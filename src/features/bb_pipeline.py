@@ -159,7 +159,7 @@ def _process_team_stats(df):
             lambda x: x.shift(1).rolling(w, min_periods=2).apply(_slope, raw=True))
 
     # ── 行程距离特征 ──
-    team['travel_distance'] = team.groupby('team', group_keys=False).apply(
+    team['travel_distance'] = team.groupby('team', group_keys=True).apply(
         lambda g: pd.Series(_compute_travel_distances(g), index=g.index)
     ).droplevel(0) if len(team) > 0 else 0.0
     team['travel_distance'] = team['travel_distance'].fillna(0).astype(float)
@@ -274,7 +274,7 @@ def build_bb_features(
     if modern_path.exists():
         new = pd.read_csv(modern_csv)
         new.columns = [c.strip().lower() for c in new.columns]
-        new['date'] = pd.to_datetime(new['date'], utc=True).dt.tz_localize(None)
+        new['date'] = pd.to_datetime(new['date'], utc=True, format='mixed').dt.tz_localize(None)
         new['home'] = new['home'].str.strip()
         new['away'] = new['away'].str.strip()
         new['home_score'] = pd.to_numeric(new['home_score'], errors='coerce')

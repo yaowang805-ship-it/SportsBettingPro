@@ -53,13 +53,8 @@ if not _TOTAL_RELIABLE:
 if not _SPREAD_RELIABLE:
     logger.info("  ℹ️ 让分推荐已禁用")
 
-# 中文映射
-TEAM_CN = {}
-cn_path = ROOT / "data" / "team_mapping.json"
-if cn_path.exists():
-    with open(cn_path) as f:
-        TEAM_CN = json.load(f)
-def cn(name): return TEAM_CN.get(name, name)
+from src.core.team_names import cn_team
+def cn(name): return cn_team(name, sport="nba")
 
 # 拉取赔率
 odds_data = fetch_basketball_odds(force=True)

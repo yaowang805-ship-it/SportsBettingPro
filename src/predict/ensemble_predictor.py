@@ -352,11 +352,45 @@ class EnsemblePredictor:
         logger.info("  加载特征列: %s 个", len(self.feat_cols))
 
         self.models = {}
+        self._individual_models = {}   # {target: [(name, model, weight), ...]}
         for target in ["win", "spread_result", "total_result"]:
-            path = MODEL_DIR_PATH / f"{self.prefix}_{target}_ensemble.pkl"
-            if path.exists():
-                self.models[target] = joblib.load(path)
-                logger.info("  加载模型: %s", path.name)
+            self._try_load_weighted(target)
+            if target not in self.models:
+                path = MODEL_DIR_PATH / f"{self.prefix}_{target}_ensemble.pkl"
+                if path.exists():
+                    self.models[target] = joblib.load(path)
+                    logger.info("  加载模型: %s", path.name)
+
+    def _try_load_weighted(self, target: str):
+        """尝试加载单模型+动态权重方案（优先级高于等权集成）。"""
+        meta_path = MODEL_DIR_PATH / f"{self.prefix}_{target}_ensemble_meta.json"
+        if not meta_path.exists():
+            return
+        try:
+            with open(meta_path) as f:
+                meta = json.load(f)
+            weights = meta.get("ensemble_weights", {})
+            if not weights:
+                return
+            base_models = meta.get("base_models", [])
+            loaded = []
+            for name in base_models:
+                w = weights.get(name)
+                if w is None or w <= 0:
+                    continue
+                model_path = MODEL_DIR_PATH / f"{self.prefix}_{target}_{name}.pkl"
+                if not model_path.exists():
+                    continue
+                model = joblib.load(model_path)
+                loaded.append((name, model, w))
+            if len(loaded) < 2:
+                return
+            self._individual_models[target] = loaded
+            names_str = ", ".join(f"{n}({w:.3f})" for n, _, w in loaded)
+            logger.info("  加载动态权重模型 [%s]: %s", target, names_str)
+            # 不用在这个阶段设置 self.models[target]，在 predict 中用加权路径
+        except Exception as e:
+            logger.warning("  动态权重加载失败 (%s): %s", target, e)
 
     def _build_features(self, odds_data: List[Dict]) -> np.ndarray:
         """构建预测特征矩阵。"""
@@ -399,33 +433,52 @@ class EnsemblePredictor:
         match_df["b2b_diff"] = match_df["home_b2b"] - match_df["away_b2b"]
         match_df["rest_diff"] = match_df["home_rest_days"] - match_df["away_rest_days"]
 
-        # ── NBA 伤病特征注入 ──
+        # ── NBA 伤病特征注入（加权严重度） ──
         try:
-            from src.features.nba_injuries import get_nba_injuries
-            # 用当前伤病数据映射到所有球队（历史行用当前数据近似，不影响预测）
+            from src.features.nba_injuries import get_nba_injuries, TEAM_ABBR
+            _INJURY_WEIGHTS = {
+                'out': 1.0, 'doubtful': 0.7,
+                'questionable': 0.4, 'day-to-day': 0.2,
+            }
             injuries = get_nba_injuries()
             if injuries:
                 injury_df = pd.DataFrame(injuries)
-                confirmed = injury_df[injury_df['status'].str.lower().isin(['out', 'doubtful'])] if 'status' in injury_df.columns else injury_df
-                team_counts = confirmed.groupby('team').size().to_dict()
-                # 球队全名 → 伤病数映射
-                from src.features.bb_pipeline import NBA_TEAM_ABBR_MAP
-                def _injured_count(team_name):
-                    abbr = NBA_TEAM_ABBR_MAP.get(team_name.strip().lower(), '')
-                    return team_counts.get(abbr, 0)
-                match_df['home_injured'] = match_df['home'].str.lower().map(
-                    lambda x: _injured_count(x))
-                match_df['away_injured'] = match_df['away'].str.lower().map(
-                    lambda x: _injured_count(x))
+                if 'status' in injury_df.columns:
+                    injury_df['weight'] = injury_df['status'].str.lower().map(
+                        lambda s: next((w for kw, w in _INJURY_WEIGHTS.items()
+                                        if kw in s.lower()), 0.0))
+                else:
+                    injury_df['weight'] = 1.0
+                team_scores = injury_df.groupby('team')['weight'].sum().to_dict()
+                # 球队全名 → 伤病权重映射
+                def _injured_score(team_name):
+                    # Try direct team name lookup first
+                    team_clean = team_name.strip()
+                    abbr = TEAM_ABBR.get(team_clean, '')
+                    if not abbr:
+                        # Fallback: reverse lookup from TEAM_ABBR
+                        rev = {v.lower(): k for k, v in TEAM_ABBR.items()}
+                        full = rev.get(team_clean.lower(), '')
+                        abbr = TEAM_ABBR.get(full, '')
+                    return team_scores.get(abbr, 0.0)
+                match_df['home_injured'] = match_df['home'].map(_injured_score).fillna(0.0)
+                match_df['away_injured'] = match_df['away'].map(_injured_score).fillna(0.0)
                 match_df['injured_diff'] = match_df['home_injured'] - match_df['away_injured']
+                # 二值特征：有无关键伤病
+                match_df['home_key_injury'] = (match_df['home_injured'] >= 1.0).astype(int)
+                match_df['away_key_injury'] = (match_df['away_injured'] >= 1.0).astype(int)
             else:
-                match_df['home_injured'] = 0
-                match_df['away_injured'] = 0
-                match_df['injured_diff'] = 0
+                match_df['home_injured'] = 0.0
+                match_df['away_injured'] = 0.0
+                match_df['injured_diff'] = 0.0
+                match_df['home_key_injury'] = 0
+                match_df['away_key_injury'] = 0
         except Exception:
-            match_df['home_injured'] = 0
-            match_df['away_injured'] = 0
-            match_df['injured_diff'] = 0
+            match_df['home_injured'] = 0.0
+            match_df['away_injured'] = 0.0
+            match_df['injured_diff'] = 0.0
+            match_df['home_key_injury'] = 0
+            match_df['away_key_injury'] = 0
 
         # ── CLV Edge 特征 ──
         _add_pred_edge_features(match_df, sport="nba")
@@ -570,14 +623,29 @@ class EnsemblePredictor:
             }
 
             for target in ["win", "spread_result", "total_result"]:
-                model = self.models.get(target)
-                if model is not None:
+                ind_models = self._individual_models.get(target)
+                if ind_models:
+                    # 动态权重路径：加权各子模型预测
                     try:
-                        prob = model.predict_proba(features)[0, 1]
+                        probs = []
+                        weights = []
+                        for _name, model, weight in ind_models:
+                            p = model.predict_proba(features)[0, 1]
+                            probs.append(p)
+                            weights.append(weight)
+                        prob = float(np.average(probs, weights=weights))
                     except Exception:
                         prob = 0.5
                 else:
-                    prob = 0.5
+                    # 标准集成路径（等权 + 校准）
+                    model = self.models.get(target)
+                    if model is not None:
+                        try:
+                            prob = model.predict_proba(features)[0, 1]
+                        except Exception:
+                            prob = 0.5
+                    else:
+                        prob = 0.5
 
                 # 裁剪原始概率到安全范围
                 raw_prob = float(np.clip(prob, 0.02, 0.98))

@@ -64,13 +64,8 @@ _TOTAL_RELIABLE = _model_is_reliable("total_result")
 if not _TOTAL_RELIABLE:
     logger.info("  ℹ️ 足球大小球推荐已禁用（模型准确率不足）")
 
-# 中文映射
-TEAM_CN = {}
-cn_path = ROOT / "data" / "football_team_cn.json"
-if cn_path.exists():
-    with open(cn_path) as f:
-        TEAM_CN = json.load(f)
-def cn(name): return TEAM_CN.get(name, name)
+from src.core.team_names import cn_team
+def cn(name): return cn_team(name, sport="football")
 
 # 拉取赔率
 odds_data = fetch_football_odds(force=True)

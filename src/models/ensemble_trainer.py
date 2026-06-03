@@ -281,12 +281,45 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
     print(f"  Voting 训练: {len(X_meta)} 样本 (至 {str(dates[meta_idx[-1]])[:10]}) "
           f"| 校准: {len(X_cal)} 样本 (自 {str(dates[cal_idx[0]])[:10]} 起)")
 
-    # ── 阶段3: 在训练集上拟合 VotingClassifier ──
-    estimators = [(name, trained_models[name]) for name in model_types if name in trained_models]
-    ensemble = VotingClassifier(estimators=estimators, voting='soft')
+    # ── 阶段3: 计算每个基模型在校准集上的表现 → 动态权重 ──
+    per_model_metrics = {}
+    model_weights = []
+    valid_estimators = []
+
+    for name in model_types:
+        if name not in trained_models:
+            continue
+        m = trained_models[name]
+        try:
+            cal_probs = m.predict_proba(X_cal)[:, 1]
+            ll = log_loss(y_cal, cal_probs)
+            brier = brier_score_loss(y_cal, cal_probs)
+            # 负log_loss保护（防止极端值）
+            weight = 1.0 / (max(ll, 0.05))
+            per_model_metrics[name] = {'cal_log_loss': round(ll, 4), 'cal_brier': round(brier, 4), 'weight': round(weight, 4)}
+            model_weights.append(weight)
+            valid_estimators.append((name, m))
+            print(f"   {name}: log_loss={ll:.4f} weight={weight:.2f}")
+        except Exception as e:
+            print(f"   {name}: 校准集评估失败 ({e}), 跳过")
+            continue
+
+    if len(valid_estimators) < 2:
+        print("  有效基模型不足 2 个，跳过")
+        return None, None
+
+    # 归一化权重
+    total_w = sum(model_weights)
+    norm_weights = [w / total_w for w in model_weights]
+    for i, (name, _) in enumerate(valid_estimators):
+        per_model_metrics[name]['norm_weight'] = round(norm_weights[i], 4)
+    print(f"  动态权重: {[(n, round(w, 3)) for n, w in zip([e[0] for e in valid_estimators], norm_weights)]}")
+
+    # ── 阶段4: 在训练集上用动态权重拟合 VotingClassifier ──
+    ensemble = VotingClassifier(estimators=valid_estimators, voting='soft', weights=norm_weights)
     ensemble.fit(X_meta, y_meta)
 
-    # ── 阶段4: 概率校准 ──
+    # ── 阶段5: 概率校准 ──
     # win 用 isotonic（样本充足，不假设分布形状）
     # spread/total 用 sigmoid（50/50 小样本下更鲁棒）
     cal_method = 'isotonic' if target_col == 'win' else 'sigmoid'
@@ -315,8 +348,10 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
     print(f"  已保存 {ensemble_path}")
 
     meta_info = {
-        'base_models': list(trained_models.keys()),
+        'base_models': [e[0] for e in valid_estimators],
         'metrics': {'brier': brier, 'log_loss': ll},
+        'per_model_metrics': per_model_metrics,
+        'ensemble_weights': {e[0]: round(w, 4) for e, w in zip(valid_estimators, norm_weights)},
         'target': target_col,
         'n_samples': len(X),
         'n_features': len(feat_cols),

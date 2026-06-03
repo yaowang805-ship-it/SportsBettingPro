@@ -35,13 +35,16 @@ TEAM_ABBR = {
 NON_ROTATION_KEYWORDS = ["two-way", "exhibit 10", "g league", "training camp"]
 
 
-def _fetch_json(url: str, timeout: int = 10) -> Optional[dict]:
-    """通用 JSON 抓取（带重试）。"""
+def _fetch_json(url: str, timeout: int = 30) -> Optional[dict]:
+    """通用 JSON 抓取（使用 requests 防 IncompleteRead）。"""
     for attempt in range(2):
         try:
-            req = Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            with urlopen(req, timeout=timeout) as resp:
-                return json.loads(resp.read().decode())
+            import requests
+            resp = requests.get(url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0"})
+            if resp.status_code == 200:
+                return resp.json()
+            else:
+                print(f"⚠️ 伤病数据 HTTP {resp.status_code}")
         except Exception as e:
             if attempt == 0:
                 print(f"⚠️ 伤病数据重试... ({e})")
