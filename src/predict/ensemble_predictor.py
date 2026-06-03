@@ -258,7 +258,7 @@ def _load_bb_history():
     if modern.exists():
         new = pd.read_csv(modern)
         new.columns = [c.strip().lower() for c in new.columns]
-        new["date"] = pd.to_datetime(new["date"], utc=True).dt.tz_localize(None)
+        new["date"] = pd.to_datetime(new["date"], utc=True, format='mixed').dt.tz_localize(None)
         new["home"] = new["home"].str.strip()
         new["away"] = new["away"].str.strip()
         new["home_goals"] = pd.to_numeric(new["home_score"], errors="coerce")
