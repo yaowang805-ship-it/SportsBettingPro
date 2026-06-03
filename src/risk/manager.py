@@ -382,12 +382,21 @@ class RiskManager:
             'model_prob': prob,
             'balance_after': self.current_balance,
         }
+        # CSV (backwards compatibility)
         needs_header = not BET_LOG_FILE.exists() or BET_LOG_FILE.stat().st_size == 0
         from src.storage.file_lock import locked_open
         with locked_open(str(BET_LOG_FILE), 'a', encoding='utf-8') as f:
             if needs_header:
                 f.write("date,stake,win,odds,model_prob,balance_after\n")
             f.write(f"{log_entry['date']},{stake},{win},{odds},{prob},{self.current_balance}\n")
+        # SQLite
+        try:
+            from src.storage.database import db
+            db.record_bet(home="", away="", sport="", bet_type="h2h",
+                          stake=stake, odds=odds, prob=prob,
+                          notes=f"win={win}" if isinstance(win, bool) else f"win={win}")
+        except Exception:
+            pass
 
     def drawdown_pct(self) -> float:
         if self.initial_budget <= 0:

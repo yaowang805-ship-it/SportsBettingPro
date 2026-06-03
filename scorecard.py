@@ -6,10 +6,10 @@ def generate_scorecard():
     # 诚实评分：
     #   数据源 16/25 — NBA(odds-api.io Bet365 真实赔率) + 足球(BSD 免费无限, 23场, h2h+totals)
     #   模型架构 16/20 — 集成模型（LGBM/XGB/CatBoost/RF）+ Dixon-Coles，无深度学习
-    #   系统架构 5/10 — pytest 92 项测试，文件锁已加，但仍无 CI/CD/数据库
+    #   系统架构 7/10 — pytest 106 项测试，SQLite 数据库，GitHub Actions CI/CD，文件锁
     #   风控执行 12/15 — VaR/CVaR 已加，执行器仍为空存根
     #   特征工程 11/15 — 新增 NBA 行程距离特征，无球员级别特征
-    details = {'数据源': 16, '特征工程': 11, '模型架构': 16, '系统架构': 5, '风控执行': 12, '运维监控': 14}
+    details = {'数据源': 16, '特征工程': 11, '模型架构': 16, '系统架构': 7, '风控执行': 12, '运维监控': 14}
     score = sum(details.values())
     logger.info("\n%s", "=" * 60)
     logger.info("📊 系统健康度评分卡 (职业顶级100分)")

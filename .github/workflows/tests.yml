@@ -1,0 +1,60 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Copy .env.example to .env
+        run: cp .env.example .env
+
+      - name: Create data directories
+        run: |
+          mkdir -p data/storage data/processed models logs
+          touch data/storage/bet_history.csv
+          touch data/storage/performance_history.csv
+
+      - name: Run tests
+        run: python -m pytest tests/ -v --tb=short
+
+      - name: Test imports
+        run: python -c "
+          import sys; sys.path.insert(0, '.');
+          from config.logging_config import get_logger;
+          logger = get_logger('test');
+          logger.info('Basic imports OK');
+          from src.core.models import DixonColesModel;
+          from src.core.normalizer import find_best_odds, OddsNormalizer;
+          from src.features.elo import compute_elo;
+          logger.info('All core imports OK');
+        "
