@@ -67,6 +67,13 @@ if not _TOTAL_RELIABLE:
 from src.core.team_names import cn_team
 def cn(name): return cn_team(name, sport="football")
 
+
+def _dc_knows_teams(home: str, away: str) -> bool:
+    """检查 DC 模型是否拥有这两支球队的参数，避免使用全局先验。"""
+    if _DC_MODEL is None or not _DC_MODEL.fitted:
+        return False
+    return home in _DC_MODEL.attack_params and away in _DC_MODEL.attack_params
+
 # 拉取赔率
 odds_data = fetch_football_odds(force=True)
 logger.info("✅ 实时赔率: %s 场", len(odds_data))
@@ -105,6 +112,18 @@ for pred in predictions:
     mkt_draw = pred.get("sharp_draw_prob") if has_sharp else pred["market_draw_prob"]
     if mkt_draw is None:
         mkt_draw = pred["market_draw_prob"]
+    mkt_away = pred.get("sharp_away_prob") if has_sharp else pred["market_away_prob"]
+    if mkt_away is None:
+        mkt_away = pred["market_away_prob"]
+
+    # ── 模型-市场一致性格挡 ──
+    # 若模型原始概率与市场隐含概率偏差 > 30pp，模型对该对阵无训练数据
+    raw_win = pred.get("win_raw", pred["win_prob"])
+    deviation = abs(raw_win - pred["market_home_prob"])
+    if deviation > 0.30:
+        logger.info("  ⏭️ %s vs %s: 模型-市场偏差%.0fpp，跳过未知对阵",
+                    home, away, deviation * 100)
+        continue
 
     # 检查各目标
     candidates = []
@@ -121,12 +140,22 @@ for pred in predictions:
                 "mkt_prob": mkt_home, "ev": home_ev, "stake": stake,
             })
 
-    # 客胜（使用原始模型概率而非收缩后概率，保持概率空间一致）
-    raw_win = pred.get("win_raw", pred["win_prob"])  # 优先取原始概率
-    away_model = 1.0 - raw_win - mkt_draw
-    mkt_away = pred.get("sharp_away_prob") if has_sharp else pred["market_away_prob"]
-    if mkt_away is None:
-        mkt_away = pred["market_away_prob"]
+    # ── 客胜 ──
+    # 优先使用 DC 模型（需包含两队）的 3-way 概率，避免二元模型推导偏差
+    away_model = None
+    if _dc_knows_teams(home, away):
+        try:
+            dc_pred = _DC_MODEL.predict(home, away)
+            if "error" not in dc_pred and dc_pred.get("away", 0) > 0:
+                away_model = dc_pred["away"]
+        except Exception:
+            pass
+    if away_model is None:
+        # 从收缩后的主胜概率推导（已包含市场信息）
+        win_shrunk = pred["win_prob"]
+        away_model = 1.0 - win_shrunk - mkt_draw
+        away_model = np.clip(away_model, 0.001, 0.999)
+
     away_ev = away_model - mkt_away
     if away_ev > 0 and away_odds > 0 and pred["n_bookmakers"] >= 3:
         kelly = (away_model * away_odds - 1) / (away_odds - 1) if away_odds > 1 else 0
@@ -135,34 +164,30 @@ for pred in predictions:
         if stake > 5 and can_bet:
             candidates.append({
                 "type": "客胜", "odds": away_odds, "model_prob": away_model,
-                "mkt_prob": pred["market_away_prob"], "ev": away_ev, "stake": stake,
+                "mkt_prob": mkt_away, "ev": away_ev, "stake": stake,
             })
 
-    # ── 平局候选 (NEW) ──
-    if mkt_draw > 0:
-        draw_odds = 1.0 / mkt_draw
-        if _DC_MODEL and _DC_MODEL.fitted:
-            try:
-                dc_pred = _DC_MODEL.predict(home, away)
-                draw_model_prob = dc_pred.get("draw", 1.0/3) if "error" not in dc_pred else 0.0
-            except Exception:
-                draw_model_prob = 0.0
-        else:
-            # 使用原始模型概率保持一致性，平局概率 = 1 - 主胜(原始) - 客胜(原始)
-            # 其中客胜 = 1 - 主胜(原始) - 市场平局概率
-            raw_win = pred.get("win_raw", pred["win_prob"])
-            raw_away = 1.0 - raw_win - mkt_draw
-            draw_model_prob = 1.0 - raw_win - raw_away if raw_away > 0 else 0.0
-        draw_ev = draw_model_prob - mkt_draw
-        if draw_ev > 0 and draw_odds > 0:
-            kelly = (draw_model_prob * draw_odds - 1) / (draw_odds - 1) if draw_odds > 1 else 0
-            stake_draw = rm.get_max_stake(draw_model_prob, draw_odds, current_exposure, input_is_prob=True) if kelly > 0 else 0
-            if stake_draw > 5:
-                candidates.append({
-                    "type": "平局", "odds": round(draw_odds, 2),
-                    "model_prob": draw_model_prob, "mkt_prob": mkt_draw,
-                    "ev": draw_ev, "stake": stake_draw,
-                })
+    # ── 平局候选 ──
+    # 只在 DC 模型拥有两队参数时才使用（否则返回全局先验，无参考价值）
+    if mkt_draw > 0 and _dc_knows_teams(home, away):
+        try:
+            dc_pred = _DC_MODEL.predict(home, away)
+            if "error" not in dc_pred:
+                draw_model_prob = dc_pred.get("draw", 0)
+                if draw_model_prob > 0:
+                    draw_odds = 1.0 / mkt_draw
+                    draw_ev = draw_model_prob - mkt_draw
+                    if draw_ev > 0 and draw_odds > 0:
+                        kelly = (draw_model_prob * draw_odds - 1) / (draw_odds - 1) if draw_odds > 1 else 0
+                        stake_draw = rm.get_max_stake(draw_model_prob, draw_odds, current_exposure, input_is_prob=True) if kelly > 0 else 0
+                        if stake_draw > 5:
+                            candidates.append({
+                                "type": "平局", "odds": round(draw_odds, 2),
+                                "model_prob": draw_model_prob, "mkt_prob": mkt_draw,
+                                "ev": draw_ev, "stake": stake_draw,
+                            })
+        except Exception:
+            pass
 
     # ── 大小球候选 ──
     total_prob = pred.get("total_result_prob")
@@ -182,7 +207,7 @@ for pred in predictions:
                 })
 
     # ── 亚洲盘口候选 ──
-    if _DC_MODEL and _DC_MODEL.fitted:
+    if _dc_knows_teams(home, away):
         try:
             ah_odds_list = extract_ah_odds([g for g in valid if g["home_team"] == home and g["away_team"] == away])
             for ah in ah_odds_list:
