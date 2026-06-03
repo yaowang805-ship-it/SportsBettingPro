@@ -1,0 +1,82 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Training files
+catboost_info/
+
+# OS files
+.DS_Store
+
+# Database files (huge, not tracked)
+data/*.db
+data/*.sqlite
+data/backup_protected/
+
+# Large CSV data (40MB+ each)
+data/storage/shot_*.csv
+data/storage/nba_shot_charts.csv
+
+# Processed features (auto-generated)
+data/processed/*.csv
+
+# Model binaries (auto-trained, >100MB each)
+models/*.pkl
+models/shap/
+models/dixon_coles_model.json
+models/*_meta.json
+
+# Runtime state (auto-generated)
+data/storage/bet_history.csv
+data/storage/performance_history.csv
+data/storage/football_history.csv
+data/storage/basketball_history.csv
+data/storage/nba_spread_results.csv
+data/storage/model_accuracy_history.csv
+data/storage/prediction_log.csv
+data/storage/scorecard_history.csv
+data/storage/virtual_portfolio.json
+data/storage/risk_state.json
+data/storage/opening_odds.json
+data/storage/performance_summary.json
+data/storage/daily_*recommendations.json
+data/storage/fb_power_ratings.json
+data/storage/nba_power_ratings.json
+data/storage/tm_market_values.json
+data/storage/model_decay_report.json
+data/storage/system_health.json
+data/storage/model_backtest_summary.json
+data/storage/arbitrage_log.json
+data/storage/edge_attribution_report.json
+data/storage/team_edge_tracking.json
+
+# Odds cache (auto-generated)
+data/storage/odds/bsd_*.json
+data/storage/odds/io_event_cache/
+data/storage/odds/live_*.json
+data/storage/odds_snapshots/
+data/storage/*_cache.json
+
+# Logs
+logs/
+*.log
+
+# Reports
+reports/*.txt
+
+# Node
+node_modules/
+package-lock.json
+package.json
+
+# Docs
+docs/
+
+# Config
+pytest.ini
+
+# Statsbomb
+data/statsbomb_open/
