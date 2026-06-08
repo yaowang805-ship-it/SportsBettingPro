@@ -105,7 +105,15 @@ def load_recommendations() -> List[dict]:
         for r in fb_recs:
             all_recs.append(_normalize_rec(r, source_sport="Football"))
 
-    # 3. Legacy fallback — daily_recommendations.json (only if no fresh data)
+    # 3. NFL — daily_nfl_recommendations.json
+    nfl_path = DATA_DIR / "daily_nfl_recommendations.json"
+    nfl_data = load_json(nfl_path)
+    if nfl_data:
+        nfl_recs = nfl_data if isinstance(nfl_data, list) else nfl_data.get("recommendations", [])
+        for r in nfl_recs:
+            all_recs.append(_normalize_rec(r, source_sport="NFL"))
+
+    # 4. Legacy fallback — daily_recommendations.json (only if no fresh data)
     if not all_recs:
         legacy_path = DATA_DIR / "daily_recommendations.json"
         legacy_data = load_json(legacy_path)

@@ -395,6 +395,10 @@ def main():
                             "league": "NFL",
                         })
 
+    # 补充 sport 字段（虚拟投注需要）
+    for r in recommendations:
+        r["sport"] = "nfl"
+
     # 按 EV 排序
     recommendations.sort(key=lambda x: x["ev"], reverse=True)
 
@@ -418,8 +422,8 @@ def main():
     # 同步到虚拟投资组合
     if recommendations:
         try:
-            from src.storage.virtual_portfolio import sync_recommendations
-            sync_recommendations(recommendations, sport="nfl")
+            from src.dashboard.components.virtual_portfolio import auto_place_bets
+            auto_place_bets(recommendations)
             logger.info("  ✅ 已同步 %d 条推荐到虚拟投资组合", len(recommendations))
         except Exception as e:
             logger.warning("  ⚠️ 虚拟投资组合同步失败: %s", e)
