@@ -284,6 +284,19 @@ def _load_fb_history():
     return df[["date", "home", "away", "home_goals", "away_goals"]]
 
 
+def _load_nfl_history():
+    """加载 NFL 历史原始比赛数据。"""
+    base = Path(__file__).resolve().parent.parent.parent
+    csv_path = base / "data" / "storage" / "nfl_history.csv"
+    if not csv_path.exists():
+        raise FileNotFoundError("未找到 NFL 历史数据")
+    df = pd.read_csv(csv_path)
+    df["date"] = pd.to_datetime(df["date"], errors="coerce")
+    return df[["date", "home", "away", "home_score", "away_score",
+               "spread_line", "total_line", "roof", "temp", "wind",
+               "home_rest", "away_rest"]]
+
+
 # ── CLV 预测 Edge 特征注入 ────────────────────────────────
 
 def _add_pred_edge_features(match_df, sport="football"):
@@ -344,7 +357,12 @@ class EnsemblePredictor:
 
     def __init__(self, sport: str):
         self.sport = sport
-        self.prefix = "model_bb" if sport == "bb" else "model_fb"
+        if sport == "bb":
+            self.prefix = "model_bb"
+        elif sport == "nfl":
+            self.prefix = "model_nfl"
+        else:
+            self.prefix = "model_fb"
 
         feat_file = MODEL_DIR_PATH / f"{self.prefix}_features.json"
         with open(feat_file) as f:
@@ -352,7 +370,6 @@ class EnsemblePredictor:
         logger.info("  加载特征列: %s 个", len(self.feat_cols))
 
         self.models = {}
-        self._individual_models = {}   # {target: [(name, model, weight), ...]}
         for target in ["win", "spread_result", "total_result"]:
             self._try_load_weighted(target)
             if target not in self.models:
@@ -362,7 +379,7 @@ class EnsemblePredictor:
                     logger.info("  加载模型: %s", path.name)
 
     def _try_load_weighted(self, target: str):
-        """尝试加载单模型+动态权重方案（优先级高于等权集成）。"""
+        """记录集成权重信息（预测统一使用校准后的集成模型）。"""
         meta_path = MODEL_DIR_PATH / f"{self.prefix}_{target}_ensemble_meta.json"
         if not meta_path.exists():
             return
@@ -370,45 +387,36 @@ class EnsemblePredictor:
             with open(meta_path) as f:
                 meta = json.load(f)
             weights = meta.get("ensemble_weights", {})
-            if not weights:
-                return
-            base_models = meta.get("base_models", [])
-            loaded = []
-            for name in base_models:
-                w = weights.get(name)
-                if w is None or w <= 0:
-                    continue
-                model_path = MODEL_DIR_PATH / f"{self.prefix}_{target}_{name}.pkl"
-                if not model_path.exists():
-                    continue
-                model = joblib.load(model_path)
-                loaded.append((name, model, w))
-            if len(loaded) < 2:
-                return
-            self._individual_models[target] = loaded
-            names_str = ", ".join(f"{n}({w:.3f})" for n, _, w in loaded)
-            logger.info("  加载动态权重模型 [%s]: %s", target, names_str)
-            # 不用在这个阶段设置 self.models[target]，在 predict 中用加权路径
+            if weights:
+                names_str = ", ".join(f"{n}({w:.3f})" for n, w in weights.items())
+                logger.info("  集成权重 [%s]: %s", target, names_str)
         except Exception as e:
-            logger.warning("  动态权重加载失败 (%s): %s", target, e)
+            logger.warning("  集成权重读取失败 (%s): %s", target, e)
 
     def _build_features(self, odds_data: List[Dict]) -> np.ndarray:
         """构建预测特征矩阵。"""
         if self.sport == "bb":
             return self._build_bb_features(odds_data)
+        if self.sport == "nfl":
+            return self._build_nfl_features(odds_data)
         return self._build_fb_features(odds_data)
 
     def _build_bb_features(self, odds_data: List[Dict]) -> np.ndarray:
         """构建篮球预测特征。"""
+        from src.core.normalizer import find_best_odds
+
         hist = _load_bb_history()
 
         today_rows = []
         for g in odds_data:
+            # 提取总盘口线作为 ovrundr 特征（用于 total 模型）
+            _, _, total_pt = find_best_odds(g, market_type='totals')
             today_rows.append({
                 "date": pd.Timestamp.now(tz="UTC").tz_localize(None),
                 "home": g["home_team"], "away": g["away_team"],
                 "home_score": np.nan, "away_score": np.nan,
                 "home_goals": np.nan, "away_goals": np.nan,
+                "ovrundr": total_pt if total_pt else np.nan,
             })
         today_df = pd.DataFrame(today_rows)
 
@@ -420,7 +428,7 @@ class EnsemblePredictor:
 
         team_feats = _team_rolling_stats(combined, goal_cols=("home_goals", "away_goals"))
 
-        match_df = combined[["date", "home", "away", "home_elo", "away_elo", "elo_diff"]].copy()
+        match_df = combined[["date", "home", "away", "home_elo", "away_elo", "elo_diff", "ovrundr"]].copy()
         for side, tc in [("home", "home"), ("away", "away")]:
             sf = team_feats.copy()
             sf.columns = [f"{side}_{c}" if c not in ("date", "team") else c for c in sf.columns]
@@ -483,6 +491,22 @@ class EnsemblePredictor:
         # ── CLV Edge 特征 ──
         _add_pred_edge_features(match_df, sport="nba")
 
+        # ── 总分预测交互特征（与训练流水线一致） ──
+        for prefix in ["home_", "away_"]:
+            for f in ["total_pts_avg_5", "total_pts_ewm5", "pts_scored_avg_5",
+                       "pts_allowed_avg_5", "total_pts_volatility_5", "high_score_rate_10"]:
+                col = f"{prefix}{f}"
+                if col not in match_df.columns:
+                    match_df[col] = 0.0
+        match_df["combined_total_avg_5"] = match_df.get("home_total_pts_avg_5", 0) + match_df.get("away_total_pts_avg_5", 0)
+        match_df["combined_pts_scored_avg_5"] = match_df.get("home_pts_scored_avg_5", 0) + match_df.get("away_pts_scored_avg_5", 0)
+        match_df["combined_pts_allowed_avg_5"] = match_df.get("home_pts_allowed_avg_5", 0) + match_df.get("away_pts_allowed_avg_5", 0)
+        match_df["total_volatility_interaction"] = match_df.get("home_total_pts_volatility_5", 0) * match_df.get("away_total_pts_volatility_5", 0)
+        match_df["high_score_rate_sum"] = (match_df.get("home_high_score_rate_10", 0) + match_df.get("away_high_score_rate_10", 0)).clip(0, 2)
+        match_df["total_rest_sum"] = match_df["home_rest_days"] + match_df["away_rest_days"]
+        match_df["pace_proxy"] = (match_df["home_gf_ewm5"] + match_df["away_gf_ewm5"] +
+                                  match_df["home_ga_ewm5"] + match_df["away_ga_ewm5"]) / 2
+
         match_df = match_df.ffill().fillna(0)
 
         # 注入天气与行程特征
@@ -491,6 +515,98 @@ class EnsemblePredictor:
             match_df = add_weather_to_df(match_df)
         except Exception:
             pass
+
+        today_start = len(hist)
+        X = match_df.iloc[today_start:]
+        avail = [c for c in self.feat_cols if c in X.columns]
+        return X[avail].fillna(0).values
+
+    def _build_nfl_features(self, odds_data: List[Dict]) -> np.ndarray:
+        """构建 NFL 预测特征（轻量版，直接基于 nfl_features.csv 特征骨架计算）。"""
+        hist = _load_nfl_history()
+
+        today_rows = []
+        for g in odds_data:
+            today_rows.append({
+                "date": pd.Timestamp.now(tz="UTC").tz_localize(None),
+                "home": g["home_team"], "away": g["away_team"],
+                "home_score": np.nan, "away_score": np.nan,
+                "spread_line": np.nan, "total_line": np.nan,
+                "roof": np.nan, "temp": np.nan, "wind": np.nan,
+                "home_rest": 7, "away_rest": 7,
+            })
+        today_df = pd.DataFrame(today_rows)
+
+        combined = pd.concat([hist, today_df], ignore_index=True).sort_values("date").reset_index(drop=True)
+
+        # ELO
+        from src.features.elo import compute_elo
+        combined = compute_elo(combined, K=40,
+                               score_home_col="home_score", score_away_col="away_score")
+
+        # 球队滚动统计（使用 points for/against）
+        team_records = []
+        for _, row in combined.iterrows():
+            for side, team in [("home", row["home"]), ("away", row["away"])]:
+                pf = row["home_score"] if side == "home" else row["away_score"]
+                pa = row["away_score"] if side == "home" else row["home_score"]
+                win = 1.0 if (side == "home" and row["home_score"] > row["away_score"]) or \
+                             (side == "away" and row["away_score"] > row["home_score"]) else 0.0
+                team_records.append({
+                    "date": row["date"], "team": team,
+                    "pf": pf, "pa": pa, "win": win, "net": pf - pa,
+                })
+        tr = pd.DataFrame(team_records).sort_values(["team", "date"])
+
+        for w in [3, 5]:
+            tr[f"pf_avg_{w}"] = tr.groupby("team")["pf"].transform(
+                lambda x: x.shift(1).rolling(w, min_periods=1).mean())
+            tr[f"pa_avg_{w}"] = tr.groupby("team")["pa"].transform(
+                lambda x: x.shift(1).rolling(w, min_periods=1).mean())
+            tr[f"net_rating_{w}"] = tr[f"pf_avg_{w}"] - tr[f"pa_avg_{w}"]
+        tr["pf_ewm5"] = tr.groupby("team")["pf"].transform(
+            lambda x: x.shift(1).ewm(span=5, adjust=False).mean())
+        tr["pa_ewm5"] = tr.groupby("team")["pa"].transform(
+            lambda x: x.shift(1).ewm(span=5, adjust=False).mean())
+        tr["win_rate_5"] = tr.groupby("team")["win"].transform(
+            lambda x: x.shift(1).rolling(5, min_periods=1).mean())
+        # 净胜分斜率（最近5场）
+        tr["net_slope_5"] = tr.groupby("team")["net"].transform(
+            lambda x: x.shift(1).rolling(5, min_periods=2).apply(lambda y: np.polyfit(np.arange(len(y)), y, 1)[0], raw=False))
+
+        feat_cols = ["date", "team", "pf_avg_3", "pf_avg_5", "pa_avg_3", "pa_avg_5",
+                     "net_rating_3", "net_rating_5", "pf_ewm5", "pa_ewm5",
+                     "win_rate_5", "net_slope_5"]
+        team_feats = tr[feat_cols]
+
+        match_df = combined[["date", "home", "away", "home_elo", "away_elo", "elo_diff"]].copy()
+        for side, tc in [("home", "home"), ("away", "away")]:
+            sf = team_feats.copy()
+            sf.columns = [f"{side}_{c}" if c not in ("date", "team") else c for c in sf.columns]
+            sf.rename(columns={"date": "date", "team": tc}, inplace=True)
+            match_df = pd.merge_asof(
+                match_df.sort_values("date"), sf.sort_values("date"),
+                by=tc, on="date", direction="backward")
+
+        match_df["off_vs_def"] = match_df["home_pf_avg_5"] - match_df["away_pa_avg_5"]
+        match_df["rest_diff"] = match_df["home_rest"] - match_df["away_rest"]
+
+        # 天气特征
+        match_df["is_dome"] = match_df["roof"].apply(
+            lambda x: 1.0 if isinstance(x, str) and x.strip().lower() in ("dome", "closed") else (0.0 if pd.notna(x) else np.nan))
+        match_df["temp"] = pd.to_numeric(match_df["temp"], errors="coerce")
+        match_df["wind"] = pd.to_numeric(match_df["wind"], errors="coerce")
+        outdoor = match_df["is_dome"] == 0
+        mask_t = outdoor & match_df["temp"].isna()
+        mask_w = outdoor & match_df["wind"].isna()
+        if mask_t.any():
+            match_df.loc[mask_t, "temp"] = match_df.loc[outdoor, "temp"].median()
+        if mask_w.any():
+            match_df.loc[mask_w, "wind"] = match_df.loc[outdoor, "wind"].median()
+        match_df.loc[match_df["is_dome"] == 1, "temp"] = 20.0
+        match_df.loc[match_df["is_dome"] == 1, "wind"] = 0.0
+
+        match_df = match_df.ffill().fillna(0)
 
         today_start = len(hist)
         X = match_df.iloc[today_start:]
@@ -623,29 +739,15 @@ class EnsemblePredictor:
             }
 
             for target in ["win", "spread_result", "total_result"]:
-                ind_models = self._individual_models.get(target)
-                if ind_models:
-                    # 动态权重路径：加权各子模型预测
+                # 统一使用校准后的集成模型（VotingClassifier + CalibratedClassifierCV）
+                model = self.models.get(target)
+                if model is not None:
                     try:
-                        probs = []
-                        weights = []
-                        for _name, model, weight in ind_models:
-                            p = model.predict_proba(features)[0, 1]
-                            probs.append(p)
-                            weights.append(weight)
-                        prob = float(np.average(probs, weights=weights))
+                        prob = model.predict_proba(features)[0, 1]
                     except Exception:
                         prob = 0.5
                 else:
-                    # 标准集成路径（等权 + 校准）
-                    model = self.models.get(target)
-                    if model is not None:
-                        try:
-                            prob = model.predict_proba(features)[0, 1]
-                        except Exception:
-                            prob = 0.5
-                    else:
-                        prob = 0.5
+                    prob = 0.5
 
                 # 裁剪原始概率到安全范围
                 raw_prob = float(np.clip(prob, 0.02, 0.98))

@@ -4,6 +4,7 @@
     from src.models.ensemble_trainer import train_sport_ensemble
     train_sport_ensemble('bb')    # 篮球
     train_sport_ensemble('fb')    # 足球
+    train_sport_ensemble('nfl')   # NFL
 """
 import json
 import sys
@@ -18,7 +19,8 @@ import numpy as np
 import optuna
 import pandas as pd
 from sklearn.calibration import CalibratedClassifierCV
-from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+from sklearn.ensemble import RandomForestClassifier, StackingClassifier, VotingClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import brier_score_loss, log_loss
 from sklearn.model_selection import TimeSeriesSplit
 
@@ -34,16 +36,23 @@ CV_SPLITS = 5       # TimeSeriesSplit folds for CV evaluation during Optuna
 
 # 根据运动类型和数据量自适应
 SPORT_CONFIG = {
-    'bb': {  # 篮球：24427 样本（↑ 12倍，原 1891），4 模型全量搜索
-        'model_types': ['lgbm', 'xgb', 'cat', 'rf'],
+    'bb': {  # 篮球：24427 样本，4 模型（RF 在 24k 样本上内存不足去掉）
+        'model_types': ['lgbm', 'xgb', 'cat', 'mlp'],
         'n_trials': 20,
-        'rf_trials': 10,  # RF 大规模数据慢，减少搜索
+        'mlp_trials': 8,
         'min_samples': 200,
     },
-    'fb': {  # 足球：~1700 样本，简化模型防过拟合
-        'model_types': ['lgbm', 'xgb'],
+    'fb': {  # 足球：~1700 样本，3 模型防过拟合
+        'model_types': ['lgbm', 'xgb', 'mlp'],
         'n_trials': 20,
+        'mlp_trials': 8,
         'min_samples': 200,
+    },
+    'nfl': {  # NFL：~1400 样本，3 模型防过拟合
+        'model_types': ['lgbm', 'xgb', 'mlp'],
+        'n_trials': 20,
+        'mlp_trials': 8,
+        'min_samples': 100,
     },
 }
 
@@ -56,6 +65,9 @@ def _load_data(sport):
     if sport == 'bb':
         csv_path = 'data/processed/bb_features.csv'
         feat_json = MODEL_DIR_PATH / 'model_bb_features.json'
+    elif sport == 'nfl':
+        csv_path = 'data/processed/nfl_features.csv'
+        feat_json = MODEL_DIR_PATH / 'model_nfl_features.json'
     else:
         csv_path = 'data/processed/fb_features.csv'
         feat_json = MODEL_DIR_PATH / 'model_fb_features.json'
@@ -76,7 +88,20 @@ def _objective(trial, X, y, model_type, tscv, scale_pos_weight=1.0, n_samples=No
     # 小数据集时增强正则化
     is_small_data = n_s < 1000
 
-    if model_type == 'cat':
+    if model_type == 'mlp':
+        from src.models.mlp_model import MLPWrapper
+        params = {
+            'hidden_layer_sizes': (
+                trial.suggest_int('hidden_1', 64, 256, step=64),
+                trial.suggest_int('hidden_2', 32, 128, step=32),
+            ),
+            'alpha': trial.suggest_float('alpha', 1e-5, 0.01, log=True),
+            'learning_rate_init': trial.suggest_float('lr_init', 1e-4, 0.005, log=True),
+            'random_state': 42,
+        }
+        model = MLPWrapper(**params)
+
+    elif model_type == 'cat':
         params = {'random_seed': 42}
         params.update({
             'iterations': trial.suggest_int('iterations', 100, 400),
@@ -167,7 +192,17 @@ def _train_base_model(X, y, model_type, scale_pos_weight=1.0, n_trials=None):
     params = {k: v for k, v in best_params.items() if k != 'random_state'}
     params['random_state'] = 42
 
-    if model_type == 'lgbm':
+    if model_type == 'mlp':
+        from src.models.mlp_model import MLPWrapper
+        # Optuna 搜索参数中 hidden_1/hidden_2 需组合为 hidden_layer_sizes 元组
+        # lr_init → learning_rate_init（MLPClassifier 参数名）
+        h1 = params.pop('hidden_1', 128)
+        h2 = params.pop('hidden_2', 64)
+        lr = params.pop('lr_init', 0.001)
+        params['hidden_layer_sizes'] = (h1, h2)
+        params['learning_rate_init'] = lr
+        model = MLPWrapper(**params)
+    elif model_type == 'lgbm':
         from lightgbm import LGBMClassifier
         params['verbosity'] = -1
         if scale_pos_weight > 1.5:
@@ -215,13 +250,14 @@ def _scale_pos_weight(y):
     return n_neg / n_pos
 
 
-def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials=None, rf_trials=None):
+def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials=None, rf_trials=None, mlp_trials=None):
     """为指定目标训练完整集成模型（单阶段 Optuna + Voting + 概率校准）。
 
     Args:
         model_types: 使用的基模型列表，如 ['lgbm', 'xgb', 'cat', 'rf']
         n_trials: Optuna 搜索次数 (默认 N_TRIALS)
         rf_trials: RF 专用 trials (大数据集时 RF 慢，可单独减少)
+        mlp_trials: MLP 专用 trials (神经网络训练慢，可单独减少)
     """
     if model_types is None:
         model_types = ['lgbm', 'xgb', 'cat', 'rf']
@@ -253,7 +289,7 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
     trained_models = {}
     for mt in model_types:
         try:
-            mt_trials = rf_trials if (mt == 'rf' and rf_trials is not None) else n_trials
+            mt_trials = rf_trials if (mt == 'rf' and rf_trials is not None) else (mlp_trials if (mt == 'mlp' and mlp_trials is not None) else n_trials)
             m, params = _train_base_model(X, y, mt, scale_pos_weight=spw, n_trials=mt_trials)
             trained_models[mt] = m
             model_path = MODEL_DIR_PATH / f"{prefix}_{mt}.pkl"
@@ -315,9 +351,58 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
         per_model_metrics[name]['norm_weight'] = round(norm_weights[i], 4)
     print(f"  动态权重: {[(n, round(w, 3)) for n, w in zip([e[0] for e in valid_estimators], norm_weights)]}")
 
-    # ── 阶段4: 在训练集上用动态权重拟合 VotingClassifier ──
-    ensemble = VotingClassifier(estimators=valid_estimators, voting='soft', weights=norm_weights)
-    ensemble.fit(X_meta, y_meta)
+    # ── 阶段4: Stacking 集成（默认）或 Voting（回退） ──
+    # 先算基模型平均 log_loss（用于判断 stacking 是否有提升）
+    avg_base_ll = np.mean([per_model_metrics[n]['cal_log_loss']
+                           for n, _ in valid_estimators])
+    best_base_ll = min([per_model_metrics[n]['cal_log_loss']
+                        for n, _ in valid_estimators])
+
+    ensemble = None
+    try:
+        # 用时间序列分割保证时序一致性（与前面 voting 的拆分一致）
+        meta_learner = LogisticRegression(
+            penalty='l2', C=5.0, solver='lbfgs', max_iter=2000,
+            random_state=42, class_weight='balanced',
+        )
+        stacking_ensemble = StackingClassifier(
+            estimators=valid_estimators,
+            final_estimator=meta_learner,
+            cv=2,  # 2-fold 对小数据集更友好
+            stack_method='predict_proba',
+            passthrough=False,
+        )
+        stacking_ensemble.fit(X_meta, y_meta)
+        stack_probs = stacking_ensemble.predict_proba(X_cal)[:, 1]
+        stack_ll = log_loss(y_cal, stack_probs)
+        print(f"  Stacking: log_loss={stack_ll:.4f} (基线 avg={avg_base_ll:.4f}, best={best_base_ll:.4f})")
+        # Stacking 需优于最佳基模型才采用
+        if stack_ll < best_base_ll - 0.01:
+            ensemble = stacking_ensemble
+            print(f"  ✅ Stacking 优于最佳基模型，采用 Stacking")
+        else:
+            print(f"  Stacking 未显著优于最佳基模型 (best={best_base_ll:.4f})，回退到 Voting")
+    except Exception as e:
+        print(f"  ⚠️ Stacking 失败 ({e})，回退到 Voting")
+
+    if ensemble is None:
+        # 自定义加权平均，避免 VotingClassifier 重拟合 degrade 基模型
+        class _WeightedEnsemble:
+            def __init__(self, estimators, weights):
+                self.estimators_ = [(n, m) for n, m in estimators]
+                self.weights = weights
+                self.classes_ = np.array([0, 1])
+            def fit(self, X, y):
+                return self
+            def predict_proba(self, X):
+                probs = np.zeros((X.shape[0], 2))
+                for (_, m), w in zip(self.estimators_, self.weights):
+                    probs += w * m.predict_proba(X)
+                probs /= sum(self.weights)
+                return probs
+            def get_params(self, deep=True):
+                return {}
+        ensemble = _WeightedEnsemble(valid_estimators, norm_weights)
 
     # ── 阶段5: 概率校准 ──
     # win 用 isotonic（样本充足，不假设分布形状）
@@ -331,6 +416,19 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
     brier = brier_score_loss(y_cal, cal_probs)
     ll = log_loss(y_cal, cal_probs)
     print(f"  校准完成: Brier={brier:.4f}, LogLoss={ll:.4f} (校准集)")
+
+    # ── 最优阈值搜索 ──
+    from sklearn.metrics import accuracy_score
+    thresholds = np.arange(0.30, 0.71, 0.02)
+    best_acc_val = 0.0
+    best_thresh = 0.5
+    for t in thresholds:
+        preds = (cal_probs >= t).astype(int)
+        acc = accuracy_score(y_cal, preds)
+        if acc > best_acc_val:
+            best_acc_val = acc
+            best_thresh = t
+    print(f"  最优阈值: {best_thresh:.2f} | 校准集准确率: {best_acc_val:.4f}")
 
     # ── SHAP 特征重要性分析 ──
     try:
@@ -355,6 +453,10 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
         'target': target_col,
         'n_samples': len(X),
         'n_features': len(feat_cols),
+        'optimal_threshold': {
+            'threshold': float(best_thresh),
+            'test_accuracy': float(best_acc_val),
+        },
     }
     meta_path = MODEL_DIR_PATH / f"{prefix}_ensemble_meta.json"
     with open(meta_path, 'w') as f:
@@ -370,12 +472,13 @@ def train_sport_ensemble(sport='bb'):
     print(f"  {'🏀' if sport == 'bb' else '⚽'} {sport.upper()} 集成模型训练")
     print(f"  配置: 基模型={config['model_types']} | trials={config['n_trials']}" +
           (f" | RF trials={config['rf_trials']}" if 'rf_trials' in config else "") +
+          (f" | MLP trials={config['mlp_trials']}" if 'mlp_trials' in config else "") +
           f" | min_samples={config['min_samples']}")
     print(f"{'#' * 55}")
 
     df, feat_cols = _load_data(sport)
     targets = ['win', 'spread_result', 'total_result']
-    prefix_map = {'bb': 'model_bb', 'fb': 'model_fb'}
+    prefix_map = {'bb': 'model_bb', 'fb': 'model_fb', 'nfl': 'model_nfl'}
     prefix = prefix_map[sport]
 
     results = {}
@@ -385,6 +488,7 @@ def train_sport_ensemble(sport='bb'):
             model_types=config['model_types'],
             n_trials=config['n_trials'],
             rf_trials=config.get('rf_trials'),
+            mlp_trials=config.get('mlp_trials'),
         )
         results[target] = metrics
 

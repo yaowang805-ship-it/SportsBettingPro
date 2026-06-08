@@ -5,6 +5,7 @@ SportsBettingPro 统一每日预测入口
   python src/predict/run_all.py
   python src/predict/run_all.py --sport nba
   python src/predict/run_all.py --sport football
+  python src/predict/run_all.py --sport nfl
   python src/predict/run_all.py --skip-monitor
 """
 import subprocess, sys, argparse
@@ -40,6 +41,19 @@ def run_monitor():
         logger.info("✅ 赛后盈亏监控完成")
     except Exception as e:
         logger.warning("⚠️  赛后监控失败：%s", e)
+    # 数据质量检查
+    try:
+        from src.monitor.data_quality import run_data_quality_check
+        dq = run_data_quality_check()
+        if dq.get("healthy", True):
+            logger.info("✅ 数据质量: 健康")
+        else:
+            issues = dq.get("issues", [])
+            logger.warning("⚠️  数据质量问题: %d 项", len(issues))
+            for iss in issues[:5]:
+                logger.warning("   - %s", iss)
+    except Exception as e:
+        logger.warning("⚠️  数据质量检查跳过: %s", e)
     try:
         from src.monitor.health_monitor import check_model_health
         health = check_model_health()
@@ -52,9 +66,18 @@ def run_monitor():
     except Exception as e:
         logger.warning("⚠️  健康度检查失败：%s", e)
 
+def _run_ranking():
+    """跨运动统一排名（非阻塞，失败不影响主流程）。"""
+    try:
+        from src.predict.rank_recommendations import main as rank_main
+        rank_main()
+    except Exception as e:
+        logger.warning("⚠️  统一排名跳过: %s", e)
+
+
 def main():
     parser = argparse.ArgumentParser(description="SportsBettingPro 每日预测入口")
-    parser.add_argument("--sport", choices=["nba","football","all"], default="all")
+    parser.add_argument("--sport", choices=["nba","football","nfl","all"], default="all")
     parser.add_argument("--skip-monitor", action="store_true")
     args = parser.parse_args()
     predict_dir = ROOT / "src" / "predict"
@@ -68,6 +91,11 @@ def main():
     if args.sport in ("football","all"):
         if not run_script(predict_dir/"daily_fb.py", "⚽ 足球预测引擎"):
             errors.append("足球预测")
+    if args.sport in ("nfl","all"):
+        if not run_script(predict_dir/"daily_nfl.py", "🏈 NFL 预测引擎"):
+            errors.append("NFL预测")
+    # 跨运动统一排名（有推荐数据就跑）
+    _run_ranking()
     if not args.skip_monitor:
         run_monitor()
     logger.info("\n%s", "="*60)

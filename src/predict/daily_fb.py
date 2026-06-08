@@ -24,22 +24,44 @@ from src.monitor.clv_tracker import capture_opening_odds
 from src.core.team_names import LEAGUE_CN
 from src.dashboard.components.virtual_portfolio import auto_place_bets
 
-# ── Dixon-Coles 比分模型 + 亚洲盘口 ──
+# ── Dixon-Coles 比分模型（贝叶斯优先，点估计备选） ──
 _DC_MODEL = None
-_DC_MODEL_PATH = ROOT / "models" / "dixon_coles_model.json"
-if _DC_MODEL_PATH.exists():
+_BAYES_DC_PATH = ROOT / "models" / "bayesian_dc_model.json"
+_LEGACY_DC_PATH = ROOT / "models" / "dixon_coles_model.json"
+
+if _BAYES_DC_PATH.exists():
+    try:
+        from src.models.bayesian_dixon_coles import BayesianDixonColes
+        _DC_MODEL = BayesianDixonColes()
+        _DC_MODEL.load(str(_BAYES_DC_PATH))
+        logger.info("  ✅ 贝叶斯 Dixon-Coles 已加载 (%d 支球队, σ_att=%.3f, σ_def=%.3f)",
+                    _DC_MODEL.n_teams, _DC_MODEL.sigma_attack, _DC_MODEL.sigma_defense)
+    except Exception as e:
+        logger.warning("  ⚠️ 贝叶斯 DC 加载失败: %s", e)
+        _DC_MODEL = None
+
+if _DC_MODEL is None and _LEGACY_DC_PATH.exists():
     try:
         from src.models.dixon_coles import DixonColesModel
         _DC_MODEL = DixonColesModel()
-        _DC_MODEL.load(str(_DC_MODEL_PATH))
-        logger.info("  ✅ Dixon-Coles 比分模型已加载 (%d 支球队)", _DC_MODEL.n_teams)
+        _DC_MODEL.load(str(_LEGACY_DC_PATH))
+        logger.info("  ✅ 传统 Dixon-Coles 已加载 (%d 支球队)", _DC_MODEL.n_teams)
     except Exception as e:
-        logger.warning("  ⚠️ Dixon-Coles 加载失败: %s", e)
+        logger.warning("  ⚠️ 传统 DC 加载失败: %s", e)
 
 from src.betting.asian_handicap import extract_ah_odds, compute_ah_ev
 
 logger.info("=" * 60)
 logger.info("⚽ 足球每日预测 - %s", datetime.now().strftime('%Y-%m-%d %H:%M'))
+
+# ── 数据刷新（ESPN 免费源补充扩展联赛） ──
+try:
+    from fetchers.data_sync import supplement_football_espn
+    supplement_football_espn()
+except ImportError:
+    logger.debug("  ESPN 补充模块不可用，跳过")
+except Exception as e:
+    logger.warning("  ⚠️ ESPN 数据补充失败: %s", e)
 
 # ── 模型准确率检查 ──
 _MODEL_ACC_MIN = 0.52
@@ -72,7 +94,43 @@ def _dc_knows_teams(home: str, away: str) -> bool:
     """检查 DC 模型是否拥有这两支球队的参数，避免使用全局先验。"""
     if _DC_MODEL is None or not _DC_MODEL.fitted:
         return False
-    return home in _DC_MODEL.attack_params and away in _DC_MODEL.attack_params
+    # 尝试精确匹配；若 odds API 名不含 "FC" 但模型名含 "FC"，自动补全
+    for name in (home, away):
+        if name in _DC_MODEL.attack_params:
+            continue
+        # 追加 " FC" 重试
+        if f"{name} FC" in _DC_MODEL.attack_params:
+            continue
+        return False
+    return True
+
+
+def _dc_name(odds_name: str) -> str:
+    """将 odds API 球队名转为 DC 模型使用的名称。"""
+    if odds_name in _DC_MODEL.attack_params:
+        return odds_name
+    fc_name = f"{odds_name} FC"
+    if fc_name in _DC_MODEL.attack_params:
+        return fc_name
+    return odds_name
+
+
+_FB_KNOWN_TEAMS = None
+
+def _teams_in_training_data(home: str, away: str) -> bool:
+    """检查至少一支球队在训练数据中，避免先验噪音。"""
+    global _FB_KNOWN_TEAMS
+    if _FB_KNOWN_TEAMS is None:
+        try:
+            import pandas as pd
+            csv_path = ROOT / "data" / "storage" / "football_history.csv"
+            hist = pd.read_csv(csv_path)
+            _FB_KNOWN_TEAMS = frozenset(
+                str(c).strip() for c in pd.concat([hist['home'], hist['away']]).dropna().unique()
+            )
+        except Exception:
+            _FB_KNOWN_TEAMS = frozenset()
+    return home in _FB_KNOWN_TEAMS or away in _FB_KNOWN_TEAMS
 
 # 拉取赔率
 odds_data = fetch_football_odds(force=True)
@@ -97,6 +155,33 @@ predictor = EnsemblePredictor("fb")
 predictions = predictor.predict(valid)
 logger.info("✅ 预测完成: %s 场", len(predictions))
 
+# ── 泊松模型混合（如可用） ──
+try:
+    from src.models.poisson_model import PoissonGoalModel
+    _POISSON_MODEL = PoissonGoalModel()
+    poisson_path = ROOT / "models/poisson_model.pkl"
+    if poisson_path.exists():
+        _POISSON_MODEL.load(str(poisson_path))
+        n_blended = 0
+        for pred in predictions:
+            poisson_pred = _POISSON_MODEL.predict_proba(pred["home_team"], pred["away_team"])
+            if "error" not in poisson_pred:
+                pred["win_prob"] = 0.5 * pred["win_prob"] + 0.5 * poisson_pred["home_win"]
+                n_blended += 1
+        if n_blended > 0:
+            logger.info("✅ 泊松模型混合: %d 场", n_blended)
+except Exception:
+    pass
+
+# ── 联赛校准器 ──
+try:
+    from src.core.league_calibration import LeagueCalibrator
+    _CALIBRATOR = LeagueCalibrator()
+    if _CALIBRATOR.get_league_stats():
+        logger.info("✅ 联赛校准器: %d 个联赛", len(_CALIBRATOR.get_league_stats()))
+except Exception:
+    _CALIBRATOR = None
+
 # 风险评估与推荐生成
 rm = RiskManager()
 recs = []
@@ -117,12 +202,19 @@ for pred in predictions:
         mkt_away = pred["market_away_prob"]
 
     # ── 模型-市场一致性格挡 ──
-    # 若模型原始概率与市场隐含概率偏差 > 30pp，模型对该对阵无训练数据
+    # 若模型原始概率与市场隐含概率偏差 > 25pp，模型对该对阵无训练数据
     raw_win = pred.get("win_raw", pred["win_prob"])
     deviation = abs(raw_win - pred["market_home_prob"])
-    if deviation > 0.30:
+    if deviation > 0.25:
         logger.info("  ⏭️ %s vs %s: 模型-市场偏差%.0fpp，跳过未知对阵",
                     home, away, deviation * 100)
+        continue
+
+    # ── 训练数据覆盖检查 ──
+    # 若双方均不在训练数据中，模型输出仅为先验概率，无分析价值
+    if not _teams_in_training_data(home, away):
+        logger.info("  ⏭️ %s vs %s: 双方均无历史数据，跳过",
+                    home, away)
         continue
 
     # 检查各目标
@@ -141,37 +233,31 @@ for pred in predictions:
             })
 
     # ── 客胜 ──
-    # 优先使用 DC 模型（需包含两队）的 3-way 概率，避免二元模型推导偏差
-    away_model = None
-    if _dc_knows_teams(home, away):
+    # 仅当 DC 3-way 模型拥有两队参数时启用。二元模型无法推导客胜概率。
+    if mkt_draw > 0 and _dc_knows_teams(home, away):
         try:
-            dc_pred = _DC_MODEL.predict(home, away)
-            if "error" not in dc_pred and dc_pred.get("away", 0) > 0:
-                away_model = dc_pred["away"]
+            dc_pred = _DC_MODEL.predict(_dc_name(home), _dc_name(away))
+            if "error" not in dc_pred:
+                away_model = dc_pred.get("away_win", dc_pred.get("away", 0))
+                if away_model > 0:
+                    away_ev = away_model - mkt_away
+                    if away_ev > 0 and away_odds > 0 and pred["n_bookmakers"] >= 3:
+                        kelly = (away_model * away_odds - 1) / (away_odds - 1) if away_odds > 1 else 0
+                        stake = rm.get_max_stake(away_model, away_odds, current_exposure, input_is_prob=True) if kelly > 0 else 0
+                        can_bet, _ = rm.can_place_bet(stake, 0.0)
+                        if stake > 5 and can_bet:
+                            candidates.append({
+                                "type": "客胜", "odds": away_odds, "model_prob": away_model,
+                                "mkt_prob": mkt_away, "ev": away_ev, "stake": stake,
+                            })
         except Exception:
             pass
-    if away_model is None:
-        # 从收缩后的主胜概率推导（已包含市场信息）
-        win_shrunk = pred["win_prob"]
-        away_model = 1.0 - win_shrunk - mkt_draw
-        away_model = np.clip(away_model, 0.001, 0.999)
-
-    away_ev = away_model - mkt_away
-    if away_ev > 0 and away_odds > 0 and pred["n_bookmakers"] >= 3:
-        kelly = (away_model * away_odds - 1) / (away_odds - 1) if away_odds > 1 else 0
-        stake = rm.get_max_stake(away_model, away_odds, current_exposure, input_is_prob=True) if kelly > 0 else 0
-        can_bet, _ = rm.can_place_bet(stake, 0.0)
-        if stake > 5 and can_bet:
-            candidates.append({
-                "type": "客胜", "odds": away_odds, "model_prob": away_model,
-                "mkt_prob": mkt_away, "ev": away_ev, "stake": stake,
-            })
 
     # ── 平局候选 ──
     # 只在 DC 模型拥有两队参数时才使用（否则返回全局先验，无参考价值）
     if mkt_draw > 0 and _dc_knows_teams(home, away):
         try:
-            dc_pred = _DC_MODEL.predict(home, away)
+            dc_pred = _DC_MODEL.predict(_dc_name(home), _dc_name(away))
             if "error" not in dc_pred:
                 draw_model_prob = dc_pred.get("draw", 0)
                 if draw_model_prob > 0:
@@ -211,7 +297,7 @@ for pred in predictions:
         try:
             ah_odds_list = extract_ah_odds([g for g in valid if g["home_team"] == home and g["away_team"] == away])
             for ah in ah_odds_list:
-                dc_pred = _DC_MODEL.predict_asian_handicap(home, away, ah["handicap"])
+                dc_pred = _DC_MODEL.predict_asian_handicap(_dc_name(home), _dc_name(away), ah["handicap"])
                 if "error" not in dc_pred:
                     model_cover = dc_pred["home_cover"]
                     ev_result = compute_ah_ev(ah, model_cover)
@@ -237,6 +323,15 @@ for pred in predictions:
 
     # 选 EV 最高的
     best = max(candidates, key=lambda x: x["ev"])
+
+    # 联赛校准（如果可用）
+    if _CALIBRATOR is not None:
+        league = pred.get("sport_key", "")
+        cal_prob = _CALIBRATOR.calibrate(league, best["model_prob"])
+        if cal_prob != best["model_prob"]:
+            logger.debug("  📐 %s 校准: %.1f%% → %.1f%%", league, best["model_prob"] * 100, cal_prob * 100)
+            best["model_prob"] = cal_prob
+
     match_time = pd.to_datetime(pred["commence_time"]).tz_convert("Asia/Shanghai")
     time_str = match_time.strftime("%m/%d %H:%M")
     logger.info("⚽ %s vs %s | %s | 模型:%s 市场:%s 赔率:%.2f EV:%s 注额:%.0f ⏰%s", cn(home), cn(away), best['type'], "{:.1%}".format(best['model_prob']), "{:.1%}".format(best['mkt_prob']), best['odds'], "{:+.1%}".format(best['ev']), best['stake'], time_str)

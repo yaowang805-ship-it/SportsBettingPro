@@ -1,0 +1,13 @@
+{
+  "project_name": "SportsBettingPro",
+  "api_keys": {
+    "odds_api": "",
+    "dingtalk_webhook": ""
+  },
+  "parameters": {
+    "budget": 1000,
+    "kelly_fraction": 0.25,
+    "min_edge": 0.06,
+    "max_recs": 5
+  }
+}

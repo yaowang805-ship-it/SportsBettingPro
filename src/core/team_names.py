@@ -2,7 +2,7 @@
 
 特征数据名使用 fb_features.csv（含市场价值等完整特征）中的名称。
 """
-from typing import Tuple
+from typing import Tuple, Optional
 
 # 足球联赛中文名
 LEAGUE_CN = {
@@ -206,7 +206,91 @@ FOOTBALL_MAP: dict[str, Tuple[str, str]] = {
     "South Korea": ("south korea", "韩国"),
     "Spain": ("spain", "西班牙"),
     "Sweden": ("sweden", "瑞典"),
-    # ===== MLS / USL =====
+    # ===== MLS =====
+    "Atlanta United FC": ("atlanta united fc", "亚特兰大联"),
+    "Austin FC": ("austin fc", "奥斯汀"),
+    "CF Montréal": ("cf montréal", "蒙特利尔"),
+    "Charlotte FC": ("charlotte fc", "夏洛特"),
+    "Chicago Fire FC": ("chicago fire fc", "芝加哥火焰"),
+    "Colorado Rapids": ("colorado rapids", "科罗拉多急流"),
+    "Columbus Crew": ("columbus crew", "哥伦布机员"),
+    "D.C. United": ("dc united", "华盛顿联"),
+    "FC Cincinnati": ("fc cincinnati", "辛辛那提"),
+    "FC Dallas": ("fc dallas", "达拉斯"),
+    "Houston Dynamo FC": ("houston dynamo fc", "休斯顿迪纳摩"),
+    "Inter Miami CF": ("inter miami cf", "迈阿密国际"),
+    "LA Galaxy": ("la galaxy", "洛杉矶银河"),
+    "LAFC": ("lafc", "洛杉矶FC"),
+    "Minnesota United FC": ("minnesota united fc", "明尼苏达联"),
+    "Nashville SC": ("nashville sc", "纳什维尔"),
+    "New England Revolution": ("new england revolution", "新英格兰革命"),
+    "New York City FC": ("new york city fc", "纽约城"),
+    "Orlando City SC": ("orlando city sc", "奥兰多城"),
+    "Philadelphia Union": ("philadelphia union", "费城联合"),
+    "Portland Timbers": ("portland timbers", "波特兰伐木者"),
+    "Real Salt Lake": ("real salt lake", "皇家盐湖城"),
+    "Red Bull New York": ("new york red bulls", "纽约红牛"),
+    "San Diego FC": ("san diego fc", "圣迭戈"),
+    "San Jose Earthquakes": ("san jose earthquakes", "圣何塞地震"),
+    "Seattle Sounders FC": ("seattle sounders fc", "西雅图海湾人"),
+    "Sporting Kansas City": ("sporting kansas city", "堪萨斯城竞技"),
+    "St. Louis CITY SC": ("st louis city sc", "圣路易斯城"),
+    "Toronto FC": ("toronto fc", "多伦多"),
+    "Vancouver Whitecaps": ("vancouver whitecaps", "温哥华白帽"),
+    # 别名
+    "Inter Miami": ("inter miami cf", "迈阿密国际"),
+    "NY Red Bulls": ("new york red bulls", "纽约红牛"),
+    "New York RB": ("new york red bulls", "纽约红牛"),
+    "New York Red Bulls": ("new york red bulls", "纽约红牛"),
+    "DC United": ("dc united", "华盛顿联"),
+    "Montreal Impact": ("cf montréal", "蒙特利尔"),
+    "NE Revolution": ("new england revolution", "新英格兰革命"),
+    # ===== J联赛 =====
+    "Albirex Niigata": ("albirex niigata", "新潟天鹅"),
+    "Avispa Fukuoka": ("avispa fukuoka", "福冈黄蜂"),
+    "Cerezo Osaka": ("cerezo osaka", "大阪樱花"),
+    "FC Tokyo": ("fc tokyo", "东京FC"),
+    "Fagiano Okayama": ("fagiano okayama", "冈山绿雉"),
+    "Gamba Osaka": ("gamba osaka", "大阪钢巴"),
+    "Kashima Antlers": ("kashima antlers", "鹿岛鹿角"),
+    "Kashiwa Reysol": ("kashiwa reysol", "柏太阳神"),
+    "Kawasaki Frontale": ("kawasaki frontale", "川崎前锋"),
+    "Kyoto Sanga": ("kyoto sanga", "京都不死鸟"),
+    "Machida Zelvia": ("machida zelvia", "町田泽维亚"),
+    "Nagoya Grampus": ("nagoya grampus", "名古屋鲸八"),
+    "Sanfrecce Hiroshima": ("sanfrecce hiroshima", "广岛三箭"),
+    "Shimizu S-Pulse": ("shimizu s-pulse", "清水心跳"),
+    "Shonan Bellmare": ("shonan bellmare", "湘南海洋"),
+    "Tokyo Verdy 1969": ("tokyo verdy 1969", "东京绿茵"),
+    "Urawa Red Diamonds": ("urawa red diamonds", "浦和红钻"),
+    "Vissel Kobe": ("vissel kobe", "神户胜利船"),
+    "Yokohama F. Marinos": ("yokohama f. marinos", "横滨水手"),
+    "Yokohama FC": ("yokohama fc", "横滨FC"),
+    # ===== 土超 =====
+    "Galatasaray": ("galatasaray", "加拉塔萨雷"),
+    "Fenerbahçe": ("fenerbahçe", "费内巴切"),
+    "Beşiktaş": ("beşiktaş", "贝西克塔斯"),
+    "Trabzonspor": ("trabzonspor", "特拉布宗体育"),
+    "Başakşehir": ("başakşehir", "巴萨克赛尔"),
+    # ===== 比甲 =====
+    "Club Brugge": ("club brugge", "布鲁日"),
+    "RSC Anderlecht": ("rsc anderlecht", "安德莱赫特"),
+    "KRC Genk": ("krc genk", "亨克"),
+    "KAA Gent": ("kaa gent", "根特"),
+    "Royal Antwerp": ("royal antwerp", "安特卫普"),
+    "Standard Liège": ("standard liège", "标准列日"),
+    # ===== 阿甲 =====
+    "River Plate": ("river plate", "河床"),
+    "Boca Juniors": ("boca juniors", "博卡青年"),
+    "Independiente": ("independiente", "独立"),
+    "Racing Club": ("racing club", "竞技"),
+    "San Lorenzo": ("san lorenzo", "圣洛伦索"),
+    # ===== 巴甲补充 =====
+    "Flamengo": ("flamengo", "弗拉门戈"),
+    "Palmeiras": ("palmeiras", "帕尔梅拉斯"),
+    "Santos": ("santos", "桑托斯"),
+    "São Paulo": ("são paulo", "圣保罗"),
+    "Corinthians": ("corinthians", "科林蒂安"),
     "Birmingham Legion FC": ("birmingham legion fc", "伯明翰军团"),
     "Louisville City FC": ("louisville city fc", "路易维尔城"),
     # ===== 摩洛哥联赛 =====
@@ -255,8 +339,93 @@ NBA_CN = {
 }
 
 
+# 足球球队名标准化：预处理 odds API 名称提高命中率
+_NORMALIZE_RULES = [
+    (lambda n: n.replace('_', ' ').strip(), '下划线转空格'),
+]
+
+
+def _normalize(name: str) -> str:
+    """标准化球队名以提高映射命中率。"""
+    n = name.strip()
+    # 下划线→空格
+    n = n.replace('_', ' ')
+    # 多个空格→一个
+    n = ' '.join(n.split())
+    return n
+
+
+# 球队名变体映射（odds API 不同命名风格 → FOOTBALL_MAP 中的标准名）
+_NAME_ALIASES = {
+    # 德甲变体 (ö→oe, ü→ue 等)
+    'FC Bayern München': 'FC Bayern Munich',
+    'Mönchengladbach': 'Mönchengladbach',
+    # 意甲变体
+    'FC Internazionale Milano': 'Inter Milan',
+    'SSC Napoli': 'Napoli',
+    # 法甲变体 (空格→短横)
+    'Paris Saint Germain': 'Paris Saint-Germain',
+    'Saint Etienne': 'Saint-Étienne',
+    # MLS/新增联赛
+    'Inter Miami CF': 'Inter Miami',
+    # 通用: 去掉 FC/CF 后缀
+}
+
+
+def _fuzzy_lookup(name: str) -> Optional[Tuple[str, str]]:
+    """模糊查找：尝试多种变体。"""
+    # 1. 精确匹配
+    mapped = FOOTBALL_MAP.get(name)
+    if mapped:
+        return mapped
+
+    # 2. 别名映射
+    aliased = _NAME_ALIASES.get(name)
+    if aliased:
+        mapped = FOOTBALL_MAP.get(aliased)
+        if mapped:
+            return mapped
+
+    # 3. 去掉常见后缀再试
+    for suffix in (' FC', ' CF', ' SCC', ' BC', ' AC', ' OSC', ' HSC', ' SCC'):
+        if name.endswith(suffix):
+            base = name[:-len(suffix)].strip()
+            mapped = FOOTBALL_MAP.get(base)
+            if mapped:
+                return mapped
+            # title case
+            mapped = FOOTBALL_MAP.get(base.title())
+            if mapped:
+                return mapped
+
+    # 4. 去掉常见前缀再试
+    for prefix in ('FC ', 'RC ', 'SC ', 'US ', 'AC ', 'SSC ', 'TSG ', 'SV ',
+                   'VfL ', 'VfB ', '1. FC ', 'FSV '):
+        if name.startswith(prefix):
+            base = name[len(prefix):].strip()
+            mapped = FOOTBALL_MAP.get(base)
+            if mapped:
+                return mapped
+
+    # 5. 标准化短横: "Saint-Germain" ↔ "Saint Germain"
+    for sep_from, sep_to in [('-', ' '), (' ', '-')]:
+        alt = name.replace(sep_from, sep_to)
+        if alt != name:
+            mapped = FOOTBALL_MAP.get(alt)
+            if mapped:
+                return mapped
+
+    # 6. 小写匹配（忽略大小写差异）
+    name_lower = name.lower()
+    for key in FOOTBALL_MAP:
+        if name_lower == key.lower():
+            return FOOTBALL_MAP[key]
+
+    return None
+
+
 def lookup_football(odds_name: str) -> Tuple[str, str]:
-    """查询足球球队映射。
+    """查询足球球队映射（支持模糊匹配）。
 
     Args:
         odds_name: odds API 返回的球队名
@@ -264,10 +433,11 @@ def lookup_football(odds_name: str) -> Tuple[str, str]:
     Returns:
         (特征数据名, 中文名) 元组，若无映射则返回 (原词小写, 原词)
     """
-    mapped = FOOTBALL_MAP.get(odds_name)
+    name = _normalize(odds_name)
+    mapped = _fuzzy_lookup(name)
     if mapped:
         return mapped
-    return (odds_name.lower(), odds_name)
+    return (name.lower(), odds_name)
 
 
 def cn_team(odds_name: str, sport: str = "nba") -> str:

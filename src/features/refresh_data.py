@@ -41,7 +41,7 @@ def refresh_basketball_history(days_back: int = 14):
     for s in scores:
         home, away = s["home_team"], s["away_team"]
         home_score, away_score = s["home_score"], s["away_score"]
-        game_date = now_utc - pd.Timedelta(days=1)
+        game_date = pd.to_datetime(s.get("game_date"), utc=True) if s.get("game_date") else (now_utc - pd.Timedelta(days=1))
 
         # 去重：匹配队名（不区分大小写）
         exists = ((existing['home'].str.lower().str.strip() == home.lower()) &
@@ -88,7 +88,7 @@ def refresh_football_history(days_back: int = 14):
         for s in scores:
             home, away = s["home_team"], s["away_team"]
             home_score, away_score = s["home_score"], s["away_score"]
-            game_date = pd.Timestamp.now(tz=timezone.utc) - pd.Timedelta(days=1)
+            game_date = pd.to_datetime(s.get("game_date"), utc=True) if s.get("game_date") else (pd.Timestamp.now(tz=timezone.utc) - pd.Timedelta(days=1))
 
             exists = ((existing['home'].str.lower() == home.lower()) &
                       (existing['away'].str.lower() == away.lower()) &

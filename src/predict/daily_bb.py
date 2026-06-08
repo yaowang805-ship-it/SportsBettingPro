@@ -79,6 +79,15 @@ predictor = EnsemblePredictor("bb")
 predictions = predictor.predict(valid)
 logger.info("✅ 预测完成: %s 场", len(predictions))
 
+# ── 联赛校准器 ──
+try:
+    from src.core.league_calibration import LeagueCalibrator
+    _CALIBRATOR = LeagueCalibrator()
+    if _CALIBRATOR.get_league_stats():
+        logger.info("✅ 联赛校准器: %d 个联赛", len(_CALIBRATOR.get_league_stats()))
+except Exception:
+    _CALIBRATOR = None
+
 # 风险评估与推荐生成（多候选 → 选最优）
 rm = RiskManager()
 recs = []
@@ -205,6 +214,15 @@ for pred in predictions:
 
     # 选 EV 最高的候选
     best = max(candidates, key=lambda x: x["ev"])
+
+    # 联赛校准（如果可用）
+    if _CALIBRATOR is not None:
+        league = "NBA"
+        cal_prob = _CALIBRATOR.calibrate(league, best["model_prob"])
+        if cal_prob != best["model_prob"]:
+            logger.debug("  📐 NBA 校准: %.1f%% → %.1f%%", best["model_prob"] * 100, cal_prob * 100)
+            best["model_prob"] = cal_prob
+
     match_time = pd.to_datetime(pred["commence_time"]).tz_convert("Asia/Shanghai")
     time_str = match_time.strftime("%m/%d %H:%M")
     logger.info("✅ %s vs %s | %s | 模型:%s 市场:%s 赔率:%.2f EV:%s 注额:%.0f ⏰%s",

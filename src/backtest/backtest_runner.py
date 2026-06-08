@@ -28,13 +28,9 @@ from src.core.evaluation import brier_score, safe_log_loss, sharpe_ratio
 DATA_DIR_PATH = ROOT / DATA_DIR if isinstance(DATA_DIR, str) else DATA_DIR
 OUTPUT_PATH = DATA_DIR_PATH / 'model_backtest_summary.json'
 
-# 按市场类型的交易成本 (滑点 + 佣金，以赔率为基础)
-TRANSACTION_COSTS = {
-    "h2h": 0.02,       # 标准胜负盘 2%
-    "spread": 0.03,     # 让分盘 3%
-    "total": 0.03,      # 大小球 3%
-    "default": 0.025,   # 默认
-}
+# 职业滑点模型参数
+SLIPPAGE_BASE = {"h2h": 0.015, "spread": 0.025, "total": 0.025, "default": 0.020}
+SLIPPAGE_STAKE_SCALE = 0.001  # 每单位注额的滑点加成（1单位=1%本金）
 
 N_BOOTSTRAP = 1000      # Bootstrap 重采样次数
 BOOTSTRAP_CI = 0.95     # 置信区间水平
@@ -71,30 +67,31 @@ def bootstrap_ci(metrics_fn, y_true, y_prob, n_samples=N_BOOTSTRAP, ci=BOOTSTRAP
     }
 
 
-def simulate_transaction_cost(probs, prices, market_type="default"):
-    """模拟交易成本对实际盈亏的影响。
+def simulate_transaction_cost(probs, prices, market_type="default", stake_ratio=0.0):
+    """模拟交易成本对实际盈亏的影响 — 职业级滑点模型。
 
-    交易成本模型: 真实赔率 = 名义赔率 * (1 - cost_rate)
-    对应的隐含概率 = 1 / 真实赔率
+    滑点 = base_slippage(market) + min(stake_ratio * SLIPPAGE_STAKE_SCALE, 0.02)
+    大额注单承受更多滑点，模拟真实市场深度影响。
 
     Args:
         probs: 模型预测概率
         prices: 名义市场赔率 (decimal)
         market_type: h2h / spread / total / default
+        stake_ratio: 注额占本金比例 (0.0~1.0)，用于计算规模相关滑点
 
     Returns:
-        adjusted_probs: 扣除交易成本后的有效概率
-        edge_loss: 每个样本的 edge 损失
+        avg_edge_loss: 平均 edge 损失
+        cost_rate: 实际使用的总成本率
     """
-    cost_rate = TRANSACTION_COSTS.get(market_type, TRANSACTION_COSTS["default"])
+    base = SLIPPAGE_BASE.get(market_type, SLIPPAGE_BASE["default"])
+    stake_adder = min(stake_ratio * SLIPPAGE_STAKE_SCALE, 0.02)
+    cost_rate = base + stake_adder
     prices = np.asarray(prices, dtype=float)
 
     # 有效赔率 = 名义赔率 * (1 - cost_rate)
     effective_prices = prices * (1 - cost_rate)
-    # 有效市场概率 = 1 / 有效赔率
     market_probs_effective = 1.0 / effective_prices
 
-    # Edge 损失 = 模型概率 - 有效市场概率 vs 模型概率 - 原始市场概率
     market_probs_raw = 1.0 / prices
     edge_after_cost = probs - market_probs_effective
     edge_before_cost = probs - market_probs_raw
@@ -103,6 +100,8 @@ def simulate_transaction_cost(probs, prices, market_type="default"):
     return {
         "avg_edge_loss": float(np.mean(edge_loss)),
         "cost_rate": cost_rate,
+        "base_slippage": base,
+        "stake_adder": stake_adder,
     }
 
 
@@ -274,7 +273,7 @@ def _classification_metrics(y_true, y_prob, threshold=0.5):
 
 def evaluate_model(df, feat_cols, model_path, target_col, dataset_name: str,
                    threshold: float = 0.5, test_frac: float = 0.2,
-                   market_type: str = "default"):
+                   market_type: str = "default", stake_ratio: float = 0.02):
     """评估模型：时间序列分割 + Bootstrap置信区间 + 交易成本。
 
     返回 dict，包含训练集和测试集指标、置信区间、交易成本影响。
@@ -354,7 +353,7 @@ def evaluate_model(df, feat_cols, model_path, target_col, dataset_name: str,
     # ── 交易成本模拟 ──
     # 假设名义赔率为 1/probs 的近似 (用于 edge 计算)
     nominal_prices = 1.0 / np.clip(test_probs, 0.05, 0.95)
-    cost_analysis = simulate_transaction_cost(test_probs, nominal_prices, market_type)
+    cost_analysis = simulate_transaction_cost(test_probs, nominal_prices, market_type, stake_ratio)
 
     # 全量指标（历史兼容）
     all_metrics = _classification_metrics(y, probs, threshold)
@@ -557,5 +556,156 @@ def run_backtest():
                         ci_str, test.get("brier", 0), test.get("samples", 0))
 
 
+def run_portfolio_backtest(bet_log_csv: str = None, bankroll: float = 10000) -> dict:
+    """投资组合级回测：对比顺序分配 vs Kelly 优化分配。
+
+    读取下注历史 CSV（date, prob, odds, actual_win），
+    按天分组模拟同时下注场景，用 QuantStats 计算专业指标。
+
+    Args:
+        bet_log_csv: 下注历史 CSV 路径，默认 BET_LOG_FILE
+        bankroll: 初始本金
+
+    Returns:
+        {strategy_a: Sequential, strategy_b: Portfolio, comparison: {...}}
+    """
+    import quantstats as qs
+
+    if bet_log_csv is None:
+        from src.risk.manager import BET_LOG_FILE
+        bet_log_csv = str(BET_LOG_FILE)
+
+    bet_log = Path(bet_log_csv)
+    if not bet_log.exists():
+        logger.warning("下注历史不存在: %s", bet_log_csv)
+        return {"error": "no_bet_log"}
+
+    df = pd.read_csv(bet_log_csv)
+    if df.empty or 'win' not in df.columns:
+        return {"error": "invalid_bet_log"}
+    if 'odds' not in df.columns or 'model_prob' not in df.columns:
+        return {"error": "缺少 odds 或 model_prob 列"}
+
+    df['date'] = pd.to_datetime(df['date'], errors='coerce')
+    df = df.dropna(subset=['date', 'win', 'odds', 'model_prob'])
+    df = df.sort_values('date').reset_index(drop=True)
+    df['day'] = df['date'].dt.date
+
+    from src.risk.portfolio import KellyPortfolioOptimizer
+    from src.risk.manager import RiskManager
+
+    # 策略 A: 顺序 Kelly（现有方式）
+    rm_a = RiskManager(initial_budget=bankroll)
+    eq_a = [float(bankroll)]
+
+    # 策略 B: 组合 Kelly 优化
+    bk_b = float(bankroll)
+    eq_b = [bk_b]
+    opt = KellyPortfolioOptimizer(max_single=0.05, max_total=0.30)
+
+    for day, day_bets in df.groupby('day'):
+        daily_inputs = []
+        for _, row in day_bets.iterrows():
+            daily_inputs.append({
+                'prob': float(row['model_prob']),
+                'odds': float(row['odds']),
+                'actual': int(row['win']),
+            })
+
+        if not daily_inputs:
+            continue
+
+        # 策略 A
+        day_exp_a = 0.0
+        day_pnl_a = 0.0
+        for b in daily_inputs:
+            stake = rm_a.get_max_stake(
+                b['prob'], b['odds'],
+                current_exposure_pct=day_exp_a,
+                input_is_prob=True,
+            )
+            if stake > 0:
+                pnl = stake * (b['odds'] - 1) if b['actual'] else -stake
+                day_pnl_a += pnl
+                day_exp_a += stake / max(rm_a.current_balance, 1)
+        eq_a.append(eq_a[-1] + day_pnl_a)
+
+        # 策略 B
+        weights, meta = opt.solve(daily_inputs)
+        day_pnl_b = 0.0
+        for i, b in enumerate(daily_inputs):
+            if i < len(weights) and weights[i] > 0:
+                stake_b = weights[i] * bk_b
+                if stake_b > 0:
+                    pnl = stake_b * (b['odds'] - 1) if b['actual'] else -stake_b
+                    day_pnl_b += pnl
+        bk_b += day_pnl_b
+        eq_b.append(bk_b)
+
+    # QuantStats 指标
+    eq_a_series = pd.Series(eq_a, name='Sequential')
+    eq_b_series = pd.Series(eq_b, name='Portfolio_Optimized')
+    ret_a = eq_a_series.pct_change().dropna()
+    ret_b = eq_b_series.pct_change().dropna()
+
+    metrics_a = {
+        'final_balance': round(float(eq_a[-1]), 2),
+        'total_return': round(float(eq_a[-1] / bankroll - 1), 4),
+        'sharpe': round(float(qs.stats.sharpe(ret_a)), 4) if len(ret_a) > 1 else 0.0,
+        'max_drawdown': round(float(qs.stats.max_drawdown(eq_a_series)), 4),
+        'sortino': round(float(qs.stats.sortino(ret_a)), 4) if len(ret_a) > 1 else 0.0,
+    }
+    metrics_b = {
+        'final_balance': round(float(eq_b[-1]), 2),
+        'total_return': round(float(eq_b[-1] / bankroll - 1), 4),
+        'sharpe': round(float(qs.stats.sharpe(ret_b)), 4) if len(ret_b) > 1 else 0.0,
+        'max_drawdown': round(float(qs.stats.max_drawdown(eq_b_series)), 4),
+        'sortino': round(float(qs.stats.sortino(ret_b)), 4) if len(ret_b) > 1 else 0.0,
+    }
+
+    comparison = {}
+    for k in metrics_a:
+        if isinstance(metrics_a[k], (int, float)):
+            diff = metrics_b[k] - metrics_a[k]
+            pct_improvement = (diff / abs(metrics_a[k]) * 100) if metrics_a[k] != 0 else 0
+            comparison[k] = round(pct_improvement, 2)
+
+    result = {
+        'strategy_a_sequential': metrics_a,
+        'strategy_b_portfolio_optimized': metrics_b,
+        'comparison_pct_improvement': comparison,
+        'n_days': len(df['day'].unique()),
+        'n_bets': len(df),
+    }
+
+    logger.info("\n%s", "=" * 60)
+    logger.info("📊 投资组合回测结果")
+    logger.info("%s", "=" * 60)
+    logger.info("  策略 A (顺序): 终值=¥%.2f, Sharpe=%.3f, 回撤=%.1f%%",
+                metrics_a['final_balance'], metrics_a['sharpe'], metrics_a['max_drawdown'] * 100)
+    logger.info("  策略 B (优化): 终值=¥%.2f, Sharpe=%.3f, 回撤=%.1f%%",
+                metrics_b['final_balance'], metrics_b['sharpe'], metrics_b['max_drawdown'] * 100)
+    logger.info("  Sharpe 改善: %+.1f%%", comparison.get('sharpe', 0))
+
+    # 追加到回测输出
+    output_path = Path(OUTPUT_PATH)
+    if output_path.exists():
+        try:
+            existing = json.loads(output_path.read_text())
+            existing['portfolio_backtest'] = result
+            output_path.write_text(json.dumps(existing, ensure_ascii=False, indent=2))
+        except Exception:
+            pass
+
+    return result
+
+
 if __name__ == '__main__':
-    run_backtest()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--portfolio', action='store_true', help='运行投资组合回测')
+    args = parser.parse_args()
+    if args.portfolio:
+        run_portfolio_backtest()
+    else:
+        run_backtest()

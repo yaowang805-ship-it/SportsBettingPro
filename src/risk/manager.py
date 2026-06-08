@@ -59,6 +59,7 @@ class PortfolioOptimizer:
     # 相关性基数矩阵
     SPORT_CORR = {
         "nba": {"nba": 1.0, "nfl": 0.15, "mlb": 0.1, "nhl": 0.1, "soccer": 0.05, "tennis": 0.02, "other": 0.03},
+        "nfl": {"nfl": 1.0, "nba": 0.15, "soccer": 0.05, "other": 0.03},
         "soccer": {"soccer": 1.0, "nba": 0.05, "nfl": 0.05, "other": 0.03},
         "other": {"other": 1.0},
     }
@@ -174,9 +175,63 @@ class PortfolioOptimizer:
 
         return min(stake, max_single_pct * (1 - current_exposure)) * adj
 
+    def solve_kelly_portfolio(self, bankroll: float = 10000,
+                              max_single_pct: float = 0.05,
+                              max_total_pct: float = 0.30) -> dict:
+        """用 KellyPortfolioOptimizer 求解真正的组合优化。
+
+        替代启发式分散度调整，直接求解联合 Kelly 最优分配。
+
+        Returns:
+            {"weights": np.ndarray, "allocations": [...], "meta": {...}}
+        """
+        from src.risk.portfolio import KellyPortfolioOptimizer
+
+        if not self.active_bets:
+            return {"weights": np.array([]), "allocations": []}
+
+        kelly_inputs = []
+        for bet in self.active_bets:
+            prob = bet.get("model_prob", 0.5)
+            odds = bet.get("odds", 2.0)
+            if prob <= 0 or odds <= 1.0:
+                continue
+            kelly_inputs.append({"prob": prob, "odds": odds})
+
+        if not kelly_inputs:
+            return {"weights": np.array([]), "allocations": []}
+
+        opt = KellyPortfolioOptimizer(max_single=max_single_pct, max_total=max_total_pct)
+
+        if len(kelly_inputs) > 1:
+            corr = self.compute_correlation_matrix()
+            if corr.shape == (len(kelly_inputs), len(kelly_inputs)):
+                weights, meta = opt.solve_with_correlation(kelly_inputs, corr)
+            else:
+                weights, meta = opt.solve(kelly_inputs)
+        else:
+            weights, meta = opt.solve(kelly_inputs)
+
+        allocations = []
+        for i, bet in enumerate(self.active_bets):
+            if i < len(weights) and weights[i] > 0:
+                allocations.append({
+                    "sport": bet.get("sport", ""),
+                    "home_team": bet.get("home_team", ""),
+                    "away_team": bet.get("away_team", ""),
+                    "market": bet.get("market", ""),
+                    "weight_pct": round(float(weights[i]), 4),
+                    "stake": round(float(weights[i] * bankroll), 2),
+                })
+
+        return {"weights": weights, "allocations": allocations, "meta": meta}
+
 
 class RiskManager:
-    """职业级风险管理器 — 增强版。"""
+    """职业级风险管理器 — 冷却止损 + 相关投注互斥版。"""
+
+    COOL_OFF_HOURS = 24         # 触发冷却后停注 N 小时
+    MAX_SAME_GAME_MARKETS = 1   # 同一场比赛最多下注 N 个不同市场
 
     def __init__(self, initial_budget: float = DEFAULT_BUDGET):
         self.initial_budget = initial_budget
@@ -190,9 +245,35 @@ class RiskManager:
         self.winning_bets = 0
         self.adaptive_kelly = AdaptiveKelly(base=KELLY_FRACTION)
         self.portfolio_optimizer = PortfolioOptimizer()
-        self._daily_bets = []  # 今日已下注
+        self._daily_bets = []
         self._last_reset_date = datetime.now().date()
+        # 冷却止损状态
+        self.cool_off_until: Optional[datetime] = None
+        self.weekly_loss = 0.0
+        self._week_start = datetime.now().date()
         self.load_state()
+        # 初始化时检查冷却状态
+        if self._in_cool_off():
+            logger.warning("  🛑 冷却中直至 %s（连败 %d 次）",
+                          self.cool_off_until.isoformat(), self.consecutive_losses)
+
+    def _in_cool_off(self) -> bool:
+        """是否处于冷却期（禁止所有下注）。"""
+        if self.cool_off_until is None:
+            return False
+        if datetime.now() < self.cool_off_until:
+            return True
+        # 冷却期已过，重置
+        self.cool_off_until = None
+        self.save_state()
+        return False
+
+    def _trigger_cool_off(self):
+        """触发冷却：停止下注 COOL_OFF_HOURS 小时。"""
+        self.cool_off_until = datetime.now() + timedelta(hours=self.COOL_OFF_HOURS)
+        logger.warning("  🛑 触发冷却停注 %d 小时（连败 %d 次，回撤 %.1f%%）",
+                      self.COOL_OFF_HOURS, self.consecutive_losses, self.drawdown_pct() * 100)
+        self.save_state()
 
     def load_state(self):
         if RISK_STATE_FILE.exists():
@@ -203,6 +284,11 @@ class RiskManager:
                 self.consecutive_losses = state.get('consecutive_losses', 0)
                 self.total_bets = state.get('total_bets', 0)
                 self.winning_bets = state.get('winning_bets', 0)
+                # 冷却状态
+                until = state.get('cool_off_until')
+                if until:
+                    self.cool_off_until = datetime.fromisoformat(until)
+                self.weekly_loss = state.get('weekly_loss', 0.0)
             except Exception:
                 pass
 
@@ -215,6 +301,8 @@ class RiskManager:
                 'consecutive_losses': self.consecutive_losses,
                 'total_bets': self.total_bets,
                 'winning_bets': self.winning_bets,
+                'cool_off_until': self.cool_off_until.isoformat() if self.cool_off_until else None,
+                'weekly_loss': self.weekly_loss,
                 'updated': datetime.now().isoformat(),
             }, f, ensure_ascii=False, indent=2)
 
@@ -259,8 +347,12 @@ class RiskManager:
                       away_team: str = '', market: str = '') -> float:
         """计算最大下注额（增强版）。
 
-        综合凯利准则 + 置信度分档 + 回撤保护 + 连败保护 + 组合分散度优化。
+        综合凯利准则 + 置信度分档 + 回撤保护 + 连败保护 + 冷却保护 + 组合分散度优化。
         """
+        # ── 冷却检查 ──
+        if self._in_cool_off():
+            return 0.0
+
         # 停手检查
         dd_mult = self._get_drawdown_multiplier()
         if dd_mult <= 0:
@@ -300,7 +392,7 @@ class RiskManager:
 
         final_stake = min(stake, max_single)
 
-        # 组合优化：防止同一场比赛同一盘口重复下注
+        # ── 相关投注互斥检测 ──
         if sport and home_team and away_team:
             same_match = [
                 b for b in self.portfolio_optimizer.active_bets
@@ -308,9 +400,16 @@ class RiskManager:
                 and b.get("home_team") == home_team
                 and b.get("away_team") == away_team
             ]
+            # 同一场比赛同一盘口 → 禁止
             for existing in same_match:
                 if existing.get("market") == (market or ""):
-                    return 0.0  # 同场比赛同一盘口禁止重复
+                    return 0.0
+            # 同一场比赛跨市场 → 限制数量
+            if len(same_match) >= self.MAX_SAME_GAME_MARKETS:
+                logger.info("  🔒 同场跨市场互斥: %s vs %s 已有 %d 注 (%s)",
+                           home_team, away_team, len(same_match),
+                           ", ".join(b.get("market", "?") for b in same_match))
+                return 0.0
 
         # 组合分散度调整
         if final_stake > 0 and (sport or home_team or away_team):
@@ -360,18 +459,34 @@ class RiskManager:
     def record_outcome(self, stake: float, win: bool, odds: float = 2.0, prob: float = 0.5):
         self.total_bets += 1
         if win:
-            self.current_balance += stake * (odds - 1.0)
+            pnl = stake * (odds - 1.0)
+            self.current_balance += pnl
             self.winning_bets += 1
             self.consecutive_losses = 0
         else:
+            pnl = -stake
             self.current_balance -= stake
             self.consecutive_losses += 1
+
+        # 滚动亏损跟踪
+        self.weekly_loss = max(0.0, self.weekly_loss - pnl)
 
         # 更新自适应凯利
         self.adaptive_kelly.update(prob, 1 if win else 0)
 
         self.save_state()
         self._append_bet_log(stake, win, odds, prob)
+
+        # ── 冷却触发条件 ──
+        # 1) 5+ 连败
+        if self.consecutive_losses >= 5:
+            self._trigger_cool_off()
+        # 2) 周亏损超 20%
+        elif self.weekly_loss >= self.initial_budget * 0.20:
+            self._trigger_cool_off()
+        # 3) 回撤超 15%
+        elif self.drawdown_pct() >= 0.15:
+            self._trigger_cool_off()
 
     def _append_bet_log(self, stake, win, odds, prob):
         log_entry = {
@@ -424,6 +539,9 @@ class RiskManager:
             'kelly_fraction': self.adaptive_kelly.fraction(),
             'under_daily_limit': self.current_balance >= self.initial_budget - self.daily_loss_limit,
             'under_monthly_limit': self.current_balance >= self.initial_budget - self.monthly_loss_limit,
+            'cool_off_active': self._in_cool_off(),
+            'cool_off_until': self.cool_off_until.isoformat() if self.cool_off_until else None,
+            'weekly_loss': self.weekly_loss,
         }
 
     # ── VaR / CVaR ──────────────────────────────────────────────

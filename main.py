@@ -25,7 +25,7 @@ if not DINGTALK_WEBHOOK:
 
 SCRIPTS = [
     (ROOT / "src" / "models" / "auto_retrain.py", "自动模型重训练（月度）"),
-    (ROOT / "src" / "predict" / "run_all.py", "职业级每日预测（NBA+足球）"),
+    (ROOT / "src" / "predict" / "run_all.py", "职业级每日预测（NBA+足球+NFL）"),
     (ROOT / "src" / "scripts" / "auto_settle_loop.py", "虚拟投注自动结算"),
     (ROOT / "src" / "monitor" / "performance.py", "赛后盈亏监控"),
     (ROOT / "src" / "monitor" / "clv_tracker.py", "CLV 收盘价追踪"),
@@ -94,6 +94,15 @@ if __name__ == "__main__":
     logger.info("=" * 72)
     logger.info("SportsBettingPro 统一日常运行 - %s", datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     logger.info("=" * 72)
+
+    # NFL 数据同步（快速，增量模式）
+    try:
+        from fetchers.data_sync import update_nfl_history
+        df = update_nfl_history()
+        if not df.empty:
+            logger.info("  NFL 历史数据: %d 行", len(df))
+    except Exception as e:
+        logger.warning("NFL 数据同步跳过: %s", e)
 
     errors = []
     for path, name in SCRIPTS:

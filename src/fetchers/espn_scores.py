@@ -38,10 +38,10 @@ def _fetch_json(url: str, timeout: int = 15) -> Optional[dict]:
         resp = requests.get(url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0"})
         if resp.status_code == 200:
             return resp.json()
-        logger.debug("ESPN API 返回 %s: %s", resp.status_code, url.split("?")[0])
+        logger.warning("⚠️ ESPN API 返回 %s: %s", resp.status_code, url.split("?")[0])
         return None
     except Exception as e:
-        logger.debug("ESPN API 请求失败 %s: %s", url.split("?")[0], e)
+        logger.warning("⚠️ ESPN API 请求失败 %s: %s", url.split("?")[0], e)
         return None
 
 
@@ -58,6 +58,9 @@ def _parse_espn_game(event: dict) -> Optional[dict]:
     competitors = comp.get("competitors", [])
     if len(competitors) < 2:
         return None
+
+    # 比赛日期
+    game_date = comp.get("date") or event.get("date", "")
 
     # 确定主客场 — ESPN 通常第一个是主队
     home_team, away_team = None, None
@@ -90,6 +93,7 @@ def _parse_espn_game(event: dict) -> Optional[dict]:
         "away_score": away_team[1],
         "status": status_type,
         "completed": is_completed,
+        "game_date": game_date,
     }
 
 
@@ -160,6 +164,7 @@ def build_espn_result_map(sport_key: str, days_back: int = 3) -> Dict[Tuple[str,
             continue
         home = g["home_team"].strip().lower()
         away = g["away_team"].strip().lower()
-        winner = g["home_team"] if g["home_score"] > g["away_score"] else g["away_team"]
+        winner = g["home_team"] if g["home_score"] > g["away_score"] else (
+            g["away_team"] if g["away_score"] > g["home_score"] else "DRAW")
         results[(home, away)] = (winner, g["home_score"], g["away_score"])
     return results

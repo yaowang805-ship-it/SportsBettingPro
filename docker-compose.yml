@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  sports-betting:
+    build: .
+    container_name: sportsbettingpro
+    volumes:
+      - ./data/storage:/app/data/storage
+      - ./models:/app/models
+      - ./logs:/app/logs
+    environment:
+      - ODDS_API_KEY=${ODDS_API_KEY:-}
+      - FOOTBALL_API_KEY=${FOOTBALL_API_KEY:-}
+      - BDL_API_KEY=${BDL_API_KEY:-}
+      - DINGTALK_WEBHOOK=${DINGTALK_WEBHOOK:-}
+    restart: unless-stopped
+
+  dashboard:
+    build: .
+    container_name: sportsbettingpro-dash
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data/storage:/app/data/storage
+      - ./models:/app/models
+    environment:
+      - ODDS_API_KEY=${ODDS_API_KEY:-}
+      - FOOTBALL_API_KEY=${FOOTBALL_API_KEY:-}
+      - BDL_API_KEY=${BDL_API_KEY:-}
+    command: ["streamlit", "run", "src/dashboard/app.py", "--server.port", "8501", "--server.headless", "true"]
+    restart: unless-stopped

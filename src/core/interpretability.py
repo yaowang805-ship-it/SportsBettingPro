@@ -5,6 +5,7 @@
     importance = report_feature_importance(model, X, feature_names)
 """
 import json
+import warnings
 from pathlib import Path
 from typing import List, Optional, Tuple
 
@@ -16,6 +17,7 @@ logger = get_logger(__name__)
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 SHAP_DIR = ROOT / "models" / "shap"
+PERM_SAMPLE_MAX = 500  # permutation importance 最大采样行数
 
 
 def compute_shap_values(model, X: pd.DataFrame, n_samples: int = 200) -> Tuple[np.ndarray, np.ndarray]:
@@ -81,24 +83,49 @@ def report_feature_importance(model, X: pd.DataFrame, feature_names: List[str] =
         importance = np.abs(model.coef_).flatten()
         method = "coef_"
     elif hasattr(model, 'estimators_'):
-        # VotingClassifier / CalibratedClassifierCV 的情况
-        # 尝试从包络的 estimator 中提取
-        if hasattr(model, 'estimator') and hasattr(model.estimator, 'feature_importances_'):
-            importance = model.estimator.feature_importances_
+        # VotingClassifier: estimators_ = [(name, estimator), ...]
+        for name, est in model.estimators_:
+            if hasattr(est, 'feature_importances_'):
+                importance = est.feature_importances_
+                method = f"estimators_.{name}.feature_importances_"
+                break
+    elif hasattr(model, 'estimator'):
+        est = model.estimator
+        if hasattr(est, 'feature_importances_'):
+            importance = est.feature_importances_
             method = "estimator.feature_importances_"
+        elif hasattr(est, 'coef_'):
+            importance = np.abs(est.coef_).flatten()
+            method = "estimator.coef_"
+        elif hasattr(est, 'estimators_'):
+            for name, e in est.estimators_:
+                if hasattr(e, 'feature_importances_'):
+                    importance = e.feature_importances_
+                    method = f"estimator.estimators_.{name}.feature_importances_"
+                    break
 
-    # 如果以上都无法提取，用 permutation importance
+    # 如果以上都无法提取，用 permutation importance（采样加速）
     if importance is None:
         method = "permutation"
         try:
-            base_score = model.score(X_array, np.ones(len(X_array)))  # dummy
+            n = min(len(X_array), PERM_SAMPLE_MAX)
+            if n < len(X_array):
+                idx = np.random.RandomState(42).choice(len(X_array), n, replace=False)
+                X_samp = X_array[idx]
+            else:
+                X_samp = X_array
+            probas = model.predict_proba(X_samp)
+            y_dummy = (probas[:, 1] >= 0.5).astype(int)
+            base_score = np.mean(y_dummy == (probas[:, 1] >= 0.5))
             importance = np.zeros(len(feature_names))
             for i in range(len(feature_names)):
-                X_perm = X_array.copy()
+                X_perm = X_samp.copy()
                 np.random.shuffle(X_perm[:, i])
-                perm_score = model.score(X_perm, np.ones(len(X_array)))
+                perm_probas = model.predict_proba(X_perm)
+                perm_score = np.mean(y_dummy == (perm_probas[:, 1] >= 0.5))
                 importance[i] = max(0, base_score - perm_score)
-        except Exception:
+        except Exception as e:
+            warnings.warn(f"Permutation importance failed: {e}")
             importance = np.ones(len(feature_names)) / len(feature_names)
 
     df = pd.DataFrame({

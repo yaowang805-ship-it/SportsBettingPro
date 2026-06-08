@@ -158,6 +158,28 @@ def _process_team_stats(df):
         team[f'net_rating_slope_{w}'] = team.groupby('team')['net_rating_3'].transform(
             lambda x: x.shift(1).rolling(w, min_periods=2).apply(_slope, raw=True))
 
+    # ── 总分预测专用特征 ──
+    team['total_pts'] = team['gf'] + team['ga']
+    # 滚动5场平均总分（team's games average total points）
+    team['total_pts_avg_5'] = team.groupby('team')['total_pts'].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=1).mean())
+    # EWMA 总分（偏重新近比赛）
+    team['total_pts_ewm5'] = team.groupby('team')['total_pts'].transform(
+        lambda x: x.shift(1).ewm(span=5, adjust=False).mean())
+    # 滚动5场平均得分和失分（窗口5，介于3/10之间）
+    team['pts_scored_avg_5'] = team.groupby('team')['gf'].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=1).mean())
+    team['pts_allowed_avg_5'] = team.groupby('team')['ga'].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=1).mean())
+    # 总分波动率（高波动 → 更可能极端值）
+    team['total_pts_volatility_5'] = team.groupby('team')['total_pts'].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=3).std())
+    # 大分率：近期比赛总分高于联盟平均(210分)的比率
+    LEAGUE_AVG_TOTAL = 210.0
+    team['is_high_scoring'] = (team['total_pts'] > LEAGUE_AVG_TOTAL).astype(int)
+    team['high_score_rate_10'] = team.groupby('team')['is_high_scoring'].transform(
+        lambda x: x.shift(1).rolling(10, min_periods=1).mean())
+
     # ── 行程距离特征 ──
     team['travel_distance'] = team.groupby('team', group_keys=True).apply(
         lambda g: pd.Series(_compute_travel_distances(g), index=g.index)
@@ -175,6 +197,9 @@ def _process_team_stats(df):
                  'net_rating_3', 'net_rating_10',
                  'gf_ewm5', 'ga_ewm5', 'opp_def_strength', 'win_rate_10', 'rest_days', 'b2b',
                  'net_rating_slope_5', 'net_rating_slope_10',
+                 'total_pts_avg_5', 'total_pts_ewm5',
+                 'pts_scored_avg_5', 'pts_allowed_avg_5',
+                 'total_pts_volatility_5', 'high_score_rate_10',
                  'travel_distance', 'travel_distance_3', 'travel_distance_5']
     return team[feat_cols]
 
@@ -365,7 +390,8 @@ def build_bb_features(
     common_cols = ['date', 'home', 'away', 'win', 'home_score', 'away_score',
                    'home_goals', 'away_goals', 'teamsprd', 'ovrundr',
                    'home_injured', 'away_injured',
-                   'home_injured_stars', 'away_injured_stars']
+                   'home_injured_stars', 'away_injured_stars',
+                   'home_odds', 'away_odds']
     parts = []
     for src in [new, old, bet]:
         if not src.empty:
@@ -376,6 +402,7 @@ def build_bb_features(
 
     df = pd.concat(parts, ignore_index=True)
     df = df.drop_duplicates(subset=['date', 'home', 'away'], keep='first')
+    df = df.dropna(subset=['date']).copy()
     df = df.sort_values('date').reset_index(drop=True)
 
     # ── 5. ELO 评级特征 ──
@@ -390,7 +417,8 @@ def build_bb_features(
     match_df = df[['date', 'home', 'away', 'win', 'home_goals', 'away_goals',
                    'teamsprd', 'ovrundr', 'home_injured', 'away_injured',
                    'home_injured_stars', 'away_injured_stars',
-                   'home_elo', 'away_elo', 'elo_diff']].copy()
+                   'home_elo', 'away_elo', 'elo_diff',
+                   'home_odds', 'away_odds']].copy()
 
     for side, team_col in [('home', 'home'), ('away', 'away')]:
         sf = team_feats.copy()
@@ -405,6 +433,24 @@ def build_bb_features(
     match_df['rest_diff'] = match_df['home_rest_days'] - match_df['away_rest_days']
     match_df['travel_diff'] = match_df['home_travel_distance'] - match_df['away_travel_distance']
     match_df['travel_3_diff'] = match_df['home_travel_distance_3'] - match_df['away_travel_distance_3']
+
+    # ── 总分预测交互特征 ──
+    match_df['combined_total_avg_5'] = match_df['home_total_pts_avg_5'] + match_df['away_total_pts_avg_5']
+    match_df['combined_pts_scored_avg_5'] = match_df['home_pts_scored_avg_5'] + match_df['away_pts_scored_avg_5']
+    match_df['combined_pts_allowed_avg_5'] = match_df['home_pts_allowed_avg_5'] + match_df['away_pts_allowed_avg_5']
+    match_df['total_volatility_interaction'] = match_df['home_total_pts_volatility_5'] * match_df['away_total_pts_volatility_5']
+    match_df['high_score_rate_sum'] = (match_df['home_high_score_rate_10'] + match_df['away_high_score_rate_10']).clip(0, 2)
+    match_df['total_rest_sum'] = match_df['home_rest_days'] + match_df['away_rest_days']
+    # pace 代理特征：两队场均得分之和反映了比赛节奏
+    match_df['pace_proxy'] = (match_df['home_gf_ewm5'] + match_df['away_gf_ewm5'] +
+                              match_df['home_ga_ewm5'] + match_df['away_ga_ewm5']) / 2
+
+    # ── 历史市场概率特征（来自 nba_betting 盘口数据） ──
+    odds_h = pd.to_numeric(match_df['home_odds'], errors='coerce')
+    odds_a = pd.to_numeric(match_df['away_odds'], errors='coerce')
+    match_df['hist_market_home_prob'] = (1.0 / odds_h.clip(lower=1.01)).fillna(0.5)
+    match_df['hist_market_away_prob'] = (1.0 / odds_a.clip(lower=1.01)).fillna(0.5)
+    match_df['hist_market_edge'] = match_df['hist_market_home_prob'] - 0.5
 
     # ── 预测 Edge 特征（CLV 代理） ──
     try:
@@ -446,7 +492,8 @@ def build_bb_features(
             match_df[wf] = 0.0
 
     # 仅填充特征列，不填充盘口原始列（避免将2015年的盘口前向填充到2026年）
-    feature_like = [c for c in match_df.columns if c not in ('teamsprd', 'ovrundr')]
+    # 注意：ovrundr 作为 total 模型的特征保留（但 teamsprd 仍排除）
+    feature_like = [c for c in match_df.columns if c not in ('teamsprd',)]
     match_df[feature_like] = match_df[feature_like].fillna(0)
 
     # 盘口结果（仅在盘口数据存在时有效）

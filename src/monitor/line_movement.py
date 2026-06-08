@@ -1,11 +1,5 @@
 """盘口变动监测系统 — Steam Move Detection + 市场状态分类。
 
-职业博彩的核心运作方式：
-  1. Pinnacle（sharpest book）收到 syndicate 大额投注 → 赔率变动
-  2. 60-90 秒内，其他 sharp 盘跟随调整
-  3. 最后调整的是 square books（散户盘）
-  4. 普通人如果在 square book 上在步骤 1→2 之间下注，就能搭 sharp money 的顺风车
-
 本模块:
   - 定时抓取所有联赛赔率快照（每博彩公司独立记录）
   - 检测 Steam Move（急剧盘口变动）
@@ -29,6 +23,7 @@ sys.path.insert(0, str(ROOT))
 from fetchers.odds_api import fetch_basketball_odds, fetch_football_odds
 from config.settings import DATA_DIR
 from config.logging_config import get_logger
+from src.core.team_names import cn_team
 
 logger = get_logger(__name__)
 
@@ -341,11 +336,15 @@ def _format_steam_alert(movement: Dict) -> str:
     mtype = movement["type"]
     home = movement["home_team"]
     away = movement["away_team"]
+    # 中文名（盘口变动属 NBA 或足球）
+    sport = "nba" if movement.get("sport_key", "").startswith("basketball") else "football"
+    home_cn = cn_team(home, sport=sport)
+    away_cn = cn_team(away, sport=sport)
 
     if mtype == "steam":
         direction_emoji = "🔥" if movement.get("sharp_confirmed") else "⚠️"
         return (
-            f"{direction_emoji} **Steam Move** {home} vs {away}\n"
+            f"{direction_emoji} **Steam Move** {home_cn} vs {away_cn}\n"
             f"  赔率: {movement['previous']:.2f} → {movement['current']:.2f} "
             f"({movement['change_pct']:+.1%})\n"
             f"  Sharp确认: {'✅' if movement.get('sharp_confirmed') else '❌'} | "
@@ -353,7 +352,7 @@ def _format_steam_alert(movement: Dict) -> str:
         )
     elif mtype == "clv_opportunity":
         return (
-            f"💎 **CLV 机会** {home} vs {away}\n"
+            f"💎 **CLV 机会** {home_cn} vs {away_cn}\n"
             f"  市场概率: {movement.get('market_prob', 0):.1%} | "
             f"Sharp共识: {movement.get('consensus_prob', 0):.1%}\n"
             f"  差距: {movement.get('diff', 0):.1%} "

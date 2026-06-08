@@ -96,7 +96,9 @@ def _detect_h2h_arb(match_data: Dict) -> List[Dict]:
 def _detect_spread_arb(match_data: Dict) -> List[Dict]:
     """检测让分盘套利机会。
 
-    同一盘口，不同公司给出不同的让分数 + 赔率组合，可能存在套利。
+    两种模式:
+      1. 真套利: 用 A 公司的 home_price 和 B 公司的 away_price 组合，1/home + 1/away < 1
+      2. 同盘口比价: 同一盘口跨公司的价格差（line shopping）
     """
     home_team = match_data.get("home_team", "")
     away_team = match_data.get("away_team", "")
@@ -106,7 +108,7 @@ def _detect_spread_arb(match_data: Dict) -> List[Dict]:
         return []
 
     # 收集所有公司的让分盘报价
-    spread_quotes = []  # [{bm, home_point, home_price, away_point, away_price}]
+    spread_quotes = []
     for bm in bookmakers:
         bm_name = bm.get("title", bm.get("key", "未知"))
         for market in bm.get("markets", []):
@@ -127,20 +129,48 @@ def _detect_spread_arb(match_data: Dict) -> List[Dict]:
     if len(spread_quotes) < 2:
         return []
 
-    # 找同一盘口下价格最优的公司
-    # 简单策略: 如果某公司 home_point == -X, 另一家公司 home_point == -X 但 home_price 更高
     opportunities = []
+
+    # 模式1: 真套利——跨公司组合 home/away
+    # 用公司A的主队价格 + 公司B的客队价格（或同公司），综合计算
+    for i in range(len(spread_quotes)):
+        for j in range(len(spread_quotes)):
+            q_home = spread_quotes[i]
+            q_away = spread_quotes[j]
+            if q_home["home_price"] and q_away["away_price"]:
+                inv_sum = 1.0 / q_home["home_price"] + 1.0 / q_away["away_price"]
+                profit_pct = (1.0 - inv_sum) * 100
+                # 同公司真套利或跨公司组合
+                if profit_pct > 0.5:
+                    total_stake = 1000
+                    home_stake = round(total_stake / (1.0 + q_home["home_price"] / q_away["away_price"]), 2)
+                    away_stake = round(total_stake - home_stake, 2)
+                    opportunities.append({
+                        "type": "spread_arb",
+                        "home_team": home_team,
+                        "away_team": away_team,
+                        "point": q_home["home_point"],
+                        "profit_pct": round(profit_pct, 3),
+                        "home_bookmaker": q_home["bookmaker"],
+                        "home_price": q_home["home_price"],
+                        "away_bookmaker": q_away["bookmaker"],
+                        "away_price": q_away["away_price"],
+                        "recommended_stakes": {"home": home_stake, "away": away_stake},
+                        "guaranteed_return": round(total_stake * profit_pct / 100, 2),
+                        "description": f"让分套利 {q_home['home_point']}: {q_home['bookmaker']}(主{q_home['home_price']}) + {q_away['bookmaker']}(客{q_away['away_price']})",
+                    })
+
+    # 模式2: 同盘口比价（line shopping）
     for i in range(len(spread_quotes)):
         for j in range(i + 1, len(spread_quotes)):
             q1, q2 = spread_quotes[i], spread_quotes[j]
             if q1["home_point"] == q2["home_point"]:
-                # 同一盘口，比较赔率
                 price_diff = abs(q1["home_price"] - q2["home_price"])
-                if price_diff > 0.05:  # 赔率差超过 5 分
+                if price_diff > 0.05:
                     better = q1 if q1["home_price"] > q2["home_price"] else q2
                     worse = q2 if q1["home_price"] > q2["home_price"] else q1
-                    opp = {
-                        "type": "spread",
+                    opportunities.append({
+                        "type": "line_shopping",
                         "home_team": home_team,
                         "away_team": away_team,
                         "point": q1["home_point"],
@@ -149,11 +179,10 @@ def _detect_spread_arb(match_data: Dict) -> List[Dict]:
                         "worst_bookmaker": worse["bookmaker"],
                         "worst_price": worse["home_price"],
                         "price_gap": round(price_diff, 4),
-                        "description": f"让分 {q1['home_point']}: {better['bookmaker']} "
+                        "description": f"让分比价 {q1['home_point']}: {better['bookmaker']} "
                                        f"({better['home_price']}) vs {worse['bookmaker']} "
                                        f"({worse['home_price']})",
-                    }
-                    opportunities.append(opp)
+                    })
 
     return opportunities
 
@@ -242,7 +271,8 @@ def report_arbitrage(opportunities: Dict[str, List[Dict]] = None, force: bool = 
             all_opps.append(opp)
 
     h2h_opps = [o for o in all_opps if o.get("type") == "h2h"]
-    spread_opps = [o for o in all_opps if o.get("type") == "spread"]
+    spread_arb = [o for o in all_opps if o.get("type") == "spread_arb"]
+    line_shop = [o for o in all_opps if o.get("type") == "line_shopping"]
 
     if h2h_opps:
         logger.info("\n  🔵 H2H 无风险套利:")
@@ -254,9 +284,17 @@ def report_arbitrage(opportunities: Dict[str, List[Dict]] = None, force: bool = 
             logger.info("      赔率: %s", opp["best_prices"])
             logger.info("      投入 ¥1000 → 稳赚 ¥%.2f", opp["guaranteed_return"])
 
-    if spread_opps:
-        logger.info("\n  🟢 让分盘套利机会:")
-        for opp in spread_opps:
+    if spread_arb:
+        logger.info("\n  🔴 让分盘真套利:")
+        spread_arb.sort(key=lambda x: x["profit_pct"], reverse=True)
+        for opp in spread_arb[:5]:
+            logger.info("    %+.2f%% | %s vs %s | %s",
+                       opp["profit_pct"], opp["home_team"], opp["away_team"], opp["description"])
+            logger.info("      投入 ¥1000 → 稳赚 ¥%.2f", opp["guaranteed_return"])
+
+    if line_shop:
+        logger.info("\n  🟡 让分盘比价机会 (line shopping):")
+        for opp in line_shop[:5]:
             logger.info("    %s vs %s | %s",
                        opp["home_team"], opp["away_team"], opp["description"])
 
@@ -269,7 +307,8 @@ def report_arbitrage(opportunities: Dict[str, List[Dict]] = None, force: bool = 
         "timestamp": datetime.now().isoformat(),
         "n_total": len(all_opps),
         "n_h2h": len(h2h_opps),
-        "n_spread": len(spread_opps),
+        "n_spread_arb": len(spread_arb),
+        "n_line_shopping": len(line_shop),
         "opportunities": all_opps,
     }
     with open(ARBITRAGE_LOG, "w", encoding="utf-8") as f:

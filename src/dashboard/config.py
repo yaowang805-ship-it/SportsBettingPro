@@ -1,6 +1,6 @@
 """Dashboard configuration — page settings and data file paths."""
 from pathlib import Path
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = ROOT / "data" / "storage"
@@ -14,7 +14,7 @@ class AppConfig:
     page_title: str = "SportsBettingPro 监控面板"
     page_icon: str = "chart_with_upwards_trend"
     layout: str = "wide"
-    refresh_interval: int = 60  # seconds
+    refresh_interval: int = 60
 
 
 config = AppConfig()
@@ -33,3 +33,13 @@ SNAPSHOT_FILE = SNAPSHOT_DIR / "last_snapshot.json"
 MOVEMENTS_FILE = SNAPSHOT_DIR / "movements.json"
 BACKTEST_FILE = DATA_DIR / "model_backtest_summary.json"
 CALIBRATION_FILE = DATA_DIR / "calibration_data.csv"
+
+# New / fixed paths
+PORTFOLIO_FILE = DATA_DIR / "virtual_portfolio.json"
+MODEL_ACCURACY_FILE = DATA_DIR / "model_accuracy_history.csv"
+ARBITRAGE_FILE = DATA_DIR / "arbitrage_log.json"
+EDGE_ATTRIBUTION_FILE = DATA_DIR / "edge_attribution_report.json"
+TEAM_EDGE_FILE = DATA_DIR / "team_edge_tracking.json"
+DECAY_REPORT_FILE = DATA_DIR / "model_decay_report.json"
+BB_RECS_FILE = DATA_DIR / "daily_bb_recommendations.json"
+FB_RECS_FILE = DATA_DIR / "daily_fb_recommendations.json"

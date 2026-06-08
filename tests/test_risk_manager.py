@@ -3,6 +3,7 @@ import pytest
 import numpy as np
 import json
 import tempfile
+from datetime import datetime, timedelta
 from pathlib import Path
 from unittest.mock import patch
 
@@ -243,7 +244,8 @@ class TestRiskManager:
         h = rm.get_health_check()
         expected_keys = {'balance', 'roi', 'drawdown', 'win_rate', 'total_bets',
                          'consecutive_losses', 'kelly_fraction',
-                         'under_daily_limit', 'under_monthly_limit'}
+                         'under_daily_limit', 'under_monthly_limit',
+                         'cool_off_active', 'cool_off_until', 'weekly_loss'}
         assert set(h.keys()) == expected_keys
 
     def test_get_confidence_tier(self):
@@ -335,3 +337,115 @@ class TestRiskManager:
     def test_portfolio_var_empty(self):
         rm = RiskManager(initial_budget=10000)
         assert rm.portfolio_var() == 0.0
+
+
+class TestCoolOff:
+    """冷却止损系统测试。"""
+
+    def test_initial_no_cool_off(self):
+        rm = RiskManager(initial_budget=10000)
+        assert rm.cool_off_until is None
+        assert not rm._in_cool_off()
+
+    def test_trigger_cool_off_sets_timestamp(self):
+        rm = RiskManager(initial_budget=10000)
+        before = datetime.now()
+        rm._trigger_cool_off()
+        assert rm.cool_off_until is not None
+        assert rm.cool_off_until > before
+        assert rm.cool_off_until <= before + timedelta(hours=24, minutes=1)
+
+    def test_in_cool_off_blocks_stake(self):
+        rm = RiskManager(initial_budget=10000)
+        rm._trigger_cool_off()
+        stake = rm.get_max_stake(0.6, 2.0, input_is_prob=True)
+        assert stake == 0.0
+
+    def test_five_consecutive_losses_triggers_cool_off(self):
+        rm = RiskManager(initial_budget=10000)
+        for _ in range(5):
+            rm.record_outcome(100, win=False, odds=2.0, prob=0.5)
+        assert rm.cool_off_until is not None
+        assert rm._in_cool_off()
+
+    def test_four_losses_no_cool_off(self):
+        rm = RiskManager(initial_budget=10000)
+        for _ in range(4):
+            rm.record_outcome(100, win=False, odds=2.0, prob=0.5)
+        assert rm.cool_off_until is None
+
+    def test_win_after_losses_resets_cool_off(self):
+        rm = RiskManager(initial_budget=10000)
+        for _ in range(4):
+            rm.record_outcome(100, win=False, odds=2.0, prob=0.5)
+        rm.record_outcome(100, win=True, odds=2.0, prob=0.5)
+        assert rm.consecutive_losses == 0
+        assert rm.cool_off_until is None
+
+    def test_weekly_loss_triggers_cool_off(self):
+        rm = RiskManager(initial_budget=20000)
+        rm.record_outcome(5000, win=False, odds=2.0, prob=0.5)
+        assert rm.cool_off_until is not None
+        assert rm._in_cool_off()
+
+    def test_drawdown_triggers_cool_off(self):
+        rm = RiskManager(initial_budget=10000)
+        rm.record_outcome(1600, win=False, odds=2.0, prob=0.5)
+        assert rm.drawdown_pct() >= 0.15
+        assert rm.cool_off_until is not None
+
+    def test_health_check_contains_cool_off_fields(self):
+        rm = RiskManager(initial_budget=10000)
+        h = rm.get_health_check()
+        assert "cool_off_active" in h
+        assert "cool_off_until" in h
+        assert "weekly_loss" in h
+        assert not h["cool_off_active"]
+
+    def test_cool_off_active_in_health_check(self):
+        rm = RiskManager(initial_budget=10000)
+        rm._trigger_cool_off()
+        h = rm.get_health_check()
+        assert h["cool_off_active"]
+
+    def test_max_same_game_markets(self):
+        rm = RiskManager(initial_budget=10000)
+        stake1 = rm.get_max_stake(0.6, 2.0, input_is_prob=True,
+                                   sport="nba", home_team="A", away_team="B", market="h2h")
+        assert stake1 > 0
+        stake2 = rm.get_max_stake(0.6, 2.0, input_is_prob=True,
+                                   sport="nba", home_team="A", away_team="B", market="spread")
+        assert stake2 == 0.0
+
+    def test_same_market_duplicate_blocked(self):
+        rm = RiskManager(initial_budget=10000)
+        stake1 = rm.get_max_stake(0.6, 2.0, input_is_prob=True,
+                                   sport="nba", home_team="A", away_team="B", market="h2h")
+        assert stake1 > 0
+        stake2 = rm.get_max_stake(0.6, 2.0, input_is_prob=True,
+                                   sport="nba", home_team="A", away_team="B", market="h2h")
+        assert stake2 == 0.0
+
+    def test_different_matches_both_allowed(self):
+        rm = RiskManager(initial_budget=10000)
+        stake1 = rm.get_max_stake(0.6, 2.0, input_is_prob=True,
+                                   sport="nba", home_team="A", away_team="B")
+        stake2 = rm.get_max_stake(0.6, 2.0, input_is_prob=True,
+                                   sport="soccer", home_team="C", away_team="D")
+        assert stake1 > 0
+        assert stake2 > 0
+
+    def test_cool_off_persists_after_save_load(self):
+        import src.risk.manager as rm_module
+        orig = rm_module.RISK_STATE_FILE
+        test_file = Path("/tmp/_test_cool_off_state.json")
+        rm_module.RISK_STATE_FILE = test_file
+        try:
+            rm1 = RiskManager(initial_budget=10000)
+            rm1._trigger_cool_off()
+            rm1.save_state()
+            rm2 = RiskManager(initial_budget=10000)
+            assert rm2._in_cool_off()
+        finally:
+            rm_module.RISK_STATE_FILE = orig
+            test_file.unlink(missing_ok=True)

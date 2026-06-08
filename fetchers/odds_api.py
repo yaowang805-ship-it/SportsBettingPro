@@ -210,7 +210,8 @@ def _fetch_odds_api_io(sport_key: str, api_key: str, markets: str, regions: str)
             selected = sel_data.get("bookmakers", [])
             if selected:
                 bookmaker = selected[0]
-    except Exception:
+    except Exception as e:
+        logger.warning("  ⚠️ odds-api.io 请求异常: %s", e)
         pass
 
     # 3. 逐事件获取赔率（带缓存），转换为兼容格式
@@ -240,6 +241,7 @@ def _fetch_odds_api_io(sport_key: str, api_key: str, markets: str, regions: str)
             if odds_resp.status_code != 200:
                 continue
         except Exception:
+            logger.warning("  ⚠️ odds-api.io 赔率请求失败 (eid=%s)", eid)
             continue
 
         odds_data = odds_resp.json()
@@ -317,14 +319,15 @@ def _io_batch_football_leagues(api_key, base, slug_map):
                 batch_ok = _io_distribute_football_events(
                     all_events, fb_slug_map, api_key, base,
                 )
-    except Exception:
+    except Exception as e:
+        logger.warning("  ⚠️ odds-api.io 请求异常: %s", e)
         pass
 
     if batch_ok:
         logger.info("✅ 批量拉取所有足球联赛成功（1次API调用代替 %d 次）", len(leagues_to_fetch))
     else:
         # 批量失败，各联赛独立拉取由调用方兜底
-        logger.debug("批量拉取足球联赛失败，将逐个拉取")
+        logger.warning("⚠️ 批量拉取足球联赛失败，将逐个拉取")
 
 
 def _io_distribute_football_events(all_events, fb_slug_map, api_key, base):
@@ -355,7 +358,8 @@ def _io_distribute_football_events(all_events, fb_slug_map, api_key, base):
             selected = sel_resp.json().get("bookmakers", [])
             if selected:
                 bookmaker = selected[0]
-    except Exception:
+    except Exception as e:
+        logger.warning("  ⚠️ odds-api.io 请求异常: %s", e)
         pass
 
     # 逐事件拉取赔率（带缓存），按联赛归集
@@ -406,6 +410,7 @@ def _io_distribute_football_events(all_events, fb_slug_map, api_key, base):
                 league_results[sport_key].append(converted)
                 n_fetched += 1
         except Exception:
+            logger.warning("  ⚠️ odds-api.io 事件处理失败 (eid=%s)", eid)
             continue
 
     if n_cached > 0 or n_fetched > 0:
@@ -516,7 +521,7 @@ def fetch_odds_api(sport_key: str, force: bool = False, markets: str = 'h2h,spre
             return data
         except Exception as exc:
             last_exc = exc
-            logger.debug('⚠️ %s key=%s failed: %s', sport_key, api_key[-6:], exc)
+            logger.warning('⚠️ %s key=%s failed: %s', sport_key, api_key[-6:], exc)
             continue
 
     # 所有 key 均失败：尝试读取缓存
@@ -544,7 +549,7 @@ def fetch_basketball_odds(force: bool = False):
                 logger.info("✅ NBA 赔率: odds-api.io %d 场", len(data))
                 return data
         except Exception as e:
-            logger.debug("odds-api.io NBA 不可用: %s", e)
+            logger.warning("⚠️ odds-api.io NBA 不可用: %s", e)
 
     # 2. the-odds-api.com 兜底
     return fetch_odds_api('basketball_nba', force=force, _timeout=8)
@@ -571,7 +576,7 @@ def fetch_football_odds(force: bool = False, leagues=None):
             _save_cache('football_all', bsd_data)
             return bsd_data
     except Exception as e:
-        logger.debug("BSD 足球赔率不可用: %s", e)
+        logger.warning("⚠️ BSD 足球赔率不可用: %s", e)
 
     # 2. the-odds-api.com 兜底（短超时）
     all_games = []
@@ -580,7 +585,7 @@ def fetch_football_odds(force: bool = False, leagues=None):
             games = fetch_odds_api(league, force=force, _timeout=8)
             all_games.extend(games)
         except Exception as e:
-            logger.debug('⚠️ 拉取 %s 赔率失败: %s', league, e)
+            logger.warning('⚠️ 拉取 %s 赔率失败: %s', league, e)
 
     if not all_games:
         cached = _load_cache('football_all', max_age_hours=24)

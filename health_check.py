@@ -46,13 +46,17 @@ def check_imports():
 def check_data_files():
     """检查关键数据文件。"""
     files = [
-        ('data/processed/bb_features_safe.csv', 'NBA Features'),
-        ('data/processed/fb_features_safe.csv', 'Football Features'),
-        ('models/model_bb_win.pkl', 'NBA Win Model'),
-        ('models/model_bb_spread.pkl', 'NBA Spread Model'),
-        ('models/model_bb_total.pkl', 'NBA Total Model'),
-        ('models/model_fb_win.pkl', 'Football Win Model'),
+        ('data/processed/bb_features.csv', 'NBA Features'),
+        ('data/processed/fb_features.csv', 'Football Features'),
+        ('models/model_bb_win_ensemble.pkl', 'NBA Win Ensemble'),
+        ('models/model_bb_spread_result_ensemble.pkl', 'NBA Spread Ensemble'),
+        ('models/model_bb_total_result_ensemble.pkl', 'NBA Total Ensemble'),
+        ('models/model_fb_win_ensemble.pkl', 'FB Win Ensemble'),
+        ('models/model_fb_spread_result_ensemble.pkl', 'FB Spread Ensemble'),
+        ('models/model_fb_total_result_ensemble.pkl', 'FB Total Ensemble'),
         ('models/model_fb_features.json', 'Football Features List'),
+        ('models/model_bb_features.json', 'NBA Features List'),
+        ('models/model_metadata.json', 'Model Metadata'),
     ]
 
     logger.info("\n📂 数据文件检查")

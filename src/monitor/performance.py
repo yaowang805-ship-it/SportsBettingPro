@@ -50,15 +50,47 @@ def update_performance():
         if 'cumulative_balance' not in settled.columns:
             settled = _recalc(settled)
         peak = settled['cumulative_balance'].cummax()
-        drawdowns = (peak - settled['cumulative_balance']) / peak.replace(0, np.nan)  # 正值=回撤
+        drawdowns = (peak - settled['cumulative_balance']) / peak.replace(0, np.nan)
         max_drawdown = drawdowns.max() if not drawdowns.empty else 0.0
         avg_stake = float(settled['stake'].mean()) if 'stake' in settled.columns else 0.0
+
+        # ── 夏普比率（年化） ──
+        returns = settled['profit'].values / float(DEFAULT_BUDGET)
+        sharpe = 0.0
+        if len(returns) >= 5 and returns.std() > 0:
+            sharpe = (returns.mean() / returns.std()) * np.sqrt(252)
+
+        # ── Sortino 比率（年化，仅考虑下行波动） ──
+        sortino = 0.0
+        if len(returns) >= 5:
+            down_returns = returns[returns < 0]
+            if len(down_returns) > 0 and down_returns.std() > 0:
+                sortino = (returns.mean() / down_returns.std()) * np.sqrt(252)
+
+        # ── 校准度（预测概率 vs 实际频率） ──
+        calibration_error = 0.0
+        if 'prob' in settled.columns:
+            settle_probs = settled['prob'].astype(float).values
+            settle_results = (settled['result'] == 'won').astype(int).values
+            if len(settle_probs) >= 20:
+                bins = np.linspace(0, 1, 11)
+                bin_errors = []
+                for i in range(len(bins) - 1):
+                    mask = (settle_probs >= bins[i]) & (settle_probs < bins[i + 1])
+                    if mask.sum() >= 5:
+                        avg_pred = settle_probs[mask].mean()
+                        actual = settle_results[mask].mean()
+                        bin_errors.append(abs(avg_pred - actual))
+                calibration_error = np.mean(bin_errors) if bin_errors else 0.0
     else:
         total_profit = 0.0
         cumulative = float(DEFAULT_BUDGET)
         roi = 0.0
         max_drawdown = 0.0
         avg_stake = 0.0
+        sharpe = 0.0
+        sortino = 0.0
+        calibration_error = 0.0
 
     # 3. 打印绩效摘要
     logger.info("=" * 50)
@@ -73,6 +105,12 @@ def update_performance():
     logger.info("   资金: ¥%.0f / ¥%.0f", cumulative, float(DEFAULT_BUDGET))
     logger.info("   回撤: %.1f%%", max_drawdown * 100)
     logger.info("   均注: ¥%.0f", avg_stake)
+    if sharpe != 0:
+        logger.info("   夏普(年化): %.2f", sharpe)
+    if sortino != 0:
+        logger.info("   Sortino(年化): %.2f", sortino)
+    if calibration_error > 0:
+        logger.info("   校准误差: %.1f%%", calibration_error * 100)
     logger.info("=" * 50)
 
     # 4. 更新 health_check 文件
@@ -89,6 +127,9 @@ def update_performance():
             'current_balance': round(cumulative, 2),
             'avg_stake': round(avg_stake, 2),
             'max_drawdown': round(max_drawdown, 4),
+            'sharpe_ratio': round(sharpe, 4) if sharpe != 0 else None,
+            'sortino_ratio': round(sortino, 4) if sortino != 0 else None,
+            'calibration_error': round(calibration_error, 4) if calibration_error > 0 else None,
         },
     }
 
