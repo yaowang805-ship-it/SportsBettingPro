@@ -421,6 +421,8 @@ class EnsemblePredictor:
         today_df = pd.DataFrame(today_rows)
 
         combined = pd.concat([hist, today_df], ignore_index=True).sort_values("date").reset_index(drop=True)
+        # 清理空值日期和队名（历史上的脏数据）
+        combined = combined.dropna(subset=["date", "home", "away"]).copy()
 
         # ELO 评级
         from src.features.elo import compute_elo
@@ -433,6 +435,7 @@ class EnsemblePredictor:
             sf = team_feats.copy()
             sf.columns = [f"{side}_{c}" if c not in ("date", "team") else c for c in sf.columns]
             sf.rename(columns={"date": "date", "team": tc}, inplace=True)
+            sf = sf.dropna(subset=["date", tc]).copy()
             match_df = pd.merge_asof(
                 match_df.sort_values("date"), sf.sort_values("date"),
                 by=tc, on="date", direction="backward")
