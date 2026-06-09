@@ -22,6 +22,7 @@ from src.notify.dingtalk import get_notifier
 from src.notify.formatter import Recommendation, MarketType, RecommendationFormatter
 from src.monitor.clv_tracker import capture_opening_odds
 from src.dashboard.components.virtual_portfolio import auto_place_bets
+from src.predict.ev_verification import log_prediction
 
 logger.info("=" * 60)
 logger.info("🏀 篮球每日预测 - %s", datetime.now().strftime('%Y-%m-%d %H:%M'))
@@ -232,6 +233,16 @@ for pred in predictions:
     recs.append({**pred, **best, "time_str": time_str,
                  "home_cn": cn(home), "away_cn": cn(away),
                  "sport": "nba", "league": "NBA", "market": best["type"]})
+    log_prediction(
+        sport="nba", league="NBA",
+        home_team=home, away_team=away,
+        market_type="胜负", market_detail=best["type"],
+        odds=best["odds"], model_prob=best["model_prob"],
+        market_prob=best["mkt_prob"], ev=best["ev"],
+        stake=best["stake"], match_time=pred["commence_time"],
+        source="daily", home_team_cn=cn(home), away_team_cn=cn(away),
+        sharp_prob=pred.get("sharp_home_prob"),
+    )
     current_exposure += best["stake"] / max(rm.current_balance, 1.0)
 
 # 钉钉通知

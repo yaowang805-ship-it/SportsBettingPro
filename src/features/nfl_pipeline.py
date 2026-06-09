@@ -251,12 +251,14 @@ def build_nfl_features(
     result[float_cols] = result[float_cols].fillna(0.0)
 
     result = result.sort_values("date").reset_index(drop=True)
+    # date 列归一化，避免带时间戳导致再读取解析失败
+    result['date'] = pd.to_datetime(result['date'], errors='coerce').dt.strftime('%Y-%m-%d')
     result.to_csv(output_csv, index=False)
     logger.info("✅ NFL 特征: %d 行, %d 列 → %s", len(result), len(result.columns), output_csv.name)
 
     # 保存特征列列表
     import json
-    feat_list = [c for c in result.columns if c not in ("date", "home", "away", "home_score", "away_score")]
+    feat_list = [c for c in result.columns if c not in ("date", "home", "away", "home_score", "away_score", "win", "spread_result", "total_result")]
     FEATURES_JSON.parent.mkdir(parents=True, exist_ok=True)
     FEATURES_JSON.write_text(json.dumps(feat_list, indent=2))
     logger.info("  特征列已保存至 %s (%d 个)", FEATURES_JSON.name, len(feat_list))

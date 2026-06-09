@@ -13,7 +13,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
-from config.logging_config import get_logger
+from config.logging_config import get_logger, setup_logging
+setup_logging(log_level="INFO", log_to_file=False, log_to_console=True)
 logger = get_logger(__name__)
 
 import joblib
@@ -24,6 +25,7 @@ from sklearn.metrics import (brier_score_loss, log_loss, precision_score,
 
 from config.settings import DATA_DIR
 from src.core.evaluation import brier_score, safe_log_loss, sharpe_ratio
+from src.models.ensemble_trainer import WeightedEnsemble  # 用于反序列化集成模型
 
 DATA_DIR_PATH = ROOT / DATA_DIR if isinstance(DATA_DIR, str) else DATA_DIR
 OUTPUT_PATH = DATA_DIR_PATH / 'model_backtest_summary.json'
@@ -279,7 +281,7 @@ def evaluate_model(df, feat_cols, model_path, target_col, dataset_name: str,
     返回 dict，包含训练集和测试集指标、置信区间、交易成本影响。
     """
     df = df.copy()
-    df['date'] = pd.to_datetime(df['date'])
+    df['date'] = pd.to_datetime(df['date'], utc=True, format='mixed')
 
     model = _load_model(model_path)
     feat_cols_actual = model.get('feat_cols', feat_cols) if isinstance(model, dict) else feat_cols
@@ -454,9 +456,12 @@ def run_backtest():
             model_file = ROOT / f'models/model_bb_{target}_ensemble.pkl'
             if model_file.exists():
                 thresh = 0.5
-                logger.info("\n  模型: %s (阈值=%s)", model_file.name, thresh)
+                # BB total_result 排除 ovrundr（与训练时特征一致）
+                target_feat_cols = [c for c in feat_cols if c != 'ovrundr'] \
+                    if target == 'total_result' else feat_cols
+                logger.info("\n  模型: %s (阈值=%s, 特征=%d)", model_file.name, thresh, len(target_feat_cols))
                 result = evaluate_model(
-                    df_bb, feat_cols, model_file, target, 'bb_features',
+                    df_bb, target_feat_cols, model_file, target, 'bb_features',
                     threshold=thresh, market_type=market_map.get(target, "default"),
                 )
                 report.append(result)
@@ -506,6 +511,51 @@ def run_backtest():
                 logger.info("\n  模型: %s (阈值=%s)", model_file.name, thresh)
                 result = evaluate_model(
                     df_fb, feat_cols, model_file, target, 'fb_features',
+                    threshold=thresh, market_type=market_map.get(target, "default"),
+                )
+                report.append(result)
+                logger.info("  时序分割: %s | %s", result['chronological_split'], result['split_info'])
+                _print_eval(result, 'train', thresh)
+                _print_eval(result, 'test', thresh)
+
+                boot = result.get('bootstrap_ci', {})
+                if boot:
+                    _print_bootstrap_ci("准确率", boot.get("accuracy", {}))
+
+                tc = result.get('transaction_cost', {})
+                if tc:
+                    logger.info("    交易成本: %s | 平均 Edge 损失: %.4f",
+                                tc.get("cost_rate", 0), tc.get("avg_edge_loss", 0))
+
+                wf = result.get('walk_forward', [])
+                if wf:
+                    n_windows = len(wf) - 1
+                    if n_windows > 0:
+                        avg_entry = wf[-1]
+                        logger.info("    Walk-Forward: %d 窗口 | 平均准确率 %.3f ± %.3f",
+                                    n_windows, avg_entry.get("avg_accuracy", 0),
+                                    avg_entry.get("std_accuracy", 0))
+
+                pd_dist = result['prob_distribution']
+                logger.info("    测试集概率分布: 中位数=%.3f P25=%.3f P75=%.3f 范围=[%.3f, %.3f]",
+                            pd_dist['median'], pd_dist['p25'], pd_dist['p75'],
+                            pd_dist['min'], pd_dist['max'])
+
+    # 美式足球模型回测（NFL 淡季无新数据，但模型已训练，需验证历史表现）
+    nfl_csv = ROOT / 'data/processed/nfl_features.csv'
+    if nfl_csv.exists():
+        df_nfl = pd.read_csv(nfl_csv)
+        feat_cols = _load_feature_columns(ROOT / 'models/model_nfl_features.json')
+        logger.info("\n%s", "=" * 60)
+        logger.info("美式足球模型回测 (%s 样本)", len(df_nfl))
+        logger.info("%s", "=" * 60)
+        for target in ['win', 'spread_result', 'total_result']:
+            model_file = ROOT / f'models/model_nfl_{target}_ensemble.pkl'
+            if model_file.exists():
+                thresh = 0.5
+                logger.info("\n  模型: %s (阈值=%s, 特征=%d)", model_file.name, thresh, len(feat_cols))
+                result = evaluate_model(
+                    df_nfl, feat_cols, model_file, target, 'nfl_features',
                     threshold=thresh, market_type=market_map.get(target, "default"),
                 )
                 report.append(result)

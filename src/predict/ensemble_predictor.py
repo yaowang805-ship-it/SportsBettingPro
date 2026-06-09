@@ -117,6 +117,48 @@ def extract_sharp_market_probs(odds_data: List[Dict]) -> Dict[str, Dict]:
     return results
 
 
+def _extract_spread_total_market_probs(game: Dict) -> dict:
+    """从单场比赛提取 spread/total 市场的隐含概率（去水）。
+
+    Returns:
+        {spread_home_prob, total_over_prob} 或空字典
+    """
+    home = game.get("home_team", "").strip().lower()
+    away = game.get("away_team", "").strip().lower()
+    bookmakers = game.get("bookmakers", [])
+
+    spread_home_prices, spread_away_prices = [], []
+    total_over_prices, total_under_prices = [], []
+
+    for bm in bookmakers:
+        for market in bm.get("markets", []):
+            if market.get("key") == "spreads":
+                outcomes = market.get("outcomes", [])
+                h = next((o["price"] for o in outcomes if o.get("name", "").strip().lower() == home), None)
+                a = next((o["price"] for o in outcomes if o.get("name", "").strip().lower() == away), None)
+                if h and a:
+                    spread_home_prices.append(h)
+                    spread_away_prices.append(a)
+            elif market.get("key") == "totals":
+                outcomes = market.get("outcomes", [])
+                over = next((o["price"] for o in outcomes if o.get("name") == "Over"), None)
+                under = next((o["price"] for o in outcomes if o.get("name") == "Under"), None)
+                if over and under:
+                    total_over_prices.append(over)
+                    total_under_prices.append(under)
+
+    result = {}
+    if spread_home_prices:
+        avg_h = np.mean(spread_home_prices)
+        avg_a = np.mean(spread_away_prices)
+        result["spread_home_prob"] = (1.0 / avg_h) / (1.0 / avg_h + 1.0 / avg_a)
+    if total_over_prices:
+        avg_o = np.mean(total_over_prices)
+        avg_u = np.mean(total_under_prices)
+        result["total_over_prob"] = (1.0 / avg_o) / (1.0 / avg_o + 1.0 / avg_u)
+    return result
+
+
 # ── 市场概率提取 ─────────────────────────────────────────────────
 
 def extract_market_probs(odds_data: List[Dict]) -> Dict[str, Dict]:
@@ -227,11 +269,31 @@ def _team_rolling_stats(df, goal_cols=("gf", "ga")):
         team[f"net_rating_slope_{w}"] = team.groupby("team")["net_rating_3"].transform(
             lambda x: x.shift(1).rolling(w, min_periods=2).apply(_slope, raw=True))
 
+    # ── 总分预测专用特征（与 bb_pipeline.py 一致） ──
+    team['total_pts'] = team['gf'] + team['ga']
+    team['total_pts_avg_5'] = team.groupby('team')['total_pts'].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=1).mean())
+    team['total_pts_ewm5'] = team.groupby('team')['total_pts'].transform(
+        lambda x: x.shift(1).ewm(span=5, adjust=False).mean())
+    team['pts_scored_avg_5'] = team.groupby('team')['gf'].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=1).mean())
+    team['pts_allowed_avg_5'] = team.groupby('team')['ga'].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=1).mean())
+    team['total_pts_volatility_5'] = team.groupby('team')['total_pts'].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=3).std())
+    LEAGUE_AVG_TOTAL = 210.0
+    team['is_high_scoring'] = (team['total_pts'] > LEAGUE_AVG_TOTAL).astype(int)
+    team['high_score_rate_10'] = team.groupby('team')['is_high_scoring'].transform(
+        lambda x: x.shift(1).rolling(10, min_periods=1).mean())
+
     feat_cols = ["date", "team", "gf_avg_3", "gf_avg_10",
                  "ga_avg_3", "ga_avg_10",
                  "net_rating_3", "net_rating_10",
                  "gf_ewm5", "ga_ewm5", "opp_def_strength", "win_rate_10", "rest_days", "b2b",
-                 "net_rating_slope_5", "net_rating_slope_10"]
+                 "net_rating_slope_5", "net_rating_slope_10",
+                 "total_pts_avg_5", "total_pts_ewm5",
+                 "pts_scored_avg_5", "pts_allowed_avg_5",
+                 "total_pts_volatility_5", "high_score_rate_10"]
     return team[feat_cols]
 
 
@@ -297,44 +359,18 @@ def _load_nfl_history():
                "home_rest", "away_rest"]]
 
 
-# ── CLV 预测 Edge 特征注入 ────────────────────────────────
-
-def _add_pred_edge_features(match_df, sport="football"):
-    """注入球队级历史 Edge 特征（CLV 代理）。
-
-    与训练流水线 bb_pipeline.py / football_pipeline.py 中的逻辑一致。
-    """
-    try:
-        from src.monitor.clv_tracker import compute_team_edge_features
-        from src.core.team_names import cn_to_feature_name
-
-        edges = compute_team_edge_features(sport=sport)
-        if edges:
-            eng_edges = {}
-            for cn, e in edges.items():
-                en = cn_to_feature_name(cn, sport=sport)
-                eng_edges[en] = e
-
-            match_df["home_pred_edge"] = match_df["home"].str.lower().map(eng_edges).fillna(0)
-            match_df["away_pred_edge"] = match_df["away"].str.lower().map(eng_edges).fillna(0)
-            match_df["pred_edge_diff"] = match_df["home_pred_edge"] - match_df["away_pred_edge"]
-        else:
-            match_df["home_pred_edge"] = 0.0
-            match_df["away_pred_edge"] = 0.0
-            match_df["pred_edge_diff"] = 0.0
-    except Exception:
-        match_df["home_pred_edge"] = 0.0
-        match_df["away_pred_edge"] = 0.0
-        match_df["pred_edge_diff"] = 0.0
-    return match_df
-
-
 # ── 市场价值 / 伤病特征注入（足球） ──────────────────────────
 
 def _add_fb_market_value_features(match_df):
     """向比赛 DataFrame 注入球队市值特征。"""
-    from src.features.transfermarkt_client import get_team_market_value
-    from src.features.football_pipeline import _TM_NAME_MAP, _load_tm_cache, _save_tm_cache
+    try:
+        from src.features.transfermarkt_client import get_team_market_value
+        from src.features.football_pipeline import _TM_NAME_MAP, _load_tm_cache, _save_tm_cache
+    except ImportError:
+        match_df["home_market_value"] = 0.0
+        match_df["away_market_value"] = 0.0
+        match_df["market_value_diff"] = 0.0
+        return match_df
 
     mv_cache = _load_tm_cache()
     for team in set(match_df["home"].unique()) | set(match_df["away"].unique()):
@@ -370,6 +406,7 @@ class EnsemblePredictor:
         logger.info("  加载特征列: %s 个", len(self.feat_cols))
 
         self.models = {}
+        self._target_feat_cols = {}  # per-target feature override
         for target in ["win", "spread_result", "total_result"]:
             self._try_load_weighted(target)
             if target not in self.models:
@@ -377,6 +414,15 @@ class EnsemblePredictor:
                 if path.exists():
                     self.models[target] = joblib.load(path)
                     logger.info("  加载模型: %s", path.name)
+
+    def _get_feature_cols(self, target: str) -> list:
+        """返回指定目标使用的特征列列表。
+
+        BB total_result 排除 ovrundr（市场大小分线），其他模型使用完整特征集。
+        """
+        if self.sport == 'bb' and target == 'total_result':
+            return [c for c in self.feat_cols if c != 'ovrundr']
+        return self.feat_cols
 
     def _try_load_weighted(self, target: str):
         """记录集成权重信息（预测统一使用校准后的集成模型）。"""
@@ -491,38 +537,25 @@ class EnsemblePredictor:
             match_df['home_key_injury'] = 0
             match_df['away_key_injury'] = 0
 
-        # ── CLV Edge 特征 ──
-        _add_pred_edge_features(match_df, sport="nba")
-
-        # ── 总分预测交互特征（与训练流水线一致） ──
-        for prefix in ["home_", "away_"]:
-            for f in ["total_pts_avg_5", "total_pts_ewm5", "pts_scored_avg_5",
-                       "pts_allowed_avg_5", "total_pts_volatility_5", "high_score_rate_10"]:
-                col = f"{prefix}{f}"
-                if col not in match_df.columns:
-                    match_df[col] = 0.0
-        match_df["combined_total_avg_5"] = match_df.get("home_total_pts_avg_5", 0) + match_df.get("away_total_pts_avg_5", 0)
-        match_df["combined_pts_scored_avg_5"] = match_df.get("home_pts_scored_avg_5", 0) + match_df.get("away_pts_scored_avg_5", 0)
-        match_df["combined_pts_allowed_avg_5"] = match_df.get("home_pts_allowed_avg_5", 0) + match_df.get("away_pts_allowed_avg_5", 0)
-        match_df["total_volatility_interaction"] = match_df.get("home_total_pts_volatility_5", 0) * match_df.get("away_total_pts_volatility_5", 0)
-        match_df["high_score_rate_sum"] = (match_df.get("home_high_score_rate_10", 0) + match_df.get("away_high_score_rate_10", 0)).clip(0, 2)
+        # ── 总分预测交互特征（基特征已由 _team_rolling_stats 计算）──
+        match_df["combined_total_avg_5"] = match_df["home_total_pts_avg_5"] + match_df["away_total_pts_avg_5"]
+        match_df["combined_pts_scored_avg_5"] = match_df["home_pts_scored_avg_5"] + match_df["away_pts_scored_avg_5"]
+        match_df["combined_pts_allowed_avg_5"] = match_df["home_pts_allowed_avg_5"] + match_df["away_pts_allowed_avg_5"]
+        match_df["total_volatility_interaction"] = match_df["home_total_pts_volatility_5"] * match_df["away_total_pts_volatility_5"]
+        match_df["high_score_rate_sum"] = (match_df["home_high_score_rate_10"] + match_df["away_high_score_rate_10"]).clip(0, 2)
         match_df["total_rest_sum"] = match_df["home_rest_days"] + match_df["away_rest_days"]
         match_df["pace_proxy"] = (match_df["home_gf_ewm5"] + match_df["away_gf_ewm5"] +
                                   match_df["home_ga_ewm5"] + match_df["away_ga_ewm5"]) / 2
 
         match_df = match_df.ffill().fillna(0)
 
-        # 注入天气与行程特征
-        try:
-            from src.features.weather_features import add_weather_to_df
-            match_df = add_weather_to_df(match_df)
-        except Exception:
-            pass
-
         today_start = len(hist)
-        X = match_df.iloc[today_start:]
-        avail = [c for c in self.feat_cols if c in X.columns]
-        return X[avail].fillna(0).values
+        X = match_df.iloc[today_start:].copy()
+        # 确保所有训练时使用的特征都存在（缺失特征补0，保持列顺序一致）
+        for col in self.feat_cols:
+            if col not in X.columns:
+                X[col] = 0.0
+        return X[self.feat_cols].fillna(0)
 
     def _build_nfl_features(self, odds_data: List[Dict]) -> np.ndarray:
         """构建 NFL 预测特征（轻量版，直接基于 nfl_features.csv 特征骨架计算）。"""
@@ -612,9 +645,12 @@ class EnsemblePredictor:
         match_df = match_df.ffill().fillna(0)
 
         today_start = len(hist)
-        X = match_df.iloc[today_start:]
-        avail = [c for c in self.feat_cols if c in X.columns]
-        return X[avail].fillna(0).values
+        X = match_df.iloc[today_start:].copy()
+        # 确保所有训练时使用的特征都存在（缺失特征补0，保持列顺序一致）
+        for col in self.feat_cols:
+            if col not in X.columns:
+                X[col] = 0.0
+        return X[self.feat_cols].fillna(0)
 
     def _build_fb_features(self, odds_data: List[Dict]) -> np.ndarray:
         """构建足球预测特征。"""
@@ -669,22 +705,15 @@ class EnsemblePredictor:
         except Exception as e:
             logger.warning("  ⚠️ xG特征构建失败: %s", e)
 
-        # ── CLV Edge 特征 ──
-        _add_pred_edge_features(match_df, sport="football")
-
         match_df = match_df.ffill().fillna(0)
 
-        # 注入天气与行程特征
-        try:
-            from src.features.weather_features import add_weather_to_df
-            match_df = add_weather_to_df(match_df)
-        except Exception:
-            pass
-
         today_start = len(hist)
-        X = match_df.iloc[today_start:]
-        avail = [c for c in self.feat_cols if c in X.columns]
-        return X[avail].fillna(0).values
+        X = match_df.iloc[today_start:].copy()
+        # 确保所有训练时使用的特征都存在（缺失特征补0，保持列顺序一致）
+        for col in self.feat_cols:
+            if col not in X.columns:
+                X[col] = 0.0
+        return X[self.feat_cols].fillna(0)
 
     def predict(self, odds_data: List[Dict]) -> List[Dict]:
         """对 Odds API 返回的比赛数据做完整预测。"""
@@ -712,6 +741,7 @@ class EnsemblePredictor:
             features = X[i:i+1]
             sharp_mkt = sharp_map.get(f"{home} @ {away}", {})
             has_sharp = not sharp_mkt.get("sharp_unavailable", True)
+            spread_total_mkt = _extract_spread_total_market_probs(game)
 
             pred = {
                 "home_team": home,
@@ -746,7 +776,9 @@ class EnsemblePredictor:
                 model = self.models.get(target)
                 if model is not None:
                     try:
-                        prob = model.predict_proba(features)[0, 1]
+                        # 按目标过滤特征列（如 BB total_result 排除 ovrundr）
+                        tf = features[self._get_feature_cols(target)]
+                        prob = model.predict_proba(tf)[0, 1]
                     except Exception:
                         prob = 0.5
                 else:
@@ -762,8 +794,10 @@ class EnsemblePredictor:
                         mkt_prob = sharp_mkt["sharp_home_prob"]
                     else:
                         mkt_prob = pred["market_home_prob"]
+                elif target == "spread_result":
+                    mkt_prob = spread_total_mkt.get("spread_home_prob", 0.5)
                 else:
-                    mkt_prob = 0.5  # 让分/大小球市场近似 50/50
+                    mkt_prob = spread_total_mkt.get("total_over_prob", 0.5)
 
                 # 动态收缩：模型越不确定，越向市场回归
                 shrunk = dynamic_shrinkage(raw_prob, mkt_prob)

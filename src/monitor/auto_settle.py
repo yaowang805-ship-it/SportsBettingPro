@@ -29,11 +29,31 @@ LEAGUE_SPORT_MAP = {
     "德甲": ("soccer_germany_bundesliga", "德甲"),
     "意甲": ("soccer_italy_serie_a", "意甲"),
     "法甲": ("soccer_france_ligue_one", "法甲"),
+    # 扩展
+    "巴甲": ("soccer_brazil_serie_a", "巴甲"),
+    "解放者杯": ("soccer_copa_libertadores", "解放者杯"),
+    "美职联": ("soccer_usa_mls", "美职联"),
+    "墨超": ("soccer_mexico_liga_mx", "墨超"),
+    "阿甲": ("soccer_argentina_primera_division", "阿甲"),
+    "葡超": ("soccer_portugal_primeira_liga", "葡超"),
+    "荷甲": ("soccer_netherlands_eredivisie", "荷甲"),
+    "比甲": ("soccer_belgium_first_div", "比甲"),
+    "土超": ("soccer_turkey_super_league", "土超"),
+    "苏超": ("soccer_scotland_premiership", "苏超"),
+    "J联赛": ("soccer_japan_j_league", "J联赛"),
+    "澳超": ("soccer_australia_aleague", "澳超"),
+    "德乙": ("soccer_germany_bundesliga2", "德乙"),
+    "法乙": ("soccer_france_ligue_two", "法乙"),
+    "英冠": ("soccer_england_championship", "英冠"),
+    "欧冠": ("soccer_uefa_champions_league", "欧冠"),
+    "欧联": ("soccer_uefa_europa_league", "欧联"),
+    "NFL": ("americanfootball_nfl", "NFL"),
 }
 
 # 兜底：sport 字段 → sport key（精确匹配）
 SPORT_FALLBACK = {
     "nba": "basketball_nba",
+    "nfl": "americanfootball_nfl",
     "football": None,  # 需要由 league 决定
 }
 

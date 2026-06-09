@@ -23,12 +23,13 @@ def run_script(script_path, description):
     if not script_path.exists():
         logger.error("❌ 脚本不存在：%s", script_path)
         return False
+    timeout = 600 if "football" in description else 300
     try:
-        subprocess.run([sys.executable, str(script_path)], check=True, text=True, timeout=300)
+        subprocess.run([sys.executable, str(script_path)], check=True, text=True, timeout=timeout)
         logger.info("✅ 完成：%s", description)
         return True
     except subprocess.TimeoutExpired:
-        logger.warning("⏰ 超时（5分钟）：%s", description)
+        logger.warning("⏰ 超时（%d秒）：%s", timeout, description)
     except subprocess.CalledProcessError as e:
         logger.error("❌ 失败（退出码 %s）：%s", e.returncode, description)
     return False
@@ -77,8 +78,9 @@ def _run_ranking():
 
 def main():
     parser = argparse.ArgumentParser(description="SportsBettingPro 每日预测入口")
-    parser.add_argument("--sport", choices=["nba","football","nfl","all"], default="all")
+    parser.add_argument("--sport", choices=["nba","football","nfl","wc","all"], default="all")
     parser.add_argument("--skip-monitor", action="store_true")
+    parser.add_argument("--simulate", action="store_true", help="运行世界杯蒙特卡洛模拟")
     args = parser.parse_args()
     predict_dir = ROOT / "src" / "predict"
     logger.info("="*60)
@@ -94,6 +96,13 @@ def main():
     if args.sport in ("nfl","all"):
         if not run_script(predict_dir/"daily_nfl.py", "🏈 NFL 预测引擎"):
             errors.append("NFL预测")
+    if args.sport in ("wc","all"):
+        # 世界杯期间自动运行（6月11日-7月19日）
+        if not run_script(predict_dir/"daily_wc.py", "🌍 世界杯预测引擎"):
+            errors.append("世界杯预测")
+        if args.simulate:
+            if not run_script(predict_dir/"wc_simulation.py", "🌍 世界杯蒙特卡洛模拟"):
+                errors.append("世界杯模拟")
     # 跨运动统一排名（有推荐数据就跑）
     _run_ranking()
     if not args.skip_monitor:

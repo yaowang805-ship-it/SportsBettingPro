@@ -177,11 +177,34 @@ ESPN_TO_CODE = {
 }
 
 
-def supplement_football_espn(output_file: Path = None) -> pd.DataFrame:
+_ESPN_CACHE_FILE = DATA_DIR / ".espn_last_sync"
+
+
+def _espn_sync_due(max_age_hours: int = 24) -> bool:
+    """检查 ESPN 同步是否需要运行（缓存控制）。"""
+    if not _ESPN_CACHE_FILE.exists():
+        return True
+    try:
+        age = (datetime.utcnow() - datetime.fromtimestamp(_ESPN_CACHE_FILE.stat().st_mtime)).total_seconds()
+        return age > max_age_hours * 3600
+    except Exception:
+        return True
+
+
+def supplement_football_espn(output_file: Path = None, *, force: bool = False) -> pd.DataFrame:
     """使用 sports-skills (ESPN) 补充足球数据中的新增联赛。
 
     不影响 football-data.org 已有的数据，只添加新联赛。
+    默认每 24 小时只同步一次，避免阻塞主流程。
+
+    Args:
+        output_file: 输出 CSV 文件路径
+        force: 强制拉取，忽略缓存
     """
+    if not force and not _espn_sync_due():
+        logger.info('  ESPN 数据 24h 内已同步，跳过（使用 force=True 强制刷新）')
+        return pd.read_csv(FOOTBALL_HISTORY_FILE) if FOOTBALL_HISTORY_FILE.exists() else pd.DataFrame()
+
     output_file = output_file or FOOTBALL_HISTORY_FILE
 
     try:
@@ -191,10 +214,12 @@ def supplement_football_espn(output_file: Path = None) -> pd.DataFrame:
         return pd.read_csv(output_file) if output_file.exists() else pd.DataFrame()
 
     logger.info('补充 ESPN 足球数据（新增联赛: %s）...', ', '.join(ESPN_EXTRA_LEAGUES.keys()))
-    espn_df = fetch_all_leagues(ESPN_TO_CODE, season_year='2025', rate_limit=0.5)
+    rate = 0.3  # 缩短间隔，改为 0.3s
+    espn_df = fetch_all_leagues(ESPN_TO_CODE, season_year='2025', rate_limit=rate)
 
     if espn_df.empty:
         logger.info('  ESPN 无新增数据')
+        _ESPN_CACHE_FILE.touch()
         return pd.read_csv(output_file) if output_file.exists() else pd.DataFrame()
 
     # 与现有数据合并
@@ -208,6 +233,7 @@ def supplement_football_espn(output_file: Path = None) -> pd.DataFrame:
     combined = combined.drop_duplicates(subset=['date', 'home', 'away', 'competition'])
     combined = combined.sort_values('date').reset_index(drop=True)
     combined.to_csv(output_file, index=False)
+    _ESPN_CACHE_FILE.touch()  # 标记同步时间
     logger.info('✅ ESPN 足球补充: %d 条新增, 总计 %d 行, %d 个联赛',
                 len(espn_df), len(combined), combined['competition'].nunique())
     return combined

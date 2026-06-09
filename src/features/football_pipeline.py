@@ -5,7 +5,12 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
-from src.features.transfermarkt_client import get_team_market_value
+try:
+    from src.features.transfermarkt_client import get_team_market_value
+    _TM_AVAILABLE = True
+except ImportError:
+    get_team_market_value = None  # type: ignore
+    _TM_AVAILABLE = False
 
 # ── Transfermarkt 球队名称规范化 ──────────────────────────────────
 _TM_NAME_MAP = {
@@ -83,10 +88,11 @@ def _save_tm_cache(cache: dict):
 
 def _lookup_market_value(team_csv_name: str, cache: dict, save_after: bool = False) -> float:
     """查询球队市值，优先使用缓存，其次实时查询 Transfermarkt。"""
-    # 如果缓存中有，直接返回
     if team_csv_name in cache:
         return cache[team_csv_name]
-    # 规范化名称
+    if not _TM_AVAILABLE:
+        cache[team_csv_name] = 0.0
+        return 0.0
     search_name = _TM_NAME_MAP.get(team_csv_name, team_csv_name)
     val = get_team_market_value(search_name)
     if val is None:
@@ -142,7 +148,7 @@ def build_football_features(input_csv="data/storage/football_history.csv", outpu
     feat_cols = ['date', 'team', 'gf_avg_3', 'gf_avg_10',
                  'ga_avg_3', 'ga_avg_10',
                  'net_rating_3', 'net_rating_10',
-                 'gf_ewm5', 'ga_ewm5', 'opp_def_strength', 'win_rate_10', 'rest_days', 'b2b',
+                 'gf_ewm5', 'ga_ewm5', 'opp_def_strength', 'win_rate_10', 'rest_days',
                  'net_rating_slope_5', 'net_rating_slope_10']
     team_feats = team[feat_cols]
 
@@ -170,43 +176,7 @@ def build_football_features(input_csv="data/storage/football_history.csv", outpu
         match_df = pd.merge_asof(match_df.sort_values('date'), sf.sort_values('date'),
                                  by=team_col, left_on='date', right_on='date', direction='backward')
     match_df['off_vs_def'] = match_df['home_gf_ewm5'] - match_df['away_ga_ewm5']
-    match_df['b2b_diff'] = match_df['home_b2b'] - match_df['away_b2b']
     match_df['rest_diff'] = match_df['home_rest_days'] - match_df['away_rest_days']
-
-    # ── 预测 Edge 特征（CLV 代理） ──
-    try:
-        from src.monitor.clv_tracker import compute_team_edge_features
-        from src.core.team_names import cn_to_feature_name
-
-        edges = compute_team_edge_features(sport="football")
-        if edges:
-            eng_edges = {}
-            for cn, e in edges.items():
-                en = cn_to_feature_name(cn, sport="football")
-                eng_edges[en] = e
-
-            match_df['home_pred_edge'] = match_df['home'].str.lower().map(eng_edges).fillna(0)
-            match_df['away_pred_edge'] = match_df['away'].str.lower().map(eng_edges).fillna(0)
-            match_df['pred_edge_diff'] = match_df['home_pred_edge'] - match_df['away_pred_edge']
-        else:
-            match_df['home_pred_edge'] = 0.0
-            match_df['away_pred_edge'] = 0.0
-            match_df['pred_edge_diff'] = 0.0
-    except Exception as e:
-        print(f"  ⚠️ 预测Edge特征注入失败: {e}")
-        match_df['home_pred_edge'] = 0.0
-        match_df['away_pred_edge'] = 0.0
-        match_df['pred_edge_diff'] = 0.0
-
-    # ── 天气与行程距离特征 ──
-    from src.features.weather_features import add_weather_to_df, get_weather_feature_names
-    try:
-        match_df = add_weather_to_df(match_df)
-    except Exception as e:
-        print(f"  ⚠️ 天气特征注入失败: {e}")
-    for wf in get_weather_feature_names():
-        if wf not in match_df.columns:
-            match_df[wf] = 0.0
 
     # ── xG 预期进球特征 ──
     from src.features.xg_pipeline import build_xg_features, merge_xg_into_match
@@ -219,8 +189,9 @@ def build_football_features(input_csv="data/storage/football_history.csv", outpu
         print(f"  ⚠️ xG 特征合并失败: {e}")
 
     match_df = match_df.ffill().fillna(0)
-    match_df['spread_result'] = (match_df['home_goals'] - match_df['away_goals'] >= 2).astype(int)
     match_df['total_result'] = ((match_df['home_goals'] + match_df['away_goals']) > 2.5).astype(int)
+    # date 列归一化，避免带时间戳导致再读取解析失败
+    match_df['date'] = pd.to_datetime(match_df['date'], errors='coerce').dt.strftime('%Y-%m-%d')
     if output_csv:
         match_df.to_csv(output_csv, index=False)
     print(f"⚽ 足球特征已生成，列数：{match_df.shape[1]}")

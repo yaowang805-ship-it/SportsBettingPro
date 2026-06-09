@@ -20,6 +20,7 @@ from config.settings import DEFAULT_BUDGET, KELLY_FRACTION, MAX_SINGLE_BET_PCT, 
 
 RISK_STATE_FILE = DATA_DIR / 'risk_state.json'
 BET_LOG_FILE = DATA_DIR / 'bet_history.csv'
+BLOCKLIST_PATH = ROOT / "models" / "market_blocklist.json"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 
@@ -231,7 +232,7 @@ class RiskManager:
     """职业级风险管理器 — 冷却止损 + 相关投注互斥版。"""
 
     COOL_OFF_HOURS = 24         # 触发冷却后停注 N 小时
-    MAX_SAME_GAME_MARKETS = 1   # 同一场比赛最多下注 N 个不同市场
+    MAX_SAME_GAME_MARKETS = 2   # 同一场比赛最多下注 N 个不同市场（联合凯利折扣后）
 
     def __init__(self, initial_budget: float = DEFAULT_BUDGET):
         self.initial_budget = initial_budget
@@ -252,10 +253,42 @@ class RiskManager:
         self.weekly_loss = 0.0
         self._week_start = datetime.now().date()
         self.load_state()
+        # ── 市场效率屏蔽名单（P3）──
+        self._market_blocklist = self._load_blocklist()
+        # ── 同场相关投注跟踪（P4）──
+        self._correlation_groups: Dict[str, list] = {}
         # 初始化时检查冷却状态
         if self._in_cool_off():
             logger.warning("  🛑 冷却中直至 %s（连败 %d 次）",
                           self.cool_off_until.isoformat(), self.consecutive_losses)
+
+    def _load_blocklist(self) -> set:
+        """加载市场效率屏蔽名单。"""
+        if not BLOCKLIST_PATH.exists():
+            return set()
+        try:
+            with open(BLOCKLIST_PATH, encoding='utf-8') as f:
+                entries = json.load(f)
+            blocked = set()
+            for e in entries:
+                key = f"{e.get('sport','')}/{e.get('league','')}/{e.get('market_type','')}"
+                blocked.add(key)
+            if blocked:
+                logger.info("  🚫 市场屏蔽: %d 个类别", len(blocked))
+            return blocked
+        except Exception as e:
+            logger.warning("  ⚠️ 屏蔽名单加载失败: %s", e)
+            return set()
+
+    def _check_market_efficiency(self, sport: str, league: str, market_type: str) -> bool:
+        """检查市场效率。True = 允许下注, False = 被屏蔽。"""
+        if not self._market_blocklist:
+            return True
+        key = f"{sport}/{league}/{market_type}"
+        if key in self._market_blocklist:
+            logger.info("  🚫 市场屏蔽: %s（历史ROI不达标）", key)
+            return False
+        return True
 
     def _in_cool_off(self) -> bool:
         """是否处于冷却期（禁止所有下注）。"""
@@ -344,13 +377,19 @@ class RiskManager:
 
     def get_max_stake(self, edge_or_prob: float, odds: float, current_exposure_pct: float = 0.0,
                       input_is_prob: bool = False, sport: str = '', home_team: str = '',
-                      away_team: str = '', market: str = '') -> float:
+                      away_team: str = '', market: str = '',
+                      league: str = '', market_type: str = '') -> float:
         """计算最大下注额（增强版）。
 
-        综合凯利准则 + 置信度分档 + 回撤保护 + 连败保护 + 冷却保护 + 组合分散度优化。
+        综合凯利准则 + 置信度分档 + 回撤保护 + 连败保护 + 冷却保护 +
+        组合分散度优化 + 市场效率过滤 + 同场相关投注联合凯利。
         """
         # ── 冷却检查 ──
         if self._in_cool_off():
+            return 0.0
+
+        # ── 市场效率过滤（P3）──
+        if not self._check_market_efficiency(sport, league, market_type or market):
             return 0.0
 
         # 停手检查
@@ -392,7 +431,7 @@ class RiskManager:
 
         final_stake = min(stake, max_single)
 
-        # ── 相关投注互斥检测 ──
+        # ── 相关投注互斥检测（P3+P4）──
         if sport and home_team and away_team:
             same_match = [
                 b for b in self.portfolio_optimizer.active_bets
@@ -404,11 +443,63 @@ class RiskManager:
             for existing in same_match:
                 if existing.get("market") == (market or ""):
                     return 0.0
-            # 同一场比赛跨市场 → 限制数量
+
+            # 同一场比赛跨市场 → 相关投注联合凯利（P4）
+            if same_match:
+                group_key = f"{sport}/{home_team}/{away_team}"
+
+                # 构建此场比赛的所有相关投注（已有 + 当前）
+                all_bets = []
+                for eb in same_match:
+                    all_bets.append({
+                        "market": eb.get("market", ""),
+                        "prob": eb.get("model_prob", 0.5),
+                        "odds": eb.get("odds", 2.0),
+                        "stake": eb.get("stake", 0),
+                    })
+                # 当前这笔还没加入，计算其个体凯利
+                current_stake = final_stake
+                all_bets.append({
+                    "market": market or "",
+                    "prob": prob,
+                    "odds": odds,
+                    "stake": current_stake,
+                })
+
+                # 联合凯利：总计 = sum(个体) * 折扣因子(0.6)
+                total_individual = sum(b["stake"] for b in all_bets)
+                joint_total = total_individual * 0.6
+
+                # 按 EV 比例分配
+                ev_weights = []
+                for b in all_bets:
+                    p = b["prob"]
+                    o = b["odds"]
+                    ev = p * o - 1  # 期望值
+                    ev_weights.append(max(0, ev))
+                total_ev = sum(ev_weights)
+
+                if total_ev > 0:
+                    for i, b in enumerate(all_bets):
+                        b["stake"] = joint_total * (ev_weights[i] / total_ev)
+
+                # 更新 portfolio_optimizer 中已有投注的仓位
+                for i, eb in enumerate(same_match):
+                    eb["stake"] = all_bets[i]["stake"]
+
+                # 当前这笔使用分配后的仓位
+                final_stake = all_bets[-1]["stake"]
+
+                # 更新跟踪
+                self._correlation_groups[group_key] = all_bets
+
+                logger.info("  🔗 同场相关投注: %s vs %s %d 个市场, 联合折扣 ¥%.1f (原 ¥%.1f)",
+                           home_team, away_team, len(all_bets), joint_total, total_individual)
+
+            # 同场跨市场数量上限
             if len(same_match) >= self.MAX_SAME_GAME_MARKETS:
-                logger.info("  🔒 同场跨市场互斥: %s vs %s 已有 %d 注 (%s)",
-                           home_team, away_team, len(same_match),
-                           ", ".join(b.get("market", "?") for b in same_match))
+                logger.info("  🔒 同场投注上限: %s vs %s 已达 %d 个市场",
+                           home_team, away_team, self.MAX_SAME_GAME_MARKETS)
                 return 0.0
 
         # 组合分散度调整

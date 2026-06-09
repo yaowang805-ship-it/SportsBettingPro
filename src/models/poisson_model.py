@@ -37,7 +37,7 @@ class PoissonGoalModel:
     attack/defense 为正则化泊松回归参数。
     """
 
-    def __init__(self, alpha: float = 1.0, max_iter: int = 500):
+    def __init__(self, alpha: float = 1.0, max_iter: int = 500, decay_halflife_days: int = 365):
         self.home_model = PoissonRegressor(alpha=alpha, max_iter=max_iter)
         self.away_model = PoissonRegressor(alpha=alpha, max_iter=max_iter)
         self.teams_: List[str] = []
@@ -46,6 +46,16 @@ class PoissonGoalModel:
         self.mu: float = 0.0
         self.home_adv: float = 0.0
         self.fitted: bool = False
+        self.decay_halflife_days = decay_halflife_days
+
+    def _compute_weights(self, dates: pd.Series) -> np.ndarray:
+        """时间衰减权重。"""
+        if len(dates) == 0:
+            return np.array([])
+        most_recent = dates.max()
+        days_diff = (most_recent - dates).dt.total_seconds() / (24 * 3600)
+        decay_const = np.log(2) / self.decay_halflife_days
+        return np.exp(-decay_const * days_diff.values)
 
     def _build_design(self, df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         """构建泊松回归的设计矩阵。
@@ -86,13 +96,21 @@ class PoissonGoalModel:
         return X_home, y_home, X_away, y_away
 
     def fit(self, df: pd.DataFrame):
-        """在历史比赛数据上训练模型。"""
+        """在历史比赛数据上训练模型（支持时间衰减）。"""
         df = df.dropna(subset=['home_goals', 'away_goals']).copy()
         logger.info('  泊松模型: %d 场比赛, 球队编码中...', len(df))
 
         X_home, y_home, X_away, y_away = self._build_design(df)
-        self.home_model.fit(X_home, y_home)
-        self.away_model.fit(X_away, y_away)
+
+        weights = None
+        if 'date' in df.columns:
+            df['date'] = pd.to_datetime(df['date'], errors='coerce')
+            weights = self._compute_weights(df['date'])
+            logger.info('  时间衰减权重: decay_halflife=%d天, range=[%.3f, %.3f]',
+                        self.decay_halflife_days, weights.min(), weights.max())
+
+        self.home_model.fit(X_home, y_home, sample_weight=weights)
+        self.away_model.fit(X_away, y_away, sample_weight=weights)
 
         # 提取基线参数
         self.mu = self.home_model.intercept_  # home model base
@@ -168,6 +186,28 @@ class PoissonGoalModel:
             "score_matrix": score_matrix.tolist(),
         }
 
+    def predict_over_under(self, home_team: str, away_team: str, line: float = 2.5) -> dict:
+        """计算任意大小球盘口的覆盖概率。"""
+        pred = self.predict_proba(home_team, away_team)
+        if "error" in pred:
+            return pred
+
+        sm = np.array(pred["score_matrix"])
+        max_g = sm.shape[0] - 1
+
+        over = under = push = 0.0
+        for i in range(max_g + 1):
+            for j in range(max_g + 1):
+                total = i + j
+                if total > line:
+                    over += sm[i, j]
+                elif total < line:
+                    under += sm[i, j]
+                else:
+                    push += sm[i, j]
+
+        return {"over": float(over), "under": float(under), "push": float(push), "line": line}
+
     def _predict_unknown(self, home_team: str, away_team: str, max_goals: int = 10) -> Dict:
         """当球队未知时使用联赛平均参数预测。"""
         logger.debug("  泊松未知球队: %s vs %s, 使用联赛均值", home_team, away_team)
@@ -211,6 +251,7 @@ class PoissonGoalModel:
             "mu": self.mu,
             "home_adv": self.home_adv,
             "n_teams": self.n_teams,
+            "decay_halflife_days": self.decay_halflife_days,
         }
         with open(path, 'wb') as f:
             pickle.dump({
@@ -231,6 +272,7 @@ class PoissonGoalModel:
         self.mu = meta["mu"]
         self.home_adv = meta["home_adv"]
         self.n_teams = meta["n_teams"]
+        self.decay_halflife_days = meta.get("decay_halflife_days", 365)
         self.fitted = True
 
 
@@ -245,8 +287,8 @@ def train_poisson_model(save_path: str = "models/poisson_model.pkl") -> PoissonG
     df.columns = [c.strip().lower() for c in df.columns]
     df["date"] = pd.to_datetime(df["date"], format="mixed", utc=True).dt.tz_localize(None)
 
-    model = PoissonGoalModel(alpha=1.0)
-    model.fit(df[["home", "away", "home_goals", "away_goals"]])
+    model = PoissonGoalModel(alpha=1.0, decay_halflife_days=365)
+    model.fit(df[["date", "home", "away", "home_goals", "away_goals"]])
 
     if model.fitted:
         save_path_full = ROOT / save_path

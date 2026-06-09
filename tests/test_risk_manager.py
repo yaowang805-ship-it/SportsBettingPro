@@ -413,9 +413,14 @@ class TestCoolOff:
         stake1 = rm.get_max_stake(0.6, 2.0, input_is_prob=True,
                                    sport="nba", home_team="A", away_team="B", market="h2h")
         assert stake1 > 0
+        # P4: 同场跨市场不再禁止，改用联合凯利折扣
         stake2 = rm.get_max_stake(0.6, 2.0, input_is_prob=True,
                                    sport="nba", home_team="A", away_team="B", market="spread")
-        assert stake2 == 0.0
+        assert stake2 > 0
+        # 第三笔相同比赛不同市场 → 超上限
+        stake3 = rm.get_max_stake(0.6, 2.0, input_is_prob=True,
+                                   sport="nba", home_team="A", away_team="B", market="total")
+        assert stake3 == 0.0
 
     def test_same_market_duplicate_blocked(self):
         rm = RiskManager(initial_budget=10000)

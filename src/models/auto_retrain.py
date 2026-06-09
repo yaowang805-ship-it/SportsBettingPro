@@ -74,12 +74,12 @@ def _check_accuracy_drop() -> bool:
 
 
 def should_retrain(frequency_days: int = 30) -> bool:
-    """检查是否需要重新训练模型（时间+退化双触发）。"""
+    """检查是否需要重新训练模型（全局+按运动项目）。"""
     meta = load_metadata()
     # 条件1: 从未训练过
     if meta['last_train'] is None:
         return True
-    # 条件2: 时间到期
+    # 条件2: 时间到期（全局阈值）
     last_train = datetime.fromisoformat(meta['last_train'])
     if (datetime.now() - last_train).days >= frequency_days:
         logger.info("  时间触发: 距上次训练 %d 天 >= %d 天",
@@ -94,47 +94,124 @@ def should_retrain(frequency_days: int = 30) -> bool:
     return False
 
 
-def mark_training_complete():
-    """标记模型训练完成。"""
+def _sport_should_retrain(sport: str, meta: dict, frequency_days: int = 30) -> bool:
+    """检查单个运动项目是否需要重训（基于上次训练时间 + 数据更新时间）。"""
+    sport_key = f'last_train_{sport}'
+    last = meta.get(sport_key)
+    if last is None:
+        logger.info("  %s 从未训练过，需要重训", sport.upper())
+        return True
+
+    last_dt = datetime.fromisoformat(last)
+    days_since = (datetime.now() - last_dt).days
+    if days_since >= frequency_days:
+        logger.info("  %s 距上次训练 %d 天 >= %d 天，需要重训",
+                    sport.upper(), days_since, frequency_days)
+        return True
+
+    # 检查数据是否有更新
+    csv_path = ROOT / "data" / "processed" / f"{sport}_features.csv"
+    if csv_path.exists():
+        mtime = datetime.fromtimestamp(csv_path.stat().st_mtime)
+        if mtime > last_dt:
+            logger.info("  %s 数据已更新 (%s)，需要重训",
+                        sport.upper(), mtime.strftime("%Y-%m-%d"))
+            return True
+
+    logger.info("  %s 无需重训（%d 天前训练，数据无更新）", sport.upper(), days_since)
+    return False
+
+
+def mark_training_complete(sport: str = None):
+    """标记模型训练完成。sport=None 标记全部，否则只标记指定项目。"""
     meta = load_metadata()
-    meta['last_train'] = datetime.now().isoformat()
+    now = datetime.now().isoformat()
+    if sport:
+        meta[f'last_train_{sport}'] = now
+    else:
+        meta['last_train'] = now
     save_metadata(meta)
 
 
 def auto_retrain():
-    """在需要时自动重新训练所有模型。"""
-    if not should_retrain():
-        print("模型已是最新，无需重新训练")
-        return False
+    """在需要时自动重新训练模型，按运动项目分别检查。"""
+    meta = load_metadata()
+    success = False
 
-    print("🔄 启动模型重新训练（时间/退化信号触发）...")
-    try:
-        from src.models.ensemble_trainer import train_sport_ensemble
-        train_sport_ensemble('bb')
-        train_sport_ensemble('fb')
-        train_sport_ensemble('nfl')
-
-        # Dixon-Coles 比分模型（贝叶斯优先）
+    for sport in ['bb', 'fb', 'nfl']:
+        if not _sport_should_retrain(sport, meta):
+            continue
         try:
-            from src.models.bayesian_dixon_coles import train_bayesian_dc
-            dc_model = train_bayesian_dc()
+            from src.models.ensemble_trainer import train_sport_ensemble
+            train_sport_ensemble(sport)
+            meta[f'last_train_{sport}'] = datetime.now().isoformat()
+            print(f"  ✅ {sport.upper()} 重训完成")
+            success = True
+        except Exception as e:
+            print(f"  ⚠️ {sport.upper()} 重训失败: {e}")
+
+    # Dixon-Coles 比分模型（经典点估计优先，快速稳定）
+    dc_key = 'last_train_dc'
+    dc_last = meta.get(dc_key)
+    dc_needed = False
+    if dc_last is None:
+        dc_needed = True
+    else:
+        dc_dt = datetime.fromisoformat(dc_last)
+        if (datetime.now() - dc_dt).days >= 30:
+            dc_needed = True
+
+    if dc_needed:
+        try:
+            from src.models.dixon_coles import train_dixon_coles
+            dc_model = train_dixon_coles()
             if dc_model.fitted:
-                print(f"  ✅ 贝叶斯 DC 训练完成 ({dc_model.n_teams} 支球队)")
+                print(f"  ✅ 经典 DC 训练完成 ({dc_model.n_teams} 支球队)")
+                meta[dc_key] = datetime.now().isoformat()
+                success = True
         except Exception:
             try:
-                from src.models.dixon_coles import train_dixon_coles
-                dc_model = train_dixon_coles()
+                from src.models.bayesian_dixon_coles import train_bayesian_dc
+                dc_model = train_bayesian_dc(draws=400, tune=400)  # 缩减采样加速
                 if dc_model.fitted:
-                    print(f"  ✅ 传统 DC 训练完成 ({dc_model.n_teams} 支球队)")
+                    print(f"  ✅ 贝叶斯 DC 训练完成 (回退, {dc_model.n_teams} 支球队)")
+                    meta[dc_key] = datetime.now().isoformat()
+                    success = True
             except Exception as e:
                 print(f"  ⚠️ DC 训练跳过: {e}")
 
-        mark_training_complete()
+    # 泊松模型重训
+    poisson_key = 'last_train_poisson'
+    poisson_last = meta.get(poisson_key)
+    poisson_needed = False
+    if poisson_last is None:
+        poisson_needed = True
+    else:
+        poisson_dt = datetime.fromisoformat(poisson_last)
+        if (datetime.now() - poisson_dt).days >= 30:
+            poisson_needed = True
+
+    if poisson_needed:
+        try:
+            from src.models.poisson_model import train_poisson_model
+            poisson_model = train_poisson_model()
+            if poisson_model.fitted:
+                print(f"  ✅ 泊松模型训练完成 ({poisson_model.n_teams} 支球队)")
+                meta[poisson_key] = datetime.now().isoformat()
+                success = True
+        except Exception as e:
+            print(f"  ⚠️ 泊松重训失败: {e}")
+
+    # 统一保存
+    meta['last_train'] = datetime.now().isoformat()
+    save_metadata(meta)
+
+    if not success:
+        print("✅ 所有模型已是最新，无需重训")
+        return False
+    else:
         print("✅ 重训练完成")
         return True
-    except Exception as e:
-        print(f"❌ 重新训练失败: {e}")
-        return False
 
 
 def get_model_health() -> dict:

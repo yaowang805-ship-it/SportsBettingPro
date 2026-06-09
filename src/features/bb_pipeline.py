@@ -289,8 +289,6 @@ def build_bb_features(
         # 自动注入伤病特征（历史数据无法获取实时伤病，填0）
         old['home_injured'] = 0
         old['away_injured'] = 0
-        old['home_injured_stars'] = 0
-        old['away_injured_stars'] = 0
     else:
         old = pd.DataFrame()
 
@@ -346,15 +344,9 @@ def build_bb_features(
                 lambda x: injury_map.get(NBA_TEAM_ABBR_MAP.get(x, ''), {}).get('injured_count', 0))
             new['away_injured'] = new['away'].str.lower().map(
                 lambda x: injury_map.get(NBA_TEAM_ABBR_MAP.get(x, ''), {}).get('injured_count', 0))
-            new['home_injured_stars'] = new['home'].str.lower().map(
-                lambda x: injury_map.get(NBA_TEAM_ABBR_MAP.get(x, ''), {}).get('injured_stars', 0))
-            new['away_injured_stars'] = new['away'].str.lower().map(
-                lambda x: injury_map.get(NBA_TEAM_ABBR_MAP.get(x, ''), {}).get('injured_stars', 0))
         else:
             new['home_injured'] = 0
             new['away_injured'] = 0
-            new['home_injured_stars'] = 0
-            new['away_injured_stars'] = 0
     else:
         new = pd.DataFrame()
 
@@ -377,8 +369,6 @@ def build_bb_features(
         bet['win'] = (bet['home_score'] > bet['away_score']).astype(int)
         bet['home_injured'] = 0
         bet['away_injured'] = 0
-        bet['home_injured_stars'] = 0
-        bet['away_injured_stars'] = 0
         print(f"  📊 nba_betting: {len(bet)} 场 ({bet['date'].dt.year.min()}~{bet['date'].dt.year.max()}, 含盘口 {bet['teamsprd'].notna().sum()} 场)")
     else:
         bet = pd.DataFrame()
@@ -390,14 +380,13 @@ def build_bb_features(
     common_cols = ['date', 'home', 'away', 'win', 'home_score', 'away_score',
                    'home_goals', 'away_goals', 'teamsprd', 'ovrundr',
                    'home_injured', 'away_injured',
-                   'home_injured_stars', 'away_injured_stars',
                    'home_odds', 'away_odds']
     parts = []
     for src in [new, old, bet]:
         if not src.empty:
             for c in common_cols:
                 if c not in src.columns:
-                    src[c] = 0 if c in ('home_injured', 'away_injured', 'home_injured_stars', 'away_injured_stars') else np.nan
+                    src[c] = 0 if c in ('home_injured', 'away_injured') else np.nan
             parts.append(src[common_cols].copy())
 
     df = pd.concat(parts, ignore_index=True)
@@ -416,7 +405,6 @@ def build_bb_features(
     # ── 6. 将特征合并到比赛行 ──
     match_df = df[['date', 'home', 'away', 'win', 'home_goals', 'away_goals',
                    'teamsprd', 'ovrundr', 'home_injured', 'away_injured',
-                   'home_injured_stars', 'away_injured_stars',
                    'home_elo', 'away_elo', 'elo_diff',
                    'home_odds', 'away_odds']].copy()
 
@@ -445,52 +433,6 @@ def build_bb_features(
     match_df['pace_proxy'] = (match_df['home_gf_ewm5'] + match_df['away_gf_ewm5'] +
                               match_df['home_ga_ewm5'] + match_df['away_ga_ewm5']) / 2
 
-    # ── 历史市场概率特征（来自 nba_betting 盘口数据） ──
-    odds_h = pd.to_numeric(match_df['home_odds'], errors='coerce')
-    odds_a = pd.to_numeric(match_df['away_odds'], errors='coerce')
-    match_df['hist_market_home_prob'] = (1.0 / odds_h.clip(lower=1.01)).fillna(0.5)
-    match_df['hist_market_away_prob'] = (1.0 / odds_a.clip(lower=1.01)).fillna(0.5)
-    match_df['hist_market_edge'] = match_df['hist_market_home_prob'] - 0.5
-
-    # ── 预测 Edge 特征（CLV 代理） ──
-    try:
-        from src.monitor.clv_tracker import compute_team_edge_features
-        from src.core.team_names import cn_to_feature_name
-
-        edges = compute_team_edge_features(sport="nba")
-        if edges:
-            # 将中文名映射为特征名
-            eng_edges = {}
-            for cn, e in edges.items():
-                en = cn_to_feature_name(cn, sport="nba")
-                eng_edges[en] = e
-
-            # 按比赛时间对齐（用 asof merge 避免未来信息泄露）
-            edge_df = pd.DataFrame({
-                'date': match_df['date'],
-                'home_edge': match_df['home'].str.lower().map(eng_edges),
-                'away_edge': match_df['away'].str.lower().map(eng_edges),
-            })
-            match_df['home_pred_edge'] = edge_df['home_edge'].fillna(0)
-            match_df['away_pred_edge'] = edge_df['away_edge'].fillna(0)
-            match_df['pred_edge_diff'] = match_df['home_pred_edge'] - match_df['away_pred_edge']
-    except Exception as e:
-        match_df['home_pred_edge'] = 0.0
-        match_df['away_pred_edge'] = 0.0
-        match_df['pred_edge_diff'] = 0.0
-
-    # ── 天气与行程距离特征 ──
-    from src.features.weather_features import add_weather_to_df, get_weather_feature_names
-    try:
-        match_df = add_weather_to_df(match_df)
-        for wf in get_weather_feature_names():
-            if wf not in match_df.columns:
-                match_df[wf] = 0.0
-    except Exception as e:
-        print(f"  ⚠️ 天气特征注入失败: {e}")
-        for wf in get_weather_feature_names():
-            match_df[wf] = 0.0
-
     # 仅填充特征列，不填充盘口原始列（避免将2015年的盘口前向填充到2026年）
     # 注意：ovrundr 作为 total 模型的特征保留（但 teamsprd 仍排除）
     feature_like = [c for c in match_df.columns if c not in ('teamsprd',)]
@@ -510,6 +452,8 @@ def build_bb_features(
         np.nan
     )
 
+    # date 列归一化为日期字符串，避免带时间戳导致的再读取解析失败
+    match_df['date'] = pd.to_datetime(match_df['date'], errors='coerce').dt.strftime('%Y-%m-%d')
     if output_csv:
         match_df.to_csv(output_csv, index=False)
     n_with_spread = match_df['teamsprd'].notna().sum()

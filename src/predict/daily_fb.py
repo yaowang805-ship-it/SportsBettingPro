@@ -23,6 +23,7 @@ from src.notify.formatter import Recommendation, MarketType, RecommendationForma
 from src.monitor.clv_tracker import capture_opening_odds
 from src.core.team_names import LEAGUE_CN
 from src.dashboard.components.virtual_portfolio import auto_place_bets
+from src.predict.ev_verification import log_prediction
 
 # ── Dixon-Coles 比分模型（贝叶斯优先，点估计备选） ──
 _DC_MODEL = None
@@ -48,6 +49,17 @@ if _DC_MODEL is None and _LEGACY_DC_PATH.exists():
         logger.info("  ✅ 传统 Dixon-Coles 已加载 (%d 支球队)", _DC_MODEL.n_teams)
     except Exception as e:
         logger.warning("  ⚠️ 传统 DC 加载失败: %s", e)
+
+# ── 泊松模型（用于混合+任意线大小球） ──
+_POISSON_MODEL = None
+if (ROOT / "models/poisson_model.pkl").exists():
+    try:
+        from src.models.poisson_model import PoissonGoalModel
+        _POISSON_MODEL = PoissonGoalModel()
+        _POISSON_MODEL.load(str(ROOT / "models/poisson_model.pkl"))
+        logger.info("  ✅ 泊松模型已加载 (%d 支球队)", _POISSON_MODEL.n_teams)
+    except Exception as e:
+        logger.warning("  ⚠️ 泊松模型加载失败: %s", e)
 
 from src.betting.asian_handicap import extract_ah_odds, compute_ah_ev
 
@@ -81,10 +93,6 @@ def _model_is_reliable(target: str) -> bool:
     except Exception:
         return False
 
-
-_TOTAL_RELIABLE = _model_is_reliable("total_result")
-if not _TOTAL_RELIABLE:
-    logger.info("  ℹ️ 足球大小球推荐已禁用（模型准确率不足）")
 
 from src.core.team_names import cn_team
 def cn(name): return cn_team(name, sport="football")
@@ -156,22 +164,15 @@ predictions = predictor.predict(valid)
 logger.info("✅ 预测完成: %s 场", len(predictions))
 
 # ── 泊松模型混合（如可用） ──
-try:
-    from src.models.poisson_model import PoissonGoalModel
-    _POISSON_MODEL = PoissonGoalModel()
-    poisson_path = ROOT / "models/poisson_model.pkl"
-    if poisson_path.exists():
-        _POISSON_MODEL.load(str(poisson_path))
-        n_blended = 0
-        for pred in predictions:
-            poisson_pred = _POISSON_MODEL.predict_proba(pred["home_team"], pred["away_team"])
-            if "error" not in poisson_pred:
-                pred["win_prob"] = 0.5 * pred["win_prob"] + 0.5 * poisson_pred["home_win"]
-                n_blended += 1
-        if n_blended > 0:
-            logger.info("✅ 泊松模型混合: %d 场", n_blended)
-except Exception:
-    pass
+if _POISSON_MODEL is not None and _POISSON_MODEL.fitted:
+    n_blended = 0
+    for pred in predictions:
+        poisson_pred = _POISSON_MODEL.predict_proba(pred["home_team"], pred["away_team"])
+        if "error" not in poisson_pred:
+            pred["win_prob"] = 0.5 * pred["win_prob"] + 0.5 * poisson_pred["home_win"]
+            n_blended += 1
+    if n_blended > 0:
+        logger.info("✅ 泊松模型混合: %d 场", n_blended)
 
 # ── 联赛校准器 ──
 try:
@@ -275,22 +276,42 @@ for pred in predictions:
         except Exception:
             pass
 
-    # ── 大小球候选 ──
-    total_prob = pred.get("total_result_prob")
+    # ── 大小球候选（泊松模型支持任意线，接近 2.5 时与 ensemble 混合）──
     total_odds = pred.get("total_odds", 0)
     total_pt = pred.get("total_point")
-    if _TOTAL_RELIABLE and total_prob is not None and total_odds > 0 and total_pt is not None:
-        under_prob = 1.0 - total_prob
-        under_ev = under_prob - 0.5
-        if under_ev > 0:
-            kelly = (under_prob * total_odds - 1) / (total_odds - 1) if total_odds > 1 else 0
-            stake_under = rm.get_max_stake(under_prob, total_odds, current_exposure, input_is_prob=True) if kelly > 0 else 0
-            if stake_under > 5:
-                candidates.append({
-                    "type": f"小 {total_pt}", "odds": total_odds,
-                    "model_prob": under_prob, "mkt_prob": 0.5,
-                    "ev": under_ev, "stake": stake_under,
-                })
+    if total_odds > 0 and total_pt is not None:
+        total_prob = None
+        total_source = "none"
+
+        # 泊松模型：任意盘口线
+        if _POISSON_MODEL is not None and _POISSON_MODEL.fitted:
+            poisson_ou = _POISSON_MODEL.predict_over_under(home, away, total_pt)
+            if "error" not in poisson_ou:
+                total_prob = poisson_ou["over"]
+                total_source = "poisson"
+
+        # 接近 2.5 时与 ensemble 混合
+        ensemble_total = pred.get("total_result_prob")
+        if ensemble_total is not None and abs(total_pt - 2.5) <= 0.3:
+            if total_source == "poisson":
+                total_prob = 0.5 * total_prob + 0.5 * ensemble_total
+                total_source = "blended"
+            else:
+                total_prob = ensemble_total
+                total_source = "ensemble"
+
+        if total_prob is not None:
+            under_prob = 1.0 - total_prob
+            under_ev = under_prob - 0.5
+            if under_ev > 0:
+                kelly = (under_prob * total_odds - 1) / (total_odds - 1) if total_odds > 1 else 0
+                stake_under = rm.get_max_stake(under_prob, total_odds, current_exposure, input_is_prob=True) if kelly > 0 else 0
+                if stake_under > 5:
+                    candidates.append({
+                        "type": f"小 {total_pt}", "odds": total_odds,
+                        "model_prob": under_prob, "mkt_prob": 0.5,
+                        "ev": under_ev, "stake": stake_under,
+                    })
 
     # ── 亚洲盘口候选 ──
     if _dc_knows_teams(home, away):
@@ -340,6 +361,16 @@ for pred in predictions:
                  "sport": "football",
                  "league": LEAGUE_CN.get(pred.get("sport_key", ""), "国际足球"),
                  "market": best["type"]})
+    log_prediction(
+        sport="football", league=pred.get("sport_key", ""),
+        home_team=home, away_team=away,
+        market_type="胜负", market_detail=best["type"],
+        odds=best["odds"], model_prob=best["model_prob"],
+        market_prob=best["mkt_prob"], ev=best["ev"],
+        stake=best["stake"], match_time=pred["commence_time"],
+        source="daily", home_team_cn=cn(home), away_team_cn=cn(away),
+        sharp_prob=pred.get("sharp_home_prob"),
+    )
     current_exposure += best["stake"] / max(rm.current_balance, 1.0)
 
 # 钉钉通知

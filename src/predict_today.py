@@ -59,6 +59,7 @@ def main():
         ("nba", "src.predict.daily_bb", "NBA"),
         ("football", "src.predict.daily_fb", "足球"),
         ("nfl", "src.predict.daily_nfl", "NFL"),
+        ("wc", "src.predict.daily_wc", "世界杯"),
     ]
 
     all_recs = []
