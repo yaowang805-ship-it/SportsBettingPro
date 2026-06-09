@@ -373,6 +373,10 @@ for pred in predictions:
     )
     current_exposure += best["stake"] / max(rm.current_balance, 1.0)
 
+# 联合凯利组合优化（替代逐个调 get_max_stake 的启发式分散调整）
+if recs:
+    recs = rm.batch_optimize(recs)
+
 # 钉钉通知
 notifier = get_notifier()
 if not recs:

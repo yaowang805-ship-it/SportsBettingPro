@@ -8,8 +8,9 @@
 import json
 import sys
 from pathlib import Path
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Tuple
+from math import radians, sin, cos, sqrt, asin
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
@@ -47,6 +48,48 @@ def _is_sharp_book(bookmaker_title: str) -> bool:
         if known_name in name and sharpness >= _SHARP_THRESHOLD:
             return True
     return False
+
+
+# ── 欧洲球队坐标（用于行程距离特征）──
+_FB_COORDS = {
+    "Arsenal": (51.555, -0.108), "Aston Villa": (52.509, -1.885), "Bournemouth": (50.735, -1.838),
+    "Brentford": (51.488, -0.289), "Brighton": (50.861, -0.084), "Chelsea": (51.482, -0.191),
+    "Crystal Palace": (51.398, -0.086), "Everton": (53.439, -2.966), "Fulham": (51.475, -0.221),
+    "Liverpool": (53.431, -2.961), "Leeds United": (53.778, -1.572), "Leicester City": (52.620, -1.142),
+    "Manchester City": (53.483, -2.200), "Manchester United": (53.463, -2.291),
+    "Newcastle United": (54.975, -1.622), "Nottingham Forest": (52.942, -1.133),
+    "Tottenham Hotspur": (51.603, -0.066), "West Ham United": (51.539, 0.017),
+    "Wolverhampton Wanderers": (52.590, -2.130),
+    "Atletico Madrid": (40.437, -3.599), "Barcelona": (41.381, 2.123),
+    "Real Madrid": (40.453, -3.688), "Sevilla": (37.384, -5.970),
+    "Real Betis": (37.356, -5.981), "Valencia": (39.475, -0.358),
+    "Villarreal": (39.944, -0.103), "Athletic Bilbao": (43.263, -2.948),
+    "Real Sociedad": (43.301, -1.974), "Celta Vigo": (42.212, -8.739),
+    "AC Milan": (45.478, 9.124), "Inter Milan": (45.478, 9.124),
+    "Juventus": (45.110, 7.641), "Roma": (41.935, 12.455), "Lazio": (41.935, 12.455),
+    "Napoli": (40.828, 14.193), "Atalanta": (45.699, 9.744), "Fiorentina": (43.771, 11.282),
+    "FC Bayern Munich": (48.219, 11.625), "Borussia Dortmund": (51.492, 7.415),
+    "RB Leipzig": (51.345, 12.348), "Bayer Leverkusen": (51.038, 7.002),
+    "Paris Saint-Germain": (48.841, 2.253), "Olympique Marseille": (43.270, 5.396),
+    "Olympique Lyon": (45.724, 4.832), "AS Monaco": (43.727, 7.415),
+    "Lille": (50.612, 3.130), "Nice": (43.704, 7.194),
+}
+_FB_CENTER_EUROPE = (50.0, 10.0)
+
+
+def _haversine(lat1, lon1, lat2, lon2):
+    """Great-circle distance in km."""
+    R = 6371
+    dlat = radians(lat2 - lat1)
+    dlon = radians(lon2 - lon1)
+    a = sin(dlat / 2) ** 2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2) ** 2
+    return R * 2 * asin(sqrt(a))
+
+
+def _team_distance(home: str, away: str) -> float:
+    c1 = _FB_COORDS.get(home, _FB_CENTER_EUROPE)
+    c2 = _FB_COORDS.get(away, _FB_CENTER_EUROPE)
+    return _haversine(c1[0], c1[1], c2[0], c2[1])
 
 
 def extract_sharp_market_probs(odds_data: List[Dict]) -> Dict[str, Dict]:
@@ -690,6 +733,10 @@ class EnsemblePredictor:
         match_df["off_vs_def"] = match_df["home_gf_ewm5"] - match_df["away_ga_ewm5"]
         match_df["b2b_diff"] = match_df["home_b2b"] - match_df["away_b2b"]
         match_df["rest_diff"] = match_df["home_rest_days"] - match_df["away_rest_days"]
+
+        # ── 新增特征：周中赛 / 行程距离 / 主客场滚动 ──
+        match_df["midweek"] = (pd.to_datetime(match_df["date"]).dt.dayofweek >= 4).astype(int)
+        match_df["away_travel_km"] = match_df.apply(lambda r: _team_distance(r["home"], r["away"]), axis=1)
 
         # 市值特征
         for col in ["home_market_value", "away_market_value", "market_value_diff"]:

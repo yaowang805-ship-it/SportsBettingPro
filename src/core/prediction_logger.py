@@ -152,8 +152,11 @@ def settle_prediction(prediction_id: str, won: bool, result_odds: Optional[float
 def batch_settle(sport: str = None):
     """批量结算已结束比赛的预测（自动匹配结果）。
 
+    通过 ESPN 免费 API 获取已结束比赛的比分，
+    自动匹配 prediction_log 中的 pending 记录并结算。
+
     Args:
-        sport: 指定运动类型，None 表示全部
+        sport: 指定运动类型（nba/football），None 表示全部
     """
     if not LOG_FILE.exists():
         return
@@ -162,25 +165,156 @@ def batch_settle(sport: str = None):
     if sport:
         pending = pending[pending["sport"] == sport]
     if pending.empty:
+        logger.info("📋 批量结算: 无待结算记录")
         return
 
+    from src.fetchers.espn_scores import fetch_espn_scores, LEAGUE_ESPN_PATH, SPORT_KEY_TO_LEAGUE
+    from src.core.team_names import cn_to_odds_name, NBA_CN
+
     settled_count = 0
-    for _, row in pending.iterrows():
-        match_time_str = row.get("match_time", "")
-        if not match_time_str:
-            continue
-        try:
-            match_dt = datetime.fromisoformat(match_time_str)
-        except Exception:
-            continue
-        # 比赛已结束超过 2 小时才结算
-        if datetime.now(timezone.utc) <= match_dt.replace(tzinfo=timezone.utc):
+    errors = 0
+
+    # 按联赛分组，每组只拉一次 ESPN
+    for (sport_name, league), grp in pending.groupby(["sport", "league"]):
+        # 映射到 ESPN 联赛名
+        espn_league = None
+        if sport_name == "nba":
+            espn_league = "NBA"
+        elif sport_name in ("football", "soccer"):
+            espn_league = league
+
+        if espn_league not in LEAGUE_ESPN_PATH:
+            logger.debug("  ⏭️ %s/%s: ESPN 不支持此联赛", sport_name, league)
             continue
 
-        # TODO: 接入实际赛果 API（balldontlie / football-data.org）自动结算
-        # 目前仅标记为待手动结算
-        pass
-    logger.info("📋 批量结算: %s 条", settled_count)
+        # 确定需拉取的天数范围
+        match_dates = set()
+        for _, row in grp.iterrows():
+            try:
+                dt = datetime.fromisoformat(row["match_time"])
+                match_dates.add(dt.strftime("%Y%m%d"))
+            except Exception:
+                continue
+        if not match_dates:
+            continue
+
+        days_back = max(
+            (datetime.now(timezone.utc) - datetime.strptime(max(match_dates), "%Y%m%d").replace(tzinfo=timezone.utc)).days + 2,
+            3
+        )
+
+        logger.info("  📡 拉取 %s ESPN 数据（回溯 %d 天）...", espn_league, days_back)
+        try:
+            espn_games = fetch_espn_scores(espn_league, days_back=min(days_back, 7))
+        except Exception as e:
+            logger.warning("  ⚠️ ESPN 拉取失败 %s: %s", espn_league, e)
+            errors += 1
+            continue
+
+        if not espn_games:
+            logger.info("  📭 %s: ESPN 无已结束比赛", espn_league)
+            continue
+
+        # 构建 ESPN 球队名索引
+        espn_scores = {}
+        for g in espn_games:
+            h, a = g["home_team"].lower(), g["away_team"].lower()
+            key_h = (h, a)
+            key_a = (a, h)
+            espn_scores[key_h] = (g["home_score"], g["away_score"])
+            espn_scores[key_a] = (g["away_score"], g["home_score"])
+
+        for _, row in grp.iterrows():
+            pred_id = row["id"]
+            home_cn = str(row.get("home_team_cn", "") or row.get("home_team", ""))
+            away_cn = str(row.get("away_team_cn", "") or row.get("away_team", ""))
+            home_en = str(row.get("home_team_en", "") or "")
+            away_en = str(row.get("away_team_en", "") or "")
+
+            # 尝试匹配英文队名
+            h_name = home_en.lower().strip() if home_en else cn_to_odds_name(home_cn).lower().strip()
+            a_name = away_en.lower().strip() if away_en else cn_to_odds_name(away_cn).lower().strip()
+
+            # 模糊匹配：ESPN 名包含 odds 名 或 odds 名包含 ESPN 名
+            match_key = None
+            for (eh, ea), (hs, as_) in espn_scores.items():
+                if (eh in h_name or h_name in eh) and (ea in a_name or a_name in ea):
+                    match_key = (eh, ea)
+                    break
+
+            if match_key is None:
+                continue
+
+            home_score, away_score = espn_scores[match_key]
+            mtype = str(row.get("market_type", ""))
+            detail = str(row.get("market_detail", ""))
+
+            won = _determine_result(mtype, detail, home_score, away_score)
+            settle_prediction(pred_id, won, result_odds=row.get("odds"))
+            settled_count += 1
+            logger.info("  ✅ %s %s vs %s → %s (%d-%d)",
+                       pred_id, home_cn, away_cn, "W" if won else "L",
+                       home_score, away_score)
+
+    logger.info("📋 批量结算: %s 条（错误 %d）", settled_count, errors)
+    return settled_count
+
+
+def _determine_result(market_type: str, market_detail: str,
+                       home_score: int, away_score: int) -> bool:
+    """根据盘口类型和比分判定输赢。"""
+    mt = market_type.lower().strip()
+    detail = market_detail.lower().strip()
+
+    if mt in ("胜负", "win", "h2h"):
+        if "主胜" in detail or "home" in detail:
+            return home_score > away_score
+        elif "客胜" in detail or "away" in detail:
+            return away_score > home_score
+        elif "平局" in detail or "draw" in detail:
+            return home_score == away_score
+        return home_score > away_score  # default: home win
+
+    elif mt in ("大小球", "total", "totals"):
+        # 提取盘口线: "大 217.5" → 217.5
+        import re
+        nums = re.findall(r"[\d.]+", detail)
+        if not nums:
+            return False
+        line = float(nums[-1])
+        total = home_score + away_score
+        if "大" in detail or "over" in detail:
+            return total > line
+        elif "小" in detail or "under" in detail:
+            return total < line
+        return total > line
+
+    elif mt in ("让分", "spread"):
+        import re
+        nums = re.findall(r"[-+]?[\d.]+", detail)
+        if not nums:
+            return False
+        spread = float(nums[0])
+        if "主" in detail or "home" in detail:
+            return home_score + spread > away_score
+        else:
+            return away_score + spread > home_score
+
+    elif mt in ("asian_handicap", "亚洲"):
+        import re
+        # Asian handicap is complex; simplified: compare actual score diff to line
+        nums = re.findall(r"[-+]?[\d.]+", detail)
+        if not nums:
+            return False
+        line = float(nums[0])
+        diff = home_score - away_score
+        if "主" in detail:
+            return diff + line > 0
+        else:
+            return diff - line < 0
+
+    # Default: home win
+    return home_score > away_score
 
 
 def get_performance(date_from: Optional[str] = None, date_to: Optional[str] = None) -> Dict:

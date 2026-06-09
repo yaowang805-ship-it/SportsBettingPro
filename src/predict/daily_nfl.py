@@ -409,6 +409,15 @@ def main():
         logger.info("    %s %s vs %s | EV=%+.1f%% Kelly=%.1f%% Stake=¥%.0f Odds=%.2f",
                     r["type"].upper(), h, a, r["ev"] * 100, r["kelly_frac"] * 100, r["stake"], r["odds"])
 
+    # 联合凯利组合优化
+    if recommendations:
+        try:
+            for r in recommendations:
+                r["sport"] = "nfl"
+            recommendations = rm.batch_optimize(recommendations, bankroll=rm.current_balance)
+        except Exception as e:
+            logger.warning("  ⚠️ 组合优化跳过: %s", e)
+
     # 保存
     NFL_RECS_FILE.write_text(json.dumps({
         "date": datetime.now().isoformat(),

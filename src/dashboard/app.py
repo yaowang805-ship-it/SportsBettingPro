@@ -17,7 +17,7 @@ from src.dashboard.pages import (
     overview, recommendations, portfolio, model_performance,
     arbitrage, clv_analysis,
     line_movement, power_ratings, system_health,
-    model_interpret,
+    model_interpret, calibration, prediction_log,
 )
 
 st.set_page_config(
@@ -32,12 +32,14 @@ PAGES = {
     "💰 投资组合": portfolio,
     "📋 推荐": recommendations,
     "🧠 模型表现": model_performance,
+    "🎯 校准可靠性": calibration,
     "🔄 套利监控": arbitrage,
     "🎯 CLV 分析": clv_analysis,
     "📈 盘口变动": line_movement,
     "🏋️ 实力评分": power_ratings,
     "🔬 模型解释": model_interpret,
     "🔋 系统健康": system_health,
+    "📄 预测记录": prediction_log,
 }
 
 st.sidebar.title("SportsBettingPro")

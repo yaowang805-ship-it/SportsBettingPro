@@ -3,8 +3,8 @@
 
 功能：
   1. 从 prediction_log.csv 读取已结算记录
-  2. 按 (sport, league, market_type) 分组统计
-  3. 输出效率评分卡
+  2. 按 (sport, league, market_type) 分组统计（含 Sharpe、置信区间）
+  3. 输出效率评分卡 + 联赛置信度排名
   4. 输出允许名单和屏蔽名单供 RiskManager 使用
 """
 import sys, json
@@ -26,8 +26,59 @@ EFFICIENCY_PATH = ROOT / "data" / "storage" / "market_efficiency.json"
 BLOCKLIST_PATH = ROOT / "models" / "market_blocklist.json"
 
 
+def _bootstrap_roi(profits: np.ndarray, n_iter: int = 2000) -> tuple:
+    """Bootstrap ROI 置信区间。"""
+    n = len(profits)
+    if n < 3:
+        return (0.0, 0.0)
+    rois = []
+    for _ in range(n_iter):
+        sample = np.random.choice(profits, size=n, replace=True)
+        rois.append(sample.mean())
+    return float(np.percentile(rois, 5)), float(np.percentile(rois, 95))
+
+
+def _sharpe_ratio(profits: np.ndarray, stakes: np.ndarray) -> float:
+    """计算投注层面的 Sharpe ratio。
+
+    每笔 return = profit / stake（收益率），
+    Sharpe = mean(return) / std(return) * sqrt(n)。
+    Sharpe > 0.5 表示有持续edge，> 1.0 表示非常可靠。
+    """
+    valid = stakes > 0
+    if valid.sum() < 3:
+        return 0.0
+    returns = profits[valid] / stakes[valid]
+    std = returns.std()
+    if std == 0:
+        return 0.0
+    return float(returns.mean() / std * np.sqrt(len(returns)))
+
+
+def _confidence_score(n: int, sharpe: float, roi: float,
+                       roi_ci_low: float, roi_ci_high: float) -> float:
+    """联赛置信度评分 (0~100)。
+
+    权重：
+      - 样本量 (40%)：n < 20 线性递增，20+ 满分
+      - Sharpe (30%)：0→0分, 0.5→15分, 1.0→30分
+      - ROI 稳定性 (30%)：置信区间宽度越窄越高
+    """
+    # 样本量分
+    n_score = min(n / 20, 1.0) * 40
+
+    # Sharpe 分
+    s_score = min(max(sharpe, 0), 2.0) / 2.0 * 30
+
+    # 稳定性分：CI 越窄越可靠
+    ci_width = roi_ci_high - roi_ci_low
+    stability = max(0, 1.0 - ci_width / 0.5) * 30  # CI宽度50pp = 0分
+
+    return round(min(n_score + s_score + stability, 100), 1)
+
+
 def analyze_efficiency(min_samples: int = 5) -> dict:
-    """分析各市场效率，返回评分卡。"""
+    """分析各市场效率，返回评分卡（含 Sharpe + 置信区间）。"""
     if not LOG_PATH.exists():
         logger.warning("⚠️ 无预测记录: %s", LOG_PATH)
         return {}
@@ -62,8 +113,22 @@ def analyze_efficiency(min_samples: int = 5) -> dict:
         y_prob = grp["model_prob"].values
         brier = float(np.mean((y_true - y_prob) ** 2))
 
-        # 校准误差 (model_prob vs actual win_rate in bins)
+        # 校准误差
         cal_error = abs(win_rate - y_prob.mean()) if n > 0 else 0
+
+        # Sharpe ratio
+        profits_arr = grp["profit"].values
+        stakes_arr = grp["stake"].values
+        sharpe = _sharpe_ratio(profits_arr, stakes_arr)
+
+        # Bootstrap ROI 置信区间
+        roi_ci_low, roi_ci_high = _bootstrap_roi(profits_arr / stakes_arr.clip(min=1))
+
+        # 置信度评分
+        conf = _confidence_score(n, sharpe, roi, roi_ci_low, roi_ci_high)
+
+        # 显著性：90% CI 全部 > 0
+        significant = roi_ci_low > 0
 
         results[f"{sport}/{league}/{mtype}"] = {
             "sport": sport,
@@ -73,6 +138,10 @@ def analyze_efficiency(min_samples: int = 5) -> dict:
             "wins": int(wins),
             "win_rate": round(float(win_rate), 4),
             "roi": round(float(roi), 4),
+            "sharpe": round(float(sharpe), 4),
+            "roi_ci_90": [round(float(roi_ci_low), 4), round(float(roi_ci_high), 4)],
+            "significant": bool(significant),
+            "confidence_score": conf,
             "avg_ev": round(float(avg_ev), 4),
             "avg_odds": round(float(avg_odds), 4),
             "brier": round(float(brier), 4),
@@ -81,7 +150,7 @@ def analyze_efficiency(min_samples: int = 5) -> dict:
             "total_stake": round(float(total_stake), 2),
         }
 
-    # 生成屏蔽名单
+    # 生成屏蔽名单（增强版：考虑置信度）
     blocklist = []
     for key, info in results.items():
         if info["roi"] < -0.05 or info["win_rate"] < 0.35:
@@ -89,7 +158,7 @@ def analyze_efficiency(min_samples: int = 5) -> dict:
                 "sport": info["sport"],
                 "league": info["league"],
                 "market_type": info["market_type"],
-                "reason": f"ROI={info['roi']:.1%} WinRate={info['win_rate']:.1%}",
+                "reason": f"ROI={info['roi']:.1%} WinRate={info['win_rate']:.1%} Sharpe={info['sharpe']:.2f}",
                 "n": info["n"],
             })
 
@@ -112,36 +181,43 @@ def analyze_efficiency(min_samples: int = 5) -> dict:
 
 
 def print_report(output: dict):
-    """打印效率评分卡。"""
+    """打印效率评分卡（含排名）。"""
     if not output:
         print("📭 无数据")
         return
 
-    print(f"\n{'='*60}")
+    print(f"\n{'='*70}")
     print(f"  市场效率分析 ({output['generated_at'][:10]})")
     print(f"  已结算: {output['total_settled']} 条, {output['categories']} 个类别")
-    print(f"{'='*60}")
+    print(f"{'='*70}")
 
     details = output.get("details", {})
     if not details:
         print("📭 无满足最低样本量的类别")
         return
 
-    # 按 ROI 排序
-    sorted_items = sorted(details.items(), key=lambda x: -x[1]["roi"])
+    # ── 按置信度评分排名 ──
+    ranked = sorted(details.items(), key=lambda x: -x[1]["confidence_score"])
 
-    print(f"\n  {'类别':<35} {'单数':<5} {'胜率':<8} {'ROI':<8} {'平均EV':<8} {'Brier':<8}")
-    print(f"  {'-'*72}")
-    for key, info in sorted_items:
+    print(f"\n  📊 联赛置信度排名（综合评分）")
+    print(f"  {'评分':<6} {'类别':<30} {'单数':<5} {'ROI':<8} {'Sharpe':<8} {'胜率':<7} {'90%CI':<14}")
+    print(f"  {'-'*78}")
+    for key, info in ranked:
+        score = info["confidence_score"]
         sport = info["sport"]
-        league = info["league"][:12]
+        league = info["league"][:10]
         mtype = info["market_type"]
-        label = f"{sport}/{league}/{mtype}"[:34]
+        label = f"{sport}/{league}/{mtype}"[:29]
         wr = f"{info['win_rate']:.0%}"
         roi = f"{info['roi']:+.1%}"
-        ev = f"{info['avg_ev']:+.2f}"
-        br = f"{info['brier']:.3f}"
-        print(f"  {label:<35} {info['n']:<5} {wr:<8} {roi:<8} {ev:<8} {br:<8}")
+        sh = f"{info['sharpe']:.2f}"
+        ci = f"[{info['roi_ci_90'][0]:+.0%}, {info['roi_ci_90'][1]:+.0%}]"
+        sig = " ✅" if info["significant"] else ""
+        print(f"  {score:<5.0f} {label:<30} {info['n']:<5} {roi:<8} {sh:<8} {wr:<7} {ci:<14}{sig}")
+
+    # 显著性摘要
+    sig_count = sum(1 for v in details.values() if v.get("significant"))
+    print(f"\n  📈 显著正EV类别: {sig_count}/{len(details)}")
 
     # 屏蔽列表
     blocklist = output.get("blocklist", [])

@@ -702,6 +702,64 @@ class RiskManager:
         z = norm.ppf(1.0 - confidence)
         return float(z * port_std)
 
+    def batch_optimize(self, recs: list, bankroll: float = None) -> list:
+        """对所有已选推荐执行联合凯利组合优化。
+
+        替代逐个调 get_max_stake() 的启发式分散调整，
+        用 KellyPortfolioOptimizer 联合求解所有推荐的最优仓位。
+
+        Returns:
+            更新后的推荐列表（stake 替换为优化值，stake=0 的被过滤）
+        """
+        if not recs:
+            return recs
+
+        # 清除候选阶段注册的幽灵条目
+        self.portfolio_optimizer.clear()
+
+        for r in recs:
+            prob = r.get("model_prob", 0.5)
+            odds = r.get("odds", 2.0)
+            if prob <= 0 or odds <= 1.0:
+                continue
+            self.portfolio_optimizer.add_bet({
+                "sport": r.get("sport", ""),
+                "home_team": r.get("home_team", ""),
+                "away_team": r.get("away_team", ""),
+                "market": r.get("market", r.get("type", "")),
+                "model_prob": prob,
+                "odds": odds,
+            })
+
+        b = bankroll or self.current_balance
+        result = self.portfolio_optimizer.solve_kelly_portfolio(
+            bankroll=b,
+            max_single_pct=self.max_single_pct,
+            max_total_pct=self.max_total_exposure,
+        )
+
+        if not result.get("allocations"):
+            return recs
+
+        # 建立 key → stake 映射
+        opt_map = {}
+        for a in result["allocations"]:
+            key = f"{a['sport']}/{a['home_team']}/{a['away_team']}/{a['market']}"
+            opt_map[key] = a["stake"]
+
+        updated = []
+        for r in recs:
+            key = (f"{r.get('sport','')}/{r.get('home_team','')}/"
+                   f"{r.get('away_team','')}/{r.get('market', r.get('type',''))}")
+            new_stake = opt_map.get(key, 0.0)
+            if new_stake > 0:
+                r["stake"] = new_stake
+                updated.append(r)
+            else:
+                r["stake"] = 0.0
+
+        return updated
+
     def reset_portfolio(self):
         """每日重置组合优化器。"""
         self.portfolio_optimizer.clear()

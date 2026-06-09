@@ -36,6 +36,14 @@ def run_script(script_path, description):
 
 def run_monitor():
     logger.info("\n%s\n▶  赛后监控 & 健康度检查\n%s", "─" * 60, "─" * 60)
+    # 自动结算
+    try:
+        from src.core.prediction_logger import batch_settle
+        n = batch_settle()
+        if n:
+            logger.info("✅ 自动结算: %s 条", n)
+    except Exception as e:
+        logger.warning("⚠️  自动结算跳过: %s", e)
     try:
         from src.monitor.performance import update_performance
         update_performance()
