@@ -20,12 +20,26 @@ logger = get_logger(__name__)
 import joblib
 import numpy as np
 import pandas as pd
-from sklearn.metrics import (brier_score_loss, log_loss, precision_score,
+
+# 轻量级重训练用
+from lightgbm import LGBMClassifier
+from xgboost import XGBClassifier
+from catboost import CatBoostClassifier
+from sklearn.calibration import CalibratedClassifierCV
+
+# 兼容已 pickle 的 Stage2Stacking / WeightedEnsemble
+import src.models.stacking as _stacking_mod
+sys.modules['__main__'].Stage2Stacking = _stacking_mod.Stage2Stacking
+sys.modules['__main__'].WeightedEnsemble = _stacking_mod.WeightedEnsemble
+from sklearn.metrics import (precision_score,
                              recall_score, f1_score, confusion_matrix)
 
+# 抑制 sklearn 特征名警告（_quick_train_ensemble 使用 numpy arrays 而非 DataFrame）
+import warnings
+warnings.filterwarnings('ignore', category=UserWarning, module='sklearn')
+
 from config.settings import DATA_DIR
-from src.core.evaluation import brier_score, safe_log_loss, sharpe_ratio
-from src.models.ensemble_trainer import WeightedEnsemble  # 用于反序列化集成模型
+from src.core.evaluation import brier_score, safe_log_loss
 
 DATA_DIR_PATH = ROOT / DATA_DIR if isinstance(DATA_DIR, str) else DATA_DIR
 OUTPUT_PATH = DATA_DIR_PATH / 'model_backtest_summary.json'
@@ -107,44 +121,58 @@ def simulate_transaction_cost(probs, prices, market_type="default", stake_ratio=
     }
 
 
-def simulate_walk_forward(df, feat_cols, model, target_col, n_windows=5, test_size=0.15):
-    """Walk-Forward 分析：滚动扩展窗口验证。
+def _quick_train_ensemble(X_tr, y_tr, X_te, y_te, verbose=False):
+    """轻量级集成训练（无 Optuna），用于 Walk-Forward 每折重训练。
 
-    每次窗口: 用之前所有数据训练(或直接评估已有模型)，在后续测试集上评估。
-    这里用已有模型在每期测试集上评估(无需重训练)。
+    返回 (probs, metrics_dict)。
+    """
+    models = []
+    configs = [
+        ('lgbm', LGBMClassifier(n_estimators=200, max_depth=5, learning_rate=0.05,
+                                random_state=42, n_jobs=-1, verbose=-1)),
+        ('xgb', XGBClassifier(n_estimators=200, max_depth=5, learning_rate=0.05,
+                              random_state=42, n_jobs=-1)),
+        ('catb', CatBoostClassifier(n_estimators=200, max_depth=5, learning_rate=0.05,
+                                    random_state=42, verbose=0, allow_writing_files=False)),
+    ]
+    all_probs = np.zeros((len(X_te), len(configs)))
+    for i, (name, m) in enumerate(configs):
+        cal = CalibratedClassifierCV(m, cv=min(3, len(np.unique(y_tr))), method='sigmoid')
+        cal.fit(X_tr, y_tr)
+        all_probs[:, i] = cal.predict_proba(X_te)[:, 1]
 
-    Args:
-        df: 特征数据
-        feat_cols: 特征列
-        model: 预训练模型
-        target_col: 目标列
-        n_windows: 窗口数
-        test_size: 每期测试集占总数据比例
+    probs = all_probs.mean(axis=1)
+    acc = float(((probs > 0.5).astype(int) == y_te).mean())
+    brier = float(((probs - y_te) ** 2).mean())
+    ll = float(-np.mean(y_te * np.log(np.clip(probs, 1e-15, 1)) +
+                         (1 - y_te) * np.log(np.clip(1 - probs, 1e-15, 1))))
+    return probs, {'accuracy': acc, 'brier': brier, 'logloss': ll}
+
+
+def walk_forward_retrain(df, feat_cols, target_col, n_windows=5, test_size=0.075):
+    """Walk-Forward 分析：每折重训练，无 lookahead bias。
+
+    每次窗口用之前所有数据训练，在后续测试集上评估。
+    使用轻量级集成（LGBM+XGB+CatBoost 平均），约 3 个基模型，无需 Optuna。
 
     Returns:
-        [{window_idx, train_range, test_range, accuracy, brier, logloss, samples}, ...]
+        [{window, train_range, test_range, train_samples, test_samples,
+          accuracy, brier, logloss, mean_prob}, ...] 最后一项是 avg 汇总。
     """
-    df = df.dropna(subset=[target_col]).sort_values("date").reset_index(drop=True)
-    X = df[feat_cols].fillna(0)
+    df = df.dropna(subset=[target_col]).sort_values('date').reset_index(drop=True)
+    X = df[feat_cols].fillna(0).values
     y = df[target_col].astype(int).values
-    dates = df["date"].values
-
-    proba_fn = getattr(model, "predict_proba", None)
-    if proba_fn is None:
-        return []
-    probs = model.predict_proba(X)[:, 1]
+    dates = df['date'].values
 
     total = len(df)
-    # 每期测试集大小（向前滚动）
     step = int(total * test_size)
-    # 初始训练集大小
     init_train = total - step * n_windows
-    if init_train < 50:
-        # 数据不够，减少窗口数
-        n_windows = max(1, (total - 50) // step)
+    if init_train < 200:
+        n_windows = max(2, (total - 200) // step)
         init_train = total - step * n_windows
-    if init_train < 10:
-        init_train = 10
+    if init_train < 100:
+        init_train = 100
+        n_windows = max(2, (total - init_train) // step)
 
     results = []
     for w in range(n_windows):
@@ -152,29 +180,23 @@ def simulate_walk_forward(df, feat_cols, model, target_col, n_windows=5, test_si
         test_start = train_end
         test_end = min(test_start + step, total)
 
-        if test_start >= test_end:
+        if test_start >= test_end or train_end < 100:
             break
 
-        train_y = y[:train_end] if train_end > 0 else y[:1]
-        test_y = y[test_start:test_end]
-        test_probs = probs[test_start:test_end]
+        X_tr, y_tr = X[:train_end], y[:train_end]
+        X_te, y_te = X[test_start:test_end], y[test_start:test_end]
 
-        if len(test_y) < 2:
-            continue
-
+        _, metrics = _quick_train_ensemble(X_tr, y_tr, X_te, y_te)
         results.append({
             "window": w + 1,
-            "train_range": f"{dates[0]} to {dates[train_end-1] if train_end > 0 else dates[0]}",
+            "train_range": f"{dates[0]} to {dates[train_end-1]}",
             "test_range": f"{dates[test_start]} to {dates[test_end-1]}",
             "train_samples": int(train_end),
-            "test_samples": int(len(test_y)),
-            "accuracy": float(( (test_probs > 0.5).astype(int) == test_y).mean()),
-            "brier": float(brier_score(test_y, test_probs)),
-            "logloss": float(safe_log_loss(test_y, test_probs)),
-            "mean_prob": float(np.mean(test_probs)),
+            "test_samples": int(len(y_te)),
+            **metrics,
+            "mean_prob": float(y_te.mean()),
         })
 
-    # 汇总
     if results:
         accs = [r["accuracy"] for r in results]
         results.append({
@@ -185,7 +207,6 @@ def simulate_walk_forward(df, feat_cols, model, target_col, n_windows=5, test_si
             "max_accuracy": float(max(accs)),
             "n_windows": len(results),
         })
-
     return results
 
 
@@ -271,6 +292,68 @@ def _classification_metrics(y_true, y_prob, threshold=0.5):
         'n_pos': n_pos,
         'n_neg': n_neg,
     }
+
+
+# ── 指标合理性校验（防止虚高准确率/Brier 等系统性问题） ──
+# 各市场类型合理上限（超出即警告）
+_SANITY_THRESHOLDS = {
+    "h2h": {"max_acc": 0.82, "min_brier": 0.08},   # 胜负: >82% 或 Brier<0.08 可疑
+    "spread": {"max_acc": 0.78, "min_brier": 0.12}, # 让分: >78% 可疑
+    "total": {"max_acc": 0.78, "min_brier": 0.12},  # 大小: >78% 可疑
+    "default": {"max_acc": 0.80, "min_brier": 0.10},
+}
+
+# 各运动的基准准确率（合理区间）
+_SPORT_BASELINE = {
+    "bb": "h2h ~60-75%, spread ~55-68%, total ~55-68%",
+    "fb": "h2h ~55-70%, spread/total ~50-65%",
+    "nfl": "h2h ~60-72%, spread ~55-65%",
+    "wc": "h2h ~55-68%, total ~50-65%",
+}
+
+
+def sanity_check_metrics(metrics: dict, market_type: str = "default",
+                          dataset_name: str = "", model_name: str = "") -> list:
+    """校验指标是否在合理范围内，返回警告列表。
+
+    在体育博彩领域，过高的准确率通常意味着 lookahead bias 或数据泄漏。
+    """
+    thresholds = _SANITY_THRESHOLDS.get(market_type, _SANITY_THRESHOLDS["default"])
+    warnings_list = []
+    acc = metrics.get("accuracy", 0)
+    brier = metrics.get("brier", 1)
+
+    if acc > thresholds["max_acc"]:
+        warnings_list.append(
+            f"⚠️  RED FLAG [{model_name} {dataset_name}] "
+            f"准确率 {acc:.1%} 超过合理上限 {thresholds['max_acc']:.0%}！"
+            f"可能原因: lookahead bias / 数据泄漏 / 过拟合"
+        )
+    elif acc > thresholds["max_acc"] - 0.05:
+        warnings_list.append(
+            f"⚠️  WARNING [{model_name} {dataset_name}] "
+            f"准确率 {acc:.1%} 接近合理上限 {thresholds['max_acc']:.0%}，建议验证"
+        )
+
+    if brier < thresholds["min_brier"]:
+        warnings_list.append(
+            f"⚠️  RED FLAG [{model_name} {dataset_name}] "
+            f"Brier {brier:.4f} 低于合理下限 {thresholds['min_brier']}！"
+            f"可能原因: 概率校准过度 / 数据泄漏"
+        )
+
+    if warnings_list:
+        logger.warning("=" * 60)
+        for w in warnings_list:
+            logger.warning(w)
+        sport_key = dataset_name.split("_")[0] if "_" in dataset_name else dataset_name
+        baseline = _SPORT_BASELINE.get(sport_key, "")
+        if baseline:
+            logger.warning("  该运动参考基准: %s", baseline)
+        logger.warning("  建议: 使用 walk-forward 重训练模式获取真实 OOS 指标")
+        logger.warning("=" * 60)
+
+    return warnings_list
 
 
 def evaluate_model(df, feat_cols, model_path, target_col, dataset_name: str,
@@ -365,6 +448,36 @@ def evaluate_model(df, feat_cols, model_path, target_col, dataset_name: str,
     test_start_ts = pd.Timestamp(dates[split_idx])
     chronological_valid = bool(train_end_ts <= test_start_ts)
 
+    # ── True OOS: 在训练集上重训练**轻量级集成**，在测试集上评估（无 lookahead）──
+    # ⚠️ 此快速重训练使用 LGBM+XGB+CatBoost 各 200 棵树（无 Optuna 调参），
+    #   结果是**真实但偏悲观**的下界。经 Optuna 调参的生产模型通常更好。
+    #   Walk-Forward（下方）的多窗口平均是更可靠的 OOS 评估。
+    test_oos = None
+    try:
+        oos_probs, oos_metrics = _quick_train_ensemble(
+            X[:split_idx], y[:split_idx],
+            X[split_idx:], y[split_idx:],
+        )
+        test_oos = _classification_metrics(test_y, oos_probs, threshold)
+        test_oos['brier'] = brier_score(test_y, oos_probs)
+        test_oos['logloss'] = safe_log_loss(test_y, oos_probs)
+        test_oos['samples'] = int(len(test_y))
+        test_oos['date_range'] = test_metrics['date_range']
+        test_oos['mean_prob'] = float(np.mean(oos_probs))
+    except Exception as e:
+        logger.debug("True OOS 重训练跳过: %s", e)
+
+    # ── 指标合理性校验（优先用 test_oos）──
+    lookahead_note = (
+        "⚠️ 该模型使用全量数据训练（含测试集时间段），chronological_split 的测试集指标为近似值，"
+        "并非真实 OOS 性能。请参考下方 True OOS 或 walk-forward(重训练) 结果。"
+    )
+    sanity_target = test_oos if test_oos else test_metrics
+    test_check = sanity_check_metrics(sanity_target, market_type, dataset_name, Path(model_path).name)
+    train_check = sanity_check_metrics(train_metrics, market_type, dataset_name, Path(model_path).name)
+    if test_check and not test_oos:
+        logger.warning("  → %s", lookahead_note)
+
     result = {
         'model': Path(model_path).name,
         'dataset': dataset_name,
@@ -373,6 +486,9 @@ def evaluate_model(df, feat_cols, model_path, target_col, dataset_name: str,
         'chronological_split': chronological_valid,
         'split_date': str(dates[split_idx - 1]),
         'split_info': f"训练集: {len(train_y)} 样本 (至 {dates[split_idx - 1]}) | 测试集: {len(test_y)} 样本 (自 {dates[split_idx]} 起)",
+        'lookahead_bias_warning': lookahead_note,
+        'test_oos': test_oos,
+        'sanity_checks': {'train': train_check, 'test': test_check},
         'overall': {
             'brier': brier,
             'logloss': logloss,
@@ -404,16 +520,16 @@ def evaluate_model(df, feat_cols, model_path, target_col, dataset_name: str,
         },
     }
 
-    # ── Walk-Forward 分析 ──
+    # ── Walk-Forward 分析（每折重训练，无 lookahead bias）──
     try:
-        wf_results = simulate_walk_forward(
-            df, valid_cols, model, target_col,
-            n_windows=5, test_size=test_frac / 2
+        wf_results = walk_forward_retrain(
+            df, valid_cols, target_col,
+            n_windows=5, test_size=test_frac / 3
         )
         if wf_results:
-            result['walk_forward'] = wf_results
+            result['walk_forward_retrain'] = wf_results
     except Exception as e:
-        logger.debug("Walk-forward 分析跳过: %s", e)
+        logger.debug("Walk-Forward(retrain) 分析跳过: %s", e)
 
     return result
 
@@ -424,6 +540,23 @@ def _print_bootstrap_ci(label, boot_dict):
                 label,
                 boot_dict["ci_lower"], boot_dict["ci_upper"],
                 boot_dict["mean"], boot_dict["std"])
+
+
+def _print_eval_rename(result, metrics_dict, label, threshold=0.5):
+    """用自定义 metrics dict 打印（用于 test_oos 等非标准键）。"""
+    cm = metrics_dict.get('confusion_matrix', {})
+    logger.info("    %s: 样本=%s Brier=%.4f LogLoss=%.4f Acc=%.3f Prec=%.3f Recall=%.3f F1=%.3f (阈值=%s)",
+                label, metrics_dict.get('samples', '?'), metrics_dict.get('brier', 0),
+                metrics_dict.get('logloss', 0), metrics_dict.get('accuracy', 0),
+                metrics_dict.get('precision', 0), metrics_dict.get('recall', 0),
+                metrics_dict.get('f1_score', 0), threshold)
+    if cm:
+        logger.info("      混淆矩阵: TN=%s FP=%s FN=%s TP=%s | 正例=%s 负例=%s",
+                    cm.get('tn', '?'), cm.get('fp', '?'), cm.get('fn', '?'),
+                    cm.get('tp', '?'), metrics_dict.get('n_pos', '?'), metrics_dict.get('n_neg', '?'))
+    dr = metrics_dict.get('date_range', {})
+    if dr:
+        logger.info("      日期范围: %s ~ %s", dr.get('start', '?'), dr.get('end', '?'))
 
 
 def _print_eval(result, label, threshold=0.5):
@@ -465,15 +598,28 @@ def run_backtest():
                     threshold=thresh, market_type=market_map.get(target, "default"),
                 )
                 report.append(result)
-                logger.info("  时序分割: %s | %s", result['chronological_split'], result['split_info'])
-                _print_eval(result, 'train', thresh)
-                _print_eval(result, 'test', thresh)
 
-                # Bootstrap CI
+                # ── True OOS（优先展示）──
+                oos = result.get('test_oos')
+                if oos:
+                    _print_eval_rename(result, oos, "test_oos(快速重训练·真实OOS)", thresh)
+                    logger.info("      (轻量级 LGBM+XGB+CatBoost, 无 Optuna 调参, 结果为悲观下界)")
+                    for w in result.get('sanity_checks', {}).get('test', []):
+                        logger.warning("    ⚠️  %s", w.split('] ')[-1] if '] ' in w else w)
+                else:
+                    logger.info("  时序分割: %s | %s", result['chronological_split'], result['split_info'])
+                    _print_eval(result, 'test', thresh)
+                    if result.get('lookahead_bias_warning'):
+                        logger.warning("    ⚠️  [LOOKAHEAD] 测试集指标为近似值（模型已见未来数据），仅供参考")
+                    for w in result.get('sanity_checks', {}).get('test', []):
+                        logger.warning("    ⚠️  %s", w.split('] ')[-1] if '] ' in w else w)
+
+                _print_eval(result, 'train', thresh)
+
+                # Bootstrap CI（基于 contaminated test，仅供参考）
                 boot = result.get('bootstrap_ci', {})
                 if boot:
-                    _print_bootstrap_ci("准确率", boot.get("accuracy", {}))
-                    _print_bootstrap_ci("Brier", boot.get("brier", {}))
+                    _print_bootstrap_ci("准确率(Bootstrap)", boot.get("accuracy", {}))
 
                 # 交易成本
                 tc = result.get('transaction_cost', {})
@@ -481,13 +627,13 @@ def run_backtest():
                     logger.info("    交易成本: %s | 平均 Edge 损失: %.4f",
                                 tc.get("cost_rate", 0), tc.get("avg_edge_loss", 0))
 
-                # Walk-Forward
-                wf = result.get('walk_forward', [])
+                # Walk-Forward（每折重训练·真实OOS）
+                wf = result.get('walk_forward_retrain', [])
                 if wf:
                     n_windows = len(wf) - 1  # 最后一个是 avg
                     if n_windows > 0:
                         avg_entry = wf[-1]
-                        logger.info("    Walk-Forward: %d 窗口 | 平均准确率 %.3f ± %.3f",
+                        logger.info("    ✅ Walk-Forward(重训练·真实OOS): %d 窗口 | 平均准确率 %.3f ± %.3f",
                                     n_windows, avg_entry.get("avg_accuracy", 0),
                                     avg_entry.get("std_accuracy", 0))
 
@@ -514,25 +660,38 @@ def run_backtest():
                     threshold=thresh, market_type=market_map.get(target, "default"),
                 )
                 report.append(result)
-                logger.info("  时序分割: %s | %s", result['chronological_split'], result['split_info'])
+
+                oos = result.get('test_oos')
+                if oos:
+                    _print_eval_rename(result, oos, "test_oos(快速重训练·真实OOS)", thresh)
+                    logger.info("      (轻量级 LGBM+XGB+CatBoost, 无 Optuna 调参, 结果为悲观下界)")
+                    for w in result.get('sanity_checks', {}).get('test', []):
+                        logger.warning("    ⚠️  %s", w.split('] ')[-1] if '] ' in w else w)
+                else:
+                    logger.info("  时序分割: %s | %s", result['chronological_split'], result['split_info'])
+                    _print_eval(result, 'test', thresh)
+                    if result.get('lookahead_bias_warning'):
+                        logger.warning("    ⚠️  [LOOKAHEAD] 测试集指标为近似值（模型已见未来数据），仅供参考")
+                    for w in result.get('sanity_checks', {}).get('test', []):
+                        logger.warning("    ⚠️  %s", w.split('] ')[-1] if '] ' in w else w)
+
                 _print_eval(result, 'train', thresh)
-                _print_eval(result, 'test', thresh)
 
                 boot = result.get('bootstrap_ci', {})
                 if boot:
-                    _print_bootstrap_ci("准确率", boot.get("accuracy", {}))
+                    _print_bootstrap_ci("准确率(Bootstrap)", boot.get("accuracy", {}))
 
                 tc = result.get('transaction_cost', {})
                 if tc:
                     logger.info("    交易成本: %s | 平均 Edge 损失: %.4f",
                                 tc.get("cost_rate", 0), tc.get("avg_edge_loss", 0))
 
-                wf = result.get('walk_forward', [])
+                wf = result.get('walk_forward_retrain', [])
                 if wf:
                     n_windows = len(wf) - 1
                     if n_windows > 0:
                         avg_entry = wf[-1]
-                        logger.info("    Walk-Forward: %d 窗口 | 平均准确率 %.3f ± %.3f",
+                        logger.info("    ✅ Walk-Forward(重训练·真实OOS): %d 窗口 | 平均准确率 %.3f ± %.3f",
                                     n_windows, avg_entry.get("avg_accuracy", 0),
                                     avg_entry.get("std_accuracy", 0))
 
@@ -559,25 +718,38 @@ def run_backtest():
                     threshold=thresh, market_type=market_map.get(target, "default"),
                 )
                 report.append(result)
-                logger.info("  时序分割: %s | %s", result['chronological_split'], result['split_info'])
+
+                oos = result.get('test_oos')
+                if oos:
+                    _print_eval_rename(result, oos, "test_oos(快速重训练·真实OOS)", thresh)
+                    logger.info("      (轻量级 LGBM+XGB+CatBoost, 无 Optuna 调参, 结果为悲观下界)")
+                    for w in result.get('sanity_checks', {}).get('test', []):
+                        logger.warning("    ⚠️  %s", w.split('] ')[-1] if '] ' in w else w)
+                else:
+                    logger.info("  时序分割: %s | %s", result['chronological_split'], result['split_info'])
+                    _print_eval(result, 'test', thresh)
+                    if result.get('lookahead_bias_warning'):
+                        logger.warning("    ⚠️  [LOOKAHEAD] 测试集指标为近似值（模型已见未来数据），仅供参考")
+                    for w in result.get('sanity_checks', {}).get('test', []):
+                        logger.warning("    ⚠️  %s", w.split('] ')[-1] if '] ' in w else w)
+
                 _print_eval(result, 'train', thresh)
-                _print_eval(result, 'test', thresh)
 
                 boot = result.get('bootstrap_ci', {})
                 if boot:
-                    _print_bootstrap_ci("准确率", boot.get("accuracy", {}))
+                    _print_bootstrap_ci("准确率(Bootstrap)", boot.get("accuracy", {}))
 
                 tc = result.get('transaction_cost', {})
                 if tc:
                     logger.info("    交易成本: %s | 平均 Edge 损失: %.4f",
                                 tc.get("cost_rate", 0), tc.get("avg_edge_loss", 0))
 
-                wf = result.get('walk_forward', [])
+                wf = result.get('walk_forward_retrain', [])
                 if wf:
                     n_windows = len(wf) - 1
                     if n_windows > 0:
                         avg_entry = wf[-1]
-                        logger.info("    Walk-Forward: %d 窗口 | 平均准确率 %.3f ± %.3f",
+                        logger.info("    ✅ Walk-Forward(重训练·真实OOS): %d 窗口 | 平均准确率 %.3f ± %.3f",
                                     n_windows, avg_entry.get("avg_accuracy", 0),
                                     avg_entry.get("std_accuracy", 0))
 
@@ -597,13 +769,38 @@ def run_backtest():
         logger.info("\n" + "=" * 60)
         logger.info("回测汇总")
         logger.info("=" * 60)
+        all_flags = []
         for r in report:
-            test = r.get("test", {})
+            oos = r.get('test_oos')
+            test = oos if oos else r.get("test", {})
             boot = r.get("bootstrap_ci", {}).get("accuracy", {})
             ci_str = f" [95%% CI: {boot.get('ci_lower', 0):.3f}-{boot.get('ci_upper', 0):.3f}]" if boot else ""
-            logger.info("  %-30s 测试 Acc=%.3f%s  Brier=%.4f  n=%s",
-                        f"{r['model'][:28]}", test.get("accuracy", 0),
-                        ci_str, test.get("brier", 0), test.get("samples", 0))
+            oos_tag = " [快速重训练·悲观下界]" if oos else " [含lookahead]"
+            logger.info("  %-30s 测试 Acc=%.3f%s  Brier=%.4f  n=%s%s",
+                        f"{r['model'][:26]}", test.get("accuracy", 0),
+                        ci_str, test.get("brier", 0), test.get("samples", 0), oos_tag)
+
+            # 附加 Walk-Forward（最可靠的 OOS）
+            wf = r.get('walk_forward_retrain', [])
+            if wf and len(wf) > 1:
+                avg = wf[-1]
+                logger.info("  ╰─Walk-Forward(5窗平均) → Acc=%.1f%%±%.1f%%",
+                            avg.get("avg_accuracy", 0) * 100,
+                            avg.get("std_accuracy", 0) * 100)
+
+            # 收集 RED FLAG（训练集和测试集）
+            for side in ('train', 'test'):
+                for w in r.get('sanity_checks', {}).get(side, []):
+                    if 'RED FLAG' in w:
+                        all_flags.append(w)
+
+        if all_flags:
+            logger.warning("\n" + "!" * 60)
+            logger.warning("  ⛔ 指标异常汇总（%d 个 RED FLAG）", len(all_flags))
+            logger.warning("!" + "!" * 59)
+            for w in all_flags:
+                logger.warning("  %s", w)
+            logger.warning("!" * 60)
 
 
 def run_portfolio_backtest(bet_log_csv: str = None, bankroll: float = 10000) -> dict:
