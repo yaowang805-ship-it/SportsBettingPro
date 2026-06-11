@@ -31,6 +31,24 @@ from sklearn.calibration import CalibratedClassifierCV
 import src.models.stacking as _stacking_mod
 sys.modules['__main__'].Stage2Stacking = _stacking_mod.Stage2Stacking
 sys.modules['__main__'].WeightedEnsemble = _stacking_mod.WeightedEnsemble
+
+# SimpleEnsemble 用于快速训练保存的模型（不依赖 Optuna）
+class SimpleEnsemble:
+    """Lightweight ensemble of 3 calibrated classifiers."""
+    def __init__(self):
+        self.models = []
+        self.feat_cols = []
+    def set_params(self, models, feat_cols):
+        self.models = models
+        self.feat_cols = feat_cols
+    def predict_proba(self, X):
+        import numpy as np
+        all_probs = np.zeros((X.shape[0], len(self.models)))
+        for i, m in enumerate(self.models):
+            all_probs[:, i] = m.predict_proba(X)[:, 1]
+        avg = all_probs.mean(axis=1)
+        return np.column_stack([1 - avg, avg])
+sys.modules['__main__'].SimpleEnsemble = SimpleEnsemble
 from sklearn.metrics import (precision_score,
                              recall_score, f1_score, confusion_matrix)
 
@@ -589,12 +607,9 @@ def run_backtest():
             model_file = ROOT / f'models/model_bb_{target}_ensemble.pkl'
             if model_file.exists():
                 thresh = 0.5
-                # BB total_result 排除 ovrundr（与训练时特征一致）
-                target_feat_cols = [c for c in feat_cols if c != 'ovrundr'] \
-                    if target == 'total_result' else feat_cols
-                logger.info("\n  模型: %s (阈值=%s, 特征=%d)", model_file.name, thresh, len(target_feat_cols))
+                logger.info("\n  模型: %s (阈值=%s, 特征=%d)", model_file.name, thresh, len(feat_cols))
                 result = evaluate_model(
-                    df_bb, target_feat_cols, model_file, target, 'bb_features',
+                    df_bb, feat_cols, model_file, target, 'bb_features',
                     threshold=thresh, market_type=market_map.get(target, "default"),
                 )
                 report.append(result)

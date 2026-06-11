@@ -7,8 +7,10 @@
     train_sport_ensemble('nfl')   # NFL
 """
 import json
+import shutil
 import sys
 import warnings
+from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
@@ -19,7 +21,7 @@ import numpy as np
 import optuna
 import pandas as pd
 from sklearn.calibration import CalibratedClassifierCV
-from sklearn.ensemble import RandomForestClassifier, StackingClassifier, VotingClassifier
+from sklearn.ensemble import RandomForestClassifier, StackingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import brier_score_loss, log_loss
 from sklearn.frozen import FrozenEstimator
@@ -33,6 +35,9 @@ MODEL_DIR_PATH = Path(MODEL_DIR) if isinstance(MODEL_DIR, str) else MODEL_DIR
 MODEL_DIR_PATH.mkdir(parents=True, exist_ok=True)
 
 N_TRIALS = 50       # Optuna trials per model (single phase)
+
+
+from src.models.stacking import Stage2Stacking, WeightedEnsemble
 CV_SPLITS = 5       # TimeSeriesSplit folds for CV evaluation during Optuna
 
 # 根据运动类型和数据量自适应
@@ -235,23 +240,79 @@ def _scale_pos_weight(y):
     return n_neg / n_pos
 
 
-class WeightedEnsemble:
-    """加权平均集成 — 可 pickle 的 _WeightedEnsemble 替代。"""
-    _estimator_type = 'classifier'
-    def __init__(self, estimators, weights):
-        self.estimators_ = [(n, m) for n, m in estimators]
-        self.weights = weights
-        self.classes_ = np.array([0, 1])
-    def fit(self, X, y):
-        return self
-    def predict_proba(self, X):
-        probs = np.zeros((X.shape[0], 2))
-        for (_, m), w in zip(self.estimators_, self.weights):
-            probs += w * m.predict_proba(X)
-        probs /= sum(self.weights)
-        return probs
-    def get_params(self, deep=True):
-        return {}
+
+
+def _compare_models(champion, challenger, X_holdout, y_holdout, threshold=0.5) -> dict:
+    """对比 champion vs challenger 在 holdout 集上的表现。
+
+    Args:
+        champion: 当前生产模型
+        challenger: 新训练模型
+        X_holdout: holdout 特征
+        y_holdout: holdout 标签
+        threshold: 分类阈值
+
+    Returns:
+        {"winner": "champion"|"challenger", "details": "...",
+         "champion_metrics": {...}, "challenger_metrics": {...}}
+    """
+    from sklearn.metrics import accuracy_score
+
+    def _eval(model):
+        probs = model.predict_proba(X_holdout)[:, 1]
+        preds = (probs >= threshold).astype(int)
+        return {
+            "accuracy": round(float(accuracy_score(y_holdout, preds)), 4),
+            "brier": round(float(brier_score_loss(y_holdout, probs)), 4),
+            "log_loss": round(float(log_loss(y_holdout, probs)), 4),
+        }
+
+    champ_metrics = _eval(champion)
+    chall_metrics = _eval(challenger)
+
+    # 逐个指标比较：accuracy 越高越好，brier 越低越好，log_loss 越低越好
+    champ_wins = 0
+    chall_wins = 0
+    details = []
+
+    if champ_metrics["accuracy"] > chall_metrics["accuracy"]:
+        champ_wins += 1
+        details.append(f"acc: champ={champ_metrics['accuracy']:.4f} > chall={chall_metrics['accuracy']:.4f}")
+    else:
+        chall_wins += 1
+        details.append(f"acc: chall={chall_metrics['accuracy']:.4f} >= champ={champ_metrics['accuracy']:.4f}")
+
+    if champ_metrics["brier"] < chall_metrics["brier"]:
+        champ_wins += 1
+        details.append(f"brier: champ={champ_metrics['brier']:.4f} < chall={chall_metrics['brier']:.4f}")
+    else:
+        chall_wins += 1
+        details.append(f"brier: chall={chall_metrics['brier']:.4f} <= champ={champ_metrics['brier']:.4f}")
+
+    if champ_metrics["log_loss"] < chall_metrics["log_loss"]:
+        champ_wins += 1
+        details.append(f"log_loss: champ={champ_metrics['log_loss']:.4f} < chall={chall_metrics['log_loss']:.4f}")
+    else:
+        chall_wins += 1
+        details.append(f"log_loss: chall={chall_metrics['log_loss']:.4f} <= champ={champ_metrics['log_loss']:.4f}")
+
+    if chall_wins > champ_wins:
+        winner = "challenger"
+    elif champ_wins > chall_wins:
+        winner = "champion"
+    else:
+        # 平局：保留 champion（保守策略）
+        winner = "champion"
+        details.append("平局，保留 champion")
+
+    return {
+        "winner": winner,
+        "details": "; ".join(details),
+        "champion_metrics": champ_metrics,
+        "challenger_metrics": chall_metrics,
+        "champion_wins": champ_wins,
+        "challenger_wins": chall_wins,
+    }
 
 
 def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials=None, rf_trials=None):
@@ -317,6 +378,9 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
     cal_idx = sorted_order[train_split:cal_split]
     holdout_idx = sorted_order[cal_split:]
 
+    X_holdout = X.iloc[holdout_idx] if len(holdout_idx) > 0 else None
+    y_holdout = y.iloc[holdout_idx] if len(holdout_idx) > 0 else None
+
     X_meta = X.iloc[meta_idx]
     y_meta = y.iloc[meta_idx]
     X_cal = X.iloc[cal_idx]
@@ -368,30 +432,37 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
 
     ensemble = None
     try:
-        # 用时间序列分割保证时序一致性（与前面 voting 的拆分一致）
+        # Stage-2 Stacking: 用已训练的基模型在校准集上做 meta 训练
+        # （避免 StackingClassifier 内部重新训练 + 打乱时序）
+        cal_meta_X = np.column_stack([
+            m.predict_proba(X_cal)[:, 1] for _, m in valid_estimators
+        ])
+        hold_meta_X = np.column_stack([
+            m.predict_proba(X_holdout)[:, 1] for _, m in valid_estimators
+        ]) if X_holdout is not None else None
+
         meta_learner = LogisticRegression(
-            penalty='l2', C=5.0, solver='lbfgs', max_iter=2000,
+            penalty='l2', C=0.5, solver='lbfgs', max_iter=3000,
             random_state=42, class_weight='balanced',
         )
-        stacking_ensemble = StackingClassifier(
-            estimators=valid_estimators,
-            final_estimator=meta_learner,
-            cv=2,  # 2-fold 对小数据集更友好
-            stack_method='predict_proba',
-            passthrough=False,
-        )
-        stacking_ensemble.fit(X_meta, y_meta)
-        stack_probs = stacking_ensemble.predict_proba(X_cal)[:, 1]
-        stack_ll = log_loss(y_cal, stack_probs)
-        print(f"  Stacking: log_loss={stack_ll:.4f} (基线 avg={avg_base_ll:.4f}, best={best_base_ll:.4f})")
-        # Stacking 需优于最佳基模型才采用
-        if stack_ll < best_base_ll - 0.01:
-            ensemble = stacking_ensemble
-            print(f"  ✅ Stacking 优于最佳基模型，采用 Stacking")
+        # 在 calibration 集上训练，在 holdout 集上评估
+        meta_learner.fit(cal_meta_X, y_cal)
+        hold_probs = meta_learner.predict_proba(hold_meta_X)[:, 1]
+        stack_ll = log_loss(y_holdout, hold_probs)
+        print(f"  Stage-2 Stacking: holdout log_loss={stack_ll:.4f} (基线 best={best_base_ll:.4f})")
+        if stack_ll < best_base_ll - 0.005:
+            # 用校准+留出全量数据重新训练 meta-learner
+            full_meta_X = np.column_stack([
+                m.predict_proba(pd.concat([X_cal, X_holdout]))[:, 1] for _, m in valid_estimators
+            ])
+            meta_learner.fit(full_meta_X, pd.concat([y_cal, y_holdout]))
+            # 包装为类模型接口以便与现有 pipeline 兼容
+            ensemble = Stage2Stacking(valid_estimators, meta_learner)
+            print("  ✅ Stage-2 Stacking 优于最佳基模型，采用 Stacking")
         else:
-            print(f"  Stacking 未显著优于最佳基模型 (best={best_base_ll:.4f})，回退到 Voting")
+            print(f"  Stage-2 Stacking 未优于最佳基模型，回退到 Voting")
     except Exception as e:
-        print(f"  ⚠️ Stacking 失败 ({e})，回退到 Voting")
+        print(f"  ⚠️ Stage-2 Stacking 失败 ({e})，回退到 Voting")
 
     if ensemble is None:
         # 自定义加权平均，避免 VotingClassifier 重拟合 degrade 基模型
@@ -438,11 +509,84 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
     except Exception as e:
         print(f"  ⚠️ SHAP 分析跳过: {e}")
 
-    # ── 保存 ──
-    ensemble_path = MODEL_DIR_PATH / f"{prefix}_ensemble.pkl"
-    joblib.dump(calibrated, ensemble_path)
-    print(f"  已保存 {ensemble_path}")
+    # ── Champion/Challenger 对比部署 ──
+    challenger_dir = MODEL_DIR_PATH / "challengers"
+    challenger_dir.mkdir(parents=True, exist_ok=True)
+    challenger_path = challenger_dir / f"{prefix}_ensemble.pkl"
+    champion_path = MODEL_DIR_PATH / f"{prefix}_ensemble.pkl"
 
+    # 先保存 challenger（新模型）
+    joblib.dump(calibrated, challenger_path)
+    print(f"  已保存 challenger: {challenger_path}")
+
+    # 检查 champion 是否存在
+    champion_exists = champion_path.exists()
+    promote = False
+    compare_report = None
+
+    # ── 版本备份：覆盖前保存旧版 ──
+    versions_dir = MODEL_DIR_PATH / "versions"
+    versions_dir.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    def _backup_champion():
+        """将当前 champion 备份到 versions/ 目录，仅保留最近 3 版。"""
+        if not champion_path.exists():
+            return
+        backup_path = versions_dir / f"{prefix}_ensemble_{ts}.pkl"
+        shutil.copy2(champion_path, backup_path)
+        print(f"  📦 备份旧版: {backup_path.name}")
+        # 清理旧备份，仅保留最近 3 个
+        backups = sorted(versions_dir.glob(f"{prefix}_ensemble_*.pkl"))
+        for old in backups[:-3]:
+            old.unlink()
+            # 同时删除对应的 meta（如果有）
+            old_meta = versions_dir / old.name.replace(".pkl", "_meta.json")
+            if old_meta.exists():
+                old_meta.unlink()
+
+    if not champion_exists:
+        # 首次训练：直接部署
+        shutil.copy2(challenger_path, champion_path)
+        print(f"  ✅ 首次训练，直接部署为 champion: {champion_path}")
+        promote = True
+    elif X_holdout is not None and len(X_holdout) >= 10:
+        # 在 holdout 集上对比 champion vs challenger
+        try:
+            champion_model = joblib.load(champion_path)
+            compare_report = _compare_models(
+                champion_model, calibrated,
+                X_holdout, y_holdout, best_thresh,
+            )
+            if compare_report["winner"] == "challenger":
+                _backup_champion()
+                shutil.copy2(challenger_path, champion_path)
+                print(f"  ✅ Challenger 胜出 ({compare_report['details']})，已更新 champion")
+                promote = True
+            else:
+                print(f"  ℹ️ Champion 仍更优 ({compare_report['details']})，保留现有模型")
+        except Exception as e:
+            print(f"  ⚠️ 模型对比失败 ({e})，直接部署 challenger")
+            _backup_champion()
+            shutil.copy2(challenger_path, champion_path)
+            promote = True
+    else:
+        # 无 holdout 数据（样本太少），直接部署
+        _backup_champion()
+        shutil.copy2(challenger_path, champion_path)
+        n_holdout = len(X_holdout) if X_holdout is not None else 0
+        print(f"  样本不足 ({n_holdout})，跳过对比，直接部署")
+        promote = True
+
+    # 保存对比报告
+    if compare_report:
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        report_path = challenger_dir / f"compare_{prefix}_{ts}.json"
+        with open(report_path, 'w') as f:
+            json.dump(compare_report, f, indent=2)
+        print(f"  对比报告: {report_path}")
+
+    # ── 保存元数据（记录部署决策） ──
     meta_info = {
         'base_models': [e[0] for e in valid_estimators],
         'metrics': {'brier': brier, 'log_loss': ll},
@@ -460,17 +604,35 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
             'start_date': str(dates[holdout_idx[0]]) if len(holdout_idx) > 0 else None,
             'n_samples': int(len(holdout_idx)),
         },
+        'deployment': {
+            'promoted': promote,
+            'champion_existed': champion_exists,
+            'winner': compare_report["winner"] if compare_report else ("champion" if champion_exists else "challenger_first_train"),
+        },
     }
     meta_path = MODEL_DIR_PATH / f"{prefix}_ensemble_meta.json"
     with open(meta_path, 'w') as f:
         json.dump(meta_info, f, indent=2)
 
+    # 版本 meta 备份（与 .pkl 备份对应）
+    if promote and champion_exists:
+        version_meta_path = versions_dir / f"{prefix}_ensemble_{ts}_meta.json"
+        with open(version_meta_path, 'w') as f:
+            json.dump(meta_info, f, indent=2)
+
     return calibrated, {'brier': brier, 'log_loss': ll}
 
 
-def train_sport_ensemble(sport='bb'):
-    """为指定运动训练所有目标的集成模型。"""
+def train_sport_ensemble(sport='bb', quick=False):
+    """为指定运动训练所有目标的集成模型。
+
+    Args:
+        sport: 运动类型 ('bb', 'fb', 'nfl', 'wc')
+        quick: 快速模式，大幅减少 Optuna trials 用于日常流水线
+    """
     config = SPORT_CONFIG.get(sport, SPORT_CONFIG['bb'])
+    if quick:
+        config = {**config, 'n_trials': 3, 'rf_trials': 2}
     print(f"\n{'#' * 55}")
     print(f"  {'🏀' if sport == 'bb' else '⚽'} {sport.upper()} 集成模型训练")
     print(f"  配置: 基模型={config['model_types']} | trials={config['n_trials']}" +
@@ -485,11 +647,7 @@ def train_sport_ensemble(sport='bb'):
 
     results = {}
     for target in targets:
-        # BB total_result 排除 ovrundr（市场大小分线），避免特征与目标过近
         target_feat_cols = feat_cols
-        if sport == 'bb' and target == 'total_result' and 'ovrundr' in feat_cols:
-            target_feat_cols = [c for c in feat_cols if c != 'ovrundr']
-            print(f"  BB total_result: 已从特征中排除 'ovrundr' ({len(target_feat_cols)} 个特征)")
 
         ensemble, metrics = train_ensemble(
             df, target, f"{prefix}_{target}", target_feat_cols,
@@ -510,4 +668,7 @@ def train_sport_ensemble(sport='bb'):
 
 if __name__ == '__main__':
     sport = sys.argv[1] if len(sys.argv) > 1 else 'bb'
+    if len(sys.argv) > 2 and sys.argv[2] == 'quick':
+        for cfg in SPORT_CONFIG.values():
+            cfg['n_trials'] = 3
     train_sport_ensemble(sport)
