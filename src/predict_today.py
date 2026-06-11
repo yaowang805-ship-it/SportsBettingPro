@@ -115,6 +115,16 @@ def main():
     except Exception:
         pass
 
+    # 数据库同步（非阻塞）
+    try:
+        import subprocess
+        sync_script = ROOT / "scripts" / "sync_db.py"
+        if sync_script.exists():
+            subprocess.run([sys.executable, str(sync_script)], check=True,
+                           capture_output=True, text=True, timeout=60)
+    except Exception:
+        pass
+
 
 if __name__ == "__main__":
     from config.logging_config import setup_logging

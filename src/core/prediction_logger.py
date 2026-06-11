@@ -146,6 +146,39 @@ def log_prediction(
         existing = pd.read_csv(LOG_FILE)
         df = pd.concat([existing, df], ignore_index=True)
     df.to_csv(LOG_FILE, index=False)
+
+    # 双写: predictions 表
+    try:
+        from src.storage.database import db
+        home_prob = away_prob = draw_prob = over_prob = under_prob = None
+        mt = market_type.lower().strip()
+        md = market_detail.lower().strip()
+        if mt in ("胜负", "h2h", "win"):
+            if "主" in md or "home" in md:
+                home_prob = model_prob
+            elif "客" in md or "away" in md:
+                away_prob = model_prob
+            elif "平" in md or "draw" in md:
+                draw_prob = model_prob
+            else:
+                home_prob = model_prob
+        elif mt in ("大小球", "total", "totals"):
+            if "大" in md or "over" in md:
+                over_prob = model_prob
+            elif "小" in md or "under" in md:
+                under_prob = model_prob
+        db.record_prediction(
+            match_key=prediction_id, sport=sport,
+            home_team=home_team or home_team_en or home_team_cn,
+            away_team=away_team or away_team_en or away_team_cn,
+            model_name=source,
+            home_prob=home_prob, away_prob=away_prob, draw_prob=draw_prob,
+            over_prob=over_prob, under_prob=under_prob,
+            commence_time=match_time.isoformat() if match_time else "",
+        )
+    except Exception:
+        pass
+
     return prediction_id
 
 
@@ -169,6 +202,18 @@ def settle_prediction(prediction_id: str, won: bool, result_odds: Optional[float
     if result_odds is not None:
         df.loc[mask, "result_odds"] = round(result_odds, 4)
     df.to_csv(LOG_FILE, index=False)
+
+    # 双写: 更新 predictions 表结算状态
+    try:
+        from src.storage.database import db
+        from src.storage.models import Prediction
+        with db.Session() as session:
+            pred = session.query(Prediction).filter_by(match_key=prediction_id).first()
+            if pred:
+                pred.was_correct = 1 if won else 0
+                session.commit()
+    except Exception:
+        pass
 
 
 def batch_settle(sport: str = None):

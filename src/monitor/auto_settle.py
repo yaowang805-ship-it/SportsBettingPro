@@ -442,7 +442,11 @@ def auto_settle(dry_run: bool = False) -> int:
                     try:
                         rm = RiskManager()
                         prob = bet.get("model_prob", 1.0 / odds if odds > 1 else 0.5)
-                        rm.record_outcome(stake, result == "won", odds, prob)
+                        rm.record_outcome(stake, result == "won", odds, prob,
+                                          sport=bet.get("sport", ""),
+                                          home_team=bet.get("home_team", bet.get("home_cn", "")),
+                                          away_team=bet.get("away_team", bet.get("away_cn", "")),
+                                          bet_type=bet.get("market_type", "h2h"))
                     except Exception as e:
                         logger.warning("  ⚠️ 风险状态同步失败: %s", e)
                 settled_count += 1

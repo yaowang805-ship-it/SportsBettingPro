@@ -144,6 +144,9 @@ class BettingOrchestrator:
                     win=(result.status == "won"),
                     odds=result.executed_odds,
                     prob=order.model_prob,
+                    sport=order.sport or "",
+                    home_team=order.home_team or "",
+                    away_team=order.away_team or "",
                 )
                 from src.core.prediction_logger import settle_prediction
                 settle_prediction(

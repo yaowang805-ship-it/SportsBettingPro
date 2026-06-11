@@ -137,6 +137,22 @@ def update_performance():
     with open(HEALTH_FILE, 'w', encoding='utf-8') as f:
         json.dump(health, f, ensure_ascii=False, indent=2)
 
+    # 双写: performance_snapshots 表
+    try:
+        from src.storage.database import db
+        db.record_performance(
+            balance=round(cumulative, 2),
+            equity=round(cumulative, 2),
+            drawdown_pct=round(max_drawdown, 4) if max_drawdown else 0.0,
+            roi=round(roi, 4) if roi else 0.0,
+            win_rate=round(win_rate, 4),
+            total_bets=total_bets,
+            settled_bets=total_bets,
+            notes="auto sync from update_performance()",
+        )
+    except Exception:
+        pass
+
     # 5. 告警检查
     from src.monitor.alert_log import log_alert
     alerts = []

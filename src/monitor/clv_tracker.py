@@ -392,6 +392,19 @@ def update_opening_with_closing(match_key: str, market: str,
 
     _save_opening_odds(data)
 
+    # 双写: clv_data 表
+    try:
+        from src.storage.database import db
+        db.record_clv(
+            match_key=match_key,
+            bookmaker=closing_bm or rec.get("opening_bookmaker", ""),
+            market=market,
+            opening=rec["opening_odds"],
+            closing=closing_odds,
+        )
+    except Exception:
+        pass
+
 
 def get_clv_by_bookmaker() -> dict:
     """按博彩公司统计 CLV。"""

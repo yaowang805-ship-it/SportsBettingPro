@@ -112,6 +112,16 @@ def run_monitor():
             logger.info("=" * 60)
     except Exception as e:
         logger.warning("Paper trading report skipped: %s", e)
+    # 数据库同步（CSV/JSON → SQLAlchemy 表）
+    try:
+        import subprocess
+        sync_script = ROOT / "scripts" / "sync_db.py"
+        if sync_script.exists():
+            subprocess.run([sys.executable, str(sync_script)], check=True,
+                           capture_output=True, text=True, timeout=60)
+            logger.info("✅ DB 同步完成")
+    except Exception as e:
+        logger.warning("⚠️  DB 同步跳过: %s", e)
 
 def _run_ranking():
     """跨运动统一排名（非阻塞，失败不影响主流程）。"""

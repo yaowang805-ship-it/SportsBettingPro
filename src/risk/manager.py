@@ -580,7 +580,8 @@ class RiskManager:
         return True, "允许下注"
 
     def record_outcome(self, stake: float, win: bool, odds: float = 2.0, prob: float = 0.5,
-                       sport: str = ""):
+                       sport: str = "", home_team: str = "", away_team: str = "",
+                       bet_type: str = "h2h"):
         self.total_bets += 1
         if win:
             pnl = stake * (odds - 1.0)
@@ -603,7 +604,9 @@ class RiskManager:
         self.adaptive_kelly.update(prob, 1 if win else 0)
 
         self.save_state()
-        self._append_bet_log(stake, win, odds, prob)
+        self._append_bet_log(stake, win, odds, prob, sport=sport,
+                             home_team=home_team, away_team=away_team,
+                             bet_type=bet_type)
 
         # ── 冷却触发条件 ──
         # 1) 5+ 连败
@@ -616,7 +619,8 @@ class RiskManager:
         elif self.drawdown_pct() >= 0.15:
             self._trigger_cool_off()
 
-    def _append_bet_log(self, stake, win, odds, prob):
+    def _append_bet_log(self, stake, win, odds, prob,
+                        sport="", home_team="", away_team="", bet_type="h2h"):
         log_entry = {
             'date': datetime.now().isoformat(),
             'stake': stake,
@@ -635,9 +639,10 @@ class RiskManager:
         # SQLite
         try:
             from src.storage.database import db
-            db.record_bet(home="", away="", sport="", bet_type="h2h",
+            db.record_bet(match_key=f"{home_team} vs {away_team}" if home_team or away_team else "",
+                          home=home_team, away=away_team, sport=sport, bet_type=bet_type,
                           stake=stake, odds=odds, prob=prob,
-                          notes=f"win={win}" if isinstance(win, bool) else f"win={win}")
+                          notes=f"win={win}")
         except Exception:
             pass
 

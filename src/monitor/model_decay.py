@@ -546,6 +546,34 @@ def run_decay_check(settle_first: bool = True) -> Dict:
     except Exception as e:
         logger.warning("保存性能历史失败: %s", e)
 
+    # 双写: model_accuracy 表（按运动/来源写入准确率）
+    try:
+        from src.storage.database import db
+        from src.storage.models import ModelAccuracy
+        import math
+        with db.Session() as session:
+            for sport, info in trend.get("by_sport", {}).items():
+                n = info.get("n", 0)
+                acc = info.get("accuracy", 0)
+                existing = session.query(ModelAccuracy).filter_by(
+                    model_name="ensemble", target=sport).first()
+                if existing:
+                    existing.total_predictions = n
+                    existing.correct = int(round(n * acc)) if not math.isnan(acc) else 0
+                    existing.accuracy = acc if not math.isnan(acc) else 0.0
+                    existing.updated_at = datetime.now(timezone.utc)
+                else:
+                    session.add(ModelAccuracy(
+                        model_name="ensemble", target=sport,
+                        total_predictions=n,
+                        correct=int(round(n * acc)) if not math.isnan(acc) else 0,
+                        accuracy=acc if not math.isnan(acc) else 0.0,
+                        updated_at=datetime.now(timezone.utc),
+                    ))
+            session.commit()
+    except Exception:
+        pass
+
     return trend
 
 
