@@ -218,18 +218,16 @@ def save_shap_report(model, X: pd.DataFrame, feature_names: List[str],
     save_path.mkdir(parents=True, exist_ok=True)
 
     # 特征重要性
-    imp_df = report_feature_importance(model, X, feature_names, save_dir=str(save_path))
+    report_feature_importance(model, X, feature_names, save_dir=str(save_path))
 
     # SHAP 值（如果模型兼容）
     top_features = []
-    mean_shap = {}
 
     try:
         shap_values, expected_value = compute_shap_values(model, X)
         if shap_values is not None:
             # 计算平均绝对值 SHAP
             mean_shap_values = np.abs(shap_values).mean(axis=0)
-            mean_shap = dict(zip(feature_names, mean_shap_values.tolist()))
 
             # 排序
             sorted_idx = np.argsort(mean_shap_values)[::-1]

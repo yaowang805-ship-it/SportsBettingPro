@@ -2,7 +2,6 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
-import numpy as np
 
 from src.dashboard.components.data_loader import (
     load_json, load_csv, render_empty_state,
@@ -41,7 +40,6 @@ def render():
         st.subheader("CLV 分布")
         n_bins = max(10, min(30, len(clv_df) // 3))
         mu = clv_df["clv"].mean()
-        sigma = clv_df["clv"].std()
         hist = (
             alt.Chart(clv_df)
             .mark_bar(opacity=0.7, color="steelblue", cornerRadius=2)

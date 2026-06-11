@@ -146,7 +146,6 @@ def render():
             df["cumulative"] = df["profit"].fillna(0).cumsum() + start_balance
             # 加起始点
             if len(df) > 0:
-                first = df.iloc[0]
                 points = pd.DataFrame([
                     {"date": df["date"].min() - pd.Timedelta(days=1), "cumulative": start_balance},
                     *[{"date": r["date"], "cumulative": r["cumulative"]} for _, r in df.iterrows()],

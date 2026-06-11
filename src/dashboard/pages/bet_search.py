@@ -2,8 +2,8 @@
 import streamlit as st
 import pandas as pd
 
-from src.dashboard.components.data_loader import load_csv, load_json, render_empty_state
-from src.dashboard.config import PRED_LOG_FILE, PORTFOLIO_FILE
+from src.dashboard.components.data_loader import load_csv, render_empty_state
+from src.dashboard.config import PRED_LOG_FILE
 
 
 def _load_records() -> pd.DataFrame:

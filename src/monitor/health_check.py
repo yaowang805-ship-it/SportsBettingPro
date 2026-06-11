@@ -250,9 +250,9 @@ def main():
     logger.info("\n🌐 API连接:")
     api = report.get('api_connectivity', {})
     for name, status in api.items():
-        if status == True:
+        if status is True:
             logger.info("  ✅ %s", name)
-        elif status == False:
+        elif status is False:
             logger.error("  ❌ %s", name)
         elif status == 'no_key':
             logger.warning("  ⚠️ %s: 未配置密钥", name)

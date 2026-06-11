@@ -297,7 +297,7 @@ class RiskManager:
             return "bb"
         if "nfl" in s or "football" in s:
             return "nfl"
-        if "soccer" in s or "epl" in s or any(l in s for l in ["liga", "serie", "bundes", "ligue"]):
+        if "soccer" in s or "epl" in s or any(lk in s for lk in ["liga", "serie", "bundes", "ligue"]):
             return "fb"
         return "fb"  # 默认映射到足球模型（覆盖面最广）
 
@@ -439,8 +439,6 @@ class RiskManager:
             return 0.0
 
         # 多层风险调整：ML 动态仓位 + 模型退化追踪 + 阈值回退
-        confidence_mult = self._get_confidence_tier(edge)
-        adaptive_frac = self.adaptive_kelly.fraction()
         model_decay_mult = self.model_decay_tracker.get_confidence_multiplier(
             self._sport_to_model_name(sport))
         dyn_mult = self.dynamic_staking.predict_multiplier({

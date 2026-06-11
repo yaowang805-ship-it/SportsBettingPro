@@ -197,7 +197,6 @@ def simulate_tournament(
 
         # 选出8个成绩最好的小组第三
         group_third.sort(key=lambda x: (-x[2], -x[3]))
-        best_third = {t[0] for t in group_third[:8]}
 
         # 晋级队伍：每组前2名（共24队）+ 8个成绩最好的小组第三
         advanced = []
@@ -287,7 +286,6 @@ def main(n_simulations: int = 10000):
 
     model_dir = Path(__file__).resolve().parent.parent.parent / "models"
     home_win_path = model_dir / "model_wc_home_win_ensemble.pkl"
-    over_path = model_dir / "model_wc_over_2.5_ensemble.pkl"
 
     if not home_win_path.exists():
         logger.error("❌ WC 模型未找到: %s", home_win_path)

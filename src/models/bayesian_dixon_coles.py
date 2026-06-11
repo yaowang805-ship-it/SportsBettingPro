@@ -152,7 +152,7 @@ class BayesianDixonColes:
         )
 
         # ── 构建 PyMC 模型 ──
-        with pm.Model() as model:
+        with pm.Model():
             # 分层先验
             σ_attack = pm.Exponential("σ_attack", 1.0)
             σ_defense = pm.Exponential("σ_defense", 1.0)

@@ -146,7 +146,7 @@ def compute_edge_attribution() -> Dict:
     attr_df = pd.DataFrame(attributions)
 
     # 聚合统计
-    with_timing = attr_df[attr_df["has_timing_data"] == True]
+    with_timing = attr_df[attr_df["has_timing_data"]]
 
     summary = {
         "generated_at": datetime.now(timezone.utc).isoformat(),

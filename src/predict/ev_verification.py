@@ -235,7 +235,6 @@ def simulate_betting(df: pd.DataFrame) -> dict:
             continue
 
         wins = y_true[mask].sum()
-        losses = n_bets - wins
         win_rate = wins / n_bets
 
         # 模拟：下注主胜，赔率用公平赔率假设 = 1 / market_prob
@@ -551,7 +550,6 @@ def _match_result(pred: pd.Series, bb_hist: str, fb_hist: str, nfl_hist: str) ->
 
     sport = pred.get('sport', '')
     market_detail = str(pred.get('market_detail', ''))
-    market_type = str(pred.get('market_type', ''))
 
     # 加载对应运动的历史数据
     if sport in ('nba', 'bb'):

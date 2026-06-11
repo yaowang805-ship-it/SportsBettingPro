@@ -536,6 +536,18 @@ _LEAGUE_TO_SPORTKEY = {
     "国际足球": "soccer_epl",
 }
 
+# 泛化联赛名 → 候选 sport_key 列表（逐个尝试直到找到匹配）
+_FALLBACK_SPORT_KEYS = {
+    "足球": [
+        "soccer_epl", "soccer_spain_la_liga", "soccer_germany_bundesliga",
+        "soccer_italy_serie_a", "soccer_france_ligue_one",
+        "soccer_fifa_world_cup", "soccer_uefa_champions_league",
+        "soccer_uefa_europa_league", "soccer_brazil_campeonato",
+        "soccer_netherlands_eredivisie", "soccer_portugal_primeira_liga",
+        "soccer_usa_mls",
+    ],
+}
+
 
 def _parse_match_key(match_key: str):
     """从 match_key 'HomeTeam @ AwayTeam 2026-05-25' 解析球队名。"""
@@ -646,7 +658,6 @@ def refresh_closing_odds() -> dict:
     if not data:
         return {"updated": 0, "skipped": 0, "errors": 0, "expired": 0}
 
-    now = datetime.now(timezone.utc)
     result = {"updated": 0, "skipped": 0, "errors": 0, "expired": 0}
 
     # 按联赛分组未收盘记录
@@ -661,46 +672,55 @@ def refresh_closing_odds() -> dict:
         return result
 
     for league, records in leagues.items():
-        sport_key = _LEAGUE_TO_SPORTKEY.get(league)
-        if not sport_key:
+        sport_keys = _FALLBACK_SPORT_KEYS.get(league, [])
+        if not sport_keys:
+            sk = _LEAGUE_TO_SPORTKEY.get(league)
+            if sk:
+                sport_keys = [sk]
+
+        if not sport_keys:
             result["skipped"] += len(records)
             continue
 
-        try:
-            odds_data = fetch_odds_api(sport_key, force=True)
-        except Exception as e:
-            logger.warning("  ⚠️ CLV收盘: %s 赔率拉取失败: %s", league, e)
-            result["errors"] += 1
-            continue
-
-        if not odds_data:
-            result["skipped"] += len(records)
-            continue
-
-        current_index = _build_h2h_index(odds_data)
-
-        for record_key, rec in records:
-            match_key = rec.get("match_key", "")
-            home_name, away_name = _parse_match_key(match_key)
-            if not home_name:
-                result["skipped"] += 1
+        unmatched = list(records)
+        for sk in sport_keys:
+            if not unmatched:
+                break
+            try:
+                odds_data = fetch_odds_api(sk, force=True)
+            except Exception as e:
+                logger.warning("  ⚠️ CLV收盘: %s 赔率拉取失败: %s", league, e)
+                result["errors"] += 1
                 continue
 
-            entry = current_index.get((home_name.lower(), away_name.lower()))
-            if not entry or entry[0] is None:
-                # 比赛已从API移除 → 标记过期
-                auto_close_expired(rec)
-                result["expired"] += 1
+            if not odds_data or not isinstance(odds_data, (list, tuple)):
                 continue
 
-            current_odds, bookmaker = entry
-            market = rec.get("market", "h2h")
+            current_index = _build_h2h_index(odds_data)
+            still_unmatched = []
+            for record_key, rec in unmatched:
+                match_key = rec.get("match_key", "")
+                home_name, away_name = _parse_match_key(match_key)
+                if not home_name:
+                    result["skipped"] += 1
+                    continue
 
-            # 写入收盘价
-            update_opening_with_closing(match_key, market, current_odds, bookmaker)
-            # 同步 prediction_log
-            _sync_prediction_log(match_key, current_odds)
-            result["updated"] += 1
+                entry = current_index.get((home_name.lower(), away_name.lower()))
+                if not entry or entry[0] is None:
+                    still_unmatched.append((record_key, rec))
+                    continue
+
+                current_odds, bookmaker = entry
+                market = rec.get("market", "h2h")
+                update_opening_with_closing(match_key, market, current_odds, bookmaker)
+                _sync_prediction_log(match_key, current_odds)
+                result["updated"] += 1
+            unmatched = still_unmatched
+
+        # 多轮尝试后仍未匹配的标记过期
+        for record_key, rec in unmatched:
+            auto_close_expired(rec)
+            result["expired"] += 1
 
     if result["updated"]:
         logger.info("  📊 CLV收盘价已更新 %d 条", result["updated"])

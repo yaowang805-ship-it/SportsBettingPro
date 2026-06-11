@@ -7,14 +7,13 @@
         print(f"{p['name']}: PTS={p['PTS']}, REB={p['REB']}, AST={p['AST']}")
 """
 
-from typing import Dict, List, Optional
-from datetime import datetime
+from typing import Dict, List
 
 from config.logging_config import get_logger
 logger = get_logger(__name__)
 
 from src.features.player_pipeline import (
-    get_today_players, PROP_STATS, PROP_LABELS, rank_player_props
+    get_today_players, rank_player_props
 )
 
 # ── 置信度阈值 ──
@@ -136,7 +135,6 @@ def format_player_report(players: List[Dict]) -> str:
 
 if __name__ == "__main__":
     # 测试
-    import sys
     print("NBA 球员投影测试")
     print("=" * 50)
     players = predict_game_player_props("Boston Celtics", "Los Angeles Lakers")

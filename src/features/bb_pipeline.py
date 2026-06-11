@@ -489,7 +489,6 @@ def build_bb_features(
 
     # ── 5. ELO 评级特征 ──
     from src.features.elo import compute_elo
-    nba_teams = set(df['home'].unique()) | set(df['away'].unique())
     df = compute_elo(df, K=20)
 
     # ── 6. 构建球队级统计特征 ──

@@ -9,11 +9,12 @@
     # [{player_id, name, position, projections: {PTS: 22.5, REB: 7.3, ...}}, ...]
 """
 
-import sys, json, time, os
+import sys
+import json
+import time
 from pathlib import Path
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Tuple
-from functools import lru_cache
+from typing import Dict, List, Optional
 
 import numpy as np
 import pandas as pd
@@ -108,8 +109,7 @@ def _call_nba_api(endpoint_name: str, **kwargs) -> Optional[pd.DataFrame]:
         return pd.DataFrame(cached)
 
     try:
-        import importlib
-        mod_path = f"nba_api.stats.endpoints"
+        mod_path = "nba_api.stats.endpoints"
         mod = __import__(mod_path, fromlist=[endpoint_name])
         ep_cls = getattr(mod, endpoint_name)
         ep = ep_cls(**kwargs)

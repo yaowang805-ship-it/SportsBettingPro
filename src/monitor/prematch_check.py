@@ -63,7 +63,6 @@ def _best_h2h_odds(odds_data: list, home_team: str, away_team: str) -> tuple:
         best_odds = None
         best_bm = ""
         sharp_before = set()
-        sharp_after = set()
         for bm in match.get("bookmakers", []):
             bm_name = bm.get("title", "unknown").lower().replace(" ", "")
             is_sharp = any(k in bm_name for k, v in BOOK_SHARPNESS.items() if v >= 0.7)

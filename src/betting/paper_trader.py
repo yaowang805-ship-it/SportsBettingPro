@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Optional
 
 from config.logging_config import get_logger
-from config.settings import BASE_DIR, DATA_DIR
+from config.settings import DATA_DIR
 
 logger = get_logger(__name__)
 
@@ -196,7 +196,6 @@ class PaperTrader:
         # 从 virtual_portfolio 提取数据
         history = portfolio.get("history", [])
         pending = portfolio.get("pending_bets", [])
-        settled_map = portfolio.get("settled", {})
         current_balance = portfolio.get("balance", self.initial_balance)
 
         # ── 基础统计 ──
@@ -326,7 +325,6 @@ class PaperTrader:
             ww = sum(1 for h in wh if h.get("status") == "won")
             wl = sum(1 for h in wh if h.get("status") == "lost")
             wp = sum(h.get("profit", 0) for h in wh)
-            ws = sum(h.get("stake", 0) for h in wh)
             return {
                 "bets": len(wh),
                 "win_rate": ww / (ww + wl) if (ww + wl) > 0 else None,
@@ -621,7 +619,6 @@ class PaperTrader:
         if s.get("avg_clv") is not None:
             lines.append(f"  Avg CLV:                 {s['avg_clv']:>+7.1%}")
             lines.append(f"  Positive CLV Rate:        {s['positive_clv_rate']:>7.1%}")
-            clv_pos = int(s.get("positive_clv_rate", 0) * 100) if s.get("positive_clv_rate") else 0
             lines.append(f"  Interpretation:          "
                          f"{'Positive CLV -- system has real edge' if s['avg_clv'] > 0 else 'Negative CLV -- system may be lucky, not skilled'}")
         else:
@@ -682,7 +679,7 @@ class PaperTrader:
         lines.append(sep)
         ready = rd.get("ready", False)
         verdict = "✅  GO" if ready else "❌  NO-GO"
-        lines.append(f"")
+        lines.append("")
         lines.append(f"  GO / NO-GO:  {verdict}")
         lines.append("")
         lines.append("  Checks:")

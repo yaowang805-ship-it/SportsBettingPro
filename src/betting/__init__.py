@@ -23,7 +23,6 @@ from config.settings import (
     SELENIUM_PLATFORM_URL, SELENIUM_PLATFORM_USERNAME, SELENIUM_PLATFORM_PASSWORD,
 )
 from src.betting.base import BaseExecutor
-from src.betting.orchestrator import BettingOrchestrator
 
 logger = get_logger(__name__)
 

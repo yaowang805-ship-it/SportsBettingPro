@@ -294,7 +294,6 @@ def compute_portfolio(pred_df: Optional[pd.DataFrame] = None) -> dict:
     pending_bets = state.get("pending_bets", [])
     history = state.get("history", [])
 
-    total_stake = 0.0
     total_profit = 0.0
     win_count = 0
     loss_count = 0

@@ -25,8 +25,6 @@ from config.settings import MODEL_DIR, DATA_DIR
 from src.core.calibration import dynamic_shrinkage
 from src.features.bb_pipeline import (
     _process_team_stats as _bb_process_team_stats,
-    _NBA_CITY_COORDS as _BB_CITY_COORDS,
-    _haversine as _bb_haversine,
 )
 from src.features.football_pipeline import (
     _process_team_stats as _fb_process_team_stats,

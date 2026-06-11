@@ -2,12 +2,10 @@
 
 数据源: data/storage/paper_trading.json (由 PaperTrader.refresh() 生成)
 """
-from datetime import datetime
 
 import altair as alt
 import pandas as pd
 import streamlit as st
-import numpy as np
 
 from src.dashboard.components.data_loader import load_json, render_empty_state
 from src.dashboard.config import PAPER_TRADING_FILE

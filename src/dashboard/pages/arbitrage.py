@@ -3,11 +3,9 @@ import json
 
 import altair as alt
 import pandas as pd
-import streamlit as st
 
-from src.dashboard.components.data_loader import load_json, render_empty_state
+from src.dashboard.components.data_loader import load_json, render_empty_state, st
 from src.dashboard.config import ARBITRAGE_FILE, EDGE_ATTRIBUTION_FILE
-from src.dashboard.components.data_loader import st
 
 
 def _load_odds_snapshots():

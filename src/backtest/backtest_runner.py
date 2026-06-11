@@ -144,7 +144,6 @@ def _quick_train_ensemble(X_tr, y_tr, X_te, y_te, verbose=False):
 
     返回 (probs, metrics_dict)。
     """
-    models = []
     configs = [
         ('lgbm', LGBMClassifier(n_estimators=200, max_depth=5, learning_rate=0.05,
                                 random_state=42, n_jobs=-1, verbose=-1)),
@@ -409,7 +408,6 @@ def evaluate_model(df, feat_cols, model_path, target_col, dataset_name: str,
     split_idx = int(len(df_valid) * (1 - test_frac))
     split_idx = max(split_idx, 1)
     split_idx = min(split_idx, len(df_valid) - 1)
-    split_date = dates[split_idx - 1]
 
     # 训练集
     train_y = y[:split_idx]

@@ -6,7 +6,6 @@
   DATABASE_URL=postgresql://user:pass@host:5432/sportsbetting
 """
 from datetime import datetime, timezone
-from typing import Optional
 
 from sqlalchemy import Column, Integer, Float, String, DateTime, Index, Text
 from sqlalchemy.orm import DeclarativeBase

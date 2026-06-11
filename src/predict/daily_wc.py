@@ -13,13 +13,11 @@ setup_logging()
 logger = get_logger(__name__)
 
 import joblib
-from src.models.stacking import Stage2Stacking, WeightedEnsemble
 import numpy as np
 import pandas as pd
 
 from config.settings import MODEL_DIR, DATA_DIR
 # 确保反序列化时可找到自定义类
-from src.models.stacking import Stage2Stacking, WeightedEnsemble
 
 # ── 48 支世界杯参赛队（Odds API 名称） ──
 WC_TEAMS_ODDS = [
@@ -445,6 +443,7 @@ def main():
     from src.notify.dingtalk import get_notifier
     from src.notify.formatter import Recommendation, MarketType, RecommendationFormatter
     from src.dashboard.components.virtual_portfolio import auto_place_bets
+    from src.monitor.clv_tracker import capture_opening_odds
 
     rm = RiskManager()
     recs = []
@@ -610,6 +609,12 @@ def main():
     # 同步到虚拟投注组合
     auto_place_bets(recs)
     logger.info("✅ 已同步 %d 条推荐到虚拟投注组合", len(recs))
+
+    # 记录开盘价（用于 CLV 追踪）
+    for r in recs:
+        match_key = f"{r['home_team']} @ {r['away_team']} {pd.to_datetime(r['commence_time']).strftime('%Y-%m-%d')}"
+        market_key = "h2h" if "主胜" in r.get("type", "") else "totals"
+        capture_opening_odds(match_key, market_key, r["odds"], r.get("recommended_bookmaker", ""), "世界杯")
 
 
 if __name__ == "__main__":

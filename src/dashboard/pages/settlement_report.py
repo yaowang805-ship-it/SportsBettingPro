@@ -1,7 +1,6 @@
 """自动结算报告 — 结算成功率、时效性、按维度分解。"""
 import streamlit as st
 import pandas as pd
-from datetime import datetime, timezone
 
 from src.dashboard.components.data_loader import load_csv, load_json, render_empty_state
 from src.dashboard.config import PRED_LOG_FILE, PORTFOLIO_FILE
@@ -39,7 +38,6 @@ def render():
         win_rate = perf.get("win_rate", 0)
         roi = perf.get("roi", 0)
         total_profit = perf.get("total_profit", 0)
-        total_stake = perf.get("total_stake", 0)
     else:
         total = len(df)
         settled = len(df[df["status"].isin(["won", "lost"])]) if "status" in df.columns else 0
@@ -47,11 +45,9 @@ def render():
         lost = len(df[df["status"] == "lost"]) if "status" in df.columns else 0
         win_rate = won / (won + lost) if (won + lost) > 0 else 0
         total_profit = 0
-        total_stake = 0
         roi = 0
 
     pending = total - settled
-    void = len(df[df["status"] == "void"]) if "status" in df.columns else 0
 
     col1, col2, col3, col4, col5, col6 = st.columns(6)
     col1.metric("总预测", total)

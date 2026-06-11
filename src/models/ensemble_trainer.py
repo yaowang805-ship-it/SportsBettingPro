@@ -21,7 +21,7 @@ import numpy as np
 import optuna
 import pandas as pd
 from sklearn.calibration import CalibratedClassifierCV
-from sklearn.ensemble import RandomForestClassifier, StackingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import brier_score_loss, log_loss
 from sklearn.frozen import FrozenEstimator
@@ -382,7 +382,6 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
     y_holdout = y.iloc[holdout_idx] if len(holdout_idx) > 0 else None
 
     X_meta = X.iloc[meta_idx]
-    y_meta = y.iloc[meta_idx]
     X_cal = X.iloc[cal_idx]
     y_cal = y.iloc[cal_idx]
     print(f"  Voting 训练: {len(X_meta)} 样本 (至 {str(dates[meta_idx[-1]])[:10]}) "
@@ -424,9 +423,6 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
     print(f"  动态权重: {[(n, round(w, 3)) for n, w in zip([e[0] for e in valid_estimators], norm_weights)]}")
 
     # ── 阶段4: Stacking 集成（默认）或 Voting（回退） ──
-    # 先算基模型平均 log_loss（用于判断 stacking 是否有提升）
-    avg_base_ll = np.mean([per_model_metrics[n]['cal_log_loss']
-                           for n, _ in valid_estimators])
     best_base_ll = min([per_model_metrics[n]['cal_log_loss']
                         for n, _ in valid_estimators])
 
@@ -460,7 +456,7 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
             ensemble = Stage2Stacking(valid_estimators, meta_learner)
             print("  ✅ Stage-2 Stacking 优于最佳基模型，采用 Stacking")
         else:
-            print(f"  Stage-2 Stacking 未优于最佳基模型，回退到 Voting")
+            print("  Stage-2 Stacking 未优于最佳基模型，回退到 Voting")
     except Exception as e:
         print(f"  ⚠️ Stage-2 Stacking 失败 ({e})，回退到 Voting")
 

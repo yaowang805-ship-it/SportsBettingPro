@@ -206,7 +206,6 @@ def render():
     balance = portfolio_state.get("balance", 10000)
     settled = portfolio_state.get("settled", {})
     pending_bets = portfolio_state.get("pending_bets", [])
-    history = portfolio_state.get("history", [])
 
     n_settled = len(settled)
     n_won = sum(1 for v in settled.values() if v == "won")
@@ -314,17 +313,8 @@ def render():
                 )
             )
 
-            # 回撤标签线
-            rule = (
-                alt.Chart(eq_df)
-                .mark_rule(color="#FF5252", strokeDash=[4, 4])
-                .encode(
-                    y=alt.Y("min_dd_y:Q"),
-                )
-                .transform_aggregate(
-                    min_dd_y="min(balance)",
-                )
-            )
+            # 回撤标签线（未使用，保留注释）
+            # rule = alt.Chart(eq_df).mark_rule(...)
 
             chart = alt.layer(area, dd_area).properties(height=300)
             st.altair_chart(chart, use_container_width=True)

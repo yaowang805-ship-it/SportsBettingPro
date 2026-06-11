@@ -188,7 +188,6 @@ _TEAM_ALIASES = {
     "wolfsburg": "vfl wolfsburg",
     "stuttgart": "vfb stuttgart",
     "leipzig": "rb leipzig",
-    "leverkusen": "bayer leverkusen",
     "frankfurt": "eintracht frankfurt",
     "union": "union berlin",
     "heidenheim": "fc heidenheim",

@@ -274,8 +274,8 @@ for pred in predictions:
         # 总分备选（find_best_total 的 model_prob 始终用大球概率）
         if _TOTAL_RELIABLE and total_prob is not None and total_pt is not None:
             for side_key, side_label in [
-                ("over", f"大(备选)"),
-                ("under", f"小(备选)"),
+                ("over", "大(备选)"),
+                ("under", "小(备选)"),
             ]:
                 alt = _ALT_FINDER.find_best_total(home, away, total_prob, total_pt, side=side_key)
                 if alt and alt["ev"] > 0:
@@ -356,7 +356,7 @@ for pred in predictions:
 # ── NBA 球员表现预测 ──
 _player_projections = []
 try:
-    from src.predict.player_projection import predict_game_player_props, format_player_report
+    from src.predict.player_projection import predict_game_player_props
     from src.features.player_pipeline import TEAM_NAME_TO_ID
     seen_matchups = set()
     for pred in predictions:
