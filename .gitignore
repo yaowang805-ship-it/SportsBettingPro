@@ -1,5 +1,6 @@
 # Python
 venv/
+.venv312/
 __pycache__/
 *.pyc
 *.pyo
@@ -14,6 +15,7 @@ catboost_info/
 # Database files (huge, not tracked)
 data/*.db
 data/*.sqlite
+database.sqlite
 data/backup_protected/
 
 # Large CSV data (40MB+ each)
@@ -52,6 +54,7 @@ data/storage/model_backtest_summary.json
 data/storage/arbitrage_log.json
 data/storage/edge_attribution_report.json
 data/storage/team_edge_tracking.json
+data/storage/paper_trading.json
 
 # Odds cache (auto-generated)
 data/storage/odds/bsd_*.json
