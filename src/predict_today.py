@@ -6,20 +6,22 @@
 用法:
     python src/predict_today.py
 """
-import json, os, sys
+import json
+import sys
 from pathlib import Path
 from datetime import datetime
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from config.settings import DATA_DIR
+
 import requests
-import numpy as np
 
 from config.logging_config import get_logger
 logger = get_logger(__name__)
 
-from config.settings import ODDS_API_KEY, DINGTALK_WEBHOOK, KELLY_FRACTION
+from config.settings import DINGTALK_WEBHOOK
 
 MIN_EV = 0.05   # 最低 EV 5%
 MAX_RECS = 5
@@ -69,7 +71,7 @@ def main():
             mod = importlib.import_module(daily_module)
             mod.main()
             # 读取生成的推荐文件
-            rec_file = ROOT / "data" / "storage" / f"daily_{sport_key}_recommendations.json"
+            rec_file = Path(DATA_DIR) / f"daily_{sport_key}_recommendations.json"
             if rec_file.exists():
                 data = json.loads(rec_file.read_text())
                 recs = data.get("recommendations", [])

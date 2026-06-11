@@ -9,11 +9,8 @@
     injuries = get_nba_injuries()  # 所有伤病
     key_missing = get_injured_rotation_players()  # 核心缺阵名单
 """
-import json
 from datetime import datetime, timezone
 from typing import List, Dict, Optional
-from urllib.request import urlopen, Request
-from urllib.error import URLError
 
 ESPN_INJURIES_URL = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries"
 

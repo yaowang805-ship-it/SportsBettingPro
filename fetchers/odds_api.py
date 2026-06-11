@@ -25,6 +25,24 @@ SPORTS_LEAGUES = [
     'soccer_germany_bundesliga',
     'soccer_italy_serie_a',
     'soccer_france_ligue_one',
+    'soccer_brazil_campeonato',
+    'soccer_brazil_serie_b',
+    'soccer_netherlands_eredivisie',
+    'soccer_portugal_primeira_liga',
+    'soccer_spain_segunda_division',
+    'soccer_china_superleague',
+    'soccer_sweden_allsvenskan',
+    'soccer_norway_eliteserien',
+    'soccer_chile_campeonato',
+    'soccer_finland_veikkausliiga',
+    'soccer_league_of_ireland',
+    'soccer_sweden_superettan',
+    'soccer_germany_dfb_pokal',
+    'soccer_england_championship',
+    'soccer_italy_serie_b',
+    'soccer_conmebol_copa_sudamericana',
+    'basketball_wnba',
+    'basketball_euroleague',
 ]
 
 
@@ -134,6 +152,26 @@ def _check_quota(sport_key: str, remaining: str, api_key: str):
                        sport_key, key_suffix, remaining)
 
 
+def _fetch_via_curl(url: str, timeout: int) -> dict:
+    """使用 curl 作为 HTTPS 降级方案（绕过 LibreSSL / proxy 兼容性问题）。"""
+    import subprocess, json
+    cmd = ['curl', '-s', '--max-time', str(timeout), url]
+    # 如果环境有代理设置，传给 curl
+    for env_var in ('HTTPS_PROXY', 'https_proxy', 'HTTP_PROXY', 'http_proxy'):
+        val = __import__('os').environ.get(env_var)
+        if val:
+            cmd.extend(['-x', val])
+            break
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout + 5)
+        if result.returncode != 0:
+            raise RuntimeError(f'curl 请求失败 (exit {result.returncode}): {result.stderr[:200]}')
+        data = json.loads(result.stdout)
+        return data
+    except json.JSONDecodeError as e:
+        raise RuntimeError(f'curl 响应解析失败: {e}')
+
+
 def _fetch_the_odds_api(sport_key: str, api_key: str, markets: str, regions: str, _timeout: int = None):
     url = f'https://api.the-odds-api.com/v4/sports/{sport_key}/odds'
     params = {
@@ -143,10 +181,19 @@ def _fetch_the_odds_api(sport_key: str, api_key: str, markets: str, regions: str
         'oddsFormat': 'decimal',
     }
     timeout = _timeout if _timeout is not None else SPORTS_API_TIMEOUT
-    resp = requests.get(url, params=params, timeout=timeout)
-    if resp.status_code != 200:
-        raise RuntimeError(f'the-odds-api 请求失败: {resp.status_code} {resp.text}')
-    return resp.json(), resp.headers.get('x-requests-remaining', 'unknown')
+    try:
+        resp = requests.get(url, params=params, timeout=timeout)
+        if resp.status_code != 200:
+            raise RuntimeError(f'the-odds-api 请求失败: {resp.status_code} {resp.text}')
+        return resp.json(), resp.headers.get('x-requests-remaining', 'unknown')
+    except Exception as req_err:
+        logger.warning('⚠️ requests 失败 (%s), 尝试 curl 降级...', req_err)
+        # 构建带 query params 的完整 URL
+        import urllib.parse
+        param_str = urllib.parse.urlencode(params)
+        full_url = f'{url}?{param_str}'
+        data = _fetch_via_curl(full_url, timeout)
+        return data, 'unknown'
 
 
 def _fetch_odds_api_io(sport_key: str, api_key: str, markets: str, regions: str):
@@ -267,11 +314,29 @@ def _build_io_slug_map():
     """构建 sport_key → (sport_slug, league_slug) 映射。"""
     return {
         "basketball_nba": ("basketball", "usa-nba"),
+        "basketball_wnba": ("basketball", "wnba"),
         "soccer_epl": ("football", "eng-premier-league"),
         "soccer_spain_la_liga": ("football", "spain-la-liga"),
         "soccer_germany_bundesliga": ("football", "germany-bundesliga"),
         "soccer_italy_serie_a": ("football", "italy-serie-a"),
         "soccer_france_ligue_one": ("football", "france-ligue-1"),
+        "soccer_brazil_campeonato": ("football", "brazil-serie-a"),
+        "soccer_netherlands_eredivisie": ("football", "netherlands-eredivisie"),
+        "soccer_portugal_primeira_liga": ("football", "portugal-primeira-liga"),
+        "soccer_spain_segunda_division": ("football", "spain-segunda-division"),
+        "soccer_brazil_serie_b": ("football", "brazil-serie-b"),
+        "soccer_china_superleague": ("football", "china-superleague"),
+        "soccer_sweden_allsvenskan": ("football", "sweden-allsvenskan"),
+        "soccer_norway_eliteserien": ("football", "norway-eliteserien"),
+        "soccer_chile_campeonato": ("football", "chile-campeonato"),
+        "soccer_finland_veikkausliiga": ("football", "finland-veikkausliiga"),
+        "soccer_league_of_ireland": ("football", "ireland-premier"),
+        "soccer_sweden_superettan": ("football", "sweden-superettan"),
+        "soccer_germany_dfb_pokal": ("football", "germany-dfb-pokal"),
+        "soccer_england_championship": ("football", "england-championship"),
+        "soccer_italy_serie_b": ("football", "italy-serie-b"),
+        "soccer_conmebol_copa_sudamericana": ("football", "conmebol-sudamericana"),
+        "basketball_euroleague": ("basketball", "euroleague"),
     }
 
 
@@ -488,7 +553,7 @@ def _convert_io_to_odds_api_format(event, odds_data, bookmaker, bm_data, sport_k
     }
 
 
-def fetch_odds_api(sport_key: str, force: bool = False, markets: str = 'h2h,spreads,totals', regions: str = 'us', _timeout: int = None):
+def fetch_odds_api(sport_key: str, force: bool = False, markets: str = 'h2h,spreads,totals', regions: str = 'us,uk,eu', _timeout: int = None):
     api_keys = [k for k in _get_sport_api_keys(sport_key) if k]
     if not api_keys:
         raise ValueError(f'未配置赔率 API Key: {sport_key}')
@@ -529,12 +594,33 @@ def fetch_odds_api(sport_key: str, force: bool = False, markets: str = 'h2h,spre
     if cached is not None:
         logger.warning('⚠️ %s 所有 API Key 均耗尽，使用缓存 (max 24h)', sport_key)
         return cached
+    # 尝试 curl 降级（绕过 proxy/SSL 兼容性问题）
+    import urllib.parse
+    api_key = api_keys[0]
+    param_str = 'apiKey=%s&regions=%s&markets=%s&oddsFormat=decimal' % (api_key, regions, markets)
+    url = 'https://api.the-odds-api.com/v4/sports/%s/odds?%s' % (sport_key, param_str)
+    try:
+        logger.info('🔧 尝试 curl 降级获取 %s...', sport_key)
+        data = _fetch_via_curl(url, timeout)
+        if data:
+            _save_cache(cache_name, data)
+            logger.info('✅ curl 降级成功：%s', sport_key)
+            return data
+    except Exception as curl_err:
+        logger.warning('⚠️ curl 降级也失败: %s', curl_err)
     raise RuntimeError(last_exc)
 
 
-def fetch_basketball_odds(force: bool = False):
-    """获取 NBA 赔率 — 优先 odds-api.io（免费、已验证通）。"""
-    cache_name = 'basketball_nba'
+def fetch_basketball_odds(force: bool = False, sport_key: str = 'basketball_nba', cache_name: str = None):
+    """获取篮球赔率 — 优先 odds-api.io（免费、已验证通）。
+
+    Args:
+        force: 是否强制刷新
+        sport_key: 'basketball_nba' / 'basketball_wnba'
+        cache_name: 缓存名，默认从 sport_key 派生
+    """
+    if cache_name is None:
+        cache_name = sport_key.replace('/', '_')
     if not force:
         cached = _load_cache(cache_name)
         if cached is not None:
@@ -543,16 +629,16 @@ def fetch_basketball_odds(force: bool = False):
     # 1. odds-api.io（免费，已验证有 Bet365 赔率）
     if ODDS_API_IO_KEY:
         try:
-            data, _ = _fetch_odds_api_io('basketball_nba', ODDS_API_IO_KEY, '', '')
+            data, _ = _fetch_odds_api_io(sport_key, ODDS_API_IO_KEY, '', '')
             if data:
                 _save_cache(cache_name, data)
-                logger.info("✅ NBA 赔率: odds-api.io %d 场", len(data))
+                logger.info("✅ %s 赔率: odds-api.io %d 场", sport_key, len(data))
                 return data
         except Exception as e:
             logger.warning("⚠️ odds-api.io NBA 不可用: %s", e)
 
     # 2. the-odds-api.com 兜底
-    return fetch_odds_api('basketball_nba', force=force, _timeout=8)
+    return fetch_odds_api(sport_key, force=force, _timeout=8)
 
 
 def fetch_football_odds(force: bool = False, leagues=None):

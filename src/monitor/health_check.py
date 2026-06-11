@@ -2,7 +2,7 @@
 """SportsBettingPro 系统整体健康检查与告警。"""
 import json
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path.cwd()))

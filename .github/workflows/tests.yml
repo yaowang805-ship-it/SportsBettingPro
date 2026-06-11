@@ -1,4 +1,4 @@
-name: Tests
+name: CI
 
 on:
   push:
@@ -6,12 +6,30 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+      - name: Install ruff
+        run: pip install ruff
+      - name: Run ruff check
+        run: ruff check src/ tests/ --output-format github
+
   test:
     runs-on: ubuntu-latest
+    needs: lint
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.9", "3.10"]
+      fail-fast: false
 
     steps:
       - uses: actions/checkout@v4
@@ -45,16 +63,10 @@ jobs:
           touch data/storage/performance_history.csv
 
       - name: Run tests
-        run: python -m pytest tests/ -v --tb=short
+        run: python -m pytest tests/ -v --tb=short -x
 
-      - name: Test imports
-        run: python -c "
-          import sys; sys.path.insert(0, '.');
-          from config.logging_config import get_logger;
-          logger = get_logger('test');
-          logger.info('Basic imports OK');
-          from src.core.models import DixonColesModel;
-          from src.core.normalizer import find_best_odds, OddsNormalizer;
-          from src.features.elo import compute_elo;
-          logger.info('All core imports OK');
-        "
+      - name: Test core imports
+        run: |
+          python -c "from src.core.interpretability import explain_prediction; print('✅ interpretability')"
+          python -c "from src.risk.manager import RiskManager; print('✅ risk manager')"
+          python -c "from src.monitor.performance import PerformanceMonitor; print('✅ performance monitor')"

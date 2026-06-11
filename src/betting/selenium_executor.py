@@ -12,12 +12,12 @@ Full implementation requires platform-specific CSS selectors for:
   5. Confirm/submit button
   6. Bet history for settlement checking
 """
-from typing import Optional, Dict
+from typing import Optional
 
 from src.betting.base import BaseExecutor
 from src.betting.models import BetOrder, BetResult
 from config.logging_config import get_logger
-from config.settings import SELENIUM_DRIVER_PATH, SELENIUM_HEADLESS
+from config.settings import SELENIUM_DRIVER_PATH
 
 logger = get_logger(__name__)
 

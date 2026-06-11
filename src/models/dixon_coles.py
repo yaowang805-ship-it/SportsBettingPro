@@ -13,9 +13,8 @@
     # probs = {home_win: 0.45, draw: 0.25, away_win: 0.30, ...}
 """
 import sys
-from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))

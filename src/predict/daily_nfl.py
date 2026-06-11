@@ -18,13 +18,12 @@ from datetime import datetime
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
-import numpy as np
 import pandas as pd
 
 from config.logging_config import get_logger
 logger = get_logger(__name__)
 
-from config.settings import DATA_DIR, KELLY_FRACTION
+from config.settings import DATA_DIR
 from src.risk.manager import RiskManager
 
 NFL_RECS_FILE = DATA_DIR / "daily_nfl_recommendations.json"
@@ -219,6 +218,20 @@ def main():
 
     # 评估各市场，生成推荐
     rm = RiskManager()
+    cb = rm.circuit_breaker_status()
+    if cb["tripped"]:
+        logger.warning("🛑 止损断路器已触发: %s", cb["message"])
+        logger.warning("⚠️ 冷却中，跳过所有推荐")
+        NFL_RECS_FILE.write_text(json.dumps({
+            "date": datetime.now().isoformat(),
+            "sport": "nfl",
+            "total_games": len(upcoming),
+            "recommendations": [],
+            "circuit_breaker": cb,
+        }, ensure_ascii=False, indent=2))
+        return
+    logger.info("✅ 止损断路器状态正常: %s", cb["message"])
+
     recommendations = []
 
     # 检查各模型是否可靠

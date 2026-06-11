@@ -8,7 +8,9 @@ SportsBettingPro 统一每日预测入口
   python src/predict/run_all.py --sport nfl
   python src/predict/run_all.py --skip-monitor
 """
-import subprocess, sys, argparse
+import subprocess
+import sys
+import argparse
 from pathlib import Path
 from datetime import datetime
 
@@ -36,20 +38,43 @@ def run_script(script_path, description):
 
 def run_monitor():
     logger.info("\n%s\n▶  赛后监控 & 健康度检查\n%s", "─" * 60, "─" * 60)
-    # 自动结算
+    # 自动结算（virtual_portfolio 待处理投注）
+    try:
+        from src.monitor.auto_settle import auto_settle
+        n2 = auto_settle()
+        if n2:
+            logger.info("✅ 虚拟组合结算: %s 条", n2)
+    except Exception as e:
+        logger.warning("⚠️  虚拟组合结算跳过: %s", e)
+    # 自动结算（prediction_log 记录）
     try:
         from src.core.prediction_logger import batch_settle
         n = batch_settle()
         if n:
-            logger.info("✅ 自动结算: %s 条", n)
+            logger.info("✅ 预测日志结算: %s 条", n)
     except Exception as e:
-        logger.warning("⚠️  自动结算跳过: %s", e)
+        logger.warning("⚠️  预测日志结算跳过: %s", e)
     try:
         from src.monitor.performance import update_performance
         update_performance()
         logger.info("✅ 赛后盈亏监控完成")
+        # 组合归因更新
+        try:
+            from src.risk.attribution import compute_and_save
+            compute_and_save()
+            logger.info("✅ 组合归因已更新")
+        except Exception:
+            pass
     except Exception as e:
         logger.warning("⚠️  赛后监控失败：%s", e)
+    # CLV 收盘价填充（赛前窗口内捕获收盘赔率）
+    try:
+        from src.monitor.clv_tracker import refresh_closing_odds
+        cr = refresh_closing_odds()
+        if cr.get("updated"):
+            logger.info("✅ CLV 收盘价: %d 条已更新", cr["updated"])
+    except Exception as e:
+        logger.warning("⚠️  CLV 收盘价填充跳过: %s", e)
     # 数据质量检查
     try:
         from src.monitor.data_quality import run_data_quality_check
@@ -84,12 +109,24 @@ def _run_ranking():
         logger.warning("⚠️  统一排名跳过: %s", e)
 
 
+def _run_prematch_check(sport=None):
+    """赛前赔率重检入口。"""
+    from src.monitor.prematch_check import run_prematch_check
+    run_prematch_check(sport=sport)
+
+
 def main():
     parser = argparse.ArgumentParser(description="SportsBettingPro 每日预测入口")
     parser.add_argument("--sport", choices=["nba","football","nfl","wc","all"], default="all")
     parser.add_argument("--skip-monitor", action="store_true")
     parser.add_argument("--simulate", action="store_true", help="运行世界杯蒙特卡洛模拟")
+    parser.add_argument("--prematch-check", action="store_true", help="赛前1-2小时赔率重检")
     args = parser.parse_args()
+
+    if args.prematch_check:
+        _run_prematch_check(sport=args.sport if args.sport != "all" else None)
+        return
+
     predict_dir = ROOT / "src" / "predict"
     logger.info("="*60)
     logger.info("🏆 SportsBettingPro 每日预测  %s", datetime.now().strftime('%Y-%m-%d %H:%M:%S'))

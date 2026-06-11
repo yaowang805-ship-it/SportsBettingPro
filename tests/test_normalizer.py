@@ -1,6 +1,5 @@
 """测试赔率归一化模块 — OddsNormalizer, find_best_odds, get_bookmaker_list."""
 import pytest
-from datetime import datetime, timezone
 
 from src.core.normalizer import (
     OddsNormalizer,
@@ -10,7 +9,6 @@ from src.core.normalizer import (
     _find_best_spread,
     _find_best_total,
 )
-from src.core.models import Match, Odds
 
 
 # ── 测试用赔率数据 ──

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """模型健康度实时监控：滚动Brier / 胜率 / 对数损失 + 自动告警"""
-import pandas as pd, numpy as np, json, os, sys
+import pandas as pd
+import json
+import sys
 from pathlib import Path
-from datetime import datetime, timedelta
-from sklearn.metrics import brier_score_loss, log_loss
+from sklearn.metrics import brier_score_loss
 import requests
 
 sys.path.insert(0, str(Path.cwd()))
@@ -70,7 +71,7 @@ def check_model_health():
         msg = {
             'msgtype': 'text',
             'text': {
-                'content': f"🚨 投注推荐系统健康告警\n\n" + "\n".join([f"• {a}" for a in alerts]) +
+                'content': "🚨 投注推荐系统健康告警\n\n" + "\n".join([f"• {a}" for a in alerts]) +
                           f"\n\nBrier(30d)={brier_30:.3f}\nWinRate(15d)={winrate_15:.1%}\n连续亏损={consecutive_lose}天"
             }
         }

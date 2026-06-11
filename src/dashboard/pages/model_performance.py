@@ -1,16 +1,14 @@
 """模型表现页面 — 准确率趋势、各模型对比、校准曲线、衰减检测。"""
 import json
-from pathlib import Path
 
 import altair as alt
 import pandas as pd
 import streamlit as st
-import numpy as np
 
-from src.dashboard.components.data_loader import load_json, load_csv, load_recommendations, render_empty_state
+from src.dashboard.components.data_loader import load_json, load_csv, render_empty_state
 from src.dashboard.config import (
     MODEL_ACCURACY_FILE, BACKTEST_FILE, CALIBRATION_FILE,
-    DECAY_REPORT_FILE, MODEL_DIR, DATA_DIR,
+    DECAY_REPORT_FILE, MODEL_DIR,
 )
 
 

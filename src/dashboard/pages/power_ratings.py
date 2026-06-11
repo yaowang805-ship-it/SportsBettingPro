@@ -4,9 +4,9 @@ import pandas as pd
 import streamlit as st
 
 from src.dashboard.components.data_loader import (
-    load_json, load_csv, data_exists, render_empty_state,
+    load_json, render_empty_state,
 )
-from src.dashboard.components.team_cn import team_cn, sport_cn
+from src.dashboard.components.team_cn import team_cn
 from src.dashboard.config import NBA_RATINGS_FILE, FB_RATINGS_FILE
 
 

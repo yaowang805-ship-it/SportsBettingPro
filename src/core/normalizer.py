@@ -1,6 +1,5 @@
-import json
 from datetime import datetime
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 from .models import Match, Odds
 
 

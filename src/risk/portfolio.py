@@ -25,7 +25,7 @@
 """
 import sys
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 import numpy as np
 from scipy.optimize import minimize, Bounds, LinearConstraint

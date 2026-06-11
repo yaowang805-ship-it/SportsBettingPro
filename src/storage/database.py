@@ -1,22 +1,26 @@
-"""SQLite 数据库层 — 替代 CSV/JSON 文件存储。
+"""SQLAlchemy 数据库层 — 支持 SQLite（开发）和 PostgreSQL（生产）。
 
-提供 ACID 事务、类型安全、便捷查询，逐步替换 flat file 存储。
+通过 DATABASE_URL 环境变量切换后端，默认 SQLite。
+保持与旧版 `db.*` API 完全向后兼容。
 
 用法:
     from src.storage.database import db
     db.record_bet(home="Lakers", away="Celtics", stake=100, odds=1.91, prob=0.55)
     bets = db.get_recent_bets(limit=20)
-    accuracy = db.get_model_accuracy("fb_win_result")
 """
-import json
-import sqlite3
+import os
 import threading
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Dict, List, Optional, Any
+
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 from config.settings import DATA_DIR
 from config.logging_config import get_logger
+from src.storage.models import Base, BetLog, Prediction, ModelAccuracy, \
+    CLVData, PerformanceSnapshot, OddsCache
 
 logger = get_logger(__name__)
 
@@ -24,139 +28,67 @@ DB_PATH = DATA_DIR / "sportsbetting.db"
 _LOCK = threading.Lock()
 
 
-def _utcnow() -> str:
-    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+def _utcnow() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def _orm_to_dict(obj: Any) -> Dict[str, Any]:
+    """ORM 对象 → dict（去掉 SQLAlchemy 内部状态）。"""
+    return {c.name: getattr(obj, c.name) for c in obj.__table__.columns}
+
+
+def _value_for_json(val: Any) -> Any:
+    """将 SQLAlchemy 返回值转为 JSON 兼容格式。"""
+    if isinstance(val, datetime):
+        return val.isoformat()
+    return val
+
+
+def _resolve_db_url(db_path: Optional[str] = None) -> str:
+    """解析数据库 URL。"""
+    url = db_path or os.environ.get("DATABASE_URL", "")
+    if url:
+        if not url.startswith("sqlite://") and not url.startswith("postgresql"):
+            url = f"sqlite:///{url}"
+        return url
+    return f"sqlite:///{DB_PATH}"
 
 
 class SportsDatabase:
-    """线程安全的 SQLite 数据库封装。"""
+    """线程安全的 SQLAlchemy 数据库封装。
 
-    def __init__(self, db_path: str = str(DB_PATH)):
-        self.db_path = db_path
-        self._local = threading.local()
+    支持 SQLite（默认）和 PostgreSQL（通过 DATABASE_URL 环境变量）。
+    """
+
+    def __init__(self, db_path: Optional[str] = None):
+        self.db_url = _resolve_db_url(db_path)
+        self._is_sqlite = "sqlite" in self.db_url
+        self._init_engine()
         self._init_schema()
 
-    def _conn(self) -> sqlite3.Connection:
-        if not hasattr(self._local, "conn") or self._local.conn is None:
-            self._local.conn = sqlite3.connect(self.db_path)
-            self._local.conn.row_factory = sqlite3.Row
-            self._local.conn.execute("PRAGMA journal_mode=WAL")
-            self._local.conn.execute("PRAGMA busy_timeout=5000")
-        return self._local.conn
+    def _init_engine(self):
+        """创建 engine + scoped session。"""
+        kwargs = {}
+        if self._is_sqlite:
+            kwargs["connect_args"] = {"timeout": 5}
+        else:
+            kwargs["pool_size"] = int(os.environ.get("DB_POOL_SIZE", "5"))
+            kwargs["max_overflow"] = int(os.environ.get("DB_MAX_OVERFLOW", "10"))
+
+        self.engine = create_engine(self.db_url, **kwargs)
+        self.Session = scoped_session(sessionmaker(bind=self.engine))
 
     def _init_schema(self):
+        """自动创建表（若不存在）。"""
         with _LOCK:
-            conn = self._conn()
-            conn.executescript("""
-                CREATE TABLE IF NOT EXISTS bet_log (
-                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-                    match_key       TEXT NOT NULL,
-                    home_team       TEXT NOT NULL,
-                    away_team       TEXT NOT NULL,
-                    sport           TEXT DEFAULT 'football',
-                    bet_type        TEXT NOT NULL,
-                    stake           REAL NOT NULL,
-                    odds            REAL NOT NULL,
-                    model_prob      REAL NOT NULL,
-                    edge            REAL,
-                    result          TEXT,
-                    profit          REAL,
-                    placed_at       TEXT NOT NULL,
-                    settled_at      TEXT,
-                    notes           TEXT
-                );
-
-                CREATE INDEX IF NOT EXISTS idx_bet_log_placed
-                    ON bet_log(placed_at DESC);
-                CREATE INDEX IF NOT EXISTS idx_bet_log_result
-                    ON bet_log(result);
-
-                CREATE TABLE IF NOT EXISTS predictions (
-                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-                    match_key       TEXT NOT NULL,
-                    sport           TEXT NOT NULL,
-                    home_team       TEXT NOT NULL,
-                    away_team       TEXT NOT NULL,
-                    commence_time   TEXT,
-                    model_name      TEXT NOT NULL,
-                    home_prob       REAL,
-                    away_prob       REAL,
-                    draw_prob       REAL,
-                    over_prob       REAL,
-                    under_prob      REAL,
-                    predicted_at    TEXT NOT NULL,
-                    home_score      INTEGER,
-                    away_score      INTEGER,
-                    was_correct     INTEGER
-                );
-
-                CREATE INDEX IF NOT EXISTS idx_pred_match
-                    ON predictions(match_key);
-                CREATE INDEX IF NOT EXISTS idx_pred_model
-                    ON predictions(model_name);
-
-                CREATE TABLE IF NOT EXISTS model_accuracy (
-                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-                    model_name      TEXT NOT NULL,
-                    target          TEXT NOT NULL,
-                    total_predictions INTEGER DEFAULT 0,
-                    correct         INTEGER DEFAULT 0,
-                    accuracy        REAL DEFAULT 0.0,
-                    brier_score     REAL,
-                    log_loss        REAL,
-                    updated_at      TEXT NOT NULL,
-                    UNIQUE(model_name, target)
-                );
-
-                CREATE TABLE IF NOT EXISTS clv_data (
-                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-                    match_key       TEXT NOT NULL,
-                    bookmaker       TEXT,
-                    market          TEXT,
-                    opening_odds    REAL,
-                    closing_odds    REAL,
-                    clv             REAL,
-                    captured_at     TEXT NOT NULL
-                );
-
-                CREATE INDEX IF NOT EXISTS idx_clv_match
-                    ON clv_data(match_key);
-
-                CREATE TABLE IF NOT EXISTS performance_snapshots (
-                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-                    timestamp       TEXT NOT NULL,
-                    balance         REAL,
-                    equity          REAL,
-                    drawdown_pct    REAL,
-                    roi             REAL,
-                    win_rate        REAL,
-                    total_bets      INTEGER,
-                    settled_bets    INTEGER,
-                    notes           TEXT
-                );
-
-                CREATE TABLE IF NOT EXISTS odds_cache (
-                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-                    sport_key       TEXT NOT NULL,
-                    home_team       TEXT NOT NULL,
-                    away_team       TEXT NOT NULL,
-                    bookmaker       TEXT,
-                    h2h_home        REAL,
-                    h2h_away        REAL,
-                    h2h_draw        REAL,
-                    total_over      REAL,
-                    total_under     REAL,
-                    total_point     REAL,
-                    spread_home     REAL,
-                    spread_point    REAL,
-                    commence_time   TEXT,
-                    fetched_at      TEXT NOT NULL
-                );
-
-                CREATE INDEX IF NOT EXISTS idx_odds_sport
-                    ON odds_cache(sport_key, fetched_at DESC);
-            """)
-            conn.commit()
+            Base.metadata.create_all(self.engine)
+            if self._is_sqlite:
+                with self.engine.connect() as conn:
+                    conn.execute(text("PRAGMA journal_mode=WAL"))
+                    conn.execute(text("PRAGMA busy_timeout=5000"))
+                    conn.commit()
+            logger.info("  📦 DB: %s (%s)", self.db_url,
+                        "PostgreSQL" if not self._is_sqlite else "SQLite")
 
     # ─── Bet Log ────────────────────────────────────────────
 
@@ -165,133 +97,157 @@ class SportsDatabase:
                    stake: float = 0, odds: float = 0, prob: float = 0,
                    edge: Optional[float] = None, notes: str = "") -> int:
         match_key = match_key or f"{home} vs {away}"
-        with _LOCK:
-            cur = self._conn().execute(
-                """INSERT INTO bet_log
-                   (match_key, home_team, away_team, sport, bet_type,
-                    stake, odds, model_prob, edge, placed_at, notes)
-                   VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
-                (match_key, home, away, sport, bet_type,
-                 stake, odds, prob, edge, _utcnow(), notes))
-            self._conn().commit()
-            return cur.lastrowid
+        with _LOCK, self.Session() as session:
+            bet = BetLog(
+                match_key=match_key, home_team=home, away_team=away,
+                sport=sport, bet_type=bet_type, stake=stake, odds=odds,
+                model_prob=prob, edge=edge, notes=notes,
+                placed_at=_utcnow(),
+            )
+            session.add(bet)
+            session.commit()
+            return bet.id
 
     def settle_bet(self, bet_id: int, result: str, profit: float):
-        with _LOCK:
-            self._conn().execute(
-                "UPDATE bet_log SET result=?, profit=?, settled_at=? WHERE id=?",
-                (result, profit, _utcnow(), bet_id))
-            self._conn().commit()
+        with _LOCK, self.Session() as session:
+            bet = session.query(BetLog).filter_by(id=bet_id).first()
+            if bet:
+                bet.result = result
+                bet.profit = profit
+                bet.settled_at = _utcnow()
+                session.commit()
 
     def get_recent_bets(self, limit: int = 50, sport: str = "") -> List[Dict]:
-        query = "SELECT * FROM bet_log"
-        params = []
-        if sport:
-            query += " WHERE sport=?"
-            params.append(sport)
-        query += " ORDER BY placed_at DESC LIMIT ?"
-        params.append(limit)
-        rows = self._conn().execute(query, params).fetchall()
-        return [dict(r) for r in rows]
+        with self.Session() as session:
+            q = session.query(BetLog)
+            if sport:
+                q = q.filter_by(sport=sport)
+            rows = q.order_by(BetLog.placed_at.desc()).limit(limit).all()
+            return [{k: _value_for_json(v) for k, v in _orm_to_dict(r).items()}
+                    for r in rows]
 
     def get_bet_stats(self, sport: str = "") -> Dict:
-        query_base = "FROM bet_log"
-        params = []
-        if sport:
-            query_base += " WHERE sport=?"
-            params.append(sport)
-        row = self._conn().execute(
-            f"SELECT COUNT(*) as total, "
-            f"SUM(CASE WHEN result='win' THEN 1 ELSE 0 END) as wins, "
-            f"SUM(CASE WHEN result='loss' THEN 1 ELSE 0 END) as losses, "
-            f"COALESCE(SUM(profit), 0) as total_profit, "
-            f"COALESCE(AVG(CASE WHEN result IS NOT NULL THEN odds END), 0) as avg_odds "
-            f"{query_base}", params).fetchone()
-        return dict(row) if row else {"total": 0, "wins": 0, "losses": 0, "total_profit": 0, "avg_odds": 0}
+        with self.Session() as session:
+            q = session.query(BetLog)
+            if sport:
+                q = q.filter_by(sport=sport)
+            rows = q.all()
+            total = len(rows)
+            wins = sum(1 for r in rows if r.result == "win")
+            losses = sum(1 for r in rows if r.result == "loss")
+            total_profit = sum((r.profit or 0) for r in rows)
+            settled = [r for r in rows if r.result is not None]
+            avg_odds = (sum(r.odds for r in settled) / len(settled)
+                        if settled else 0.0)
+            return {
+                "total": total,
+                "wins": wins,
+                "losses": losses,
+                "total_profit": total_profit,
+                "avg_odds": round(avg_odds, 4),
+            }
+
+    # ─── Predictions ─────────────────────────────────────────
+
+    def record_prediction(self, match_key: str, sport: str,
+                          home_team: str, away_team: str,
+                          model_name: str, home_prob: float = None,
+                          away_prob: float = None, draw_prob: float = None,
+                          over_prob: float = None, under_prob: float = None,
+                          commence_time: str = "") -> int:
+        with _LOCK, self.Session() as session:
+            pred = Prediction(
+                match_key=match_key, sport=sport,
+                home_team=home_team, away_team=away_team,
+                model_name=model_name, home_prob=home_prob,
+                away_prob=away_prob, draw_prob=draw_prob,
+                over_prob=over_prob, under_prob=under_prob,
+                commence_time=commence_time,
+                predicted_at=_utcnow(),
+            )
+            session.add(pred)
+            session.commit()
+            return pred.id
 
     # ─── Model Accuracy ─────────────────────────────────────
 
     def update_accuracy(self, model_name: str, target: str,
                         correct: bool, prob: float):
-        with _LOCK:
-            existing = self._conn().execute(
-                "SELECT * FROM model_accuracy WHERE model_name=? AND target=?",
-                (model_name, target)).fetchone()
+        with _LOCK, self.Session() as session:
+            existing = session.query(ModelAccuracy).filter_by(
+                model_name=model_name, target=target).first()
             if existing:
-                total = existing["total_predictions"] + 1
-                corr = existing["correct"] + (1 if correct else 0)
-                acc = corr / total if total > 0 else 0.0
-                self._conn().execute(
-                    "UPDATE model_accuracy SET total_predictions=?, correct=?, "
-                    "accuracy=?, updated_at=? WHERE id=?",
-                    (total, corr, acc, _utcnow(), existing["id"]))
+                existing.total_predictions += 1
+                existing.correct += 1 if correct else 0
+                existing.accuracy = (existing.correct /
+                                     max(existing.total_predictions, 1))
+                existing.updated_at = _utcnow()
             else:
-                self._conn().execute(
-                    "INSERT INTO model_accuracy (model_name, target, "
-                    "total_predictions, correct, accuracy, updated_at) "
-                    "VALUES (?,?,1,?,?,?)",
-                    (model_name, target, 1 if correct else 0,
-                     1.0 if correct else 0.0, _utcnow()))
-            self._conn().commit()
+                session.add(ModelAccuracy(
+                    model_name=model_name, target=target,
+                    total_predictions=1,
+                    correct=1 if correct else 0,
+                    accuracy=1.0 if correct else 0.0,
+                    updated_at=_utcnow(),
+                ))
+            session.commit()
 
     def get_accuracy(self, model_name: str = "", target: str = "") -> List[Dict]:
-        query = "SELECT * FROM model_accuracy WHERE 1=1"
-        params = []
-        if model_name:
-            query += " AND model_name=?"
-            params.append(model_name)
-        if target:
-            query += " AND target=?"
-            params.append(target)
-        rows = self._conn().execute(query + " ORDER BY updated_at DESC", params).fetchall()
-        return [dict(r) for r in rows]
+        with self.Session() as session:
+            q = session.query(ModelAccuracy)
+            if model_name:
+                q = q.filter_by(model_name=model_name)
+            if target:
+                q = q.filter_by(target=target)
+            rows = q.order_by(ModelAccuracy.updated_at.desc()).all()
+            return [{k: _value_for_json(v) for k, v in _orm_to_dict(r).items()}
+                    for r in rows]
 
     # ─── Performance Snapshots ──────────────────────────────
 
-    def record_performance(self, balance: float, equity: float = 0,
+    def record_performance(self, balance: float = 0, equity: float = 0,
                            drawdown_pct: float = 0, roi: float = 0,
                            win_rate: float = 0, total_bets: int = 0,
                            settled_bets: int = 0, notes: str = ""):
-        with _LOCK:
-            self._conn().execute(
-                "INSERT INTO performance_snapshots "
-                "(timestamp, balance, equity, drawdown_pct, roi, "
-                "win_rate, total_bets, settled_bets, notes) "
-                "VALUES (?,?,?,?,?,?,?,?,?)",
-                (_utcnow(), balance, equity, drawdown_pct, roi,
-                 win_rate, total_bets, settled_bets, notes))
-            self._conn().commit()
+        with _LOCK, self.Session() as session:
+            session.add(PerformanceSnapshot(
+                timestamp=_utcnow(), balance=balance, equity=equity,
+                drawdown_pct=drawdown_pct, roi=roi, win_rate=win_rate,
+                total_bets=total_bets, settled_bets=settled_bets,
+                notes=notes,
+            ))
+            session.commit()
 
     def get_performance_history(self, limit: int = 30) -> List[Dict]:
-        rows = self._conn().execute(
-            "SELECT * FROM performance_snapshots "
-            "ORDER BY timestamp DESC LIMIT ?", (limit,)).fetchall()
-        return [dict(r) for r in rows]
+        with self.Session() as session:
+            rows = session.query(PerformanceSnapshot).order_by(
+                PerformanceSnapshot.timestamp.desc()).limit(limit).all()
+            return [{k: _value_for_json(v) for k, v in _orm_to_dict(r).items()}
+                    for r in rows]
 
     # ─── CLV Data ───────────────────────────────────────────
 
     def record_clv(self, match_key: str, bookmaker: str, market: str,
                    opening: float, closing: float):
         clv = closing - opening
-        with _LOCK:
-            self._conn().execute(
-                "INSERT INTO clv_data (match_key, bookmaker, market, "
-                "opening_odds, closing_odds, clv, captured_at) "
-                "VALUES (?,?,?,?,?,?,?)",
-                (match_key, bookmaker, market,
-                 opening, closing, clv, _utcnow()))
-            self._conn().commit()
+        with _LOCK, self.Session() as session:
+            session.add(CLVData(
+                match_key=match_key, bookmaker=bookmaker, market=market,
+                opening_odds=opening, closing_odds=closing,
+                clv=clv, captured_at=_utcnow(),
+            ))
+            session.commit()
 
     def get_clv_summary(self, limit: int = 100) -> List[Dict]:
-        rows = self._conn().execute(
-            "SELECT * FROM clv_data ORDER BY captured_at DESC LIMIT ?",
-            (limit,)).fetchall()
-        return [dict(r) for r in rows]
+        with self.Session() as session:
+            rows = session.query(CLVData).order_by(
+                CLVData.captured_at.desc()).limit(limit).all()
+            return [{k: _value_for_json(v) for k, v in _orm_to_dict(r).items()}
+                    for r in rows]
 
     # ─── Odds Cache ─────────────────────────────────────────
 
     def save_odds(self, sport_key: str, games_data: List[Dict]):
-        """批量保存赔率快照。"""
         now = _utcnow()
         rows = []
         for g in games_data:
@@ -301,62 +257,76 @@ class SportsDatabase:
                 markets = {m["key"]: m["outcomes"] for m in bm.get("markets", [])}
                 h2h = markets.get("h2h", [])
                 totals = markets.get("totals", [])
-                h2h_home = next((o["price"] for o in h2h if o["name"].lower() == home.lower()), None)
-                h2h_away = next((o["price"] for o in h2h if o["name"].lower() == away.lower()), None)
-                h2h_draw = next((o["price"] for o in h2h if o["name"].lower() == "draw"), None)
-                over = next((o for o in totals if o.get("name", "").lower() == "over"), None)
-                under = next((o for o in totals if o.get("name", "").lower() == "under"), None)
-                rows.append((
-                    sport_key, home, away, bm.get("key"),
-                    h2h_home, h2h_away, h2h_draw,
-                    over["price"] if over else None,
-                    under["price"] if under else None,
-                    over.get("point") if over else None,
-                    None, None,
-                    g.get("commence_time"), now
+                h2h_home = next((o["price"] for o in h2h
+                                 if o["name"].lower() == home.lower()), None)
+                h2h_away = next((o["price"] for o in h2h
+                                 if o["name"].lower() == away.lower()), None)
+                h2h_draw = next((o["price"] for o in h2h
+                                 if o["name"].lower() == "draw"), None)
+                over = next((o for o in totals
+                             if o.get("name", "").lower() == "over"), None)
+                under = next((o for o in totals
+                              if o.get("name", "").lower() == "under"), None)
+                rows.append(OddsCache(
+                    sport_key=sport_key, home_team=home, away_team=away,
+                    bookmaker=bm.get("key"),
+                    h2h_home=h2h_home, h2h_away=h2h_away, h2h_draw=h2h_draw,
+                    total_over=over["price"] if over else None,
+                    total_under=under["price"] if under else None,
+                    total_point=over.get("point") if over else None,
+                    commence_time=g.get("commence_time"),
+                    fetched_at=now,
                 ))
         if rows:
-            with _LOCK:
-                self._conn().executemany(
-                    "INSERT INTO odds_cache (sport_key, home_team, away_team, "
-                    "bookmaker, h2h_home, h2h_away, h2h_draw, total_over, "
-                    "total_under, total_point, spread_home, spread_point, "
-                    "commence_time, fetched_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                    rows)
-                self._conn().commit()
+            with _LOCK, self.Session() as session:
+                session.add_all(rows)
+                session.commit()
 
     def get_odds_history(self, sport_key: str = "", home_team: str = "",
                          away_team: str = "", limit: int = 100) -> List[Dict]:
-        query = "SELECT * FROM odds_cache WHERE 1=1"
-        params = []
-        if sport_key:
-            query += " AND sport_key=?"
-            params.append(sport_key)
-        if home_team:
-            query += " AND home_team=?"
-            params.append(home_team)
-        if away_team:
-            query += " AND away_team=?"
-            params.append(away_team)
-        query += " ORDER BY fetched_at DESC LIMIT ?"
-        params.append(limit)
-        rows = self._conn().execute(query, params).fetchall()
-        return [dict(r) for r in rows]
+        with self.Session() as session:
+            q = session.query(OddsCache)
+            if sport_key:
+                q = q.filter_by(sport_key=sport_key)
+            if home_team:
+                q = q.filter_by(home_team=home_team)
+            if away_team:
+                q = q.filter_by(away_team=away_team)
+            rows = q.order_by(OddsCache.fetched_at.desc()).limit(limit).all()
+            return [{k: _value_for_json(v) for k, v in _orm_to_dict(r).items()}
+                    for r in rows]
 
     # ─── Maintenance ────────────────────────────────────────
 
     def vacuum(self):
-        """回收磁盘空间。"""
-        self._conn().execute("VACUUM")
+        """回收磁盘空间（SQLite 专用）。"""
+        if self._is_sqlite:
+            with self.engine.connect() as conn:
+                conn.execute(text("VACUUM"))
+                conn.commit()
 
     def get_db_size(self) -> int:
-        return Path(self.db_path).stat().st_size if Path(self.db_path).exists() else 0
+        """返回数据库文件大小（SQLite 专用）。"""
+        if self._is_sqlite:
+            db_file = self.db_url.replace("sqlite:///", "")
+            return Path(db_file).stat().st_size if Path(db_file).exists() else 0
+        # PostgreSQL: 查询数据库大小
+        try:
+            with self.engine.connect() as conn:
+                result = conn.execute(
+                    text("SELECT pg_database_size(current_database())"))
+                return result.scalar() or 0
+        except Exception:
+            return 0
 
     def close(self):
-        if hasattr(self._local, "conn") and self._local.conn:
-            self._local.conn.close()
-            self._local.conn = None
+        self.Session.remove()
+        self.engine.dispose()
+
+    def get_db_type(self) -> str:
+        """返回当前数据库类型。"""
+        return "postgresql" if not self._is_sqlite else "sqlite"
 
 
-# 全局单例
+# 全局单例（保持向后兼容）
 db = SportsDatabase()

@@ -6,13 +6,13 @@
     df = build_wc_features()  # 训练: 全量历史特征
     feat = compute_team_features(team_name, date)  # 推理: 单队特征
 """
-import sys, json
+import sys
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
-import numpy as np
 import pandas as pd
 
 from config.logging_config import get_logger
@@ -191,6 +191,29 @@ def build_wc_features(
     ) - team.groupby('team')['ga'].transform(
         lambda x: x.shift(1).rolling(5, min_periods=1).mean())
 
+    # ── P15+增强特征 ──
+    # 净胜分波动率
+    team['margin'] = team['gf'] - team['ga']
+    for w in [5, 10]:
+        team[f'margin_{w}'] = team.groupby('team')['margin'].transform(
+            lambda x: x.shift(1).rolling(w, min_periods=1).mean())
+    team['margin_volatility_5'] = team.groupby('team')['margin'].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=1).std()).fillna(0)
+    # 进球波动率
+    team['gf_volatility_5'] = team.groupby('team')['gf'].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=1).std()).fillna(0)
+    # 连胜/连败
+    team['scoring_streak'] = team.groupby('team')['gf'].transform(
+        lambda x: x.shift(1).rolling(10, min_periods=1)
+        .apply(lambda s: (s > 0).astype(int).sum(), raw=True))
+    # 最近一场是否赢球（动量）
+    team['last_game_won'] = team.groupby('team')['is_win'].transform(
+        lambda x: x.shift(1).rolling(1).max())
+    # 形式趋势：近3场 vs 近10场胜率之差
+    team['win_rate_3'] = team.groupby('team')['is_win'].transform(
+        lambda x: x.shift(1).rolling(3, min_periods=1).mean())
+    team['form_trend_3_10'] = team['win_rate_3'].fillna(0.5) - team['win_rate_10'].fillna(0.5)
+
     # ── 对手强度加权评分 ──
     elo_lookup = {}
     for _, er in elo_df.iterrows():
@@ -207,6 +230,11 @@ def build_wc_features(
 
     team['opp_elo'] = team.groupby('team', group_keys=False).apply(
         lambda g: _opponent_strength(g, elo_lookup))
+
+    # 赛程强度（近5/10场所遇对手平均 ELO）
+    for w in [5, 10]:
+        team[f'sos_elo_{w}'] = team.groupby('team')['opp_elo'].transform(
+            lambda x: x.shift(1).rolling(w, min_periods=1).mean()).fillna(1500)
 
     # ── 合并特征到比赛行 ──
     match_df = df[['date', 'home_team', 'away_team', 'home_score', 'away_score',
@@ -225,7 +253,10 @@ def build_wc_features(
     feat_cols = ['date', 'team', 'gf_avg_3', 'gf_avg_5', 'gf_avg_10',
                  'ga_avg_3', 'ga_avg_5', 'ga_avg_10',
                  'win_rate_5', 'win_rate_10', 'draw_rate_5', 'draw_rate_10',
-                 'rest_days', 'net_5', 'opp_elo']
+                 'rest_days', 'net_5', 'opp_elo',
+                 'margin_5', 'margin_10', 'margin_volatility_5',
+                 'gf_volatility_5', 'scoring_streak', 'last_game_won',
+                 'form_trend_3_10', 'sos_elo_5']
 
     team_feats = team[feat_cols]
     for side, team_col in [('home', 'home_team'), ('away', 'away_team')]:
@@ -244,6 +275,13 @@ def build_wc_features(
     match_df['ga_avg_5_diff'] = match_df['home_ga_avg_5'].fillna(1) - match_df['away_ga_avg_5'].fillna(1)
     match_df['total_avg_5'] = match_df['home_gf_avg_5'].fillna(1) + match_df['away_gf_avg_5'].fillna(1)
     match_df['opp_elo_diff'] = match_df['home_opp_elo'].fillna(1500) - match_df['away_opp_elo'].fillna(1500)
+    # P15+ 增强交互特征
+    match_df['margin_diff_5'] = match_df['home_margin_5'].fillna(0) - match_df['away_margin_5'].fillna(0)
+    match_df['sos_elo_diff'] = match_df['home_sos_elo_5'].fillna(1500) - match_df['away_sos_elo_5'].fillna(1500)
+    match_df['gf_vol_diff'] = match_df['home_gf_volatility_5'].fillna(0) - match_df['away_gf_volatility_5'].fillna(0)
+    match_df['total_avg_10'] = match_df['home_gf_avg_10'].fillna(1) + match_df['away_gf_avg_10'].fillna(1)
+    match_df['attack_vs_defence'] = match_df['home_gf_avg_5'].fillna(1) * match_df['away_ga_avg_5'].fillna(1)
+    match_df['defence_vs_attack'] = match_df['home_ga_avg_5'].fillna(1) * match_df['away_gf_avg_5'].fillna(1)
 
     # neutral 标志
     match_df['is_neutral'] = match_df['neutral'].fillna(False).astype(int)

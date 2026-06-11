@@ -11,7 +11,10 @@ help:
 	@echo "  make backtest     运行回测"
 	@echo "  make health       系统健康检查"
 	@echo "  make test         运行单元测试（85+ 项）"
+	@echo "  make lint         运行 ruff 代码检查"
+	@echo "  make format       自动格式化代码"
 	@echo "  make install      安装依赖"
+	@echo "  make install-dev   安装开发依赖（ruff/pre-commit）"
 	@echo "  make clean        清理临时文件"
 	@echo "  make deploy       安装 crontab 定时任务（每天09:30）"
 	@echo "  make deploy-remove 移除 crontab"
@@ -40,6 +43,18 @@ test:
 
 install:
 	pip install -r requirements.txt
+
+install-dev:
+	pip install -r requirements-dev.txt
+	pre-commit install
+
+lint:
+	ruff check src/ tests/
+
+format:
+	ruff format src/ tests/
+
+check: lint test
 
 deploy:
 	bash deploy/install_cron.sh

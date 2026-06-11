@@ -1,10 +1,12 @@
-"""系统健康页面 — 模型状态、API连通性、风控检查。"""
+"""系统健康页面 — 模型状态、API连通性、风控检查、告警时间线。"""
 import streamlit as st
+from datetime import datetime
 
 from src.dashboard.components.data_loader import (
-    load_json, load_csv, data_exists, render_empty_state,
+    load_json, load_csv, render_empty_state,
 )
 from src.dashboard.config import SYSTEM_HEALTH_FILE, BACKTEST_FILE, PRED_LOG_FILE
+from src.monitor.alert_log import get_alerts
 
 
 def render():
@@ -108,3 +110,23 @@ def render():
                            f"时序分割: {model_result.get('chronological_split', False)}")
     else:
         st.info("📭 暂无回测结果。")
+
+    # ── 告警时间线 ──
+    st.subheader("📋 告警时间线")
+    alerts = get_alerts(limit=50)
+    if alerts:
+        level_emoji = {"INFO": "ℹ️", "WARNING": "⚠️", "ERROR": "🚨", "CRITICAL": "🔥"}
+        for a in reversed(alerts):
+            ts = a.get("timestamp", "")
+            try:
+                dt = datetime.fromisoformat(ts)
+                ts_str = dt.strftime("%m-%d %H:%M")
+            except ValueError:
+                ts_str = ts
+            level = a.get("level", "INFO")
+            emoji = level_emoji.get(level, "📌")
+            st.markdown(f"**{emoji} {a.get('title', '')}** `{ts_str}`  "
+                        f"<small>{a.get('detail', '')}</small>",
+                        unsafe_allow_html=True)
+    else:
+        st.info("📭 暂无告警记录。")

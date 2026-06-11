@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """世界杯每日推荐 — WC 集成模型 + the-odds-api 赔率。"""
-import sys, json
+import sys
+import json
 from pathlib import Path
-from datetime import datetime, timezone
+from datetime import datetime
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
@@ -12,11 +13,13 @@ setup_logging()
 logger = get_logger(__name__)
 
 import joblib
+from src.models.stacking import Stage2Stacking, WeightedEnsemble
 import numpy as np
 import pandas as pd
 
 from config.settings import MODEL_DIR, DATA_DIR
-from src.models.ensemble_trainer import WeightedEnsemble
+# 确保反序列化时可找到自定义类
+from src.models.stacking import Stage2Stacking, WeightedEnsemble
 
 # ── 48 支世界杯参赛队（Odds API 名称） ──
 WC_TEAMS_ODDS = [
@@ -44,16 +47,28 @@ FEAT_COLS = [
     'home_ga_avg_3', 'home_ga_avg_5', 'home_ga_avg_10',
     'home_win_rate_5', 'home_win_rate_10', 'home_draw_rate_5', 'home_draw_rate_10',
     'home_rest_days', 'home_net_5', 'home_opp_elo',
+    'home_margin_5', 'home_margin_10', 'home_margin_volatility_5',
+    'home_gf_volatility_5', 'home_scoring_streak', 'home_last_game_won',
+    'home_form_trend_3_10', 'home_sos_elo_5',
     'away_gf_avg_3', 'away_gf_avg_5', 'away_gf_avg_10',
     'away_ga_avg_3', 'away_ga_avg_5', 'away_ga_avg_10',
     'away_win_rate_5', 'away_win_rate_10', 'away_draw_rate_5', 'away_draw_rate_10',
     'away_rest_days', 'away_net_5', 'away_opp_elo',
+    'away_margin_5', 'away_margin_10', 'away_margin_volatility_5',
+    'away_gf_volatility_5', 'away_scoring_streak', 'away_last_game_won',
+    'away_form_trend_3_10', 'away_sos_elo_5',
     'form_diff_5', 'net_5_diff', 'rest_diff', 'gf_avg_5_diff', 'ga_avg_5_diff',
-    'total_avg_5', 'opp_elo_diff', 'is_neutral',
+    'total_avg_5', 'opp_elo_diff',
+    'margin_diff_5', 'sos_elo_diff', 'gf_vol_diff', 'total_avg_10',
+    'attack_vs_defence', 'defence_vs_attack', 'is_neutral',
 ]
 
 MODEL_DIR_PATH = Path(MODEL_DIR) if isinstance(MODEL_DIR, str) else MODEL_DIR
 DATA_DIR_PATH = Path(DATA_DIR) if isinstance(DATA_DIR, str) else DATA_DIR
+
+# WC 专属保守兜底
+WC_EV_THRESHOLD = 0.05     # EV > 5% 才推荐
+WC_PROB_CAP = 0.15         # 模型概率不超过市场 + 15pp
 
 
 def _odds_to_csv(name: str) -> str:
@@ -155,6 +170,26 @@ def _build_feature_matrix(odds_data: list) -> tuple:
     away['is_home'] = 0
     team = pd.concat([home, away], ignore_index=True).sort_values(['team', 'date'])
 
+    # 对手 ELO（匹配训练时的 opp_elo 特征，基于比赛时点的 ELO）
+    elo_lookup = {}
+    for _, row in df.iterrows():
+        h, a = row['home_team'], row['away_team']
+        h_elo = elo_ratings.get(h, 1500.0)
+        a_elo = elo_ratings.get(a, 1500.0)
+        elo_lookup[(row['date'], h, a)] = (h_elo, a_elo)
+
+    def _opp_elo_for_team(team_df):
+        vals = []
+        for _, r in team_df.iterrows():
+            # 训练流水线: 主队 key=(date,team,opponent), 客队 key=(date,opponent,team)
+            key = (r['date'], r['team'], r['opponent']) if r['is_home'] else (r['date'], r['opponent'], r['team'])
+            elos = elo_lookup.get(key)
+            opp_elo = elos[1] if r['is_home'] else elos[0] if elos else 1500.0
+            vals.append(opp_elo)
+        return pd.Series(vals, index=team_df.index)
+
+    team['opp_elo'] = team.groupby('team', group_keys=False).apply(_opp_elo_for_team)
+
     for w in [3, 5, 10]:
         team[f'gf_avg_{w}'] = team.groupby('team')['gf'].transform(
             lambda x: x.shift(1).rolling(w, min_periods=1).mean())
@@ -175,6 +210,28 @@ def _build_feature_matrix(odds_data: list) -> tuple:
     ) - team.groupby('team')['ga'].transform(
         lambda x: x.shift(1).rolling(5, min_periods=1).mean())
 
+    # ── 增强特征（margin, volatility, streak） ──
+    team['margin'] = team['gf'] - team['ga']
+    for w in [5, 10]:
+        team[f'margin_{w}'] = team.groupby('team')['margin'].transform(
+            lambda x: x.shift(1).rolling(w, min_periods=1).mean())
+    team['margin_volatility_5'] = team.groupby('team')['margin'].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=1).std()).fillna(0)
+    team['gf_volatility_5'] = team.groupby('team')['gf'].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=1).std()).fillna(0)
+    team['scoring_streak'] = team.groupby('team')['gf'].transform(
+        lambda x: x.shift(1).rolling(10, min_periods=1)
+        .apply(lambda s: (s > 0).astype(int).sum(), raw=True))
+    team['last_game_won'] = team.groupby('team')['is_win'].transform(
+        lambda x: x.shift(1).rolling(1).max())
+    team['win_rate_3'] = team.groupby('team')['is_win'].transform(
+        lambda x: x.shift(1).rolling(3, min_periods=1).mean())
+    team['form_trend_3_10'] = team['win_rate_3'].fillna(0.5) - team['win_rate_10'].fillna(0.5)
+    # 赛程强度
+    for w in [5, 10]:
+        team[f'sos_elo_{w}'] = team.groupby('team')['opp_elo'].transform(
+            lambda x: x.shift(1).rolling(w, min_periods=1).mean()).fillna(1500)
+
     # 取每支球队的最新特征
     team_latest = {}
     for team_odds in WC_TEAMS_ODDS:
@@ -188,7 +245,10 @@ def _build_feature_matrix(odds_data: list) -> tuple:
                 ['gf_avg_3', 'gf_avg_5', 'gf_avg_10',
                  'ga_avg_3', 'ga_avg_5', 'ga_avg_10',
                  'win_rate_5', 'win_rate_10', 'draw_rate_5', 'draw_rate_10',
-                 'rest_days', 'net_5']}
+                 'rest_days', 'net_5', 'opp_elo',
+                 'margin_5', 'margin_10', 'margin_volatility_5',
+                 'gf_volatility_5', 'scoring_streak', 'last_game_won',
+                 'form_trend_3_10', 'sos_elo_5']}
         team_latest[team_odds] = feat
 
     # ── 构建特征向量 ──
@@ -222,7 +282,15 @@ def _build_feature_matrix(odds_data: list) -> tuple:
             'home_draw_rate_10': _v(hf, 'draw_rate_10', 0.25),
             'home_rest_days': _v(hf, 'rest_days', 7),
             'home_net_5': _v(hf, 'net_5', 0),
-            'home_opp_elo': 1500.0,  # 设为默认值（对手强度不易精确计算）
+            'home_opp_elo': _v(hf, 'opp_elo', 1500),
+            'home_margin_5': _v(hf, 'margin_5', 0),
+            'home_margin_10': _v(hf, 'margin_10', 0),
+            'home_margin_volatility_5': _v(hf, 'margin_volatility_5', 0),
+            'home_gf_volatility_5': _v(hf, 'gf_volatility_5', 0),
+            'home_scoring_streak': _v(hf, 'scoring_streak', 0),
+            'home_last_game_won': _v(hf, 'last_game_won', 0),
+            'home_form_trend_3_10': _v(hf, 'form_trend_3_10', 0),
+            'home_sos_elo_5': _v(hf, 'sos_elo_5', 1500),
             'away_gf_avg_3': _v(af, 'gf_avg_3', 1),
             'away_gf_avg_5': _v(af, 'gf_avg_5', 1),
             'away_gf_avg_10': _v(af, 'gf_avg_10', 1),
@@ -235,7 +303,15 @@ def _build_feature_matrix(odds_data: list) -> tuple:
             'away_draw_rate_10': _v(af, 'draw_rate_10', 0.25),
             'away_rest_days': _v(af, 'rest_days', 7),
             'away_net_5': _v(af, 'net_5', 0),
-            'away_opp_elo': 1500.0,
+            'away_opp_elo': _v(af, 'opp_elo', 1500),
+            'away_margin_5': _v(af, 'margin_5', 0),
+            'away_margin_10': _v(af, 'margin_10', 0),
+            'away_margin_volatility_5': _v(af, 'margin_volatility_5', 0),
+            'away_gf_volatility_5': _v(af, 'gf_volatility_5', 0),
+            'away_scoring_streak': _v(af, 'scoring_streak', 0),
+            'away_last_game_won': _v(af, 'last_game_won', 0),
+            'away_form_trend_3_10': _v(af, 'form_trend_3_10', 0),
+            'away_sos_elo_5': _v(af, 'sos_elo_5', 1500),
         }
         # 交互特征
         row['form_diff_5'] = row['home_win_rate_5'] - row['away_win_rate_5']
@@ -245,6 +321,12 @@ def _build_feature_matrix(odds_data: list) -> tuple:
         row['ga_avg_5_diff'] = row['home_ga_avg_5'] - row['away_ga_avg_5']
         row['total_avg_5'] = row['home_gf_avg_5'] + row['away_gf_avg_5']
         row['opp_elo_diff'] = row['home_opp_elo'] - row['away_opp_elo']
+        row['margin_diff_5'] = row['home_margin_5'] - row['away_margin_5']
+        row['sos_elo_diff'] = row['home_sos_elo_5'] - row['away_sos_elo_5']
+        row['gf_vol_diff'] = row['home_gf_volatility_5'] - row['away_gf_volatility_5']
+        row['total_avg_10'] = row['home_gf_avg_10'] + row['away_gf_avg_10']
+        row['attack_vs_defence'] = row['home_gf_avg_5'] * row['away_ga_avg_5']
+        row['defence_vs_attack'] = row['home_ga_avg_5'] * row['away_gf_avg_5']
         row['is_neutral'] = 1
 
         rows_list.append(row)
@@ -255,7 +337,7 @@ def _build_feature_matrix(odds_data: list) -> tuple:
 
 
 def _extract_market_probs(odds_data: list) -> dict:
-    """提取 H2H 和大小球市场概率。"""
+    """提取 H2H 和大小球市场概率（含平局去抽水）。"""
     results = {}
     for game in odds_data:
         home = game.get("home_team", "")
@@ -263,27 +345,27 @@ def _extract_market_probs(odds_data: list) -> dict:
         bk = game.get("bookmakers", [])
         key = f"{home} @ {away}"
 
-        home_prices, away_prices = [], []
-        total_over_prices, total_under_prices, total_points = [], [], []
+        home_prices, draw_prices, away_prices = [], [], []
+        total_by_point = {}  # {point: [(over_price, under_price), ...]}
 
         for bm in bk:
             for mkt in bm.get("markets", []):
                 if mkt.get("key") == "h2h":
                     oss = mkt.get("outcomes", [])
                     hp = next((o["price"] for o in oss if o.get("name", "").strip().lower() == home.lower()), None)
+                    dp = next((o["price"] for o in oss if o.get("name", "").strip().lower() == "draw"), None)
                     ap = next((o["price"] for o in oss if o.get("name", "").strip().lower() == away.lower()), None)
-                    if hp and ap:
+                    if hp and dp and ap:
                         home_prices.append(hp)
+                        draw_prices.append(dp)
                         away_prices.append(ap)
                 elif mkt.get("key") == "totals":
                     oss = mkt.get("outcomes", [])
                     ov = next((o["price"] for o in oss if o.get("name") == "Over"), None)
                     un = next((o["price"] for o in oss if o.get("name") == "Under"), None)
+                    pt = oss[0].get("point", 2.5) if oss else 2.5
                     if ov and un:
-                        total_over_prices.append(ov)
-                        total_under_prices.append(un)
-                        pt = oss[0].get("point", 2.5)
-                        total_points.append(pt)
+                        total_by_point.setdefault(pt, []).append((ov, un))
 
         if not home_prices:
             continue
@@ -291,8 +373,8 @@ def _extract_market_probs(odds_data: list) -> dict:
         n = len(home_prices)
         home_probs, away_probs = [], []
         for i in range(n):
-            imp_h, imp_a = 1.0 / home_prices[i], 1.0 / away_prices[i]
-            tot = imp_h + imp_a
+            imp_h, imp_d, imp_a = 1.0 / home_prices[i], 1.0 / draw_prices[i], 1.0 / away_prices[i]
+            tot = imp_h + imp_d + imp_a
             home_probs.append(imp_h / tot)
             away_probs.append(imp_a / tot)
 
@@ -304,14 +386,19 @@ def _extract_market_probs(odds_data: list) -> dict:
             "n_bookmakers": n,
         }
 
-        if total_over_prices:
+        if total_by_point:
+            # 取最常出现的盘口值（众数），避免不同盘口值混在一起取均值
+            best_pt = max(total_by_point, key=lambda pt: len(total_by_point[pt]))
+            pairs = total_by_point[best_pt]
             over_probs = []
-            for i in range(len(total_over_prices)):
-                imp_o, imp_u = 1.0 / total_over_prices[i], 1.0 / total_under_prices[i]
+            all_over_prices = []
+            for ov, un in pairs:
+                imp_o, imp_u = 1.0 / ov, 1.0 / un
                 over_probs.append(imp_o / (imp_o + imp_u))
+                all_over_prices.append(ov)
             info["total_over_prob"] = float(np.mean(over_probs))
-            info["total_odds"] = max(total_over_prices)
-            info["total_point"] = float(np.mean(total_points))
+            info["total_odds"] = max(all_over_prices)
+            info["total_point"] = float(best_pt)
 
         results[key] = info
     return results
@@ -388,9 +475,11 @@ def main():
             try:
                 win_prob = models["home_win"].predict_proba(features)[0, 1]
                 win_prob = float(np.clip(win_prob, 0.02, 0.98))
+                # WC 保守兜底：模型概率不显著高于市场
+                win_prob = min(win_prob, mkt_home + WC_PROB_CAP)
                 win_ev = win_prob - mkt_home
 
-                if win_ev > 0 and home_odds > 0 and market.get("n_bookmakers", 0) >= 3:
+                if win_ev > WC_EV_THRESHOLD and home_odds > 0 and market.get("n_bookmakers", 0) >= 3:
                     kelly = (win_prob * home_odds - 1) / (home_odds - 1) if home_odds > 1 else 0
                     stake = rm.get_max_stake(win_prob, home_odds, current_exposure, input_is_prob=True) if kelly > 0 else 0
                     can_bet, _ = rm.can_place_bet(stake, 0.0)
@@ -408,9 +497,11 @@ def main():
             try:
                 over_prob = models["over_2.5"].predict_proba(features)[0, 1]
                 over_prob = float(np.clip(over_prob, 0.02, 0.98))
+                # WC 保守兜底
+                over_prob = min(over_prob, mkt_over + WC_PROB_CAP)
                 over_ev = over_prob - mkt_over
 
-                if over_ev > 0:
+                if over_ev > WC_EV_THRESHOLD:
                     kelly = (over_prob * total_odds - 1) / (total_odds - 1) if total_odds > 1 else 0
                     stake = rm.get_max_stake(over_prob, total_odds, current_exposure, input_is_prob=True) if kelly > 0 else 0
                     can_bet, _ = rm.can_place_bet(stake, 0.0)
@@ -424,8 +515,9 @@ def main():
                 # 小分
                 under_prob = 1.0 - over_prob
                 under_mkt = 1.0 - mkt_over
+                under_prob = min(under_prob, under_mkt + WC_PROB_CAP)
                 under_ev = under_prob - under_mkt
-                if under_ev > 0:
+                if under_ev > WC_EV_THRESHOLD:
                     under_odds = 1.0 / under_mkt if under_mkt > 0 else total_odds
                     kelly = (under_prob * under_odds - 1) / (under_odds - 1) if under_odds > 1 else 0
                     stake = rm.get_max_stake(under_prob, under_odds, current_exposure, input_is_prob=True) if kelly > 0 else 0
@@ -464,7 +556,7 @@ def main():
             market_detail=best["type"],
             odds=best["odds"], model_prob=best["model_prob"],
             market_prob=best["mkt_prob"], ev=best["ev"],
-            stake=best["stake"], match_time=game["commence_time"],
+            stake=best["stake"], match_time=match_time,
             source="daily_wc", home_team_cn=_cn(home), away_team_cn=_cn(away),
         )
         current_exposure += best["stake"] / max(rm.current_balance, 1.0)

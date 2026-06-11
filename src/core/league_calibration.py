@@ -8,10 +8,10 @@
     calibrator.update("EPL", 0.65, 1)  # (league, pred_prob, actual_win)
     calibrated_prob = calibrator.calibrate("EPL", 0.65)
 """
-import sys, json, warnings
+import sys
+import json
 from pathlib import Path
 from collections import defaultdict
-from typing import List, Tuple, Optional
 
 import numpy as np
 from sklearn.linear_model import LogisticRegression

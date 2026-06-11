@@ -10,11 +10,10 @@
   from src.monitor.data_quality import run_data_quality_check
   report = run_data_quality_check()
 """
-import json
 import sys
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 import numpy as np
 import pandas as pd

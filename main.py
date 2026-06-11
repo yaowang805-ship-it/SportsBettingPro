@@ -24,10 +24,9 @@ if not DINGTALK_WEBHOOK:
     logger.warning("未检测到有效钉钉Webhook，若需钉钉通知请在 .env 中设置 DINGTALK_WEBHOOK")
 
 SCRIPTS = [
-    (ROOT / "src" / "models" / "auto_retrain.py", "自动模型重训练（月度）"),
-    (ROOT / "src" / "predict" / "run_all.py", "职业级每日预测（NBA+足球+NFL）"),
-    (ROOT / "src" / "scripts" / "auto_settle_loop.py", "虚拟投注自动结算"),
-    (ROOT / "src" / "monitor" / "performance.py", "赛后盈亏监控"),
+    (ROOT / "src" / "models" / "auto_retrain.py", "自动模型重训练（月度）", 900),
+    (ROOT / "src" / "predict" / "run_all.py", "职业级每日预测（NBA+足球+NFL）", 600),
+    (ROOT / "src" / "monitor" / "performance.py", "投注结算+盈亏监控"),
     (ROOT / "src" / "monitor" / "clv_tracker.py", "CLV 收盘价追踪"),
     (ROOT / "src" / "monitor" / "health_check.py", "系统健康检查"),
 ]
@@ -47,7 +46,8 @@ def send_alert(title: str, message: str) -> None:
         pass
 
 
-def run_script(script_path: Path, description: str, max_retries: int = 2) -> bool:
+def run_script(script_path: Path, description: str, max_retries: int = 2,
+                timeout: int = 300) -> bool:
     """运行脚本，支持重试机制。"""
     logger.info("开始: %s", description)
     if not script_path.exists():
@@ -60,7 +60,7 @@ def run_script(script_path: Path, description: str, max_retries: int = 2) -> boo
                                   check=True,
                                   capture_output=True,
                                   text=True,
-                                  timeout=300)
+                                  timeout=timeout)
             logger.info("完成: %s", description)
             if result.stdout:
                 tail = '\n'.join(result.stdout.strip().splitlines()[-8:])
@@ -105,8 +105,10 @@ if __name__ == "__main__":
         logger.warning("NFL 数据同步跳过: %s", e)
 
     errors = []
-    for path, name in SCRIPTS:
-        if not run_script(path, name):
+    for item in SCRIPTS:
+        path, name = item[0], item[1]
+        timeout = item[2] if len(item) > 2 else 300
+        if not run_script(path, name, timeout=timeout):
             errors.append(name)
 
     # Power Rating 报告
@@ -150,18 +152,43 @@ if __name__ == "__main__":
     except Exception as e:
         logger.warning("数据质量检测失败: %s", e)
 
-    # SHAP 特征漂移检测
+    # 特征漂移检测（用当前模型的 feature_importances_ vs 基线）
     try:
         from src.core.interpretability import detect_feature_drift
         shap_dir = ROOT / "models" / "shap"
         baseline_csv = shap_dir / "feature_importance.csv"
         if baseline_csv.exists():
+            # 加载一个已训练模型和最新特征数据，计算当前特征重要性
+            model_paths = [
+                (ROOT / "models" / "model_bb_win_ensemble.pkl", ROOT / "data" / "processed" / "bb_features.csv"),
+                (ROOT / "models" / "model_fb_win_ensemble.pkl", ROOT / "data" / "processed" / "fb_features.csv"),
+            ]
+            current_imp = None
             import pandas as pd
-            baseline = pd.read_csv(baseline_csv)
-            if len(baseline) > 0:
-                drifted = detect_feature_drift(str(baseline_csv), baseline)
+            for model_p, feat_p in model_paths:
+                if model_p.exists() and feat_p.exists():
+                    try:
+                        import joblib
+                        from src.models.ensemble_trainer import Stage2Stacking, WeightedEnsemble
+                        model = joblib.load(model_p)
+                        feats = pd.read_csv(feat_p)
+                        # 只保留纯特征列
+                        drop_cols = {'date', 'home_team', 'away_team', 'target', 'home_score', 'away_score', 'total_goals', 'league', 'sport', 'result'}
+                        feat_cols = [c for c in feats.columns if c not in drop_cols]
+                        recent = feats[feat_cols].tail(500)
+                        from src.core.interpretability import report_feature_importance
+                        imp_df = report_feature_importance(model, recent.head(200))
+                        if imp_df is not None and len(imp_df) > 0:
+                            current_imp = imp_df
+                            break
+                    except Exception:
+                        continue
+            if current_imp is not None:
+                drifted = detect_feature_drift(str(baseline_csv), current_imp)
                 if drifted:
                     logger.warning("特征漂移: %d 个特征发生变化", len(drifted))
+            else:
+                logger.info("⏭️ 特征漂移检测跳过（无可用模型+数据）")
     except Exception as e:
         logger.warning("SHAP 特征漂移检测失败: %s", e)
 

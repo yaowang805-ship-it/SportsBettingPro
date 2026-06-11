@@ -12,7 +12,9 @@
     probs = model.predict("Liverpool", "Manchester City")
     probs["home_win"]  # 0.45 + 可信区间
 """
-import sys, json, pickle, warnings
+import sys
+import json
+import warnings
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 

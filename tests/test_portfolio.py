@@ -1,5 +1,4 @@
 """测试 Kelly 投资组合优化器。"""
-import pytest
 import numpy as np
 
 from src.risk.portfolio import KellyPortfolioOptimizer, find_best_kelly_bet

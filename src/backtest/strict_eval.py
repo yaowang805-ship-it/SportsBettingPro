@@ -3,9 +3,11 @@
 绝对干净的回测：逐场严格时序，杜绝任何未来信息泄露。
 只信任宪法规定的 features_stable.py 作为特征入口。
 """
-import pandas as pd, numpy as np, sys, warnings
+import pandas as pd
+import numpy as np
+import sys
+import warnings
 from pathlib import Path
-from datetime import datetime, timedelta
 
 warnings.filterwarnings('ignore')
 sys.path.insert(0, str(Path.cwd()))
@@ -147,7 +149,7 @@ if len(real) > 0:
     acc_model = (real['model_prob'] > 0.5).eq(real['actual']).mean()
     acc_shrunk = (real['shrunk_prob'] > 0.5).eq(real['actual']).mean()
     
-    print(f"\n📊 性能报告 (仅含真实赔率场次):")
+    print("\n📊 性能报告 (仅含真实赔率场次):")
     print(f"  Brier (模型): {brier_model:.4f}")
     print(f"  Brier (市场): {brier_market:.4f}")
     print(f"  Brier (收缩): {brier_shrunk:.4f}")
@@ -156,7 +158,7 @@ if len(real) > 0:
     
     # 按赔率区间分析
     real['odds_group'] = pd.cut(real['home_odds'], bins=[1.0, 1.4, 1.8, 2.2, 3.0, 5.0, 10.0])
-    print(f"\n📊 按赔率区间分析:")
+    print("\n📊 按赔率区间分析:")
     print(real.groupby('odds_group', observed=False).agg(
         n=('actual', 'count'),
         model_acc=('model_prob', lambda x: ((x > 0.5) == real.loc[x.index, 'actual']).mean()),
@@ -169,7 +171,7 @@ if len(real) > 0:
     kelly_stakes = np.minimum(kelly_stakes, 50)
     bets = (real['shrunk_prob'] > 0.5) & (real['home_odds'] >= 1.4)
     profits = np.where(bets, np.where(real['actual']==1, kelly_stakes*(real['home_odds'].values.clip(1.01,21)-1), -kelly_stakes), 0)
-    print(f"\n💰 凯利投注模拟:")
+    print("\n💰 凯利投注模拟:")
     print(f"  投注数: {bets.sum()}")
     print(f"  总利润: {profits.sum():.1f}")
     print(f"  胜率: {real.loc[bets, 'actual'].mean():.4f}")
@@ -181,7 +183,7 @@ if len(real) > 0:
         brier=('shrunk_prob', lambda x: brier_score_loss(real.loc[x.index, 'actual'], x)),
         acc=('actual', lambda x: ((real.loc[x.index, 'shrunk_prob'] > 0.5) == x).mean())
     )
-    print(f"\n📊 按赛季汇总:")
+    print("\n📊 按赛季汇总:")
     print(seasonal.round(4))
 else:
     print("\n⚠️ 无真实赔率场次，无法评估投注性能")

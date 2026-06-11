@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """足球每日推荐 — 使用集成模型 + 市场赔率特征。"""
-import sys, json
+import sys
+import json
 from pathlib import Path
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
@@ -11,7 +12,6 @@ from config.logging_config import setup_logging, get_logger
 setup_logging()
 logger = get_logger(__name__)
 
-import numpy as np
 import pandas as pd
 
 from config.settings import DATA_DIR
@@ -24,6 +24,9 @@ from src.monitor.clv_tracker import capture_opening_odds
 from src.core.team_names import LEAGUE_CN
 from src.dashboard.components.virtual_portfolio import auto_place_bets
 from src.predict.ev_verification import log_prediction
+from src.core.recommendation_scorer import RecommendationScorer
+
+_SCORER = RecommendationScorer()
 
 # ── Dixon-Coles 比分模型（贝叶斯优先，点估计备选） ──
 _DC_MODEL = None
@@ -140,6 +143,12 @@ def _teams_in_training_data(home: str, away: str) -> bool:
             _FB_KNOWN_TEAMS = frozenset()
     return home in _FB_KNOWN_TEAMS or away in _FB_KNOWN_TEAMS
 
+# ── 休赛期检测 ──
+from src.core.season_check import has_upcoming_games
+if not has_upcoming_games("football", days_back=2):
+    logger.info("⚽ 足球休赛期，今日跳过")
+    sys.exit(0)
+
 # 拉取赔率
 odds_data = fetch_football_odds(force=True)
 logger.info("✅ 实时赔率: %s 场", len(odds_data))
@@ -185,6 +194,28 @@ except Exception:
 
 # 风险评估与推荐生成
 rm = RiskManager()
+cb = rm.circuit_breaker_status()
+if cb["tripped"]:
+    logger.warning("🛑 止损断路器已触发: %s", cb["message"])
+    logger.warning("⚠️ 冷却中，跳过所有推荐")
+    notifier = get_notifier()
+    msg = notifier.build_markdown_message(
+        "【投注推荐】足球推荐已暂停",
+        f"✅ 足球推荐分析已完成\n\n🛑 **止损断路器已触发**\n\n{cb['message']}\n\n今日不生成推荐。"
+    )
+    notifier.send(msg, "足球推荐暂停通知")
+    output = {
+        "date": datetime.now().isoformat(),
+        "sport": "football",
+        "total_games": len(valid),
+        "recommendations": [],
+        "circuit_breaker": cb,
+    }
+    Path(DATA_DIR / "daily_fb_recommendations.json").write_text(json.dumps(output, ensure_ascii=False, indent=2))
+    sys.exit(0)
+else:
+    logger.info("✅ 止损断路器状态正常: %s", cb["message"])
+
 recs = []
 current_exposure = 0.0
 for pred in predictions:
@@ -279,7 +310,7 @@ for pred in predictions:
     # ── 大小球候选（泊松模型支持任意线，接近 2.5 时与 ensemble 混合）──
     total_odds = pred.get("total_odds", 0)
     total_pt = pred.get("total_point")
-    if total_odds > 0 and total_pt is not None:
+    if total_odds is not None and total_odds > 0 and total_pt is not None:
         total_prob = None
         total_source = "none"
 
@@ -353,14 +384,31 @@ for pred in predictions:
             logger.debug("  📐 %s 校准: %.1f%% → %.1f%%", league, best["model_prob"] * 100, cal_prob * 100)
             best["model_prob"] = cal_prob
 
+    # ── 推荐质量评分过滤 ──
+    league_cn = LEAGUE_CN.get(pred.get("sport_key", ""), "国际足球")
+    merged = {**pred, **best, "sport": "football", "league": league_cn}
+    sq = _SCORER.score(merged, market_type="胜负",
+                       model_is_home=best["type"] in ("主胜", "亚洲让球"))
+    score, tier = sq["score"], sq["tier"]
+    logger.info("  📊 质量评分: %.1f (%s) SM指数: %.1f",
+                score, tier, sq.get("smart_money_index", 0))
+
+    if tier == "low":
+        logger.info("  ⏭️ 质量分 %.1f < 60, 跳过推荐", score)
+        continue
+    elif tier == "medium":
+        best["stake"] = round(best["stake"] * 0.5, 2)
+        logger.info("  ⚖️ 中等质量, 半仓: ¥%.0f", best["stake"])
+
     match_time = pd.to_datetime(pred["commence_time"]).tz_convert("Asia/Shanghai")
     time_str = match_time.strftime("%m/%d %H:%M")
     logger.info("⚽ %s vs %s | %s | 模型:%s 市场:%s 赔率:%.2f EV:%s 注额:%.0f ⏰%s", cn(home), cn(away), best['type'], "{:.1%}".format(best['model_prob']), "{:.1%}".format(best['mkt_prob']), best['odds'], "{:+.1%}".format(best['ev']), best['stake'], time_str)
     recs.append({**pred, **best, "time_str": time_str,
                  "home_cn": cn(home), "away_cn": cn(away),
                  "sport": "football",
-                 "league": LEAGUE_CN.get(pred.get("sport_key", ""), "国际足球"),
-                 "market": best["type"]})
+                 "league": league_cn,
+                 "market": best["type"],
+                 "quality_score": score, "quality_tier": tier})
     log_prediction(
         sport="football", league=pred.get("sport_key", ""),
         home_team=home, away_team=away,
@@ -370,7 +418,12 @@ for pred in predictions:
         stake=best["stake"], match_time=pred["commence_time"],
         source="daily", home_team_cn=cn(home), away_team_cn=cn(away),
         sharp_prob=pred.get("sharp_home_prob"),
+        quality_score=score, quality_tier=tier,
+        model_version=pred.get("model_version", ""),
+        n_bookmakers=pred.get("n_bookmakers", 0),
+        scorer_breakdown=json.dumps(sq["breakdown"], ensure_ascii=False),
     )
+    _SCORER.reload_efficiency()
     current_exposure += best["stake"] / max(rm.current_balance, 1.0)
 
 # 联合凯利组合优化（替代逐个调 get_max_stake 的启发式分散调整）

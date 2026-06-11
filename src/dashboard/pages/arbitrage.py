@@ -1,12 +1,11 @@
 """套利监控页面 — 实时套利机会、赔率分歧、市场效率。"""
 import json
-from pathlib import Path
 
 import altair as alt
 import pandas as pd
 import streamlit as st
 
-from src.dashboard.components.data_loader import load_json, load_csv, render_empty_state
+from src.dashboard.components.data_loader import load_json, render_empty_state
 from src.dashboard.config import ARBITRAGE_FILE, EDGE_ATTRIBUTION_FILE
 from src.dashboard.components.data_loader import st
 

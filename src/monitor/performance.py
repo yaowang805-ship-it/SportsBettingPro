@@ -6,12 +6,12 @@
   2. 从历史比赛 CSV 匹配 pending 投注
   3. 生成绩效报告 → 更新 health_check
 """
-import json, sys
+import json
+import sys
 from pathlib import Path
-from datetime import datetime, timezone
+from datetime import datetime
 
 import numpy as np
-import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
@@ -24,7 +24,7 @@ PERF_FILE = DATA_DIR / "performance_history.csv"
 PORTFOLIO_FILE = DATA_DIR / "virtual_portfolio.json"
 HEALTH_FILE = DATA_DIR / "system_health.json"
 
-from src.monitor.result_matcher import auto_settle, _read_perf, _recalc, _save_perf
+from src.monitor.result_matcher import auto_settle, _read_perf, _recalc
 
 
 def update_performance():
@@ -138,13 +138,20 @@ def update_performance():
         json.dump(health, f, ensure_ascii=False, indent=2)
 
     # 5. 告警检查
+    from src.monitor.alert_log import log_alert
     alerts = []
     if total_bets >= 20 and win_rate < 0.45:
-        alerts.append(f"⚠️ 胜率过低: {win_rate:.1%}")
+        msg = f"胜率过低: {win_rate:.1%}"
+        alerts.append(f"⚠️ {msg}")
+        log_alert("performance", msg, f"近 {total_bets} 场胜率 {win_rate:.1%}", "WARNING")
     if roi < -0.10:
-        alerts.append(f"🚨 累计亏损: {roi:.1%}")
+        msg = f"累计亏损: {roi:.1%}"
+        alerts.append(f"🚨 {msg}")
+        log_alert("risk", msg, f"累计 ROI {roi:.1%}", "ERROR")
     if max_drawdown > 0.15:
-        alerts.append(f"⚠️ 回撤过大: {max_drawdown:.1%}")
+        msg = f"回撤过大: {max_drawdown:.1%}"
+        alerts.append(f"⚠️ {msg}")
+        log_alert("risk", msg, f"最大回撤 {max_drawdown:.1%}", "WARNING")
     if total_bets == 0 and len(pending) > 0:
         alerts.append(f"⏳ {len(pending)} 笔待结算")
 

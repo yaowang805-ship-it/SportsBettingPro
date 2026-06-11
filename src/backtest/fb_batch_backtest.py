@@ -1,4 +1,7 @@
-import pandas as pd, numpy as np, os, glob
+import pandas as pd
+import numpy as np
+import os
+import glob
 from lightgbm import LGBMClassifier
 
 ODDS_DIR = "data/free_odds"

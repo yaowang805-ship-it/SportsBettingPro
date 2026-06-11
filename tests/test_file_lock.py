@@ -1,7 +1,5 @@
 """测试文件锁 — locked_open 基本功能。"""
-import pytest
 import json
-import os
 from pathlib import Path
 
 from src.storage.file_lock import locked_open

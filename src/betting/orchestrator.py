@@ -10,7 +10,7 @@ Execution flow:
   6. On failure: log error, return rejected BetResult
   7. Periodic settle_active_bets() checks all active orders
 """
-from typing import List, Optional
+from typing import List
 
 from config.logging_config import get_logger
 from config.settings import BETTING_PLATFORM

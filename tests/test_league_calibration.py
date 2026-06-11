@@ -1,5 +1,4 @@
 """测试每联赛校准器。"""
-import pytest
 import numpy as np
 
 from src.core.league_calibration import LeagueCalibrator

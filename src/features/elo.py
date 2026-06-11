@@ -1,11 +1,11 @@
 """ELO 评级系统 — 为比赛预测提供球队实力特征。"""
-import numpy as np
 import pandas as pd
 
 
 def compute_elo(df: pd.DataFrame, K: float = 30,
                 home_col: str = "home", away_col: str = "away",
-                score_home_col: str = "home_goals", score_away_col: str = "away_goals") -> pd.DataFrame:
+                score_home_col: str = "home_goals", score_away_col: str = "away_goals",
+                date_col: str = "date") -> pd.DataFrame:
     """计算球队 ELO 评级作为比赛特征。
 
     对按日期排序的比赛逐场计算，每场比赛使用赛前 ELO。
@@ -18,11 +18,12 @@ def compute_elo(df: pd.DataFrame, K: float = 30,
         away_col: 客队列名
         score_home_col: 主队比分列名
         score_away_col: 客队比分列名
+        date_col: 日期列名
 
     Returns:
         原 DataFrame 新增三列: home_elo, away_elo, elo_diff
     """
-    df = df.copy().sort_values("date").reset_index(drop=True)
+    df = df.copy().sort_values(date_col).reset_index(drop=True)
 
     # 初始化 ELO 字典（所有球队 1500 分）
     elo_ratings = {}

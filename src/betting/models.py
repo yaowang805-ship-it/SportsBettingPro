@@ -1,5 +1,5 @@
 """Betting data models — BetOrder, BetResult dataclasses."""
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
 

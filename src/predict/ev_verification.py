@@ -9,10 +9,10 @@
   5. 真实投注日志分析：performance_history + prediction_log
   6. 向前预测日志：为每日流水线添加持久化预测记录
 """
-import json, sys, warnings
+import json
+import sys
 from pathlib import Path
 from datetime import datetime
-from collections import defaultdict
 from typing import Optional
 
 ROOT = Path(__file__).resolve().parent.parent.parent
@@ -331,7 +331,7 @@ def analyze_real_bets() -> dict:
         print(f"  ROI:    {results['roi']*100:+.2f}%")
 
         if len(settled) > 0:
-            print(f"\n  最近已结算:")
+            print("\n  最近已结算:")
             for _, r in settled.sort_values('date', ascending=False).head(10).iterrows():
                 print(f"    {r['date']} {r.get('game','?')} | "
                       f"{r['result']} | ¥{r['profit']:+.0f}")
@@ -435,7 +435,7 @@ def model_capability_summary(cal: dict, brier: dict, auc: dict) -> dict:
     print("=" * 72)
     for d in details:
         print(f"    {d}")
-    print(f"\n  ══════════════════════════════════")
+    print("\n  ══════════════════════════════════")
     print(f"  总分: {score}/{max_score}")
     if score >= 85:
         grade = "A (职业级 — 可直接实盘)"
@@ -448,7 +448,7 @@ def model_capability_summary(cal: dict, brier: dict, auc: dict) -> dict:
     else:
         grade = "F (不足 — 需大幅改进)"
     print(f"  评级: {grade}")
-    print(f"  ══════════════════════════════════")
+    print("  ══════════════════════════════════")
 
     return {"score": score, "max_score": max_score, "grade": grade, "details": details}
 
@@ -459,55 +459,56 @@ def model_capability_summary(cal: dict, brier: dict, auc: dict) -> dict:
 
 PREDICTION_LOG_FILE = ROOT / "data" / "storage" / "prediction_log.csv"
 
+# 统一引用 prediction_logger 的列定义（单数据源）
+
+
+def _migrate_csv_schema(target_fields: list):
+    """将 prediction_log.csv 迁移到目标列模式，保留现有数据。"""
+    import pandas as pd
+    try:
+        df = pd.read_csv(PREDICTION_LOG_FILE, on_bad_lines='skip')
+    except Exception:
+        df = pd.DataFrame()
+    for col in target_fields:
+        if col not in df.columns:
+            df[col] = ""
+    df = df[target_fields]
+    df.to_csv(PREDICTION_LOG_FILE, index=False, encoding='utf-8')
+    logger.info("  🔄 CSV 模式迁移: → %d 列", len(target_fields))
+
 
 def log_prediction(sport: str, league: str, home_team: str, away_team: str,
                    market_type: str, market_detail: str, odds: float,
                    model_prob: float, market_prob: float, ev: float,
                    stake: float, match_time, source: str = "daily",
                    sharp_prob: float = None, home_team_cn: str = None,
-                   away_team_cn: str = None):
-    """记录一条预测到持久化日志。
+                   away_team_cn: str = None,
+                   quality_score: float = None, quality_tier: str = None,
+                   model_version: str = None, n_bookmakers: int = 0,
+                   scorer_breakdown: dict = None):
+    """记录一条预测到持久化日志（委托给 prediction_logger）。
 
-    调用时机：daily_bb.py / daily_fb.py 每次生成推荐时。
+    调用时机：daily_bb.py / daily_fb.py / daily_wc.py 每次生成推荐时。
     """
-    import csv, os
-    from datetime import datetime
+    from src.core.prediction_logger import log_prediction as _base_log
 
-    record_id = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-    timestamp = datetime.now().isoformat()
-
-    row = {
-        "id": record_id,
-        "timestamp": timestamp,
-        "date": datetime.now().strftime("%Y-%m-%d"),
-        "sport": sport,
-        "league": league or "",
-        "home_team": home_team or "",
-        "away_team": away_team or "",
-        "market_type": market_type,
-        "market_detail": market_detail,
-        "odds": f"{odds:.4f}" if odds else "",
-        "model_prob": f"{model_prob:.6f}" if model_prob else "",
-        "market_prob": f"{market_prob:.6f}" if market_prob else "",
-        "ev": f"{ev:.6f}" if ev else "",
-        "stake": f"{stake:.2f}" if stake else "",
-        "match_time": str(match_time) if match_time else "",
-        "source": source,
-        "status": "pending",
-        "sharp_prob": f"{sharp_prob:.6f}" if sharp_prob else "",
-        "home_team_cn": home_team_cn or "",
-        "away_team_cn": away_team_cn or "",
-    }
-
-    file_exists = PREDICTION_LOG_FILE.exists()
-    with open(PREDICTION_LOG_FILE, 'a', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=list(row.keys()))
-        if not file_exists or os.path.getsize(PREDICTION_LOG_FILE) == 0:
-            writer.writeheader()
-        writer.writerow(row)
-
-    logger.info(f"  📝 预测已记录: {record_id}")
-    return record_id
+    return _base_log(
+        sport=sport, league=league,
+        home_team_cn=home_team_cn or home_team,
+        away_team_cn=away_team_cn or away_team,
+        home_team_en=home_team,
+        away_team_en=away_team,
+        home_team=home_team,
+        away_team=away_team,
+        market_type=market_type, market_detail=market_detail,
+        odds=odds, model_prob=model_prob,
+        market_prob=market_prob, ev=ev,
+        stake=stake, match_time=match_time,
+        source=source, sharp_prob=sharp_prob,
+        quality_score=quality_score, quality_tier=quality_tier,
+        model_version=model_version, n_bookmakers=n_bookmakers,
+        scorer_breakdown=json.dumps(scorer_breakdown, ensure_ascii=False) if isinstance(scorer_breakdown, dict) else (scorer_breakdown or ""),
+    )
 
 
 def auto_settle_predictions():

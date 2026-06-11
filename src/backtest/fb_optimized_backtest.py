@@ -1,4 +1,7 @@
-import pandas as pd, numpy as np, os, glob
+import pandas as pd
+import numpy as np
+import os
+import glob
 from lightgbm import LGBMClassifier
 from collections import deque
 
@@ -168,7 +171,7 @@ for fp in sorted(glob.glob(f"{ODDS_DIR}/*.csv")):
                 '玩法': target_name, '比赛': len(data), '投注': bets,
                 '胜率': f"{wr:.1%}", '回报': f"{ret:+.2%}"
             })
-    except Exception as e:
+    except Exception:
         pass
 
 if all_results:

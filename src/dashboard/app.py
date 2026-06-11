@@ -18,6 +18,8 @@ from src.dashboard.pages import (
     arbitrage, clv_analysis,
     line_movement, power_ratings, system_health,
     model_interpret, calibration, prediction_log,
+    odds_comparison, data_freshness, bet_search,
+    settlement_report, backtest_report,
 )
 
 st.set_page_config(
@@ -31,6 +33,7 @@ PAGES = {
     "📊 总览": overview,
     "💰 投资组合": portfolio,
     "📋 推荐": recommendations,
+    "📋 赔率对比": odds_comparison,
     "🧠 模型表现": model_performance,
     "🎯 校准可靠性": calibration,
     "🔄 套利监控": arbitrage,
@@ -40,6 +43,10 @@ PAGES = {
     "🔬 模型解释": model_interpret,
     "🔋 系统健康": system_health,
     "📄 预测记录": prediction_log,
+    "📅 数据新鲜度": data_freshness,
+    "🔍 投注检索": bet_search,
+    "📋 结算报告": settlement_report,
+    "📊 回测报告": backtest_report,
 }
 
 st.sidebar.title("SportsBettingPro")

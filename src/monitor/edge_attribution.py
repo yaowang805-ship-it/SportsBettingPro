@@ -25,9 +25,8 @@ import json
 import sys
 from pathlib import Path
 from datetime import datetime, timezone
-from typing import Dict, List, Optional
+from typing import Dict
 
-import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent.parent

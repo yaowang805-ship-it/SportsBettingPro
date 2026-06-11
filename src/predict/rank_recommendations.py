@@ -5,9 +5,10 @@
   - 业余：每个运动独立生成推荐，各自分配仓位
   - 专业：所有运动统一排名，只打全局最优的前 N 个，组合级别分配 bankroll
 """
-import sys, json
+import sys
+import json
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
@@ -15,12 +16,14 @@ sys.path.insert(0, str(ROOT))
 from config.logging_config import get_logger
 logger = get_logger(__name__)
 
-import numpy as np
 import pandas as pd
 
-from config.settings import DATA_DIR, KELLY_FRACTION
+from config.settings import DATA_DIR
 from src.risk.manager import RiskManager
 from src.core.team_names import cn_team
+from src.notify.dingtalk import get_notifier
+from src.notify.formatter import Recommendation, MarketType, RecommendationFormatter
+from src.dashboard.components.virtual_portfolio import auto_place_bets
 
 BB_RECS_FILE = DATA_DIR / "daily_bb_recommendations.json"
 FB_RECS_FILE = DATA_DIR / "daily_fb_recommendations.json"
@@ -277,6 +280,56 @@ def main():
     }, ensure_ascii=False, indent=2))
 
     logger.info("  ✅ 排名已保存至 %s", RANKED_OUTPUT.name)
+
+    # ── 统一钉钉通知 + 虚拟投注 ──
+    notifier = get_notifier()
+    SPORT_CN = {"nba": "NBA", "football": "足球", "nfl": "NFL"}
+    rec_objs = []
+    for r in ranked:
+        sport_raw = r.get("sport", "")
+        sport_arg = "football" if sport_raw == "football" else ("nba" if sport_raw == "nba" else sport_raw)
+        rec_objs.append(Recommendation(
+            sport=SPORT_CN.get(sport_raw, sport_raw.upper()),
+            league=r.get("league", ""),
+            home_team=cn_team(r.get("home_team", ""), sport=sport_arg),
+            away_team=cn_team(r.get("away_team", ""), sport=sport_arg),
+            market_type=MarketType.H2H,
+            market_detail=r.get("type", ""),
+            odds=r["odds"],
+            model_prob=r["model_prob"],
+            market_prob=r["mkt_prob"],
+            ev=r["ev"],
+            stake=r["stake"],
+            match_time=pd.to_datetime(r.get("match_time")) if r.get("match_time") else None,
+        ))
+
+    formatter = RecommendationFormatter()
+    msg_text = formatter.format_recommendations_for_dingtalk(
+        rec_objs, title="全体育 统一排名", sport_name="全体育"
+    )
+    msg = notifier.build_markdown_message("【投注推荐】全体育统一排名", msg_text)
+    notifier.send(msg, f"全体育 {len(rec_objs)}条推荐")
+
+    # 覆盖各运动独立虚拟投注 — 用统一排名结果替换
+    auto_place_recs = []
+    for r in ranked:
+        sport_raw = r.get("sport", "")
+        sport_arg = "football" if sport_raw == "football" else ("nba" if sport_raw == "nba" else sport_raw)
+        auto_place_recs.append({
+            "sport": sport_raw,
+            "league": r.get("league", ""),
+            "home_team": r.get("home_team", ""),
+            "away_team": r.get("away_team", ""),
+            "home_cn": cn_team(r.get("home_team", ""), sport=sport_arg),
+            "away_cn": cn_team(r.get("away_team", ""), sport=sport_arg),
+            "market": r.get("type", ""),
+            "market_type": r.get("type", ""),
+            "odds": r.get("odds", 0),
+            "stake": r.get("stake", 0),
+            "model_prob": r.get("model_prob", 0),
+        })
+    auto_place_bets(auto_place_recs, reset_pending=True)
+    logger.info("  ✅ 虚拟投注已同步统一排名: %d 条", len(auto_place_recs))
 
 
 if __name__ == "__main__":

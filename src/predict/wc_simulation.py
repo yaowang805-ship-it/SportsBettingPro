@@ -5,7 +5,9 @@
     python src/predict/wc_simulation.py           # 完整模拟
     python src/predict/wc_simulation.py --iters 50000  # 更多模拟次数
 """
-import sys, json, random
+import sys
+import json
+import random
 from pathlib import Path
 from collections import defaultdict
 from datetime import datetime
@@ -14,12 +16,10 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 import numpy as np
-import pandas as pd
 
 from config.logging_config import get_logger
 logger = get_logger(__name__)
 
-from src.models.ensemble_trainer import WeightedEnsemble
 from config.settings import DATA_DIR
 from fetchers.odds_api import fetch_odds_api
 
@@ -375,13 +375,13 @@ def main(n_simulations: int = 10000):
 
     # 夺冠热门 Top 5
     top5 = sorted(result["results"], key=lambda x: -x["champion_pct"])[:5]
-    print(f"\n  🏆 夺冠热门:")
+    print("\n  🏆 夺冠热门:")
     for i, r in enumerate(top5, 1):
         print(f"    {i}. {r['team_cn']} — {r['champion_pct']}%")
 
     # 小组出线热门 Top 5
     top_adv = sorted(result["results"], key=lambda x: -x["advance_pct"])[:5]
-    print(f"\n  📈 出线热门:")
+    print("\n  📈 出线热门:")
     for i, r in enumerate(top_adv, 1):
         print(f"    {i}. {r['team_cn']} — {r['advance_pct']}%")
 
@@ -397,10 +397,10 @@ def main(n_simulations: int = 10000):
         notifier = get_notifier()
 
         lines = [f"🌍 世界杯模拟 ({n_simulations:,} 次)\n"]
-        lines.append(f"🏆 夺冠概率\n")
+        lines.append("🏆 夺冠概率\n")
         for i, r in enumerate(top5, 1):
             lines.append(f"  {i}. {r['team_cn']} {r['champion_pct']}%")
-        lines.append(f"\n📈 出线概率 Top5\n")
+        lines.append("\n📈 出线概率 Top5\n")
         for i, r in enumerate(top_adv, 1):
             lines.append(f"  {i}. {r['team_cn']} {r['advance_pct']}%")
 

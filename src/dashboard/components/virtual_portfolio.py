@@ -8,7 +8,7 @@
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Optional
 
 import pandas as pd
 
@@ -43,13 +43,14 @@ def _fetch_closing_odds(home_team: str, away_team: str, league: str) -> Optional
         "德甲": "soccer_germany_bundesliga",
         "意甲": "soccer_italy_serie_a",
         "法甲": "soccer_france_ligue_one",
-        "巴甲": "soccer_brazil_serie_a",
+        "巴甲": "soccer_brazil_campeonato",
         "解放者杯": "soccer_copa_libertadores",
         "美职联": "soccer_usa_mls",
         "墨超": "soccer_mexico_liga_mx",
         "阿甲": "soccer_argentina_primera_division",
         "葡超": "soccer_portugal_primeira_liga",
         "荷甲": "soccer_netherlands_eredivisie",
+        "EuroLeague": "basketball_euroleague",
         "比甲": "soccer_belgium_first_div",
         "土超": "soccer_turkey_super_league",
         "苏超": "soccer_scotland_premiership",
@@ -124,23 +125,35 @@ def _make_bet_id(rec: dict) -> str:
 
 # ── 公开 API ──
 
-def auto_place_bets(rec_list: list):
+def auto_place_bets(rec_list: list, reset_pending: bool = False):
     """自动将推荐同步为虚拟投注（幂等：已存在的不会重复添加）。
 
     Args:
         rec_list: daily_recommendations.json 中的推荐列表
+        reset_pending: 若为 True，先清空所有待结算投注再添加（用于统一排名覆盖各运动独立推荐）
     """
     state = _load_state()
+    if reset_pending:
+        state["pending_bets"] = []
     pending = state.get("pending_bets", [])
+    balance = state.get("balance", _INITIAL_BALANCE)
     pending_ids = {b.get("id", "") for b in pending}
     settled_ids = set(state.get("settled", {}).keys())
     history_ids = {h.get("id", "") for h in state.get("history", [])}
     existing_ids = pending_ids | settled_ids | history_ids
 
+    # 仓位上限检查：总待结算注额不超过余额的 30%
+    total_pending_stake = sum(b.get("stake", 0) for b in pending)
+    max_total_exposure = balance * 0.30
+
     added = 0
     for rec in rec_list:
         bid = _make_bet_id(rec)
         if bid in existing_ids:
+            continue
+        stake = float(rec.get("stake", 0))
+        # 仓位上限：本笔加入后不超限
+        if total_pending_stake + stake > max_total_exposure:
             continue
         odds = float(rec.get("odds", 0))
         league = rec.get("league", "")
@@ -161,11 +174,12 @@ def auto_place_bets(rec_list: list):
             "odds": odds,
             "opening_odds": opening_odds or odds,
             "closing_odds": None,
-            "stake": float(rec.get("stake", 0)),
+            "stake": stake,
             "model_prob": float(rec.get("model_prob", 0)),
             "created_at": datetime.now(timezone.utc).isoformat(),
         })
         existing_ids.add(bid)
+        total_pending_stake += stake
         added += 1
 
     if added > 0:

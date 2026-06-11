@@ -24,13 +24,14 @@ import requests
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 from config.logging_config import get_logger
 from config.settings import ODDS_API_KEY, SPORTS_API_TIMEOUT
+from src.notify.dingtalk import get_notifier
 
 logger = get_logger(__name__)
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 LOG_FILE = ROOT / "data" / "storage" / "prediction_log.csv"
 
-from src.fetchers.espn_scores import fetch_espn_scores_by_sport_key
+from fetchers.espn_scores import fetch_espn_scores_by_sport_key
 DECAY_REPORT_FILE = ROOT / "data" / "storage" / "model_decay_report.json"
 PERFORMANCE_HISTORY_FILE = ROOT / "data" / "storage" / "model_accuracy_history.csv"
 
@@ -438,6 +439,28 @@ def compute_accuracy_trend() -> Dict:
     # 退化级别
     if is_decaying:
         result["decay_level"] = "critical" if len(decay_signals) > 1 else "warning"
+        # 钉钉告警
+        try:
+            notifier = get_notifier()
+            details = "; ".join(decay_signals)
+            summary = (
+                f"### ⚠️ 模型性能退化检测\n\n"
+                f"**级别**: {result['decay_level']}\n"
+                f"**信号**: {details}\n\n"
+                f"| 指标 | 值 |\n"
+                f"|---|---|\n"
+                f"| 14天准确率 | {result.get('rolling_14d', 'N/A'):.1%} |\n"
+                f"| 7天准确率 | {result.get('rolling_7d', 'N/A'):.1%} |\n"
+                f"| 基线准确率 | {baseline:.1%} |\n"
+                f"| 14天样本量 | {result.get('n_14d', 0)} |\n"
+                f"| 趋势斜率 | {result.get('trend_slope', 'N/A')} |\n\n"
+                f"系统将在下次定时任务中自动触发重训。"
+            )
+            msg = notifier.build_markdown_message("⚠️ 模型退化告警", summary)
+            notifier.send(msg, "模型退化告警")
+            logger.warning("  模型退化告警已发送钉钉")
+        except Exception as e:
+            logger.warning("  模型退化钉钉通知失败: %s", e)
     else:
         result["decay_level"] = "healthy"
 

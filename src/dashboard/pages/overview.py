@@ -1,14 +1,12 @@
 """总览页面 — 系统核心指标、组合概览、实时状态。"""
-import json
 from datetime import datetime
-from pathlib import Path
 
 import altair as alt
 import pandas as pd
 import streamlit as st
 import numpy as np
 
-from src.dashboard.components.data_loader import load_json, load_csv, data_exists, render_empty_state
+from src.dashboard.components.data_loader import load_json, load_csv, render_empty_state
 from src.dashboard.config import (
     SYSTEM_HEALTH_FILE, RISK_STATE_FILE, PORTFOLIO_FILE,
     BET_HISTORY_FILE, MODEL_ACCURACY_FILE,
@@ -22,6 +20,51 @@ def _safe_metric(value, fmt=".2f", fallback="N/A"):
     if isinstance(value, str):
         return value
     return f"{value:{fmt}}"
+
+
+def _render_circuit_breaker(risk_state: dict):
+    """从 risk_state 读取状态，显示断路器指示器。"""
+    cool_off_until = risk_state.get("cool_off_until")
+    consecutive_losses = risk_state.get("consecutive_losses", 0)
+    balance = risk_state.get("balance", 10000)
+    initial = 10000
+    drawdown = max(0.0, 1.0 - balance / initial) if initial > 0 else 0.0
+
+    # 冷却中？
+    if cool_off_until:
+        try:
+            until = datetime.fromisoformat(cool_off_until)
+            remaining = (until - datetime.now()).total_seconds() / 3600
+            if remaining > 0:
+                st.error(
+                    f"🔴 **止损断路器已触发** — 冷却中（剩余 {remaining:.1f} 小时，"
+                    f"连败 {consecutive_losses} 次，回撤 {drawdown:.1%}）"
+                )
+                return
+        except Exception:
+            pass
+
+    # 回撤警告
+    if drawdown >= 0.10:
+        st.warning(
+            f"🟡 **回撤警告** — 当前回撤 {drawdown:.1%}，接近触发线 15%。"
+            f"连败 {consecutive_losses} 次，请注意风险。"
+        )
+        return
+
+    if consecutive_losses >= 3:
+        st.warning(
+            f"🟡 **连败警告** — 已连续 {consecutive_losses} 次亏损，注意风险。"
+        )
+        return
+
+    # 正常
+    if consecutive_losses > 0 or drawdown > 0.01:
+        st.info(
+            f"🟢 **止损状态正常** — 回撤 {drawdown:.1%}，连败 {consecutive_losses} 次"
+        )
+    else:
+        st.info("🟢 **止损状态正常**")
 
 
 def render():
@@ -52,6 +95,9 @@ def render():
     else:
         total_profit = 0
         roi = 0
+
+    # ── 止损断路器状态指示器 ──
+    _render_circuit_breaker(risk_state)
 
     # ── 顶部 KPI 行 ──
     st.subheader("核心指标")

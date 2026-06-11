@@ -17,6 +17,8 @@ import numpy as np
 import pandas as pd
 
 from config.settings import DEFAULT_BUDGET, KELLY_FRACTION, MAX_SINGLE_BET_PCT, MAX_TOTAL_EXPOSURE, DATA_DIR
+from src.risk.model_decay_tracker import ModelDecayTracker
+from src.risk.dynamic_staking import DynamicStakingModel
 
 RISK_STATE_FILE = DATA_DIR / 'risk_state.json'
 BET_LOG_FILE = DATA_DIR / 'bet_history.csv'
@@ -229,7 +231,7 @@ class PortfolioOptimizer:
 
 
 class RiskManager:
-    """职业级风险管理器 — 冷却止损 + 相关投注互斥版。"""
+    """职业级风险管理器 — 冷却止损 + 相关投注互斥 + ML 动态仓位版。"""
 
     COOL_OFF_HOURS = 24         # 触发冷却后停注 N 小时
     MAX_SAME_GAME_MARKETS = 2   # 同一场比赛最多下注 N 个不同市场（联合凯利折扣后）
@@ -257,6 +259,14 @@ class RiskManager:
         self._market_blocklist = self._load_blocklist()
         # ── 同场相关投注跟踪（P4）──
         self._correlation_groups: Dict[str, list] = {}
+        # ── ML 动态仓位模型（P6 风控升级）──
+        self.model_decay_tracker = ModelDecayTracker()
+        self.dynamic_staking = DynamicStakingModel()
+        # 后台训练（不阻塞）
+        try:
+            self.dynamic_staking.train()
+        except Exception:
+            pass
         # 初始化时检查冷却状态
         if self._in_cool_off():
             logger.warning("  🛑 冷却中直至 %s（连败 %d 次）",
@@ -279,6 +289,17 @@ class RiskManager:
         except Exception as e:
             logger.warning("  ⚠️ 屏蔽名单加载失败: %s", e)
             return set()
+
+    def _sport_to_model_name(self, sport: str) -> str:
+        """将 sport 标识映射到模型名（用于模型退化追踪）。"""
+        s = sport.lower()
+        if "nba" in s or "basketball" in s or "ncaa" in s:
+            return "bb"
+        if "nfl" in s or "football" in s:
+            return "nfl"
+        if "soccer" in s or "epl" in s or any(l in s for l in ["liga", "serie", "bundes", "ligue"]):
+            return "fb"
+        return "fb"  # 默认映射到足球模型（覆盖面最广）
 
     def _check_market_efficiency(self, sport: str, league: str, market_type: str) -> bool:
         """检查市场效率。True = 允许下注, False = 被屏蔽。"""
@@ -417,10 +438,23 @@ class RiskManager:
         if kelly <= 0:
             return 0.0
 
-        # 多层风险调整
+        # 多层风险调整：ML 动态仓位 + 模型退化追踪 + 阈值回退
         confidence_mult = self._get_confidence_tier(edge)
         adaptive_frac = self.adaptive_kelly.fraction()
-        kelly_fraction = KELLY_FRACTION * confidence_mult * dd_mult * streak_mult
+        model_decay_mult = self.model_decay_tracker.get_confidence_multiplier(
+            self._sport_to_model_name(sport))
+        dyn_mult = self.dynamic_staking.predict_multiplier({
+            "edge": edge,
+            "model_prob": prob,
+            "odds": odds,
+            "drawdown_pct": self.drawdown_pct(),
+            "consecutive_losses": self.consecutive_losses,
+            "adaptive_kelly_frac": self.adaptive_kelly.fraction(),
+            "n_active_bets": len(self.portfolio_optimizer.active_bets),
+            "win_rate": self.win_rate(),
+            "total_bets": self.total_bets,
+        })
+        kelly_fraction = KELLY_FRACTION * model_decay_mult * dyn_mult
 
         stake_pct = max(0.0, min(kelly * kelly_fraction, self.max_single_pct))
         stake = self.current_balance * stake_pct
@@ -529,7 +563,7 @@ class RiskManager:
             return False, "账户资金已耗尽"
 
         if stake > self.current_balance * self.max_single_pct:
-            return False, f"单注超过限额"
+            return False, "单注超过限额"
 
         # 日亏损检查
         today = datetime.now().date()
@@ -539,7 +573,7 @@ class RiskManager:
 
         total_exposure = current_exposure_pct + (stake / self.current_balance)
         if total_exposure > self.max_total_exposure:
-            return False, f"总仓位超过限额"
+            return False, "总仓位超过限额"
 
         # 回撤停手
         if self.drawdown_pct() > 0.25:
@@ -547,7 +581,8 @@ class RiskManager:
 
         return True, "允许下注"
 
-    def record_outcome(self, stake: float, win: bool, odds: float = 2.0, prob: float = 0.5):
+    def record_outcome(self, stake: float, win: bool, odds: float = 2.0, prob: float = 0.5,
+                       sport: str = ""):
         self.total_bets += 1
         if win:
             pnl = stake * (odds - 1.0)
@@ -558,6 +593,10 @@ class RiskManager:
             pnl = -stake
             self.current_balance -= stake
             self.consecutive_losses += 1
+
+        # 模型退化追踪
+        model_name = self._sport_to_model_name(sport)
+        self.model_decay_tracker.record_prediction(model_name, prob, win)
 
         # 滚动亏损跟踪
         self.weekly_loss = max(0.0, self.weekly_loss - pnl)
@@ -620,6 +659,8 @@ class RiskManager:
         return self.winning_bets / self.total_bets
 
     def get_health_check(self) -> dict:
+        decay_health = self.model_decay_tracker.get_all_health()
+        fi = self.dynamic_staking.get_feature_importance()
         return {
             'balance': self.current_balance,
             'roi': self.roi(),
@@ -633,6 +674,81 @@ class RiskManager:
             'cool_off_active': self._in_cool_off(),
             'cool_off_until': self.cool_off_until.isoformat() if self.cool_off_until else None,
             'weekly_loss': self.weekly_loss,
+            'ml_dynamic_staking_trained': self.dynamic_staking.is_trained,
+            'ml_feature_importance': fi,
+            'model_decay': decay_health,
+        }
+
+    # ── 止损断路器 ─────────────────────────────────────────────
+
+    def compute_daily_loss(self) -> float:
+        """计算当日累计亏损（基于 _daily_bets）。"""
+        today = datetime.now().date()
+        if today != self._last_reset_date:
+            return 0.0
+        return max(0.0, -sum(b.get("pnl", 0) for b in self._daily_bets if b.get("pnl", 0) < 0))
+
+    def circuit_breaker_status(self) -> dict:
+        """断路器状态 — 是否应该停止下注及原因。
+
+        Returns:
+            {tripped, reason, cool_off_remaining_hours, consecutive_losses,
+             drawdown_pct, balance, message}
+        """
+        # 1. 冷却期检查
+        if self._in_cool_off():
+            remaining = (self.cool_off_until - datetime.now()).total_seconds() / 3600
+            return {
+                "tripped": True,
+                "reason": "cool_off",
+                "cool_off_remaining_hours": round(remaining, 1),
+                "consecutive_losses": self.consecutive_losses,
+                "drawdown_pct": round(self.drawdown_pct(), 4),
+                "balance": round(self.current_balance, 2),
+                "message": f"🛑 冷却中（剩余 {remaining:.1f} 小时，连败 {self.consecutive_losses} 次）",
+            }
+
+        # 2. 回撤检查
+        dd = self.drawdown_pct()
+        if dd >= 0.15:
+            return {
+                "tripped": True,
+                "reason": "drawdown",
+                "cool_off_remaining_hours": 0.0,
+                "consecutive_losses": self.consecutive_losses,
+                "drawdown_pct": round(dd, 4),
+                "balance": round(self.current_balance, 2),
+                "message": f"🛑 回撤 {dd:.1%} 超过 15% 阈值，停止下注",
+            }
+
+        # 3. 周亏损检查
+        weekly_loss_pct = self.weekly_loss / max(self.initial_budget, 1)
+        if weekly_loss_pct >= 0.20:
+            return {
+                "tripped": True,
+                "reason": "weekly_loss",
+                "cool_off_remaining_hours": 0.0,
+                "consecutive_losses": self.consecutive_losses,
+                "drawdown_pct": round(dd, 4),
+                "balance": round(self.current_balance, 2),
+                "message": f"🛑 周亏损 {weekly_loss_pct:.1%} 超过 20% 阈值，停止下注",
+            }
+
+        # 4. 空仓 / 低回撤警告（未触发）
+        warning = ""
+        if dd >= 0.10:
+            warning = f"⚠️ 回撤 {dd:.1%} 接近触发线（15%）"
+        elif self.consecutive_losses >= 3:
+            warning = f"⚠️ 连败 {self.consecutive_losses} 次，注意风险"
+
+        return {
+            "tripped": False,
+            "reason": "none",
+            "cool_off_remaining_hours": 0.0,
+            "consecutive_losses": self.consecutive_losses,
+            "drawdown_pct": round(dd, 4),
+            "balance": round(self.current_balance, 2),
+            "message": "✅ 正常" if not warning else warning,
         }
 
     # ── VaR / CVaR ──────────────────────────────────────────────

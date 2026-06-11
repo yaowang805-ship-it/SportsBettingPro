@@ -13,7 +13,7 @@ import sys
 from collections import defaultdict
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Dict, List, Any
 
 import numpy as np
 
@@ -68,7 +68,7 @@ BOOK_SHARPNESS = {
     "matchbook": 0.7,
 }
 
-# 需要监测的联赛
+# 需要监测的联赛（全部活跃联赛）
 SPORTS_TO_MONITOR = [
     ("basketball_nba", "NBA"),
     ("soccer_epl", "英超"),
@@ -76,6 +76,36 @@ SPORTS_TO_MONITOR = [
     ("soccer_germany_bundesliga", "德甲"),
     ("soccer_italy_serie_a", "意甲"),
     ("soccer_france_ligue_one", "法甲"),
+    ("soccer_brazil_campeonato", "巴甲"),
+    ("soccer_netherlands_eredivisie", "荷甲"),
+    ("soccer_portugal_primeira_liga", "葡超"),
+    ("soccer_usa_mls", "美职联"),
+    ("soccer_mexico_liga_mx", "墨超"),
+    ("soccer_argentina_primera_division", "阿甲"),
+    ("soccer_belgium_first_div", "比甲"),
+    ("soccer_turkey_super_league", "土超"),
+    ("soccer_scotland_premiership", "苏超"),
+    ("soccer_japan_j_league", "J联赛"),
+    ("soccer_australia_aleague", "澳超"),
+    ("soccer_germany_bundesliga2", "德乙"),
+    ("soccer_france_ligue_two", "法乙"),
+    ("soccer_england_championship", "英冠"),
+    ("americanfootball_nfl", "NFL"),
+    ("basketball_euroleague", "EuroLeague"),
+    ("soccer_fifa_world_cup", "世界杯"),
+    ("soccer_spain_segunda_division", "西乙"),
+    ("soccer_brazil_serie_b", "巴乙"),
+    ("soccer_china_superleague", "中超"),
+    ("soccer_sweden_allsvenskan", "瑞典超"),
+    ("soccer_norway_eliteserien", "挪威超"),
+    ("soccer_chile_campeonato", "智利甲"),
+    ("soccer_finland_veikkausliiga", "芬超"),
+    ("soccer_league_of_ireland", "爱超"),
+    ("soccer_sweden_superettan", "瑞典甲"),
+    ("soccer_germany_dfb_pokal", "德杯"),
+    ("soccer_italy_serie_b", "意乙"),
+    ("soccer_conmebol_copa_sudamericana", "南美杯"),
+    ("basketball_wnba", "WNBA"),
 ]
 
 

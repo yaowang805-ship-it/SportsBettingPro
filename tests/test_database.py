@@ -2,7 +2,6 @@
 import os
 import tempfile
 import pytest
-from datetime import datetime, timezone
 
 
 @pytest.fixture(autouse=True)
@@ -158,3 +157,48 @@ class TestOddsCache:
         fb = db.get_odds_history(sport_key="soccer_epl")
         assert len(bb) == 1
         assert len(fb) == 1
+
+
+class TestDatabaseBackend:
+    def test_resolve_db_url_default(self):
+        from src.storage.database import _resolve_db_url
+        url = _resolve_db_url()
+        assert url.startswith("sqlite:///")
+
+    def test_resolve_db_url_postgres(self):
+        from src.storage.database import _resolve_db_url
+        url = _resolve_db_url("postgresql://user:pass@host:5432/sportsbetting")
+        assert url.startswith("postgresql://")
+
+    def test_resolve_db_url_explicit_path(self):
+        from src.storage.database import _resolve_db_url
+        url = _resolve_db_url("/tmp/mydb.db")
+        assert "sqlite" in url
+
+    def test_get_db_type_sqlite(self):
+        import tempfile
+        from src.storage.database import SportsDatabase
+        db = SportsDatabase(tempfile.mktemp(suffix=".db"))
+        assert db.get_db_type() == "sqlite"
+
+    def test_db_vacuum_sqlite(self):
+        import tempfile
+        from src.storage.database import SportsDatabase
+        db = SportsDatabase(tempfile.mktemp(suffix=".db"))
+        db.vacuum()
+
+    def test_get_db_size_sqlite(self):
+        import tempfile
+        from src.storage.database import SportsDatabase
+        db = SportsDatabase(tempfile.mktemp(suffix=".db"))
+        size = db.get_db_size()
+        assert size >= 0
+
+    def test_close_then_reopen(self):
+        import tempfile
+        from src.storage.database import SportsDatabase
+        db = SportsDatabase(tempfile.mktemp(suffix=".db"))
+        db.record_bet(home="A", away="B", stake=100, odds=2.0, prob=0.5)
+        db.close()
+        db2 = SportsDatabase(tempfile.mktemp(suffix=".db"))
+        db2.record_bet(home="C", away="D", stake=100, odds=2.0, prob=0.5)

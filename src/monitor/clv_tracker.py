@@ -12,9 +12,9 @@ CLV 是职业博彩的第一指标：
 """
 import json
 import sys
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional, List, Dict
+from typing import Optional, Dict
 
 import pandas as pd
 
@@ -22,7 +22,6 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 from fetchers.odds_api import fetch_odds_api
-from src.core.normalizer import OddsNormalizer
 from config.logging_config import get_logger
 logger = get_logger(__name__)
 
@@ -524,9 +523,198 @@ def compute_team_edge_features(sport: str = None, window: int = 10) -> Dict[str,
     return result
 
 
+# ── 收盘价自动填充 ───────────────────────────────────────────────
+
+_LEAGUE_TO_SPORTKEY = {
+    "NBA": "basketball_nba",
+    "英超": "soccer_epl", "西甲": "soccer_spain_la_liga",
+    "德甲": "soccer_germany_bundesliga", "意甲": "soccer_italy_serie_a",
+    "法甲": "soccer_france_ligue_one",
+    "世界杯": "soccer_fifa_world_cup",
+    "欧冠": "soccer_uefa_champions_league",
+    "欧联": "soccer_uefa_europa_league",
+    "国际足球": "soccer_epl",
+}
+
+
+def _parse_match_key(match_key: str):
+    """从 match_key 'HomeTeam @ AwayTeam 2026-05-25' 解析球队名。"""
+    try:
+        team_part = match_key.rsplit(" ", 1)[0]
+        parts = team_part.split(" @ ", 1)
+        if len(parts) == 2:
+            return parts[0].strip(), parts[1].strip()
+    except Exception:
+        pass
+    return None, None
+
+
+def _build_h2h_index(odds_data: list) -> dict:
+    """从 odds API 响应构建 (home_lower, away_lower) → (best_h2h, bookmaker) 索引。"""
+    idx = {}
+    for match in odds_data:
+        home = match.get("home_team", "").strip().lower()
+        away = match.get("away_team", "").strip().lower()
+        best_odds = None
+        best_bm = ""
+        for bm in match.get("bookmakers", []):
+            for mkt in bm.get("markets", []):
+                if mkt.get("key") != "h2h":
+                    continue
+                for out in mkt.get("outcomes", []):
+                    if out.get("name", "").strip().lower() == home:
+                        price = out.get("price")
+                        if price and (best_odds is None or price > best_odds):
+                            best_odds = price
+                            best_bm = bm.get("title", "unknown")
+        idx[(home, away)] = (best_odds, best_bm)
+    return idx
+
+
+def _sync_prediction_log(match_key: str, closing_odds: float):
+    """同步更新 prediction_log.csv 的 result_odds。"""
+    if not LOG_FILE.exists():
+        return
+    df = pd.read_csv(LOG_FILE)
+    if df.empty:
+        return
+
+    home_name, away_name = _parse_match_key(match_key)
+    if not home_name:
+        return
+
+    h_lower, a_lower = home_name.lower(), away_name.lower()
+    mask = pd.Series([False] * len(df))
+
+    # 尝试英文队名匹配
+    for en_col in ("home_team_en",):
+        if en_col in df.columns:
+            col_lower = df[en_col].astype(str).str.strip().str.lower()
+            ac = df.get("away_team_en", df.get(en_col, pd.Series([""] * len(df))))
+            a_col_lower = ac.astype(str).str.strip().str.lower()
+            mask = mask | (
+                df["status"].isin(["pending", "won", "lost"])
+                & (col_lower == h_lower)
+                & (a_col_lower == a_lower)
+            )
+
+    # 兜底中文名
+    if not mask.any():
+        for col in ("home_team_cn", "home_team"):
+            if col in df.columns:
+                col_lower = df[col].astype(str).str.strip().str.lower()
+                mask = mask | (
+                    df["status"].isin(["pending", "won", "lost"])
+                    & (col_lower == h_lower)
+                )
+                break
+
+    if mask.any():
+        df.loc[mask, "result_odds"] = round(closing_odds, 4)
+        df.to_csv(LOG_FILE, index=False)
+
+
+def auto_close_expired(rec: dict):
+    """标记已过期的开盘记录（比赛已结束且无法获取收盘价）。"""
+    data = _load_opening_odds()
+    updated = False
+    rmk = rec.get("match_key", "")
+    rmkt = rec.get("market", "")
+    for record_key, existing in list(data.items()):
+        if existing.get("match_key") == rmk and existing.get("market") == rmkt:
+            if existing.get("closing_odds") is not None:
+                continue
+            existing["closing_odds"] = 0
+            existing["closing_bookmaker"] = "expired"
+            existing["clv"] = 0
+            updated = True
+            break
+    if updated:
+        _save_opening_odds(data)
+
+
+def refresh_closing_odds() -> dict:
+    """扫描开盘价中未收盘的记录，在赛前窗口捕获收盘价。
+
+    流程：读取 opening_odds.json → 按联赛分组拉取当前赔率 →
+    匹配未关闭记录 → 调用 update_opening_with_closing() + 同步 prediction_log。
+
+    Returns:
+        {"updated": N, "skipped": N, "errors": N, "expired": N}
+    """
+    data = _load_opening_odds()
+    if not data:
+        return {"updated": 0, "skipped": 0, "errors": 0, "expired": 0}
+
+    now = datetime.now(timezone.utc)
+    result = {"updated": 0, "skipped": 0, "errors": 0, "expired": 0}
+
+    # 按联赛分组未收盘记录
+    leagues = {}
+    for record_key, rec in data.items():
+        if rec.get("closing_odds") is not None:
+            continue
+        league = rec.get("league", "")
+        leagues.setdefault(league, []).append((record_key, rec))
+
+    if not leagues:
+        return result
+
+    for league, records in leagues.items():
+        sport_key = _LEAGUE_TO_SPORTKEY.get(league)
+        if not sport_key:
+            result["skipped"] += len(records)
+            continue
+
+        try:
+            odds_data = fetch_odds_api(sport_key, force=True)
+        except Exception as e:
+            logger.warning("  ⚠️ CLV收盘: %s 赔率拉取失败: %s", league, e)
+            result["errors"] += 1
+            continue
+
+        if not odds_data:
+            result["skipped"] += len(records)
+            continue
+
+        current_index = _build_h2h_index(odds_data)
+
+        for record_key, rec in records:
+            match_key = rec.get("match_key", "")
+            home_name, away_name = _parse_match_key(match_key)
+            if not home_name:
+                result["skipped"] += 1
+                continue
+
+            entry = current_index.get((home_name.lower(), away_name.lower()))
+            if not entry or entry[0] is None:
+                # 比赛已从API移除 → 标记过期
+                auto_close_expired(rec)
+                result["expired"] += 1
+                continue
+
+            current_odds, bookmaker = entry
+            market = rec.get("market", "h2h")
+
+            # 写入收盘价
+            update_opening_with_closing(match_key, market, current_odds, bookmaker)
+            # 同步 prediction_log
+            _sync_prediction_log(match_key, current_odds)
+            result["updated"] += 1
+
+    if result["updated"]:
+        logger.info("  📊 CLV收盘价已更新 %d 条", result["updated"])
+    if result["expired"]:
+        logger.info("  ⌛ CLV过期 %d 条（比赛已结束无法获取收盘价）", result["expired"])
+    return result
+
+
 def main():
     """CLV 更新入口：更新待结算预测的 CLV 并打印报告。"""
     logger.info("\n🔍 CLV 追踪更新 - %s", datetime.now().strftime('%Y-%m-%d %H:%M'))
+    # 先尝试填充收盘价
+    refresh_closing_odds()
+    # 再更新待结算预测
     res = update_clv_for_pending()
     logger.info("  更新: %s, 跳过: %s, 错误: %s", res['updated'], res['skipped'], res['errors'])
     report_clv()

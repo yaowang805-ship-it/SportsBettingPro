@@ -6,9 +6,8 @@
 """
 import asyncio
 import json
-from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 import aiohttp
 import numpy as np
@@ -136,7 +135,6 @@ _UNDERSTAT_TEAM_MAP = {
     "Bologna": "Bologna FC 1909",
     "Cagliari": "Cagliari Calcio",
     "Como": "Como 1907",
-    "Lecce": "US Lecce",
     "Pisa": "AC Pisa 1909",
     "Athletic Club": "Athletic Bilbao",
     "Alaves": "Deportivo Alavés",
@@ -245,6 +243,13 @@ def build_xg_features(seasons: Optional[List[int]] = None) -> pd.DataFrame:
         df.groupby("team")["xg_for"].transform(
             lambda x: x.shift(1).rolling(10, min_periods=1).mean()).clip(lower=0.01)
 
+    # xG 残差：实际进球 vs xG（捕捉运气/超常发挥）
+    df["xg_residual"] = df["goals_for"] - df["xg_for"]
+    df["xg_residual_5"] = df.groupby("team")["xg_residual"].transform(
+        lambda x: x.shift(1).rolling(5, min_periods=2).mean())
+    df["xg_residual_10"] = df.groupby("team")["xg_residual"].transform(
+        lambda x: x.shift(1).rolling(10, min_periods=3).mean())
+
     return df
 
 
@@ -258,6 +263,7 @@ def merge_xg_into_match(match_df: pd.DataFrame, xg_df: pd.DataFrame) -> pd.DataF
         "xga_avg_3", "xga_avg_10",
         "xg_diff_3", "xg_diff_10",
         "xg_ewm5", "xga_ewm5", "xg_conversion",
+        "xg_residual_5", "xg_residual_10",
     ]
     for side, team_col in [("home", "home"), ("away", "away")]:
         sf = xg_df[["date", "team"] + XG_COLS_KEEP].copy()

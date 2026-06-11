@@ -38,6 +38,7 @@ BDL_API_KEY = os.getenv('BDL_API_KEY')
 FOOTBALL_DATA_API_KEY = os.getenv('FOOTBALL_DATA_API_KEY', FOOTBALL_API_KEY)
 BSD_API_KEY = os.getenv('BSD_API_KEY')
 DINGTALK_WEBHOOK = os.getenv('DINGTALK_WEBHOOK')
+DATABASE_URL = os.getenv('DATABASE_URL', '')  # 空=SQLite, postgresql://user:pass@host/db
 
 
 def _is_placeholder_webhook(url: str) -> bool:

@@ -1,4 +1,8 @@
-import pandas as pd, numpy as np, os, glob, json
+import pandas as pd
+import numpy as np
+import os
+import glob
+import json
 from lightgbm import LGBMClassifier
 
 ODDS_DIR = "data/free_odds"
@@ -159,7 +163,7 @@ for fp in sorted(glob.glob(f"{ODDS_DIR}/*.csv")):
                 '比赛': len(data), '投注': bets,
                 '胜率': f"{wr:.1%}", '回报': f"{ret:+.2%}"
             })
-    except Exception as e:
+    except Exception:
         pass
 
 if all_results:
@@ -174,7 +178,7 @@ if all_results:
     else:
         print("  ✅ 未发现异常赛季")
     
-    print(f"\n📊 30维深度特征回测汇总:")
+    print("\n📊 30维深度特征回测汇总:")
     print(f"总赛季: {len(df)} | 平均回报: {ret_nums.mean()/100:+.2%} | 盈利占比: {(ret_nums>0).mean():.0%}")
     
     # 按特征类型分组

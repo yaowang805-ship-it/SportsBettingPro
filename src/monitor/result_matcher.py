@@ -19,11 +19,13 @@
     # 手动标注
     python3 src/monitor/result_matcher.py update <date> <game> <bet_type> <result> <profit>
 """
-import json, re, unicodedata, sys
+import json
+import re
+import unicodedata
+import sys
 from pathlib import Path
 
 import pandas as pd
-import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
@@ -52,6 +54,15 @@ if _alias_path.exists():
         _TEAM_ALIASES.update(json.loads(_alias_path.read_text(encoding='utf-8')))
     except Exception:
         pass
+
+def _norm(name: str) -> str:
+    if not name:
+        return ""
+    n = re.sub(r"\(.*?\)", "", name)
+    n = unicodedata.normalize('NFKD', n)
+    n = ''.join(ch for ch in n if not unicodedata.combining(ch))
+    n = re.sub(r"[^0-9A-Za-z一-鿿]+", " ", n).strip().lower()
+    return _TEAM_ALIASES.get(n, n)
 
 _cn_path = ROOT / "data" / "team_mapping.json"
 if _cn_path.exists():
@@ -89,7 +100,7 @@ def _parse_game(s: str) -> tuple:
     for sep in [' vs ', ' v ', ' - ']:
         if sep in s:
             parts = s.split(sep, 1)
-            return parts[0].strip(), parts[1].strip()
+            return parts[0].strip().lower(), parts[1].strip().lower()
     return "", ""
 
 
@@ -133,6 +144,7 @@ def settle_from_portfolio() -> int:
     perf = _read_perf()
     history = state.get('history', [])
     updated = 0
+    new_rows = []
 
     for h in history:
         bid = h.get('id', '')
@@ -153,7 +165,7 @@ def settle_from_portfolio() -> int:
             profit = float(h.get('profit', 0) or 0)
             if stake == 0 and profit != 0:
                 stake = abs(profit) / (odds - 1) if odds > 1 and status == 'won' else abs(profit)
-            new_row = {
+            new_rows.append({
                 'date': h.get('date', '')[:10],
                 'game': bid,
                 'bet': bid.split('_')[-1] if '_' in bid else '',
@@ -163,9 +175,12 @@ def settle_from_portfolio() -> int:
                 'profit': profit,
                 'odds': odds,
                 'cumulative_balance': 0,
-            }
-            perf = pd.concat([perf, pd.DataFrame([new_row])], ignore_index=True)
+            })
             updated += 1
+
+    if new_rows:
+        new_df = pd.DataFrame(new_rows)
+        perf = new_df if perf.empty else pd.concat([perf, new_df], ignore_index=True)
 
     if updated > 0:
         perf = _recalc(perf)
@@ -303,12 +318,12 @@ def validate_pending_records():
     perf = _read_perf()
     pending = perf[perf['result'] == 'pending']
     settled = perf[perf['result'].isin(['won', 'lost'])]
-    print(f"\n📊 绩效摘要")
+    print("\n📊 绩效摘要")
     print(f"   {'已结算:' :12} {len(settled):>3} 笔")
     print(f"   {'待结算:' :12} {len(pending):>3} 笔")
     print(f"   {'总计:' :12} {len(perf):>3} 笔")
     if not pending.empty:
-        print(f"\n📋 待结算列表:")
+        print("\n📋 待结算列表:")
         for _, r in pending.iterrows():
             print(f"   [{r['date']}] {r['game']} | {r['bet']} | ¥{float(r.get('stake',0) or 0):.0f} @ {float(r.get('odds',1) or 1):.2f}")
     print()
@@ -340,7 +355,7 @@ def generate_summary_report():
         print(f"   资金:   ¥{cum:.0f} / ¥{fb:.0f}")
         print(f"   回撤:   {dd:.1%}")
     else:
-        print(f"\n   ⏳ 尚无已结算投注")
+        print("\n   ⏳ 尚无已结算投注")
     if not pending.empty:
         print(f"\n   ⏳ 待结算: {len(pending)} 笔 (注额 ¥{float(pending['stake'].sum()):.0f})")
     print("=" * 60 + "\n")

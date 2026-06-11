@@ -10,9 +10,8 @@
 """
 import json
 import sys
-from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -41,7 +40,6 @@ _NBA_CANONICAL = {
     "Indiana": "Indiana Pacers",
     "L.A. Clippers": "LA Clippers",
     "L.A. Lakers": "Los Angeles Lakers",
-    "LA Clippers": "LA Clippers",
     "Memphis": "Memphis Grizzlies",
     "Miami": "Miami Heat",
     "Milwaukee": "Milwaukee Bucks",
@@ -60,7 +58,6 @@ _NBA_CANONICAL = {
     "Washington": "Washington Wizards",
     # 已全名的保持不变
     "Los Angeles Lakers": "Los Angeles Lakers",
-    "LA Clippers": "LA Clippers",
 }
 
 

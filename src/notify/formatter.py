@@ -97,7 +97,7 @@ class Recommendation:
         """
         time_str = f"🕐 {self.match_time.strftime('%Y年%m月%d日 %H:%M')}" if self.match_time else ""
         
-        return (
+        text = (
             f"## {self.home_team} vs {self.away_team}\n"
             f"**【{self.league} · {self.market_type.value}】**\n"
             f"{time_str}\n\n"
@@ -111,7 +111,8 @@ class Recommendation:
         )
         if self.bookmaker:
             text += f"\n- 🏦 推荐平台: **{self.bookmaker}**"
-    
+        return text
+
     def to_dict(self) -> Dict:
         """转换为字典"""
         return {

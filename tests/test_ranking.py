@@ -1,15 +1,11 @@
 """测试跨运动统一排名引擎。"""
 import pytest
 import json
-import numpy as np
-from pathlib import Path
 
 from src.predict.rank_recommendations import (
     _calculate_kelly,
     load_recommendations,
     rank_recommendations,
-    BB_RECS_FILE,
-    FB_RECS_FILE,
 )
 
 

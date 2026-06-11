@@ -5,7 +5,6 @@ DingTalk 统一通知模块 - 所有推荐模块的钉钉发送接口
 """
 import json
 import sys
-import os
 from pathlib import Path
 from typing import Dict, List, Optional
 import requests
@@ -47,7 +46,7 @@ class DingTalkNotifier:
             logger.warning(f"⚠️ DingTalk webhook URL 格式无效: {self.webhook[:50]}...")
             return False
         
-        logger.info(f"✅ webhook URL 格式验证通过")
+        logger.info("✅ webhook URL 格式验证通过")
         return True
     
     def build_text_message(self, title: str, content: str) -> Dict:
@@ -125,7 +124,7 @@ class DingTalkNotifier:
                 try:
                     resp_json = resp.json()
                     if resp_json.get('errcode') == 0:
-                        logger.info(f"✅ 钉钉消息发送成功")
+                        logger.info("✅ 钉钉消息发送成功")
                         return True
                     else:
                         logger.error(f"❌ 钉钉 API 错误: {resp_json.get('errmsg', '未知错误')}")
@@ -142,7 +141,7 @@ class DingTalkNotifier:
             logger.error(f"❌ 钉钉请求超时 ({DINGTALK_TIMEOUT}s)")
             return False
         except requests.exceptions.ConnectionError:
-            logger.error(f"❌ 无法连接到钉钉服务器")
+            logger.error("❌ 无法连接到钉钉服务器")
             return False
         except Exception as e:
             logger.error(f"❌ 发送钉钉消息失败: {e}")

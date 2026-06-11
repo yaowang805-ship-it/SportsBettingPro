@@ -8,8 +8,7 @@
 import json
 import sys
 from pathlib import Path
-from datetime import datetime, timezone, timedelta
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List
 from math import radians, sin, cos, sqrt, asin
 
 ROOT = Path(__file__).resolve().parent.parent.parent
@@ -24,6 +23,19 @@ import pandas as pd
 
 from config.settings import MODEL_DIR, DATA_DIR
 from src.core.calibration import dynamic_shrinkage
+from src.features.bb_pipeline import (
+    _process_team_stats as _bb_process_team_stats,
+    _NBA_CITY_COORDS as _BB_CITY_COORDS,
+    _haversine as _bb_haversine,
+)
+from src.features.football_pipeline import (
+    _process_team_stats as _fb_process_team_stats,
+)
+
+# 兼容已 pickle 的 Stage2Stacking / WeightedEnsemble（旧模型存为 __main__.*）
+import src.models.stacking as _stacking_mod
+sys.modules['__main__'].Stage2Stacking = _stacking_mod.Stage2Stacking
+sys.modules['__main__'].WeightedEnsemble = _stacking_mod.WeightedEnsemble
 
 MODEL_DIR_PATH = Path(MODEL_DIR) if isinstance(MODEL_DIR, str) else MODEL_DIR
 DATA_DIR_PATH = Path(DATA_DIR) if isinstance(DATA_DIR, str) else DATA_DIR
@@ -278,68 +290,6 @@ def _slope(y):
     return np.polyfit(np.arange(len(y)), y, 1)[0]
 
 
-def _team_rolling_stats(df, goal_cols=("gf", "ga")):
-    """从原始比赛记录构建球队级滚动统计。"""
-    gf_col, ga_col = goal_cols
-    home = df[["date", "home", gf_col, ga_col]].copy()
-    home.columns = ["date", "team", "gf", "ga"]
-    home["is_home"] = 1
-    away = df[["date", "away", ga_col, gf_col]].copy()
-    away.columns = ["date", "team", "gf", "ga"]
-    away["is_home"] = 0
-    team = pd.concat([home, away], ignore_index=True).sort_values(["team", "date"])
-
-    for w in [3, 10]:
-        team[f"gf_avg_{w}"] = team.groupby("team")["gf"].transform(
-            lambda x: x.shift(1).rolling(w, min_periods=1).mean())
-        team[f"ga_avg_{w}"] = team.groupby("team")["ga"].transform(
-            lambda x: x.shift(1).rolling(w, min_periods=1).mean())
-        team[f"net_rating_{w}"] = team[f"gf_avg_{w}"] - team[f"ga_avg_{w}"]
-
-    team["gf_ewm5"] = team.groupby("team")["gf"].transform(
-        lambda x: x.shift(1).ewm(span=5, adjust=False).mean())
-    team["ga_ewm5"] = team.groupby("team")["ga"].transform(
-        lambda x: x.shift(1).ewm(span=5, adjust=False).mean())
-    team["opp_def_strength"] = team["ga_ewm5"]
-    team["is_win"] = (team["gf"] > team["ga"]).astype(int)
-    team["win_rate_10"] = team.groupby("team")["is_win"].transform(
-        lambda x: x.shift(1).rolling(10, min_periods=1).mean())
-    team["rest_days"] = team.groupby("team")["date"].diff().dt.days.fillna(3)
-    team["b2b"] = (team["rest_days"] == 1).astype(int)
-
-    # 趋势斜率特征（动量）
-    for w in [5, 10]:
-        team[f"net_rating_slope_{w}"] = team.groupby("team")["net_rating_3"].transform(
-            lambda x: x.shift(1).rolling(w, min_periods=2).apply(_slope, raw=True))
-
-    # ── 总分预测专用特征（与 bb_pipeline.py 一致） ──
-    team['total_pts'] = team['gf'] + team['ga']
-    team['total_pts_avg_5'] = team.groupby('team')['total_pts'].transform(
-        lambda x: x.shift(1).rolling(5, min_periods=1).mean())
-    team['total_pts_ewm5'] = team.groupby('team')['total_pts'].transform(
-        lambda x: x.shift(1).ewm(span=5, adjust=False).mean())
-    team['pts_scored_avg_5'] = team.groupby('team')['gf'].transform(
-        lambda x: x.shift(1).rolling(5, min_periods=1).mean())
-    team['pts_allowed_avg_5'] = team.groupby('team')['ga'].transform(
-        lambda x: x.shift(1).rolling(5, min_periods=1).mean())
-    team['total_pts_volatility_5'] = team.groupby('team')['total_pts'].transform(
-        lambda x: x.shift(1).rolling(5, min_periods=3).std())
-    LEAGUE_AVG_TOTAL = 210.0
-    team['is_high_scoring'] = (team['total_pts'] > LEAGUE_AVG_TOTAL).astype(int)
-    team['high_score_rate_10'] = team.groupby('team')['is_high_scoring'].transform(
-        lambda x: x.shift(1).rolling(10, min_periods=1).mean())
-
-    feat_cols = ["date", "team", "gf_avg_3", "gf_avg_10",
-                 "ga_avg_3", "ga_avg_10",
-                 "net_rating_3", "net_rating_10",
-                 "gf_ewm5", "ga_ewm5", "opp_def_strength", "win_rate_10", "rest_days", "b2b",
-                 "net_rating_slope_5", "net_rating_slope_10",
-                 "total_pts_avg_5", "total_pts_ewm5",
-                 "pts_scored_avg_5", "pts_allowed_avg_5",
-                 "total_pts_volatility_5", "high_score_rate_10"]
-    return team[feat_cols]
-
-
 # ── 历史数据加载 ──────────────────────────────────────────────
 
 def _load_bb_history():
@@ -386,7 +336,10 @@ def _load_fb_history():
     df.columns = [c.strip().lower() for c in df.columns]
     df["date"] = pd.to_datetime(df["date"], format="mixed", utc=True).dt.tz_localize(None)
     df = df.rename(columns={"home_score": "home_goals", "away_score": "away_goals"})
-    return df[["date", "home", "away", "home_goals", "away_goals"]]
+    cols = ["date", "home", "away", "home_goals", "away_goals"]
+    if "competition" in df.columns:
+        cols.append("competition")
+    return df[cols]
 
 
 def _load_nfl_history():
@@ -458,6 +411,21 @@ class EnsemblePredictor:
                     self.models[target] = joblib.load(path)
                     logger.info("  加载模型: %s", path.name)
 
+        # ── 模型版本（用于投注审计日志） ──
+        self.model_version = "unknown"
+        meta_path = MODEL_DIR_PATH / "model_metadata.json"
+        if meta_path.exists():
+            try:
+                meta = json.loads(meta_path.read_text())
+                key = f"last_train_{sport}"
+                if key in meta:
+                    ts = meta[key]
+                    date_part = ts[:10].replace("-", "")
+                    self.model_version = f"{sport}_{date_part}"
+                    logger.info("  模型版本: %s", self.model_version)
+            except Exception:
+                pass
+
     def _get_feature_cols(self, target: str) -> list:
         """返回指定目标使用的特征列列表。
 
@@ -510,16 +478,22 @@ class EnsemblePredictor:
         today_df = pd.DataFrame(today_rows)
 
         combined = pd.concat([hist, today_df], ignore_index=True).sort_values("date").reset_index(drop=True)
-        # 清理空值日期和队名（历史上的脏数据）
+        # 清理空值日期和队名（历史上的脏数据，今日数据是干净的所以不会丢）
         combined = combined.dropna(subset=["date", "home", "away"]).copy()
+        n_hist = len(combined) - len(today_df)  # dropna 可能减少 hist 行数
 
         # ELO 评级
         from src.features.elo import compute_elo
         combined = compute_elo(combined, K=20)
 
-        team_feats = _team_rolling_stats(combined, goal_cols=("home_goals", "away_goals"))
+        # ── 使用训练流水线的特征工程（_process_team_stats 生成全部球队特征）──
+        combined_input = combined.copy()
+        combined_input['home_score'] = combined_input['home_goals']
+        combined_input['away_score'] = combined_input['away_goals']
+        team_feats = _bb_process_team_stats(combined_input)
 
-        match_df = combined[["date", "home", "away", "home_elo", "away_elo", "elo_diff", "ovrundr"]].copy()
+        match_df = combined[["date", "home", "away", "home_goals", "away_goals",
+                             "home_elo", "away_elo", "elo_diff", "ovrundr"]].copy()
         for side, tc in [("home", "home"), ("away", "away")]:
             sf = team_feats.copy()
             sf.columns = [f"{side}_{c}" if c not in ("date", "team") else c for c in sf.columns]
@@ -529,9 +503,12 @@ class EnsemblePredictor:
                 match_df.sort_values("date"), sf.sort_values("date"),
                 by=tc, on="date", direction="backward")
 
+        # ── 基础交叉特征（与 bp_pipeline.build_bb_features 一致）──
         match_df["off_vs_def"] = match_df["home_gf_ewm5"] - match_df["away_ga_ewm5"]
         match_df["b2b_diff"] = match_df["home_b2b"] - match_df["away_b2b"]
         match_df["rest_diff"] = match_df["home_rest_days"] - match_df["away_rest_days"]
+        match_df["travel_diff"] = match_df["home_travel_distance"] - match_df["away_travel_distance"]
+        match_df["travel_3_diff"] = match_df["home_travel_distance_3"] - match_df["away_travel_distance_3"]
 
         # ── NBA 伤病特征注入（加权严重度） ──
         try:
@@ -550,13 +527,10 @@ class EnsemblePredictor:
                 else:
                     injury_df['weight'] = 1.0
                 team_scores = injury_df.groupby('team')['weight'].sum().to_dict()
-                # 球队全名 → 伤病权重映射
                 def _injured_score(team_name):
-                    # Try direct team name lookup first
                     team_clean = team_name.strip()
                     abbr = TEAM_ABBR.get(team_clean, '')
                     if not abbr:
-                        # Fallback: reverse lookup from TEAM_ABBR
                         rev = {v.lower(): k for k, v in TEAM_ABBR.items()}
                         full = rev.get(team_clean.lower(), '')
                         abbr = TEAM_ABBR.get(full, '')
@@ -564,7 +538,6 @@ class EnsemblePredictor:
                 match_df['home_injured'] = match_df['home'].map(_injured_score).fillna(0.0)
                 match_df['away_injured'] = match_df['away'].map(_injured_score).fillna(0.0)
                 match_df['injured_diff'] = match_df['home_injured'] - match_df['away_injured']
-                # 二值特征：有无关键伤病
                 match_df['home_key_injury'] = (match_df['home_injured'] >= 1.0).astype(int)
                 match_df['away_key_injury'] = (match_df['away_injured'] >= 1.0).astype(int)
             else:
@@ -580,7 +553,7 @@ class EnsemblePredictor:
             match_df['home_key_injury'] = 0
             match_df['away_key_injury'] = 0
 
-        # ── 总分预测交互特征（基特征已由 _team_rolling_stats 计算）──
+        # ── 总分预测交互特征 ──
         match_df["combined_total_avg_5"] = match_df["home_total_pts_avg_5"] + match_df["away_total_pts_avg_5"]
         match_df["combined_pts_scored_avg_5"] = match_df["home_pts_scored_avg_5"] + match_df["away_pts_scored_avg_5"]
         match_df["combined_pts_allowed_avg_5"] = match_df["home_pts_allowed_avg_5"] + match_df["away_pts_allowed_avg_5"]
@@ -590,9 +563,118 @@ class EnsemblePredictor:
         match_df["pace_proxy"] = (match_df["home_gf_ewm5"] + match_df["away_gf_ewm5"] +
                                   match_df["home_ga_ewm5"] + match_df["away_ga_ewm5"]) / 2
 
+        # ── 新增交叉特征（与 build_bb_features 同步）──
+        # 净胜分 / SoS / 主客场 / 波动率
+        if 'home_avg_margin_5' in match_df.columns and 'away_avg_margin_5' in match_df.columns:
+            match_df['margin_diff'] = match_df['home_avg_margin_5'] - match_df['away_avg_margin_5']
+        if 'home_sos_5' in match_df.columns and 'away_sos_5' in match_df.columns:
+            match_df['sos_diff'] = match_df['home_sos_5'] - match_df['away_sos_5']
+        if 'home_home_win_rate_5' in match_df.columns and 'away_away_win_rate_5' in match_df.columns:
+            match_df['home_away_win_diff'] = match_df['home_home_win_rate_5'] - match_df['away_away_win_rate_5']
+        if 'home_margin_volatility_5' in match_df.columns and 'away_margin_volatility_5' in match_df.columns:
+            match_df['margin_volatility_interaction'] = match_df['home_margin_volatility_5'] * match_df['away_margin_volatility_5']
+
+        # 动量 + 形态回归
+        if 'home_streak' in match_df.columns and 'away_streak' in match_df.columns:
+            match_df['streak_diff'] = match_df['home_streak'] - match_df['away_streak']
+        if 'home_form_regression' in match_df.columns and 'away_form_regression' in match_df.columns:
+            match_df['form_regression_diff'] = match_df['home_form_regression'] - match_df['away_form_regression']
+
+        # 赛季阶段
+        _month = pd.to_datetime(match_df['date']).dt.month
+        match_df['season_stage'] = _month.map({
+            10: 0, 11: 0, 12: 1, 1: 1, 2: 2, 3: 2, 4: 3, 5: 3, 6: 3,
+        }).fillna(-1)
+
+        # H2H 历史交锋（过去 5 次对阵）
+        h2h_cache = {}
+        for _, r in combined.sort_values('date').iterrows():
+            h, a = r['home'], r['away']
+            key = tuple(sorted([h, a]))
+            if key not in h2h_cache:
+                h2h_cache[key] = []
+            h2h_cache[key].append({
+                'home': h, 'away': a,
+                'home_goals': r['home_goals'], 'away_goals': r['away_goals'],
+                'date': r['date'],
+            })
+        h2h_rows = []
+        for _, row in match_df.iterrows():
+            h, a = row['home'], row['away']
+            key = tuple(sorted([h, a]))
+            meetings = h2h_cache.get(key, [])
+            prior = [m for m in meetings if m['date'] < row['date']]
+            last_5 = prior[-5:]
+            if len(last_5) >= 2:
+                h_wins = a_wins = 0
+                for m in last_5:
+                    if m['home'] == h:
+                        if m['home_goals'] > m['away_goals']:
+                            h_wins += 1
+                        else:
+                            a_wins += 1
+                    else:
+                        if m['away_goals'] > m['home_goals']:
+                            h_wins += 1
+                        else:
+                            a_wins += 1
+                avg_total = sum(m['home_goals'] + m['away_goals'] for m in last_5) / len(last_5)
+            else:
+                h_wins = a_wins = 0
+                avg_total = 0.0
+            h2h_rows.append({
+                'h2h_home_wins': h_wins, 'h2h_away_wins': a_wins,
+                'h2h_avg_total_pts': avg_total, 'h2h_net_wins': h_wins - a_wins,
+            })
+        if h2h_rows:
+            h2h_df = pd.DataFrame(h2h_rows, index=match_df.index)
+            match_df = pd.concat([match_df, h2h_df], axis=1)
+
+        # 联赛宏观趋势（expanding window）
+        league_df = combined.sort_values('date').copy()
+        league_df['_total_pts'] = league_df['home_goals'] + league_df['away_goals']
+        league_df['_home_win'] = (league_df['home_goals'] > league_df['away_goals']).astype(int)
+        league_df['_home_adv'] = league_df['home_goals'] - league_df['away_goals']
+        league_df['_home_win'] = league_df['_home_win'].shift(1).expanding(min_periods=10).mean()
+        league_df['_avg_total_pts'] = league_df['_total_pts'].shift(1).expanding(min_periods=10).mean()
+        league_df['_home_adv'] = league_df['_home_adv'].shift(1).expanding(min_periods=10).mean()
+        match_df['league_home_win_rate'] = league_df['_home_win'].values
+        match_df['league_avg_total_pts'] = league_df['_avg_total_pts'].values
+        match_df['league_home_adv'] = league_df['_home_adv'].values
+
+        # B2B 密度
+        if 'home_b2b' in match_df.columns and 'away_b2b' in match_df.columns:
+            match_df['home_b2b_density'] = match_df['home_b2b'].rolling(5, min_periods=1).sum()
+            match_df['away_b2b_density'] = match_df['away_b2b'].rolling(5, min_periods=1).sum()
+            match_df['b2b_density_diff'] = match_df['home_b2b_density'] - match_df['away_b2b_density']
+
+        # 休息综合优势
+        r_diff = match_df['rest_diff'].clip(-3, 3) / 3
+        a_b2b = match_df['away_b2b'] * 0.5
+        h_b2b = match_df['home_b2b'] * 0.5
+        t_diff = match_df['travel_3_diff'].clip(-3000, 3000) / 3000
+        match_df['rest_advantage'] = r_diff + (a_b2b - h_b2b) + t_diff
+
+        # 动量质量
+        if 'home_streak' in match_df.columns and 'home_avg_margin_5' in match_df.columns:
+            match_df['home_momentum_quality'] = match_df['home_streak'] * match_df['home_avg_margin_5'].clip(-15, 15) / 15
+            match_df['away_momentum_quality'] = match_df['away_streak'] * match_df['away_avg_margin_5'].clip(-15, 15) / 15
+            match_df['momentum_quality_diff'] = match_df['home_momentum_quality'] - match_df['away_momentum_quality']
+
+        # H2H 主导率
+        if 'h2h_home_wins' in match_df.columns and 'h2h_away_wins' in match_df.columns:
+            match_df['h2h_total'] = match_df['h2h_home_wins'] + match_df['h2h_away_wins']
+            match_df['h2h_dominance'] = match_df['h2h_net_wins'] / match_df['h2h_total'].clip(lower=1)
+        if 'h2h_dominance' in match_df.columns and 'home_home_win_rate_5' in match_df.columns:
+            match_df['h2h_form_x'] = match_df['h2h_dominance'] * match_df['home_home_win_rate_5']
+
+        # ELO 残差差
+        if 'home_elo_residual_5' in match_df.columns and 'away_elo_residual_5' in match_df.columns:
+            match_df['elo_residual_diff'] = match_df['home_elo_residual_5'] - match_df['away_elo_residual_5']
+
         match_df = match_df.ffill().fillna(0)
 
-        today_start = len(hist)
+        today_start = min(n_hist, len(match_df))
         X = match_df.iloc[today_start:].copy()
         # 确保所有训练时使用的特征都存在（缺失特征补0，保持列顺序一致）
         for col in self.feat_cols:
@@ -687,7 +769,8 @@ class EnsemblePredictor:
 
         match_df = match_df.ffill().fillna(0)
 
-        today_start = len(hist)
+        n_hist = len(combined) - len(today_df)
+        today_start = min(n_hist, len(match_df))
         X = match_df.iloc[today_start:].copy()
         # 确保所有训练时使用的特征都存在（缺失特征补0，保持列顺序一致）
         for col in self.feat_cols:
@@ -696,9 +779,8 @@ class EnsemblePredictor:
         return X[self.feat_cols].fillna(0)
 
     def _build_fb_features(self, odds_data: List[Dict]) -> np.ndarray:
-        """构建足球预测特征。"""
+        """构建足球预测特征（与训练流水线一致）。"""
         hist = _load_fb_history()
-        # 注入市值特征
         hist = _add_fb_market_value_features(hist)
 
         today_rows = []
@@ -711,17 +793,18 @@ class EnsemblePredictor:
         today_df = pd.DataFrame(today_rows)
 
         combined = pd.concat([hist, today_df], ignore_index=True).sort_values("date").reset_index(drop=True)
+        # win 列用于联赛宏观特征
+        combined["win"] = (combined["home_goals"] > combined["away_goals"]).astype(int)
 
-        # ELO 评级
         from src.features.elo import compute_elo
         combined = compute_elo(combined, K=30)
-
-        team_feats = _team_rolling_stats(combined, goal_cols=("home_goals", "away_goals"))
-
-        # 足球额外特征：市值
+        team_feats = _fb_process_team_stats(combined)
         combined = _add_fb_market_value_features(combined)
 
         match_df = combined[["date", "home", "away", "home_elo", "away_elo", "elo_diff"]].copy()
+        if "competition" in combined.columns:
+            match_df["competition"] = combined["competition"].values
+
         for side, tc in [("home", "home"), ("away", "away")]:
             sf = team_feats.copy()
             sf.columns = [f"{side}_{c}" if c not in ("date", "team") else c for c in sf.columns]
@@ -731,19 +814,48 @@ class EnsemblePredictor:
                 by=tc, on="date", direction="backward")
 
         match_df["off_vs_def"] = match_df["home_gf_ewm5"] - match_df["away_ga_ewm5"]
-        match_df["b2b_diff"] = match_df["home_b2b"] - match_df["away_b2b"]
         match_df["rest_diff"] = match_df["home_rest_days"] - match_df["away_rest_days"]
-
-        # ── 新增特征：周中赛 / 行程距离 / 主客场滚动 ──
         match_df["midweek"] = (pd.to_datetime(match_df["date"]).dt.dayofweek >= 4).astype(int)
         match_df["away_travel_km"] = match_df.apply(lambda r: _team_distance(r["home"], r["away"]), axis=1)
+        match_df["season_stage"] = pd.to_datetime(match_df["date"]).dt.month.map({
+            8: 0, 9: 0, 10: 0, 11: 1, 12: 1, 1: 1, 2: 2, 3: 2, 4: 2, 5: 3,
+        }).fillna(-1)
 
-        # 市值特征
+        if "home_sos_elo_5" in match_df.columns and "away_sos_elo_5" in match_df.columns:
+            match_df["sos_elo_diff"] = match_df["home_sos_elo_5"] - match_df["away_sos_elo_5"]
+        if "home_home_win_rate_5" in match_df.columns and "away_away_win_rate_5" in match_df.columns:
+            match_df["home_away_win_diff"] = match_df["home_home_win_rate_5"] - match_df["away_away_win_rate_5"]
+
+        if "home_win_streak" in match_df.columns and "home_avg_margin_5" in match_df.columns:
+            match_df["home_momentum_quality"] = match_df["home_win_streak"] * match_df["home_avg_margin_5"].clip(-3, 3) / 3
+            match_df["away_momentum_quality"] = match_df["away_win_streak"] * match_df["away_avg_margin_5"].clip(-3, 3) / 3
+            match_df["momentum_quality_diff"] = match_df["home_momentum_quality"] - match_df["away_momentum_quality"]
+
+        if "home_gf_volatility_5" in match_df.columns and "away_ga_volatility_5" in match_df.columns:
+            match_df["margin_volatility_interaction"] = match_df["home_gf_volatility_5"] * match_df["away_ga_volatility_5"]
+
+        # 累计行程 + 休息优势
+        team_away = match_df[["date", "away", "away_travel_km"]].copy()
+        team_away["cum_travel_3"] = team_away.groupby("away")["away_travel_km"].transform(
+            lambda x: x.shift(1).rolling(3, min_periods=1).sum())
+        match_df["away_cum_travel_3"] = pd.merge_asof(
+            match_df.sort_values("date"), team_away.sort_values("date"),
+            by="away", left_on="date", right_on="date", direction="backward")["cum_travel_3"].fillna(0)
+        r_diff = match_df["rest_diff"].clip(-3, 3) / 3
+        t_3 = match_df["away_cum_travel_3"].clip(0, 3000) / 3000
+        match_df["rest_advantage"] = r_diff - t_3 + match_df["midweek"] * 0.3
+
+        # 对手近期状态
+        team_latest = team_feats.sort_values("date").groupby("team").last().reset_index()
+        form_lookup = dict(zip(team_latest["team"], team_latest["points_5"]))
+        match_df["home_opp_points_5"] = match_df["away"].map(form_lookup).fillna(0)
+        match_df["away_opp_points_5"] = match_df["home"].map(form_lookup).fillna(0)
+
         for col in ["home_market_value", "away_market_value", "market_value_diff"]:
             if col in combined.columns:
                 match_df[col] = combined[col].values
 
-        # ── xG 预期进球特征 ──
+        # xG 预期进球特征
         try:
             from src.features.xg_pipeline import build_xg_features, merge_xg_into_match
             xg_df = build_xg_features(seasons=[2024, 2023])
@@ -752,11 +864,72 @@ class EnsemblePredictor:
         except Exception as e:
             logger.warning("  ⚠️ xG特征构建失败: %s", e)
 
+        # H2H 特征（简化版，仅基于 combined 数据）
+        try:
+            h2h_cache = {}
+            for _, r in combined.sort_values("date").iterrows():
+                key = tuple(sorted([r["home"], r["away"]]))
+                if key not in h2h_cache:
+                    h2h_cache[key] = []
+                h2h_cache[key].append({
+                    "home": r["home"], "away": r["away"],
+                    "home_goals": r["home_goals"], "away_goals": r["away_goals"],
+                    "date": r["date"],
+                })
+            h2h_rows = []
+            for _, row in match_df.iterrows():
+                h, a = row["home"], row["away"]
+                prior = [m for m in h2h_cache.get(tuple(sorted([h, a])), [])
+                         if isinstance(m["date"], pd.Timestamp) and m["date"] < row["date"]]
+                last_5 = prior[-5:]
+                if len(last_5) >= 2:
+                    h_wins = sum(1 for m in last_5 if (m["home"] == h and m["home_goals"] > m["away_goals"]) or
+                                 (m["away"] == h and m["away_goals"] > m["home_goals"]))
+                    a_wins = sum(1 for m in last_5 if (m["home"] == a and m["home_goals"] > m["away_goals"]) or
+                                 (m["away"] == a and m["away_goals"] > m["home_goals"]))
+                    draws = len(last_5) - h_wins - a_wins
+                    avg_total = sum(m["home_goals"] + m["away_goals"] for m in last_5) / len(last_5)
+                else:
+                    h_wins = a_wins = draws = 0
+                    avg_total = 0.0
+                h2h_rows.append({"h2h_home_wins": h_wins, "h2h_away_wins": a_wins,
+                                 "h2h_draws": draws, "h2h_avg_total_goals": avg_total})
+            if h2h_rows:
+                h2h_df = pd.DataFrame(h2h_rows, index=match_df.index)
+                match_df = pd.concat([match_df, h2h_df], axis=1)
+                match_df["h2h_total"] = match_df["h2h_home_wins"] + match_df["h2h_away_wins"] + match_df["h2h_draws"]
+                match_df["h2h_dominance"] = (match_df["h2h_home_wins"] - match_df["h2h_away_wins"]) / match_df["h2h_total"].clip(lower=1)
+                if "home_home_win_rate_5" in match_df.columns:
+                    match_df["h2h_form_x"] = match_df["h2h_dominance"] * match_df["home_home_win_rate_5"]
+        except Exception as e:
+            logger.warning("  ⚠️ H2H特征构建失败: %s", e)
+
+        # 联赛宏观趋势特征
+        if "competition" in match_df.columns:
+            try:
+                comp_df = combined.sort_values("date").copy()
+                comp_df["_goals_total"] = comp_df["home_goals"] + comp_df["away_goals"]
+                for col, src in [("league_home_win_rate", "win"), ("league_avg_home_goals", "home_goals"),
+                                 ("league_avg_away_goals", "away_goals")]:
+                    if src in comp_df.columns:
+                        comp_df[col] = comp_df.groupby("competition")[src].transform(
+                            lambda x: x.shift(1).expanding(min_periods=5).mean())
+                comp_df["league_avg_goals"] = comp_df.groupby("competition")["_goals_total"].transform(
+                    lambda x: x.shift(1).expanding(min_periods=5).mean())
+                comp_df["league_home_adv"] = comp_df.groupby("competition")["_home_adv"].transform(
+                    lambda x: x.shift(1).expanding(min_periods=5).mean()) if "_home_adv" in comp_df.columns else 0
+                lc = ["date", "home", "away", "league_home_win_rate", "league_avg_goals",
+                      "league_home_adv", "league_avg_home_goals", "league_avg_away_goals"]
+                lc = [c for c in lc if c in comp_df.columns]
+                match_df = match_df.merge(comp_df[lc], on=["date", "home", "away"], how="left")
+            except Exception as e:
+                logger.warning("  ⚠️ 联赛宏观特征构建失败: %s", e)
+
         match_df = match_df.ffill().fillna(0)
 
-        today_start = len(hist)
+        n_hist = len(combined) - len(today_df)
+        today_start = min(n_hist, len(match_df))
         X = match_df.iloc[today_start:].copy()
-        # 确保所有训练时使用的特征都存在（缺失特征补0，保持列顺序一致）
         for col in self.feat_cols:
             if col not in X.columns:
                 X[col] = 0.0
@@ -816,6 +989,7 @@ class EnsemblePredictor:
                 "spread_odds": spread_best_odds,
                 "total_odds": total_best_odds,
                 "all_bookmakers": all_bookies,
+                "model_version": self.model_version,
             }
 
             for target in ["win", "spread_result", "total_result"]:

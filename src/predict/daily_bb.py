@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """篮球每日推荐 — 使用集成模型 + 市场赔率特征。"""
-import sys, json
+import sys
+import json
 from pathlib import Path
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
@@ -11,7 +12,6 @@ from config.logging_config import setup_logging, get_logger
 setup_logging()
 logger = get_logger(__name__)
 
-import numpy as np
 import pandas as pd
 
 from config.settings import DATA_DIR
@@ -23,6 +23,10 @@ from src.notify.formatter import Recommendation, MarketType, RecommendationForma
 from src.monitor.clv_tracker import capture_opening_odds
 from src.dashboard.components.virtual_portfolio import auto_place_bets
 from src.predict.ev_verification import log_prediction
+from src.core.recommendation_scorer import RecommendationScorer
+from src.predict.alt_line_finder import AltLineFinder
+
+_SCORER = RecommendationScorer()
 
 logger.info("=" * 60)
 logger.info("🏀 篮球每日预测 - %s", datetime.now().strftime('%Y-%m-%d %H:%M'))
@@ -57,9 +61,18 @@ if not _SPREAD_RELIABLE:
 from src.core.team_names import cn_team
 def cn(name): return cn_team(name, sport="nba")
 
+# ── 休赛期检测 ──
+from src.core.season_check import has_upcoming_games
+if not has_upcoming_games("nba", days_back=2):
+    logger.info("🏀 NBA 休赛期，今日跳过")
+    sys.exit(0)
+
 # 拉取赔率
 odds_data = fetch_basketball_odds(force=True)
 logger.info("✅ 实时赔率: %s 场", len(odds_data))
+
+# 备选盘口查找器（多区域赔率 + alternate lines）
+_ALT_FINDER = AltLineFinder(odds_data)
 
 # 时间过滤
 now = pd.Timestamp.now(tz=timezone.utc)
@@ -91,6 +104,30 @@ except Exception:
 
 # 风险评估与推荐生成（多候选 → 选最优）
 rm = RiskManager()
+cb = rm.circuit_breaker_status()
+if cb["tripped"]:
+    logger.warning("🛑 止损断路器已触发: %s", cb["message"])
+    logger.warning("⚠️ 冷却中，跳过所有推荐")
+    # 仍发送空推荐通知
+    notifier = get_notifier()
+    msg = notifier.build_markdown_message(
+        "【投注推荐】NBA 推荐已暂停",
+        f"✅ NBA推荐分析已完成\n\n🛑 **止损断路器已触发**\n\n{cb['message']}\n\n今日不生成推荐。"
+    )
+    notifier.send(msg, "NBA推荐暂停通知")
+    # 保存空推荐记录
+    output = {
+        "date": datetime.now().isoformat(),
+        "sport": "nba",
+        "total_games": len(valid),
+        "recommendations": [],
+        "circuit_breaker": cb,
+    }
+    Path(DATA_DIR / "daily_bb_recommendations.json").write_text(json.dumps(output, ensure_ascii=False, indent=2))
+    sys.exit(0)
+else:
+    logger.info("✅ 止损断路器状态正常: %s", cb["message"])
+
 recs = []
 current_exposure = 0.0
 for pred in predictions:
@@ -179,7 +216,7 @@ for pred in predictions:
     total_prob = pred.get("total_result_prob")
     total_odds = pred.get("total_odds", 0)
     total_pt = pred.get("total_point")
-    if _TOTAL_RELIABLE and total_prob is not None and total_odds > 0 and total_pt is not None:
+    if _TOTAL_RELIABLE and total_prob is not None and (total_odds or 0) > 0 and total_pt is not None:
         total_mkt = 0.5
         over_ev = total_prob - total_mkt
         if over_ev > 0:
@@ -195,7 +232,7 @@ for pred in predictions:
                 })
 
     # 6. 小球
-    if _TOTAL_RELIABLE and total_prob is not None and total_odds > 0 and total_pt is not None:
+    if _TOTAL_RELIABLE and total_prob is not None and (total_odds or 0) > 0 and total_pt is not None:
         under_prob = 1.0 - total_prob
         under_ev = under_prob - 0.5
         if under_ev > 0:
@@ -210,10 +247,58 @@ for pred in predictions:
                     "market_key": "total",
                 })
 
+    # ── 备选盘口检查：寻找比标准线更高 EV 的 alternate lines ──
+    try:
+        # 让分备选（find_best_spread 的 model_prob 始终用主队概率）
+        if _SPREAD_RELIABLE and spread_prob is not None and spread_pt is not None:
+            for side_key, side_label in [
+                ("home", "主队让分(备选)"),
+                ("away", "客队让分(备选)"),
+            ]:
+                alt = _ALT_FINDER.find_best_spread(home, away, spread_prob, spread_pt, side=side_key)
+                if alt and alt["ev"] > 0:
+                    stake = rm.get_max_stake(alt["adj_prob"], alt["odds"], current_exposure, input_is_prob=True)
+                    if stake > 5:
+                        candidates.append({
+                            "type": f"{side_label} {alt['line']:+.1f}",
+                            "side": f"{side_key}_spread_alt",
+                            "odds": alt["odds"],
+                            "model_prob": alt["adj_prob"],
+                            "mkt_prob": 0.5,
+                            "ev": alt["ev"],
+                            "stake": stake,
+                            "recommended_bookmaker": "",
+                            "market_key": "spread_alt",
+                        })
+
+        # 总分备选（find_best_total 的 model_prob 始终用大球概率）
+        if _TOTAL_RELIABLE and total_prob is not None and total_pt is not None:
+            for side_key, side_label in [
+                ("over", f"大(备选)"),
+                ("under", f"小(备选)"),
+            ]:
+                alt = _ALT_FINDER.find_best_total(home, away, total_prob, total_pt, side=side_key)
+                if alt and alt["ev"] > 0:
+                    stake = rm.get_max_stake(alt["adj_prob"], alt["odds"], current_exposure, input_is_prob=True)
+                    if stake > 5:
+                        candidates.append({
+                            "type": f"{side_label} {alt['line']:.1f}",
+                            "side": f"{side_key}_total_alt",
+                            "odds": alt["odds"],
+                            "model_prob": alt["adj_prob"],
+                            "mkt_prob": 0.5,
+                            "ev": alt["ev"],
+                            "stake": stake,
+                            "recommended_bookmaker": "",
+                            "market_key": "total_alt",
+                        })
+    except Exception as exc:
+        logger.debug("备选盘口检查失败: %s", exc)
+
     if not candidates:
         continue
 
-    # 选 EV 最高的候选
+    # 选 EV 最高的候选（备选盘口如 EV 更高可替代标准盘口）
     best = max(candidates, key=lambda x: x["ev"])
 
     # 联赛校准（如果可用）
@@ -230,9 +315,25 @@ for pred in predictions:
                 cn(home), cn(away), best['type'],
                 "{:.1%}".format(best['model_prob']), "{:.1%}".format(best['mkt_prob']),
                 best['odds'], "{:+.1%}".format(best['ev']), best['stake'], time_str)
+
+    # ── 推荐质量评分过滤 ──
+    merged = {**pred, **best, "sport": "nba", "league": "NBA"}
+    sq = _SCORER.score(merged, market_type="胜负")
+    score, tier = sq["score"], sq["tier"]
+    logger.info("  📊 质量评分: %.1f (%s) SM指数: %.1f",
+                score, tier, sq.get("smart_money_index", 0))
+
+    if tier == "low":
+        logger.info("  ⏭️ 质量分 %.1f < 60, 跳过推荐", score)
+        continue
+    elif tier == "medium":
+        best["stake"] = round(best["stake"] * 0.5, 2)
+        logger.info("  ⚖️ 中等质量, 半仓: ¥%.0f", best["stake"])
+
     recs.append({**pred, **best, "time_str": time_str,
                  "home_cn": cn(home), "away_cn": cn(away),
-                 "sport": "nba", "league": "NBA", "market": best["type"]})
+                 "sport": "nba", "league": "NBA", "market": best["type"],
+                 "quality_score": score, "quality_tier": tier})
     log_prediction(
         sport="nba", league="NBA",
         home_team=home, away_team=away,
@@ -242,8 +343,44 @@ for pred in predictions:
         stake=best["stake"], match_time=pred["commence_time"],
         source="daily", home_team_cn=cn(home), away_team_cn=cn(away),
         sharp_prob=pred.get("sharp_home_prob"),
+        quality_score=score, quality_tier=tier,
+        model_version=pred.get("model_version", ""),
+        n_bookmakers=pred.get("n_bookmakers", 0),
+        scorer_breakdown=json.dumps(sq["breakdown"], ensure_ascii=False),
     )
     current_exposure += best["stake"] / max(rm.current_balance, 1.0)
+
+    # 每日刷新一次市场效率数据
+    _SCORER.reload_efficiency()
+
+# ── NBA 球员表现预测 ──
+_player_projections = []
+try:
+    from src.predict.player_projection import predict_game_player_props, format_player_report
+    from src.features.player_pipeline import TEAM_NAME_TO_ID
+    seen_matchups = set()
+    for pred in predictions:
+        home, away = pred["home_team"], pred["away_team"]
+        matchup = f"{home} @ {away}"
+        if matchup in seen_matchups:
+            continue
+        seen_matchups.add(matchup)
+        if home in TEAM_NAME_TO_ID and away in TEAM_NAME_TO_ID:
+            players = predict_game_player_props(home, away)
+            if players:
+                _player_projections.extend(players)
+                logger.info("🏀 球员投影: %s vs %s — %d 人", cn(home), cn(away), len(players))
+                for p in players[:5]:
+                    logger.info("  %s: PTS %.1f REB %.1f AST %.1f (conf=%.2f)",
+                                p["name"], p["PTS"], p["REB"], p["AST"], p["confidence"])
+    if _player_projections:
+        proj_path = DATA_DIR / "daily_bb_player_props.json"
+        proj_path.write_text(
+            json.dumps(_player_projections, ensure_ascii=False, indent=2)
+        )
+        logger.info("✅ 球员投影已保存: %s (%d 人)", proj_path, len(_player_projections))
+except Exception as e:
+    logger.debug("球员投影失败: %s", e)
 
 # 联合凯利组合优化（替代逐个调 get_max_stake 的启发式分散调整）
 if recs:

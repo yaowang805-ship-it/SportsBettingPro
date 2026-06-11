@@ -5,11 +5,9 @@
   推荐 → 已投注 → 已结算（赢/输） → 绩效统计
 """
 import json
-import os
-from datetime import datetime, timezone, date
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional, List, Dict
-from dataclasses import dataclass, asdict
+from typing import Optional, Dict
 
 from config.logging_config import get_logger
 logger = get_logger(__name__)
@@ -22,13 +20,15 @@ LOG_FILE = LOG_DIR / "prediction_log.csv"
 PERF_FILE = LOG_DIR / "performance_summary.json"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 
-# CSV 列定义
+# CSV 列定义（全系统统一 schema — ev_verification.py 引用此列表）
 COLUMNS = [
     "id",               # 唯一 ID: {date}_{sport}_{market}_{seq}
     "timestamp",        # 推荐生成时间
     "date",             # 推荐日期
-    "sport",            # nba / football
+    "sport",            # nba / football / world_cup
     "league",           # NBA / 英超 / 西甲 ...
+    "home_team",        # 英文队名（用于匹配结算）
+    "away_team",        # 英文队名
     "home_team_cn",     # 中文队名（用于推送显示）
     "away_team_cn",     # 中文队名
     "home_team_en",     # 英文队名（用于 CLV 追踪回查）
@@ -42,7 +42,12 @@ COLUMNS = [
     "sharp_prob",       # sharp consensus 市场概率（用于 edge 归因）
     "stake",            # 建议注额
     "match_time",       # 比赛时间
-    "source",           # 推荐来源 (global_top5 / daily_bb / daily_fb)
+    "source",           # 推荐来源 (global_top5 / daily_bb / daily_fb / daily_wc)
+    "quality_score",    # 推荐质量评分
+    "quality_tier",     # 质量等级 (A/B/C/D)
+    "model_version",    # 模型版本标识
+    "n_bookmakers",     # 采样的博彩公司数量
+    "scorer_breakdown", # 得分分解 (JSON)
     "status",           # pending / won / lost / void
     "settled_at",       # 结算时间
     "result_odds",      # 结算时的最终赔率（用于 CLV 分析）
@@ -80,12 +85,24 @@ def log_prediction(
     home_team_en: str = "",
     away_team_en: str = "",
     sharp_prob: Optional[float] = None,
+    home_team: str = "",
+    away_team: str = "",
+    quality_score: Optional[float] = None,
+    quality_tier: Optional[str] = None,
+    model_version: Optional[str] = None,
+    n_bookmakers: int = 0,
+    scorer_breakdown: Optional[str] = None,
 ) -> str:
     """记录一条推荐。
 
     Args:
         home_team_cn / away_team_cn: 中文队名（推送显示用）
         home_team_en / away_team_en: 英文队名（CLV 追踪回查用）
+        home_team / away_team: 英文队名（用于比赛匹配，默认取 home_team_en）
+        quality_score / quality_tier: 推荐质量评分/等级
+        model_version: 模型版本
+        n_bookmakers: 采样的博彩公司数量
+        scorer_breakdown: 得分分解 JSON 字符串
 
     Returns:
         预测 ID
@@ -98,8 +115,8 @@ def log_prediction(
         "date": now.strftime("%Y-%m-%d"),
         "sport": sport,
         "league": league,
-        "home_team": home_team_cn,  # 兼容旧列名：存中文名
-        "away_team": away_team_cn,
+        "home_team": home_team or home_team_en or home_team_cn,
+        "away_team": away_team or away_team_en or away_team_cn,
         "home_team_cn": home_team_cn,
         "away_team_cn": away_team_cn,
         "home_team_en": home_team_en,
@@ -114,6 +131,11 @@ def log_prediction(
         "stake": round(stake, 2),
         "match_time": match_time.isoformat() if match_time else "",
         "source": source,
+        "quality_score": round(quality_score, 1) if quality_score is not None else "",
+        "quality_tier": quality_tier or "",
+        "model_version": model_version or "",
+        "n_bookmakers": str(n_bookmakers),
+        "scorer_breakdown": scorer_breakdown or "",
         "status": "pending",
         "settled_at": "",
         "result_odds": "",
@@ -168,8 +190,8 @@ def batch_settle(sport: str = None):
         logger.info("📋 批量结算: 无待结算记录")
         return
 
-    from src.fetchers.espn_scores import fetch_espn_scores, LEAGUE_ESPN_PATH, SPORT_KEY_TO_LEAGUE
-    from src.core.team_names import cn_to_odds_name, NBA_CN
+    from fetchers.espn_scores import fetch_espn_scores, LEAGUE_ESPN_PATH
+    from src.core.team_names import cn_to_odds_name
 
     settled_count = 0
     errors = 0
@@ -182,6 +204,10 @@ def batch_settle(sport: str = None):
             espn_league = "NBA"
         elif sport_name in ("football", "soccer"):
             espn_league = league
+        elif sport_name == "world_cup":
+            espn_league = "世界杯"
+        elif sport_name == "nfl":
+            espn_league = "NFL"
 
         if espn_league not in LEAGUE_ESPN_PATH:
             logger.debug("  ⏭️ %s/%s: ESPN 不支持此联赛", sport_name, league)
@@ -313,8 +339,8 @@ def _determine_result(market_type: str, market_detail: str,
         else:
             return diff - line < 0
 
-    # Default: home win
-    return home_score > away_score
+    # Unknown market type → not settled
+    return False
 
 
 def get_performance(date_from: Optional[str] = None, date_to: Optional[str] = None) -> Dict:

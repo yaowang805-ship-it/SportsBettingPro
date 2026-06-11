@@ -1,8 +1,6 @@
 """测试风险管理模块 — AdaptiveKelly, PortfolioOptimizer, RiskManager."""
 import pytest
 import numpy as np
-import json
-import tempfile
 from datetime import datetime, timedelta
 from pathlib import Path
 from unittest.mock import patch
@@ -12,12 +10,23 @@ from src.risk.manager import AdaptiveKelly, PortfolioOptimizer, RiskManager
 
 @pytest.fixture(autouse=True)
 def _isolate_state():
-    """每个测试前打补丁，防止 RiskManager 加载真实 risk_state.json。"""
-    with patch("src.risk.manager.RISK_STATE_FILE", Path("/tmp/_test_risk_state.json")):
-        with patch("src.risk.manager.BET_LOG_FILE", Path("/tmp/_test_bet_log.csv")):
-            yield
-    for p in ["/tmp/_test_risk_state.json", "/tmp/_test_bet_log.csv"]:
-        Path(p).unlink(missing_ok=True)
+    """每个测试前打补丁，防止 RiskManager 加载真实状态文件。"""
+    tmp_data = Path("/tmp/_test_risk_data")
+    tmp_data.mkdir(parents=True, exist_ok=True)
+    patches = [
+        patch("src.risk.manager.RISK_STATE_FILE", tmp_data / "risk_state.json"),
+        patch("src.risk.manager.BET_LOG_FILE", tmp_data / "bet_log.csv"),
+        patch("src.risk.model_decay_tracker.DECAY_FILE", tmp_data / "decay.json"),
+        patch("src.risk.dynamic_staking.MODEL_FILE", tmp_data / "ds_model.json"),
+        patch("src.risk.dynamic_staking.BET_LOG_FILE", tmp_data / "bet_log.csv"),
+    ]
+    for p in patches:
+        p.start()
+    yield
+    for p in patches:
+        p.stop()
+    import shutil
+    shutil.rmtree(str(tmp_data), ignore_errors=True)
 
 
 class TestAdaptiveKelly:
@@ -245,8 +254,22 @@ class TestRiskManager:
         expected_keys = {'balance', 'roi', 'drawdown', 'win_rate', 'total_bets',
                          'consecutive_losses', 'kelly_fraction',
                          'under_daily_limit', 'under_monthly_limit',
-                         'cool_off_active', 'cool_off_until', 'weekly_loss'}
+                         'cool_off_active', 'cool_off_until', 'weekly_loss',
+                         'ml_dynamic_staking_trained', 'ml_feature_importance',
+                         'model_decay'}
         assert set(h.keys()) == expected_keys
+
+    def test_model_decay_in_health_check(self):
+        rm = RiskManager(initial_budget=10000)
+        h = rm.get_health_check()
+        assert isinstance(h['model_decay'], dict)
+
+    def test_record_outcome_updates_model_decay(self):
+        rm = RiskManager(initial_budget=10000)
+        rm.model_decay_tracker.clear_history()
+        rm.record_outcome(100, win=True, odds=2.0, prob=0.6, sport="nba")
+        h = rm.get_health_check()
+        assert isinstance(h['model_decay'], dict)
 
     def test_get_confidence_tier(self):
         rm = RiskManager()

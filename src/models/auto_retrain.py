@@ -8,13 +8,12 @@
 """
 import json
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
-import joblib
 import pandas as pd
 
 from config.settings import MODEL_DIR
@@ -44,6 +43,11 @@ def _check_decay_signal() -> bool:
         report = json.loads(DECAY_REPORT_FILE.read_text())
         if report.get("is_decaying"):
             logger.warning("  ⚠️ 检测到模型退化信号: %s", report.get("decay_signal", "?"))
+            try:
+                from src.monitor.alert_log import log_alert
+                log_alert("model", "模型退化信号", report.get("decay_signal", "?"), "WARNING")
+            except Exception:
+                pass
             return True
         return False
     except Exception:
@@ -67,6 +71,11 @@ def _check_accuracy_drop() -> bool:
             if early_mean - recent_mean >= 0.05:  # 5pp 下滑
                 logger.warning("  ⚠️ 准确率下滑 %.1fpp (近期 %.1f%% → 前期 %.1f%%)",
                               (early_mean - recent_mean) * 100, recent_mean * 100, early_mean * 100)
+                try:
+                    from src.monitor.alert_log import log_alert
+                    log_alert("model", "准确率下滑", f"全局准确率 {(early_mean-recent_mean)*100:.1f}pp", "WARNING")
+                except Exception:
+                    pass
                 return True
         return False
     except Exception:
@@ -143,7 +152,7 @@ def auto_retrain():
             continue
         try:
             from src.models.ensemble_trainer import train_sport_ensemble
-            train_sport_ensemble(sport)
+            train_sport_ensemble(sport, quick=True)
             meta[f'last_train_{sport}'] = datetime.now().isoformat()
             print(f"  ✅ {sport.upper()} 重训完成")
             success = True

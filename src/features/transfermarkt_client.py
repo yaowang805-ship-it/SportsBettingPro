@@ -6,7 +6,6 @@ import asyncio
 import functools
 from typing import Optional
 
-import aiohttp
 from tmkt import TMKT
 
 # 联赛代码 -> 名称映射（用于 team_search 时限定范围）

@@ -13,7 +13,7 @@ LEAGUE_CN = {
     "soccer_france_ligue_one": "法甲",
     "basketball_nba": "NBA",
     # 扩展联赛
-    "soccer_brazil_serie_a": "巴甲",
+    "soccer_brazil_campeonato": "巴甲",
     "soccer_copa_libertadores": "解放者杯",
     "soccer_usa_mls": "美职联",
     "soccer_mexico_liga_mx": "墨超",
@@ -37,6 +37,7 @@ LEAGUE_CN = {
     "soccer_uefa_champions_league": "欧冠",
     "soccer_uefa_europa_league": "欧联",
     "americanfootball_nfl": "NFL",
+    "basketball_euroleague": "EuroLeague",
 }
 
 # odds API 名 → (特征数据名, 中文名)
@@ -316,6 +317,23 @@ FOOTBALL_MAP: dict[str, Tuple[str, str]] = {
     "Santos": ("santos", "桑托斯"),
     "São Paulo": ("são paulo", "圣保罗"),
     "Corinthians": ("corinthians", "科林蒂安"),
+    # ===== 巴甲扩展 (2026 赛季) =====
+    "Atletico Mineiro": ("atletico mineiro", "米内罗竞技"),
+    "Atletico Paranaense": ("atletico paranaense", "巴拉纳竞技"),
+    "Bahia": ("bahia", "巴伊亚"),
+    "Botafogo": ("botafogo", "博塔弗戈"),
+    "Bragantino-SP": ("bragantino sp", "布拉甘蒂诺"),
+    "Chapecoense": ("chapecoense", "沙佩科恩斯"),
+    "Coritiba": ("coritiba", "科里蒂巴"),
+    "Cruzeiro": ("cruzeiro", "克鲁塞罗"),
+    "Fluminense": ("fluminense", "弗鲁米嫩塞"),
+    "Grêmio": ("grêmio", "格雷米奥"),
+    "Internacional": ("internacional", "巴西国际"),
+    "Mirassol": ("mirassol", "米拉索尔"),
+    "Remo": ("remo", "雷莫"),
+    "Sao Paulo": ("são paulo", "圣保罗"),
+    "Vasco da Gama": ("vasco da gama", "瓦斯科达伽马"),
+    "Vitoria": ("vitoria", "维多利亚"),
     "Birmingham Legion FC": ("birmingham legion fc", "伯明翰军团"),
     "Louisville City FC": ("louisville city fc", "路易维尔城"),
     # ===== 摩洛哥联赛 =====

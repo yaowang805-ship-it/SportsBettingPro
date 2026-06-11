@@ -4,13 +4,12 @@ import pandas as pd
 import streamlit as st
 
 from src.dashboard.components.data_loader import (
-    load_json, load_csv, data_exists, render_empty_state, load_recommendations,
+    load_csv, render_empty_state, load_recommendations,
 )
 from src.dashboard.components.virtual_portfolio import (
-    compute_portfolio, settle_bet, load_portfolio_state,
-    auto_place_bets, reset_portfolio, update_clv_for_pending,
+    compute_portfolio, settle_bet, auto_place_bets, reset_portfolio, update_clv_for_pending,
 )
-from src.dashboard.components.team_cn import team_cn, sport_cn
+from src.dashboard.components.team_cn import team_cn
 from src.dashboard.config import PRED_LOG_FILE
 
 

@@ -1,4 +1,4 @@
-import pandas as pd, numpy as np
+import pandas as pd
 
 def build_features(input_csv="data/storage/basketball_scores_combined.csv", output_csv="data/processed/bb_features.csv"):
     df = pd.read_csv(input_csv)
