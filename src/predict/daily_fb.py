@@ -69,14 +69,15 @@ from src.betting.asian_handicap import extract_ah_odds, compute_ah_ev
 logger.info("=" * 60)
 logger.info("⚽ 足球每日预测 - %s", datetime.now().strftime('%Y-%m-%d %H:%M'))
 
-# ── 数据刷新（ESPN 免费源补充扩展联赛） ──
+# ── 数据刷新（football-data.org 主源 + ESPN 扩展联赛） ──
 try:
-    from fetchers.data_sync import supplement_football_espn
+    from fetchers.data_sync import update_football_history, supplement_football_espn
+    update_football_history()
     supplement_football_espn()
 except ImportError:
-    logger.debug("  ESPN 补充模块不可用，跳过")
+    logger.debug("  数据同步模块不可用，跳过")
 except Exception as e:
-    logger.warning("  ⚠️ ESPN 数据补充失败: %s", e)
+    logger.warning("  ⚠️ 数据同步失败: %s", e)
 
 # ── 模型准确率检查 ──
 _MODEL_ACC_MIN = 0.52

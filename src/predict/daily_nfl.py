@@ -164,6 +164,19 @@ def main():
     logger.info("=" * 60)
     logger.info("🏈 NFL 每日预测 - %s", datetime.now().strftime("%Y-%m-%d %H:%M"))
 
+    # ── 休赛期检测 ──
+    try:
+        from src.core.season_check import has_upcoming_games
+        if not has_upcoming_games("nfl", days_back=2):
+            logger.info("🏈 NFL 休赛期，今日跳过")
+            NFL_RECS_FILE.write_text(json.dumps({
+                "date": datetime.now().isoformat(), "sport": "nfl",
+                "total_games": 0, "recommendations": [],
+            }, ensure_ascii=False, indent=2))
+            return
+    except Exception:
+        pass
+
     # 获取赔率
     odds_data = _fetch_nfl_odds()
     if not odds_data:
