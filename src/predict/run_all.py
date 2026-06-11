@@ -99,6 +99,19 @@ def run_monitor():
         logger.info("✅ 模型健康度检查完成")
     except Exception as e:
         logger.warning("⚠️  健康度检查失败：%s", e)
+    # 模拟交易报告（只读聚合，不修改任何文件）
+    try:
+        from src.betting.paper_trader import PaperTrader
+        pt = PaperTrader()
+        state = pt.run()
+        if state.get("readiness", {}).get("ready"):
+            logger.info("")
+            logger.info("=" * 60)
+            logger.info("  ✅ PAPER TRADING: READY FOR LIVE TRADING!")
+            logger.info("  All readiness checks passed. Review report and enable live trading.")
+            logger.info("=" * 60)
+    except Exception as e:
+        logger.warning("Paper trading report skipped: %s", e)
 
 def _run_ranking():
     """跨运动统一排名（非阻塞，失败不影响主流程）。"""

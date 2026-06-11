@@ -48,9 +48,9 @@ def get_executor(platform: Optional[str] = None) -> BaseExecutor:
         # Lazy import to avoid heavy dependencies
         from src.betting.betfair_executor import BetfairExecutor
         return BetfairExecutor(
-            api_key=BETFAIR_API_KEY,
             username=BETFAIR_USERNAME or "",
             password=BETFAIR_PASSWORD or "",
+            app_key=BETFAIR_API_KEY,
         )
 
     elif platform == "selenium":

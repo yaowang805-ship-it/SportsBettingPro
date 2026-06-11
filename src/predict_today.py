@@ -106,6 +106,15 @@ def main():
         _send_dingtalk("今日推荐", msg)
         logger.info("✅ 已通知钉钉: 无推荐")
 
+    # 模拟交易报告（非阻塞）
+    try:
+        from src.betting.paper_trader import PaperTrader
+        pt = PaperTrader()
+        print()
+        pt.print_report()
+    except Exception:
+        pass
+
 
 if __name__ == "__main__":
     from config.logging_config import setup_logging

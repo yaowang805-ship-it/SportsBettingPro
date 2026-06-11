@@ -19,7 +19,7 @@ from src.dashboard.pages import (
     line_movement, power_ratings, system_health,
     model_interpret, calibration, prediction_log,
     odds_comparison, data_freshness, bet_search,
-    settlement_report, backtest_report,
+    settlement_report, backtest_report, paper_trading,
 )
 
 st.set_page_config(
@@ -32,6 +32,7 @@ st.set_page_config(
 PAGES = {
     "📊 总览": overview,
     "💰 投资组合": portfolio,
+    "📜 模拟交易": paper_trading,
     "📋 推荐": recommendations,
     "📋 赔率对比": odds_comparison,
     "🧠 模型表现": model_performance,
