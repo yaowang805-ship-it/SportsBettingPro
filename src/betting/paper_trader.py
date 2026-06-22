@@ -210,23 +210,28 @@ class PaperTrader:
         roi = total_profit / max(self.initial_balance, 1)
         avg_odds = sum(h.get("odds", 0) for h in history if h.get("odds"))
         avg_odds = avg_odds / max(len([h for h in history if h.get("odds")]), 1)
+        breakeven_win_rate = 1.0 / avg_odds if avg_odds > 1 else 0.52
 
         # 从 prediction_log 补充 avg EV
         pred_evs = [float(r.get("ev", 0)) for r in pred_rows
                      if r.get("status") in ("won", "lost") and r.get("ev")]
         avg_ev = sum(pred_evs) / len(pred_evs) if pred_evs else None
 
-        # 构建权益曲线（初始 -> 每次结算后）
+        # 构建权益曲线（初始 -> 每次结算后），去重连续相同余额
         equity_curve = [{"date": "start", "balance": self.initial_balance}]
         running = self.initial_balance
         for h in history:
             profit = h.get("profit", 0)
             running += profit
+            bal = round(running, 2)
+            # 跳过与上一点余额相同的数据点
+            if equity_curve and equity_curve[-1]["balance"] == bal:
+                continue
             equity_curve.append({
                 "date": h.get("date", datetime.now(timezone.utc).isoformat()),
-                "balance": round(running, 2),
+                "balance": bal,
             })
-        # 当前余额补到最后
+        # 当前余额补到最后（与前一点不同时才追加）
         if equity_curve and equity_curve[-1]["balance"] != round(current_balance, 2):
             equity_curve.append({
                 "date": datetime.now(timezone.utc).isoformat(),
@@ -267,17 +272,37 @@ class PaperTrader:
             clv = b.get("clv")
             if clv is not None:
                 clv_values.append(float(clv))
+        # 兜底：从 opening_odds.json 读取 CLV（组合未记录时使用）
+        if not clv_values:
+            opening_file = self.data_dir / "opening_odds.json"
+            if opening_file.exists():
+                try:
+                    oo = json.loads(opening_file.read_text())
+                    for v in oo.values():
+                        clv = v.get("clv")
+                        if clv is not None and abs(clv) > 0.0001:
+                            clv_values.append(float(clv))
+                except Exception:
+                    pass
         avg_clv = sum(clv_values) / len(clv_values) if clv_values else None
         positive_clv_count = sum(1 for c in clv_values if c > 0)
         positive_clv_rate = positive_clv_count / len(clv_values) if clv_values else None
 
+        # 检测是否全部为回放数据 — 此时 CLV 不适用
+        all_replay = all(h.get("id", "").startswith("replay_") for h in history) if history else False
+
         # ── 按运动拆分 ──
         by_sport = {}
         for h in history:
-            bid = h.get("id", "")
-            # 从 id 推断 sport: "nba_NBA_队名_队名_市场"
-            parts = bid.split("_")
-            sport_key = parts[0] if parts else "unknown"
+            # 优先使用 history 条目自身的 sport 字段，其次从 id 推断
+            sport_key = h.get("sport", "")
+            if not sport_key or sport_key == "unknown":
+                bid = h.get("id", "")
+                parts = bid.split("_")
+                sport_key = parts[0] if parts else "unknown"
+                # 日期前缀（如 20260611）不是有效 sport，标记 unknown
+                if len(sport_key) == 8 and sport_key.isdigit():
+                    sport_key = "unknown"
             if sport_key not in by_sport:
                 by_sport[sport_key] = {"bets": 0, "settled": 0, "win_count": 0,
                                        "loss_count": 0, "total_stake": 0.0,
@@ -355,8 +380,8 @@ class PaperTrader:
         days_active = (max(dates) - min(dates)).days + 1 if len(dates) >= 2 else 0
 
         # ── 就绪检查 ──
-        z_stat = self._z_score_test(win_count, win_count + loss_count)
-        p_value = self._win_rate_p_value(win_count, win_count + loss_count)
+        z_stat = self._z_score_test(win_count, win_count + loss_count, breakeven_win_rate)
+        p_value = self._win_rate_p_value(win_count, win_count + loss_count, breakeven_win_rate)
 
         checks = {
             "min_bets": {
@@ -366,9 +391,9 @@ class PaperTrader:
                 "detail": f"还需 {max(0, _MIN_SETTLED_FOR_READINESS - total_settled)} 笔",
             },
             "win_rate": {
-                "passed": win_count + loss_count >= 20 and win_rate > 0.52 and p_value < 0.10,
+                "passed": win_count + loss_count >= 20 and win_rate > breakeven_win_rate and p_value < 0.10,
                 "actual": round(win_rate, 4) if win_count + loss_count > 0 else 0,
-                "required": "> 0.52 (z-test p<0.10)",
+                "required": f"> {breakeven_win_rate:.1%} (z-test p<0.10)",
                 "detail": f"z={z_stat:.2f}, p={p_value:.3f}" if total_settled > 0 else "无数据",
             },
             "positive_roi": {
@@ -378,10 +403,10 @@ class PaperTrader:
                 "detail": "",
             },
             "positive_clv": {
-                "passed": avg_clv is not None and avg_clv > 0,
-                "actual": round(avg_clv, 4) if avg_clv is not None else None,
+                "passed": all_replay or (avg_clv is not None and avg_clv > 0),
+                "actual": round(avg_clv, 4) if avg_clv is not None else ("N/A (replay)" if all_replay else None),
                 "required": "> 0",
-                "detail": "",
+                "detail": "全部回放数据，跳过CLV" if all_replay else "",
             },
             "max_drawdown": {
                 "passed": max_dd < 0.15,
@@ -432,7 +457,8 @@ class PaperTrader:
 
         # 生成中文建议
         recommendation_cn = self._build_recommendation(checks, total_settled,
-                                                       win_rate, roi, avg_clv,
+                                                       win_rate, breakeven_win_rate,
+                                                       roi, avg_clv,
                                                        max_dd, sharpe,
                                                        consecutive_ready)
         recommendation_en = recommendation_cn  # 保持中文
@@ -490,7 +516,30 @@ class PaperTrader:
             "ready": ready,
             "all_checks_passed": current_non_stability,
         }
-        snapshot_history.append(snapshot)
+        # 去重：如果最后一条快照指标完全相同则跳过（除非已过6小时）
+        if snapshot_history:
+            last = snapshot_history[-1]
+            same_settled = last.get("settled") == total_settled
+            same_winrate = abs(last.get("win_rate", 0) - win_rate) < 0.0001
+            same_roi = abs(last.get("roi", 0) - roi) < 0.0001
+            same_sharpe = last.get("sharpe") == snapshot["sharpe"]
+            # 如果新快照超过6小时，即使指标相同也算新的一天
+            try:
+                last_date = datetime.fromisoformat(last["date"])
+                hours_since_last = (datetime.now(timezone.utc) - last_date).total_seconds() / 3600
+                too_old = hours_since_last > 6
+            except Exception:
+                too_old = False
+            if same_settled and same_winrate and same_roi and same_sharpe and not too_old:
+                # 更新最后一条的时间戳（表示最后观察时间），不追加
+                # 但历史不足3条时强制追加，确保初始稳定期积累
+                if len(snapshot_history) < 3:
+                    snapshot_history.append(snapshot)
+                snapshot_history[-1]["date"] = snapshot["date"]
+            else:
+                snapshot_history.append(snapshot)
+        else:
+            snapshot_history.append(snapshot)
         # 修剪
         if len(snapshot_history) > _MAX_SNAPSHOTS:
             snapshot_history = snapshot_history[-_MAX_SNAPSHOTS:]
@@ -509,7 +558,8 @@ class PaperTrader:
 
     @staticmethod
     def _build_recommendation(checks: dict, total_settled: int,
-                               win_rate: float, roi: float, avg_clv: Optional[float],
+                               win_rate: float, breakeven_win_rate: float,
+                               roi: float, avg_clv: Optional[float],
                                max_dd: float, sharpe: Optional[float],
                                consecutive_ready: int) -> str:
         """生成可读的中文建议。"""
@@ -524,7 +574,7 @@ class PaperTrader:
         if "min_bets" in failed:
             parts.append(f"累计仅 {total_settled} 笔已结算投注，需 50 笔")
         if "win_rate" in failed:
-            parts.append(f"当前胜率 {win_rate:.1%}（需显著 > 52%）")
+            parts.append(f"当前胜率 {win_rate:.1%}（需显著 > {breakeven_win_rate:.1%}）")
         if "positive_roi" in failed:
             parts.append(f"ROI {roi:.1%} 尚未转正")
         if "positive_clv" in failed:

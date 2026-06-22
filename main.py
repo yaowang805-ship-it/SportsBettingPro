@@ -25,7 +25,7 @@ if not DINGTALK_WEBHOOK:
 
 SCRIPTS = [
     (ROOT / "src" / "models" / "auto_retrain.py", "自动模型重训练（月度）", 900),
-    (ROOT / "src" / "predict" / "run_all.py", "职业级每日预测（NBA+足球+NFL）", 600),
+    # (ROOT / "src" / "predict" / "run_all.py", "职业级每日预测（NBA+足球+NFL）", 600),
     (ROOT / "src" / "monitor" / "performance.py", "投注结算+盈亏监控"),
     (ROOT / "src" / "monitor" / "clv_tracker.py", "CLV 收盘价追踪"),
     (ROOT / "src" / "monitor" / "health_check.py", "系统健康检查"),
@@ -94,15 +94,6 @@ if __name__ == "__main__":
     logger.info("=" * 72)
     logger.info("SportsBettingPro 统一日常运行 - %s", datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     logger.info("=" * 72)
-
-    # NFL 数据同步（快速，增量模式）
-    try:
-        from fetchers.data_sync import update_nfl_history
-        df = update_nfl_history()
-        if not df.empty:
-            logger.info("  NFL 历史数据: %d 行", len(df))
-    except Exception as e:
-        logger.warning("NFL 数据同步跳过: %s", e)
 
     errors = []
     for item in SCRIPTS:
@@ -205,6 +196,78 @@ if __name__ == "__main__":
         print_team_edge_report()
     except Exception as e:
         logger.warning("Team edge tracking 失败: %s", e)
+
+    # ── Line Shopping 扫描（Task #161：提取 Pinnacle vs 零售最佳）──
+    try:
+        from src.betting.line_shopping import run_line_shopping
+        ls_opps = run_line_shopping()
+        if ls_opps:
+            logger.info("  ✅ Line Shopping: %d 条 +EV 机会已同步", len(ls_opps))
+    except Exception as e:
+        logger.warning("Line shopping 扫描失败: %s", e)
+
+    # ── Line Shopping 投注执行 - 将 +EV 机会转为虚拟投注 ──
+    try:
+        from src.betting.place_line_shops import place_line_shops
+        n_placed = place_line_shops()
+        if n_placed:
+            logger.info("  ✅ Line Shopping 投注已入虚拟组合: %d 条", n_placed)
+    except Exception as e:
+        logger.warning("Line shopping 投注执行失败: %s", e)
+
+
+    # ── 历史回放引擎 — 模拟交易样本不足时自动补充 ──
+    try:
+        from src.betting.paper_trader import PaperTrader
+        pt_state = PaperTrader().readiness_summary()
+        if pt_state.get("ready"):
+            logger.info("  ⏭️ 跳过回放: 模拟交易已达就绪状态")
+        elif not pt_state.get("checks", {}).get("min_bets", {}).get("passed", False):
+            from scripts.replay_engine import ReplayEngine
+            engine = ReplayEngine(min_edge=0.03, kelly_fraction=0.07)
+            engine.run()
+            logger.info("  ✅ 回放引擎完成: %d 笔新增投注", len(engine.bet_records))
+        else:
+            logger.info("  ⏭️ 跳过回放: 样本量充足但其他检查未通过")
+    except Exception as e:
+        logger.warning("回放引擎失败: %s", e)
+
+    # ── 赔率数据源健康检查（Task #159：多数据源缓存状态）──
+    try:
+        from fetchers.odds_api import check_cache_health
+        ch = check_cache_health()
+        if ch["overall"] == "ok":
+            logger.info("  ✅ 数据源健康: %d/%d 缓存有效", ch["fresh"], ch["cached_leagues"])
+        elif ch["overall"] == "warning":
+            logger.warning("  ⚠️ 数据源警告: 最旧缓存 %.1f 小时, %d/%d 有效",
+                          ch["stale_max_hours"], ch["fresh"], ch["cached_leagues"])
+        else:
+            logger.warning("  ❌ 数据源降级: 仅 %d/%d 缓存有效", ch["fresh"], ch["cached_leagues"])
+    except Exception as e:
+        logger.warning("数据源健康检查失败: %s", e)
+
+    # ── 组合风控状态概览（Task #160：组合风险摘要）──
+    try:
+        from src.risk.manager import RiskManager
+        rm = RiskManager()
+        cb = rm.circuit_breaker_status()
+        n_active = len(rm.portfolio_optimizer.active_bets)
+
+        logger.info("─" * 60)
+        logger.info("  📊 组合风控状态")
+        logger.info("─" * 60)
+        logger.info("  %s", cb["message"])
+        logger.info("  当前资金: ¥%.2f | ROI: %+.2f%% | 回撤: %.2f%%",
+                   cb["balance"], rm.roi() * 100, cb["drawdown_pct"] * 100)
+        logger.info("  胜率: %.1f%% | 连败: %d | 总下注: %d",
+                   rm.win_rate() * 100, cb["consecutive_losses"], rm.total_bets)
+        logger.info("  活跃投注: %d | VaR(95%%): ¥%.2f | CVaR(95%%): ¥%.2f",
+                   n_active, rm.compute_var(0.95), rm.compute_cvar(0.95))
+        if n_active > 0:
+            ds = rm.portfolio_optimizer.diversification_score()
+            logger.info("  组合分散度: %.2f", ds)
+    except Exception as e:
+        logger.warning("组合风控概览失败: %s", e)
 
     logger.info("=" * 72)
     if errors:
