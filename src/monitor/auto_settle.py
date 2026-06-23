@@ -51,6 +51,7 @@ LEAGUE_SPORT_MAP = {
     "NFL": ("americanfootball_nfl", "NFL"),
     "EuroLeague": ("basketball_euroleague", "EuroLeague"),
     "世界杯": ("soccer_fifa_world_cup", "世界杯"),
+    "World Cup 2026": ("soccer_fifa_world_cup", "世界杯"),
     "WNBA": ("basketball_wnba", "WNBA"),
     "西乙": ("soccer_spain_segunda_division", "西乙"),
     "巴乙": ("soccer_brazil_serie_b", "巴乙"),
@@ -346,7 +347,7 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                 is_home_win = home_score > away_score
                 is_draw = home_score == away_score
 
-                if "平" in market:
+                if "平" in market or "draw" in market.lower():
                     return "won" if is_draw else "lost"
                 if "主胜" in market or "home" in market.lower():
                     return "won" if is_home_win else "lost"
@@ -436,8 +437,23 @@ def auto_settle(dry_run: bool = False) -> int:
                     logger.info("  [试运行] %s → %s (注额¥%.0f 赔率%.2f)", bid[:40], result, stake, odds)
                 else:
                     settle_bet(bid, result, stake, odds)
-                    logger.info("  ✅ %s → %s (盈亏¥%.0f)", bid[:40], result,
-                                stake * (odds - 1) if result == "won" else -stake)
+                    profit = stake * (odds - 1) if result == "won" else -stake
+                    logger.info("  ✅ %s → %s (盈亏¥%.0f)", bid[:40], result, profit)
+                    # 记录到策略优化器
+                    try:
+                        from src.betting.strategy_optimizer import SettlementLogger
+                        SettlementLogger().record(
+                            bet_id=bid,
+                            league=bet.get("league", ""),
+                            market=bet.get("market_type", "unknown"),
+                            edge_pct=bet.get("model_prob", 0) / (1.0 / max(odds, 1.01)) - 1.0 if odds > 1 else 0,
+                            odds=odds,
+                            stake=stake,
+                            profit=profit,
+                            outcome=result,
+                        )
+                    except Exception as e:
+                        logger.warning("  记录结算日志失败: %s", e)
                     # 同步到 RiskManager 冷却状态
                     try:
                         rm = RiskManager()
@@ -519,6 +535,8 @@ def _auto_void_timeout(max_days: int = 3) -> int:
 
 
 def main():
+    from config.logging_config import setup_logging
+    setup_logging()
     auto_settle(dry_run="--dry-run" in sys.argv)
 
 

@@ -3,12 +3,15 @@
 流程:
   line_shopping_results.json
     → 过滤 edge >= 3% 的机会
-    → 计算 Kelly 仓位 (fraction=0.07)
+    → 按 EV 排序，Kelly 计算比例
+    → 归一化到每日 ¥10,000 预算
     → auto_place_bets → virtual_portfolio.json
 """
+import datetime
 import json
+import shutil
 from pathlib import Path
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 from config.logging_config import get_logger
 from config.settings import DATA_DIR, DEFAULT_BUDGET
@@ -16,17 +19,47 @@ from config.settings import DATA_DIR, DEFAULT_BUDGET
 logger = get_logger(__name__)
 
 LS_FILE = DATA_DIR / "line_shopping_results.json"
-BANKROLL = float(DEFAULT_BUDGET)
-KELLY_FRACTION = 0.07  # 与回放引擎一致
+DAILY_BUDGET = float(DEFAULT_BUDGET)  # 10000
+MAX_PER_BET_PCT = 0.20   # 单注上限 20%
+MAX_PER_MATCH_PCT = 0.35  # 单场比赛总暴露上限 35%
 MIN_EDGE = 0.03
+KELLY_FRACTION = 0.25    # 1/4 Kelly 保守策略
+
+# 备份配置
+BACKUP_DIR = DATA_DIR / "backups" / "virtual_portfolio"
+BACKUP_KEEP = 30
 
 
-def place_line_shops() -> int:
+def _backup_vp(vp_file: Path):
+    """备份 virtual_portfolio.json，保留最近 BACKUP_KEEP 份。"""
+    if not vp_file.exists():
+        return
+    BACKUP_DIR.mkdir(parents=True, exist_ok=True)
+    ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    shutil.copy2(vp_file, BACKUP_DIR / f"virtual_portfolio_{ts}.json")
+    # 清理旧备份
+    backups = sorted(BACKUP_DIR.glob("virtual_portfolio_*.json"), reverse=True)
+    for old in backups[BACKUP_KEEP:]:
+        old.unlink()
+
+
+def place_line_shops(daily_budget: Optional[float] = None) -> int:
     """读取 Line Shopping 结果，将符合条件的 +EV 机会写入虚拟投注。
+
+    分配策略:
+      1. 按 EV 从高到低排序
+      2. 计算每笔的 Kelly 比例
+      3. 归一化到 daily_budget，确保 total = daily_budget
+      4. 单注上限 20% of daily_budget
+
+    Args:
+        daily_budget: 当日总预算，默认 DAILY_BUDGET (¥10,000)
 
     Returns:
         新增的投注数量
     """
+    budget = daily_budget or DAILY_BUDGET
+
     if not LS_FILE.exists():
         logger.info("  ⏭️ 无 Line Shopping 结果文件")
         return 0
@@ -42,18 +75,11 @@ def place_line_shops() -> int:
         logger.info("  ⏭️ 无 Line Shopping 机会")
         return 0
 
-    # 从虚拟组合获取当前余额
-    vp_file = DATA_DIR / "virtual_portfolio.json"
-    current_balance = BANKROLL
-    if vp_file.exists():
-        try:
-            vp = json.loads(vp_file.read_text())
-            current_balance = float(vp.get("balance", BANKROLL))
-        except Exception:
-            pass
-
     # 读取已存在的投注 ID，避免重复
+    vp_file = DATA_DIR / "virtual_portfolio.json"
     existing_ids = set()
+    already_allocated_today = 0.0
+    today_str = datetime.datetime.now().strftime("%Y-%m-%d")
     if vp_file.exists():
         try:
             vp = json.loads(vp_file.read_text())
@@ -61,103 +87,183 @@ def place_line_shops() -> int:
                 existing_ids.add(h.get("id", ""))
             for b in vp.get("pending_bets", []):
                 existing_ids.add(b.get("id", ""))
+                # 统计今日已分配金额
+                ct = b.get("created_at", "")
+                if today_str in ct:
+                    already_allocated_today += b.get("stake", 0)
             for k in vp.get("settled", {}).keys():
                 existing_ids.add(k)
         except Exception:
             pass
 
-    bet_list = []
+    # 今日剩余预算
+    remaining_budget = max(0, budget - already_allocated_today)
+    if remaining_budget < 100:
+        logger.info("  ⏭️ 今日预算已用完（¥%.0f / ¥%.0f）", already_allocated_today, budget)
+        return 0
+    if remaining_budget < budget:
+        logger.info("  今日已分配 ¥%.0f / ¥%.0f，剩余 ¥%.0f",
+                    already_allocated_today, budget, remaining_budget)
+    budget = remaining_budget
+
+    # ── 按 EV 降序排列 ──
+    opportunities.sort(key=lambda x: x.get("_ev", 0), reverse=True)
+
+    # ── 第一遍：计算 Kelly，筛选有效机会 ──
+    candidates = []
     for opp in opportunities:
         ev = opp.get("_ev", 0)
         if ev < MIN_EDGE:
             continue
 
+        odds = opp.get("odds", 0)
+        model_prob = opp.get("model_prob", 0)
+        if odds <= 1 or model_prob <= 0:
+            continue
+
+        b = odds - 1.0
+        kelly = (model_prob * b - (1.0 - model_prob)) / b if b > 0 else 0
+        if kelly <= 0:
+            continue
+
         home = opp.get("home_team", "")
         away = opp.get("away_team", "")
         outcome = opp.get("outcome", "")
-        odds = opp.get("odds", 0)
-        model_prob = opp.get("model_prob", 0)
-        league = opp.get("league", "")
-        commence_time = opp.get("commence_time", "")
-
-        # 计算 Kelly 仓位
-        b = odds - 1.0
-        kelly = (model_prob * b - (1.0 - model_prob)) / b if b > 0 else 0
-        stake_pct = min(kelly * KELLY_FRACTION, 0.05)
-        if stake_pct <= 0:
-            continue
-        stake = round(current_balance * stake_pct, 2)
-        if stake <= 0:
-            continue
-
-        # 生成唯一 ID（与 virtual_portfolio._make_bet_id 一致）
         bid = f"line_shop_{home}_{away}_{outcome}".replace(" ", "_")[:80]
         if bid in existing_ids:
             continue
 
-        bet_list.append({
-            "id": bid,
-            "sport": opp.get("sport", "football"),
-            "league": league,
-            "home_team": home,
-            "away_team": away,
-            "home_cn": home,
-            "away_cn": away,
-            "market": "line_shopping",
-            "market_type": "line_shopping",
+        candidates.append({
+            "opp": opp,
+            "bid": bid,
+            "kelly": kelly,
             "odds": odds,
-            "stake": stake,
             "model_prob": model_prob,
-            "commence_time": commence_time,
+            "home": home,
+            "away": away,
+            "outcome": outcome,
+        })
+
+    if not candidates:
+        logger.info("  ⏭️ 所有机会已存在或无满足条件的机会")
+        return 0
+
+    # ── 第二遍：归一化到 daily_budget ──
+    raw_stakes = [min(c["kelly"] * KELLY_FRACTION, MAX_PER_BET_PCT) for c in candidates]
+    total_raw = sum(raw_stakes)
+
+    bet_list = []
+    total_allocated = 0.0
+    for i, c in enumerate(candidates):
+        if total_raw > 0:
+            stake = round(budget * raw_stakes[i] / total_raw, 2)
+        else:
+            stake = round(budget / len(candidates), 2)
+
+        # 单注硬上限
+        max_stake = budget * MAX_PER_BET_PCT
+        stake = min(stake, max_stake)
+        if stake <= 0:
+            continue
+
+        total_allocated += stake
+        bet_list.append({
+            "id": c["bid"],
+            "sport": c["opp"].get("sport", "football"),
+            "league": c["opp"].get("league", ""),
+            "home_team": c["home"],
+            "away_team": c["away"],
+            "home_cn": c["home"],
+            "away_cn": c["away"],
+            "market_type": c["outcome"],
+            "odds": c["odds"],
+            "stake": stake,
+            "model_prob": c["model_prob"],
+            "commence_time": c["opp"].get("commence_time", ""),
             "created_at": __import__("datetime").datetime.now(
                 __import__("datetime").timezone.utc).isoformat(),
         })
 
     if not bet_list:
-        logger.info("  ⏭️ 所有机会已存在或无满足条件的机会")
         return 0
 
-    # 写入虚拟组合
-    try:
-        from src.dashboard.components.virtual_portfolio import auto_place_bets
-        auto_place_bets(bet_list, reset_pending=False)
-    except Exception as e:
-        logger.warning("  ⚠️ auto_place_bets 失败: %s，直接写入", e)
-        # 降级：直接写入 virtual_portfolio.json
-        _direct_write(bet_list, vp_file)
-
-    logger.info("  ✅ Line Shopping 投注已执行: %d 条", len(bet_list))
+    # ── 单场比赛总暴露上限 ──
+    match_exposure = {}
     for b in bet_list:
+        key = f"{b['home_team']}_{b['away_team']}"
+        match_exposure.setdefault(key, 0)
+        match_exposure[key] += b["stake"]
+    max_per_match = budget * MAX_PER_MATCH_PCT
+    for b in bet_list:
+        key = f"{b['home_team']}_{b['away_team']}"
+        if match_exposure[key] > max_per_match:
+            ratio = max_per_match / match_exposure[key]
+            b["stake"] = round(b["stake"] * ratio, 2)
+    # 修正后重新汇总
+    total_allocated = sum(b["stake"] for b in bet_list)
+
+    # ── 写入虚拟组合（直接写入，绕过 auto_place_bets 的 30% 上限） ──
+    vp_file = DATA_DIR / "virtual_portfolio.json"
+    _backup_vp(vp_file)
+    added_count = _direct_write(bet_list, vp_file)
+
+    logger.info("  ✅ 虚拟投注: %d 条新增 / %d 条候选 | 总 ¥%.0f / 日预算 ¥%.0f",
+                added_count, len(bet_list), total_allocated, budget)
+    for b in bet_list:
+        ev_pct = (b["model_prob"] - 1.0 / b["odds"]) / (1.0 / b["odds"]) * 100
         logger.info("    %s vs %s [%s] odds=%.2f stake=¥%.0f edge=%.1f%%",
-                    b["home_team"], b["away_team"], b["market"],
-                    b["odds"], b["stake"],
-                    (b.get("model_prob", 0) - 1.0 / b["odds"]) / (1.0 / b["odds"]) * 100
-                    if b["odds"] > 0 else 0)
+                    b["home_team"], b["away_team"], b["market_type"],
+                    b["odds"], b["stake"], ev_pct)
+
+    return added_count
 
     return len(bet_list)
 
 
+def _make_store_id(rec: dict) -> str:
+    """生成与 virtual_portfolio._make_bet_id 一致的 ID。"""
+    sport = rec.get("sport", "unknown")
+    league = rec.get("league", "unknown")
+    home = rec.get("home_cn", rec.get("home_team", ""))
+    away = rec.get("away_cn", rec.get("away_team", ""))
+    market = rec.get("market_type", "")
+    return f"{sport}_{league}_{home}_{away}_{market}" \
+        .replace(" ", "_").replace(".", "")[:80]
+
+
 def _direct_write(bet_list: List[Dict], vp_file: Path):
-    """降级方案：直接追加到 virtual_portfolio.json。"""
-    import datetime
-    state = {"settled": {}, "pending_bets": [], "balance": BANKROLL, "history": []}
+    """直接追加到 virtual_portfolio.json（绕过 auto_place_bets 的 30% 上限）。"""
+    state = {"settled": {}, "pending_bets": [], "balance": DAILY_BUDGET, "history": []}
     if vp_file.exists():
         try:
             state = json.loads(vp_file.read_text())
         except Exception:
-            state = {"settled": {}, "pending_bets": [], "balance": BANKROLL, "history": []}
+            state = {"settled": {}, "pending_bets": [], "balance": DAILY_BUDGET, "history": []}
 
     pending = state.get("pending_bets", [])
-    existing_ids = set()
-    for h in state.get("history", []):
-        existing_ids.add(h.get("id", ""))
-    for b in pending:
-        existing_ids.add(b.get("id", ""))
+    history = state.get("history", [])
+    settled = state.get("settled", {})
 
+    # 收集已存在的 ID（用 _make_store_id 格式匹配）
+    existing_ids = set()
+    for b in pending:
+        existing_ids.add(_make_store_id(b))
+    for h in history:
+        existing_ids.add(_make_store_id(h))
+    existing_ids.update(settled.keys())
+
+    added = 0
     for b in bet_list:
-        if b["id"] in existing_ids:
+        bid = _make_store_id(b)
+        if bid in existing_ids:
             continue
         pending.append(b)
+        existing_ids.add(bid)
+        added += 1
 
     state["pending_bets"] = pending
     vp_file.write_text(json.dumps(state, ensure_ascii=False, indent=2))
+
+    if added:
+        logger.info("  实际新增 %d 条投注（%d 条已存在跳过）", added, len(bet_list) - added)
+    return added

@@ -115,6 +115,17 @@ def _event_to_row(event: dict, league_code: str) -> Optional[dict]:
     }
 
 
+def _check_python_version():
+    """Python 3.10+ required for sports-skills (X | Y type union syntax)."""
+    import sys
+    if sys.version_info < (3, 10):
+        logger.warning("sports-skills 需要 Python 3.10+ (当前 %s.%s)，"
+                       "二线联赛将通过 football-data.org 覆盖",
+                       sys.version_info.major, sys.version_info.minor)
+
+_check_python_version()
+
+
 def fetch_league_schedule(league_id: str, season_year: str = '2025') -> pd.DataFrame:
     """获取指定联赛整个赛季的比赛数据。
 

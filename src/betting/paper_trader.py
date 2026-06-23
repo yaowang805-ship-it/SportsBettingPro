@@ -210,6 +210,10 @@ class PaperTrader:
         roi = total_profit / max(self.initial_balance, 1)
         avg_odds = sum(h.get("odds", 0) for h in history if h.get("odds"))
         avg_odds = avg_odds / max(len([h for h in history if h.get("odds")]), 1)
+        # 无已结算时，从 pending 取平均赔率
+        if avg_odds <= 1 and pending:
+            pending_odds = [b.get("odds", 0) for b in pending if b.get("odds", 0) > 1]
+            avg_odds = sum(pending_odds) / len(pending_odds) if pending_odds else 0
         breakeven_win_rate = 1.0 / avg_odds if avg_odds > 1 else 0.52
 
         # 从 prediction_log 补充 avg EV
@@ -284,6 +288,12 @@ class PaperTrader:
                             clv_values.append(float(clv))
                 except Exception:
                     pass
+        # Line shopping 模式下不适用 CLV（无"收盘线"概念），清空以免误导
+        if history and all(h.get("id", "").startswith("line_shop") for h in history):
+            clv_values = []
+        # 无已结算数据时 CLV 无意义
+        if not history:
+            clv_values = []
         avg_clv = sum(clv_values) / len(clv_values) if clv_values else None
         positive_clv_count = sum(1 for c in clv_values if c > 0)
         positive_clv_rate = positive_clv_count / len(clv_values) if clv_values else None
@@ -372,12 +382,15 @@ class PaperTrader:
         dates = []
         for h in history:
             try:
-                dates.append(datetime.fromisoformat(h["date"]))
+                dt = datetime.fromisoformat(h["date"])
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=timezone.utc)
+                dates.append(dt)
             except Exception:
                 pass
         first_bet = min(dates).strftime("%Y-%m-%d") if dates else None
         last_bet = max(dates).strftime("%Y-%m-%d") if dates else None
-        days_active = (max(dates) - min(dates)).days + 1 if len(dates) >= 2 else 0
+        days_active = (max(dates) - min(dates)).days + 1 if len(dates) >= 2 else (1 if dates else 0)
 
         # ── 就绪检查 ──
         z_stat = self._z_score_test(win_count, win_count + loss_count, breakeven_win_rate)
@@ -403,10 +416,10 @@ class PaperTrader:
                 "detail": "",
             },
             "positive_clv": {
-                "passed": all_replay or (avg_clv is not None and avg_clv > 0),
-                "actual": round(avg_clv, 4) if avg_clv is not None else ("N/A (replay)" if all_replay else None),
+                "passed": all_replay or avg_clv is None or avg_clv > 0,
+                "actual": round(avg_clv, 4) if avg_clv is not None else ("N/A (无数据)" if not history else "N/A (replay)" if all_replay else "N/A"),
                 "required": "> 0",
-                "detail": "全部回放数据，跳过CLV" if all_replay else "",
+                "detail": "Line shopping 模式跳过 CLV" if avg_clv is None else ("全部回放数据，跳过CLV" if all_replay else ""),
             },
             "max_drawdown": {
                 "passed": max_dd < 0.15,
@@ -578,11 +591,13 @@ class PaperTrader:
         if "positive_roi" in failed:
             parts.append(f"ROI {roi:.1%} 尚未转正")
         if "positive_clv" in failed:
-            parts.append(f"平均 CLV {avg_clv or 0:.4f} 需为正")
+            clv_str = f"平均 CLV {avg_clv:.4f}" if avg_clv is not None else "CLV 无数据"
+            parts.append(f"{clv_str} 需为正")
         if "max_drawdown" in failed:
             parts.append(f"最大回撤 {max_dd:.1%} 超过 15%")
         if "sharpe_ratio" in failed:
-            parts.append(f"夏普 {sharpe} 需 > 0.5")
+            s_str = f"{sharpe:.2f}" if sharpe is not None else "N/A"
+            parts.append(f"夏普 {s_str} 需 > 0.5")
         if "stability" in failed:
             parts.append(f"稳定期 {consecutive_ready}/3 天")
 
@@ -756,6 +771,105 @@ class PaperTrader:
                 lines.append(f"    {rec_cn[i:i+60]}")
         lines.append("")
         lines.append(sep)
+
+        return "\n".join(lines)
+
+    # ── 钉钉日报 ───────────────────────────────────────
+
+    def generate_dingtalk_report(self, state: dict = None) -> str:
+        """生成钉钉 Markdown 格式的每日复盘报告。"""
+        if state is None:
+            state = self.refresh()
+        s = state
+        rd = s.get("readiness", {})
+        checks = rd.get("checks", {})
+
+        today = datetime.now().strftime("%Y-%m-%d")
+        lines = []
+        lines.append(f"**📊 模拟交易日报 — {today}**")
+        lines.append("")
+
+        # 概况
+        lines.append("---")
+        lines.append("**概况**")
+        pnl = s.get("total_profit", 0)
+        pnl_str = f"+¥{pnl:,.0f}" if pnl >= 0 else f"-¥{abs(pnl):,.0f}"
+        lines.append(f"- 期初资金: ¥{self.initial_balance:,.0f}")
+        lines.append(f"- 当前资金: ¥{s['current_bankroll']:,.0f}")
+        lines.append(f"- 总投注: {s['total_bets']} 笔（已结算 {s['settled_bets']} / 待结算 {s['pending_bets']}）")
+        period_start = s.get('first_bet_date', '') or '今日'
+        period_end = s.get('last_bet_date', '') or datetime.now().strftime('%Y-%m-%d')
+        lines.append(f"- 周期: {period_start} ~ {period_end} ({s.get('total_days_active', 0)} 天)")
+        lines.append("")
+
+        # 今日表现（用 last_7_days 近似当天；如果能区分当天更好）
+        tier = s.get("metrics_by_tier", {}).get("last_7_days", {})
+        lines.append("---")
+        lines.append("**表现**")
+        wr = s.get("win_rate", 0) or 0
+        lines.append(f"- 胜率: {wr:.1%}（{s['win_count']}胜 / {s['loss_count']}负）")
+        lines.append(f"- 总利润: {pnl_str}")
+        lines.append(f"- ROI: {s.get('roi', 0):+.1%}" if s.get('roi') is not None else "- ROI: N/A")
+        lines.append(f"- 平均赔率: {s.get('avg_odds', 0):.2f}")
+        if s.get("avg_ev") is not None:
+            lines.append(f"- 平均 EV: {s['avg_ev']:+.2%}")
+        lines.append("")
+
+        # 风险
+        lines.append("---")
+        lines.append("**风险指标**")
+        lines.append(f"- 最大回撤: {s.get('max_drawdown', 0):.1%}")
+        lines.append(f"- 夏普比率: {s.get('sharpe_ratio', 'N/A')}")
+        lines.append(f"- 最大连败: {s.get('max_consecutive_losses', 0)} 次")
+        streak = s.get("current_streak", 0)
+        streak_str = f"{streak}连胜" if streak > 0 else f"{abs(streak)}连败" if streak < 0 else "-"
+        lines.append(f"- 当前走势: {streak_str}")
+        lines.append("")
+
+        # 就绪检查表
+        lines.append("---")
+        lines.append("**就绪评估**")
+        ready = rd.get("ready", False)
+        lines.append(f"> **结论: {'✅ GO - 可以上线' if ready else '❌ NO-GO - 继续模拟'}**")
+        lines.append("")
+        for ck, cv in checks.items():
+            icon = "✅" if cv["passed"] else "❌"
+            actual = cv.get("actual", "N/A")
+            req = cv.get("required", "")
+            detail = cv.get("detail", "")
+            if isinstance(actual, float):
+                actual = f"{actual:.4f}" if actual < 1 else f"{actual:.0f}"
+            if actual is None:
+                actual = "N/A"
+            d = f" — {detail}" if detail else ""
+            lines.append(f"{icon} {ck}: {actual}（需 {req}）{d}")
+        lines.append("")
+
+        # 策略优化建议（如果有足够数据）
+        try:
+            from src.betting.strategy_optimizer import StrategyOptimizer
+            opt = StrategyOptimizer()
+            analysis = opt.analyze()
+            if analysis.get("status") == "ready":
+                lines.append("---")
+                lines.append("**📈 策略优化建议**")
+                rec = analysis.get("recommendation", {})
+                if rec.get("min_edge_pct"):
+                    lines.append(f"- 推荐最低 Edge: **{rec['min_edge_pct']}%**（当前 3%）")
+                if rec.get("blocked_leagues"):
+                    lines.append(f"- 建议屏蔽联赛: {', '.join(rec['blocked_leagues'])}")
+                lines.append(f"- 分析样本: {analysis.get('count', 0)} 笔已结算")
+            else:
+                lines.append("---")
+                lines.append(f"_策略优化: 还需 {max(0, 20 - analysis.get('count', 0))} 笔结算数据_")
+        except Exception:
+            pass
+
+        # 建议
+        rec = rd.get("recommendation_cn", "")
+        if rec:
+            lines.append("---")
+            lines.append(f"_{rec}_")
 
         return "\n".join(lines)
 

@@ -424,14 +424,27 @@ class EnsemblePredictor:
             except Exception:
                 pass
 
-    def _get_feature_cols(self, target: str) -> list:
-        """返回指定目标使用的特征列列表。
+        self._init_poisson()
 
-        BB total_result 排除 ovrundr（市场大小分线），其他模型使用完整特征集。
-        """
-        if self.sport == 'bb' and target == 'total_result':
-            return [c for c in self.feat_cols if c != 'ovrundr']
+    def _get_feature_cols(self, target: str) -> list:
+        """返回指定目标使用的特征列列表。"""
         return self.feat_cols
+
+    def _init_poisson(self):
+        """为足球加载泊松进球模型（用于 total_result 事后融合）。"""
+        self._poisson_model = None
+        if self.sport != 'fb':
+            return
+        try:
+            from src.models.poisson_model import PoissonGoalModel, train_poisson_model
+            self._poisson_model = train_poisson_model()
+            if self._poisson_model.fitted:
+                logger.info("  泊松模型已加载，用于 FB total_result 事后融合")
+            else:
+                self._poisson_model = None
+        except Exception as e:
+            logger.warning("  泊松模型加载失败: %s", e)
+            self._poisson_model = None
 
     def _try_load_weighted(self, target: str):
         """记录集成权重信息（预测统一使用校准后的集成模型）。"""
@@ -1020,6 +1033,17 @@ class EnsemblePredictor:
 
                 # 动态收缩：模型越不确定，越向市场回归
                 shrunk = dynamic_shrinkage(raw_prob, mkt_prob)
+
+                # ── 泊松事后融合（仅 FB total_result） ──
+                if target == "total_result" and self.sport == "fb" and self._poisson_model is not None:
+                    try:
+                        poisson_pred = self._poisson_model.predict_proba(home, away)
+                        poisson_over = poisson_pred.get("over_2.5", 0.5)
+                        # 保守融合：集成占 70%，泊松占 30%
+                        shrunk = 0.7 * shrunk + 0.3 * poisson_over
+                    except Exception:
+                        pass
+
                 pred[f"{target}_prob"] = shrunk
                 pred[f"{target}_raw"] = raw_prob  # 暴露原始概率（用于下游多结果概率计算）
 

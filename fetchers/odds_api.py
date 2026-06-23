@@ -58,7 +58,13 @@ def _load_cache(name: str, max_age_hours: int = 4):
     if datetime.now() - mtime > timedelta(hours=max_age_hours):
         return None
     with open(path, 'r', encoding='utf-8') as f:
-        return json.load(f)
+        data = json.load(f)
+    # 防御：缓存应为列表（match 列表），拒绝错误 dict
+    if not isinstance(data, list):
+        logger.warning("⚠️ 缓存 %s 格式错误（dict 而非 list），忽略", name)
+        path.unlink(missing_ok=True)
+        return None
+    return data
 
 
 def _save_cache(name: str, data):
@@ -193,6 +199,10 @@ def _fetch_the_odds_api(sport_key: str, api_key: str, markets: str, regions: str
         param_str = urllib.parse.urlencode(params)
         full_url = f'{url}?{param_str}'
         data = _fetch_via_curl(full_url, timeout)
+        # curl 可能返回 API 错误 JSON（dict 而非 list），此时应抛出而非返回
+        if isinstance(data, dict):
+            err_msg = data.get("message", data.get("error", str(data)))
+            raise RuntimeError(f'the-odds-api curl 降级返回错误: {err_msg}')
         return data, 'unknown'
 
 
@@ -603,12 +613,55 @@ def fetch_odds_api(sport_key: str, force: bool = False, markets: str = 'h2h,spre
         logger.info('🔧 尝试 curl 降级获取 %s...', sport_key)
         data = _fetch_via_curl(url, timeout)
         if data:
+            # 防御：curl 可能返回 API 错误 JSON（dict 而非 list）
+            if isinstance(data, dict):
+                err_msg = data.get("message", data.get("error", str(data)))
+                raise RuntimeError(f'curl 降级返回错误: {err_msg}')
             _save_cache(cache_name, data)
             logger.info('✅ curl 降级成功：%s', sport_key)
             return data
     except Exception as curl_err:
         logger.warning('⚠️ curl 降级也失败: %s', curl_err)
     raise RuntimeError(last_exc)
+
+
+def check_cache_health() -> dict:
+    """检查所有赔率缓存的状态，返回每项缓存的时效报告。"""
+    report = {"cached_leagues": 0, "fresh": 0, "stale_max_hours": 0, "uncached_leagues": 0,
+              "details": {}, "overall": "ok"}
+
+    league_keys = set()
+    for sk in SPORTS_LEAGUES:
+        league_keys.add(sk.replace("/", "_"))
+    league_keys.add("football_all")
+    league_keys.add("basketball_nba")
+    league_keys.add("basketball_wnba")
+
+    now = datetime.now()
+    for name in sorted(league_keys):
+        path = _cache_path(name)
+        if not path.exists():
+            report["uncached_leagues"] += 1
+            report["details"][name] = {"status": "uncached", "age_hours": None}
+            continue
+        age = (now - datetime.fromtimestamp(path.stat().st_mtime)).total_seconds() / 3600
+        report["cached_leagues"] += 1
+        if age <= 4:
+            report["fresh"] += 1
+            status = "fresh"
+        elif age <= 24:
+            status = "stale"
+        else:
+            status = "expired"
+        report["details"][name] = {"status": status, "age_hours": round(age, 1)}
+        report["stale_max_hours"] = max(report["stale_max_hours"], round(age, 1))
+
+    fresh_ratio = report["fresh"] / max(report["cached_leagues"], 1)
+    if fresh_ratio < 0.5:
+        report["overall"] = "degraded"
+    elif report["stale_max_hours"] > 12:
+        report["overall"] = "warning"
+    return report
 
 
 def fetch_basketball_odds(force: bool = False, sport_key: str = 'basketball_nba', cache_name: str = None):

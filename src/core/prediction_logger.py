@@ -107,8 +107,30 @@ def log_prediction(
     Returns:
         预测 ID
     """
-    prediction_id = _next_id()
     now = datetime.now(timezone.utc)
+
+    # 去重：检查是否已存在同场比赛+市场+日期的 pending 记录
+    if LOG_FILE.exists():
+        try:
+            existing = pd.read_csv(LOG_FILE)
+            if not existing.empty and "status" in existing.columns:
+                match_day = match_time.date().isoformat() if match_time else now.strftime("%Y-%m-%d")
+                dup_mask = (
+                    (existing["status"] == "pending") &
+                    (existing["sport"] == sport) &
+                    (existing["market_type"] == market_type) &
+                    (existing["market_detail"] == market_detail) &
+                    (existing["home_team"] == (home_team or home_team_en or home_team_cn)) &
+                    (existing["away_team"] == (away_team or away_team_en or away_team_cn))
+                )
+                if dup_mask.any():
+                    logger.debug("  跳过重复预测: %s %s vs %s %s %s",
+                                 sport, home_team_cn, away_team_cn, market_type, market_detail)
+                    return existing.iloc[dup_mask.idxmax()]["id"]
+        except Exception:
+            pass
+
+    prediction_id = _next_id()
     row = {
         "id": prediction_id,
         "timestamp": now.isoformat(),

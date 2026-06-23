@@ -197,14 +197,16 @@ if __name__ == "__main__":
     except Exception as e:
         logger.warning("Team edge tracking 失败: %s", e)
 
-    # ── Line Shopping 扫描（Task #161：提取 Pinnacle vs 零售最佳）──
+    # ── +EV 监控扫描 + 钉钉推送 ──
     try:
-        from src.betting.line_shopping import run_line_shopping
-        ls_opps = run_line_shopping()
-        if ls_opps:
-            logger.info("  ✅ Line Shopping: %d 条 +EV 机会已同步", len(ls_opps))
+        from src.monitor.ev_monitor import scan_and_notify
+        n_new = scan_and_notify()
+        if n_new:
+            logger.info("  ✅ +EV 监控: %d 条新机会已推送钉钉", n_new)
+        else:
+            logger.info("  ✅ +EV 监控: 无新机会")
     except Exception as e:
-        logger.warning("Line shopping 扫描失败: %s", e)
+        logger.warning("+EV 监控扫描失败: %s", e)
 
     # ── Line Shopping 投注执行 - 将 +EV 机会转为虚拟投注 ──
     try:
@@ -214,6 +216,20 @@ if __name__ == "__main__":
             logger.info("  ✅ Line Shopping 投注已入虚拟组合: %d 条", n_placed)
     except Exception as e:
         logger.warning("Line shopping 投注执行失败: %s", e)
+
+    # ── +EV 投注建议推送 — 每日推荐列表 ──
+    try:
+        from src.betting.line_shopping import push_cached_recommendations
+        push_cached_recommendations()
+    except Exception as e:
+        logger.warning("投注建议推送失败: %s", e)
+
+    # ── CLV 收盘价追踪 — 验证 edge 是否真实 ──
+    try:
+        from src.monitor.clv_ls import send_clv_report
+        send_clv_report()
+    except Exception as e:
+        logger.warning("CLV 报告推送失败: %s", e)
 
 
     # ── 历史回放引擎 — 模拟交易样本不足时自动补充 ──

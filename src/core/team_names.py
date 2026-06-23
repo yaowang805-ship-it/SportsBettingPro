@@ -343,6 +343,51 @@ FOOTBALL_MAP: dict[str, Tuple[str, str]] = {
     "Renaissance Zemamra": ("renaissance zemamra", "泽马马拉"),
     "Union Sportive Yacoub El Mansour": ("union sportive yacoub el mansour", "雅各布曼苏尔"),
     "Wydad Casablanca": ("wydad casablanca", "维达德卡萨布兰卡"),
+    # ===== 常用补充（2026-06-23）=====
+    "Türkiye": ("türkiye", "土耳其"),
+    "Miami FC": ("miami fc", "迈阿密FC"),
+    "Orange County SC": ("orange county sc", "橙县SC"),
+    "Tunisia": ("tunisia", "突尼斯"),
+    "Morocco": ("morocco", "摩洛哥"),
+    "Croatia": ("croatia", "克罗地亚"),
+    "Portugal": ("portugal", "葡萄牙"),
+    "Uzbekistan": ("uzbekistan", "乌兹别克斯坦"),
+    "Japan": ("japan", "日本"),
+    "Colombia": ("colombia", "哥伦比亚"),
+    "Ecuador": ("ecuador", "厄瓜多尔"),
+    "Germany": ("germany", "德国"),
+    "Scotland": ("scotland", "苏格兰"),
+    "Brazil": ("brazil", "巴西"),
+    "South Africa": ("south africa", "南非"),
+    "Switzerland": ("switzerland", "瑞士"),
+    "Canada": ("canada", "加拿大"),
+    "England": ("england", "英格兰"),
+    "Ghana": ("ghana", "加纳"),
+    "Paraguay": ("paraguay", "巴拉圭"),
+    "Australia": ("australia", "澳大利亚"),
+    "Czech Republic": ("czech republic", "捷克"),
+    "Curaçao": ("curaçao", "库拉索"),
+    "Qatar": ("qatar", "卡塔尔"),
+    "Bosnia & Herzegovina": ("bosnia & herzegovina", "波黑"),
+    "Haiti": ("haiti", "海地"),
+    "Honduras": ("honduras", "洪都拉斯"),
+    "Costa Rica": ("costa rica", "哥斯达黎加"),
+    "Jordan": ("jordan", "约旦"),
+    "Finland": ("finland", "芬兰"),
+    "Iceland": ("iceland", "冰岛"),
+    "North Macedonia": ("north macedonia", "北马其顿"),
+    "Slovakia": ("slovakia", "斯洛伐克"),
+    "Romania": ("romania", "罗马尼亚"),
+    "Montenegro": ("montenegro", "黑山"),
+    "Wales": ("wales", "威尔士"),
+    "Faroe Islands": ("faroe islands", "法罗群岛"),
+    "Kazakhstan": ("kazakhstan", "哈萨克斯坦"),
+    "Bulgaria": ("bulgaria", "保加利亚"),
+    "Estonia": ("estonia", "爱沙尼亚"),
+    "Georgia": ("georgia", "格鲁吉亚"),
+    "Belarus": ("belarus", "白俄罗斯"),
+    "Armenia": ("armenia", "亚美尼亚"),
+    "China": ("china", "中国"),
 }
 
 # NBA 球队映射 — odds API 名→中文名
@@ -517,6 +562,8 @@ def cn_team(odds_name: str, sport: str = "nba") -> str:
     if sport == "nba":
         return NBA_CN.get(odds_name, odds_name)
     _, cn = lookup_football(odds_name)
+    if cn == odds_name:
+        return WC_CN.get(odds_name, odds_name)
     return cn
 
 

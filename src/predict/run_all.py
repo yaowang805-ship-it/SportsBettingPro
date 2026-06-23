@@ -5,7 +5,6 @@ SportsBettingPro 统一每日预测入口
   python src/predict/run_all.py
   python src/predict/run_all.py --sport nba
   python src/predict/run_all.py --sport football
-  python src/predict/run_all.py --sport nfl
   python src/predict/run_all.py --skip-monitor
 """
 import subprocess
@@ -75,6 +74,14 @@ def run_monitor():
             logger.info("✅ CLV 收盘价: %d 条已更新", cr["updated"])
     except Exception as e:
         logger.warning("⚠️  CLV 收盘价填充跳过: %s", e)
+    # CLV 待结算投注更新（virtual_portfolio 待结算 → closing_odds + clv）
+    try:
+        from src.dashboard.components.virtual_portfolio import update_clv_for_pending
+        n_clv = update_clv_for_pending()
+        if n_clv:
+            logger.info("✅ CLV 组合更新: %d 条", n_clv)
+    except Exception as e:
+        logger.warning("⚠️  CLV 组合更新跳过: %s", e)
     # 数据质量检查
     try:
         from src.monitor.data_quality import run_data_quality_check
@@ -140,9 +147,8 @@ def _run_prematch_check(sport=None):
 
 def main():
     parser = argparse.ArgumentParser(description="SportsBettingPro 每日预测入口")
-    parser.add_argument("--sport", choices=["nba","football","nfl","wc","all"], default="all")
+    parser.add_argument("--sport", choices=["nba","football","all"], default="all")
     parser.add_argument("--skip-monitor", action="store_true")
-    parser.add_argument("--simulate", action="store_true", help="运行世界杯蒙特卡洛模拟")
     parser.add_argument("--prematch-check", action="store_true", help="赛前1-2小时赔率重检")
     args = parser.parse_args()
 
@@ -161,16 +167,6 @@ def main():
     if args.sport in ("football","all"):
         if not run_script(predict_dir/"daily_fb.py", "⚽ 足球预测引擎"):
             errors.append("足球预测")
-    if args.sport in ("nfl","all"):
-        if not run_script(predict_dir/"daily_nfl.py", "🏈 NFL 预测引擎"):
-            errors.append("NFL预测")
-    if args.sport in ("wc","all"):
-        # 世界杯期间自动运行（6月11日-7月19日）
-        if not run_script(predict_dir/"daily_wc.py", "🌍 世界杯预测引擎"):
-            errors.append("世界杯预测")
-        if args.simulate:
-            if not run_script(predict_dir/"wc_simulation.py", "🌍 世界杯蒙特卡洛模拟"):
-                errors.append("世界杯模拟")
     # 跨运动统一排名（有推荐数据就跑）
     _run_ranking()
     if not args.skip_monitor:

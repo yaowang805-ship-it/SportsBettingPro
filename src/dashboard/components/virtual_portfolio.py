@@ -178,6 +178,17 @@ def auto_place_bets(rec_list: list, reset_pending: bool = False):
             "model_prob": float(rec.get("model_prob", 0)),
             "created_at": datetime.now(timezone.utc).isoformat(),
         })
+        # 同步开盘价到 clv_tracker
+        try:
+            date_str = rec.get("commence_time", "")[:10]
+            if not date_str:
+                date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+            match_key = f"{home_team_en} @ {away_team_en} {date_str}"
+            from src.monitor.clv_tracker import capture_opening_odds
+            capture_opening_odds(match_key, rec.get("market", "h2h"), odds,
+                                  bookmaker="virtual", league=league)
+        except Exception:
+            pass
         existing_ids.add(bid)
         total_pending_stake += stake
         added += 1

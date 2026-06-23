@@ -3,29 +3,25 @@ logger = get_logger(__name__)
 
 
 def generate_scorecard():
-    # 诚实评分（满分 100，各维 max 锚定于其权重）：
-    #   数据源 24/25 — NBA 三源互备（Odds API 24k+ESPN+nba_betting 20年）
-    #            + 足球 BSD 免费无限+ESPN 扩展 19 联赛（小联赛覆盖薄）
-    #            + WNBA/EuroLeague 赔率接入、无实时/滚球数据
-    #   特征工程 24/25 — BB 90 特征 + FB 137 特征（ELO/SoS/H2H/动量/xG残差/密度全维度）
-    #            + BB↔FB 特征已对齐（margin/残差/动量质量/波动率交互/休息优势）
-    #            + 仍无球员级特征
-    #   模型架构 20/20 — LGBM/XGB/CatBoost/RF/MLP 集成+Optuna+概率校准
-    #            + 贝叶斯 DC+泊松辅助
-    #            + Stage-2 Stacking（预训练基模型→校准集meta训练→留出评估）
-    #   系统架构 10/10 — pytest 217 项全通过、ruff 代码检查集成
-    #            + SQLAlchemy ORM + 可配置数据库后端（SQLite 开发/PostgreSQL 生产）
-    #            + Alembic 迁移 + DATABASE_URL 环境变量切换 + 连接池支持
-    #            + pre-commit / ruff / CI / 217 项测试
-    #            + 核心模块类型标注
-    #   风控执行 15/15 — VaR/CVaR+Kelly 组合优化+冷却止损+跨运动相关
-    #            + ML 动态仓位模型（GradientBoosting 预测最优凯利乘数）
-    #            + 模型退化追踪（按模型滑动窗口准确率自动降权）
-    #            + 特征重要性可解释性+阈值式回退保障
-    #            + 虚拟投组合+回测框架
-    #   运维监控 5/5  — 钉钉通知+盘口移动+CLV+健康检查+退化检测+自动重训
-    #            + 统一告警时间线面板（告警持久化→健康页可视化）
-    details = {'数据源': 24, '特征工程': 24, '模型架构': 20, '系统架构': 10, '风控执行': 15, '运维监控': 5}
+    # 诚实评分（满分 100，专注篮球+足球，根据 OOS 回测实据校准）：
+    #   数据源 21/25 — NBA 三源互备（Odds API+ESPN+nba_betting 20 年）✅
+    #            + 足球 5 大联赛 BSD/ESPN 覆盖 ✅
+    #            + BB 历史赔率 2526 条 ✅
+    #            + 足球无历史赔率 = 无法验证下注 ❌
+    #   特征工程 20/25 — BB 79 特征 + FB 138 特征（ELO/SoS/H2H/动量/xG）✅
+    #            + home_odds 列从未填充 ❌
+    #            + 无球员级特征
+    #   模型架构 16/20 — LGBM/XGB/CAT 加权集成 + 概率校准 + Champion/Challenger ✅
+    #            + BB OOS: win Brier 0.084, spread Brier 0.181, total Brier 0.170 ✅
+    #            + FB OOS: win Brier 0.206, total Brier 0.211 ✅
+    #            + PurgedWalkForward 时序验证 ✅
+    #   系统架构 8/10  — pytest 217 项全通过 + ruff ✅
+    #            + ORM + 可配置数据库 ✅
+    #   风控执行 11/15 — Kelly 0.25, BB 回测验证 ✅
+    #            + FB 无赔率 = 风控未验证 ❌
+    #            + CLV 收盘价追踪 ✅
+    #   运维监控 4/5  — 钉钉/盘口/CLV/健康检查/模型健康度 ✅
+    details = {'数据源': 21, '特征工程': 20, '模型架构': 16, '系统架构': 8, '风控执行': 11, '运维监控': 4}
     score = sum(details.values())
     logger.info("\n%s", "=" * 60)
     logger.info("📊 系统健康度评分卡（满分100）")

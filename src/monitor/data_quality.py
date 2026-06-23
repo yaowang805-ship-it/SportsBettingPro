@@ -225,6 +225,11 @@ def check_odds_api_quality() -> Dict:
                 result["issues"].append(f"{label}: API 返回空数据")
                 continue
 
+            # 防御：确保 data 是列表
+            if not isinstance(data, list):
+                result["issues"].append(f"{label}: API 返回非列表类型 ({type(data).__name__})")
+                continue
+
             # 平均博彩公司数
             bm_counts = []
             for match in data:

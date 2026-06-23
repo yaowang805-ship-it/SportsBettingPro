@@ -63,8 +63,8 @@ def _check_accuracy_drop() -> bool:
         df = pd.read_csv(csv_path)
         if len(df) < 10:
             return False
-        recent = df.tail(10)["accuracy"].values
-        early = df.tail(20).head(10)["accuracy"].values
+        recent = df.tail(10)["baseline"].values
+        early = df.tail(20).head(10)["baseline"].values
         if len(recent) >= 5 and len(early) >= 5:
             recent_mean = recent.mean()
             early_mean = early.mean()
@@ -147,7 +147,7 @@ def auto_retrain():
     meta = load_metadata()
     success = False
 
-    for sport in ['bb', 'fb', 'nfl']:
+    for sport in ['bb', 'fb']:
         if not _sport_should_retrain(sport, meta):
             continue
         try:

@@ -4,7 +4,6 @@
     from src.models.ensemble_trainer import train_sport_ensemble
     train_sport_ensemble('bb')    # 篮球
     train_sport_ensemble('fb')    # 足球
-    train_sport_ensemble('nfl')   # NFL
 """
 import json
 import shutil
@@ -26,6 +25,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import brier_score_loss, log_loss
 from sklearn.frozen import FrozenEstimator
 from sklearn.model_selection import TimeSeriesSplit
+from sklearn.metrics import brier_score_loss
 
 warnings.filterwarnings('ignore', category=UserWarning, module='optuna')
 
@@ -35,6 +35,55 @@ MODEL_DIR_PATH = Path(MODEL_DIR) if isinstance(MODEL_DIR, str) else MODEL_DIR
 MODEL_DIR_PATH.mkdir(parents=True, exist_ok=True)
 
 N_TRIALS = 50       # Optuna trials per model (single phase)
+EMBARGO_DAYS = 14   # 训练集和验证集之间的间隔天数（防止时序泄露）
+
+
+class PurgedWalkForward:
+    """时间序列交叉验证，支持 purging + embargo。
+
+    每折：在时间轴上从前往后滑动，
+    train 和 test 之间有 embargo_days 的间隔，
+    防止序列相关性导致的泄露。
+
+    用法:
+        cv = PurgedWalkForward(dates, n_splits=5, embargo_days=14)
+        for train_idx, test_idx in cv.split(X):
+            ...
+    """
+    def __init__(self, dates: np.ndarray, n_splits: int = 5,
+                 embargo_days: int = EMBARGO_DAYS):
+        self.dates = np.asarray(pd.to_datetime(dates))
+        self.n_splits = n_splits
+        self.embargo_days = embargo_days
+
+    def split(self, X, y=None, groups=None):
+        sorted_order = np.argsort(self.dates)
+        n = len(sorted_order)
+        test_size = n // (self.n_splits + 1)
+        if test_size < 1:
+            test_size = 1
+
+        for i in range(self.n_splits):
+            test_end = n - (self.n_splits - i - 1) * test_size
+            test_start = max(0, test_end - test_size)
+
+            test_idx = sorted_order[test_start:test_end]
+            test_earliest = self.dates[test_idx].min()
+            embargo_cutoff = test_earliest - pd.Timedelta(days=self.embargo_days)
+
+            train_candidates = sorted_order[:test_start]
+            train_idx = np.array([
+                i for i in train_candidates
+                if self.dates[i] <= embargo_cutoff
+            ])
+
+            if len(train_idx) < 10 or len(test_idx) < 5:
+                continue
+
+            yield train_idx, test_idx
+
+    def get_n_splits(self, X=None, y=None, groups=None):
+        return self.n_splits
 
 
 from src.models.stacking import Stage2Stacking, WeightedEnsemble
@@ -42,7 +91,7 @@ CV_SPLITS = 5       # TimeSeriesSplit folds for CV evaluation during Optuna
 
 # 根据运动类型和数据量自适应
 SPORT_CONFIG = {
-    'bb': {  # 篮球：24427 样本，3 模型（RF 在 24k 样本上内存不足去掉）
+    'bb': {  # 篮球：24427 样本，3 模型
         'model_types': ['lgbm', 'xgb', 'cat'],
         'n_trials': 20,
         'min_samples': 200,
@@ -51,18 +100,7 @@ SPORT_CONFIG = {
         'model_types': ['lgbm', 'xgb'],
         'n_trials': 20,
         'min_samples': 200,
-        'targets': ['win', 'total_result'],  # 无真实让分盘数据，不训练 spread_result
-    },
-    'nfl': {  # NFL：~1400 样本，2 模型防过拟合
-        'model_types': ['lgbm', 'xgb'],
-        'n_trials': 20,
-        'min_samples': 100,
-    },
-    'wc': {  # 世界杯：~3500 国家队比赛样本，2 模型
-        'model_types': ['lgbm', 'xgb'],
-        'n_trials': 25,
-        'min_samples': 200,
-        'targets': ['home_win', 'over_2.5'],
+        'targets': ['win', 'total_result'],
     },
 }
 
@@ -71,16 +109,26 @@ def _tscv(n_splits=CV_SPLITS):
     return TimeSeriesSplit(n_splits=n_splits)
 
 
+def _ece_score(y_true, y_prob, n_bins=10):
+    """期望校准误差 (Expected Calibration Error)。"""
+    bins = np.linspace(0, 1, n_bins + 1)
+    ece = 0.0
+    for i in range(n_bins):
+        mask = (y_prob >= bins[i]) & (y_prob < bins[i + 1])
+        if i == n_bins - 1:
+            mask |= y_prob == 1.0
+        if not mask.any():
+            continue
+        bin_acc = y_true[mask].mean()
+        bin_conf = y_prob[mask].mean()
+        ece += abs(bin_acc - bin_conf) * mask.sum()
+    return ece / max(len(y_true), 1)
+
+
 def _load_data(sport):
     if sport == 'bb':
         csv_path = 'data/processed/bb_features.csv'
         feat_json = MODEL_DIR_PATH / 'model_bb_features.json'
-    elif sport == 'nfl':
-        csv_path = 'data/processed/nfl_features.csv'
-        feat_json = MODEL_DIR_PATH / 'model_nfl_features.json'
-    elif sport == 'wc':
-        csv_path = 'data/processed/wc_features.csv'
-        feat_json = MODEL_DIR_PATH / 'model_wc_features.json'
     else:
         csv_path = 'data/processed/fb_features.csv'
         feat_json = MODEL_DIR_PATH / 'model_fb_features.json'
@@ -176,14 +224,22 @@ def _objective(trial, X, y, model_type, tscv, scale_pos_weight=1.0, n_samples=No
     return np.mean(losses)
 
 
-def _train_base_model(X, y, model_type, scale_pos_weight=1.0, n_trials=None):
-    """用 Optuna 最优参数训练单模型。"""
+def _train_base_model(X, y, model_type, scale_pos_weight=1.0, n_trials=None, dates=None):
+    """用 Optuna 最优参数训练单模型。
+
+    Args:
+        dates: 可选的日期数组，传入后使用 PurgedWalkForward（含 embargo）替代 TimeSeriesSplit
+    """
     if n_trials is None:
         n_trials = N_TRIALS
-    tscv = _tscv()
+
+    if dates is not None:
+        cv_splitter = PurgedWalkForward(dates, n_splits=CV_SPLITS, embargo_days=EMBARGO_DAYS)
+    else:
+        cv_splitter = _tscv()
 
     study = optuna.create_study(direction='minimize', sampler=optuna.samplers.TPESampler(seed=42))
-    study.optimize(lambda t: _objective(t, X, y, model_type, tscv, scale_pos_weight, n_samples=len(X)),
+    study.optimize(lambda t: _objective(t, X, y, model_type, cv_splitter, scale_pos_weight, n_samples=len(X)),
                    n_trials=n_trials, show_progress_bar=False)
     best_params = study.best_params
     best_value = study.best_value
@@ -340,6 +396,7 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
 
     X = train_df[feat_cols].fillna(0)
     y = train_df[target_col].astype(int)
+    dates = train_df['date'].values  # 用于 PurgedWalkForward
     pos_ratio = y.mean()
     print(f"  样本: {len(X)}, 特征: {len(feat_cols)}, 正例: {pos_ratio:.2%}")
 
@@ -354,7 +411,7 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
     for mt in model_types:
         try:
             mt_trials = rf_trials if (mt == 'rf' and rf_trials is not None) else n_trials
-            m, params = _train_base_model(X, y, mt, scale_pos_weight=spw, n_trials=mt_trials)
+            m, params = _train_base_model(X, y, mt, scale_pos_weight=spw, n_trials=mt_trials, dates=dates)
             trained_models[mt] = m
             model_path = MODEL_DIR_PATH / f"{prefix}_{mt}.pkl"
             joblib.dump(m, model_path)
@@ -480,7 +537,15 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
     cal_probs = calibrated.predict_proba(X_cal)[:, 1]
     brier = brier_score_loss(y_cal, cal_probs)
     ll = log_loss(y_cal, cal_probs)
-    print(f"  校准完成: Brier={brier:.4f}, LogLoss={ll:.4f} (校准集)")
+    cal_ece = _ece_score(y_cal.values, cal_probs)
+    print(f"  校准完成: Brier={brier:.4f}, LogLoss={ll:.4f}, ECE={cal_ece:.4f} (校准集)")
+
+    # holdout ECE（如果有留出集）
+    if X_holdout is not None and len(X_holdout) >= 10:
+        hold_probs = calibrated.predict_proba(X_holdout)[:, 1]
+        hold_ece = _ece_score(y_holdout.values, hold_probs)
+        hold_brier = brier_score_loss(y_holdout, hold_probs)
+        print(f"  留出集:  Brier={hold_brier:.4f}, ECE={hold_ece:.4f} ({len(X_holdout)} 样本)")
 
     # ── 最优阈值搜索 ──
     from sklearn.metrics import accuracy_score
@@ -585,7 +650,11 @@ def train_ensemble(df, target_col, prefix, feat_cols, model_types=None, n_trials
     # ── 保存元数据（记录部署决策） ──
     meta_info = {
         'base_models': [e[0] for e in valid_estimators],
-        'metrics': {'brier': brier, 'log_loss': ll},
+        'metrics': {'brier': brier, 'log_loss': ll, 'ece': round(float(cal_ece), 4)},
+        'holdout_metrics': {
+            'brier': round(float(hold_brier), 4),
+            'ece': round(float(hold_ece), 4),
+        } if X_holdout is not None and len(X_holdout) >= 10 else None,
         'per_model_metrics': per_model_metrics,
         'ensemble_weights': {e[0]: round(w, 4) for e, w in zip(valid_estimators, norm_weights)},
         'target': target_col,
@@ -623,7 +692,7 @@ def train_sport_ensemble(sport='bb', quick=False):
     """为指定运动训练所有目标的集成模型。
 
     Args:
-        sport: 运动类型 ('bb', 'fb', 'nfl', 'wc')
+        sport: 运动类型 ('bb', 'fb')
         quick: 快速模式，大幅减少 Optuna trials 用于日常流水线
     """
     config = SPORT_CONFIG.get(sport, SPORT_CONFIG['bb'])
@@ -638,7 +707,7 @@ def train_sport_ensemble(sport='bb', quick=False):
 
     df, feat_cols = _load_data(sport)
     targets = config.get('targets', ['win', 'spread_result', 'total_result'])
-    prefix_map = {'bb': 'model_bb', 'fb': 'model_fb', 'nfl': 'model_nfl', 'wc': 'model_wc'}
+    prefix_map = {'bb': 'model_bb', 'fb': 'model_fb'}
     prefix = prefix_map[sport]
 
     results = {}

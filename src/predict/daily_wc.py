@@ -66,7 +66,18 @@ DATA_DIR_PATH = Path(DATA_DIR) if isinstance(DATA_DIR, str) else DATA_DIR
 
 # WC 专属保守兜底
 WC_EV_THRESHOLD = 0.05     # EV > 5% 才推荐
-WC_PROB_CAP = 0.15         # 模型概率不超过市场 + 15pp
+WC_PROB_CAP = 0.15         # 弃用，改用 _shrink
+
+
+def _shrink(prob: float, market: float) -> float:
+    """动态收缩：模型偏离市场越远，收缩越强。
+
+    模型严重高估弱队时（如 Brazil 客胜 Morocco 给 82%），
+    自动向市场概率靠拢，防止极端错误推荐。
+    """
+    deviation = abs(prob - market)
+    shrink_factor = min(deviation, 0.5)  # 偏离 50pp 以上收缩 50%
+    return prob * (1 - shrink_factor) + market * shrink_factor
 
 
 def _odds_to_csv(name: str) -> str:
@@ -421,6 +432,9 @@ def main():
     from fetchers.odds_api import fetch_odds_api
     try:
         odds_data = fetch_odds_api('soccer_fifa_world_cup', force=True, markets='h2h,totals')
+        if not isinstance(odds_data, list):
+            logger.error("❌ 赔率数据格式错误（期望 list，实际 %s）", type(odds_data).__name__)
+            sys.exit(1)
         logger.info("✅ 世界杯赔率: %d 场", len(odds_data))
     except Exception as e:
         logger.error("❌ 赔率拉取失败: %s", e)
@@ -474,8 +488,8 @@ def main():
             try:
                 win_prob = models["home_win"].predict_proba(features)[0, 1]
                 win_prob = float(np.clip(win_prob, 0.02, 0.98))
-                # WC 保守兜底：模型概率不显著高于市场
-                win_prob = min(win_prob, mkt_home + WC_PROB_CAP)
+                # 动态收缩：防止极端概率
+                win_prob = _shrink(win_prob, mkt_home)
                 win_ev = win_prob - mkt_home
 
                 if win_ev > WC_EV_THRESHOLD and home_odds > 0 and market.get("n_bookmakers", 0) >= 3:
@@ -496,8 +510,7 @@ def main():
             try:
                 over_prob = models["over_2.5"].predict_proba(features)[0, 1]
                 over_prob = float(np.clip(over_prob, 0.02, 0.98))
-                # WC 保守兜底
-                over_prob = min(over_prob, mkt_over + WC_PROB_CAP)
+                over_prob = _shrink(over_prob, mkt_over)
                 over_ev = over_prob - mkt_over
 
                 if over_ev > WC_EV_THRESHOLD:
@@ -514,7 +527,7 @@ def main():
                 # 小分
                 under_prob = 1.0 - over_prob
                 under_mkt = 1.0 - mkt_over
-                under_prob = min(under_prob, under_mkt + WC_PROB_CAP)
+                under_prob = _shrink(under_prob, under_mkt)
                 under_ev = under_prob - under_mkt
                 if under_ev > WC_EV_THRESHOLD:
                     under_odds = 1.0 / under_mkt if under_mkt > 0 else total_odds

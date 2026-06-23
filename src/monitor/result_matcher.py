@@ -141,6 +141,27 @@ def settle_from_portfolio() -> int:
     except Exception:
         return 0
 
+    # 读取 prediction_log.csv 用于获取真实概率
+    from src.core.prediction_logger import LOG_FILE as PRED_LOG_PATH
+    pred_log_df = pd.DataFrame()
+    if PRED_LOG_PATH.exists():
+        try:
+            pred_log_df = pd.read_csv(PRED_LOG_PATH)
+        except Exception:
+            pass
+
+    def _lookup_prob(home_cn: str, away_cn: str, market_detail: str) -> tuple:
+        """在 prediction_log 中查找真实概率。"""
+        if pred_log_df.empty:
+            return 0.0, 0.0
+        for _, r in pred_log_df.iterrows():
+            hc = str(r.get("home_team_cn", ""))
+            ac = str(r.get("away_team_cn", ""))
+            md = str(r.get("market_detail", ""))
+            if (hc == home_cn and ac == away_cn and md == market_detail):
+                return float(r.get("model_prob", 0) or 0), float(r.get("market_prob", 0) or 0)
+        return 0.0, 0.0
+
     perf = _read_perf()
     history = state.get('history', [])
     updated = 0
@@ -165,11 +186,25 @@ def settle_from_portfolio() -> int:
             profit = float(h.get('profit', 0) or 0)
             if stake == 0 and profit != 0:
                 stake = abs(profit) / (odds - 1) if odds > 1 and status == 'won' else abs(profit)
+
+            # 从 bid 解析中文队名用于查 prediction_log
+            parts = bid.split("_")
+            if len(parts) >= 4:
+                # bid 格式: sport_联赛_主队_客队_市场
+                home_cn = parts[2] if len(parts) > 2 else ""
+                away_cn = parts[3] if len(parts) > 3 else ""
+                market_detail = "_".join(parts[4:]) if len(parts) > 4 else ""
+            else:
+                home_cn = away_cn = market_detail = ""
+
+            prob, mkt_prob = _lookup_prob(home_cn, away_cn, market_detail)
+
             new_rows.append({
                 'date': h.get('date', '')[:10],
                 'game': bid,
                 'bet': bid.split('_')[-1] if '_' in bid else '',
-                'prob': 0.0, 'market_prob': 0.0,
+                'prob': prob,
+                'market_prob': mkt_prob,
                 'stake': stake,
                 'result': status,
                 'profit': profit,

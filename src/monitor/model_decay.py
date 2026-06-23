@@ -34,6 +34,7 @@ LOG_FILE = ROOT / "data" / "storage" / "prediction_log.csv"
 from fetchers.espn_scores import fetch_espn_scores_by_sport_key
 DECAY_REPORT_FILE = ROOT / "data" / "storage" / "model_decay_report.json"
 PERFORMANCE_HISTORY_FILE = ROOT / "data" / "storage" / "model_accuracy_history.csv"
+PERF_FILE = ROOT / "data" / "storage" / "performance_history.csv"
 
 # 准确率退化阈值: 滚动14天准确率比基线低超过此值 → 触发重训
 DECAY_THRESHOLD = 0.08  # 8个百分点
@@ -108,7 +109,14 @@ def _extract_winner(scores_data: List[Dict]) -> Dict[str, Tuple[str, int, int]]:
 def _normalize(name) -> str:
     if not isinstance(name, str):
         return ""
-    return name.strip().lower().replace("fc", "").replace("cf", "").replace("afc", "").strip()
+    n = name.strip().lower().replace("fc", "").replace("cf", "").replace("afc", "").strip()
+    # 队名别名归一化（Odds API vs ESPN 名称差异）
+    ALIASES = {
+        "usa": "united states",
+        "turkey": "türkiye",
+        "dr congo": "congo dr",
+    }
+    return ALIASES.get(n, n)
 
 
 # 中文 → 英文队名映射（用于结算匹配）
@@ -243,6 +251,7 @@ def _sport_key_for_league(league: str) -> Optional[str]:
         "德甲": "soccer_germany_bundesliga",
         "意甲": "soccer_italy_serie_a",
         "法甲": "soccer_france_ligue_one",
+        "soccer_fifa_world_cup": "soccer_fifa_world_cup",
     }
     return mapping.get(league)
 
@@ -333,8 +342,79 @@ def settle_pending_predictions(days_back: int = 10) -> int:
     return settled_count
 
 
+def _compute_accuracy_from_perf_history() -> Dict:
+    """从 performance_history.csv 计算准确率（fallback 路径）。
+
+    performance_history.csv 字段: date, game, bet, prob, market_prob, stake, result, profit, odds, cumulative_balance
+    其中 result = won/lost
+    """
+    if not PERF_FILE.exists():
+        return {"n_total": 0, "message": "performance_history 不存在"}
+
+    df = pd.read_csv(PERF_FILE)
+    df = df[df["result"].isin(["won", "lost"])].copy()
+    if df.empty:
+        return {"n_total": 0, "message": "performance_history 无已结算记录"}
+
+    df["is_win"] = (df["result"] == "won").astype(int)
+    df["settle_date"] = pd.to_datetime(df["date"], errors="coerce")
+    if df["settle_date"].dt.tz is None:
+        df["settle_date"] = df["settle_date"].dt.tz_localize("UTC")
+
+    now_ts = pd.Timestamp.now(tz=timezone.utc)
+    baseline = df["is_win"].mean()
+
+    result = {
+        "baseline": round(float(baseline), 4),
+        "n_total": len(df),
+        "n_won": int(df["is_win"].sum()),
+        "source": "performance_history",  # 标记数据来源
+    }
+
+    for window, label in [(7, "rolling_7d"), (14, "rolling_14d"), (30, "rolling_30d")]:
+        cutoff = now_ts - timedelta(days=window)
+        recent = df[df["settle_date"] >= cutoff]
+        n = len(recent)
+        result[label] = round(float(recent["is_win"].mean()), 4) if n > 0 else None
+        result[f"n_{window}d"] = n
+
+    # 退化检测（简化版，无 by_sport/by_market）
+    is_decaying = False
+    decay_signals = []
+    rolling_14d = result.get("rolling_14d")
+    if rolling_14d is not None and result["n_14d"] >= MIN_SAMPLES_FOR_DECAY:
+        gap = baseline - rolling_14d
+        if gap > DECAY_THRESHOLD:
+            is_decaying = True
+            decay_signals.append(
+                f"14天准确率 ({rolling_14d:.1%}) 比基线 ({baseline:.1%}) 低 {gap:.1%}"
+            )
+
+    # 趋势斜率
+    if len(df) >= 3:
+        df_sorted = df.sort_values("settle_date")
+        df_sorted["week"] = df_sorted["settle_date"].dt.isocalendar().week.astype(int)
+        weekly_acc = df_sorted.groupby("week")["is_win"].mean()
+        if len(weekly_acc) >= 3:
+            recent_weeks = weekly_acc.tail(5)
+            if len(recent_weeks) >= 3:
+                slope = np.polyfit(range(len(recent_weeks)), recent_weeks.values, 1)[0]
+                result["trend_slope"] = round(float(slope), 4)
+                if slope < -0.02:
+                    is_decaying = True
+                    decay_signals.append(f"准确率趋势斜率为负 ({slope:.4f})")
+
+    result["is_decaying"] = is_decaying
+    result["decay_signal"] = "; ".join(decay_signals) if decay_signals else "无退化信号"
+    result["decay_level"] = "critical" if (is_decaying and len(decay_signals) > 1) else ("warning" if is_decaying else "healthy")
+    return result
+
+
 def compute_accuracy_trend() -> Dict:
     """计算各时间窗口的预测准确率趋势。
+
+    优先使用 prediction_log.csv，若已结算样本不足 10 条则回退到
+    performance_history.csv（虚拟投注历史）。
 
     Returns:
         {
@@ -353,12 +433,13 @@ def compute_accuracy_trend() -> Dict:
     """
     df = _load_prediction_log()
     if df.empty:
-        return {"error": "无预测数据"}
+        return _compute_accuracy_from_perf_history()
 
     # 筛选已结算的预测
     settled = df[df["status"].isin(["won", "lost"])].copy()
-    if settled.empty:
-        return {"n_total": 0, "message": "暂无已结算预测"}
+    if len(settled) < 10:
+        logger.info("  prediction_log 已结算样本不足 (%d < 10)，回退到 performance_history", len(settled))
+        return _compute_accuracy_from_perf_history()
 
     settled["is_win"] = (settled["status"] == "won").astype(int)
     if "settled_at" in settled.columns:
@@ -467,6 +548,115 @@ def compute_accuracy_trend() -> Dict:
     return result
 
 
+def calibration_report() -> Dict:
+    """可靠性诊断报告 — 模型概率校准度检查。
+
+    将预测概率分桶，对比每个桶的预测概率均值 vs 实际胜率。
+    这是判断模型是否"知道自己不知道"的关键指标。
+
+    Returns:
+        {"buckets": [{bucket, n, avg_prob, win_rate, gap}, ...],
+         "ece": 期望校准误差, "mce": 最大校准误差,
+         "n_total": 总样本}
+    """
+    df = _load_prediction_log()
+    if df.empty or len(df[df["status"].isin(["won", "lost"])]) < 5:
+        # 兜底：从 performance_history.csv 读取 prob 和 result
+        if PERF_FILE.exists():
+            perf = pd.read_csv(PERF_FILE)
+            perf = perf[perf["result"].isin(["won", "lost"])].copy()
+            if len(perf) >= 5:
+                perf["is_win"] = (perf["result"] == "won").astype(int)
+                perf["model_prob"] = pd.to_numeric(perf["prob"], errors="coerce").fillna(0)
+                perf["sport"] = perf["game"].apply(lambda x: "bb" if "NBA" in str(x) else "fb")
+                settled = perf
+    else:
+        settled = df[df["status"].isin(["won", "lost"])].copy()
+        settled["is_win"] = (settled["status"] == "won").astype(int)
+        probs = pd.to_numeric(settled["model_prob"], errors="coerce").dropna()
+        settled = settled.loc[probs.index].copy()
+        settled["model_prob"] = probs
+
+    if len(settled) < 5:
+        return {"error": f"有效样本不足 ({len(settled)} < 5)", "n_total": len(settled)}
+
+    # 10 个等宽桶: 0-0.1, 0.1-0.2, ..., 0.9-1.0
+    settled["bucket"] = pd.cut(settled["model_prob"], bins=10, labels=False) / 10
+    buckets = []
+    weighted_sum = 0.0
+    n_total = len(settled)
+
+    print(f"\n{'='*60}")
+    print(f"  校准度诊断 — {datetime.now().strftime('%Y-%m-%d')}")
+    print(f"  总样本: {n_total}")
+    print(f"{'='*60}")
+    print(f"  {'概率区间':<10} {'数量':>6} {'平均概率':>10} {'实际胜率':>10} {'偏差':>8}")
+    print(f"  {'-'*10} {'-'*6} {'-'*10} {'-'*10} {'-'*8}")
+
+    for i in range(10):
+        lo, hi = i / 10, (i + 1) / 10
+        mask = (settled["model_prob"] >= lo) & (settled["model_prob"] < hi)
+        # 让上边界包含 1.0
+        if i == 9:
+            mask |= settled["model_prob"] == 1.0
+        subset = settled[mask]
+        n = len(subset)
+        if n == 0:
+            print(f"  {lo:.0%}-{hi:.0%}:    {n:>6} {'—':>10} {'—':>10} {'—':>8}")
+            continue
+        avg_prob = subset["model_prob"].mean()
+        win_rate = subset["is_win"].mean()
+        gap = avg_prob - win_rate
+        weighted_sum += abs(gap) * n / n_total
+        buckets.append({
+            "bucket": f"{lo:.0%}-{hi:.0%}",
+            "n": n,
+            "avg_prob": round(float(avg_prob), 4),
+            "win_rate": round(float(win_rate), 4),
+            "gap": round(float(gap), 4),
+        })
+        gap_str = f"{gap:+.1%}"
+        print(f"  {lo:.0%}-{hi:.0%}:    {n:>6} {avg_prob:>10.1%} {win_rate:>10.1%} {gap_str:>8}")
+
+    ece = round(weighted_sum, 4)
+    mce = round(max(b["gap"] for b in buckets), 4) if buckets else 0
+    print(f"  {'-'*44}")
+    print(f"  ECE (期望校准误差): {ece:.2%}")
+    print(f"  MCE (最大校准误差): {mce:.2%}")
+
+    # 按运动拆分
+    by_sport = {}
+    for sport in settled["sport"].unique():
+        ss = settled[settled["sport"] == sport]
+        if len(ss) < 3:
+            continue
+        ece_sport = sum(abs(ss["model_prob"] - ss["is_win"])) / len(ss)
+        by_sport[sport] = {
+            "n": len(ss),
+            "ece": round(float(ece_sport), 4),
+            "win_rate": round(float(ss["is_win"].mean()), 4),
+        }
+        print(f"  {sport}: ECE={ece_sport:.2%} ({len(ss)}条)")
+
+    result = {
+        "buckets": buckets,
+        "ece": ece,
+        "mce": mce,
+        "n_total": n_total,
+        "by_sport": by_sport,
+    }
+
+    # 保存到报告文件
+    report_path = ROOT / "data" / "storage" / "calibration_report.json"
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    result["timestamp"] = datetime.now().isoformat()
+    with open(report_path, "w", encoding="utf-8") as f:
+        json.dump(result, f, ensure_ascii=False, indent=2)
+
+    print(f"{'='*60}\n")
+    return result
+
+
 def run_decay_check(settle_first: bool = True) -> Dict:
     """运行完整的衰减检测流程。
 
@@ -515,6 +705,18 @@ def run_decay_check(settle_first: bool = True) -> Dict:
         logger.info("\n  按运动:")
         for sport, info in trend["by_sport"].items():
             logger.info("    %s: %.1f%% (%d 样本)", sport, info["accuracy"] * 100, info["n"])
+
+    # 校准度诊断
+    logger.info("")
+    cal = calibration_report()
+    trend["calibration"] = {
+        "ece": cal.get("ece"),
+        "mce": cal.get("mce"),
+        "n_calibrated": cal.get("n_total", 0),
+    }
+    if cal.get("ece") is not None:
+        ece_rating = "✅ 良好" if cal["ece"] < 0.05 else ("⚠️ 一般" if cal["ece"] < 0.10 else "❌ 差")
+        logger.info("  校准度 ECE: %.2f%% %s", cal["ece"] * 100, ece_rating)
 
     logger.info("=" * 55)
 

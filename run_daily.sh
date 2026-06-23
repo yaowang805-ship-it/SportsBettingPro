@@ -25,11 +25,7 @@ if [ ! -f ".env" ]; then
     exit 1
 fi
 
-# 第一步：数据刷新（ESPN -> CSV）
-echo "📡 刷新历史比赛数据..."
-python src/features/refresh_data.py --sport all 2>&1 || echo "⚠️ 数据刷新跳过（非关键步骤）"
-
-# 运行主程序
+# 运行主程序（内部处理数据同步）
 echo "🚀 启动主程序..."
 python main.py
 

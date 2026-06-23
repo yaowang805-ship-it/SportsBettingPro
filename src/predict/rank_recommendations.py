@@ -82,20 +82,25 @@ def _load_arbitrage_opportunities() -> List[Dict]:
                     })
             elif opp.get("type") == "line_shopping":
                 gap = opp.get("price_gap", 0)
-                if gap > 0.07:
+                edge = opp.get("edge", gap)
+                if edge > 0.02:  # line shopping 2% edge 即可, 低于 h2h 套利
+                    best_price = opp.get("best_price", 0)
+                    model_prob = opp.get("model_prob",
+                                         1.0 / best_price + edge if best_price > 0 else 0.55)
+                    mkt_prob = 1.0 / best_price if best_price > 0 else 0.5
                     candidates.append({
-                        "sport": opp.get("_sport", "line_shopping"),
+                        "sport": opp.get("_sport", "football"),
                         "type": "line_shopping",
                         "home_team": opp.get("home_team", ""),
                         "away_team": opp.get("away_team", ""),
-                        "odds": opp.get("best_price", 0),
-                        "model_prob": 0.55,
-                        "mkt_prob": 1.0 / opp.get("best_price", 2.0),
-                        "_ev": 0.55 - 1.0 / opp.get("best_price", 2.0),
+                        "odds": best_price,
+                        "model_prob": round(model_prob, 4),
+                        "mkt_prob": round(mkt_prob, 4),
+                        "_ev": round(edge, 4),
                         "_kelly_frac": 0.0,
                         "_arbitrage": opp,
-                        "league": opp.get("_sport", ""),
-                        "commence_time": "",
+                        "league": opp.get("_sport", "football"),
+                        "commence_time": opp.get("commence_time", ""),
                     })
         logger.info("  📌 套利/比价候选: %d 条", len(candidates))
         return candidates

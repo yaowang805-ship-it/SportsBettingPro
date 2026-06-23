@@ -345,6 +345,40 @@ def _process_team_stats(df):
     return team[feat_cols]
 
 
+def _compute_rolling_poisson_probs(df: pd.DataFrame, block_size: int = 300) -> np.ndarray:
+    """用滚动窗口泊松模型计算每场比赛的 over/under 概率（零泄漏）。
+
+    对第 N 块比赛(第 N*block_size 到 (N+1)*block_size 场)：
+      训练: 用 0..N*block_size-1 的所有历史比赛
+      预测: 当前块的每场比赛的 over_{2.5} 概率
+    训练集不足 block_size 的初始段返回 0.5。
+    """
+    df_sorted = df.sort_values('date').reset_index(drop=True)
+    n = len(df_sorted)
+    probs = np.full(n, 0.5)
+    from src.models.poisson_model import PoissonGoalModel
+
+    for start in range(0, n, block_size):
+        train_end = start + block_size
+        if train_end >= n:
+            break
+        train_df = df_sorted.iloc[:train_end]
+        try:
+            model = PoissonGoalModel(alpha=1.0, decay_halflife_days=365)
+            model.fit(train_df[['date', 'home', 'away', 'home_goals', 'away_goals']])
+        except Exception:
+            continue
+        next_end = min(train_end + block_size, n)
+        for j in range(train_end, next_end):
+            row = df_sorted.iloc[j]
+            try:
+                pred = model.predict_proba(row['home'], row['away'])
+                probs[j] = pred.get('over_2.5', 0.5)
+            except Exception:
+                probs[j] = 0.5
+    return probs
+
+
 def build_football_features(input_csv=None, output_csv=None):
     if input_csv is None:
         input_csv = str(Path(DATA_DIR) / "football_history.csv")
