@@ -161,49 +161,40 @@ def push_dingtalk(opps: list):
     if not qualified:
         return
 
-
-    total = sum(o.get("stake", 0) for o in qualified)
     lines = []
+    lines.append(f"📊 投注推荐 {datetime.now().strftime('%m/%d %H:%M')}")
+    lines.append("")
     for i, o in enumerate(qualified, 1):
         h_cn = cn_team(o["home_team"], "football")
         a_cn = cn_team(o["away_team"], "football")
         oc = OUTCOME_CN.get(o["outcome"], o.get("outcome_label", o["outcome"]))
         fair = round(1.0 / o["model_prob"], 2)
         stake_str = f" ¥{o['stake']:.0f}" if o.get("stake", 0) > 0 else ""
-        # Edge 衰退标记
+        mkt = o.get("market", "1x2")
+        tag = {"over_under": "大小", "btts": "进球"}.get(mkt, "独赢")
         decay = o.get("_edge_decay")
         decay_tag = ""
         if decay and decay.get("decaying"):
-            decay_tag = f" 📉{decay['change']:+.1f}%/{decay['elapsed_min']}m"
-        lines.append(
-            f"##### #{i} {h_cn} vs {a_cn}\n"
-            f"> {oc} | 公平价: {fair}{stake_str} | Edge: +{o['edge_pct']}%{decay_tag}"
-        )
+            decay_tag = f" [下降{decay['change']:+.1f}%]"
+        lines.append(f"{i}. {h_cn} vs {a_cn}")
+        lines.append(f"   {tag} {oc} | 公平价 {fair}{stake_str} | +{o['edge_pct']}%{decay_tag}")
 
     # 衰退汇总
     decaying_all = [o for o in opps if o.get("_edge_decay") and o["_edge_decay"].get("decaying")]
-    decay_summary = ""
     if decaying_all:
-        first3 = decaying_all[:3]
-        decay_lines = [f"📉 {len(decaying_all)} 条机会 Edge 正在下降，建议尽快下注："]
-        for d in first3:
+        lines.append(f"  共 {len(decaying_all)} 条 Edge 下降中，建议尽快下注")
+        for d in decaying_all[:2]:
             h = cn_team(d["home_team"], "football")
             a = cn_team(d["away_team"], "football")
             ch = d["_edge_decay"]["change"]
             mn = d["_edge_decay"]["elapsed_min"]
-            decay_lines.append(f"- {h} vs {a} Edge {ch:+.1f}%（{mn}分钟内）")
-        decay_summary = "\n\n" + "\n".join(decay_lines)
+            lines.append(f"   {h} vs {a} {ch:+.1f}%（{mn}分钟）")
 
-    now = datetime.now(timezone.utc).strftime("%H:%M")
-    title = f"+EV 投注推荐: {len(qualified)} 条"
-    body = (
-        f"**{title}**\n\n"
-        f"刷新 {now} | 日预算 ¥{DAILY_BUDGET:.0f}\n\n"
-        + "\n\n".join(lines)
-        + decay_summary
-    )
+    lines.append("")
+    lines.append(f"日预算 ¥{DAILY_BUDGET:.0f} | 共 {len(opps)} 条机会")
 
-    send_dingtalk(body, msgtype="markdown", title=title)
+    body = "\n".join(lines)
+    send_dingtalk(body, msgtype="markdown", title=f"+EV {len(qualified)}条")
 
 
 def _send_dingtalk_alert(text: str):

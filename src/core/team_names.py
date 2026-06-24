@@ -530,6 +530,7 @@ WC_CN = {
     "South Korea": "韩国", "Spain": "西班牙", "Sweden": "瑞典",
     "Switzerland": "瑞士", "Tunisia": "突尼斯", "Turkey": "土耳其",
     "USA": "美国", "Uruguay": "乌拉圭", "Uzbekistan": "乌兹别克斯坦",
+    "Qingdao Hainiu": "青岛海牛", "Yunnan Yukun": "云南玉昆",
 }
 
 
