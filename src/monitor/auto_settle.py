@@ -267,9 +267,10 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
     away_cn = bet.get("away_cn", "")
     market = bet.get("market_type", bet.get("market_detail", ""))
 
-    # 判断盘口类型
-    ou_match = re.match(r'^([大小])\s*([\d.]+)$', market.strip())
+    # 判断盘口类型（支持 大2.5 / 小1.5 和 over_2.5 / under_1.5 两种格式）
+    ou_match = re.match(r'^(?:([大小])|(over|under))[_\s]*([\d.]+)$', market.strip(), re.IGNORECASE)
     is_over_under = ou_match is not None
+    is_btts = market.strip().lower() in ("yes", "no")
 
     # 构建候选列表: 英文翻译 → 原始值 → 中文名
     home_candidates = []
@@ -337,11 +338,20 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                 # ── 大小球结算 ──
                 if is_over_under:
                     total = home_score + away_score
-                    line = float(ou_match.group(2))
-                    if ou_match.group(1) == '大':
+                    line = float(ou_match.group(3))
+                    direction = (ou_match.group(1) or ou_match.group(2)).lower()
+                    if direction in ('大', 'over'):
                         return "won" if total > line else "lost"
-                    else:  # 小
+                    else:  # 小 / under
                         return "won" if total < line else "lost"
+
+                # ── BTTS 双方进球结算 ──
+                if is_btts:
+                    both_scored = home_score > 0 and away_score > 0
+                    if market.strip().lower() == "yes":
+                        return "won" if both_scored else "lost"
+                    else:  # "no"
+                        return "won" if not both_scored else "lost"
 
                 # ── H2H 结算（主胜/客胜/平） ──
                 is_home_win = home_score > away_score
