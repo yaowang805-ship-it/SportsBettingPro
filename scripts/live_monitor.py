@@ -27,7 +27,7 @@ from config.dingtalk import send_dingtalk
 setup_logging()
 logger = get_logger(__name__)
 
-OUTCOME_CN = {"home": "主胜", "draw": "平局", "away": "客胜"}
+OUTCOME_CN = {"home": "主胜", "draw": "平局", "away": "客胜", "yes": "双方进球", "no": "一方不进"}
 
 REPORT_FILE = DATA_DIR / "live_report.json"
 

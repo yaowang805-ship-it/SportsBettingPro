@@ -496,7 +496,7 @@ class LineShoppingScanner:
 
         for outcome, outcome_label, prob in [
             ("yes", "双方进球", prob_yes),
-            ("no", "不进球", prob_no),
+            ("no", "一方不进", prob_no),
         ]:
             side_key = outcome
             retail_info = retail.get(side_key, {})

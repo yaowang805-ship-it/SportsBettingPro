@@ -78,6 +78,26 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
         logger.info("  ⏭️ 无 Line Shopping 机会")
         return 0
 
+    # 校准：获取 edge 折扣系数（偏差大的联赛/市场打折处理）
+    try:
+        from src.risk.calibration import BetCalibrator
+        calibrator = BetCalibrator()
+        cal_report = calibrator.analyze()
+        if cal_report.get("status") == "ok" and cal_report.get("flagged"):
+            discounted = 0
+            for opp in opportunities:
+                league = opp.get("league", "")
+                market = opp.get("market", "1x2")
+                adj = calibrator.get_edge_adjustment(league, market)
+                if adj < 1.0:
+                    opp["_edge_pct"] = opp.get("edge_pct", 0) * adj
+                    opp["_ev"] = opp.get("_ev", 0) * adj
+                    discounted += 1
+            if discounted:
+                logger.info("  校准打折: %d 条机会 edge 已折扣（偏差联赛/市场）", discounted)
+    except Exception:
+        pass
+
     # 读取已存在的投注 ID，避免重复
     vp_file = DATA_DIR / "virtual_portfolio.json"
     existing_ids = set()

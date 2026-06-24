@@ -464,6 +464,22 @@ def auto_settle(dry_run: bool = False) -> int:
                         )
                     except Exception as e:
                         logger.warning("  记录结算日志失败: %s", e)
+                    # 记录到校准器
+                    try:
+                        from src.risk.calibration import BetCalibrator
+                        model_prob = bet.get("model_prob", 0)
+                        if model_prob > 0 and odds > 1:
+                            BetCalibrator().record(
+                                bet_id=bid,
+                                league=bet.get("league", ""),
+                                market=bet.get("market_type", "unknown"),
+                                edge_pct=(model_prob - 1.0/odds) / (1.0/odds) * 100 if odds > 1 else 0,
+                                model_prob=model_prob,
+                                odds=odds,
+                                result=result,
+                            )
+                    except Exception as e:
+                        logger.warning("  校准记录失败: %s", e)
                     # 同步到 RiskManager 冷却状态
                     try:
                         rm = RiskManager()

@@ -865,6 +865,24 @@ class PaperTrader:
         except Exception:
             pass
 
+        # 校准分析（模型概率 vs 实际胜率）
+        try:
+            from src.risk.calibration import BetCalibrator
+            cal = BetCalibrator().analyze()
+            if cal.get("status") == "ok":
+                bias_pct = cal["overall_bias_pct"]
+                icon = "✅" if abs(bias_pct) < 5 else "⚠️" if abs(bias_pct) < 10 else "❌"
+                lines.append("---")
+                lines.append("**概率校准**")
+                lines.append(f"{icon} 模型概率 {cal['avg_model_prob']*100:.1f}% vs 实际胜率 {cal['actual_win_rate']*100:.1f}%（偏差 {bias_pct:+.1f}%）")
+                lines.append(f"- 样本: {cal['total_bets']} 笔 | 胜 {cal['wins']} 负 {cal['losses']}")
+                if cal["flagged"]:
+                    lines.append(f"⚠️ 标记 {len(cal['flagged'])} 个问题组:")
+                    for f in cal["flagged"]:
+                        lines.append(f"  - [{f['type']}] {f['name']}: 偏差 {f['bias_pct']:+.1f}%（{f['count']} 笔）→ {f['action']}")
+        except Exception:
+            pass
+
         # 建议
         rec = rd.get("recommendation_cn", "")
         if rec:
