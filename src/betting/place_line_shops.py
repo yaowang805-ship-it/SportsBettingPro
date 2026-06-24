@@ -24,6 +24,8 @@ MAX_PER_BET_PCT = 0.20   # 单注上限 20%
 MAX_PER_MATCH_PCT = 0.35  # 单场比赛总暴露上限 35%
 MIN_EDGE = 0.03
 KELLY_FRACTION = 0.25    # 1/4 Kelly 保守策略
+MAX_ODDS = 10.0          # 高赔率过滤（>10的赔率模型概率不可靠）
+MAX_PER_MATCH_BETS = 2   # 同一比赛最多下注方向数
 
 # 备份配置
 BACKUP_DIR = DATA_DIR / "backups" / "virtual_portfolio"
@@ -146,6 +148,32 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
 
     if not candidates:
         logger.info("  ⏭️ 所有机会已存在或无满足条件的机会")
+        return 0
+
+    # ── 优化过滤 ──
+    before = len(candidates)
+
+    # 1) 过滤高赔率（>10倍模型概率不可靠）
+    candidates = [c for c in candidates if c["odds"] <= MAX_ODDS]
+    filtered_odds = before - len(candidates)
+
+    # 2) 同一比赛最多 MAX_PER_MATCH_BETS 个方向（按 EV 取top）
+    match_groups = {}
+    for c in candidates:
+        key = f"{c['home']}_{c['away']}"
+        match_groups.setdefault(key, []).append(c)
+    candidates = []
+    for key, group in match_groups.items():
+        # 组内已按 EV 降序（外层已排序）
+        candidates.extend(group[:MAX_PER_MATCH_BETS])
+    filtered_match = sum(len(g) - MAX_PER_MATCH_BETS for g in match_groups.values()
+                          if len(g) > MAX_PER_MATCH_BETS)
+
+    if filtered_odds or filtered_match:
+        logger.info("  优化过滤: 高赔率 %d 条, 同比赛超额 %d 条", filtered_odds, filtered_match)
+
+    if not candidates:
+        logger.info("  ⏭️ 过滤后无候选")
         return 0
 
     # ── 第二遍：归一化到 daily_budget ──
