@@ -22,6 +22,7 @@ from src.betting.line_shopping import LineShoppingScanner
 from src.core.team_names import cn_team
 from config.settings import DATA_DIR, DINGTALK_WEBHOOK
 from config.logging_config import get_logger, setup_logging
+from config.dingtalk import send_dingtalk
 
 setup_logging()
 logger = get_logger(__name__)
@@ -160,7 +161,6 @@ def push_dingtalk(opps: list):
     if not qualified:
         return
 
-    import requests
 
     total = sum(o.get("stake", 0) for o in qualified)
     lines = []
@@ -203,31 +203,12 @@ def push_dingtalk(opps: list):
         + decay_summary
     )
 
-    try:
-        resp = requests.post(
-            DINGTALK_WEBHOOK,
-            json={"msgtype": "markdown", "markdown": {"title": title, "text": body}},
-            timeout=10,
-        )
-        logger.info("  钉钉推送: %s", resp.json().get("errmsg", resp.status_code))
-    except Exception as e:
-        logger.warning("  钉钉推送失败: %s", e)
+    send_dingtalk(body, msgtype="markdown", title=title)
 
 
 def _send_dingtalk_alert(text: str):
     """发送纯文本钉钉告警（用于故障通知）。"""
-    if not DINGTALK_WEBHOOK:
-        return
-    import requests
-    try:
-        resp = requests.post(
-            DINGTALK_WEBHOOK,
-            json={"msgtype": "text", "text": {"content": text}},
-            timeout=10,
-        )
-        logger.info("  故障告警推送: %s", resp.json().get("errmsg", resp.status_code))
-    except Exception as e:
-        logger.warning("  故障告警推送失败: %s", e)
+    send_dingtalk(text)
 
 
 def push_daily_review():
@@ -244,16 +225,9 @@ def push_daily_review():
         pt = PaperTrader()
         state = pt.refresh()
         report = pt.generate_dingtalk_report(state)
-        # 钉钉需要关键词"投注推荐"
         title = f"📊 投注推荐复盘 — {today}"
         body = f"👉 投注推荐复盘\n\n{report}"
-        import requests
-        resp = requests.post(
-            DINGTALK_WEBHOOK,
-            json={"msgtype": "markdown", "markdown": {"title": title, "text": body}},
-            timeout=10,
-        )
-        logger.info("  每日复盘推送: %s", resp.json().get("errmsg", resp.status_code))
+        send_dingtalk(body, msgtype="markdown", title=title)
         _LAST_REVIEW_DATE = today
     except Exception as e:
         logger.warning("  每日复盘推送失败: %s", e)
