@@ -302,23 +302,31 @@ def main():
             continue
         consecutive_failures = 0  # 成功后重置
 
-        # ── 虚拟投注 + 自动结算（--betting 模式） ──
+        # ── 自动结算（每次扫描都跑，不依赖新投注） ──
+        if args.betting:
+            from src.monitor.auto_settle import auto_settle
+            settled = auto_settle()
+            if settled:
+                logger.info("  已结算 %d 笔", settled)
+
+        # ── 虚拟投注（--betting 模式） ──
+        placed = 0
         if args.betting:
             from src.betting.place_line_shops import place_line_shops
             placed = place_line_shops()
-            if placed:
-                from src.monitor.auto_settle import auto_settle
-                auto_settle()
-                from src.betting.paper_trader import PaperTrader
-                pt = PaperTrader()
-                state = pt.refresh()
-                rd = state.get("readiness", {})
-                verdict = "GO" if rd.get("ready") else "NO-GO"
-                logger.info("   余额: ¥%.0f | 已结算: %d 笔 | P&L: ¥%+.0f | %s",
-                            state.get("current_bankroll", 0),
-                            state.get("settled_bets", 0),
-                            state.get("total_profit", 0),
-                            verdict)
+
+        # ── 投注后状态报告 ──
+        if args.betting and (placed or settled):
+            from src.betting.paper_trader import PaperTrader
+            pt = PaperTrader()
+            state = pt.refresh()
+            rd = state.get("readiness", {})
+            verdict = "GO" if rd.get("ready") else "NO-GO"
+            logger.info("   余额: ¥%.0f | 已结算: %d 笔 | P&L: ¥%+.0f | %s",
+                        state.get("current_bankroll", 0),
+                        state.get("settled_bets", 0),
+                        state.get("total_profit", 0),
+                        verdict)
 
         if opps:
             report = generate_report(opps)
