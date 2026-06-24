@@ -26,6 +26,7 @@ MIN_EDGE = 0.03
 KELLY_FRACTION = 0.25    # 1/4 Kelly 保守策略
 MAX_ODDS = 10.0          # 高赔率过滤（>10的赔率模型概率不可靠）
 MAX_PER_MATCH_BETS = 2   # 同一比赛最多下注方向数
+SCAN_BUDGET_PCT = 0.30   # 每次扫描最多花剩余预算的 30%
 
 # 备份配置
 BACKUP_DIR = DATA_DIR / "backups" / "virtual_portfolio"
@@ -103,10 +104,14 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
     if remaining_budget < 100:
         logger.info("  ⏭️ 今日预算已用完（¥%.0f / ¥%.0f）", already_allocated_today, budget)
         return 0
-    if remaining_budget < budget:
-        logger.info("  今日已分配 ¥%.0f / ¥%.0f，剩余 ¥%.0f",
-                    already_allocated_today, budget, remaining_budget)
-    budget = remaining_budget
+
+    # 每次扫描最多花剩余预算的 SCAN_BUDGET_PCT，留子弹给后面的机会
+    scan_budget = round(remaining_budget * SCAN_BUDGET_PCT, 0)
+    scan_budget = max(scan_budget, 100)  # 至少留¥100（给小额机会）
+    scan_budget = min(scan_budget, remaining_budget)
+    logger.info("  今日已分配 ¥%.0f / ¥%.0f，本次扫描预算 ¥%.0f（剩余 ¥%.0f 留后续）",
+                already_allocated_today, budget, scan_budget, remaining_budget - scan_budget)
+    budget = scan_budget
 
     # ── 按 EV 降序排列 ──
     opportunities.sort(key=lambda x: x.get("_ev", 0), reverse=True)
@@ -221,7 +226,7 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
         key = f"{b['home_team']}_{b['away_team']}"
         match_exposure.setdefault(key, 0)
         match_exposure[key] += b["stake"]
-    max_per_match = budget * MAX_PER_MATCH_PCT
+    max_per_match = DAILY_BUDGET * MAX_PER_MATCH_PCT
     for b in bet_list:
         key = f"{b['home_team']}_{b['away_team']}"
         if match_exposure[key] > max_per_match:
