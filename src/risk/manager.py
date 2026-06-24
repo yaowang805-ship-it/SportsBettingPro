@@ -233,7 +233,7 @@ class PortfolioOptimizer:
 class RiskManager:
     """职业级风险管理器 — 冷却止损 + 相关投注互斥 + ML 动态仓位版。"""
 
-    COOL_OFF_HOURS = 24         # 触发冷却后停注 N 小时
+    COOL_OFF_HOURS = 0          # 虚拟投注不启用冷却（之前24h，去掉因为纯虚拟无实际风险）
     MAX_SAME_GAME_MARKETS = 2   # 同一场比赛最多下注 N 个不同市场（联合凯利折扣后）
 
     def __init__(self, initial_budget: float = DEFAULT_BUDGET):
