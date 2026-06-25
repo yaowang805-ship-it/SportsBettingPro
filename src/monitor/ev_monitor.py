@@ -141,11 +141,8 @@ def _calc_stakes(opps: List[dict]) -> List[dict]:
     return result
 
 
-def _send_dingtalk(opps: List[dict]):
-    if not DINGTALK_WEBHOOK:
-        logger.info("  未配置钉钉 Webhook，跳过推送")
-        return
-
+def _build_dingtalk_body(opps: List[dict]) -> str:
+    """构建钉钉推送的 Markdown 正文（纯函数，不含网络调用）。"""
     opps = _calc_stakes(opps)
     now = datetime.now(timezone.utc)
     lines = []
@@ -154,8 +151,9 @@ def _send_dingtalk(opps: List[dict]):
 
     for i, opp in enumerate(opps[:20], 1):
         oc = _outcome_label(opp)
-        h_cn = cn_team(opp['home_team'], 'football')
-        a_cn = cn_team(opp['away_team'], 'football')
+        _sport = "nba" if opp.get("sport") in ("nba", "basketball") or "nba" in opp.get("league", "").lower() else "football"
+        h_cn = cn_team(opp['home_team'], _sport)
+        a_cn = cn_team(opp['away_team'], _sport)
         fair = round(1.0 / opp['model_prob'], 2)
         tag = MARKET_TAG.get(opp.get("market", "1x2"), opp.get("market", ""))
 
@@ -199,7 +197,15 @@ def _send_dingtalk(opps: List[dict]):
     if waiting:
         lines.append(f"⏳ {waiting} 条 >30h 两段式等待中")
 
-    body = "\n".join(lines)
+    return "\n".join(lines)
+
+
+def _send_dingtalk(opps: List[dict]):
+    if not DINGTALK_WEBHOOK:
+        logger.info("  未配置钉钉 Webhook，跳过推送")
+        return
+
+    body = _build_dingtalk_body(opps)
     title = f"+EV {len(opps)}条"
 
     try:

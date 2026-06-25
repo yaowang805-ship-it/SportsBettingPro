@@ -11,6 +11,7 @@ help:
 	@echo "  make backtest     运行回测"
 	@echo "  make health       系统健康检查"
 	@echo "  make test         运行单元测试（85+ 项）"
+	@echo "  make test-format  仅测试钉钉推送格式回归（快速）"
 	@echo "  make lint         运行 ruff 代码检查"
 	@echo "  make format       自动格式化代码"
 	@echo "  make install      安装依赖"
@@ -40,6 +41,9 @@ health:
 
 test:
 	python3 -m pytest tests/ -v
+
+test-format:
+	python3 -m pytest tests/test_ev_monitor_format.py -v
 
 install:
 	pip install -r requirements.txt
