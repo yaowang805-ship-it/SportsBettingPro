@@ -28,6 +28,16 @@ MAX_ODDS = 10.0          # 高赔率过滤（>10的赔率模型概率不可靠�
 MAX_PER_MATCH_BETS = 2   # 同一比赛最多下注方向数
 SCAN_BUDGET_PCT = 0.30   # 每次扫描最多花剩余预算的 30%
 
+# 各市场的 Kelly 信心乘数（流动性低的市场减半）
+_CONFIDENCE = {
+    "1x2": 1.0,
+    "over_under": 1.0,
+    "btts": 0.5,
+    "corners_1x2": 0.5,
+    "double_chance": 0.5,
+    "draw_no_bet": 0.5,
+}
+
 # 两段式投注：扫描发现机会后，只在临近比赛时再投注
 # 72h 扫到 → 等 → 进入 MAX_HOURS_AHEAD 窗口 → 重新验证 → 投注
 MAX_HOURS_AHEAD = 30     # 超过此小时数的比赛不投注（留给后续验证）
@@ -227,7 +237,7 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
         return 0
 
     # ── 第二遍：归一化到 daily_budget ──
-    raw_stakes = [min(c["kelly"] * KELLY_FRACTION, MAX_PER_BET_PCT) for c in candidates]
+    raw_stakes = [min(c["kelly"] * KELLY_FRACTION * _CONFIDENCE.get(c["opp"].get("market", ""), 0.5), MAX_PER_BET_PCT) for c in candidates]
     total_raw = sum(raw_stakes)
 
     bet_list = []
@@ -253,6 +263,7 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
             "away_team": c["away"],
             "home_cn": c["home"],
             "away_cn": c["away"],
+            "market": c["opp"].get("market", ""),
             "market_type": c["outcome"],
             "odds": c["odds"],
             "stake": stake,

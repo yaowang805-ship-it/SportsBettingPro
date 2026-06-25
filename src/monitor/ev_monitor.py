@@ -63,6 +63,16 @@ DAILY_BUDGET = 10000.0
 MAX_PER_BET = 2000.0
 MAX_PER_MATCH = 3500.0
 
+# 各市场的 Kelly 信心乘数（流动性低的市场减半）
+_CONFIDENCE = {
+    "1x2": 1.0,
+    "over_under": 1.0,
+    "btts": 0.5,
+    "corners_1x2": 0.5,
+    "double_chance": 0.5,
+    "draw_no_bet": 0.5,
+}
+
 
 def _outcome_label(opp: dict) -> str:
     """获取中文结果标签。"""
@@ -110,7 +120,7 @@ def _calc_stakes(opps: List[dict]) -> List[dict]:
         candidates.append({**o, "_kelly": kelly})
 
     valid = [c for c in candidates if "_kelly" in c]
-    raw = [min(c["_kelly"] * 0.25, MAX_PER_BET / scan_budget) for c in valid]
+    raw = [min(c["_kelly"] * 0.25 * _CONFIDENCE.get(c.get("market", ""), 0.5), MAX_PER_BET / scan_budget) for c in valid]
     total_raw = sum(raw)
 
     result = []

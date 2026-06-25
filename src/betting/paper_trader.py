@@ -334,6 +334,38 @@ class PaperTrader:
             sv["avg_clv"] = (sum(sv["clv_values"]) / len(sv["clv_values"])
                              if sv["clv_values"] else None)
 
+        # ── 按市场拆分（1x2 / over_under / btts / corners 等）──
+        by_market = {}
+        for h in history:
+            mkt = h.get("market") or h.get("market_type", "unknown")
+            if mkt not in by_market:
+                by_market[mkt] = {"bets": 0, "settled": 0, "win_count": 0,
+                                  "loss_count": 0, "total_stake": 0.0,
+                                  "total_profit": 0.0}
+            s = by_market[mkt]
+            s["settled"] += 1
+            s["bets"] += 1
+            if h.get("status") == "won":
+                s["win_count"] += 1
+            elif h.get("status") == "lost":
+                s["loss_count"] += 1
+            s["total_stake"] += h.get("stake", 0)
+            s["total_profit"] += h.get("profit", 0)
+        # pending 也算在总 bet 数内
+        for b in pending:
+            mkt = b.get("market") or b.get("market_type", "unknown")
+            if mkt not in by_market:
+                by_market[mkt] = {"bets": 0, "settled": 0, "win_count": 0,
+                                  "loss_count": 0, "total_stake": 0.0,
+                                  "total_profit": 0.0}
+            by_market[mkt]["bets"] += 1
+
+        for mk, mv in by_market.items():
+            mv["win_rate"] = (mv["win_count"] / max(mv["settled"], 1)
+                              if mv["settled"] > 0 else None)
+            mv["roi"] = (mv["total_profit"] / max(self.initial_balance, 1)
+                         if mv["settled"] > 0 else None)
+
         # ── 时间窗口统计 ──
         now = datetime.now(timezone.utc)
         def _in_window(h, days):
@@ -495,6 +527,7 @@ class PaperTrader:
             "last_bet_date": last_bet,
             "total_days_active": days_active,
             "by_sport": by_sport,
+            "by_market": by_market,
             "equity_curve": equity_curve,
             "metrics_by_tier": metrics_by_tier,
             "readiness": {
@@ -705,7 +738,28 @@ class PaperTrader:
             lines.append("")
             line = "  * Sports with <20 settled bets: insufficient data for reliable assessment"
             lines.append(line)
-        lines.append("")
+
+        # ── 按市场 ──
+        by_market = s.get("by_market", {})
+        if by_market:
+            lines.append("")
+            header = f"  {'Market':<14} {'Bets':>6} {'Settled':>8} {'Won/Loss':>10} {'WinRate':>8} {'Profit':>10} {'ROI':>8}"
+            lines.append(header)
+            lines.append("  " + "-" * (len(header) - 2))
+            for mk in sorted(by_market.keys()):
+                mv = by_market[mk]
+                if mv["settled"] > 0:
+                    wl = f"{mv['win_count']}W/{mv['loss_count']}L"
+                    wr_str = f"{mv['win_rate']:.1%}" if mv["win_rate"] is not None else "N/A"
+                    profit_str = f"¥{mv['total_profit']:+.0f}" if abs(mv['total_profit']) >= 0.5 else "¥0"
+                    roi_str = f"{mv['roi']:.1%}" if mv["roi"] is not None else "N/A"
+                else:
+                    wl = "0/0"
+                    wr_str = "N/A"
+                    profit_str = "N/A"
+                    roi_str = "N/A"
+                lines.append(f"  {mk:<14} {mv['bets']:>6} {mv['settled']:>8} {wl:>10} {wr_str:>8} {profit_str:>10} {roi_str:>8}")
+            lines.append("")
 
         # ═══════════ 6. TIERED ═══════════
         lines.append(sub)
