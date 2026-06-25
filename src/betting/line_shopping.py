@@ -57,7 +57,7 @@ RETAIL_SLUGS = [
 ]
 
 MIN_EV = 0.02
-MAX_OPPORTUNITIES = 40  # 含大小球 + BTTS
+MAX_OPPORTUNITIES = 60  # 含1x2 + 大小球 + BTTS + 双边 + 无平 + 角球
 
 # Over/Under 盘口配置：(市场 key, 盘口线, 显示名称)
 OVER_UNDER_MARKETS = [
@@ -161,7 +161,7 @@ class LineShoppingScanner:
 
     def _get_best_retail_2way(self, market_data: dict, side1_key: str, side2_key: str) -> dict:
         """从 BSD 2-way 市场获取最佳零售赔率及来源。"""
-        best = {}
+        result = {}
         for side_key in [side1_key, side2_key]:
             bm = market_data.get(side_key, {}).get("bookmakers", {})
             best_odds, best_bm = 0.0, ""
@@ -172,8 +172,8 @@ class LineShoppingScanner:
                     if odds > best_odds:
                         best_odds = odds
                         best_bm = slug
-            best[side_key] = {"odds": best_odds, "bookmaker": best_bm}
-        return best
+            result[side_key] = {"odds": best_odds, "bookmaker": best_bm}
+        return result
 
     MAX_EDGE_PCT = 30.0  # 超过此值的 edge 视为数据错误
     MAX_PINNY_STALE_HOURS = 12  # Pinnacle 数据超过此小时数视为过期
@@ -350,6 +350,24 @@ class LineShoppingScanner:
         btts_data = markets.get("btts")
         if btts_data:
             opps = self._evaluate_btts(event_info, btts_data)
+            opportunities.extend(opps)
+
+        # ── Double Chance 双边机会 ──
+        dc_data = markets.get("double_chance")
+        if dc_data and h2h:  # 需要 1x2 数据做互补计算
+            opps = self._evaluate_double_chance(event_info, dc_data, h2h)
+            opportunities.extend(opps)
+
+        # ── Draw No Bet 平局退款 ──
+        dnb_data = markets.get("draw_no_bet")
+        if dnb_data:
+            opps = self._evaluate_draw_no_bet(event_info, dnb_data)
+            opportunities.extend(opps)
+
+        # ── Corners 1x2 角球独赢 ──
+        corners_data = markets.get("corners_1x2")
+        if corners_data:
+            opps = self._evaluate_corners_1x2(event_info, corners_data)
             opportunities.extend(opps)
 
         return opportunities
@@ -545,6 +563,169 @@ class LineShoppingScanner:
 
             opportunities.append(opp)
 
+        return opportunities
+
+    def _evaluate_double_chance(self, event_info: dict, dc_data: dict, h2h: dict) -> List[Dict]:
+        """评估 Double Chance 双边机会（1X/12/X2）。"""
+        # 从 1x2 市场取互补方向的 Pinnacle 赔率
+        pinny_1x2 = self._get_pinnacle_odds(h2h)
+        if not pinny_1x2:
+            return []
+        # DC 配对: (DC方向, 互补结果, 互补赔率key, 显示名)
+        dc_config = [
+            ("1X", "away", "主/平"),
+            ("12", "draw", "主/客"),
+            ("X2", "home", "客/平"),
+        ]
+        opportunities = []
+        for dc_side, comp_key, label in dc_config:
+            # Pinnacle DC 赔率
+            pinny_dc_side = (dc_data.get(dc_side, {}).get("bookmakers", {})
+                             .get(PINNACLE_SLUG, {}).get("decimal_odds"))
+            if not pinny_dc_side:
+                continue
+            pinny_dc_side = float(pinny_dc_side)
+            # 互补方向 Pinnacle 赔率
+            comp_odds = pinny_1x2.get(comp_key)
+            if not comp_odds or comp_odds <= 0:
+                continue
+            # 2-way 去抽水
+            prob_dc, prob_comp, vig = _remove_vig_2way(pinny_dc_side, comp_odds)
+            # 零售最佳
+            retail_odds = 0.0
+            retail_bm = ""
+            bm = dc_data.get(dc_side, {}).get("bookmakers", {})
+            for slug in RETAIL_SLUGS:
+                rd = bm.get(slug, {}).get("decimal_odds")
+                if rd:
+                    r = float(rd)
+                    if r > retail_odds:
+                        retail_odds = r
+                        retail_bm = slug
+            if retail_odds <= 0:
+                continue
+            retail_implied = 1.0 / retail_odds
+            ev = (prob_dc - retail_implied) / retail_implied
+            if ev <= self.min_ev:
+                continue
+            kelly = (prob_dc * retail_odds - 1) / (retail_odds - 1) * 0.25
+            if kelly <= 0:
+                continue
+            opp = {
+                "type": "line_shopping", "market": "double_chance",
+                "sport": "football", "league": event_info.get("league_name", ""),
+                "home_team": event_info["home_team"], "away_team": event_info["away_team"],
+                "outcome": dc_side, "outcome_label": label,
+                "commence_time": event_info.get("commence_time", ""),
+                "pinny_odds": round(pinny_dc_side, 4),
+                "retail_odds": round(retail_odds, 4),
+                "retail_bookmaker": retail_bm,
+                "edge_pct": round(ev * 100, 2), "kelly_pct": round(kelly * 100, 2),
+                "vig_pct": round(vig * 100, 2), "_ev": ev, "_kelly_frac": kelly,
+                "odds": retail_odds, "model_prob": round(prob_dc, 4),
+                "mkt_prob": round(retail_implied, 4),
+            }
+            if self._validate_opportunity(opp, pinny_1x2, None):
+                opportunities.append(opp)
+        return opportunities
+
+    def _evaluate_draw_no_bet(self, event_info: dict, dnb_data: dict) -> List[Dict]:
+        """评估 Draw No Bet 平局退款（HOME/AWAY）。"""
+        sides = {"HOME": "主胜(无平)", "AWAY": "客胜(无平)"}
+        opportunities = []
+        for side, label in sides.items():
+            pinny_odds = (dnb_data.get(side, {}).get("bookmakers", {})
+                          .get(PINNACLE_SLUG, {}).get("decimal_odds"))
+            if not pinny_odds:
+                continue
+            pinny_odds = float(pinny_odds)
+            # 找互补方向做 2-way 去抽水
+            comp_side = "AWAY" if side == "HOME" else "HOME"
+            comp_pinny = (dnb_data.get(comp_side, {}).get("bookmakers", {})
+                          .get(PINNACLE_SLUG, {}).get("decimal_odds"))
+            if not comp_pinny:
+                continue
+            prob, prob_comp, vig = _remove_vig_2way(pinny_odds, float(comp_pinny))
+            # 零售最佳
+            retail_odds = 0.0
+            retail_bm = ""
+            bm = dnb_data.get(side, {}).get("bookmakers", {})
+            for slug in RETAIL_SLUGS:
+                rd = bm.get(slug, {}).get("decimal_odds")
+                if rd:
+                    r = float(rd)
+                    if r > retail_odds:
+                        retail_odds = r
+                        retail_bm = slug
+            if retail_odds <= 0:
+                continue
+            retail_implied = 1.0 / retail_odds
+            ev = (prob - retail_implied) / retail_implied
+            if ev <= self.min_ev:
+                continue
+            kelly = (prob * retail_odds - 1) / (retail_odds - 1) * 0.25
+            if kelly <= 0:
+                continue
+            opp = {
+                "type": "line_shopping", "market": "draw_no_bet",
+                "sport": "football", "league": event_info.get("league_name", ""),
+                "home_team": event_info["home_team"], "away_team": event_info["away_team"],
+                "outcome": side.lower(), "outcome_label": label,
+                "commence_time": event_info.get("commence_time", ""),
+                "pinny_odds": round(pinny_odds, 4),
+                "retail_odds": round(retail_odds, 4),
+                "retail_bookmaker": retail_bm,
+                "edge_pct": round(ev * 100, 2), "kelly_pct": round(kelly * 100, 2),
+                "vig_pct": round(vig * 100, 2), "_ev": ev, "_kelly_frac": kelly,
+                "odds": retail_odds, "model_prob": round(prob, 4),
+                "mkt_prob": round(retail_implied, 4),
+            }
+            if self._validate_opportunity(opp, {side: pinny_odds, comp_side: float(comp_pinny)}, dnb_data):
+                opportunities.append(opp)
+        return opportunities
+
+    def _evaluate_corners_1x2(self, event_info: dict, corners_data: dict) -> List[Dict]:
+        """评估 Corners 1x2 角球独赢（复用 1x2 评估逻辑）。"""
+        pinny = self._get_pinnacle_odds(corners_data)
+        if not pinny:
+            return []
+        pinny_h, pinny_d, pinny_a, vig = _remove_vig(pinny["home"], pinny["draw"], pinny["away"])
+        retail = self._get_best_retail(corners_data)
+        opportunities = []
+        for outcome, pinny_prob, retail_key, label in [
+            ("home", pinny_h, "home", "角球主胜"),
+            ("draw", pinny_d, "draw", "角球平局"),
+            ("away", pinny_a, "away", "角球客胜"),
+        ]:
+            retail_odds = retail[retail_key]
+            if retail_odds <= 0:
+                continue
+            retail_implied = 1.0 / retail_odds
+            ev = (pinny_prob - retail_implied) / retail_implied
+            if ev <= self.min_ev:
+                continue
+            kelly = (pinny_prob * retail_odds - 1) / (retail_odds - 1) * 0.25
+            if kelly <= 0:
+                continue
+            opp = {
+                "type": "line_shopping", "market": "corners_1x2",
+                "sport": "football", "league": event_info.get("league_name", ""),
+                "home_team": event_info["home_team"], "away_team": event_info["away_team"],
+                "outcome": outcome, "outcome_label": label,
+                "commence_time": event_info.get("commence_time", ""),
+                "pinny_home_odds": pinny["home"], "pinny_draw_odds": pinny["draw"],
+                "pinny_away_odds": pinny["away"],
+                "pinny_prob_home": round(pinny_h, 4), "pinny_prob_draw": round(pinny_d, 4),
+                "pinny_prob_away": round(pinny_a, 4),
+                "retail_odds": round(retail_odds, 4),
+                "retail_bookmaker": retail[f"{retail_key}_bm"],
+                "edge_pct": round(ev * 100, 2), "kelly_pct": round(kelly * 100, 2),
+                "vig_pct": round(vig * 100, 2), "_ev": ev, "_kelly_frac": kelly,
+                "odds": retail_odds, "model_prob": round(pinny_prob, 4),
+                "mkt_prob": round(retail_implied, 4),
+            }
+            if self._validate_opportunity(opp, pinny, corners_data):
+                opportunities.append(opp)
         return opportunities
 
     def scan(self) -> List[Dict]:

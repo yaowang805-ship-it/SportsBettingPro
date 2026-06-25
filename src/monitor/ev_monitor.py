@@ -22,13 +22,16 @@ sys.path.insert(0, str(ROOT))
 from config.logging_config import get_logger
 from config.settings import DATA_DIR, DINGTALK_WEBHOOK
 from src.betting.line_shopping import LineShoppingScanner
+from src.core.team_names import cn_team
 from src.monitor.clv_ls import track_pending_snapshots, send_clv_report
 
 logger = get_logger(__name__)
 
 SEEN_FILE = DATA_DIR / "ev_seen.json"
 
-OUTCOME_CN = {"home": "🏠 主胜", "draw": "⚖️ 平局", "away": "✈️ 客胜"}
+OUTCOME_CN = {"home": "🏠 主胜", "draw": "⚖️ 平局", "away": "✈️ 客胜",
+               "over": "大", "under": "小",
+               "yes": "双方进球", "no": "不进球"}
 
 
 def _load_seen() -> dict:
@@ -49,33 +52,155 @@ def _fingerprint(opp: dict) -> str:
     return f"{opp.get('league', '')}|{opp['home_team']}|{opp['away_team']}|{opp['outcome']}"
 
 
+MARKET_TAG = {"1x2": "独赢", "over_under": "大小", "btts": "进球",
+               "double_chance": "双边", "draw_no_bet": "无平", "corners_1x2": "角球"}
+
+OUTCOME_CN_MAP = {"home": "主胜", "draw": "平局", "away": "客胜",
+                   "over": "大", "under": "小",
+                   "yes": "双方进球", "no": "不进球"}
+
+DAILY_BUDGET = 10000.0
+MAX_PER_BET = 2000.0
+MAX_PER_MATCH = 3500.0
+
+
+def _outcome_label(opp: dict) -> str:
+    """获取中文结果标签。"""
+    label = opp.get("outcome_label", "")
+    if label:
+        return label
+    return OUTCOME_CN_MAP.get(opp.get("outcome", ""), opp.get("outcome", ""))
+
+
+def _calc_stakes(opps: List[dict]) -> List[dict]:
+    """估算每笔投注的 ¥ 金额（与 place_line_shops 逻辑一致）。"""
+    vp_file = DATA_DIR / "virtual_portfolio.json"
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    allocated_today = 0.0
+    if vp_file.exists():
+        try:
+            vp = json.loads(vp_file.read_text())
+            for b in vp.get("pending_bets", []):
+                ct = b.get("created_at", "")
+                if today_str in ct:
+                    allocated_today += b.get("stake", 0)
+        except Exception:
+            pass
+    budget = max(0, DAILY_BUDGET - allocated_today)
+    if budget < 100:
+        return [{**o, "stake": 0} for o in opps]
+
+    scan_budget = round(budget * 0.30, 0)
+    scan_budget = max(scan_budget, 100)
+    scan_budget = min(scan_budget, budget)
+
+    candidates = []
+    for o in opps:
+        ev = o.get("_ev", 0)
+        odds = o.get("odds", 0)
+        model_prob = o.get("model_prob", 0)
+        if ev < 0.03 or odds <= 1 or model_prob <= 0:
+            candidates.append({**o, "stake": 0})
+            continue
+        b_val = odds - 1.0
+        kelly = (model_prob * b_val - (1.0 - model_prob)) / b_val if b_val > 0 else 0
+        if kelly <= 0:
+            candidates.append({**o, "stake": 0})
+            continue
+        candidates.append({**o, "_kelly": kelly})
+
+    valid = [c for c in candidates if "_kelly" in c]
+    raw = [min(c["_kelly"] * 0.25, MAX_PER_BET / scan_budget) for c in valid]
+    total_raw = sum(raw)
+
+    result = []
+    i = 0
+    for c in candidates:
+        if "_kelly" in c:
+            if total_raw > 0:
+                stake = min(round(scan_budget * raw[i] / total_raw, 0), MAX_PER_BET)
+            else:
+                stake = 0
+            i += 1
+            result.append({**c, "stake": int(stake)})
+        else:
+            result.append(c)
+
+    match_total = {}
+    for r in result:
+        key = f"{r.get('home_team', '')}_{r.get('away_team', '')}"
+        match_total[key] = match_total.get(key, 0) + r.get("stake", 0)
+    for r in result:
+        key = f"{r.get('home_team', '')}_{r.get('away_team', '')}"
+        if match_total.get(key, 0) > MAX_PER_MATCH:
+            ratio = MAX_PER_MATCH / match_total[key]
+            new_stake = round(r["stake"] * ratio, 0)
+            match_total[key] -= r["stake"] - new_stake
+            r["stake"] = int(new_stake)
+
+    return result
+
+
 def _send_dingtalk(opps: List[dict]):
     if not DINGTALK_WEBHOOK:
         logger.info("  未配置钉钉 Webhook，跳过推送")
         return
 
+    opps = _calc_stakes(opps)
+    now = datetime.now(timezone.utc)
     lines = []
-    for opp in opps[:5]:
-        outcome_cn = OUTCOME_CN.get(opp["outcome"], opp["outcome"])
-        commence = opp.get("commence_time", "")
-        try:
-            dt = datetime.fromisoformat(commence.replace("Z", "+00:00"))
-            commence_cn = dt.strftime("%m/%d %H:%M")
-        except (ValueError, TypeError):
-            commence_cn = commence
+    lines.append(f"📊 投注推荐 {now.strftime('%m/%d %H:%M')}")
+    lines.append("")
 
-        lines.append(
-            f"##### {opp['home_team']} vs {opp['away_team']}\n"
-            f"> 结果: {outcome_cn} | 时间: {commence_cn}\n"
-            f"> Edge: **+{opp['edge_pct']}%** | 赔率: {opp['retail_odds']:.2f} @ {opp['retail_bookmaker']}\n"
-            f"> Pinnacle: {opp['pinny_home_odds']:.2f}/{opp['pinny_draw_odds']:.2f}/{opp['pinny_away_odds']:.2f}"
-        )
+    for i, opp in enumerate(opps[:20], 1):
+        oc = _outcome_label(opp)
+        h_cn = cn_team(opp['home_team'], 'football')
+        a_cn = cn_team(opp['away_team'], 'football')
+        fair = round(1.0 / opp['model_prob'], 2)
+        tag = MARKET_TAG.get(opp.get("market", "1x2"), opp.get("market", ""))
 
-    total = len(opps)
-    title = f"⚽ +EV 投注推荐: {total} 条"
-    body = f"**{title}**\n\n发现 {total} 条 Line Shopping 机会：\n\n" + "\n\n".join(lines)
-    if total > 5:
-        body += f"\n\n...及另外 {total - 5} 条，详见 line_shopping_results.json"
+        ct = opp.get("commence_time", "")
+        time_tag = ""
+        if ct:
+            try:
+                dt = datetime.fromisoformat(ct.replace("Z", "+00:00"))
+                hours = (dt - now).total_seconds() / 3600
+                if hours > 48:
+                    time_tag = f" [{hours:.0f}h后]"
+                elif hours > 24:
+                    time_tag = f" [{hours:.0f}h后]"
+                elif hours > 1:
+                    time_tag = f" [{hours:.0f}h后]"
+                elif hours > 0:
+                    time_tag = f" [{int(hours*60)}分钟后]"
+                else:
+                    time_tag = " [已开赛]"
+            except Exception:
+                pass
+
+        stake_str = f" ¥{opp['stake']:.0f}" if opp.get("stake", 0) > 0 else ""
+
+        lines.append(f"{i}. {h_cn} vs {a_cn}{time_tag}")
+        lines.append(f"   {tag} {oc} | 公平价 {fair}{stake_str} | +{opp['edge_pct']}%")
+
+    waiting = 0
+    for opp in opps:
+        ct = opp.get("commence_time", "")
+        if ct:
+            try:
+                dt = datetime.fromisoformat(ct.replace("Z", "+00:00"))
+                if (dt - now).total_seconds() / 3600 > 30:
+                    waiting += 1
+            except Exception:
+                pass
+
+    lines.append("")
+    lines.append(f"日预算 ¥{DAILY_BUDGET:.0f} | 共 {len(opps)} 条机会")
+    if waiting:
+        lines.append(f"⏳ {waiting} 条 >30h 两段式等待中")
+
+    body = "\n".join(lines)
+    title = f"+EV {len(opps)}条"
 
     try:
         import requests

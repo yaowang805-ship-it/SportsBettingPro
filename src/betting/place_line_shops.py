@@ -7,9 +7,9 @@
     → 归一化到每日 ¥10,000 预算
     → auto_place_bets → virtual_portfolio.json
 """
-import datetime
 import json
 import shutil
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import List, Dict, Optional
 
@@ -28,6 +28,10 @@ MAX_ODDS = 10.0          # 高赔率过滤（>10的赔率模型概率不可靠�
 MAX_PER_MATCH_BETS = 2   # 同一比赛最多下注方向数
 SCAN_BUDGET_PCT = 0.30   # 每次扫描最多花剩余预算的 30%
 
+# 两段式投注：扫描发现机会后，只在临近比赛时再投注
+# 72h 扫到 → 等 → 进入 MAX_HOURS_AHEAD 窗口 → 重新验证 → 投注
+MAX_HOURS_AHEAD = 30     # 超过此小时数的比赛不投注（留给后续验证）
+
 # 备份配置
 BACKUP_DIR = DATA_DIR / "backups" / "virtual_portfolio"
 BACKUP_KEEP = 30
@@ -38,7 +42,7 @@ def _backup_vp(vp_file: Path):
     if not vp_file.exists():
         return
     BACKUP_DIR.mkdir(parents=True, exist_ok=True)
-    ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     shutil.copy2(vp_file, BACKUP_DIR / f"virtual_portfolio_{ts}.json")
     # 清理旧备份
     backups = sorted(BACKUP_DIR.glob("virtual_portfolio_*.json"), reverse=True)
@@ -102,7 +106,7 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
     vp_file = DATA_DIR / "virtual_portfolio.json"
     existing_ids = set()
     already_allocated_today = 0.0
-    today_str = datetime.datetime.now().strftime("%Y-%m-%d")
+    today_str = datetime.now().strftime("%Y-%m-%d")
     if vp_file.exists():
         try:
             vp = json.loads(vp_file.read_text())
@@ -138,6 +142,7 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
 
     # ── 第一遍：计算 Kelly，筛选有效机会 ──
     candidates = []
+    skipped_far = 0  # 统计因太远跳过
     for opp in opportunities:
         ev = opp.get("_ev", 0)
         if ev < MIN_EDGE:
@@ -147,6 +152,18 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
         model_prob = opp.get("model_prob", 0)
         if odds <= 1 or model_prob <= 0:
             continue
+
+        # 两段式过滤：超过 MAX_HOURS_AHEAD 的比赛不投注，等下次扫描
+        ct = opp.get("commence_time", "")
+        if ct:
+            try:
+                dt = datetime.fromisoformat(ct.replace("Z", "+00:00"))
+                hours_until = (dt - datetime.now(timezone.utc)).total_seconds() / 3600
+                if hours_until > MAX_HOURS_AHEAD:
+                    skipped_far += 1
+                    continue
+            except Exception:
+                pass
 
         b = odds - 1.0
         kelly = (model_prob * b - (1.0 - model_prob)) / b if b > 0 else 0
@@ -171,8 +188,16 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
             "outcome": outcome,
         })
 
+    if skipped_far:
+        logger.info("  ⏳ %d 个机会距离开赛 > %d 小时，两段式等待中（暂不投注）",
+                    skipped_far, MAX_HOURS_AHEAD)
+
     if not candidates:
-        logger.info("  ⏭️ 所有机会已存在或无满足条件的机会")
+        if skipped_far:
+            logger.info("  ⏭️ 全部 %d 个机会因距离开赛超过 %d 小时跳过（两段式等待中）",
+                        skipped_far, MAX_HOURS_AHEAD)
+        else:
+            logger.info("  ⏭️ 所有机会已存在或无满足条件的机会")
         return 0
 
     # ── 优化过滤 ──
@@ -233,8 +258,7 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
             "stake": stake,
             "model_prob": c["model_prob"],
             "commence_time": c["opp"].get("commence_time", ""),
-            "created_at": __import__("datetime").datetime.now(
-                __import__("datetime").timezone.utc).isoformat(),
+            "created_at": datetime.now(timezone.utc).isoformat(),
         })
 
     if not bet_list:
@@ -269,8 +293,6 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
                     b["odds"], b["stake"], ev_pct)
 
     return added_count
-
-    return len(bet_list)
 
 
 def _make_store_id(rec: dict) -> str:

@@ -388,6 +388,14 @@ FOOTBALL_MAP: dict[str, Tuple[str, str]] = {
     "Belarus": ("belarus", "白俄罗斯"),
     "Armenia": ("armenia", "亚美尼亚"),
     "China": ("china", "中国"),
+    # ===== 中超（2026赛季） =====
+    "Cabo Verde": ("cabo verde", "佛得角"),
+    "Chengdu Rongcheng": ("chengdu rongcheng", "成都蓉城"),
+    "Chongqing Tonglianglong FC": ("chongqing tonglianglong", "重庆铜梁龙"),
+    "Henan FC": ("henan fc", "河南"),
+    "Shanghai Port": ("shanghai port", "上海海港"),
+    "Shenzhen Peng City": ("shenzhen peng city", "深圳鹏城"),
+    "Tianjin Jinmen Tiger": ("tianjin jinmen tiger", "天津津门虎"),
 }
 
 # NBA 球队映射 — odds API 名→中文名
@@ -531,6 +539,7 @@ WC_CN = {
     "Switzerland": "瑞士", "Tunisia": "突尼斯", "Turkey": "土耳其",
     "USA": "美国", "Uruguay": "乌拉圭", "Uzbekistan": "乌兹别克斯坦",
     "Qingdao Hainiu": "青岛海牛", "Yunnan Yukun": "云南玉昆",
+    "Cabo Verde": "佛得角", "Cape Verde": "佛得角",
 }
 
 

@@ -276,20 +276,8 @@ class PaperTrader:
             clv = b.get("clv")
             if clv is not None:
                 clv_values.append(float(clv))
-        # 兜底：从 opening_odds.json 读取 CLV（组合未记录时使用）
-        if not clv_values:
-            opening_file = self.data_dir / "opening_odds.json"
-            if opening_file.exists():
-                try:
-                    oo = json.loads(opening_file.read_text())
-                    for v in oo.values():
-                        clv = v.get("clv")
-                        if clv is not None and abs(clv) > 0.0001:
-                            clv_values.append(float(clv))
-                except Exception:
-                    pass
         # Line shopping 模式下不适用 CLV（无"收盘线"概念），清空以免误导
-        if history and all(h.get("id", "").startswith("line_shop") for h in history):
+        if not clv_values or any("football_World_Cup" in h.get("id","") or h.get("id","").startswith("line_shop") for h in history):
             clv_values = []
         # 无已结算数据时 CLV 无意义
         if not history:

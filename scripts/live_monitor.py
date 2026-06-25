@@ -27,7 +27,8 @@ from config.dingtalk import send_dingtalk
 setup_logging()
 logger = get_logger(__name__)
 
-OUTCOME_CN = {"home": "主胜", "draw": "平局", "away": "客胜", "yes": "双方进球", "no": "一方不进"}
+OUTCOME_CN = {"home": "主胜", "draw": "平局", "away": "客胜", "yes": "双方进球", "no": "一方不进",
+              "1X": "主/平", "12": "主/客", "X2": "客/平"}
 
 REPORT_FILE = DATA_DIR / "live_report.json"
 
@@ -39,6 +40,7 @@ MAX_PER_BET = 2000.0     # 单注上限 ¥2,000
 MAX_PER_MATCH = 3500.0   # 单场比赛总暴露上限 ¥3,500
 MIN_EDGE = 0.03
 KELLY_FRAC = 0.25        # 1/4 Kelly
+AUTO_PUSH_EV_THRESHOLD = 8.0  # Edge >= 此值自动推送钉钉方案（%）
 
 
 def _calc_stakes(opps: list, budget: float = DAILY_BUDGET) -> list:
@@ -114,15 +116,15 @@ def _calc_stakes(opps: list, budget: float = DAILY_BUDGET) -> list:
 def generate_report(opps: list) -> str:
     """生成包含建议投注额的投注对照报告（取前8条）。"""
     opps = _calc_stakes(opps)
-    opps = opps[:12]
+    opps = opps[:20]
     total = sum(o.get("stake", 0) for o in opps)
     lines = []
     lines.append("=" * 80)
     lines.append(f"  +EV 投注推荐  {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     lines.append("=" * 80)
     lines.append("")
-    lines.append(f"  {'#':>2} {'比赛':<32} {'推荐':>6} {'公平价':>7} {'建议投注':>10} {'Edge':>8}")
-    lines.append(f"  {'─'*2} {'─'*32} {'─'*6} {'─'*7} {'─'*10} {'─'*8}")
+    lines.append(f"  {'#':>2} {'比赛':<32} {'推荐':>6} {'公平价':>7} {'建议投注':>10} {'Edge':>8} {'距开赛':>8}")
+    lines.append(f"  {'─'*2} {'─'*32} {'─'*6} {'─'*7} {'─'*10} {'─'*8} {'─'*8}")
 
     for i, o in enumerate(opps, 1):
         h_cn = cn_team(o["home_team"], "football")
@@ -133,14 +135,33 @@ def generate_report(opps: list) -> str:
             mkt_tag = " [大小]"
         elif mkt == "btts":
             mkt_tag = " [进球]"
+        elif mkt == "double_chance":
+            mkt_tag = " [双边]"
+        elif mkt == "draw_no_bet":
+            mkt_tag = " [无平]"
+        elif mkt == "corners_1x2":
+            mkt_tag = " [角球]"
         else:
             mkt_tag = ""
         match_str = f"{h_cn} vs {a_cn}{mkt_tag}"
         oc = OUTCOME_CN.get(o["outcome"], o.get("outcome_label", o["outcome"]))
         fair = round(1.0 / o["model_prob"], 2)
         stake_str = f"¥{o['stake']:.0f}" if o.get("stake", 0) > 0 else " —"
+        # 距离开赛
+        ct = o.get("commence_time", "")
+        time_tag = ""
+        if ct:
+            try:
+                dt = __import__("datetime").datetime.fromisoformat(ct.replace("Z", "+00:00"))
+                hours = (dt - datetime.now(timezone.utc)).total_seconds() / 3600
+                if hours > 0:
+                    time_tag = f"{hours:.0f}h"
+                else:
+                    time_tag = "已开赛"
+            except:
+                pass
         lines.append(
-            f"  {i:>2} {match_str:<32} {oc:>6} {fair:>7} {stake_str:>10} +{o['edge_pct']:>5.1f}%"
+            f"  {i:>2} {match_str:<32} {oc:>6} {fair:>7} {stake_str:>10} +{o['edge_pct']:>5.1f}% {time_tag:>8}"
         )
 
     lines.append("")
@@ -157,9 +178,32 @@ def push_dingtalk(opps: list):
         return
 
     opps = _calc_stakes(opps)
-    qualified = [o for o in opps if o["edge_pct"] >= 3][:12]
+    # 混合选取：每种盘口至少取 top 2，再用总榜 top 补齐到 20
+    qualified = [o for o in opps if o["edge_pct"] >= 3]
     if not qualified:
         return
+    by_market = {}
+    for o in qualified:
+        by_market.setdefault(o.get("market", "1x2"), []).append(o)
+    selected = []
+    seen_ids = set()
+    for m, items in sorted(by_market.items()):
+        for o in items[:2]:
+            kid = f"{o['home_team']}_{o['away_team']}_{o['market']}_{o['outcome']}"
+            if kid not in seen_ids:
+                selected.append(o)
+                seen_ids.add(kid)
+    # 补齐剩余（按 edge 排序）
+    for o in qualified:
+        kid = f"{o['home_team']}_{o['away_team']}_{o['market']}_{o['outcome']}"
+        if kid not in seen_ids:
+            selected.append(o)
+            seen_ids.add(kid)
+        if len(selected) >= 20:
+            break
+    qualified = selected[:20]
+
+    now_utc = datetime.now(timezone.utc)
 
     lines = []
     lines.append(f"📊 投注推荐 {datetime.now().strftime('%m/%d %H:%M')}")
@@ -171,12 +215,34 @@ def push_dingtalk(opps: list):
         fair = round(1.0 / o["model_prob"], 2)
         stake_str = f" ¥{o['stake']:.0f}" if o.get("stake", 0) > 0 else ""
         mkt = o.get("market", "1x2")
-        tag = {"over_under": "大小", "btts": "进球"}.get(mkt, "独赢")
+        tag = {"over_under": "大小", "btts": "进球", "double_chance": "双边", "draw_no_bet": "无平", "corners_1x2": "角球"}.get(mkt, "独赢")
         decay = o.get("_edge_decay")
         decay_tag = ""
         if decay and decay.get("decaying"):
             decay_tag = f" [下降{decay['change']:+.1f}%]"
-        lines.append(f"{i}. {h_cn} vs {a_cn}")
+
+        # 距离开赛时间
+        ct = o.get("commence_time", "")
+        time_tag = ""
+        if ct:
+            try:
+                dt = __import__("datetime").datetime.fromisoformat(ct.replace("Z", "+00:00"))
+                hours = (dt - now_utc).total_seconds() / 3600
+                if hours > 48:
+                    time_tag = f" [{hours:.0f}h后]"
+                elif hours > 24:
+                    time_tag = f" [{hours:.0f}h后]"
+                elif hours > 1:
+                    time_tag = f" [{hours:.0f}h后]"
+                elif hours > 0:
+                    mins = int(hours * 60)
+                    time_tag = f" [{mins}分钟后]"
+                else:
+                    time_tag = f" [已开赛]"
+            except:
+                pass
+
+        lines.append(f"{i}. {h_cn} vs {a_cn}{time_tag}")
         lines.append(f"   {tag} {oc} | 公平价 {fair}{stake_str} | +{o['edge_pct']}%{decay_tag}")
 
     # 衰退汇总
@@ -192,6 +258,21 @@ def push_dingtalk(opps: list):
 
     lines.append("")
     lines.append(f"日预算 ¥{DAILY_BUDGET:.0f} | 共 {len(opps)} 条机会")
+
+    # 统计等待中的远程机会
+    now_utc = datetime.now(timezone.utc)
+    waiting = 0
+    for o in qualified:
+        ct = o.get("commence_time", "")
+        if ct:
+            try:
+                dt = __import__("datetime").datetime.fromisoformat(ct.replace("Z", "+00:00"))
+                if (dt - now_utc).total_seconds() / 3600 > 30:
+                    waiting += 1
+            except:
+                pass
+    if waiting:
+        lines.append(f"⏳ {waiting} 条 >30h 两段式等待中")
 
     body = "\n".join(lines)
     send_dingtalk(body, msgtype="markdown", title=f"+EV {len(qualified)}条")
@@ -274,11 +355,28 @@ def main():
             if settled:
                 logger.info("  已结算 %d 笔", settled)
 
-        # ── 虚拟投注（--betting 模式） ──
+        # ── 虚拟投注（--betting 模式，两段式：仅投 30h 内比赛） ──
         placed = 0
         if args.betting:
             from src.betting.place_line_shops import place_line_shops
             placed = place_line_shops()
+            # 统计有多少机会因距离开赛太远被跳过
+            far_count = sum(1 for o in opps if o.get("commence_time", ""))
+            if far_count:
+                now_utc = datetime.now(timezone.utc)
+                far = 0
+                for o in opps:
+                    ct = o.get("commence_time", "")
+                    if ct:
+                        try:
+                            dt = __import__("datetime").datetime.fromisoformat(
+                                ct.replace("Z", "+00:00"))
+                            if (dt - now_utc).total_seconds() / 3600 > 30:
+                                far += 1
+                        except:
+                            pass
+                if far:
+                    logger.info("  ⏳ %d 个机会太远（>30h），两段式等待中", far)
 
         # ── 投注后状态报告 ──
         if args.betting and (placed or settled):
@@ -315,7 +413,11 @@ def main():
             REPORT_FILE.parent.mkdir(parents=True, exist_ok=True)
             REPORT_FILE.write_text(report)
 
-            if args.dingtalk:
+            # 自动推送：--dingtalk 强制推送，或最高 Edge 超过阈值自动推送
+            max_edge = max(o.get("edge_pct", 0) for o in opps)
+            should_push = args.dingtalk or max_edge >= AUTO_PUSH_EV_THRESHOLD
+            if should_push:
+                logger.info("  最高 Edge %.1f%% >= 阈值 %.0f%%，自动推送钉钉", max_edge, AUTO_PUSH_EV_THRESHOLD)
                 push_dingtalk(opps)
                 push_daily_review()
 
