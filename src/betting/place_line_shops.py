@@ -29,7 +29,7 @@ MAX_PER_MATCH_BETS = 2   # 同一比赛最多下注方向数
 SCAN_BUDGET_PCT = 0.30   # 每次扫描最多花剩余预算的 30%
 
 # 允许的玩法（只投这些）
-ALLOWED_MARKETS = {"1x2", "over_under", "corners_1x2", "btts", "draw_no_bet"}
+ALLOWED_MARKETS = {"1x2", "over_under", "corners_1x2", "btts"}
 
 # 各市场的 Kelly 信心乘数（流动性低的市场减半）
 _CONFIDENCE = {
