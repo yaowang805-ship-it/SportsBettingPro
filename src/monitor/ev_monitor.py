@@ -53,7 +53,8 @@ def _fingerprint(opp: dict) -> str:
 
 
 MARKET_TAG = {"1x2": "独赢", "over_under": "大小", "btts": "进球",
-               "double_chance": "双边", "draw_no_bet": "无平", "corners_1x2": "角球"}
+               "double_chance": "双边", "draw_no_bet": "无平", "corners_1x2": "角球",
+               "total_corners": "角球大小"}
 
 OUTCOME_CN_MAP = {"home": "主胜", "draw": "平局", "away": "客胜",
                    "over": "大", "under": "小",
@@ -64,7 +65,7 @@ MAX_PER_BET = 2000.0
 MAX_PER_MATCH = 3500.0
 
 # 允许的玩法（不在此列的过滤掉）
-ALLOWED_MARKETS = {"1x2", "over_under", "corners_1x2", "btts"}
+ALLOWED_MARKETS = {"1x2", "over_under", "corners_1x2", "btts", "total_corners"}
 
 # 各市场的 Kelly 信心乘数（流动性低的市场减半）
 _CONFIDENCE = {
@@ -72,6 +73,7 @@ _CONFIDENCE = {
     "over_under": 1.0,
     "btts": 0.5,
     "corners_1x2": 0.5,
+    "total_corners": 0.5,
     "double_chance": 0.5,
     "draw_no_bet": 0.5,
 }
@@ -222,15 +224,12 @@ def _send_dingtalk(opps: List[dict]):
     body = _build_dingtalk_body(opps)
     title = f"+EV {len(opps)}条"
 
-    try:
-        import requests
-        resp = requests.post(DINGTALK_WEBHOOK, json={
-            "msgtype": "markdown",
-            "markdown": {"title": title, "text": body},
-        }, timeout=10)
-        logger.info("  钉钉推送完成: %s", resp.status_code)
-    except Exception as e:
-        logger.warning("  钉钉推送失败: %s", e)
+    from config.settings import send_dingtalk
+    ok = send_dingtalk(title, body)
+    if ok:
+        logger.info("  钉钉推送完成")
+    else:
+        logger.warning("  钉钉推送失败")
 
 
 def scan_and_notify(force_notify: bool = False) -> int:

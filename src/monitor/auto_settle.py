@@ -272,6 +272,10 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
     is_over_under = ou_match is not None
     is_btts = market.strip().lower() in ("yes", "no")
 
+    # 角球大小盘需要角球计数才能结算，目前无数据来源，跳过
+    if bet.get("market") == "total_corners":
+        return None
+
     # 构建候选列表: 英文翻译 → 原始值 → 中文名
     home_candidates = []
     for name in [_normalize_team(home_raw), _normalize_team(home_cn)]:

@@ -29,15 +29,8 @@ MAX_RECS = 5
 # ── 钉钉推送 ──
 
 def _send_dingtalk(title: str, text: str):
-    if not DINGTALK_WEBHOOK:
-        return
-    try:
-        requests.post(DINGTALK_WEBHOOK, json={
-            "msgtype": "markdown",
-            "markdown": {"title": title, "text": text},
-        }, timeout=10)
-    except Exception:
-        pass
+    from config.settings import send_dingtalk as _sd
+    _sd(title, text)
 
 # ── 主逻辑 ──
 

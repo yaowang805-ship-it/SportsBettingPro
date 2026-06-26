@@ -23,6 +23,19 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 if not DINGTALK_WEBHOOK:
     logger.warning("未检测到有效钉钉Webhook，若需钉钉通知请在 .env 中设置 DINGTALK_WEBHOOK")
 
+# ── 防退化检查 — 启动前验证数据完整性 ──
+try:
+    from src.health.regression import run_all_checks
+    _passed, _issues = run_all_checks()
+    if _passed:
+        logger.info("✅ 防退化检查通过")
+    else:
+        for _i in _issues:
+            logger.error("❌ 防退化: %s", _i)
+        send_alert("系统防退化检查", "发现 " + str(len(_issues)) + " 个问题:\n" + "\n".join(_issues))
+except Exception as _e:
+    logger.warning("防退化检查异常: %s", _e)
+
 SCRIPTS = [
     (ROOT / "src" / "models" / "auto_retrain.py", "自动模型重训练（月度）", 900),
     # (ROOT / "src" / "predict" / "run_all.py", "职业级每日预测（NBA+足球+NFL）", 600),
@@ -33,17 +46,8 @@ SCRIPTS = [
 
 
 def send_alert(title: str, message: str) -> None:
-    if not DINGTALK_WEBHOOK:
-        return
-    try:
-        import requests
-        payload = {
-            "msgtype": "markdown",
-            "markdown": {"title": title, "text": f"**{title}**\n\n{message}"}
-        }
-        requests.post(DINGTALK_WEBHOOK, json=payload, timeout=10)
-    except Exception:
-        pass
+    from config.settings import send_dingtalk
+    send_dingtalk(title, message)
 
 
 def run_script(script_path: Path, description: str, max_retries: int = 2,
@@ -101,6 +105,15 @@ if __name__ == "__main__":
         timeout = item[2] if len(item) > 2 else 300
         if not run_script(path, name, timeout=timeout):
             errors.append(name)
+
+    # ── ESPN 自动结算 — 比 CSV 更及时 ──
+    try:
+        from src.monitor.auto_settle import auto_settle
+        n = auto_settle()
+        if n:
+            logger.info("  ✅ 自动结算: %d 笔比赛", n)
+    except Exception as e:
+        logger.warning("自动结算失败: %s", e)
 
     # Power Rating 报告
     try:
@@ -224,6 +237,13 @@ if __name__ == "__main__":
     except Exception as e:
         logger.warning("投注建议推送失败: %s", e)
 
+    # ── +EV 资金分配报告 — 未来48h +EV>5% 按¥10000分配 ──
+    try:
+        from src.report.ev_push import push_ev_report
+        push_ev_report()
+    except Exception as e:
+        logger.warning("+EV 资金分配报告推送失败: %s", e)
+
     # ── CLV 收盘价追踪 — 验证 edge 是否真实 ──
     try:
         from src.monitor.clv_ls import send_clv_report
@@ -284,6 +304,18 @@ if __name__ == "__main__":
             logger.info("  组合分散度: %.2f", ds)
     except Exception as e:
         logger.warning("组合风控概览失败: %s", e)
+
+    # ── 防退化终检 — 确认全流程未引入新问题 ──
+    try:
+        from src.health.regression import run_all_checks
+        _p2, _i2 = run_all_checks()
+        if _p2:
+            logger.info("✅ 终检防退化通过")
+        else:
+            for _ii in _i2:
+                logger.error("❌ 终检防退化: %s", _ii)
+    except Exception:
+        pass
 
     logger.info("=" * 72)
     if errors:

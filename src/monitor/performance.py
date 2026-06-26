@@ -173,12 +173,9 @@ def update_performance():
 
     if alerts and DINGTALK_WEBHOOK:
         try:
-            import requests
-            msg = "📊 系统绩效报告\n" + "\n".join(alerts)
-            requests.post(DINGTALK_WEBHOOK, json={
-                'msgtype': 'text',
-                'text': {'content': msg},
-            }, timeout=10)
+            from config.settings import send_dingtalk
+            body = "📊 系统绩效报告\n" + "\n".join(alerts)
+            send_dingtalk("绩效报告", body)
         except Exception as e:
             logger.warning("告警发送失败: %s", e)
 

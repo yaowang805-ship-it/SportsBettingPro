@@ -38,6 +38,7 @@ BDL_API_KEY = os.getenv('BDL_API_KEY')
 FOOTBALL_DATA_API_KEY = os.getenv('FOOTBALL_DATA_API_KEY', FOOTBALL_API_KEY)
 BSD_API_KEY = os.getenv('BSD_API_KEY')
 DINGTALK_WEBHOOK = os.getenv('DINGTALK_WEBHOOK')
+DINGTALK_KEYWORD = '投注推荐'  # 钉钉机器人关键词，所有消息必须包含
 DATABASE_URL = os.getenv('DATABASE_URL', '')  # 空=SQLite, postgresql://user:pass@host/db
 
 
@@ -47,6 +48,35 @@ def _is_placeholder_webhook(url: str) -> bool:
 
 if DINGTALK_WEBHOOK and _is_placeholder_webhook(DINGTALK_WEBHOOK):
     DINGTALK_WEBHOOK = None
+
+
+def send_dingtalk(title: str, body: str, timeout: int = 10) -> bool:
+    """统一钉钉推送，返回 True=成功。
+
+    自动确保正文包含机器人关键词。所有推送请走此函数，不要直接 requests.post。
+    """
+    if not DINGTALK_WEBHOOK:
+        return False
+    # 确保关键词存在
+    if DINGTALK_KEYWORD not in body:
+        body = f"**{DINGTALK_KEYWORD} · {title}**\n\n{body}"
+    try:
+        import requests
+        resp = requests.post(DINGTALK_WEBHOOK, json={
+            "msgtype": "markdown",
+            "markdown": {"title": title[:20], "text": body},
+        }, timeout=timeout)
+        result = resp.json()
+        ok = result.get("errcode") == 0
+        if not ok:
+            import logging
+            logging.getLogger(__name__).warning("钉钉推送失败: errcode=%s %s",
+                                                result.get("errcode"), result.get("errmsg", "")[:80])
+        return ok
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).warning("钉钉推送异常: %s", e)
+        return False
 
 SHRINK_BB = float(os.getenv('SHRINK_BB', '0.846'))
 SHRINK_FB = float(os.getenv('SHRINK_FB', '0.808'))
@@ -75,3 +105,54 @@ SELENIUM_PLATFORM_PASSWORD = os.getenv('SELENIUM_PLATFORM_PASSWORD', '')
 RACE_API_KEY = os.getenv('RACE_API_KEY', '')
 PRE_BET_ODDS_VALIDATION = os.getenv('PRE_BET_ODDS_VALIDATION', 'true').lower() == 'true'
 MAX_ODDS_SLIPPAGE = float(os.getenv('MAX_ODDS_SLIPPAGE', '0.05'))     # 5% 赔率偏差自动拒绝
+
+# ===== 可信联赛白名单（Pinnacle 准确度高） =====
+# 不在名单内的联赛（如中超）自动从投注和推送中排除
+TRUSTED_LEAGUES = {
+    # 五大联赛
+    "Premier League", "English Premier League",
+    "La Liga", "Spain La Liga",
+    "Bundesliga", "German Bundesliga",
+    "Serie A", "Italy Serie A",
+    "Ligue 1", "France Ligue 1",
+    # 二级联赛
+    "England Championship",
+    "Spain Segunda Division",
+    "Italy Serie B",
+    "German 2. Bundesliga",
+    "France Ligue 2",
+    # 其他欧洲主流
+    "Eredivisie", "Netherlands Eredivisie",
+    "Primeira Liga", "Portugal Primeira Liga",
+    "Champions League", "UEFA Champions League",
+    "Europa League", "UEFA Europa League",
+    "Conference League", "UEFA Conference League",
+    # 当前赛事
+    "World Cup 2026",
+    "world cup 2026",
+    "FIFA World Cup",
+    # 北欧（夏季活跃）
+    "Sweden Allsvenskan",
+    "Norway Eliteserien",
+    "Finland Veikkausliiga",
+    # 南美
+    "Brazil Campeonato",
+    "Brazil Serie B",
+    "Chile Campeonato",
+    "Copa Sudamericana",
+    "Copa Libertadores",
+    # 其他
+    "Sweden Superettan",
+    "Denmark Superliga",
+    "Austria Bundesliga",
+    "Swiss Super League",
+    "Belgium Pro League",
+    "Turkey Super Lig",
+    "Scotland Premiership",
+    "Russia Premier League",
+    "Ukraine Premier League",
+    "Czech First League",
+    "Croatia HNL",
+    "Greece Super League",
+    "Poland Ekstraklasa",
+}

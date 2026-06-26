@@ -141,6 +141,8 @@ def generate_report(opps: list) -> str:
             mkt_tag = " [无平]"
         elif mkt == "corners_1x2":
             mkt_tag = " [角球]"
+        elif mkt == "total_corners":
+            mkt_tag = " [角球大小]"
         else:
             mkt_tag = ""
         match_str = f"{h_cn} vs {a_cn}{mkt_tag}"
@@ -215,7 +217,7 @@ def push_dingtalk(opps: list):
         fair = round(1.0 / o["model_prob"], 2)
         stake_str = f" ¥{o['stake']:.0f}" if o.get("stake", 0) > 0 else ""
         mkt = o.get("market", "1x2")
-        tag = {"over_under": "大小", "btts": "进球", "double_chance": "双边", "draw_no_bet": "无平", "corners_1x2": "角球"}.get(mkt, "独赢")
+        tag = {"over_under": "大小", "btts": "进球", "double_chance": "双边", "draw_no_bet": "无平", "corners_1x2": "角球", "total_corners": "角球大小"}.get(mkt, "独赢")
         decay = o.get("_edge_decay")
         decay_tag = ""
         if decay and decay.get("decaying"):

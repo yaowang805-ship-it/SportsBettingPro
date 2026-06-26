@@ -269,15 +269,12 @@ def send_clv_report():
     title = f"📊 CLV 投注推荐: {total} 条"
     body = f"**{title}**\n\n正 CLV {positive}/{total} 条：\n\n" + "\n\n".join(lines)
 
-    try:
-        import requests
-        resp = requests.post(DINGTALK_WEBHOOK, json={
-            "msgtype": "markdown",
-            "markdown": {"title": title, "text": body},
-        }, timeout=10)
-        logger.info("  CLV 钉钉推送完成: %s", resp.status_code)
-    except Exception as e:
-        logger.warning("  CLV 钉钉推送失败: %s", e)
+    from config.settings import send_dingtalk
+    ok = send_dingtalk(title, body)
+    if ok:
+        logger.info("  CLV 钉钉推送完成")
+    else:
+        logger.warning("  CLV 钉钉推送失败")
 
     return total
 

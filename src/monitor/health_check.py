@@ -199,19 +199,12 @@ def send_health_alert(alerts):
 
     message = "🏥 SportsBettingPro 系统健康检查\n\n" + "\n".join(alerts)
 
-    try:
-        import requests
-        payload = {
-            "msgtype": "markdown",
-            "markdown": {"title": "系统健康告警", "text": message}
-        }
-        resp = requests.post(DINGTALK_WEBHOOK, json=payload, timeout=10)
-        if resp.status_code == 200:
-            logger.info("📤 健康告警已发送")
-        else:
-            logger.error("⚠️ 健康告警发送失败: %s %s", resp.status_code, resp.text)
-    except Exception as e:
-        logger.error("⚠️ 告警发送失败: %s", e)
+    from config.settings import send_dingtalk
+    ok = send_dingtalk("系统健康告警", message)
+    if ok:
+        logger.info("📤 健康告警已发送")
+    else:
+        logger.error("⚠️ 健康告警发送失败")
 
 def main():
     logger.info("🔍 SportsBettingPro 系统健康检查")

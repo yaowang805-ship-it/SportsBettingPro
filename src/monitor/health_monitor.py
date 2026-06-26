@@ -68,16 +68,11 @@ def check_model_health():
 
     # 发送钉钉告警
     if alerts and DINGTALK_WEBHOOK:
-        msg = {
-            'msgtype': 'text',
-            'text': {
-                'content': "🚨 投注推荐系统健康告警\n\n" + "\n".join([f"• {a}" for a in alerts]) +
-                          f"\n\nBrier(30d)={brier_30:.3f}\nWinRate(15d)={winrate_15:.1%}\n连续亏损={consecutive_lose}天"
-            }
-        }
         try:
-            resp = requests.post(DINGTALK_WEBHOOK, json=msg, timeout=10)
-            logger.info("📤 告警推送: %s", resp.status_code)
+            from config.settings import send_dingtalk
+            body = "🚨 投注推荐系统健康告警\n\n" + "\n".join([f"• {a}" for a in alerts]) + \
+                   f"\n\nBrier(30d)={brier_30:.3f}\nWinRate(15d)={winrate_15:.1%}\n连续亏损={consecutive_lose}天"
+            send_dingtalk("系统健康告警", body)
         except Exception:
             logger.error("⚠️ 钉钉告警发送失败")
 

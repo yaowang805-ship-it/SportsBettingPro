@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import List, Dict, Optional
 
 from config.logging_config import get_logger
-from config.settings import DATA_DIR, DEFAULT_BUDGET
+from config.settings import DATA_DIR, DEFAULT_BUDGET, TRUSTED_LEAGUES
 
 logger = get_logger(__name__)
 
@@ -29,7 +29,7 @@ MAX_PER_MATCH_BETS = 2   # 同一比赛最多下注方向数
 SCAN_BUDGET_PCT = 0.30   # 每次扫描最多花剩余预算的 30%
 
 # 允许的玩法（只投这些）
-ALLOWED_MARKETS = {"1x2", "over_under", "corners_1x2", "btts"}
+ALLOWED_MARKETS = {"1x2", "over_under", "corners_1x2", "btts", "total_corners"}
 
 # 各市场的 Kelly 信心乘数（流动性低的市场减半）
 _CONFIDENCE = {
@@ -37,6 +37,7 @@ _CONFIDENCE = {
     "over_under": 1.0,
     "btts": 0.5,
     "corners_1x2": 0.5,
+    "total_corners": 0.5,
     "double_chance": 0.5,
     "draw_no_bet": 0.5,
 }
@@ -114,6 +115,13 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
                 logger.info("  校准打折: %d 条机会 edge 已折扣（偏差联赛/市场）", discounted)
     except Exception:
         pass
+
+    # 过滤只留下可信联赛
+    before_filter = len(opportunities)
+    opportunities = [o for o in opportunities if o.get("league", "") in TRUSTED_LEAGUES]
+    if len(opportunities) < before_filter:
+        logger.info("  联赛过滤: %d → %d（移除了%d条不可信联赛）",
+                    before_filter, len(opportunities), before_filter - len(opportunities))
 
     # 过滤只留下允许的玩法
     before_filter = len(opportunities)

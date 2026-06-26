@@ -191,6 +191,8 @@ class BetCalibrator:
             return "btts"
         if "over" in m or "under" in m or "大小" in m:
             return "over_under"
+        if m == "total_corners":
+            return "over_under"
         return "other"
 
     @staticmethod
