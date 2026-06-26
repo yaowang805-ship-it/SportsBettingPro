@@ -161,7 +161,7 @@ class TestBuildDingTalkBody:
         ("1x2", "独赢"),
         ("over_under", "大小"),
         ("btts", "进球"),
-        ("double_chance", "双边"),
+        ("draw_no_bet", "无平"),
     ])
     def test_known_market_tags(self, tmp_dir, market, tag):
         opp = _make_opp(market=market)

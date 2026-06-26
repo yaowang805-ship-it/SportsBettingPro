@@ -63,6 +63,9 @@ DAILY_BUDGET = 10000.0
 MAX_PER_BET = 2000.0
 MAX_PER_MATCH = 3500.0
 
+# 允许的玩法（不在此列的过滤掉）
+ALLOWED_MARKETS = {"1x2", "over_under", "corners_1x2", "btts", "draw_no_bet"}
+
 # 各市场的 Kelly 信心乘数（流动性低的市场减半）
 _CONFIDENCE = {
     "1x2": 1.0,
@@ -153,6 +156,7 @@ def _calc_stakes(opps: List[dict]) -> List[dict]:
 
 def _build_dingtalk_body(opps: List[dict]) -> str:
     """构建钉钉推送的 Markdown 正文（纯函数，不含网络调用）。"""
+    opps = [o for o in opps if o.get("market") in ALLOWED_MARKETS]
     opps = _calc_stakes(opps)
     now = datetime.now(timezone.utc)
     lines = []

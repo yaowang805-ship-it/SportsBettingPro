@@ -396,6 +396,12 @@ FOOTBALL_MAP: dict[str, Tuple[str, str]] = {
     "Shanghai Port": ("shanghai port", "上海海港"),
     "Shenzhen Peng City": ("shenzhen peng city", "深圳鹏城"),
     "Tianjin Jinmen Tiger": ("tianjin jinmen tiger", "天津津门虎"),
+    "Dalian Yingbo FC": ("dalian yingbo", "大连英博"),
+    "Shanghai Shenhua": ("shanghai shenhua", "上海申花"),
+    "Wuhan Three Towns": ("wuhan three towns", "武汉三镇"),
+    "Shandong Taishan": ("shandong taishan", "山东泰山"),
+    "Beijing Guoan": ("beijing guoan", "北京国安"),
+    "Liaoning Tieren FC": ("liaoning tieren", "辽宁铁人"),
 }
 
 # NBA 球队映射 — odds API 名→中文名
@@ -540,6 +546,9 @@ WC_CN = {
     "USA": "美国", "Uruguay": "乌拉圭", "Uzbekistan": "乌兹别克斯坦",
     "Qingdao Hainiu": "青岛海牛", "Yunnan Yukun": "云南玉昆",
     "Cabo Verde": "佛得角", "Cape Verde": "佛得角",
+    "Dalian Yingbo FC": "大连英博", "Shanghai Shenhua": "上海申花",
+    "Wuhan Three Towns": "武汉三镇", "Shandong Taishan": "山东泰山",
+    "Beijing Guoan": "北京国安", "Liaoning Tieren FC": "辽宁铁人",
 }
 
 

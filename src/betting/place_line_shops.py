@@ -28,6 +28,9 @@ MAX_ODDS = 10.0          # 高赔率过滤（>10的赔率模型概率不可靠�
 MAX_PER_MATCH_BETS = 2   # 同一比赛最多下注方向数
 SCAN_BUDGET_PCT = 0.30   # 每次扫描最多花剩余预算的 30%
 
+# 允许的玩法（只投这些）
+ALLOWED_MARKETS = {"1x2", "over_under", "corners_1x2", "btts", "draw_no_bet"}
+
 # 各市场的 Kelly 信心乘数（流动性低的市场减半）
 _CONFIDENCE = {
     "1x2": 1.0,
@@ -111,6 +114,13 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
                 logger.info("  校准打折: %d 条机会 edge 已折扣（偏差联赛/市场）", discounted)
     except Exception:
         pass
+
+    # 过滤只留下允许的玩法
+    before_filter = len(opportunities)
+    opportunities = [o for o in opportunities if o.get("market") in ALLOWED_MARKETS]
+    if len(opportunities) < before_filter:
+        logger.info("  玩法过滤: %d → %d（移除了%d条非核心玩法）",
+                    before_filter, len(opportunities), before_filter - len(opportunities))
 
     # 读取已存在的投注 ID，避免重复
     vp_file = DATA_DIR / "virtual_portfolio.json"
