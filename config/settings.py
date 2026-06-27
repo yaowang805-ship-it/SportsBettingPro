@@ -131,18 +131,14 @@ TRUSTED_LEAGUES = {
     "World Cup 2026",
     "world cup 2026",
     "FIFA World Cup",
-    # 北欧（夏季活跃）
+    # 北欧
     "Sweden Allsvenskan",
     "Norway Eliteserien",
-    "Finland Veikkausliiga",
     # 南美
     "Brazil Campeonato",
-    "Brazil Serie B",
-    "Chile Campeonato",
     "Copa Sudamericana",
     "Copa Libertadores",
     # 其他
-    "Sweden Superettan",
     "Denmark Superliga",
     "Austria Bundesliga",
     "Swiss Super League",

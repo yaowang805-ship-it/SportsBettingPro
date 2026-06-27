@@ -57,7 +57,7 @@ RETAIL_SLUGS = [
 ]
 
 MIN_EV = 0.02
-MAX_OPPORTUNITIES = 120  # 含1x2 + 大小球 + BTTS + 双边 + 无平 + 角球 + 角球大小
+MAX_OPPORTUNITIES = 300  # 含1x2 + 大小球 + BTTS + 双边 + 无平 + 角球 + 角球大小
 
 # Over/Under 盘口配置：(市场 key, 盘口线, 显示名称)
 OVER_UNDER_MARKETS = [
@@ -813,7 +813,7 @@ class LineShoppingScanner:
         logger.info("🔍 Line Shopping 扫描 (Pinnacle vs 零售最佳)")
         logger.info("─" * 60)
 
-        events = fetch_upcoming_events(hours_ahead=72)
+        events = fetch_upcoming_events(hours_ahead=168)
         if not events:
             logger.info("  无即将开始的足球赛事")
             return []
@@ -935,10 +935,20 @@ class LineShoppingScanner:
             return f"角球大{o['line']} {o['pinny_over_odds']} / 角球小{o['line']} {o['pinny_under_odds']}"
         if o.get("market") == "btts":
             return f"是 {o['pinny_yes_odds']} / 否 {o['pinny_no_odds']}"
-        return f"{o['pinny_home_odds']}/{o['pinny_draw_odds']}/{o['pinny_away_odds']}"
+        if o.get("market") in ("double_chance", "draw_no_bet"):
+            po = o.get("pinny_odds", "")
+            return f"{po}" if po else "-"
+        if o.get("pinny_home_odds") and o.get("pinny_away_odds"):
+            return f"{o['pinny_home_odds']}/{o.get('pinny_draw_odds','-')}/{o['pinny_away_odds']}"
+        # 兜底：用任何可用的 pinny 字段
+        for k in ("pinny_odds", "pinny_prob"):
+            v = o.get(k)
+            if v:
+                return f"{v}"
+        return "-"
 
     def push_recommendations(self):
-        """推送合格投注建议到钉钉（≥3% edge）。"""
+        """推送合格投注建议到钉钉（≥3% edge，统一格式）。"""
         if not DINGTALK_WEBHOOK or not self.opportunities:
             return
 
@@ -946,39 +956,46 @@ class LineShoppingScanner:
         if not qualified:
             return
 
+        # 复用 ev_push 的格式工具
+        from src.report.ev_push import _fmt_time, _cn_league, _market_cn, _fair_odds
+
         now = datetime.now(timezone.utc).strftime('%m/%d %H:%M')
         lines = []
+        lines.append(f"**正EV 推荐** ({now})")
+        lines.append(f"> {len(qualified)} 条 | 参考价=平博无抽水")
+        lines.append("")
 
-        for i, o in enumerate(qualified[:16], 1):
-            oc = self._opp_label(o)
-            h_cn = cn_team(o['home_team'], 'football')
-            a_cn = cn_team(o['away_team'], 'football')
-            ct = o.get('commence_time', '')
-            try:
-                dt = datetime.fromisoformat(ct.replace('Z', '+00:00'))
-                tc = dt.strftime('%m/%d %H:%M')
-            except Exception:
-                tc = ct
-            fair = round(1.0 / o['model_prob'], 2)
-            pinny_str = self._pinnacle_display(o)
+        # 按比赛分组
+        from collections import defaultdict
+        by_match = defaultdict(list)
+        for o in qualified:
+            by_match[(o["home_team"], o["away_team"], o.get("commence_time", ""))].append(o)
 
-            lines.append(
-                f"##### #{i} {h_cn} vs {a_cn}\n"
-                f"> [{oc}] {tc}\n"
-                f"> 公平价: **{fair}** | Edge: **+{o['edge_pct']}%**\n"
-                f"> Pinnacle: {pinny_str}"
-            )
+        idx = 0
+        for (home, away, ct), bets in sorted(by_match.items(), key=lambda x: max(b.get("edge_pct", 0) for b in x[1]), reverse=True):
+            h_cn = cn_team(home, 'football')
+            a_cn = cn_team(away, 'football')
+            ts = _fmt_time(ct)
+            idx += 1
+            league = _cn_league(bets[0].get("league", ""))
+            lines.append(f"{idx}. **{h_cn} vs {a_cn}** ({league}) {ts}")
+            lines.append(f"市场 | 参考价 | 溢价")
+            lines.append(f"-|-|-")
+            for b in bets[:4]:  # 每场比赛最多 4 条
+                mc = _market_cn(b)
+                fp = _fair_odds(b)
+                fp_s = f"{fp}" if fp else "-"
+                lines.append(f"{mc} | {fp_s} | +{b['edge_pct']}%")
+            lines.append("")
 
-        remaining = len(qualified) - 12
-        title = f"+EV 投注推荐: {len(qualified)} 条"
-        body = (
-            f"**{title}**\n\n"
-            f"扫描 {now} | ≥3% edge\n\n"
-            + "\n\n".join(lines)
-        )
-        if remaining > 0:
-            body += f"\n\n...及另外 {remaining} 条"
-        body += "\n\n---\n💡 BB体育赔率 > **公平价** = +EV 机会"
+        lines.append("---")
+        max_ev = qualified[0]['edge_pct']
+        avg_ev = sum(o['edge_pct'] for o in qualified) / len(qualified)
+        lines.append(f"共 {len(qualified)} 条, 最高溢价 {max_ev:.1f}%, 平均 {avg_ev:.1f}%")
+        lines.append("💡 体育平台赔率 > 参考价 = +EV")
+
+        title = f"正EV {datetime.now().strftime('%m/%d %H:%M')}"
+        body = "\n".join(lines)
 
         try:
             from config.settings import send_dingtalk
@@ -1045,63 +1062,48 @@ def run_line_shopping() -> List[Dict]:
 
 
 def push_cached_recommendations():
-    """从已保存的结果文件推送投注建议到钉钉（不重新扫描）。"""
+    """从已保存的结果文件推送投注建议到钉钉（统一使用 ev_push 格式）。"""
     if not DINGTALK_WEBHOOK:
         return
-    path = DATA_DIR / "line_shopping_results.json"
-    if not path.exists():
-        return
+    # 使用 ev_push.py 的统一格式
     try:
-        data = json.loads(path.read_text())
-        opps = data.get("opportunities", [])
+        from src.report.ev_push import build_ev_report, _cn_league, _fmt_time, _fair_odds, _market_cn
     except Exception:
         return
 
-    qualified = [o for o in opps if o['edge_pct'] >= 3 and o.get("league", "") in TRUSTED_LEAGUES]
-    if not qualified:
-        return
-
-    scanner = LineShoppingScanner()
-
-    now = datetime.now(timezone.utc).strftime('%m/%d %H:%M')
-    lines = []
-
-    for i, o in enumerate(qualified[:12], 1):
-        oc = scanner._opp_label(o)
-        h_cn = cn_team(o['home_team'], 'football')
-        a_cn = cn_team(o['away_team'], 'football')
-        ct = o.get('commence_time', '')
+    body = build_ev_report()
+    if body.startswith("no") or body.startswith("kelly"):
+        path = DATA_DIR / "line_shopping_results.json"
+        if not path.exists():
+            return
         try:
-            dt = datetime.fromisoformat(ct.replace('Z', '+00:00'))
-            tc = dt.strftime('%m/%d %H:%M')
+            data = json.loads(path.read_text())
         except Exception:
-            tc = ct
-        fair = round(1.0 / o['model_prob'], 2)
-        pinny_str = scanner._pinnacle_display(o)
+            return
+        opps = data.get("opportunities", [])
+        qualified = [o for o in opps if o['edge_pct'] >= 3 and o.get("league", "") in TRUSTED_LEAGUES]
+        if not qualified:
+            logger.info("  无 ≥3% edge 机会")
+            return
+        body = f"**正EV 推荐**\n\n> {data.get('updated', '?')[:16]} | {len(qualified)} 条\n\n"
+        # 简表：前 12 条
+        for i, o in enumerate(qualified[:12], 1):
+            h_cn = cn_team(o['home_team'], 'football')
+            a_cn = cn_team(o['away_team'], 'football')
+            ts = _fmt_time(o.get('commence_time', ''))
+            league = _cn_league(o.get('league', ''))
+            mc = _market_cn(o)
+            fp = _fair_odds(o)
+            fp_s = f"{fp}" if fp else "-"
+            body += f"{i}. **{h_cn} vs {a_cn}** ({league}) {ts} | {mc} 参考价={fp_s}\n"
+        body += "\n---\n💡 体育平台赔率 > **参考价** = +EV"
 
-        lines.append(
-            f"##### #{i} {h_cn} vs {a_cn}\n"
-            f"> [{oc}] {tc}\n"
-            f"> 公平价: **{fair}** | Edge: **+{o['edge_pct']}%**\n"
-            f"> Pinnacle: {pinny_str}"
-        )
-
-    remaining = len(qualified) - 12
-    title = f"+EV 投注推荐: {len(qualified)} 条"
-    body = (
-        f"**{title}**\n\n"
-        f"扫描 {now} | ≥3% edge\n\n"
-        + "\n\n".join(lines)
-    )
-    if remaining > 0:
-        body += f"\n\n...及另外 {remaining} 条"
-    body += "\n\n---\n💡 BB体育赔率 > **公平价** = +EV 机会"
-
+    title = f"正EV {datetime.now().strftime('%m/%d')}"
     try:
         from config.settings import send_dingtalk
         ok = send_dingtalk(title, body)
         if ok:
-            logger.info("  ✅ 推荐已推送钉钉: %d 条", len(qualified))
+            logger.info("  ✅ 推荐已推送钉钉")
     except Exception as e:
         logger.warning("  ⚠️ 推荐钉钉推送失败: %s", e)
 

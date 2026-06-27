@@ -85,26 +85,34 @@ def _save_cache(name: str, data):
 
 
 def fetch_upcoming_events(hours_ahead: int = 48) -> list:
-    """从 BSD 获取即将开始的足球赛事列表。
+    """从 BSD 获取即将开始的足球赛事列表（自动翻页，获取全部）。"""
+    PAGE_SIZE = 200
+    all_predictions = []
+    offset = 0
 
-    使用 predictions 端点（返回 135+ 比赛预测，含事件 ID）。
-    """
-    url = f"{BASE_URL}/api/v2/predictions/"
-    try:
-        resp = requests.get(url, headers=_headers(), timeout=SPORTS_API_TIMEOUT)
-        if resp.status_code != 200:
-            logger.warning("BSD predictions 请求失败: %d", resp.status_code)
-            return []
-        data = resp.json()
-        results = data.get("results", data.get("predictions", []))
-    except Exception as e:
-        logger.warning("BSD predictions 解析失败: %s", e)
-        return []
+    while True:
+        url = f"{BASE_URL}/api/v2/predictions/?limit={PAGE_SIZE}&offset={offset}"
+        try:
+            resp = requests.get(url, headers=_headers(), timeout=SPORTS_API_TIMEOUT)
+            if resp.status_code != 200:
+                logger.warning("BSD predictions 请求失败: %d", resp.status_code)
+                break
+            data = resp.json()
+            results = data.get("results", data.get("predictions", []))
+            if not results:
+                break
+            all_predictions.extend(results)
+            if len(results) < PAGE_SIZE:
+                break
+            offset += PAGE_SIZE
+        except Exception as e:
+            logger.warning("BSD predictions 解析失败: %s", e)
+            break
 
     now = datetime.now(timezone.utc)
     cutoff = now + timedelta(hours=hours_ahead)
     events = []
-    for p in results:
+    for p in all_predictions:
         event = p.get("event", {})
         date_str = event.get("event_date", "")
         if not date_str:
