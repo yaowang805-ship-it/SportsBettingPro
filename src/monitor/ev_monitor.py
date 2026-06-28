@@ -53,8 +53,7 @@ def _fingerprint(opp: dict) -> str:
 
 
 MARKET_TAG = {"1x2": "独赢", "over_under": "大小", "btts": "进球",
-               "double_chance": "双边", "draw_no_bet": "无平", "corners_1x2": "角球",
-               "total_corners": "角球大小"}
+               "double_chance": "双边", "draw_no_bet": "无平", "corners_1x2": "角球"}
 
 OUTCOME_CN_MAP = {"home": "主胜", "draw": "平局", "away": "客胜",
                    "over": "大", "under": "小",
@@ -65,7 +64,7 @@ MAX_PER_BET = 2000.0
 MAX_PER_MATCH = 3500.0
 
 # 允许的玩法（不在此列的过滤掉）
-ALLOWED_MARKETS = {"1x2", "over_under", "corners_1x2", "btts", "total_corners"}
+ALLOWED_MARKETS = {"1x2", "over_under", "corners_1x2", "btts"}
 
 # 各市场的 Kelly 信心乘数（流动性低的市场减半）
 _CONFIDENCE = {
@@ -73,7 +72,6 @@ _CONFIDENCE = {
     "over_under": 1.0,
     "btts": 0.5,
     "corners_1x2": 0.5,
-    "total_corners": 0.5,
     "double_chance": 0.5,
     "draw_no_bet": 0.5,
 }

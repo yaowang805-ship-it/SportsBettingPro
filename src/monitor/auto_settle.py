@@ -59,6 +59,7 @@ LEAGUE_SPORT_MAP = {
     "英乙": (None, "英乙"),
     "意乙": (None, "意乙"),
     "中超": ("soccer_china_superleague", "中超"),
+    "Chinese Super League": ("soccer_china_superleague", "中超"),
     "瑞典超": ("soccer_sweden_allsvenskan", "瑞典超"),
     "挪威超": ("soccer_norway_eliteserien", "挪威超"),
     "芬超": ("soccer_finland_veikkausliiga", "芬超"),
@@ -95,6 +96,8 @@ def _fetch_completed_scores_espn(league: str, days_back: int = 3) -> list:
                 {"name": g["home_team"], "score": str(home_score)},
                 {"name": g["away_team"], "score": str(away_score)},
             ],
+            "home_corners": g.get("home_corners"),
+            "away_corners": g.get("away_corners"),
         })
     return odds_format
 
@@ -272,10 +275,6 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
     is_over_under = ou_match is not None
     is_btts = market.strip().lower() in ("yes", "no")
 
-    # 角球大小盘需要角球计数才能结算，目前无数据来源，跳过
-    if bet.get("market") == "total_corners":
-        return None
-
     # 构建候选列表: 英文翻译 → 原始值 → 中文名
     home_candidates = []
     for name in [_normalize_team(home_raw), _normalize_team(home_cn)]:
@@ -339,7 +338,22 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                 if home_score is None or away_score is None:
                     continue
 
-                # ── 大小球结算 ──
+                # ── 角球大小盘结算 ──
+                is_total_corners = bet.get("market") == "total_corners"
+                if is_total_corners:
+                    home_corners = game.get("home_corners")
+                    away_corners = game.get("away_corners")
+                    if home_corners is None or away_corners is None:
+                        continue
+                    total = home_corners + away_corners
+                    line = float(ou_match.group(3))
+                    direction = (ou_match.group(1) or ou_match.group(2)).lower()
+                    if direction in ('大', 'over'):
+                        return "won" if total > line else "lost"
+                    else:
+                        return "won" if total < line else "lost"
+
+                # ── 大小球结算（非角球） ──
                 if is_over_under:
                     total = home_score + away_score
                     line = float(ou_match.group(3))
@@ -392,18 +406,15 @@ def auto_settle(dry_run: bool = False) -> int:
     logger.info("开始自动结算: %s 笔待处理", len(pending))
     settled_count = 0
 
-    # 按运动分组获取比分
-    sport_groups = {}
+    # 按 (运动, 联赛) 分组获取比分（同运动不同联赛必须分开）
+    league_groups = {}
     for bet in pending:
-        sport = bet.get("sport", "")
-        if sport not in sport_groups:
-            sport_groups[sport] = []
-        sport_groups[sport].append(bet)
+        key = (bet.get("sport", ""), bet.get("league", ""))
+        if key not in league_groups:
+            league_groups[key] = []
+        league_groups[key].append(bet)
 
-    for sport, bets in sport_groups.items():
-        # 用第一笔投注的 league 确定 odds API sport key
-        sample_bet = bets[0]
-        league = sample_bet.get("league", "")
+    for (sport, league), bets in league_groups.items():
         api_key_info = LEAGUE_SPORT_MAP.get(league)
         if not api_key_info:
             # 兜底：用 sport 字段在 SPORT_FALLBACK 中查找

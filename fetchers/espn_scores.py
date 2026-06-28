@@ -124,11 +124,24 @@ def _fetch_json(url: str, timeout: int = 15) -> Optional[dict]:
         return None
 
 
+def _extract_stat(competitor: dict, stat_name: str) -> Optional[int]:
+    """从 ESPN competitor statistics 中提取指定统计值。"""
+    stats = competitor.get("statistics", [])
+    for s in stats:
+        if s.get("name") == stat_name:
+            try:
+                return int(s.get("displayValue", "0"))
+            except (ValueError, TypeError):
+                return None
+    return None
+
+
 def _parse_espn_game(event: dict) -> Optional[dict]:
     """解析 ESPN 单场比赛数据。
 
     Returns:
-        {home_team, away_team, home_score, away_score, status, completed}
+        {home_team, away_team, home_score, away_score,
+         home_corners, away_corners, status, completed}
     """
     comps = event.get("competitions", [])
     if not comps:
@@ -150,17 +163,20 @@ def _parse_espn_game(event: dict) -> Optional[dict]:
             score = int(score)
         except (ValueError, TypeError):
             score = 0
+        corners = _extract_stat(c, "wonCorners")
         if c.get("homeAway") == "home":
-            home_team = (name, score)
+            home_team = (name, score, corners)
         else:
-            away_team = (name, score)
+            away_team = (name, score, corners)
 
     if not home_team or not away_team:
         # 如果没有 homeAway 字段，默认第一个是主队
         home_team = (competitors[0].get("team", {}).get("displayName", ""),
-                     int(competitors[0].get("score", 0) or 0))
+                     int(competitors[0].get("score", 0) or 0),
+                     _extract_stat(competitors[0], "wonCorners"))
         away_team = (competitors[1].get("team", {}).get("displayName", ""),
-                     int(competitors[1].get("score", 0) or 0))
+                     int(competitors[1].get("score", 0) or 0),
+                     _extract_stat(competitors[1], "wonCorners"))
 
     status_type = comp.get("status", {}).get("type", {}).get("name", "")
     is_completed = status_type in ("STATUS_FINAL", "STATUS_FULL_TIME", "STATUS_FULL_TIME_EXTRA")
@@ -170,6 +186,8 @@ def _parse_espn_game(event: dict) -> Optional[dict]:
         "away_team": away_team[0].strip(),
         "home_score": home_team[1],
         "away_score": away_team[1],
+        "home_corners": home_team[2],
+        "away_corners": away_team[2],
         "status": status_type,
         "completed": is_completed,
         "game_date": game_date,
