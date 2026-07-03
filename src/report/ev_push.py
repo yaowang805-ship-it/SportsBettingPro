@@ -53,6 +53,9 @@ _LEAGUE_CN = {
     "UEFA Europa League": "欧联",
     "Brazil Campeonato": "巴甲",
     "Copa Libertadores": "解放者杯",
+    "K League 1": "韩职",
+    "Allsvenskan": "瑞典超",
+    "Veikkausliiga": "芬超",
 }
 
 

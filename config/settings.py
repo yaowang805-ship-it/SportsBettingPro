@@ -130,4 +130,11 @@ TRUSTED_LEAGUES = {
     # 南美顶级赛事
     "Brazil Campeonato",
     "Copa Libertadores",
+    # ==== 夏季活跃联赛（2026-07 分析添加）====
+    # 北欧（Pinnacle 100%，夏季主力联赛）
+    "Allsvenskan",                    # 瑞典超
+    # 亚洲（Pinnacle 100%）
+    "K League 1",                     # 韩职
+    # 芬兰（Pinnacle 75%）
+    "Veikkausliiga",                  # 芬超
 }
