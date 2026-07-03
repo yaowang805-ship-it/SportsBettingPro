@@ -948,7 +948,7 @@ class LineShoppingScanner:
         return "-"
 
     def push_recommendations(self):
-        """推送合格投注建议到钉钉（≥3% edge，统一格式）。"""
+        """推送合格投注建议到钉钉（≥3% edge）。"""
         if not DINGTALK_WEBHOOK or not self.opportunities:
             return
 
@@ -956,54 +956,13 @@ class LineShoppingScanner:
         if not qualified:
             return
 
-        # 复用 ev_push 的格式工具
-        from src.report.ev_push import _fmt_time, _cn_league, _market_cn, _fair_odds
+        # 保存结果给 push_cached_recommendations 消费
+        self.save_results()
 
-        now = datetime.now(timezone.utc).strftime('%m/%d %H:%M')
-        lines = []
-        lines.append(f"**正EV 推荐** ({now})")
-        lines.append(f"> {len(qualified)} 条 | 参考价=平博无抽水")
-        lines.append("")
-
-        # 按比赛分组
-        from collections import defaultdict
-        by_match = defaultdict(list)
-        for o in qualified:
-            by_match[(o["home_team"], o["away_team"], o.get("commence_time", ""))].append(o)
-
-        idx = 0
-        for (home, away, ct), bets in sorted(by_match.items(), key=lambda x: max(b.get("edge_pct", 0) for b in x[1]), reverse=True):
-            h_cn = cn_team(home, 'football')
-            a_cn = cn_team(away, 'football')
-            ts = _fmt_time(ct)
-            idx += 1
-            league = _cn_league(bets[0].get("league", ""))
-            lines.append(f"{idx}. **{h_cn} vs {a_cn}** ({league}) {ts}")
-            lines.append(f"市场 | 参考价 | 溢价")
-            lines.append(f"-|-|-")
-            for b in bets[:4]:  # 每场比赛最多 4 条
-                mc = _market_cn(b)
-                fp = _fair_odds(b)
-                fp_s = f"{fp}" if fp else "-"
-                lines.append(f"{mc} | {fp_s} | +{b['edge_pct']}%")
-            lines.append("")
-
-        lines.append("---")
-        max_ev = qualified[0]['edge_pct']
-        avg_ev = sum(o['edge_pct'] for o in qualified) / len(qualified)
-        lines.append(f"共 {len(qualified)} 条, 最高溢价 {max_ev:.1f}%, 平均 {avg_ev:.1f}%")
-        lines.append("💡 体育平台赔率 > 参考价 = +EV")
-
-        title = f"正EV {datetime.now().strftime('%m/%d %H:%M')}"
-        body = "\n".join(lines)
-
-        try:
-            from config.settings import send_dingtalk
-            ok = send_dingtalk(title, body)
-            if ok:
-                logger.info("  ✅ 推荐推送钉钉完成")
-        except Exception as e:
-            logger.warning("  ⚠️ 推荐钉钉推送失败: %s", e)
+        # 复用缓存推送（格式统一在 ev_push.py）
+        from src.betting.line_shopping import push_cached_recommendations
+        push_cached_recommendations()
+        return
 
     def save_results(self):
         """保存并同步到 arbitrage_log.json 供排名系统消费。"""
@@ -1062,43 +1021,29 @@ def run_line_shopping() -> List[Dict]:
 
 
 def push_cached_recommendations():
-    """从已保存的结果文件推送投注建议到钉钉（统一使用 ev_push 格式）。"""
+    """从已保存的结果文件推送投注建议到钉钉。"""
     if not DINGTALK_WEBHOOK:
         return
-    # 使用 ev_push.py 的统一格式
     try:
-        from src.report.ev_push import build_ev_report, _cn_league, _fmt_time, _fair_odds, _market_cn
+        from src.report.ev_push import build_ev_report
     except Exception:
         return
 
     body = build_ev_report()
-    if body.startswith("no") or body.startswith("kelly"):
-        path = DATA_DIR / "line_shopping_results.json"
-        if not path.exists():
-            return
-        try:
-            data = json.loads(path.read_text())
-        except Exception:
-            return
-        opps = data.get("opportunities", [])
-        qualified = [o for o in opps if o['edge_pct'] >= 3 and o.get("league", "") in TRUSTED_LEAGUES]
-        if not qualified:
-            logger.info("  无 ≥3% edge 机会")
-            return
-        body = f"**正EV 推荐**\n\n> {data.get('updated', '?')[:16]} | {len(qualified)} 条\n\n"
-        # 简表：前 12 条
-        for i, o in enumerate(qualified[:12], 1):
-            h_cn = cn_team(o['home_team'], 'football')
-            a_cn = cn_team(o['away_team'], 'football')
-            ts = _fmt_time(o.get('commence_time', ''))
-            league = _cn_league(o.get('league', ''))
-            mc = _market_cn(o)
-            fp = _fair_odds(o)
-            fp_s = f"{fp}" if fp else "-"
-            body += f"{i}. **{h_cn} vs {a_cn}** ({league}) {ts} | {mc} 参考价={fp_s}\n"
-        body += "\n---\n💡 体育平台赔率 > **参考价** = +EV"
+    if body.startswith("no") or body.startswith("line"):
+        logger.info("  ⏭️ 无推送内容: %s", body)
+        return
 
-    title = f"正EV {datetime.now().strftime('%m/%d')}"
+    # 格式验证 — 防止格式被意外修改
+    try:
+        from src.report.ev_push import _validate_format
+        if not _validate_format(body):
+            logger.error("推送格式验证失败！阻止发送。body=%s...", body[:100])
+            return
+    except ImportError:
+        pass
+
+    title = f"+EV 投注推荐: {body.count('#####')} 条"
     try:
         from config.settings import send_dingtalk
         ok = send_dingtalk(title, body)

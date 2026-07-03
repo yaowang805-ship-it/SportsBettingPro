@@ -107,48 +107,27 @@ PRE_BET_ODDS_VALIDATION = os.getenv('PRE_BET_ODDS_VALIDATION', 'true').lower() =
 MAX_ODDS_SLIPPAGE = float(os.getenv('MAX_ODDS_SLIPPAGE', '0.05'))     # 5% 赔率偏差自动拒绝
 
 # ===== 可信联赛白名单（Pinnacle 准确度高） =====
-# 不在名单内的联赛（如中超）自动从投注和推送中排除
+# 只保留 Pinnacle 准确率高的联赛（低流动性联赛自动排除）
 TRUSTED_LEAGUES = {
-    # 五大联赛
+    # 五大联赛（Pinnacle 流动性最高，数据最可靠）
     "Premier League", "English Premier League",
     "La Liga", "Spain La Liga",
     "Bundesliga", "German Bundesliga",
     "Serie A", "Italy Serie A",
     "Ligue 1", "France Ligue 1",
-    # 二级联赛
+    # 二级联赛（流动性较好）
     "England Championship",
     "Spain Segunda Division",
-    "Italy Serie B",
     "German 2. Bundesliga",
-    "France Ligue 2",
-    # 其他欧洲主流
+    # 其他欧洲主流联赛
     "Eredivisie", "Netherlands Eredivisie",
     "Primeira Liga", "Portugal Primeira Liga",
     "Champions League", "UEFA Champions League",
     "Europa League", "UEFA Europa League",
-    "Conference League", "UEFA Conference League",
-    # 当前赛事
+    # 国际大赛
     "World Cup 2026",
     "world cup 2026",
-    "FIFA World Cup",
-    # 北欧
-    "Sweden Allsvenskan",
-    "Norway Eliteserien",
-    # 南美
+    # 南美顶级赛事
     "Brazil Campeonato",
-    "Copa Sudamericana",
     "Copa Libertadores",
-    # 其他
-    "Denmark Superliga",
-    "Austria Bundesliga",
-    "Swiss Super League",
-    "Belgium Pro League",
-    "Turkey Super Lig",
-    "Scotland Premiership",
-    "Russia Premier League",
-    "Ukraine Premier League",
-    "Czech First League",
-    "Croatia HNL",
-    "Greece Super League",
-    "Poland Ekstraklasa",
 }
