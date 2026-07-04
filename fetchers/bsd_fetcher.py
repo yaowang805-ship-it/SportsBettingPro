@@ -50,6 +50,7 @@ BSD_LEAGUE_MAP = {
     "Swiss Super League": "soccer_epl",
     "Saudi Pro League": "soccer_epl",
     "World Cup 2026": "soccer_epl",
+    "J1 League": "soccer_epl",
     "Brazilian Serie A": "soccer_brazil_campeonato",
 }
 

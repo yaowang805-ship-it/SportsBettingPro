@@ -22,7 +22,6 @@ sys.path.insert(0, str(ROOT))
 from config.logging_config import get_logger
 from config.settings import DATA_DIR, DINGTALK_WEBHOOK
 from src.betting.line_shopping import LineShoppingScanner
-from src.core.team_names import cn_team
 from src.monitor.clv_ls import track_pending_snapshots, send_clv_report
 
 logger = get_logger(__name__)
@@ -154,74 +153,24 @@ def _calc_stakes(opps: List[dict]) -> List[dict]:
     return result
 
 
-def _build_dingtalk_body(opps: List[dict]) -> str:
-    """构建钉钉推送的 Markdown 正文（纯函数，不含网络调用）。"""
-    opps = [o for o in opps if o.get("market") in ALLOWED_MARKETS]
-    opps = _calc_stakes(opps)
-    now = datetime.now(timezone.utc)
-    lines = []
-    lines.append(f"📊 投注推荐 {now.strftime('%m/%d %H:%M')}")
-    lines.append("")
-
-    for i, opp in enumerate(opps[:20], 1):
-        oc = _outcome_label(opp)
-        _sport = "nba" if opp.get("sport") in ("nba", "basketball") or "nba" in opp.get("league", "").lower() else "football"
-        h_cn = cn_team(opp['home_team'], _sport)
-        a_cn = cn_team(opp['away_team'], _sport)
-        fair = round(1.0 / opp['model_prob'], 2)
-        tag = MARKET_TAG.get(opp.get("market", "1x2"), opp.get("market", ""))
-
-        ct = opp.get("commence_time", "")
-        time_tag = ""
-        if ct:
-            try:
-                dt = datetime.fromisoformat(ct.replace("Z", "+00:00"))
-                hours = (dt - now).total_seconds() / 3600
-                if hours > 48:
-                    time_tag = f" [{hours:.0f}h后]"
-                elif hours > 24:
-                    time_tag = f" [{hours:.0f}h后]"
-                elif hours > 1:
-                    time_tag = f" [{hours:.0f}h后]"
-                elif hours > 0:
-                    time_tag = f" [{int(hours*60)}分钟后]"
-                else:
-                    time_tag = " [已开赛]"
-            except Exception:
-                pass
-
-        stake_str = f" ¥{opp['stake']:.0f}" if opp.get("stake", 0) > 0 else ""
-
-        lines.append(f"{i}. {h_cn} vs {a_cn}{time_tag}")
-        lines.append(f"   {tag} {oc} | 公平价 {fair}{stake_str} | +{opp['edge_pct']}%")
-
-    waiting = 0
-    for opp in opps:
-        ct = opp.get("commence_time", "")
-        if ct:
-            try:
-                dt = datetime.fromisoformat(ct.replace("Z", "+00:00"))
-                if (dt - now).total_seconds() / 3600 > 30:
-                    waiting += 1
-            except Exception:
-                pass
-
-    lines.append("")
-    lines.append(f"日预算 ¥{DAILY_BUDGET:.0f} | 共 {len(opps)} 条机会")
-    if waiting:
-        lines.append(f"⏳ {waiting} 条 >30h 两段式等待中")
-
-    return "\n".join(lines)
-
-
-def _send_dingtalk(opps: List[dict]):
+def _send_dingtalk():
+    """使用 ev_push 的统一格式推送钉钉。"""
     if not DINGTALK_WEBHOOK:
         logger.info("  未配置钉钉 Webhook，跳过推送")
         return
 
-    body = _build_dingtalk_body(opps)
-    title = f"+EV {len(opps)}条"
+    from src.report.ev_push import build_ev_report, _validate_format
+    body = build_ev_report()
 
+    if body.startswith("no") or body.startswith("line"):
+        logger.info("  无符合条件的机会，不推送")
+        return
+
+    if not _validate_format(body):
+        logger.error("  推送格式验证失败！阻止发送。body=%s...", body[:100])
+        return
+
+    title = f"+EV 投注推荐: {body.count('#####')} 条"
     from config.settings import send_dingtalk
     ok = send_dingtalk(title, body)
     if ok:
@@ -257,7 +206,7 @@ def scan_and_notify(force_notify: bool = False) -> int:
     seen = _load_seen()
 
     if force_notify:
-        _send_dingtalk(opps)
+        _send_dingtalk()
         for opp in opps:
             seen["seen"][_fingerprint(opp)] = {
                 "edge": opp["edge_pct"],
@@ -278,7 +227,7 @@ def scan_and_notify(force_notify: bool = False) -> int:
         return 0
 
     logger.info("  新机会: %d 条 (共 %d 条)", len(new_opps), len(opps))
-    _send_dingtalk(new_opps)
+    _send_dingtalk()
 
     for opp in new_opps:
         seen["seen"][_fingerprint(opp)] = {

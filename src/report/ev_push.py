@@ -54,8 +54,14 @@ _LEAGUE_CN = {
     "Brazil Campeonato": "巴甲",
     "Copa Libertadores": "解放者杯",
     "K League 1": "韩职",
+    "J1 League": "日职",
     "Allsvenskan": "瑞典超",
     "Veikkausliiga": "芬超",
+    "Eliteserien": "挪威超",
+    "MLS": "美职联",
+    "Major League Soccer": "美职联",
+    "Brasileirão Serie A": "巴甲",
+    "Brazil Serie A": "巴甲",
 }
 
 
@@ -183,7 +189,7 @@ def build_ev_report() -> str:
         league = bets[0].get("league", "")
         match_total = sum(b["_stake"] for b in bets)
 
-        lines.append(f"##### #{idx} {h_cn} vs {a_cn}（{_cn_league(league)}）{tc}")
+        lines.append(f"##### #{idx} {h_cn} 对 {a_cn}（{_cn_league(league)}）{tc}")
         for b in bets:
             oc = _opp_label(b)
             fair = round(1.0 / b.get("model_prob", 0.5), 2) if b.get("model_prob", 0) > 0 else "?"
@@ -200,7 +206,7 @@ def build_ev_report() -> str:
     title = f"+EV 投注推荐: {len(qualified)} 条"
     body = (
         f"**{title}**\n\n"
-        f"扫描 {now_str} | ≥3% edge | 总额 ¥{total_allocated:,}\n\n"
+        f"扫描 {now_str} | ≥3% 溢价 | 总额 ¥{total_allocated:,}\n\n"
         + "\n".join(lines).strip()
     )
     body += "\n\n---\n💡 BB赔率 > **公平价** = +EV | 零售=市场最佳价(非推荐)"

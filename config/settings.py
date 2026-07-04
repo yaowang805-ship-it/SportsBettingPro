@@ -135,6 +135,15 @@ TRUSTED_LEAGUES = {
     "Allsvenskan",                    # 瑞典超
     # 亚洲（Pinnacle 100%）
     "K League 1",                     # 韩职
+    "J1 League",                      # 日职
     # 芬兰（Pinnacle 75%）
     "Veikkausliiga",                  # 芬超
+    # 北欧顶级联赛（Pinnacle 100%）
+    "Eliteserien",                    # 挪威超
+    # 北美顶级联赛
+    "MLS",                            # 美职联
+    "Major League Soccer",            # 美职联全称
+    # 南美顶级联赛
+    "Brasileirão Serie A",            # 巴甲
+    "Brazil Serie A",                 # 巴甲别名
 }
