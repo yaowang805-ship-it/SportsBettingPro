@@ -487,6 +487,23 @@ NBA_CN = {
     "Washington Wizards": "奇才",
 }
 
+# WNBA 球队中文名
+BB_CN = {
+    "Atlanta Dream": "亚特兰大梦想",
+    "Chicago Sky": "芝加哥天空",
+    "Connecticut Sun": "康涅狄格太阳",
+    "Dallas Wings": "达拉斯飞翼",
+    "Indiana Fever": "印第安纳狂热",
+    "Las Vegas Aces": "拉斯维加斯王牌",
+    "Los Angeles Sparks": "洛杉矶火花",
+    "Minnesota Lynx": "明尼苏达山猫",
+    "New York Liberty": "纽约自由人",
+    "Phoenix Mercury": "菲尼克斯水星",
+    "Seattle Storm": "西雅图风暴",
+    "Toronto Tempo": "多伦多节奏",
+    "Washington Mystics": "华盛顿神秘人",
+}
+
 
 # 足球球队名标准化：预处理 odds API 名称提高命中率
 _NORMALIZE_RULES = [
@@ -620,12 +637,18 @@ def cn_team(odds_name: str, sport: str = "nba") -> str:
 
     Args:
         odds_name: odds API 返回的球队名
-        sport: 'nba' 或 'football'
+        sport: 'nba', 'football', 或 'basketball'
 
     Returns:
         中文名，若无映射则返回原词
     """
     if sport == "nba":
+        return NBA_CN.get(odds_name, odds_name)
+    if sport == "basketball":
+        # WNBA 优先，共享城市名的球队 fallback 到 NBA 名
+        cn = BB_CN.get(odds_name)
+        if cn:
+            return cn
         return NBA_CN.get(odds_name, odds_name)
     _, cn = lookup_football(odds_name)
     if cn == odds_name:
