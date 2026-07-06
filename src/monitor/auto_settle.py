@@ -338,22 +338,7 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                 if home_score is None or away_score is None:
                     continue
 
-                # ── 角球大小盘结算 ──
-                is_total_corners = bet.get("market") == "total_corners"
-                if is_total_corners:
-                    home_corners = game.get("home_corners")
-                    away_corners = game.get("away_corners")
-                    if home_corners is None or away_corners is None:
-                        continue
-                    total = home_corners + away_corners
-                    line = float(ou_match.group(3))
-                    direction = (ou_match.group(1) or ou_match.group(2)).lower()
-                    if direction in ('大', 'over'):
-                        return "won" if total > line else "lost"
-                    else:
-                        return "won" if total < line else "lost"
-
-                # ── 大小球结算（非角球） ──
+                # ── 大小球结算 ──
                 if is_over_under:
                     total = home_score + away_score
                     line = float(ou_match.group(3))

@@ -53,30 +53,16 @@ if DINGTALK_WEBHOOK and _is_placeholder_webhook(DINGTALK_WEBHOOK):
 def send_dingtalk(title: str, body: str, timeout: int = 10) -> bool:
     """统一钉钉推送，返回 True=成功。
 
-    自动确保正文包含机器人关键词。所有推送请走此函数，不要直接 requests.post。
+    委托给 config.dingtalk 的直连实现（绕过 Shadowrocket DNS 劫持）。
+    自动确保正文包含机器人关键词。所有推送请走此函数。
     """
+    from config.dingtalk import send_dingtalk as _real_send
     if not DINGTALK_WEBHOOK:
         return False
     # 确保关键词存在
     if DINGTALK_KEYWORD not in body:
         body = f"**{DINGTALK_KEYWORD} · {title}**\n\n{body}"
-    try:
-        import requests
-        resp = requests.post(DINGTALK_WEBHOOK, json={
-            "msgtype": "markdown",
-            "markdown": {"title": title[:20], "text": body},
-        }, timeout=timeout)
-        result = resp.json()
-        ok = result.get("errcode") == 0
-        if not ok:
-            import logging
-            logging.getLogger(__name__).warning("钉钉推送失败: errcode=%s %s",
-                                                result.get("errcode"), result.get("errmsg", "")[:80])
-        return ok
-    except Exception as e:
-        import logging
-        logging.getLogger(__name__).warning("钉钉推送异常: %s", e)
-        return False
+    return _real_send(body, msgtype="markdown", title=title)
 
 SHRINK_BB = float(os.getenv('SHRINK_BB', '0.846'))
 SHRINK_FB = float(os.getenv('SHRINK_FB', '0.808'))

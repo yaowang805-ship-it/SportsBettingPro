@@ -370,12 +370,6 @@ class LineShoppingScanner:
             opps = self._evaluate_corners_1x2(event_info, corners_data)
             opportunities.extend(opps)
 
-        # ── Total Corners 角球大小盘 ──
-        tc_data = markets.get("total_corners")
-        if tc_data:
-            opps = self._evaluate_total_corners(event_info, tc_data)
-            opportunities.extend(opps)
-
         return opportunities
 
     def _evaluate_1x2(self, event_info: dict, h2h: dict) -> List[Dict]:
@@ -734,78 +728,6 @@ class LineShoppingScanner:
                 opportunities.append(opp)
         return opportunities
 
-    def _evaluate_total_corners(self, event_info: dict, tc_data: dict) -> List[Dict]:
-        """评估 Total Corners 角球大小盘口（2-way，多线 5.5-12.5）。"""
-        # 发现所有可用的线
-        lines = set()
-        for key in tc_data.keys():
-            if key.startswith("over@"):
-                try:
-                    lines.add(float(key.split("@")[1]))
-                except (ValueError, IndexError):
-                    continue
-
-        opportunities = []
-        for line in sorted(lines):
-            over_key = f"over@{line}"
-            under_key = f"under@{line}"
-
-            pinny = self._get_pinnacle_2way(tc_data, over_key, under_key)
-            if not pinny:
-                continue
-
-            prob_over, prob_under, vig = _remove_vig_2way(pinny[over_key], pinny[under_key])
-            retail = self._get_best_retail_2way(tc_data, over_key, under_key)
-
-            for outcome_name, outcome_label, prob in [
-                ("over", "角球大", prob_over),
-                ("under", "角球小", prob_under),
-            ]:
-                side_key = f"{outcome_name}@{line}"
-                retail_info = retail.get(side_key, {})
-                retail_odds = retail_info.get("odds", 0)
-                if retail_odds <= 0:
-                    continue
-
-                retail_implied = 1.0 / retail_odds
-                ev = (prob - retail_implied) / retail_implied
-                if ev <= self.min_ev:
-                    continue
-
-                kelly = (prob * retail_odds - 1) / (retail_odds - 1) * 0.25
-                if kelly <= 0:
-                    continue
-
-                opp = {
-                    "type": "line_shopping", "market": "total_corners",
-                    "line": line, "sport": "football",
-                    "league": event_info.get("league_name", ""),
-                    "home_team": event_info["home_team"],
-                    "away_team": event_info["away_team"],
-                    "outcome": f"{outcome_name}_{line}",
-                    "outcome_label": f"{outcome_label}{line}",
-                    "commence_time": event_info.get("commence_time", ""),
-                    "pinny_over_odds": round(pinny[over_key], 4),
-                    "pinny_under_odds": round(pinny[under_key], 4),
-                    "pinny_prob": round(prob, 4),
-                    "retail_odds": round(retail_odds, 4),
-                    "retail_bookmaker": retail_info.get("bookmaker", ""),
-                    "edge_pct": round(ev * 100, 2), "kelly_pct": round(kelly * 100, 2),
-                    "vig_pct": round(vig * 100, 2), "_ev": ev, "_kelly_frac": kelly,
-                    "odds": retail_odds, "model_prob": round(prob, 4),
-                    "mkt_prob": round(retail_implied, 4),
-                }
-
-                if not self._validate_opportunity(opp, pinny, tc_data):
-                    continue
-                if pinny[over_key] < 1.01 or pinny[under_key] < 1.01:
-                    continue
-
-                opportunities.append(opp)
-
-        # 每场比赛最多保留 6 条（3条线 × 大小）
-        opportunities.sort(key=lambda x: x["_ev"], reverse=True)
-        return opportunities[:6]
 
     def scan(self) -> List[Dict]:
         """扫描即将开始的比赛，返回 +EV 机会列表。"""
@@ -824,7 +746,6 @@ class LineShoppingScanner:
         n_with_1x2 = 0
         n_with_ou = 0
         n_with_btts = 0
-        n_with_total_corners = 0
         for ev in events:
             raw = self._load_raw_odds_cached(ev["id"])
             if not raw:
@@ -847,14 +768,6 @@ class LineShoppingScanner:
             if btts_data and self._get_pinnacle_2way(btts_data, "yes", "no"):
                 n_with_btts += 1
             # 检查 Total Corners 是否有 Pinnacle
-            tc_data = markets.get("total_corners")
-            if tc_data:
-                for key in tc_data:
-                    if key.startswith("over@"):
-                        pinny = self._get_pinnacle_2way(tc_data, key, key.replace("over@", "under@"))
-                        if pinny:
-                            n_with_total_corners += 1
-                            break
 
             opps = self._evaluate_match(ev, raw)
             opportunities.extend(opps)
@@ -879,14 +792,14 @@ class LineShoppingScanner:
             logger.info("  ⚠ Pinnacle 过期数据: %d 场（>%d 小时未更新）",
                         stale_1x2, self.MAX_PINNY_STALE_HOURS)
 
-        logger.info("  含 Pinnacle 1x2: %d 场 | O/U: %d 场 | BTTS: %d 场 | 角球大小: %d 场",
-                    n_with_1x2, n_with_ou, n_with_btts, n_with_total_corners)
+        logger.info("  含 Pinnacle 1x2: %d 场 | O/U: %d 场 | BTTS: %d 场",
+                    n_with_1x2, n_with_ou, n_with_btts)
         logger.info("  +EV 机会: %d 条（1x2 + 大小球 + 双方进球 + 角球）", len(opportunities))
 
         if opportunities:
             t = opportunities[0]
             # 判断市场类型
-            if t.get("market") in ("over_under", "total_corners"):
+            if t.get("market") == "over_under":
                 label = t.get("outcome_label", t["outcome"])
             else:
                 outcome_cn = {"home": "主胜", "draw": "平局", "away": "客胜"}
@@ -920,8 +833,6 @@ class LineShoppingScanner:
         """获取可读的结果标签。"""
         if o.get("market") == "over_under":
             return o.get("outcome_label", o["outcome"])
-        if o.get("market") == "total_corners":
-            return o.get("outcome_label", o["outcome"])
         if o.get("market") == "btts":
             return o.get("outcome_label", "双方进球" if o["outcome"] == "yes" else "不进球")
         outcome_cn = {"home": "主胜", "draw": "平局", "away": "客胜"}
@@ -931,8 +842,6 @@ class LineShoppingScanner:
         """获取 Pinnacle 赔率显示字符串。"""
         if o.get("market") == "over_under":
             return f"大{o['line']} {o['pinny_over_odds']} / 小{o['line']} {o['pinny_under_odds']}"
-        if o.get("market") == "total_corners":
-            return f"角球大{o['line']} {o['pinny_over_odds']} / 角球小{o['line']} {o['pinny_under_odds']}"
         if o.get("market") == "btts":
             return f"是 {o['pinny_yes_odds']} / 否 {o['pinny_no_odds']}"
         if o.get("market") in ("double_chance", "draw_no_bet"):
@@ -1012,31 +921,35 @@ class LineShoppingScanner:
 
 
 def run_line_shopping() -> List[Dict]:
-    """便捷入口：扫描 + 保存，返回机会列表。"""
+    """便捷入口：扫描 + 保存 + 推送，返回机会列表。"""
     scanner = LineShoppingScanner()
     opps = scanner.scan()
     if opps:
         scanner.save_results()
+        push_cached_recommendations()
     return opps
 
 
 def push_cached_recommendations():
-    """从已保存的结果文件推送投注建议到钉钉。"""
+    """从已保存的结果文件推送新发现的 +EV 投注建议到钉钉。
+
+    已推送过的机会会自动去重，不会重复发送。
+    """
     if not DINGTALK_WEBHOOK:
         return
     try:
-        from src.report.ev_push import build_ev_report
+        from src.report.ev_push import build_ev_report, _load_seen, _save_seen, _validate_format
     except Exception:
         return
 
-    body = build_ev_report()
+    seen = _load_seen()
+    body, new_fps = build_ev_report(seen)
     if body.startswith("no") or body.startswith("line"):
-        logger.info("  ⏭️ 无推送内容: %s", body)
+        logger.info("  ⏭️ %s", body)
         return
 
     # 格式验证 — 防止格式被意外修改
     try:
-        from src.report.ev_push import _validate_format
         if not _validate_format(body):
             logger.error("推送格式验证失败！阻止发送。body=%s...", body[:100])
             return
@@ -1048,7 +961,9 @@ def push_cached_recommendations():
         from config.settings import send_dingtalk
         ok = send_dingtalk(title, body)
         if ok:
-            logger.info("  ✅ 推荐已推送钉钉")
+            seen.update(new_fps)
+            _save_seen(seen)
+            logger.info("  ✅ 推荐已推送钉钉（%d 条新机会）", len(new_fps))
     except Exception as e:
         logger.warning("  ⚠️ 推荐钉钉推送失败: %s", e)
 

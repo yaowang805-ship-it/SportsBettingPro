@@ -221,6 +221,15 @@ if __name__ == "__main__":
     except Exception as e:
         logger.warning("+EV 监控扫描失败: %s", e)
 
+    # ── 篮球 +EV 扫描 ──
+    try:
+        from src.betting.bb_line_shopping import scan_and_notify
+        bb_n = scan_and_notify()
+        if bb_n:
+            logger.info("  ✅ 篮球 +EV: %d 条", bb_n)
+    except Exception as e:
+        logger.warning("篮球 +EV 扫描失败: %s", e)
+
     # ── Line Shopping 投注执行 - 将 +EV 机会转为虚拟投注 ──
     try:
         from src.betting.place_line_shops import place_line_shops
@@ -230,21 +239,14 @@ if __name__ == "__main__":
     except Exception as e:
         logger.warning("Line shopping 投注执行失败: %s", e)
 
-    # ── +EV 投注建议推送 — 每日推荐列表 ──
+    # ── +EV 投注建议推送（含足球 + 篮球） ──
     try:
         from src.betting.line_shopping import push_cached_recommendations
         push_cached_recommendations()
     except Exception as e:
         logger.warning("投注建议推送失败: %s", e)
 
-    # ── +EV 资金分配报告 — 未来48h +EV>5% 按¥10000分配 ──
-    try:
-        from src.report.ev_push import push_ev_report
-        push_ev_report()
-    except Exception as e:
-        logger.warning("+EV 资金分配报告推送失败: %s", e)
-
-    # ── CLV 收盘价追踪 — 验证 edge 是否真实 ──
+    # ── CLV 收盘价追踪 ──
     try:
         from src.monitor.clv_ls import send_clv_report
         send_clv_report()
