@@ -22,7 +22,6 @@ from src.core.team_names import cn_team
 
 logger = get_logger(__name__)
 RESULTS_FILE = DATA_DIR / "line_shopping_results.json"
-BB_RESULTS_FILE = DATA_DIR / "bb_line_shopping_results.json"
 SEEN_FILE = DATA_DIR / "pushed_fingerprints.json"
 
 BANKROLL = 10000
@@ -181,7 +180,7 @@ def _calc_stakes(opps: list, bankroll: float = BANKROLL) -> list:
 
 
 def build_ev_report(seen_set: set = None) -> tuple:
-    """构建合并推送报告（足球+篮球），返回 (body, new_fingerprints)。
+    """构建足球 +EV 推送报告，返回 (body, new_fingerprints)。
 
     seen_set: 已推送过的指纹集合，用于去重。None=不过滤。
     """
@@ -204,20 +203,6 @@ def build_ev_report(seen_set: set = None) -> tuple:
     qualified = _calc_stakes(qualified[:MAX_BETS])
     qualified = [o for o in qualified if o["_stake"] > 0]
 
-    # 篮球
-    now_ts = now.timestamp()
-    bb_all = []
-    if BB_RESULTS_FILE.exists():
-        bb_data = json.loads(BB_RESULTS_FILE.read_text())
-        bb_all = [
-            o for o in bb_data.get("opportunities", [])
-            if o.get("edge_pct", 0) >= 3
-            and o.get("commence_time")
-            and _ct_timestamp(o["commence_time"]) > now_ts
-        ]
-        bb_all.sort(key=lambda x: x["edge_pct"], reverse=True)
-        bb_all = bb_all[:8]
-
     # 去重：按指纹过滤已推送过的
     new_fps = set()
     if seen_set is not None:
@@ -229,21 +214,30 @@ def build_ev_report(seen_set: set = None) -> tuple:
                 new_fps.add(fp)
         qualified = fb_new
 
-        bb_new = []
-        for o in bb_all:
-            fp = _make_fingerprint(o)
-            if fp not in seen_set:
-                bb_new.append(o)
-                new_fps.add(fp)
-        bb_all = bb_new
-
-    total_items = len(qualified) + len(bb_all)
-    if total_items == 0:
+    if not qualified:
         if seen_set is not None:
             return "no new +EV opportunities", set()
         return "no +EV opportunities", set()
 
-    # 按比赛分组（足球）
+    # 同一场比赛的 double_chance 只保留 edge 最高的那条
+    dc_groups = {}
+    deduped = []
+    for o in qualified:
+        if o.get("market") == "double_chance":
+            key = (o.get("home_team", ""), o.get("away_team", ""), o.get("commence_time", ""))
+            if key in dc_groups:
+                if o["edge_pct"] > dc_groups[key]["edge_pct"]:
+                    deduped.remove(dc_groups[key])
+                    dc_groups[key] = o
+                    deduped.append(o)
+            else:
+                dc_groups[key] = o
+                deduped.append(o)
+        else:
+            deduped.append(o)
+    qualified = deduped
+
+    # 按比赛分组
     from collections import defaultdict
     by_match = defaultdict(list)
     for o in qualified:
@@ -252,57 +246,35 @@ def build_ev_report(seen_set: set = None) -> tuple:
 
     now_str = now.strftime("%m/%d %H:%M")
     total_allocated = sum(o["_stake"] for o in qualified)
-    fb_count = len(qualified)
     lines = []
 
-    # 足球段落
-    if qualified:
-        for idx, ((home, away, ct), bets) in enumerate(
-            sorted(by_match.items(), key=lambda x: max(b.get("edge_pct", 0) for b in x[1]), reverse=True), 1
-        ):
-            h_cn = cn_team(home, "football")
-            a_cn = cn_team(away, "football")
-            tc = _fmt_time(ct)
-            league = bets[0].get("league", "")
-            match_total = sum(b["_stake"] for b in bets)
+    for idx, ((home, away, ct), bets) in enumerate(
+        sorted(by_match.items(), key=lambda x: max(b.get("edge_pct", 0) for b in x[1]), reverse=True), 1
+    ):
+        h_cn = cn_team(home, "football")
+        a_cn = cn_team(away, "football")
+        tc = _fmt_time(ct)
+        league = bets[0].get("league", "")
+        match_total = sum(b["_stake"] for b in bets)
 
-            lines.append(f"##### #{idx} {h_cn} 对 {a_cn}（{_cn_league(league)}）{tc}")
-            for b in bets:
-                oc = _opp_label(b)
-                fair = round(1.0 / b.get("model_prob", 0.5), 2) if b.get("model_prob", 0) > 0 else "?"
-                retail = b.get("odds", "-")
-                ev_pct = b["edge_pct"]
-                stake = b["_stake"]
-                lines.append(
-                    f"> [{oc}] 公平价: {fair} | 零售: {retail} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}"
-                )
-            if len(bets) > 1:
-                lines.append(f"> **本场合计: ¥{match_total:,}**")
-            lines.append("")
-
-    # 篮球段落
-    if bb_all:
-        lines.append(f"\n**🏀 WNBA +EV 机会: {len(bb_all)} 条**\n")
-        for i, o in enumerate(bb_all, 1):
-            h_cn = cn_team(o["home_team"], "basketball")
-            a_cn = cn_team(o["away_team"], "basketball")
-            mkt = o.get("market_label", o.get("market", ""))
-            oc = o.get("outcome_label", o.get("outcome", ""))
-            pt = o.get("point")
-            pt_str = f"@{pt:+.1f}" if pt is not None else ""
-            fair = o.get("fair_price", "?")
-            retail = o.get("retail_odds", "-")
-            ev = o["edge_pct"]
-            tc = _fmt_time(o.get("commence_time", ""))
-
-            lines.append(f"##### #{fb_count + i} {h_cn} 对 {a_cn}（WNBA）{tc}")
-            lines.append(f"> [{mkt} {oc}{pt_str}] 公平价: {fair} | 零售: {retail} | 溢价: +{ev}% | 投注: -")
+        lines.append(f"##### #{idx} {h_cn} 对 {a_cn}（{_cn_league(league)}）{tc}")
+        for b in bets:
+            oc = _opp_label(b)
+            fair = round(1.0 / b.get("model_prob", 0.5), 2) if b.get("model_prob", 0) > 0 else "?"
+            retail = b.get("odds", "-")
+            ev_pct = b["edge_pct"]
+            stake = b["_stake"]
+            lines.append(
+                f"> [{oc}] 公平价: {fair} | 零售: {retail} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}"
+            )
+        if len(bets) > 1:
+            lines.append(f"> **本场合计: ¥{match_total:,}**")
         lines.append("")
 
-    title = f"+EV 投注推荐: {total_items} 条"
+    title = f"+EV 投注推荐: {len(qualified)} 条"
     body = (
         f"**{title}**\n\n"
-        f"扫描 {now_str} | ≥3% 溢价{' | 总额 ¥' + f'{total_allocated:,}' if total_allocated else ''}\n\n"
+        f"扫描 {now_str} | ≥3% 溢价 | 总额 ¥{total_allocated:,}\n\n"
         + "\n".join(lines).strip()
     )
     body += "\n\n---\n💡 BB赔率 > **公平价** = +EV | 零售=市场最佳价(非推荐)"

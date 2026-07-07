@@ -154,29 +154,9 @@ def _calc_stakes(opps: List[dict]) -> List[dict]:
 
 
 def _send_dingtalk():
-    """使用 ev_push 的统一格式推送钉钉。"""
-    if not DINGTALK_WEBHOOK:
-        logger.info("  未配置钉钉 Webhook，跳过推送")
-        return
-
-    from src.report.ev_push import build_ev_report, _validate_format
-    body = build_ev_report()
-
-    if body.startswith("no") or body.startswith("line"):
-        logger.info("  无符合条件的机会，不推送")
-        return
-
-    if not _validate_format(body):
-        logger.error("  推送格式验证失败！阻止发送。body=%s...", body[:100])
-        return
-
-    title = f"+EV 投注推荐: {body.count('#####')} 条"
-    from config.settings import send_dingtalk
-    ok = send_dingtalk(title, body)
-    if ok:
-        logger.info("  钉钉推送完成")
-    else:
-        logger.warning("  钉钉推送失败")
+    """使用 ev_push 的统一格式推送钉钉（委托给 push_cached_recommendations 进行去重）。"""
+    from src.betting.line_shopping import push_cached_recommendations
+    push_cached_recommendations()
 
 
 def scan_and_notify(force_notify: bool = False) -> int:
