@@ -502,6 +502,56 @@ BB_CN = {
     "Seattle Storm": "西雅图风暴",
     "Toronto Tempo": "多伦多节奏",
     "Washington Mystics": "华盛顿神秘人",
+    "Golden State Valkyries": "金州女武神",
+    "Portland Fire": "波特兰火焰",
+}
+
+# MLB 球队中文名
+MLB_CN = {
+    "Arizona Diamondbacks": "亚利桑那响尾蛇",
+    "Atlanta Braves": "亚特兰大勇士",
+    "Baltimore Orioles": "巴尔的摩金莺",
+    "Boston Red Sox": "波士顿红袜",
+    "Chicago Cubs": "芝加哥小熊",
+    "Chicago White Sox": "芝加哥白袜",
+    "Cincinnati Reds": "辛辛那提红人",
+    "Cleveland Guardians": "克利夫兰守护者",
+    "Colorado Rockies": "科罗拉多洛基",
+    "Detroit Tigers": "底特律老虎",
+    "Houston Astros": "休斯顿太空人",
+    "Kansas City Royals": "堪萨斯城皇家",
+    "Los Angeles Angels": "洛杉矶天使",
+    "Los Angeles Dodgers": "洛杉矶道奇",
+    "Miami Marlins": "迈阿密马林鱼",
+    "Milwaukee Brewers": "密尔沃基酿酒人",
+    "Minnesota Twins": "明尼苏达双城",
+    "New York Mets": "纽约大都会",
+    "New York Yankees": "纽约洋基",
+    "Oakland Athletics": "奥克兰运动家",
+    "Philadelphia Phillies": "费城费城人",
+    "Pittsburgh Pirates": "匹兹堡海盗",
+    "San Diego Padres": "圣迭戈教士",
+    "San Francisco Giants": "旧金山巨人",
+    "Seattle Mariners": "西雅图水手",
+    "St. Louis Cardinals": "圣路易斯红雀",
+    "Tampa Bay Rays": "坦帕湾光芒",
+    "Texas Rangers": "得克萨斯游骑兵",
+    "Toronto Blue Jays": "多伦多蓝鸟",
+    "Washington Nationals": "华盛顿国民",
+}
+
+# 网球球员中文名（按发现的球员逐步添加）
+TENNIS_CN = {
+    # ATP 温网 2026
+    "Flavio Cobolli": "弗拉维奥·科博利",
+    "Arthur Fery": "阿瑟·费里",
+    "Taylor Fritz": "泰勒·弗里茨",
+    "Alexander Zverev": "亚历山大·兹维列夫",
+    # WTA 温网 2026
+    "Linda Noskova": "琳达·诺斯科娃",
+    "Elise Mertens": "爱丽丝·梅尔滕斯",
+    "Marta Kostyuk": "玛尔塔·科斯丘克",
+    "Jasmine Paolini": "贾斯明·保利尼",
 }
 
 
@@ -613,6 +663,8 @@ WC_CN = {
     "Dalian Yingbo FC": "大连英博", "Shanghai Shenhua": "上海申花",
     "Wuhan Three Towns": "武汉三镇", "Shandong Taishan": "山东泰山",
     "Beijing Guoan": "北京国安", "Liaoning Tieren FC": "辽宁铁人",
+    "Dynamo Kyiv": "基辅迪纳摩",
+    "FC Universitatea Cluj": "克卢日大学",
 }
 
 
@@ -637,7 +689,7 @@ def cn_team(odds_name: str, sport: str = "nba") -> str:
 
     Args:
         odds_name: odds API 返回的球队名
-        sport: 'nba', 'football', 或 'basketball'
+        sport: 'nba', 'basketball', 'football', 'baseball', 'tennis'
 
     Returns:
         中文名，若无映射则返回原词
@@ -645,11 +697,14 @@ def cn_team(odds_name: str, sport: str = "nba") -> str:
     if sport == "nba":
         return NBA_CN.get(odds_name, odds_name)
     if sport == "basketball":
-        # WNBA 优先，共享城市名的球队 fallback 到 NBA 名
         cn = BB_CN.get(odds_name)
         if cn:
             return cn
         return NBA_CN.get(odds_name, odds_name)
+    if sport == "baseball":
+        return MLB_CN.get(odds_name, odds_name)
+    if sport == "tennis":
+        return TENNIS_CN.get(odds_name, odds_name)
     _, cn = lookup_football(odds_name)
     if cn == odds_name:
         return WC_CN.get(odds_name, odds_name)

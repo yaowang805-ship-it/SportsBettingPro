@@ -22,6 +22,9 @@ from src.core.team_names import cn_team
 
 logger = get_logger(__name__)
 RESULTS_FILE = DATA_DIR / "line_shopping_results.json"
+BB_RESULTS_FILE = DATA_DIR / "bb_line_shopping_results.json"
+MLB_RESULTS_FILE = DATA_DIR / "mlb_line_shopping_results.json"
+TENNIS_RESULTS_FILE = DATA_DIR / "tennis_line_shopping_results.json"
 SEEN_FILE = DATA_DIR / "pushed_fingerprints.json"
 
 BANKROLL = 10000
@@ -89,6 +92,11 @@ _LEAGUE_CN = {
     "Major League Soccer": "美职联",
     "Brasileirão Serie A": "巴甲",
     "Brazil Serie A": "巴甲",
+    "basketball_wnba": "WNBA",
+    "basketball_nba": "NBA",
+    "basketball_euroleague": "EuroLeague",
+    "tennis_atp_wimbledon": "ATP温网",
+    "tennis_wta_wimbledon": "WTA温网",
 }
 
 
@@ -133,19 +141,31 @@ def _opp_label(o: dict) -> str:
     outcome = o.get("outcome", "")
     label = o.get("outcome_label", "")
     if label:
-        return label
-    if mkt == "over_under":
+        display = label
+    elif mkt == "over_under":
         if outcome.startswith("over"):
-            return f"大{outcome.split('_')[1]}"
-        if outcome.startswith("under"):
-            return f"小{outcome.split('_')[1]}"
-    if mkt == "btts":
-        return "双方进球" if outcome == "yes" else "不进球"
-    if mkt == "corners_1x2":
-        return _OUTCOME_CN.get(outcome, outcome)
-    if mkt in ("1x2", "double_chance"):
-        return _OUTCOME_CN.get(outcome, outcome)
-    return outcome
+            display = f"大{outcome.split('_')[1]}"
+        elif outcome.startswith("under"):
+            display = f"小{outcome.split('_')[1]}"
+        else:
+            display = outcome
+    elif mkt == "btts":
+        display = "双方进球" if outcome == "yes" else "不进球"
+    elif mkt == "corners_1x2":
+        display = _OUTCOME_CN.get(outcome, outcome)
+    elif mkt in ("1x2", "double_chance"):
+        display = _OUTCOME_CN.get(outcome, outcome)
+    else:
+        display = outcome
+
+    # 非足球玩法加市场前缀（如"独赢 主胜"、"让分盘 客胜+5.5"）
+    if o.get("sport") in ("basketball", "baseball", "tennis"):
+        mkt_label = o.get("market_label", "")
+        pt_str = o.get("point_str", "") or ""
+        if mkt_label:
+            return f"{mkt_label} {display}{pt_str}"
+
+    return display
 
 
 def _fmt_time(ct: str) -> str:
@@ -165,13 +185,13 @@ def _ct_timestamp(ct: str) -> float:
 
 def _calc_stakes(opps: list, bankroll: float = BANKROLL) -> list:
     """按 Kelly 比例分配投注额。"""
-    total_kelly = sum(o.get("kelly_pct", 0) for o in opps)
+    total_kelly = sum(o.get("kelly_pct") or 0 for o in opps)
     if total_kelly <= 0:
         for o in opps:
             o["_stake"] = 0
         return opps
     for o in opps:
-        k = o.get("kelly_pct", 0)
+        k = o.get("kelly_pct") or 0
         stake = round((k / total_kelly) * bankroll)
         if stake < 5:
             stake = 0
@@ -198,6 +218,55 @@ def build_ev_report(seen_set: set = None) -> tuple:
         and o.get("commence_time")
         and o.get("league", "") in TRUSTED_LEAGUES
     ]
+
+    # === 篮球 +EV 机会 ===
+    if BB_RESULTS_FILE.exists():
+        bb_data = json.loads(BB_RESULTS_FILE.read_text())
+        for o in bb_data.get("opportunities", []):
+            if o.get("edge_pct", 0) >= 3:
+                ct = o.get("commence_time", "")
+                if ct:
+                    try:
+                        dt = datetime.fromisoformat(ct.replace("Z", "+00:00"))
+                        if dt < now:
+                            continue
+                    except Exception:
+                        pass
+                # 篮球没有 kelly_pct，按标准 Kelly 公式补齐
+                if o.get("kelly_pct") is None:
+                    retail = o.get("retail_odds", 0)
+                    if retail > 1:
+                        kelly = (o["edge_pct"] / 100) / (retail - 1) * 0.25
+                        o["kelly_pct"] = round(kelly * 100, 2)
+                    else:
+                        o["kelly_pct"] = 0
+                qualified.append(o)
+
+    # === 棒球 +EV 机会 ===
+    for rf, label in [(MLB_RESULTS_FILE, "棒球"), (TENNIS_RESULTS_FILE, "网球")]:
+        if rf.exists():
+            try:
+                sdata = json.loads(rf.read_text())
+                for o in sdata.get("opportunities", []):
+                    if o.get("edge_pct", 0) >= 3:
+                        ct = o.get("commence_time", "")
+                        if ct:
+                            try:
+                                dt = datetime.fromisoformat(ct.replace("Z", "+00:00"))
+                                if dt < now:
+                                    continue
+                            except Exception:
+                                pass
+                        if o.get("kelly_pct") is None:
+                            retail = o.get("retail_odds", 0)
+                            if retail > 1:
+                                kelly = (o["edge_pct"] / 100) / (retail - 1) * 0.25
+                                o["kelly_pct"] = round(kelly * 100, 2)
+                            else:
+                                o["kelly_pct"] = 0
+                        qualified.append(o)
+            except Exception:
+                pass
 
     qualified.sort(key=lambda x: x["edge_pct"], reverse=True)
     qualified = _calc_stakes(qualified[:MAX_BETS])
@@ -251,8 +320,9 @@ def build_ev_report(seen_set: set = None) -> tuple:
     for idx, ((home, away, ct), bets) in enumerate(
         sorted(by_match.items(), key=lambda x: max(b.get("edge_pct", 0) for b in x[1]), reverse=True), 1
     ):
-        h_cn = cn_team(home, "football")
-        a_cn = cn_team(away, "football")
+        sport = bets[0].get("sport", "football")
+        h_cn = cn_team(home, sport)
+        a_cn = cn_team(away, sport)
         tc = _fmt_time(ct)
         league = bets[0].get("league", "")
         match_total = sum(b["_stake"] for b in bets)
@@ -260,8 +330,14 @@ def build_ev_report(seen_set: set = None) -> tuple:
         lines.append(f"##### #{idx} {h_cn} 对 {a_cn}（{_cn_league(league)}）{tc}")
         for b in bets:
             oc = _opp_label(b)
-            fair = round(1.0 / b.get("model_prob", 0.5), 2) if b.get("model_prob", 0) > 0 else "?"
-            retail = b.get("odds", "-")
+            # 兼容足球(model_prob/odds)和篮球(fair_price/retail_odds)的字段名
+            if b.get("fair_price") is not None:
+                fair = round(b["fair_price"], 2)
+            elif b.get("model_prob", 0) > 0:
+                fair = round(1.0 / b["model_prob"], 2)
+            else:
+                fair = "?"
+            retail = b.get("retail_odds") or b.get("odds", "-")
             ev_pct = b["edge_pct"]
             stake = b["_stake"]
             lines.append(
@@ -282,6 +358,21 @@ def build_ev_report(seen_set: set = None) -> tuple:
     return body, new_fps
 
 
+def _check_body_chinese(body: str) -> list:
+    """检查推送内容是否有英文名残留，返回问题列表。"""
+    import re
+    issues = []
+    for line in body.split("\n"):
+        if line.startswith("#####"):
+            m = re.search(r"##### #\d+ (.+?)（", line)
+            if m:
+                name_part = m.group(1)
+                english_words = re.findall(r"\b[A-Z][a-z]{2,}\b", name_part)
+                if english_words:
+                    issues.append(f"英文名残留: {' '.join(english_words[:3])} ← {line.strip()[:60]}")
+    return issues
+
+
 def push_ev_report():
     setup_logging()
     if not DINGTALK_WEBHOOK:
@@ -296,6 +387,14 @@ def push_ev_report():
 
     if not _validate_format(body):
         logger.error("推送格式验证失败！阻止发送。body=%s...", body[:100])
+        return
+
+    # 中文自检：发现英文队名/球员名残留时报警
+    en_issues = _check_body_chinese(body)
+    if en_issues:
+        for issue in en_issues:
+            logger.warning("⚠️ %s", issue)
+        logger.warning("推送内容有英文名残留，请检查 team_names.py 是否缺少映射")
         return
 
     title = f"+EV 投注推荐: {body.count('#####')} 条"
