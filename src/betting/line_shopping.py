@@ -57,7 +57,7 @@ RETAIL_SLUGS = [
 ]
 
 MIN_EV = 0.02
-MAX_OPPORTUNITIES = 400  # 含1x2 + 大小球 + BTTS + 双边 + 无平 + 角球 + 角球大小 + 总角球
+MAX_OPPORTUNITIES = 300  # 含1x2 + 大小球 + BTTS + 双边 + 无平 + 角球
 
 # Over/Under 盘口配置：(市场 key, 盘口线, 显示名称)
 OVER_UNDER_MARKETS = [
@@ -214,7 +214,7 @@ class LineShoppingScanner:
             if market_data:
                 if market == "1x2":
                     stale = self._is_pinny_stale(market_data, ["HOME", "AWAY", "DRAW"])
-                elif market in ("over_under", "total_corners"):
+                elif market == "over_under":
                     line = opp.get("line", 2.5)
                     stale = self._is_pinny_stale(market_data, [f"over@{line}", f"under@{line}"])
                 elif market == "btts":
@@ -238,7 +238,7 @@ class LineShoppingScanner:
         pinny_ref = None
         if market == "1x2":
             pinny_ref = pinny.get(opp.get("outcome", "")) if isinstance(pinny, dict) else None
-        elif market in ("over_under", "total_corners"):
+        elif market == "over_under":
             k = f"{opp['outcome']}@{opp['line']}"
             pinny_ref = pinny.get(k) if isinstance(pinny, dict) else None
         elif market == "btts":
@@ -328,7 +328,7 @@ class LineShoppingScanner:
         return opportunities
 
     def _evaluate_match(self, event_info: dict, raw_odds: dict) -> List[Dict]:
-        """评估单场比赛的全部盘口（1x2 + 大小球 + 角球），返回 +EV 机会列表。"""
+        """评估单场比赛的全部盘口（1x2 + 大小球 + 角球独赢），返回 +EV 机会列表。"""
         opportunities = []
         markets = raw_odds.get("markets", {})
 
@@ -368,12 +368,6 @@ class LineShoppingScanner:
         corners_data = markets.get("corners_1x2")
         if corners_data:
             opps = self._evaluate_corners_1x2(event_info, corners_data)
-            opportunities.extend(opps)
-
-        # ── Total Corners 角球总数 O/U ──
-        tc_data = markets.get("total_corners")
-        if tc_data:
-            opps = self._evaluate_total_corners(event_info, tc_data)
             opportunities.extend(opps)
 
         return opportunities
@@ -732,69 +726,6 @@ class LineShoppingScanner:
             }
             if self._validate_opportunity(opp, pinny, corners_data):
                 opportunities.append(opp)
-        return opportunities
-
-    def _evaluate_total_corners(self, event_info: dict, tc_data: dict) -> List[Dict]:
-        """评估总角球数盘口（total_corners），多线 O/U 结构复用 2-way 逻辑。"""
-        # 从 side keys 提取所有唯一盘口线
-        lines = set()
-        for key in tc_data:
-            if key.startswith("over@"):
-                try:
-                    lines.add(float(key.split("@")[1]))
-                except (ValueError, IndexError):
-                    continue
-
-        opportunities = []
-        for line in sorted(lines):
-            side1, side2 = f"over@{line}", f"under@{line}"
-            pinny = self._get_pinnacle_2way(tc_data, side1, side2)
-            if not pinny:
-                continue
-
-            prob_over, prob_under, vig = _remove_vig_2way(pinny[side1], pinny[side2])
-            retail = self._get_best_retail_2way(tc_data, side1, side2)
-
-            for outcome_name, outcome_label, prob in [
-                ("over", "角大", prob_over),
-                ("under", "角小", prob_under),
-            ]:
-                side_key = f"{outcome_name}@{line}"
-                retail_info = retail.get(side_key, {})
-                retail_odds = retail_info.get("odds", 0)
-                if retail_odds <= 0:
-                    continue
-                retail_implied = 1.0 / retail_odds
-                ev = (prob - retail_implied) / retail_implied
-                if ev <= self.min_ev:
-                    continue
-                kelly = (prob * retail_odds - 1) / (retail_odds - 1) * 0.25
-                if kelly <= 0:
-                    continue
-
-                opp = {
-                    "type": "line_shopping", "market": "total_corners",
-                    "line": line,
-                    "sport": "football", "league": event_info.get("league_name", ""),
-                    "home_team": event_info["home_team"], "away_team": event_info["away_team"],
-                    "outcome": f"{outcome_name}_{line}", "outcome_label": f"{outcome_label}{line}",
-                    "commence_time": event_info.get("commence_time", ""),
-                    "pinny_over_odds": round(pinny[side1], 4),
-                    "pinny_under_odds": round(pinny[side2], 4),
-                    "pinny_prob": round(prob, 4),
-                    "retail_odds": round(retail_odds, 4),
-                    "retail_bookmaker": retail_info.get("bookmaker", ""),
-                    "edge_pct": round(ev * 100, 2), "kelly_pct": round(kelly * 100, 2),
-                    "vig_pct": round(vig * 100, 2), "_ev": ev, "_kelly_frac": kelly,
-                    "odds": retail_odds, "model_prob": round(prob, 4),
-                    "mkt_prob": round(retail_implied, 4),
-                }
-                if not self._validate_opportunity(opp, pinny, tc_data):
-                    continue
-                if pinny[side1] < 1.01 or pinny[side2] < 1.01:
-                    continue
-                opportunities.append(opp)
-
         return opportunities
 
 
