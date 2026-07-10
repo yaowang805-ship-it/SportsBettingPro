@@ -73,7 +73,7 @@ MAX_BET_PCT = float(os.getenv('MAX_BET_PCT', '0.25'))
 MAX_SINGLE_BET_PCT = float(os.getenv('MAX_SINGLE_BET_PCT', '0.05'))          # 单场最高 5%
 MAX_TOTAL_EXPOSURE = float(os.getenv('MAX_TOTAL_EXPOSURE', '0.30'))          # 总仓位上限 30%
 KELLY_FRACTION = float(os.getenv('KELLY_FRACTION', '0.25'))              # 1/4 凯利
-MIN_EDGE = float(os.getenv('MIN_EDGE', '0.06'))
+MIN_EDGE = float(os.getenv('MIN_EDGE', '0.03'))
 MIN_DAILY_STAKE = int(os.getenv('MIN_DAILY_STAKE', str(max(100, int(DEFAULT_BUDGET * 0.1)))))   # 最小每日建议注额，默认预算10%
 SPORTS_API_TIMEOUT = int(os.getenv('SPORTS_API_TIMEOUT', '30'))
 

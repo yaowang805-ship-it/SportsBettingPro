@@ -193,10 +193,9 @@ class PaperTrader:
         pred_rows = self._load_prediction_log()
         own_state = self._load_own_state()
 
-        # 从 virtual_portfolio 提取数据
+        # 从历史记录重新计算余额（不使用 portfolio.balance，因 void 退款冲高了该值）
         history = portfolio.get("history", [])
         pending = portfolio.get("pending_bets", [])
-        current_balance = portfolio.get("balance", self.initial_balance)
 
         # ── 基础统计 ──
         win_count = sum(1 for h in history if h.get("status") == "won")
@@ -207,6 +206,7 @@ class PaperTrader:
         win_rate = win_count / (win_count + loss_count) if (win_count + loss_count) > 0 else 0.0
         total_profit = sum(h.get("profit", 0) for h in history if h.get("profit") is not None)
         total_stake = sum(h.get("stake", 0) for h in history if h.get("stake") is not None)
+        current_balance = round(self.initial_balance + total_profit, 2)
         roi = total_profit / max(self.initial_balance, 1)
         avg_odds = sum(h.get("odds", 0) for h in history if h.get("odds"))
         avg_odds = avg_odds / max(len([h for h in history if h.get("odds")]), 1)
@@ -235,7 +235,7 @@ class PaperTrader:
                 "date": h.get("date", datetime.now(timezone.utc).isoformat()),
                 "balance": bal,
             })
-        # 当前余额补到最后（与前一点不同时才追加）
+        # 余额补到最后（当 equity_curve 的最后点与当前余额不一致才追加）
         if equity_curve and equity_curve[-1]["balance"] != round(current_balance, 2):
             equity_curve.append({
                 "date": datetime.now(timezone.utc).isoformat(),

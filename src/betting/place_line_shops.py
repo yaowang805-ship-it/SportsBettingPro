@@ -23,7 +23,7 @@ DAILY_BUDGET = float(DEFAULT_BUDGET)  # 10000
 MAX_PER_BET_PCT = 0.20   # 单注上限 20%
 MAX_PER_MATCH_PCT = 0.35  # 单场比赛总暴露上限 35%
 MIN_EDGE = 0.03
-KELLY_FRACTION = 0.25    # 1/4 Kelly 保守策略
+KELLY_FRACTION = 0.10    # 1/10 Kelly 保守策略（原 0.25，回撤过高后调降）
 MAX_ODDS = 10.0          # 高赔率过滤（>10的赔率模型概率不可靠）
 MAX_PER_MATCH_BETS = 2   # 同一比赛最多下注方向数
 SCAN_BUDGET_PCT = 0.30   # 每次扫描最多花剩余预算的 30%
@@ -47,6 +47,47 @@ MAX_HOURS_AHEAD = 30     # 超过此小时数的比赛不投注（留给后续�
 # 备份配置
 BACKUP_DIR = DATA_DIR / "backups" / "virtual_portfolio"
 BACKUP_KEEP = 30
+
+
+def _get_drawdown_multiplier() -> float:
+    """读取历史权益曲线，根据当前回撤返回 Kelly 乘数。
+
+    回撤 < 15%: 正常 (1.0)
+    回撤 15-30%: 半仓 (0.5)
+    回撤 > 30%: 停止 (0.0)
+    """
+    vp_file = DATA_DIR / "virtual_portfolio.json"
+    if not vp_file.exists():
+        return 1.0
+    try:
+        vp = json.loads(vp_file.read_text())
+        history = vp.get("history", [])
+        if len(history) < 5:
+            return 1.0
+
+        # 从历史记录计算权益曲线
+        balance = 10000.0
+        peak = balance
+        max_drawdown = 0.0
+        for h in history:
+            profit = h.get("profit", 0)
+            balance += profit
+            if balance > peak:
+                peak = balance
+            dd = (peak - balance) / peak if peak > 0 else 0
+            if dd > max_drawdown:
+                max_drawdown = dd
+
+        if max_drawdown > 0.30:
+            logger.warning("  🛑 回撤 %.1f%% > 30%%，停止新投注", max_drawdown * 100)
+            return 0.0
+        elif max_drawdown > 0.15:
+            logger.info("  ⚠️ 回撤 %.1f%% > 15%%，Kelly 减半", max_drawdown * 100)
+            return 0.5
+        return 1.0
+    except Exception as e:
+        logger.warning("  ⚠️ 读取回撤失败: %s", e)
+        return 1.0
 
 
 def _backup_vp(vp_file: Path):
@@ -253,7 +294,11 @@ def place_line_shops(daily_budget: Optional[float] = None) -> int:
         return 0
 
     # ── 第二遍：归一化到 daily_budget ──
-    raw_stakes = [min(c["kelly"] * KELLY_FRACTION * _CONFIDENCE.get(c["opp"].get("market", ""), 0.5), MAX_PER_BET_PCT) for c in candidates]
+    dd_mult = _get_drawdown_multiplier()
+    if dd_mult <= 0:
+        logger.info("  🛑 回撤超标，跳过本次扫描")
+        return 0
+    raw_stakes = [min(c["kelly"] * KELLY_FRACTION * dd_mult * _CONFIDENCE.get(c["opp"].get("market", ""), 0.5), MAX_PER_BET_PCT) for c in candidates]
     total_raw = sum(raw_stakes)
 
     bet_list = []

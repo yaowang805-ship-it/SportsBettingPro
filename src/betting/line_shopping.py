@@ -56,7 +56,7 @@ RETAIL_SLUGS = [
     "consensus", "oddssafari-consensus",
 ]
 
-MIN_EV = 0.02
+MIN_EV = 0.03
 MAX_OPPORTUNITIES = 300  # 含1x2 + 大小球 + BTTS + 双边 + 无平 + 角球
 
 # Over/Under 盘口配置：(市场 key, 盘口线, 显示名称)

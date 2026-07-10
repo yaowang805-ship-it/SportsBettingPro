@@ -18,6 +18,8 @@ from config.settings import DATA_DIR, ODDS_API_KEY
 logger = get_logger(__name__)
 
 SCAN_MARKETS = "h2h,spreads,totals"
+MAX_EDGE_PCT = 30.0  # 超过此值的 edge 视为数据错误
+KELLY_FRACTION = 0.10  # 1/10 Kelly 保守策略
 
 
 def _fetch_odds(sport_key: str, regions: str) -> list:
@@ -107,9 +109,9 @@ def _eval_h2h(home_team: str, away_team: str, commence_time: str,
         if fair <= 0 or rp <= 1:
             continue
         ev = round((rp - fair) / fair * 100, 2)
-        if ev < 3:
+        if ev < 3 or ev > MAX_EDGE_PCT:
             continue
-        kelly = (ev / 100) / (rp - 1) * 0.25
+        kelly = (ev / 100) / (rp - 1) * KELLY_FRACTION
         opps.append({
             "sport": sport, "league": league, "market": "h2h", "market_label": "独赢",
             "home_team": home_team, "away_team": away_team,
@@ -143,10 +145,10 @@ def _eval_spreads(home_team: str, away_team: str, commence_time: str,
         if fair <= 0 or rp <= 1:
             continue
         ev = round((rp - fair) / fair * 100, 2)
-        if ev < 3:
+        if ev < 3 or ev > MAX_EDGE_PCT:
             continue
         pt_str = f"{pt:+g}" if pt is not None else ""
-        kelly = (ev / 100) / (rp - 1) * 0.25
+        kelly = (ev / 100) / (rp - 1) * KELLY_FRACTION
         opps.append({
             "sport": sport, "league": league, "market": "spreads", "market_label": "让分盘",
             "home_team": home_team, "away_team": away_team,
@@ -181,9 +183,9 @@ def _eval_totals(home_team: str, away_team: str, commence_time: str,
         if fair <= 0 or rp <= 1:
             continue
         ev = round((rp - fair) / fair * 100, 2)
-        if ev < 3:
+        if ev < 3 or ev > MAX_EDGE_PCT:
             continue
-        kelly = (ev / 100) / (rp - 1) * 0.25
+        kelly = (ev / 100) / (rp - 1) * KELLY_FRACTION
         opps.append({
             "sport": sport, "league": league, "market": "totals", "market_label": "大小分",
             "home_team": home_team, "away_team": away_team,
@@ -281,10 +283,10 @@ def _eval_alternate_spreads(home_team: str, away_team: str, commence_time: str,
             if not r_price or r_price <= 1 or fair <= 0:
                 continue
             ev = round((r_price - fair) / fair * 100, 2)
-            if ev < 3:
+            if ev < 3 or ev > MAX_EDGE_PCT:
                 continue
             pt_str = f"{team_pt:+g}"
-            kelly = (ev / 100) / (r_price - 1) * 0.25
+            kelly = (ev / 100) / (r_price - 1) * KELLY_FRACTION
             opps.append({
                 "sport": sport, "league": league, "market": "alternate_spreads", "market_label": "让分盘",
                 "home_team": home_team, "away_team": away_team,
@@ -319,9 +321,9 @@ def _eval_alternate_totals(home_team: str, away_team: str, commence_time: str,
             if not r_price or r_price <= 1 or fair <= 0:
                 continue
             ev = round((r_price - fair) / fair * 100, 2)
-            if ev < 3:
+            if ev < 3 or ev > MAX_EDGE_PCT:
                 continue
-            kelly = (ev / 100) / (r_price - 1) * 0.25
+            kelly = (ev / 100) / (r_price - 1) * KELLY_FRACTION
             opps.append({
                 "sport": sport, "league": league, "market": "alternate_totals", "market_label": "大小分",
                 "home_team": home_team, "away_team": away_team,
