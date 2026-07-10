@@ -328,7 +328,7 @@ class LineShoppingScanner:
         return opportunities
 
     def _evaluate_match(self, event_info: dict, raw_odds: dict) -> List[Dict]:
-        """评估单场比赛的全部盘口（1x2 + 大小球 + 角球独赢），返回 +EV 机会列表。"""
+        """评估单场比赛的全部盘口（1x2 + 大小球 + 角球），返回 +EV 机会列表。"""
         opportunities = []
         markets = raw_odds.get("markets", {})
 
