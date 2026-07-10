@@ -135,6 +135,10 @@ def _validate_format(body: str) -> bool:
 
 
 _OUTCOME_CN = {"home": "主胜", "draw": "平局", "away": "客胜"}
+_SPORT_ORDER = {"football": 0, "basketball": 1, "WNBA": 1, "wnba": 1,
+                 "baseball": 2, "MLB": 2, "mlb": 2, "tennis": 3}
+_SPORT_CN = {"football": "足球", "basketball": "篮球", "WNBA": "篮球", "wnba": "篮球",
+             "baseball": "棒球", "MLB": "棒球", "mlb": "棒球", "tennis": "网球"}
 
 
 def _opp_label(o: dict) -> str:
@@ -161,7 +165,7 @@ def _opp_label(o: dict) -> str:
         display = outcome
 
     # 非足球玩法加市场前缀（如"独赢 主胜"、"让分盘 客胜+5.5"）
-    if o.get("sport") in ("basketball", "baseball", "tennis"):
+    if o.get("sport") not in ("football",):
         mkt_label = o.get("market_label", "")
         pt_str = o.get("point_str", "") or ""
         if mkt_label:
@@ -270,7 +274,8 @@ def build_ev_report(seen_set: set = None) -> tuple:
             except Exception:
                 pass
 
-    qualified.sort(key=lambda x: x["edge_pct"], reverse=True)
+    qualified.sort(key=lambda o: (
+        _SPORT_ORDER.get(o.get("sport", "football"), 99), -o["edge_pct"]))
     qualified = _calc_stakes(qualified[:MAX_BETS])
     qualified = [o for o in qualified if o["_stake"] > 0]
 
@@ -318,11 +323,18 @@ def build_ev_report(seen_set: set = None) -> tuple:
     now_str = now.strftime("%m/%d %H:%M")
     total_allocated = sum(o["_stake"] for o in qualified)
     lines = []
+    last_sport = None
 
     for idx, ((home, away, ct), bets) in enumerate(
-        sorted(by_match.items(), key=lambda x: max(b.get("edge_pct", 0) for b in x[1]), reverse=True), 1
+        sorted(by_match.items(), key=lambda x: (
+            _SPORT_ORDER.get(x[1][0].get("sport", "football"), 99),
+            -max(b.get("edge_pct", 0) for b in x[1]))), 1
     ):
         sport = bets[0].get("sport", "football")
+        if sport != last_sport:
+            cn_label = _SPORT_CN.get(sport, sport)
+            lines.append(f"── {cn_label} ──\n")
+            last_sport = sport
         h_cn = cn_team(home, sport)
         a_cn = cn_team(away, sport)
         tc = _fmt_time(ct)
