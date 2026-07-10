@@ -28,7 +28,7 @@ TENNIS_RESULTS_FILE = DATA_DIR / "tennis_line_shopping_results.json"
 SEEN_FILE = DATA_DIR / "pushed_fingerprints.json"
 
 BANKROLL = 10000
-MAX_BETS = 12
+MAX_BETS = 999  # 不限量，所有 ≥3% 的都发
 
 
 def _make_fingerprint(o: dict) -> str:
@@ -95,8 +95,10 @@ _LEAGUE_CN = {
     "basketball_wnba": "WNBA",
     "basketball_nba": "NBA",
     "basketball_euroleague": "EuroLeague",
+    "baseball_mlb": "MLB",
     "tennis_atp_wimbledon": "ATP温网",
     "tennis_wta_wimbledon": "WTA温网",
+    "NPL Queensland": "昆士兰超",
 }
 
 

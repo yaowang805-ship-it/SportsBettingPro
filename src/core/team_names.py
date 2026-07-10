@@ -449,6 +449,13 @@ FOOTBALL_MAP: dict[str, Tuple[str, str]] = {
     "VPS Vaasa": ("vps vaasa", "瓦萨"),
     "KuPS Kuopio": ("kups kuopio", "库普斯"),
     "AC Oulu": ("ac oulu", "奥卢"),
+    # ===== 昆士兰超（NPL Queensland）=====
+    "Moreton City Excelsior FC": ("moreton city excelsior fc", "莫尔顿城"),
+    "Magic United TFA": ("magic united tfa", "魔术联"),
+    "Brisbane Roar Youth": ("brisbane roar youth", "布里斯班狮吼青年"),
+    "Rochedale Rovers": ("rochedale rovers", "罗奇代尔流浪者"),
+    "Peninsula Power": ("peninsula power", "半岛力量"),
+    "Wynnum Wolves FC": ("wynnum wolves fc", "温纳姆狼队"),
 }
 
 # NBA 球队映射 — odds API 名→中文名
@@ -694,16 +701,14 @@ def cn_team(odds_name: str, sport: str = "nba") -> str:
     Returns:
         中文名，若无映射则返回原词
     """
-    if sport == "nba":
-        return NBA_CN.get(odds_name, odds_name)
-    if sport == "basketball":
+    if sport in ("nba", "basketball", "wnba", "WNBA"):
         cn = BB_CN.get(odds_name)
         if cn:
             return cn
         return NBA_CN.get(odds_name, odds_name)
-    if sport == "baseball":
+    if sport in ("baseball", "mlb", "MLB"):
         return MLB_CN.get(odds_name, odds_name)
-    if sport == "tennis":
+    if sport in ("tennis",):
         return TENNIS_CN.get(odds_name, odds_name)
     _, cn = lookup_football(odds_name)
     if cn == odds_name:
