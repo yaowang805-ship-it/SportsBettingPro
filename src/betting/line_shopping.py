@@ -402,6 +402,7 @@ class LineShoppingScanner:
             if kelly <= 0:
                 continue
 
+            pinny_price = pinny[retail_key]
             opp = {
                 "type": "line_shopping",
                 "market": "1x2",
@@ -417,6 +418,7 @@ class LineShoppingScanner:
                 "pinny_prob_home": round(pinny_h, 4),
                 "pinny_prob_draw": round(pinny_d, 4),
                 "pinny_prob_away": round(pinny_a, 4),
+                "pinnacle_price": round(pinny_price, 4),
                 "retail_odds": round(retail_odds, 4),
                 "retail_bookmaker": retail[f"{retail_key}_bm"],
                 "edge_pct": round(ev * 100, 2),
@@ -466,6 +468,7 @@ class LineShoppingScanner:
             if kelly <= 0:
                 continue
 
+            pinny_price = pinny[side_key]
             opp = {
                 "type": "line_shopping",
                 "market": "over_under",
@@ -480,6 +483,7 @@ class LineShoppingScanner:
                 "pinny_over_odds": round(pinny[side1], 4),
                 "pinny_under_odds": round(pinny[side2], 4),
                 "pinny_prob": round(prob, 4),
+                "pinnacle_price": round(pinny_price, 4),
                 "retail_odds": round(retail_odds, 4),
                 "retail_bookmaker": retail_info.get("bookmaker", ""),
                 "edge_pct": round(ev * 100, 2),
@@ -531,6 +535,7 @@ class LineShoppingScanner:
             if kelly <= 0:
                 continue
 
+            pinny_price = pinny[side_key]
             opp = {
                 "type": "line_shopping",
                 "market": "btts",
@@ -544,6 +549,7 @@ class LineShoppingScanner:
                 "pinny_yes_odds": round(pinny["yes"], 4),
                 "pinny_no_odds": round(pinny["no"], 4),
                 "pinny_prob": round(prob, 4),
+                "pinnacle_price": round(pinny_price, 4),
                 "retail_odds": round(retail_odds, 4),
                 "retail_bookmaker": retail_info.get("bookmaker", ""),
                 "edge_pct": round(ev * 100, 2),
@@ -618,6 +624,7 @@ class LineShoppingScanner:
                 "outcome": dc_side, "outcome_label": label,
                 "commence_time": event_info.get("commence_time", ""),
                 "pinny_odds": round(pinny_dc_side, 4),
+                "pinnacle_price": round(pinny_dc_side, 4),
                 "retail_odds": round(retail_odds, 4),
                 "retail_bookmaker": retail_bm,
                 "edge_pct": round(ev * 100, 2), "kelly_pct": round(kelly * 100, 2),
@@ -673,6 +680,7 @@ class LineShoppingScanner:
                 "outcome": side.lower(), "outcome_label": label,
                 "commence_time": event_info.get("commence_time", ""),
                 "pinny_odds": round(pinny_odds, 4),
+                "pinnacle_price": round(pinny_odds, 4),
                 "retail_odds": round(retail_odds, 4),
                 "retail_bookmaker": retail_bm,
                 "edge_pct": round(ev * 100, 2), "kelly_pct": round(kelly * 100, 2),
@@ -707,6 +715,7 @@ class LineShoppingScanner:
             kelly = (pinny_prob * retail_odds - 1) / (retail_odds - 1) * 0.25
             if kelly <= 0:
                 continue
+            pinny_price = pinny[retail_key]
             opp = {
                 "type": "line_shopping", "market": "corners_1x2",
                 "sport": "football", "league": event_info.get("league_name", ""),
@@ -717,6 +726,7 @@ class LineShoppingScanner:
                 "pinny_away_odds": pinny["away"],
                 "pinny_prob_home": round(pinny_h, 4), "pinny_prob_draw": round(pinny_d, 4),
                 "pinny_prob_away": round(pinny_a, 4),
+                "pinnacle_price": round(pinny_price, 4),
                 "retail_odds": round(retail_odds, 4),
                 "retail_bookmaker": retail[f"{retail_key}_bm"],
                 "edge_pct": round(ev * 100, 2), "kelly_pct": round(kelly * 100, 2),
