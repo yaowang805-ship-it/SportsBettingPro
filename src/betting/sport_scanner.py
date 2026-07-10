@@ -21,11 +21,38 @@ SCAN_MARKETS = "h2h,spreads,totals"
 MAX_EDGE_PCT = 30.0  # 超过此值的 edge 视为数据错误
 KELLY_FRACTION = 0.10  # 1/10 Kelly 保守策略
 
+# ===== the-odds-api 每日限额 =====
+DAILY_LIMIT = 600
+_COUNTER_FILE = DATA_DIR / "locks" / "odds_api_counter.json"
+
+
+def _api_call(label: str) -> bool:
+    """API 调用前检查+计数。返回 True=可继续，False=已达上限。"""
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    try:
+        data = json.loads(_COUNTER_FILE.read_text())
+        if data.get("date") != today:
+            data = {"date": today, "count": 0}
+    except Exception:
+        data = {"date": today, "count": 0}
+
+    if data["count"] >= DAILY_LIMIT:
+        logger.warning("API 配额已耗尽 (%d/%d)，跳过 %s", data["count"], DAILY_LIMIT, label)
+        return False
+
+    _COUNTER_FILE.parent.mkdir(parents=True, exist_ok=True)
+    data = {"date": today, "count": data["count"] + 1}
+    _COUNTER_FILE.write_text(json.dumps(data, ensure_ascii=False))
+    logger.info("API 配额: %d/%d (%s)", data["count"], DAILY_LIMIT, label)
+    return True
+
 
 def _fetch_odds(sport_key: str, regions: str) -> list:
     """从 the-odds-api 抓取赔率。"""
     if not ODDS_API_KEY:
         logger.error("ODDS_API_KEY 未配置")
+        return []
+    if not _api_call(f"odds {sport_key} {regions}"):
         return []
     import requests
     url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds"
@@ -339,6 +366,8 @@ def get_active_leagues(sport_key_prefix: str) -> Set[str]:
     """从 API 获取当前活跃的联赛（按前缀筛选）。"""
     if not ODDS_API_KEY:
         return set()
+    if not _api_call(f"sports_list {sport_key_prefix}"):
+        return set()
     import requests
     try:
         url = f"https://api.the-odds-api.com/v4/sports/?apiKey={ODDS_API_KEY}"
@@ -355,6 +384,8 @@ def get_active_leagues(sport_key_prefix: str) -> Set[str]:
 def _fetch_event_odds(sport_key: str, event_id: str) -> dict:
     """抓取单场比赛的备选盘口赔率（合并 EU+US 区域）。"""
     if not ODDS_API_KEY:
+        return {}
+    if not _api_call(f"event_odds {sport_key} {event_id[:8]}"):
         return {}
     import requests
     url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/events/{event_id}/odds"
