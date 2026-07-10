@@ -57,7 +57,7 @@ RETAIL_SLUGS = [
 ]
 
 MIN_EV = 0.02
-MAX_OPPORTUNITIES = 400  # 含1x2 + 大小球 + BTTS + 双边 + 无平 + 角球 + 角球大小 + 总角球
+MAX_OPPORTUNITIES = 400  # 含1x2 + 大小球 + BTTS + 双边 + 无平 + 总角球
 
 # Over/Under 盘口配置：(市场 key, 盘口线, 显示名称)
 OVER_UNDER_MARKETS = [
@@ -362,12 +362,6 @@ class LineShoppingScanner:
         dnb_data = markets.get("draw_no_bet")
         if dnb_data:
             opps = self._evaluate_draw_no_bet(event_info, dnb_data)
-            opportunities.extend(opps)
-
-        # ── Corners 1x2 角球独赢 ──
-        corners_data = markets.get("corners_1x2")
-        if corners_data:
-            opps = self._evaluate_corners_1x2(event_info, corners_data)
             opportunities.extend(opps)
 
         # ── Total Corners 角球总数 O/U ──
