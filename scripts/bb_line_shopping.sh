@@ -31,6 +31,6 @@ scan_and_notify()
 # 统一推送（所有体育）
 python3 -c "
 import sys; sys.path.insert(0, '.')
-from src.betting.line_shopping import push_cached_recommendations
-push_cached_recommendations()
+from src.report.ev_push import push_ev_report
+push_ev_report()
 " >> "$LOG" 2>&1
