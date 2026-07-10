@@ -114,6 +114,7 @@ _FORMAT_MARKERS = {
     "header_prefix": "**+EV 投注推荐:",
     "entry_prefix": "##### #",
     "fair_price": "公平价:",
+    "pinnacle": "Pinnacle:",
     "retail": "零售:",
     "edge": "溢价:",
     "stake": "投注:",
@@ -127,6 +128,7 @@ def _validate_format(body: str) -> bool:
         body.startswith(_FORMAT_MARKERS["header_prefix"]),
         _FORMAT_MARKERS["entry_prefix"] in body,
         _FORMAT_MARKERS["fair_price"] in body,
+        _FORMAT_MARKERS["pinnacle"] in body,
         _FORMAT_MARKERS["retail"] in body,
         _FORMAT_MARKERS["edge"] in body,
         _FORMAT_MARKERS["stake"] in body,
@@ -352,11 +354,14 @@ def build_ev_report(seen_set: set = None) -> tuple:
                 fair = round(1.0 / b["model_prob"], 2)
             else:
                 fair = "?"
+            pinny = b.get("pinnacle_price") or "?"
+            if pinny != "?":
+                pinny = round(pinny, 2)
             retail = b.get("retail_odds") or b.get("odds", "-")
             ev_pct = b["edge_pct"]
             stake = b["_stake"]
             lines.append(
-                f"> [{oc}] 公平价: {fair} | 零售: {retail} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}"
+                f"> [{oc}] 公平价: {fair} | Pinnacle: {pinny} | 零售: {retail} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}"
             )
         if len(bets) > 1:
             lines.append(f"> **本场合计: ¥{match_total:,}**")

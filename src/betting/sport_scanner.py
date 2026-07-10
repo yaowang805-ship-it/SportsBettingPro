@@ -128,7 +128,7 @@ def _eval_h2h(home_team: str, away_team: str, commence_time: str,
     fh, fa = _remove_vig(ph, pa)
     retail = _get_retail_best(us_game, "h2h")
     opps = []
-    for team, fair, outcome_cn in [(home_team, fh, "主胜"), (away_team, fa, "客胜")]:
+    for team, fair, pinny_price, outcome_cn in [(home_team, fh, ph, "主胜"), (away_team, fa, pa, "客胜")]:
         r = retail.get(team)
         if not r:
             continue
@@ -144,7 +144,7 @@ def _eval_h2h(home_team: str, away_team: str, commence_time: str,
             "home_team": home_team, "away_team": away_team,
             "outcome": outcome_cn, "outcome_label": outcome_cn,
             "point": None, "point_str": "", "commence_time": commence_time,
-            "fair_price": fair, "retail_odds": rp, "edge_pct": ev,
+            "fair_price": fair, "pinnacle_price": pinny_price, "retail_odds": rp, "edge_pct": ev,
             "odds": rp, "kelly_pct": round(kelly * 100, 2),
         })
     return opps
@@ -181,7 +181,7 @@ def _eval_spreads(home_team: str, away_team: str, commence_time: str,
             "home_team": home_team, "away_team": away_team,
             "outcome": f"{side}胜_{team}", "outcome_label": f"{side}胜",
             "point": pt, "point_str": pt_str, "commence_time": commence_time,
-            "fair_price": fair, "retail_odds": rp, "edge_pct": ev,
+            "fair_price": fair, "pinnacle_price": pe["price"], "retail_odds": rp, "edge_pct": ev,
             "odds": rp, "kelly_pct": round(kelly * 100, 2),
         })
     return opps
@@ -218,7 +218,7 @@ def _eval_totals(home_team: str, away_team: str, commence_time: str,
             "home_team": home_team, "away_team": away_team,
             "outcome": f"{suffix}{pt}", "outcome_label": f"{suffix}{pt}",
             "point": pt, "point_str": "", "commence_time": commence_time,
-            "fair_price": fair, "retail_odds": rp, "edge_pct": ev,
+            "fair_price": fair, "pinnacle_price": pe["price"], "retail_odds": rp, "edge_pct": ev,
             "odds": rp, "kelly_pct": round(kelly * 100, 2),
         })
     return opps
@@ -303,9 +303,9 @@ def _eval_alternate_spreads(home_team: str, away_team: str, commence_time: str,
         r_home = retail.get(h_pt, {}).get(home_team)
         r_away = retail.get(a_pt, {}).get(away_team)
 
-        for team, team_pt, fair, r_price, side in [
-            (home_team, h_pt, fh, r_home, "主"),
-            (away_team, a_pt, fa, r_away, "客"),
+        for team, team_pt, fair, pinny_price, r_price, side in [
+            (home_team, h_pt, fh, h_oc["price"], r_home, "主"),
+            (away_team, a_pt, fa, a_oc["price"], r_away, "客"),
         ]:
             if not r_price or r_price <= 1 or fair <= 0:
                 continue
@@ -319,7 +319,7 @@ def _eval_alternate_spreads(home_team: str, away_team: str, commence_time: str,
                 "home_team": home_team, "away_team": away_team,
                 "outcome": f"{side}胜_{team}", "outcome_label": f"{side}胜",
                 "point": team_pt, "point_str": pt_str, "commence_time": commence_time,
-                "fair_price": fair, "retail_odds": r_price, "edge_pct": ev,
+                "fair_price": fair, "pinnacle_price": pinny_price, "retail_odds": r_price, "edge_pct": ev,
                 "odds": r_price, "kelly_pct": round(kelly * 100, 2),
             })
     return opps
@@ -344,7 +344,7 @@ def _eval_alternate_totals(home_team: str, away_team: str, commence_time: str,
         fo, fu = _remove_vig(over, under)
         r_over = retail.get(pt, {}).get("Over")
         r_under = retail.get(pt, {}).get("Under")
-        for suffix, fair, r_price in [("大", fo, r_over), ("小", fu, r_under)]:
+        for suffix, fair, pinny_price, r_price in [("大", fo, over, r_over), ("小", fu, under, r_under)]:
             if not r_price or r_price <= 1 or fair <= 0:
                 continue
             ev = round((r_price - fair) / fair * 100, 2)
@@ -356,7 +356,7 @@ def _eval_alternate_totals(home_team: str, away_team: str, commence_time: str,
                 "home_team": home_team, "away_team": away_team,
                 "outcome": f"{suffix}{pt}", "outcome_label": f"{suffix}{pt}",
                 "point": pt, "point_str": "", "commence_time": commence_time,
-                "fair_price": fair, "retail_odds": r_price, "edge_pct": ev,
+                "fair_price": fair, "pinnacle_price": pinny_price, "retail_odds": r_price, "edge_pct": ev,
                 "odds": r_price, "kelly_pct": round(kelly * 100, 2),
             })
     return opps

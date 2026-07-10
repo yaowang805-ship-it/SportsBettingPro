@@ -14,8 +14,8 @@ def _make_good_body() -> str:
         "**+EV 投注推荐: 3 条**\n\n"
         "扫描 07/03 09:00 | ≥3% edge | 总额 ¥2,000\n\n"
         "##### #1 法国 vs 巴西 (World Cup) 07/04 21:00\n"
-        "> [主胜] 公平价: 2.50 | 零售: 2.62 | 溢价: +8.5% | 投注: ¥800\n"
-        "> [大2.5] 公平价: 1.95 | 零售: 2.10 | 溢价: +5.2% | 投注: ¥300\n"
+        "> [主胜] 公平价: 2.50 | Pinnacle: 2.55 | 零售: 2.62 | 溢价: +8.5% | 投注: ¥800\n"
+        "> [大2.5] 公平价: 1.95 | Pinnacle: 2.00 | 零售: 2.10 | 溢价: +5.2% | 投注: ¥300\n"
         "> **本场合计: ¥1,100**\n\n"
         "---\n"
         "💡 BB赔率 > **公平价** = +EV | 零售=市场最佳价(非推荐)"
@@ -43,6 +43,11 @@ class TestPushFormat:
         body = _make_good_body()
         body = body.replace("公平价:", "参考价:")
         assert not _validate_format(body), "公平价改为参考价应导致验证失败"
+
+    def test_missing_pinnacle_fails(self):
+        body = _make_good_body()
+        body = body.replace("Pinnacle:", "网站:")
+        assert not _validate_format(body), "Pinnacle改为网站应导致验证失败"
 
     def test_missing_retail_fails(self):
         body = _make_good_body()
