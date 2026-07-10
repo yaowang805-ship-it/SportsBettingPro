@@ -547,6 +547,22 @@ MLB_CN = {
     "Washington Nationals": "华盛顿国民",
 }
 
+# NPB 日本棒球队中文名
+NPB_CN = {
+    "Chiba Lotte Marines": "千叶罗德海洋",
+    "Chunichi Dragons": "中日龙",
+    "Fukuoka SoftBank Hawks": "福冈软银鹰",
+    "Hanshin Tigers": "阪神虎",
+    "Hiroshima Toyo Carp": "广岛东洋鲤鱼",
+    "Hokkaido Nippon-Ham Fighters": "北海道日本火腿斗士",
+    "Orix Buffaloes": "欧力士野牛",
+    "Saitama Seibu Lions": "埼玉西武狮",
+    "Tohoku Rakuten Golden Eagles": "东北乐天金鹫",
+    "Tokyo Yakult Swallows": "东京养乐多燕子",
+    "Yokohama DeNA BayStars": "横滨DeNA海湾之星",
+    "Yomiuri Giants": "读卖巨人",
+}
+
 # 网球球员中文名（按发现的球员逐步添加）
 TENNIS_CN = {
     # ATP 温网 2026
@@ -710,7 +726,10 @@ def cn_team(odds_name: str, sport: str = "nba") -> str:
             return cn
         return NBA_CN.get(odds_name, odds_name)
     if sport in ("baseball", "mlb", "MLB"):
-        return MLB_CN.get(odds_name, odds_name)
+        cn = MLB_CN.get(odds_name)
+        if cn:
+            return cn
+        return NPB_CN.get(odds_name, odds_name)
     if sport in ("tennis",):
         return TENNIS_CN.get(odds_name, odds_name)
     _, cn = lookup_football(odds_name)

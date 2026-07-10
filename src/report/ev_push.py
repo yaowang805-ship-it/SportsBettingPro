@@ -96,6 +96,7 @@ _LEAGUE_CN = {
     "basketball_nba": "NBA",
     "basketball_euroleague": "EuroLeague",
     "baseball_mlb": "MLB",
+    "baseball_npb": "NPB日职",
     "tennis_atp_wimbledon": "ATP温网",
     "tennis_wta_wimbledon": "WTA温网",
     "NPL Queensland": "昆士兰超",
