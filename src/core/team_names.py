@@ -554,11 +554,14 @@ TENNIS_CN = {
     "Arthur Fery": "阿瑟·费里",
     "Taylor Fritz": "泰勒·弗里茨",
     "Alexander Zverev": "亚历山大·兹维列夫",
+    "Jannik Sinner": "扬尼克·辛纳",
+    "Novak Djokovic": "诺瓦克·德约科维奇",
     # WTA 温网 2026
     "Linda Noskova": "琳达·诺斯科娃",
     "Elise Mertens": "爱丽丝·梅尔滕斯",
     "Marta Kostyuk": "玛尔塔·科斯丘克",
     "Jasmine Paolini": "贾斯明·保利尼",
+    "Karolina Muchova": "卡罗利娜·穆霍娃",
 }
 
 
