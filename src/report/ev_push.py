@@ -39,7 +39,9 @@ def _make_fingerprint(o: dict) -> str:
     away = o.get("away_team", "?")
     outcome = o.get("outcome", "?")
     pt = o.get("point") or o.get("line") or ""
-    return f"{sport}|{market}|{home}|{away}|{outcome}|{pt}"
+    # 加上比赛日期，避免同系列跨天指纹碰撞
+    ct = (o.get("commence_time") or "")[:10]
+    return f"{sport}|{market}|{home}|{away}|{outcome}|{pt}|{ct}"
 
 
 def _load_seen() -> set:
