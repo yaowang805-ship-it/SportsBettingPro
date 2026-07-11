@@ -103,6 +103,8 @@ _LEAGUE_CN = {
     "tennis_atp_wimbledon": "ATP温网",
     "tennis_wta_wimbledon": "WTA温网",
     "NPL Queensland": "昆士兰超",
+    "americanfootball_nfl": "NFL",
+    "americanfootball_cfl": "CFL",
 }
 
 
