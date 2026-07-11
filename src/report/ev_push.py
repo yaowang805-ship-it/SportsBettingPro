@@ -25,6 +25,7 @@ RESULTS_FILE = DATA_DIR / "line_shopping_results.json"
 BB_RESULTS_FILE = DATA_DIR / "bb_line_shopping_results.json"
 MLB_RESULTS_FILE = DATA_DIR / "mlb_line_shopping_results.json"
 TENNIS_RESULTS_FILE = DATA_DIR / "tennis_line_shopping_results.json"
+FB_RESULTS_FILE = DATA_DIR / "american_football_line_shopping_results.json"
 SEEN_FILE = DATA_DIR / "pushed_fingerprints.json"
 
 BANKROLL = 10000
@@ -141,9 +142,11 @@ def _validate_format(body: str) -> bool:
 
 _OUTCOME_CN = {"home": "主胜", "draw": "平局", "away": "客胜"}
 _SPORT_ORDER = {"football": 0, "basketball": 1, "WNBA": 1, "wnba": 1,
-                 "baseball": 2, "MLB": 2, "mlb": 2, "tennis": 3}
+                 "baseball": 2, "MLB": 2, "mlb": 2, "tennis": 3,
+                 "american_football": 4}
 _SPORT_CN = {"football": "足球", "basketball": "篮球", "WNBA": "篮球", "wnba": "篮球",
-             "baseball": "棒球", "MLB": "棒球", "mlb": "棒球", "tennis": "网球"}
+             "baseball": "棒球", "MLB": "棒球", "mlb": "棒球", "tennis": "网球",
+             "american_football": "美式足球"}
 
 
 def _opp_label(o: dict) -> str:
@@ -254,7 +257,7 @@ def build_ev_report(seen_set: set = None) -> tuple:
                 qualified.append(o)
 
     # === 棒球 +EV 机会 ===
-    for rf, label in [(MLB_RESULTS_FILE, "棒球"), (TENNIS_RESULTS_FILE, "网球")]:
+    for rf, label in [(MLB_RESULTS_FILE, "棒球"), (TENNIS_RESULTS_FILE, "网球"), (FB_RESULTS_FILE, "美式足球")]:
         if rf.exists():
             try:
                 sdata = json.loads(rf.read_text())

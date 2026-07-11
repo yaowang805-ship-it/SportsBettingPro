@@ -22,7 +22,7 @@ MAX_EDGE_PCT = 30.0  # 超过此值的 edge 视为数据错误
 KELLY_FRACTION = 0.10  # 1/10 Kelly 保守策略
 
 # ===== the-odds-api 每日限额 =====
-DAILY_LIMIT = 600
+DAILY_LIMIT = 600  # 20,000/月，日均 666，预留余量
 _COUNTER_FILE = DATA_DIR / "locks" / "odds_api_counter.json"
 
 
