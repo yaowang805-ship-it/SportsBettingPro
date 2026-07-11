@@ -409,13 +409,12 @@ def push_ev_report():
         logger.error("推送格式验证失败！阻止发送。body=%s...", body[:100])
         return
 
-    # 中文自检：发现英文队名/球员名残留时报警
+    # 中文自检：发现英文队名/球员名残留时报警（不拦截推送）
     en_issues = _check_body_chinese(body)
     if en_issues:
         for issue in en_issues:
             logger.warning("⚠️ %s", issue)
         logger.warning("推送内容有英文名残留，请检查 team_names.py 是否缺少映射")
-        return
 
     title = f"+EV 投注推荐: {body.count('#####')} 条"
     from config.settings import send_dingtalk

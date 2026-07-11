@@ -402,6 +402,12 @@ FOOTBALL_MAP: dict[str, Tuple[str, str]] = {
     "Shandong Taishan": ("shandong taishan", "山东泰山"),
     "Beijing Guoan": ("beijing guoan", "北京国安"),
     "Liaoning Tieren FC": ("liaoning tieren", "辽宁铁人"),
+    "Qingdao West Coast": ("qingdao west coast", "青岛西海岸"),
+    "Yunnan Yukun": ("yunnan yukun", "云南玉昆"),
+    "Zhejiang": ("zhejiang", "浙江"),
+    # ===== 巴乙（Campeonato Brasileiro Série B）=====
+    "Grêmio Novorizontino": ("grêmio novorizontino", "诺沃里宗蒂诺"),
+    "Operário-PR": ("operário-pr", "巴拉纳竞技"),
     # ===== 瑞典超（Allsvenskan）=====
     "Kalmar FF": ("kalmar ff", "卡尔马"),
     "Örgryte IS": ("örgryte is", "厄格里特"),
@@ -442,13 +448,28 @@ FOOTBALL_MAP: dict[str, Tuple[str, str]] = {
     "IF Gnistan": ("if gnistan", "吉尼斯坦"),
     "HJK Helsinki": ("hjk helsinki", "赫尔辛基"),
     "SJK Seinäjoki": ("sjk seinäjoki", "塞伊奈约基"),
+    "SJK": ("sjk", "塞伊奈约基"),
     "FC Inter Turku": ("fc inter turku", "图尔库国际"),
     "FC Haka": ("fc haka", "哈卡"),
     "FC Ilves": ("fc ilves", "伊尔韦斯"),
     "FC Honka": ("fc honka", "洪卡"),
     "VPS Vaasa": ("vps vaasa", "瓦萨"),
+    "VPS": ("vps", "瓦萨"),
     "KuPS Kuopio": ("kups kuopio", "库普斯"),
     "AC Oulu": ("ac oulu", "奥卢"),
+    # ===== 挪威超（Eliteserien）=====
+    "KFUM Oslo": ("kfum oslo", "KFUM奥斯陆"),
+    "Bodø/Glimt": ("bodø/glimt", "博德闪耀"),
+    "Molde FK": ("molde fk", "莫尔德"),
+    "Rosenborg BK": ("rosenborg bk", "罗森博格"),
+    "Vålerenga IF": ("vålerenga if", "瓦勒伦加"),
+    "Sarpsborg 08 FF": ("sarpsborg 08 ff", "萨尔普斯堡"),
+    "Tromsø IL": ("tromsø il", "特罗姆瑟"),
+    "Viking FK": ("viking fk", "维京"),
+    "Strømsgodset IF": ("strømsgodset if", "斯特罗姆加斯特"),
+    "HamKam": ("hamkam", "汉坎"),
+    "Fredrikstad FK": ("fredrikstad fk", "腓特烈斯塔"),
+    "Bryne FK": ("bryne fk", "布莱尼"),
     # ===== 昆士兰超（NPL Queensland）=====
     "Moreton City Excelsior FC": ("moreton city excelsior fc", "莫尔顿城"),
     "Magic United TFA": ("magic united tfa", "魔术联"),
@@ -456,6 +477,11 @@ FOOTBALL_MAP: dict[str, Tuple[str, str]] = {
     "Rochedale Rovers": ("rochedale rovers", "罗奇代尔流浪者"),
     "Peninsula Power": ("peninsula power", "半岛力量"),
     "Wynnum Wolves FC": ("wynnum wolves fc", "温纳姆狼队"),
+    "Gold Coast Knights": ("gold coast knights", "黄金海岸骑士"),
+    "Brisbane City": ("brisbane city", "布里斯班城"),
+    "Queensland Lions FC": ("queensland lions fc", "昆士兰狮队"),
+    "Olympic FC": ("olympic fc", "奥林匹克FC"),
+    "Brisbane Roar": ("brisbane roar", "布里斯班狮吼"),
 }
 
 # NBA 球队映射 — odds API 名→中文名

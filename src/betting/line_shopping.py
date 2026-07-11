@@ -966,13 +966,12 @@ def push_cached_recommendations():
     except ImportError:
         pass
 
-    # 中文自检 — 发现英文名残留时阻止发送
+    # 中文自检 — 发现英文名残留时报警（不拦截推送）
     en_issues = _check_body_chinese(body)
     if en_issues:
         for issue in en_issues:
             logger.warning("⚠️ %s", issue)
         logger.warning("推送内容有英文名残留，请检查 team_names.py 是否缺少映射")
-        return
 
     title = f"+EV 投注推荐: {body.count('#####')} 条"
     try:
