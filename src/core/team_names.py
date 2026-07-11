@@ -573,6 +573,55 @@ MLB_CN = {
     "Washington Nationals": "华盛顿国民",
 }
 
+# NFL 球队中文名
+NFL_CN = {
+    "Arizona Cardinals": "亚利桑那红雀",
+    "Atlanta Falcons": "亚特兰大猎鹰",
+    "Baltimore Ravens": "巴尔的摩乌鸦",
+    "Buffalo Bills": "布法罗比尔",
+    "Carolina Panthers": "卡罗来纳黑豹",
+    "Chicago Bears": "芝加哥熊",
+    "Cincinnati Bengals": "辛辛那提猛虎",
+    "Cleveland Browns": "克利夫兰布朗",
+    "Dallas Cowboys": "达拉斯牛仔",
+    "Denver Broncos": "丹佛野马",
+    "Detroit Lions": "底特律雄狮",
+    "Green Bay Packers": "绿湾包装工",
+    "Houston Texans": "休斯顿得州人",
+    "Indianapolis Colts": "印第安纳波利斯小马",
+    "Jacksonville Jaguars": "杰克逊维尔美洲虎",
+    "Kansas City Chiefs": "堪萨斯城酋长",
+    "Las Vegas Raiders": "拉斯维加斯突袭者",
+    "Los Angeles Chargers": "洛杉矶闪电",
+    "Los Angeles Rams": "洛杉矶公羊",
+    "Miami Dolphins": "迈阿密海豚",
+    "Minnesota Vikings": "明尼苏达维京人",
+    "New England Patriots": "新英格兰爱国者",
+    "New Orleans Saints": "新奥尔良圣徒",
+    "New York Giants": "纽约巨人",
+    "New York Jets": "纽约喷气机",
+    "Philadelphia Eagles": "费城老鹰",
+    "Pittsburgh Steelers": "匹兹堡钢人",
+    "San Francisco 49ers": "旧金山49人",
+    "Seattle Seahawks": "西雅图海鹰",
+    "Tampa Bay Buccaneers": "坦帕湾海盗",
+    "Tennessee Titans": "田纳西泰坦",
+    "Washington Commanders": "华盛顿指挥官",
+}
+
+# CFL 球队中文名
+CFL_CN = {
+    "BC Lions": "BC狮队",
+    "Calgary Stampeders": "卡尔加里奔马",
+    "Edmonton Elks": "埃德蒙顿麋鹿",
+    "Hamilton Tiger-Cats": "汉密尔顿虎猫",
+    "Montreal Alouettes": "蒙特利尔云雀",
+    "Ottawa Redblacks": "渥太华红黑",
+    "Saskatchewan Roughriders": "萨斯喀彻温粗骑手",
+    "Toronto Argonauts": "多伦多阿尔戈英雄",
+    "Winnipeg Blue Bombers": "温尼伯蓝色轰炸机",
+}
+
 # NPB 日本棒球队中文名
 NPB_CN = {
     "Chiba Lotte Marines": "千叶罗德海洋",
@@ -758,6 +807,11 @@ def cn_team(odds_name: str, sport: str = "nba") -> str:
         return NPB_CN.get(odds_name, odds_name)
     if sport in ("tennis",):
         return TENNIS_CN.get(odds_name, odds_name)
+    if sport in ("american_football",):
+        cn = NFL_CN.get(odds_name) or CFL_CN.get(odds_name)
+        if cn:
+            return cn
+        return odds_name
     _, cn = lookup_football(odds_name)
     if cn == odds_name:
         return WC_CN.get(odds_name, odds_name)
