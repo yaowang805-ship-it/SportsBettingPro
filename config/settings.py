@@ -132,6 +132,5 @@ TRUSTED_LEAGUES = {
     # 南美顶级联赛
     "Brasileirão Serie A",            # 巴甲
     "Brazil Serie A",                 # 巴甲别名
-    # 大洋洲（2026-07 添加，Pinnacle 有覆盖）
-    "NPL Queensland",                 # 昆士兰超级联赛
+    # 大洋洲（已移除 NPL Queensland — 联赛太乱）
 }
