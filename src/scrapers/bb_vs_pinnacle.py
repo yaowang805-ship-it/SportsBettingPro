@@ -1105,6 +1105,39 @@ def verify_match(bb_match, pin_match):
         return False, "队名无法验证（无中文→英文映射）"
 
 
+def _warn_suspicious(ev_pct, match_score, verified):
+    """返回高 EV / 低置信度警告标记，None 表示无警告。"""
+    if ev_pct > 20:
+        return "⚠️ 溢价异常高(>20%)，可能是匹配错误，请核对球队"
+    if ev_pct > 15:
+        return "⚠️ 溢价偏高(>15%)，建议核对赔率"
+    if ev_pct > 10 and match_score < 0.85:
+        return f"⚠️ 匹配度偏低({match_score})，请确认球队是否正确"
+    if not verified and match_score < 0.75:
+        return "⚠️ 匹配度偏低，请核对球队是否正确"
+    return None
+
+
+def _check_pinnacle():
+    """启动时检测 Pinnacle API 连通性。"""
+    test_url = f"{API_BASE}/sports/29/matchups"
+    try:
+        resp = SESSION.get(test_url, timeout=15)
+        if resp.status_code == 200:
+            print("  ✅ Pinnacle API 连通正常")
+            return True
+        print(f"  ❌ Pinnacle API 返回 {resp.status_code}")
+    except requests.exceptions.ConnectionError:
+        print("  ❌ Pinnacle API 连接失败（SOCKS5 代理）")
+        print("  → 请检查 Shadowrocket 是否开启，localhost:1082 是否可用")
+    except requests.exceptions.Timeout:
+        print("  ❌ Pinnacle API 超时")
+        print("  → 可能是代理节点问题，尝试切换 Shadowrocket 节点")
+    except Exception as e:
+        print(f"  ❌ Pinnacle API 异常: {e}")
+    return False
+
+
 def main():
     print("=" * 60)
     print("BB体育 vs Pinnacle 完整赔率对比 v2")
@@ -1128,6 +1161,14 @@ def main():
             else:
                 valid_1x2 += 1
     print(f"  有独赢赔率: {valid_1x2} 场足球 + {valid_2way} 场其他 = {valid_1x2 + valid_2way}")
+
+    # 0. Pinnacle 连通性检测
+    if not _check_pinnacle():
+        print("\n⚠️ Pinnacle API 不可用，中止。解决办法：")
+        print("  1. 确认 Shadowrocket 已开启")
+        print("  2. 确认 SOCKS5 代理在 localhost:1082 运行")
+        print("  3. 切换代理节点后重试")
+        sys.exit(1)
 
     # 2. Get all matchups from Pinnacle for relevant sports
     all_pin_leagues = {}
@@ -1206,6 +1247,16 @@ def main():
 
     print(f"\n\n匹配比赛: {len(matched)} 场")
     print(f"  队名: {len(name_matches)} | 时间+赔率: {len(other_matches)}")
+
+    # 验证匹配的比赛：检查球队名是否一致
+    verified_count = 0
+    for m in matched:
+        verified, note = verify_match(m["bb"], m["pin"])
+        m["verified"] = verified
+        m["verify_note"] = note
+        if verified:
+            verified_count += 1
+    print(f"  队名验证: {verified_count}/{len(matched)} 可确认球队一致")
 
     # For +EV calculation
     valid_matches = matched
@@ -1390,6 +1441,18 @@ def main():
                 entry[mk] = [max(entry[mk], key=lambda x: x["ev_pct"])]
 
         if entry["opportunities"] or entry["handicap"] or entry["over_under"]:
+            # 可疑 EV / 低置信度警告
+            for mk in ("opportunities", "handicap", "over_under"):
+                for o in entry.get(mk, []):
+                    w = _warn_suspicious(o["ev_pct"], entry["match_score"], m.get("verified", False))
+                    if w:
+                        o["_warn"] = w
+                        if w not in entry["flags"]:
+                            entry["flags"].append(w)
+            # 低匹配度 + 不可验证 → 标记
+            ms = entry["match_score"]
+            if not m.get("verified", False) and ms < 0.85:
+                entry["flags"].append(f"球队待确认(匹配度{ms})")
             opportunities.append(entry)
 
     total_opps_1x2 = sum(len(o["opportunities"]) for o in opportunities)
