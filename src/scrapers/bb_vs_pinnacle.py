@@ -783,8 +783,13 @@ def get_pin_ml_sorted(pin_match, sport="football"):
     return []
 
 
-def get_pin_spread(pin_match):
-    """Get Pinnacle spread (handicap) for period=0. Returns (home_price, away_price)."""
+def get_pin_spread(pin_match, target_line=None):
+    """Get Pinnacle spread (handicap) for period=0.
+
+    如果指定 target_line，返回线值最接近的让球盘（Pinnacle 可能返回多个让球线）。
+    否则返回第一个 period=0 的让球盘。
+    """
+    candidates = []
     for sp in pin_match.get("spread", []):
         if sp["period"] == 0:
             prices = sp.get("prices", [])
@@ -795,12 +800,31 @@ def get_pin_spread(pin_match):
                     home_p = p
                 elif p.get("designation") == "away":
                     away_p = p
-            return home_p, away_p
-    return None, None
+            if home_p and away_p:
+                candidates.append((home_p, away_p))
+
+    if not candidates:
+        return None, None
+    if target_line is None or len(candidates) == 1:
+        return candidates[0]
+
+    # 找线值最接近的
+    best = candidates[0]
+    best_diff = abs(target_line - candidates[0][0].get("points", 0))
+    for home_p, away_p in candidates[1:]:
+        diff = abs(target_line - home_p.get("points", 0))
+        if diff < best_diff:
+            best_diff = diff
+            best = (home_p, away_p)
+    return best
 
 
-def get_pin_total(pin_match):
-    """Get Pinnacle total (over/under) for period=0. Returns (over_price, under_price)."""
+def get_pin_total(pin_match, target_line=None):
+    """Get Pinnacle total (over/under) for period=0.
+
+    如果指定 target_line，返回线值最接近的大小盘。
+    """
+    candidates = []
     for t in pin_match.get("total", []):
         if t["period"] == 0:
             prices = t.get("prices", [])
@@ -811,8 +835,22 @@ def get_pin_total(pin_match):
                     over_p = p
                 elif p.get("designation") == "under":
                     under_p = p
-            return over_p, under_p
-    return None, None
+            if over_p and under_p:
+                candidates.append((over_p, under_p))
+
+    if not candidates:
+        return None, None
+    if target_line is None or len(candidates) == 1:
+        return candidates[0]
+
+    best = candidates[0]
+    best_diff = abs(target_line - candidates[0][0].get("points", 0))
+    for over_p, under_p in candidates[1:]:
+        diff = abs(target_line - over_p.get("points", 0))
+        if diff < best_diff:
+            best_diff = diff
+            best = (over_p, under_p)
+    return best
 
 
 def find_pin_match_by_name(bb_home, bb_away, pin_list):
@@ -1117,24 +1155,29 @@ def _calibrate_market_line(sport, market_type, bb_line, pin_line, pin_points):
     """检查 BB 盘口线与 Pinnacle 盘口线是否一致，防止市场错配。
 
     market_type: "hc"(让球) 或 "ou"(大小)
-    返回 (ok, msg)，ok=False 表示线不匹配，可能匹配错了市场。
+    返回 (ok, msg)，ok=False 表示线不匹配，该机会应被过滤掉。
     """
     if bb_line is None or (pin_line is None and pin_points is None):
         return True, ""
-    # 取可用的对比线
     ref = pin_line if pin_line is not None else pin_points
     try:
         ref = float(ref)
     except (TypeError, ValueError):
         return True, ""
 
-    # 网球特殊处理：OU 线(20.5) vs sets total(2.5) — 差一个数量级
-    if sport == "tennis" and market_type == "ou":
-        if abs(bb_line - ref) > 5 and abs(bb_line / ref) > 3:
+    diff = abs(bb_line - ref)
+
+    if market_type == "hc":
+        # 让球线偏差超过 0.5 → 匹配错了让球线
+        if diff > 0.5:
+            return False, f"让球线不一致: BB={bb_line} vs Pinnacle={ref}"
+    elif market_type == "ou":
+        # 网球特殊：OU 线(20.5) vs sets total(2.5)
+        if sport == "tennis" and diff > 5:
             return False, f"大小盘线不匹配: BB={bb_line} vs Pinnacle={ref}，可能用了错误市场"
-    # 常规检查：线差异过大
-    if abs(bb_line - ref) > 3 and ref != 0 and abs(bb_line / ref) > 2:
-        return False, f"盘口线差异过大: BB={bb_line} vs Pinnacle={ref}"
+        # 常规大小盘线偏差超过 1.0 → 可疑
+        if diff > 1.0:
+            return False, f"大小盘线不一致: BB={bb_line} vs Pinnacle={ref}"
 
     return True, ""
 
@@ -1292,6 +1335,10 @@ def main():
             verified_count += 1
     print(f"  队名验证: {verified_count}/{len(matched)} 可确认球队一致")
 
+    # 校准计数器
+    cal_blocked_hc = 0
+    cal_blocked_ou = 0
+
     # For +EV calculation
     valid_matches = matched
 
@@ -1370,7 +1417,8 @@ def main():
                 gs = pin.get("games_spread")
                 home_sp, away_sp = get_pin_spread({"spread": gs}) if gs else (None, None)
             else:
-                home_sp, away_sp = get_pin_spread(pin)
+                # 找线值最接近 Pinnacle 让球盘（可能有多个让球线）
+                home_sp, away_sp = get_pin_spread(pin, target_line=bb_hl)
             if home_sp and away_sp and home_sp.get("price_decimal") and away_sp.get("price_decimal"):
                 pin_home_odds = home_sp["price_decimal"]
                 pin_away_odds = away_sp["price_decimal"]
@@ -1381,9 +1429,15 @@ def main():
                 pin_hc_line = home_sp.get("points")
                 bb_hc_line_val = bb_hc.get("home_line") or bb_hc.get("away_line")
                 cal_ok, cal_msg = _calibrate_market_line(sport, "hc", bb_hc_line_val, pin_hc_line, None)
-                if not cal_ok and cal_msg not in entry["flags"]:
-                    entry["flags"].append(cal_msg)
+                if not cal_ok:
+                    if cal_msg not in entry["flags"]:
+                        entry["flags"].append(cal_msg)
+                    # 校准失败：跳过整个让球盘
+                    home_sp = away_sp = None
+                    cal_blocked_hc += 1
 
+                if not home_sp or not away_sp:
+                    continue  # 校准失败已拦截，跳过剩余让球处理
                 # 通过盘口线（points）对齐：BB 的哪条线匹配 Pinnacle 的主/客
                 bb_hl = bb_hc.get("home_line")
                 bb_al = bb_hc.get("away_line")
@@ -1448,7 +1502,8 @@ def main():
                 gt = pin.get("games_total")
                 over_p, under_p = get_pin_total({"total": gt}) if gt else (None, None)
             else:
-                over_p, under_p = get_pin_total(pin)
+                # 找线值最接近的 Pinnacle 大小盘（可能有多个大小线）
+                over_p, under_p = get_pin_total(pin, target_line=bb_line)
             if over_p and under_p:
                 total_implied_ou = 1.0 / over_p["price_decimal"] + 1.0 / under_p["price_decimal"]
                 over_fair = round(over_p["price_decimal"] * total_implied_ou, 4)
@@ -1457,8 +1512,14 @@ def main():
                 # 校准：检查大小盘线是否对得上
                 pin_ou_line = over_p.get("points")
                 cal_ok, cal_msg = _calibrate_market_line(sport, "ou", bb_ou["line"], pin_ou_line, None)
-                if not cal_ok and cal_msg not in entry["flags"]:
-                    entry["flags"].append(cal_msg)
+                if not cal_ok:
+                    if cal_msg not in entry["flags"]:
+                        entry["flags"].append(cal_msg)
+                    # 校准失败：跳过整个大小盘
+                    over_p = under_p = None
+                    cal_blocked_ou += 1
+                if not over_p or not under_p:
+                    continue  # 校准失败已拦截，跳过剩余大小处理
                 if over_p.get("price_decimal") and over_p["price_decimal"] > 0:
                     ev_o = (bb_ou["over_odds"] - over_fair) / over_fair * 100
                     if ev_o > 1:
@@ -1510,6 +1571,12 @@ def main():
     print(f"\n{'='*60}")
     print(f"匹配: {len(matched)} | +EV 独赢: {total_opps_1x2} | 让球: {total_hc} | 大小: {total_ou} | 总计: {total_all}")
     print(f"{'='*60}")
+    # 校准报告
+    if cal_blocked_hc or cal_blocked_ou:
+        print(f"\n  🔒 校准拦截: 让球{cal_blocked_hc}个 | 大小{cal_blocked_ou}个 (盘口线不匹配)")
+    else:
+        print("\n  ✅ 校准全部通过 (所有让球/大小盘口线一致)")
+    print()
     for entry in opportunities:
         flag_txt = ""
         sport_tag = {"football":"⚽","basketball":"🏀","tennis":"🎾","baseball":"⚾","american_football":"🏈"}.get(entry.get("sport", ""), "")
@@ -1540,6 +1607,8 @@ def main():
         "opportunities_handicap": total_hc,
         "opportunities_over_under": total_ou,
         "opportunities_total": total_all,
+        "calibration_blocked_hc": cal_blocked_hc,
+        "calibration_blocked_ou": cal_blocked_ou,
         "details": opportunities,
     }
     out_path = DATA_DIR / "bb_vs_pinnacle_comparison.json"
