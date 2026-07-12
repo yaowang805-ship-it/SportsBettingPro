@@ -19,6 +19,24 @@ _OUTCOME_CN = {"home": "主胜", "draw": "和局", "away": "客胜"}
 _REVERSE_CN = {v: k for k, v in _OUTCOME_CN.items()}
 
 
+def _league_multiplier(league: str) -> float:
+    """根据联赛级别动态加权：主流联赛 1.0，次级 0.85，其他 0.7。"""
+    major = ["ATP - ", "WTA - ", "NBA", "WNBA", "MLB",
+             "英格兰", "西班牙", "德国甲", "意大利", "法国",
+             "超级联赛", "冠军联赛", "世界杯", "欧冠", "欧联"]
+    medium = ["挑战赛", "125K", "瑞典超", "挪威超", "芬兰",
+              "FIBA欧洲", "欧洲篮球", "欧洲联赛",
+              "日本职业", "KBO", "韩国", "澳洲",
+              "白俄罗斯", "哈萨克", "乌拉圭", "巴拉圭"]
+    for kw in major:
+        if kw in league:
+            return 1.0
+    for kw in medium:
+        if kw in league:
+            return 0.85
+    return 0.7
+
+
 def _calc_kelly_stakes(opps: list) -> list:
     """按 Kelly 比例分配投注额，与 ev_push.py 一致。"""
     total_kelly = sum(o.get("_kelly_pct", 0) for o in opps)
@@ -40,6 +58,8 @@ def _collect_opportunities(match, market_key):
     league = match.get("league", "")
     home_cn = match.get("home_bb", "")
     away_cn = match.get("away_bb", "")
+    match_score = match.get("match_score", 0.7)
+    league_mult = _league_multiplier(league)
     result = []
     for opp in match.get(market_key, []):
         ev = opp.get("ev_pct", 0)
@@ -52,6 +72,9 @@ def _collect_opportunities(match, market_key):
         if bb_odds > 1:
             kelly = (ev / 100) / (bb_odds - 1) * 0.25
             kelly_pct = round(kelly * 100, 2)
+
+        # 综合评分：溢价 × 匹配度 × 联赛权重
+        score = round(ev * match_score * league_mult, 2)
 
         # 带盘口信息的显示名
         desig = opp.get("designation", "")
@@ -68,6 +91,8 @@ def _collect_opportunities(match, market_key):
             "pin_odds": pin_odds,
             "fair_price": fair,
             "ev_pct": ev,
+            "_match_score": match_score,
+            "_score": score,
             "_kelly_pct": kelly_pct,
             "_pin_epoch": match.get("start_time_pin_epoch"),  # 用于显示开赛时间
         })
@@ -104,21 +129,21 @@ def build_report():
     if not qualified:
         return "no +EV opportunities (>=3%)", []
 
-    # 排序：运动 → 联赛 → 比赛 → -EV
-    SPORT_ORDER = {"soccer": 0, "basketball": 1, "baseball": 2, "tennis": 3, "american_football": 4}
-    SPORT_CN = {"soccer": "⚽ 足球", "basketball": "🏀 篮球", "baseball": "⚾ 棒球",
-                "tennis": "🎾 网球", "american_football": "🏈 美式足球"}
+    SPORT_ORDER = {"football": 0, "basketball": 1, "tennis": 2, "baseball": 3, "american_football": 4}
+    SPORT_CN = {"football": "⚽ 足球", "basketball": "🏀 篮球", "tennis": "🎾 网球",
+                "baseball": "⚾ 棒球", "american_football": "🏈 美式足球"}
+
+    # 第一步：按综合评分排序，取 top 50
+    qualified.sort(key=lambda o: -o["_score"])
+    if len(qualified) > MAX_OPPORTUNITIES:
+        qualified = qualified[:MAX_OPPORTUNITIES]
+
+    # 第二步：按运动→联赛分组重排（用于展示），组内按评分降序
     qualified.sort(key=lambda o: (
         SPORT_ORDER.get(o.get("sport", ""), 99),
         o.get("league", ""),
-        o.get("home_cn", ""),
-        o.get("away_cn", ""),
-        -o["ev_pct"]
+        -o["_score"]
     ))
-
-    # 只取前50条
-    if len(qualified) > MAX_OPPORTUNITIES:
-        qualified = qualified[:MAX_OPPORTUNITIES]
 
     # Kelly 分配
     qualified = _calc_kelly_stakes(qualified)
