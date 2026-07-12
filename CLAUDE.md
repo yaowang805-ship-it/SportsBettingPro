@@ -77,7 +77,8 @@ bb_ev_push.py --no-bet             # 只推送不投注
 - `src/betting/bb_virtual_bet.py` — 虚拟投注执行（¥10,000 每日预算，按日重置，Kelly基于公平价）
 - `src/betting/bb_settle.py` — BB体育 投注结算
 - `src/report/bb_ev_push.py` — 钉钉推送（运动分组 + 联赛分组 + 开赛时间 + Kelly 分配 + 自动投注）
-- `src/report/daily_settlement.py` — 每日晨间结算报告（LaunchAgent 09:00 自动推送）
+- `src/report/daily_settlement.py` — 每日晨间结算报告（LaunchAgent 09:00 自动推送，含止损状态）
+- `src/report/periodic_report.py` — 联赛维度周报/月报（按联赛分析 ROI/胜率/盈亏，LaunchAgent 定时推送）
 - `src/monitor/auto_settle.py` — ESPN 自动结算
 - `src/monitor/performance.py` — 投注结算+盈亏监控
 - `src/risk/manager.py` — 组合风控（含 DynamicStaking）
@@ -94,7 +95,9 @@ bb_ev_push.py --no-bet             # 只推送不投注
 6. **开赛时间** — 推送中显示北京时间（由 Pinnacle 的 UTC start_time 转换）。
 7. **公平价 = 去抽水赔率** — Pinnacle 抽水后的真实公平价，高于 Pinnacle 实际赔率。溢价 = (BB - 公平价) / 公平价。
 8. **虚拟投注** — 每日固定 ¥10,000 预算（按日重置），Kelly 分数 0.25（基于公平价），单注 max 2%，每日上限 50 笔。
-9. **每日结算报告** — LaunchAgent 每天 09:00 推送，含昨日盈亏、累计ROI、待结算清单。
+9. **止损机制** — 连输 3 天 → 预算减半；连输 5 天 → 停投。基于按日汇总盈亏自动计算。
+10. **每日结算报告** — LaunchAgent 每天 09:00 推送，含昨日盈亏、累计ROI、待结算清单、止损状态。
+11. **周报/月报** — LaunchAgent 周报（周日 21:00）+ 月报（每月 1 日 10:00），按联赛维度分析 ROI/胜率/盈亏。
 
 ## 编码约定
 

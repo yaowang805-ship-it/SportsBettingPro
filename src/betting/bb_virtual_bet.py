@@ -9,7 +9,8 @@
     python3 src/betting/bb_virtual_bet.py --from-push     # 从推送暂存文件投注
 """
 import json, sys, time, math
-from datetime import datetime, timezone, date
+from collections import defaultdict
+from datetime import datetime, timezone, date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
@@ -32,6 +33,14 @@ PORTFOLIO_FILE = DATA_DIR / "virtual_portfolio.json"
 
 # 推送暂存文件 — bb_ev_push.py 导出已筛选的机会列表
 PUSH_STAGING_FILE = DATA_DIR / "push_staging.json"
+
+# 止损参数
+CONSECUTIVE_LOSS_STOP = 5         # 连输5天 → 停投
+STOP_LOSS_MULTIPLIERS = {
+    0: 1.0, 1: 1.0, 2: 1.0,       # 0-2天正常
+    3: 0.5, 4: 0.5,                # 3-4天减半
+    5: 0.0,                        # 5天停投
+}
 
 API_BASE = "https://guest.api.arcadia.pinnacle.com/0.1"
 import requests
@@ -102,6 +111,46 @@ def _calc_kelly_stake(bb_odds: float, fair_price: float, balance: float) -> floa
     return min(stake, max_stake)
 
 
+def _calc_stop_loss_multiplier(portfolio: dict) -> float:
+    """计算止损系数：连输 N 天 → 降仓/停投。
+
+    从已结算历史按日汇总盈亏，从昨天往前数连续亏损天数。
+    """
+    history = [h for h in portfolio.get("history", [])
+               if h.get("source") == "bb_vs_pinnacle" and h.get("result") in ("won", "lost")]
+
+    # 按日汇总盈亏
+    daily_pnl = defaultdict(float)
+    for h in history:
+        d = (h.get("settled_at") or h.get("date") or "")[:10]
+        if d:
+            daily_pnl[d] += h.get("profit", 0)
+
+    today = date.today().isoformat()
+    sorted_dates = sorted([d for d in daily_pnl if d < today], reverse=True)
+
+    consecutive_loss = 0
+    for d in sorted_dates:
+        if daily_pnl[d] < 0:
+            consecutive_loss += 1
+        else:
+            break
+
+    mult = STOP_LOSS_MULTIPLIERS.get(min(consecutive_loss, CONSECUTIVE_LOSS_STOP), 1.0)
+    return mult, consecutive_loss
+
+
+def _format_stop_loss_msg(mult: float, loss_days: int) -> str:
+    """格式化止损状态消息。"""
+    if mult == 0.0:
+        return f"🛑 止损触发：连输 {loss_days} 天，今日停投"
+    if mult < 1.0:
+        return f"⚠️ 连输 {loss_days} 天，预算减半 ¥{DAILY_BANKROLL * mult:.0f}/日"
+    if loss_days > 0:
+        return f"📊 连输 {loss_days} 天后回血，恢复正常预算"
+    return ""
+
+
 def _market_from_designation(desig: str) -> str:
     """从 designation 推断市场类型。"""
     d = desig.lower()
@@ -128,7 +177,9 @@ def place_bets(dry_run=False):
         return
 
     portfolio = _load_portfolio()
-    daily_remaining, is_new_day = _check_daily_budget(portfolio, DAILY_BANKROLL)
+    stop_mult, loss_days = _calc_stop_loss_multiplier(portfolio)
+    daily_bankroll = DAILY_BANKROLL * stop_mult
+    daily_remaining, is_new_day = _check_daily_budget(portfolio, daily_bankroll)
     pending_ids = {b.get("id", "") for b in portfolio.get("pending_bets", [])}
     settled_ids = set(portfolio.get("settled", {}).keys())
     history_ids = {h.get("id", "") for h in portfolio.get("history", [])}
@@ -142,9 +193,20 @@ def place_bets(dry_run=False):
     bets_placed = 0
     total_stake = 0
 
+    # 止损提示
+    stop_msg = _format_stop_loss_msg(stop_mult, loss_days)
+    if stop_msg:
+        print(f"\n{stop_msg}\n")
+
+    if stop_mult == 0.0:
+        print("=" * 60)
+        print("🛑 止损停投日，跳过")
+        print("=" * 60)
+        return 0
+
     print("=" * 60)
     print("BB体育 vs Pinnacle 虚拟投注")
-    print(f"每日预算: ¥{DAILY_BANKROLL:.2f} | 今日剩余: ¥{daily_remaining:.2f} | Kelly系数: {KELLY_FRAC}")
+    print(f"每日预算: ¥{daily_bankroll:.2f} (基准¥{DAILY_BANKROLL:.2f}) | 今日剩余: ¥{daily_remaining:.2f} | Kelly系数: {KELLY_FRAC}")
     print("=" * 60)
 
     for opp in opportunities:
@@ -260,13 +322,15 @@ def place_bets(dry_run=False):
     return bets_placed
 
 
-def place_bets_from_push(opportunities, daily_bankroll=10000.0):
+def place_bets_from_push(opportunities, bankroll=10000.0):
     """从推送的已筛选机会列表执行投注（stake 已预计算）。"""
     if not opportunities:
         logger.info("空机会列表，跳过投注")
         return 0
 
     portfolio = _load_portfolio()
+    stop_mult, loss_days = _calc_stop_loss_multiplier(portfolio)
+    daily_bankroll = bankroll * stop_mult
     daily_remaining, is_new_day = _check_daily_budget(portfolio, daily_bankroll)
     pending_ids = {b.get("id", "") for b in portfolio.get("pending_bets", [])}
     settled_ids = set(portfolio.get("settled", {}).keys())
@@ -276,8 +340,18 @@ def place_bets_from_push(opportunities, daily_bankroll=10000.0):
     bets_placed = 0
     total_stake = 0
 
+    stop_msg = _format_stop_loss_msg(stop_mult, loss_days)
+    if stop_msg:
+        print(f"\n{stop_msg}\n")
+
+    if stop_mult == 0.0:
+        print(f"\n{'='*60}")
+        print("🛑 止损停投日，跳过")
+        print(f"{'='*60}")
+        return 0
+
     print(f"\n{'='*60}")
-    print(f"推送投注 — 今日剩余 ¥{daily_remaining:.2f} / ¥{daily_bankroll:.2f}")
+    print(f"推送投注 — 今日剩余 ¥{daily_remaining:.2f} / ¥{daily_bankroll:.2f} (基准¥{bankroll:.2f})")
     print(f"{'='*60}")
 
     for o in opportunities:

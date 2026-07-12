@@ -8,6 +8,7 @@
     python3 src/report/daily_settlement.py --no-push      # 仅打印不推送
 """
 import json, sys
+from collections import defaultdict
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -134,6 +135,33 @@ def build_report():
     lines.append(f"胜率 {win_rate}% | ROI {roi:+.2f}%")
     lines.append(f"总盈亏 {total_profit:+.0f}¥ | 余额 {balance:.0f}¥")
     lines.append("")
+
+    # ── 止损状态 ──
+    # 按日汇总盈亏，计算连输天数
+    daily_pnl = defaultdict(float)
+    for h in bb_history:
+        d = (h.get("settled_at") or h.get("date") or "")[:10]
+        if d:
+            daily_pnl[d] += h.get("profit", 0)
+    today_str = _bj_now().strftime("%Y-%m-%d")
+    sorted_dates = sorted([d for d in daily_pnl if d < today_str], reverse=True)
+    consecutive_loss = 0
+    for d in sorted_dates:
+        if daily_pnl[d] < 0:
+            consecutive_loss += 1
+        else:
+            break
+    if consecutive_loss >= 5:
+        stop_status = "🛑 连输{}天，已停投".format(consecutive_loss)
+    elif consecutive_loss >= 3:
+        stop_status = "⚠️ 连输{}天，预算减半".format(consecutive_loss)
+    elif consecutive_loss > 0:
+        stop_status = "📊 连输{}天（尚未触发止损）".format(consecutive_loss)
+    else:
+        stop_status = ""
+    if stop_status:
+        lines.append(f"**【止损状态】** {stop_status}")
+        lines.append("")
 
     # ── 待结算 ──
     pending_count = len(bb_pending)
