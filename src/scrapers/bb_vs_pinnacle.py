@@ -23,6 +23,14 @@ API_BASE = "https://guest.api.arcadia.pinnacle.com/0.1"
 SESSION = requests.Session()
 SESSION.headers.update({"Accept": "application/json"})
 
+# SOCKS5 代理支持（Shadowrocket 本地代理，用于绕过 Cloudflare）
+PROXY = "socks5://localhost:1082"
+try:
+    import socks  # PySocks
+    SESSION.proxies = {"http": PROXY, "https": PROXY}
+except ImportError:
+    pass
+
 # 重试参数
 MAX_RETRIES = 3
 RETRY_DELAY = 2.0  # 初始延迟（秒）
@@ -73,14 +81,15 @@ MARKET_LABELS = {
 
 def detect_sport(bb_match):
     """从 BB 比赛数据中检测运动类型。
-    优先使用提取阶段标记的 sport 字段，回退到联赛关键词匹配。"""
-    sport = bb_match.get("sport", "")
-    if sport:
-        return sport
+    优先使用联赛关键词匹配（比 BB 的 sport 字段更可靠，因为
+    提取阶段可能会把网球比赛标记为棒球），回退到 BB sport 字段。"""
     league = bb_match.get("league", "")
     for kw, s in BB_SPORT_KEYWORDS.items():
         if kw in league:
             return s
+    sport = bb_match.get("sport", "")
+    if sport:
+        return sport
     return "football"  # 默认
 
 # BB体育中文联赛名 → Pinnacle 联赛名（关键词匹配）
@@ -113,6 +122,7 @@ LEAGUE_KEYWORDS = {
     "WNBA 美国职业女子篮球联赛": "WNBA",
     "FIBA欧洲篮球A级锦标赛": "European U20 Championship Division A",
     "FIBA欧洲篮球B级锦标赛": "European U20 Championship Division B",
+    "FIBA欧洲女子篮球锦标赛A级": "European U20 Championship Division A Women",
     "FIBA欧洲女子篮球锦标赛B级": "European U20 Championship Division B Women",
     "菲律宾PBA总督杯": "Philippines - PBA Governors Cup",
     "澳洲篮球": "NBL",
@@ -419,7 +429,16 @@ def load_bb_odds():
     path = DATA_DIR / "bb_odds_extracted.json"
     if not path.exists():
         return []
-    return json.loads(path.read_text()).get("matches", [])
+    data = json.loads(path.read_text()).get("matches", [])
+    # 去重：相同 (home, away, league) 只保留第一个
+    seen = set()
+    unique = []
+    for m in data:
+        key = (m.get("home", ""), m.get("away", ""), m.get("league", ""))
+        if key not in seen:
+            seen.add(key)
+            unique.append(m)
+    return unique
 
 
 def extract_bb_1x2(bb_match, sport="football"):
@@ -674,6 +693,22 @@ def get_league_matchups_and_markets(league_id):
             "spread": spread,
             "total": total,
         })
+
+    # 对网球：把 Games 条目（局数让分/大小）合并到常规条目
+    games_map = {}
+    for r in result:
+        h, a = r["home"], r["away"]
+        if h.endswith(" (Games)") or a.endswith(" (Games)"):
+            base_h = h.replace(" (Games)", "")
+            base_a = a.replace(" (Games)", "")
+            games_map[(base_h, base_a)] = {"spread": r["spread"], "total": r["total"]}
+    for r in result:
+        h, a = r["home"], r["away"]
+        if not h.endswith(" (Games)") and not a.endswith(" (Games)"):
+            g = games_map.get((h, a))
+            if g:
+                r["games_spread"] = g["spread"]
+                r["games_total"] = g["total"]
 
     return result
 
@@ -1005,6 +1040,22 @@ def _match_pin_name(pn, pin_name):
     return False
 
 
+def _find_best_league(pin_name, all_sport_matchups):
+    """匹配 Pinnacle 联赛名，优先返回精确匹配。"""
+    needle = pin_name.lower().strip()
+    matched = []
+    for lid, info in all_sport_matchups.items():
+        if _match_pin_name(needle, info["name"]):
+            matched.append(lid)
+    if not matched:
+        return None
+    # 精确匹配优先（防止 "Division A" 前缀匹配到 "Division A Women"）
+    for lid in matched:
+        if all_sport_matchups[lid]["name"].lower() == needle:
+            return lid
+    return matched[0]
+
+
 def find_pinnacle_league_id(bb_league_name, all_sport_matchups):
     """Find Pinnacle league ID that matches a BB体育 league name"""
     bb_lower = bb_league_name.lower().strip()
@@ -1013,15 +1064,15 @@ def find_pinnacle_league_id(bb_league_name, all_sport_matchups):
         if bb_name in bb_league_name or bb_league_name in bb_name:
             pin_names = [pin_name] if isinstance(pin_name, str) else pin_name
             for pn in pin_names:
-                for lid, info in all_sport_matchups.items():
-                    if _match_pin_name(pn, info["name"]):
-                        return lid
+                lid = _find_best_league(pn, all_sport_matchups)
+                if lid:
+                    return lid
         if bb_lower == bb_name.lower():
             pin_names = [pin_name] if isinstance(pin_name, str) else pin_name
             for pn in pin_names:
-                for lid, info in all_sport_matchups.items():
-                    if _match_pin_name(pn, info["name"]):
-                        return lid
+                lid = _find_best_league(pn, all_sport_matchups)
+                if lid:
+                    return lid
 
     # Fuzzy match
     for lid, info in all_sport_matchups.items():
@@ -1228,7 +1279,13 @@ def main():
         # --- 让球/让分 (Handicap/Spread) ---
         bb_hc = extract_bb_handicap(bb, sport)
         if bb_hc:
-            home_sp, away_sp = get_pin_spread(pin)
+            # 网球：BB 让分线 > 10 表示局数让分，用 games_spread
+            bb_hl = bb_hc.get("home_line") or bb_hc.get("away_line")
+            if sport == "tennis" and bb_hl is not None and abs(bb_hl) > 10:
+                gs = pin.get("games_spread")
+                home_sp, away_sp = get_pin_spread({"spread": gs}) if gs else (None, None)
+            else:
+                home_sp, away_sp = get_pin_spread(pin)
             if home_sp and away_sp and home_sp.get("price_decimal") and away_sp.get("price_decimal"):
                 pin_home_odds = home_sp["price_decimal"]
                 pin_away_odds = away_sp["price_decimal"]
@@ -1293,7 +1350,13 @@ def main():
         # --- 大小 (Over/Under) 带去抽水 ---
         bb_ou = extract_bb_ou(bb, sport)
         if bb_ou:
-            over_p, under_p = get_pin_total(pin)
+            # 网球：BB 大小线 > 10 表示局数大小，用 games_total
+            bb_line = bb_ou.get("line")
+            if sport == "tennis" and bb_line is not None and bb_line > 10:
+                gt = pin.get("games_total")
+                over_p, under_p = get_pin_total({"total": gt}) if gt else (None, None)
+            else:
+                over_p, under_p = get_pin_total(pin)
             if over_p and under_p:
                 total_implied_ou = 1.0 / over_p["price_decimal"] + 1.0 / under_p["price_decimal"]
                 over_fair = round(over_p["price_decimal"] * total_implied_ou, 4)
