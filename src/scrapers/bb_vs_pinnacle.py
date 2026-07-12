@@ -583,10 +583,18 @@ def extract_bb_ou(bb_match, sport="football"):
     """Extract over/under odds and line from BB match.
 
     3-way (足球): O/U odds at odds[5:7]
-    2-way (篮球/网球/棒球): O/U odds at odds[4:6]
+    2-way (篮球/网球/棒球): O/U odds at odds[-2:] (最后2个赔率)
+
+    注意：网球可能有多个让盘口线(alternate handicaps)占用 odds[2:N-2]，
+    所以 O/U 不能固定在 odds[4:6]，必须用最后2个赔率。
     """
     odds = bb_match.get("odds_values", [])
-    idx = 5 if sport not in TWO_WAY_SPORTS else 4
+    if sport in TWO_WAY_SPORTS:
+        if len(odds) < 6:
+            return None  # 只有 ml+hc，没有大小盘
+        idx = len(odds) - 2  # 大小盘永远是最后的2个赔率
+    else:
+        idx = 5  # 足球：3 ml + 2 hc
     if len(odds) < idx + 2:
         return None
 
@@ -1105,6 +1113,32 @@ def verify_match(bb_match, pin_match):
         return False, "队名无法验证（无中文→英文映射）"
 
 
+def _calibrate_market_line(sport, market_type, bb_line, pin_line, pin_points):
+    """检查 BB 盘口线与 Pinnacle 盘口线是否一致，防止市场错配。
+
+    market_type: "hc"(让球) 或 "ou"(大小)
+    返回 (ok, msg)，ok=False 表示线不匹配，可能匹配错了市场。
+    """
+    if bb_line is None or (pin_line is None and pin_points is None):
+        return True, ""
+    # 取可用的对比线
+    ref = pin_line if pin_line is not None else pin_points
+    try:
+        ref = float(ref)
+    except (TypeError, ValueError):
+        return True, ""
+
+    # 网球特殊处理：OU 线(20.5) vs sets total(2.5) — 差一个数量级
+    if sport == "tennis" and market_type == "ou":
+        if abs(bb_line - ref) > 5 and abs(bb_line / ref) > 3:
+            return False, f"大小盘线不匹配: BB={bb_line} vs Pinnacle={ref}，可能用了错误市场"
+    # 常规检查：线差异过大
+    if abs(bb_line - ref) > 3 and ref != 0 and abs(bb_line / ref) > 2:
+        return False, f"盘口线差异过大: BB={bb_line} vs Pinnacle={ref}"
+
+    return True, ""
+
+
 def _warn_suspicious(ev_pct, match_score, verified):
     """返回高 EV / 低置信度警告标记，None 表示无警告。"""
     if ev_pct > 20:
@@ -1343,6 +1377,13 @@ def main():
                 bb_home_odds = bb_hc["home_odds"]
                 bb_away_odds = bb_hc["away_odds"]
 
+                # 校准：检查让球线是否对得上
+                pin_hc_line = home_sp.get("points")
+                bb_hc_line_val = bb_hc.get("home_line") or bb_hc.get("away_line")
+                cal_ok, cal_msg = _calibrate_market_line(sport, "hc", bb_hc_line_val, pin_hc_line, None)
+                if not cal_ok and cal_msg not in entry["flags"]:
+                    entry["flags"].append(cal_msg)
+
                 # 通过盘口线（points）对齐：BB 的哪条线匹配 Pinnacle 的主/客
                 bb_hl = bb_hc.get("home_line")
                 bb_al = bb_hc.get("away_line")
@@ -1412,6 +1453,12 @@ def main():
                 total_implied_ou = 1.0 / over_p["price_decimal"] + 1.0 / under_p["price_decimal"]
                 over_fair = round(over_p["price_decimal"] * total_implied_ou, 4)
                 under_fair = round(under_p["price_decimal"] * total_implied_ou, 4)
+
+                # 校准：检查大小盘线是否对得上
+                pin_ou_line = over_p.get("points")
+                cal_ok, cal_msg = _calibrate_market_line(sport, "ou", bb_ou["line"], pin_ou_line, None)
+                if not cal_ok and cal_msg not in entry["flags"]:
+                    entry["flags"].append(cal_msg)
                 if over_p.get("price_decimal") and over_p["price_decimal"] > 0:
                     ev_o = (bb_ou["over_odds"] - over_fair) / over_fair * 100
                     if ev_o > 1:
