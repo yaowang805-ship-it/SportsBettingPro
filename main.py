@@ -37,10 +37,10 @@ except Exception as _e:
     logger.warning("防退化检查异常: %s", _e)
 
 SCRIPTS = [
-    (ROOT / "src" / "models" / "auto_retrain.py", "自动模型重训练（月度）", 900),
+    # (ROOT / "src" / "models" / "auto_retrain.py", "自动模型重训练（月度）", 900),  # ML 已暂停
     # (ROOT / "src" / "predict" / "run_all.py", "职业级每日预测（NBA+足球+NFL）", 600),
     (ROOT / "src" / "monitor" / "performance.py", "投注结算+盈亏监控"),
-    (ROOT / "src" / "monitor" / "clv_tracker.py", "CLV 收盘价追踪"),
+    # (ROOT / "src" / "monitor" / "clv_tracker.py", "CLV 收盘价追踪"),  # 模块不存在
     (ROOT / "src" / "monitor" / "health_check.py", "系统健康检查"),
 ]
 
@@ -122,79 +122,46 @@ if __name__ == "__main__":
     except Exception as e:
         logger.warning("Power Rating 报告失败: %s", e)
 
-    # 盘口快照（使用缓存，预测脚本刚拉完）
-    try:
-        from src.monitor.line_movement import take_snapshot
-        n = take_snapshot(force=False)
-        logger.info("盘口快照: %d 场比赛", n)
-    except Exception as e:
-        logger.warning("盘口快照失败: %s", e)
+    # 盘口快照（模块当前不可用）
+    # try:
+    #     from src.monitor.line_movement import take_snapshot
+    #     n = take_snapshot(force=False)
+    #     logger.info("盘口快照: %d 场比赛", n)
+    # except Exception as e:
+    #     logger.warning("盘口快照失败: %s", e)
 
-    # 套利扫描（使用缓存，避免重复消耗 API 配额）
-    try:
-        from src.monitor.arbitrage import scan_all_leagues, report_arbitrage
-        arb_results = scan_all_leagues(force=False)
-        report_arbitrage(arb_results, force=False)
-    except Exception as e:
-        logger.warning("套利扫描失败: %s", e)
+    # 套利扫描（模块当前不可用）
+    # try:
+    #     from src.monitor.arbitrage import scan_all_leagues, report_arbitrage
+    #     arb_results = scan_all_leagues(force=False)
+    #     report_arbitrage(arb_results, force=False)
+    # except Exception as e:
+    #     logger.warning("套利扫描失败: %s", e)
 
-    # 模型衰减检测
-    try:
-        from src.monitor.model_decay import run_decay_check
-        decay_report = run_decay_check()
-        if decay_report.get("is_decaying"):
-            logger.warning("模型衰减信号: %s", decay_report.get("decay_signal", ""))
-    except Exception as e:
-        logger.warning("模型衰减检测失败: %s", e)
+    # 模型衰减检测（ML 已暂停）
+    # try:
+    #     from src.monitor.model_decay import run_decay_check
+    #     decay_report = run_decay_check()
+    #     if decay_report.get("is_decaying"):
+    #         logger.warning("模型衰减信号: %s", decay_report.get("decay_signal", ""))
+    # except Exception as e:
+    #     logger.warning("模型衰减检测失败: %s", e)
 
-    # 数据质量检测
-    try:
-        from src.monitor.data_quality import run_data_quality_check
-        dq_report = run_data_quality_check()
-        if dq_report["overall_status"] == "error":
-            logger.warning("数据质量检测发现严重问题")
-    except Exception as e:
-        logger.warning("数据质量检测失败: %s", e)
+    # 数据质量检测（ML 已暂停）
+    # try:
+    #     from src.monitor.data_quality import run_data_quality_check
+    #     dq_report = run_data_quality_check()
+    #     if dq_report["overall_status"] == "error":
+    #         logger.warning("数据质量检测发现严重问题")
+    # except Exception as e:
+    #     logger.warning("数据质量检测失败: %s", e)
 
-    # 特征漂移检测（用当前模型的 feature_importances_ vs 基线）
-    try:
-        from src.core.interpretability import detect_feature_drift
-        shap_dir = ROOT / "models" / "shap"
-        baseline_csv = shap_dir / "feature_importance.csv"
-        if baseline_csv.exists():
-            # 加载一个已训练模型和最新特征数据，计算当前特征重要性
-            model_paths = [
-                (ROOT / "models" / "model_bb_win_ensemble.pkl", ROOT / "data" / "processed" / "bb_features.csv"),
-                (ROOT / "models" / "model_fb_win_ensemble.pkl", ROOT / "data" / "processed" / "fb_features.csv"),
-            ]
-            current_imp = None
-            import pandas as pd
-            for model_p, feat_p in model_paths:
-                if model_p.exists() and feat_p.exists():
-                    try:
-                        import joblib
-                        from src.models.ensemble_trainer import Stage2Stacking, WeightedEnsemble
-                        model = joblib.load(model_p)
-                        feats = pd.read_csv(feat_p)
-                        # 只保留纯特征列
-                        drop_cols = {'date', 'home_team', 'away_team', 'target', 'home_score', 'away_score', 'total_goals', 'league', 'sport', 'result'}
-                        feat_cols = [c for c in feats.columns if c not in drop_cols]
-                        recent = feats[feat_cols].tail(500)
-                        from src.core.interpretability import report_feature_importance
-                        imp_df = report_feature_importance(model, recent.head(200))
-                        if imp_df is not None and len(imp_df) > 0:
-                            current_imp = imp_df
-                            break
-                    except Exception:
-                        continue
-            if current_imp is not None:
-                drifted = detect_feature_drift(str(baseline_csv), current_imp)
-                if drifted:
-                    logger.warning("特征漂移: %d 个特征发生变化", len(drifted))
-            else:
-                logger.info("⏭️ 特征漂移检测跳过（无可用模型+数据）")
-    except Exception as e:
-        logger.warning("SHAP 特征漂移检测失败: %s", e)
+    # # 特征漂移检测（ML 已暂停）
+    # try:
+    #     from src.core.interpretability import detect_feature_drift
+    #     ...
+    # except Exception as e:
+    #     logger.warning("SHAP 特征漂移检测失败: %s", e)
 
     # Edge Attribution
     try:
@@ -209,50 +176,6 @@ if __name__ == "__main__":
         print_team_edge_report()
     except Exception as e:
         logger.warning("Team edge tracking 失败: %s", e)
-
-    # ── +EV 监控扫描 + 钉钉推送 ──
-    try:
-        from src.monitor.ev_monitor import scan_and_notify
-        n_new = scan_and_notify()
-        if n_new:
-            logger.info("  ✅ +EV 监控: %d 条新机会已推送钉钉", n_new)
-        else:
-            logger.info("  ✅ +EV 监控: 无新机会")
-    except Exception as e:
-        logger.warning("+EV 监控扫描失败: %s", e)
-
-    # ── 篮球 +EV 扫描 ──
-    try:
-        from src.betting.bb_line_shopping import scan_and_notify
-        bb_n = scan_and_notify()
-        if bb_n:
-            logger.info("  ✅ 篮球 +EV: %d 条", bb_n)
-    except Exception as e:
-        logger.warning("篮球 +EV 扫描失败: %s", e)
-
-    # ── Line Shopping 投注执行 - 将 +EV 机会转为虚拟投注 ──
-    try:
-        from src.betting.place_line_shops import place_line_shops
-        n_placed = place_line_shops()
-        if n_placed:
-            logger.info("  ✅ Line Shopping 投注已入虚拟组合: %d 条", n_placed)
-    except Exception as e:
-        logger.warning("Line shopping 投注执行失败: %s", e)
-
-    # ── +EV 投注建议推送（含足球 + 篮球） ──
-    try:
-        from src.betting.line_shopping import push_cached_recommendations
-        push_cached_recommendations()
-    except Exception as e:
-        logger.warning("投注建议推送失败: %s", e)
-
-    # ── CLV 收盘价追踪 ──
-    try:
-        from src.monitor.clv_ls import send_clv_report
-        send_clv_report()
-    except Exception as e:
-        logger.warning("CLV 报告推送失败: %s", e)
-
 
     # ── 历史回放引擎 — 模拟交易样本不足时自动补充 ──
     try:
@@ -269,20 +192,6 @@ if __name__ == "__main__":
             logger.info("  ⏭️ 跳过回放: 样本量充足但其他检查未通过")
     except Exception as e:
         logger.warning("回放引擎失败: %s", e)
-
-    # ── 赔率数据源健康检查（Task #159：多数据源缓存状态）──
-    try:
-        from fetchers.odds_api import check_cache_health
-        ch = check_cache_health()
-        if ch["overall"] == "ok":
-            logger.info("  ✅ 数据源健康: %d/%d 缓存有效", ch["fresh"], ch["cached_leagues"])
-        elif ch["overall"] == "warning":
-            logger.warning("  ⚠️ 数据源警告: 最旧缓存 %.1f 小时, %d/%d 有效",
-                          ch["stale_max_hours"], ch["fresh"], ch["cached_leagues"])
-        else:
-            logger.warning("  ❌ 数据源降级: 仅 %d/%d 缓存有效", ch["fresh"], ch["cached_leagues"])
-    except Exception as e:
-        logger.warning("数据源健康检查失败: %s", e)
 
     # ── 组合风控状态概览（Task #160：组合风险摘要）──
     try:

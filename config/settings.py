@@ -26,17 +26,6 @@ def _load_env_file(path: Path):
 
 _load_env_file(ENV_FILE)
 
-ODDS_API_KEY = os.getenv('ODDS_API_KEY')
-ODDS_API_KEY_2 = os.getenv('ODDS_API_KEY_2') or os.getenv('ODDS_API_KEY_BACKUP') or ''
-ODDS_API_KEY_3 = os.getenv('ODDS_API_KEY_3') or ''
-ODDS_API_IO_KEY = os.getenv('ODDS_API_IO_KEY')
-BASKETBALL_API_KEY = os.getenv('BASKETBALL_API_KEY', ODDS_API_KEY)
-FOOTBALL_ODDS_API_KEY = os.getenv('FOOTBALL_ODDS_API_KEY', ODDS_API_KEY)
-FOOTBALL_API_KEY = os.getenv('FOOTBALL_API_KEY')
-OPENWEATHERMAP_API_KEY = os.getenv('OPENWEATHERMAP_API_KEY')
-BDL_API_KEY = os.getenv('BDL_API_KEY')
-FOOTBALL_DATA_API_KEY = os.getenv('FOOTBALL_DATA_API_KEY', FOOTBALL_API_KEY)
-BSD_API_KEY = os.getenv('BSD_API_KEY')
 DINGTALK_WEBHOOK = os.getenv('DINGTALK_WEBHOOK')
 DINGTALK_KEYWORD = '投注推荐'  # 钉钉机器人关键词，所有消息必须包含
 DATABASE_URL = os.getenv('DATABASE_URL', '')  # 空=SQLite, postgresql://user:pass@host/db

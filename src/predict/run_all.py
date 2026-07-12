@@ -66,35 +66,7 @@ def run_monitor():
             pass
     except Exception as e:
         logger.warning("⚠️  赛后监控失败：%s", e)
-    # CLV 收盘价填充（赛前窗口内捕获收盘赔率）
-    try:
-        from src.monitor.clv_tracker import refresh_closing_odds
-        cr = refresh_closing_odds()
-        if cr.get("updated"):
-            logger.info("✅ CLV 收盘价: %d 条已更新", cr["updated"])
-    except Exception as e:
-        logger.warning("⚠️  CLV 收盘价填充跳过: %s", e)
-    # CLV 待结算投注更新（virtual_portfolio 待结算 → closing_odds + clv）
-    try:
-        from src.dashboard.components.virtual_portfolio import update_clv_for_pending
-        n_clv = update_clv_for_pending()
-        if n_clv:
-            logger.info("✅ CLV 组合更新: %d 条", n_clv)
-    except Exception as e:
-        logger.warning("⚠️  CLV 组合更新跳过: %s", e)
-    # 数据质量检查
-    try:
-        from src.monitor.data_quality import run_data_quality_check
-        dq = run_data_quality_check()
-        if dq.get("healthy", True):
-            logger.info("✅ 数据质量: 健康")
-        else:
-            issues = dq.get("issues", [])
-            logger.warning("⚠️  数据质量问题: %d 项", len(issues))
-            for iss in issues[:5]:
-                logger.warning("   - %s", iss)
-    except Exception as e:
-        logger.warning("⚠️  数据质量检查跳过: %s", e)
+    # 模型健康度检查
     try:
         from src.monitor.health_monitor import check_model_health
         health = check_model_health()
@@ -139,22 +111,11 @@ def _run_ranking():
         logger.warning("⚠️  统一排名跳过: %s", e)
 
 
-def _run_prematch_check(sport=None):
-    """赛前赔率重检入口。"""
-    from src.monitor.prematch_check import run_prematch_check
-    run_prematch_check(sport=sport)
-
-
 def main():
     parser = argparse.ArgumentParser(description="SportsBettingPro 每日预测入口")
     parser.add_argument("--sport", choices=["nba","football","all"], default="all")
     parser.add_argument("--skip-monitor", action="store_true")
-    parser.add_argument("--prematch-check", action="store_true", help="赛前1-2小时赔率重检")
     args = parser.parse_args()
-
-    if args.prematch_check:
-        _run_prematch_check(sport=args.sport if args.sport != "all" else None)
-        return
 
     predict_dir = ROOT / "src" / "predict"
     logger.info("="*60)

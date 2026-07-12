@@ -31,6 +31,11 @@ models/shap/
 models/dixon_coles_model.json
 models/*_meta.json
 
+# Generated CSV / parquet / state files
+data/storage/*.csv
+data/storage/*.parq
+data/storage/scores*.csv
+
 # Runtime state (auto-generated)
 data/storage/bet_history.csv
 data/storage/performance_history.csv
@@ -55,6 +60,18 @@ data/storage/arbitrage_log.json
 data/storage/edge_attribution_report.json
 data/storage/team_edge_tracking.json
 data/storage/paper_trading.json
+data/storage/push_staging.json
+data/storage/daily_settlement_last.json
+
+# Auto-generated data directories
+data/history/
+data/odds/
+data/monitor/
+data/manual_backup/
+data/storage/locks/
+data/storage/player_cache/
+data/storage/backups/
+data/storage/odds/
 
 # Odds cache (auto-generated)
 data/storage/odds/bsd_*.json
@@ -69,6 +86,8 @@ logs/
 
 # Reports
 reports/*.txt
+reports/*.png
+reports/
 
 # Node
 node_modules/
@@ -80,6 +99,13 @@ docs/
 
 # Config
 pytest.ini
+
+# Scorecard / generated history
+scorecard_history.csv
+test_eng.csv
+
+# Claude internal config
+.claude/
 
 # Statsbomb
 data/statsbomb_open/

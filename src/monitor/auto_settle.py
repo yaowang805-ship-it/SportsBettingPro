@@ -1,4 +1,4 @@
-"""虚拟投注自动结算 — 根据 Odds API 已完成比赛结果自动结算待处理投注。"""
+"""虚拟投注自动结算 — 根据 ESPN 已完成比赛结果自动结算待处理投注。"""
 import sys
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -10,7 +10,6 @@ sys.path.insert(0, str(ROOT))
 import requests
 
 from config.logging_config import get_logger
-from config.settings import ODDS_API_KEY
 from src.dashboard.components.virtual_portfolio import (
     _load_state, _save_state, settle_bet,
 )
@@ -19,8 +18,6 @@ from fetchers.espn_scores import fetch_espn_scores, LEAGUE_ESPN_PATH
 from src.risk.manager import RiskManager
 
 logger = get_logger(__name__)
-
-API_BASE = "https://api.the-odds-api.com/v4/sports"
 
 # 联赛名 → (sport key for odds API, display name)
 LEAGUE_SPORT_MAP = {
@@ -141,23 +138,7 @@ def _fetch_completed_scores(sport_key: str, days_back: int = 3) -> list:
             logger.info("  ESPN %s: %s 场已完成", league_name, len(espn_data))
             return espn_data
 
-    # 降级：Odds API
-    logger.debug("ESPN 不可用，降级到 Odds API: %s", sport_key)
-    for d in [days_back, 2, 1]:
-        url = f"{API_BASE}/{sport_key}/scores/?apiKey={ODDS_API_KEY}&daysFrom={d}"
-        try:
-            resp = requests.get(url, timeout=15)
-            if resp.status_code == 200:
-                return resp.json()
-            elif resp.status_code == 422:
-                logger.debug("比分API daysFrom=%s 无效，降级重试", d)
-            else:
-                logger.warning("比分API返回 %s: %s", resp.status_code, resp.text[:100])
-                return []
-        except Exception as e:
-            logger.warning("比分API请求失败 %s: %s", sport_key, e)
-            return []
-    logger.warning("比分API %s 所有 daysFrom 均失败", sport_key)
+    logger.warning("ESPN 无数据: %s", sport_key)
     return []
 
 

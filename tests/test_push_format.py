@@ -5,20 +5,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from src.report.ev_push import _validate_format, _FORMAT_MARKERS
+from src.report.bb_ev_push import _validate_format, _FORMAT_MARKERS
 
 
 def _make_good_body() -> str:
-    """模拟一份格式正确的推送内容（按比赛分组）。"""
+    """模拟一份格式正确的推送内容（bb_ev_push 新格式）。"""
     return (
-        "**+EV 投注推荐: 3 条**\n\n"
-        "扫描 07/03 09:00 | ≥3% edge | 总额 ¥2,000\n\n"
-        "##### #1 法国 vs 巴西 (World Cup) 07/04 21:00\n"
-        "> [主胜] 公平价: 2.50 | Pinnacle: 2.55 | 零售: 2.62 | 溢价: +8.5% | 投注: ¥800\n"
-        "> [大2.5] 公平价: 1.95 | Pinnacle: 2.00 | 零售: 2.10 | 溢价: +5.2% | 投注: ¥300\n"
-        "> **本场合计: ¥1,100**\n\n"
+        "**+EV 投注推荐: 3 场比赛**\n\n"
+        "扫描 07/03 09:00 | ≥1% 溢价 | 总额 ¥2,000\n\n"
+        "⚽ 足球\n"
+        "  世界杯\n"
+        "  ##### #1 法国 对 巴西  (07/04 21:00)\n"
+        "    [主胜] 公平价: 2.50 | Pinnacle: 2.55 | BB价: 2.62 | 溢价: +8.5% | 投注: ¥800\n"
+        "    [大2.5] 公平价: 1.95 | Pinnacle: 2.00 | BB价: 2.10 | 溢价: +5.2% | 投注: ¥300\n\n"
         "---\n"
-        "💡 BB赔率 > **公平价** = +EV | 零售=市场最佳价(非推荐)"
+        "💡 公平价 = Pinnacle去抽水赔率 | 溢价 = (BB - 公平价) / 公平价 | 赔率实时变动，以 Pinnacle 网站当前价为准"
     )
 
 
@@ -36,7 +37,7 @@ class TestPushFormat:
 
     def test_missing_entry_prefix_fails(self):
         body = _make_good_body()
-        body = body.replace("##### #", "#")
+        body = body.replace("##### ", "### ")
         assert not _validate_format(body), "缺少#####应导致验证失败"
 
     def test_missing_fair_price_fails(self):
@@ -51,8 +52,8 @@ class TestPushFormat:
 
     def test_missing_retail_fails(self):
         body = _make_good_body()
-        body = body.replace("零售:", "市场:")
-        assert not _validate_format(body), "零售改为市场应导致验证失败"
+        body = body.replace("BB价:", "市场:")
+        assert not _validate_format(body), "BB价改为市场应导致验证失败"
 
     def test_missing_edge_fails(self):
         body = _make_good_body()
@@ -66,7 +67,7 @@ class TestPushFormat:
 
     def test_missing_footer_fails(self):
         body = _make_good_body()
-        body = body.replace("BB赔率", "体育赔率")
+        body = body.replace("公平价 = Pinnacle去抽水赔率", "参考价 = 去水价")
         assert not _validate_format(body), "底部提示语改变应导致验证失败"
 
     def test_all_format_markers_defined(self):

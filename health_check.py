@@ -83,18 +83,17 @@ def check_config():
 
     from config.settings import (
         DEFAULT_BUDGET, MAX_SINGLE_BET_PCT, KELLY_FRACTION,
-        MIN_EDGE, ODDS_API_KEY, DINGTALK_WEBHOOK
+        MIN_EDGE, DINGTALK_WEBHOOK
     )
 
     logger.info("初始资金: %s", DEFAULT_BUDGET)
     logger.info("单注最高: %.1f%%", MAX_SINGLE_BET_PCT * 100)
     logger.info("凯利系数: %s", KELLY_FRACTION)
     logger.info("最小 EV: %.1f%%", MIN_EDGE * 100)
-    logger.info("API Key: %s", '已配置 ✅' if ODDS_API_KEY else '未配置 ❌')
     logger.info("钉钉通知: %s", '已配置 ✅' if DINGTALK_WEBHOOK else '未配置 ❌')
 
     logger.info("=" * 80)
-    return ODDS_API_KEY and DINGTALK_WEBHOOK
+    return bool(DINGTALK_WEBHOOK)
 
 
 def main():
