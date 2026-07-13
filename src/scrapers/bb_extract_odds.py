@@ -1,5 +1,5 @@
 """BB体育 赔率提取 —— 通过 AppleScript 从 pc.x14ff.com (Chrome) 提取"""
-import subprocess, json, time, sys, re
+import subprocess, json, time, sys, re, random
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
@@ -114,6 +114,47 @@ def click_text(text, timeout=10):
     return run_js(js, timeout=timeout)
 
 
+def navigate_sport(sport_id):
+    """用 URL 导航切换运动，比点击选项卡更可靠。"""
+    url = f"{X14FF_BASE}/index.html#/?type=3&sportId={sport_id}&marketType=DEFAULT&showMenu=1"
+    navigate_tab(url, wait_after=0)
+    human_delay(2.0, 4.0)  # 等待 SPA 切换加载
+
+
+def sport_matches_extracted(sport_key, matches):
+    """快速验证提取到的比赛是否确实属于该运动。
+
+    某些运动无数据时 SPA 不会切换，导致提取到上一运动的比赛。
+    通过联赛关键词校验避免分类错误。
+    """
+    if not matches:
+        return False
+    indicators = {
+        "soccer": ["联赛", "杯", "FC", "超级", "英超", "西甲", "德甲"],
+        "basketball": ["NBA", "篮球", "WNBA", "NBL"],
+        "tennis": ["ATP", "WTA", "公开赛", "挑战赛"],
+        "baseball": ["MLB", "NPB", "棒球", "巨人", "阪神", "野球"],
+        "american_football": ["NFL", "美式"],
+    }
+    kws = indicators.get(sport_key, [])
+    if not kws:
+        return True
+    sample = matches[:5]
+    matched = sum(1 for m in sample if any(kw in m.get("league", "") for kw in kws))
+    return matched >= max(1, len(sample) * 0.4)
+
+
+def scroll_jitter():
+    """随机上下滚动，模拟人类浏览行为。"""
+    dy = random.randint(-200, 250)
+    run_js(f"(function(){{window.scrollBy({{top:{dy},behavior:'smooth'}});return dy;}})()")
+
+
+def human_delay(lo=1.0, hi=3.0):
+    """随机延迟，模拟人类操作间隔。"""
+    time.sleep(round(random.uniform(lo, hi), 2))
+
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description="BB体育 赔率提取")
@@ -134,7 +175,8 @@ if __name__ == '__main__':
 
         # 1. 直接导航到早盘页面（足球默认，sportId=1）
         print(f"\n导航到: {X14FF_EARLY}")
-        navigate_tab(X14FF_EARLY, wait_after=2)
+        navigate_tab(X14FF_EARLY, wait_after=0)
+        human_delay(1.5, 3.0)  # 等待页面加载
 
         # 2. 等待 SPA 加载（首次需要更长时间，至少50个赔率才算加载完成）
         content = wait_for_content(
@@ -148,11 +190,15 @@ if __name__ == '__main__':
         for sport_key, sport_cn, sport_id in SPORT_CONFIG:
             print(f"\n--- {sport_cn} ({sport_key}) ---")
 
-            # 第一个运动（足球）已在页面上，不需要点击
+            # 用 URL 导航切换运动（比点击选项卡更可靠）
             if sport_id != 1:
-                print(f"  点击筛选: {sport_cn}")
-                click_text(sport_cn)
-                time.sleep(2)
+                print(f"  导航到: sportId={sport_id}")
+                scroll_jitter()
+                navigate_sport(sport_id)
+            else:
+                # 足球已在页面上，加点拟人延迟
+                scroll_jitter()
+                human_delay(0.5, 1.5)
 
             # 等待赔率出现
             content = wait_for_content(
@@ -175,13 +221,19 @@ if __name__ == '__main__':
                 continue
 
             print(f"  赔率数: {content_val}，提取中...")
-            time.sleep(2)
+            scroll_jitter()
+            human_delay(0.8, 2.0)
 
             try:
                 raw = run_js(_X14FF_EXTRACT_JS, timeout=30)
                 matches = json.loads(raw)
             except Exception as e:
                 print(f"  ⚠️  {sport_cn} 提取失败: {e}")
+                continue
+
+            # 验证提取到的比赛确实属于该运动（防止 SPA 未正确切换）
+            if not sport_matches_extracted(sport_key, matches):
+                print(f"  ⚠️  {sport_cn} 内容不匹配（SPA 未正确切换），跳过")
                 continue
 
             # 添加运动标签、去重、过滤中国足球
@@ -232,9 +284,9 @@ if __name__ == '__main__':
         out_path.write_text(json.dumps(output, ensure_ascii=False, indent=2))
         print(f"\n已保存到 {out_path}")
 
-        # 提取完成，导航到 about:blank 清理页面，降低被封风险
-        print("清理页面...")
-        navigate_tab("about:blank", wait_after=0)
+        # 提取完成，回到足球首页，不关页面
+        print("提取完成，页面保持打开...")
+        navigate_tab(X14FF_EARLY, wait_after=0)
 
     else:
         # --- 单运动提取模式（原有逻辑） ---
@@ -365,9 +417,9 @@ if __name__ == '__main__':
         out_path.write_text(json.dumps(output, ensure_ascii=False, indent=2))
         print(f"\n已保存到 {out_path}")
 
-        # 提取完成，清理页面
-        print("清理页面...")
-        navigate_tab("about:blank", wait_after=0)
+        # 提取完成，不关页面
+        print("提取完成，页面保持打开...")
+        navigate_tab(X14FF_EARLY, wait_after=0)  # 回到首页
 
         # 统计
         sports = {}

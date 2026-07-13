@@ -1297,7 +1297,7 @@ def main():
     for i, (bb_name, pin_id) in enumerate(matched_leagues.items()):
         # Rate limiting: jittered delay between API calls (except first)
         if i > 0:
-            delay = round(random.uniform(1.2, 2.8), 1)
+            delay = round(random.uniform(1.8, 4.2), 1)
             print(f"  ⏳ 等待 {delay:.1f}s 避免限流...")
             time.sleep(delay)
 
