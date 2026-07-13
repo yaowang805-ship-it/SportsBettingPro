@@ -21,15 +21,12 @@ import requests
 
 API_BASE = "https://guest.api.arcadia.pinnacle.com/0.1"
 SESSION = requests.Session()
+SESSION.trust_env = False  # Python 3.14+ 避免自动读取系统代理配置
 SESSION.headers.update({"Accept": "application/json"})
 
 # SOCKS5 代理支持（Shadowrocket 本地代理，用于绕过 Cloudflare）
+# 直连也支持（代理不可用时自动回退）
 PROXY = "socks5://localhost:1082"
-try:
-    import socks  # PySocks
-    SESSION.proxies = {"http": PROXY, "https": PROXY}
-except ImportError:
-    pass
 
 # 重试参数
 MAX_RETRIES = 3
@@ -1108,34 +1105,81 @@ def _find_best_league(pin_name, all_sport_matchups):
 
 
 def find_pinnacle_league_id(bb_league_name, all_sport_matchups):
-    """Find Pinnacle league ID that matches a BB体育 league name"""
-    bb_lower = bb_league_name.lower().strip()
+    """Find Pinnacle league ID that matches a BB体育 league name (single best match)"""
+    ids = find_pinnacle_league_ids(bb_league_name, all_sport_matchups)
+    return ids[0] if ids else None
 
+
+def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
+    """Find ALL Pinnacle league IDs matching a BB体育 league name.
+
+    网球等赛事在 Pinnacle 可能拆分为多个子联赛（Qualifiers、R1等），
+    返回所有匹配的联赛 ID + 同前缀的子联赛。
+
+    策略：
+    1. LEAGUE_KEYWORDS 精确映射
+    2. 对已精确映射的联赛，找 Pinnacle 上同前缀名的子联赛（如 "ATP Bastad"
+       → "ATP Bastad - Qualifiers"、"ATP Bastad - R1"）
+       限制：只对单赛事名（不含" - "在原映射名中）做子联赛扩展
+    3. 未精确映射的联赛用英文关键词做可控模糊匹配
+    """
+    bb_lower = bb_league_name.lower().strip()
+    matched_ids = set()
+
+    # Phase 1: LEAGUE_KEYWORDS 精确映射
+    matched_pin_names = []  # Pinnacle 联赛名列表
     for bb_name, pin_name in LEAGUE_KEYWORDS.items():
         if bb_name in bb_league_name or bb_league_name in bb_name:
             pin_names = [pin_name] if isinstance(pin_name, str) else pin_name
             for pn in pin_names:
                 lid = _find_best_league(pn, all_sport_matchups)
                 if lid:
-                    return lid
+                    matched_ids.add(lid)
+                    matched_pin_names.append(pn)
+            break
         if bb_lower == bb_name.lower():
             pin_names = [pin_name] if isinstance(pin_name, str) else pin_name
             for pn in pin_names:
                 lid = _find_best_league(pn, all_sport_matchups)
                 if lid:
-                    return lid
+                    matched_ids.add(lid)
+                    matched_pin_names.append(pn)
+            break
 
-    # Fuzzy match
-    for lid, info in all_sport_matchups.items():
-        pin_name = info["name"].lower()
-        pin_short = pin_name.split(" - ")[-1] if " - " in pin_name else pin_name
-        bb_short = bb_lower.split(" - ")[-1] if " - " in bb_lower else bb_lower
-        bb_words = set(bb_short.replace("联赛", "").replace("超级", "").replace("甲级", "").replace("乙级", "").split())
-        pin_words = set(pin_short.split())
-        if bb_words & pin_words:
-            return lid
+    if matched_ids:
+        # Phase 1.5: 子联赛扩展 — 只对不含" - "的短名（如 "ATP Bastad"）
+        # 找所有同前缀的 Pinnacle 联赛（如 "ATP Bastad - Qualifiers"）
+        # 但不对 "Russia - First League" 这种结构扩展
+        for pn in matched_pin_names:
+            if " - " in pn:
+                continue  # 已经是多段名称，不做子联赛扩展
+            for lid, info in all_sport_matchups.items():
+                if lid in matched_ids:
+                    continue
+                if info["name"].lower().startswith(pn.lower()):
+                    matched_ids.add(lid)
 
-    return None
+        return sorted(matched_ids)
+
+    # Phase 2: 只有未精确映射的联赛才做英文关键词模糊匹配
+    import re as _re
+    bb_en_parts = _re.findall(r'[A-Za-z]{2,}', bb_lower)
+    bb_en_set = set(w.lower() for w in bb_en_parts)
+
+    if bb_en_set:
+        for lid, info in all_sport_matchups.items():
+            pin_name = info["name"].lower()
+            pin_words = set(pin_name.split())
+            overlap = bb_en_set & pin_words
+            if len(overlap) >= 2:
+                matched_ids.add(lid)
+            elif len(overlap) == 1:
+                single_word = list(overlap)[0]
+                if single_word not in ("cup", "league", "championship", "championships",
+                                       "premier", "division", "super", "open", "tour"):
+                    matched_ids.add(lid)
+
+    return sorted(matched_ids) if matched_ids else []
 
 
 def verify_match(bb_match, pin_match):
@@ -1203,18 +1247,17 @@ def _warn_suspicious(ev_pct, match_score, verified):
 def _check_pinnacle():
     """启动时检测 Pinnacle API 连通性。"""
     test_url = f"{API_BASE}/sports/29/matchups"
+    SESSION.proxies = {}
     try:
         resp = SESSION.get(test_url, timeout=15)
         if resp.status_code == 200:
-            print("  ✅ Pinnacle API 连通正常")
+            print(f"  ✅ Pinnacle API 连通正常")
             return True
         print(f"  ❌ Pinnacle API 返回 {resp.status_code}")
-    except requests.exceptions.ConnectionError:
-        print("  ❌ Pinnacle API 连接失败（SOCKS5 代理）")
-        print("  → 请检查 Shadowrocket 是否开启，localhost:1082 是否可用")
     except requests.exceptions.Timeout:
         print("  ❌ Pinnacle API 超时")
-        print("  → 可能是代理节点问题，尝试切换 Shadowrocket 节点")
+    except requests.exceptions.ConnectionError:
+        print("  ❌ Pinnacle API 连接失败")
     except Exception as e:
         print(f"  ❌ Pinnacle API 异常: {e}")
     return False
@@ -1282,26 +1325,30 @@ def main():
 
     print(f"\nBB体育联赛分布 ({len(bb_leagues)}):")
     for league, count in sorted(bb_leagues.items(), key=lambda x: -x[1]):
-        pin_id = find_pinnacle_league_id(league, all_pin_leagues)
-        status = f" → Pinnacle ID={pin_id}" if pin_id else " → ❌ 未匹配"
+        pin_ids = find_pinnacle_league_ids(league, all_pin_leagues)
+        status = f" → Pinnacle ID={pin_ids}" if pin_ids else " → ❌ 未匹配"
         print(f"  {league}: {count}场{status}")
 
     # 4. Get Pinnacle odds for matched leagues
     matched_leagues = {}
     for league in bb_leagues:
-        pin_id = find_pinnacle_league_id(league, all_pin_leagues)
-        if pin_id:
-            matched_leagues[league] = pin_id
+        pin_ids = find_pinnacle_league_ids(league, all_pin_leagues)
+        if pin_ids:
+            matched_leagues[league] = pin_ids
 
     if not matched_leagues:
         print("\n⚠️ 没有找到匹配的 Pinnacle 联赛")
         return
 
-    # 5. Fetch markets for each matched league (with jitter to avoid rate limiting)
+    # 5. Fetch markets for each matched league — 去重，每个 Pinnacle ID 只调用一次
+    all_unique_pin_ids = set()
+    for pin_ids in matched_leagues.values():
+        all_unique_pin_ids.update(pin_ids)
+    print(f"\n  Pinnacle 联赛去重后: {len(all_unique_pin_ids)} 个 (来自 {len(matched_leagues)} 个 BB 联赛)")
+
     all_pin_matches = []
-    for i, (bb_name, pin_id) in enumerate(matched_leagues.items()):
-        # Rate limiting: jittered delay between API calls (except first)
-        if i > 0:
+    for call_idx, pin_id in enumerate(sorted(all_unique_pin_ids)):
+        if call_idx > 0:
             delay = round(random.uniform(1.8, 4.2), 1)
             print(f"  ⏳ 等待 {delay:.1f}s 避免限流...")
             time.sleep(delay)
@@ -1315,10 +1362,14 @@ def main():
     # 6. Group Pinnacle matches by BB league name for matching
     pin_by_bb_league = {}
     for bb_league in matched_leagues:
-        pin_lid = matched_leagues[bb_league]
-        pin_league_name = all_pin_leagues.get(pin_lid, {}).get("name", "")
+        pin_ids = matched_leagues[bb_league]
+        pin_league_names = set()
+        for pid in pin_ids:
+            name = all_pin_leagues.get(pid, {}).get("name", "")
+            if name:
+                pin_league_names.add(name)
         pin_by_bb_league[bb_league] = [
-            m for m in all_pin_matches if m["league_name"] == pin_league_name
+            m for m in all_pin_matches if m["league_name"] in pin_league_names
         ]
 
     # 7. Find overlapping matches by odds pattern matching

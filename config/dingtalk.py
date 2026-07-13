@@ -1,4 +1,4 @@
-"""钉钉机器人推送工具 — 绕过本地 DNS 拦截（Shadowrocket 网络扩展）
+"""钉钉机器人推送工具 — 绕过本地 DNS 拦截
 
 用法:
     from config.dingtalk import send_dingtalk
@@ -6,18 +6,15 @@
     send_dingtalk("投注推荐 消息内容", msgtype="markdown", title="标题")
 """
 import json
-import ssl
-import urllib.request
-import urllib.error
+
+import requests
 
 from config.logging_config import get_logger
 from config.settings import DINGTALK_WEBHOOK
 
 logger = get_logger(__name__)
 
-# Shadowrocket 网络扩展将 DNS 劫持到 198.18.x.x，需手动解析
-_DINGTALK_IP = "47.246.137.199"
-_TIMEOUT = 10
+_TIMEOUT = 15
 
 
 def send_dingtalk(
@@ -25,7 +22,7 @@ def send_dingtalk(
     msgtype: str = "text",
     title: str = "",
 ) -> bool:
-    """发送钉钉消息，绕过 DNS 劫持直连 IP。
+    """发送钉钉消息。
 
     Args:
         content: 消息正文
@@ -44,29 +41,18 @@ def send_dingtalk(
     else:
         payload = {"msgtype": "text", "text": {"content": content}}
 
-    data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+    headers = {"Content-Type": "application/json"}
 
-    # 用真实 IP 替换域名，通过 Host header 让服务器正确识别
-    url = DINGTALK_WEBHOOK.replace("oapi.dingtalk.com", _DINGTALK_IP)
-
-    ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
-
-    req = urllib.request.Request(
-        url,
-        data=data,
-        headers={
-            "Content-Type": "application/json",
-            "Host": "oapi.dingtalk.com",
-        },
-        method="POST",
-    )
+    # 用 requests 发送（trust_env=False 避免 Python 3.14 环境问题）
+    sess = requests.Session()
+    sess.trust_env = False
 
     try:
-        resp = urllib.request.urlopen(req, timeout=_TIMEOUT, context=ctx)
-        body = resp.read().decode()
-        result = json.loads(body)
+        resp = sess.post(DINGTALK_WEBHOOK, json=payload, headers=headers, timeout=_TIMEOUT)
+        if resp.status_code != 200:
+            logger.warning("  钉钉推送异常: HTTP Error %s", resp.status_code)
+            return False
+        result = resp.json()
         if result.get("errcode") == 0:
             logger.info("  钉钉推送成功")
             return True
@@ -74,8 +60,14 @@ def send_dingtalk(
             logger.warning('  钉钉推送失败: 关键词不匹配（需包含"投注推荐"）')
             return False
         else:
-            logger.warning("  钉钉推送失败: %s", result.get("errmsg", body))
+            logger.warning("  钉钉推送失败: %s", result.get("errmsg", resp.text))
             return False
+    except requests.exceptions.Timeout:
+        logger.warning("  钉钉推送超时")
+        return False
+    except requests.exceptions.ConnectionError:
+        logger.warning("  钉钉推送连接失败")
+        return False
     except Exception as e:
         logger.warning("  钉钉推送异常: %s", e)
         return False
