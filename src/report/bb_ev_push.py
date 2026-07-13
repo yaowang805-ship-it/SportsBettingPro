@@ -221,11 +221,14 @@ def push_report(place_bets=False):
         return
 
     # 保存推送机会列表到暂存文件（供虚拟投注使用）
-    if qualified and place_bets:
+    # 机会少于10场时不投注（降低集中风险）
+    if qualified and place_bets and len(qualified) >= 10:
         from src.betting.bb_virtual_bet import PUSH_STAGING_FILE, place_bets_from_push
         PUSH_STAGING_FILE.write_text(json.dumps(qualified, ensure_ascii=False, indent=2))
         logger.info("推送机会已暂存到 %s，开始投注...", PUSH_STAGING_FILE)
         place_bets_from_push(qualified)
+    elif qualified and place_bets and len(qualified) < 10:
+        logger.info("机会不足10场(%d场)，跳过虚拟投注", len(qualified))
 
     # 钉钉内容安全：body 里没有 BB体育 关键词，安全
     from config.settings import send_dingtalk
@@ -272,8 +275,11 @@ if __name__ == "__main__":
     if qualified and ("--place-bets" in sys.argv or "--stage" in sys.argv):
         from src.betting.bb_virtual_bet import PUSH_STAGING_FILE, place_bets_from_push
         PUSH_STAGING_FILE.write_text(json.dumps(qualified, ensure_ascii=False, indent=2))
-        logger.info("推送机会已暂存到 %s", PUSH_STAGING_FILE)
-        place_bets_from_push(qualified)
+        if len(qualified) >= 10:
+            logger.info("推送机会已暂存到 %s", PUSH_STAGING_FILE)
+            place_bets_from_push(qualified)
+        else:
+            logger.info("机会不足10场(%d场)，跳过虚拟投注", len(qualified))
 
     if "--no-push" not in sys.argv:
         push_report(place_bets=("--no-bet" not in sys.argv))

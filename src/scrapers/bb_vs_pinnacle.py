@@ -74,7 +74,7 @@ BB_SPORT_KEYWORDS = {
 MARKET_LABELS = {
     "football":  {"ml": ["主胜","和局","客胜"], "hc_home":"让球主胜", "hc_away":"让球客胜", "over":"大球", "under":"小球"},
     "basketball": {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
-    "tennis":     {"ml": ["球员1","球员2"], "hc_home":"让局主胜", "hc_away":"让局客胜", "over":"大分", "under":"小分"},
+    "tennis":     {"ml": ["主胜","客胜"], "hc_home":"让局主胜", "hc_away":"让局客胜", "over":"大分", "under":"小分"},
     "baseball":   {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
     "american_football": {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
 }
