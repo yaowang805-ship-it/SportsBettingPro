@@ -149,13 +149,18 @@ LEAGUE_KEYWORDS = {
     "ATP - 博斯塔德公开赛": "ATP Bastad",
     "ATP - 大满贯温布尔登网球公开赛": "ATP Wimbledon",
     "ATP - 格施塔德公开赛": "ATP Gstaad",
+    "ATP - 乌马格公开赛": "ATP Umag",
     "ATP挑战赛 - 格兰比公开赛": "ATP Challenger Granby",
     "ATP挑战赛 - 波哥大公开赛": "ATP Challenger Bogota",
+    "ATP挑战赛 - 科尔德农斯公开赛": "ATP Challenger Cordenons",
+    "WTA - 罗马公开赛": "WTA 125K Rome",
+    "WTA - 雅西公开赛": "WTA Iasi",
+    "WTA - 基茨比厄尔公开赛": "WTA 125K Kitzbuhel",
+    "WTA - 伊斯坦布尔 2 公开赛": "WTA 125K Istanbul",
+    "WTA - 雅典公开赛": "WTA Athens",
     "WTA - 孔特雷克塞维尔公开赛": "WTA 125K Contrexeville - Final",
     "WTA - 孔特雷克塞维尔公开赛 - 双打": "WTA 125K Contrexeville - Doubles",
     "WTA - 纽波特公开赛": "WTA 125K Newport",
-    "WTA - 罗马公开赛": "WTA 125K Rome",
-    "WTA - 雅西公开赛": "WTA Iasi",
 }
 
 # 常见球队中英名称映射（用于匹配验证）
