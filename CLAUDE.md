@@ -24,19 +24,14 @@
 
 ```
 BB体育 (pc.x14ff.com SPA) ──→ bb_extract_odds.py (--all-sports) ──→ bb_odds_extracted.json
-                    │              └── bb_extract_x14ff.js (文本解析)
+                    │              ├── bb_extract_x14ff.js (文本解析-FT)
+                    │              └── bb_extract_dom.js (DOM读取-FT+HT盘口)
                     ↓
 Pinnacle API ──────────────→ bb_vs_pinnacle.py ──→ bb_vs_pinnacle_comparison.json
-                                      ↓
-                              bb_ev_push.py → 钉钉推送 (+EV，运动分组+联赛分组+开赛时间)
-                                      │        ↑ 公平价 = 去抽水价 | 溢价 = (BB - 公平价) / 公平价
-                                      ↓
-                              bb_virtual_bet.py → virtual_portfolio.json (每日¥1万自动投注)
-                                      │         ↑ 每日预算跟踪，Kelly基于公平价
-                                      ↓
-                              auto_settle.py → ESPN自动结算
-                                      ↓
-                              daily_settlement.py → 钉钉推送 (每日晨间结算报告)
+                    │        ├── period=0 → FT 对比
+                    │        └── period=1 → HT 对比（上半场）
+                    ↓
+                    bb_ev_push.py → 钉钉推送 (+EV，含上半场盘口)
 ```
 
 ### 每日流程
@@ -72,8 +67,9 @@ bb_ev_push.py --no-bet             # 只推送不投注
 ## 关键文件
 
 - `src/scrapers/bb_extract_odds.py` — BB体育 赔率提取（AppleScript + Chrome），`--all-sports` 多运动
-- `src/scrapers/bb_extract_x14ff.js` — pc.x14ff.com SPA 文本解析器（唯一 JS 提取器）
-- `src/scrapers/bb_vs_pinnacle.py` — BB vs Pinnacle 对比引擎（含去抽水公平价计算）
+- `src/scrapers/bb_extract_x14ff.js` — pc.x14ff.com SPA 文本解析器（FT赔率，向后兼容）
+- `src/scrapers/bb_extract_dom.js` — DOM提取器（按class name读取，FT + HT盘口同时提取）
+- `src/scrapers/bb_vs_pinnacle.py` — BB vs Pinnacle 对比引擎（含去抽水公平价计算，FT + HT对比）
 - `src/betting/bb_virtual_bet.py` — 虚拟投注执行（¥10,000 每日预算，按日重置，Kelly基于公平价）
 - `src/betting/bb_settle.py` — BB体育 投注结算
 - `src/report/bb_ev_push.py` — 钉钉推送（运动分组 + 联赛分组 + 开赛时间 + Kelly 分配 + 自动投注）

@@ -38,15 +38,10 @@ def _league_multiplier(league: str) -> float:
 
 
 def _calc_kelly_stakes(opps: list) -> list:
-    """按 Kelly 比例分配投注额，与 ev_push.py 一致。"""
-    total_kelly = sum(o.get("_kelly_pct", 0) for o in opps)
-    if total_kelly <= 0:
-        for o in opps:
-            o["_stake"] = 0
-        return opps
+    """按 Kelly 比例计算投注额，与 ev_push.py 一致。"""
     for o in opps:
-        k = o.get("_kelly_pct", 0)
-        stake = round((k / total_kelly) * BANKROLL)
+        k = o.get("_kelly_pct", 0)  # 已转为百分比（如 2.5 = 2.5%）
+        stake = round(BANKROLL * k / 100)
         if stake < 5:
             stake = 0
         o["_stake"] = stake
@@ -119,12 +114,13 @@ def build_report():
     data = json.loads(COMPARISON_FILE.read_text())
     details = data.get("details", [])
 
-    # 收集所有 >=3% 溢价的 opportunities
+    # 收集所有 >=1% 溢价的 opportunities
     qualified = []
     for match in details:
         qualified.extend(_collect_opportunities(match, "opportunities"))
         qualified.extend(_collect_opportunities(match, "handicap"))
         qualified.extend(_collect_opportunities(match, "over_under"))
+        qualified.extend(_collect_opportunities(match, "double_chance"))
 
     if not qualified:
         return "no +EV opportunities (>=3%)", []
@@ -138,10 +134,12 @@ def build_report():
     if len(qualified) > MAX_OPPORTUNITIES:
         qualified = qualified[:MAX_OPPORTUNITIES]
 
-    # 第二步：按运动→联赛分组重排（用于展示），组内按评分降序
+    # 第二步：按运动→联赛→比赛→评分降序重排（同场比赛不同盘口不分开）
     qualified.sort(key=lambda o: (
         SPORT_ORDER.get(o.get("sport", ""), 99),
         o.get("league", ""),
+        o.get("home_cn", ""),
+        o.get("away_cn", ""),
         -o["_score"]
     ))
 
@@ -159,7 +157,7 @@ def build_report():
     match_idx = 0
     for o in qualified:
         oc = o["designation"]
-        pinny = round(o["pin_odds"], 2)
+        pinny = round(o.get("pin_odds", 0), 2) if o.get("pin_odds", 0) > 0 else 0
         fair = o.get("fair_price") or round(o["pin_odds"], 2)
         bb_odds = o["bb_odds"]
         ev_pct = o["ev_pct"]
@@ -195,7 +193,7 @@ def build_report():
             prev_match = match_key
 
         lines.append(
-            f"    [{oc}] 公平价: {fair} | Pinnacle: {pinny} | BB价: {bb_odds} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}"
+            f"    [{oc}] 公平价: {fair}" + (f" | Pinnacle: {pinny}" if o.get("pin_odds", 0) > 0 else " | 推导: 1X2") + f" | BB价: {bb_odds} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}"
         )
 
     title = f"+EV 投注推荐: {match_idx} 场比赛"

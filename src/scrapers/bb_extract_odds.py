@@ -94,6 +94,8 @@ def wait_for_content(check_js, timeout=15, interval=1):
 
 # 加载 pc.x14ff.com 专用提取 JS
 _X14FF_EXTRACT_JS = (Path(__file__).parent / "bb_extract_x14ff.js").read_text(encoding="utf-8")
+# DOM 提取器（按 class name 读取，可提取 FT + HT 盘口）
+_DOM_EXTRACT_JS = (Path(__file__).parent / "bb_extract_dom.js").read_text(encoding="utf-8")
 
 
 def click_text(text, timeout=10):
@@ -153,6 +155,210 @@ def scroll_jitter():
 def human_delay(lo=1.0, hi=3.0):
     """随机延迟，模拟人类操作间隔。"""
     time.sleep(round(random.uniform(lo, hi), 2))
+
+
+def click_sidebar_item(text):
+    """Click item in the sports sidebar (left panel), not per-match tabs.
+
+    Uses the correct selector for the side menu structure:
+    li.sport-menu-li.active .sub-menu-list .sum-menu-item span
+    """
+    js = f"""
+(function() {{
+    var sidebar = document.querySelector('li.sport-menu-li.active');
+    if (!sidebar) return 'no sidebar found';
+    var items = sidebar.querySelectorAll('.sum-menu-item');
+    for (var i = 0; i < items.length; i++) {{
+        var spans = items[i].querySelectorAll('span');
+        for (var j = 0; j < spans.length; j++) {{
+            if (spans[j].innerText.trim() === '{text}') {{
+                items[i].click();
+                return 'clicked: ' + spans[j].innerText.trim();
+            }}
+        }}
+    }}
+    return 'not found: ' + '{text}';
+}})();
+"""
+    return run_js(js, timeout=10)
+
+
+_SIDEBAR_EXTRACT_JS_SIMPLE = """
+(function() {
+    var items = document.querySelectorAll('.home-match-list__item');
+    var results = [];
+    items.forEach(function(item) {
+        try {
+            var home = '', away = '', league = '';
+            var tns = item.querySelectorAll('.team-name');
+            if (tns.length >= 1) home = tns[0].innerText.trim();
+            if (tns.length >= 2) away = tns[1].innerText.trim();
+            if (!home || !away) return;
+
+            var group = item.closest('.group-matches');
+            if (group) {
+                var ln = group.querySelector('.league-name');
+                if (ln) league = ln.innerText.trim();
+            }
+
+            // Collect all decimal odds from this match container
+            var odds = [];
+            var all = item.querySelectorAll('*');
+            all.forEach(function(el) {
+                if (el.children.length === 0) {
+                    var t = el.innerText.trim();
+                    if (/^\\d+\\.\\d{2}$/.test(t)) odds.push(t);
+                }
+            });
+
+            results.push({league: league, home: home, away: away, odds_values: odds});
+        } catch(e) {}
+    });
+    return JSON.stringify(results);
+})();
+"""
+
+# Map sidebar view names to output field names
+_SIDEBAR_FIELDS = {
+    "双重机会": "odds_dc",
+    "半场/全场": "odds_htft",
+    "角球": "odds_corner",
+    "单/双": "odds_oe",
+}
+
+# Odds counts per view for truncation during merge
+_SIDEBAR_ODDS_COUNT = {
+    "odds_dc": 9,       # FT(3) + HT(3) + 2H(3) 双重机会
+    "odds_htft": 9,     # 主/主, 主/和, 主/客, 和/主, 和/和, 和/客, 客/主, 客/和, 客/客
+    "odds_corner": 7,   # 主, 和, 客, 让球主, 让球客, 大, 小
+    "odds_oe": 6,       # FT单, FT双, HT单, HT双, 2H单, 2H双
+}
+
+
+def extract_sidebar_view(view_name):
+    """Click a sidebar view and extract odds from match containers via DOM.
+
+    Returns list of dicts: {home, away, league, odds_values}
+    """
+    print(f"    (点击 '{view_name}'...)")
+    result = click_sidebar_item(view_name)
+    print(f"    → {result}")
+    human_delay(3.0, 5.0)
+
+    raw = run_js(_SIDEBAR_EXTRACT_JS_SIMPLE, timeout=15)
+    if not raw:
+        print(f"    ⚠️  JS 提取无返回")
+        return []
+    try:
+        matches = json.loads(raw)
+    except json.JSONDecodeError:
+        print(f"    ⚠️  JS 返回非 JSON")
+        return []
+
+    print(f"    → DOM 提取到 {len(matches)} 场比赛")
+    return matches
+
+
+def extract_football_sidebar_markets():
+    """Extract all sidebar markets for football.
+
+    First resets Chrome by navigating to about:blank and back to football
+    to ensure reliable JS execution, then extracts each sidebar view.
+
+    Returns dict: {market_name: [match_list]} for each sidebar view.
+    """
+    SIDEBAR_VIEWS = ["双重机会", "半场/全场", "角球", "单/双"]
+    results = {}
+
+    # Reset Chrome to ensure reliable JS execution
+    print("  重置 Chrome 标签页...")
+    navigate_tab("about:blank", wait_after=0.5)
+    human_delay(0.5, 1.0)
+    navigate_sport(1)
+    wait_for_content(
+        "(function(){var m=document.body.innerText.match(/\\d+\\.\\d{2,4}/g);var c=m?m.length:0;return c>=20?c:0})()",
+        timeout=20, interval=2.0
+    )
+
+    for view_name in SIDEBAR_VIEWS:
+        print(f"  侧边栏 '{view_name}' 提取中...")
+        matches = extract_sidebar_view(view_name)
+        for m in matches:
+            m["_bb_view"] = view_name
+        results[view_name] = matches
+        print(f"    → {len(matches)} 场比赛")
+
+        # Reset to default view before next
+        navigate_sport(1)
+        human_delay(2.0, 3.0)
+
+    return results
+
+
+def merge_sidebar_markets(all_matches, sidebar_data):
+    """Merge sidebar market data into the all_matches list.
+
+    Sidebar matches are matched to main-view matches by (home, away, league).
+    Extra odds are added as fields (odds_dc, odds_htft, odds_corner, odds_oe).
+    """
+    for market_name, market_matches in sidebar_data.items():
+        field = _SIDEBAR_FIELDS.get(market_name)
+        if not field:
+            continue
+
+        # Build index by (home, away, league)
+        idx = {}
+        for sm in market_matches:
+            key = (sm.get("home", ""), sm.get("away", ""), sm.get("league", ""))
+            idx[key] = sm.get("odds_values", [])
+
+        merged = 0
+        for m in all_matches:
+            key = (m.get("home", ""), m.get("away", ""), m.get("league", ""))
+            vals = idx.get(key)
+            if vals:
+                n = _SIDEBAR_ODDS_COUNT.get(field, len(vals))
+                m[field] = vals[:n]
+                merged += 1
+
+        logger.info("侧边栏 '%s' 合并: %d/%d 匹配成功", market_name, merged, len(all_matches))
+
+    return all_matches
+
+
+def merge_dom_odds(matches):
+    """对提取到的比赛列表，运行 DOM 提取器并合并 odds_ft/odds_ht。
+
+    用 (home, away) 匹配文本提取结果和 DOM 提取结果。
+    matches 的每个元素会被注入 odds_ft 和 odds_ht 字段。
+    """
+    dom_raw = run_js(_DOM_EXTRACT_JS, timeout=30)
+    if not dom_raw:
+        logger.warning("DOM 提取器无返回，跳过 HT 盘口合并")
+        return matches
+    try:
+        dom_matches = json.loads(dom_raw)
+    except json.JSONDecodeError:
+        logger.warning("DOM 提取器返回非 JSON，跳过")
+        return matches
+
+    # 建立 DOM key 索引
+    dom_idx = {}
+    for dm in dom_matches:
+        key = (dm.get("home", "").strip(), dm.get("away", "").strip())
+        dom_idx[key] = dm
+
+    merged = 0
+    for m in matches:
+        key = (m.get("home", "").strip(), m.get("away", "").strip())
+        dm = dom_idx.get(key)
+        if dm:
+            m["odds_ft"] = dm.get("odds_ft", {})
+            m["odds_ht"] = dm.get("odds_ht", {})
+            merged += 1
+
+    logger.info("DOM 盘口合并: %d/%d 场比赛匹配成功", merged, len(matches))
+    return matches
 
 
 if __name__ == '__main__':
@@ -257,6 +463,10 @@ if __name__ == '__main__':
                 m["sport_cn"] = sport_cn
                 unique.append(m)
 
+            # 给主视图比赛打标签
+            for um in unique:
+                um["_bb_view"] = "main"
+
             all_matches.extend(unique)
             sport_counts[sport_cn] = len(unique)
             print(f"  → {len(unique)} 场比赛")
@@ -267,9 +477,19 @@ if __name__ == '__main__':
         for name, count in sorted(sport_counts.items(), key=lambda x: -x[1]):
             print(f"  {name}: {count}")
 
+        # 合并 DOM 提取的 FT + HT 盘口
+        if total > 0:
+            print("\n合并 DOM 盘口数据...")
+            all_matches = merge_dom_odds(all_matches)
+
         if total == 0:
             print("⚠️  未提取到任何比赛！")
             sys.exit(1)
+
+        # 足球侧边栏市场提取
+        print("\n=== 提取足球侧边栏市场 ===")
+        sidebar_data = extract_football_sidebar_markets()
+        all_matches = merge_sidebar_markets(all_matches, sidebar_data)
 
         # 保存
         timestamp = time.strftime('%Y-%m-%dT%H:%M:%S')
