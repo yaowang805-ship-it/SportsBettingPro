@@ -71,7 +71,7 @@ BB_SPORT_KEYWORDS = {
 MARKET_LABELS = {
     "football":  {"ml": ["主胜","和局","客胜"], "hc_home":"让球主胜", "hc_away":"让球客胜", "over":"大球", "under":"小球"},
     "basketball": {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
-    "tennis":     {"ml": ["主胜","客胜"], "hc_home":"让局主胜", "hc_away":"让局客胜", "over":"大分", "under":"小分"},
+    "tennis":     {"ml": ["主胜","客胜"], "hc_home":"让盘主胜", "hc_away":"让盘客胜", "over":"大分", "under":"小分"},
     "baseball":   {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
     "american_football": {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
 }
@@ -388,6 +388,9 @@ TEAM_NAME_MAP = {
     # Basketball
     "奥克兰大蜥蜴": "Auckland Tuatara",
     "奥塔哥掘金": "Otago Nuggets",
+    # Tennis players — 中文音译 → Pinnacle 英文名
+    "维多利亚.莫尔瓦约娃 (斯洛伐克)": "Viktoria Morvayova",
+    "萨拉.贝莱克 (捷克)": "Sara Bejlek",
 }
 
 
@@ -888,18 +891,72 @@ def get_pin_total(pin_match, target_line=None, source=None):
     return best
 
 
+def _pinyin_match_names(bb_home: str, bb_away: str, pin_list: list) -> tuple:
+    """Fallback: pinyin-based fuzzy matching for CJK names (e.g. tennis players).
+
+    Uses pypinyin to convert Chinese names to pinyin, then difflib
+    to compare against Pinnacle English names.  Only kicks in when
+    the BB names contain CJK characters and TEAM_NAME_MAP has no entry.
+    Returns (match, score) or (None, 0.0).
+    """
+    try:
+        from pypinyin import lazy_pinyin
+    except ImportError:
+        return None, 0.0
+    from difflib import SequenceMatcher as _SM
+
+    def _is_cjk(s):
+        return any('一' <= c <= '鿿' for c in s)
+
+    def _pinyin_key(name):
+        # Strip country suffix "(xxx)" and whitespace
+        raw = name.rsplit("(", 1)[0].strip()
+        if not _is_cjk(raw):
+            return ""
+        # Convert each dot-separated syllable to pinyin
+        syllables = raw.split(".")
+        py = " ".join("".join(lazy_pinyin(s)).lower() for s in syllables)
+        return py
+
+    bb_home_py = _pinyin_key(bb_home)
+    bb_away_py = _pinyin_key(bb_away)
+    if not bb_home_py and not bb_away_py:
+        return None, 0.0
+
+    best_match = None
+    best_score = 0.0
+
+    for pin in pin_list:
+        pin_home_l = pin.get("home", "").lower()
+        pin_away_l = pin.get("away", "").lower()
+        scores = []
+        if bb_home_py:
+            scores.append(_SM(None, bb_home_py, pin_home_l).ratio())
+        if bb_away_py:
+            scores.append(_SM(None, bb_away_py, pin_away_l).ratio())
+        avg = sum(scores) / len(scores) if scores else 0
+        if avg > best_score:
+            best_score = avg
+            best_match = pin
+
+    # Lower threshold for pinyin matching — pronunciation varies
+    if best_score >= 0.50:
+        return best_match, best_score
+    return None, 0.0
+
+
 def find_pin_match_by_name(bb_home, bb_away, pin_list):
     """Find Pinnacle match by team name mapping.
 
-    Uses TEAM_NAME_MAP to translate BB Chinese names to English,
-    then finds the best matching Pinnacle match.
+    Phase 1: TEAM_NAME_MAP (exact Chinese→English).
+    Phase 2: pinyin-based fuzzy matching (for tennis etc.).
     Returns (match, score) or (None, 0).
     """
     bb_home_en = TEAM_NAME_MAP.get(bb_home, "").lower()
     bb_away_en = TEAM_NAME_MAP.get(bb_away, "").lower()
 
     if not bb_home_en and not bb_away_en:
-        return None, 0.0
+        return _pinyin_match_names(bb_home, bb_away, pin_list)
 
     best_match = None
     best_score = 0.0
@@ -1043,29 +1100,45 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
             "sport": sport,
         }
 
-    # Phase 1: Name-based
+    # Phase 1: Name-based — for each Pin match, find best BB match
+    # Group BB data by league
+    bb_by_league = {}
     for bb_key, bd in bb_data.items():
-        bb = bd["match"]
-        sport = bd["sport"]
-        bb_league = bb.get("league", "")
+        league = bd["match"].get("league", "")
+        bb_by_league.setdefault(league, []).append((bb_key, bd))
+
+    for bb_league, bb_entries in bb_by_league.items():
         pin_list = pin_matches_by_league.get(bb_league, [])
-        pin_match, name_score = find_pin_match_by_name(
-            bb.get("home", ""), bb.get("away", ""), pin_list,
-        )
-        if pin_match and name_score >= 0.9:
-            pin_ml = get_pin_ml_sorted(pin_match, sport)
-            min_odds = 2 if sport in TWO_WAY_SPORTS else 3
-            if len(pin_ml) >= min_odds:
-                mid = pin_match.get("matchup_id", id(pin_match))
-                if mid not in used_pin_ids:
-                    used_pin_ids.add(mid)
-                    used_bb_keys.add(bb_key)
+        # For each Pin match, find the best available BB match
+        for pin in pin_list:
+            pin_id = pin.get("matchup_id", id(pin))
+            if pin_id in used_pin_ids:
+                continue
+            best_bb_key = None
+            best_bd = None
+            best_name_score = 0.0
+            for bb_key, bd in bb_entries:
+                if bb_key in used_bb_keys:
+                    continue
+                _, name_score = find_pin_match_by_name(
+                    bd["match"].get("home", ""), bd["match"].get("away", ""), [pin],
+                )
+                if name_score > best_name_score:
+                    best_name_score = name_score
+                    best_bb_key = bb_key
+                    best_bd = bd
+            if best_bd and best_name_score >= 0.50:
+                pin_ml = get_pin_ml_sorted(pin, best_bd["sport"])
+                min_odds = 2 if best_bd["sport"] in TWO_WAY_SPORTS else 3
+                if len(pin_ml) >= min_odds:
+                    used_pin_ids.add(pin_id)
+                    used_bb_keys.add(best_bb_key)
                     name_matched.append({
-                        "bb": bb, "pin": pin_match, "league": bb_league,
-                        "match_score": 1.0, "team_score": name_score,
+                        "bb": best_bd["match"], "pin": pin, "league": bb_league,
+                        "match_score": 1.0, "team_score": best_name_score,
                         "match_type": "name",
-                        "bb_1x2": bd["bb_1x2"], "pin_1x2": pin_ml,
-                        "sport": sport,
+                        "bb_1x2": best_bd["bb_1x2"], "pin_1x2": pin_ml,
+                        "sport": best_bd["sport"],
                     })
 
     # Phase 2: Global greedy per-league
