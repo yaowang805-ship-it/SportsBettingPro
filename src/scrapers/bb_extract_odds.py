@@ -300,6 +300,10 @@ def extract_sidebar_view(view_name):
     print(f"    (点击 '{view_name}'...)")
     result = click_sidebar_item(view_name)
     print(f"    → {result}")
+    if "not found" in result:
+        print(f"    ⚠️  侧边栏 '{view_name}' 不可用，跳过（保留页面当前视图）")
+        return []
+
     human_delay(3.0, 5.0)
 
     raw = run_js(_SIDEBAR_EXTRACT_JS_SIMPLE, timeout=15)

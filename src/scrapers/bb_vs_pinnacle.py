@@ -1888,6 +1888,13 @@ def main():
         # --- 双重机会 (Double Chance) FT：从 Pinnacle 1X2 推导公平价 ---
         bb_dc = bb.get("odds_dc", [])
         if len(bb_dc) >= 3 and n_ml == 3:
+            # 安全校验：BB 双重机会赔率是否与主1X2相同（侧边栏点击失败时会出现）
+            dc_first3 = [round(float(x), 2) for x in bb_dc[:3]]
+            ml_first3 = [round(x, 2) for x in bb_ml[:3]]
+            if dc_first3 == ml_first3:
+                # 侧边栏提取失败，odds_dc 只是主视图赔率的复制
+                bb_dc = []
+        if len(bb_dc) >= 3 and n_ml == 3:
             h, d, a = pin_ml
             if all(x and x > 0 for x in [h, d, a]):
                 imp = 1/h + 1/d + 1/a
