@@ -49,11 +49,15 @@ def _calc_kelly_stakes(opps: list) -> list:
 
 
 def _collect_opportunities(match, market_key):
-    """从指定市场收集 +EV 机会。"""
+    """从指定市场收集 +EV 机会。校准过滤：时间匹配必须高分才推送。"""
+    match_type = match.get("match_type", "unknown")
+    match_score = match.get("match_score", 0.7)
+    # 时间匹配（非队名匹配）需要高置信度，防止推错比赛
+    if match_type == "time" and match_score < 0.90:
+        return []
     league = match.get("league", "")
     home_cn = match.get("home_bb", "")
     away_cn = match.get("away_bb", "")
-    match_score = match.get("match_score", 0.7)
     league_mult = _league_multiplier(league)
     result = []
     for opp in match.get(market_key, []):

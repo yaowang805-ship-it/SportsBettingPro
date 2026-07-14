@@ -20,6 +20,7 @@ SPORT_CONFIG = [
     ("baseball",         "棒球", 7),
     ("american_football","美式足球", 6),
 ]
+SPORT_ID_BY_CN = {name: sid for _, name, sid in SPORT_CONFIG}
 
 X14FF_BASE = "https://pc.x14ff.com"
 X14FF_EARLY = X14FF_BASE + "/index.html#/?type=3&sportId=1&marketType=DEFAULT&showMenu=1"
@@ -106,6 +107,7 @@ def click_text(text, timeout=10):
         for (var i = 0; i < all.length; i++) {{
             var t = all[i].innerText.trim();
             if (t === '{text}' && all[i].offsetParent !== null) {{
+                all[i].scrollIntoView({{block:'center'}});
                 all[i].click();
                 return 'clicked';
             }}
@@ -116,11 +118,66 @@ def click_text(text, timeout=10):
     return run_js(js, timeout=timeout)
 
 
-def navigate_sport(sport_id):
-    """用 URL 导航切换运动，比点击选项卡更可靠。"""
-    url = f"{X14FF_BASE}/index.html#/?type=3&sportId={sport_id}&marketType=DEFAULT&showMenu=1"
+def click_sidebar_sport(sport_cn, sport_id=None):
+    """在左侧边栏点击运动标签（滚动到可视区域后再点击）。
+
+    sport_id: 若传入，同步更新 URL hash 以强制 SPA 路由切换。
+    """
+    # 额外步骤：更新 hash 路由确保 SPA 切换运动
+    if sport_id is not None:
+        run_js(f"""
+        (function(){{
+            var h = '#/?type=3&sportId={sport_id}&marketType=DEFAULT&showMenu=1';
+            if (location.hash !== h) {{
+                location.hash = h;
+            }}
+        }})();
+        """, timeout=5)
+        human_delay(0.5, 1.0)
+
+    click_js = f"""
+    (function() {{
+        var name = '{sport_cn}';
+        var lis = document.querySelectorAll('li.sport-menu-li');
+        for (var i = 0; i < lis.length; i++) {{
+            var span = lis[i].querySelector('span.name');
+            if (span && span.innerText.trim() === name) {{
+                var item = span.closest('div.sport-menu-item') || lis[i];
+                item.scrollIntoView({{block:'center', behavior:'instant'}});
+                try {{ item.click(); return 'clicked'; }} catch(e) {{}}
+                item.dispatchEvent(new MouseEvent('click', {{bubbles:true,cancelable:true,view:window}}));
+                return 'dispatched';
+            }}
+        }}
+        return 'not_found';
+    }})();
+    """
+    result = run_js(click_js, timeout=10)
+    if 'not_found' not in result:
+        return result
+    # 不在可视区域 — 从顶部逐步滚动容器后重试
+    for pos in [0, 150, 300, 500, 800, 1200, 2000]:
+        run_js(f"""
+        (function(){{
+            var c=document.querySelector('.scroll.relative-position.fit');
+            if(c){{c.scrollTop={pos};}}
+        }})();
+        """, timeout=5)
+        human_delay(0.6, 1.0)
+        result = run_js(click_js, timeout=10)
+        if 'not_found' not in result:
+            return result + f' (scrollTop={pos})'
+    return 'not_found: ' + sport_cn
+
+
+def navigate_sport(sport_id, use_early=False):
+    """用 URL 导航到运动页面，等待 SPA 充分加载。"""
+    if use_early:
+        url = f"{X14FF_BASE}/index.html#/?type=3&sportId={sport_id}&marketType=DEFAULT&showMenu=1"
+    else:
+        url = f"{X14FF_BASE}/index.html#/?sportId={sport_id}&marketType=DEFAULT&showMenu=1"
     navigate_tab(url, wait_after=0)
-    human_delay(2.0, 4.0)  # 等待 SPA 切换加载
+    human_delay(6.0, 9.0)
 
 
 def sport_matches_extracted(sport_key, matches):
@@ -134,8 +191,8 @@ def sport_matches_extracted(sport_key, matches):
     indicators = {
         "soccer": ["联赛", "杯", "FC", "超级", "英超", "西甲", "德甲"],
         "basketball": ["NBA", "篮球", "WNBA", "NBL"],
-        "tennis": ["ATP", "WTA", "公开赛", "挑战赛"],
-        "baseball": ["MLB", "NPB", "棒球", "巨人", "阪神", "野球"],
+        "tennis": ["ATP", "WTA", "公开赛", "挑战赛", "ITF"],
+        "baseball": ["MLB", "NPB", "棒球", "职业", "墨西哥", "中华"],
         "american_football": ["NFL", "美式"],
     }
     kws = indicators.get(sport_key, [])
@@ -270,11 +327,9 @@ def extract_football_sidebar_markets():
     SIDEBAR_VIEWS = ["双重机会", "半场/全场", "角球", "单/双"]
     results = {}
 
-    # Reset Chrome to ensure reliable JS execution
-    print("  重置 Chrome 标签页...")
-    navigate_tab("about:blank", wait_after=0.5)
-    human_delay(0.5, 1.0)
-    navigate_sport(1)
+    print("  点击切换到足球...")
+    click_sidebar_sport("足球", sport_id=SPORT_ID_BY_CN.get("足球"))
+    human_delay(2.0, 3.0)
     wait_for_content(
         "(function(){var m=document.body.innerText.match(/\\d+\\.\\d{2,4}/g);var c=m?m.length:0;return c>=20?c:0})()",
         timeout=20, interval=2.0
@@ -289,7 +344,7 @@ def extract_football_sidebar_markets():
         print(f"    → {len(matches)} 场比赛")
 
         # Reset to default view before next
-        navigate_sport(1)
+        click_sidebar_sport("足球", sport_id=SPORT_ID_BY_CN.get("足球"))
         human_delay(2.0, 3.0)
 
     return results
@@ -379,32 +434,28 @@ if __name__ == '__main__':
         all_matches = []
         sport_counts = {}
 
-        # 1. 直接导航到早盘页面（足球默认，sportId=1）
-        print(f"\n导航到: {X14FF_EARLY}")
+        # 0. 初始化：加载BB体育早盘URL（type=3 = 早盘, sportId=1 = 足球）
+        # 后续只通过侧边栏点击切换运动，不刷新URL
+        print("\n=== 初始化 BB体育 ===")
         navigate_tab(X14FF_EARLY, wait_after=0)
-        human_delay(1.5, 3.0)  # 等待页面加载
-
-        # 2. 等待 SPA 加载（首次需要更长时间，至少50个赔率才算加载完成）
-        content = wait_for_content(
-            "(function(){var m=document.body.innerText.match(/\\d+\\.\\d{2,4}/g);var c=m?m.length:0;return c>=50?c:0})()",
-            timeout=40, interval=2.0
+        human_delay(6.0, 9.0)
+        wait_for_content(
+            "(function(){var m=document.body.innerText.match(/\\d+\\.\\d{2,4}/g);return m?String(m.length):'0';})()",
+            timeout=20, interval=2.0
         )
-        if content is None:
-            print(f"⚠️  pc.x14ff.com 加载超时")
-            sys.exit(1)
+        human_delay(2.0, 3.0)
 
+        # 1. 对每个运动，点击侧边栏切换（不刷新页面）
         for sport_key, sport_cn, sport_id in SPORT_CONFIG:
             print(f"\n--- {sport_cn} ({sport_key}) ---")
+            if sport_key == "american_football":
+                print(f"  跳过（SPA无数据）")
+                continue
 
-            # 用 URL 导航切换运动（比点击选项卡更可靠）
-            if sport_id != 1:
-                print(f"  导航到: sportId={sport_id}")
-                scroll_jitter()
-                navigate_sport(sport_id)
-            else:
-                # 足球已在页面上，加点拟人延迟
-                scroll_jitter()
-                human_delay(0.5, 1.5)
+            print(f"  点击侧边栏: {sport_cn}...")
+            click_result = click_sidebar_sport(sport_cn, sport_id=sport_id)
+            print(f"  点击结果: {click_result}")
+            human_delay(3.0, 5.0)
 
             # 等待赔率出现
             content = wait_for_content(
@@ -431,16 +482,44 @@ if __name__ == '__main__':
             human_delay(0.8, 2.0)
 
             try:
-                raw = run_js(_X14FF_EXTRACT_JS, timeout=30)
+                # 足球用文本提取器（时间模式解析），其他用DOM提取器（类名读取）
+                if sport_key == "soccer":
+                    raw = run_js(_X14FF_EXTRACT_JS, timeout=30)
+                else:
+                    raw = run_js(_DOM_EXTRACT_JS, timeout=30)
                 matches = json.loads(raw)
+                if len(matches) > 0:
+                    leagues = [m.get("league", "?")[:20] for m in matches[:5]]
+                    print(f"  提取到 {len(matches)} 场, 联赛: {leagues}")
+                else:
+                    print(f"  提取到 0 场比赛")
             except Exception as e:
                 print(f"  ⚠️  {sport_cn} 提取失败: {e}")
                 continue
 
             # 验证提取到的比赛确实属于该运动（防止 SPA 未正确切换）
             if not sport_matches_extracted(sport_key, matches):
-                print(f"  ⚠️  {sport_cn} 内容不匹配（SPA 未正确切换），跳过")
-                continue
+                # 重试：再次点击侧边栏
+                print(f"  ⚠️  内容不匹配，重新点击...")
+                human_delay(1.0, 2.0)
+                click_result = click_sidebar_sport(sport_cn, sport_id=sport_id)
+                print(f"  重试点: {click_result}")
+                human_delay(3.0, 5.0)
+                try:
+                    if sport_key == "soccer":
+                        raw = run_js(_X14FF_EXTRACT_JS, timeout=30)
+                    else:
+                        raw = run_js(_DOM_EXTRACT_JS, timeout=30)
+                    matches = json.loads(raw)
+                    if len(matches) > 0:
+                        leagues = [m.get("league", "?")[:20] for m in matches[:5]]
+                        print(f"  重试提取到 {len(matches)} 场, 联赛: {leagues}")
+                except Exception as e:
+                    print(f"  ⚠️  重试提取失败: {e}")
+                    continue
+                if not sport_matches_extracted(sport_key, matches):
+                    print(f"  ⚠️  仍不匹配，跳过")
+                    continue
 
             # 添加运动标签、去重、过滤中国足球
             seen = set()
@@ -504,9 +583,8 @@ if __name__ == '__main__':
         out_path.write_text(json.dumps(output, ensure_ascii=False, indent=2))
         print(f"\n已保存到 {out_path}")
 
-        # 提取完成，回到足球首页，不关页面
+        # 提取完成，不关页面
         print("提取完成，页面保持打开...")
-        navigate_tab(X14FF_EARLY, wait_after=0)
 
     else:
         # --- 单运动提取模式（原有逻辑） ---

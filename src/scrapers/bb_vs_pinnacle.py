@@ -141,7 +141,9 @@ LEAGUE_KEYWORDS = {
     "MLB": "MLB",
     "美国职业棒球大联盟": "MLB",
     "日本职业棒球": "Nippon Professional Baseball",
+    "日本职业包装": "Nippon Professional Baseball",  # SPA渲染错误（棒球→包装）
     "韩国棒球": "Korea Professional Baseball",
+    "中华职业棒球大联盟": "Chinese Professional Baseball League",
     # Tennis
     "ATP - 博斯塔德公开赛": "ATP Bastad",
     "ATP - 大满贯温布尔登网球公开赛": "ATP Wimbledon",
@@ -452,15 +454,28 @@ def extract_bb_1x2(bb_match, sport="football"):
     3-way (足球): odds[0:3] = [home, draw, away]
     2-way (篮球/网球/棒球): odds[0:2] = [home, away]
 
+    Primary source: structured odds_ft.ml from DOM extractor (reliable).
+    Fallback: positional odds_values (backward compat with text extractor).
+
     Returns (odds_list, is_valid).
     """
+    n = 3 if sport not in TWO_WAY_SPORTS else 2
+
+    # Primary: structured odds_ft.ml from DOM extractor
+    odds_ft = bb_match.get("odds_ft", {})
+    if isinstance(odds_ft, dict) and "ml" in odds_ft:
+        # DOM extractor explicitly checked ML box — trust its result
+        ft_ml = odds_ft["ml"]
+        if isinstance(ft_ml, list) and len(ft_ml) >= n:
+            bb_1x2 = [v for v in ft_ml if 1.01 <= v <= 51.0]
+            if len(bb_1x2) >= n:
+                return bb_1x2, True
+        # DOM says no ML (empty list) → don't fall through to positional
+        return [], False
+
+    # Fallback: positional odds_values (text extractor legacy)
     odds = bb_match.get("odds_values", [])
     full_text = bb_match.get("full_text", "")
-
-    if sport in TWO_WAY_SPORTS:
-        n = 2
-    else:
-        n = 3
 
     if len(odds) < n:
         return [], False
@@ -533,8 +548,27 @@ def extract_bb_handicap(bb_match, sport="football"):
     3-way (足球): handicap odds at odds[3:5], lines found in full_text
     2-way (篮球/网球/棒球): handicap odds at odds[2:4]
 
+    Primary source: structured odds_ft.handicap from DOM extractor.
+    Fallback: positional reading from odds_values + full_text.
+
     Uses 主/客 labels in full_text to correctly assign home/away lines.
     """
+    # Primary: structured odds_ft.handicap from DOM extractor
+    odds_ft = bb_match.get("odds_ft", {})
+    if isinstance(odds_ft, dict):
+        ft_hc = odds_ft.get("handicap")
+        if isinstance(ft_hc, dict) and ft_hc.get("home_odds") and ft_hc.get("away_odds"):
+            home_line = ft_hc.get("home_line")
+            away_line = ft_hc.get("away_line")
+            if home_line is not None or away_line is not None:
+                return {
+                    "home_odds": ft_hc["home_odds"],
+                    "away_odds": ft_hc["away_odds"],
+                    "home_line": home_line,
+                    "away_line": away_line,
+                    "home_line_str": ft_hc.get("home_line_str", ""),
+                    "away_line_str": ft_hc.get("away_line_str", ""),
+                }
     odds = bb_match.get("odds_values", [])
     idx = 3 if sport not in TWO_WAY_SPORTS else 2
     if len(odds) < idx + 2:
@@ -590,9 +624,24 @@ def extract_bb_ou(bb_match, sport="football"):
     3-way (足球): O/U odds at odds[5:7]
     2-way (篮球/网球/棒球): O/U odds at odds[-2:] (最后2个赔率)
 
+    Primary source: structured odds_ft.total from DOM extractor.
+    Fallback: positional reading from odds_values + full_text.
+
     注意：网球可能有多个让盘口线(alternate handicaps)占用 odds[2:N-2]，
     所以 O/U 不能固定在 odds[4:6]，必须用最后2个赔率。
     """
+    # Primary: structured odds_ft.total from DOM extractor
+    odds_ft = bb_match.get("odds_ft", {})
+    if isinstance(odds_ft, dict):
+        ft_ou = odds_ft.get("total")
+        if isinstance(ft_ou, dict) and ft_ou.get("over_odds") and ft_ou.get("under_odds"):
+            line = ft_ou.get("line")
+            if line is not None:
+                return {
+                    "over_odds": ft_ou["over_odds"],
+                    "under_odds": ft_ou["under_odds"],
+                    "line": line,
+                }
     odds = bb_match.get("odds_values", [])
     if sport in TWO_WAY_SPORTS:
         if len(odds) < 6:
@@ -1094,7 +1143,7 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
         bb_1x2, valid = extract_bb_1x2(bb, sport)
         min_odds = 2 if sport in TWO_WAY_SPORTS else 3
         if not valid or len(bb_1x2) < min_odds:
-            continue
+            bb_1x2 = []  # No ML market — still include for HC/OU comparison
         bb_data[_make_bb_key(bb)] = {
             "match": bb, "bb_1x2": bb_1x2, "epoch": _bb_to_epoch(bb),
             "sport": sport,
@@ -1128,18 +1177,25 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                     best_bb_key = bb_key
                     best_bd = bd
             if best_bd and best_name_score >= 0.50:
-                pin_ml = get_pin_ml_sorted(pin, best_bd["sport"])
-                min_odds = 2 if best_bd["sport"] in TWO_WAY_SPORTS else 3
-                if len(pin_ml) >= min_odds:
-                    used_pin_ids.add(pin_id)
-                    used_bb_keys.add(best_bb_key)
-                    name_matched.append({
-                        "bb": best_bd["match"], "pin": pin, "league": bb_league,
-                        "match_score": 1.0, "team_score": best_name_score,
-                        "match_type": "name",
-                        "bb_1x2": best_bd["bb_1x2"], "pin_1x2": pin_ml,
-                        "sport": best_bd["sport"],
-                    })
+                sport = best_bd["sport"]
+                bb_ml = best_bd.get("bb_1x2", [])
+                min_odds = 2 if sport in TWO_WAY_SPORTS else 3
+                pin_ml = []
+                if len(bb_ml) >= min_odds:
+                    # BB has ML — require Pin to have ML too
+                    pin_ml = get_pin_ml_sorted(pin, sport)
+                    if len(pin_ml) < min_odds:
+                        continue
+                # BB has no ML → still match for HC/OU comparison
+                used_pin_ids.add(pin_id)
+                used_bb_keys.add(best_bb_key)
+                name_matched.append({
+                    "bb": best_bd["match"], "pin": pin, "league": bb_league,
+                    "match_score": 1.0, "team_score": best_name_score,
+                    "match_type": "name",
+                    "bb_1x2": bb_ml, "pin_1x2": pin_ml,
+                    "sport": sport,
+                })
 
     # Phase 2: Global greedy per-league
     for bb_league, pin_list in pin_matches_by_league.items():
@@ -1161,7 +1217,9 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                 combined = _compute_combined_score(
                     bd["match"], bd["bb_1x2"], bd["epoch"], pin, pin_ml, sport,
                 )
-                if combined >= 0.70:
+                # 网球的时间匹配容易出错，提高门限
+                min_threshold = 0.90 if sport == "tennis" else 0.70
+                if combined >= min_threshold:
                     pairs.append((combined, bb_key, bd["match"], pin,
                                   bd["bb_1x2"], pin_ml, pin_id, sport))
 
@@ -1327,8 +1385,9 @@ def _calibrate_market_line(sport, market_type, bb_line, pin_line, pin_points, is
         # HT 让球线必须精确一致（通常是0或-0.25）
         if is_ht and diff > 0.01:
             return False, f"HT让球线不一致: BB={bb_line} vs Pinnacle={ref}"
-        # FT 让球线偏差超过 0.5 → 匹配错了让球线
-        if diff > 0.5:
+        # FT 让球线：足球必须精确，其他允许 0.5 偏差
+        max_diff = 0.01 if sport == "football" else 0.5
+        if diff > max_diff:
             return False, f"让球线不一致: BB={bb_line} vs Pinnacle={ref}"
     elif market_type == "ou":
         # 网球特殊：OU 线(20.5) vs sets total(2.5)
@@ -1337,8 +1396,9 @@ def _calibrate_market_line(sport, market_type, bb_line, pin_line, pin_points, is
         # HT 大小盘：线必须精确一致（BB 0.5 vs Pin 0.75 = 无效对比）
         if is_ht and diff > 0.01:
             return False, f"HT大小盘线不一致: BB={bb_line} vs Pinnacle={ref}"
-        # FT 常规大小盘线偏差超过 1.0 → 可疑
-        if diff > 1.0:
+        # FT 大小盘：足球必须精确，其他允许 1.0 偏差
+        max_diff = 0.01 if sport == "football" else 1.0
+        if diff > max_diff:
             return False, f"大小盘线不一致: BB={bb_line} vs Pinnacle={ref}"
 
     return True, ""
@@ -1587,7 +1647,8 @@ def main():
         bb_hc = extract_bb_handicap(bb, sport)
         if bb_hc:
             bb_hl = bb_hc.get("home_line") or bb_hc.get("away_line")
-            if sport == "tennis" and bb_hl is not None and abs(bb_hl) > 10:
+            if sport == "tennis":
+                # BB handicap1 is games handicap (lines like +1.5/-1.5)
                 gs = pin.get("games_spread")
                 home_sp, away_sp = get_pin_spread({"spread": gs}) if gs else (None, None)
             else:
