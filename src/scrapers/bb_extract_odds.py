@@ -98,6 +98,85 @@ _X14FF_EXTRACT_JS = (Path(__file__).parent / "bb_extract_x14ff.js").read_text(en
 # DOM 提取器（按 class name 读取，可提取 FT + HT 盘口）
 _DOM_EXTRACT_JS = (Path(__file__).parent / "bb_extract_dom.js").read_text(encoding="utf-8")
 
+# 批量 DC 提取 JS：逐个点击比赛行打开右侧面板，读取"双重机会"赔率
+_BATCH_DC_EXTRACT_JS = """
+(function() {
+    if (window.__dc_extracting) return JSON.stringify({status:'already_running'});
+    window.__dc_extracting = true;
+    window.__dc_results = [];
+    window.__dc_done = false;
+
+    var items = document.querySelectorAll('.home-match-list__item');
+    window.__dc_index = 0;
+    window.__dc_total = items.length;
+
+    function extractDC() {
+        var groups = document.querySelectorAll('.match-odd-line-group.media-group');
+        var allOdds = [];
+        for (var g = 0; g < groups.length; g++) {
+            var titleEl = groups[g].querySelector('.title-box .title');
+            if (titleEl && titleEl.innerText.trim() === '双重机会') {
+                var valueEls = groups[g].querySelectorAll('.odd-value.fetchWidth .value');
+                valueEls.forEach(function(v) {
+                    var num = parseFloat(v.innerText.trim());
+                    if (!isNaN(num)) allOdds.push(num);
+                });
+            }
+        }
+        return allOdds;
+    }
+
+    function processNext() {
+        if (window.__dc_index >= window.__dc_total) {
+            window.__dc_done = true;
+            window.__dc_extracting = false;
+            return;
+        }
+
+        var items = document.querySelectorAll('.home-match-list__item');
+        var item = items[window.__dc_index];
+        if (!item) {
+            window.__dc_results.push({home:'', away:'', league:'', odds_values:[]});
+            window.__dc_index++;
+            setTimeout(processNext, 100);
+            return;
+        }
+
+        var home = '', away = '';
+        var tns = item.querySelectorAll('.team-name.team-score');
+        if (tns.length >= 1) home = tns[0].innerText.trim();
+        if (tns.length >= 2) away = tns[1].innerText.trim();
+
+        var league = '';
+        var group = item.closest('.group-matches');
+        if (group) {
+            var ln = group.querySelector('.league-name');
+            if (ln) league = ln.innerText.trim();
+        }
+
+        item.scrollIntoView({block:'center',behavior:'instant'});
+        try { item.click(); } catch(e) {
+            item.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,view:window}));
+        }
+
+        setTimeout(function() {
+            var odds = extractDC();
+            window.__dc_results.push({
+                home: home,
+                away: away,
+                league: league,
+                odds_values: odds
+            });
+            window.__dc_index++;
+            processNext();
+        }, 1500);
+    }
+
+    processNext();
+    return JSON.stringify({status:'started',total:window.__dc_total});
+})();
+"""
+
 
 def click_text(text, timeout=10):
     """在页面中查找可见文本并点击（用于 SPA 筛选按钮）。"""
@@ -323,12 +402,13 @@ def extract_sidebar_view(view_name):
 def extract_football_sidebar_markets():
     """Extract all sidebar markets for football.
 
-    First resets Chrome by navigating to about:blank and back to football
-    to ensure reliable JS execution, then extracts each sidebar view.
+    "双重机会" is NOT available in the sidebar — it's only shown in the
+    right detail panel when a match row is clicked. We handle it separately
+    via batch panel extraction.
 
     Returns dict: {market_name: [match_list]} for each sidebar view.
     """
-    SIDEBAR_VIEWS = ["双重机会", "半场/全场", "角球", "单/双"]
+    SIDEBAR_VIEWS = ["半场/全场", "角球", "单/双"]
     results = {}
 
     print("  点击切换到足球...")
@@ -350,6 +430,14 @@ def extract_football_sidebar_markets():
         # Reset to default view before next
         click_sidebar_sport("足球", sport_id=SPORT_ID_BY_CN.get("足球"))
         human_delay(2.0, 3.0)
+
+    # Extract DC from right detail panel (not available in sidebar)
+    print("\n  从右侧面板提取双重机会...")
+    dc_matches = extract_dc_from_panel()
+    for m in dc_matches:
+        m["_bb_view"] = "双重机会"
+    results["双重机会"] = dc_matches
+    print(f"  → {len(dc_matches)} 场比赛含双重机会")
 
     return results
 
@@ -418,6 +506,81 @@ def merge_dom_odds(matches):
 
     logger.info("DOM 盘口合并: %d/%d 场比赛匹配成功", merged, len(matches))
     return matches
+
+
+def extract_dc_from_panel():
+    """Extract double chance odds from the right detail panel.
+
+    "双重机会" market is NOT available in the sidebar or per-match tabs.
+    It's only shown in the right detail panel when a match row is clicked.
+    This function clicks each football match row sequentially, waits for
+    the panel to load, extracts DC odds, then moves to the next.
+
+    Returns list of {home, away, league, odds_values} matching the format
+    expected by merge_sidebar_markets.
+    """
+    print("  (批量DC提取: 逐个点击比赛行 → 右侧面板)...")
+
+    # Clean any stale globals from previous runs
+    run_js("delete window.__dc_results;delete window.__dc_done;delete window.__dc_extracting;delete window.__dc_index;delete window.__dc_total;", timeout=5)
+
+    raw = run_js(_BATCH_DC_EXTRACT_JS, timeout=15)
+    try:
+        if raw:
+            info = json.loads(raw)
+            total = info.get("total", 0)
+            print(f"  → 启动成功, {total} 场比赛待提取")
+        else:
+            print("  → JS启动无返回, 尝试继续...")
+            total = 999
+    except json.JSONDecodeError:
+        print(f"  → JS原始返回: {raw[:100]}")
+        total = 999
+
+    if total == 0:
+        print("  → 无比赛, 跳过")
+        return []
+
+    # Poll for completion
+    max_wait = 180
+    poll_interval = 3
+    elapsed = 0
+    while elapsed < max_wait:
+        time.sleep(poll_interval)
+        elapsed += poll_interval
+        done_raw = run_js("JSON.stringify(window.__dc_done)", timeout=5)
+        if done_raw == "true":
+            print(f"  → DC提取完成 ({elapsed}s)")
+            break
+        print(f"  → 等待DC提取... ({elapsed}s)")
+    else:
+        print(f"  ⚠️ DC提取超时 ({max_wait}s)")
+        run_js("window.__dc_extracting=false;window.__dc_done=true;", timeout=5)
+
+    # Read results
+    results_raw = run_js("JSON.stringify(window.__dc_results)", timeout=10)
+    if not results_raw:
+        print("  ⚠️ 无法读取DC结果")
+        return []
+
+    try:
+        all_results = json.loads(results_raw)
+    except json.JSONDecodeError:
+        print("  ⚠️ DC结果非JSON")
+        return []
+
+    # Filter to matches that actually have DC odds (at least FT 3-way)
+    valid = [r for r in all_results if r.get("odds_values") and len(r["odds_values"]) >= 3]
+    print(f"  → {len(all_results)} 场处理, {len(valid)} 场含双重机会")
+
+    # Clean up globals
+    run_js("delete window.__dc_results;delete window.__dc_done;delete window.__dc_extracting;delete window.__dc_index;delete window.__dc_total;", timeout=5)
+
+    # Reset view back to football default
+    click_sidebar_sport("足球", sport_id=SPORT_ID_BY_CN.get("足球"))
+    human_delay(2.0, 3.0)
+
+    return valid
 
 
 if __name__ == '__main__':
