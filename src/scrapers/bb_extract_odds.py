@@ -98,82 +98,138 @@ _X14FF_EXTRACT_JS = (Path(__file__).parent / "bb_extract_x14ff.js").read_text(en
 # DOM 提取器（按 class name 读取，可提取 FT + HT 盘口）
 _DOM_EXTRACT_JS = (Path(__file__).parent / "bb_extract_dom.js").read_text(encoding="utf-8")
 
-# 批量 DC 提取 JS：逐个点击比赛行打开右侧面板，读取"双重机会"赔率
-_BATCH_DC_EXTRACT_JS = """
+# 批量面板提取 JS：逐个点击比赛行打开右侧面板，读取"双重机会"+ "平局退款"等市场
+_PANEL_BATCH_EXTRACT_JS = """
 (function() {
-    if (window.__dc_extracting) return JSON.stringify({status:'already_running'});
-    window.__dc_extracting = true;
-    window.__dc_results = [];
-    window.__dc_done = false;
+    if (window.__panel_extracting) return JSON.stringify({status:'already_running'});
+    window.__panel_extracting = true;
+    window.__panel_results = [];
+    window.__panel_done = false;
 
-    var items = document.querySelectorAll('.home-match-list__item');
-    window.__dc_index = 0;
-    window.__dc_total = items.length;
+    // SNAPSHOT all match rows at start — don't re-query after each click
+    var items = Array.from(document.querySelectorAll('.home-match-list__item'));
+    window.__panel_index = 0;
+    window.__panel_total = items.length;
 
-    function extractDC() {
+    function getPanelMatchTitle() {
+        var firstGroup = document.querySelector('.match-odd-line-group.media-group');
+        if (!firstGroup) return null;
+        // Walk up to find the panel container
+        var container = firstGroup.closest('.right-panel,.el-drawer,.el-dialog,.detail-panel,.match-detail,.media-content');
+        if (!container) container = firstGroup.parentElement;
+        if (!container) return null;
+        // Search all text for " vs " pattern (team separator)
+        var lines = (container.innerText || '').split('\\n');
+        for (var i = 0; i < lines.length; i++) {
+            var l = lines[i].trim();
+            if (l.length > 10 && (l.indexOf(' vs ') >= 0 || l.indexOf(' VS ') >= 0)) return l;
+        }
+        return null;
+    }
+
+    function matchTeamsInPanel(panelTitle, expectedHome, expectedAway) {
+        if (!panelTitle) return null;
+        var t = panelTitle.toLowerCase();
+        var h = expectedHome.toLowerCase().trim();
+        var a = expectedAway.toLowerCase().trim();
+        // Normalize: strip non-alphanumeric (keep chinese chars)
+        function n(s) { return s.replace(/[^a-z0-9\\u4e00-\\u9fff]/g, ''); }
+        return t.indexOf(n(h)) >= 0 && t.indexOf(n(a)) >= 0;
+    }
+
+    function waitForPanel(callback, retries) {
         var groups = document.querySelectorAll('.match-odd-line-group.media-group');
-        var allOdds = [];
+        if (groups.length > 0) { callback(); }
+        else if (retries > 0) { setTimeout(function(){ waitForPanel(callback, retries-1); }, 500); }
+        else { callback(); }
+    }
+
+    function extractMarkets() {
+        var groups = document.querySelectorAll('.match-odd-line-group.media-group');
+        var dc = [], dnb = [];
         for (var g = 0; g < groups.length; g++) {
             var titleEl = groups[g].querySelector('.title .title-text');
-            if (titleEl && titleEl.innerText.includes('双重机会') && !titleEl.innerText.includes('&')) {
-                var valueEls = groups[g].querySelectorAll('p.value');
-                valueEls.forEach(function(v) {
-                    var num = parseFloat(v.innerText.trim());
-                    if (!isNaN(num)) allOdds.push(num);
-                });
+            if (!titleEl) continue;
+            var title = titleEl.innerText.trim().replace(/\\n/g, ' ');
+            var odds = [];
+            groups[g].querySelectorAll('p.value').forEach(function(v) {
+                var num = parseFloat(v.innerText.trim());
+                if (!isNaN(num)) odds.push(num);
+            });
+            if (title.indexOf('\\u53CC\\u91CD\\u673A\\u4F1A') >= 0 && title.indexOf('&') < 0) {
+                dc = dc.concat(odds);
+            } else if (title.indexOf('\\u5E73\\u5C40\\u9000\\u6B3E') >= 0) {
+                dnb = dnb.concat(odds);
             }
         }
-        return allOdds;
+        return { double_chance: dc, draw_no_bet: dnb };
+    }
+
+    function clickItem(item) {
+        item.scrollIntoView({block:'center',behavior:'instant'});
+        try { item.click(); }
+        catch(e) { item.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,view:window})); }
+    }
+
+    function clickAndExtract(item, home, away, league, retriesLeft) {
+        clickItem(item);
+        waitForPanel(function() {
+            var panelTitle = getPanelMatchTitle();
+            var verified = matchTeamsInPanel(panelTitle, home, away);
+
+            if (verified === false && retriesLeft > 0) {
+                // Panel shows wrong match — retry with one less retry
+                clickAndExtract(item, home, away, league, retriesLeft - 1);
+            } else {
+                var mkts = extractMarkets();
+                window.__panel_results.push({
+                    home: home, away: away, league: league,
+                    double_chance: mkts.double_chance,
+                    draw_no_bet: mkts.draw_no_bet,
+                    verified: verified,
+                });
+                window.__panel_index++;
+                setTimeout(processNext, 300);
+            }
+        }, 10);
     }
 
     function processNext() {
-        if (window.__dc_index >= window.__dc_total) {
-            window.__dc_done = true;
-            window.__dc_extracting = false;
+        if (window.__panel_index >= items.length) {
+            window.__panel_done = true;
+            window.__panel_extracting = false;
             return;
         }
 
-        var items = document.querySelectorAll('.home-match-list__item');
-        var item = items[window.__dc_index];
-        if (!item) {
-            window.__dc_results.push({home:'', away:'', league:'', odds_values:[]});
-            window.__dc_index++;
+        var item = items[window.__panel_index];
+        if (!item || !document.contains(item)) {
+            window.__panel_results.push({
+                home:'', away:'', league:'',
+                double_chance:[], draw_no_bet:[],
+                verified:false, error:'detached'
+            });
+            window.__panel_index++;
             setTimeout(processNext, 100);
             return;
         }
 
-        var home = '', away = '';
+        var home = '', away = '', league = '';
         var tns = item.querySelectorAll('.team-name.team-score');
         if (tns.length >= 1) home = tns[0].innerText.trim();
         if (tns.length >= 2) away = tns[1].innerText.trim();
 
-        var league = '';
         var group = item.closest('.group-matches');
         if (group) {
             var ln = group.querySelector('.league-name');
             if (ln) league = ln.innerText.trim();
         }
 
-        item.scrollIntoView({block:'center',behavior:'instant'});
-        try { item.click(); } catch(e) {
-            item.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,view:window}));
-        }
-
-        setTimeout(function() {
-            var odds = extractDC();
-            window.__dc_results.push({
-                home: home,
-                away: away,
-                league: league,
-                odds_values: odds
-            });
-            window.__dc_index++;
-            processNext();
-        }, 1500);
+        // Click and extract with up to 2 retries on mismatch
+        clickAndExtract(item, home, away, league, 2);
     }
 
     processNext();
-    return JSON.stringify({status:'started',total:window.__dc_total});
+    return JSON.stringify({status:'started',total:items.length});
 })();
 """
 
@@ -357,6 +413,7 @@ _SIDEBAR_EXTRACT_JS_SIMPLE = """
 # Map sidebar view names to output field names
 _SIDEBAR_FIELDS = {
     "双重机会": "odds_dc",
+    "平局退款": "odds_dnb",
     "半场/全场": "odds_htft",
     "角球": "odds_corner",
     "单/双": "odds_oe",
@@ -364,8 +421,9 @@ _SIDEBAR_FIELDS = {
 
 # Odds counts per view for truncation during merge
 _SIDEBAR_ODDS_COUNT = {
-    "odds_dc": 9,       # FT(3) + HT(3) + 2H(3) 双重机会
-    "odds_htft": 9,     # 主/主, 主/和, 主/客, 和/主, 和/和, 和/客, 客/主, 客/和, 客/客
+    "odds_dc": 3,       # FT(3) 双重机会（Pinnacle只有FT市场，无HT/2H）
+    "odds_dnb": 6,      # FT(2) + HT(2) + 2H(2) 平局退款
+    "odds_htft": 9,     # 主/主, 主/和, 主/客, ...
     "odds_corner": 7,   # 主, 和, 客, 让球主, 让球客, 大, 小
     "odds_oe": 6,       # FT单, FT双, HT单, HT双, 2H单, 2H双
 }
@@ -400,15 +458,17 @@ def extract_sidebar_view(view_name):
 
 
 def extract_football_sidebar_markets():
-    """Extract all sidebar markets for football.
+    """Extract football markets from the right detail panel.
 
-    "双重机会" is NOT available in the sidebar — it's only shown in the
-    right detail panel when a match row is clicked. We handle it separately
-    via batch panel extraction.
+    "双重机会" and "平局退款" are NOT available in the sidebar — they are
+    only shown in the right detail panel when a match row is clicked.
 
-    Returns dict: {market_name: [match_list]} for each sidebar view.
+    Other sidebar views (半场/全场, 角球, 单/双) don't exist in the
+    current SPA sidebar (sum-menu-list is empty for football), so
+    only panel-based extraction is used here.
+
+    Returns dict: {market_name: [match_list]} for each extracted market.
     """
-    SIDEBAR_VIEWS = ["半场/全场", "角球", "单/双"]
     results = {}
 
     print("  点击切换到足球...")
@@ -419,25 +479,12 @@ def extract_football_sidebar_markets():
         timeout=20, interval=2.0
     )
 
-    for view_name in SIDEBAR_VIEWS:
-        print(f"  侧边栏 '{view_name}' 提取中...")
-        matches = extract_sidebar_view(view_name)
-        for m in matches:
-            m["_bb_view"] = view_name
+    # Extract DC + DNB from right detail panel (sidebar can't access these)
+    print("\n  从右侧面板提取附加市场...")
+    panel_data = extract_panel_markets()
+    for view_name, matches in panel_data.items():
         results[view_name] = matches
-        print(f"    → {len(matches)} 场比赛")
-
-        # Reset to default view before next
-        click_sidebar_sport("足球", sport_id=SPORT_ID_BY_CN.get("足球"))
-        human_delay(2.0, 3.0)
-
-    # Extract DC from right detail panel (not available in sidebar)
-    print("\n  从右侧面板提取双重机会...")
-    dc_matches = extract_dc_from_panel()
-    for m in dc_matches:
-        m["_bb_view"] = "双重机会"
-    results["双重机会"] = dc_matches
-    print(f"  → {len(dc_matches)} 场比赛含双重机会")
+        print(f"  → {view_name}: {len(matches)} 场比赛")
 
     return results
 
@@ -455,9 +502,13 @@ def merge_sidebar_markets(all_matches, sidebar_data):
 
         # Build index by (home, away, league)
         idx = {}
+        idx_v = {}
         for sm in market_matches:
             key = (sm.get("home", ""), sm.get("away", ""), sm.get("league", ""))
             idx[key] = sm.get("odds_values", [])
+            v = sm.get("_panel_verified")
+            if v is not None:
+                idx_v[key] = v
 
         merged = 0
         for m in all_matches:
@@ -466,6 +517,9 @@ def merge_sidebar_markets(all_matches, sidebar_data):
             if vals:
                 n = _SIDEBAR_ODDS_COUNT.get(field, len(vals))
                 m[field] = vals[:n]
+                v = idx_v.get(key)
+                if v is not None:
+                    m[field + "_verified"] = v
                 merged += 1
 
         logger.info("侧边栏 '%s' 合并: %d/%d 匹配成功", market_name, merged, len(all_matches))
@@ -508,23 +562,24 @@ def merge_dom_odds(matches):
     return matches
 
 
-def extract_dc_from_panel():
-    """Extract double chance odds from the right detail panel.
+def extract_panel_markets():
+    """Extract 双重机会 and 平局退款 odds from the right detail panel.
 
-    "双重机会" market is NOT available in the sidebar or per-match tabs.
-    It's only shown in the right detail panel when a match row is clicked.
+    These markets are NOT available in the sidebar or per-match tabs.
+    They are only shown in the right detail panel when a match row is clicked.
     This function clicks each football match row sequentially, waits for
-    the panel to load, extracts DC odds, then moves to the next.
+    the panel to load, extracts all configured markets, then moves to the next.
 
-    Returns list of {home, away, league, odds_values} matching the format
-    expected by merge_sidebar_markets.
+    Returns dict mapping market names to match lists, e.g.:
+    {"双重机会": [{home, away, league, odds_values}, ...],
+     "平局退款": [{home, away, league, odds_values}, ...]}
     """
-    print("  (批量DC提取: 逐个点击比赛行 → 右侧面板)...")
+    print("  (批量面板提取: 逐个点击比赛行 → 右侧面板)...")
 
     # Clean any stale globals from previous runs
-    run_js("delete window.__dc_results;delete window.__dc_done;delete window.__dc_extracting;delete window.__dc_index;delete window.__dc_total;", timeout=5)
+    run_js("delete window.__panel_results;delete window.__panel_done;delete window.__panel_extracting;delete window.__panel_index;delete window.__panel_total;", timeout=5)
 
-    raw = run_js(_BATCH_DC_EXTRACT_JS, timeout=15)
+    raw = run_js(_PANEL_BATCH_EXTRACT_JS, timeout=15)
     try:
         if raw:
             info = json.loads(raw)
@@ -539,7 +594,7 @@ def extract_dc_from_panel():
 
     if total == 0:
         print("  → 无比赛, 跳过")
-        return []
+        return {}
 
     # Poll for completion
     max_wait = 180
@@ -548,39 +603,76 @@ def extract_dc_from_panel():
     while elapsed < max_wait:
         time.sleep(poll_interval)
         elapsed += poll_interval
-        done_raw = run_js("JSON.stringify(window.__dc_done)", timeout=5)
+        done_raw = run_js("JSON.stringify(window.__panel_done)", timeout=5)
         if done_raw == "true":
-            print(f"  → DC提取完成 ({elapsed}s)")
+            print(f"  → 面板提取完成 ({elapsed}s)")
             break
-        print(f"  → 等待DC提取... ({elapsed}s)")
+        print(f"  → 等待面板提取... ({elapsed}s)")
     else:
-        print(f"  ⚠️ DC提取超时 ({max_wait}s)")
-        run_js("window.__dc_extracting=false;window.__dc_done=true;", timeout=5)
+        print(f"  ⚠️ 面板提取超时 ({max_wait}s)")
+        run_js("window.__panel_extracting=false;window.__panel_done=true;", timeout=5)
 
     # Read results
-    results_raw = run_js("JSON.stringify(window.__dc_results)", timeout=10)
+    results_raw = run_js("JSON.stringify(window.__panel_results)", timeout=10)
     if not results_raw:
-        print("  ⚠️ 无法读取DC结果")
-        return []
+        print("  ⚠️ 无法读取面板结果")
+        run_js("delete window.__panel_results;delete window.__panel_done;delete window.__panel_extracting;delete window.__panel_index;delete window.__panel_total;", timeout=5)
+        return {}
 
     try:
         all_results = json.loads(results_raw)
     except json.JSONDecodeError:
-        print("  ⚠️ DC结果非JSON")
-        return []
+        print("  ⚠️ 面板结果非JSON")
+        return {}
 
-    # Filter to matches that actually have DC odds (at least FT 3-way)
-    valid = [r for r in all_results if r.get("odds_values") and len(r["odds_values"]) >= 3]
-    print(f"  → {len(all_results)} 场处理, {len(valid)} 场含双重机会")
+    # Split results by market type, using verified flag
+    result = {}
+    dc_matches = []
+    dnb_matches = []
+    verified_count = 0
+    unverified_count = 0
+    for r in all_results:
+        verified = r.get("verified")
+        dc_odds = r.get("double_chance", [])
+        dnb_odds = r.get("draw_no_bet", [])
+
+        # 面板确认显示的是不同比赛 → 丢弃
+        if verified is False:
+            unverified_count += 1
+            continue
+
+        if verified is True:
+            verified_count += 1
+
+        if dc_odds and len(dc_odds) >= 3:
+            dc_matches.append({
+                "home": r.get("home", ""), "away": r.get("away", ""),
+                "league": r.get("league", ""),
+                "odds_values": dc_odds, "_bb_view": "双重机会",
+                "_panel_verified": verified,
+            })
+        if dnb_odds and len(dnb_odds) >= 2:
+            dnb_matches.append({
+                "home": r.get("home", ""), "away": r.get("away", ""),
+                "league": r.get("league", ""),
+                "odds_values": dnb_odds, "_bb_view": "平局退款",
+                "_panel_verified": verified,
+            })
+    if dc_matches:
+        result["双重机会"] = dc_matches
+    if dnb_matches:
+        result["平局退款"] = dnb_matches
+
+    print(f"  → {len(all_results)} 场处理, 已验证={verified_count}, 丢弃={unverified_count}, DC={len(dc_matches)}, DNB={len(dnb_matches)}")
 
     # Clean up globals
-    run_js("delete window.__dc_results;delete window.__dc_done;delete window.__dc_extracting;delete window.__dc_index;delete window.__dc_total;", timeout=5)
+    run_js("delete window.__panel_results;delete window.__panel_done;delete window.__panel_extracting;delete window.__panel_index;delete window.__panel_total;", timeout=5)
 
     # Reset view back to football default
     click_sidebar_sport("足球", sport_id=SPORT_ID_BY_CN.get("足球"))
     human_delay(2.0, 3.0)
 
-    return valid
+    return result
 
 
 if __name__ == '__main__':
@@ -596,7 +688,8 @@ if __name__ == '__main__':
     if args.all_sports:
         # --- 多运动提取模式（pc.x14ff.com SPORTSBOOK） ---
         # 禁止的中国足球联赛（用户明确要求）
-        BANNED_LEAGUES = ["中国甲级联赛", "中国超级联赛", "中国乙级联赛", "中超"]
+        BANNED_LEAGUES = ["中国甲级联赛", "中国超级联赛", "中国乙级联赛", "中超",
+                            "中国女子甲级联赛", "中国女子超级联赛"]
 
         all_matches = []
         sport_counts = {}
@@ -663,6 +756,30 @@ if __name__ == '__main__':
             except Exception as e:
                 print(f"  ⚠️  {sport_cn} 提取失败: {e}")
                 continue
+
+            # 足球：文本提取后立即跑DOM提取器合并，确保 odds_ft/odds_ht 完整
+            if sport_key == "soccer" and len(matches) > 0:
+                dom_raw = run_js(_DOM_EXTRACT_JS, timeout=30)
+                if dom_raw:
+                    try:
+                        dom_matches = json.loads(dom_raw)
+                        dom_idx = {}
+                        for dm in dom_matches:
+                            key = (dm.get("home", "").strip(), dm.get("away", "").strip())
+                            dom_idx[key] = dm
+                        merged = 0
+                        for m in matches:
+                            key = (m.get("home", "").strip(), m.get("away", "").strip())
+                            dm = dom_idx.get(key)
+                            if dm:
+                                m["odds_ft"] = dm.get("odds_ft", {})
+                                m["odds_ht"] = dm.get("odds_ht", {})
+                                merged += 1
+                        print(f"  DOM合并: {merged}/{len(matches)} 场")
+                    except json.JSONDecodeError:
+                        print("  ⚠️  DOM JSON解析失败，跳过")
+                else:
+                    print("  ⚠️  DOM提取无返回，跳过")
 
             # 验证提取到的比赛确实属于该运动（防止 SPA 未正确切换）
             if not sport_matches_extracted(sport_key, matches):

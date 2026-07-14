@@ -52,6 +52,9 @@ BB_SPORT_KEYWORDS = {
     "俄罗斯甲级联赛": "football", "澳门甲级联赛": "football",
     "白俄罗斯超级联赛": "football", "冰岛甲级联赛": "football",
     "爱沙尼亚甲级联赛": "football",
+    "欧足联欧洲协会联赛": "football",
+    "澳大利亚杯": "football",
+    "厄瓜多尔甲级联赛": "football",
     # Basketball
     "NBA": "basketball", "美国职业篮球": "basketball",
     "欧洲篮球联赛": "basketball", "CBA": "basketball",
@@ -86,6 +89,8 @@ def detect_sport(bb_match):
             return s
     sport = bb_match.get("sport", "")
     if sport:
+        if sport == "soccer":
+            return "football"
         return sport
     return "football"  # 默认
 
@@ -99,12 +104,14 @@ LEAGUE_KEYWORDS = {
     "瑞典超级联赛": "Sweden - Allsvenskan",
     "超级挪威联赛": "Norway - Eliteserien",
     "乌拉圭甲级联赛": "Uruguay - Primera Division",
+    "厄瓜多尔甲级联赛": "Ecuador - Serie A",
     "哈萨克斯坦超级联赛": "Kazakhstan - Premier League",
     "巴拉圭乙级联赛": "Paraguay - Division Intermedia",
     "俄罗斯甲级联赛": "Russia - First League",
     "澳门甲级联赛": "Macau - Elite League",
     "白俄罗斯超级联赛": "Belarus - Premier League",
-    "冰岛甲级联赛": "Iceland - Premier League",
+    # 冰岛甲级联赛在 Pinnacle 无对应联赛，删除防止 false positive
+    # "冰岛甲级联赛": "Iceland - Premier League",  # ❌ 这是冰岛超级联赛，完全不同的联赛
     "爱沙尼亚甲级联赛": "Estonia - Meistriliiga",
     # 早盘联赛映射
     "欧洲冠军联赛-资格赛": "UEFA - Champions League Qualifiers",
@@ -112,6 +119,7 @@ LEAGUE_KEYWORDS = {
     "西班牙甲级联赛": "Spain - La Liga",
     "德国甲级联赛": "Germany - Bundesliga",
     "欧足联欧洲联赛-资格赛": "UEFA - Europa League Qualifiers",
+    "欧足联欧洲协会联赛-资格赛": "UEFA - Conference League Qualifiers",
     "2026世界杯 (在加拿大墨西哥&美国)": "FIFA - World Cup",
     # US / AU sports
     "NBA夏季联赛": "NBA",
@@ -125,6 +133,7 @@ LEAGUE_KEYWORDS = {
     "澳洲篮球": "NBL",
     "篮球 - NCAA": "NCAA",
     "新西兰 - NBL": "Uganda NBL",
+    "澳大利亚杯": "Australia - Cup",
     "澳大利亚": "Australia",
     "女子大V": "Australia",
     "女子 NBL 1": "Australia",
@@ -143,7 +152,7 @@ LEAGUE_KEYWORDS = {
     "日本职业棒球": "Nippon Professional Baseball",
     "日本职业包装": "Nippon Professional Baseball",  # SPA渲染错误（棒球→包装）
     "韩国棒球": "Korea Professional Baseball",
-    "中华职业棒球大联盟": "Chinese Professional Baseball League",
+    "中华职业棒球大联盟": "Chinese Taipei - Professional League",
     # Tennis
     "ATP - 博斯塔德公开赛": "ATP Bastad",
     "ATP - 大满贯温布尔登网球公开赛": "ATP Wimbledon",
@@ -362,21 +371,52 @@ TEAM_NAME_MAP = {
     "曼城": "Manchester City",
     # Baseball / NPB
     "东北乐天金鹫": "Tohoku Rakuten Golden Eagles",
+    "东北乐天金鹰": "Tohoku Rakuten Golden Eagles",  # BB界面简体
     "中日龙": "Chunichi Dragons",
+    "名古屋中日龙": "Chunichi Dragons",  # BB含城市名
     "北海道日本火腿斗士": "Hokkaido Nippon-Ham Fighters",
     "埼玉西武狮": "Saitama Seibu Lions",
     "广岛东洋鲤鱼": "Hiroshima Toyo Carp",
-    "横滨海湾之星": "Yokohama DeNA BayStars",
+    "横滨海湾之星": "Yokohama Bay Stars",
+    "横滨湾星": "Yokohama Bay Stars",  # BB简称
     "欧力士野牛": "Orix Buffaloes",
     "福冈软银鹰": "Fukuoka SoftBank Hawks",
     "读卖巨人": "Yomiuri Giants",
+    "东京读卖巨人": "Yomiuri Giants",  # BB含城市名
     "阪神虎": "Hanshin Tigers",
+    "阪神老虎": "Hanshin Tigers",  # BB界面变体
     "东京益力多燕子": "Tokyo Yakult Swallows",
+    "东京养乐多燕子": "Tokyo Yakult Swallows",  # BB译名变体
     "乐天桃猿": "Rakuten Monkeys",
     "味全龙": "Wei Chuan Dragons",
     "统一7-ELEVen狮子": "Uni-President 7-ELEVEN Lions",
     "中信兄弟": "CTBC Brothers",
     "富邦悍将": "Fubon Guardians",
+    # WNBA
+    "康涅狄格阳光 (女)": "Connecticut Sun",
+    "波特兰火焰 (女)": "Portland Fire",
+    "多伦多节奏 (女)": "Toronto Tempo",
+    "华盛顿神秘人 (女)": "Washington Mystics",
+    # FIBA U20 country names
+    "爱沙尼亚 U20": "Estonia",
+    "卢森堡 U20": "Luxembourg",
+    "乌克兰 U20": "Ukraine",
+    "瑞士 U20": "Switzerland",
+    "北马其顿 U20": "North Macedonia",
+    "瑞典 U20": "Sweden",
+    "波黑 U20": "Bosnia And Herzegovina",
+    "塞浦路斯 U20": "Cyprus",
+    "保加利亚 U20": "Bulgaria",
+    "丹麦 U20": "Denmark",
+    "葡萄牙 U20": "Portugal",
+    "冰岛 U20": "Iceland",
+    "荷兰 U20": "Netherlands",
+    "匈牙利 U20": "Hungary",
+    "爱尔兰 U20": "Ireland",
+    "阿塞拜疆 U20": "Azerbaijan",
+    "科索沃 U20": "Kosovo",
+    "亚美尼亚 U20": "Armenia",
+
     "台钢雄鹰": "TSG Hawks",
     # Baseball / MLB
     "华盛顿国民": "Washington Nationals",
@@ -463,17 +503,22 @@ def extract_bb_1x2(bb_match, sport="football"):
 
     # Primary: structured odds_ft.ml from DOM extractor
     odds_ft = bb_match.get("odds_ft", {})
-    if isinstance(odds_ft, dict) and "ml" in odds_ft:
-        # DOM extractor explicitly checked ML box — trust its result
-        ft_ml = odds_ft["ml"]
-        if isinstance(ft_ml, list) and len(ft_ml) >= n:
-            bb_1x2 = [v for v in ft_ml if 1.01 <= v <= 51.0]
-            if len(bb_1x2) >= n:
-                return bb_1x2, True
-        # DOM says no ML (empty list) → don't fall through to positional
-        return [], False
+    if isinstance(odds_ft, dict):
+        if "ml" in odds_ft:
+            ft_ml = odds_ft["ml"]
+            if isinstance(ft_ml, list) and len(ft_ml) >= n:
+                bb_1x2 = [v for v in ft_ml if 1.01 <= v <= 51.0]
+                if len(bb_1x2) >= n:
+                    return bb_1x2, True
+            # DOM says no ML or wrong count → don't fall through
+            return [], False
+        else:
+            # odds_ft exists (even if empty) but no "ml" key → DOM merge didn't find
+            # this match. Positional odds_values can misread HC/OU odds as ML,
+            # so bail out rather than returning wrong data.
+            return [], False
 
-    # Fallback: positional odds_values (text extractor legacy)
+    # Not a dict — legacy data, try positional fallback
     odds = bb_match.get("odds_values", [])
     full_text = bb_match.get("full_text", "")
 
@@ -1044,15 +1089,28 @@ def find_pin_match_by_name(bb_home, bb_away, pin_list):
 
 
 def _bb_to_epoch(bb_match):
-    """Convert BB match period+time (GMT+8) to epoch seconds (UTC)."""
-    period = bb_match.get("period", "")  # "07/15"
-    btime = bb_match.get("time", "")    # "03:00"
+    """Convert BB match time to epoch seconds (UTC).
+
+    支持两种格式:
+    1. API 数据: bt 字段 (Unix 毫秒时间戳)
+    2. DOM 提取: period("07/15") + time("03:00") (GMT+8)
+    """
+    # API 数据: bt 是毫秒时间戳
+    bt = bb_match.get("bt")
+    if bt:
+        try:
+            return int(int(bt) / 1000)
+        except (ValueError, TypeError):
+            pass
+
+    # DOM 提取: period + time (GMT+8)
+    period = bb_match.get("period", "")
+    btime = bb_match.get("time", "")
     if not period or not btime:
         return None
     try:
         dt_str = f"2026-{period[:2]}-{period[3:5]}T{btime[:2]}:{btime[3:5]}:00"
         dt_naive = datetime.strptime(dt_str, "%Y-%m-%dT%H:%M:%S")
-        # GMT+8 → UTC: subtract 8 hours
         dt_utc = dt_naive - timedelta(hours=8)
         return int(dt_utc.replace(tzinfo=timezone.utc).timestamp())
     except (ValueError, IndexError):
@@ -1382,24 +1440,16 @@ def _calibrate_market_line(sport, market_type, bb_line, pin_line, pin_points, is
     diff = abs(bb_line - ref)
 
     if market_type == "hc":
-        # HT 让球线必须精确一致（通常是0或-0.25）
-        if is_ht and diff > 0.01:
-            return False, f"HT让球线不一致: BB={bb_line} vs Pinnacle={ref}"
-        # FT 让球线：足球必须精确，其他允许 0.5 偏差
-        max_diff = 0.01 if sport == "football" else 0.5
-        if diff > max_diff:
-            return False, f"让球线不一致: BB={bb_line} vs Pinnacle={ref}"
+        if diff > 0.01:
+            tag = "HT" if is_ht else ""
+            return False, f"{tag}让球线不一致: BB={bb_line} vs Pinnacle={ref}"
     elif market_type == "ou":
-        # 网球特殊：OU 线(20.5) vs sets total(2.5)
-        if sport == "tennis" and diff > 5:
-            return False, f"大小盘线不匹配: BB={bb_line} vs Pinnacle={ref}，可能用了错误市场"
-        # HT 大小盘：线必须精确一致（BB 0.5 vs Pin 0.75 = 无效对比）
-        if is_ht and diff > 0.01:
-            return False, f"HT大小盘线不一致: BB={bb_line} vs Pinnacle={ref}"
-        # FT 大小盘：足球必须精确，其他允许 1.0 偏差
-        max_diff = 0.01 if sport == "football" else 1.0
-        if diff > max_diff:
-            return False, f"大小盘线不一致: BB={bb_line} vs Pinnacle={ref}"
+        if diff > 0.01:
+            # 网球特殊：如果 diff>5 说明跨市场比较（games vs sets）
+            if sport == "tennis" and diff > 5:
+                return False, f"大小盘线不匹配: BB={bb_line} vs Pinnacle={ref}，可能用了错误市场"
+            tag = "HT" if is_ht else ""
+            return False, f"{tag}大小盘线不一致: BB={bb_line} vs Pinnacle={ref}"
 
     return True, ""
 
@@ -1589,7 +1639,17 @@ def main():
         # 开赛时间（北京时间）
         bb_period = bb.get("period", "")
         bb_time = bb.get("time", "")
-        bb_start = f"{bb_period} {bb_time}".strip()
+        bb_bt = bb.get("bt")
+        if bb_bt:
+            try:
+                bb_epoch = int(int(bb_bt) / 1000)
+                bb_dt = datetime.fromtimestamp(bb_epoch, tz=timezone.utc)
+                bb_bj = bb_dt.astimezone(timezone(timedelta(hours=8)))
+                bb_start = bb_bj.strftime("%m/%d %H:%M")
+            except (ValueError, TypeError, OSError):
+                bb_start = ""
+        else:
+            bb_start = f"{bb_period} {bb_time}".strip()
         pin_start_raw = pin.get("start_time", "")
         # Convert Pinnacle UTC to epoch for display
         pin_epoch = _pin_to_epoch(pin)
@@ -1612,6 +1672,7 @@ def main():
             "handicap": [],
             "over_under": [],
             "double_chance": [],
+            "draw_no_bet": [],
         }
 
         pin_ml_source = pin.get("moneyline", [])
@@ -1648,9 +1709,12 @@ def main():
         if bb_hc:
             bb_hl = bb_hc.get("home_line") or bb_hc.get("away_line")
             if sport == "tennis":
-                # BB handicap1 is games handicap (lines like +1.5/-1.5)
-                gs = pin.get("games_spread")
-                home_sp, away_sp = get_pin_spread({"spread": gs}) if gs else (None, None)
+                # BB tennis handicap1 is game handicap (always ±1.5 games).
+                # Pinnacle's games_spread returns match-specific game handicap
+                # lines (±2.0, ±4.0, ±5.5) that don't match BB's fixed ±1.5.
+                # The odds from games_spread are from a different market (set
+                # handicap / 盘分让分), producing false +EV.  Skip HC for tennis.
+                home_sp = away_sp = None
             else:
                 home_sp, away_sp = get_pin_spread(pin, target_line=bb_hl)
             if home_sp and away_sp and home_sp.get("price_decimal") and away_sp.get("price_decimal"):
@@ -1789,7 +1853,7 @@ def main():
             # HT 独赢
             pin_ht_ml = get_pin_ml_sorted_from_source(pin.get("ht_moneyline", []), sport)
             if pin_ht_ml and len(pin_ht_ml) >= 2:
-                n_ht_ml = len(pin_ht_ml)
+                n_ht_ml = min(len(pin_ht_ml), len(ht_labels["ml"]))  # cap to available labels
                 bb_ht_ml = bb_ht["ml"]
                 if len(bb_ht_ml) >= n_ht_ml:
                     total_implied_ht_ml = sum(1.0 / p for p in pin_ht_ml if p and p > 0)
@@ -1901,49 +1965,92 @@ def main():
                 p_h, p_d, p_a = (1/h)/imp, (1/d)/imp, (1/a)/imp
                 dc_fair = [1/(p_h+p_d), 1/(p_d+p_a), 1/(p_h+p_a)]
                 dc_labels = ["双重机会-主/和局", "双重机会-和局/客", "双重机会-主/客"]
+                # DC 赔率必须低于对应的两个独立1X2赔率（覆盖两个赛果，概率更高）
+                dc_pair_indices = [(0,1), (1,2), (0,2)]
                 for i in range(3):
                     bb_dc_val = float(bb_dc[i]) if isinstance(bb_dc[i], str) else bb_dc[i]
-                    if bb_dc_val and dc_fair[i] > 0:
-                        ev = (bb_dc_val - dc_fair[i]) / dc_fair[i] * 100
-                        if ev > 1:
-                            entry["double_chance"].append({
-                                "designation": dc_labels[i],
-                                "bb_odds": bb_dc_val,
-                                "fair_price": round(dc_fair[i], 4),
+                    if not (bb_dc_val and dc_fair[i] > 0):
+                        continue
+                    # 安全校验：DC赔率必须低于两个组成赛果的1X2赔率
+                    idx1, idx2 = dc_pair_indices[i]
+                    if bb_ml[idx1] and bb_ml[idx2] and bb_dc_val >= min(bb_ml[idx1], bb_ml[idx2]):
+                        continue
+                    ev = (bb_dc_val - dc_fair[i]) / dc_fair[i] * 100
+                    if ev > 1:
+                        entry["double_chance"].append({
+                            "designation": dc_labels[i],
+                            "bb_odds": bb_dc_val,
+                            "fair_price": round(dc_fair[i], 4),
+                            "ev_pct": round(ev, 2),
+                            "_market": "dc",
+                        })
+
+        # --- 平局退款 (Draw No Bet) FT：从 Pinnacle 1X2 推导公平价 ---
+        bb_dnb = bb.get("odds_dnb", [])
+        if len(bb_dnb) >= 2 and n_ml == 3:
+            # 安全校验：DNB赔率必须小于对应独赢赔率（退款盘更安全→赔率更低）
+            bb_dnb_h = float(bb_dnb[0]) if isinstance(bb_dnb[0], str) else bb_dnb[0]
+            bb_dnb_a = float(bb_dnb[1]) if isinstance(bb_dnb[1], str) else bb_dnb[1]
+            if bb_dnb_h >= bb_ml[0] * 0.99 or bb_dnb_a >= bb_ml[-1] * 0.99:
+                bb_dnb = []
+        if len(bb_dnb) >= 2 and n_ml == 3:
+            h, d, a = pin_ml
+            if all(x and x > 0 for x in [h, d, a]):
+                imp = 1/h + 1/d + 1/a
+                p_h, p_d, p_a = (1/h)/imp, (1/d)/imp, (1/a)/imp
+                dnb_fair = [1/(p_h/(p_h+p_d)), 1/(p_a/(p_a+p_d))]
+                dnb_labels = ["平局退款-主", "平局退款-客"]
+                for i in range(2):
+                    bb_dnb_val = float(bb_dnb[i]) if isinstance(bb_dnb[i], str) else bb_dnb[i]
+                    if bb_dnb_val and dnb_fair[i] > 0:
+                        ev = (bb_dnb_val - dnb_fair[i]) / dnb_fair[i] * 100
+                        # DNB EV > 15% 通常是提取错误（侧边栏导航错位），直接丢弃
+                        if 1 < ev <= 15:
+                            entry["draw_no_bet"].append({
+                                "designation": dnb_labels[i],
+                                "bb_odds": bb_dnb_val,
+                                "fair_price": round(dnb_fair[i], 4),
                                 "ev_pct": round(ev, 2),
-                                "_market": "dc",
+                                "_market": "dnb",
                             })
 
-        # --- 上半场双重机会 (HT DC)：从 Pinnacle HT 1X2 推导公平价 ---
-        if len(bb_dc) >= 6 and n_ml == 3:
-            pin_ht_ml = get_pin_ml_sorted_from_source(pin.get("ht_moneyline", []), sport)
-            if len(pin_ht_ml) == 3:
-                hh, dd, aa = pin_ht_ml
-                if all(x and x > 0 for x in [hh, dd, aa]):
-                    imp = 1/hh + 1/dd + 1/aa
-                    p_h, p_d, p_a = (1/hh)/imp, (1/dd)/imp, (1/aa)/imp
-                    dc_fair = [1/(p_h+p_d), 1/(p_d+p_a), 1/(p_h+p_a)]
-                    dc_labels = ["上半场双重机会-主/和局", "上半场双重机会-和局/客", "上半场双重机会-主/客"]
-                    for i in range(3):
-                        bb_dc_val = float(bb_dc[3+i]) if isinstance(bb_dc[3+i], str) else bb_dc[3+i]
-                        if bb_dc_val and dc_fair[i] > 0:
-                            ev = (bb_dc_val - dc_fair[i]) / dc_fair[i] * 100
-                            if ev > 1:
-                                entry["double_chance"].append({
-                                    "designation": dc_labels[i],
-                                    "bb_odds": bb_dc_val,
-                                    "fair_price": round(dc_fair[i], 4),
-                                    "ev_pct": round(ev, 2),
-                                    "_market": "ht_dc",
-                                })
+        # --- 上半场平局退款 (HT DNB)：从 Pinnacle HT 1X2 推导公平价 ---
+        if len(bb_dnb) >= 4 and n_ml == 3:
+            # 安全校验：HT DNB赔率必须小于HT独赢赔率
+            bb_ht_ml = bb.get("odds_ht", {}).get("ml", [])
+            if len(bb_ht_ml) >= 2:
+                ht_h = float(bb_dnb[2]) if isinstance(bb_dnb[2], str) else bb_dnb[2]
+                ht_a = float(bb_dnb[3]) if isinstance(bb_dnb[3], str) else bb_dnb[3]
+                if ht_h >= bb_ht_ml[0] * 0.99 or ht_a >= bb_ht_ml[-1] * 0.99:
+                    bb_dnb = bb_dnb[:2]  # 保留FT DNB，清除HT DNB
+            if len(bb_dnb) >= 4:  # HT DNB 有效时才继续
+                pin_ht_ml = get_pin_ml_sorted_from_source(pin.get("ht_moneyline", []), sport)
+                if len(pin_ht_ml) == 3:
+                    hh, dd, aa = pin_ht_ml
+                    if all(x and x > 0 for x in [hh, dd, aa]):
+                        imp = 1/hh + 1/dd + 1/aa
+                        p_h, p_d, p_a = (1/hh)/imp, (1/dd)/imp, (1/aa)/imp
+                        dnb_fair = [1/(p_h/(p_h+p_d)), 1/(p_a/(p_a+p_d))]
+                        dnb_labels = ["上半场平局退款-主", "上半场平局退款-客"]
+                        for i in range(2):
+                            bb_dnb_val = float(bb_dnb[2+i]) if isinstance(bb_dnb[2+i], str) else bb_dnb[2+i]
+                            if bb_dnb_val and dnb_fair[i] > 0:
+                                ev = (bb_dnb_val - dnb_fair[i]) / dnb_fair[i] * 100
+                                if 1 < ev <= 15:
+                                    entry["draw_no_bet"].append({
+                                        "designation": dnb_labels[i],
+                                        "bb_odds": bb_dnb_val,
+                                        "fair_price": round(dnb_fair[i], 4),
+                                        "ev_pct": round(ev, 2),
+                                        "_market": "ht_dnb",
+                                    })
 
-        # 同一市场只保留溢价最高的选项（FT + HT + DC + HT_DC 各自保留）
-        for mk in ("opportunities", "handicap", "over_under", "double_chance"):
+        # 同一市场只保留溢价最高的选项（FT + HT + DC + DNB + HT_DNB 各自保留）
+        for mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"):
             if entry[mk]:
                 ft_entries = [x for x in entry[mk] if x.get("_market") in (None, "", "main")]
                 ht_entries = [x for x in entry[mk] if x.get("_market") == "ht"]
                 dc_entries = [x for x in entry[mk] if x.get("_market") == "dc"]
-                ht_dc_entries = [x for x in entry[mk] if x.get("_market") == "ht_dc"]
                 best = []
                 if ft_entries:
                     best.append(max(ft_entries, key=lambda x: x["ev_pct"]))
@@ -1951,13 +2058,17 @@ def main():
                     best.append(max(ht_entries, key=lambda x: x["ev_pct"]))
                 if dc_entries:
                     best.append(max(dc_entries, key=lambda x: x["ev_pct"]))
-                if ht_dc_entries:
-                    best.append(max(ht_dc_entries, key=lambda x: x["ev_pct"]))
+                dnb_entries = [x for x in entry[mk] if x.get("_market") == "dnb"]
+                ht_dnb_entries = [x for x in entry[mk] if x.get("_market") == "ht_dnb"]
+                if dnb_entries:
+                    best.append(max(dnb_entries, key=lambda x: x["ev_pct"]))
+                if ht_dnb_entries:
+                    best.append(max(ht_dnb_entries, key=lambda x: x["ev_pct"]))
                 entry[mk] = best
 
-        if entry["opportunities"] or entry["handicap"] or entry["over_under"] or entry["double_chance"]:
+        if entry["opportunities"] or entry["handicap"] or entry["over_under"] or entry["double_chance"] or entry["draw_no_bet"]:
             # 可疑 EV / 低置信度警告
-            for mk in ("opportunities", "handicap", "over_under", "double_chance"):
+            for mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"):
                 for o in entry.get(mk, []):
                     w = _warn_suspicious(o["ev_pct"], entry["match_score"], m.get("verified", False))
                     if w:
@@ -1974,10 +2085,11 @@ def main():
     total_hc = sum(len(o.get("handicap", [])) for o in opportunities)
     total_ou = sum(len(o.get("over_under", [])) for o in opportunities)
     total_dc = sum(len(o.get("double_chance", [])) for o in opportunities)
-    total_all = total_opps_1x2 + total_hc + total_ou + total_dc
+    total_dnb = sum(len(o.get("draw_no_bet", [])) for o in opportunities)
+    total_all = total_opps_1x2 + total_hc + total_ou + total_dc + total_dnb
 
     print(f"\n{'='*60}")
-    print(f"匹配: {len(matched)} | +EV 独赢: {total_opps_1x2} | 让球: {total_hc} | 大小: {total_ou} | 双重机会: {total_dc} | 总计: {total_all}")
+    print(f"匹配: {len(matched)} | +EV 独赢: {total_opps_1x2} | 让球: {total_hc} | 大小: {total_ou} | 双重机会: {total_dc} | 平局退款: {total_dnb} | 总计: {total_all}")
     print(f"{'='*60}")
     # 校准报告
     if cal_blocked_hc or cal_blocked_ou:
@@ -2002,6 +2114,8 @@ def main():
             print(f"    ✅ +EV {o['ev_pct']}%: {o['designation']}({o['line']}) (BB={o['bb_odds']} Pin={o['pin_odds']})")
         for o in entry.get("double_chance", []):
             print(f"    ✅ +EV {o['ev_pct']}%: {o['designation']} (BB={o['bb_odds']} Fair={o['fair_price']})")
+        for o in entry.get("draw_no_bet", []):
+            print(f"    ✅ +EV {o['ev_pct']}%: {o['designation']} (BB={o['bb_odds']} Fair={o['fair_price']})")
 
     # Save
     timestamp = time.strftime('%Y-%m-%dT%H:%M:%S')
@@ -2017,6 +2131,7 @@ def main():
         "opportunities_handicap": total_hc,
         "opportunities_over_under": total_ou,
         "opportunities_double_chance": total_dc,
+        "opportunities_draw_no_bet": total_dnb,
         "opportunities_total": total_all,
         "calibration_blocked_hc": cal_blocked_hc,
         "calibration_blocked_ou": cal_blocked_ou,

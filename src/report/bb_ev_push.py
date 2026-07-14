@@ -125,6 +125,7 @@ def build_report():
         qualified.extend(_collect_opportunities(match, "handicap"))
         qualified.extend(_collect_opportunities(match, "over_under"))
         qualified.extend(_collect_opportunities(match, "double_chance"))
+        qualified.extend(_collect_opportunities(match, "draw_no_bet"))
 
     if not qualified:
         return "no +EV opportunities (>=3%)", []
