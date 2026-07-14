@@ -114,9 +114,9 @@ _BATCH_DC_EXTRACT_JS = """
         var groups = document.querySelectorAll('.match-odd-line-group.media-group');
         var allOdds = [];
         for (var g = 0; g < groups.length; g++) {
-            var titleEl = groups[g].querySelector('.title-box .title');
-            if (titleEl && titleEl.innerText.trim() === '双重机会') {
-                var valueEls = groups[g].querySelectorAll('.odd-value.fetchWidth .value');
+            var titleEl = groups[g].querySelector('.title .title-text');
+            if (titleEl && titleEl.innerText.includes('双重机会') && !titleEl.innerText.includes('&')) {
+                var valueEls = groups[g].querySelectorAll('p.value');
                 valueEls.forEach(function(v) {
                     var num = parseFloat(v.innerText.trim());
                     if (!isNaN(num)) allOdds.push(num);
