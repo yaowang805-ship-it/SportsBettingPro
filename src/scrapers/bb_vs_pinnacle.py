@@ -822,14 +822,18 @@ TEAM_NAME_MAP = {
 
 
 def api_get(path, retry=True):
+    """调用 Pinnacle API，带详细错误诊断。"""
     url = f"{API_BASE}{path}"
     for attempt in range(MAX_RETRIES if retry else 1):
         try:
-            # 使用 SOCKS5 代理（Shadowrocket VPN），无代理时也回退直连
+            # 先试 SOCKS5 代理（Shadowrocket），失败回退直连
+            socks_err = None
             try:
                 resp = SESSION.get(url, timeout=30, proxies={"https": PROXY, "http": PROXY})
-            except Exception:
+            except Exception as e:
+                socks_err = e
                 resp = SESSION.get(url, timeout=30)
+
             if resp.status_code == 429:
                 wait = RETRY_DELAY * (2 ** attempt)
                 print(f"  ⏳ 429 rate limited, retry in {wait:.0f}s...")
@@ -839,17 +843,65 @@ def api_get(path, retry=True):
                 if attempt < MAX_RETRIES - 1:
                     time.sleep(RETRY_DELAY)
                     continue
+                # 最后一次失败：打印诊断
+                _diagnose_pinnacle_error(url, resp.status_code, socks_err)
                 return None
             return resp.json()
+        except requests.exceptions.SSLError as e:
+            print(f"  ❌ SSL 握手失败 ({type(e).__name__})")
+            print(f"    原因: {e}")
+            print(f"    建议: 检查系统时间是否正确，或更新 SSL 证书")
+            return None
+        except requests.exceptions.ConnectionError as e:
+            print(f"  ❌ 连接失败: {e}")
+            print(f"    建议: 检查网络连接 / Shadowrocket 是否开启")
+            return None
         except requests.exceptions.Timeout:
             if attempt < MAX_RETRIES - 1:
                 print(f"  ⏳ timeout, retry in {RETRY_DELAY:.0f}s...")
                 time.sleep(RETRY_DELAY)
                 continue
+            print(f"  ❌ Pinnacle API 超时（多次重试后）")
+            print(f"    建议: 检查网络延迟 / 切换 VPN 节点")
             return None
-        except Exception:
+        except requests.exceptions.ChunkedEncodingError as e:
+            # Python 3.14 http.client bug: chunked transfer 解析失败
+            print(f"  ❌ ChunkedEncodingError: {e}")
+            print(f"    原因: Python 3.14 http.client chunked transfer bug")
+            print(f"    自动重试中...")
+            if attempt < MAX_RETRIES - 1:
+                time.sleep(RETRY_DELAY)
+                continue
+            return None
+        except Exception as e:
+            print(f"  ❌ Pinnacle API 请求异常 ({type(e).__name__}): {e}")
             return None
     return None
+
+
+def _diagnose_pinnacle_error(url, status_code, socks_error=None):
+    """Pinnacle API 非 200 响应诊断。"""
+    print(f"\n  ❌ Pinnacle API 返回 {status_code}")
+    if status_code == 403:
+        print(f"    原因: 403 Forbidden — 非真实封锁，通常是以下情况之一：")
+        print(f"      1. Python 3.14 http.client chunked transfer bug 误报")
+        print(f"      2. SOCKS5 代理（localhost:1082）无此 API 访问权限")
+        print(f"    解决: 已改用 requests.Session()（去掉 cloudscraper），应已修复")
+        print(f"         如仍出现，尝试关闭 Shadowrocket 后重试")
+    elif status_code == 401:
+        print(f"    原因: 401 Unauthorized — 请求缺少/无效认证")
+        print(f"    解决: Pinnacle API 是公开的，不需要认证。可能是代理问题")
+        print(f"         尝试关闭 Shadowrocket 后重试")
+    elif status_code == 429:
+        print(f"    原因: 429 Rate Limited — 请求过快")
+        print(f"    解决: 等待 1 分钟后重试")
+    elif status_code == 503:
+        print(f"    原因: 503 Service Unavailable — Pinnacle 服务暂时不可用")
+        print(f"    解决: 等待几分钟后重试")
+    else:
+        print(f"    原因: 未知")
+        if socks_error:
+            print(f"    SOCKS5 代理错误: {socks_error}")
 
 
 def us_to_decimal(us_price):
@@ -1872,16 +1924,24 @@ def _check_pinnacle():
     """启动时检测 Pinnacle API 连通性（先试直连，再试 SOCKS5 代理）。"""
     test_url = f"{API_BASE}/sports/29/matchups"
     SESSION.proxies = {}
+
+    # 测试 1: 直连
     try:
         resp = SESSION.get(test_url, timeout=15)
         if resp.status_code == 200:
-            print(f"  ✅ Pinnacle API 连通正常")
+            print(f"  ✅ Pinnacle API 连通正常（直连）")
             return True
-        print(f"  ❌ Pinnacle API 直连返回 {resp.status_code}，尝试 SOCKS5 代理...")
+        print(f"  ⚠️  直连返回 {resp.status_code}，尝试 SOCKS5...")
+    except requests.exceptions.SSLError as e:
+        print(f"  ❌ Pinnacle API SSL 失败: {e}")
+        print(f"     → 检查系统时间 / 更新 CA 证书")
+    except requests.exceptions.ConnectionError as e:
+        print(f"  ❌ Pinnacle API 直连失败: {e}")
+        print(f"     → 检查网络连接")
     except Exception as e:
-        print(f"  ❌ Pinnacle API 直连失败: {e}，尝试 SOCKS5 代理...")
+        print(f"  ❌ Pinnacle API 直连异常 ({type(e).__name__}): {e}")
 
-    # 回退：通过 SOCKS5 代理重试
+    # 测试 2: SOCKS5 代理
     try:
         resp = SESSION.get(test_url, timeout=15, proxies={"https": PROXY, "http": PROXY})
         if resp.status_code == 200:
@@ -1890,6 +1950,11 @@ def _check_pinnacle():
         print(f"  ❌ Pinnacle API (SOCKS5) 返回 {resp.status_code}")
     except Exception as e:
         print(f"  ❌ Pinnacle API (SOCKS5) 失败: {e}")
+
+    print(f"\n  💡 诊断: Pinnacle API 不可用")
+    print(f"    两种可能:")
+    print(f"    1. Python 3.14 http.client chunked bug — 重试几次可恢复")
+    print(f"    2. 网络/代理问题 — 检查 Shadowrocket 是否开启")
     return False
 
 
@@ -1921,12 +1986,49 @@ def _check_extraction_consistency(n_matches: int):
     }))
 
 
+def _preflight_check():
+    """连通性预检：同时检查 BB API 和 Pinnacle API，返回是否全部正常。"""
+    print("\n" + "=" * 60)
+    print("🔌 连通性预检")
+    print("=" * 60)
+
+    # BB API
+    bb_ok = True
+    bb_path = DATA_DIR / "bb_odds_extracted.json"
+    if bb_path.exists():
+        age = time.time() - bb_path.stat().st_mtime
+        print(f"\n📡 BB体育 数据文件: {bb_path.name}")
+        print(f"   文件存在, 更新于 {age/60:.0f} 分钟前")
+    else:
+        print(f"\n📡 BB体育: 数据文件不存在 → 需要先运行 bb_api_fetcher")
+        bb_ok = False
+
+    # Pinnacle API
+    pin_ok = _check_pinnacle()
+
+    print()
+    if bb_ok and pin_ok:
+        print(f"  ✅ 全部连通正常")
+    else:
+        if not bb_ok:
+            print(f"  ❌ BB API 异常")
+        if not pin_ok:
+            print(f"  ❌ Pinnacle API 异常")
+    print("=" * 60)
+    return bb_ok and pin_ok
+
+
 def main():
     print("=" * 60)
     print("BB体育 vs Pinnacle 完整赔率对比 v2")
     print("=" * 60)
 
-    # 1. Load BB体育 data
+    # 0. 如果传入了 --check 参数，只跑预检
+    if "--check" in sys.argv:
+        _preflight_check()
+        return
+
+    # 1. Load BB体育数据
     bb_matches = load_bb_odds()
     # 过滤掉冠军/优胜者盘口（非比赛）
     bb_matches = [m for m in bb_matches if m.get("league", "") not in OUTRIGHT_LEAGUES]
