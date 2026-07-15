@@ -22,13 +22,13 @@ from config.logging_config import get_logger
 logger = get_logger(__name__)
 
 # 虚拟投注参数
-DAILY_BANKROLL = 10000.0           # 每日投注总额（每天固定1万）
-INITIAL_BALANCE = 10000.0          # 初始资金（用于首次启动）
+DAILY_BANKROLL = 50000.0           # 每日投注总额（指挥官模式：目标月利润5万）
+INITIAL_BALANCE = 50000.0          # 初始资金
 MAX_STAKE_PCT = 0.02               # 单注最大仓位 2%
 KELLY_FRAC = 0.25                  # Kelly 分数
 MIN_EV_PCT = 2.0                   # 最小 EV 阈值（fair-price 基准）
 MAX_EV_PCT = 100.0                 # EV 超过此值跳过
-MAX_BETS = 50                      # 每日最多投注数
+MAX_BETS = 80                      # 每日最多投注数（指挥官模式：目标月利润5万）
 PORTFOLIO_FILE = DATA_DIR / "virtual_portfolio.json"
 
 # 推送暂存文件 — bb_ev_push.py 导出已筛选的机会列表
@@ -322,7 +322,7 @@ def place_bets(dry_run=False):
     return bets_placed
 
 
-def place_bets_from_push(opportunities, bankroll=10000.0):
+def place_bets_from_push(opportunities, bankroll=50000.0):
     """从推送的已筛选机会列表执行投注（stake 已预计算）。"""
     if not opportunities:
         logger.info("空机会列表，跳过投注")
@@ -365,6 +365,8 @@ def place_bets_from_push(opportunities, bankroll=10000.0):
         if stake <= 0:
             continue
 
+        # 单注上限 2%（防御，推送端已算好）
+        stake = min(stake, bankroll * MAX_STAKE_PCT)
         # 不超过剩余预算
         stake = min(stake, daily_remaining)
         if stake < 1:

@@ -20,12 +20,20 @@ from config.settings import DATA_DIR
 import requests
 
 API_BASE = "https://guest.api.arcadia.pinnacle.com/0.1"
+
+# Pinnacle 是标准 REST API（无 Cloudflare），直接用 requests 即可。
+# 之前用 cloudscraper 会在 Python 3.14 的 chunked transfer encoding bug 下
+# 触发 IncompleteRead，被误判为 403。
 SESSION = requests.Session()
-SESSION.trust_env = False  # Python 3.14+ 避免自动读取系统代理配置
-SESSION.headers.update({"Accept": "application/json"})
+SESSION.trust_env = False
+SESSION.headers.update({
+    "Accept": "application/json, text/plain, */*",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+    "Referer": "https://www.pinnacle.com/",
+    "Origin": "https://www.pinnacle.com",
+})
 
 # SOCKS5 代理支持（Shadowrocket 本地代理，用于绕过 Cloudflare）
-# 直连也支持（代理不可用时自动回退）
 PROXY = "socks5://localhost:1082"
 
 # 重试参数
@@ -116,8 +124,61 @@ LEAGUE_KEYWORDS = {
     # 早盘联赛映射
     "欧洲冠军联赛-资格赛": "UEFA - Champions League Qualifiers",
     "英格兰超级联赛": "England - Premier League",
+    "英格兰冠军联赛": "England - Championship",
+    "英格兰甲级联赛": "England - League One",
+    "英格兰乙级联赛": "England - League Two",
+    "英格兰联赛杯": "England - EFL Cup",
+    "英格兰社区盾": "England - Community Shield",
+    "英格兰足球议会全国联赛": "England - National League",
     "西班牙甲级联赛": "Spain - La Liga",
     "德国甲级联赛": "Germany - Bundesliga",
+    "德国乙级联赛": "Germany - Bundesliga 2",
+    "德国超级杯": "Germany - Super Cup",
+    "意大利甲级联赛": "Italy - Serie A",
+    "法国甲级联赛": "France - Ligue 1",
+    "法国超级杯": "France - Trophee des Champions",
+    "荷兰甲级联赛": "Netherlands - Eredivisie",
+    "巴西甲级联赛": "Brazil - Serie A",
+    "巴西乙级联赛": "Brazil - Serie B",
+    "巴西杯": "Brazil - Copa do Brasil",
+    "墨西哥超级联赛": "Mexico - Liga MX",
+    "美国职业大联盟": "USA - Major League Soccer",
+    "阿根廷甲级联赛": "Argentina - Liga Pro",
+    "阿根廷全国联赛": "Argentina - Primera B Nacional",
+    "阿根廷杯": "Argentina - Cup",
+    "比利时甲级联赛": "Belgium - Pro League",
+    "比利时超级杯": "Belgium - Super Cup",
+    "瑞士超级联赛": "Switzerland - Super League",
+    "挪威超级联赛": "Norway - Eliteserien",
+    "挪威甲级联赛": "Norway - OBOS-ligaen",
+    "丹麦超级联赛": "Denmark - Superliga",
+    "丹麦甲级联赛": "Denmark - 1st Division",
+    "瑞典超甲级联赛": "Sweden - Superettan",
+    "波兰甲级联赛": "Poland - Ekstraklasa",
+    "波兰超级杯": "Poland - Super Cup",
+    "捷克甲级联赛": "Czech Republic - First League",
+    "奥地利甲级联赛": "Austria - Bundesliga",
+    "苏格兰超级联赛": "Scotland - Premiership",
+    "乌克兰超级联赛": "Ukraine - Premier League",
+    "俄罗斯超级联赛": "Russia - Premier League",
+    "俄罗斯杯": "Russia - Cup",
+    "俄罗斯超级杯": "Russia - Super Cup",
+    "罗马尼亚甲级联赛": "Romania - Liga 1",
+    "保加利亚甲级联赛": "Bulgaria - First League",
+    "斯洛文尼亚甲级联赛": "Slovenia - PrvaLiga",
+    "塞尔维亚超级联赛": "Serbia - Super Liga",
+    "匈牙利甲级联赛": "Hungary - OTP Bank Liga",
+    "希腊超级联赛": "Greece - Super League",
+    "土耳其超级联赛": "Turkey - Super League",
+    "秘鲁甲级联赛": "Peru - Liga 1",
+    "智利甲级联赛": "Chile - Primera Division",
+    "哥伦比亚甲级联赛": "Colombia - Liga BetPlay",
+    "韩国K1联赛": "Korea Republic - K League",
+    "韩国乙级联赛": "Korea Republic - K League 2",
+    "韩国足协杯": "South Korea - FA Cup",
+    "美国冠军联赛": "USA - USL Championship",
+    "美国国家女子联赛": "USA - NWSL",
+    "加拿大超级联赛": "Canada - Premier League",
     "欧足联欧洲联赛-资格赛": "UEFA - Europa League Qualifiers",
     "欧足联欧洲协会联赛-资格赛": "UEFA - Conference League Qualifiers",
     "2026世界杯 (在加拿大墨西哥&美国)": "FIFA - World Cup",
@@ -132,7 +193,8 @@ LEAGUE_KEYWORDS = {
     "菲律宾PBA总督杯": "Philippines - PBA Governors Cup",
     "澳洲篮球": "NBL",
     "篮球 - NCAA": "NCAA",
-    "新西兰 - NBL": "Uganda NBL",
+    "新西兰 - NBL": "New Zealand - NBL",
+    "新西兰全国篮球联赛": "New Zealand - NBL",
     "澳大利亚杯": "Australia - Cup",
     "澳大利亚": "Australia",
     "女子大V": "Australia",
@@ -145,6 +207,10 @@ LEAGUE_KEYWORDS = {
     "乌干达篮球联赛": "Uganda NBL",
     "乌干达女子篮球联赛": "Uganda NBL Women",
     "乌拉圭女子篮球联赛": "Uruguay - Liga Femenina",
+    "乌拉圭METRO联赛": "Uruguay - Metro League",
+    "危地马拉大都会篮球联赛": "Guatemala - LMM",
+    "多米尼加共和国LNB": "Dominican Republic - LNB",
+    "越南职业篮球联赛": "Vietnam - VBA",
     "马里篮球甲级联赛": "Mali - Premere Division",
     # Baseball
     "MLB": "MLB",
@@ -153,6 +219,7 @@ LEAGUE_KEYWORDS = {
     "日本职业包装": "Nippon Professional Baseball",  # SPA渲染错误（棒球→包装）
     "韩国棒球": "Korea Professional Baseball",
     "中华职业棒球大联盟": "Chinese Taipei - Professional League",
+    "墨西哥棒球联盟": "Mexican League",
     # Tennis
     "ATP - 博斯塔德公开赛": "ATP Bastad",
     "ATP - 大满贯温布尔登网球公开赛": "ATP Wimbledon",
@@ -161,14 +228,32 @@ LEAGUE_KEYWORDS = {
     "ATP挑战赛 - 格兰比公开赛": "ATP Challenger Granby",
     "ATP挑战赛 - 波哥大公开赛": "ATP Challenger Bogota",
     "ATP挑战赛 - 科尔德农斯公开赛": "ATP Challenger Cordenons",
+    "ATP挑战赛 - 林肯公开赛": "ATP Challenger Lincoln",
+    "ATP挑战赛 - 本斯霍滕公开赛": "ATP Challenger Benshoten",
+    "ATP挑战赛 - 波索布兰科公开赛": "ATP Challenger Pozoblanco",
+    "ATP挑战赛 - 科尔代农斯公开赛": "ATP Challenger Cordenons",
+    "ATP 挑战者 - 波索布兰科公开双打": "ATP Challenger Pozoblanco",
     "WTA - 罗马公开赛": "WTA 125K Rome",
     "WTA - 雅西公开赛": "WTA Iasi",
     "WTA - 基茨比厄尔公开赛": "WTA 125K Kitzbuhel",
     "WTA - 伊斯坦布尔 2 公开赛": "WTA 125K Istanbul",
+    "WTA - 伊斯坦堡 2 公开赛": "WTA 125K Istanbul",
     "WTA - 雅典公开赛": "WTA Athens",
     "WTA - 孔特雷克塞维尔公开赛": "WTA 125K Contrexeville - Final",
     "WTA - 孔特雷克塞维尔公开赛 - 双打": "WTA 125K Contrexeville - Doubles",
     "WTA - 纽波特公开赛": "WTA 125K Newport",
+    # 戴维斯杯
+    "戴维斯杯": "Davis Cup",
+    # ITF 世界网球 — 用比赛等级关键词匹配 Pinnacle 上的 ITF 赛事
+    # BB 格式: "世界网球 - M15 甘迪亚 男子单打"
+    # Pinnacle 格式: "ITF M15 Gandia" (需要 API 联通后验证)
+    "世界网球 - M25": "ITF M25",
+    "世界网球 - M15": "ITF M15",
+    "世界网球 - W75": "ITF W75",
+    "世界网球 - W50": "ITF W50",
+    "世界网球 - W35": "ITF W35",
+    "世界网球 - W15": "ITF W15",
+    "世界網球 - M25": "ITF M25",
 }
 
 # 常见球队中英名称映射（用于匹配验证）
@@ -271,6 +356,36 @@ TEAM_NAME_MAP = {
     # 巴拉圭乙
     "诺维布雷": "Novibet",
     "桑坦尼体育会": "Sportivo Santani",
+    # 球会友谊赛 — 更多球队
+    "华沙莱吉亚": "Legia Warsaw",
+    "拉多米亚克": "Radomiak Radom",
+    "韦恩威斯巴登": "Wehen Wiesbaden",
+    "冈山绿雉": "Fagiano Okayama",
+    "哥罗纳": "Korona Kielce",
+    "斯塔泽舒夫": "Stal Stalowa Wola",
+    "兰德斯": "Randers",
+    "诺茨郡": "Notts County",
+    "葡萄牙体育": "Sporting CP",
+    "凯尔特人": "Celtic",
+    "拜斯迪卡": "Dukla Banska Bystrica",
+    "斯拉文贝鲁波": "Slaven Belupo",
+    "广岛三箭": "Sanfrecce Hiroshima",
+    "特拉维夫夏普尔": "Hapoel Tel Aviv",
+    # 韩国K1联赛
+    "仁川联": "Incheon United",
+    "全北现代": "Jeonbuk Motors",
+    "济州联队": "Jeju SK",
+    "浦项制铁": "Pohang Steelers",
+    "蔚山现代": "Ulsan HD",
+    "大田韩亚市民": "Daejeon Citizen",
+    "江原FC": "Gangwon FC",
+    "金泉尚武": "Gimcheon Sangmu",
+    "安养FC": "Anyang",
+    "光州FC": "Gwangju FC",
+    "富川FC 1995": "Bucheon FC 1995",
+    "首尔FC": "FC Seoul",
+    "大邱FC": "Daegu FC",
+    "水原FC": "Suwon FC",
     # 俄罗斯甲
     "乌里扬诺夫斯克": "Ulyanovsk",
     "叶尼塞": "Yenisey",
@@ -427,9 +542,279 @@ TEAM_NAME_MAP = {
     "辛辛那提红人": "Cincinnati Reds",
     "科罗拉多洛基山": "Colorado Rockies",
     "洛杉矶天使": "Los Angeles Angels",
-    # Basketball
+    # Basketball — NBA
+    "亚特兰大老鹰": "Atlanta Hawks",
+    "波士顿凯尔特人": "Boston Celtics",
+    "布鲁克林篮网": "Brooklyn Nets",
+    "夏洛特黄蜂": "Charlotte Hornets",
+    "芝加哥公牛": "Chicago Bulls",
+    "克利夫兰骑士": "Cleveland Cavaliers",
+    "达拉斯独行侠": "Dallas Mavericks",
+    "丹佛掘金": "Denver Nuggets",
+    "底特律活塞": "Detroit Pistons",
+    "金州勇士": "Golden State Warriors",
+    "休士顿火箭": "Houston Rockets",
+    "印第安纳步行者": "Indiana Pacers",
+    "洛杉矶快船": "Los Angeles Clippers",
+    "洛杉矶湖人": "Los Angeles Lakers",
+    "孟菲斯灰熊": "Memphis Grizzlies",
+    "迈阿密热火": "Miami Heat",
+    "密尔沃基雄鹿": "Milwaukee Bucks",
+    "明尼苏达森林狼": "Minnesota Timberwolves",
+    "新奥尔良鹈鹕队": "New Orleans Pelicans",
+    "纽约尼克斯": "New York Knicks",
+    "俄克拉荷马城雷霆": "Oklahoma City Thunder",
+    "奥兰多魔术": "Orlando Magic",
+    "费城76人": "Philadelphia 76ers",
+    "菲尼克斯太阳": "Phoenix Suns",
+    "波特兰开拓者": "Portland Trail Blazers",
+    "萨克拉门托国王": "Sacramento Kings",
+    "圣安东尼奥马刺": "San Antonio Spurs",
+    "多伦多猛龙": "Toronto Raptors",
+    "犹他爵士": "Utah Jazz",
+    "华盛顿奇才": "Washington Wizards",
+    # WNBA
+    "芝加哥天空 (女)": "Chicago Sky",
+    "康涅狄格阳光 (女)": "Connecticut Sun",
+    "达拉斯飞翼 (女)": "Dallas Wings",
+    "印第安纳狂热 (女)": "Indiana Fever",
+    "拉斯维加斯王牌 (女)": "Las Vegas Aces",
+    "洛杉矶火花 (女)": "Los Angeles Sparks",
+    "明尼苏达山猫 (女)": "Minnesota Lynx",
+    "纽约自由 (女)": "New York Liberty",
+    "凤凰城水星 (女)": "Phoenix Mercury",
+    "西雅图风暴 (女)": "Seattle Storm",
+    "华盛顿神秘人 (女)": "Washington Mystics",
+    # WNBA — 2026 expansion
+    "波特兰火焰 (女)": "Portland Fire",
+    "多伦多节奏 (女)": "Toronto Tempo",
+    "金州瓦尔基里 (女)": "Golden State Valkyries",
+    # FIBA U20 — 欧洲国家
+    "阿尔巴尼亚 U20": "Albania",
+    "比利时 U20": "Belgium",
+    "波黑 U20": "Bosnia And Herzegovina",
+    "保加利亚 U20": "Bulgaria",
+    "克罗地亚 U20": "Croatia",
+    "塞浦路斯 U20": "Cyprus",
+    "捷克 U20": "Czech Republic",
+    "丹麦 U20": "Denmark",
+    "英格兰 U20": "England",
+    "爱沙尼亚 U20": "Estonia",
+    "芬兰 U20": "Finland",
+    "法国 U20": "France",
+    "格鲁吉亚 U20": "Georgia",
+    "德国 U20": "Germany",
+    "希腊 U20": "Greece",
+    "匈牙利 U20": "Hungary",
+    "冰岛 U20": "Iceland",
+    "爱尔兰 U20": "Ireland",
+    "以色列 U20": "Israel",
+    "意大利 U20": "Italy",
+    "科索沃 U20": "Kosovo",
+    "拉脱维亚 U20": "Latvia",
+    "立陶宛 U20": "Lithuania",
+    "卢森堡 U20": "Luxembourg",
+    "荷兰 U20": "Netherlands",
+    "北马其顿 U20": "North Macedonia",
+    "波兰 U20": "Poland",
+    "葡萄牙 U20": "Portugal",
+    "罗马尼亚 U20": "Romania",
+    "塞尔维亚 U20": "Serbia",
+    "斯洛伐克 U20": "Slovakia",
+    "斯洛文尼亚 U20": "Slovenia",
+    "西班牙 U20": "Spain",
+    "瑞典 U20": "Sweden",
+    "瑞士 U20": "Switzerland",
+    "土耳其 U20": "Turkey",
+    "乌克兰 U20": "Ukraine",
+    # FIBA U20 non-European
+    "加拿大 U20": "Canada",
+    "美国 U20": "USA",
+    "澳大利亚 U20": "Australia",
+    "新西兰 U20": "New Zealand",
+    # Basketball — 菲律宾PBA
+    "汇众光纤": "Converge FiberXers",
+    "泰丰吉普": "Terrafirma Dyip",
+    "马拉古闪电": "Meralco Bolts",
+    "凤凰燃料大师": "Phoenix Fuel Masters",
+    # Basketball — 新西兰NBL
+    "塔拉纳基": "Taranaki Mountainairs",
+    "尼尔森巨人": "Nelson Giants",
     "奥克兰大蜥蜴": "Auckland Tuatara",
     "奥塔哥掘金": "Otago Nuggets",
+    "霍克湾雄鹰": "Hawke's Bay Hawks",
+    # Basketball — 智利
+    "塔尔卡西班牙人": "CD Espanol De Talca",
+    "普恩特阿尔托": "CD Puente Alto",
+    "瓦尔迪维亚": "CD Valdivia",
+    "奥索尔诺西班牙人": "CD Espanol Osorno",
+    "奎利普尔": "CD Colegio Los Leones",
+    "科洛科洛": "CSD Colo Colo",
+    # Basketball — 波多黎各
+    "卡罗莱纳巨人": "Gigantes de Carolina",
+    "巴亚蒙牛仔": "Vaqueros de Bayamon",
+    "桑特罗斯德": "Aguada Santeros",
+    "阿雷西博上尉": "Capitanes de Arecibo",
+    "庞塞雄狮": "Leones de Ponce",
+    "圣日尔曼": "Atleticos de San German",
+    # Basketball — 卢旺达
+    "EAU卢旺达": "East African University Rwanda",
+    "老虎BBC": "Tigers",
+    "卢旺达能源集团": "Rwanda Energy Group",
+    "卢旺达爱国军": "APR BBC",
+    # Basketball — 黎巴嫩
+    "萨格瑟": "Sagesse",
+    "朱尼耶中央俱乐部": "Central Club",
+    # Basketball — 多米尼加
+    "旧金山印第安人": "Indios de San Francisco de Macoris",
+    "圣地亚哥地铁": "Metros de Santiago",
+    # Basketball — 香港
+    "康仁福建": "Wellman Fukien",
+    "香港东方": "Hong Kong Eastern Long Lions",
+    # Basketball — 乌拉圭METRO
+    "拉雷博尔赫斯": "IA Larre Borges",
+    "拉戈马尔": "Lagomar CC",
+    "阿尔巴特罗斯": "Albatros",
+    "蒙得维的亚BBC": "Montevideo B.B.C",
+    # Basketball — 乌拉圭女子
+    "拉戈马尔 (女)": "Lagomar",
+    "耶鲁 (女)": "Yale",
+    "阿瓜达竞技 (女)": "Aguada",
+    "防卫者体育 (女)": "Defensor Sporting",
+    # Basketball — 危地马拉
+    "哈尔科内斯": "Halcones",
+    "郊狼": "Coyotes",
+    # Basketball — 越南
+    "芽庄海豚": "Nha Trang Dolphins",
+    "河内水牛": "Hanoi Buffaloes",
+    # Basketball — Uganda
+    "KCCA豹": "KCCA Panthers",
+    "城市油工": "City Oilers",
+    # World Cup 足球
+    "英格兰": "England",
+    "阿根廷": "Argentina",
+    "巴西": "Brazil",
+    "法国": "France",
+    "德国": "Germany",
+    "葡萄牙": "Portugal",
+    "西班牙": "Spain",
+    "荷兰": "Netherlands",
+    "比利时": "Belgium",
+    "克罗地亚": "Croatia",
+    # Baseball — MLB 补充
+    "亚利桑那响尾蛇": "Arizona Diamondbacks",
+    "亚特兰大勇士": "Atlanta Braves",
+    "巴尔的摩金莺": "Baltimore Orioles",
+    "波士顿红袜": "Boston Red Sox",
+    "芝加哥小熊": "Chicago Cubs",
+    "芝加哥白袜": "Chicago White Sox",
+    "辛辛那提红人": "Cincinnati Reds",
+    "克利夫兰守护者": "Cleveland Guardians",
+    "科罗拉多洛基山": "Colorado Rockies",
+    "底特律老虎": "Detroit Tigers",
+    "休士顿太空人": "Houston Astros",
+    "堪萨斯城皇家": "Kansas City Royals",
+    "洛杉矶天使": "Los Angeles Angels",
+    "洛杉矶道奇": "Los Angeles Dodgers",
+    "迈阿密马林鱼": "Miami Marlins",
+    "密尔沃基酿酒人": "Milwaukee Brewers",
+    "明尼苏达双城": "Minnesota Twins",
+    "纽约洋基": "New York Yankees",
+    "纽约大都会": "New York Mets",
+    "奥克兰运动家": "Oakland Athletics",
+    "费城费城人": "Philadelphia Phillies",
+    "匹兹堡海盗": "Pittsburgh Pirates",
+    "圣迭戈教士": "San Diego Padres",
+    "旧金山巨人": "San Francisco Giants",
+    "西雅图水手": "Seattle Mariners",
+    "圣路易斯红雀": "St. Louis Cardinals",
+    "坦帕湾光芒": "Tampa Bay Rays",
+    "德州游骑兵": "Texas Rangers",
+    "多伦多蓝鸟": "Toronto Blue Jays",
+    "华盛顿国民": "Washington Nationals",
+    # Baseball — 墨西哥联盟(部分)
+    "金塔纳罗奥老虎": "Tigres de Quintana Roo",
+    "墨西哥红魔鬼": "Diablos Rojos del Mexico",
+    "克雷塔罗阴谋者": "Conspiradores de Queretaro",
+    "莱昂刺客": "Bravos de Leon",
+    "尤卡坦狮王": "Leones de Yucatan",
+    "坎佩切海盗": "Piratas de Campeche",
+    "塔巴斯科奥尔梅克": "Olmecas de Tabasco",
+    "普埃布拉鹦鹉": "Pericos de Puebla",
+    "瓦哈卡战士": "Guerreros de Oaxaca",
+    "提华纳公牛": "Toros de Tijuana",
+    "拉雷多双城": "Tecolotes de Los Dos Laredos",
+    "里耶罗斯": "Rieleros de Aguascalientes",
+    "萨拉佩": "Charros de Jalisco",
+    "韦拉克鲁斯老鹰": "El Aguila de Veracruz",
+    "蒙特雷苏丹": "Sultanes de Monterrey",
+    "杜兰戈将军": "Generales de Durango",
+    # 英格兰冠军联赛 / 英格兰联赛杯
+    "西汉姆联": "West Ham United",
+    "朴茨茅斯": "Portsmouth",
+    "卡迪夫城": "Cardiff City",
+    "斯文登": "Swindon Town",
+    "诺维奇": "Norwich City",
+    "西布罗姆维奇": "West Bromwich Albion",
+    "女王公园巡游者": "Queens Park Rangers",
+    "布里斯托尔城": "Bristol City",
+    "米尔沃尔": "Millwall",
+    "伯明翰城": "Birmingham City",
+    "索利赫尔": "Solihull Moors",
+    "米尔顿凯恩斯": "Milton Keynes Dons",
+    "牛津联队": "Oxford United",
+    "博尔顿": "Bolton Wanderers",
+    "布莱克本流浪者": "Blackburn Rovers",
+    "普雷斯顿": "Preston North End",
+    "斯托克城": "Stoke City",
+    "谢周三": "Sheffield Wednesday",
+    "卢顿": "Luton Town",
+    "伯恩利": "Burnley",
+    "米德尔斯堡": "Middlesbrough",
+    "德比郡": "Derby County",
+    "斯旺西": "Swansea City",
+    "沃特福德": "Watford",
+    "雷丁": "Reading",
+    "哈德斯菲尔德": "Huddersfield Town",
+    "罗瑟汉姆": "Rotherham United",
+    "韦康比流浪者": "Wycombe Wanderers",
+    "彼得堡联": "Peterborough United",
+    "巴恩斯利": "Barnsley",
+    "什鲁斯伯里": "Shrewsbury Town",
+    "伯顿": "Burton Albion",
+    "埃克塞特城": "Exeter City",
+    "北安普顿": "Northampton Town",
+    "奥尔德肖特": "Aldershot Town",
+    "查尔顿": "Charlton Athletic",
+    "维冈竞技": "Wigan Athletic",
+    "克劳利镇": "Crawley Town",
+    # 丹麦超 / 挪威超
+    "奥胡斯": "Aarhus",
+    "霍森斯": "Horsens",
+    "锡尔克堡": "Silkeborg",
+    "桑德菲杰": "Sandefjord",
+    "博多格林特": "Bodo Glimt",
+    "费德列斯达": "Fredrikstad",
+    "代格福什": "Degerfors",
+    # 巴西甲/乙
+    "福塔雷萨": "Fortaleza",
+    "诺瓦里桑蒂诺": "Gremio Novorizontino",
+    # 美国
+    "拉斯维加斯光": "Las Vegas Lights",
+    # 澳大利亚杯
+    "布伦瑞克尤文图斯": "Brunswick Juventus FC",
+    # 美国职业大联盟 (MLS)
+    "休斯敦迪纳摩": "Houston Dynamo",
+    "华盛顿联": "D.C. United",
+    "洛杉矶银河": "Los Angeles Galaxy",
+    "洛杉矶FC": "Los Angeles FC",
+    "纳什维尔": "Nashville SC",
+    "亚特兰大联": "Atlanta United",
+    "圣何塞地震": "San Jose Earthquakes",
+    "奥兰多城": "Orlando City",
+    # 日本棒球（BB界面变体）
+    "福冈软件银行鹰": "Fukuoka SoftBank Hawks",
+    "统一狮": "Uni-President 7-ELEVEN Lions",
     # Tennis players — 中文音译 → Pinnacle 英文名
     "维多利亚.莫尔瓦约娃 (斯洛伐克)": "Viktoria Morvayova",
     "萨拉.贝莱克 (捷克)": "Sara Bejlek",
@@ -440,7 +825,11 @@ def api_get(path, retry=True):
     url = f"{API_BASE}{path}"
     for attempt in range(MAX_RETRIES if retry else 1):
         try:
-            resp = SESSION.get(url, timeout=30)
+            # 使用 SOCKS5 代理（Shadowrocket VPN），无代理时也回退直连
+            try:
+                resp = SESSION.get(url, timeout=30, proxies={"https": PROXY, "http": PROXY})
+            except Exception:
+                resp = SESSION.get(url, timeout=30)
             if resp.status_code == 429:
                 wait = RETRY_DELAY * (2 ** attempt)
                 print(f"  ⏳ 429 rate limited, retry in {wait:.0f}s...")
@@ -1133,7 +1522,7 @@ def _pin_to_epoch(pin_match):
         return None
 
 
-def _odds_similarity(bb_1x2, pin_1x2, min_odds=3):
+def _odds_similarity(bb_1x2, pin_1x2, min_odds=3, sport="football"):
     """Compute odds similarity score (0-1)."""
     if len(bb_1x2) < min_odds or len(pin_1x2) < min_odds:
         return 0.0
@@ -1148,7 +1537,10 @@ def _odds_similarity(bb_1x2, pin_1x2, min_odds=3):
 
     avg_ratio = sum(ratios) / len(ratios) if ratios else 0
     if len(ratios) >= min_odds and max(ratios) - min(ratios) > 0.15:
-        avg_ratio *= 0.8
+        # 网球赔率经常严重倾斜（如 1.10 vs 6.50），ratio spread 必然 > 0.15，
+        # 这个 ×0.8 惩罚对网球不合理，会导致 valid 匹配 score 被压低。
+        if sport != "tennis":
+            avg_ratio *= 0.8
     return avg_ratio
 
 
@@ -1159,7 +1551,7 @@ def _make_bb_key(bb):
 def _compute_combined_score(bb, bb_1x2, bb_epoch, pin, pin_ml, sport="football"):
     """Combined score = odds_similarity × time_factor (0-1)."""
     min_odds = 2 if sport in TWO_WAY_SPORTS else 3
-    odds_score = _odds_similarity(bb_1x2, pin_ml, min_odds)
+    odds_score = _odds_similarity(bb_1x2, pin_ml, min_odds, sport)
     time_factor = 1.0
     if bb_epoch:
         pin_epoch = _pin_to_epoch(pin)
@@ -1275,11 +1667,20 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                 combined = _compute_combined_score(
                     bd["match"], bd["bb_1x2"], bd["epoch"], pin, pin_ml, sport,
                 )
-                # 网球的时间匹配容易出错，提高门限
-                min_threshold = 0.90 if sport == "tennis" else 0.70
+                # 网球的时间匹配：降低门限以覆盖更多 ITF 赛事
+                min_threshold = 0.75 if sport == "tennis" else 0.70
                 if combined >= min_threshold:
                     pairs.append((combined, bb_key, bd["match"], pin,
                                   bd["bb_1x2"], pin_ml, pin_id, sport))
+                elif sport == "tennis" and combined > 0.4 and not bd['match'].get('league','').startswith('世界'):
+                    bb_t = bd['match'].get('bt','')
+                    pin_t = pin.get('start_time','')
+                    bb_odds = bd.get('bb_1x2',[])
+                    pin_odds_list = pin_ml
+                    print(f"  [网球 Phase 2] {bd['match'].get('home','')} vs {bd['match'].get('away','')}")
+                    print(f"    combined={combined:.3f} (阈值={min_threshold})")
+                    print(f"    BB时间={bb_t} Pin时间={pin_t}")
+                    print(f"    BB赔率={bb_odds} Pin赔率={pin_odds_list}")
 
         pairs.sort(key=lambda x: -x[0])
         for combined, bb_key, bb, pin, bb_1x2, pin_ml, pin_id, sport in pairs:
@@ -1468,7 +1869,7 @@ def _warn_suspicious(ev_pct, match_score, verified):
 
 
 def _check_pinnacle():
-    """启动时检测 Pinnacle API 连通性。"""
+    """启动时检测 Pinnacle API 连通性（先试直连，再试 SOCKS5 代理）。"""
     test_url = f"{API_BASE}/sports/29/matchups"
     SESSION.proxies = {}
     try:
@@ -1476,14 +1877,48 @@ def _check_pinnacle():
         if resp.status_code == 200:
             print(f"  ✅ Pinnacle API 连通正常")
             return True
-        print(f"  ❌ Pinnacle API 返回 {resp.status_code}")
-    except requests.exceptions.Timeout:
-        print("  ❌ Pinnacle API 超时")
-    except requests.exceptions.ConnectionError:
-        print("  ❌ Pinnacle API 连接失败")
+        print(f"  ❌ Pinnacle API 直连返回 {resp.status_code}，尝试 SOCKS5 代理...")
     except Exception as e:
-        print(f"  ❌ Pinnacle API 异常: {e}")
+        print(f"  ❌ Pinnacle API 直连失败: {e}，尝试 SOCKS5 代理...")
+
+    # 回退：通过 SOCKS5 代理重试
+    try:
+        resp = SESSION.get(test_url, timeout=15, proxies={"https": PROXY, "http": PROXY})
+        if resp.status_code == 200:
+            print(f"  ✅ Pinnacle API 连通正常 (SOCKS5)")
+            return True
+        print(f"  ❌ Pinnacle API (SOCKS5) 返回 {resp.status_code}")
+    except Exception as e:
+        print(f"  ❌ Pinnacle API (SOCKS5) 失败: {e}")
     return False
+
+
+_EXTRACTION_META_FILE = DATA_DIR / "extraction_consistency_meta.json"
+
+
+def _check_extraction_consistency(n_matches: int):
+    """检查 BB 提取量是否稳定。如果比上次下降 >30%，打印醒目警告。"""
+    prev = None
+    if _EXTRACTION_META_FILE.exists():
+        try:
+            prev = json.loads(_EXTRACTION_META_FILE.read_text())
+        except (json.JSONDecodeError, ValueError):
+            pass
+
+    if prev:
+        prev_count = prev.get("bb_matches_total", 0)
+        if prev_count > 0:
+            drop = (prev_count - n_matches) / prev_count
+            if drop > 0.30:
+                tag = "⚠️" * 5
+                print(f"\n{tag} 提取量异常下降!")
+                print(f"  BB 比赛数: {prev_count} → {n_matches} ({drop*100:.0f}%)")
+                print(f"  检查 bb_api_fetcher.py 是否正常返回数据\n")
+
+    _EXTRACTION_META_FILE.write_text(json.dumps({
+        "bb_matches_total": n_matches,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+    }))
 
 
 def main():
@@ -1727,6 +2162,19 @@ def main():
                 pin_hc_line = home_sp.get("points")
                 bb_hc_line_val = bb_hc.get("home_line") or bb_hc.get("away_line")
                 cal_ok, cal_msg = _calibrate_market_line(sport, "hc", bb_hc_line_val, pin_hc_line, None)
+                if cal_ok:
+                    # 二次校验：同时检查 home 和 away 两条线的一致性
+                    # 防止因盘口线波动导致单侧校验通过但整体错配
+                    bb_hl = bb_hc.get("home_line")
+                    bb_al = bb_hc.get("away_line")
+                    pin_hl = home_sp.get("points")
+                    pin_al = away_sp.get("points")
+                    if all(x is not None for x in (bb_hl, bb_al, pin_hl, pin_al)):
+                        home_ok = abs(bb_hl - pin_hl) <= 0.01
+                        away_ok = abs(bb_al - pin_al) <= 0.01
+                        if not (home_ok or away_ok):
+                            cal_ok = False
+                            cal_msg = f"让球线错配: BB=[{bb_hl},{bb_al}] vs Pin=[{pin_hl},{pin_al}]"
                 if not cal_ok:
                     if cal_msg not in entry["flags"]:
                         entry["flags"].append(cal_msg)
@@ -2117,16 +2565,39 @@ def main():
         for o in entry.get("draw_no_bet", []):
             print(f"    ✅ +EV {o['ev_pct']}%: {o['designation']} (BB={o['bb_odds']} Fair={o['fair_price']})")
 
+    # 提取量一致性检查：如果 BB 比赛数比上次骤降 >30%，打印醒目警告
+    _check_extraction_consistency(len(bb_matches))
+
     # Save
     timestamp = time.strftime('%Y-%m-%dT%H:%M:%S')
     # Sport → name mapping for output
     sport_name_map = {"football":"足球","basketball":"篮球","tennis":"网球","baseball":"棒球","american_football":"美式足球"}
+    # Per-sport breakdown for consistency tracking
+    sport_counts = {}
+    sport_opp_counts = {}
+    for entry in opportunities:
+        s = entry.get("sport", "unknown")
+        sport_counts[s] = sport_counts.get(s, 0) + 1
+        n_opps = (len(entry.get("opportunities", [])) + len(entry.get("handicap", []))
+                   + len(entry.get("over_under", [])) + len(entry.get("double_chance", []))
+                   + len(entry.get("draw_no_bet", [])))
+        sport_opp_counts[s] = sport_opp_counts.get(s, 0) + n_opps
+
     output = {
+        "version": "2.0",
+        "parameters": {
+            "phase2_threshold_default": 0.70,
+            "phase2_threshold_tennis": 0.75,
+            "ev_cap_pct": 15,
+            "min_ev_pct": 1,
+        },
         "timestamp": timestamp,
         "bb_matches_total": len(bb_matches),
         "pinnacle_leagues_found": len(matched_leagues),
         "matched_matches": len(matched),
         "matches_with_ev": len(opportunities),
+        "per_sport_matched": {k: v for k, v in sorted(sport_counts.items())},
+        "per_sport_opportunities": {k: v for k, v in sorted(sport_opp_counts.items())},
         "opportunities_1x2": total_opps_1x2,
         "opportunities_handicap": total_hc,
         "opportunities_over_under": total_ou,

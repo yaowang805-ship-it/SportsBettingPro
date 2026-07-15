@@ -1,103 +1,80 @@
-# SportsBettingPro — 项目指南
+# SportsBettingPro — 指挥官作战手册
 
-## 当前策略（2026-07-12）
+## 当前策略（2026-07-15 指挥官模式）
 
 **核心方向：BB体育 vs Pinnacle +EV（比价套利）**
 - BB体育（早盘赔率）vs Pinnacle（公平价参考）→ +EV 机会
-- 发现机会 → 钉钉推送 → 虚拟投注
+- 发现机会 → 钉钉推送 → 真实投注（用户执行）
+- **目标：月利润 ¥50,000**
 
 **不做什么：**
-- ❌ 不做 ML 预测模型（已暂停，2026-07 已清理 2GB+ 遗留 ML 数据）
-- ❌ 不做 NFL（美式足球 BB 冠军盘口无法解析）
-- ❌ 不使用 BSD API 或 the-odds-api（已停用）
+- ❌ 不做 ML 预测模型
+- ❌ 不碰中国足球联赛
+- ❌ 不使用 BSD API 或 the-odds-api
 - ❌ 不重复已经完成的工作（先查记忆）
 
 ## 数据源
 
-| 用途 | 数据源 | 配额 | 状态 |
+| 用途 | 数据源 | 方式 | 状态 |
 |---|---|---|---|
-| 投注平台赔率 | BB体育 (pc.x14ff.com SPA) | 免费 | ✅ 主力 |
-| 公平价参考 | Pinnacle (guest.api.arcadia.pinnacle.com) | 免费无限 | ✅ |
-| 赛果/结算 | ESPN (sports-skills) + football-data.org | 免费无限 | ✅ |
+| 投注平台赔率 | BB体育 (api.infv1.com) | 直接 HTTP API | ✅ 主力 |
+| 公平价参考 | Pinnacle (guest.api.arcadia.pinnacle.com) | HTTP API | ✅ |
+| 赛果/结算 | ESPN | HTTP API | ✅ |
 
 ## 系统架构
 
 ```
-BB体育 (pc.x14ff.com SPA) ──→ bb_extract_odds.py (--all-sports) ──→ bb_odds_extracted.json
-                    │              ├── bb_extract_x14ff.js (文本解析-FT)
-                    │              └── bb_extract_dom.js (DOM读取-FT+HT盘口)
-                    ↓
-Pinnacle API ──────────────→ bb_vs_pinnacle.py ──→ bb_vs_pinnacle_comparison.json
-                    │        ├── period=0 → FT 对比
-                    │        └── period=1 → HT 对比（上半场）
-                    ↓
-                    bb_ev_push.py → 钉钉推送 (+EV，含上半场盘口)
+BB API (api.infv1.com) ──────→ bb_api_fetcher.py ──→ bb_odds_extracted.json
+                                   └── type=2 (72小时), requests 直连
+                                              ↓
+Pinnacle API ─────────────────────→ bb_vs_pinnacle.py ──→ bb_vs_pinnacle_comparison.json
+                                   ├── period=0 → FT 对比
+                                   └── period=1 → HT 对比
+                                              ↓
+                              bb_ev_push.py → 钉钉推送
+                                   ├── ≥2% EV, 按开赛时间排序
+                                   ├── DNS 绕过直连（真实IP+SNI）
+                                   └── --no-bet = 只推送不投注
 ```
 
-### 每日流程
+### 操作流程
 
-| 时间(北京) | 事件 | 说明 |
+```bash
+# 全量提取 → 对比 → 推送（第一次扫描含投注）
+python3 -m src.scrapers.bb_api_fetcher --all-sports
+python3 -m src.scrapers.bb_vs_pinnacle
+python3 -m src.report.bb_ev_push
+
+# 后续扫描只推送（当日预算已用）
+python3 -m src.report.bb_ev_push --no-bet
+```
+
+## 当前参数
+
+| 参数 | 值 | 说明 |
 |---|---|---|
-| 08:57 | main.py | auto_settle + 风控报告 (LaunchAgent) |
-| 09:00 | daily_settlement.py | 推送昨日结算报告 (LaunchAgent) |
-| 14:00/18:00/22:00/02:00 | 手动扫描+推送 | 见下方操作流程 |
-
-### 操作流程（每天第一次扫描之后）
-
-```bash
-bb_extract_odds.py --all-sports    # 1. 提取BB体育赔率（Chrome需打开）
-bb_vs_pinnacle.py                  # 2. 对比Pinnacle计算+EV
-bb_ev_push.py                      # 3. 钉钉推送 + 自动投注¥1万
-```
-
-第二次及以后的扫描只推送到钉钉即可，不需要重复投注（每日预算已用完）：
-```bash
-bb_ev_push.py --no-bet             # 只推送不投注
-```
-
-### 结算报告
-
-每天上午 09:00 LaunchAgent 自动推送结算报告到钉钉，包含：
-- 昨日新增结算（赢/输/盈亏）
-- 累计统计（总投注、胜率、ROI、总盈亏）
-- 待结算清单
-- 当日预算使用情况
-```
+| 日预算 | ¥50,000 | 支撑月利润¥50k目标 |
+| Kelly 分数 | 0.25 | 保守投注 |
+| 最小 EV | 2% | 低溢价不值得追 |
+| EV 上限 | 15% | 防假阳性 |
+| 单注上限 | 2% | ¥1,000 |
+| 每日最多 | 50 笔 | |
 
 ## 关键文件
 
-- `src/scrapers/bb_extract_odds.py` — BB体育 赔率提取（AppleScript + Chrome），`--all-sports` 多运动
-- `src/scrapers/bb_extract_x14ff.js` — pc.x14ff.com SPA 文本解析器（FT赔率，向后兼容）
-- `src/scrapers/bb_extract_dom.js` — DOM提取器（按class name读取，FT + HT盘口同时提取）
-- `src/scrapers/bb_vs_pinnacle.py` — BB vs Pinnacle 对比引擎（含去抽水公平价计算，FT + HT对比）
-- `src/betting/bb_virtual_bet.py` — 虚拟投注执行（¥10,000 每日预算，按日重置，Kelly基于公平价）
-- `src/betting/bb_settle.py` — BB体育 投注结算
-- `src/report/bb_ev_push.py` — 钉钉推送（运动分组 + 联赛分组 + 开赛时间 + Kelly 分配 + 自动投注）
-- `src/report/daily_settlement.py` — 每日晨间结算报告（LaunchAgent 09:00 自动推送，含止损状态）
-- `src/report/periodic_report.py` — 联赛维度周报/月报（按联赛分析 ROI/胜率/盈亏，LaunchAgent 定时推送）
+- `src/scrapers/bb_api_fetcher.py` — BB API 直连提取（Chrome 无依赖）
+- `src/scrapers/bb_vs_pinnacle.py` — 对比引擎（去抽水公平价, FT+HT）
+- `src/betting/bb_virtual_bet.py` — 虚拟投注（¥50,000日预算）
+- `src/report/bb_ev_push.py` — 钉钉推送（格式优化: 置信度+时间排序）
 - `src/monitor/auto_settle.py` — ESPN 自动结算
-- `src/monitor/performance.py` — 投注结算+盈亏监控
-- `src/risk/manager.py` — 组合风控（含 DynamicStaking）
-- `main.py` — 每日流水线（清理后：仅跑 performance + health_check + 风控）
-- `scripts/daily_settlement_push.sh` — LaunchAgent 脚本，09:00 推送结算报告
+- `config/dingtalk.py` — 钉钉直连（真实IP+SNI 绕过 DNS 劫持）
 
 ## 关键决策
 
-1. **BB体育 主力** — 只能在 BB体育 下注，只对比 BB体育 vs Pinnacle。
-2. **BSD API + the-odds-api 已停用** — 用不了其他零售平台，对比了也没用。
-3. **pc.x14ff.com SPA 提取** — 单次导航到早盘页面，通过 SPA 点击切换运动（sportId: 足球=1, 篮球=3, 网球=5, 美式足球=6, 棒球=7）。
-4. **运动支持** — 足球(3-way)、篮球/棒球/网球(2-way)。美式足球在 champion 盘口，无法解析。
-5. **扫描频次** — 每天 4 次（14/18/22/02 北京时间），覆盖欧洲全天比赛。
-6. **开赛时间** — 推送中显示北京时间（由 Pinnacle 的 UTC start_time 转换）。
-7. **公平价 = 去抽水赔率** — Pinnacle 抽水后的真实公平价，高于 Pinnacle 实际赔率。溢价 = (BB - 公平价) / 公平价。
-8. **虚拟投注** — 每日固定 ¥10,000 预算（按日重置），Kelly 分数 0.25（基于公平价），单注 max 2%，每日上限 50 笔。
-9. **止损机制** — 连输 3 天 → 预算减半；连输 5 天 → 停投。基于按日汇总盈亏自动计算。
-10. **每日结算报告** — LaunchAgent 每天 09:00 推送，含昨日盈亏、累计ROI、待结算清单、止损状态。
-11. **周报/月报** — LaunchAgent 周报（周日 21:00）+ 月报（每月 1 日 10:00），按联赛维度分析 ROI/胜率/盈亏。
-
-## 编码约定
-
-- 中文注释
-- 钉钉通知用 `send_dingtalk()` 函数
-- 新功能先查记忆和 CLAUDE.md 确认未重复
-- 禁用 "BB体育" 关键词（钉钉内容安全过滤）
+1. **BB API 直连** — `api.infv1.com` POST + Authorization token（从 Chrome LevelDB 提取）
+2. **type=2** — 返回未来72小时比赛（658场），type=3 仅当天（26场）
+3. **钉钉直连** — Shadowrocket VPN 劫持 DNS，硬编码真实IP `161.117.107.66` + SNI
+4. **requests 库** — Python 3.14 urllib 有 IncompleteRead bug，大响应截断
+5. **置信度标记** — ✓ = 队名匹配(≥0.95), ◷ = 时间匹配
+6. **≥2% EV** — 低于2%的溢价不值得追，过滤噪音
+7. **止损机制** — 连输3天预算减半，5天停投

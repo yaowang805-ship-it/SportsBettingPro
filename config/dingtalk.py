@@ -1,13 +1,11 @@
-"""钉钉机器人推送工具 — 绕过本地 DNS 拦截
+"""钉钉机器人推送工具 — DNS 绕过直连
 
-用法:
-    from config.dingtalk import send_dingtalk
-    send_dingtalk("投注推荐 消息内容")
-    send_dingtalk("投注推荐 消息内容", msgtype="markdown", title="标题")
+Shadowrocket VPN DNS 劫持 oapi.dingtalk.com → 198.18.0.35（假 IP），
+通过硬编码真实 IP + SNI（Server Name Indication）绕过。
 """
 import json
-
-import requests
+import socket
+import ssl
 
 from config.logging_config import get_logger
 from config.settings import DINGTALK_WEBHOOK
@@ -16,13 +14,31 @@ logger = get_logger(__name__)
 
 _TIMEOUT = 15
 
+# oapi.dingtalk.com 真实 IP（DNS 查询 8.8.8.8 获取，备用防止 VPN 劫持）
+_REAL_IP = "161.117.107.66"
+
+
+def _resolve_host(webhook: str):
+    """从 webhook URL 解析 host 和 path。"""
+    rest = webhook
+    if rest.startswith("https://"):
+        rest = rest[len("https://"):]
+    elif rest.startswith("http://"):
+        rest = rest[len("http://"):]
+    host = rest.split("/", 1)[0]
+    path = "/" + rest.split("/", 1)[1] if "/" in rest else ""
+    return host, path
+
 
 def send_dingtalk(
     content: str,
     msgtype: str = "text",
     title: str = "",
 ) -> bool:
-    """发送钉钉消息。
+    """发送钉钉消息（DNS 绕过直连）。
+
+    用真实 IP 建立 TCP 连接，SSL SNI 设置为 oapi.dingtalk.com，
+    绕过 Shadowrocket VPN 的 DNS 劫持。
 
     Args:
         content: 消息正文
@@ -41,18 +57,45 @@ def send_dingtalk(
     else:
         payload = {"msgtype": "text", "text": {"content": content}}
 
-    headers = {"Content-Type": "application/json"}
+    body = json.dumps(payload)
+    host, path = _resolve_host(DINGTALK_WEBHOOK)
 
-    # 用 requests 发送（trust_env=False 避免 Python 3.14 环境问题）
-    sess = requests.Session()
-    sess.trust_env = False
-
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(_TIMEOUT)
     try:
-        resp = sess.post(DINGTALK_WEBHOOK, json=payload, headers=headers, timeout=_TIMEOUT)
-        if resp.status_code != 200:
-            logger.warning("  钉钉推送异常: HTTP Error %s", resp.status_code)
-            return False
-        result = resp.json()
+        sock.connect((_REAL_IP, 443))
+
+        ctx = ssl.create_default_context()
+        ssock = ctx.wrap_socket(sock, server_hostname=host)
+
+        req = (
+            f"POST {path} HTTP/1.1\r\n"
+            f"Host: {host}\r\n"
+            f"Content-Type: application/json\r\n"
+            f"Content-Length: {len(body)}\r\n"
+            f"Connection: close\r\n"
+            f"\r\n"
+            f"{body}"
+        )
+        ssock.sendall(req.encode())
+
+        resp_data = b""
+        while True:
+            chunk = ssock.recv(4096)
+            if not chunk:
+                break
+            resp_data += chunk
+
+        resp_text = resp_data.decode(errors="replace")
+        # 找到 body 部分
+        if "\r\n\r\n" in resp_text:
+            http_body = resp_text.split("\r\n\r\n", 1)[1]
+        elif "\n\n" in resp_text:
+            http_body = resp_text.split("\n\n", 1)[1]
+        else:
+            http_body = resp_text
+
+        result = json.loads(http_body)
         if result.get("errcode") == 0:
             logger.info("  钉钉推送成功")
             return True
@@ -60,14 +103,17 @@ def send_dingtalk(
             logger.warning('  钉钉推送失败: 关键词不匹配（需包含"投注推荐"）')
             return False
         else:
-            logger.warning("  钉钉推送失败: %s", result.get("errmsg", resp.text))
+            logger.warning("  钉钉推送失败: %s", result.get("errmsg", resp_text[:200]))
             return False
-    except requests.exceptions.Timeout:
+
+    except socket.timeout:
         logger.warning("  钉钉推送超时")
-        return False
-    except requests.exceptions.ConnectionError:
-        logger.warning("  钉钉推送连接失败")
         return False
     except Exception as e:
         logger.warning("  钉钉推送异常: %s", e)
         return False
+    finally:
+        try:
+            sock.close()
+        except Exception:
+            pass
