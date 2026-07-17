@@ -140,13 +140,13 @@ def _min_ev_for_tier(tier: int) -> float:
     if tier == 1:
         return 2.0
     elif tier == 2:
-        return 3.0
+        return 2.0
     elif tier == 3:
-        return 5.0
+        return 3.0
     return 99.0  # Tier 4 不推送
 
 # EV 上限 — EV > 此值几乎全是假阳性（队名匹配到错误比赛）
-EV_CAP = 15
+EV_CAP = 20
 
 
 def _check_sport_consistency(opportunities: list) -> list:
