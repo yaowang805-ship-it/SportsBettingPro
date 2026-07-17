@@ -29,7 +29,121 @@ CONSISTENCY_WARN_THRESHOLD = 0.20
 _BANNED_LEAGUES = [
     "马里篮球甲级联赛",
     "球会友谊赛",  # Pinnacle 覆盖不全，无法准确匹配
+    "越南职业篮球联赛",
+    "危地马拉大都会篮球联赛",
+    "卢旺达全国篮球联赛",
+    "乌干达篮球联赛",
+    "乌干达女子篮球联赛",
+    "黎巴嫩篮球甲级联赛",
+    "多米尼加共和国LNB",
+    "菲律宾PBA总督杯",
+    "澳大利亚新南威尔士",  # 澳洲低级别足球联赛，Pinnacle不覆盖
+    "澳大利亚维多利亚",    # 同上
+    "澳大利亚昆士兰",      # 同上
+    "南澳大利亚",          # 同上
+    "澳大利亚北领地",      # 同上
+    "澳大利亚塔斯马尼亚",  # 同上
+    "澳大利亚西部",
+    "澳大利亚杯",
+    "乌拉圭女子篮球联赛",  # 用户反馈错误率高
+    "乌拉圭METRO联赛",    # 用户反馈错误率高
+    # 中国足球 — 假球高风险市场，全部拉黑
+    "中国甲级联赛", "中国超级联赛", "中国乙级联赛",
+    "中超", "中国足球超级联赛", "Chinese Super League",
+    "中甲", "中乙", "中冠",
+    "中国女子甲级联赛", "中国女子超级联赛", "中国女子乙级联赛",
+    "足协杯", "中国足协杯",
 ]
+
+# ── 联赛可信度分层（Tier 1 = Pinnacle 最可靠） ──
+# 每层最低 EV 门槛不同，推送排序按层优先
+# Tier 1: Pinnacle 核心联赛，定价最准 → min EV 2%
+# Tier 2: 主流二级联赛 → min EV 3%
+# Tier 3: 低级别/非主流联赛 → min EV 5%
+# Tier 4: 仅扫描不推送（积累数据备用）
+_LEAGUE_TIERS = {
+    # ═══ Tier 1 — Pinnacle 核心联赛 ═══
+    # 足球五大联赛 + 顶级联赛
+    "英格兰超级联赛": 1, "西班牙甲级联赛": 1, "德国甲级联赛": 1,
+    "意大利甲级联赛": 1, "法国甲级联赛": 1,
+    "英格兰冠军联赛": 1, "德国乙级联赛": 1,
+    "荷兰甲级联赛": 1, "葡萄牙超级联赛": 1,
+    "巴西甲级联赛": 1, "阿根廷甲级联赛": 1,
+    "美国职业大联盟": 1,
+    # 篮球核心
+    "NBA": 1, "WNBA": 1, "美国职业篮球联赛": 1,
+    # 棒球核心
+    "MLB": 1, "美国职业棒球大联盟": 1,
+
+    # ═══ Tier 2 — 主流二级联赛 ═══
+    # 欧洲二级联赛 + 主流小联赛
+    "挪威超级联赛": 2, "瑞典超级联赛": 2, "丹麦超级联赛": 2,
+    "英格兰甲级联赛": 2, "英格兰乙级联赛": 2,
+    "巴西乙级联赛": 2, "阿根廷全国联赛": 2,
+    "俄罗斯甲级联赛": 2, "保加利亚甲级联赛": 2, "罗马尼亚甲级联赛": 2,
+    "南美俱乐部杯": 2, "南美解放者杯": 2,
+    "冰岛超级联赛": 2, "瑞典超甲级联赛": 2,
+    "美国冠军联赛": 2,
+    "英格兰联赛杯": 2, "英格兰社区盾": 2,
+    "法国超级杯": 2, "德国超级杯": 2,
+    "巴西杯": 2,
+    "墨西哥超级联赛": 2, "智利甲级联赛": 2, "哥伦比亚甲级联赛": 2,
+    "秘鲁甲级联赛": 2, "厄瓜多尔甲级联赛": 2,
+    "比利时甲级联赛": 2, "瑞士超级联赛": 2, "奥地利甲级联赛": 2,
+    "土耳其超级联赛": 2, "希腊超级联赛": 2,
+    "波兰甲级联赛": 2, "捷克甲级联赛": 2,
+    "匈牙利甲级联赛": 2, "塞尔维亚超级联赛": 2, "斯洛文尼亚甲级联赛": 2,
+    "乌克兰超级联赛": 2, "俄罗斯超级联赛": 2, "俄罗斯杯": 2, "俄罗斯超级杯": 2,
+    "韩国K1联赛": 2, "韩国乙级联赛": 2, "韩国足协杯": 2,
+    "欧足联欧洲会议联赛-资格赛": 2, "欧足联欧洲联赛-资格赛": 2,
+    "欧洲冠军联赛-资格赛": 2,
+    "苏格兰超级联赛": 2, "苏格兰联赛杯": 2,
+    "丹麦甲级联赛": 2, "挪威甲级联赛": 2,
+    # 篮球二级
+    "欧洲篮球联赛": 2, "FIBA欧洲": 2,
+    "新西兰全国篮球联赛": 2, "新西兰 - NBL": 2,
+    "波多黎各国家篮球联赛": 2,
+    "澳大利亚北部篮球联赛": 2, "澳大利亚南部篮球联赛": 2,
+    "澳大利亚东部篮球联赛": 2, "澳大利亚西部篮球联赛": 2, "澳大利亚中部篮球联赛": 2,
+    # 棒球二级
+    "日本职业棒球": 2, "韩国棒球": 2, "中华职业棒球大联盟": 2,
+    "墨西哥棒球联盟": 2,
+
+    # ═══ Tier 3 — 低级别/非主流 ═══
+    "加拿大超级联赛": 3, "爱沙尼亚甲级联赛": 3,
+    "芬兰超级联赛": 3, "芬兰甲级联赛": 3, "芬兰乙级联赛": 3,
+    "阿根廷杯": 3,
+    "澳大利亚北部女子篮球联赛": 3, "澳大利亚南部女子篮球联赛": 3,
+    "巴拉圭": 3, "白俄罗斯超级联赛": 3, "哈萨克斯坦超级联赛": 3,
+    "乌拉圭甲级联赛": 3, "乌拉圭METRO联赛": 3, "乌拉圭女子篮球联赛": 3,
+    "澳门甲级联赛": 3,
+    "巴西LBF女子篮球联赛": 3,
+    "澳大利亚维多利亚州": 3, "澳大利亚新南威尔士州": 3,
+
+    # ═══ Tier 4 — 仅扫描不推送 ═══
+    "世界网球": 4, "ITF": 4, "ATP挑战赛": 4,
+    "NBA夏季联赛": 4,
+    "智利全国篮球联赛": 4,
+}
+
+
+def _get_league_tier(league: str) -> int:
+    """返回联赛所属 Tier (1-4)，不认识的联赛默认 Tier 3。"""
+    for kw, tier in _LEAGUE_TIERS.items():
+        if kw in league:
+            return tier
+    return 3
+
+
+def _min_ev_for_tier(tier: int) -> float:
+    """每层最低 EV 门槛。"""
+    if tier == 1:
+        return 2.0
+    elif tier == 2:
+        return 3.0
+    elif tier == 3:
+        return 5.0
+    return 99.0  # Tier 4 不推送
 
 # EV 上限 — EV > 此值几乎全是假阳性（队名匹配到错误比赛）
 EV_CAP = 15
@@ -78,21 +192,9 @@ def _check_sport_consistency(opportunities: list) -> list:
 
 
 def _league_multiplier(league: str) -> float:
-    """根据联赛级别动态加权：主流联赛 1.0，次级 0.85，其他 0.7。"""
-    major = ["ATP - ", "WTA - ", "NBA", "WNBA", "MLB",
-             "英格兰", "西班牙", "德国甲", "意大利", "法国",
-             "超级联赛", "冠军联赛", "世界杯", "欧冠", "欧联"]
-    medium = ["挑战赛", "125K", "瑞典超", "挪威超", "芬兰",
-              "FIBA欧洲", "欧洲篮球", "欧洲联赛",
-              "日本职业", "KBO", "韩国", "澳洲",
-              "白俄罗斯", "哈萨克", "乌拉圭", "巴拉圭"]
-    for kw in major:
-        if kw in league:
-            return 1.0
-    for kw in medium:
-        if kw in league:
-            return 0.85
-    return 0.7
+    """根据联赛 Tier 返回 Kelly 加权。"""
+    tier = _get_league_tier(league)
+    return {1: 1.0, 2: 0.9, 3: 0.7, 4: 0.5}.get(tier, 0.7)
 
 
 def _calc_kelly_stakes(opps: list) -> list:
@@ -130,6 +232,16 @@ def _calc_kelly_stakes(opps: list) -> list:
 
 def _collect_opportunities(match, market_key):
     """从指定市场收集 +EV 机会。校准过滤：时间匹配必须高分才推送。"""
+    # 72小时窗口过滤：超过未来72小时的比赛不推送
+    pin_epoch = match.get("start_time_pin_epoch")
+    if pin_epoch:
+        now_epoch = datetime.now(timezone.utc).timestamp()
+        if pin_epoch > now_epoch + 72 * 3600:
+            return []
+        # 已开赛过滤：开赛时间已过的比赛不推送（给5分钟缓冲）
+        if pin_epoch + 300 < now_epoch:
+            return []
+
     match_type = match.get("match_type", "unknown")
     match_score = match.get("match_score", 0.7)
     # 时间匹配（非队名匹配）需要高置信度，防止推错比赛。
@@ -150,10 +262,19 @@ def _collect_opportunities(match, market_key):
         if banned in league:
             return []
 
+    # 联赛可信度分层过滤
+    tier = _get_league_tier(league)
+    if tier == 4:
+        return []  # Tier 4 仅扫描不推送
+    # Tier 2/3: 非队名匹配且匹配分<0.90 不推送（防假阳性）
+    if tier >= 2 and match_type != "name" and match_score < 0.90:
+        return []
+    min_ev = _min_ev_for_tier(tier)
+
     result = []
     for opp in match.get(market_key, []):
         ev = opp.get("ev_pct", 0)
-        if ev < 2:  # 指挥官模式：低于2%溢价不值得追
+        if ev < min_ev:  # 按 Tier 动态门槛过滤
             continue
         bb_odds = opp.get("bb_odds", 0)
         pin_odds = opp.get("pin_odds", 0)
@@ -185,6 +306,8 @@ def _collect_opportunities(match, market_key):
             "league": league,
             "home_cn": home_cn,
             "away_cn": away_cn,
+            "home_team": match.get("home_pin", home_cn),
+            "away_team": match.get("away_pin", away_cn),
             "designation": display_name,
             "bb_odds": bb_odds,
             "pin_odds": pin_odds,
@@ -193,6 +316,7 @@ def _collect_opportunities(match, market_key):
             "_match_score": match_score,
             "_score": score,
             "_kelly_pct": kelly_pct,
+            "_tier": tier,
             "_pin_epoch": match.get("start_time_pin_epoch"),  # 用于显示开赛时间
         })
     return result
@@ -224,34 +348,33 @@ def _collect_opportunities_from_file():
 
 
 def _diversify_and_rank(qualified: list) -> list:
-    """多样性选择 + 排序 + Kelly 分配。"""
+    """多样性选择 + 按联赛 Tier 排序 + Kelly 分配。"""
     if not qualified:
         return []
 
     SPORT_ORDER = {"football": 0, "basketball": 1, "tennis": 2, "baseball": 3, "american_football": 4}
 
-    # 各运动至少保留 1 条
+    # 各运动至少保留 1 条（按 Tier 优先选）
     selected = []
     selected_ids = set()
     for sport in ("football", "basketball", "tennis", "baseball", "american_football"):
         sport_opps = [o for o in qualified if o.get("sport") == sport]
         if sport_opps:
-            best = max(sport_opps, key=lambda x: x["_score"])
+            best = max(sport_opps, key=lambda x: (4 - x.get("_tier", 3), x["_score"]))
             selected.append(best)
             selected_ids.add(id(best))
 
     remaining = [o for o in qualified if id(o) not in selected_ids]
-    remaining.sort(key=lambda o: -o["_score"])
+    # 核心改动：按 Tier 排序（1 优先），同 Tier 内按 score 降序
+    remaining.sort(key=lambda o: (o.get("_tier", 3), -o["_score"]))
     max_remaining = MAX_OPPORTUNITIES - len(selected)
     selected.extend(remaining[:max_remaining])
     qualified = selected
 
-    # 排序：运动→联赛→开赛时间
+    # 最终展示排序：按 Tier → 运动 → 开赛时间
     qualified.sort(key=lambda o: (
+        o.get("_tier", 3),
         SPORT_ORDER.get(o.get("sport", ""), 99),
-        o.get("league", ""),
-        o.get("home_cn", ""),
-        o.get("away_cn", ""),
         o.get("_pin_epoch") if o.get("_pin_epoch") else 9999999999,
     ))
 
@@ -284,6 +407,8 @@ def _format_body(qualified: list, warnings: list | None = None) -> str:
     prev_league = None
     prev_match = None
     match_idx = 0
+    _TIER_LABEL = {1: "T1", 2: "T2", 3: "T3"}
+
     for o in qualified:
         oc = o["designation"]
         pinny = round(o.get("pin_odds", 0), 2) if o.get("pin_odds", 0) > 0 else 0
@@ -292,6 +417,8 @@ def _format_body(qualified: list, warnings: list | None = None) -> str:
         ev_pct = o["ev_pct"]
         stake = o["_stake"]
         match_key = (o.get("home_cn", ""), o.get("away_cn", ""))
+        tier = o.get("_tier", 3)
+        tier_label = _TIER_LABEL.get(tier, "")
 
         sport = o.get("sport", "")
         sport_label = SPORT_CN.get(sport, "")
@@ -305,7 +432,7 @@ def _format_body(qualified: list, warnings: list | None = None) -> str:
 
         league = o.get("league", "")
         if league and league != prev_league:
-            lines.append(f"  {league}")
+            lines.append(f"  [{tier_label}] {league}")
             prev_league = league
             prev_match = None
 
@@ -326,10 +453,10 @@ def _format_body(qualified: list, warnings: list | None = None) -> str:
     title = f"+EV 投注推荐: {match_idx} 场比赛"
     body = (
         f"**{title}**\n\n"
-        f"扫描 {now_str} | ≥2% 溢价 | 总额 ¥{total_allocated:,}\n\n"
+        f"扫描 {now_str} | 总额 ¥{total_allocated:,}\n\n"
         + "\n".join(lines).strip()
     )
-    body += "\n\n---\n💡 公平价 = Pinnacle去抽水赔率 | 溢价 = (BB - 公平价) / 公平价 | 赔率实时变动，以 Pinnacle 网站当前价为准"
+    body += "\n\n---\n💡 T1=Pinnacle最可靠 T2=主流联赛 T3=低级别 | 公平价 = Pinnacle去抽水赔率 | 溢价 = (BB - 公平价) / 公平价 | 赔率实时变动，以 Pinnacle 网站当前价为准"
     return body
 
 

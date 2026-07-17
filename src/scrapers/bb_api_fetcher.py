@@ -86,6 +86,13 @@ def _get_h5_token_from_chrome():
     env_token = os.environ.get("BB_API_TOKEN")
     if env_token:
         return env_token
+    # 再检查 .bb_token 文件（持久化缓存）
+    token_file = os.path.join(os.path.dirname(__file__), "..", "..", ".bb_token")
+    if os.path.isfile(token_file):
+        tok = open(token_file).read().strip()
+        if tok and len(tok) > 30:
+            logger.info("从 .bb_token 文件读取 API token")
+            return tok
 
     # 通过 AppleScript 从正在运行的 Chrome 获取
     import subprocess, tempfile
@@ -95,13 +102,14 @@ def _get_h5_token_from_chrome():
     try:
         out = subprocess.check_output(["osascript", ascript], text=True, timeout=15)
         ls = json.loads(out.strip())
-        h5 = ls.get("h5-token", "")
+        # bb60.com 存的是 h5-token，pc.x14ff.com 存的是 user-token（值相同）
+        h5 = ls.get("h5-token", "") or ls.get("user-token", "")
         if h5:
-            logger.info("从 Chrome localStorage 获取到 h5-token")
+            logger.info("从 Chrome localStorage 获取到 API token")
             return h5
-        logger.warning("Chrome localStorage 中未找到 h5-token")
+        logger.warning("Chrome localStorage 中未找到 h5-token 或 user-token")
     except Exception as e:
-        logger.warning("从 Chrome 获取 h5-token 失败: %s", e)
+        logger.warning("从 Chrome 获取 token 失败: %s", e)
 
     # 备选：从 LevelDB 搜索
     leveldb_dir = os.path.expanduser(
@@ -116,8 +124,8 @@ def _get_h5_token_from_chrome():
                 data = open(fpath, "rb").read()
             except (OSError, IOError):
                 continue
-            # 搜索 h5-token base64 值
-            m = re.search(rb'h5-token.\x01([A-Za-z0-9+/=]{40,60})', data)
+            # 搜索 h5-token 或 user-token（新格式含 tt_ 前缀和点号）
+            m = re.search(rb'(?:h5-token|user-token).\x01([A-Za-z0-9_.-]{30,80})', data)
             if m:
                 token = m.group(1).decode()
                 logger.info("从 Chrome LevelDB %s 提取到 h5-token", fname)

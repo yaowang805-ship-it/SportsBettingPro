@@ -10,7 +10,7 @@
 **不做什么：**
 - ❌ 不做 ML 预测模型
 - ❌ 不碰中国足球联赛
-- ❌ 不使用 BSD API 或 the-odds-api
+- ❌ BSD API / the-odds-api 不用于比价（有 quota），但可用于赛果结算
 - ❌ 不重复已经完成的工作（先查记忆）
 
 ## 数据源
@@ -19,7 +19,7 @@
 |---|---|---|---|
 | 投注平台赔率 | BB体育 (api.infv1.com) | 直接 HTTP API | ✅ 主力 |
 | 公平价参考 | Pinnacle (guest.api.arcadia.pinnacle.com) | HTTP API | ✅ |
-| 赛果/结算 | ESPN | HTTP API | ✅ |
+| 赛果/结算 | ESPN + football-data.org + The Odds API + 直播吧 | 多源聚合 | ✅ |
 
 ## 系统架构
 

@@ -1,4 +1,4 @@
-"""虚拟投注自动结算 — 根据 ESPN 已完成比赛结果自动结算待处理投注。"""
+"""虚拟投注自动结算 — 多数据源（ESPN + football-data.org + 直播吧）自动结算。"""
 import sys
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -14,7 +14,7 @@ from src.dashboard.components.virtual_portfolio import (
     _load_state, _save_state, settle_bet,
 )
 from src.core.team_names import cn_to_odds_name
-from fetchers.espn_scores import fetch_espn_scores, LEAGUE_ESPN_PATH
+from fetchers.multi_source_scores import get_completed_scores
 from src.risk.manager import RiskManager
 
 logger = get_logger(__name__)
@@ -121,6 +121,54 @@ LEAGUE_SPORT_MAP = {
     "阿根廷全国联赛": (None, "阿根廷全国联赛"),
     "英格兰联赛杯": (None, "英格兰联赛杯"),
     "澳门甲级联赛": (None, "澳门甲级联赛"),
+    # 新增 BB API 联赛映射
+    "保加利亚甲级联赛": ("soccer_bulgaria_first_league", "保甲"),
+    "韩国K1联赛": ("soccer_korea_k_league", "K1联赛"),
+    "罗马尼亚甲级联赛": ("soccer_romania_liga_1", "罗甲"),
+    "阿根廷全国联赛": ("soccer_argentina_primera_b_nacional", "阿全国联"),
+    "阿根廷甲级联赛": ("soccer_argentina_primera_division", "阿甲"),
+    "挪威超级联赛": ("soccer_norway_eliteserien", "挪超"),
+    "瑞士超级联赛": ("soccer_switzerland_super_league", "瑞士超"),
+    "奥地利甲级联赛": ("soccer_austria_bundesliga", "奥甲"),
+    "丹麦超级联赛": ("soccer_denmark_superliga", "丹超"),
+    "捷克甲级联赛": ("soccer_czech_first_league", "捷甲"),
+    "克罗地亚甲级联赛": ("soccer_croatia_first_league", "克甲"),
+    "塞尔维亚超级联赛": ("soccer_serbia_super_league", "塞超"),
+    "波兰甲级联赛": ("soccer_poland_ekstraklasa", "波甲"),
+    "英格兰联赛杯": ("soccer_england_league_cup", "英联赛杯"),
+    "球会友谊赛": (None, "球会友谊赛"),
+    "美国冠军联赛": ("soccer_usa_usl_championship", "美冠联"),
+    "澳大利亚杯": ("soccer_australia_cup", "澳洲杯"),
+    "厄瓜多尔甲级联赛": ("soccer_ecuador_serie_a", "厄甲"),
+    "巴西杯": ("soccer_brazil_cup", "巴西杯"),
+    "南美俱乐部杯": ("soccer_conmebol_copa_sudamericana", "南美杯"),
+    "南美解放者杯": ("soccer_copa_libertadores", "解放者杯"),
+    # 网球 — 无 ESPN 覆盖，纯超时作废
+    "ATP - 格施塔德公开赛 - 双打": (None, "ATP格施塔德双打"),
+    "ATP挑战赛 - 林肯公开赛": (None, "ATP挑战赛林肯"),
+    "ITF - M15 乌斯拉尔男子單打": (None, "ITF M15乌斯拉尔"),
+    "ITF - M15 乌斯拉尔男子单打": (None, "ITF M15乌斯拉尔"),
+    "ITF - M15 罗切斯特男子单打": (None, "ITF M15罗切斯特"),
+    "ITF - M25 克拉姆萨赫 男子单打": (None, "ITF M25克拉姆萨赫"),
+    "ITF - M25 布里斯班 男子单打": (None, "ITF M25布里斯班单打"),
+    "ITF - M25 布里斯班 男子双打": (None, "ITF M25布里斯班双打"),
+    "ITF - M25 希尔克雷斯特 男子单打": (None, "ITF M25希尔克雷斯特"),
+    "ITF - M25 路易斯维尔 男子单打": (None, "ITF M25路易斯维尔"),
+    "ITF - W15 库尔索姆利斯卡班亚 女子单打": (None, "ITF W15库尔索姆利斯卡"),
+    "ITF - W35 圣保罗 女子双打": (None, "ITF W35圣保罗双打"),
+    "ITF - W50 达姆施塔特 女子单打": (None, "ITF W50达姆施塔特"),
+    "ITF - W75 奥洛穆茨 女子单打": (None, "ITF W75奥洛穆茨"),
+    "ITF - M15 新戈里卡 男子单打": (None, "ITF M15新戈里卡"),
+    # 篮球 — 无 ESPN 覆盖
+    "新西兰全国篮球联赛": (None, "NZ NBL"),
+    "菲律宾PBA总督杯": (None, "菲律宾PBA"),
+    "FIBA欧洲篮球A级锦标赛 U20": (None, "FIBA U20"),
+    "危地马拉大都会篮球联赛": (None, "危地马拉篮球"),
+    # 棒球 — 无 ESPN 覆盖
+    "日本职业棒球": (None, "日本职棒"),
+    # 足球小联赛
+    "澳大利亚新南威尔士州北部全国超级联赛": (None, "澳北超"),
+    "瑞典超甲级联赛": (None, "瑞典超甲"),
 }
 
 # 兜底：sport 字段 → sport key（精确匹配）
@@ -157,47 +205,47 @@ def _fetch_completed_scores_espn(league: str, days_back: int = 3) -> list:
     return odds_format
 
 
-def _fetch_completed_scores(sport_key: str, days_back: int = 3) -> list:
-    """获取已结束比赛比分：优先 ESPN（免费），降级到 Odds API。"""
-    # 先尝试 ESPN
-    league_name = None
+def _sport_key_to_espn_league(sport_key: str) -> Optional[str]:
+    """将 Odds API sport_key 转为 ESPN 联赛名。
+
+    通过反向遍历 LEAGUE_SPORT_MAP 找到对应的 ESPN 联赛名。
+    """
+    # Method 1: 通过 LEAGUE_SPORT_MAP 反查
+    for bb_league, (sk, _) in LEAGUE_SPORT_MAP.items():
+        if sk == sport_key and bb_league in LEAGUE_ESPN_PATH:
+            return bb_league
+    # Method 2: 直接路径匹配
     for lname, (spath, _) in LEAGUE_ESPN_PATH.items():
-        if sport_key.replace("_", "/") == spath or \
-           spath.replace("/", "_") == sport_key or \
-           sport_key.endswith(spath.split("/")[-1]) or \
-           spath.startswith(sport_key.replace("_", "/")):
-            league_name = lname
-            break
-    # 直接通过映射查
-    if not league_name:
-        sk_to_l = {
-            "basketball_nba": "NBA", "soccer_epl": "英超",
-            "soccer_spain_la_liga": "西甲", "soccer_germany_bundesliga": "德甲",
-            "soccer_italy_serie_a": "意甲", "soccer_france_ligue_one": "法甲",
-            "soccer_fifa_world_cup": "世界杯",
-            "basketball_wnba": "WNBA",
-            "soccer_spain_segunda_division": "西乙",
-            "soccer_brazil_serie_b": "巴乙",
-            "soccer_china_superleague": "中超",
-            "soccer_sweden_allsvenskan": "瑞典超",
-            "soccer_norway_eliteserien": "挪威超",
-            "soccer_chile_campeonato": "智利甲",
-            "soccer_finland_veikkausliiga": "芬超",
-            "soccer_league_of_ireland": "爱超",
-            "soccer_sweden_superettan": "瑞典甲",
-            "soccer_germany_dfb_pokal": "德杯",
-            "soccer_conmebol_copa_sudamericana": "南美杯",
-        }
-        league_name = sk_to_l.get(sport_key)
+        if sport_key.replace("_", "/") == spath:
+            return lname
+    # Method 3: 硬编码兜底（旧的 sport_key 命名）
+    _HARDCODED = {
+        "basketball_nba": "NBA", "soccer_epl": "英超",
+        "soccer_spain_la_liga": "西甲", "soccer_germany_bundesliga": "德甲",
+        "soccer_italy_serie_a": "意甲", "soccer_france_ligue_one": "法甲",
+        "soccer_fifa_world_cup": "世界杯",
+        "basketball_wnba": "WNBA",
+        "soccer_spain_segunda_division": "西乙",
+        "soccer_brazil_serie_b": "巴乙",
+        "soccer_china_superleague": "中超",
+        "soccer_sweden_allsvenskan": "瑞典超",
+        "soccer_norway_eliteserien": "挪威超",
+        "soccer_chile_campeonato": "智利甲",
+        "soccer_finland_veikkausliiga": "芬超",
+        "soccer_league_of_ireland": "爱超",
+        "soccer_sweden_superettan": "瑞典甲",
+        "soccer_germany_dfb_pokal": "德杯",
+        "soccer_conmebol_copa_sudamericana": "南美杯",
+    }
+    return _HARDCODED.get(sport_key)
 
-    if league_name:
-        espn_data = _fetch_completed_scores_espn(league_name, days_back)
-        if espn_data:
-            logger.info("  ESPN %s: %s 场已完成", league_name, len(espn_data))
-            return espn_data
 
-    logger.warning("ESPN 无数据: %s", sport_key)
-    return []
+def _fetch_completed_scores(league_name: str, days_back: int = 3) -> list:
+    """多源获取已结束比赛比分。"""
+    scores = get_completed_scores(league_name, days_back)
+    if scores:
+        logger.info("  已完成: %s 场", len(scores))
+    return scores
 
 
 def _normalize_team(name) -> str:
@@ -439,9 +487,9 @@ def auto_settle(dry_run: bool = False) -> int:
         league_groups[key].append(bet)
 
     for (sport, league), bets in league_groups.items():
+        # 跳过已从 LEAGUE_SPORT_MAP 确认不支持的联赛
         api_key_info = LEAGUE_SPORT_MAP.get(league)
         if not api_key_info:
-            # 兜底：用 sport 字段在 SPORT_FALLBACK 中查找
             sk = SPORT_FALLBACK.get(sport)
             if sk:
                 api_key_info = (sk, league or sport)
@@ -449,26 +497,11 @@ def auto_settle(dry_run: bool = False) -> int:
                 logger.warning("未知联赛: %s (sport=%s)，跳过 %s 笔", league, sport, len(bets))
                 continue
 
-        sport_key, display = api_key_info
+        _, display = api_key_info
         logger.info("获取 %s 已完成比赛...", display)
 
-        if sport_key:
-            completed = _fetch_completed_scores(sport_key)
-        else:
-            # 无 Odds API 映射的联赛：直接用 ESPN
-            league_name = display
-            from fetchers.espn_scores import LEAGUE_ESPN_PATH
-            if league_name in LEAGUE_ESPN_PATH:
-                from fetchers.espn_scores import fetch_espn_scores
-                completed = [
-                    {"home_team": g["home_team"], "away_team": g["away_team"],
-                     "completed": g.get("completed", True),
-                     "scores": [{"name": g["home_team"], "score": str(g["home_score"])},
-                                {"name": g["away_team"], "score": str(g["away_score"])}]}
-                    for g in fetch_espn_scores(league_name, days_back=3)
-                ]
-            else:
-                completed = []
+        # 多源获取比赛结果（ESPN → football-data.org → 直播吧）
+        completed = _fetch_completed_scores(league)
 
         if not completed:
             logger.warning("  %s 无比分数据", display)
@@ -547,7 +580,7 @@ def auto_settle(dry_run: bool = False) -> int:
     return settled_count
 
 
-def _auto_void_timeout(max_days: int = 3) -> int:
+def _auto_void_timeout(max_days: int = 7) -> int:
     """超时兜底：超过 max_days 仍未匹配到结果的投注自动作废。
 
     作废 = 返还本金，不记盈亏。防止投注因 API 配额/数据缺失永久卡在 pending。

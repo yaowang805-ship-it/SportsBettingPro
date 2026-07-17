@@ -136,7 +136,7 @@ LEAGUE_KEYWORDS = {
     "德国超级杯": "Germany - Super Cup",
     "意大利甲级联赛": "Italy - Serie A",
     "法国甲级联赛": "France - Ligue 1",
-    "法国超级杯": "France - Trophee des Champions",
+    "法国超级杯": "France - Super Cup",
     "荷兰甲级联赛": "Netherlands - Eredivisie",
     "巴西甲级联赛": "Brazil - Serie A",
     "巴西乙级联赛": "Brazil - Serie B",
@@ -165,7 +165,7 @@ LEAGUE_KEYWORDS = {
     "俄罗斯超级杯": "Russia - Super Cup",
     "罗马尼亚甲级联赛": "Romania - Liga 1",
     "保加利亚甲级联赛": "Bulgaria - First League",
-    "斯洛文尼亚甲级联赛": "Slovenia - PrvaLiga",
+    "斯洛文尼亚甲级联赛": "Slovenia - Prva Liga",
     "塞尔维亚超级联赛": "Serbia - Super Liga",
     "匈牙利甲级联赛": "Hungary - OTP Bank Liga",
     "希腊超级联赛": "Greece - Super League",
@@ -177,11 +177,21 @@ LEAGUE_KEYWORDS = {
     "韩国乙级联赛": "Korea Republic - K League 2",
     "韩国足协杯": "South Korea - FA Cup",
     "美国冠军联赛": "USA - USL Championship",
-    "美国国家女子联赛": "USA - NWSL",
+    "美国国家女子联赛": "USA - National Womens Soccer League",
     "加拿大超级联赛": "Canada - Premier League",
     "欧足联欧洲联赛-资格赛": "UEFA - Europa League Qualifiers",
+    "欧足联欧洲会议联赛-资格赛": "UEFA - Conference League Qualifiers",
     "欧足联欧洲协会联赛-资格赛": "UEFA - Conference League Qualifiers",
     "2026世界杯 (在加拿大墨西哥&美国)": "FIFA - World Cup",
+    # 南美足球
+    "南美俱乐部杯": "CONMEBOL - Copa Sudamericana",
+    "南美解放者杯": "CONMEBOL - Copa Libertadores",
+    # 冰岛
+    "冰岛超级联赛": "Iceland - Premier League",
+    # 美国/加拿大
+    "加拿大超级联赛": "Canada - Premier League",
+    "NFL 美国职业美式足球": "NFL",
+    "美国职业美式足球": "NFL",
     # US / AU sports
     "NBA夏季联赛": "NBA",
     "美国职业篮球联赛": "NBA",
@@ -196,9 +206,15 @@ LEAGUE_KEYWORDS = {
     "新西兰 - NBL": "New Zealand - NBL",
     "新西兰全国篮球联赛": "New Zealand - NBL",
     "澳大利亚杯": "Australia - Cup",
-    "澳大利亚": "Australia",
-    "女子大V": "Australia",
-    "女子 NBL 1": "Australia",
+    "澳大利亚北部篮球联赛": "Australia - NBL1",
+    "澳大利亚南部篮球联赛": "Australia - NBL1",
+    "澳大利亚东部篮球联赛": "Australia - NBL1",
+    "澳大利亚西部篮球联赛": "Australia - NBL1",
+    "澳大利亚中部篮球联赛": "Australia - NBL1",
+    "澳大利亚北部女子篮球联赛": "Australia - NBL1 Women",
+    "澳大利亚南部女子篮球联赛": "Australia - NBL1 Women",
+    "澳大利亚东部女子篮球联赛": "Australia - NBL1 Women",
+    "澳大利亚西部女子篮球联赛": "Australia - NBL1 Women",
     "智利全国篮球联赛": "Chile - LNB",
     "波多黎各国家篮球联赛": "Puerto Rico - Superior Nacional",
     "黎巴嫩篮球甲级联赛": "Lebanon - Lebanese Basketball League",
@@ -217,6 +233,7 @@ LEAGUE_KEYWORDS = {
     "美国职业棒球大联盟": "MLB",
     "日本职业棒球": "Nippon Professional Baseball",
     "日本职业包装": "Nippon Professional Baseball",  # SPA渲染错误（棒球→包装）
+    "韩国职业棒球": "Korea Professional Baseball",
     "韩国棒球": "Korea Professional Baseball",
     "中华职业棒球大联盟": "Chinese Taipei - Professional League",
     "墨西哥棒球联盟": "Mexican League",
@@ -226,13 +243,12 @@ LEAGUE_KEYWORDS = {
     "ATP - 格施塔德公开赛": "ATP Gstaad",
     "ATP - 乌马格公开赛": "ATP Umag",
     "ATP挑战赛 - 格兰比公开赛": "ATP Challenger Granby",
-    "ATP挑战赛 - 波哥大公开赛": "ATP Challenger Bogota",
-    "ATP挑战赛 - 科尔德农斯公开赛": "ATP Challenger Cordenons",
     "ATP挑战赛 - 林肯公开赛": "ATP Challenger Lincoln",
-    "ATP挑战赛 - 本斯霍滕公开赛": "ATP Challenger Benshoten",
     "ATP挑战赛 - 波索布兰科公开赛": "ATP Challenger Pozoblanco",
-    "ATP挑战赛 - 科尔代农斯公开赛": "ATP Challenger Cordenons",
     "ATP 挑战者 - 波索布兰科公开双打": "ATP Challenger Pozoblanco",
+    "ATP挑战赛 - 科尔德农斯公开赛": "ATP Challenger Cordenons",
+    "ATP挑战赛 - 本斯霍滕公开赛": "ATP Challenger Bunschoten",
+    "ATP挑战赛 - 科尔代农斯公开赛": "ATP Challenger Cordenons",
     "WTA - 罗马公开赛": "WTA 125K Rome",
     "WTA - 雅西公开赛": "WTA Iasi",
     "WTA - 基茨比厄尔公开赛": "WTA 125K Kitzbuhel",
@@ -244,16 +260,6 @@ LEAGUE_KEYWORDS = {
     "WTA - 纽波特公开赛": "WTA 125K Newport",
     # 戴维斯杯
     "戴维斯杯": "Davis Cup",
-    # ITF 世界网球 — 用比赛等级关键词匹配 Pinnacle 上的 ITF 赛事
-    # BB 格式: "世界网球 - M15 甘迪亚 男子单打"
-    # Pinnacle 格式: "ITF M15 Gandia" (需要 API 联通后验证)
-    "世界网球 - M25": "ITF M25",
-    "世界网球 - M15": "ITF M15",
-    "世界网球 - W75": "ITF W75",
-    "世界网球 - W50": "ITF W50",
-    "世界网球 - W35": "ITF W35",
-    "世界网球 - W15": "ITF W15",
-    "世界網球 - M25": "ITF M25",
 }
 
 # 常见球队中英名称映射（用于匹配验证）
@@ -532,6 +538,39 @@ TEAM_NAME_MAP = {
     "科索沃 U20": "Kosovo",
     "亚美尼亚 U20": "Armenia",
 
+    # Tennis — ATP / WTA / Challenger 球员
+    "雨果.德利恩": "Hugo Dellien",
+    "伊奥尼斯.西拉斯": "Ioannis Xilas",
+    "安娜.邦达尔": "Anna Bondar",
+    "塔马拉.齐丹谢克": "Tamara Zidansek",
+    "莉莉.塔格": "Lilli Tagger",
+    "萨拉.贝莱克": "Sara Bejlek",
+    "斯特凡诺.特拉瓦利亚": "Stefano Travaglia",
+    "马里亚诺.纳沃内": "Mariano Navone",
+    "斯特凡诺.纳波里塔诺": "Stefano Napolitano",
+    "亚历克斯.巴雷纳": "Alex Barrena",
+    "胡安.卡洛斯.普拉多.安杰洛": "Juan Carlos Prado Angelo",
+    "达米尔.德祖赫": "Damir Dzumhur",
+    "哈丽特.达特": "Harriet Dart",
+    "玛莉亚.沙卡里": "Maria Sakkari",
+    "加布里埃拉.克努森": "Gabriela Knutson",
+    "兰拉娜.塔拉鲁迪": "Lanlana Tararudee",
+    "维罗妮卡.埃尔亚韦茨": "Veronika Erjavec",
+    "莫纳.巴特尔": "Mona Barthel",
+    "玛丽亚.卢尔德.卡尔": "Maria Lourdes Carle",
+    "巴博拉.帕利科娃": "Barbora Palicova",
+    "巴勃罗.卡雷尼奥.布斯塔": "Pablo Carreno Busta",
+    "卡米洛.乌戈.卡拉贝利": "Camilo Ugo Carabelli",
+    "弗拉维欧.科博利": "Flavio Cobolli",
+    "罗曼.安德烈斯.布尔鲁查加": "Roman Andres Burruchaga",
+    "瓦伦丁.瓦切洛特": "Valentin Vacherot",
+    "费德里科.邦迪奥利": "Federico Bondioli",
+    "吉多.伊万.胡斯托": "Guido Ivan Justo",
+    "费德里科.奥古斯丁.戈麦斯": "Federico Agustin Gomez",
+    "马特奥.阿纳尔迪": "Matteo Arnaldi",
+    "努诺.博尔赫斯": "Nuno Borges",
+    "格里戈尔.季米特洛夫": "Grigor Dimitrov",
+
     "台钢雄鹰": "TSG Hawks",
     # Baseball / MLB
     "华盛顿国民": "Washington Nationals",
@@ -542,6 +581,17 @@ TEAM_NAME_MAP = {
     "辛辛那提红人": "Cincinnati Reds",
     "科罗拉多洛基山": "Colorado Rockies",
     "洛杉矶天使": "Los Angeles Angels",
+    # Baseball — KBO (韩国棒球)
+    "三星狮": "Samsung Lions",
+    "乐天巨人": "Lotte Giants",
+    "韩华鹰": "Hanwha Eagles",
+    "培证英雄": "Kiwoom Heroes",
+    "起亚老虎": "Kia Tigers",
+    "斗山熊": "Doosan Bears",
+    "LG双子": "LG Twins",
+    "NC恐龙": "NC Dinos",
+    "SSG登陆者": "SSG Landers",
+    "KT巫师": "KT Wiz",
     # Basketball — NBA
     "亚特兰大老鹰": "Atlanta Hawks",
     "波士顿凯尔特人": "Boston Celtics",
@@ -643,6 +693,29 @@ TEAM_NAME_MAP = {
     "奥克兰大蜥蜴": "Auckland Tuatara",
     "奥塔哥掘金": "Otago Nuggets",
     "霍克湾雄鹰": "Hawke's Bay Hawks",
+    # Basketball — 澳大利亚NBL1 (北部+南部)
+    "凯恩斯马林鱼": "Cairns Marlins",
+    "罗克汉普顿火箭": "Rockhampton Rockets",
+    "凯恩斯海豚": "Cairns Dolphins",
+    "罗克汉普顿旋风": "Rockhampton Cyclones",
+    "埃尔特姆野猫": "Eltham Wildcats",
+    "基尔塞斯眼镜蛇": "Kilsyth Cobras",
+    "桑德林剑齿虎": "Sandringham Sabres",
+    "北方力量": "Northern Tasmania",
+    "本迪高勇士": "Bendigo Braves",
+    "凯勒闪电": "Keilor Thunder",
+    "诺克斯袭击者": "Knox Raiders",
+    "电光": "Hobart Chargers",
+    "凯恩斯海豚 (女)": "Cairns Dolphins",
+    "罗克汉普顿旋风 (女)": "Rockhampton Cyclones",
+    "埃尔特姆野猫 (女)": "Eltham Wildcats",
+    "基尔塞斯眼镜蛇 (女)": "Kilsyth Cobras",
+    "桑德林剑齿虎 (女)": "Sandringham Sabres",
+    "北方力量篮球队 (女)": "Northern Tasmania",
+    "本迪高勇士 (女)": "Bendigo Braves",
+    "凯勒闪电 (女)": "Keilor Thunder",
+    "诺克斯袭击者 (女)": "Knox Raiders",
+    "电光 (女)": "Hobart Chargers",
     # Basketball — 智利
     "塔尔卡西班牙人": "CD Espanol De Talca",
     "普恩特阿尔托": "CD Puente Alto",
@@ -1358,6 +1431,7 @@ def get_pin_spread(pin_match, target_line=None, source=None):
     """Get Pinnacle spread (handicap).
 
     source: 直接传入 spread 列表（如 ht_spread），不传则用 pin_match["spread"] period=0
+    Returns (home_p, away_p, is_alternate) — is_alternate=True 表示用了备用盘口线而非主线
     """
     candidates = []
     entries = source if source is not None else pin_match.get("spread", [])
@@ -1376,10 +1450,12 @@ def get_pin_spread(pin_match, target_line=None, source=None):
             candidates.append((home_p, away_p))
 
     if not candidates:
-        return None, None
-    if target_line is None or len(candidates) == 1:
-        return candidates[0]
+        return None, None, False
+    if target_line is None:
+        return candidates[0][0], candidates[0][1], False
 
+    # 找线值最接近的候选项，但要求偏差 ≤ 0.5
+    # 铁律：BB 有什么线就比什么线，线不对就不比
     best = candidates[0]
     best_diff = abs(target_line - candidates[0][0].get("points", 0))
     for home_p, away_p in candidates[1:]:
@@ -1387,7 +1463,13 @@ def get_pin_spread(pin_match, target_line=None, source=None):
         if diff < best_diff:
             best_diff = diff
             best = (home_p, away_p)
-    return best
+
+    # 偏差超过 0.5 就认为线不匹配，丢弃
+    if best_diff > 0.5:
+        return None, None, False
+
+    is_alternate = best is not candidates[0]
+    return best[0], best[1], is_alternate
 
 
 def get_pin_total(pin_match, target_line=None, source=None):
@@ -1413,7 +1495,7 @@ def get_pin_total(pin_match, target_line=None, source=None):
 
     if not candidates:
         return None, None
-    if target_line is None or len(candidates) == 1:
+    if target_line is None:
         return candidates[0]
 
     best = candidates[0]
@@ -1423,6 +1505,9 @@ def get_pin_total(pin_match, target_line=None, source=None):
         if diff < best_diff:
             best_diff = diff
             best = (over_p, under_p)
+
+    if best_diff > 0.5:
+        return None, None
     return best
 
 
@@ -1720,7 +1805,8 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                     bd["match"], bd["bb_1x2"], bd["epoch"], pin, pin_ml, sport,
                 )
                 # 网球的时间匹配：降低门限以覆盖更多 ITF 赛事
-                min_threshold = 0.75 if sport == "tennis" else 0.70
+                # ITF 赔率差异大 + 时间经常微调，纯时间和赔率匹配很难高分
+                min_threshold = 0.55 if sport == "tennis" else 0.70
                 if combined >= min_threshold:
                     pairs.append((combined, bb_key, bd["match"], pin,
                                   bd["bb_1x2"], pin_ml, pin_id, sport))
@@ -1785,6 +1871,105 @@ def find_pinnacle_league_id(bb_league_name, all_sport_matchups):
     return ids[0] if ids else None
 
 
+def _find_itf_league_ids(bb_league_name, all_sport_matchups):
+    """Handle 世界网球 (ITF) leagues with location-based matching.
+
+    BB format: "世界网球 - M15 乌斯拉尔 男子单打"
+    Pinnacle format: "ITF Men Uslar - R1"
+
+    Uses hardcoded Chinese→English location mapping, falling back
+    to pinyin fuzzy matching for unmapped locations.
+    """
+    # Hardcoded Chinese ITF location → English name mapping
+    # (Transliterations vary too much for reliable pinyin-only matching)
+    ITF_LOCATION_MAP = {
+        "乌斯拉尔": "uslar",
+        "新戈里卡": "nova gorica",
+        "武宁": "wuning",
+        "维多利亚加斯泰斯": "vitoria-gasteiz",
+        "库尔索姆利斯卡班亚": "kursumlijska banja",
+        "布朗库堡": "castelo branco",
+        "达姆施塔特": "darmstadt",
+        "都灵": "torino",
+        "六安": "luan",
+        "圣保罗": "sao paulo",
+        "达拉斯": "dallas",
+        "奥洛穆茨": "olomouc",
+        "莫纳斯提尔": "monastir",
+        "路易斯维尔": "louisville",
+        "希尔克雷斯特": "hillcrest",
+        "克尔什科": "krsko",
+        "克尔斯科": "krsko",
+        "古比奥": "gubbio",
+        "古比奧": "gubbio",
+        "克拉姆萨赫": "kramsach",
+        "甘迪亚": "gandia",
+        "诺丁汉": "nottingham",
+        "格兰比": "granby",
+        "罗切斯特": "rochester",
+        "比利亚孔斯蒂图西翁": "villa constitucion",
+        "斯洛博齐亚": "slobozia",
+        "于尔亚日": "uriage",
+        "阿斯塔纳": "astana",
+        "布里斯班": "brisbane",
+        "印多尔": "indore",
+        "新戈里察": "nova gorica",
+    }
+
+    import re as _re
+
+    # Extract level (M15, M25, W15, W35, W50, W75)
+    level_m = _re.search(r'(M\d+|W\d+)', bb_league_name)
+    if not level_m:
+        return []
+    level = level_m.group(1)
+    is_women = level.startswith('W')
+
+    # Extract location: characters after the level code
+    after_level = bb_league_name.split(level, 1)[-1].strip()
+    loc_parts = []
+    for ch in after_level:
+        if '一' <= ch <= '鿿' or ch == '·':
+            loc_parts.append(ch)
+        elif loc_parts:
+            break
+    location_cn = ''.join(loc_parts).strip('· ')
+    if not location_cn:
+        return []
+
+    # Get English location name from map, or fall back to pinyin
+    location_en = ITF_LOCATION_MAP.get(location_cn, "")
+    if not location_en:
+        try:
+            from pypinyin import lazy_pinyin
+            location_en = ''.join(lazy_pinyin(location_cn)).lower().replace(' ', '')
+        except ImportError:
+            location_en = location_cn.lower()
+
+    gender_prefix = "Women" if is_women else "Men"
+    location_lower = location_en.lower().strip()
+
+    matched_ids = []
+    for lid, info in all_sport_matchups.items():
+        name = info.get("name", "")
+        if not name.startswith("ITF") or gender_prefix not in name:
+            continue
+        # Extract location from Pinnacle league name
+        pin_after_itf = name.split("ITF", 1)[-1].strip()
+        pin_after_gender = pin_after_itf.split(gender_prefix, 1)[-1].strip()
+        pin_location = pin_after_gender.split("-")[0].strip().lower()
+
+        if not pin_location:
+            continue
+
+        # Direct match: location is a substring of Pinnacle name
+        if location_lower in pin_location or pin_location in location_lower:
+            if lid not in matched_ids:
+                matched_ids.append(lid)
+
+    return matched_ids
+
+
 def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
     """Find ALL Pinnacle league IDs matching a BB体育 league name.
 
@@ -1793,6 +1978,7 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
 
     策略：
     1. LEAGUE_KEYWORDS 精确映射
+    1.5. ITF 世界网球特殊处理（位置拼音匹配）
     2. 对已精确映射的联赛，找 Pinnacle 上同前缀名的子联赛（如 "ATP Bastad"
        → "ATP Bastad - Qualifiers"、"ATP Bastad - R1"）
        限制：只对单赛事名（不含" - "在原映射名中）做子联赛扩展
@@ -1803,23 +1989,70 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
 
     # Phase 1: LEAGUE_KEYWORDS 精确映射
     matched_pin_names = []  # Pinnacle 联赛名列表
+    # 收集所有匹配的关键词候选
+    exact_candidate = None     # bb_name == bb_league_name (精确匹配)
+    reverse_candidates = []    # bb_league_name in bb_name (联赛名在关键词内，可靠)
+    direct_candidates = []     # bb_name in bb_league_name (关键词在联赛名内，可能有CJK子串碰撞)
+
     for bb_name, pin_name in LEAGUE_KEYWORDS.items():
-        if bb_name in bb_league_name or bb_league_name in bb_name:
+        in_direct = bb_name in bb_league_name
+        in_reverse = bb_league_name in bb_name
+
+        if in_direct and in_reverse:
+            # 双向子串=精确匹配，最高优先级，立即使用
+            exact_candidate = (bb_name, pin_name)
+            break
+        elif in_reverse:
+            # 联赛名在关键词内（如关键词"白俄罗斯超级联赛"包含联赛名"俄罗斯超级联赛"）
+            # 这种匹配非常可靠，无假阳性
+            reverse_candidates.append((bb_name, pin_name))
+        elif in_direct:
+            # 关键词在联赛名内（如"俄罗斯超级联赛"是"白俄罗斯超级联赛"的子串）
+            # 可能有CJK子串碰撞，需要用最长关键词消歧
+            direct_candidates.append((bb_name, pin_name, len(bb_name)))
+
+    # 尝试精确匹配
+    if exact_candidate:
+        bb_name, pin_name = exact_candidate
+        pin_names = [pin_name] if isinstance(pin_name, str) else pin_name
+        for pn in pin_names:
+            lid = _find_best_league(pn, all_sport_matchups)
+            if lid:
+                matched_ids.add(lid)
+                matched_pin_names.append(pn)
+
+    # 无精确匹配时，尝试反向匹配（可靠）
+    if not matched_ids:
+        for bb_name, pin_name in reverse_candidates:
             pin_names = [pin_name] if isinstance(pin_name, str) else pin_name
             for pn in pin_names:
                 lid = _find_best_league(pn, all_sport_matchups)
                 if lid:
                     matched_ids.add(lid)
                     matched_pin_names.append(pn)
-            break
-        if bb_lower == bb_name.lower():
+                    break
+            if matched_ids:
+                break
+
+    # 仍无匹配时，尝试正向匹配（最长关键词优先）
+    if not matched_ids and direct_candidates:
+        direct_candidates.sort(key=lambda c: -c[2])  # 按关键词长度降序
+        for bb_name, pin_name, _ in direct_candidates:
             pin_names = [pin_name] if isinstance(pin_name, str) else pin_name
             for pn in pin_names:
                 lid = _find_best_league(pn, all_sport_matchups)
                 if lid:
                     matched_ids.add(lid)
                     matched_pin_names.append(pn)
-            break
+                    break
+            if matched_ids:
+                break
+
+    # Phase 1.5: ITF 世界网球 → 位置拼音匹配
+    if not matched_ids and ("世界网球" in bb_league_name or "世界網球" in bb_league_name):
+        itf_ids = _find_itf_league_ids(bb_league_name, all_sport_matchups)
+        if itf_ids:
+            return sorted(itf_ids)
 
     if matched_ids:
         # Phase 1.5: 子联赛扩展 — 只对不含" - "的短名（如 "ATP Bastad"）
@@ -1848,10 +2081,10 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
             overlap = bb_en_set & pin_words
             if len(overlap) >= 2:
                 matched_ids.add(lid)
+            # 单关键词只匹配主流联赛缩写，防止 "atp" 匹配到所有 ATP 联赛
             elif len(overlap) == 1:
                 single_word = list(overlap)[0]
-                if single_word not in ("cup", "league", "championship", "championships",
-                                       "premier", "division", "super", "open", "tour"):
+                if single_word in ("nba", "nfl", "mlb", "wnba", "ncaa"):
                     matched_ids.add(lid)
 
     return sorted(matched_ids) if matched_ids else []
@@ -2032,7 +2265,14 @@ def main():
     bb_matches = load_bb_odds()
     # 过滤掉冠军/优胜者盘口（非比赛）
     bb_matches = [m for m in bb_matches if m.get("league", "") not in OUTRIGHT_LEAGUES]
-    print(f"\nBB体育: {len(bb_matches)} 场比赛 (排除冠军盘口后)")
+    # 过滤掉已开赛的比赛（bt 是毫秒时间戳）
+    _now_ts = int(time.time() * 1000)
+    _before = len(bb_matches)
+    bb_matches = [m for m in bb_matches if not m.get("bt") or int(m["bt"]) > _now_ts]
+    _filtered = _before - len(bb_matches)
+    if _filtered:
+        print(f"  🕐 已过滤 {_filtered} 场已开赛的比赛")
+    print(f"\nBB体育: {len(bb_matches)} 场比赛 (排除冠军盘口+已开赛后)")
 
     # Count how many have valid 1X2/moneyline
     valid_1x2 = 0
@@ -2108,12 +2348,19 @@ def main():
 
     all_pin_matches = []
     for call_idx, pin_id in enumerate(sorted(all_unique_pin_ids)):
+        info = all_pin_leagues.get(pin_id, {})
+
+        # 跳过父级联赛（0 场比赛）：如 ATP Gstaad (ID 197277) 不直接包含比赛，
+        # 其子联赛（R16、QF、Doubles 等）已在去重列表中单独包含。
+        if info.get("matchup_count", 0) == 0:
+            print(f"  跳过 [{info.get('name', pin_id)}] (ID={pin_id}) — 父级联赛无直接比赛")
+            continue
+
         if call_idx > 0:
             delay = round(random.uniform(1.8, 4.2), 1)
             print(f"  ⏳ 等待 {delay:.1f}s 避免限流...")
             time.sleep(delay)
 
-        info = all_pin_leagues.get(pin_id, {})
         print(f"\n获取 [{info.get('name', pin_id)}] (ID={pin_id}) 赔率...")
         matches = get_league_matchups_and_markets(pin_id)
         print(f"  → {len(matches)} 场比赛")
@@ -2253,12 +2500,20 @@ def main():
                 # handicap / 盘分让分), producing false +EV.  Skip HC for tennis.
                 home_sp = away_sp = None
             else:
-                home_sp, away_sp = get_pin_spread(pin, target_line=bb_hl)
+                home_sp, away_sp, sp_is_alt = get_pin_spread(pin, target_line=bb_hl)
             if home_sp and away_sp and home_sp.get("price_decimal") and away_sp.get("price_decimal"):
                 pin_home_odds = home_sp["price_decimal"]
                 pin_away_odds = away_sp["price_decimal"]
                 bb_home_odds = bb_hc["home_odds"]
                 bb_away_odds = bb_hc["away_odds"]
+
+                if sp_is_alt:
+                    main_spreads = pin.get("spread", [])
+                    if main_spreads:
+                        mp = main_spreads[0].get("prices", [])
+                        mp_line = next((p.get("points","?") for p in mp if p.get("designation")=="home"), "?")
+                        mp_odds = next((p.get("price_decimal","?") for p in mp if p.get("designation")=="home"), "?")
+                        entry["flags"].append(f"备用盘口: Pin主线={mp_line}@{mp_odds}")
 
                 # 校准：检查让球线是否对得上
                 pin_hc_line = home_sp.get("points")
@@ -2271,12 +2526,13 @@ def main():
                     bb_al = bb_hc.get("away_line")
                     pin_hl = home_sp.get("points")
                     pin_al = away_sp.get("points")
-                    if all(x is not None for x in (bb_hl, bb_al, pin_hl, pin_al)):
-                        home_ok = abs(bb_hl - pin_hl) <= 0.01
-                        away_ok = abs(bb_al - pin_al) <= 0.01
-                        if not (home_ok or away_ok):
-                            cal_ok = False
-                            cal_msg = f"让球线错配: BB=[{bb_hl},{bb_al}] vs Pin=[{pin_hl},{pin_al}]"
+                    home_ok = (bb_hl is not None and pin_hl is not None
+                               and abs(bb_hl - pin_hl) <= 0.01)
+                    away_ok = (bb_al is not None and pin_al is not None
+                               and abs(bb_al - pin_al) <= 0.01)
+                    if (bb_hl is not None or bb_al is not None) and not (home_ok or away_ok):
+                        cal_ok = False
+                        cal_msg = f"让球线错配: BB=[{bb_hl},{bb_al}] vs Pin=[{pin_hl},{pin_al}]"
                 if not cal_ok:
                     if cal_msg not in entry["flags"]:
                         entry["flags"].append(cal_msg)
@@ -2427,7 +2683,7 @@ def main():
             bb_ht_hc = bb_ht.get("handicap")
             if bb_ht_hc:
                 bb_hl = bb_ht_hc.get("home_line") or bb_ht_hc.get("away_line")
-                home_sp, away_sp = get_pin_spread(pin, target_line=bb_hl, source=pin.get("ht_spread", []))
+                home_sp, away_sp, _ = get_pin_spread(pin, target_line=bb_hl, source=pin.get("ht_spread", []))
                 if home_sp and away_sp and home_sp.get("price_decimal") and away_sp.get("price_decimal"):
                     pin_home_odds = home_sp["price_decimal"]
                     pin_away_odds = away_sp["price_decimal"]
