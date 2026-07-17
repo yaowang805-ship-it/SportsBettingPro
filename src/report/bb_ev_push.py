@@ -266,8 +266,8 @@ def _collect_opportunities(match, market_key):
     tier = _get_league_tier(league)
     if tier == 4:
         return []  # Tier 4 仅扫描不推送
-    # Tier 2/3: 非队名匹配且匹配分<0.90 不推送（防假阳性）
-    if tier >= 2 and match_type != "name" and match_score < 0.90:
+    # Tier 2/3: 非队名匹配且匹配分<0.80 不推送（防假阳性）
+    if tier >= 2 and match_type != "name" and match_score < 0.80:
         return []
     min_ev = _min_ev_for_tier(tier)
 

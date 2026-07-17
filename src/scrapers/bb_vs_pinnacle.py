@@ -822,6 +822,27 @@ TEAM_NAME_MAP = {
     "韦拉克鲁斯老鹰": "El Aguila de Veracruz",
     "蒙特雷苏丹": "Sultanes de Monterrey",
     "杜兰戈将军": "Generales de Durango",
+    # Baseball — MLB 中文变体补充
+    "休斯敦太空人": "Houston Astros",
+    "堪萨斯市皇家": "Kansas City Royals",
+    "奥克兰运动家队": "Oakland Athletics",
+    "科罗拉多洛矶": "Colorado Rockies",
+    "圣地亚哥教士": "San Diego Padres",
+    # Baseball — 墨西哥联盟 中文变体补充
+    "普矣布拉鹦鹉": "Pericos de Puebla",
+    "蒙特瑞苏丹": "Sultanes de Monterrey",
+    "瓦哈卡勇士": "Guerreros de Oaxaca",
+    "红鹰队": "El Aguila de Veracruz",
+    "尤卡坦狮子": "Leones de Yucatan",
+    "墨西哥红魔": "Diablos Rojos del Mexico",
+    "塔巴斯科奧尔梅克": "Olmecas de Tabasco",
+    "阿瓜斯卡连特斯": "Rieleros de Aguascalientes",
+    "哈利斯科州查罗斯": "Charros de Jalisco",
+    "蒙克洛瓦钢人": "Acereros de Monclova",
+    "萨尔蒂约瑟拉佩人": "Saraperos de Saltillo",
+    "奇瓦瓦多拉多斯": "Dorados de Chihuahua",
+    "卡连特德杜兰戈": "Generales de Durango",
+    "拉古纳联盟海藻": "Algodoneros de la Union Laguna",
     # 英格兰冠军联赛 / 英格兰联赛杯
     "西汉姆联": "West Ham United",
     "朴茨茅斯": "Portsmouth",
@@ -2810,8 +2831,8 @@ def main():
                     bb_dnb_val = float(bb_dnb[i]) if isinstance(bb_dnb[i], str) else bb_dnb[i]
                     if bb_dnb_val and dnb_fair[i] > 0:
                         ev = (bb_dnb_val - dnb_fair[i]) / dnb_fair[i] * 100
-                        # DNB EV > 15% 通常是提取错误（侧边栏导航错位），直接丢弃
-                        if 1 < ev <= 15:
+                        # DNB EV > 20% 通常是提取错误（侧边栏导航错位），直接丢弃
+                        if 1 < ev <= 20:
                             entry["draw_no_bet"].append({
                                 "designation": dnb_labels[i],
                                 "bb_odds": bb_dnb_val,
@@ -2842,7 +2863,7 @@ def main():
                             bb_dnb_val = float(bb_dnb[2+i]) if isinstance(bb_dnb[2+i], str) else bb_dnb[2+i]
                             if bb_dnb_val and dnb_fair[i] > 0:
                                 ev = (bb_dnb_val - dnb_fair[i]) / dnb_fair[i] * 100
-                                if 1 < ev <= 15:
+                                if 1 < ev <= 20:
                                     entry["draw_no_bet"].append({
                                         "designation": dnb_labels[i],
                                         "bb_odds": bb_dnb_val,
