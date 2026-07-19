@@ -27,9 +27,8 @@ data/processed/*.csv
 
 # Model binaries (auto-trained, >100MB each)
 models/*.pkl
-models/shap/
-models/dixon_coles_model.json
-models/*_meta.json
+models/challengers/
+models/*.json
 
 # Generated CSV / parquet / state files
 data/storage/*.csv
