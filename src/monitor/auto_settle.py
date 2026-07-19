@@ -166,6 +166,22 @@ LEAGUE_SPORT_MAP = {
     "菲律宾PBA总督杯": (None, "菲律宾PBA"),
     "FIBA欧洲篮球A级锦标赛 U20": (None, "FIBA U20"),
     "危地马拉大都会篮球联赛": (None, "危地马拉篮球"),
+    # 澳大利亚低级别足球 — 无 ESPN 覆盖
+    "澳大利亚新南威尔士甲级联赛U20": (None, "澳新南U20"),
+    "澳大利亚新南威尔士州北部全国超级联赛": (None, "澳北超"),
+    "澳大利亚维多利亚州全国超级联赛": (None, "澳维超"),
+    "澳大利亚维多利亚州超级联赛 1": (None, "澳维甲1"),
+    "澳大利亚维多利亚州超级联赛 2": (None, "澳维甲2"),
+    # 其他足球联赛
+    "阿根廷杯": ("soccer_argentina_cup", "阿根廷杯"),
+    # 网球 — ITF 赛事别名（BB API vs 推送显示不同）
+    "世界网球 - M15 乌斯拉尔 男子單打": (None, "ITF M15乌斯拉尔"),
+    "世界网球 - M25 希尔克雷斯特 男子单打": (None, "ITF M25希尔克雷斯特"),
+    # 棒球
+    "墨西哥棒球联盟": (None, "墨西哥棒球"),
+    # 冰岛联赛 — 极小众，无 ESPN 覆盖，超时作废
+    "冰岛超级联赛": (None, "冰岛超"),
+    "冰岛超级联赛女子": (None, "冰岛超女"),
     # 棒球 — 无 ESPN 覆盖
     "日本职业棒球": (None, "日本职棒"),
     # 足球小联赛
@@ -251,10 +267,18 @@ def _fetch_completed_scores(league_name: str, days_back: int = 3) -> list:
 
 
 def _normalize_team(name) -> str:
-    """归一化队名以便匹配。"""
+    """归一化队名以便匹配（去除拉丁口音符号，保留CJK字符）。"""
     if not isinstance(name, str):
         return ""
-    return name.strip().lower().replace("fc", "").replace("cf", "").strip()
+    import re as _re
+    import unicodedata
+    # 只剥离组合变音符号（é→e, ñ→n），不影响 CJK 字符
+    name = ''.join(c for c in unicodedata.normalize('NFKD', name) if not unicodedata.combining(c))
+    name = name.strip().lower()
+    # 只移除独立单词的 fc/cf（不破坏 LAFC、布伦瑞克城FC 等名字）
+    name = _re.sub(r'\bfc\b', '', name)
+    name = _re.sub(r'\bcf\b', '', name)
+    return name.strip()
 
 
 # 常见队名昵称/缩写映射（fuzzy 太不可控，用精确别名代替）
@@ -296,6 +320,164 @@ _TEAM_ALIASES = {
 # 常见通用词，不应参与子串/fuzzy匹配
 _GENERIC_TEAM_TOKENS = {"fc", "cf", "sc", "ac", "osc", "hsc", "scc", "bc", "us",
                         "ssc", "tsg", "sv", "vfl", "vfb", "fsv", "as", "rc", "1"}
+
+# 中文 → 英文队名映射（专用于结算匹配，覆盖 cn_to_odds_name 未覆盖的球队）
+# 格式: 中文(小写) → 英文(小写)  — 与 cn_to_odds_name 格式一致
+_CN_TO_EN_SETTLEMENT = {
+    # === 乌拉圭甲级联赛 ===
+    "乌拉圭民族": "nacional",
+    "蒙得维的亚流浪者": "montevideo wanderers",
+    "蒙得维的亚城图尔克": "ciudad de montevideo",
+    "普罗格雷索": "progreso",
+    "马尔多纳多": "deportivo maldonado",
+    "达努比奥": "danubio",
+    # === 厄瓜多尔甲级联赛 ===
+    "德芬": "delfin",
+    "马卡拉": "macara",
+    "基多天主大学": "universidad catolica (quito)",
+    "基多大学体育": "liga de quito",
+    "利伯塔德洛哈": "libertad loja",
+    "理工大学竞技": "tecnico universitario",
+    "奥伦斯": "orense",
+    "埃梅莱克": "emelec",
+    "瓜亚基尔巴塞罗那": "barcelona guayaquil",
+    "瓜亚基尔城": "guayaquil city",
+    # === 阿根廷甲级联赛 ===
+    "甘拿斯亚门多萨": "gimnasia mendoza",
+    "科尔多瓦中央": "central cordoba",
+    "萨斯菲尔德": "velez sarsfield",
+    "科尔多瓦学院": "instituto cordoba",
+    "河床": "river plate",
+    "巴拉卡斯中央队": "barracas central",
+    # === 阿根廷全国联赛 ===
+    "科勒加勒斯": "colegiales",
+    "米德兰": "midland",
+    "阿马格罗": "almagro",
+    "甘拿斯亚迪罗": "gimnasia jujuy",
+    # === 挪威超级联赛 ===
+    "汉坎": "hamkam",
+    "特罗姆瑟": "tromso",
+    "维京": "viking",
+    "桑德菲杰": "sandefjord",
+    "博多格林特": "bodoe/glimt",
+    "费德列斯达": "fredrikstad",
+    # === 瑞典超级联赛 ===
+    "哈马比": "hammarby",
+    "代格福什": "degerfors",
+    "奥尔格里特": "ois",
+    "尤尔戈登": "djurgardens",
+    # === 美国职业大联盟 ===
+    "圣何塞地震": "san jose earthquakes",
+    "奥兰多城": "orlando city",
+    "洛杉矶银河": "la galaxy",
+    "洛杉矶FC": "lafc",
+    "休斯敦迪纳摩": "houston dynamo",
+    "华盛顿联": "dc united",
+    # === 韩国K1联赛 ===
+    "仁川联": "incheon united",
+    "全北现代": "jeonbuk hyundai motors",
+    "济州联队": "jeju united",
+    "浦项制铁": "pohang steelers",
+    # === 巴西乙级联赛 ===
+    "福塔雷萨": "fortaleza",
+    "诺瓦里桑蒂诺": "novorizontino",
+    "雷加塔斯巴西": "recife",
+    "累西腓航海": "nautico",
+    # === 墨西哥超级联赛 ===
+    "莱昂": "leon",
+    "阿特拉斯": "atlas",
+    # === 德国甲级联赛 ===
+    "多特蒙德": "borussia dortmund",
+    "汉堡": "hamburger sv",
+    "拜仁慕尼黑": "fc bayern munich",
+    "斯图加特": "vfb stuttgart",
+    # === 欧足联欧洲联赛-资格赛 ===
+    "克卢日大学": "university cluj",
+    "基辅迪纳摩": "dynamo kyiv",
+    "德利城": "derry city",
+    "索菲亚中央陆军": "cska sofia",
+    "费伦茨瓦罗斯": "ferencvaros",
+    "伏伊伏丁那": "vojvodina",
+    # === 欧洲冠军联赛-资格赛 ===
+    "伊拿迪亚": "dinamo tirana",
+    "佩特罗古": "petrocub",
+    "艾达比辛": "elbasani",
+    "克拉克斯维克": "klippan",
+    # === 俄罗斯甲级联赛 ===
+    "乌拉尔": "ural",
+    "叶尼塞": "yenisey",
+    "图拉兵工厂": "arsenal tula",
+    "下卡姆斯克石油": "neftekhimik",
+    "莫斯科鱼雷": "torpedo moscow",
+    "乌里扬诺夫斯克": "volga ulyanovsk",
+    "叶尼塞克拉斯诺亚尔斯克": "yenisey",
+    # === 英格兰超级联赛 ===
+    "纽卡斯尔联": "newcastle united",
+    "利物浦": "liverpool",
+    "赫尔城": "hull city",
+    "曼彻斯特联": "manchester united",
+    "诺丁汉森林": "nottingham forest",
+    "利兹联": "leeds united",
+    # === 西班牙甲级联赛 ===
+    "塞维利亚": "sevilla",
+    "巴列卡诺": "rayo vallecano",
+    "拉科鲁尼亚": "deportivo la coruna",
+    "埃尔切": "elche",
+    "桑坦德竞技": "racing santander",
+    "比利亚雷亚尔": "villarreal",
+    "瓦伦西亚": "valencia",
+    "皇家贝蒂斯": "real betis",
+    "西班牙人": "espanyol",
+    "莱万特": "levante",
+    "阿拉维斯": "alaves",
+    "赫塔菲": "getafe",
+    "马德里竞技": "atletico madrid",
+    "马拉加": "malaga",
+    # === 日本职业棒球 ===
+    "北海道日本火腿斗士": "hokkaido nippon-ham fighters",
+    "福冈软件银行鹰": "fukuoka softbank hawks",
+    "名古屋中日龙": "chunichi dragons",
+    "阪神老虎": "hanshin tigers",
+    # === 新西兰全国篮球联赛 ===
+    "奥塔哥掘金": "otago nuggets",
+    "霍克湾雄鹰": "hawke's bay hawks",
+    "塔拉纳基": "taranaki airs",
+    "尼尔森巨人": "nelson giants",
+    # === 菲律宾PBA总督杯 ===
+    "汇众光纤": "converge fiberxers",
+    "泰丰吉普": "terrafirma dyip",
+    "马拉古闪电": "meralco bolts",
+    "凤凰燃料大师": "phoenix fuel masters",
+    # === FIBA U20 ===
+    "德国 U20": "germany u20",
+    "拉脱维亚 U20": "latvia u20",
+    "西班牙 U20": "spain u20",
+    "罗马尼亚 U20": "romania u20",
+    # === 澳大利亚杯 ===
+    "贝尔格莱德阿德莱德": "belgrade adelaide",
+    "北鹰阳光": "northern eagles",
+    "马林海岸游骑兵FC": "marin coastal rangers",
+    "布伦瑞克尤文图斯": "brunswick juventus",
+    # === 意大利甲级联赛 ===
+    "国际米兰": "inter milan",
+    "蒙扎": "monza",
+    # === 法国甲级联赛 ===
+    "巴黎FC": "paris fc",
+    "特鲁瓦": "troyes",
+    # === 芬兰甲级联赛 ===
+    "MP米克力": "mikkeli",
+    "吉普": "jjk",
+    # === 其他 ===
+    "布伦瑞克城": "brunswick city",
+    "梅特兰": "maitland",
+    "米德兰": "midland",
+    "艾达比辛": "elbasani",
+    "克拉克斯维克": "klippan",
+    "德国 U20": "germany u20",
+    "西班牙 U20": "spain u20",
+    "拉脱维亚 U20": "latvia u20",
+    "罗马尼亚 U20": "romania u20",
+}
 
 
 def _resolve_alias(name: str) -> str:
@@ -361,14 +543,19 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
     bet_market = bet.get("market", "")
 
     # 判断盘口类型
-    ou_match = re.match(r'^(?:([大小])|(over|under))[_\s]*([\d.]+)$', outcome.strip(), re.IGNORECASE)
+    # 支持格式: "大球(2.5)" "上半场大球(1.0)" "大分(11.5)" "小球(2.25)" "大(2)" "over 2.5"
+    ou_match = re.match(
+        r'^(?:(上半场|下半场|全场)?[_\s]*([大小])(?:球|分)?|(over|under))'
+        r'[_\s]*[\(（]?([\d.]+(?:/[\d.]+)?)[\)）]?$',
+        outcome.strip(), re.IGNORECASE
+    )
     is_over_under = ou_match is not None
     is_btts = outcome.strip().lower() in ("yes", "no")
     # 让球盘：market="handicap" 或 outcome 含 "让" 或 line 字段存在
     hc_line_raw = bet.get("line", "")
     is_handicap = bet_market == "handicap" or "让" in outcome or hc_line_raw
 
-    # 构建候选列表: 英文翻译 → 原始值 → 中文名
+    # 构建候选列表: 中文原始名 → Odds API 英译 → 结算专用英译
     home_candidates = []
     for name in [_normalize_team(home_raw), _normalize_team(home_cn)]:
         if name:
@@ -376,6 +563,9 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
             en_name = _normalize_team(cn_to_odds_name(name))
             if en_name and en_name not in home_candidates:
                 home_candidates.append(en_name)
+            en_settle = _normalize_team(_CN_TO_EN_SETTLEMENT.get(name, name))
+            if en_settle and en_settle not in home_candidates and en_settle != name:
+                home_candidates.append(en_settle)
     seen_h = set()
     home_cands = [c for c in home_candidates if not (c in seen_h or seen_h.add(c))]
 
@@ -386,6 +576,9 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
             en_name = _normalize_team(cn_to_odds_name(name))
             if en_name and en_name not in away_candidates:
                 away_candidates.append(en_name)
+            en_settle = _normalize_team(_CN_TO_EN_SETTLEMENT.get(name, name))
+            if en_settle and en_settle not in away_candidates and en_settle != name:
+                away_candidates.append(en_settle)
     seen_a = set()
     away_cands = [c for c in away_candidates if not (c in seen_a or seen_a.add(c))]
 
@@ -434,8 +627,22 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                 # ── 大小球结算 ──
                 if is_over_under:
                     total = home_score + away_score
-                    line = float(ou_match.group(3))
-                    direction = (ou_match.group(1) or ou_match.group(2)).lower()
+                    # 解析盘口线（支持折中盘如 0/0.5 → 0.25）
+                    line_str = ou_match.group(4)
+                    if '/' in line_str:
+                        parts = line_str.split('/')
+                        try:
+                            line = sum(float(p) for p in parts) / len(parts)
+                        except (ValueError, TypeError):
+                            line = None
+                    else:
+                        try:
+                            line = float(line_str)
+                        except (ValueError, TypeError):
+                            line = None
+                    if line is None:
+                        continue
+                    direction = (ou_match.group(2) or ou_match.group(3)).lower()
                     if direction in ('大', 'over'):
                         return "won" if total > line else "lost"
                     else:  # 小 / under
@@ -458,11 +665,30 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                             hc_line = float(hc_line_raw)
                         except (ValueError, TypeError):
                             pass
-                    # 从 outcome 解析（如 "+3.5"、"-1.5"、"让球主胜"等）
+                    # 从 outcome 解析（如 "+3.5"、"-1.5"、或 "让球主胜(0)"、"让球客胜(+0/0.5)"）
                     if hc_line is None:
+                        # 先尝试纯数字格式
                         hcm = re.match(r'^([+-]?\d+(?:\.\d+)?)$', outcome.strip())
                         if hcm:
                             hc_line = float(hcm.group(1))
+                        else:
+                            # 尝试从括号中提取（如 "让球主胜(0)"、"让分客胜(-3.5)"）
+                            hcm = re.search(r'[\(（]([^)）]+)[\)）]', outcome.strip())
+                            if hcm:
+                                hc_str = hcm.group(1)
+                                if '/' in hc_str:
+                                    # 亚洲让球折中盘（如 +0/0.5 → 平均值 0.25）
+                                    parts = hc_str.split('/')
+                                    try:
+                                        vals = [float(p) for p in parts]
+                                        hc_line = sum(vals) / len(vals)
+                                    except (ValueError, TypeError):
+                                        pass
+                                else:
+                                    try:
+                                        hc_line = float(hc_str)
+                                    except (ValueError, TypeError):
+                                        pass
                     if hc_line is None:
                         return None  # 解析不出盘口线，跳过
                     effective_home = home_score + hc_line
@@ -478,12 +704,26 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                 is_home_win = home_score > away_score
                 is_draw = home_score == away_score
 
-                if "平" in outcome or "draw" in outcome.lower():
+                # 和局（"平"和"和"两种中文表达）
+                if "平" in outcome or "和" in outcome or "draw" in outcome.lower():
                     return "won" if is_draw else "lost"
                 if "主胜" in outcome or "home" in outcome.lower():
                     return "won" if is_home_win else "lost"
                 if "客胜" in outcome or "away" in outcome.lower():
                     return "won" if (away_score > home_score) else "lost"
+
+                # ── 双重机会（Double Chance） ──
+                if "双重机会" in outcome or "double chance" in outcome.lower():
+                    # "主/和局" = home/draw
+                    if "主" in outcome and "和" in outcome:
+                        return "won" if (is_home_win or is_draw) else "lost"
+                    # "和局/客" = draw/away
+                    if "和" in outcome and "客" in outcome:
+                        return "won" if (is_draw or away_score > home_score) else "lost"
+                    # "主/客" = home/away
+                    if "主" in outcome and "客" in outcome:
+                        return "won" if (is_home_win or away_score > home_score) else "lost"
+                    return None  # 无法识别的双重机会组合
 
                 # 未识别的 market_type，保守返回 None 不误判
                 return None
