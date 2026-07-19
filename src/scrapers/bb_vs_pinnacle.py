@@ -1856,111 +1856,134 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     })
 
         # --- 让球/让分 (Handicap/Spread) ---
+        # 收集所有BB让球线：主线 + 备用线
+        # 当主让球线与Pinnacle不匹配时，尝试备用让球线
+        hc_candidates = []
         bb_hc = extract_bb_handicap(bb, sport)
         if bb_hc:
-            bb_hl = bb_hc.get("home_line") or bb_hc.get("away_line")
-            if sport == "tennis":
-                # BB tennis handicap1 is always ±1.5 games (game handicap).
-                # Pinnacle's games_spread sometimes has ±1.5, sometimes
-                # other lines.  get_pin_spread with target_line handles
-                # the matching; if no ±1.5 exists (diff > 0.5) it returns None.
-                home_sp, away_sp, sp_is_alt = get_pin_spread(pin, target_line=bb_hl)
-            else:
-                home_sp, away_sp, sp_is_alt = get_pin_spread(pin, target_line=bb_hl)
-            if home_sp and away_sp and home_sp.get("price_decimal") and away_sp.get("price_decimal"):
-                pin_home_odds = home_sp["price_decimal"]
-                pin_away_odds = away_sp["price_decimal"]
-                bb_home_odds = bb_hc["home_odds"]
-                bb_away_odds = bb_hc["away_odds"]
+            hc_candidates.append(("main", bb_hc))
+            # 从结构化数据提取备用让球盘
+            odds_ft = bb.get("odds_ft", {})
+            if isinstance(odds_ft, dict):
+                alt_hcs = odds_ft.get("alternate_handicaps", [])
+                if isinstance(alt_hcs, list):
+                    for ah in alt_hcs:
+                        if isinstance(ah, dict) and ah.get("home_odds") and ah.get("away_odds"):
+                            hc_candidates.append(("alt", ah))
 
-                if sp_is_alt:
-                    main_spreads = pin.get("spread", [])
-                    if main_spreads:
-                        mp = main_spreads[0].get("prices", [])
-                        mp_line = next((p.get("points","?") for p in mp if p.get("designation")=="home"), "?")
-                        mp_odds = next((p.get("price_decimal","?") for p in mp if p.get("designation")=="home"), "?")
-                        entry["flags"].append(f"备用盘口: Pin主线={mp_line}@{mp_odds}")
+        for hc_tag, hc_dict in hc_candidates:
+            bb_hl = hc_dict.get("home_line") or hc_dict.get("away_line")
+            if bb_hl is None:
+                continue
+            home_sp, away_sp, sp_is_alt = get_pin_spread(pin, target_line=bb_hl)
+            if not (home_sp and away_sp and home_sp.get("price_decimal") and away_sp.get("price_decimal")):
+                continue
 
-                # 校准：检查让球线是否对得上
-                pin_hc_line = home_sp.get("points")
-                bb_hc_line_val = bb_hc.get("home_line") or bb_hc.get("away_line")
-                cal_ok, cal_msg = _calibrate_market_line(sport, "hc", bb_hc_line_val, pin_hc_line, None)
-                if cal_ok:
-                    # 二次校验：同时检查 home 和 away 两条线的一致性
-                    # 防止因盘口线波动导致单侧校验通过但整体错配
-                    bb_hl = bb_hc.get("home_line")
-                    bb_al = bb_hc.get("away_line")
-                    pin_hl = home_sp.get("points")
-                    pin_al = away_sp.get("points")
-                    home_ok = (bb_hl is not None and pin_hl is not None
-                               and abs(bb_hl - pin_hl) <= 0.01)
-                    away_ok = (bb_al is not None and pin_al is not None
-                               and abs(bb_al - pin_al) <= 0.01)
-                    if (bb_hl is not None or bb_al is not None) and not (home_ok or away_ok):
-                        cal_ok = False
-                        cal_msg = f"让球线错配: BB=[{bb_hl},{bb_al}] vs Pin=[{pin_hl},{pin_al}]"
-                if not cal_ok:
-                    if cal_msg not in entry["flags"]:
-                        entry["flags"].append(cal_msg)
-                    home_sp = away_sp = None
-                    cal_blocked_hc += 1
+            pin_home_odds = home_sp["price_decimal"]
+            pin_away_odds = away_sp["price_decimal"]
+            bb_home_odds = hc_dict["home_odds"]
+            bb_away_odds = hc_dict["away_odds"]
 
-                if not home_sp or not away_sp:
-                    continue
-                # 通过盘口线（points）对齐：BB 的哪条线匹配 Pinnacle 的主/客
-                bb_hl = bb_hc.get("home_line")
-                bb_al = bb_hc.get("away_line")
-                pin_hl = home_sp.get("points")
+            new_flags = []
+            if sp_is_alt:
+                main_spreads = pin.get("spread", [])
+                if main_spreads:
+                    mp = main_spreads[0].get("prices", [])
+                    mp_line = next((p.get("points","?") for p in mp if p.get("designation")=="home"), "?")
+                    mp_odds = next((p.get("price_decimal","?") for p in mp if p.get("designation")=="home"), "?")
+                    new_flags.append(f"备用盘口: Pin主线={mp_line}@{mp_odds}")
+
+            # 校准：检查让球线是否对得上
+            pin_hc_line = home_sp.get("points")
+            bb_hc_line_val = hc_dict.get("home_line") or hc_dict.get("away_line")
+            cal_ok, cal_msg = _calibrate_market_line(sport, "hc", bb_hc_line_val, pin_hc_line, None)
+            if cal_ok:
+                # 二次校验：同时检查 home 和 away 两条线的一致性
+                bb_hl_inner = hc_dict.get("home_line")
+                bb_al = hc_dict.get("away_line")
+                pin_hl_inner = home_sp.get("points")
                 pin_al = away_sp.get("points")
-                swapped = False
-                if bb_hl is not None and bb_al is not None and pin_hl is not None and pin_al is not None:
-                    home_diff = abs(bb_hl - pin_hl)
-                    away_diff = abs(bb_al - pin_al)
-                    cross_home = abs(bb_al - pin_hl)
-                    cross_away = abs(bb_hl - pin_al)
-                    # 如果交叉匹配比直接匹配更好 → 交换
-                    if cross_home + cross_away < home_diff + away_diff - 0.01:
-                        swapped = True
+                home_ok = (bb_hl_inner is not None and pin_hl_inner is not None
+                           and abs(bb_hl_inner - pin_hl_inner) <= 0.01)
+                away_ok = (bb_al is not None and pin_al is not None
+                           and abs(bb_al - pin_al) <= 0.01)
+                if (bb_hl_inner is not None or bb_al is not None) and not (home_ok or away_ok):
+                    cal_ok = False
+                    cal_msg = f"让球线错配: BB=[{bb_hl_inner},{bb_al}] vs Pin=[{pin_hl_inner},{pin_al}]"
+            if not cal_ok:
+                if cal_msg not in entry["flags"]:
+                    entry["flags"].append(cal_msg)
+                if hc_tag == "main":
+                    cal_blocked_hc += 1
+                continue
 
-                if swapped:
-                    # BB 的主客与 Pinnacle 相反，交换对比
-                    bb_hc_odds_for_pin_home = bb_away_odds
-                    bb_hc_odds_for_pin_away = bb_home_odds
-                    hc_home_desig = bb_hc.get("away_line_str", "")
-                    hc_away_desig = bb_hc.get("home_line_str", "")
-                else:
-                    bb_hc_odds_for_pin_home = bb_home_odds
-                    bb_hc_odds_for_pin_away = bb_away_odds
-                    hc_home_desig = bb_hc.get("home_line_str", "")
-                    hc_away_desig = bb_hc.get("away_line_str", "")
+            # 线校验通过 → 计算EV
+            for f in new_flags:
+                if f not in entry["flags"]:
+                    entry["flags"].append(f)
 
-                # 去抽水公平价
-                total_implied_hc = 1.0 / pin_home_odds + 1.0 / pin_away_odds
-                pin_home_fair = round(pin_home_odds * total_implied_hc, 4)
-                pin_away_fair = round(pin_away_odds * total_implied_hc, 4)
+            # 通过盘口线（points）对齐：BB 的哪条线匹配 Pinnacle 的主/客
+            pin_hl = home_sp.get("points")
+            pin_al = away_sp.get("points")
+            swapped = False
+            if bb_hl is not None and bb_al is not None and pin_hl is not None and pin_al is not None:
+                bb_hl = hc_dict.get("home_line")
+                bb_al = hc_dict.get("away_line")
+                home_diff = abs(bb_hl - pin_hl) if bb_hl is not None else 999
+                away_diff = abs(bb_al - pin_al) if bb_al is not None else 999
+                cross_home = abs(bb_al - pin_hl) if bb_al is not None else 999
+                cross_away = abs(bb_hl - pin_al) if bb_hl is not None else 999
+                if cross_home + cross_away < home_diff + away_diff - 0.01:
+                    swapped = True
 
-                # EV = (BB - 公平价) / 公平价
-                ev_h = (bb_hc_odds_for_pin_home - pin_home_fair) / pin_home_fair * 100
-                ev_a = (bb_hc_odds_for_pin_away - pin_away_fair) / pin_away_fair * 100
+            if swapped:
+                bb_hc_odds_for_pin_home = bb_away_odds
+                bb_hc_odds_for_pin_away = bb_home_odds
+                hc_home_desig = hc_dict.get("away_line_str", "")
+                hc_away_desig = hc_dict.get("home_line_str", "")
+            else:
+                bb_hc_odds_for_pin_home = bb_home_odds
+                bb_hc_odds_for_pin_away = bb_away_odds
+                hc_home_desig = hc_dict.get("home_line_str", "")
+                hc_away_desig = hc_dict.get("away_line_str", "")
 
-                if ev_h > 1:
-                    entry["handicap"].append({
-                        "designation": mlabels["hc_home"],
-                        "line": hc_home_desig,
-                        "bb_odds": bb_hc_odds_for_pin_home,
-                        "pin_odds": pin_home_odds,
-                        "fair_price": pin_home_fair,
-                        "ev_pct": round(ev_h, 2),
-                    })
-                if ev_a > 1:
-                    entry["handicap"].append({
-                        "designation": mlabels["hc_away"],
-                        "line": hc_away_desig,
-                        "bb_odds": bb_hc_odds_for_pin_away,
-                        "pin_odds": pin_away_odds,
-                        "fair_price": pin_away_fair,
-                        "ev_pct": round(ev_a, 2),
-                    })
+            # 去抽水公平价
+            total_implied_hc = 1.0 / pin_home_odds + 1.0 / pin_away_odds
+            pin_home_fair = round(pin_home_odds * total_implied_hc, 4)
+            pin_away_fair = round(pin_away_odds * total_implied_hc, 4)
+
+            ev_h = (bb_hc_odds_for_pin_home - pin_home_fair) / pin_home_fair * 100 if pin_home_fair > 0 else 0
+            ev_a = (bb_hc_odds_for_pin_away - pin_away_fair) / pin_away_fair * 100 if pin_away_fair > 0 else 0
+
+            if hc_tag == "alt":
+                line_info = f"[备{bb_hl}]" if bb_hl is not None else "[备]"
+            else:
+                line_info = ""
+
+            if ev_h > 1:
+                opp = {
+                    "designation": mlabels["hc_home"],
+                    "line": hc_home_desig,
+                    "bb_odds": bb_hc_odds_for_pin_home,
+                    "pin_odds": pin_home_odds,
+                    "fair_price": pin_home_fair,
+                    "ev_pct": round(ev_h, 2),
+                }
+                if line_info:
+                    opp.setdefault("tags", []).append(line_info)
+                entry["handicap"].append(opp)
+            if ev_a > 1:
+                opp = {
+                    "designation": mlabels["hc_away"],
+                    "line": hc_away_desig,
+                    "bb_odds": bb_hc_odds_for_pin_away,
+                    "pin_odds": pin_away_odds,
+                    "fair_price": pin_away_fair,
+                    "ev_pct": round(ev_a, 2),
+                }
+                if line_info:
+                    opp.setdefault("tags", []).append(line_info)
+                entry["handicap"].append(opp)
 
         # --- 大小 (Over/Under) 带去抽水 ---
         bb_ou = extract_bb_ou(bb, sport)

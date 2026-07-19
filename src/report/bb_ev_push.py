@@ -289,12 +289,11 @@ def _collect_opportunities_from_file():
     details = data.get("details", [])
     qualified = []
     for match in details:
-        # 整场比赛过滤：如果任意市场有 EV>20% 或盘口主线不匹配，说明 Pinnacle 对比不可靠，
-        # 该比赛的所有机会（含让球/大小/DC）都应跳过，避免假阳性
+        # 整场比赛过滤：仅当整场对比不可靠时才跳过（如溢价异常高）
+        # "备用盘口: Pin主线" 是信息标记，只说明用了Pinnacle非主线让球线对比，不影响其他市场
         flags = match.get("flags", [])
         has_suspect_flag = any(
-            "溢价异常高" in f or "备用盘口: Pin主线" in f or "含比赛序号前缀" in f
-            or "球员冲突" in f
+            "溢价异常高" in f or "含比赛序号前缀" in f or "球员冲突" in f
             for f in flags
         )
         if has_suspect_flag:
