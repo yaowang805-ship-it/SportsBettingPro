@@ -70,68 +70,7 @@ def check_performance_health():
 
 def check_api_connectivity():
     """检查API连接状态。"""
-    try:
-        from config.settings import (
-            ODDS_API_KEY,
-            ODDS_API_IO_KEY,
-            FOOTBALL_ODDS_API_KEY,
-            FOOTBALL_API_KEY,
-            BASKETBALL_API_KEY,
-        )
-        import requests
-
-        results = {
-            'odds_api': False,
-            'football_api': bool(FOOTBALL_API_KEY),
-            'basketball_api': bool(BASKETBALL_API_KEY),
-        }
-
-        def try_the_odds(url, params):
-            try:
-                resp = requests.get(url, params=params, timeout=10)
-                return resp.status_code == 200
-            except Exception as exc:
-                results.setdefault('odds_api_errors', []).append(str(exc))
-                return False
-
-        if BASKETBALL_API_KEY:
-            results['odds_api_basketball_key'] = try_the_odds(
-                'https://api.the-odds-api.com/v4/sports',
-                {'apiKey': BASKETBALL_API_KEY},
-            )
-            if results['odds_api_basketball_key']:
-                results['odds_api'] = True
-
-        if not results['odds_api'] and FOOTBALL_ODDS_API_KEY:
-            results['odds_api_football_odds_key'] = try_the_odds(
-                'https://api.the-odds-api.com/v4/sports',
-                {'apiKey': FOOTBALL_ODDS_API_KEY},
-            )
-            if results['odds_api_football_odds_key']:
-                results['odds_api'] = True
-
-        if not results['odds_api'] and ODDS_API_KEY:
-            results['odds_api_generic_key'] = try_the_odds(
-                'https://api.the-odds-api.com/v4/sports',
-                {'apiKey': ODDS_API_KEY},
-            )
-            if results['odds_api_generic_key']:
-                results['odds_api'] = True
-
-        if not results['odds_api'] and ODDS_API_IO_KEY:
-            results['odds_api_io_key'] = try_the_odds(
-                'https://api.odds-api.io/v4/sports',
-                {'apiKey': ODDS_API_IO_KEY},
-            )
-            if results['odds_api_io_key']:
-                results['odds_api'] = True
-
-        if not results['odds_api'] and 'odds_api_errors' not in results:
-            results['odds_api_errors'] = ['未配置有效Odds API key']
-
-        return results
-    except Exception as e:
-        return {'error': str(e)}
+    return {}
 
 def generate_health_report():
     """生成完整的健康报告。"""

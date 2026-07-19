@@ -10,21 +10,21 @@
 **不做什么：**
 - ❌ 不做 ML 预测模型
 - ❌ 不碰中国足球联赛
-- ❌ BSD API / the-odds-api 不用于比价（有 quota），但可用于赛果结算
+- ❌ the-odds-api 不用于比价（有 quota），已从流水线移除
 - ❌ 不重复已经完成的工作（先查记忆）
 
 ## 数据源
 
 | 用途 | 数据源 | 方式 | 状态 |
 |---|---|---|---|
-| 投注平台赔率 | BB体育 (api.infv1.com) | 直接 HTTP API | ✅ 主力 |
+| 投注平台赔率 | BB体育 (api.447a9.com) + FB体育 (api.5c4r3.com) | 直接 HTTP API | ✅ 双平台 |
 | 公平价参考 | Pinnacle (guest.api.arcadia.pinnacle.com) | HTTP API | ✅ |
-| 赛果/结算 | ESPN + football-data.org + The Odds API + 直播吧 | 多源聚合 | ✅ |
+| 赛果/结算 | ESPN + football-data.org + 直播吧 | 多源聚合 | ✅ |
 
 ## 系统架构
 
 ```
-BB API (api.infv1.com) ──────→ bb_api_fetcher.py ──→ bb_odds_extracted.json
+BB/FB API (api.447a9.com / api.5c4r3.com) ──→ bb_api_fetcher.py ──→ bb_odds_extracted.json
                                    └── type=2 (72小时), requests 直连
                                               ↓
 Pinnacle API ─────────────────────→ bb_vs_pinnacle.py ──→ bb_vs_pinnacle_comparison.json
@@ -73,7 +73,7 @@ python3 -m src.report.bb_ev_push --no-bet
 
 ## 关键决策
 
-1. **BB API 直连** — `api.infv1.com` POST + Authorization token（从 Chrome LevelDB 提取）
+1. **BB/FB API 直连** — `api.447a9.com` (BB) + `api.5c4r3.com` (FB) POST + Authorization token（从 Chrome LevelDB 提取）
 2. **type=2** — 返回未来72小时比赛（658场），type=3 仅当天（26场）
 3. **钉钉直连** — Shadowrocket VPN 劫持 DNS，硬编码真实IP `161.117.107.66` + SNI
 4. **requests 库** — Python 3.14 urllib 有 IncompleteRead bug，大响应截断

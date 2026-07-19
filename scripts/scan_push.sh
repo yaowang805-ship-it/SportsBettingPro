@@ -1,7 +1,7 @@
 #!/bin/bash
 # BB体育 扫描+推送 — LaunchAgent 定时任务
 # 参数: --no-bet 不投注（20:00用）, --bet 投注（08:00用）
-# 依赖: Chrome 已打开 pc.x14ff.com
+# 使用 BB API 直连（无需 Chrome）
 
 cd "$(dirname "$0")/.." || exit 1
 
@@ -16,15 +16,9 @@ python3 -c "import time; time.sleep($JITTER)" 2>/dev/null
 
 echo "===== $(date) =====" >> "$LOG_FILE"
 
-# 检查 Chrome 是否运行
-if ! pgrep -x "Google Chrome" > /dev/null; then
-    echo "❌ Chrome 未运行，跳过扫描" >> "$LOG_FILE"
-    exit 1
-fi
-
-# Step 1: 提取 BB 赔率
-echo "[1/3] 提取 BB 赔率..." >> "$LOG_FILE"
-python3 src/scrapers/bb_extract_odds.py --all-sports >> "$LOG_FILE" 2>&1
+# Step 1: 提取 BB/FB 赔率
+echo "[1/3] 提取 BB/FB 赔率..." >> "$LOG_FILE"
+python3 -m src.scrapers.bb_api_fetcher --all-sports >> "$LOG_FILE" 2>&1
 if [ $? -ne 0 ]; then
     echo "❌ 提取失败" >> "$LOG_FILE"
     exit 1

@@ -107,5 +107,9 @@ test_eng.csv
 # Claude internal config
 .claude/
 
+# Auth tokens
+.bb_token
+data/storage/.bb_token
+
 # Statsbomb
 data/statsbomb_open/
