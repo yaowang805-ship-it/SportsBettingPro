@@ -1,5 +1,5 @@
 """BB体育 vs Pinnacle +EV 钉钉推送 — 格式与 ev_push.py 一致，零售→BB价。"""
-import json, sys
+import json, sys, time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -16,6 +16,23 @@ FINGERPRINT_FILE = DATA_DIR / "pushed_fingerprints.json"
 BANKROLL = 50000.0
 MAX_OPPORTUNITIES = 100
 
+# 联赛配置数据（从固定文件加载）
+BANNED_LEAGUES_FILE = DATA_DIR / "banned_leagues.json"
+LEAGUE_TIERS_FILE = DATA_DIR / "league_tiers.json"
+
+
+def _load_banned_leagues():
+    if BANNED_LEAGUES_FILE.exists():
+        return json.loads(BANNED_LEAGUES_FILE.read_text())
+    return []
+
+
+def _load_league_tiers():
+    if LEAGUE_TIERS_FILE.exists():
+        return json.loads(LEAGUE_TIERS_FILE.read_text())
+    return {}
+
+
 _OUTCOME_CN = {"home": "主胜", "draw": "和局", "away": "客胜"}
 _REVERSE_CN = {v: k for k, v in _OUTCOME_CN.items()}
 
@@ -25,106 +42,11 @@ PUSH_META_FILE = DATA_DIR / "push_consistency_meta.json"
 # 一个 sport 的机会数比前次下降超过此比例时，在推送中发出警告
 CONSISTENCY_WARN_THRESHOLD = 0.20
 
-# 不靠谱联赛 — 匹配质量差、假阳性多，直接屏蔽
-_BANNED_LEAGUES = [
-    "马里篮球甲级联赛",
-    "球会友谊赛",  # Pinnacle 覆盖不全，无法准确匹配
-    "越南职业篮球联赛",
-    "危地马拉大都会篮球联赛",
-    "卢旺达全国篮球联赛",
-    "乌干达篮球联赛",
-    "乌干达女子篮球联赛",
-    "黎巴嫩篮球甲级联赛",
-    "多米尼加共和国LNB",
-    "菲律宾PBA总督杯",
-    "澳大利亚新南威尔士",  # 澳洲低级别足球联赛，Pinnacle不覆盖
-    "澳大利亚维多利亚",    # 同上
-    "澳大利亚昆士兰",      # 同上
-    "南澳大利亚",          # 同上
-    "澳大利亚北领地",      # 同上
-    "澳大利亚塔斯马尼亚",  # 同上
-    "澳大利亚西部",
-    "澳大利亚杯",
-    "乌拉圭女子篮球联赛",  # 用户反馈错误率高
-    "乌拉圭METRO联赛",    # 用户反馈错误率高
-    # 中国足球 — 假球高风险市场，全部拉黑
-    "中国甲级联赛", "中国超级联赛", "中国乙级联赛",
-    "中超", "中国足球超级联赛", "Chinese Super League",
-    "中甲", "中乙", "中冠",
-    "中国女子甲级联赛", "中国女子超级联赛", "中国女子乙级联赛",
-    "足协杯", "中国足协杯",
-]
+# 不靠谱联赛 — 匹配质量差、假阳性多，直接屏蔽（从固定文件加载）
+_BANNED_LEAGUES = _load_banned_leagues()
 
-# ── 联赛可信度分层（Tier 1 = Pinnacle 最可靠） ──
-# 每层最低 EV 门槛不同，推送排序按层优先
-# Tier 1: Pinnacle 核心联赛，定价最准 → min EV 2%
-# Tier 2: 主流二级联赛 → min EV 3%
-# Tier 3: 低级别/非主流联赛 → min EV 5%
-# Tier 4: 仅扫描不推送（积累数据备用）
-_LEAGUE_TIERS = {
-    # ═══ Tier 1 — Pinnacle 核心联赛 ═══
-    # 足球五大联赛 + 顶级联赛
-    "英格兰超级联赛": 1, "西班牙甲级联赛": 1, "德国甲级联赛": 1,
-    "意大利甲级联赛": 1, "法国甲级联赛": 1,
-    "英格兰冠军联赛": 1, "德国乙级联赛": 1,
-    "荷兰甲级联赛": 1, "葡萄牙超级联赛": 1,
-    "巴西甲级联赛": 1, "阿根廷甲级联赛": 1,
-    "美国职业大联盟": 1,
-    # 篮球核心
-    "NBA": 1, "WNBA": 1, "美国职业篮球联赛": 1,
-    # 棒球核心
-    "MLB": 1, "美国职业棒球大联盟": 1,
-
-    # ═══ Tier 2 — 主流二级联赛 ═══
-    # 欧洲二级联赛 + 主流小联赛
-    "挪威超级联赛": 2, "瑞典超级联赛": 2, "丹麦超级联赛": 2,
-    "英格兰甲级联赛": 2, "英格兰乙级联赛": 2,
-    "巴西乙级联赛": 2, "阿根廷全国联赛": 2,
-    "俄罗斯甲级联赛": 2, "保加利亚甲级联赛": 2, "罗马尼亚甲级联赛": 2,
-    "南美俱乐部杯": 2, "南美解放者杯": 2,
-    "冰岛超级联赛": 2, "瑞典超甲级联赛": 2,
-    "美国冠军联赛": 2,
-    "英格兰联赛杯": 2, "英格兰社区盾": 2,
-    "法国超级杯": 2, "德国超级杯": 2,
-    "巴西杯": 2,
-    "墨西哥超级联赛": 2, "智利甲级联赛": 2, "哥伦比亚甲级联赛": 2,
-    "秘鲁甲级联赛": 2, "厄瓜多尔甲级联赛": 2,
-    "比利时甲级联赛": 2, "瑞士超级联赛": 2, "奥地利甲级联赛": 2,
-    "土耳其超级联赛": 2, "希腊超级联赛": 2,
-    "波兰甲级联赛": 2, "捷克甲级联赛": 2,
-    "匈牙利甲级联赛": 2, "塞尔维亚超级联赛": 2, "斯洛文尼亚甲级联赛": 2,
-    "乌克兰超级联赛": 2, "俄罗斯超级联赛": 2, "俄罗斯杯": 2, "俄罗斯超级杯": 2,
-    "韩国K1联赛": 2, "韩国乙级联赛": 2, "韩国足协杯": 2,
-    "欧足联欧洲会议联赛-资格赛": 2, "欧足联欧洲联赛-资格赛": 2,
-    "欧洲冠军联赛-资格赛": 2,
-    "苏格兰超级联赛": 2, "苏格兰联赛杯": 2,
-    "丹麦甲级联赛": 2, "挪威甲级联赛": 2,
-    # 篮球二级
-    "欧洲篮球联赛": 2, "FIBA欧洲": 2,
-    "新西兰全国篮球联赛": 2, "新西兰 - NBL": 2,
-    "波多黎各国家篮球联赛": 2,
-    "澳大利亚北部篮球联赛": 2, "澳大利亚南部篮球联赛": 2,
-    "澳大利亚东部篮球联赛": 2, "澳大利亚西部篮球联赛": 2, "澳大利亚中部篮球联赛": 2,
-    # 棒球二级
-    "日本职业棒球": 2, "韩国棒球": 2, "中华职业棒球大联盟": 2,
-    "墨西哥棒球联盟": 2,
-
-    # ═══ Tier 3 — 低级别/非主流 ═══
-    "加拿大超级联赛": 3, "爱沙尼亚甲级联赛": 3,
-    "芬兰超级联赛": 3, "芬兰甲级联赛": 3, "芬兰乙级联赛": 3,
-    "阿根廷杯": 3,
-    "澳大利亚北部女子篮球联赛": 3, "澳大利亚南部女子篮球联赛": 3,
-    "巴拉圭": 3, "白俄罗斯超级联赛": 3, "哈萨克斯坦超级联赛": 3,
-    "乌拉圭甲级联赛": 3, "乌拉圭METRO联赛": 3, "乌拉圭女子篮球联赛": 3,
-    "澳门甲级联赛": 3,
-    "巴西LBF女子篮球联赛": 3,
-    "澳大利亚维多利亚州": 3, "澳大利亚新南威尔士州": 3,
-
-    # ═══ Tier 4 — 仅扫描不推送 ═══
-    "世界网球": 4, "ITF": 4, "ATP挑战赛": 4,
-    "NBA夏季联赛": 4,
-    "智利全国篮球联赛": 4,
-}
+# 联赛可信度分层（从固定文件加载）
+_LEAGUE_TIERS = _load_league_tiers()
 
 
 def _get_league_tier(league: str) -> int:
@@ -136,25 +58,31 @@ def _get_league_tier(league: str) -> int:
 
 
 def _min_ev_for_tier(tier: int) -> float:
-    """每层最低 EV 门槛。"""
+    """每层最低 EV 门槛。T1 最可信门槛最低，T3 需显著更高 edge 才推。"""
     if tier == 1:
         return 2.0
     elif tier == 2:
-        return 2.0
-    elif tier == 3:
         return 3.0
+    elif tier == 3:
+        return 5.0
     return 99.0  # Tier 4 不推送
 
 # EV 上限 — EV > 此值几乎全是假阳性（队名匹配到错误比赛）
 EV_CAP = 20
 
 
-def _check_sport_consistency(opportunities: list) -> list:
-    """对比上次推送的 per-sport 机会数，有显著下降时返回警告列表。"""
+def _check_sport_consistency(opportunities: list, pre_dedup_counts: dict | None = None) -> list:
+    """对比上次推送的 per-sport 机会数，有显著下降时返回警告列表。
+
+    pre_dedup_counts: 去重前的 per-sport 计数，用于检测（防止被指纹去重误导）。
+                      传 None 则直接用 opportunities 的计数。
+    """
     counts = {}
     for o in opportunities:
         s = o.get("sport", "unknown")
         counts[s] = counts.get(s, 0) + 1
+
+    compare_counts = pre_dedup_counts or counts
 
     prev = None
     if PUSH_META_FILE.exists():
@@ -166,7 +94,7 @@ def _check_sport_consistency(opportunities: list) -> list:
     warnings = []
     if prev:
         prev_counts = prev.get("per_sport_counts", {})
-        for sport, count in counts.items():
+        for sport, count in compare_counts.items():
             prev_count = prev_counts.get(sport, 0)
             if prev_count > 0:
                 change = (count - prev_count) / prev_count
@@ -181,10 +109,11 @@ def _check_sport_consistency(opportunities: list) -> list:
                         f"({prev_count}→{count})，请确认是否混入异常机会"
                     )
 
-    # 保存当前数据供下次对比
+    # 保存当前实际推送的数据供下次对比
     PUSH_META_FILE.write_text(json.dumps({
         "per_sport_counts": counts,
         "total": len(opportunities),
+        "pre_dedup_total": sum(compare_counts.values()),
         "timestamp": datetime.now(timezone.utc).isoformat(),
     }, ensure_ascii=False, indent=2))
 
@@ -231,7 +160,10 @@ def _calc_kelly_stakes(opps: list) -> list:
 
 
 def _collect_opportunities(match, market_key):
-    """从指定市场收集 +EV 机会。校准过滤：时间匹配必须高分才推送。"""
+    """从指定市场收集 +EV 机会。校准过滤：时间匹配必须高分才推送。
+
+    为每条机会附加 bb_price_source 字段，标记该赔率来自哪个平台（BB/FB）。
+    """
     # 72小时窗口过滤：超过未来72小时的比赛不推送
     pin_epoch = match.get("start_time_pin_epoch")
     if pin_epoch:
@@ -271,6 +203,18 @@ def _collect_opportunities(match, market_key):
         return []
     min_ev = _min_ev_for_tier(tier)
 
+    # 确定该市场类型对应哪个平台提供了最高赔率
+    _MK_TO_SOURCE_KEY = {
+        "opportunities": "ml",
+        "handicap": "handicap",
+        "over_under": "ou",
+        "double_chance": "dc",
+        "draw_no_bet": "dnb",
+    }
+    platform_sources = match.get("platform_sources", {})
+    source_key = _MK_TO_SOURCE_KEY.get(market_key, "ml")
+    price_source = platform_sources.get(source_key, match.get("bb_price_source", "BB"))
+
     result = []
     for opp in match.get(market_key, []):
         ev = opp.get("ev_pct", 0)
@@ -279,7 +223,7 @@ def _collect_opportunities(match, market_key):
         bb_odds = opp.get("bb_odds", 0)
         pin_odds = opp.get("pin_odds", 0)
 
-        # EV 上限过滤：EV > 15% 几乎全是假阳性（中文队名匹配到错误的英文队名）
+        # EV 上限过滤：EV > 20% 几乎全是假阳性（中文队名匹配到错误的英文队名）
         if ev > EV_CAP:
             continue
 
@@ -313,11 +257,14 @@ def _collect_opportunities(match, market_key):
             "pin_odds": pin_odds,
             "fair_price": fair,
             "ev_pct": ev,
+            "start_time_bb": match.get("start_time_bb", ""),
+
             "_match_score": match_score,
             "_score": score,
             "_kelly_pct": kelly_pct,
             "_tier": tier,
             "_pin_epoch": match.get("start_time_pin_epoch"),  # 用于显示开赛时间
+            "bb_price_source": price_source,  # 标记赔率来源平台
         })
     return result
 
@@ -342,6 +289,16 @@ def _collect_opportunities_from_file():
     details = data.get("details", [])
     qualified = []
     for match in details:
+        # 整场比赛过滤：如果任意市场有 EV>20% 或盘口主线不匹配，说明 Pinnacle 对比不可靠，
+        # 该比赛的所有机会（含让球/大小/DC）都应跳过，避免假阳性
+        flags = match.get("flags", [])
+        has_suspect_flag = any(
+            "溢价异常高" in f or "备用盘口: Pin主线" in f or "含比赛序号前缀" in f
+            or "球员冲突" in f
+            for f in flags
+        )
+        if has_suspect_flag:
+            continue
         for mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"):
             qualified.extend(_collect_opportunities(match, mk))
     return qualified
@@ -371,10 +328,10 @@ def _diversify_and_rank(qualified: list) -> list:
     selected.extend(remaining[:max_remaining])
     qualified = selected
 
-    # 最终展示排序：按 Tier → 运动 → 开赛时间
+    # 最终展示排序：按运动 → Tier → 开赛时间（同运动内足球紧挨着、篮球紧挨着）
     qualified.sort(key=lambda o: (
-        o.get("_tier", 3),
         SPORT_ORDER.get(o.get("sport", ""), 99),
+        o.get("_tier", 3),
         o.get("_pin_epoch") if o.get("_pin_epoch") else 9999999999,
     ))
 
@@ -385,42 +342,79 @@ def _diversify_and_rank(qualified: list) -> list:
 
 
 def _format_body(qualified: list, warnings: list | None = None) -> str:
-    """将 qualified 机会列表格式化为钉钉推送文本。"""
+    """将 qualified 机会列表格式化为钉钉推送文本。按比赛分组，同场多盘口合并显示。"""
     if not qualified:
         return ""
 
     SPORT_CN = {"football": "⚽ 足球", "basketball": "🏀 篮球", "tennis": "🎾 网球",
                 "baseball": "⚾ 棒球", "american_football": "🏈 美式足球"}
+    _TIER_LABEL = {1: "T1", 2: "T2", 3: "T3"}
+    SPORT_ORDER = {"football": 0, "basketball": 1, "tennis": 2, "baseball": 3, "american_football": 4}
 
     now_str = datetime.now(timezone.utc).astimezone().strftime("%m/%d %H:%M")
     total_allocated = sum(o["_stake"] for o in qualified)
 
-    # 一致性警告 — 显示在正文最前面
+    # 数据新鲜度：读取文件 mtime 显示提取时间
+    bb_file = DATA_DIR / "bb_odds_extracted.json"
+    pin_file = COMPARISON_FILE
+    bb_time = ""
+    pin_time = ""
+    try:
+        if bb_file.exists():
+            bb_mtime = datetime.fromtimestamp(bb_file.stat().st_mtime, tz=timezone.utc).astimezone()
+            bb_time = bb_mtime.strftime("%m/%d %H:%M")
+    except (OSError, ValueError):
+        pass
+    try:
+        if pin_file.exists():
+            pin_mtime = datetime.fromtimestamp(pin_file.stat().st_mtime, tz=timezone.utc).astimezone()
+            pin_time = pin_mtime.strftime("%m/%d %H:%M")
+    except (OSError, ValueError):
+        pass
+
+    # 来源平台统计
+    source_counts = {}
+    for o in qualified:
+        src = o.get("bb_price_source", "BB")
+        label = {"BB": "BB", "FB": "FB", "BOTH": "BB/FB"}.get(src, src)
+        source_counts[label] = source_counts.get(label, 0) + 1
+    platform_stats = " | ".join(
+        f"{s}价{x}条" for s, x in sorted(source_counts.items())
+    )
+
+    # 一致性警告
     warning_lines = []
     if warnings:
         for w in warnings:
             warning_lines.append(f"{w}")
-        warning_lines.append("")  # 空行隔开
+        warning_lines.append("")
+
+    # 按比赛分组：(sport, league, home_cn, away_cn)
+    from collections import OrderedDict
+    groups = OrderedDict()
+    for o in qualified:
+        gkey = (o.get("sport", ""), o.get("league", ""), o.get("home_cn", ""), o.get("away_cn", ""))
+        if gkey not in groups:
+            groups[gkey] = []
+        groups[gkey].append(o)
+
+    # 组间排序：按运动 → Tier → 最早开赛时间
+    def group_sort_key(item):
+        (sport, league, home, away), opps = item
+        tier = opps[0].get("_tier", 3)
+        min_epoch = min((o.get("_pin_epoch") or 9999999999) for o in opps)
+        return (SPORT_ORDER.get(sport, 99), tier, min_epoch)
+    sorted_groups = sorted(groups.items(), key=group_sort_key)
 
     lines = list(warning_lines)
     prev_sport = None
     prev_league = None
-    prev_match = None
     match_idx = 0
-    _TIER_LABEL = {1: "T1", 2: "T2", 3: "T3"}
 
-    for o in qualified:
-        oc = o["designation"]
-        pinny = round(o.get("pin_odds", 0), 2) if o.get("pin_odds", 0) > 0 else 0
-        fair = o.get("fair_price") or round(o["pin_odds"], 2)
-        bb_odds = o["bb_odds"]
-        ev_pct = o["ev_pct"]
-        stake = o["_stake"]
-        match_key = (o.get("home_cn", ""), o.get("away_cn", ""))
-        tier = o.get("_tier", 3)
-        tier_label = _TIER_LABEL.get(tier, "")
+    for (sport, league, home, away), opps in sorted_groups:
+        # 组内按 EV 降序
+        opps.sort(key=lambda o: -o["ev_pct"])
 
-        sport = o.get("sport", "")
         sport_label = SPORT_CN.get(sport, "")
         if sport != prev_sport:
             if prev_sport is not None:
@@ -428,40 +422,76 @@ def _format_body(qualified: list, warnings: list | None = None) -> str:
             lines.append(sport_label)
             prev_sport = sport
             prev_league = None
-            prev_match = None
 
-        league = o.get("league", "")
-        if league and league != prev_league:
+        tier = opps[0].get("_tier", 3)
+        tier_label = _TIER_LABEL.get(tier, "")
+        if league != prev_league:
             lines.append(f"  [{tier_label}] {league}")
             prev_league = league
-            prev_match = None
 
-        if match_key != prev_match:
-            match_idx += 1
-            bj_time = _format_bj_time(o.get("_pin_epoch"))
-            time_suffix = f"  ({bj_time})" if bj_time else ""
+        match_idx += 1
+        bj_time = opps[0].get("start_time_bb", "") or _format_bj_time(opps[0].get("_pin_epoch"))
+        time_suffix = f"  ({bj_time})" if bj_time else ""
+        lines.append(f"  ##### #{match_idx} {home} 对 {away}{time_suffix}")
+
+        for o in opps:
+            oc = o["designation"]
+            pinny = round(o.get("pin_odds", 0), 2) if o.get("pin_odds", 0) > 0 else 0
+            fair = o.get("fair_price") or round(o["pin_odds"], 2)
+            bb_odds = o["bb_odds"]
+            ev_pct = o["ev_pct"]
+            stake = o["_stake"]
+            confidence = "✓" if o.get("_match_score", 0) >= 0.95 else "◷"
+
+            # 来源平台标签
+            src = o.get("bb_price_source", "BB")
+            if src == "ALL":
+                src = "BB/FB"
+            source_label = f"{src}价"
+
             lines.append(
-                f"  ##### #{match_idx} {o['home_cn']} 对 {o['away_cn']}{time_suffix}"
+                f"    [{oc}] {confidence} 公平价: {fair}"
+                + (f" | Pinnacle: {pinny}" if o.get("pin_odds", 0) > 0 else " | 推导: 1X2")
+                + f" | {source_label}: {bb_odds} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}"
             )
-            prev_match = match_key
 
-        confidence = "✓" if o.get("_match_score", 0) >= 0.95 else "◷"
-        lines.append(
-            f"    [{oc}] {confidence} 公平价: {fair}" + (f" | Pinnacle: {pinny}" if o.get("pin_odds", 0) > 0 else " | 推导: 1X2") + f" | BB价: {bb_odds} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}"
-        )
+    # 数据新鲜度信息
+    freshness_parts = []
+    if bb_time:
+        freshness_parts.append(f"BB/FB提取: {bb_time}")
+    if pin_time:
+        freshness_parts.append(f"Pinnacle提取: {pin_time}")
+    freshness_line = " | ".join(freshness_parts) if freshness_parts else ""
 
     title = f"+EV 投注推荐: {match_idx} 场比赛"
     body = (
         f"**{title}**\n\n"
-        f"扫描 {now_str} | 总额 ¥{total_allocated:,}\n\n"
+        f"扫描 {now_str} | 总额 ¥{total_allocated:,}\n"
+        + (f"{freshness_line}\n" if freshness_line else "")
+        + (f"来源: {platform_stats}\n\n" if platform_stats else "\n")
         + "\n".join(lines).strip()
     )
-    body += "\n\n---\n💡 T1=Pinnacle最可靠 T2=主流联赛 T3=低级别 | 公平价 = Pinnacle去抽水赔率 | 溢价 = (BB - 公平价) / 公平价 | 赔率实时变动，以 Pinnacle 网站当前价为准"
+    body += "\n\n---\n💡 T1=Pinnacle最可靠 T2=主流联赛 T3=低级别 | 公平价 = Pinnacle去抽水赔率 | 溢价 = (售价 - 公平价) / 公平价 | 来源: BB=BB价 FB=FB价 BB/FB=两平台相同 | 赔率实时变动，以 Pinnacle 网站当前价为准"
     return body
 
 
-def build_report():
-    """构建格式化的 BB vs Pinnacle +EV 报告。返回 (body_text, qualified_opportunities)."""
+def build_report(force: bool = False):
+    """构建格式化的 BB vs Pinnacle +EV 报告。返回 (body_text, qualified_opportunities).
+
+    Args:
+        force: 跳过 2 小时新鲜度检查，即使对比文件较旧也继续推送。
+    """
+    # 强制新鲜度检查：对比文件必须是最近 2 小时内生成的（除非 --force）
+    if COMPARISON_FILE.exists():
+        if not force:
+            mtime = COMPARISON_FILE.stat().st_mtime
+            age_hours = (time.time() - mtime) / 3600
+            if age_hours > 2:
+                print(f"❌ bb_vs_pinnacle_comparison.json 已过期 ({age_hours:.1f}小时前)，请先运行 bb_vs_pinnacle 重新对比")
+                return "data stale", []
+    else:
+        return "no comparison data", []
+
     qualified = _collect_opportunities_from_file()
     if not qualified:
         return "no +EV opportunities (>=2%)", []
@@ -477,7 +507,7 @@ def build_report():
 # ── 推送去重 ──
 
 def _make_fingerprint(o: dict) -> str:
-    """为一条机会生成唯一指纹：sport|home|away|盘口|比赛日期"""
+    """为一条机会生成唯一指纹：sport|league|home|away|盘口|比赛日期"""
     match_date = ""
     ep = o.get("_pin_epoch")
     if ep:
@@ -486,7 +516,7 @@ def _make_fingerprint(o: dict) -> str:
             match_date = dt.strftime("%Y-%m-%d")
         except (ValueError, OSError, OverflowError):
             pass
-    return f"{o.get('sport','')}|{o.get('home_cn','')}|{o.get('away_cn','')}|{o.get('designation','')}|{match_date}"
+    return f"{o.get('sport','')}|{o.get('league','')}|{o.get('home_cn','')}|{o.get('away_cn','')}|{o.get('designation','')}|{match_date}"
 
 
 def _load_fingerprints() -> set:
@@ -538,13 +568,18 @@ def push_report(place_bets=False):
     if not qualified:
         logger.info("no +EV opportunities after filtering")
         return
+
+    # 一致性检查用去重前的数据，防止被指纹去重大幅减少 count 导致误报
+    pre_dedup_counts = {o.get("sport", "unknown"): 0 for o in qualified}
+    for o in qualified:
+        pre_dedup_counts[o.get("sport", "unknown")] = pre_dedup_counts.get(o.get("sport", "unknown"), 0) + 1
+
     qualified = _filter_pushed(qualified)
     if not qualified:
         logger.info("所有机会均已推送过，跳过")
         return
 
-    # 一致性检查：对比上次各运动推送数，异常时追加警告
-    warnings = _check_sport_consistency(qualified)
+    warnings = _check_sport_consistency(qualified, pre_dedup_counts)
     body = _format_body(qualified, warnings)
     if not body:
         logger.info("empty body, skip")
@@ -579,10 +614,10 @@ _FORMAT_MARKERS = {
     "match_prefix": "##### ",
     "fair_price": "公平价:",
     "pinnacle": "Pinnacle:",
-    "retail": "BB价:",
+    "retail": "价:",  # BB价 / FB价 / BB/FB价
     "edge": "溢价:",
     "stake": "投注:",
-    "footer": "公平价 = Pinnacle去抽水赔率",
+    "footer": "来源:",
 }
 
 
@@ -600,7 +635,8 @@ def _validate_format(body: str) -> bool:
 if __name__ == "__main__":
     from config.logging_config import setup_logging
     setup_logging()
-    body, qualified = build_report()
+    force_fresh = "--force" in sys.argv
+    body, qualified = build_report(force=force_fresh)
     print(body)
 
     # 保存推送机会到暂存文件（即使 --no-push 也保存）

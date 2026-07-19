@@ -16,6 +16,8 @@ from src.dashboard.components.virtual_portfolio import (
 from src.core.team_names import cn_to_odds_name
 from fetchers.multi_source_scores import get_completed_scores
 from src.risk.manager import RiskManager
+from src.betting.strategy_optimizer import SettlementLogger
+from src.risk.calibration import BetCalibrator
 
 logger = get_logger(__name__)
 
@@ -345,7 +347,7 @@ def _team_matches(candidate: str, api_name: str) -> bool:
 def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
     """尝试将投注与已完成比赛匹配，返回 'won' 或 'lost' 或 None。
 
-    支持 H2H（主胜/客胜/平）和 大小球（大X/小X）两种盘口类型。
+    支持 H2H（主胜/客胜/平）、大小球（大X/小X）、让球盘（handicap）三种盘口类型。
     遍历多种队名候选（英文翻译、中文名、原始存储名），
     逐一尝试匹配比赛结果。
     """
@@ -355,12 +357,16 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
     away_raw = bet.get("away_team", bet.get("away_cn", ""))
     home_cn = bet.get("home_cn", "")
     away_cn = bet.get("away_cn", "")
-    market = bet.get("market_type", bet.get("market_detail", ""))
+    outcome = bet.get("market_type", bet.get("market_detail", ""))
+    bet_market = bet.get("market", "")
 
-    # 判断盘口类型（支持 大2.5 / 小1.5 和 over_2.5 / under_1.5 两种格式）
-    ou_match = re.match(r'^(?:([大小])|(over|under))[_\s]*([\d.]+)$', market.strip(), re.IGNORECASE)
+    # 判断盘口类型
+    ou_match = re.match(r'^(?:([大小])|(over|under))[_\s]*([\d.]+)$', outcome.strip(), re.IGNORECASE)
     is_over_under = ou_match is not None
-    is_btts = market.strip().lower() in ("yes", "no")
+    is_btts = outcome.strip().lower() in ("yes", "no")
+    # 让球盘：market="handicap" 或 outcome 含 "让" 或 line 字段存在
+    hc_line_raw = bet.get("line", "")
+    is_handicap = bet_market == "handicap" or "让" in outcome or hc_line_raw
 
     # 构建候选列表: 英文翻译 → 原始值 → 中文名
     home_candidates = []
@@ -438,20 +444,45 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                 # ── BTTS 双方进球结算 ──
                 if is_btts:
                     both_scored = home_score > 0 and away_score > 0
-                    if market.strip().lower() == "yes":
+                    if outcome.strip().lower() == "yes":
                         return "won" if both_scored else "lost"
                     else:  # "no"
                         return "won" if not both_scored else "lost"
+
+                # ── 让球盘结算（handicap） ──
+                if is_handicap:
+                    hc_line = None
+                    # 从 line 字段解析
+                    if hc_line_raw:
+                        try:
+                            hc_line = float(hc_line_raw)
+                        except (ValueError, TypeError):
+                            pass
+                    # 从 outcome 解析（如 "+3.5"、"-1.5"、"让球主胜"等）
+                    if hc_line is None:
+                        hcm = re.match(r'^([+-]?\d+(?:\.\d+)?)$', outcome.strip())
+                        if hcm:
+                            hc_line = float(hcm.group(1))
+                    if hc_line is None:
+                        return None  # 解析不出盘口线，跳过
+                    effective_home = home_score + hc_line
+                    if effective_home > away_score:
+                        return "won"  # 让球主胜
+                    elif effective_home < away_score:
+                        return "lost"  # 让球客胜
+                    else:
+                        # 走水（平局） — 返还本金
+                        return "won"  # 走水算赢（本金返还，不赚不亏）
 
                 # ── H2H 结算（主胜/客胜/平） ──
                 is_home_win = home_score > away_score
                 is_draw = home_score == away_score
 
-                if "平" in market or "draw" in market.lower():
+                if "平" in outcome or "draw" in outcome.lower():
                     return "won" if is_draw else "lost"
-                if "主胜" in market or "home" in market.lower():
+                if "主胜" in outcome or "home" in outcome.lower():
                     return "won" if is_home_win else "lost"
-                if "客胜" in market or "away" in market.lower():
+                if "客胜" in outcome or "away" in outcome.lower():
                     return "won" if (away_score > home_score) else "lost"
 
                 # 未识别的 market_type，保守返回 None 不误判
@@ -519,11 +550,15 @@ def auto_settle(dry_run: bool = False) -> int:
                     logger.info("  [试运行] %s → %s (注额¥%.0f 赔率%.2f)", bid[:40], result, stake, odds)
                 else:
                     settle_bet(bid, result, stake, odds)
-                    profit = stake * (odds - 1) if result == "won" else -stake
+                    if result == "won":
+                        profit = stake * (odds - 1)
+                    elif result == "push":
+                        profit = 0.0
+                    else:
+                        profit = -stake
                     logger.info("  ✅ %s → %s (盈亏¥%.0f)", bid[:40], result, profit)
                     # 记录到策略优化器
                     try:
-                        from src.betting.strategy_optimizer import SettlementLogger
                         SettlementLogger().record(
                             bet_id=bid,
                             league=bet.get("league", ""),
@@ -538,7 +573,6 @@ def auto_settle(dry_run: bool = False) -> int:
                         logger.warning("  记录结算日志失败: %s", e)
                     # 记录到校准器
                     try:
-                        from src.risk.calibration import BetCalibrator
                         model_prob = bet.get("model_prob", 0)
                         if model_prob > 0 and odds > 1:
                             BetCalibrator().record(
@@ -576,6 +610,18 @@ def auto_settle(dry_run: bool = False) -> int:
         if timeout_count:
             logger.info("超时自动作废: %s 笔", timeout_count)
             settled_count += timeout_count
+
+    # ── 策略自进化 ──
+    if not dry_run and settled_count > 0:
+        try:
+            from src.risk.self_learn import analyze, apply_adjustments
+            _report = analyze()
+            if _report.get("status") == "ok" and _report.get("recommendations"):
+                _n = apply_adjustments(_report)
+                if _n:
+                    logger.info("策略自进化: 已调整 %d 个联赛层级", _n)
+        except Exception as e:
+            logger.warning("策略自进化异常: %s", e)
 
     return settled_count
 

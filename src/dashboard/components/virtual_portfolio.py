@@ -113,7 +113,12 @@ def settle_bet(bet_id: str, result: str, stake: float, odds: float) -> dict:
             remaining.append(b)
     state["pending_bets"] = remaining
 
-    profit = stake * (odds - 1) if result == "won" else -stake
+    if result == "won":
+        profit = stake * (odds - 1)
+    elif result == "push":
+        profit = 0.0  # 走水：返还本金，不赚不亏
+    else:
+        profit = -stake
     state["balance"] += profit
 
     entry = {
@@ -150,8 +155,9 @@ def compute_portfolio(pred_df: Optional[pd.DataFrame] = None) -> dict:
         total_profit += profit
         if h.get("status") == "won":
             win_count += 1
-        else:
+        elif h.get("status") in ("lost", "loss"):
             loss_count += 1
+        # "push" 不记输赢
         equity_points.append({
             "date": h.get("date", datetime.now().isoformat()),
             "balance": round(running_balance, 2),

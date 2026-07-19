@@ -31,6 +31,23 @@ MAX_EV_PCT = 100.0                 # EV 超过此值跳过
 MAX_BETS = 80                      # 每日最多投注数（指挥官模式：目标月利润5万）
 PORTFOLIO_FILE = DATA_DIR / "virtual_portfolio.json"
 
+# 联赛分层（与 bb_ev_push.py 保持一致）
+LEAGUE_TIERS_FILE = DATA_DIR / "league_tiers.json"
+
+
+def _get_league_tier(league: str) -> int:
+    if LEAGUE_TIERS_FILE.exists():
+        tiers = json.loads(LEAGUE_TIERS_FILE.read_text())
+        for kw, tier in tiers.items():
+            if kw in league:
+                return tier
+    return 3
+
+
+def _league_multiplier(league: str) -> float:
+    tier = _get_league_tier(league)
+    return {1: 1.0, 2: 0.9, 3: 0.7, 4: 0.5}.get(tier, 0.7)
+
 # 推送暂存文件 — bb_ev_push.py 导出已筛选的机会列表
 PUSH_STAGING_FILE = DATA_DIR / "push_staging.json"
 
@@ -96,8 +113,8 @@ def _make_bet_id(home, away, outcome, market="1x2"):
     return f"bb_vs_pin_{key}".replace(" ", "_").replace(".", "")[:60]
 
 
-def _calc_kelly_stake(bb_odds: float, fair_price: float, balance: float) -> float:
-    """Kelly stake sizing — 基于公平价作为真实概率。"""
+def _calc_kelly_stake(bb_odds: float, fair_price: float, balance: float, league: str = "") -> float:
+    """Kelly stake sizing — 基于公平价作为真实概率，应用联赛 Tier 加权。"""
     if fair_price <= 1 or bb_odds <= 1:
         return 0.0
     true_prob = 1.0 / fair_price
@@ -106,7 +123,8 @@ def _calc_kelly_stake(bb_odds: float, fair_price: float, balance: float) -> floa
     kelly = (b * true_prob - (1 - true_prob)) / b
     if kelly <= 0:
         return 0.0
-    stake = balance * KELLY_FRAC * kelly
+    tier_mult = _league_multiplier(league)
+    stake = balance * KELLY_FRAC * tier_mult * kelly
     max_stake = balance * MAX_STAKE_PCT
     return min(stake, max_stake)
 
@@ -223,6 +241,10 @@ def place_bets(dry_run=False):
         if bets_placed >= MAX_BETS:
             break
 
+        match_key = (home, away)
+        match_total_stake = 0.0
+        PER_MATCH_CAP = daily_bankroll * 0.03  # 单场总投注 ≤ 3%
+
         for mk in ("opportunities", "handicap", "over_under"):
             if bets_placed >= MAX_BETS:
                 break
@@ -256,8 +278,8 @@ def place_bets(dry_run=False):
                     print(f"  ⏭️ 已存在: {bet_id}")
                     continue
 
-                # Kelly stake using fair_price
-                stake = _calc_kelly_stake(bb_odds, fair_price, daily_remaining)
+                # Kelly stake using fair_price + tier multiplier
+                stake = _calc_kelly_stake(bb_odds, fair_price, daily_remaining, league=league)
 
                 if stake < 1.0:
                     print(f"  ⏭️ {outcome} @ {bb_odds} — 投注额={stake:.2f}")
@@ -266,6 +288,15 @@ def place_bets(dry_run=False):
                 stake = max(1.0, min(stake, daily_remaining * MAX_STAKE_PCT))
                 if stake > daily_remaining:
                     stake = daily_remaining
+
+                # 单场总投注上限
+                if match_total_stake + stake > PER_MATCH_CAP:
+                    allowed = PER_MATCH_CAP - match_total_stake
+                    if allowed < 5:
+                        print(f"  ⏭️ {outcome} — 单场上限已达 (¥{match_total_stake:.0f})")
+                        continue
+                    stake = allowed
+                match_total_stake += stake
 
                 bet = {
                     "id": bet_id,

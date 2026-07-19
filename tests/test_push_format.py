@@ -18,6 +18,7 @@ def _make_good_body() -> str:
         "  ##### #1 法国 对 巴西  (07/04 21:00)\n"
         "    [主胜] 公平价: 2.50 | Pinnacle: 2.55 | BB价: 2.62 | 溢价: +8.5% | 投注: ¥800\n"
         "    [大2.5] 公平价: 1.95 | Pinnacle: 2.00 | BB价: 2.10 | 溢价: +5.2% | 投注: ¥300\n\n"
+        "来源: BB价2条\n\n"
         "---\n"
         "💡 公平价 = Pinnacle去抽水赔率 | 溢价 = (BB - 公平价) / 公平价 | 赔率实时变动，以 Pinnacle 网站当前价为准"
     )
@@ -52,7 +53,9 @@ class TestPushFormat:
 
     def test_missing_retail_fails(self):
         body = _make_good_body()
-        body = body.replace("BB价:", "市场:")
+        # "价:" 可能出现在：BB价、公平价、来源行。全部替换掉
+        body = body.replace("BB价:", "市场:").replace("来源: BB价", "来源: BB市场")
+        body = body.replace("公平价:", "参考价:")
         assert not _validate_format(body), "BB价改为市场应导致验证失败"
 
     def test_missing_edge_fails(self):
@@ -67,8 +70,11 @@ class TestPushFormat:
 
     def test_missing_footer_fails(self):
         body = _make_good_body()
+        # 去掉来源行 + 修改尾部说明，确保"来源:"被完全移除
+        lines = body.split("\n")
+        body = "\n".join(l for l in lines if "来源:" not in l)
         body = body.replace("公平价 = Pinnacle去抽水赔率", "参考价 = 去水价")
-        assert not _validate_format(body), "底部提示语改变应导致验证失败"
+        assert not _validate_format(body), "来源:被移除应导致验证失败"
 
     def test_all_format_markers_defined(self):
         """确认所有_FORMAT_MARKERS键都有非空值。"""
