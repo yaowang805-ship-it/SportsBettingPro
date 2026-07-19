@@ -65,6 +65,8 @@ data/storage/daily_settlement_last.json
 
 # Auto-generated data directories
 data/history/
+data/storage/*.lock
+data/storage/.*
 data/odds/
 data/monitor/
 data/manual_backup/
