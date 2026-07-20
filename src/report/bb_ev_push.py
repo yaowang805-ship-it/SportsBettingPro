@@ -733,6 +733,8 @@ def push_report(place_bets=False, incremental=False, qualified=None):
     # 增量扫描标记：标题 + 正文头部添加标记
     if incremental:
         title = f"⚡ 增量扫描 +EV 机会: {body.count('#####')} 条 新发现"
+        # 正文第一行标题也改为增量扫描
+        body = body.replace("**+EV 投注推荐", "**⚡ 增量扫描 +EV 机会", 1)
         lines = body.split("\n")
         insert_pos = None
         for i, line in enumerate(lines):
