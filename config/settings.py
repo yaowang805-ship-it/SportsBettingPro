@@ -53,21 +53,16 @@ def send_dingtalk(title: str, body: str, timeout: int = 10) -> bool:
         body = f"**{DINGTALK_KEYWORD} · {title}**\n\n{body}"
     return _real_send(body, msgtype="markdown", title=title)
 
-SHRINK_BB = float(os.getenv('SHRINK_BB', '0.846'))
-SHRINK_FB = float(os.getenv('SHRINK_FB', '0.808'))
 DEFAULT_BUDGET = int(os.getenv('DEFAULT_BUDGET', '10000'))
-MAX_BET_PCT = float(os.getenv('MAX_BET_PCT', '0.25'))
 
 # ===== 职业资金管理参数 =====
-MAX_SINGLE_BET_PCT = float(os.getenv('MAX_SINGLE_BET_PCT', '0.05'))          # 单场最高 5%
-MAX_TOTAL_EXPOSURE = float(os.getenv('MAX_TOTAL_EXPOSURE', '0.30'))          # 总仓位上限 30%
-KELLY_FRACTION = float(os.getenv('KELLY_FRACTION', '0.25'))              # 1/4 凯利
+MAX_SINGLE_BET_PCT = float(os.getenv('MAX_SINGLE_BET_PCT', '0.05'))
+MAX_TOTAL_EXPOSURE = float(os.getenv('MAX_TOTAL_EXPOSURE', '0.30'))
+KELLY_FRACTION = float(os.getenv('KELLY_FRACTION', '0.25'))
 MIN_EDGE = float(os.getenv('MIN_EDGE', '0.03'))
-MIN_DAILY_STAKE = int(os.getenv('MIN_DAILY_STAKE', str(max(100, int(DEFAULT_BUDGET * 0.1)))))   # 最小每日建议注额，默认预算10%
-SPORTS_API_TIMEOUT = int(os.getenv('SPORTS_API_TIMEOUT', '30'))
 
 # ===== 自动下注执行配置 =====
-BETTING_PLATFORM = os.getenv('BETTING_PLATFORM', 'selenium')         # selenium | betfair
+BETTING_PLATFORM = os.getenv('BETTING_PLATFORM', 'selenium')
 BETFAIR_API_KEY = os.getenv('BETFAIR_API_KEY', '')
 BETFAIR_USERNAME = os.getenv('BETFAIR_USERNAME', '')
 BETFAIR_PASSWORD = os.getenv('BETFAIR_PASSWORD', '')
@@ -79,47 +74,4 @@ SELENIUM_PLATFORM_USERNAME = os.getenv('SELENIUM_PLATFORM_USERNAME', '')
 SELENIUM_PLATFORM_PASSWORD = os.getenv('SELENIUM_PLATFORM_PASSWORD', '')
 RACE_API_KEY = os.getenv('RACE_API_KEY', '')
 PRE_BET_ODDS_VALIDATION = os.getenv('PRE_BET_ODDS_VALIDATION', 'true').lower() == 'true'
-MAX_ODDS_SLIPPAGE = float(os.getenv('MAX_ODDS_SLIPPAGE', '0.05'))     # 5% 赔率偏差自动拒绝
-
-# ===== 可信联赛白名单（Pinnacle 准确度高） =====
-# 只保留 Pinnacle 准确率高的联赛（低流动性联赛自动排除）
-TRUSTED_LEAGUES = {
-    # 五大联赛（Pinnacle 流动性最高，数据最可靠）
-    "Premier League", "English Premier League",
-    "La Liga", "Spain La Liga",
-    "Bundesliga", "German Bundesliga",
-    "Serie A", "Italy Serie A",
-    "Ligue 1", "France Ligue 1",
-    # 二级联赛（流动性较好）
-    "England Championship",
-    "Spain Segunda Division",
-    "German 2. Bundesliga",
-    # 其他欧洲主流联赛
-    "Eredivisie", "Netherlands Eredivisie",
-    "Primeira Liga", "Portugal Primeira Liga",
-    "Champions League", "UEFA Champions League",
-    "Europa League", "UEFA Europa League",
-    # 国际大赛
-    "World Cup 2026",
-    "world cup 2026",
-    # 南美顶级赛事
-    "Brazil Campeonato",
-    "Copa Libertadores",
-    # ==== 夏季活跃联赛（2026-07 分析添加）====
-    # 北欧（Pinnacle 100%，夏季主力联赛）
-    "Allsvenskan",                    # 瑞典超
-    # 亚洲（Pinnacle 100%）
-    "K League 1",                     # 韩职
-    "J1 League",                      # 日职
-    # 芬兰（Pinnacle 75%）
-    "Veikkausliiga",                  # 芬超
-    # 北欧顶级联赛（Pinnacle 100%）
-    "Eliteserien",                    # 挪威超
-    # 北美顶级联赛
-    "MLS",                            # 美职联
-    "Major League Soccer",            # 美职联全称
-    # 南美顶级联赛
-    "Brasileirão Serie A",            # 巴甲
-    "Brazil Serie A",                 # 巴甲别名
-    # 大洋洲（已移除 NPL Queensland — 联赛太乱）
-}
+MAX_ODDS_SLIPPAGE = float(os.getenv('MAX_ODDS_SLIPPAGE', '0.05'))

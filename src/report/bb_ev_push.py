@@ -12,6 +12,7 @@ from config.settings import DATA_DIR, DINGTALK_WEBHOOK
 logger = get_logger(__name__)
 
 COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison.json"
+FB_COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison_FB.json"
 FINGERPRINT_FILE = DATA_DIR / "pushed_fingerprints.json"
 BANKROLL = 50000.0
 MAX_OPPORTUNITIES = 100
@@ -60,11 +61,11 @@ def _get_league_tier(league: str) -> int:
 def _min_ev_for_tier(tier: int) -> float:
     """每层最低 EV 门槛。T1 最可信门槛最低，T3 需显著更高 edge 才推。"""
     if tier == 1:
-        return 2.0
+        return 1.5
     elif tier == 2:
-        return 3.0
+        return 2.0
     elif tier == 3:
-        return 5.0
+        return 2.5
     return 99.0  # Tier 4 不推送
 
 # EV 上限 — EV > 此值几乎全是假阳性（队名匹配到错误比赛）
@@ -128,8 +129,8 @@ def _league_multiplier(league: str) -> float:
 
 def _calc_kelly_stakes(opps: list) -> list:
     """按 Kelly 比例计算投注额，加单注上限 2% + 单场上限 3%。"""
-    MAX_STAKE_PCT = 0.02  # 单注 ≤ 2% bankroll
-    PER_MATCH_CAP_PCT = 0.03  # 同一场比赛总投注 ≤ 3%
+    MAX_STAKE_PCT = 0.04  # 单注 ≤ 4% bankroll (¥2,000)
+    PER_MATCH_CAP_PCT = 0.06  # 同一场比赛总投注 ≤ 6%
 
     # 第一遍：计算毛 Kelly 投注额
     for o in opps:
@@ -164,11 +165,11 @@ def _collect_opportunities(match, market_key):
 
     为每条机会附加 bb_price_source 字段，标记该赔率来自哪个平台（BB/FB）。
     """
-    # 72小时窗口过滤：超过未来72小时的比赛不推送
+    # 96小时窗口过滤：超过未来96小时的比赛不推送（资金效率平衡）
     pin_epoch = match.get("start_time_pin_epoch")
     if pin_epoch:
         now_epoch = datetime.now(timezone.utc).timestamp()
-        if pin_epoch > now_epoch + 72 * 3600:
+        if pin_epoch > now_epoch + 96 * 3600:
             return []
         # 已开赛过滤：开赛时间已过的比赛不推送（给5分钟缓冲）
         if pin_epoch + 300 < now_epoch:
@@ -234,7 +235,7 @@ def _collect_opportunities(match, market_key):
         fair = opp.get("fair_price") or round(pin_odds, 2)
         kelly_pct = 0
         if bb_odds > 1:
-            kelly = (ev / 100) / (bb_odds - 1) * 0.25
+            kelly = (ev / 100) / (bb_odds - 1) * 0.75
             kelly_pct = round(kelly * 100, 2)
 
         # 综合评分：溢价 × 匹配度 × 联赛权重
@@ -282,15 +283,60 @@ def _format_bj_time(pin_epoch):
 
 
 def _collect_opportunities_from_file():
-    """从对比文件收集所有 +EV 机会，返回 raw qualified list（未排序/未 Kelly）。"""
-    if not COMPARISON_FILE.exists():
+    """从对比文件收集所有 +EV 机会，返回 raw qualified list（未排序/未 Kelly）。
+
+    同时读取主对比(BB+FB合并)和FB独立对比文件，去重合并。
+    同场比赛同一盘口取最高赔率（跨文件联赛名可能不同导致指纹不匹配）。
+    """
+    # 读取主对比文件
+    main_opps = _read_comparison_file(COMPARISON_FILE)
+    # 读取FB独立对比文件
+    fb_opps = _read_comparison_file(FB_COMPARISON_FILE)
+    if not fb_opps:
+        return main_opps
+
+    # 去重合并：FB机会中指纹不在主列表的才添加
+    main_fps = {_make_fingerprint(o) for o in main_opps}
+    merged = list(main_opps)
+    added = 0
+    for o in fb_opps:
+        fp = _make_fingerprint(o)
+        if fp not in main_fps:
+            merged.append(o)
+            main_fps.add(fp)
+            added += 1
+    if added:
+        logger.info("FB独立对比: 添加 %d 个独有机会", added)
+
+    # 二次去重：同场比赛同一盘口只保留最高赔率
+    # （联赛名可能因API来源不同而不一致，导致指纹不匹配）
+    best_per_match = {}
+    dup_removed = 0
+    for o in merged:
+        match_key = (o.get("sport", ""), o.get("home_cn", ""), o.get("away_cn", ""), o.get("designation", ""))
+        existing = best_per_match.get(match_key)
+        if existing is None or o.get("bb_odds", 0) > existing.get("bb_odds", 0):
+            best_per_match[match_key] = o
+
+    if len(best_per_match) < len(merged):
+        dup_removed = len(merged) - len(best_per_match)
+        merged = list(best_per_match.values())
+        logger.info("同场去重: 移除 %d 个较低赔率机会，保留 %d 个", dup_removed, len(merged))
+
+    return merged
+
+
+def _read_comparison_file(path):
+    """读取单个对比文件，返回机会列表。"""
+    if not path.exists():
         return []
-    data = json.loads(COMPARISON_FILE.read_text())
+    try:
+        data = json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return []
     details = data.get("details", [])
     qualified = []
     for match in details:
-        # 整场比赛过滤：仅当整场对比不可靠时才跳过（如溢价异常高）
-        # "备用盘口: Pin主线" 是信息标记，只说明用了Pinnacle非主线让球线对比，不影响其他市场
         flags = match.get("flags", [])
         has_suspect_flag = any(
             "溢价异常高" in f or "含比赛序号前缀" in f or "球员冲突" in f
@@ -327,10 +373,11 @@ def _diversify_and_rank(qualified: list) -> list:
     selected.extend(remaining[:max_remaining])
     qualified = selected
 
-    # 最终展示排序：按运动 → Tier → 开赛时间（同运动内足球紧挨着、篮球紧挨着）
+    # 最终展示排序：按运动 → Tier → 联赛名 → 开赛时间（同联赛紧挨着）
     qualified.sort(key=lambda o: (
         SPORT_ORDER.get(o.get("sport", ""), 99),
         o.get("_tier", 3),
+        o.get("league", "") or "",
         o.get("_pin_epoch") if o.get("_pin_epoch") else 9999999999,
     ))
 
@@ -340,13 +387,67 @@ def _diversify_and_rank(qualified: list) -> list:
     return qualified
 
 
-def _format_body(qualified: list, warnings: list | None = None) -> str:
+def _compute_sport_summary():
+    """从对比文件和BB数据计算各运动的比赛数、匹配数和机会数。
+
+    Returns:
+        dict: {sport: {"total": N, "matched": N, "opps_ge_1": N, "opps_ge_2": N}}
+    """
+    SPORTS = {"football": "足球", "basketball": "篮球", "tennis": "网球",
+              "baseball": "棒球", "american_football": "美式足球"}
+    summary = {s: {"total": 0, "matched": 0, "opps_ge_1": 0, "opps_ge_2": 0}
+               for s in SPORTS}
+
+    # 从 BB 数据读各运动总比赛数
+    bb_file = DATA_DIR / "bb_odds_extracted.json"
+    if bb_file.exists():
+        try:
+            bb_data = json.loads(bb_file.read_text())
+            from src.scrapers.bb_vs_pinnacle import detect_sport
+            for m in bb_data.get("matches", []):
+                s = detect_sport(m)
+                if s in summary:
+                    summary[s]["total"] += 1
+        except Exception:
+            pass
+
+    # 从对比文件读匹配数据和机会数据（主对比 + FB 独立对比）
+    for fpath in (COMPARISON_FILE, FB_COMPARISON_FILE):
+        if fpath.exists():
+            try:
+                data = json.loads(fpath.read_text())
+                ps = data.get("per_sport_matched", {})
+                for s, c in ps.items():
+                    if s in summary:
+                        summary[s]["matched"] += c
+                for entry in data.get("details", []):
+                    s = entry.get("sport", "")
+                    if s not in summary:
+                        continue
+                    for market_key in ["opportunities", "handicap", "over_under",
+                                       "double_chance", "draw_no_bet"]:
+                        for opp in entry.get(market_key, []):
+                            ev = opp.get("ev_pct", 0)
+                            if ev >= 1:
+                                summary[s]["opps_ge_1"] += 1
+                            if ev >= 2:
+                                summary[s]["opps_ge_2"] += 1
+            except Exception:
+                pass
+
+    return summary
+
+
+def _format_body(qualified: list, warnings: list | None = None,
+                 sport_summary: dict | None = None) -> str:
     """将 qualified 机会列表格式化为钉钉推送文本。按比赛分组，同场多盘口合并显示。"""
     if not qualified:
         return ""
 
     SPORT_CN = {"football": "⚽ 足球", "basketball": "🏀 篮球", "tennis": "🎾 网球",
                 "baseball": "⚾ 棒球", "american_football": "🏈 美式足球"}
+    SPORT_EMOJI = {"football": "⚽", "basketball": "🏀", "tennis": "🎾",
+                   "baseball": "⚾", "american_football": "🏈"}
     _TIER_LABEL = {1: "T1", 2: "T2", 3: "T3"}
     SPORT_ORDER = {"football": 0, "basketball": 1, "tennis": 2, "baseball": 3, "american_football": 4}
 
@@ -388,6 +489,28 @@ def _format_body(qualified: list, warnings: list | None = None) -> str:
             warning_lines.append(f"{w}")
         warning_lines.append("")
 
+    # ── 各运动全景统计（无机会的运动也显示）──
+    sport_summary_line = ""
+    if sport_summary:
+        parts = []
+        for s, cn in [("football","足球"),("basketball","篮球"),("tennis","网球"),
+                       ("baseball","棒球"),("american_football","美式足球")]:
+            info = sport_summary.get(s, {})
+            t = info.get("total", 0)
+            o1 = info.get("opps_ge_1", 0)
+            o2 = info.get("opps_ge_2", 0)
+            emoji = SPORT_EMOJI.get(s, "")
+            if t > 0:
+                if o2 > 0:
+                    parts.append(f"{emoji}{cn}{t}场{o2}个≥2%")
+                elif o1 > 0:
+                    parts.append(f"{emoji}{cn}{t}场{o1}个≥1%")
+                else:
+                    parts.append(f"{emoji}{cn}{t}场无+EV")
+            else:
+                parts.append(f"{emoji}{cn}无数据")
+        sport_summary_line = " | ".join(parts)
+
     # 按比赛分组：(sport, league, home_cn, away_cn)
     from collections import OrderedDict
     groups = OrderedDict()
@@ -397,12 +520,12 @@ def _format_body(qualified: list, warnings: list | None = None) -> str:
             groups[gkey] = []
         groups[gkey].append(o)
 
-    # 组间排序：按运动 → Tier → 最早开赛时间
+    # 组间排序：按运动 → Tier → 联赛 → 最早开赛时间（同联赛紧挨着）
     def group_sort_key(item):
         (sport, league, home, away), opps = item
         tier = opps[0].get("_tier", 3)
         min_epoch = min((o.get("_pin_epoch") or 9999999999) for o in opps)
-        return (SPORT_ORDER.get(sport, 99), tier, min_epoch)
+        return (SPORT_ORDER.get(sport, 99), tier, league or "", min_epoch)
     sorted_groups = sorted(groups.items(), key=group_sort_key)
 
     lines = list(warning_lines)
@@ -466,6 +589,7 @@ def _format_body(qualified: list, warnings: list | None = None) -> str:
     body = (
         f"**{title}**\n\n"
         f"扫描 {now_str} | 总额 ¥{total_allocated:,}\n"
+        + (f"**{sport_summary_line}**\n\n" if sport_summary_line else "")
         + (f"{freshness_line}\n" if freshness_line else "")
         + (f"来源: {platform_stats}\n\n" if platform_stats else "\n")
         + "\n".join(lines).strip()
@@ -491,6 +615,7 @@ def build_report(force: bool = False):
     else:
         return "no comparison data", []
 
+    sport_summary = _compute_sport_summary()
     qualified = _collect_opportunities_from_file()
     if not qualified:
         return "no +EV opportunities (>=2%)", []
@@ -499,7 +624,7 @@ def build_report(force: bool = False):
         return "no +EV opportunities after filtering", []
     # 一致性检查：对比上次各运动推送数，异常时追加警告
     warnings = _check_sport_consistency(qualified)
-    body = _format_body(qualified, warnings)
+    body = _format_body(qualified, warnings, sport_summary)
     return body, qualified
 
 
@@ -553,7 +678,7 @@ def _filter_pushed(qualified: list) -> list:
     return new
 
 
-def push_report(place_bets=False):
+def push_report(place_bets=False, incremental=False):
     if not DINGTALK_WEBHOOK:
         logger.info("no DINGTALK_WEBHOOK configured")
         return
@@ -584,6 +709,24 @@ def push_report(place_bets=False):
         logger.info("empty body, skip")
         return
 
+    # 增量扫描标记：标题 + 正文头部添加标记
+    if incremental:
+        title = f"⚡ 增量扫描 +EV 机会: {body.count('#####')} 条 新发现"
+        # 在 body 的 sport_summary_line 后插入增量标记
+        lines = body.split("\n")
+        insert_pos = None
+        for i, line in enumerate(lines):
+            if line.startswith("**") and ("⚽" in line or "🏀" in line or "🎾" in line):
+                insert_pos = i
+                break
+        if insert_pos is not None:
+            lines.insert(insert_pos, "🔄 **增量扫描** — 以下机会为最近20分钟内新发现\n")
+            body = "\n".join(lines)
+        else:
+            body = body.replace("扫描 ", "🔄 增量扫描 ")
+    else:
+        title = f"+EV 投注推荐: {body.count('#####')} 条"
+
     # 保存推送机会列表到暂存文件
     if place_bets and len(qualified) >= 10:
         from src.betting.bb_virtual_bet import PUSH_STAGING_FILE, place_bets_from_push
@@ -594,7 +737,6 @@ def push_report(place_bets=False):
         logger.info("机会不足10场(%d场)，跳过虚拟投注", len(qualified))
 
     from config.settings import send_dingtalk
-    title = f"+EV 投注推荐: {body.count('#####')} 条"
     ok = send_dingtalk(title, body)
     if ok:
         new_fps = {_make_fingerprint(o) for o in qualified}
@@ -649,4 +791,5 @@ if __name__ == "__main__":
             logger.info("机会不足10场(%d场)，跳过虚拟投注", len(qualified))
 
     if "--no-push" not in sys.argv:
-        push_report(place_bets=("--no-bet" not in sys.argv))
+        push_report(place_bets=("--no-bet" not in sys.argv),
+                    incremental="--incremental" in sys.argv)

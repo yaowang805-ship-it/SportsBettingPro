@@ -229,9 +229,8 @@ def run_incremental():
         print("  ❌ 获取BB数据失败")
         return
 
-    # 过滤已开赛和冠军盘口
+    # 过滤已开赛
     _now_ts = int(time.time() * 1000)
-    bb_matches = [m for m in bb_matches if m.get("league", "") not in OUTRIGHT_LEAGUES]
     bb_matches = [m for m in bb_matches if not m.get("bt") or int(m["bt"]) > _now_ts]
 
     # 2. 加载快照
@@ -375,7 +374,7 @@ def _run_push():
     """运行推送。"""
     import subprocess
     result = subprocess.run(
-        [sys.executable, "-m", "src.report.bb_ev_push", "--no-bet"],
+        [sys.executable, "-m", "src.report.bb_ev_push", "--no-bet", "--incremental"],
         capture_output=True, text=True, cwd=SRC_DIR.parent,
     )
     if result.returncode != 0:

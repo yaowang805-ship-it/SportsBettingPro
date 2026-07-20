@@ -211,7 +211,7 @@ class PipelineOrchestrator:
             sys.argv = old_argv
         logger.info("Step 1/3: 完成")
 
-        logger.info("Step 2/3: Pinnacle 对比...")
+        logger.info("Step 2/3: Pinnacle 对比 (BB+FB合并)...")
         from src.scrapers.bb_vs_pinnacle import main as compare
         old_argv = sys.argv
         sys.argv = ["bb_vs_pinnacle"]
@@ -221,7 +221,17 @@ class PipelineOrchestrator:
             sys.argv = old_argv
         logger.info("Step 2/3: 完成")
 
-        logger.info("Step 3/3: +EV 推送...")
+        logger.info("Step 2b/3: Pinnacle 对比 (FB独立)...")
+        sys.argv = ["bb_vs_pinnacle",
+                     "--input=bb_odds_extracted_FB.json",
+                     "--output=bb_vs_pinnacle_comparison_FB.json"]
+        try:
+            compare()
+        finally:
+            sys.argv = old_argv
+        logger.info("Step 2b/3: 完成")
+
+        logger.info("Step 3/3: +EV 推送 (合并双对比)...")
         from src.report.bb_ev_push import main as push
         old_argv = sys.argv
         sys.argv = ["bb_ev_push", "--no-bet"] if not bet else ["bb_ev_push"]
