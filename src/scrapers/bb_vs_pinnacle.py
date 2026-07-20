@@ -763,6 +763,64 @@ def extract_bb_btts(bb_match):
     return None, None
 
 
+def _derive_btts_from_team_total(team_total_entries):
+    """从 Pinnacle team_total 0.5 盘口推导 BTTS 公平价（去抽水）。"""
+    home_prob = away_prob = None
+    for tt in team_total_entries:
+        if tt.get("period", 0) != 0:
+            continue
+        side = tt.get("side", "")
+        prices = tt.get("prices", [])
+        over_dec = under_dec = None
+        for p in prices:
+            des = p.get("designation", "").lower()
+            dec = p.get("price_decimal", 0)
+            if p.get("points") == 0.5:
+                if des == "over" and dec > 1:
+                    over_dec = dec
+                elif des == "under" and dec > 1:
+                    under_dec = dec
+        if over_dec and under_dec:
+            imp_total = 1.0 / over_dec + 1.0 / under_dec
+            prob_over = (1.0 / over_dec) / imp_total
+            if side == "home":
+                home_prob = prob_over
+            elif side == "away":
+                away_prob = prob_over
+    if not home_prob or not away_prob:
+        return None, None
+    btts_yes = home_prob * away_prob
+    if btts_yes <= 0.001:
+        return None, None
+    return round(1.0 / btts_yes, 4), round(1.0 / (1.0 - btts_yes), 4)
+
+
+def _add_btts_opportunities(entry, bb_yes, bb_no, yes_fair, no_fair):
+    """计算并添加 BTTS 双边进球机会到 entry。"""
+    if not all([bb_yes, bb_no, yes_fair, no_fair]):
+        return
+    ev_yes = round((bb_yes - yes_fair) / yes_fair * 100, 2)
+    ev_no = round((bb_no - no_fair) / no_fair * 100, 2)
+    if ev_yes > 1:
+        entry["opportunities"].append({
+            "designation": "双边进球-是",
+            "bb_odds": bb_yes,
+            "pin_odds": yes_fair,
+            "fair_price": yes_fair,
+            "ev_pct": ev_yes,
+            "_market": "btts",
+        })
+    if ev_no > 1:
+        entry["opportunities"].append({
+            "designation": "双边进球-否",
+            "bb_odds": bb_no,
+            "pin_odds": no_fair,
+            "fair_price": no_fair,
+            "ev_pct": ev_no,
+            "_market": "btts",
+        })
+
+
 def sort_ml_prices(prices):
     """Sort moneyline prices to [home, draw, away] order by designation."""
     order = {"home": 0, "draw": 1, "away": 2}
@@ -839,6 +897,7 @@ def get_league_matchups_and_markets(league_id):
                 elif per == 1:
                     ht_total.append(entry)
             elif mtype == "team_total":
+                entry["side"] = mkt.get("side", "")
                 team_total.append(entry)
             elif mtype == "both_to_score" and per == 0:
                 btts.append(entry)
@@ -2462,51 +2521,38 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                 "_market": "dnb",
                             })
 
-        # --- 双边进球 (BTTS) FT：从 Pinnacle both_to_score 市场提取 ---
+        # --- 双边进球 (BTTS) FT：从 Pinnacle both_to_score 市场或 team_total 0.5 推导 ---
         bb_btts_yes, bb_btts_no = extract_bb_btts(m)
-        pin_btts = pin.get("btts", [])
-        if bb_btts_yes and bb_btts_no and pin_btts:
-            for btts_entry in pin_btts:
-                if btts_entry.get("period", 0) != 0:
-                    continue
-                prices = btts_entry.get("prices", [])
-                yes_price = no_price = None
-                for p in prices:
-                    des = p.get("designation", "").lower()
-                    val = p.get("price_decimal", 0)
-                    if val <= 0:
+        if bb_btts_yes and bb_btts_no:
+            pin_btts = pin.get("btts", [])
+            if pin_btts:
+                # 路径A：Pinnacle 直接提供 both_to_score 市场
+                for btts_entry in pin_btts:
+                    if btts_entry.get("period", 0) != 0:
                         continue
-                    if des in ("yes", "both", "是"):
-                        yes_price = val
-                    elif des in ("no", "否"):
-                        no_price = val
-                if not yes_price or not no_price:
-                    continue
-                # 去抽水
-                btts_imp = 1.0 / yes_price + 1.0 / no_price
-                yes_fair = round(yes_price / btts_imp, 4)
-                no_fair = round(no_price / btts_imp, 4)
-                ev_yes = (bb_btts_yes - yes_fair) / yes_fair * 100
-                ev_no = (bb_btts_no - no_fair) / no_fair * 100
-                if ev_yes > 1:
-                    entry["opportunities"].append({
-                        "designation": "双边进球-是",
-                        "bb_odds": bb_btts_yes,
-                        "pin_odds": yes_price,
-                        "fair_price": yes_fair,
-                        "ev_pct": round(ev_yes, 2),
-                        "_market": "btts",
-                    })
-                if ev_no > 1:
-                    entry["opportunities"].append({
-                        "designation": "双边进球-否",
-                        "bb_odds": bb_btts_no,
-                        "pin_odds": no_price,
-                        "fair_price": no_fair,
-                        "ev_pct": round(ev_no, 2),
-                        "_market": "btts",
-                    })
-                break
+                    prices = btts_entry.get("prices", [])
+                    yes_price = no_price = None
+                    for p in prices:
+                        des = p.get("designation", "").lower()
+                        val = p.get("price_decimal", 0)
+                        if val <= 0:
+                            continue
+                        if des in ("yes", "both", "是"):
+                            yes_price = val
+                        elif des in ("no", "否"):
+                            no_price = val
+                    if not yes_price or not no_price:
+                        continue
+                    btts_imp = 1.0 / yes_price + 1.0 / no_price
+                    yes_fair = round(yes_price / btts_imp, 4)
+                    no_fair = round(no_price / btts_imp, 4)
+                    _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, yes_fair, no_fair)
+                    break
+            else:
+                # 路径B：从 team_total 0.5 推导 BTTS 公平价
+                yes_fair, no_fair = _derive_btts_from_team_total(pin.get("team_total", []))
+                if yes_fair and no_fair:
+                    _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, yes_fair, no_fair)
 
         # --- 上半场平局退款 (HT DNB)：从 Pinnacle HT 1X2 推导公平价 ---
         if len(bb_dnb) >= 4 and n_ml == 3:
