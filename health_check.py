@@ -13,16 +13,12 @@ def check_imports():
     """检查所有关键模块是否可导入。"""
     modules = [
         ('config.settings', 'Core Configuration'),
-        ('src.core.risk', 'Risk Calculation'),
-        ('src.core.evaluation', 'Performance Evaluation'),
-        ('src.features.bb_pipeline', 'Basketball Features'),
-        ('src.features.football_pipeline', 'Football Features'),
-        ('src.features.tournament_pipeline', 'Tournament Features'),
-        ('src.models.train_models', 'Model Training'),
-        ('src.models.auto_retrain', 'Auto Retrain'),
-        ('src.backtest.backtest_runner', 'Backtest Engine'),
-        ('src.risk.manager', 'Risk Manager'),
-        ('src.predict.semi_auto_bettor', 'Semi Auto Bettor'),
+        ('config.dingtalk', 'DingTalk Direct'),
+        ('src.scrapers.bb_api_fetcher', 'BB API Fetcher'),
+        ('src.scrapers.bb_vs_pinnacle', 'BB vs Pinnacle Comparison'),
+        ('src.report.bb_ev_push', '+EV Push Report'),
+        ('src.betting.bb_virtual_bet', 'Virtual Betting'),
+        ('src.scrapers.bb_incremental_scanner', 'Incremental Scanner'),
     ]
 
     logger.info("=" * 80)
@@ -46,17 +42,11 @@ def check_imports():
 def check_data_files():
     """检查关键数据文件。"""
     files = [
-        ('data/processed/bb_features.csv', 'NBA Features'),
-        ('data/processed/fb_features.csv', 'Football Features'),
-        ('models/model_bb_win_ensemble.pkl', 'NBA Win Ensemble'),
-        ('models/model_bb_spread_result_ensemble.pkl', 'NBA Spread Ensemble'),
-        ('models/model_bb_total_result_ensemble.pkl', 'NBA Total Ensemble'),
-        ('models/model_fb_win_ensemble.pkl', 'FB Win Ensemble'),
-        ('models/model_fb_spread_result_ensemble.pkl', 'FB Spread Ensemble'),
-        ('models/model_fb_total_result_ensemble.pkl', 'FB Total Ensemble'),
-        ('models/model_fb_features.json', 'Football Features List'),
-        ('models/model_bb_features.json', 'NBA Features List'),
-        ('models/model_metadata.json', 'Model Metadata'),
+        ('data/storage/bb_odds_extracted.json', 'BB Extracted Odds'),
+        ('data/storage/bb_vs_pinnacle_comparison.json', 'BB vs Pinnacle Comparison'),
+        ('data/storage/pinnacle_league_structure.json', 'Pinnacle League Structure'),
+        ('data/storage/team_name_map.json', 'Team Name Mappings'),
+        ('data/storage/virtual_portfolio.json', 'Virtual Portfolio'),
     ]
 
     logger.info("\n📂 数据文件检查")
@@ -82,14 +72,9 @@ def check_config():
     logger.info("=" * 80)
 
     from config.settings import (
-        DEFAULT_BUDGET, MAX_SINGLE_BET_PCT, KELLY_FRACTION,
-        MIN_EDGE, DINGTALK_WEBHOOK
+        DINGTALK_WEBHOOK
     )
 
-    logger.info("初始资金: %s", DEFAULT_BUDGET)
-    logger.info("单注最高: %.1f%%", MAX_SINGLE_BET_PCT * 100)
-    logger.info("凯利系数: %s", KELLY_FRACTION)
-    logger.info("最小 EV: %.1f%%", MIN_EDGE * 100)
     logger.info("钉钉通知: %s", '已配置 ✅' if DINGTALK_WEBHOOK else '未配置 ❌')
 
     logger.info("=" * 80)
@@ -113,9 +98,8 @@ def main():
 
     if all(results.values()):
         logger.info("\n✅ 系统已准备好！可以运行：")
-        logger.info("  bash quick_start.sh  # 快速启动")
-        logger.info("  python main.py       # 日常自动化")
-        logger.info("  python src/predict/semi_auto_bettor.py  # 半自动投注审核")
+        logger.info("  ./pipeline.sh scan       # 全量扫描+对比+推送")
+        logger.info("  ./pipeline.sh daemon start  # 启动守护进程")
         return 0
     else:
         logger.error("\n❌ 系统检查失败，请检查上述错误")

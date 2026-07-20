@@ -115,11 +115,13 @@ def settle_bet(bet_id: str, result: str, stake: float, odds: float) -> dict:
 
     if result == "won":
         profit = stake * (odds - 1)
+        state["balance"] += stake + profit  # 本金已在投注时扣除，结算归还本金+利润 = stake * odds
     elif result == "push":
-        profit = 0.0  # 走水：返还本金，不赚不亏
+        profit = 0.0
+        state["balance"] += stake  # 走水：本金已在投注时扣除，结算归还本金
     else:
         profit = -stake
-    state["balance"] += profit
+        # 亏损：本金已在投注时扣除且无法收回，余额不做调整
 
     entry = {
         "id": bet_id,

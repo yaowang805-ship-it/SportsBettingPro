@@ -15,7 +15,7 @@ COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison.json"
 FB_COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison_FB.json"
 FINGERPRINT_FILE = DATA_DIR / "pushed_fingerprints.json"
 BANKROLL = 50000.0
-MAX_OPPORTUNITIES = 100
+MAX_OPPORTUNITIES = 50
 
 # 联赛配置数据（从固定文件加载）
 BANNED_LEAGUES_FILE = DATA_DIR / "banned_leagues.json"
@@ -61,15 +61,15 @@ def _get_league_tier(league: str) -> int:
 def _min_ev_for_tier(tier: int) -> float:
     """每层最低 EV 门槛。T1 最可信门槛最低，T3 需显著更高 edge 才推。"""
     if tier == 1:
-        return 1.5
+        return 3.0
     elif tier == 2:
-        return 2.0
+        return 4.0
     elif tier == 3:
-        return 2.5
+        return 5.0
     return 99.0  # Tier 4 不推送
 
 # EV 上限 — EV > 此值几乎全是假阳性（队名匹配到错误比赛）
-EV_CAP = 20
+EV_CAP = 12
 
 
 def _check_sport_consistency(opportunities: list, pre_dedup_counts: dict | None = None) -> list:
@@ -329,25 +329,6 @@ def _collect_opportunities_from_file():
         merged = list(best_per_match.values())
         logger.info("同场去重: 移除 %d 个较低赔率机会，保留 %d 个", dup_removed, len(merged))
 
-    # 最终去重：同 (sport, home, away, designation) 保留最高 bb_odds
-    # （可能来自 _diversify_and_rank 后仍残留的不同价格的同一机会）
-    seen = {}
-    final_removed = 0
-    for o in merged:
-        key = (
-            o.get("sport", ""),
-            o.get("home_cn", "").strip(),
-            o.get("away_cn", "").strip(),
-            o.get("designation", "").replace(" ", "").replace("（", "(").replace("）", ")"),
-        )
-        existing = seen.get(key)
-        if existing is None or o.get("bb_odds", 0) > existing.get("bb_odds", 0):
-            seen[key] = o
-    if len(seen) < len(merged):
-        final_removed = len(merged) - len(seen)
-        merged = list(seen.values())
-        logger.info("最终去重: 移除 %d 条较低赔率重复", final_removed)
-
     return merged
 
 
@@ -602,20 +583,19 @@ def _format_body(qualified: list, warnings: list | None = None,
                 + f" | {source_label}: {bb_odds} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}"
             )
 
-    # 数据新鲜度信息
-    freshness_parts = []
+    # 数据时间（用文件 mtime，即实际提取时间）
+    data_time_parts = []
     if bb_time:
-        freshness_parts.append(f"BB/FB提取: {bb_time}")
+        data_time_parts.append(f"BB数据 {bb_time}")
     if pin_time:
-        freshness_parts.append(f"Pinnacle提取: {pin_time}")
-    freshness_line = " | ".join(freshness_parts) if freshness_parts else ""
+        data_time_parts.append(f"Pinnacle {pin_time}")
+    data_time_str = " | ".join(data_time_parts) if data_time_parts else f"数据 {now_str}"
 
     title = f"+EV 投注推荐: {match_idx} 场比赛"
     body = (
         f"**{title}**\n\n"
-        f"扫描 {now_str} | 总额 ¥{total_allocated:,}\n"
+        f"{data_time_str} | 总额 ¥{total_allocated:,}\n"
         + (f"**{sport_summary_line}**\n\n" if sport_summary_line else "")
-        + (f"{freshness_line}\n" if freshness_line else "")
         + (f"来源: {platform_stats}\n\n" if platform_stats else "\n")
         + "\n".join(lines).strip()
     )

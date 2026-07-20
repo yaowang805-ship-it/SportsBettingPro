@@ -37,7 +37,6 @@ from scrapers.bb_vs_pinnacle import (
     _load_league_structure,
     detect_sport,
     extract_bb_1x2,
-    OUTRIGHT_LEAGUES,
 )
 
 
@@ -306,7 +305,6 @@ def run_full():
         return
 
     _now_ts = int(time.time() * 1000)
-    bb_matches = [m for m in bb_matches if m.get("league", "") not in OUTRIGHT_LEAGUES]
     bb_matches = [m for m in bb_matches if not m.get("bt") or int(m["bt"]) > _now_ts]
 
     refresh_needed = False
@@ -324,7 +322,6 @@ def run_full():
     # 更新快照
     bb_after = _fetch_bb_data()
     if bb_after:
-        bb_after = [m for m in bb_after if m.get("league", "") not in OUTRIGHT_LEAGUES]
         bb_after = [m for m in bb_after if not m.get("bt") or int(m["bt"]) > _now_ts]
         new_result = compare_bb_vs_pinnacle(bb_after, _load_league_structure())
         if new_result:
@@ -346,7 +343,7 @@ def _fetch_bb_data():
     matches = raw.get("matches", [])
     # 如果数据太旧，重新抓取
     age_m = (time.time() - BB_EXTRACTED.stat().st_mtime) / 60
-    if age_m > 60:
+    if age_m > 15:
         print(f"  ⚠️ BB数据 {age_m:.0f} 分钟前，重新抓取...")
         if not _run_fetcher():
             print("  ❌ 重新抓取失败，继续使用旧数据")

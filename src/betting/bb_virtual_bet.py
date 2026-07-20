@@ -25,10 +25,10 @@ logger = get_logger(__name__)
 DAILY_BANKROLL = 50000.0           # 每日投注总额（指挥官模式：目标月利润5万）
 INITIAL_BALANCE = 50000.0          # 初始资金
 MAX_STAKE_PCT = 0.06               # 单注最大仓位 6% (¥3,000)
-KELLY_FRAC = 0.75                  # Kelly 分数
-MIN_EV_PCT = 1.5                   # 最小 EV 阈值（与T1门槛一致）
-MAX_EV_PCT = 100.0                 # EV 超过此值跳过
-MAX_BETS = 80                      # 每日最多投注数（指挥官模式：目标月利润5万）
+KELLY_FRAC = 0.50                  # Kelly 分数
+MIN_EV_PCT = 3.0                   # 最小 EV 阈值（与T1门槛一致）
+MAX_EV_PCT = 12.0                 # EV 超过此值跳过
+MAX_BETS = 50                      # 每日最多投注数（质量优先）
 PORTFOLIO_FILE = DATA_DIR / "virtual_portfolio.json"
 
 # 联赛分层（与 bb_ev_push.py 保持一致）

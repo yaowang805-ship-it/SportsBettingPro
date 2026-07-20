@@ -305,9 +305,9 @@ def _auto_map_team_names(matched_entries):
 
     if new_pairs > 0:
         _save_team_name_map(TEAM_NAME_MAP)
-        print(f"  📁 队名自动映射: 新增 {new_pairs} 条队名映射")
+        print(f"  📁 队名自动映射: 新增 {new_pairs} 条队名映射 (已保存到 team_name_map.json)")
     else:
-        pass  # 安静跳过，不在输出中显示
+        print(f"  📁 队名自动映射: 0 条新增")
 
     return new_pairs
 
@@ -371,17 +371,18 @@ MARKET_LABELS = {
 
 def detect_sport(bb_match):
     """从 BB 比赛数据中检测运动类型。
-    优先使用联赛关键词匹配（比 BB 的 sport 字段更可靠，因为
-    提取阶段可能会把网球比赛标记为棒球），回退到 BB sport 字段。"""
-    league = bb_match.get("league", "")
-    for kw, s in BB_SPORT_KEYWORDS.items():
-        if kw in league:
-            return s
+    优先使用 BB API 的 sport 字段（bb_api_fetcher 直连 API，sport 字段可靠），
+    回退到联赛关键词匹配（用于旧 DOM 提取器数据）。"""
     sport = bb_match.get("sport", "")
     if sport:
         if sport == "soccer":
             return "football"
-        return sport
+        if sport in ("football", "basketball", "tennis", "baseball", "american_football"):
+            return sport
+    league = bb_match.get("league", "")
+    for kw, s in BB_SPORT_KEYWORDS.items():
+        if kw in league:
+            return s
     return "football"  # 默认
 
 # BB体育中文联赛名 → Pinnacle 联赛名（关键词匹配），从固定文件加载
@@ -1309,7 +1310,6 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                 min_odds = 2 if sport in TWO_WAY_SPORTS else 3
                 pin_ml = []
                 if len(bb_ml) >= min_odds:
-                    # BB has ML — require Pin to have ML too
                     pin_ml = get_pin_ml_sorted(pin, sport)
                     if len(pin_ml) < min_odds:
                         continue
@@ -1843,9 +1843,10 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             unmatched_leagues.append(league)
 
     # 自动全量映射：每天第一次跑数据时，所有新出现的联赛自动找 Pinnacle ID
+    new_mappings = {}
     if unmatched_leagues:
         print(f"\n  🔍 自动联赛映射: 尝试为 {len(unmatched_leagues)} 个未匹配联赛发现 Pinnacle ID...")
-        new_mappings = _auto_map_leagues(unmatched_leagues, all_pin_leagues)
+        new_mappings = _auto_map_leagues(unmatched_leagues, all_pin_leagues) or {}
         if new_mappings:
             for league in new_mappings:
                 pin_ids = find_pinnacle_league_ids(league, all_pin_leagues)
@@ -2665,6 +2666,25 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         "calibration_blocked_ou": cal_blocked_ou,
         "details": opportunities,
     }
+    # ---- 映射汇总 ----
+    _n_mapped = len(matched_leagues)
+    _n_unmapped = len(unmatched_leagues)
+    _n_team = len(TEAM_NAME_MAP)
+    _n_league_total = _n_mapped + _n_unmapped
+    print(f"\n{'='*60}")
+    print(f"📊 映射汇总")
+    print(f"{'='*60}")
+    print(f"  联赛: {_n_mapped}/{_n_league_total} 已匹配", end="")
+    if _n_unmapped:
+        print(f" | ❌ {_n_unmapped} 未匹配 (Pinnacle 无覆盖)", end="")
+    print()
+    print(f"  队名映射表: {_n_team} 条 (team_name_map.json)")
+    if new_mappings:
+        print(f"  ✅ 本轮新增联赛映射: {len(new_mappings)} 个")
+        for _l in new_mappings:
+            print(f"    · {_l}")
+    print(f"{'='*60}")
+
     save_path.write_text(json.dumps(output, ensure_ascii=False, indent=2, default=str))
     print(f"\n已保存到 {save_path}")
     return output

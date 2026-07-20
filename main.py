@@ -37,10 +37,7 @@ except Exception as _e:
     logger.warning("防退化检查异常: %s", _e)
 
 SCRIPTS = [
-    # (ROOT / "src" / "models" / "auto_retrain.py", "自动模型重训练（月度）", 900),  # ML 已暂停
-    # (ROOT / "src" / "predict" / "run_all.py", "职业级每日预测（NBA+足球+NFL）", 600),
     (ROOT / "src" / "monitor" / "performance.py", "投注结算+盈亏监控"),
-    # (ROOT / "src" / "monitor" / "clv_tracker.py", "CLV 收盘价追踪"),  # 模块不存在
     (ROOT / "src" / "monitor" / "health_check.py", "系统健康检查"),
 ]
 
@@ -122,47 +119,6 @@ if __name__ == "__main__":
     except Exception as e:
         logger.warning("Power Rating 报告失败: %s", e)
 
-    # 盘口快照（模块当前不可用）
-    # try:
-    #     from src.monitor.line_movement import take_snapshot
-    #     n = take_snapshot(force=False)
-    #     logger.info("盘口快照: %d 场比赛", n)
-    # except Exception as e:
-    #     logger.warning("盘口快照失败: %s", e)
-
-    # 套利扫描（模块当前不可用）
-    # try:
-    #     from src.monitor.arbitrage import scan_all_leagues, report_arbitrage
-    #     arb_results = scan_all_leagues(force=False)
-    #     report_arbitrage(arb_results, force=False)
-    # except Exception as e:
-    #     logger.warning("套利扫描失败: %s", e)
-
-    # 模型衰减检测（ML 已暂停）
-    # try:
-    #     from src.monitor.model_decay import run_decay_check
-    #     decay_report = run_decay_check()
-    #     if decay_report.get("is_decaying"):
-    #         logger.warning("模型衰减信号: %s", decay_report.get("decay_signal", ""))
-    # except Exception as e:
-    #     logger.warning("模型衰减检测失败: %s", e)
-
-    # 数据质量检测（ML 已暂停）
-    # try:
-    #     from src.monitor.data_quality import run_data_quality_check
-    #     dq_report = run_data_quality_check()
-    #     if dq_report["overall_status"] == "error":
-    #         logger.warning("数据质量检测发现严重问题")
-    # except Exception as e:
-    #     logger.warning("数据质量检测失败: %s", e)
-
-    # # 特征漂移检测（ML 已暂停）
-    # try:
-    #     from src.core.interpretability import detect_feature_drift
-    #     ...
-    # except Exception as e:
-    #     logger.warning("SHAP 特征漂移检测失败: %s", e)
-
     # Edge Attribution
     try:
         from src.monitor.edge_attribution import print_edge_attribution_report
@@ -184,10 +140,7 @@ if __name__ == "__main__":
         if pt_state.get("ready"):
             logger.info("  ⏭️ 跳过回放: 模拟交易已达就绪状态")
         elif not pt_state.get("checks", {}).get("min_bets", {}).get("passed", False):
-            from scripts.replay_engine import ReplayEngine
-            engine = ReplayEngine(min_edge=0.03, kelly_fraction=0.07)
-            engine.run()
-            logger.info("  ✅ 回放引擎完成: %d 笔新增投注", len(engine.bet_records))
+            logger.info("  ⏭️ 跳过回放: ReplayEngine 模块暂不可用")
         else:
             logger.info("  ⏭️ 跳过回放: 样本量充足但其他检查未通过")
     except Exception as e:
