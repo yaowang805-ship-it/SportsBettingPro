@@ -50,32 +50,41 @@ cmd_scan() {
 
     _log "====== SCAN START ======"
     _log "Step 1/3: BB/FB API 提取..."
-    python3 -m src.scrapers.bb_api_fetcher --all-sports 2>&1 | tee -a "$PIPELINE_LOG"
-    if [ ${PIPESTATUS[0]} -ne 0 ]; then
+    python3 -m src.scrapers.bb_api_fetcher --all-sports 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+    if [ $rc -ne 0 ]; then
         _log "❌ Step 1/3 失败"
-        _send_alert "全量扫描 Step 1/3 失败"
+        _send_alert "全量扫描 Step 1/3 (bb_api_fetcher)" "$rc"
         return 1
     fi
     _log "Step 1/3: 完成"
 
-    _log "Step 2/3: Pinnacle 对比..."
-    python3 -m src.scrapers.bb_vs_pinnacle 2>&1 | tee -a "$PIPELINE_LOG"
-    if [ ${PIPESTATUS[0]} -ne 0 ]; then
+    _log "Step 2/3: Pinnacle 对比 (BB+FB合并)..."
+    python3 -m src.scrapers.bb_vs_pinnacle 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+    if [ $rc -ne 0 ]; then
         _log "❌ Step 2/3 失败"
-        _send_alert "全量扫描 Step 2/3 失败"
+        _send_alert "全量扫描 Step 2/3 (bb_vs_pinnacle)" "$rc"
         return 1
     fi
     _log "Step 2/3: 完成"
 
-    _log "Step 3/3: +EV 推送..."
-    if [ -n "$no_bet" ]; then
-        python3 -m src.report.bb_ev_push --no-bet 2>&1 | tee -a "$PIPELINE_LOG"
-    else
-        python3 -m src.report.bb_ev_push 2>&1 | tee -a "$PIPELINE_LOG"
-    fi
+    _log "Step 2b/3: Pinnacle 对比 (FB独立)..."
+    python3 -m src.scrapers.bb_vs_pinnacle \
+        --input=bb_odds_extracted_FB.json \
+        --output=bb_vs_pinnacle_comparison_FB.json 2>&1 | tee -a "$PIPELINE_LOG"
     if [ ${PIPESTATUS[0]} -ne 0 ]; then
+        _log "⚠️ Step 2b/3 失败 (FB独立对比非关键，继续)"
+    fi
+    _log "Step 2b/3: 完成"
+
+    _log "Step 3/3: +EV 推送 (合并双对比)..."
+    if [ -n "$no_bet" ]; then
+        python3 -m src.report.bb_ev_push --no-bet 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+    else
+        python3 -m src.report.bb_ev_push 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+    fi
+    if [ $rc -ne 0 ]; then
         _log "❌ Step 3/3 失败"
-        _send_alert "全量扫描 Step 3/3 失败"
+        _send_alert "全量扫描 Step 3/3 (bb_ev_push)" "$rc"
         return 1
     fi
     _log "Step 3/3: 完成"
@@ -84,11 +93,10 @@ cmd_scan() {
 
 cmd_incremental() {
     _log "====== INCREMENTAL START ======"
-    python3 -m src.scrapers.bb_incremental_scanner 2>&1 | tee -a "$PIPELINE_LOG"
-    local rc=${PIPESTATUS[0]}
+    python3 -m src.scrapers.bb_incremental_scanner 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
     if [ $rc -ne 0 ]; then
         _log "❌ 增量扫描失败 (rc=$rc)"
-        _send_alert "增量扫描失败"
+        _send_alert "增量扫描 (bb_incremental_scanner)" "$rc"
         return 1
     fi
     _log "====== INCREMENTAL DONE ======"
@@ -96,11 +104,10 @@ cmd_incremental() {
 
 cmd_settle() {
     _log "====== SETTLE START ======"
-    python3 -m src.monitor.auto_settle 2>&1 | tee -a "$PIPELINE_LOG"
-    local rc=${PIPESTATUS[0]}
+    python3 -m src.monitor.auto_settle 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
     if [ $rc -ne 0 ]; then
         _log "❌ 结算失败 (rc=$rc)"
-        _send_alert "自动结算失败"
+        _send_alert "自动结算 (auto_settle)" "$rc"
         return 1
     fi
     _log "====== SETTLE DONE ======"
@@ -126,7 +133,7 @@ cmd_report() {
     local rc=${PIPESTATUS[0]}
     if [ $rc -ne 0 ]; then
         _log "❌ $type 报告失败 (rc=$rc)"
-        _send_alert "${type}报告推送失败"
+        _send_alert "${type}报告推送失败" "$rc"
         return 1
     fi
     _log "====== $type REPORT DONE ======"
@@ -269,9 +276,18 @@ cmd_git_commit() {
 
 _send_alert() {
     local msg="$1"
+    local exit_code="${2:-?}"
+    local log_tail=""
+    if [ -f "$PIPELINE_LOG" ]; then
+        log_tail=$(tail -5 "$PIPELINE_LOG" 2>/dev/null | head -c 300)
+    fi
     python3 -c "
 from config.settings import send_dingtalk
-send_dingtalk('Pipeline Alert', '❌ $msg ($(date '+%H:%M'))')
+msg = '''❌ $msg (exit=$exit_code)
+时间: $(date '+%m/%d %H:%M')
+最近日志:
+$log_tail'''
+send_dingtalk('Pipeline Alert', msg)
 " 2>/dev/null || true
 }
 

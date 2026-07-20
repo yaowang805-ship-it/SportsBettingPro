@@ -17,14 +17,14 @@
 
 | 用途 | 数据源 | 方式 | 状态 |
 |---|---|---|---|
-| 投注平台赔率 | BB体育 (api.447a9.com) + FB体育 (api.5c4r3.com) | 直接 HTTP API | ✅ 双平台 |
+| 投注平台赔率 | BB体育 (api.infv1.com) | 直接 HTTP API | ✅ 仅BB |
 | 公平价参考 | Pinnacle (guest.api.arcadia.pinnacle.com) | HTTP API | ✅ |
 | 赛果/结算 | ESPN + football-data.org + 直播吧 | 多源聚合 | ✅ |
 
 ## 系统架构
 
 ```
-BB/FB API (api.447a9.com / api.5c4r3.com) ──→ bb_api_fetcher.py ──→ bb_odds_extracted.json
+BB体育 API (api.infv1.com, user-token) ──→ bb_api_fetcher.py ──→ bb_odds_extracted.json
                                    └── type=2 (72小时), requests 直连
                                               ↓
 Pinnacle API ─────────────────────→ bb_vs_pinnacle.py ──→ bb_vs_pinnacle_comparison.json
@@ -54,13 +54,13 @@ python3 -m src.report.bb_ev_push --no-bet
 | 参数 | 值 | 说明 |
 |---|---|---|
 | 日预算 | ¥50,000 | 支撑月利润¥50k目标 |
-| Kelly 分数 | 0.25 | 保守投注 |
-| T1 最小 EV | 2% | 优先推送高置信度 |
-| T2 最小 EV | 2% | 主流联赛 |
-| T3 最小 EV | 2% | 低级别联赛 + 网球 |
+| Kelly 分数 | 0.75 | 0.75凯利（2026-07-20从0.50上调，目标月利润¥50k） |
+| T1 最小 EV | 1.5% | 最可靠联赛（从2%下调） |
+| T2 最小 EV | 2.0% | 主流联赛（从2.5%下调） |
+| T3 最小 EV | 2.5% | 低级别（从3%下调） |
 | EV 上限 | 20% | 防极端值假阳性 |
-| 单注上限 | 2% | ¥1,000 |
-| 每日最多 | 50 笔 | |
+| 单注上限 | 6% (¥3,000) | 从4%上调（目标月利润¥50k） |
+| 每日最多 | 80 笔 | |
 
 ## 关键文件
 
@@ -73,10 +73,10 @@ python3 -m src.report.bb_ev_push --no-bet
 
 ## 关键决策
 
-1. **BB/FB API 直连** — `api.447a9.com` (BB) + `api.5c4r3.com` (FB) POST + Authorization token（从 Chrome LevelDB 提取）
+1. **BB API 直连** — `api.infv1.com` (BB体育真实API, user-token头)，非旧 `api.447a9.com`（那是不同数据源返回错误低价）
 2. **type=2** — 返回未来72小时比赛（658场），type=3 仅当天（26场）
 3. **钉钉直连** — Shadowrocket VPN 劫持 DNS，硬编码真实IP `161.117.107.66` + SNI
 4. **requests 库** — Python 3.14 urllib 有 IncompleteRead bug，大响应截断
 5. **置信度标记** — ✓ = 队名匹配(≥0.95), ◷ = 时间匹配
-6. **Tier门槛** — T1≥2%, T2≥2%, T3≥3%, EV_CAP=20%
+6. **Tier门槛** — T1≥2%, T2≥2.5%, T3≥3%, EV_CAP=20%
 7. **止损机制** — 连输3天预算减半，5天停投

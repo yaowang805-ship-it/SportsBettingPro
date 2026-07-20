@@ -94,14 +94,27 @@ def _connect_with_fallback(hostname: str):
         ssl.SSLSocket | None: 连接成功返回 SSL socket
     """
     # 尝试1: 硬编码 IP
-    for attempt, ip in enumerate([_REAL_IP, None]):
+    # 尝试2: 8.8.8.8 DNS 查询
+    # 尝试3: 系统 DNS（走 Shadowrocket，通常可用）
+    ips = [_REAL_IP, None, None]
+    for attempt in range(3):
         if attempt == 1:
             dns_ip = _resolve_via_dns()
             if not dns_ip:
-                logger.warning("  DNS 备用解析失败，无法连接钉钉")
-                return None
+                logger.warning("  DNS(8.8.8.8) 解析失败")
+                continue
             ip = dns_ip
-            logger.info(f"  使用 DNS 解析 IP: {ip}")
+            logger.info(f"  使用 DNS(8.8.8.8) IP: {ip}")
+        elif attempt == 2:
+            try:
+                addrs = socket.getaddrinfo(hostname, 443, socket.AF_INET, socket.SOCK_STREAM)
+                ip = addrs[0][4][0]
+                logger.info(f"  使用系统DNS IP: {ip}")
+            except Exception:
+                logger.warning("  系统DNS解析失败")
+                continue
+        else:
+            ip = ips[0]
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(_TIMEOUT)
@@ -109,7 +122,8 @@ def _connect_with_fallback(hostname: str):
             sock.connect((ip, 443))
             ctx = ssl.create_default_context()
             ssock = ctx.wrap_socket(sock, server_hostname=hostname)
-            logger.info(f"  钉钉连接成功 ({'硬编码' if attempt == 0 else 'DNS备用'} IP: {ip})")
+            labels = ["硬编码", "DNS(8.8.8.8)", "系统DNS"]
+            logger.info(f"  钉钉连接成功 ({labels[attempt]} IP: {ip})")
             return ssock
         except Exception:
             try:
@@ -117,7 +131,7 @@ def _connect_with_fallback(hostname: str):
             except Exception:
                 pass
             if attempt == 0:
-                logger.warning(f"  硬编码 IP {_REAL_IP} 连接失败，尝试 DNS 解析备用...")
+                logger.warning(f"  硬编码 IP {_REAL_IP} 连接失败")
             continue
 
     return None

@@ -1,4 +1,4 @@
-"""BB体育 API 调用器 —— 直接 HTTP 调用 api.447a9.com
+"""BB体育 API 调用器 —— 直接 HTTP 调用 api.infv1.com (BB体育真实API)
 
 替代 Chrome DOM 提取器 (bb_extract_odds.py)，直接从 API 获取：
 - 比赛列表（含球队名、联赛、开赛时间）
@@ -24,13 +24,14 @@ from config.logging_config import get_logger
 logger = get_logger(__name__)
 
 # API 端点（BB体育）
-API_BASE = "https://api.447a9.com"
+API_BASE = "https://api.infv1.com"
 
-# 多平台配置（BB体育 + FB体育，DB体育待定-Protobuf API）
+# 多平台配置（BB体育 + FB体育）
+# 注意: BB体育真正API是 api.infv1.com（user-token），不是 api.447a9.com（h5-token）
 PLATFORMS = {
     "BB": {
-        "api_base": "https://api.447a9.com",
-        "auth_header": "h5-token",
+        "api_base": "https://api.infv1.com",
+        "auth_header": "user-token",
         "label": "BB体育",
         "label_short": "BB",
     },
@@ -97,10 +98,9 @@ SPORT_PERIODS = {
 # ─── Token 提取 ───────────────────────────────────────────────
 
 def _get_h5_token_from_chrome():
-    """从 Chrome localStorage 通过 AppleScript 获取 h5-token（有效认证凭据）。
+    """从 Chrome localStorage 获取 API token（user-token/h5-token 值相同）。
 
-    实际有效的 API token 是 `h5-token` (localStorage key)，作为请求头 `h5-token` 发送。
-    旧的 Authorization header (st-auth) 已过期。
+    BB体育真实API使用 `user-token` 请求头，FB体育也用 `user-token`。
     """
     # 先检查环境变量（用于测试/备用）
     env_token = os.environ.get("BB_API_TOKEN")
@@ -673,8 +673,9 @@ def _merge_single_match(platform_matches):
     base = platform_matches[0][1].copy()
     platforms_in_group = [pm[0] for pm in platform_matches]
 
-    # sources 初始标记为 "BOTH"，只有某平台真正有更高赔率时才标记为它
-    sources = {key: "BOTH" for key in ["ml", "handicap", "ou", "dnb", "dc"]}
+    # sources 初始标记为第一个平台，只有某平台真正有更高赔率时才标记为它
+    first_plat = platform_matches[0][0]
+    sources = {key: first_plat for key in ["ml", "handicap", "ou", "dnb", "dc"]}
 
     def _update_source(market_key, base_val, plat_val, platform):
         """当 base_val < plat_val 时才更新 source 为指定平台，否则不变。"""
@@ -823,6 +824,48 @@ def _merge_single_match(platform_matches):
                     if len(plat_ht_dc) >= len(base_ht_dc):
                         base_ht["dc"] = plat_ht_dc
 
+    # ── FT/HC 备用让球盘（alternate_handicaps）跨平台合并 ──
+    def _merge_alternates(base_alts, plat_alts, line_key, odds_keys):
+        """合并备用盘口列表，同线取最高赔率。"""
+        if not plat_alts:
+            return base_alts or []
+        if not base_alts:
+            return plat_alts
+        result = list(base_alts)
+        for pa in plat_alts:
+            pa_line = pa.get(line_key)
+            if pa_line is None:
+                result.append(pa)
+                continue
+            found = False
+            for ba in result:
+                ba_line = ba.get(line_key)
+                if ba_line is not None and abs(ba_line - pa_line) <= 0.05:
+                    for ok in odds_keys:
+                        if pa.get(ok, 0) > ba.get(ok, 0):
+                            ba[ok] = pa[ok]
+                    found = True
+                    break
+            if not found:
+                result.append(pa)
+        return result
+
+    for period in ("odds_ft", "odds_ht"):
+        base_period = base.get(period, {})
+        plat_period = m.get(period, {})
+        if not plat_period:
+            continue
+        base_alts = base_period.get("alternate_handicaps", [])
+        plat_alts = plat_period.get("alternate_handicaps", [])
+        merged_hc = _merge_alternates(base_alts, plat_alts, "home_line", ["home_odds", "away_odds"])
+        if merged_hc is not plat_alts:
+            base_period["alternate_handicaps"] = merged_hc
+        base_alts = base_period.get("alternate_totals", [])
+        plat_alts = plat_period.get("alternate_totals", [])
+        merged_ou = _merge_alternates(base_alts, plat_alts, "line", ["over_odds", "under_odds"])
+        if merged_ou is not plat_alts:
+            base_period["alternate_totals"] = merged_ou
+
     base["platform"] = "ALL"
     base["platform_sources"] = sources
     return base
@@ -916,20 +959,38 @@ def _fetch_one_platform(platform_key: str):
     return platform_key, platform_matches
 
 
-def fetch_all_sports():
+def fetch_all_sports(with_fb=False):
     """获取所有运动在所有平台的比赛数据并结构化。
+
+    with_fb: 是否同时提取 FB 平台（默认 False，因为 BB 赔率通常更优）。
 
     使用多线程并行提取各平台数据，然后按比赛合并取最高赔率。
     """
+    platforms_to_fetch = ["BB"]
+    if with_fb:
+        platforms_to_fetch.append("FB")
+
     all_platform_matches = {}
     total_by_platform = {}
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=len(PLATFORMS)) as executor:
-        futures = {executor.submit(_fetch_one_platform, key): key for key in PLATFORMS}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=len(platforms_to_fetch)) as executor:
+        futures = {executor.submit(_fetch_one_platform, key): key for key in platforms_to_fetch}
         for future in concurrent.futures.as_completed(futures):
             platform_key, platform_matches = future.result()
             total_by_platform[platform_key] = len(platform_matches)
             all_platform_matches[platform_key] = platform_matches
+
+    # 保存各平台原始数据（用于FB独立对比）
+    for plat_key, plat_matches in all_platform_matches.items():
+        plat_path = DATA_DIR / f"bb_odds_extracted_{plat_key}.json"
+        plat_output = {
+            "timestamp": time.strftime('%Y-%m-%dT%H:%M:%S'),
+            "source": f"{PLATFORMS[plat_key]['label']} (原始数据)",
+            "match_count": len(plat_matches),
+            "matches": plat_matches,
+        }
+        plat_path.write_text(json.dumps(plat_output, ensure_ascii=False, default=str))
+        print(f"  {PLATFORMS[plat_key]['label']} 原始数据已保存: {plat_path.name} ({len(plat_matches)} 场)")
 
     # 合并各平台结果（取最高赔率）
     print(f"\n{'=' * 50}")
@@ -991,7 +1052,8 @@ def save_results(matches, single_platform=None):
     if single_platform:
         source_label = f"{PLATFORMS[single_platform]['label']} (单平台调试)"
     else:
-        source_label = f"BB体育+FB体育 (多平台合并)"
+        has_fb = any(m.get("platform") == "ALL" or m.get("platform") == "FB" for m in matches)
+        source_label = "BB体育+FB体育 (多平台合并)" if has_fb else "BB体育 (仅BB)"
 
     output = {
         "timestamp": timestamp,
@@ -1106,6 +1168,8 @@ def main():
         if arg.startswith("--platform="):
             platform_override = arg.split("=", 1)[1].upper()
 
+    with_fb = "--with-fb" in sys.argv
+
     if platform_override:
         # 单平台模式
         print(f"🔧 单平台模式: {PLATFORMS.get(platform_override, {}).get('label', platform_override)}")
@@ -1117,11 +1181,13 @@ def main():
             print("⚠️ 未提取到任何比赛！")
             sys.exit(1)
     else:
-        # 全平台模式
-        matches = fetch_all_sports()
+        # 默认模式：仅 BB（除非 --with-fb）
+        label = "BB体育" if not with_fb else "BB体育+FB体育"
+        print(f"🔧 模式: {label}" + (" (含FB)" if with_fb else " (仅BB)"))
+        matches = fetch_all_sports(with_fb=with_fb)
         if matches:
             save_results(matches)
-            print(f"\n多平台提取完成，共 {len(matches)} 场比赛")
+            print(f"\n提取完成，共 {len(matches)} 场比赛 ({label})")
         else:
             print("⚠️ 未提取到任何比赛！")
             sys.exit(1)

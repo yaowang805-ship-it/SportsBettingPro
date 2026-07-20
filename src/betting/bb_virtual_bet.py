@@ -24,9 +24,9 @@ logger = get_logger(__name__)
 # 虚拟投注参数
 DAILY_BANKROLL = 50000.0           # 每日投注总额（指挥官模式：目标月利润5万）
 INITIAL_BALANCE = 50000.0          # 初始资金
-MAX_STAKE_PCT = 0.02               # 单注最大仓位 2%
-KELLY_FRAC = 0.25                  # Kelly 分数
-MIN_EV_PCT = 2.0                   # 最小 EV 阈值（fair-price 基准）
+MAX_STAKE_PCT = 0.06               # 单注最大仓位 6% (¥3,000)
+KELLY_FRAC = 0.75                  # Kelly 分数
+MIN_EV_PCT = 1.5                   # 最小 EV 阈值（与T1门槛一致）
 MAX_EV_PCT = 100.0                 # EV 超过此值跳过
 MAX_BETS = 80                      # 每日最多投注数（指挥官模式：目标月利润5万）
 PORTFOLIO_FILE = DATA_DIR / "virtual_portfolio.json"

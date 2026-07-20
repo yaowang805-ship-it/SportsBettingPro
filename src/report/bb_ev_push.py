@@ -310,10 +310,16 @@ def _collect_opportunities_from_file():
 
     # 二次去重：同场比赛同一盘口只保留最高赔率
     # （联赛名可能因API来源不同而不一致，导致指纹不匹配）
+    # 注意到 designation 可能因空格或数字精度不同而不一致，特做 whitespace 归一化
     best_per_match = {}
     dup_removed = 0
     for o in merged:
-        match_key = (o.get("sport", ""), o.get("home_cn", ""), o.get("away_cn", ""), o.get("designation", ""))
+        match_key = (
+            o.get("sport", ""),
+            o.get("home_cn", "").strip(),
+            o.get("away_cn", "").strip(),
+            o.get("designation", "").replace(" ", "").replace("（", "(").replace("）", ")"),
+        )
         existing = best_per_match.get(match_key)
         if existing is None or o.get("bb_odds", 0) > existing.get("bb_odds", 0):
             best_per_match[match_key] = o
@@ -322,6 +328,25 @@ def _collect_opportunities_from_file():
         dup_removed = len(merged) - len(best_per_match)
         merged = list(best_per_match.values())
         logger.info("同场去重: 移除 %d 个较低赔率机会，保留 %d 个", dup_removed, len(merged))
+
+    # 最终去重：同 (sport, home, away, designation) 保留最高 bb_odds
+    # （可能来自 _diversify_and_rank 后仍残留的不同价格的同一机会）
+    seen = {}
+    final_removed = 0
+    for o in merged:
+        key = (
+            o.get("sport", ""),
+            o.get("home_cn", "").strip(),
+            o.get("away_cn", "").strip(),
+            o.get("designation", "").replace(" ", "").replace("（", "(").replace("）", ")"),
+        )
+        existing = seen.get(key)
+        if existing is None or o.get("bb_odds", 0) > existing.get("bb_odds", 0):
+            seen[key] = o
+    if len(seen) < len(merged):
+        final_removed = len(merged) - len(seen)
+        merged = list(seen.values())
+        logger.info("最终去重: 移除 %d 条较低赔率重复", final_removed)
 
     return merged
 
@@ -598,31 +623,42 @@ def _format_body(qualified: list, warnings: list | None = None,
     return body
 
 
-def build_report(force: bool = False):
-    """构建格式化的 BB vs Pinnacle +EV 报告。返回 (body_text, qualified_opportunities).
+def _prepare_opportunities(force=False):
+    """Shared: collect + diversify. Returns qualified list or empty list.
 
     Args:
-        force: 跳过 2 小时新鲜度检查，即使对比文件较旧也继续推送。
+        force: If True, skip 2-hour freshness check.
     """
-    # 强制新鲜度检查：对比文件必须是最近 2 小时内生成的（除非 --force）
     if COMPARISON_FILE.exists():
         if not force:
             mtime = COMPARISON_FILE.stat().st_mtime
             age_hours = (time.time() - mtime) / 3600
             if age_hours > 2:
                 print(f"❌ bb_vs_pinnacle_comparison.json 已过期 ({age_hours:.1f}小时前)，请先运行 bb_vs_pinnacle 重新对比")
-                return "data stale", []
+                return []
     else:
-        return "no comparison data", []
+        return []
 
-    sport_summary = _compute_sport_summary()
     qualified = _collect_opportunities_from_file()
     if not qualified:
-        return "no +EV opportunities (>=2%)", []
-    qualified = _diversify_and_rank(qualified)
+        return []
+
+    return _diversify_and_rank(qualified)
+
+
+def build_report(force: bool = False):
+    """构建格式化的 BB vs Pinnacle +EV 报告。返回 (body_text, qualified_opportunities).
+
+    Args:
+        force: 跳过 2 小时新鲜度检查，即使对比文件较旧也继续推送。
+    """
+    qualified = _prepare_opportunities(force=force)
     if not qualified:
-        return "no +EV opportunities after filtering", []
-    # 一致性检查：对比上次各运动推送数，异常时追加警告
+        if not COMPARISON_FILE.exists():
+            return "no comparison data", []
+        return "no +EV opportunities", []
+
+    sport_summary = _compute_sport_summary()
     warnings = _check_sport_consistency(qualified)
     body = _format_body(qualified, warnings, sport_summary)
     return body, qualified
@@ -678,25 +714,30 @@ def _filter_pushed(qualified: list) -> list:
     return new
 
 
-def push_report(place_bets=False, incremental=False):
+def push_report(place_bets=False, incremental=False, qualified=None):
+    """推送报告到钉钉。
+
+    Args:
+        place_bets: 是否执行自动投注。
+        incremental: 增量扫描标记。
+        qualified: 可选，来自 build_report 的已处理机会列表。为 None 时独立预处理。
+    """
     if not DINGTALK_WEBHOOK:
         logger.info("no DINGTALK_WEBHOOK configured")
         return
 
-    # 收集 → 去重 → 格式化 → 推送
-    qualified = _collect_opportunities_from_file()
+    if qualified is None:
+        qualified = _prepare_opportunities(force=True)
+
     if not qualified:
         logger.info("no +EV opportunities found")
         return
-    qualified = _diversify_and_rank(qualified)
-    if not qualified:
-        logger.info("no +EV opportunities after filtering")
-        return
 
     # 一致性检查用去重前的数据，防止被指纹去重大幅减少 count 导致误报
-    pre_dedup_counts = {o.get("sport", "unknown"): 0 for o in qualified}
+    pre_dedup_counts = {}
     for o in qualified:
-        pre_dedup_counts[o.get("sport", "unknown")] = pre_dedup_counts.get(o.get("sport", "unknown"), 0) + 1
+        s = o.get("sport", "unknown")
+        pre_dedup_counts[s] = pre_dedup_counts.get(s, 0) + 1
 
     qualified = _filter_pushed(qualified)
     if not qualified:
@@ -712,7 +753,6 @@ def push_report(place_bets=False, incremental=False):
     # 增量扫描标记：标题 + 正文头部添加标记
     if incremental:
         title = f"⚡ 增量扫描 +EV 机会: {body.count('#####')} 条 新发现"
-        # 在 body 的 sport_summary_line 后插入增量标记
         lines = body.split("\n")
         insert_pos = None
         for i, line in enumerate(lines):
@@ -792,4 +832,5 @@ if __name__ == "__main__":
 
     if "--no-push" not in sys.argv:
         push_report(place_bets=("--no-bet" not in sys.argv),
-                    incremental="--incremental" in sys.argv)
+                    incremental="--incremental" in sys.argv,
+                    qualified=qualified if qualified else None)
