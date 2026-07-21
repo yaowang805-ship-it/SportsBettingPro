@@ -104,25 +104,16 @@ LEAGUE_SPORT_MAP = {
     "瑞典甲": ("soccer_sweden_superettan", "瑞典甲"),
     "瑞典甲级联赛": ("soccer_sweden_superettan", "瑞典甲"),
     "南美杯": ("soccer_conmebol_copa_sudamericana", "南美杯"),
-    "乌拉圭甲级联赛": (None, "乌拉圭甲级联赛"),
-    "乌拉圭乙级联赛": (None, "乌拉圭乙级联赛"),
-    "俄罗斯甲级联赛": (None, "俄罗斯甲级联赛"),
-    "俄罗斯超级联赛": (None, "俄罗斯超级联赛"),
-    "巴拉圭甲级联赛": (None, "巴拉圭甲级联赛"),
-    "巴拉圭乙级联赛": (None, "巴拉圭乙级联赛"),
-    "哈萨克斯坦超级联赛": (None, "哈萨克斯坦超级联赛"),
-    "白俄罗斯超级联赛": (None, "白俄罗斯超级联赛"),
-    "冰岛甲级联赛": (None, "冰岛甲级联赛"),
-    "爱沙尼亚甲级联赛": (None, "爱沙尼亚甲级联赛"),
-    "苏格兰联赛杯": (None, "苏格兰联赛杯"),
-    "马来西亚总统杯 U20": (None, "马来西亚总统杯 U20"),
+    "乌拉圭甲级联赛": (None, "乌拉圭甲"),
+    "乌拉圭乙级联赛": (None, "乌拉圭乙"),
+    "巴拉圭甲级联赛": (None, "巴拉圭甲"),
+    "巴拉圭乙级联赛": (None, "巴拉圭乙"),
+    "哈萨克斯坦超级联赛": (None, "哈萨克斯坦超"),
+    "白俄罗斯超级联赛": (None, "白俄罗斯超"),
+    "爱沙尼亚甲级联赛": (None, "爱沙尼亚甲"),
+    "澳门甲级联赛": (None, "澳门甲"),
+    "马来西亚总统杯 U20": (None, "马来西亚U20"),
     "韩国足协杯": (None, "韩国足协杯"),
-    "澳大利亚杯": (None, "澳大利亚杯"),
-    "厄瓜多尔甲级联赛": (None, "厄瓜多尔甲级联赛"),
-    "罗马尼亚甲级联赛": (None, "罗马尼亚甲级联赛"),
-    "阿根廷全国联赛": (None, "阿根廷全国联赛"),
-    "英格兰联赛杯": (None, "英格兰联赛杯"),
-    "澳门甲级联赛": (None, "澳门甲级联赛"),
     # 新增 BB API 联赛映射
     "保加利亚甲级联赛": ("soccer_bulgaria_first_league", "保甲"),
     "韩国K1联赛": ("soccer_korea_k_league", "K1联赛"),
@@ -180,13 +171,35 @@ LEAGUE_SPORT_MAP = {
     # 棒球
     "墨西哥棒球联盟": (None, "墨西哥棒球"),
     # 冰岛联赛 — 极小众，无 ESPN 覆盖，超时作废
-    "冰岛超级联赛": (None, "冰岛超"),
+    "冰岛超级联赛": ("soccer_iceland_pepsi_deild", "冰岛超"),
     "冰岛超级联赛女子": (None, "冰岛超女"),
-    # 棒球 — 无 ESPN 覆盖
-    "日本职业棒球": (None, "日本职棒"),
+    # 棒球
+    "日本职业棒球": ("baseball_npb", "日本职棒"),
+    "MLB 美国职业棒球大联盟": ("baseball_mlb", "MLB"),
+    "MLB联赛": ("baseball_mlb", "MLB"),
+    # 芬兰足球
+    "芬兰甲级联赛": ("soccer_finland_ykkosliiga", "芬甲"),
+    # 瑞典足球
+    "瑞典超甲级联赛": ("soccer_sweden_superettan", "瑞典超甲"),
+    # 俄罗斯足球
+    "俄罗斯超级联赛": ("soccer_russia_premier_league", "俄超"),
+    "俄罗斯甲级联赛": ("soccer_russia_first_league", "俄甲"),
+    "俄罗斯乙级A组联赛": ("soccer_russia_second_league_a", "俄乙A"),
+    # 南美足球
+    "秘鲁甲级联赛": ("soccer_peru_primeira_division", "秘鲁甲"),
+    "立陶宛甲级联赛": ("soccer_lithuania_a_lyga", "立陶宛甲"),
+    "印度加尔各答超级联赛": (None, "印度加尔各答超"),
+    # 欧足联会议联赛（BB API 用词变体）
+    "欧足联欧洲会议联赛-资格赛": ("soccer_uefa_conference_league", "欧协联"),
+    "欧足联欧洲会议联赛": ("soccer_uefa_conference_league", "欧协联"),
+    # WNBA 全称
+    "WNBA 美国职业女子篮球联赛": ("basketball_wnba", "WNBA"),
     # 足球小联赛
     "澳大利亚新南威尔士州北部全国超级联赛": (None, "澳北超"),
-    "瑞典超甲级联赛": (None, "瑞典超甲"),
+    # 苏格兰联赛杯
+    "苏格兰联赛杯": ("soccer_scotland_league_cup", "苏格兰联赛杯"),
+    # 冰岛甲级
+    "冰岛甲级联赛": (None, "冰岛甲级联赛"),
 }
 
 # 兜底：sport 字段 → sport key（精确匹配）
@@ -760,19 +773,27 @@ def auto_settle(dry_run: bool = False) -> int:
     for (sport, league), bets in league_groups.items():
         # 跳过已从 LEAGUE_SPORT_MAP 确认不支持的联赛
         api_key_info = LEAGUE_SPORT_MAP.get(league)
+        looks_up_scores = True
         if not api_key_info:
             sk = SPORT_FALLBACK.get(sport)
             if sk:
                 api_key_info = (sk, league or sport)
             else:
-                logger.warning("未知联赛: %s (sport=%s)，跳过 %s 笔", league, sport, len(bets))
-                continue
+                # 级联退避：用 sport 字段作为 league 名尝试获取比分
+                logger.info("  联赛映射未知，尝试 sport 级联退避: %s", sport)
+                completed = _fetch_completed_scores(sport)
+                if completed:
+                    display = league or sport
+                else:
+                    logger.warning("未知联赛: %s (sport=%s)，跳过 %s 笔", league, sport, len(bets))
+                    continue
+                looks_up_scores = False
 
-        _, display = api_key_info
-        logger.info("获取 %s 已完成比赛...", display)
-
-        # 多源获取比赛结果（ESPN → football-data.org → 直播吧）
-        completed = _fetch_completed_scores(league)
+        if looks_up_scores:
+            _, display = api_key_info
+            logger.info("获取 %s 已完成比赛...", display)
+            # 多源获取比赛结果（ESPN → football-data.org → Odds API → BSD → 直播吧）
+            completed = _fetch_completed_scores(league)
 
         if not completed:
             logger.warning("  %s 无比分数据", display)

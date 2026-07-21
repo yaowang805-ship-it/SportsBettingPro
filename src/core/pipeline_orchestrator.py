@@ -44,9 +44,9 @@ CHECK_INTERVAL = 30            # 调度循环检查间隔（秒）
 # 定时任务表：(名称, HH:MM, 处理函数, 参数字典)
 SCHEDULE = [
     ("full_scan_morning",  "08:00", "do_full_scan",  {"bet": True}),
-    ("settle_morning",     "08:30", "do_settle",      {}),
-    ("daily_report",       "08:35", "do_daily_report",{}),
-    ("full_scan_evening",  "20:00", "do_full_scan",   {"bet": False}),
+    ("settle_morning",     "09:30", "do_settle",      {}),
+    ("daily_report",       "10:00", "do_daily_report",{}),
+    ("full_scan_evening",  "20:00", "do_full_scan",   {"bet": True}),
     ("settle_evening",     "20:30", "do_settle",      {}),
     # 周报：周日 21:00
     ("weekly_report",      "Sun 21:00", "do_weekly_report", {}),

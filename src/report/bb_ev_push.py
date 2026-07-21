@@ -259,6 +259,7 @@ def _collect_opportunities(match, market_key):
             "fair_price": fair,
             "ev_pct": ev,
             "start_time_bb": match.get("start_time_bb", ""),
+            "_market_type": market_key,  # "opportunities"|"handicap"|"over_under"|...
 
             "_match_score": match_score,
             "_score": score,
@@ -360,12 +361,14 @@ def _diversify_and_rank(qualified: list) -> list:
     if not qualified:
         return []
 
-    SPORT_ORDER = {"football": 0, "basketball": 1, "tennis": 2, "baseball": 3, "american_football": 4}
+    SPORT_ORDER = {"football": 0, "basketball": 1, "tennis": 2, "baseball": 3, "american_football": 4,
+                    "pingpong": 5, "badminton": 6, "volleyball": 7, "boxing": 8, "mma": 9, "ice_hockey": 10}
 
     # 各运动至少保留 1 条（按 Tier 优先选）
     selected = []
     selected_ids = set()
-    for sport in ("football", "basketball", "tennis", "baseball", "american_football"):
+    for sport in ("football", "basketball", "tennis", "baseball", "american_football",
+                   "pingpong", "badminton", "volleyball", "boxing", "mma", "ice_hockey"):
         sport_opps = [o for o in qualified if o.get("sport") == sport]
         if sport_opps:
             best = max(sport_opps, key=lambda x: (4 - x.get("_tier", 3), x["_score"]))
@@ -400,7 +403,9 @@ def _compute_sport_summary():
         dict: {sport: {"total": N, "matched": N, "opps_ge_1": N, "opps_ge_2": N}}
     """
     SPORTS = {"football": "足球", "basketball": "篮球", "tennis": "网球",
-              "baseball": "棒球", "american_football": "美式足球"}
+              "baseball": "棒球", "american_football": "美式足球",
+              "pingpong": "乒乓球", "badminton": "羽毛球", "volleyball": "排球",
+              "boxing": "拳击", "mma": "MMA", "ice_hockey": "冰球"}
     summary = {s: {"total": 0, "matched": 0, "opps_ge_1": 0, "opps_ge_2": 0}
                for s in SPORTS}
 
@@ -451,11 +456,18 @@ def _format_body(qualified: list, warnings: list | None = None,
         return ""
 
     SPORT_CN = {"football": "⚽ 足球", "basketball": "🏀 篮球", "tennis": "🎾 网球",
-                "baseball": "⚾ 棒球", "american_football": "🏈 美式足球"}
+                "baseball": "⚾ 棒球", "american_football": "🏈 美式足球",
+                "pingpong": "🏓 乒乓球", "badminton": "🏸 羽毛球",
+                "volleyball": "🏐 排球", "boxing": "👊 拳击",
+                "mma": "🥊 MMA", "ice_hockey": "🏒 冰球"}
     SPORT_EMOJI = {"football": "⚽", "basketball": "🏀", "tennis": "🎾",
-                   "baseball": "⚾", "american_football": "🏈"}
+                   "baseball": "⚾", "american_football": "🏈",
+                   "pingpong": "🏓", "badminton": "🏸",
+                   "volleyball": "🏐", "boxing": "👊",
+                   "mma": "🥊", "ice_hockey": "🏒"}
     _TIER_LABEL = {1: "T1", 2: "T2", 3: "T3"}
-    SPORT_ORDER = {"football": 0, "basketball": 1, "tennis": 2, "baseball": 3, "american_football": 4}
+    SPORT_ORDER = {"football": 0, "basketball": 1, "tennis": 2, "baseball": 3, "american_football": 4,
+                   "pingpong": 5, "badminton": 6, "volleyball": 7, "boxing": 8, "mma": 9, "ice_hockey": 10}
 
     now_str = datetime.now(timezone.utc).astimezone().strftime("%m/%d %H:%M")
     total_allocated = sum(o["_stake"] for o in qualified)
@@ -500,7 +512,10 @@ def _format_body(qualified: list, warnings: list | None = None,
     if sport_summary:
         parts = []
         for s, cn in [("football","足球"),("basketball","篮球"),("tennis","网球"),
-                       ("baseball","棒球"),("american_football","美式足球")]:
+                       ("baseball","棒球"),("american_football","美式足球"),
+                       ("pingpong","乒乓球"),("badminton","羽毛球"),
+                       ("volleyball","排球"),("boxing","拳击"),
+                       ("mma","MMA"),("ice_hockey","冰球")]:
             info = sport_summary.get(s, {})
             t = info.get("total", 0)
             o1 = info.get("opps_ge_1", 0)
@@ -749,23 +764,23 @@ def push_report(place_bets=False, incremental=False, qualified=None):
     else:
         title = f"+EV 投注推荐: {body.count('#####')} 条"
 
-    # 保存推送机会列表到暂存文件
-    if place_bets and len(qualified) >= 10:
+    # 推送 + 投注（始终投注，不再有 <10 限制）
+    if place_bets:
         from src.betting.bb_virtual_bet import PUSH_STAGING_FILE, place_bets_from_push
         PUSH_STAGING_FILE.write_text(json.dumps(qualified, ensure_ascii=False, indent=2))
         logger.info("推送机会已暂存到 %s，开始投注...", PUSH_STAGING_FILE)
         place_bets_from_push(qualified)
-    elif place_bets and len(qualified) < 10:
-        logger.info("机会不足10场(%d场)，跳过虚拟投注", len(qualified))
 
     from config.settings import send_dingtalk
     ok = send_dingtalk(title, body)
     if ok:
-        new_fps = {_make_fingerprint(o) for o in qualified}
-        existing = _load_fingerprints()
-        existing.update(new_fps)
-        _save_fingerprints(existing)
-        logger.info("BB vs Pinnacle +EV report pushed (%d opportunities, %d new)", body.count('#####'), len(new_fps))
+        # 只有实际投注才保存指纹（--no-bet 不存，下次 --bet 仍可投注）
+        if place_bets:
+            new_fps = {_make_fingerprint(o) for o in qualified}
+            existing = _load_fingerprints()
+            existing.update(new_fps)
+            _save_fingerprints(existing)
+        logger.info("BB vs Pinnacle +EV report pushed (%d opportunities)", body.count('#####'))
     else:
         logger.warning("BB vs Pinnacle push failed")
 
@@ -802,15 +817,12 @@ if __name__ == "__main__":
     body, qualified = build_report(force=force_fresh)
     print(body)
 
-    # 保存推送机会到暂存文件（即使 --no-push 也保存）
+    # 保存推送机会到暂存文件
     if qualified and ("--place-bets" in sys.argv or "--stage" in sys.argv):
         from src.betting.bb_virtual_bet import PUSH_STAGING_FILE, place_bets_from_push
         PUSH_STAGING_FILE.write_text(json.dumps(qualified, ensure_ascii=False, indent=2))
-        if len(qualified) >= 10:
-            logger.info("推送机会已暂存到 %s", PUSH_STAGING_FILE)
-            place_bets_from_push(qualified)
-        else:
-            logger.info("机会不足10场(%d场)，跳过虚拟投注", len(qualified))
+        logger.info("推送机会已暂存到 %s: %d 场", PUSH_STAGING_FILE, len(qualified))
+        place_bets_from_push(qualified)
 
     if "--no-push" not in sys.argv:
         push_report(place_bets=("--no-bet" not in sys.argv),

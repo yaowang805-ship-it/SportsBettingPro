@@ -95,6 +95,10 @@ LEAGUE_ESPN_PATH = {
     "罗马尼亚甲级联赛": ("soccer/rou.1", "罗甲"),
     "厄瓜多尔甲级联赛": ("soccer/ecu.1", "厄甲"),
     "巴拉圭甲级联赛": ("soccer/par.1", "巴拉圭甲"),
+    # MLB
+    "MLB 美国职业棒球大联盟": ("baseball/mlb", "MLB"),
+    "MLB联赛": ("baseball/mlb", "MLB"),
+    "MLB": ("baseball/mlb", "MLB"),
 }
 
 # 反查: sport_key → league_name
@@ -136,6 +140,13 @@ SPORT_KEY_TO_LEAGUE = {
     "soccer_germany_dfb_pokal": "德杯",
     "soccer_italy_serie_b": "意乙",
     "soccer_conmebol_copa_sudamericana": "南美杯",
+    "baseball_mlb": "MLB",
+    "baseball_npb": "日本职业棒球",
+    "soccer_iceland_pepsi_deild": "冰岛超级联赛",
+    "soccer_peru_primeira_division": "秘鲁甲级联赛",
+    "soccer_lithuania_a_lyga": "立陶宛甲级联赛",
+    "soccer_russia_premier_league": "俄罗斯超级联赛",
+    "soccer_russia_first_league": "俄罗斯甲级联赛",
 }
 
 

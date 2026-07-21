@@ -79,6 +79,16 @@ _ODDS_API_LEAGUES = {
     "NFL美国职业美式足球": "americanfootball_nfl",
     "NCAAF": "americanfootball_ncaaf", "CFL": "americanfootball_cfl",
     "NHL": "icehockey_nhl",
+    # 新增覆盖
+    "秘鲁甲级联赛": "soccer_peru_primeira_division",
+    "立陶宛甲级联赛": "soccer_lithuania_a_lyga",
+    "冰岛超级联赛": "soccer_iceland_pepsi_deild",
+    "MLB 美国职业棒球大联盟": "baseball_mlb",
+    "WNBA 美国职业女子篮球联赛": "basketball_wnba",
+    "俄罗斯甲级联赛": "soccer_russia_first_league",
+    "俄罗斯乙级A组联赛": "soccer_russia_second_league_a",
+    "苏格兰联赛杯": "soccer_scotland_league_cup",
+    "瑞典超甲级联赛": "soccer_sweden_superettan",
 }
 
 

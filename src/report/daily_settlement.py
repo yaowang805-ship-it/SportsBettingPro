@@ -64,6 +64,54 @@ def _get_settled_at(entry):
         return entry.get("settled_at", entry.get("date", ""))
     return ""
 
+def _get_result(entry):
+    """统一提取 result，兼容旧数据用 status 字段。"""
+    if isinstance(entry, dict):
+        r = entry.get("result")
+        if r:
+            return r
+        return entry.get("status", "")
+    return str(entry) if entry else ""
+
+
+def _format_bet_line(h: dict) -> str:
+    """格式化单笔结算明细行。"""
+    profit = h.get("profit", 0)
+    stake = h.get("stake", 0)
+    odds = h.get("odds", 0)
+    icon = "✅" if _get_result(h) == "won" else "❌"
+    profit_str = f"+¥{profit:.0f}" if profit > 0 else f"¥{profit:.0f}"
+
+    # 新格式：有 home_cn 字段
+    home = h.get("home_cn", "")
+    away = h.get("away_cn", "")
+    if home and away:
+        market = h.get("market_type", "")
+        league = h.get("league", "")
+        label = f"[{league}] {home} vs {away}" if league else f"{home} vs {away}"
+        if market:
+            return f"{icon} {label} | {market} @ {odds:.2f} | ¥{stake:.0f} → {profit_str}"
+        return f"{icon} {label} | @ {odds:.2f} | ¥{stake:.0f} → {profit_str}"
+
+    # 旧格式：从 bet_id 解析
+    bid = h.get("id", "")
+    raw = bid.replace("bb_vs_pin_", "", 1)
+    if "_" in raw:
+        parts = raw.split("_")
+        if len(parts) >= 4:
+            market = parts[0]
+            outcome = parts[-1]
+            team_parts = parts[1:-1]
+            if len(team_parts) >= 2:
+                home = team_parts[-2]
+                away = team_parts[-1]
+                if outcome == "客胜":
+                    return f"{icon} {home} vs {away} | {market} @ {odds:.2f} | ¥{stake:.0f} → {profit_str}"
+                return f"{icon} {home} vs {away} | {outcome} @ {odds:.2f} | ¥{stake:.0f} → {profit_str}"
+
+    # 最简回退
+    return f"{icon} ¥{stake:.0f} @ {odds:.2f} → {profit_str}"
+
 
 def build_report():
     """构建结算报告。返回 (body_text, stats_dict)。"""
@@ -75,8 +123,11 @@ def build_report():
     initial = portfolio.get("initial_bankroll", 10000.0)
     daily_budget = portfolio.get("daily_budget", {})
 
-    # 只统计 bb_vs_pinnacle 投注
+    # 只统计 bb_vs_pinnacle 投注（兼容旧数据无 source 字段）
     bb_history = [h for h in history if h.get("source") == "bb_vs_pinnacle"]
+    if not bb_history:
+        bb_history = history  # 旧数据降级：所有记录都是 bb_vs_pinnacle
+
     bb_pending = [b for b in pending if b.get("source") == "bb_vs_pinnacle"]
 
     today = _bj_now().strftime("%m/%d")
@@ -94,8 +145,8 @@ def build_report():
         new_history = [h for h in bb_history if
                        (h.get("settled_at") or h.get("date") or "") > day_ago]
 
-    new_won = sum(1 for h in new_history if h.get("result") == "won")
-    new_lost = sum(1 for h in new_history if h.get("result") == "lost")
+    new_won = sum(1 for h in new_history if _get_result(h) == "won")
+    new_lost = sum(1 for h in new_history if _get_result(h) == "lost")
     new_profit = sum(h.get("profit", 0) for h in new_history)
 
     lines.append(f"**【今日结算】** {len(new_history)} 笔")
@@ -103,7 +154,7 @@ def build_report():
         lines.append(f"✅ 赢 {new_won} / ❌ 输 {new_lost} / 盈亏 {new_profit:+.0f}¥")
         lines.append("")
         for h in new_history[-8:]:
-            icon = "✅" if h.get("result") == "won" else "❌"
+            icon = "✅" if _get_result(h) == "won" else "❌"
             market = h.get("market_type", "?")
             odds = h.get("odds", 0)
             profit = h.get("profit", 0)
@@ -120,11 +171,27 @@ def build_report():
         lines.append("暂无新增结算")
         lines.append("")
 
+    # ── 昨日推送统计 ──
+    yesterday = (_bj_now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    yester_hist = [h for h in bb_history if (h.get("settled_at") or h.get("date") or "").startswith(yesterday)]
+    yester_pend = [b for b in bb_pending if (b.get("created_at") or "").startswith(yesterday)]
+    yester_won = sum(1 for h in yester_hist if _get_result(h) == "won")
+    yester_lost = sum(1 for h in yester_hist if _get_result(h) == "lost")
+    yester_void = sum(1 for h in yester_hist if _get_result(h) in ("void", "push", "refund"))
+    yester_profit = sum(h.get("profit", 0) for h in yester_hist)
+
+    if yester_hist or yester_pend:
+        lines.append(f"**【昨日推送统计】** {yesterday}")
+        lines.append(f"已结算 {len(yester_hist)} 笔 / 待结算 {len(yester_pend)} 笔")
+        if yester_hist:
+            lines.append(f"✅ 赢 {yester_won} / ❌ 输 {yester_lost} / ⓪ 无效 {yester_void} / 盈亏 {yester_profit:+.0f}¥")
+        lines.append("")
+
     # ── 截至现在的累计统计 ──
     total_bets = len(bb_history)
-    won = sum(1 for h in bb_history if h.get("result") == "won")
-    lost = sum(1 for h in bb_history if h.get("result") == "lost")
-    void = sum(1 for h in bb_history if h.get("result") in ("void", "push", "refund"))
+    won = sum(1 for h in bb_history if _get_result(h) == "won")
+    lost = sum(1 for h in bb_history if _get_result(h) == "lost")
+    void = sum(1 for h in bb_history if _get_result(h) in ("void", "push", "refund"))
     total_profit = sum(h.get("profit", 0) for h in bb_history)
     total_stake = sum(h.get("stake", 0) for h in bb_history)
     roi = round(total_profit / (total_stake or 1) * 100, 2)
@@ -135,6 +202,21 @@ def build_report():
     lines.append(f"胜率 {win_rate}% | ROI {roi:+.2f}%")
     lines.append(f"总盈亏 {total_profit:+.0f}¥ | 余额 {balance:.0f}¥")
     lines.append("")
+
+    # ── 结算明细 ──
+    won_bets = [h for h in bb_history if _get_result(h) == "won"]
+    lost_bets = [h for h in bb_history if _get_result(h) == "lost"]
+    lines.append(f"**【结算明细】** {total_bets} 笔")
+    if won_bets:
+        lines.append(f"✅ 赢 ({len(won_bets)})")
+        for h in won_bets[-10:]:
+            lines.append(f"  {_format_bet_line(h)}")
+        lines.append("")
+    if lost_bets:
+        lines.append(f"❌ 输 ({len(lost_bets)})")
+        for h in lost_bets[-10:]:
+            lines.append(f"  {_format_bet_line(h)}")
+        lines.append("")
 
     # ── 止损状态 ──
     # 按日汇总盈亏，计算连输天数
@@ -185,9 +267,14 @@ def build_report():
     # ── 当日预算 ──
     budget_date = daily_budget.get("date", "")
     budget_used = daily_budget.get("used", 0)
+    # 从 bb_virtual_bet 获取实际日预算，避免硬编码不一致
+    try:
+        from src.betting.bb_virtual_bet import DAILY_BANKROLL
+    except ImportError:
+        DAILY_BANKROLL = 50000.0
     if budget_date and budget_used:
         lines.append(f"**【当日投注】**")
-        lines.append(f"日期 {budget_date} | 已用 {budget_used:.0f}¥ / 10000¥")
+        lines.append(f"日期 {budget_date} | 已用 {budget_used:.0f}¥ / {DAILY_BANKROLL:.0f}¥")
         lines.append("")
 
     body = "\n".join(lines)
@@ -213,7 +300,6 @@ def push_report():
     now_utc = datetime.now(timezone.utc).isoformat()
     _save_last_cutoff(now_utc)
 
-    # 保证全中文
     title = f"结算报告 {_bj_now().strftime('%m/%d')}"
     ok = send_dingtalk(title, body)
     if ok:

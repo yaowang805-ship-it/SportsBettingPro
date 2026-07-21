@@ -371,7 +371,7 @@ def _run_push():
     """运行推送。"""
     import subprocess
     result = subprocess.run(
-        [sys.executable, "-m", "src.report.bb_ev_push", "--no-bet", "--incremental"],
+        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental"],
         capture_output=True, text=True, cwd=SRC_DIR.parent,
     )
     if result.returncode != 0:
