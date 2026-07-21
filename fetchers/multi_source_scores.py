@@ -419,6 +419,67 @@ def _fetch_fd_matches(competition_code: str, days_back: int = 3) -> list:
         return []
 
 
+# Sport → league names that have score source coverage
+_SPORT_LEAGUES = {
+    "football": [
+        "英超", "西甲", "德甲", "意甲", "法甲", "英冠", "德乙", "法乙",
+        "巴甲", "荷甲", "葡超", "比甲", "土超", "苏超", "J联赛", "澳超",
+        "美职联", "墨超", "阿甲", "瑞典超", "挪威超", "芬超", "爱超",
+        "瑞典甲", "中超", "西乙", "巴乙", "英甲", "英乙", "意乙",
+        "欧冠", "欧联", "解放者杯", "南美杯", "世界杯",
+        "丹麦超级联赛", "瑞士超级联赛", "奥地利甲级联赛",
+        "波兰甲级联赛", "捷克甲级联赛", "克罗地亚甲级联赛",
+        "保加利亚甲级联赛", "塞尔维亚超级联赛", "罗马尼亚甲级联赛",
+        "俄罗斯超级联赛", "俄罗斯甲级联赛", "厄瓜多尔甲级联赛",
+        "秘鲁甲级联赛", "立陶宛甲级联赛", "冰岛超级联赛",
+        "乌拉圭甲级联赛", "巴拉圭甲级联赛",
+        "英格兰联赛杯", "南美俱乐部杯", "南美解放者杯",
+        "欧足联欧洲协会联赛-资格赛", "欧足联欧洲协会联赛",
+        "欧足联欧洲联赛-资格赛", "欧洲冠军联赛-资格赛",
+    ],
+    "basketball": [
+        "NBA", "WNBA", "EuroLeague", "NBA夏季联赛",
+    ],
+    "baseball": [
+        "MLB", "NPB", "KBO",
+    ],
+    "americanfootball": [
+        "NFL", "NCAAF", "CFL",
+    ],
+    "tennis": [],  # No free score source
+}
+
+
+def get_completed_scores_by_sport(sport: str, days_back: int = 3) -> list:
+    """按 sport 名称获取该运动所有联赛的已完成比赛结果。
+
+    遍历该运动所有已知联赛，去重后返回合并结果。
+    用于 auto_settle.py 的 sport 级联退避。
+    """
+    leagues = _SPORT_LEAGUES.get(sport)
+    if not leagues:
+        # 尝试模糊匹配：key 包含 sport 字符串
+        for key, league_list in _SPORT_LEAGUES.items():
+            if key in sport or sport in key:
+                leagues = league_list
+                break
+    if not leagues:
+        return []
+
+    seen = set()
+    results = []
+    for league in leagues:
+        batch = get_completed_scores(league, days_back)
+        for g in batch:
+            dedup_key = (g.get("home_team", ""), g.get("away_team", ""),
+                         g.get("home_score"), g.get("away_score"))
+            if dedup_key not in seen:
+                seen.add(dedup_key)
+                results.append(g)
+    logger.info("sport级联退避 %s: 查询 %d 个联赛，获得 %d 场比赛", sport, len(leagues), len(results))
+    return results
+
+
 def get_completed_scores(league: str, days_back: int = 3) -> list:
     """多源获取指定联赛的已完成比赛结果。
 

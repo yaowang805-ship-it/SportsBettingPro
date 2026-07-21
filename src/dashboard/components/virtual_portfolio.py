@@ -5,7 +5,9 @@
   2. settle_bet(bet_id, result) — 手动标记赢/输
   3. compute_portfolio() — 计算余额/ROI/胜率/权益曲线
 """
+import fcntl
 import json
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
@@ -16,6 +18,27 @@ from src.dashboard.config import PRED_LOG_FILE
 
 _PORTFOLIO_STATE_FILE = Path(PRED_LOG_FILE).parent / "virtual_portfolio.json"
 _INITIAL_BALANCE = 10000.0
+
+
+# ── 跨进程文件锁 ──
+
+_LOCK_FD = None
+
+
+@contextmanager
+def _portfolio_lock():
+    """独占锁：与 bb_virtual_bet.py 共享同一锁文件。"""
+    global _LOCK_FD
+    lock_path = _PORTFOLIO_STATE_FILE.with_suffix(_PORTFOLIO_STATE_FILE.suffix + ".lck")
+    fd = open(lock_path, "w")
+    _LOCK_FD = fd
+    try:
+        fcntl.flock(fd.fileno(), fcntl.LOCK_EX)
+        yield
+    finally:
+        fcntl.flock(fd.fileno(), fcntl.LOCK_UN)
+        fd.close()
+        _LOCK_FD = None
 
 
 # ── 内部持久化 ──
@@ -46,53 +69,54 @@ def _make_bet_id(rec: dict) -> str:
 # ── 公开 API ──
 
 def auto_place_bets(rec_list: list, reset_pending: bool = False):
-    state = _load_state()
-    if reset_pending:
-        state["pending_bets"] = []
-    pending = state.get("pending_bets", [])
-    balance = state.get("balance", _INITIAL_BALANCE)
-    pending_ids = {b.get("id", "") for b in pending}
-    settled_ids = set(state.get("settled", {}).keys())
-    history_ids = {h.get("id", "") for h in state.get("history", [])}
-    existing_ids = pending_ids | settled_ids | history_ids
+    with _portfolio_lock():
+        state = _load_state()
+        if reset_pending:
+            state["pending_bets"] = []
+        pending = state.get("pending_bets", [])
+        balance = state.get("balance", _INITIAL_BALANCE)
+        pending_ids = {b.get("id", "") for b in pending}
+        settled_ids = set(state.get("settled", {}).keys())
+        history_ids = {h.get("id", "") for h in state.get("history", [])}
+        existing_ids = pending_ids | settled_ids | history_ids
 
-    total_pending_stake = sum(b.get("stake", 0) for b in pending)
-    max_total_exposure = balance * 0.30
+        total_pending_stake = sum(b.get("stake", 0) for b in pending)
+        max_total_exposure = balance * 0.30
 
-    added = 0
-    for rec in rec_list:
-        bid = _make_bet_id(rec)
-        if bid in existing_ids:
-            continue
-        stake = float(rec.get("stake", 0))
-        if total_pending_stake + stake > max_total_exposure:
-            continue
-        odds = float(rec.get("odds", 0))
-        league = rec.get("league", "")
-        home_team_en = rec.get("home_team", "")
-        away_team_en = rec.get("away_team", "")
-        pending.append({
-            "id": bid,
-            "sport": rec.get("sport", ""),
-            "league": league,
-            "home_cn": rec.get("home_cn", home_team_en),
-            "away_cn": rec.get("away_cn", away_team_en),
-            "home_team": home_team_en,
-            "away_team": away_team_en,
-            "market_type": rec.get("market", rec.get("market_type", "")),
-            "market_detail": rec.get("market", rec.get("market_type", "")),
-            "odds": odds,
-            "stake": stake,
-            "model_prob": float(rec.get("model_prob", 0)),
-            "created_at": datetime.now(timezone.utc).isoformat(),
-        })
-        existing_ids.add(bid)
-        total_pending_stake += stake
-        added += 1
+        added = 0
+        for rec in rec_list:
+            bid = _make_bet_id(rec)
+            if bid in existing_ids:
+                continue
+            stake = float(rec.get("stake", 0))
+            if total_pending_stake + stake > max_total_exposure:
+                continue
+            odds = float(rec.get("odds", 0))
+            league = rec.get("league", "")
+            home_team_en = rec.get("home_team", "")
+            away_team_en = rec.get("away_team", "")
+            pending.append({
+                "id": bid,
+                "sport": rec.get("sport", ""),
+                "league": league,
+                "home_cn": rec.get("home_cn", home_team_en),
+                "away_cn": rec.get("away_cn", away_team_en),
+                "home_team": home_team_en,
+                "away_team": away_team_en,
+                "market_type": rec.get("market", rec.get("market_type", "")),
+                "market_detail": rec.get("market", rec.get("market_type", "")),
+                "odds": odds,
+                "stake": stake,
+                "model_prob": float(rec.get("model_prob", 0)),
+                "created_at": datetime.now(timezone.utc).isoformat(),
+            })
+            existing_ids.add(bid)
+            total_pending_stake += stake
+            added += 1
 
-    if added > 0:
-        state["pending_bets"] = pending
-        _save_state(state)
+        if added > 0:
+            state["pending_bets"] = pending
+            _save_state(state)
 
 
 def load_portfolio_state() -> dict:
@@ -100,42 +124,57 @@ def load_portfolio_state() -> dict:
 
 
 def reset_portfolio():
-    _save_state({"settled": {}, "pending_bets": [], "balance": _INITIAL_BALANCE, "history": []})
+    with _portfolio_lock():
+        _save_state({"settled": {}, "pending_bets": [], "balance": _INITIAL_BALANCE, "history": []})
 
 
 def settle_bet(bet_id: str, result: str, stake: float, odds: float) -> dict:
-    state = _load_state()
-    state["settled"][bet_id] = result
+    with _portfolio_lock():
+        state = _load_state()
+        state["settled"][bet_id] = result
 
-    remaining = []
-    for b in state.get("pending_bets", []):
-        if b.get("id") != bet_id:
-            remaining.append(b)
-    state["pending_bets"] = remaining
+        # 从待结算中找到这场比赛信息
+        pending_bet = None
+        remaining = []
+        for b in state.get("pending_bets", []):
+            if b.get("id") == bet_id:
+                pending_bet = b
+            else:
+                remaining.append(b)
+        state["pending_bets"] = remaining
 
-    if result == "won":
-        profit = stake * (odds - 1)
-        state["balance"] += stake + profit  # 本金已在投注时扣除，结算归还本金+利润 = stake * odds
-    elif result == "push":
-        profit = 0.0
-        state["balance"] += stake  # 走水：本金已在投注时扣除，结算归还本金
-    else:
-        profit = -stake
-        # 亏损：本金已在投注时扣除且无法收回，余额不做调整
+        if result == "won":
+            profit = stake * (odds - 1)
+            state["balance"] += stake + profit  # 本金已在投注时扣除，结算归还本金+利润 = stake * odds
+        elif result == "push":
+            profit = 0.0
+            state["balance"] += stake  # 走水：本金已在投注时扣除，结算归还本金
+        else:
+            profit = -stake
+            # 亏损：本金已在投注时扣除且无法收回，余额不做调整
 
-    entry = {
-        "id": bet_id,
-        "match": f"{stake:.0f}¥ @ {odds:.2f}",
-        "date": datetime.now(timezone.utc).isoformat(),
-        "stake": stake,
-        "odds": odds,
-        "profit": round(profit, 2),
-        "status": result,
-    }
+        entry = {
+            "id": bet_id,
+            "match": f"{stake:.0f}¥ @ {odds:.2f}",
+            "date": datetime.now(timezone.utc).isoformat(),
+            "stake": stake,
+            "odds": odds,
+            "profit": round(profit, 2),
+            "result": result,
+            "status": result,
+            "source": "bb_vs_pinnacle",
+        }
+        # 从待结算记录提取详细信息
+        if pending_bet:
+            entry["home_cn"] = pending_bet.get("home_cn", "")
+            entry["away_cn"] = pending_bet.get("away_cn", "")
+            entry["market_type"] = pending_bet.get("market", pending_bet.get("market_type", ""))
+            entry["league"] = pending_bet.get("league", "")
+            entry["sport"] = pending_bet.get("sport", "")
 
-    state["history"].append(entry)
-    _save_state(state)
-    return state
+        state["history"].append(entry)
+        _save_state(state)
+        return state
 
 
 def compute_portfolio(pred_df: Optional[pd.DataFrame] = None) -> dict:

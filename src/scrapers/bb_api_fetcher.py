@@ -54,12 +54,19 @@ SPORTS = [
     (5, "tennis", "网球"),
     (7, "baseball", "棒球"),
     (6, "american_football", "美式足球"),
+    (15, "pingpong", "乒乓球"),
+    (19, "boxing", "拳击"),
+    (18, "mma", "MMA"),
+    (16, "badminton", "羽毛球"),
+    (2, "ice_hockey", "冰球"),
+    (13, "volleyball", "排球"),
 ]
 
 # Market type 映射 (按运动)
 MARKET_TYPES = {
     1: {  # 足球
         "ml": 1005, "hc": 1000, "ou": 1007, "dnb": 1089, "dc": 1012, "btts": 1027,
+        "corner_ml": 1009, "corner_ou": 1010, "corner_hc": 1011,
     },
     3: {  # 篮球 (3004=独赢, 3003=大小, 3002=让分)
         "ml": 3004, "ou": 3003, "hc": 3002,
@@ -73,6 +80,24 @@ MARKET_TYPES = {
     6: {  # 美式足球 (NFL/大学/室内)
         "ml": 6001, "hc": 6002, "ou": 6003,
     },
+    15: {  # 乒乓球
+        "ml": 15001, "hc": 15002, "ou": 15003,
+    },
+    19: {  # 拳击
+        "ml": 19002, "ou": 19001,
+    },
+    18: {  # MMA
+        "ml": 18002, "ou": 18001,
+    },
+    16: {  # 羽毛球
+        "ml": 16003, "hc": 16001, "ou": 16002,
+    },
+    2: {  # 冰球
+        "ml": 2003, "hc": 2001, "ou": 2002,
+    },
+    13: {  # 排球
+        "ml": 13001, "hc": 13002, "ou": 13003,
+    },
 }
 
 # 各运动的市场显示中文名
@@ -83,6 +108,12 @@ MARKET_LABELS = {
     "tennis":     {"ml_name": "独赢", "hc_name": "让盘", "ou_name": "大小"},
     "baseball":   {"ml_name": "独赢", "hc_name": "让分", "ou_name": "大小"},
     "american_football": {"ml_name": "独赢", "hc_name": "让分", "ou_name": "大小"},
+    "pingpong":  {"ml_name": "独赢", "hc_name": "让分", "ou_name": "大小"},
+    "boxing":    {"ml_name": "独赢", "ou_name": "大小"},
+    "mma":       {"ml_name": "独赢", "ou_name": "大小"},
+    "badminton": {"ml_name": "独赢", "hc_name": "让局", "ou_name": "大小"},
+    "ice_hockey": {"ml_name": "1X2", "hc_name": "让球", "ou_name": "大小"},
+    "volleyball": {"ml_name": "独赢", "hc_name": "让分", "ou_name": "大小"},
 }
 
 # 各运动的 period 编码
@@ -92,6 +123,12 @@ SPORT_PERIODS = {
     5: {"ft": 5001, "ht": 5002, "2h": 5003},
     7: {"ft": 7001},
     6: {"ft": 6001},
+    15: {"ft": 15001},
+    19: {"ft": 19001},
+    18: {"ft": 18001},
+    16: {"ft": 16001},
+    2: {"ft": 2001},
+    13: {"ft": 13001},
 }
 
 
@@ -306,7 +343,10 @@ def extract_match_odds(record, sport_key, platform="BB"):
         "platform": platform,
         "sport_cn": {"football": "足球", "basketball": "篮球",
                      "tennis": "网球", "baseball": "棒球",
-                     "american_football": "美式足球"}.get(sport_key, ""),
+                     "american_football": "美式足球",
+                     "pingpong": "乒乓球", "boxing": "拳击",
+                     "mma": "MMA", "badminton": "羽毛球",
+                     "ice_hockey": "冰球", "volleyball": "排球"}.get(sport_key, ""),
         "id": record.get("id"),
         "bt": record.get("bt"),
         "nm": record.get("nm", ""),
@@ -591,6 +631,102 @@ def extract_match_odds(record, sport_key, platform="BB"):
         return None
         return None
 
+    def _extract_corner_ml(period):
+        """Extract Corner 1X2 (角球独赢) from mty=1009."""
+        mty_code = mt.get("corner_ml")
+        if not mty_code:
+            return None
+        group = _find_market_group(record, mty_code, period)
+        if not group:
+            return None
+        markets = group.get("mks", group.get("markets", []))
+        if not markets:
+            return None
+        ops = _get_market_options(markets[0])
+        if len(ops) < 3:
+            return None
+        return [float(op.get("od", 0)) for op in ops[:3] if float(op.get("od", 0)) > 1]
+
+    def _extract_corner_hc(period):
+        """Extract Corner Handicap (角球让球) from mty=1011."""
+        mty_code = mt.get("corner_hc")
+        if not mty_code:
+            return None
+        group = _find_market_group(record, mty_code, period)
+        if not group:
+            return None
+        markets = group.get("mks", group.get("markets", []))
+        if not markets:
+            return None
+        lines = []
+        for mk in markets:
+            ops = _get_market_options(mk)
+            if len(ops) < 2:
+                continue
+            home_op, away_op = ops[0], ops[1]
+            home_odds = float(home_op.get("od", 0))
+            away_odds = float(away_op.get("od", 0))
+            if home_odds <= 0 or away_odds <= 0:
+                continue
+            lines.append({
+                "home_line_str": home_op.get("nm", ""),
+                "away_line_str": away_op.get("nm", ""),
+                "home_odds": home_odds,
+                "away_odds": away_odds,
+            })
+        if not lines:
+            return None
+        return {"primary": lines[0], "alternates": lines[1:]}
+
+    def _extract_corner_ou(period):
+        """Extract Corner Over/Under (角球大小) from mty=1010."""
+        mty_code = mt.get("corner_ou")
+        if not mty_code:
+            return None
+        group = _find_market_group(record, mty_code, period)
+        if not group:
+            return None
+        markets = group.get("mks", group.get("markets", []))
+        if not markets:
+            return None
+        lines = []
+        for mk in markets:
+            ops = _get_market_options(mk)
+            if len(ops) < 2:
+                continue
+            over_op, under_op = ops[0], ops[1]
+            over_odds = float(over_op.get("od", 0))
+            under_odds = float(under_op.get("od", 0))
+            if over_odds <= 0 or under_odds <= 0:
+                continue
+            # Use li field for line value (e.g. "9", "9.5"), fallback to nm parsing
+            line_val = None
+            li_raw = mk.get("li") or over_op.get("li")
+            if li_raw is not None:
+                try:
+                    line_val = float(li_raw)
+                except (ValueError, TypeError):
+                    pass
+            line_str = over_op.get("nm", "")
+            if line_val is None and line_str:
+                # Try Chinese format "大 9" or English format "o 9"
+                for prefix in ("大 ", "o ", "O ", "ov "):
+                    if line_str.lower().startswith(prefix):
+                        try:
+                            line_val = float(line_str[len(prefix):])
+                        except ValueError:
+                            pass
+                        break
+            lines.append({
+                "line": line_val,
+                "line_str": line_str,
+                "over_odds": over_odds,
+                "under_odds": under_odds,
+            })
+        if not lines:
+            return None
+        return {"primary": lines[0], "alternates": lines[1:]}
+
     # FT
     ft_ml = _extract_ml(ft_period)
     ft_hc = _extract_handicap(ft_period)
@@ -617,6 +753,19 @@ def extract_match_odds(record, sport_key, platform="BB"):
         if ft_btts:
             ft_dict["btts"] = ft_btts
 
+        # 角球市场
+        ft_corner_ml = _extract_corner_ml(ft_period)
+        if ft_corner_ml:
+            ft_dict["corner_ml"] = ft_corner_ml
+        ft_corner_hc = _extract_corner_hc(ft_period)
+        if ft_corner_hc:
+            ft_dict["corner_hc"] = ft_corner_hc["primary"]
+            ft_dict["alternate_corner_hc"] = ft_corner_hc["alternates"]
+        ft_corner_ou = _extract_corner_ou(ft_period)
+        if ft_corner_ou:
+            ft_dict["corner_ou"] = ft_corner_ou["primary"]
+            ft_dict["alternate_corner_ou"] = ft_corner_ou["alternates"]
+
     result["odds_ft"] = ft_dict
 
     # HT
@@ -642,6 +791,19 @@ def extract_match_odds(record, sport_key, platform="BB"):
             ht_dc = _extract_dc(ht_period)
             if ht_dc:
                 ht_dict["dc"] = ht_dc
+
+            # 角球 HT
+            ht_corner_ml = _extract_corner_ml(ht_period)
+            if ht_corner_ml:
+                ht_dict["corner_ml"] = ht_corner_ml
+            ht_corner_hc = _extract_corner_hc(ht_period)
+            if ht_corner_hc:
+                ht_dict["corner_hc"] = ht_corner_hc["primary"]
+                ht_dict["alternate_corner_hc"] = ht_corner_hc["alternates"]
+            ht_corner_ou = _extract_corner_ou(ht_period)
+            if ht_corner_ou:
+                ht_dict["corner_ou"] = ht_corner_ou["primary"]
+                ht_dict["alternate_corner_ou"] = ht_corner_ou["alternates"]
 
     result["odds_ht"] = ht_dict
 

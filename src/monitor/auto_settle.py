@@ -14,7 +14,7 @@ from src.dashboard.components.virtual_portfolio import (
     _load_state, _save_state, settle_bet,
 )
 from src.core.team_names import cn_to_odds_name
-from fetchers.multi_source_scores import get_completed_scores
+from fetchers.multi_source_scores import get_completed_scores, get_completed_scores_by_sport
 from src.risk.manager import RiskManager
 from src.betting.strategy_optimizer import SettlementLogger
 from src.risk.calibration import BetCalibrator
@@ -779,9 +779,9 @@ def auto_settle(dry_run: bool = False) -> int:
             if sk:
                 api_key_info = (sk, league or sport)
             else:
-                # 级联退避：用 sport 字段作为 league 名尝试获取比分
+                # 级联退避：按 sport 遍历所有已知联赛获取比分
                 logger.info("  联赛映射未知，尝试 sport 级联退避: %s", sport)
-                completed = _fetch_completed_scores(sport)
+                completed = get_completed_scores_by_sport(sport)
                 if completed:
                     display = league or sport
                 else:

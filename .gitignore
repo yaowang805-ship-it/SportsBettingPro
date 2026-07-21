@@ -62,6 +62,9 @@ data/storage/paper_trading.json
 data/storage/push_staging.json
 data/storage/daily_settlement_last.json
 
+# Entire data/storage/ directory (all runtime-generated files)
+data/storage/
+
 # Auto-generated data directories
 data/history/
 data/storage/*.lock

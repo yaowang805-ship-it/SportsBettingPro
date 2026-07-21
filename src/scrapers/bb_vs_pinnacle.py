@@ -122,9 +122,15 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
     if not unmatched_bb_leagues:
         return {}
 
+    # 已知的自动映射假阳性黑名单 — 防止 NZIHL→NHL 等错误
+    _BANNED_AUTO_MAP = {"nzihl新西兰冰球联盟"}
+
     new_mappings = {}
 
     for bb_name in sorted(unmatched_bb_leagues):
+        if bb_name.lower() in _BANNED_AUTO_MAP:
+            continue
+
         bb_lower = bb_name.lower().strip()
 
         # Extract English tokens and standalone numbers
@@ -154,7 +160,9 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
 
             # Sport filter bonus: same sport = +0.1
             # BB_SPORT_KEYWORDS uses English ("basketball"), pinnacle uses Chinese ("篮球")
-            _pin_sport_en = {"足球":"football","篮球":"basketball","网球":"tennis","棒球":"baseball","美式足球":"american_football"}.get(pin_sport, "")
+            _pin_sport_en = {"足球":"football","篮球":"basketball","网球":"tennis","棒球":"baseball",
+                              "美式足球":"american_football","乒乓球":"pingpong","拳击":"boxing",
+                              "MMA":"mma","羽毛球":"badminton","冰球":"ice_hockey","排球":"volleyball"}.get(pin_sport, "")
             sport_bonus = 0.1 if (bb_sport and bb_sport == _pin_sport_en) else 0.0
 
             # --- Method 1: English token overlap ---
@@ -326,8 +334,10 @@ def _rate_limit():
 
 
 # 运动 ID 映射
-SPORT_IDS = {29: "足球", 4: "篮球", 33: "网球", 3: "棒球", 15: "美式足球"}
-TWO_WAY_SPORTS = {"basketball", "tennis", "baseball", "american_football"}
+SPORT_IDS = {29: "足球", 4: "篮球", 33: "网球", 3: "棒球", 15: "美式足球",
+             32: "乒乓球", 6: "拳击", 22: "MMA", 1: "羽毛球", 19: "冰球", 34: "排球"}
+TWO_WAY_SPORTS = {"basketball", "tennis", "baseball", "american_football",
+                  "pingpong", "boxing", "mma", "badminton", "volleyball"}
 
 # BB体育联赛关键词 → 运动类型
 BB_SPORT_KEYWORDS = {
@@ -358,6 +368,19 @@ BB_SPORT_KEYWORDS = {
     "MLB": "baseball", "日本职业棒球": "baseball",
     "韩国棒球": "baseball", "中华职业棒球": "baseball",
     "棒球": "baseball",
+    # Ping Pong
+    "乒乓球": "pingpong", "WTT": "pingpong", "TT 精英": "pingpong",
+    "捷克职业联赛": "pingpong",
+    # Boxing
+    "拳击": "boxing",
+    # MMA
+    "UFC": "mma", "MMA": "mma",
+    # Badminton
+    "羽毛球": "badminton", "公开赛": "badminton",
+    # Ice Hockey
+    "冰球": "ice_hockey",
+    # Volleyball
+    "排球": "volleyball", "FIVB": "volleyball",
 }
 
 # 各运动的市场标签
@@ -367,6 +390,12 @@ MARKET_LABELS = {
     "tennis":     {"ml": ["主胜","客胜"], "hc_home":"让盘主胜", "hc_away":"让盘客胜", "over":"大分", "under":"小分"},
     "baseball":   {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
     "american_football": {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
+    "pingpong":  {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
+    "boxing":    {"ml": ["主胜","客胜"], "over":"大分", "under":"小分"},
+    "mma":       {"ml": ["主胜","客胜"], "over":"大分", "under":"小分"},
+    "badminton": {"ml": ["主胜","客胜"], "hc_home":"让局主胜", "hc_away":"让局客胜", "over":"大分", "under":"小分"},
+    "ice_hockey": {"ml": ["主胜","和局","客胜"], "hc_home":"让球主胜", "hc_away":"让球客胜", "over":"大分", "under":"小分"},
+    "volleyball": {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
 }
 
 def detect_sport(bb_match):
@@ -377,7 +406,10 @@ def detect_sport(bb_match):
     if sport:
         if sport == "soccer":
             return "football"
-        if sport in ("football", "basketball", "tennis", "baseball", "american_football"):
+        known_sports = ("football", "basketball", "tennis", "baseball",
+                        "american_football", "pingpong", "boxing", "mma",
+                        "badminton", "ice_hockey", "volleyball")
+        if sport in known_sports:
             return sport
     league = bb_match.get("league", "")
     for kw, s in BB_SPORT_KEYWORDS.items():
@@ -974,9 +1006,13 @@ def team_name_score(bb_home, bb_away, pin_home, pin_away):
     home_match = name_match(bb_home_en_l, pin_home_l) if bb_home_mapped else False
     away_match = name_match(bb_away_en_l, pin_away_l) if bb_away_mapped else False
 
-    if home_match and away_match:
+    # 检查交叉配对：BB的home可能对应Pinnacle的away（拳击等项目常见主客互换）
+    cross_home_match = name_match(bb_home_en_l, pin_away_l) if bb_home_mapped else False
+    cross_away_match = name_match(bb_away_en_l, pin_home_l) if bb_away_mapped else False
+
+    if (home_match and away_match) or (cross_home_match and cross_away_match):
         return 1.0
-    elif home_match or away_match:
+    elif home_match or away_match or cross_home_match or cross_away_match:
         return 0.6
     else:
         return 0.0

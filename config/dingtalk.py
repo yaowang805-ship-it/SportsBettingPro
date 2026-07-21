@@ -214,8 +214,60 @@ def send_dingtalk(
     except socket.timeout:
         logger.warning("  钉钉推送超时")
         return False
+    except (json.JSONDecodeError, ValueError) as e:
+        logger.warning("  钉钉返回非JSON响应 (%s)，重试一次", e)
+        logger.debug("  原始响应: %s", resp_data[:500] if 'resp_data' in dir() else "N/A")
+        # 重试一次（可能连接被重置）
+        try:
+            ssock.close()
+        except Exception:
+            pass
+        return _retry_send(host, path, body)
     except Exception as e:
         logger.warning("  钉钉推送异常: %s", e)
+        return False
+
+
+def _retry_send(host: str, path: str, body: str) -> bool:
+    """一次重试：用系统DNS重新连接并发送。"""
+    try:
+        addrs = socket.getaddrinfo(host, 443, socket.AF_INET, socket.SOCK_STREAM)
+        ip = addrs[0][4][0]
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(_TIMEOUT)
+        sock.connect((ip, 443))
+        ctx = ssl.create_default_context()
+        ssock = ctx.wrap_socket(sock, server_hostname=host)
+        logger.info("  重试连接 (系统DNS IP: %s)", ip)
+        req = (
+            f"POST {path} HTTP/1.1\r\n"
+            f"Host: {host}\r\n"
+            f"Content-Type: application/json\r\n"
+            f"Content-Length: {len(body)}\r\n"
+            f"Connection: close\r\n"
+            f"\r\n"
+            f"{body}"
+        )
+        ssock.sendall(req.encode())
+        resp_data = b""
+        while True:
+            chunk = ssock.recv(4096)
+            if not chunk:
+                break
+            resp_data += chunk
+        resp_text = resp_data.decode(errors="replace")
+        if "\r\n\r\n" in resp_text:
+            http_body = resp_text.split("\r\n\r\n", 1)[1]
+        else:
+            http_body = resp_text
+        result = json.loads(http_body)
+        if result.get("errcode") == 0:
+            logger.info("  重试推送成功")
+            return True
+        logger.warning("  重试推送失败: %s", result.get("errmsg", resp_text[:200]))
+        return False
+    except Exception as e:
+        logger.warning("  重试推送失败: %s", e)
         return False
     finally:
         try:

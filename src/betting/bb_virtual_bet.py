@@ -8,10 +8,11 @@
     python3 src/betting/bb_virtual_bet.py --dry           # 预览不下单
     python3 src/betting/bb_virtual_bet.py --from-push     # 从推送暂存文件投注
 """
-import json, sys, time, math
+import json, sys, time, math, fcntl
 from collections import defaultdict
 from datetime import datetime, timezone, date, timedelta
 from pathlib import Path
+from contextlib import contextmanager
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
@@ -50,6 +51,26 @@ def _league_multiplier(league: str) -> float:
 
 # 推送暂存文件 — bb_ev_push.py 导出已筛选的机会列表
 PUSH_STAGING_FILE = DATA_DIR / "push_staging.json"
+
+# 跨进程锁 — 防止并发读写 virtual_portfolio.json
+_LOCK_FD = None
+
+
+@contextmanager
+def _portfolio_lock():
+    """独占锁：防止并发 pipeline 进程覆盖投注数据。"""
+    global _LOCK_FD
+    lock_path = PORTFOLIO_FILE.with_suffix(PORTFOLIO_FILE.suffix + ".lck")
+    fd = open(lock_path, "w")
+    _LOCK_FD = fd
+    try:
+        fcntl.flock(fd.fileno(), fcntl.LOCK_EX)
+        yield
+    finally:
+        fcntl.flock(fd.fileno(), fcntl.LOCK_UN)
+        fd.close()
+        _LOCK_FD = None
+
 
 # 止损参数
 CONSECUTIVE_LOSS_STOP = 5         # 连输5天 → 停投
@@ -194,163 +215,172 @@ def place_bets(dry_run=False):
         logger.info("没有 +EV 机会")
         return
 
-    portfolio = _load_portfolio()
-    stop_mult, loss_days = _calc_stop_loss_multiplier(portfolio)
-    daily_bankroll = DAILY_BANKROLL * stop_mult
-    daily_remaining, is_new_day = _check_daily_budget(portfolio, daily_bankroll)
-    pending_ids = {b.get("id", "") for b in portfolio.get("pending_bets", [])}
-    settled_ids = set(portfolio.get("settled", {}).keys())
-    history_ids = {h.get("id", "") for h in portfolio.get("history", [])}
-    existing_ids = pending_ids | settled_ids | history_ids
+    with _portfolio_lock():
+        portfolio = _load_portfolio()
+        stop_mult, loss_days = _calc_stop_loss_multiplier(portfolio)
+        daily_bankroll = DAILY_BANKROLL * stop_mult
+        daily_remaining, is_new_day = _check_daily_budget(portfolio, daily_bankroll)
+        pending_ids = {b.get("id", "") for b in portfolio.get("pending_bets", [])}
+        settled_ids = set(portfolio.get("settled", {}).keys())
+        history_ids = {h.get("id", "") for h in portfolio.get("history", [])}
+        existing_ids = pending_ids | settled_ids | history_ids
 
-    if is_new_day:
-        portfolio["daily_budget"]["date"] = _today_str()
-        portfolio["daily_budget"]["used"] = 0.0
-        portfolio["daily_budget"]["bets"] = 0
+        bets_placed = 0
+        total_stake = 0
 
-    bets_placed = 0
-    total_stake = 0
+        # 止损提示
+        stop_msg = _format_stop_loss_msg(stop_mult, loss_days)
+        if stop_msg:
+            print(f"\n{stop_msg}\n")
 
-    # 止损提示
-    stop_msg = _format_stop_loss_msg(stop_mult, loss_days)
-    if stop_msg:
-        print(f"\n{stop_msg}\n")
+        if stop_mult == 0.0:
+            print("=" * 60)
+            print("🛑 止损停投日，跳过")
+            print("=" * 60)
+            return 0
 
-    if stop_mult == 0.0:
+        # 全局余额检查
+        if portfolio.get("balance", 0) <= 0:
+            print(f"\n{'='*60}")
+            print(f"🛑 余额为 ¥{portfolio['balance']:.0f}，跳过投注")
+            print(f"{'='*60}")
+            return 0
+
         print("=" * 60)
-        print("🛑 止损停投日，跳过")
+        print("BB体育 vs Pinnacle 虚拟投注")
+        print(f"每日预算: ¥{daily_bankroll:.2f} (基准¥{DAILY_BANKROLL:.2f}) | 今日剩余: ¥{daily_remaining:.2f} | Kelly系数: {KELLY_FRAC}")
         print("=" * 60)
-        return 0
 
-    print("=" * 60)
-    print("BB体育 vs Pinnacle 虚拟投注")
-    print(f"每日预算: ¥{daily_bankroll:.2f} (基准¥{DAILY_BANKROLL:.2f}) | 今日剩余: ¥{daily_remaining:.2f} | Kelly系数: {KELLY_FRAC}")
-    print("=" * 60)
+        for opp in opportunities:
+            league = opp["league"]
+            home = opp["home_bb"]
+            away = opp["away_bb"]
+            flags = opp.get("flags", [])
+            sport = opp.get("sport", "football")
 
-    for opp in opportunities:
-        league = opp["league"]
-        home = opp["home_bb"]
-        away = opp["away_bb"]
-        flags = opp.get("flags", [])
-        sport = opp.get("sport", "football")
+            if flags:
+                print(f"\n⏭️ [{league}] {home} vs {away} — 跳过（异常标记: {flags}）")
+                continue
 
-        if flags:
-            print(f"\n⏭️ [{league}] {home} vs {away} — 跳过（异常标记: {flags}）")
-            continue
-
-        if bets_placed >= MAX_BETS:
-            break
-
-        match_key = (home, away)
-        match_total_stake = 0.0
-        PER_MATCH_CAP = daily_bankroll * 0.03  # 单场总投注 ≤ 3%
-
-        for mk in ("opportunities", "handicap", "over_under"):
             if bets_placed >= MAX_BETS:
                 break
-            for o in opp.get(mk, []):
+
+            match_key = (home, away)
+            match_total_stake = 0.0
+            PER_MATCH_CAP = daily_bankroll * 0.03  # 单场总投注 ≤ 3%
+
+            for mk in ("opportunities", "handicap", "over_under"):
                 if bets_placed >= MAX_BETS:
                     break
+                for o in opp.get(mk, []):
+                    if bets_placed >= MAX_BETS:
+                        break
 
-                ev = o["ev_pct"]
-                bb_odds = o["bb_odds"]
-                fair_price = o.get("fair_price", o["pin_odds"])
-                pin_odds = o["pin_odds"]
-                outcome = o["designation"]
-                hc_line = o.get("line", "")
+                    ev = o["ev_pct"]
+                    bb_odds = o["bb_odds"]
+                    fair_price = o.get("fair_price", o["pin_odds"])
+                    pin_odds = o["pin_odds"]
+                    outcome = o["designation"]
+                    hc_line = o.get("line", "")
 
-                if ev < MIN_EV_PCT:
-                    continue
-                if ev > MAX_EV_PCT:
-                    print(f"\n⏭️ [{league}] {home} vs {away} {outcome} — EV={ev}% 过高跳过")
-                    continue
-
-                # Determine market type from the list key
-                if mk == "opportunities":
-                    market_type = "1x2"
-                elif mk == "handicap":
-                    market_type = "handicap"
-                else:
-                    market_type = "over_under"
-
-                bet_id = _make_bet_id(home, away, outcome, market_type)
-                if bet_id in existing_ids:
-                    print(f"  ⏭️ 已存在: {bet_id}")
-                    continue
-
-                # Kelly stake using fair_price + tier multiplier
-                stake = _calc_kelly_stake(bb_odds, fair_price, daily_remaining, league=league)
-
-                if stake < 1.0:
-                    print(f"  ⏭️ {outcome} @ {bb_odds} — 投注额={stake:.2f}")
-                    continue
-
-                stake = max(1.0, min(stake, daily_remaining * MAX_STAKE_PCT))
-                if stake > daily_remaining:
-                    stake = daily_remaining
-
-                # 单场总投注上限
-                if match_total_stake + stake > PER_MATCH_CAP:
-                    allowed = PER_MATCH_CAP - match_total_stake
-                    if allowed < 5:
-                        print(f"  ⏭️ {outcome} — 单场上限已达 (¥{match_total_stake:.0f})")
+                    if ev < MIN_EV_PCT:
                         continue
-                    stake = allowed
-                match_total_stake += stake
+                    if ev > MAX_EV_PCT:
+                        print(f"\n⏭️ [{league}] {home} vs {away} {outcome} — EV={ev}% 过高跳过")
+                        continue
 
-                bet = {
-                    "id": bet_id,
-                    "sport": sport,
-                    "league": league,
-                    "home_team": opp.get("home_pin", home),
-                    "away_team": opp.get("away_pin", away),
-                    "home_cn": home,
-                    "away_cn": away,
-                    "market": market_type,
-                    "market_type": outcome,
-                    "line": hc_line,
-                    "odds": bb_odds,
-                    "stake": round(stake, 2),
-                    "model_prob": round(1.0 / fair_price, 4),
-                    "ev_pct": ev,
-                    "pin_odds": pin_odds,
-                    "fair_price": fair_price,
-                    "source": "bb_vs_pinnacle",
-                    "commence_time": opp.get("start_time_pin_epoch", ""),
-                    "created_at": datetime.now(timezone.utc).isoformat(),
-                }
+                    # Determine market type from the list key
+                    if mk == "opportunities":
+                        market_type = "1x2"
+                    elif mk == "handicap":
+                        market_type = "handicap"
+                    else:
+                        market_type = "over_under"
 
-                if dry_run:
-                    print(f"\n  📋 [{league}] {home} vs {away}")
-                    print(f"    投注: {outcome} @ {bb_odds} | 公平价={fair_price}")
-                    print(f"    金额: ¥{stake:.2f} (EV={ev:.1f}%, Kelly={KELLY_FRAC})")
-                    bets_placed += 1
-                    total_stake += stake
-                else:
-                    portfolio["pending_bets"].append(bet)
-                    daily_remaining -= stake
-                    portfolio["daily_budget"]["used"] += stake
-                    portfolio["daily_budget"]["bets"] += 1
-                    existing_ids.add(bet_id)
-                    bets_placed += 1
-                    total_stake += stake
-                    print(f"\n  ✅ [{league}] {home} vs {away}")
-                    print(f"    投注: {outcome} @ {bb_odds} | ¥{stake:.2f} | EV={ev:.1f}%")
+                    bet_id = _make_bet_id(home, away, outcome, market_type)
+                    if bet_id in existing_ids:
+                        print(f"  ⏭️ 已存在: {bet_id}")
+                        continue
 
-    if not dry_run and bets_placed > 0:
-        daily_used = portfolio["daily_budget"]["used"]
-        portfolio["balance"] = round(portfolio.get("balance", INITIAL_BALANCE) - total_stake, 2)
-        _save_portfolio(portfolio)
-        print(f"\n{'='*60}")
-        print(f"已投注 {bets_placed} 笔，总金额 ¥{total_stake:.2f}")
-        print(f"今日已用: ¥{daily_used:.2f} / ¥{DAILY_BANKROLL:.2f}")
-        print(f"组合余额: ¥{portfolio['balance']:.2f}")
-        print(f"保存到 {PORTFOLIO_FILE}")
-    elif dry_run:
-        print(f"\n{'='*60}")
-        print(f"预览: {bets_placed} 笔可投注，总金额 ¥{total_stake:.2f}")
+                    # Kelly stake using fair_price + tier multiplier
+                    stake = _calc_kelly_stake(bb_odds, fair_price, daily_remaining, league=league)
 
-    return bets_placed
+                    if stake < 1.0:
+                        print(f"  ⏭️ {outcome} @ {bb_odds} — 投注额={stake:.2f}")
+                        continue
+
+                    stake = max(1.0, min(stake, daily_remaining * MAX_STAKE_PCT))
+                    if stake > daily_remaining:
+                        stake = daily_remaining
+
+                    # 余额检查：不超可用资金
+                    balance = portfolio.get("balance", 0)
+                    if balance < stake:
+                        print(f"  ⏭️ {outcome} — 余额不足 (¥{balance:.0f} < ¥{stake:.0f})")
+                        continue
+
+                    # 单场总投注上限
+                    if match_total_stake + stake > PER_MATCH_CAP:
+                        allowed = PER_MATCH_CAP - match_total_stake
+                        if allowed < 5:
+                            print(f"  ⏭️ {outcome} — 单场上限已达 (¥{match_total_stake:.0f})")
+                            continue
+                        stake = allowed
+                    match_total_stake += stake
+
+                    bet = {
+                        "id": bet_id,
+                        "sport": sport,
+                        "league": league,
+                        "home_team": opp.get("home_pin", home),
+                        "away_team": opp.get("away_pin", away),
+                        "home_cn": home,
+                        "away_cn": away,
+                        "market": market_type,
+                        "market_type": outcome,
+                        "line": hc_line,
+                        "odds": bb_odds,
+                        "stake": round(stake, 2),
+                        "model_prob": round(1.0 / fair_price, 4),
+                        "ev_pct": ev,
+                        "pin_odds": pin_odds,
+                        "fair_price": fair_price,
+                        "source": "bb_vs_pinnacle",
+                        "commence_time": opp.get("start_time_pin_epoch", ""),
+                        "created_at": datetime.now(timezone.utc).isoformat(),
+                    }
+
+                    if dry_run:
+                        print(f"\n  📋 [{league}] {home} vs {away}")
+                        print(f"    投注: {outcome} @ {bb_odds} | 公平价={fair_price}")
+                        print(f"    金额: ¥{stake:.2f} (EV={ev:.1f}%, Kelly={KELLY_FRAC})")
+                        bets_placed += 1
+                        total_stake += stake
+                    else:
+                        portfolio["pending_bets"].append(bet)
+                        daily_remaining -= stake
+                        portfolio["daily_budget"]["used"] += stake
+                        portfolio["daily_budget"]["bets"] += 1
+                        existing_ids.add(bet_id)
+                        bets_placed += 1
+                        total_stake += stake
+                        print(f"\n  ✅ [{league}] {home} vs {away}")
+                        print(f"    投注: {outcome} @ {bb_odds} | ¥{stake:.2f} | EV={ev:.1f}%")
+
+        if not dry_run and bets_placed > 0:
+            daily_used = portfolio["daily_budget"]["used"]
+            portfolio["balance"] = round(portfolio.get("balance", INITIAL_BALANCE) - total_stake, 2)
+            _save_portfolio(portfolio)
+            print(f"\n{'='*60}")
+            print(f"已投注 {bets_placed} 笔，总金额 ¥{total_stake:.2f}")
+            print(f"今日已用: ¥{daily_used:.2f} / ¥{DAILY_BANKROLL:.2f}")
+            print(f"组合余额: ¥{portfolio['balance']:.2f}")
+            print(f"保存到 {PORTFOLIO_FILE}")
+        elif dry_run:
+            print(f"\n{'='*60}")
+            print(f"预览: {bets_placed} 笔可投注，总金额 ¥{total_stake:.2f}")
+
+        return bets_placed
 
 
 def place_bets_from_push(opportunities, bankroll=50000.0):
@@ -359,118 +389,142 @@ def place_bets_from_push(opportunities, bankroll=50000.0):
         logger.info("空机会列表，跳过投注")
         return 0
 
-    portfolio = _load_portfolio()
-    stop_mult, loss_days = _calc_stop_loss_multiplier(portfolio)
-    daily_bankroll = bankroll * stop_mult
-    daily_remaining, is_new_day = _check_daily_budget(portfolio, daily_bankroll)
-    pending_ids = {b.get("id", "") for b in portfolio.get("pending_bets", [])}
-    settled_ids = set(portfolio.get("settled", {}).keys())
-    history_ids = {h.get("id", "") for h in portfolio.get("history", [])}
-    existing_ids = pending_ids | settled_ids | history_ids
+    with _portfolio_lock():
+        portfolio = _load_portfolio()
+        stop_mult, loss_days = _calc_stop_loss_multiplier(portfolio)
+        daily_bankroll = bankroll * stop_mult
+        daily_remaining, is_new_day = _check_daily_budget(portfolio, daily_bankroll)
+        pending_ids = {b.get("id", "") for b in portfolio.get("pending_bets", [])}
+        settled_ids = set(portfolio.get("settled", {}).keys())
+        history_ids = {h.get("id", "") for h in portfolio.get("history", [])}
+        existing_ids = pending_ids | settled_ids | history_ids
 
-    bets_placed = 0
-    total_stake = 0
+        bets_placed = 0
+        bets_today = portfolio["daily_budget"].get("bets", 0)  # 跨调用累计
+        total_stake = 0
 
-    stop_msg = _format_stop_loss_msg(stop_mult, loss_days)
-    if stop_msg:
-        print(f"\n{stop_msg}\n")
+        stop_msg = _format_stop_loss_msg(stop_mult, loss_days)
+        if stop_msg:
+            print(f"\n{stop_msg}\n")
 
-    if stop_mult == 0.0:
+        if stop_mult == 0.0:
+            print(f"\n{'='*60}")
+            print("🛑 止损停投日，跳过")
+            print(f"{'='*60}")
+            return 0
+
+        # 全局余额检查
+        balance = portfolio.get("balance", 0)
+        if balance <= 0:
+            print(f"\n{'='*60}")
+            print(f"🛑 余额为 ¥{balance:.0f}，跳过投注")
+            print(f"{'='*60}")
+            return 0
+
         print(f"\n{'='*60}")
-        print("🛑 止损停投日，跳过")
+        print(f"推送投注 — 今日剩余 ¥{daily_remaining:.2f} / ¥{daily_bankroll:.2f} (基准¥{bankroll:.2f})")
         print(f"{'='*60}")
-        return 0
 
-    print(f"\n{'='*60}")
-    print(f"推送投注 — 今日剩余 ¥{daily_remaining:.2f} / ¥{daily_bankroll:.2f} (基准¥{bankroll:.2f})")
-    print(f"{'='*60}")
+        for o in opportunities:
+            if bets_today + bets_placed >= MAX_BETS:
+                print(f"  ⏭️ 今日已达 {MAX_BETS} 笔上限")
+                break
+            if daily_remaining <= 0:
+                print("  ⏭️ 今日预算已用完")
+                break
 
-    for o in opportunities:
-        if bets_placed >= MAX_BETS:
-            break
-        if daily_remaining <= 0:
-            print("  ⏭️ 今日预算已用完")
-            break
+            stake = o.get("_stake", 0)
+            if stake <= 0:
+                continue
 
-        stake = o.get("_stake", 0)
-        if stake <= 0:
-            continue
+            # 单注上限 2%（防御，推送端已算好）
+            stake = min(stake, bankroll * MAX_STAKE_PCT)
+            # 不超过剩余预算
+            stake = min(stake, daily_remaining)
+            if stake < 1:
+                continue
 
-        # 单注上限 2%（防御，推送端已算好）
-        stake = min(stake, bankroll * MAX_STAKE_PCT)
-        # 不超过剩余预算
-        stake = min(stake, daily_remaining)
-        if stake < 1:
-            continue
+            # 余额检查：不超可用资金
+            balance = portfolio.get("balance", 0)
+            if balance < stake:
+                print(f"  ⏭️ 余额不足 (¥{balance:.0f} < ¥{stake:.0f})")
+                continue
 
-        bb_odds = o["bb_odds"]
-        outcome = o["designation"]
-        home = o.get("home_cn", "")
-        away = o.get("away_cn", "")
-        league = o.get("league", "")
+            bb_odds = o["bb_odds"]
+            outcome = o["designation"]
+            home = o.get("home_cn", "")
+            away = o.get("away_cn", "")
+            league = o.get("league", "")
 
-        # 从 designation 和 line 推断市场类型
-        desig = o.get("designation", "")
-        hc_line = o.get("line", "")
-        if "让" in desig or hc_line:
-            market_type = "handicap"
-        elif desig.startswith(("大分", "小分", "大球", "小球", "大", "小")):
-            market_type = "over_under"
+            # 从 upstream 传递的 _market_type 推断市场类型，兼容旧数据无此字段
+            raw_mk = o.get("_market_type", "")
+            if raw_mk in ("opportunities", "double_chance", "draw_no_bet"):
+                market_type = "1x2"
+            elif raw_mk in ("handicap", "over_under"):
+                market_type = raw_mk
+            else:
+                # 旧数据降级：从 designation 和 line 推断
+                desig = o.get("designation", "")
+                hc_line = o.get("line", "")
+                if "让" in desig or hc_line:
+                    market_type = "handicap"
+                elif desig.startswith(("大分", "小分", "大球", "小球", "大", "小")):
+                    market_type = "over_under"
+                else:
+                    market_type = "1x2"
+
+            bet_id = _make_bet_id(home, away, outcome, market_type)
+            if bet_id in existing_ids:
+                print(f"  ⏭️ 已存在: {bet_id}")
+                continue
+
+            fair_price = o.get("fair_price", o.get("pin_odds", 0))
+            pin_odds = o.get("pin_odds", 0)
+            ev = o.get("ev_pct", 0)
+
+            bet = {
+                "id": bet_id,
+                "sport": o.get("sport", ""),
+                "league": league,
+                "home_team": o.get("home_pin", home),
+                "away_team": o.get("away_pin", away),
+                "home_cn": home,
+                "away_cn": away,
+                "market": market_type,
+                "market_type": outcome,
+                "line": hc_line,
+                "odds": bb_odds,
+                "stake": round(stake, 2),
+                "model_prob": round(1.0 / fair_price, 4) if fair_price > 1 else 0,
+                "ev_pct": ev,
+                "pin_odds": pin_odds,
+                "fair_price": fair_price,
+                "source": "bb_vs_pinnacle",
+                "commence_time": o.get("_pin_epoch", ""),
+                "created_at": datetime.now(timezone.utc).isoformat(),
+            }
+
+            portfolio["pending_bets"].append(bet)
+            daily_remaining -= stake
+            portfolio["daily_budget"]["used"] = portfolio["daily_budget"].get("used", 0) + stake
+            portfolio["daily_budget"]["bets"] = portfolio["daily_budget"].get("bets", 0) + 1
+            existing_ids.add(bet_id)
+            bets_placed += 1
+            total_stake += stake
+            print(f"  ✅ [{league}] {home} vs {away}")
+            print(f"    投注: {outcome} @ {bb_odds} | ¥{stake:.2f} | EV={ev:.1f}%")
+
+        if bets_placed > 0:
+            daily_used = portfolio["daily_budget"].get("used", 0)
+            portfolio["balance"] = round(portfolio.get("balance", INITIAL_BALANCE) - total_stake, 2)
+            _save_portfolio(portfolio)
+            print(f"\n已投注 {bets_placed} 笔，总金额 ¥{total_stake:.2f}")
+            print(f"今日已用: ¥{daily_used:.2f} / ¥{daily_bankroll:.2f}")
+            print(f"组合余额: ¥{portfolio['balance']:.2f}")
         else:
-            market_type = "1x2"
+            print("  无新增投注")
 
-        bet_id = _make_bet_id(home, away, outcome, market_type)
-        if bet_id in existing_ids:
-            print(f"  ⏭️ 已存在: {bet_id}")
-            continue
-
-        fair_price = o.get("fair_price", o.get("pin_odds", 0))
-        pin_odds = o.get("pin_odds", 0)
-        ev = o.get("ev_pct", 0)
-
-        bet = {
-            "id": bet_id,
-            "sport": o.get("sport", ""),
-            "league": league,
-            "home_team": o.get("home_pin", home),
-            "away_team": o.get("away_pin", away),
-            "home_cn": home,
-            "away_cn": away,
-            "market": market_type,
-            "market_type": outcome,
-            "line": hc_line,
-            "odds": bb_odds,
-            "stake": round(stake, 2),
-            "model_prob": round(1.0 / fair_price, 4) if fair_price > 1 else 0,
-            "ev_pct": ev,
-            "pin_odds": pin_odds,
-            "fair_price": fair_price,
-            "source": "bb_vs_pinnacle",
-            "commence_time": o.get("_pin_epoch", ""),
-            "created_at": datetime.now(timezone.utc).isoformat(),
-        }
-
-        portfolio["pending_bets"].append(bet)
-        daily_remaining -= stake
-        portfolio["daily_budget"]["used"] = portfolio["daily_budget"].get("used", 0) + stake
-        portfolio["daily_budget"]["bets"] = portfolio["daily_budget"].get("bets", 0) + 1
-        existing_ids.add(bet_id)
-        bets_placed += 1
-        total_stake += stake
-        print(f"  ✅ [{league}] {home} vs {away}")
-        print(f"    投注: {outcome} @ {bb_odds} | ¥{stake:.2f} | EV={ev:.1f}%")
-
-    if bets_placed > 0:
-        daily_used = portfolio["daily_budget"].get("used", 0)
-        portfolio["balance"] = round(portfolio.get("balance", INITIAL_BALANCE) - total_stake, 2)
-        _save_portfolio(portfolio)
-        print(f"\n已投注 {bets_placed} 笔，总金额 ¥{total_stake:.2f}")
-        print(f"今日已用: ¥{daily_used:.2f} / ¥{daily_bankroll:.2f}")
-        print(f"组合余额: ¥{portfolio['balance']:.2f}")
-    else:
-        print("  无新增投注")
-
-    return bets_placed
+        return bets_placed
 
 
 def main():
