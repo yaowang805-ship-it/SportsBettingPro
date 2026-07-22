@@ -37,12 +37,21 @@ LOCK_FILE = SRC_DIR / "data" / "storage" / ".pipeline_daemon.lock"
 LOG_DIR = SRC_DIR / "data" / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 
+# 日志轮转：启动时自动归档过大的旧日志（跳过已轮转过的文件）
+_date_str = datetime.now().strftime('%Y%m%d')
+for _lf in sorted(LOG_DIR.iterdir()):
+    if _lf.is_file() and _lf.stat().st_size > 2 * 1024 * 1024 and not _lf.name.endswith(_date_str):
+        _rotated = _lf.parent / f"{_lf.name}.{_date_str}"
+        _lf.rename(_rotated)
+        print(f"  📦 日志轮转: {_lf.name} → {_rotated.name}")
+
 SCAN_WINDOW = (8, 22)         # 08:00 ~ 22:00
 INCREMENTAL_INTERVAL = 1200    # 20 分钟（秒）
 CHECK_INTERVAL = 30            # 调度循环检查间隔（秒）
 
 # 定时任务表：(名称, HH:MM, 处理函数, 参数字典)
 SCHEDULE = [
+    ("health_check",       "07:55", "do_health_check", {}),
     ("full_scan_morning",  "08:00", "do_full_scan",  {"bet": True}),
     ("settle_morning",     "09:30", "do_settle",      {}),
     ("daily_report",       "10:00", "do_daily_report",{}),
@@ -125,13 +134,22 @@ class PipelineOrchestrator:
     def _is_in_scan_window(self, now: datetime) -> bool:
         return SCAN_WINDOW[0] <= now.hour < SCAN_WINDOW[1]
 
-    def _is_time_match(self, weekday, dom, hour, minute, now: datetime) -> bool:
-        """检查当前时间是否符合调度条件。"""
+    def _is_time_match(self, weekday, dom, hour, minute, now: datetime, wide_window=False) -> bool:
+        """检查当前时间是否符合调度条件。
+
+        wide_window=False: 2 分钟窗口（正常调度循环用）
+        wide_window=True: 只要当前时间 >= 调度时间即匹配（启动追赶用）
+        """
         if dom is not None and now.day != dom:
             return False
         if weekday is not None and now.weekday() != weekday:
             return False
-        return (now.hour, now.minute) == (hour, minute)
+        scheduled_total = hour * 60 + minute
+        now_total = now.hour * 60 + now.minute
+        diff = now_total - scheduled_total
+        if wide_window:
+            return diff >= 0
+        return 0 <= diff <= 2
 
     def _should_run_wall_clock(self, name: str, now: datetime) -> bool:
         """判断定时任务是否该执行（每天一次）。"""
@@ -162,6 +180,14 @@ class PipelineOrchestrator:
             elapsed = time.time() - t0
             logger.info("[%s] ====== DONE (%ds) ======", name, elapsed)
             return True
+
+        except SystemExit as e:
+            elapsed = time.time() - t0
+            err_msg = f"SystemExit({e.code})"
+            logger.error("[%s] FAILED after %ds: %s", name, elapsed, err_msg)
+            logger.error(traceback.format_exc())
+            self._send_alert(name, err_msg)
+            return False
 
         except Exception as e:
             elapsed = time.time() - t0
@@ -313,6 +339,80 @@ class PipelineOrchestrator:
         else:
             logger.warning("提交失败: %s", result.stderr[:200])
 
+    def do_health_check(self):
+        """运行系统健康检查，有 WARN/FAIL 时发 DingTalk。"""
+        import subprocess
+        result = subprocess.run(
+            [sys.executable, str(SRC_DIR / "health_check_system.py")],
+            capture_output=True, text=True, cwd=SRC_DIR,
+            timeout=120,
+        )
+        stdout = result.stdout or ""
+        stderr = result.stderr or ""
+        for line in stdout.splitlines():
+            logger.info("  %s", line)
+
+        # 检查是否有 FAIL/WARN
+        has_fail = "❌" in stdout
+        has_warn = "⚠️" in stdout
+        if result.returncode != 0 or has_fail or has_warn:
+            summary = f"Health Check {'❌ FAIL' if has_fail else '⚠️ WARN'}"
+            body = (
+                f"**{summary}**\n\n"
+                f"```\n{stdout[:1500]}```"
+            )
+            try:
+                send_dingtalk(summary, body)
+                logger.info("健康检查告警已发送")
+            except Exception as e:
+                logger.error("告警发送失败: %s", e)
+        else:
+            logger.info("健康检查: 全部通过")
+
+    # ------------------------------------------------------------------
+    # 启动追赶 — 重启后补执行当天已错过的定时任务
+    # ------------------------------------------------------------------
+    def _catch_up_missed_tasks(self):
+        """守护进程启动时检查今天及昨天错过的定时任务并补执行。
+
+        场景：daemon 在 09:00 重启，08:00 的 full_scan 已被跳过。
+        场景：daemon 停机多日，重启后补跑之前错过的每日任务。
+        此方法遍历 SCHEDULE，对昨天/今天已过时间点且未执行的任务立即执行一次。
+        """
+        from datetime import timedelta
+        now = datetime.now()
+        caught_up = []
+        # 最多往前补 2 天（含今天）
+        check_dates = [now.date(), (now - timedelta(days=1)).date(), (now - timedelta(days=2)).date()]
+
+        for name, time_str, method_name, kwargs in SCHEDULE:
+            for cd in check_dates:
+                if self._last_run.get(name) == cd:
+                    continue  # 这天已执行过
+                dt = datetime(cd.year, cd.month, cd.day, *(int(x) for x in time_str.split()[-1].split(":")))
+                if dt > now:
+                    continue  # 未来的不补
+                weekday, dom, hour, minute = _parse_schedule_time(time_str)
+                if dom is not None and cd.day != dom:
+                    continue
+                if weekday is not None and cd.weekday() != weekday:
+                    continue
+
+                method = getattr(self, method_name, None)
+                if not method:
+                    continue
+
+                logger.info("[追赶] 发现错过的任务 %s (原定 %s %s), 立即执行...", name, cd, time_str)
+                self._run_task(name, method, **kwargs)
+                self._last_run[name] = cd
+                caught_up.append(name)
+                break  # 同一任务只补最近一次
+
+        if caught_up:
+            logger.info("[追赶] 已完成 %d 个错过的任务: %s", len(caught_up), ", ".join(caught_up))
+        else:
+            logger.info("[追赶] 无错过的定时任务")
+
     # ------------------------------------------------------------------
     # 主循环
     # ------------------------------------------------------------------
@@ -325,6 +425,7 @@ class PipelineOrchestrator:
             "weekly_report": self.do_weekly_report,
             "monthly_report": self.do_monthly_report,
             "incremental": self.do_incremental,
+            "health_check": self.do_health_check,
         }
         func = task_map.get(task_name)
         if not func:
@@ -345,6 +446,10 @@ class PipelineOrchestrator:
 
         if not self.dry_run and not self._is_in_scan_window(datetime.now()):
             logger.info("当前不在扫描时段，等待 %02d:00...", SCAN_WINDOW[0])
+
+        # 启动时追赶今天已错过的定时任务
+        if not self.dry_run:
+            self._catch_up_missed_tasks()
 
         try:
             while self._running:
@@ -382,7 +487,7 @@ def main():
     import argparse
     parser = argparse.ArgumentParser(description="Pipeline Orchestrator")
     parser.add_argument("--dry-run", action="store_true", help="不实际执行任务")
-    parser.add_argument("--task", help="执行单个任务后退出 (scan|settle|incremental|daily_report|weekly_report|monthly_report)")
+    parser.add_argument("--task", help="执行单个任务后退出 (scan|settle|incremental|daily_report|weekly_report|monthly_report|health_check)")
     args = parser.parse_args()
 
     orch = PipelineOrchestrator(dry_run=args.dry_run)

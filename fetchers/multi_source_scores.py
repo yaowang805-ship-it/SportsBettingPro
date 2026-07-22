@@ -14,6 +14,12 @@ from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Tuple
 
 from config.logging_config import get_logger
+from config.settings import (
+    ODDS_API_KEYS as _ODDS_API_KEYS,
+    BSD_API_KEY as _BSD_API_KEY,
+    BALLDONTLIE_API_KEY as _BALLDONTLIE_API_KEY,
+    FOOTBALL_DATA_API_KEY as _FOOTBALL_DATA_API_KEY,
+)
 
 logger = get_logger(__name__)
 
@@ -36,7 +42,6 @@ _FD_COMPETITIONS = {
 
 # ── The Odds API v4 ──
 _OA_API_BASE = "https://api.the-odds-api.com/v4"
-_ODDS_API_KEYS: List[str] = []
 
 _ODDS_API_LEAGUES = {
     "WNBA": "basketball_wnba", "美国女子职业篮球联赛": "basketball_wnba",
@@ -93,26 +98,7 @@ _ODDS_API_LEAGUES = {
 
 
 def _load_odds_api_keys() -> List[str]:
-    if _ODDS_API_KEYS:
-        return _ODDS_API_KEYS
-    keys = []
-    try:
-        with open(".env") as f:
-            for line in f:
-                line = line.strip()
-                if line.startswith("ODDS_API_KEY_"):
-                    val = line.split("=", 1)[1].strip()
-                    if val:
-                        keys.append(val)
-    except Exception:
-        pass
-    import os
-    for i in range(1, 10):
-        k = os.environ.get(f"ODDS_API_KEY_{i}")
-        if k:
-            keys.append(k)
-    _ODDS_API_KEYS.extend(keys)
-    return keys
+    return [k for k in _ODDS_API_KEYS if k]
 
 
 def _fetch_odds_api_scores(sport_key: str, days_back: int = 3) -> list:
@@ -172,17 +158,7 @@ def _get_bsd_token() -> Optional[str]:
     global _BSD_TOKEN
     if _BSD_TOKEN:
         return _BSD_TOKEN
-    try:
-        with open(".env") as f:
-            for line in f:
-                line = line.strip()
-                if line.startswith("BSD_API_KEY="):
-                    _BSD_TOKEN = line.split("=", 1)[1].strip()
-                    return _BSD_TOKEN
-    except Exception:
-        pass
-    import os
-    _BSD_TOKEN = os.environ.get("BSD_API_KEY")
+    _BSD_TOKEN = _BSD_API_KEY or None
     return _BSD_TOKEN
 
 
@@ -291,17 +267,7 @@ def _get_balldontlie_key() -> Optional[str]:
     global _BALLDONTLIE_KEY
     if _BALLDONTLIE_KEY:
         return _BALLDONTLIE_KEY
-    try:
-        with open(".env") as f:
-            for line in f:
-                line = line.strip()
-                if line.startswith("BALLDONTLIE_API_KEY="):
-                    _BALLDONTLIE_KEY = line.split("=", 1)[1].strip()
-                    return _BALLDONTLIE_KEY
-    except Exception:
-        pass
-    import os
-    _BALLDONTLIE_KEY = os.environ.get("BALLDONTLIE_API_KEY")
+    _BALLDONTLIE_KEY = _BALLDONTLIE_API_KEY or None
     return _BALLDONTLIE_KEY
 
 
@@ -364,16 +330,7 @@ from fetchers.zhibo8_scores import CODE_LEAGUE_MAP as _ZHIBO8_CODES
 
 
 def _get_football_data_key() -> Optional[str]:
-    try:
-        with open(".env") as f:
-            for line in f:
-                line = line.strip()
-                if line.startswith("FOOTBALL_API_KEY="):
-                    return line.split("=", 1)[1].strip()
-        import os
-        return os.environ.get("FOOTBALL_API_KEY")
-    except Exception:
-        return None
+    return _FOOTBALL_DATA_API_KEY or None
 
 
 def _fetch_fd_matches(competition_code: str, days_back: int = 3) -> list:

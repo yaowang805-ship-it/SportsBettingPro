@@ -31,6 +31,10 @@ BB_SNAPSHOT = DATA_DIR / "bb_odds_snapshot.json"
 COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison.json"
 PIN_LEAGUE_STRUCTURE = DATA_DIR / "pinnacle_league_structure.json"
 
+# FB 独立对比通道
+FB_EXTRACTED = DATA_DIR / "bb_odds_extracted_FB.json"
+FB_COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison_FB.json"
+
 from scrapers.bb_api_fetcher import main as fetch_bb
 from scrapers.bb_vs_pinnacle import (
     compare_bb_vs_pinnacle,
@@ -217,6 +221,14 @@ def run_incremental():
     """增量扫描入口。"""
     import sys
     sys.stdout.reconfigure(line_buffering=True)
+
+    # 扫描时段检查：只在 08:00~22:00 运行
+    from datetime import datetime
+    _now_hour = datetime.now().hour
+    if _now_hour < 8 or _now_hour >= 22:
+        print(f"  ⏭️ 当前时间 {_now_hour}:00 不在扫描时段 (08:00~22:00)，跳过增量扫描")
+        return
+
     print("=" * 60)
     print("BB体育 增量扫描 (变动检测 → 定向对比)")
     print("=" * 60)
@@ -232,10 +244,18 @@ def run_incremental():
     _now_ts = int(time.time() * 1000)
     bb_matches = [m for m in bb_matches if not m.get("bt") or int(m["bt"]) > _now_ts]
 
-    # 2. 加载快照
+    # 2. FB 独立数据刷新 + 对比（每次增量扫描都检查，独立于 BB 变动检测）
+    print(f"\n📡 检查FB数据新鲜度...")
+    _refresh_fb_data()
+    all_pin_leagues = _load_league_structure()
+    fb_had_new = False
+    if all_pin_leagues:
+        fb_had_new = _run_fb_comparison(all_pin_leagues)
+
+    # 3. 加载快照
     snapshot = load_snapshot()
 
-    # 3. 检测变动
+    # 4. 检测变动
     changed_ids, new_ids, changed_leagues = detect_changes(bb_matches, snapshot)
     n_changed = len(changed_ids) + len(new_ids)
 
@@ -243,6 +263,10 @@ def run_incremental():
         print("\n✅ 无赔率变动，跳过扫描")
         # 仍然更新快照(可能有比赛已开赛)
         save_snapshot(bb_matches)
+        # FB 可能有新机会，单独触发推送
+        if fb_had_new:
+            print(f"\n📣 FB 新+EV机会 → 运行推送...")
+            _run_push()
         return
 
     print(f"\n📊 变动检测:")
@@ -252,11 +276,13 @@ def run_incremental():
     for lg in sorted(changed_leagues):
         print(f"    {lg}")
 
-    # 4. 加载 Pinnacle 联赛结构
-    all_pin_leagues = _load_league_structure()
+    # 5. 加载 Pinnacle 联赛结构
     if not all_pin_leagues:
-        print("  ❌ 无 Pinnacle 联赛结构数据，跳过增量扫描")
-        return
+        all_pin_leagues = _load_league_structure()
+        if not all_pin_leagues:
+            print("  ❌ 无 Pinnacle 联赛结构数据，跳过增量扫描")
+            save_snapshot(bb_matches)
+            return
 
     # 5. 只对变动联赛做对比
     print(f"\n🔍 增量对比 (只扫 {len(changed_leagues)} 个变动联赛)...")
@@ -285,8 +311,8 @@ def run_incremental():
     save_snapshot(bb_matches)
 
     # 9. 推送新机会
-    if new_result.get("details"):
-        print(f"\n📣 {len(new_result['details'])} 条新+EV机会 → 运行推送...")
+    if new_result.get("details") or fb_had_new:
+        print(f"\n📣 新+EV机会 → 运行推送...")
         _run_push()
     else:
         print("\n📭 无新+EV机会")
@@ -360,11 +386,90 @@ def _run_fetcher():
     result = subprocess.run(
         [sys.executable, "-m", "src.scrapers.bb_api_fetcher", "--all-sports"],
         capture_output=True, text=True, cwd=SRC_DIR.parent,
+        timeout=120,
     )
     if result.returncode != 0:
         print(f"  ❌ bb_api_fetcher 失败: {result.stderr[:200]}")
         return False
     return True
+
+
+def _refresh_fb_data():
+    """检查 FB 提取数据是否过时，过时则重新抓取。"""
+    if not FB_EXTRACTED.exists():
+        print("  📥 FB 数据不存在，开始抓取...")
+        return _fetch_fb_only()
+
+    age_m = (time.time() - FB_EXTRACTED.stat().st_mtime) / 60
+    # FB 数据超过 2 小时，或比 BB 合并数据更旧，则刷新
+    bb_age_m = (time.time() - BB_EXTRACTED.stat().st_mtime) / 60 if BB_EXTRACTED.exists() else 999
+
+    if age_m > 120 or age_m > bb_age_m + 30:
+        print(f"  📥 FB 数据 {age_m:.0f} 分钟前 (BB数据 {bb_age_m:.0f} 分钟前)，重新抓取...")
+        return _fetch_fb_only()
+
+    print(f"  ✅ FB 数据新鲜 ({age_m:.0f} 分钟前)")
+    return True
+
+
+def _fetch_fb_only():
+    """仅抓取 FB 平台数据。"""
+    import subprocess
+    import sys
+    result = subprocess.run(
+        [sys.executable, "-m", "src.scrapers.bb_api_fetcher", "--platform=FB"],
+        capture_output=True, text=True, cwd=SRC_DIR.parent,
+        timeout=180,
+    )
+    for line in (result.stdout or "").splitlines()[-10:]:
+        print(f"    {line}")
+    if result.returncode != 0:
+        print(f"  ❌ FB 抓取失败: {result.stderr[:200]}")
+        return False
+    return True
+
+
+def _run_fb_comparison(all_pin_leagues):
+    """对 FB 数据进行独立对比，更新 FB 对比文件。
+
+    Returns:
+        bool: True 如果发现新的 +EV 机会
+    """
+    if not FB_EXTRACTED.exists():
+        print("  ⏭️ 无 FB 数据，跳过 FB 对比")
+        return False
+
+    age_m = (time.time() - FB_EXTRACTED.stat().st_mtime) / 60
+    if age_m > 150:
+        print(f"  ⏭️ FB 数据仍过时 ({age_m:.0f} 分钟)，跳过 FB 对比")
+        return False
+
+    print(f"\n🔍 FB 独立对比...")
+    raw = json.loads(FB_EXTRACTED.read_text())
+    fb_matches = raw.get("matches", [])
+    _now_ts = int(time.time() * 1000)
+    fb_matches = [m for m in fb_matches if not m.get("bt") or int(m["bt"]) > _now_ts]
+
+    if not fb_matches:
+        print("  ⏭️ 无未开赛 FB 比赛")
+        return False
+
+    print(f"  FB 比赛数: {len(fb_matches)}")
+
+    from scrapers.bb_vs_pinnacle import compare_bb_vs_pinnacle
+    fb_result = compare_bb_vs_pinnacle(
+        fb_matches,
+        all_pin_leagues,
+        save_path=FB_COMPARISON_FILE,
+    )
+
+    if fb_result is None:
+        print("  ⚠️ FB 对比无结果")
+        return False
+
+    n_fb = len(fb_result.get("details", []))
+    print(f"  ✅ FB 对比完成: {n_fb} 条")
+    return n_fb > 0
 
 
 def _run_push():
@@ -373,6 +478,7 @@ def _run_push():
     result = subprocess.run(
         [sys.executable, "-m", "src.report.bb_ev_push", "--incremental"],
         capture_output=True, text=True, cwd=SRC_DIR.parent,
+        timeout=120,
     )
     if result.returncode != 0:
         print(f"  ❌ bb_ev_push 失败 (exit={result.returncode}):")

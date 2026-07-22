@@ -13,7 +13,10 @@ Execution flow:
 from typing import List
 
 from config.logging_config import get_logger
-from config.settings import BETTING_PLATFORM
+try:
+    from config.settings import BETTING_PLATFORM
+except ImportError:
+    BETTING_PLATFORM = "manual"  # 已废弃，兼容旧代码
 from src.betting.base import BaseExecutor
 from src.betting.models import BetOrder, BetResult
 from src.risk.manager import RiskManager

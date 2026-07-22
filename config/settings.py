@@ -2,9 +2,7 @@ import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-# 日常运行和缓存均使用 data/storage 目录
 DATA_DIR = BASE_DIR / 'data' / 'storage'
-RAW_DATA_DIR = BASE_DIR / 'data' / 'raw'
 MODEL_DIR = BASE_DIR / 'models'
 
 ENV_FILE = BASE_DIR / '.env'
@@ -58,20 +56,16 @@ DEFAULT_BUDGET = int(os.getenv('DEFAULT_BUDGET', '10000'))
 # ===== 职业资金管理参数 =====
 MAX_SINGLE_BET_PCT = float(os.getenv('MAX_SINGLE_BET_PCT', '0.05'))
 MAX_TOTAL_EXPOSURE = float(os.getenv('MAX_TOTAL_EXPOSURE', '0.30'))
-KELLY_FRACTION = float(os.getenv('KELLY_FRACTION', '0.25'))
-MIN_EDGE = float(os.getenv('MIN_EDGE', '0.03'))
+KELLY_FRACTION = float(os.getenv('KELLY_FRACTION', '0.25'))  # 被 bb_ev_push.py 和 bb_virtual_bet.py 覆写为 0.50
 
-# ===== 自动下注执行配置 =====
-BETTING_PLATFORM = os.getenv('BETTING_PLATFORM', 'selenium')
-BETFAIR_API_KEY = os.getenv('BETFAIR_API_KEY', '')
-BETFAIR_USERNAME = os.getenv('BETFAIR_USERNAME', '')
-BETFAIR_PASSWORD = os.getenv('BETFAIR_PASSWORD', '')
-BETFAIR_CERT_PATH = os.getenv('BETFAIR_CERT_PATH', '')
-SELENIUM_DRIVER_PATH = os.getenv('SELENIUM_DRIVER_PATH', '')
-SELENIUM_HEADLESS = os.getenv('SELENIUM_HEADLESS', 'true').lower() == 'true'
-SELENIUM_PLATFORM_URL = os.getenv('SELENIUM_PLATFORM_URL', '')
-SELENIUM_PLATFORM_USERNAME = os.getenv('SELENIUM_PLATFORM_USERNAME', '')
-SELENIUM_PLATFORM_PASSWORD = os.getenv('SELENIUM_PLATFORM_PASSWORD', '')
-RACE_API_KEY = os.getenv('RACE_API_KEY', '')
+
+
+
+
+# ===== 比分获取器 API keys（供 multi_source_scores.py 使用） =====
+ODDS_API_KEYS = [v for k, v in sorted(os.environ.items()) if k.startswith("ODDS_API_KEY_")]
+BSD_API_KEY = os.getenv("BSD_API_KEY", "")
+BALLDONTLIE_API_KEY = os.getenv("BALLDONTLIE_API_KEY", "")
+FOOTBALL_DATA_API_KEY = os.getenv("FOOTBALL_API_KEY", "")
 PRE_BET_ODDS_VALIDATION = os.getenv('PRE_BET_ODDS_VALIDATION', 'true').lower() == 'true'
 MAX_ODDS_SLIPPAGE = float(os.getenv('MAX_ODDS_SLIPPAGE', '0.05'))

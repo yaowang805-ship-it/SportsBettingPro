@@ -35,8 +35,8 @@ SESSION.headers.update({
     "Origin": "https://www.pinnacle.com",
 })
 
-# SOCKS5 代理支持（Shadowrocket 本地代理，用于绕过 Cloudflare）
-PROXY = "socks5://localhost:1082"
+# 代理支持（当前关闭，Pinnacle API 直连正常）
+# PROXY = "socks5://localhost:1082"
 
 # 重试参数
 MAX_RETRIES = 3
@@ -322,7 +322,7 @@ def _auto_map_team_names(matched_entries):
 
 # 速率限制 — API 请求间隔至少 0.5 秒
 _last_req_time = 0.0
-_MIN_REQUEST_INTERVAL = 0.5
+_MIN_REQUEST_INTERVAL = 0.25
 
 
 def _rate_limit():
@@ -431,13 +431,8 @@ def api_get(path, retry=True):
     url = f"{API_BASE}{path}"
     for attempt in range(MAX_RETRIES if retry else 1):
         try:
-            # 先试 SOCKS5 代理（Shadowrocket），失败回退直连
-            socks_err = None
-            try:
-                resp = SESSION.get(url, timeout=30, proxies={"https": PROXY, "http": PROXY})
-            except Exception as e:
-                socks_err = e
-                resp = SESSION.get(url, timeout=30)
+            # 直连 Pinnacle API（SOCKS5 代理已移除，节省 2-5s 连接超时）
+            resp = SESSION.get(url, timeout=30)
 
             if resp.status_code == 429:
                 wait = RETRY_DELAY * (2 ** attempt)
@@ -448,18 +443,22 @@ def api_get(path, retry=True):
                 if attempt < MAX_RETRIES - 1:
                     time.sleep(RETRY_DELAY)
                     continue
-                _diagnose_pinnacle_error(url, resp.status_code, socks_err)
+                _diagnose_pinnacle_error(url, resp.status_code)
                 return None
             data = resp.json()
             return data
         except requests.exceptions.SSLError as e:
-            print(f"  ❌ SSL 握手失败 ({type(e).__name__})")
-            print(f"    原因: {e}")
-            print(f"    建议: 检查系统时间是否正确，或更新 SSL 证书")
+            # Python 3.14 SSL 间歇性断连 (UNEXPECTED_EOF_WHILE_READING)，重试可恢复
+            if attempt < MAX_RETRIES - 1:
+                wait = RETRY_DELAY * (2 ** attempt)
+                print(f"  ⏳ SSL 错误, {wait:.0f}s 后重试...")
+                time.sleep(wait)
+                continue
+            print(f"  ❌ SSL 握手失败 (多次重试后): {type(e).__name__}")
             return None
         except requests.exceptions.ConnectionError as e:
             print(f"  ❌ 连接失败: {e}")
-            print(f"    建议: 检查网络连接 / Shadowrocket 是否开启")
+            print(f"    建议: 检查网络连接")
             return None
         except requests.exceptions.Timeout:
             if attempt < MAX_RETRIES - 1:
@@ -484,19 +483,18 @@ def api_get(path, retry=True):
     return None
 
 
-def _diagnose_pinnacle_error(url, status_code, socks_error=None):
+def _diagnose_pinnacle_error(url, status_code):
     """Pinnacle API 非 200 响应诊断。"""
+    if status_code == 0:
+        print(f"  ❌ Pinnacle API 请求异常，请检查网络连接")
+        return
     print(f"\n  ❌ Pinnacle API 返回 {status_code}")
     if status_code == 403:
-        print(f"    原因: 403 Forbidden — 非真实封锁，通常是以下情况之一：")
-        print(f"      1. Python 3.14 http.client chunked transfer bug 误报")
-        print(f"      2. SOCKS5 代理（localhost:1082）无此 API 访问权限")
-        print(f"    解决: 已改用 requests.Session()（去掉 cloudscraper），应已修复")
-        print(f"         如仍出现，尝试关闭 Shadowrocket 后重试")
+        print(f"    原因: 403 Forbidden — Python 3.14 http.client chunked transfer bug 误报")
+        print(f"    解决: 已改用 requests.Session()，应已修复。重试即可")
     elif status_code == 401:
-        print(f"    原因: 401 Unauthorized — 请求缺少/无效认证")
-        print(f"    解决: Pinnacle API 是公开的，不需要认证。可能是代理问题")
-        print(f"         尝试关闭 Shadowrocket 后重试")
+        print(f"    原因: 401 Unauthorized — Pinnacle 公开 API 不需要认证")
+        print(f"    解决: 重试即可，通常会自动恢复")
     elif status_code == 429:
         print(f"    原因: 429 Rate Limited — 请求过快")
         print(f"    解决: 等待 1 分钟后重试")
@@ -505,8 +503,6 @@ def _diagnose_pinnacle_error(url, status_code, socks_error=None):
         print(f"    解决: 等待几分钟后重试")
     else:
         print(f"    原因: 未知")
-        if socks_error:
-            print(f"    SOCKS5 代理错误: {socks_error}")
 
 
 def us_to_decimal(us_price):
@@ -528,8 +524,9 @@ def load_bb_odds(path=None):
     mtime = path.stat().st_mtime
     age_hours = (time.time() - mtime) / 3600
     if age_hours > 2 and path == DATA_DIR / "bb_odds_extracted.json":
-        print(f"  ❌ bb_odds_extracted.json 已过期 ({age_hours:.1f}小时前)，请先运行 bb_api_fetcher --all-sports 重新抓取")
-        sys.exit(1)
+        msg = f"bb_odds_extracted.json 已过期 ({age_hours:.1f}小时前)，请先运行 bb_api_fetcher --all-sports"
+        print(f"  ❌ {msg}")
+        raise RuntimeError(msg)
 
     data = json.loads(path.read_text()).get("matches", [])
     # 去重：优先用 API id，无 id 时回退 (home, away, league)
@@ -851,6 +848,282 @@ def _add_btts_opportunities(entry, bb_yes, bb_no, yes_fair, no_fair):
             "ev_pct": ev_no,
             "_market": "btts",
         })
+
+
+def _fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
+    """角球市场对比：从 Pinnacle 角球联赛提取数据并与 BB 角球赔率对比。
+
+    Pinnacle 角球联赛命名规则：原联赛名 + " Corners"
+    例如 "Brazil - Serie A" → "Brazil - Serie A Corners"
+
+    Returns list of corner opportunity entries (empty list if none).
+    """
+    # 1. 找出所有 Pinnacle 角球联赛（含比赛）
+    pin_corner_by_base = {}
+    for lid, info in all_pin_leagues.items():
+        name = info.get("name", "")
+        if name.endswith(" Corners") and info.get("matchup_count", 0) > 0:
+            base = name[:-8]
+            pin_corner_by_base[base] = {"id": lid, "name": name, "sport_id": info.get("sport_id")}
+
+    if not pin_corner_by_base:
+        return []
+
+    # 2. 映射 BB 联赛 → 角球联赛
+    bb_league_to_corner = {}
+    for bb_league in matched_leagues:
+        pin_ids = matched_leagues[bb_league]
+        for pid in pin_ids:
+            base_name = all_pin_leagues.get(pid, {}).get("name", "")
+            if base_name in pin_corner_by_base:
+                bb_league_to_corner[bb_league] = pin_corner_by_base[base_name]
+                break
+
+    if not bb_league_to_corner:
+        return []
+
+    # 3. 收集有角球数据的 BB 比赛
+    bb_corner_matches = []
+    for m in bb_matches:
+        if detect_sport(m) != "football":
+            continue
+        bb_league = m.get("league", "?")
+        if bb_league not in bb_league_to_corner:
+            continue
+        odds_ft = m.get("odds_ft", {})
+        if not isinstance(odds_ft, dict):
+            continue
+        if not any([odds_ft.get("corner_ml"), odds_ft.get("corner_hc"), odds_ft.get("corner_ou")]):
+            continue
+        bb_corner_matches.append(m)
+
+    if not bb_corner_matches:
+        return []
+
+    # 4. 获取 Pinnacle 角球比赛（联赛去重）
+    corner_leagues_to_fetch = {}
+    for bb_league, cinfo in bb_league_to_corner.items():
+        lid = cinfo["id"]
+        if lid not in corner_leagues_to_fetch:
+            corner_leagues_to_fetch[lid] = cinfo
+
+    league_names = sorted(cinfo["name"] for cinfo in corner_leagues_to_fetch.values())
+    print(f"\n{'='*60}")
+    print(f"📐 角球对比 ({len(corner_leagues_to_fetch)} 个联赛)")
+    print(f"{'='*60}")
+    for cn in league_names:
+        print(f"  • {cn}")
+
+    pin_corner_matchups = []
+    for lid, cinfo in corner_leagues_to_fetch.items():
+        time.sleep(random.uniform(0.3, 0.5))
+        matchups = get_league_matchups_and_markets(lid)
+        if matchups:
+            print(f"  [角球] {cinfo['name']}: {len(matchups)} 场")
+        else:
+            print(f"  [角球] {cinfo['name']}: ⚠️ 无数据")
+        pin_corner_matchups.extend(matchups)
+
+    if not pin_corner_matchups:
+        print("  ⚠️ 全部角球联赛无返回数据")
+        return []
+
+    # 5. 匹配 BB → Pinnacle 角球 + EV 计算
+    from difflib import SequenceMatcher as _SM
+    mlabels = MARKET_LABELS["football"]
+    corner_entries = []
+
+    for bb_m in bb_corner_matches:
+        bb_league = bb_m.get("league", "?")
+        bb_home = bb_m.get("home_team", bb_m.get("home", "")).strip()
+        bb_away = bb_m.get("away_team", bb_m.get("away", "")).strip()
+
+        # 找最佳匹配的 Pinnacle 角球比赛
+        best_pin = None
+        best_score = 0.0
+
+        for pin_m in pin_corner_matchups:
+            pin_home = pin_m.get("home", "").strip().lower()
+            pin_away = pin_m.get("away", "").strip().lower()
+            bb_home_en = TEAM_NAME_MAP.get(bb_home, bb_home).lower()
+            bb_away_en = TEAM_NAME_MAP.get(bb_away, bb_away).lower()
+
+            score_parts = []
+            if bb_home_en and pin_home:
+                if bb_home_en == pin_home:
+                    score_parts.append(1.0)
+                elif bb_home_en in pin_home or pin_home in bb_home_en:
+                    score_parts.append(0.9)
+                else:
+                    sm = _SM(None, bb_home_en, pin_home)
+                    score_parts.append(sm.ratio() * 0.7)
+
+            if bb_away_en and pin_away:
+                if bb_away_en == pin_away:
+                    score_parts.append(1.0)
+                elif bb_away_en in pin_away or pin_away in bb_away_en:
+                    score_parts.append(0.9)
+                else:
+                    sm = _SM(None, bb_away_en, pin_away)
+                    score_parts.append(sm.ratio() * 0.7)
+
+            avg = sum(score_parts) / len(score_parts) if score_parts else 0
+            if avg > best_score:
+                best_score = avg
+                best_pin = pin_m
+
+        if best_score < 0.70:
+            continue
+
+        odds_ft = bb_m.get("odds_ft", {})
+        corner_ml = odds_ft.get("corner_ml", [])
+        corner_hc = odds_ft.get("corner_hc")
+        corner_ou = odds_ft.get("corner_ou")
+
+        if not any([corner_ml, corner_hc, corner_ou]):
+            continue
+
+        # 开赛时间
+        bb_bt = bb_m.get("bt")
+        bb_start = ""
+        if bb_bt:
+            try:
+                bb_epoch = int(int(bb_bt) / 1000)
+                bb_dt = datetime.fromtimestamp(bb_epoch, tz=timezone.utc)
+                bb_bj = bb_dt.astimezone(timezone(timedelta(hours=8)))
+                bb_start = bb_bj.strftime("%m/%d %H:%M")
+            except (ValueError, TypeError, OSError):
+                pass
+
+        entry = {
+            "league": bb_league,
+            "market_type": "角球",
+            "match_type": "name" if best_score >= 0.85 else "time",
+            "home_bb": bb_home,
+            "away_bb": bb_away,
+            "home_pin": best_pin.get("home", ""),
+            "away_pin": best_pin.get("away", ""),
+            "match_score": round(best_score, 3),
+            "sport": "football",
+            "flags": [],
+            "start_time_bb": bb_start,
+            "start_time_pin": best_pin.get("start_time", ""),
+            "start_time_pin_epoch": _pin_to_epoch(best_pin),
+            "platform_sources": bb_m.get("platform_sources", {}),
+            "bb_price_source": bb_m.get("platform", "BB"),
+            "opportunities": [],
+            "handicap": [],
+            "over_under": [],
+            "double_chance": [],
+            "draw_no_bet": [],
+        }
+
+        # --- 角球独赢 (Corner ML) ---
+        if corner_ml and len(corner_ml) >= 3:
+            pin_ml = get_pin_ml_sorted(best_pin, "football")
+            if len(pin_ml) >= 3:
+                total_implied = sum(1.0 / p for p in pin_ml if p and p > 0)
+                for i in range(3):
+                    bb_o = corner_ml[i]
+                    pin_o = pin_ml[i]
+                    if pin_o and pin_o > 0:
+                        fair = round(pin_o * total_implied, 4) if total_implied > 0 else round(pin_o, 2)
+                        ev = (bb_o - fair) / fair * 100 if fair > 0 else 0
+                        if ev > 1:
+                            entry["opportunities"].append({
+                                "designation": mlabels["ml"][i] + "(角球)",
+                                "bb_odds": bb_o,
+                                "pin_odds": pin_o,
+                                "fair_price": fair,
+                                "ev_pct": round(ev, 2),
+                                "_market": "corner",
+                            })
+
+        # --- 角球让球 (Corner HC) ---
+        if isinstance(corner_hc, dict):
+            bb_home_str = corner_hc.get("home_line_str", "")
+            bb_away_str = corner_hc.get("away_line_str", "")
+            bb_home_odds = corner_hc.get("home_odds")
+            bb_away_odds = corner_hc.get("away_odds")
+
+            bb_hl_val = parse_asian_line(bb_home_str) if bb_home_str else None
+            if bb_hl_val is None:
+                bb_hl_val = parse_asian_line(bb_away_str) if bb_away_str else None
+
+            if bb_hl_val is not None and bb_home_odds and bb_away_odds:
+                home_sp, away_sp, _ = get_pin_spread(best_pin, target_line=bb_hl_val)
+                if home_sp and away_sp and home_sp.get("price_decimal") and away_sp.get("price_decimal"):
+                    pin_odds_h = home_sp["price_decimal"]
+                    pin_odds_a = away_sp["price_decimal"]
+                    imp = 1.0 / pin_odds_h + 1.0 / pin_odds_a
+                    fair_h = round(pin_odds_h * imp, 4)
+                    fair_a = round(pin_odds_a * imp, 4)
+
+                    ev_h = (bb_home_odds - fair_h) / fair_h * 100 if fair_h > 0 else 0
+                    ev_a = (bb_away_odds - fair_a) / fair_a * 100 if fair_a > 0 else 0
+
+                    if ev_h > 1:
+                        entry["handicap"].append({
+                            "designation": "角球" + mlabels["hc_home"],
+                            "line": bb_home_str,
+                            "bb_odds": bb_home_odds,
+                            "pin_odds": pin_odds_h,
+                            "fair_price": fair_h,
+                            "ev_pct": round(ev_h, 2),
+                            "_market": "corner",
+                        })
+                    if ev_a > 1:
+                        entry["handicap"].append({
+                            "designation": "角球" + mlabels["hc_away"],
+                            "line": bb_away_str,
+                            "bb_odds": bb_away_odds,
+                            "pin_odds": pin_odds_a,
+                            "fair_price": fair_a,
+                            "ev_pct": round(ev_a, 2),
+                            "_market": "corner",
+                        })
+
+        # --- 角球大小 (Corner OU) ---
+        if isinstance(corner_ou, dict):
+            bb_line = corner_ou.get("line")
+            bb_over_odds = corner_ou.get("over_odds")
+            bb_under_odds = corner_ou.get("under_odds")
+
+            if bb_line is not None and bb_over_odds and bb_under_odds:
+                over_p, under_p = get_pin_total(best_pin, target_line=bb_line)
+                if over_p and under_p and over_p.get("price_decimal") and under_p.get("price_decimal"):
+                    imp = 1.0 / over_p["price_decimal"] + 1.0 / under_p["price_decimal"]
+                    over_fair = round(over_p["price_decimal"] * imp, 4)
+                    under_fair = round(under_p["price_decimal"] * imp, 4)
+
+                    ev_over = (bb_over_odds - over_fair) / over_fair * 100 if over_fair > 0 else 0
+                    ev_under = (bb_under_odds - under_fair) / under_fair * 100 if under_fair > 0 else 0
+
+                    if ev_over > 1:
+                        entry["over_under"].append({
+                            "designation": "角球" + mlabels["over"],
+                            "line": corner_ou.get("line_str", str(bb_line)),
+                            "bb_odds": bb_over_odds,
+                            "pin_odds": over_p["price_decimal"],
+                            "fair_price": over_fair,
+                            "ev_pct": round(ev_over, 2),
+                            "_market": "corner",
+                        })
+                    if ev_under > 1:
+                        entry["over_under"].append({
+                            "designation": "角球" + mlabels["under"],
+                            "line": corner_ou.get("line_str", str(bb_line)),
+                            "bb_odds": bb_under_odds,
+                            "pin_odds": under_p["price_decimal"],
+                            "fair_price": under_fair,
+                            "ev_pct": round(ev_under, 2),
+                            "_market": "corner",
+                        })
+
+        if entry["opportunities"] or entry["handicap"] or entry["over_under"]:
+            corner_entries.append(entry)
+
+    return corner_entries
 
 
 def sort_ml_prices(prices):
@@ -1799,17 +2072,16 @@ def _warn_suspicious(ev_pct, match_score, verified):
 
 
 def _check_pinnacle():
-    """启动时检测 Pinnacle API 连通性（先试直连，再试 SOCKS5 代理）。"""
+    """启动时检测 Pinnacle API 直连连通性。"""
     test_url = f"{API_BASE}/sports/29/matchups"
     SESSION.proxies = {}
 
-    # 测试 1: 直连
     try:
         resp = SESSION.get(test_url, timeout=15)
         if resp.status_code == 200:
-            print(f"  ✅ Pinnacle API 连通正常（直连）")
+            print(f"  ✅ Pinnacle API 连通正常")
             return True
-        print(f"  ⚠️  直连返回 {resp.status_code}，尝试 SOCKS5...")
+        print(f"  ⚠️  Pinnacle API 返回 {resp.status_code}")
     except requests.exceptions.SSLError as e:
         print(f"  ❌ Pinnacle API SSL 失败: {e}")
         print(f"     → 检查系统时间 / 更新 CA 证书")
@@ -1817,22 +2089,10 @@ def _check_pinnacle():
         print(f"  ❌ Pinnacle API 直连失败: {e}")
         print(f"     → 检查网络连接")
     except Exception as e:
-        print(f"  ❌ Pinnacle API 直连异常 ({type(e).__name__}): {e}")
-
-    # 测试 2: SOCKS5 代理
-    try:
-        resp = SESSION.get(test_url, timeout=15, proxies={"https": PROXY, "http": PROXY})
-        if resp.status_code == 200:
-            print(f"  ✅ Pinnacle API 连通正常 (SOCKS5)")
-            return True
-        print(f"  ❌ Pinnacle API (SOCKS5) 返回 {resp.status_code}")
-    except Exception as e:
-        print(f"  ❌ Pinnacle API (SOCKS5) 失败: {e}")
+        print(f"  ❌ Pinnacle API 异常 ({type(e).__name__}): {e}")
 
     print(f"\n  💡 诊断: Pinnacle API 不可用")
-    print(f"    两种可能:")
-    print(f"    1. Python 3.14 http.client chunked bug — 重试几次可恢复")
-    print(f"    2. 网络/代理问题 — 检查 Shadowrocket 是否开启")
+    print(f"    可能原因: 网络连接问题 / Python 3.14 http.client chunked bug")
     return False
 
 
@@ -2675,8 +2935,20 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     total_1x2_only = total_opps_1x2 - total_btts
     total_all = total_opps_1x2 + total_hc + total_ou + total_dc + total_dnb
 
+    # 角球对比（在总计数之后合并，不污染已有统计）
+    corner_start = time.time()
+    corner_entries = _fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues)
+    total_corner = 0
+    if corner_entries:
+        for ce in corner_entries:
+            total_corner += len(ce.get("opportunities", [])) + len(ce.get("handicap", [])) + len(ce.get("over_under", []))
+        opportunities.extend(corner_entries)
+        total_all += total_corner
+    if total_corner:
+        print(f"  ⏱ 角球用时: {time.time()-corner_start:.0f}s")
+
     print(f"\n{'='*60}")
-    print(f"匹配: {len(matched)} | +EV 独赢: {total_1x2_only} | 让球: {total_hc} | 大小: {total_ou} | 双重机会: {total_dc} | 平局退款: {total_dnb} | 双边进球: {total_btts} | 总计: {total_all}")
+    print(f"匹配: {len(matched)} | +EV 独赢: {total_1x2_only} | 让球: {total_hc} | 大小: {total_ou} | 双重机会: {total_dc} | 平局退款: {total_dnb} | 双边进球: {total_btts} | 角球: {total_corner} | 总计: {total_all}")
     print(f"{'='*60}")
     # 校准报告
     if cal_blocked_hc or cal_blocked_ou:
@@ -2743,6 +3015,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         "opportunities_double_chance": total_dc,
         "opportunities_draw_no_bet": total_dnb,
         "opportunities_btts": total_btts,
+        "opportunities_corner": total_corner,
         "opportunities_total": total_all,
         "calibration_blocked_hc": cal_blocked_hc,
         "calibration_blocked_ou": cal_blocked_ou,
@@ -2819,11 +3092,11 @@ def main():
             if age < 86400:
                 print(f"\n⚠️ Pinnacle API 不可用，使用缓存数据（{age/3600:.0f} 小时前）")
                 return
-        print("\n⚠️ Pinnacle API 不可用，且无可用缓存。解决办法：")
-        print("  1. 确认 Shadowrocket 已开启")
-        print("  2. 确认 SOCKS5 代理在 localhost:1082 运行")
-        print("  3. 切换代理节点后重试")
-        sys.exit(1)
+        msg = "Pinnacle API 不可用且无可用缓存"
+        print(f"\n⚠️ {msg}。解决办法：")
+        print("  1. 检查网络连接")
+        print("  2. 切换代理节点后重试")
+        raise RuntimeError(msg)
 
     force_refresh = "--refresh-leagues" in sys.argv
     if force_refresh:
@@ -2831,21 +3104,32 @@ def main():
     all_pin_leagues = _load_league_structure(force_refresh=force_refresh)
     if not all_pin_leagues:
         print("  ⚠️  本地无联赛结构数据，从 Pinnacle API 拉取...")
-        for sid, sname in SPORT_IDS.items():
-            matchups = api_get(f"/sports/{sid}/matchups") or []
-            for mu in matchups:
+
+        def _fetch_sport(sid, sname):
+            mu_list = api_get(f"/sports/{sid}/matchups") or []
+            result = {}
+            for mu in mu_list:
                 league = mu.get("league", {})
                 lid = league.get("id")
                 if lid:
-                    if lid not in all_pin_leagues:
-                        all_pin_leagues[lid] = {
-                            "name": league.get("name", ""),
-                            "group": league.get("group", ""),
-                            "sport": sname,
-                            "sport_id": sid,
-                            "matchup_count": 0,
-                        }
-                    all_pin_leagues[lid]["matchup_count"] += 1
+                    result[lid] = {
+                        "name": league.get("name", ""),
+                        "group": league.get("group", ""),
+                        "sport": sname,
+                        "sport_id": sid,
+                        "matchup_count": 1,
+                    }
+            return result
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+            futures = {executor.submit(_fetch_sport, sid, sname): sname for sid, sname in SPORT_IDS.items()}
+            for future in concurrent.futures.as_completed(futures):
+                sport_leagues = future.result()
+                for lid, info in sport_leagues.items():
+                    if lid in all_pin_leagues:
+                        all_pin_leagues[lid]["matchup_count"] += 1
+                    else:
+                        all_pin_leagues[lid] = info
         _save_league_structure(all_pin_leagues)
     else:
         print(f"  📂 从本地文件加载 Pinnacle 联赛结构 ({len(all_pin_leagues)} 个联赛)")

@@ -25,13 +25,9 @@ LAST_REPORT_FILE = DATA_DIR / "daily_settlement_last.json"
 
 
 def _load_portfolio() -> dict:
-    if PORTFOLIO_FILE.exists():
-        try:
-            return json.loads(PORTFOLIO_FILE.read_text())
-        except Exception:
-            pass
-    return {"pending_bets": [], "settled": {}, "history": [], "balance": 10000.0,
-            "initial_bankroll": 10000.0, "daily_budget": {}}
+    """委托给虚拟投注引擎的规范加载器。"""
+    from src.betting.bb_virtual_bet import _load_portfolio as _real_load
+    return _real_load()
 
 
 def _load_last_cutoff() -> str:
@@ -50,13 +46,6 @@ def _save_last_cutoff(cutoff: str):
 
 def _bj_now() -> datetime:
     return datetime.now(timezone.utc).astimezone(timezone(timedelta(hours=8)))
-
-
-def _get_result_val(entry):
-    """统一提取 result 字段（兼容 string 或 dict 格式）。"""
-    if isinstance(entry, dict):
-        return entry.get("result", "")
-    return str(entry) if isinstance(entry, str) else ""
 
 
 def _get_settled_at(entry):

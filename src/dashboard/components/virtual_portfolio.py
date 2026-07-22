@@ -44,12 +44,9 @@ def _portfolio_lock():
 # ── 内部持久化 ──
 
 def _load_state() -> dict:
-    if _PORTFOLIO_STATE_FILE.exists():
-        try:
-            return json.loads(_PORTFOLIO_STATE_FILE.read_text())
-        except Exception:
-            pass
-    return {"settled": {}, "pending_bets": [], "balance": _INITIAL_BALANCE, "history": []}
+    """委托给虚拟投注引擎的规范加载器。"""
+    from src.betting.bb_virtual_bet import _load_portfolio as _real_load
+    return _real_load()
 
 
 def _save_state(state: dict):
@@ -95,6 +92,14 @@ def auto_place_bets(rec_list: list, reset_pending: bool = False):
             league = rec.get("league", "")
             home_team_en = rec.get("home_team", "")
             away_team_en = rec.get("away_team", "")
+            # market_type 必须存具体结果（如 "客胜"、"让球主胜(-0.5/1)"），
+            # 而非通用市场类别（"1x2"、"handicap"）。
+            # 优先级：designation > market > market_type
+            specific_outcome = (
+                rec.get("designation")
+                or rec.get("market")
+                or rec.get("market_type", "")
+            )
             pending.append({
                 "id": bid,
                 "sport": rec.get("sport", ""),
@@ -103,8 +108,8 @@ def auto_place_bets(rec_list: list, reset_pending: bool = False):
                 "away_cn": rec.get("away_cn", away_team_en),
                 "home_team": home_team_en,
                 "away_team": away_team_en,
-                "market_type": rec.get("market", rec.get("market_type", "")),
-                "market_detail": rec.get("market", rec.get("market_type", "")),
+                "market_type": specific_outcome,
+                "market_detail": specific_outcome,
                 "odds": odds,
                 "stake": stake,
                 "model_prob": float(rec.get("model_prob", 0)),

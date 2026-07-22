@@ -22,32 +22,19 @@ from config.logging_config import get_logger
 
 logger = get_logger(__name__)
 
-# 虚拟投注参数
-DAILY_BANKROLL = 50000.0           # 每日投注总额（指挥官模式：目标月利润5万）
-INITIAL_BALANCE = 50000.0          # 初始资金
-MAX_STAKE_PCT = 0.06               # 单注最大仓位 6% (¥3,000)
-KELLY_FRAC = 0.50                  # Kelly 分数
-MIN_EV_PCT = 3.0                   # 最小 EV 阈值（与T1门槛一致）
-MAX_EV_PCT = 12.0                 # EV 超过此值跳过
-MAX_BETS = 50                      # 每日最多投注数（质量优先）
+from config.constants import (
+    BANKROLL as DAILY_BANKROLL,
+    INITIAL_BALANCE,
+    EV_CAP as MAX_EV_PCT,
+    MAX_BETS,
+    KELLY_FRACTION as KELLY_FRAC,
+    MAX_STAKE_PCT,
+    MIN_EV_PCT,
+    get_league_tier as _get_league_tier,
+    league_multiplier as _league_multiplier,
+)
+
 PORTFOLIO_FILE = DATA_DIR / "virtual_portfolio.json"
-
-# 联赛分层（与 bb_ev_push.py 保持一致）
-LEAGUE_TIERS_FILE = DATA_DIR / "league_tiers.json"
-
-
-def _get_league_tier(league: str) -> int:
-    if LEAGUE_TIERS_FILE.exists():
-        tiers = json.loads(LEAGUE_TIERS_FILE.read_text())
-        for kw, tier in tiers.items():
-            if kw in league:
-                return tier
-    return 3
-
-
-def _league_multiplier(league: str) -> float:
-    tier = _get_league_tier(league)
-    return {1: 1.0, 2: 0.9, 3: 0.7, 4: 0.5}.get(tier, 0.7)
 
 # 推送暂存文件 — bb_ev_push.py 导出已筛选的机会列表
 PUSH_STAGING_FILE = DATA_DIR / "push_staging.json"
@@ -220,6 +207,8 @@ def place_bets(dry_run=False):
         stop_mult, loss_days = _calc_stop_loss_multiplier(portfolio)
         daily_bankroll = DAILY_BANKROLL * stop_mult
         daily_remaining, is_new_day = _check_daily_budget(portfolio, daily_bankroll)
+        # 日预算不超实际余额
+        daily_remaining = min(daily_remaining, max(0, portfolio.get("balance", 0)))
         pending_ids = {b.get("id", "") for b in portfolio.get("pending_bets", [])}
         settled_ids = set(portfolio.get("settled", {}).keys())
         history_ids = {h.get("id", "") for h in portfolio.get("history", [])}
@@ -313,10 +302,10 @@ def place_bets(dry_run=False):
                     if stake > daily_remaining:
                         stake = daily_remaining
 
-                    # 余额检查：不超可用资金
-                    balance = portfolio.get("balance", 0)
-                    if balance < stake:
-                        print(f"  ⏭️ {outcome} — 余额不足 (¥{balance:.0f} < ¥{stake:.0f})")
+                    # 余额检查：不超可用资金（扣减已投注额）
+                    running_balance = portfolio.get("balance", 0) - total_stake
+                    if running_balance < stake:
+                        print(f"  ⏭️ {outcome} — 余额不足 (¥{running_balance:.0f} < ¥{stake:.0f})")
                         continue
 
                     # 单场总投注上限
@@ -394,6 +383,8 @@ def place_bets_from_push(opportunities, bankroll=50000.0):
         stop_mult, loss_days = _calc_stop_loss_multiplier(portfolio)
         daily_bankroll = bankroll * stop_mult
         daily_remaining, is_new_day = _check_daily_budget(portfolio, daily_bankroll)
+        # 日预算不超实际余额
+        daily_remaining = min(daily_remaining, max(0, portfolio.get("balance", 0)))
         pending_ids = {b.get("id", "") for b in portfolio.get("pending_bets", [])}
         settled_ids = set(portfolio.get("settled", {}).keys())
         history_ids = {h.get("id", "") for h in portfolio.get("history", [])}
@@ -444,10 +435,10 @@ def place_bets_from_push(opportunities, bankroll=50000.0):
             if stake < 1:
                 continue
 
-            # 余额检查：不超可用资金
-            balance = portfolio.get("balance", 0)
-            if balance < stake:
-                print(f"  ⏭️ 余额不足 (¥{balance:.0f} < ¥{stake:.0f})")
+            # 余额检查：不超可用资金（扣减已投注额）
+            running_balance = portfolio.get("balance", 0) - total_stake
+            if running_balance < stake:
+                print(f"  ⏭️ 余额不足 (¥{running_balance:.0f} < ¥{stake:.0f})")
                 continue
 
             bb_odds = o["bb_odds"]
@@ -492,7 +483,7 @@ def place_bets_from_push(opportunities, bankroll=50000.0):
                 "away_cn": away,
                 "market": market_type,
                 "market_type": outcome,
-                "line": hc_line,
+                "line": o.get("line", ""),
                 "odds": bb_odds,
                 "stake": round(stake, 2),
                 "model_prob": round(1.0 / fair_price, 4) if fair_price > 1 else 0,

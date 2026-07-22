@@ -7,8 +7,6 @@ from typing import Optional
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
-import requests
-
 from config.logging_config import get_logger
 from src.dashboard.components.virtual_portfolio import (
     _load_state, _save_state, settle_bet,
@@ -209,66 +207,6 @@ SPORT_FALLBACK = {
     "nfl": "americanfootball_nfl",
     "football": None,  # 需要由 league 决定
 }
-
-
-def _fetch_completed_scores_espn(league: str, days_back: int = 3) -> list:
-    """从 ESPN 免费 API 获取已结束比赛的比分（无配额限制）。"""
-    espn_games = fetch_espn_scores(league, days_back)
-    if not espn_games:
-        logger.debug("ESPN 无 %s 比分数据", league)
-        return []
-    # 转换为与 Odds API 兼容的格式
-    odds_format = []
-    for g in espn_games:
-        home_score = g.get("home_score", 0)
-        away_score = g.get("away_score", 0)
-        odds_format.append({
-            "home_team": g["home_team"],
-            "away_team": g["away_team"],
-            "completed": g.get("completed", True),
-            "scores": [
-                {"name": g["home_team"], "score": str(home_score)},
-                {"name": g["away_team"], "score": str(away_score)},
-            ],
-            "home_corners": g.get("home_corners"),
-            "away_corners": g.get("away_corners"),
-        })
-    return odds_format
-
-
-def _sport_key_to_espn_league(sport_key: str) -> Optional[str]:
-    """将 Odds API sport_key 转为 ESPN 联赛名。
-
-    通过反向遍历 LEAGUE_SPORT_MAP 找到对应的 ESPN 联赛名。
-    """
-    # Method 1: 通过 LEAGUE_SPORT_MAP 反查
-    for bb_league, (sk, _) in LEAGUE_SPORT_MAP.items():
-        if sk == sport_key and bb_league in LEAGUE_ESPN_PATH:
-            return bb_league
-    # Method 2: 直接路径匹配
-    for lname, (spath, _) in LEAGUE_ESPN_PATH.items():
-        if sport_key.replace("_", "/") == spath:
-            return lname
-    # Method 3: 硬编码兜底（旧的 sport_key 命名）
-    _HARDCODED = {
-        "basketball_nba": "NBA", "soccer_epl": "英超",
-        "soccer_spain_la_liga": "西甲", "soccer_germany_bundesliga": "德甲",
-        "soccer_italy_serie_a": "意甲", "soccer_france_ligue_one": "法甲",
-        "soccer_fifa_world_cup": "世界杯",
-        "basketball_wnba": "WNBA",
-        "soccer_spain_segunda_division": "西乙",
-        "soccer_brazil_serie_b": "巴乙",
-        "soccer_china_superleague": "中超",
-        "soccer_sweden_allsvenskan": "瑞典超",
-        "soccer_norway_eliteserien": "挪威超",
-        "soccer_chile_campeonato": "智利甲",
-        "soccer_finland_veikkausliiga": "芬超",
-        "soccer_league_of_ireland": "爱超",
-        "soccer_sweden_superettan": "瑞典甲",
-        "soccer_germany_dfb_pokal": "德杯",
-        "soccer_conmebol_copa_sudamericana": "南美杯",
-    }
-    return _HARDCODED.get(sport_key)
 
 
 def _fetch_completed_scores(league_name: str, days_back: int = 3) -> list:
@@ -490,6 +428,82 @@ _CN_TO_EN_SETTLEMENT = {
     "西班牙 U20": "spain u20",
     "拉脱维亚 U20": "latvia u20",
     "罗马尼亚 U20": "romania u20",
+    "格鲁吉亚 U20": "georgia u20",
+    "丹麦 U20": "denmark u20",
+    # === WNBA ===
+    "亚特兰大梦想 (女)": "atlanta dream",
+    "芝加哥天空 (女)": "chicago sky",
+    "达拉斯飞翼 (女)": "dallas wings",
+    "洛杉矶火花 (女)": "los angeles sparks",
+    # === 俄罗斯足球 ===
+    "ska哈巴罗夫斯克": "ska khabarovsk",
+    "索科尔萨拉托夫": "sokol saratov",
+    "fk卡卢加": "fk kaluga",
+    "弗拉季高加索": "alania vladikavkaz",
+    "莫斯科罗迪纳": "rodina moscow",
+    "莫斯科罗迪纳二队": "rodina moscow ii",
+    "莫斯科斯巴达": "spartak moscow",
+    "洛特伏尔加格勒": "rotor volgograd",
+    # === 保加利亚足球 ===
+    "弗拉察博特夫": "botev vratsa",
+    "普罗夫迪夫博特夫": "botev plovdiv",
+    "索菲亚列夫斯基": "levski sofia",
+    "索菲亚火车头": "lokomotiv sofia",
+    "索非亚斯拉维亚": "slavia sofia",
+    # === 罗马尼亚足球 ===
+    "布格勒斯特迅速 1923": "rapid bucharest",
+    "米耶尔库雷亚丘克": "miercurea ciuc",
+    "胡内多阿拉": "corvinul hunedoara",
+    "舍佩斯": "sepsi osv",
+    "达克斯特雷达 1904": "dac dunajska streda",
+    # === 瑞典足球 ===
+    "松兹瓦尔": "sundsvall",
+    "诺尔比": "norrby",
+    # === 丹麦足球 ===
+    "维积利": "vejle",
+    "ab格莱萨克瑟": "ab gladsaxe",
+    # === 芬兰足球 ===
+    "玛丽港": "mariehamn",
+    "拉赫蒂": "lahti",
+    # === 冰岛 ===
+    "格林达维克 (女)": "grindavik",
+    "科帕沃古": "kopavogur",
+    "维斯特里": "vestri",
+    # === 立陶宛 ===
+    "苏杜瓦": "suduva",
+    "黑格尔曼": "hegelmann",
+    # === 波黑 ===
+    "莫斯塔尔维列兹": "velez mostar",
+    # === 韩国 ===
+    "天安城": "cheonan city",
+    "首尔衣恋": "seoul e land",
+    # === MLS/USL ===
+    "底特律城": "detroit city",
+    "温哥华白帽": "vancouver whitecaps",
+    "辛辛那提": "fc cincinnati",
+    # === 南美足球 ===
+    "博利瓦尔": "bolivar",
+    "泰格雷": "tigre",
+    "科其姆波": "coquimbo",
+    "约森独立队": "independiente del valle",
+    "穆苏克鲁纳": "mushuc runa",
+    "阿利亚加": "aliaga",
+    "卡塞罗斯学生队": "estudiantes caseros",
+    "里奥夸尔托学生队": "estudiantes rio cuarto",
+    "新芝加哥": "nueva chicago",
+    "拉费尔拿": "rafaela",
+    "康塞普西翁大学": "universidad de concepcion",
+    "瓦斯科达伽马": "vasco da gama",
+    "瓦斯科达伽马 u22": "vasco da gama u22",
+    "米拉索尔": "mirassol",
+    "体育生队": "sport boys",
+    "洛斯香卡斯": "los chankas",
+    # === 印度 ===
+    "莫亨巴根二队": "mohun bagan ii",
+    "加尔各答ms": "calcutta ms",
+    # === MLB ===
+    "千叶罗德海洋": "chiba lotte marines",
+    "巴尔的摩金莺": "baltimore orioles",
 }
 
 
@@ -770,6 +784,7 @@ def auto_settle(dry_run: bool = False) -> int:
             league_groups[key] = []
         league_groups[key].append(bet)
 
+    _sport_fallback_cache: dict[str, list] = {}  # sport → completed scores 缓存
     for (sport, league), bets in league_groups.items():
         # 跳过已从 LEAGUE_SPORT_MAP 确认不支持的联赛
         api_key_info = LEAGUE_SPORT_MAP.get(league)
@@ -779,9 +794,11 @@ def auto_settle(dry_run: bool = False) -> int:
             if sk:
                 api_key_info = (sk, league or sport)
             else:
-                # 级联退避：按 sport 遍历所有已知联赛获取比分
-                logger.info("  联赛映射未知，尝试 sport 级联退避: %s", sport)
-                completed = get_completed_scores_by_sport(sport)
+                # 级联退避：按 sport 遍历所有已知联赛获取比分（仅首次调用，后续缓存）
+                if sport not in _sport_fallback_cache:
+                    logger.info("  联赛映射未知，尝试 sport 级联退避: %s", sport)
+                    _sport_fallback_cache[sport] = get_completed_scores_by_sport(sport) or []
+                completed = _sport_fallback_cache[sport]
                 if completed:
                     display = league or sport
                 else:

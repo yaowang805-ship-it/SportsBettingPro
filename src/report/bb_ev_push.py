@@ -11,11 +11,19 @@ from config.settings import DATA_DIR, DINGTALK_WEBHOOK
 
 logger = get_logger(__name__)
 
+from config.constants import (
+    BANKROLL,
+    MAX_BETS as MAX_OPPORTUNITIES,
+    EV_CAP,
+    KELLY_FRACTION,
+    SPORT_ORDER,
+    get_league_tier as _get_league_tier,
+    league_multiplier,
+)
+
 COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison.json"
 FB_COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison_FB.json"
 FINGERPRINT_FILE = DATA_DIR / "pushed_fingerprints.json"
-BANKROLL = 50000.0
-MAX_OPPORTUNITIES = 50
 
 # 联赛配置数据（从固定文件加载）
 BANNED_LEAGUES_FILE = DATA_DIR / "banned_leagues.json"
@@ -26,12 +34,6 @@ def _load_banned_leagues():
     if BANNED_LEAGUES_FILE.exists():
         return json.loads(BANNED_LEAGUES_FILE.read_text())
     return []
-
-
-def _load_league_tiers():
-    if LEAGUE_TIERS_FILE.exists():
-        return json.loads(LEAGUE_TIERS_FILE.read_text())
-    return {}
 
 
 _OUTCOME_CN = {"home": "主胜", "draw": "和局", "away": "客胜"}
@@ -45,17 +47,6 @@ CONSISTENCY_WARN_THRESHOLD = 0.20
 
 # 不靠谱联赛 — 匹配质量差、假阳性多，直接屏蔽（从固定文件加载）
 _BANNED_LEAGUES = _load_banned_leagues()
-
-# 联赛可信度分层（从固定文件加载）
-_LEAGUE_TIERS = _load_league_tiers()
-
-
-def _get_league_tier(league: str) -> int:
-    """返回联赛所属 Tier (1-4)，不认识的联赛默认 Tier 3。"""
-    for kw, tier in _LEAGUE_TIERS.items():
-        if kw in league:
-            return tier
-    return 3
 
 
 def _min_ev_for_tier(tier: int) -> float:
@@ -121,12 +112,6 @@ def _check_sport_consistency(opportunities: list, pre_dedup_counts: dict | None 
     return warnings
 
 
-def _league_multiplier(league: str) -> float:
-    """根据联赛 Tier 返回 Kelly 加权。"""
-    tier = _get_league_tier(league)
-    return {1: 1.0, 2: 0.9, 3: 0.7, 4: 0.5}.get(tier, 0.7)
-
-
 def _calc_kelly_stakes(opps: list) -> list:
     """按 Kelly 比例计算投注额，加单注上限 2% + 单场上限 3%。"""
     MAX_STAKE_PCT = 0.04  # 单注 ≤ 4% bankroll (¥2,000)
@@ -188,7 +173,7 @@ def _collect_opportunities(match, market_key):
     league = match.get("league", "")
     home_cn = match.get("home_bb", "")
     away_cn = match.get("away_bb", "")
-    league_mult = _league_multiplier(league)
+    league_mult = league_multiplier(league)
 
     # 屏蔽不靠谱联赛
     for banned in _BANNED_LEAGUES:
@@ -224,7 +209,7 @@ def _collect_opportunities(match, market_key):
         bb_odds = opp.get("bb_odds", 0)
         pin_odds = opp.get("pin_odds", 0)
 
-        # EV 上限过滤：EV > 20% 几乎全是假阳性（中文队名匹配到错误的英文队名）
+        # EV 上限过滤：EV > EV_CAP 几乎全是假阳性（中文队名匹配到错误的英文队名）
         if ev > EV_CAP:
             continue
 
@@ -232,10 +217,11 @@ def _collect_opportunities(match, market_key):
         # （小联赛弱队不可能有真实 15+ 赔率，通常是匹配错误）
         if bb_odds > 15.0 and league_mult < 1.0:
             continue
+
         fair = opp.get("fair_price") or round(pin_odds, 2)
         kelly_pct = 0
         if bb_odds > 1:
-            kelly = (ev / 100) / (bb_odds - 1) * 0.75
+            kelly = (ev / 100) / (bb_odds - 1) * KELLY_FRACTION
             kelly_pct = round(kelly * 100, 2)
 
         # 综合评分：溢价 × 匹配度 × 联赛权重
@@ -347,9 +333,14 @@ def _read_comparison_file(path):
         flags = match.get("flags", [])
         has_suspect_flag = any(
             "溢价异常高" in f or "含比赛序号前缀" in f or "球员冲突" in f
+            or "球队待确认" in f
             for f in flags
         )
         if has_suspect_flag:
+            continue
+        # 低匹配度过滤：Phase 2 时间匹配产生错误赛果的风险高
+        match_score = match.get("match_score", 1.0)
+        if match_score < 0.85:
             continue
         for mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"):
             qualified.extend(_collect_opportunities(match, mk))
@@ -360,9 +351,6 @@ def _diversify_and_rank(qualified: list) -> list:
     """多样性选择 + 按联赛 Tier 排序 + Kelly 分配。"""
     if not qualified:
         return []
-
-    SPORT_ORDER = {"football": 0, "basketball": 1, "tennis": 2, "baseball": 3, "american_football": 4,
-                    "pingpong": 5, "badminton": 6, "volleyball": 7, "boxing": 8, "mma": 9, "ice_hockey": 10}
 
     # 各运动至少保留 1 条（按 Tier 优先选）
     selected = []
@@ -466,9 +454,6 @@ def _format_body(qualified: list, warnings: list | None = None,
                    "volleyball": "🏐", "boxing": "👊",
                    "mma": "🥊", "ice_hockey": "🏒"}
     _TIER_LABEL = {1: "T1", 2: "T2", 3: "T3"}
-    SPORT_ORDER = {"football": 0, "basketball": 1, "tennis": 2, "baseball": 3, "american_football": 4,
-                   "pingpong": 5, "badminton": 6, "volleyball": 7, "boxing": 8, "mma": 9, "ice_hockey": 10}
-
     now_str = datetime.now(timezone.utc).astimezone().strftime("%m/%d %H:%M")
     total_allocated = sum(o["_stake"] for o in qualified)
 
@@ -662,7 +647,11 @@ def build_report(force: bool = False):
 # ── 推送去重 ──
 
 def _make_fingerprint(o: dict) -> str:
-    """为一条机会生成唯一指纹：sport|league|home|away|盘口|比赛日期"""
+    """为一条机会生成唯一指纹：sport|league|home|away|盘口（含线值）|比赛日期
+
+    盘口线参与指纹：线变了（如 -9.5→-10.5）视为新机会可重新推送。
+    仅归一化队名空格，防止 "(女)" 前不一致空格导致误判为不同机会。
+    """
     match_date = ""
     ep = o.get("_pin_epoch")
     if ep:
@@ -671,7 +660,11 @@ def _make_fingerprint(o: dict) -> str:
             match_date = dt.strftime("%Y-%m-%d")
         except (ValueError, OSError, OverflowError):
             pass
-    return f"{o.get('sport','')}|{o.get('league','')}|{o.get('home_cn','')}|{o.get('away_cn','')}|{o.get('designation','')}|{match_date}"
+    # 归一化空格：前后 trim + 内部连续空格 → 单空格
+    def _norm(s):
+        import re as _re
+        return _re.sub(r'\s+', ' ', s.strip()) if s else s
+    return f"{_norm(o.get('sport',''))}|{_norm(o.get('league',''))}|{_norm(o.get('home_cn',''))}|{_norm(o.get('away_cn',''))}|{_norm(o.get('designation',''))}|{match_date}"
 
 
 def _load_fingerprints() -> set:
@@ -686,9 +679,10 @@ def _load_fingerprints() -> set:
 
 
 def _save_fingerprints(fps: set):
-    FINGERPRINT_FILE.write_text(
-        json.dumps(sorted(fps), ensure_ascii=False, indent=2)
-    )
+    """原子写入指纹文件：先写 .tmp 再 rename，防止进程崩溃导致文件损坏。"""
+    tmp = FINGERPRINT_FILE.with_suffix(".fptmp")
+    tmp.write_text(json.dumps(sorted(fps), ensure_ascii=False, indent=2))
+    tmp.replace(FINGERPRINT_FILE)
 
 
 def _filter_pushed(qualified: list) -> list:
@@ -764,22 +758,20 @@ def push_report(place_bets=False, incremental=False, qualified=None):
     else:
         title = f"+EV 投注推荐: {body.count('#####')} 条"
 
-    # 推送 + 投注（始终投注，不再有 <10 限制）
-    if place_bets:
-        from src.betting.bb_virtual_bet import PUSH_STAGING_FILE, place_bets_from_push
-        PUSH_STAGING_FILE.write_text(json.dumps(qualified, ensure_ascii=False, indent=2))
-        logger.info("推送机会已暂存到 %s，开始投注...", PUSH_STAGING_FILE)
-        place_bets_from_push(qualified)
-
     from config.settings import send_dingtalk
     ok = send_dingtalk(title, body)
     if ok:
-        # 只有实际投注才保存指纹（--no-bet 不存，下次 --bet 仍可投注）
+        # 投注后保存指纹
         if place_bets:
-            new_fps = {_make_fingerprint(o) for o in qualified}
-            existing = _load_fingerprints()
-            existing.update(new_fps)
-            _save_fingerprints(existing)
+            from src.betting.bb_virtual_bet import PUSH_STAGING_FILE, place_bets_from_push
+            PUSH_STAGING_FILE.write_text(json.dumps(qualified, ensure_ascii=False, indent=2))
+            logger.info("推送机会已暂存到 %s，开始投注...", PUSH_STAGING_FILE)
+            place_bets_from_push(qualified)
+        # 指纹总是保存（不管 --no-bet），防止重复推送同一场比赛
+        new_fps = {_make_fingerprint(o) for o in qualified}
+        existing = _load_fingerprints()
+        existing.update(new_fps)
+        _save_fingerprints(existing)
         logger.info("BB vs Pinnacle +EV report pushed (%d opportunities)", body.count('#####'))
     else:
         logger.warning("BB vs Pinnacle push failed")
@@ -810,9 +802,8 @@ def _validate_format(body: str) -> bool:
     return True
 
 
-if __name__ == "__main__":
-    from config.logging_config import setup_logging
-    setup_logging()
+def main():
+    """CLI 入口 / pipeline_orchestrator 入口。"""
     force_fresh = "--force" in sys.argv
     body, qualified = build_report(force=force_fresh)
     print(body)
@@ -828,3 +819,10 @@ if __name__ == "__main__":
         push_report(place_bets=("--no-bet" not in sys.argv),
                     incremental="--incremental" in sys.argv,
                     qualified=qualified if qualified else None)
+    return body
+
+
+if __name__ == "__main__":
+    from config.logging_config import setup_logging
+    setup_logging()
+    main()
