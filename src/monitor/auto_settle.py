@@ -1,5 +1,5 @@
 """虚拟投注自动结算 — 多数据源（ESPN + football-data.org + 直播吧）自动结算。"""
-import sys
+import json, sys
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Optional
@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 from config.logging_config import get_logger
+from config.settings import DATA_DIR
 from src.dashboard.components.virtual_portfolio import (
     _load_state, _save_state, settle_bet,
 )
@@ -18,6 +19,39 @@ from src.betting.strategy_optimizer import SettlementLogger
 from src.risk.calibration import BetCalibrator
 
 logger = get_logger(__name__)
+
+# ── 三态结算标记 ──
+# source quality levels
+SOURCE_PRIMARY = "primary"      # ESPN/直播吧 — 可靠主源
+SOURCE_BACKUP = "backup"        # football-data.org/Odds API/BSD/BALLDONTLIE — 备用源
+SOURCE_UNRESOLVED = "unresolved"  # 所有源都无法匹配 → 待人工确认
+
+_PRIMARY_SOURCES = {"espn", "zhibo8"}
+_UNRESOLVED_FILE = DATA_DIR / "unresolved_bets.json"
+
+
+def _detect_source_quality(completed_games: list) -> str:
+    """检测已完成比赛数据的来源质量。"""
+    if not completed_games:
+        return SOURCE_UNRESOLVED
+    source = (completed_games[0].get("source") or "").lower()
+    return SOURCE_PRIMARY if source in _PRIMARY_SOURCES else SOURCE_BACKUP
+
+
+def _save_unresolved(unresolved: list):
+    """持久化未结算投注列表供日报使用。"""
+    _UNRESOLVED_FILE.write_text(json.dumps(unresolved, ensure_ascii=False, indent=2, default=str))
+
+
+def _load_unresolved() -> list:
+    """加载未结算投注列表。"""
+    if _UNRESOLVED_FILE.exists():
+        try:
+            return json.loads(_UNRESOLVED_FILE.read_text())
+        except (json.JSONDecodeError, OSError):
+            pass
+    return []
+
 
 # 联赛名 → (sport key for odds API, display name)
 # 同时支持 BB API 全称中文名（如"英格兰超级联赛"）和简称（如"英超"）
@@ -785,10 +819,14 @@ def auto_settle(dry_run: bool = False) -> int:
         league_groups[key].append(bet)
 
     _sport_fallback_cache: dict[str, list] = {}  # sport → completed scores 缓存
+    unresolved_bets = []  # 所有源都无法匹配的投注
+    source_quality_log = {}  # {(sport, league): quality}
+
     for (sport, league), bets in league_groups.items():
         # 跳过已从 LEAGUE_SPORT_MAP 确认不支持的联赛
         api_key_info = LEAGUE_SPORT_MAP.get(league)
         looks_up_scores = True
+        display = league or sport
         if not api_key_info:
             sk = SPORT_FALLBACK.get(sport)
             if sk:
@@ -799,9 +837,7 @@ def auto_settle(dry_run: bool = False) -> int:
                     logger.info("  联赛映射未知，尝试 sport 级联退避: %s", sport)
                     _sport_fallback_cache[sport] = get_completed_scores_by_sport(sport) or []
                 completed = _sport_fallback_cache[sport]
-                if completed:
-                    display = league or sport
-                else:
+                if not completed:
                     logger.warning("未知联赛: %s (sport=%s)，跳过 %s 笔", league, sport, len(bets))
                     continue
                 looks_up_scores = False
@@ -809,14 +845,26 @@ def auto_settle(dry_run: bool = False) -> int:
         if looks_up_scores:
             _, display = api_key_info
             logger.info("获取 %s 已完成比赛...", display)
-            # 多源获取比赛结果（ESPN → football-data.org → Odds API → BSD → 直播吧）
             completed = _fetch_completed_scores(league)
 
         if not completed:
             logger.warning("  %s 无比分数据", display)
+            source_quality_log[(sport, league)] = SOURCE_UNRESOLVED
+            for bet in bets:
+                unresolved_bets.append({
+                    "id": bet.get("id", ""),
+                    "league": league,
+                    "sport": sport,
+                    "home": bet.get("home_cn", bet.get("home_team", "")),
+                    "away": bet.get("away_cn", bet.get("away_team", "")),
+                    "market": bet.get("market_type", ""),
+                    "reason": "数据源无比分",
+                })
             continue
 
-        logger.info("  %s 条已完成记录", len(completed))
+        source_quality = _detect_source_quality(completed)
+        source_quality_log[(sport, league)] = source_quality
+        logger.info("  %s 条已完成记录 (来源: %s)", len(completed), source_quality)
 
         for bet in bets:
             bid = bet.get("id", "")
@@ -877,6 +925,21 @@ def auto_settle(dry_run: bool = False) -> int:
                     except Exception as e:
                         logger.warning("  ⚠️ 风险状态同步失败: %s", e)
                 settled_count += 1
+            else:
+                # 三态：有数据但匹配失败 → 标记 unresolved
+                unresolved_bets.append({
+                    "id": bid,
+                    "league": league,
+                    "sport": sport,
+                    "home": bet.get("home_cn", bet.get("home_team", "")),
+                    "away": bet.get("away_cn", bet.get("away_team", "")),
+                    "market": bet.get("market_type", ""),
+                    "stake": bet.get("stake", 0),
+                    "odds": bet.get("odds", 0),
+                    "source_quality": source_quality,
+                    "reason": "队名匹配失败",
+                })
+                logger.debug("  ⏳ %s 暂未匹配到比分 (来源: %s)", bid[:40], source_quality)
 
     # ── 回写推荐记录：将已结算投注的结果同步到 recommendation_log.csv ──
     if not dry_run:
@@ -910,6 +973,18 @@ def auto_settle(dry_run: bool = False) -> int:
                     logger.info("策略自进化: 已调整 %d 个联赛层级", _n)
         except Exception as e:
             logger.warning("策略自进化异常: %s", e)
+
+    # ── 三态结算标记：持久化未解决投注 ──
+    if not dry_run:
+        # 过滤掉 unresolved_bets 中已被 settled 的（settle_bet 移除了 pending_bets）
+        state_after = _load_state()
+        settled_ids = set()
+        for h in state_after.get("history", []):
+            settled_ids.add(h.get("id", ""))
+        unresolved_bets = [u for u in unresolved_bets if u["id"] not in settled_ids]
+        _save_unresolved(unresolved_bets)
+        if unresolved_bets:
+            logger.warning("⏳ 待人工确认: %d 笔投注在所有数据源中均未找到匹配", len(unresolved_bets))
 
     return settled_count
 

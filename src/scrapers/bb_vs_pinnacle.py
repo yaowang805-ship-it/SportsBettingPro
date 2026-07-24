@@ -21,775 +21,52 @@ from config.settings import DATA_DIR
 
 import requests
 
-API_BASE = "https://guest.api.arcadia.pinnacle.com/0.1"
-
-# Pinnacle 是标准 REST API（无 Cloudflare），直接用 requests 即可。
-# 之前用 cloudscraper 会在 Python 3.14 的 chunked transfer encoding bug 下
-# 触发 IncompleteRead，被误判为 403。
-SESSION = requests.Session()
-SESSION.trust_env = False
-SESSION.headers.update({
-    "Accept": "application/json, text/plain, */*",
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-    "Referer": "https://www.pinnacle.com/",
-    "Origin": "https://www.pinnacle.com",
-})
-
-# 代理支持（当前关闭，Pinnacle API 直连正常）
-# PROXY = "socks5://localhost:1082"
-
-# 重试参数
-MAX_RETRIES = 3
-RETRY_DELAY = 2.0  # 初始延迟（秒）
-
-# Pinnacle 联赛结构（运动 → 联赛列表 → ID/名称），几乎不变，存固定文件
-PINNACLE_LEAGUE_FILE = DATA_DIR / "pinnacle_league_structure.json"
-CACHE_TTL_DAYS = 7  # 超过此天数强制刷新
-
-
-def _load_league_structure(force_refresh: bool = False):
-    """从固定文件加载 Pinnacle 联赛结构，超过 TTL 则返回空以触发刷新"""
-    if force_refresh:
-        return {}
-    if PINNACLE_LEAGUE_FILE.exists():
-        age_seconds = time.time() - PINNACLE_LEAGUE_FILE.stat().st_mtime
-        age_days = age_seconds / 86400
-        if age_days > CACHE_TTL_DAYS:
-            print(f"  ⏳ 联赛结构缓存已过期（{age_days:.1f} 天 > {CACHE_TTL_DAYS} 天），重新拉取...")
-            return {}
-        return json.loads(PINNACLE_LEAGUE_FILE.read_text())
-    return {}
-
-
-def _save_league_structure(data):
-    """保存 Pinnacle 联赛结构到固定文件"""
-    PINNACLE_LEAGUE_FILE.parent.mkdir(parents=True, exist_ok=True)
-    PINNACLE_LEAGUE_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2))
-    print(f"  📁 Pinnacle 联赛结构已保存到 {PINNACLE_LEAGUE_FILE}")
-
-
-# 球队名称映射（中文→英文），从固定文件加载
-TEAM_NAME_MAP_FILE = DATA_DIR / "team_name_map.json"
-
-
-def _load_team_name_map():
-    """从固定文件加载球队名称映射"""
-    if TEAM_NAME_MAP_FILE.exists():
-        return json.loads(TEAM_NAME_MAP_FILE.read_text())
-    print("  ⚠️ team_name_map.json 不存在，返回空映射")
-    return {}
-
-
-def _save_team_name_map(data):
-    """保存球队名称映射到固定文件"""
-    TEAM_NAME_MAP_FILE.parent.mkdir(parents=True, exist_ok=True)
-    TEAM_NAME_MAP_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2))
-    print(f"  📁 队名映射已保存 ({len(data)} 条)")
-
-
-# 联赛名称映射（中文→Pinnacle英文），从固定文件加载
-LEAGUE_KEYWORDS_FILE = DATA_DIR / "league_keywords.json"
-
-
-def _load_league_keywords():
-    """从固定文件加载联赛名称映射"""
-    if LEAGUE_KEYWORDS_FILE.exists():
-        return json.loads(LEAGUE_KEYWORDS_FILE.read_text())
-    print("  ⚠️ league_keywords.json 不存在，返回空映射")
-    return {}
-
-
-def _save_league_keywords(data):
-    """保存联赛名称映射到固定文件"""
-    LEAGUE_KEYWORDS_FILE.parent.mkdir(parents=True, exist_ok=True)
-    LEAGUE_KEYWORDS_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2))
-    print(f"  📁 联赛关键词已保存 ({len(data)} 条)")
-
-
-def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
-    """自动联赛映射：为未匹配的BB联赛自动发现Pinnacle联赛ID。
-
-    多策略匹配（按优先级）:
-    1. English token overlap — 提取BB名中的英文单词 vs Pinnacle名
-    2. Number + remaining text fuzzy — "U22" → "Brazil - LDB U22"
-    3. 对纯中文名，检测已知 sport keyword 后按运动过滤
-
-    置信度 >= 0.5 的匹配自动保存到 LEAGUE_KEYWORDS.
-    """
-    import re as _re
-    from difflib import SequenceMatcher as _SM
-
-    if not unmatched_bb_leagues:
-        return {}
-
-    # 已知的自动映射假阳性黑名单 — 防止 NZIHL→NHL 等错误
-    _BANNED_AUTO_MAP = {"nzihl新西兰冰球联盟"}
-
-    new_mappings = {}
-
-    for bb_name in sorted(unmatched_bb_leagues):
-        if bb_name.lower() in _BANNED_AUTO_MAP:
-            continue
-
-        bb_lower = bb_name.lower().strip()
-
-        # Extract English tokens and standalone numbers
-        bb_en_tokens = _re.findall(r'[a-z]+', bb_lower)
-        bb_en_set = set(bb_en_tokens)
-        bb_numbers = _re.findall(r'\d+', bb_name)
-        bb_has_cjk = any('一' <= c <= '鿿' for c in bb_name)
-
-        # Determine likely sport from BB name keywords
-        bb_sport = None
-        for kw, s in BB_SPORT_KEYWORDS.items():
-            if kw in bb_name:
-                bb_sport = s
-                break
-
-        candidates = []
-
-        for lid, info in all_pin_leagues.items():
-            pin_name = info.get("name", "")
-            pin_sport = info.get("sport", "")
-            if not pin_name:
-                continue
-            pin_lower = pin_name.lower()
-            pin_words = set(pin_lower.split())
-
-            score = 0.0
-
-            # Sport filter bonus: same sport = +0.1
-            # BB_SPORT_KEYWORDS uses English ("basketball"), pinnacle uses Chinese ("篮球")
-            _pin_sport_en = {"足球":"football","篮球":"basketball","网球":"tennis","棒球":"baseball",
-                              "美式足球":"american_football","乒乓球":"pingpong","拳击":"boxing",
-                              "MMA":"mma","羽毛球":"badminton","冰球":"ice_hockey","排球":"volleyball"}.get(pin_sport, "")
-            sport_bonus = 0.1 if (bb_sport and bb_sport == _pin_sport_en) else 0.0
-
-            # --- Method 1: English token overlap ---
-            if bb_en_set:
-                overlap = bb_en_set & pin_words
-                meaningful = {w for w in overlap
-                              if len(w) >= 3 or w in (
-                                  'nba', 'nfl', 'mlb', 'wnba', 'ncaa',
-                                  'nhl', 'cba', 'kbo', 'atp', 'wta', 'itf',
-                                  'ldb', 'fifa', 'uefa', 'nrl', 'afl',
-                              )}
-
-                if len(meaningful) >= 2:
-                    score = max(score, 0.75 + sport_bonus)
-                elif len(meaningful) == 1:
-                    single = list(meaningful)[0]
-                    # Famous league abbrevs → strong match
-                    if single in ('nba', 'nfl', 'mlb', 'wnba', 'ncaa',
-                                  'nhl', 'cba', 'kbo', 'ldb'):
-                        score = max(score, 0.70 + sport_bonus)
-                    elif single in ('atp', 'wta', 'itf', 'fifa', 'uefa'):
-                        score = max(score, 0.65 + sport_bonus)
-                    # Generic words → weak signal
-                    elif single in ('cup', 'league', 'open', 'championship',
-                                    'tournament', 'series', 'tour', 'masters',
-                                    'grand', 'prix', 'classic', 'trophy',
-                                    'title', 'final', 'qualifiers', 'group',
-                                    'premier', 'super', 'club', 'international'):
-                        score = max(score, 0.15 + sport_bonus)
-                    else:
-                        score = max(score, 0.30 + sport_bonus)
-
-            # --- Method 2: Number + remaining text fuzzy ---
-            remaining = ' '.join(bb_en_tokens + bb_numbers).strip()
-            if remaining and len(remaining) >= 2:
-                sm = _SM(None, remaining.lower(), pin_lower)
-                sm_score = sm.ratio()
-                if sm_score > 0.35:
-                    score = max(score, sm_score * 0.7 + sport_bonus)
-
-            # --- Method 2b: Alphanumeric + CJK-stripped substring match ---
-            # Catches "U22" matching "ldb u22" or "U20" matching "u20 women's"
-            bb_stripped = _re.sub(r'[一-鿿]+', ' ', bb_name).strip()
-            bb_stripped = _re.sub(r'\s+', ' ', bb_stripped).strip().lower()
-            if bb_stripped and len(bb_stripped) >= 2:
-                # Substring: does Pinnacle name contain the stripped BB text?
-                if bb_stripped in pin_lower:
-                    score = max(score, 0.55 + sport_bonus)
-                # Fuzzy on stripped text
-                sm_stripped = _SM(None, bb_stripped, pin_lower)
-                if sm_stripped.ratio() > 0.35:
-                    score = max(score, sm_stripped.ratio() * 0.65 + sport_bonus)
-
-            # --- Method 3: For pure CJK names, use sport-filtered fuzzy ---
-            if bb_has_cjk and not bb_en_set and bb_sport:
-                # Only Pinnacle leagues of the same sport
-                if pin_sport == bb_sport:
-                    # Check if the Pinnacle name contains any English words
-                    # that are commonly associated with Chinese league names
-                    # This is weak but better than nothing
-                    common_words = {'league', 'cup', 'championship', 'tournament',
-                                    'premier', 'division', 'liga', 'serie', 'super'}
-                    pin_common = pin_words & common_words
-                    if pin_common:
-                        # Very weak: just having any sport-matching league word
-                        score = max(score, 0.20 + sport_bonus)
-
-            if score >= 0.50:
-                candidates.append((lid, score, pin_name))
-                if '巴西发展' in bb_name:
-                    print(f'    DEBUG: lid={lid}, name={pin_name}, score={score}, sport_bonus={sport_bonus}, pin_lower={pin_lower}')
-
-        if candidates:
-            candidates.sort(key=lambda x: -x[1])
-            best_id, best_score, best_pin_name = candidates[0]
-
-            # Dedup: don't map two BB names to the same Pinnacle name
-            already_mapped = False
-            existing_bb = None
-            for ebb, epin in LEAGUE_KEYWORDS.items():
-                epins = [epin] if isinstance(epin, str) else epin
-                if best_pin_name in epins:
-                    already_mapped = True
-                    existing_bb = ebb
-                    break
-
-            if already_mapped:
-                # Still useful if BB name is different — might be a variant
-                if bb_name != existing_bb and bb_name not in LEAGUE_KEYWORDS:
-                    if not dry_run:
-                        LEAGUE_KEYWORDS[bb_name] = best_pin_name
-                    new_mappings[bb_name] = [best_id]
-                    print(f"  🔄 自动映射 (变体): [{bb_name}] → [{best_pin_name}] (score={best_score:.2f})")
-            else:
-                print(f"  🔄 自动映射: [{bb_name}] → [{best_pin_name}] (ID={best_id}, score={best_score:.2f})")
-                if not dry_run:
-                    LEAGUE_KEYWORDS[bb_name] = best_pin_name
-                new_mappings[bb_name] = [best_id]
-
-    if new_mappings:
-        if not dry_run:
-            _save_league_keywords(LEAGUE_KEYWORDS)
-            print(f"  ✅ 自动映射: {len(new_mappings)} 个联赛已保存到 league_keywords.json")
-        else:
-            print(f"  📝 自动映射发现 (dry-run): {len(new_mappings)} 个联赛")
-    else:
-        print(f"  ℹ️ 自动映射: 无新联赛可匹配")
-
-    return new_mappings
-
-
-def _auto_map_team_names(matched_entries):
-    """从高置信度匹配中自动提取队名映射 (中文→英文)。
-
-    只从满足以下条件的匹配中提取:
-    - match_score >= 0.85 或已 verified
-    - BB 队名含中文 (非纯ASCII)
-    自动保存到 team_name_map.json.
-    """
-    new_pairs = 0
-    skipped = 0
-
-    for m in matched_entries:
-        match_score = m.get("match_score", 0)
-        verified = m.get("verified", False)
-        if match_score < 0.85 and not verified:
-            skipped += 1
-            continue
-
-        bb = m.get("bb", {})
-        pin = m.get("pin", {})
-        bb_home = bb.get("home", "").strip()
-        bb_away = bb.get("away", "").strip()
-        pin_home = pin.get("home", "").strip()
-        pin_away = pin.get("away", "").strip()
-
-        # Map home team: only if BB name has Chinese characters
-        if bb_home and pin_home and len(bb_home) >= 2:
-            if not bb_home.isascii() and bb_home not in TEAM_NAME_MAP:
-                TEAM_NAME_MAP[bb_home] = pin_home
-                new_pairs += 1
-
-        # Map away team
-        if bb_away and pin_away and len(bb_away) >= 2:
-            if not bb_away.isascii() and bb_away not in TEAM_NAME_MAP:
-                TEAM_NAME_MAP[bb_away] = pin_away
-                new_pairs += 1
-
-    if new_pairs > 0:
-        _save_team_name_map(TEAM_NAME_MAP)
-        print(f"  📁 队名自动映射: 新增 {new_pairs} 条队名映射 (已保存到 team_name_map.json)")
-    else:
-        print(f"  📁 队名自动映射: 0 条新增")
-
-    return new_pairs
-
-
-# 速率限制 — API 请求间隔至少 0.5 秒
-_last_req_time = 0.0
-_MIN_REQUEST_INTERVAL = 0.25
-
-
-def _rate_limit():
-    global _last_req_time
-    elapsed = time.time() - _last_req_time
-    if elapsed < _MIN_REQUEST_INTERVAL:
-        time.sleep(_MIN_REQUEST_INTERVAL - elapsed)
-    _last_req_time = time.time()
-
-
-# 运动 ID 映射
-SPORT_IDS = {29: "足球", 4: "篮球", 33: "网球", 3: "棒球", 15: "美式足球",
-             32: "乒乓球", 6: "拳击", 22: "MMA", 1: "羽毛球", 19: "冰球", 34: "排球"}
-TWO_WAY_SPORTS = {"basketball", "tennis", "baseball", "american_football",
-                  "pingpong", "boxing", "mma", "badminton", "volleyball"}
-
-# BB体育联赛关键词 → 运动类型
-BB_SPORT_KEYWORDS = {
-    # Football
-    "欧洲冠军联赛": "football", "欧洲足联欧洲联赛": "football",
-    "超级联赛": "football", "西班牙甲级联赛": "football",
-    "德国甲级联赛": "football", "世界杯": "football",
-    "球会友谊赛": "football", "苏格兰联赛杯": "football",
-    "芬兰": "football", "瑞典超级联赛": "football",
-    "超级挪威联赛": "football", "乌拉圭甲级联赛": "football",
-    "哈萨克斯坦超级联赛": "football", "巴拉圭": "football",
-    "俄罗斯甲级联赛": "football", "澳门甲级联赛": "football",
-    "白俄罗斯超级联赛": "football", "冰岛甲级联赛": "football",
-    "爱沙尼亚甲级联赛": "football",
-    "欧足联欧洲协会联赛": "football",
-    "澳大利亚杯": "football",
-    "厄瓜多尔甲级联赛": "football",
-    # Basketball
-    "NBA": "basketball", "美国职业篮球": "basketball",
-    "欧洲篮球联赛": "basketball", "CBA": "basketball",
-    "韩国篮球": "basketball", "日本篮球": "basketball",
-    "菲律宾篮球": "basketball", "篮球": "basketball",
-    "年度最佳": "american_football", "美式足球": "american_football",
-    "NFL": "american_football",
-    # Tennis
-    "ATP": "tennis", "WTA": "tennis", "网球": "tennis",
-    # Baseball
-    "MLB": "baseball", "日本职业棒球": "baseball",
-    "韩国棒球": "baseball", "中华职业棒球": "baseball",
-    "棒球": "baseball",
-    # Ping Pong
-    "乒乓球": "pingpong", "WTT": "pingpong", "TT 精英": "pingpong",
-    "捷克职业联赛": "pingpong",
-    # Boxing
-    "拳击": "boxing",
-    # MMA
-    "UFC": "mma", "MMA": "mma",
-    # Badminton
-    "羽毛球": "badminton", "公开赛": "badminton",
-    # Ice Hockey
-    "冰球": "ice_hockey",
-    # Volleyball
-    "排球": "volleyball", "FIVB": "volleyball",
-}
-
-# 各运动的市场标签
-MARKET_LABELS = {
-    "football":  {"ml": ["主胜","和局","客胜"], "hc_home":"让球主胜", "hc_away":"让球客胜", "over":"大球", "under":"小球"},
-    "basketball": {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
-    "tennis":     {"ml": ["主胜","客胜"], "hc_home":"让盘主胜", "hc_away":"让盘客胜", "over":"大分", "under":"小分"},
-    "baseball":   {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
-    "american_football": {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
-    "pingpong":  {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
-    "boxing":    {"ml": ["主胜","客胜"], "over":"大分", "under":"小分"},
-    "mma":       {"ml": ["主胜","客胜"], "over":"大分", "under":"小分"},
-    "badminton": {"ml": ["主胜","客胜"], "hc_home":"让局主胜", "hc_away":"让局客胜", "over":"大分", "under":"小分"},
-    "ice_hockey": {"ml": ["主胜","和局","客胜"], "hc_home":"让球主胜", "hc_away":"让球客胜", "over":"大分", "under":"小分"},
-    "volleyball": {"ml": ["主胜","客胜"], "hc_home":"让分主胜", "hc_away":"让分客胜", "over":"大分", "under":"小分"},
-}
-
-def detect_sport(bb_match):
-    """从 BB 比赛数据中检测运动类型。
-    优先使用 BB API 的 sport 字段（bb_api_fetcher 直连 API，sport 字段可靠），
-    回退到联赛关键词匹配（用于旧 DOM 提取器数据）。"""
-    sport = bb_match.get("sport", "")
-    if sport:
-        if sport == "soccer":
-            return "football"
-        known_sports = ("football", "basketball", "tennis", "baseball",
-                        "american_football", "pingpong", "boxing", "mma",
-                        "badminton", "ice_hockey", "volleyball")
-        if sport in known_sports:
-            return sport
-    league = bb_match.get("league", "")
-    for kw, s in BB_SPORT_KEYWORDS.items():
-        if kw in league:
-            return s
-    return "football"  # 默认
-
-# BB体育中文联赛名 → Pinnacle 联赛名（关键词匹配），从固定文件加载
-LEAGUE_KEYWORDS = _load_league_keywords()
-
-# 球队名称映射（中文→英文），从固定文件加载
-TEAM_NAME_MAP = _load_team_name_map()
-
-
-def api_get(path, retry=True):
-    """调用 Pinnacle API，带详细错误诊断。"""
-    _rate_limit()  # 确保请求间隔
-
-    url = f"{API_BASE}{path}"
-    for attempt in range(MAX_RETRIES if retry else 1):
-        try:
-            # 直连 Pinnacle API（SOCKS5 代理已移除，节省 2-5s 连接超时）
-            resp = SESSION.get(url, timeout=30)
-
-            if resp.status_code == 429:
-                wait = RETRY_DELAY * (2 ** attempt)
-                print(f"  ⏳ 429 rate limited, retry in {wait:.0f}s...")
-                time.sleep(wait)
-                continue
-            if resp.status_code != 200:
-                if attempt < MAX_RETRIES - 1:
-                    time.sleep(RETRY_DELAY)
-                    continue
-                _diagnose_pinnacle_error(url, resp.status_code)
-                return None
-            data = resp.json()
-            return data
-        except requests.exceptions.SSLError as e:
-            # Python 3.14 SSL 间歇性断连 (UNEXPECTED_EOF_WHILE_READING)，重试可恢复
-            if attempt < MAX_RETRIES - 1:
-                wait = RETRY_DELAY * (2 ** attempt)
-                print(f"  ⏳ SSL 错误, {wait:.0f}s 后重试...")
-                time.sleep(wait)
-                continue
-            print(f"  ❌ SSL 握手失败 (多次重试后): {type(e).__name__}")
-            return None
-        except requests.exceptions.ConnectionError as e:
-            print(f"  ❌ 连接失败: {e}")
-            print(f"    建议: 检查网络连接")
-            return None
-        except requests.exceptions.Timeout:
-            if attempt < MAX_RETRIES - 1:
-                print(f"  ⏳ timeout, retry in {RETRY_DELAY:.0f}s...")
-                time.sleep(RETRY_DELAY)
-                continue
-            print(f"  ❌ Pinnacle API 超时（多次重试后）")
-            print(f"    建议: 检查网络延迟 / 切换 VPN 节点")
-            return None
-        except requests.exceptions.ChunkedEncodingError as e:
-            # Python 3.14 http.client bug: chunked transfer 解析失败
-            print(f"  ❌ ChunkedEncodingError: {e}")
-            print(f"    原因: Python 3.14 http.client chunked transfer bug")
-            print(f"    自动重试中...")
-            if attempt < MAX_RETRIES - 1:
-                time.sleep(RETRY_DELAY)
-                continue
-            return None
-        except Exception as e:
-            print(f"  ❌ Pinnacle API 请求异常 ({type(e).__name__}): {e}")
-            return None
-    return None
-
-
-def _diagnose_pinnacle_error(url, status_code):
-    """Pinnacle API 非 200 响应诊断。"""
-    if status_code == 0:
-        print(f"  ❌ Pinnacle API 请求异常，请检查网络连接")
-        return
-    print(f"\n  ❌ Pinnacle API 返回 {status_code}")
-    if status_code == 403:
-        print(f"    原因: 403 Forbidden — Python 3.14 http.client chunked transfer bug 误报")
-        print(f"    解决: 已改用 requests.Session()，应已修复。重试即可")
-    elif status_code == 401:
-        print(f"    原因: 401 Unauthorized — Pinnacle 公开 API 不需要认证")
-        print(f"    解决: 重试即可，通常会自动恢复")
-    elif status_code == 429:
-        print(f"    原因: 429 Rate Limited — 请求过快")
-        print(f"    解决: 等待 1 分钟后重试")
-    elif status_code == 503:
-        print(f"    原因: 503 Service Unavailable — Pinnacle 服务暂时不可用")
-        print(f"    解决: 等待几分钟后重试")
-    else:
-        print(f"    原因: 未知")
-
-
-def us_to_decimal(us_price):
-    if us_price is None:
-        return None
-    if us_price > 0:
-        return round(1 + us_price / 100, 4)
-    else:
-        return round(1 - 100 / us_price, 4)
-
-
-def load_bb_odds(path=None):
-    if path is None:
-        path = DATA_DIR / "bb_odds_extracted.json"
-    if not path.exists():
-        return []
-
-    # 强制新鲜度检查：BB 数据必须是最近 2 小时内抓取的
-    mtime = path.stat().st_mtime
-    age_hours = (time.time() - mtime) / 3600
-    if age_hours > 2 and path == DATA_DIR / "bb_odds_extracted.json":
-        msg = f"bb_odds_extracted.json 已过期 ({age_hours:.1f}小时前)，请先运行 bb_api_fetcher --all-sports"
-        print(f"  ❌ {msg}")
-        raise RuntimeError(msg)
-
-    data = json.loads(path.read_text()).get("matches", [])
-    # 去重：优先用 API id，无 id 时回退 (home, away, league)
-    seen = set()
-    unique = []
-    for m in data:
-        mid = m.get("id")
-        key = (str(mid),) if mid else (m.get("home", ""), m.get("away", ""), m.get("league", ""))
-        if key not in seen:
-            seen.add(key)
-            unique.append(m)
-    return unique
-
-
-def extract_bb_1x2(bb_match, sport="football"):
-    """Extract 1X2 odds from BB match.
-
-    3-way (足球): odds[0:3] = [home, draw, away]
-    2-way (篮球/网球/棒球): odds[0:2] = [home, away]
-
-    Primary source: structured odds_ft.ml from DOM extractor (reliable).
-    Fallback: positional odds_values (backward compat with text extractor).
-
-    Returns (odds_list, is_valid).
-    """
-    n = 3 if sport not in TWO_WAY_SPORTS else 2
-
-    # Primary: structured odds_ft.ml from DOM extractor
-    odds_ft = bb_match.get("odds_ft", {})
-    if isinstance(odds_ft, dict):
-        if "ml" in odds_ft:
-            ft_ml = odds_ft["ml"]
-            if isinstance(ft_ml, list) and len(ft_ml) >= n:
-                bb_1x2 = [v for v in ft_ml if 1.01 <= v <= 51.0]
-                if len(bb_1x2) >= n:
-                    return bb_1x2, True
-            # DOM says no ML or wrong count → don't fall through
-            return [], False
-        else:
-            # odds_ft exists (even if empty) but no "ml" key → DOM merge didn't find
-            # this match. Positional odds_values can misread HC/OU odds as ML,
-            # so bail out rather than returning wrong data.
-            return [], False
-
-    # Not a dict — legacy data, try positional fallback
-    odds = bb_match.get("odds_values", [])
-    full_text = bb_match.get("full_text", "")
-
-    if len(odds) < n:
-        return [], False
-
-    if sport not in TWO_WAY_SPORTS:
-        # Football 3-way: check if 1X2 is available (no "-" after "和")
-        ft_compact = " ".join(full_text.split())
-        he_idx = ft_compact.find("和")
-        if he_idx >= 0:
-            after_he = ft_compact[he_idx:he_idx+30]
-            if "-" in after_he.split()[1:4]:
-                return [], False
-
-    bb_1x2 = []
-    for o in odds[:n]:
-        try:
-            val = float(o)
-            if 1.01 <= val <= 51.0:
-                bb_1x2.append(val)
-        except (ValueError, TypeError):
-            pass
-
-    if len(bb_1x2) < n:
-        return [], False
-
-    return bb_1x2, True
-
-
-def parse_asian_line(line_str):
-    """Convert Chinese Asian handicap notation to decimal line.
-    Examples: '-0/0.5' → -0.25, '+0.5/1' → +0.75, '-1' → -1.0, '大2.5' → 2.5
-    """
-    if not line_str:
-        return None
-    s = line_str.strip()
-
-    if s.startswith('大') or s.startswith('小'):
-        try:
-            return float(s[1:])
-        except ValueError:
-            return None
-
-    sign = 1.0
-    rest = s
-    if s.startswith('+'):
-        sign = 1.0
-        rest = s[1:]
-    elif s.startswith('-'):
-        sign = -1.0
-        rest = s[1:]
-
-    if '/' in rest:
-        parts = rest.split('/')
-        try:
-            low = float(parts[0])
-            high = float(parts[1])
-            return sign * (low + high) / 2.0
-        except (ValueError, IndexError):
-            return None
-
-    try:
-        return sign * float(rest)
-    except ValueError:
-        return None
-
-
-def extract_bb_handicap(bb_match, sport="football"):
-    """Extract handicap odds and line from BB match.
-
-    3-way (足球): handicap odds at odds[3:5], lines found in full_text
-    2-way (篮球/网球/棒球): handicap odds at odds[2:4]
-
-    Primary source: structured odds_ft.handicap from DOM extractor.
-    Fallback: positional reading from odds_values + full_text.
-
-    Uses 主/客 labels in full_text to correctly assign home/away lines.
-    """
-    # Primary: structured odds_ft.handicap from DOM extractor
-    odds_ft = bb_match.get("odds_ft", {})
-    if isinstance(odds_ft, dict):
-        ft_hc = odds_ft.get("handicap")
-        if isinstance(ft_hc, dict) and ft_hc.get("home_odds") and ft_hc.get("away_odds"):
-            home_line = ft_hc.get("home_line")
-            away_line = ft_hc.get("away_line")
-            if home_line is not None or away_line is not None:
-                return {
-                    "home_odds": ft_hc["home_odds"],
-                    "away_odds": ft_hc["away_odds"],
-                    "home_line": home_line,
-                    "away_line": away_line,
-                    "home_line_str": ft_hc.get("home_line_str", ""),
-                    "away_line_str": ft_hc.get("away_line_str", ""),
-                }
-    odds = bb_match.get("odds_values", [])
-    idx = 3 if sport not in TWO_WAY_SPORTS else 2
-    if len(odds) < idx + 2:
-        return None
-
-    home_odds = float(odds[idx])
-    away_odds = float(odds[idx + 1])
-
-    text = bb_match.get("full_text", "")
-    tokens = [t.strip() for t in text.split('\n') if t.strip()]
-
-    home_line_str = ""
-    away_line_str = ""
-
-    # Phase 1: 寻找 "主" + 盘口线 / "客" + 盘口线 配对
-    for i, t in enumerate(tokens):
-        if t == '主' and i + 1 < len(tokens):
-            if re.match(r'^[+-]', tokens[i + 1]):
-                home_line_str = tokens[i + 1]
-        elif t == '客' and i + 1 < len(tokens):
-            if re.match(r'^[+-]', tokens[i + 1]):
-                away_line_str = tokens[i + 1]
-
-    # Phase 2: 回退 — 按顺序取前两条盘口线
-    if not home_line_str and not away_line_str:
-        lines_found = []
-        for t in tokens:
-            if re.match(r'^[+-]\d+(?:\.\d+)?(?:\/\d+(?:\.\d+)?)?$', t):
-                lines_found.append(t)
-        if len(lines_found) >= 2:
-            home_line_str = lines_found[0]
-            away_line_str = lines_found[1]
-
-    if not home_line_str and not away_line_str:
-        return None
-
-    home_line_val = parse_asian_line(home_line_str) if home_line_str else None
-    away_line_val = parse_asian_line(away_line_str) if away_line_str else round(-(home_line_val or 0), 2)
-
-    return {
-        "home_odds": home_odds,
-        "away_odds": away_odds,
-        "home_line": home_line_val,
-        "away_line": away_line_val,
-        "home_line_str": home_line_str,
-        "away_line_str": away_line_str,
-    }
-
-
-def extract_bb_ou(bb_match, sport="football"):
-    """Extract over/under odds and line from BB match.
-
-    3-way (足球): O/U odds at odds[5:7]
-    2-way (篮球/网球/棒球): O/U odds at odds[-2:] (最后2个赔率)
-
-    Primary source: structured odds_ft.total from DOM extractor.
-    Fallback: positional reading from odds_values + full_text.
-
-    注意：网球可能有多个让盘口线(alternate handicaps)占用 odds[2:N-2]，
-    所以 O/U 不能固定在 odds[4:6]，必须用最后2个赔率。
-    """
-    # Primary: structured odds_ft.total from DOM extractor
-    odds_ft = bb_match.get("odds_ft", {})
-    if isinstance(odds_ft, dict):
-        ft_ou = odds_ft.get("total")
-        if isinstance(ft_ou, dict) and ft_ou.get("over_odds") and ft_ou.get("under_odds"):
-            line = ft_ou.get("line")
-            if line is not None:
-                return {
-                    "over_odds": ft_ou["over_odds"],
-                    "under_odds": ft_ou["under_odds"],
-                    "line": line,
-                }
-    odds = bb_match.get("odds_values", [])
-    if sport in TWO_WAY_SPORTS:
-        if len(odds) < 6:
-            return None  # 只有 ml+hc，没有大小盘
-        idx = len(odds) - 2  # 大小盘永远是最后的2个赔率
-    else:
-        idx = 5  # 足球：3 ml + 2 hc
-    if len(odds) < idx + 2:
-        return None
-
-    over_odds = float(odds[idx])
-    under_odds = float(odds[idx + 1])
-
-    text = bb_match.get("full_text", "")
-    tokens = [t.strip() for t in text.split('\n') if t.strip()]
-
-    over_line_val = None
-    under_line_val = None
-    for t in tokens:
-        if t.startswith('大'):
-            ov = parse_asian_line(t)
-            if ov is not None:
-                over_line_val = ov
-        elif t.startswith('小'):
-            uv = parse_asian_line(t)
-            if uv is not None:
-                under_line_val = uv
-
-    if over_line_val is not None and under_line_val is not None:
-        return {
-            "over_odds": over_odds,
-            "under_odds": under_odds,
-            "line": over_line_val,
-        }
-    return None
-
-
-def extract_bb_btts(bb_match):
-    """Extract BTTS (Both Teams To Score) odds from BB match.
-    Returns (yes_odds, no_odds) or (None, None).
-    """
-    odds_ft = bb_match.get("odds_ft", {})
-    if isinstance(odds_ft, dict):
-        btts = odds_ft.get("btts", {})
-        if isinstance(btts, dict):
-            yes = btts.get("yes_odds")
-            no = btts.get("no_odds")
-            if yes and no and yes > 1 and no > 1:
-                return yes, no
-    return None, None
+# 从子模块导入 API 传输层
+from src.scrapers.pinnacle_api import (
+    API_BASE, SESSION, api_get, _rate_limit, _diagnose_pinnacle_error, us_to_decimal,
+)
+from src.scrapers.pinnacle_api import _rate_limit as _  # noqa: ensure rate_limit usable
+
+API_BASE = API_BASE  # re-export for backward compat
+SESSION = SESSION
+
+from src.scrapers.pinnacle_league_map import (
+    PINNACLE_LEAGUE_FILE, CACHE_TTL_DAYS, TEAM_NAME_MAP_FILE, LEAGUE_KEYWORDS_FILE, TEAM_NAME_MAP,
+    _load_league_structure, _save_league_structure,
+    _load_team_name_map, _save_team_name_map,
+    _load_league_keywords, _save_league_keywords,
+    _auto_map_leagues, _auto_map_team_names,
+    _match_pin_name, _find_best_league,
+    find_pinnacle_league_id, _find_itf_league_ids, find_pinnacle_league_ids,
+)
+
+# 从子模块导入 BB 数据提取
+from src.scrapers.bb_data import (
+    SPORT_IDS, TWO_WAY_SPORTS, BB_SPORT_KEYWORDS, MARKET_LABELS,
+    detect_sport, load_bb_odds, extract_bb_1x2, parse_asian_line,
+    extract_bb_handicap, extract_bb_ou, extract_bb_btts,
+    extract_bb_oe, extract_bb_htft,
+)
+
+# 导入市场获取模块
+from src.scrapers.pinnacle_markets import (
+    sort_ml_prices, get_league_matchups_and_markets,
+)
+
+# 导入匹配引擎
+from src.scrapers.matching_engine import (
+    team_name_score, get_pin_ml_sorted, get_pin_ml_sorted_from_source,
+    get_pin_spread, get_pin_total,
+    _pinyin_match_names, find_pin_match_by_name,
+    _bb_to_epoch, _pin_to_epoch, _odds_similarity,
+    _make_bb_key, _compute_combined_score, find_matches_by_odds,
+)
+
+# Re-export for backward compat
+_SPORT_IDS = SPORT_IDS
+_TWO_WAY_SPORTS = TWO_WAY_SPORTS
+_BB_SPORT_KEYWORDS = BB_SPORT_KEYWORDS
+_MARKET_LABELS = MARKET_LABELS
 
 
 def _derive_btts_from_team_total(team_total_entries):
@@ -824,7 +101,7 @@ def _derive_btts_from_team_total(team_total_entries):
     return round(1.0 / btts_yes, 4), round(1.0 / (1.0 - btts_yes), 4)
 
 
-def _add_btts_opportunities(entry, bb_yes, bb_no, yes_fair, no_fair):
+def _add_btts_opportunities(entry, bb_yes, bb_no, yes_fair, no_fair, pin_yes=None, pin_no=None, source="direct"):
     """计算并添加 BTTS 双边进球机会到 entry。"""
     if not all([bb_yes, bb_no, yes_fair, no_fair]):
         return
@@ -834,22 +111,99 @@ def _add_btts_opportunities(entry, bb_yes, bb_no, yes_fair, no_fair):
         entry["opportunities"].append({
             "designation": "双边进球-是",
             "bb_odds": bb_yes,
-            "pin_odds": yes_fair,
+            "pin_odds": pin_yes or yes_fair,
             "fair_price": yes_fair,
             "ev_pct": ev_yes,
             "_market": "btts",
+            "_price_source": source,
         })
     if ev_no > 1:
         entry["opportunities"].append({
             "designation": "双边进球-否",
             "bb_odds": bb_no,
-            "pin_odds": no_fair,
+            "pin_odds": pin_no or no_fair,
             "fair_price": no_fair,
             "ev_pct": ev_no,
             "_market": "btts",
+            "_price_source": source,
         })
 
 
+def _add_oe_opportunities(entry, bb_odd, bb_even, odd_fair, even_fair, pin_odd=None, pin_even=None):
+    """计算并添加 Odd/Even (单/双) 机会到 entry。"""
+    if not all([bb_odd, bb_even, odd_fair, even_fair]):
+        return
+    ev_odd = round((bb_odd - odd_fair) / odd_fair * 100, 2)
+    ev_even = round((bb_even - even_fair) / even_fair * 100, 2)
+    if ev_odd > 1:
+        entry["opportunities"].append({
+            "designation": "单",
+            "bb_odds": bb_odd,
+            "pin_odds": pin_odd or odd_fair,
+            "fair_price": odd_fair,
+            "ev_pct": ev_odd,
+            "_market": "oe",
+        })
+    if ev_even > 1:
+        entry["opportunities"].append({
+            "designation": "双",
+            "bb_odds": bb_even,
+            "pin_odds": pin_even or even_fair,
+            "fair_price": even_fair,
+            "ev_pct": ev_even,
+            "_market": "oe",
+        })
+
+
+# HT/FT 9个选项的中文名（与BB API返回顺序一致）
+HTFT_LABELS = [
+    "主/主", "主/和局", "主/客",
+    "和局/主", "和局/和局", "和局/客",
+    "客/主", "客/和局", "客/客",
+]
+
+# HT/FT 9个选项的英文键名（与Pinnacle参与者顺序一致）
+HTFT_KEYS = [
+    "home/home", "home/draw", "home/away",
+    "draw/home", "draw/draw", "draw/away",
+    "away/home", "away/draw", "away/away",
+]
+
+
+def _add_htft_opportunities(entry, bb_htft_dict, pin_prices_list):
+    """计算并添加 HT/FT (半全场) 机会到 entry。
+
+    bb_htft_dict: BB赔率 dict，键为 HTFT_KEYS，值为赔率
+    pin_prices_list: Pinnacle 9个价格 dict 列表（含 price_decimal）
+    """
+    if not bb_htft_dict or not pin_prices_list or len(pin_prices_list) < 9:
+        return
+    raw_prices = []
+    for p in pin_prices_list:
+        val = p.get("price_decimal", 0)
+        if val <= 0:
+            return
+        raw_prices.append(val)
+    if len(raw_prices) < 9:
+        return
+    # 去抽水：公平价 = 零售价 × 总隐含概率
+    imp = sum(1.0 / v for v in raw_prices)
+    fair_prices = [round(v * imp, 4) for v in raw_prices]
+    for i in range(9):
+        key = HTFT_KEYS[i]
+        bb_val = bb_htft_dict.get(key, 0)
+        if not bb_val or bb_val <= 1:
+            continue
+        ev = round((bb_val - fair_prices[i]) / fair_prices[i] * 100, 2)
+        if ev > 1:
+            entry["opportunities"].append({
+                "designation": HTFT_LABELS[i],
+                "bb_odds": bb_val,
+                "pin_odds": raw_prices[i],
+                "fair_price": fair_prices[i],
+                "ev_pct": ev,
+                "_market": "htft",
+            })
 def _fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
     """角球市场对比：从 Pinnacle 角球联赛提取数据并与 BB 角球赔率对比。
 
@@ -1124,888 +478,6 @@ def _fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             corner_entries.append(entry)
 
     return corner_entries
-
-
-def sort_ml_prices(prices):
-    """Sort moneyline prices to [home, draw, away] order by designation."""
-    order = {"home": 0, "draw": 1, "away": 2}
-    sorted_p = sorted(prices, key=lambda p: order.get(p.get("designation", ""), 99))
-    return sorted_p
-
-
-def get_league_matchups_and_markets(league_id):
-    """Get matchups and markets for a specific league"""
-    matchups = api_get(f"/leagues/{league_id}/matchups")
-    if not matchups:
-        return []
-
-    mu_map = {m["id"]: m for m in matchups}
-
-    markets = api_get(f"/leagues/{league_id}/markets/straight")
-    if not markets:
-        return []
-
-    mm = {}
-    for m in markets:
-        mid = m.get("matchupId")
-        if mid not in mm:
-            mm[mid] = []
-        mm[mid].append(m)
-
-    result = []
-    for mid, mkt_list in mm.items():
-        mu = mu_map.get(mid)
-        if not mu:
-            continue
-
-        league = mu.get("league", {})
-        participants = mu.get("participants", [])
-
-        home, away = "", ""
-        for p in participants:
-            if p.get("alignment") == "home":
-                home = p.get("name", "")
-            elif p.get("alignment") == "away":
-                away = p.get("name", "")
-
-        if not home and not away:
-            continue
-
-        moneyline, spread, total = [], [], []
-        ht_moneyline, ht_spread, ht_total = [], [], []
-        team_total = []
-        btts = []
-        for mkt in mkt_list:
-            mtype = mkt.get("type", "")
-            per = mkt.get("period", 0)
-            prices = [{
-                "designation": p.get("designation", ""),
-                "price_decimal": us_to_decimal(p.get("price")),
-                "points": p.get("points"),  # handicap line / total line
-            } for p in mkt.get("prices", [])]
-
-            entry = {"period": per, "prices": prices}
-            if mtype == "moneyline":
-                entry["prices_sorted"] = sort_ml_prices(prices)
-                if per == 0:
-                    moneyline.append(entry)
-                elif per == 1:
-                    ht_moneyline.append(entry)
-            elif mtype == "spread":
-                if per == 0:
-                    spread.append(entry)
-                elif per == 1:
-                    ht_spread.append(entry)
-            elif mtype == "total":
-                if per == 0:
-                    total.append(entry)
-                elif per == 1:
-                    ht_total.append(entry)
-            elif mtype == "team_total":
-                entry["side"] = mkt.get("side", "")
-                team_total.append(entry)
-            elif mtype == "both_to_score" and per == 0:
-                btts.append(entry)
-
-        result.append({
-            "matchup_id": mid,
-            "league_name": league.get("name", ""),
-            "league_group": league.get("group", ""),
-            "home": home,
-            "away": away,
-            "start_time": mu.get("startTime", ""),
-            "moneyline": moneyline,
-            "spread": spread,
-            "total": total,
-            "ht_moneyline": ht_moneyline,
-            "ht_spread": ht_spread,
-            "ht_total": ht_total,
-            "team_total": team_total,
-		    "btts": btts,
-        })
-
-    # 对网球：把 Games 条目（局数让分/大小）合并到常规条目
-    games_map = {}
-    for r in result:
-        h, a = r["home"], r["away"]
-        if h.endswith(" (Games)") or a.endswith(" (Games)"):
-            base_h = h.replace(" (Games)", "")
-            base_a = a.replace(" (Games)", "")
-            games_map[(base_h, base_a)] = {"spread": r["spread"], "total": r["total"]}
-    for r in result:
-        h, a = r["home"], r["away"]
-        if not h.endswith(" (Games)") and not a.endswith(" (Games)"):
-            g = games_map.get((h, a))
-            if g:
-                r["games_spread"] = g["spread"]
-                r["games_total"] = g["total"]
-
-    return result
-
-
-def team_name_score(bb_home, bb_away, pin_home, pin_away):
-    """Score how well BB team names (Chinese) match Pinnacle team names (English).
-    Uses TEAM_NAME_MAP for known translations and fuzzy matching.
-    Returns score 0.0-1.0.
-    """
-    def lookup_cn(name):
-        return TEAM_NAME_MAP.get(name, name.lower())
-
-    bb_home_en = lookup_cn(bb_home)
-    bb_away_en = lookup_cn(bb_away)
-    # Normalize: lowercase for comparison
-    bb_home_en_l = bb_home_en.lower() if bb_home_en else ""
-    bb_away_en_l = bb_away_en.lower() if bb_away_en else ""
-    pin_home_l = pin_home.lower()
-    pin_away_l = pin_away.lower()
-
-    # If the name wasn't in the map, we can't verify it
-    bb_home_mapped = bb_home_en != bb_home.lower()
-    bb_away_mapped = bb_away_en != bb_away.lower()
-
-    def name_match(bb_en_l, pin_l):
-        """Check if BB English name matches Pinnacle name, case-insensitive."""
-        if not bb_en_l or not pin_l:
-            return False
-        # Exact match
-        if bb_en_l == pin_l:
-            return True
-        # BB name is a substring of Pinnacle name (e.g., "Inverness" in "inverness ct")
-        if bb_en_l in pin_l or pin_l in bb_en_l:
-            return True
-        # Pinnacle name is in BB name (e.g., "east fife" in "east fife...")
-        return False
-
-    home_match = name_match(bb_home_en_l, pin_home_l) if bb_home_mapped else False
-    away_match = name_match(bb_away_en_l, pin_away_l) if bb_away_mapped else False
-
-    # 检查交叉配对：BB的home可能对应Pinnacle的away（拳击等项目常见主客互换）
-    cross_home_match = name_match(bb_home_en_l, pin_away_l) if bb_home_mapped else False
-    cross_away_match = name_match(bb_away_en_l, pin_home_l) if bb_away_mapped else False
-
-    if (home_match and away_match) or (cross_home_match and cross_away_match):
-        return 1.0
-    elif home_match or away_match or cross_home_match or cross_away_match:
-        return 0.6
-    else:
-        return 0.0
-
-
-def get_pin_ml_sorted(pin_match, sport="football"):
-    """Get Pinnacle moneyline odds sorted for the given sport.
-    3-way (足球): returns [home, draw, away]; 2-way: returns [home, away].
-    """
-    min_req = 2 if sport in TWO_WAY_SPORTS else 3
-    for ml in pin_match.get("moneyline", []):
-        if ml["period"] == 0:
-            prices = ml.get("prices_sorted", ml.get("prices", []))
-            odds = []
-            for p in prices:
-                if p.get("price_decimal") and 1.01 <= p["price_decimal"] <= 51.0:
-                    odds.append(p["price_decimal"])
-            if len(odds) >= min_req:
-                return odds[:min_req]
-    return []
-
-
-def get_pin_ml_sorted_from_source(ml_source, sport="football"):
-    """Get Pinnacle moneyline odds from a market source list (any period).
-    3-way: [home, draw, away]; 2-way: [home, away].
-    """
-    min_req = 2 if sport in TWO_WAY_SPORTS else 3
-    for ml in ml_source:
-        prices = ml.get("prices_sorted", ml.get("prices", []))
-        odds = []
-        for p in prices:
-            if p.get("price_decimal") and 1.01 <= p["price_decimal"] <= 51.0:
-                odds.append(p["price_decimal"])
-        if len(odds) >= min_req:
-            return odds[:min_req]
-    return []
-
-
-def get_pin_spread(pin_match, target_line=None, source=None):
-    """Get Pinnacle spread (handicap).
-
-    source: 直接传入 spread 列表（如 ht_spread），不传则用 pin_match["spread"] period=0
-    Returns (home_p, away_p, is_alternate) — is_alternate=True 表示用了备用盘口线而非主线
-    """
-    candidates = []
-    entries = source if source is not None else pin_match.get("spread", [])
-    for sp in entries:
-        if source is None and sp.get("period", 0) != 0:
-            continue
-        prices = sp.get("prices", [])
-        home_p = None
-        away_p = None
-        for p in prices:
-            if p.get("designation") == "home":
-                home_p = p
-            elif p.get("designation") == "away":
-                away_p = p
-        if home_p and away_p:
-            candidates.append((home_p, away_p))
-
-    if not candidates:
-        return None, None, False
-    if target_line is None:
-        return candidates[0][0], candidates[0][1], False
-
-    # 找线值最接近的候选项，但要求偏差 ≤ 0.5
-    # 铁律：BB 有什么线就比什么线，线不对就不比
-    best = candidates[0]
-    best_diff = abs(target_line - candidates[0][0].get("points", 0))
-    for home_p, away_p in candidates[1:]:
-        diff = abs(target_line - home_p.get("points", 0))
-        if diff < best_diff:
-            best_diff = diff
-            best = (home_p, away_p)
-
-    # 偏差超过 0.5 就认为线不匹配，丢弃
-    if best_diff > 0.5:
-        return None, None, False
-
-    is_alternate = best is not candidates[0]
-    return best[0], best[1], is_alternate
-
-
-def get_pin_total(pin_match, target_line=None, source=None):
-    """Get Pinnacle total (over/under).
-
-    source: 直接传入 total 列表（如 ht_total），不传则用 pin_match["total"] period=0
-    """
-    candidates = []
-    entries = source if source is not None else pin_match.get("total", [])
-    for t in entries:
-        if source is None and t.get("period", 0) != 0:
-            continue
-        prices = t.get("prices", [])
-        over_p = None
-        under_p = None
-        for p in prices:
-            if p.get("designation") == "over":
-                over_p = p
-            elif p.get("designation") == "under":
-                under_p = p
-        if over_p and under_p:
-            candidates.append((over_p, under_p))
-
-    if not candidates:
-        return None, None
-    if target_line is None:
-        return candidates[0]
-
-    best = candidates[0]
-    best_diff = abs(target_line - candidates[0][0].get("points", 0))
-    for over_p, under_p in candidates[1:]:
-        diff = abs(target_line - over_p.get("points", 0))
-        if diff < best_diff:
-            best_diff = diff
-            best = (over_p, under_p)
-
-    if best_diff > 0.5:
-        return None, None
-    return best
-
-
-def _pinyin_match_names(bb_home: str, bb_away: str, pin_list: list) -> tuple:
-    """Fallback: pinyin-based fuzzy matching for CJK names (e.g. tennis players).
-
-    Uses pypinyin to convert Chinese names to pinyin, then difflib
-    to compare against Pinnacle English names.  Only kicks in when
-    the BB names contain CJK characters and TEAM_NAME_MAP has no entry.
-    Returns (match, score) or (None, 0.0).
-    """
-    try:
-        from pypinyin import lazy_pinyin
-    except ImportError:
-        return None, 0.0
-    from difflib import SequenceMatcher as _SM
-
-    def _is_cjk(s):
-        return any('一' <= c <= '鿿' for c in s)
-
-    def _pinyin_key(name):
-        # Strip country suffix "(xxx)" and whitespace
-        raw = name.rsplit("(", 1)[0].strip()
-        if not _is_cjk(raw):
-            return ""
-        # Normalize "·" to "." so "戴维德·托托拉" splits into ["戴维德", "托托拉"]
-        cleaned = raw.replace("·", ".").replace("‧", ".")
-        # Convert each dot-separated syllable to pinyin, strip non-alphanum
-        syllables = cleaned.split(".")
-        parts = []
-        for s in syllables:
-            py = "".join(lazy_pinyin(s)).lower()
-            py = "".join(c for c in py if c.isalnum())
-            parts.append(py)
-        return " ".join(parts)
-
-    bb_home_py = _pinyin_key(bb_home)
-    bb_away_py = _pinyin_key(bb_away)
-    if not bb_home_py and not bb_away_py:
-        return None, 0.0
-
-    best_match = None
-    best_score = 0.0
-
-    for pin in pin_list:
-        pin_home_l = pin.get("home", "").lower()
-        pin_away_l = pin.get("away", "").lower()
-        scores = []
-        if bb_home_py:
-            scores.append(_SM(None, bb_home_py, pin_home_l).ratio())
-        if bb_away_py:
-            scores.append(_SM(None, bb_away_py, pin_away_l).ratio())
-        avg = sum(scores) / len(scores) if scores else 0
-        if avg > best_score:
-            best_score = avg
-            best_match = pin
-
-    # Lower threshold for pinyin matching — pronunciation varies
-    if best_score >= 0.50:
-        return best_match, best_score
-    return None, 0.0
-
-
-def find_pin_match_by_name(bb_home, bb_away, pin_list):
-    """Find Pinnacle match by team name mapping.
-
-    Phase 1: TEAM_NAME_MAP (exact Chinese→English).
-    Phase 2: pinyin-based fuzzy matching (for tennis etc.).
-    Returns (match, score) or (None, 0).
-    """
-    bb_home_en = TEAM_NAME_MAP.get(bb_home, "").lower()
-    bb_away_en = TEAM_NAME_MAP.get(bb_away, "").lower()
-
-    if not bb_home_en and not bb_away_en:
-        return _pinyin_match_names(bb_home, bb_away, pin_list)
-
-    best_match = None
-    best_score = 0.0
-
-    for pin in pin_list:
-        pin_home_l = pin.get("home", "").lower()
-        pin_away_l = pin.get("away", "").lower()
-
-        score_parts = []
-
-        if bb_home_en:
-            if bb_home_en == pin_home_l:
-                score_parts.append(1.0)
-            elif bb_home_en in pin_home_l or pin_home_l in bb_home_en:
-                score_parts.append(0.9)
-            else:
-                score_parts.append(0.0)
-
-        if bb_away_en:
-            if bb_away_en == pin_away_l:
-                score_parts.append(1.0)
-            elif bb_away_en in pin_away_l or pin_away_l in bb_away_en:
-                score_parts.append(0.9)
-            else:
-                score_parts.append(0.0)
-
-        avg = sum(score_parts) / len(score_parts) if score_parts else 0
-
-        if avg > best_score:
-            best_score = avg
-            best_match = pin
-
-    if best_score >= 0.8:
-        return best_match, best_score
-    return None, 0.0
-
-
-def _bb_to_epoch(bb_match):
-    """Convert BB match time to epoch seconds (UTC).
-
-    支持两种格式:
-    1. API 数据: bt 字段 (Unix 毫秒时间戳)
-    2. DOM 提取: period("07/15") + time("03:00") (GMT+8)
-    """
-    # API 数据: bt 是毫秒时间戳
-    bt = bb_match.get("bt")
-    if bt:
-        try:
-            return int(int(bt) / 1000)
-        except (ValueError, TypeError):
-            pass
-
-    # DOM 提取: period + time (GMT+8)
-    period = bb_match.get("period", "")
-    btime = bb_match.get("time", "")
-    if not period or not btime:
-        return None
-    try:
-        dt_str = f"2026-{period[:2]}-{period[3:5]}T{btime[:2]}:{btime[3:5]}:00"
-        dt_naive = datetime.strptime(dt_str, "%Y-%m-%dT%H:%M:%S")
-        dt_utc = dt_naive - timedelta(hours=8)
-        return int(dt_utc.replace(tzinfo=timezone.utc).timestamp())
-    except (ValueError, IndexError):
-        return None
-
-
-def _pin_to_epoch(pin_match):
-    """Convert Pinnacle matchup start_time (UTC) to epoch seconds."""
-    start = pin_match.get("start_time", "")
-    if not start or "T" not in start:
-        return None
-    try:
-        # Handle "2026-07-14T19:00:00Z" by replacing Z with +00:00
-        start_clean = start.replace("Z", "+00:00")
-        dt = datetime.fromisoformat(start_clean)
-        if dt.tzinfo is None:
-            dt = dt.replace(tzinfo=timezone.utc)
-        return int(dt.timestamp())
-    except (ValueError, IndexError):
-        return None
-
-
-def _odds_similarity(bb_1x2, pin_1x2, min_odds=3, sport="football"):
-    """Compute odds similarity score (0-1)."""
-    if len(bb_1x2) < min_odds or len(pin_1x2) < min_odds:
-        return 0.0
-    ratios = []
-    for i in range(min_odds):
-        bb_o = bb_1x2[i]
-        pin_o = pin_1x2[i]
-        if pin_o > 0:
-            ratios.append(min(bb_o, pin_o) / max(bb_o, pin_o))
-        else:
-            ratios.append(0)
-
-    avg_ratio = sum(ratios) / len(ratios) if ratios else 0
-    if len(ratios) >= min_odds and max(ratios) - min(ratios) > 0.15:
-        # 网球赔率经常严重倾斜（如 1.10 vs 6.50），ratio spread 必然 > 0.15，
-        # 这个 ×0.8 惩罚对网球不合理，会导致 valid 匹配 score 被压低。
-        if sport != "tennis":
-            avg_ratio *= 0.8
-    return avg_ratio
-
-
-def _make_bb_key(bb):
-    return f"{bb.get('home','')}|{bb.get('away','')}|{bb.get('league','')}"
-
-
-def _compute_combined_score(bb, bb_1x2, bb_epoch, pin, pin_ml, sport="football"):
-    """Combined score = odds_similarity × time_factor (0-1)."""
-    min_odds = 2 if sport in TWO_WAY_SPORTS else 3
-    odds_score = _odds_similarity(bb_1x2, pin_ml, min_odds, sport)
-    time_factor = 1.0
-    if bb_epoch:
-        pin_epoch = _pin_to_epoch(pin)
-        if pin_epoch is not None:
-            diff = abs(bb_epoch - pin_epoch)
-            if diff < 600:           # < 10 min — same time
-                time_factor = 1.0
-            elif diff < 1800:         # 10-30 min
-                time_factor = 0.97
-            elif diff < 3600:         # 30-60 min
-                time_factor = 0.93
-            elif diff < 7200:         # 1-2 hr
-                time_factor = 0.88
-            elif diff < 14400:        # 2-4 hr
-                time_factor = 0.50
-            else:
-                time_factor = 0.20
-    return odds_score * time_factor
-
-
-def find_matches_by_odds(bb_matches, pin_matches_by_league):
-    """Match BB体育 games to Pinnacle games.
-
-    Two-phase:
-    1. Name-based (preferred) — uses TEAM_NAME_MAP
-    2. Global greedy: build all (BB, Pin) pairs per league, sort by
-       combined (time × odds) score, greedily assign.  Prevents the
-       common swap-error when two matches share a kickoff time.
-    """
-    name_matched = []
-    matched = []
-    used_pin_ids = set()
-    used_bb_keys = set()
-
-    # Pre-compute BB data（检测运动类型）
-    bb_data = {}
-    for bb in bb_matches:
-        sport = detect_sport(bb)
-        bb_1x2, valid = extract_bb_1x2(bb, sport)
-        min_odds = 2 if sport in TWO_WAY_SPORTS else 3
-        if not valid or len(bb_1x2) < min_odds:
-            bb_1x2 = []  # No ML market — still include for HC/OU comparison
-        bb_data[_make_bb_key(bb)] = {
-            "match": bb, "bb_1x2": bb_1x2, "epoch": _bb_to_epoch(bb),
-            "sport": sport,
-        }
-
-    # Phase 1: Name-based — for each Pin match, find best BB match
-    # Group BB data by league
-    bb_by_league = {}
-    for bb_key, bd in bb_data.items():
-        league = bd["match"].get("league", "")
-        bb_by_league.setdefault(league, []).append((bb_key, bd))
-
-    for bb_league, bb_entries in bb_by_league.items():
-        pin_list = pin_matches_by_league.get(bb_league, [])
-        # For each Pin match, find the best available BB match
-        for pin in pin_list:
-            pin_id = pin.get("matchup_id", id(pin))
-            if pin_id in used_pin_ids:
-                continue
-            best_bb_key = None
-            best_bd = None
-            best_name_score = 0.0
-            for bb_key, bd in bb_entries:
-                if bb_key in used_bb_keys:
-                    continue
-                _, name_score = find_pin_match_by_name(
-                    bd["match"].get("home", ""), bd["match"].get("away", ""), [pin],
-                )
-                if name_score > best_name_score:
-                    best_name_score = name_score
-                    best_bb_key = bb_key
-                    best_bd = bd
-            if best_bd and best_name_score >= 0.50:
-                # 硬时间窗口：同队名但开赛时间差 >4h → 不同比赛（防双赛日混淆）
-                bb_epoch = best_bd["epoch"]
-                pin_epoch = _pin_to_epoch(pin)
-                if bb_epoch is not None and pin_epoch is not None:
-                    if abs(bb_epoch - pin_epoch) > 14400:
-                        continue
-                sport = best_bd["sport"]
-                bb_ml = best_bd.get("bb_1x2", [])
-                min_odds = 2 if sport in TWO_WAY_SPORTS else 3
-                pin_ml = []
-                if len(bb_ml) >= min_odds:
-                    pin_ml = get_pin_ml_sorted(pin, sport)
-                    if len(pin_ml) < min_odds:
-                        continue
-                # BB has no ML → still match for HC/OU comparison
-                used_pin_ids.add(pin_id)
-                used_bb_keys.add(best_bb_key)
-                name_matched.append({
-                    "bb": best_bd["match"], "pin": pin, "league": bb_league,
-                    "match_score": 1.0, "team_score": best_name_score,
-                    "match_type": "name",
-                    "bb_1x2": bb_ml, "pin_1x2": pin_ml,
-                    "sport": sport,
-                })
-
-    # Phase 2: Global greedy per-league
-    for bb_league, pin_list in pin_matches_by_league.items():
-        pairs = []
-        for bb_key, bd in bb_data.items():
-            if bb_key in used_bb_keys:
-                continue
-            if bd["match"].get("league", "") != bb_league:
-                continue
-            sport = bd["sport"]
-            min_odds = 2 if sport in TWO_WAY_SPORTS else 3
-            for pin in pin_list:
-                pin_id = pin.get("matchup_id", id(pin))
-                if pin_id in used_pin_ids:
-                    continue
-                pin_ml = get_pin_ml_sorted(pin, sport)
-                if len(pin_ml) < min_odds:
-                    continue
-                combined = _compute_combined_score(
-                    bd["match"], bd["bb_1x2"], bd["epoch"], pin, pin_ml, sport,
-                )
-                # 网球的时间匹配：降低门限以覆盖更多 ITF 赛事
-                # ITF 赔率差异大 + 时间经常微调，纯时间和赔率匹配很难高分
-                # 已从 0.70 → 0.55 → 0.45（进一步放松以匹配更多网球比赛）
-                min_threshold = 0.45 if sport == "tennis" else 0.70
-                if combined >= min_threshold:
-                    pairs.append((combined, bb_key, bd["match"], pin,
-                                  bd["bb_1x2"], pin_ml, pin_id, sport))
-                elif sport == "tennis" and combined > 0.4 and not bd['match'].get('league','').startswith('世界'):
-                    bb_t = bd['match'].get('bt','')
-                    pin_t = pin.get('start_time','')
-                    bb_odds = bd.get('bb_1x2',[])
-                    pin_odds_list = pin_ml
-                    print(f"  [网球 Phase 2] {bd['match'].get('home','')} vs {bd['match'].get('away','')}")
-                    print(f"    combined={combined:.3f} (阈值={min_threshold})")
-                    print(f"    BB时间={bb_t} Pin时间={pin_t}")
-                    print(f"    BB赔率={bb_odds} Pin赔率={pin_odds_list}")
-
-        pairs.sort(key=lambda x: -x[0])
-        for combined, bb_key, bb, pin, bb_1x2, pin_ml, pin_id, sport in pairs:
-            if bb_key in used_bb_keys or pin_id in used_pin_ids:
-                continue
-            used_bb_keys.add(bb_key)
-            used_pin_ids.add(pin_id)
-            matched.append({
-                "bb": bb, "pin": pin, "league": bb_league,
-                "match_score": round(combined, 3), "match_type": "time",
-                "bb_1x2": bb_1x2, "pin_1x2": pin_ml, "sport": sport,
-            })
-
-    return name_matched + matched
-
-
-def _match_pin_name(pn, pin_name):
-    """Check if pin keyword matches Pinnacle league name (word boundary)."""
-    needle = pn.lower()
-    haystack = pin_name.lower()
-    idx = haystack.find(needle)
-    while idx != -1:
-        before = idx == 0 or haystack[idx - 1] in " -"
-        after = idx + len(needle) >= len(haystack) or haystack[idx + len(needle)] in " -"
-        if before and after:
-            return True
-        idx = haystack.find(needle, idx + 1)
-    return False
-
-
-def _find_best_league(pin_name, all_sport_matchups):
-    """匹配 Pinnacle 联赛名，优先返回精确匹配。"""
-    needle = pin_name.lower().strip()
-    matched = []
-    for lid, info in all_sport_matchups.items():
-        if _match_pin_name(needle, info["name"]):
-            matched.append(lid)
-    if not matched:
-        return None
-    # 精确匹配优先（防止 "Division A" 前缀匹配到 "Division A Women"）
-    for lid in matched:
-        if all_sport_matchups[lid]["name"].lower() == needle:
-            return lid
-    return matched[0]
-
-
-def find_pinnacle_league_id(bb_league_name, all_sport_matchups):
-    """Find Pinnacle league ID that matches a BB体育 league name (single best match)"""
-    ids = find_pinnacle_league_ids(bb_league_name, all_sport_matchups)
-    return ids[0] if ids else None
-
-
-def _find_itf_league_ids(bb_league_name, all_sport_matchups):
-    """Handle 世界网球 (ITF) leagues with location-based matching.
-
-    BB format: "世界网球 - M15 乌斯拉尔 男子单打"
-    Pinnacle format: "ITF Men Uslar - R1"
-
-    Uses hardcoded Chinese→English location mapping, falling back
-    to pinyin fuzzy matching for unmapped locations.
-
-    NOTE: Pinnacle does NOT have separate doubles leagues for ITF events,
-    so if the BB league name contains 双打/雙打, return empty.
-    """
-    # ITF doubles: Pinnacle has no corresponding doubles leagues
-    if '双打' in bb_league_name or '雙打' in bb_league_name or 'Doubles' in bb_league_name:
-        return []
-
-    # Hardcoded Chinese ITF location → English name mapping
-    # (Transliterations vary too much for reliable pinyin-only matching)
-    ITF_LOCATION_MAP = {
-        "乌斯拉尔": "uslar",
-        "新戈里卡": "nova gorica",
-        "武宁": "wuning",
-        "维多利亚加斯泰斯": "vitoria-gasteiz",
-        "库尔索姆利斯卡班亚": "kursumlijska banja",
-        "布朗库堡": "castelo branco",
-        "达姆施塔特": "darmstadt",
-        "都灵": "torino",
-        "六安": "luan",
-        "圣保罗": "sao paulo",
-        "达拉斯": "dallas",
-        "奥洛穆茨": "olomouc",
-        "莫纳斯提尔": "monastir",
-        "路易斯维尔": "louisville",
-        "希尔克雷斯特": "hillcrest",
-        "克尔什科": "krsko",
-        "克尔斯科": "krsko",
-        "古比奥": "gubbio",
-        "古比奧": "gubbio",
-        "克拉姆萨赫": "kramsach",
-        "甘迪亚": "gandia",
-        "诺丁汉": "nottingham",
-        "格兰比": "granby",
-        "罗切斯特": "rochester",
-        "比利亚孔斯蒂图西翁": "villa constitucion",
-        "斯洛博齐亚": "slobozia",
-        "于尔亚日": "uriage",
-        "阿斯塔纳": "astana",
-        "布里斯班": "brisbane",
-        "印多尔": "indore",
-        "新戈里察": "nova gorica",
-        "阿姆施泰滕": "amstetten",
-        "诺让苏尔马恩": "nogent-sur-marne",
-    }
-
-    import re as _re
-
-    # Extract level (M15, M25, W15, W35, W50, W75)
-    level_m = _re.search(r'(M\d+|W\d+)', bb_league_name)
-    if not level_m:
-        return []
-    level = level_m.group(1)
-    is_women = level.startswith('W')
-
-    # Extract location: characters after the level code
-    after_level = bb_league_name.split(level, 1)[-1].strip()
-    loc_parts = []
-    for ch in after_level:
-        if '一' <= ch <= '鿿' or ch == '·':
-            loc_parts.append(ch)
-        elif loc_parts:
-            break
-    location_cn = ''.join(loc_parts).strip('· ')
-    if not location_cn:
-        return []
-
-    # Get English location name from map, or fall back to pinyin
-    location_en = ITF_LOCATION_MAP.get(location_cn, "")
-    if not location_en:
-        try:
-            from pypinyin import lazy_pinyin
-            location_en = ''.join(lazy_pinyin(location_cn)).lower().replace(' ', '')
-        except ImportError:
-            location_en = location_cn.lower()
-
-    gender_prefix = "Women" if is_women else "Men"
-    location_lower = location_en.lower().strip()
-
-    matched_ids = []
-    for lid, info in all_sport_matchups.items():
-        name = info.get("name", "")
-        if not name.startswith("ITF") or gender_prefix not in name:
-            continue
-        # Extract location from Pinnacle league name
-        pin_after_itf = name.split("ITF", 1)[-1].strip()
-        pin_after_gender = pin_after_itf.split(gender_prefix, 1)[-1].strip()
-        pin_location = pin_after_gender.split("-")[0].strip().lower()
-
-        if not pin_location:
-            continue
-
-        # Direct match: location is a substring of Pinnacle name
-        if location_lower in pin_location or pin_location in location_lower:
-            if lid not in matched_ids:
-                matched_ids.append(lid)
-
-    return matched_ids
-
-
-def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
-    """Find ALL Pinnacle league IDs matching a BB体育 league name.
-
-    网球等赛事在 Pinnacle 可能拆分为多个子联赛（Qualifiers、R1等），
-    返回所有匹配的联赛 ID + 同前缀的子联赛。
-
-    策略：
-    1. LEAGUE_KEYWORDS 精确映射
-    1.5. ITF 世界网球特殊处理（位置拼音匹配）
-    2. 对已精确映射的联赛，找 Pinnacle 上同前缀名的子联赛（如 "ATP Bastad"
-       → "ATP Bastad - Qualifiers"、"ATP Bastad - R1"）
-       限制：只对单赛事名（不含" - "在原映射名中）做子联赛扩展
-    3. 未精确映射的联赛用英文关键词做可控模糊匹配
-    """
-    bb_lower = bb_league_name.lower().strip()
-    matched_ids = set()
-
-    # Phase 1: LEAGUE_KEYWORDS 精确映射
-    matched_pin_names = []  # Pinnacle 联赛名列表
-    # 收集所有匹配的关键词候选
-    exact_candidate = None     # bb_name == bb_league_name (精确匹配)
-    reverse_candidates = []    # bb_league_name in bb_name (联赛名在关键词内，可靠)
-    direct_candidates = []     # bb_name in bb_league_name (关键词在联赛名内，可能有CJK子串碰撞)
-
-    for bb_name, pin_name in LEAGUE_KEYWORDS.items():
-        in_direct = bb_name in bb_league_name
-        in_reverse = bb_league_name in bb_name
-
-        if in_direct and in_reverse:
-            # 双向子串=精确匹配，最高优先级，立即使用
-            exact_candidate = (bb_name, pin_name)
-            break
-        elif in_reverse:
-            # 联赛名在关键词内（如关键词"白俄罗斯超级联赛"包含联赛名"俄罗斯超级联赛"）
-            # 这种匹配非常可靠，无假阳性
-            reverse_candidates.append((bb_name, pin_name))
-        elif in_direct:
-            # 关键词在联赛名内（如"俄罗斯超级联赛"是"白俄罗斯超级联赛"的子串）
-            # 可能有CJK子串碰撞，需要用最长关键词消歧
-            direct_candidates.append((bb_name, pin_name, len(bb_name)))
-
-    # 尝试精确匹配
-    if exact_candidate:
-        bb_name, pin_name = exact_candidate
-        pin_names = [pin_name] if isinstance(pin_name, str) else pin_name
-        for pn in pin_names:
-            lid = _find_best_league(pn, all_sport_matchups)
-            if lid:
-                matched_ids.add(lid)
-                matched_pin_names.append(pn)
-
-    # 无精确匹配时，尝试反向匹配（可靠）
-    if not matched_ids:
-        for bb_name, pin_name in reverse_candidates:
-            pin_names = [pin_name] if isinstance(pin_name, str) else pin_name
-            for pn in pin_names:
-                lid = _find_best_league(pn, all_sport_matchups)
-                if lid:
-                    matched_ids.add(lid)
-                    matched_pin_names.append(pn)
-                    break
-            if matched_ids:
-                break
-
-    # 仍无匹配时，尝试正向匹配（最长关键词优先）
-    if not matched_ids and direct_candidates:
-        direct_candidates.sort(key=lambda c: -c[2])  # 按关键词长度降序
-        for bb_name, pin_name, _ in direct_candidates:
-            pin_names = [pin_name] if isinstance(pin_name, str) else pin_name
-            for pn in pin_names:
-                lid = _find_best_league(pn, all_sport_matchups)
-                if lid:
-                    matched_ids.add(lid)
-                    matched_pin_names.append(pn)
-                    break
-            if matched_ids:
-                break
-
-    # Phase 1.5: ITF 世界网球 → 位置拼音匹配
-    if not matched_ids and ("世界网球" in bb_league_name or "世界網球" in bb_league_name):
-        itf_ids = _find_itf_league_ids(bb_league_name, all_sport_matchups)
-        if itf_ids:
-            return sorted(itf_ids)
-
-    if matched_ids:
-        # Phase 1.5: 子联赛扩展 — 只对不含" - "的短名（如 "ATP Bastad"）
-        # 找所有同前缀的 Pinnacle 联赛（如 "ATP Bastad - Qualifiers"）
-        # 但不对 "Russia - First League" 这种结构扩展
-        for pn in matched_pin_names:
-            if " - " in pn:
-                continue  # 已经是多段名称，不做子联赛扩展
-            for lid, info in all_sport_matchups.items():
-                if lid in matched_ids:
-                    continue
-                if info["name"].lower().startswith(pn.lower()):
-                    matched_ids.add(lid)
-
-        return sorted(matched_ids)
-
-    # Phase 2: 只有未精确映射的联赛才做英文关键词模糊匹配
-    import re as _re
-    bb_en_parts = _re.findall(r'[A-Za-z]{2,}', bb_lower)
-    bb_en_set = set(w.lower() for w in bb_en_parts)
-
-    if bb_en_set:
-        for lid, info in all_sport_matchups.items():
-            pin_name = info["name"].lower()
-            pin_words = set(pin_name.split())
-            overlap = bb_en_set & pin_words
-            if len(overlap) >= 2:
-                matched_ids.add(lid)
-            # 单关键词只匹配主流联赛缩写，防止 "atp" 匹配到所有 ATP 联赛
-            elif len(overlap) == 1:
-                single_word = list(overlap)[0]
-                if single_word in ("nba", "nfl", "mlb", "wnba", "ncaa"):
-                    matched_ids.add(lid)
-
-    return sorted(matched_ids) if matched_ids else []
 
 
 def verify_match(bb_match, pin_match):
@@ -2451,9 +923,18 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         "ev_pct": round(ev, 2),
                     })
 
+        # 网球双打 vs 单打不匹配时跳过让球和大小盘
+        _is_doubles_mismatch = (
+            sport == "tennis"
+            and (" / " in entry.get("home_bb", "") or " / " in entry.get("away_bb", ""))
+            and (" / " not in entry.get("home_pin", "") and " / " not in entry.get("away_pin", ""))
+        )
+        if _is_doubles_mismatch:
+            entry["flags"].append("网球双打 vs 单打: 非独赢市场可能来自错误的单打比赛")
+
         # --- 让球/让分 (Handicap/Spread) ---
         hc_candidates = []
-        bb_hc = extract_bb_handicap(bb, sport)
+        bb_hc = extract_bb_handicap(bb, sport) if not _is_doubles_mismatch else None
         if bb_hc:
             hc_candidates.append(("main", bb_hc))
         # 备用让球盘线加入对比（BB/FB API 可能有 alternate_handicaps/alternate_handicap）
@@ -2464,7 +945,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     hc_candidates.append(("alt", alt))
 
         for hc_tag, hc_dict in hc_candidates:
-            bb_hl = hc_dict.get("home_line") or hc_dict.get("away_line")
+            bb_hl = hc_dict.get("home_line") if hc_dict.get("home_line") is not None else hc_dict.get("away_line")
             if bb_hl is None:
                 continue
             home_sp, away_sp, sp_is_alt = get_pin_spread(pin, target_line=bb_hl)
@@ -2487,7 +968,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
 
             # 校准：检查让球线是否对得上
             pin_hc_line = home_sp.get("points")
-            bb_hc_line_val = hc_dict.get("home_line") or hc_dict.get("away_line")
+            bb_hc_line_val = hc_dict.get("home_line") if hc_dict.get("home_line") is not None else hc_dict.get("away_line")
             cal_ok, cal_msg = _calibrate_market_line(sport, "hc", bb_hc_line_val, pin_hc_line, None)
             if cal_ok:
                 # 二次校验：同时检查 home 和 away 两条线的一致性
@@ -2579,7 +1060,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
 
         # --- 大小 (Over/Under) 带去抽水 ---
         ou_candidates = []
-        bb_ou = extract_bb_ou(bb, sport)
+        bb_ou = extract_bb_ou(bb, sport) if not _is_doubles_mismatch else None
         if bb_ou:
             ou_candidates.append(("main", bb_ou))
         # 备用大小盘线加入对比（BB/FB API 可能有 alternate_totals/alternate_total）
@@ -2594,7 +1075,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             bb_line = bb_ou.get("line")
             if sport == "tennis" and bb_line is not None and bb_line > 10:
                 gt = pin.get("games_total")
-                over_p, under_p = get_pin_total({"total": gt}) if gt else (None, None)
+                over_p, under_p = get_pin_total({"total": gt}, target_line=bb_line) if gt else (None, None)
             else:
                 # 找线值最接近的 Pinnacle 大小盘（可能有多个大小线）
                 over_p, under_p = get_pin_total(pin, target_line=bb_line)
@@ -2672,7 +1153,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             # HT 让球
             bb_ht_hc = bb_ht.get("handicap")
             if bb_ht_hc:
-                bb_hl = bb_ht_hc.get("home_line") or bb_ht_hc.get("away_line")
+                bb_hl = bb_ht_hc.get("home_line") if bb_ht_hc.get("home_line") is not None else bb_ht_hc.get("away_line")
                 home_sp, away_sp, sp_is_alt = get_pin_spread(pin, target_line=bb_hl, source=pin.get("ht_spread", []))
                 if home_sp and away_sp and home_sp.get("price_decimal") and away_sp.get("price_decimal"):
                     pin_home_odds = home_sp["price_decimal"]
@@ -2752,38 +1233,74 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                     "_market": "ht",
                                 })
 
-        # --- 双重机会 (Double Chance) FT：从 Pinnacle 1X2 推导公平价 ---
+        # --- 双重机会 (Double Chance) FT ---
         bb_dc = bb.get("odds_dc", [])
+        dc_labels = ["双重机会-主/和局", "双重机会-和局/客", "双重机会-主/客"]
+        dc_desig_map = {"1X": 0, "2X": 1, "12": 2}
+        # dc_fair[i] = fair price for comparison, dc_pin_raw[i] = Pinnacle raw price (for display)
+        dc_fair = None
+        dc_pin_raw = None
+
         if len(bb_dc) >= 3 and n_ml == 3:
-            # 安全校验：BB 双重机会赔率是否与主1X2相同（侧边栏点击失败时会出现）
+            # 安全校验：BB DC 赔率是否与主1X2相同（侧边栏点击失败时会出现）
             dc_first3 = [round(float(x), 2) for x in bb_dc[:3]]
             ml_first3 = [round(x, 2) for x in bb_ml[:3]]
             if dc_first3 == ml_first3:
-                # 侧边栏提取失败，odds_dc 只是主视图赔率的复制
                 bb_dc = []
+
         if len(bb_dc) >= 3 and n_ml == 3:
-            h, d, a = pin_ml
-            if all(x and x > 0 for x in [h, d, a]):
-                imp = 1/h + 1/d + 1/a
-                p_h, p_d, p_a = (1/h)/imp, (1/d)/imp, (1/a)/imp
-                dc_fair = [1/(p_h+p_d), 1/(p_d+p_a), 1/(p_h+p_a)]
-                dc_labels = ["双重机会-主/和局", "双重机会-和局/客", "双重机会-主/客"]
-                # DC 赔率必须低于对应的两个独立1X2赔率（覆盖两个赛果，概率更高）
+            # 路径A：Pinnacle 有 double_chance 市场 → 用 Pinnacle 零售价做基准
+            pin_dc = pin.get("double_chance", [])
+            for dc_market in pin_dc:
+                if dc_market.get("period", 0) != 0:
+                    continue
+                prices = dc_market.get("prices", [])
+                if len(prices) >= 3:
+                    dc_raw = [None, None, None]
+                    for i, p in enumerate(prices):
+                        des = p.get("designation", "")
+                        val = p.get("price_decimal", 0)
+                        idx = dc_desig_map.get(des)
+                        if idx is None and i < 3:
+                            # 子比赛不返回 designation（空字符串），按数组位置映射
+                            # 位置0=1X(主/和局), 位置1=2X(和局/客), 位置2=12(主/客)
+                            idx_map = {0: "1X", 1: "2X", 2: "12"}
+                            idx = dc_desig_map.get(idx_map.get(i, ""))
+                        if idx is not None and val > 0:
+                            dc_raw[idx] = val
+                    if all(x and x > 0 for x in dc_raw):
+                        dc_fair = dc_raw        # fair = Pinnacle零售价（不做去抽水）
+                        dc_pin_raw = dc_raw     # 用于推送显示
+                    break
+
+            # 路径B：Pinnacle 无 DC 市场 → 从 1X2 推导公平价（去抽水后合并概率）
+            if dc_fair is None:
+                h, d, a = pin_ml
+                if all(x and x > 0 for x in [h, d, a]):
+                    imp = 1/h + 1/d + 1/a
+                    p_h, p_d, p_a = (1/h)/imp, (1/d)/imp, (1/a)/imp
+                    dc_fair = [round(1/(p_h+p_d), 4), round(1/(p_d+p_a), 4), round(1/(p_h+p_a), 4)]
+                    # 推导无原始 Pinnacle 价格，dc_pin_raw 保持 None → 推送会显示"推导: 1X2"
+
+            if dc_fair:
                 dc_pair_indices = [(0,1), (1,2), (0,2)]
                 for i in range(3):
                     bb_dc_val = float(bb_dc[i]) if isinstance(bb_dc[i], str) else bb_dc[i]
-                    if not (bb_dc_val and dc_fair[i] > 0):
+                    fp = dc_fair[i]
+                    if not (bb_dc_val and fp and fp > 0):
                         continue
                     # 安全校验：DC赔率必须低于两个组成赛果的1X2赔率
                     idx1, idx2 = dc_pair_indices[i]
                     if bb_ml[idx1] and bb_ml[idx2] and bb_dc_val >= min(bb_ml[idx1], bb_ml[idx2]):
                         continue
-                    ev = (bb_dc_val - dc_fair[i]) / dc_fair[i] * 100
+                    ev = (bb_dc_val - fp) / fp * 100
                     if ev > 1:
+                        pin_raw_val = round(dc_pin_raw[i], 4) if dc_pin_raw else 0
                         entry["double_chance"].append({
                             "designation": dc_labels[i],
                             "bb_odds": bb_dc_val,
-                            "fair_price": round(dc_fair[i], 4),
+                            "pin_odds": pin_raw_val,
+                            "fair_price": round(fp, 4),
                             "ev_pct": round(ev, 2),
                             "_market": "dc",
                         })
@@ -2837,18 +1354,58 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             yes_price = val
                         elif des in ("no", "否"):
                             no_price = val
+                    # designation 为空时用数组位置（子比赛 prices 无 designation）
+                    if not yes_price or not no_price:
+                        if len(prices) >= 2:
+                            yes_price = prices[0].get("price_decimal", 0)
+                            no_price = prices[1].get("price_decimal", 0)
                     if not yes_price or not no_price:
                         continue
                     btts_imp = 1.0 / yes_price + 1.0 / no_price
-                    yes_fair = round(yes_price / btts_imp, 4)
-                    no_fair = round(no_price / btts_imp, 4)
-                    _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, yes_fair, no_fair)
+                    yes_fair = round(yes_price * btts_imp, 4)
+                    no_fair = round(no_price * btts_imp, 4)
+                    _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, yes_fair, no_fair, pin_yes=yes_price, pin_no=no_price)
                     break
             else:
                 # 路径B：从 team_total 0.5 推导 BTTS 公平价
                 yes_fair, no_fair = _derive_btts_from_team_total(pin.get("team_total", []))
                 if yes_fair and no_fair:
-                    _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, yes_fair, no_fair)
+                    _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, yes_fair, no_fair, source="derived")
+
+        # --- 单/双 (Odd/Even) FT：从 Pinnacle Total Goals Odd/Even 市场 ---
+        bb_oe_odd, bb_oe_even = extract_bb_oe(bb)
+        if bb_oe_odd and bb_oe_even:
+            pin_oe = pin.get("oe", [])
+            if pin_oe:
+                for oe_entry in pin_oe:
+                    if oe_entry.get("period", 0) != 0:
+                        continue
+                    prices = oe_entry.get("prices", [])
+                    if len(prices) < 2:
+                        continue
+                    odd_price = prices[0].get("price_decimal", 0)
+                    even_price = prices[1].get("price_decimal", 0)
+                    if odd_price <= 0 or even_price <= 0:
+                        continue
+                    oe_imp = 1.0 / odd_price + 1.0 / even_price
+                    odd_fair = round(odd_price * oe_imp, 4)
+                    even_fair = round(even_price * oe_imp, 4)
+                    _add_oe_opportunities(entry, bb_oe_odd, bb_oe_even, odd_fair, even_fair, pin_odd=odd_price, pin_even=even_price)
+                    break
+
+        # --- 半全场 (HT/FT) FT：从 Pinnacle Half-Time/Full-Time 市场 ---
+        bb_htft = extract_bb_htft(bb)
+        if bb_htft:
+            pin_htft = pin.get("htft", [])
+            if pin_htft:
+                for htft_entry in pin_htft:
+                    if htft_entry.get("period", 0) != 0:
+                        continue
+                    prices = htft_entry.get("prices", [])
+                    if len(prices) < 9:
+                        continue
+                    _add_htft_opportunities(entry, bb_htft, prices)
+                    break
 
         # --- 上半场平局退款 (HT DNB)：从 Pinnacle HT 1X2 推导公平价 ---
         if len(bb_dnb) >= 4 and n_ml == 3:
@@ -2881,13 +1438,15 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                         "_market": "ht_dnb",
                                     })
 
-        # 同一市场只保留溢价最高的选项（FT + HT + DC + DNB + HT_DNB 各自保留）
+        # 同一市场只保留溢价最高的选项（FT + HT + DC + DNB + HT_DNB + BTTS + OE + HT/FT 各自保留）
         for mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"):
             if entry[mk]:
                 ft_entries = [x for x in entry[mk] if x.get("_market") in (None, "", "main")]
                 ht_entries = [x for x in entry[mk] if x.get("_market") == "ht"]
                 dc_entries = [x for x in entry[mk] if x.get("_market") == "dc"]
                 btts_entries = [x for x in entry[mk] if x.get("_market") == "btts"]
+                oe_entries = [x for x in entry[mk] if x.get("_market") == "oe"]
+                htft_entries = [x for x in entry[mk] if x.get("_market") == "htft"]
                 best = []
                 if ft_entries:
                     best.append(max(ft_entries, key=lambda x: x["ev_pct"]))
@@ -2903,6 +1462,10 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     best.append(max(ht_dnb_entries, key=lambda x: x["ev_pct"]))
                 if btts_entries:
                     best.append(max(btts_entries, key=lambda x: x["ev_pct"]))
+                if oe_entries:
+                    best.append(max(oe_entries, key=lambda x: x["ev_pct"]))
+                if htft_entries:
+                    best.append(max(htft_entries, key=lambda x: x["ev_pct"]))
                 entry[mk] = best
 
         if entry["opportunities"] or entry["handicap"] or entry["over_under"] or entry["double_chance"] or entry["draw_no_bet"]:
@@ -2932,7 +1495,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     total_dc = sum(len(o.get("double_chance", [])) for o in opportunities)
     total_dnb = sum(len(o.get("draw_no_bet", [])) for o in opportunities)
     total_btts = sum(1 for o in opportunities for x in o["opportunities"] if x.get("_market") == "btts")
-    total_1x2_only = total_opps_1x2 - total_btts
+    total_oe = sum(1 for o in opportunities for x in o["opportunities"] if x.get("_market") == "oe")
+    total_htft = sum(1 for o in opportunities for x in o["opportunities"] if x.get("_market") == "htft")
+    total_1x2_only = total_opps_1x2 - total_btts - total_oe - total_htft
     total_all = total_opps_1x2 + total_hc + total_ou + total_dc + total_dnb
 
     # 角球对比（在总计数之后合并，不污染已有统计）
@@ -2948,7 +1513,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         print(f"  ⏱ 角球用时: {time.time()-corner_start:.0f}s")
 
     print(f"\n{'='*60}")
-    print(f"匹配: {len(matched)} | +EV 独赢: {total_1x2_only} | 让球: {total_hc} | 大小: {total_ou} | 双重机会: {total_dc} | 平局退款: {total_dnb} | 双边进球: {total_btts} | 角球: {total_corner} | 总计: {total_all}")
+    print(f"匹配: {len(matched)} | +EV 独赢: {total_1x2_only} | 让球: {total_hc} | 大小: {total_ou} | 双重机会: {total_dc} | 平局退款: {total_dnb} | 双边进球: {total_btts} | 单/双: {total_oe} | 半全场: {total_htft} | 角球: {total_corner} | 总计: {total_all}")
     print(f"{'='*60}")
     # 校准报告
     if cal_blocked_hc or cal_blocked_ou:

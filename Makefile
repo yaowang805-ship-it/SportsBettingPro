@@ -61,10 +61,13 @@ format:
 check: lint test
 
 deploy:
-	bash deploy/install_cron.sh
+	@echo "部署已由 launchd pipeline_orchestrator 管理"
+	@echo "如需重装 launchd plist，请运行:"
+	@echo "  cp scripts/com.sportsbettingpro.daemon.plist ~/Library/LaunchAgents/"
+	@echo "  launchctl load ~/Library/LaunchAgents/com.sportsbettingpro.daemon.plist"
 
 deploy-remove:
-	bash deploy/install_cron.sh --remove
+	@echo "如需卸载: launchctl unload ~/Library/LaunchAgents/com.sportsbettingpro.daemon.plist"
 
 clean:
 	find . -type f -name "*.pyc" -delete

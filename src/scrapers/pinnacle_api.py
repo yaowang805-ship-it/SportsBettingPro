@@ -1,0 +1,420 @@
+"""Pinnacle API 传输层 — HTTP 请求、限速、错误诊断
+
+Python 3.14 http.client chunked encoding bug → 自动 monkey-patch
+cf_clearance cookie → 绕过 Cloudflare Turnstile
+"""
+import time
+import logging
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent.parent
+
+import requests
+from config.settings import DATA_DIR
+
+logger = logging.getLogger(__name__)
+
+API_BASE = "https://guest.api.arcadia.pinnacle.com/0.1"
+API_KEY = "CmX2KcMrXuFmNg6YFbmTxE0y9CIrOi0R"
+COOKIE_FILE = DATA_DIR / "pinnacle_cf_clearance.txt"
+
+# ── Python 3.14 chunked encoding monkey-patch ──────────────────────────
+import http.client
+
+_orig_safe_read = http.client.HTTPResponse._safe_read
+
+def _safe_read_patched(self, amt):
+    """Retry on IncompleteRead — Python 3.14 http.client chunked bug."""
+    data = b""
+    while amt > 0:
+        try:
+            chunk = _orig_safe_read(self, amt)
+            return data + chunk if chunk else data
+        except http.client.IncompleteRead as e:
+            data += e.partial
+            amt -= len(e.partial)
+            if amt <= 0:
+                return data
+
+http.client.HTTPResponse._safe_read = _safe_read_patched
+
+# ── Session setup ──────────────────────────────────────────────────────
+
+SESSION = requests.Session()
+SESSION.trust_env = False
+SESSION.proxies = {"http": "", "https": ""}
+SESSION.headers.update({
+    "Accept": "application/json, text/plain, */*",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/150.0.0.0 Safari/537.36",
+    "Referer": "https://www.pinnacle.com/",
+    "Origin": "https://www.pinnacle.com",
+    "X-API-Key": API_KEY,
+})
+
+MAX_RETRIES = 3
+RETRY_DELAY = 2.0
+
+_last_req_time = 0.0
+_MIN_REQUEST_INTERVAL = 0.25
+
+
+def _load_cookie():
+    """从文件加载 cf_clearance cookie。"""
+    if COOKIE_FILE.exists():
+        val = COOKIE_FILE.read_text().strip()
+        if val:
+            SESSION.cookies.set("cf_clearance", val, domain=".pinnacle.com")
+            logger.info("已加载 cf_clearance cookie (%d 字符)", len(val))
+            return True
+    logger.warning("cf_clearance cookie 文件不存在: %s", COOKIE_FILE)
+    return False
+
+
+def _refresh_cookie_from_chrome():
+    """直接从 Chrome 浏览器读取 cf_clearance cookie（最轻量、最可靠）。
+
+    比 Playwright 方案更好：不需要打开浏览器窗口、不需要人机验证。
+    Chrome 浏览器已打开并有有效 cookie 时直接读出。
+    """
+    try:
+        import browser_cookie3
+        cj = browser_cookie3.chrome(domain_name=".pinnacle.com")
+        for c in cj:
+            if c.name == "cf_clearance":
+                val = c.value
+                COOKIE_FILE.write_text(val)
+                SESSION.cookies.set("cf_clearance", val, domain=".pinnacle.com")
+                logger.info("cf_clearance refreshed from Chrome (%d chars)", len(val))
+                return True
+        logger.warning("Chrome 中未找到 cf_clearance cookie")
+    except Exception as e:
+        logger.warning("从 Chrome 读取 cookie 失败: %s", e)
+    return False
+
+
+def _check_hosts_file():
+    """检查 /etc/hosts 是否包含 pinnacle 相关域名 —— 硬编码 IP 可能导致 VPN 切换后连不上。"""
+    hosts_path = "/etc/hosts"
+    pinnacle_domains = ["pinnacle.com", "arcadia.pinnacle.com"]
+    try:
+        content = Path(hosts_path).read_text()
+        for line in content.splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            for domain in pinnacle_domains:
+                if domain in line:
+                    msg = (
+                        f"/etc/hosts 包含 pinnacle 硬编码: {line} — "
+                        "VPN IP 变更后会导致连接失败，建议删除"
+                    )
+                    logger.warning(msg)
+                    print(f"⚠️  {msg}")
+                    return True
+    except (OSError, IOError):
+        pass
+    return False
+
+
+def _rate_limit():
+    global _last_req_time
+    elapsed = time.time() - _last_req_time
+    if elapsed < _MIN_REQUEST_INTERVAL:
+        time.sleep(_MIN_REQUEST_INTERVAL - elapsed)
+    _last_req_time = time.time()
+
+
+def _refresh_cookie_via_playwright():
+    """Playwright 启动 Chrome 150 → 刷新 cf_clearance cookie。
+
+    仅在 cookie 过期/403 时自动调用。
+    """
+    try:
+        _refresh_cookie_fast()
+        return True
+    except Exception as exc:
+        logger.error("Playwright refresh failed: %s", exc)
+        return False
+
+
+def _refresh_cookie_fast():
+    """用 Playwright + 真实 Chrome 150 + 当前 cookie 刷新。"""
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        logger.error("playwright not installed, cannot refresh cookie")
+        return
+
+    chrome_path = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+    old_cookie = SESSION.cookies.get("cf_clearance", domain=".pinnacle.com") or ""
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(
+            headless=True,
+            executable_path=chrome_path,
+            args=["--disable-blink-features=AutomationControlled"],
+        )
+        context = browser.new_context(
+            user_agent=(
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/150.0.0.0 Safari/537.36"
+            ),
+        )
+        if old_cookie:
+            context.add_cookies([{
+                "name": "cf_clearance",
+                "value": old_cookie,
+                "domain": ".pinnacle.com",
+                "path": "/",
+                "httpOnly": True,
+                "secure": True,
+            }])
+
+        page = context.new_page()
+        resp = page.goto(
+            f"{API_BASE}/sports",
+            wait_until="domcontentloaded",
+            timeout=20000,
+        )
+
+        if resp and resp.status == 200:
+            cookies = context.cookies()
+            for c in cookies:
+                if c["name"] == "cf_clearance":
+                    COOKIE_FILE.write_text(c["value"])
+                    SESSION.cookies.set(
+                        "cf_clearance", c["value"], domain=".pinnacle.com"
+                    )
+                    logger.info("cf_clearance refreshed via Playwright")
+                    break
+        browser.close()
+
+
+def api_get(path, retry=True):
+    """调用 Pinnacle API，带 cookie 和限速。"""
+    _load_cookie()  # load every time to ensure cookie is set
+    _rate_limit()
+    url = f"{API_BASE}{path}"
+
+    for attempt in range(MAX_RETRIES if retry else 1):
+        try:
+            resp = SESSION.get(url, timeout=30)
+
+            if resp.status_code == 429:
+                wait = RETRY_DELAY * (2 ** attempt)
+                logger.warning("429 rate limited, retry in %.0fs", wait)
+                time.sleep(wait)
+                continue
+
+            if resp.status_code == 403:
+                logger.warning("403 Forbidden — 尝试自动恢复...")
+                # 先试 Chrome 实时 cookie（最轻量）
+                if not _refresh_cookie_from_chrome():
+                    # 再试 Playwright（重量级，需要浏览器进程）
+                    _refresh_cookie_via_playwright()
+                if attempt < MAX_RETRIES - 1:
+                    continue
+                _diagnose_pinnacle_error(url, 403)
+                return None
+
+            if resp.status_code != 200:
+                if attempt < MAX_RETRIES - 1:
+                    time.sleep(RETRY_DELAY)
+                    continue
+                _diagnose_pinnacle_error(url, resp.status_code)
+                return None
+
+            return resp.json()
+
+        except requests.exceptions.SSLError as e:
+            logger.warning("SSL error, retrying... %s", e)
+            if attempt < MAX_RETRIES - 1:
+                time.sleep(RETRY_DELAY * (2 ** attempt))
+                continue
+            logger.error("SSL handshake failed after retries")
+            return None
+
+        except requests.exceptions.ConnectionError as e:
+            logger.error("Connection failed: %s", e)
+            return None
+
+        except requests.exceptions.Timeout:
+            if attempt < MAX_RETRIES - 1:
+                logger.warning("timeout, retrying...")
+                time.sleep(RETRY_DELAY)
+                continue
+            logger.error("Pinnacle API timeout after retries")
+            return None
+
+        except requests.exceptions.ChunkedEncodingError as e:
+            logger.warning("ChunkedEncodingError (Python 3.14 bug), retrying... %s", e)
+            if attempt < MAX_RETRIES - 1:
+                time.sleep(RETRY_DELAY)
+                continue
+            return None
+
+        except Exception as e:
+            logger.error("Pinnacle API error (%s): %s", type(e).__name__, e)
+            return None
+
+    return None
+
+
+def _diagnose_pinnacle_error(url, status_code):
+    """Pinnacle API 非 200 响应诊断。"""
+    logger.error("Pinnacle API returned %d for %s", status_code, url)
+    if status_code == 403:
+        logger.error("403 Forbidden — cf_clearance cookie 无效或 Cloudflare WAF 拦截")
+        logger.error("运行诊断: python3 -m src.scrapers.pinnacle_api --check")
+    elif status_code == 401:
+        logger.error("401 Unauthorized — X-API-Key 缺失或无效")
+    elif status_code == 429:
+        logger.error("429 Rate Limited — 等待 1 分钟后重试")
+    elif status_code == 503:
+        logger.error("503 Service Unavailable — Pinnacle 服务不可用")
+
+
+def us_to_decimal(us_price):
+    """美式赔率 → 十进制。"""
+    if us_price is None:
+        return None
+    if us_price > 0:
+        return round(1 + us_price / 100, 4)
+    else:
+        return round(1 - 100 / us_price, 4)
+
+
+# ── Preflight connectivity check ───────────────────────────────────────
+
+def check_pinnacle_connectivity(verbose=True):
+    """Pinnacle API 全面连通性检查。
+
+    按顺序测试: DNS → HTTP基础连接 → cookie → 关键端点
+    返回 (ok: bool, diagnostics: list)
+    """
+    import socket as _socket
+
+    diag = []
+    ok = True
+
+    def _log(msg, is_error=False):
+        diag.append(msg)
+        if verbose:
+            # CLI 模式下 logging 可能无 handler，用 print 兜底
+            try:
+                (logger.error if is_error else logger.info)(msg)
+            except Exception:
+                pass
+            print(msg)
+
+    # 0. Hosts 文件检查
+    _log("--- Pinnacle API 连通性检查 ---")
+    if _check_hosts_file():
+        _log("⚠️  /etc/hosts 含 pinnacle 硬编码 — VPN 切换后会导致连接失败", is_error=True)
+        ok = False
+
+    # 1. DNS 解析
+    dns_ok = False
+    for host in ["guest.api.arcadia.pinnacle.com", "www.pinnacle.com"]:
+        try:
+            ip = _socket.getaddrinfo(host, 443)[0][4][0]
+            _log(f"✅ DNS: {host} → {ip}")
+            dns_ok = True
+        except _socket.gaierror as e:
+            _log(f"❌ DNS 解析失败 {host}: {e}", is_error=True)
+            ok = False
+    if not dns_ok:
+        _log("❌ DNS 完全不可用 — 检查网络/VPN", is_error=True)
+        if verbose:
+            print("\n❌ DNS 故障: Pinnacle 域名无法解析")
+            print("   可能原因: VPN DNS 劫持 / 网络断开 / 路由器故障")
+        return False, diag
+
+    # 2. 基础 HTTP 连通性（CF 层面）
+    try:
+        r = SESSION.get(f"{API_BASE}/sports", timeout=15)
+        if r.status_code == 200:
+            _log(f"✅ /sports = 200 ({len(r.json())} sports)")
+        elif r.status_code == 403:
+            _log("❌ /sports = 403 — cf_clearance cookie 无效或过期", is_error=True)
+            ok = False
+        elif r.status_code == 503:
+            _log("❌ /sports = 503 — Pinnacle 服务不可用", is_error=True)
+            ok = False
+        else:
+            _log(f"❌ /sports = {r.status_code}", is_error=True)
+            ok = False
+    except requests.exceptions.SSLError as e:
+        _log(f"❌ SSL 握手失败: {e}", is_error=True)
+        _log("   可能原因: 代理/VPN 拦截了 Pinnacle 证书", is_error=True)
+        ok = False
+    except requests.exceptions.ConnectionError as e:
+        _log(f"❌ 连接失败: {e}", is_error=True)
+        _log("   可能原因: Cloudflare 拦截 / VPN 路由问题", is_error=True)
+        ok = False
+    except requests.exceptions.Timeout:
+        _log("❌ 连接超时 — 网络/VPN 问题", is_error=True)
+        ok = False
+
+    # 3. Cookie 状态
+    cookie = SESSION.cookies.get("cf_clearance", domain=".pinnacle.com")
+    if cookie:
+        _log(f"✅ cf_clearance cookie 已加载 ({len(cookie)} 字符)")
+    else:
+        _log("❌ 未加载 cf_clearance cookie", is_error=True)
+        # 尝试从 Chrome 读取
+        if _refresh_cookie_from_chrome():
+            _log("✅ 已从 Chrome 自动获取 cookie")
+        else:
+            _log("❌ 无法从 Chrome 获取 cookie", is_error=True)
+            _log("   请在 Chrome 中打开 https://www.pinnacle.com 通行人机验证", is_error=True)
+            ok = False
+
+    # 4. 带 X-API-Key 的端点测试
+    try:
+        r = SESSION.get(f"{API_BASE}/leagues/29/matchups", timeout=15)
+        if r.status_code == 200:
+            n = len(r.json()) if isinstance(r.json(), list) else 0
+            _log(f"✅ matchups (含 X-API-Key) = 200 ({n} matches)")
+        elif r.status_code == 401:
+            _log(f"❌ matchups = 401 — X-API-Key 无效或缺失", is_error=True)
+            ok = False
+        elif r.status_code == 403:
+            _log(f"❌ matchups = 403 — Cloudflare WAF 拦截了 X-API-Key 请求", is_error=True)
+            _log("   需在 Chrome 中刷新 pinnacle.com 获取新 cookie", is_error=True)
+            ok = False
+        else:
+            _log(f"❌ matchups = {r.status_code}", is_error=True)
+            ok = False
+    except Exception as e:
+        _log(f"❌ matchups 异常: {e}", is_error=True)
+        ok = False
+
+    if ok:
+        _log("✅ Pinnacle API 连通性正常")
+    else:
+        _log("❌ Pinnacle API 存在问题，部分功能不可用", is_error=True)
+
+    return ok, diag
+
+
+def main():
+    """CLI: python3 -m src.scrapers.pinnacle_api --check"""
+    import sys
+    if "--check" in sys.argv:
+        ok, diag = check_pinnacle_connectivity(verbose=True)
+        sys.exit(0 if ok else 1)
+    else:
+        print("用法: python3 -m src.scrapers.pinnacle_api --check")
+        sys.exit(1)
+
+
+# ── Module init ────────────────────────────────────────────────────────
+_load_cookie()
+_check_hosts_file()
+
+if __name__ == "__main__":
+    main()

@@ -99,6 +99,11 @@ def _load_portfolio() -> dict:
 
 
 def _save_portfolio(state: dict):
+    """写入前备份，防止文件损坏导致数据丢失。"""
+    if PORTFOLIO_FILE.exists():
+        bak = PORTFOLIO_FILE.with_suffix(PORTFOLIO_FILE.suffix + ".bak")
+        import shutil
+        shutil.copy2(str(PORTFOLIO_FILE), str(bak))
     PORTFOLIO_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2))
 
 

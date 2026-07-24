@@ -14,7 +14,7 @@
     </array>
 
     <key>WorkingDirectory</key>
-    <string>/Users/wangyao/SportsBettingPro</string>
+    <string>/Users/wangyao/Desktop/SportsBettingPro</string>
 
     <key>RunAtLoad</key>
     <true/>
@@ -26,10 +26,10 @@
     <integer>30</integer>
 
     <key>StandardOutPath</key>
-    <string>/Users/wangyao/SportsBettingPro/data/logs/pipeline_daemon.log</string>
+    <string>/Users/wangyao/Desktop/SportsBettingPro/data/logs/pipeline_daemon.log</string>
 
     <key>StandardErrorPath</key>
-    <string>/Users/wangyao/SportsBettingPro/data/logs/pipeline_daemon.log</string>
+    <string>/Users/wangyao/Desktop/SportsBettingPro/data/logs/pipeline_daemon.log</string>
 
     <key>EnvironmentVariables</key>
     <dict>

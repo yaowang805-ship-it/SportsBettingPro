@@ -266,6 +266,25 @@ def build_report():
         lines.append(f"日期 {budget_date} | 已用 {budget_used:.0f}¥ / {DAILY_BANKROLL:.0f}¥")
         lines.append("")
 
+    # ── 待人工确认（三态结算 unresolved） ──
+    try:
+        from src.monitor.auto_settle import _load_unresolved
+        unresolved = _load_unresolved()
+    except Exception:
+        unresolved = []
+    if unresolved:
+        lines.append(f"**【待人工确认】** {len(unresolved)} 笔无法自动结算")
+        for u in unresolved[:5]:
+            home = u.get("home", "?")
+            away = u.get("away", "?")
+            market = u.get("market", "?")
+            reason = u.get("reason", "")
+            source_q = u.get("source_quality", "?")
+            lines.append(f"⏳ {home} vs {away} | {market} | 源:{source_q} | {reason}")
+        if len(unresolved) > 5:
+            lines.append(f"   ... 还有 {len(unresolved) - 5} 笔")
+        lines.append("")
+
     body = "\n".join(lines)
 
     stats = {

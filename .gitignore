@@ -65,6 +65,13 @@ data/storage/daily_settlement_last.json
 # Entire data/storage/ directory (all runtime-generated files)
 data/storage/
 
+# Exception: 关键映射文件需要 git 跟踪（双备份）
+!data/storage/league_keywords.json
+!data/storage/team_name_map.json
+!data/storage/banned_leagues.json
+!data/storage/league_tiers.json
+!data/storage/team_aliases.json
+
 # Auto-generated data directories
 data/history/
 data/storage/*.lock

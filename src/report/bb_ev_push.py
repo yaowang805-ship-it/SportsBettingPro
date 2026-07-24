@@ -28,6 +28,8 @@ from config.constants import (
 COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison.json"
 FB_COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison_FB.json"
 FINGERPRINT_FILE = DATA_DIR / "pushed_fingerprints.json"
+CLV_LOG_FILE = DATA_DIR / "clv_tracking.csv"
+BUDGET_TRACKER_FILE = DATA_DIR / "budget_tracker.json"
 
 # 联赛配置数据（从固定文件加载）
 BANNED_LEAGUES_FILE = DATA_DIR / "banned_leagues.json"
@@ -52,23 +54,217 @@ CONSISTENCY_WARN_THRESHOLD = 0.20
 # 不靠谱联赛 — 匹配质量差、假阳性多，直接屏蔽（从固定文件加载）
 _BANNED_LEAGUES = _load_banned_leagues()
 
-# 市场质量权重 — 基于结算数据统计的各市场 ROI，用于加权 EV 排序
-# 权重 < 0.5 表示该市场长期表现差，需要更高 EV 才能获得同等优先级
+# CLV 暂停缓存 — 进程内只从 SQLite 加载一次
+_CLV_SUSPENSIONS_CACHE = None
+
+
+def _get_clv_suspensions():
+    global _CLV_SUSPENSIONS_CACHE
+    if _CLV_SUSPENSIONS_CACHE is None:
+        _CLV_SUSPENSIONS_CACHE = _load_clv_suspensions()
+    return _CLV_SUSPENSIONS_CACHE
+
+# 市场质量权重 — 用于加权 EV 排序
+# 权重基于全球 Pinnacle 效率研究 + BB/FB 平台特征确定:
+# Pinnacle 效率越高 → 公平价越可靠 → 权重越高
+# BB/FB 相对偏离越大 → 机会越多 → 权重略增
+# 综合平衡后: 权重 = 公平价可信度 × BB/FB 偏离概率
 MARKET_QUALITY = {
-    # 权重基于结算数据，但考虑样本量做 Bayesian 收缩：
-    # 样本少 → 权重接近 1.0（保守），样本多且信号强才偏离
-    "ou":   1.00,  # 大小球: 52笔 +7.3% ROI → 最可靠信号，基准
-    "hc":   1.00,  # 让球: 7笔样本太小，暂不调整
-    "ht":   1.00,  # 上半场: 12笔 +27% ROI，样本小保留基准
-    "btts": 1.00,  # 双边进球: 11笔 +13.6%，样本小保留基准
-    "1x2":  0.75,  # 独赢: 47笔 -37.7%，但其中11笔世界杯全输严重拖累。
-                   #         去掉世界杯36笔仅-4%，所以轻微惩罚而非彻底排除
-    "dc":   0.80,  # 双重机会: 1笔 -100%，样本不足以判断
-    "dnb":  0.80,  # 平局退款: 无结算数据
-    "oe":   0.80,  # 单/双: 新市场无数据
-    "htft": 0.80,  # 半全场: 新市场无数据
-    "corner": 0.80,  # 角球: 新市场无数据
+    "1x2":  1.00,  # 独赢: Pinnacle 最高效(无FLB) → 公平价最可靠, 正常权重
+    "hc":   1.00,  # 让球: Pinnacle AH 效率高(~2%抽水), 整数盘口优先
+    "ou":   0.90,  # 大小球: Pinnacle 效率较低 → 公平价有噪音, 保守处理
+    "btts": 0.85,  # 双边进球: 学术数据不足, 公平价可靠性低
+    "dnb":  0.80,  # 平局退款: 介于 AH 和 1X2 之间, 维持
+    "ht":   0.75,  # 上半场: 无直接研究, 数据少 → 保守
+    "dc":   0.75,  # 双重机会: 从 1X2 推导, API 数据质量待验证
+    "oe":   0.70,  # 单/双: 新市场, 样本不足
+    "corner": 0.70,  # 角球: 新市场, 样本不足
+    "htft": 0.60,  # 半全场: 极复杂市场, 公平价可靠性最低
 }
+
+# ── 市场预算分配 ──
+# 基于"公平价可信度 × BB/FB 偏离概率"二维分配
+# Key = budget group name, Value = BANKROLL 比例
+MARKET_BUDGET = {
+    "足球1X2":    0.20,  # football + 1x2: 公平价最可靠
+    "篮球ML":     0.20,  # basketball + 1x2: POD 验证最佳 ROI
+    "足球OU":     0.15,  # football + ou/btts: 有噪音但机会多
+    "篮球大小分":  0.15,  # basketball + ou
+    "让球盘":     0.10,  # all sports + hc
+    "棒球":       0.10,  # baseball: 高 ROI 惊喜
+    "网球":       0.05,  # tennis: FLB 需扣除
+}
+_BUDGET_DEFAULT = 0.05  # 其他未列出项
+
+
+def _get_budget_group(sport: str, sub_market: str) -> str:
+    """将 (sport, sub_market) 映射到预算组名。"""
+    if sport == "football" and sub_market == "1x2":
+        return "足球1X2"
+    if sport == "basketball" and sub_market == "1x2":
+        return "篮球ML"
+    if sport == "football" and sub_market in ("ou", "btts"):
+        return "足球OU"
+    if sport == "basketball" and sub_market == "ou":
+        return "篮球大小分"
+    if sub_market == "hc":
+        return "让球盘"
+    if sport == "baseball":
+        return "棒球"
+    if sport == "tennis":
+        return "网球"
+    return "其他"
+
+
+def _load_budget_tracker():
+    """加载当日预算跟踪器。日期不匹配时自动重置。"""
+    from config.database import get_budget, save_budget
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    spent = get_budget(today)
+    return spent, today
+
+
+def _save_budget_tracker(spent: dict, date_str: str):
+    """保存预算跟踪器（写入 SQLite）。"""
+    from config.database import save_budget
+    save_budget({k: v for k, v in spent.items() if v > 0}, date_str)
+
+
+# ── CLV 追踪 ──
+
+def _log_clv(opps: list):
+    """将推送机会的 CLV 数据写入 SQLite（主）和 CSV（备份）。"""
+    from config.database import insert_push_clv
+    insert_push_clv(opps)
+
+    # CSV 备份
+    import csv
+    exists = CLV_LOG_FILE.exists()
+    with open(CLV_LOG_FILE, "a", newline="") as f:
+        writer = csv.writer(f)
+        if not exists:
+            writer.writerow([
+                "timestamp", "sport", "league", "home", "away",
+                "designation", "sub_market", "bb_odds", "pin_odds",
+                "fair_price", "ev_pct", "stake", "tier", "match_epoch",
+            ])
+        now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        for o in opps:
+            writer.writerow([
+                now,
+                o.get("sport", ""),
+                o.get("league", ""),
+                o.get("home_cn", ""),
+                o.get("away_cn", ""),
+                o.get("designation", ""),
+                o.get("_sub_market", o.get("_market", "")),
+                o.get("bb_odds", 0),
+                o.get("pin_odds", 0),
+                o.get("fair_price", 0),
+                o.get("ev_pct", 0),
+                o.get("_stake", 0),
+                o.get("_tier", 0),
+                o.get("_pin_epoch", ""),
+            ])
+
+
+# ── CLV 趋势检查 ──
+
+_CLV_WARN_THRESHOLD = 100   # 连续 N 条中位数 CLV < 0 → 黄色警告
+_CLV_STOP_THRESHOLD = 200   # 连续 N+ 条中位数 CLV < 0 → 红色暂停
+_CLV_MEDIAN_CUTOFF = -0.5   # 中位数 CLV 低于此值触发
+
+
+def _check_clv_trend(opps: list) -> tuple:
+    """检查每个 (sport, league) 的 CLV 趋势。
+
+    Returns:
+        (warnings, suspensions)
+        warnings: list[str] — 推送中展示的警告文本
+        suspensions: set of (sport, league) tuples — 应暂停的组合
+    """
+    from config.database import get_clv_trend
+
+    # 获取已暂停的列表
+    suspended = _load_clv_suspensions()
+
+    combos_seen = set()
+    for o in opps:
+        sport = o.get("sport", "")
+        league = o.get("league", "")
+        if not sport or not league:
+            continue
+        key = (sport, league)
+        if key in combos_seen:
+            continue
+        combos_seen.add(key)
+
+    warnings = []
+    new_suspensions = set()
+
+    for sport, league in combos_seen:
+        records = get_clv_trend(sport, league, limit=_CLV_STOP_THRESHOLD)
+        if not records or len(records) < 20:
+            continue
+
+        # 计算中位数 CLV
+        clv_values = [r["clv"] for r in records]
+        median_clv = sorted(clv_values)[len(clv_values) // 2]
+
+        # 检查连续负 CLV 的最长长度
+        max_consecutive_neg = 0
+        current_run = 0
+        for r in records:
+            if r.get("clv", 0) < 0:
+                current_run += 1
+                max_consecutive_neg = max(max_consecutive_neg, current_run)
+            else:
+                current_run = 0
+
+        is_suspended = (sport, league) in suspended
+
+        if is_suspended:
+            warnings.append(
+                f"⏸️ {sport}/{league} CLV 持续为负({median_clv:+.1f}%中位, "
+                f"最长{max_consecutive_neg}条), 已暂停推送"
+            )
+            new_suspensions.add((sport, league))
+        elif max_consecutive_neg >= _CLV_STOP_THRESHOLD or median_clv < _CLV_MEDIAN_CUTOFF - 2:
+            warnings.append(
+                f"🛑 {sport}/{league} CLV 严重为负(中位{median_clv:+.1f}%, "
+                f"连续{max_consecutive_neg}条负值), 暂停推送"
+            )
+            new_suspensions.add((sport, league))
+        elif max_consecutive_neg >= _CLV_WARN_THRESHOLD or median_clv < _CLV_MEDIAN_CUTOFF:
+            warnings.append(
+                f"⚠️ {sport}/{league} CLV 趋势不佳(中位{median_clv:+.1f}%, "
+                f"连续{max_consecutive_neg}条负值), 关注"
+            )
+
+    # 持久化暂停列表
+    if new_suspensions != suspended:
+        _save_clv_suspensions(new_suspensions)
+
+    return warnings, new_suspensions
+
+
+def _load_clv_suspensions() -> set:
+    """从 SQLite 加载已暂停的 (sport, league) 组合。"""
+    from config.database import get_push_meta
+    raw = get_push_meta("clv_suspensions")
+    if raw:
+        try:
+            return {tuple(item) for item in json.loads(raw)}
+        except (json.JSONDecodeError, TypeError):
+            pass
+    return set()
+
+
+def _save_clv_suspensions(suspensions: set):
+    """持久化暂停列表到 SQLite。"""
+    from config.database import set_push_meta
+    set_push_meta("clv_suspensions", json.dumps(sorted(suspensions), ensure_ascii=False))
+
 
 # 中文市场名（用于推送显示）
 _MARKET_CN = {
@@ -149,7 +345,7 @@ def _check_sport_consistency(opportunities: list, pre_dedup_counts: Optional[dic
 
 
 def _calc_kelly_stakes(opps: list) -> list:
-    """按 Kelly 比例计算投注额，加单注上限 + 单场上限。"""
+    """按 Kelly 比例计算投注额，加单注上限 + 单场上限 + 市场预算上限。"""
     from config.constants import MAX_STAKE_PCT as _MAX_STAKE_PCT, PER_MATCH_CAP_PCT as _PER_MATCH_CAP_PCT
 
     # 第一遍：计算毛 Kelly 投注额
@@ -177,7 +373,63 @@ def _calc_kelly_stakes(opps: list) -> list:
             for o in group:
                 o["_stake"] = max(0, round(o["_stake"] * ratio))
 
+    # 第三遍：市场预算上限
+    spent, today = _load_budget_tracker()
+    budget_groups = defaultdict(list)
+    for o in opps:
+        if o["_stake"] == 0:
+            continue
+        sport = o.get("sport", "")
+        sub = o.get("_sub_market", o.get("_market", ""))
+        group = _get_budget_group(sport, sub)
+        budget_groups[group].append(o)
+
+    for group, group_opps in budget_groups.items():
+        cap = BANKROLL * MARKET_BUDGET.get(group, _BUDGET_DEFAULT)
+        used = spent.get(group, 0)
+        remaining = cap - used
+        if remaining <= 0:
+            for o in group_opps:
+                o["_stake"] = 0
+            logger.info("预算超限: %s 已用完 (¥%d/¥%d)", group, int(used), int(cap))
+            continue
+        total_wanted = sum(o["_stake"] for o in group_opps)
+        if total_wanted > remaining:
+            ratio = remaining / total_wanted
+            for o in group_opps:
+                o["_stake"] = max(0, round(o["_stake"] * ratio))
+            logger.info("预算压缩: %s 需¥%d 限¥%d, 压缩至%.0f%%",
+                        group, total_wanted, int(remaining), ratio * 100)
+
+    # 保存更新后的预算跟踪（预分配，推送后可能因去重而修正）
+    new_spent = dict(spent)
+    for o in opps:
+        if o["_stake"] == 0:
+            continue
+        sport = o.get("sport", "")
+        sub = o.get("_sub_market", o.get("_market", ""))
+        group = _get_budget_group(sport, sub)
+        new_spent[group] = new_spent.get(group, 0) + o["_stake"]
+    _save_budget_tracker(new_spent, today)
+
     return opps
+
+
+def _correct_budget_tracker(opps: list):
+    """推送成功后重算预算消耗，排除因指纹去重被过滤的机会。
+
+    在 _calc_kelly_stakes 预分配后调用，修正为实际推送金额。
+    """
+    from collections import defaultdict
+    groups = defaultdict(int)
+    for o in opps:
+        if o["_stake"] == 0:
+            continue
+        sport = o.get("sport", "")
+        sub = o.get("_sub_market", o.get("_market", ""))
+        group = _get_budget_group(sport, sub)
+        groups[group] += o["_stake"]
+    _save_budget_tracker(dict(groups), datetime.now(timezone.utc).strftime("%Y-%m-%d"))
 
 
 def _collect_opportunities(match, market_key):
@@ -214,6 +466,10 @@ def _collect_opportunities(match, market_key):
     for banned in _BANNED_LEAGUES:
         if banned in league:
             return []
+
+    # CLV 趋势暂停检查：连续负 CLV → 暂时跳过该 (sport, league)
+    if (match.get("sport", ""), league) in _get_clv_suspensions():
+        return []
 
     # 联赛可信度分层过滤
     tier = _get_league_tier(league)
@@ -698,6 +954,9 @@ def build_report(force: bool = False):
 
     sport_summary = _compute_sport_summary()
     warnings = _check_sport_consistency(qualified)
+    clv_warnings, _ = _check_clv_trend(qualified)
+    if clv_warnings:
+        warnings = (warnings or []) + clv_warnings
     body = _format_body(qualified, warnings, sport_summary)
     return body, qualified
 
@@ -728,18 +987,15 @@ def _make_fingerprint(o: dict) -> str:
 
 
 def _load_fingerprints() -> set:
-    if FINGERPRINT_FILE.exists():
-        try:
-            data = json.loads(FINGERPRINT_FILE.read_text())
-            if isinstance(data, list):
-                return set(data)
-        except (json.JSONDecodeError, ValueError):
-            pass
-    return set()
+    from config.database import load_fingerprints as _db_load
+    return _db_load()
 
 
 def _save_fingerprints(fps: set):
-    """原子写入指纹文件：先写 .tmp 再 rename，防止进程崩溃导致文件损坏。"""
+    """原子写入指纹文件 + SQLite。"""
+    from config.database import save_fingerprints
+    save_fingerprints(fps)
+    # 同时写入 JSON 作为二次备份
     tmp = FINGERPRINT_FILE.with_suffix(".fptmp")
     tmp.write_text(json.dumps(sorted(fps), ensure_ascii=False, indent=2))
     tmp.replace(FINGERPRINT_FILE)
@@ -794,6 +1050,9 @@ def push_report(place_bets=False, incremental=False, qualified=None):
         return
 
     warnings = _check_sport_consistency(qualified, pre_dedup_counts)
+    clv_warnings, _ = _check_clv_trend(qualified)
+    if clv_warnings:
+        warnings = (warnings or []) + clv_warnings
     body = _format_body(qualified, warnings)
     if not body:
         logger.info("empty body, skip")
@@ -832,10 +1091,20 @@ def push_report(place_bets=False, incremental=False, qualified=None):
             logger.info("推送机会已暂存到 %s，开始投注...", PUSH_STAGING_FILE)
             place_bets_from_push(qualified)
         # 指纹总是保存（不管 --no-bet），防止重复推送同一场比赛
+        from config.database import add_fingerprints
         new_fps = {_make_fingerprint(o) for o in qualified}
+        add_fingerprints(new_fps)
+        # JSON 二次备份
         existing = _load_fingerprints()
         existing.update(new_fps)
         _save_fingerprints(existing)
+
+        # 预算修正：去除因指纹去重被过滤的机会，保留实际推送消耗
+        _correct_budget_tracker(qualified)
+
+        # CLV 追踪：记录每条推送的赔率数据用于收盘线价值分析
+        _log_clv(qualified)
+
         logger.info("BB vs Pinnacle +EV report pushed (%d opportunities)", body.count('#####'))
     else:
         logger.warning("BB vs Pinnacle push failed")

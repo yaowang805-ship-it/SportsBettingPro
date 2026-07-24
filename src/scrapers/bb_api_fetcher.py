@@ -66,6 +66,7 @@ SPORTS = [
 MARKET_TYPES = {
     1: {  # 足球
         "ml": 1005, "hc": 1000, "ou": 1007, "dnb": 1089, "dc": 1012, "btts": 1027,
+        "oe": 1008, "htft": 1033,
         "corner_ml": 1009, "corner_ou": 1010, "corner_hc": 1011,
     },
     3: {  # 篮球 (3004=独赢, 3003=大小, 3002=让分)
@@ -103,7 +104,8 @@ MARKET_TYPES = {
 # 各运动的市场显示中文名
 MARKET_LABELS = {
     "football":  {"ml_name": "独赢", "hc_name": "让球", "ou_name": "大小",
-                  "dnb_name": "平局退款", "dc_name": "双重机会"},
+                  "dnb_name": "平局退款", "dc_name": "双重机会",
+                  "oe_name": "单/双", "htft_name": "半全场"},
     "basketball": {"ml_name": "独赢", "hc_name": "让分", "ou_name": "大小"},
     "tennis":     {"ml_name": "独赢", "hc_name": "让盘", "ou_name": "大小"},
     "baseball":   {"ml_name": "独赢", "hc_name": "让分", "ou_name": "大小"},
@@ -485,16 +487,29 @@ def extract_match_odds(record, sport_key, platform="BB"):
                 continue
             line_val = _get_line_value(mk)
 
-            home_op = away_op = None
+            # 优先用 na 字段（队名）确定主客，na 为空则 fallback 到 ty 字段
+            cb_home, cb_away = _get_match_teams(record)
+            assigned_home = assigned_away = None
             for op in ops:
-                ty = op.get("ty", 0)
-                if ty == 1:
-                    home_op = op
-                elif ty == 2:
-                    away_op = op
-            if not home_op or not away_op:
-                home_op, away_op = ops[0], ops[1]
+                op_na = (op.get("na", "") or "").strip()
+                if cb_home and op_na == cb_home:
+                    assigned_home = op
+                elif cb_away and op_na == cb_away:
+                    assigned_away = op
+            if not assigned_home or not assigned_away:
+                # na 不包含队名，回退 ty 方案
+                assigned_home = assigned_away = None
+                for op in ops:
+                    ty = op.get("ty", 0)
+                    if ty == 1:
+                        assigned_home = op
+                    elif ty == 2:
+                        assigned_away = op
+                if not assigned_home or not assigned_away:
+                    assigned_home, assigned_away = ops[0], ops[1]
 
+            home_op = assigned_home
+            away_op = assigned_away
             home_odds = float(home_op.get("od", 0))
             away_odds = float(away_op.get("od", 0))
             home_line_str = home_op.get("nm", "")
@@ -629,6 +644,71 @@ def extract_match_odds(record, sport_key, platform="BB"):
         if yes_op and no_op:
             return {"yes_odds": yes_op, "no_odds": no_op}
         return None
+
+    def _extract_oe(period):
+        """Extract Odd/Even (单/双) from mty=1008."""
+        mty_code = mt.get("oe")
+        if not mty_code:
+            return None
+        group = _find_market_group(record, mty_code, period)
+        if not group:
+            return None
+        markets = group.get("mks", group.get("markets", []))
+        if not markets:
+            return None
+        ops = _get_market_options(markets[0])
+        if len(ops) < 2:
+            return None
+        odd_op = even_op = None
+        for op in ops:
+            na = (op.get("na", "") or "").strip()
+            od = float(op.get("od", 0))
+            if od <= 0:
+                continue
+            if na in ("单", "Odd", "odd"):
+                odd_op = od
+            elif na in ("双", "Even", "even"):
+                even_op = od
+            elif odd_op is None:
+                odd_op = od
+            elif even_op is None:
+                even_op = od
+        if odd_op and even_op:
+            return {"odd_odds": odd_op, "even_odds": even_op}
+        return None
+
+    def _extract_htft(period):
+        """Extract Half-Time/Full-Time (半全场) from mty=1033.
+
+        Returns dict with 9 keys: home/home, home/draw, home/away,
+        draw/home, draw/draw, draw/away, away/home, away/draw, away/away
+        """
+        mty_code = mt.get("htft")
+        if not mty_code:
+            return None
+        group = _find_market_group(record, mty_code, period)
+        if not group:
+            return None
+        markets = group.get("mks", group.get("markets", []))
+        if not markets:
+            return None
+        ops = _get_market_options(markets[0])
+        if len(ops) < 9:
+            return None
+
+        # 9 options in order: 主/主, 主/和, 主/客, 和/主, 和/和, 和/客, 客/主, 客/和, 客/客
+        keys = ["home/home", "home/draw", "home/away",
+                "draw/home", "draw/draw", "draw/away",
+                "away/home", "away/draw", "away/away"]
+        result = {}
+        for i, op in enumerate(ops):
+            if i >= len(keys):
+                break
+            od = float(op.get("od", 0))
+            if od > 1:
+                result[keys[i]] = od
+        if len(result) >= 9:
+            return result
         return None
 
     def _extract_corner_ml(period):
@@ -752,6 +832,12 @@ def extract_match_odds(record, sport_key, platform="BB"):
         ft_btts = _extract_btts(ft_period)
         if ft_btts:
             ft_dict["btts"] = ft_btts
+        ft_oe = _extract_oe(ft_period)
+        if ft_oe:
+            ft_dict["oe"] = ft_oe
+        ft_htft = _extract_htft(ft_period)
+        if ft_htft:
+            ft_dict["htft"] = ft_htft
 
         # 角球市场
         ft_corner_ml = _extract_corner_ml(ft_period)
@@ -1040,11 +1126,21 @@ def _merge_platform_results(platform_results):
     Returns: 合并后的 match 列表
     """
     from collections import OrderedDict
+
+    # 加载队名映射表，归一化 home/away 名称使不同平台同一球队能合并
+    _team_map = {}
+    _tm_path = DATA_DIR / "team_name_map.json"
+    if _tm_path.exists():
+        _team_map = json.loads(_tm_path.read_text())
+
+    def _norm(name):
+        return _team_map.get(name, name)
+
     groups = OrderedDict()
 
     for platform, matches in platform_results.items():
         for m in matches:
-            key = (m.get("home", ""), m.get("away", ""), m.get("league", ""))
+            key = (_norm(m.get("home", "")), _norm(m.get("away", "")), m.get("league", ""))
             if key not in groups:
                 groups[key] = []
             groups[key].append((platform, m))
