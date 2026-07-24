@@ -29,6 +29,7 @@ from config.constants import (
     MAX_BETS,
     KELLY_FRACTION as KELLY_FRAC,
     MAX_STAKE_PCT,
+    PER_MATCH_CAP_PCT,
     MIN_EV_PCT,
     get_league_tier as _get_league_tier,
     league_multiplier as _league_multiplier,
@@ -256,7 +257,7 @@ def place_bets(dry_run=False):
 
             match_key = (home, away)
             match_total_stake = 0.0
-            PER_MATCH_CAP = daily_bankroll * 0.03  # 单场总投注 ≤ 3%
+            PER_MATCH_CAP = daily_bankroll * PER_MATCH_CAP_PCT  # 单场总投注 ≤ 6%
 
             for mk in ("opportunities", "handicap", "over_under"):
                 if bets_placed >= MAX_BETS:
@@ -327,6 +328,7 @@ def place_bets(dry_run=False):
                         "away_cn": away,
                         "market": market_type,
                         "market_type": outcome,
+                        "sub_market": opp.get("_sub_market", opp.get("_market", "")),
                         "line": hc_line,
                         "odds": bb_odds,
                         "stake": round(stake, 2),
@@ -483,6 +485,7 @@ def place_bets_from_push(opportunities, bankroll=50000.0):
                 "away_cn": away,
                 "market": market_type,
                 "market_type": outcome,
+                "sub_market": o.get("_sub_market", o.get("_market", "")),
                 "line": o.get("line", ""),
                 "odds": bb_odds,
                 "stake": round(stake, 2),

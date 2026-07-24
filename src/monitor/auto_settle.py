@@ -841,6 +841,7 @@ def auto_settle(dry_run: bool = False) -> int:
                             bet_id=bid,
                             league=bet.get("league", ""),
                             market=bet.get("market_type", "unknown"),
+                            sub_market=bet.get("sub_market", bet.get("_market", "")),
                             edge_pct=bet.get("model_prob", 0) / (1.0 / max(odds, 1.01)) - 1.0 if odds > 1 else 0,
                             odds=odds,
                             stake=stake,
@@ -877,6 +878,15 @@ def auto_settle(dry_run: bool = False) -> int:
                         logger.warning("  ⚠️ 风险状态同步失败: %s", e)
                 settled_count += 1
 
+    # ── 回写推荐记录：将已结算投注的结果同步到 recommendation_log.csv ──
+    if not dry_run:
+        _sync_recommendation_log(state, settled_count)
+    # ── 推荐记录全量结算：已投注已回写，未投注的用推荐 stakes 算结果 ──
+    if not dry_run:
+        rec_settled = _settle_recommendation_log()
+        if rec_settled:
+            settled_count += rec_settled
+
     if settled_count == 0:
         logger.info("未找到可结算的投注（比赛可能仍未结束）")
     else:
@@ -902,6 +912,117 @@ def auto_settle(dry_run: bool = False) -> int:
             logger.warning("策略自进化异常: %s", e)
 
     return settled_count
+
+
+def _settle_recommendation_log() -> int:
+    """全量结算推荐记录中所有未结算的比赛。
+
+    加载 recommendation_log.csv，对每个 status != "settled" 的条目：
+    1. 用 _match_bet 查比分
+    2. 用推荐时的 stake 算盈亏
+    3. 更新 CSV
+
+    Returns:
+        结算数量
+    """
+    try:
+        from src.report.recommendation_tracker import load_all, _rewrite_all, _make_fingerprint_from_row
+    except ImportError:
+        return 0
+
+    records = load_all()
+    if not records:
+        return 0
+
+    pending = [r for r in records if r.get("status") != "settled"]
+    if not pending:
+        return 0
+
+    logger.info("推荐记录全量结算: %s 笔待处理", len(pending))
+
+    # 按 (sport, league) 分组
+    league_groups = {}
+    for rec in pending:
+        key = (rec.get("sport", ""), rec.get("league", ""))
+        league_groups.setdefault(key, []).append(rec)
+
+    _sport_fallback_cache: dict[str, list] = {}
+    settled = 0
+    updated_rows = set()  # track indices that need updating
+
+    for (sport, league), recs in league_groups.items():
+        # 获取比分
+        api_key_info = LEAGUE_SPORT_MAP.get(league)
+        if not api_key_info:
+            sk = SPORT_FALLBACK.get(sport)
+            if sk:
+                api_key_info = (sk, league or sport)
+            else:
+                if sport not in _sport_fallback_cache:
+                    _sport_fallback_cache[sport] = get_completed_scores_by_sport(sport) or []
+                completed = _sport_fallback_cache[sport]
+                if not completed:
+                    continue
+        if api_key_info:
+            completed = _fetch_completed_scores(league)
+        if not completed:
+            continue
+
+        for rec in recs:
+            # 构造 fake bet 给 _match_bet 用
+            designation = rec.get("designation", "")
+            market_type_str = rec.get("market_type", "")
+            odds_val = float(rec.get("bb_odds", 0))
+            stake_val = float(rec.get("stake", 0))
+            if odds_val <= 0 or stake_val <= 0:
+                continue
+
+            # 映射中文标识到 _match_bet 能识别的格式
+            mapped_designation = designation
+            if "双边进球" in designation:
+                # "双边进球-是" → "yes", "双边进球-否" → "no"
+                mapped_designation = "yes" if "是" in designation else "no"
+            elif "双重机会" in designation:
+                # "双重机会-主/和局" → "双重机会-主/和局" 保留原样（_match_bet 已支持）
+                pass
+
+            fake_bet = {
+                "home_team": rec.get("home_team", ""),
+                "home_cn": rec.get("home_cn", ""),
+                "away_team": rec.get("away_team", ""),
+                "away_cn": rec.get("away_cn", ""),
+                "market_type": mapped_designation,
+                "market": market_type_str,
+                "odds": odds_val,
+                "stake": stake_val,
+            }
+
+            result = _match_bet(fake_bet, completed)
+            if result:
+                if result == "won":
+                    profit = stake_val * (odds_val - 1)
+                elif result == "push":
+                    profit = 0.0
+                else:
+                    profit = -stake_val
+
+                # Update in-place
+                rec["status"] = "settled"
+                rec["result"] = result
+                rec["profit"] = str(round(profit, 2))
+                settled += 1
+
+                logger.info("  [推荐结算] %s vs %s | %s | stake=¥%.0f → %s (盈亏¥%.0f)",
+                            rec.get("home_cn", ""), rec.get("away_cn", ""),
+                            designation, stake_val, result, profit)
+
+    if settled:
+        _rewrite_all(records)
+        logger.info("推荐记录全量结算完成: %d 笔", settled)
+    else:
+        logger.info("推荐记录全量结算: 无可结算条目")
+
+    return settled
 
 
 def _auto_void_timeout(max_days: int = 7) -> int:
@@ -954,6 +1075,73 @@ def _auto_void_timeout(max_days: int = 7) -> int:
         _save_state(state)
         logger.info("  超时作废完成: %d 笔", voided)
     return voided
+
+
+def _sync_recommendation_log(state: dict, settled_count: int):
+    """将已结算投注的结果同步到 recommendation_log.csv。
+
+    通过 (home_cn, away_cn, designation) 三元组匹配推荐记录与投注结果。
+    """
+    try:
+        from src.report.recommendation_tracker import load_all, _rewrite_all
+    except ImportError:
+        return
+
+    records = load_all()
+    if not records:
+        return
+
+    # 从 portfolio history 构建 结果映射
+    # 格式：(home_cn, away_cn, desig) → (result, profit)
+    history_results = {}
+    for h in state.get("history", []):
+        if h.get("status") not in ("won", "lost", "void"):
+            continue
+        desig = h.get("market_type", "")
+        if not desig:
+            # 从 bet_id 提取 designation（id 格式: bb_vs_pin_{market}_{home}_{away}_{designation})
+            bid = h.get("id", "")
+            parts = bid.split("_")
+            if len(parts) >= 5:
+                desig = parts[-1]
+        if not desig:
+            continue
+        key = (h.get("home_cn", ""), h.get("away_cn", ""), desig)
+        profit = h.get("profit", 0) or 0
+        history_results[key] = (h["status"], profit)
+
+    # 从 settled dict 补充（bid 含编码信息）
+    settled = state.get("settled", {})
+    if isinstance(settled, dict):
+        for bid, result in settled.items():
+            if isinstance(result, str) and result in ("won", "lost"):
+                parts = bid.split("_")
+                # 尝试从 bet_id 提取
+                if len(parts) >= 5:
+                    # bb_vs_pin_{market}_{home}_{away}_{designation}
+                    desig = parts[-1]
+                    home_encoded = parts[-3] if len(parts) >= 4 else ""
+                    away_encoded = parts[-2] if len(parts) >= 4 else ""
+                    key = (home_encoded, away_encoded, desig)
+                    if key not in history_results:
+                        history_results[key] = (result, 0)
+
+    if not history_results:
+        return
+
+    updated = 0
+    for row in records:
+        key = (row.get("home_cn", ""), row.get("away_cn", ""), row.get("designation", ""))
+        if key in history_results and row.get("status") != "settled":
+            result, profit = history_results[key]
+            row["status"] = "settled"
+            row["result"] = result
+            row["profit"] = str(round(float(profit), 2))
+            updated += 1
+
+    if updated:
+        _rewrite_all(records)
+        logger.info("推荐记录同步: 已更新 %d 条结算结果", updated)
 
 
 def main():

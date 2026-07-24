@@ -29,17 +29,18 @@ class SettlementLogger:
 
     def record(self, bet_id: str, league: str, market: str,
                edge_pct: float, odds: float, stake: float,
-               profit: float, outcome: str):
+               profit: float, outcome: str,
+               sub_market: str = ""):
         """记录一笔结算结果。"""
         is_new = not self.log_file.exists()
         with open(self.log_file, "a", newline="") as f:
             w = csv.writer(f)
             if is_new:
-                w.writerow(["date", "bet_id", "league", "market",
+                w.writerow(["date", "bet_id", "league", "market", "sub_market",
                            "edge_pct", "odds", "stake", "profit", "outcome"])
             w.writerow([
                 datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M"),
-                bet_id, league, market,
+                bet_id, league, market, sub_market,
                 round(edge_pct, 2), round(odds, 4), round(stake, 2),
                 round(profit, 2), outcome,
             ])

@@ -2,6 +2,7 @@
 import json, sys, time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+from typing import Optional
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
@@ -10,6 +11,9 @@ from config.logging_config import get_logger
 from config.settings import DATA_DIR, DINGTALK_WEBHOOK
 
 logger = get_logger(__name__)
+
+# 推荐记录追踪 — 记录每次推送的所有推荐
+from src.report import recommendation_tracker
 
 from config.constants import (
     BANKROLL,
@@ -48,6 +52,38 @@ CONSISTENCY_WARN_THRESHOLD = 0.20
 # 不靠谱联赛 — 匹配质量差、假阳性多，直接屏蔽（从固定文件加载）
 _BANNED_LEAGUES = _load_banned_leagues()
 
+# 市场质量权重 — 基于结算数据统计的各市场 ROI，用于加权 EV 排序
+# 权重 < 0.5 表示该市场长期表现差，需要更高 EV 才能获得同等优先级
+MARKET_QUALITY = {
+    # 权重基于结算数据，但考虑样本量做 Bayesian 收缩：
+    # 样本少 → 权重接近 1.0（保守），样本多且信号强才偏离
+    "ou":   1.00,  # 大小球: 52笔 +7.3% ROI → 最可靠信号，基准
+    "hc":   1.00,  # 让球: 7笔样本太小，暂不调整
+    "ht":   1.00,  # 上半场: 12笔 +27% ROI，样本小保留基准
+    "btts": 1.00,  # 双边进球: 11笔 +13.6%，样本小保留基准
+    "1x2":  0.75,  # 独赢: 47笔 -37.7%，但其中11笔世界杯全输严重拖累。
+                   #         去掉世界杯36笔仅-4%，所以轻微惩罚而非彻底排除
+    "dc":   0.80,  # 双重机会: 1笔 -100%，样本不足以判断
+    "dnb":  0.80,  # 平局退款: 无结算数据
+    "oe":   0.80,  # 单/双: 新市场无数据
+    "htft": 0.80,  # 半全场: 新市场无数据
+    "corner": 0.80,  # 角球: 新市场无数据
+}
+
+# 中文市场名（用于推送显示）
+_MARKET_CN = {
+    "1x2": "独赢",
+    "hc": "让球",
+    "ou": "大小球",
+    "ht": "上半场",
+    "btts": "双边进球",
+    "dc": "双重机会",
+    "dnb": "平局退款",
+    "oe": "单/双",
+    "htft": "半全场",
+    "corner": "角球",
+}
+
 
 def _min_ev_for_tier(tier: int) -> float:
     """每层最低 EV 门槛。T1 最可信门槛最低，T3 需显著更高 edge 才推。"""
@@ -60,10 +96,10 @@ def _min_ev_for_tier(tier: int) -> float:
     return 99.0  # Tier 4 不推送
 
 # EV 上限 — EV > 此值几乎全是假阳性（队名匹配到错误比赛）
-EV_CAP = 12
+# 使用 constants.EV_CAP (12.0)
 
 
-def _check_sport_consistency(opportunities: list, pre_dedup_counts: dict | None = None) -> list:
+def _check_sport_consistency(opportunities: list, pre_dedup_counts: Optional[dict] = None) -> list:
     """对比上次推送的 per-sport 机会数，有显著下降时返回警告列表。
 
     pre_dedup_counts: 去重前的 per-sport 计数，用于检测（防止被指纹去重误导）。
@@ -113,15 +149,14 @@ def _check_sport_consistency(opportunities: list, pre_dedup_counts: dict | None 
 
 
 def _calc_kelly_stakes(opps: list) -> list:
-    """按 Kelly 比例计算投注额，加单注上限 2% + 单场上限 3%。"""
-    MAX_STAKE_PCT = 0.04  # 单注 ≤ 4% bankroll (¥2,000)
-    PER_MATCH_CAP_PCT = 0.06  # 同一场比赛总投注 ≤ 6%
+    """按 Kelly 比例计算投注额，加单注上限 + 单场上限。"""
+    from config.constants import MAX_STAKE_PCT as _MAX_STAKE_PCT, PER_MATCH_CAP_PCT as _PER_MATCH_CAP_PCT
 
     # 第一遍：计算毛 Kelly 投注额
     for o in opps:
         k = o.get("_kelly_pct", 0)
         stake = round(BANKROLL * k / 100)
-        max_stake = BANKROLL * MAX_STAKE_PCT
+        max_stake = BANKROLL * _MAX_STAKE_PCT
         stake = int(min(stake, max_stake))
         if stake < 5:
             stake = 0
@@ -134,7 +169,7 @@ def _calc_kelly_stakes(opps: list) -> list:
         key = (o.get("home_cn", ""), o.get("away_cn", ""))
         match_groups[key].append(o)
 
-    per_match_max = BANKROLL * PER_MATCH_CAP_PCT
+    per_match_max = BANKROLL * _PER_MATCH_CAP_PCT
     for key, group in match_groups.items():
         total = sum(o["_stake"] for o in group)
         if total > per_match_max:
@@ -218,14 +253,34 @@ def _collect_opportunities(match, market_key):
         if bb_odds > 15.0 and league_mult < 1.0:
             continue
 
+        # 市场子类型识别：区分同一 market_key 下的不同市场（如 1X2 / HT / BTTS / DC）
+        sub_market = opp.get("_market", "")
+        if not sub_market or sub_market == "main":
+            # 根据 market_key 推导子类型
+            _MK_TO_SUB = {
+                "opportunities": "1x2",
+                "handicap": "hc",
+                "over_under": "ou",
+                "double_chance": "dc",
+                "draw_no_bet": "dnb",
+            }
+            sub_market = _MK_TO_SUB.get(market_key, "1x2")
+        market_w = MARKET_QUALITY.get(sub_market, 0.50)
+
+        # 加权 EV：原始 EV × 市场质量权重
+        # 用于排序（市场权重低的如 1x2 需要更高 EV 才能排在前面）
+        weighted_ev = round(ev * market_w, 2)
+
+        # 原始 EV 已通过 min_ev 检查，加权 EV 不用于过滤（仅排序）
+        # Kelly 用原始 EV，不用加权（投注额基于实际 edge）
         fair = opp.get("fair_price") or round(pin_odds, 2)
         kelly_pct = 0
         if bb_odds > 1:
             kelly = (ev / 100) / (bb_odds - 1) * KELLY_FRACTION
             kelly_pct = round(kelly * 100, 2)
 
-        # 综合评分：溢价 × 匹配度 × 联赛权重
-        score = round(ev * match_score * league_mult, 2)
+        # 综合评分：加权溢价 × 匹配度 × 联赛权重
+        score = round(weighted_ev * match_score * league_mult, 2)
 
         # 带盘口信息的显示名
         desig = opp.get("designation", "")
@@ -246,9 +301,12 @@ def _collect_opportunities(match, market_key):
             "ev_pct": ev,
             "start_time_bb": match.get("start_time_bb", ""),
             "_market_type": market_key,  # "opportunities"|"handicap"|"over_under"|...
+            "_sub_market": sub_market,  # "1x2"|"ht"|"btts"|"dc"|"oe"|"htft"|...
 
             "_match_score": match_score,
             "_score": score,
+            "_weighted_ev": weighted_ev,
+            "_market_weight": market_w,
             "_kelly_pct": kelly_pct,
             "_tier": tier,
             "_pin_epoch": match.get("start_time_pin_epoch"),  # 用于显示开赛时间
@@ -437,8 +495,8 @@ def _compute_sport_summary():
     return summary
 
 
-def _format_body(qualified: list, warnings: list | None = None,
-                 sport_summary: dict | None = None) -> str:
+def _format_body(qualified: list, warnings: Optional[list] = None,
+                 sport_summary: Optional[dict] = None) -> str:
     """将 qualified 机会列表格式化为钉钉推送文本。按比赛分组，同场多盘口合并显示。"""
     if not qualified:
         return ""
@@ -540,8 +598,8 @@ def _format_body(qualified: list, warnings: list | None = None,
     match_idx = 0
 
     for (sport, league, home, away), opps in sorted_groups:
-        # 组内按 EV 降序
-        opps.sort(key=lambda o: -o["ev_pct"])
+        # 组内按加权 EV 降序（市场质量高的优先）
+        opps.sort(key=lambda o: -o.get("_weighted_ev", o["ev_pct"]))
 
         sport_label = SPORT_CN.get(sport, "")
         if sport != prev_sport:
@@ -647,8 +705,9 @@ def build_report(force: bool = False):
 # ── 推送去重 ──
 
 def _make_fingerprint(o: dict) -> str:
-    """为一条机会生成唯一指纹：sport|league|home|away|盘口（含线值）|比赛日期
+    """为一条机会生成唯一指纹：sport|league|home|away|盘口（含线值）|子市场|比赛日期
 
+    含子市场（_sub_market）防止 1X2 客胜 vs HT 客胜 等跨市场误杀。
     盘口线参与指纹：线变了（如 -9.5→-10.5）视为新机会可重新推送。
     仅归一化队名空格，防止 "(女)" 前不一致空格导致误判为不同机会。
     """
@@ -664,7 +723,8 @@ def _make_fingerprint(o: dict) -> str:
     def _norm(s):
         import re as _re
         return _re.sub(r'\s+', ' ', s.strip()) if s else s
-    return f"{_norm(o.get('sport',''))}|{_norm(o.get('league',''))}|{_norm(o.get('home_cn',''))}|{_norm(o.get('away_cn',''))}|{_norm(o.get('designation',''))}|{match_date}"
+    sub = o.get("_sub_market", o.get("_market", ""))
+    return f"{_norm(o.get('sport',''))}|{_norm(o.get('league',''))}|{_norm(o.get('home_cn',''))}|{_norm(o.get('away_cn',''))}|{_norm(o.get('designation',''))}|{sub}|{match_date}"
 
 
 def _load_fingerprints() -> set:
@@ -761,6 +821,10 @@ def push_report(place_bets=False, incremental=False, qualified=None):
     from config.settings import send_dingtalk
     ok = send_dingtalk(title, body)
     if ok:
+        # 记录本次推送的所有推荐比赛
+        scan_type = "incremental" if incremental else "full"
+        recommendation_tracker.log_recommendations(qualified, scan_type=scan_type)
+
         # 投注后保存指纹
         if place_bets:
             from src.betting.bb_virtual_bet import PUSH_STAGING_FILE, place_bets_from_push
