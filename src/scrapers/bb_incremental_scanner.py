@@ -429,6 +429,124 @@ def _fetch_fb_only():
     return True
 
 
+def _merge_bb_odds_into_fb(fb_matches):
+    """将 BB 数据的高赔率合并到 FB 数据中。
+
+    FB 和 BB 的队名相同（都是中文名），按 league + home + away 做精确匹配。
+    对每个市场（ML, handicap, total, dnb 等）取 BB 和 FB 的 max 值。
+    """
+    bb_path = DATA_DIR / "bb_odds_extracted.json"
+    if not bb_path.exists():
+        return fb_matches
+
+    bb_data = json.loads(bb_path.read_text())
+    all_bb = bb_data.get("matches", [])
+
+    # 建立 BB 索引: (league, home, away) → match
+    bb_index = {}
+    for m in all_bb:
+        key = (m.get("league", ""), m.get("home", ""), m.get("away", ""))
+        bb_index[key] = m
+
+    merged_count = 0
+    for fb_m in fb_matches:
+        key = (fb_m.get("league", ""), fb_m.get("home", ""), fb_m.get("away", ""))
+        bb_m = bb_index.get(key)
+        if not bb_m:
+            continue
+
+        fb_ft = fb_m.get("odds_ft", {})
+        bb_ft = bb_m.get("odds_ft", {})
+
+        # 追踪每个市场哪个平台提供最高赔率
+        sources = {}
+
+        # ML: 逐元素取最大
+        fb_ml = fb_ft.get("ml", [])
+        bb_ml = bb_ft.get("ml", [])
+        if bb_ml and len(bb_ml) == len(fb_ml):
+            changed = False
+            for i in range(len(fb_ml)):
+                if bb_ml[i] > fb_ml[i]:
+                    fb_ml[i] = bb_ml[i]
+                    changed = True
+            if changed:
+                fb_ft["ml"] = fb_ml
+                sources["ml"] = "BB"
+
+        # Handicap: 主客赔率取最大（线一致时）
+        fb_hc = fb_ft.get("handicap", {})
+        bb_hc = bb_ft.get("handicap", {})
+        if fb_hc and bb_hc and isinstance(fb_hc, dict) and isinstance(bb_hc, dict):
+            fb_line = fb_hc.get("home_line_str", "")
+            bb_line = bb_hc.get("home_line_str", "")
+            if fb_line == bb_line:
+                hc_changed = False
+                if bb_hc.get("home_odds", 0) > fb_hc.get("home_odds", 0):
+                    fb_hc["home_odds"] = bb_hc["home_odds"]
+                    hc_changed = True
+                if bb_hc.get("away_odds", 0) > fb_hc.get("away_odds", 0):
+                    fb_hc["away_odds"] = bb_hc["away_odds"]
+                    hc_changed = True
+                if hc_changed:
+                    sources["handicap"] = "BB"
+
+        # OU: 大小赔率取最大（线一致时）
+        fb_ou = fb_ft.get("total", {})
+        bb_ou = bb_ft.get("total", {})
+        if fb_ou and bb_ou and isinstance(fb_ou, dict) and isinstance(bb_ou, dict):
+            fb_line = fb_ou.get("line_str", "")
+            bb_line = bb_ou.get("line_str", "")
+            if fb_line == bb_line:
+                ou_changed = False
+                if bb_ou.get("over_odds", 0) > fb_ou.get("over_odds", 0):
+                    fb_ou["over_odds"] = bb_ou["over_odds"]
+                    ou_changed = True
+                if bb_ou.get("under_odds", 0) > fb_ou.get("under_odds", 0):
+                    fb_ou["under_odds"] = bb_ou["under_odds"]
+                    ou_changed = True
+                if ou_changed:
+                    sources["ou"] = "BB"
+
+        # DNB
+        fb_dnb = fb_ft.get("dnb", {})
+        bb_dnb = bb_ft.get("dnb", {})
+        if fb_dnb and bb_dnb and isinstance(fb_dnb, dict) and isinstance(bb_dnb, dict):
+            dnb_changed = False
+            if bb_dnb.get("home_odds", 0) > fb_dnb.get("home_odds", 0):
+                fb_dnb["home_odds"] = bb_dnb["home_odds"]
+                dnb_changed = True
+            if bb_dnb.get("away_odds", 0) > fb_dnb.get("away_odds", 0):
+                fb_dnb["away_odds"] = bb_dnb["away_odds"]
+                dnb_changed = True
+            if dnb_changed:
+                sources["dnb"] = "BB"
+
+        # OE: 单/双赔率取最大
+        fb_oe = fb_ft.get("oe", {})
+        bb_oe = bb_ft.get("oe", {})
+        if fb_oe and bb_oe and isinstance(fb_oe, dict) and isinstance(bb_oe, dict):
+            oe_changed = False
+            if bb_oe.get("odd_odds", 0) > fb_oe.get("odd_odds", 0):
+                fb_oe["odd_odds"] = bb_oe["odd_odds"]
+                oe_changed = True
+            if bb_oe.get("even_odds", 0) > fb_oe.get("even_odds", 0):
+                fb_oe["even_odds"] = bb_oe["even_odds"]
+                oe_changed = True
+            if oe_changed:
+                sources["oe"] = "BB"
+
+        # 更新平台来源标记：有 BB 合入的市场标记为 BB，其余保持 FB
+        fb_m["platform_sources"] = sources
+        fb_m["platform"] = "BOTH" if sources else "FB"
+
+        merged_count += 1
+
+    if merged_count:
+        print(f"  🔀 BB 高赔率已合并到 FB: {merged_count} 场")
+    return fb_matches
+
+
 def _run_fb_comparison(all_pin_leagues):
     """对 FB 数据进行独立对比，更新 FB 对比文件。
 
@@ -455,6 +573,9 @@ def _run_fb_comparison(all_pin_leagues):
         return False
 
     print(f"  FB 比赛数: {len(fb_matches)}")
+
+    # 合并 BB 数据中的更高赔率（BB 和 FB 队名相同，按 league+home+away 匹配）
+    fb_matches = _merge_bb_odds_into_fb(fb_matches)
 
     from scrapers.bb_vs_pinnacle import compare_bb_vs_pinnacle
     fb_result = compare_bb_vs_pinnacle(
