@@ -170,9 +170,9 @@ def _log_clv(opps: list):
 
 # ── CLV 趋势检查 ──
 
-_CLV_WARN_THRESHOLD = 100   # 连续 N 条中位数 CLV < 0 → 黄色警告
-_CLV_STOP_THRESHOLD = 200   # 连续 N+ 条中位数 CLV < 0 → 红色暂停
-_CLV_MEDIAN_CUTOFF = -0.5   # 中位数 CLV 低于此值触发
+_CLV_WARN_THRESHOLD = 50    # 连续 N 条中位数 CLV < 0 → 黄色警告
+_CLV_STOP_THRESHOLD = 100   # 连续 N+ 条中位数 CLV < 0 → 红色暂停
+_CLV_MEDIAN_CUTOFF = -1.0   # 中位数 CLV 低于此值触发
 
 
 def _check_clv_trend(opps: list) -> tuple:

@@ -28,6 +28,7 @@ usage() {
   scan [--no-bet]       全量扫描 + 对比 + 推送
   incremental           增量扫描（变动检测 → 定向对比）
   settle                结算已结束比赛
+  tier-update [--dry-run]  ROI 自进化联赛分层更新
   report <type>         推送报告 (daily|weekly|monthly)
   daemon <action>       管理守护进程 (start|stop|restart|status)
   log [-n N|-f]         查看管道日志
@@ -111,6 +112,20 @@ cmd_settle() {
         return 1
     fi
     _log "====== SETTLE DONE ======"
+}
+
+cmd_tier_update() {
+    local dry_run=""
+    [[ "$1" == "--dry-run" ]] && dry_run="--dry-run" && shift
+
+    _log "====== TIER UPDATE START ======"
+    python3 -m src.report.auto_tier_updater $dry_run 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+    if [ $rc -ne 0 ]; then
+        _log "❌ 联赛分层更新失败 (rc=$rc)"
+        _send_alert "联赛分层更新 (auto_tier_updater)" "$rc"
+        return 1
+    fi
+    _log "====== TIER UPDATE DONE ======"
 }
 
 cmd_report() {
@@ -301,6 +316,7 @@ case "$CMD" in
     scan)         cmd_scan "$@" ;;
     incremental)  cmd_incremental "$@" ;;
     settle)       cmd_settle "$@" ;;
+    tier-update)  cmd_tier_update "$@" ;;
     report)       cmd_report "$@" ;;
     daemon)       cmd_daemon "$@" ;;
     log)          cmd_log "$@" ;;
