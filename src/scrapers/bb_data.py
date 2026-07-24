@@ -196,6 +196,8 @@ def extract_bb_handicap(bb_match, sport="football"):
                     "away_odds": ft_hc["away_odds"],
                     "home_line": home_line,
                     "away_line": away_line,
+                    "home_line_str": ft_hc.get("home_line_str", str(home_line) if home_line is not None else ""),
+                    "away_line_str": ft_hc.get("away_line_str", str(away_line) if away_line is not None else ""),
                 }
     odds = bb_match.get("odds_values", [])
     full_text = bb_match.get("full_text", "")
@@ -223,15 +225,21 @@ def _extract_football_hc_positional(odds_slice, full_text):
                     hc_lines.append(line)
                     break
     if len(hc_lines) >= 2:
+        hl, al = hc_lines[0], -hc_lines[1]
         return {"home_odds": hc_odds[0], "away_odds": hc_odds[1],
-                "home_line": hc_lines[0], "away_line": -hc_lines[1]}
+                "home_line": hl, "away_line": al,
+                "home_line_str": str(hl), "away_line_str": str(al)}
     elif len(hc_lines) == 1:
+        hl, al = hc_lines[0], -hc_lines[0]
         return {"home_odds": hc_odds[0], "away_odds": hc_odds[1],
-                "home_line": hc_lines[0], "away_line": -hc_lines[0]}
+                "home_line": hl, "away_line": al,
+                "home_line_str": str(hl), "away_line_str": str(al)}
     is_draw = "和" in " ".join(ft_parts[:10])
     if not hc_lines and not is_draw:
+        hl, al = -0.25, 0.25
         return {"home_odds": hc_odds[0], "away_odds": hc_odds[1],
-                "home_line": -0.25, "away_line": 0.25}
+                "home_line": hl, "away_line": al,
+                "home_line_str": str(hl), "away_line_str": str(al)}
     return None
 
 
@@ -249,9 +257,12 @@ def _extract_2way_hc_positional(odds_slice, full_text):
             lines.append(line)
     if lines:
         line_val = lines[0]
+        hl, al = -line_val, line_val
         return {"home_odds": hc_odds[0], "away_odds": hc_odds[1],
-                "home_line": -line_val, "away_line": line_val}
-    return {"home_odds": hc_odds[0], "away_odds": hc_odds[1]}
+                "home_line": hl, "away_line": al,
+                "home_line_str": str(hl), "away_line_str": str(al)}
+    return {"home_odds": hc_odds[0], "away_odds": hc_odds[1],
+            "home_line_str": "", "away_line_str": ""}
 
 
 def extract_bb_ou(bb_match, sport="football"):

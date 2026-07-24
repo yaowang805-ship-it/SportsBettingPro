@@ -1074,28 +1074,25 @@ def _merge_single_match(platform_matches):
 
     # ── FT/HC 备用让球盘（alternate_handicaps）跨平台合并 ──
     def _merge_alternates(base_alts, plat_alts, line_key, odds_keys):
-        """合并备用盘口列表，同线取最高赔率。"""
-        if not plat_alts:
+        """合并备用盘口列表，同线取最高赔率。
+
+        核心原则：只合并两个平台都存在的线，不添加对方平台独有的线。
+        因为用户只在 BB/FB APP 上下注，不在的线推了也没意义。
+        """
+        if not plat_alts or not base_alts:
             return base_alts or []
-        if not base_alts:
-            return plat_alts
         result = list(base_alts)
         for pa in plat_alts:
             pa_line = pa.get(line_key)
             if pa_line is None:
-                result.append(pa)
                 continue
-            found = False
             for ba in result:
                 ba_line = ba.get(line_key)
                 if ba_line is not None and abs(ba_line - pa_line) <= 0.05:
                     for ok in odds_keys:
                         if pa.get(ok, 0) > ba.get(ok, 0):
                             ba[ok] = pa[ok]
-                    found = True
                     break
-            if not found:
-                result.append(pa)
         return result
 
     for period in ("odds_ft", "odds_ht"):
