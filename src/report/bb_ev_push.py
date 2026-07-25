@@ -913,8 +913,30 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
         + (f"来源: {platform_stats}\n\n" if platform_stats else "\n")
         + "\n".join(lines).strip()
     )
-    body += "\n\n---\n💡 T1=Pinnacle最可靠 T2=主流联赛 T3=低级别 | 公平价 = Pinnacle去抽水赔率 | 溢价 = (售价 - 公平价) / 公平价 | 来源: BB=BB价 FB=FB价 BB/FB=两平台相同 | 赔率实时变动，以 Pinnacle 网站当前价为准"
+    body += ("\n\n---\n"
+             "💡 T1=Pinnacle最可靠 T2=主流联赛 T3=低级别 | "
+             "公平价 = Pinnacle去抽水赔率 | "
+             "溢价 = (售价 - 公平价) / 公平价 | "
+             "来源: BB=BB价 FB=FB价 BB/FB=两平台相同 | "
+             "赔率实时变动，以 Pinnacle 网站当前价为准")
+    # 策略参数快照
+    body += (f"\n📐 市场权重: 1X2={MARKET_QUALITY.get('1x2',1):.2f} "
+             f"HC={MARKET_QUALITY.get('hc',1):.2f} "
+             f"OU={MARKET_QUALITY.get('ou',1):.2f} "
+             f"BTTS={MARKET_QUALITY.get('btts',1):.2f} "
+             f"DC={MARKET_QUALITY.get('dc',1):.2f} | "
+             f"Kelly: {KELLY_FRACTION} | "
+             f"结算: {len(_get_settleable_summary())}联赛已验证")
     return body
+
+def _get_settleable_summary() -> set:
+    """获取已验证可结算的联赛集合（供 footer 显示）。"""
+    try:
+        from src.core.settleability import get_settleable_stats
+        stats = get_settleable_stats()
+        return {name for name, e in stats.get("leagues", {}).items() if e.get("successes", 0) > 0}
+    except ImportError:
+        return set()
 
 
 def _prepare_opportunities(force=False):
