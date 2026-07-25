@@ -24,8 +24,9 @@ SETTLEABLE_FILE = DATA_DIR / "settleable_leagues.json"
 PROBATION_MULTIPLIER = 0.20   # 试用联赛投注比例（曾 0.05，太保守）
 MAX_PROBATION_LEAGUES = 5     # 每日最多试用联赛数（集中火力验证）
 
-# 已验证联赛加成（已证明 ROI 的联赛值得重注）
-VERIFIED_LEAGUE_BONUS = 1.5   # 已验证联赛投注额 ×1.5
+# 已验证联赛不额外加成（31笔样本太少, 不足以证明ROI优势）
+# 作用: 未验证联赛打折, 已验证联赛正常
+VERIFIED_LEAGUE_BONUS = 1.0   # 已验证 = 正常投注, 不加成
 
 # 已知可结算的联赛（历史遗留白名单，新数据以 settleable_leagues.json 为准）
 KNOWN_SETTLEABLE_LEAGUES = {
