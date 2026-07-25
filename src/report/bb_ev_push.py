@@ -746,7 +746,7 @@ def _collect_opportunities(match, market_key):
             # 按市场类型使用不同 Kelly（基于回测 ROI）
             market_kelly = _get_kelly_for_market(sub_market)
             kelly = (ev / 100) / (bb_odds - 1) * market_kelly
-            kelly_pct = round(kelly * 100, 2)
+            kelly_pct = round(kelly * 100 * league_mult, 2)
 
         # 综合评分：加权溢价 × 匹配度 × 联赛权重
         score = round(weighted_ev * match_score * league_mult, 2)
