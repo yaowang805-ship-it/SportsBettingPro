@@ -18,12 +18,13 @@ _local = threading.local()
 
 
 def get_conn() -> sqlite3.Connection:
-    """获取线程本地连接。"""
+    """获取线程本地连接（首次调用自动建表）。"""
     if not hasattr(_local, "conn") or _local.conn is None:
         _local.conn = sqlite3.connect(str(DB_PATH), timeout=10)
         _local.conn.row_factory = sqlite3.Row
         _local.conn.execute("PRAGMA journal_mode=WAL")
         _local.conn.execute("PRAGMA synchronous=NORMAL")
+        init_db()  # 首次连接自动建表+迁移
     return _local.conn
 
 
