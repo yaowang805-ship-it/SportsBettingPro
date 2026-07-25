@@ -333,9 +333,6 @@ def run_incremental(time_window: str = "all"):
     # 8. 保存新快照
     save_snapshot(bb_matches)
 
-    # 8b. 轻量结算: 结算2小时前开赛的投注(加速资金回收+联赛验证)
-    _quick_settle()
-
     # 9. 推送新机会
     if new_result.get("details") or fb_had_new:
         print(f"\n📣 新+EV机会 → 运行推送...")
