@@ -160,7 +160,7 @@ def get_league_multiplier_adjustment(league: str, sport: str = "") -> float:
     if is_league_probationary(league, sport):
         # 检查是否有实际 Pinnacle 匹配记录（更高信任）
         if _has_pinnacle_matches(league):
-            return 0.50  # Pinnacle-matched probation
+            return 0.80  # Pinnacle-matched: 已验赔率真实，结算只是时间问题
         return PROBATION_MULTIPLIER  # 0.20 API-only probation
 
     return 0.0
