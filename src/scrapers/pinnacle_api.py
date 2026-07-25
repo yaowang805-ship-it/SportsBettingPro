@@ -2,12 +2,33 @@
 
 Python 3.14 http.client chunked encoding bug → 自动 monkey-patch
 cf_clearance cookie → 绕过 Cloudflare Turnstile
+DNS bypass → 绕过 Shadowrocket VPN 劫持
 """
 import time
 import logging
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
+
+# ── DNS 绕过 Shadowrocket 劫持 (必须在 requests 导入前) ──────────────
+import socket as _socket
+_orig_getaddrinfo = _socket.getaddrinfo
+
+_PINNACLE_HOSTS = {
+    "guest.api.arcadia.pinnacle.com": ["104.18.42.200", "172.64.145.56"],
+    "pinnacle.com": ["104.18.42.200", "172.64.145.56"],
+    "www.pinnacle.com": ["104.18.42.200", "172.64.145.56"],
+}
+
+def _patched_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
+    if host in _PINNACLE_HOSTS:
+        result = []
+        for ip in _PINNACLE_HOSTS[host]:
+            result.append((_socket.AF_INET, _socket.SOCK_STREAM, 6, "", (ip, port)))
+        return result
+    return _orig_getaddrinfo(host, port, family, type, proto, flags)
+
+_socket.getaddrinfo = _patched_getaddrinfo
 
 import requests
 from config.settings import DATA_DIR
@@ -17,6 +38,7 @@ logger = logging.getLogger(__name__)
 API_BASE = "https://guest.api.arcadia.pinnacle.com/0.1"
 API_KEY = "CmX2KcMrXuFmNg6YFbmTxE0y9CIrOi0R"
 COOKIE_FILE = DATA_DIR / "pinnacle_cf_clearance.txt"
+
 
 # ── Python 3.14 chunked encoding monkey-patch ──────────────────────────
 import http.client
