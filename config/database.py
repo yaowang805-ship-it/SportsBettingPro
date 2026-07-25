@@ -30,6 +30,12 @@ def get_conn() -> sqlite3.Connection:
 def init_db():
     """建表（幂等）。"""
     db = get_conn()
+    try:
+        db.execute("ALTER TABLE pushed_fingerprints ADD COLUMN ev_pct REAL DEFAULT 0")
+        db.commit()
+    except Exception:
+        pass  # 列已存在
+
     db.executescript("""
         CREATE TABLE IF NOT EXISTS budget_tracker (
             date        TEXT NOT NULL,
@@ -40,6 +46,7 @@ def init_db():
 
         CREATE TABLE IF NOT EXISTS pushed_fingerprints (
             fingerprint TEXT PRIMARY KEY,
+            ev_pct      REAL DEFAULT 0,
             created_at  TEXT NOT NULL
         );
 
@@ -98,36 +105,46 @@ def save_budget(spent: dict, date: str):
 
 # ── pushed_fingerprints ──
 
-def load_fingerprints() -> set:
-    """加载所有指纹。"""
-    rows = get_conn().execute(
-        "SELECT fingerprint FROM pushed_fingerprints"
-    ).fetchall()
-    return {r["fingerprint"] for r in rows}
+def load_fingerprints() -> dict:
+    """加载所有指纹 → {fingerprint: ev_pct}。"""
+    try:
+        rows = get_conn().execute(
+            "SELECT fingerprint, ev_pct FROM pushed_fingerprints"
+        ).fetchall()
+        return {r["fingerprint"]: (r["ev_pct"] or 0) for r in rows}
+    except Exception:
+        # 兼容旧表(无ev_pct列)
+        rows = get_conn().execute(
+            "SELECT fingerprint FROM pushed_fingerprints"
+        ).fetchall()
+        return {r["fingerprint"]: 0 for r in rows}
 
 
-def save_fingerprints(fps: set):
-    """批量覆盖保存指纹（用事务）。"""
+def save_fingerprints(fps: dict):
+    """批量覆盖保存指纹（用事务）。fps = {fingerprint: ev_pct}"""
     db = get_conn()
     db.execute("DELETE FROM pushed_fingerprints")
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    data = [(fp, now) for fp in sorted(fps)]
+    data = [(fp, ev, now) for fp, ev in sorted(fps.items())]
     db.executemany(
-        "INSERT INTO pushed_fingerprints (fingerprint, created_at) VALUES (?, ?)",
+        "INSERT INTO pushed_fingerprints (fingerprint, ev_pct, created_at) VALUES (?, ?, ?)",
         data,
     )
     db.commit()
 
 
-def add_fingerprints(fps: set):
-    """增量添加指纹（推送成功后调用）。"""
+def add_fingerprints(fps: dict):
+    """增量添加/更新指纹（推送成功后调用）。fps = {fingerprint: ev_pct}
+
+    如果指纹已存在且新EV更高 → 更新EV。否则插入。
+    """
     db = get_conn()
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    data = [(fp, now) for fp in fps]
-    db.executemany(
-        "INSERT OR IGNORE INTO pushed_fingerprints (fingerprint, created_at) VALUES (?, ?)",
-        data,
-    )
+    for fp, ev in fps.items():
+        db.execute(
+            "INSERT OR REPLACE INTO pushed_fingerprints (fingerprint, ev_pct, created_at) VALUES (?, ?, ?)",
+            (fp, ev, now),
+        )
     db.commit()
 
 

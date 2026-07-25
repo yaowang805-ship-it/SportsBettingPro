@@ -1238,36 +1238,45 @@ def _make_fingerprint(o: dict) -> str:
     return f"{_norm(o.get('sport',''))}|{_norm(o.get('league',''))}|{_norm(o.get('home_cn',''))}|{_norm(o.get('away_cn',''))}|{_norm(o.get('designation',''))}|{sub}|{match_date}"
 
 
-def _load_fingerprints() -> set:
+def _load_fingerprints() -> dict:
     from config.database import load_fingerprints as _db_load
     return _db_load()
 
 
-def _save_fingerprints(fps: set):
-    """原子写入指纹文件 + SQLite。"""
+def _save_fingerprints(fps: dict):
+    """原子写入指纹文件 + SQLite。fps = {fingerprint: ev_pct}"""
     from config.database import save_fingerprints
     save_fingerprints(fps)
     # 同时写入 JSON 作为二次备份
     tmp = FINGERPRINT_FILE.with_suffix(".fptmp")
-    tmp.write_text(json.dumps(sorted(fps), ensure_ascii=False, indent=2))
+    tmp.write_text(json.dumps(fps, ensure_ascii=False, indent=2))
     tmp.replace(FINGERPRINT_FILE)
 
 
 def _filter_pushed(qualified: list) -> list:
-    """过滤掉指纹已存在于 pushed_fingerprints.json 的机会。"""
+    """过滤已推送机会，同盘口EV上涨>1%允许重推。"""
     existing = _load_fingerprints()
     if not existing:
         return qualified
     new = []
     skipped = 0
+    re_pushed = 0
     for o in qualified:
         fp = _make_fingerprint(o)
+        ev = o.get("ev_pct", 0)
         if fp in existing:
-            skipped += 1
+            old_ev = existing[fp]
+            if ev - old_ev > 1.0:
+                re_pushed += 1
+                new.append(o)
+            else:
+                skipped += 1
         else:
             new.append(o)
     if skipped:
         logger.info("去重过滤: 跳过 %d 条已推送机会", skipped)
+    if re_pushed:
+        logger.info("EV重推: %d 条机会EV上涨>1%重新推送", re_pushed)
     return new
 
 
@@ -1365,13 +1374,15 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
             place_bets_from_push(bettable)
         elif place_bets:
             logger.info("无可投注机会（全部被结算可行性过滤）")
-        # 指纹总是保存（不管 --no-bet），防止重复推送同一场比赛
+        # 指纹保存 (含EV追踪, 同盘口EV上涨>1%可重推)
         from config.database import add_fingerprints
-        new_fps = {_make_fingerprint(o) for o in qualified}
+        new_fps = {_make_fingerprint(o): o.get("ev_pct", 0) for o in qualified}
         add_fingerprints(new_fps)
         # JSON 二次备份
         existing = _load_fingerprints()
-        existing.update(new_fps)
+        for fp, ev in new_fps.items():
+            if fp not in existing or ev > existing[fp]:
+                existing[fp] = ev
         _save_fingerprints(existing)
 
         # 预算修正：去除因指纹去重被过滤的机会，保留实际推送消耗
