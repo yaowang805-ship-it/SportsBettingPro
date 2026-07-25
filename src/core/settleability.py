@@ -20,8 +20,14 @@ logger = get_logger(__name__)
 
 SETTLEABLE_FILE = DATA_DIR / "settleable_leagues.json"
 
-# 已知可结算的联赛 → (sport_key, display_name)
-# 同步自 auto_settle.LEAGUE_SPORT_MAP 的核心条目
+# 试用期投注参数
+PROBATION_MULTIPLIER = 0.20   # 试用联赛投注比例（曾 0.05，太保守）
+MAX_PROBATION_LEAGUES = 5     # 每日最多试用联赛数（集中火力验证）
+
+# 已验证联赛加成（已证明 ROI 的联赛值得重注）
+VERIFIED_LEAGUE_BONUS = 1.5   # 已验证联赛投注额 ×1.5
+
+# 已知可结算的联赛（历史遗留白名单，新数据以 settleable_leagues.json 为准）
 KNOWN_SETTLEABLE_LEAGUES = {
     "NBA", "WNBA", "NFL", "MLB", "NPB",
     "英超", "英格兰超级联赛", "西甲", "西班牙甲级联赛",
@@ -140,14 +146,14 @@ def get_league_multiplier_adjustment(league: str, sport: str = "") -> float:
     """获取联赛投注额调整系数。
 
     Returns:
-        1.0 — 已证明可结算，全額投注
-        0.05 — 试用期联赛，仅 5% 测试（≈¥10-200）
+        1.5 — 已验证可结算，加倍投注（ROI 已证明）
+        0.20 — 试用期联赛，20% 测试（曾 5%，加速验证）
         0.0 — 完全不可结算，不下注
     """
     if is_league_settleable(league, sport):
-        return 1.0
+        return VERIFIED_LEAGUE_BONUS  # 1.5x for proven leagues
     if is_league_probationary(league, sport):
-        return 0.05  # 5% of normal stake for probation testing
+        return PROBATION_MULTIPLIER  # 0.20 for probation testing
     return 0.0
 
 

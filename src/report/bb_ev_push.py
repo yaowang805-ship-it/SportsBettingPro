@@ -1107,19 +1107,21 @@ def push_report(place_bets=False, incremental=False, qualified=None):
         recommendation_tracker.log_recommendations(qualified, scan_type=scan_type)
 
         # 投注前过滤：三层结算可行性
-        # - 已证明可结算 → 全額投注
-        # - 试用期联赛 → 降至 5% 测试投注（最小 ¥10）
+        # - 已验证可结算 → 1.5x 加倍投注（ROI 已证明）
+        # - 试用期联赛 → 20% 测试投注，每日最多 5 个（集中火力验证）
         # - 完全不可结算 → 跳过投注
         bettable = qualified
-        from src.core.settleability import is_league_settleable, is_league_probationary
+        from src.core.settleability import (is_league_settleable, is_league_probationary,
+                                              PROBATION_MULTIPLIER, MAX_PROBATION_LEAGUES,
+                                              VERIFIED_LEAGUE_BONUS)
         skipped_leagues = set()
-        probation_leagues = set()
+        probation_leagues = {}  # league → total EV
         for o in qualified:
             league = o.get("league", "")
             sport = o.get("sport", "")
             if not is_league_settleable(league, sport):
                 if is_league_probationary(league, sport):
-                    probation_leagues.add(league)
+                    probation_leagues[league] = probation_leagues.get(league, 0) + o.get("ev_pct", 0)
                 else:
                     skipped_leagues.add(league)
 
@@ -1132,14 +1134,39 @@ def push_report(place_bets=False, incremental=False, qualified=None):
                 logger.info("  🚫 %s", l)
 
         if probation_leagues:
-            # 试用期联赛降至 5% 投注额
+            # 只保留每日 TOP N 试用联赛（按 EV 总和排序）
+            top_probation = sorted(probation_leagues.items(), key=lambda x: -x[1])
+            top_probation = top_probation[:MAX_PROBATION_LEAGUES]
+            top_probation_set = {l for l, _ in top_probation}
+            probation_cut = set(probation_leagues.keys()) - top_probation_set
+
+            # 从投注列表中移除超限的试用联赛
+            if probation_cut:
+                bettable = [o for o in bettable
+                            if o.get("league", "") not in probation_cut]
+                logger.info("试用联赛限流: 保留 %d 个 (EV最高), 跳过 %d 个",
+                            len(top_probation_set), len(probation_cut))
+                for l in sorted(probation_cut):
+                    logger.info("  ⏭️ %s", l)
+
+            # 试用联赛降至 20% 投注额
             for o in bettable:
-                if o.get("league", "") in probation_leagues:
+                if o.get("league", "") in top_probation_set:
                     original_stake = o.get("_stake", 0)
-                    o["_stake"] = max(10.0, round(original_stake * 0.05, 2))
-            logger.info("结算可行性: %d 个试用期联赛降至 5%% 测试投注", len(probation_leagues))
-            for l in sorted(probation_leagues):
+                    o["_stake"] = max(10.0, round(original_stake * PROBATION_MULTIPLIER, 2))
+            logger.info("结算可行性: %d 个试用联赛降至 %.0f%% 测试投注",
+                        len(top_probation_set), PROBATION_MULTIPLIER * 100)
+            for l in sorted(top_probation_set):
                 logger.info("  🔬 %s", l)
+
+        # 已验证联赛加倍投注
+        verified_count = 0
+        for o in bettable:
+            if is_league_settleable(o.get("league", ""), o.get("sport", "")):
+                o["_stake"] = round(o.get("_stake", 0) * VERIFIED_LEAGUE_BONUS, 2)
+                verified_count += 1
+        if verified_count:
+            logger.info("已验证联赛: %d 条机会 ×%.1f 加倍投注", verified_count, VERIFIED_LEAGUE_BONUS)
 
         # 投注后保存指纹
         if place_bets and bettable:
