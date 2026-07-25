@@ -15,6 +15,7 @@ import os
 import signal
 import sys
 import time
+import threading
 import traceback
 from datetime import datetime, date
 from pathlib import Path
@@ -170,11 +171,36 @@ class PipelineOrchestrator:
     # ------------------------------------------------------------------
     # 任务执行（统一错误处理）
     # ------------------------------------------------------------------
-    def _run_task(self, name: str, task_callable, **kwargs) -> bool:
-        """执行任务，捕获所有异常，失败时发 DingTalk 告警。"""
+    def _run_task(self, name: str, task_callable, background: bool = False, **kwargs) -> bool:
+        """执行任务。settle/report 类慢任务在后台线程运行，不阻塞主循环。
+
+        Args:
+            background: True = 后台线程（settle/report），False = 同步运行（scan）
+        """
         if name in self._active_tasks:
             logger.warning("[%s] 上一轮还未完成，跳过本次调度", name)
             return False
+
+        if background:
+            # 后台线程运行，不阻塞主循环
+            def _bg_runner():
+                self._active_tasks.add(f"{name}_bg")
+                logger.info("[%s] ====== START (后台) ======", name)
+                t0 = time.time()
+                try:
+                    task_callable(**kwargs)
+                    elapsed = time.time() - t0
+                    logger.info("[%s] ====== DONE (后台, %ds) ======", name, elapsed)
+                except Exception as e:
+                    elapsed = time.time() - t0
+                    logger.error("[%s] FAILED after %ds: %s", name, elapsed, e)
+                    logger.error(traceback.format_exc())
+                    self._send_alert(name, str(e))
+                finally:
+                    self._active_tasks.discard(f"{name}_bg")
+            t = threading.Thread(target=_bg_runner, daemon=True)
+            t.start()
+            return True
 
         self._active_tasks.add(name)
         logger.info("[%s] ====== START ======", name)
@@ -417,7 +443,9 @@ class PipelineOrchestrator:
                     continue
 
                 logger.info("[追赶] 发现错过的任务 %s (原定 %s %s), 立即执行...", name, cd, time_str)
-                self._run_task(name, method, **kwargs)
+                _BACKGROUND_TASKS = {"settle", "report", "git_commit", "memory_update"}
+                is_bg = any(t in name for t in _BACKGROUND_TASKS)
+                self._run_task(name, method, background=is_bg, **kwargs)
                 self._last_run[name] = cd
                 caught_up.append(name)
                 break  # 同一任务只补最近一次
@@ -471,7 +499,8 @@ class PipelineOrchestrator:
             while self._running:
                 now = datetime.now()
 
-                # 1) 定时任务
+                # 1) 定时任务 (settle/report → 后台线程, scan → 同步)
+                _BACKGROUND_TASKS = {"settle", "report", "git_commit", "memory_update"}
                 for name, time_str, method_name, kwargs in SCHEDULE:
                     weekday, dom, hour, minute = _parse_schedule_time(time_str)
                     if not self._is_time_match(weekday, dom, hour, minute, now):
@@ -480,7 +509,8 @@ class PipelineOrchestrator:
                         continue
                     method = getattr(self, method_name, None)
                     if method:
-                        self._run_task(name, method, **kwargs)
+                        is_bg = any(t in name for t in _BACKGROUND_TASKS)
+                        self._run_task(name, method, background=is_bg, **kwargs)
                         self._last_run[name] = now.date()
 
                 # 2) 增量扫描 — 双层: 临场15min / 早盘30min
