@@ -1213,13 +1213,12 @@ def push_report(place_bets=False, incremental=False, qualified=None):
         recommendation_tracker.log_recommendations(qualified, scan_type=scan_type)
 
         # 投注前过滤：三层结算可行性
-        # - 已验证可结算 → 1.5x 加倍投注（ROI 已证明）
+        # - 已验证可结算 → 正常投注（31笔样本不足以加成）
         # - 试用期联赛 → 20% 测试投注，每日最多 5 个（集中火力验证）
         # - 完全不可结算 → 跳过投注
         bettable = qualified
         from src.core.settleability import (is_league_settleable, is_league_probationary,
-                                              PROBATION_MULTIPLIER, MAX_PROBATION_LEAGUES,
-                                              VERIFIED_LEAGUE_BONUS)
+                                              PROBATION_MULTIPLIER, MAX_PROBATION_LEAGUES)
         skipped_leagues = set()
         probation_leagues = {}  # league → total EV
         for o in qualified:
@@ -1265,14 +1264,11 @@ def push_report(place_bets=False, incremental=False, qualified=None):
             for l in sorted(top_probation_set):
                 logger.info("  🔬 %s", l)
 
-        # 已验证联赛加倍投注
-        verified_count = 0
-        for o in bettable:
-            if is_league_settleable(o.get("league", ""), o.get("sport", "")):
-                o["_stake"] = round(o.get("_stake", 0) * VERIFIED_LEAGUE_BONUS, 2)
-                verified_count += 1
+        # 已验证联赛 = 正常投注 (不加成, 31笔样本不足以证明ROI优势)
+        verified_count = sum(1 for o in bettable
+                             if is_league_settleable(o.get("league", ""), o.get("sport", "")))
         if verified_count:
-            logger.info("已验证联赛: %d 条机会 ×%.1f 加倍投注", verified_count, VERIFIED_LEAGUE_BONUS)
+            logger.info("已验证联赛: %d 条机会 (正常投注)", verified_count)
 
         # 投注后保存指纹
         if place_bets and bettable:
