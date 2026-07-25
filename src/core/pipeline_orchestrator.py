@@ -425,7 +425,7 @@ class PipelineOrchestrator:
         check_dates = [now.date(), (now - timedelta(days=1)).date(), (now - timedelta(days=2)).date()]
 
         # daily_report 不追赶（重启后补发昨天的报告没意义）
-        _SKIP_CATCHUP = {"daily_report", "weekly_report", "monthly_report", "memory_update"}
+        _SKIP_CATCHUP = {"health_check", "daily_report", "weekly_report", "monthly_report", "memory_update"}
 
         for name, time_str, method_name, kwargs in SCHEDULE:
             if name in _SKIP_CATCHUP:

@@ -132,8 +132,7 @@ def _check_hosts_file():
                         f"/etc/hosts 包含 pinnacle 硬编码: {line} — "
                         "VPN IP 变更后会导致连接失败，建议删除"
                     )
-                    logger.warning(msg)
-                    print(f"⚠️  {msg}")
+                    logger.info(msg)  # 硬编码是有意为之, 非错误
                     return True
     except (OSError, IOError):
         pass
