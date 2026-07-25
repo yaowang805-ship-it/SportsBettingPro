@@ -217,20 +217,27 @@ def _rebuild_output(details, existing, new_result):
     }
 
 
-def run_incremental():
-    """增量扫描入口。"""
+def run_incremental(time_window: str = "all"):
+    """增量扫描入口。
+
+    Args:
+        time_window: "near" = 仅24h内, "far" = 仅24-72h, "all" = 全部
+    """
     import sys
     sys.stdout.reconfigure(line_buffering=True)
 
     # 扫描时段检查：只在 08:00~22:00 运行
-    from datetime import datetime
+    from datetime import datetime, timezone, timedelta
     _now_hour = datetime.now().hour
     if _now_hour < 8 or _now_hour >= 22:
         print(f"  ⏭️ 当前时间 {_now_hour}:00 不在扫描时段 (08:00~22:00)，跳过增量扫描")
         return
 
+    labels = {"near": "24h内临场", "far": "24-72h早盘", "all": "全时段"}
+    label = labels.get(time_window, "全时段")
+
     print("=" * 60)
-    print("BB体育 增量扫描 (变动检测 → 定向对比)")
+    print(f"BB体育 增量扫描 [{label}] (变动检测 → 定向对比)")
     print("=" * 60)
 
     # 1. 获取最新BB数据
@@ -240,9 +247,20 @@ def run_incremental():
         print("  ❌ 获取BB数据失败")
         return
 
-    # 过滤已开赛
-    _now_ts = int(time.time() * 1000)
-    bb_matches = [m for m in bb_matches if not m.get("bt") or int(m["bt"]) > _now_ts]
+    # 过滤已开赛 + 时间窗口
+    now_ts = int(time.time() * 1000)
+    now_ms = int(time.time() * 1000)
+    h24_ms = 24 * 3600 * 1000
+    h72_ms = 72 * 3600 * 1000
+
+    bb_matches = [m for m in bb_matches if not m.get("bt") or int(m["bt"]) > now_ts]
+
+    if time_window == "near":
+        bb_matches = [m for m in bb_matches if int(m.get("bt", 0)) - now_ms <= h24_ms]
+    elif time_window == "far":
+        bb_matches = [m for m in bb_matches if h24_ms < int(m.get("bt", 0)) - now_ms <= h72_ms]
+
+    print(f"  时间窗口 [{label}]: {len(bb_matches)} 场")
 
     # 2. FB 独立数据刷新 + 对比（每次增量扫描都检查，独立于 BB 变动检测）
     print(f"\n📡 检查FB数据新鲜度...")
