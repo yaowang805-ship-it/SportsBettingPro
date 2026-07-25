@@ -714,11 +714,6 @@ def _collect_opportunities(match, market_key):
         if bb_odds > 15.0 and league_mult < 1.0:
             continue
 
-        # 赔率上限过滤: 根据 Pinnacle 历史数据按运动/联赛/市场限制
-        _odds_limit = _get_odds_limit(match.get("sport", ""), league, sub_market)
-        if _odds_limit and bb_odds > _odds_limit:
-            continue
-
         # 市场子类型识别：区分同一 market_key 下的不同市场（如 1X2 / HT / BTTS / DC）
         sub_market = opp.get("_market", "")
         if not sub_market or sub_market == "main":
@@ -731,6 +726,12 @@ def _collect_opportunities(match, market_key):
                 "draw_no_bet": "dnb",
             }
             sub_market = _MK_TO_SUB.get(market_key, "1x2")
+
+        # 赔率上限过滤: Pinnacle 历史数据按运动/联赛/市场限制
+        _odds_limit = _get_odds_limit(match.get("sport", ""), league, sub_market)
+        if _odds_limit and bb_odds > _odds_limit:
+            continue
+
         market_w = _get_market_weight(sub_market, match.get("sport", ""))
 
         # 加权 EV：原始 EV × 市场质量权重
