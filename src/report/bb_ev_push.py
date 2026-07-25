@@ -159,6 +159,64 @@ def _get_tennis_odds_limit(league: str) -> float:
             return limit
     return 3.0  # 默认保守
 
+# --- 全运动赔率上限 (基于 Pinnacle 历史数据) ---
+_ODDS_LIMITS_CACHE = None
+
+def _load_odds_limits():
+    global _ODDS_LIMITS_CACHE
+    if _ODDS_LIMITS_CACHE is None:
+        import json
+        limits_file = DATA_DIR / ".." / ".." / "odds" / "odds_limits.json"
+        # Try multiple paths
+        from pathlib import Path
+        for p in [DATA_DIR.parent / "odds" / "odds_limits.json",
+                  Path("data/odds/odds_limits.json")]:
+            if p.exists():
+                try:
+                    _ODDS_LIMITS_CACHE = json.loads(p.read_text())
+                    break
+                except (json.JSONDecodeError, OSError):
+                    pass
+        if _ODDS_LIMITS_CACHE is None:
+            _ODDS_LIMITS_CACHE = {}
+    return _ODDS_LIMITS_CACHE
+
+def _get_odds_limit(sport: str, league: str, market: str) -> float:
+    """根据 Pinnacle 历史数据返回该运动/联赛/市场的赔率上限。
+
+    Returns:
+        最大允许的 BB 赔率, 超过此值跳过。
+        返回 0 表示无限制。
+    """
+    limits = _load_odds_limits()
+    if not limits:
+        return 0  # No limits loaded → no restriction
+
+    # 1. Sport-specific lookup
+    sport_data = limits.get(sport, {})
+    if not sport_data:
+        return limits.get("default", {}).get(market, 5.0)
+
+    # 2. League-specific lookup
+    if isinstance(sport_data, dict):
+        # Check for by-league data (football, tennis)
+        for league_key, league_limits in sport_data.items():
+            if league_key.lower() in (league or "").lower():
+                if isinstance(league_limits, dict):
+                    return league_limits.get(f"{market}_limit", league_limits.get(market, 0))
+        # Check for by-tournament data (tennis)
+        if "by_tournament" in sport_data:
+            for key, limit in sport_data.get("by_tournament", {}).items():
+                if key.lower() in (league or "").lower():
+                    return limit
+
+    # 3. Default for sport
+    default_limit = sport_data.get(market, sport_data.get(f"{market}_limit", 0))
+    if default_limit:
+        return default_limit
+
+    return limits.get("default", {}).get(market, 5.0)
+
 # 网球赛事级别准确度 (Pinnacle 5,013场数据)
 # vig越低→Pinnacle越准→比价越可靠
 PINNACLE_TENNIS_ACCURACY = {
@@ -656,11 +714,10 @@ def _collect_opportunities(match, market_key):
         if bb_odds > 15.0 and league_mult < 1.0:
             continue
 
-        # 网球赔率过滤: 根据赛事级别和Pinnacle历史数据决定
-        if match.get("sport", "") == "tennis":
-            odds_limit = _get_tennis_odds_limit(league)
-            if bb_odds > odds_limit:
-                continue
+        # 赔率上限过滤: 根据 Pinnacle 历史数据按运动/联赛/市场限制
+        _odds_limit = _get_odds_limit(match.get("sport", ""), league, sub_market)
+        if _odds_limit and bb_odds > _odds_limit:
+            continue
 
         # 市场子类型识别：区分同一 market_key 下的不同市场（如 1X2 / HT / BTTS / DC）
         sub_market = opp.get("_market", "")
