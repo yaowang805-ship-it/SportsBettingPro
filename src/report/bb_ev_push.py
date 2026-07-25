@@ -126,17 +126,55 @@ MARKET_QUALITY_BASKETBALL = {
     "ou":   0.60,  # 大小分: 比价空间较小(edge+0.9%)
 }
 
-# --- 网球市场权重 (Pinnacle 2,413场 + 实战13中1) ---
-# Pinnacle抽水3.09%, 67.5%比赛Favorite赢
-# 致命FLB: >5.0赔率ROI=-11.2% vs 1.3-1.5赔率ROI=-0.1%
-# 核心规则: 只投低赔方(<3.0), 因为高赔方的+EV只是FLB噪音
+# --- 网球市场权重 (Pinnacle 5,013场, 3年ATP/WTA数据) ---
+# Pinnacle抽水3.85%, 按赛事级别差异大:
+#   Masters 1000: 1.80% (最准), Grand Slam: 5.69% (最差)
+# FLB严重: 低赔ROI=-1.4%, 高赔ROI=-15.3%
+# 核心: 按赛事级别 + 赔率范围双重过滤
 MARKET_QUALITY_TENNIS = {
-    "1x2":  0.70,  # Pinnacle抽水3.09%, 比足球1X2(4.29%)更准
-    "hc":   0.50,  # 让盘: 实战验证不足
-    "ou":   0.50,  # 大小分: 无Pinnacle数据
+    "1x2":  1.05,  # Pinnacle抽水3.85% → 比足球1X2(4.29%)更准
+    "hc":   0.80,  # 让盘: 谨慎
+    "ou":   0.70,  # 大小分: 谨慎
 }
-# 网球赔率上限: 超过此赔率不投(FLB陷阱)
-TENNIS_MAX_ODDS = 3.0  # BB赔率 > 3.0 → 跳过
+
+# 网球赔率上限 — 按赛事级别, 基于Pinnacle 5,013场真实ROI
+# 上限=该级别该赔率范围仍有正期望的最高赔率
+TENNIS_ODDS_LIMITS = {
+    # 赛事级别关键字 → 最大BB赔率
+    "Grand Slam": 5.0,        # >5.0 ROI=-34.4%, >10.0 ROI惨不忍睹
+    "Masters": 5.0,           # 3.0-5.0 ROI=+9.4% → 可以投到5.0
+    "ATP 500": 4.0,           # 3.0-5.0 ROI=-5.5% → 略微放宽
+    "ATP 250": 5.0,           # 3.0-5.0虽差但5.0-10.0 ROI=+17.1%(有value)
+    "WTA": 5.0,               # WTA暂用ATP250同参数
+    "Challenger": 3.0,        # 挑战赛: 匹配质量差, 保守
+    "ITF": 2.5,               # ITF低级别: 匹配质量最差, 只投低赔
+    "W15": 2.5, "M15": 2.5,  # ITF Futures: 极度保守
+    "W25": 2.5, "M25": 2.5,
+}
+
+def _get_tennis_odds_limit(league: str) -> float:
+    """根据联赛名返回网球赔率上限。"""
+    for keyword, limit in TENNIS_ODDS_LIMITS.items():
+        if keyword.lower() in league.lower():
+            return limit
+    return 3.0  # 默认保守
+
+# 网球赛事级别准确度 (Pinnacle 5,013场数据)
+# vig越低→Pinnacle越准→比价越可靠
+PINNACLE_TENNIS_ACCURACY = {
+    "Masters": 1.50,    # vig=1.80%, Pinnacle最准→比价最可靠
+    "Grand Slam": 0.70, # vig=5.69%, 公众投注量大→线被推偏
+    "ATP 500": 0.75,    # vig=5.34%
+    "ATP 250": 1.06,    # vig=3.78%
+    "WTA": 1.00,        # 默认
+}
+
+def _get_tennis_accuracy(league: str) -> float:
+    """根据联赛名返回网球准确度加成。"""
+    for keyword, bonus in PINNACLE_TENNIS_ACCURACY.items():
+        if keyword.lower() in league.lower():
+            return bonus
+    return 1.0
 
 # --- 棒球市场权重 (公开研究) ---
 MARKET_QUALITY_BASEBALL = {
@@ -618,9 +656,11 @@ def _collect_opportunities(match, market_key):
         if bb_odds > 15.0 and league_mult < 1.0:
             continue
 
-        # 网球赔率上限：高赔方是FLB陷阱 (Pinnacle 2,413场: >5.0 ROI=-11.2%)
-        if match.get("sport", "") == "tennis" and bb_odds > TENNIS_MAX_ODDS:
-            continue
+        # 网球赔率过滤: 根据赛事级别和Pinnacle历史数据决定
+        if match.get("sport", "") == "tennis":
+            odds_limit = _get_tennis_odds_limit(league)
+            if bb_odds > odds_limit:
+                continue
 
         # 市场子类型识别：区分同一 market_key 下的不同市场（如 1X2 / HT / BTTS / DC）
         sub_market = opp.get("_market", "")
