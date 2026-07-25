@@ -50,18 +50,18 @@ for _lf in sorted(LOG_DIR.iterdir()):
         _lf.write_text("")  # truncate in-place，fd 仍然有效
         print(f"  📦 日志轮转: {_lf.name} → {_rotated.name}")
 
-SCAN_WINDOW = (8, 22)              # 08:00 ~ 22:00
+SCAN_WINDOW = (7, 22)              # 07:00 ~ 22:00
 INCREMENTAL_INTERVAL_NEAR = 900    # 15 分钟 — 24h内临场比赛
 INCREMENTAL_INTERVAL_FAR = 1800    # 30 分钟 — 24-72h早盘比赛
 CHECK_INTERVAL = 30                # 调度循环检查间隔（秒）
 
 # 定时任务表：(名称, HH:MM, 处理函数, 参数字典)
 SCHEDULE = [
-    ("health_check",       "07:55", "do_health_check", {}),
-    ("full_scan_morning",  "08:00", "do_full_scan",  {"bet": True}),
-    ("settle_morning",     "09:30", "do_settle",      {}),
-    ("daily_report",       "10:00", "do_daily_report",{}),
-    ("memory_update",      "10:05", "do_memory_update", {}),
+    ("health_check",       "06:55", "do_health_check", {}),
+    ("full_scan_morning",  "07:00", "do_full_scan",  {"bet": True}),
+    ("settle_morning",     "08:30", "do_settle",      {}),
+    ("daily_report",       "09:00", "do_daily_report",{}),
+    ("memory_update",      "09:05", "do_memory_update", {}),
     ("settle_noon",        "14:00", "do_settle",      {}),  # 午后结算
     ("settle_afternoon",   "17:00", "do_settle",      {}),  # 傍晚结算
     ("full_scan_evening",  "20:00", "do_full_scan",   {"bet": True}),
