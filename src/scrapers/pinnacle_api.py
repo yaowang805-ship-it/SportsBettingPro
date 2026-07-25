@@ -332,11 +332,10 @@ def check_pinnacle_connectivity(verbose=True):
                 pass
             print(msg)
 
-    # 0. Hosts 文件检查
+    # 0. Hosts 文件检查（仅提示，不算失败——硬编码是有意为之）
     _log("--- Pinnacle API 连通性检查 ---")
     if _check_hosts_file():
-        _log("⚠️  /etc/hosts 含 pinnacle 硬编码 — VPN 切换后会导致连接失败", is_error=True)
-        ok = False
+        _log("ℹ️  /etc/hosts 含 pinnacle 硬编码（已主动配置，非错误）", is_error=False)
 
     # 1. DNS 解析
     dns_ok = False

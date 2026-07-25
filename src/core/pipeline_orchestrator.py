@@ -392,10 +392,9 @@ class PipelineOrchestrator:
         for line in stdout.splitlines():
             logger.info("  %s", line)
 
-        # 检查是否有 FAIL/WARN
+        # 只在真正 FAIL 时推送钉钉，WARN 只记录日志
         has_fail = "❌" in stdout
-        has_warn = "⚠️" in stdout
-        if result.returncode != 0 or has_fail or has_warn:
+        if result.returncode != 0 or has_fail:
             summary = f"Health Check {'❌ FAIL' if has_fail else '⚠️ WARN'}"
             body = (
                 f"**{summary}**\n\n"
