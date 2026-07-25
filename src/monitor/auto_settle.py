@@ -883,6 +883,12 @@ def auto_settle(dry_run: bool = False) -> int:
                     else:
                         profit = -stake
                     logger.info("  ✅ %s → %s (盈亏¥%.0f)", bid[:40], result, profit)
+                    # 记录结算追踪
+                    try:
+                        from src.core.settleability import record_settlement
+                        record_settlement(bet.get("league", ""), success=True)
+                    except ImportError:
+                        pass
                     # 记录到策略优化器
                     try:
                         SettlementLogger().record(
@@ -1047,8 +1053,11 @@ def _settle_recommendation_log() -> int:
             # 构造 fake bet 给 _match_bet 用
             designation = rec.get("designation", "")
             market_type_str = rec.get("market_type", "")
-            odds_val = float(rec.get("bb_odds", 0))
-            stake_val = float(rec.get("stake", 0))
+            try:
+                odds_val = float(rec.get("bb_odds", 0))
+                stake_val = float(rec.get("stake", 0))
+            except (ValueError, TypeError):
+                continue
             if odds_val <= 0 or stake_val <= 0:
                 continue
 
@@ -1091,7 +1100,35 @@ def _settle_recommendation_log() -> int:
                             rec.get("home_cn", ""), rec.get("away_cn", ""),
                             designation, stake_val, result, profit)
 
-    if settled:
+    # 标记超时未匹配的推荐记录为 unresolved
+    _now = datetime.now(timezone.utc)
+    _unresolved_cutoff = _now - timedelta(days=2)
+    unresolved_count = 0
+    for r in records:
+        if r.get("status") in ("settled", "unresolved"):
+            continue
+        start_str = r.get("start_time", "")
+        if not start_str:
+            continue
+        try:
+            # 格式: "07/29 08:15" (MM/DD HH:MM)
+            parts = start_str.strip().split()
+            if len(parts) == 2:
+                mm, dd = parts[0].split("/")
+                hh, minute = parts[1].split(":")
+                match_dt = datetime(_now.year, int(mm), int(dd), int(hh), int(minute), tzinfo=timezone.utc)
+                if match_dt < _unresolved_cutoff:
+                    r["status"] = "unresolved"
+                    r["result"] = "no_data"
+                    r["profit"] = "0"
+                    unresolved_count += 1
+        except (ValueError, IndexError):
+            continue
+
+    if unresolved_count:
+        logger.info("推荐记录: %d 条超时未匹配标记为 unresolved", unresolved_count)
+
+    if settled or unresolved_count:
         _rewrite_all(records)
         logger.info("推荐记录全量结算完成: %d 笔", settled)
     else:
@@ -1100,7 +1137,7 @@ def _settle_recommendation_log() -> int:
     return settled
 
 
-def _auto_void_timeout(max_days: int = 7) -> int:
+def _auto_void_timeout(max_days: int = 3) -> int:
     """超时兜底：超过 max_days 仍未匹配到结果的投注自动作废。
 
     作废 = 返还本金，不记盈亏。防止投注因 API 配额/数据缺失永久卡在 pending。
@@ -1129,6 +1166,7 @@ def _auto_void_timeout(max_days: int = 7) -> int:
             bid = bet.get("id", "")
             stake = bet.get("stake", 0)
             odds = bet.get("odds", 0)
+            league = bet.get("league", "")
             # 作废：本金返还 balance，不记盈亏
             state["balance"] += stake
             state["history"].append({
@@ -1139,7 +1177,20 @@ def _auto_void_timeout(max_days: int = 7) -> int:
                 "odds": odds,
                 "profit": 0.0,
                 "status": "void",
+                "source": "bb_vs_pinnacle",
+                "league": league,
+                "sport": bet.get("sport", ""),
+                "home_cn": bet.get("home_cn", ""),
+                "away_cn": bet.get("away_cn", ""),
+                "market_type": bet.get("market_type", bet.get("market", "")),
             })
+            # 记录到结算追踪
+            if league:
+                try:
+                    from src.core.settleability import record_void
+                    record_void(league)
+                except ImportError:
+                    pass
             logger.info("  ⏰ 超时作废: %s (%.0f¥, 已 %d 天)", bid[:40], stake, (now - dt).days)
             voided += 1
         else:

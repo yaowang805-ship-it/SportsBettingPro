@@ -38,11 +38,15 @@ LOG_DIR = SRC_DIR / "data" / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 
 # 日志轮转：启动时自动归档过大的旧日志（跳过已轮转过的文件）
+# 使用 copy+truncate 而非 rename，因为 launchd 持有 pipeline_daemon.log 的 fd，
+# rename 只改目录项不会改变 fd 指向的 inode，会导致新日志丢失。
 _date_str = datetime.now().strftime('%Y%m%d')
 for _lf in sorted(LOG_DIR.iterdir()):
     if _lf.is_file() and _lf.stat().st_size > 2 * 1024 * 1024 and not _lf.name.endswith(_date_str):
         _rotated = _lf.parent / f"{_lf.name}.{_date_str}"
-        _lf.rename(_rotated)
+        import shutil
+        shutil.copy2(str(_lf), str(_rotated))
+        _lf.write_text("")  # truncate in-place，fd 仍然有效
         print(f"  📦 日志轮转: {_lf.name} → {_rotated.name}")
 
 SCAN_WINDOW = (8, 22)         # 08:00 ~ 22:00

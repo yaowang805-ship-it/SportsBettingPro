@@ -46,7 +46,24 @@ def get_league_tier(league: str) -> int:
     return 3
 
 
-def league_multiplier(league: str) -> float:
-    """根据联赛等级返回投注额乘数。"""
+def league_multiplier(league: str, sport: str = "") -> float:
+    """根据联赛等级 + 结算可行性返回投注额乘数。
+
+    三层体系：
+    - 已证明可结算 → 全額 (Tier乘数)
+    - 试用期联赛 → 5% 测试投注 (¥10-200)
+    - 完全不可结算 → 0 (不下注)
+    """
     tier = get_league_tier(league)
-    return {1: 1.0, 2: 0.9, 3: 0.7, 4: 0.5}.get(tier, 0.7)
+    base = {1: 1.0, 2: 0.9, 3: 0.7, 4: 0.5}.get(tier, 0.7)
+
+    # 结算可行性调整
+    if sport:
+        try:
+            from src.core.settleability import get_league_multiplier_adjustment
+            settle_adj = get_league_multiplier_adjustment(league, sport)
+            return base * settle_adj
+        except ImportError:
+            pass
+
+    return base

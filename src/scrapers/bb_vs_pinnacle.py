@@ -1268,6 +1268,18 @@ def main():
     _filtered = _before - len(bb_matches)
     if _filtered:
         print(f"  🕐 已过滤 {_filtered} 场已开赛的比赛")
+
+    # 过滤禁区联赛（中国足球等），在对比层就跳过
+    _banned_file = DATA_DIR / "banned_leagues.json"
+    if _banned_file.exists():
+        _banned = json.loads(_banned_file.read_text())
+        _before_ban = len(bb_matches)
+        bb_matches = [m for m in bb_matches
+                       if not any(b in (m.get("league") or "") for b in _banned)]
+        _banned_filtered = _before_ban - len(bb_matches)
+        if _banned_filtered:
+            print(f"  🚫 已过滤 {_banned_filtered} 场禁区联赛比赛")
+
     print(f"\nBB体育: {len(bb_matches)} 场比赛 (已过滤已开赛)")
 
     valid_1x2 = 0

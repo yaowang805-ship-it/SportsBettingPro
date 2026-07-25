@@ -178,8 +178,25 @@ def settle_bet(bet_id: str, result: str, stake: float, odds: float) -> dict:
             entry["sport"] = pending_bet.get("sport", "")
 
         state["history"].append(entry)
+
+        # 余额校验：每次结算后检查是否有漂移，自动修正
+        _validate_balance(state)
+
         _save_state(state)
         return state
+
+
+def _validate_balance(state: dict):
+    """结算后验证余额一致性，漂移超过 ¥1 时自动修正。"""
+    from src.core.balance_recalc import recalculate_balance
+    stored = state.get("balance", 0)
+    calc = recalculate_balance(state)
+    drift = stored - calc
+    if abs(drift) > 1.0:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.warning("⚠️ 余额漂移 ¥%+.2f，自动修正: stored=%.0f → calc=%.0f", drift, stored, calc)
+        state["balance"] = calc
 
 
 def compute_portfolio(pred_df: Optional[pd.DataFrame] = None) -> dict:

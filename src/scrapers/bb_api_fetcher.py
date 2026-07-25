@@ -62,6 +62,11 @@ SPORTS = [
     (13, "volleyball", "排球"),
 ]
 
+# Pinnacle 覆盖的运动（只有这些运动有对比价值）
+PINNACLE_SPORTS = {"football", "basketball", "tennis", "baseball",
+                    "american_football", "mma", "badminton",
+                    "ice_hockey", "volleyball"}
+
 # Market type 映射 (按运动)
 MARKET_TYPES = {
     1: {  # 足球
@@ -1457,6 +1462,9 @@ def _fetch_single_platform(platform_key):
 
     all_matches = []
     for sport_id, sport_key, sport_cn in SPORTS:
+        if sport_key not in PINNACLE_SPORTS:
+            print(f"\n--- {sport_cn} (sportId={sport_id}) ⏭️ 跳过 (Pinnacle 无覆盖)")
+            continue
         print(f"\n--- {sport_cn} (sportId={sport_id}) ---")
         records = fetch_sport(sport_id, platform=platform_key)
         if not records:

@@ -1084,12 +1084,49 @@ def push_report(place_bets=False, incremental=False, qualified=None):
         scan_type = "incremental" if incremental else "full"
         recommendation_tracker.log_recommendations(qualified, scan_type=scan_type)
 
+        # 投注前过滤：三层结算可行性
+        # - 已证明可结算 → 全額投注
+        # - 试用期联赛 → 降至 5% 测试投注（最小 ¥10）
+        # - 完全不可结算 → 跳过投注
+        bettable = qualified
+        from src.core.settleability import is_league_settleable, is_league_probationary
+        skipped_leagues = set()
+        probation_leagues = set()
+        for o in qualified:
+            league = o.get("league", "")
+            sport = o.get("sport", "")
+            if not is_league_settleable(league, sport):
+                if is_league_probationary(league, sport):
+                    probation_leagues.add(league)
+                else:
+                    skipped_leagues.add(league)
+
+        if skipped_leagues:
+            bettable = [o for o in bettable
+                        if is_league_settleable(o.get("league", ""), o.get("sport", ""))
+                        or is_league_probationary(o.get("league", ""), o.get("sport", ""))]
+            logger.info("结算可行性: 跳过 %d 个不可结算联赛", len(skipped_leagues))
+            for l in sorted(skipped_leagues):
+                logger.info("  🚫 %s", l)
+
+        if probation_leagues:
+            # 试用期联赛降至 5% 投注额
+            for o in bettable:
+                if o.get("league", "") in probation_leagues:
+                    original_stake = o.get("_stake", 0)
+                    o["_stake"] = max(10.0, round(original_stake * 0.05, 2))
+            logger.info("结算可行性: %d 个试用期联赛降至 5%% 测试投注", len(probation_leagues))
+            for l in sorted(probation_leagues):
+                logger.info("  🔬 %s", l)
+
         # 投注后保存指纹
-        if place_bets:
+        if place_bets and bettable:
             from src.betting.bb_virtual_bet import PUSH_STAGING_FILE, place_bets_from_push
-            PUSH_STAGING_FILE.write_text(json.dumps(qualified, ensure_ascii=False, indent=2))
+            PUSH_STAGING_FILE.write_text(json.dumps(bettable, ensure_ascii=False, indent=2))
             logger.info("推送机会已暂存到 %s，开始投注...", PUSH_STAGING_FILE)
-            place_bets_from_push(qualified)
+            place_bets_from_push(bettable)
+        elif place_bets:
+            logger.info("无可投注机会（全部被结算可行性过滤）")
         # 指纹总是保存（不管 --no-bet），防止重复推送同一场比赛
         from config.database import add_fingerprints
         new_fps = {_make_fingerprint(o) for o in qualified}
