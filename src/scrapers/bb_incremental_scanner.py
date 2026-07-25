@@ -310,6 +310,9 @@ def run_incremental():
     # 8. 保存新快照
     save_snapshot(bb_matches)
 
+    # 8b. 轻量结算: 结算2小时前开赛的投注(加速资金回收+联赛验证)
+    _quick_settle()
+
     # 9. 推送新机会
     if new_result.get("details") or fb_had_new:
         print(f"\n📣 新+EV机会 → 运行推送...")
@@ -593,8 +596,57 @@ def _run_fb_comparison(all_pin_leagues):
     return n_fb > 0
 
 
-def _run_push():
-    """运行推送。"""
+def _quick_settle():
+    """轻量结算: 每60分钟在增量扫描时顺便结算。
+
+    完整结算(09:30/20:30)深度拉取所有比分。
+    轻量结算只快速检查已结束比赛,加速资金回收+联赛验证。
+    """
+    import json, time as _time
+
+    pf_file = DATA_DIR / "virtual_portfolio.json"
+    if not pf_file.exists():
+        return
+
+    try:
+        pf = json.loads(pf_file.read_text())
+    except (json.JSONDecodeError, OSError):
+        return
+
+    pending = pf.get("pending_bets", [])
+    if len(pending) < 5:
+        return  # 太少不值得跑
+
+    # 频率控制: 60分钟内只跑一次
+    _state_file = DATA_DIR / ".quick_settle_state"
+    now = _time.time()
+    if _state_file.exists():
+        try:
+            last = float(_state_file.read_text().strip())
+            if now - last < 3600:
+                return
+        except (ValueError, OSError):
+            pass
+    _state_file.write_text(str(now))
+
+    print(f"\n🔍 轻量结算 ({len(pending)}笔pending)...")
+    import subprocess
+    result = subprocess.run(
+        [sys.executable, "-m", "src.monitor.auto_settle"],
+        capture_output=True, text=True, cwd=SRC_DIR.parent,
+        timeout=180,
+    )
+    settled = 0
+    for line in (result.stdout or "").splitlines():
+        if "✅" in line and ("盈亏" in line or "won" in line or "lost" in line):
+            settled += 1
+            print(f"  {line.strip()[:120]}")
+    if settled:
+        print(f"  ✅ 轻量结算: {settled} 笔")
+    elif "自动结算完成" in (result.stdout or ""):
+        for line in (result.stdout or "").splitlines():
+            if "自动结算完成" in line:
+                print(f"  {line.strip()}")
     import subprocess
     result = subprocess.run(
         [sys.executable, "-m", "src.report.bb_ev_push", "--incremental"],

@@ -60,6 +60,8 @@ SCHEDULE = [
     ("settle_morning",     "09:30", "do_settle",      {}),
     ("daily_report",       "10:00", "do_daily_report",{}),
     ("memory_update",      "10:05", "do_memory_update", {}),
+    ("settle_noon",        "14:00", "do_settle",      {}),  # 午后结算
+    ("settle_afternoon",   "17:00", "do_settle",      {}),  # 傍晚结算
     ("full_scan_evening",  "20:00", "do_full_scan",   {"bet": True}),
     ("settle_evening",     "20:30", "do_settle",      {}),
     # 周报：周日 21:00
