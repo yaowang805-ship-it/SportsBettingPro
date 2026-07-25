@@ -145,16 +145,40 @@ def is_league_probationary(league: str, sport: str = "") -> bool:
 def get_league_multiplier_adjustment(league: str, sport: str = "") -> float:
     """获取联赛投注额调整系数。
 
+    四层体系：
+    - 1.50 — 已验证可结算（历史有成功记录）
+    - 0.50 — Pinnacle匹配试用（有Pinnacle比赛 + LEAGUE_SPORT_MAP覆盖）
+    - 0.20 — API试用（仅LEAGUE_SPORT_MAP覆盖，无Pinnacle匹配记录）
+    - 0.00 — 完全不可结算
+
     Returns:
-        1.5 — 已验证可结算，加倍投注（ROI 已证明）
-        0.20 — 试用期联赛，20% 测试（曾 5%，加速验证）
-        0.0 — 完全不可结算，不下注
+        投注额乘数
     """
     if is_league_settleable(league, sport):
-        return VERIFIED_LEAGUE_BONUS  # 1.5x for proven leagues
+        return VERIFIED_LEAGUE_BONUS  # 1.5x
+
     if is_league_probationary(league, sport):
-        return PROBATION_MULTIPLIER  # 0.20 for probation testing
+        # 检查是否有实际 Pinnacle 匹配记录（更高信任）
+        if _has_pinnacle_matches(league):
+            return 0.50  # Pinnacle-matched probation
+        return PROBATION_MULTIPLIER  # 0.20 API-only probation
+
     return 0.0
+
+
+def _has_pinnacle_matches(league: str) -> bool:
+    """检查联赛是否在最近的 Pinnacle 对比中有匹配。"""
+    try:
+        from config.settings import DATA_DIR
+        comp_path = DATA_DIR / "bb_vs_pinnacle_comparison.json"
+        if comp_path.exists():
+            data = json.loads(comp_path.read_text())
+            for d in data.get("details", []):
+                if d.get("league") == league:
+                    return True
+    except (ImportError, json.JSONDecodeError, OSError):
+        pass
+    return False
 
 
 def record_settlement(league: str, success: bool):
