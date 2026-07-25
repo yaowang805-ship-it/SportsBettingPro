@@ -1254,13 +1254,14 @@ def _filter_pushed(qualified: list) -> list:
     return new
 
 
-def push_report(place_bets=False, incremental=False, qualified=None):
+def push_report(place_bets=False, incremental=False, qualified=None, force=False):
     """推送报告到钉钉。
 
     Args:
         place_bets: 是否执行自动投注。
         incremental: 增量扫描标记。
         qualified: 可选，来自 build_report 的已处理机会列表。为 None 时独立预处理。
+        force: 跳过指纹去重，强制推送。
     """
     if not DINGTALK_WEBHOOK:
         logger.info("no DINGTALK_WEBHOOK configured")
@@ -1279,7 +1280,8 @@ def push_report(place_bets=False, incremental=False, qualified=None):
         s = o.get("sport", "unknown")
         pre_dedup_counts[s] = pre_dedup_counts.get(s, 0) + 1
 
-    qualified = _filter_pushed(qualified)
+    if not force:
+        qualified = _filter_pushed(qualified)
     if not qualified:
         logger.info("所有机会均已推送过，跳过")
         return
@@ -1407,7 +1409,8 @@ def main():
     if "--no-push" not in sys.argv:
         push_report(place_bets=("--no-bet" not in sys.argv),
                     incremental="--incremental" in sys.argv,
-                    qualified=qualified if qualified else None)
+                    qualified=qualified if qualified else None,
+                    force=force_fresh)
     return body
 
 
