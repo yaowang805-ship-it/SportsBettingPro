@@ -178,7 +178,24 @@ def _load_odds_limits():
                 except (json.JSONDecodeError, OSError):
                     pass
         if _ODDS_LIMITS_CACHE is None:
-            _ODDS_LIMITS_CACHE = {}
+            # 文件不存在时用内置默认值 (基于Pinnacle历史数据)
+            _ODDS_LIMITS_CACHE = {
+                "football": {
+                    "德甲": {"1x2_limit": 20.0, "ou_limit": 20.0}, "德乙": {"1x2_limit": 20.0, "ou_limit": 20.0},
+                    "英超": {"1x2_limit": 8.0, "ou_limit": 9.6}, "英冠": {"1x2_limit": 10.0, "ou_limit": 12.0},
+                    "西甲": {"1x2_limit": 8.0, "ou_limit": 9.6}, "意甲": {"1x2_limit": 6.0, "ou_limit": 7.2},
+                    "法甲": {"1x2_limit": 8.0, "ou_limit": 9.6}, "葡超": {"1x2_limit": 5.0, "ou_limit": 6.0},
+                    "荷甲": {"1x2_limit": 8.0, "ou_limit": 9.6}, "土超": {"1x2_limit": 5.0, "ou_limit": 6.0},
+                    "希超": {"1x2_limit": 5.0, "ou_limit": 6.0},
+                },
+                "tennis": {
+                    "Masters": 10.0, "Grand Slam": 5.0, "ATP 500": 10.0, "ATP 250": 5.0,
+                    "WTA": 5.0, "Challenger": 3.0, "ITF": 2.5, "W15": 2.5, "M15": 2.5,
+                },
+                "basketball": {"NBA": {"hc": 10.0, "1x2": 8.0, "ou": 8.0}},
+                "baseball": {"MLB": {"1x2": 5.0, "ou": 5.0, "hc": 5.0}},
+                "default": {"1x2": 5.0, "ou": 5.0, "hc": 5.0},
+            }
     return _ODDS_LIMITS_CACHE
 
 def _get_odds_limit(sport: str, league: str, market: str) -> float:

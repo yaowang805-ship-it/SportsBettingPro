@@ -36,12 +36,19 @@ _SPORT_SORT_TUPLE = tuple(SPORT_ORDER.keys())
 
 
 def get_league_tier(league: str) -> int:
-    """返回联赛所属 Tier (1-4)，不认识的联赛默认 Tier 3。"""
+    """返回联赛所属 Tier (1-4)，不认识的联赛默认 Tier 3。
+
+    双向匹配: kw in league (短名匹配长名) 或 league in kw (长名匹配短名)
+    """
     tiers_file = DATA_DIR / "league_tiers.json"
     if tiers_file.exists():
         tiers = json.loads(tiers_file.read_text())
+        # 精确匹配优先
+        if league in tiers:
+            return tiers[league]
+        # 双向模糊匹配
         for kw, tier in tiers.items():
-            if kw in league:
+            if kw in league or league in kw:
                 return tier
     return 3
 
@@ -55,10 +62,15 @@ def league_multiplier(league: str, sport: str = "") -> float:
     tier = get_league_tier(league)
     base = {1: 1.0, 2: 0.9, 3: 0.7, 4: 0.5}.get(tier, 0.7)
 
-    # Pinnacle准确度加成 (基于72,806场真实数据)
+    # Pinnacle准确度加成 (基于真实数据, 按运动区分)
     try:
-        from src.report.bb_ev_push import PINNACLE_LEAGUE_ACCURACY
-        accuracy_bonus = PINNACLE_LEAGUE_ACCURACY.get(league, 1.0)
+        from src.report.bb_ev_push import (PINNACLE_LEAGUE_ACCURACY,
+                                             PINNACLE_TENNIS_ACCURACY,
+                                             _get_tennis_accuracy)
+        if sport == "tennis":
+            accuracy_bonus = _get_tennis_accuracy(league)
+        else:
+            accuracy_bonus = PINNACLE_LEAGUE_ACCURACY.get(league, 1.0)
         base *= accuracy_bonus
     except ImportError:
         pass

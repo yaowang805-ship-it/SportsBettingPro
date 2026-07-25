@@ -20,13 +20,7 @@ logger = get_logger(__name__)
 
 SETTLEABLE_FILE = DATA_DIR / "settleable_leagues.json"
 
-# 试用期投注参数
-PROBATION_MULTIPLIER = 0.20   # 试用联赛投注比例（曾 0.05，太保守）
-MAX_PROBATION_LEAGUES = 5     # 每日最多试用联赛数（集中火力验证）
-
-# 已验证联赛不额外加成（31笔样本太少, 不足以证明ROI优势）
-# 作用: 未验证联赛打折, 已验证联赛正常
-VERIFIED_LEAGUE_BONUS = 1.0   # 已验证 = 正常投注, 不加成
+# 结算验证仅做门禁 (能投/不能投), 权重来自 Pinnacle 历史数据
 
 # 已知可结算的联赛（历史遗留白名单，新数据以 settleable_leagues.json 为准）
 KNOWN_SETTLEABLE_LEAGUES = {
@@ -141,26 +135,6 @@ def is_league_probationary(league: str, sport: str = "") -> bool:
         pass
 
     return False
-
-
-def get_settlement_penalty(league: str, sport: str = "") -> float:
-    """获取结算惩罚系数。
-
-    这不是权重！权重来自 Pinnacle 海量历史数据。
-    这只是决定"能不能投"的门禁：
-    - 1.0 — 可以投（已验证或Pinnacle匹配+API覆盖）
-    - 0.0 — 不能投（完全不可结算，投了注定作废）
-
-    Returns:
-        0.0 或 1.0
-    """
-    if is_league_settleable(league, sport):
-        return 1.0  # 已验证，可以投
-    if is_league_probationary(league, sport):
-        if _has_pinnacle_matches(league):
-            return 1.0  # Pinnacle匹配+API覆盖，可以投
-        return 1.0  # API覆盖，可以投（小额测试）
-    return 0.0  # 完全不可结算，不投
 
 
 def _has_pinnacle_matches(league: str) -> bool:
