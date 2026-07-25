@@ -126,12 +126,17 @@ MARKET_QUALITY_BASKETBALL = {
     "ou":   0.60,  # 大小分: 比价空间较小(edge+0.9%)
 }
 
-# --- 网球市场权重 (FLB研究) ---
+# --- 网球市场权重 (Pinnacle 2,413场 + 实战13中1) ---
+# Pinnacle抽水3.09%, 67.5%比赛Favorite赢
+# 致命FLB: >5.0赔率ROI=-11.2% vs 1.3-1.5赔率ROI=-0.1%
+# 核心规则: 只投低赔方(<3.0), 因为高赔方的+EV只是FLB噪音
 MARKET_QUALITY_TENNIS = {
-    "1x2":  1.00,  # 两结果市场, 低赔方有价值
-    "hc":   0.80,  # 让盘/让局
-    "ou":   0.70,  # 总局数大小
+    "1x2":  0.70,  # Pinnacle抽水3.09%, 比足球1X2(4.29%)更准
+    "hc":   0.50,  # 让盘: 实战验证不足
+    "ou":   0.50,  # 大小分: 无Pinnacle数据
 }
+# 网球赔率上限: 超过此赔率不投(FLB陷阱)
+TENNIS_MAX_ODDS = 3.0  # BB赔率 > 3.0 → 跳过
 
 # --- 棒球市场权重 (公开研究) ---
 MARKET_QUALITY_BASEBALL = {
@@ -611,6 +616,10 @@ def _collect_opportunities(match, market_key):
         # 超高赔率过滤：BB 赔率 > 15.0 且不是主流联赛 → 跳过
         # （小联赛弱队不可能有真实 15+ 赔率，通常是匹配错误）
         if bb_odds > 15.0 and league_mult < 1.0:
+            continue
+
+        # 网球赔率上限：高赔方是FLB陷阱 (Pinnacle 2,413场: >5.0 ROI=-11.2%)
+        if match.get("sport", "") == "tennis" and bb_odds > TENNIS_MAX_ODDS:
             continue
 
         # 市场子类型识别：区分同一 market_key 下的不同市场（如 1X2 / HT / BTTS / DC）
