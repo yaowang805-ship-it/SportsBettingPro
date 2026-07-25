@@ -1212,63 +1212,24 @@ def push_report(place_bets=False, incremental=False, qualified=None):
         scan_type = "incremental" if incremental else "full"
         recommendation_tracker.log_recommendations(qualified, scan_type=scan_type)
 
-        # 投注前过滤：三层结算可行性
-        # - 已验证可结算 → 正常投注（31笔样本不足以加成）
-        # - 试用期联赛 → 20% 测试投注，每日最多 5 个（集中火力验证）
-        # - 完全不可结算 → 跳过投注
+        # 投注前过滤：结算门禁（能投/不能投，不是权重）
+        # 权重来自 Pinnacle 130,310场历史数据，不来自结算验证
         bettable = qualified
-        from src.core.settleability import (is_league_settleable, is_league_probationary,
-                                              PROBATION_MULTIPLIER, MAX_PROBATION_LEAGUES)
-        skipped_leagues = set()
-        probation_leagues = {}  # league → total EV
+        from src.core.settleability import is_league_settleable, is_league_probationary
+        blocked_leagues = set()
         for o in qualified:
             league = o.get("league", "")
             sport = o.get("sport", "")
-            if not is_league_settleable(league, sport):
-                if is_league_probationary(league, sport):
-                    probation_leagues[league] = probation_leagues.get(league, 0) + o.get("ev_pct", 0)
-                else:
-                    skipped_leagues.add(league)
+            if not is_league_settleable(league, sport) and not is_league_probationary(league, sport):
+                blocked_leagues.add(league)
 
-        if skipped_leagues:
+        if blocked_leagues:
             bettable = [o for o in bettable
                         if is_league_settleable(o.get("league", ""), o.get("sport", ""))
                         or is_league_probationary(o.get("league", ""), o.get("sport", ""))]
-            logger.info("结算可行性: 跳过 %d 个不可结算联赛", len(skipped_leagues))
-            for l in sorted(skipped_leagues):
+            logger.info("结算门禁: 跳过 %d 个不可结算联赛", len(blocked_leagues))
+            for l in sorted(blocked_leagues):
                 logger.info("  🚫 %s", l)
-
-        if probation_leagues:
-            # 只保留每日 TOP N 试用联赛（按 EV 总和排序）
-            top_probation = sorted(probation_leagues.items(), key=lambda x: -x[1])
-            top_probation = top_probation[:MAX_PROBATION_LEAGUES]
-            top_probation_set = {l for l, _ in top_probation}
-            probation_cut = set(probation_leagues.keys()) - top_probation_set
-
-            # 从投注列表中移除超限的试用联赛
-            if probation_cut:
-                bettable = [o for o in bettable
-                            if o.get("league", "") not in probation_cut]
-                logger.info("试用联赛限流: 保留 %d 个 (EV最高), 跳过 %d 个",
-                            len(top_probation_set), len(probation_cut))
-                for l in sorted(probation_cut):
-                    logger.info("  ⏭️ %s", l)
-
-            # 试用联赛降至 20% 投注额
-            for o in bettable:
-                if o.get("league", "") in top_probation_set:
-                    original_stake = o.get("_stake", 0)
-                    o["_stake"] = max(10.0, round(original_stake * PROBATION_MULTIPLIER, 2))
-            logger.info("结算可行性: %d 个试用联赛降至 %.0f%% 测试投注",
-                        len(top_probation_set), PROBATION_MULTIPLIER * 100)
-            for l in sorted(top_probation_set):
-                logger.info("  🔬 %s", l)
-
-        # 已验证联赛 = 正常投注 (不加成, 31笔样本不足以证明ROI优势)
-        verified_count = sum(1 for o in bettable
-                             if is_league_settleable(o.get("league", ""), o.get("sport", "")))
-        if verified_count:
-            logger.info("已验证联赛: %d 条机会 (正常投注)", verified_count)
 
         # 投注后保存指纹
         if place_bets and bettable:

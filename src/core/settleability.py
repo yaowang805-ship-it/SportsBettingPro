@@ -143,28 +143,24 @@ def is_league_probationary(league: str, sport: str = "") -> bool:
     return False
 
 
-def get_league_multiplier_adjustment(league: str, sport: str = "") -> float:
-    """获取联赛投注额调整系数。
+def get_settlement_penalty(league: str, sport: str = "") -> float:
+    """获取结算惩罚系数。
 
-    四层体系：
-    - 1.50 — 已验证可结算（历史有成功记录）
-    - 0.50 — Pinnacle匹配试用（有Pinnacle比赛 + LEAGUE_SPORT_MAP覆盖）
-    - 0.20 — API试用（仅LEAGUE_SPORT_MAP覆盖，无Pinnacle匹配记录）
-    - 0.00 — 完全不可结算
+    这不是权重！权重来自 Pinnacle 海量历史数据。
+    这只是决定"能不能投"的门禁：
+    - 1.0 — 可以投（已验证或Pinnacle匹配+API覆盖）
+    - 0.0 — 不能投（完全不可结算，投了注定作废）
 
     Returns:
-        投注额乘数
+        0.0 或 1.0
     """
     if is_league_settleable(league, sport):
-        return VERIFIED_LEAGUE_BONUS  # 1.5x
-
+        return 1.0  # 已验证，可以投
     if is_league_probationary(league, sport):
-        # 检查是否有实际 Pinnacle 匹配记录（更高信任）
         if _has_pinnacle_matches(league):
-            return 0.80  # Pinnacle-matched: 已验赔率真实，结算只是时间问题
-        return PROBATION_MULTIPLIER  # 0.20 API-only probation
-
-    return 0.0
+            return 1.0  # Pinnacle匹配+API覆盖，可以投
+        return 1.0  # API覆盖，可以投（小额测试）
+    return 0.0  # 完全不可结算，不投
 
 
 def _has_pinnacle_matches(league: str) -> bool:

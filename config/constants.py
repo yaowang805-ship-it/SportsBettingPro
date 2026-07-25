@@ -47,9 +47,10 @@ def get_league_tier(league: str) -> int:
 
 
 def league_multiplier(league: str, sport: str = "") -> float:
-    """根据联赛等级 + 结算可行性 + Pinnacle准确度返回投注额乘数。
+    """根据联赛等级 + Pinnacle准确度返回投注额乘数。
 
-    Pinnacle越准 → 比价越可靠 → 乘数加成。
+    Pinnacle越准(低抽水) → 比价越可靠 → 乘数加成。
+    不包含结算验证（结算是门禁，能投/不能投，不是权重）。
     """
     tier = get_league_tier(league)
     base = {1: 1.0, 2: 0.9, 3: 0.7, 4: 0.5}.get(tier, 0.7)
@@ -61,14 +62,5 @@ def league_multiplier(league: str, sport: str = "") -> float:
         base *= accuracy_bonus
     except ImportError:
         pass
-
-    # 结算可行性调整
-    if sport:
-        try:
-            from src.core.settleability import get_league_multiplier_adjustment
-            settle_adj = get_league_multiplier_adjustment(league, sport)
-            return base * settle_adj
-        except ImportError:
-            pass
 
     return base
