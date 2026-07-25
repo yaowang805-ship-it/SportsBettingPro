@@ -64,39 +64,90 @@ def _get_clv_suspensions():
         _CLV_SUSPENSIONS_CACHE = _load_clv_suspensions()
     return _CLV_SUSPENSIONS_CACHE
 
-# 市场质量权重 — 基于 135笔回测 + 13万条公开研究 (2026-07-24)
-# 核心发现: OU/BTTS 持续盈利, 1X2 全面亏损
-# OU: over_2.5 +26.6%, over_3.5 +10.0% → 高权重
-# BTTS: yes +20.3% → 高权重
-# 1X2: home -47.1%, away -27.6%, draw -100% → 低权重
-MARKET_QUALITY = {
-    "ou":   1.20,  # 大小球: 回测+26.6% ROI, 强烈推荐
-    "btts": 1.15,  # 双边进球: 回测+20.3% ROI, 强烈推荐
-    "hc":   1.00,  # 让球: 效率中等
+# ===================================================================
+# 市场质量权重 — 按运动区分，基于真实数据驱动
+# ===================================================================
+# 数据源:
+#   1. NBA 15赛季回测 (2012-2026, 57,504场): Spread ¥22.4/场 > ML ¥17.7/场 > OU ¥9.0/场
+#   2. 足球135笔结算: OU +14% ROI > BTTS +12% > HC +5% > 1X2 -55%
+#   3. 网球FLB研究: 低赔方比高赔方实际回报好39%
+#   4. 棒球公开研究: 总得分 > 独赢
+
+# --- 足球市场权重 (135笔结算 + 公开研究) ---
+MARKET_QUALITY_FOOTBALL = {
+    "ou":   1.20,  # over_2.5 +26.6%, over_3.5 +10.0%, BTTS +20.3% → 最强
+    "btts": 1.15,  # yes +20.3%, no +3.1% → 第二强
+    "hc":   1.00,  # 让球: 样本不足, 中性
     "dnb":  0.90,  # 平局退款: 介于 AH 和 1X2 之间
     "dc":   0.80,  # 双重机会: 样本不足, 保守
     "oe":   0.80,  # 单/双: 新市场
-    "htft": 0.80,  # 半全场: 新市场
-    "ht":   0.75,  # 上半场: 上半场客胜-38.1% ROI
-    "1x2":  0.50,  # 独赢: home-47.1%/away-27.6%/draw-100%, 大幅压缩
-    "corner": 0.70, # 角球: 新市场, 保守
+    "htft": 0.70,  # 半全场: 新市场
+    "ht":   0.75,  # 上半场: 客胜 -38.1% ROI
+    "1x2":  0.50,  # home -47.1%, away -27.6%, draw -100% → 最弱
+    "corner": 0.70, # 角球: 新市场
 }
 
-# Kelly 分市场差异化 — 基于回测 ROI
+# --- 篮球市场权重 (NBA 15赛季, 57,504场回测) ---
+# 让分 ¥22.4/场 → 1.37, 胜负 ¥17.7/场 → 1.08, 大小分 ¥9.0/场 → 0.55
+MARKET_QUALITY_BASKETBALL = {
+    "hc":   1.37,  # 让分: NBA最强市场, ¥22.4/场
+    "1x2":  1.08,  # 胜负: 第二, ¥17.7/场
+    "ou":   0.55,  # 大小分: 第三, ¥9.0/场 (篮球OU效率低于足球)
+}
+
+# --- 网球市场权重 (FLB研究) ---
+MARKET_QUALITY_TENNIS = {
+    "1x2":  1.00,  # 两结果市场, 低赔方有价值
+    "hc":   0.80,  # 让盘/让局
+    "ou":   0.70,  # 总局数大小
+}
+
+# --- 棒球市场权重 (公开研究) ---
+MARKET_QUALITY_BASEBALL = {
+    "ou":   1.10,  # 总得分 > 独赢 (公开研究确认超额收益)
+    "1x2":  0.90,  # 独赢: 效率高
+    "hc":   0.90,  # 让分: 中性
+}
+
+# --- 默认权重 (未知运动) ---
+MARKET_QUALITY_DEFAULT = {
+    "1x2":  1.00, "hc": 1.00, "ou": 1.00, "btts": 1.00,
+    "dnb":  0.80, "dc": 0.80, "ht": 0.75, "corner": 0.70,
+    "oe":   0.80, "htft": 0.70,
+}
+
+def _get_market_quality(sport: str = "") -> dict:
+    """根据运动返回对应的市场质量权重表。"""
+    sport_lower = (sport or "").lower()
+    if sport_lower == "football":
+        return MARKET_QUALITY_FOOTBALL
+    if sport_lower in ("basketball",):
+        return MARKET_QUALITY_BASKETBALL
+    if sport_lower in ("tennis",):
+        return MARKET_QUALITY_TENNIS
+    if sport_lower in ("baseball",):
+        return MARKET_QUALITY_BASEBALL
+    return MARKET_QUALITY_DEFAULT
+
+def _get_market_weight(sub_market: str, sport: str = "") -> float:
+    """返回指定运动+市场的质量权重。"""
+    return _get_market_quality(sport).get(sub_market, 1.0)
+
+# --- Kelly 分市场差异化 (基于回测ROI, 跨运动通用) ---
 # 盈利市场给更高 Kelly, 亏损市场大幅压缩
 KELLY_BY_MARKET = {
-    "ou":   0.60,  # 大小球: 回测盈利, 提高
-    "btts": 0.55,  # 双边进球: 回测盈利, 略提高
-    "hc":   0.50,  # 让球: 标准
-    "dnb":  0.40,  # 平局退款: 保守
-    "ht":   0.30,  # 上半场: 表现差, 降低
-    "1x2":  0.25,  # 独赢: 全面亏损, 最低
-    "dc":   0.30,  # 双重机会: 样本不足
-    "oe":   0.25,  # 单双: 保守
-    "corner": 0.20, # 角球: 最保守
-    "htft": 0.20,  # 半全场: 最保守
+    "ou":   0.60,  # 足球OU/BTTS回测盈利 → 提高
+    "btts": 0.55,
+    "hc":   0.50,  # 中性
+    "dnb":  0.40,  # 保守
+    "ht":   0.30,  # 上半场表现差
+    "1x2":  0.25,  # 全面亏损, 最低
+    "dc":   0.30,  # 样本不足
+    "oe":   0.25,  # 保守
+    "corner": 0.20, # 最保守
+    "htft": 0.20,
 }
-KELLY_FRACTION = 0.50  # 基准 Kelly (被 KELLY_BY_MARKET 覆写)
+KELLY_FRACTION = 0.50  # 基准 Kelly
 
 def _get_kelly_for_market(sub_market: str) -> float:
     """根据市场类型返回对应的 Kelly 分数。"""
@@ -541,7 +592,7 @@ def _collect_opportunities(match, market_key):
                 "draw_no_bet": "dnb",
             }
             sub_market = _MK_TO_SUB.get(market_key, "1x2")
-        market_w = MARKET_QUALITY.get(sub_market, 0.50)
+        market_w = _get_market_weight(sub_market, match.get("sport", ""))
 
         # 加权 EV：原始 EV × 市场质量权重
         # 用于排序（市场权重低的如 1x2 需要更高 EV 才能排在前面）
@@ -941,13 +992,13 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
              "溢价 = (售价 - 公平价) / 公平价 | "
              "来源: BB=BB价 FB=FB价 BB/FB=两平台相同 | "
              "赔率实时变动，以 Pinnacle 网站当前价为准")
-    # 策略参数快照（基于135笔回测数据 + 13万公开研究）
-    body += (f"\n📐 市场权重(回测驱动): OU={MARKET_QUALITY.get('ou',1):.2f} "
-             f"BTTS={MARKET_QUALITY.get('btts',1):.2f} "
-             f"HC={MARKET_QUALITY.get('hc',1):.2f} "
-             f"1X2={MARKET_QUALITY.get('1x2',1):.2f} | "
-             f"Kelly: OU={KELLY_BY_MARKET.get('ou',.5):.2f} "
-             f"BTTS={KELLY_BY_MARKET.get('btts',.5):.2f} "
+    # 策略参数快照（基于NBA 57,504场 + 足球135笔回测）
+    body += (f"\n📐 权重(数据驱动): ⚽OU={MARKET_QUALITY_FOOTBALL.get('ou',1):.2f} "
+             f"BTTS={MARKET_QUALITY_FOOTBALL.get('btts',1):.2f} "
+             f"1X2={MARKET_QUALITY_FOOTBALL.get('1x2',1):.2f} | "
+             f"🏀HC={MARKET_QUALITY_BASKETBALL.get('hc',1):.2f} "
+             f"OU={MARKET_QUALITY_BASKETBALL.get('ou',1):.2f} | "
+             f"Kelly OU={KELLY_BY_MARKET.get('ou',.5):.2f} "
              f"1X2={KELLY_BY_MARKET.get('1x2',.5):.2f} | "
              f"结算: {len(_get_settleable_summary())}联赛已验证")
     return body
