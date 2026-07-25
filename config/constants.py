@@ -47,15 +47,20 @@ def get_league_tier(league: str) -> int:
 
 
 def league_multiplier(league: str, sport: str = "") -> float:
-    """根据联赛等级 + 结算可行性返回投注额乘数。
+    """根据联赛等级 + 结算可行性 + Pinnacle准确度返回投注额乘数。
 
-    三层体系：
-    - 已证明可结算 → 全額 (Tier乘数)
-    - 试用期联赛 → 5% 测试投注 (¥10-200)
-    - 完全不可结算 → 0 (不下注)
+    Pinnacle越准 → 比价越可靠 → 乘数加成。
     """
     tier = get_league_tier(league)
     base = {1: 1.0, 2: 0.9, 3: 0.7, 4: 0.5}.get(tier, 0.7)
+
+    # Pinnacle准确度加成 (基于72,806场真实数据)
+    try:
+        from src.report.bb_ev_push import PINNACLE_LEAGUE_ACCURACY
+        accuracy_bonus = PINNACLE_LEAGUE_ACCURACY.get(league, 1.0)
+        base *= accuracy_bonus
+    except ImportError:
+        pass
 
     # 结算可行性调整
     if sport:
