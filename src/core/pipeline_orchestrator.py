@@ -50,7 +50,7 @@ for _lf in sorted(LOG_DIR.iterdir()):
         print(f"  📦 日志轮转: {_lf.name} → {_rotated.name}")
 
 SCAN_WINDOW = (8, 22)         # 08:00 ~ 22:00
-INCREMENTAL_INTERVAL = 1200    # 20 分钟（秒）
+INCREMENTAL_INTERVAL = 600     # 10 分钟（秒）— 更快捕获早盘软赔率
 CHECK_INTERVAL = 30            # 调度循环检查间隔（秒）
 
 # 定时任务表：(名称, HH:MM, 处理函数, 参数字典)
