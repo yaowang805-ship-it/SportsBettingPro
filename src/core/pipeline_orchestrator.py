@@ -59,6 +59,7 @@ SCHEDULE = [
     ("full_scan_morning",  "08:00", "do_full_scan",  {"bet": True}),
     ("settle_morning",     "09:30", "do_settle",      {}),
     ("daily_report",       "10:00", "do_daily_report",{}),
+    ("memory_update",      "10:05", "do_memory_update", {}),
     ("full_scan_evening",  "20:00", "do_full_scan",   {"bet": True}),
     ("settle_evening",     "20:30", "do_settle",      {}),
     # 周报：周日 21:00
@@ -304,6 +305,11 @@ class PipelineOrchestrator:
             pr()
         finally:
             sys.argv = old_argv
+
+    def do_memory_update(self):
+        """更新 Claude 记忆库，同步最新系统状态。"""
+        from src.core.memory_updater import update_all
+        update_all(dry_run=False)
 
     def do_monthly_report(self):
         from src.report.periodic_report import main as pr
