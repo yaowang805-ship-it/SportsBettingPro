@@ -233,12 +233,17 @@ def run_incremental(time_window: str = "all"):
         print(f"  ⏭️ 当前时间 {_now_hour}:00 不在扫描时段 (08:00~22:00)，跳过增量扫描")
         return
 
-    labels = {"near": "24h内临场", "far": "24-72h早盘", "all": "全时段"}
+    labels = {"near": "🏃 24h内临场", "far": "🚶 24-72h早盘", "all": "全时段"}
     label = labels.get(time_window, "全时段")
 
     print("=" * 60)
     print(f"BB体育 增量扫描 [{label}] (变动检测 → 定向对比)")
     print("=" * 60)
+
+    # 保存 time_window 到文件，供 _run_push 读取
+    import json as _json
+    (DATA_DIR / ".incremental_mode").write_text(
+        _json.dumps({"time_window": time_window, "label": label}))
 
     # 1. 获取最新BB数据
     print("\n📡 获取BB数据...")
@@ -665,9 +670,21 @@ def _quick_settle():
         for line in (result.stdout or "").splitlines():
             if "自动结算完成" in line:
                 print(f"  {line.strip()}")
+
+def _run_push():
+    """运行推送。读取增量模式标识传标签。"""
     import subprocess
+    mode_file = DATA_DIR / ".incremental_mode"
+    extra_args = []
+    if mode_file.exists():
+        try:
+            import json as _json
+            mode = _json.loads(mode_file.read_text())
+            extra_args = ["--label", mode.get("label", "")]
+        except Exception:
+            pass
     result = subprocess.run(
-        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental"],
+        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental"] + extra_args,
         capture_output=True, text=True, cwd=SRC_DIR.parent,
         timeout=120,
     )

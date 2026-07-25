@@ -1280,7 +1280,7 @@ def _filter_pushed(qualified: list) -> list:
     return new
 
 
-def push_report(place_bets=False, incremental=False, qualified=None, force=False):
+def push_report(place_bets=False, incremental=False, qualified=None, force=False, label: str = ""):
     """推送报告到钉钉。
 
     Args:
@@ -1288,6 +1288,7 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         incremental: 增量扫描标记。
         qualified: 可选，来自 build_report 的已处理机会列表。为 None 时独立预处理。
         force: 跳过指纹去重，强制推送。
+        label: 增量扫描类型标签（如 "🏃 24h内临场"）
     """
     if not DINGTALK_WEBHOOK:
         logger.info("no DINGTALK_WEBHOOK configured")
@@ -1323,20 +1324,20 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
 
     # 增量扫描标记：标题 + 正文头部添加标记
     if incremental:
-        title = f"⚡ 增量扫描 +EV 机会: {body.count('#####')} 条 新发现"
+        prefix = label if label else "⚡ 增量扫描"
+        title = f"{prefix} +EV 机会: {body.count('#####')} 条"
         # 正文第一行标题也改为增量扫描
-        body = body.replace("**+EV 投注推荐", "**⚡ 增量扫描 +EV 机会", 1)
-        lines = body.split("\n")
-        insert_pos = None
-        for i, line in enumerate(lines):
-            if line.startswith("**") and ("⚽" in line or "🏀" in line or "🎾" in line):
-                insert_pos = i
-                break
-        if insert_pos is not None:
-            lines.insert(insert_pos, "🔄 **增量扫描** — 以下机会为最近20分钟内新发现\n")
-            body = "\n".join(lines)
-        else:
-            body = body.replace("扫描 ", "🔄 增量扫描 ")
+        body = body.replace("**+EV 投注推荐", f"**{prefix} +EV 机会", 1)
+        if not label:
+            lines = body.split("\n")
+            insert_pos = None
+            for i, line in enumerate(lines):
+                if line.startswith("**") and ("⚽" in line or "🏀" in line or "🎾" in line):
+                    insert_pos = i
+                    break
+            if insert_pos is not None:
+                lines.insert(insert_pos, "🔄 **增量扫描** — 以下机会为最近20分钟内新发现\n")
+                body = "\n".join(lines)
     else:
         title = f"+EV 投注推荐: {body.count('#####')} 条"
 
@@ -1434,11 +1435,19 @@ def main():
         logger.info("推送机会已暂存到 %s: %d 场", PUSH_STAGING_FILE, len(qualified))
         place_bets_from_push(qualified)
 
+    # 读取 --label 参数
+    label_flag = ""
+    for i, arg in enumerate(sys.argv):
+        if arg == "--label" and i + 1 < len(sys.argv):
+            label_flag = sys.argv[i + 1]
+            break
+
     if "--no-push" not in sys.argv:
         push_report(place_bets=("--no-bet" not in sys.argv),
                     incremental="--incremental" in sys.argv,
                     qualified=qualified if qualified else None,
-                    force=force_fresh)
+                    force=force_fresh,
+                    label=label_flag)
     return body
 
 
