@@ -64,23 +64,43 @@ def _get_clv_suspensions():
         _CLV_SUSPENSIONS_CACHE = _load_clv_suspensions()
     return _CLV_SUSPENSIONS_CACHE
 
-# 市场质量权重 — 用于加权 EV 排序
-# 权重基于全球 Pinnacle 效率研究 + BB/FB 平台特征确定:
-# Pinnacle 效率越高 → 公平价越可靠 → 权重越高
-# BB/FB 相对偏离越大 → 机会越多 → 权重略增
-# 综合平衡后: 权重 = 公平价可信度 × BB/FB 偏离概率
+# 市场质量权重 — 基于 135笔回测 + 13万条公开研究 (2026-07-24)
+# 核心发现: OU/BTTS 持续盈利, 1X2 全面亏损
+# OU: over_2.5 +26.6%, over_3.5 +10.0% → 高权重
+# BTTS: yes +20.3% → 高权重
+# 1X2: home -47.1%, away -27.6%, draw -100% → 低权重
 MARKET_QUALITY = {
-    "1x2":  1.00,  # 独赢: Pinnacle 最高效(无FLB) → 公平价最可靠, 正常权重
-    "hc":   1.00,  # 让球: Pinnacle AH 效率高(~2%抽水), 整数盘口优先
-    "ou":   0.90,  # 大小球: Pinnacle 效率较低 → 公平价有噪音, 保守处理
-    "btts": 0.85,  # 双边进球: 学术数据不足, 公平价可靠性低
-    "dnb":  0.80,  # 平局退款: 介于 AH 和 1X2 之间, 维持
-    "ht":   0.75,  # 上半场: 无直接研究, 数据少 → 保守
-    "dc":   0.75,  # 双重机会: 从 1X2 推导, API 数据质量待验证
-    "oe":   0.70,  # 单/双: 新市场, 样本不足
-    "corner": 0.70,  # 角球: 新市场, 样本不足
-    "htft": 0.60,  # 半全场: 极复杂市场, 公平价可靠性最低
+    "ou":   1.20,  # 大小球: 回测+26.6% ROI, 强烈推荐
+    "btts": 1.15,  # 双边进球: 回测+20.3% ROI, 强烈推荐
+    "hc":   1.00,  # 让球: 效率中等
+    "dnb":  0.90,  # 平局退款: 介于 AH 和 1X2 之间
+    "dc":   0.80,  # 双重机会: 样本不足, 保守
+    "oe":   0.80,  # 单/双: 新市场
+    "htft": 0.80,  # 半全场: 新市场
+    "ht":   0.75,  # 上半场: 上半场客胜-38.1% ROI
+    "1x2":  0.50,  # 独赢: home-47.1%/away-27.6%/draw-100%, 大幅压缩
+    "corner": 0.70, # 角球: 新市场, 保守
 }
+
+# Kelly 分市场差异化 — 基于回测 ROI
+# 盈利市场给更高 Kelly, 亏损市场大幅压缩
+KELLY_BY_MARKET = {
+    "ou":   0.60,  # 大小球: 回测盈利, 提高
+    "btts": 0.55,  # 双边进球: 回测盈利, 略提高
+    "hc":   0.50,  # 让球: 标准
+    "dnb":  0.40,  # 平局退款: 保守
+    "ht":   0.30,  # 上半场: 表现差, 降低
+    "1x2":  0.25,  # 独赢: 全面亏损, 最低
+    "dc":   0.30,  # 双重机会: 样本不足
+    "oe":   0.25,  # 单双: 保守
+    "corner": 0.20, # 角球: 最保守
+    "htft": 0.20,  # 半全场: 最保守
+}
+KELLY_FRACTION = 0.50  # 基准 Kelly (被 KELLY_BY_MARKET 覆写)
+
+def _get_kelly_for_market(sub_market: str) -> float:
+    """根据市场类型返回对应的 Kelly 分数。"""
+    return KELLY_BY_MARKET.get(sub_market, KELLY_FRACTION)
 
 # ── 市场预算分配 ──
 # 基于"公平价可信度 × BB/FB 偏离概率"二维分配
@@ -532,7 +552,9 @@ def _collect_opportunities(match, market_key):
         fair = opp.get("fair_price") or round(pin_odds, 2)
         kelly_pct = 0
         if bb_odds > 1:
-            kelly = (ev / 100) / (bb_odds - 1) * KELLY_FRACTION
+            # 按市场类型使用不同 Kelly（基于回测 ROI）
+            market_kelly = _get_kelly_for_market(sub_market)
+            kelly = (ev / 100) / (bb_odds - 1) * market_kelly
             kelly_pct = round(kelly * 100, 2)
 
         # 综合评分：加权溢价 × 匹配度 × 联赛权重
@@ -919,13 +941,14 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
              "溢价 = (售价 - 公平价) / 公平价 | "
              "来源: BB=BB价 FB=FB价 BB/FB=两平台相同 | "
              "赔率实时变动，以 Pinnacle 网站当前价为准")
-    # 策略参数快照
-    body += (f"\n📐 市场权重: 1X2={MARKET_QUALITY.get('1x2',1):.2f} "
-             f"HC={MARKET_QUALITY.get('hc',1):.2f} "
-             f"OU={MARKET_QUALITY.get('ou',1):.2f} "
+    # 策略参数快照（基于135笔回测数据 + 13万公开研究）
+    body += (f"\n📐 市场权重(回测驱动): OU={MARKET_QUALITY.get('ou',1):.2f} "
              f"BTTS={MARKET_QUALITY.get('btts',1):.2f} "
-             f"DC={MARKET_QUALITY.get('dc',1):.2f} | "
-             f"Kelly: {KELLY_FRACTION} | "
+             f"HC={MARKET_QUALITY.get('hc',1):.2f} "
+             f"1X2={MARKET_QUALITY.get('1x2',1):.2f} | "
+             f"Kelly: OU={KELLY_BY_MARKET.get('ou',.5):.2f} "
+             f"BTTS={KELLY_BY_MARKET.get('btts',.5):.2f} "
+             f"1X2={KELLY_BY_MARKET.get('1x2',.5):.2f} | "
              f"结算: {len(_get_settleable_summary())}联赛已验证")
     return body
 
