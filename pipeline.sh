@@ -47,7 +47,9 @@ EOF
 
 cmd_scan() {
     local no_bet=""
+    local force=""
     [[ "$1" == "--no-bet" ]] && no_bet="--no-bet" && shift
+    [[ "$1" == "--force" ]] && force="--force" && shift
 
     _log "====== SCAN START ======"
     _log "Step 1/3: BB/FB API 提取..."
@@ -79,9 +81,9 @@ cmd_scan() {
 
     _log "Step 3/3: +EV 推送 (合并双对比)..."
     if [ -n "$no_bet" ]; then
-        python3 -m src.report.bb_ev_push --no-bet 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+        python3 -m src.report.bb_ev_push --no-bet $force 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
     else
-        python3 -m src.report.bb_ev_push 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+        python3 -m src.report.bb_ev_push $force 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
     fi
     if [ $rc -ne 0 ]; then
         _log "❌ Step 3/3 失败"
