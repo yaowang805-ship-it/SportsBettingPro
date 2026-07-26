@@ -1162,19 +1162,13 @@ def _get_settleable_summary() -> set:
 
 
 def _prepare_opportunities(force=False):
-    """Shared: collect + diversify. Returns qualified list or empty list.
-
-    Args:
-        force: If True, skip 2-hour freshness check.
-    """
-    if COMPARISON_FILE.exists():
-        if not force:
-            mtime = COMPARISON_FILE.stat().st_mtime
-            age_hours = (time.time() - mtime) / 3600
-            if age_hours > 2:
-                print(f"❌ bb_vs_pinnacle_comparison.json 已过期 ({age_hours:.1f}小时前)，请先运行 bb_vs_pinnacle 重新对比")
-                return []
-    else:
+    """对比文件必须 < 30 分钟, 确保赔率是实时的, 拒绝缓存。"""
+    if not COMPARISON_FILE.exists():
+        return []
+    mtime = COMPARISON_FILE.stat().st_mtime
+    age_min = (time.time() - mtime) / 60
+    if age_min > 30:
+        print(f"❌ 对比文件过期 ({age_min:.0f}分钟前)，拒绝使用缓存")
         return []
 
     qualified = _collect_opportunities_from_file()
