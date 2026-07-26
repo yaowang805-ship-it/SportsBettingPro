@@ -330,6 +330,11 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
 
             if bb_hl_val is not None and bb_home_odds and bb_away_odds:
                 home_sp, away_sp, _ = get_pin_spread(best_pin, target_line=bb_hl_val)
+                # 校准: 角球让球线必须精确匹配
+                if home_sp and away_sp:
+                    pin_line = home_sp.get("points")
+                    if pin_line is not None and abs(bb_hl_val - pin_line) > 0.001:
+                        home_sp = away_sp = None  # 线不匹配, 拒绝
                 if home_sp and away_sp and home_sp.get("price_decimal") and away_sp.get("price_decimal"):
                     pin_odds_h = home_sp["price_decimal"]
                     pin_odds_a = away_sp["price_decimal"]
@@ -369,6 +374,11 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
 
             if bb_line is not None and bb_over_odds and bb_under_odds:
                 over_p, under_p = get_pin_total(best_pin, target_line=bb_line)
+                # 校准: 角球大小线必须精确匹配
+                if over_p and under_p:
+                    pin_line = over_p.get("points")
+                    if pin_line is not None and abs(bb_line - pin_line) > 0.1:
+                        over_p = under_p = None  # 线不匹配, 拒绝
                 if over_p and under_p and over_p.get("price_decimal") and under_p.get("price_decimal"):
                     imp = 1.0 / over_p["price_decimal"] + 1.0 / under_p["price_decimal"]
                     over_fair = round(over_p["price_decimal"] * imp, 4)
