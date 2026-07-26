@@ -217,27 +217,19 @@ def _rebuild_output(details, existing, new_result):
     }
 
 
-def run_incremental(time_window: str = "all"):
-    """增量扫描入口。
-
-    Args:
-        time_window: "near" = 仅24h内, "far" = 仅24-72h, "all" = 全部
-    """
+def run_incremental():
+    """增量扫描入口。"""
     import sys
     sys.stdout.reconfigure(line_buffering=True)
 
-    # 扫描时段检查：只在 08:00~22:00 运行
-    from datetime import datetime, timezone, timedelta
+    from datetime import datetime
     _now_hour = datetime.now().hour
-    if _now_hour < 8 or _now_hour >= 22:
-        print(f"  ⏭️ 当前时间 {_now_hour}:00 不在扫描时段 (08:00~22:00)，跳过增量扫描")
+    if _now_hour < 7 or _now_hour >= 22:
+        print(f"  ⏭️ 当前时间 {_now_hour}:00 不在扫描时段 (07:00~22:00)，跳过增量扫描")
         return
 
-    labels = {"near": "🏃 24h内临场", "far": "🚶 24-72h早盘", "all": "全时段"}
-    label = labels.get(time_window, "全时段")
-
     print("=" * 60)
-    print(f"BB体育 增量扫描 [{label}] (变动检测 → 定向对比)")
+    print("BB体育 增量扫描 (变动检测 → 定向对比)")
     print("=" * 60)
 
     # 1. 获取最新BB数据
@@ -247,20 +239,11 @@ def run_incremental(time_window: str = "all"):
         print("  ❌ 获取BB数据失败")
         return
 
-    # 过滤已开赛 + 时间窗口
+    # 过滤已开赛
     now_ts = int(time.time() * 1000)
-    now_ms = int(time.time() * 1000)
-    h24_ms = 24 * 3600 * 1000
-    h72_ms = 72 * 3600 * 1000
-
     bb_matches = [m for m in bb_matches if not m.get("bt") or int(m["bt"]) > now_ts]
 
-    if time_window == "near":
-        bb_matches = [m for m in bb_matches if int(m.get("bt", 0)) - now_ms <= h24_ms]
-    elif time_window == "far":
-        bb_matches = [m for m in bb_matches if h24_ms < int(m.get("bt", 0)) - now_ms <= h72_ms]
-
-    print(f"  时间窗口 [{label}]: {len(bb_matches)} 场")
+    print(f"  比赛: {len(bb_matches)} 场")
 
     # 2. FB 独立数据刷新 + 对比（每次增量扫描都检查，独立于 BB 变动检测）
     print(f"\n📡 检查FB数据新鲜度...")
@@ -284,7 +267,7 @@ def run_incremental(time_window: str = "all"):
         # FB 可能有新机会，单独触发推送
         if fb_had_new:
             print(f"\n📣 FB 新+EV机会 → 运行推送...")
-            _run_push(label)
+            _run_push()
         return
 
     print(f"\n📊 变动检测:")
@@ -370,7 +353,7 @@ def run_full():
         new_result = compare_bb_vs_pinnacle(bb_after, _load_league_structure())
         if new_result:
             save_snapshot(bb_after)
-            _run_push(label)
+            _run_push()
     else:
         # 回退到直接调 bb_vs_pinnacle 的 main()
         print("  ⚠️ 直接调用 bb_vs_pinnacle.main()")
@@ -445,124 +428,6 @@ def _fetch_fb_only():
         print(f"  ❌ FB 抓取失败: {result.stderr[:200]}")
         return False
     return True
-
-
-def _merge_bb_odds_into_fb(fb_matches):
-    """将 BB 数据的高赔率合并到 FB 数据中。
-
-    FB 和 BB 的队名相同（都是中文名），按 league + home + away 做精确匹配。
-    对每个市场（ML, handicap, total, dnb 等）取 BB 和 FB 的 max 值。
-    """
-    bb_path = DATA_DIR / "bb_odds_extracted.json"
-    if not bb_path.exists():
-        return fb_matches
-
-    bb_data = json.loads(bb_path.read_text())
-    all_bb = bb_data.get("matches", [])
-
-    # 建立 BB 索引: (league, home, away) → match
-    bb_index = {}
-    for m in all_bb:
-        key = (m.get("league", ""), m.get("home", ""), m.get("away", ""))
-        bb_index[key] = m
-
-    merged_count = 0
-    for fb_m in fb_matches:
-        key = (fb_m.get("league", ""), fb_m.get("home", ""), fb_m.get("away", ""))
-        bb_m = bb_index.get(key)
-        if not bb_m:
-            continue
-
-        fb_ft = fb_m.get("odds_ft", {})
-        bb_ft = bb_m.get("odds_ft", {})
-
-        # 追踪每个市场哪个平台提供最高赔率
-        sources = {}
-
-        # ML: 逐元素取最大
-        fb_ml = fb_ft.get("ml", [])
-        bb_ml = bb_ft.get("ml", [])
-        if bb_ml and len(bb_ml) == len(fb_ml):
-            changed = False
-            for i in range(len(fb_ml)):
-                if bb_ml[i] > fb_ml[i]:
-                    fb_ml[i] = bb_ml[i]
-                    changed = True
-            if changed:
-                fb_ft["ml"] = fb_ml
-                sources["ml"] = "BB"
-
-        # Handicap: 主客赔率取最大（线一致时）
-        fb_hc = fb_ft.get("handicap", {})
-        bb_hc = bb_ft.get("handicap", {})
-        if fb_hc and bb_hc and isinstance(fb_hc, dict) and isinstance(bb_hc, dict):
-            fb_line = fb_hc.get("home_line_str", "")
-            bb_line = bb_hc.get("home_line_str", "")
-            if fb_line == bb_line:
-                hc_changed = False
-                if bb_hc.get("home_odds", 0) > fb_hc.get("home_odds", 0):
-                    fb_hc["home_odds"] = bb_hc["home_odds"]
-                    hc_changed = True
-                if bb_hc.get("away_odds", 0) > fb_hc.get("away_odds", 0):
-                    fb_hc["away_odds"] = bb_hc["away_odds"]
-                    hc_changed = True
-                if hc_changed:
-                    sources["handicap"] = "BB"
-
-        # OU: 大小赔率取最大（线一致时）
-        fb_ou = fb_ft.get("total", {})
-        bb_ou = bb_ft.get("total", {})
-        if fb_ou and bb_ou and isinstance(fb_ou, dict) and isinstance(bb_ou, dict):
-            fb_line = fb_ou.get("line_str", "")
-            bb_line = bb_ou.get("line_str", "")
-            if fb_line == bb_line:
-                ou_changed = False
-                if bb_ou.get("over_odds", 0) > fb_ou.get("over_odds", 0):
-                    fb_ou["over_odds"] = bb_ou["over_odds"]
-                    ou_changed = True
-                if bb_ou.get("under_odds", 0) > fb_ou.get("under_odds", 0):
-                    fb_ou["under_odds"] = bb_ou["under_odds"]
-                    ou_changed = True
-                if ou_changed:
-                    sources["ou"] = "BB"
-
-        # DNB
-        fb_dnb = fb_ft.get("dnb", {})
-        bb_dnb = bb_ft.get("dnb", {})
-        if fb_dnb and bb_dnb and isinstance(fb_dnb, dict) and isinstance(bb_dnb, dict):
-            dnb_changed = False
-            if bb_dnb.get("home_odds", 0) > fb_dnb.get("home_odds", 0):
-                fb_dnb["home_odds"] = bb_dnb["home_odds"]
-                dnb_changed = True
-            if bb_dnb.get("away_odds", 0) > fb_dnb.get("away_odds", 0):
-                fb_dnb["away_odds"] = bb_dnb["away_odds"]
-                dnb_changed = True
-            if dnb_changed:
-                sources["dnb"] = "BB"
-
-        # OE: 单/双赔率取最大
-        fb_oe = fb_ft.get("oe", {})
-        bb_oe = bb_ft.get("oe", {})
-        if fb_oe and bb_oe and isinstance(fb_oe, dict) and isinstance(bb_oe, dict):
-            oe_changed = False
-            if bb_oe.get("odd_odds", 0) > fb_oe.get("odd_odds", 0):
-                fb_oe["odd_odds"] = bb_oe["odd_odds"]
-                oe_changed = True
-            if bb_oe.get("even_odds", 0) > fb_oe.get("even_odds", 0):
-                fb_oe["even_odds"] = bb_oe["even_odds"]
-                oe_changed = True
-            if oe_changed:
-                sources["oe"] = "BB"
-
-        # 更新平台来源标记：有 BB 合入的市场标记为 BB，其余保持 FB
-        fb_m["platform_sources"] = sources
-        fb_m["platform"] = "BOTH" if sources else "FB"
-
-        merged_count += 1
-
-    if merged_count:
-        print(f"  🔀 BB 高赔率已合并到 FB: {merged_count} 场")
-    return fb_matches
 
 
 def _run_fb_comparison(all_pin_leagues):
@@ -660,12 +525,11 @@ def _quick_settle():
             if "自动结算完成" in line:
                 print(f"  {line.strip()}")
 
-def _run_push(label: str = ""):
-    """运行推送。label = 增量扫描类型标识。"""
+def _run_push():
+    """运行推送。"""
     import subprocess
-    extra_args = ["--label", label] if label else []
     result = subprocess.run(
-        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental", "--force"] + extra_args,
+        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental", "--force"],
         capture_output=True, text=True, cwd=SRC_DIR.parent,
         timeout=120,
     )

@@ -102,8 +102,7 @@ class PipelineOrchestrator:
         self._running = True
         self._active_tasks: set[str] = set()
         self._last_run: dict[str, date] = {}          # 定时任务 → 最后执行日期
-        self._last_incremental_near: float = 0          # 近场增量扫描时间戳
-        self._last_incremental_far: float = 0           # 远场增量扫描时间戳
+        self._last_incremental: float = 0               # 增量扫描时间戳
         self._alert_cooldown: dict[str, float] = {}    # 告警冷却
         self._setup_signal_handlers()
 
@@ -302,10 +301,10 @@ class PipelineOrchestrator:
             sys.argv = old_argv
         logger.info("Step 3/3: 完成")
 
-    def do_incremental(self, time_window: str = "all"):
-        """增量扫描。time_window = "near" | "far" | "all" """
+    def do_incremental(self):
+        """增量扫描。"""
         from src.scrapers.bb_incremental_scanner import run_incremental
-        run_incremental(time_window=time_window)
+        run_incremental()
 
     def do_settle(self):
         """自动结算。"""
@@ -485,10 +484,9 @@ class PipelineOrchestrator:
         self._ensure_single_instance()
         logger.info("=" * 50)
         logger.info("Pipeline Orchestrator 启动")
-        logger.info("扫描时段: %02d:00~%02d:00 | 增量: 临场%dmin / 早盘%dmin",
+        logger.info("扫描时段: %02d:00~%02d:00 | 增量: %dmin",
                      SCAN_WINDOW[0], SCAN_WINDOW[1],
-                     INCREMENTAL_INTERVAL_NEAR // 60,
-                     INCREMENTAL_INTERVAL_FAR // 60)
+                     INCREMENTAL_INTERVAL_NEAR // 60)
         logger.info("定时任务: %s", ", ".join(name for name, *_ in SCHEDULE))
         logger.info("dry-run: %s", self.dry_run)
         logger.info("=" * 50)
@@ -518,16 +516,12 @@ class PipelineOrchestrator:
                         self._run_task(name, method, background=is_bg, **kwargs)
                         self._last_run[name] = now.date()
 
-                # 2) 增量扫描 — 双层: 临场10min / 早盘60min
+                # 2) 增量扫描 — 每10分钟全时段
                 if self._is_in_scan_window(now):
-                    elapsed_near = (now - datetime.fromtimestamp(self._last_incremental_near)).total_seconds() if self._last_incremental_near else INCREMENTAL_INTERVAL_NEAR + 1
-                    if elapsed_near >= INCREMENTAL_INTERVAL_NEAR:
-                        self._run_task("incremental_near", self.do_incremental, time_window="near")
-                        self._last_incremental_near = time.time()
-                    elapsed_far = (now - datetime.fromtimestamp(self._last_incremental_far)).total_seconds() if self._last_incremental_far else INCREMENTAL_INTERVAL_FAR + 1
-                    if elapsed_far >= INCREMENTAL_INTERVAL_FAR:
-                        self._run_task("incremental_far", self.do_incremental, time_window="far")
-                        self._last_incremental_far = time.time()
+                    elapsed = (now - datetime.fromtimestamp(self._last_incremental)).total_seconds() if self._last_incremental else INCREMENTAL_INTERVAL_NEAR + 1
+                    if elapsed >= INCREMENTAL_INTERVAL_NEAR:
+                        self._run_task("incremental_scan", self.do_incremental)
+                        self._last_incremental = time.time()
                 time.sleep(CHECK_INTERVAL)
 
         except KeyboardInterrupt:
