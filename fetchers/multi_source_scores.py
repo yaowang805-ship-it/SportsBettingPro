@@ -84,16 +84,21 @@ _ODDS_API_LEAGUES = {
     "NFL美国职业美式足球": "americanfootball_nfl",
     "NCAAF": "americanfootball_ncaaf", "CFL": "americanfootball_cfl",
     "NHL": "icehockey_nhl",
-    # 新增覆盖
-    "秘鲁甲级联赛": "soccer_peru_primeira_division",
-    "立陶宛甲级联赛": "soccer_lithuania_a_lyga",
-    "冰岛超级联赛": "soccer_iceland_pepsi_deild",
+    # 新增覆盖 — 仅使用 Odds API 实际存在的 sport key
+    "波兰超级联赛": "soccer_poland_ekstraklasa",
+    "波兰甲": "soccer_poland_ekstraklasa",
+    "希腊超级联赛": "soccer_greece_super_league",
+    "希超": "soccer_greece_super_league",
+    "葡萄牙超级联赛": "soccer_portugal_primeira_liga",
+    "葡超": "soccer_portugal_primeira_liga",
+    "意大利乙级联赛": "soccer_italy_serie_b",
+    "意乙": "soccer_italy_serie_b",
     "MLB 美国职业棒球大联盟": "baseball_mlb",
     "WNBA 美国职业女子篮球联赛": "basketball_wnba",
-    "俄罗斯甲级联赛": "soccer_russia_first_league",
-    "俄罗斯乙级A组联赛": "soccer_russia_second_league_a",
-    "苏格兰联赛杯": "soccer_scotland_league_cup",
     "瑞典超甲级联赛": "soccer_sweden_superettan",
+    # 以下 league 在 Odds API 中不存在，删除错误映射:
+    # 秘鲁甲/俄罗斯甲/俄罗斯乙/厄瓜多尔甲/保加利亚甲/拉脱维亚超/罗马尼亚甲...
+    # → 这些联赛由 ESPN 或 football-data.org 覆盖，或无法结算
 }
 
 
