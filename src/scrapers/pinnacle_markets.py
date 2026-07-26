@@ -28,6 +28,27 @@ def get_league_matchups_and_markets(league_id):
     if not markets:
         return []
 
+    # 价格有效性校验: Pinnacle API cookie部分失效时返回null价格
+    null_count = 0
+    total_count = 0
+    for m in markets:
+        for p in m.get("prices", []):
+            total_count += 1
+            if p.get("price_decimal") is None:
+                null_count += 1
+    if total_count > 0 and null_count / total_count > 0.5:
+        # 超过50%的价格为null → cookie失效, 数据不可用
+        import logging
+        logging.getLogger(__name__).warning(
+            "Pinnacle API 价格无效: %d/%d null (%.0f%%) — cookie可能过期, 拒绝使用",
+            null_count, total_count, null_count / total_count * 100)
+        return []  # 返回空, 触发上层降级逻辑
+    elif null_count > 0:
+        import logging
+        logging.getLogger(__name__).warning(
+            "Pinnacle API 部分价格null: %d/%d (%.0f%%)",
+            null_count, total_count, null_count / total_count * 100)
+
     mm = {}
     for m in markets:
         mid = m.get("matchupId")
