@@ -8,8 +8,8 @@ from pathlib import Path
 from config.settings import DATA_DIR
 
 # ── 资金管理 ──
-BANKROLL = 50000.0                 # 日预算（bb_ev_push BANKROLL / bb_virtual_bet DAILY_BANKROLL）
-INITIAL_BALANCE = 50000.0          # 初始资金（仅 bb_virtual_bet 使用）
+BANKROLL = 10000.0                 # 日预算（123条机会/天, 均¥81）
+INITIAL_BALANCE = 50000.0          # 初始资金（累计余额）
 
 # ── EV 相关 ──
 EV_CAP = 12.0                      # 最大 EV %（bb_ev_push EV_CAP / bb_virtual_bet MAX_EV_PCT）
