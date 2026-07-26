@@ -172,7 +172,7 @@ def get_pin_total(pin_match, target_line=None, source=None):
             best_diff = diff
             best = (over_p, under_p)
 
-    if best_diff > 0.5:
+    if best_diff > 0.1:
         return None, None
     return best
 

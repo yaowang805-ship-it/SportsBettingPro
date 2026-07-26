@@ -151,10 +151,8 @@ def _calibrate_market_line(sport, market_type, bb_line, pin_line, pin_points, is
             tag = "HT" if is_ht else ""
             return False, f"{tag}让球线不一致: BB={bb_line} vs Pinnacle={ref}"
     elif market_type == "ou":
-        if diff > 0.5:
-            # 网球特殊：如果 diff>5 说明跨市场比较（games vs sets）
-            if sport == "tennis" and diff > 5:
-                return False, f"大小盘线不匹配: BB={bb_line} vs Pinnacle={ref}，可能用了错误市场"
+        # 大小球线也需精确匹配(0.25已明显不对: BB=1.75 vs Pin=2.0)
+        if diff > 0.1:
             tag = "HT" if is_ht else ""
             return False, f"{tag}大小盘线不一致: BB={bb_line} vs Pinnacle={ref}"
 
