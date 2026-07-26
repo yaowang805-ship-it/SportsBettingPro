@@ -146,7 +146,8 @@ def _calibrate_market_line(sport, market_type, bb_line, pin_line, pin_points, is
     diff = abs(bb_line - ref)
 
     if market_type == "hc":
-        if diff > 0.01:
+        # 让球线必须精确匹配(BB=0.75 vs Pin=1.0 → 不匹配)
+        if diff > 0.001:
             tag = "HT" if is_ht else ""
             return False, f"{tag}让球线不一致: BB={bb_line} vs Pinnacle={ref}"
     elif market_type == "ou":
