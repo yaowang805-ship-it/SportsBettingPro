@@ -240,11 +240,6 @@ def run_incremental(time_window: str = "all"):
     print(f"BB体育 增量扫描 [{label}] (变动检测 → 定向对比)")
     print("=" * 60)
 
-    # 保存 time_window 到文件，供 _run_push 读取
-    import json as _json
-    (DATA_DIR / ".incremental_mode").write_text(
-        _json.dumps({"time_window": time_window, "label": label}))
-
     # 1. 获取最新BB数据
     print("\n📡 获取BB数据...")
     bb_matches = _fetch_bb_data()
@@ -289,7 +284,7 @@ def run_incremental(time_window: str = "all"):
         # FB 可能有新机会，单独触发推送
         if fb_had_new:
             print(f"\n📣 FB 新+EV机会 → 运行推送...")
-            _run_push()
+            _run_push(label)
         return
 
     print(f"\n📊 变动检测:")
@@ -375,7 +370,7 @@ def run_full():
         new_result = compare_bb_vs_pinnacle(bb_after, _load_league_structure())
         if new_result:
             save_snapshot(bb_after)
-            _run_push()
+            _run_push(label)
     else:
         # 回退到直接调 bb_vs_pinnacle 的 main()
         print("  ⚠️ 直接调用 bb_vs_pinnacle.main()")
@@ -668,18 +663,10 @@ def _quick_settle():
             if "自动结算完成" in line:
                 print(f"  {line.strip()}")
 
-def _run_push():
-    """运行推送。读取增量模式标识传标签。"""
+def _run_push(label: str = ""):
+    """运行推送。label = 增量扫描类型标识。"""
     import subprocess
-    mode_file = DATA_DIR / ".incremental_mode"
-    extra_args = []
-    if mode_file.exists():
-        try:
-            import json as _json
-            mode = _json.loads(mode_file.read_text())
-            extra_args = ["--label", mode.get("label", "")]
-        except Exception:
-            pass
+    extra_args = ["--label", label] if label else []
     result = subprocess.run(
         [sys.executable, "-m", "src.report.bb_ev_push", "--incremental"] + extra_args,
         capture_output=True, text=True, cwd=SRC_DIR.parent,
