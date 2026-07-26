@@ -1410,21 +1410,8 @@ def main():
         logger.info("推送机会已暂存到 %s: %d 场", PUSH_STAGING_FILE, len(qualified))
         place_bets_from_push(qualified)
 
-    # 读取增量扫描标签（独立文件，无并发问题）
-    label_flag = ""
-    for i, arg in enumerate(sys.argv):
-        if arg == "--label-file" and i + 1 < len(sys.argv):
-            try:
-                from pathlib import Path
-                lf = Path(sys.argv[i + 1])
-                if lf.exists():
-                    import json as _json
-                    data = _json.loads(lf.read_text())
-                    label_flag = data.get("label", "")
-                    lf.unlink()
-            except Exception:
-                pass
-            break
+    # 读取增量扫描标签（环境变量传递，进程隔离）
+    label_flag = os.environ.get("PUSH_LABEL", "")
 
     if "--no-push" not in sys.argv:
         push_report(place_bets=("--no-bet" not in sys.argv),
