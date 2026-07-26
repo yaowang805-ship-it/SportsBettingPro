@@ -23,7 +23,7 @@ import requests
 
 # 从子模块导入 API 传输层
 from src.scrapers.pinnacle_api import (
-    API_BASE, SESSION, api_get, _rate_limit, _diagnose_pinnacle_error, us_to_decimal,
+    API_BASE, SESSION, api_get, _rate_limit, _diagnose_pinnacle_error, us_to_decimal, get_decimal_price,
 )
 from src.scrapers.pinnacle_api import _rate_limit as _  # noqa: ensure rate_limit usable
 
@@ -89,7 +89,7 @@ def _derive_btts_from_team_total(team_total_entries):
         over_dec = under_dec = None
         for p in prices:
             des = p.get("designation", "").lower()
-            dec = p.get("price_decimal", 0)
+            dec = get_decimal_price(p) or 0
             if p.get("points") == 0.5:
                 if des == "over" and dec > 1:
                     over_dec = dec
@@ -578,11 +578,11 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             if bb_hl is None:
                 continue
             home_sp, away_sp, sp_is_alt = get_pin_spread(pin, target_line=bb_hl)
-            if not (home_sp and away_sp and home_sp.get("price_decimal") and away_sp.get("price_decimal")):
+            if not (home_sp and away_sp and get_decimal_price(home_sp) and get_decimal_price(away_sp)):
                 continue
 
-            pin_home_odds = home_sp["price_decimal"]
-            pin_away_odds = away_sp["price_decimal"]
+            pin_home_odds = get_decimal_price(home_sp)
+            pin_away_odds = get_decimal_price(away_sp)
             bb_home_odds = hc_dict["home_odds"]
             bb_away_odds = hc_dict["away_odds"]
 
@@ -592,7 +592,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 if main_spreads:
                     mp = main_spreads[0].get("prices", [])
                     mp_line = next((p.get("points","?") for p in mp if p.get("designation")=="home"), "?")
-                    mp_odds = next((p.get("price_decimal","?") for p in mp if p.get("designation")=="home"), "?")
+                    mp_odds = next((get_decimal_price(p) or "?" for p in mp if p.get("designation")=="home"), "?")
                     new_flags.append(f"备用盘口: Pin主线={mp_line}@{mp_odds}")
 
             # 校准：检查让球线是否对得上
@@ -711,9 +711,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             if not over_p or not under_p:
                 continue
 
-            total_implied_ou = 1.0 / over_p["price_decimal"] + 1.0 / under_p["price_decimal"]
-            over_fair = round(over_p["price_decimal"] * total_implied_ou, 4)
-            under_fair = round(under_p["price_decimal"] * total_implied_ou, 4)
+            total_implied_ou = 1.0 / get_decimal_price(over_p) + 1.0 / get_decimal_price(under_p)
+            over_fair = round(get_decimal_price(over_p) * total_implied_ou, 4)
+            under_fair = round(get_decimal_price(under_p) * total_implied_ou, 4)
 
             # 校准：检查大小盘线是否对得上
             pin_ou_line = over_p.get("points")
@@ -725,25 +725,25 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     cal_blocked_ou += 1
                 continue
 
-            if over_p.get("price_decimal") and over_p["price_decimal"] > 0:
+            if get_decimal_price(over_p) and get_decimal_price(over_p) > 0:
                 ev_o = (bb_ou["over_odds"] - over_fair) / over_fair * 100
                 if ev_o > 1:
                     entry["over_under"].append({
                         "designation": mlabels["over"],
                         "line": str(bb_ou["line"]),
                         "bb_odds": bb_ou["over_odds"],
-                        "pin_odds": over_p["price_decimal"],
+                        "pin_odds": get_decimal_price(over_p),
                         "fair_price": over_fair,
                         "ev_pct": round(ev_o, 2),
                     })
-            if under_p.get("price_decimal") and under_p["price_decimal"] > 0:
+            if get_decimal_price(under_p) and get_decimal_price(under_p) > 0:
                 ev_u = (bb_ou["under_odds"] - under_fair) / under_fair * 100
                 if ev_u > 1:
                     entry["over_under"].append({
                         "designation": mlabels["under"],
                         "line": str(bb_ou["line"]),
                         "bb_odds": bb_ou["under_odds"],
-                        "pin_odds": under_p["price_decimal"],
+                        "pin_odds": get_decimal_price(under_p),
                         "fair_price": under_fair,
                         "ev_pct": round(ev_u, 2),
                     })
@@ -784,9 +784,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             if bb_ht_hc:
                 bb_hl = bb_ht_hc.get("home_line") if bb_ht_hc.get("home_line") is not None else bb_ht_hc.get("away_line")
                 home_sp, away_sp, sp_is_alt = get_pin_spread(pin, target_line=bb_hl, source=pin.get("ht_spread", []))
-                if home_sp and away_sp and home_sp.get("price_decimal") and away_sp.get("price_decimal"):
-                    pin_home_odds = home_sp["price_decimal"]
-                    pin_away_odds = away_sp["price_decimal"]
+                if home_sp and away_sp and get_decimal_price(home_sp) and get_decimal_price(away_sp):
+                    pin_home_odds = get_decimal_price(home_sp)
+                    pin_away_odds = get_decimal_price(away_sp)
                     # 校准：HT 让球线必须精确一致
                     pin_hc_line = home_sp.get("points")
                     bb_hc_line_val = bb_ht_hc.get("home_line")
@@ -796,7 +796,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         if ht_spreads:
                             mp = ht_spreads[0].get("prices", [])
                             mp_line = next((p.get("points", "?") for p in mp if p.get("designation") == "home"), "?")
-                            mp_odds = next((p.get("price_decimal", "?") for p in mp if p.get("designation") == "home"), "?")
+                            mp_odds = next((get_decimal_price(p) or "?" for p in mp if p.get("designation") == "home"), "?")
                             entry["flags"].append(f"备用盘口: Pin主线={mp_line}@{mp_odds}")
                     if cal_ok:
                         total_implied = 1.0 / pin_home_odds + 1.0 / pin_away_odds
@@ -834,29 +834,29 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     pin_ou_line = over_p.get("points")
                     cal_ok, _ = _calibrate_market_line(sport, "ou", bb_ht_ou["line"], pin_ou_line, None, is_ht=True)
                     if cal_ok:
-                        total_implied = 1.0 / over_p["price_decimal"] + 1.0 / under_p["price_decimal"]
-                        over_fair = round(over_p["price_decimal"] * total_implied, 4)
-                        under_fair = round(under_p["price_decimal"] * total_implied, 4)
-                        if over_p.get("price_decimal") and over_p["price_decimal"] > 0:
+                        total_implied = 1.0 / get_decimal_price(over_p) + 1.0 / get_decimal_price(under_p)
+                        over_fair = round(get_decimal_price(over_p) * total_implied, 4)
+                        under_fair = round(get_decimal_price(under_p) * total_implied, 4)
+                        if get_decimal_price(over_p) and get_decimal_price(over_p) > 0:
                             ev_o = (bb_ht_ou["over_odds"] - over_fair) / over_fair * 100
                             if ev_o > 1:
                                 entry["over_under"].append({
                                     "designation": ht_labels["over"],
                                     "line": str(bb_ht_ou["line"]),
                                     "bb_odds": bb_ht_ou["over_odds"],
-                                    "pin_odds": over_p["price_decimal"],
+                                    "pin_odds": get_decimal_price(over_p),
                                     "fair_price": over_fair,
                                     "ev_pct": round(ev_o, 2),
                                     "_market": "ht",
                                 })
-                        if under_p.get("price_decimal") and under_p["price_decimal"] > 0:
+                        if get_decimal_price(under_p) and get_decimal_price(under_p) > 0:
                             ev_u = (bb_ht_ou["under_odds"] - under_fair) / under_fair * 100
                             if ev_u > 1:
                                 entry["over_under"].append({
                                     "designation": ht_labels["under"],
                                     "line": str(bb_ht_ou["line"]),
                                     "bb_odds": bb_ht_ou["under_odds"],
-                                    "pin_odds": under_p["price_decimal"],
+                                    "pin_odds": get_decimal_price(under_p),
                                     "fair_price": under_fair,
                                     "ev_pct": round(ev_u, 2),
                                     "_market": "ht",
@@ -888,7 +888,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     dc_raw = [None, None, None]
                     for i, p in enumerate(prices):
                         des = p.get("designation", "")
-                        val = p.get("price_decimal", 0)
+                        val = get_decimal_price(p) or 0
                         idx = dc_desig_map.get(des)
                         if idx is None and i < 3:
                             # 子比赛不返回 designation（空字符串），按数组位置映射
@@ -976,7 +976,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     yes_price = no_price = None
                     for p in prices:
                         des = p.get("designation", "").lower()
-                        val = p.get("price_decimal", 0)
+                        val = get_decimal_price(p) or 0
                         if val <= 0:
                             continue
                         if des in ("yes", "both", "是"):

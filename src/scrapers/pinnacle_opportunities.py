@@ -13,6 +13,7 @@ from src.scrapers.bb_data import (
     MARKET_LABELS, detect_sport, parse_asian_line,
 )
 from src.scrapers.pinnacle_league_map import TEAM_NAME_MAP
+from src.scrapers.pinnacle_api import get_decimal_price
 from src.scrapers.pinnacle_markets import get_league_matchups_and_markets
 from src.scrapers.matching_engine import (
     get_pin_ml_sorted, get_pin_spread, get_pin_total, _pin_to_epoch,
@@ -102,7 +103,7 @@ def add_htft_opportunities(entry, bb_htft_dict, pin_prices_list):
         return
     raw_prices = []
     for p in pin_prices_list:
-        val = p.get("price_decimal", 0)
+        val = get_decimal_price(p) or 0
         if val <= 0:
             return
         raw_prices.append(val)
@@ -335,9 +336,9 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                     pin_line = home_sp.get("points")
                     if pin_line is not None and abs(bb_hl_val - pin_line) > 0.001:
                         home_sp = away_sp = None  # 线不匹配, 拒绝
-                if home_sp and away_sp and home_sp.get("price_decimal") and away_sp.get("price_decimal"):
-                    pin_odds_h = home_sp["price_decimal"]
-                    pin_odds_a = away_sp["price_decimal"]
+                if home_sp and away_sp and get_decimal_price(home_sp) and get_decimal_price(away_sp):
+                    pin_odds_h = get_decimal_price(home_sp)
+                    pin_odds_a = get_decimal_price(away_sp)
                     imp = 1.0 / pin_odds_h + 1.0 / pin_odds_a
                     fair_h = round(pin_odds_h * imp, 4)
                     fair_a = round(pin_odds_a * imp, 4)
@@ -379,10 +380,10 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                     pin_line = over_p.get("points")
                     if pin_line is not None and abs(bb_line - pin_line) > 0.1:
                         over_p = under_p = None  # 线不匹配, 拒绝
-                if over_p and under_p and over_p.get("price_decimal") and under_p.get("price_decimal"):
-                    imp = 1.0 / over_p["price_decimal"] + 1.0 / under_p["price_decimal"]
-                    over_fair = round(over_p["price_decimal"] * imp, 4)
-                    under_fair = round(under_p["price_decimal"] * imp, 4)
+                if over_p and under_p and get_decimal_price(over_p) and get_decimal_price(under_p):
+                    imp = 1.0 / get_decimal_price(over_p) + 1.0 / get_decimal_price(under_p)
+                    over_fair = round(get_decimal_price(over_p) * imp, 4)
+                    under_fair = round(get_decimal_price(under_p) * imp, 4)
 
                     ev_over = (bb_over_odds - over_fair) / over_fair * 100 if over_fair > 0 else 0
                     ev_under = (bb_under_odds - under_fair) / under_fair * 100 if under_fair > 0 else 0
@@ -392,7 +393,7 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                             "designation": "角球" + mlabels["over"],
                             "line": corner_ou.get("line_str", str(bb_line)),
                             "bb_odds": bb_over_odds,
-                            "pin_odds": over_p["price_decimal"],
+                            "pin_odds": get_decimal_price(over_p),
                             "fair_price": over_fair,
                             "ev_pct": round(ev_over, 2),
                             "_market": "corner",
@@ -402,7 +403,7 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                             "designation": "角球" + mlabels["under"],
                             "line": corner_ou.get("line_str", str(bb_line)),
                             "bb_odds": bb_under_odds,
-                            "pin_odds": under_p["price_decimal"],
+                            "pin_odds": get_decimal_price(under_p),
                             "fair_price": under_fair,
                             "ev_pct": round(ev_under, 2),
                             "_market": "corner",

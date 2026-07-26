@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 
-from src.scrapers.pinnacle_api import api_get, us_to_decimal
+from src.scrapers.pinnacle_api import get_decimal_price,  api_get, us_to_decimal
 
 def sort_ml_prices(prices):
     """Sort moneyline prices to [home, draw, away] order by designation."""
@@ -34,7 +34,7 @@ def get_league_matchups_and_markets(league_id):
     for m in markets:
         for p in m.get("prices", []):
             total_count += 1
-            if p.get("price_decimal") is None:
+            if get_decimal_price(p) is None:
                 null_count += 1
     if total_count > 0 and null_count / total_count > 0.5:
         # 超过50%的价格为null → cookie失效, 数据不可用

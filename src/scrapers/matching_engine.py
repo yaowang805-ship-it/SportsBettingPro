@@ -4,6 +4,8 @@
 """
 import re
 from collections import defaultdict
+
+from src.scrapers.pinnacle_api import get_decimal_price
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -70,8 +72,8 @@ def get_pin_ml_sorted(pin_match, sport="football"):
             prices = ml.get("prices_sorted", ml.get("prices", []))
             odds = []
             for p in prices:
-                if p.get("price_decimal") and 1.01 <= p["price_decimal"] <= 51.0:
-                    odds.append(p["price_decimal"])
+                if get_decimal_price(p) and 1.01 <= get_decimal_price(p) <= 51.0:
+                    odds.append(get_decimal_price(p))
             if len(odds) >= min_req:
                 return odds[:min_req]
     return []
@@ -86,8 +88,8 @@ def get_pin_ml_sorted_from_source(ml_source, sport="football"):
         prices = ml.get("prices_sorted", ml.get("prices", []))
         odds = []
         for p in prices:
-            if p.get("price_decimal") and 1.01 <= p["price_decimal"] <= 51.0:
-                odds.append(p["price_decimal"])
+            if get_decimal_price(p) and 1.01 <= get_decimal_price(p) <= 51.0:
+                odds.append(get_decimal_price(p))
         if len(odds) >= min_req:
             return odds[:min_req]
     return []

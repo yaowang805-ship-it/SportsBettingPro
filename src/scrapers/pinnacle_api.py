@@ -308,6 +308,24 @@ def us_to_decimal(us_price):
         return round(1 - 100 / us_price, 4)
 
 
+def get_decimal_price(price_obj: dict) -> float:
+    """从 Pinnacle 价格对象中提取十进制赔率。
+
+    兼容两种 API 格式:
+    - 新格式: {"price": 147} (美式赔率)
+    - 旧格式: {"price_decimal": 2.47} (十进制)
+    """
+    # 新格式: price (US odds)
+    us_price = price_obj.get("price")
+    if us_price is not None and isinstance(us_price, (int, float)):
+        return us_to_decimal(us_price)
+    # 旧格式: price_decimal
+    dec = price_obj.get("price_decimal")
+    if dec is not None and isinstance(dec, (int, float)) and dec > 1:
+        return float(dec)
+    return None
+
+
 # ── Preflight connectivity check ───────────────────────────────────────
 
 def check_pinnacle_connectivity(verbose=True):
