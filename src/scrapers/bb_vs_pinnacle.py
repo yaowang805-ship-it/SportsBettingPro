@@ -934,7 +934,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             "_market": "dc",
                         })
 
-        # --- 平局退款 (Draw No Bet) FT：从 Pinnacle 1X2 推导公平价 ---
+        # --- 平局退款 (Draw No Bet) FT ---
         bb_dnb = bb.get("odds_dnb", [])
         if len(bb_dnb) >= 2 and n_ml == 3:
             # 安全校验：DNB赔率必须小于对应独赢赔率（退款盘更安全→赔率更低）
@@ -943,21 +943,52 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             if bb_dnb_h >= bb_ml[0] * 0.99 or bb_dnb_a >= bb_ml[-1] * 0.99:
                 bb_dnb = []
         if len(bb_dnb) >= 2 and n_ml == 3:
-            h, d, a = pin_ml
-            if all(x and x > 0 for x in [h, d, a]):
-                imp = 1/h + 1/d + 1/a
-                p_h, p_d, p_a = (1/h)/imp, (1/d)/imp, (1/a)/imp
-                dnb_fair = [1/(p_h/(p_h+p_d)), 1/(p_a/(p_a+p_d))]
+            dnb_fair = None
+            dnb_pin_raw = None
+            # 路径A: Pinnacle 直接提供 DNB 市场
+            pin_dnb = pin.get("draw_no_bet", [])
+            for dnb_entry in pin_dnb:
+                if dnb_entry.get("period", 0) != 0:
+                    continue
+                prices = dnb_entry.get("prices", [])
+                if len(prices) >= 2:
+                    h_price = a_price = None
+                    for p in prices:
+                        des = p.get("designation", "").lower()
+                        val = get_decimal_price(p) or p.get("price_decimal", 0)
+                        if "home" in des or "主" in des:
+                            h_price = val
+                        elif "away" in des or "客" in des:
+                            a_price = val
+                    # 通过 participantId 映射
+                    if not h_price or not a_price:
+                        if len(prices) >= 2:
+                            h_price = prices[0].get("price_decimal", 0)
+                            a_price = prices[1].get("price_decimal", 0)
+                    if h_price and a_price and h_price > 1 and a_price > 1:
+                        imp_dnb = 1.0 / h_price + 1.0 / a_price
+                        dnb_fair = [round(h_price * imp_dnb, 4), round(a_price * imp_dnb, 4)]
+                        dnb_pin_raw = [h_price, a_price]
+                        break
+            if not dnb_fair:
+                # 路径B: 从 1X2 推导
+                h, d, a = pin_ml
+                if all(x and x > 0 for x in [h, d, a]):
+                    imp = 1/h + 1/d + 1/a
+                    p_h, p_d, p_a = (1/h)/imp, (1/d)/imp, (1/a)/imp
+                    dnb_fair = [1/(p_h/(p_h+p_d)), 1/(p_a/(p_a+p_d))]
+            if dnb_fair:
                 dnb_labels = ["平局退款-主", "平局退款-客"]
                 for i in range(2):
                     bb_dnb_val = float(bb_dnb[i]) if isinstance(bb_dnb[i], str) else bb_dnb[i]
                     if bb_dnb_val and dnb_fair[i] > 0:
                         ev = (bb_dnb_val - dnb_fair[i]) / dnb_fair[i] * 100
-                        # DNB EV > 20% 通常是提取错误（侧边栏导航错位），直接丢弃
                         if 1 < ev <= 20:
+                            pin_raw = round(dnb_pin_raw[i], 4) if dnb_pin_raw else 0
                             entry["draw_no_bet"].append({
                                 "designation": dnb_labels[i],
                                 "bb_odds": bb_dnb_val,
+                                "pin_odds": pin_raw,
                                 "fair_price": round(dnb_fair[i], 4),
                                 "ev_pct": round(ev, 2),
                                 "_market": "dnb",

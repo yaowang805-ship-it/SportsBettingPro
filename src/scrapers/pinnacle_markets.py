@@ -101,6 +101,7 @@ def get_league_matchups_and_markets(league_id):
         team_total = []
         btts = []
         double_chance = []
+        draw_no_bet = []
         for mkt in mkt_list:
             mtype = mkt.get("type", "")
             per = mkt.get("period", 0)
@@ -151,6 +152,7 @@ def get_league_matchups_and_markets(league_id):
             "team_total": team_total,
 		    "btts": btts,
 		    "double_chance": double_chance,
+            "draw_no_bet": draw_no_bet,
             "_is_games": _is_games,
         })
 
@@ -360,6 +362,56 @@ def get_league_matchups_and_markets(league_id):
                 for htft in htft_entries:
                     if htft["period"] not in existing_periods:
                         existing.append(htft)
+            break
+
+    # --- 平局退款 (DNB)：["Home Or Draw", "Away Or Draw"] 子比赛 ---
+    # 注意：Pinnacle 用 "Or Draw" 区分 DC(三结果)和 DNB(两结果)
+    for mu in matchups:
+        parent_id = mu.get("parentId")
+        if not parent_id:
+            continue
+        pnames = [p.get("name", "") for p in mu.get("participants", [])]
+        if len(pnames) != 2:
+            continue
+        if not all("Or Draw" in n for n in pnames):
+            continue
+        # 排除 DC（DC 有3个参与者，DNB有2个）
+        spec = mu.get("special", {})
+        desc = spec.get("description", "")
+        if "Double Chance" in desc:
+            continue  # 这是DC, 跳过
+        mid = mu["id"]
+        dnb_markets = mm.get(mid, [])
+        if not dnb_markets:
+            continue
+        pid_to_name = {str(p.get("id")): p.get("name", "") for p in mu.get("participants", [])}
+        dnb_entries = []
+        for mkt in dnb_markets:
+            if mkt.get("type") != "moneyline":
+                continue
+            period = mkt.get("period", 0)
+            prices = []
+            for p in mkt.get("prices", []):
+                pid = str(p.get("participantId", ""))
+                name = pid_to_name.get(pid, "")
+                desig = p.get("designation", "")
+                if not desig or desig == "None":
+                    desig = name.lower() if name else ""
+                prices.append({
+                    "designation": desig,
+                    "price_decimal": us_to_decimal(p.get("price")),
+                    "points": p.get("points"),
+                })
+            if len(prices) >= 2:
+                dnb_entries.append({"period": period, "prices": prices})
+        if not dnb_entries:
+            continue
+        for entry in result:
+            if entry.get("matchup_id") != parent_id:
+                continue
+            existing = entry.get("draw_no_bet", [])
+            if not existing:
+                entry["draw_no_bet"] = dnb_entries
             break
 
     return result
