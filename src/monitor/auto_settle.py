@@ -809,6 +809,8 @@ def auto_settle(dry_run: bool = False) -> int:
 
     logger.info("开始自动结算: %s 笔待处理", len(pending))
     settled_count = 0
+    consecutive_failures = 0
+    MAX_CONSECUTIVE_FAILURES = 10  # 连续失败此数后放弃本次结算
 
     # 按 (运动, 联赛) 分组获取比分（同运动不同联赛必须分开）
     league_groups = {}
@@ -849,6 +851,10 @@ def auto_settle(dry_run: bool = False) -> int:
 
         if not completed:
             logger.warning("  %s 无比分数据", display)
+            consecutive_failures += 1
+            if consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
+                logger.error("连续 %d 个联赛无数据, 结算中断(避免死循环)", consecutive_failures)
+                break
             source_quality_log[(sport, league)] = SOURCE_UNRESOLVED
             for bet in bets:
                 unresolved_bets.append({
@@ -861,6 +867,8 @@ def auto_settle(dry_run: bool = False) -> int:
                     "reason": "数据源无比分",
                 })
             continue
+        else:
+            consecutive_failures = 0  # 成功获取则重置
 
         source_quality = _detect_source_quality(completed)
         source_quality_log[(sport, league)] = source_quality

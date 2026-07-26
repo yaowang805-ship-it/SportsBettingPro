@@ -426,7 +426,8 @@ class PipelineOrchestrator:
 
         # daily_report 不追赶（重启后补发昨天的报告没意义）
         _SKIP_CATCHUP = {"health_check", "daily_report", "weekly_report", "monthly_report", "memory_update",
-                          "full_scan_morning", "full_scan_evening"}
+                          "full_scan_morning", "full_scan_evening",
+                          "settle_morning", "settle_noon", "settle_afternoon", "settle_evening"}
 
         for name, time_str, method_name, kwargs in SCHEDULE:
             if name in _SKIP_CATCHUP:
@@ -504,8 +505,8 @@ class PipelineOrchestrator:
             while self._running:
                 now = datetime.now()
 
-                # 1) 定时任务 (settle/report → 后台线程, scan → 同步)
-                _BACKGROUND_TASKS = {"settle", "report", "git_commit", "memory_update"}
+                # 1) 定时任务 (settle/report → 后台线程, 但settle同时只跑一个)
+                _BACKGROUND_TASKS = {"report", "git_commit", "memory_update"}
                 for name, time_str, method_name, kwargs in SCHEDULE:
                     weekday, dom, hour, minute = _parse_schedule_time(time_str)
                     if not self._is_time_match(weekday, dom, hour, minute, now):
@@ -514,7 +515,10 @@ class PipelineOrchestrator:
                         continue
                     method = getattr(self, method_name, None)
                     if method:
-                        is_bg = any(t in name for t in _BACKGROUND_TASKS)
+                        is_settle = "settle" in name
+                        is_bg = any(t in name for t in _BACKGROUND_TASKS) or is_settle
+                        if is_settle and "settle" in str(self._active_tasks):
+                            continue  # 已有结算在跑, 等下一轮
                         self._run_task(name, method, background=is_bg, **kwargs)
                         self._last_run[name] = now.date()
 
