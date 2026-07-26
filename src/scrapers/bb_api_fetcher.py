@@ -937,14 +937,16 @@ def _merge_single_match(platform_matches):
 
     # 遍历其他平台，取各市场最高赔率
     for platform, m in platform_matches[1:]:
-        # ML: 逐元素取最大
+        # ML: 逐元素取最大（差异>25%视为不同比赛,不合并）
         base_ml = base.get("odds_ft", {}).get("ml", [])
         plat_ml = m.get("odds_ft", {}).get("ml", [])
         if plat_ml and len(plat_ml) >= len(base_ml):
             for i in range(min(len(base_ml), len(plat_ml))):
                 if plat_ml[i] > base_ml[i]:
-                    base_ml[i] = plat_ml[i]
-                    sources["ml"] = platform
+                    # 安全校验: 同场比赛不同平台赔率差异不应>25%
+                    if base_ml[i] > 0 and plat_ml[i] / base_ml[i] < 1.25:
+                        base_ml[i] = plat_ml[i]
+                        sources["ml"] = platform
             if len(plat_ml) > len(base_ml):
                 base["odds_ft"]["ml"] = plat_ml
                 sources["ml"] = platform
