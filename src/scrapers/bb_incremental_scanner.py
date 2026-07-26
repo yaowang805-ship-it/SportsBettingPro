@@ -217,19 +217,22 @@ def _rebuild_output(details, existing, new_result):
     }
 
 
-def run_incremental():
-    """增量扫描入口。"""
+def run_incremental(time_window: str = "all"):
+    """增量扫描入口。time_window: near=24h内, far=24-72h, all=全部"""
     import sys
     sys.stdout.reconfigure(line_buffering=True)
 
-    from datetime import datetime
+    from datetime import datetime, timezone, timedelta
     _now_hour = datetime.now().hour
     if _now_hour < 7 or _now_hour >= 22:
-        print(f"  ⏭️ 当前时间 {_now_hour}:00 不在扫描时段 (07:00~22:00)，跳过增量扫描")
+        print(f"  ⏭️ 不在扫描时段，跳过")
         return
 
+    labels = {"near": "🏃 24h内临场", "far": "🚶 24-72h早盘", "all": "⚡ 增量扫描"}
+    label = labels.get(time_window, "⚡ 增量扫描")
+
     print("=" * 60)
-    print("BB体育 增量扫描 (变动检测 → 定向对比)")
+    print(f"BB体育 增量扫描 [{label}]")
     print("=" * 60)
 
     # 1. 获取最新BB数据
@@ -239,11 +242,20 @@ def run_incremental():
         print("  ❌ 获取BB数据失败")
         return
 
-    # 过滤已开赛
+    # 过滤已开赛 + 时间窗口
     now_ts = int(time.time() * 1000)
+    now_ms = int(time.time() * 1000)
+    h24_ms = 24 * 3600 * 1000
+    h72_ms = 72 * 3600 * 1000
+
     bb_matches = [m for m in bb_matches if not m.get("bt") or int(m["bt"]) > now_ts]
 
-    print(f"  比赛: {len(bb_matches)} 场")
+    if time_window == "near":
+        bb_matches = [m for m in bb_matches if int(m.get("bt", 0)) - now_ms <= h24_ms]
+    elif time_window == "far":
+        bb_matches = [m for m in bb_matches if h24_ms < int(m.get("bt", 0)) - now_ms <= h72_ms]
+
+    print(f"  [{label}]: {len(bb_matches)} 场")
 
     # 2. FB 独立数据刷新 + 对比（每次增量扫描都检查，独立于 BB 变动检测）
     print(f"\n📡 检查FB数据新鲜度...")
@@ -267,7 +279,7 @@ def run_incremental():
         # FB 可能有新机会，单独触发推送
         if fb_had_new:
             print(f"\n📣 FB 新+EV机会 → 运行推送...")
-            _run_push()
+            _run_push(label)
         return
 
     print(f"\n📊 变动检测:")
@@ -353,7 +365,7 @@ def run_full():
         new_result = compare_bb_vs_pinnacle(bb_after, _load_league_structure())
         if new_result:
             save_snapshot(bb_after)
-            _run_push()
+            _run_push(label)
     else:
         # 回退到直接调 bb_vs_pinnacle 的 main()
         print("  ⚠️ 直接调用 bb_vs_pinnacle.main()")
@@ -525,11 +537,12 @@ def _quick_settle():
             if "自动结算完成" in line:
                 print(f"  {line.strip()}")
 
-def _run_push():
-    """运行推送。"""
+def _run_push(label: str = ""):
+    """运行推送。label 传参不传文件，防并发覆盖。"""
     import subprocess
+    extra_args = ["--label", label] if label else []
     result = subprocess.run(
-        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental", "--force"],
+        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental", "--force"] + extra_args,
         capture_output=True, text=True, cwd=SRC_DIR.parent,
         timeout=120,
     )
