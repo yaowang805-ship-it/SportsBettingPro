@@ -592,9 +592,6 @@ def _run_fb_comparison(all_pin_leagues):
 
     print(f"  FB 比赛数: {len(fb_matches)}")
 
-    # 合并 BB 数据中的更高赔率（BB 和 FB 队名相同，按 league+home+away 匹配）
-    fb_matches = _merge_bb_odds_into_fb(fb_matches)
-
     from scrapers.bb_vs_pinnacle import compare_bb_vs_pinnacle
     fb_result = compare_bb_vs_pinnacle(
         fb_matches,
