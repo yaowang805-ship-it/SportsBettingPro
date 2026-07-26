@@ -874,14 +874,6 @@ def _read_comparison_file(path):
     details = data.get("details", [])
     qualified = []
     for match in details:
-        flags = match.get("flags", [])
-        has_suspect_flag = any(
-            "溢价异常高" in f or "含比赛序号前缀" in f or "球员冲突" in f
-            or "球队待确认" in f
-            for f in flags
-        )
-        if has_suspect_flag:
-            continue
         # 低匹配度过滤：Phase 2 时间匹配产生错误赛果的风险高
         match_score = match.get("match_score", 1.0)
         if match_score < 0.85:
