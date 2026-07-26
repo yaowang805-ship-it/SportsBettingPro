@@ -486,13 +486,15 @@ def _run_fb_comparison(all_pin_leagues):
 
 
 def _run_push(label: str = ""):
-    """运行推送。label写文件传递（并发安全）。"""
+    """运行推送。label写独立文件防并发覆盖。"""
+    import json, os, random
+    fid = f"{int(time.time())}_{random.randint(0,9999)}"
+    label_file = DATA_DIR / f".push_label_{fid}"
     if label:
-        import json
-        (DATA_DIR / ".push_label").write_text(json.dumps({"label": label}))
+        label_file.write_text(json.dumps({"label": label}))
     import subprocess
     result = subprocess.run(
-        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental"],
+        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental", "--label-file", str(label_file)],
         capture_output=True, text=True, cwd=SRC_DIR.parent,
         timeout=120,
     )
