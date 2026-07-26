@@ -314,7 +314,7 @@ def run_incremental():
     # 9. 推送新机会
     if new_result.get("details") or fb_had_new:
         print(f"\n📣 新+EV机会 → 运行推送...")
-        _run_push(label)
+        _run_push()
     else:
         print("\n📭 无新+EV机会")
 
