@@ -1295,13 +1295,7 @@ def main():
     print(f"  有独赢赔率: {valid_1x2} 场足球 + {valid_2way} 场其他 = {valid_1x2 + valid_2way}")
 
     if not _check_pinnacle():
-        cached = DATA_DIR / "bb_vs_pinnacle_comparison.json"
-        if cached.exists():
-            age = time.time() - cached.stat().st_mtime
-            if age < 86400:
-                print(f"\n⚠️ Pinnacle API 不可用，使用缓存数据（{age/3600:.0f} 小时前）")
-                return
-        msg = "Pinnacle API 不可用且无可用缓存"
+        msg = "Pinnacle API 不可用 — 取消扫描（不使用缓存，确保赔率真实）"
         print(f"\n⚠️ {msg}。解决办法：")
         print("  1. 检查网络连接")
         print("  2. 切换代理节点后重试")
