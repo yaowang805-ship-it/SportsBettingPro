@@ -228,8 +228,8 @@ def run_incremental(time_window: str = "all"):
         print(f"  ⏭️ 不在扫描时段，跳过")
         return
 
-    labels = {"near": "🏃 24h内临场", "far": "🚶 24-72h早盘", "all": "⚡ 增量扫描"}
-    label = labels.get(time_window, "⚡ 增量扫描")
+    labels = {"near": "24h内临场", "far": "24-72h早盘", "all": "增量扫描"}
+    label = labels.get(time_window, "增量扫描")
 
     print("=" * 60)
     print(f"BB体育 增量扫描 [{label}]")
@@ -542,7 +542,7 @@ def _run_push(label: str = ""):
     import subprocess
     extra_args = ["--label", label] if label else []
     result = subprocess.run(
-        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental", "--force"] + extra_args,
+        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental"] + extra_args,
         capture_output=True, text=True, cwd=SRC_DIR.parent,
         timeout=120,
     )

@@ -1308,22 +1308,11 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         logger.info("empty body, skip")
         return
 
-    # 增量扫描标记：标题 + 正文头部添加标记
+    # 增量扫描标记
     if incremental:
         prefix = label if label else "⚡ 增量扫描"
         title = f"{prefix} +EV 机会: {body.count('#####')} 条"
-        # 正文第一行标题也改为增量扫描
         body = body.replace("**+EV 投注推荐", f"**{prefix} +EV 机会", 1)
-        if not label:
-            lines = body.split("\n")
-            insert_pos = None
-            for i, line in enumerate(lines):
-                if line.startswith("**") and ("⚽" in line or "🏀" in line or "🎾" in line):
-                    insert_pos = i
-                    break
-            if insert_pos is not None:
-                lines.insert(insert_pos, "🔄 **增量扫描** — 以下机会为最近20分钟内新发现\n")
-                body = "\n".join(lines)
     else:
         title = f"+EV 投注推荐: {body.count('#####')} 条"
 
