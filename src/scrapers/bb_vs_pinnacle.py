@@ -983,7 +983,11 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             yes_price = val
                         elif des in ("no", "否"):
                             no_price = val
-                    # BTTS子比赛designation="None"时无法区分Yes/No → 跳过
+                    # BTTS子比赛: 通过participantId已映射到正确Yes/No标签
+                    if not yes_price or not no_price:
+                        if len(prices) >= 2:
+                            yes_price = prices[0].get("price_decimal", 0)
+                            no_price = prices[1].get("price_decimal", 0)
                     if not yes_price or not no_price:
                         continue
                     if not yes_price or not no_price:

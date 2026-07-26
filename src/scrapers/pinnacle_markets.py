@@ -235,16 +235,27 @@ def get_league_matchups_and_markets(league_id):
         btts_markets = mm.get(mid, [])
         if not btts_markets:
             continue
+        # 建立 participantId → name 映射
+        pid_to_name = {str(p.get("id")): p.get("name", "") for p in mu.get("participants", [])}
+
         btts_entries = []
         for mkt in btts_markets:
             if mkt.get("type") != "moneyline":
                 continue
             period = mkt.get("period", 0)
-            prices = [{
-                "designation": p.get("designation", ""),
-                "price_decimal": us_to_decimal(p.get("price")),
-                "points": p.get("points"),
-            } for p in mkt.get("prices", [])]
+            prices = []
+            for p in mkt.get("prices", []):
+                pid = str(p.get("participantId", ""))
+                name = pid_to_name.get(pid, "")
+                # 用 participantId 映射到正确的 Yes/No 标签
+                desig = p.get("designation", "")
+                if not desig or desig == "None":
+                    desig = name.lower() if name else ""
+                prices.append({
+                    "designation": desig,
+                    "price_decimal": us_to_decimal(p.get("price")),
+                    "points": p.get("points"),
+                })
             if len(prices) >= 2:
                 btts_entries.append({"period": period, "prices": prices})
         if not btts_entries:
