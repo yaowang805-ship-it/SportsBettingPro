@@ -668,7 +668,7 @@ def _run_push(label: str = ""):
     import subprocess
     extra_args = ["--label", label] if label else []
     result = subprocess.run(
-        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental"] + extra_args,
+        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental", "--force"] + extra_args,
         capture_output=True, text=True, cwd=SRC_DIR.parent,
         timeout=120,
     )
@@ -677,8 +677,10 @@ def _run_push(label: str = ""):
         for line in (result.stderr or "").splitlines()[:10]:
             print(f"    {line}")
         return False
-    for line in (result.stdout or "").splitlines()[:20]:
+    for line in (result.stdout or "").splitlines():
         print(f"  {line}")
+    for line in (result.stderr or "").splitlines():
+        print(f"  [stderr] {line}")
     return True
 
 
