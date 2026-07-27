@@ -189,16 +189,25 @@ def get_league_matchups_and_markets(league_id):
             continue
         mid = mu["id"]
         dc_markets = mm.get(mid, [])
+        # pnames → DC outcome labels (same order as participants)
+        # pnames = ["TeamA Or Draw", "Draw Or TeamB", "TeamA Or TeamB"]
+        dc_label_map = {0: "1X", 1: "2X", 2: "12"}
+
         dc_prices = None
         for mkt in dc_markets:
             if mkt.get("type") == "moneyline" and mkt.get("period") == 0:
-                prices = [{
-                    "designation": p.get("designation", ""),
-                    "price_decimal": us_to_decimal(p.get("price")),
-                    "points": p.get("points"),
-                } for p in mkt.get("prices", [])]
-                if len(prices) >= 3:
-                    dc_prices = prices
+                raw_prices = mkt.get("prices", [])
+                if len(raw_prices) < 3:
+                    continue
+                prices = []
+                for i, p in enumerate(raw_prices):
+                    label = dc_label_map.get(i, p.get("designation", ""))
+                    prices.append({
+                        "designation": label,
+                        "price_decimal": us_to_decimal(p.get("price")),
+                        "points": p.get("points"),
+                    })
+                dc_prices = prices
                 break
         if not dc_prices:
             continue
@@ -299,13 +308,18 @@ def get_league_matchups_and_markets(league_id):
             if mkt.get("type") != "moneyline":
                 continue
             period = mkt.get("period", 0)
-            prices = [{
-                "designation": p.get("designation", ""),
-                "price_decimal": us_to_decimal(p.get("price")),
-                "points": p.get("points"),
-            } for p in mkt.get("prices", [])]
-            if len(prices) >= 2:
-                oe_entries.append({"period": period, "prices": prices})
+            # pnames = ["Odd", "Even"], 用 pnames 给价格打标签
+            raw_prices = mkt.get("prices", [])
+            labelled = []
+            for i, p in enumerate(raw_prices):
+                label = pnames[i] if i < len(pnames) else p.get("designation", "")
+                labelled.append({
+                    "designation": label,
+                    "price_decimal": us_to_decimal(p.get("price")),
+                    "points": p.get("points"),
+                })
+            if len(labelled) >= 2:
+                oe_entries.append({"period": period, "prices": labelled})
         if not oe_entries:
             continue
         for entry in result:

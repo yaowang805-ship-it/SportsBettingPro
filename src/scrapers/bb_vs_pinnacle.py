@@ -891,8 +891,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         val = get_decimal_price(p) or 0
                         idx = dc_desig_map.get(des)
                         if idx is None and i < 3:
-                            # 子比赛不返回 designation（空字符串），按数组位置映射
-                            # 位置0=1X(主/和局), 位置1=2X(和局/客), 位置2=12(主/客)
+                            # pnames 已打标签(pinnacle_markets.py)，此处 fallback 仅用于旧缓存数据
                             idx_map = {0: "1X", 1: "2X", 2: "12"}
                             idx = dc_desig_map.get(idx_map.get(i, ""))
                         if idx is not None and val > 0:
@@ -1042,8 +1041,13 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     prices = oe_entry.get("prices", [])
                     if len(prices) < 2:
                         continue
-                    odd_price = prices[0].get("price_decimal", 0)
-                    even_price = prices[1].get("price_decimal", 0)
+                    # 用 designation 匹配 Odd/Even (不再靠位置 [0]=Odd [1]=Even)
+                    odd_price = even_price = 0
+                    for p in prices:
+                        des = p.get("designation", "").lower()
+                        val = p.get("price_decimal", 0) or get_decimal_price(p) or 0
+                        if des == "odd" and val > 0: odd_price = val
+                        elif des == "even" and val > 0: even_price = val
                     if odd_price <= 0 or even_price <= 0:
                         continue
                     oe_imp = 1.0 / odd_price + 1.0 / even_price
