@@ -548,6 +548,7 @@ def _calc_kelly_stakes(opps: list) -> list:
         if stake < 5:
             stake = 0
         o["_stake"] = stake
+        o["_raw_stake"] = stake  # 保存原始 Kelly 值，预算耗尽时用于展示
 
     # 第二遍：同一比赛多盘口 → 按比例压缩到单场上限
     from collections import defaultdict
@@ -1050,6 +1051,12 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
             bb_odds = o["bb_odds"]
             ev_pct = o["ev_pct"]
             stake = o["_stake"]
+            # 预算耗尽时显示原始 Kelly 投注额（标注"建议"）
+            if stake == 0 and o.get("_raw_stake", 0) > 0:
+                stake = o["_raw_stake"]
+                stake_note = " (建议)"
+            else:
+                stake_note = ""
             confidence = "✓" if o.get("_match_score", 0) >= 0.95 else "◷"
 
             # 来源平台标签
@@ -1061,7 +1068,7 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
             lines.append(
                 f"    [{oc}] {confidence} 公平价: {fair}"
                 + (f" | Pinnacle: {pinny}" if o.get("pin_odds", 0) > 0 else " | 推导: 1X2")
-                + f" | {source_label}: {bb_odds} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}"
+                + f" | {source_label}: {bb_odds} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}{stake_note}"
             )
 
     # 数据时间（用文件 mtime，即实际提取时间）
