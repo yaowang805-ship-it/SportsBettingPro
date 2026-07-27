@@ -1203,6 +1203,93 @@ def _save_fingerprints(fps: dict):
     tmp.replace(FINGERPRINT_FILE)
 
 
+def _verify_odds_freshness(qualified: list, max_ev_drop: float = 3.0) -> list:
+    """推送前二次验价：重新拉取 Pinnacle 实时赔率，EV 下降 >3% 则过滤。
+
+    防止对比文件过时导致推送的赔率与实时行情不一致。
+    只验证前 10 条（高频机会），避免过多 API 调用。
+    """
+    if not qualified:
+        return qualified
+    try:
+        from src.scrapers.pinnacle_markets import get_league_matchups_and_markets
+        from src.scrapers.pinnacle_league_map import find_pinnacle_league_ids
+        import json
+
+        ps = json.loads((DATA_DIR / "pinnacle_league_structure.json").read_text())
+        # 只验前 10 条的联赛（高频机会）
+        leagues_to_check = set()
+        for o in qualified[:10]:
+            lid = find_pinnacle_league_ids(o.get("league", ""), ps)
+            if lid:
+                leagues_to_check.add(lid[0])
+
+        if not leagues_to_check:
+            return qualified
+
+        # 拉取实时数据
+        fresh_pin = {}
+        for lid in leagues_to_check:
+            try:
+                result = get_league_matchups_and_markets(lid)
+                for r in result:
+                    key = (r.get("home", ""), r.get("away", ""))
+                    fresh_pin[key] = r
+            except Exception:
+                pass
+
+        if not fresh_pin:
+            return qualified
+
+        # 验证每条机会
+        kept = []
+        skipped = 0
+        for o in qualified:
+            pin_home = o.get("home_team", o.get("home_pin", ""))
+            pin_away = o.get("away_team", o.get("away_pin", ""))
+            key = (pin_home, pin_away)
+            fresh = fresh_pin.get(key)
+            if not fresh:
+                kept.append(o)
+                continue
+
+            # 找对应的实时赔率
+            mkt = o.get("_sub_market", o.get("_market", ""))
+            fresh_odds = None
+            if mkt == "1x2":
+                for ml in fresh.get("moneyline", []):
+                    for p in ml.get("prices", []):
+                        if p.get("designation", "").lower() in (o.get("designation", "").lower(),):
+                            fresh_odds = p.get("price_decimal", 0)
+            elif mkt == "hc":
+                for sp in fresh.get("spread", []):
+                    for p in sp.get("prices", []):
+                        if p.get("designation", "").lower() in ("home", "away"):
+                            fresh_odds = p.get("price_decimal", 0)
+
+            if fresh_odds and fresh_odds > 0:
+                # 重新计算 EV
+                bb_odds = o.get("bb_odds", 0)
+                new_ev = round((bb_odds - fresh_odds) / fresh_odds * 100, 2)
+                old_ev = o.get("ev_pct", 0)
+                ev_drop = old_ev - new_ev
+                if ev_drop > max_ev_drop:
+                    logger.info("验价过滤: %s EV从%.1f%%降至%.1f%% (Pin %.2f→%.2f)",
+                                o.get("designation", ""), old_ev, new_ev,
+                                o.get("pin_odds", 0), fresh_odds)
+                    skipped += 1
+                    continue
+
+            kept.append(o)
+
+        if skipped:
+            logger.info("二次验价: 过滤 %d 条过时机会", skipped)
+        return kept
+    except Exception as e:
+        logger.warning("二次验价失败(跳过): %s", e)
+        return qualified
+
+
 def _filter_pushed(qualified: list) -> list:
     """过滤已推送机会，同盘口EV上涨>1%允许重推。"""
     existing = _load_fingerprints()
@@ -1240,6 +1327,10 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         force: 跳过指纹去重，强制推送。
         label: 增量扫描类型标签（如 "24h内临场" 或 "24-72h早盘"）
     """
+    # 推送前二次验价：对比文件可能已过期，重新拉取关键比赛的实时赔率
+    if qualified and incremental:
+        qualified = _verify_odds_freshness(qualified)
+
     # 时间窗口过滤：增量扫描只推送对应时间段的比赛
     if incremental and qualified:
         now_ts = time.time()
