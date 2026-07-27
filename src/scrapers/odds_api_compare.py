@@ -221,11 +221,6 @@ def run_all():
     all_details.extend(boxing)
     logger.info(f"Boxing: {len(boxing)} 条")
 
-    # NCAAF
-    ncaaf = compare_sport("americanfootball_ncaaf", "american_football")
-    all_details.extend(ncaaf)
-    logger.info(f"NCAAF: {len(ncaaf)} 条")
-
     # 网球 (各赛事)
     for bb_league, odds_key in TENNIS_KEY_MAP.items():
         bb_all = json.loads(BB_EXTRACTED.read_text())
