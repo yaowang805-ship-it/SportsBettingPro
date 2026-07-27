@@ -28,6 +28,8 @@ DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data" / "storage"
 
 BB_EXTRACTED = DATA_DIR / "bb_odds_extracted.json"
 BB_SNAPSHOT = DATA_DIR / "bb_odds_snapshot.json"
+BB_SNAPSHOT_NEAR = DATA_DIR / "bb_odds_snapshot_near.json"   # 24h内独立快照
+BB_SNAPSHOT_FAR = DATA_DIR / "bb_odds_snapshot_far.json"      # 24-72h独立快照
 COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison.json"
 COMPARISON_FILE_NEAR = DATA_DIR / "bb_vs_pinnacle_comparison_near.json"    # 24h内
 COMPARISON_FILE_FAR = DATA_DIR / "bb_vs_pinnacle_comparison_far.json"      # 24-72h
@@ -98,8 +100,10 @@ def load_snapshot():
     return {"timestamp": "", "matches": {}}
 
 
-def save_snapshot(bb_matches):
-    """原子写入当前BB赔率为新快照。"""
+def save_snapshot(bb_matches, snap_file=None):
+    """原子写入当前BB赔率为新快照。near/far 各自独立。"""
+    if snap_file is None:
+        snap_file = BB_SNAPSHOT
     snapshot = {"timestamp": time.strftime("%Y-%m-%dT%H:%M:%S"), "matches": {}}
     now_ts = int(time.time() * 1000)
     for m in bb_matches:
@@ -115,9 +119,9 @@ def save_snapshot(bb_matches):
             "bt": bt,
             **_odds_key(m),
         }
-    tmp = BB_SNAPSHOT.with_suffix(".tmp")
+    tmp = snap_file.with_suffix(".tmp")
     tmp.write_text(json.dumps(snapshot, ensure_ascii=False))
-    tmp.replace(BB_SNAPSHOT)
+    tmp.replace(snap_file)
     return snapshot
 
 
@@ -241,6 +245,9 @@ def run_incremental(time_window: str = "all"):
     labels = {"near": "24h内临场", "far": "24-72h早盘", "all": "增量扫描"}
     label = labels.get(time_window, "增量扫描")
 
+    # 设置当前扫描的快照/对比文件（near/far 独立，互不污染）
+    _current_snap = BB_SNAPSHOT_NEAR if time_window == "near" else BB_SNAPSHOT_FAR
+
     print("=" * 60)
     print(f"BB体育 增量扫描 [{label}]")
     print("=" * 60)
@@ -274,8 +281,11 @@ def run_incremental(time_window: str = "all"):
     if all_pin_leagues:
         fb_had_new = _run_fb_comparison(all_pin_leagues)
 
-    # 3. 加载快照
-    snapshot = load_snapshot()
+    # 3. 加载快照（near/far 各自独立）
+    snapshot = {"timestamp": "", "matches": {}}
+    if _current_snap.exists():
+        try: snapshot = json.loads(_current_snap.read_text())
+        except: pass
 
     # 4. 增量扫描强制实时：不清点变动，直接全量对比时间窗口内的所有联赛
     # （用户要求每次增量扫描都实时抓取Pinnacle数据，不使用缓存/历史数据）
@@ -284,16 +294,15 @@ def run_incremental(time_window: str = "all"):
     changed_ids = set()
     new_ids = set()
 
-    # 空转计数器：每 6 次无变动扫描仍强制推送一次（约每小时）
-    _no_change_file = DATA_DIR / ".incr_no_change_count"
+    # 空转计数器：near/far 各自独立（每 6 次无变动强制推送一次）
+    _no_change_file = DATA_DIR / f".incr_no_change_{time_window}"
     _no_change_count = int(_no_change_file.read_text().strip()) if _no_change_file.exists() else 0
 
     if n_changed == 0:
         _no_change_count += 1
         _no_change_file.write_text(str(_no_change_count))
         print(f"\n✅ 无赔率变动 (连续{_no_change_count}次)，跳过扫描")
-        save_snapshot(bb_matches)
-        # FB 新机会 或 累计 6 次无变动 → 强制推送
+        save_snapshot(bb_matches, _current_snap)
         if fb_had_new or _no_change_count >= 6:
             print(f"\n📣 强制推送检查...")
             _run_push(label)
@@ -316,7 +325,7 @@ def run_incremental(time_window: str = "all"):
         all_pin_leagues = _load_league_structure()
         if not all_pin_leagues:
             print("  ❌ 无 Pinnacle 联赛结构数据，跳过增量扫描")
-            save_snapshot(bb_matches)
+            save_snapshot(bb_matches, _current_snap)
             return
 
     # 5. 实时对比：拉取当前时间窗口的所有联赛 Pinnacle 数据
@@ -332,7 +341,7 @@ def run_incremental(time_window: str = "all"):
 
     if new_result is None:
         print("  ⚠️ 增量对比无结果")
-        save_snapshot(bb_matches)
+        save_snapshot(bb_matches, _current_snap)
         return
 
     print(f"\n✅ 已保存实时结果 → {window_file.name} ({len(new_result.get('details', []))} 条+EV)")
