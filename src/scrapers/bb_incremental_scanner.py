@@ -406,9 +406,9 @@ def _fetch_bb_data(time_window: str = "all"):
         return None
     raw = json.loads(BB_EXTRACTED.read_text())
     matches = raw.get("matches", [])
+    # 每次增量扫描都强制重新抓取 BB 实时数据
     age_m = (time.time() - BB_EXTRACTED.stat().st_mtime) / 60
-    refresh_threshold = 5 if time_window == "near" else 15
-    if age_m > refresh_threshold:
+    if age_m > 0:  # 总是实时抓取
         print(f"  ⚠️ BB数据 {age_m:.0f} 分钟前，重新抓取...")
         if not _run_fetcher():
             print("  ❌ 重新抓取失败，继续使用旧数据")
