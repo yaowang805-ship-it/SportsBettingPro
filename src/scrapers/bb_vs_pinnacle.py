@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
-from config.settings import DATA_DIR
+from config.settings import DATA_DIR, safe_load_json
 
 import requests
 
@@ -258,7 +258,7 @@ def _preflight_check():
 
 
 def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, save_path=None):
-    """核心对比逻辑：联赛映射 → Pinnacle抓取 → 匹配 → EV计算 → 输出。
+    """核心对比逻辑：联赛映射 -> Pinnacle抓取 -> 匹配 -> EV计算 -> 输出。
 
     Args:
         bb_matches: 已过滤的BB比赛列表
@@ -268,6 +268,12 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     Returns:
         对比结果 dict，失败返回 None
     """
+    # 版本自检：引擎升级后增量扫描自动切换为全量重建
+    if selected_leagues and COMPARISON_FILE.exists():
+        cached = safe_load_json(COMPARISON_FILE, default={})
+        if cached.get("code_version", 0) < COMPARISON_CODE_VERSION:
+            print(f"  ⚡ 对比引擎升级 (v{cached.get('code_version',0)}->v{COMPARISON_CODE_VERSION})，强制全量重建")
+            selected_leagues = None
     if save_path is None:
         save_path = DATA_DIR / "bb_vs_pinnacle_comparison.json"
 
@@ -1227,6 +1233,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
 
     output = {
         "version": "2.0",
+        "code_version": 3,  # 对比引擎版本号，升级后强制全量重建
         "parameters": {
             "phase2_threshold_default": 0.70,
             "phase2_threshold_tennis": 0.75,
