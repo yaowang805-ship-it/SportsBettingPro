@@ -97,7 +97,7 @@ MARKET_QUALITY_FOOTBALL = {
     "dnb":  1.00,  # 中性
     "dc":   0.95,  # 从1X2推导
     "1x2":  0.90,  # 稍逊(4.29%抽水)
-    "ht":   0.85,  # 无Pinnacle收盘数据
+    "ht":   0.90,  # 半场1X2→对齐全场1X2（同类市场，相同Pinnacle数据覆盖）
     "corner": 0.80,
     "htft": 0.80,
     "oe":   0.85,
@@ -292,8 +292,8 @@ KELLY_BY_MARKET = {
     "hc":   0.50,  # 标准
     "dnb":  0.50,  # 中性
     "1x2":  0.45,  # 抽水稍高(4.29%)，且历史假阳性多→略降
+    "ht":   0.45,  # 半场1X2→对齐全场1X2（Pinnacle有HT数据，无理由更低）
     "dc":   0.45,  # 从1X2推导
-    "ht":   0.40,  # 数据有限
     "oe":   0.35,  # 无Pinnacle数据
     "corner": 0.35, # 无Pinnacle数据
     "htft": 0.35,  # 无Pinnacle数据
@@ -321,7 +321,7 @@ _BUDGET_DEFAULT = 0.05  # 其他未列出项
 
 def _get_budget_group(sport: str, sub_market: str) -> str:
     """将 (sport, sub_market) 映射到预算组名。"""
-    if sport == "football" and sub_market == "1x2":
+    if sport == "football" and sub_market in ("1x2", "ht"):
         return "足球1X2"
     if sport == "basketball" and sub_market == "1x2":
         return "篮球ML"
