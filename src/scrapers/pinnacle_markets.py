@@ -414,4 +414,32 @@ def get_league_matchups_and_markets(league_id):
                 entry["draw_no_bet"] = dnb_entries
             break
 
+    # 非足球 parent-child 去重合并：同一 parent 的多个子比赛合并为一个条目
+    _parent_groups = {}
+    _no_parent = []
+    for r in result:
+        pid = r.get("matchup_id")
+        # 根据 matchup_id 找到原始 matchup 的 parentId
+        _mu = mu_map.get(pid, {})
+        _parent_id = _mu.get("parentId") if isinstance(_mu, dict) else None
+        if _parent_id:
+            if _parent_id not in _parent_groups:
+                _parent_groups[_parent_id] = []
+            _parent_groups[_parent_id].append(r)
+        else:
+            _no_parent.append(r)
+
+    if _parent_groups:
+        _merged = list(_no_parent)
+        for _pid, _entries in _parent_groups.items():
+            _base = _entries[0]
+            # 合并所有子条目的盘口
+            for e in _entries[1:]:
+                _base["moneyline"].extend(e.get("moneyline", []))
+                _base["spread"].extend(e.get("spread", []))
+                _base["total"].extend(e.get("total", []))
+                _base["team_total"].extend(e.get("team_total", []))
+            _merged.append(_base)
+        result = _merged
+
     return result
