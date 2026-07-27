@@ -12,6 +12,7 @@
     python3 -m src.core.pipeline_orchestrator --task settle
 """
 import fcntl
+import json
 import os
 import shutil
 import signal
@@ -564,14 +565,30 @@ class PipelineOrchestrator:
             warnings.append(f"far扫描停滞 {far_elapsed/60:.0f}分钟(预期{INCREMENTAL_INTERVAL_FAR/60:.0f}min)")
 
         if warnings:
-            logger.warning("🐕 看门狗: %s", "; ".join(warnings))
-            # 连续两次告警才推送（只发一次，走冷却）
+            logger.warning("🐕 看门狗(扫描): %s", "; ".join(warnings))
             self._scan_failure_count += 1
             if self._scan_failure_count >= 2:
                 self._send_alert("scan_watchdog", "; ".join(warnings))
-                self._scan_failure_count = 0  # 重置，等下次触发
+                self._scan_failure_count = 0
         else:
-            self._scan_failure_count = 0  # 恢复正常
+            self._scan_failure_count = 0
+
+        # 2) 结算看门狗：检测超时未结算的投注
+        try:
+            pf_path = SRC_DIR / "data" / "storage" / "virtual_portfolio.json"
+            if pf_path.exists():
+                pf = json.loads(pf_path.read_text())
+                pending = pf.get("pending_bets", [])
+                now_ts = time.time()
+                stale_48h = sum(1 for b in pending if b.get("commence_time", 0) < now_ts - 172800)
+                stale_24h = sum(1 for b in pending if 86400 < (now_ts - b.get("commence_time", 0)) <= 172800)
+                if stale_48h > 0:
+                    logger.warning("🐕 看门狗(结算): %d笔超48h未结算!", stale_48h)
+                    self._send_alert("settle_watchdog", f"{stale_48h}笔投注超48小时未结算")
+                elif stale_24h > 3:
+                    logger.warning("🐕 看门狗(结算): %d笔超24h未结算", stale_24h)
+        except Exception:
+            pass
 
     def _mark_scan_ok(self):
         """标记增量扫描成功完成（供 _run_task 钩子）。"""
