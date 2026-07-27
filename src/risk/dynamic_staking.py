@@ -139,11 +139,8 @@ class DynamicStakingModel:
             ), axis=1
         )
         df["implied_kelly"] = df["implied_kelly"].clip(lower=0)
-        df["adaptive_kelly_frac"] = (
-            df["stake"] / (df["implied_kelly"] * df["balance_after"])
-            if "balance_after" in df.columns else 0.25
-        )
-        df["adaptive_kelly_frac"] = df["adaptive_kelly_frac"].clip(0, 1).fillna(0.25)
+        # 注意: 不再从 balance_after 反推 kelly_frac（含未来信息泄漏），改用常数
+        df["adaptive_kelly_frac"] = 0.25
 
         df["n_active_bets"] = 1  # 简化：历史数据无反查组合规模
 

@@ -36,13 +36,16 @@ class AdaptiveKelly:
         self.high = high
 
     def update(self, prob, outcome):
-        self.window.append(np.log(prob) if outcome == 1 else np.log(1 - prob))
+        self.window.append((prob, outcome))
 
     def fraction(self):
         if len(self.window) < 5:
             return self.base
-        avg = np.mean(self.window)
-        adj = np.clip(2 * (avg + 0.5), 0.5, 1.5)
+        avg_prob = np.mean([p for p, _ in self.window])
+        win_rate = np.mean([o for _, o in self.window])
+        # 实盘胜率 vs 预期胜率：超过预期→提高Kelly, 低于预期→降低
+        ratio = win_rate / max(avg_prob, 0.01)
+        adj = np.clip(ratio, 0.5, 1.5)
         return np.clip(self.base * adj, self.low, self.high)
 
 
@@ -234,7 +237,7 @@ class PortfolioOptimizer:
 class RiskManager:
     """职业级风险管理器 — 冷却止损 + 相关投注互斥 + ML 动态仓位版。"""
 
-    COOL_OFF_HOURS = 0          # 虚拟投注不启用冷却（之前24h，去掉因为纯虚拟无实际风险）
+    COOL_OFF_HOURS = 24  # 止损冷却时间（触发后24小时内不投注）
     MAX_SAME_GAME_MARKETS = 2   # 同一场比赛最多下注 N 个不同市场（联合凯利折扣后）
 
     def __init__(self, initial_budget: float = DEFAULT_BUDGET):

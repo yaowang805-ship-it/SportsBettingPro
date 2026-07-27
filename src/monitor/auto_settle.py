@@ -724,6 +724,8 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                     if line is None:
                         continue
                     direction = (ou_match.group(2) or ou_match.group(3)).lower()
+                    if total == line:
+                        return "push"  # 大小球走水（恰好等于盘口线）
                     if direction in ('大', 'over'):
                         return "won" if total > line else "lost"
                     else:  # 小 / under
@@ -779,7 +781,7 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                         return "lost"  # 让球客胜
                     else:
                         # 走水（平局） — 返还本金
-                        return "won"  # 走水算赢（本金返还，不赚不亏）
+                        return "push"  # push = 本金返还，不赚不亏
 
                 # ── H2H 结算（主胜/客胜/平） ──
                 is_home_win = home_score > away_score
@@ -830,7 +832,7 @@ def auto_settle(dry_run: bool = False) -> int:
     logger.info("开始自动结算: %s 笔待处理", len(pending))
     settled_count = 0
     consecutive_failures = 0
-    MAX_CONSECUTIVE_FAILURES = 10  # 连续失败此数后放弃本次结算
+    MAX_CONSECUTIVE_FAILURES = 30  # 连续失败此数后放弃本次结算
 
     # 按 (运动, 联赛) 分组获取比分（同运动不同联赛必须分开）
     league_groups = {}
@@ -1182,12 +1184,18 @@ def _auto_void_timeout(max_days: int = 3) -> int:
     for bet in pending:
         created = bet.get("created_at", "")
         if not created:
-            remaining.append(bet)
+            stake = bet.get("stake", 0)
+            bid = bet.get("id", "")
+            logger.info("  ⏰ 超时作废(无创建时间): %s (%.0f¥)", bid[:40], stake)
+            voided.append(bid)
             continue
         try:
             dt = datetime.fromisoformat(created.replace("Z", "+00:00"))
         except (ValueError, TypeError):
-            remaining.append(bet)
+            stake = bet.get("stake", 0)
+            bid = bet.get("id", "")
+            logger.info("  ⏰ 超时作废(时间格式无效): %s (%.0f¥)", bid[:40], stake)
+            voided.append(bid)
             continue
 
         if dt < cutoff:

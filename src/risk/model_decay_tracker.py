@@ -81,11 +81,10 @@ class ModelDecayTracker:
         baseline = ACCURACY_BASELINES.get(model_name, 0.50)
 
         if accuracy < baseline:
-            # 低于基准: 等比降权，最低 0.3
-            return max(0.3, accuracy / baseline * 0.6)
-        elif accuracy < baseline + 0.05:
-            return 0.8
+            # 低于基准: 等比降权，最低 0.5（打八折）
+            return max(0.5, accuracy / baseline * 0.8)
         else:
+            # 达到或超过基准: 正常置信度
             return 1.0
 
     def get_multi_window_multiplier(self, model_name: str) -> float:

@@ -365,7 +365,7 @@ def place_bets(dry_run=False):
 
         if not dry_run and bets_placed > 0:
             daily_used = portfolio["daily_budget"]["used"]
-            portfolio["balance"] = round(portfolio.get("balance", INITIAL_BALANCE) - total_stake, 2)
+            portfolio["balance"] = round(portfolio["balance"] - total_stake, 2)
             _save_portfolio(portfolio)
             print(f"\n{'='*60}")
             print(f"已投注 {bets_placed} 笔，总金额 ¥{total_stake:.2f}")
@@ -515,7 +515,7 @@ def place_bets_from_push(opportunities, bankroll=50000.0):
 
         if bets_placed > 0:
             daily_used = portfolio["daily_budget"].get("used", 0)
-            portfolio["balance"] = round(portfolio.get("balance", INITIAL_BALANCE) - total_stake, 2)
+            portfolio["balance"] = round(portfolio["balance"] - total_stake, 2)
             _save_portfolio(portfolio)
             print(f"\n已投注 {bets_placed} 笔，总金额 ¥{total_stake:.2f}")
             print(f"今日已用: ¥{daily_used:.2f} / ¥{daily_bankroll:.2f}")
