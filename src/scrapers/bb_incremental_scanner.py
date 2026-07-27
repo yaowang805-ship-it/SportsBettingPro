@@ -279,15 +279,25 @@ def run_incremental(time_window: str = "all"):
     changed_ids, new_ids, changed_leagues = detect_changes(bb_matches, snapshot)
     n_changed = len(changed_ids) + len(new_ids)
 
+    # 空转计数器：每 6 次无变动扫描仍强制推送一次（约每小时）
+    _no_change_file = DATA_DIR / ".incr_no_change_count"
+    _no_change_count = int(_no_change_file.read_text().strip()) if _no_change_file.exists() else 0
+
     if n_changed == 0:
-        print("\n✅ 无赔率变动，跳过扫描")
-        # 仍然更新快照(可能有比赛已开赛)
+        _no_change_count += 1
+        _no_change_file.write_text(str(_no_change_count))
+        print(f"\n✅ 无赔率变动 (连续{_no_change_count}次)，跳过扫描")
         save_snapshot(bb_matches)
-        # FB 可能有新机会，单独触发推送
-        if fb_had_new:
-            print(f"\n📣 FB 新+EV机会 → 运行推送...")
+        # FB 新机会 或 累计 6 次无变动 → 强制推送
+        if fb_had_new or _no_change_count >= 6:
+            print(f"\n📣 强制推送检查...")
             _run_push(label)
+            _no_change_count = 0
+            _no_change_file.write_text("0")
         return
+    else:
+        _no_change_count = 0
+        _no_change_file.write_text("0")
 
     print(f"\n📊 变动检测:")
     print(f"  赔率变动: {len(changed_ids)} 场")
