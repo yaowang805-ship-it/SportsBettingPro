@@ -1,4 +1,6 @@
+import json
 import os
+import time
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -69,3 +71,66 @@ BALLDONTLIE_API_KEY = os.getenv("BALLDONTLIE_API_KEY", "")
 FOOTBALL_DATA_API_KEY = os.getenv("FOOTBALL_API_KEY", "")
 PRE_BET_ODDS_VALIDATION = os.getenv('PRE_BET_ODDS_VALIDATION', 'true').lower() == 'true'
 MAX_ODDS_SLIPPAGE = float(os.getenv('MAX_ODDS_SLIPPAGE', '0.05'))
+
+
+# ===== 文件安全写入工具 =====
+import shutil
+
+def safe_save_json(filepath, data, min_size_bytes=10):
+    """原子写入 JSON 文件（tmp→验证→备份→rename）。
+    防止写入空数据或损坏导致数据丢失。
+    """
+    filepath = Path(filepath)
+    content = json.dumps(data, ensure_ascii=False, indent=2)
+    if len(content) < min_size_bytes:
+        raise ValueError(f'拒绝写入 {filepath.name}: 数据太小 ({len(content)} 字节), 可能为空或损坏')
+
+    # 1. 写临时文件
+    tmp = filepath.with_suffix(filepath.suffix + '.tmp')
+    tmp.write_text(content)
+
+    # 2. 验证临时文件可读
+    try:
+        json.loads(tmp.read_text())
+    except json.JSONDecodeError as e:
+        tmp.unlink()
+        raise ValueError(f'临时文件验证失败 {filepath.name}: {e}')
+
+    # 3. 备份旧文件
+    if filepath.exists():
+        bak = filepath.with_suffix(filepath.suffix + '.bak')
+        shutil.copy2(str(filepath), str(bak))
+
+    # 4. 原子替换
+    tmp.replace(filepath)
+
+
+def safe_load_json(filepath, default=None, max_age_hours=None):
+    """安全加载 JSON，文件损坏/过时时返回 default。"""
+    filepath = Path(filepath)
+    if not filepath.exists():
+        return default
+
+    # 时效性检查
+    if max_age_hours:
+        age_h = (time.time() - filepath.stat().st_mtime) / 3600
+        if age_h > max_age_hours:
+            return default
+
+    try:
+        data = json.loads(filepath.read_text())
+        # 空数据视为损坏
+        if isinstance(data, dict) and len(data) == 0:
+            return default
+        if isinstance(data, list) and len(data) == 0:
+            return data  # 空列表可以接受
+        return data
+    except (json.JSONDecodeError, OSError) as e:
+        # 尝试从 .bak 恢复
+        bak = filepath.with_suffix(filepath.suffix + '.bak')
+        if bak.exists():
+            try:
+                return json.loads(bak.read_text())
+            except Exception:
+                pass
+        return default

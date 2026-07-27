@@ -150,6 +150,30 @@ class PipelineOrchestrator:
         if LOCK_FILE.exists():
             LOCK_FILE.unlink()
 
+    def _startup_integrity_check(self):
+        """启动时检查关键文件完整性，损坏则自动从 .bak 恢复。"""
+        from config.settings import DATA_DIR, safe_load_json
+        critical_files = [
+            (DATA_DIR / "team_name_map.json", dict, 100),          # 至少100条映射
+            (DATA_DIR / "league_keywords.json", dict, 10),         # 至少10条映射
+            (DATA_DIR / "pinnacle_league_structure.json", dict, 10), # 至少10个联赛
+            (DATA_DIR / "league_tiers.json", dict, 5),
+        ]
+        for fpath, expected_type, min_count in critical_files:
+            if not fpath.exists():
+                logger.warning("[自检] %s 不存在，跳过", fpath.name)
+                continue
+            data = safe_load_json(fpath)
+            if data is None or (isinstance(data, expected_type) and len(data) < min_count):
+                logger.error("[自检] %s 为空或损坏, 尝试从.bak恢复", fpath.name)
+                bak = fpath.with_suffix(fpath.suffix + '.bak')
+                if bak.exists():
+                    import shutil
+                    shutil.copy2(str(bak), str(fpath))
+                    logger.warning("[自检] %s 已从 .bak 恢复", fpath.name)
+                else:
+                    self._send_alert("integrity", f"{fpath.name} 损坏且无备份")
+
     # ------------------------------------------------------------------
     # 调度逻辑
     # ------------------------------------------------------------------
@@ -569,6 +593,7 @@ class PipelineOrchestrator:
     def run_forever(self):
         """守护进程主循环。"""
         self._ensure_single_instance()
+        self._startup_integrity_check()
         logger.info("=" * 50)
         logger.info("Pipeline Orchestrator 启动")
         logger.info("扫描时段: %02d:00~%02d:00 | 增量: 临场%dmin / 早盘%dmin",
