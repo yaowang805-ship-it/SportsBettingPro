@@ -302,38 +302,9 @@ def _get_kelly_for_market(sub_market: str) -> float:
     """根据市场类型返回对应的 Kelly 分数。"""
     return KELLY_BY_MARKET.get(sub_market, KELLY_FRACTION)
 
-# ── 市场预算分配 ──
-# 基于"公平价可信度 × BB/FB 偏离概率"二维分配
-# Key = budget group name, Value = BANKROLL 比例
-MARKET_BUDGET = {
-    "足球1X2":    0.20,  # football + 1x2: 公平价最可靠
-    "篮球ML":     0.20,  # basketball + 1x2: POD 验证最佳 ROI
-    "足球OU":     0.15,  # football + ou/btts: 有噪音但机会多
-    "篮球大小分":  0.15,  # basketball + ou
-    "让球盘":     0.10,  # all sports + hc
-    "棒球":       0.10,  # baseball: 高 ROI 惊喜
-    "网球":       0.05,  # tennis: FLB 需扣除
-}
-_BUDGET_DEFAULT = 0.05  # 其他未列出项
-
-
-def _get_budget_group(sport: str, sub_market: str) -> str:
-    """将 (sport, sub_market) 映射到预算组名。"""
-    if sport == "football" and sub_market in ("1x2", "ht"):
-        return "足球1X2"
-    if sport == "basketball" and sub_market == "1x2":
-        return "篮球ML"
-    if sport == "football" and sub_market in ("ou", "btts"):
-        return "足球OU"
-    if sport == "basketball" and sub_market == "ou":
-        return "篮球大小分"
-    if sub_market == "hc":
-        return "让球盘"
-    if sport == "baseball":
-        return "棒球"
-    if sport == "tennis":
-        return "网球"
-    return "其他"
+# ── 日预算总额控制 (取代分组预算上限) ──
+# 纯 Kelly 分配, 总额 ¥10,000/天, 按投注额比例压缩
+TOTAL_DAILY_BUDGET = 10000  # 日预算总额
 
 
 def _load_budget_tracker():
@@ -593,70 +564,39 @@ def _calc_kelly_stakes(opps: list) -> list:
             for o in group:
                 o["_stake"] = max(0, round(o["_stake"] * ratio))
 
-    # 第三遍：市场预算上限
+    # 第三遍：总额预算控制（替代分组预算上限）
+    # 纯 Kelly 决定相对比例，总额超过日预算时等比压缩
     spent, today = _load_budget_tracker()
-    budget_groups = defaultdict(list)
-    for o in opps:
-        if o["_stake"] == 0:
-            continue
-        sport = o.get("sport", "")
-        sub = o.get("_sub_market", o.get("_market", ""))
-        group = _get_budget_group(sport, sub)
-        budget_groups[group].append(o)
+    daily_used = sum(spent.values()) if spent else 0
+    remaining = TOTAL_DAILY_BUDGET - daily_used
 
-    for group, group_opps in budget_groups.items():
-        cap = BANKROLL * MARKET_BUDGET.get(group, _BUDGET_DEFAULT)
-        used = spent.get(group, 0)
-        remaining = cap - used
-        if remaining <= 0:
-            for o in group_opps:
-                o["_stake"] = 0
-            logger.info("预算超限: %s 已用完 (¥%d/¥%d)", group, int(used), int(cap))
-            continue
-        total_wanted = sum(o["_stake"] for o in group_opps)
-        if total_wanted > remaining:
-            ratio = remaining / total_wanted
-            for o in group_opps:
+    total_wanted = sum(o["_stake"] for o in opps if o["_stake"] > 0)
+    if remaining <= 0:
+        for o in opps:
+            o["_stake"] = 0
+        logger.info("日预算已用完 (¥%d/¥%d)", int(daily_used), TOTAL_DAILY_BUDGET)
+    elif total_wanted > remaining:
+        ratio = remaining / total_wanted
+        for o in opps:
+            if o["_stake"] > 0:
                 o["_stake"] = max(0, round(o["_stake"] * ratio))
-            logger.info("预算压缩: %s 需¥%d 限¥%d, 压缩至%.0f%%",
-                        group, total_wanted, int(remaining), ratio * 100)
+        logger.info("日预算压缩: 需¥%d 剩¥%d, 压缩至%.0f%%",
+                    total_wanted, int(remaining), ratio * 100)
 
-    # 保存更新后的预算跟踪（预分配，推送后可能因去重而修正）
-    new_spent = dict(spent)
-    for o in opps:
-        if o["_stake"] == 0:
-            continue
-        sport = o.get("sport", "")
-        sub = o.get("_sub_market", o.get("_market", ""))
-        group = _get_budget_group(sport, sub)
-        new_spent[group] = new_spent.get(group, 0) + o["_stake"]
-    _save_budget_tracker(new_spent, today)
+    # 保存预分配（总额）供下次推送参考
+    new_total = daily_used + sum(o["_stake"] for o in opps if o["_stake"] > 0)
+    _save_budget_tracker({"total": new_total}, today)
 
     return opps
 
 
 def _correct_budget_tracker(opps: list):
-    """推送成功后重算预算消耗，排除因指纹去重被过滤的机会。
-
-    在 _calc_kelly_stakes 预分配后调用，修正为实际推送金额。
-    保留当天之前的预算分配，只替换当前推送涉及的分组金额。
-    """
-    from collections import defaultdict
+    """推送成功后重算预算消耗，排除因指纹去重被过滤的机会。"""
     spent, today = _load_budget_tracker()
-    # 计算当前推送的实际消耗
-    groups = defaultdict(int)
-    for o in opps:
-        if o["_stake"] == 0:
-            continue
-        sport = o.get("sport", "")
-        sub = o.get("_sub_market", o.get("_market", ""))
-        group = _get_budget_group(sport, sub)
-        groups[group] += o["_stake"]
-    # 合并：保留当天其他推送的预算，替换当前推送的预算
-    merged = dict(spent)
-    for group, amount in groups.items():
-        merged[group] = merged.get(group, 0) + amount
-    _save_budget_tracker(merged, today)
+    total = sum(o["_stake"] for o in opps if o["_stake"] > 0)
+    # 保留当天之前推送的累积，加上本次实际
+    prev_total = sum(spent.values()) if spent else 0
+    _save_budget_tracker({"total": prev_total + total}, today)
 
 
 def _collect_opportunities(match, market_key):
