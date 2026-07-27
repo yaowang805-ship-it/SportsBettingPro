@@ -275,9 +275,12 @@ def run_incremental(time_window: str = "all"):
     # 3. 加载快照
     snapshot = load_snapshot()
 
-    # 4. 检测变动
-    changed_ids, new_ids, changed_leagues = detect_changes(bb_matches, snapshot)
-    n_changed = len(changed_ids) + len(new_ids)
+    # 4. 增量扫描强制实时：不清点变动，直接全量对比时间窗口内的所有联赛
+    # （用户要求每次增量扫描都实时抓取Pinnacle数据，不使用缓存/历史数据）
+    n_changed = 1  # 强制进入对比流程
+    changed_leagues = {m.get("league", "") for m in bb_matches if m.get("league")}  # 全部联赛
+    changed_ids = set()
+    new_ids = set()
 
     # 空转计数器：每 6 次无变动扫描仍强制推送一次（约每小时）
     _no_change_file = DATA_DIR / ".incr_no_change_count"
@@ -314,30 +317,25 @@ def run_incremental(time_window: str = "all"):
             save_snapshot(bb_matches)
             return
 
-    # 5. 只对变动联赛做对比
-    print(f"\n🔍 增量对比 (只扫 {len(changed_leagues)} 个变动联赛)...")
+    # 5. 全量实时对比：不限定联赛，拉取所有变动联赛的实时 Pinnacle 数据
+    print(f"\n🔍 增量实时对比 ({len(changed_leagues)} 个联赛)...")
     new_result = compare_bb_vs_pinnacle(
         bb_matches,
         all_pin_leagues,
         selected_leagues=changed_leagues,
-        save_path=None,  # 返回 dict，不直接保存
+        save_path=None,
     )
 
     if new_result is None:
         print("  ⚠️ 增量对比无结果")
-        # 仍然保存快照
         save_snapshot(bb_matches)
         return
 
-    # 6. 合并到已有结果
-    existing = load_current_comparison()
-    merged = merge_comparison(existing, new_result, changed_leagues)
-
-    # 7. 原子保存合并结果
+    # 6. 直接覆盖（不使用历史合并，确保数据实时）
     tmp = COMPARISON_FILE.with_suffix(".tmp")
-    tmp.write_text(json.dumps(merged, ensure_ascii=False, indent=2, default=str))
+    tmp.write_text(json.dumps(new_result, ensure_ascii=False, indent=2, default=str))
     tmp.replace(COMPARISON_FILE)
-    print(f"\n✅ 已保存合并结果 ({len(merged['details'])} 条+EV)")
+    print(f"\n✅ 已保存实时结果 ({len(new_result.get('details', []))} 条+EV)")
 
     # 8. 保存新快照
     save_snapshot(bb_matches)
