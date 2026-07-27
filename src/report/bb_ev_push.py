@@ -1315,11 +1315,15 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         logger.info("empty body, skip")
         return
 
-    # 增量扫描标记
+    # 扫描标记
     if incremental:
         prefix = label if label else "⚡ 增量扫描"
         title = f"{prefix} +EV 机会: {body.count('#####')} 条"
         body = body.replace("**+EV 投注推荐", f"**{prefix} +EV 机会", 1)
+    elif label:
+        # 全量/定时扫描带标签（如「每日定时全量推送」）
+        title = f"{label} +EV 机会: {body.count('#####')} 条"
+        body = body.replace("**+EV 投注推荐", f"**{label} +EV 机会", 1)
     else:
         title = f"+EV 投注推荐: {body.count('#####')} 条"
 

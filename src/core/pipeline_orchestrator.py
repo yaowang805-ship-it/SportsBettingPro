@@ -270,46 +270,53 @@ class PipelineOrchestrator:
     # ------------------------------------------------------------------
     def do_full_scan(self, bet: bool = True):
         """全量扫描：提取 → 对比 → 推送。"""
-        logger.info("Step 1/3: BB/FB API 提取...")
-        from src.scrapers.bb_api_fetcher import main as fetch
-        # bb_api_fetcher.main() 读取 sys.argv，需要临时设置
-        old_argv = sys.argv
-        sys.argv = ["bb_api_fetcher", "--all-sports"]
-        try:
-            fetch()
-        finally:
-            sys.argv = old_argv
-        logger.info("Step 1/3: 完成")
+        # 设置推送标签（保存/恢复避免影响增量扫描）
+        _prev_label = os.environ.get("PUSH_LABEL", "")
+        os.environ["PUSH_LABEL"] = "每日定时全量推送"
 
-        logger.info("Step 2/3: Pinnacle 对比 (BB+FB合并)...")
-        from src.scrapers.bb_vs_pinnacle import main as compare
-        old_argv = sys.argv
-        sys.argv = ["bb_vs_pinnacle"]
         try:
-            compare()
-        finally:
-            sys.argv = old_argv
-        logger.info("Step 2/3: 完成")
+            logger.info("Step 1/3: BB/FB API 提取...")
+            from src.scrapers.bb_api_fetcher import main as fetch
+            # bb_api_fetcher.main() 读取 sys.argv，需要临时设置
+            old_argv = sys.argv
+            sys.argv = ["bb_api_fetcher", "--all-sports"]
+            try:
+                fetch()
+            finally:
+                sys.argv = old_argv
+            logger.info("Step 1/3: 完成")
 
-        logger.info("Step 2b/3: Pinnacle 对比 (FB独立)...")
-        sys.argv = ["bb_vs_pinnacle",
-                     "--input=bb_odds_extracted_FB.json",
-                     "--output=bb_vs_pinnacle_comparison_FB.json"]
-        try:
-            compare()
-        finally:
-            sys.argv = old_argv
-        logger.info("Step 2b/3: 完成")
+            logger.info("Step 2/3: Pinnacle 对比 (BB+FB合并)...")
+            from src.scrapers.bb_vs_pinnacle import main as compare
+            old_argv = sys.argv
+            sys.argv = ["bb_vs_pinnacle"]
+            try:
+                compare()
+            finally:
+                sys.argv = old_argv
+            logger.info("Step 2/3: 完成")
 
-        logger.info("Step 3/3: +EV 推送 (合并双对比)...")
-        from src.report.bb_ev_push import main as push
-        old_argv = sys.argv
-        sys.argv = ["bb_ev_push", "--no-bet"] if not bet else ["bb_ev_push"]
-        try:
-            push()
+            logger.info("Step 2b/3: Pinnacle 对比 (FB独立)...")
+            sys.argv = ["bb_vs_pinnacle",
+                         "--input=bb_odds_extracted_FB.json",
+                         "--output=bb_vs_pinnacle_comparison_FB.json"]
+            try:
+                compare()
+            finally:
+                sys.argv = old_argv
+            logger.info("Step 2b/3: 完成")
+
+            logger.info("Step 3/3: +EV 推送 (合并双对比)...")
+            from src.report.bb_ev_push import main as push
+            old_argv = sys.argv
+            sys.argv = ["bb_ev_push", "--no-bet"] if not bet else ["bb_ev_push"]
+            try:
+                push()
+            finally:
+                sys.argv = old_argv
+            logger.info("Step 3/3: 完成")
         finally:
-            sys.argv = old_argv
-        logger.info("Step 3/3: 完成")
+            os.environ["PUSH_LABEL"] = _prev_label
 
     def do_incremental(self, time_window: str = "all"):
         """增量扫描。time_window = "near" | "far" | "all" """
