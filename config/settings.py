@@ -51,7 +51,7 @@ def send_dingtalk(title: str, body: str, timeout: int = 10) -> bool:
         body = f"**{DINGTALK_KEYWORD} · {title}**\n\n{body}"
     return _real_send(body, msgtype="markdown", title=title)
 
-DEFAULT_BUDGET = int(os.getenv('DEFAULT_BUDGET', '50000'))
+DEFAULT_BUDGET = int(os.getenv('DEFAULT_BUDGET', '10000'))
 
 # ===== 职业资金管理参数 =====
 MAX_SINGLE_BET_PCT = float(os.getenv('MAX_SINGLE_BET_PCT', '0.05'))

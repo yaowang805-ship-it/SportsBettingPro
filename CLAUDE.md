@@ -53,13 +53,13 @@ python3 -m src.report.bb_ev_push --no-bet
 
 | 参数 | 值 | 说明 |
 |---|---|---|
-| 日预算 | ¥50,000 | 稳定不变 |
+| 日预算 | ¥10,000 | 稳定不变 |
 | Kelly 分数 | 0.50 | 稳妥半凯利（2026-07-20从0.75下调） |
 | T1 最小 EV | 3.0% | 最可靠联赛 |
 | T2 最小 EV | 4.0% | 主流联赛 |
 | T3 最小 EV | 5.0% | 低级别 |
 | EV 上限 | 12% | 防假阳性 |
-| 单注上限 | 6% (¥3,000) | |
+| 单注上限 | 6% (¥600) | |
 | 每日最多 | 50 笔 | 质量优先 |
 | 1X2 权重 | 1.00 | Pinnacle 最高效 → EV 最可靠，恢复正常权重 |
 | OU 权重 | 0.90 | Pinnacle 效率较低 → 公平价有噪音，保守处理 |
@@ -69,7 +69,7 @@ python3 -m src.report.bb_ev_push --no-bet
 
 - `src/scrapers/bb_api_fetcher.py` — BB API 直连提取（Chrome 无依赖）
 - `src/scrapers/bb_vs_pinnacle.py` — 对比引擎（去抽水公平价, FT+HT）
-- `src/betting/bb_virtual_bet.py` — 虚拟投注（¥50,000日预算）
+- `src/betting/bb_virtual_bet.py` — 虚拟投注（¥10,000日预算）
 - `src/report/bb_ev_push.py` — 钉钉推送（格式优化: 置信度+时间排序）
 - `src/monitor/auto_settle.py` — ESPN 自动结算
 - `config/dingtalk.py` — 钉钉直连（真实IP+SNI 绕过 DNS 劫持）
