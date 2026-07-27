@@ -87,10 +87,10 @@ def get_league_matchups_and_markets(league_id):
         # 标记此条目是否为 Games 类型（网球局数盘）
         _is_games = any(p.get("name", "").endswith(" (Games)") for p in participants)
 
-        # 跳过非网球子比赛（DC、BTTS、正确比分、让球、大小等特殊市场），
-        # 这些通过 parent 继承队名但有自己的 matchupId，不应在主列表中。
-        # 网球 Games 盘是例外：它需要 parent 名称获取干净队名。
-        if parent_participants and not _is_games:
+        # 足球: 跳过 DC/BTTS/正确比分等衍生市场子比赛
+        # 棒球/篮球等: parent 结构包含真正的比赛信息，需要保留
+        _is_football = league.get('sport', {}).get('name', '') in ('Soccer', '足球') if isinstance(league, dict) else False
+        if _is_football and parent_participants and not _is_games:
             continue
 
         if not home and not away:
