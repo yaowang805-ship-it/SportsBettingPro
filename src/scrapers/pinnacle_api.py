@@ -225,6 +225,7 @@ def _refresh_cookie_fast():
 
 def api_get(path, retry=True):
     """调用 Pinnacle API，带 cookie 和限速。"""
+    global _ssl_fail_count
     _load_cookie()  # load every time to ensure cookie is set
     _rate_limit()
     url = f"{API_BASE}{path}"
@@ -261,7 +262,6 @@ def api_get(path, retry=True):
             return resp.json()
 
         except requests.exceptions.SSLError as e:
-            global _ssl_fail_count
             _ssl_fail_count += 1
             logger.warning("SSL error, retrying... %s", e)
             if attempt < MAX_RETRIES - 1:
