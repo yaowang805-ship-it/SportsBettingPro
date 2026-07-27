@@ -674,10 +674,6 @@ def _collect_opportunities(match, market_key):
         if ev > EV_CAP:
             continue
 
-        # HTFT/半全场 额外上限：高赔率低概率市场容易虚高
-        if sub_market == "htft" and ev > 50:
-            continue
-
         # 超高赔率过滤：BB 赔率 > 15.0 且不是主流联赛 → 跳过
         # （小联赛弱队不可能有真实 15+ 赔率，通常是匹配错误）
         if bb_odds > 15.0 and league_mult < 1.0:
@@ -695,6 +691,10 @@ def _collect_opportunities(match, market_key):
                 "draw_no_bet": "dnb",
             }
             sub_market = _MK_TO_SUB.get(market_key, "1x2")
+
+        # HTFT/半全场 EV 上限：高赔率低概率市场容易虚高
+        if sub_market == "htft" and ev > 50:
+            continue
 
         # 赔率上限过滤: Pinnacle 历史数据按运动/联赛/市场限制
         _odds_limit = _get_odds_limit(match.get("sport", ""), league, sub_market)
