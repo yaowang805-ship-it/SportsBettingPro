@@ -142,12 +142,14 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
         bb_numbers = _re.findall(r'\d+', bb_name)
         bb_has_cjk = any('一' <= c <= '鿿' for c in bb_name)
 
-        # Determine likely sport from BB name keywords
+        # Determine likely sport from BB name keywords (fallback to 'football')
         bb_sport = None
         for kw, s in BB_SPORT_KEYWORDS.items():
             if kw in bb_name:
                 bb_sport = s
                 break
+        if bb_sport is None:
+            bb_sport = 'football'  # 大部分未匹配联赛是足球
 
         candidates = []
 
@@ -162,10 +164,17 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
             score = 0.0
 
             # Sport filter bonus: same sport = +0.1
-            # BB_SPORT_KEYWORDS uses English ("basketball"), pinnacle uses Chinese ("篮球")
+            # Pinnacle sport 可能是中文或英文
             _pin_sport_en = {"足球":"football","篮球":"basketball","网球":"tennis","棒球":"baseball",
                               "美式足球":"american_football","乒乓球":"pingpong","拳击":"boxing",
-                              "MMA":"mma","羽毛球":"badminton","冰球":"ice_hockey","排球":"volleyball"}.get(pin_sport, "")
+                              "MMA":"mma","羽毛球":"badminton","冰球":"ice_hockey","排球":"volleyball",
+                              "Soccer":"football","Basketball":"basketball","Tennis":"tennis",
+                              "Baseball":"baseball","American Football":"american_football",
+                              "Ice Hockey":"ice_hockey","Volleyball":"volleyball",
+                              "Boxing":"boxing","Mixed Martial Arts":"mma",
+                              "Badminton":"badminton","Table Tennis":"pingpong",
+                              "Aussie Rules":"aussie_rules","Cricket":"cricket",
+                              "Handball":"handball","Rugby":"rugby"}.get(pin_sport, pin_sport.lower() if pin_sport else "")
             sport_bonus = 0.1 if (bb_sport and bb_sport == _pin_sport_en) else 0.0
 
             # --- Method 1: English token overlap ---
@@ -219,21 +228,50 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
                 if sm_stripped.ratio() > 0.35:
                     score = max(score, sm_stripped.ratio() * 0.65 + sport_bonus)
 
-            # --- Method 3: For pure CJK names, use sport-filtered fuzzy ---
+            # --- Method 3: Chinese country+division matching ---
             if bb_has_cjk and not bb_en_set and bb_sport:
-                # Only Pinnacle leagues of the same sport
                 if pin_sport == bb_sport:
-                    # Check if the Pinnacle name contains any English words
-                    # that are commonly associated with Chinese league names
-                    # This is weak but better than nothing
-                    common_words = {'league', 'cup', 'championship', 'tournament',
-                                    'premier', 'division', 'liga', 'serie', 'super'}
-                    pin_common = pin_words & common_words
-                    if pin_common:
-                        # Very weak: just having any sport-matching league word
-                        score = max(score, 0.20 + sport_bonus)
+                    # 中→英国家名映射
+                    _CN2EN_COUNTRY = {
+                        '挪威': 'norway', '俄罗斯': 'russia', '乌拉圭': 'uruguay', '阿根廷': 'argentina',
+                        '芬兰': 'finland', '捷克': 'czech', '印度': 'india', '乌克兰': 'ukraine',
+                        '厄瓜多尔': 'ecuador', '秘鲁': 'peru', '哥伦比亚': 'colombia',
+                        '巴西': 'brazil', '爱沙尼亚': 'estonia', '智利': 'chile', '墨西哥': 'mexico',
+                        '瑞典': 'sweden', '巴拉圭': 'paraguay', '韩国': 'korea', '日本': 'japan',
+                        '澳大利亚': 'australia', '美国': 'usa', '英格兰': 'england',
+                        '德国': 'germany', '法国': 'france', '意大利': 'italy', '西班牙': 'spain',
+                        '葡萄牙': 'portugal', '荷兰': 'netherlands', '比利时': 'belgium',
+                        '奥地利': 'austria', '瑞士': 'switzerland', '波兰': 'poland',
+                        '罗马尼亚': 'romania', '保加利亚': 'bulgaria', '丹麦': 'denmark',
+                        '冰岛': 'iceland', '爱尔兰': 'ireland', '苏格兰': 'scotland',
+                        '土耳其': 'turkey', '希腊': 'greece', '南非': 'south africa',
+                        '塞尔维亚': 'serbia', '克罗地亚': 'croatia', '斯洛伐克': 'slovakia',
+                        '匈牙利': 'hungary', '以色列': 'israel', '中国': 'china',
+                        '加拿大': 'canada', '埃及': 'egypt', '摩洛哥': 'morocco',
+                        '突尼斯': 'tunisia', '尼日利亚': 'nigeria', '加纳': 'ghana',
+                        '伊朗': 'iran', '沙特': 'saudi', '阿联酋': 'uae', '卡塔尔': 'qatar',
+                        '泰国': 'thailand', '越南': 'vietnam', '马来西亚': 'malaysia',
+                        '印尼': 'indonesia', '新加坡': 'singapore',
+                    }
+                    # 级别匹配: 甲=1st/Premier, 乙=2nd, 丙=3rd, 丁=4th
+                    _CN2EN_DIV = {
+                        '超级': 'premier', '甲': '1st', '乙': '2nd', '丙': '3rd', '丁': '4th',
+                        '后备': 'reserve', '女子': 'women', '青年': 'youth', 'U19': 'u19',
+                        'U20': 'u20', 'U21': 'u21', 'U23': 'u23', '杯': 'cup',
+                    }
+                    country_score = 0
+                    div_score = 0
+                    for cn, en in _CN2EN_COUNTRY.items():
+                        if cn in bb_name and en in pin_lower:
+                            country_score = 0.40
+                            break
+                    for cn, en in _CN2EN_DIV.items():
+                        if cn in bb_name and en in pin_lower:
+                            div_score = max(div_score, 0.15)
+                    if country_score > 0:
+                        score = max(score, country_score + div_score + sport_bonus)
 
-            if score >= 0.50:
+            if score >= 0.55:
                 candidates.append((lid, score, pin_name))
                 if '巴西发展' in bb_name:
                     print(f'    DEBUG: lid={lid}, name={pin_name}, score={score}, sport_bonus={sport_bonus}, pin_lower={pin_lower}')
