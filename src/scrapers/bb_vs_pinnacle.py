@@ -903,7 +903,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         if idx is not None and val > 0:
                             dc_raw[idx] = val
                     if all(x and x > 0 for x in dc_raw):
-                        dc_fair = dc_raw        # fair = Pinnacle零售价（不做去抽水）
+                        # 去抽水 (multiplicative proportional method)
+                        dc_imp = sum(1.0 / v for v in dc_raw)
+                        dc_fair = [round(v * dc_imp, 4) for v in dc_raw]
                         dc_pin_raw = dc_raw     # 用于推送显示
                     break
 
