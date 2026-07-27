@@ -496,15 +496,15 @@ class PipelineOrchestrator:
                 self._last_incremental_near = time.time()
             elapsed_near = (now - datetime.fromtimestamp(self._last_incremental_near)).total_seconds()
             if elapsed_near >= INCREMENTAL_INTERVAL_NEAR:
+                self._last_incremental_near = time.time()  # START 时刻记录
                 self._run_task("incremental_near", self.do_incremental, time_window="near")
-                self._last_incremental_near = time.time()
 
             if self._last_incremental_far is None:
                 self._last_incremental_far = time.time()
             elapsed_far = (now - datetime.fromtimestamp(self._last_incremental_far)).total_seconds()
             if elapsed_far >= INCREMENTAL_INTERVAL_FAR:
+                self._last_incremental_far = time.time()  # START 时刻记录
                 self._run_task("incremental_far", self.do_incremental, time_window="far")
-                self._last_incremental_far = time.time()
 
         # 3) 自检看门狗
         self._watchdog()
