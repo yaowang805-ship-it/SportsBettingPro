@@ -365,7 +365,7 @@ def run_full():
         new_result = compare_bb_vs_pinnacle(bb_after, _load_league_structure())
         if new_result:
             save_snapshot(bb_after)
-            _run_push(label)
+            _run_push("全量扫描")
     else:
         # 回退到直接调 bb_vs_pinnacle 的 main()
         print("  ⚠️ 直接调用 bb_vs_pinnacle.main()")
