@@ -298,8 +298,6 @@ KELLY_BY_MARKET = {
     "corner": 0.35, # 无Pinnacle数据
     "htft": 0.35,  # 无Pinnacle数据
 }
-KELLY_FRACTION = 0.50  # 基准 Kelly
-
 def _get_kelly_for_market(sub_market: str) -> float:
     """根据市场类型返回对应的 Kelly 分数。"""
     return KELLY_BY_MARKET.get(sub_market, KELLY_FRACTION)
