@@ -271,14 +271,15 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     Returns:
         对比结果 dict，失败返回 None
     """
+    if save_path is None:
+        save_path = DATA_DIR / "bb_vs_pinnacle_comparison.json"
+
     # 版本自检：引擎升级后增量扫描自动切换为全量重建
-    if selected_leagues and COMPARISON_FILE.exists():
-        cached = safe_load_json(COMPARISON_FILE, default={})
+    if selected_leagues and save_path.exists():
+        cached = safe_load_json(save_path, default={})
         if cached.get("code_version", 0) < COMPARISON_CODE_VERSION:
             print(f"  ⚡ 对比引擎升级 (v{cached.get('code_version',0)}->v{COMPARISON_CODE_VERSION})，强制全量重建")
             selected_leagues = None
-    if save_path is None:
-        save_path = DATA_DIR / "bb_vs_pinnacle_comparison.json"
 
     # 3. Map BB体育 leagues to Pinnacle league IDs
     bb_leagues = {}
