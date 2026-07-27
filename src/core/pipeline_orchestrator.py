@@ -335,6 +335,14 @@ class PipelineOrchestrator:
                 sys.argv = old_argv
             logger.info("Step 2b/3: 完成")
 
+            logger.info("Step 2c/3: 辅助数据源对比 (the-odds-api/BDS)...")
+            try:
+                from src.scrapers.wnba_odds_api import compare_wnba
+                compare_wnba()
+            except Exception as e:
+                logger.warning("辅助对比跳过: %s", e)
+            logger.info("Step 2c/3: 完成")
+
             logger.info("Step 3/3: +EV 推送 (合并双对比)...")
             from src.report.bb_ev_push import main as push
             old_argv = sys.argv

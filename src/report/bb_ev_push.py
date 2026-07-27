@@ -27,6 +27,7 @@ from config.constants import (
 
 COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison.json"
 FB_COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison_FB.json"
+WNBA_COMPARISON_FILE = DATA_DIR / "bb_vs_wnba_comparison.json"
 FINGERPRINT_FILE = DATA_DIR / "pushed_fingerprints.json"
 CLV_LOG_FILE = DATA_DIR / "clv_tracking.csv"
 BUDGET_TRACKER_FILE = DATA_DIR / "budget_tracker.json"
@@ -770,6 +771,13 @@ def _collect_opportunities_from_file():
     main_opps = _read_comparison_file(COMPARISON_FILE)
     # 读取FB独立对比文件
     fb_opps = _read_comparison_file(FB_COMPARISON_FILE)
+    # 读取WNBA对比文件 (the-odds-api)
+    wnba_opps = _read_comparison_file(WNBA_COMPARISON_FILE)
+    # 合并 WNBA 机会
+    if wnba_opps:
+        main_opps.extend(wnba_opps)
+        logger.info("WNBA对比: 添加 %d 个机会", len(wnba_opps))
+
     if not fb_opps:
         return main_opps
 
