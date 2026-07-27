@@ -1052,19 +1052,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     _add_oe_opportunities(entry, bb_oe_odd, bb_oe_even, odd_fair, even_fair, pin_odd=odd_price, pin_even=even_price)
                     break
 
-        # --- 半全场 (HT/FT) FT：从 Pinnacle Half-Time/Full-Time 市场 ---
-        bb_htft = extract_bb_htft(bb)
-        if bb_htft:
-            pin_htft = pin.get("htft", [])
-            if pin_htft:
-                for htft_entry in pin_htft:
-                    if htft_entry.get("period", 0) != 0:
-                        continue
-                    prices = htft_entry.get("prices", [])
-                    if len(prices) < 9:
-                        continue
-                    _add_htft_opportunities(entry, bb_htft, prices)
-                    break
+        # --- 半全场 (HT/FT) — 已禁用：Pinnacle API 不返回价格标签(designation)，
+        # 代码靠位置猜测映射，顺序不可靠，产生大量虚假+EV（如437%假阳性）。
+        # 如需恢复，必须先确认 Pinnacle HTFT price designation 的实际顺序。
 
         # --- 上半场平局退款 (HT DNB)：从 Pinnacle HT 1X2 推导公平价 ---
         if len(bb_dnb) >= 4 and n_ml == 3:
