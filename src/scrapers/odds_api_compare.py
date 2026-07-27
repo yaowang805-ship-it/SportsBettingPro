@@ -221,23 +221,6 @@ def run_all():
     all_details.extend(boxing)
     logger.info(f"Boxing: {len(boxing)} 条")
 
-    # 网球 (各赛事)
-    for bb_league, odds_key in TENNIS_KEY_MAP.items():
-        bb_all = json.loads(BB_EXTRACTED.read_text())
-        tennis_matches = [m for m in bb_all.get("matches", [])
-                         if m.get("sport") == "tennis" and m.get("league") == bb_league]
-        if not tennis_matches:
-            continue
-        # 临时替换数据
-        import io
-        fake = {"matches": tennis_matches}
-        old_path = BB_EXTRACTED
-        BB_EXTRACTED_temp = DATA_DIR / "_temp_tennis.json"
-        BB_EXTRACTED_temp.write_text(json.dumps(fake))
-        # HACK: reuse compare_sport but with filtered data
-        # 简单直接：对网球不走通用函数，单独处理
-        BB_EXTRACTED_temp.unlink()
-
     # 保存
     output = {
         "version": "1.0",
