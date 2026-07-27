@@ -566,6 +566,7 @@ def _calc_kelly_stakes(opps: list) -> list:
 
     # 第三遍：总额预算控制（替代分组预算上限）
     # 纯 Kelly 决定相对比例，总额超过日预算时等比压缩
+    # 预算耗尽时仍保留 stake=0 供展示
     spent, today = _load_budget_tracker()
     daily_used = sum(spent.values()) if spent else 0
     remaining = TOTAL_DAILY_BUDGET - daily_used
@@ -574,7 +575,7 @@ def _calc_kelly_stakes(opps: list) -> list:
     if remaining <= 0:
         for o in opps:
             o["_stake"] = 0
-        logger.info("日预算已用完 (¥%d/¥%d)", int(daily_used), TOTAL_DAILY_BUDGET)
+        logger.info("日预算已用完 (¥%d/¥%d), 保留机会供展示", int(daily_used), TOTAL_DAILY_BUDGET)
     elif total_wanted > remaining:
         ratio = remaining / total_wanted
         for o in opps:
@@ -859,9 +860,8 @@ def _diversify_and_rank(qualified: list) -> list:
         o.get("_pin_epoch") if o.get("_pin_epoch") else 9999999999,
     ))
 
-    # Kelly 分配
+    # Kelly 分配（预算耗尽时保留机会，stake=0 仅展示不投注）
     qualified = _calc_kelly_stakes(qualified)
-    qualified = [o for o in qualified if o["_stake"] > 0]
     return qualified
 
 
