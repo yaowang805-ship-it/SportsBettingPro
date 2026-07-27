@@ -51,12 +51,12 @@ def send_dingtalk(title: str, body: str, timeout: int = 10) -> bool:
         body = f"**{DINGTALK_KEYWORD} · {title}**\n\n{body}"
     return _real_send(body, msgtype="markdown", title=title)
 
-DEFAULT_BUDGET = int(os.getenv('DEFAULT_BUDGET', '10000'))
+DEFAULT_BUDGET = int(os.getenv('DEFAULT_BUDGET', '50000'))
 
 # ===== 职业资金管理参数 =====
 MAX_SINGLE_BET_PCT = float(os.getenv('MAX_SINGLE_BET_PCT', '0.05'))
 MAX_TOTAL_EXPOSURE = float(os.getenv('MAX_TOTAL_EXPOSURE', '0.30'))
-KELLY_FRACTION = float(os.getenv('KELLY_FRACTION', '0.25'))  # 被 bb_ev_push.py 和 bb_virtual_bet.py 覆写为 0.50
+# Kelly 分数统一由 config.constants.KELLY_FRACTION 控制，此处不再重复定义
 
 
 

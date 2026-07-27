@@ -87,14 +87,17 @@ def _odds_changed(old, new):
 
 
 def load_snapshot():
-    """加载赔率快照。"""
-    if BB_SNAPSHOT.exists():
-        return json.loads(BB_SNAPSHOT.read_text())
+    """加载赔率快照，文件损坏时自动恢复为空快照。"""
+    try:
+        if BB_SNAPSHOT.exists():
+            return json.loads(BB_SNAPSHOT.read_text())
+    except (json.JSONDecodeError, OSError):
+        print(f"  ⚠️ 快照文件损坏，重置为空快照")
     return {"timestamp": "", "matches": {}}
 
 
 def save_snapshot(bb_matches):
-    """保存当前BB赔率为新快照。"""
+    """原子写入当前BB赔率为新快照。"""
     snapshot = {"timestamp": time.strftime("%Y-%m-%dT%H:%M:%S"), "matches": {}}
     now_ts = int(time.time() * 1000)
     for m in bb_matches:
@@ -103,14 +106,16 @@ def save_snapshot(bb_matches):
             continue
         bt = m.get("bt")
         if bt and int(bt) < now_ts:
-            continue  # 已开赛不保存
+            continue
         snapshot["matches"][mid] = {
             "league": m.get("league", ""),
             "sport": m.get("sport", ""),
             "bt": bt,
             **_odds_key(m),
         }
-    BB_SNAPSHOT.write_text(json.dumps(snapshot, ensure_ascii=False))
+    tmp = BB_SNAPSHOT.with_suffix(".tmp")
+    tmp.write_text(json.dumps(snapshot, ensure_ascii=False))
+    tmp.replace(BB_SNAPSHOT)
     return snapshot
 
 
@@ -138,9 +143,12 @@ def detect_changes(new_matches, snapshot):
 
 
 def load_current_comparison():
-    """加载已有的对比结果。"""
-    if COMPARISON_FILE.exists():
-        return json.loads(COMPARISON_FILE.read_text())
+    """加载已有的对比结果，文件损坏时返回 None。"""
+    try:
+        if COMPARISON_FILE.exists():
+            return json.loads(COMPARISON_FILE.read_text())
+    except (json.JSONDecodeError, OSError):
+        print("  ⚠️ 对比文件损坏，重新生成")
     return None
 
 
@@ -243,12 +251,11 @@ def run_incremental(time_window: str = "all"):
         return
 
     # 过滤已开赛 + 时间窗口
-    now_ts = int(time.time() * 1000)
     now_ms = int(time.time() * 1000)
     h24_ms = 24 * 3600 * 1000
     h72_ms = 72 * 3600 * 1000
 
-    bb_matches = [m for m in bb_matches if not m.get("bt") or int(m["bt"]) > now_ts]
+    bb_matches = [m for m in bb_matches if not m.get("bt") or int(m["bt"]) > now_ms]
 
     if time_window == "near":
         bb_matches = [m for m in bb_matches if int(m.get("bt", 0)) - now_ms <= h24_ms]
@@ -316,8 +323,10 @@ def run_incremental(time_window: str = "all"):
     existing = load_current_comparison()
     merged = merge_comparison(existing, new_result, changed_leagues)
 
-    # 7. 保存合并结果
-    COMPARISON_FILE.write_text(json.dumps(merged, ensure_ascii=False, indent=2, default=str))
+    # 7. 原子保存合并结果
+    tmp = COMPARISON_FILE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(merged, ensure_ascii=False, indent=2, default=str))
+    tmp.replace(COMPARISON_FILE)
     print(f"\n✅ 已保存合并结果 ({len(merged['details'])} 条+EV)")
 
     # 8. 保存新快照
@@ -396,15 +405,19 @@ def _run_fetcher():
     """运行BB API抓取。"""
     import subprocess
     import sys
-    result = subprocess.run(
-        [sys.executable, "-m", "src.scrapers.bb_api_fetcher", "--all-sports"],
-        capture_output=True, text=True, cwd=SRC_DIR.parent,
-        timeout=120,
-    )
-    if result.returncode != 0:
-        print(f"  ❌ bb_api_fetcher 失败: {result.stderr[:200]}")
+    try:
+        result = subprocess.run(
+            [sys.executable, "-m", "src.scrapers.bb_api_fetcher", "--all-sports"],
+            capture_output=True, text=True, cwd=SRC_DIR.parent,
+            timeout=120,
+        )
+        if result.returncode != 0:
+            print(f"  ❌ bb_api_fetcher 失败: {result.stderr[:200]}")
+            return False
+        return True
+    except subprocess.TimeoutExpired:
+        print("  ❌ bb_api_fetcher 超时 (120s)")
         return False
-    return True
 
 
 def _refresh_fb_data():
@@ -429,17 +442,21 @@ def _fetch_fb_only():
     """仅抓取 FB 平台数据。"""
     import subprocess
     import sys
-    result = subprocess.run(
-        [sys.executable, "-m", "src.scrapers.bb_api_fetcher", "--platform=FB"],
-        capture_output=True, text=True, cwd=SRC_DIR.parent,
-        timeout=180,
-    )
-    for line in (result.stdout or "").splitlines()[-10:]:
-        print(f"    {line}")
-    if result.returncode != 0:
-        print(f"  ❌ FB 抓取失败: {result.stderr[:200]}")
+    try:
+        result = subprocess.run(
+            [sys.executable, "-m", "src.scrapers.bb_api_fetcher", "--platform=FB"],
+            capture_output=True, text=True, cwd=SRC_DIR.parent,
+            timeout=180,
+        )
+        for line in (result.stdout or "").splitlines()[-10:]:
+            print(f"    {line}")
+        if result.returncode != 0:
+            print(f"  ❌ FB 抓取失败: {result.stderr[:200]}")
+            return False
+        return True
+    except subprocess.TimeoutExpired:
+        print("  ❌ FB 抓取超时 (180s)")
         return False
-    return True
 
 
 def _run_fb_comparison(all_pin_leagues):
@@ -491,21 +508,25 @@ def _run_push(label: str = ""):
     env = os.environ.copy()
     if label:
         env["PUSH_LABEL"] = label
-    result = subprocess.run(
-        [sys.executable, "-m", "src.report.bb_ev_push", "--incremental"],
-        capture_output=True, text=True, cwd=SRC_DIR.parent,
-        timeout=120, env=env,
-    )
-    if result.returncode != 0:
-        print(f"  ❌ bb_ev_push 失败 (exit={result.returncode}):")
-        for line in (result.stderr or "").splitlines()[:10]:
-            print(f"    {line}")
+    try:
+        result = subprocess.run(
+            [sys.executable, "-m", "src.report.bb_ev_push", "--incremental"],
+            capture_output=True, text=True, cwd=SRC_DIR.parent,
+            timeout=120, env=env,
+        )
+        if result.returncode != 0:
+            print(f"  ❌ bb_ev_push 失败 (exit={result.returncode}):")
+            for line in (result.stderr or "").splitlines()[:10]:
+                print(f"    {line}")
+            return False
+        for line in (result.stdout or "").splitlines():
+            print(f"  {line}")
+        for line in (result.stderr or "").splitlines():
+            print(f"  [stderr] {line}")
+        return True
+    except subprocess.TimeoutExpired:
+        print("  ❌ bb_ev_push 超时 (120s)")
         return False
-    for line in (result.stdout or "").splitlines():
-        print(f"  {line}")
-    for line in (result.stderr or "").splitlines():
-        print(f"  [stderr] {line}")
-    return True
 
 
 def main():

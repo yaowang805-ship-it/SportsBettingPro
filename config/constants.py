@@ -8,7 +8,7 @@ from pathlib import Path
 from config.settings import DATA_DIR
 
 # ── 资金管理 ──
-BANKROLL = 10000.0                 # 日预算（123条机会/天, 均¥81）
+BANKROLL = 50000.0                 # 日预算
 INITIAL_BALANCE = 50000.0          # 初始资金（累计余额）
 
 # ── EV 相关 ──

@@ -11,12 +11,15 @@
     python3 -m src.core.pipeline_orchestrator --task scan
     python3 -m src.core.pipeline_orchestrator --task settle
 """
+import fcntl
 import os
+import shutil
 import signal
 import sys
 import time
 import threading
 import traceback
+from typing import Optional
 from datetime import datetime, date
 from pathlib import Path
 
@@ -38,17 +41,20 @@ LOCK_FILE = SRC_DIR / "data" / "storage" / ".pipeline_daemon.lock"
 LOG_DIR = SRC_DIR / "data" / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 
-# 日志轮转：启动时自动归档过大的旧日志（跳过已轮转过的文件）
-# 使用 copy+truncate 而非 rename，因为 launchd 持有 pipeline_daemon.log 的 fd，
-# rename 只改目录项不会改变 fd 指向的 inode，会导致新日志丢失。
-_date_str = datetime.now().strftime('%Y%m%d')
+# 日志清理：删除超过 7 天的轮转日志（保留当前文件，launchd 持有其 fd）
+# 不再使用 copy+truncate 轮转（会产生递归文件名），直接依赖 TimedRotatingFileHandler
+_now_ts = time.time()
+_seven_days_sec = 7 * 86400
 for _lf in sorted(LOG_DIR.iterdir()):
-    if _lf.is_file() and _lf.stat().st_size > 2 * 1024 * 1024 and not _lf.name.endswith(_date_str):
-        _rotated = _lf.parent / f"{_lf.name}.{_date_str}"
-        import shutil
-        shutil.copy2(str(_lf), str(_rotated))
-        _lf.write_text("")  # truncate in-place，fd 仍然有效
-        print(f"  📦 日志轮转: {_lf.name} → {_rotated.name}")
+    if not _lf.is_file():
+        continue
+    _age_sec = _now_ts - _lf.stat().st_mtime
+    # 跳过当前活跃的日志文件（pipeline_daemon.log 等）
+    if _lf.name == "pipeline_daemon.log":
+        continue
+    if _age_sec > _seven_days_sec:
+        _lf.unlink()
+        print(f"  🗑️ 清理旧日志: {_lf.name} ({(int(_age_sec / 86400))}天前)")
 
 SCAN_WINDOW = (7, 22)              # 07:00 ~ 22:00
 INCREMENTAL_INTERVAL_NEAR = 600    # 10 分钟 — 24h内临场(赔率波动大)
@@ -102,8 +108,8 @@ class PipelineOrchestrator:
         self._running = True
         self._active_tasks: set[str] = set()
         self._last_run: dict[str, date] = {}          # 定时任务 → 最后执行日期
-        self._last_incremental_near: float = 0
-        self._last_incremental_far: float = 0
+        self._last_incremental_near: Optional[float] = None
+        self._last_incremental_far: Optional[float] = None
         self._alert_cooldown: dict[str, float] = {}    # 告警冷却
         self._setup_signal_handlers()
 
@@ -121,21 +127,25 @@ class PipelineOrchestrator:
     def _ensure_single_instance(self):
         if not LOCK_FILE.parent.exists():
             LOCK_FILE.parent.mkdir(parents=True, exist_ok=True)
-        pid = str(os.getpid())
-        if LOCK_FILE.exists():
-            old = LOCK_FILE.read_text().strip()
-            if old:
-                try:
-                    os.kill(int(old), 0)
-                    logger.error("另一实例正在运行 (PID %s)，退出", old)
-                    sys.exit(0)
-                except (ValueError, OSError):
-                    pass
-        LOCK_FILE.write_text(pid)
-        logger.info("PID %s 已锁定 %s", pid, LOCK_FILE)
+        # 原子锁: 使用 fcntl.flock 避免 TOCTOU 竞态
+        self._lock_fd = open(LOCK_FILE, "a+")
+        try:
+            fcntl.flock(self._lock_fd.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            logger.error("另一实例正在运行，退出")
+            sys.exit(0)
+        # 写入当前 PID
+        self._lock_fd.seek(0)
+        self._lock_fd.truncate()
+        self._lock_fd.write(str(os.getpid()))
+        self._lock_fd.flush()
+        logger.info("PID %s 已锁定 %s", os.getpid(), LOCK_FILE)
 
     def _cleanup_lock(self):
-        if LOCK_FILE.exists() and LOCK_FILE.read_text().strip() == str(os.getpid()):
+        if hasattr(self, "_lock_fd"):
+            fcntl.flock(self._lock_fd.fileno(), fcntl.LOCK_UN)
+            self._lock_fd.close()
+        if LOCK_FILE.exists():
             LOCK_FILE.unlink()
 
     # ------------------------------------------------------------------
@@ -209,9 +219,8 @@ class PipelineOrchestrator:
         try:
             if self.dry_run:
                 logger.info("[%s] (dry-run) 跳过实际执行", name)
-                result = None
             else:
-                result = task_callable(**kwargs)
+                task_callable(**kwargs)
             elapsed = time.time() - t0
             logger.info("[%s] ====== DONE (%ds) ======", name, elapsed)
             return True
@@ -382,11 +391,17 @@ class PipelineOrchestrator:
     def do_health_check(self):
         """运行系统健康检查，有 WARN/FAIL 时发 DingTalk。"""
         import subprocess
-        result = subprocess.run(
-            [sys.executable, str(SRC_DIR / "health_check_system.py")],
-            capture_output=True, text=True, cwd=SRC_DIR,
-            timeout=120,
-        )
+        try:
+            result = subprocess.run(
+                [sys.executable, str(SRC_DIR / "health_check_system.py")],
+                capture_output=True, text=True, cwd=SRC_DIR,
+                timeout=120,
+            )
+        except subprocess.TimeoutExpired:
+            logger.error("健康检查超时 (120s)")
+            self._send_alert("health_check", "超时 (120s)")
+            return
+
         stdout = result.stdout or ""
         stderr = result.stderr or ""
         for line in stdout.splitlines():
@@ -412,54 +427,77 @@ class PipelineOrchestrator:
     # 启动追赶 — 重启后补执行当天已错过的定时任务
     # ------------------------------------------------------------------
     def _catch_up_missed_tasks(self):
-        """守护进程启动时检查今天及昨天错过的定时任务并补执行。
+        """守护进程启动时检查今天及之前错过的 git_commit 并补执行。
 
-        场景：daemon 在 09:00 重启，08:00 的 full_scan 已被跳过。
-        场景：daemon 停机多日，重启后补跑之前错过的每日任务。
-        此方法遍历 SCHEDULE，对昨天/今天已过时间点且未执行的任务立即执行一次。
+        其他任务（扫描/结算/报告）不追赶：重启后立即执行会导致数据重复。
+        只有 git_commit 需要追赶，确保未提交的改动不丢失。
         """
         from datetime import timedelta
         now = datetime.now()
-        caught_up = []
         # 最多往前补 2 天（含今天）
         check_dates = [now.date(), (now - timedelta(days=1)).date(), (now - timedelta(days=2)).date()]
 
-        # daily_report 不追赶（重启后补发昨天的报告没意义）
-        _SKIP_CATCHUP = {"health_check", "daily_report", "weekly_report", "monthly_report", "memory_update",
-                          "full_scan_morning", "full_scan_evening",
-                          "settle_morning", "settle_noon", "settle_afternoon", "settle_evening"}
-
         for name, time_str, method_name, kwargs in SCHEDULE:
-            if name in _SKIP_CATCHUP:
+            if name != "git_commit":
                 continue
             for cd in check_dates:
                 if self._last_run.get(name) == cd:
-                    continue  # 这天已执行过
+                    continue
                 dt = datetime(cd.year, cd.month, cd.day, *(int(x) for x in time_str.split()[-1].split(":")))
                 if dt > now:
-                    continue  # 未来的不补
-                weekday, dom, hour, minute = _parse_schedule_time(time_str)
-                if dom is not None and cd.day != dom:
                     continue
-                if weekday is not None and cd.weekday() != weekday:
-                    continue
-
                 method = getattr(self, method_name, None)
                 if not method:
                     continue
-
-                logger.info("[追赶] 发现错过的任务 %s (原定 %s %s), 立即执行...", name, cd, time_str)
-                _BACKGROUND_TASKS = {"settle", "report", "git_commit", "memory_update"}
-                is_bg = any(t in name for t in _BACKGROUND_TASKS)
-                self._run_task(name, method, background=is_bg, **kwargs)
+                logger.info("[追赶] git_commit 错过的提交 (%s), 立即执行...", cd)
+                self._run_task(name, method, background=True, **kwargs)
                 self._last_run[name] = cd
-                caught_up.append(name)
-                break  # 同一任务只补最近一次
+                break
 
-        if caught_up:
-            logger.info("[追赶] 已完成 %d 个错过的任务: %s", len(caught_up), ", ".join(caught_up))
-        else:
-            logger.info("[追赶] 无错过的定时任务")
+    # ------------------------------------------------------------------
+    # 主循环单次迭代
+    # ------------------------------------------------------------------
+    def _tick(self):
+        """主循环的一次迭代：检查定时任务 + 增量扫描。"""
+        now = datetime.now()
+
+        # 1) 定时任务 (settle/report → 后台线程)
+        _BACKGROUND_TASKS = {"settle", "report", "git_commit", "memory_update"}
+        for name, time_str, method_name, kwargs in SCHEDULE:
+            weekday, dom, hour, minute = _parse_schedule_time(time_str)
+            if not self._is_time_match(weekday, dom, hour, minute, now):
+                continue
+            if not self._should_run_wall_clock(name, now):
+                continue
+            method = getattr(self, method_name, None)
+            if not method:
+                continue
+            is_settle = "settle" in name
+            is_bg = any(t in name for t in _BACKGROUND_TASKS) or is_settle
+            if is_settle and self._active_tasks_settle():
+                continue  # 已有结算在跑, 等下一轮
+            self._run_task(name, method, background=is_bg, **kwargs)
+            self._last_run[name] = now.date()
+
+        # 2) 增量扫描 — 双层: 临场10min / 早盘60min
+        if self._is_in_scan_window(now):
+            if self._last_incremental_near is None:
+                self._last_incremental_near = time.time()
+            elapsed_near = (now - datetime.fromtimestamp(self._last_incremental_near)).total_seconds()
+            if elapsed_near >= INCREMENTAL_INTERVAL_NEAR:
+                self._run_task("incremental_near", self.do_incremental, time_window="near")
+                self._last_incremental_near = time.time()
+
+            if self._last_incremental_far is None:
+                self._last_incremental_far = time.time()
+            elapsed_far = (now - datetime.fromtimestamp(self._last_incremental_far)).total_seconds()
+            if elapsed_far >= INCREMENTAL_INTERVAL_FAR:
+                self._run_task("incremental_far", self.do_incremental, time_window="far")
+                self._last_incremental_far = time.time()
+
+    def _active_tasks_settle(self) -> bool:
+        """检查是否有结算任务正在运行（比 str(set) 更可靠）。"""
+        return any("settle" in t for t in self._active_tasks)
 
     # ------------------------------------------------------------------
     # 主循环
@@ -497,41 +535,23 @@ class PipelineOrchestrator:
         if not self.dry_run and not self._is_in_scan_window(datetime.now()):
             logger.info("当前不在扫描时段，等待 %02d:00...", SCAN_WINDOW[0])
 
+        # 启动时设置增量扫描初始时间，避免立即触发（与全量扫描重复）
+        now = time.time()
+        self._last_incremental_near = now
+        self._last_incremental_far = now
+
         # 启动时追赶今天已错过的定时任务
         if not self.dry_run:
             self._catch_up_missed_tasks()
 
         try:
             while self._running:
-                now = datetime.now()
-
-                # 1) 定时任务 (settle/report → 后台线程, 但settle同时只跑一个)
-                _BACKGROUND_TASKS = {"report", "git_commit", "memory_update"}
-                for name, time_str, method_name, kwargs in SCHEDULE:
-                    weekday, dom, hour, minute = _parse_schedule_time(time_str)
-                    if not self._is_time_match(weekday, dom, hour, minute, now):
-                        continue
-                    if not self._should_run_wall_clock(name, now):
-                        continue
-                    method = getattr(self, method_name, None)
-                    if method:
-                        is_settle = "settle" in name
-                        is_bg = any(t in name for t in _BACKGROUND_TASKS) or is_settle
-                        if is_settle and "settle" in str(self._active_tasks):
-                            continue  # 已有结算在跑, 等下一轮
-                        self._run_task(name, method, background=is_bg, **kwargs)
-                        self._last_run[name] = now.date()
-
-                # 2) 增量扫描 — 双层: 临场10min / 早盘60min
-                if self._is_in_scan_window(now):
-                    elapsed_near = (now - datetime.fromtimestamp(self._last_incremental_near)).total_seconds() if self._last_incremental_near else INCREMENTAL_INTERVAL_NEAR + 1
-                    if elapsed_near >= INCREMENTAL_INTERVAL_NEAR:
-                        self._run_task("incremental_near", self.do_incremental, time_window="near")
-                        self._last_incremental_near = time.time()
-                    elapsed_far = (now - datetime.fromtimestamp(self._last_incremental_far)).total_seconds() if self._last_incremental_far else INCREMENTAL_INTERVAL_FAR + 1
-                    if elapsed_far >= INCREMENTAL_INTERVAL_FAR:
-                        self._run_task("incremental_far", self.do_incremental, time_window="far")
-                        self._last_incremental_far = time.time()
+                try:
+                    self._tick()
+                except Exception as e:
+                    logger.error("主循环异常: %s", e)
+                    logger.error(traceback.format_exc())
+                    self._send_alert("main_loop_crash", str(e))
                 time.sleep(CHECK_INTERVAL)
 
         except KeyboardInterrupt:

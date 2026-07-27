@@ -1,5 +1,6 @@
 from typing import Iterable, Optional
-from config.settings import DEFAULT_BUDGET, KELLY_FRACTION, MAX_SINGLE_BET_PCT
+from config.settings import DEFAULT_BUDGET, MAX_SINGLE_BET_PCT
+from config.constants import KELLY_FRACTION
 
 
 def implied_probability(odds: float) -> float:

@@ -82,15 +82,23 @@ _last_req_time = 0.0
 _MIN_REQUEST_INTERVAL = 0.25
 
 
+_cookie_loaded = False  # 进程级标志，只记一次日志
+
+
 def _load_cookie():
     """从文件加载 cf_clearance cookie。"""
+    global _cookie_loaded
     if COOKIE_FILE.exists():
         val = COOKIE_FILE.read_text().strip()
         if val:
             SESSION.cookies.set("cf_clearance", val, domain=".pinnacle.com")
-            logger.info("已加载 cf_clearance cookie (%d 字符)", len(val))
+            if not _cookie_loaded:
+                logger.info("已加载 cf_clearance cookie (%d 字符)", len(val))
+                _cookie_loaded = True
             return True
-    logger.warning("cf_clearance cookie 文件不存在: %s", COOKIE_FILE)
+    if not _cookie_loaded:
+        logger.warning("cf_clearance cookie 文件不存在: %s", COOKIE_FILE)
+        _cookie_loaded = True
     return False
 
 

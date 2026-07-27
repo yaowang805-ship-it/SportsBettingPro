@@ -16,7 +16,8 @@ logger = get_logger(__name__)
 import numpy as np
 import pandas as pd
 
-from config.settings import DEFAULT_BUDGET, KELLY_FRACTION, MAX_SINGLE_BET_PCT, MAX_TOTAL_EXPOSURE, DATA_DIR
+from config.settings import DEFAULT_BUDGET, MAX_SINGLE_BET_PCT, MAX_TOTAL_EXPOSURE, DATA_DIR
+from config.constants import KELLY_FRACTION
 from src.risk.model_decay_tracker import ModelDecayTracker
 from src.risk.dynamic_staking import DynamicStakingModel
 

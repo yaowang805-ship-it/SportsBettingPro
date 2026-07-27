@@ -641,8 +641,11 @@ def _correct_budget_tracker(opps: list):
     """推送成功后重算预算消耗，排除因指纹去重被过滤的机会。
 
     在 _calc_kelly_stakes 预分配后调用，修正为实际推送金额。
+    保留当天之前的预算分配，只替换当前推送涉及的分组金额。
     """
     from collections import defaultdict
+    spent, today = _load_budget_tracker()
+    # 计算当前推送的实际消耗
     groups = defaultdict(int)
     for o in opps:
         if o["_stake"] == 0:
@@ -651,7 +654,11 @@ def _correct_budget_tracker(opps: list):
         sub = o.get("_sub_market", o.get("_market", ""))
         group = _get_budget_group(sport, sub)
         groups[group] += o["_stake"]
-    _save_budget_tracker(dict(groups), datetime.now(timezone.utc).strftime("%Y-%m-%d"))
+    # 合并：保留当天其他推送的预算，替换当前推送的预算
+    merged = dict(spent)
+    for group, amount in groups.items():
+        merged[group] = merged.get(group, 0) + amount
+    _save_budget_tracker(merged, today)
 
 
 def _collect_opportunities(match, market_key):

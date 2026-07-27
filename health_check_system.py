@@ -51,7 +51,6 @@ SETTINGS_KEEP = {
     "BASE_DIR", "DATA_DIR", "MODEL_DIR", "ENV_FILE",
     "DINGTALK_WEBHOOK", "DINGTALK_KEYWORD", "DATABASE_URL",
     "DEFAULT_BUDGET", "MAX_SINGLE_BET_PCT", "MAX_TOTAL_EXPOSURE",
-    "KELLY_FRACTION", "MIN_EDGE",
     "ODDS_API_KEYS", "BSD_API_KEY", "BALLDONTLIE_API_KEY",
     "FOOTBALL_DATA_API_KEY", "PRE_BET_ODDS_VALIDATION", "MAX_ODDS_SLIPPAGE",
     "_load_env_file", "_is_placeholder_webhook", "send_dingtalk",
@@ -234,9 +233,11 @@ def c5_dead_py_files():
 
 
 def c6_disk_usage():
-    """检查 data/storage/ 和 models/ 磁盘用量。"""
+    """检查 data/storage/、models/ 和日志目录磁盘用量。"""
     results = []
-    for label, path in [("data/storage/", DATA_DIR), ("models/", MODEL_DIR)]:
+    for label, path in [("data/storage/", DATA_DIR), ("models/", MODEL_DIR),
+                         ("logs/", BASE_DIR / "logs"),
+                         ("data/logs/", BASE_DIR / "data" / "logs")]:
         if not path.exists():
             results.append(("INFO", f"{label} 不存在"))
             continue
