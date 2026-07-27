@@ -368,18 +368,20 @@ def _compute_combined_score(bb, bb_1x2, bb_epoch, pin, pin_ml, sport="football")
         pin_epoch = _pin_to_epoch(pin)
         if pin_epoch is not None:
             diff = abs(bb_epoch - pin_epoch)
-            if diff < 600:           # < 10 min — same time
-                time_factor = 1.0
-            elif diff < 1800:         # 10-30 min
-                time_factor = 0.97
-            elif diff < 3600:         # 30-60 min
-                time_factor = 0.93
-            elif diff < 7200:         # 1-2 hr
-                time_factor = 0.88
-            elif diff < 14400:        # 2-4 hr
-                time_factor = 0.50
+            # 网球/拳击/MMA: 赛程灵活，时间窗口放宽
+            if sport in ("tennis", "boxing", "mma"):
+                if diff < 1800: time_factor = 1.0
+                elif diff < 7200: time_factor = 0.95
+                elif diff < 14400: time_factor = 0.85
+                elif diff < 21600: time_factor = 0.60  # 4-6h
+                else: time_factor = 0.30
             else:
-                time_factor = 0.20
+                if diff < 600: time_factor = 1.0
+                elif diff < 1800: time_factor = 0.97
+                elif diff < 3600: time_factor = 0.93
+                elif diff < 7200: time_factor = 0.88
+                elif diff < 14400: time_factor = 0.50
+                else: time_factor = 0.20
     return odds_score * time_factor
 
 
@@ -486,7 +488,8 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                 # 网球的时间匹配：降低门限以覆盖更多 ITF 赛事
                 # ITF 赔率差异大 + 时间经常微调，纯时间和赔率匹配很难高分
                 # 已从 0.70 → 0.55 → 0.45（进一步放松以匹配更多网球比赛）
-                min_threshold = 0.45 if sport == "tennis" else 0.70
+                # 放宽阈值以匹配更多非足球比赛(足球队名覆盖好,非足球依赖Phase2)
+                min_threshold = 0.45 if sport in ("tennis", "boxing", "mma") else 0.60
                 if combined >= min_threshold:
                     pairs.append((combined, bb_key, bd["match"], pin,
                                   bd["bb_1x2"], pin_ml, pin_id, sport))
