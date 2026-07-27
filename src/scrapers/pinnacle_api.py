@@ -15,9 +15,9 @@ import socket as _socket
 _orig_getaddrinfo = _socket.getaddrinfo
 
 _PINNACLE_HOSTS = {
-    "guest.api.arcadia.pinnacle.com": ["104.18.42.200", "172.64.145.56"],
-    "pinnacle.com": ["104.18.42.200", "172.64.145.56"],
-    "www.pinnacle.com": ["104.18.42.200", "172.64.145.56"],
+    "guest.api.arcadia.pinnacle.com": ["198.18.0.39", "104.18.42.200", "172.64.145.56"],
+    "pinnacle.com": ["198.18.0.40", "104.18.42.200"],
+    "www.pinnacle.com": ["198.18.0.40", "104.18.42.200"],
 }
 
 def _patched_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
