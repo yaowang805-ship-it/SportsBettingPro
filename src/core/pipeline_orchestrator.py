@@ -110,6 +110,8 @@ class PipelineOrchestrator:
         self._last_run: dict[str, date] = {}          # 定时任务 → 最后执行日期
         self._last_incremental_near: Optional[float] = None
         self._last_incremental_far: Optional[float] = None
+        self._last_scan_success: float = 0             # 最后一次成功完成的时间戳
+        self._scan_failure_count: int = 0              # 连续失败计数
         self._alert_cooldown: dict[str, float] = {}    # 告警冷却
         self._setup_signal_handlers()
 
@@ -223,6 +225,8 @@ class PipelineOrchestrator:
                 task_callable(**kwargs)
             elapsed = time.time() - t0
             logger.info("[%s] ====== DONE (%ds) ======", name, elapsed)
+            if "incremental" in name:
+                self._mark_scan_ok()
             return True
 
         except SystemExit as e:
@@ -502,9 +506,45 @@ class PipelineOrchestrator:
                 self._run_task("incremental_far", self.do_incremental, time_window="far")
                 self._last_incremental_far = time.time()
 
+        # 3) 自检看门狗
+        self._watchdog()
+
     def _active_tasks_settle(self) -> bool:
         """检查是否有结算任务正在运行（比 str(set) 更可靠）。"""
         return any("settle" in t for t in self._active_tasks)
+
+    def _watchdog(self):
+        """自检看门狗：检测增量扫描是否停滞，Pinnacle 连接是否异常。"""
+        now = time.time()
+        if not self._is_in_scan_window(datetime.now()):
+            return  # 非扫描时段不检查
+
+        # 检查增量扫描是否按时运行（允许 1.5 倍间隔容忍度）
+        near_elapsed = now - self._last_incremental_near if self._last_incremental_near else 0
+        far_elapsed = now - self._last_incremental_far if self._last_incremental_far else 0
+        near_timeout = INCREMENTAL_INTERVAL_NEAR * 1.5
+        far_timeout = INCREMENTAL_INTERVAL_FAR * 1.5
+
+        warnings = []
+        if self._last_incremental_near and near_elapsed > near_timeout:
+            warnings.append(f"near扫描停滞 {near_elapsed/60:.0f}分钟(预期{INCREMENTAL_INTERVAL_NEAR/60:.0f}min)")
+        if self._last_incremental_far and far_elapsed > far_timeout:
+            warnings.append(f"far扫描停滞 {far_elapsed/60:.0f}分钟(预期{INCREMENTAL_INTERVAL_FAR/60:.0f}min)")
+
+        if warnings:
+            logger.warning("🐕 看门狗: %s", "; ".join(warnings))
+            # 连续两次告警才推送（只发一次，走冷却）
+            self._scan_failure_count += 1
+            if self._scan_failure_count >= 2:
+                self._send_alert("scan_watchdog", "; ".join(warnings))
+                self._scan_failure_count = 0  # 重置，等下次触发
+        else:
+            self._scan_failure_count = 0  # 恢复正常
+
+    def _mark_scan_ok(self):
+        """标记增量扫描成功完成（供 _run_task 钩子）。"""
+        self._last_scan_success = time.time()
+        self._scan_failure_count = 0
 
     # ------------------------------------------------------------------
     # 主循环
@@ -542,10 +582,11 @@ class PipelineOrchestrator:
         if not self.dry_run and not self._is_in_scan_window(datetime.now()):
             logger.info("当前不在扫描时段，等待 %02d:00...", SCAN_WINDOW[0])
 
-        # 启动时设置增量扫描初始时间，避免立即触发（与全量扫描重复）
+        # 启动时设置增量扫描初始时间为 (now - interval + 60s)，首次 tick 即可触发
+        # （避免与全量扫描同时触发，但不会等待完整的 10 分钟周期）
         now = time.time()
-        self._last_incremental_near = now
-        self._last_incremental_far = now
+        self._last_incremental_near = now - INCREMENTAL_INTERVAL_NEAR + 60
+        self._last_incremental_far = now - INCREMENTAL_INTERVAL_FAR + 60
 
         # 启动时追赶今天已错过的定时任务
         if not self.dry_run:

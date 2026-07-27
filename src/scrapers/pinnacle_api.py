@@ -75,8 +75,9 @@ SESSION.headers.update({
     "X-API-Key": API_KEY,
 })
 
-MAX_RETRIES = 3
+MAX_RETRIES = 5
 RETRY_DELAY = 2.0
+_ssl_fail_count = 0  # 全局 SSL 失败计数器（看门狗用）
 
 _last_req_time = 0.0
 _MIN_REQUEST_INTERVAL = 0.25
@@ -256,12 +257,20 @@ def api_get(path, retry=True):
                 _diagnose_pinnacle_error(url, resp.status_code)
                 return None
 
+            _ssl_fail_count = 0  # 成功请求，重置 SSL 故障计数
             return resp.json()
 
         except requests.exceptions.SSLError as e:
+            global _ssl_fail_count
+            _ssl_fail_count += 1
             logger.warning("SSL error, retrying... %s", e)
             if attempt < MAX_RETRIES - 1:
-                time.sleep(RETRY_DELAY * (2 ** attempt))
+                wait = RETRY_DELAY * (2 ** attempt)
+                # 大范围 SSL 故障时加额外冷却
+                if _ssl_fail_count > 20:
+                    wait += 10
+                    logger.warning("SSL大面积故障(已%d次), 额外冷却%.0fs", _ssl_fail_count, wait)
+                time.sleep(wait)
                 continue
             logger.error("SSL handshake failed after retries")
             return None
