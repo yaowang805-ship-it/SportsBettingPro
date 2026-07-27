@@ -616,7 +616,21 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
     hc_line_raw = bet.get("line", "")
     is_handicap = bet_market == "handicap" or "让" in outcome or hc_line_raw
 
-    # 构建候选列表: 中文原始名 → Odds API 英译 → 结算专用英译
+    # 从 team_name_map.json 查找英文名（3370条中→英，远超 _CN_TO_EN_SETTLEMENT）
+    def _lookup_team_map(name: str) -> str:
+        if not name:
+            return ""
+        try:
+            from config.settings import DATA_DIR as _DD
+            _map_path = _DD / "team_name_map.json"
+            if _map_path.exists():
+                _tm = json.loads(_map_path.read_text())
+                return _tm.get(name, "")
+        except Exception:
+            pass
+        return ""
+
+    # 构建候选列表: 中文原始名 → Odds API 英译 → 结算专用英译 → team_name_map
     home_candidates = []
     for name in [_normalize_team(home_raw), _normalize_team(home_cn)]:
         if name:
@@ -627,6 +641,9 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
             en_settle = _normalize_team(_CN_TO_EN_SETTLEMENT.get(name, name))
             if en_settle and en_settle not in home_candidates and en_settle != name:
                 home_candidates.append(en_settle)
+            en_tm = _normalize_team(_lookup_team_map(name))
+            if en_tm and en_tm not in home_candidates and en_tm != name:
+                home_candidates.append(en_tm)
     seen_h = set()
     home_cands = [c for c in home_candidates if not (c in seen_h or seen_h.add(c))]
 
@@ -640,6 +657,9 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
             en_settle = _normalize_team(_CN_TO_EN_SETTLEMENT.get(name, name))
             if en_settle and en_settle not in away_candidates and en_settle != name:
                 away_candidates.append(en_settle)
+            en_tm = _normalize_team(_lookup_team_map(name))
+            if en_tm and en_tm not in away_candidates and en_tm != name:
+                away_candidates.append(en_tm)
     seen_a = set()
     away_cands = [c for c in away_candidates if not (c in seen_a or seen_a.add(c))]
 
