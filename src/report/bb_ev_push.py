@@ -1134,12 +1134,14 @@ def _get_settleable_summary() -> set:
 
 def _prepare_opportunities(force=False):
     """对比文件必须 < 30 分钟, 确保赔率是实时的, 拒绝缓存。"""
-    if not COMPARISON_FILE.exists():
-        return []
-    mtime = COMPARISON_FILE.stat().st_mtime
-    age_min = (time.time() - mtime) / 60
-    if age_min > 30:
-        print(f"❌ 对比文件过期 ({age_min:.0f}分钟前)，拒绝使用缓存")
+    # 检查最新的对比文件(near/far/main)
+    newest_age = 999
+    for f in (COMPARISON_FILE_NEAR, COMPARISON_FILE_FAR, COMPARISON_FILE):
+        if f.exists():
+            age = (time.time() - f.stat().st_mtime) / 60
+            newest_age = min(newest_age, age)
+    if newest_age > 30 and not force:
+        print(f"❌ 对比文件过期 ({newest_age:.0f}分钟前)，拒绝使用缓存")
         return []
 
     qualified = _collect_opportunities_from_file()
