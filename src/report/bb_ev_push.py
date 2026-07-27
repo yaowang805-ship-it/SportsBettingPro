@@ -26,6 +26,8 @@ from config.constants import (
 )
 
 COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison.json"
+COMPARISON_FILE_NEAR = DATA_DIR / "bb_vs_pinnacle_comparison_near.json"
+COMPARISON_FILE_FAR = DATA_DIR / "bb_vs_pinnacle_comparison_far.json"
 FB_COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison_FB.json"
 ODDSAPI_COMPARISON_FILE = DATA_DIR / "bb_vs_oddsapi_comparison.json"
 FINGERPRINT_FILE = DATA_DIR / "pushed_fingerprints.json"
@@ -773,6 +775,11 @@ def _collect_opportunities_from_file():
     """
     # 读取主对比文件
     main_opps = _read_comparison_file(COMPARISON_FILE)
+    # 读取 near/far 独立对比文件
+    near_opps = _read_comparison_file(COMPARISON_FILE_NEAR)
+    far_opps = _read_comparison_file(COMPARISON_FILE_FAR)
+    if near_opps: main_opps.extend(near_opps)
+    if far_opps: main_opps.extend(far_opps)
     # 读取FB独立对比文件
     fb_opps = _read_comparison_file(FB_COMPARISON_FILE)
     # 读取辅助对比文件 (the-odds-api: WNBA/NCAAF/Boxing等)

@@ -29,6 +29,8 @@ DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data" / "storage"
 BB_EXTRACTED = DATA_DIR / "bb_odds_extracted.json"
 BB_SNAPSHOT = DATA_DIR / "bb_odds_snapshot.json"
 COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison.json"
+COMPARISON_FILE_NEAR = DATA_DIR / "bb_vs_pinnacle_comparison_near.json"    # 24h内
+COMPARISON_FILE_FAR = DATA_DIR / "bb_vs_pinnacle_comparison_far.json"      # 24-72h
 PIN_LEAGUE_STRUCTURE = DATA_DIR / "pinnacle_league_structure.json"
 
 # FB 独立对比通道
@@ -319,11 +321,13 @@ def run_incremental(time_window: str = "all"):
 
     # 5. 实时对比：拉取当前时间窗口的所有联赛 Pinnacle 数据
     print(f"\n🔍 增量实时对比 ({len(changed_leagues)} 个联赛)...")
+    # near/far 写入独立文件，互不覆盖
+    window_file = COMPARISON_FILE_NEAR if time_window == "near" else COMPARISON_FILE_FAR
     new_result = compare_bb_vs_pinnacle(
         bb_matches,
         all_pin_leagues,
         selected_leagues=changed_leagues,
-        save_path=None,
+        save_path=str(window_file),
     )
 
     if new_result is None:
@@ -331,13 +335,7 @@ def run_incremental(time_window: str = "all"):
         save_snapshot(bb_matches)
         return
 
-    # 6. 按时间窗口合并：更新当前窗口数据，保留另一窗口数据
-    existing = load_current_comparison()
-    merged = merge_comparison(existing, new_result, changed_leagues)
-    tmp = COMPARISON_FILE.with_suffix(".tmp")
-    tmp.write_text(json.dumps(merged, ensure_ascii=False, indent=2, default=str))
-    tmp.replace(COMPARISON_FILE)
-    print(f"\n✅ 已保存合并结果 ({len(merged.get('details', []))} 条+EV)")
+    print(f"\n✅ 已保存实时结果 → {window_file.name} ({len(new_result.get('details', []))} 条+EV)")
 
     # 8. 保存新快照
     save_snapshot(bb_matches)
