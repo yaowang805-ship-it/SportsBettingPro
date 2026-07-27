@@ -245,7 +245,7 @@ def run_incremental(time_window: str = "all"):
 
     # 1. 获取最新BB数据
     print("\n📡 获取BB数据...")
-    bb_matches = _fetch_bb_data()
+    bb_matches = _fetch_bb_data(time_window)
     if not bb_matches:
         print("  ❌ 获取BB数据失败")
         return
@@ -358,7 +358,7 @@ def run_full():
     print("BB体育 全量扫描")
     print("=" * 60)
 
-    bb_matches = _fetch_bb_data()
+    bb_matches = _fetch_bb_data("all")
     if not bb_matches:
         return
 
@@ -378,7 +378,7 @@ def run_full():
         _run_fetcher()
 
     # 更新快照
-    bb_after = _fetch_bb_data()
+    bb_after = _fetch_bb_data("all")
     if bb_after:
         bb_after = [m for m in bb_after if not m.get("bt") or int(m["bt"]) > _now_ts]
         new_result = compare_bb_vs_pinnacle(bb_after, _load_league_structure())
@@ -392,16 +392,16 @@ def run_full():
         vs_main()
 
 
-def _fetch_bb_data():
-    """从BB提取文件中读取数据。"""
+def _fetch_bb_data(time_window: str = "all"):
+    """从BB提取文件中读取数据。near扫描阈值5分钟，far扫描15分钟。"""
     if not BB_EXTRACTED.exists():
         print("  ❌ 无BB数据，先运行 bb_api_fetcher")
         return None
     raw = json.loads(BB_EXTRACTED.read_text())
     matches = raw.get("matches", [])
-    # 如果数据太旧，重新抓取
     age_m = (time.time() - BB_EXTRACTED.stat().st_mtime) / 60
-    if age_m > 15:
+    refresh_threshold = 5 if time_window == "near" else 15
+    if age_m > refresh_threshold:
         print(f"  ⚠️ BB数据 {age_m:.0f} 分钟前，重新抓取...")
         if not _run_fetcher():
             print("  ❌ 重新抓取失败，继续使用旧数据")
