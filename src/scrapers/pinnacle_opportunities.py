@@ -97,32 +97,40 @@ def add_htft_opportunities(entry, bb_htft_dict, pin_prices_list):
     """计算并添加 HT/FT (半全场) 机会到 entry。
 
     bb_htft_dict: BB赔率 dict，键为 HTFT_KEYS，值为赔率
-    pin_prices_list: Pinnacle 9个价格 dict 列表（含 price_decimal）
+    pin_prices_list: Pinnacle 价格 list，每个含 designation(如\"home/home\")和 price_decimal
     """
     if not bb_htft_dict or not pin_prices_list or len(pin_prices_list) < 9:
         return
-    raw_prices = []
+
+    # 按 designation 标签建立索引（不再靠位置猜测）
+    pin_by_key = {}
     for p in pin_prices_list:
+        des = p.get("designation", "").lower().replace(" ", "")
         val = get_decimal_price(p) or 0
-        if val <= 0:
-            return
-        raw_prices.append(val)
-    if len(raw_prices) < 9:
+        if val > 0 and des:
+            pin_by_key[des] = val
+
+    if len(pin_by_key) < 9:
         return
-    imp = sum(1.0 / v for v in raw_prices)
-    fair_prices = [round(v * imp, 4) for v in raw_prices]
+
+    # 去抽水
+    imp = sum(1.0 / v for v in pin_by_key.values())
+    fair_by_key = {k: round(v * imp, 4) for k, v in pin_by_key.items()}
+
     for i in range(9):
-        key = HTFT_KEYS[i]
+        key = HTFT_KEYS[i]  # "home/home", "home/draw", ...
         bb_val = bb_htft_dict.get(key, 0)
-        if not bb_val or bb_val <= 1:
+        pin_val = pin_by_key.get(key, 0)
+        fair_val = fair_by_key.get(key, 0)
+        if not bb_val or bb_val <= 1 or not fair_val:
             continue
-        ev = round((bb_val - fair_prices[i]) / fair_prices[i] * 100, 2)
+        ev = round((bb_val - fair_val) / fair_val * 100, 2)
         if ev > 1:
             entry["opportunities"].append({
                 "designation": HTFT_LABELS[i],
                 "bb_odds": bb_val,
-                "pin_odds": raw_prices[i],
-                "fair_price": fair_prices[i],
+                "pin_odds": pin_val,
+                "fair_price": fair_val,
                 "ev_pct": ev,
                 "_market": "htft",
             })

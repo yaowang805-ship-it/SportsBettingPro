@@ -337,18 +337,30 @@ def get_league_matchups_and_markets(league_id):
         htft_markets = mm.get(mid, [])
         if not htft_markets:
             continue
+        # 用 pnames 给 HTFT 价格打标签（Pinnacle API 的 price.designation 为空）
+        htft_label_map = {}
+        for i, pname in enumerate(pnames):
+            key = pname.lower().replace(" ", "").replace("/", "/")  # "Home/Home" → "home/home"
+            htft_label_map[i] = key
+
         htft_entries = []
         for mkt in htft_markets:
             if mkt.get("type") != "moneyline":
                 continue
             period = mkt.get("period", 0)
-            prices = [{
-                "designation": p.get("designation", ""),
-                "price_decimal": us_to_decimal(p.get("price")),
-                "points": p.get("points"),
-            } for p in mkt.get("prices", [])]
-            if len(prices) >= 9:
-                htft_entries.append({"period": period, "prices": prices})
+            raw_prices = mkt.get("prices", [])
+            if len(raw_prices) < 9:
+                continue
+            # 按 pnames 顺序给价格打标签
+            labelled_prices = []
+            for i, p in enumerate(raw_prices):
+                label = htft_label_map.get(i, p.get("designation", ""))
+                labelled_prices.append({
+                    "designation": label,
+                    "price_decimal": us_to_decimal(p.get("price")),
+                    "points": p.get("points"),
+                })
+            htft_entries.append({"period": period, "prices": labelled_prices})
         if not htft_entries:
             continue
         for entry in result:
