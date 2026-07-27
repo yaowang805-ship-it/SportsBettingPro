@@ -336,7 +336,7 @@ def run_incremental(time_window: str = "all"):
         bb_matches,
         all_pin_leagues,
         selected_leagues=changed_leagues,
-        save_path=str(window_file),
+        save_path=window_file,
     )
 
     if new_result is None:
