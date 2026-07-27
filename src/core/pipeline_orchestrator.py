@@ -462,18 +462,20 @@ class PipelineOrchestrator:
     # 启动追赶 — 重启后补执行当天已错过的定时任务
     # ------------------------------------------------------------------
     def _catch_up_missed_tasks(self):
-        """守护进程启动时检查今天及之前错过的 git_commit 并补执行。
+        """守护进程启动时检查今天及之前错过的任务并补执行。
 
-        其他任务（扫描/结算/报告）不追赶：重启后立即执行会导致数据重复。
-        只有 git_commit 需要追赶，确保未提交的改动不丢失。
+        git_commit: 总是追赶（确保改动不丢失）
+        settle: 追赶 2 小时前的，避免重启瞬间重复结算
+        扫描/报告: 不追赶（会重复推送）
         """
         from datetime import timedelta
         now = datetime.now()
-        # 最多往前补 2 天（含今天）
         check_dates = [now.date(), (now - timedelta(days=1)).date(), (now - timedelta(days=2)).date()]
 
         for name, time_str, method_name, kwargs in SCHEDULE:
-            if name != "git_commit":
+            # git_commit 总是追赶
+            # settle 只追赶 2 小时以上的
+            if name != "git_commit" and "settle" not in name:
                 continue
             for cd in check_dates:
                 if self._last_run.get(name) == cd:
@@ -484,7 +486,13 @@ class PipelineOrchestrator:
                 method = getattr(self, method_name, None)
                 if not method:
                     continue
-                logger.info("[追赶] git_commit 错过的提交 (%s), 立即执行...", cd)
+                # 结算追赶保护：只追 2 小时前的，避免重启时重复结算
+                if "settle" in name:
+                    settle_deadline = datetime(cd.year, cd.month, cd.day) + timedelta(hours=int(time_str.split()[-1].split(":")[0]) + 2,
+                                 minutes=int(time_str.split()[-1].split(":")[1]))
+                    if now < settle_deadline:
+                        continue  # 还不够晚，跳过
+                logger.info("[追赶] %s 错过 (%s %s), 立即执行...", name, cd, time_str)
                 self._run_task(name, method, background=True, **kwargs)
                 self._last_run[name] = cd
                 break
