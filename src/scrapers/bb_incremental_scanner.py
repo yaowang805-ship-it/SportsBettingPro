@@ -317,7 +317,7 @@ def run_incremental(time_window: str = "all"):
             save_snapshot(bb_matches)
             return
 
-    # 5. 全量实时对比：不限定联赛，拉取所有变动联赛的实时 Pinnacle 数据
+    # 5. 实时对比：拉取当前时间窗口的所有联赛 Pinnacle 数据
     print(f"\n🔍 增量实时对比 ({len(changed_leagues)} 个联赛)...")
     new_result = compare_bb_vs_pinnacle(
         bb_matches,
@@ -331,11 +331,13 @@ def run_incremental(time_window: str = "all"):
         save_snapshot(bb_matches)
         return
 
-    # 6. 直接覆盖（不使用历史合并，确保数据实时）
+    # 6. 按时间窗口合并：更新当前窗口数据，保留另一窗口数据
+    existing = load_current_comparison()
+    merged = merge_comparison(existing, new_result, changed_leagues)
     tmp = COMPARISON_FILE.with_suffix(".tmp")
-    tmp.write_text(json.dumps(new_result, ensure_ascii=False, indent=2, default=str))
+    tmp.write_text(json.dumps(merged, ensure_ascii=False, indent=2, default=str))
     tmp.replace(COMPARISON_FILE)
-    print(f"\n✅ 已保存实时结果 ({len(new_result.get('details', []))} 条+EV)")
+    print(f"\n✅ 已保存合并结果 ({len(merged.get('details', []))} 条+EV)")
 
     # 8. 保存新快照
     save_snapshot(bb_matches)
@@ -347,7 +349,7 @@ def run_incremental(time_window: str = "all"):
     else:
         print("\n📭 无新+EV机会")
 
-    return merged
+    return new_result
 
 
 def run_full():
