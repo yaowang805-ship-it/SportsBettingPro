@@ -53,6 +53,9 @@ from src.scrapers.pinnacle_markets import (
     sort_ml_prices, get_league_matchups_and_markets,
 )
 
+# 对比引擎版本号：修改校准/匹配逻辑后递增，触发全量重建
+COMPARISON_CODE_VERSION = 3
+
 # 导入匹配引擎
 from src.scrapers.matching_engine import (
     team_name_score, get_pin_ml_sorted, get_pin_ml_sorted_from_source,
