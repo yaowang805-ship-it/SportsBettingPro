@@ -1219,8 +1219,19 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         incremental: 增量扫描标记。
         qualified: 可选，来自 build_report 的已处理机会列表。为 None 时独立预处理。
         force: 跳过指纹去重，强制推送。
-        label: 增量扫描类型标签（如 "🏃 24h内临场"）
+        label: 增量扫描类型标签（如 "24h内临场" 或 "24-72h早盘"）
     """
+    # 时间窗口过滤：增量扫描只推送对应时间段的比赛
+    if incremental and qualified:
+        now_ts = time.time()
+        h24_sec = 24 * 3600
+        h72_sec = 72 * 3600
+        if "24h内" in label or "临场" in label:
+            qualified = [o for o in qualified
+                        if o.get("_pin_epoch") and (o["_pin_epoch"] - now_ts) <= h24_sec]
+        elif "72h" in label or "早盘" in label:
+            qualified = [o for o in qualified
+                        if o.get("_pin_epoch") and h24_sec < (o["_pin_epoch"] - now_ts) <= h72_sec]
     if not DINGTALK_WEBHOOK:
         logger.info("no DINGTALK_WEBHOOK configured")
         return
