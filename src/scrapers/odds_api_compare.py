@@ -30,13 +30,6 @@ SPORT_KEY_MAP = {
     "tennis": None,  # 网球按赛事匹配，见下方
 }
 
-# 网球赛事关键词 → the-odds-api key
-TENNIS_KEY_MAP = {
-    "ATP - 华盛顿公开赛": "tennis_atp_washington_open",
-    "WTA - 华盛顿公开赛": "tennis_wta_washington_open",
-}
-
-
 def _get_api_key():
     """返回可用配额最多的 key。"""
     if not ODDS_API_KEYS:
