@@ -846,7 +846,8 @@ def _read_comparison_file(path):
         match_score = match.get("match_score", 1.0)
         if match_score < 0.85:
             continue
-        for mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"):
+        for mk in ("opportunities", "handicap", "over_under", "double_chance"):
+    # DNB(平局退款)暂缓: 推导价与Pinnacle直供价偏差>16%
             qualified.extend(_collect_opportunities(match, mk))
     return qualified
 
