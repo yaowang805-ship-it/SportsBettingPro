@@ -178,14 +178,15 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
         bb_numbers = _re.findall(r'\d+', bb_name)
         bb_has_cjk = any('一' <= c <= '鿿' for c in bb_name)
 
-        # Determine likely sport from BB name keywords (fallback to 'football')
+        # Determine likely sport from BB name keywords
         bb_sport = None
         for kw, s in BB_SPORT_KEYWORDS.items():
             if kw in bb_name:
                 bb_sport = s
                 break
         if bb_sport is None:
-            bb_sport = 'football'  # 大部分未匹配联赛是足球
+            # 无法确定运动类型 → 不自动映射 (防止跨运动错配)
+            continue
 
         candidates = []
 
@@ -327,12 +328,14 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
                     break
 
             if already_mapped:
-                # Still useful if BB name is different — might be a variant
-                if bb_name != existing_bb and bb_name not in LEAGUE_KEYWORDS:
-                    if not dry_run:
-                        LEAGUE_KEYWORDS[bb_name] = best_pin_name
-                    new_mappings[bb_name] = [best_id]
-                    print(f"  \U0001f504 自动映射 (变体): [{bb_name}] → [{best_pin_name}] (score={best_score:.2f})")
+                # 只接受同联赛变体(相似度>0.8), 拒绝不同联赛→同一Pinnacle
+                sm = _SM(None, bb_name.lower(), existing_bb.lower())
+                if sm.ratio() > 0.8:
+                    if bb_name not in LEAGUE_KEYWORDS:
+                        if not dry_run:
+                            LEAGUE_KEYWORDS[bb_name] = best_pin_name
+                        new_mappings[bb_name] = [best_id]
+                        print(f"  🔄 自动映射 (变体): [{bb_name}] → [{best_pin_name}] (score={best_score:.2f})")
             else:
                 print(f"  \U0001f504 自动映射: [{bb_name}] → [{best_pin_name}] (ID={best_id}, score={best_score:.2f})")
                 if not dry_run:
