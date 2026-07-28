@@ -16,7 +16,7 @@ EV_CAP = 12.0                      # 最大 EV %（bb_ev_push EV_CAP / bb_virtua
 MIN_EV_PCT = 3.0                   # 最小 EV %（与 T1 门槛一致）
 
 # ── 数量限制 ──
-MAX_BETS = 50                      # 每日最多投注数 / 推送机会数
+MAX_BETS = 100                     # 每日最多投注数 / 推送机会数
 
 # ── Kelly 计算 ──
 KELLY_FRACTION = 0.50              # Kelly 分数（bb_virtual_bet 0.50 / 旧 bb_ev_push 0.75 → 统一为 0.50）

@@ -69,6 +69,7 @@ SCHEDULE = [
     ("settle_morning",     "08:30", "do_settle",      {}),
     ("daily_report",       "09:00", "do_daily_report",{}),
     ("memory_update",      "09:05", "do_memory_update", {}),
+    ("daily_cleanup",      "09:10", "do_cleanup",      {}),  # 指纹+临时文件清理
     ("settle_noon",        "14:00", "do_settle",      {}),  # 午后结算
     ("settle_afternoon",   "17:00", "do_settle",      {}),  # 傍晚结算
     ("full_scan_evening",  "20:00", "do_full_scan",   {"bet": True}),
@@ -402,6 +403,35 @@ class PipelineOrchestrator:
             pr()
         finally:
             sys.argv = old_argv
+
+    def do_cleanup(self):
+        """每日清理：过期指纹 + 旧日志 + 临时文件。"""
+        # 1. 清理过期指纹
+        try:
+            from config.database import load_fingerprints, save_fingerprints
+            from datetime import date
+            today = date.today().strftime("%Y-%m-%d")
+            fps = load_fingerprints()
+            expired = [fp for fp in fps if fp.split("|")[-1] < today]
+            for fp in expired: del fps[fp]
+            if expired:
+                save_fingerprints(fps)
+                logger.info("清理 %d 条过期指纹", len(expired))
+        except Exception as e:
+            logger.warning("指纹清理失败: %s", e)
+
+        # 2. 清理旧的临时文件
+        try:
+            import os, time
+            now = time.time()
+            for f in (SRC_DIR / "data" / "storage").glob("*.tmp"):
+                if now - f.stat().st_mtime > 86400:
+                    f.unlink()
+            for f in (SRC_DIR / "data" / "storage").glob("push_staging*"):
+                if now - f.stat().st_mtime > 86400:
+                    f.unlink()
+        except Exception as e:
+            logger.warning("临时文件清理失败: %s", e)
 
     def do_git_commit(self):
         """自动 git 提交。"""

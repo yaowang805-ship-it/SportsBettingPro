@@ -526,8 +526,11 @@ def _run_push(label: str = ""):
     if label:
         env["PUSH_LABEL"] = label
     try:
+        push_args = [sys.executable, "-m", "src.report.bb_ev_push"]
+        if label != "全量扫描":  # 增量扫描才传 --incremental
+            push_args.append("--incremental")
         result = subprocess.run(
-            [sys.executable, "-m", "src.report.bb_ev_push", "--incremental"],
+            push_args,
             capture_output=True, text=True, cwd=SRC_DIR.parent,
             timeout=120, env=env,
         )

@@ -1167,7 +1167,7 @@ def _settle_recommendation_log() -> int:
     return settled
 
 
-def _auto_void_timeout(max_days: int = 3) -> int:
+def _auto_void_timeout(max_days: int = 5) -> int:
     """超时兜底：超过 max_days 仍未匹配到结果的投注自动作废。
 
     作废 = 返还本金，不记盈亏。防止投注因 API 配额/数据缺失永久卡在 pending。
