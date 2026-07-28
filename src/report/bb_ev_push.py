@@ -1327,18 +1327,29 @@ def _filter_pushed(qualified: list) -> list:
         match_date = fp.split("|")[-1]
         if fp in existing:
             old_ev = existing[fp]
-            # 同一天或未来比赛：EV涨>0.5%且BB赔率未恶化才重推
-            # 防「EV虚增」: BB赔率下降 + Pin下降更多 → EV看似上涨但实际价值变差
-            old_bb = existing.get(fp + "_bb", 0)  # 旧BB赔率(指纹库扩展字段)
+            # 重推判断：以实际赔率变动为主, EV为辅
+            old_bb = existing.get(fp + "_bb", 0)
             bb_now = o.get("bb_odds", 0)
-            bb_dropped = old_bb > 0 and bb_now < old_bb * 0.98  # BB赔率跌>2%
-            if ev - old_ev > 0.5 and not bb_dropped:
+            bb_ratio = bb_now / old_bb if old_bb > 0 else 1.0
+            ev_delta = ev - old_ev
+
+            should_push = False
+            if bb_ratio >= 1.02:
+                # BB/FB赔率涨>2%: 实际价格更优, 无条件重推
+                should_push = True
+            elif bb_ratio <= 0.98:
+                # BB/FB赔率跌>2%: 市场反向, 不推
+                should_push = False
+            elif ev_delta > 0.5:
+                # 赔率稳定, EV涨>0.5%: 正常重推
+                should_push = True
+
+            if should_push:
                 re_pushed += 1
                 new.append(o)
             else:
-                if bb_dropped:
-                    logger.info("BB赔率恶化过滤: %s BB %.2f→%.2f EV %.1f→%.1f%%",
-                                o.get("designation",""), old_bb, bb_now, old_ev, ev)
+                if bb_ratio <= 0.98:
+                    logger.info("BB赔率恶化过滤: %s BB %.2f→%.2f", o.get("designation",""), old_bb, bb_now)
                 skipped += 1
         elif match_date < today_str:
             # 已过期的比赛日期，允许推送
