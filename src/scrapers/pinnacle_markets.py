@@ -103,6 +103,9 @@ def get_league_matchups_and_markets(league_id):
         double_chance = []
         draw_no_bet = []
         for mkt in mkt_list:
+            # 跳过锁定/暂停的市场(状态非open)
+            if mkt.get("status", "open") != "open":
+                continue
             mtype = mkt.get("type", "")
             per = mkt.get("period", 0)
             prices = [{
