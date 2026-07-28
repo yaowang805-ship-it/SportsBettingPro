@@ -488,8 +488,8 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                 # 网球的时间匹配：降低门限以覆盖更多 ITF 赛事
                 # ITF 赔率差异大 + 时间经常微调，纯时间和赔率匹配很难高分
                 # 已从 0.70 → 0.55 → 0.45（进一步放松以匹配更多网球比赛）
-                # 放宽阈值以匹配更多非足球比赛(足球队名覆盖好,非足球依赖Phase2)
-                min_threshold = 0.45 if sport in ("tennis", "boxing", "mma") else 0.60
+                # 放宽阈值: 非足球运动依赖Phase2, 更低门槛匹配更多比赛供队名学习
+                min_threshold = 0.45 if sport in ("tennis", "boxing", "mma") else 0.50
                 if combined >= min_threshold:
                     pairs.append((combined, bb_key, bd["match"], pin,
                                   bd["bb_1x2"], pin_ml, pin_id, sport))
