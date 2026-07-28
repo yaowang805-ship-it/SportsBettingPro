@@ -100,28 +100,55 @@ TEAM_NAME_MAP = _load_team_name_map()
 LEAGUE_KEYWORDS = _load_league_keywords()
 
 
+# 通用英文关键词：单独出现不足以确定联赛身份
+_GENERIC_KEYWORD_BLACKLIST = {"open", "cup", "league", "tour", "tournament", "series", "masters", "grand", "slam", "classic", "trophy", "final", "qualifiers", "group", "premier", "super", "club", "international", "championship", "division", "liga", "serie", "primera", "segunda", "tercera", "first", "second", "third", "national"}
+
 # ---------------------------------------------------------------------------
 # Auto-discovery: new leagues
 # ---------------------------------------------------------------------------
 
 def discover_new_leagues(all_pin_leagues):
-    """扫描 Pinnacle 联赛，自动发现 BB 未映射的新联赛并尝试匹配。"""
+    """扫描 Pinnacle 联赛，寻找未映射的 BB 联赛并自动匹配。"""
     import re
+    from difflib import SequenceMatcher as _SM
     new_mappings = {}
+
+    # 收集BB联赛列表
+    bb_leagues = set()
+    try:
+        bb = json.loads((DATA_DIR / 'bb_odds_extracted.json').read_text())
+        for m in bb.get('matches', []):
+            bb_leagues.add(m.get('league', ''))
+    except: pass
+
     for pin_id, info in all_pin_leagues.items():
         if not isinstance(info, dict): continue
         pin_name = info.get("name", "")
         if not pin_name or info.get("matchup_count", 0) == 0: continue
         if pin_name in LEAGUE_KEYWORDS.values(): continue
 
+        # 提取Pin联赛名的有意义英文词
         en_words = set(w.lower() for w in re.findall(r'[A-Za-z]{3,}', pin_name))
-        if not en_words: continue
+        meaningful = {w for w in en_words if w not in _GENERIC_KEYWORD_BLACKLIST}
+        if not meaningful: continue
 
-        # 与所有BB联赛名匹配
-        for bb_name in list(LEAGUE_KEYWORDS.keys()):
-            if bb_name in new_mappings: continue
+        # 在BB未映射联赛中搜索
+        for bb_name in bb_leagues:
+            if bb_name in LEAGUE_KEYWORDS or bb_name in new_mappings: continue
             bb_lower = bb_name.lower()
-            if any(w in bb_lower for w in en_words):
+            # 全部有意义词都在BB名中 → 匹配
+            if all(w in bb_lower for w in meaningful):
+                # 跨运动校验
+                bb_sport = None
+                for kw, s in BB_SPORT_KEYWORDS.items():
+                    if kw in bb_name: bb_sport = s; break
+                if bb_sport is None: bb_sport = 'football'
+                pin_sport_en = {'Soccer':'football','Basketball':'basketball','Tennis':'tennis',
+                    'Baseball':'baseball','American Football':'american_football',
+                    'Mixed Martial Arts':'mma','Boxing':'boxing','Ice Hockey':'ice_hockey'
+                }.get(info.get('sport',''), '')
+                if pin_sport_en and bb_sport != pin_sport_en: continue
+
                 new_mappings[bb_name] = pin_name
                 break
 
@@ -155,8 +182,6 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
 
     # Known auto-map false-positive blacklist - prevents NZIHL -> NHL etc.
     _BANNED_AUTO_MAP = {"nzihl新西兰冰球联盟"}
-    # 通用关键词黑名单：只有这些英文词的不自动映射（防止所有 ATP/WTA/ITF 赛事映射到同一联赛）
-    _GENERIC_KEYWORD_BLACKLIST = {"open", "cup", "league", "tour", "tournament", "series", "masters", "grand", "slam", "classic", "trophy", "final", "qualifiers", "group", "premier", "super", "club", "international", "championship", "division", "liga", "serie", "primera", "segunda", "tercera", "first", "second", "third", "national"}
 
     new_mappings = {}
 
@@ -299,11 +324,11 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
                     div_score = 0
                     for cn, en in _CN2EN_COUNTRY.items():
                         if cn in bb_name and en in pin_lower:
-                            country_score = 0.40
+                            country_score = 0.50  # 提高: 国家名是强信号
                             break
                     for cn, en in _CN2EN_DIV.items():
                         if cn in bb_name and en in pin_lower:
-                            div_score = max(div_score, 0.15)
+                            div_score = max(div_score, 0.20)  # 提高: 级别也是强信号
                     if country_score > 0:
                         score = max(score, country_score + div_score + sport_bonus)
 
@@ -323,6 +348,11 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
                 'Mixed Martial Arts':'mma','Boxing':'boxing','Ice Hockey':'ice_hockey'}
             if _SPORT_MAP.get(best_pin_sport, '') not in ('', bb_sport):
                 continue  # 跨运动→拒绝
+
+            # 防误映射: 只靠通用词匹配且分低→拒绝
+            meaningful_tokens = bb_en_set - _GENERIC_KEYWORD_BLACKLIST
+            if not meaningful_tokens and best_score < 0.70:
+                continue
 
             # Dedup: don't map two BB names to the same Pinnacle name
             already_mapped = False
