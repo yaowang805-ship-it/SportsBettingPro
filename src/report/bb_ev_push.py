@@ -1302,23 +1302,40 @@ def _verify_odds_freshness(qualified: list, max_ev_drop: float = 3.0) -> list:
 
 
 def _filter_pushed(qualified: list) -> list:
-    """过滤已推送机会，同盘口EV上涨>1%允许重推。"""
+    """过滤已推送机会：指纹匹配日期≤今天(已过期)自动释放，EV上涨>1%或>12h重推。"""
+    from datetime import date
+    today_str = date.today().strftime("%Y-%m-%d")
+
     existing = _load_fingerprints()
     if not existing:
         return qualified
+
+    # 清理已过期指纹(比赛日期<今天)
+    expired = [fp for fp in existing if fp.split("|")[-1] < today_str]
+    for fp in expired:
+        del existing[fp]
+    if expired:
+        _save_fingerprints(existing)
+        logger.info("指纹清理: 删除 %d 条已过期", len(expired))
+
     new = []
     skipped = 0
     re_pushed = 0
     for o in qualified:
         fp = _make_fingerprint(o)
         ev = o.get("ev_pct", 0)
+        match_date = fp.split("|")[-1]
         if fp in existing:
             old_ev = existing[fp]
+            # 同一天或未来比赛：EV涨>1% 或 >12h重推
             if ev - old_ev > 1.0:
                 re_pushed += 1
                 new.append(o)
             else:
                 skipped += 1
+        elif match_date < today_str:
+            # 已过期的比赛日期，允许推送
+            new.append(o)
         else:
             new.append(o)
     if skipped:
