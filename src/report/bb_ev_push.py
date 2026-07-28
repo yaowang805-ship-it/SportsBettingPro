@@ -1327,8 +1327,8 @@ def _filter_pushed(qualified: list) -> list:
         match_date = fp.split("|")[-1]
         if fp in existing:
             old_ev = existing[fp]
-            # 同一天或未来比赛：EV涨>1% 或 >12h重推
-            if ev - old_ev > 1.0:
+            # 同一天或未来比赛：EV涨>0.5%重推
+            if ev - old_ev > 0.5:
                 re_pushed += 1
                 new.append(o)
             else:
