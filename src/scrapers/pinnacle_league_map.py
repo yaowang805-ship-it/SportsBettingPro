@@ -163,6 +163,9 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
     for bb_name in sorted(unmatched_bb_leagues):
         if bb_name.lower() in _BANNED_AUTO_MAP:
             continue
+        # ITF网球: 走地点匹配(_find_itf_league_ids), 不靠auto-map
+        if bb_name.startswith('ITF'):
+            continue
         # Doubles matches: Pinnacle does not offer ITF doubles odds
         if "双打" in bb_name:
             continue

@@ -37,7 +37,7 @@ BB_SPORT_KEYWORDS = {
     "菲律宾篮球": "basketball", "篮球": "basketball",
     "年度最佳": "american_football", "美式足球": "american_football",
     "NFL": "american_football",
-    "ATP": "tennis", "WTA": "tennis", "网球": "tennis",
+    "ATP": "tennis", "WTA": "tennis", "ITF": "tennis", "网球": "tennis",
     "MLB": "baseball", "日本职业棒球": "baseball",
     "韩国棒球": "baseball", "中华职业棒球": "baseball",
     "棒球": "baseball",
