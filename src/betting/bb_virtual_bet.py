@@ -427,26 +427,33 @@ def place_bets_from_push(opportunities, bankroll=50000.0):
             if bets_today + bets_placed >= MAX_BETS:
                 print(f"  ⏭️ 今日已达 {MAX_BETS} 笔上限")
                 break
-            if daily_remaining <= 0:
-                print("  ⏭️ 今日预算已用完")
-                break
 
             stake = o.get("_stake", 0)
-            if stake <= 0:
+            raw_stake = o.get("_raw_stake", stake)
+            if stake <= 0 and raw_stake <= 0:
                 continue
+            # 预算耗尽时仍记录投注(用于结算统计), 不扣余额
+            track_only = (stake <= 0)
+            if track_only:
+                stake = raw_stake
+            else:
+                if daily_remaining <= 0:
+                    track_only = True
+                    stake = raw_stake
 
-            # 单注上限 2%（防御，推送端已算好）
-            stake = min(stake, bankroll * MAX_STAKE_PCT)
-            # 不超过剩余预算
-            stake = min(stake, daily_remaining)
             if stake < 1:
                 continue
 
-            # 余额检查：不超可用资金（扣减已投注额）
-            running_balance = portfolio.get("balance", 0) - total_stake
-            if running_balance < stake:
-                print(f"  ⏭️ 余额不足 (¥{running_balance:.0f} < ¥{stake:.0f})")
-                continue
+            if not track_only:
+                # 单注上限 + 预算检查 (仅实际投注)
+                stake = min(stake, bankroll * MAX_STAKE_PCT)
+                stake = min(stake, daily_remaining)
+                if stake < 1:
+                    continue
+                running_balance = portfolio.get("balance", 0) - total_stake
+                if running_balance < stake:
+                    track_only = True  # 余额不足→仅记录
+                    stake = raw_stake
 
             bb_odds = o["bb_odds"]
             outcome = o["designation"]
@@ -501,23 +508,27 @@ def place_bets_from_push(opportunities, bankroll=50000.0):
                 "source": "bb_vs_pinnacle",
                 "commence_time": o.get("_pin_epoch", ""),
                 "created_at": datetime.now(timezone.utc).isoformat(),
+                "track_only": track_only,  # 仅记录不扣款
             }
 
             portfolio["pending_bets"].append(bet)
-            daily_remaining -= stake
-            portfolio["daily_budget"]["used"] = portfolio["daily_budget"].get("used", 0) + stake
+            if not track_only:
+                daily_remaining -= stake
+                portfolio["daily_budget"]["used"] = portfolio["daily_budget"].get("used", 0) + stake
+                total_stake += stake
             portfolio["daily_budget"]["bets"] = portfolio["daily_budget"].get("bets", 0) + 1
             existing_ids.add(bet_id)
             bets_placed += 1
-            total_stake += stake
-            print(f"  ✅ [{league}] {home} vs {away}")
+            tag = " 📝仅记录" if track_only else ""
+            print(f"  ✅ [{league}] {home} vs {away}{tag}")
             print(f"    投注: {outcome} @ {bb_odds} | ¥{stake:.2f} | EV={ev:.1f}%")
 
         if bets_placed > 0:
             daily_used = portfolio["daily_budget"].get("used", 0)
-            portfolio["balance"] = round(portfolio["balance"] - total_stake, 2)
+            if total_stake > 0:
+                portfolio["balance"] = round(portfolio["balance"] - total_stake, 2)
             _save_portfolio(portfolio)
-            print(f"\n已投注 {bets_placed} 笔，总金额 ¥{total_stake:.2f}")
+            print(f"\n已记录 {bets_placed} 笔" + (f"，投注 ¥{total_stake:.2f}" if total_stake > 0 else " (仅跟踪,不扣款)"))
             print(f"今日已用: ¥{daily_used:.2f} / ¥{daily_bankroll:.2f}")
             print(f"组合余额: ¥{portfolio['balance']:.2f}")
         else:
