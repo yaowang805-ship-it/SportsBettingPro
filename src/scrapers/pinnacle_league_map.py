@@ -156,7 +156,7 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
     # Known auto-map false-positive blacklist - prevents NZIHL -> NHL etc.
     _BANNED_AUTO_MAP = {"nzihl新西兰冰球联盟"}
     # 通用关键词黑名单：只有这些英文词的不自动映射（防止所有 ATP/WTA/ITF 赛事映射到同一联赛）
-    _GENERIC_KEYWORD_BLACKLIST = {"atp", "wta", "itf", "challenger", "open", "cup", "league", "tour", "tournament", "series", "masters", "grand", "slam", "classic", "trophy", "final", "qualifiers", "group", "premier", "super", "club", "international", "championship", "division", "liga", "serie", "primera", "segunda", "tercera", "first", "second", "third", "national"}
+    _GENERIC_KEYWORD_BLACKLIST = {"open", "cup", "league", "tour", "tournament", "series", "masters", "grand", "slam", "classic", "trophy", "final", "qualifiers", "group", "premier", "super", "club", "international", "championship", "division", "liga", "serie", "primera", "segunda", "tercera", "first", "second", "third", "national"}
 
     new_mappings = {}
 
