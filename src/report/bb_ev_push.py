@@ -672,8 +672,9 @@ def _collect_opportunities(match, market_key):
         bb_odds = opp.get("bb_odds", 0)
         pin_odds = opp.get("pin_odds", 0)
 
-        # EV 上限过滤：EV > EV_CAP 几乎全是假阳性（中文队名匹配到错误的英文队名）
-        if ev > EV_CAP:
+        # EV 上限过滤：网球/高赔率运动放宽到 30%，足球保持 12%
+        _ev_cap = 30.0 if match.get("sport") == "tennis" else EV_CAP
+        if ev > _ev_cap:
             continue
 
         # 超高赔率过滤：BB 赔率 > 15.0 且不是主流联赛 → 跳过
