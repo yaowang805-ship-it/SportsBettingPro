@@ -1387,10 +1387,11 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         s = o.get("sport", "unknown")
         pre_dedup_counts[s] = pre_dedup_counts.get(s, 0) + 1
 
-    if not force:
+    # 指纹去重仅用于投注，不影响推送展示
+    if not incremental and not force:
         qualified = _filter_pushed(qualified)
     if not qualified:
-        logger.info("所有机会均已推送过，跳过")
+        logger.info("no +EV opportunities found")
         return
 
     warnings = _check_sport_consistency(qualified, pre_dedup_counts)
