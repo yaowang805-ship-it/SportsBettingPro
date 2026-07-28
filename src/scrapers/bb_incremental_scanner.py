@@ -443,15 +443,11 @@ def _refresh_fb_data():
         print("  📥 FB 数据不存在，开始抓取...")
         return _fetch_fb_only()
 
-    age_m = (time.time() - FB_EXTRACTED.stat().st_mtime) / 60
-    # FB 数据超过 2 小时，或比 BB 合并数据更旧，则刷新
-    bb_age_m = (time.time() - BB_EXTRACTED.stat().st_mtime) / 60 if BB_EXTRACTED.exists() else 999
-
-    if age_m > 120 or age_m > bb_age_m + 30:
-        print(f"  📥 FB 数据 {age_m:.0f} 分钟前 (BB数据 {bb_age_m:.0f} 分钟前)，重新抓取...")
+    # FB 数据也每次增量扫描都实时抓取, 与 BB 保持一致
+    age_m = (time.time() - FB_EXTRACTED.stat().st_mtime) / 60 if FB_EXTRACTED.exists() else 999
+    if age_m > 0:  # 总是重新抓取
+        print(f"  📥 FB 数据 {age_m:.0f} 分钟前，重新抓取...")
         return _fetch_fb_only()
-
-    print(f"  ✅ FB 数据新鲜 ({age_m:.0f} 分钟前)")
     return True
 
 
