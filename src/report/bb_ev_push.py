@@ -299,7 +299,7 @@ KELLY_BY_MARKET = {
     "dc":   0.45,  # 从1X2推导
     "oe":   0.35,  # 无Pinnacle数据
     "corner": 0.35, # 无Pinnacle数据
-    "htft": 0.35,  # 无Pinnacle数据
+    "htft": 0.25,  # 低流动性+高抽水(5-7%), EV可靠性低, 严格控制
 }
 def _get_kelly_for_market(sub_market: str) -> float:
     """根据市场类型返回对应的 Kelly 分数。"""
