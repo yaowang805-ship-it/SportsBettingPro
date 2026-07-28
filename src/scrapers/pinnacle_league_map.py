@@ -101,6 +101,39 @@ LEAGUE_KEYWORDS = _load_league_keywords()
 
 
 # ---------------------------------------------------------------------------
+# Auto-discovery: new leagues
+# ---------------------------------------------------------------------------
+
+def discover_new_leagues(all_pin_leagues):
+    """扫描 Pinnacle 联赛，自动发现 BB 未映射的新联赛并尝试匹配。"""
+    import re
+    new_mappings = {}
+    for pin_id, info in all_pin_leagues.items():
+        if not isinstance(info, dict): continue
+        pin_name = info.get("name", "")
+        if not pin_name or info.get("matchup_count", 0) == 0: continue
+        if pin_name in LEAGUE_KEYWORDS.values(): continue
+
+        en_words = set(w.lower() for w in re.findall(r'[A-Za-z]{3,}', pin_name))
+        if not en_words: continue
+
+        # 与所有BB联赛名匹配
+        for bb_name in list(LEAGUE_KEYWORDS.keys()):
+            if bb_name in new_mappings: continue
+            bb_lower = bb_name.lower()
+            if any(w in bb_lower for w in en_words):
+                new_mappings[bb_name] = pin_name
+                break
+
+    if new_mappings:
+        for bb_name, pin_name in new_mappings.items():
+            LEAGUE_KEYWORDS[bb_name] = pin_name
+        _save_league_keywords(LEAGUE_KEYWORDS)
+        print(f"  🆕 自动发现 {len(new_mappings)} 个新联赛映射")
+    return new_mappings
+
+
+# ---------------------------------------------------------------------------
 # Auto-mapping: leagues
 # ---------------------------------------------------------------------------
 

@@ -38,6 +38,7 @@ from src.scrapers.pinnacle_league_map import (
     _auto_map_leagues, _auto_map_team_names,
     _match_pin_name, _find_best_league,
     find_pinnacle_league_id, _find_itf_league_ids, find_pinnacle_league_ids,
+    discover_new_leagues,
 )
 
 # 从子模块导入 BB 数据提取
@@ -316,6 +317,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     if unmatched_leagues:
         print(f"\n  🔍 自动联赛映射: 尝试为 {len(unmatched_leagues)} 个未匹配联赛发现 Pinnacle ID...")
         new_mappings = _auto_map_leagues(unmatched_leagues, all_pin_leagues) or {}
+        # 自动发现：Pinnacle新增联赛，BB未映射的
+        discover_new_leagues(all_pin_leagues)
         if new_mappings:
             for league in new_mappings:
                 pin_ids = find_pinnacle_league_ids(league, all_pin_leagues)
@@ -340,27 +343,6 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     for pin_ids in matched_leagues.values():
         all_unique_pin_ids.update(pin_ids)
     print(f"\n  Pinnacle 联赛去重后: {len(all_unique_pin_ids)} 个 (来自 {len(matched_leagues)} 个 BB 联赛)")
-
-    # 自动发现新联赛：Pinnacle有但league_keywords未映射的，尝试自动匹配
-    _new_pin_leagues = set()
-    for pin_id in all_unique_pin_ids:
-        info = all_pin_leagues.get(pin_id, {})
-        pin_name = info.get("name", "")
-        if pin_name and pin_name not in LEAGUE_KEYWORDS.values():
-            _new_pin_leagues.add(pin_name)
-    if _new_pin_leagues:
-        print(f"\n  🆕 发现 {len(_new_pin_leagues)} 个新Pinnacle联赛, 尝试自动映射...")
-        for pn in sorted(_new_pin_leagues)[:10]:
-            # 在BB联赛中搜索匹配
-            for bb_name in bb_leagues:
-                # 简单规则: Pinnacle名中的英文词是否出现在BB名中
-                import re
-                en_words = re.findall(r'[A-Za-z]{3,}', pn)
-                if en_words and any(w.lower() in bb_name.lower() for w in en_words):
-                    if bb_name not in LEAGUE_KEYWORDS and pn not in LEAGUE_KEYWORDS.values():
-                        LEAGUE_KEYWORDS[bb_name] = pn
-                        _save_league_keywords(LEAGUE_KEYWORDS)
-                        print(f"    ✅ {bb_name[:40]} → {pn}")
 
     # 过滤：跳过父级联赛（0 场比赛）
     pin_ids_to_fetch = []
