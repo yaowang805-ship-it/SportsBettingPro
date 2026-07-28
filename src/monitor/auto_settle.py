@@ -909,6 +909,8 @@ def auto_settle(dry_run: bool = False) -> int:
                     settle_bet(bid, result, stake, odds)
                     if result == "won":
                         profit = stake * (odds - 1)
+                        # 结算反馈: 胜投确认匹配正确, 自动学习队名映射
+                        _learn_team_names_from_win(bet)
                     elif result == "push":
                         profit = 0.0
                     else:
@@ -1166,6 +1168,26 @@ def _settle_recommendation_log() -> int:
         logger.info("推荐记录全量结算: 无可结算条目")
 
     return settled
+
+
+def _learn_team_names_from_win(bet: dict):
+    """结算反馈: 胜投→匹配正确→自动学习BB中文→Pinnacle英文队名映射。"""
+    try:
+        from config.settings import DATA_DIR
+        tm_file = DATA_DIR / "team_name_map.json"
+        tm = json.loads(tm_file.read_text()) if tm_file.exists() else {}
+        new_pairs = 0
+        for cn_key, en_key in [("home_cn", "home_team"), ("away_cn", "away_team")]:
+            cn_name = bet.get(cn_key, "").strip()
+            en_name = bet.get(en_key, "").strip()
+            if cn_name and en_name and not cn_name.isascii() and cn_name not in tm:
+                tm[cn_name] = en_name
+                new_pairs += 1
+        if new_pairs:
+            tm_file.write_text(json.dumps(tm, ensure_ascii=False, indent=2))
+            logger.info("结算反馈: 学习 %d 个队名映射", new_pairs)
+    except Exception as e:
+        logger.debug("队名学习失败: %s", e)
 
 
 def _auto_void_timeout(max_days: int = 5) -> int:
