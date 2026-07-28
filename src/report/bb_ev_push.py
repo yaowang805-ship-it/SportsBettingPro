@@ -842,9 +842,12 @@ def _read_comparison_file(path):
     details = data.get("details", [])
     qualified = []
     for match in details:
-        # 低匹配度过滤：Phase 2 时间匹配产生错误赛果的风险高
+        # 低匹配度过滤：非足球运动(拳击/MMA/网球)放宽到0.60
         match_score = match.get("match_score", 1.0)
-        if match_score < 0.85:
+        match_type = match.get("match_type", "")
+        sport = match.get("sport", "")
+        min_score = 0.60 if sport in ("boxing", "mma", "tennis") else 0.85
+        if match_score < min_score:
             continue
         for mk in ("opportunities", "handicap", "over_under", "double_chance"):
     # DNB(平局退款)暂缓: 推导价与Pinnacle直供价偏差>16%
