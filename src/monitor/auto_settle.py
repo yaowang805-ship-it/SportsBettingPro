@@ -243,7 +243,7 @@ SPORT_FALLBACK = {
 }
 
 
-def _fetch_completed_scores(league_name: str, days_back: int = 3) -> list:
+def _fetch_completed_scores(league_name: str, days_back: int = 1) -> list:
     """多源获取已结束比赛比分。"""
     scores = get_completed_scores(league_name, days_back)
     if scores:
@@ -833,6 +833,7 @@ def auto_settle(dry_run: bool = False) -> int:
     settled_count = 0
     consecutive_failures = 0
     MAX_CONSECUTIVE_FAILURES = 30  # 连续失败此数后放弃本次结算
+    PER_LEAGUE_TIMEOUT = 10        # 单联赛结算超时秒数（跳过慢联赛）
 
     # 按 (运动, 联赛) 分组获取比分（同运动不同联赛必须分开）
     league_groups = {}
