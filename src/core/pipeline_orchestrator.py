@@ -622,7 +622,11 @@ class PipelineOrchestrator:
                 stale_24h = sum(1 for b in pending if 86400 < (now_ts - b.get("commence_time", 0)) <= 172800)
                 if stale_48h > 0:
                     logger.warning("🐕 看门狗(结算): %d笔超48h未结算!", stale_48h)
-                    self._send_alert("settle_watchdog", f"{stale_48h}笔投注超48小时未结算")
+                    # 告警冷却: 每4小时只发一次
+                    last_alert = self._alert_cooldown.get("settle_watchdog", 0)
+                    if time.time() - last_alert > 14400:
+                        self._send_alert("settle_watchdog", f"{stale_48h}笔投注超48小时未结算")
+                        self._alert_cooldown["settle_watchdog"] = time.time()
                 elif stale_24h > 3:
                     logger.warning("🐕 看门狗(结算): %d笔超24h未结算", stale_24h)
         except Exception:
