@@ -672,9 +672,10 @@ def _collect_opportunities(match, market_key):
         bb_odds = opp.get("bb_odds", 0)
         pin_odds = opp.get("pin_odds", 0)
 
-        # EV 上限过滤：网球/高赔率运动放宽到 30%，足球保持 12%
-        _ev_cap = 30.0 if match.get("sport") == "tennis" else EV_CAP
-        if ev > _ev_cap:
+        # EV 上限过滤：高赔率天然高 EV，用动态上限防假阳性
+        # 公式: max(12, (odds-1)*20). odds=2→cap=20%, odds=5→cap=80%
+        _dynamic_cap = max(EV_CAP, (bb_odds - 1) * 20)
+        if ev > _dynamic_cap:
             continue
 
         # 超高赔率过滤：BB 赔率 > 15.0 且不是主流联赛 → 跳过
