@@ -332,15 +332,14 @@ def _auto_map_team_names(matched_entries):
 
     for m in matched_entries:
         match_score = m.get("match_score", 0)
-        verified = m.get("verified", False)
         match_type = m.get("match_type", "")
-        # 降低门槛: score≥0.70, 且必须是非时间匹配(时间匹配的队名可能不准确)
-        # 队名匹配(name)可以直接信任; 时间+赔率匹配(time)需要≥0.80
-        if match_type == "name" and match_score < 0.70:
+        # 降低门槛: 只要匹配成功就学习队名映射
+        # 队名匹配(name)≥0.60即可; 时间匹配(time)≥0.70
+        if match_type == "name" and match_score < 0.60:
             skipped += 1; continue
-        if match_type == "time" and match_score < 0.80:
+        if match_type == "time" and match_score < 0.70:
             skipped += 1; continue
-        if match_score < 0.70:
+        if match_score < 0.60:
             skipped += 1; continue
 
         bb = m.get("bb", {})

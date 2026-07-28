@@ -39,18 +39,33 @@ def get_league_tier(league: str) -> int:
     """返回联赛所属 Tier (1-4)，不认识的联赛默认 Tier 3。
 
     双向匹配: kw in league (短名匹配长名) 或 league in kw (长名匹配短名)
+    自动分级: 根据联赛名中的级别关键词推断
     """
     tiers_file = DATA_DIR / "league_tiers.json"
     if tiers_file.exists():
         tiers = json.loads(tiers_file.read_text())
-        # 精确匹配优先
         if league in tiers:
             return tiers[league]
-        # 双向模糊匹配
         for kw, tier in tiers.items():
             if kw in league or league in kw:
                 return tier
-    return 3
+
+    # 自动分级: 根据联赛名推断
+    league_lower = league.lower()
+    # T1: 顶级联赛关键词
+    if any(kw in league for kw in ['英超','西甲','意甲','德甲','法甲','NBA','MLB','NFL','UFC','NHL','WNBA',
+                                     'Premier League','La Liga','Serie A','Bundesliga','Ligue 1',
+                                     'Champions League','Europa League','World Cup']):
+        return 1
+    # T2: 次级/挑战赛
+    if any(kw in league for kw in ['Challenger','冠军联赛','欧联','欧会','甲级','超级','Major',
+                                     'NCAA','夏季联赛','季前赛','公开赛']):
+        return 2
+    # T4: 明显低级别
+    if any(kw in league for kw in ['U19','U20','U21','U23','后备','青年','丁级','丙级',
+                                     '友谊赛','女子','女篮','3x3','室内']):
+        return 4
+    return 3  # default
 
 
 def league_multiplier(league: str, sport: str = "") -> float:
