@@ -52,7 +52,7 @@ _REVERSE_CN = {v: k for k, v in _OUTCOME_CN.items()}
 # 保存每次推送的 per-sport 机会数，用于检测异常波动
 PUSH_META_FILE = DATA_DIR / "push_consistency_meta.json"
 # 一个 sport 的机会数比前次下降超过此比例时，在推送中发出警告
-CONSISTENCY_WARN_THRESHOLD = 0.20
+CONSISTENCY_WARN_THRESHOLD = 0.50  # 放宽阈值: 指纹去重会造成大幅波动, 50%以内正常
 
 # 不靠谱联赛 — 匹配质量差、假阳性多，直接屏蔽（从固定文件加载）
 _BANNED_LEAGUES = _load_banned_leagues()
