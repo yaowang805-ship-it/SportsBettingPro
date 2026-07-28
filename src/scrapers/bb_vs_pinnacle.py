@@ -993,7 +993,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 if all(x and x > 0 for x in [h, d, a]):
                     imp = 1/h + 1/d + 1/a
                     p_h, p_d, p_a = (1/h)/imp, (1/d)/imp, (1/a)/imp
-                    dnb_fair = [1/(p_h/(p_h+p_d)), 1/(p_a/(p_a+p_d))]
+                    dnb_fair = [round(1/(p_h/(1-p_d)), 4), round(1/(p_a/(1-p_d)), 4)]
             if dnb_fair:
                 dnb_labels = ["平局退款-主", "平局退款-客"]
                 for i in range(2):
@@ -1105,7 +1105,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     if all(x and x > 0 for x in [hh, dd, aa]):
                         imp = 1/hh + 1/dd + 1/aa
                         p_h, p_d, p_a = (1/hh)/imp, (1/dd)/imp, (1/aa)/imp
-                        dnb_fair = [1/(p_h/(p_h+p_d)), 1/(p_a/(p_a+p_d))]
+                        dnb_fair = [round(1/(p_h/(1-p_d)), 4), round(1/(p_a/(1-p_d)), 4)]
                         dnb_labels = ["上半场平局退款-主", "上半场平局退款-客"]
                         for i in range(2):
                             bb_dnb_val = float(bb_dnb[2+i]) if isinstance(bb_dnb[2+i], str) else bb_dnb[2+i]
