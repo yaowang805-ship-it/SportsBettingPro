@@ -548,10 +548,10 @@ def _calc_kelly_stakes(opps: list) -> list:
         stake = round(BANKROLL * k / 100)
         max_stake = BANKROLL * _MAX_STAKE_PCT
         stake = int(min(stake, max_stake))
+        o["_raw_stake"] = stake  # 保存原始 Kelly 值(预算耗尽时展示用)
         if stake < 5:
             stake = 0
         o["_stake"] = stake
-        o["_raw_stake"] = stake  # 保存原始 Kelly 值，预算耗尽时用于展示
 
     # 第二遍：同一比赛多盘口 → 按比例压缩到单场上限
     from collections import defaultdict
@@ -570,7 +570,7 @@ def _calc_kelly_stakes(opps: list) -> list:
 
     # 第三遍：总额预算控制（替代分组预算上限）
     # 纯 Kelly 决定相对比例，总额超过日预算时等比压缩
-    # 预算耗尽时仍保留 stake=0 供展示
+    # 预算耗尽时 _stake=0 但 _raw_stake 保留原始 Kelly 值供展示
     spent, today = _load_budget_tracker()
     daily_used = sum(spent.values()) if spent else 0
     remaining = TOTAL_DAILY_BUDGET - daily_used
@@ -578,7 +578,7 @@ def _calc_kelly_stakes(opps: list) -> list:
     total_wanted = sum(o["_stake"] for o in opps if o["_stake"] > 0)
     if remaining <= 0:
         for o in opps:
-            o["_stake"] = 0
+            o["_stake"] = 0  # 预算耗尽: 不投注但保留展示
         logger.info("日预算已用完 (¥%d/¥%d), 保留机会供展示", int(daily_used), TOTAL_DAILY_BUDGET)
     elif total_wanted > remaining:
         ratio = remaining / total_wanted
@@ -1387,11 +1387,10 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         s = o.get("sport", "unknown")
         pre_dedup_counts[s] = pre_dedup_counts.get(s, 0) + 1
 
-    # 指纹去重仅用于投注，不影响推送展示
-    if not incremental and not force:
+    if not force:
         qualified = _filter_pushed(qualified)
     if not qualified:
-        logger.info("no +EV opportunities found")
+        logger.info("所有机会均已推送过，跳过")
         return
 
     warnings = _check_sport_consistency(qualified, pre_dedup_counts)
