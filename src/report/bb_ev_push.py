@@ -1462,9 +1462,11 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
             fp = _make_fingerprint(o)
             ev = o.get("ev_pct", 0)
             bb = o.get("bb_odds", 0)
+            src = o.get("bb_price_source", "BB")
             new_fps[fp] = ev  # 主指纹: EV值
             if bb > 0:
-                new_fps[fp + "_bb"] = bb  # 扩展字段: BB赔率(检测恶化)
+                new_fps[fp + "_bb"] = bb    # 扩展字段: 实际赔率(检测恶化)
+                new_fps[fp + "_src"] = 1 if src == "FB" else 0  # 价格来源
         add_fingerprints(new_fps)
         # JSON 二次备份
         existing = _load_fingerprints()
