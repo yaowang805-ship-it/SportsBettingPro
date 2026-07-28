@@ -185,8 +185,7 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
                 bb_sport = s
                 break
         if bb_sport is None:
-            # 无法确定运动类型 → 不自动映射 (防止跨运动错配)
-            continue
+            bb_sport = 'football'  # 大部分未匹配联赛是足球, 跨运动由国家名+运动校验兜底
 
         candidates = []
 
@@ -316,6 +315,14 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
         if candidates:
             candidates.sort(key=lambda x: -x[1])
             best_id, best_score, best_pin_name = candidates[0]
+
+            # 跨运动校验: BB足球不应映射到Pinnacle篮球
+            best_pin_sport = all_pin_leagues.get(best_id, {}).get('sport', '')
+            _SPORT_MAP = {'Soccer':'football','Basketball':'basketball','Tennis':'tennis',
+                'Baseball':'baseball','American Football':'american_football',
+                'Mixed Martial Arts':'mma','Boxing':'boxing','Ice Hockey':'ice_hockey'}
+            if _SPORT_MAP.get(best_pin_sport, '') not in ('', bb_sport):
+                continue  # 跨运动→拒绝
 
             # Dedup: don't map two BB names to the same Pinnacle name
             already_mapped = False
