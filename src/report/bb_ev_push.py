@@ -1327,11 +1327,18 @@ def _filter_pushed(qualified: list) -> list:
         match_date = fp.split("|")[-1]
         if fp in existing:
             old_ev = existing[fp]
-            # 同一天或未来比赛：EV涨>0.5%重推
-            if ev - old_ev > 0.5:
+            # 同一天或未来比赛：EV涨>0.5%且BB赔率未恶化才重推
+            # 防「EV虚增」: BB赔率下降 + Pin下降更多 → EV看似上涨但实际价值变差
+            old_bb = existing.get(fp + "_bb", 0)  # 旧BB赔率(指纹库扩展字段)
+            bb_now = o.get("bb_odds", 0)
+            bb_dropped = old_bb > 0 and bb_now < old_bb * 0.98  # BB赔率跌>2%
+            if ev - old_ev > 0.5 and not bb_dropped:
                 re_pushed += 1
                 new.append(o)
             else:
+                if bb_dropped:
+                    logger.info("BB赔率恶化过滤: %s BB %.2f→%.2f EV %.1f→%.1f%%",
+                                o.get("designation",""), old_bb, bb_now, old_ev, ev)
                 skipped += 1
         elif match_date < today_str:
             # 已过期的比赛日期，允许推送
@@ -1450,7 +1457,14 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
             logger.info("无可投注机会（全部被结算可行性过滤）")
         # 指纹保存 (含EV追踪, 同盘口EV上涨>1%可重推)
         from config.database import add_fingerprints
-        new_fps = {_make_fingerprint(o): o.get("ev_pct", 0) for o in qualified}
+        new_fps = {}
+        for o in qualified:
+            fp = _make_fingerprint(o)
+            ev = o.get("ev_pct", 0)
+            bb = o.get("bb_odds", 0)
+            new_fps[fp] = ev  # 主指纹: EV值
+            if bb > 0:
+                new_fps[fp + "_bb"] = bb  # 扩展字段: BB赔率(检测恶化)
         add_fingerprints(new_fps)
         # JSON 二次备份
         existing = _load_fingerprints()
