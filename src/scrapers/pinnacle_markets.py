@@ -351,11 +351,12 @@ def get_league_matchups_and_markets(league_id):
         htft_markets = mm.get(mid, [])
         if not htft_markets:
             continue
-        # 用 pnames 给 HTFT 价格打标签（Pinnacle API 的 price.designation 为空）
-        htft_label_map = {}
-        for i, pname in enumerate(pnames):
-            key = pname.lower().replace(" ", "").replace("/", "/")  # "Home/Home" → "home/home"
-            htft_label_map[i] = key
+        # HTFT 9个价格按固定顺序对应 HTFT_KEYS(用位置, 不用pnames值)
+        # Pinnacle pnames是具体队名(如\"sportivoluqueno-sportivoluqueno\"), 不是通用标签
+        HTFT_POS_KEYS = ["home/home","home/draw","home/away",
+                         "draw/home","draw/draw","draw/away",
+                         "away/home","away/draw","away/away"]
+        htft_label_map = {i: HTFT_POS_KEYS[i] for i in range(9)}
 
         htft_entries = []
         for mkt in htft_markets:
