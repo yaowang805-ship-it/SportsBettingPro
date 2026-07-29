@@ -57,6 +57,50 @@ CONSISTENCY_WARN_THRESHOLD = 0.50  # 放宽阈值: 指纹去重会造成大幅�
 # 不靠谱联赛 — 匹配质量差、假阳性多，直接屏蔽（从固定文件加载）
 _BANNED_LEAGUES = _load_banned_leagues()
 
+# ── 中文队名 Unicode 归一化 ──
+# BB 和 FB 平台对同一支队伍的队名可能返回不同汉字变体
+# (如 兹/茲、维/維)，导致 BB/FB 去重失效，同一比赛同一盘口被推送两次。
+# 映射方向: 繁体/异体 → 简体/标准，保证两个平台的名称可比。
+_UNICODE_VARIANT_MAP = {
+    # 常见繁→简
+    0x8332: 0x5179,  # 茲 → 兹 (维德祖罗茲→维德祖罗兹)
+    0x7F85: 0x7F57,  # 羅 → 罗
+    0x723E: 0x5C14,  # 爾 → 尔
+    0x4E9E: 0x4E9A,  # 亞 → 亚
+    0x7DAD: 0x7EF4,  # 維 → 维
+    0x7D93: 0x7ECF,  # 經 → 经
+    0x8655: 0x5904,  # 處 → 处
+    0x7D05: 0x7EA2,  # 紅 → 红
+    0x7D1A: 0x7EA7,  # 級 → 级
+    0x8056: 0x5723,  # 聖 → 圣
+    # 全角括号 → 半角
+    0xFF08: 0x0028,  # （ → (
+    0xFF09: 0x0029,  # ） → )
+    # 全角数字/字母 → 半角
+    0xFF10: 0x0030,  # ０ → 0
+    0xFF11: 0x0031,  # １ → 1
+    0xFF12: 0x0032,  # ２ → 2
+    0xFF13: 0x0033,  # ３ → 3
+    0xFF14: 0x0034,  # ４ → 4
+    0xFF15: 0x0035,  # ５ → 5
+    0xFF16: 0x0036,  # ６ → 6
+    0xFF17: 0x0037,  # ７ → 7
+    0xFF18: 0x0038,  # ８ → 8
+    0xFF19: 0x0039,  # ９ → 9
+}
+
+
+def _normalize_cn(s: str) -> str:
+    """归一化中文字符: 繁体→简体, 全角→半角。去重和指纹生成前统一调用。"""
+    if not s:
+        return s
+    result = []
+    for ch in s:
+        cp = ord(ch)
+        result.append(chr(_UNICODE_VARIANT_MAP.get(cp, cp)))
+    return "".join(result)
+
+
 # CLV 暂停缓存 — 进程内只从 SQLite 加载一次
 _CLV_SUSPENSIONS_CACHE = None
 
@@ -696,8 +740,15 @@ def _collect_opportunities(match, market_key):
             }
             sub_market = _MK_TO_SUB.get(market_key, "1x2")
 
-        # HTFT/半全场 EV 上限：高赔率低概率市场容易虚高
-        if sub_market == "htft" and ev > 50:
+        # HTFT/半全场 EV 上限：此类市场 Pinnacle 盘口常与 BB 不是同一市场
+        # (如 Pinnacle "半全场" 含加时 vs BB 不含)，导致假 EV 极高
+        # 收紧上限 50%→30%，降低推送虚高机会的风险
+        if sub_market == "htft" and ev > 30:
+            continue
+
+        # 比赛已标记"溢价异常高" + htft 市场 → 匹配错误的概率极高，直接跳过
+        flags = match.get("flags", [])
+        if sub_market == "htft" and any("溢价异常高" in f for f in flags):
             continue
 
         # 赔率上限过滤: Pinnacle 历史数据按运动/联赛/市场限制
@@ -810,13 +861,15 @@ def _collect_opportunities_from_file():
     # 二次去重：同场比赛同一盘口只保留最高赔率
     # （联赛名可能因API来源不同而不一致，导致指纹不匹配）
     # 注意到 designation 可能因空格或数字精度不同而不一致，特做 whitespace 归一化
+    # 使用 _normalize_cn 统一简繁体，防止 BB/FB 队名微小差异导致重复推送
     best_per_match = {}
     dup_removed = 0
     for o in merged:
         match_key = (
             o.get("sport", ""),
-            o.get("home_cn", "").strip(),
-            o.get("away_cn", "").strip(),
+            _normalize_cn(o.get("league", "") or ""),
+            _normalize_cn(o.get("home_cn", "").strip()),
+            _normalize_cn(o.get("away_cn", "").strip()),
             o.get("designation", "").replace(" ", "").replace("（", "(").replace("）", ")"),
         )
         existing = best_per_match.get(match_key)
@@ -842,15 +895,23 @@ def _read_comparison_file(path):
     details = data.get("details", [])
     qualified = []
     for match in details:
-        # 低匹配度过滤：非足球运动(拳击/MMA/网球)放宽到0.60
+        # 低匹配度过滤：非足球运动提高门槛（拳击/MMA 映射错误率高）
         match_score = match.get("match_score", 1.0)
         match_type = match.get("match_type", "")
         sport = match.get("sport", "")
-        min_score = 0.60 if sport in ("boxing", "mma", "tennis") else 0.85
+        if sport in ("boxing", "mma"):
+            min_score = 0.80  # UFC/拳击映射错误多，0.60→0.80
+        elif sport == "tennis":
+            min_score = 0.75  # 网球也从严，0.60→0.75
+        else:
+            min_score = 0.85  # 足球等主力运动保持高标准
         if match_score < min_score:
             continue
+        # 球员冲突 + 时间匹配 → 过期数据，直接跳过整场比赛
+        flags = match.get("flags", [])
+        if match_type == "time" and any("球员冲突" in f for f in flags):
+            continue
         for mk in ("opportunities", "handicap", "over_under", "double_chance"):
-    # DNB(平局退款)暂缓: 推导价与Pinnacle直供价偏差>16%
             qualified.extend(_collect_opportunities(match, mk))
     return qualified
 
@@ -1160,9 +1221,19 @@ def _prepare_opportunities(force=False):
 def build_report(force: bool = False):
     """构建格式化的 BB vs Pinnacle +EV 报告。返回 (body_text, qualified_opportunities).
 
+    🔴 铁律：实时拉取失败 → 不发缓存数据，发钉钉告警。
+
     Args:
         force: 跳过 2 小时新鲜度检查，即使对比文件较旧也继续推送。
+    Returns:
+        (body, qualified): body 为 None 表示不应推送。
     """
+    # 🔴 铁律：推送前必须实时拉取赔率，不使用缓存
+    live_ok, errors = _refresh_live_odds()
+    if not live_ok:
+        _send_failure_alert(errors)
+        return None, None  # 不推送
+
     qualified = _prepare_opportunities(force=force)
     if not qualified:
         if not COMPARISON_FILE.exists():
@@ -1174,6 +1245,9 @@ def build_report(force: bool = False):
     clv_warnings, _ = _check_clv_trend(qualified)
     if clv_warnings:
         warnings = (warnings or []) + clv_warnings
+    # 如果 FB 独立对比未完成，加一条提示（不影响主推送）
+    if errors:
+        warnings = (warnings or []) + [f"⚠️ {e}" for e in errors]
     body = _format_body(qualified, warnings, sport_summary)
     return body, qualified
 
@@ -1185,7 +1259,7 @@ def _make_fingerprint(o: dict) -> str:
 
     含子市场（_sub_market）防止 1X2 客胜 vs HT 客胜 等跨市场误杀。
     盘口线参与指纹：线变了（如 -9.5→-10.5）视为新机会可重新推送。
-    仅归一化队名空格，防止 "(女)" 前不一致空格导致误判为不同机会。
+    归一化：空格 + 中文简繁体统一，防止 BB/FB 队名微小差异导致重复推送。
     """
     match_date = ""
     ep = o.get("_pin_epoch")
@@ -1195,10 +1269,10 @@ def _make_fingerprint(o: dict) -> str:
             match_date = dt.strftime("%Y-%m-%d")
         except (ValueError, OSError, OverflowError):
             pass
-    # 归一化空格：前后 trim + 内部连续空格 → 单空格
+    # 归一化：空格 + 中文简繁体统一
     def _norm(s):
         import re as _re
-        return _re.sub(r'\s+', ' ', s.strip()) if s else s
+        return _normalize_cn(_re.sub(r'\s+', ' ', s.strip())) if s else s
     sub = o.get("_sub_market", o.get("_market", ""))
     return f"{_norm(o.get('sport',''))}|{_norm(o.get('league',''))}|{_norm(o.get('home_cn',''))}|{_norm(o.get('away_cn',''))}|{_norm(o.get('designation',''))}|{sub}|{match_date}"
 
@@ -1367,6 +1441,148 @@ def _filter_pushed(qualified: list) -> list:
     return new
 
 
+def _refresh_live_odds():
+    """推送前强制实时拉取 BB/FB + Pinnacle 赔率并重新比价。
+
+    🔴 铁律：钉钉推送的任何比赛必须使用实时赔率，绝不使用缓存过时数据。
+    实时拉取失败 → 不推送比赛，改为发送失败告警到钉钉。
+
+    Returns:
+        (live_ok, errors): live_ok=True 表示主对比(BB)实时比价全链路成功。
+        errors 是警告列表，记录非致命失败（如 FB 失败但 BB 成功）。
+    """
+    from src.scrapers.bb_api_fetcher import fetch_all_sports
+    from src.scrapers.bb_vs_pinnacle import compare_bb_vs_pinnacle
+    from src.scrapers.bb_data import load_bb_odds
+
+    logger.info("🔄 推送前实时拉取赔率...")
+    errors = []
+    t0 = time.time()
+
+    # 1. 实时拉取 BB 和 FB 赔率
+    bb_ok = False
+    fb_ok = False
+    try:
+        fetch_all_sports(with_fb=True)
+        bb_ok = True
+        fb_ok = True
+        logger.info("  ✅ BB/FB 赔率实时拉取完成 (%.0fs)", time.time() - t0)
+    except Exception as e:
+        # fetch_all_sports 失败时，BB 数据可能部分成功
+        bb_extracted = DATA_DIR / "bb_odds_extracted.json"
+        if bb_extracted.exists():
+            age = (time.time() - bb_extracted.stat().st_mtime) / 60
+            if age < 5:  # 5 分钟内可接受
+                bb_ok = True
+                logger.warning("  ⚠️ BB/FB 拉取异常但 BB 数据较新(%.0f分钟前)，继续", age)
+            else:
+                errors.append(f"BB/FB 赔率拉取失败: {str(e)[:100]}")
+        else:
+            errors.append(f"BB/FB 赔率拉取失败且无数据: {str(e)[:100]}")
+
+    if not bb_ok:
+        logger.error("  ❌ BB 赔率不可用，无法推送")
+        return False, errors
+
+    # 2. 加载 Pinnacle 联赛结构
+    from src.scrapers.pinnacle_league_map import _load_league_structure
+    try:
+        all_pin_leagues = _load_league_structure()
+    except Exception as e:
+        errors.append(f"Pinnacle 联赛结构加载失败: {str(e)[:100]}")
+        return False, errors
+
+    if not all_pin_leagues:
+        errors.append("Pinnacle 联赛结构为空")
+        return False, errors
+
+    # 3. BB 主数据 → 实时比价
+    t1 = time.time()
+    try:
+        bb_matches = load_bb_odds()
+    except Exception as e:
+        errors.append(f"BB 赔率数据读取失败: {str(e)[:100]}")
+        return False, errors
+
+    if not bb_matches:
+        errors.append("BB 赔率数据为空")
+        return False, errors
+
+    pin_ok = False
+    try:
+        result = compare_bb_vs_pinnacle(
+            bb_matches, all_pin_leagues,
+            save_path=COMPARISON_FILE,
+        )
+        if result is not None:
+            logger.info("  ✅ BB主对比完成 (%.0fs), %d 场匹配, %d 个+EV",
+                        time.time() - t1,
+                        result.get("matched_matches", 0),
+                        result.get("opportunities_total", 0))
+            pin_ok = True
+        else:
+            errors.append("BB vs Pinnacle 比价返回空结果")
+    except Exception as e:
+        errors.append(f"Pinnacle 实时比价失败: {str(e)[:100]}")
+
+    if not pin_ok:
+        logger.error("  ❌ Pinnacle 实时比价失败，无法推送")
+        return False, errors
+
+    # 4. FB 独立数据 → 实时比价（非致命）
+    fb_extracted = DATA_DIR / "bb_odds_extracted_FB.json"
+    if fb_extracted.exists():
+        t2 = time.time()
+        try:
+            fb_matches = load_bb_odds(path=fb_extracted)
+            if fb_matches:
+                fb_result = compare_bb_vs_pinnacle(
+                    fb_matches, all_pin_leagues,
+                    save_path=FB_COMPARISON_FILE,
+                )
+                if fb_result:
+                    logger.info("  ✅ FB独立对比完成 (%.0fs), %d 场匹配, %d 个+EV",
+                                time.time() - t2,
+                                fb_result.get("matched_matches", 0),
+                                fb_result.get("opportunities_total", 0))
+                    fb_ok = True
+                else:
+                    logger.warning("  ⚠️ FB独立对比返回空结果（不影响主推送）")
+        except Exception as e:
+            logger.warning("  ⚠️ FB独立对比失败（不影响主推送）: %s", e)
+
+    if not fb_ok:
+        errors.append("FB 独立比价未完成（仅使用 BB 数据）")
+
+    logger.info("🎯 实时赔率比价全部完成 (%.0fs)", time.time() - t0)
+    return True, errors
+
+
+def _send_failure_alert(errors: list):
+    """实时赔率拉取失败时，发送钉钉告警，告知用户具体失败原因。"""
+    from config.settings import send_dingtalk
+    now = datetime.now(timezone.utc).strftime("%m/%d %H:%M")
+    lines = [
+        f"## ⚠️ 实时赔率推送失败 ({now})",
+        "",
+        "以下环节失败，本次未推送任何比赛：",
+        "",
+    ]
+    for i, err in enumerate(errors, 1):
+        lines.append(f"{i}. {err}")
+    lines.append("")
+    lines.append("---")
+    lines.append("请检查网络/VPN 后重新触发推送。")
+
+    body = "\n".join(lines)
+    title = "⚠️ 赔率拉取失败 — 未推送"
+    try:
+        send_dingtalk(title, body)
+        logger.info("钉钉失败告警已发送")
+    except Exception as e:
+        logger.error("钉钉告警发送失败: %s", e)
+
+
 def push_report(place_bets=False, incremental=False, qualified=None, force=False, label: str = ""):
     """推送报告到钉钉。
 
@@ -1377,7 +1593,7 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         force: 跳过指纹去重，强制推送。
         label: 增量扫描类型标签（如 "24h内临场" 或 "24-72h早盘"）
     """
-    # 推送前二次验价：对比文件可能已过期，重新拉取关键比赛的实时赔率
+    # 推送前二次验价（仅增量模式且 qualified 已由调用者提供时）
     if qualified and incremental:
         qualified = _verify_odds_freshness(qualified)
 
@@ -1530,6 +1746,12 @@ def main():
     """CLI 入口 / pipeline_orchestrator 入口。"""
     force_fresh = "--force" in sys.argv
     body, qualified = build_report(force=force_fresh)
+
+    if body is None:
+        # 实时赔率拉取失败，已发送钉钉告警，不推送
+        logger.error("实时赔率拉取失败，跳过推送")
+        return None
+
     print(body)
 
     # 保存推送机会到暂存文件
