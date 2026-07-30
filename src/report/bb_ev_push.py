@@ -744,10 +744,8 @@ def _calc_kelly_stakes(opps: list) -> list:
     from config.weight_matrix import get_stake_pct
 
     streak_mult = _get_streak_multiplier()
-    total_budget = TOTAL_DAILY_BUDGET * streak_mult  # 连亏时整体降预算
 
-    # 第一遍：计算每条机会的分配权重
-    total_weight = 0.0
+    # 第一遍：独立计算每条机会的 Kelly 投注额
     for o in opps:
         odds = o.get("bb_odds", 0)
         sport = o.get("sport", "")
@@ -757,7 +755,7 @@ def _calc_kelly_stakes(opps: list) -> list:
 
         stake_pct = get_stake_pct(sport, league, sub, odds)
         if stake_pct <= 0:
-            o["_weight"] = 0
+            o["_stake"] = 0; o["_raw_stake"] = 0
             continue
 
         # 蒸汽检测
@@ -775,37 +773,19 @@ def _calc_kelly_stakes(opps: list) -> list:
         weekend_mult = 0.9 if (match_epoch and datetime.fromtimestamp(match_epoch, tz=timezone.utc)
             .astimezone(timezone(timedelta(hours=8))).weekday() >= 4) else 1.0
 
-        # 权重 = 矩阵仓位% × Kelly% × 蒸汽系数 × 周末系数
-        weight = stake_pct * max(k, 0.1) * steam_mult * weekend_mult
-        o["_weight"] = weight
-        total_weight += weight
+        # 独立计算: 日预算 × 仓位% × (Kelly%/3) × 蒸汽 × 周末 × 连亏
+        # Kelly/3: Kelly 3%时给满仓位, 6%时2x, 1%时0.33x
+        stake = int(BANKROLL * stake_pct * (k / 3.0) * steam_mult * weekend_mult * streak_mult)
+        o["_raw_stake"] = stake
+        o["_stake"] = stake if stake >= 5 else 0
 
-    # 第二遍：按权重比例分配预算
-    if total_weight > 0:
+    # 第二遍：总额超预算时等比压缩
+    total_wanted = sum(o["_stake"] for o in opps if o["_stake"] > 0)
+    if total_wanted > TOTAL_DAILY_BUDGET:
+        ratio = TOTAL_DAILY_BUDGET / total_wanted
         for o in opps:
-            w = o.get("_weight", 0)
-            if w <= 0:
-                o["_raw_stake"] = 0
-                o["_stake"] = 0
-                continue
-
-            stake = round(total_budget * w / total_weight)
-            odds = o.get("bb_odds", 0)
-            sport = o.get("sport", "")
-            league = o.get("league", "")
-            sub = o.get("_sub_market", o.get("_market", ""))
-
-            # 单注上限
-            stake_pct = get_stake_pct(sport, league, sub, odds)
-            max_stake = BANKROLL * stake_pct
-            stake = int(min(stake, max_stake))
-
-            o["_raw_stake"] = stake
-            o["_stake"] = stake if stake >= 5 else 0
-    else:
-        for o in opps:
-            o["_raw_stake"] = 0
-            o["_stake"] = 0
+            if o["_stake"] > 0:
+                o["_stake"] = max(5, round(o["_stake"] * ratio))
 
     # 第三遍：同场比赛最多2条 + 单场上限
     from collections import defaultdict
