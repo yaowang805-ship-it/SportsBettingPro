@@ -355,7 +355,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     print(f"\n  待获取赔率的联赛: {len(pin_ids_to_fetch)} 个")
 
     # 并行获取（8 个线程，短延时避免 Pinnacle 限流）
-    MAX_WORKERS = 8
+    MAX_WORKERS = 4  # 降低并发防 Cloudflare 断连
     all_pin_matches = []
     _fetch_lock = __import__('threading').Lock()
 
@@ -1421,7 +1421,7 @@ def main():
                     }
             return result
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
             futures = {executor.submit(_fetch_sport, sid, sname): sname for sid, sname in SPORT_IDS.items()}
             for future in concurrent.futures.as_completed(futures):
                 sport_leagues = future.result()
