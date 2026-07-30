@@ -673,8 +673,9 @@ class PipelineOrchestrator:
         self._startup_integrity_check()
         logger.info("=" * 50)
         logger.info("Pipeline Orchestrator 启动")
-        logger.info("扫描时段: %02d:00~%02d:00 | 增量: 临场%dmin / 早盘%dmin",
+        logger.info("扫描时段: %02d:00~%02d:00 | 增量: 临场%dmin / 近场%dmin / 早盘%dmin",
                      SCAN_WINDOW[0], SCAN_WINDOW[1],
+                     INCREMENTAL_INTERVAL_URGENT // 60,
                      INCREMENTAL_INTERVAL_NEAR // 60,
                      INCREMENTAL_INTERVAL_FAR // 60)
         logger.info("定时任务: %s", ", ".join(name for name, *_ in SCHEDULE))
@@ -687,6 +688,7 @@ class PipelineOrchestrator:
         # 启动时设置增量扫描初始时间为 (now - interval + 60s)，首次 tick 即可触发
         # （避免与全量扫描同时触发，但不会等待完整的 10 分钟周期）
         now = time.time()
+        self._last_incremental_urgent = now - INCREMENTAL_INTERVAL_URGENT + 60
         self._last_incremental_near = now - INCREMENTAL_INTERVAL_NEAR + 60
         self._last_incremental_far = now - INCREMENTAL_INTERVAL_FAR + 60
 
