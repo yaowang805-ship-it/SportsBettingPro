@@ -273,7 +273,10 @@ def run_incremental(time_window: str = "all"):
 
     h6_ms = 6 * 3600 * 1000
 
-    if time_window == "urgent":
+    if time_window == "all" or time_window not in ("urgent", "near", "far"):
+        # all: 72h内所有比赛
+        bb_matches = [m for m in bb_matches if int(m.get("bt", 0)) - now_ms <= h72_ms]
+    elif time_window == "urgent":
         bb_matches = [m for m in bb_matches if int(m.get("bt", 0)) - now_ms <= h6_ms]
     elif time_window == "near":
         bb_matches = [m for m in bb_matches if h6_ms < int(m.get("bt", 0)) - now_ms <= h24_ms]
