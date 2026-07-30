@@ -227,10 +227,40 @@ def _refresh_cookie_fast():
         browser.close()
 
 
+def _diagnose_response(resp, url: str) -> str:
+    """诊断非 200 响应，返回错误类型: cloudflare_block/ip_ban/maintenance/rate_limit/unknown"""
+    try:
+        body = resp.text[:500]
+    except:
+        body = ""
+
+    # 503 + MAINTENANCE → Pinnacle 计划内维护
+    if resp.status_code == 503 and "MAINTENANCE" in body:
+        return "maintenance"
+
+    # 503 空响应 → Pinnacle 后端限速
+    if resp.status_code == 503 and not body.strip():
+        return "rate_limit"
+
+    # 403 + Cloudflare 拦截页面 → IP 被风控
+    if resp.status_code == 403 and ("cloudflare" in body.lower() or "Attention Required" in body):
+        return "ip_ban"
+
+    # 403 + JSON → cookie 过期
+    if resp.status_code == 403 and "application/json" in resp.headers.get("content-type", ""):
+        return "cookie_expired"
+
+    # 403 其他 → 大概率 cookie
+    if resp.status_code == 403:
+        return "cookie_expired"
+
+    return "unknown"
+
+
 def api_get(path, retry=True):
-    """调用 Pinnacle API，带 cookie 和限速。"""
+    """调用 Pinnacle API，带自诊断和自动恢复。"""
     global _ssl_fail_count
-    _load_cookie()  # load every time to ensure cookie is set
+    _load_cookie()
     _rate_limit()
     url = f"{API_BASE}{path}"
 
@@ -244,26 +274,41 @@ def api_get(path, retry=True):
                 time.sleep(wait)
                 continue
 
-            if resp.status_code == 403:
-                logger.warning("403 Forbidden — 尝试自动恢复...")
-                # 先试 Chrome 实时 cookie（最轻量）
-                if not _refresh_cookie_from_chrome():
-                    # 再试 Playwright（重量级，需要浏览器进程）
-                    _refresh_cookie_via_playwright()
+            if resp.status_code == 200:
+                _ssl_fail_count = 0
+                return resp.json()
+
+            # ── 自诊断 ──
+            err_type = _diagnose_response(resp, url)
+
+            if err_type == "maintenance":
+                logger.warning("Pinnacle 维护中 — 跳过本次扫描")
+                return None  # 不重试
+
+            if err_type == "ip_ban":
+                logger.error("Cloudflare IP 封禁 — 需换 VPN 节点")
+                return None  # 不重试，重试也没用
+
+            if err_type == "cookie_expired":
+                logger.warning("Cookie 过期 — 从 Chrome 恢复...")
+                if _refresh_cookie_from_chrome():
+                    continue  # 重试
                 if attempt < MAX_RETRIES - 1:
                     continue
-                _diagnose_pinnacle_error(url, 403)
-                return None
 
-            if resp.status_code != 200:
-                if attempt < MAX_RETRIES - 1:
-                    time.sleep(RETRY_DELAY)
-                    continue
-                _diagnose_pinnacle_error(url, resp.status_code)
-                return None
+            if err_type == "rate_limit":
+                wait = RETRY_DELAY * (2 ** attempt) + 5
+                logger.warning("Pinnacle 限速, %.0fs 后重试", wait)
+                time.sleep(wait)
+                continue
 
-            _ssl_fail_count = 0  # 成功请求，重置 SSL 故障计数
-            return resp.json()
+            # 其他错误: 重试
+            if attempt < MAX_RETRIES - 1:
+                time.sleep(RETRY_DELAY)
+                continue
+
+            _diagnose_pinnacle_error(url, resp.status_code)
+            return None
 
         except requests.exceptions.SSLError as e:
             _ssl_fail_count += 1
