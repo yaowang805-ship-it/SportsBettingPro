@@ -372,6 +372,33 @@ def _save_budget_tracker(spent: dict, date_str: str):
 
 # ── CLV 追踪 ──
 
+def _get_streak_multiplier() -> float:
+    """近3天连亏→降仓50%，直到出现盈利日。"""
+    import json as _json
+    pf_file = DATA_DIR / "storage" / "virtual_portfolio.json"
+    if not pf_file.exists():
+        return 1.0
+
+    try:
+        pf = _json.loads(pf_file.read_text())
+        history = pf.get("history", [])
+        from collections import defaultdict
+        by_day = defaultdict(lambda: {"profit": 0})
+        for h in history:
+            date = str(h.get("date", ""))[:10]
+            by_day[date]["profit"] += h.get("profit", 0)
+
+        recent = sorted(by_day.items())[-3:]  # 最近3天
+        losing_days = sum(1 for _, d in recent if d["profit"] < 0)
+        if losing_days >= 3:
+            return 0.5  # 连亏3天，仓位减半
+        elif losing_days >= 2:
+            return 0.7  # 连亏2天，降30%
+        return 1.0
+    except Exception:
+        return 1.0
+
+
 def _maybe_send_health_report(qualified: list, place_bets: bool):
     """每周一/周四推送组合健康报告（蒙特卡洛风险 + 近7天绩效）。"""
     now = datetime.now(timezone(timedelta(hours=8)))
@@ -382,7 +409,7 @@ def _maybe_send_health_report(qualified: list, place_bets: bool):
 
     # 加载组合数据
     import json as _json
-    pf_file = DATA_DIR / "virtual_portfolio.json"
+    pf_file = DATA_DIR / "storage" / "virtual_portfolio.json"
     if not pf_file.exists():
         return
     pf = _json.loads(pf_file.read_text())
@@ -708,6 +735,9 @@ def _calc_kelly_stakes(opps: list) -> list:
     import math
     from config.weight_matrix import get_stake_pct
 
+    # 动态连亏调整：近3天全负→降仓50%，直到出现盈利日
+    streak_mult = _get_streak_multiplier()
+
     # 并发凯利调整：多笔同时投注时降低单笔仓位（行业标准：除以 sqrt(并发数)）
     concurrent_count = len([o for o in opps if o.get("_kelly_pct", 0) > 0])
     concurrency_divisor = max(1, math.sqrt(concurrent_count)) if concurrent_count > 0 else 1
@@ -715,6 +745,7 @@ def _calc_kelly_stakes(opps: list) -> list:
     for o in opps:
         k = o.get("_kelly_pct", 0)
         k_adjusted = k / concurrency_divisor  # 并发调整
+        k_adjusted *= streak_mult  # 连亏降仓
         stake = round(BANKROLL * k_adjusted / 100)
         odds = o.get("bb_odds", 0)
         sport = o.get("sport", "")
