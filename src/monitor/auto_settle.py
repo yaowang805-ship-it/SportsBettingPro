@@ -1014,12 +1014,17 @@ def auto_settle(dry_run: bool = False) -> int:
     else:
         logger.info("自动结算完成: %s 笔", settled_count)
 
-    # ── 超时兜底：超过 3 天的 pending 投注自动作废（返还本金，不记盈亏）──
+    # ── 超时兜底：超过 N 天自动作废（返还本金，不记盈亏）──
+    # 所有联赛 5 天, ESPN 不覆盖联赛 3 天加速
     if not dry_run:
-        timeout_count = _auto_void_timeout()
+        timeout_count = _auto_void_timeout(max_days=5)
         if timeout_count:
-            logger.info("超时自动作废: %s 笔", timeout_count)
+            logger.info("超时自动作废(5天): %s 笔", timeout_count)
             settled_count += timeout_count
+        timeout_fast = _auto_void_timeout(max_days=3, skip_settleable=True)
+        if timeout_fast:
+            logger.info("超时自动作废(3天/非覆盖): %s 笔", timeout_fast)
+            settled_count += timeout_fast
 
     # ── 策略自进化 ──
     if not dry_run and settled_count > 0:
@@ -1210,15 +1215,22 @@ def _learn_team_names_from_win(bet: dict):
         logger.debug("队名学习失败: %s", e)
 
 
-def _auto_void_timeout(max_days: int = 5) -> int:
+def _auto_void_timeout(max_days: int = 5, skip_settleable: bool = False) -> int:
     """超时兜底：超过 max_days 仍未匹配到结果的投注自动作废。
 
     作废 = 返还本金，不记盈亏。防止投注因 API 配额/数据缺失永久卡在 pending。
+    skip_settleable=True: 只作废不可结算联赛的投注（3天加速通道）。
     """
     state = _load_state()
     pending = state.get("pending_bets", [])
     if not pending:
         return 0
+
+    if skip_settleable:
+        from src.core.settleability import is_league_settleable
+        pending = [b for b in pending if not is_league_settleable(
+            b.get("league", ""), b.get("sport", "")
+        )]
 
     now = datetime.now(timezone.utc)
     cutoff = now - timedelta(days=max_days)
