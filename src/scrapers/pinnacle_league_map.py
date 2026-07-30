@@ -425,10 +425,10 @@ def _auto_map_team_names(matched_entries):
         pin_home = pin.get("home", "").strip()
         pin_away = pin.get("away", "").strip()
 
-        # MMA/拳击: 选手名中英文差异大，匹配引擎常按对阵顺序错配，
+        # MMA/拳击/篮球: 匹配引擎常按对阵顺序错配（同赛事多场同时开打），
         # 禁止自动学习队名映射，避免错误映射雪球效应
         sport = m.get("sport", "")
-        if sport in ("mma", "boxing"):
+        if sport in ("mma", "boxing", "basketball"):
             continue
 
         # Map home team: only if BB name has Chinese characters
