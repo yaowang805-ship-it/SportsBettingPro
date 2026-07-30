@@ -1711,45 +1711,75 @@ def _verify_odds_freshness(qualified: list, max_ev_drop: float = 3.0) -> list:
         return qualified
 
 
-def _apply_match_cooldown(qualified: list, cooldown_hours: int = 4) -> list:
-    """同一比赛在冷却时间内最多推送 1 次，防 EV 微小波动反复推送。"""
+def _apply_match_exposure_cap(qualified: list) -> list:
+    """同一场比赛累计投注不超过日预算 6%，超出的机会降权或跳过。
+
+    比硬冷却更灵活: EV大涨时仍可追加，但总量受控。
+    追踪文件: push_cooldown.json → 增加 match_total_stake 字段。
+    """
     cooldown_file = DATA_DIR / "push_cooldown.json"
     now = time.time()
-    cooldown_sec = cooldown_hours * 3600
+    match_cap = BANKROLL * 0.06  # 单场累计上限
 
-    # 加载冷却记录
-    cooldowns = {}
+    # 加载记录 {match_id: {timestamp, total_stake}}
+    records = {}
     if cooldown_file.exists():
         try:
-            cooldowns = json.loads(cooldown_file.read_text())
+            records = json.loads(cooldown_file.read_text())
         except (json.JSONDecodeError, OSError):
             pass
 
-    # 清理过期记录
-    cooldowns = {k: v for k, v in cooldowns.items() if now - v < cooldown_sec}
+    # 清理24h过期记录
+    records = {k: v for k, v in records.items() if now - v.get("timestamp", 0) < 86400}
 
     kept = []
     skipped = 0
+    capped = 0
     for o in qualified:
         match_id = "|".join([o.get("sport", ""), o.get("home_cn", "").strip(), o.get("away_cn", "").strip()])
-        if match_id in cooldowns:
-            skipped += 1
-        else:
-            kept.append(o)
-            cooldowns[match_id] = now  # 记录本次推送时间
+        new_stake = o.get("_stake", 0)
+        existing = records.get(match_id, {})
+        prev_stake = existing.get("total_stake", 0) if isinstance(existing, dict) else 0
 
-    # 保存
-    cooldown_file.write_text(json.dumps(cooldowns, ensure_ascii=False))
+        if prev_stake + new_stake > match_cap:
+            # 超过单场上限: 压缩到剩余额度
+            remaining = max(0, match_cap - prev_stake)
+            if remaining >= 5:
+                o["_stake"] = int(remaining)
+                o["_raw_stake"] = int(remaining)
+                capped += 1
+            else:
+                o["_stake"] = 0
+                skipped += 1
+                continue
 
+        kept.append(o)
+        records[match_id] = {
+            "timestamp": now,
+            "total_stake": prev_stake + o["_stake"],
+        }
+
+    cooldown_file.write_text(json.dumps(records, ensure_ascii=False))
     if skipped:
-        logger.info("比赛冷却: 跳过 %d 条 (同一比赛 %dh 内已推送过)", skipped, cooldown_hours)
+        logger.info("单场超限跳过: %d 条 (累计已超 ¥%.0f)", skipped, match_cap)
+    if capped:
+        logger.info("单场压缩: %d 条 (压缩至剩余额度)", capped)
     return kept
 
 
 def _filter_pushed(qualified: list) -> list:
-    """过滤已推送机会：指纹匹配日期≤今天(已过期)自动释放，EV上涨>1%或>12h重推。"""
+    """过滤已推送机会: 分层重推阈值 + 赔率变动驱动。
+
+    重推规则 (按时间紧迫度分层):
+      >24h前: 需赔率涨>5% 或 EV涨>3%
+      6-24h:   需赔率涨>3% 或 EV涨>2%
+      1-6h:    需赔率涨>2% 或 EV涨>1%
+      <1h:     需赔率涨>1% 或 EV涨>0.5%
+    赔率跌>3%: 不推 (市场反向)
+    """
     from datetime import date
     today_str = date.today().strftime("%Y-%m-%d")
+    now_epoch = time.time()
 
     existing = _load_fingerprints()
     if not existing:
@@ -1763,48 +1793,53 @@ def _filter_pushed(qualified: list) -> list:
         _save_fingerprints(existing)
         logger.info("指纹清理: 删除 %d 条已过期", len(expired))
 
-    new = []
-    skipped = 0
-    re_pushed = 0
+    def _get_thresholds(hours_to_match):
+        if hours_to_match > 24:  return (5.0, 3.0)   # bb%, ev%
+        elif hours_to_match > 6: return (3.0, 2.0)
+        elif hours_to_match > 1: return (2.0, 1.0)
+        else:                    return (1.0, 0.5)
+
+    new = []; skipped = 0; re_pushed = 0
     for o in qualified:
         fp = _make_fingerprint(o)
         ev = o.get("ev_pct", 0)
         match_date = fp.split("|")[-1]
-        if fp in existing:
-            old_ev = existing[fp]
-            # 重推判断：以实际赔率变动为主, EV为辅
-            old_bb = existing.get(fp + "_bb", 0)
-            bb_now = o.get("bb_odds", 0)
-            bb_ratio = bb_now / old_bb if old_bb > 0 else 1.0
-            ev_delta = ev - old_ev
 
-            should_push = False
-            if bb_ratio >= 1.02:
-                # BB/FB赔率涨>2%: 实际价格更优, 无条件重推
-                should_push = True
-            elif bb_ratio <= 0.98:
-                # BB/FB赔率跌>2%: 市场反向, 不推
-                should_push = False
-            elif ev_delta > 0.5:
-                # 赔率稳定, EV涨>0.5%: 正常重推
-                should_push = True
-
-            if should_push:
-                re_pushed += 1
-                new.append(o)
-            else:
-                if bb_ratio <= 0.98:
-                    logger.info("BB赔率恶化过滤: %s BB %.2f→%.2f", o.get("designation",""), old_bb, bb_now)
-                skipped += 1
-        elif match_date < today_str:
-            # 已过期的比赛日期，允许推送
+        if fp not in existing:
             new.append(o)
+            continue
+
+        # 已推送过 → 检查是否值得重推
+        old_ev = existing[fp]
+        old_bb = existing.get(fp + "_bb", 0)
+        bb_now = o.get("bb_odds", 0)
+        bb_change = (bb_now - old_bb) / old_bb * 100 if old_bb > 0 else 0
+        ev_delta = ev - old_ev
+
+        # 分层阈值
+        hours = (o.get("_pin_epoch", now_epoch + 86400) - now_epoch) / 3600
+        bb_thresh, ev_thresh = _get_thresholds(hours)
+
+        should_push = False
+        if bb_change >= bb_thresh:
+            should_push = True  # 赔率大涨: 无条件重推
+        elif bb_change <= -3.0:
+            should_push = False  # 赔率大跌: 市场反向
+        elif ev_delta >= ev_thresh:
+            should_push = True  # EV 达到阈值
+
+        if should_push:
+            re_pushed += 1
+            new.append(o)
+            logger.info("重推: %s (%.1fh前) BB %+.1f%% EV %+.1f%%",
+                       o.get("designation",""), hours, bb_change, ev_delta)
         else:
-            new.append(o)
+            skipped += 1
+
     if skipped:
-        logger.info("去重过滤: 跳过 %d 条已推送机会", skipped)
+        logger.info("去重过滤: 跳过 %d 条", skipped)
     if re_pushed:
-        logger.info("EV重推: %d 条机会EV上涨>1%重新推送", re_pushed)
+        logger.info("分层重推: %d 条", re_pushed)
     return new
 
 
@@ -1999,7 +2034,7 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         return
 
     # 单场推送冷却：同一比赛 4 小时内最多推送 1 次（防止 EV 微小波动导致反复推送）
-    qualified = _apply_match_cooldown(qualified)
+    qualified = _apply_match_exposure_cap(qualified)
 
     warnings = _check_sport_consistency(qualified, pre_dedup_counts)
     clv_warnings, _ = _check_clv_trend(qualified)
