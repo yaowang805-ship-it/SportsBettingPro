@@ -853,11 +853,28 @@ def _load_snapshot_cache():
     if snap_file.exists():
         try:
             data = json.loads(snap_file.read_text())
-            for m in data.get("matches", []):
-                home = m.get("home_cn", m.get("home", "")).strip()
-                away = m.get("away_cn", m.get("away", "")).strip()
-                for mk in ("moneyline", "handicap", "over_under"):
-                    for opp in m.get(mk, []):
+            matches = data.get("matches", {})
+            # matches 可能是 dict (keyed by event_id) 或 list
+            if isinstance(matches, dict):
+                match_list = matches.values()
+            else:
+                match_list = matches
+            for m in match_list:
+                if not isinstance(m, dict):
+                    continue
+                home = (m.get("home_cn") or m.get("home") or "").strip()
+                away = (m.get("away_cn") or m.get("away") or "").strip()
+                if not home or not away:
+                    continue
+                for mk in ("moneyline", "handicap", "over_under", "ml", "hc", "ou"):
+                    market_data = m.get(mk)
+                    if not market_data:
+                        continue
+                    # market_data 可能是 list 或 dict
+                    items = market_data if isinstance(market_data, list) else [market_data]
+                    for opp in items:
+                        if not isinstance(opp, dict):
+                            continue
                         desig = opp.get("designation", "")
                         key = f"{home}|{away}|{desig}"
                         _SNAPSHOT_CACHE[key] = opp.get("odds", opp.get("bb_odds", 0))
