@@ -372,6 +372,63 @@ def _save_budget_tracker(spent: dict, date_str: str):
 
 # ── CLV 追踪 ──
 
+def _maybe_send_health_report(qualified: list, place_bets: bool):
+    """每周一/周四推送组合健康报告（蒙特卡洛风险 + 近7天绩效）。"""
+    now = datetime.now(timezone(timedelta(hours=8)))
+    if now.weekday() not in (0, 3):  # 周一(0) 和 周四(3)
+        return
+    if now.hour < 8 or now.hour > 20:  # 只在 8:00-20:00 发
+        return
+
+    # 加载组合数据
+    import json as _json
+    pf_file = DATA_DIR / "virtual_portfolio.json"
+    if not pf_file.exists():
+        return
+    pf = _json.loads(pf_file.read_text())
+    history = pf.get("history", [])
+    if len(history) < 20:
+        return  # 样本不足
+
+    # 统计
+    won = [h for h in history if h.get("status") == "won"]
+    lost = [h for h in history if h.get("status") == "lost"]
+    settled = won + lost
+    if not settled:
+        return
+    wr = len(won) / len(settled)
+    avg_odds = sum(h.get("odds", 0) for h in settled) / len(settled)
+    total_profit = sum(h.get("profit", 0) for h in history)
+    total_stake = sum(h.get("stake", 0) for h in settled)
+
+    # 近7天
+    cutoff = (now - timedelta(days=7)).isoformat()
+    recent = [h for h in history if h.get("date", "") >= cutoff]
+    recent_profit = sum(h.get("profit", 0) for h in recent)
+
+    # 蒙特卡洛
+    mc = _run_monte_carlo(wr, avg_odds, n_sims=5000)
+
+    # 构建报告
+    lines = [
+        "## 📊 组合健康报告",
+        "",
+        f"**已结算**: {len(history)} 笔 | 胜率: {wr*100:.0f}% | 均赔: {avg_odds:.2f}",
+        f"**累计盈亏**: ¥{total_profit:+,.0f} | 近7天: ¥{recent_profit:+,.0f}",
+        "",
+        "### 🎲 蒙特卡洛风险模拟 (5,000次)",
+        f"| 破产概率 | 平均最大回撤 | 中位回报 | 最差回报 | 生存率 |",
+        f"|---|---|---|---|---|",
+        f"| {mc['ruin_prob']:.1f}% | {mc['avg_max_dd']:.1f}% | {mc['median_return']:+.0f}% | {mc['worst_return']:+.0f}% | {mc['survival_rate']:.1f}% |",
+        "",
+        f"💡 破产概率 = 连续亏损导致本金损失70%以上的概率",
+        f"💡 中位回报 = 500笔投注后期望的中位数回报率",
+    ]
+
+    from config.settings import send_dingtalk
+    send_dingtalk("📊 组合健康报告", "\n".join(lines))
+
+
 def _log_clv(opps: list):
     """将推送机会的 CLV 数据写入 SQLite（主）和 CSV（备份）。"""
     from config.database import insert_push_clv
@@ -587,6 +644,62 @@ def _check_sport_consistency(opportunities: list, pre_dedup_counts: Optional[dic
     return warnings
 
 
+def _run_monte_carlo(win_rate: float, avg_odds: float, n_sims: int = 10000, n_bets: int = 500):
+    """蒙特卡洛破产风险模拟。
+
+    Args:
+        win_rate: 历史胜率 (0.0-1.0)
+        avg_odds: 平均赔率
+        n_sims: 模拟次数
+        n_bets: 每次模拟的投注次数
+    Returns:
+        dict with ruin_prob, max_drawdown, median_return, worst_return, best_return
+    """
+    import random
+    random.seed(42)
+
+    stake_pct = 0.02  # 每注 2% (保守假设)
+    ruin_threshold = 0.3  # 回撤 70% 视为破产
+
+    results = {"ruin": 0, "max_dd": [], "final": []}
+
+    for _ in range(n_sims):
+        bankroll = 1.0
+        peak = 1.0
+        max_dd = 0.0
+
+        for _ in range(n_bets):
+            if bankroll < 0.01:  # 破产
+                results["ruin"] += 1
+                bankroll = 0.0
+                break
+
+            bet = bankroll * stake_pct
+            if random.random() < win_rate:
+                bankroll += bet * (avg_odds - 1)
+            else:
+                bankroll -= bet
+
+            if bankroll > peak:
+                peak = bankroll
+            dd = (peak - bankroll) / peak if peak > 0 else 0
+            if dd > max_dd:
+                max_dd = dd
+
+        results["max_dd"].append(max_dd)
+        results["final"].append(bankroll)
+
+    valid = [f for f in results["final"] if f > 0]
+    return {
+        "ruin_prob": results["ruin"] / n_sims * 100,
+        "avg_max_dd": sum(results["max_dd"]) / n_sims * 100,
+        "median_return": (sorted(valid)[len(valid)//2] - 1) * 100 if valid else 0,
+        "worst_return": (min(valid) - 1) * 100 if valid else 0,
+        "best_return": (max(valid) - 1) * 100 if valid else 0,
+        "survival_rate": len(valid) / n_sims * 100,
+    }
+
+
 def _calc_kelly_stakes(opps: list) -> list:
     """按 Kelly 比例计算投注额，加单注上限 + 单场上限 + 市场预算上限。"""
     from config.constants import MAX_STAKE_PCT as _MAX_STAKE_PCT, PER_MATCH_CAP_PCT as _PER_MATCH_CAP_PCT
@@ -607,6 +720,27 @@ def _calc_kelly_stakes(opps: list) -> list:
         sport = o.get("sport", "")
         league = o.get("league", "")
         sub = o.get("_sub_market", o.get("_market", ""))
+
+        # 蒸汽移动检测：比较当前 BB 赔率 vs 快照赔率
+        # 赔率朝有利方向移动 >3% → 提高仓位；朝不利方向 >3% → 降低仓位
+        # 依据: Simon (2024, Management Science) — 赔率线系统性过度反应
+        snap_odds = o.get("_snapshot_bb_odds", 0)
+        if snap_odds > 1.0 and odds > 1.0:
+            move_pct = (odds - snap_odds) / snap_odds  # + = 赔率涨(有利), - = 跌(不利)
+            if abs(move_pct) > 0.03:
+                o["_steam_move"] = round(move_pct * 100, 1)
+                # 有利移动：提高仓位 (乘 1.0~1.5)；不利移动：降低 (乘 0.5~1.0)
+                steam_mult = 1.0 + move_pct * 3  # 3%移动 → ±9%仓位调整
+                steam_mult = max(0.5, min(1.5, steam_mult))
+                stake = round(stake * steam_mult)
+
+        # 周末效应：周五-周日比赛折扣 10% (Simon 2024 — 周末预测可靠性下降)
+        match_epoch = o.get("_pin_epoch", 0)
+        if match_epoch:
+            match_dt = datetime.fromtimestamp(match_epoch, tz=timezone.utc)
+            bj_dt = match_dt.astimezone(timezone(timedelta(hours=8)))
+            if bj_dt.weekday() >= 4:  # 周五(4)/周六(5)/周日(6)
+                stake = round(stake * 0.9)
 
         # 基于全量历史回测的动态仓位上限
         stake_pct = get_stake_pct(sport, league, sub, odds)
@@ -672,6 +806,40 @@ def _correct_budget_tracker(opps: list):
     # 保留当天之前推送的累积，加上本次实际
     prev_total = sum(spent.values()) if spent else 0
     _save_budget_tracker({"total": prev_total + total}, today)
+
+
+# 上一次 BB 赔率快照缓存 (用于蒸汽移动检测)
+_SNAPSHOT_CACHE = None
+
+
+def _load_snapshot_cache():
+    """加载上一次的 BB 赔率快照，用于检测赔率蒸汽移动。"""
+    global _SNAPSHOT_CACHE
+    if _SNAPSHOT_CACHE is not None:
+        return _SNAPSHOT_CACHE
+    snap_file = DATA_DIR / "bb_odds_snapshot.json"
+    _SNAPSHOT_CACHE = {}
+    if snap_file.exists():
+        try:
+            data = json.loads(snap_file.read_text())
+            for m in data.get("matches", []):
+                home = m.get("home_cn", m.get("home", "")).strip()
+                away = m.get("away_cn", m.get("away", "")).strip()
+                for mk in ("moneyline", "handicap", "over_under"):
+                    for opp in m.get(mk, []):
+                        desig = opp.get("designation", "")
+                        key = f"{home}|{away}|{desig}"
+                        _SNAPSHOT_CACHE[key] = opp.get("odds", opp.get("bb_odds", 0))
+        except (json.JSONDecodeError, OSError):
+            pass
+    return _SNAPSHOT_CACHE
+
+
+def _lookup_snapshot_odds(home: str, away: str, designation: str) -> float:
+    """查找上一次快照中对应比赛的 BB 赔率。0 = 无快照数据。"""
+    cache = _load_snapshot_cache()
+    key = f"{home}|{away}|{designation}"
+    return cache.get(key, 0)
 
 
 def _collect_opportunities(match, market_key):
@@ -842,6 +1010,7 @@ def _collect_opportunities(match, market_key):
             "bb_odds": bb_odds,
             "pin_odds": pin_odds,
             "fair_price": fair,
+            "_snapshot_bb_odds": _lookup_snapshot_odds(home_cn, away_cn, display_name),
             "ev_pct": ev,
             "start_time_bb": match.get("start_time_bb", ""),
             "_market_type": market_key,  # "opportunities"|"handicap"|"over_under"|...
@@ -1863,6 +2032,9 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
 
         # CLV 追踪：记录每条推送的赔率数据用于收盘线价值分析
         _log_clv(qualified)
+
+        # 风险报告：蒙特卡洛模拟 + 组合健康检查
+        _maybe_send_health_report(qualified, place_bets)
 
         logger.info("BB vs Pinnacle +EV report pushed (%d opportunities)", body.count('#####'))
     else:
