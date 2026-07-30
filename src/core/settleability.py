@@ -45,6 +45,8 @@ KNOWN_SETTLEABLE_LEAGUES = {
     "保加利亚甲级联赛", "挪威甲级联赛",
     "苏格兰联赛杯", "韩国乙级联赛",
     "冰岛丙级联赛", "世界网球",
+    "波兰超级联赛", "波兰甲级联赛",
+    "美国MLS下级职业赛", "MLS下级",
 }
 
 # 已知有运动的 fallback（sport 级别可尝试结算）
@@ -82,6 +84,10 @@ def is_league_settleable(league: str, sport: str = "") -> bool:
     """
     if not league:
         return False
+
+    # 层0: 静态白名单 — 已知可结算但尚未有成功记录的联赛
+    if league in KNOWN_SETTLEABLE_LEAGUES:
+        return True
 
     # 层1: 历史追踪数据 — 有成功记录才可信
     data = _load_settleable()
