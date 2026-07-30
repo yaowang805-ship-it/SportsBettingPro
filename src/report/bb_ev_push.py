@@ -146,7 +146,7 @@ MARKET_QUALITY_FOOTBALL = {
     "1x2":  0.90,  # 稍逊(4.29%抽水)
     "ht":   0.90,  # 半场1X2→对齐全场1X2（同类市场，相同Pinnacle数据覆盖）
     "corner": 0.80,
-    "htft": 0.80,
+    "htft": 0.50,  # 半全场: BB/Pin 定义不同(含不含加时), 历史溢价33%, 严格压低
     "oe":   0.85,
 }
 
@@ -160,8 +160,10 @@ PINNACLE_LEAGUE_ACCURACY = {
     "英超": 1.05, "荷甲": 1.05, "法甲": 1.05,
     # 标准 (抽水4-5%): 1.0
     "西乙": 1.00, "比甲": 1.00, "苏超": 1.00, "西甲": 1.00,
-    "英甲": 1.00, "意甲": 1.00,
-    # 低准确度 (抽水>5%): Pinnacle较不准→比价可靠性低→-15%
+    "英甲": 1.00,
+    # 中低准确度 (抽水5-6%): Pinnacle 定价偏松 → -10%
+    "意甲": 0.90,
+    # 低准确度 (抽水>6%): Pinnacle较不准→比价可靠性低→-15%
     "土超": 0.85, "葡超": 0.85, "希超": 0.85,
 }
 
@@ -383,6 +385,7 @@ def _log_clv(opps: list):
         if not exists:
             writer.writerow([
                 "timestamp", "sport", "league", "home", "away",
+                "home_pin", "away_pin",
                 "designation", "sub_market", "bb_odds", "pin_odds",
                 "fair_price", "ev_pct", "stake", "tier", "match_epoch",
             ])
@@ -394,6 +397,8 @@ def _log_clv(opps: list):
                 o.get("league", ""),
                 o.get("home_cn", ""),
                 o.get("away_cn", ""),
+                o.get("home_team", o.get("home_pin", "")),  # Pinnacle 英文名
+                o.get("away_team", o.get("away_pin", "")),  # Pinnacle 英文名
                 o.get("designation", ""),
                 o.get("_sub_market", o.get("_market", "")),
                 o.get("bb_odds", 0),
@@ -586,22 +591,38 @@ def _calc_kelly_stakes(opps: list) -> list:
     """按 Kelly 比例计算投注额，加单注上限 + 单场上限 + 市场预算上限。"""
     from config.constants import MAX_STAKE_PCT as _MAX_STAKE_PCT, PER_MATCH_CAP_PCT as _PER_MATCH_CAP_PCT
 
-    # 第一遍：计算毛 Kelly 投注额
+    # 第一遍：计算毛 Kelly 投注额（全量回测权重矩阵 + 并发凯利调整）
+    import math
+    from config.weight_matrix import get_stake_pct
+
+    # 并发凯利调整：多笔同时投注时降低单笔仓位（行业标准：除以 sqrt(并发数)）
+    concurrent_count = len([o for o in opps if o.get("_kelly_pct", 0) > 0])
+    concurrency_divisor = max(1, math.sqrt(concurrent_count)) if concurrent_count > 0 else 1
+
     for o in opps:
         k = o.get("_kelly_pct", 0)
-        stake = round(BANKROLL * k / 100)
-        max_stake = BANKROLL * _MAX_STAKE_PCT
+        k_adjusted = k / concurrency_divisor  # 并发调整
+        stake = round(BANKROLL * k_adjusted / 100)
+        odds = o.get("bb_odds", 0)
+        sport = o.get("sport", "")
+        league = o.get("league", "")
+        sub = o.get("_sub_market", o.get("_market", ""))
+
+        # 基于全量历史回测的动态仓位上限
+        stake_pct = get_stake_pct(sport, league, sub, odds)
+        max_stake = BANKROLL * stake_pct
         stake = int(min(stake, max_stake))
-        o["_raw_stake"] = stake  # 保存原始 Kelly 值(预算耗尽时展示用)
+        o["_raw_stake"] = stake
         if stake < 5:
             stake = 0
         o["_stake"] = stake
 
     # 第二遍：同一比赛多盘口 → 按比例压缩到单场上限
+    # 使用 (sport, home_cn, away_cn) 作为 key，联赛名可能因BB/FB不同而不一致
     from collections import defaultdict
     match_groups = defaultdict(list)
     for o in opps:
-        key = (o.get("home_cn", ""), o.get("away_cn", ""))
+        key = (o.get("sport", ""), o.get("home_cn", "").strip(), o.get("away_cn", "").strip())
         match_groups[key].append(o)
 
     per_match_max = BANKROLL * _PER_MATCH_CAP_PCT
@@ -611,6 +632,11 @@ def _calc_kelly_stakes(opps: list) -> list:
             ratio = per_match_max / total
             for o in group:
                 o["_stake"] = max(0, round(o["_stake"] * ratio))
+        # 标记同场其他盘口（只保留最高分的2条，避免同一场比赛推太多）
+        if len(group) > 2:
+            group.sort(key=lambda o: o.get("_score", 0), reverse=True)
+            for o in group[2:]:
+                o["_stake"] = 0  # 超过2条的同场机会不投注
 
     # 第三遍：总额预算控制（替代分组预算上限）
     # 纯 Kelly 决定相对比例，总额超过日预算时等比压缩
@@ -653,14 +679,20 @@ def _collect_opportunities(match, market_key):
 
     为每条机会附加 bb_price_source 字段，标记该赔率来自哪个平台（BB/FB）。
     """
-    # 96小时窗口过滤：超过未来96小时的比赛不推送（资金效率平衡）
+    # 96小时窗口 + 已开赛过滤（双时间源交叉验证）
+    # BB 和 Pinnacle 的时间戳可能不一致（时区/夏令时差异），取较早者防漏
     pin_epoch = match.get("start_time_pin_epoch")
-    if pin_epoch:
-        now_epoch = datetime.now(timezone.utc).timestamp()
-        if pin_epoch > now_epoch + 96 * 3600:
+    bb_epoch = _parse_bb_time(match.get("start_time_bb", ""))
+    now_epoch = datetime.now(timezone.utc).timestamp()
+    # 取 BB 和 Pin 中较早的时间作为开赛时间
+    effective_epoch = min(
+        pin_epoch if pin_epoch else float('inf'),
+        bb_epoch if bb_epoch else float('inf'),
+    )
+    if effective_epoch != float('inf'):
+        if effective_epoch > now_epoch + 96 * 3600:
             return []
-        # 已开赛过滤：开赛时间已过的比赛不推送（给5分钟缓冲）
-        if pin_epoch + 300 < now_epoch:
+        if effective_epoch + 300 < now_epoch:
             return []
 
     match_type = match.get("match_type", "unknown")
@@ -669,6 +701,7 @@ def _collect_opportunities(match, market_key):
     # 时间匹配（非队名匹配）需要高置信度，防止推错比赛。
     # 门限必须与 bb_vs_pinnacle.py Phase 2 保持一致：
     #   网球 0.75，其他 0.70
+    # 注: MMA/拳击的时间匹配已在 _read_comparison_file 整场跳过，此处是兜底
     if match_type == "time":
         min_ok = 0.75 if sport == "tennis" else 0.70
         if match_score < min_ok:
@@ -727,6 +760,12 @@ def _collect_opportunities(match, market_key):
         if bb_odds > 15.0 and league_mult < 1.0:
             continue
 
+        # 赔率 > 10.0 过滤：仅五大联赛有 Pin 收盘正 ROI (法甲+29%/西甲+8%/意甲+5%/英超+5%/德甲+4%)
+        # 其他联赛 >10.0 全是负 ROI，直接跳过
+        _big5 = ("德甲", "英超", "西甲", "意甲", "法甲")
+        if bb_odds > 10.0 and not any(b5 in league for b5 in _big5):
+            continue
+
         # 市场子类型识别：区分同一 market_key 下的不同市场（如 1X2 / HT / BTTS / DC）
         sub_market = opp.get("_market", "")
         if not sub_market or sub_market == "main":
@@ -755,6 +794,13 @@ def _collect_opportunities(match, market_key):
         # (UFC 选手名在 BB/FB 和 Pinnacle 之间经常不一致，匹配引擎容易按位置错配)
         if sport in ("mma", "boxing") and ev > 15 and any("溢价异常高" in f for f in flags):
             continue
+
+        # MMA/拳击: BB 与 Pinnacle 赔率偏差 >25% → 映射错误
+        # 同一场比赛，赔率不会差这么多。偏差大说明配到了不同选手。
+        if sport in ("mma", "boxing") and pin_odds > 0:
+            dev = abs(bb_odds - pin_odds) / pin_odds
+            if dev > 0.25:
+                continue
 
         # 赔率上限过滤: Pinnacle 历史数据按运动/联赛/市场限制
         _odds_limit = _get_odds_limit(match.get("sport", ""), league, sub_market)
@@ -811,6 +857,25 @@ def _collect_opportunities(match, market_key):
             "bb_price_source": price_source,  # 标记赔率来源平台
         })
     return result
+
+
+def _parse_bb_time(start_time_bb: str):
+    """将 BB 时间字符串 'MM/DD HH:MM'（北京时间）转 UTC epoch。失败返回 None。"""
+    if not start_time_bb or not start_time_bb.strip():
+        return None
+    try:
+        # 补齐年份：用当前年份，但如果 MM/DD 跨年则用上一年
+        now = datetime.now(timezone(timedelta(hours=8)))
+        year = now.year
+        dt_bj = datetime.strptime(f"{year}/{start_time_bb}", "%Y/%m/%d %H:%M")
+        dt_bj = dt_bj.replace(tzinfo=timezone(timedelta(hours=8)))
+        # 如果解析出的日期比现在晚超过6个月，可能是跨年
+        if (dt_bj - now).days > 180:
+            dt_bj = datetime.strptime(f"{year-1}/{start_time_bb}", "%Y/%m/%d %H:%M")
+            dt_bj = dt_bj.replace(tzinfo=timezone(timedelta(hours=8)))
+        return dt_bj.timestamp()
+    except (ValueError, OSError):
+        return None
 
 
 def _format_bj_time(pin_epoch):
@@ -876,13 +941,12 @@ def _collect_opportunities_from_file():
         away = _normalize_cn(o.get("away_cn", "").strip())
         start = o.get("start_time_bb", "") or str(o.get("_pin_epoch", ""))
 
-        # 三层 key：依次放宽队名匹配，防止 BB/FB 翻译差异导致重复推送
-        # L1: 主客队名都匹配 (最精确)
+        # 三层 key：队名+时间交叉比对
+        # 联赛名可能因 BB/FB 翻译不同而不同 (如 "欧足联欧洲会议联赛" vs "欧足联欧洲协会联赛")
+        # L2/L3 去掉了 league，因为 (sport, home, start_time) 已唯一确定一场比赛
         key_exact = (sport, league, home, away, designation)
-        # L2: 主队 + 时间匹配 (客队名可能不同，但主队同时间只能打一场)
-        key_home_time = (sport, league, home, start, designation)
-        # L3: 客队 + 时间匹配 (主队名可能不同)
-        key_away_time = (sport, league, away, start, designation)
+        key_home_time = (sport, home, start, designation)       # 不含 league
+        key_away_time = (sport, away, start, designation)       # 不含 league
 
         existing = (best_per_match.get(key_exact) or
                     best_per_match.get(key_home_time) or
@@ -923,6 +987,9 @@ def _read_comparison_file(path):
         sport = match.get("sport", "")
         if sport in ("boxing", "mma"):
             min_score = 0.80  # UFC/拳击映射错误多，0.60→0.80
+            # MMA/拳击时间匹配不可靠，同赛事多场同时开打，直接跳过整场
+            if match_type == "time":
+                continue
         elif sport == "tennis":
             min_score = 0.75  # 网球也从严，0.60→0.75
         else:
@@ -939,13 +1006,17 @@ def _read_comparison_file(path):
 
 
 def _diversify_and_rank(qualified: list) -> list:
-    """多样性选择 + 按联赛 Tier 排序 + Kelly 分配。"""
+    """多样性选择 + 按联赛 Tier 排序 + Kelly 分配。
+
+    保证: 每种运动至少 1 条 + 每种盘口类型至少 N 条，降低集中风险。
+    """
     if not qualified:
         return []
 
-    # 各运动至少保留 1 条（按 Tier 优先选）
     selected = []
     selected_ids = set()
+
+    # --- 第一轮：每种运动至少 1 条 ---
     for sport in ("football", "basketball", "tennis", "baseball", "american_football",
                    "pingpong", "badminton", "volleyball", "boxing", "mma", "ice_hockey"):
         sport_opps = [o for o in qualified if o.get("sport") == sport]
@@ -954,8 +1025,29 @@ def _diversify_and_rank(qualified: list) -> list:
             selected.append(best)
             selected_ids.add(id(best))
 
+    # --- 第二轮：每种盘口类型至少 N 条（分散风险） ---
+    MARKET_MIN = {
+        "1x2": 3,   # 独赢 主/和/客
+        "hc": 2,     # 让球
+        "ou": 3,     # 大小球
+        "dc": 2,     # 双重机会
+        "ht": 1,     # 上半场
+        "btts": 1,   # 双边进球
+        "dnb": 1,    # 平局退款
+        "htft": 1,   # 半全场
+        "oe": 1,     # 单/双
+    }
+    remaining_for_market = [o for o in qualified if id(o) not in selected_ids]
+    for sub_market, min_n in MARKET_MIN.items():
+        candidates = [o for o in remaining_for_market
+                      if o.get("_sub_market") == sub_market and id(o) not in selected_ids]
+        candidates.sort(key=lambda o: (o.get("_tier", 3), -o["_score"]))
+        for o in candidates[:min_n]:
+            selected.append(o)
+            selected_ids.add(id(o))
+
+    # --- 第三轮：按 score 填满剩余 ---
     remaining = [o for o in qualified if id(o) not in selected_ids]
-    # 核心改动：按 Tier 排序（1 优先），同 Tier 内按 score 降序
     remaining.sort(key=lambda o: (o.get("_tier", 3), -o["_score"]))
     max_remaining = MAX_OPPORTUNITIES - len(selected)
     selected.extend(remaining[:max_remaining])
@@ -1401,6 +1493,41 @@ def _verify_odds_freshness(qualified: list, max_ev_drop: float = 3.0) -> list:
         return qualified
 
 
+def _apply_match_cooldown(qualified: list, cooldown_hours: int = 4) -> list:
+    """同一比赛在冷却时间内最多推送 1 次，防 EV 微小波动反复推送。"""
+    cooldown_file = DATA_DIR / "push_cooldown.json"
+    now = time.time()
+    cooldown_sec = cooldown_hours * 3600
+
+    # 加载冷却记录
+    cooldowns = {}
+    if cooldown_file.exists():
+        try:
+            cooldowns = json.loads(cooldown_file.read_text())
+        except (json.JSONDecodeError, OSError):
+            pass
+
+    # 清理过期记录
+    cooldowns = {k: v for k, v in cooldowns.items() if now - v < cooldown_sec}
+
+    kept = []
+    skipped = 0
+    for o in qualified:
+        match_id = "|".join([o.get("sport", ""), o.get("home_cn", "").strip(), o.get("away_cn", "").strip()])
+        if match_id in cooldowns:
+            skipped += 1
+        else:
+            kept.append(o)
+            cooldowns[match_id] = now  # 记录本次推送时间
+
+    # 保存
+    cooldown_file.write_text(json.dumps(cooldowns, ensure_ascii=False))
+
+    if skipped:
+        logger.info("比赛冷却: 跳过 %d 条 (同一比赛 %dh 内已推送过)", skipped, cooldown_hours)
+    return kept
+
+
 def _filter_pushed(qualified: list) -> list:
     """过滤已推送机会：指纹匹配日期≤今天(已过期)自动释放，EV上涨>1%或>12h重推。"""
     from datetime import date
@@ -1653,6 +1780,9 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         logger.info("所有机会均已推送过，跳过")
         return
 
+    # 单场推送冷却：同一比赛 4 小时内最多推送 1 次（防止 EV 微小波动导致反复推送）
+    qualified = _apply_match_cooldown(qualified)
+
     warnings = _check_sport_consistency(qualified, pre_dedup_counts)
     clv_warnings, _ = _check_clv_trend(qualified)
     if clv_warnings:
@@ -1767,7 +1897,12 @@ def _validate_format(body: str) -> bool:
 def main():
     """CLI 入口 / pipeline_orchestrator 入口。"""
     force_fresh = "--force" in sys.argv
-    body, qualified = build_report(force=force_fresh)
+    try:
+        body, qualified = build_report(force=force_fresh)
+    except Exception as e:
+        logger.error("build_report 崩溃: %s", e, exc_info=True)
+        _send_failure_alert([f"build_report 异常: {str(e)[:200]}"])
+        return None
 
     if body is None:
         # 实时赔率拉取失败，已发送钉钉告警，不推送

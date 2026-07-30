@@ -552,10 +552,54 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     break
 
         # --- 独赢 (Moneyline) 带去抽水 ---
+        # 检测主客反转：BB 和 Pinnacle 对主客队的标注可能相反
+        # 用两种方式检测：1) 队名交叉匹配  2) 赔率差异最小化
+        _ml_swapped = False
+
+        # 方式1：队名映射交叉匹配
+        _bb_home_mapped = entry["home_bb"] in TEAM_NAME_MAP
+        _bb_away_mapped = entry["away_bb"] in TEAM_NAME_MAP
+        if _bb_home_mapped and _bb_away_mapped:
+            _bb_he = TEAM_NAME_MAP.get(entry["home_bb"], "").lower()
+            _bb_ae = TEAM_NAME_MAP.get(entry["away_bb"], "").lower()
+            _ph = entry["home_pin"].lower()
+            _pa = entry["away_pin"].lower()
+            _direct = (1 if _bb_he == _ph else 0) + (1 if _bb_ae == _pa else 0)
+            _cross = (1 if _bb_he == _pa else 0) + (1 if _bb_ae == _ph else 0)
+            if _cross > _direct:
+                _ml_swapped = True
+
+        # 方式2：赔率模式检测 (适用于无队名映射的运动，如拳击/MMA/网球)
+        if not _ml_swapped and len(bb_ml) >= 2 and len(pin_ml) >= 2:
+            # 对 2-way: 比较 [home,away] vs [away,home]
+            # 对 3-way: 比较 [home,draw,away] vs [away,draw,home]
+            _direct_diff = 0.0
+            _cross_diff = 0.0
+            for i in range(len(bb_ml)):
+                if bb_ml[i] and pin_ml[i]:
+                    _direct_diff += abs(bb_ml[i] - pin_ml[i])
+            # 交叉：交换首尾，中间(draw)不变
+            _pin_cross = list(pin_ml)
+            _pin_cross[0], _pin_cross[-1] = _pin_cross[-1], _pin_cross[0]
+            for i in range(len(bb_ml)):
+                if bb_ml[i] and _pin_cross[i]:
+                    _cross_diff += abs(bb_ml[i] - _pin_cross[i])
+            # 交叉差异显著更小 → 认定反转
+            if _cross_diff < _direct_diff * 0.7 and _direct_diff > 0.5:
+                _ml_swapped = True
+
+        if _ml_swapped:
+            entry["flags"].append("已校准: BB主客反转(Pin主=BB客, Pin客=BB主)")
+
         total_implied_ml = sum(1.0 / p for p in pin_ml if p and p > 0)
         for i in range(n_ml):
             bb_o = bb_ml[i]
-            pin_o = pin_ml[i]
+            # 反转时交换 Pinnacle 赔率: 2-way → 交换 0↔1, 3-way → 交换 0↔2
+            if _ml_swapped:
+                _pin_i = (n_ml - 1 - i) if i in (0, n_ml - 1) else i
+            else:
+                _pin_i = i
+            pin_o = pin_ml[_pin_i]
             if pin_o and pin_o > 0:
                 fair_price = round(pin_o * total_implied_ml, 4) if total_implied_ml > 0 else round(pin_o, 2)
                 ev = (bb_o - fair_price) / fair_price * 100 if fair_price > 0 else 0

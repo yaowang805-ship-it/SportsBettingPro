@@ -33,6 +33,8 @@ usage() {
   daemon <action>       管理守护进程 (start|stop|restart|status)
   log [-n N|-f]         查看管道日志
   check                 健康检查
+  clv-collect           采集收盘赔率计算 CLV
+  clv-report [--no-push] 推送 CLV 日报
   git-commit            自动提交 git 变更
 
 选项:
@@ -291,6 +293,22 @@ cmd_git_commit() {
     _log "====== GIT COMMIT DONE ======"
 }
 
+cmd_clv_collect() {
+    _log "====== CLV COLLECT START ======"
+    .venv312/bin/python -m src.monitor.clv_collector 2>&1 | tee -a "$PIPELINE_LOG"
+    _log "====== CLV COLLECT DONE ======"
+}
+
+cmd_clv_report() {
+    _log "====== CLV REPORT START ======"
+    if [[ "$1" == "--no-push" ]]; then
+        .venv312/bin/python -m src.report.clv_report --no-push 2>&1 | tee -a "$PIPELINE_LOG"
+    else
+        .venv312/bin/python -m src.report.clv_report 2>&1 | tee -a "$PIPELINE_LOG"
+    fi
+    _log "====== CLV REPORT DONE ======"
+}
+
 _send_alert() {
     local msg="$1"
     local exit_code="${2:-?}"
@@ -323,6 +341,8 @@ case "$CMD" in
     daemon)       cmd_daemon "$@" ;;
     log)          cmd_log "$@" ;;
     check)        cmd_check "$@" ;;
+    clv-collect)  cmd_clv_collect "$@" ;;
+    clv-report)   cmd_clv_report "$@" ;;
     git-commit)   cmd_git_commit "$@" ;;
     help|--help)  usage ;;
     *)
