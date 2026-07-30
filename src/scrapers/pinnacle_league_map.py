@@ -398,8 +398,11 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
 def _auto_map_team_names(matched_entries):
     """Auto-extract team name mappings (Chinese -> English) from high-confidence matches.
 
+    🔴 铁律: 只有完美的队名匹配(name, score>=0.95)才能自动学习映射.
+    时间匹配(time)绝不自动学习 — 同赛事多场同时开打导致交叉错配.
+
     Only extracts from matches where:
-    - match_score >= 0.85 or verified
+    - match_type == "name" AND match_score >= 0.95
     - BB team name contains Chinese characters (not pure ASCII)
     Saves to team_name_map.json automatically.
     """
@@ -409,14 +412,12 @@ def _auto_map_team_names(matched_entries):
     for m in matched_entries:
         match_score = m.get("match_score", 0)
         match_type = m.get("match_type", "")
-        # 降低门槛: 只要匹配成功就学习队名映射
-        # 队名匹配(name)≥0.60即可; 时间匹配(time)≥0.70
-        if match_type == "name" and match_score < 0.60:
-            skipped += 1; continue
-        if match_type == "time" and match_score < 0.70:
-            skipped += 1; continue
-        if match_score < 0.60:
-            skipped += 1; continue
+
+        # 🔴 铁律: 只有完美队名匹配才自动学习
+        # 时间匹配绝不学习 (同时间多场比赛容易交叉错配)
+        if match_type != "name" or match_score < 0.95:
+            skipped += 1
+            continue
 
         bb = m.get("bb", {})
         pin = m.get("pin", {})
@@ -425,11 +426,12 @@ def _auto_map_team_names(matched_entries):
         pin_home = pin.get("home", "").strip()
         pin_away = pin.get("away", "").strip()
 
-        # MMA/拳击/篮球: 匹配引擎常按对阵顺序错配（同赛事多场同时开打），
-        # 禁止自动学习队名映射，避免错误映射雪球效应
-        sport = m.get("sport", "")
-        if sport in ("mma", "boxing", "basketball"):
-            continue
+        # 额外安全检查: 如果队名在映射表中已存在且指向不同Pin名, 跳过
+        # (防止覆盖正确的手动映射)
+        for bb_name, pin_name in [(bb_home, pin_home), (bb_away, pin_away)]:
+            if bb_name in TEAM_NAME_MAP and TEAM_NAME_MAP[bb_name] != pin_name:
+                skipped += 1
+                continue
 
         # Map home team: only if BB name has Chinese characters
         if bb_home and pin_home and len(bb_home) >= 2:
