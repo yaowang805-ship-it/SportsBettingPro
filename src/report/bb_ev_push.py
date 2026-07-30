@@ -1729,8 +1729,16 @@ def _apply_match_exposure_cap(qualified: list) -> list:
         except (json.JSONDecodeError, OSError):
             pass
 
-    # 清理24h过期记录
-    records = {k: v for k, v in records.items() if now - v.get("timestamp", 0) < 86400}
+    # 清理24h过期记录 (兼容旧格式 float timestamp)
+    cleaned = {}
+    for k, v in records.items():
+        if isinstance(v, dict):
+            if now - v.get("timestamp", 0) < 86400:
+                cleaned[k] = v
+        elif isinstance(v, (int, float)):
+            if now - v < 86400:
+                cleaned[k] = {"timestamp": v, "total_stake": 0}
+    records = cleaned
 
     kept = []
     skipped = 0
@@ -1739,7 +1747,10 @@ def _apply_match_exposure_cap(qualified: list) -> list:
         match_id = "|".join([o.get("sport", ""), o.get("home_cn", "").strip(), o.get("away_cn", "").strip()])
         new_stake = o.get("_stake", 0)
         existing = records.get(match_id, {})
-        prev_stake = existing.get("total_stake", 0) if isinstance(existing, dict) else 0
+        if isinstance(existing, (int, float)):
+            prev_stake = 0  # old format: just had timestamp
+        else:
+            prev_stake = existing.get("total_stake", 0)
 
         if prev_stake + new_stake > match_cap:
             # 超过单场上限: 压缩到剩余额度
