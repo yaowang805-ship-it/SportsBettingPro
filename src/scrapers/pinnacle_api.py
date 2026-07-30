@@ -99,6 +99,10 @@ def _load_cookie():
             return True
     if not _cookie_loaded:
         logger.warning("cf_clearance cookie 文件不存在: %s", COOKIE_FILE)
+        # 自动从 Chrome 浏览器恢复 cookie
+        if _refresh_cookie_from_chrome():
+            _cookie_loaded = False  # 重新尝试加载
+            return _load_cookie()
         _cookie_loaded = True
     return False
 
