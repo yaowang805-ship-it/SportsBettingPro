@@ -399,6 +399,17 @@ def _get_streak_multiplier() -> float:
         return 1.0
 
 
+def _auto_sync():
+    """推送成功后自动同步: 清除 pyc 缓存 + Git 提交 (非阻塞)。"""
+    try:
+        import subprocess, os
+        script = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "scripts", "auto_sync.sh")
+        if os.path.exists(script):
+            subprocess.Popen(["bash", script], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception:
+        pass  # 静默失败, 不影响推送
+
+
 def _maybe_send_health_report(qualified: list, place_bets: bool):
     """每周一/周四推送组合健康报告（蒙特卡洛风险 + 近7天绩效）。"""
     now = datetime.now(timezone(timedelta(hours=8)))
@@ -2075,6 +2086,9 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         _maybe_send_health_report(qualified, place_bets)
 
         logger.info("BB vs Pinnacle +EV report pushed (%d opportunities)", body.count('#####'))
+
+        # 自动同步: 清除 pyc + Git 提交
+        _auto_sync()
     else:
         logger.warning("BB vs Pinnacle push failed")
 
