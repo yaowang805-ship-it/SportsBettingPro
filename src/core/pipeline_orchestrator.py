@@ -58,8 +58,9 @@ for _lf in sorted(LOG_DIR.iterdir()):
         print(f"  🗑️ 清理旧日志: {_lf.name} ({(int(_age_sec / 86400))}天前)")
 
 SCAN_WINDOW = (7, 22)              # 07:00 ~ 22:00
-INCREMENTAL_INTERVAL_NEAR = 1200   # 20 分钟 — 24h内临场(防Cloudflare封IP)
-INCREMENTAL_INTERVAL_FAR = 7200    # 2 小时 — 24-72h早盘(赔率几乎不动)
+INCREMENTAL_INTERVAL_URGENT = 900   # 15 分钟 — <6h 临场(赔率波动最大)
+INCREMENTAL_INTERVAL_NEAR = 1800    # 30 分钟 — 6-24h 近场
+INCREMENTAL_INTERVAL_FAR = 7200     # 2 小时  — 24-72h 早盘(几乎不动)
 CHECK_INTERVAL = 30                # 调度循环检查间隔（秒）
 
 # 定时任务表：(名称, HH:MM, 处理函数, 参数字典)
@@ -110,6 +111,7 @@ class PipelineOrchestrator:
         self._running = True
         self._active_tasks: set[str] = set()
         self._last_run: dict[str, date] = {}          # 定时任务 → 最后执行日期
+        self._last_incremental_urgent: Optional[float] = None
         self._last_incremental_near: Optional[float] = None
         self._last_incremental_far: Optional[float] = None
         self._last_scan_success: float = 0             # 最后一次成功完成的时间戳
@@ -561,20 +563,28 @@ class PipelineOrchestrator:
             self._run_task(name, method, background=is_bg, **kwargs)
             self._last_run[name] = now.date()
 
-        # 2) 增量扫描 — 双层: 临场10min / 早盘60min
+        # 2) 增量扫描 — 三层: 临场15min / 近场30min / 早盘2h
         if self._is_in_scan_window(now):
+            import random as _random
+            # 每次启动时添加 ±15% 随机抖动，避免固定间隔被 Cloudflare 识别为爬虫
+            _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
+
+            if self._last_incremental_urgent is None:
+                self._last_incremental_urgent = time.time()
+            if (now - datetime.fromtimestamp(self._last_incremental_urgent)).total_seconds() >= _jitter(INCREMENTAL_INTERVAL_URGENT):
+                self._last_incremental_urgent = time.time()
+                self._run_task("incremental_urgent", self.do_incremental, time_window="urgent")
+
             if self._last_incremental_near is None:
                 self._last_incremental_near = time.time()
-            elapsed_near = (now - datetime.fromtimestamp(self._last_incremental_near)).total_seconds()
-            if elapsed_near >= INCREMENTAL_INTERVAL_NEAR:
-                self._last_incremental_near = time.time()  # START 时刻记录
+            if (now - datetime.fromtimestamp(self._last_incremental_near)).total_seconds() >= _jitter(INCREMENTAL_INTERVAL_NEAR):
+                self._last_incremental_near = time.time()
                 self._run_task("incremental_near", self.do_incremental, time_window="near")
 
             if self._last_incremental_far is None:
                 self._last_incremental_far = time.time()
-            elapsed_far = (now - datetime.fromtimestamp(self._last_incremental_far)).total_seconds()
-            if elapsed_far >= INCREMENTAL_INTERVAL_FAR:
-                self._last_incremental_far = time.time()  # START 时刻记录
+            if (now - datetime.fromtimestamp(self._last_incremental_far)).total_seconds() >= _jitter(INCREMENTAL_INTERVAL_FAR):
+                self._last_incremental_far = time.time()
                 self._run_task("incremental_far", self.do_incremental, time_window="far")
 
         # 3) 自检看门狗

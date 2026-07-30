@@ -242,11 +242,16 @@ def run_incremental(time_window: str = "all"):
         print(f"  ⏭️ 不在扫描时段，跳过")
         return
 
-    labels = {"near": "24h内临场", "far": "24-72h早盘", "all": "增量扫描"}
+    labels = {"urgent": "<6h临场", "near": "6-24h近场", "far": "24-72h早盘", "all": "增量扫描"}
     label = labels.get(time_window, "增量扫描")
 
-    # 设置当前扫描的快照/对比文件（near/far 独立，互不污染）
-    _current_snap = BB_SNAPSHOT_NEAR if time_window == "near" else BB_SNAPSHOT_FAR
+    # 设置当前扫描的快照/对比文件（urgent/near/far 独立，互不污染）
+    if time_window == "urgent":
+        _current_snap = BB_SNAPSHOT_NEAR  # urgent 和 near 共享 near 快照
+    elif time_window == "near":
+        _current_snap = BB_SNAPSHOT_NEAR
+    else:
+        _current_snap = BB_SNAPSHOT_FAR
 
     print("=" * 60)
     print(f"BB体育 增量扫描 [{label}]")
@@ -266,8 +271,12 @@ def run_incremental(time_window: str = "all"):
 
     bb_matches = [m for m in bb_matches if not m.get("bt") or int(m["bt"]) > now_ms]
 
-    if time_window == "near":
-        bb_matches = [m for m in bb_matches if int(m.get("bt", 0)) - now_ms <= h24_ms]
+    h6_ms = 6 * 3600 * 1000
+
+    if time_window == "urgent":
+        bb_matches = [m for m in bb_matches if int(m.get("bt", 0)) - now_ms <= h6_ms]
+    elif time_window == "near":
+        bb_matches = [m for m in bb_matches if h6_ms < int(m.get("bt", 0)) - now_ms <= h24_ms]
     elif time_window == "far":
         bb_matches = [m for m in bb_matches if h24_ms < int(m.get("bt", 0)) - now_ms <= h72_ms]
 
