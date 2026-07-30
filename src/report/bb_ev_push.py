@@ -817,10 +817,6 @@ def _calc_kelly_stakes(opps: list) -> list:
             for o in group[2:]:
                 o["_stake"] = 0
 
-    # 保存预分配（总额）供下次推送参考
-    new_total = daily_used + sum(o["_stake"] for o in opps if o["_stake"] > 0)
-    _save_budget_tracker({"total": new_total}, today)
-
     return opps
 
 
