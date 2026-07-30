@@ -728,65 +728,80 @@ def _run_monte_carlo(win_rate: float, avg_odds: float, n_sims: int = 10000, n_be
 
 
 def _calc_kelly_stakes(opps: list) -> list:
-    """按 Kelly 比例计算投注额，加单注上限 + 单场上限 + 市场预算上限。"""
+    """按权重比例分配日预算。每条机会的投注额 = 日预算 × (该机会权重 / 总权重)。"""
     from config.constants import MAX_STAKE_PCT as _MAX_STAKE_PCT, PER_MATCH_CAP_PCT as _PER_MATCH_CAP_PCT
-
-    # 第一遍：计算毛 Kelly 投注额（全量回测权重矩阵 + 并发凯利调整）
-    import math
     from config.weight_matrix import get_stake_pct
 
-    # 动态连亏调整：近3天全负→降仓50%，直到出现盈利日
     streak_mult = _get_streak_multiplier()
+    total_budget = TOTAL_DAILY_BUDGET * streak_mult  # 连亏时整体降预算
 
-    # 并发凯利调整：多笔同时投注时降低单笔仓位（行业标准：除以 sqrt(并发数)）
-    concurrent_count = len([o for o in opps if o.get("_kelly_pct", 0) > 0])
-    concurrency_divisor = max(1, math.sqrt(concurrent_count)) if concurrent_count > 0 else 1
-
+    # 第一遍：计算每条机会的分配权重
+    total_weight = 0.0
     for o in opps:
-        k = o.get("_kelly_pct", 0)
-        k_adjusted = k / concurrency_divisor  # 并发调整
-        k_adjusted *= streak_mult  # 连亏降仓
-        stake = round(BANKROLL * k_adjusted / 100)
         odds = o.get("bb_odds", 0)
         sport = o.get("sport", "")
         league = o.get("league", "")
         sub = o.get("_sub_market", o.get("_market", ""))
+        k = o.get("_kelly_pct", 0)
 
-        # 蒸汽移动检测：比较当前 BB 赔率 vs 快照赔率
-        # 赔率朝有利方向移动 >3% → 提高仓位；朝不利方向 >3% → 降低仓位
-        # 依据: Simon (2024, Management Science) — 赔率线系统性过度反应
+        stake_pct = get_stake_pct(sport, league, sub, odds)
+        if stake_pct <= 0:
+            o["_weight"] = 0
+            continue
+
+        # 蒸汽检测
         snap_odds = o.get("_snapshot_bb_odds", 0)
+        steam_mult = 1.0
         if snap_odds > 1.0 and odds > 1.0:
-            move_pct = (odds - snap_odds) / snap_odds  # + = 赔率涨(有利), - = 跌(不利)
+            move_pct = (odds - snap_odds) / snap_odds
             if abs(move_pct) > 0.03:
                 o["_steam_move"] = round(move_pct * 100, 1)
-                # 有利移动：提高仓位 (乘 1.0~1.5)；不利移动：降低 (乘 0.5~1.0)
-                steam_mult = 1.0 + move_pct * 3  # 3%移动 → ±9%仓位调整
+                steam_mult = 1.0 + move_pct * 3
                 steam_mult = max(0.5, min(1.5, steam_mult))
-                stake = round(stake * steam_mult)
 
-        # 周末效应：周五-周日比赛折扣 10% (Simon 2024 — 周末预测可靠性下降)
+        # 周末折扣
         match_epoch = o.get("_pin_epoch", 0)
-        if match_epoch:
-            match_dt = datetime.fromtimestamp(match_epoch, tz=timezone.utc)
-            bj_dt = match_dt.astimezone(timezone(timedelta(hours=8)))
-            if bj_dt.weekday() >= 4:  # 周五(4)/周六(5)/周日(6)
-                stake = round(stake * 0.9)
+        weekend_mult = 0.9 if (match_epoch and datetime.fromtimestamp(match_epoch, tz=timezone.utc)
+            .astimezone(timezone(timedelta(hours=8))).weekday() >= 4) else 1.0
 
-        # 基于全量历史回测的动态仓位上限
-        stake_pct = get_stake_pct(sport, league, sub, odds)
-        max_stake = BANKROLL * stake_pct
-        stake = int(min(stake, max_stake))
-        o["_raw_stake"] = stake
-        if stake < 5:
-            stake = 0
-        o["_stake"] = stake
+        # 权重 = 矩阵仓位% × Kelly% × 蒸汽系数 × 周末系数
+        weight = stake_pct * max(k, 0.1) * steam_mult * weekend_mult
+        o["_weight"] = weight
+        total_weight += weight
 
-    # 第二遍：同一比赛多盘口 → 按比例压缩到单场上限
-    # 使用 (sport, home_cn, away_cn) 作为 key，联赛名可能因BB/FB不同而不一致
+    # 第二遍：按权重比例分配预算
+    if total_weight > 0:
+        for o in opps:
+            w = o.get("_weight", 0)
+            if w <= 0:
+                o["_raw_stake"] = 0
+                o["_stake"] = 0
+                continue
+
+            stake = round(total_budget * w / total_weight)
+            odds = o.get("bb_odds", 0)
+            sport = o.get("sport", "")
+            league = o.get("league", "")
+            sub = o.get("_sub_market", o.get("_market", ""))
+
+            # 单注上限
+            stake_pct = get_stake_pct(sport, league, sub, odds)
+            max_stake = BANKROLL * stake_pct
+            stake = int(min(stake, max_stake))
+
+            o["_raw_stake"] = stake
+            o["_stake"] = stake if stake >= 5 else 0
+    else:
+        for o in opps:
+            o["_raw_stake"] = 0
+            o["_stake"] = 0
+
+    # 第三遍：同场比赛最多2条 + 单场上限
     from collections import defaultdict
     match_groups = defaultdict(list)
     for o in opps:
+        if o["_stake"] <= 0:
+            continue
         key = (o.get("sport", ""), o.get("home_cn", "").strip(), o.get("away_cn", "").strip())
         match_groups[key].append(o)
 
@@ -797,31 +812,10 @@ def _calc_kelly_stakes(opps: list) -> list:
             ratio = per_match_max / total
             for o in group:
                 o["_stake"] = max(0, round(o["_stake"] * ratio))
-        # 标记同场其他盘口（只保留最高分的2条，避免同一场比赛推太多）
         if len(group) > 2:
             group.sort(key=lambda o: o.get("_score", 0), reverse=True)
             for o in group[2:]:
-                o["_stake"] = 0  # 超过2条的同场机会不投注
-
-    # 第三遍：总额预算控制（替代分组预算上限）
-    # 纯 Kelly 决定相对比例，总额超过日预算时等比压缩
-    # 预算耗尽时 _stake=0 但 _raw_stake 保留原始 Kelly 值供展示
-    spent, today = _load_budget_tracker()
-    daily_used = sum(spent.values()) if spent else 0
-    remaining = TOTAL_DAILY_BUDGET - daily_used
-
-    total_wanted = sum(o["_stake"] for o in opps if o["_stake"] > 0)
-    if remaining <= 0:
-        for o in opps:
-            o["_stake"] = 0  # 预算耗尽: 不投注但保留展示
-        logger.info("日预算已用完 (¥%d/¥%d), 保留机会供展示", int(daily_used), TOTAL_DAILY_BUDGET)
-    elif total_wanted > remaining:
-        ratio = remaining / total_wanted
-        for o in opps:
-            if o["_stake"] > 0:
-                o["_stake"] = max(0, round(o["_stake"] * ratio))
-        logger.info("日预算压缩: 需¥%d 剩¥%d, 压缩至%.0f%%",
-                    total_wanted, int(remaining), ratio * 100)
+                o["_stake"] = 0
 
     # 保存预分配（总额）供下次推送参考
     new_total = daily_used + sum(o["_stake"] for o in opps if o["_stake"] > 0)
