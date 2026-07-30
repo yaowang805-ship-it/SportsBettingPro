@@ -53,7 +53,7 @@ cmd_scan() {
 
     _log "====== SCAN START ======"
     _log "Step 1/3: BB/FB API 提取..."
-    python3 -m src.scrapers.bb_api_fetcher --all-sports 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+    .venv312/bin/python -m src.scrapers.bb_api_fetcher --all-sports 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
     if [ $rc -ne 0 ]; then
         _log "❌ Step 1/3 失败"
         _send_alert "全量扫描 Step 1/3 (bb_api_fetcher)" "$rc"
@@ -62,7 +62,7 @@ cmd_scan() {
     _log "Step 1/3: 完成"
 
     _log "Step 2/3: Pinnacle 对比 (BB+FB合并)..."
-    python3 -m src.scrapers.bb_vs_pinnacle 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+    .venv312/bin/python -m src.scrapers.bb_vs_pinnacle 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
     if [ $rc -ne 0 ]; then
         _log "❌ Step 2/3 失败"
         _send_alert "全量扫描 Step 2/3 (bb_vs_pinnacle)" "$rc"
@@ -71,7 +71,7 @@ cmd_scan() {
     _log "Step 2/3: 完成"
 
     _log "Step 2b/3: Pinnacle 对比 (FB独立)..."
-    python3 -m src.scrapers.bb_vs_pinnacle \
+    .venv312/bin/python -m src.scrapers.bb_vs_pinnacle \
         --input=bb_odds_extracted_FB.json \
         --output=bb_vs_pinnacle_comparison_FB.json 2>&1 | tee -a "$PIPELINE_LOG"
     if [ ${PIPESTATUS[0]} -ne 0 ]; then
@@ -81,9 +81,9 @@ cmd_scan() {
 
     _log "Step 3/3: +EV 推送 (合并双对比)..."
     if [ -n "$no_bet" ]; then
-        python3 -m src.report.bb_ev_push --no-bet $force 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+        .venv312/bin/python -m src.report.bb_ev_push --no-bet $force 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
     else
-        python3 -m src.report.bb_ev_push $force 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+        .venv312/bin/python -m src.report.bb_ev_push $force 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
     fi
     if [ $rc -ne 0 ]; then
         _log "❌ Step 3/3 失败"
@@ -96,7 +96,7 @@ cmd_scan() {
 
 cmd_incremental() {
     _log "====== INCREMENTAL START ======"
-    python3 -m src.scrapers.bb_incremental_scanner 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+    .venv312/bin/python -m src.scrapers.bb_incremental_scanner 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
     if [ $rc -ne 0 ]; then
         _log "❌ 增量扫描失败 (rc=$rc)"
         _send_alert "增量扫描 (bb_incremental_scanner)" "$rc"
@@ -107,7 +107,7 @@ cmd_incremental() {
 
 cmd_settle() {
     _log "====== SETTLE START ======"
-    python3 -m src.monitor.auto_settle 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+    .venv312/bin/python -m src.monitor.auto_settle 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
     if [ $rc -ne 0 ]; then
         _log "❌ 结算失败 (rc=$rc)"
         _send_alert "自动结算 (auto_settle)" "$rc"
@@ -121,7 +121,7 @@ cmd_tier_update() {
     [[ "$1" == "--dry-run" ]] && dry_run="--dry-run" && shift
 
     _log "====== TIER UPDATE START ======"
-    python3 -m src.report.auto_tier_updater $dry_run 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
+    .venv312/bin/python -m src.report.auto_tier_updater $dry_run 2>&1 | tee -a "$PIPELINE_LOG"; rc=${PIPESTATUS[0]}
     if [ $rc -ne 0 ]; then
         _log "❌ 联赛分层更新失败 (rc=$rc)"
         _send_alert "联赛分层更新 (auto_tier_updater)" "$rc"
@@ -135,15 +135,15 @@ cmd_report() {
     case "$type" in
         daily)
             _log "====== DAILY REPORT START ======"
-            python3 -m src.report.daily_settlement 2>&1 | tee -a "$PIPELINE_LOG"
+            .venv312/bin/python -m src.report.daily_settlement 2>&1 | tee -a "$PIPELINE_LOG"
             ;;
         weekly)
             _log "====== WEEKLY REPORT START ======"
-            python3 -m src.report.periodic_report --weekly 2>&1 | tee -a "$PIPELINE_LOG"
+            .venv312/bin/python -m src.report.periodic_report --weekly 2>&1 | tee -a "$PIPELINE_LOG"
             ;;
         monthly)
             _log "====== MONTHLY REPORT START ======"
-            python3 -m src.report.periodic_report --monthly 2>&1 | tee -a "$PIPELINE_LOG"
+            .venv312/bin/python -m src.report.periodic_report --monthly 2>&1 | tee -a "$PIPELINE_LOG"
             ;;
         *)  _log "❌ 未知报告类型: $type (可用: daily|weekly|monthly)"; return 1 ;;
     esac
@@ -298,7 +298,7 @@ _send_alert() {
     if [ -f "$PIPELINE_LOG" ]; then
         log_tail=$(tail -5 "$PIPELINE_LOG" 2>/dev/null | head -c 300)
     fi
-    python3 -c "
+    .venv312/bin/python -c "
 from config.settings import send_dingtalk
 msg = '''❌ $msg (exit=$exit_code)
 时间: $(date '+%m/%d %H:%M')

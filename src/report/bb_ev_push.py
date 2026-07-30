@@ -665,11 +665,11 @@ def _collect_opportunities(match, market_key):
 
     match_type = match.get("match_type", "unknown")
     match_score = match.get("match_score", 0.7)
+    sport = match.get("sport", "")
     # 时间匹配（非队名匹配）需要高置信度，防止推错比赛。
     # 门限必须与 bb_vs_pinnacle.py Phase 2 保持一致：
     #   网球 0.75，其他 0.70
     if match_type == "time":
-        sport = match.get("sport", "")
         min_ok = 0.75 if sport == "tennis" else 0.70
         if match_score < min_ok:
             return []
@@ -749,6 +749,11 @@ def _collect_opportunities(match, market_key):
         # 比赛已标记"溢价异常高" + htft 市场 → 匹配错误的概率极高，直接跳过
         flags = match.get("flags", [])
         if sub_market == "htft" and any("溢价异常高" in f for f in flags):
+            continue
+
+        # MMA/拳击: 高 EV + "溢价异常高"标志 → 几乎一定是队名映射错误
+        # (UFC 选手名在 BB/FB 和 Pinnacle 之间经常不一致，匹配引擎容易按位置错配)
+        if sport in ("mma", "boxing") and ev > 15 and any("溢价异常高" in f for f in flags):
             continue
 
         # 赔率上限过滤: Pinnacle 历史数据按运动/联赛/市场限制
@@ -858,27 +863,44 @@ def _collect_opportunities_from_file():
     if added:
         logger.info("FB独立对比: 添加 %d 个独有机会", added)
 
-    # 二次去重：同场比赛同一盘口只保留最高赔率
-    # （联赛名可能因API来源不同而不一致，导致指纹不匹配）
-    # 注意到 designation 可能因空格或数字精度不同而不一致，特做 whitespace 归一化
-    # 使用 _normalize_cn 统一简繁体，防止 BB/FB 队名微小差异导致重复推送
+    # 二次去重：同场比赛同一盘口只保留最高赔率。
+    # 队名可能因 BB/FB 平台翻译不同而完全不同 (如 "弗雷斯尼洛虾" vs "甘布西诺弗雷斯尼洛")，
+    # 不能仅靠队名字符匹配。改用 比赛时间 + 参赛方 交叉比对。
     best_per_match = {}
     dup_removed = 0
     for o in merged:
-        match_key = (
-            o.get("sport", ""),
-            _normalize_cn(o.get("league", "") or ""),
-            _normalize_cn(o.get("home_cn", "").strip()),
-            _normalize_cn(o.get("away_cn", "").strip()),
-            o.get("designation", "").replace(" ", "").replace("（", "(").replace("）", ")"),
-        )
-        existing = best_per_match.get(match_key)
-        if existing is None or o.get("bb_odds", 0) > existing.get("bb_odds", 0):
-            best_per_match[match_key] = o
+        designation = o.get("designation", "").replace(" ", "").replace("（", "(").replace("）", ")")
+        sport = o.get("sport", "")
+        league = _normalize_cn(o.get("league", "") or "")
+        home = _normalize_cn(o.get("home_cn", "").strip())
+        away = _normalize_cn(o.get("away_cn", "").strip())
+        start = o.get("start_time_bb", "") or str(o.get("_pin_epoch", ""))
 
-    if len(best_per_match) < len(merged):
-        dup_removed = len(merged) - len(best_per_match)
-        merged = list(best_per_match.values())
+        # 三层 key：依次放宽队名匹配，防止 BB/FB 翻译差异导致重复推送
+        # L1: 主客队名都匹配 (最精确)
+        key_exact = (sport, league, home, away, designation)
+        # L2: 主队 + 时间匹配 (客队名可能不同，但主队同时间只能打一场)
+        key_home_time = (sport, league, home, start, designation)
+        # L3: 客队 + 时间匹配 (主队名可能不同)
+        key_away_time = (sport, league, away, start, designation)
+
+        existing = (best_per_match.get(key_exact) or
+                    best_per_match.get(key_home_time) or
+                    best_per_match.get(key_away_time))
+
+        if existing is None or o.get("bb_odds", 0) > existing.get("bb_odds", 0):
+            # 替换旧条目时，清理指向旧对象的所有 key
+            if existing is not None:
+                stale = [k for k, v in best_per_match.items() if v is existing]
+                for k in stale:
+                    del best_per_match[k]
+            for k in (key_exact, key_home_time, key_away_time):
+                best_per_match[k] = o
+
+    unique_count = len({id(v) for v in best_per_match.values()})
+    if unique_count < len(merged):
+        dup_removed = len(merged) - unique_count
+        merged = list({id(v): v for v in best_per_match.values()}.values())
         logger.info("同场去重: 移除 %d 个较低赔率机会，保留 %d 个", dup_removed, len(merged))
 
     return merged
