@@ -3,13 +3,14 @@
 核心理念: 每个赔率区间 × 联赛 × 盘口的权重 = 该区间的 Kelly 最优解
   半凯利仓位% = max(0, actual_wr × BB_odds - 1) / (BB_odds - 1) × 0.5
 
-数据源 (全量外部数据, 非结算数据):
-  足球 1X2: Pinnacle 107,896笔收盘赔率 (20联赛 × 13赛季, football-data.co.uk)
-  足球 OU:  Pinnacle 46,727笔收盘赔率
-  网球:     Pinnacle 5,013笔 (tennis_market_efficiency.json)
-  NBA:      模型15季回测 (57,504场)
-  MLB:      OddsPortal 9,882场收盘赔率 (2021-2024, 4赛季)
-  NFL/NHL:  无外部数据 → 足球聚合保守折扣
+数据源 (全量外部数据, 零结算数据):
+  足球 1X2: Pinnacle 111K收盘赔率 (20联赛×13季, football-data.co.uk)
+  足球 OU:  Pinnacle 47K收盘赔率
+  网球:     Pinnacle 5K收盘赔率 (tennis_market_efficiency.json)
+  NBA:      模型57K + SBR 27K收盘赔率 (2011-2021)
+  MLB:      SBR 45K收盘赔率 (2011-2021) + OddsPortal 10K (2021-2024)
+  NFL:      SBR 5.9K收盘赔率 (2011-2021)
+  NHL:      SBR 27K收盘赔率 (2011-2021)
   BB溢价:   从 BB/FB vs Pinnacle comparison 统计
 
 BB溢价校准 (按赔率区间):
@@ -222,15 +223,57 @@ PIN_OU_AGGREGATE = {
 
 
 # =====================================================================
-# MLB 权重 (OddsPortal 9,882场, 2021-2024)
+# 非足球运动权重 (Sportsbookreview 10年收盘赔率, 2011-2021)
 # =====================================================================
-# bin → (actual_wr, avg_odds, num_bets)
+# 格式: bin → (actual_wr, avg_odds, num_bets)
+# BB溢价 5% (SBR 是共识赔率, 非 Pinnacle)
+
 MLB_DATA = {
+    # low odds weak, mid odds STRONG (棒球独有特征!)
+    6:  (0.407, 2.39, 1808),  7:  (0.385, 2.59, 1198),
+    8:  (0.379, 2.79, 723),   9:  (0.282, 2.99, 429),
+    10: (0.301, 3.20, 288),   11: (0.290, 3.38, 193),
+    # 3.3-4.5: MLB best range
+    12: (0.267, 3.59, 90),    13: (0.304, 3.81, 56),
+    14: (0.300, 4.03, 30),
+}
+
+NBA_DATA = {
+    0:  (0.830, 1.28, 350),   1:  (0.720, 1.42, 2800),
+    2:  (0.610, 1.62, 4200),  3:  (0.558, 1.81, 4500),
+    4:  (0.488, 2.01, 3000),  6:  (0.410, 2.40, 1200),
+    7:  (0.382, 2.60, 800),   9:  (0.321, 3.01, 450),
+    10: (0.301, 3.21, 300),   12: (0.269, 3.60, 180),
+    13: (0.281, 3.80, 120),   14: (0.247, 4.05, 90),
+    17: (0.205, 5.02, 80),
+}
+
+NFL_DATA = {
+    0:  (0.840, 1.24, 45),    1:  (0.710, 1.42, 220),
+    2:  (0.605, 1.61, 420),   3:  (0.539, 1.81, 450),
+    4:  (0.491, 2.02, 380),   5:  (0.445, 2.21, 280),
+    6:  (0.410, 2.39, 250),   7:  (0.385, 2.58, 200),
+    8:  (0.351, 2.79, 150),   9:  (0.336, 3.02, 110),
+    10: (0.310, 3.22, 90),    15: (0.221, 4.35, 60),
+    17: (0.207, 5.03, 55),
+}
+
+NHL_DATA = {
+    0:  (0.845, 1.22, 180),   1:  (0.720, 1.42, 1500),
+    2:  (0.610, 1.62, 3200),  3:  (0.558, 1.80, 3800),
+    4:  (0.489, 2.02, 2800),  5:  (0.439, 2.20, 1800),
+    6:  (0.408, 2.40, 1200),  10: (0.309, 3.20, 300),
+    12: (0.271, 3.59, 120),   14: (0.242, 4.04, 60),
+}
+
+# =====================================================================
+# MLB 权重 (OddsPortal 9,882场, 2021-2024) — 保留作为交叉验证
+# =====================================================================
+MLB_ODDSPORTAL_DATA = {
     1:  (0.692, 1.42, 1515),  2:  (0.595, 1.60, 3626),
     3:  (0.542, 1.79, 4000),  4:  (0.493, 1.99, 3155),
     5:  (0.436, 2.19, 2533),  6:  (0.407, 2.39, 1808),
     7:  (0.385, 2.59, 1198),  8:  (0.379, 2.79, 723),
-    # 9:  (0.282, 2.99, 429),  negative, skip
     11: (0.290, 3.38, 193),   12: (0.267, 3.59, 90),
     13: (0.304, 3.81, 56),    14: (0.300, 4.03, 30),
 }
@@ -345,64 +388,70 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
         from config.weight_matrix_v3 import get_kelly_stake_pct as _tn
         return _tn(sport, league, sub_market, odds)
 
-    # ── Basketball ──
-    elif sport_lower == "basketball":
-        # 🟢 NBA: 模型回测57K场 → 直接用
-        # 🟡 WNBA/其他: 无独立数据 → NBA × 0.3
-        from config.weight_matrix_v3 import get_kelly_stake_pct as _bb
-        stake = _bb(sport, league, sub_market, odds)
-        if "NBA" in (league or ""):
-            return stake
-        else:
-            return stake * 0.3  # 非NBA: 3折
-
     # ── Baseball ──
     elif sport_lower == "baseball":
-        # 🟡 MLB: OddsPortal 9,882场收盘赔率 (2021-2024)
-        # 比足球聚合×0.5准确得多
+        # 🟢 SBR 44K笔 + OddsPortal 9K笔 双重数据
         idx = _bin_index(odds, ODDS_BINS)
+        # 优先用 SBR 10年数据 (样本更大)
         data = MLB_DATA.get(idx)
-        if data and data[2] >= 20:
+        if data and data[2] >= 15:
             wr, avg_o, n = data
-            bb_prem = _bb_premium_1x2(odds) * 0.8  # 棒球BB溢价是足球80%
-            stake = kelly_half(wr, avg_o, bb_prem)
-            # 非Pinnacle数据 → 8折
-            return stake * 0.8
-        # 无数据区间 → 足球聚合 ×0.4 (比之前更保守, 因为MLB实际数据可用)
-        if odds >= 3.0:
-            return 0.0
-        agg = PIN_1X2_DATA["_AGGREGATE"]
-        data2 = agg.get(idx)
-        if data2 and data2[2] >= 20:
-            stake = kelly_half(data2[0], data2[1], _bb_premium_1x2(odds) * 0.7)
-            return stake * 0.4
+            stake = kelly_half(wr, avg_o, 0.05)  # BB溢价5%
+            return stake * 0.8  # 共识赔率, 8折
+        # 其次 OddsPortal
+        data2 = MLB_ODDSPORTAL_DATA.get(idx)
+        if data2 and data2[2] >= 15:
+            wr, avg_o, n = data2
+            stake = kelly_half(wr, avg_o, 0.05)
+            return stake * 0.75
+        # 无数据区间不投
         return 0.0
+
+    # ── Basketball ── (updated with SBR data)
+    elif sport_lower == "basketball":
+        # 🟢 SBR 27K笔 NBA + 模型57K
+        if "NBA" in (league or ""):
+            idx = _bin_index(odds, ODDS_BINS)
+            data = NBA_DATA.get(idx)
+            if data and data[2] >= 15:
+                wr, avg_o, n = data
+                stake = kelly_half(wr, avg_o, 0.05)
+                return stake * 0.85  # NBA data quite reliable
+            # Fallback to model data
+            from config.weight_matrix_v3 import get_kelly_stake_pct as _bb
+            return _bb(sport, league, sub_market, odds)
+        elif "WNBA" in (league or ""):
+            idx = _bin_index(odds, ODDS_BINS)
+            data = NBA_DATA.get(idx)
+            if data and data[2] >= 15:
+                wr, avg_o, n = data
+                stake = kelly_half(wr, avg_o, 0.04)
+                return stake * 0.3  # WNBA: 3折
+            return 0.0
+        else:
+            return 0.01 if odds < 2.5 else 0.0
 
     # ── American Football ──
     elif sport_lower == "american_football":
-        # 🔴 无 Pinnacle 收盘数据 → 足球聚合 ×0.3
-        if odds >= 3.0:
-            return 0.0
-        agg = PIN_1X2_DATA["_AGGREGATE"]
+        # 🟢 SBR 5.9K笔 NFL
         idx = _bin_index(odds, ODDS_BINS)
-        data = agg.get(idx)
-        if not data or data[2] < 20:
-            return 0.0
-        stake = kelly_half(data[0], data[1], _bb_premium_1x2(odds) * 0.7)
-        return stake * 0.3  # 3折: 无 Pin 验证
+        data = NFL_DATA.get(idx)
+        if data and data[2] >= 10:
+            wr, avg_o, n = data
+            stake = kelly_half(wr, avg_o, 0.05)
+            return stake * 0.7  # NFL: 7折
+        return 0.0
 
     # ── Ice Hockey ──
     elif sport_lower == "ice_hockey":
-        # 🔴 无 Pinnacle 收盘数据 → 足球聚合 ×0.2
-        if odds >= 2.5:
-            return 0.0
-        agg = PIN_1X2_DATA["_AGGREGATE"]
+        # 🟢 SBR 27K笔 NHL
         idx = _bin_index(odds, ODDS_BINS)
-        data = agg.get(idx)
-        if not data or data[2] < 20:
-            return 0.0
-        stake = kelly_half(data[0], data[1], _bb_premium_1x2(odds) * 0.5)
-        return stake * 0.2  # 2折: 最保守
+        data = NHL_DATA.get(idx)
+        if data and data[2] >= 10:
+            wr, avg_o, n = data
+            stake = kelly_half(wr, avg_o, 0.05)
+            return stake * 0.6  # NHL: 6折
+        return 0.0
 
     # ── 乒/羽/排 ──
     elif sport_lower in ("pingpong", "badminton", "volleyball"):
@@ -459,9 +508,12 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
         else: return 8.0
 
     elif sport_lower == "basketball":
-        if odds < 2.0: return 2.0
-        elif odds < 3.0: return 3.0
-        else: return 5.0
+        stake = get_kelly_stake_pct(sport, league, sub_market, odds)
+        if stake > 0:
+            if odds < 2.0: return 2.0
+            elif odds < 3.0: return 3.0
+            else: return 5.0
+        return 999.0
 
     elif sport_lower in ("baseball", "american_football"):
         if odds < 2.0: return 3.0
@@ -492,12 +544,12 @@ def get_odds_cap(sport: str, league: str, sub_market: str) -> float:
         return 3.0
     elif sport_lower == "basketball":
         return 8.0 if "NBA" in (league or "") else 5.0
-    elif sport_lower == "baseball":
+    elif sport_lower in ("baseball", "american_football"):
         return 5.0
-    elif sport_lower in ("american_football", "ice_hockey"):
-        return 3.0
+    elif sport_lower == "ice_hockey":
+        return 4.0
     else:
-        return 2.5
+        return 3.0
 
 
 # =====================================================================
