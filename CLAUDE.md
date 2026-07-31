@@ -1,6 +1,6 @@
 # SportsBettingPro — 指挥官作战手册
 
-## 当前策略（2026-07-15 指挥官模式）
+## 当前策略（2026-07-31 V4 更新）
 
 **核心方向：BB体育 vs Pinnacle +EV（比价套利）**
 - BB体育（早盘赔率）vs Pinnacle（公平价参考）→ +EV 机会
@@ -20,6 +20,7 @@
 | 投注平台赔率 | BB体育 (api.infv1.com) | 直接 HTTP API | ✅ 仅BB |
 | 公平价参考 | Pinnacle (guest.api.arcadia.pinnacle.com) | HTTP API | ✅ |
 | 赛果/结算 | ESPN + football-data.org + 直播吧 | 多源聚合 | ✅ |
+| **权重标定** | **football-data.co.uk Pinnacle 收盘** | **111K场/20联赛/13季** | ✅ |
 
 ## 系统架构
 
@@ -54,32 +55,59 @@ python3 -m src.report.bb_ev_push --no-bet
 | 参数 | 值 | 说明 |
 |---|---|---|
 | 日预算 | ¥10,000 | 稳定不变 |
-| Kelly 分数 | 0.50 | 稳妥半凯利（2026-07-20从0.75下调） |
-| T1 最小 EV | 3.0% | 最可靠联赛 |
-| T2 最小 EV | 4.0% | 主流联赛 |
-| T3 最小 EV | 5.0% | 低级别 |
-| EV 上限 | 12% | 防假阳性 |
+| Kelly 分数 | 0.50 | 稳妥半凯利 |
 | 单注上限 | 6% (¥600) | |
 | 每日最多 | 50 笔 | 质量优先 |
-| 1X2 权重 | 1.00 | Pinnacle 最高效 → EV 最可靠，恢复正常权重 |
-| OU 权重 | 0.90 | Pinnacle 效率较低 → 公平价有噪音，保守处理 |
-| BTTS 权重 | 0.85 | 学术数据不足，公平价可靠性低 |
+| EV 上限 | 12% (动态) | max(12, (odds-1)×20) |
+
+### V4 权重矩阵 (`config/weight_matrix_v4.py`) — 全量 Pinnacle 历史数据驱动
+
+**核心公式**: `半凯利仓位% = max(0, 实际胜率×BB赔率-1) / (BB赔率-1) × 0.5`
+**数据源**: **完全外部数据，零笔结算数据参与**
+
+| 运动 | 数据源 | 数据量 | 赔率区间数 |
+|---|---|---|---|
+| ⚽ 足球 1X2 | football-data.co.uk Pinnacle 收盘 | **111,225 场** (20联赛×13季) | 30 细桶 |
+| ⚽ 足球 OU | football-data.co.uk Pinnacle 收盘 | **46,727 场** | 30 细桶 |
+| 🎾 网球 | Pinnacle 收盘赔率 | **5,013 场** (5赛事级) | 16 细桶 |
+| 🏀 NBA | 模型回测 | **57,504 场** (15季) | 14 细桶 |
+| ⚾ MLB | 保守默认 | 无外部 Pinnacle 数据 | 3 档 |
+| 🏈 NFL | 保守默认 | 无外部 Pinnacle 数据 | 3 档 |
+| 🏒 NHL | 保守默认 | 无外部 Pinnacle 数据 | 2 档 |
+
+### 投注公式
+
+```
+投注额 = 日预算 × V4_Kelly% × Kelly倍率 × 蒸汽 × 连亏
+```
+
+其中 V4_Kelly% **已经是最优解**（Pinnacle 历史数据 + BB 溢价校准），Kelly 倍率/蒸汽/连亏仅做边际调整。
+
+### 封杀规则
+
+| 规则 | 原因 |
+|---|---|
+| DC (双重机会) | Pinnacle 无对应盘口，0% 历史胜率 |
+| HTFT (半全场) | BB/Pin 定义不一致 |
+| MMA/拳击 | 队名映射错误率极高 |
+| 赔率 >20.0 | 111K Pinnacle 数据确认全部负期望 |
 
 ## 关键文件
 
-- `src/scrapers/bb_api_fetcher.py` — BB API 直连提取（Chrome 无依赖）
+- `config/weight_matrix_v4.py` — **V4 权重矩阵（全量外部数据驱动）**
+- `data/pinnacle_historical/` — 275 个 Pinnacle 历史 CSV
+- `src/scrapers/bb_api_fetcher.py` — BB API 直连提取
 - `src/scrapers/bb_vs_pinnacle.py` — 对比引擎（去抽水公平价, FT+HT）
-- `src/betting/bb_virtual_bet.py` — 虚拟投注（¥10,000日预算）
-- `src/report/bb_ev_push.py` — 钉钉推送（格式优化: 置信度+时间排序）
+- `src/report/bb_ev_push.py` — 钉钉推送 + V4 投注
+- `src/betting/bb_virtual_bet.py` — 虚拟投注
 - `src/monitor/auto_settle.py` — ESPN 自动结算
-- `config/dingtalk.py` — 钉钉直连（真实IP+SNI 绕过 DNS 劫持）
+- `config/dingtalk.py` — 钉钉直连
 
 ## 关键决策
 
-1. **BB API 直连** — `api.infv1.com` (BB体育真实API, user-token头)，非旧 `api.447a9.com`（那是不同数据源返回错误低价）
-2. **type=2** — 返回未来72小时比赛（658场），type=3 仅当天（26场）
-3. **钉钉直连** — Shadowrocket VPN 劫持 DNS，硬编码真实IP `161.117.107.66` + SNI
-4. **requests 库** — Python 3.14 urllib 有 IncompleteRead bug，大响应截断
-5. **置信度标记** — ✓ = 队名匹配(≥0.95), ◷ = 时间匹配
-6. **Tier门槛** — T1≥3%, T2≥4%, T3≥5%, EV_CAP=12%
-7. **止损机制** — 连输3天预算减半，5天停投
+1. **BB API 直连** — `api.infv1.com` (BB体育真实API, user-token头)
+2. **type=2** — 返回未来72小时比赛
+3. **钉钉直连** — 硬编码真实IP `161.117.107.66` + SNI
+4. **置信度标记** — ✓ = 队名匹配(≥0.95), ◷ = 时间匹配
+5. **止损机制** — 连输3天预算减半，5天停投
+6. **权重矩阵** — 全量 Pinnacle 外部数据驱动，逐联赛逐赔率区间独立

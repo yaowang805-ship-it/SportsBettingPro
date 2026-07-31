@@ -739,13 +739,24 @@ def _run_monte_carlo(win_rate: float, avg_odds: float, n_sims: int = 10000, n_be
 
 
 def _calc_kelly_stakes(opps: list) -> list:
-    """按权重比例分配日预算。每条机会的投注额 = 日预算 × (该机会权重 / 总权重)。"""
+    """V3 纯 Kelly 最优仓位分配。赔率区间直接决定投注额。
+
+    公式:
+      base_stake = BANKROLL × V3_Kelly% (赔率区间驱动, 已是最优解)
+      adjusted = base_stake × Kelly倍率 × 蒸汽 × 连亏
+
+    V3 的 get_kelly_stake_pct() 内化了:
+      - Pinnacle vig (低 vig → 高置信 → 高仓位)
+      - 赔率区间期望收益 (Kelly公式: edge/(odds-1)×0.5)
+      - 联赛级别差异 (已知联赛 vig 驱动)
+      - 市场质量差异 (OU > 1X2 > HT)
+    无需 league_multiplier 或 weekend_mult (已在 V3 计算中考虑)。
+    """
     from config.constants import MAX_STAKE_PCT as _MAX_STAKE_PCT, PER_MATCH_CAP_PCT as _PER_MATCH_CAP_PCT
-    from config.weight_matrix import get_stake_pct
+    from config.weight_matrix_v4 import get_kelly_stake_pct
 
     streak_mult = _get_streak_multiplier()
 
-    # 第一遍：独立计算每条机会的 Kelly 投注额
     for o in opps:
         odds = o.get("bb_odds", 0)
         sport = o.get("sport", "")
@@ -753,29 +764,29 @@ def _calc_kelly_stakes(opps: list) -> list:
         sub = o.get("_sub_market", o.get("_market", ""))
         k = o.get("_kelly_pct", 0)
 
-        stake_pct = get_stake_pct(sport, league, sub, odds)
+        # V3 赔率区间直接驱动的 Kelly 最优仓位
+        stake_pct = get_kelly_stake_pct(sport, league, sub, odds)
         if stake_pct <= 0:
             o["_stake"] = 0; o["_raw_stake"] = 0
             continue
 
-        # 蒸汽检测
+        # 蒸汽检测 (边际调整 ±30%)
         snap_odds = o.get("_snapshot_bb_odds", 0)
         steam_mult = 1.0
         if snap_odds > 1.0 and odds > 1.0:
             move_pct = (odds - snap_odds) / snap_odds
             if abs(move_pct) > 0.03:
                 o["_steam_move"] = round(move_pct * 100, 1)
-                steam_mult = 1.0 + move_pct * 3
-                steam_mult = max(0.5, min(1.5, steam_mult))
+                steam_mult = 1.0 + move_pct * 2
+                steam_mult = max(0.7, min(1.3, steam_mult))
 
-        # 周末折扣
-        match_epoch = o.get("_pin_epoch", 0)
-        weekend_mult = 0.9 if (match_epoch and datetime.fromtimestamp(match_epoch, tz=timezone.utc)
-            .astimezone(timezone(timedelta(hours=8))).weekday() >= 4) else 1.0
+        # Kelly 倍率 (边缘调整: edge 越高越值得加注)
+        kelly_mult = 1.0
+        if k > 0:
+            kelly_mult = min(1.5, max(0.5, k / 3.0))
 
-        # 独立计算: 日预算 × 仓位% × (Kelly%/3) × 蒸汽 × 周末 × 连亏
-        # Kelly/3: Kelly 3%时给满仓位, 6%时2x, 1%时0.33x
-        stake = int(BANKROLL * stake_pct * (k / 3.0) * steam_mult * weekend_mult * streak_mult)
+        # 最终投注额: V3最优仓位 × Kelly倍率 × 蒸汽 × 连亏
+        stake = int(BANKROLL * stake_pct * kelly_mult * steam_mult * streak_mult)
         o["_raw_stake"] = stake
         o["_stake"] = stake if stake >= 5 else 0
 
@@ -941,26 +952,29 @@ def _collect_opportunities(match, market_key):
     result = []
     for opp in match.get(market_key, []):
         ev = opp.get("ev_pct", 0)
-        if ev < min_ev:  # 按 Tier 动态门槛过滤
-            continue
         bb_odds = opp.get("bb_odds", 0)
         pin_odds = opp.get("pin_odds", 0)
 
+        # ── V2 动态 EV 门槛: 赔率越高 → 门槛越高 ──
+        # V4 的 get_min_ev 基于 Pinnacle 107K场数据
+        from config.weight_matrix_v4 import get_min_ev
+        v3_min_ev = get_min_ev(match.get("sport", ""), league, sub_market, bb_odds)
+        if ev < v3_min_ev:
+            continue
+
+        # 同时也要过旧的 Tier 底线（兜底）
+        if ev < min_ev:
+            continue
+
         # EV 上限过滤：高赔率天然高 EV，用动态上限防假阳性
-        # 公式: max(12, (odds-1)*20). odds=2→cap=20%, odds=5→cap=80%
         _dynamic_cap = max(EV_CAP, (bb_odds - 1) * 20)
         if ev > _dynamic_cap:
             continue
 
-        # 超高赔率过滤：BB 赔率 > 15.0 且不是主流联赛 → 跳过
-        # （小联赛弱队不可能有真实 15+ 赔率，通常是匹配错误）
-        if bb_odds > 15.0 and league_mult < 1.0:
-            continue
-
-        # 赔率 > 10.0 过滤：仅五大联赛有 Pin 收盘正 ROI (法甲+29%/西甲+8%/意甲+5%/英超+5%/德甲+4%)
-        # 其他联赛 >10.0 全是负 ROI，直接跳过
-        _big5 = ("德甲", "英超", "西甲", "意甲", "法甲")
-        if bb_odds > 10.0 and not any(b5 in league for b5 in _big5):
+        # ── V4 赔率上限: 基于 Pinnacle 全量数据 ──
+        from config.weight_matrix_v4 import get_odds_cap
+        _odds_cap = get_odds_cap(match.get("sport", ""), league, sub_market)
+        if _odds_cap > 0 and bb_odds > _odds_cap:
             continue
 
         # 市场子类型识别：区分同一 market_key 下的不同市场（如 1X2 / HT / BTTS / DC）
@@ -999,9 +1013,7 @@ def _collect_opportunities(match, market_key):
             if dev > 0.25:
                 continue
 
-        # 赔率上限过滤: Pinnacle 历史数据按运动/联赛/市场限制
-        _odds_limit = _get_odds_limit(match.get("sport", ""), league, sub_market)
-        if _odds_limit and bb_odds > _odds_limit:
+        # 赔率上限过滤: V3 的 get_odds_cap 已在上面处理
             continue
 
         market_w = _get_market_weight(sub_market, match.get("sport", ""))
