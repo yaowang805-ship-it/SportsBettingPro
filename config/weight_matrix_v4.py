@@ -274,6 +274,9 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
             return kelly_half(wr, avg_o, bb_prem)
 
         elif sub_market == "ht":
+            # HT 高赔封杀: >=4.0 历史全输 (20笔结算, Pin 数据也极薄)
+            if odds >= 4.0:
+                return 0.0
             league_data = _match_league(league, PIN_1X2_DATA)
             if not league_data:
                 return 0.0
@@ -283,10 +286,9 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
             wr, avg_o, n = data
             if n < 15:
                 return 0.0
-            # HT: 15% 折扣在溢价和最终结果上
             bb_prem = _bb_premium_ht(odds)
             stake = kelly_half(wr, avg_o, bb_prem)
-            return stake * 0.85  # 额外 HT 折扣
+            return stake * 0.85
 
         else:  # 1X2 (also used for BTTS/DNB/OE/Corner fallback)
             # 🔵 特殊市场: 无 Pinnacle 对应盘口 → 固定上限
