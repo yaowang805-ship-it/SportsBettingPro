@@ -8,6 +8,8 @@
   足球 OU:  Pinnacle 46,727笔收盘赔率
   网球:     Pinnacle 5,013笔 (tennis_market_efficiency.json)
   NBA:      模型15季回测 (57,504场)
+  MLB:      OddsPortal 9,882场收盘赔率 (2021-2024, 4赛季)
+  NFL/NHL:  无外部数据 → 足球聚合保守折扣
   BB溢价:   从 BB/FB vs Pinnacle comparison 统计
 
 BB溢价校准 (按赔率区间):
@@ -220,6 +222,20 @@ PIN_OU_AGGREGATE = {
 
 
 # =====================================================================
+# MLB 权重 (OddsPortal 9,882场, 2021-2024)
+# =====================================================================
+# bin → (actual_wr, avg_odds, num_bets)
+MLB_DATA = {
+    1:  (0.692, 1.42, 1515),  2:  (0.595, 1.60, 3626),
+    3:  (0.542, 1.79, 4000),  4:  (0.493, 1.99, 3155),
+    5:  (0.436, 2.19, 2533),  6:  (0.407, 2.39, 1808),
+    7:  (0.385, 2.59, 1198),  8:  (0.379, 2.79, 723),
+    # 9:  (0.282, 2.99, 429),  negative, skip
+    11: (0.290, 3.38, 193),   12: (0.267, 3.59, 90),
+    13: (0.304, 3.81, 56),    14: (0.300, 4.03, 30),
+}
+
+# =====================================================================
 # 封杀
 # =====================================================================
 BLOCKED_SPORTS = {"mma", "boxing"}
@@ -342,17 +358,25 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
 
     # ── Baseball ──
     elif sport_lower == "baseball":
-        # 🔴 无 Pinnacle 收盘数据 → 足球聚合 ×0.5
+        # 🟡 MLB: OddsPortal 9,882场收盘赔率 (2021-2024)
+        # 比足球聚合×0.5准确得多
+        idx = _bin_index(odds, ODDS_BINS)
+        data = MLB_DATA.get(idx)
+        if data and data[2] >= 20:
+            wr, avg_o, n = data
+            bb_prem = _bb_premium_1x2(odds) * 0.8  # 棒球BB溢价是足球80%
+            stake = kelly_half(wr, avg_o, bb_prem)
+            # 非Pinnacle数据 → 8折
+            return stake * 0.8
+        # 无数据区间 → 足球聚合 ×0.4 (比之前更保守, 因为MLB实际数据可用)
         if odds >= 3.0:
             return 0.0
         agg = PIN_1X2_DATA["_AGGREGATE"]
-        idx = _bin_index(odds, ODDS_BINS)
-        data = agg.get(idx)
-        if not data or data[2] < 20:
-            return 0.0
-        bb_prem = _bb_premium_1x2(odds) * 0.8  # 棒球 BB 溢价估计是足球的 80%
-        stake = kelly_half(data[0], data[1], bb_prem)
-        return stake * 0.5  # 5折: 无 Pin 验证
+        data2 = agg.get(idx)
+        if data2 and data2[2] >= 20:
+            stake = kelly_half(data2[0], data2[1], _bb_premium_1x2(odds) * 0.7)
+            return stake * 0.4
+        return 0.0
 
     # ── American Football ──
     elif sport_lower == "american_football":
