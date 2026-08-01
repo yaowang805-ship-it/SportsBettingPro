@@ -263,7 +263,7 @@ def _diagnose_response(resp, url: str) -> str:
     """诊断非 200 响应，返回错误类型: cloudflare_block/ip_ban/maintenance/rate_limit/unknown"""
     try:
         body = resp.text[:500]
-    except:
+    except Exception:
         body = ""
 
     # 503 + MAINTENANCE → Pinnacle 计划内维护
