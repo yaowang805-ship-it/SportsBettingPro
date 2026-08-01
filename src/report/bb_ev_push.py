@@ -1635,8 +1635,14 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
         time_suffix = f"  ({bj_time})" if bj_time else ""
         lines.append(f"  ##### #{match_idx} {home} 对 {away}{time_suffix}")
 
+        # 去重: 同场比赛同一盘口+赔率只显示一条
+        seen_lines = set()
         for o in opps:
             oc = o["designation"]
+            line_key = (oc, o.get("bb_odds", 0), o.get("pin_odds", 0), o.get("ev_pct", 0))
+            if line_key in seen_lines:
+                continue
+            seen_lines.add(line_key)
             pinny = round(o.get("pin_odds", 0), 2) if o.get("pin_odds", 0) > 0 else 0
             fair = o.get("fair_price") or round(o["pin_odds"], 2)
             bb_odds = o["bb_odds"]
