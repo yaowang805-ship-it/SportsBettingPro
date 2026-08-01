@@ -34,9 +34,6 @@ FINGERPRINT_FILE = DATA_DIR / "pushed_fingerprints.json"
 CLV_LOG_FILE = DATA_DIR / "clv_tracking.csv"
 BUDGET_TRACKER_FILE = DATA_DIR / "budget_tracker.json"
 
-# --no-bet 调试模式: 不存指纹 (防止手动调试污染去重)
-_NO_BET_DEBUG = False
-
 # 联赛配置数据（从固定文件加载）
 BANNED_LEAGUES_FILE = DATA_DIR / "banned_leagues.json"
 LEAGUE_TIERS_FILE = DATA_DIR / "league_tiers.json"
@@ -2174,7 +2171,8 @@ def _send_failure_alert(errors: list):
         logger.error("钉钉告警发送失败: %s", e)
 
 
-def push_report(place_bets=False, incremental=False, qualified=None, force=False, label: str = ""):
+def push_report(place_bets=False, incremental=False, qualified=None, force=False, label: str = "",
+                save_fingerprints: bool = True):
     """推送报告到钉钉。
 
     Args:
@@ -2183,6 +2181,7 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         qualified: 可选，来自 build_report 的已处理机会列表。为 None 时独立预处理。
         force: 跳过指纹去重，强制推送。
         label: 增量扫描类型标签（如 "24h内临场" 或 "24-72h早盘"）
+        save_fingerprints: 是否保存指纹 (--no-bet调试时False)
     """
     # 推送前二次验价（仅增量模式且 qualified 已由调用者提供时）
     if qualified and incremental:
@@ -2281,19 +2280,18 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         elif place_bets:
             logger.info("无可投注机会（全部被结算可行性过滤）")
         # 指纹保存 (含EV追踪, 同盘口EV上涨>1%可重推)
-        # --no-bet 调试模式不存指纹 (防止手动调试污染去重)
-        if not _NO_BET_DEBUG:
+        # 指纹保存 (每场最多2条, 与同场冷却一致)
+        if save_fingerprints:
             from collections import defaultdict
             from config.database import add_fingerprints
             new_fps = {}
-            # 按比赛分组, 每场最多存2个指纹 (与同场冷却一致, 防超额锁定)
             match_groups = defaultdict(list)
             for o in qualified:
                 key = (o.get("sport",""), o.get("home_cn","").strip(), o.get("away_cn","").strip())
                 match_groups[key].append(o)
             for key, group in match_groups.items():
                 group.sort(key=lambda o: o.get("_score", 0), reverse=True)
-                for o in group[:2]:  # 只存前2条
+                for o in group[:2]:
                     fp = _make_fingerprint(o)
                     ev = o.get("ev_pct", 0)
                     bb = o.get("bb_odds", 0)
@@ -2304,8 +2302,6 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
                         new_fps[fp + "_src"] = 1 if src == "FB" else 0
             add_fingerprints(new_fps)
             logger.info("指纹: 保存 %d 条 (来自 %d 场比赛)", len(new_fps), len(match_groups))
-        else:
-            logger.info("--no-bet 调试模式: 跳过指纹保存")
         # JSON 二次备份
         existing = _load_fingerprints()
         for fp, ev in new_fps.items():
@@ -2382,17 +2378,13 @@ def main():
     # 读取增量扫描标签（环境变量传递，进程隔离）
     label_flag = os.environ.get("PUSH_LABEL", "")
 
-    # --no-bet 调试模式: 不存指纹 (防止手动调试污染去重)
-    if "--no-bet" in sys.argv:
-        import src.report.bb_ev_push as _mod
-        _mod._NO_BET_DEBUG = True
-
     if "--no-push" not in sys.argv:
         push_report(place_bets=("--no-bet" not in sys.argv),
                     incremental="--incremental" in sys.argv,
                     qualified=qualified if qualified else None,
                     force=force_fresh,
-                    label=label_flag)
+                    label=label_flag,
+                    save_fingerprints=("--no-bet" not in sys.argv))
     return body
 
 
