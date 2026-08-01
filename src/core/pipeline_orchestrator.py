@@ -58,7 +58,7 @@ for _lf in sorted(LOG_DIR.iterdir()):
         print(f"  🗑️ 清理旧日志: {_lf.name} ({(int(_age_sec / 86400))}天前)")
 
 SCAN_WINDOW = (7, 22)              # 07:00 ~ 22:00
-INCREMENTAL_NEAR_INTERVAL = 1200   # 20 分钟 — 24h内近场比赛 (赔率变动快, 高频抓机会)
+INCREMENTAL_NEAR_INTERVAL = 900    # 15 分钟 — 24h内近场比赛 (高频抓变动)
 INCREMENTAL_FAR_INTERVAL = 3600    # 60 分钟 — 24-72h早盘比赛 (赔率相对稳定)
 CHECK_INTERVAL = 30                # 调度循环检查间隔（秒）
 
