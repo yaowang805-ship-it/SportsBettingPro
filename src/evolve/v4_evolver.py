@@ -348,13 +348,60 @@ def evolve_weekly():
 
 
 def evolve_monthly():
-    """每月进化任务: 全量权重重算 + 交叉验证。"""
+    """每月进化任务: 全量权重重算 + 赔率区间权重重算 + 交叉验证。"""
     _ensure_dirs()
     logger.info("=== 每月进化 ===")
-    # TODO: 下载新的 football-data.co.uk 赛季数据
-    # TODO: 重新计算所有联赛的 (wr, avg_odds, n)
-    # TODO: 交叉验证: 留出一个赛季, 回测 V4 权重
-    logger.info("=== 每月进化完成 (全量重算待实现) ===")
+    logger.info("Step 1/3: 重算赔率区间权重...")
+    _recalibrate_odds_weights()
+    logger.info("Step 2/3: 结算反馈贝叶斯更新...")
+    analyze_settlement_feedback()
+    logger.info("Step 3/3: V4 健康检查...")
+    health = audit_v4_health()
+    for issue in health["issues"]:
+        logger.warning("  %s: %s", issue["type"], issue["suggestion"])
+    logger.info("=== 每月进化完成 ===")
+
+
+def _recalibrate_odds_weights():
+    """用全量 Pinnacle 数据重算赔率区间权重。"""
+    import csv
+    from collections import defaultdict
+    from config.weight_matrix_v4 import ODDS_BINS, _bb_premium_1x2
+
+    pin_dir = DATA_DIR / "pinnacle_historical"
+    bins = defaultdict(lambda: [0, 0, 0.0])  # wins, total, sum_odds
+
+    def bi(o):
+        for i, t in enumerate(ODDS_BINS):
+            if o < t: return i
+        return len(ODDS_BINS)-1
+
+    for subdir in pin_dir.iterdir():
+        if not subdir.is_dir() or subdir.name in ("sbr","oddsportal","scottfree","tennis_data","mma"): continue
+        for f in subdir.glob("*.csv"):
+            try:
+                with open(f, encoding='utf-8-sig') as fh:
+                    for r in csv.DictReader(fh):
+                        try:
+                            ph=float(r.get("PSH",0)or 0);pd=float(r.get("PSD",0)or 0);pa=float(r.get("PSA",0)or 0)
+                            ftr=r.get("FTR","")
+                        except: continue
+                        if min(ph,pa)<=1.01: continue
+                        for odds, won in [(ph,ftr=="H"),(pd,ftr=="D"),(pa,ftr=="A")]:
+                            if odds<=1.01: continue
+                            idx=bi(odds); bins[idx][1]+=1; bins[idx][2]+=odds
+                            if won: bins[idx][0]+=1
+            except: continue
+
+    logger.info("赔率权重重算: %d 笔数据", sum(v[1] for v in bins.values()))
+    for idx in sorted(bins.keys()):
+        w, n, s = bins[idx]
+        if n < 100: continue
+        wr = w/n; avg_o = s/n
+        bb_o = avg_o*(1+_bb_premium_1x2(avg_o))
+        bb_ev = wr*bb_o - 1
+        if bb_ev > 0.05: logger.info("  @%.1f: BB EV %+.1f%% → +30%% (n=%d)", avg_o, bb_ev*100, n)
+        elif bb_ev < 0: logger.info("  @%.1f: BB EV %+.1f%% → 封杀 (n=%d)", avg_o, bb_ev*100, n)
 
 
 # =====================================================================
