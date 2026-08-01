@@ -573,24 +573,25 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             if _cross > _direct:
                 _ml_swapped = True
 
-        # 方式2：赔率模式检测 (适用于无队名映射的运动，如拳击/MMA/网球)
+        # 方式2：赔率模式检测 (适用于无队名映射的运动，如拳击/MMA/网球/篮球)
         if not _ml_swapped and len(bb_ml) >= 2 and len(pin_ml) >= 2:
-            # 对 2-way: 比较 [home,away] vs [away,home]
-            # 对 3-way: 比较 [home,draw,away] vs [away,draw,home]
             _direct_diff = 0.0
             _cross_diff = 0.0
             for i in range(len(bb_ml)):
                 if bb_ml[i] and pin_ml[i]:
                     _direct_diff += abs(bb_ml[i] - pin_ml[i])
-            # 交叉：交换首尾，中间(draw)不变
             _pin_cross = list(pin_ml)
             _pin_cross[0], _pin_cross[-1] = _pin_cross[-1], _pin_cross[0]
             for i in range(len(bb_ml)):
                 if bb_ml[i] and _pin_cross[i]:
                     _cross_diff += abs(bb_ml[i] - _pin_cross[i])
-            # 交叉差异显著更小 → 认定反转
-            if _cross_diff < _direct_diff * 0.7 and _direct_diff > 0.5:
+            # V4.2: 放宽阈值 — 2-way sport (篮球等) 赔率接近, 需要更敏感
+            is_two_way = n_ml == 2
+            swap_ratio_threshold = 0.85 if is_two_way else 0.7
+            swap_abs_threshold = 0.25 if is_two_way else 0.5
+            if _cross_diff < _direct_diff * swap_ratio_threshold and _direct_diff > swap_abs_threshold:
                 _ml_swapped = True
+                entry["flags"].append(f"赔率模式检测到主客反转 (direct={_direct_diff:.2f} cross={_cross_diff:.2f})")
 
         if _ml_swapped:
             entry["flags"].append("已校准: BB主客反转(Pin主=BB客, Pin客=BB主)")

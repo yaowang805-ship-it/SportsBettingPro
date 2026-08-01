@@ -357,14 +357,50 @@ def evolve_monthly():
     logger.info("=== 每月进化完成 (全量重算待实现) ===")
 
 
+# =====================================================================
+# 5. 数据备份 — 保护不可再生数据
+# =====================================================================
+def backup_critical_data():
+    """备份不可再生的核心数据文件。"""
+    _ensure_dirs()
+    backup_dir = EVOLVE_DIR / "backups"
+    backup_dir.mkdir(exist_ok=True)
+
+    critical_files = [
+        STORAGE_DIR / "settlement_log.csv",
+        STORAGE_DIR / "team_name_map.json",
+        STORAGE_DIR / "pinnacle_league_structure.json",
+        STORAGE_DIR / "league_tiers.json",
+    ]
+
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M")
+    backed_up = 0
+    for f in critical_files:
+        if f.exists():
+            import shutil
+            dest = backup_dir / f"{f.stem}_{timestamp}{f.suffix}"
+            shutil.copy2(f, dest)
+            backed_up += 1
+
+    # 保留最近 30 个备份
+    all_backups = sorted(backup_dir.glob("*"))
+    for old in all_backups[:-30]:
+        old.unlink()
+
+    logger.info("数据备份: %d 个文件 → %s (%d 个历史备份)",
+                backed_up, backup_dir, len(list(backup_dir.glob("*"))))
+
+
 if __name__ == "__main__":
     import sys
     logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(levelname)-7s | %(name)s | %(message)s')
 
     if "--weekly" in sys.argv:
         evolve_weekly()
+        backup_critical_data()
     elif "--monthly" in sys.argv:
         evolve_monthly()
+        backup_critical_data()
     elif "--feedback" in sys.argv:
         fb = analyze_settlement_feedback()
         if fb:
@@ -375,5 +411,7 @@ if __name__ == "__main__":
     elif "--audit" in sys.argv:
         health = audit_v4_health()
         print(json.dumps(health, indent=2, ensure_ascii=False))
+    elif "--backup" in sys.argv:
+        backup_critical_data()
     else:
         evolve_daily()
