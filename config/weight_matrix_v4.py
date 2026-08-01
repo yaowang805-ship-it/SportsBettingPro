@@ -240,10 +240,8 @@ PIN_1X2_DATA = {
     },
 }
 
-# 更小联赛(数据少)直接用聚合数据
-for _lg in ("英甲", "英乙", "苏超", "德乙", "意乙", "西乙", "法乙",
-            "荷甲", "比甲", "葡超", "土超", "希超", "英议联", "苏甲"):
-    PIN_1X2_DATA[_lg] = PIN_1X2_DATA["_AGGREGATE"]
+# V4.3: 所有24联赛都有独立权重数据, 不再需要聚合赋值
+# 未知联赛 → _match_league 返回 _AGGREGATE
 
 
 # =====================================================================
@@ -303,10 +301,7 @@ PIN_OU_DATA = {
         9: (0.267, 2.99, 258),  10: (0.266, 3.19, 154), 11: (0.336, 3.38, 128),
     },
 }
-# 无独立数据的联赛用聚合
-for _lg in ("意甲", "法甲", "意乙", "法乙", "荷甲", "比甲", "葡超", "土超", "希超", "苏超", "苏甲"):
-    if _lg not in PIN_OU_DATA:
-        PIN_OU_DATA[_lg] = PIN_OU_DATA["_AGGREGATE"]
+# V4.3: 所有24联赛都有独立OU权重
 
 # 向后兼容别名
 PIN_OU_AGGREGATE = PIN_OU_DATA["_AGGREGATE"]
@@ -510,7 +505,7 @@ def _match_league(league: str, data_dict: dict):
             continue
         if kw in (league or ""):
             return data_dict[kw]
-    return data_dict.get("_AGGREGATE")
+    return data_dict.get("_AGGREGATE")  # V4.3: 仅未知联赛回退聚合
 
 
 # V4.2: 样本量阈值 (Wilson CI 驱动)
@@ -551,7 +546,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         idx = _bin_index(odds, ODDS_BINS)
 
         if sub_market == "ou":
-            # V4.2: 逐联赛 OU 权重 (回退聚合)
+            # V4.3: 逐联赛 OU 权重 (24联赛独立数据, 聚合仅兜底)
             ou_league_data = _match_league(league, PIN_OU_DATA)
             if not ou_league_data:
                 return 0.0
@@ -562,8 +557,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             if n < MIN_N_MINIMUM:
                 return 0.0
             bb_prem = _bb_premium_ou(odds)
-            discount = 0.85 if ou_league_data is PIN_OU_DATA.get("_AGGREGATE") else 1.0
-            return kelly_075(wr, avg_o, bb_prem, n) * discount
+            return kelly_075(wr, avg_o, bb_prem, n)
 
         elif sub_market == "ht":
             if odds >= 4.0:
@@ -589,11 +583,6 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return cfg["max_stake"]
 
             league_data = _match_league(league, PIN_1X2_DATA)
-            if league_data is PIN_1X2_DATA.get("_AGGREGATE"):
-                discount = 0.85
-            else:
-                discount = 1.0
-
             if not league_data:
                 return 0.0
             data = league_data.get(idx)
@@ -604,7 +593,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             bb_prem = _bb_premium_1x2(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n)
-            return stake * discount
+            return stake
 
     # ── Tennis (V4.2: 直接编码, 不再复用V3) ──
     elif sport_lower == "tennis":
