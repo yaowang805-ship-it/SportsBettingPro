@@ -1741,8 +1741,9 @@ def get_odds_cap(sport: str, league: str, sub_market: str) -> float:
     if sport_lower == "football":
         return 20.0 if sub_market not in SPECIAL_MARKET_CAPS else SPECIAL_MARKET_CAPS[sub_market]["max_odds"]
     elif sport_lower == "tennis":
+        # V4.3: 137,922笔Pinnacle数据回测, edge正到@5.4
         for kw, cap in [("Masters",15.0),("Grand Slam",5.0),("ATP 500",10.0),
-                        ("ATP 250",5.0),("WTA",4.0),("Challenger",3.0),("ITF",2.5)]:
+                        ("ATP 250",5.0),("WTA",5.0),("Challenger",3.0),("ITF",3.0)]:
             if kw.lower() in (league or "").lower():
                 return cap
         return 3.0
