@@ -34,6 +34,9 @@ FINGERPRINT_FILE = DATA_DIR / "pushed_fingerprints.json"
 CLV_LOG_FILE = DATA_DIR / "clv_tracking.csv"
 BUDGET_TRACKER_FILE = DATA_DIR / "budget_tracker.json"
 
+# --no-bet 调试模式: 不存指纹 (防止手动调试污染去重)
+_NO_BET_DEBUG = False
+
 # 联赛配置数据（从固定文件加载）
 BANNED_LEAGUES_FILE = DATA_DIR / "banned_leagues.json"
 LEAGUE_TIERS_FILE = DATA_DIR / "league_tiers.json"
@@ -2278,18 +2281,22 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         elif place_bets:
             logger.info("无可投注机会（全部被结算可行性过滤）")
         # 指纹保存 (含EV追踪, 同盘口EV上涨>1%可重推)
-        from config.database import add_fingerprints
-        new_fps = {}
-        for o in qualified:
-            fp = _make_fingerprint(o)
-            ev = o.get("ev_pct", 0)
-            bb = o.get("bb_odds", 0)
-            src = o.get("bb_price_source", "BB")
-            new_fps[fp] = ev  # 主指纹: EV值
-            if bb > 0:
-                new_fps[fp + "_bb"] = bb    # 扩展字段: 实际赔率(检测恶化)
-                new_fps[fp + "_src"] = 1 if src == "FB" else 0  # 价格来源
-        add_fingerprints(new_fps)
+        # --no-bet 调试模式不存指纹 (防止手动调试污染去重)
+        if not _NO_BET_DEBUG:
+            from config.database import add_fingerprints
+            new_fps = {}
+            for o in qualified:
+                fp = _make_fingerprint(o)
+                ev = o.get("ev_pct", 0)
+                bb = o.get("bb_odds", 0)
+                src = o.get("bb_price_source", "BB")
+                new_fps[fp] = ev
+                if bb > 0:
+                    new_fps[fp + "_bb"] = bb
+                    new_fps[fp + "_src"] = 1 if src == "FB" else 0
+            add_fingerprints(new_fps)
+        else:
+            logger.info("--no-bet 调试模式: 跳过指纹保存")
         # JSON 二次备份
         existing = _load_fingerprints()
         for fp, ev in new_fps.items():
@@ -2365,6 +2372,11 @@ def main():
 
     # 读取增量扫描标签（环境变量传递，进程隔离）
     label_flag = os.environ.get("PUSH_LABEL", "")
+
+    # --no-bet 调试模式: 不存指纹 (防止手动调试污染去重)
+    if "--no-bet" in sys.argv:
+        import src.report.bb_ev_push as _mod
+        _mod._NO_BET_DEBUG = True
 
     if "--no-push" not in sys.argv:
         push_report(place_bets=("--no-bet" not in sys.argv),
