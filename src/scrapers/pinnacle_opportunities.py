@@ -60,7 +60,7 @@ def add_oe_opportunities(entry, bb_odd, bb_even, odd_fair, even_fair, pin_odd=No
     ev_even = round((bb_even - even_fair) / even_fair * 100, 2)
     if ev_odd > 1:
         entry["opportunities"].append({
-            "designation": "单",
+            "designation": "单双-单",
             "bb_odds": bb_odd,
             "pin_odds": pin_odd or odd_fair,
             "fair_price": odd_fair,
@@ -69,7 +69,7 @@ def add_oe_opportunities(entry, bb_odd, bb_even, odd_fair, even_fair, pin_odd=No
         })
     if ev_even > 1:
         entry["opportunities"].append({
-            "designation": "双",
+            "designation": "单双-双",
             "bb_odds": bb_even,
             "pin_odds": pin_even or even_fair,
             "fair_price": even_fair,

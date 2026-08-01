@@ -56,10 +56,13 @@ def _bin_index(odds: float, bins: list) -> int:
 # =====================================================================
 # Kelly 公式
 # =====================================================================
-def kelly_half(actual_wr: float, avg_odds: float, bb_premium: float, cap: float = 0.06) -> float:
-    """半凯利仓位 (返回小数, 0.06 = 6%)。
+def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float, cap: float = 0.06) -> float:
+    """0.75凯利仓位 (返回小数, 0.06 = 6%)。
 
-    公式: half_kelly = max(0, wr×BB_odds - 1) / (BB_odds - 1) × 0.5
+    公式: kelly_075 = max(0, wr×BB_odds - 1) / (BB_odds - 1) × 0.75
+
+    V4.1: 从半凯利(0.5)升级为0.75凯利 — Pinnacle 收盘赔率质量极高(111K样本)，可以更激进。
+    已移除极低赔折扣 — Pinnacle 收盘赔率本身就低 vig，Kelly 不会高估。
     """
     if actual_wr <= 0 or avg_odds <= 1.01:
         return 0.0
@@ -67,13 +70,8 @@ def kelly_half(actual_wr: float, avg_odds: float, bb_premium: float, cap: float 
     roi = actual_wr * bb_odds - 1.0
     if roi <= 0:
         return 0.0
-    half_kelly = roi / (bb_odds - 1.0) * 0.5
-    # 极低赔折扣 (Kelly高估了极低赔的优势)
-    if avg_odds < 1.3:
-        half_kelly *= 0.5
-    elif avg_odds < 1.5:
-        half_kelly *= 0.7
-    return min(cap, max(0.0, half_kelly))
+    kelly = roi / (bb_odds - 1.0) * 0.75
+    return min(cap, max(0.0, kelly))
 
 
 # =====================================================================
@@ -330,7 +328,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
             if n < 15:
                 return 0.0
             bb_prem = _bb_premium_ou(odds)
-            return kelly_half(wr, avg_o, bb_prem)
+            return kelly_075(wr, avg_o, bb_prem)
 
         elif sub_market == "ht":
             # HT 高赔封杀: >=4.0 历史全输 (20笔结算, Pin 数据也极薄)
@@ -346,7 +344,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
             if n < 15:
                 return 0.0
             bb_prem = _bb_premium_ht(odds)
-            stake = kelly_half(wr, avg_o, bb_prem)
+            stake = kelly_075(wr, avg_o, bb_prem)
             return stake * 0.85
 
         else:  # 1X2 (also used for BTTS/DNB/OE/Corner fallback)
@@ -358,9 +356,9 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
                 return cfg["max_stake"]
 
             league_data = _match_league(league, PIN_1X2_DATA)
-            # 🟡 联赛无自有 Pin 数据 → 用全量聚合 × 0.7
+            # 🟡 联赛无自有 Pin 数据 → 用全量聚合 × 0.85 (V4.1: 0.7→0.85, 聚合111K样本足够可靠)
             if league_data is PIN_1X2_DATA.get("_AGGREGATE"):
-                discount = 0.7
+                discount = 0.85
             else:
                 discount = 1.0
 
@@ -373,7 +371,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
             if n < 10:
                 return 0.0
             bb_prem = _bb_premium_1x2(odds)
-            stake = kelly_half(wr, avg_o, bb_prem)
+            stake = kelly_075(wr, avg_o, bb_prem)
             return stake * discount
 
     # ── Tennis ──
@@ -396,13 +394,13 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
         data = MLB_DATA.get(idx)
         if data and data[2] >= 15:
             wr, avg_o, n = data
-            stake = kelly_half(wr, avg_o, 0.05)  # BB溢价5%
+            stake = kelly_075(wr, avg_o, 0.05)  # BB溢价5%
             return stake * 0.8  # 共识赔率, 8折
         # 其次 OddsPortal
         data2 = MLB_ODDSPORTAL_DATA.get(idx)
         if data2 and data2[2] >= 15:
             wr, avg_o, n = data2
-            stake = kelly_half(wr, avg_o, 0.05)
+            stake = kelly_075(wr, avg_o, 0.05)
             return stake * 0.75
         # 无数据区间不投
         return 0.0
@@ -415,7 +413,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
             data = NBA_DATA.get(idx)
             if data and data[2] >= 15:
                 wr, avg_o, n = data
-                stake = kelly_half(wr, avg_o, 0.05)
+                stake = kelly_075(wr, avg_o, 0.05)
                 return stake * 0.85  # NBA data quite reliable
             # Fallback to model data
             from config.weight_matrix_v3 import get_kelly_stake_pct as _bb
@@ -425,7 +423,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
             data = NBA_DATA.get(idx)
             if data and data[2] >= 15:
                 wr, avg_o, n = data
-                stake = kelly_half(wr, avg_o, 0.04)
+                stake = kelly_075(wr, avg_o, 0.04)
                 return stake * 0.3  # WNBA: 3折
             return 0.0
         else:
@@ -438,7 +436,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
         data = NFL_DATA.get(idx)
         if data and data[2] >= 10:
             wr, avg_o, n = data
-            stake = kelly_half(wr, avg_o, 0.05)
+            stake = kelly_075(wr, avg_o, 0.05)
             return stake * 0.7  # NFL: 7折
         return 0.0
 
@@ -449,7 +447,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
         data = NHL_DATA.get(idx)
         if data and data[2] >= 10:
             wr, avg_o, n = data
-            stake = kelly_half(wr, avg_o, 0.05)
+            stake = kelly_075(wr, avg_o, 0.05)
             return stake * 0.6  # NHL: 6折
         return 0.0
 
@@ -561,8 +559,8 @@ def print_matrix():
     bins = ODDS_BINS
 
     print(f"{'='*100}")
-    print(f"V4 权重矩阵: 1X2 (Pinnacle 107,896场, BB+7%溢价)")
-    print(f"每格 = half-kelly% of bankroll, cap=6%")
+    print(f"V4.1 权重矩阵: 1X2 (Pinnacle 107,896场, BB+7%溢价, 0.75-Kelly)")
+    print(f"每格 = 0.75-kelly% of bankroll, cap=6%")
     print(f"{'='*100}")
 
     test_odds = []
@@ -589,7 +587,7 @@ def print_matrix():
         print(row)
 
     print()
-    print(f"公式: half_kelly = max(0, actual_wr × BB_odds - 1) / (BB_odds - 1) × 0.5")
+    print(f"公式: 0.75_kelly = max(0, actual_wr × BB_odds - 1) / (BB_odds - 1) × 0.75")
     print(f"BB_odds = Pin_odds × (1 + bb_premium)")
     print(f"数据源: football-data.co.uk Pinnacle 收盘赔率 2012-2025")
 
