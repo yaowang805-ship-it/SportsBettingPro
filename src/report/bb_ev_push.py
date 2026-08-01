@@ -955,6 +955,20 @@ def _collect_opportunities(match, market_key):
         bb_odds = opp.get("bb_odds", 0)
         pin_odds = opp.get("pin_odds", 0)
 
+        # 市场子类型识别：区分同一 market_key 下的不同市场（如 1X2 / HT / BTTS / DC）
+        # ⚠️ 必须在使用 sub_market 之前定义（V4 get_min_ev/get_odds_cap 需要）
+        sub_market = opp.get("_market", "")
+        if not sub_market or sub_market == "main":
+            # 根据 market_key 推导子类型
+            _MK_TO_SUB = {
+                "opportunities": "1x2",
+                "handicap": "hc",
+                "over_under": "ou",
+                "double_chance": "dc",
+                "draw_no_bet": "dnb",
+            }
+            sub_market = _MK_TO_SUB.get(market_key, "1x2")
+
         # ── V2 动态 EV 门槛: 赔率越高 → 门槛越高 ──
         # V4 的 get_min_ev 基于 Pinnacle 107K场数据
         from config.weight_matrix_v4 import get_min_ev
@@ -976,19 +990,6 @@ def _collect_opportunities(match, market_key):
         _odds_cap = get_odds_cap(match.get("sport", ""), league, sub_market)
         if _odds_cap > 0 and bb_odds > _odds_cap:
             continue
-
-        # 市场子类型识别：区分同一 market_key 下的不同市场（如 1X2 / HT / BTTS / DC）
-        sub_market = opp.get("_market", "")
-        if not sub_market or sub_market == "main":
-            # 根据 market_key 推导子类型
-            _MK_TO_SUB = {
-                "opportunities": "1x2",
-                "handicap": "hc",
-                "over_under": "ou",
-                "double_chance": "dc",
-                "draw_no_bet": "dnb",
-            }
-            sub_market = _MK_TO_SUB.get(market_key, "1x2")
 
         # HTFT/半全场 EV 上限：此类市场 Pinnacle 盘口常与 BB 不是同一市场
         # (如 Pinnacle "半全场" 含加时 vs BB 不含)，导致假 EV 极高
