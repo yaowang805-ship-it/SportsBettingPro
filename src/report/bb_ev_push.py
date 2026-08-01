@@ -2283,18 +2283,27 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         # 指纹保存 (含EV追踪, 同盘口EV上涨>1%可重推)
         # --no-bet 调试模式不存指纹 (防止手动调试污染去重)
         if not _NO_BET_DEBUG:
+            from collections import defaultdict
             from config.database import add_fingerprints
             new_fps = {}
+            # 按比赛分组, 每场最多存2个指纹 (与同场冷却一致, 防超额锁定)
+            match_groups = defaultdict(list)
             for o in qualified:
-                fp = _make_fingerprint(o)
-                ev = o.get("ev_pct", 0)
-                bb = o.get("bb_odds", 0)
-                src = o.get("bb_price_source", "BB")
-                new_fps[fp] = ev
-                if bb > 0:
-                    new_fps[fp + "_bb"] = bb
-                    new_fps[fp + "_src"] = 1 if src == "FB" else 0
+                key = (o.get("sport",""), o.get("home_cn","").strip(), o.get("away_cn","").strip())
+                match_groups[key].append(o)
+            for key, group in match_groups.items():
+                group.sort(key=lambda o: o.get("_score", 0), reverse=True)
+                for o in group[:2]:  # 只存前2条
+                    fp = _make_fingerprint(o)
+                    ev = o.get("ev_pct", 0)
+                    bb = o.get("bb_odds", 0)
+                    src = o.get("bb_price_source", "BB")
+                    new_fps[fp] = ev
+                    if bb > 0:
+                        new_fps[fp + "_bb"] = bb
+                        new_fps[fp + "_src"] = 1 if src == "FB" else 0
             add_fingerprints(new_fps)
+            logger.info("指纹: 保存 %d 条 (来自 %d 场比赛)", len(new_fps), len(match_groups))
         else:
             logger.info("--no-bet 调试模式: 跳过指纹保存")
         # JSON 二次备份
