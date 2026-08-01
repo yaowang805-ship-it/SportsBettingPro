@@ -1459,7 +1459,7 @@ def _match_tournament(league: str) -> Optional[dict]:
 # 封杀规则 — V4.2: 数据化
 # =====================================================================
 # DC/HTFT: Pinnacle 无对应盘口 → 无法做公平价比较 → 封杀
-BLOCKED_MARKETS = {"dc", "htft"}
+BLOCKED_MARKETS = {"htft"}  # V4.3: DC 解封 (1X2推导公平价数学等价)
 
 # MMA/Boxing: 仅封杀高风险子类型 (时间匹配 + 球员冲突)
 # V4.2: name-matched + score≥0.95 的 MMA/Boxing 允许小额投注
@@ -1491,6 +1491,7 @@ def _is_risky_mma_boxing(sport: str, league: str, odds: float,
 # 特殊市场 (无 Pinnacle 对应盘口 → 固定上限)
 # =====================================================================
 SPECIAL_MARKET_CAPS = {
+    "dc":    {"max_stake": 0.015, "max_odds": 4.0},  # V4.3: DC解封, 保守上限1.5%
     "btts":  {"max_stake": 0.03, "max_odds": 3.0},
     "dnb":   {"max_stake": 0.02, "max_odds": 5.0},
     "oe":    {"max_stake": 0.01, "max_odds": 2.5},
