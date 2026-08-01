@@ -922,6 +922,81 @@ def _lookup_bb_price_for_fb_match(match, market_key):
     return None
 
 
+def _verify_bb_price_exists(home: str, away: str, designation: str,
+                            expected_price: float, market_key: str,
+                            line=None) -> bool:
+    """验证比较引擎给出的 BB 价格是否真实存在于 BB 原始数据中。
+
+    防止 home/away 反转、线错配等 bug 产生 phantom price。
+    """
+    if expected_price <= 0:
+        return False
+    try:
+        from src.scrapers.bb_data import load_bb_odds
+        bb_matches = load_bb_odds()
+    except Exception:
+        return True
+
+    if not home or not away:
+        return True
+
+    for m in bb_matches:
+        m_home = m.get("home", "").strip()
+        m_away = m.get("away", "").strip()
+        if not (home in m_home and away in m_away):
+            continue
+
+        odds_ft = m.get("odds_ft", {})
+        candidates = []
+
+        if market_key == "opportunities":
+            ml = odds_ft.get("ml", [])
+            candidates = [o for o in ml if o]
+            ht = odds_ft.get("ht", {})
+            if isinstance(ht, dict):
+                ht_ml = ht.get("ml", [])
+                if ht_ml:
+                    candidates.extend([o for o in ht_ml if o])
+
+        elif market_key == "handicap":
+            hc = odds_ft.get("handicap", {})
+            if isinstance(hc, dict):
+                bb_home_line = hc.get("home_line")
+                bb_away_line = hc.get("away_line")
+                # 检查线是否匹配
+                if line is not None:
+                    line_matches = False
+                    for bl in [bb_home_line, bb_away_line]:
+                        if bl is not None and abs(abs(bl) - abs(line)) <= 0.6:
+                            line_matches = True
+                            break
+                    if not line_matches:
+                        # 检查 alternate lines
+                        for alt in odds_ft.get("alternate_handicaps", []):
+                            al = alt.get("home_line") or alt.get("away_line")
+                            if al is not None and abs(abs(al) - abs(line)) <= 0.6:
+                                candidates.extend([alt.get("home_odds", 0), alt.get("away_odds", 0)])
+                                line_matches = True
+                                break
+                    if not line_matches:
+                        return False  # 线不存在于 BB
+                if not candidates:
+                    candidates = [hc.get("home_odds", 0), hc.get("away_odds", 0)]
+
+        elif market_key == "over_under":
+            ou = odds_ft.get("total", {})
+            if isinstance(ou, dict):
+                candidates = [ou.get("over_odds", 0), ou.get("under_odds", 0)]
+
+        # 验证: 预期价格是否在 BB 数据中 (3% 容差)
+        for c in candidates:
+            if c and abs(c - expected_price) / c < 0.03:
+                return True
+        return False  # phantom price
+
+    return True  # 比赛不在 BB 数据中，放行
+
+
 def _collect_opportunities(match, market_key):
     """从指定市场收集 +EV 机会。校准过滤：时间匹配必须高分才推送。
 
@@ -1007,6 +1082,16 @@ def _collect_opportunities(match, market_key):
         ev = opp.get("ev_pct", 0)
         bb_odds = opp.get("bb_odds", 0)
         pin_odds = opp.get("pin_odds", 0)
+
+        # 🔴 终极保护: 验证 BB 价格是否真实存在于 BB 数据中
+        # 防止 home/away 反转、线错配等比较引擎 bug 产生 phantom price
+        _price_ok = _verify_bb_price_exists(
+            match.get("home_bb", ""), match.get("away_bb", ""),
+            opp.get("designation", ""), bb_odds, market_key,
+            opp.get("line")
+        )
+        if not _price_ok:
+            continue  # 价格不真实，跳过此机会
 
         # FB-only 匹配: 如果 BB 有同样 designation 的更好价格 → 替换
         designation_orig = opp.get("designation", "")
