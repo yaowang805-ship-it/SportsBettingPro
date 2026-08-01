@@ -1996,29 +1996,36 @@ def _filter_pushed(qualified: list) -> list:
             continue
 
         # 已推送过 → 检查是否值得重推
-        old_ev = existing[fp]
+        old_data = existing[fp]
+        old_ev = old_data if isinstance(old_data, (int, float)) else old_data.get("ev", 0)
         old_bb = existing.get(fp + "_bb", 0)
+        old_ts = 0 if isinstance(old_data, (int, float)) else old_data.get("ts", 0)
         bb_now = o.get("bb_odds", 0)
         bb_change = (bb_now - old_bb) / old_bb * 100 if old_bb > 0 else 0
         ev_delta = ev - old_ev
+        hours_since_push = (time.time() - old_ts) / 3600 if old_ts > 0 else 99
 
-        # 分层阈值
-        hours = (o.get("_pin_epoch", now_epoch + 86400) - now_epoch) / 3600
-        bb_thresh, ev_thresh = _get_thresholds(hours)
+        # 时间冷却: >4小时自动重推
+        if hours_since_push > 4:
+            should_push = True
+        else:
+            # 分层阈值 (越临近越敏感)
+            bb_thresh = 5.0 if hours_since_push > 1 else 3.0
+            ev_thresh = 3.0 if hours_since_push > 1 else 2.0
 
-        should_push = False
-        if bb_change >= bb_thresh:
-            should_push = True  # 赔率大涨: 无条件重推
-        elif bb_change <= -3.0:
-            should_push = False  # 赔率大跌: 市场反向
-        elif ev_delta >= ev_thresh:
-            should_push = True  # EV 达到阈值
+            should_push = False
+            if bb_change >= bb_thresh:
+                should_push = True
+            elif bb_change <= -3.0:
+                should_push = False
+            elif ev_delta >= ev_thresh:
+                should_push = True
 
         if should_push:
             re_pushed += 1
             new.append(o)
-            logger.info("重推: %s (%.1fh前) BB %+.1f%% EV %+.1f%%",
-                       o.get("designation",""), hours, bb_change, ev_delta)
+            logger.info("重推: %s (%.1fh前推) BB %+.1f%% EV %+.1f%%",
+                       o.get("designation",""), hours_since_push, bb_change, ev_delta)
         else:
             skipped += 1
 
@@ -2296,7 +2303,8 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
                     ev = o.get("ev_pct", 0)
                     bb = o.get("bb_odds", 0)
                     src = o.get("bb_price_source", "BB")
-                    new_fps[fp] = ev
+                    # V4.3: 存 {ev, ts} 用于时间冷却重推
+                    new_fps[fp] = {"ev": ev, "ts": time.time()}
                     if bb > 0:
                         new_fps[fp + "_bb"] = bb
                         new_fps[fp + "_src"] = 1 if src == "FB" else 0
