@@ -723,7 +723,14 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
             for lid, info in all_sport_matchups.items():
                 if lid in matched_ids:
                     continue
-                if info["name"].lower().startswith(pn.lower()):
+                if isinstance(info, dict) and "name" in info:
+                    pname = info["name"].lower()
+                elif isinstance(info, dict):
+                    first = next(iter(info.values()), {}) if info else {}
+                    pname = (first.get("name", "") if isinstance(first, dict) else str(first)).lower()
+                else:
+                    continue
+                if pname.startswith(pn.lower()):
                     matched_ids.add(lid)
 
         return sorted(matched_ids)
@@ -735,7 +742,15 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
 
     if bb_en_set:
         for lid, info in all_sport_matchups.items():
-            pin_name = info["name"].lower()
+            # 兼容两种格式: 旧格式(flat dict)有name字段, 网球格式(nested)需穿透
+            if isinstance(info, dict) and "name" in info:
+                pin_name = info["name"].lower()
+            elif isinstance(info, dict):
+                # Nested: {league_id: {name: ...}} → 取第一个league的name
+                first = next(iter(info.values()), {}) if info else {}
+                pin_name = (first.get("name", "") if isinstance(first, dict) else str(first)).lower()
+            else:
+                continue
             pin_words = set(pin_name.split())
             overlap = bb_en_set & pin_words
             if len(overlap) >= 2:
