@@ -162,7 +162,10 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
     for bb_league in matched_leagues:
         pin_ids = matched_leagues[bb_league]
         for pid in pin_ids:
-            base_name = all_pin_leagues.get(pid, {}).get("name", "")
+            # V4.3 nested: 跨sport穿透查找
+            from src.scrapers.pinnacle_league_map import lookup_pin_league
+            info = lookup_pin_league(all_pin_leagues, pid)
+            base_name = info.get("name", "")
             if base_name in pin_corner_by_base:
                 bb_league_to_corner[bb_league] = pin_corner_by_base[base_name]
                 break

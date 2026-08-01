@@ -356,11 +356,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     # V4.3: all_pin_leagues 为 nested {sport_id: {league_id: data}} → 需穿透查找
     pin_ids_to_fetch = []
     for pin_id in sorted(all_unique_pin_ids):
-        info = {}
-        for sport_data in all_pin_leagues.values():
-            if isinstance(sport_data, dict) and str(pin_id) in sport_data:
-                info = sport_data[str(pin_id)]
-                break
+        from src.scrapers.pinnacle_league_map import lookup_pin_league
+        info = lookup_pin_league(all_pin_leagues, pin_id)
         if info.get("matchup_count", 0) == 0:
             print(f"  跳过 [{info.get('name', pin_id)}] (ID={pin_id}) — 父级联赛无直接比赛")
         else:
@@ -374,11 +371,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
 
     def _fetch_one(pin_id):
         # V4.3 nested: 穿透查找 league info
-        info = {}
-        for sport_data in all_pin_leagues.values():
-            if isinstance(sport_data, dict) and str(pin_id) in sport_data:
-                info = sport_data[str(pin_id)]
-                break
+        from src.scrapers.pinnacle_league_map import lookup_pin_league
+        info = lookup_pin_league(all_pin_leagues, pin_id)
         time.sleep(random.uniform(0.1, 0.4))
         name = info.get('name', pin_id)
         with _fetch_lock:
@@ -405,11 +399,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         pin_league_names = set()
         for pid in pin_ids:
             # V4.3 nested: 穿透 sport → league 查找
-            info = {}
-            for sport_data in all_pin_leagues.values():
-                if isinstance(sport_data, dict) and str(pid) in sport_data:
-                    info = sport_data[str(pid)]
-                    break
+            from src.scrapers.pinnacle_league_map import lookup_pin_league
+            info = lookup_pin_league(all_pin_leagues, pid)
             name = info.get("name", "")
             if name:
                 pin_league_names.add(name)

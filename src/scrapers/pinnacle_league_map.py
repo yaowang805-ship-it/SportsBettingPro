@@ -485,11 +485,20 @@ def _safe_get_name(info):
     """安全获取联赛名 — 兼容 flat {name:..} 和 nested {league_id: {name:..}}"""
     if not isinstance(info, dict): return ""
     if "name" in info and isinstance(info["name"], str): return info["name"]
-    # nested: 从第一个league取值
     for v in info.values():
         if isinstance(v, dict) and "name" in v:
             return v["name"]
     return ""
+
+def lookup_pin_league(all_pin_leagues, league_id):
+    """V4.3: 在 nested 结构 {sport_id: {league_id: data}} 中穿透查找联赛。
+
+    统一入口 — 所有需要根据 league_id 查找 league data 的地方都应使用此函数。
+    """
+    for sport_data in all_pin_leagues.values():
+        if isinstance(sport_data, dict) and str(league_id) in sport_data:
+            return sport_data[str(league_id)]
+    return {}
 
 def _find_best_league(pin_name, all_sport_matchups):
     """Match Pinnacle league name, prefer exact match."""
