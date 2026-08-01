@@ -1588,8 +1588,8 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             return kelly_075(wr, avg_o, bb_prem, n)
 
         elif sub_market == "ht":
-            # V4.3: HT封顶 4.0→6.0 (1X2数据代理参考)
-            if odds >= 6.0:
+            # V4.3: HT封顶 4.8 (316K 赔率区间回测: @4.8+ BB EV全负)
+            if odds >= 4.8:
                 return 0.0
             league_data = _match_league(league, PIN_1X2_DATA)
             if not league_data:
