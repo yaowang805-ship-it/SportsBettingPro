@@ -1491,7 +1491,7 @@ def _is_risky_mma_boxing(sport: str, league: str, odds: float,
 # 特殊市场 (无 Pinnacle 对应盘口 → 固定上限)
 # =====================================================================
 SPECIAL_MARKET_CAPS = {
-    "dc":    {"max_stake": 0.015, "max_odds": 4.0},  # V4.3: DC解封, 保守上限1.5%
+    "dc":    {"max_stake": 0.015, "max_odds": 6.0},  # V4.3: DC解封, 1.5%仓位/6.0赔率
     "btts":  {"max_stake": 0.03, "max_odds": 3.0},
     "dnb":   {"max_stake": 0.02, "max_odds": 5.0},
     "oe":    {"max_stake": 0.01, "max_odds": 2.5},
