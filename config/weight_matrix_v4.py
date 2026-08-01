@@ -1,32 +1,30 @@
-"""投注权重矩阵 V4 — Pinnacle 107,896场全量历史数据驱动
+"""投注权重矩阵 V4.2 — 全量外部数据驱动 + 统计校准
 
 核心理念: 每个赔率区间 × 联赛 × 盘口的权重 = 该区间的 Kelly 最优解
-  半凯利仓位% = max(0, actual_wr × BB_odds - 1) / (BB_odds - 1) × 0.5
+  0.75-Kelly仓位% = max(0, actual_wr × BB_odds - 1) / (BB_odds - 1) × 0.75
 
 数据源 (全量外部数据, 零结算数据):
-  足球 1X2: Pinnacle 111K收盘赔率 (20联赛×13季, football-data.co.uk)
-  足球 OU:  Pinnacle 47K收盘赔率
-  网球:     Pinnacle 5K收盘赔率 (tennis_market_efficiency.json)
-  NBA:      模型57K + SBR 27K收盘赔率 (2011-2021)
-  MLB:      SBR 45K收盘赔率 (2011-2021) + OddsPortal 10K (2021-2024)
-  NFL:      SBR 5.9K收盘赔率 (2011-2021)
-  NHL:      SBR 27K收盘赔率 (2011-2021)
-  BB溢价:   从 BB/FB vs Pinnacle comparison 统计
+  足球 1X2:  Pinnacle 111K收盘赔率 (20联赛×13季, football-data.co.uk)
+  足球 OU:   Pinnacle 47K收盘赔率
+  网球:      Pinnacle 5K收盘赔率 (直接编码, 不再复用V3)
+  NBA:       模型57K + SBR 27K收盘赔率 (2011-2021)
+  MLB:       SBR 45K收盘赔率 (2011-2021) + OddsPortal 10K (2021-2024)
+  NFL:       SBR 5.9K收盘赔率 (2011-2021)
+  NHL:       SBR 27K收盘赔率 (2011-2021)
+  BB溢价:    从 BB/FB vs Pinnacle comparison 实际统计 (2026-08-01)
 
-BB溢价校准 (按赔率区间):
-  低赔 (<2.0): BB比Pin高 7-9% (流动性好, 竞争充分)
-  中赔 (2.0-4.0): BB比Pin高 5-7%
-  高赔 (4.0-7.0): BB比Pin高 3-5%
-  超高 (>7.0): BB比Pin高 1-3% (假阳性多)
-
-生成日期: 2026-07-31
+V4.2 改进 (2026-08-01):
+  P0: BB溢价表从实际对比数据中位数统计 (替代硬编码阶梯)
+  P1: 网球 Pinnacle 5K数据直接编码 (替代复用V3)
+  P2: 样本量阈值基于置信区间 (n≥10/30/50 分级)
+  P3: 封杀规则数据化 (DC/HTFT保留, MMA/Boxing仅封杀高风险)
 """
 
 from functools import lru_cache
 from typing import Optional
 
 # =====================================================================
-# 赔率区间 (30 bins, 0.2-1.0 步长)
+# 赔率区间
 # =====================================================================
 ODDS_BINS = [
     1.30, 1.50, 1.70, 1.90, 2.10, 2.30, 2.50, 2.70, 2.90,
@@ -40,12 +38,6 @@ TENNIS_ODDS_BINS = [
     2.50, 3.00, 4.00, 5.00, 6.00, 8.00, 10.00, 15.00, float('inf')
 ]
 
-BASKETBALL_ODDS_BINS = [
-    1.30, 1.50, 1.70, 1.90, 2.10, 2.40, 2.70,
-    3.00, 3.50, 4.00, 5.00, 7.00, 10.00, float('inf')
-]
-
-
 def _bin_index(odds: float, bins: list) -> int:
     for i, t in enumerate(bins):
         if odds < t:
@@ -54,15 +46,19 @@ def _bin_index(odds: float, bins: list) -> int:
 
 
 # =====================================================================
-# Kelly 公式
+# Kelly 公式 — V4.2: 基于样本量的置信度折扣
 # =====================================================================
-def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float, cap: float = 0.06) -> float:
+def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
+              n_bets: int = 100, cap: float = 0.06) -> float:
     """0.75凯利仓位 (返回小数, 0.06 = 6%)。
 
-    公式: kelly_075 = max(0, wr×BB_odds - 1) / (BB_odds - 1) × 0.75
+    公式: kelly_075 = max(0, wr×BB_odds - 1) / (BB_odds - 1) × 0.75 × confidence(n)
 
-    V4.1: 从半凯利(0.5)升级为0.75凯利 — Pinnacle 收盘赔率质量极高(111K样本)，可以更激进。
-    已移除极低赔折扣 — Pinnacle 收盘赔率本身就低 vig，Kelly 不会高估。
+    V4.2: 增加基于样本量的置信度折扣
+      n >= 100: confidence = 1.0   (CI宽度 ~19%)
+      n >= 50:  confidence = 0.95  (CI宽度 ~26%)
+      n >= 30:  confidence = 0.85  (CI宽度 ~33%)
+      n >= 10:  confidence = 0.70  (CI宽度 ~52%)
     """
     if actual_wr <= 0 or avg_odds <= 1.01:
         return 0.0
@@ -71,38 +67,46 @@ def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float, cap: float =
     if roi <= 0:
         return 0.0
     kelly = roi / (bb_odds - 1.0) * 0.75
-    return min(cap, max(0.0, kelly))
+    # 样本量置信度折扣 (Wilson CI驱动的分级)
+    if n_bets >= 100:
+        confidence = 1.0
+    elif n_bets >= 50:
+        confidence = 0.95
+    elif n_bets >= 30:
+        confidence = 0.85
+    else:  # n >= 10 (最低门槛)
+        confidence = 0.70
+    return min(cap, max(0.0, kelly * confidence))
 
 
 # =====================================================================
-# BB 溢价表 (按赔率区间, 从 BB vs Pinnacle comparison 统计)
+# BB 溢价表 — V4.2: 从实际 BB vs Pinnacle 对比数据统计
+#   数据源: bb_vs_pinnacle_comparison.json (仅高置信 name 匹配, 过滤异常值)
+#   统计日期: 2026-08-01, 中位数 × 0.8 保守系数
 # =====================================================================
 def _bb_premium_1x2(odds: float) -> float:
-    """1X2 市场的 BB 溢价 (BB赔率/Pin赔率 - 1)。"""
-    if odds < 1.5: return 0.07    # 低赔: 竞争最充分
-    elif odds < 2.0: return 0.08  # 1.5-2.0: 溢价最高
-    elif odds < 2.5: return 0.07
-    elif odds < 3.0: return 0.065
-    elif odds < 4.0: return 0.06
-    elif odds < 5.0: return 0.05
-    elif odds < 7.0: return 0.04
-    elif odds < 10.0: return 0.03
-    else: return 0.02
+    """1X2 市场的 BB 溢价 (BB赔率/Pin赔率 - 1)。
+
+    V4.2: 从实际对比数据中位数统计 (n≥10时), 样本不足保留保守值。
+    """
+    if odds < 1.5: return 0.07      # n=3, 数据不足, 保留保守值
+    elif odds < 2.0: return 0.08    # n=9, 数据中位 8.1%, 接近
+    elif odds < 2.5: return 0.07    # n=1, 保留保守值
+    elif odds < 3.0: return 0.09    # n=12, 中位 11.2%×0.8=9.0%
+    elif odds < 4.0: return 0.07    # n=32, 中位 8.8%×0.8=7.0%
+    elif odds < 5.0: return 0.08    # n=36, 中位 10.5%×0.8=8.4%
+    elif odds < 7.0: return 0.10    # n=34, 中位 12.8%×0.8=10.2%
+    elif odds < 10.0: return 0.11   # n=17, 中位 13.9%×0.8=11.1%
+    else: return 0.17               # n=25, 中位 21.8%×0.8=17.4%
 
 
 def _bb_premium_ou(odds: float) -> float:
-    """OU 市场的 BB 溢价 (OU vig更低 → BB溢价空间类似)。"""
-    if odds < 1.5: return 0.075
-    elif odds < 1.7: return 0.08
-    elif odds < 2.0: return 0.085   # OU 1.7-2.0 溢价最丰
-    elif odds < 2.5: return 0.07
-    elif odds < 3.0: return 0.06
-    elif odds < 4.0: return 0.05
-    else: return 0.03
+    """OU 市场的 BB 溢价。OU 数据样本不足，沿用 1X2 溢价 × 1.05 (OU vig更低)。"""
+    return _bb_premium_1x2(odds) * 1.05
 
 
 def _bb_premium_ht(odds: float) -> float:
-    """HT 半场溢价 (折扣15%)。"""
+    """HT 半场溢价 (HT 流动性较低 → 折扣 15%)。"""
     return _bb_premium_1x2(odds) * 0.85
 
 
@@ -110,7 +114,6 @@ def _bb_premium_ht(odds: float) -> float:
 # 1X2 权重矩阵 (从 Pinnacle 107,896场直接计算)
 # =====================================================================
 # 格式: {league: {bin_index: (actual_wr, avg_odds, num_bets)}}
-# 只包含 n>=10 的可靠数据点
 # 每个联赛的数据点都是该联赛独有的赔率区间盈利模式
 
 PIN_1X2_DATA = {
@@ -148,7 +151,6 @@ PIN_1X2_DATA = {
         18: (0.150, 5.40, 327), 19: (0.181, 5.80, 238), 20: (0.206, 6.25, 175),
         21: (0.147, 6.75, 136), 22: (0.088, 7.25, 102), 23: (0.034, 7.75, 58),
         24: (0.161, 8.50, 93), 25: (0.080, 9.50, 50), 26: (0.034, 11.00, 58),
-        27: (0.000, 13.50, 18), 28: (0.000, 17.50, 9),
     },
     "意甲": {
         0: (0.846, 1.24, 332), 1: (0.713, 1.40, 676), 2: (0.639, 1.60, 731),
@@ -160,7 +162,7 @@ PIN_1X2_DATA = {
         18: (0.196, 5.40, 419), 19: (0.133, 5.80, 279), 20: (0.128, 6.25, 282),
         21: (0.141, 6.75, 234), 22: (0.124, 7.25, 177), 23: (0.141, 7.75, 170),
         24: (0.070, 8.50, 242), 25: (0.053, 9.50, 169), 26: (0.090, 11.00, 177),
-        27: (0.067, 13.50, 164), 28: (0.048, 17.50, 105), 29: (0.000, 25.00, 57),
+        27: (0.067, 13.50, 164), 28: (0.048, 17.50, 105),
     },
     "西甲": {
         0: (0.850, 1.25, 367), 1: (0.735, 1.39, 328), 2: (0.593, 1.60, 386),
@@ -184,7 +186,7 @@ PIN_1X2_DATA = {
         18: (0.176, 5.40, 165), 19: (0.137, 5.80, 102), 20: (0.167, 6.25, 84),
         21: (0.143, 6.75, 63), 22: (0.108, 7.25, 65), 23: (0.082, 7.75, 49),
         24: (0.128, 8.50, 47), 25: (0.067, 9.50, 45), 26: (0.069, 11.00, 58),
-        27: (0.103, 13.50, 39), 28: (0.065, 17.50, 31),
+        27: (0.103, 13.50, 39),
     },
     # 大样本聚合 (所有联赛合并, 用于缺失联赛的默认值)
     "_AGGREGATE": {
@@ -210,7 +212,6 @@ for _lg in ("英甲", "英乙", "苏超", "德乙", "意乙", "西乙", "法乙"
 # =====================================================================
 # OU 权重 (从 46,727场比赛)
 # =====================================================================
-# bin → (actual_wr, avg_odds, num_bets)
 PIN_OU_AGGREGATE = {
     0: (0.813, 1.24, 139),   1: (0.698, 1.42, 2426),  2: (0.608, 1.62, 13671),
     3: (0.542, 1.80, 26049), 4: (0.485, 1.99, 24480), 5: (0.427, 2.18, 14616),
@@ -222,16 +223,20 @@ PIN_OU_AGGREGATE = {
 
 # =====================================================================
 # 非足球运动权重 (Sportsbookreview 10年收盘赔率, 2011-2021)
+# V4.2: SBR 非 Pinnacle → BB溢价统一 5% (共识赔率, 保守)
+#       折扣系数回测: 基于数据源质量分级
 # =====================================================================
-# 格式: bin → (actual_wr, avg_odds, num_bets)
-# BB溢价 5% (SBR 是共识赔率, 非 Pinnacle)
+# 数据源折扣 (Pinnacle=1.0, 共识赔率按数据量和可靠性分级)
+DISCOUNT_PINNACLE   = 1.0   # Pinnacle 直接收盘赔率
+DISCOUNT_SBR_LARGE  = 0.85  # SBR ≥10K笔 (NBA/NHL/MLB)
+DISCOUNT_SBR_MEDIUM = 0.75  # SBR 5-10K笔 (NFL)
+DISCOUNT_ODDSPORTAL = 0.75  # OddsPortal (非Pinnacle源)
+DISCOUNT_WNBA       = 0.30  # WNBA (借用NBA数据, 大幅折扣)
 
 MLB_DATA = {
-    # low odds weak, mid odds STRONG (棒球独有特征!)
     6:  (0.407, 2.39, 1808),  7:  (0.385, 2.59, 1198),
     8:  (0.379, 2.79, 723),   9:  (0.282, 2.99, 429),
     10: (0.301, 3.20, 288),   11: (0.290, 3.38, 193),
-    # 3.3-4.5: MLB best range
     12: (0.267, 3.59, 90),    13: (0.304, 3.81, 56),
     14: (0.300, 4.03, 30),
 }
@@ -264,9 +269,6 @@ NHL_DATA = {
     12: (0.271, 3.59, 120),   14: (0.242, 4.04, 60),
 }
 
-# =====================================================================
-# MLB 权重 (OddsPortal 9,882场, 2021-2024) — 保留作为交叉验证
-# =====================================================================
 MLB_ODDSPORTAL_DATA = {
     1:  (0.692, 1.42, 1515),  2:  (0.595, 1.60, 3626),
     3:  (0.542, 1.79, 4000),  4:  (0.493, 1.99, 3155),
@@ -277,11 +279,108 @@ MLB_ODDSPORTAL_DATA = {
 }
 
 # =====================================================================
-# 封杀
+# 网球权重 — V4.2: Pinnacle 5,013场直接编码 (不再复用V3)
+#   数据源: tennis_market_efficiency.json
+#   格式: {tournament: {bin_index: (pin_roi_pct, bb_premium_pct)}}
+#   pin_roi: Pinnacle 收盘赔率回测 ROI (%)
+#   bb_premium: BB vs Pinnacle 溢价估计 (%)
 # =====================================================================
-BLOCKED_SPORTS = {"mma", "boxing"}
-BLOCKED_MARKETS = {"dc", "htft"}  # 0% 胜率 或 Pinnacle 无对应盘口
-BLOCKED_LEAGUES = {"中超", "Chinese Super League", "China Super League"}  # 中国联赛不碰 或 Pinnacle 无对应盘口
+TENNIS_EDGE = {
+    "Masters": {
+        0:  (-3.7, 5.0),  1:  (-3.7, 5.0),  2:  (-3.7, 5.0),
+        3:  (-5.2, 5.0),  4:  (-1.8, 6.0),  5:  (-1.8, 6.0),
+        6:  (-1.8, 5.5),  7:  (-3.4, 5.0),  8:  (-3.4, 4.5),
+        9:  (9.4, 6.0),   10: (9.4, 5.5),
+        11: (-14.4, 3.0), 12: (-14.4, 2.0), 13: (-14.4, 1.0),
+        14: (7.7, 3.0),   15: (7.7, 2.0),
+    },
+    "Grand Slam": {
+        0:  (-0.9, 4.0),  1:  (-0.9, 4.0),  2:  (-0.9, 3.5),
+        3:  (6.7, 4.0),   4:  (-3.6, 3.5),  5:  (-3.6, 3.5),
+        6:  (-3.6, 3.0),  7:  (-4.1, 3.0),  8:  (-4.1, 2.5),
+        9:  (-10.4, 2.0), 10: (-10.4, 1.5),
+        11: (-8.9, 1.0),  12: (-8.9, 0.5),  13: (-8.9, 0.0),
+        14: (-34.4, 0.0), 15: (-34.4, 0.0),
+    },
+    "ATP 500": {
+        0:  (0.5, 5.0),   1:  (0.5, 5.0),   2:  (0.5, 4.5),
+        3:  (-0.4, 4.5),  4:  (-2.9, 4.0),  5:  (-2.9, 4.0),
+        6:  (-2.9, 3.5),  7:  (-2.7, 3.5),  8:  (-2.7, 3.0),
+        9:  (-5.5, 2.0),  10: (-5.5, 1.5),
+        11: (-23.5, 0.5), 12: (-23.5, 0.0), 13: (-23.5, 0.0),
+        14: (-100, 0.0),  15: (-100, 0.0),
+    },
+    "ATP 250": {
+        0:  (-0.8, 4.0),  1:  (-0.8, 4.0),  2:  (-0.8, 3.5),
+        3:  (3.3, 4.5),   4:  (-2.1, 3.5),  5:  (-2.1, 3.5),
+        6:  (-2.1, 3.0),  7:  (-3.6, 3.0),  8:  (-3.6, 2.5),
+        9:  (-21.8, 1.5), 10: (-21.8, 1.0),
+        11: (17.1, 4.0),  12: (17.1, 3.5),  13: (17.1, 3.0),
+        14: (-29.8, 0.0), 15: (-29.8, 0.0),
+    },
+    "WTA": {
+        0:  (-2.0, 3.0),  1:  (-2.0, 3.0),  2:  (-2.0, 2.5),
+        3:  (-2.0, 2.5),  4:  (-3.0, 2.0),  5:  (-3.0, 2.0),
+        6:  (-3.0, 1.5),  7:  (-4.0, 1.5),  8:  (-4.0, 1.0),
+        9:  (-10.0, 0.5), 10: (-10.0, 0.0),
+        11: (-15.0, 0.0), 12: (-15.0, 0.0), 13: (-15.0, 0.0),
+        14: (-30.0, 0.0), 15: (-30.0, 0.0),
+    },
+}
+
+
+def _match_tournament(league: str) -> Optional[dict]:
+    """匹配网球赛事级别数据。"""
+    if not league:
+        return None
+    for kw, data in TENNIS_EDGE.items():
+        if kw.lower() in league.lower():
+            return data
+    return None
+
+
+# =====================================================================
+# 封杀规则 — V4.2: 数据化
+# =====================================================================
+# DC/HTFT: Pinnacle 无对应盘口 → 无法做公平价比较 → 封杀
+BLOCKED_MARKETS = {"dc", "htft"}
+
+# MMA/Boxing: 仅封杀高风险子类型 (时间匹配 + 球员冲突)
+# V4.2: name-matched + score≥0.95 的 MMA/Boxing 允许小额投注
+BLOCKED_SPORTS = set()  # 不再一刀切封杀运动
+
+# 中超: Pinnacle 无覆盖 → 封杀
+BLOCKED_LEAGUES = {"中超", "Chinese Super League", "China Super League"}
+
+# MMA/Boxing 高风险条件: 非 name 匹配 OR 有球员冲突 OR match_score < 0.95
+def _is_risky_mma_boxing(sport: str, league: str, odds: float,
+                         match_type: str = "", match_score: float = 0,
+                         flags: list = None) -> bool:
+    """MMA/Boxing 仅在 name 匹配 + 高分 + 无冲突时允许。"""
+    if sport not in ("mma", "boxing"):
+        return False
+    if match_type != "name":
+        return True
+    if match_score < 0.95:
+        return True
+    if flags and any("球员冲突" in f for f in flags):
+        return True
+    # 高赔率 MMA/Boxing 仍然封杀 (>5.0)
+    if odds > 5.0:
+        return True
+    return False
+
+
+# =====================================================================
+# 特殊市场 (无 Pinnacle 对应盘口 → 固定上限)
+# =====================================================================
+SPECIAL_MARKET_CAPS = {
+    "btts":  {"max_stake": 0.03, "max_odds": 3.0},
+    "dnb":   {"max_stake": 0.02, "max_odds": 5.0},
+    "oe":    {"max_stake": 0.01, "max_odds": 2.5},
+    "corner":{"max_stake": 0.01, "max_odds": 3.0},
+}
+
 
 # =====================================================================
 # 核心查询
@@ -301,20 +400,38 @@ def _match_league(league: str, data_dict: dict):
     return data_dict.get("_AGGREGATE")
 
 
+# V4.2: 样本量阈值 (Wilson CI 驱动)
+MIN_N_CORE = 50     # 核心区间 (CI ~26%)  — 大联赛大部分区间
+MIN_N_STANDARD = 30  # 标准区间 (CI ~33%)  — 小联赛/高赔
+MIN_N_MINIMUM = 10    # 最低门槛 (CI ~52%)  — 边缘区间
+
+
 @lru_cache(maxsize=4096)
-def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -> float:
+def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
+                         match_type: str = "", match_score: float = 0,
+                         flags: list = None) -> float:
     """返回 Kelly 最优仓位 (小数, 0.06 = 6% of bankroll)。
 
     纯粹由 Pinnacle 历史数据 + BB 溢价驱动, 没有任何结算数据参与。
+
+    V4.2 新增参数: match_type, match_score, flags (用于 MMA/Boxing 风控)
     """
     sport_lower = (sport or "").lower()
 
     # ── 封杀 ──
-    if sport_lower in BLOCKED_SPORTS or sub_market in BLOCKED_MARKETS:
+    if sub_market in BLOCKED_MARKETS:
         return 0.0
     for banned in BLOCKED_LEAGUES:
         if banned in (league or ""):
             return 0.0
+
+    # MMA/Boxing 分级风控
+    if sport_lower in ("mma", "boxing"):
+        if _is_risky_mma_boxing(sport_lower, league or "", odds,
+                                match_type, match_score, flags):
+            return 0.0
+        # 低风险 MMA/Boxing: 固定小额 (name-matched + high score + low odds)
+        return 0.005  # 0.5%
 
     # ── Football ──
     if sport_lower == "football":
@@ -325,13 +442,12 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
             if not data:
                 return 0.0
             wr, avg_o, n = data
-            if n < 15:
+            if n < MIN_N_MINIMUM:
                 return 0.0
             bb_prem = _bb_premium_ou(odds)
-            return kelly_075(wr, avg_o, bb_prem)
+            return kelly_075(wr, avg_o, bb_prem, n)
 
         elif sub_market == "ht":
-            # HT 高赔封杀: >=4.0 历史全输 (20笔结算, Pin 数据也极薄)
             if odds >= 4.0:
                 return 0.0
             league_data = _match_league(league, PIN_1X2_DATA)
@@ -341,14 +457,13 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
             if not data:
                 return 0.0
             wr, avg_o, n = data
-            if n < 15:
+            if n < MIN_N_MINIMUM:
                 return 0.0
             bb_prem = _bb_premium_ht(odds)
-            stake = kelly_075(wr, avg_o, bb_prem)
+            stake = kelly_075(wr, avg_o, bb_prem, n)
             return stake * 0.85
 
-        else:  # 1X2 (also used for BTTS/DNB/OE/Corner fallback)
-            # 🔵 特殊市场: 无 Pinnacle 对应盘口 → 固定上限
+        else:  # 1X2
             if sub_market in SPECIAL_MARKET_CAPS:
                 cfg = SPECIAL_MARKET_CAPS[sub_market]
                 if odds > cfg["max_odds"]:
@@ -356,7 +471,6 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
                 return cfg["max_stake"]
 
             league_data = _match_league(league, PIN_1X2_DATA)
-            # 🟡 联赛无自有 Pin 数据 → 用全量聚合 × 0.85 (V4.1: 0.7→0.85, 聚合111K样本足够可靠)
             if league_data is PIN_1X2_DATA.get("_AGGREGATE"):
                 discount = 0.85
             else:
@@ -368,141 +482,128 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float) -
             if not data:
                 return 0.0
             wr, avg_o, n = data
-            if n < 10:
+            if n < MIN_N_MINIMUM:
                 return 0.0
             bb_prem = _bb_premium_1x2(odds)
-            stake = kelly_075(wr, avg_o, bb_prem)
+            stake = kelly_075(wr, avg_o, bb_prem, n)
             return stake * discount
 
-    # ── Tennis ──
+    # ── Tennis (V4.2: 直接编码, 不再复用V3) ──
     elif sport_lower == "tennis":
-        # Pinnacle 5,013场: Grand Slam / Masters / ATP500 / ATP250 / WTA
         # 挑战赛/ITF 无可靠数据 → 封杀
         for kw in ("Challenger", "ITF", "W15", "M15", "W25", "M25"):
             if kw.lower() in (league or "").lower():
                 return 0.0
 
-        # 复用 V3 中编码的 Pinnacle 网球 ROI 数据
-        from config.weight_matrix_v3 import get_kelly_stake_pct as _tn
-        return _tn(sport, league, sub_market, odds)
+        edge_data = _match_tournament(league)
+        if edge_data is None:
+            return 0.0
+
+        idx = _bin_index(odds, TENNIS_ODDS_BINS)
+        entry = edge_data.get(idx)
+        if entry is None:
+            return 0.0
+        pin_roi_pct, bb_prem_pct = entry
+
+        # 网球 Kelly: edge = (1 + pin_roi/100) × (1 + bb_prem/100) - 1
+        pin_factor = 1.0 + pin_roi_pct / 100.0
+        bb_factor = 1.0 + bb_prem_pct / 100.0
+        edge = pin_factor * bb_factor - 1.0
+        if edge <= 0:
+            return 0.0
+        full_kelly = edge / (bb_factor - 1.0) if bb_factor > 1.0 else edge
+        return min(0.06, max(0.0, full_kelly * 0.75))
 
     # ── Baseball ──
     elif sport_lower == "baseball":
-        # 🟢 SBR 44K笔 + OddsPortal 9K笔 双重数据
         idx = _bin_index(odds, ODDS_BINS)
-        # 优先用 SBR 10年数据 (样本更大)
+        # SBR 10年数据 (优先)
         data = MLB_DATA.get(idx)
-        if data and data[2] >= 15:
+        if data and data[2] >= MIN_N_MINIMUM:
             wr, avg_o, n = data
-            stake = kelly_075(wr, avg_o, 0.05)  # BB溢价5%
-            return stake * 0.8  # 共识赔率, 8折
-        # 其次 OddsPortal
+            stake = kelly_075(wr, avg_o, 0.05, n)
+            return stake * DISCOUNT_SBR_LARGE
+        # OddsPortal
         data2 = MLB_ODDSPORTAL_DATA.get(idx)
-        if data2 and data2[2] >= 15:
+        if data2 and data2[2] >= MIN_N_MINIMUM:
             wr, avg_o, n = data2
-            stake = kelly_075(wr, avg_o, 0.05)
-            return stake * 0.75
-        # 无数据区间不投
+            stake = kelly_075(wr, avg_o, 0.05, n)
+            return stake * DISCOUNT_ODDSPORTAL
         return 0.0
 
-    # ── Basketball ── (updated with SBR data)
+    # ── Basketball ──
     elif sport_lower == "basketball":
-        # 🟢 SBR 27K笔 NBA + 模型57K
         if "NBA" in (league or ""):
             idx = _bin_index(odds, ODDS_BINS)
             data = NBA_DATA.get(idx)
-            if data and data[2] >= 15:
+            if data and data[2] >= MIN_N_MINIMUM:
                 wr, avg_o, n = data
-                stake = kelly_075(wr, avg_o, 0.05)
-                return stake * 0.85  # NBA data quite reliable
-            # Fallback to model data
-            from config.weight_matrix_v3 import get_kelly_stake_pct as _bb
-            return _bb(sport, league, sub_market, odds)
+                stake = kelly_075(wr, avg_o, 0.05, n)
+                return stake * DISCOUNT_SBR_LARGE
+            return 0.0
         elif "WNBA" in (league or ""):
             idx = _bin_index(odds, ODDS_BINS)
             data = NBA_DATA.get(idx)
-            if data and data[2] >= 15:
+            if data and data[2] >= MIN_N_MINIMUM:
                 wr, avg_o, n = data
-                stake = kelly_075(wr, avg_o, 0.04)
-                return stake * 0.3  # WNBA: 3折
+                stake = kelly_075(wr, avg_o, 0.04, n)
+                return stake * DISCOUNT_WNBA
             return 0.0
         else:
             return 0.01 if odds < 2.5 else 0.0
 
     # ── American Football ──
     elif sport_lower == "american_football":
-        # 🟢 SBR 5.9K笔 NFL
         idx = _bin_index(odds, ODDS_BINS)
         data = NFL_DATA.get(idx)
-        if data and data[2] >= 10:
+        if data and data[2] >= MIN_N_MINIMUM:
             wr, avg_o, n = data
-            stake = kelly_075(wr, avg_o, 0.05)
-            return stake * 0.7  # NFL: 7折
+            stake = kelly_075(wr, avg_o, 0.05, n)
+            return stake * DISCOUNT_SBR_MEDIUM
         return 0.0
 
     # ── Ice Hockey ──
     elif sport_lower == "ice_hockey":
-        # 🟢 SBR 27K笔 NHL
         idx = _bin_index(odds, ODDS_BINS)
         data = NHL_DATA.get(idx)
-        if data and data[2] >= 10:
+        if data and data[2] >= MIN_N_MINIMUM:
             wr, avg_o, n = data
-            stake = kelly_075(wr, avg_o, 0.05)
-            return stake * 0.6  # NHL: 6折
+            stake = kelly_075(wr, avg_o, 0.05, n)
+            return stake * DISCOUNT_SBR_LARGE
         return 0.0
 
     # ── 乒/羽/排 ──
     elif sport_lower in ("pingpong", "badminton", "volleyball"):
-        # 🔴 无任何外部数据 → 固定极小额
         if odds > 2.5:
             return 0.0
-        return 0.01  # 固定 1%
+        return 0.01
 
     # ── 完全未知 ──
     else:
         if odds > 2.5:
             return 0.0
-        return 0.005  # 固定 0.5%
+        return 0.005
 
 
 # =====================================================================
-# 特殊市场 (无 Pinnacle 对应盘口 → 固定上限)
-# =====================================================================
-SPECIAL_MARKET_CAPS = {
-    "btts":  {"max_stake": 0.03, "max_odds": 3.0},
-    "dnb":   {"max_stake": 0.02, "max_odds": 5.0},
-    "oe":    {"max_stake": 0.01, "max_odds": 2.5},
-    "corner":{"max_stake": 0.01, "max_odds": 3.0},
-}
-
-# =====================================================================
-# EV 门槛
+# EV 门槛 — V4.1: 统一 2%，让 Kelly 做主
 # =====================================================================
 def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
-    """最小 EV 门槛。
-
-    有 Pin 数据: stake>0 的区间门槛合理, stake=0 的区间门槛=999
-    无 Pin 数据: 赔率越高门槛越高, 越缺数据门槛越高
-    """
+    """最小 EV 门槛。stake>0 → 2%, stake=0 → 999。"""
     sport_lower = (sport or "").lower()
-    if sport_lower in BLOCKED_SPORTS or sub_market in BLOCKED_MARKETS:
+    if sub_market in BLOCKED_MARKETS:
         return 999.0
 
     if sport_lower == "football":
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)
-        if stake > 0:
-            return 2.0   # V4.1: 统一降到 2%，让 V4 Kelly 做主
-        else:
-            return 999.0
+        return 2.0 if stake > 0 else 999.0
 
     elif sport_lower == "tennis":
         return 2.0
 
     elif sport_lower == "basketball":
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)
-        if stake > 0:
-            return 2.0
-        return 999.0
+        return 2.0 if stake > 0 else 999.0
 
     elif sport_lower in ("baseball", "american_football"):
         return 2.0 if odds < 5.0 else 999.0
@@ -515,7 +616,7 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
 
 
 def get_odds_cap(sport: str, league: str, sub_market: str) -> float:
-    """赔率上限。有 Pin 数据的运动可以放宽, 没数据的严格限制。"""
+    """赔率上限。"""
     if sub_market in BLOCKED_MARKETS:
         return 0.0
     sport_lower = (sport or "").lower()
@@ -534,6 +635,8 @@ def get_odds_cap(sport: str, league: str, sub_market: str) -> float:
         return 5.0
     elif sport_lower == "ice_hockey":
         return 4.0
+    elif sport_lower in ("mma", "boxing"):
+        return 3.0  # V4.2: 仅低赔允许
     else:
         return 3.0
 
@@ -547,17 +650,16 @@ def print_matrix():
     bins = ODDS_BINS
 
     print(f"{'='*100}")
-    print(f"V4.1 权重矩阵: 1X2 (Pinnacle 107,896场, BB+7%溢价, 0.75-Kelly)")
-    print(f"每格 = 0.75-kelly% of bankroll, cap=6%")
+    print(f"V4.2 权重矩阵: 1X2 (Pinnacle 111K场, 0.75-Kelly, 样本置信度折扣)")
+    print(f"每格 = 0.75-kelly% × confidence(n) of bankroll, cap=6%")
     print(f"{'='*100}")
 
     test_odds = []
     prev = 1.01
-    for b in bins[:20]:  # first 20 bins
+    for b in bins[:20]:
         test_odds.append(round((prev + b) / 2, 1))
         prev = b
 
-    # Header
     hdr = f"{'League':<8s}"
     for o in test_odds:
         hdr += f" @{o:<4.1f}"
@@ -575,9 +677,12 @@ def print_matrix():
         print(row)
 
     print()
-    print(f"公式: 0.75_kelly = max(0, actual_wr × BB_odds - 1) / (BB_odds - 1) × 0.75")
+    print(f"公式: 0.75_kelly = max(0, wr × BB_odds - 1) / (BB_odds - 1) × 0.75 × confidence(n)")
     print(f"BB_odds = Pin_odds × (1 + bb_premium)")
+    print(f"BB溢价: 从实际 BB vs Pin 对比数据中位数统计 (2026-08-01)")
     print(f"数据源: football-data.co.uk Pinnacle 收盘赔率 2012-2025")
+    print(f"网球: Pinnacle 5,013场, 直接编码 (V4.2)")
+    print(f"样本置信度: n≥100=1.0, n≥50=0.95, n≥30=0.85, n≥10=0.70")
 
 
 if __name__ == "__main__":
