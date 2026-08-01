@@ -300,6 +300,22 @@ class PipelineOrchestrator:
             err_msg = f"{e}"
             logger.error("[%s] FAILED after %ds: %s", name, elapsed, err_msg)
             logger.error(traceback.format_exc())
+
+            # 增量扫描重试: 瞬时故障(API超时/网络抖动)不应错过整个窗口
+            if "incremental" in name:
+                for attempt in range(1, 4):
+                    wait = 30 * attempt
+                    logger.info("[%s] 重试 %d/3 (%ds后)...", name, attempt, wait)
+                    time.sleep(wait)
+                    try:
+                        task_callable(**kwargs)
+                        elapsed2 = time.time() - t0
+                        logger.info("[%s] ====== DONE (重试%d, %ds) ======", name, attempt, elapsed2)
+                        self._mark_scan_ok()
+                        return True
+                    except Exception as e2:
+                        logger.error("[%s] 重试%d也失败: %s", name, attempt, e2)
+
             self._send_alert(name, err_msg)
             return False
 
