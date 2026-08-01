@@ -73,6 +73,15 @@ data/storage/
 !data/storage/league_tiers.json
 !data/storage/team_aliases.json
 
+# Exception: 核心业务数据 — 不可再生，必须 git 保护
+!data/storage/settlement_log.csv
+!data/storage/pushed_fingerprints.json
+!data/storage/pinnacle_league_structure.json
+
+# Exception: V4 进化数据
+!data/storage/evolve/
+!data/storage/evolve/*.json
+
 # Auto-generated data directories
 data/history/
 data/storage/*.lock
