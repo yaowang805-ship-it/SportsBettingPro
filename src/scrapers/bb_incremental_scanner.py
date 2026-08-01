@@ -540,7 +540,7 @@ def _run_push(label: str = ""):
         result = subprocess.run(
             push_args,
             capture_output=True, text=True, cwd=SRC_DIR.parent,
-            timeout=120, env=env,
+            timeout=300, env=env,
         )
         if result.returncode != 0:
             print(f"  ❌ bb_ev_push 失败 (exit={result.returncode}):")
