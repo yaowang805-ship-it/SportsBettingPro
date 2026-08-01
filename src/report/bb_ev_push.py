@@ -779,6 +779,18 @@ def _calc_kelly_stakes(opps: list) -> list:
             from config.weight_matrix_v4 import HFA_AWAY_DISCOUNT
             stake_pct *= HFA_AWAY_DISCOUNT
 
+        # V4.2 亚洲让球折扣: AH 同赔率胜率略低于 1X2 → ×0.92
+        if sub in ("hc", "handicap") or "让球" in designation or "让分" in designation:
+            from config.weight_matrix_v4 import AH_DISCOUNT
+            stake_pct *= AH_DISCOUNT
+
+        # V4.2 CLV 联赛加成: 正/零 CLV 联赛早盘优势更可靠 → ×1.05
+        for clv_lg in ("意甲", "Serie A"):
+            if clv_lg in (league or ""):
+                from config.weight_matrix_v4 import CLV_BOOST
+                stake_pct *= CLV_BOOST
+                break
+
         # 蒸汽检测 (边际调整 ±30%)
         snap_odds = o.get("_snapshot_bb_odds", 0)
         steam_mult = 1.0

@@ -52,6 +52,17 @@ def _bin_index(odds: float, bins: list) -> int:
 HFA_HOME_BOOST = 1.05     # 主场投注 Kelly ×1.05
 HFA_AWAY_DISCOUNT = 0.95  # 客场投注 Kelly ×0.95
 
+# 亚洲让球 (AH) 折扣 — V4.2: 19,989场 Pinnacle AH 数据
+#   AH 同赔率胜率略低于 1X2 (因 push 风险和让球调整)
+#   让球投注 Kelly ×0.92
+AH_DISCOUNT = 0.92
+
+# CLV 联赛调整 — V4.2: Pinnacle 开盘→收盘线移动分析
+#   正/中性 CLV 联赛: 赔率不逆向移动 → 早盘优势更可靠 → +5% Kelly
+#   负 CLV 联赛: 赔率逆向移动 → 保持基准 Kelly
+CLV_POSITIVE_LEAGUES = {"意甲", "Serie A"}  # 唯二正/零 CLV 联赛
+CLV_BOOST = 1.05  # 正 CLV 联赛 Kelly ×1.05
+
 
 # =====================================================================
 # Kelly 公式 — V4.2: 基于样本量的置信度折扣
