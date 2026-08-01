@@ -358,8 +358,8 @@ def run_incremental(time_window: str = "all"):
 
     print(f"\n✅ 已保存实时结果 → {window_file.name} ({len(new_result.get('details', []))} 条+EV)")
 
-    # 8. 保存新快照
-    save_snapshot(bb_matches)
+    # 8. 保存新快照 (near/far 各自独立)
+    save_snapshot(bb_matches, _current_snap)
 
     # 9. 推送新机会
     if new_result.get("details") or fb_had_new:
