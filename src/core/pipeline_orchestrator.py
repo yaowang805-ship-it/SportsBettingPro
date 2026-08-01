@@ -557,7 +557,7 @@ class PipelineOrchestrator:
         now = datetime.now()
 
         # 1) 定时任务 (settle/report → 后台线程)
-        _BACKGROUND_TASKS = {"settle", "report", "git_commit", "memory_update", "evolve"}
+        _BACKGROUND_TASKS = {"settle", "report", "git_commit", "memory_update", "evolve", "incremental"}
         for name, time_str, method_name, kwargs in SCHEDULE:
             weekday, dom, hour, minute = _parse_schedule_time(time_str)
             if not self._is_time_match(weekday, dom, hour, minute, now):
