@@ -491,39 +491,27 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
     if sport_lower == "football":
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)
         if stake > 0:
-            if odds < 2.0: return 2.0
-            elif odds < 3.0: return 3.0
-            elif odds < 5.0: return 5.0
-            elif odds < 7.0: return 7.0
-            else: return 10.0
+            return 2.0   # V4.1: 统一降到 2%，让 V4 Kelly 做主
         else:
             return 999.0
 
     elif sport_lower == "tennis":
-        if odds < 2.0: return 2.0
-        elif odds < 3.0: return 3.0
-        elif odds < 5.0: return 5.0
-        else: return 8.0
+        return 2.0
 
     elif sport_lower == "basketball":
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)
         if stake > 0:
-            if odds < 2.0: return 2.0
-            elif odds < 3.0: return 3.0
-            else: return 5.0
+            return 2.0
         return 999.0
 
     elif sport_lower in ("baseball", "american_football"):
-        if odds < 2.0: return 3.0
-        elif odds < 3.0: return 5.0
-        else: return 999.0
+        return 2.0 if odds < 5.0 else 999.0
 
     elif sport_lower in ("ice_hockey", "pingpong", "badminton", "volleyball"):
-        if odds < 2.5: return 4.0
-        else: return 999.0
+        return 2.0 if odds < 3.0 else 999.0
 
     else:
-        return 5.0
+        return 2.0
 
 
 def get_odds_cap(sport: str, league: str, sub_market: str) -> float:
