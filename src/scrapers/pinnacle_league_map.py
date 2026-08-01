@@ -481,18 +481,27 @@ def _match_pin_name(pn, pin_name):
     return False
 
 
+def _safe_get_name(info):
+    """安全获取联赛名 — 兼容 flat {name:..} 和 nested {league_id: {name:..}}"""
+    if not isinstance(info, dict): return ""
+    if "name" in info and isinstance(info["name"], str): return info["name"]
+    # nested: 从第一个league取值
+    for v in info.values():
+        if isinstance(v, dict) and "name" in v:
+            return v["name"]
+    return ""
+
 def _find_best_league(pin_name, all_sport_matchups):
     """Match Pinnacle league name, prefer exact match."""
     needle = pin_name.lower().strip()
     matched = []
     for lid, info in all_sport_matchups.items():
-        if _match_pin_name(needle, info["name"]):
+        if _match_pin_name(needle, _safe_get_name(info)):
             matched.append(lid)
     if not matched:
         return None
-    # Exact match preferred (prevent "Division A" prefix matching "Division A Women")
     for lid in matched:
-        if all_sport_matchups[lid]["name"].lower() == needle:
+        if _safe_get_name(all_sport_matchups.get(lid, {})).lower() == needle:
             return lid
     return matched[0]
 
@@ -733,7 +742,7 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
                 if lid in matched_ids:
                     continue
                 if isinstance(info, dict) and "name" in info:
-                    pname = info["name"].lower()
+                    pname = _safe_get_name(info).lower()
                 elif isinstance(info, dict):
                     first = next(iter(info.values()), {}) if info else {}
                     pname = (first.get("name", "") if isinstance(first, dict) else str(first)).lower()
@@ -753,7 +762,7 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
         for lid, info in all_sport_matchups.items():
             # 兼容两种格式: 旧格式(flat dict)有name字段, 网球格式(nested)需穿透
             if isinstance(info, dict) and "name" in info:
-                pin_name = info["name"].lower()
+                pin_name = _safe_get_name(info).lower()
             elif isinstance(info, dict):
                 # Nested: {league_id: {name: ...}} → 取第一个league的name
                 first = next(iter(info.values()), {}) if info else {}
