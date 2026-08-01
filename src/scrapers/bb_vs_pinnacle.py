@@ -353,9 +353,14 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     print(f"\n  Pinnacle 联赛去重后: {len(all_unique_pin_ids)} 个 (来自 {len(matched_leagues)} 个 BB 联赛)")
 
     # 过滤：跳过父级联赛（0 场比赛）
+    # V4.3: all_pin_leagues 为 nested {sport_id: {league_id: data}} → 需穿透查找
     pin_ids_to_fetch = []
     for pin_id in sorted(all_unique_pin_ids):
-        info = all_pin_leagues.get(pin_id, {})
+        info = {}
+        for sport_data in all_pin_leagues.values():
+            if isinstance(sport_data, dict) and str(pin_id) in sport_data:
+                info = sport_data[str(pin_id)]
+                break
         if info.get("matchup_count", 0) == 0:
             print(f"  跳过 [{info.get('name', pin_id)}] (ID={pin_id}) — 父级联赛无直接比赛")
         else:
