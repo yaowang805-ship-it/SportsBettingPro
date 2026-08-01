@@ -726,7 +726,7 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
                 break
 
     # Phase 1.5: ITF World Tennis -> location pinyin matching
-    if not matched_ids and ("世界网球" in bb_league_name or "世界網球" in bb_league_name):
+    if not matched_ids and ("世界网球" in bb_league_name or "世界網球" in bb_league_name or bb_league_name.startswith("ITF")):
         itf_ids = _find_itf_league_ids(bb_league_name, all_sport_matchups)
         if itf_ids:
             return sorted(itf_ids)
