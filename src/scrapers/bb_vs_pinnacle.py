@@ -373,7 +373,12 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     _fetch_lock = __import__('threading').Lock()
 
     def _fetch_one(pin_id):
-        info = all_pin_leagues.get(pin_id, {})
+        # V4.3 nested: 穿透查找 league info
+        info = {}
+        for sport_data in all_pin_leagues.values():
+            if isinstance(sport_data, dict) and str(pin_id) in sport_data:
+                info = sport_data[str(pin_id)]
+                break
         time.sleep(random.uniform(0.1, 0.4))
         name = info.get('name', pin_id)
         with _fetch_lock:
@@ -399,7 +404,13 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         pin_ids = matched_leagues[bb_league]
         pin_league_names = set()
         for pid in pin_ids:
-            name = all_pin_leagues.get(pid, {}).get("name", "")
+            # V4.3 nested: 穿透 sport → league 查找
+            info = {}
+            for sport_data in all_pin_leagues.values():
+                if isinstance(sport_data, dict) and str(pid) in sport_data:
+                    info = sport_data[str(pid)]
+                    break
+            name = info.get("name", "")
             if name:
                 pin_league_names.add(name)
         pin_by_bb_league[bb_league] = [
