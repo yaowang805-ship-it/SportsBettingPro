@@ -1787,7 +1787,10 @@ def _make_fingerprint(o: dict) -> str:
         import re as _re
         return _normalize_cn(_re.sub(r'\s+', ' ', s.strip())) if s else s
     sub = o.get("_sub_market", o.get("_market", ""))
-    return f"{_norm(o.get('sport',''))}|{_norm(o.get('league',''))}|{_norm(o.get('home_cn',''))}|{_norm(o.get('away_cn',''))}|{_norm(o.get('designation',''))}|{sub}|{match_date}"
+    # 盘口线参与指纹: 让球/大小球线变了 → 新机会, 不拦截
+    line = o.get("line", "") or o.get("_line", "")
+    line_str = f"|{line}" if line and sub in ("hc", "handicap", "ou", "over_under") else ""
+    return f"{_norm(o.get('sport',''))}|{_norm(o.get('league',''))}|{_norm(o.get('home_cn',''))}|{_norm(o.get('away_cn',''))}|{_norm(o.get('designation',''))}|{sub}{line_str}|{match_date}"
 
 
 def _load_fingerprints() -> dict:
