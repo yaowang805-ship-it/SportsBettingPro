@@ -85,6 +85,25 @@ CLV_BOOST = 1.05  # 正 CLV 联赛 Kelly ×1.05
 #     1.00 Kelly: ✅ 存活, 但回撤 100%
 #   风险控制: 连输3天减半 + 5天停投 → 实际回撤远低于理论值
 # =====================================================================
+def _odds_weight(odds: float) -> float:
+    """赔率区间权重 (316K Pinnacle BB EV回测, 2026-08-01)
+    @1.3-2.1: BB EV 5.7-7.8% → +30%
+    @3.3-3.5: BB EV 5.2%     → +30%
+    @2.1-2.9: BB EV 3.2-3.9% → +15%
+    @3.1-3.9: BB EV 2.7-3.1% → +15%
+    @2.9-3.1: BB EV 1.9%     → 基准
+    @3.9-4.8: BB EV微负      → -15%
+    @4.8+:     BB EV负       → 封杀
+    """
+    if odds < 2.1: return 1.30
+    elif odds < 2.9: return 1.15
+    elif odds < 3.1: return 1.00
+    elif odds < 3.5: return 1.30
+    elif odds < 3.9: return 1.15
+    elif odds < 4.8: return 0.85
+    else: return 0.0
+
+# =====================================================================
 def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
               n_bets: int = 100, cap: float = 0.06) -> float:
     """0.75凯利仓位 (返回小数, 0.06 = 6%)。
@@ -1603,7 +1622,8 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             bb_prem = _bb_premium_1x2(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n)
-            return stake
+            # V4.3: 赔率区间权重 (316K Pinnacle BB EV回测)
+            return stake * _odds_weight(odds)
 
     # ── Tennis (V4.2: 直接编码, 不再复用V3) ──
     elif sport_lower == "tennis":
