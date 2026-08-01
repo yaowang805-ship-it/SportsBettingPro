@@ -139,8 +139,12 @@ def _calibrate_market_line(sport, market_type, bb_line, pin_line, pin_points, is
     is_ht: HT(半场)市场 — 线必须完全一致，不允许近似匹配
     返回 (ok, msg)，ok=False 表示线不匹配，该机会应被过滤掉。
     """
-    if bb_line is None or (pin_line is None and pin_points is None):
+    # BB无线 → 无法比较 (OK, 后续会跳过)
+    if bb_line is None:
         return True, ""
+    # BB有线但Pin无线 → 校准失败 (不能让BB线匹配到不存在的Pin线)
+    if pin_line is None and pin_points is None:
+        return False, "Pin无线可比(BB={})".format(bb_line)
     ref = pin_line if pin_line is not None else pin_points
     try:
         ref = float(ref)
