@@ -770,6 +770,15 @@ def _calc_kelly_stakes(opps: list) -> list:
             o["_stake"] = 0; o["_raw_stake"] = 0
             continue
 
+        # V4.2 Home Field Advantage: 主场投注 Kelly×1.05, 客场×0.95
+        designation = o.get("designation", "")
+        if "主" in designation and "客" not in designation:
+            from config.weight_matrix_v4 import HFA_HOME_BOOST
+            stake_pct *= HFA_HOME_BOOST
+        elif "客" in designation:
+            from config.weight_matrix_v4 import HFA_AWAY_DISCOUNT
+            stake_pct *= HFA_AWAY_DISCOUNT
+
         # 蒸汽检测 (边际调整 ±30%)
         snap_odds = o.get("_snapshot_bb_odds", 0)
         steam_mult = 1.0
