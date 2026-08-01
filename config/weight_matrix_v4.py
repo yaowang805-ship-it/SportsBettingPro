@@ -1751,7 +1751,7 @@ def get_odds_cap(sport: str, league: str, sub_market: str) -> float:
     elif sport_lower in ("baseball", "american_football"):
         return 5.0
     elif sport_lower == "ice_hockey":
-        return 4.0
+        return 5.0  # V4.3: SBR数据@4.0仍有正edge(n=60,+3%)
     elif sport_lower in ("mma", "boxing"):
         return 3.0  # V4.2: 仅低赔允许
     else:
