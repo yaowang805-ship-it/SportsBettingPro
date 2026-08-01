@@ -997,16 +997,15 @@ def _collect_opportunities(match, market_key):
         if sub_market == "htft" and ev > 30:
             continue
 
-        # V4.1: 溢价异常高不再直接封杀，改为标注警告（让结算数据来验证）
+        # V4.2: 溢价异常高检查改为 per-opportunity (不再用 match-level flag 误伤无辜)
         flags = match.get("flags", [])
-        has_high_ev_flag = any("溢价异常高" in f for f in flags)
 
         # 仅保留 HTFT ev>30 的直接封杀（BB/Pin 半全场定义不一致，产品不同）
         if sub_market == "htft" and ev > 30:
             continue
 
         # MMA/拳击 + 高EV标志 → 仍封杀（队名映射错误率确实极高，V4已屏蔽但兜底）
-        if sport in ("mma", "boxing") and ev > 15 and has_high_ev_flag:
+        if sport in ("mma", "boxing") and ev > 15 and any("溢价异常高" in f for f in flags):
             continue
 
         # MMA/拳击: BB 与 Pinnacle 赔率偏差 >25% → 映射错误
@@ -1055,7 +1054,7 @@ def _collect_opportunities(match, market_key):
             "fair_price": fair,
             "_snapshot_bb_odds": _lookup_snapshot_odds(home_cn, away_cn, display_name),
             "ev_pct": ev,
-            "_warn": "⚠️ 溢价异常高，请核对" if has_high_ev_flag else "",
+            "_warn": "⚠️ 溢价异常高，请核对" if ev > 20 else "",
             "start_time_bb": match.get("start_time_bb", ""),
             "_market_type": market_key,  # "opportunities"|"handicap"|"over_under"|...
             "_sub_market": sub_market,  # "1x2"|"ht"|"btts"|"dc"|"oe"|"htft"|...
