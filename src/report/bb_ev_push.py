@@ -882,6 +882,46 @@ def _lookup_snapshot_odds(home: str, away: str, designation: str) -> float:
     return cache.get(key, 0)
 
 
+def _lookup_bb_price_for_fb_match(match, market_key):
+    """FB-only 匹配回查 BB 数据，找到同场比赛的 BB 赔率。
+
+    Returns: dict {designation: bb_odds} 或 None。
+    如果 BB 价格更好，调用者用它替换 FB 价格。
+    """
+    try:
+        from src.scrapers.bb_data import load_bb_odds
+        bb_matches = load_bb_odds()
+    except Exception:
+        return None
+
+    home = match.get("home_bb", "").strip()
+    away = match.get("away_bb", "").strip()
+    if not home or not away:
+        return None
+
+    # 队名匹配: 优先完全匹配，其次模糊匹配
+    for m in bb_matches:
+        m_home = m.get("home", "").strip()
+        m_away = m.get("away", "").strip()
+        # 简单匹配
+        if home in m_home and away in m_away:
+            odds_ft = m.get("odds_ft", {})
+            result = {}
+            if market_key == "opportunities":
+                ml = odds_ft.get("ml", [])
+                labels = ["主胜", "和局", "客胜"]
+                for i, lbl in enumerate(labels):
+                    if i < len(ml) and ml[i]:
+                        result[lbl] = ml[i]
+            elif market_key == "over_under":
+                ou = odds_ft.get("ou", [])
+                if len(ou) >= 2:
+                    result["大球"] = ou[0]
+                    result["小球"] = ou[1]
+            return result if result else None
+    return None
+
+
 def _collect_opportunities(match, market_key):
     """从指定市场收集 +EV 机会。校准过滤：时间匹配必须高分才推送。
 
@@ -949,11 +989,35 @@ def _collect_opportunities(match, market_key):
     source_key = _MK_TO_SOURCE_KEY.get(market_key, "ml")
     price_source = platform_sources.get(source_key, match.get("bb_price_source", "BB"))
 
+    # V4.2: FB-only 匹配回查 BB 数据 — 用更好的价格
+    #   场景: BB通道队名映射失败, FB通道成功但只用了FB价格
+    #   如果 BB 同场比赛有更好赔率 → 用 BB 价格
+    if price_source == "FB" and not platform_sources:
+        _bb_odds = _lookup_bb_price_for_fb_match(match, market_key)
+        if _bb_odds:
+            price_source = "BB/FB"  # 标记两个平台都有
+
     result = []
+    # FB-only 匹配回查 BB 价 (在循环外查一次, 在循环内按 designation 替换)
+    bb_better_prices = None
+    if price_source == "BB/FB" and "_bb_odds" in dir():
+        bb_better_prices = _bb_odds
+
     for opp in match.get(market_key, []):
         ev = opp.get("ev_pct", 0)
         bb_odds = opp.get("bb_odds", 0)
         pin_odds = opp.get("pin_odds", 0)
+
+        # FB-only 匹配: 如果 BB 有同样 designation 的更好价格 → 替换
+        designation_orig = opp.get("designation", "")
+        if bb_better_prices and designation_orig in bb_better_prices:
+            bb_better = bb_better_prices[designation_orig]
+            if bb_better > bb_odds:
+                bb_odds = bb_better
+                # 重新计算 EV (用原 fair_price)
+                fair = opp.get("fair_price", 0)
+                if fair > 0:
+                    ev = round((bb_better - fair) / fair * 100, 2)
 
         # 市场子类型识别：区分同一 market_key 下的不同市场（如 1X2 / HT / BTTS / DC）
         # ⚠️ 必须在使用 sub_market 之前定义（V4 get_min_ev/get_odds_cap 需要）

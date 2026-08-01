@@ -70,6 +70,9 @@ SCHEDULE = [
     ("daily_report",       "09:00", "do_daily_report",{}),
     ("memory_update",      "09:05", "do_memory_update", {}),
     ("daily_cleanup",      "09:10", "do_cleanup",      {}),  # 指纹+临时文件清理
+    ("evolve_daily",       "09:15", "do_evolve_daily", {}),  # V4 BB溢价累积
+    # 周报：周日 21:00
+    ("evolve_weekly",      "Mon 06:07", "do_evolve_weekly", {}),  # V4 每周进化(结算反馈+溢价重算)
     ("settle_noon",        "14:00", "do_settle",      {}),  # 午后结算
     ("settle_afternoon",   "17:00", "do_settle",      {}),  # 傍晚结算
     ("full_scan_evening",  "20:00", "do_full_scan",   {"bet": True}),
@@ -433,6 +436,16 @@ class PipelineOrchestrator:
         except Exception as e:
             logger.warning("临时文件清理失败: %s", e)
 
+    def do_evolve_daily(self):
+        """V4 每日进化: BB 溢价累积。"""
+        from src.evolve.v4_evolver import evolve_daily
+        evolve_daily()
+
+    def do_evolve_weekly(self):
+        """V4 每周进化: 结算反馈 + 溢价重算 + 健康检查。"""
+        from src.evolve.v4_evolver import evolve_weekly
+        evolve_weekly()
+
     def do_git_commit(self):
         """自动 git 提交。"""
         import subprocess
@@ -544,7 +557,7 @@ class PipelineOrchestrator:
         now = datetime.now()
 
         # 1) 定时任务 (settle/report → 后台线程)
-        _BACKGROUND_TASKS = {"settle", "report", "git_commit", "memory_update"}
+        _BACKGROUND_TASKS = {"settle", "report", "git_commit", "memory_update", "evolve"}
         for name, time_str, method_name, kwargs in SCHEDULE:
             weekday, dom, hour, minute = _parse_schedule_time(time_str)
             if not self._is_time_match(weekday, dom, hour, minute, now):
@@ -655,6 +668,8 @@ class PipelineOrchestrator:
             "monthly_report": self.do_monthly_report,
             "incremental": self.do_incremental,
             "health_check": self.do_health_check,
+            "evolve_daily": self.do_evolve_daily,
+            "evolve_weekly": self.do_evolve_weekly,
         }
         func = task_map.get(task_name)
         if not func:

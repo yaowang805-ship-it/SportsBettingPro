@@ -35,6 +35,7 @@ usage() {
   check                 健康检查
   clv-collect           采集收盘赔率计算 CLV
   clv-report [--no-push] 推送 CLV 日报
+  evolve [--weekly]      V4 自我进化 (daily/weekly/monthly)
   git-commit            自动提交 git 变更
 
 选项:
@@ -293,6 +294,23 @@ cmd_git_commit() {
     _log "====== GIT COMMIT DONE ======"
 }
 
+cmd_evolve() {
+    local flag="${1:-}"
+    _log "====== V4 EVOLVE START ======"
+    if [ "$flag" = "--weekly" ]; then
+        .venv312/bin/python -m src.evolve.v4_evolver --weekly 2>&1 | tee -a "$PIPELINE_LOG"
+    elif [ "$flag" = "--monthly" ]; then
+        .venv312/bin/python -m src.evolve.v4_evolver --monthly 2>&1 | tee -a "$PIPELINE_LOG"
+    elif [ "$flag" = "--feedback" ]; then
+        .venv312/bin/python -m src.evolve.v4_evolver --feedback 2>&1 | tee -a "$PIPELINE_LOG"
+    elif [ "$flag" = "--audit" ]; then
+        .venv312/bin/python -m src.evolve.v4_evolver --audit 2>&1 | tee -a "$PIPELINE_LOG"
+    else
+        .venv312/bin/python -m src.evolve.v4_evolver 2>&1 | tee -a "$PIPELINE_LOG"
+    fi
+    _log "====== V4 EVOLVE DONE ======"
+}
+
 cmd_clv_collect() {
     _log "====== CLV COLLECT START ======"
     .venv312/bin/python -m src.monitor.clv_collector 2>&1 | tee -a "$PIPELINE_LOG"
@@ -344,6 +362,7 @@ case "$CMD" in
     clv-collect)  cmd_clv_collect "$@" ;;
     clv-report)   cmd_clv_report "$@" ;;
     git-commit)   cmd_git_commit "$@" ;;
+    evolve)       cmd_evolve "$@" ;;
     help|--help)  usage ;;
     *)
         echo "❌ 未知命令: $CMD"
