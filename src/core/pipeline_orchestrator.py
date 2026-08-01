@@ -156,28 +156,57 @@ class PipelineOrchestrator:
             LOCK_FILE.unlink()
 
     def _startup_integrity_check(self):
-        """启动时检查关键文件完整性，损坏则自动从 .bak 恢复。"""
+        """启动前自检: 模块导入 + 文件格式 + 代码版本。
+
+        任何失败 → 拒绝启动 + 钉钉告警。防止旧代码/坏数据破坏运行。
+        """
         from config.settings import DATA_DIR, safe_load_json
+        errors = []
+
+        # 1) 模块导入检查 (防代码bug)
+        CRITICAL_MODULES = [
+            "config.weight_matrix_v4",
+            "src.scrapers.bb_api_fetcher",
+            "src.scrapers.bb_vs_pinnacle",
+            "src.scrapers.pinnacle_api",
+            "src.scrapers.pinnacle_league_map",
+            "src.report.bb_ev_push",
+        ]
+        import importlib
+        for mod_name in CRITICAL_MODULES:
+            try:
+                importlib.import_module(mod_name)
+            except Exception as e:
+                msg = f"[自检] import {mod_name} 失败: {e}"
+                logger.error(msg)
+                errors.append(msg)
+
+        # 2) 关键文件格式检查 (防数据结构变更)
         critical_files = [
-            (DATA_DIR / "team_name_map.json", dict, 100),          # 至少100条映射
-            (DATA_DIR / "league_keywords.json", dict, 10),         # 至少10条映射
-            (DATA_DIR / "pinnacle_league_structure.json", dict, 10), # 至少10个联赛
-            (DATA_DIR / "league_tiers.json", dict, 5),
+            (DATA_DIR / "pinnacle_league_structure.json", dict, 50),
+            (DATA_DIR / "team_name_map.json", dict, 100),
+            (DATA_DIR / "league_keywords.json", dict, 10),
         ]
         for fpath, expected_type, min_count in critical_files:
             if not fpath.exists():
-                logger.warning("[自检] %s 不存在，跳过", fpath.name)
+                errors.append(f"[自检] {fpath.name} 不存在")
                 continue
             data = safe_load_json(fpath)
-            if data is None or (isinstance(data, expected_type) and len(data) < min_count):
-                logger.error("[自检] %s 为空或损坏, 尝试从.bak恢复", fpath.name)
-                bak = fpath.with_suffix(fpath.suffix + '.bak')
-                if bak.exists():
-                    import shutil
-                    shutil.copy2(str(bak), str(fpath))
-                    logger.warning("[自检] %s 已从 .bak 恢复", fpath.name)
-                else:
-                    self._send_alert("integrity", f"{fpath.name} 损坏且无备份")
+            if data is None or not isinstance(data, expected_type) or len(data) < min_count:
+                errors.append(f"[自检] {fpath.name} 损坏 (type={type(data).__name__}, len={len(data) if data else 0})")
+
+        # 3) Pinnacle 结构格式验证 (防 flat/nested 混搭导致的崩溃)
+        pin_struct = safe_load_json(DATA_DIR / "pinnacle_league_structure.json")
+        if pin_struct and isinstance(pin_struct, dict):
+            flat_count = sum(1 for v in pin_struct.values() if isinstance(v, dict) and "name" in v and isinstance(v["name"], str))
+            if flat_count > 0:
+                errors.append(f"[自检] Pinnacle结构含{flat_count}个flat格式运动(应为nested), 请运行 normalize")
+
+        if errors:
+            for e in errors:
+                logger.error(e)
+            self._send_alert("startup_check_failed", "\n".join(errors[:5]))
+            raise SystemExit(f"启动自检失败: {len(errors)} 项不通过")
 
     # ------------------------------------------------------------------
     # 调度逻辑
