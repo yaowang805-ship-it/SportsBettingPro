@@ -342,7 +342,16 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
             best_id, best_score, best_pin_name = candidates[0]
 
             # 跨运动校验: BB足球不应映射到Pinnacle篮球
-            best_pin_sport = all_pin_leagues.get(best_id, {}).get('sport', '')
+            # V4.3: 处理 nested/旧格式兼容 — best_id可能是league_id或sport_id
+            _best_data = all_pin_leagues.get(best_id, {})
+            if not isinstance(_best_data, dict) or "sport" not in _best_data:
+                # Nested format: 在所有sport中搜索这个league_id
+                _best_data = {}
+                for _sd in all_pin_leagues.values():
+                    if isinstance(_sd, dict) and str(best_id) in _sd:
+                        _best_data = _sd[str(best_id)]
+                        break
+            best_pin_sport = _best_data.get('sport', '') if isinstance(_best_data, dict) else ''
             _SPORT_MAP = {'Soccer':'football','Basketball':'basketball','Tennis':'tennis',
                 'Baseball':'baseball','American Football':'american_football',
                 'Mixed Martial Arts':'mma','Boxing':'boxing','Ice Hockey':'ice_hockey'}
@@ -472,38 +481,18 @@ def _match_pin_name(pn, pin_name):
     return False
 
 
-def _get_name(info):
-    """兼容 flat 和 nested 格式获取联赛名。"""
-    if isinstance(info, dict) and "name" in info:
-        return info["name"]
-    if isinstance(info, dict):
-        first = next(iter(info.values()), {}) if info else {}
-        return first.get("name", "") if isinstance(first, dict) else str(first)
-    return ""
-
 def _find_best_league(pin_name, all_sport_matchups):
-    """Match Pinnacle league name, prefer exact match.
-
-    all_sport_matchups: {sport_id: {league_id: league_data}} (V4.3 normalized)
-    """
+    """Match Pinnacle league name, prefer exact match."""
     needle = pin_name.lower().strip()
     matched = []
-    # Build flat league_id → league_data map for efficient lookup
-    all_leagues = {}
-    for sport_id, sport_data in all_sport_matchups.items():
-        if isinstance(sport_data, dict):
-            for lid, info in sport_data.items():
-                if isinstance(info, dict):
-                    all_leagues[lid] = info
-
-    for lid, info in all_leagues.items():
-        name = _get_name(info)
-        if name and _match_pin_name(needle, name):
+    for lid, info in all_sport_matchups.items():
+        if _match_pin_name(needle, info["name"]):
             matched.append(lid)
     if not matched:
         return None
+    # Exact match preferred (prevent "Division A" prefix matching "Division A Women")
     for lid in matched:
-        if _get_name(all_leagues.get(lid, {})).lower() == needle:
+        if all_sport_matchups[lid]["name"].lower() == needle:
             return lid
     return matched[0]
 
@@ -740,13 +729,18 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
         for pn in matched_pin_names:
             if " - " in pn:
                 continue  # already multi-segment, skip sub-league expansion
-            for sport_id, sport_data in all_sport_matchups.items():
-                for lid, info in (sport_data.items() if isinstance(sport_data, dict) else []):
-                    if lid in matched_ids:
-                        continue
-                    pname = _get_name(info).lower()
-                    if pname and pname.startswith(pn.lower()):
-                        matched_ids.add(lid)
+            for lid, info in all_sport_matchups.items():
+                if lid in matched_ids:
+                    continue
+                if isinstance(info, dict) and "name" in info:
+                    pname = info["name"].lower()
+                elif isinstance(info, dict):
+                    first = next(iter(info.values()), {}) if info else {}
+                    pname = (first.get("name", "") if isinstance(first, dict) else str(first)).lower()
+                else:
+                    continue
+                if pname.startswith(pn.lower()):
+                    matched_ids.add(lid)
 
         return sorted(matched_ids)
 
@@ -756,9 +750,16 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
     bb_en_set = set(w.lower() for w in bb_en_parts)
 
     if bb_en_set:
-        for sport_id, sport_data in all_sport_matchups.items():
-            for lid, info in (sport_data.items() if isinstance(sport_data, dict) else []):
-                pin_name = _get_name(info).lower()
+        for lid, info in all_sport_matchups.items():
+            # 兼容两种格式: 旧格式(flat dict)有name字段, 网球格式(nested)需穿透
+            if isinstance(info, dict) and "name" in info:
+                pin_name = info["name"].lower()
+            elif isinstance(info, dict):
+                # Nested: {league_id: {name: ...}} → 取第一个league的name
+                first = next(iter(info.values()), {}) if info else {}
+                pin_name = (first.get("name", "") if isinstance(first, dict) else str(first)).lower()
+            else:
+                continue
             pin_words = set(pin_name.split())
             overlap = bb_en_set & pin_words
             if len(overlap) >= 2:
