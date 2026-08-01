@@ -77,13 +77,26 @@ SESSION.headers.update({
 
 MAX_RETRIES = 5
 RETRY_DELAY = 2.0
+COOKIE_REFRESH_COOLDOWN = 900      # Cookie 刷新失败后冷却 15 分钟
+MAX_COOKIE_REFRESHES = 3           # 每次扫描最多刷新 3 次 cookie
 _ssl_fail_count = 0  # 全局 SSL 失败计数器（看门狗用）
 
 _last_req_time = 0.0
 _MIN_REQUEST_INTERVAL = 0.25
 
-
 _cookie_loaded = False  # 进程级标志，只记一次日志
+_cookie_refresh_count = 0          # 本次扫描 cookie 刷新次数
+_last_cookie_val = ""              # 上次 cookie 值（防假刷新）
+_cookie_cooldown_until = 0.0       # Cookie 冷却到期时间戳
+
+
+def reset_cookie_state():
+    """每次扫描开始时重置 cookie 刷新计数器。"""
+    global _cookie_refresh_count, _last_cookie_val, _cookie_cooldown_until
+    _cookie_refresh_count = 0
+    # 注意：不重置 cooldown 和 last_val（如果正在冷却，应该保持冷却）
+    if time.time() > _cookie_cooldown_until:
+        _cookie_cooldown_until = 0.0
 
 
 def _load_cookie():
@@ -108,20 +121,39 @@ def _load_cookie():
 
 
 def _refresh_cookie_from_chrome():
-    """直接从 Chrome 浏览器读取 cf_clearance cookie（最轻量、最可靠）。
+    """直接从 Chrome 浏览器读取 cf_clearance cookie。
 
-    比 Playwright 方案更好：不需要打开浏览器窗口、不需要人机验证。
-    Chrome 浏览器已打开并有有效 cookie 时直接读出。
+    防假刷新: 每次扫描最多刷新 3 次，相同 cookie 值不重试，冷却 15 分钟。
     """
+    global _cookie_refresh_count, _last_cookie_val, _cookie_cooldown_until
+
+    now = time.time()
+    if now < _cookie_cooldown_until:
+        remaining = int(_cookie_cooldown_until - now)
+        logger.warning("Cookie 刷新冷却中 (剩余 %ds)，跳过刷新", remaining)
+        return False
+    if _cookie_refresh_count >= MAX_COOKIE_REFRESHES:
+        _cookie_cooldown_until = now + COOKIE_REFRESH_COOLDOWN
+        logger.error("Cookie 已刷新 %d 次仍失败，冷却 %d 分钟",
+                     _cookie_refresh_count, COOKIE_REFRESH_COOLDOWN // 60)
+        return False
+
+    _cookie_refresh_count += 1
     try:
         import browser_cookie3
         cj = browser_cookie3.chrome(domain_name=".pinnacle.com")
         for c in cj:
             if c.name == "cf_clearance":
                 val = c.value
+                if val == _last_cookie_val:
+                    logger.warning("Cookie 值未变化 (%d chars)，Chrome 中可能也是过期 cookie", len(val))
+                    _cookie_cooldown_until = now + COOKIE_REFRESH_COOLDOWN
+                    return False
+                _last_cookie_val = val
                 COOKIE_FILE.write_text(val)
                 SESSION.cookies.set("cf_clearance", val, domain=".pinnacle.com")
                 logger.info("cf_clearance refreshed from Chrome (%d chars)", len(val))
+                _cookie_refresh_count = 0
                 return True
         logger.warning("Chrome 中未找到 cf_clearance cookie")
     except Exception as e:

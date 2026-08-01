@@ -278,6 +278,10 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     if save_path is None:
         save_path = DATA_DIR / "bb_vs_pinnacle_comparison.json"
 
+    # 每次扫描重置 cookie 刷新计数器（防 403 死循环）
+    from src.scrapers.pinnacle_api import reset_cookie_state
+    reset_cookie_state()
+
     # 版本自检：引擎升级后增量扫描自动切换为全量重建
     if selected_leagues and save_path.exists():
         cached = safe_load_json(save_path, default={})
