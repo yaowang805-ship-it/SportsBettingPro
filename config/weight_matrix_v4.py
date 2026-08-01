@@ -409,7 +409,7 @@ MIN_N_MINIMUM = 10    # 最低门槛 (CI ~52%)  — 边缘区间
 @lru_cache(maxsize=4096)
 def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                          match_type: str = "", match_score: float = 0,
-                         flags: list = None) -> float:
+                         flags: tuple = None) -> float:
     """返回 Kelly 最优仓位 (小数, 0.06 = 6% of bankroll)。
 
     纯粹由 Pinnacle 历史数据 + BB 溢价驱动, 没有任何结算数据参与。
