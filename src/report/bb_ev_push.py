@@ -952,6 +952,10 @@ def _verify_bb_price_exists(home: str, away: str, designation: str,
     """
     if expected_price <= 0:
         return False
+    # line 安全转换 (JSON 可能返回 string)
+    if line is not None:
+        try: line = float(line)
+        except (ValueError, TypeError): line = None
     try:
         from src.scrapers.bb_data import load_bb_odds
         bb_matches = load_bb_odds()
@@ -1106,10 +1110,15 @@ def _collect_opportunities(match, market_key):
 
         # 🔴 终极保护: 验证 BB 价格是否真实存在于 BB 数据中
         # 防止 home/away 反转、线错配等比较引擎 bug 产生 phantom price
+        # 转换 line 为 float (JSON 可能返回 string)
+        _raw_line = opp.get("line")
+        try: _line = float(_raw_line) if _raw_line else None
+        except (ValueError, TypeError): _line = None
+
         _price_ok = _verify_bb_price_exists(
             match.get("home_bb", ""), match.get("away_bb", ""),
             opp.get("designation", ""), bb_odds, market_key,
-            opp.get("line")
+            _line
         )
         if not _price_ok:
             continue  # 价格不真实，跳过此机会
