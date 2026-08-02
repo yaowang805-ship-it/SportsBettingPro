@@ -312,7 +312,7 @@ def run_incremental(time_window: str = "all"):
         _no_change_file.write_text(str(_no_change_count))
         print(f"\n✅ 无赔率变动 (连续{_no_change_count}次)，跳过扫描")
         save_snapshot(bb_matches, _current_snap)
-        if fb_had_new or _no_change_count >= 6:
+        if fb_had_new or _no_change_count >= 3:  # V4.5: 3次空转→强制全量(45min), 防漏Pin-only变动
             print(f"\n📣 强制推送检查...")
             _run_push(label)
             _no_change_count = 0
