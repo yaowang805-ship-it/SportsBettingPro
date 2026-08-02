@@ -361,6 +361,9 @@ def run_incremental(time_window: str = "all"):
     # 8. 保存新快照 (near/far 各自独立)
     save_snapshot(bb_matches, _current_snap)
 
+    # 8.5. 增量去重: 保存本次扫描所有对比结果的指纹 (防重复推送)
+    _save_scan_fingerprints(new_result)
+
     # 9. 推送新机会
     if new_result.get("details") or fb_had_new:
         print(f"\n📣 新+EV机会 → 运行推送 [{label}]...")
@@ -525,6 +528,53 @@ def _run_fb_comparison(all_pin_leagues):
     n_fb = len(fb_result.get("details", []))
     print(f"  ✅ FB 对比完成: {n_fb} 条")
     return n_fb > 0
+
+
+def _save_scan_fingerprints(scan_result: dict):
+    """保存本次扫描所有对比结果的指纹 (防增量重复推送)。
+
+    在推送前保存，确保即使推送被V4过滤掉，指纹仍然存在，
+    下次扫描不会重复处理同一批比赛。
+    """
+    try:
+        from config.database import load_fingerprints, save_fingerprints
+        from src.report.bb_ev_push import _make_fingerprint
+        import time as _time
+
+        existing = load_fingerprints()
+        new_count = 0
+
+        for detail in scan_result.get("details", []):
+            sport = detail.get("sport", "")
+            league = detail.get("league", "")
+            home = detail.get("home_bb", "").strip()
+            away = detail.get("away_bb", "").strip()
+
+            for mk in ["opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"]:
+                for opp in detail.get(mk, []):
+                    ev = opp.get("ev_pct", 0)
+                    if ev < 1:  # Only fingerprint opportunities with some EV
+                        continue
+
+                    o = {
+                        "sport": sport, "league": league,
+                        "home_cn": home, "away_cn": away,
+                        "designation": opp.get("designation", ""),
+                        "_sub_market": opp.get("_market", mk),
+                        "bb_odds": opp.get("bb_odds", 0),
+                        "ev_pct": ev,
+                        "_pin_epoch": detail.get("start_time_pin_epoch"),
+                    }
+                    fp = _make_fingerprint(o)
+                    if fp not in existing:
+                        existing[fp] = {"ev": ev, "ts": _time.time()}
+                        new_count += 1
+
+        if new_count > 0:
+            save_fingerprints(existing)
+            print(f"  🔒 扫描指纹: 新增 {new_count} 条")
+    except Exception as e:
+        print(f"  ⚠️ 指纹保存失败: {e}")
 
 
 def _run_push(label: str = ""):
