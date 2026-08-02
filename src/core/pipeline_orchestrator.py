@@ -63,6 +63,7 @@ CHECK_INTERVAL = 30                # 调度循环检查间隔（秒）
 
 # 定时任务表：(名称, HH:MM, 处理函数, 参数字典)
 SCHEDULE = [
+    ("time_calibration",  "06:50", "do_time_calibration", {}),  # 时间校准: BB/Pin/系统时钟对齐
     ("health_check",       "06:55", "do_health_check", {}),
     ("full_scan_morning",  "07:00", "do_full_scan",  {"bet": True}),
     ("settle_morning",     "08:30", "do_settle",      {}),
@@ -519,6 +520,73 @@ class PipelineOrchestrator:
             logger.info("已提交变更")
         else:
             logger.warning("提交失败: %s", result.stderr[:200])
+
+    def do_time_calibration(self):
+        """时间校准: 检查 BB API / Pinnacle / 系统时钟三方时间偏差。
+
+        时间偏差过大会导致:
+        - 比赛匹配错位 (BB时间和Pin时间对不上)
+        - 指纹日期错乱 (match_date 偏移到前一天/后一天)
+        - 增量扫描窗口判断错误
+
+        每天 06:50 执行, 偏差 >60s 发送钉钉告警。
+        """
+        import time as _time
+        from config.settings import send_dingtalk
+
+        logger.info("🕐 时间校准开始...")
+        issues = []
+
+        # 1. 系统时间 vs HTTP 时间 (WorldTimeAPI, 无需额外依赖)
+        try:
+            import urllib.request, json as _json
+            req = urllib.request.Request('https://worldtimeapi.org/api/timezone/etc/utc')
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                wt_data = _json.loads(resp.read())
+                utc_time = wt_data.get('unixtime', 0)
+                sys_time = _time.time()
+                http_offset = abs(sys_time - utc_time)
+                logger.info(f"  系统时钟 vs WorldTimeAPI: 偏差 {http_offset:.1f}s")
+                if http_offset > 60:
+                    issues.append(f"系统时钟偏差 {http_offset:.0f}s (vs WorldTimeAPI)")
+        except Exception as e:
+            logger.warning(f"  HTTP 时间查询失败: {e}")
+
+        # 2. BB / FB API 连通性 & 延迟
+        try:
+            from src.scrapers.bb_api_fetcher import api_post
+            t0 = _time.time()
+            resp = api_post('/api/v1/sports', {})  # Light endpoint
+            bb_latency = _time.time() - t0
+            logger.info(f"  BB API 延迟: {bb_latency:.1f}s (status={'ok' if resp else 'fail'})")
+            if bb_latency > 10:
+                issues.append(f"BB API 延迟 {bb_latency:.0f}s (>10s)")
+            if resp is None:
+                issues.append("BB API 不可达")
+        except Exception as e:
+            logger.warning(f"  BB API 连接失败: {e}")
+            issues.append(f"BB API 连接失败: {str(e)[:50]}")
+
+        # 3. Pinnacle API 时间（从 league 数据推断）
+        try:
+            from src.scrapers.pinnacle_api import api_get as pin_get
+            t0 = _time.time()
+            resp = pin_get('/0.1/leagues/29')  # Football sport, light endpoint
+            pin_time = _time.time()
+            pin_latency = pin_time - t0
+            logger.info(f"  Pinnacle API 延迟: {pin_latency:.1f}s")
+            if pin_latency > 10:
+                issues.append(f"Pinnacle API 延迟 {pin_latency:.0f}s (>10s)")
+        except Exception as e:
+            logger.warning(f"  Pinnacle 连接失败: {e}")
+
+        # 4. 汇总 & 告警
+        if issues:
+            msg = "🕐 时间校准异常:\n" + "\n".join(f"  - {i}" for i in issues)
+            logger.warning(msg)
+            send_dingtalk("时间校准异常", msg)
+        else:
+            logger.info("🕐 时间校准: 全部正常 ✅")
 
     def do_health_check(self):
         """运行系统健康检查，有 WARN/FAIL 时发 DingTalk。"""
