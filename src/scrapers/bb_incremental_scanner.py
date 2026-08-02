@@ -173,16 +173,20 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
                     if not mu_id:
                         continue
 
-                    # 提取赔率指纹: ML odds
-                    ml_odds = []
-                    for ml in mu.get('moneyline', mu.get('money_line', [])):
-                        if isinstance(ml, dict) and ml.get('period', 0) == 0:
-                            for p in ml.get('prices', []):
-                                price = p.get('price', p.get('decimal', 0))
-                                if price:
-                                    ml_odds.append(round(float(price), 4))
+                    # 提取赔率指纹: ML + Spread + Total (三者任一变动都触发)
+                    odds_fp = []
+                    for mkt_type in ['moneyline', 'money_line', 'spread', 'total']:
+                        for mkt in mu.get(mkt_type, []):
+                            if isinstance(mkt, dict) and mkt.get('period', 0) == 0:
+                                for p in mkt.get('prices', []):
+                                    price = p.get('price', p.get('decimal', 0))
+                                    pts = p.get('points', p.get('handicap', ''))
+                                    if price:
+                                        odds_fp.append(round(float(price), 4))
+                                    if pts:
+                                        odds_fp.append(round(float(pts), 4))
 
-                    odds_key = tuple(ml_odds[:3]) if ml_odds else None
+                    odds_key = tuple(odds_fp) if odds_fp else None
                     if odds_key:
                         new_pin[str(mu_id)] = odds_key
                         old_key = old_pin.get(str(mu_id))
