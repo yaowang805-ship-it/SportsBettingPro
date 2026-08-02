@@ -653,7 +653,11 @@ def _save_scan_fingerprints(scan_result: dict):
 
 def _run_push(label: str = ""):
     """运行推送。label通过环境变量传递(进程隔离,无并发问题)。"""
-    import subprocess, os
+    import subprocess, os, shutil
+    # V4.5: 推送前清理 __pycache__，防止子进程加载旧 .pyc 导致去重失效
+    for pyc in SRC_DIR.rglob("__pycache__"):
+        try: shutil.rmtree(pyc)
+        except: pass
     env = os.environ.copy()
     if label:
         env["PUSH_LABEL"] = label
