@@ -2470,8 +2470,9 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
             fp = _make_fingerprint(o)
             new_fps[fp] = o.get("ev_pct", 0)
         for fp, ev in new_fps.items():
-            if fp not in existing or ev > existing[fp]:
-                existing[fp] = ev
+            old_ev = existing[fp].get("ev", 0) if isinstance(existing.get(fp), dict) else (existing.get(fp) or 0)
+            if fp not in existing or ev > old_ev:
+                existing[fp] = {"ev": ev, "ts": time.time()}
         _save_fingerprints(existing)
 
         # 预算修正：去除因指纹去重被过滤的机会，保留实际推送消耗
