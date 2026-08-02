@@ -787,7 +787,7 @@ def _calc_kelly_stakes(opps: list) -> list:
 
         stake = int(bankroll * stake_pct)
         o["_raw_stake"] = stake
-        o["_stake"] = stake if stake >= 5 else 0
+        o["_stake"] = stake if stake >= 30 else 0  # V4.5: 最低¥30, 过滤碎单
 
     # 第二遍：总额超预算时等比压缩
     daily_budget = bankroll  # V4.5: 动态日预算
@@ -796,7 +796,7 @@ def _calc_kelly_stakes(opps: list) -> list:
         ratio = daily_budget / total_wanted
         for o in opps:
             if o["_stake"] > 0:
-                o["_stake"] = max(5, round(o["_stake"] * ratio))
+                o["_stake"] = max(30, round(o["_stake"] * ratio))  # V4.5: 最低¥30
 
     # 第三遍：跨盘口相关性折扣 + 单场上限
     from collections import defaultdict
