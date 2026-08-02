@@ -125,6 +125,89 @@ def save_snapshot(bb_matches, snap_file=None):
     return snapshot
 
 
+def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window):
+    """拉取 Pinnacle 数据并与上次快照对比，检测 Pin 侧赔率变动。
+
+    Pinnacle API 是联赛级接口，无法单场查询。对所有活跃联赛拉取数据
+    （约 50-100 个联赛，每联赛一个 API 调用，0.25s间隔 → ~25s），
+    然后与上次 Pinnacle 快照对比，找出 Pin 侧变动。
+    """
+    from src.scrapers.pinnacle_league_map import find_pinnacle_league_ids
+    from src.scrapers.pinnacle_api import api_get as pin_get
+
+    pin_snap_path = DATA_DIR / f".pin_snapshot_{time_window}.json"
+    old_pin = {}
+    if pin_snap_path.exists():
+        try:
+            old_pin = json.loads(pin_snap_path.read_text())
+        except:
+            pass
+
+    new_pin = {}
+    pin_changed = set()
+
+    league_count = 0
+    for bb_league in active_leagues:
+        pin_ids = find_pinnacle_league_ids(bb_league, all_pin_leagues)
+        if not pin_ids:
+            continue
+        league_count += 1
+
+        for pid in pin_ids[:3]:  # 每个联赛最多3个Pinnacle子联赛
+            try:
+                matchups = pin_get(f'/0.1/leagues/{pid}/matchups')
+                if not matchups:
+                    continue
+                if isinstance(matchups, dict):
+                    matchups = matchups.get('matchups', matchups.get('data', []))
+                if not isinstance(matchups, list):
+                    continue
+
+                for mu in matchups:
+                    if not isinstance(mu, dict):
+                        continue
+                    mu_id = mu.get('matchup_id', mu.get('id', ''))
+                    if not mu_id:
+                        continue
+
+                    # 提取赔率指纹: ML odds
+                    ml_odds = []
+                    for ml in mu.get('moneyline', mu.get('money_line', [])):
+                        if isinstance(ml, dict) and ml.get('period', 0) == 0:
+                            for p in ml.get('prices', []):
+                                price = p.get('price', p.get('decimal', 0))
+                                if price:
+                                    ml_odds.append(round(float(price), 4))
+
+                    odds_key = tuple(ml_odds[:3]) if ml_odds else None
+                    if odds_key:
+                        new_pin[str(mu_id)] = odds_key
+
+                        # 与旧快照对比
+                        old_key = old_pin.get(str(mu_id))
+                        if old_key != odds_key:
+                            # Pinnacle赔率变了 → 找对应的BB比赛ID
+                            pin_changed.add(str(mu_id))
+            except Exception:
+                pass
+
+    # 保存新快照
+    try:
+        pin_snap_path.write_text(json.dumps(new_pin, ensure_ascii=False))
+    except:
+        pass
+
+    # Pinnacle和BB用不同的match ID → 直接返回变动联赛名（联赛级对比兜底）
+    pin_changed_leagues = set()
+    if pin_changed:
+        for m in bb_matches:
+            if str(m.get("id","")) in pin_changed:
+                pin_changed_leagues.add(m.get("league",""))
+    print(f"  Pin侧: {league_count}个联赛, {len(new_pin)}场, 变动{len(pin_changed)}场 → {len(pin_changed_leagues)}个联赛")
+
+    return pin_changed_leagues  # 返回变动联赛名集合
+
+
 def detect_changes(new_matches, snapshot):
     """对比新老数据，返回 (changed_ids, new_ids, changed_leagues)。"""
     old = snapshot.get("matches", {})
@@ -299,20 +382,36 @@ def run_incremental(time_window: str = "all"):
         try: snapshot = json.loads(_current_snap.read_text())
         except: pass
 
-    # 4. 真正增量：对比快照，只拉取变动联赛的 Pinnacle 数据
+    # 4. 真正增量：BB快照 + Pinnacle快照 双向变动检测
+    #    比价是相对的 — 任一方赔率变动都会产生新edge
     changed_ids, new_ids, changed_leagues = detect_changes(bb_matches, snapshot)
-    n_changed = len(changed_ids) + len(new_ids)
 
-    # 空转计数器：near/far 各自独立（每 6 次无变动强制推送一次）
+    # 4.5 加载 Pinnacle 联赛结构
+    if not all_pin_leagues:
+        all_pin_leagues = _load_league_structure()
+        if not all_pin_leagues:
+            print("  ❌ 无 Pinnacle 联赛结构数据，跳过增量扫描")
+            save_snapshot(bb_matches, _current_snap)
+            return
+
+    # 拉取所有活跃联赛的 Pinnacle 数据 (API 按联赛返回, 无法单场查询)
+    # 然后与上次 Pinnacle 快照对比, 检测 Pin 侧变动
+    active_leagues = {m.get("league", "") for m in bb_matches if m.get("league")}
+    pin_changed_leagues = _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window)
+
+    # 合并双向变动: BB变 ∪ Pin变
+    all_changed_leagues = changed_leagues | pin_changed_leagues
+    total_changed = len(changed_ids) + len(new_ids) + len(pin_changed_leagues)
+
     _no_change_file = DATA_DIR / f".incr_no_change_{time_window}"
     _no_change_count = int(_no_change_file.read_text().strip()) if _no_change_file.exists() else 0
 
-    if n_changed == 0:
+    if total_changed == 0:
         _no_change_count += 1
         _no_change_file.write_text(str(_no_change_count))
-        print(f"\n✅ 无赔率变动 (连续{_no_change_count}次)，跳过扫描")
+        print(f"\n✅ BB和Pin均无变动 (连续{_no_change_count}次)，跳过扫描")
         save_snapshot(bb_matches, _current_snap)
-        if fb_had_new or _no_change_count >= 3:  # V4.5: 3次空转→强制全量(45min), 防漏Pin-only变动
+        if fb_had_new or _no_change_count >= 3:
             print(f"\n📣 强制推送检查...")
             _run_push(label)
             _no_change_count = 0
@@ -322,30 +421,19 @@ def run_incremental(time_window: str = "all"):
         _no_change_count = 0
         _no_change_file.write_text("0")
 
-    print(f"\n📊 变动检测:")
-    print(f"  赔率变动: {len(changed_ids)} 场")
-    print(f"  新增比赛: {len(new_ids)} 场")
-    print(f"  涉及联赛: {len(changed_leagues)} 个")
-    for lg in sorted(changed_leagues)[:10]:
-        print(f"    {lg}")
-    if len(changed_leagues) > 10:
-        print(f"    ... 等 {len(changed_leagues)-10} 个")
+    print(f"\n📊 双向变动检测:")
+    print(f"  BB变动: {len(changed_ids)} 场")
+    print(f"  Pin变动: {len(pin_changed_ids)} 场")
+    print(f"  新增: {len(new_ids)} 场")
+    print(f"  合计变动: {total_changed} 场, 涉及 {len(all_changed_leagues)} 个联赛")
 
-    # 5. 加载 Pinnacle 联赛结构
-    if not all_pin_leagues:
-        all_pin_leagues = _load_league_structure()
-        if not all_pin_leagues:
-            print("  ❌ 无 Pinnacle 联赛结构数据，跳过增量扫描")
-            save_snapshot(bb_matches, _current_snap)
-            return
-
-    # 5. 只拉取变动联赛的 Pinnacle 数据 (真正增量)
-    print(f"\n🔍 增量实时对比 (仅 {len(changed_leagues)} 个变动联赛)...")
+    # 5. 只对比变动联赛 (双向: BB或Pin任一方变动都触发)
+    print(f"\n🔍 增量实时对比 (仅 {len(all_changed_leagues)} 个变动联赛)...")
     window_file = COMPARISON_FILE_NEAR if time_window == "near" else COMPARISON_FILE_FAR
     new_result = compare_bb_vs_pinnacle(
         bb_matches,
         all_pin_leagues,
-        selected_leagues=list(changed_leagues) if changed_leagues else None,
+        selected_leagues=list(all_changed_leagues) if all_changed_leagues else None,
         save_path=window_file,
     )
 
