@@ -627,7 +627,7 @@ def _min_ev_for_tier(tier: int) -> float:
         return 4.0
     elif tier == 3:
         return 5.0
-    return 99.0  # Tier 4 不推送
+    else: return 6.0  # V4.3: Tier4放宽, 6%门槛
 
 # EV 上限 — EV > 此值几乎全是假阳性（队名匹配到错误比赛）
 # 使用 constants.EV_CAP (12.0)
@@ -1071,7 +1071,7 @@ def _collect_opportunities(match, market_key):
     # 联赛可信度分层过滤
     tier = _get_league_tier(league)
     if tier == 4:
-        return []  # Tier 4 仅扫描不推送
+        pass  # V4.3: Tier4不再封杀, 允许推送(低权重)
     # Tier 2/3: 非队名匹配且匹配分<0.80 不推送（防假阳性）
     if tier >= 2 and match_type != "name" and match_score < 0.80:
         return []

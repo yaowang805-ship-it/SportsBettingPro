@@ -1510,11 +1510,12 @@ def _is_risky_mma_boxing(sport: str, league: str, odds: float,
 # 特殊市场 (无 Pinnacle 对应盘口 → 固定上限)
 # =====================================================================
 SPECIAL_MARKET_CAPS = {
-    "dc":    {"max_stake": 0.015, "max_odds": 6.0},  # V4.3: DC解封, 1.5%仓位/6.0赔率
-    "btts":  {"max_stake": 0.03, "max_odds": 3.0},
-    "dnb":   {"max_stake": 0.02, "max_odds": 5.0},
-    "oe":    {"max_stake": 0.01, "max_odds": 2.5},
-    "corner":{"max_stake": 0.01, "max_odds": 3.0},
+    # V4.3: 无历史数据的市场放宽限制 (用结算数据慢慢验证)
+    "dc":    {"max_stake": 0.015, "max_odds": 8.0},   # 无数据, 放宽至8.0
+    "btts":  {"max_stake": 0.03, "max_odds": 5.0},    # 无数据, 放宽至5.0
+    "dnb":   {"max_stake": 0.02, "max_odds": 8.0},    # 无数据, 放宽至8.0
+    "oe":    {"max_stake": 0.01, "max_odds": 4.0},    # 无数据, 放宽至4.0
+    "corner":{"max_stake": 0.01, "max_odds": 5.0},    # 无数据, 放宽至5.0
 }
 
 
