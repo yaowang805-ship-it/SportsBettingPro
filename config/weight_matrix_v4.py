@@ -105,16 +105,17 @@ def _odds_weight(odds: float) -> float:
 
 # =====================================================================
 def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
-              n_bets: int = 100, cap: float = 0.06) -> float:
+              n_bets: int = 100, cap: float = 0.06,
+              sport_confidence: float = 1.0) -> float:
     """0.75凯利仓位 (返回小数, 0.06 = 6%)。
 
-    公式: kelly_075 = max(0, wr×BB_odds - 1) / (BB_odds - 1) × 0.75 × confidence(n)
+    公式: kelly_075 = max(0, wr×BB_odds - 1) / (BB_odds - 1) × 0.75 × confidence(n) × sport_discount
 
-    V4.2: 增加基于样本量的置信度折扣
-      n >= 100: confidence = 1.0   (CI宽度 ~19%)
-      n >= 50:  confidence = 0.95  (CI宽度 ~26%)
-      n >= 30:  confidence = 0.85  (CI宽度 ~33%)
-      n >= 10:  confidence = 0.70  (CI宽度 ~52%)
+    V4.4: 连续置信度 + 运动级折扣
+      n >= 100: confidence = 1.0
+      n >= 30:  confidence = 0.7 + 0.3×(n-30)/70  (线性插值 0.70→1.0)
+      n >= 10:  confidence = 0.5 + 0.2×(n-10)/20  (线性插值 0.50→0.70)
+      sport_confidence: NFL=0.75, NHL=0.65 (数据源非Pinnacle), 默认1.0
     """
     if actual_wr <= 0 or avg_odds <= 1.01:
         return 0.0
@@ -123,16 +124,16 @@ def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
     if roi <= 0:
         return 0.0
     kelly = roi / (bb_odds - 1.0) * 0.75
-    # 样本量置信度折扣 (Wilson CI驱动的分级)
+    # V4.4: 连续样本量置信度 (替代4级阶梯)
     if n_bets >= 100:
         confidence = 1.0
-    elif n_bets >= 50:
-        confidence = 0.95
     elif n_bets >= 30:
-        confidence = 0.85
-    else:  # n >= 10 (最低门槛)
-        confidence = 0.70
-    return min(cap, max(0.0, kelly * confidence))
+        confidence = 0.7 + 0.3 * (n_bets - 30) / 70.0
+    elif n_bets >= 10:
+        confidence = 0.5 + 0.2 * (n_bets - 10) / 20.0
+    else:
+        confidence = 0.5  # n<10 仍然 0.5, MIN_N 由调用者控制
+    return min(cap, max(0.0, kelly * confidence * sport_confidence))
 
 
 # =====================================================================
@@ -1088,7 +1089,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         idx = _bin_index(odds, ODDS_BINS)
 
         if sub_market == "ou":
-            # V4.3: 逐联赛 OU 权重 (24联赛独立数据, 聚合仅兜底)
+            # V4.4: 逐联赛 OU 权重, 小样本联赛折扣
             ou_league_data = _match_league(league, PIN_OU_DATA)
             if not ou_league_data:
                 return 0.0
@@ -1099,7 +1100,12 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             if n < MIN_N_MINIMUM:
                 return 0.0
             bb_prem = _bb_premium_ou(odds)
-            return kelly_075(wr, avg_o, bb_prem, n)
+            stake = kelly_075(wr, avg_o, bb_prem, n)
+            # V4.4: 小样本OU联赛折扣 (<3000投注)
+            ou_total = sum(e[2] for e in ou_league_data.values())
+            if ou_total < 3000:
+                stake *= 0.75
+            return stake
 
         elif sub_market == "ht":
             # V4.3: HT封顶 4.8 (316K 赔率区间回测: @4.8+ BB EV全负)
@@ -1162,35 +1168,27 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         pin_factor = 1.0 + pin_roi_pct / 100.0
         bb_factor = 1.0 + bb_prem_pct / 100.0
         edge = pin_factor * bb_factor - 1.0
-        if edge <= 0:
+        if edge <= 0.01:  # V4.4: 网球最低edge=1% (数据样本少, 保守)
             return 0.0
         full_kelly = edge / (odds - 1.0)
-        return min(0.06, max(0.0, full_kelly * 0.75))
+        return min(0.04, max(0.0, full_kelly * 0.5))  # V4.4: 网球cap=4%, kelly=0.5
 
-    # ── Ice Hockey ──
+    # ── Ice Hockey (NHL) ──
     elif sport_lower in ("ice_hockey", "hockey", "nhl"):
         idx = _bin_index(odds, ODDS_BINS)
         data = NHL_DATA.get(idx)
-        if data and data[2] >= MIN_N_MINIMUM:
+        if data and data[2] >= 50:  # V4.4: MIN_N=50 (ESPN数据, 非Pinnacle)
             wr, avg_o, n = data
-            return kelly_075(wr, avg_o, 0.05, n)  # ESPN vig ~4% → bb_premium=0.05
+            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.65)
         return 0.0
 
-    # ── Baseball ──
+    # ── Baseball (MLB) ──
     elif sport_lower == "baseball":
         idx = _bin_index(odds, ODDS_BINS)
-        # SBR 10年数据 (优先)
         data = MLB_DATA.get(idx)
         if data and data[2] >= MIN_N_MINIMUM:
             wr, avg_o, n = data
-            stake = kelly_075(wr, avg_o, 0.05, n)
-            return stake * DISCOUNT_SBR_LARGE
-        # OddsPortal
-        data2 = MLB_ODDSPORTAL_DATA.get(idx)
-        if data2 and data2[2] >= MIN_N_MINIMUM:
-            wr, avg_o, n = data2
-            stake = kelly_075(wr, avg_o, 0.05, n)
-            return stake * DISCOUNT_ODDSPORTAL
+            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.90)
         return 0.0
 
     # ── Basketball ──
@@ -1214,14 +1212,13 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         else:
             return 0.01 if odds < 2.5 else 0.0
 
-    # ── American Football ──
+    # ── American Football (NFL) ──
     elif sport_lower == "american_football":
         idx = _bin_index(odds, ODDS_BINS)
         data = NFL_DATA.get(idx)
-        if data and data[2] >= MIN_N_MINIMUM:
+        if data and data[2] >= 50:  # V4.4: MIN_N=50 (MGM Grand 2.7K, 样本偏少)
             wr, avg_o, n = data
-            stake = kelly_075(wr, avg_o, 0.05, n)
-            return stake * DISCOUNT_SBR_MEDIUM
+            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.75)
         return 0.0
 
     # ── Ice Hockey ──
