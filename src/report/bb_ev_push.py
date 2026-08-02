@@ -2027,7 +2027,8 @@ def _apply_match_exposure_cap(qualified: list) -> list:
     """
     cooldown_file = DATA_DIR / "push_cooldown.json"
     now = time.time()
-    match_cap = BANKROLL * 1.0   # 单场不设限 (V4.3)
+    from config.constants import get_dynamic_bankroll
+    match_cap = get_dynamic_bankroll() * 1.0   # V4.5: 动态资金
 
     # 加载记录 {match_id: {timestamp, total_stake}}
     records = {}
@@ -2131,7 +2132,8 @@ def _filter_pushed(qualified: list) -> list:
         # 已推送过 → 分层重推 (按距开赛时间, 匹配增量扫描节奏)
         old_data = existing[fp]
         old_ev = old_data if isinstance(old_data, (int, float)) else old_data.get("ev", 0)
-        old_bb = existing.get(fp + "_bb", 0)
+        old_bb_raw = existing.get(fp + "_bb", 0)
+        old_bb = old_bb_raw if isinstance(old_bb_raw, (int, float)) else (old_bb_raw.get("ev", 0) if isinstance(old_bb_raw, dict) else 0)
         old_ts = 0 if isinstance(old_data, (int, float)) else old_data.get("ts", 0)
         bb_now = o.get("bb_odds", 0)
         bb_change = (bb_now - old_bb) / old_bb * 100 if old_bb > 0 else 0
