@@ -1903,7 +1903,7 @@ def _apply_match_exposure_cap(qualified: list) -> list:
     """
     cooldown_file = DATA_DIR / "push_cooldown.json"
     now = time.time()
-    match_cap = BANKROLL * 0.06  # 单场累计上限
+    match_cap = BANKROLL * 1.0   # 单场不设限 (V4.3)
 
     # 加载记录 {match_id: {timestamp, total_stake}}
     records = {}
