@@ -23,7 +23,7 @@ KELLY_FRACTION = 0.50              # Kelly 分数（bb_virtual_bet 0.50 / 旧 bb
 
 # ── 仓位限制 ──
 MAX_STAKE_PCT = 0.06               # 单注最大仓位比例
-PER_MATCH_CAP_PCT = 0.06           # 单场多个盘口总仓位比例
+PER_MATCH_CAP_PCT = 0.10           # 单场多个盘口总仓位比例
 
 # ── 运动排序（推送展示用） ──
 SPORT_ORDER = {
