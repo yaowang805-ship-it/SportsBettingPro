@@ -620,14 +620,8 @@ _MARKET_CN = {
 
 
 def _min_ev_for_tier(tier: int) -> float:
-    """每层最低 EV 门槛。T1 最可信门槛最低，T3 需显著更高 edge 才推。"""
-    if tier == 1:
-        return 3.0
-    elif tier == 2:
-        return 4.0
-    elif tier == 3:
-        return 5.0
-    else: return 6.0  # V4.3: Tier4放宽, 6%门槛
+    """V4.3: 统一2% — 真正过滤交给_odds_weight(Pinnacle数据驱动)。"""
+    return 2.0
 
 # EV 上限 — EV > 此值几乎全是假阳性（队名匹配到错误比赛）
 # 使用 constants.EV_CAP (12.0)
