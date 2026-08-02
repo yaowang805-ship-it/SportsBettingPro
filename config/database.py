@@ -107,26 +107,41 @@ def save_budget(spent: dict, date: str):
 # ── pushed_fingerprints ──
 
 def load_fingerprints() -> dict:
-    """加载所有指纹 → {fingerprint: ev_pct}。"""
+    """加载所有指纹。V4.3: ev_pct存储为JSON字符串 {ev: float, ts: float}。"""
+    import json as _json
     try:
         rows = get_conn().execute(
             "SELECT fingerprint, ev_pct FROM pushed_fingerprints"
         ).fetchall()
-        return {r["fingerprint"]: (r["ev_pct"] or 0) for r in rows}
+        result = {}
+        for r in rows:
+            val = r["ev_pct"]
+            if isinstance(val, str) and val.startswith("{"):
+                try: result[r["fingerprint"]] = _json.loads(val)
+                except: result[r["fingerprint"]] = {"ev": float(val or 0), "ts": 0}
+            elif isinstance(val, (int, float)):
+                result[r["fingerprint"]] = {"ev": float(val), "ts": 0}  # 兼容旧int格式
+            else:
+                result[r["fingerprint"]] = {"ev": 0, "ts": 0}
+        return result
     except Exception:
-        # 兼容旧表(无ev_pct列)
-        rows = get_conn().execute(
-            "SELECT fingerprint FROM pushed_fingerprints"
-        ).fetchall()
-        return {r["fingerprint"]: 0 for r in rows}
+        rows = get_conn().execute("SELECT fingerprint FROM pushed_fingerprints").fetchall()
+        return {r["fingerprint"]: {"ev": 0, "ts": 0} for r in rows}
 
 
 def save_fingerprints(fps: dict):
-    """批量覆盖保存指纹（用事务）。fps = {fingerprint: ev_pct}"""
+    """批量覆盖保存指纹。V4.3: ev_pct存JSON字符串 {ev, ts}。"""
+    import json as _json
     db = get_conn()
     db.execute("DELETE FROM pushed_fingerprints")
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    data = [(fp, ev, now) for fp, ev in sorted(fps.items())]
+    data = []
+    for fp, val in sorted(fps.items()):
+        if isinstance(val, dict):
+            ev_str = _json.dumps(val)
+        else:
+            ev_str = _json.dumps({"ev": float(val), "ts": 0})
+        data.append((fp, ev_str, now))
     db.executemany(
         "INSERT INTO pushed_fingerprints (fingerprint, ev_pct, created_at) VALUES (?, ?, ?)",
         data,
@@ -135,16 +150,18 @@ def save_fingerprints(fps: dict):
 
 
 def add_fingerprints(fps: dict):
-    """增量添加/更新指纹（推送成功后调用）。fps = {fingerprint: ev_pct}
-
-    如果指纹已存在且新EV更高 → 更新EV。否则插入。
-    """
+    """增量添加/更新指纹。V4.3: ev_pct存JSON字符串。"""
+    import json as _json
     db = get_conn()
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    for fp, ev in fps.items():
+    for fp, val in fps.items():
+        if isinstance(val, dict):
+            ev_str = _json.dumps(val)
+        else:
+            ev_str = _json.dumps({"ev": float(val), "ts": 0})
         db.execute(
             "INSERT OR REPLACE INTO pushed_fingerprints (fingerprint, ev_pct, created_at) VALUES (?, ?, ?)",
-            (fp, ev, now),
+            (fp, ev_str, now),
         )
     db.commit()
 
