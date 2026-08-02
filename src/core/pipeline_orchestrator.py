@@ -633,9 +633,56 @@ class PipelineOrchestrator:
         # 3) 自检看门狗
         self._watchdog()
 
+        # 4) V4.4: 代码热更新检测 — 源文件变更后自动重启，防止跑旧代码
+        self._check_code_changes()
+
     def _active_tasks_settle(self) -> bool:
         """检查是否有结算任务正在运行（比 str(set) 更可靠）。"""
         return any("settle" in t for t in self._active_tasks)
+
+    # ------------------------------------------------------------------
+    # V4.4: 代码热更新 — 检测源文件变更后自动重启
+    # ------------------------------------------------------------------
+    _CODE_MTIME_SNAPSHOT: dict = {}
+    _CODE_CHECK_INTERVAL = 300  # 每 5 分钟检查一次
+
+    def _snapshot_code_mtimes(self):
+        """记录 src/ 下所有 .py 文件的修改时间。"""
+        src_dir = SRC_DIR / "src"
+        mtimes = {}
+        for f in src_dir.rglob("*.py"):
+            if '__pycache__' not in str(f):
+                try:
+                    mtimes[str(f)] = f.stat().st_mtime
+                except OSError:
+                    pass
+        self._CODE_MTIME_SNAPSHOT = mtimes
+        logger.info("📸 代码快照: %d 个源文件", len(mtimes))
+
+    def _check_code_changes(self):
+        """检测源文件是否被修改，如有则自动重启。"""
+        now = time.time()
+        if not hasattr(self, '_last_code_check'):
+            self._last_code_check = now
+            self._snapshot_code_mtimes()
+            return
+        if now - self._last_code_check < self._CODE_CHECK_INTERVAL:
+            return
+        self._last_code_check = now
+
+        changed = []
+        for path_str, old_mtime in self._CODE_MTIME_SNAPSHOT.items():
+            try:
+                new_mtime = Path(path_str).stat().st_mtime
+                if new_mtime > old_mtime + 1:  # 1秒容忍度
+                    changed.append(Path(path_str).name)
+            except OSError:
+                pass
+
+        if changed:
+            logger.warning("🔄 检测到 %d 个源文件变更: %s... 自动重启", len(changed), ", ".join(changed[:5]))
+            # 优雅重启: 保存状态, 重新执行自身
+            os.execv(sys.executable, [sys.executable, "-m", "src.core.pipeline_orchestrator"] + sys.argv[1:])
 
     def _watchdog(self):
         """自检看门狗：检测增量扫描是否停滞，Pinnacle 连接是否异常。"""

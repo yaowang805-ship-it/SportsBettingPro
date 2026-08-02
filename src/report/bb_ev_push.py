@@ -1992,9 +1992,11 @@ def _verify_odds_freshness(qualified: list, max_ev_drop: float = 3.0) -> list:
                             fresh_odds = p.get("price_decimal", 0)
 
             if fresh_odds and fresh_odds > 0:
-                # 重新计算 EV
+                # 重新计算 EV (V4.4: fresh_odds 含 vig，比去抽水公平价低 2-4%
+                # 所以 new_ev 会比旧 EV 系统性地低，需要 +2% 偏差修正)
                 bb_odds = o.get("bb_odds", 0)
-                new_ev = round((bb_odds - fresh_odds) / fresh_odds * 100, 2)
+                raw_ev = round((bb_odds - fresh_odds) / fresh_odds * 100, 2)
+                new_ev = raw_ev + 2.0  # vig 修正
                 old_ev = o.get("ev_pct", 0)
                 ev_drop = old_ev - new_ev
                 if ev_drop > max_ev_drop:

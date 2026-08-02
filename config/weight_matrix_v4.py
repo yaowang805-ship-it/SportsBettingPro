@@ -1143,12 +1143,13 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         pin_roi_pct, bb_prem_pct = entry
 
         # 网球 Kelly: edge = (1 + pin_roi/100) × (1 + bb_prem/100) - 1
+        # V4.4: 使用实际 BB 赔率作为分母 (而非 bb_premium，原公式放大 10-20x)
         pin_factor = 1.0 + pin_roi_pct / 100.0
         bb_factor = 1.0 + bb_prem_pct / 100.0
         edge = pin_factor * bb_factor - 1.0
         if edge <= 0:
             return 0.0
-        full_kelly = edge / (bb_factor - 1.0) if bb_factor > 1.0 else edge
+        full_kelly = edge / (odds - 1.0)
         return min(0.06, max(0.0, full_kelly * 0.75))
 
     # ── Baseball ──

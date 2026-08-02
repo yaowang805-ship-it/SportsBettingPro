@@ -604,6 +604,13 @@ class RiskManager:
         # 滚动亏损跟踪
         self.weekly_loss = max(0.0, self.weekly_loss - pnl)
 
+        # V4.4: 填充 _daily_bets (之前从未填充, compute_daily_loss 始终返回0)
+        self._daily_bets.append({
+            "stake": stake, "win": win, "pnl": pnl,
+            "sport": sport, "bet_type": bet_type,
+            "time": datetime.now().timestamp(),
+        })
+
         # 更新自适应凯利
         self.adaptive_kelly.update(prob, 1 if win else 0)
 

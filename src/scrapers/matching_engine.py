@@ -38,9 +38,12 @@ def team_name_score(bb_home, bb_away, pin_home, pin_away):
     pin_home_l = pin_home.lower()
     pin_away_l = pin_away.lower()
 
-    # If the name wasn't in the map, we can't verify it
-    bb_home_mapped = bb_home_en != bb_home.lower()
-    bb_away_mapped = bb_away_en != bb_away.lower()
+    # V4.4: 纯英文名 (NBA/UFC/PSG) 不需映射即可匹配
+    # 如果原始名就是纯 ASCII，说明队名本身就是英文，直接参与匹配
+    bb_home_is_ascii = bb_home.isascii() if bb_home else False
+    bb_away_is_ascii = bb_away.isascii() if bb_away else False
+    bb_home_mapped = bb_home_en != bb_home.lower() or bb_home_is_ascii
+    bb_away_mapped = bb_away_en != bb_away.lower() or bb_away_is_ascii
 
     def name_match(bb_en_l, pin_l):
         """Check if BB English name matches Pinnacle name, case-insensitive."""
