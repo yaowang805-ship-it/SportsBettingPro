@@ -331,10 +331,12 @@ class PipelineOrchestrator:
             return
         self._alert_cooldown[task_name] = now
 
+        from datetime import timezone as _tz, timedelta as _td
+        bj_time = datetime.now(_tz(_td(hours=8))).strftime('%m/%d %H:%M')
         body = (
             f"**Pipeline Alert**\n\n"
             f"任务: {task_name}\n"
-            f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
+            f"时间: {bj_time} (北京时间)\n"
             f"错误: {error[:200]}"
         )
         try:

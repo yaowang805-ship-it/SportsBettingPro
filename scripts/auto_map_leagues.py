@@ -114,12 +114,15 @@ def main():
     for n, c, p, s in medium[:10]:
         print(f"  {n} ({c}场) → {p} ({s:.0%})")
 
+    # 🔒 绝不覆盖已有映射 (保护人工校准结果)
     apply = "--apply" in sys.argv
     added = 0
     for n, c, p, s in high:
         if n not in keywords:
             keywords[n] = p
             added += 1
+        else:
+            pass  # 已存在 → 跳过, 不覆盖
     if apply and added:
         save_keywords(keywords)
         print(f"\n✅ 已应用 {added} 个高置信度映射")
