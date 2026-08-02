@@ -63,6 +63,7 @@ CHECK_INTERVAL = 30                # 调度循环检查间隔（秒）
 
 # 定时任务表：(名称, HH:MM, 处理函数, 参数字典)
 SCHEDULE = [
+    ("self_repair",       "06:45", "do_self_repair", {}),       # 自检+自动修复: 锁文件/缓存/指纹/连通性
     ("time_calibration",  "06:50", "do_time_calibration", {}),  # 时间校准: BB/Pin/系统时钟对齐
     ("health_check",       "06:55", "do_health_check", {}),
     ("full_scan_morning",  "07:00", "do_full_scan",  {"bet": True}),
@@ -520,6 +521,99 @@ class PipelineOrchestrator:
             logger.info("已提交变更")
         else:
             logger.warning("提交失败: %s", result.stderr[:200])
+
+    def do_self_repair(self):
+        """V4.5: 自检+自动修复 — 在每天任务开始前修复常见问题。
+
+        检查项: 锁文件/缓存/指纹DB/API连通性/磁盘空间
+        修复项: 清理僵尸锁/过期缓存/损坏指纹/磁盘告警
+        """
+        import shutil, json as _json
+        from config.settings import send_dingtalk
+
+        logger.info("🔧 自检+自动修复开始...")
+        issues_found = []
+        issues_fixed = []
+
+        # 1) 清理僵尸锁文件 (进程已死但锁还在)
+        lock_path = SRC_DIR / "data" / "storage" / ".pipeline_daemon.lock"
+        if lock_path.exists():
+            try:
+                lock_pid = int(lock_path.read_text().strip())
+                try: os.kill(lock_pid, 0)  # 检查进程是否存在
+                except OSError:  # 进程不存在 → 僵尸锁
+                    lock_path.unlink()
+                    issues_fixed.append("僵尸锁文件已清理")
+            except: pass
+
+        # 2) 清理 __pycache__ (防止 .pyc 导致跑旧代码)
+        pyc_count = 0
+        for pyc in SRC_DIR.rglob("__pycache__"):
+            try:
+                shutil.rmtree(pyc)
+                pyc_count += 1
+            except: pass
+        if pyc_count > 0:
+            issues_fixed.append(f"清理{pyc_count}个__pycache__目录")
+
+        # 3) 指纹DB完整性检查
+        try:
+            from config.database import load_fingerprints, save_fingerprints
+            fps = load_fingerprints()
+            # 检查是否有异常空指纹或过期指纹 (>30天)
+            bad_fps = 0
+            import time as _t
+            for fp, val in list(fps.items()):
+                if isinstance(val, dict):
+                    ts = val.get("ts", 0)
+                    if ts > 0 and _t.time() - ts > 30 * 86400:
+                        del fps[fp]; bad_fps += 1
+                elif not fp or len(fp) < 10:
+                    del fps[fp]; bad_fps += 1
+            if bad_fps > 0:
+                save_fingerprints(fps)
+                issues_fixed.append(f"清理{bad_fps}条损坏/过期指纹")
+        except Exception as e:
+            issues_found.append(f"指纹DB异常: {e}")
+
+        # 4) API 连通性检查
+        try:
+            from src.scrapers.pinnacle_api import check_pinnacle_connectivity
+            if not check_pinnacle_connectivity(verbose=False):
+                issues_found.append("Pinnacle API 不可达")
+        except Exception as e:
+            issues_found.append(f"Pinnacle 连通性检查失败: {e}")
+
+        try:
+            from src.scrapers.bb_api_fetcher import _ensure_token
+            token = _ensure_token()
+            if not token:
+                issues_found.append("BB API Token 缺失")
+        except Exception as e:
+            issues_found.append(f"BB Token 检查失败: {e}")
+
+        try:
+            from config.settings import send_dingtalk as _sd
+            if not _sd("系统自检", "SportsBettingPro 自检消息"):
+                issues_found.append("钉钉推送不可用")
+        except: pass
+
+        # 5) 磁盘空间检查
+        try:
+            usage = shutil.disk_usage(SRC_DIR)
+            free_gb = usage.free / (1024**3)
+            if free_gb < 1:
+                issues_found.append(f"磁盘空间不足: {free_gb:.1f}GB")
+            else:
+                logger.info(f"  磁盘: {free_gb:.1f}GB 可用")
+        except: pass
+
+        # 汇总 & 上报
+        logger.info(f"🔧 自检: {len(issues_fixed)}个修复, {len(issues_found)}个问题")
+        if issues_found:
+            _sd("系统自检异常", "🔧 自检发现问题:\n" + "\n".join(f"  ❌ {i}" for i in issues_found))
+        if issues_fixed:
+            logger.info("  已修复: " + "; ".join(issues_fixed))
 
     def do_time_calibration(self):
         """时间校准: 检查 BB API / Pinnacle / 系统时钟三方时间偏差。
