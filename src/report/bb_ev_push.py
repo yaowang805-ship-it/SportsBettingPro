@@ -1892,6 +1892,10 @@ def _make_fingerprint(o: dict) -> str:
         import re as _re
         return _normalize_cn(_re.sub(r'\s+', ' ', s.strip())) if s else s
     sub = o.get("_sub_market", o.get("_market", ""))
+    # V4.5: 归一化 sub_market (opportunities/"" → "1x2", 与扫描器一致)
+    if sub in ("", "opportunities"): sub = "1x2"
+    elif sub in ("hc", "handicap"): sub = "hc"
+    elif sub in ("ou", "over_under"): sub = "ou"
     # 盘口线参与指纹: 让球/大小球线变了 → 新机会, 不拦截
     line = o.get("line", "") or o.get("_line", "")
     line_str = f"|{line}" if line and sub in ("hc", "handicap", "ou", "over_under") else ""

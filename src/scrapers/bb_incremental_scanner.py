@@ -630,11 +630,21 @@ def _save_scan_fingerprints(scan_result: dict):
                     if ev < 1:  # Only fingerprint opportunities with some EV
                         continue
 
+                    # 归一化 _sub_market: 与 push 侧 _make_fingerprint 一致
+                    raw_mk = opp.get("_market", "")
+                    if raw_mk in ("", "opportunities", "1x2"):
+                        norm_mk = "1x2"
+                    elif raw_mk in ("hc", "handicap"):
+                        norm_mk = "hc"
+                    elif raw_mk in ("ou", "over_under"):
+                        norm_mk = "ou"
+                    else:
+                        norm_mk = raw_mk  # ht, btts, dc, dnb 等
                     o = {
                         "sport": sport, "league": league,
                         "home_cn": home, "away_cn": away,
                         "designation": opp.get("designation", ""),
-                        "_sub_market": opp.get("_market", mk),
+                        "_sub_market": norm_mk,
                         "bb_odds": opp.get("bb_odds", 0),
                         "ev_pct": ev,
                         "_pin_epoch": detail.get("start_time_pin_epoch"),
