@@ -352,16 +352,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         all_unique_pin_ids.update(pin_ids)
     print(f"\n  Pinnacle 联赛去重后: {len(all_unique_pin_ids)} 个 (来自 {len(matched_leagues)} 个 BB 联赛)")
 
-    # 过滤：跳过父级联赛（0 场比赛）
-    # V4.3: all_pin_leagues 为 nested {sport_id: {league_id: data}} → 需穿透查找
-    pin_ids_to_fetch = []
-    for pin_id in sorted(all_unique_pin_ids):
-        from src.scrapers.pinnacle_league_map import lookup_pin_league
-        info = lookup_pin_league(all_pin_leagues, pin_id)
-        if info.get("matchup_count", 0) == 0:
-            print(f"  跳过 [{info.get('name', pin_id)}] (ID={pin_id}) — 父级联赛无直接比赛")
-        else:
-            pin_ids_to_fetch.append(pin_id)
+    # V4.3: 全量拉取, Pinnacle API自动过滤空联赛
+    pin_ids_to_fetch = list(sorted(all_unique_pin_ids))
     print(f"\n  待获取赔率的联赛: {len(pin_ids_to_fetch)} 个")
 
     # 并行获取（8 个线程，短延时避免 Pinnacle 限流）
