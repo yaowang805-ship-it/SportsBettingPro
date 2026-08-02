@@ -668,8 +668,16 @@ def _run_push(label: str = ""):
         )
         if result.returncode != 0:
             print(f"  ❌ bb_ev_push 失败 (exit={result.returncode}):")
-            for line in (result.stderr or "").splitlines()[:10]:
+            stderr_text = (result.stderr or "")
+            # 打印完整错误 (之前截断到10行, 丢失关键traceback)
+            for line in stderr_text.splitlines():
                 print(f"    {line}")
+            # 也打印 stdout 最后几行 (可能有上下文)
+            stdout_lines = (result.stdout or "").splitlines()
+            if stdout_lines:
+                print(f"  --- stdout (last 5) ---")
+                for line in stdout_lines[-5:]:
+                    print(f"    {line}")
             return False
         for line in (result.stdout or "").splitlines():
             print(f"  {line}")
