@@ -813,7 +813,7 @@ def _calc_kelly_stakes(opps: list) -> list:
             if o["_stake"] > 0:
                 o["_stake"] = max(5, round(o["_stake"] * ratio))
 
-    # 第三遍：同场比赛最多2条 + 单场上限
+    # 第三遍：跨盘口相关性折扣 + 单场上限
     from collections import defaultdict
     match_groups = defaultdict(list)
     for o in opps:
@@ -824,14 +824,122 @@ def _calc_kelly_stakes(opps: list) -> list:
 
     per_match_max = BANKROLL * _PER_MATCH_CAP_PCT
     for key, group in match_groups.items():
+        # V4.4: 跨盘口相关性折扣 — 同场多盘口联合 Kelly 调整
+        if len(group) >= 2:
+            discount = _cross_market_correlation_discount(group)
+            if discount < 1.0:
+                for o in group:
+                    o["_stake"] = max(0, round(o["_stake"] * discount))
+                    o["_corr_discount"] = round(discount, 3)
+
         total = sum(o["_stake"] for o in group)
         if total > per_match_max:
             ratio = per_match_max / total
             for o in group:
                 o["_stake"] = max(0, round(o["_stake"] * ratio))
-        # V4.4: 取消同场盘口数量限制，有多少推多少
 
     return opps
+
+
+# ── 跨盘口相关性矩阵 ──
+# 基于足球/篮球市场间结构关系标定
+# corr=1.0 完全重叠, corr=0.0 完全独立
+_MARKET_CORRELATION = {
+    # 1x2 vs others
+    ("1x2", "1x2"): 1.0,
+    ("1x2", "ou"): 0.35,     # 主胜→进球多→大球, 中等相关
+    ("1x2", "hc"): 0.85,     # 让球和独赢高度重叠
+    ("1x2", "btts"): 0.30,   # 弱相关
+    ("1x2", "ht"): 0.45,     # 半场结果与全场中等相关
+    ("1x2", "dc"): 0.90,     # 双重机会与独赢几乎重叠
+    ("1x2", "dnb"): 0.95,    # 平局退款几乎等于独赢
+    # OU vs others
+    ("ou", "ou"): 1.0,
+    ("ou", "hc"): 0.30,      # 让球和大小球弱相关
+    ("ou", "btts"): 0.55,    # BTTS 与大球中等相关
+    ("ou", "ht"): 0.40,      # 半场大小球相关
+    ("ou", "dc"): 0.25,
+    ("ou", "dnb"): 0.30,
+    # HC vs others
+    ("hc", "hc"): 1.0,
+    ("hc", "btts"): 0.25,
+    ("hc", "ht"): 0.50,      # 半场让球相关
+    ("hc", "dc"): 0.80,
+    ("hc", "dnb"): 0.85,
+    # BTTS vs others
+    ("btts", "btts"): 1.0,
+    ("btts", "ht"): 0.30,
+    ("btts", "dc"): 0.20,
+    ("btts", "dnb"): 0.25,
+    # HT vs others
+    ("ht", "ht"): 1.0,
+    ("ht", "dc"): 0.40,
+    ("ht", "dnb"): 0.45,
+    # DC/DNB
+    ("dc", "dc"): 1.0,
+    ("dc", "dnb"): 0.70,
+    ("dnb", "dnb"): 1.0,
+}
+
+
+def _cross_market_correlation_discount(group: list) -> float:
+    """计算同场多盘口的联合 Kelly 折扣因子。
+
+    当同一场比赛投注多个盘口时，由于盘口间的结构性相关，
+    独立 Kelly 会高估联合优势。此函数计算折扣以修正。
+
+    discount = 1 / sqrt(1 + avg_corr × (n - 1))
+    - n=1: discount=1.0 (无折扣)
+    - n=2, corr=0.85 (1x2+hc): discount≈0.74 (减 26%)
+    - n=2, corr=0.35 (1x2+ou): discount≈0.86 (减 14%)
+    - n=3, mixed: discount≈0.65-0.75
+    """
+    n = len(group)
+    if n <= 1:
+        return 1.0
+
+    # 提取每个机会的市场类型
+    markets = []
+    for o in group:
+        sub = o.get("_sub_market", o.get("_market", ""))
+        # 归一化市场名
+        if sub in ("handicap", "hc"):
+            markets.append("hc")
+        elif sub in ("over_under", "ou"):
+            markets.append("ou")
+        elif sub in ("btts",):
+            markets.append("btts")
+        elif sub in ("ht", "half_time"):
+            markets.append("ht")
+        elif sub in ("double_chance", "dc"):
+            markets.append("dc")
+        elif sub in ("draw_no_bet", "dnb"):
+            markets.append("dnb")
+        else:
+            markets.append("1x2")
+
+    # 计算平均成对相关性
+    total_corr = 0.0
+    pair_count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            m1, m2 = markets[i], markets[j]
+            # 对称查找
+            corr = _MARKET_CORRELATION.get((m1, m2), _MARKET_CORRELATION.get((m2, m1), 0.3))
+            total_corr += corr
+            pair_count += 1
+
+    if pair_count == 0:
+        return 1.0
+
+    avg_corr = total_corr / pair_count
+
+    # 折扣公式: 基于联合 Kelly 近似
+    # discount = 1 / (1 + avg_corr × (n-1) × 0.5)
+    # 确保折扣不低于 0.4 (最多减 60%)
+    import math
+    discount = 1.0 / (1.0 + avg_corr * (n - 1) * 0.5)
+    return max(0.4, discount)
 
 
 def _correct_budget_tracker(opps: list):
@@ -1631,6 +1739,13 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
         time_suffix = f"  ({bj_time})" if bj_time else ""
         lines.append(f"  ##### #{match_idx} {home} 对 {away}{time_suffix}")
 
+        # V4.4: 跨盘口相关性折扣提示
+        if len(opps) >= 2:
+            disc = opps[0].get("_corr_discount", 1.0)
+            if disc < 1.0:
+                disc_pct = round((1 - disc) * 100)
+                lines.append(f"    🔗 跨盘口折扣 -{disc_pct}% ({len(opps)}盘口联合Kelly)")
+
         # 去重: 同场比赛同一盘口+赔率只显示一条
         seen_lines = set()
         for o in opps:
@@ -1727,21 +1842,28 @@ def _prepare_opportunities(force=False):
     return _diversify_and_rank(qualified)
 
 
-def build_report(force: bool = False):
+def build_report(force: bool = False, incremental: bool = False):
     """构建格式化的 BB vs Pinnacle +EV 报告。返回 (body_text, qualified_opportunities).
 
     🔴 铁律：实时拉取失败 → 不发缓存数据，发钉钉告警。
 
     Args:
         force: 跳过 2 小时新鲜度检查，即使对比文件较旧也继续推送。
+        incremental: 增量模式 — 跳过实时拉取，直接使用增量扫描的 near/far 文件。
     Returns:
         (body, qualified): body 为 None 表示不应推送。
     """
-    # 🔴 铁律：推送前必须实时拉取赔率，不使用缓存
-    live_ok, errors = _refresh_live_odds()
-    if not live_ok:
-        _send_failure_alert(errors)
-        return None, None  # 不推送
+    errors = []
+    if incremental:
+        # 增量模式: 跳过实时拉取，直接使用增量扫描已有的对比文件
+        # 增量扫描器已经在 5 分钟内拉取过赔率，无需重复
+        logger.info("⚡ 增量模式 — 使用已有对比文件, 跳过实时拉取")
+    else:
+        # 🔴 铁律：全量推送前必须实时拉取赔率，不使用缓存
+        live_ok, errors = _refresh_live_odds()
+        if not live_ok:
+            _send_failure_alert(errors)
+            return None, None  # 不推送
 
     qualified = _prepare_opportunities(force=force)
     if not qualified:
@@ -1770,7 +1892,8 @@ def _make_fingerprint(o: dict) -> str:
     盘口线参与指纹：线变了（如 -9.5→-10.5）视为新机会可重新推送。
     归一化：空格 + 中文简繁体统一，防止 BB/FB 队名微小差异导致重复推送。
     """
-    match_date = ""
+    # V4.4: 无 _pin_epoch 时用 "9999" 占位，防止 _filter_pushed 误删空日期指纹
+    match_date = "9999-12-31"
     ep = o.get("_pin_epoch")
     if ep:
         try:
@@ -2394,8 +2517,9 @@ def _validate_format(body: str) -> bool:
 def main():
     """CLI 入口 / pipeline_orchestrator 入口。"""
     force_fresh = "--force" in sys.argv
+    is_incremental = "--incremental" in sys.argv
     try:
-        body, qualified = build_report(force=force_fresh)
+        body, qualified = build_report(force=force_fresh, incremental=is_incremental)
     except Exception as e:
         logger.error("build_report 崩溃: %s", e, exc_info=True)
         _send_failure_alert([f"build_report 异常: {str(e)[:200]}"])

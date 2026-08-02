@@ -150,13 +150,22 @@ def settle_bet(bet_id: str, result: str, stake: float, odds: float) -> dict:
 
         if result == "won":
             profit = stake * (odds - 1)
-            state["balance"] += stake + profit  # 本金已在投注时扣除，结算归还本金+利润 = stake * odds
+            # V4.4: 区分 track_only (本金未扣) vs 正常投注 (本金已扣)
+            if pending_bet and pending_bet.get("track_only"):
+                state["balance"] += profit  # 只加利润，本金从未扣除
+            else:
+                state["balance"] += stake + profit  # 本金已在投注时扣除，结算归还本金+利润
         elif result == "push":
             profit = 0.0
-            state["balance"] += stake  # 走水：本金已在投注时扣除，结算归还本金
+            # V4.4: track_only 本金从未扣除，无需归还
+            if not (pending_bet and pending_bet.get("track_only")):
+                state["balance"] += stake  # 走水：本金已在投注时扣除，结算归还本金
         else:
             profit = -stake
-            # 亏损：本金已在投注时扣除且无法收回，余额不做调整
+            # V4.4: track_only 本金从未扣除，亏损需从余额扣除
+            if pending_bet and pending_bet.get("track_only"):
+                state["balance"] -= stake
+            # 正常投注：本金已在投注时扣除且无法收回，余额不做调整
 
         entry = {
             "id": bet_id,

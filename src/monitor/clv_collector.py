@@ -59,8 +59,6 @@ def _load_pending_entries():
             key_pin = (r.get("home_pin", ""), r.get("away_pin", ""), r.get("sub_market", ""), r.get("designation", ""))
             if key not in existing and key_pin not in existing:
                 entries.append(r)
-            if key not in existing:
-                entries.append(r)
     return entries
 
 

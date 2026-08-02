@@ -186,6 +186,24 @@ class KellyPortfolioOptimizer:
 
         optimal = np.clip(result.x, 0, self.max_single)
 
+        # V4.4: 应用相关性惩罚 — 高相关投注权重下调
+        if corr_matrix.shape == (n, n) and m > 1:
+            corr_v = corr_matrix[np.ix_(valid_idx, valid_idx)]
+            # 对每对投注，若相关系数 > 0.3，下调权重
+            for i in range(m):
+                avg_corr = 0.0
+                count = 0
+                for j in range(m):
+                    if i != j and optimal[i] > 0 and optimal[j] > 0:
+                        avg_corr += corr_v[i, j]
+                        count += 1
+                if count > 0:
+                    avg_corr /= count
+                    # 相关性惩罚: 0.3以上每+0.1减10%权重
+                    if avg_corr > 0.3:
+                        penalty = 1.0 - min(0.5, (avg_corr - 0.3) * 1.0)
+                        optimal[i] *= penalty
+
         # 相关调整后的组合方差
         variances = probs_v * (1.0 - probs_v)
         stds = np.sqrt(np.maximum(variances, 1e-10))
