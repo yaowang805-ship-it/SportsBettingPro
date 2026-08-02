@@ -733,76 +733,54 @@ def _run_monte_carlo(win_rate: float, avg_odds: float, n_sims: int = 10000, n_be
 
 
 def _calc_kelly_stakes(opps: list) -> list:
-    """V3 纯 Kelly 最优仓位分配。赔率区间直接决定投注额。
+    """V4.4 简化纯 Kelly 仓位分配。
 
-    公式:
-      base_stake = BANKROLL × V3_Kelly% (赔率区间驱动, 已是最优解)
-      adjusted = base_stake × Kelly倍率 × 蒸汽 × 连亏
+    公式: stake = BANKROLL × V4_Kelly% × AH_discount × cross_discount
 
-    V3 的 get_kelly_stake_pct() 内化了:
-      - Pinnacle vig (低 vig → 高置信 → 高仓位)
-      - 赔率区间期望收益 (Kelly公式: edge/(odds-1)×0.5)
-      - 联赛级别差异 (已知联赛 vig 驱动)
-      - 市场质量差异 (OU > 1X2 > HT)
-    无需 league_multiplier 或 weekend_mult (已在 V3 计算中考虑)。
+    V4_Kelly% 已内化:
+      - Pinnacle 历史 WR (627K 场, 30 bins)
+      - BB 溢价 (实际对比数据中位数统计)
+      - 运动级数据置信度 (NFL×0.75, NHL×0.65)
+      - 样本量连续置信度 (n=10→100平滑)
+      - 联赛级独立标定 (25 联赛)
+      - 市场差异 (OU vs 1X2 vs HT)
+
+    移除的冗余乘数:
+      - HFA: Pinnacle WR 已含主场效应
+      - CLV: WR 数据已反映
+      - steam: 噪音信号, 赔率变动原因复杂
+      - kelly_mult: 重复 Kelly 计算
+      - streak: 赌徒谬误 (过去≠未来)
     """
     from config.constants import MAX_STAKE_PCT as _MAX_STAKE_PCT, PER_MATCH_CAP_PCT as _PER_MATCH_CAP_PCT
     from config.weight_matrix_v4 import get_kelly_stake_pct
-
-    streak_mult = _get_streak_multiplier()
 
     for o in opps:
         odds = o.get("bb_odds", 0)
         sport = o.get("sport", "")
         league = o.get("league", "")
         sub = o.get("_sub_market", o.get("_market", ""))
-        k = o.get("_kelly_pct", 0)
+        match_type = o.get("_match_type", "")
+        match_score = o.get("_match_score", 0)
 
-        # V3 赔率区间直接驱动的 Kelly 最优仓位
         stake_pct = get_kelly_stake_pct(sport, league, sub, odds)
         if stake_pct <= 0:
             o["_stake"] = 0; o["_raw_stake"] = 0
             continue
 
-        # V4.2 Home Field Advantage: 主场投注 Kelly×1.05, 客场×0.95
-        designation = o.get("designation", "")
-        if "主" in designation and "客" not in designation:
-            from config.weight_matrix_v4 import HFA_HOME_BOOST
-            stake_pct *= HFA_HOME_BOOST
-        elif "客" in designation:
-            from config.weight_matrix_v4 import HFA_AWAY_DISCOUNT
-            stake_pct *= HFA_AWAY_DISCOUNT
-
-        # V4.2 亚洲让球折扣: AH 同赔率胜率略低于 1X2 → ×0.92
-        if sub in ("hc", "handicap") or "让球" in designation or "让分" in designation:
+        # V4.4: AH 折扣 (让球盘用 1X2 数据 → 需修正)
+        if sub in ("hc", "handicap") or "让球" in o.get("designation", "") or "让分" in o.get("designation", ""):
             from config.weight_matrix_v4 import AH_DISCOUNT
             stake_pct *= AH_DISCOUNT
 
-        # V4.2 CLV 联赛加成: 正/零 CLV 联赛早盘优势更可靠 → ×1.05
-        for clv_lg in ("意甲", "Serie A"):
-            if clv_lg in (league or ""):
-                from config.weight_matrix_v4 import CLV_BOOST
-                stake_pct *= CLV_BOOST
-                break
+        # V4.4: 匹配置信度折扣 (时间匹配不如队名匹配可靠)
+        if match_type == "time" and match_score < 0.90:
+            stake_pct *= 0.80  # 低置信时间匹配 → 减 20%
 
-        # 蒸汽检测 (边际调整 ±30%)
-        snap_odds = o.get("_snapshot_bb_odds", 0)
-        steam_mult = 1.0
-        if snap_odds > 1.0 and odds > 1.0:
-            move_pct = (odds - snap_odds) / snap_odds
-            if abs(move_pct) > 0.03:
-                o["_steam_move"] = round(move_pct * 100, 1)
-                steam_mult = 1.0 + move_pct * 2
-                steam_mult = max(0.7, min(1.3, steam_mult))
+        # V4.4: 单注硬上限 4% (简化后无需 kelly_mult, 直接 cap)
+        stake_pct = min(stake_pct, 0.04)
 
-        # Kelly 倍率 (边缘调整: edge 越高越值得加注)
-        # V4.4: 上限从 1.5→1.2，防止边远联赛+高edge过度集中
-        kelly_mult = 1.0
-        if k > 0:
-            kelly_mult = min(1.2, max(0.5, k / 3.0))
-
-        # 最终投注额: V3最优仓位 × Kelly倍率 × 蒸汽 × 连亏
-        stake = int(BANKROLL * stake_pct * kelly_mult * steam_mult * streak_mult)
+        stake = int(BANKROLL * stake_pct)
         o["_raw_stake"] = stake
         o["_stake"] = stake if stake >= 5 else 0
 
