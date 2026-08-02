@@ -501,18 +501,35 @@ def lookup_pin_league(all_pin_leagues, league_id):
     return {}
 
 def _find_best_league(pin_name, all_sport_matchups):
-    """Match Pinnacle league name, prefer exact match."""
+    """Match Pinnacle league name, prefer exact match.
+
+    all_sport_matchups: {sport_id: {league_id: league_data}} (nested format)
+    Returns league_id or None.
+    """
     needle = pin_name.lower().strip()
-    matched = []
-    for lid, info in all_sport_matchups.items():
-        if _match_pin_name(needle, _safe_get_name(info)):
-            matched.append(lid)
+    matched = []  # list of (sport_id, league_id)
+
+    for sport_id, sport_data in all_sport_matchups.items():
+        if not isinstance(sport_data, dict): continue
+        # Check if flat format (has "name" key at top level)
+        if "name" in sport_data:
+            if _match_pin_name(needle, str(sport_data["name"])):
+                matched.append((sport_id, sport_id))
+        else:
+            # Nested: {league_id: league_data}
+            for league_id, league_info in sport_data.items():
+                if isinstance(league_info, dict) and _match_pin_name(needle, league_info.get("name", "")):
+                    matched.append((sport_id, league_id))
+
     if not matched:
         return None
-    for lid in matched:
-        if _safe_get_name(all_sport_matchups.get(lid, {})).lower() == needle:
-            return lid
-    return matched[0]
+
+    # Exact match preferred
+    for sport_id, league_id in matched:
+        name = _safe_get_name(all_sport_matchups.get(sport_id, {}))
+        if name.lower() == needle:
+            return league_id
+    return matched[0][1]
 
 
 def find_pinnacle_league_id(bb_league_name, all_sport_matchups):
