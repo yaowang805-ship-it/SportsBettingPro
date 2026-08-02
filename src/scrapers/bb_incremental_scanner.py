@@ -158,7 +158,7 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
             if league_changed:
                 break
             try:
-                matchups = pin_get(f'/0.1/leagues/{pid}/matchups')
+                matchups = pin_get(f'/leagues/{pid}/matchups')  # api_get 已自动加 /0.1 前缀
                 if not matchups:
                     continue
                 if isinstance(matchups, dict):
