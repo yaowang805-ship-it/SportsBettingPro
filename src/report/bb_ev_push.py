@@ -1437,16 +1437,17 @@ def _collect_opportunities_from_file():
         away = _normalize_cn(o.get("away_cn", "").strip())
         start = o.get("start_time_bb", "") or str(o.get("_pin_epoch", ""))
 
-        # 三层 key：队名+时间交叉比对
+        # V4.4: 四层 key — BB/FB 队名翻译可能完全不同, 加纯时间key
         # 联赛名可能因 BB/FB 翻译不同而不同 (如 "欧足联欧洲会议联赛" vs "欧足联欧洲协会联赛")
-        # L2/L3 去掉了 league，因为 (sport, home, start_time) 已唯一确定一场比赛
         key_exact = (sport, league, home, away, designation)
-        key_home_time = (sport, home, start, designation)       # 不含 league
-        key_away_time = (sport, away, start, designation)       # 不含 league
+        key_home_time = (sport, home, start, designation)
+        key_away_time = (sport, away, start, designation)
+        key_time_only = (sport, start, designation)              # BB/FB队名完全不同时兜底
 
         existing = (best_per_match.get(key_exact) or
                     best_per_match.get(key_home_time) or
-                    best_per_match.get(key_away_time))
+                    best_per_match.get(key_away_time) or
+                    best_per_match.get(key_time_only))
 
         if existing is None or o.get("bb_odds", 0) > existing.get("bb_odds", 0):
             # 替换旧条目时，清理指向旧对象的所有 key
@@ -1454,7 +1455,7 @@ def _collect_opportunities_from_file():
                 stale = [k for k, v in best_per_match.items() if v is existing]
                 for k in stale:
                     del best_per_match[k]
-            for k in (key_exact, key_home_time, key_away_time):
+            for k in (key_exact, key_home_time, key_away_time, key_time_only):
                 best_per_match[k] = o
 
     unique_count = len({id(v) for v in best_per_match.values()})

@@ -973,10 +973,14 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         if idx is not None and val > 0:
                             dc_raw[idx] = val
                     if all(x and x > 0 for x in dc_raw):
-                        # 去抽水 (multiplicative proportional method)
-                        dc_imp = sum(1.0 / v for v in dc_raw)
-                        dc_fair = [round(v * dc_imp, 4) for v in dc_raw]
-                        dc_pin_raw = dc_raw     # 用于推送显示
+                        # V4.4: Pinnacle DC 价格 < 1.2 → 数据异常, 回退到1X2推导
+                        if any(v < 1.2 for v in dc_raw):
+                            dc_fair = None  # 触发 Path B
+                        else:
+                            # 去抽水 (multiplicative proportional method)
+                            dc_imp = sum(1.0 / v for v in dc_raw)
+                            dc_fair = [round(v * dc_imp, 4) for v in dc_raw]
+                            dc_pin_raw = dc_raw
                     break
 
             # 路径B：Pinnacle 无 DC 市场 → 从 1X2 推导公平价（去抽水后合并概率）
