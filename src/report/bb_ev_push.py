@@ -16,7 +16,8 @@ logger = get_logger(__name__)
 from src.report import recommendation_tracker
 
 from config.constants import (
-    BANKROLL,
+    BANKROLL as _BASE_BANKROLL,
+    get_dynamic_bankroll,
     MAX_BETS as MAX_OPPORTUNITIES,
     EV_CAP,
     KELLY_FRACTION,
@@ -752,8 +753,10 @@ def _calc_kelly_stakes(opps: list) -> list:
       - kelly_mult: 重复 Kelly 计算
       - streak: 赌徒谬误 (过去≠未来)
     """
-    from config.constants import MAX_STAKE_PCT as _MAX_STAKE_PCT, PER_MATCH_CAP_PCT as _PER_MATCH_CAP_PCT
+    from config.constants import MAX_STAKE_PCT as _MAX_STAKE_PCT, PER_MATCH_CAP_PCT as _PER_MATCH_CAP_PCT, get_dynamic_bankroll as _get_bankroll
     from config.weight_matrix_v4 import get_kelly_stake_pct
+
+    bankroll = _get_bankroll()
 
     for o in opps:
         odds = o.get("bb_odds", 0)
@@ -780,14 +783,15 @@ def _calc_kelly_stakes(opps: list) -> list:
         # V4.4: 单注硬上限 4% (简化后无需 kelly_mult, 直接 cap)
         stake_pct = min(stake_pct, 0.04)
 
-        stake = int(BANKROLL * stake_pct)
+        stake = int(bankroll * stake_pct)
         o["_raw_stake"] = stake
         o["_stake"] = stake if stake >= 5 else 0
 
     # 第二遍：总额超预算时等比压缩
+    daily_budget = bankroll  # V4.5: 动态日预算
     total_wanted = sum(o["_stake"] for o in opps if o["_stake"] > 0)
-    if total_wanted > TOTAL_DAILY_BUDGET:
-        ratio = TOTAL_DAILY_BUDGET / total_wanted
+    if total_wanted > daily_budget:
+        ratio = daily_budget / total_wanted
         for o in opps:
             if o["_stake"] > 0:
                 o["_stake"] = max(5, round(o["_stake"] * ratio))
@@ -801,7 +805,7 @@ def _calc_kelly_stakes(opps: list) -> list:
         key = (o.get("sport", ""), o.get("home_cn", "").strip(), o.get("away_cn", "").strip())
         match_groups[key].append(o)
 
-    per_match_max = BANKROLL * _PER_MATCH_CAP_PCT
+    per_match_max = bankroll * _PER_MATCH_CAP_PCT
     for key, group in match_groups.items():
         # V4.4: 跨盘口相关性折扣 — 同场多盘口联合 Kelly 调整
         if len(group) >= 2:

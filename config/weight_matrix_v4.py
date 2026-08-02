@@ -1057,6 +1057,71 @@ MIN_N_STANDARD = 30  # 标准区间 (CI ~33%)  — 小联赛/高赔
 MIN_N_MINIMUM = 10    # 最低门槛 (CI ~52%)  — 边缘区间
 
 
+# =====================================================================
+# V4.5: 结算反馈环 — 实盘 ROI 自动校准权重
+# =====================================================================
+def _load_settlement_feedback() -> dict:
+    """从 settlement_log.csv 加载各联赛的实盘 ROI。
+    返回 {league: {"n": int, "roi": float, "avg_odds": float}}
+    """
+    import csv
+    from pathlib import Path
+    from collections import defaultdict
+
+    sp = Path(__file__).resolve().parent.parent / "data" / "storage" / "settlement_log.csv"
+    if not sp.exists():
+        return {}
+
+    by_lg = defaultdict(lambda: {"stake": 0.0, "profit": 0.0, "odds_sum": 0.0, "n": 0})
+    with open(sp) as f:
+        for r in csv.DictReader(f):
+            lg = r.get("league", "")
+            if not lg:
+                continue
+            stake = float(r.get("stake", 0))
+            profit = float(r.get("profit", 0))
+            odds = float(r.get("odds", 0))
+            by_lg[lg]["stake"] += stake
+            by_lg[lg]["profit"] += profit
+            if odds > 0:
+                by_lg[lg]["odds_sum"] += odds
+                by_lg[lg]["n"] += 1
+
+    result = {}
+    for lg, d in by_lg.items():
+        if d["n"] >= 15 and d["stake"] > 0:
+            result[lg] = {
+                "n": d["n"],
+                "roi": d["profit"] / d["stake"],
+                "avg_odds": d["odds_sum"] / d["n"] if d["n"] > 0 else 0,
+            }
+    return result
+
+
+def _settlement_multiplier(league: str) -> float:
+    """V4.5: 根据实盘结算 ROI 调整 sports_confidence。
+    - ROI > +15% → +10% (联赛被低估, 加仓)
+    - ROI +5% to +15% → 基准
+    - ROI -10% to +5% → -15% (略低, 微降)
+    - ROI < -10% → -30% (显著亏损, 大幅降仓)
+    - 样本 < 15 → 不调整 (×1.0)
+    """
+    fb = _load_settlement_feedback()
+    data = fb.get(league)
+    if data is None or data["n"] < 15:
+        return 1.0
+
+    roi = data["roi"]
+    if roi > 0.15:
+        return 1.10
+    elif roi > 0.05:
+        return 1.00
+    elif roi > -0.10:
+        return 0.85
+    else:
+        return 0.70
+
+
 @lru_cache(maxsize=4096)
 def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                          match_type: str = "", match_score: float = 0,
@@ -1105,7 +1170,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             ou_total = sum(e[2] for e in ou_league_data.values())
             if ou_total < 3000:
                 stake *= 0.75
-            return stake
+            return stake * _settlement_multiplier(league)
 
         elif sub_market == "ht":
             # V4.3: HT封顶 4.8 (316K 赔率区间回测: @4.8+ BB EV全负)
@@ -1122,7 +1187,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             bb_prem = _bb_premium_ht(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n)
-            return stake * 0.85
+            return stake * 0.85 * _settlement_multiplier(league)
 
         else:  # 1X2
             if sub_market in SPECIAL_MARKET_CAPS:
@@ -1142,9 +1207,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             bb_prem = _bb_premium_1x2(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n)
-            # V4.4: 移除 _odds_weight 乘数 (与 Kelly 公式重复计算 edge)
-            # Kelly 已通过 actual_wr × BB_odds 编码了赔率区间的真实优势
-            return stake
+            return stake * _settlement_multiplier(league)
 
     # ── Tennis (V4.2: 直接编码, 不再复用V3) ──
     elif sport_lower == "tennis":
@@ -1179,7 +1242,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         data = NHL_DATA.get(idx)
         if data and data[2] >= 50:  # V4.4: MIN_N=50 (ESPN数据, 非Pinnacle)
             wr, avg_o, n = data
-            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.65)
+            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.65) * _settlement_multiplier(league)
         return 0.0
 
     # ── Baseball (MLB) ──
@@ -1188,7 +1251,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         data = MLB_DATA.get(idx)
         if data and data[2] >= MIN_N_MINIMUM:
             wr, avg_o, n = data
-            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.90)
+            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.90) * _settlement_multiplier(league)
         return 0.0
 
     # ── Basketball ──
@@ -1199,7 +1262,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             if data and data[2] >= MIN_N_MINIMUM:
                 wr, avg_o, n = data
                 stake = kelly_075(wr, avg_o, 0.05, n)
-                return stake * DISCOUNT_SBR_LARGE
+                return stake * DISCOUNT_SBR_LARGE * _settlement_multiplier(league)
             return 0.0
         elif "WNBA" in (league or ""):
             idx = _bin_index(odds, ODDS_BINS)
@@ -1207,7 +1270,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             if data and data[2] >= MIN_N_MINIMUM:
                 wr, avg_o, n = data
                 stake = kelly_075(wr, avg_o, 0.04, n)
-                return stake * DISCOUNT_WNBA
+                return stake * DISCOUNT_WNBA * _settlement_multiplier(league)
             return 0.0
         else:
             return 0.01 if odds < 2.5 else 0.0
@@ -1218,7 +1281,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         data = NFL_DATA.get(idx)
         if data and data[2] >= 50:  # V4.4: MIN_N=50 (MGM Grand 2.7K, 样本偏少)
             wr, avg_o, n = data
-            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.75)
+            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.75) * _settlement_multiplier(league)
         return 0.0
 
     # ── Ice Hockey ──
@@ -1228,7 +1291,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         if data and data[2] >= MIN_N_MINIMUM:
             wr, avg_o, n = data
             stake = kelly_075(wr, avg_o, 0.05, n)
-            return stake * DISCOUNT_SBR_LARGE
+            return stake * DISCOUNT_SBR_LARGE * _settlement_multiplier(league)
         return 0.0
 
     # ── 乒/羽/排 ──

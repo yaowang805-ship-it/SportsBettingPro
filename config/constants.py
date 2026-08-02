@@ -8,8 +8,26 @@ from pathlib import Path
 from config.settings import DATA_DIR
 
 # ── 资金管理 ──
-BANKROLL = 10000.0                 # 日预算
+BANKROLL = 10000.0                 # 日预算（基准）
 INITIAL_BALANCE = 50000.0          # 初始资金（累计余额）
+
+
+def get_dynamic_bankroll() -> float:
+    """V4.5: 动态日预算 = max(¥10,000, 当前余额 × 80%)
+
+    资金增长时自动扩大仓位，回撤时不低于初始 ¥10,000。
+    """
+    from pathlib import Path
+    import json as _json
+    pf = Path(__file__).resolve().parent.parent / "data" / "storage" / "virtual_portfolio.json"
+    try:
+        if pf.exists():
+            data = _json.loads(pf.read_text())
+            balance = float(data.get("balance", BANKROLL))
+            return max(BANKROLL, round(balance * 0.80, -2))  # 80%, 取整百
+    except Exception:
+        pass
+    return BANKROLL
 
 # ── EV 相关 ──
 EV_CAP = 12.0                      # 最大 EV %（bb_ev_push EV_CAP / bb_virtual_bet MAX_EV_PCT）
