@@ -1895,6 +1895,28 @@ def _verify_odds_freshness(qualified: list, max_ev_drop: float = 3.0) -> list:
         return qualified
 
 
+def _save_qualified_fingerprints(qualified: list):
+    """保存指纹 (每场最多2条, 与同场冷却一致)。"""
+    from collections import defaultdict
+    from config.database import add_fingerprints
+    new_fps = {}
+    match_groups = defaultdict(list)
+    for o in qualified:
+        key = (o.get("sport",""), o.get("home_cn","").strip(), o.get("away_cn","").strip())
+        match_groups[key].append(o)
+    for key, group in match_groups.items():
+        group.sort(key=lambda o: o.get("_score", 0), reverse=True)
+        for o in group[:2]:
+            fp = _make_fingerprint(o)
+            ev = o.get("ev_pct", 0)
+            bb = o.get("bb_odds", 0)
+            new_fps[fp] = {"ev": ev, "ts": time.time()}
+            if bb > 0:
+                new_fps[fp + "_bb"] = bb
+    add_fingerprints(new_fps)
+    logger.info("指纹: %d条 (%d场)", len(new_fps), len(match_groups))
+
+
 def _apply_match_exposure_cap(qualified: list) -> list:
     """同一场比赛累计投注不超过日预算 6%，超出的机会降权或跳过。
 
@@ -2266,6 +2288,9 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         warnings = (warnings or []) + clv_warnings
     body = _format_body(qualified, warnings)
     if not body:
+        # 即使空推也存指纹, 防止下次增量扫描重复处理同样机会
+        if save_fingerprints and qualified:
+            _save_qualified_fingerprints(qualified)
         logger.info("empty body, skip")
         return
 
@@ -2315,32 +2340,14 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
             place_bets_from_push(bettable)
         elif place_bets:
             logger.info("无可投注机会（全部被结算可行性过滤）")
-        # 指纹保存 (含EV追踪, 同盘口EV上涨>1%可重推)
-        # 指纹保存 (每场最多2条, 与同场冷却一致)
         if save_fingerprints:
-            from collections import defaultdict
-            from config.database import add_fingerprints
-            new_fps = {}
-            match_groups = defaultdict(list)
-            for o in qualified:
-                key = (o.get("sport",""), o.get("home_cn","").strip(), o.get("away_cn","").strip())
-                match_groups[key].append(o)
-            for key, group in match_groups.items():
-                group.sort(key=lambda o: o.get("_score", 0), reverse=True)
-                for o in group[:2]:
-                    fp = _make_fingerprint(o)
-                    ev = o.get("ev_pct", 0)
-                    bb = o.get("bb_odds", 0)
-                    src = o.get("bb_price_source", "BB")
-                    # V4.3: 存 {ev, ts} 用于时间冷却重推
-                    new_fps[fp] = {"ev": ev, "ts": time.time()}
-                    if bb > 0:
-                        new_fps[fp + "_bb"] = bb
-                        new_fps[fp + "_src"] = 1 if src == "FB" else 0
-            add_fingerprints(new_fps)
-            logger.info("指纹: 保存 %d 条 (来自 %d 场比赛)", len(new_fps), len(match_groups))
+            _save_qualified_fingerprints(qualified)
         # JSON 二次备份
         existing = _load_fingerprints()
+        new_fps = {}
+        for o in qualified:
+            fp = _make_fingerprint(o)
+            new_fps[fp] = o.get("ev_pct", 0)
         for fp, ev in new_fps.items():
             if fp not in existing or ev > existing[fp]:
                 existing[fp] = ev
