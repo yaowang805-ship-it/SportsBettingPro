@@ -796,9 +796,10 @@ def _calc_kelly_stakes(opps: list) -> list:
                 steam_mult = max(0.7, min(1.3, steam_mult))
 
         # Kelly 倍率 (边缘调整: edge 越高越值得加注)
+        # V4.4: 上限从 1.5→1.2，防止边远联赛+高edge过度集中
         kelly_mult = 1.0
         if k > 0:
-            kelly_mult = min(1.5, max(0.5, k / 3.0))
+            kelly_mult = min(1.2, max(0.5, k / 3.0))
 
         # 最终投注额: V3最优仓位 × Kelly倍率 × 蒸汽 × 连亏
         stake = int(BANKROLL * stake_pct * kelly_mult * steam_mult * streak_mult)

@@ -1136,8 +1136,9 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             bb_prem = _bb_premium_1x2(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n)
-            # V4.3: 赔率区间权重 (316K Pinnacle BB EV回测)
-            return stake * _odds_weight(odds)
+            # V4.4: 移除 _odds_weight 乘数 (与 Kelly 公式重复计算 edge)
+            # Kelly 已通过 actual_wr × BB_odds 编码了赔率区间的真实优势
+            return stake
 
     # ── Tennis (V4.2: 直接编码, 不再复用V3) ──
     elif sport_lower == "tennis":
