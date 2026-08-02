@@ -829,9 +829,9 @@ def _calc_kelly_stakes(opps: list) -> list:
             ratio = per_match_max / total
             for o in group:
                 o["_stake"] = max(0, round(o["_stake"] * ratio))
-        if len(group) > 2:
+        if len(group) > 4:  # V4.3: 2→4, 同场多盘口分散风险
             group.sort(key=lambda o: o.get("_score", 0), reverse=True)
-            for o in group[2:]:
+            for o in group[4:]:
                 o["_stake"] = 0
 
     return opps
@@ -1905,7 +1905,7 @@ def _save_qualified_fingerprints(qualified: list):
         match_groups[key].append(o)
     for key, group in match_groups.items():
         group.sort(key=lambda o: o.get("_score", 0), reverse=True)
-        for o in group[:2]:
+        for o in group[:4]:  # 与同场冷却一致
             fp = _make_fingerprint(o)
             ev = o.get("ev_pct", 0)
             bb = o.get("bb_odds", 0)
