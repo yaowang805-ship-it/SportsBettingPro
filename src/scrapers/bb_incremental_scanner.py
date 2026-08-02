@@ -299,12 +299,9 @@ def run_incremental(time_window: str = "all"):
         try: snapshot = json.loads(_current_snap.read_text())
         except: pass
 
-    # 4. 增量扫描强制实时：不清点变动，直接全量对比时间窗口内的所有联赛
-    # （用户要求每次增量扫描都实时抓取Pinnacle数据，不使用缓存/历史数据）
-    n_changed = 1  # 强制进入对比流程
-    changed_leagues = {m.get("league", "") for m in bb_matches if m.get("league")}  # 全部联赛
-    changed_ids = set()
-    new_ids = set()
+    # 4. 真正增量：对比快照，只拉取变动联赛的 Pinnacle 数据
+    changed_ids, new_ids, changed_leagues = detect_changes(bb_matches, snapshot)
+    n_changed = len(changed_ids) + len(new_ids)
 
     # 空转计数器：near/far 各自独立（每 6 次无变动强制推送一次）
     _no_change_file = DATA_DIR / f".incr_no_change_{time_window}"
@@ -329,8 +326,10 @@ def run_incremental(time_window: str = "all"):
     print(f"  赔率变动: {len(changed_ids)} 场")
     print(f"  新增比赛: {len(new_ids)} 场")
     print(f"  涉及联赛: {len(changed_leagues)} 个")
-    for lg in sorted(changed_leagues):
+    for lg in sorted(changed_leagues)[:10]:
         print(f"    {lg}")
+    if len(changed_leagues) > 10:
+        print(f"    ... 等 {len(changed_leagues)-10} 个")
 
     # 5. 加载 Pinnacle 联赛结构
     if not all_pin_leagues:
@@ -340,14 +339,13 @@ def run_incremental(time_window: str = "all"):
             save_snapshot(bb_matches, _current_snap)
             return
 
-    # 5. 实时对比：拉取当前时间窗口的所有联赛 Pinnacle 数据
-    print(f"\n🔍 增量实时对比 ({len(changed_leagues)} 个联赛)...")
-    # near/far 写入独立文件，互不覆盖
+    # 5. 只拉取变动联赛的 Pinnacle 数据 (真正增量)
+    print(f"\n🔍 增量实时对比 (仅 {len(changed_leagues)} 个变动联赛)...")
     window_file = COMPARISON_FILE_NEAR if time_window == "near" else COMPARISON_FILE_FAR
     new_result = compare_bb_vs_pinnacle(
         bb_matches,
         all_pin_leagues,
-        selected_leagues=None,  # 全量对比, 不限制联赛
+        selected_leagues=list(changed_leagues) if changed_leagues else None,
         save_path=window_file,
     )
 
