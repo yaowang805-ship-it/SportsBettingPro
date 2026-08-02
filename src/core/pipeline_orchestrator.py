@@ -749,8 +749,15 @@ class PipelineOrchestrator:
 
         if changed:
             logger.warning("🔄 检测到 %d 个源文件变更: %s... 自动重启", len(changed), ", ".join(changed[:5]))
-            # 优雅重启: 保存状态, 重新执行自身
-            os.execv(sys.executable, [sys.executable, "-m", "src.core.pipeline_orchestrator"] + sys.argv[1:])
+            # 释放锁文件 → exit(42) → launchd KeepAlive 自动重启
+            lock_path = SRC_DIR / "data" / "storage" / ".pipeline_daemon.lock"
+            try:
+                if lock_path.exists():
+                    lock_path.unlink()
+            except OSError:
+                pass
+            logger.info("🔄 锁文件已释放, 退出等待 launchd 重启...")
+            os._exit(42)  # 特殊退出码, launchd KeepAlive 会自动重启
 
     def _watchdog(self):
         """自检看门狗：检测增量扫描是否停滞，Pinnacle 连接是否异常。"""
