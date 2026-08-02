@@ -771,10 +771,7 @@ def _calc_kelly_stakes(opps: list) -> list:
             o["_stake"] = 0; o["_raw_stake"] = 0
             continue
 
-        # V4.4: AH 折扣 (让球盘用 1X2 数据 → 需修正)
-        if sub in ("hc", "handicap") or "让球" in o.get("designation", "") or "让分" in o.get("designation", ""):
-            from config.weight_matrix_v4 import AH_DISCOUNT
-            stake_pct *= AH_DISCOUNT
+        # V4.5: HC 已有独立 Pinnacle AH 收盘数据标定, 无需额外折扣
 
         # V4.4: 匹配置信度折扣 (时间匹配不如队名匹配可靠)
         if match_type == "time" and match_score < 0.90:

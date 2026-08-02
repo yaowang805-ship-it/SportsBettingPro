@@ -841,6 +841,25 @@ PIN_OU_DATA = {
 
 # 向后兼容别名
 PIN_OU_AGGREGATE = PIN_OU_DATA["_AGGREGATE"]
+# =====================================================================
+# V4.5: 让球盘独立标定 — Pinnacle 亚洲让球收盘数据 (49K bets)
+#   数据源: football-data.co.uk Pinnacle closing AH odds (AHh + PSH/PSA)
+#   含半赢/半输处理 (quarter-ball handicaps)
+# =====================================================================
+PIN_HC_DATA = {
+    0: (0.745, 1.21, 1059), 1: (0.703, 1.40, 1713), 2: (0.692, 1.61, 2746),
+    3: (0.671, 1.80, 4022), 4: (0.720, 2.00, 3795), 5: (0.634, 2.19, 3788),
+    6: (0.592, 2.39, 3341), 7: (0.546, 2.59, 2835), 8: (0.487, 2.79, 2507),
+    9: (0.444, 3.00, 2774), 10: (0.442, 3.19, 2897), 11: (0.403, 3.39, 2638),
+    12: (0.388, 3.59, 2041), 13: (0.342, 3.79, 1841), 14: (0.286, 4.03, 2027),
+    15: (0.262, 4.33, 1530), 16: (0.266, 4.64, 1158), 17: (0.267, 4.99, 1137),
+    18: (0.247, 5.38, 875), 19: (0.240, 5.79, 650), 20: (0.232, 6.24, 613),
+    21: (0.301, 6.73, 469), 22: (0.347, 7.24, 387), 23: (0.326, 7.72, 340),
+    24: (0.330, 8.47, 575), 25: (0.294, 9.46, 377), 26: (0.248, 10.85, 441),
+    27: (0.215, 13.34, 297), 28: (0.184, 17.10, 251), 29: (0.112, 25.39, 163),
+}
+
+
 
 
 # =====================================================================
@@ -1188,6 +1207,26 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             bb_prem = _bb_premium_ht(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n)
             return stake * 0.85 * _settlement_multiplier(league)
+
+        elif sub_market in ("hc", "handicap"):
+            # V4.5: HC 独立标定 — 使用 Pinnacle 亚洲让球收盘数据 (49K)
+            data = PIN_HC_DATA.get(idx)
+            if data and data[2] >= 20:
+                wr, avg_o, n = data
+                bb_prem = _bb_premium_1x2(odds) * 0.95  # HC BB溢价略低
+                return kelly_075(wr, avg_o, bb_prem, n)
+            # 回退到1X2数据
+            league_data = _match_league(league, PIN_1X2_DATA)
+            if not league_data:
+                return 0.0
+            data = league_data.get(idx)
+            if not data:
+                return 0.0
+            wr, avg_o, n = data
+            if n < MIN_N_MINIMUM:
+                return 0.0
+            bb_prem = _bb_premium_1x2(odds)
+            return kelly_075(wr, avg_o, bb_prem, n) * 0.92
 
         else:  # 1X2
             if sub_market in SPECIAL_MARKET_CAPS:
