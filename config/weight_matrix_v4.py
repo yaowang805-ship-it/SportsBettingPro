@@ -917,6 +917,32 @@ NBA_DATA = {  # V4.3: teamrankings close odds 59K bets (2003-2026), 替代旧SBR
     24: (0.105, 8.40, 438), 25: (0.115, 9.41, 374), 26: (0.083, 10.81, 399),
     27: (0.073, 13.02, 274), 28: (0.060, 16.65, 166),
 }
+# V4.5: NBA OU/Spread 独立数据
+NBA_OU_DATA = {
+    4: (0.490, 1.98, 7673), 5: (0.490, 2.18, 3588), 6: (0.510, 2.39, 1905),
+    7: (0.507, 2.59, 1233), 8: (0.506, 2.79, 955), 9: (0.515, 3.00, 561),
+    10: (0.505, 3.17, 600), 11: (0.526, 3.37, 511), 12: (0.482, 3.60, 369),
+    13: (0.517, 3.80, 205), 14: (0.522, 4.05, 347), 15: (0.484, 4.32, 223),
+    16: (0.537, 4.65, 281), 17: (0.480, 5.02, 177), 18: (0.500, 5.42, 210),
+    19: (0.493, 5.77, 75), 20: (0.528, 6.09, 127), 21: (0.500, 6.58, 98),
+    22: (0.488, 7.09, 86), 23: (0.415, 7.61, 41), 24: (0.453, 8.36, 117),
+    25: (0.397, 9.35, 58), 26: (0.516, 10.69, 64),
+}
+
+# V4.5: MLB OU (SBR 24.4K) 
+MLB_OU_DATA = {
+    3: (0.507, 1.85, 9654), 4: (0.489, 1.96, 14477), 5: (0.526, 2.11, 285),
+}
+
+# V4.5: NHL OU (Kaggle ESPN 6.6K)
+NHL_OU_DATA = {
+    0: (0.449, 1.19, 49), 1: (0.562, 1.43, 320), 2: (0.563, 1.61, 1037),
+    3: (0.536, 1.80, 1460), 4: (0.560, 1.99, 1306), 5: (0.559, 2.19, 1255),
+    6: (0.549, 2.38, 779), 7: (0.487, 2.56, 191), 8: (0.570, 2.77, 86),
+    9: (0.500, 2.98, 38), 10: (0.640, 3.17, 25),
+}
+
+
 
 NFL_DATA = {  # V4.3: MGM Grand close odds 2,718 bets (2021-2025), 替代旧SBR 6K
     0: (0.791, 1.20, 335), 1: (0.687, 1.39, 339), 2: (0.627, 1.59, 402),
@@ -1287,6 +1313,14 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
     # ── Baseball (MLB) ──
     elif sport_lower == "baseball":
         idx = _bin_index(odds, ODDS_BINS)
+        # OU market
+        if sub_market in ("ou", "over_under"):
+            data = MLB_OU_DATA.get(idx)
+            if data and data[2] >= 30:
+                wr, avg_o, n = data
+                return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.85) * _settlement_multiplier(league)
+            return 0.0
+        # Moneyline
         data = MLB_DATA.get(idx)
         if data and data[2] >= MIN_N_MINIMUM:
             wr, avg_o, n = data
@@ -1297,12 +1331,23 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
     elif sport_lower == "basketball":
         if "NBA" in (league or ""):
             idx = _bin_index(odds, ODDS_BINS)
-            data = NBA_DATA.get(idx)
-            if data and data[2] >= MIN_N_MINIMUM:
-                wr, avg_o, n = data
-                stake = kelly_075(wr, avg_o, 0.05, n)
-                return stake * DISCOUNT_SBR_LARGE * _settlement_multiplier(league)
-            return 0.0
+            # OU market
+            if sub_market in ("ou", "over_under"):
+                data = NBA_OU_DATA.get(idx)
+                if data and data[2] >= 30:
+                    wr, avg_o, n = data
+                    return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.85) * _settlement_multiplier(league)
+                return 0.0
+            # Spread market
+            elif sub_market in ("hc", "handicap"):
+                return 0.02  # V4.5: NBA spread 固定2%
+            # Moneyline
+            else:
+                data = NBA_DATA.get(idx)
+                if data and data[2] >= MIN_N_MINIMUM:
+                    wr, avg_o, n = data
+                    return kelly_075(wr, avg_o, 0.05, n) * DISCOUNT_SBR_LARGE * _settlement_multiplier(league)
+                return 0.0
         elif "WNBA" in (league or ""):
             idx = _bin_index(odds, ODDS_BINS)
             data = NBA_DATA.get(idx)
