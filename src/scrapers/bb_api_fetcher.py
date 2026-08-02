@@ -223,41 +223,56 @@ def api_post(endpoint, params, platform="BB"):
     """直接 HTTP POST 调用指定平台的 API。
 
     使用 requests 库避免 Python 3.14 urllib IncompleteRead 截断问题。
+    V4.5: 增加指数退避重试 (3次, 1s/2s/4s)。
     返回解析后的 JSON dict，或 None。
     """
+    import time as _time
     platform_config = PLATFORMS.get(platform, PLATFORMS["BB"])
-    token = _ensure_token()
-    if not token:
-        logger.error("无 %s API token，请先登录 pc.x14ff.com", platform_config["label"])
-        return None
 
-    url = f"{platform_config['api_base']}{endpoint}"
-    headers = {
-        "Content-Type": "application/json",
-        platform_config["auth_header"]: token,
-        "User-Agent": _USER_AGENT,
-    }
+    for attempt in range(3):
+        token = _ensure_token()
+        if not token:
+            logger.error("无 %s API token，请先登录 pc.x14ff.com", platform_config["label"])
+            return None
 
-    try:
-        resp = _SESSION.post(url, json=params, headers=headers, timeout=30)
-        if resp.status_code == 401:
-            logger.warning("API 401 认证失败，token 可能已过期，下次调用将重新获取")
-            _ensure_token._cache = _TOKEN_SENTINEL
+        url = f"{platform_config['api_base']}{endpoint}"
+        headers = {
+            "Content-Type": "application/json",
+            platform_config["auth_header"]: token,
+            "User-Agent": _USER_AGENT,
+        }
+
+        try:
+            resp = _SESSION.post(url, json=params, headers=headers, timeout=30)
+            if resp.status_code == 401:
+                logger.warning("API 401 认证失败，token 可能已过期，重新获取...")
+                _ensure_token._cache = _TOKEN_SENTINEL
+                continue  # retry with new token
+            if resp.status_code in (429, 503, 502):
+                wait = 2 ** attempt
+                logger.warning("API HTTP %s: %s, %ds后重试(%d/3)", resp.status_code, endpoint, wait, attempt+1)
+                _time.sleep(wait)
+                continue
+            if resp.status_code != 200:
+                logger.warning("API HTTP %s: %s", resp.status_code, endpoint)
+                return None
+            return resp.json()
+        except requests.exceptions.Timeout:
+            if attempt < 2:
+                logger.warning("API 超时: %s, %ds后重试(%d/3)", endpoint, 2**attempt, attempt+1)
+                _time.sleep(2 ** attempt)
+                continue
+            logger.warning("API 超时(3次): %s", endpoint)
             return None
-        if resp.status_code != 200:
-            logger.warning("API HTTP %s: %s", resp.status_code, endpoint)
+        except requests.exceptions.RequestException as e:
+            if attempt < 2:
+                _time.sleep(2 ** attempt)
+                continue
+            logger.warning("API 请求失败(3次) %s: %s", endpoint, e)
             return None
-        body = resp.json()
-        return body
-    except requests.exceptions.Timeout:
-        logger.warning("API 超时: %s", endpoint)
-        return None
-    except requests.exceptions.RequestException as e:
-        logger.warning("API 请求失败 %s: %s", endpoint, e)
-        return None
-    except json.JSONDecodeError as e:
-        logger.warning("API 响应异常 %s: %s", endpoint, e)
-        return None
+        except json.JSONDecodeError as e:
+            logger.warning("API 响应异常 %s: %s", endpoint, e)
+            return None
 
 
 # ─── 提取函数 ─────────────────────────────────────────────────
