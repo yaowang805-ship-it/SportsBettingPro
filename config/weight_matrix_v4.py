@@ -14,7 +14,7 @@ Kelly 0.75 回测: 真正滚动窗口 (2012-2014→2025), 全部存活
   NBA:       模型57K + SBR 27K收盘赔率 (2011-2021)
   MLB:       SBR 45K收盘赔率 (2011-2021) + OddsPortal 10K (2021-2024)
   NFL:       SBR 5.9K收盘赔率 (2011-2021)
-  NHL:       SBR 27K收盘赔率 (2011-2021)
+  NHL:       Kaggle ESPN 6.8K收盘赔率 (2004-2025)
   BB溢价:    从 BB/FB vs Pinnacle comparison 实际统计 (2026-08-01)
 
 V4.3 更新 (2026-08-01):
@@ -1165,6 +1165,15 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         full_kelly = edge / (odds - 1.0)
         return min(0.06, max(0.0, full_kelly * 0.75))
 
+    # ── Ice Hockey ──
+    elif sport_lower in ("ice_hockey", "hockey", "nhl"):
+        idx = _bin_index(odds, ODDS_BINS)
+        data = NHL_DATA.get(idx)
+        if data and data[2] >= MIN_N_MINIMUM:
+            wr, avg_o, n = data
+            return kelly_075(wr, avg_o, 0.05, n)  # ESPN vig ~4% → bb_premium=0.05
+        return 0.0
+
     # ── Baseball ──
     elif sport_lower == "baseball":
         idx = _bin_index(odds, ODDS_BINS)
@@ -1339,3 +1348,18 @@ def print_matrix():
 
 if __name__ == "__main__":
     print_matrix()
+# =====================================================================
+# NHL 权重 — V4.4: Kaggle NHL 6,757场比赛 (2004-2025, ESPN赔率)
+#   favorite_moneyline 转换为 decimal odds
+#   ESPN 赔率 ≈ 市场平均, 含 vig ~4%
+# =====================================================================
+NHL_DATA = {
+    0: (0.547, 1.18, 53), 1: (0.530, 1.43, 332), 2: (0.469, 1.61, 1062),
+    3: (0.501, 1.80, 1492), 4: (0.505, 1.99, 1322), 5: (0.480, 2.19, 1260),
+    6: (0.496, 2.38, 781), 7: (0.477, 2.56, 195), 8: (0.478, 2.77, 90),
+    9: (0.390, 2.98, 41), 10: (0.577, 3.17, 26), 12: (0.357, 3.59, 14),
+    14: (0.500, 4.03, 18), 15: (0.800, 4.27, 10), 16: (0.700, 4.58, 10),
+    19: (0.500, 5.75, 10),
+}
+
+
