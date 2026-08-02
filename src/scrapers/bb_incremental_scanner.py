@@ -347,13 +347,15 @@ def run_incremental(time_window: str = "all"):
     new_result = compare_bb_vs_pinnacle(
         bb_matches,
         all_pin_leagues,
-        selected_leagues=changed_leagues,
+        selected_leagues=None,  # 全量对比, 不限制联赛
         save_path=window_file,
     )
 
     if new_result is None:
-        print("  ⚠️ 增量对比无结果")
+        print("  ⚠️ 增量对比无结果 — 仍然指纹本次扫描的比赛(防止无限重复推送)")
         save_snapshot(bb_matches, _current_snap)
+        # 即使对比无结果, 也要指纹标记已处理过 (防止每次扫描都推同样的比赛)
+        _save_scan_fingerprints({"details": []})
         return
 
     print(f"\n✅ 已保存实时结果 → {window_file.name} ({len(new_result.get('details', []))} 条+EV)")
