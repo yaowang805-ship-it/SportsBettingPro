@@ -38,13 +38,74 @@ def load_pin_league_names():
     return names
 
 def load_keywords():
+    """加载关键词映射。如果主文件损坏, 自动从最新备份恢复。"""
     kw_file = DATA / "league_keywords.json"
     if kw_file.exists():
-        return json.loads(kw_file.read_text())
+        try:
+            return json.loads(kw_file.read_text())
+        except (json.JSONDecodeError, OSError):
+            print("⚠️ 关键词文件损坏, 尝试从备份恢复...")
+
+    # 从备份恢复
+    backup_dir = DATA / "keyword_backups"
+    backups = sorted(backup_dir.glob("league_keywords_*.json"))
+    if backups:
+        latest = backups[-1]
+        print(f"✅ 从 {latest.name} 恢复")
+        kw = json.loads(latest.read_text())
+        kw_file.write_text(json.dumps(kw, ensure_ascii=False, indent=2))
+        return kw
     return {}
 
-def save_keywords(kw):
-    DATA.joinpath("league_keywords.json").write_text(json.dumps(kw, ensure_ascii=False, indent=2))
+def save_keywords(kw, force=False):
+    """保存关键词映射。自动备份 + 防覆盖保护。"""
+    kw_file = DATA / "league_keywords.json"
+
+    # 自动备份 (保留最近10个版本)
+    backup_dir = DATA / "keyword_backups"
+    backup_dir.mkdir(exist_ok=True)
+    import time as _time
+    backup = backup_dir / f"league_keywords_{_time.strftime('%Y%m%d_%H%M%S')}.json"
+    if kw_file.exists():
+        import shutil
+        shutil.copy2(kw_file, backup)
+        # 清理旧备份 (保留最近10个)
+        all_backups = sorted(backup_dir.glob("*.json"))
+        for old in all_backups[:-10]:
+            old.unlink()
+
+    # 验证: 新映射必须指向存在的 Pinnacle 联赛名 (如果不是 --force)
+    if not force:
+        old_kw = load_keywords()
+        new_entries = {k: v for k, v in kw.items() if k not in old_kw}
+        if new_entries:
+            pin_names = load_pin_league_names()
+            invalid = {k: v for k, v in new_entries.items() if v not in pin_names}
+            if invalid:
+                print(f"❌ {len(invalid)} 个映射指向不存在的Pinnacle联赛, 拒绝保存:")
+                for k, v in invalid.items():
+                    print(f"  {k} → {v}")
+                print(f"💡 使用 --force 强制保存")
+                return False
+
+    kw_file.write_text(json.dumps(kw, ensure_ascii=False, indent=2))
+
+    # 记录变更日志
+    log_file = backup_dir / "mapping_changelog.txt"
+    old_kw = load_keywords() if not force else {}
+    added = {k: v for k, v in kw.items() if k not in old_kw}
+    removed = {k: v for k, v in old_kw.items() if k not in kw}
+    changed = {k: (old_kw[k], v) for k, v in kw.items() if k in old_kw and old_kw[k] != v}
+
+    with open(log_file, "a") as lf:
+        lf.write(f"\n[{_time.strftime('%Y-%m-%d %H:%M:%S')}] ")
+        if added: lf.write(f"+{len(added)} ")
+        if removed: lf.write(f"-{len(removed)} ")
+        if changed: lf.write(f"~{len(changed)} ")
+        if not (added or removed or changed): lf.write("无变更")
+        lf.write("\n")
+
+    return True
 
 def similarity(a, b):
     return SequenceMatcher(None, a.lower(), b.lower()).ratio()
