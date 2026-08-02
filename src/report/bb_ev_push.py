@@ -1062,6 +1062,11 @@ def _collect_opportunities(match, market_key):
     if (match.get("sport", ""), league) in _get_clv_suspensions():
         return []
 
+    # 2-way运动独赢价格校验: BB/Pin差>2x→市场错配(如让分混入独赢)
+    flags_check = match.get("flags", [])
+    if any("独赢价格异常" in f for f in flags_check) and market_key == "opportunities":
+        return []  # 跳过该场比赛的所有独赢机会
+
     # 联赛可信度分层过滤
     tier = _get_league_tier(league)
     if tier == 4:

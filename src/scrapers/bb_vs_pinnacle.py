@@ -550,6 +550,14 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         pin_hc_source = pin.get("spread", [])
         pin_ou_source = pin.get("total", [])
 
+        # 2-way运动独赢校验: BB和Pin价格不应差>2x (否则可能是让分线混入)
+        if n_ml == 2 and len(pin_ml) >= 2:
+            for i in range(2):
+                if bb_ml[i] and pin_ml[i]:
+                    ratio = max(bb_ml[i], pin_ml[i]) / min(bb_ml[i], pin_ml[i])
+                    if ratio > 2.0:
+                        entry["flags"].append(f"⚠️ {mlabels['ml'][i]}独赢价格异常(BB={bb_ml[i]:.2f} Pin={pin_ml[i]:.2f}),可能市场错配")
+
         # Sanity check: flag if moneyline odds differ by > 3x
         for i in range(n_ml):
             if bb_ml[i] and pin_ml[i]:
