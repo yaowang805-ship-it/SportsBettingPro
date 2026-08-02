@@ -65,11 +65,35 @@ HFA_AWAY_DISCOUNT = 0.95  # 客场投注 Kelly ×0.95
 #   让球投注 Kelly ×0.92
 AH_DISCOUNT = 0.92
 
-# CLV 联赛调整 — V4.2: Pinnacle 开盘→收盘线移动分析
-#   正/中性 CLV 联赛: 赔率不逆向移动 → 早盘优势更可靠 → +5% Kelly
-#   负 CLV 联赛: 赔率逆向移动 → 保持基准 Kelly
-CLV_POSITIVE_LEAGUES = {"意甲", "Serie A"}  # 唯二正/零 CLV 联赛
-CLV_BOOST = 1.05  # 正 CLV 联赛 Kelly ×1.05
+# CLV 联赛调整 — V4.5: 从 CLV 采集数据动态加载正/负 CLV 联赛
+#   正 CLV: BB 赔率向 Pinnacle 收盘价收敛 → 早盘优势可靠 → +5%
+#   负 CLV: BB 赔率逆向移动 → 保持基准
+def _load_clv_positive_leagues() -> set:
+    """从 CLV 快照数据中加载正 CLV 联赛 (CLV > +2%)。"""
+    import json as _json
+    from pathlib import Path
+    snap_dir = Path(__file__).resolve().parent.parent / "data" / "storage" / "odds_snapshots"
+    try:
+        files = sorted(snap_dir.glob("*.json"), key=lambda f: f.stat().st_mtime, reverse=True)
+        for f in files[:3]:
+            data = _json.loads(f.read_text())
+            if isinstance(data, dict):
+                positive = set()
+                for key, snap in data.items():
+                    if isinstance(snap, dict):
+                        clv_pct = snap.get("clv_pct", snap.get("true_clv", 0))
+                        if clv_pct and clv_pct > 2.0:
+                            league = snap.get("league", "")
+                            if league:
+                                positive.add(league)
+                if positive:
+                    return positive
+    except Exception:
+        pass
+    return {"意甲", "Serie A"}  # fallback
+
+CLV_POSITIVE_LEAGUES = _load_clv_positive_leagues()
+CLV_BOOST = 1.05
 
 
 # =====================================================================
