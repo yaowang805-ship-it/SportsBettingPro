@@ -543,8 +543,14 @@ def _save_scan_fingerprints(scan_result: dict):
 
         existing = load_fingerprints()
         new_count = 0
+        now_ts = _time.time()
 
         for detail in scan_result.get("details", []):
+            # 🔒 只指纹72h内的比赛 (>72h的提前锁死→进入窗口后推不了)
+            pin_epoch = detail.get("start_time_pin_epoch")
+            if pin_epoch and pin_epoch > now_ts + 72 * 3600:
+                continue  # >72h, 不存指纹, 等进入窗口再说
+
             sport = detail.get("sport", "")
             league = detail.get("league", "")
             home = detail.get("home_bb", "").strip()
