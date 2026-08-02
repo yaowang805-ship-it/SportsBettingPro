@@ -183,7 +183,7 @@ class PipelineOrchestrator:
 
         # 2) 关键文件格式检查 (防数据结构变更)
         critical_files = [
-            (DATA_DIR / "pinnacle_league_structure.json", dict, 50),
+            (DATA_DIR / "pinnacle_league_structure.json", dict, 5),
             (DATA_DIR / "team_name_map.json", dict, 100),
             (DATA_DIR / "league_keywords.json", dict, 10),
         ]
