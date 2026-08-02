@@ -1111,7 +1111,7 @@ def _collect_opportunities(match, market_key):
 
     为每条机会附加 bb_price_source 字段，标记该赔率来自哪个平台（BB/FB）。
     """
-    # 96小时窗口 + 已开赛过滤（双时间源交叉验证）
+    # V4.5: 72小时窗口 (超72h盘口基本锁定) + 已开赛过滤
     # BB 和 Pinnacle 的时间戳可能不一致（时区/夏令时差异），取较早者防漏
     pin_epoch = match.get("start_time_pin_epoch")
     bb_epoch = _parse_bb_time(match.get("start_time_bb", ""))
@@ -1122,7 +1122,7 @@ def _collect_opportunities(match, market_key):
         bb_epoch if bb_epoch else float('inf'),
     )
     if effective_epoch != float('inf'):
-        if effective_epoch > now_epoch + 96 * 3600:
+        if effective_epoch > now_epoch + 72 * 3600:  # 72h cap
             return []
         if effective_epoch + 300 < now_epoch:
             return []
