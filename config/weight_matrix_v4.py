@@ -1286,7 +1286,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         bb_prem = 0.03  # V4.5: BB网球溢价 ~3% (从对比数据统计)
         bb_odds = avg_o * (1.0 + bb_prem)
         roi = wr * bb_odds - 1.0
-        if roi <= 0.01:
+        if roi <= 0.005:  # V4.5: 156K数据支持下放宽到0.5%
             return 0.0
         kelly = roi / (bb_odds - 1.0) * 0.5  # Half Kelly
         confidence = 1.0 if n >= 100 else (0.7 + 0.3*(n-30)/70 if n >= 30 else 0.5)
