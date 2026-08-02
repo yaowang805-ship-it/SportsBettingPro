@@ -58,8 +58,7 @@ for _lf in sorted(LOG_DIR.iterdir()):
         print(f"  🗑️ 清理旧日志: {_lf.name} ({(int(_age_sec / 86400))}天前)")
 
 SCAN_WINDOW = (7, 22)              # 07:00 ~ 22:00
-INCREMENTAL_NEAR_INTERVAL = 900    # 15 分钟 — 24h内近场比赛 (高频抓变动)
-INCREMENTAL_FAR_INTERVAL = 3600    # 60 分钟 — 24-72h早盘比赛 (赔率相对稳定)
+INCREMENTAL_INTERVAL = 900  # 15 分钟 — 0-72h全量对比 (BB+Pin同时拉, 无条件)
 CHECK_INTERVAL = 30                # 调度循环检查间隔（秒）
 
 # 定时任务表：(名称, HH:MM, 处理函数, 参数字典)
@@ -113,8 +112,7 @@ class PipelineOrchestrator:
         self._running = True
         self._active_tasks: set[str] = set()
         self._last_run: dict[str, date] = {}          # 定时任务 → 最后执行日期
-        self._last_incremental_near: Optional[float] = None
-        self._last_incremental_far: Optional[float] = None
+        self._last_incremental: Optional[float] = None
         self._last_scan_success: float = 0             # 最后一次成功完成的时间戳
         self._scan_failure_count: int = 0              # 连续失败计数
         self._alert_cooldown: dict[str, float] = {}    # 告警冷却
@@ -621,26 +619,16 @@ class PipelineOrchestrator:
             self._run_task(name, method, background=is_bg, **kwargs)
             self._last_run[name] = now.date()
 
-        # 2) 增量扫描 — 双层频率
-        #    近场 (24h内):  30分钟 — 赔率变动快，需要高频
-        #    早盘 (24-72h): 2小时  — 赔率相对稳定
+        # 2) 增量扫描 — 统一15分钟, 0-72h全量 (BB+Pin同时拉, 指纹去重防重复)
         if self._is_in_scan_window(now):
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
-            # Near scan: 30min interval, 24h window
-            if self._last_incremental_near is None:
-                self._last_incremental_near = time.time()
-            if (now - datetime.fromtimestamp(self._last_incremental_near)).total_seconds() >= _jitter(INCREMENTAL_NEAR_INTERVAL):
-                self._last_incremental_near = time.time()
-                self._run_task("incremental_near", self.do_incremental, time_window="near")
-
-            # Far scan: 2hr interval, 24-72h window
-            if self._last_incremental_far is None:
-                self._last_incremental_far = time.time()
-            if (now - datetime.fromtimestamp(self._last_incremental_far)).total_seconds() >= _jitter(INCREMENTAL_FAR_INTERVAL):
-                self._last_incremental_far = time.time()
-                self._run_task("incremental_far", self.do_incremental, time_window="far")
+            if self._last_incremental is None:
+                self._last_incremental = time.time()
+            if (now - datetime.fromtimestamp(self._last_incremental)).total_seconds() >= _jitter(INCREMENTAL_INTERVAL):
+                self._last_incremental = time.time()
+                self._run_task("incremental", self.do_incremental, time_window="all")
 
         # 3) 自检看门狗
         self._watchdog()
@@ -655,17 +643,13 @@ class PipelineOrchestrator:
         if not self._is_in_scan_window(datetime.now()):
             return  # 非扫描时段不检查
 
-        # 检查近场增量扫描是否按时运行（允许 1.5 倍间隔容忍度）
-        incr_near_elapsed = now - self._last_incremental_near if self._last_incremental_near else 0
-        incr_near_timeout = INCREMENTAL_NEAR_INTERVAL * 1.5
-        incr_far_elapsed = now - self._last_incremental_far if self._last_incremental_far else 0
-        incr_far_timeout = INCREMENTAL_FAR_INTERVAL * 1.5
+        # 检查增量扫描是否按时运行（允许 1.5 倍间隔容忍度）
+        incr_elapsed = now - self._last_incremental if self._last_incremental else 0
+        incr_timeout = INCREMENTAL_INTERVAL * 1.5
 
         warnings = []
-        if self._last_incremental_near and incr_near_elapsed > incr_near_timeout:
-            warnings.append(f"近场扫描停滞 {incr_near_elapsed/60:.0f}分钟(预期{INCREMENTAL_NEAR_INTERVAL/60:.0f}min)")
-        if self._last_incremental_far and incr_far_elapsed > incr_far_timeout:
-            warnings.append(f"早盘扫描停滞 {incr_far_elapsed/60:.0f}分钟(预期{INCREMENTAL_FAR_INTERVAL/60:.0f}min)")
+        if self._last_incremental and incr_elapsed > incr_timeout:
+            warnings.append(f"增量扫描停滞 {incr_elapsed/60:.0f}分钟(预期{INCREMENTAL_INTERVAL/60:.0f}min)")
 
         if warnings:
             logger.warning("🐕 看门狗(扫描): %s", "; ".join(warnings))
@@ -730,10 +714,9 @@ class PipelineOrchestrator:
         self._startup_integrity_check()
         logger.info("=" * 50)
         logger.info("Pipeline Orchestrator 启动")
-        logger.info("扫描时段: %02d:00~%02d:00 | 近场: %dmin(24h) 早盘: %dmin(24-72h)",
+        logger.info("扫描时段: %02d:00~%02d:00 | 增量: %dmin (0-72h全量)",
                      SCAN_WINDOW[0], SCAN_WINDOW[1],
-                     INCREMENTAL_NEAR_INTERVAL // 60,
-                     INCREMENTAL_FAR_INTERVAL // 60)
+                     INCREMENTAL_INTERVAL // 60)
         logger.info("定时任务: %s", ", ".join(name for name, *_ in SCHEDULE))
         logger.info("dry-run: %s", self.dry_run)
         logger.info("=" * 50)
@@ -744,8 +727,7 @@ class PipelineOrchestrator:
         # 启动时设置增量扫描初始时间为 (now - interval + 60s)，首次 tick 即可触发
         # （避免与全量扫描同时触发，但不会等待完整的周期）
         now = time.time()
-        self._last_incremental_near = now - INCREMENTAL_NEAR_INTERVAL + 60
-        self._last_incremental_far = now - INCREMENTAL_FAR_INTERVAL + 60
+        self._last_incremental = now - INCREMENTAL_INTERVAL + 60
 
         # 启动时追赶今天已错过的定时任务
         if not self.dry_run:
