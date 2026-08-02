@@ -407,12 +407,15 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
 def _auto_map_team_names(matched_entries):
     """Auto-extract team name mappings (Chinese -> English) from high-confidence matches.
 
-    🔴 铁律: 只有完美的队名匹配(name, score>=0.95)才能自动学习映射.
-    时间匹配(time)绝不自动学习 — 同赛事多场同时开打导致交叉错配.
+    V4.4: Relaxed learning to break chicken-and-egg problem.
 
-    Only extracts from matches where:
-    - match_type == "name" AND match_score >= 0.95
-    - BB team name contains Chinese characters (not pure ASCII)
+    Phase 1 (name, score>=0.95): perfect name match -> always learn.
+    Phase 2 (time, score>=0.85): high-confidence time+odds match -> learn ONLY for
+      individual sports (tennis, boxing, MMA) where cross-match risk is near-zero
+      (one player cannot play two matches simultaneously).
+      Team sports (football/basketball) still require Phase 1 name match.
+
+    Only extracts when BB team name contains non-ASCII characters.
     Saves to team_name_map.json automatically.
     """
     new_pairs = 0
@@ -421,10 +424,17 @@ def _auto_map_team_names(matched_entries):
     for m in matched_entries:
         match_score = m.get("match_score", 0)
         match_type = m.get("match_type", "")
+        sport = m.get("sport", "")
 
-        # 🔴 铁律: 只有完美队名匹配才自动学习
-        # 时间匹配绝不学习 (同时间多场比赛容易交叉错配)
-        if match_type != "name" or match_score < 0.95:
+        # Phase 1: perfect name match -> always learn
+        is_phase1 = (match_type == "name" and match_score >= 0.95)
+
+        # Phase 2: time+odds match -> learn only for individual sports
+        # No cross-match risk: one player can't be in two matches at once
+        is_phase2_individual = (match_type == "time" and match_score >= 0.85
+                                and sport in ("tennis", "boxing", "mma"))
+
+        if not is_phase1 and not is_phase2_individual:
             skipped += 1
             continue
 
@@ -435,14 +445,14 @@ def _auto_map_team_names(matched_entries):
         pin_home = pin.get("home", "").strip()
         pin_away = pin.get("away", "").strip()
 
-        # 额外安全检查: 如果队名在映射表中已存在且指向不同Pin名, 跳过
-        # (防止覆盖正确的手动映射)
+        # Safety: skip if BB name already mapped to a different Pin name
+        # (prevents overwriting correct manual mappings)
         for bb_name, pin_name in [(bb_home, pin_home), (bb_away, pin_away)]:
             if bb_name in TEAM_NAME_MAP and TEAM_NAME_MAP[bb_name] != pin_name:
                 skipped += 1
                 continue
 
-        # Map home team: only if BB name has Chinese characters
+        # Map home team: only if BB name has non-ASCII characters
         if bb_home and pin_home and len(bb_home) >= 2:
             if not bb_home.isascii() and bb_home not in TEAM_NAME_MAP:
                 TEAM_NAME_MAP[bb_home] = pin_home
@@ -453,20 +463,6 @@ def _auto_map_team_names(matched_entries):
             if not bb_away.isascii() and bb_away not in TEAM_NAME_MAP:
                 TEAM_NAME_MAP[bb_away] = pin_away
                 new_pairs += 1
-
-    if new_pairs > 0:
-        _save_team_name_map(TEAM_NAME_MAP)
-        print(f"  \U0001f4c1 队名自动映射: 新增 {new_pairs} 条队名映射 (已保存到 team_name_map.json)")
-    else:
-        print(f"  \U0001f4c1 队名自动映射: 0 条新增")
-
-    return new_pairs
-
-
-# ---------------------------------------------------------------------------
-# League name matching helpers
-# ---------------------------------------------------------------------------
-
 def _match_pin_name(pn, pin_name):
     """Check if pin keyword matches Pinnacle league name (word boundary)."""
     needle = pn.lower()
@@ -612,6 +608,28 @@ def _find_itf_league_ids(bb_league_name, all_sport_matchups):
         "罗加什卡斯拉蒂纳": "rogaska slatina",
         "萨维泰帕莱": "savitaipale",
         "巴厘": "bali",
+        # V4.4: newly mapped cities for active ITF tournaments
+        "瓦曼特拉": "huamantla",
+        "乌曼德拉": "umandra",
+        "爱德华兹维尔": "edwardsville",
+        "韦尔斯": "wels",
+        "佛罗伦萨": "florence",
+        "马佐夫舍格罗济斯克": "grodzisk mazowiecki",
+        "波恩": "bonn",
+        "哈根": "hagen",
+        "圣马力诺": "san marino",
+        "伊斯坦布尔": "istanbul",
+        "利贝雷茨": "liberec",
+        "普罗夫迪夫": "plovdiv",
+        "萨姆松": "samsun",
+        "温哥华": "vancouver",
+        "洛斯卡沃斯": "los cabos",
+        "蒙特利尔": "montreal",
+        "多伦多": "toronto",
+        "华盛顿": "washington",
+        "孟菲斯": "memphis",
+        "莱克星顿": "lexington",
+        "特尔古穆列什": "targu mures",
     }
 
     import re as _re

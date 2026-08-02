@@ -20,7 +20,15 @@ def team_name_score(bb_home, bb_away, pin_home, pin_away):
     Returns score 0.0-1.0.
     """
     def lookup_cn(name):
-        return TEAM_NAME_MAP.get(name, name.lower())
+        # V4.4: strip gender suffix (女) and country suffix before lookup
+        import re as _re
+        clean = _re.sub(r'\s*[（(][^)）]*[)）]', '', name).strip()
+        # Try exact match first, then stripped version
+        if name in TEAM_NAME_MAP:
+            return TEAM_NAME_MAP[name]
+        if clean != name and clean in TEAM_NAME_MAP:
+            return TEAM_NAME_MAP[clean]
+        return name.lower()
 
     bb_home_en = lookup_cn(bb_home)
     bb_away_en = lookup_cn(bb_away)
@@ -234,7 +242,8 @@ def _pinyin_match_names(bb_home: str, bb_away: str, pin_list: list) -> tuple:
             best_match = pin
 
     # Lower threshold for pinyin matching — pronunciation varies
-    if best_score >= 0.50:
+    # V4.4: 0.50->0.42 for tennis (individual sport, false positive risk is low)
+    if best_score >= 0.42:
         return best_match, best_score
     return None, 0.0
 
@@ -246,8 +255,12 @@ def find_pin_match_by_name(bb_home, bb_away, pin_list):
     Phase 2: pinyin-based fuzzy matching (for tennis etc.).
     Returns (match, score) or (None, 0).
     """
-    bb_home_en = TEAM_NAME_MAP.get(bb_home, "").lower()
-    bb_away_en = TEAM_NAME_MAP.get(bb_away, "").lower()
+    # V4.4: strip gender/country suffix before lookup
+    import re as _re2
+    bb_home_clean = _re2.sub(r'\s*[（(][^)）]*[)）]', '', bb_home).strip()
+    bb_away_clean = _re2.sub(r'\s*[（(][^)）]*[)）]', '', bb_away).strip()
+    bb_home_en = (TEAM_NAME_MAP.get(bb_home) or TEAM_NAME_MAP.get(bb_home_clean, "")).lower()
+    bb_away_en = (TEAM_NAME_MAP.get(bb_away) or TEAM_NAME_MAP.get(bb_away_clean, "")).lower()
 
     if not bb_home_en and not bb_away_en:
         return _pinyin_match_names(bb_home, bb_away, pin_list)
@@ -440,13 +453,17 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                     best_bb_key = bb_key
                     best_bd = bd
             if best_bd and best_name_score >= 0.50:
+                # 个人运动放宽门槛：网球/拳击/MMA 不存在团队运动的交叉错配
+                sport = best_bd["sport"]
+                min_name_score = 0.45 if sport in ("tennis", "boxing", "mma") else 0.50
+                if best_name_score < min_name_score:
+                    continue
                 # 硬时间窗口：同队名但开赛时间差 >4h → 不同比赛（防双赛日混淆）
                 bb_epoch = best_bd["epoch"]
                 pin_epoch = _pin_to_epoch(pin)
                 if bb_epoch is not None and pin_epoch is not None:
                     if abs(bb_epoch - pin_epoch) > 14400:
                         continue
-                sport = best_bd["sport"]
                 bb_ml = best_bd.get("bb_1x2", [])
                 min_odds = 2 if sport in TWO_WAY_SPORTS else 3
                 pin_ml = []
