@@ -768,8 +768,13 @@ def _calc_kelly_stakes(opps: list) -> list:
 
         stake_pct = get_kelly_stake_pct(sport, league, sub, odds)
         if stake_pct <= 0:
-            o["_stake"] = 0; o["_raw_stake"] = 0
-            continue
+            # V4.5: 历史均价可能低估当前BB赔率 → EV正值时给最低Kelly
+            ev = o.get("ev_pct", 0)
+            if ev > 1.0 and odds > 1.5:
+                stake_pct = min(0.015, (ev / 100) / (odds - 1.0) * 0.25)
+            else:
+                o["_stake"] = 0; o["_raw_stake"] = 0
+                continue
 
         # V4.5: HC 已有独立 Pinnacle AH 收盘数据标定, 无需额外折扣
 

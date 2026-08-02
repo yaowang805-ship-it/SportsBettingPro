@@ -102,17 +102,40 @@ def get_league_matchups_and_markets(league_id):
         btts = []
         double_chance = []
         draw_no_bet = []
+        # 构建 participantId → designation 映射 (新API去掉designation字段)
+        _pid_to_desig = {}
+        for p in mu.get("participants", []):
+            pid = p.get("participantId", p.get("id"))
+            align = p.get("alignment", "")
+            if align == "home": _pid_to_desig[pid] = "home"
+            elif align == "away": _pid_to_desig[pid] = "away"
+            else:
+                name = p.get("name", "").lower()
+                if name == home.lower(): _pid_to_desig[pid] = "home"
+                elif name == away.lower(): _pid_to_desig[pid] = "away"
+                else: _pid_to_desig[pid] = name
+
         for mkt in mkt_list:
             # 跳过锁定/暂停的市场(状态非open)
             if mkt.get("status", "open") != "open":
                 continue
             mtype = mkt.get("type", "")
             per = mkt.get("period", 0)
-            prices = [{
-                "designation": p.get("designation", ""),
-                "price_decimal": us_to_decimal(p.get("price")),
-                "points": p.get("points"),  # handicap line / total line
-            } for p in mkt.get("prices", [])]
+            prices = []
+            for p in mkt.get("prices", []):
+                desig = p.get("designation", "")  # 旧格式
+                if not desig:
+                    # 新格式: participantId → designation
+                    pid = p.get("participantId", "")
+                    desig = _pid_to_desig.get(pid, "")
+                price = p.get("price")
+                prices.append({
+                    "designation": desig,
+                    "price_decimal": us_to_decimal(price),
+                    "points": p.get("points"),
+                })
+            if not prices:
+                continue
 
             entry = {"period": per, "prices": prices}
             if mtype == "moneyline":
