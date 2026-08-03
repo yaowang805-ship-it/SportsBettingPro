@@ -428,8 +428,10 @@ def run_incremental(time_window: str = "all"):
     save_snapshot(bb_matches, _current_snap)
 
     # 9. 推送新机会 (必须在指纹保存之前 — 否则子进程 _filter_pushed 会拦截全部)
+    # V4.5: 去重后无新机会 → 跳过推送, 减少钉钉消息轰炸
     push_ok = True
     if new_result.get("details") or fb_had_new:
+        # 先指纹化, 再让推送子进程自己去重
         print(f"\n📣 新+EV机会 → 运行推送 [{label}]...")
         push_ok = _run_push(label)
     else:

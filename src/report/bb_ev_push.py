@@ -2128,7 +2128,7 @@ def _filter_pushed(qualified: list) -> list:
         elif hours_to_match > 1: return (2.0, 1.0)
         else:                    return (1.0, 0.5)
 
-    new = []; skipped = 0; re_pushed = 0
+    new = []; skipped = 0
     for o in qualified:
         fp = _make_fingerprint(o)
         ev = o.get("ev_pct", 0)
@@ -2137,66 +2137,11 @@ def _filter_pushed(qualified: list) -> list:
         if fp not in existing:
             new.append(o)
             continue
-
-        # 已推送过 → 分层重推 (按距开赛时间, 匹配增量扫描节奏)
-        old_data = existing[fp]
-        old_ev = old_data if isinstance(old_data, (int, float)) else old_data.get("ev", 0)
-        old_bb_raw = existing.get(fp + "_bb", 0)
-        old_bb = old_bb_raw if isinstance(old_bb_raw, (int, float)) else (old_bb_raw.get("ev", 0) if isinstance(old_bb_raw, dict) else 0)
-        old_ts = 0 if isinstance(old_data, (int, float)) else old_data.get("ts", 0)
-        bb_now = o.get("bb_odds", 0)
-        bb_change = (bb_now - old_bb) / old_bb * 100 if old_bb > 0 else 0
-        ev_delta = ev - old_ev
-
-        hours_to_match = (o.get("_pin_epoch", now_epoch + 86400) - now_epoch) / 3600
-
-        # 分层逻辑 (对应增量扫描: 近场15min/24h, 早盘60min/24-72h)
-        if hours_to_match <= 6:
-            # <6h临场: 赔率变动最快, 15min扫描 × 2周期 = 30min自动重推
-            auto_cooling = 0.5   # 30分钟
-            bb_thresh = 2.0      # 赔率涨2%即重推
-            ev_thresh = 1.0      # EV涨1%即重推
-        elif hours_to_match <= 24:
-            # 6-24h近场: 15min扫描, 1h自动重推(4个周期)
-            auto_cooling = 1.0
-            bb_thresh = 3.0
-            ev_thresh = 2.0
-        elif hours_to_match <= 72:
-            # 24-72h早盘: 60min扫描, 2h自动重推(2个周期)
-            auto_cooling = 2.0
-            bb_thresh = 5.0
-            ev_thresh = 3.0
-        else:
-            # >72h: 6h自动重推
-            auto_cooling = 6.0
-            bb_thresh = 5.0
-            ev_thresh = 3.0
-
-        hours_since_push = (time.time() - old_ts) / 3600 if old_ts > 0 else 99
-
-        if hours_since_push >= auto_cooling:
-            should_push = True
-        elif bb_change >= bb_thresh:
-            should_push = True
-        elif bb_change <= -3.0:
-            should_push = False
-        elif ev_delta >= ev_thresh:
-            should_push = True
-        else:
-            should_push = False
-
-        if should_push:
-            re_pushed += 1
-            new.append(o)
-            logger.info("重推: %s (距赛%.0fh, 推后%.1fh) BB%+.1f%% EV%+.1f%%",
-                       o.get("designation",""), hours_to_match, hours_since_push, bb_change, ev_delta)
-        else:
-            skipped += 1
+        # V4.5: 已推送过 → 直接跳过 (关闭自动冷却重推, 每场比赛只推一次)
+        skipped += 1
 
     if skipped:
         logger.info("去重过滤: 跳过 %d 条", skipped)
-    if re_pushed:
-        logger.info("分层重推: %d 条", re_pushed)
     return new
 
 
