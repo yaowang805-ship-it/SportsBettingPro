@@ -2128,7 +2128,7 @@ def _filter_pushed(qualified: list) -> list:
         elif hours_to_match > 1: return (2.0, 1.0)
         else:                    return (1.0, 0.5)
 
-    new = []; skipped = 0
+    new = []; skipped = 0; re_pushed = 0
     for o in qualified:
         fp = _make_fingerprint(o)
         ev = o.get("ev_pct", 0)
@@ -2137,11 +2137,31 @@ def _filter_pushed(qualified: list) -> list:
         if fp not in existing:
             new.append(o)
             continue
-        # V4.5: 已推送过 → 直接跳过 (关闭自动冷却重推, 每场比赛只推一次)
-        skipped += 1
+
+        # V4.5: 已推送过 → 仅赔率/EV显著改善时重推 (无时间冷却)
+        old_data = existing[fp]
+        old_ev = old_data if isinstance(old_data, (int, float)) else old_data.get("ev", 0)
+        old_bb_raw = existing.get(fp + "_bb", 0)
+        old_bb = old_bb_raw if isinstance(old_bb_raw, (int, float)) else (old_bb_raw.get("ev", 0) if isinstance(old_bb_raw, dict) else 0)
+        bb_now = o.get("bb_odds", 0)
+        bb_change = (bb_now - old_bb) / old_bb * 100 if old_bb > 0 else 0
+        ev_delta = ev - old_ev
+
+        hours_to_match = (o.get("_pin_epoch", now_epoch + 86400) - now_epoch) / 3600
+        if hours_to_match <= 6:    bb_thresh, ev_thresh = 2.0, 1.0
+        elif hours_to_match <= 24: bb_thresh, ev_thresh = 3.0, 2.0
+        else:                      bb_thresh, ev_thresh = 5.0, 3.0
+
+        if bb_change >= bb_thresh or ev_delta >= ev_thresh:
+            re_pushed += 1; new.append(o)
+            existing[fp + "_bb"] = bb_now
+        else:
+            skipped += 1
 
     if skipped:
         logger.info("去重过滤: 跳过 %d 条", skipped)
+    if re_pushed:
+        logger.info("赔率变动重推: %d 条", re_pushed)
     return new
 
 
