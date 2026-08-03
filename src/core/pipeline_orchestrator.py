@@ -457,19 +457,37 @@ class PipelineOrchestrator:
 
     def do_cleanup(self):
         """每日清理：过期指纹 + 旧日志 + 临时文件。"""
-        # 1. 清理过期指纹
+        # 1. 清理过期记录 (SQLite指纹 + 文件去重)
+        import json as _json, time as _time
+        from datetime import date
+        today = date.today().strftime("%Y-%m-%d")
         try:
             from config.database import load_fingerprints, save_fingerprints
-            from datetime import date
-            today = date.today().strftime("%Y-%m-%d")
             fps = load_fingerprints()
             expired = [fp for fp in fps if fp.split("|")[-1] < today]
             for fp in expired: del fps[fp]
             if expired:
                 save_fingerprints(fps)
-                logger.info("清理 %d 条过期指纹", len(expired))
+                logger.info("清理 %d 条过期SQLite指纹", len(expired))
         except Exception as e:
-            logger.warning("指纹清理失败: %s", e)
+            logger.warning("SQLite指纹清理失败: %s", e)
+
+        # 清理文件去重中的过期记录
+        try:
+            opps_file = SRC_DIR / "data" / "storage" / "pushed_opportunities.json"
+            if opps_file.exists():
+                opps = _json.loads(opps_file.read_text())
+                clean = {}
+                for key, val in opps.items():
+                    # key格式: ...|epoch[:10], 最后一段是epoch前10位(日期)
+                    ts = val.get("ts", 0)
+                    if ts > _time.time() - 86400 * 3:  # 保留3天
+                        clean[key] = val
+                if len(clean) < len(opps):
+                    opps_file.write_text(_json.dumps(clean, ensure_ascii=False))
+                    logger.info("清理 %d 条过期推送记录", len(opps) - len(clean))
+        except Exception as e:
+            logger.warning("推送记录清理失败: %s", e)
 
         # 2. 清理旧的临时文件 + 快照 + 日志
         try:
