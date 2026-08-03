@@ -1248,11 +1248,31 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             return 0.0
 
     # MMA/Boxing: 固定小额, 仅name匹配+高分+低赔率允许
+    # V4.5: UFC 385K Betting Odds (Kaggle daily dataset)
+    UFC_DATA = {
+        0: (0.485, 1.20, 54746), 1: (0.527, 1.39, 62533), 2: (0.524, 1.58, 50378),
+        3: (0.427, 1.80, 26061), 4: (0.557, 1.98, 17628), 5: (0.581, 2.18, 20597),
+        6: (0.450, 2.38, 19421), 7: (0.426, 2.58, 23709), 8: (0.406, 2.78, 18597),
+        9: (0.434, 2.98, 12357), 10: (0.501, 3.18, 11653), 11: (0.581, 3.38, 9699),
+        12: (0.577, 3.56, 9178), 13: (0.493, 3.77, 6383), 14: (0.371, 4.02, 10445),
+        15: (0.435, 4.31, 5245), 16: (0.541, 4.61, 6621), 17: (0.630, 4.97, 4587),
+        18: (0.717, 5.40, 4816), 19: (0.462, 5.75, 2005), 20: (0.646, 6.13, 3202),
+        21: (0.753, 6.60, 1430), 22: (0.547, 7.06, 869), 23: (0.655, 7.58, 438),
+        24: (0.682, 8.26, 866), 25: (0.437, 9.21, 742), 26: (0.326, 10.59, 660),
+        27: (0.209, 13.02, 296), 28: (0.583, 16.09, 36),
+    }
+
     if sport_lower in ("mma", "boxing"):
+        if sport_lower == "mma":
+            idx = _bin_index(odds, ODDS_BINS)
+            data = UFC_DATA.get(idx)
+            if data and data[2] >= 30:
+                wr, avg_o, n = data
+                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.70)
         if _is_risky_mma_boxing(sport_lower, league or "", odds,
                                 match_type, match_score, flags):
             return 0.0
-        return 0.01  # V4.5: 1% (name-matched + score>=0.95 + odds<=5.0)
+        return 0.01  # Boxing: 1% fixed
 
     # ── Football ──
     if sport_lower == "football":
