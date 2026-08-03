@@ -1885,13 +1885,14 @@ def _make_fingerprint(o: dict) -> str:
     盘口线参与指纹：线变了（如 -9.5→-10.5）视为新机会可重新推送。
     归一化：空格 + 中文简繁体统一，防止 BB/FB 队名微小差异导致重复推送。
     """
-    # V4.4: 无 _pin_epoch 时用 "9999" 占位，防止 _filter_pushed 误删空日期指纹
+    # V4.5: 使用北京时间 (与推送显示一致)
     match_date = "9999-12-31"
     ep = o.get("_pin_epoch")
     if ep:
         try:
             dt = datetime.fromtimestamp(ep, tz=timezone.utc)
-            match_date = dt.strftime("%Y-%m-%d")
+            bj = dt.astimezone(timezone(timedelta(hours=8)))
+            match_date = bj.strftime("%Y-%m-%d")
         except (ValueError, OSError, OverflowError):
             pass
     # 归一化：空格 + 中文简繁体统一
