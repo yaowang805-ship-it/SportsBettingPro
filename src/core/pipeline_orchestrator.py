@@ -456,7 +456,16 @@ class PipelineOrchestrator:
             sys.argv = old_argv
 
     def do_cleanup(self):
-        """每日清理：过期指纹 + 旧日志 + 临时文件。"""
+        """每日清理：过期记录 + 旧日志 + 临时文件 + 备份关键数据。"""
+        # 0. 备份关键映射文件 (防止误删)
+        import shutil as _shutil
+        backup_dir = SRC_DIR / "data" / "manual_backup"
+        backup_dir.mkdir(parents=True, exist_ok=True)
+        for fname in ["league_keywords.json", "team_name_map.json", "league_tiers.json"]:
+            src = SRC_DIR / "data" / "storage" / fname
+            dst = backup_dir / fname
+            if src.exists():
+                _shutil.copy2(src, dst)
         # 1. 清理过期记录 (SQLite指纹 + 文件去重)
         import json as _json, time as _time
         from datetime import date
