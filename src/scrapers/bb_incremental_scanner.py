@@ -427,11 +427,21 @@ def run_incremental(time_window: str = "all"):
     # 8. 保存新快照 (near/far 各自独立)
     save_snapshot(bb_matches, _current_snap)
 
-    # 9. 推送新机会 → 推送后保存指纹
+    # 9. 推送新机会 (每2小时一次, 防止消息轰炸)
     push_ok = True
+    _push_throttle_file = DATA_DIR / ".last_push_time"
+    _push_interval = 7200  # 2小时
+    now_ts = time.time()
+    last_push = float(_push_throttle_file.read_text().strip()) if _push_throttle_file.exists() else 0
+
     if new_result.get("details") or fb_had_new:
-        print(f"\n📣 新+EV机会 → 运行推送 [{label}]...")
-        push_ok = _run_push(label)
+        if now_ts - last_push >= _push_interval:
+            print(f"\n📣 新+EV机会 → 运行推送 [{label}]...")
+            push_ok = _run_push(label)
+            _push_throttle_file.write_text(str(now_ts))
+        else:
+            remaining = int((_push_interval - (now_ts - last_push)) / 60)
+            print(f"\n⏳ 距下次推送还有 {remaining}min (每2小时一批)")
     else:
         print("\n📭 无新+EV机会")
 
