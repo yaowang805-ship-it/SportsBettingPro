@@ -1247,13 +1247,12 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         if banned in (league or ""):
             return 0.0
 
-    # MMA/Boxing 分级风控
+    # MMA/Boxing: 固定小额, 仅name匹配+高分+低赔率允许
     if sport_lower in ("mma", "boxing"):
         if _is_risky_mma_boxing(sport_lower, league or "", odds,
                                 match_type, match_score, flags):
             return 0.0
-        # 低风险 MMA/Boxing: 固定小额 (name-matched + high score + low odds)
-        return 0.005  # 0.5%
+        return 0.01  # V4.5: 1% (name-matched + score>=0.95 + odds<=5.0)
 
     # ── Football ──
     if sport_lower == "football":
