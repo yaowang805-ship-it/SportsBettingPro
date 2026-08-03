@@ -2139,73 +2139,74 @@ def _apply_match_exposure_cap(qualified: list) -> list:
 
 
 def _filter_pushed(qualified: list) -> list:
-    """过滤已推送机会: 分层重推阈值 + 赔率变动驱动。
+    """V4.5: 文件对比去重 — 直接对比两次推送内容, 不依赖字符串指纹。
 
-    重推规则 (按时间紧迫度分层):
-      >24h前: 需赔率涨>5% 或 EV涨>3%
-      6-24h:   需赔率涨>3% 或 EV涨>2%
-      1-6h:    需赔率涨>2% 或 EV涨>1%
-      <1h:     需赔率涨>1% 或 EV涨>0.5%
-    赔率跌>3%: 不推 (市场反向)
+    保存上次推送的完整机会到 pushed_opportunities.json。
+    新推送时逐条对比, 只推送新增的。赔率显著改善时允许重推。
     """
-    from datetime import date
-    today_str = date.today().strftime("%Y-%m-%d")
+    import json as _json
+
+    pushed_file = DATA_DIR / "pushed_opportunities.json"
+    last_pushed = {}
+    if pushed_file.exists():
+        try:
+            last_pushed = _json.loads(pushed_file.read_text())
+        except:
+            pass
+
     now_epoch = time.time()
+    new_opps = {}
+    result = []
+    skipped = 0
+    re_pushed = 0
 
-    existing = _load_fingerprints()
-    if not existing:
-        return qualified
-
-    # 清理已过期指纹(比赛日期<今天)
-    expired = [fp for fp in existing if fp.split("|")[-1] < today_str]
-    for fp in expired:
-        del existing[fp]
-    if expired:
-        _save_fingerprints(existing)
-        logger.info("指纹清理: 删除 %d 条已过期", len(expired))
-
-    def _get_thresholds(hours_to_match):
-        if hours_to_match > 24:  return (5.0, 3.0)   # bb%, ev%
-        elif hours_to_match > 6: return (3.0, 2.0)
-        elif hours_to_match > 1: return (2.0, 1.0)
-        else:                    return (1.0, 0.5)
-
-    new = []; skipped = 0; re_pushed = 0
     for o in qualified:
-        fp = _make_fingerprint(o)
-        ev = o.get("ev_pct", 0)
-        match_date = fp.split("|")[-1]
+        key = "|".join([
+            o.get("sport", ""),
+            o.get("league", ""),
+            o.get("home_cn", "").strip(),
+            o.get("away_cn", "").strip(),
+            o.get("designation", ""),
+            o.get("_sub_market", o.get("_market", "")),
+            str(o.get("line", "") or ""),
+            str(o.get("_pin_epoch", ""))[:10],
+        ])
+        bb_now = o.get("bb_odds", 0)
+        ev_now = o.get("ev_pct", 0)
 
-        if fp not in existing:
-            new.append(o)
+        new_opps[key] = {"bb": bb_now, "ev": ev_now, "ts": time.time()}
+
+        old = last_pushed.get(key)
+        if old is None:
+            result.append(o)
             continue
 
-        # V4.5: 已推送过 → 仅赔率/EV显著改善时重推 (无时间冷却)
-        old_data = existing[fp]
-        old_ev = old_data if isinstance(old_data, (int, float)) else old_data.get("ev", 0)
-        old_bb_raw = existing.get(fp + "_bb", 0)
-        old_bb = old_bb_raw if isinstance(old_bb_raw, (int, float)) else (old_bb_raw.get("ev", 0) if isinstance(old_bb_raw, dict) else 0)
-        bb_now = o.get("bb_odds", 0)
+        old_bb = old.get("bb", 0)
+        old_ev = old.get("ev", 0)
         bb_change = (bb_now - old_bb) / old_bb * 100 if old_bb > 0 else 0
-        ev_delta = ev - old_ev
+        ev_delta = ev_now - old_ev
 
-        hours_to_match = (o.get("_pin_epoch", now_epoch + 86400) - now_epoch) / 3600
-        if hours_to_match <= 6:    bb_thresh, ev_thresh = 2.0, 1.0
-        elif hours_to_match <= 24: bb_thresh, ev_thresh = 3.0, 2.0
-        else:                      bb_thresh, ev_thresh = 5.0, 3.0
+        hours = (o.get("_pin_epoch", now_epoch + 86400) - now_epoch) / 3600
+        if hours <= 6:    bb_th, ev_th = 2.0, 1.0
+        elif hours <= 24: bb_th, ev_th = 3.0, 2.0
+        else:             bb_th, ev_th = 5.0, 3.0
 
-        if bb_change >= bb_thresh or ev_delta >= ev_thresh:
-            re_pushed += 1; new.append(o)
-            existing[fp + "_bb"] = bb_now
+        if bb_change >= bb_th or ev_delta >= ev_th:
+            re_pushed += 1
+            result.append(o)
         else:
             skipped += 1
+
+    try:
+        pushed_file.write_text(_json.dumps(new_opps, ensure_ascii=False))
+    except:
+        pass
 
     if skipped:
         logger.info("去重过滤: 跳过 %d 条", skipped)
     if re_pushed:
-        logger.info("赔率变动重推: %d 条", re_pushed)
-    return new
-
+        logger.info("赔率改善重推: %d 条", re_pushed)
+    return result
 
 def _refresh_live_odds():
     """推送前强制实时拉取 BB/FB + Pinnacle 赔率并重新比价。
