@@ -72,6 +72,7 @@ SCHEDULE = [
     ("memory_update",      "09:05", "do_memory_update", {}),
     ("daily_cleanup",      "09:10", "do_cleanup",      {}),  # 指纹+临时文件清理
     ("evolve_daily",       "09:15", "do_evolve_daily", {}),  # V4 BB溢价累积
+    ("download_data",      "09:20", "do_download_data", {}), # V4.5: 自动下载新数据源
     # 周报：周日 21:00
     ("evolve_weekly",      "Mon 06:07", "do_evolve_weekly", {}),  # V4 每周进化(结算反馈+溢价重算)
     ("settle_noon",        "14:00", "do_settle",      {}),  # 午后结算
@@ -508,6 +509,28 @@ class PipelineOrchestrator:
                     logger.info("日志归档: %s", gz_path.name)
         except Exception as e:
             logger.warning("临时文件清理失败: %s", e)
+
+    def do_download_data(self):
+        """V4.5: 每日尝试从已知数据源下载新的历史赔率数据。"""
+        import subprocess, os
+        logger.info("📥 自动下载历史数据...")
+        script = SRC_DIR / "scripts" / "download_v4_data.sh"
+        if script.exists():
+            try:
+                result = subprocess.run(
+                    ["bash", str(script)],
+                    capture_output=True, text=True, timeout=120,
+                    cwd=str(SRC_DIR)
+                )
+                for line in (result.stdout or "").splitlines()[-5:]:
+                    if line.strip():
+                        logger.info(f"  {line.strip()}")
+                if result.returncode != 0:
+                    logger.warning("下载脚本返回非0: %d", result.returncode)
+            except subprocess.TimeoutExpired:
+                logger.warning("下载脚本超时")
+            except Exception as e:
+                logger.warning("下载脚本失败: %s", e)
 
     def do_evolve_daily(self):
         """V4 每日进化: BB 溢价累积。"""

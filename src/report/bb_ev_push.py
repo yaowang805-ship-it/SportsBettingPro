@@ -106,6 +106,31 @@ def _normalize_cn(s: str) -> str:
 _CLV_SUSPENSIONS_CACHE = None
 
 
+def _get_league_pnl_summary(qualified: list) -> str:
+    """从结算日志中提取本次推送涉及联赛的累计P&L。"""
+    import csv
+    from collections import defaultdict
+    from pathlib import Path
+    sp = Path(__file__).resolve().parent.parent / "data" / "storage" / "settlement_log.csv"
+    if not sp.exists():
+        return ""
+    by_lg = defaultdict(lambda: {"stake": 0.0, "profit": 0.0, "n": 0})
+    with open(sp) as f:
+        for r in csv.DictReader(f):
+            by_lg[r.get("league", "")]["stake"] += float(r.get("stake", 0))
+            by_lg[r.get("league", "")]["profit"] += float(r.get("profit", 0))
+            by_lg[r.get("league", "")]["n"] += 1
+    # 收集本次推送涉及的联赛
+    push_leagues = set(o.get("league", "") for o in qualified)
+    parts = []
+    for lg in sorted(push_leagues):
+        d = by_lg.get(lg)
+        if d and d["n"] >= 5:
+            roi = d["profit"] / d["stake"] * 100 if d["stake"] > 0 else 0
+            parts.append(f"{lg}: {d['n']}笔 ROI {roi:+.0f}%")
+    return " | ".join(parts[:5]) if parts else ""
+
+
 def _get_clv_suspensions():
     global _CLV_SUSPENSIONS_CACHE
     if _CLV_SUSPENSIONS_CACHE is None:
@@ -782,8 +807,13 @@ def _calc_kelly_stakes(opps: list) -> list:
         if match_type == "time" and match_score < 0.90:
             stake_pct *= 0.80  # 低置信时间匹配 → 减 20%
 
-        # V4.4: 单注硬上限 4% (简化后无需 kelly_mult, 直接 cap)
-        stake_pct = min(stake_pct, 0.04)
+        # V4.5: 运动差异化单注上限 (按数据质量和波动率)
+        _SPORT_CAPS = {
+            "football": 0.04, "basketball": 0.03, "baseball": 0.03,
+            "american_football": 0.02, "ice_hockey": 0.02, "tennis": 0.02,
+        }
+        sport_cap = _SPORT_CAPS.get(sport, 0.02)
+        stake_pct = min(stake_pct, sport_cap)
 
         stake = int(bankroll * stake_pct)
         o["_raw_stake"] = stake
@@ -1790,12 +1820,16 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
         + (f"来源: {platform_stats}\n\n" if platform_stats else "\n")
         + "\n".join(lines).strip()
     )
+    # V4.5: 联赛级累计 P&L
+    pnl_line = _get_league_pnl_summary(qualified)
     body += ("\n\n---\n"
              "💡 T1=Pinnacle最可靠 T2=主流联赛 T3=低级别 | "
              "公平价 = Pinnacle去抽水赔率 | "
              "溢价 = (售价 - 公平价) / 公平价 | "
              "来源: BB=BB价 FB=FB价 BB/FB=两平台相同 | "
              "赔率实时变动，以 Pinnacle 网站当前价为准")
+    if pnl_line:
+        body += f"\n📊 {pnl_line}"
     # 策略参数快照 (Pinnacle 61,404场 + NBA 57,504场真实数据)
     body += (f"\n📐 权重(数据驱动): ⚽OU={MARKET_QUALITY_FOOTBALL.get('ou',1):.2f} "
              f"1X2={MARKET_QUALITY_FOOTBALL.get('1x2',1):.2f} | "

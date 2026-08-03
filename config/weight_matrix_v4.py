@@ -187,26 +187,84 @@ def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
 def _bb_premium_1x2(odds: float) -> float:
     """1X2 市场的 BB 溢价 (BB赔率/Pin赔率 - 1)。
 
-    V4.2: 从实际对比数据中位数统计 (n≥10时), 样本不足保留保守值。
+    V4.5: 优先从实时对比数据统计, 无数据时回退到保守默认值。
     """
-    if odds < 1.5: return 0.07      # n=3, 数据不足, 保留保守值
-    elif odds < 2.0: return 0.08    # n=9, 数据中位 8.1%, 接近
-    elif odds < 2.5: return 0.07    # n=1, 保留保守值
-    elif odds < 3.0: return 0.09    # n=12, 中位 11.2%×0.8=9.0%
-    elif odds < 4.0: return 0.07    # n=32, 中位 8.8%×0.8=7.0%
-    elif odds < 5.0: return 0.08    # n=36, 中位 10.5%×0.8=8.4%
-    elif odds < 7.0: return 0.10    # n=34, 中位 12.8%×0.8=10.2%
-    elif odds < 10.0: return 0.11   # n=17, 中位 13.9%×0.8=11.1%
-    else: return 0.17               # n=25, 中位 21.8%×0.8=17.4%
+    premiums = _load_live_premiums().get("1x2", {})
+    if premiums:
+        bid = _bin_index(odds, ODDS_BINS)
+        if bid in premiums:
+            return premiums[bid]
+    # Fallback: 保守默认值
+    if odds < 1.5: return 0.07
+    elif odds < 2.0: return 0.08
+    elif odds < 2.5: return 0.07
+    elif odds < 3.0: return 0.09
+    elif odds < 4.0: return 0.07
+    elif odds < 5.0: return 0.08
+    elif odds < 7.0: return 0.10
+    elif odds < 10.0: return 0.11
+    else: return 0.17
+
+
+def _load_live_premiums() -> dict:
+    """从最新的 BB vs Pinnacle 对比数据中统计各盘口的实时溢价。
+    返回 {market: {bin: premium}} 如 {"1x2": {3: 0.08, 4: 0.07}, "ou": {...}}
+    """
+    import json as _json
+    from pathlib import Path
+    from collections import defaultdict
+    comp_path = Path(__file__).resolve().parent.parent / "data" / "storage" / "bb_vs_pinnacle_comparison.json"
+    try:
+        if not comp_path.exists():
+            return {}
+        data = _json.loads(comp_path.read_text())
+        details = data.get("details", [])
+        if len(details) < 50:
+            return {}  # 对比数据太少, 不用
+
+        by_mkt = defaultdict(lambda: defaultdict(list))
+        for d in details:
+            # 只用高置信 name 匹配 (match_type=name, score>=0.95)
+            if d.get("match_type") != "name" or d.get("match_score", 0) < 0.95:
+                continue
+            for mk, opps in [("1x2", d.get("opportunities", [])),
+                             ("ou", d.get("over_under", [])),
+                             ("hc", d.get("handicap", []))]:
+                for opp in opps:
+                    bb_o = opp.get("bb_odds", 0)
+                    pin_o = opp.get("pin_odds", 0)
+                    if bb_o > 1.5 and pin_o > 1.01:
+                        prem = bb_o / pin_o - 1.0
+                        if 0 < prem < 0.5:
+                            bid = _bin_index(bb_o, ODDS_BINS)
+                            by_mkt[mk][bid].append(prem)
+
+        result = {}
+        for mk, bins in by_mkt.items():
+            mk_result = {}
+            for bid, vals in bins.items():
+                if len(vals) >= 5:
+                    median = sorted(vals)[len(vals)//2]
+                    mk_result[bid] = round(median * 0.8, 2)  # ×0.8 保守系数
+            if mk_result:
+                result[mk] = mk_result
+        return result
+    except Exception:
+        return {}
 
 
 def _bb_premium_ou(odds: float) -> float:
-    """OU 市场的 BB 溢价。OU 数据样本不足，沿用 1X2 溢价 × 1.05 (OU vig更低)。"""
+    """OU 市场的 BB 溢价。优先实时数据, 回退 1X2×1.05。"""
+    premiums = _load_live_premiums().get("ou", {})
+    if premiums:
+        bid = _bin_index(odds, ODDS_BINS)
+        if bid in premiums:
+            return premiums[bid]
     return _bb_premium_1x2(odds) * 1.05
 
 
 def _bb_premium_ht(odds: float) -> float:
-    """HT 半场溢价 (HT 流动性较低 → 折扣 15%)。"""
+    """HT 半场溢价。优先实时数据, 回退 1X2×0.85。"""
     return _bb_premium_1x2(odds) * 0.85
 
 
