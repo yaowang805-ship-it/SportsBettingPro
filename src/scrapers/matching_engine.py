@@ -486,6 +486,7 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                 })
 
     # Phase 2: Global greedy per-league
+    # V4.5: 网球禁用 Phase 2 (时间+赔率匹配在同赛事同时段多场次中错误率高)
     for bb_league, pin_list in pin_matches_by_league.items():
         pairs = []
         for bb_key, bd in bb_data.items():
@@ -494,6 +495,8 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
             if bd["match"].get("league", "") != bb_league:
                 continue
             sport = bd["sport"]
+            if sport == "tennis":
+                continue  # 网球只用 Phase 1 拼音匹配, Phase 2 错配率太高
             min_odds = 2 if sport in TWO_WAY_SPORTS else 3
             for pin in pin_list:
                 pin_id = pin.get("matchup_id", id(pin))
