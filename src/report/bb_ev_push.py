@@ -1750,8 +1750,10 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
             bb_odds = o["bb_odds"]
             ev_pct = o["ev_pct"]
             stake = o["_stake"]
+            # V4.5: 过滤碎单 (<¥30 不显示)
+            if stake < 30:
+                continue
             # 预算耗尽时显示原始 Kelly 投注额（标注"建议"）
-            if stake == 0 and o.get("_raw_stake", 0) > 0:
                 stake = o["_raw_stake"]
                 stake_note = " (建议)"
             else:
