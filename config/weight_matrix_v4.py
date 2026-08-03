@@ -68,31 +68,50 @@ AH_DISCOUNT = 0.92
 # CLV 联赛调整 — V4.5: 从 CLV 采集数据动态加载正/负 CLV 联赛
 #   正 CLV: BB 赔率向 Pinnacle 收盘价收敛 → 早盘优势可靠 → +5%
 #   负 CLV: BB 赔率逆向移动 → 保持基准
-def _load_clv_positive_leagues() -> set:
-    """从 CLV 快照数据中加载正 CLV 联赛 (CLV > +2%)。"""
+def _load_clv_data() -> dict:
+    """从 CLV 快照数据中加载各联赛的 CLV 表现。
+    返回 {league: avg_clv_pct}，用于动态调整 Kelly。
+    CLV > 0: BB 赔率向 Pinnacle 收敛 → 早盘优势可靠 → 加成
+    CLV < 0: BB 赔率逆向移动 → 保守
+    """
     import json as _json
     from pathlib import Path
+    from collections import defaultdict
     snap_dir = Path(__file__).resolve().parent.parent / "data" / "storage" / "odds_snapshots"
+    clv_by_league = defaultdict(list)
     try:
         files = sorted(snap_dir.glob("*.json"), key=lambda f: f.stat().st_mtime, reverse=True)
-        for f in files[:3]:
+        for f in files[:5]:  # 最近5个快照
             data = _json.loads(f.read_text())
             if isinstance(data, dict):
-                positive = set()
                 for key, snap in data.items():
                     if isinstance(snap, dict):
-                        clv_pct = snap.get("clv_pct", snap.get("true_clv", 0))
-                        if clv_pct and clv_pct > 2.0:
-                            league = snap.get("league", "")
-                            if league:
-                                positive.add(league)
-                if positive:
-                    return positive
+                        clv = snap.get("clv_pct", snap.get("true_clv", None))
+                        lg = snap.get("league", "")
+                        if clv is not None and lg:
+                            clv_by_league[lg].append(clv)
     except Exception:
         pass
-    return {"意甲", "Serie A"}  # fallback
+    # 每联赛取平均值
+    result = {}
+    for lg, vals in clv_by_league.items():
+        if len(vals) >= 3:
+            result[lg] = sum(vals) / len(vals)
+    return result
 
-CLV_POSITIVE_LEAGUES = _load_clv_positive_leagues()
+
+def _clv_multiplier(league: str) -> float:
+    """V4.5: CLV 动态调整 — 正CLV联赛加成, 负CLV联赛降权。"""
+    clv_data = _load_clv_data()
+    avg_clv = clv_data.get(league, 0)
+    if avg_clv > 3.0:   return 1.08   # 强正CLV: +8%
+    elif avg_clv > 1.0: return 1.04   # 正CLV: +4%
+    elif avg_clv < -3.0: return 0.88  # 强负CLV: -12%
+    elif avg_clv < -1.0: return 0.94  # 负CLV: -6%
+    return 1.0
+
+
+CLV_POSITIVE_LEAGUES = set()  # 不再硬编码, 由 _clv_multiplier 动态决定
 CLV_BOOST = 1.05
 
 
@@ -1199,7 +1218,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             ou_total = sum(e[2] for e in ou_league_data.values())
             if ou_total < 3000:
                 stake *= 0.75
-            return stake * _settlement_multiplier(league)
+            return stake * _settlement_multiplier(league) * _clv_multiplier(league)
 
         elif sub_market == "ht":
             # V4.3: HT封顶 4.8 (316K 赔率区间回测: @4.8+ BB EV全负)
@@ -1216,7 +1235,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             bb_prem = _bb_premium_ht(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n)
-            return stake * 0.85 * _settlement_multiplier(league)
+            return stake * _settlement_multiplier(league) * _clv_multiplier(league) * 0.85 * _settlement_multiplier(league)
 
         elif sub_market in ("hc", "handicap"):
             # V4.5: HC 独立标定 — 使用 Pinnacle 亚洲让球收盘数据 (49K)
@@ -1256,7 +1275,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             bb_prem = _bb_premium_1x2(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n)
-            return stake * _settlement_multiplier(league)
+            return stake * _settlement_multiplier(league) * _clv_multiplier(league) * _settlement_multiplier(league) * _clv_multiplier(league)
 
     # ── Tennis (V4.2: 直接编码, 不再复用V3) ──
     elif sport_lower == "tennis":

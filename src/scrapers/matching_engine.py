@@ -244,9 +244,9 @@ def _pinyin_match_names(bb_home: str, bb_away: str, pin_list: list) -> tuple:
             best_score = avg
             best_match = pin
 
-    # Lower threshold for pinyin matching — pronunciation varies
-    # V4.4: 0.50->0.42 for tennis (individual sport, false positive risk is low)
-    if best_score >= 0.42:
+    # V4.5: 0.42→0.35 进一步放宽 (网球匹配率仅3.4%, 漏掉170场)
+    # 个人运动无交叉错配风险, 低分匹配+时间窗口+赔率校验三重保护
+    if best_score >= 0.35:
         return best_match, best_score
     return None, 0.0
 
@@ -458,7 +458,7 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
             if best_bd and best_name_score >= 0.50:
                 # 个人运动放宽门槛：网球/拳击/MMA 不存在团队运动的交叉错配
                 sport = best_bd["sport"]
-                min_name_score = 0.45 if sport in ("tennis", "boxing", "mma") else 0.50
+                min_name_score = 0.38 if sport in ("tennis", "boxing", "mma") else 0.50  # V4.5: 网球0.45→0.38
                 if best_name_score < min_name_score:
                     continue
                 # 硬时间窗口：同队名但开赛时间差 >4h → 不同比赛（防双赛日混淆）
