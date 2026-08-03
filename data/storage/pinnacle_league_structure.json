@@ -6274,5 +6274,53 @@
       "sport": "Mixed Martial Arts",
       "sport_id": 22
     }
+  },
+  "26": {
+    "1654": {
+      "name": "NRL",
+      "group": "Australia",
+      "sport": "Rugby League",
+      "sport_id": 26
+    },
+    "1655": {
+      "name": "Super League",
+      "group": "United Kingdom",
+      "sport": "Rugby League",
+      "sport_id": 26
+    }
+  },
+  "27": {
+    "287400": {
+      "name": "Nations Championship",
+      "group": "World",
+      "sport": "Rugby Union",
+      "sport_id": 27
+    }
+  },
+  "15": {
+    "889": {
+      "name": "NFL",
+      "group": "USA",
+      "sport": "American Football",
+      "sport_id": 15
+    },
+    "880": {
+      "name": "NCAA",
+      "group": "USA",
+      "sport": "American Football",
+      "sport_id": 15
+    },
+    "4347": {
+      "name": "NFL Pre Season",
+      "group": "USA",
+      "sport": "American Football",
+      "sport_id": 15
+    },
+    "876": {
+      "name": "Canadian Football",
+      "group": "Canada",
+      "sport": "American Football",
+      "sport_id": 15
+    }
   }
 }
