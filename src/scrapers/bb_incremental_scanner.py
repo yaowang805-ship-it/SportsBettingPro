@@ -427,18 +427,15 @@ def run_incremental(time_window: str = "all"):
     # 8. 保存新快照 (near/far 各自独立)
     save_snapshot(bb_matches, _current_snap)
 
-    # 9. 推送新机会 (必须在指纹保存之前 — 否则子进程 _filter_pushed 会拦截全部)
-    # V4.5: 去重后无新机会 → 跳过推送, 减少钉钉消息轰炸
+    # 9. 推送新机会 → 推送后保存指纹
     push_ok = True
     if new_result.get("details") or fb_had_new:
-        # 先指纹化, 再让推送子进程自己去重
         print(f"\n📣 新+EV机会 → 运行推送 [{label}]...")
         push_ok = _run_push(label)
     else:
         print("\n📭 无新+EV机会")
 
-    # 9.5. 增量去重: 推送完成后保存指纹，防止下次扫描重复处理
-    # ⚠️ 必须在推送之后！否则推离子进程 _filter_pushed 会拦截全部机会
+    # 推送完成后保存指纹，防止下次扫描重复处理
     _save_scan_fingerprints(new_result)
 
     return new_result
