@@ -1544,6 +1544,11 @@ def _diversify_and_rank(qualified: list) -> list:
 
     # Kelly 分配（预算耗尽时保留机会，stake=0 仅展示不投注）
     qualified = _calc_kelly_stakes(qualified)
+
+    # V4.5: 单次推送上限 20 条, 按 Kelly 仓位降序取 top
+    qualified.sort(key=lambda o: o.get("_stake", 0), reverse=True)
+    qualified = qualified[:20]
+
     return qualified
 
 

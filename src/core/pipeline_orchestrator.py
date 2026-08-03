@@ -470,16 +470,42 @@ class PipelineOrchestrator:
         except Exception as e:
             logger.warning("指纹清理失败: %s", e)
 
-        # 2. 清理旧的临时文件
+        # 2. 清理旧的临时文件 + 快照 + 日志
         try:
-            import os, time
-            now = time.time()
+            import os as _os, time as _time, shutil as _shutil
+            now = _time.time()
+            # 临时文件
             for f in (SRC_DIR / "data" / "storage").glob("*.tmp"):
                 if now - f.stat().st_mtime > 86400:
                     f.unlink()
+            # Push staging
             for f in (SRC_DIR / "data" / "storage").glob("push_staging*"):
                 if now - f.stat().st_mtime > 86400:
                     f.unlink()
+            # BB快照 (保留最新2个)
+            snap_files = sorted((SRC_DIR / "data" / "storage").glob("bb_odds_snapshot*.json"),
+                                key=lambda x: x.stat().st_mtime, reverse=True)
+            for f in snap_files[2:]:
+                f.unlink()
+            # Pin快照
+            for f in (SRC_DIR / "data" / "storage").glob(".pin_snapshot_*.json"):
+                if now - f.stat().st_mtime > 86400 * 3:
+                    f.unlink()
+            # 对比文件备份
+            for f in (SRC_DIR / "data" / "storage").glob("*.bak"):
+                if now - f.stat().st_mtime > 86400:
+                    f.unlink()
+            # 日志轮转: 7天以上的压缩归档
+            log_dir = SRC_DIR / "data" / "logs"
+            for lf in sorted(log_dir.glob("pipeline_daemon.log*")):
+                age = now - lf.stat().st_mtime
+                if age > 86400 * 7 and not lf.name.endswith('.gz'):
+                    import gzip
+                    gz_path = lf.with_suffix(lf.suffix + '.gz')
+                    with open(lf, 'rb') as fi, gzip.open(gz_path, 'wb') as fo:
+                        _shutil.copyfileobj(fi, fo)
+                    lf.unlink()
+                    logger.info("日志归档: %s", gz_path.name)
         except Exception as e:
             logger.warning("临时文件清理失败: %s", e)
 
