@@ -567,7 +567,8 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                 continue
             sport = bd["sport"]
             if sport == "tennis":
-                continue  # 网球只用 Phase 1 拼音匹配, Phase 2 错配率太高
+                # V4.5: 重新启用 Phase 2 — 拼音相似度已集成, 提高门槛防错配
+                pass
             min_odds = 2 if sport in TWO_WAY_SPORTS else 3
             for pin in pin_list:
                 pin_id = pin.get("matchup_id", id(pin))
