@@ -1503,14 +1503,24 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
 
     if sport_lower == "football":
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)
-        return 2.0 if stake > 0 else 999.0
+        # V4.5: 联赛无专属数据时回退聚合, 聚合无数据时 EV>=2% 仍放行
+        if stake > 0:
+            return 2.0
+        # Kelly=0 但赔率在合理范围 (<=20) → 放行, 后续用最小仓位
+        if odds <= 20.0:
+            return 2.0
+        return 999.0  # 超高赔率封杀
 
     elif sport_lower == "tennis":
         return 2.0
 
     elif sport_lower == "basketball":
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)
-        return 2.0 if stake > 0 else 999.0
+        if stake > 0:
+            return 2.0
+        if odds <= 8.0:
+            return 2.0
+        return 999.0
 
     elif sport_lower in ("baseball", "american_football"):
         return 2.0 if odds < 5.0 else 999.0

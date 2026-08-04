@@ -1082,7 +1082,13 @@ def _verify_bb_price_exists(home: str, away: str, designation: str,
     for m in bb_matches:
         m_home = m.get("home", "").strip()
         m_away = m.get("away", "").strip()
-        if not (home in m_home and away in m_away):
+        # 宽松匹配: 比较引擎可能对队名做了归一化 (去国家/去空格),
+        # 逐个检查 home/away 是否出现在 BB 数据中, 允许反转
+        home_in_home = home in m_home or m_home in home
+        away_in_away = away in m_away or m_away in away
+        home_in_away = home in m_away or m_away in home
+        away_in_home = away in m_home or m_home in away
+        if not ((home_in_home and away_in_away) or (home_in_away and away_in_home)):
             continue
 
         odds_ft = m.get("odds_ft", {})
