@@ -1543,19 +1543,27 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 'WTA'
             return 'ATP 250'
         tour_data = TENNIS_DATA.get(_match_tour(league))
+        use_ext = False
         if tour_data is None:
-            # V4.5: 回退到 Pinnacle Grand Slam 236场数据
+            # V4.5: 回退到 Pinnacle Grand Slam 236场数据 (用ODDS_BINS, 非TENNIS_BINS)
             try: tour_data = TENNIS_DATA_EXT
-            except NameError: return 0.0
-            if tour_data is None: return 0.0
+            except NameError: pass
+            if tour_data: use_ext = True
+            else: return 0.0
 
-        idx = _bin_index(odds, TENNIS_ODDS_BINS)
+        if use_ext:
+            idx = _bin_index(odds, ODDS_BINS)
+        else:
+            idx = _bin_index(odds, TENNIS_ODDS_BINS)
         data = tour_data.get(idx)
-        if not data or data[2] < 10:
-            # V4.5: 回退到 Pinnacle Grand Slam 数据
-            try: data = TENNIS_DATA_EXT.get(idx) if 'TENNIS_DATA_EXT' in dir() else None
-            except: data = None
-            if not data or data[2] < 5:
+        if not data or data[2] < 5:
+            if not use_ext:
+                try: data = TENNIS_DATA_EXT.get(_bin_index(odds, ODDS_BINS)) if 'TENNIS_DATA_EXT' in dir() else None
+                except: data = None
+                if not data or data[2] < 5:
+                    return 0.0
+                use_ext = True
+            else:
                 return 0.0
         wr, avg_o, n = data
         
