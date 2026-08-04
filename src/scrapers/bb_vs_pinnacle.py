@@ -1338,7 +1338,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     # ---- 映射汇总 ----
     _n_mapped = len(matched_leagues)
     _n_unmapped = len(unmatched_leagues)
-    _n_team = len(TEAM_NAME_MAP)
+    _n_team = len(TEAM_NAME_MAP) - 1  # V4.5: exclude _meta key
     _n_league_total = _n_mapped + _n_unmapped
     print(f"\n{'='*60}")
     print(f"📊 映射汇总")

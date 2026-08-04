@@ -63,18 +63,87 @@ def _save_league_structure(data):
 
 
 def _load_team_name_map():
-    """Load team name mapping (Chinese -> English) from file."""
-    if TEAM_NAME_MAP_FILE.exists():
-        return json.loads(TEAM_NAME_MAP_FILE.read_text())
-    print("  ⚠️ team_name_map.json 不存在，返回空映射")
-    return {}
+    """Load team name mapping (Chinese -> English) from file.
+
+    V4.5: 支持置信度元数据 (_meta), 向后兼容旧格式 (纯 {cn: en}).
+    返回的 dict 包含 _meta key, 但通过 .get(name) 仍返回 pin 名 (兼容旧代码).
+    """
+    if not TEAM_NAME_MAP_FILE.exists():
+        print("  ⚠️ team_name_map.json 不存在，返回空映射")
+        return {"_meta": {}}
+
+    raw = json.loads(TEAM_NAME_MAP_FILE.read_text())
+    if "_meta" in raw:
+        return raw  # V4.5 格式
+
+    # 旧格式: {cn: en} — 升级为 V4.5 格式
+    from datetime import date
+    today = date.today().isoformat()
+    upgraded = {"_meta": {}}
+    for k, v in raw.items():
+        upgraded[k] = v
+        upgraded["_meta"][k] = {"sport": "unknown", "n": 1,
+                                 "first": today, "last": today}
+    return upgraded
 
 
 def _save_team_name_map(data):
-    """Save team name mapping to file."""
+    """Save team name mapping to file (含 _meta 置信度)."""
     TEAM_NAME_MAP_FILE.parent.mkdir(parents=True, exist_ok=True)
     TEAM_NAME_MAP_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=2))
-    print(f"  \U0001f4c1 队名映射已保存 ({len(data)} 条)")
+    # 不打印 — 避免刷屏, 由调用者决定
+
+def _get_name_confirmed_count(name_map, cn_name):
+    """获取名字映射的确认次数 (置信度)."""
+    meta = name_map.get("_meta", {}).get(cn_name, {})
+    return meta.get("n", 0)
+
+def _update_name_meta(name_map, cn_name, pin_name, sport, source="auto"):
+    """更新名字映射元数据: 确认次数+1 或新建."""
+    from datetime import date
+    today = date.today().isoformat()
+    meta = name_map.setdefault("_meta", {})
+    if cn_name in meta:
+        entry = meta[cn_name]
+        entry["n"] = entry.get("n", 0) + 1
+        entry["last"] = today
+        if sport != "unknown":
+            entry["sport"] = sport
+    else:
+        meta[cn_name] = {"sport": sport, "n": 1, "first": today, "last": today, "source": source}
+
+def _should_overwrite(name_map, cn_name, new_pin, new_sport, match_score):
+    """判断是否应该覆盖已有映射。
+
+    规则:
+    - 同名映射 (same pin) → 永远允许 (确认+1)
+    - 不同名映射 → 需满足:
+      1. 运动一致 (sport match)
+      2. 新匹配高分 (>=0.90) 且 旧映射低确认 (n<=2)
+      或 新匹配极高 (>=0.95) 且 旧映射无确认 (n<=1, unknown sport)
+    """
+    if cn_name not in name_map:
+        return True
+    existing_pin = name_map[cn_name]
+    if existing_pin == new_pin:
+        return True  # 同名, 确认+1
+
+    # 冲突 — 检查条件
+    meta = name_map.get("_meta", {}).get(cn_name, {})
+    existing_n = meta.get("n", 1)
+    existing_sport = meta.get("sport", "unknown")
+
+    # 条件1: 运动必须一致 (防止跨运动污染)
+    if new_sport != "unknown" and existing_sport != "unknown" and new_sport != existing_sport:
+        return False
+
+    # 条件2: 高分覆盖低确认
+    if match_score >= 0.95 and existing_n <= 2:
+        return True
+    if match_score >= 0.90 and existing_n <= 1:
+        return True
+
+    return False
 
 
 def _load_league_keywords():
@@ -461,34 +530,36 @@ def _auto_map_team_names(matched_entries):
 
         # Safety: skip if BB name already mapped to a different Pin name
         # (prevents overwriting correct manual mappings)
-        # V4.5: 个人运动(tennis/boxing/mma)高分匹配允许覆盖旧映射 (修复旧错误映射)
+        # V4.5: 置信度投票 — 新映射需多票才能覆盖已有确认的映射
         for bb_name, pin_name in [(bb_home, pin_home), (bb_away, pin_away)]:
-            if bb_name in TEAM_NAME_MAP and TEAM_NAME_MAP[bb_name] != pin_name:
-                # Allow overwrite for individual sports with high-confidence Phase 2 match
-                if is_phase2_individual and match_score >= 0.90:
-                    TEAM_NAME_MAP[bb_name] = pin_name
-                    new_pairs += 1
-                    continue
+            if not bb_name or not pin_name:
+                continue
+            if not _should_overwrite(TEAM_NAME_MAP, bb_name, pin_name, sport, match_score):
                 skipped += 1
                 continue
 
         # Map home team: only if BB name has non-ASCII characters
         if bb_home and pin_home and len(bb_home) >= 2:
-            if not bb_home.isascii() and bb_home not in TEAM_NAME_MAP:
-                TEAM_NAME_MAP[bb_home] = pin_home
-                new_pairs += 1
+            if not bb_home.isascii():
+                if bb_home not in TEAM_NAME_MAP:
+                    TEAM_NAME_MAP[bb_home] = pin_home
+                    new_pairs += 1
+                _update_name_meta(TEAM_NAME_MAP, bb_home, pin_home, sport)
 
         # Map away team
         if bb_away and pin_away and len(bb_away) >= 2:
-            if not bb_away.isascii() and bb_away not in TEAM_NAME_MAP:
-                TEAM_NAME_MAP[bb_away] = pin_away
-                new_pairs += 1
+            if not bb_away.isascii():
+                if bb_away not in TEAM_NAME_MAP:
+                    TEAM_NAME_MAP[bb_away] = pin_away
+                    new_pairs += 1
+                _update_name_meta(TEAM_NAME_MAP, bb_away, pin_away, sport)
 
-    # 持久化: 每次学习后立即保存
-    if new_pairs > 0:
+    # 持久化: 有新映射或确认数变化时保存
+    if new_pairs > 0 or skipped > 0:
         _save_team_name_map(TEAM_NAME_MAP)
         import logging
-        logging.getLogger(__name__).info(f"队名映射: +{new_pairs} 条 (总计 {len(TEAM_NAME_MAP)})")
+        _log = logging.getLogger(__name__)
+        _log.info(f"队名映射: +{new_pairs} 确认/{skipped} 跳过 ({len(TEAM_NAME_MAP)-1} 总计)")
 
 def _match_pin_name(pn, pin_name):
     """Check if pin keyword matches Pinnacle league name (word boundary)."""
