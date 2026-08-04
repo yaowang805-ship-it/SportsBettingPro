@@ -73,6 +73,7 @@ SCHEDULE = [
     ("daily_cleanup",      "09:10", "do_cleanup",      {}),  # 指纹+临时文件清理
     ("evolve_daily",       "09:15", "do_evolve_daily", {}),  # V4 BB溢价累积
     ("download_data",      "09:20", "do_download_data", {}), # V4.5: 自动下载新数据源
+    ("name_mapping",       "09:25", "do_name_mapping", {}), # V4.5: 拼音自动名映射
     # 周报：周日 21:00
     ("evolve_weekly",      "Mon 06:07", "do_evolve_weekly", {}),  # V4 每周进化(结算反馈+溢价重算)
     ("settle_noon",        "14:00", "do_settle",      {}),  # 午后结算
@@ -578,6 +579,83 @@ class PipelineOrchestrator:
                 logger.warning("下载脚本超时")
             except Exception as e:
                 logger.warning("下载脚本失败: %s", e)
+
+    def do_name_mapping(self):
+        """V4.5: 每日拼音自动名映射 — Pinnacle API拉选手名单→拼音匹配BB中文名."""
+        import json as _json, re, logging
+        _log = logging.getLogger(__name__)
+        try:
+            from pypinyin import pinyin, Style
+            from difflib import SequenceMatcher
+            from src.scrapers.pinnacle_api import api_get
+
+            bb_file = SRC_DIR / "data" / "storage" / "bb_odds_extracted.json"
+            with open(bb_file) as f:
+                bb = _json.load(f)
+            matches = bb if isinstance(bb, list) else bb.get("matches", bb.get("data", []))
+            nm_file = SRC_DIR / "data" / "storage" / "team_name_map.json"
+            with open(nm_file) as f:
+                nm = _json.load(f)
+
+            def _sim(cn, en):
+                try:
+                    py = "".join(p[0] for p in pinyin(cn, style=Style.NORMAL))
+                    return SequenceMatcher(None, re.sub(r"[^a-z]", "", py), re.sub(r"[^a-z]", "", en.lower())).ratio()
+                except Exception:
+                    return 0
+
+            SPORTS = {"tennis": 33, "boxing": 6, "mma": 22, "basketball": 4, "ice_hockey": 19}
+            total_new = 0
+            for sport_name, pin_id in SPORTS.items():
+                bb_names = set()
+                for m in matches:
+                    if m.get("sport") != sport_name:
+                        continue
+                    for p in [m.get("home", ""), m.get("away", "")]:
+                        p = re.sub(r"\s*[（(][^)）]*[)）]", "", p).strip()
+                        if p and not p.isascii():
+                            bb_names.add(p)
+
+                resp = api_get(f"/sports/{pin_id}/leagues")
+                if not resp:
+                    continue
+                leagues = resp if isinstance(resp, list) else resp.get("leagues", [])
+                active = [l for l in leagues if l.get("matchupCount", 0) > 0]
+
+                pin_names = set()
+                for lg in active[:5]:
+                    resp = api_get(f"/leagues/{lg['id']}/matchups")
+                    if not resp:
+                        continue
+                    for mu in (resp if isinstance(resp, list) else []):
+                        for p in mu.get("participants", []):
+                            n = p.get("name", "")
+                            if n:
+                                pin_names.add(n)
+
+                new_maps = 0
+                for cn in bb_names:
+                    if cn in nm:
+                        continue  # 已有映射, 不覆盖
+                    best, best_en = 0, ""
+                    for en in pin_names:
+                        s = _sim(cn, en)
+                        if s > best:
+                            best = s
+                            best_en = en
+                    if best >= 0.45:
+                        nm[cn] = best_en
+                        new_maps += 1
+                total_new += new_maps
+                if new_maps:
+                    _log.info("名映射 [%s]: +%d", sport_name, new_maps)
+
+            if total_new > 0:
+                with open(nm_file, "w") as f:
+                    _json.dump(nm, f, ensure_ascii=False, indent=2)
+                _log.info("名映射: +%d 条 (总计 %d)", total_new, len(nm) - 1)
+        except Exception as e:
+            _log.warning("名映射失败: %s", e)
 
     def do_evolve_daily(self):
         """V4 每日进化: BB 溢价累积。"""
