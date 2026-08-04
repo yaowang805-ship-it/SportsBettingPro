@@ -520,7 +520,12 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         mlabels = MARKET_LABELS.get(sport, MARKET_LABELS["football"])
         bb_ml = m.get("bb_1x2", [])
         pin_ml = m.get("pin_1x2", [])
-        n_ml = len(bb_ml)  # 3 for football, 2 for others
+        # V4.5: 对齐数组长度 — tennis/boxing等2way运动pin_ml可能≠bb_ml长度
+        n_ml = len(bb_ml)
+        if len(pin_ml) < n_ml:
+            pin_ml = list(pin_ml) + [0] * (n_ml - len(pin_ml))
+        elif len(pin_ml) > n_ml:
+            pin_ml = pin_ml[:n_ml]
 
         # 开赛时间（北京时间）
         bb_period = bb.get("period", "")
