@@ -1,5 +1,5 @@
 """虚拟投注自动结算 — 多数据源（ESPN + football-data.org + 直播吧）自动结算。"""
-import json, sys
+import json, sys, time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Optional
