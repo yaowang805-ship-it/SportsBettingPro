@@ -30,6 +30,7 @@ V4.2 改进 (2026-08-01):
 
 from functools import lru_cache
 from typing import Optional
+from pathlib import Path
 
 # =====================================================================
 # 赔率区间
@@ -272,6 +273,39 @@ def _bb_premium_ht(odds: float) -> float:
 # 1X2 权重矩阵 (从 Pinnacle 107,896场直接计算)
 # =====================================================================
 # 格式: {league: {bin_index: (actual_wr, avg_odds, num_bets)}}
+# V4.5: 尝试从校准 JSON 加载最新权重, 不存在则使用下方硬编码回退
+import json as _json_v4
+
+def _load_calibrated_weights():
+    """加载 scripts/calibrate_v4_weights.py 生成的校准权重。"""
+    cal_path = Path(__file__).resolve().parent.parent / "data" / "storage" / "v4_calibrated_weights.json"
+    if cal_path.exists():
+        try:
+            raw = _json_v4.loads(cal_path.read_text())
+            if "PIN_1X2_DATA" not in raw or "PIN_OU_DATA" not in raw:
+                return None
+            # JSON keys are strings, values are lists — convert to int/tuple
+            for data_key in ["PIN_1X2_DATA", "PIN_OU_DATA"]:
+                if data_key not in raw: continue
+                converted = {}
+                for lg, bins in raw[data_key].items():
+                    converted[lg] = {}
+                    for bi, val in bins.items():
+                        converted[lg][int(bi)] = tuple(val) if isinstance(val, list) else val
+                raw[data_key] = converted
+            # PIN_AH_DATA: flat dict (no per-league nesting)
+            if "PIN_AH_DATA" in raw:
+                ah = {}
+                for bi, val in raw["PIN_AH_DATA"].items():
+                    ah[int(bi)] = tuple(val) if isinstance(val, list) else val
+                raw["PIN_AH_DATA"] = ah
+            return raw
+        except Exception:
+            pass
+    return None
+
+_CALIBRATED = _load_calibrated_weights()
+
 # 每个联赛的数据点都是该联赛独有的赔率区间盈利模式
 
 PIN_1X2_DATA = {
@@ -938,6 +972,17 @@ PIN_HC_DATA = {
 
 
 # =====================================================================
+# =====================================================================
+# V4.5: 动态加载校准权重 (覆盖上方硬编码回退)
+# =====================================================================
+if _CALIBRATED:
+    PIN_1X2_DATA = _CALIBRATED["PIN_1X2_DATA"]
+    PIN_OU_DATA = _CALIBRATED["PIN_OU_DATA"]
+    PIN_OU_AGGREGATE = PIN_OU_DATA["_AGGREGATE"]
+    if "PIN_AH_DATA" in _CALIBRATED:
+        PIN_HC_DATA = _CALIBRATED["PIN_AH_DATA"]
+del _CALIBRATED
+
 # 赛季时间衰减 — V4.2: 近年数据权重更高
 #   衰减函数: weight = 0.95^(seasons_ago)
 #   例: 2024-25赛季 weight=1.0, 2020-21 weight=0.95^4=0.81
