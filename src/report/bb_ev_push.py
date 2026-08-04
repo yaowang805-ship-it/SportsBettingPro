@@ -1862,7 +1862,7 @@ def _get_settleable_summary() -> set:
         return set()
 
 
-def _prepare_opportunities(force=False):
+def _prepare_opportunities(skip_freshness=False):
     """对比文件必须 < 30 分钟, 确保赔率是实时的, 拒绝缓存。"""
     # 检查最新的对比文件(near/far/main)
     newest_age = 999
@@ -1870,7 +1870,7 @@ def _prepare_opportunities(force=False):
         if f.exists():
             age = (time.time() - f.stat().st_mtime) / 60
             newest_age = min(newest_age, age)
-    if newest_age > 30 and not force:
+    if newest_age > 30 and not skip_freshness:
         print(f"❌ 对比文件过期 ({newest_age:.0f}分钟前)，拒绝使用缓存")
         return []
 
@@ -1881,13 +1881,13 @@ def _prepare_opportunities(force=False):
     return _diversify_and_rank(qualified)
 
 
-def build_report(force: bool = False, incremental: bool = False):
+def build_report(skip_freshness: bool = False, incremental: bool = False):
     """构建格式化的 BB vs Pinnacle +EV 报告。返回 (body_text, qualified_opportunities).
 
     🔴 铁律：实时拉取失败 → 不发缓存数据，发钉钉告警。
 
     Args:
-        force: 跳过 2 小时新鲜度检查，即使对比文件较旧也继续推送。
+        skip_freshness: 跳过 30 分钟新鲜度检查，即使对比文件较旧也继续推送。
         incremental: 增量模式 — 跳过实时拉取，直接使用增量扫描的 near/far 文件。
     Returns:
         (body, qualified): body 为 None 表示不应推送。
@@ -1904,7 +1904,7 @@ def build_report(force: bool = False, incremental: bool = False):
             _send_failure_alert(errors)
             return None, None  # 不推送
 
-    qualified = _prepare_opportunities(force=force)
+    qualified = _prepare_opportunities(skip_freshness=skip_freshness)
     if not qualified:
         if not COMPARISON_FILE.exists():
             return "no comparison data", []
@@ -2150,8 +2150,42 @@ def _apply_match_exposure_cap(qualified: list) -> list:
     return kept
 
 
+# ── 去重审计日志 ──
+_DEDUP_LOG = None
+
+def _get_dedup_log():
+    global _DEDUP_LOG
+    if _DEDUP_LOG is None:
+        log_dir = DATA_DIR.parent / "logs"
+        log_dir.mkdir(parents=True, exist_ok=True)
+        _DEDUP_LOG = log_dir / "push_dedup.log"
+    return _DEDUP_LOG
+
+def _audit_log(action, key, opp, reason=""):
+    """记录每条推送机会的去重决定到 push_dedup.log。"""
+    try:
+        from datetime import datetime, timezone, timedelta
+        now = datetime.now(timezone(timedelta(hours=8))).strftime("%m/%d %H:%M")
+        home = opp.get("home_cn", "?") if isinstance(opp, dict) else "?"
+        away = opp.get("away_cn", "?") if isinstance(opp, dict) else "?"
+        bb = opp.get("bb_odds", 0) if isinstance(opp, dict) else 0
+        ev = opp.get("ev_pct", 0) if isinstance(opp, dict) else 0
+        line = f"[{now}] {action:7s} | {home} vs {away} | BB={bb:.2f} EV={ev:.1f}% | {reason} | {key[:80]}"
+        log_file = _get_dedup_log()
+        with open(log_file, 'a') as f:
+            f.write(line + "\n")
+    except Exception:
+        pass  # 审计日志失败不影响推送
+
+
 def _filter_pushed(qualified: list) -> list:
-    """V4.5: 文件对比去重 — 直接对比两次推送内容, 不依赖字符串指纹。
+    """V4.5: 五层去重防护。
+
+    1. 精确 key 匹配 (sport|league|home|away|des|sub|line|epoch)
+    2. 模糊 key 兜底 (队名前2字 → 防队名微小差异)
+    3. 赔率改善重推 (BB/EV 变化超阈值)
+    4. 原子写入 (temp→rename, 防崩溃)
+    5. 审计日志 (push_dedup.log)
 
     保存上次推送的完整机会到 pushed_opportunities.json。
     新推送时逐条对比, 只推送新增的。赔率显著改善时允许重推。
@@ -2173,24 +2207,40 @@ def _filter_pushed(qualified: list) -> list:
     re_pushed = 0
 
     for o in qualified:
-        key = "|".join([
-            o.get("sport", ""),
-            o.get("league", ""),
-            o.get("home_cn", "").strip(),
-            o.get("away_cn", "").strip(),
-            o.get("designation", ""),
-            o.get("_sub_market", o.get("_market", "")),
-            str(o.get("line", "") or ""),
-            str(o.get("_pin_epoch", ""))[:10],
-        ])
+        # Layer 1: 精确 key — sport|league|home|away|des|sub_market|line|epoch[:10]
+        home = o.get("home_cn", "").strip()
+        away = o.get("away_cn", "").strip()
+        sport = o.get("sport", "")
+        designation = o.get("designation", "")
+        sub_market = o.get("_sub_market", o.get("_market", "")) or "1x2"
+        line = str(o.get("line", "") or "")
+        epoch10 = str(o.get("_pin_epoch", ""))[:10]
+
+        key = "|".join([sport, o.get("league", ""), home, away, designation, sub_market, line, epoch10])
+
+        # Layer 4: 模糊 key — 防队名微小差异导致 key 不匹配
+        # 取队名前2字 + 盘口 + 时间 → 同一场比赛大概率命中
+        fuzzy_key = "|".join([sport, home[:2], away[:2], designation, sub_market, line, epoch10])
+
         bb_now = o.get("bb_odds", 0)
         ev_now = o.get("ev_pct", 0)
 
-        new_opps[key] = {"bb": bb_now, "ev": ev_now, "ts": time.time()}
+        merged_key = key  # 保存用精确 key
+        new_opps[merged_key] = {"bb": bb_now, "ev": ev_now, "ts": time.time()}
 
+        # 查找: 先精确, 再模糊
         old = last_pushed.get(key)
+        if old is None and fuzzy_key != key:
+            # 模糊匹配 — 同场比赛队名稍异
+            for hist_key, hist_val in last_pushed.items():
+                if hist_key.startswith(fuzzy_key[:40]):  # sport+home[:2]+away[:2] 段匹配
+                    old = hist_val
+                    merged_key = hist_key  # 用历史 key 覆盖, 避免指纹膨胀
+                    break
+
         if old is None:
             result.append(o)
+            _audit_log("PUSHED", merged_key, o, "new")
             continue
 
         old_bb = old.get("bb", 0)
@@ -2206,19 +2256,28 @@ def _filter_pushed(qualified: list) -> list:
         if bb_change >= bb_th or ev_delta >= ev_th:
             re_pushed += 1
             result.append(o)
+            _audit_log("REPUSH", merged_key, o, f"bb_change={bb_change:.1f}% ev_delta={ev_delta:.1f}")
         else:
             skipped += 1
+            _audit_log("SKIPPED", merged_key, o, f"bb_change={bb_change:.1f}% (threshold={bb_th}%)")
 
     try:
-        # V4.5: 合并保存 — 保留历史指纹, 只更新/新增本次的
+        # Layer 3: 原子写入 — temp file → rename + flock 防并发
         merged = dict(last_pushed)
         merged.update(new_opps)
         # 清理 3 天前的过期记录
         cutoff = time.time() - 86400 * 3
         merged = {k: v for k, v in merged.items() if v.get("ts", 0) > cutoff}
-        pushed_file.write_text(_json.dumps(merged, ensure_ascii=False))
-    except:
-        pass
+
+        tmp_file = pushed_file.with_suffix('.tmp')
+        import fcntl as _fcntl, os as _os
+        with open(tmp_file, 'w') as _f:
+            _f.write(_json.dumps(merged, ensure_ascii=False))
+            _f.flush()
+            _os.fsync(_f.fileno())
+        _os.replace(tmp_file, pushed_file)  # 原子 rename
+    except Exception as e:
+        logger.warning("指纹文件写入失败: %s", e)
 
     if skipped:
         logger.info("去重过滤: 跳过 %d 条", skipped)
@@ -2368,17 +2427,17 @@ def _send_failure_alert(errors: list):
         logger.error("钉钉告警发送失败: %s", e)
 
 
-def push_report(place_bets=False, incremental=False, qualified=None, force=False, label: str = "",
-                save_fingerprints: bool = True):
+def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup: bool = False,
+                skip_freshness: bool = False, label: str = ""):
     """推送报告到钉钉。
 
     Args:
         place_bets: 是否执行自动投注。
         incremental: 增量扫描标记。
         qualified: 可选，来自 build_report 的已处理机会列表。为 None 时独立预处理。
-        force: 跳过指纹去重，强制推送。
+        skip_dedup: 跳过指纹去重 (仅紧急手动重推, 需显式 --skip-dedup)。
+        skip_freshness: 跳过对比文件新鲜度检查。
         label: 增量扫描类型标签（如 "24h内临场" 或 "24-72h早盘"）
-        save_fingerprints: 是否保存指纹 (--no-bet调试时False)
     """
     # 推送前二次验价（仅增量模式且 qualified 已由调用者提供时）
     if qualified and incremental:
@@ -2400,7 +2459,7 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         return
 
     if qualified is None:
-        qualified = _prepare_opportunities(force=True)
+        qualified = _prepare_opportunities(skip_freshness=skip_freshness)
 
     if not qualified:
         logger.info("no +EV opportunities found")
@@ -2412,7 +2471,7 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
         s = o.get("sport", "unknown")
         pre_dedup_counts[s] = pre_dedup_counts.get(s, 0) + 1
 
-    if not force:
+    if not skip_dedup:
         qualified = _filter_pushed(qualified)
     if not qualified:
         logger.info("所有机会均已推送过，跳过")
@@ -2428,7 +2487,7 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
     body = _format_body(qualified, warnings)
     if not body:
         # 即使空推也存指纹, 防止下次增量扫描重复处理同样机会
-        if save_fingerprints and qualified:
+        if qualified:
             _save_qualified_fingerprints(qualified)
         logger.info("empty body, skip")
         return
@@ -2479,8 +2538,8 @@ def push_report(place_bets=False, incremental=False, qualified=None, force=False
             place_bets_from_push(bettable)
         elif place_bets:
             logger.info("无可投注机会（全部被结算可行性过滤）")
-        if save_fingerprints:
-            _save_qualified_fingerprints(qualified)
+        # 指纹永存 — 无论模式, 推送成功即记录
+        _save_qualified_fingerprints(qualified)
         # JSON 二次备份
         existing = _load_fingerprints()
         new_fps = {}
@@ -2536,11 +2595,18 @@ def _validate_format(body: str) -> bool:
 
 
 def main():
-    """CLI 入口 / pipeline_orchestrator 入口。"""
-    force_fresh = "--force" in sys.argv
+    """CLI 入口 / pipeline_orchestrator 入口。
+
+    --force: 跳过对比文件新鲜度检查 (允许用旧文件推送)
+    --skip-dedup: 跳过指纹去重 (仅紧急手动重推, 需显式传)
+    --incremental: 增量模式
+    --no-bet: 不自动投注
+    """
+    skip_freshness = "--force" in sys.argv
+    skip_dedup = "--skip-dedup" in sys.argv
     is_incremental = "--incremental" in sys.argv
     try:
-        body, qualified = build_report(force=force_fresh, incremental=is_incremental)
+        body, qualified = build_report(skip_freshness=skip_freshness, incremental=is_incremental)
     except Exception as e:
         logger.error("build_report 崩溃: %s", e, exc_info=True)
         _send_failure_alert([f"build_report 异常: {str(e)[:200]}"])
@@ -2565,11 +2631,11 @@ def main():
 
     if "--no-push" not in sys.argv:
         push_report(place_bets=("--no-bet" not in sys.argv),
-                    incremental="--incremental" in sys.argv,
+                    incremental=is_incremental,
                     qualified=qualified if qualified else None,
-                    force=force_fresh,
-                    label=label_flag,
-                    save_fingerprints=("--no-bet" not in sys.argv))
+                    skip_dedup=skip_dedup,
+                    skip_freshness=skip_freshness,
+                    label=label_flag)
     return body
 
 
