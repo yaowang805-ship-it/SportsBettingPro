@@ -2187,16 +2187,26 @@ def _filter_pushed(qualified: list) -> list:
 
     1. 精确 key 匹配 (sport|league|home|away|des|sub|line|epoch)
     2. 模糊 key 兜底 (队名前2字 → 防队名微小差异)
-    3. 赔率改善重推 (BB/EV 变化超阈值)
+    3. 溢价改善重推 (premium delta ≥ 2%)
     4. 原子写入 (temp→rename, 防崩溃)
     5. 审计日志 (push_dedup.log)
-
-    保存上次推送的完整机会到 pushed_opportunities.json。
-    新推送时逐条对比, 只推送新增的。赔率显著改善时允许重推。
+    6. 文件锁 (防并发推送竞态)
     """
     import json as _json
 
     pushed_file = DATA_DIR / "pushed_opportunities.json"
+    lock_file = DATA_DIR / ".push_dedup.lock"
+
+    # 文件锁防并发
+    import fcntl as _fcntl
+    _lock_fd = open(lock_file, "w")
+    try:
+        _fcntl.flock(_lock_fd.fileno(), _fcntl.LOCK_EX | _fcntl.LOCK_NB)
+    except BlockingIOError:
+        _lock_fd.close()
+        logger.warning("另一推送进程正在运行, 跳过")
+        return qualified  # 放行, 让另一个进程处理去重
+
     last_pushed = {}
     if pushed_file.exists():
         try:
@@ -2299,6 +2309,8 @@ def _filter_pushed(qualified: list) -> list:
         logger.info("去重过滤: 跳过 %d 条", skipped)
     if re_pushed:
         logger.info("赔率改善重推: %d 条", re_pushed)
+    _fcntl.flock(_lock_fd.fileno(), _fcntl.LOCK_UN)
+    _lock_fd.close()
     return result
 
 def _refresh_live_odds():
