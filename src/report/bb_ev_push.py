@@ -2183,141 +2183,93 @@ def _audit_log(action, key, opp, reason=""):
 
 
 def _filter_pushed(qualified: list) -> list:
-    """V4.5: 五层去重防护。
+    """去重：一条机会推过一次就不再推送，除非溢价涨≥2%。
 
-    1. 精确 key 匹配 (sport|league|home|away|des|sub|line|epoch)
-    2. 模糊 key 兜底 (队名前2字 → 防队名微小差异)
-    3. 溢价改善重推 (premium delta ≥ 2%)
-    4. 原子写入 (temp→rename, 防崩溃)
-    5. 审计日志 (push_dedup.log)
-    6. 文件锁 (防并发推送竞态)
+    规则极简，防崩：
+    1. key = sport|league|home|away|designation|sub_market|line|epoch[:10]
+    2. 新key → PUSHED; 已有key → SKIPPED (除非premium+≥2% → REPUSH)
+    3. 指纹永不过期(靠kickoff自清理: 开赛后自动作废)
     """
-    import json as _json
+    import json as _json, fcntl as _fcntl, os as _os
 
     pushed_file = DATA_DIR / "pushed_opportunities.json"
     lock_file = DATA_DIR / ".push_dedup.lock"
 
-    # 文件锁防并发
-    import fcntl as _fcntl
+    # 文件锁
     _lock_fd = open(lock_file, "w")
-    try:
-        _fcntl.flock(_lock_fd.fileno(), _fcntl.LOCK_EX | _fcntl.LOCK_NB)
-    except BlockingIOError:
-        _lock_fd.close()
-        logger.warning("另一推送进程正在运行, 跳过")
-        return qualified  # 放行, 让另一个进程处理去重
+    try: _fcntl.flock(_lock_fd.fileno(), _fcntl.LOCK_EX | _fcntl.LOCK_NB)
+    except BlockingIOError: _lock_fd.close(); return qualified
 
+    # 读现有指纹
     last_pushed = {}
-    _FINGERPRINT_VERSION = 2  # 升级去重逻辑时递增, 自动清空旧数据
     if pushed_file.exists():
-        try:
-            raw = _json.loads(pushed_file.read_text())
-            if raw.get("_version", 1) < _FINGERPRINT_VERSION:
-                logger.info("指纹格式升级(v%d→v%d), 清空旧数据", raw.get("_version", 1), _FINGERPRINT_VERSION)
-                last_pushed = {}
-            else:
-                last_pushed = raw
-        except:
-            pass
+        try: last_pushed = _json.loads(pushed_file.read_text())
+        except: pass
+    # 去掉_version键(如果有)
+    last_pushed.pop("_version", None)
 
     now_epoch = time.time()
-    new_opps = {}
-    result = []
-    skipped = 0
-    re_pushed = 0
+    result, skipped, re_pushed = [], 0, 0
 
     for o in qualified:
-        # Layer 1: 精确 key — sport|league|home|away|des|sub_market|line|epoch[:10]
-        home = o.get("home_cn", "").strip()
-        away = o.get("away_cn", "").strip()
-        sport = o.get("sport", "")
-        designation = o.get("designation", "")
-        sub_market = o.get("_sub_market", o.get("_market", "")) or "1x2"
-        line = str(o.get("line", "") or "")
-        epoch10 = str(o.get("_pin_epoch", ""))[:10]
-
-        key = "|".join([sport, o.get("league", ""), home, away, designation, sub_market, line, epoch10])
-
-        # Layer 4: 模糊 key — 防队名微小差异导致 key 不匹配
-        # 取队名前2字 + 盘口 + 时间 → 同一场比赛大概率命中
-        fuzzy_key = "|".join([sport, home[:2], away[:2], designation, sub_market, line, epoch10])
-
+        key = "|".join([
+            o.get("sport", ""),
+            o.get("league", ""),
+            o.get("home_cn", "").strip(),
+            o.get("away_cn", "").strip(),
+            o.get("designation", ""),
+            o.get("_sub_market", o.get("_market", "")) or "1x2",
+            str(o.get("line", "") or ""),
+            str(o.get("_pin_epoch", ""))[:10],
+        ])
         bb_now = o.get("bb_odds", 0)
         ev_now = o.get("ev_pct", 0)
+        fair_now = o.get("fair_price", 0)
+        kickoff = o.get("_pin_epoch", now_epoch + 86400)
 
-        merged_key = key  # 保存用精确 key
-        new_opps[merged_key] = {"bb": bb_now, "ev": ev_now, "ts": time.time(),
-                                 "fair": o.get("fair_price", 0),
-                                 "kickoff": o.get("_pin_epoch", now_epoch + 86400)}
-
-        # 查找: 先精确, 再模糊
+        # 更新指纹(会在下面save)
         old = last_pushed.get(key)
-        if old is None and fuzzy_key != key:
-            # 模糊匹配 — 同场比赛队名稍异
-            for hist_key, hist_val in last_pushed.items():
-                if hist_key.startswith(fuzzy_key[:40]):  # sport+home[:2]+away[:2] 段匹配
-                    old = hist_val
-                    merged_key = hist_key  # 用历史 key 覆盖, 避免指纹膨胀
-                    break
+        last_pushed[key] = {"bb": bb_now, "ev": ev_now, "fair": fair_now,
+                             "ts": time.time(), "kickoff": kickoff}
 
+        # 新key → 推送
         if old is None:
             result.append(o)
-            _audit_log("PUSHED", merged_key, o, "new")
+            _audit_log("PUSHED", key, o, "new")
+            result.append(o)
+            _audit_log("PUSHED", key, o, "new")
             continue
 
+        # 旧key → 检查溢价增幅
         old_bb = old.get("bb", 0)
-        old_ev = old.get("ev", 0)
-        bb_change = (bb_now - old_bb) / old_bb * 100 if old_bb > 0 else 0
-        ev_delta = ev_now - old_ev
-
-        hours = (o.get("_pin_epoch", now_epoch + 86400) - now_epoch) / 3600
-        # V4.5: 提高重推阈值 — 赔率日常波动3-5%, 小波动不值得重推
-        # V4.5: 溢价驱动重推 — 溢价增幅≥1%即可重推
-        old_ev = old.get("ev", 0)
         old_fair = old.get("fair", 0)
-        # 旧指纹无 fair → 用旧EV作为proxy, 无法计算delta → 不重推
-        if old_fair > 0:
-            old_premium = (old_bb - old_fair) / old_fair * 100
-        else:
-            old_premium = old_ev  # 旧格式, 用保存的EV作为近似
-        new_premium = o.get("ev_pct", 0)
+        old_premium = ((old_bb - old_fair) / old_fair * 100) if old_fair > 0 else old.get("ev", 0)
+        new_premium = ev_now
         premium_delta = new_premium - old_premium
 
         if old_fair > 0 and premium_delta >= 2.0:
             re_pushed += 1
             result.append(o)
-            _audit_log("REPUSH", merged_key, o, f"premium+{premium_delta:.1f}% ({old_premium:.1f}→{new_premium:.1f}%)")
+            _audit_log("REPUSH", key, o, f"premium+{premium_delta:.1f}%")
         else:
             skipped += 1
-            _audit_log("SKIPPED", merged_key, o, f"premium_delta={premium_delta:.1f}%")
+            _audit_log("SKIPPED", key, o, f"premium_delta={premium_delta:.1f}%")
 
+    # 清理: 开赛超过24h的指纹删除
+    cleaned = {k: v for k, v in last_pushed.items()
+               if isinstance(v, dict) and v.get("kickoff", now_epoch + 86400) > now_epoch - 86400}
+    # 原子写入
+    tmp = pushed_file.with_suffix('.tmp')
     try:
-        # Layer 3: 原子写入 — temp file → rename + flock 防并发
-        merged = dict(last_pushed)
-        merged["_version"] = _FINGERPRINT_VERSION
-        merged.update(new_opps)
-        # V4.5: 比赛驱动保留 — 保留至开赛后2h, 最多7天
-        # 防止同场比赛在3天后指纹过期被重复推送
-        merged = {k: v for k, v in merged.items()
-                  if k == "_version"  # 保留版本号(非dict)
-                  or (isinstance(v, dict) and (
-                      v.get("ts", 0) > now_epoch - 86400 * 7
-                      or v.get("kickoff", 0) > now_epoch))}
-
-        tmp_file = pushed_file.with_suffix('.tmp')
-        import fcntl as _fcntl, os as _os
-        with open(tmp_file, 'w') as _f:
-            _f.write(_json.dumps(merged, ensure_ascii=False))
-            _f.flush()
-            _os.fsync(_f.fileno())
-        _os.replace(tmp_file, pushed_file)  # 原子 rename
+        with open(tmp, 'w') as f:
+            _json.dump(cleaned, f, ensure_ascii=False)
+            f.flush(); _os.fsync(f.fileno())
+        _os.replace(tmp, pushed_file)
     except Exception as e:
-        logger.warning("指纹文件写入失败: %s", e)
+        logger.warning("指纹写入失败: %s", e)
 
-    if skipped:
-        logger.info("去重过滤: 跳过 %d 条", skipped)
-    if re_pushed:
-        logger.info("赔率改善重推: %d 条", re_pushed)
+    if skipped: logger.info("去重: 跳过%d条", skipped)
+    if re_pushed: logger.info("重推: %d条", re_pushed)
     _fcntl.flock(_lock_fd.fileno(), _fcntl.LOCK_UN)
     _lock_fd.close()
     return result
