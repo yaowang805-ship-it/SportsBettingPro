@@ -915,6 +915,11 @@ def auto_settle(dry_run: bool = False) -> int:
         if not completed:
             logger.warning("  %s 无比分数据", display)
             consecutive_failures += 1
+            # V4.5: 记录联赛失败
+            fc = _failure_cache.get(league, {"consecutive": 0, "ts": now_ts})
+            fc["consecutive"] = fc.get("consecutive", 0) + 1
+            fc["ts"] = now_ts
+            _failure_cache[league] = fc
             if consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
                 logger.error("连续 %d 个联赛无数据, 结算中断(避免死循环)", consecutive_failures)
                 break
@@ -932,6 +937,9 @@ def auto_settle(dry_run: bool = False) -> int:
             continue
         else:
             consecutive_failures = 0  # 成功获取则重置
+            # V4.5: 成功后重置联赛失败计数
+            if league in _failure_cache:
+                del _failure_cache[league]
 
         source_quality = _detect_source_quality(completed)
         source_quality_log[(sport, league)] = source_quality
@@ -1069,6 +1077,13 @@ def auto_settle(dry_run: bool = False) -> int:
         _save_unresolved(unresolved_bets)
         if unresolved_bets:
             logger.warning("⏳ 待人工确认: %d 笔投注在所有数据源中均未找到匹配", len(unresolved_bets))
+
+    # V4.5: 保存联赛失败缓存
+    if _failure_cache:
+        try:
+            _failure_cache_file.parent.mkdir(parents=True, exist_ok=True)
+            _failure_cache_file.write_text(json.dumps(_failure_cache, ensure_ascii=False))
+        except: pass
 
     return settled_count
 
