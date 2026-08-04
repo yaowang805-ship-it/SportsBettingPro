@@ -2299,8 +2299,10 @@ def _filter_pushed(qualified: list) -> list:
         # V4.5: 比赛驱动保留 — 保留至开赛后2h, 最多7天
         # 防止同场比赛在3天后指纹过期被重复推送
         merged = {k: v for k, v in merged.items()
-                  if v.get("ts", 0) > now_epoch - 86400 * 7  # 7天硬上限
-                  or v.get("kickoff", 0) > now_epoch}  # 未开赛则保留
+                  if k == "_version"  # 保留版本号(非dict)
+                  or (isinstance(v, dict) and (
+                      v.get("ts", 0) > now_epoch - 86400 * 7
+                      or v.get("kickoff", 0) > now_epoch))}
 
         tmp_file = pushed_file.with_suffix('.tmp')
         import fcntl as _fcntl, os as _os
