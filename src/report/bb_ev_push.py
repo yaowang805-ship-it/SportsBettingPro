@@ -791,7 +791,7 @@ def _calc_kelly_stakes(opps: list) -> list:
         match_type = o.get("_match_type", "")
         match_score = o.get("_match_score", 0)
 
-        stake_pct = get_kelly_stake_pct(sport, league, sub, odds)
+        stake_pct = get_kelly_stake_pct(sport, league, sub, odds, match_type, match_score)
         if stake_pct <= 0:
             # V4.5: 历史均价可能低估当前BB赔率 → EV正值时给最低Kelly
             ev = o.get("ev_pct", 0)

@@ -1085,19 +1085,19 @@ BLOCKED_LEAGUES = {"中超", "Chinese Super League", "China Super League"}
 def _is_risky_mma_boxing(sport: str, league: str, odds: float,
                          match_type: str = "", match_score: float = 0,
                          flags: list = None) -> bool:
-    """MMA/Boxing 仅在 name 匹配 + 高分 + 无冲突时允许。"""
+    """MMA/Boxing 风控: name 匹配+高分 放行, time 匹配+高分 也放行(保守仓位)."""
     if sport not in ("mma", "boxing"):
         return False
-    if match_type != "name":
-        return True
-    if match_score < 0.95:
-        return True
     if flags and any("球员冲突" in f for f in flags):
         return True
-    # 高赔率 MMA/Boxing 仍然封杀 (>5.0)
-    if odds > 5.0:
-        return True
-    return False
+    # name 匹配: 高分放行
+    if match_type == "name" and match_score >= 0.95:
+        return odds > 5.0  # 只封高赔
+    # time 匹配: 需要更高分 (>=0.85)
+    if match_type == "time" and match_score >= 0.85:
+        return odds > 5.0
+    # 低置信匹配 → 拒绝
+    return True
 
 
 # =====================================================================
@@ -1279,11 +1279,13 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             data = UFC_DATA.get(idx)
             if data and data[2] >= 30:
                 wr, avg_o, n = data
-                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.70)
+                # V4.5 健康检查: 隐含 ROI > 20% → 数据异常, 走保守公式
+                if wr * avg_o - 1 <= 0.20:
+                    return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.50)
         if _is_risky_mma_boxing(sport_lower, league or "", odds,
                                 match_type, match_score, flags):
             return 0.0
-        return 0.01  # Boxing: 1% fixed
+        return 0.01  # 保守 1% (非 Pinnacle 数据)
 
     # ── Football ──
     if sport_lower == "football":
