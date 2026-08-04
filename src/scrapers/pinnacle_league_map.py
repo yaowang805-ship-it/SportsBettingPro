@@ -483,6 +483,13 @@ def _auto_map_team_names(matched_entries):
             if not bb_away.isascii() and bb_away not in TEAM_NAME_MAP:
                 TEAM_NAME_MAP[bb_away] = pin_away
                 new_pairs += 1
+
+    # 持久化: 每次学习后立即保存
+    if new_pairs > 0:
+        _save_team_name_map(TEAM_NAME_MAP)
+        import logging
+        logging.getLogger(__name__).info(f"队名映射: +{new_pairs} 条 (总计 {len(TEAM_NAME_MAP)})")
+
 def _match_pin_name(pn, pin_name):
     """Check if pin keyword matches Pinnacle league name (word boundary)."""
     needle = pn.lower()
