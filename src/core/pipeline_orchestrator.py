@@ -349,8 +349,27 @@ class PipelineOrchestrator:
     # ------------------------------------------------------------------
     # 具体任务实现
     # ------------------------------------------------------------------
+    def _reload_critical_modules(self):
+        """V4.5: 每次任务前重载关键模块 — 代码改动立即生效, 不需要等5min热更新."""
+        import importlib
+        _CRITICAL = [
+            "src.scrapers.bb_vs_pinnacle",
+            "src.scrapers.matching_engine",
+            "src.scrapers.pinnacle_league_map",
+            "src.scrapers.pinnacle_opportunities",
+            "src.report.bb_ev_push",
+            "config.weight_matrix_v4",
+        ]
+        for mod_name in _CRITICAL:
+            try:
+                if mod_name in sys.modules:
+                    importlib.reload(sys.modules[mod_name])
+            except Exception as e:
+                logger.warning(f"模块热重载失败 {mod_name}: {e}")
+
     def do_full_scan(self, bet: bool = True):
         """全量扫描：提取 → 对比 → 推送。"""
+        self._reload_critical_modules()
         # 设置推送标签（保存/恢复避免影响增量扫描）
         _prev_label = os.environ.get("PUSH_LABEL", "")
         os.environ["PUSH_LABEL"] = "每日定时全量推送"
@@ -409,6 +428,7 @@ class PipelineOrchestrator:
 
     def do_incremental(self, time_window: str = "all"):
         """增量扫描。time_window = "near" | "far" | "all" """
+        self._reload_critical_modules()
         from src.scrapers.bb_incremental_scanner import run_incremental
         run_incremental(time_window=time_window)
 
@@ -887,7 +907,7 @@ class PipelineOrchestrator:
     # V4.4: 代码热更新 — 检测源文件变更后自动重启
     # ------------------------------------------------------------------
     _CODE_MTIME_SNAPSHOT: dict = {}
-    _CODE_CHECK_INTERVAL = 300  # 每 5 分钟检查一次
+    _CODE_CHECK_INTERVAL = 60  # 每 5 分钟检查一次
 
     def _snapshot_code_mtimes(self):
         """记录 src/ 下所有 .py 文件的修改时间。"""
