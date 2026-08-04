@@ -1327,11 +1327,16 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
 
         elif sub_market in ("hc", "handicap"):
             # V4.5: HC 独立标定 — 使用 Pinnacle 亚洲让球收盘数据 (49K)
+            # V4.5 fix: ROI 健康检查 — 异常高 ROI (>15%) 说明数据源非 Pinnacle 收盘, 退回1X2
             data = PIN_HC_DATA.get(idx)
             if data and data[2] >= 20:
                 wr, avg_o, n = data
-                bb_prem = _bb_premium_1x2(odds) * 0.95  # HC BB溢价略低
-                return kelly_075(wr, avg_o, bb_prem, n)
+                implied_roi = wr * avg_o - 1
+                if implied_roi > 0.15:  # 不可能来自 Pinnacle 收盘
+                    pass  # 跳过, 走1X2回退
+                else:
+                    bb_prem = _bb_premium_1x2(odds) * 0.95
+                    return kelly_075(wr, avg_o, bb_prem, n)
             # 回退到1X2数据
             league_data = _match_league(league, PIN_1X2_DATA)
             if not league_data:
