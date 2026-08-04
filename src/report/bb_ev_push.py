@@ -2254,17 +2254,18 @@ def _filter_pushed(qualified: list) -> list:
 
         hours = (o.get("_pin_epoch", now_epoch + 86400) - now_epoch) / 3600
         # V4.5: 提高重推阈值 — 赔率日常波动3-5%, 小波动不值得重推
-        if hours <= 6:    bb_th, ev_th = 8.0, 4.0   # 临场: BB>8%才重推
-        elif hours <= 24: bb_th, ev_th = 12.0, 6.0  # 当天: BB>12%
-        else:             bb_th, ev_th = 20.0, 10.0  # 更早: BB>20%
+        # V4.5: 溢价驱动重推 — 溢价增幅>1%即可重推
+        old_premium = (old_bb - old.get("fair", old_bb)) / old.get("fair", old_bb) * 100 if old.get("fair", 0) > 0 else 0
+        new_premium = o.get("ev_pct", 0)
+        premium_delta = new_premium - old_premium
 
-        if bb_change >= bb_th or ev_delta >= ev_th:
+        if premium_delta >= 1.0:
             re_pushed += 1
             result.append(o)
-            _audit_log("REPUSH", merged_key, o, f"bb_change={bb_change:.1f}% ev_delta={ev_delta:.1f}")
+            _audit_log("REPUSH", merged_key, o, f"premium+{premium_delta:.1f}% ({old_premium:.1f}→{new_premium:.1f}%)")
         else:
             skipped += 1
-            _audit_log("SKIPPED", merged_key, o, f"bb_change={bb_change:.1f}% (threshold={bb_th}%)")
+            _audit_log("SKIPPED", merged_key, o, f"premium_delta={premium_delta:.1f}%")
 
     try:
         # Layer 3: 原子写入 — temp file → rename + flock 防并发
