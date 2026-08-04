@@ -430,7 +430,7 @@ def run_incremental(time_window: str = "all"):
     # 9. 推送新机会 (每2小时一次, 防止消息轰炸)
     push_ok = True
     _push_throttle_file = DATA_DIR / ".last_push_time"
-    _push_interval = 1800  # 30分钟 (夏天低频, 8月底改为7200)
+    _push_interval = 900  # 15分钟
     now_ts = time.time()
     last_push = float(_push_throttle_file.read_text().strip()) if _push_throttle_file.exists() else 0
 
