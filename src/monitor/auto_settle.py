@@ -1012,6 +1012,18 @@ def auto_settle(dry_run: bool = False) -> int:
                     except Exception as e:
                         logger.warning("  ⚠️ 风险状态同步失败: %s", e)
                 settled_count += 1
+                # V4.5: 结算后立即贝叶斯反馈 → V4权重矩阵自我进化
+                try:
+                    from src.evolve.v4_evolver import bayesian_update_settlement
+                    outcome_str = result.get("outcome", "")
+                    bayesian_update_settlement(
+                        league=bet.get("league", ""),
+                        sub_market=bet.get("market_type", "1x2"),
+                        odds=bet.get("odds", 0),
+                        outcome="won" if outcome_str == "won" else "lost",
+                        stake=bet.get("stake", 0),
+                    )
+                except Exception: pass
             else:
                 # 三态：有数据但匹配失败 → 标记 unresolved
                 unresolved_bets.append({

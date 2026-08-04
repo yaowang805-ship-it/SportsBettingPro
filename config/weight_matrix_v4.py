@@ -1516,6 +1516,14 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             bb_prem = _bb_premium_1x2(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n)
+            # V4.5 自我进化: 结算后验覆盖Pinnacle先验
+            try:
+                from src.evolve.v4_evolver import get_settlement_posterior
+                post = get_settlement_posterior(league, idx, "1x2")
+                if post:
+                    stake_post = kelly_075(post, avg_o, bb_prem, max(n, 10))
+                    stake = stake * 0.7 + stake_post * 0.3  # 70%Pin + 30%结算
+            except ImportError: pass
             return stake * _settlement_multiplier(league) * _clv_multiplier(league)
 
     # ── Tennis (V4.2: 直接编码, 不再复用V3) ──

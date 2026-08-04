@@ -438,6 +438,59 @@ def backup_critical_data():
                 backed_up, backup_dir, len(list(backup_dir.glob("*"))))
 
 
+# =====================================================================
+# 6. 实时贝叶斯更新 (每次结算后调用)
+# =====================================================================
+def bayesian_update_settlement(league, sub_market, odds, outcome, stake=0):
+    """一次结算后立即更新该 (league, bin) 的贝叶斯后验.
+
+    供 auto_settle.py 在每个投注结算后调用.
+    """
+    if outcome == 'void': return
+    is_win = 1 if outcome == 'won' else 0
+
+    # 加载已有
+    bayesian_file = EVOLVE_DIR / "bayesian_weights.json"
+    data = {}
+    if bayesian_file.exists():
+        try: data = json.loads(bayesian_file.read_text())
+        except: pass
+
+    # 找赔率bin
+    from config.weight_matrix_v4 import ODDS_BINS
+    def _bi(o):
+        for i, t in enumerate(ODDS_BINS):
+            if o <= t: return i
+        return 29
+
+    bi = _bi(odds)
+    key = f"{league}|{bi}|{sub_market}"
+    entry = data.get(key, [0, 0])
+    data[key] = [entry[0] + is_win, entry[1] + 1]
+
+    # 精简：最多保留500条
+    if len(data) > 500:
+        oldest = min(data.keys(), key=lambda k: data[k][1])
+        del data[oldest]
+
+    with open(bayesian_file, 'w') as f:
+        json.dump(data, f, ensure_ascii=False)
+
+
+def get_settlement_posterior(league, bin_idx, sub_market="1x2") -> Optional[float]:
+    """获取该(league,bin)的结算后验胜率. None=无数据."""
+    bayesian_file = EVOLVE_DIR / "bayesian_weights.json"
+    if not bayesian_file.exists(): return None
+    try:
+        data = json.loads(bayesian_file.read_text())
+        key = f"{league}|{bin_idx}|{sub_market}"
+        entry = data.get(key)
+        if entry and entry[1] >= 3:
+            return round(entry[0] / entry[1], 4)
+    except: pass
+    return None
+
+
 if __name__ == "__main__":
     import sys
     logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(levelname)-7s | %(name)s | %(message)s')
