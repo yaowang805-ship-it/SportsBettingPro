@@ -997,8 +997,12 @@ if _CALIBRATED:
         NFL_OU_DATA = _CALIBRATED["NFL_OU_DATA"]
     if "NFL_HC_DATA" in _CALIBRATED:
         NFL_HC_DATA_EXT = _CALIBRATED["NFL_HC_DATA"]
-    if "MLB_ODDSPORTAL_DATA" in _CALIBRATED:
+    if "MLB_MULTI_ML_DATA" in _CALIBRATED:
+        MLB_DATA = _CALIBRATED["MLB_MULTI_ML_DATA"]  # V4.5: 2,467场BookMaker收盘
+    elif "MLB_ODDSPORTAL_DATA" in _CALIBRATED:
         MLB_DATA = _CALIBRATED["MLB_ODDSPORTAL_DATA"]
+    if "TENNIS_PINNACLE_ML" in _CALIBRATED:
+        TENNIS_DATA_EXT = _CALIBRATED["TENNIS_PINNACLE_ML"]  # V4.5: 236场GS Pinnacle收盘
 del _CALIBRATED
 
 # 赛季时间衰减 — V4.2: 近年数据权重更高
@@ -1540,12 +1544,19 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             return 'ATP 250'
         tour_data = TENNIS_DATA.get(_match_tour(league))
         if tour_data is None:
-            return 0.0
+            # V4.5: 回退到 Pinnacle Grand Slam 236场数据
+            try: tour_data = TENNIS_DATA_EXT
+            except NameError: return 0.0
+            if tour_data is None: return 0.0
 
         idx = _bin_index(odds, TENNIS_ODDS_BINS)
         data = tour_data.get(idx)
         if not data or data[2] < 10:
-            return 0.0
+            # V4.5: 回退到 Pinnacle Grand Slam 数据
+            try: data = TENNIS_DATA_EXT.get(idx) if 'TENNIS_DATA_EXT' in dir() else None
+            except: data = None
+            if not data or data[2] < 5:
+                return 0.0
         wr, avg_o, n = data
         
         # Kelly: edge = wr×avg_o×(1+bb_prem) - 1
