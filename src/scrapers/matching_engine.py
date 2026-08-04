@@ -603,13 +603,20 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
             if bb_key in used_bb_keys or pin_id in used_pin_ids:
                 continue
             # Phase 2 队名校验：防止时间+赔率相似但实际不同比赛的错误匹配
-            # 如果队名完全不相关(score<0.3)且combined非极高(<0.90)，跳过
-            # V4.5: 个人运动(tennis/boxing/mma)跳过队名校验 — 中英文名天然不匹配
-            if sport not in ("tennis", "boxing", "mma"):
-                tn_score = team_name_score(
+            # V4.5: 加入 rapidfuzz 模糊匹配 — 提升中英文名匹配率
+            tn_score = team_name_score(
+                bb.get("home", ""), bb.get("away", ""),
+                pin.get("home", ""), pin.get("away", "")
+            )
+            # 队名映射失败时尝试 rapidfuzz
+            if tn_score < 0.3 and _HAS_RAPIDFUZZ:
+                fuzzy_score, _ = fuzzy_match_teams(
                     bb.get("home", ""), bb.get("away", ""),
-                    pin.get("home", ""), pin.get("away", "")
+                    pin.get("home", ""), pin.get("away", ""), threshold=75
                 )
+                tn_score = max(tn_score, fuzzy_score)
+
+            if sport not in ("tennis", "boxing", "mma"):
                 if tn_score < 0.3 and combined < 0.90:
                     continue
             used_bb_keys.add(bb_key)
@@ -621,4 +628,189 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
             })
 
     return name_matched + matched
+
+
+# =====================================================================
+# V4.5 业界级映射增强
+# =====================================================================
+
+# ── 1. rapidfuzz 模糊匹配 ──
+try:
+    from rapidfuzz import fuzz, process
+    _HAS_RAPIDFUZZ = True
+except ImportError:
+    _HAS_RAPIDFUZZ = False
+
+
+def _normalize_team(name: str) -> str:
+    """标准化队名: 去国家后缀、去括号、去空格、小写."""
+    name = re.sub(r'\s*[（(][^)）]*[)）]', '', (name or ''))
+    name = re.sub(r'\s+', ' ', name).strip().lower()
+    return name
+
+
+def _generate_aliases(name: str) -> list:
+    """自动生成队名别名.
+    曼联 → [曼联, Man United, Manchester United, Man Utd]
+    """
+    name = (name or '').strip()
+    aliases = [name]
+    # 取最后一部分 (俱乐部名)
+    parts = name.split()
+    if len(parts) >= 2:
+        aliases.append(parts[-1])  # e.g. "Manchester United" → "United"
+    # 去掉常见后缀
+    for suffix in ['FC', 'SC', 'CF', 'United', 'City', 'Club']:
+        if name.endswith(' ' + suffix):
+            aliases.append(name[:-len(suffix)-1])
+    return aliases
+
+
+def fuzzy_match_teams(bb_home, bb_away, pin_home, pin_away, threshold=85):
+    """使用 rapidfuzz 模糊匹配队名. 返回 (score, is_swapped)."""
+    if not _HAS_RAPIDFUZZ:
+        return 0.0, False
+
+    bb_h = _normalize_team(bb_home)
+    bb_a = _normalize_team(bb_away)
+    pin_h = _normalize_team(pin_home)
+    pin_a = _normalize_team(pin_away)
+
+    if not bb_h or not bb_a or not pin_h or not pin_a:
+        return 0.0, False
+
+    # 直向匹配
+    direct_h = max(fuzz.ratio(bb_h, pin_h), fuzz.partial_ratio(bb_h, pin_h),
+                   fuzz.token_sort_ratio(bb_h, pin_h))
+    direct_a = max(fuzz.ratio(bb_a, pin_a), fuzz.partial_ratio(bb_a, pin_a),
+                   fuzz.token_sort_ratio(bb_a, pin_a))
+    direct = (direct_h + direct_a) / 200  # 标准化到 0-1
+
+    # 交叉匹配 (home↔away swap)
+    cross_h = max(fuzz.ratio(bb_h, pin_a), fuzz.partial_ratio(bb_h, pin_a),
+                  fuzz.token_sort_ratio(bb_h, pin_a))
+    cross_a = max(fuzz.ratio(bb_a, pin_h), fuzz.partial_ratio(bb_a, pin_h),
+                  fuzz.token_sort_ratio(bb_a, pin_h))
+    cross = (cross_h + cross_a) / 200
+
+    if direct >= cross and direct >= threshold/100:
+        return direct, False
+    elif cross >= threshold/100:
+        return cross, True
+    return 0.0, False
+
+
+# ── 2. Union-Find 同一比赛去重 ──
+class UnionFind:
+    """并查集 — 将等价比赛聚类."""
+    def __init__(self):
+        self.parent = {}
+        self.rank = {}
+
+    def find(self, x):
+        if x not in self.parent:
+            self.parent[x] = x
+            self.rank[x] = 0
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+    def union(self, x, y):
+        rx, ry = self.find(x), self.find(y)
+        if rx == ry: return
+        if self.rank[rx] < self.rank[ry]:
+            self.parent[rx] = ry
+        elif self.rank[rx] > self.rank[ry]:
+            self.parent[ry] = rx
+        else:
+            self.parent[ry] = rx
+            self.rank[rx] += 1
+
+
+def dedup_cross_league(matched_entries):
+    """Union-Find 去重: 同一Pinnacle比赛被不同BB联赛匹配时, 只保留最高分."""
+    if len(matched_entries) <= 1:
+        return matched_entries
+
+    uf = UnionFind()
+    # 用 Pin matchup_id 作为聚类 key
+    pin_to_entries = defaultdict(list)
+    for i, entry in enumerate(matched_entries):
+        pin = entry.get("pin", {})
+        pin_id = pin.get("matchup_id", pin.get("id", id(pin)))
+        pin_to_entries[pin_id].append(i)
+
+    # 同一 Pin ID → 只保留最高分
+    kept = []
+    seen_pins = set()
+    for entry in matched_entries:
+        pin = entry.get("pin", {})
+        pin_id = pin.get("matchup_id", pin.get("id", id(pin)))
+        if pin_id in seen_pins:
+            # 找此 pin 已保留的条目, 保留更高分
+            for i, e in enumerate(kept):
+                e_pin = e.get("pin", {})
+                e_pid = e_pin.get("matchup_id", e_pin.get("id", id(e_pin)))
+                if e_pid == pin_id:
+                    if entry.get("match_score", 0) > e.get("match_score", 0):
+                        kept[i] = entry
+                    break
+        else:
+            seen_pins.add(pin_id)
+            kept.append(entry)
+
+    return kept
+
+
+# ── 3. 日期无关匹配 (篮球/网球延期) ──
+def try_date_independent_match(bb_matches, pin_matches_by_league, sport="tennis"):
+    """当时间窗口匹配失败时, 尝试纯赔率+名模糊匹配.
+
+    适用场景: 比赛延期、时区错误、赛程调整.
+    仅用于个人运动 (tennis/boxing/mma), 团队运动风险太高.
+    """
+    if sport not in ("tennis", "boxing", "mma"):
+        return []
+
+    results = []
+    from src.scrapers.pinnacle_league_map import find_pinnacle_league_ids
+
+    for bb in bb_matches:
+        bb_league = bb.get("league", "")
+        if bb_league not in pin_matches_by_league:
+            continue
+
+        bb_1x2, valid = extract_bb_1x2(bb, sport)
+        if not valid or len(bb_1x2) < 2:
+            continue
+
+        best_score = 0.45  # 更高的门槛
+        best_pin = None
+
+        for pin in pin_matches_by_league.get(bb_league, []):
+            pin_ml = get_pin_ml_sorted(pin, sport)
+            if len(pin_ml) < 2: continue
+
+            # 纯赔率相似度 (无时间因素)
+            odds_score = _odds_similarity(bb_1x2, pin_ml, 2, sport)
+            # 名字模糊匹配
+            name_score, _ = fuzzy_match_teams(
+                bb.get("home", ""), bb.get("away", ""),
+                pin.get("home", ""), pin.get("away", ""), threshold=70
+            )
+            # 综合: odds主导 + name加成
+            combined = odds_score * 0.7 + name_score * 0.3
+            if combined > best_score:
+                best_score = combined
+                best_pin = pin
+
+        if best_pin and best_score >= 0.55:
+            results.append({
+                "bb": bb, "pin": best_pin, "league": bb_league,
+                "match_score": round(best_score, 3), "match_type": "date_indep",
+                "bb_1x2": bb_1x2, "pin_1x2": get_pin_ml_sorted(best_pin, sport),
+                "sport": sport,
+            })
+
+    return results
 

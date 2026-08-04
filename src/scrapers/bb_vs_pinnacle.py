@@ -403,6 +403,28 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     # 7. Find overlapping matches by odds pattern matching
     matched = find_matches_by_odds(bb_matches, pin_by_bb_league)
 
+    # V4.5: Union-Find 去重 — 跨联赛同比赛只保留最高分
+    from src.scrapers.matching_engine import dedup_cross_league, try_date_independent_match
+    if matched:
+        before = len(matched)
+        matched = dedup_cross_league(matched)
+        if len(matched) < before:
+            print(f"  🔗 Union-Find去重: {before}→{len(matched)} (移除{before-len(matched)}个重复)")
+
+    # V4.5: 日期无关匹配 — 网球/拳击/MMA 延期比赛
+    for sport_name in ("tennis", "boxing", "mma"):
+        sport_matches = try_date_independent_match(bb_matches, pin_by_bb_league, sport=sport_name)
+        if sport_matches:
+            # 去重: 避免与已有匹配重复
+            used_bb = {_make_bb_key(m["bb"]) for m in matched}
+            used_pin = {m["pin"].get("matchup_id", id(m["pin"])) for m in matched}
+            new = [m for m in sport_matches
+                   if _make_bb_key(m["bb"]) not in used_bb
+                   and m["pin"].get("matchup_id", id(m["pin"])) not in used_pin]
+            if new:
+                matched.extend(new)
+                print(f"  📅 日期无关匹配 [{sport_name}]: +{len(new)} 场")
+
     # 自动队名映射：从高置信度匹配中提取中文→英文队名
     if matched:
         _auto_map_team_names(matched)
