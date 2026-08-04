@@ -616,7 +616,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     _direct_diff += abs(bb_ml[i] - pin_ml[i])
             _pin_cross = list(pin_ml)
             _pin_cross[0], _pin_cross[-1] = _pin_cross[-1], _pin_cross[0]
-            _n = min(len(bb_ml), len(pin_ml)); 
+            _n = min(len(bb_ml), len(pin_ml))
+            for i in range(_n):
                 if bb_ml[i] and _pin_cross[i]:
                     _cross_diff += abs(bb_ml[i] - _pin_cross[i])
             # V4.2: 放宽阈值 — 2-way sport (篮球等) 赔率接近, 需要更敏感
