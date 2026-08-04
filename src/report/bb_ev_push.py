@@ -2224,7 +2224,8 @@ def _filter_pushed(qualified: list) -> list:
         ev_now = o.get("ev_pct", 0)
 
         merged_key = key  # 保存用精确 key
-        new_opps[merged_key] = {"bb": bb_now, "ev": ev_now, "ts": time.time()}
+        new_opps[merged_key] = {"bb": bb_now, "ev": ev_now, "ts": time.time(),
+                                 "kickoff": o.get("_pin_epoch", now_epoch + 86400)}
 
         # 查找: 先精确, 再模糊
         old = last_pushed.get(key)
@@ -2263,9 +2264,11 @@ def _filter_pushed(qualified: list) -> list:
         # Layer 3: 原子写入 — temp file → rename + flock 防并发
         merged = dict(last_pushed)
         merged.update(new_opps)
-        # 清理 3 天前的过期记录
-        cutoff = time.time() - 86400 * 3
-        merged = {k: v for k, v in merged.items() if v.get("ts", 0) > cutoff}
+        # V4.5: 比赛驱动保留 — 保留至开赛后2h, 最多7天
+        # 防止同场比赛在3天后指纹过期被重复推送
+        merged = {k: v for k, v in merged.items()
+                  if v.get("ts", 0) > now_epoch - 86400 * 7  # 7天硬上限
+                  or v.get("kickoff", 0) > now_epoch}  # 未开赛则保留
 
         tmp_file = pushed_file.with_suffix('.tmp')
         import fcntl as _fcntl, os as _os

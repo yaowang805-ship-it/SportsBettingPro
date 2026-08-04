@@ -610,12 +610,13 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         if not _ml_swapped and len(bb_ml) >= 2 and len(pin_ml) >= 2:
             _direct_diff = 0.0
             _cross_diff = 0.0
-            for i in range(len(bb_ml)):
+            _n_compare = min(len(bb_ml), len(pin_ml))  # V4.5: 防数组不等长
+            for i in range(_n_compare):
                 if bb_ml[i] and pin_ml[i]:
                     _direct_diff += abs(bb_ml[i] - pin_ml[i])
             _pin_cross = list(pin_ml)
             _pin_cross[0], _pin_cross[-1] = _pin_cross[-1], _pin_cross[0]
-            for i in range(len(bb_ml)):
+            _n = min(len(bb_ml), len(pin_ml)); 
                 if bb_ml[i] and _pin_cross[i]:
                     _cross_diff += abs(bb_ml[i] - _pin_cross[i])
             # V4.2: 放宽阈值 — 2-way sport (篮球等) 赔率接近, 需要更敏感
