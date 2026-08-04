@@ -1,0 +1,51 @@
+﻿Country;Season;Date;Type;Home_Team;Home_Goal;Away_Goal;Away_Team;Note;Odds_Home;Odds_Draw;Odds_Away;End_Of_RT;Interval;Exact number of goals;Winning margin;BTTS
+USA;NHL 2003/2004;05/05/1998;Regular Season;Toronto Maple Leafs;3;1;New York Rangers;;110;247;187;Home;4 | 6;4;2;Yes
+USA;NHL 1998/1999;09/10/1998;Regular Season;Florida Panthers;4;1;Tampa Bay Lightning;;-125;359;200;Home;4 | 6;5;3_or_more;Yes
+USA;NHL 1998/1999;09/10/1998;Regular Season;New York Rangers;0;1;Philadelphia Flyers;;135;330;129;Away;0 | 1;1;1;No
+USA;NHL 1998/1999;10/10/1998;Regular Season;Boston Bruins;3;3;St. Louis Blues;OT;110;330;140;Draw;4 | 6;6;zero;Yes
+USA;NHL 1998/1999;10/10/1998;Regular Season;Carolina Hurricanes;4;4;Tampa Bay Lightning;OT;-143;350;210;Draw;7_or_more;8;zero;Yes
+USA;NHL 1998/1999;10/10/1998;Regular Season;Chicago Blackhawks;2;1;New Jersey Devils;;129;325;125;Home;2 | 3;3;1;Yes
+USA;NHL 1998/1999;10/10/1998;Regular Season;Colorado Avalanche;3;4;Ottawa Senators;;-179;359;265;Away;7_or_more;7;1;Yes
+USA;NHL 1998/1999;10/10/1998;Regular Season;Dallas Stars;4;1;Buffalo Sabres;;-143;340;210;Home;4 | 6;5;3_or_more;Yes
+USA;NHL 1998/1999;10/10/1998;Regular Season;Edmonton Oilers;1;2;Los Angeles Kings;;100;340;160;Away;2 | 3;3;1;Yes
+USA;NHL 1998/1999;10/10/1998;Regular Season;Montreal Canadiens;7;1;New York Rangers;;100;340;165;Home;7_or_more;8;3_or_more;Yes
+USA;NHL 1998/1999;10/10/1998;Regular Season;Nashville Predators;0;1;Florida Panthers;;140;330;110;Away;0 | 1;1;1;No
+USA;NHL 1998/1999;10/10/1998;Regular Season;New York Islanders;3;4;Pittsburgh Penguins;;140;330;110;Away;7_or_more;7;1;Yes
+USA;NHL 1998/1999;10/10/1998;Regular Season;Toronto Maple Leafs;2;1;Detroit Red Wings;;140;325;114;Home;2 | 3;3;1;Yes
+USA;NHL 1998/1999;10/10/1998;Regular Season;Washington Capitals;1;0;Anaheim Ducks;;-125;350;200;Home;0 | 1;1;1;No
+USA;NHL 1998/1999;11/10/1998;Regular Season;Arizona Coyotes;1;4;Ottawa Senators;;-105;330;150;Away;4 | 6;5;3_or_more;Yes
+USA;NHL 1998/1999;11/10/1998;Regular Season;Philadelphia Flyers;4;1;Anaheim Ducks;;-182;359;265;Home;4 | 6;5;3_or_more;Yes
+USA;NHL 1998/1999;13/10/1998;Regular Season;Dallas Stars;3;1;Chicago Blackhawks;;-179;330;260;Home;4 | 6;4;2;Yes
+USA;NHL 1998/1999;13/10/1998;Regular Season;Edmonton Oilers;2;3;Toronto Maple Leafs;;100;309;165;Away;4 | 6;5;1;Yes
+USA;NHL 1998/1999;13/10/1998;Regular Season;Montreal Canadiens;1;0;Anaheim Ducks;;-133;325;200;Home;0 | 1;1;1;No
+USA;NHL 1998/1999;13/10/1998;Regular Season;Nashville Predators;3;2;Carolina Hurricanes;;150;305;104;Home;4 | 6;5;1;Yes
+USA;NHL 1998/1999;13/10/1998;Regular Season;Washington Capitals;2;3;Detroit Red Wings;;135;309;129;Away;4 | 6;5;1;Yes
+USA;NHL 1998/1999;14/10/1998;Regular Season;Colorado Avalanche;0;3;Boston Bruins;;-152;330;235;Away;2 | 3;3;3_or_more;No
+USA;NHL 1998/1999;14/10/1998;Regular Season;New Jersey Devils;1;3;Pittsburgh Penguins;;-111;309;175;Away;4 | 6;4;2;Yes
+USA;NHL 1998/1999;14/10/1998;Regular Season;Tampa Bay Lightning;0;2;New York Islanders;;110;305;145;Away;2 | 3;2;2;No
+USA;NHL 1998/1999;14/10/1998;Regular Season;Vancouver Canucks;1;4;Edmonton Oilers;;-118;309;175;Away;4 | 6;5;3_or_more;Yes
+USA;NHL 1998/1999;15/10/1998;Regular Season;Arizona Coyotes;5;2;Colorado Avalanche;;110;309;125;Home;7_or_more;7;3_or_more;Yes
+USA;NHL 1998/1999;15/10/1998;Regular Season;Carolina Hurricanes;2;2;Dallas Stars;OT;165;309;100;Draw;4 | 6;4;zero;Yes
+USA;NHL 1998/1999;15/10/1998;Regular Season;Chicago Blackhawks;3;5;Anaheim Ducks;;-125;315;200;Away;7_or_more;8;2;Yes
+USA;NHL 1998/1999;16/10/1998;Regular Season;Buffalo Sabres;2;2;Florida Panthers;OT;-133;320;215;Draw;4 | 6;4;zero;Yes
+USA;NHL 1998/1999;16/10/1998;Regular Season;Calgary Flames;3;7;Toronto Maple Leafs;;125;305;129;Away;7_or_more;10;3_or_more;Yes
+USA;NHL 1998/1999;16/10/1998;Regular Season;Detroit Red Wings;4;1;St. Louis Blues;;-125;320;200;Home;4 | 6;5;3_or_more;Yes
+USA;NHL 1998/1999;16/10/1998;Regular Season;Los Angeles Kings;2;1;Boston Bruins;OT;110;305;150;Draw;2 | 3;3;1;Yes
+USA;NHL 1998/1999;16/10/1998;Regular Season;New York Rangers;1;2;New Jersey Devils;;145;309;125;Away;2 | 3;3;1;Yes
+USA;NHL 1998/1999;16/10/1998;Regular Season;Tampa Bay Lightning;2;5;Philadelphia Flyers;;185;320;-118;Away;7_or_more;7;3_or_more;Yes
+USA;NHL 1998/1999;16/10/1998;Regular Season;Washington Capitals;2;2;Montreal Canadiens;OT;-111;309;175;Draw;4 | 6;4;zero;Yes
+USA;NHL 1998/1999;17/10/1998;Regular Season;Carolina Hurricanes;1;1;Philadelphia Flyers;OT;175;309;-105;Draw;2 | 3;2;zero;Yes
+USA;NHL 1998/1999;17/10/1998;Regular Season;Chicago Blackhawks;4;3;Dallas Stars;;140;300;114;Home;7_or_more;7;1;Yes
+USA;NHL 1998/1999;17/10/1998;Regular Season;Montreal Canadiens;3;4;Buffalo Sabres;;110;300;170;Away;7_or_more;7;1;Yes
+USA;NHL 1998/1999;17/10/1998;Regular Season;New Jersey Devils;2;4;Edmonton Oilers;;-143;320;229;Away;4 | 6;6;2;Yes
+USA;NHL 1998/1999;17/10/1998;Regular Season;Ottawa Senators;3;1;Nashville Predators;;-179;330;290;Home;4 | 6;4;2;Yes
+USA;NHL 1998/1999;17/10/1998;Regular Season;Pittsburgh Penguins;3;3;New York Rangers;OT;-154;320;225;Draw;4 | 6;6;zero;Yes
+USA;NHL 1998/1999;17/10/1998;Regular Season;St. Louis Blues;0;1;New York Islanders;;-154;320;229;Away;0 | 1;1;1;No
+USA;NHL 1998/1999;17/10/1998;Regular Season;Vancouver Canucks;4;1;Toronto Maple Leafs;;120;300;129;Home;4 | 6;5;3_or_more;Yes
+USA;NHL 1998/1999;18/10/1998;Regular Season;Detroit Red Wings;2;0;Calgary Flames;;-200;340;320;Home;2 | 3;2;2;No
+USA;NHL 1998/1999;18/10/1998;Regular Season;Los Angeles Kings;5;5;Colorado Avalanche;OT;120;300;120;Draw;7_or_more;10;zero;Yes
+USA;NHL 1998/1999;18/10/1998;Regular Season;San Jose Sharks;0;3;Boston Bruins;;135;300;114;Away;2 | 3;3;3_or_more;No
+USA;NHL 1998/1999;18/10/1998;Regular Season;Tampa Bay Lightning;1;4;Washington Capitals;;150;300;104;Away;4 | 6;5;3_or_more;Yes
+USA;NHL 1998/1999;19/10/1998;Regular Season;Arizona Coyotes;3;1;Boston Bruins;;114;300;145;Home;4 | 6;4;2;Yes
+USA;NHL 1998/1999;19/10/1998;Regular Season;Montreal Canadiens;1;2;Chicago Blackhawks;;-111;309;185;Away;2 | 3;3;1;Yes
+USA;NHL 1998/1999;19/10/1998;Regular Season;Toronto Maple Leafs;2;2;Nashville Predators;OT;-217;350;380;Draw;4 | 6;4;zero;Yes
