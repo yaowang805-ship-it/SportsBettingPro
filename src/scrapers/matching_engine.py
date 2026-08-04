@@ -532,12 +532,14 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                 continue
             # Phase 2 队名校验：防止时间+赔率相似但实际不同比赛的错误匹配
             # 如果队名完全不相关(score<0.3)且combined非极高(<0.90)，跳过
-            tn_score = team_name_score(
-                bb.get("home", ""), bb.get("away", ""),
-                pin.get("home", ""), pin.get("away", "")
-            )
-            if tn_score < 0.3 and combined < 0.90:
-                continue
+            # V4.5: 个人运动(tennis/boxing/mma)跳过队名校验 — 中英文名天然不匹配
+            if sport not in ("tennis", "boxing", "mma"):
+                tn_score = team_name_score(
+                    bb.get("home", ""), bb.get("away", ""),
+                    pin.get("home", ""), pin.get("away", "")
+                )
+                if tn_score < 0.3 and combined < 0.90:
+                    continue
             used_bb_keys.add(bb_key)
             used_pin_ids.add(pin_id)
             matched.append({

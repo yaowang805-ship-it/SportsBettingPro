@@ -1235,16 +1235,20 @@ def _collect_opportunities(match, market_key):
 
         # 🔴 终极保护: 验证 BB 价格是否真实存在于 BB 数据中
         # 防止 home/away 反转、线错配等比较引擎 bug 产生 phantom price
-        # 转换 line 为 float (JSON 可能返回 string)
-        _raw_line = opp.get("line")
-        try: _line = float(_raw_line) if _raw_line else None
-        except (ValueError, TypeError): _line = None
+        # V4.5: name匹配+高分(>=0.95) → 队名已确认, 跳过价格验证
+        if match_type == "name" and match_score >= 0.95:
+            _price_ok = True
+        else:
+            # 转换 line 为 float (JSON 可能返回 string)
+            _raw_line = opp.get("line")
+            try: _line = float(_raw_line) if _raw_line else None
+            except (ValueError, TypeError): _line = None
 
-        _price_ok = _verify_bb_price_exists(
-            match.get("home_bb", ""), match.get("away_bb", ""),
-            opp.get("designation", ""), bb_odds, market_key,
-            _line
-        )
+            _price_ok = _verify_bb_price_exists(
+                match.get("home_bb", ""), match.get("away_bb", ""),
+                opp.get("designation", ""), bb_odds, market_key,
+                _line
+            )
         if not _price_ok:
             continue  # 价格不真实，跳过此机会
 
@@ -1503,10 +1507,12 @@ def _read_comparison_file(path):
         match_type = match.get("match_type", "")
         sport = match.get("sport", "")
         if sport in ("boxing", "mma"):
-            min_score = 0.80  # UFC/拳击映射错误多，0.60→0.80
-            # MMA/拳击时间匹配不可靠，同赛事多场同时开打，直接跳过整场
+            # V4.5: 中英文名无法匹配, 依赖Phase2 odds+time
+            # time匹配提高门槛至0.85防同赛事错配, name匹配(来自name_map)保持0.80
             if match_type == "time":
-                continue
+                min_score = 0.85
+            else:
+                min_score = 0.80
         elif sport == "tennis":
             min_score = 0.75  # 网球也从严，0.60→0.75
         else:
