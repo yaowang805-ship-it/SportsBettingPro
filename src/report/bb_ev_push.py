@@ -1147,8 +1147,8 @@ def _collect_opportunities(match, market_key):
 
     为每条机会附加 bb_price_source 字段，标记该赔率来自哪个平台（BB/FB）。
     """
-    # V4.5: 72小时窗口 (超72h盘口基本锁定) + 已开赛过滤
-    # BB 和 Pinnacle 的时间戳可能不一致（时区/夏令时差异），取较早者防漏
+    sport = match.get("sport", "")
+    # V4.5: 运动差异化窗口 — 非足球放宽到5天
     pin_epoch = match.get("start_time_pin_epoch")
     bb_epoch = _parse_bb_time(match.get("start_time_bb", ""))
     now_epoch = datetime.now(timezone.utc).timestamp()
@@ -1158,14 +1158,19 @@ def _collect_opportunities(match, market_key):
         bb_epoch if bb_epoch else float('inf'),
     )
     if effective_epoch != float('inf'):
-        if effective_epoch > now_epoch + 72 * 3600:  # 72h cap
+        # V4.5: 运动差异化窗口 — 非足球比赛少, 放宽到5天
+        if sport == "football":
+            max_hours = 72
+        else:
+            max_hours = 120  # 5天: 其他运动比赛少, 不能太挑
+        if effective_epoch > now_epoch + max_hours * 3600:
             return []
         if effective_epoch + 300 < now_epoch:
             return []
 
     match_type = match.get("match_type", "unknown")
     match_score = match.get("match_score", 0.7)
-    sport = match.get("sport", "")
+    # sport 已在上方提取
     # 时间匹配（非队名匹配）需要高置信度，防止推错比赛。
     # 门限必须与 bb_vs_pinnacle.py Phase 2 保持一致：
     #   网球 0.75，其他 0.70
