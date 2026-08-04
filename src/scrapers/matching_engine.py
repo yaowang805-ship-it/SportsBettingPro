@@ -800,7 +800,8 @@ def try_date_independent_match(bb_matches, pin_matches_by_league, sport="tennis"
             )
             # 综合: odds主导 + name加成
             combined = odds_score * 0.7 + name_score * 0.3
-            if combined > best_score:
+            # V4.5: 拼音必须≥0.3 (过滤完全错配)
+            if name_score >= 0.3 and combined > best_score:
                 best_score = combined
                 best_pin = pin
 
