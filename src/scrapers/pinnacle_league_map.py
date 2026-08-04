@@ -489,6 +489,7 @@ def _auto_map_team_names(matched_entries):
     """
     new_pairs = 0
     skipped = 0
+    confirmed = 0  # 已有映射的确认次数
 
     for m in matched_entries:
         match_score = m.get("match_score", 0)
@@ -541,25 +542,31 @@ def _auto_map_team_names(matched_entries):
         # Map home team: only if BB name has non-ASCII characters
         if bb_home and pin_home and len(bb_home) >= 2:
             if not bb_home.isascii():
-                if bb_home not in TEAM_NAME_MAP:
+                is_new = bb_home not in TEAM_NAME_MAP
+                if is_new:
                     TEAM_NAME_MAP[bb_home] = pin_home
                     new_pairs += 1
+                else:
+                    confirmed += 1
                 _update_name_meta(TEAM_NAME_MAP, bb_home, pin_home, sport)
 
         # Map away team
         if bb_away and pin_away and len(bb_away) >= 2:
             if not bb_away.isascii():
-                if bb_away not in TEAM_NAME_MAP:
+                is_new = bb_away not in TEAM_NAME_MAP
+                if is_new:
                     TEAM_NAME_MAP[bb_away] = pin_away
                     new_pairs += 1
+                else:
+                    confirmed += 1
                 _update_name_meta(TEAM_NAME_MAP, bb_away, pin_away, sport)
 
-    # 持久化: 有新映射或确认数变化时保存
-    if new_pairs > 0 or skipped > 0:
+    # 持久化: 每次学习/确认后立即保存
+    if new_pairs > 0 or confirmed > 0:
         _save_team_name_map(TEAM_NAME_MAP)
         import logging
         _log = logging.getLogger(__name__)
-        _log.info(f"队名映射: +{new_pairs} 确认/{skipped} 跳过 ({len(TEAM_NAME_MAP)-1} 总计)")
+        _log.info(f"队名映射: +{new_pairs} 新/{confirmed} 确认/{skipped} 跳过 ({len(TEAM_NAME_MAP)-1} 总计)")
 
 def _match_pin_name(pn, pin_name):
     """Check if pin keyword matches Pinnacle league name (word boundary)."""

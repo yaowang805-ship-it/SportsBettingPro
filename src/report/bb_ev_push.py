@@ -2210,7 +2210,13 @@ def _filter_pushed(qualified: list) -> list:
             skipped += 1
 
     try:
-        pushed_file.write_text(_json.dumps(new_opps, ensure_ascii=False))
+        # V4.5: 合并保存 — 保留历史指纹, 只更新/新增本次的
+        merged = dict(last_pushed)
+        merged.update(new_opps)
+        # 清理 3 天前的过期记录
+        cutoff = time.time() - 86400 * 3
+        merged = {k: v for k, v in merged.items() if v.get("ts", 0) > cutoff}
+        pushed_file.write_text(_json.dumps(merged, ensure_ascii=False))
     except:
         pass
 
