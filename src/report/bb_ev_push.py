@@ -1506,17 +1506,15 @@ def _read_comparison_file(path):
         match_score = match.get("match_score", 1.0)
         match_type = match.get("match_type", "")
         sport = match.get("sport", "")
-        if sport in ("boxing", "mma"):
-            # V4.5: 中英文名无法匹配, 依赖Phase2 odds+time
-            # time匹配提高门槛至0.85防同赛事错配, name匹配(来自name_map)保持0.80
-            if match_type == "time":
-                min_score = 0.85
-            else:
-                min_score = 0.80
+        if sport == "football":
+            min_score = 0.85  # 比赛多，高标准
+        elif sport in ("boxing", "mma"):
+            # V4.5: 中英文名依赖Phase2 odds+time, 放宽门槛(比赛少)
+            min_score = 0.70
         elif sport == "tennis":
-            min_score = 0.75  # 网球也从严，0.60→0.75
+            min_score = 0.65  # 网球 odds匹配准确，放宽
         else:
-            min_score = 0.85  # 足球等主力运动保持高标准
+            min_score = 0.70  # 非主力运动比赛少，放宽
         if match_score < min_score:
             continue
         # 球员冲突 + 时间匹配 → 过期数据，直接跳过整场比赛

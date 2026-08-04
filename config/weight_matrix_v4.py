@@ -277,28 +277,29 @@ def _bb_premium_ht(odds: float) -> float:
 import json as _json_v4
 
 def _load_calibrated_weights():
-    """加载 scripts/calibrate_v4_weights.py 生成的校准权重。"""
-    cal_path = Path(__file__).resolve().parent.parent / "data" / "storage" / "v4_calibrated_weights.json"
-    if cal_path.exists():
+    """加载平滑后的校准权重, 回退到原始校准。"""
+    # 优先平滑权重
+    for fname in ["v4_smoothed_weights.json", "v4_calibrated_weights.json"]:
+        cal_path = Path(__file__).resolve().parent.parent / "data" / "storage" / fname
+        if not cal_path.exists(): continue
         try:
             raw = _json_v4.loads(cal_path.read_text())
-            if "PIN_1X2_DATA" not in raw or "PIN_OU_DATA" not in raw:
-                return None
-            # JSON keys are strings, values are lists — convert to int/tuple
-            for data_key in ["PIN_1X2_DATA", "PIN_OU_DATA"]:
-                if data_key not in raw: continue
+            if "PIN_1X2_DATA" not in raw: continue
+            # 转换 JSON 格式: str key → int, list → tuple
+            for data_key in list(raw.keys()):
                 converted = {}
-                for lg, bins in raw[data_key].items():
-                    converted[lg] = {}
-                    for bi, val in bins.items():
-                        converted[lg][int(bi)] = tuple(val) if isinstance(val, list) else val
+                sample = next(iter(raw[data_key].values())) if raw[data_key] else None
+                if isinstance(sample, dict):
+                    # Per-league: {lg: {bi: [wr, avg_o, n]}}
+                    for lg, bins in raw[data_key].items():
+                        converted[lg] = {}
+                        for bi, val in bins.items():
+                            converted[lg][int(bi)] = tuple(val) if isinstance(val, list) else val
+                else:
+                    # Flat: {bi: [wr, avg_o, n]}
+                    for bi, val in raw[data_key].items():
+                        converted[int(bi)] = tuple(val) if isinstance(val, list) else val
                 raw[data_key] = converted
-            # PIN_AH_DATA: flat dict (no per-league nesting)
-            if "PIN_AH_DATA" in raw:
-                ah = {}
-                for bi, val in raw["PIN_AH_DATA"].items():
-                    ah[int(bi)] = tuple(val) if isinstance(val, list) else val
-                raw["PIN_AH_DATA"] = ah
             return raw
         except Exception:
             pass
@@ -978,9 +979,26 @@ PIN_HC_DATA = {
 if _CALIBRATED:
     PIN_1X2_DATA = _CALIBRATED["PIN_1X2_DATA"]
     PIN_OU_DATA = _CALIBRATED["PIN_OU_DATA"]
-    PIN_OU_AGGREGATE = PIN_OU_DATA["_AGGREGATE"]
+    if "_AGGREGATE" in PIN_OU_DATA:
+        PIN_OU_AGGREGATE = PIN_OU_DATA["_AGGREGATE"]
     if "PIN_AH_DATA" in _CALIBRATED:
-        PIN_HC_DATA = _CALIBRATED["PIN_AH_DATA"]
+        ah_raw = _CALIBRATED["PIN_AH_DATA"]
+        PIN_HC_DATA = {int(k): tuple(v) if isinstance(v, list) else v for k, v in ah_raw.items()}
+    # V4.5 新标定数据源
+    if "NBA_ML_DATA" in _CALIBRATED:
+        NBA_DATA = _CALIBRATED["NBA_ML_DATA"]
+    if "NBA_SPREAD_DATA" in _CALIBRATED:
+        NBA_SPREAD = _CALIBRATED["NBA_SPREAD_DATA"]
+    if "NBA_TOTAL_DATA" in _CALIBRATED:
+        NBA_TOTAL = _CALIBRATED["NBA_TOTAL_DATA"]
+    if "NFL_ML_DATA" in _CALIBRATED:
+        NFL_DATA = _CALIBRATED["NFL_ML_DATA"]
+    if "NFL_OU_DATA" in _CALIBRATED:
+        NFL_OU_DATA = _CALIBRATED["NFL_OU_DATA"]
+    if "NFL_HC_DATA" in _CALIBRATED:
+        NFL_HC_DATA_EXT = _CALIBRATED["NFL_HC_DATA"]
+    if "MLB_ODDSPORTAL_DATA" in _CALIBRATED:
+        MLB_DATA = _CALIBRATED["MLB_ODDSPORTAL_DATA"]
 del _CALIBRATED
 
 # 赛季时间衰减 — V4.2: 近年数据权重更高
@@ -1284,6 +1302,57 @@ def _settlement_multiplier(league: str) -> float:
         return 0.70
 
 
+def _pin_market_roi(data_dict) -> float:
+    """返回 Pinnacle 收盘数据的最大单 bin ROI (去异常值).
+    如果全部 bin ROI < 0 → 该市场在 Pin 收盘线无利可图, 需 BB 高溢价覆盖.
+    V4.5: 过滤小样本bin(n<200)和极端ROI(>15%).
+    """
+    if not data_dict: return -1.0
+    rois = []
+    for v in data_dict.values():
+        if isinstance(v, tuple) and len(v) >= 2:
+            wr, avg_o = v[0], v[1]
+            n = v[2] if len(v) >= 3 else 100
+            roi = wr * avg_o - 1
+            if n >= 200 and roi < 0.15:  # 可靠样本 + 非极端值
+                rois.append(roi)
+    return max(rois) if rois else -1.0
+
+# 运动×盘口 Pin ROI 缓存 (模块加载时计算)
+_PIN_MARKET_ROI = {}
+
+def _get_pin_market_roi(sport, sub_market) -> float:
+    """获取某运动盘口的 Pinnacle 收盘最大 ROI."""
+    key = (sport, sub_market)
+    if key in _PIN_MARKET_ROI: return _PIN_MARKET_ROI[key]
+
+    if sport == "football":
+        if sub_market in ("1x2", "ml", ""):
+            roi = _pin_market_roi(PIN_1X2_DATA.get("_AGGREGATE", {}))
+        elif sub_market in ("ou", "over_under"):
+            roi = _pin_market_roi(PIN_OU_DATA.get("_AGGREGATE", {}))
+        elif sub_market in ("hc", "handicap"):
+            roi = _pin_market_roi(PIN_HC_DATA)
+        elif sub_market == "ht":
+            roi = _pin_market_roi(PIN_1X2_DATA.get("_AGGREGATE", {})) * 0.85
+        else:
+            roi = -0.05  # 特殊市场默认为负
+    elif sport == "tennis":
+        roi = _pin_market_roi(TENNIS_DATA.get("ATP 250", TENNIS_DATA))
+    elif sport == "basketball":
+        roi = _pin_market_roi(NBA_DATA)
+    elif sport == "baseball":
+        roi = _pin_market_roi(MLB_DATA)
+    elif sport == "american_football":
+        roi = _pin_market_roi(NFL_DATA)
+    elif sport == "ice_hockey":
+        roi = _pin_market_roi(NHL_DATA)
+    else:
+        roi = -0.10  # 无数据, 保守估计为负
+
+    _PIN_MARKET_ROI[key] = roi
+    return roi
+
 @lru_cache(maxsize=4096)
 def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                          match_type: str = "", match_score: float = 0,
@@ -1292,6 +1361,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
 
     纯粹由 Pinnacle 历史数据 + BB 溢价驱动, 没有任何结算数据参与。
 
+    V4.5: Pin ROI 全为负的盘口 → 封杀, 除非 BB 实时溢价能覆盖.
     V4.2 新增参数: match_type, match_score, flags (用于 MMA/Boxing 风控)
     """
     sport_lower = (sport or "").lower()
@@ -1398,6 +1468,37 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             return kelly_075(wr, avg_o, bb_prem, n) * 0.92
 
         else:  # 1X2
+            # V4.5: DC/DNB/BTTS/OE 用底层数据推导 (不再固定上限)
+            if sub_market in ("dc", "dnb"):
+                # DC/DNB 从 1X2 推导 → 用 1X2 数据 × 0.5 (组合盘口风险更低)
+                league_data = _match_league(league, PIN_1X2_DATA)
+                if not league_data:
+                    return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
+                data = league_data.get(idx)
+                if not data:
+                    return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
+                wr, avg_o, n = data
+                if n < MIN_N_MINIMUM:
+                    return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
+                bb_prem = _bb_premium_1x2(odds) * 0.85  # DC溢价低于1X2
+                stake = kelly_075(wr * 1.08, avg_o, bb_prem, n) * 0.5  # WR上调8%(组合覆盖更高), 半仓
+                return min(stake, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.02))
+
+            if sub_market in ("btts", "oe"):
+                # BTTS/OE 与总进球相关 → 用 OU 数据 × 0.35
+                ou_league_data = _match_league(league, PIN_OU_DATA)
+                if not ou_league_data:
+                    return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
+                data = ou_league_data.get(idx)
+                if not data:
+                    return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
+                wr, avg_o, n = data
+                if n < MIN_N_MINIMUM:
+                    return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
+                bb_prem = _bb_premium_ou(odds) * 0.8
+                stake = kelly_075(wr, avg_o, bb_prem, n, sport_confidence=0.6) * 0.35
+                return min(stake, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.03))
+
             if sub_market in SPECIAL_MARKET_CAPS:
                 cfg = SPECIAL_MARKET_CAPS[sub_market]
                 if odds > cfg["max_odds"]:
@@ -1455,7 +1556,13 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             return 0.0
         kelly = roi / (bb_odds - 1.0) * 0.5  # Half Kelly
         confidence = 1.0 if n >= 100 else (0.7 + 0.3*(n-30)/70 if n >= 30 else 0.5)
-        return min(0.04, max(0.0, kelly * confidence))
+        stake = min(0.04, max(0.0, kelly * confidence))
+        # V4.5: OU(总局数)/HC(让局) 与 ML 不同, 加折扣
+        if sub_market in ("ou", "over_under"):
+            stake *= 0.7   # 总局数市场波动更大
+        elif sub_market in ("hc", "handicap"):
+            stake *= 0.85  # 让局市场
+        return stake
 
     # ── Ice Hockey (NHL) ──
     elif sport_lower in ("ice_hockey", "hockey", "nhl"):
@@ -1469,14 +1576,24 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
     # ── Baseball (MLB) ──
     elif sport_lower == "baseball":
         idx = _bin_index(odds, ODDS_BINS)
-        # OU market
         if sub_market in ("ou", "over_under"):
             data = MLB_OU_DATA.get(idx)
             if data and data[2] >= 30:
                 wr, avg_o, n = data
                 return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.85) * _settlement_multiplier(league)
+            # V4.5: OU bin缺失 → 回退ML数据×0.7
+            data = MLB_DATA.get(idx)
+            if data and data[2] >= MIN_N_MINIMUM:
+                wr, avg_o, n = data
+                return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.80) * 0.7 * _settlement_multiplier(league)
             return 0.0
-        # Moneyline
+        if sub_market in ("hc", "handicap"):
+            # V4.5: HC回退ML×0.9
+            data = MLB_DATA.get(idx)
+            if data and data[2] >= MIN_N_MINIMUM:
+                wr, avg_o, n = data
+                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.85) * 0.9 * _settlement_multiplier(league)
+            return 0.0
         data = MLB_DATA.get(idx)
         if data and data[2] >= MIN_N_MINIMUM:
             wr, avg_o, n = data
@@ -1496,7 +1613,12 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             # Spread market
             elif sub_market in ("hc", "handicap"):
-                return 0.02  # V4.5: NBA spread 固定2%
+                # V4.5: 从ML数据推导×0.9 (spread与ML高度相关)
+                data = NBA_DATA.get(idx)
+                if data and data[2] >= MIN_N_MINIMUM:
+                    wr, avg_o, n = data
+                    return kelly_075(wr, avg_o, 0.05, n) * DISCOUNT_SBR_LARGE * 0.9 * _settlement_multiplier(league)
+                return 0.01  # 保守1%
             # Moneyline
             else:
                 data = NBA_DATA.get(idx)
@@ -1518,28 +1640,43 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
     # ── American Football (NFL) ──
     elif sport_lower == "american_football":
         idx = _bin_index(odds, ODDS_BINS)
-        # OU market
         if sub_market in ("ou", "over_under"):
             data = NFL_OU_DATA.get(idx)
             if data and data[2] >= 20:
                 wr, avg_o, n = data
                 return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.80) * _settlement_multiplier(league)
+            # V4.5: OU bin缺失 → 回退ML×0.7
+            data = NFL_DATA.get(idx)
+            if data and data[2] >= 30:
+                wr, avg_o, n = data
+                return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.75) * 0.7 * _settlement_multiplier(league)
             return 0.0
-        # Moneyline
+        if sub_market in ("hc", "handicap"):
+            # V4.5: HC回退ML×0.9
+            data = NFL_DATA.get(idx)
+            if data and data[2] >= 30:
+                wr, avg_o, n = data
+                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.80) * 0.9 * _settlement_multiplier(league)
+            return 0.0
         data = NFL_DATA.get(idx)
-        if data and data[2] >= 30:  # V4.5: nflverse 10.5K 投注
+        if data and data[2] >= 30:
             wr, avg_o, n = data
             return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.85) * _settlement_multiplier(league)
         return 0.0
 
-    # ── Ice Hockey ──
+    # ── Ice Hockey (NHL) ──
     elif sport_lower == "ice_hockey":
         idx = _bin_index(odds, ODDS_BINS)
         data = NHL_DATA.get(idx)
         if data and data[2] >= MIN_N_MINIMUM:
             wr, avg_o, n = data
-            stake = kelly_075(wr, avg_o, 0.05, n)
-            return stake * DISCOUNT_SBR_LARGE * _settlement_multiplier(league)
+            stake = kelly_075(wr, avg_o, 0.05, n) * DISCOUNT_SBR_LARGE
+            # V4.5: OU/HC 加独立折扣 (NHL puck line ~= ML × 0.85, OU ~= ML × 0.75)
+            if sub_market in ("ou", "over_under"):
+                stake *= 0.75
+            elif sub_market in ("hc", "handicap"):
+                stake *= 0.85
+            return stake * _settlement_multiplier(league)
         return 0.0
 
     # ── 乒/羽/排 ──
@@ -1559,40 +1696,49 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
 # EV 门槛 — V4.1: 统一 2%，让 Kelly 做主
 # =====================================================================
 def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
-    """最小 EV 门槛。stake>0 → 2%, stake=0 → 999。"""
+    """最小 EV 门槛。stake>0 → 2%, stake=0 → 999。
+
+    V4.5: Pin ROI全为负的盘口 → 提高EV门槛至5% (需BB高溢价覆盖).
+    """
     sport_lower = (sport or "").lower()
     if sub_market in BLOCKED_MARKETS:
         return 999.0
 
+    # V4.5: Pin 全负ROI盘口 → 需更高EV (但仅对样本充足的运动)
+    pin_roi = _get_pin_market_roi(sport_lower, sub_market)
+    # 足球/篮球样本充足 → 严；其他运动样本少 → 宽
+    if sport_lower in ("football", "basketball"):
+        base_min_ev = 5.0 if pin_roi < -0.03 else 2.0
+    else:
+        base_min_ev = 2.0  # 样本少的运动不额外提高门槛
+
     if sport_lower == "football":
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)
-        # V4.5: 联赛无专属数据时回退聚合, 聚合无数据时 EV>=2% 仍放行
         if stake > 0:
-            return 2.0
-        # Kelly=0 但赔率在合理范围 (<=20) → 放行, 后续用最小仓位
+            return base_min_ev
         if odds <= 20.0:
-            return 2.0
-        return 999.0  # 超高赔率封杀
+            return base_min_ev
+        return 999.0
 
     elif sport_lower == "tennis":
-        return 2.0
+        return base_min_ev
 
     elif sport_lower == "basketball":
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)
         if stake > 0:
-            return 2.0
+            return base_min_ev
         if odds <= 8.0:
-            return 2.0
+            return base_min_ev
         return 999.0
 
     elif sport_lower in ("baseball", "american_football"):
-        return 2.0 if odds < 5.0 else 999.0
+        return base_min_ev if odds < 5.0 else 999.0
 
     elif sport_lower in ("ice_hockey", "pingpong", "badminton", "volleyball"):
-        return 2.0 if odds < 3.0 else 999.0
+        return base_min_ev if odds < 3.0 else 999.0
 
     else:
-        return 2.0
+        return base_min_ev
 
 
 def get_odds_cap(sport: str, league: str, sub_market: str) -> float:
