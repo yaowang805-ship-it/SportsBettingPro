@@ -2208,9 +2208,15 @@ def _filter_pushed(qualified: list) -> list:
         return qualified  # 放行, 让另一个进程处理去重
 
     last_pushed = {}
+    _FINGERPRINT_VERSION = 2  # 升级去重逻辑时递增, 自动清空旧数据
     if pushed_file.exists():
         try:
-            last_pushed = _json.loads(pushed_file.read_text())
+            raw = _json.loads(pushed_file.read_text())
+            if raw.get("_version", 1) < _FINGERPRINT_VERSION:
+                logger.info("指纹格式升级(v%d→v%d), 清空旧数据", raw.get("_version", 1), _FINGERPRINT_VERSION)
+                last_pushed = {}
+            else:
+                last_pushed = raw
         except:
             pass
 
@@ -2288,6 +2294,7 @@ def _filter_pushed(qualified: list) -> list:
     try:
         # Layer 3: 原子写入 — temp file → rename + flock 防并发
         merged = dict(last_pushed)
+        merged["_version"] = _FINGERPRINT_VERSION
         merged.update(new_opps)
         # V4.5: 比赛驱动保留 — 保留至开赛后2h, 最多7天
         # 防止同场比赛在3天后指纹过期被重复推送
