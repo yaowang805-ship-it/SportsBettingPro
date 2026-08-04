@@ -427,33 +427,7 @@ PIN_1X2_DATA = {
         24: (0.196, 8.41, 46),
         25: (0.133, 9.47, 30),
     },
-    "葡甲": {
-        1: (0.711, 1.42, 114),
-        2: (0.585, 1.61, 494),
-        3: (0.569, 1.80, 851),
-        4: (0.503, 2.00, 1050),
-        5: (0.440, 2.19, 1066),
-        6: (0.404, 2.39, 977),
-        7: (0.393, 2.59, 865),
-        8: (0.343, 2.81, 1140),
-        9: (0.319, 3.00, 1885),
-        10: (0.313, 3.19, 2444),
-        11: (0.286, 3.39, 1910),
-        12: (0.243, 3.59, 1071),
-        13: (0.251, 3.79, 717),
-        14: (0.252, 4.03, 786),
-        15: (0.186, 4.33, 548),
-        16: (0.173, 4.64, 422),
-        17: (0.156, 4.99, 404),
-        18: (0.175, 5.38, 274),
-        19: (0.173, 5.79, 260),
-        20: (0.154, 6.23, 175),
-        21: (0.125, 6.74, 104),
-        22: (0.052, 7.24, 77),
-        23: (0.143, 7.77, 63),
-        24: (0.196, 8.41, 46),
-        25: (0.133, 9.47, 30),
-    },
+    # 葡甲 — 移除 (数据与西乙完全相同, 回退 _AGGREGATE)
     "英议联": {
         0: (0.828, 1.24, 64),
         1: (0.714, 1.41, 238),
@@ -1143,10 +1117,47 @@ SPECIAL_MARKET_CAPS = {
 # 核心查询
 # =====================================================================
 
+# V4.5: 中英文联赛名映射 — 解决 _match_league 子字符串找不到的问题
+_LEAGUE_ALIASES = {
+    "premier league": "英超", "english premier league": "英超",
+    "la liga": "西甲", "spanish la liga": "西甲",
+    "serie a": "意甲", "italian serie a": "意甲",
+    "bundesliga": "德甲", "german bundesliga": "德甲",
+    "ligue 1": "法甲", "french ligue 1": "法甲",
+    "eredivisie": "荷甲", "dutch eredivisie": "荷甲",
+    "primeira liga": "葡超", "portuguese primeira liga": "葡超",
+    "mls": "美国职业大联盟", "major league soccer": "美国职业大联盟",
+    "championship": "英冠", "english championship": "英冠",
+    "league one": "英甲", "english league one": "英甲",
+    "league two": "英乙", "english league two": "英乙",
+    "scottish premiership": "苏超",
+    "j1 league": "日本J1联赛", "j-league": "日本J1联赛",
+    "k league 1": "韩国K1联赛",
+    "brazilian serie a": "巴西甲级联赛", "brasileirao": "巴西甲级联赛",
+    "liga mx": "墨西哥超级联赛", "mexican liga mx": "墨西哥超级联赛",
+    "argentine primera": "阿根廷甲级联赛",
+    "super lig": "土超", "turkish super lig": "土超",
+    "belgian pro league": "比甲",
+    "greek super league": "希超",
+    "austrian bundesliga": "奥地利甲级联赛",
+    "swiss super league": "瑞士超级联赛",
+    "danish superliga": "丹麦超级联赛",
+    "allsvenskan": "瑞典超级联赛", "swedish allsvenskan": "瑞典超级联赛",
+}
+
 def _match_league(league: str, data_dict: dict):
-    """匹配联赛数据, 优先精确匹配, 然后模糊匹配。"""
+    """匹配联赛数据, 优先精确匹配, 然后中英文别名, 最后模糊匹配。"""
+    if not league:
+        return data_dict.get("_AGGREGATE")
     if league in data_dict:
         return data_dict[league]
+    # V4.5: 英文名 → 中文名 别名查找
+    league_lower = league.lower().strip()
+    if league_lower in _LEAGUE_ALIASES:
+        cn_name = _LEAGUE_ALIASES[league_lower]
+        if cn_name in data_dict:
+            return data_dict[cn_name]
+    # 子字符串模糊匹配
     for kw in sorted(data_dict.keys(), key=lambda x: -len(x)):
         if kw == "_AGGREGATE":
             continue
@@ -1154,7 +1165,7 @@ def _match_league(league: str, data_dict: dict):
             continue
         if kw in (league or ""):
             return data_dict[kw]
-    return data_dict.get("_AGGREGATE")  # V4.3: 仅未知联赛回退聚合
+    return data_dict.get("_AGGREGATE")  # 仅未知联赛回退聚合
 
 
 # V4.2: 样本量阈值 (Wilson CI 驱动)
@@ -1312,7 +1323,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             bb_prem = _bb_premium_ht(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n)
-            return stake * _settlement_multiplier(league) * _clv_multiplier(league) * 0.85 * _settlement_multiplier(league)
+            return stake * _settlement_multiplier(league) * _clv_multiplier(league) * 0.85
 
         elif sub_market in ("hc", "handicap"):
             # V4.5: HC 独立标定 — 使用 Pinnacle 亚洲让球收盘数据 (49K)
@@ -1352,7 +1363,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             bb_prem = _bb_premium_1x2(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n)
-            return stake * _settlement_multiplier(league) * _clv_multiplier(league) * _settlement_multiplier(league) * _clv_multiplier(league)
+            return stake * _settlement_multiplier(league) * _clv_multiplier(league)
 
     # ── Tennis (V4.2: 直接编码, 不再复用V3) ──
     elif sport_lower == "tennis":
@@ -1610,13 +1621,4 @@ if __name__ == "__main__":
 #   favorite_moneyline 转换为 decimal odds
 #   ESPN 赔率 ≈ 市场平均, 含 vig ~4%
 # =====================================================================
-NHL_DATA = {
-    0: (0.547, 1.18, 53), 1: (0.530, 1.43, 332), 2: (0.469, 1.61, 1062),
-    3: (0.501, 1.80, 1492), 4: (0.505, 1.99, 1322), 5: (0.480, 2.19, 1260),
-    6: (0.496, 2.38, 781), 7: (0.477, 2.56, 195), 8: (0.478, 2.77, 90),
-    9: (0.390, 2.98, 41), 10: (0.577, 3.17, 26), 12: (0.357, 3.59, 14),
-    14: (0.500, 4.03, 18), 15: (0.800, 4.27, 10), 16: (0.700, 4.58, 10),
-    19: (0.500, 5.75, 10),
-}
-
-
+# V4.5: NHL_ESPN_DATA 已合并到上方 NHL_DATA, 删除重复定义

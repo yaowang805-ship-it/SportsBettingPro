@@ -807,11 +807,15 @@ class PipelineOrchestrator:
         now = datetime.now()
         check_dates = [now.date(), (now - timedelta(days=1)).date(), (now - timedelta(days=2)).date()]
 
+        # V4.5: 结算追赶只跑最近错过的一个, 防多个结算同时运行
+        started_settle = False
         for name, time_str, method_name, kwargs in SCHEDULE:
             # git_commit 总是追赶
-            # settle 只追赶 2 小时以上的
+            # settle 只追赶 2 小时以上的, 且一次只追一个
             if name != "git_commit" and "settle" not in name:
                 continue
+            if "settle" in name and started_settle:
+                continue  # 已有结算在追, 跳过其他的
             for cd in check_dates:
                 if self._last_run.get(name) == cd:
                     continue
@@ -827,6 +831,7 @@ class PipelineOrchestrator:
                                  minutes=int(time_str.split()[-1].split(":")[1]))
                     if now < settle_deadline:
                         continue  # 还不够晚，跳过
+                    started_settle = True
                 logger.info("[追赶] %s 错过 (%s %s), 立即执行...", name, cd, time_str)
                 self._run_task(name, method, background=True, **kwargs)
                 self._last_run[name] = cd
@@ -962,14 +967,21 @@ class PipelineOrchestrator:
                 stale_48h = sum(1 for b in pending if b.get("commence_time", 0) < now_ts - 172800)
                 stale_24h = sum(1 for b in pending if 86400 < (now_ts - b.get("commence_time", 0)) <= 172800)
                 if stale_48h > 0:
-                    logger.warning("🐕 看门狗(结算): %d笔超48h未结算!", stale_48h)
+                    # V4.5: 日志也加冷却 (30min), 防每秒刷屏
+                    last_log = self._alert_cooldown.get("settle_watchdog_log", 0)
+                    if time.time() - last_log > 1800:
+                        logger.warning("🐕 看门狗(结算): %d笔超48h未结算!", stale_48h)
+                        self._alert_cooldown["settle_watchdog_log"] = time.time()
                     # 告警冷却: 每4小时只发一次
                     last_alert = self._alert_cooldown.get("settle_watchdog", 0)
                     if time.time() - last_alert > 14400:
                         self._send_alert("settle_watchdog", f"{stale_48h}笔投注超48小时未结算")
                         self._alert_cooldown["settle_watchdog"] = time.time()
                 elif stale_24h > 3:
-                    logger.warning("🐕 看门狗(结算): %d笔超24h未结算", stale_24h)
+                    last_log = self._alert_cooldown.get("settle_watchdog_log", 0)
+                    if time.time() - last_log > 1800:
+                        logger.warning("🐕 看门狗(结算): %d笔超24h未结算", stale_24h)
+                        self._alert_cooldown["settle_watchdog_log"] = time.time()
         except Exception:
             pass
 

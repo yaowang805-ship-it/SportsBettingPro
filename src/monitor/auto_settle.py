@@ -855,13 +855,33 @@ def auto_settle(dry_run: bool = False) -> int:
     MAX_CONSECUTIVE_FAILURES = 30  # 连续失败此数后放弃本次结算
     PER_LEAGUE_TIMEOUT = 10        # 单联赛结算超时秒数（跳过慢联赛）
 
-    # 按 (运动, 联赛) 分组获取比分（同运动不同联赛必须分开）
+    # V4.5: 联赛失败缓存 — 连续3次失败 → 24h 跳过, 加速结算
+    from pathlib import Path
+    _failure_cache_file = DATA_DIR / "settle_failure_cache.json"
+    _failure_cache = {}
+    if _failure_cache_file.exists():
+        try: _failure_cache = json.loads(_failure_cache_file.read_text())
+        except: pass
+    now_ts = time.time()
+    # 清理过期 (>24h)
+    _failure_cache = {k: v for k, v in _failure_cache.items() if v.get("ts", 0) > now_ts - 86400}
+
+    # 按 (运动, 联赛) 分组获取比分
     league_groups = {}
+    skipped_leagues = 0
     for bet in pending:
         key = (bet.get("sport", ""), bet.get("league", ""))
+        lg_name = bet.get("league", "")
+        # 跳过已证明失败的联赛
+        fc = _failure_cache.get(lg_name, {})
+        if fc.get("consecutive", 0) >= 3:
+            skipped_leagues += 1
+            continue
         if key not in league_groups:
             league_groups[key] = []
         league_groups[key].append(bet)
+    if skipped_leagues:
+        logger.info("跳过 %d 笔 (联赛连续失败≥3次, 24h冷却)", skipped_leagues)
 
     _sport_fallback_cache: dict[str, list] = {}  # sport → completed scores 缓存
     unresolved_bets = []  # 所有源都无法匹配的投注

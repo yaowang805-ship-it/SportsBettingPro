@@ -113,6 +113,8 @@ def is_league_probationary(league: str, sport: str = "") -> bool:
 
     试用期联赛：在 LEAGUE_SPORT_MAP 中有映射，但历史上从未成功结算过。
     允许 ¥10-50 的测试投注，成功结算后自动升级为 settleable。
+
+    V4.5 收紧: 尝试过但 0% 成功率的联赛 → 拒绝 (已证明不可结算).
     """
     if not league:
         return False
@@ -121,6 +123,15 @@ def is_league_probationary(league: str, sport: str = "") -> bool:
     if is_league_settleable(league, sport):
         return False
 
+    # V4.5: 检查历史结算记录, 有尝试但 0% 成功率 → 拒绝
+    data = _load_settleable()
+    lg_data = data.get("leagues", {}).get(league, {})
+    if isinstance(lg_data, dict):
+        attempts = lg_data.get("attempts", 0)
+        successes = lg_data.get("successes", 0)
+        if attempts >= 2 and successes == 0:
+            return False  # 已证实无法结算, 拒绝
+
     # 检查是否在 LEAGUE_SPORT_MAP 中
     try:
         from src.monitor.auto_settle import LEAGUE_SPORT_MAP, SPORT_FALLBACK
@@ -128,18 +139,17 @@ def is_league_probationary(league: str, sport: str = "") -> bool:
             return True
         if sport and sport in SPORT_FALLBACK:
             return True
-        # 模糊匹配：前缀匹配（如 "世界网球 - M15" 和 "世界网球 - W15" 共享 "世界网球" 前缀）
+        # 模糊匹配：前缀匹配
         for mapped_league in LEAGUE_SPORT_MAP:
             if len(mapped_league) >= 4 and len(league) >= 4:
-                # 前4字匹配
                 if mapped_league[:4] == league[:4]:
                     return True
-                # 包含匹配
                 if mapped_league in league or league in mapped_league:
                     return True
     except ImportError:
         pass
 
+    # V4.5: 联赛不在 LEAGUE_SPORT_MAP 中 → 完全没数据源, 拒绝
     return False
 
 
