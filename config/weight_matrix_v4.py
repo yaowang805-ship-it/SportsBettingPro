@@ -1535,65 +1535,32 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             stake = kelly_075(wr, avg_o, bb_prem, n)
             return stake * _settlement_multiplier(league) * _clv_multiplier(league)
 
-    # ── Tennis (V4.2: 直接编码, 不再复用V3) ──
+    # ── Tennis (V4.5: Pinnacle Grand Slam 236场收盘做主源) ──
     elif sport_lower == "tennis":
-        # V4.5: 基于 Bet365/Pinnacle 收盘赔率 156K 场独立标定
         # 挑战赛/ITF 无可靠数据 → 封杀
         for kw in ("Challenger", "ITF", "W15", "M15", "W25", "M25"):
             if kw.lower() in (league or "").lower():
                 return 0.0
 
-        # Match tournament to level
-        def _match_tour(lg):
-            lg_l = (lg or "").lower()
-            if any(k in lg_l for k in ['grand slam','australian open','roland garros','wimbledon','us open']):
-                return 'Grand Slam'
-            if any(k in lg_l for k in ['masters','indian wells','miami','monte carlo','madrid','rome','canada','cincinnati','shanghai','paris']):
-                return 'Masters'
-            if '500' in lg_l or any(k in lg_l for k in ['rotterdam','dubai','barcelona','halle','queen','hamburg','washington','beijing','tokyo','basel','vienna','rio']):
-                return 'ATP 500'
-            if 'wta' in lg_l:
-                return 'WTA'
-            return 'ATP 250'
-        tour_data = TENNIS_DATA.get(_match_tour(league))
-        use_ext = False
-        if tour_data is None:
-            # V4.5: 回退到 Pinnacle Grand Slam 236场数据 (用ODDS_BINS, 非TENNIS_BINS)
-            try: tour_data = TENNIS_DATA_EXT
-            except NameError: pass
-            if tour_data: use_ext = True
-            else: return 0.0
-
-        if use_ext:
-            idx = _bin_index(odds, ODDS_BINS)
-        else:
-            idx = _bin_index(odds, TENNIS_ODDS_BINS)
-        data = tour_data.get(idx)
+        # V4.5: Pinnacle Grand Slam 236场做主源, 赔率上限8.0
+        try:
+            data = TENNIS_DATA_EXT.get(_bin_index(odds, ODDS_BINS)) if 'TENNIS_DATA_EXT' in dir() else None
+        except NameError:
+            data = None
         if not data or data[2] < 5:
-            if not use_ext:
-                try: data = TENNIS_DATA_EXT.get(_bin_index(odds, ODDS_BINS)) if 'TENNIS_DATA_EXT' in dir() else None
-                except: data = None
-                if not data or data[2] < 5:
-                    return 0.0
-                use_ext = True
-            else:
-                return 0.0
+            return 0.0
         wr, avg_o, n = data
-        
-        # Kelly: edge = wr×avg_o×(1+bb_prem) - 1
-        bb_prem = 0.03  # V4.5: BB网球溢价 ~3% (从对比数据统计)
+
+        bb_prem = 0.03
         bb_odds = avg_o * (1.0 + bb_prem)
         roi = wr * bb_odds - 1.0
-        if roi <= 0.005:  # V4.5: 156K数据支持下放宽到0.5%
+        if roi <= 0.005:
             return 0.0
         kelly = roi / (bb_odds - 1.0) * 0.5  # Half Kelly
         confidence = 1.0 if n >= 100 else (0.7 + 0.3*(n-30)/70 if n >= 30 else 0.5)
         stake = min(0.04, max(0.0, kelly * confidence))
-        # V4.5: OU(总局数)/HC(让局) 与 ML 不同, 加折扣
-        if sub_market in ("ou", "over_under"):
-            stake *= 0.7   # 总局数市场波动更大
-        elif sub_market in ("hc", "handicap"):
-            stake *= 0.85  # 让局市场
+        if sub_market in ("ou", "over_under"): stake *= 0.7
+        elif sub_market in ("hc", "handicap"): stake *= 0.85
         return stake
 
     # ── Ice Hockey (NHL) ──
@@ -1794,12 +1761,11 @@ def get_odds_cap(sport: str, league: str, sub_market: str) -> float:
     if sport_lower == "football":
         return 20.0 if sub_market not in SPECIAL_MARKET_CAPS else SPECIAL_MARKET_CAPS[sub_market]["max_odds"]
     elif sport_lower == "tennis":
-        # V4.3: 137,922笔Pinnacle数据回测, edge正到@5.4
-        for kw, cap in [("Masters",15.0),("Grand Slam",5.0),("ATP 500",10.0),
-                        ("ATP 250",5.0),("WTA",5.0),("Challenger",3.0),("ITF",3.0)]:
+        for kw, cap in [("Masters",20.0),("Grand Slam",15.0),("ATP 500",15.0),
+                        ("ATP 250",10.0),("WTA",10.0),("Challenger",8.0),("ITF",5.0)]:
             if kw.lower() in (league or "").lower():
                 return cap
-        return 3.0
+        return 8.0  # 未知赛事默认
     elif sport_lower == "basketball":
         return 8.0 if "NBA" in (league or "") else 5.0
     elif sport_lower in ("baseball", "american_football"):

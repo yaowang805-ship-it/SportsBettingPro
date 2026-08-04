@@ -162,12 +162,12 @@ class TestMatchThresholds:
             "拳击门槛应为0.70"
 
     def test_tennis_threshold_relaxed(self):
-        """网球门槛不应是0.75 (已放宽)."""
+        """网球门槛不应是0.75 (已放宽到0.45)."""
         import inspect
         from src.report.bb_ev_push import _read_comparison_file
         source = inspect.getsource(_read_comparison_file)
-        assert "min_score = 0.65" in source or "0.65" in source, \
-            "网球门槛应为0.65"
+        assert "0.45" in source, \
+            "网球门槛应为0.45"
 
 
 # ===================================================================

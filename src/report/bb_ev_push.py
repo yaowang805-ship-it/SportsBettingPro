@@ -1176,7 +1176,7 @@ def _collect_opportunities(match, market_key):
     #   网球 0.75，其他 0.70
     # 注: MMA/拳击的时间匹配已在 _read_comparison_file 整场跳过，此处是兜底
     if match_type == "time":
-        min_ok = 0.75 if sport == "tennis" else 0.70
+        min_ok = 0.45 if sport == "tennis" else 0.70  # V4.5: 网球日期无关匹配放宽
         if match_score < min_ok:
             return []
     league = match.get("league", "")
@@ -1517,14 +1517,15 @@ def _read_comparison_file(path):
             # V4.5: 中英文名依赖Phase2 odds+time, 放宽门槛(比赛少)
             min_score = 0.70
         elif sport == "tennis":
-            min_score = 0.65  # 网球 odds匹配准确，放宽
+            min_score = 0.45  # 日期无关匹配分低, 但有赔率+拼音双重验证
         else:
             min_score = 0.70  # 非主力运动比赛少，放宽
         if match_score < min_score:
             continue
         # 球员冲突 + 时间匹配 → 过期数据，直接跳过整场比赛
+        # V4.5: 网球选手自然打多轮, 跳过此检查
         flags = match.get("flags", [])
-        if match_type == "time" and any("球员冲突" in f for f in flags):
+        if sport != "tennis" and match_type == "time" and any("球员冲突" in f for f in flags):
             continue
         for mk in ("opportunities", "handicap", "over_under", "double_chance"):
             qualified.extend(_collect_opportunities(match, mk))
