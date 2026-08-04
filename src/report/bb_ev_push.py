@@ -2230,6 +2230,7 @@ def _filter_pushed(qualified: list) -> list:
 
         merged_key = key  # 保存用精确 key
         new_opps[merged_key] = {"bb": bb_now, "ev": ev_now, "ts": time.time(),
+                                 "fair": o.get("fair_price", 0),
                                  "kickoff": o.get("_pin_epoch", now_epoch + 86400)}
 
         # 查找: 先精确, 再模糊
@@ -2254,12 +2255,18 @@ def _filter_pushed(qualified: list) -> list:
 
         hours = (o.get("_pin_epoch", now_epoch + 86400) - now_epoch) / 3600
         # V4.5: 提高重推阈值 — 赔率日常波动3-5%, 小波动不值得重推
-        # V4.5: 溢价驱动重推 — 溢价增幅>1%即可重推
-        old_premium = (old_bb - old.get("fair", old_bb)) / old.get("fair", old_bb) * 100 if old.get("fair", 0) > 0 else 0
+        # V4.5: 溢价驱动重推 — 溢价增幅≥1%即可重推
+        old_ev = old.get("ev", 0)
+        old_fair = old.get("fair", 0)
+        # 旧指纹无 fair → 用旧EV作为proxy, 无法计算delta → 不重推
+        if old_fair > 0:
+            old_premium = (old_bb - old_fair) / old_fair * 100
+        else:
+            old_premium = old_ev  # 旧格式, 用保存的EV作为近似
         new_premium = o.get("ev_pct", 0)
         premium_delta = new_premium - old_premium
 
-        if premium_delta >= 1.0:
+        if old_fair > 0 and premium_delta >= 2.0:
             re_pushed += 1
             result.append(o)
             _audit_log("REPUSH", merged_key, o, f"premium+{premium_delta:.1f}% ({old_premium:.1f}→{new_premium:.1f}%)")
