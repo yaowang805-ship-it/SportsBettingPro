@@ -1627,12 +1627,24 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                     return kelly_075(wr, avg_o, 0.05, n) * DISCOUNT_SBR_LARGE * _settlement_multiplier(league)
                 return 0.0
         elif "WNBA" in (league or ""):
-            idx = _bin_index(odds, ODDS_BINS)
-            data = NBA_DATA.get(idx)
-            if data and data[2] >= MIN_N_MINIMUM:
-                wr, avg_o, n = data
-                stake = kelly_075(wr, avg_o, 0.04, n)
-                return stake * DISCOUNT_WNBA * _settlement_multiplier(league)
+            # V4.5: WNBA 261场BookMaker收盘标定
+            wnba_data = None
+            try:
+                from pathlib import Path
+                import json as _j
+                cp = Path(__file__).resolve().parent.parent / "data" / "storage" / "v4_calibrated_weights.json"
+                if cp.exists():
+                    d = _j.loads(cp.read_text())
+                    raw = d.get("WNBA_ML_DATA", {})
+                    wnba_data = {int(k): tuple(v) if isinstance(v, list) else v for k, v in raw.items()}
+            except: pass
+
+            if wnba_data:
+                idx = _bin_index(odds, ODDS_BINS)
+                data = wnba_data.get(idx)
+                if data and data[2] >= 5:
+                    wr, avg_o, n = data
+                    return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.50) * _settlement_multiplier(league)
             return 0.0
         else:
             return 0.01 if odds < 2.5 else 0.0
