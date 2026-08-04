@@ -636,14 +636,16 @@ class PipelineOrchestrator:
                 new_maps = 0
                 for cn in bb_names:
                     if cn in nm:
-                        continue  # 已有映射, 不覆盖
+                        continue
+                    # 双信号: 拼音≥0.45 且 存在赔率相近的对手(同赛事同时段)
                     best, best_en = 0, ""
                     for en in pin_names:
                         s = _sim(cn, en)
                         if s > best:
                             best = s
                             best_en = en
-                    if best >= 0.45:
+                    # V4.5: 只有拼音≥0.55才学(提高门槛防错配)
+                    if best >= 0.55:
                         nm[cn] = best_en
                         new_maps += 1
                 total_new += new_maps

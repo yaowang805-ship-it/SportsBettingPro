@@ -411,8 +411,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         if len(matched) < before:
             print(f"  🔗 Union-Find去重: {before}→{len(matched)} (移除{before-len(matched)}个重复)")
 
-    # V4.5: 日期无关匹配 — 网球/拳击/MMA 延期比赛
-    for sport_name in ("tennis", "boxing", "mma"):
+    # V4.5: 日期无关匹配 — 仅拳击/MMA (网球错配率太高)
+    for sport_name in ("boxing", "mma"):
         sport_matches = try_date_independent_match(bb_matches, pin_by_bb_league, sport=sport_name)
         if sport_matches:
             # 去重: 避免与已有匹配重复
