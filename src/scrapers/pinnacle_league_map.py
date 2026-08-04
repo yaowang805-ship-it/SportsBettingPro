@@ -434,6 +434,20 @@ def _auto_map_team_names(matched_entries):
         is_phase2_individual = (match_type == "time" and match_score >= 0.80
                                 and sport in ("tennis", "boxing", "mma"))
 
+        # V4.5: 运动一致性检查 — 防止跨运动错配学习
+        # boxing只能学Boxing Matches, MMA只能学UFC等
+        pin_league = (m.get("pin", {}).get("league_name", "") or "").lower()
+        _SPORT_LEAGUE_CHECK = {
+            "boxing": ["boxing"],
+            "mma": ["ufc", "mixed martial arts"],
+            "tennis": ["atp", "wta", "itf", "challenger", "tennis"],
+        }
+        if sport in _SPORT_LEAGUE_CHECK:
+            allowed = _SPORT_LEAGUE_CHECK[sport]
+            if not any(kw in pin_league for kw in allowed):
+                skipped += 1
+                continue
+
         if not is_phase1 and not is_phase2_individual:
             skipped += 1
             continue
@@ -447,8 +461,14 @@ def _auto_map_team_names(matched_entries):
 
         # Safety: skip if BB name already mapped to a different Pin name
         # (prevents overwriting correct manual mappings)
+        # V4.5: 个人运动(tennis/boxing/mma)高分匹配允许覆盖旧映射 (修复旧错误映射)
         for bb_name, pin_name in [(bb_home, pin_home), (bb_away, pin_away)]:
             if bb_name in TEAM_NAME_MAP and TEAM_NAME_MAP[bb_name] != pin_name:
+                # Allow overwrite for individual sports with high-confidence Phase 2 match
+                if is_phase2_individual and match_score >= 0.90:
+                    TEAM_NAME_MAP[bb_name] = pin_name
+                    new_pairs += 1
+                    continue
                 skipped += 1
                 continue
 
