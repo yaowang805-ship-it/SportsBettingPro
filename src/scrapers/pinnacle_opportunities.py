@@ -206,14 +206,23 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
         print(f"  • {cn}")
 
     pin_corner_matchups = []
-    for lid, cinfo in corner_leagues_to_fetch.items():
-        time.sleep(random.uniform(0.3, 0.5))
+    import concurrent.futures
+
+    def _fetch_one_corner(lid, cinfo):
+        time.sleep(random.uniform(0.1, 0.3))
         matchups = get_league_matchups_and_markets(lid)
-        if matchups:
-            print(f"  [角球] {cinfo['name']}: {len(matchups)} 场")
-        else:
-            print(f"  [角球] {cinfo['name']}: ⚠️ 无数据")
-        pin_corner_matchups.extend(matchups)
+        return lid, cinfo, matchups
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+        futures = {executor.submit(_fetch_one_corner, lid, cinfo): lid
+                   for lid, cinfo in corner_leagues_to_fetch.items()}
+        for fut in concurrent.futures.as_completed(futures):
+            lid, cinfo, matchups = fut.result()
+            if matchups:
+                print(f"  [角球] {cinfo['name']}: {len(matchups)} 场")
+            else:
+                print(f"  [角球] {cinfo['name']}: ⚠️ 无数据")
+            pin_corner_matchups.extend(matchups)
 
     if not pin_corner_matchups:
         print("  ⚠️ 全部角球联赛无返回数据")
