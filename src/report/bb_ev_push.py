@@ -2248,9 +2248,10 @@ def _filter_pushed(qualified: list) -> list:
         ev_delta = ev_now - old_ev
 
         hours = (o.get("_pin_epoch", now_epoch + 86400) - now_epoch) / 3600
-        if hours <= 6:    bb_th, ev_th = 2.0, 1.0
-        elif hours <= 24: bb_th, ev_th = 3.0, 2.0
-        else:             bb_th, ev_th = 5.0, 3.0
+        # V4.5: 提高重推阈值 — 赔率日常波动3-5%, 小波动不值得重推
+        if hours <= 6:    bb_th, ev_th = 8.0, 4.0   # 临场: BB>8%才重推
+        elif hours <= 24: bb_th, ev_th = 12.0, 6.0  # 当天: BB>12%
+        else:             bb_th, ev_th = 20.0, 10.0  # 更早: BB>20%
 
         if bb_change >= bb_th or ev_delta >= ev_th:
             re_pushed += 1
