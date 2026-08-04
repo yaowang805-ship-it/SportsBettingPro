@@ -93,8 +93,17 @@ def get_league_matchups_and_markets(league_id):
         if _is_football and parent_participants and not _is_games:
             continue
 
+        # V4.5: 棒球等运动Pinnacle用parent存队名, child存盘口(Over/Under)
         if not home and not away:
-            continue
+            if parent_mu:
+                parent_parts = parent_mu.get("participants", [])
+                for p in parent_parts:
+                    if p.get("alignment") == "home":
+                        home = p.get("name", "")
+                    elif p.get("alignment") == "away":
+                        away = p.get("name", "")
+            if not home and not away:
+                continue
 
         moneyline, spread, total = [], [], []
         ht_moneyline, ht_spread, ht_total = [], [], []
