@@ -431,7 +431,7 @@ def _auto_map_team_names(matched_entries):
 
         # Phase 2: time+odds match -> learn only for individual sports
         # No cross-match risk: one player can't be in two matches at once
-        is_phase2_individual = (match_type == "time" and match_score >= 0.85
+        is_phase2_individual = (match_type == "time" and match_score >= 0.80
                                 and sport in ("tennis", "boxing", "mma"))
 
         if not is_phase1 and not is_phase2_individual:

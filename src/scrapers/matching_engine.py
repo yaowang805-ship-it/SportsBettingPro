@@ -375,8 +375,59 @@ def _make_bb_key(bb):
     return f"{bb.get('home','')}|{bb.get('away','')}|{bb.get('league','')}"
 
 
+def _pinyin_name_similarity(cn_name, en_name):
+    """Calculate similarity between Chinese transliterated name and English name via pinyin.
+
+    Used for individual sports (boxing/MMA/tennis) where BB has Chinese names
+    and Pinnacle has English names. Returns 0.0-1.0.
+    """
+    import re
+    from difflib import SequenceMatcher
+    try:
+        from pypinyin import pinyin, Style
+    except ImportError:
+        return 0.0
+
+    if not cn_name or not en_name:
+        return 0.0
+    # Only compute for non-ASCII names (Chinese characters)
+    if cn_name.isascii():
+        return 0.0
+
+    try:
+        py_parts = pinyin(cn_name, style=Style.NORMAL)
+        py_str = ''.join(p[0] for p in py_parts)
+    except Exception:
+        return 0.0
+
+    # Normalize
+    py_str = re.sub(r'[^a-z]', '', py_str.lower())
+    en_str = re.sub(r'[^a-z]', '', en_name.lower())
+
+    if not py_str or not en_str:
+        return 0.0
+
+    # Direct string similarity
+    direct = SequenceMatcher(None, py_str, en_str).ratio()
+
+    # Syllable-level matching
+    py_syllables = [p[0] for p in py_parts]
+    en_parts = en_name.lower().split()
+    syl_scores = []
+    for py_syl in py_syllables:
+        best = 0.0
+        for en_part in en_parts:
+            s = SequenceMatcher(None, py_syl, en_part).ratio()
+            if s > best:
+                best = s
+        syl_scores.append(best)
+    syl_avg = sum(syl_scores) / len(syl_scores) if syl_scores else 0.0
+
+    return max(direct, syl_avg * 0.9)
+
+
 def _compute_combined_score(bb, bb_1x2, bb_epoch, pin, pin_ml, sport="football"):
-    """Combined score = odds_similarity × time_factor (0-1)."""
+    """Combined score = odds_similarity × time_factor × name_boost (0-1)."""
     min_odds = 2 if sport in TWO_WAY_SPORTS else 3
     odds_score = _odds_similarity(bb_1x2, pin_ml, min_odds, sport)
     time_factor = 1.0
@@ -398,7 +449,27 @@ def _compute_combined_score(bb, bb_1x2, bb_epoch, pin, pin_ml, sport="football")
                 elif diff < 7200: time_factor = 0.88
                 elif diff < 14400: time_factor = 0.50
                 else: time_factor = 0.20
-    return odds_score * time_factor
+
+    # V4.5: 个人运动中英文名拼音相似度加成 — 解决中文名vs英文名无法匹配的问题
+    name_boost = 1.0
+    if sport in ("boxing", "mma", "tennis"):
+        bb_home = bb.get("home", "").strip()
+        bb_away = bb.get("away", "").strip()
+        pin_home = pin.get("home", "").strip()
+        pin_away = pin.get("away", "").strip()
+        if bb_home and bb_away and pin_home and pin_away:
+            try:
+                ns = _pinyin_name_similarity
+                # 尝试两种方向 (home↔home + away↔away 或 home↔away + away↔home)
+                direct = (ns(bb_home, pin_home) + ns(bb_away, pin_away)) / 2
+                crossed = (ns(bb_home, pin_away) + ns(bb_away, pin_home)) / 2
+                best_name_score = max(direct, crossed)
+                # 名字匹配加成: 0.5分 → 1.5倍; 0.3分 → 1.15倍
+                name_boost = 1.0 + best_name_score * 0.5
+            except Exception:
+                pass
+
+    return odds_score * time_factor * name_boost
 
 
 def find_matches_by_odds(bb_matches, pin_matches_by_league):
