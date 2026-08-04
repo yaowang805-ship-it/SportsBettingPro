@@ -602,12 +602,22 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
         for combined, bb_key, bb, pin, bb_1x2, pin_ml, pin_id, sport in pairs:
             if bb_key in used_bb_keys or pin_id in used_pin_ids:
                 continue
+            # V4.5: 网球拼音必须≥0.35 (防错配)
+            if sport == "tennis":
+                nscore, _ = fuzzy_match_teams(
+                    bb.get("home", ""), bb.get("away", ""),
+                    pin.get("home", ""), pin.get("away", ""), threshold=60
+                )
+                if nscore < 0.35:
+                    continue
             # Phase 2 队名校验：防止时间+赔率相似但实际不同比赛的错误匹配
-            # V4.5: 加入 rapidfuzz 模糊匹配 — 提升中英文名匹配率
-            tn_score = team_name_score(
-                bb.get("home", ""), bb.get("away", ""),
-                pin.get("home", ""), pin.get("away", "")
-            )
+            else:
+                tn_score = team_name_score(
+                    bb.get("home", ""), bb.get("away", ""),
+                    pin.get("home", ""), pin.get("away", "")
+                )
+                if tn_score < 0.3 and combined < 0.90:
+                    continue
             # 队名映射失败时尝试 rapidfuzz
             if tn_score < 0.3 and _HAS_RAPIDFUZZ:
                 fuzzy_score, _ = fuzzy_match_teams(
