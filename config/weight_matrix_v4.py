@@ -998,11 +998,15 @@ if _CALIBRATED:
     if "NFL_HC_DATA" in _CALIBRATED:
         NFL_HC_DATA_EXT = _CALIBRATED["NFL_HC_DATA"]
     if "MLB_MULTI_ML_DATA" in _CALIBRATED:
-        MLB_DATA = _CALIBRATED["MLB_MULTI_ML_DATA"]  # V4.5: 2,467场BookMaker收盘
+        MLB_DATA = _CALIBRATED["MLB_MULTI_ML_DATA"]
     elif "MLB_ODDSPORTAL_DATA" in _CALIBRATED:
         MLB_DATA = _CALIBRATED["MLB_ODDSPORTAL_DATA"]
     if "TENNIS_PINNACLE_ML" in _CALIBRATED:
-        TENNIS_DATA_EXT = _CALIBRATED["TENNIS_PINNACLE_ML"]  # V4.5: 236场GS Pinnacle收盘
+        TENNIS_DATA_EXT = _CALIBRATED["TENNIS_PINNACLE_ML"]
+    if "UFC_MULTI_ML" in _CALIBRATED:
+        UFC_NEW = _CALIBRATED["UFC_MULTI_ML"]  # V4.5: 521场BookMaker收盘
+    if "NFL_MULTI_ML" in _CALIBRATED:
+        NFL_DATA = _CALIBRATED["NFL_MULTI_ML"]  # V4.5: 285场BookMaker收盘
 del _CALIBRATED
 
 # 赛季时间衰减 — V4.2: 近年数据权重更高
@@ -1394,17 +1398,26 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
 
     if sport_lower in ("mma", "boxing"):
         if sport_lower == "mma":
+            # V4.5: 优先用新标定 521场 BookMaker 收盘
+            try:
+                if 'UFC_NEW' in dir() and UFC_NEW:
+                    idx = _bin_index(odds, ODDS_BINS)
+                    data = UFC_NEW.get(idx)
+                    if data and data[2] >= 5:
+                        wr, avg_o, n = data
+                        return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.50)
+            except NameError: pass
+            # 回退到旧 UFC_DATA
             idx = _bin_index(odds, ODDS_BINS)
             data = UFC_DATA.get(idx)
             if data and data[2] >= 30:
                 wr, avg_o, n = data
-                # V4.5 健康检查: 隐含 ROI > 20% → 数据异常, 走保守公式
                 if wr * avg_o - 1 <= 0.20:
                     return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.50)
         if _is_risky_mma_boxing(sport_lower, league or "", odds,
                                 match_type, match_score, flags):
             return 0.0
-        return 0.01  # 保守 1% (非 Pinnacle 数据)
+        return 0.01  # 保守 1%
 
     # ── Football ──
     if sport_lower == "football":
