@@ -188,14 +188,22 @@ def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
 def _bb_premium_1x2(odds: float) -> float:
     """1X2 市场的 BB 溢价 (BB赔率/Pin赔率 - 1)。
 
-    V4.5: 优先从实时对比数据统计, 无数据时回退到保守默认值。
+    V4.5: 优先进化累积数据, 其次实时对比, 最后硬编码。
     """
+    # 1. 进化累积数据 (最优先, 跨多次扫描累积)
+    try:
+        from src.evolve.v4_evolver import get_evolved_premium
+        evo = get_evolved_premium(odds)
+        if evo is not None:
+            return evo
+    except ImportError: pass
+    # 2. 实时对比数据
     premiums = _load_live_premiums().get("1x2", {})
     if premiums:
         bid = _bin_index(odds, ODDS_BINS)
         if bid in premiums:
             return premiums[bid]
-    # Fallback: 保守默认值
+    # 3. 保守默认值
     if odds < 1.5: return 0.07
     elif odds < 2.0: return 0.08
     elif odds < 2.5: return 0.07
@@ -1567,7 +1575,13 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             return 0.0
         wr, avg_o, n = data
 
+        # V4.5: 优先进化累积数据, 回退3%
         bb_prem = 0.03
+        try:
+            from src.evolve.v4_evolver import get_evolved_premium
+            evo = get_evolved_premium(odds)
+            if evo is not None: bb_prem = evo
+        except ImportError: pass
         bb_odds = avg_o * (1.0 + bb_prem)
         roi = wr * bb_odds - 1.0
         if roi <= 0.005:
