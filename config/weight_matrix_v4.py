@@ -1590,24 +1590,23 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
     # ── Baseball (MLB) ──
     elif sport_lower == "baseball":
         # V4.5: 优先用MLB Vegas 45K场数据
-        try:
-            if "MLB_VEGAS_ML" not in dir(): raise NameError
+        g = globals()
+        if "MLB_VEGAS_ML" in g:
             idx = _bin_index(odds, ODDS_BINS)
-            if sub_market in ("ou", "over_under") and "MLB_VEGAS_OU" in dir():
-                data = MLB_VEGAS_OU.get(idx)
+            if sub_market in ("ou", "over_under") and "MLB_VEGAS_OU" in g:
+                data = g["MLB_VEGAS_OU"].get(idx)
                 if data and data[2] >= 30:
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.80) * _settlement_multiplier(league)
-            if sub_market in ("hc", "handicap") and "MLB_VEGAS_RL" in dir():
-                data = MLB_VEGAS_RL.get(idx)
+            if sub_market in ("hc", "handicap") and "MLB_VEGAS_RL" in g:
+                data = g["MLB_VEGAS_RL"].get(idx)
                 if data and data[2] >= 30:
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.80) * _settlement_multiplier(league)
-            data = MLB_VEGAS_ML.get(idx)
+            data = g["MLB_VEGAS_ML"].get(idx)
             if data and data[2] >= 30:
                 wr, avg_o, n = data
                 return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.85) * _settlement_multiplier(league)
-        except (NameError, AttributeError): pass
         # Fallback to old data
         return 0.0
 
