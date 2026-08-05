@@ -1547,17 +1547,20 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             stake = kelly_075(wr, avg_o, bb_prem, n)
             return stake * _settlement_multiplier(league) * _clv_multiplier(league)
 
-    # ── Tennis (V4.5: Pinnacle Grand Slam 236场收盘做主源) ──
+    # ── Tennis (V4.5: ATP/WTA 6.9万场 Pinnacle收盘) ──
     elif sport_lower == "tennis":
         # 挑战赛/ITF 无可靠数据 → 封杀
         for kw in ("Challenger", "ITF", "W15", "M15", "W25", "M25"):
             if kw.lower() in (league or "").lower():
                 return 0.0
 
-        # V4.5: Pinnacle Grand Slam 236场做主源, 赔率上限8.0
-        try:
-            data = TENNIS_DATA_EXT.get(_bin_index(odds, ODDS_BINS)) if 'TENNIS_DATA_EXT' in dir() else None
-        except NameError:
+        # V4.5: 优先用6.9万场Pinnacle, 回退236场GS
+        g = globals()
+        if "TENNIS_ATP_WTA_ML" in g:
+            data = g["TENNIS_ATP_WTA_ML"].get(_bin_index(odds, ODDS_BINS))
+        elif "TENNIS_DATA_EXT" in g:
+            data = g["TENNIS_DATA_EXT"].get(_bin_index(odds, ODDS_BINS))
+        else:
             data = None
         if not data or data[2] < 5:
             return 0.0
