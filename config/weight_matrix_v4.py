@@ -278,32 +278,29 @@ import json as _json_v4
 
 def _load_calibrated_weights():
     """加载平滑后的校准权重, 回退到原始校准。"""
-    # 优先平滑权重
+    # V4.5: 平滑优先, 标定补充新key (MLB_VEGAS等)
+    merged = {}
     for fname in ["v4_smoothed_weights.json", "v4_calibrated_weights.json"]:
         cal_path = Path(__file__).resolve().parent.parent / "data" / "storage" / fname
         if not cal_path.exists(): continue
         try:
             raw = _json_v4.loads(cal_path.read_text())
-            if "PIN_1X2_DATA" not in raw: continue
-            # 转换 JSON 格式: str key → int, list → tuple
             for data_key in list(raw.keys()):
+                if data_key in merged: continue  # 已有(平滑)则跳过
                 converted = {}
                 sample = next(iter(raw[data_key].values())) if raw[data_key] else None
                 if isinstance(sample, dict):
-                    # Per-league: {lg: {bi: [wr, avg_o, n]}}
                     for lg, bins in raw[data_key].items():
                         converted[lg] = {}
                         for bi, val in bins.items():
                             converted[lg][int(bi)] = tuple(val) if isinstance(val, list) else val
                 else:
-                    # Flat: {bi: [wr, avg_o, n]}
                     for bi, val in raw[data_key].items():
                         converted[int(bi)] = tuple(val) if isinstance(val, list) else val
-                raw[data_key] = converted
-            return raw
+                merged[data_key] = converted
         except Exception:
             pass
-    return None
+    return merged if merged else None
 
 _CALIBRATED = _load_calibrated_weights()
 
