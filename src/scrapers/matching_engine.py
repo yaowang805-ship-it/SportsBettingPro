@@ -602,31 +602,26 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
         for combined, bb_key, bb, pin, bb_1x2, pin_ml, pin_id, sport in pairs:
             if bb_key in used_bb_keys or pin_id in used_pin_ids:
                 continue
-            # V4.5: 网球拼音必须≥0.35 (防错配)
+            # Phase 2 队名校验
             if sport == "tennis":
-                nscore = (_pinyin_name_similarity(bb.get("home", ""), pin.get("home", "")) +
-                          _pinyin_name_similarity(bb.get("away", ""), pin.get("away", ""))) / 2
-                if nscore < 0.35:
+                tn_score = (_pinyin_name_similarity(bb.get("home", ""), pin.get("home", "")) +
+                            _pinyin_name_similarity(bb.get("away", ""), pin.get("away", ""))) / 2
+                if tn_score < 0.35:
                     continue
-            # Phase 2 队名校验：防止时间+赔率相似但实际不同比赛的错误匹配
             else:
                 tn_score = team_name_score(
                     bb.get("home", ""), bb.get("away", ""),
                     pin.get("home", ""), pin.get("away", "")
                 )
-                if tn_score < 0.3 and combined < 0.90:
-                    continue
-            # 队名映射失败时尝试 rapidfuzz
-            if tn_score < 0.3 and _HAS_RAPIDFUZZ:
-                fuzzy_score, _ = fuzzy_match_teams(
-                    bb.get("home", ""), bb.get("away", ""),
-                    pin.get("home", ""), pin.get("away", ""), threshold=75
-                )
-                tn_score = max(tn_score, fuzzy_score)
-
-            if sport not in ("tennis", "boxing", "mma"):
-                if tn_score < 0.3 and combined < 0.90:
-                    continue
+                if tn_score < 0.3 and _HAS_RAPIDFUZZ:
+                    fs, _ = fuzzy_match_teams(
+                        bb.get("home", ""), bb.get("away", ""),
+                        pin.get("home", ""), pin.get("away", ""), threshold=75
+                    )
+                    tn_score = max(tn_score, fs)
+                if sport not in ("tennis", "boxing", "mma"):
+                    if tn_score < 0.3 and combined < 0.90:
+                        continue
             used_bb_keys.add(bb_key)
             used_pin_ids.add(pin_id)
             matched.append({
