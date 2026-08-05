@@ -1,932 +1,948 @@
 {
-  "2436": {
-    "name": "Italy - Serie A",
-    "sport_id": 29,
-    "matchup_count": 11
-  },
-  "2386": {
-    "name": "Portugal - Primeira Liga",
-    "sport_id": 29,
-    "matchup_count": 9
-  },
-  "210697": {
-    "name": "Argentina - Liga Pro",
-    "sport_id": 29,
-    "matchup_count": 5
-  },
-  "1834": {
-    "name": "Brazil - Serie A",
-    "sport_id": 29,
-    "matchup_count": 10
-  },
-  "202235": {
-    "name": "India - Calcutta Premier Division",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "226450": {
-    "name": "Argentina - Liga Pro Reserves",
-    "sport_id": 29,
-    "matchup_count": 6
-  },
-  "5598": {
-    "name": "Ecuador - Serie A",
-    "sport_id": 29,
-    "matchup_count": 8
-  },
-  "2036": {
-    "name": "France - Ligue 1",
-    "sport_id": 29,
-    "matchup_count": 10
-  },
-  "2374": {
-    "name": "Poland - Ekstraklasa",
-    "sport_id": 29,
-    "matchup_count": 6
-  },
-  "1875": {
-    "name": "CONMEBOL - Copa Libertadores",
-    "sport_id": 29,
-    "matchup_count": 8
-  },
-  "1958": {
-    "name": "England - League 2",
-    "sport_id": 29,
-    "matchup_count": 12
-  },
-  "2421": {
-    "name": "Scotland - Premiership",
-    "sport_id": 29,
-    "matchup_count": 6
-  },
-  "2387": {
-    "name": "Portugal - Liga 2",
-    "sport_id": 29,
-    "matchup_count": 9
-  },
-  "1908": {
-    "name": "Denmark - Cup",
-    "sport_id": 29,
-    "matchup_count": 2
-  },
-  "1977": {
-    "name": "England - Championship",
-    "sport_id": 29,
-    "matchup_count": 13
-  },
-  "2432": {
-    "name": "Spain - Segunda Division",
-    "sport_id": 29,
-    "matchup_count": 11
-  },
-  "271382": {
-    "name": "UEFA - Conference League Qualifiers",
-    "sport_id": 29,
-    "matchup_count": 29
-  },
-  "2095": {
-    "name": "Hungary - NB 1",
-    "sport_id": 29,
-    "matchup_count": 2
-  },
-  "1982": {
-    "name": "England - EFL Cup",
-    "sport_id": 29,
-    "matchup_count": 35
-  },
-  "1867": {
-    "name": "Colombia - Cup",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "9394": {
-    "name": "Australia - Cup",
-    "sport_id": 29,
-    "matchup_count": 2
-  },
-  "1835": {
-    "name": "Brazil - Serie B",
-    "sport_id": 29,
-    "matchup_count": 10
-  },
-  "1739": {
-    "name": "Argentina - Primera B Nacional",
-    "sport_id": 29,
-    "matchup_count": 18
-  },
-  "1792": {
-    "name": "Austria - Bundesliga",
-    "sport_id": 29,
-    "matchup_count": 6
-  },
-  "2592": {
-    "name": "Turkey - Super League",
-    "sport_id": 29,
-    "matchup_count": 7
-  },
-  "2636": {
-    "name": "UEFA - Super Cup",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2663": {
-    "name": "USA - Major League Soccer",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2331": {
-    "name": "Norway - 1st Division",
-    "sport_id": 29,
-    "matchup_count": 8
-  },
-  "1773": {
-    "name": "Austria - 2. Liga",
-    "sport_id": 29,
-    "matchup_count": 8
-  },
-  "2472": {
-    "name": "CONMEBOL - Copa Sudamericana",
-    "sport_id": 29,
-    "matchup_count": 8
-  },
-  "2333": {
-    "name": "Norway - Eliteserien",
-    "sport_id": 29,
-    "matchup_count": 7
-  },
-  "2120": {
-    "name": "Ireland - Premier",
-    "sport_id": 29,
-    "matchup_count": 5
-  },
-  "2642": {
-    "name": "UEFA - Champions League Women",
-    "sport_id": 29,
-    "matchup_count": 4
-  },
-  "286332": {
-    "name": "Norway - 3rd Division",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2024": {
-    "name": "Finland - Veikkausliiga",
-    "sport_id": 29,
-    "matchup_count": 6
-  },
-  "5264": {
-    "name": "UEFA - EURO",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2517": {
-    "name": "Switzerland - Super League",
-    "sport_id": 29,
-    "matchup_count": 6
-  },
-  "2025": {
-    "name": "Finland - Ykkosliiga",
-    "sport_id": 29,
-    "matchup_count": 5
-  },
-  "1953": {
-    "name": "England - Community Shield",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1842": {
-    "name": "Germany - Bundesliga",
-    "sport_id": 29,
-    "matchup_count": 10
-  },
-  "1864": {
-    "name": "Club Friendlies Women",
-    "sport_id": 29,
-    "matchup_count": 3
-  },
-  "9531": {
-    "name": "Costa Rica - Primera Division",
-    "sport_id": 29,
-    "matchup_count": 3
-  },
-  "234884": {
-    "name": "Finland - Ykkonen",
-    "sport_id": 29,
-    "matchup_count": 5
-  },
-  "1978": {
-    "name": "England - National League",
-    "sport_id": 29,
-    "matchup_count": 12
-  },
-  "1856": {
-    "name": "Chile - Cup",
-    "sport_id": 29,
-    "matchup_count": 4
-  },
-  "209758": {
-    "name": "Mexico - Liga de Expansión MX",
-    "sport_id": 29,
-    "matchup_count": 6
-  },
-  "2395": {
-    "name": "Romania - Liga 1",
-    "sport_id": 29,
-    "matchup_count": 8
-  },
-  "283787": {
-    "name": "Scotland - Highland League",
-    "sport_id": 29,
-    "matchup_count": 2
-  },
-  "215023": {
-    "name": "Portugal - Liga 3",
-    "sport_id": 29,
-    "matchup_count": 3
-  },
-  "2123": {
-    "name": "Ireland - Division 1",
-    "sport_id": 29,
-    "matchup_count": 5
-  },
-  "1843": {
-    "name": "Germany - Bundesliga 2",
-    "sport_id": 29,
-    "matchup_count": 9
-  },
-  "10921": {
-    "name": "Colombia - Primera B",
-    "sport_id": 29,
-    "matchup_count": 5
-  },
-  "2373": {
-    "name": "Poland - Cup",
-    "sport_id": 29,
-    "matchup_count": 10
-  },
-  "199710": {
-    "name": "Romania - Liga 2",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1957": {
-    "name": "England - League 1",
-    "sport_id": 29,
-    "matchup_count": 12
-  },
-  "216106": {
-    "name": "Mozambique - Mocambola",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2627": {
-    "name": "UEFA - Champions League",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "6633": {
-    "name": "Poland - 1st Liga",
-    "sport_id": 29,
-    "matchup_count": 9
-  },
-  "2417": {
-    "name": "Scotland - Championship",
-    "sport_id": 29,
-    "matchup_count": 5
-  },
-  "8592": {
-    "name": "Australia - NPL Capital Territory",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1928": {
-    "name": "Netherlands - Eredivisie",
-    "sport_id": 29,
-    "matchup_count": 9
-  },
-  "35174": {
-    "name": "Russia - First League",
-    "sport_id": 29,
-    "matchup_count": 5
-  },
-  "1728": {
-    "name": "Sweden - Allsvenskan",
-    "sport_id": 29,
-    "matchup_count": 8
-  },
-  "205439": {
-    "name": "Estonia - Meistriliiga Women",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "201065": {
-    "name": "USA - USL Championship",
-    "sport_id": 29,
-    "matchup_count": 10
-  },
-  "2027": {
-    "name": "France - Ligue 3",
-    "sport_id": 29,
-    "matchup_count": 4
-  },
-  "2100": {
-    "name": "Iceland - 1. Deild",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "201290": {
-    "name": "USA - National Womens Soccer League",
-    "sport_id": 29,
-    "matchup_count": 7
-  },
-  "223067": {
-    "name": "Myanmar - Women League",
-    "sport_id": 29,
-    "matchup_count": 2
-  },
-  "2578": {
-    "name": "Turkey - 1st League",
-    "sport_id": 29,
-    "matchup_count": 2
-  },
-  "2518": {
-    "name": "Switzerland - Challenge League",
-    "sport_id": 29,
-    "matchup_count": 5
-  },
-  "1880": {
-    "name": "Croatia - HNL",
-    "sport_id": 29,
-    "matchup_count": 4
-  },
-  "1980": {
-    "name": "England - Premier League",
-    "sport_id": 29,
-    "matchup_count": 11
-  },
-  "1913": {
-    "name": "Denmark - Superliga",
-    "sport_id": 29,
-    "matchup_count": 4
-  },
-  "2037": {
-    "name": "France - Ligue 2",
-    "sport_id": 29,
-    "matchup_count": 9
-  },
-  "9320": {
-    "name": "Bulgaria - First League",
-    "sport_id": 29,
-    "matchup_count": 7
-  },
-  "1857": {
-    "name": "Chile - Primera Division",
-    "sport_id": 29,
-    "matchup_count": 8
-  },
-  "201951": {
-    "name": "Mongolia - Premier League",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2035": {
-    "name": "France - Super Cup",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2476": {
-    "name": "Sweden - Superettan",
-    "sport_id": 29,
-    "matchup_count": 8
-  },
-  "234301": {
-    "name": "Argentina - Torneo Promocional Amateur",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2157": {
-    "name": "Japan - J League",
-    "sport_id": 29,
-    "matchup_count": 10
-  },
-  "2409": {
-    "name": "Russia - Cup",
-    "sport_id": 29,
-    "matchup_count": 4
-  },
-  "213349": {
-    "name": "China - League Two",
-    "sport_id": 29,
-    "matchup_count": 2
-  },
-  "1844": {
-    "name": "Germany - 3. Liga",
-    "sport_id": 29,
-    "matchup_count": 10
-  },
-  "1833": {
-    "name": "Brazil - Cup",
-    "sport_id": 29,
-    "matchup_count": 6
-  },
-  "191543": {
-    "name": "Brazil - Rio Cup",
-    "sport_id": 29,
-    "matchup_count": 3
-  },
-  "2406": {
-    "name": "Russia - Premier League",
-    "sport_id": 29,
-    "matchup_count": 6
-  },
-  "1863": {
-    "name": "Club Friendlies",
-    "sport_id": 29,
-    "matchup_count": 30
-  },
-  "5591": {
-    "name": "Colombia - Primera A",
-    "sport_id": 29,
-    "matchup_count": 9
-  },
-  "2138": {
-    "name": "Israel - Ligat Al Toto Cup",
-    "sport_id": 29,
-    "matchup_count": 2
-  },
-  "1904": {
-    "name": "Denmark - Division 1",
-    "sport_id": 29,
-    "matchup_count": 6
-  },
-  "205322": {
-    "name": "USA - USL League One",
-    "sport_id": 29,
-    "matchup_count": 2
-  },
-  "2359": {
-    "name": "Paraguay - Division Profesional",
-    "sport_id": 29,
-    "matchup_count": 6
-  },
-  "5595": {
-    "name": "Bolivia - Primera Division",
-    "sport_id": 29,
-    "matchup_count": 3
-  },
-  "6417": {
-    "name": "China - Super League",
-    "sport_id": 29,
-    "matchup_count": 8
-  },
-  "2366": {
-    "name": "Peru - Liga 1",
-    "sport_id": 29,
-    "matchup_count": 9
-  },
-  "197088": {
-    "name": "Iceland - Urvalsdeild Women",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "201238": {
-    "name": "Norway - U19 League",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2196": {
-    "name": "Spain - La Liga",
-    "sport_id": 29,
-    "matchup_count": 11
-  },
-  "5593": {
-    "name": "Uruguay - Primera Division",
-    "sport_id": 29,
-    "matchup_count": 8
-  },
-  "2632": {
-    "name": "UEFA - Europa League Qualifiers",
-    "sport_id": 29,
-    "matchup_count": 11
-  },
-  "227146": {
-    "name": "CONCACAF - Central American Cup",
-    "sport_id": 29,
-    "matchup_count": 3
-  },
-  "1929": {
-    "name": "Netherlands - Eerste Divisie",
-    "sport_id": 29,
-    "matchup_count": 10
-  },
-  "2102": {
-    "name": "Iceland - Premier League",
-    "sport_id": 29,
-    "matchup_count": 5
-  },
-  "2457": {
-    "name": "Slovenia - Prva Liga",
-    "sport_id": 29,
-    "matchup_count": 5
-  },
-  "205451": {
-    "name": "UEFA - Champions League Qualifiers",
-    "sport_id": 29,
-    "matchup_count": 2
-  },
-  "207551": {
-    "name": "Korea Republic - K League 1",
-    "sport_id": 29,
-    "matchup_count": 5
-  },
-  "207552": {
-    "name": "Korea Republic - K League 2",
-    "sport_id": 29,
-    "matchup_count": 7
-  },
-  "220652": {
-    "name": "CAF - Africa Cup of Nations Women",
-    "sport_id": 29,
-    "matchup_count": 4
-  },
-  "200283": {
-    "name": "India - Shillong Premier League",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2453": {
-    "name": "Slovakia - Super Liga",
-    "sport_id": 29,
-    "matchup_count": 3
-  },
-  "2259": {
-    "name": "Northern Ireland - Premiership",
-    "sport_id": 29,
-    "matchup_count": 5
-  },
-  "1817": {
-    "name": "Belgium - Pro League",
-    "sport_id": 29,
-    "matchup_count": 9
-  },
-  "2054": {
-    "name": "Germany - Super Cup",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "205939": {
-    "name": "North America - Leagues Cup",
-    "sport_id": 29,
-    "matchup_count": 12
-  },
-  "209537": {
-    "name": "Australia - NPL Capital Territory Youth U23",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "219609": {
-    "name": "Ecuador - Cup",
-    "sport_id": 29,
-    "matchup_count": 2
-  },
-  "5596": {
-    "name": "Venezuela - Primera Division",
-    "sport_id": 29,
-    "matchup_count": 2
-  },
-  "1891": {
-    "name": "Czech Republic - First Liga",
-    "sport_id": 29,
-    "matchup_count": 7
-  },
-  "9406": {
-    "name": "ITF Women Koksijde - R1",
-    "sport_id": 33,
-    "matchup_count": 7
-  },
-  "227034": {
-    "name": "ITF Men Bielsko Biala - R1",
-    "sport_id": 33,
-    "matchup_count": 8
-  },
-  "275884": {
-    "name": "ITF Women Southaven - R1",
-    "sport_id": 33,
-    "matchup_count": 12
-  },
-  "8612": {
-    "name": "ITF Women Tianjin - R1",
-    "sport_id": 33,
-    "matchup_count": 5
-  },
-  "225116": {
-    "name": "ITF Men Kursumlijska Banja - R1",
-    "sport_id": 33,
-    "matchup_count": 13
-  },
-  "221309": {
-    "name": "ATP Montreal - R2",
-    "sport_id": 33,
-    "matchup_count": 9
-  },
-  "293478": {
-    "name": "ITF Men Fano - R16",
-    "sport_id": 33,
-    "matchup_count": 8
-  },
-  "209985": {
-    "name": "ITF Men Curtea de Arges - R1",
-    "sport_id": 33,
-    "matchup_count": 9
-  },
-  "214846": {
-    "name": "ITF Women Ourense - R1",
-    "sport_id": 33,
-    "matchup_count": 10
-  },
-  "225220": {
-    "name": "ITF Women Kursumlijska Banja - R1",
-    "sport_id": 33,
-    "matchup_count": 8
-  },
-  "270853": {
-    "name": "WTA 125K Warsaw - Doubles",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "272144": {
-    "name": "ATP Challenger Hagen - R16",
-    "sport_id": 33,
-    "matchup_count": 4
-  },
-  "237181": {
-    "name": "ITF Men Londrina - R16",
-    "sport_id": 33,
-    "matchup_count": 8
-  },
-  "227160": {
-    "name": "ITF Men Southaven - R1",
-    "sport_id": 33,
-    "matchup_count": 11
-  },
-  "9292": {
-    "name": "ITF Women Astana - R1",
-    "sport_id": 33,
-    "matchup_count": 9
-  },
-  "197459": {
-    "name": "ITF Women Leipzig - R1",
-    "sport_id": 33,
-    "matchup_count": 9
-  },
-  "287056": {
-    "name": "ATP Challenger Plovdiv - R16",
-    "sport_id": 33,
-    "matchup_count": 3
-  },
-  "206422": {
-    "name": "ITF Women Roehampton - R16",
-    "sport_id": 33,
-    "matchup_count": 3
-  },
-  "9293": {
-    "name": "ITF Women Astana - R16",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "215475": {
-    "name": "ITF Men Eupen - R1",
-    "sport_id": 33,
-    "matchup_count": 12
-  },
-  "225221": {
-    "name": "ITF Women Kursumlijska Banja - R16",
-    "sport_id": 33,
-    "matchup_count": 2
-  },
-  "221534": {
-    "name": "ATP Challenger Grodzisk Mazowiecki - R16",
-    "sport_id": 33,
-    "matchup_count": 5
-  },
-  "9407": {
-    "name": "ITF Women Koksijde - R16",
-    "sport_id": 33,
-    "matchup_count": 4
-  },
-  "220756": {
-    "name": "ITF Men Roehampton - R1",
-    "sport_id": 33,
-    "matchup_count": 8
-  },
-  "226805": {
-    "name": "ITF Men Astana - R16",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "214067": {
-    "name": "ITF Men Poprad - R1",
-    "sport_id": 33,
-    "matchup_count": 8
-  },
-  "9690": {
-    "name": "ATP Challenger Istanbul - R16",
-    "sport_id": 33,
-    "matchup_count": 4
-  },
-  "9416": {
-    "name": "ITF Women Landisville - R1",
-    "sport_id": 33,
-    "matchup_count": 13
-  },
-  "236797": {
-    "name": "WTA 125K Warsaw - R16",
-    "sport_id": 33,
-    "matchup_count": 8
-  },
-  "197305": {
-    "name": "WTA Toronto",
-    "sport_id": 33,
-    "matchup_count": 3
-  },
-  "237010": {
-    "name": "ITF Women Chacabuco - R1",
-    "sport_id": 33,
-    "matchup_count": 8
-  },
-  "197460": {
-    "name": "ITF Women Leipzig - R16",
-    "sport_id": 33,
-    "matchup_count": 2
-  },
-  "275845": {
-    "name": "ITF Men Tauste - R16",
-    "sport_id": 33,
-    "matchup_count": 8
-  },
-  "214769": {
-    "name": "ITF Men Frankfurt - R1",
-    "sport_id": 33,
-    "matchup_count": 9
-  },
-  "275799": {
-    "name": "ITF Women Hameenlinna - R1",
-    "sport_id": 33,
-    "matchup_count": 13
-  },
-  "226804": {
-    "name": "ITF Men Astana - R1",
-    "sport_id": 33,
-    "matchup_count": 9
-  },
-  "214068": {
-    "name": "ITF Men Poprad - R16",
-    "sport_id": 33,
-    "matchup_count": 2
-  },
-  "220757": {
-    "name": "ITF Men Roehampton - R16",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "214847": {
-    "name": "ITF Women Ourense - R16",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "206421": {
-    "name": "ITF Women Roehampton - R1",
-    "sport_id": 33,
-    "matchup_count": 8
-  },
-  "8613": {
-    "name": "ITF Women Tianjin - R16",
-    "sport_id": 33,
-    "matchup_count": 2
-  },
-  "221381": {
-    "name": "WTA Toronto - R2",
-    "sport_id": 33,
-    "matchup_count": 6
-  },
-  "213143": {
-    "name": "Australia - NBL1 Women",
-    "sport_id": 4,
-    "matchup_count": 1
-  },
-  "5608": {
-    "name": "Philippines - PBA Governors Cup",
-    "sport_id": 4,
-    "matchup_count": 2
-  },
-  "206146": {
-    "name": "Brazil - Campeonato Paulista",
-    "sport_id": 4,
-    "matchup_count": 4
-  },
-  "486": {
-    "name": "Mexico - Liga Nacional de Baloncesto Profesional",
-    "sport_id": 4,
-    "matchup_count": 3
-  },
-  "210483": {
-    "name": "Rwanda - National League",
-    "sport_id": 4,
-    "matchup_count": 2
-  },
-  "209863": {
-    "name": "Uruguay - Metro League",
-    "sport_id": 4,
-    "matchup_count": 2
-  },
-  "493": {
-    "name": "NCAA",
-    "sport_id": 4,
-    "matchup_count": 1
-  },
-  "604": {
-    "name": "World - Club Friendlies",
-    "sport_id": 4,
-    "matchup_count": 2
-  },
-  "213554": {
-    "name": "Australia - NBL1",
-    "sport_id": 4,
-    "matchup_count": 1
-  },
-  "203908": {
-    "name": "Chile - LNB",
-    "sport_id": 4,
-    "matchup_count": 5
-  },
-  "487": {
-    "name": "NBA",
-    "sport_id": 4,
-    "matchup_count": 36
-  },
-  "578": {
-    "name": "WNBA",
-    "sport_id": 4,
-    "matchup_count": 4
-  },
-  "246": {
-    "name": "MLB",
-    "sport_id": 3,
-    "matchup_count": 18
-  },
-  "6227": {
-    "name": "Korea Professional Baseball",
-    "sport_id": 3,
-    "matchup_count": 6
-  },
-  "187703": {
-    "name": "Nippon Professional Baseball",
-    "sport_id": 3,
-    "matchup_count": 7
-  },
-  "208753": {
-    "name": "Chinese Taipei - Professional League",
-    "sport_id": 3,
-    "matchup_count": 3
-  },
-  "876": {
-    "name": "Canadian Football",
-    "sport_id": 15,
-    "matchup_count": 5
-  },
-  "880": {
-    "name": "NCAA",
-    "sport_id": 15,
-    "matchup_count": 198
-  },
-  "889": {
-    "name": "NFL",
-    "sport_id": 15,
-    "matchup_count": 174
-  },
-  "4347": {
-    "name": "NFL Pre Season",
-    "sport_id": 15,
-    "matchup_count": 1
-  },
-  "1456": {
-    "name": "NHL",
-    "sport_id": 19,
-    "matchup_count": 3
-  },
-  "1602": {
-    "name": "World - Club Friendlies",
-    "sport_id": 19,
-    "matchup_count": 7
-  },
-  "1624": {
-    "name": "UFC",
-    "sport_id": 22,
-    "matchup_count": 22
-  },
-  "197047": {
-    "name": "Boxing Matches",
-    "sport_id": 6,
-    "matchup_count": 18
+  "29": {
+    "2436": {
+      "name": "Italy - Serie A",
+      "sport_id": 29,
+      "matchup_count": 11
+    },
+    "2386": {
+      "name": "Portugal - Primeira Liga",
+      "sport_id": 29,
+      "matchup_count": 9
+    },
+    "210697": {
+      "name": "Argentina - Liga Pro",
+      "sport_id": 29,
+      "matchup_count": 5
+    },
+    "1834": {
+      "name": "Brazil - Serie A",
+      "sport_id": 29,
+      "matchup_count": 10
+    },
+    "202235": {
+      "name": "India - Calcutta Premier Division",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "226450": {
+      "name": "Argentina - Liga Pro Reserves",
+      "sport_id": 29,
+      "matchup_count": 6
+    },
+    "5598": {
+      "name": "Ecuador - Serie A",
+      "sport_id": 29,
+      "matchup_count": 8
+    },
+    "2036": {
+      "name": "France - Ligue 1",
+      "sport_id": 29,
+      "matchup_count": 10
+    },
+    "2374": {
+      "name": "Poland - Ekstraklasa",
+      "sport_id": 29,
+      "matchup_count": 6
+    },
+    "1875": {
+      "name": "CONMEBOL - Copa Libertadores",
+      "sport_id": 29,
+      "matchup_count": 8
+    },
+    "1958": {
+      "name": "England - League 2",
+      "sport_id": 29,
+      "matchup_count": 12
+    },
+    "2421": {
+      "name": "Scotland - Premiership",
+      "sport_id": 29,
+      "matchup_count": 6
+    },
+    "2387": {
+      "name": "Portugal - Liga 2",
+      "sport_id": 29,
+      "matchup_count": 9
+    },
+    "1908": {
+      "name": "Denmark - Cup",
+      "sport_id": 29,
+      "matchup_count": 2
+    },
+    "1977": {
+      "name": "England - Championship",
+      "sport_id": 29,
+      "matchup_count": 13
+    },
+    "2432": {
+      "name": "Spain - Segunda Division",
+      "sport_id": 29,
+      "matchup_count": 11
+    },
+    "271382": {
+      "name": "UEFA - Conference League Qualifiers",
+      "sport_id": 29,
+      "matchup_count": 29
+    },
+    "2095": {
+      "name": "Hungary - NB 1",
+      "sport_id": 29,
+      "matchup_count": 2
+    },
+    "1982": {
+      "name": "England - EFL Cup",
+      "sport_id": 29,
+      "matchup_count": 35
+    },
+    "1867": {
+      "name": "Colombia - Cup",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "9394": {
+      "name": "Australia - Cup",
+      "sport_id": 29,
+      "matchup_count": 2
+    },
+    "1835": {
+      "name": "Brazil - Serie B",
+      "sport_id": 29,
+      "matchup_count": 10
+    },
+    "1739": {
+      "name": "Argentina - Primera B Nacional",
+      "sport_id": 29,
+      "matchup_count": 18
+    },
+    "1792": {
+      "name": "Austria - Bundesliga",
+      "sport_id": 29,
+      "matchup_count": 6
+    },
+    "2592": {
+      "name": "Turkey - Super League",
+      "sport_id": 29,
+      "matchup_count": 7
+    },
+    "2636": {
+      "name": "UEFA - Super Cup",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "2663": {
+      "name": "USA - Major League Soccer",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "2331": {
+      "name": "Norway - 1st Division",
+      "sport_id": 29,
+      "matchup_count": 8
+    },
+    "1773": {
+      "name": "Austria - 2. Liga",
+      "sport_id": 29,
+      "matchup_count": 8
+    },
+    "2472": {
+      "name": "CONMEBOL - Copa Sudamericana",
+      "sport_id": 29,
+      "matchup_count": 8
+    },
+    "2333": {
+      "name": "Norway - Eliteserien",
+      "sport_id": 29,
+      "matchup_count": 7
+    },
+    "2120": {
+      "name": "Ireland - Premier",
+      "sport_id": 29,
+      "matchup_count": 5
+    },
+    "2642": {
+      "name": "UEFA - Champions League Women",
+      "sport_id": 29,
+      "matchup_count": 4
+    },
+    "286332": {
+      "name": "Norway - 3rd Division",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "2024": {
+      "name": "Finland - Veikkausliiga",
+      "sport_id": 29,
+      "matchup_count": 6
+    },
+    "5264": {
+      "name": "UEFA - EURO",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "2517": {
+      "name": "Switzerland - Super League",
+      "sport_id": 29,
+      "matchup_count": 6
+    },
+    "2025": {
+      "name": "Finland - Ykkosliiga",
+      "sport_id": 29,
+      "matchup_count": 5
+    },
+    "1953": {
+      "name": "England - Community Shield",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "1842": {
+      "name": "Germany - Bundesliga",
+      "sport_id": 29,
+      "matchup_count": 10
+    },
+    "1864": {
+      "name": "Club Friendlies Women",
+      "sport_id": 29,
+      "matchup_count": 3
+    },
+    "9531": {
+      "name": "Costa Rica - Primera Division",
+      "sport_id": 29,
+      "matchup_count": 3
+    },
+    "234884": {
+      "name": "Finland - Ykkonen",
+      "sport_id": 29,
+      "matchup_count": 5
+    },
+    "1978": {
+      "name": "England - National League",
+      "sport_id": 29,
+      "matchup_count": 12
+    },
+    "1856": {
+      "name": "Chile - Cup",
+      "sport_id": 29,
+      "matchup_count": 4
+    },
+    "209758": {
+      "name": "Mexico - Liga de Expansión MX",
+      "sport_id": 29,
+      "matchup_count": 6
+    },
+    "2395": {
+      "name": "Romania - Liga 1",
+      "sport_id": 29,
+      "matchup_count": 8
+    },
+    "283787": {
+      "name": "Scotland - Highland League",
+      "sport_id": 29,
+      "matchup_count": 2
+    },
+    "215023": {
+      "name": "Portugal - Liga 3",
+      "sport_id": 29,
+      "matchup_count": 3
+    },
+    "2123": {
+      "name": "Ireland - Division 1",
+      "sport_id": 29,
+      "matchup_count": 5
+    },
+    "1843": {
+      "name": "Germany - Bundesliga 2",
+      "sport_id": 29,
+      "matchup_count": 9
+    },
+    "10921": {
+      "name": "Colombia - Primera B",
+      "sport_id": 29,
+      "matchup_count": 5
+    },
+    "2373": {
+      "name": "Poland - Cup",
+      "sport_id": 29,
+      "matchup_count": 10
+    },
+    "199710": {
+      "name": "Romania - Liga 2",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "1957": {
+      "name": "England - League 1",
+      "sport_id": 29,
+      "matchup_count": 12
+    },
+    "216106": {
+      "name": "Mozambique - Mocambola",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "2627": {
+      "name": "UEFA - Champions League",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "6633": {
+      "name": "Poland - 1st Liga",
+      "sport_id": 29,
+      "matchup_count": 9
+    },
+    "2417": {
+      "name": "Scotland - Championship",
+      "sport_id": 29,
+      "matchup_count": 5
+    },
+    "8592": {
+      "name": "Australia - NPL Capital Territory",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "1928": {
+      "name": "Netherlands - Eredivisie",
+      "sport_id": 29,
+      "matchup_count": 9
+    },
+    "35174": {
+      "name": "Russia - First League",
+      "sport_id": 29,
+      "matchup_count": 5
+    },
+    "1728": {
+      "name": "Sweden - Allsvenskan",
+      "sport_id": 29,
+      "matchup_count": 8
+    },
+    "205439": {
+      "name": "Estonia - Meistriliiga Women",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "201065": {
+      "name": "USA - USL Championship",
+      "sport_id": 29,
+      "matchup_count": 10
+    },
+    "2027": {
+      "name": "France - Ligue 3",
+      "sport_id": 29,
+      "matchup_count": 4
+    },
+    "2100": {
+      "name": "Iceland - 1. Deild",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "201290": {
+      "name": "USA - National Womens Soccer League",
+      "sport_id": 29,
+      "matchup_count": 7
+    },
+    "223067": {
+      "name": "Myanmar - Women League",
+      "sport_id": 29,
+      "matchup_count": 2
+    },
+    "2578": {
+      "name": "Turkey - 1st League",
+      "sport_id": 29,
+      "matchup_count": 2
+    },
+    "2518": {
+      "name": "Switzerland - Challenge League",
+      "sport_id": 29,
+      "matchup_count": 5
+    },
+    "1880": {
+      "name": "Croatia - HNL",
+      "sport_id": 29,
+      "matchup_count": 4
+    },
+    "1980": {
+      "name": "England - Premier League",
+      "sport_id": 29,
+      "matchup_count": 11
+    },
+    "1913": {
+      "name": "Denmark - Superliga",
+      "sport_id": 29,
+      "matchup_count": 4
+    },
+    "2037": {
+      "name": "France - Ligue 2",
+      "sport_id": 29,
+      "matchup_count": 9
+    },
+    "9320": {
+      "name": "Bulgaria - First League",
+      "sport_id": 29,
+      "matchup_count": 7
+    },
+    "1857": {
+      "name": "Chile - Primera Division",
+      "sport_id": 29,
+      "matchup_count": 8
+    },
+    "201951": {
+      "name": "Mongolia - Premier League",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "2035": {
+      "name": "France - Super Cup",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "2476": {
+      "name": "Sweden - Superettan",
+      "sport_id": 29,
+      "matchup_count": 8
+    },
+    "234301": {
+      "name": "Argentina - Torneo Promocional Amateur",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "2157": {
+      "name": "Japan - J League",
+      "sport_id": 29,
+      "matchup_count": 10
+    },
+    "2409": {
+      "name": "Russia - Cup",
+      "sport_id": 29,
+      "matchup_count": 4
+    },
+    "213349": {
+      "name": "China - League Two",
+      "sport_id": 29,
+      "matchup_count": 2
+    },
+    "1844": {
+      "name": "Germany - 3. Liga",
+      "sport_id": 29,
+      "matchup_count": 10
+    },
+    "1833": {
+      "name": "Brazil - Cup",
+      "sport_id": 29,
+      "matchup_count": 6
+    },
+    "191543": {
+      "name": "Brazil - Rio Cup",
+      "sport_id": 29,
+      "matchup_count": 3
+    },
+    "2406": {
+      "name": "Russia - Premier League",
+      "sport_id": 29,
+      "matchup_count": 6
+    },
+    "1863": {
+      "name": "Club Friendlies",
+      "sport_id": 29,
+      "matchup_count": 30
+    },
+    "5591": {
+      "name": "Colombia - Primera A",
+      "sport_id": 29,
+      "matchup_count": 9
+    },
+    "2138": {
+      "name": "Israel - Ligat Al Toto Cup",
+      "sport_id": 29,
+      "matchup_count": 2
+    },
+    "1904": {
+      "name": "Denmark - Division 1",
+      "sport_id": 29,
+      "matchup_count": 6
+    },
+    "205322": {
+      "name": "USA - USL League One",
+      "sport_id": 29,
+      "matchup_count": 2
+    },
+    "2359": {
+      "name": "Paraguay - Division Profesional",
+      "sport_id": 29,
+      "matchup_count": 6
+    },
+    "5595": {
+      "name": "Bolivia - Primera Division",
+      "sport_id": 29,
+      "matchup_count": 3
+    },
+    "6417": {
+      "name": "China - Super League",
+      "sport_id": 29,
+      "matchup_count": 8
+    },
+    "2366": {
+      "name": "Peru - Liga 1",
+      "sport_id": 29,
+      "matchup_count": 9
+    },
+    "197088": {
+      "name": "Iceland - Urvalsdeild Women",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "201238": {
+      "name": "Norway - U19 League",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "2196": {
+      "name": "Spain - La Liga",
+      "sport_id": 29,
+      "matchup_count": 11
+    },
+    "5593": {
+      "name": "Uruguay - Primera Division",
+      "sport_id": 29,
+      "matchup_count": 8
+    },
+    "2632": {
+      "name": "UEFA - Europa League Qualifiers",
+      "sport_id": 29,
+      "matchup_count": 11
+    },
+    "227146": {
+      "name": "CONCACAF - Central American Cup",
+      "sport_id": 29,
+      "matchup_count": 3
+    },
+    "1929": {
+      "name": "Netherlands - Eerste Divisie",
+      "sport_id": 29,
+      "matchup_count": 10
+    },
+    "2102": {
+      "name": "Iceland - Premier League",
+      "sport_id": 29,
+      "matchup_count": 5
+    },
+    "2457": {
+      "name": "Slovenia - Prva Liga",
+      "sport_id": 29,
+      "matchup_count": 5
+    },
+    "205451": {
+      "name": "UEFA - Champions League Qualifiers",
+      "sport_id": 29,
+      "matchup_count": 2
+    },
+    "207551": {
+      "name": "Korea Republic - K League 1",
+      "sport_id": 29,
+      "matchup_count": 5
+    },
+    "207552": {
+      "name": "Korea Republic - K League 2",
+      "sport_id": 29,
+      "matchup_count": 7
+    },
+    "220652": {
+      "name": "CAF - Africa Cup of Nations Women",
+      "sport_id": 29,
+      "matchup_count": 4
+    },
+    "200283": {
+      "name": "India - Shillong Premier League",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "2453": {
+      "name": "Slovakia - Super Liga",
+      "sport_id": 29,
+      "matchup_count": 3
+    },
+    "2259": {
+      "name": "Northern Ireland - Premiership",
+      "sport_id": 29,
+      "matchup_count": 5
+    },
+    "1817": {
+      "name": "Belgium - Pro League",
+      "sport_id": 29,
+      "matchup_count": 9
+    },
+    "2054": {
+      "name": "Germany - Super Cup",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "205939": {
+      "name": "North America - Leagues Cup",
+      "sport_id": 29,
+      "matchup_count": 12
+    },
+    "209537": {
+      "name": "Australia - NPL Capital Territory Youth U23",
+      "sport_id": 29,
+      "matchup_count": 1
+    },
+    "219609": {
+      "name": "Ecuador - Cup",
+      "sport_id": 29,
+      "matchup_count": 2
+    },
+    "5596": {
+      "name": "Venezuela - Primera Division",
+      "sport_id": 29,
+      "matchup_count": 2
+    },
+    "1891": {
+      "name": "Czech Republic - First Liga",
+      "sport_id": 29,
+      "matchup_count": 7
+    }
+  },
+  "33": {
+    "9406": {
+      "name": "ITF Women Koksijde - R1",
+      "sport_id": 33,
+      "matchup_count": 7
+    },
+    "227034": {
+      "name": "ITF Men Bielsko Biala - R1",
+      "sport_id": 33,
+      "matchup_count": 8
+    },
+    "275884": {
+      "name": "ITF Women Southaven - R1",
+      "sport_id": 33,
+      "matchup_count": 12
+    },
+    "8612": {
+      "name": "ITF Women Tianjin - R1",
+      "sport_id": 33,
+      "matchup_count": 5
+    },
+    "225116": {
+      "name": "ITF Men Kursumlijska Banja - R1",
+      "sport_id": 33,
+      "matchup_count": 13
+    },
+    "221309": {
+      "name": "ATP Montreal - R2",
+      "sport_id": 33,
+      "matchup_count": 9
+    },
+    "293478": {
+      "name": "ITF Men Fano - R16",
+      "sport_id": 33,
+      "matchup_count": 8
+    },
+    "209985": {
+      "name": "ITF Men Curtea de Arges - R1",
+      "sport_id": 33,
+      "matchup_count": 9
+    },
+    "214846": {
+      "name": "ITF Women Ourense - R1",
+      "sport_id": 33,
+      "matchup_count": 10
+    },
+    "225220": {
+      "name": "ITF Women Kursumlijska Banja - R1",
+      "sport_id": 33,
+      "matchup_count": 8
+    },
+    "270853": {
+      "name": "WTA 125K Warsaw - Doubles",
+      "sport_id": 33,
+      "matchup_count": 1
+    },
+    "272144": {
+      "name": "ATP Challenger Hagen - R16",
+      "sport_id": 33,
+      "matchup_count": 4
+    },
+    "237181": {
+      "name": "ITF Men Londrina - R16",
+      "sport_id": 33,
+      "matchup_count": 8
+    },
+    "227160": {
+      "name": "ITF Men Southaven - R1",
+      "sport_id": 33,
+      "matchup_count": 11
+    },
+    "9292": {
+      "name": "ITF Women Astana - R1",
+      "sport_id": 33,
+      "matchup_count": 9
+    },
+    "197459": {
+      "name": "ITF Women Leipzig - R1",
+      "sport_id": 33,
+      "matchup_count": 9
+    },
+    "287056": {
+      "name": "ATP Challenger Plovdiv - R16",
+      "sport_id": 33,
+      "matchup_count": 3
+    },
+    "206422": {
+      "name": "ITF Women Roehampton - R16",
+      "sport_id": 33,
+      "matchup_count": 3
+    },
+    "9293": {
+      "name": "ITF Women Astana - R16",
+      "sport_id": 33,
+      "matchup_count": 1
+    },
+    "215475": {
+      "name": "ITF Men Eupen - R1",
+      "sport_id": 33,
+      "matchup_count": 12
+    },
+    "225221": {
+      "name": "ITF Women Kursumlijska Banja - R16",
+      "sport_id": 33,
+      "matchup_count": 2
+    },
+    "221534": {
+      "name": "ATP Challenger Grodzisk Mazowiecki - R16",
+      "sport_id": 33,
+      "matchup_count": 5
+    },
+    "9407": {
+      "name": "ITF Women Koksijde - R16",
+      "sport_id": 33,
+      "matchup_count": 4
+    },
+    "220756": {
+      "name": "ITF Men Roehampton - R1",
+      "sport_id": 33,
+      "matchup_count": 8
+    },
+    "226805": {
+      "name": "ITF Men Astana - R16",
+      "sport_id": 33,
+      "matchup_count": 1
+    },
+    "214067": {
+      "name": "ITF Men Poprad - R1",
+      "sport_id": 33,
+      "matchup_count": 8
+    },
+    "9690": {
+      "name": "ATP Challenger Istanbul - R16",
+      "sport_id": 33,
+      "matchup_count": 4
+    },
+    "9416": {
+      "name": "ITF Women Landisville - R1",
+      "sport_id": 33,
+      "matchup_count": 13
+    },
+    "236797": {
+      "name": "WTA 125K Warsaw - R16",
+      "sport_id": 33,
+      "matchup_count": 8
+    },
+    "197305": {
+      "name": "WTA Toronto",
+      "sport_id": 33,
+      "matchup_count": 3
+    },
+    "237010": {
+      "name": "ITF Women Chacabuco - R1",
+      "sport_id": 33,
+      "matchup_count": 8
+    },
+    "197460": {
+      "name": "ITF Women Leipzig - R16",
+      "sport_id": 33,
+      "matchup_count": 2
+    },
+    "275845": {
+      "name": "ITF Men Tauste - R16",
+      "sport_id": 33,
+      "matchup_count": 8
+    },
+    "214769": {
+      "name": "ITF Men Frankfurt - R1",
+      "sport_id": 33,
+      "matchup_count": 9
+    },
+    "275799": {
+      "name": "ITF Women Hameenlinna - R1",
+      "sport_id": 33,
+      "matchup_count": 13
+    },
+    "226804": {
+      "name": "ITF Men Astana - R1",
+      "sport_id": 33,
+      "matchup_count": 9
+    },
+    "214068": {
+      "name": "ITF Men Poprad - R16",
+      "sport_id": 33,
+      "matchup_count": 2
+    },
+    "220757": {
+      "name": "ITF Men Roehampton - R16",
+      "sport_id": 33,
+      "matchup_count": 1
+    },
+    "214847": {
+      "name": "ITF Women Ourense - R16",
+      "sport_id": 33,
+      "matchup_count": 1
+    },
+    "206421": {
+      "name": "ITF Women Roehampton - R1",
+      "sport_id": 33,
+      "matchup_count": 8
+    },
+    "8613": {
+      "name": "ITF Women Tianjin - R16",
+      "sport_id": 33,
+      "matchup_count": 2
+    },
+    "221381": {
+      "name": "WTA Toronto - R2",
+      "sport_id": 33,
+      "matchup_count": 6
+    }
+  },
+  "4": {
+    "213143": {
+      "name": "Australia - NBL1 Women",
+      "sport_id": 4,
+      "matchup_count": 1
+    },
+    "5608": {
+      "name": "Philippines - PBA Governors Cup",
+      "sport_id": 4,
+      "matchup_count": 2
+    },
+    "206146": {
+      "name": "Brazil - Campeonato Paulista",
+      "sport_id": 4,
+      "matchup_count": 4
+    },
+    "486": {
+      "name": "Mexico - Liga Nacional de Baloncesto Profesional",
+      "sport_id": 4,
+      "matchup_count": 3
+    },
+    "210483": {
+      "name": "Rwanda - National League",
+      "sport_id": 4,
+      "matchup_count": 2
+    },
+    "209863": {
+      "name": "Uruguay - Metro League",
+      "sport_id": 4,
+      "matchup_count": 2
+    },
+    "493": {
+      "name": "NCAA",
+      "sport_id": 4,
+      "matchup_count": 1
+    },
+    "604": {
+      "name": "World - Club Friendlies",
+      "sport_id": 4,
+      "matchup_count": 2
+    },
+    "213554": {
+      "name": "Australia - NBL1",
+      "sport_id": 4,
+      "matchup_count": 1
+    },
+    "203908": {
+      "name": "Chile - LNB",
+      "sport_id": 4,
+      "matchup_count": 5
+    },
+    "487": {
+      "name": "NBA",
+      "sport_id": 4,
+      "matchup_count": 36
+    },
+    "578": {
+      "name": "WNBA",
+      "sport_id": 4,
+      "matchup_count": 4
+    }
+  },
+  "3": {
+    "246": {
+      "name": "MLB",
+      "sport_id": 3,
+      "matchup_count": 18
+    },
+    "6227": {
+      "name": "Korea Professional Baseball",
+      "sport_id": 3,
+      "matchup_count": 6
+    },
+    "187703": {
+      "name": "Nippon Professional Baseball",
+      "sport_id": 3,
+      "matchup_count": 7
+    },
+    "208753": {
+      "name": "Chinese Taipei - Professional League",
+      "sport_id": 3,
+      "matchup_count": 3
+    }
+  },
+  "15": {
+    "876": {
+      "name": "Canadian Football",
+      "sport_id": 15,
+      "matchup_count": 5
+    },
+    "880": {
+      "name": "NCAA",
+      "sport_id": 15,
+      "matchup_count": 198
+    },
+    "889": {
+      "name": "NFL",
+      "sport_id": 15,
+      "matchup_count": 174
+    },
+    "4347": {
+      "name": "NFL Pre Season",
+      "sport_id": 15,
+      "matchup_count": 1
+    }
+  },
+  "19": {
+    "1456": {
+      "name": "NHL",
+      "sport_id": 19,
+      "matchup_count": 3
+    },
+    "1602": {
+      "name": "World - Club Friendlies",
+      "sport_id": 19,
+      "matchup_count": 7
+    }
+  },
+  "22": {
+    "1624": {
+      "name": "UFC",
+      "sport_id": 22,
+      "matchup_count": 22
+    }
+  },
+  "6": {
+    "197047": {
+      "name": "Boxing Matches",
+      "sport_id": 6,
+      "matchup_count": 18
+    }
   }
 }
