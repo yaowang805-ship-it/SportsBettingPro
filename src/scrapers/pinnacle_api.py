@@ -10,25 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 
-# ── DNS 绕过 Shadowrocket 劫持 (必须在 requests 导入前) ──────────────
-import socket as _socket
-_orig_getaddrinfo = _socket.getaddrinfo
-
-_PINNACLE_HOSTS = {
-    "guest.api.arcadia.pinnacle.com": ["104.18.42.200", "172.64.145.56"],
-    "pinnacle.com": ["104.18.42.200"],
-    "www.pinnacle.com": ["104.18.42.200"],
-}
-
-def _patched_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
-    if host in _PINNACLE_HOSTS:
-        result = []
-        for ip in _PINNACLE_HOSTS[host]:
-            result.append((_socket.AF_INET, _socket.SOCK_STREAM, 6, "", (ip, port)))
-        return result
-    return _orig_getaddrinfo(host, port, family, type, proto, flags)
-
-_socket.getaddrinfo = _patched_getaddrinfo
+# ── DNS 解析: V4.5 走系统自然DNS (不再硬编码IP, 换节点即换IP) ──
 
 import requests
 from config.settings import DATA_DIR
