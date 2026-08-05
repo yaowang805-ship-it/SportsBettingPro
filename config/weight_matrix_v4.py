@@ -1006,7 +1006,14 @@ if _CALIBRATED:
     if "UFC_MULTI_ML" in _CALIBRATED:
         UFC_NEW = _CALIBRATED["UFC_MULTI_ML"]  # V4.5: 521场BookMaker收盘
     if "NFL_MULTI_ML" in _CALIBRATED:
-        NFL_DATA = _CALIBRATED["NFL_MULTI_ML"]  # V4.5: 285场BookMaker收盘
+        NFL_DATA = _CALIBRATED["NFL_MULTI_ML"]
+    # V4.5: MLB Vegas 45K场
+    if "MLB_VEGAS_ML" in _CALIBRATED:
+        MLB_VEGAS_ML = _CALIBRATED["MLB_VEGAS_ML"]
+        if "MLB_VEGAS_RunLine" in _CALIBRATED:
+            MLB_VEGAS_RL = _CALIBRATED["MLB_VEGAS_RunLine"]
+        if "MLB_VEGAS_OU" in _CALIBRATED:
+            MLB_VEGAS_OU = _CALIBRATED["MLB_VEGAS_OU"]
 del _CALIBRATED
 
 # 赛季时间衰减 — V4.2: 近年数据权重更高
@@ -1582,29 +1589,26 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
 
     # ── Baseball (MLB) ──
     elif sport_lower == "baseball":
-        idx = _bin_index(odds, ODDS_BINS)
-        if sub_market in ("ou", "over_under"):
-            data = MLB_OU_DATA.get(idx)
+        # V4.5: 优先用MLB Vegas 45K场数据
+        try:
+            if "MLB_VEGAS_ML" not in dir(): raise NameError
+            idx = _bin_index(odds, ODDS_BINS)
+            if sub_market in ("ou", "over_under") and "MLB_VEGAS_OU" in dir():
+                data = MLB_VEGAS_OU.get(idx)
+                if data and data[2] >= 30:
+                    wr, avg_o, n = data
+                    return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.80) * _settlement_multiplier(league)
+            if sub_market in ("hc", "handicap") and "MLB_VEGAS_RL" in dir():
+                data = MLB_VEGAS_RL.get(idx)
+                if data and data[2] >= 30:
+                    wr, avg_o, n = data
+                    return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.80) * _settlement_multiplier(league)
+            data = MLB_VEGAS_ML.get(idx)
             if data and data[2] >= 30:
                 wr, avg_o, n = data
-                return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.85) * _settlement_multiplier(league)
-            # V4.5: OU bin缺失 → 回退ML数据×0.7
-            data = MLB_DATA.get(idx)
-            if data and data[2] >= MIN_N_MINIMUM:
-                wr, avg_o, n = data
-                return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.80) * 0.7 * _settlement_multiplier(league)
-            return 0.0
-        if sub_market in ("hc", "handicap"):
-            # V4.5: HC回退ML×0.9
-            data = MLB_DATA.get(idx)
-            if data and data[2] >= MIN_N_MINIMUM:
-                wr, avg_o, n = data
-                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.85) * 0.9 * _settlement_multiplier(league)
-            return 0.0
-        data = MLB_DATA.get(idx)
-        if data and data[2] >= MIN_N_MINIMUM:
-            wr, avg_o, n = data
-            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.90) * _settlement_multiplier(league)
+                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.85) * _settlement_multiplier(league)
+        except (NameError, AttributeError): pass
+        # Fallback to old data
         return 0.0
 
     # ── Basketball ──
