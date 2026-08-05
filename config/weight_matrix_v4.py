@@ -1381,6 +1381,14 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         if banned in (league or ""):
             return 0.0
 
+    # V4.5: 高赔率封杀 — Pinnacle历史WR接近0%, BB溢价无法覆盖
+    if sport_lower == "football" and sub_market in ("1x2", "ml", ""):
+        if odds > 10.0:
+            return 0.0
+    elif sport_lower in ("basketball", "baseball", "american_football", "ice_hockey"):
+        if odds > 8.0:
+            return 0.0
+
     # MMA/Boxing: 固定小额, 仅name匹配+高分+低赔率允许
     # V4.5: UFC 385K Betting Odds (Kaggle daily dataset)
     UFC_DATA = {
