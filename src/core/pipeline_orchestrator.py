@@ -197,12 +197,20 @@ class PipelineOrchestrator:
             if data is None or not isinstance(data, expected_type) or len(data) < min_count:
                 errors.append(f"[自检] {fpath.name} 损坏 (type={type(data).__name__}, len={len(data) if data else 0})")
 
-        # 3) Pinnacle 结构格式验证 (防 flat/nested 混搭导致的崩溃)
+        # 3) Pinnacle 结构格式验证 + 自动修复
         pin_struct = safe_load_json(DATA_DIR / "pinnacle_league_structure.json")
         if pin_struct and isinstance(pin_struct, dict):
             flat_count = sum(1 for v in pin_struct.values() if isinstance(v, dict) and "name" in v and isinstance(v["name"], str))
             if flat_count > 0:
-                errors.append(f"[自检] Pinnacle结构含{flat_count}个flat格式运动(应为nested), 请运行 normalize")
+                logger.warning("[自检] Pinnacle结构flat格式, 自动转换...")
+                nested = {}
+                for lid, info in pin_struct.items():
+                    sid = str(info.get("sport_id", 0))
+                    if sid not in nested: nested[sid] = {}
+                    nested[sid][lid] = info
+                from config.settings import DATA_DIR as _dd
+                (_dd / "pinnacle_league_structure.json").write_text(json.dumps(nested, ensure_ascii=False, indent=2))
+                logger.info("[自检] Pinnacle结构已自动修复 (flat→nested)")
 
         if errors:
             for e in errors:
