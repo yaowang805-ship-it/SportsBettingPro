@@ -1735,7 +1735,7 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)
         if stake > 0:
             return base_min_ev
-        if odds <= 20.0:
+        if odds <= 10.0:
             return base_min_ev
         return 999.0
 
