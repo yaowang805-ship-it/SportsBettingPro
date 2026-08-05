@@ -1735,9 +1735,13 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)
         if stake > 0:
             return base_min_ev
-        # V4.5: 赔率>10 → Pin ROI≈-27.5%, EV>28%才放行
+        # V4.5: 赔率>10 → 按Wilson CI最差ROI逐bin放行
         if odds > 10.0:
-            return 28.0
+            # Wilson最差ROI: bin26=-36% bin27=-40% bin28=-60% bin29=-57%
+            if odds <= 11.0: return 41.0
+            if odds <= 13.5: return 45.0
+            if odds <= 17.5: return 65.0
+            return 62.0  # >17.5
         return base_min_ev
 
     elif sport_lower == "tennis":
