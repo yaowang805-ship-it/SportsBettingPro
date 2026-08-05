@@ -1020,6 +1020,7 @@ if _CALIBRATED:
         if "MLB_VEGAS_OU" in _CALIBRATED:
             MLB_VEGAS_OU = _CALIBRATED["MLB_VEGAS_OU"]
     if "TENNIS_ATP_WTA_ML" in _CALIBRATED: TENNIS_ATP_WTA_ML = _CALIBRATED["TENNIS_ATP_WTA_ML"]
+    if "BETFAIR_BOXING_ML" in _CALIBRATED: BETFAIR_BOXING = _CALIBRATED["BETFAIR_BOXING_ML"]
 del _CALIBRATED
 
 # 赛季时间衰减 — V4.2: 近年数据权重更高
@@ -1438,7 +1439,14 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         if _is_risky_mma_boxing(sport_lower, league or "", odds,
                                 match_type, match_score, flags):
             return 0.0
-        return 0.01  # 保守 1%
+        # V4.5: 优先Betfair 663场, 回退保守1%
+        if sport_lower == "boxing" and "BETFAIR_BOXING" in globals():
+            idx = _bin_index(odds, ODDS_BINS)
+            data = globals()["BETFAIR_BOXING"].get(idx)
+            if data and data[2] >= 10:
+                wr, avg_o, n = data
+                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.35)
+        return 0.01
 
     # ── Football ──
     if sport_lower == "football":
