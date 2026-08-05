@@ -351,22 +351,13 @@ class PipelineOrchestrator:
     # 具体任务实现
     # ------------------------------------------------------------------
     def _reload_critical_modules(self):
-        """V4.5: 每次任务前重载关键模块 — 代码改动立即生效, 不需要等5min热更新."""
+        """V4.5: 每次tick前重载所有src模块 — 代码改动立即生效."""
         import importlib
-        _CRITICAL = [
-            "src.scrapers.bb_vs_pinnacle",
-            "src.scrapers.matching_engine",
-            "src.scrapers.pinnacle_league_map",
-            "src.scrapers.pinnacle_opportunities",
-            "src.report.bb_ev_push",
-            "config.weight_matrix_v4",
-        ]
-        for mod_name in _CRITICAL:
-            try:
-                if mod_name in sys.modules:
-                    importlib.reload(sys.modules[mod_name])
-            except Exception as e:
-                logger.warning(f"模块热重载失败 {mod_name}: {e}")
+        to_reload = [m for m in sys.modules if any(m.startswith(p) for p in
+            ("src.", "config.weight")) and "pipeline_orchestrator" not in m]
+        for mod_name in to_reload:
+            try: importlib.reload(sys.modules[mod_name])
+            except Exception: pass
 
     def do_full_scan(self, bet: bool = True):
         """全量扫描：提取 → 对比 → 推送。"""
@@ -942,6 +933,7 @@ class PipelineOrchestrator:
     # ------------------------------------------------------------------
     def _tick(self):
         """主循环的一次迭代：检查定时任务 + 增量扫描。"""
+        self._reload_critical_modules()  # V4.5: 每次tick前重载, 代码0延迟生效
         now = datetime.now()
 
         # 1) 定时任务 (settle/report → 后台线程)

@@ -604,10 +604,8 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                 continue
             # V4.5: 网球拼音必须≥0.35 (防错配)
             if sport == "tennis":
-                nscore, _ = fuzzy_match_teams(
-                    bb.get("home", ""), bb.get("away", ""),
-                    pin.get("home", ""), pin.get("away", ""), threshold=60
-                )
+                nscore = (_pinyin_name_similarity(bb.get("home", ""), pin.get("home", "")) +
+                          _pinyin_name_similarity(bb.get("away", ""), pin.get("away", ""))) / 2
                 if nscore < 0.35:
                     continue
             # Phase 2 队名校验：防止时间+赔率相似但实际不同比赛的错误匹配
