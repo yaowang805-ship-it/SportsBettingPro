@@ -1021,6 +1021,8 @@ if _CALIBRATED:
             MLB_VEGAS_OU = _CALIBRATED["MLB_VEGAS_OU"]
     if "TENNIS_ATP_WTA_ML" in _CALIBRATED: TENNIS_ATP_WTA_ML = _CALIBRATED["TENNIS_ATP_WTA_ML"]
     if "BETFAIR_BOXING_ML" in _CALIBRATED: BETFAIR_BOXING = _CALIBRATED["BETFAIR_BOXING_ML"]
+    if "BETFAIR_BASEBALL_ML" in _CALIBRATED: BETFAIR_BASEBALL = _CALIBRATED["BETFAIR_BASEBALL_ML"]
+    if "BETFAIR_BASKET_ML" in _CALIBRATED: BETFAIR_BASKET = _CALIBRATED["BETFAIR_BASKET_ML"]
 del _CALIBRATED
 
 # 赛季时间衰减 — V4.2: 近年数据权重更高
@@ -1679,6 +1681,14 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.50) * _settlement_multiplier(league)
             return 0.0
+        # V4.5: 非NBA/WNBA用Betfair 24K + 保守1%
+        elif "BETFAIR_BASKET" in globals():
+            idx = _bin_index(odds, ODDS_BINS)
+            data = globals()["BETFAIR_BASKET"].get(idx)
+            if data and data[2] >= 20:
+                wr, avg_o, n = data
+                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.35) * _settlement_multiplier(league)
+            return 0.01 if odds < 2.5 else 0.0
         else:
             return 0.01 if odds < 2.5 else 0.0
 
