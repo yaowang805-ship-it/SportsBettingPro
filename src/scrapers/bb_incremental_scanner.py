@@ -406,12 +406,12 @@ def run_incremental(time_window: str = "all"):
         return
 
     print(f"\n📊 双向变动: BB {len(bb_changed_leagues)}个联赛, Pin {len(pin_changed_leagues)}个联赛 → 合并 {len(all_changed)}个")
-    print(f"\n🔍 增量对比 (仅{len(all_changed)}个变动联赛, ~1min)...")
+    print(f"\n🔄 实时全量对比 (拉取最新BB+Pin, ~2min)...")
     window_file = COMPARISON_FILE_NEAR if time_window == "near" else COMPARISON_FILE_FAR
     new_result = compare_bb_vs_pinnacle(
         bb_matches,
         all_pin_leagues,
-        selected_leagues=list(all_changed) if all_changed else None,
+        selected_leagues=None,  # V4.5: 全量拉取最新BB+Pin, 不用增量
         save_path=window_file,
     )
 
