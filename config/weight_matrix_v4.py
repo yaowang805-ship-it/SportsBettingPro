@@ -1381,13 +1381,13 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         if banned in (league or ""):
             return 0.0
 
-    # V4.5: 高赔率封杀 — Pinnacle历史WR接近0%, BB溢价无法覆盖
-    if sport_lower == "football" and sub_market in ("1x2", "ml", ""):
-        if odds > 10.0:
-            return 0.0
-    elif sport_lower in ("basketball", "baseball", "american_football", "ice_hockey"):
-        if odds > 8.0:
-            return 0.0
+    # V4.5: 高赔率条件放行 — EV必须覆盖Pin负ROI
+    if odds > 10.0:
+        # Pin高赔ROI≈-27.5%, 需要BB溢价足够大才能覆盖
+        if sport_lower == "football":
+            return 0.0  # Kelly=0, 但EV>27.5%时get_min_ev会放行
+        elif sport_lower in ("basketball", "baseball", "american_football", "ice_hockey"):
+            return 0.0  # >8.0封杀(数据更少)
 
     # MMA/Boxing: 固定小额, 仅name匹配+高分+低赔率允许
     # V4.5: UFC 385K Betting Odds (Kaggle daily dataset)
@@ -1735,9 +1735,10 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)
         if stake > 0:
             return base_min_ev
-        if odds <= 10.0:
-            return base_min_ev
-        return 999.0
+        # V4.5: 赔率>10 → Pin ROI≈-27.5%, EV>28%才放行
+        if odds > 10.0:
+            return 28.0
+        return base_min_ev
 
     elif sport_lower == "tennis":
         return base_min_ev
