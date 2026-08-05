@@ -1611,12 +1611,12 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
     elif sport_lower == "basketball":
         if "NBA" in (league or ""):
             idx = _bin_index(odds, ODDS_BINS)
-            # OU market
+            # OU market — V4.5: NBA_OU_DATA非Pinnacle, ML回退×0.7
             if sub_market in ("ou", "over_under"):
-                data = NBA_OU_DATA.get(idx)
-                if data and data[2] >= 30:
+                data = NBA_DATA.get(idx)
+                if data and data[2] >= MIN_N_MINIMUM:
                     wr, avg_o, n = data
-                    return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.85) * _settlement_multiplier(league)
+                    return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.75) * 0.7 * _settlement_multiplier(league)
                 return 0.0
             # Spread market
             elif sub_market in ("hc", "handicap"):
