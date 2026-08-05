@@ -885,8 +885,8 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
         # (e.g. "ATP Bastad" -> "ATP Bastad - Qualifiers", "ATP Bastad - R1")
         # But do NOT expand "Russia - First League" style names
         for pn in matched_pin_names:
-            if " - " in pn:
-                continue  # already multi-segment, skip sub-league expansion
+            # V4.5: 网球轮次展开 — "ATP Montreal"匹配所有"ATP Montreal - R1/R2/QF"
+            pn_lower = pn.lower()
             for lid, info in all_sport_matchups.items():
                 if lid in matched_ids:
                     continue
@@ -897,7 +897,8 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
                     pname = (first.get("name", "") if isinstance(first, dict) else str(first)).lower()
                 else:
                     continue
-                if pname.startswith(pn.lower()):
+                # 匹配: pn是pname的前缀(如ATP Montreal匹配ATP Montreal - R1)
+                if pname == pn_lower or pname.startswith(pn_lower + " -"):
                     matched_ids.add(lid)
 
         return sorted(matched_ids)
