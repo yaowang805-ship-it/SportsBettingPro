@@ -293,10 +293,10 @@ def _load_calibrated_weights():
                     for lg, bins in raw[data_key].items():
                         converted[lg] = {}
                         for bi, val in bins.items():
-                            converted[lg][int(bi)] = tuple(val) if isinstance(val, list) else val
+                            converted[lg][int(float(bi))] = tuple(val) if isinstance(val, list) else val
                 else:
                     for bi, val in raw[data_key].items():
-                        converted[int(bi)] = tuple(val) if isinstance(val, list) else val
+                        converted[int(float(bi))] = tuple(val) if isinstance(val, list) else val
                 merged[data_key] = converted
         except Exception:
             pass
