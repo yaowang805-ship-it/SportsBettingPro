@@ -374,6 +374,7 @@ def extract_match_odds(record, sport_key, platform="BB"):
         "nm": record.get("nm", ""),
         "odds_ft": {},
         "odds_ht": {},
+        "odds_sh": {},
         "_bb_view": "main",
         "_bb_source": "api",
     }
@@ -382,6 +383,7 @@ def extract_match_odds(record, sport_key, platform="BB"):
     periods = SPORT_PERIODS.get(sport_id, {"ft": 1001, "ht": 1002})
     ft_period = periods.get("ft", 1001)
     ht_period = periods.get("ht")
+    sh_period = periods.get("2h")
 
     # ─── FT ──────────────────────────────────────────────
 
@@ -913,6 +915,32 @@ def extract_match_odds(record, sport_key, platform="BB"):
 
     result["odds_ht"] = ht_dict
 
+    # SH (Second Half / 下半场)
+    if sh_period:
+        sh_ml = _extract_ml(sh_period)
+        sh_hc = _extract_handicap(sh_period)
+        sh_ou = _extract_ou(sh_period)
+
+        sh_dict = {}
+        if sh_ml:
+            sh_dict["ml"] = sh_ml
+        if sh_hc:
+            sh_dict["handicap"] = sh_hc["primary"]
+            sh_dict["alternate_handicaps"] = sh_hc["alternates"]
+        if sh_ou:
+            sh_dict["total"] = sh_ou["primary"]
+            sh_dict["alternate_totals"] = sh_ou["alternates"]
+
+        if sport_key == "football":
+            sh_dc = _extract_dc(sh_period)
+            if sh_dc:
+                sh_dict["dc"] = sh_dc
+            sh_oe = _extract_oe(sh_period)
+            if sh_oe:
+                sh_dict["oe"] = sh_oe
+
+        result["odds_sh"] = sh_dict
+
     # dnb flat list for backward compat
     dnb_flat = []
     ft_dnb_dict = ft_dict.get("dnb")
@@ -1094,6 +1122,56 @@ def _merge_single_match(platform_matches):
                     if len(plat_ht_dc) >= len(base_ht_dc):
                         base_ht["dc"] = plat_ht_dc
 
+            # ── odds_sh 跨平台合并 ──
+            base_sh = base.get("odds_sh", {})
+            plat_sh = m.get("odds_sh", {})
+            if plat_sh:
+                # SH ML
+                base_sh_ml = base_sh.get("ml", [])
+                plat_sh_ml = plat_sh.get("ml", [])
+                if plat_sh_ml and len(plat_sh_ml) >= len(base_sh_ml):
+                    for i in range(min(len(base_sh_ml), len(plat_sh_ml))):
+                        if plat_sh_ml[i] > base_sh_ml[i]:
+                            base_sh_ml[i] = plat_sh_ml[i]
+                    if len(plat_sh_ml) > len(base_sh_ml):
+                        base_sh["ml"] = plat_sh_ml
+
+                # SH Handicap
+                base_sh_hc = base_sh.get("handicap")
+                plat_sh_hc = plat_sh.get("handicap")
+                if base_sh_hc and plat_sh_hc and isinstance(base_sh_hc, dict) and isinstance(plat_sh_hc, dict):
+                    bl = base_sh_hc.get("home_line") or base_sh_hc.get("away_line")
+                    pl = plat_sh_hc.get("home_line") or plat_sh_hc.get("away_line")
+                    if bl is None or pl is None or abs(bl - pl) <= 0.1:
+                        if plat_sh_hc.get("home_odds", 0) > base_sh_hc.get("home_odds", 0):
+                            base_sh_hc["home_odds"] = plat_sh_hc["home_odds"]
+                        if plat_sh_hc.get("away_odds", 0) > base_sh_hc.get("away_odds", 0):
+                            base_sh_hc["away_odds"] = plat_sh_hc["away_odds"]
+                elif not base_sh_hc and plat_sh_hc:
+                    base_sh["handicap"] = plat_sh_hc
+
+                # SH Total (OU)
+                base_sh_ou = base_sh.get("total")
+                plat_sh_ou = plat_sh.get("total")
+                if base_sh_ou and plat_sh_ou and isinstance(base_sh_ou, dict) and isinstance(plat_sh_ou, dict):
+                    bl = base_sh_ou.get("line")
+                    pl = plat_sh_ou.get("line")
+                    if bl is None or pl is None or abs(bl - pl) <= 0.5:
+                        if plat_sh_ou.get("over_odds", 0) > base_sh_ou.get("over_odds", 0):
+                            base_sh_ou["over_odds"] = plat_sh_ou["over_odds"]
+                        if plat_sh_ou.get("under_odds", 0) > base_sh_ou.get("under_odds", 0):
+                            base_sh_ou["under_odds"] = plat_sh_ou["under_odds"]
+                elif not base_sh_ou and plat_sh_ou:
+                    base_sh["total"] = plat_sh_ou
+
+                # SH DC
+                if plat_sh.get("dc"):
+                    base_sh_dc = base_sh.get("dc", [])
+                    plat_sh_dc = plat_sh.get("dc", [])
+                    if not base_sh_dc or any(plat_sh_dc[i] > base_sh_dc[i] for i in range(min(len(base_sh_dc), len(plat_sh_dc)))):
+                        if len(plat_sh_dc) >= len(base_sh_dc):
+                            base_sh["dc"] = plat_sh_dc
+
     # ── FT/HC 备用让球盘（alternate_handicaps）跨平台合并 ──
     def _merge_alternates(base_alts, plat_alts, line_key, odds_keys):
         """合并备用盘口列表，同线取最高赔率。
@@ -1117,7 +1195,7 @@ def _merge_single_match(platform_matches):
                     break
         return result
 
-    for period in ("odds_ft", "odds_ht"):
+    for period in ("odds_ft", "odds_ht", "odds_sh"):
         base_period = base.get(period, {})
         plat_period = m.get(period, {})
         if not plat_period:

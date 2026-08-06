@@ -967,6 +967,172 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                     "_market": "ht",
                                 })
 
+        # --- 下半场 (SH) 对比：BB odds_sh vs Pinnacle period=1 (HT) ---
+        # 赛前盘中，上下半场对称，Pinnacle HT 可作为 2H 参考价
+        bb_sh = bb.get("odds_sh", {})
+        if bb_sh:
+            sh_labels = {
+                "ml": ["下半场主胜", "下半场和局", "下半场客胜"] if sport == "football" else ["下半场主胜", "下半场客胜"],
+                "hc_home": "下半场让球主胜", "hc_away": "下半场让球客胜",
+                "over": "下半场大球", "under": "下半场小球",
+            }
+            # SH 独赢
+            if bb_sh.get("ml") and pin.get("ht_moneyline"):
+                pin_sh_ml = get_pin_ml_sorted_from_source(pin.get("ht_moneyline", []), sport)
+                if pin_sh_ml and len(pin_sh_ml) >= 2:
+                    n_sh_ml = min(len(pin_sh_ml), len(sh_labels["ml"]))
+                    bb_sh_ml = bb_sh["ml"]
+                    if len(bb_sh_ml) >= n_sh_ml:
+                        total_implied_sh = sum(1.0 / p for p in pin_sh_ml if p and p > 0)
+                        for i in range(n_sh_ml):
+                            bb_o = bb_sh_ml[i]
+                            pin_o = pin_sh_ml[i]
+                            if pin_o and pin_o > 0:
+                                fair_price = round(pin_o * total_implied_sh, 4) if total_implied_sh > 0 else round(pin_o, 2)
+                                ev = (bb_o - fair_price) / fair_price * 100 if fair_price > 0 else 0
+                                if ev > 1:
+                                    entry["opportunities"].append({
+                                        "designation": sh_labels["ml"][i],
+                                        "bb_odds": bb_o,
+                                        "pin_odds": pin_o,
+                                        "fair_price": fair_price,
+                                        "ev_pct": round(ev, 2),
+                                        "_market": "sh",
+                                    })
+
+            # SH 让球
+            bb_sh_hc = bb_sh.get("handicap")
+            if bb_sh_hc:
+                bb_hl = bb_sh_hc.get("home_line") if bb_sh_hc.get("home_line") is not None else bb_sh_hc.get("away_line")
+                home_sp, away_sp, sp_is_alt = get_pin_spread(pin, target_line=bb_hl, source=pin.get("ht_spread", []))
+                if home_sp and away_sp and get_decimal_price(home_sp) and get_decimal_price(away_sp):
+                    pin_home_odds = get_decimal_price(home_sp)
+                    pin_away_odds = get_decimal_price(away_sp)
+                    pin_hc_line = home_sp.get("points")
+                    cal_ok, _ = _calibrate_market_line(sport, "hc", bb_hl, pin_hc_line, None, is_ht=True)
+                    if cal_ok:
+                        total_implied = 1.0 / pin_home_odds + 1.0 / pin_away_odds
+                        home_fair = round(pin_home_odds * total_implied, 4)
+                        away_fair = round(pin_away_odds * total_implied, 4)
+                        ev_h = (bb_sh_hc["home_odds"] - home_fair) / home_fair * 100 if home_fair > 0 else 0
+                        ev_a = (bb_sh_hc["away_odds"] - away_fair) / away_fair * 100 if away_fair > 0 else 0
+                        if ev_h > 1:
+                            entry["handicap"].append({
+                                "designation": sh_labels["hc_home"],
+                                "line": bb_sh_hc.get("home_line_str", ""),
+                                "bb_odds": bb_sh_hc["home_odds"],
+                                "pin_odds": pin_home_odds,
+                                "fair_price": home_fair,
+                                "ev_pct": round(ev_h, 2),
+                                "_market": "sh",
+                            })
+                        if ev_a > 1:
+                            entry["handicap"].append({
+                                "designation": sh_labels["hc_away"],
+                                "line": bb_sh_hc.get("away_line_str", ""),
+                                "bb_odds": bb_sh_hc["away_odds"],
+                                "pin_odds": pin_away_odds,
+                                "fair_price": away_fair,
+                                "ev_pct": round(ev_a, 2),
+                                "_market": "sh",
+                            })
+
+            # SH 大小
+            bb_sh_ou = bb_sh.get("total")
+            if bb_sh_ou:
+                bb_line = bb_sh_ou.get("line")
+                over_p, under_p = get_pin_total(pin, target_line=bb_line, source=pin.get("ht_total", []))
+                if over_p and under_p:
+                    pin_ou_line = over_p.get("points")
+                    cal_ok, _ = _calibrate_market_line(sport, "ou", bb_sh_ou["line"], pin_ou_line, None, is_ht=True)
+                    if cal_ok:
+                        total_implied = 1.0 / get_decimal_price(over_p) + 1.0 / get_decimal_price(under_p)
+                        over_fair = round(get_decimal_price(over_p) * total_implied, 4)
+                        under_fair = round(get_decimal_price(under_p) * total_implied, 4)
+                        if get_decimal_price(over_p) and get_decimal_price(over_p) > 0:
+                            ev_o = (bb_sh_ou["over_odds"] - over_fair) / over_fair * 100
+                            if ev_o > 1:
+                                entry["over_under"].append({
+                                    "designation": sh_labels["over"],
+                                    "line": str(bb_sh_ou["line"]),
+                                    "bb_odds": bb_sh_ou["over_odds"],
+                                    "pin_odds": get_decimal_price(over_p),
+                                    "fair_price": over_fair,
+                                    "ev_pct": round(ev_o, 2),
+                                    "_market": "sh",
+                                })
+                        if get_decimal_price(under_p) and get_decimal_price(under_p) > 0:
+                            ev_u = (bb_sh_ou["under_odds"] - under_fair) / under_fair * 100
+                            if ev_u > 1:
+                                entry["over_under"].append({
+                                    "designation": sh_labels["under"],
+                                    "line": str(bb_sh_ou["line"]),
+                                    "bb_odds": bb_sh_ou["under_odds"],
+                                    "pin_odds": get_decimal_price(under_p),
+                                    "fair_price": under_fair,
+                                    "ev_pct": round(ev_u, 2),
+                                    "_market": "sh",
+                                })
+
+            # SH 双重机会
+            bb_sh_dc = bb_sh.get("dc", [])
+            if len(bb_sh_dc) >= 3 and n_ml == 3:
+                sh_dc_fair = None
+                sh_dc_pin_raw = None
+                pin_dc = pin.get("double_chance", [])
+                for dc_market in pin_dc:
+                    if dc_market.get("period", 0) != 1:
+                        continue
+                    prices = dc_market.get("prices", [])
+                    if len(prices) >= 3:
+                        dc_desig_map = {"1X": 0, "2X": 1, "12": 2}
+                        dc_raw = [None, None, None]
+                        for p in prices:
+                            des = p.get("designation", "")
+                            val = get_decimal_price(p) or 0
+                            idx = dc_desig_map.get(des)
+                            if idx is None and len(prices) == 3:
+                                idx_map = {0: "1X", 1: "2X", 2: "12"}
+                                idx = dc_desig_map.get(idx_map.get(prices.index(p), ""))
+                            if idx is not None and val > 0:
+                                dc_raw[idx] = val
+                        if all(x and x > 0 for x in dc_raw):
+                            if not any(v < 1.2 for v in dc_raw):
+                                dc_imp = sum(1.0 / v for v in dc_raw)
+                                sh_dc_fair = [round(v * dc_imp, 4) for v in dc_raw]
+                                sh_dc_pin_raw = dc_raw
+                        break
+                if sh_dc_fair is None:
+                    pin_ht_ml_for_sh = get_pin_ml_sorted_from_source(pin.get("ht_moneyline", []), sport)
+                    if len(pin_ht_ml_for_sh) == 3:
+                        hh, dd, aa = pin_ht_ml_for_sh
+                        if all(x and x > 0 for x in [hh, dd, aa]):
+                            imp = 1/hh + 1/dd + 1/aa
+                            p_h, p_d, p_a = (1/hh)/imp, (1/dd)/imp, (1/aa)/imp
+                            sh_dc_fair = [round(1/(p_h+p_d), 4), round(1/(p_d+p_a), 4), round(1/(p_h+p_a), 4)]
+                if sh_dc_fair:
+                    sh_dc_labels = ["下半场双重机会-主/和局", "下半场双重机会-和局/客", "下半场双重机会-主/客"]
+                    sh_dc_pair_indices = [(0,1), (1,2), (0,2)]
+                    for i in range(3):
+                        bb_val = float(bb_sh_dc[i]) if isinstance(bb_sh_dc[i], str) else bb_sh_dc[i]
+                        fp = sh_dc_fair[i]
+                        if not (bb_val and fp and fp > 0):
+                            continue
+                        idx1, idx2 = sh_dc_pair_indices[i]
+                        if len(bb_sh.get("ml", [])) >= 3 and bb_val >= min(bb_sh["ml"][idx1], bb_sh["ml"][idx2]):
+                            continue
+                        ev = (bb_val - fp) / fp * 100
+                        if ev > 1:
+                            pin_raw_val = round(sh_dc_pin_raw[i], 4) if sh_dc_pin_raw else 0
+                            entry["double_chance"].append({
+                                "designation": sh_dc_labels[i],
+                                "bb_odds": bb_val,
+                                "pin_odds": pin_raw_val,
+                                "fair_price": round(fp, 4),
+                                "ev_pct": round(ev, 2),
+                                "_market": "sh_dc",
+                            })
+
         # --- 双重机会 (Double Chance) FT ---
         bb_dc = bb.get("odds_dc", [])
         dc_labels = ["双重机会-主/和局", "双重机会-和局/客", "双重机会-主/客"]
@@ -1289,6 +1455,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             if entry[mk]:
                 ft_entries = [x for x in entry[mk] if x.get("_market") in (None, "", "main")]
                 ht_entries = [x for x in entry[mk] if x.get("_market") == "ht"]
+                sh_entries = [x for x in entry[mk] if x.get("_market") == "sh"]
                 dc_entries = [x for x in entry[mk] if x.get("_market") == "dc"]
                 btts_entries = [x for x in entry[mk] if x.get("_market") == "btts"]
                 oe_entries = [x for x in entry[mk] if x.get("_market") == "oe"]
@@ -1298,6 +1465,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     best.append(max(ft_entries, key=lambda x: x["ev_pct"]))
                 if ht_entries:
                     best.append(max(ht_entries, key=lambda x: x["ev_pct"]))
+                if sh_entries:
+                    best.append(max(sh_entries, key=lambda x: x["ev_pct"]))
                 if dc_entries:
                     best.append(max(dc_entries, key=lambda x: x["ev_pct"]))
                 ht_dc_entries = [x for x in entry[mk] if x.get("_market") == "ht_dc"]
