@@ -151,19 +151,30 @@ SPORT_KEY_TO_LEAGUE = {
 
 
 def _fetch_json(url: str, timeout: int = 15) -> Optional[dict]:
-    """通用 JSON 抓取（requests 优先，curl 降级）。"""
-    try:
-        resp = requests.get(url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0"})
-        if resp.status_code == 200:
-            return resp.json()
-        logger.warning("⚠️ ESPN API 返回 %s: %s", resp.status_code, url.split("?")[0])
-        return None
-    except Exception as e:
-        logger.warning("⚠️ ESPN API 请求失败 %s: %s", url.split("?")[0], e)
-        # curl 降级（绕过 LibreSSL / proxy 兼容性问题）
+    """通用 JSON 抓取（HTTPS → HTTP 降级 → curl 降级）。
+
+    ESPN API: HTTPS 被 Edgesuite CDN 封杀返回 403，HTTP 正常。
+    """
+    urls_to_try = [url]
+    if url.startswith("https://"):
+        urls_to_try.append(url.replace("https://", "http://", 1))
+
+    for try_url in urls_to_try:
+        try:
+            resp = requests.get(try_url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0"})
+            if resp.status_code == 200:
+                return resp.json()
+            if resp.status_code == 403 and try_url.startswith("https://"):
+                continue  # HTTPS blocked, try HTTP
+            logger.warning("⚠️ ESPN API 返回 %s: %s", resp.status_code, try_url.split("?")[0])
+        except Exception as e:
+            logger.warning("⚠️ ESPN API 请求失败 %s: %s", try_url.split("?")[0], e)
+
+    # curl 降级（绕过 LibreSSL / proxy 兼容性问题）
+    for try_url in urls_to_try:
         try:
             import subprocess, json
-            cmd = ['curl', '-s', '--max-time', str(timeout), '-H', 'User-Agent: Mozilla/5.0', url]
+            cmd = ['curl', '-s', '--max-time', str(timeout), '-H', 'User-Agent: Mozilla/5.0', try_url]
             import os
             for env_var in ('HTTPS_PROXY', 'https_proxy', 'HTTP_PROXY', 'http_proxy'):
                 val = os.environ.get(env_var)
@@ -176,7 +187,7 @@ def _fetch_json(url: str, timeout: int = 15) -> Optional[dict]:
                 return data
         except Exception:
             pass
-        return None
+    return None
 
 
 def _extract_stat(competitor: dict, stat_name: str) -> Optional[int]:

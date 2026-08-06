@@ -25,22 +25,26 @@ COOKIE_FILE = DATA_DIR / "pinnacle_cf_clearance.txt"
 # ── Python 3.14 chunked encoding monkey-patch ──────────────────────────
 import http.client
 
-_orig_safe_read = http.client.HTTPResponse._safe_read
+_PATCHED = getattr(http.client.HTTPResponse, "_safe_read_is_patched", False)
 
-def _safe_read_patched(self, amt):
-    """Retry on IncompleteRead — Python 3.14 http.client chunked bug."""
-    data = b""
-    while amt > 0:
-        try:
-            chunk = _orig_safe_read(self, amt)
-            return data + chunk if chunk else data
-        except http.client.IncompleteRead as e:
-            data += e.partial
-            amt -= len(e.partial)
-            if amt <= 0:
-                return data
+if not _PATCHED:
+    _orig_safe_read = http.client.HTTPResponse._safe_read
 
-http.client.HTTPResponse._safe_read = _safe_read_patched
+    def _safe_read_patched(self, amt):
+        """Retry on IncompleteRead — Python 3.14 http.client chunked bug."""
+        data = b""
+        while amt > 0:
+            try:
+                chunk = _orig_safe_read(self, amt)
+                return data + chunk if chunk else data
+            except http.client.IncompleteRead as e:
+                data += e.partial
+                amt -= len(e.partial)
+                if amt <= 0:
+                    return data
+
+    _safe_read_patched._safe_read_is_patched = True  # marker to survive reload()
+    http.client.HTTPResponse._safe_read = _safe_read_patched
 
 # ── Session setup ──────────────────────────────────────────────────────
 
