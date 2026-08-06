@@ -43,8 +43,8 @@ if not _PATCHED:
                 if amt <= 0:
                     return data
 
-    _safe_read_patched._safe_read_is_patched = True  # marker to survive reload()
     http.client.HTTPResponse._safe_read = _safe_read_patched
+    http.client.HTTPResponse._safe_read_is_patched = True  # marker on CLASS, survives reload()
 
 # ── Session setup ──────────────────────────────────────────────────────
 
