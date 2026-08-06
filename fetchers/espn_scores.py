@@ -159,9 +159,18 @@ def _fetch_json(url: str, timeout: int = 15) -> Optional[dict]:
     if url.startswith("https://"):
         urls_to_try.append(url.replace("https://", "http://", 1))
 
+    REQ_HEADERS = {
+        "User-Agent": (
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/150.0.0.0 Safari/537.36"
+        ),
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
     for try_url in urls_to_try:
         try:
-            resp = requests.get(try_url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0"})
+            resp = requests.get(try_url, timeout=timeout, headers=REQ_HEADERS)
             if resp.status_code == 200:
                 return resp.json()
             if resp.status_code == 403 and try_url.startswith("https://"):
@@ -170,11 +179,23 @@ def _fetch_json(url: str, timeout: int = 15) -> Optional[dict]:
         except Exception as e:
             logger.warning("⚠️ ESPN API 请求失败 %s: %s", try_url.split("?")[0], e)
 
-    # curl 降级（绕过 LibreSSL / proxy 兼容性问题）
+    # curl 降级（绕过 LibreSSL / proxy 兼容性问题 + ESPN WAF）
+    CURL_UA = (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/150.0.0.0 Safari/537.36"
+    )
     for try_url in urls_to_try:
         try:
             import subprocess, json
-            cmd = ['curl', '-s', '--max-time', str(timeout), '-H', 'User-Agent: Mozilla/5.0', try_url]
+            cmd = [
+                'curl', '-s', '--compressed', '-L',
+                '--max-time', str(timeout),
+                '-H', f'User-Agent: {CURL_UA}',
+                '-H', 'Accept: application/json, text/plain, */*',
+                '-H', 'Accept-Language: en-US,en;q=0.9',
+                try_url,
+            ]
             import os
             for env_var in ('HTTPS_PROXY', 'https_proxy', 'HTTP_PROXY', 'http_proxy'):
                 val = os.environ.get(env_var)
@@ -184,7 +205,11 @@ def _fetch_json(url: str, timeout: int = 15) -> Optional[dict]:
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout + 5)
             if result.returncode == 0 and result.stdout:
                 data = json.loads(result.stdout)
+                logger.debug("curl fallback success: %s", try_url.split("?")[0])
                 return data
+            else:
+                logger.debug("curl fallback failed rc=%d len=%d: %s",
+                           result.returncode, len(result.stdout or ""), try_url.split("?")[0])
         except Exception:
             pass
     return None
