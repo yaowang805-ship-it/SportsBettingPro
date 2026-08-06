@@ -81,7 +81,7 @@ MARKET_TYPES = {
         "ml": 5001, "hc": 5004, "ou": 5003,
     },
     7: {  # 棒球
-        "ml": 7003, "hc": 7001, "ou": 7002,
+        "ml": 7003, "hc": 7001, "ou": [7002, 7004, 7005],  # 多线OU: 7002=全垒 7004/7005=备选
     },
     6: {  # 美式足球 (NFL/大学/室内)
         "ml": 6001, "hc": 6002, "ou": 6003,
@@ -128,7 +128,7 @@ SPORT_PERIODS = {
     1: {"ft": 1001, "ht": 1002, "2h": 1003},
     3: {"ft": 3001},
     5: {"ft": 5001, "ht": 5002, "2h": 5003},
-    7: {"ft": 7001},
+    7: {"ft": 7001, "f5": 7004},  # F5 = First 5 Innings (Pinnacle period 3)
     6: {"ft": 6001},
     15: {"ft": 15001},
     19: {"ft": 19001},
@@ -384,6 +384,7 @@ def extract_match_odds(record, sport_key, platform="BB"):
     ft_period = periods.get("ft", 1001)
     ht_period = periods.get("ht")
     sh_period = periods.get("2h")
+    f5_period = periods.get("f5")  # baseball first 5 innings
 
     # ─── FT ──────────────────────────────────────────────
 
@@ -554,35 +555,38 @@ def extract_match_odds(record, sport_key, platform="BB"):
         return {"primary": lines[0], "alternates": lines[1:]}
 
     def _extract_ou(period):
-        mty_code = mt.get("ou")
-        if not mty_code:
+        mty_codes = mt.get("ou")
+        if not mty_codes:
             return None
-        group = _find_market_group(record, mty_code, period)
-        if not group:
-            return None
-        markets = group.get("mks", group.get("markets", []))
-        if not markets:
-            return None
+        if not isinstance(mty_codes, list):
+            mty_codes = [mty_codes]
 
         lines = []
-        for mk in markets:
-            ops = _get_market_options(mk)
-            if len(ops) < 2:
+        for mty_code in mty_codes:
+            group = _find_market_group(record, mty_code, period)
+            if not group:
                 continue
-            line_val = _get_line_value(mk)
-            over_op = ops[0]
-            under_op = ops[1]
-            over_odds = float(over_op.get("od", 0))
-            under_odds = float(under_op.get("od", 0))
-            line_str = over_op.get("nm", "")
-            if over_odds <= 0 or under_odds <= 0:
+            markets = group.get("mks", group.get("markets", []))
+            if not markets:
                 continue
-            lines.append({
-                "line": line_val,
-                "line_str": line_str,
-                "over_odds": over_odds,
-                "under_odds": under_odds,
-            })
+            for mk in markets:
+                ops = _get_market_options(mk)
+                if len(ops) < 2:
+                    continue
+                line_val = _get_line_value(mk)
+                over_op = ops[0]
+                under_op = ops[1]
+                over_odds = float(over_op.get("od", 0))
+                under_odds = float(under_op.get("od", 0))
+                line_str = over_op.get("nm", "")
+                if over_odds <= 0 or under_odds <= 0:
+                    continue
+                lines.append({
+                    "line": line_val,
+                    "line_str": line_str,
+                    "over_odds": over_odds,
+                    "under_odds": under_odds,
+                })
 
         if not lines:
             return None
@@ -941,6 +945,15 @@ def extract_match_odds(record, sport_key, platform="BB"):
 
         result["odds_sh"] = sh_dict
 
+    # F5 (First 5 Innings — 棒球)
+    if f5_period:
+        f5_ou = _extract_ou(f5_period)
+        f5_dict = {}
+        if f5_ou:
+            f5_dict["total"] = f5_ou["primary"]
+            f5_dict["alternate_totals"] = f5_ou["alternates"]
+        result["odds_f5"] = f5_dict
+
     # dnb flat list for backward compat
     dnb_flat = []
     ft_dnb_dict = ft_dict.get("dnb")
@@ -1195,7 +1208,7 @@ def _merge_single_match(platform_matches):
                     break
         return result
 
-    for period in ("odds_ft", "odds_ht", "odds_sh"):
+    for period in ("odds_ft", "odds_ht", "odds_sh", "odds_f5"):
         base_period = base.get(period, {})
         plat_period = m.get(period, {})
         if not plat_period:

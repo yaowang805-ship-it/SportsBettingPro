@@ -967,6 +967,57 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                     "_market": "ht",
                                 })
 
+        # --- 棒球 F5 (First 5 Innings) 对比：BB odds_f5 vs Pinnacle period=3 ---
+        if sport == "baseball":
+            bb_f5 = bb.get("odds_f5", {})
+            if bb_f5:
+                f5_labels = {"over": "F5大球", "under": "F5小球"}
+                bb_f5_ou = bb_f5.get("total")
+                if bb_f5_ou:
+                    bb_line = bb_f5_ou.get("line")
+                    # Pinnacle period 3 = F5 innings
+                    total_source = pin.get("total", [])
+                    f5_totals = [t for t in total_source if t.get("period") == 3]
+                    over_p = under_p = None
+                    best_diff = float("inf")
+                    for t in f5_totals:
+                        prices = t.get("prices", [])
+                        for p in prices:
+                            pts = p.get("points")
+                            if pts is not None and abs(pts - (bb_line or 0)) < best_diff:
+                                if p.get("designation") == "over":
+                                    over_p = p
+                                elif p.get("designation") == "under":
+                                    under_p = p
+                        if over_p and under_p:
+                            best_diff = abs((over_p.get("points") or 0) - (bb_line or 0))
+                    if over_p and under_p and get_decimal_price(over_p) and get_decimal_price(under_p):
+                        total_implied = 1.0 / get_decimal_price(over_p) + 1.0 / get_decimal_price(under_p)
+                        over_fair = round(get_decimal_price(over_p) * total_implied, 4)
+                        under_fair = round(get_decimal_price(under_p) * total_implied, 4)
+                        ev_o = (bb_f5_ou["over_odds"] - over_fair) / over_fair * 100 if over_fair > 0 else 0
+                        ev_u = (bb_f5_ou["under_odds"] - under_fair) / under_fair * 100 if under_fair > 0 else 0
+                        if ev_o > 1:
+                            entry["over_under"].append({
+                                "designation": f5_labels["over"],
+                                "line": str(bb_f5_ou.get("line", "")),
+                                "bb_odds": bb_f5_ou["over_odds"],
+                                "pin_odds": get_decimal_price(over_p),
+                                "fair_price": over_fair,
+                                "ev_pct": round(ev_o, 2),
+                                "_market": "f5",
+                            })
+                        if ev_u > 1:
+                            entry["over_under"].append({
+                                "designation": f5_labels["under"],
+                                "line": str(bb_f5_ou.get("line", "")),
+                                "bb_odds": bb_f5_ou["under_odds"],
+                                "pin_odds": get_decimal_price(under_p),
+                                "fair_price": under_fair,
+                                "ev_pct": round(ev_u, 2),
+                                "_market": "f5",
+                            })
+
         # --- 双重机会 (Double Chance) FT ---
         bb_dc = bb.get("odds_dc", [])
         dc_labels = ["双重机会-主/和局", "双重机会-和局/客", "双重机会-主/客"]
