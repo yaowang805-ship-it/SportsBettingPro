@@ -1044,6 +1044,77 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             "_market": "dc",
                         })
 
+        # --- 上半场双重机会 (HT DC) ---
+        bb_ht_dc = bb.get("odds_ht", {}).get("dc", [])
+        if len(bb_ht_dc) >= 3 and n_ml == 3:
+            # 安全校验：HT DC 赔率是否与 HT 独赢相同
+            bb_ht_ml_check = bb.get("odds_ht", {}).get("ml", [])
+            if len(bb_ht_ml_check) >= 3:
+                dc_first3 = [round(float(x), 2) for x in bb_ht_dc[:3]]
+                ht_ml_first3 = [round(x, 2) for x in bb_ht_ml_check[:3]]
+                if dc_first3 == ht_ml_first3:
+                    bb_ht_dc = []
+        if len(bb_ht_dc) >= 3 and n_ml == 3:
+            ht_dc_fair = None
+            ht_dc_pin_raw = None
+            # 路径A: Pinnacle 有 HT DC 子比赛
+            pin_dc = pin.get("double_chance", [])
+            for dc_market in pin_dc:
+                if dc_market.get("period", 0) != 1:
+                    continue  # HT DC = period 1
+                prices = dc_market.get("prices", [])
+                if len(prices) >= 3:
+                    dc_desig_map = {"1X": 0, "2X": 1, "12": 2}
+                    dc_raw = [None, None, None]
+                    for p in prices:
+                        des = p.get("designation", "")
+                        val = get_decimal_price(p) or 0
+                        idx = dc_desig_map.get(des)
+                        if idx is None and len(prices) == 3:
+                            idx_map = {0: "1X", 1: "2X", 2: "12"}
+                            idx = dc_desig_map.get(idx_map.get(prices.index(p), ""))
+                        if idx is not None and val > 0:
+                            dc_raw[idx] = val
+                    if all(x and x > 0 for x in dc_raw):
+                        if any(v < 1.2 for v in dc_raw):
+                            ht_dc_fair = None
+                        else:
+                            dc_imp = sum(1.0 / v for v in dc_raw)
+                            ht_dc_fair = [round(v * dc_imp, 4) for v in dc_raw]
+                            ht_dc_pin_raw = dc_raw
+                    break
+            # 路径B: 从 HT 1X2 推导
+            if ht_dc_fair is None:
+                pin_ht_ml_for_dc = get_pin_ml_sorted_from_source(pin.get("ht_moneyline", []), sport)
+                if len(pin_ht_ml_for_dc) == 3:
+                    hh, dd, aa = pin_ht_ml_for_dc
+                    if all(x and x > 0 for x in [hh, dd, aa]):
+                        imp = 1/hh + 1/dd + 1/aa
+                        p_h, p_d, p_a = (1/hh)/imp, (1/dd)/imp, (1/aa)/imp
+                        ht_dc_fair = [round(1/(p_h+p_d), 4), round(1/(p_d+p_a), 4), round(1/(p_h+p_a), 4)]
+            if ht_dc_fair:
+                ht_dc_labels = ["上半场双重机会-主/和局", "上半场双重机会-和局/客", "上半场双重机会-主/客"]
+                ht_dc_pair_indices = [(0,1), (1,2), (0,2)]
+                for i in range(3):
+                    bb_val = float(bb_ht_dc[i]) if isinstance(bb_ht_dc[i], str) else bb_ht_dc[i]
+                    fp = ht_dc_fair[i]
+                    if not (bb_val and fp and fp > 0):
+                        continue
+                    idx1, idx2 = ht_dc_pair_indices[i]
+                    if len(bb_ht_ml_check) >= 3 and bb_val >= min(bb_ht_ml_check[idx1], bb_ht_ml_check[idx2]):
+                        continue
+                    ev = (bb_val - fp) / fp * 100
+                    if ev > 1:
+                        pin_raw_val = round(ht_dc_pin_raw[i], 4) if ht_dc_pin_raw else 0
+                        entry["double_chance"].append({
+                            "designation": ht_dc_labels[i],
+                            "bb_odds": bb_val,
+                            "pin_odds": pin_raw_val,
+                            "fair_price": round(fp, 4),
+                            "ev_pct": round(ev, 2),
+                            "_market": "ht_dc",
+                        })
+
         # --- 平局退款 (Draw No Bet) FT ---
         bb_dnb = bb.get("odds_dnb", [])
         if len(bb_dnb) >= 2 and n_ml == 3:
@@ -1229,6 +1300,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     best.append(max(ht_entries, key=lambda x: x["ev_pct"]))
                 if dc_entries:
                     best.append(max(dc_entries, key=lambda x: x["ev_pct"]))
+                ht_dc_entries = [x for x in entry[mk] if x.get("_market") == "ht_dc"]
+                if ht_dc_entries:
+                    best.append(max(ht_dc_entries, key=lambda x: x["ev_pct"]))
                 dnb_entries = [x for x in entry[mk] if x.get("_market") == "dnb"]
                 ht_dnb_entries = [x for x in entry[mk] if x.get("_market") == "ht_dnb"]
                 if dnb_entries:
