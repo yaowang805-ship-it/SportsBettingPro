@@ -82,10 +82,10 @@ class TestOverUnder:
         assert _match_bet(bet, [game]) == "lost"
 
     def test_over_exact_push_not_won(self):
-        """整数线 total=line → 不赢（push 视为 lost）。"""
+        """整数线 total=line → push（V4.5 独立追踪 push，不强制归为 lost）。"""
         bet = _make_bet("阿森纳", "切尔西", "大 3")
         game = _make_game("Arsenal", "Chelsea", 2, 1)
-        assert _match_bet(bet, [game]) == "lost"
+        assert _match_bet(bet, [game]) == "push"
 
     def test_over_with_team_space(self):
         """市场类型含空格。"""
