@@ -269,13 +269,25 @@ def extract_bb_ou(bb_match, sport="football"):
     """Extract over/under odds and line from BB match."""
     odds_ft = bb_match.get("odds_ft", {})
     if isinstance(odds_ft, dict):
-        ft_ou = odds_ft.get("over_under")
+        # V4.5: BB API uses "total" key, not "over_under"
+        ft_ou = odds_ft.get("total") or odds_ft.get("over_under")
         if isinstance(ft_ou, dict) and ft_ou.get("over_odds") and ft_ou.get("under_odds"):
             return {
                 "over_odds": ft_ou["over_odds"],
                 "under_odds": ft_ou["under_odds"],
                 "line": ft_ou.get("line"),
             }
+    # HT OU extraction
+    odds_ht = bb_match.get("odds_ht", {})
+    if isinstance(odds_ht, dict):
+        ht_ou = odds_ht.get("total") or odds_ht.get("over_under")
+        if isinstance(ht_ou, dict) and ht_ou.get("over_odds") and ht_ou.get("under_odds"):
+            return {
+                "over_odds": ht_ou["over_odds"],
+                "under_odds": ht_ou["under_odds"],
+                "line": ht_ou.get("line"),
+            }
+    # Legacy fallback
     odds = bb_match.get("odds_values", [])
     full_text = bb_match.get("full_text", "")
     n = 3 if sport not in TWO_WAY_SPORTS else 2
