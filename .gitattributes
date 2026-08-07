@@ -3,3 +3,7 @@ data/pinnacle_historical/nfl_stats/*.csv filter=lfs diff=lfs merge=lfs -text
 data/pinnacle_historical/tennis_large/*.csv filter=lfs diff=lfs merge=lfs -text
 data/pinnacle_historical/nba_data/*.csv filter=lfs diff=lfs merge=lfs -text
 data/pinnacle_historical/nhl_data/*.csv filter=lfs diff=lfs merge=lfs -text
+data/pinnacle_historical/kaggle_nhl/*.csv filter=lfs diff=lfs merge=lfs -text
+data/pinnacle_historical/kaggle_tennis/*.xls filter=lfs diff=lfs merge=lfs -text
+data/pinnacle_historical/kaggle_tennis/*.xlsx filter=lfs diff=lfs merge=lfs -text
+data/pinnacle_historical/kaggle_beat_bookie/*.gz filter=lfs diff=lfs merge=lfs -text
