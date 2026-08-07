@@ -1906,17 +1906,32 @@ def build_report(skip_freshness: bool = False, incremental: bool = False):
     """
     errors = []
     if incremental:
-        # 增量模式: 检查对比文件新鲜度，>2h 过期则强制实时拉取
+        # 增量模式: 检查对比文件新鲜度
+        # 条件1: >2h 过期 → 强制实时拉取
+        # 条件2: BB数据比 Pin 新 >5min → BB已更新但Pin未跟上 → 强制实时拉取
         pin_age_min = 999.0
+        need_refresh = False
         try:
             if COMPARISON_FILE.exists():
                 pin_mtime = datetime.fromtimestamp(COMPARISON_FILE.stat().st_mtime,
                                                     tz=timezone.utc).astimezone()
                 pin_age_min = (datetime.now(timezone.utc).astimezone() - pin_mtime).total_seconds() / 60
+                # 检查 BB 数据是否比 Pin 新
+                bb_file = DATA_DIR / "bb_odds_extracted.json"
+                if bb_file.exists():
+                    bb_mtime = datetime.fromtimestamp(bb_file.stat().st_mtime,
+                                                       tz=timezone.utc).astimezone()
+                    bb_fresher = (bb_mtime - pin_mtime).total_seconds() > 300
+                    if bb_fresher:
+                        logger.warning("⚡ 增量模式 — BB数据比Pin新 %.0fmin，强制实时拉取",
+                                       (bb_mtime - pin_mtime).total_seconds() / 60)
+                        need_refresh = True
         except Exception:
             pass
         if pin_age_min > 120:
             logger.warning("⚡ 增量模式 — Pin数据 %.0fh 过期，强制实时拉取", pin_age_min / 60)
+            need_refresh = True
+        if need_refresh:
             live_ok, errors = _refresh_live_odds()
             if not live_ok:
                 _send_failure_alert(errors)

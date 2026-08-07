@@ -401,19 +401,31 @@ def run_incremental(time_window: str = "all"):
     total_changed = len(changed_ids) + len(new_ids) + len(pin_changed_leagues)
 
     if total_changed == 0:
-        # 即使无变动，>2h 也应强制全量对比刷新 Pin 数据
+        # 即无变动，也要检查是否需要强制刷新：
+        # 1. Pin 数据 >2h 未刷新 → 强制对比
+        # 2. BB 数据比 Pin 新 >5min → BB 已更新但 Pin 未跟上 → 强制对比
         window_file = COMPARISON_FILE_NEAR if time_window == "near" else COMPARISON_FILE_FAR
         force_refresh = False
         try:
             if not window_file.exists():
                 force_refresh = True
             else:
-                age_min = (time.time() - window_file.stat().st_mtime) / 60
-                if age_min > 120:
-                    print(f"\n⏰ Pin数据 {age_min:.0f}min 未刷新，强制全量对比")
+                pin_age_min = (time.time() - window_file.stat().st_mtime) / 60
+                # 检查 BB 数据是否比 Pin 新
+                bb_file = DATA_DIR / "bb_odds_extracted.json"
+                bb_fresher = False
+                if bb_file.exists():
+                    bb_mtime = bb_file.stat().st_mtime
+                    pin_mtime = window_file.stat().st_mtime
+                    bb_fresher = (bb_mtime - pin_mtime) > 300  # BB 比 Pin 新 >5min
+                if pin_age_min > 120:
+                    print(f"\n⏰ Pin数据 {pin_age_min:.0f}min 未刷新，强制全量对比")
+                    force_refresh = True
+                elif bb_fresher:
+                    print(f"\n⚠️ BB数据比Pin新 {((bb_mtime-pin_mtime)/60):.0f}min，强制全量对比（BB已更新Pin未跟上）")
                     force_refresh = True
                 else:
-                    print(f"\n✅ BB+Pin均无变动，跳过对比 (Pin数据 {age_min:.0f}min前)")
+                    print(f"\n✅ BB+Pin均无变动，跳过对比 (Pin数据 {pin_age_min:.0f}min前)")
         except OSError:
             pass
         if not force_refresh:
