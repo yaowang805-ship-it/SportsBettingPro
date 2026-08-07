@@ -2249,16 +2249,10 @@ def _filter_pushed(qualified: list) -> list:
     result, skipped, re_pushed = [], 0, 0
 
     for o in qualified:
-        key = "|".join([
-            o.get("sport", ""),
-            o.get("league", ""),
-            o.get("home_cn", "").strip(),
-            o.get("away_cn", "").strip(),
-            o.get("designation", ""),
-            o.get("_sub_market", o.get("_market", "")) or "1x2",
-            str(o.get("line", "") or ""),
-            str(o.get("_pin_epoch", ""))[:10],
-        ])
+        # V4.5: 统一使用 _make_fingerprint 的 key 格式
+        # sport|league|home|away|designation|sub_market|line|match_date(Beijing)
+        # 含 Unicode 归一化 + 盘口线 + 北京时间日期
+        key = _make_fingerprint(o)
         bb_now = o.get("bb_odds", 0)
         ev_now = o.get("ev_pct", 0)
         fair_now = o.get("fair_price", 0)
@@ -2271,8 +2265,6 @@ def _filter_pushed(qualified: list) -> list:
 
         # 新key → 推送
         if old is None:
-            result.append(o)
-            _audit_log("PUSHED", key, o, "new")
             result.append(o)
             _audit_log("PUSHED", key, o, "new")
             continue
