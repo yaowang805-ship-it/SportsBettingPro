@@ -1,8 +1,40 @@
+# ── 核心数据处理 ──
 pandas
 numpy
+scipy
+
+# ── ML 模型（已废弃，保留兼容）──
 scikit-learn
 lightgbm
 xgboost
 catboost
 joblib
+
+# ── HTTP & API ──
 requests
+
+# ── 数据库 ──
+SQLAlchemy
+
+# ── Dashboard ──
+streamlit
+altair
+
+# ── 配置 & 通知 ──
+python-dotenv
+
+# ── Cookie / 浏览器自动化 ──
+playwright
+browser-cookie3
+
+# ── 中文拼音匹配 ──
+pypinyin
+
+# ── 回测 & 分析 ──
+shap
+QuantStats
+
+# ── 可选增强 ──
+rapidfuzz
+betfairlightweight
+openpyxl

@@ -160,7 +160,6 @@ LEAGUE_SPORT_MAP = {
     "波兰甲级联赛": ("soccer_poland_ekstraklasa", "波甲"),
     "英格兰联赛杯": ("soccer_england_league_cup", "英联赛杯"),
     "球会友谊赛": (None, "球会友谊赛"),
-    "美国冠军联赛": ("soccer_usa_usl_championship", "美冠联"),
     "澳大利亚杯": ("soccer_australia_cup", "澳洲杯"),
     "厄瓜多尔甲级联赛": ("soccer_ecuador_serie_a", "厄甲"),
     "巴西杯": ("soccer_brazil_cup", "巴西杯"),
@@ -473,13 +472,6 @@ _CN_TO_EN_SETTLEMENT = {
     # === 其他 ===
     "布伦瑞克城": "brunswick city",
     "梅特兰": "maitland",
-    "米德兰": "midland",
-    "艾达比辛": "elbasani",
-    "克拉克斯维克": "klippan",
-    "德国 U20": "germany u20",
-    "西班牙 U20": "spain u20",
-    "拉脱维亚 U20": "latvia u20",
-    "罗马尼亚 U20": "romania u20",
     "格鲁吉亚 U20": "georgia u20",
     "丹麦 U20": "denmark u20",
     # === WNBA ===

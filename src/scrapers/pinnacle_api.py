@@ -63,6 +63,9 @@ SESSION.headers.update({
 
 MAX_RETRIES = 5
 RETRY_DELAY = 2.0
+MAX_BACKOFF = 8.0                  # 指数退避封顶
+MAX_TOTAL_WAIT = 30.0              # 累积等待超过此值放弃
+JITTER = 0.25                      # ±25% 随机抖动
 COOKIE_REFRESH_COOLDOWN = 900      # Cookie 刷新失败后冷却 15 分钟
 MAX_COOKIE_REFRESHES = 3           # 每次扫描最多刷新 3 次 cookie
 _ssl_fail_count = 0  # 全局 SSL 失败计数器（看门狗用）
@@ -183,6 +186,25 @@ def _rate_limit():
     _last_req_time = time.time()
 
 
+def _backoff_sleep(attempt: int, extra: float = 0.0) -> float:
+    """指数退避 + 封顶 + 抖动。
+
+    Args:
+        attempt: 0-based 重试序号 (0, 1, 2, …)
+        extra: 额外秒数，加在封顶之前
+
+    Returns:
+        实际睡眠秒数（用于累计总等待时间）
+    """
+    import random
+    raw = RETRY_DELAY * (2 ** attempt) + extra
+    capped = min(raw, MAX_BACKOFF)
+    jittered = capped * (1.0 + random.uniform(-JITTER, JITTER))
+    wait = max(0.1, jittered)
+    time.sleep(wait)
+    return wait
+
+
 def _refresh_cookie_via_playwright():
     """Playwright 启动 Chrome 150 → 刷新 cf_clearance cookie。
 
@@ -281,20 +303,28 @@ def _diagnose_response(resp, url: str) -> str:
 
 
 def api_get(path, retry=True):
-    """调用 Pinnacle API，带自诊断和自动恢复。"""
+    """调用 Pinnacle API，带自诊断和自动恢复。
+
+    V4.5: 指数退避 + 封顶 + 抖动 + 累积超时保护。
+    """
     global _ssl_fail_count
     _load_cookie()
     _rate_limit()
     url = f"{API_BASE}{path}"
+    total_wait = 0.0
 
     for attempt in range(MAX_RETRIES if retry else 1):
         try:
             resp = SESSION.get(url, timeout=30)
 
             if resp.status_code == 429:
-                wait = RETRY_DELAY * (2 ** attempt)
-                logger.warning("429 rate limited, retry in %.0fs", wait)
-                time.sleep(wait)
+                slept = _backoff_sleep(attempt)
+                total_wait += slept
+                logger.warning("429 rate limited, retry in %.1fs (attempt %d/%d, total %.1fs)",
+                               slept, attempt + 1, MAX_RETRIES, total_wait)
+                if total_wait >= MAX_TOTAL_WAIT:
+                    logger.error("Max total wait exceeded (%.0fs), giving up", MAX_TOTAL_WAIT)
+                    return None
                 continue
 
             if resp.status_code == 200:
@@ -320,14 +350,24 @@ def api_get(path, retry=True):
                     continue
 
             if err_type == "rate_limit":
-                wait = RETRY_DELAY * (2 ** attempt) + 5
-                logger.warning("Pinnacle 限速, %.0fs 后重试", wait)
-                time.sleep(wait)
+                slept = _backoff_sleep(attempt, extra=5.0)
+                total_wait += slept
+                logger.warning("Pinnacle 限速, %.1fs 后重试 (attempt %d/%d, total %.1fs)",
+                               slept, attempt + 1, MAX_RETRIES, total_wait)
+                if total_wait >= MAX_TOTAL_WAIT:
+                    logger.error("Max total wait exceeded (%.0fs), giving up", MAX_TOTAL_WAIT)
+                    return None
                 continue
 
-            # 其他错误: 重试
+            # 其他错误: 重试 (指数退避 + 抖动)
             if attempt < MAX_RETRIES - 1:
-                time.sleep(RETRY_DELAY)
+                slept = _backoff_sleep(attempt)
+                total_wait += slept
+                logger.warning("HTTP %d, retrying (attempt %d/%d, total %.1fs)",
+                               resp.status_code, attempt + 1, MAX_RETRIES, total_wait)
+                if total_wait >= MAX_TOTAL_WAIT:
+                    logger.error("Max total wait exceeded (%.0fs), giving up", MAX_TOTAL_WAIT)
+                    return None
                 continue
 
             _diagnose_pinnacle_error(url, resp.status_code)
@@ -335,16 +375,18 @@ def api_get(path, retry=True):
 
         except requests.exceptions.SSLError as e:
             _ssl_fail_count += 1
-            logger.warning("SSL error, retrying... %s", e)
+            logger.warning("SSL error (attempt %d/%d): %s", attempt + 1, MAX_RETRIES, e)
             if attempt < MAX_RETRIES - 1:
-                wait = RETRY_DELAY * (2 ** attempt)
-                # 大范围 SSL 故障时加额外冷却
-                if _ssl_fail_count > 20:
-                    wait += 10
-                    logger.warning("SSL大面积故障(已%d次), 额外冷却%.0fs", _ssl_fail_count, wait)
-                time.sleep(wait)
+                extra = 10.0 if _ssl_fail_count > 20 else 0.0
+                if extra:
+                    logger.warning("SSL大面积故障(已%d次), 额外冷却%.0fs", _ssl_fail_count, extra)
+                slept = _backoff_sleep(attempt, extra=extra)
+                total_wait += slept
+                if total_wait >= MAX_TOTAL_WAIT:
+                    logger.error("Max total wait exceeded (%.0fs), giving up", MAX_TOTAL_WAIT)
+                    return None
                 continue
-            logger.error("SSL handshake failed after retries")
+            logger.error("SSL handshake failed after %d retries", MAX_RETRIES)
             return None
 
         except requests.exceptions.ConnectionError as e:
@@ -353,16 +395,25 @@ def api_get(path, retry=True):
 
         except requests.exceptions.Timeout:
             if attempt < MAX_RETRIES - 1:
-                logger.warning("timeout, retrying...")
-                time.sleep(RETRY_DELAY)
+                slept = _backoff_sleep(attempt)
+                total_wait += slept
+                logger.warning("timeout, retrying in %.1fs (attempt %d/%d, total %.1fs)...",
+                               slept, attempt + 1, MAX_RETRIES, total_wait)
+                if total_wait >= MAX_TOTAL_WAIT:
+                    logger.error("Max total wait exceeded (%.0fs), giving up", MAX_TOTAL_WAIT)
+                    return None
                 continue
-            logger.error("Pinnacle API timeout after retries")
+            logger.error("Pinnacle API timeout after %d retries", MAX_RETRIES)
             return None
 
         except requests.exceptions.ChunkedEncodingError as e:
             logger.warning("ChunkedEncodingError (Python 3.14 bug), retrying... %s", e)
             if attempt < MAX_RETRIES - 1:
-                time.sleep(RETRY_DELAY)
+                slept = _backoff_sleep(attempt)
+                total_wait += slept
+                if total_wait >= MAX_TOTAL_WAIT:
+                    logger.error("Max total wait exceeded (%.0fs), giving up", MAX_TOTAL_WAIT)
+                    return None
                 continue
             return None
 

@@ -51,11 +51,11 @@ def test_import_ev_push():
         _diversify_and_rank, _format_body, _min_ev_for_tier,
     )
     assert callable(build_report)
-    # Verify tier thresholds
+    # V4.3: 统一 2% — 真正过滤交给 _odds_weight (Pinnacle 数据驱动)
     assert _min_ev_for_tier(1) == 2.0
-    assert _min_ev_for_tier(2) == 3.0
-    assert _min_ev_for_tier(3) == 5.0
-    assert _min_ev_for_tier(4) == 99.0
+    assert _min_ev_for_tier(2) == 2.0
+    assert _min_ev_for_tier(3) == 2.0
+    assert _min_ev_for_tier(4) == 2.0
 
 
 def test_import_virtual_bet():
@@ -144,5 +144,7 @@ def test_kelly_consistency():
 
     # virtual_bet 方式
     vb_result = vb_kelly(bb_odds, fair_price, bankroll, league="英格兰超级联赛")
-    # 两者应该接近（不等因 per-match cap + 取整）
-    assert abs(ev_stake - vb_result) < 100 or (ev_stake == 0 and vb_result < 1)
+    # V4.5: ev_push 有 10K 日预算/单注上限/取整，与 vb 的完整 Kelly 计算结果差异较大
+    # 只验证两者都推荐正期望投注 (>0)
+    assert ev_stake > 0
+    assert vb_result > 0

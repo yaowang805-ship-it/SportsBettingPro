@@ -201,7 +201,7 @@ class TestRiskManager:
         # 60% prob at 2.0 odds → 20% edge → positive Kelly
         stake = rm.get_max_stake(0.6, 2.0, input_is_prob=True)
         assert stake > 0
-        assert stake < 10000 * 0.05  # should not exceed max_single
+        assert stake <= 10000 * 0.05  # V4.5: 单注上限含等于
 
     def test_get_max_stake_drawdown_stop(self):
         rm = RiskManager(initial_budget=10000)
