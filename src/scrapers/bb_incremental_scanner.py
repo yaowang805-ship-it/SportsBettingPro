@@ -401,9 +401,26 @@ def run_incremental(time_window: str = "all"):
     total_changed = len(changed_ids) + len(new_ids) + len(pin_changed_leagues)
 
     if total_changed == 0:
-        print(f"\n✅ BB+Pin均无变动，跳过对比")
-        save_snapshot(bb_matches, _current_snap)
-        return
+        # 即使无变动，>2h 也应强制全量对比刷新 Pin 数据
+        window_file = COMPARISON_FILE_NEAR if time_window == "near" else COMPARISON_FILE_FAR
+        force_refresh = False
+        try:
+            if not window_file.exists():
+                force_refresh = True
+            else:
+                age_min = (time.time() - window_file.stat().st_mtime) / 60
+                if age_min > 120:
+                    print(f"\n⏰ Pin数据 {age_min:.0f}min 未刷新，强制全量对比")
+                    force_refresh = True
+                else:
+                    print(f"\n✅ BB+Pin均无变动，跳过对比 (Pin数据 {age_min:.0f}min前)")
+        except OSError:
+            pass
+        if not force_refresh:
+            save_snapshot(bb_matches, _current_snap)
+            return
+        # 强制刷新: 全量拉取对比
+        total_changed = 1  # force comparison below
 
     print(f"\n📊 双向变动: BB {len(bb_changed_leagues)}个联赛, Pin {len(pin_changed_leagues)}个联赛 → 合并 {len(all_changed)}个")
     print(f"\n🔄 实时全量对比 (拉取最新BB+Pin, ~2min)...")
