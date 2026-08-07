@@ -86,23 +86,28 @@ def reset_cookie_state():
 
 
 def _load_cookie():
-    """从文件加载 cf_clearance cookie。"""
+    """从文件加载 cf_clearance cookie。
+
+    V4.5: 循环替代递归，防止 Chrome 刷新无限递归导致 RecursionError。
+    """
     global _cookie_loaded
-    if COOKIE_FILE.exists():
-        val = COOKIE_FILE.read_text().strip()
-        if val:
-            SESSION.cookies.set("cf_clearance", val, domain=".pinnacle.com")
-            if not _cookie_loaded:
-                logger.info("已加载 cf_clearance cookie (%d 字符)", len(val))
-                _cookie_loaded = True
-            return True
-    if not _cookie_loaded:
-        logger.warning("cf_clearance cookie 文件不存在: %s", COOKIE_FILE)
+    max_attempts = 3  # 最多尝试 3 轮（初始加载 + 2 次刷新）
+    for attempt in range(max_attempts):
+        if COOKIE_FILE.exists():
+            val = COOKIE_FILE.read_text().strip()
+            if val:
+                SESSION.cookies.set("cf_clearance", val, domain=".pinnacle.com")
+                if not _cookie_loaded:
+                    logger.info("已加载 cf_clearance cookie (%d 字符)", len(val))
+                    _cookie_loaded = True
+                return True
+        if attempt == 0 and not _cookie_loaded:
+            logger.warning("cf_clearance cookie 文件不存在: %s", COOKIE_FILE)
         # 自动从 Chrome 浏览器恢复 cookie
         if _refresh_cookie_from_chrome():
-            _cookie_loaded = False  # 重新尝试加载
-            return _load_cookie()
-        _cookie_loaded = True
+            continue  # 刷新成功，重试加载文件
+        break  # 刷新失败或冷却中，停止尝试
+    _cookie_loaded = True  # 标记已尝试，不再重复
     return False
 
 

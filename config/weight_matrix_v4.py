@@ -1609,7 +1609,13 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         data = NHL_DATA.get(idx)
         if data and data[2] >= 50:  # V4.4: MIN_N=50 (ESPN数据, 非Pinnacle)
             wr, avg_o, n = data
-            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.65) * _settlement_multiplier(league)
+            stake = kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.65)
+            # V4.5: OU/HC 加独立折扣 (NHL puck line ~= ML × 0.85, OU ~= ML × 0.75)
+            if sub_market in ("ou", "over_under"):
+                stake *= 0.75
+            elif sub_market in ("hc", "handicap"):
+                stake *= 0.85
+            return stake * _settlement_multiplier(league)
         return 0.0
 
     # ── Baseball (MLB) ──
@@ -1717,21 +1723,6 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         if data and data[2] >= 30:
             wr, avg_o, n = data
             return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.85) * _settlement_multiplier(league)
-        return 0.0
-
-    # ── Ice Hockey (NHL) ──
-    elif sport_lower == "ice_hockey":
-        idx = _bin_index(odds, ODDS_BINS)
-        data = NHL_DATA.get(idx)
-        if data and data[2] >= MIN_N_MINIMUM:
-            wr, avg_o, n = data
-            stake = kelly_075(wr, avg_o, 0.05, n) * DISCOUNT_SBR_LARGE
-            # V4.5: OU/HC 加独立折扣 (NHL puck line ~= ML × 0.85, OU ~= ML × 0.75)
-            if sub_market in ("ou", "over_under"):
-                stake *= 0.75
-            elif sub_market in ("hc", "handicap"):
-                stake *= 0.85
-            return stake * _settlement_multiplier(league)
         return 0.0
 
     # ── 乒/羽/排 ──

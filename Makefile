@@ -22,13 +22,13 @@ help:
 	@echo ""
 
 run:
-	python src/predict/run_all.py --sport all
+	python3 -m src.core.pipeline_orchestrator --once
 
 run-nba:
-	python src/predict/run_all.py --sport nba
+	python3 -m src.scrapers.bb_api_fetcher --sport basketball
 
 run-football:
-	python src/predict/run_all.py --sport football
+	python3 -m src.scrapers.bb_api_fetcher --sport football
 
 dashboard:
 	streamlit run src/dashboard/app.py --server.port 8501
@@ -37,13 +37,13 @@ backtest:
 	python src/backtest/backtest_runner.py
 
 health:
-	python health_check.py
+	python health_check_system.py
 
 test:
 	python3 -m pytest tests/ -v
 
 test-format:
-	python3 -m pytest tests/test_ev_monitor_format.py -v
+	python3 -m pytest tests/test_push_format.py -v
 
 install:
 	pip install -r requirements.txt

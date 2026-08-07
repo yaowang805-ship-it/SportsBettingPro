@@ -71,9 +71,12 @@ python3 -m src.report.bb_ev_push --no-bet
 | ⚽ 足球 OU | football-data.co.uk Pinnacle 收盘 | **46,727 场** | 30 细桶 |
 | 🎾 网球 | Pinnacle 收盘赔率 | **5,013 场** (5赛事级) | 16 细桶 |
 | 🏀 NBA | 模型回测 | **57,504 场** (15季) | 14 细桶 |
-| ⚾ MLB | 保守默认 | 无外部 Pinnacle 数据 | 3 档 |
-| 🏈 NFL | 保守默认 | 无外部 Pinnacle 数据 | 3 档 |
-| 🏒 NHL | 保守默认 | 无外部 Pinnacle 数据 | 2 档 |
+| ⚾ MLB | SBR + OddsPortal + Vegas | **70,905 场** (16 桶) | 16 细桶 |
+| 🏈 NFL | SBR 收盘赔率 | **5,904 场** (2011-2021) | 27 细桶 |
+| 🏒 NHL | Kaggle ESPN 收盘 | **6,817 场** (2004-2025) | 10 细桶 |
+| 🥊 拳击 | Betfair | **663 场** | 保守 |
+| 🥋 UFC | BookMaker 收盘 | **521 场** | 保守 |
+| 🏀 非NBA篮球 | Betfair | **24,000 场** | fallback |
 
 ### 投注公式
 
@@ -89,13 +92,13 @@ python3 -m src.report.bb_ev_push --no-bet
 |---|---|
 | DC (双重机会) | Pinnacle 无对应盘口，0% 历史胜率 |
 | HTFT (半全场) | BB/Pin 定义不一致 |
-| MMA/拳击 | 队名映射错误率极高 |
+| MMA/拳击 | V4.2+ 条件允许: name匹配+高分+低赔率 → 小额（不再封杀） |
 | 赔率 >20.0 | 111K Pinnacle 数据确认全部负期望 |
 
 ## 关键文件
 
 - `config/weight_matrix_v4.py` — **V4 权重矩阵（全量外部数据驱动）**
-- `data/pinnacle_historical/` — 275 个 Pinnacle 历史 CSV
+- `data/pinnacle_historical/` — 381 个 Pinnacle 历史 CSV (Git LFS 管理大文件)
 - `src/scrapers/bb_api_fetcher.py` — BB API 直连提取
 - `src/scrapers/bb_vs_pinnacle.py` — 对比引擎（去抽水公平价, FT+HT）
 - `src/report/bb_ev_push.py` — 钉钉推送 + V4 投注
