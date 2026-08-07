@@ -1,3 +1,5 @@
 data/pinnacle_historical/betfair/*.csv filter=lfs diff=lfs merge=lfs -text
 data/pinnacle_historical/nfl_stats/*.csv filter=lfs diff=lfs merge=lfs -text
 data/pinnacle_historical/tennis_large/*.csv filter=lfs diff=lfs merge=lfs -text
+data/pinnacle_historical/nba_data/*.csv filter=lfs diff=lfs merge=lfs -text
+data/pinnacle_historical/nhl_data/*.csv filter=lfs diff=lfs merge=lfs -text
