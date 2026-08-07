@@ -1676,6 +1676,7 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
     pin_file = COMPARISON_FILE
     bb_time = ""
     pin_time = ""
+    pin_stale_warning = ""
     try:
         if bb_file.exists():
             bb_mtime = datetime.fromtimestamp(bb_file.stat().st_mtime, tz=timezone.utc).astimezone()
@@ -1686,6 +1687,12 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
         if pin_file.exists():
             pin_mtime = datetime.fromtimestamp(pin_file.stat().st_mtime, tz=timezone.utc).astimezone()
             pin_time = pin_mtime.strftime("%m/%d %H:%M")
+            # 检测 Pinnacle 数据过期
+            pin_age_min = (datetime.now(timezone.utc).astimezone() - pin_mtime).total_seconds() / 60
+            if pin_age_min > 120:
+                pin_stale_warning = f" ⚠️{int(pin_age_min / 60)}h过期"
+            elif pin_age_min > 60:
+                pin_stale_warning = " ⚠️过期"
     except (OSError, ValueError):
         pass
 
@@ -1825,7 +1832,8 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
     if bb_time:
         data_time_parts.append(f"BB数据 {bb_time}")
     if pin_time:
-        data_time_parts.append(f"Pinnacle {pin_time}")
+        pin_label = f"Pin数据 {pin_time}{pin_stale_warning}"
+        data_time_parts.append(pin_label)
     data_time_str = " | ".join(data_time_parts) if data_time_parts else f"数据 {now_str}"
 
     title = f"+EV 投注推荐: {match_idx} 场比赛"
@@ -1898,9 +1906,23 @@ def build_report(skip_freshness: bool = False, incremental: bool = False):
     """
     errors = []
     if incremental:
-        # 增量模式: 跳过实时拉取，直接使用增量扫描已有的对比文件
-        # 增量扫描器已经在 5 分钟内拉取过赔率，无需重复
-        logger.info("⚡ 增量模式 — 使用已有对比文件, 跳过实时拉取")
+        # 增量模式: 检查对比文件新鲜度，>2h 过期则强制实时拉取
+        pin_age_min = 999.0
+        try:
+            if COMPARISON_FILE.exists():
+                pin_mtime = datetime.fromtimestamp(COMPARISON_FILE.stat().st_mtime,
+                                                    tz=timezone.utc).astimezone()
+                pin_age_min = (datetime.now(timezone.utc).astimezone() - pin_mtime).total_seconds() / 60
+        except Exception:
+            pass
+        if pin_age_min > 120:
+            logger.warning("⚡ 增量模式 — Pin数据 %.0fh 过期，强制实时拉取", pin_age_min / 60)
+            live_ok, errors = _refresh_live_odds()
+            if not live_ok:
+                _send_failure_alert(errors)
+                return None, None
+        else:
+            logger.info("⚡ 增量模式 — 使用已有对比文件 (%.0fmin前), 跳过实时拉取", pin_age_min)
     else:
         # 🔴 铁律：全量推送前必须实时拉取赔率，不使用缓存
         live_ok, errors = _refresh_live_odds()
