@@ -385,20 +385,27 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 print(f"  ❌ 获取联赛 ID={pid} 失败: {e}")
 
     # 6. Group Pinnacle matches by BB league name for matching
+    # V4.5: 优先按 league_id 匹配（比 league_name 字符串匹配更可靠）
+    # 网球/棒球/冰球等运动的 Pinnacle API 返回的 match league_name 可能与
+    # 联赛结构缓存中的 name 不一致（如 API 返回 "ATP Montreal"，缓存中是
+    # "ATP Montreal - R1"），导致按名称过滤全部丢弃。
     pin_by_bb_league = {}
     for bb_league in matched_leagues:
         pin_ids = matched_leagues[bb_league]
         pin_league_names = set()
+        pin_league_id_set = set()
         for pid in pin_ids:
-            # V4.3 nested: 穿透 sport → league 查找
+            pin_league_id_set.add(str(pid))
+            # 同时保留 league_name 作为 fallback
             from src.scrapers.pinnacle_league_map import lookup_pin_league
             info = lookup_pin_league(all_pin_leagues, pid)
             name = info.get("name", "")
             if name:
                 pin_league_names.add(name)
-        pin_by_bb_league[bb_league] = [
-            m for m in all_pin_matches if m["league_name"] in pin_league_names
-        ]
+        # league_id 匹配（首选） + league_name fallback（league_id 为空时）
+        id_matches = [m for m in all_pin_matches if str(m.get("league_id", "")) in pin_league_id_set]
+        name_matches = [m for m in all_pin_matches if m["league_name"] in pin_league_names and m not in id_matches]
+        pin_by_bb_league[bb_league] = id_matches + name_matches
 
     # 7. Find overlapping matches by odds pattern matching
     matched = find_matches_by_odds(bb_matches, pin_by_bb_league)

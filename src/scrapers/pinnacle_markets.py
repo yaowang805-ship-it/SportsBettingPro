@@ -173,6 +173,7 @@ def get_league_matchups_and_markets(league_id):
 
         result.append({
             "matchup_id": mid,
+            "league_id": league_id,
             "league_name": league.get("name", ""),
             "league_group": league.get("group", ""),
             "home": home,
