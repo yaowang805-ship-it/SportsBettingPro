@@ -532,28 +532,28 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
             if not best_bd or best_name_score < min_name_score:
                 continue
             # 硬时间窗口：同队名但开赛时间差 >4h → 不同比赛（防双赛日混淆）
-                bb_epoch = best_bd["epoch"]
-                pin_epoch = _pin_to_epoch(pin)
-                if bb_epoch is not None and pin_epoch is not None:
-                    if abs(bb_epoch - pin_epoch) > 14400:
-                        continue
-                bb_ml = best_bd.get("bb_1x2", [])
-                min_odds = 2 if sport in TWO_WAY_SPORTS else 3
-                pin_ml = []
-                if len(bb_ml) >= min_odds:
-                    pin_ml = get_pin_ml_sorted(pin, sport)
-                    if len(pin_ml) < min_odds:
-                        continue
-                # BB has no ML → still match for HC/OU comparison
-                used_pin_ids.add(pin_id)
-                used_bb_keys.add(best_bb_key)
-                name_matched.append({
-                    "bb": best_bd["match"], "pin": pin, "league": bb_league,
-                    "match_score": 1.0, "team_score": best_name_score,
-                    "match_type": "name",
-                    "bb_1x2": bb_ml, "pin_1x2": pin_ml,
-                    "sport": sport,
-                })
+            bb_epoch = best_bd["epoch"]
+            pin_epoch = _pin_to_epoch(pin)
+            if bb_epoch is not None and pin_epoch is not None:
+                if abs(bb_epoch - pin_epoch) > 14400:
+                    continue
+            bb_ml = best_bd.get("bb_1x2", [])
+            min_odds = 2 if sport in TWO_WAY_SPORTS else 3
+            pin_ml = []
+            if len(bb_ml) >= min_odds:
+                pin_ml = get_pin_ml_sorted(pin, sport)
+                if len(pin_ml) < min_odds:
+                    continue
+            # BB has no ML → still match for HC/OU comparison
+            used_pin_ids.add(pin_id)
+            used_bb_keys.add(best_bb_key)
+            name_matched.append({
+                "bb": best_bd["match"], "pin": pin, "league": bb_league,
+                "match_score": 1.0, "team_score": best_name_score,
+                "match_type": "name",
+                "bb_1x2": bb_ml, "pin_1x2": pin_ml,
+                "sport": sport,
+            })
 
     # Phase 2: Global greedy per-league
     # V4.5: 网球禁用 Phase 2 (时间+赔率匹配在同赛事同时段多场次中错误率高)
