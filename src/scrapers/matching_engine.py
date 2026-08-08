@@ -526,13 +526,12 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                     best_name_score = name_score
                     best_bb_key = bb_key
                     best_bd = bd
-            if best_bd and best_name_score >= 0.50:
-                # 个人运动放宽门槛：网球/拳击/MMA 不存在团队运动的交叉错配
-                sport = best_bd["sport"]
-                min_name_score = 0.38 if sport in ("tennis", "boxing", "mma") else 0.50  # V4.5: 网球0.45→0.38
-                if best_name_score < min_name_score:
-                    continue
-                # 硬时间窗口：同队名但开赛时间差 >4h → 不同比赛（防双赛日混淆）
+            # V4.5: 运动特定门槛 — 网球/拳击/MMA 放宽至0.38 (个人运动无团队交叉错配)
+            sport = best_bd["sport"] if best_bd else ""
+            min_name_score = 0.38 if sport in ("tennis", "boxing", "mma") else 0.50
+            if not best_bd or best_name_score < min_name_score:
+                continue
+            # 硬时间窗口：同队名但开赛时间差 >4h → 不同比赛（防双赛日混淆）
                 bb_epoch = best_bd["epoch"]
                 pin_epoch = _pin_to_epoch(pin)
                 if bb_epoch is not None and pin_epoch is not None:

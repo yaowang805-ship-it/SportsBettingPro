@@ -11,8 +11,12 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 from config.settings import DATA_DIR
 
 # 运动 ID 映射
+# 注: 乒乓球(32)/羽毛球(1)/排球(34) 在 Pinnacle 无对应数据
+# 这些运动仅在 BB 端拉取，不会参与 Pinnacle 对比
 SPORT_IDS = {29: "足球", 4: "篮球", 33: "网球", 3: "棒球", 15: "美式足球",
              32: "乒乓球", 6: "拳击", 22: "MMA", 1: "羽毛球", 19: "冰球", 34: "排球"}
+# Pinnacle 无覆盖的运动 (sport_id 在 league_structure 中不存在或无联赛)
+PINNACLE_MISSING_SPORTS = {"pingpong", "badminton", "volleyball"}
 TWO_WAY_SPORTS = {"basketball", "tennis", "baseball", "american_football",
                   "pingpong", "boxing", "mma", "badminton", "volleyball"}
 

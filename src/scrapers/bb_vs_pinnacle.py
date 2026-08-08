@@ -310,6 +310,19 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         print(f"\n增量扫描: 只处理 {len(bb_leagues)} 个变动的联赛")
 
     print(f"\nBB体育联赛分布 ({len(bb_leagues)}):")
+    # V4.5: 统计无 Pinnacle 覆盖的运动 (乒乓球/羽毛球/排球等)
+    from src.scrapers.bb_data import PINNACLE_MISSING_SPORTS
+    no_pin_sports = {}
+    for m in bb_matches:
+        s = m.get("sport", "")
+        if s in PINNACLE_MISSING_SPORTS:
+            no_pin_sports[s] = no_pin_sports.get(s, 0) + 1
+    if no_pin_sports:
+        sport_cn = {"pingpong": "乒乓球", "badminton": "羽毛球", "volleyball": "排球"}
+        skipped_parts = []
+        for s, c in sorted(no_pin_sports.items(), key=lambda x: -x[1]):
+            skipped_parts.append(f"{sport_cn.get(s,s)}({c}场)")
+        print(f"  ⚠️ 跳过无Pinnacle数据运动: {', '.join(skipped_parts)}")
     league_pin_cache = {}
     unmatched_leagues = []
     for league, count in sorted(bb_leagues.items(), key=lambda x: -x[1]):
