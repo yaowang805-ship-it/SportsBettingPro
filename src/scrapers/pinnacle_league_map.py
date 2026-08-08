@@ -119,8 +119,8 @@ def _should_overwrite(name_map, cn_name, new_pin, new_sport, match_score):
     - 同名映射 (same pin) → 永远允许 (确认+1)
     - 不同名映射 → 需满足:
       1. 运动一致 (sport match)
-      2. 新匹配高分 (>=0.90) 且 旧映射低确认 (n<=2)
-      或 新匹配极高 (>=0.95) 且 旧映射无确认 (n<=1, unknown sport)
+      2. V4.5: 网球/个人运动防污染 — 新映射为双打组合(含'/')但CN名不含'/' → 拒绝
+      3. 高分覆盖低确认 (网球更严格: n<=1 才能覆盖)
     """
     if cn_name not in name_map:
         return True
@@ -137,8 +137,14 @@ def _should_overwrite(name_map, cn_name, new_pin, new_sport, match_score):
     if new_sport != "unknown" and existing_sport != "unknown" and new_sport != existing_sport:
         return False
 
+    # V4.5: 网球防双打污染 — 双打组合名不应覆盖单打选手名
+    if '/' in new_pin and '/' not in cn_name:
+        return False
+
     # 条件2: 高分覆盖低确认
-    if match_score >= 0.95 and existing_n <= 2:
+    # 网球等高危运动更严格 — 只允许覆盖 n<=1
+    max_overwrite_n = 1 if new_sport == "tennis" else 2
+    if match_score >= 0.95 and existing_n <= max_overwrite_n:
         return True
     if match_score >= 0.90 and existing_n <= 1:
         return True
