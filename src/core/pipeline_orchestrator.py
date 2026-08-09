@@ -225,14 +225,25 @@ class PipelineOrchestrator:
         except Exception as e:
             errors.append(f"[自检] Pinnacle API 不可达: {e} — 请启动 Shadowrocket")
 
-        # 5) 联赛缓存最低数量检查 (>100 联赛, 非仅足球)
-        if pin_struct and isinstance(pin_struct, dict) and len(pin_struct) < 100:
-            logger.warning("[自检] 联赛缓存仅 %d 条 → 启动后自动重建", len(pin_struct))
-            # 删除过期缓存, 触发下次扫描时重建
-            stale_path = DATA_DIR / "pinnacle_league_structure.json"
-            backup_path = DATA_DIR / f"pinnacle_league_structure.json.stale.{int(time.time())}"
-            stale_path.rename(backup_path)
-            logger.info("[自检] 已备份旧缓存为 %s, 下次扫描将自动重建", backup_path.name)
+        # 5) 联赛缓存最低数量检查 — 防误删: 从 manual_backup 恢复 > 直接删除
+        if pin_struct and isinstance(pin_struct, dict) and len(pin_struct) < 50:
+            logger.warning("[自检] 联赛缓存仅 %d 条 (<50, 疑似过期)", len(pin_struct))
+            # 优先从 manual_backup 恢复
+            manual_backup = DATA_DIR.parent / "manual_backup" / "pinnacle_league_structure.json"
+            if manual_backup.exists():
+                backup_data = safe_load_json(manual_backup)
+                if backup_data and len(backup_data) > 100:
+                    (DATA_DIR / "pinnacle_league_structure.json").write_text(
+                        json.dumps(backup_data, ensure_ascii=False, indent=2))
+                    logger.info("[自检] 已从 manual_backup 恢复联赛缓存 (%d 联赛)", len(backup_data))
+                else:
+                    logger.warning("[自检] manual_backup 也无效, 下次扫描时自动重建")
+            else:
+                # 最后手段: 删除让扫描重建
+                stale_path = DATA_DIR / "pinnacle_league_structure.json"
+                backup_path = DATA_DIR / f"pinnacle_league_structure.json.stale.{int(time.time())}"
+                stale_path.rename(backup_path)
+                logger.info("[自检] 已备份旧缓存, 下次扫描将自动重建")
 
         if errors:
             for e in errors:
