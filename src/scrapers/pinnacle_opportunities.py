@@ -22,15 +22,16 @@ from src.scrapers.matching_engine import (
 
 # ── BTTS ──
 
-def add_btts_opportunities(entry, bb_yes, bb_no, yes_fair, no_fair, pin_yes=None, pin_no=None, source="direct"):
+def add_btts_opportunities(entry, bb_yes, bb_no, yes_fair, no_fair, pin_yes=None, pin_no=None, source="direct", prefix=""):
     """计算并添加 BTTS 双边进球机会到 entry。"""
     if not all([bb_yes, bb_no, yes_fair, no_fair]):
         return
+    p = (prefix + "双边进球-") if prefix else "双边进球-"
     ev_yes = round((bb_yes - yes_fair) / yes_fair * 100, 2)
     ev_no = round((bb_no - no_fair) / no_fair * 100, 2)
     if ev_yes > 1:
         entry["opportunities"].append({
-            "designation": "双边进球-是",
+            "designation": p + "是",
             "bb_odds": bb_yes,
             "pin_odds": pin_yes or yes_fair,
             "fair_price": yes_fair,
@@ -40,7 +41,7 @@ def add_btts_opportunities(entry, bb_yes, bb_no, yes_fair, no_fair, pin_yes=None
         })
     if ev_no > 1:
         entry["opportunities"].append({
-            "designation": "双边进球-否",
+            "designation": p + "否",
             "bb_odds": bb_no,
             "pin_odds": pin_no or no_fair,
             "fair_price": no_fair,
@@ -52,15 +53,16 @@ def add_btts_opportunities(entry, bb_yes, bb_no, yes_fair, no_fair, pin_yes=None
 
 # ── Odd/Even ──
 
-def add_oe_opportunities(entry, bb_odd, bb_even, odd_fair, even_fair, pin_odd=None, pin_even=None):
+def add_oe_opportunities(entry, bb_odd, bb_even, odd_fair, even_fair, pin_odd=None, pin_even=None, prefix=""):
     """计算并添加 Odd/Even (单/双) 机会到 entry。"""
     if not all([bb_odd, bb_even, odd_fair, even_fair]):
         return
+    p = (prefix + "单双-") if prefix else "单双-"
     ev_odd = round((bb_odd - odd_fair) / odd_fair * 100, 2)
     ev_even = round((bb_even - even_fair) / even_fair * 100, 2)
     if ev_odd > 1:
         entry["opportunities"].append({
-            "designation": "单双-单",
+            "designation": p + "单",
             "bb_odds": bb_odd,
             "pin_odds": pin_odd or odd_fair,
             "fair_price": odd_fair,
@@ -69,7 +71,7 @@ def add_oe_opportunities(entry, bb_odd, bb_even, odd_fair, even_fair, pin_odd=No
         })
     if ev_even > 1:
         entry["opportunities"].append({
-            "designation": "单双-双",
+            "designation": p + "双",
             "bb_odds": bb_even,
             "pin_odds": pin_even or even_fair,
             "fair_price": even_fair,

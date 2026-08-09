@@ -904,6 +904,13 @@ def extract_match_odds(record, sport_key, platform="BB"):
             if ht_dc:
                 ht_dict["dc"] = ht_dc
 
+            ht_btts = _extract_btts(ht_period)
+            if ht_btts:
+                ht_dict["btts"] = ht_btts
+            ht_oe = _extract_oe(ht_period)
+            if ht_oe:
+                ht_dict["oe"] = ht_oe
+
             # 角球 HT
             ht_corner_ml = _extract_corner_ml(ht_period)
             if ht_corner_ml:

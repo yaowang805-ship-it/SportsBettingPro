@@ -47,6 +47,7 @@ from src.scrapers.bb_data import (
     detect_sport, load_bb_odds, extract_bb_1x2, parse_asian_line,
     extract_bb_handicap, extract_bb_ou, extract_bb_btts,
     extract_bb_oe, extract_bb_htft,
+    extract_bb_btts_ht, extract_bb_oe_ht,
 )
 
 # 导入市场获取模块
@@ -1194,6 +1195,56 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             "ev_pct": round(ev, 2),
                             "_market": "ht_dc",
                         })
+
+        # --- HT 双边进球 (HT BTTS) ---
+        bb_ht_btts_yes, bb_ht_btts_no = extract_bb_btts_ht(bb)
+        if bb_ht_btts_yes and bb_ht_btts_no:
+            pin_btts = pin.get("btts", [])
+            if pin_btts:
+                yes_price = no_price = None
+                for btts_entry in pin_btts:
+                    if btts_entry.get("period", 0) != 1:  # HT period
+                        continue
+                    prices = btts_entry.get("prices", [])
+                    for p in prices:
+                        if p.get("designation") == "yes":
+                            yes_price = get_decimal_price(p)
+                        elif p.get("designation") == "no":
+                            no_price = get_decimal_price(p)
+                    if yes_price and no_price:
+                        btts_imp = 1.0 / yes_price + 1.0 / no_price
+                        yes_fair = round(yes_price * btts_imp, 4)
+                        no_fair = round(no_price * btts_imp, 4)
+                        _add_btts_opportunities(entry, bb_ht_btts_yes, bb_ht_btts_no,
+                                                yes_fair, no_fair,
+                                                pin_yes=yes_price, pin_no=no_price,
+                                                prefix="上半场")
+                        break
+
+        # --- HT 单/双 (HT OE) ---
+        bb_ht_oe_odd, bb_ht_oe_even = extract_bb_oe_ht(bb)
+        if bb_ht_oe_odd and bb_ht_oe_even:
+            pin_oe = pin.get("odd_even", [])
+            if pin_oe:
+                odd_price = even_price = None
+                for oe_entry in pin_oe:
+                    if oe_entry.get("period", 0) != 1:  # HT period
+                        continue
+                    prices = oe_entry.get("prices", [])
+                    for p in prices:
+                        if p.get("designation") == "odd":
+                            odd_price = get_decimal_price(p)
+                        elif p.get("designation") == "even":
+                            even_price = get_decimal_price(p)
+                    if odd_price and even_price:
+                        oe_imp = 1.0 / odd_price + 1.0 / even_price
+                        odd_fair = round(odd_price * oe_imp, 4)
+                        even_fair = round(even_price * oe_imp, 4)
+                        _add_oe_opportunities(entry, bb_ht_oe_odd, bb_ht_oe_even,
+                                              odd_fair, even_fair,
+                                              pin_odd=odd_price, pin_even=even_price,
+                                              prefix="上半场")
+                        break
 
         # --- 平局退款 (Draw No Bet) FT ---
         bb_dnb = bb.get("odds_dnb", [])

@@ -339,6 +339,32 @@ def extract_bb_oe(bb_match):
     return None, None
 
 
+def extract_bb_btts_ht(bb_match):
+    """Extract HT (上半场) BTTS odds from BB match."""
+    odds_ht = bb_match.get("odds_ht", {})
+    if isinstance(odds_ht, dict):
+        btts = odds_ht.get("btts", {})
+        if isinstance(btts, dict):
+            yes = btts.get("yes_odds")
+            no = btts.get("no_odds")
+            if yes and no and yes > 1 and no > 1:
+                return yes, no
+    return None, None
+
+
+def extract_bb_oe_ht(bb_match):
+    """Extract HT (上半场) Odd/Even odds from BB match."""
+    odds_ht = bb_match.get("odds_ht", {})
+    if isinstance(odds_ht, dict):
+        oe = odds_ht.get("oe", {})
+        if isinstance(oe, dict):
+            odd = oe.get("odd_odds")
+            even = oe.get("even_odds")
+            if odd and even and odd > 1 and even > 1:
+                return odd, even
+    return None, None
+
+
 def extract_bb_htft(bb_match):
     """Extract HT/FT odds from BB match."""
     odds_ft = bb_match.get("odds_ft", {})
