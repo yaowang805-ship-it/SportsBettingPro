@@ -379,10 +379,11 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     pin_ids_to_fetch = list(sorted(all_unique_pin_ids))
     print(f"\n  待获取赔率的联赛: {len(pin_ids_to_fetch)} 个")
 
-    # 并行获取（8 个线程，短延时避免 Pinnacle 限流）
+    # 并行获取（4 个线程，短延时避免 Pinnacle 限流）
     MAX_WORKERS = 4  # 降低并发防 Cloudflare 断连
     all_pin_matches = []
     _fetch_lock = __import__('threading').Lock()
+    _fetch_errors = []  # V5: 跟踪获取失败的联赛
 
     def _fetch_one(pin_id):
         # V4.3 nested: 穿透查找 league info
@@ -405,7 +406,13 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 all_pin_matches.extend(result)
             except Exception as e:
                 pid = fut_map[fut]
-                print(f"  ❌ 获取联赛 ID={pid} 失败: {e}")
+                from src.scrapers.pinnacle_league_map import lookup_pin_league
+                info = lookup_pin_league(all_pin_leagues, pid)
+                league_name = info.get('name', str(pid))
+                sport = info.get('sport', '?')
+                error_msg = f"获取联赛失败 [{league_name}] (ID={pid}, sport={sport}): {e}"
+                print(f"  ❌ {error_msg}")
+                _fetch_errors.append(error_msg)
 
     # 6. Group Pinnacle matches by BB league name for matching
     # V4.5: 优先按 league_id 匹配（比 league_name 字符串匹配更可靠）
@@ -1514,7 +1521,22 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
 
     print(f"\n{'='*60}")
     if time_skip_count:
+        if _fetch_errors:
+        print(f"🔴 联赛获取失败: {len(_fetch_errors)} 个 — 这些运动的数据可能不完整")
+        for err in _fetch_errors:
+            print(f"   {err[:120]}")
+    if time_skip_count:
         print(f"🛡️ 时间匹配跳过: {time_skip_count} 场 (无队名重叠)")
+    # V5: 检测运动级数据丢失 (有BB数据但对比结果为0)
+    _bb_sports_with_data = set()
+    for m in bb_matches:
+        s = m.get("sport", "")
+        if s:
+            _bb_sports_with_data.add(s)
+    _cmp_sports_with_matches = set(sport_counts.keys())
+    _lost_sports = _bb_sports_with_data - _cmp_sports_with_matches - {"pingpong", "badminton"}  # 乒乓/羽毛预期无对比
+    if _lost_sports:
+        print(f"⚠️ 运动数据丢失: {', '.join(sorted(_lost_sports))} — BB有数据但对比=0 (Pinnacle获取失败?)")
     print(f"匹配: {len(matched)} | +EV 独赢: {total_1x2_only} | 让球: {total_hc} | 大小: {total_ou} | 双重机会: {total_dc} | 平局退款: {total_dnb} | 双边进球: {total_btts} | 单/双: {total_oe} | 半全场: {total_htft} | 角球: {total_corner} | 总计: {total_all}")
     print(f"{'='*60}")
     # 校准报告
@@ -1580,6 +1602,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         "matches_with_ev": len(opportunities),
         "per_sport_matched": {k: v for k, v in sorted(sport_counts.items())},
         "per_sport_opportunities": {k: v for k, v in sorted(sport_opp_counts.items())},
+        "fetch_errors": _fetch_errors,  # V5: 联赛获取失败记录
         "opportunities_1x2": total_opps_1x2,
         "opportunities_handicap": total_hc,
         "opportunities_over_under": total_ou,
