@@ -1520,23 +1520,12 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         print(f"  ⏱ 角球用时: {time.time()-corner_start:.0f}s")
 
     print(f"\n{'='*60}")
-    if time_skip_count:
-        if _fetch_errors:
+    if _fetch_errors:
         print(f"🔴 联赛获取失败: {len(_fetch_errors)} 个 — 这些运动的数据可能不完整")
         for err in _fetch_errors:
             print(f"   {err[:120]}")
     if time_skip_count:
         print(f"🛡️ 时间匹配跳过: {time_skip_count} 场 (无队名重叠)")
-    # V5: 检测运动级数据丢失 (有BB数据但对比结果为0)
-    _bb_sports_with_data = set()
-    for m in bb_matches:
-        s = m.get("sport", "")
-        if s:
-            _bb_sports_with_data.add(s)
-    _cmp_sports_with_matches = set(sport_counts.keys())
-    _lost_sports = _bb_sports_with_data - _cmp_sports_with_matches - {"pingpong", "badminton"}  # 乒乓/羽毛预期无对比
-    if _lost_sports:
-        print(f"⚠️ 运动数据丢失: {', '.join(sorted(_lost_sports))} — BB有数据但对比=0 (Pinnacle获取失败?)")
     print(f"匹配: {len(matched)} | +EV 独赢: {total_1x2_only} | 让球: {total_hc} | 大小: {total_ou} | 双重机会: {total_dc} | 平局退款: {total_dnb} | 双边进球: {total_btts} | 单/双: {total_oe} | 半全场: {total_htft} | 角球: {total_corner} | 总计: {total_all}")
     print(f"{'='*60}")
     # 校准报告
@@ -1584,6 +1573,17 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                    + len(entry.get("over_under", [])) + len(entry.get("double_chance", []))
                    + len(entry.get("draw_no_bet", [])))
         sport_opp_counts[s] = sport_opp_counts.get(s, 0) + n_opps
+
+    # V5: 检测运动级数据丢失 (有BB数据但对比结果为0)
+    _bb_sports_with_data = set()
+    for m in bb_matches:
+        _s = m.get("sport", "")
+        if _s:
+            _bb_sports_with_data.add(_s)
+    _cmp_sports_with_matches = set(sport_counts.keys())
+    _lost_sports = _bb_sports_with_data - _cmp_sports_with_matches - {"pingpong", "badminton"}
+    if _lost_sports:
+        print(f"⚠️ 运动数据丢失: {', '.join(sorted(_lost_sports))} — BB有数据但对比=0 (Pinnacle获取失败?)")
 
     output = {
         "version": "2.0",
