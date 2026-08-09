@@ -359,9 +359,19 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "斯洛伐克乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "危地马拉全国联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-09T08:44:26.205218+00:00",
+  "updated": "2026-08-09T10:49:50.579938+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
