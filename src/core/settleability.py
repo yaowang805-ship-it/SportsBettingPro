@@ -132,19 +132,17 @@ def is_league_probationary(league: str, sport: str = "") -> bool:
         if attempts >= 2 and successes == 0:
             return False  # 已证实无法结算, 拒绝
 
-    # 检查是否在 LEAGUE_SPORT_MAP 中 (仅精确匹配, 不再用模糊/子串防误匹配)
+    # 检查数据源覆盖 (LEAGUE_SPORT_MAP + SPORT_FALLBACK)
     try:
         from src.monitor.auto_settle import LEAGUE_SPORT_MAP, SPORT_FALLBACK
         if league in LEAGUE_SPORT_MAP:
             return True
-        if sport and sport in SPORT_FALLBACK and sport != "football":
-            # 非足球运动 (NBA/WNBA/NFL) 允许 sport-level fallback
+        if sport and sport in SPORT_FALLBACK:
             return True
-        # V5: 仅前缀匹配 (>=6字符同前缀), 不再做子串匹配
-        # 子串匹配导致 "巴西杯" 匹配 "巴西甲级联赛" → 允许下注但无法结算
+        # V5: 前缀匹配 (>=4字符) — 比子串更精确但比完全精确更宽松
         for mapped_league in LEAGUE_SPORT_MAP:
-            if len(mapped_league) >= 6 and len(league) >= 6:
-                if mapped_league[:6] == league[:6]:
+            if len(mapped_league) >= 4 and len(league) >= 4:
+                if mapped_league[:4] == league[:4]:
                     return True
     except ImportError:
         pass
