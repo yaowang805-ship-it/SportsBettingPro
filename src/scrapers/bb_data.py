@@ -15,8 +15,9 @@ from config.settings import DATA_DIR
 # 这些运动仅在 BB 端拉取，不会参与 Pinnacle 对比
 SPORT_IDS = {29: "足球", 4: "篮球", 33: "网球", 3: "棒球", 15: "美式足球",
              32: "乒乓球", 6: "拳击", 22: "MMA", 1: "羽毛球", 19: "冰球", 34: "排球"}
-# Pinnacle 无覆盖的运动 (sport_id 在 league_structure 中不存在或无联赛)
-PINNACLE_MISSING_SPORTS = {"pingpong", "badminton", "volleyball"}
+# Pinnacle 覆盖的运动 — 动态检测，不再硬编码。
+# 所有 BB 运动都应在 SPORT_IDS 中，Pinnacle 是否活跃由实际 matchup 数据决定。
+PINNACLE_MISSING_SPORTS = set()
 TWO_WAY_SPORTS = {"basketball", "tennis", "baseball", "american_football",
                   "pingpong", "boxing", "mma", "badminton", "volleyball"}
 

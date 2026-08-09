@@ -310,19 +310,28 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         print(f"\n增量扫描: 只处理 {len(bb_leagues)} 个变动的联赛")
 
     print(f"\nBB体育联赛分布 ({len(bb_leagues)}):")
-    # V4.5: 统计无 Pinnacle 覆盖的运动 (乒乓球/羽毛球/排球等)
-    from src.scrapers.bb_data import PINNACLE_MISSING_SPORTS
-    no_pin_sports = {}
+    # V5: 动态统计无 Pinnacle 联赛覆盖的运动 (无需硬编码)
+    # Pinnacle 联赛 sport 字段存中文名 (来自 SPORT_IDS), BB match sport 存英文 key
+    sport_cn = {"pingpong": "乒乓球", "badminton": "羽毛球", "volleyball": "排球",
+                "football": "足球", "basketball": "篮球", "tennis": "网球",
+                "baseball": "棒球", "american_football": "美式足球",
+                "boxing": "拳击", "mma": "MMA", "ice_hockey": "冰球"}
+    _cn_to_en = {v: k for k, v in sport_cn.items()}
+    _pin_active_sports = set()
+    for lid, info in all_pin_leagues.items():
+        cn_sport = info.get("sport", "")
+        en_sport = _cn_to_en.get(cn_sport, cn_sport)
+        _pin_active_sports.add(en_sport)
+    _missing_sports = {}
     for m in bb_matches:
         s = m.get("sport", "")
-        if s in PINNACLE_MISSING_SPORTS:
-            no_pin_sports[s] = no_pin_sports.get(s, 0) + 1
-    if no_pin_sports:
-        sport_cn = {"pingpong": "乒乓球", "badminton": "羽毛球", "volleyball": "排球"}
+        if s and s not in _pin_active_sports and s in sport_cn:
+            _missing_sports[s] = _missing_sports.get(s, 0) + 1
+    if _missing_sports:
         skipped_parts = []
-        for s, c in sorted(no_pin_sports.items(), key=lambda x: -x[1]):
+        for s, c in sorted(_missing_sports.items(), key=lambda x: -x[1]):
             skipped_parts.append(f"{sport_cn.get(s,s)}({c}场)")
-        print(f"  ⚠️ 跳过无Pinnacle数据运动: {', '.join(skipped_parts)}")
+        print(f"  ⚠️ Pinnacle 无此运动联赛: {', '.join(skipped_parts)}")
     league_pin_cache = {}
     unmatched_leagues = []
     for league, count in sorted(bb_leagues.items(), key=lambda x: -x[1]):

@@ -75,6 +75,8 @@ data/storage/
 
 # Exception: 核心业务数据 — 不可再生，必须 git 保护
 !data/storage/settlement_log.csv
+!data/storage/settleable_leagues.json
+!data/storage/pushed_opportunities.json
 !data/storage/pushed_fingerprints.json
 !data/storage/pinnacle_league_structure.json
 

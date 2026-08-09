@@ -1,0 +1,345 @@
+{
+  "leagues": {
+    "WNBA 美国职业女子篮球联赛": {
+      "attempts": 4,
+      "successes": 4,
+      "success_rate": 1.0
+    },
+    "芬兰超级联赛": {
+      "attempts": 8,
+      "successes": 8,
+      "success_rate": 1.0
+    },
+    "厄瓜多尔甲级联赛": {
+      "attempts": 13,
+      "successes": 6,
+      "success_rate": 0.462
+    },
+    "瑞典超甲级联赛": {
+      "attempts": 1,
+      "successes": 1,
+      "success_rate": 1.0
+    },
+    "巴西甲级联赛": {
+      "attempts": 24,
+      "successes": 16,
+      "success_rate": 0.667
+    },
+    "美国职业大联盟": {
+      "attempts": 31,
+      "successes": 30,
+      "success_rate": 0.968
+    },
+    "阿根廷甲级联赛": {
+      "attempts": 11,
+      "successes": 2,
+      "success_rate": 0.182
+    },
+    "南美俱乐部杯": {
+      "attempts": 5,
+      "successes": 2,
+      "success_rate": 0.4
+    },
+    "墨西哥超级联赛": {
+      "attempts": 7,
+      "successes": 5,
+      "success_rate": 0.714
+    },
+    "欧足联欧洲会议联赛-资格赛": {
+      "attempts": 5,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "欧足联欧洲联赛-资格赛": {
+      "attempts": 7,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "秘鲁甲级联赛": {
+      "attempts": 6,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "乌兹别克斯坦超级联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "欧足联欧洲协会联赛-资格赛": {
+      "attempts": 4,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "苏格兰联赛杯": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "韩国K1联赛": {
+      "attempts": 5,
+      "successes": 5,
+      "success_rate": 1.0
+    },
+    "瑞典超级联赛": {
+      "attempts": 12,
+      "successes": 11,
+      "success_rate": 0.917
+    },
+    "俄罗斯甲级联赛": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "俄罗斯超级联赛": {
+      "attempts": 3,
+      "successes": 1,
+      "success_rate": 0.333
+    },
+    "保加利亚甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "挪威甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "挪威超级联赛": {
+      "attempts": 5,
+      "successes": 3,
+      "success_rate": 0.6
+    },
+    "阿根廷全国联赛": {
+      "attempts": 4,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "韩国乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "乌拉圭甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "世界网球 - W15 大加那利岛拉斯帕尔马斯 女子单打": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "MLB 美国职业棒球大联盟": {
+      "attempts": 8,
+      "successes": 8,
+      "success_rate": 1.0
+    },
+    "巴西乙级联赛": {
+      "attempts": 8,
+      "successes": 7,
+      "success_rate": 0.875
+    },
+    "巴拉圭甲级联赛": {
+      "attempts": 4,
+      "successes": 4,
+      "success_rate": 1.0
+    },
+    "智利甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "波兰超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "美国MLS下级职业赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "ITF - M25韦茨拉尔男子单打": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "乌拉圭甲级后备联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "芬兰甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "ATP挑战赛 - 波恩公开赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "ITF - M15 都柏林 男子单打": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "ITF - W50 克诺克海斯特 女子单打": {
+      "attempts": 4,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "ITF - W75 黑兴根 女子单打": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "ATP挑战赛 - 萨姆松公开赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "ATP挑战赛 - 温哥华公开赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "ITF - W15 别尔斯科比亚瓦 女子单打": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "ITF - W15 库尔索姆利斯卡班亚 女子单打": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "ITF - M25 皮特什蒂 男子单打": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "ITF - M25 科沙林 男子单打": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "ITF - W50 都柏林 女子单打": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "美国冠军联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "瑞士挑战联赛": {
+      "attempts": 2,
+      "successes": 2,
+      "success_rate": 1.0
+    },
+    "斯洛文尼亚甲级联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "罗马尼亚甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "丹麦超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "苏格兰超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "瑞典女子超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "非洲女子国家杯 (在摩洛哥)": {
+      "attempts": 4,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "英格兰联赛杯": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "巴西杯": {
+      "attempts": 6,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "玻利维亚甲级联赛": {
+      "attempts": 7,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "委内瑞拉超级联赛": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "欧洲冠军联赛-资格赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "ATP - 蒙特利尔公开赛": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "日本甲级联赛": {
+      "attempts": 2,
+      "successes": 1,
+      "success_rate": 0.5
+    },
+    "葡萄牙超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "澳大利亚首都特区全国超级联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "爱尔兰甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "美国甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "德国乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "墨西哥棒球联盟": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "巴西女子甲级联赛": {
+      "attempts": 2,
+      "successes": 2,
+      "success_rate": 1.0
+    }
+  },
+  "updated": "2026-08-09T06:09:10.411670+00:00"
+}
