@@ -351,37 +351,32 @@ def _get_line_value(market):
         return None
 
 
-def _fix_af_ou_hc(odds_dict, sport_key):
+def _fix_af_ou_hc(period_dict, sport_key):
     """V5: 美式足球 OU/HC 数据交换 — FB API mty=6002(让分)/6003(大小) 数据错位。
     让分线>20(如37.5)显然是大小球线，此时交换 OU 和 HC。
+    period_dict: ft_dict, ht_dict, or sh_dict (会被原地修改)。
     """
     if sport_key != "american_football":
         return
-    for period_label in ["ft", "ht", "sh"]:
-        period_key = f"odds_{period_label}"
-        if period_key == "odds_ft":
-            period = odds_dict  # ft_dict directly
-        else:
-            continue  # HT/SH not in this scope yet
-        hc = period.get("handicap", {})
-        ou = period.get("total", {})
-        if not isinstance(hc, dict) or not isinstance(ou, dict):
-            continue
-        hc_line = hc.get("home_line")
-        ou_line = ou.get("line")
-        if hc_line is None:
-            continue
-        # >20绝对是大小球线 (NFL常规总分~40-50, 让分通常<20)
-        hc_is_ou = abs(float(hc_line)) > 20
-        ou_is_broken = ou_line is None
-        if hc_is_ou and ou_is_broken:
-            period["total"] = {
-                "line": abs(float(hc_line)),
-                "line_str": hc.get("home_line_str", ""),
-                "over_odds": hc.get("home_odds", 0),
-                "under_odds": hc.get("away_odds", 0),
-            }
-            period["handicap"] = {}  # 清空: 无法从FB获取真正的让分
+    hc = period_dict.get("handicap", {})
+    ou = period_dict.get("total", {})
+    if not isinstance(hc, dict) or not isinstance(ou, dict):
+        return
+    hc_line = hc.get("home_line")
+    ou_line = ou.get("line")
+    if hc_line is None:
+        return
+    # >20绝对是大小球线 (NFL常规总分~40-50, 让分通常<20)
+    hc_is_ou = abs(float(hc_line)) > 20
+    ou_is_broken = ou_line is None
+    if hc_is_ou and ou_is_broken:
+        period_dict["total"] = {
+            "line": abs(float(hc_line)),
+            "line_str": hc.get("home_line_str", ""),
+            "over_odds": hc.get("home_odds", 0),
+            "under_odds": hc.get("away_odds", 0),
+        }
+        period_dict["handicap"] = {}  # 清空: 无法从FB获取真正的让分
 
 
 def extract_match_odds(record, sport_key, platform="BB"):
@@ -988,6 +983,8 @@ def extract_match_odds(record, sport_key, platform="BB"):
             if sh_oe:
                 sh_dict["oe"] = sh_oe
 
+        # V5: 美式足球 OU/HC 交换
+        _fix_af_ou_hc(sh_dict, sport_key)
         result["odds_sh"] = sh_dict
 
     # F5 (First 5 Innings — 棒球)

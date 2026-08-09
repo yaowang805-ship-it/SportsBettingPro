@@ -543,10 +543,30 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
 
     # 8. Compare all markets (1X2, Handicap, O/U)
     opportunities = []
+    time_skip_count = 0
     for m in valid_matches:
         bb = m["bb"]
         pin = m["pin"]
         sport = m.get("sport", "football")
+
+        # V5: 时间匹配假阳性防护 — 非队名匹配且双方队名都不同时跳过
+        match_type = m.get("match_type", "")
+        match_score = m.get("match_score", 0)
+        if match_type != "name":
+            # 检查是否有任何队名相似性
+            bb_home = (bb.get("home_bb") or "").lower()
+            bb_away = (bb.get("away_bb") or "").lower()
+            pin_home = (pin.get("home") or "").lower()
+            pin_away = (pin.get("away") or "").lower()
+            # 至少有一队名包含对方
+            has_name_overlap = (
+                (bb_home and (bb_home in pin_home or pin_home in bb_home)) or
+                (bb_away and (bb_away in pin_away or pin_away in bb_away)) or
+                match_score >= 0.95  # 高分时间匹配(比分+赔率高度一致)可放行
+            )
+            if not has_name_overlap:
+                time_skip_count += 1
+                continue
         mlabels = MARKET_LABELS.get(sport, MARKET_LABELS["football"])
         bb_ml = m.get("bb_1x2", [])
         pin_ml = m.get("pin_1x2", [])
@@ -1493,6 +1513,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         print(f"  ⏱ 角球用时: {time.time()-corner_start:.0f}s")
 
     print(f"\n{'='*60}")
+    if time_skip_count:
+        print(f"🛡️ 时间匹配跳过: {time_skip_count} 场 (无队名重叠)")
     print(f"匹配: {len(matched)} | +EV 独赢: {total_1x2_only} | 让球: {total_hc} | 大小: {total_ou} | 双重机会: {total_dc} | 平局退款: {total_dnb} | 双边进球: {total_btts} | 单/双: {total_oe} | 半全场: {total_htft} | 角球: {total_corner} | 总计: {total_all}")
     print(f"{'='*60}")
     # 校准报告
@@ -1554,6 +1576,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         "bb_matches_total": len(bb_matches),
         "pinnacle_leagues_found": len(matched_leagues),
         "matched_matches": len(matched),
+        "time_match_skipped": time_skip_count,
         "matches_with_ev": len(opportunities),
         "per_sport_matched": {k: v for k, v in sorted(sport_counts.items())},
         "per_sport_opportunities": {k: v for k, v in sorted(sport_opp_counts.items())},
