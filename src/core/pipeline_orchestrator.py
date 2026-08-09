@@ -212,11 +212,38 @@ class PipelineOrchestrator:
                 (_dd / "pinnacle_league_structure.json").write_text(json.dumps(nested, ensure_ascii=False, indent=2))
                 logger.info("[自检] Pinnacle结构已自动修复 (flat→nested)")
 
+        # 4) Pinnacle API 连通性检查 (Shadowrocket 必须运行)
+        try:
+            from src.scrapers.pinnacle_api import SESSION, API_BASE, _load_cookie
+            _load_cookie()
+            r = SESSION.get(f"{API_BASE}/sports", timeout=10)
+            if r.status_code == 200:
+                sports = r.json()
+                logger.info("[自检] Pinnacle API 连通 ✅ (%d 运动)", len(sports))
+            else:
+                errors.append(f"[自检] Pinnacle API HTTP {r.status_code} — Shadowrocket运行了吗?")
+        except Exception as e:
+            errors.append(f"[自检] Pinnacle API 不可达: {e} — 请启动 Shadowrocket")
+
+        # 5) 联赛缓存最低数量检查 (>100 联赛, 非仅足球)
+        if pin_struct and isinstance(pin_struct, dict) and len(pin_struct) < 100:
+            logger.warning("[自检] 联赛缓存仅 %d 条 → 启动后自动重建", len(pin_struct))
+            # 删除过期缓存, 触发下次扫描时重建
+            stale_path = DATA_DIR / "pinnacle_league_structure.json"
+            backup_path = DATA_DIR / f"pinnacle_league_structure.json.stale.{int(time.time())}"
+            stale_path.rename(backup_path)
+            logger.info("[自检] 已备份旧缓存为 %s, 下次扫描将自动重建", backup_path.name)
+
         if errors:
             for e in errors:
                 logger.error(e)
-            self._send_alert("startup_check_failed", "\n".join(errors[:5]))
-            raise SystemExit(f"启动自检失败: {len(errors)} 项不通过")
+            # 仅API不可达时发告警, 文件问题继续启动(下次扫描会修复)
+            api_errors = [e for e in errors if "API" in e or "Shadowrocket" in e or "Pinnacle" in e]
+            if api_errors:
+                self._send_alert("startup_check_failed", "\n".join(api_errors[:5]))
+                raise SystemExit(f"启动自检失败: {len(api_errors)} 项不通过")
+            else:
+                logger.warning("[自检] %d 项非致命问题, 继续启动", len(errors))
 
     # ------------------------------------------------------------------
     # 调度逻辑
