@@ -71,7 +71,13 @@ MAX_COOKIE_REFRESHES = 3           # 每次扫描最多刷新 3 次 cookie
 _ssl_fail_count = 0  # 全局 SSL 失败计数器（看门狗用）
 
 _last_req_time = 0.0
-_MIN_REQUEST_INTERVAL = 0.25
+_MIN_REQUEST_INTERVAL = 0.5        # V5: 0.25→0.5s 防 Cloudflare 风控
+_REQUEST_COUNT = 0                  # V5: 扫描内请求计数器
+_SCAN_PAUSE_UNTIL = 0.0            # V5: Cloudflare 封禁后自动暂停
+_REQUEST_BURST_WINDOW = 10         # V5: 10秒窗口
+_REQUEST_BURST_LIMIT = 15          # V5: 10秒内最多15个请求
+_BURST_WINDOW_START = 0.0
+_BURST_COUNT = 0
 
 _cookie_loaded = False  # 进程级标志，只记一次日志
 _cookie_refresh_count = 0          # 本次扫描 cookie 刷新次数
@@ -179,11 +185,35 @@ def _check_hosts_file():
 
 
 def _rate_limit():
-    global _last_req_time
+    global _last_req_time, _REQUEST_COUNT, _BURST_WINDOW_START, _BURST_COUNT, _SCAN_PAUSE_UNTIL
+
+    # V5: Cloudflare 封禁后自动暂停
+    if _SCAN_PAUSE_UNTIL > 0:
+        remaining = _SCAN_PAUSE_UNTIL - time.time()
+        if remaining > 0:
+            logger.warning("Cloudflare 封禁冷却中, 暂停 %.0fs...", remaining)
+            time.sleep(min(remaining, 60))  # 每次最多等60秒
+            if time.time() < _SCAN_PAUSE_UNTIL:
+                return  # 还没到时间，直接返回（让调用者决定是否继续）
+
+    # V5: 突发流量限制 — 10秒窗口内最多 15 请求
+    now = time.time()
+    if now - _BURST_WINDOW_START > _REQUEST_BURST_WINDOW:
+        _BURST_WINDOW_START = now
+        _BURST_COUNT = 0
+    if _BURST_COUNT >= _REQUEST_BURST_LIMIT:
+        sleep_time = _REQUEST_BURST_WINDOW - (now - _BURST_WINDOW_START)
+        if sleep_time > 0:
+            time.sleep(sleep_time)
+            _BURST_WINDOW_START = time.time()
+            _BURST_COUNT = 0
+
     elapsed = time.time() - _last_req_time
     if elapsed < _MIN_REQUEST_INTERVAL:
         time.sleep(_MIN_REQUEST_INTERVAL - elapsed)
     _last_req_time = time.time()
+    _REQUEST_COUNT += 1
+    _BURST_COUNT += 1
 
 
 def _backoff_sleep(attempt: int, extra: float = 0.0) -> float:
@@ -339,7 +369,9 @@ def api_get(path, retry=True):
                 return None  # 不重试
 
             if err_type == "ip_ban":
-                logger.error("Cloudflare IP 封禁 — 需换 VPN 节点")
+                logger.error("Cloudflare IP 封禁 — 自动暂停扫描 30 分钟")
+                global _SCAN_PAUSE_UNTIL
+                _SCAN_PAUSE_UNTIL = time.time() + 1800  # 30 分钟冷却
                 return None  # 不重试，重试也没用
 
             if err_type == "cookie_expired":

@@ -380,7 +380,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     print(f"\n  待获取赔率的联赛: {len(pin_ids_to_fetch)} 个")
 
     # 并行获取（4 个线程，短延时避免 Pinnacle 限流）
-    MAX_WORKERS = 4  # 降低并发防 Cloudflare 断连
+    MAX_WORKERS = 2  # V5: 4→2, 配合 0.5s rate limit = 4 req/s (防 Cloudflare 封IP)
     all_pin_matches = []
     _fetch_lock = __import__('threading').Lock()
     _fetch_errors = []  # V5: 跟踪获取失败的联赛
