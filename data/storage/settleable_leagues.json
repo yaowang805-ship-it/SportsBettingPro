@@ -341,5 +341,29 @@
       "success_rate": 1.0
     }
   },
-  "updated": "2026-08-09T06:09:10.411670+00:00"
+  "updated": "2026-08-09T06:09:10.411670+00:00",
+  "玻利维亚甲级联赛": {
+    "sport": "football",
+    "source": "espn",
+    "espn_id": "bol.1",
+    "consecutive_failures": 0
+  },
+  "英格兰联赛杯": {
+    "sport": "football",
+    "source": "football_data",
+    "espn_id": "eng.league_cup",
+    "consecutive_failures": 0
+  },
+  "巴西杯": {
+    "sport": "football",
+    "source": "espn",
+    "espn_id": "bra.copa_do_brasil",
+    "consecutive_failures": 0
+  },
+  "日本职业棒球": {
+    "sport": "baseball",
+    "source": "espn",
+    "espn_id": "jpn.1",
+    "consecutive_failures": 0
+  }
 }
