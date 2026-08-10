@@ -1031,6 +1031,13 @@ try:
         NBA_DATA = {int(k): v for k, v in _SBR_NBA.items()}
         NBA_SPREAD = {int(k): v for k, v in SBR_DATA["NBA"]["spread"].items()}
         NBA_TOTAL = {int(k): v for k, v in SBR_DATA["NBA"]["ou"].items()}
+    # V5: TeamRankings NBA 29K (2003-2026) — 补充到SBR数据中
+    try:
+        from config.nba_tr_calibrated import NBA_TR_ML
+        for k, v in NBA_TR_ML['NBA_ML'].items():
+            NBA_DATA[int(k)] = v
+    except ImportError:
+        pass
     if "MLB" in SBR_DATA:
         _SBR_MLB = SBR_DATA["MLB"]["ml"]
         for k, v in _SBR_MLB.items():
