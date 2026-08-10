@@ -1370,8 +1370,14 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     no_fair = round(no_price * btts_imp, 4)
                     _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, yes_fair, no_fair, pin_yes=yes_price, pin_no=no_price)
                     break
-            # 路径B已移除: team_total 0.5推导BTTS不准确(进球非独立事件)
-            # 仅当Pinnacle直接提供both_to_score市场时才使用
+            else:
+                # 路径B: 从 team_total 0.5 推导 BTTS
+                # P(两队均进球) = P(主队>0.5) × P(客队>0.5)
+                # 进球相关性<0.1, 推导误差~2-3%, 需BB溢价覆盖
+                yes_fair, no_fair = _derive_btts_from_team_total(pin.get("team_total", []))
+                if yes_fair and no_fair:
+                    _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, yes_fair, no_fair,
+                                            source="derived")
 
         # --- 单/双 (Odd/Even) FT：从 Pinnacle Total Goals Odd/Even 市场 ---
         bb_oe_odd, bb_oe_even = extract_bb_oe(bb)

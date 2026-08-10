@@ -1232,6 +1232,9 @@ def _collect_opportunities(match, market_key):
         _bb_odds = _lookup_bb_price_for_fb_match(match, market_key)
         if _bb_odds:
             price_source = "BB/FB"  # 标记两个平台都有
+        # V5: 美式足球FB独赢不可靠 — FB盘口结构与Pin不对齐, 赔率错配高频
+        elif sport == "american_football":
+            return []  # 直接拒绝FB-only的AF机会
 
     result = []
     # FB-only 匹配回查 BB 价 (在循环外查一次, 在循环内按 designation 替换)
@@ -2135,7 +2138,8 @@ _UNSETTLEABLE_LEAGUES = {
     "巴西杯", "俄罗斯甲级联赛", "爱尔兰甲级联赛",
     "非洲女子国家杯 (在摩洛哥)", "非洲女子国家杯",
     "ATP - 蒙特利尔公开赛", "ITF - W50 克诺克海斯特 女子单打",
-    # 低成功率 (<20%) — 暂不加入, 待更多数据
+    # V5: NFL季前赛 — FB盘口结构与常规赛不同, 赔率错配高频
+    "NFL 季前赛", "NFL Pre Season",
 }
 
 

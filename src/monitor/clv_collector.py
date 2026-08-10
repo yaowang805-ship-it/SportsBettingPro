@@ -83,6 +83,23 @@ def _fetch_close_odds(entries):
         return results
     ps = json.loads(ps_file.read_text())
 
+    # V5: 从对比文件补全 Pinnacle 队名 (历史追踪数据缺失 home_pin/away_pin)
+    _cmp_file = DATA_DIR / "bb_vs_pinnacle_comparison.json"
+    _pin_names = {}
+    if _cmp_file.exists():
+        try:
+            _cmp = json.loads(_cmp_file.read_text())
+            for det in _cmp.get("details", []):
+                key = (det.get("home_bb", ""), det.get("away_bb", ""), det.get("league", ""))
+                _pin_names[key] = (det.get("home_pin", ""), det.get("away_pin", ""))
+        except: pass
+    for e in entries:
+        if not e.get("home_pin") or not e.get("away_pin"):
+            key = (e.get("home", ""), e.get("away", ""), e.get("league", ""))
+            if key in _pin_names:
+                e["home_pin"] = _pin_names[key][0]
+                e["away_pin"] = _pin_names[key][1]
+
     # 按联赛分组，减少 API 调用
     by_league = defaultdict(list)
     for e in entries:

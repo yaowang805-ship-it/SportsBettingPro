@@ -76,9 +76,14 @@ SCHEDULE = [
     ("name_mapping",       "09:25", "do_name_mapping", {}), # V4.5: 拼音自动名映射
     # 周报：周日 21:00
     ("evolve_weekly",      "Mon 06:07", "do_evolve_weekly", {}),  # V4 每周进化(结算反馈+溢价重算)
+    ("health_check_noon",  "13:55", "do_health_check", {}),  # 午后巡检
     ("settle_noon",        "14:00", "do_settle",      {}),  # 午后结算
     ("settle_afternoon",   "17:00", "do_settle",      {}),  # 傍晚结算
     ("full_scan_evening",  "20:00", "do_full_scan",   {"bet": True}),
+    ("clv_collect",        "12:00", "do_clv_collect", {}),  # CLV收盘采集
+    ("clv_collect",        "16:00", "do_clv_collect", {}),
+    ("clv_collect",        "18:00", "do_clv_collect", {}),
+    ("clv_collect",        "20:00", "do_clv_collect", {}),
     ("settle_evening",     "20:30", "do_settle",      {}),
     # 周报：周日 21:00
     ("weekly_report",      "Sun 21:00", "do_weekly_report", {}),
@@ -486,6 +491,16 @@ class PipelineOrchestrator:
         self._reload_critical_modules()
         from src.scrapers.bb_incremental_scanner import run_incremental
         run_incremental(time_window=time_window)
+
+    def do_clv_collect(self):
+        """V5: CLV收盘价采集 — 对比赛前15-360分钟的投注拉取Pinnacle收盘赔率。"""
+        try:
+            from src.monitor.clv_collector import collect
+            n = collect()
+            if n > 0:
+                logger.info("CLV采集: %d条", n)
+        except Exception as e:
+            logger.warning("CLV采集失败: %s", e)
 
     def do_settle(self):
         """自动结算 (原有 + 追踪投注结算)。"""
@@ -928,39 +943,32 @@ class PipelineOrchestrator:
             logger.info("🕐 时间校准: 全部正常 ✅")
 
     def do_health_check(self):
-        """运行系统健康检查，有 WARN/FAIL 时发 DingTalk。"""
-        import subprocess
+        """V5: 全系统健康自检 — 有问题推钉钉。"""
         try:
-            result = subprocess.run(
-                [sys.executable, str(SRC_DIR / "health_check_system.py")],
-                capture_output=True, text=True, cwd=SRC_DIR,
-                timeout=120,
-            )
-        except subprocess.TimeoutExpired:
-            logger.error("健康检查超时 (120s)")
-            self._send_alert("health_check", "超时 (120s)")
-            return
+            from src.monitor.health_checker import run_health_check
+            report = run_health_check(push=False, quiet=True)
+            logger.info("健康度: %s/100", report.score)
+            for i in report.issues:
+                logger.warning("  ❌ %s", i)
+            for w in report.warnings:
+                logger.warning("  ⚠️ %s", w)
 
-        stdout = result.stdout or ""
-        stderr = result.stderr or ""
-        for line in stdout.splitlines():
-            logger.info("  %s", line)
-
-        # 只在真正 FAIL 时推送钉钉，WARN 只记录日志
-        has_fail = "❌" in stdout
-        if result.returncode != 0 or has_fail:
-            summary = f"Health Check {'❌ FAIL' if has_fail else '⚠️ WARN'}"
-            body = (
-                f"**{summary}**\n\n"
-                f"```\n{stdout[:1500]}```"
-            )
-            try:
-                send_dingtalk(summary, body)
-                logger.info("健康检查告警已发送")
-            except Exception as e:
-                logger.error("告警发送失败: %s", e)
-        else:
-            logger.info("健康检查: 全部通过")
+            # 有问题或警告时推钉钉
+            if report.issues or report.warnings:
+                lines = [f"🩺 健康度: {report.score}/100"]
+                if report.issues:
+                    lines.append(f"\n🔴 问题 ({len(report.issues)}):")
+                    for i in report.issues[:10]:
+                        lines.append(f"  ❌ {i}")
+                if report.warnings:
+                    lines.append(f"\n🟡 警告 ({len(report.warnings)}):")
+                    for w in report.warnings[:10]:
+                        lines.append(f"  ⚠️ {w}")
+                body = "\n".join(lines)
+                send_dingtalk(f"系统健康报告 {report.score}/100", body, timeout=10)
+                logger.info("健康报告已推送")
+        except Exception as e:
+            logger.error("健康检查异常: %s", e)
 
     # ------------------------------------------------------------------
     # 启动追赶 — 重启后补执行当天已错过的定时任务
