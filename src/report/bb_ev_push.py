@@ -797,17 +797,14 @@ def _calc_kelly_stakes(opps: list) -> list:
             ev = o.get("ev_pct", 0)
             if ev > 1.0 and odds > 1.5:
                 stake_pct = min(0.015, (ev / 100) / (odds - 1.0) * 0.25)
-            # V5: 推导盘口(btts/oe/dnb)无历史数据, Kelly返回0 → 用简单Kelly公式
-            elif sub in ("btts", "oe", "dnb") and ev > 0:
-                kelly_pct = o.get("_kelly_pct", 0)
-                if kelly_pct > 0:
-                    stake_pct = min(kelly_pct / 100, 0.015)  # 不超过1.5%
-                else:
-                    o["_stake"] = 0; o["_raw_stake"] = 0
-                    continue
             else:
                 o["_stake"] = 0; o["_raw_stake"] = 0
                 continue
+        # V5: 推导盘口(btts/oe/dnb)无历史数据 → Kelly可能极低 → 用简单公式兜底
+        if sub in ("btts", "oe", "dnb"):
+            kelly_pct = o.get("_kelly_pct", 0)
+            simple_pct = min(kelly_pct / 100, 0.015) if kelly_pct > 0 else 0
+            stake_pct = max(stake_pct, simple_pct)  # 取较高者
 
         # V4.5: HC 已有独立 Pinnacle AH 收盘数据标定, 无需额外折扣
 

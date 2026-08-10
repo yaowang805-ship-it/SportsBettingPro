@@ -277,10 +277,25 @@ def extract_bb_ou(bb_match, sport="football"):
         # V4.5: BB API uses "total" key, not "over_under"
         ft_ou = odds_ft.get("total") or odds_ft.get("over_under")
         if isinstance(ft_ou, dict) and ft_ou.get("over_odds") and ft_ou.get("under_odds"):
+            line = ft_ou.get("line")
+            # V5: 美式足球/篮球等低比分运动, line可能嵌在line_str中 (如 "大 54.5")
+            if line is None:
+                line_str = ft_ou.get("line_str", "")
+                if line_str:
+                    import re
+                    m = re.search(r'[\d]+\.?[\d]*', str(line_str))
+                    if m:
+                        try:
+                            line = float(m.group())
+                        except (ValueError, TypeError):
+                            pass
+            if line is None:
+                # 无line的OU盘口不可比价 (如 "主" 只表示方向无线值)
+                return None
             return {
                 "over_odds": ft_ou["over_odds"],
                 "under_odds": ft_ou["under_odds"],
-                "line": ft_ou.get("line"),
+                "line": line,
             }
     # HT OU extraction
     odds_ht = bb_match.get("odds_ht", {})
