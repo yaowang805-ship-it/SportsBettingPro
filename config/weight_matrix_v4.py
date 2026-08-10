@@ -1754,7 +1754,13 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
     pin_roi = _get_pin_market_roi(sport_lower, sub_market)
     # 足球/篮球样本充足 → 严；其他运动样本少 → 宽
     if sport_lower in ("football", "basketball"):
-        base_min_ev = 5.0 if pin_roi < -0.03 else 2.0
+        # V5: DC/DNB/BTTS 是推导盘口(无直接Pinnacle历史数据), 降低门槛到3%
+        if sub_market in ("dc", "dnb", "btts", "ht_dc"):
+            base_min_ev = 3.0
+        elif pin_roi < -0.03:
+            base_min_ev = 5.0
+        else:
+            base_min_ev = 2.0
     else:
         base_min_ev = 2.0  # 样本少的运动不额外提高门槛
 

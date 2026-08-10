@@ -1214,6 +1214,7 @@ def _collect_opportunities(match, market_key):
         "over_under": "ou",
         "double_chance": "dc",
         "draw_no_bet": "dnb",
+        "btts": "btts",
     }
     platform_sources = match.get("platform_sources", {})
     source_key = _MK_TO_SOURCE_KEY.get(market_key, "ml")
@@ -1279,6 +1280,7 @@ def _collect_opportunities(match, market_key):
                 "over_under": "ou",
                 "double_chance": "dc",
                 "draw_no_bet": "dnb",
+                "btts": "btts",
             }
             sub_market = _MK_TO_SUB.get(market_key, "1x2")
 
@@ -1527,7 +1529,7 @@ def _read_comparison_file(path):
         flags = match.get("flags", [])
         if sport != "tennis" and match_type == "time" and any("球员冲突" in f for f in flags):
             continue
-        for mk in ("opportunities", "handicap", "over_under", "double_chance"):
+        for mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"):
             qualified.extend(_collect_opportunities(match, mk))
     return qualified
 
