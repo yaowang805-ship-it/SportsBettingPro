@@ -326,7 +326,7 @@
       "success_rate": 0.0
     },
     "德国乙级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -414,9 +414,24 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "苏格兰冠军联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "墨西哥女子联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "尼加拉瓜甲级联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-10T08:57:15.043723+00:00",
+  "updated": "2026-08-10T12:41:28.342924+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
