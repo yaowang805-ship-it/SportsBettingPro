@@ -1,5 +1,5 @@
 {
-  "balance": 9407.8,
+  "balance": 9218.8,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1956,6 +1956,29 @@
       "commence_time": 1786406400,
       "created_at": "2026-08-10T12:11:06.358728+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_奥达斯_努布伦斯_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "智利甲级联赛",
+      "home_team": "奥达斯",
+      "away_team": "努布伦斯",
+      "home_cn": "奥达斯",
+      "away_cn": "努布伦斯",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.82,
+      "stake": 189,
+      "model_prob": 0.5648,
+      "ev_pct": 2.8,
+      "pin_odds": 0,
+      "fair_price": 1.7705,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786406400,
+      "created_at": "2026-08-10T12:18:03.532921+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -8915,8 +8938,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-10",
-    "used": 5032.0,
-    "bets": 57
+    "used": 5221.0,
+    "bets": 58
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
