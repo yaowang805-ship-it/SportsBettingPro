@@ -62,6 +62,89 @@ def _save_league_structure(data):
     print(f"  \U0001f4c1 Pinnacle 联赛结构已保存到 {PINNACLE_LEAGUE_FILE}")
 
 
+# 并发保护: 防止多线程同时写入缓存文件
+import threading as _threading
+_refresh_lock = _threading.Lock()
+_refreshing_flag = False  # 是否有线程正在刷新
+
+
+def refresh_league_structure(force_refresh: bool = False):
+    """确保 Pinnacle 联赛结构缓存是最新的（线程安全）。
+
+    如果缓存存在且未过期，直接返回（毫秒级）。
+    如果缓存不存在/过期/force_refresh，从 Pinnacle API 拉取。
+
+    设计为可在后台线程中调用 — 多次并发调用只会触发一次 API 刷新。
+    Returns:
+        联赛结构 dict (可能为 {})
+    """
+    global _refreshing_flag
+    if not force_refresh:
+        leagues = _load_league_structure(force_refresh=False)
+        if leagues:
+            return leagues
+
+    # 需要刷新 — 只让第一个线程执行 API 拉取
+    with _refresh_lock:
+        if not force_refresh:
+            leagues = _load_league_structure(force_refresh=False)
+            if leagues:
+                return leagues
+        if not _refreshing_flag:
+            _refreshing_flag = True
+            try:
+                return _do_refresh_league_structure()
+            finally:
+                _refreshing_flag = False
+
+    # 另一个线程正在刷新，等待完成
+    for _ in range(120):  # 最多等 120 秒
+        leagues = _load_league_structure(force_refresh=False)
+        if leagues:
+            return leagues
+        time.sleep(0.5)
+    return {}
+
+
+def _do_refresh_league_structure():
+    """从 Pinnacle API 拉取全量联赛结构（实际执行者）。"""
+    import concurrent.futures
+    from src.scrapers.bb_data import SPORT_IDS
+
+    print("  ⚠️ 从 Pinnacle API 拉取联赛结构...")
+    leagues = {}
+
+    def _fetch_sport(sid, sname):
+        mu_list = api_get(f"/sports/{sid}/matchups") or []
+        result = {}
+        for mu in mu_list:
+            league = mu.get("league", {})
+            lid = league.get("id")
+            if lid:
+                result[lid] = {
+                    "name": league.get("name", ""),
+                    "group": league.get("group", ""),
+                    "sport": sname,
+                    "sport_id": sid,
+                    "matchup_count": 1,
+                }
+        return result
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+        futures = {executor.submit(_fetch_sport, sid, sname): sname
+                   for sid, sname in SPORT_IDS.items()}
+        for future in concurrent.futures.as_completed(futures):
+            sport_leagues = future.result()
+            for lid, info in sport_leagues.items():
+                if lid in leagues:
+                    leagues[lid]["matchup_count"] += 1
+                else:
+                    leagues[lid] = info
+
+    _save_league_structure(leagues)
+    return leagues
+
+
 def _load_team_name_map():
     """Load team name mapping (Chinese -> English) from file.
 
