@@ -97,64 +97,19 @@ def _cn_to_en(cn_name: str) -> Optional[str]:
     return None
 
 
-def fetch_espn_results(sport: str, league_name: str, days_back: int = 3) -> list:
-    """从 ESPN API 获取已结束比赛的结果。
+def fetch_results(league_name: str, days_back: int = 3) -> list:
+    """使用多源抓取器获取已结束比赛的结果 (ESPN + football-data.org + 直播吧等)。
 
     Returns:
-        [{home: str, away: str, home_score: int, away_score: int,
-          winner: home/away/draw, status: str, date: str, league: str}, ...]
+        [{home_team, away_team, home_score, away_score, source, completed}, ...]
     """
-    slug = ESPN_SPORT_SLUGS.get(sport)
-    if not slug:
+    try:
+        from fetchers.multi_source_scores import get_completed_scores
+        scores = get_completed_scores(league_name, days_back=days_back)
+        return scores
+    except Exception as e:
+        logger.warning("多源赛果抓取失败 [%s]: %s", league_name, e)
         return []
-
-    results = []
-    session = requests.Session()
-    session.headers.update({
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
-    })
-
-    # 搜索最近 N 天的比赛
-    for day_offset in range(days_back):
-        date_str = (datetime.now() - timedelta(days=day_offset)).strftime("%Y%m%d")
-        url = f"https://site.api.espn.com/apis/site/v2/sports/{slug}/scoreboard?dates={date_str}"
-        try:
-            resp = session.get(url, timeout=15)
-            if resp.status_code != 200:
-                continue
-            data = resp.json()
-            for event in data.get("events", []):
-                comp = event.get("competitions", [{}])[0]
-                status = comp.get("status", {}).get("type", {}).get("name", "")
-                if status != "STATUS_FINAL":
-                    continue
-
-                competitors = comp.get("competitors", [])
-                if len(competitors) < 2:
-                    continue
-
-                home = competitors[0].get("team", {}).get("displayName", "")
-                away = competitors[1].get("team", {}).get("displayName", "")
-                home_score = int(competitors[0].get("score", 0) or 0)
-                away_score = int(competitors[1].get("score", 0) or 0)
-                league = event.get("league", {}).get("name", "") or comp.get("league", "")
-
-                results.append({
-                    "home": home,
-                    "away": away,
-                    "home_score": home_score,
-                    "away_score": away_score,
-                    "winner": "home" if home_score > away_score else ("away" if away_score > home_score else "draw"),
-                    "status": "FINAL",
-                    "date": event.get("date", ""),
-                    "league": league,
-                    "source": "espn",
-                })
-        except Exception as e:
-            logger.debug("ESPN 查询失败 [%s/%s]: %s", slug, date_str, e)
-            continue
-
-    return results
 
 
 def fetch_football_data_results(league_code: str, days_back: int = 3) -> list:
@@ -225,8 +180,11 @@ def find_match_result(bet: dict, results: list) -> Optional[dict]:
 
     for r in results:
         score = 0
-        r_home = r.get("home", "").strip()
-        r_away = r.get("away", "").strip()
+        r_home = r.get("home_team", "").strip()
+        r_away = r.get("away_team", "").strip()
+        completed = r.get("completed", False)
+        if not completed:
+            continue
 
         # 1. Pinnacle 名精确匹配 (分值最高)
         if home_pin and away_pin:
@@ -273,8 +231,8 @@ def find_match_result(bet: dict, results: list) -> Optional[dict]:
             best_score = score
             best_result = r
 
-    # 要求至少有一定匹配分数 (队名匹配或映射匹配)
-    if best_score >= 4:
+    # 降低门槛: 多源抓取不返回联赛/时间信息, 队名匹配即可
+    if best_score >= 2:
         return best_result
     return None
 
@@ -470,11 +428,8 @@ def settle_pending_bets(dry_run: bool = False) -> dict:
         sport, league = key.split("|", 1)
         logger.info("  查询 [%s] %s: %d 笔", sport, league, len(group_bets))
 
-        # 获取赛果
-        results = fetch_espn_results(sport, league, days_back=3)
-        if sport == "football":
-            # 额外尝试 football-data.org (足球专用)
-            pass  # 需要 API key
+        # 获取赛果 (多源: ESPN + football-data.org + 直播吧)
+        results = fetch_results(league, days_back=3)
 
         if not results:
             logger.info("    无赛果数据，跳过 %d 笔", len(group_bets))

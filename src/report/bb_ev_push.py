@@ -2128,6 +2128,40 @@ def _save_qualified_fingerprints(qualified: list):
     logger.info("指纹: %d条 (%d场)", len(new_fps), len(match_groups))
 
 
+# 不可结算联赛黑名单 (>=3次尝试, 0%成功率)
+_UNSETTLEABLE_LEAGUES = {
+    "欧足联欧洲联赛-资格赛", "欧足联欧洲会议联赛-资格赛", "欧足联欧洲协会联赛-资格赛",
+    "玻利维亚甲级联赛", "秘鲁甲级联赛", "阿根廷全国联赛", "委内瑞拉超级联赛",
+    "巴西杯", "俄罗斯甲级联赛", "爱尔兰甲级联赛",
+    "非洲女子国家杯 (在摩洛哥)", "非洲女子国家杯",
+    "ATP - 蒙特利尔公开赛", "ITF - W50 克诺克海斯特 女子单打",
+    # 低成功率 (<20%) — 暂不加入, 待更多数据
+}
+
+
+def _filter_unsettleable_leagues(qualified: list) -> list:
+    """过滤已知不可结算的联赛。"""
+    blocked = []
+    kept = []
+    for o in qualified:
+        league = o.get("league", "")
+        # 精确匹配 + 子串匹配 (如 "委内瑞拉超级联赛" in "委内瑞拉超级联赛 2026")
+        blocked_flag = False
+        for banned in _UNSETTLEABLE_LEAGUES:
+            if banned in league:
+                blocked_flag = True
+                break
+        if blocked_flag:
+            blocked.append(f"{league} ({o.get('sport', '?')})")
+        else:
+            kept.append(o)
+
+    if blocked:
+        unique = sorted(set(blocked))
+        logger.info("结算门禁: 拦截 %d 个机会 (联赛=%s)", len(blocked), ", ".join(unique))
+    return kept
+
+
 def _apply_match_exposure_cap(qualified: list) -> list:
     """同一场比赛累计投注不超过日预算 6%，超出的机会降权或跳过。
 
@@ -2502,6 +2536,9 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
 
     # 单场推送冷却：同一比赛 4 小时内最多推送 1 次（防止 EV 微小波动导致反复推送）
     qualified = _apply_match_exposure_cap(qualified)
+
+    # 结算可行性门禁: 已知0%成功率的联赛直接拦截 (避免推送无法验证的投注)
+    qualified = _filter_unsettleable_leagues(qualified)
 
     warnings = _check_sport_consistency(qualified, pre_dedup_counts)
     clv_warnings, _ = _check_clv_trend(qualified)

@@ -271,7 +271,7 @@
       "success_rate": 0.0
     },
     "英格兰联赛杯": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -379,9 +379,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "萨尔瓦多超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-10T01:05:32.153808+00:00",
+  "updated": "2026-08-10T02:44:49.251012+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

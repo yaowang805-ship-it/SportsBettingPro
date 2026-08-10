@@ -24,9 +24,9 @@ logger = get_logger(__name__)
 TRACKING_FILE = DATA_DIR / "clv_tracking.csv"
 RESULTS_FILE = DATA_DIR / "clv_results.csv"
 
-# 采集窗口：比赛开始前 5 分钟 ~ 120 分钟拉取收盘赔率
-CLV_WINDOW_BEFORE_MIN = 5    # 比赛前 5 分钟
-CLV_WINDOW_BEFORE_MAX = 120  # 比赛前 120 分钟
+# 采集窗口：比赛开始前 15 分钟 ~ 360 分钟拉取收盘赔率
+CLV_WINDOW_BEFORE_MIN = 15   # 比赛前 15 分钟 (原5)
+CLV_WINDOW_BEFORE_MAX = 360  # 比赛前 360 分钟/6小时 (原120)
 CLV_MIN_AGE_SECONDS = 300    # 至少推送后 5 分钟才采集 (避免取到同一时刻的赔率)
 
 

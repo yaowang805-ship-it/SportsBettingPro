@@ -742,10 +742,11 @@ class PipelineOrchestrator:
         result = subprocess.run(
             ["git", "add", "-u"],
             cwd=SRC_DIR,
-            capture_output=True, text=True,
+            capture_output=True,
         )
         if result.returncode != 0:
-            logger.warning("git add 失败: %s", result.stderr[:200])
+            err = result.stderr.decode('utf-8', errors='replace')[:200] if result.stderr else ''
+            logger.warning("git add 失败: %s", err)
             return
         result = subprocess.run(
             ["git", "diff", "--staged", "--quiet"],
@@ -758,12 +759,13 @@ class PipelineOrchestrator:
         result = subprocess.run(
             ["git", "commit", "-m", f"日常自动存档 {datetime.now().strftime('%Y-%m-%d')}"],
             cwd=SRC_DIR,
-            capture_output=True, text=True,
+            capture_output=True,
         )
         if result.returncode == 0:
             logger.info("已提交变更")
         else:
-            logger.warning("提交失败: %s", result.stderr[:200])
+            err = result.stderr.decode('utf-8', errors='replace')[:200] if result.stderr else ''
+            logger.warning("提交失败: %s", err)
 
     def do_self_repair(self):
         """V4.5: 自检+自动修复 — 在每天任务开始前修复常见问题。

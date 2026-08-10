@@ -1012,6 +1012,47 @@ if _CALIBRATED:
         UFC_NEW = _CALIBRATED["UFC_MULTI_ML"]  # V4.5: 521场BookMaker收盘
     if "NFL_MULTI_ML" in _CALIBRATED:
         NFL_DATA = _CALIBRATED["NFL_MULTI_ML"]
+
+# V5: Beat the Bookie 共识收盘价 (32家博彩公司含Pinnacle, 479K场, 818联赛)
+try:
+    from config.btb_calibrated import BTB_1X2_DATA
+    BTB_1X2_AGGREGATE = BTB_1X2_DATA.get("_AGGREGATE", {})
+except ImportError:
+    BTB_1X2_DATA = {}
+    BTB_1X2_AGGREGATE = {}
+
+# V5: SBR Consensus 收盘价 (SportsbookReview, 含Pinnacle, 56K场, 4运动)
+# 优先使用SBR数据, 但保留旧数据作为bin空缺时的回退
+try:
+    from config.sbr_calibrated import SBR_DATA
+    if "NBA" in SBR_DATA:
+        _SBR_NBA = SBR_DATA["NBA"]["ml"]
+        NBA_DATA = {int(k): v for k, v in _SBR_NBA.items()}
+        NBA_SPREAD = {int(k): v for k, v in SBR_DATA["NBA"]["spread"].items()}
+        NBA_TOTAL = {int(k): v for k, v in SBR_DATA["NBA"]["ou"].items()}
+    if "MLB" in SBR_DATA:
+        _SBR_MLB = SBR_DATA["MLB"]["ml"]
+        for k, v in _SBR_MLB.items():
+            MLB_DATA[int(k)] = v
+        MLB_SPREAD = {int(k): v for k, v in SBR_DATA["MLB"]["spread"].items()}
+        MLB_TOTAL = {int(k): v for k, v in SBR_DATA["MLB"]["ou"].items()}
+    if "NFL" in SBR_DATA:
+        _SBR_NFL = SBR_DATA["NFL"]["ml"]
+        for k, v in _SBR_NFL.items():
+            NFL_DATA[int(k)] = v
+        NFL_SPREAD_DATA = {int(k): v for k, v in SBR_DATA["NFL"]["spread"].items()}
+        NFL_TOTAL_DATA = {int(k): v for k, v in SBR_DATA["NFL"]["ou"].items()}
+    if "NHL" in SBR_DATA:
+        _SBR_NHL = SBR_DATA["NHL"]["ml"]
+        try:
+            for k, v in _SBR_NHL.items():
+                NHL_DATA[int(k)] = v
+        except NameError:
+            pass
+        NHL_SPREAD = {int(k): v for k, v in SBR_DATA["NHL"]["spread"].items()}
+        NHL_TOTAL = {int(k): v for k, v in SBR_DATA["NHL"]["ou"].items()}
+except ImportError:
+    pass
     # V4.5: MLB Vegas 45K场
     if "MLB_VEGAS_ML" in _CALIBRATED:
         MLB_VEGAS_ML = _CALIBRATED["MLB_VEGAS_ML"]
@@ -1130,6 +1171,15 @@ NHL_DATA = {
     6:  (0.408, 2.40, 1200),  10: (0.309, 3.20, 300),
     12: (0.271, 3.59, 120),   14: (0.242, 4.04, 60),
 }
+
+# V5: 合并 SBR 数据到现有硬编码 (SBR优先)
+try:
+    from config.sbr_calibrated import SBR_DATA as _SBR
+    if "NHL" in _SBR:
+        for k, v in _SBR["NHL"]["ml"].items():
+            NHL_DATA[int(k)] = v
+except ImportError:
+    pass
 
 MLB_ODDSPORTAL_DATA = {
     1:  (0.692, 1.42, 1515),  2:  (0.595, 1.60, 3626),
@@ -1253,6 +1303,104 @@ def _match_league(league: str, data_dict: dict):
         if kw in (league or ""):
             return data_dict[kw]
     return data_dict.get("_AGGREGATE")  # 仅未知联赛回退聚合
+
+
+# V5: Beat the Bookie 英文联赛名 → BB中文名 映射
+_BTB_LEAGUE_MAP = {
+    "英格兰超级联赛": "England: Premier League",
+    "英超": "England: Premier League",
+    "英格兰冠军联赛": "England: Championship",
+    "英冠": "England: Championship",
+    "英格兰甲级联赛": "England: League One",
+    "英甲": "England: League One",
+    "英格兰乙级联赛": "England: League Two",
+    "英乙": "England: League Two",
+    "西班牙甲级联赛": "Spain: Primera Division",
+    "西甲": "Spain: Primera Division",
+    "西班牙乙级联赛": "Spain: Segunda Division",
+    "意大利甲级联赛": "Italy: Serie A",
+    "意甲": "Italy: Serie A",
+    "意大利乙级联赛": "Italy: Serie B",
+    "意乙": "Italy: Serie B",
+    "德国甲级联赛": "Germany: Bundesliga",
+    "德甲": "Germany: Bundesliga",
+    "德国乙级联赛": "Germany: 2. Bundesliga",
+    "德乙": "Germany: 2. Bundesliga",
+    "法国甲级联赛": "France: Ligue 1",
+    "法甲": "France: Ligue 1",
+    "法国乙级联赛": "France: Ligue 2",
+    "法乙": "France: Ligue 2",
+    "荷兰甲级联赛": "Netherlands: Eredivisie",
+    "荷甲": "Netherlands: Eredivisie",
+    "葡萄牙超级联赛": "Portugal: Liga Portugal",
+    "葡超": "Portugal: Liga Portugal",
+    "巴西甲级联赛": "Brazil: Brasileirao",
+    "巴甲": "Brazil: Brasileirao",
+    "阿根廷甲级联赛": "Argentina: Primera Division",
+    "墨西哥超级联赛": "Mexico: Primera Division",
+    "美国职业大联盟": "World: Club Friendly",  # MLS not in BTB, fallback to global
+    "日本甲级联赛": "Japan: J-League",
+    "韩国K1联赛": "South Korea: K-League",
+    "俄罗斯超级联赛": "Russia: Premier League",
+    "土耳其超级联赛": "Turkey: Super Lig",
+    "比利时甲级联赛": "Belgium: Jupiler League",
+    "瑞士超级联赛": "Switzerland: Super League",
+    "奥地利甲级联赛": "Austria: Bundesliga",
+    "丹麦超级联赛": "Denmark: Superligaen",
+    "瑞典超级联赛": "Sweden: Allsvenskan",
+    "挪威超级联赛": "Norway: Eliteserien",
+    "希腊超级联赛": "Greece: Super League",
+    "波兰超级联赛": "Poland: Ekstraklasa",
+    "捷克甲级联赛": "Czech Republic: Czech Liga",
+    "克罗地亚甲级联赛": "Croatia: 1 HNL",
+    "塞尔维亚超级联赛": "Serbia: Super Liga",
+    "罗马尼亚甲级联赛": "Romania: Liga 1",
+    "保加利亚甲级联赛": "Bulgaria: A PFG",
+    "苏格兰超级联赛": "Scotland: Premiership",
+    "智利甲级联赛": "Chile: Primera Division",
+    "哥伦比亚甲级联赛": "Colombia: Liga Postobon",
+    "厄瓜多尔甲级联赛": "Ecuador: Serie A",
+    "秘鲁甲级联赛": "Peru: Primera Division",
+    "乌拉圭甲级联赛": "Uruguay: Primera Division",
+    "巴拉圭甲级联赛": "Paraguay: Primera Division",
+    "委内瑞拉超级联赛": "Venezuela: Primera Division",
+    "玻利维亚甲级联赛": "Bolivia: LFPB",
+    "澳大利亚甲级联赛": "Australia: A-League",
+    "摩洛哥甲级联赛": "Morocco: Botola Pro",
+    "埃及甲级联赛": "Egypt: Premier League",
+    "南非超级联赛": "South Africa: PSL",
+    "沙特阿拉伯职业联赛": "Saudi Arabia: Pro League",
+    "芬兰超级联赛": "Finland: Veikkausliiga",
+    "爱尔兰超级联赛": "Ireland: Premier Division",
+}
+
+
+def _match_btb_league(bb_league: str) -> dict:
+    """将 BB 中文联赛名映射到 BTB 数据，返回该联赛的 bin 数据 dict。"""
+    if not bb_league or not BTB_1X2_DATA:
+        return BTB_1X2_AGGREGATE
+    # 精确匹配
+    if bb_league in BTB_1X2_DATA:
+        return BTB_1X2_DATA[bb_league]
+    # 中文→英文映射
+    en_name = _BTB_LEAGUE_MAP.get(bb_league)
+    if en_name and en_name in BTB_1X2_DATA:
+        return BTB_1X2_DATA[en_name]
+    # 子串匹配 (BB名含在BTB名中)
+    for btb_name in BTB_1X2_DATA:
+        if btb_name == "_AGGREGATE":
+            continue
+        if bb_league.lower() in btb_name.lower():
+            return BTB_1X2_DATA[btb_name]
+    # 反向子串 (BTB名含在BB名中)
+    for btb_name in BTB_1X2_DATA:
+        if btb_name == "_AGGREGATE":
+            continue
+        # 提取BTB名中的国家+联赛部分
+        parts = btb_name.split(": ")
+        if len(parts) == 2 and parts[1].lower() in bb_league.lower():
+            return BTB_1X2_DATA[btb_name]
+    return BTB_1X2_AGGREGATE
 
 
 # V4.2: 样本量阈值 (Wilson CI 驱动)
@@ -1515,11 +1663,18 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             bb_prem = _bb_premium_1x2(odds)
             return kelly_075(wr, avg_o, bb_prem, n) * 0.92
 
-        else:  # 1X2
-            # V4.5: DC/DNB/BTTS/OE 用底层数据推导 (不再固定上限)
+        else:  # 1X2 (incl. dc, dnb, btts, oe derived)
+            # V5: 优先使用 Pinnacle 联赛数据，无数据时回退 BTB 共识收盘价 (818联赛)
+            league_data = _match_league(league, PIN_1X2_DATA)
+            if not league_data and BTB_1X2_DATA:
+                league_data = _match_btb_league(league)
+                # BTB 数据置信度折扣: Pinnacle单家 > 32家平均
+                _btb_discount = 0.85
+            else:
+                _btb_discount = 1.0
+
+            # DC/DNB from 1X2 derivation
             if sub_market in ("dc", "dnb"):
-                # DC/DNB 从 1X2 推导 → 用 1X2 数据 × 0.5 (组合盘口风险更低)
-                league_data = _match_league(league, PIN_1X2_DATA)
                 if not league_data:
                     return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
                 data = league_data.get(idx)
@@ -1528,10 +1683,11 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 wr, avg_o, n = data
                 if n < MIN_N_MINIMUM:
                     return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
-                bb_prem = _bb_premium_1x2(odds) * 0.85  # DC溢价低于1X2
-                stake = kelly_075(wr * 1.08, avg_o, bb_prem, n) * 0.5  # WR上调8%(组合覆盖更高), 半仓
+                bb_prem = _bb_premium_1x2(odds) * 0.85
+                stake = kelly_075(wr * 1.08, avg_o, bb_prem, n) * 0.5 * _btb_discount
                 return min(stake, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.02))
 
+            # BTTS/OE from OU derivation (uses OU data, BTB doesn't have OU so no change)
             if sub_market in ("btts", "oe"):
                 # BTTS/OE 与总进球相关 → 用 OU 数据 × 0.35
                 ou_league_data = _match_league(league, PIN_OU_DATA)
@@ -1553,7 +1709,12 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                     return 0.0
                 return cfg["max_stake"]
 
+            # V5: 纯1X2 → 优先Pinnacle数据, 无数据回退BTB共识收盘价
             league_data = _match_league(league, PIN_1X2_DATA)
+            _btb_fallback = False
+            if not league_data and BTB_1X2_DATA:
+                league_data = _match_btb_league(league)
+                _btb_fallback = True
             if not league_data:
                 return 0.0
             data = league_data.get(idx)
@@ -1564,6 +1725,8 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             bb_prem = _bb_premium_1x2(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n)
+            if _btb_fallback:
+                stake *= 0.85  # BTB共识价折扣 (32家平均 vs Pinnacle单家)
             return stake * _settlement_multiplier(league) * _clv_multiplier(league)
 
     # ── Tennis (V4.5: ATP/WTA 6.9万场 Pinnacle收盘) ──
@@ -1603,64 +1766,88 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         elif sub_market in ("hc", "handicap"): stake *= 0.85
         return stake
 
-    # ── Ice Hockey (NHL) ──
+    # ── Ice Hockey (NHL) — V5: SBR共识收盘价 ──
     elif sport_lower in ("ice_hockey", "hockey", "nhl"):
         idx = _bin_index(odds, ODDS_BINS)
+        if sub_market in ("ou", "over_under") and "NHL_TOTAL" in dir():
+            data = NHL_TOTAL.get(idx) or NHL_TOTAL.get(str(idx))
+            if data and isinstance(data, (list, tuple)) and len(data) >= 2 and data[1] >= 200:
+                wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
+                return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.65) * _settlement_multiplier(league)
+        if sub_market in ("hc", "handicap") and "NHL_SPREAD" in dir():
+            data = NHL_SPREAD.get(idx) or NHL_SPREAD.get(str(idx))
+            if data and isinstance(data, (list, tuple)) and len(data) >= 2 and data[1] >= 200:
+                wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
+                return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.65) * _settlement_multiplier(league)
+        # ML fallback
         data = NHL_DATA.get(idx)
-        if data and data[2] >= 50:  # V4.4: MIN_N=50 (ESPN数据, 非Pinnacle)
+        if data and data[2] >= 50:
             wr, avg_o, n = data
             stake = kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.65)
-            # V4.5: OU/HC 加独立折扣 (NHL puck line ~= ML × 0.85, OU ~= ML × 0.75)
-            if sub_market in ("ou", "over_under"):
-                stake *= 0.75
-            elif sub_market in ("hc", "handicap"):
-                stake *= 0.85
+            if sub_market in ("ou", "over_under"): stake *= 0.75
+            elif sub_market in ("hc", "handicap"): stake *= 0.85
             return stake * _settlement_multiplier(league)
         return 0.0
 
-    # ── Baseball (MLB) ──
+    # ── Baseball (MLB) — V5: SBR共识收盘价 ──
     elif sport_lower == "baseball":
-        # V4.5: 优先用MLB Vegas 45K场数据
+        idx = _bin_index(odds, ODDS_BINS)
         g = globals()
+        # OU market
+        if sub_market in ("ou", "over_under") and "MLB_TOTAL" in dir():
+            data = MLB_TOTAL.get(idx) or MLB_TOTAL.get(str(idx))
+            if data and isinstance(data, (list, tuple)) and len(data) >= 2 and data[1] >= 200:
+                wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
+                return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.80) * _settlement_multiplier(league)
+        # Spread market
+        if sub_market in ("hc", "handicap") and "MLB_SPREAD" in dir():
+            data = MLB_SPREAD.get(idx) or MLB_SPREAD.get(str(idx))
+            if data and isinstance(data, (list, tuple)) and len(data) >= 2 and data[1] >= 200:
+                wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
+                return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.80) * _settlement_multiplier(league)
+        # ML
+        data = None
         if "MLB_VEGAS_ML" in g:
-            idx = _bin_index(odds, ODDS_BINS)
-            if sub_market in ("ou", "over_under") and "MLB_VEGAS_OU" in g:
-                data = g["MLB_VEGAS_OU"].get(idx)
-                if data and data[2] >= 30:
-                    wr, avg_o, n = data
-                    return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.80) * _settlement_multiplier(league)
-            if sub_market in ("hc", "handicap") and "MLB_VEGAS_RL" in g:
-                data = g["MLB_VEGAS_RL"].get(idx)
-                if data and data[2] >= 30:
-                    wr, avg_o, n = data
-                    return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.80) * _settlement_multiplier(league)
             data = g["MLB_VEGAS_ML"].get(idx)
-            if data and data[2] >= 30:
-                wr, avg_o, n = data
-                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.85) * _settlement_multiplier(league)
-        # Fallback to old data
-        return 0.0
+        if not data and MLB_DATA:
+            data = MLB_DATA.get(idx)
+        if data and data[2] >= 20:
+            wr, avg_o, n = data
+            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.80) * _settlement_multiplier(league)
 
     # ── Basketball ──
     elif sport_lower == "basketball":
         if "NBA" in (league or ""):
             idx = _bin_index(odds, ODDS_BINS)
-            # OU market — V4.5: NBA_OU_DATA非Pinnacle, ML回退×0.7
+            # OU market — V5: SBR共识收盘价 OU独立标定
             if sub_market in ("ou", "over_under"):
+                if NBA_TOTAL:
+                    # 使用实际OU收盘线数据 (binned by total line)
+                    _ou_bin = _bin_index(odds, OU_BINS) if 'OU_BINS' in dir() else idx
+                    data = NBA_TOTAL.get(idx) or NBA_TOTAL.get(str(idx))
+                    if data and isinstance(data, (list, tuple)) and len(data) >= 2 and data[1] >= 200:
+                        wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
+                        return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.75) * _settlement_multiplier(league)
+                # Fallback: ML derivation
                 data = NBA_DATA.get(idx)
                 if data and data[2] >= MIN_N_MINIMUM:
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.75) * 0.7 * _settlement_multiplier(league)
                 return 0.0
-            # Spread market
+            # Spread market — V5: SBR实际spread收盘线独立标定
             elif sub_market in ("hc", "handicap"):
-                # V4.5: 从ML数据推导×0.9 (spread与ML高度相关)
+                if NBA_SPREAD:
+                    data = NBA_SPREAD.get(idx) or NBA_SPREAD.get(str(idx))
+                    if data and isinstance(data, (list, tuple)) and len(data) >= 2 and data[1] >= 200:
+                        wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
+                        return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.75) * _settlement_multiplier(league)
+                # Fallback: ML derivation
                 data = NBA_DATA.get(idx)
                 if data and data[2] >= MIN_N_MINIMUM:
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.05, n) * DISCOUNT_SBR_LARGE * 0.9 * _settlement_multiplier(league)
-                return 0.01  # 保守1%
-            # Moneyline
+                return 0.01
+            # Moneyline — V5: SBR共识收盘价独立标定
             else:
                 data = NBA_DATA.get(idx)
                 if data and data[2] >= MIN_N_MINIMUM:
@@ -1687,33 +1874,52 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.50) * _settlement_multiplier(league)
             return 0.0
-        # V4.5: 非NBA/WNBA用Betfair 24K + 保守1%
-        elif "BETFAIR_BASKET" in globals():
-            idx = _bin_index(odds, ODDS_BINS)
-            data = globals()["BETFAIR_BASKET"].get(idx)
-            if data and data[2] >= 20:
-                wr, avg_o, n = data
-                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.35) * _settlement_multiplier(league)
-            return 0.01 if odds < 2.5 else 0.0
+        # V5: 非NBA/WNBA用Betfair 24K篮球数据 (含FIBA世界杯/WNBA/ASEAN等)
         else:
-            return 0.01 if odds < 2.5 else 0.0
+            idx = _bin_index(odds, ODDS_BINS)
+            data = None
+            # 优先用Betfair数据 (exchange closing odds ~= Pinnacle)
+            try:
+                from config.betfair_basketball_calibrated import BETFAIR_BASKETBALL
+                agg = BETFAIR_BASKETBALL.get("_AGGREGATE", {})
+                data = agg.get(str(idx))
+            except ImportError:
+                pass
+            # 回退旧Betfair数据
+            if not data and "BETFAIR_BASKET" in globals():
+                data = globals()["BETFAIR_BASKET"].get(idx)
+            if data and isinstance(data, (list, tuple)) and len(data) >= 3 and data[2] >= 20:
+                wr, avg_o, n = data
+                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.40) * _settlement_multiplier(league)
+            # Fallback: no data → conservative 1% (was the old BETFAIR_BASKET bug)
+            return 0.01 if odds < 3.0 else 0.0
 
     # ── American Football (NFL) ──
     elif sport_lower == "american_football":
         idx = _bin_index(odds, ODDS_BINS)
+        # V5: SBR共识收盘价 OU/Spread 独立标定
+        if sub_market in ("ou", "over_under") and "NFL_TOTAL_DATA" in dir():
+            data = NFL_TOTAL_DATA.get(idx) or NFL_TOTAL_DATA.get(str(idx))
+            if data and isinstance(data, (list, tuple)) and len(data) >= 2 and data[1] >= 100:
+                wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
+                return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.80) * _settlement_multiplier(league)
+        if sub_market in ("hc", "handicap") and "NFL_SPREAD_DATA" in dir():
+            data = NFL_SPREAD_DATA.get(idx) or NFL_SPREAD_DATA.get(str(idx))
+            if data and isinstance(data, (list, tuple)) and len(data) >= 2 and data[1] >= 100:
+                wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
+                return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.80) * _settlement_multiplier(league)
+        # Fallback: old data
         if sub_market in ("ou", "over_under"):
-            data = NFL_OU_DATA.get(idx)
+            data = NFL_OU_DATA.get(idx) if "NFL_OU_DATA" in dir() else None
             if data and data[2] >= 20:
                 wr, avg_o, n = data
                 return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.80) * _settlement_multiplier(league)
-            # V4.5: OU bin缺失 → 回退ML×0.7
             data = NFL_DATA.get(idx)
             if data and data[2] >= 30:
                 wr, avg_o, n = data
                 return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.75) * 0.7 * _settlement_multiplier(league)
             return 0.0
         if sub_market in ("hc", "handicap"):
-            # V4.5: HC回退ML×0.9
             data = NFL_DATA.get(idx)
             if data and data[2] >= 30:
                 wr, avg_o, n = data

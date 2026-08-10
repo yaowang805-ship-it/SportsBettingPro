@@ -90,7 +90,7 @@
   "德国丙级联赛": "Germany - 3. Liga",
   "法国乙级联赛": "France - Ligue 2",
   "法国丙级联赛": "France - Ligue 3",
-  "墨西哥棒球联盟": "Mexican League",
+  "墨西哥棒球联盟": "Mexico - Liga Mexicana de Beisbol",
   "智利全国篮球联赛": "Chile - LNB",
   "墨西哥甲级联赛": "Mexico - Liga MX",
   "乌拉圭乙级联赛": "Uruguay - Segunda Division",
@@ -338,8 +338,8 @@
   "中国青少年精英联赛 U20": "China - U20 League",
   "德国青年联赛U19": "Germany - Bundesliga U19",
   "巴西女子足球锦标赛A3": "Brazil - Brasileiro Women A3",
-  "ATP挑战赛 - 布朗斯堡公开赛": "ATP Challenger Astana - R1",
-  "ATP挑战赛 - 阿斯塔纳公开赛": "ATP Challenger Astana - R1",
+  "ATP挑战赛 - 布朗斯堡公开赛": "ATP Challenger Brownsburg - Qualifiers",
+  "ATP挑战赛 - 阿斯塔纳公开赛": "ATP Challenger Astana - Qualifiers",
   "玻利维亚全国联赛 U19": "Portugal - U19 Championship",
   "卢旺达女子全国篮球联赛": "Rwanda - National League Women",
   "卢旺达全国篮球联赛": "Rwanda - National League",
@@ -362,5 +362,9 @@
   "西班牙乙级联赛": "Spain - Segunda Division",
   "沙特阿拉伯职业联赛": "Saudi Arabia - Pro League",
   "乌拉圭甲级后备联赛": "Uruguay - Reserve League",
-  "联赛杯 (在美国和加拿大和墨西哥)": "Leagues Cup"
+  "联赛杯 (在美国和加拿大和墨西哥)": "Leagues Cup",
+  "ATP挑战赛 - 阿斯塔纳公开赛 - 双打": "ATP Challenger Astana - Qualifiers",
+  "ATP挑战赛 - 布朗斯堡公开赛 - 双打": "ATP Challenger Brownsburg - Qualifiers",
+  "ITF - M15 图尔库 男子单打": "ITF Men Turku",
+  "巴西圣保罗州篮球锦标赛 U20": "Brazil - Paulista FPB U20"
 }
