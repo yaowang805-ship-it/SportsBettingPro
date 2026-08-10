@@ -43,6 +43,26 @@ def save_tracked_bets(data):
     tmp.replace(TRACKED_BETS_FILE)
 
 
+def _compute_simple_kelly_stake(o: dict) -> int:
+    """A/B测试: Simple Half Kelly from EV%.  cap 2% per bet (对齐职业标准)."""
+    ev = o.get("ev_pct", 0)
+    odds = o.get("bb_odds", 0)
+    if ev > 0 and odds > 1:
+        pct = min((ev / 100) / (odds - 1) * 0.5, 0.02)
+        stake = int(20000 * pct)  # ¥20,000 bankroll
+        return stake if stake >= 30 else 0
+    return 0
+
+
+def _compute_simple_kelly_pct(o: dict) -> float:
+    """A/B测试: Simple Half Kelly 仓位百分比."""
+    ev = o.get("ev_pct", 0)
+    odds = o.get("bb_odds", 0)
+    if ev > 0 and odds > 1:
+        return round(min((ev / 100) / (odds - 1) * 0.5, 0.02) * 100, 2)
+    return 0.0
+
+
 def record_bets(opportunities: list, push_label: str = ""):
     """在推送时记录投注。每条机会 → 一条追踪记录。
 
@@ -82,8 +102,14 @@ def record_bets(opportunities: list, push_label: str = ""):
             "pin_odds": o.get("pin_odds", 0),
             "fair_price": o.get("fair_price", 0),
             "ev_pct": o.get("ev_pct", 0),
-            "stake": o.get("_stake", 0),
-            "kelly_pct": o.get("_kelly_pct", 0),
+            "stake": o.get("_stake", 0),           # V5 Matrix 投注额
+            "kelly_pct": o.get("_kelly_pct", 0),     # V5 Matrix Kelly%
+            # A/B 测试: Simple Kelly 策略 (对比基准)
+            "simple_stake": _compute_simple_kelly_stake(o),
+            "simple_kelly_pct": _compute_simple_kelly_pct(o),
+            # 结算字段
+            "profit": None,            # V5 Matrix 盈亏
+            "profit_simple": None,      # Simple Kelly 盈亏
             "tier": o.get("_tier", 0),
             "match_score": o.get("match_score", 0),
             "match_epoch": o.get("_pin_epoch", 0),
@@ -160,12 +186,25 @@ def get_pnl_summary() -> dict:
         by_league[lg]["stake"] += b["stake"]
         by_league[lg]["profit"] += b.get("profit", 0) or 0
 
+    # A/B 对比: Simple Kelly vs V5 Matrix
+    simple_stake = sum(b.get("simple_stake", 0) or 0 for b in settled)
+    simple_profit = sum(b.get("profit_simple", 0) or 0 for b in settled)
+    simple_roi = round(simple_profit / simple_stake * 100, 2) if simple_stake > 0 else 0
+
     return {
         "total_bets": len(bets),
         "settled": len(settled),
         "pending": len(pending),
         "total_stake": total_stake,
         "total_profit": total_profit,
+        "roi_pct": round(total_profit / total_stake * 100, 2) if total_stake > 0 else 0,
+        # A/B test
+        "simple_stake": simple_stake,
+        "simple_profit": simple_profit,
+        "simple_roi_pct": simple_roi,
+        "v5_stake": total_stake,
+        "v5_profit": total_profit,
+        "v5_roi_pct": round(total_profit / total_stake * 100, 2) if total_stake > 0 else 0,
         "roi_pct": round(total_profit / total_stake * 100, 2) if total_stake > 0 else 0,
         "by_sport": dict(by_sport),
         "by_league": dict(by_league),
@@ -217,7 +256,7 @@ def settle_bet(push_id: str, result: str, home_score=None, away_score=None,
             b["settled_at"] = datetime.now(timezone.utc).isoformat()
             b["settle_source"] = source
 
-            # 自动计算盈亏
+            # 自动计算盈亏 (V5 Matrix)
             if profit is None:
                 stake = b["stake"]
                 if result == "won":
@@ -233,6 +272,21 @@ def settle_bet(push_id: str, result: str, home_score=None, away_score=None,
                 else:
                     profit = 0
             b["profit"] = round(profit, 2)
+
+            # A/B: Simple Kelly 盈亏
+            simple_stake = b.get("simple_stake", 0) or 0
+            if result == "won":
+                b["profit_simple"] = round(simple_stake * (b["bb_odds"] - 1), 2)
+            elif result == "lost":
+                b["profit_simple"] = -simple_stake
+            elif result == "void":
+                b["profit_simple"] = 0
+            elif result == "half_won":
+                b["profit_simple"] = round(simple_stake * (b["bb_odds"] - 1) / 2, 2)
+            elif result == "half_lost":
+                b["profit_simple"] = round(-simple_stake / 2, 2)
+            else:
+                b["profit_simple"] = 0
             save_tracked_bets(data)
             logger.info("✅ 结算: %s → %s (¥%.0f) [%s]", push_id[:60], result, profit, source)
             return True

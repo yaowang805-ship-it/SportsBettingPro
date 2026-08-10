@@ -149,11 +149,12 @@ def _odds_weight(odds: float) -> float:
 
 # =====================================================================
 def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
-              n_bets: int = 100, cap: float = 0.06,
+              n_bets: int = 100, cap: float = 0.04,
               sport_confidence: float = 1.0) -> float:
-    """0.75凯利仓位 (返回小数, 0.06 = 6%)。
+    """V5 Half Kelly仓位 (返回小数, 0.04 = 4%)。
 
-    公式: kelly_075 = max(0, wr×BB_odds - 1) / (BB_odds - 1) × 0.75 × confidence(n) × sport_discount
+    公式: half_kelly = max(0, wr×BB_odds - 1) / (BB_odds - 1) × 0.50 × confidence(n) × sport_discount
+    职业标准: Half Kelly 是平衡增长与生存的最优解
 
     V4.4: 连续置信度 + 运动级折扣
       n >= 100: confidence = 1.0
@@ -167,7 +168,7 @@ def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
     roi = actual_wr * bb_odds - 1.0
     if roi <= 0:
         return 0.0
-    kelly = roi / (bb_odds - 1.0) * 0.75
+    kelly = roi / (bb_odds - 1.0) * 0.50   # V5: Half Kelly (was 0.75)
     # V4.4: 连续样本量置信度 (替代4级阶梯)
     if n_bets >= 100:
         confidence = 1.0
@@ -177,7 +178,7 @@ def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
         confidence = 0.5 + 0.2 * (n_bets - 10) / 20.0
     else:
         confidence = 0.5  # n<10 仍然 0.5, MIN_N 由调用者控制
-    return min(cap, max(0.0, kelly * confidence * sport_confidence))
+    return min(cap, max(0.0, kelly * confidence * sport_confidence))  # V5: cap=0.04 (Half Kelly)
 
 
 # =====================================================================

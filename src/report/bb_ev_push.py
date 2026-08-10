@@ -1601,9 +1601,9 @@ def _diversify_and_rank(qualified: list) -> list:
     # Kelly 分配（预算耗尽时保留机会，stake=0 仅展示不投注）
     qualified = _calc_kelly_stakes(qualified)
 
-    # V4.5: 单次推送上限 20 条, 按 Kelly 仓位降序取 top
+    # V5: "Bet Everything" — 职业做法: 有edge就上, 不设数量上限
     qualified.sort(key=lambda o: o.get("_stake", 0), reverse=True)
-    qualified = qualified[:20]
+    # Kelly>0 的保留, stake=0 的仅展示不投注 (已在 _calc_kelly_stakes 处理)
 
     return qualified
 
@@ -2131,14 +2131,10 @@ def _save_qualified_fingerprints(qualified: list):
     logger.info("指纹: %d条 (%d场)", len(new_fps), len(match_groups))
 
 
-# 不可结算联赛黑名单 (>=3次尝试, 0%成功率)
+# V5: 不可结算联赛黑名单 — 仅限Pinnacle/BB无数据或盘口结构错配的联赛
+# 不因ESPN不覆盖而拉黑 — 结算不了就标记pending, 不比价才是真损失
 _UNSETTLEABLE_LEAGUES = {
-    "欧足联欧洲联赛-资格赛", "欧足联欧洲会议联赛-资格赛", "欧足联欧洲协会联赛-资格赛",
-    "玻利维亚甲级联赛", "秘鲁甲级联赛", "阿根廷全国联赛", "委内瑞拉超级联赛",
-    "巴西杯", "俄罗斯甲级联赛", "爱尔兰甲级联赛",
-    "非洲女子国家杯 (在摩洛哥)", "非洲女子国家杯",
-    "ATP - 蒙特利尔公开赛", "ITF - W50 克诺克海斯特 女子单打",
-    # V5: NFL季前赛 — FB盘口结构与常规赛不同, 赔率错配高频
+    # 盘口结构错配 (非结算问题)
     "NFL 季前赛", "NFL Pre Season",
 }
 
