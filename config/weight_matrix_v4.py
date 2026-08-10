@@ -1961,13 +1961,15 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
     # 足球/篮球样本充足 → 严；其他运动样本少 → 宽
     if sport_lower in ("football", "basketball"):
         # V5: 推导盘口按赔率差异化 (无直接Pinnacle数据, 低赔率天然低EV)
-        # BTTS/OE: team_total推导, 误差~2-3% → min_ev+1%
-        # DC/DNB: 1X2数学推导, 误差<1% → min_ev不变
-        if sub_market in ("btts", "oe"):
+        # BTTS: team_total推导, 误差~2-3% → min_ev+1%
+        # OE: 50/50结构性市场, BB>fair即+EV → min_ev=1%
+        if sub_market == "oe":
+            base_min_ev = 1.0   # 结构性50/50, 不需要高门槛
+        elif sub_market == "btts":
             if odds < 2.0:
                 base_min_ev = 3.0   # 推导误差补偿+1%
             elif odds < 3.5:
-                base_min_ev = 4.0   # 推导误差补偿+1%
+                base_min_ev = 4.0
             else:
                 base_min_ev = 5.0
         elif sub_market in ("dc", "dnb", "ht_dc"):

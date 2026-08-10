@@ -384,9 +384,19 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "阿根廷乙级曼特波里顿联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "瑞典乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-10T02:44:49.251012+00:00",
+  "updated": "2026-08-10T06:19:19.728526+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
