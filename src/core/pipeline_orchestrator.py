@@ -488,7 +488,7 @@ class PipelineOrchestrator:
         run_incremental(time_window=time_window)
 
     def do_settle(self):
-        """自动结算。"""
+        """自动结算 (原有 + 追踪投注结算)。"""
         from src.monitor.auto_settle import main as settle_main
         old_argv = sys.argv
         sys.argv = ["auto_settle"]
@@ -496,6 +496,19 @@ class PipelineOrchestrator:
             settle_main()
         finally:
             sys.argv = old_argv
+
+        # 追踪投注结算: 所有推送过的投注 → 赛果匹配 → 盈亏计算
+        try:
+            from src.monitor.result_fetcher import settle_pending_bets
+            from src.monitor.bet_tracker import get_pnl_summary
+            result = settle_pending_bets(dry_run=False)
+            if result["settled"] > 0:
+                summary = get_pnl_summary()
+                if summary.get("settled", 0) > 0:
+                    logger.info("📊 追踪盈亏: %d笔 ¥%.0f ROI=%.1f%%",
+                               summary["settled"], summary["total_profit"], summary["roi_pct"])
+        except Exception as e:
+            logger.warning("追踪投注结算失败: %s", e)
 
     def do_daily_report(self):
         """日报推送。"""
