@@ -412,8 +412,23 @@ class PipelineOrchestrator:
         _prev_label = os.environ.get("PUSH_LABEL", "")
         os.environ["PUSH_LABEL"] = "每日定时全量推送"
 
+        # 后台预加载 Pinnacle 联赛结构（与 BB 提取并行，省 10-20s）
+        preload_done = threading.Event()
+        def _preload_pin_leagues():
+            try:
+                from src.scrapers.pinnacle_league_map import refresh_league_structure
+                refresh_league_structure()
+            except Exception as e:
+                logger.warning("联赛结构预加载失败: %s", e)
+            finally:
+                preload_done.set()
+
+        preload_thread = threading.Thread(
+            target=_preload_pin_leagues, daemon=True, name="preload-pin-leagues")
+        preload_thread.start()
+
         try:
-            logger.info("Step 1/3: BB/FB API 提取...")
+            logger.info("Step 1/3: BB/FB API 提取 (联赛结构后台预加载中)...")
             from src.scrapers.bb_api_fetcher import main as fetch
             # bb_api_fetcher.main() 读取 sys.argv，需要临时设置
             old_argv = sys.argv
@@ -424,6 +439,8 @@ class PipelineOrchestrator:
                 sys.argv = old_argv
             logger.info("Step 1/3: 完成")
 
+            # 确保联赛预加载已完成
+            preload_done.wait()
             logger.info("Step 2/3: Pinnacle 对比 (BB+FB合并)...")
             from src.scrapers.bb_vs_pinnacle import main as compare
             old_argv = sys.argv

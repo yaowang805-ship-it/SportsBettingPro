@@ -39,6 +39,7 @@ from src.scrapers.pinnacle_league_map import (
     _match_pin_name, _find_best_league,
     find_pinnacle_league_id, _find_itf_league_ids, find_pinnacle_league_ids,
     discover_new_leagues,
+    refresh_league_structure,
 )
 
 # 从子模块导入 BB 数据提取
@@ -389,7 +390,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         # V4.3 nested: 穿透查找 league info
         from src.scrapers.pinnacle_league_map import lookup_pin_league
         info = lookup_pin_league(all_pin_leagues, pin_id)
-        time.sleep(random.uniform(0.1, 0.4))
+        time.sleep(random.uniform(0.05, 0.15))
         name = info.get('name', pin_id)
         with _fetch_lock:
             print(f"\n获取 [{name}] (ID={pin_id}) 赔率...")
@@ -1701,39 +1702,11 @@ def main():
     force_refresh = "--refresh-leagues" in sys.argv
     if force_refresh:
         print("  🔄 收到 --refresh-leagues 标志，强制刷新联赛结构...")
-    all_pin_leagues = _load_league_structure(force_refresh=force_refresh)
+    all_pin_leagues = refresh_league_structure(force_refresh=force_refresh)
     if not all_pin_leagues:
-        print("  ⚠️  本地无联赛结构数据，从 Pinnacle API 拉取...")
-
-        def _fetch_sport(sid, sname):
-            mu_list = api_get(f"/sports/{sid}/matchups") or []
-            result = {}
-            for mu in mu_list:
-                league = mu.get("league", {})
-                lid = league.get("id")
-                if lid:
-                    result[lid] = {
-                        "name": league.get("name", ""),
-                        "group": league.get("group", ""),
-                        "sport": sname,
-                        "sport_id": sid,
-                        "matchup_count": 1,
-                    }
-            return result
-
-        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-            futures = {executor.submit(_fetch_sport, sid, sname): sname for sid, sname in SPORT_IDS.items()}
-            for future in concurrent.futures.as_completed(futures):
-                sport_leagues = future.result()
-                for lid, info in sport_leagues.items():
-                    if lid in all_pin_leagues:
-                        all_pin_leagues[lid]["matchup_count"] += 1
-                    else:
-                        all_pin_leagues[lid] = info
-        _save_league_structure(all_pin_leagues)
-    else:
-        print(f"  📂 从本地文件加载 Pinnacle 联赛结构 ({len(all_pin_leagues)} 个联赛)")
-    print(f"Pinnacle 联赛总数: {len(all_pin_leagues)}")
+        print("  ⚠️  Pinnacle 联赛结构为空，跳过扫描")
+        return
+    print(f"  📂 Pinnacle 联赛结构: {len(all_pin_leagues)} 个联赛")
 
     compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, save_path=output_path)
 

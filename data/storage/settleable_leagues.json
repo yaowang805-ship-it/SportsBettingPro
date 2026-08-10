@@ -316,7 +316,7 @@
       "success_rate": 0.0
     },
     "爱尔兰甲级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -369,9 +369,19 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "斯洛伐克超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "冰岛超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-09T10:49:50.579938+00:00",
+  "updated": "2026-08-10T01:05:32.153808+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

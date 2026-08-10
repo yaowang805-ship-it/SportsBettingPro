@@ -1803,11 +1803,9 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
             bb_odds = o["bb_odds"]
             ev_pct = o["ev_pct"]
             stake = o["_stake"]
-            # V4.5: 过滤碎单 (<¥30 不显示)
-            if stake < 30:
-                continue
             # 预算耗尽时显示原始 Kelly 投注额（标注"建议"）
-                stake = o["_raw_stake"]
+            if stake < 30:
+                stake = o.get("_raw_stake", stake)
                 stake_note = " (建议)"
             else:
                 stake_note = ""
@@ -2575,6 +2573,14 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
 
         # CLV 追踪：记录每条推送的赔率数据用于收盘线价值分析
         _log_clv(qualified)
+
+        # 投注追踪：每条推送记录完整信息，赛后结算用
+        try:
+            from src.monitor.bet_tracker import record_bets
+            push_label = os.environ.get("PUSH_LABEL", "手动推送")
+            record_bets(qualified, push_label=push_label)
+        except Exception as e:
+            logger.warning("投注追踪记录失败: %s", e)
 
         # 风险报告：蒙特卡洛模拟 + 组合健康检查
         _maybe_send_health_report(qualified, place_bets)

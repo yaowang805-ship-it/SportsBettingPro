@@ -72,7 +72,7 @@ def refresh_league_structure(force_refresh: bool = False):
     """确保 Pinnacle 联赛结构缓存是最新的（线程安全）。
 
     如果缓存存在且未过期，直接返回（毫秒级）。
-    如果缓存不存在/过期/force_refresh，从 Pinnacle API 拉取。
+    如果缓存不存在/过期/force_refresh/低质量(<50条)，从 Pinnacle API 拉取。
 
     设计为可在后台线程中调用 — 多次并发调用只会触发一次 API 刷新。
     Returns:
@@ -81,14 +81,16 @@ def refresh_league_structure(force_refresh: bool = False):
     global _refreshing_flag
     if not force_refresh:
         leagues = _load_league_structure(force_refresh=False)
-        if leagues:
+        if leagues and len(leagues) >= 50:
             return leagues
+        if leagues:
+            print(f"  ⚠️ 联赛缓存仅 {len(leagues)} 条 (<50, 疑似过期)，触发刷新...")
 
     # 需要刷新 — 只让第一个线程执行 API 拉取
     with _refresh_lock:
         if not force_refresh:
             leagues = _load_league_structure(force_refresh=False)
-            if leagues:
+            if leagues and len(leagues) >= 50:
                 return leagues
         if not _refreshing_flag:
             _refreshing_flag = True
