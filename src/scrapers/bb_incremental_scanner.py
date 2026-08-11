@@ -478,10 +478,10 @@ def run_incremental(time_window: str = "all"):
     # 8. 保存新快照 (near/far 各自独立)
     save_snapshot(bb_matches, _current_snap)
 
-    # 9. 推送新机会 (每2小时一次, 防止消息轰炸)
+    # 9. 推送新机会 (V5: 10分钟节流, 匹配5min扫描频率)
     push_ok = True
     _push_throttle_file = DATA_DIR / ".last_push_time"
-    _push_interval = 1800  # 30分钟
+    _push_interval = 600  # V5: 10分钟 (was 30min)
     now_ts = time.time()
     last_push = float(_push_throttle_file.read_text().strip()) if _push_throttle_file.exists() else 0
 
@@ -490,14 +490,14 @@ def run_incremental(time_window: str = "all"):
             print(f"\n📣 新+EV机会 → 运行推送 [{label}]...")
             push_ok = _run_push(label)
             _push_throttle_file.write_text(str(now_ts))
+            # V5 fix: 推送成功后才保存指纹 (防节流跳过丢失)
+            _save_scan_fingerprints(new_result)
         else:
             remaining = int((_push_interval - (now_ts - last_push)) / 60)
-            print(f"\n⏳ 距下次推送还有 {remaining}min (每2小时一批)")
+            print(f"\n⏳ 距下次推送还有 {remaining}min (每10分钟一批)")
     else:
         print("\n📭 无新+EV机会")
-
-    # 推送完成后保存指纹，防止下次扫描重复处理
-    _save_scan_fingerprints(new_result)
+        _save_scan_fingerprints(new_result)  # 无机会也要指纹, 防反复空扫
 
     return new_result
 
