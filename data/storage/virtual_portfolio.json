@@ -1,5 +1,5 @@
 {
-  "balance": 10951.8,
+  "balance": 10751.8,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1374,6 +1374,29 @@
       "commence_time": 1786473000,
       "created_at": "2026-08-11T09:40:06.430041+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_博卡青年_列高列达_平局退款-主",
+      "sport": "football",
+      "league": "南美俱乐部杯",
+      "home_team": "博卡青年",
+      "away_team": "列高列达",
+      "home_cn": "博卡青年",
+      "away_cn": "列高列达",
+      "market": "1x2",
+      "market_type": "平局退款-主",
+      "sub_market": "dnb",
+      "line": "",
+      "odds": 1.16,
+      "stake": 200,
+      "model_prob": 0.8894,
+      "ev_pct": 3.18,
+      "pin_odds": 0,
+      "fair_price": 1.1243,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786485600,
+      "created_at": "2026-08-11T10:06:26.319551+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -8708,8 +8731,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-11",
-    "used": 1227.0,
-    "bets": 26
+    "used": 1427.0,
+    "bets": 27
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
