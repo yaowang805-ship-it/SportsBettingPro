@@ -1121,18 +1121,18 @@ class PipelineOrchestrator:
             os._exit(42)  # 特殊退出码, launchd KeepAlive 会自动重启
 
     def _watchdog(self):
-        """自检看门狗：检测增量扫描是否停滞，Pinnacle 连接是否异常。"""
+        """自检看门狗：检测增量扫描是否停滞，Pinnacle 连接是否异常。V5: 分层扫描, 只看最长的far间隔。"""
         now = time.time()
         if not self._is_in_scan_window(datetime.now()):
-            return  # 非扫描时段不检查
+            return
 
-        # 检查增量扫描是否按时运行（允许 1.5 倍间隔容忍度）
-        incr_elapsed = now - self._last_incremental if self._last_incremental else 0
-        incr_timeout = INCREMENTAL_INTERVAL * 1.5
+        # V5: 使用最长的间隔(far=60min)作为看门狗基准, 允许2x容忍
+        _far_elapsed = now - self._last_inc_far if self._last_inc_far else 0
+        _far_timeout = 3600 * 2  # 120分钟
 
         warnings = []
-        if self._last_incremental and incr_elapsed > incr_timeout:
-            warnings.append(f"增量扫描停滞 {incr_elapsed/60:.0f}分钟(预期{INCREMENTAL_INTERVAL/60:.0f}min)")
+        if self._last_inc_far and _far_elapsed > _far_timeout:
+            warnings.append(f"增量扫描停滞 {_far_elapsed/60:.0f}分钟(预期60min)")
 
         if warnings:
             logger.warning("🐕 看门狗(扫描): %s", "; ".join(warnings))
