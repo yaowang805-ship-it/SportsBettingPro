@@ -71,7 +71,7 @@ MAX_COOKIE_REFRESHES = 3           # 每次扫描最多刷新 3 次 cookie
 _ssl_fail_count = 0  # 全局 SSL 失败计数器（看门狗用）
 
 _last_req_time = 0.0
-_MIN_REQUEST_INTERVAL = 0.5        # V5: 0.25→0.5s 防 Cloudflare 风控
+_MIN_REQUEST_INTERVAL = 0.35       # V5: 0.5→0.35s (3 workers × ~8 req/s, 封禁线16)
 _REQUEST_COUNT = 0                  # V5: 扫描内请求计数器
 _SCAN_PAUSE_UNTIL = 0.0            # V5: Cloudflare 封禁后自动暂停
 _REQUEST_BURST_WINDOW = 10         # V5: 10秒窗口

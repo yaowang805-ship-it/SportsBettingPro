@@ -1048,8 +1048,8 @@ class PipelineOrchestrator:
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
-            # 三层独立定时器
-            for tw, interval, label in [("urgent", 300, "临场<6h"), ("near", 900, "中程6-24h"), ("far", 3600, "远端24-72h")]:
+            # V5: 三层独立定时器 (urgent 3min / near 10min / far 60min)
+            for tw, interval, label in [("urgent", 180, "临场<6h"), ("near", 600, "中程6-24h"), ("far", 3600, "远端24-72h")]:
                 last_key = f"_last_inc_{tw}"
                 last_val = getattr(self, last_key, None)
                 if last_val is None:

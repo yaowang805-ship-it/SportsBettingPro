@@ -381,7 +381,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     print(f"\n  待获取赔率的联赛: {len(pin_ids_to_fetch)} 个")
 
     # 并行获取（4 个线程，短延时避免 Pinnacle 限流）
-    MAX_WORKERS = 2  # V5: 4→2, 配合 0.5s rate limit = 4 req/s (防 Cloudflare 封IP)
+    MAX_WORKERS = 3  # V5: 2→3, 配合 0.35s rate limit = ~8 req/s (安全, 封禁线16)
     all_pin_matches = []
     _fetch_lock = __import__('threading').Lock()
     _fetch_errors = []  # V5: 跟踪获取失败的联赛
@@ -390,7 +390,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         # V4.3 nested: 穿透查找 league info
         from src.scrapers.pinnacle_league_map import lookup_pin_league
         info = lookup_pin_league(all_pin_leagues, pin_id)
-        time.sleep(random.uniform(0.05, 0.15))
+        time.sleep(random.uniform(0.03, 0.10))  # V5: reduced further for 3min scans
         name = info.get('name', pin_id)
         with _fetch_lock:
             print(f"\n获取 [{name}] (ID={pin_id}) 赔率...")
