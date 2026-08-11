@@ -621,8 +621,8 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                 # V5: 获取当前联赛的 Pinnacle 候选队名列表
                 _pin_candidates = set()
                 _bb_league = bb.get("league", "")
-                if _bb_league in pin_by_bb_league:
-                    for _pm in pin_by_bb_league[_bb_league]:
+                if _bb_league in pin_matches_by_league:
+                    for _pm in pin_matches_by_league[_bb_league]:
                         _pin_candidates.add(_pm.get("home", ""))
                         _pin_candidates.add(_pm.get("away", ""))
                 tn_score = team_name_score(
