@@ -1330,11 +1330,9 @@ def _collect_opportunities(match, market_key):
         if sub_market == "htft" and ev > 30:
             continue
 
-        # MMA/拳击保护: UFC/大联盟放行, 小赛事封杀
-        if sport in ("mma", "boxing") and ev > 15 and any("溢价异常高" in f for f in flags):
-            is_major = any(kw in (league or "").upper() for kw in ("UFC", "BELLATOR", "PFL", "ONE"))
-            if not is_major:
-                continue
+        # V5: MMA/Boxing 全封 — 中文译名到英文的映射不存在, 所有匹配都是假阳性
+        if sport in ("mma", "boxing"):
+            continue
         # V5: ITF/Challenger网球 + 溢价异常高 → 球员名错配高频, 直接拒绝
         if sport == "tennis" and ev > 20 and any("溢价异常高" in f for f in flags):
             is_low_tier = any(kw in (league or "").lower() for kw in ("itf", "challenger", "w15", "m15", "w25", "m25", "w35", "w50", "w75"))
