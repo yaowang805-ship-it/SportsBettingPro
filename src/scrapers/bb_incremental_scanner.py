@@ -389,16 +389,21 @@ def run_incremental(time_window: str = "all"):
             save_snapshot(bb_matches, _current_snap)
             return
 
-    # 4a. BB侧: 本地快照对比 (毫秒)
-    changed_ids, new_ids, bb_changed_leagues = detect_changes(bb_matches, snapshot)
-
-    # 4b. Pin侧: 拉取活跃联赛数据→与上次Pin快照对比 (~25s)
+    # V5: Pinnacle变动驱动 — Pin是信号源, Pin变了才拉BB
+    # 4a. Pin侧: 拉取活跃联赛数据→与上次Pin快照对比 (~25s)
     active_leagues = {m.get("league", "") for m in bb_matches if m.get("league")}
     pin_changed_leagues = _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window)
 
-    # 4c. 合并: BB变 ∪ Pin变 = 需要对比的联赛
-    all_changed = bb_changed_leagues | pin_changed_leagues
-    total_changed = len(changed_ids) + len(new_ids) + len(pin_changed_leagues)
+    # 4b. BB侧: 本地快照对比 (毫秒) — 辅助确认
+    changed_ids, new_ids, bb_changed_leagues = detect_changes(bb_matches, snapshot)
+
+    # 4c. Pin变优先: Pin变了 → 必须对比; BB新比赛 → 补充对比
+    all_changed = pin_changed_leagues | bb_changed_leagues
+    total_changed = len(pin_changed_leagues) + len(bb_changed_leagues)
+    if pin_changed_leagues:
+        print(f"  🔔 Pin变动: {len(pin_changed_leagues)}个联赛 → 立即对比")
+    if not pin_changed_leagues and bb_changed_leagues:
+        print(f"  📝 BB变动: {len(bb_changed_leagues)}个联赛 (Pin未动)")
 
     if total_changed == 0:
         # 即无变动，也要检查是否需要强制刷新：

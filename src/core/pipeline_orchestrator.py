@@ -122,6 +122,9 @@ class PipelineOrchestrator:
         self._active_tasks: set[str] = set()
         self._last_run: dict[str, date] = {}          # 定时任务 → 最后执行日期
         self._last_incremental: Optional[float] = None
+        self._last_inc_urgent: Optional[float] = None   # 临场<6h
+        self._last_inc_near: Optional[float] = None      # 中程6-24h
+        self._last_inc_far: Optional[float] = None       # 远端24-72h
         self._last_scan_success: float = 0             # 最后一次成功完成的时间戳
         self._scan_failure_count: int = 0              # 连续失败计数
         self._alert_cooldown: dict[str, float] = {}    # 告警冷却
@@ -1040,16 +1043,21 @@ class PipelineOrchestrator:
             self._run_task(name, method, background=is_bg, **kwargs)
             self._last_run[name] = now.date()
 
-        # 2) 增量扫描 — 统一15分钟, 0-72h全量 (BB+Pin同时拉, 指纹去重防重复)
+        # 2) V5 分层增量扫描 — 临场5min/中程15min/远端60min (Pinnacle变动驱动)
         if self._is_in_scan_window(now):
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
-            if self._last_incremental is None:
-                self._last_incremental = time.time()
-            if (now - datetime.fromtimestamp(self._last_incremental)).total_seconds() >= _jitter(INCREMENTAL_INTERVAL):
-                self._last_incremental = time.time()
-                self._run_task("incremental", self.do_incremental, time_window="all")
+            # 三层独立定时器
+            for tw, interval, label in [("urgent", 300, "临场<6h"), ("near", 900, "中程6-24h"), ("far", 3600, "远端24-72h")]:
+                last_key = f"_last_inc_{tw}"
+                last_val = getattr(self, last_key, None)
+                if last_val is None:
+                    setattr(self, last_key, time.time())
+                    last_val = time.time()
+                if (now - datetime.fromtimestamp(last_val)).total_seconds() >= _jitter(interval):
+                    setattr(self, last_key, time.time())
+                    self._run_task(f"incremental_{tw}", self.do_incremental, time_window=tw)
 
         # 3) 自检看门狗
         self._watchdog()
