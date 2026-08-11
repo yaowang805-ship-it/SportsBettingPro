@@ -2273,6 +2273,7 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
     import json as _json, fcntl as _fcntl, os as _os
 
     pushed_file = DATA_DIR / "pushed_opportunities.json"
+    fp_file = FINGERPRINT_FILE
     lock_file = DATA_DIR / ".push_dedup.lock"
 
     # 文件锁
@@ -2280,12 +2281,16 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
     try: _fcntl.flock(_lock_fd.fileno(), _fcntl.LOCK_EX | _fcntl.LOCK_NB)
     except BlockingIOError: _lock_fd.close(); return qualified
 
-    # 读现有指纹
+    # 读现有指纹 (V5: 合并两个去重文件)
     last_pushed = {}
-    if pushed_file.exists():
-        try: last_pushed = _json.loads(pushed_file.read_text())
-        except: pass
-    # 去掉_version键(如果有)
+    for src_file in (pushed_file, fp_file):
+        if src_file.exists():
+            try:
+                data = _json.loads(src_file.read_text())
+                for k, v in data.items():
+                    if not k.startswith("_"):
+                        last_pushed[k] = v
+            except: pass
     last_pushed.pop("_version", None)
 
     now_epoch = time.time()
@@ -2330,15 +2335,16 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
     # 清理: 开赛超过24h的指纹删除
     cleaned = {k: v for k, v in last_pushed.items()
                if isinstance(v, dict) and v.get("kickoff", now_epoch + 86400) > now_epoch - 86400}
-    # 原子写入
-    tmp = pushed_file.with_suffix('.tmp')
-    try:
-        with open(tmp, 'w') as f:
-            _json.dump(cleaned, f, ensure_ascii=False)
-            f.flush(); _os.fsync(f.fileno())
-        _os.replace(tmp, pushed_file)
-    except Exception as e:
-        logger.warning("指纹写入失败: %s", e)
+    # 原子写入两个去重文件
+    for dst_file in (pushed_file, fp_file):
+        tmp = dst_file.with_suffix('.tmp')
+        try:
+            with open(tmp, 'w') as f:
+                _json.dump(cleaned, f, ensure_ascii=False)
+                f.flush(); _os.fsync(f.fileno())
+            _os.replace(tmp, dst_file)
+        except (OSError, Exception) as e:
+            logger.warning("指纹写入失败: %s", e)
 
     if skipped: logger.info("去重: 跳过%d条", skipped)
     if re_pushed: logger.info("重推: %d条", re_pushed)

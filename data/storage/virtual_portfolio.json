@@ -23,7 +23,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786206600,
       "created_at": "2026-08-08T06:05:53.497336+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_1x2_阿蒂斯布尔诺_奥洛穆茨_双边进球-否",
@@ -69,7 +71,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786183200,
       "created_at": "2026-08-08T07:34:24.210745+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_over_under_戈特尼_卢雷亚_小球(325)",
@@ -92,7 +96,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786186800,
       "created_at": "2026-08-08T07:34:24.210817+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_over_under_卡托维兹斯巴达_斯迪隆戈佐_大球(25)",
@@ -115,7 +121,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786183200,
       "created_at": "2026-08-08T07:34:24.210866+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_over_under_阪神老虎_名古屋中日龙_大分(65)",
@@ -138,7 +146,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786179600,
       "created_at": "2026-08-08T07:34:24.210911+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_1x2_南特_红星_双边进球-是",
@@ -161,7 +171,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786214700,
       "created_at": "2026-08-08T07:34:24.210952+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_over_under_奧雷布洛西里安斯卡_BK前进_大球(275)",
@@ -184,7 +196,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786186800,
       "created_at": "2026-08-08T07:34:24.210992+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_handicap_瑞迪_希明_上半场让球主胜(0)",
@@ -207,7 +221,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786186800,
       "created_at": "2026-08-08T07:34:24.211031+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_over_under_瑞迪_希明_上半场大球(15)",
@@ -230,7 +246,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786186800,
       "created_at": "2026-08-08T07:34:24.211067+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_over_under_霍布罗_AB格莱萨克瑟_上半场大球(10)",
@@ -253,7 +271,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786197600,
       "created_at": "2026-08-08T10:29:26.448118+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_handicap_阿里亚纳_FC_特雷勒堡_上半场让球客胜(0)",
@@ -276,7 +296,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786186800,
       "created_at": "2026-08-08T10:29:26.448261+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_handicap_AIK斯托福斯_于默奥FF_让球客胜(-05)",
@@ -299,7 +321,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786197600,
       "created_at": "2026-08-08T12:08:06.205792+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_over_under_萨米恩托_埃斯科瓦尔_上半场小球(075)",
@@ -322,7 +346,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786215600,
       "created_at": "2026-08-08T12:08:06.205989+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_over_under_萨米恩托_埃斯科瓦尔_小球(20)",
@@ -345,7 +371,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786215600,
       "created_at": "2026-08-08T12:18:39.529306+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_over_under_SK阿尔蒂斯布杰诺_奥洛穆茨_上半场大球(10)",
@@ -437,7 +465,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786197600,
       "created_at": "2026-08-08T14:06:55.491816+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_1x2_波城_阿讷西_和局",
@@ -460,7 +490,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786214700,
       "created_at": "2026-08-08T14:06:55.491858+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_over_under_图库曼中心_厄尔尼诺_上半场小球(075)",
@@ -483,7 +515,9 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786215600,
       "created_at": "2026-08-08T14:06:55.491900+00:00",
-      "track_only": false
+      "track_only": false,
+      "status": "voided",
+      "result": "void"
     },
     {
       "id": "bb_vs_pin_handicap_塔林利瓦迪亚_诺米联_上半场让球主胜(-05/1)",
