@@ -1143,30 +1143,22 @@ class PipelineOrchestrator:
         else:
             self._scan_failure_count = 0
 
-        # 2) 结算看门狗：检测超时未结算的投注
+        # 2) 结算看门狗：检测 tracked_bets.json 中超时未结算的投注
         try:
-            pf_path = SRC_DIR / "data" / "storage" / "virtual_portfolio.json"
-            if pf_path.exists():
-                pf = json.loads(pf_path.read_text())
-                pending = pf.get("pending_bets", [])
+            tb_path = SRC_DIR / "data" / "storage" / "tracked_bets.json"
+            if tb_path.exists():
+                tb = json.loads(tb_path.read_text())
+                pending = [b for b in tb.get("bets", []) if b.get("status") == "pending"]
                 now_ts = time.time()
-                stale_48h = sum(1 for b in pending if b.get("commence_time", 0) < now_ts - 172800)
-                stale_24h = sum(1 for b in pending if 86400 < (now_ts - b.get("commence_time", 0)) <= 172800)
-                if stale_48h > 0:
-                    # V4.5: 日志也加冷却 (30min), 防每秒刷屏
-                    last_log = self._alert_cooldown.get("settle_watchdog_log", 0)
-                    if time.time() - last_log > 1800:
-                        logger.warning("🐕 看门狗(结算): %d笔超48h未结算!", stale_48h)
-                        self._alert_cooldown["settle_watchdog_log"] = time.time()
-                    # 告警冷却: 每8小时只发一次 (防重启重置)
+                stale_48h = sum(1 for b in pending if b.get("match_epoch", 0) > 0 and (now_ts - b["match_epoch"]) > 172800)
+                if stale_48h > 5:  # V5: 只在新系统>5笔超时时告警
                     last_alert = self._alert_cooldown.get("settle_watchdog", 0)
                     if time.time() - last_alert > 28800:
                         self._send_alert("settle_watchdog", f"{stale_48h}笔投注超48小时未结算")
                         self._alert_cooldown["settle_watchdog"] = time.time()
-                elif stale_24h > 3:
                     last_log = self._alert_cooldown.get("settle_watchdog_log", 0)
                     if time.time() - last_log > 1800:
-                        logger.warning("🐕 看门狗(结算): %d笔超24h未结算", stale_24h)
+                        logger.warning("🐕 看门狗(结算): %d笔超48h未结算!", stale_48h)
                         self._alert_cooldown["settle_watchdog_log"] = time.time()
         except Exception:
             pass
