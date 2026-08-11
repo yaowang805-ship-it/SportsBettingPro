@@ -1347,9 +1347,6 @@ def _collect_opportunities(match, market_key):
             if dev > 0.25:
                 continue
 
-        # 赔率上限过滤: V3 的 get_odds_cap 已在上面处理
-            continue
-
         market_w = _get_market_weight(sub_market, match.get("sport", ""))
 
         # 加权 EV：原始 EV × 市场质量权重
