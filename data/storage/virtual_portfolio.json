@@ -1,5 +1,5 @@
 {
-  "balance": 10623.8,
+  "balance": 10352.8,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1442,6 +1442,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786494600,
       "created_at": "2026-08-11T10:19:34.294185+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_奈梅亨_奥林匹亚科斯_双边进球-是",
+      "sport": "football",
+      "league": "欧洲冠军联赛-资格赛",
+      "home_team": "奈梅亨",
+      "away_team": "奥林匹亚科斯",
+      "home_cn": "奈梅亨",
+      "away_cn": "奥林匹亚科斯",
+      "market": "1x2",
+      "market_type": "双边进球-是",
+      "sub_market": "btts",
+      "line": "",
+      "odds": 1.69,
+      "stake": 150,
+      "model_prob": 0.6107,
+      "ev_pct": 3.21,
+      "pin_odds": 1.5556,
+      "fair_price": 1.6375,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786469400,
+      "created_at": "2026-08-11T10:44:31.850052+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_印第安纳狂热_(女)_纽约自由人_(女)_小分(1915)",
+      "sport": "basketball",
+      "league": "WNBA 美国职业女子篮球联赛",
+      "home_team": "印第安纳狂热 (女)",
+      "away_team": "纽约自由人 (女)",
+      "home_cn": "印第安纳狂热 (女)",
+      "away_cn": "纽约自由人 (女)",
+      "market": "over_under",
+      "market_type": "小分(191.5)",
+      "sub_market": "ou",
+      "line": "",
+      "odds": 2.19,
+      "stake": 121,
+      "model_prob": 0.4694,
+      "ev_pct": 2.79,
+      "pin_odds": 2.0,
+      "fair_price": 2.1305,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786491000,
+      "created_at": "2026-08-11T10:44:31.850103+00:00",
       "track_only": false
     }
   ],
@@ -8777,8 +8823,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-11",
-    "used": 1555.0,
-    "bets": 29
+    "used": 1826.0,
+    "bets": 31
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
