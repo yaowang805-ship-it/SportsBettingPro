@@ -65,6 +65,10 @@ def _make_bet_id(rec: dict) -> str:
 
 # ── 公开 API ──
 
+def update_clv_for_pending():
+    """V5 placeholder: CLV tracking moved to src/monitor/clv_collector."""
+    return 0
+
 def auto_place_bets(rec_list: list, reset_pending: bool = False):
     with _portfolio_lock():
         state = _load_state()
