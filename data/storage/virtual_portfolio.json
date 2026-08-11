@@ -1,30 +1,7 @@
 {
-  "balance": 9297.8,
+  "balance": 9425.8,
   "initial_bankroll": 10000,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_奥特格宁兰二队_斯达约珀兰_客胜",
-      "sport": "football",
-      "league": "挪威丙级联赛",
-      "home_team": "奥特格宁兰二队",
-      "away_team": "斯达约珀兰",
-      "home_cn": "奥特格宁兰二队",
-      "away_cn": "斯达约珀兰",
-      "market": "1x2",
-      "market_type": "客胜",
-      "sub_market": "1x2",
-      "line": "",
-      "odds": 4.81,
-      "stake": 128,
-      "model_prob": 0.2732,
-      "ev_pct": 31.42,
-      "pin_odds": 3.25,
-      "fair_price": 3.6599,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1786190400,
-      "created_at": "2026-08-08T01:37:39.093941+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_奥特格宁兰二队_斯达约珀兰_双重机会-和局/客",
       "sport": "football",
@@ -1587,6 +1564,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786498200,
       "created_at": "2026-08-10T23:09:46.981848+00:00",
+      "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_里昂_布拉格斯巴达_客胜",
+      "sport": "football",
+      "league": "欧洲冠军联赛-资格赛",
+      "home_team": "里昂",
+      "away_team": "布拉格斯巴达",
+      "home_cn": "里昂",
+      "away_cn": "布拉格斯巴达",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 7.3,
+      "stake": 26,
+      "model_prob": 0.146,
+      "ev_pct": 6.58,
+      "pin_odds": 6.44,
+      "fair_price": 6.8494,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786474800,
+      "created_at": "2026-08-11T02:08:33.729882+00:00",
       "track_only": true
     }
   ],
@@ -8738,12 +8738,27 @@
       "home_cn": "阿伦达尔",
       "away_cn": "扑斯",
       "market_type": "上半场让球主胜(-0/0.5)"
+    },
+    {
+      "id": "bb_vs_pin_1x2_奥特格宁兰二队_斯达约珀兰_客胜",
+      "match": "128¥ @ 4.81 (超时作废)",
+      "date": "2026-08-11T02:00:11.516616+00:00",
+      "stake": 128,
+      "odds": 4.81,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "挪威丙级联赛",
+      "sport": "football",
+      "home_cn": "奥特格宁兰二队",
+      "away_cn": "斯达约珀兰",
+      "market_type": "客胜"
     }
   ],
   "daily_budget": {
     "date": "2026-08-11",
     "used": 1227.0,
-    "bets": 23
+    "bets": 24
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
