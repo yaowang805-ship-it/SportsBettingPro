@@ -160,7 +160,7 @@ def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
       n >= 100: confidence = 1.0
       n >= 30:  confidence = 0.7 + 0.3×(n-30)/70  (线性插值 0.70→1.0)
       n >= 10:  confidence = 0.5 + 0.2×(n-10)/20  (线性插值 0.50→0.70)
-      sport_confidence: NFL=0.75, NHL=0.65 (数据源非Pinnacle), 默认1.0
+      sport_confidence: NFL=0.75, NHL=0.75 (V5: 0.65→0.75, SBR 14K≥NFL 3K), 默认1.0
     """
     if actual_wr <= 0 or avg_odds <= 1.01:
         return 0.0
@@ -1781,17 +1781,17 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             data = NHL_TOTAL.get(idx) or NHL_TOTAL.get(str(idx))
             if data and isinstance(data, (list, tuple)) and len(data) >= 2 and data[1] >= 200:
                 wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
-                return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.65) * _settlement_multiplier(league)
+                return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.75) * _settlement_multiplier(league)
         if sub_market in ("hc", "handicap") and "NHL_SPREAD" in dir():
             data = NHL_SPREAD.get(idx) or NHL_SPREAD.get(str(idx))
             if data and isinstance(data, (list, tuple)) and len(data) >= 2 and data[1] >= 200:
                 wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
-                return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.65) * _settlement_multiplier(league)
+                return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.75) * _settlement_multiplier(league)
         # ML fallback
         data = NHL_DATA.get(idx)
         if data and data[2] >= 50:
             wr, avg_o, n = data
-            stake = kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.65)
+            stake = kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.75)
             if sub_market in ("ou", "over_under"): stake *= 0.75
             elif sub_market in ("hc", "handicap"): stake *= 0.85
             return stake * _settlement_multiplier(league)
@@ -1986,10 +1986,12 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
             elif odds < 3.5:
                 base_min_ev = 3.0
             else:
-                base_min_ev = 5.0
-        # V5: HC 让球也是低赔率盘口, 从5%降到3%
+                base_min_ev = 4.0   # V5: 5%→4% (high odds relaxation)
+        # V5: HC低赔率3%, OU有Pin数据4%
         elif sub_market in ("hc", "handicap"):
             base_min_ev = 3.0
+        elif sub_market in ("ou", "over_under"):
+            base_min_ev = 4.0   # V5: 5%→4% (median EV=4.4%, Pin ROI=-3.6%)
         elif pin_roi < -0.03:
             base_min_ev = 5.0
         else:

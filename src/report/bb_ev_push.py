@@ -1330,9 +1330,16 @@ def _collect_opportunities(match, market_key):
         if sub_market == "htft" and ev > 30:
             continue
 
-        # MMA/拳击 + 高EV标志 → 仍封杀（队名映射错误率确实极高，V4已屏蔽但兜底）
+        # MMA/拳击保护: UFC/大联盟放行, 小赛事封杀
         if sport in ("mma", "boxing") and ev > 15 and any("溢价异常高" in f for f in flags):
-            continue
+            is_major = any(kw in (league or "").upper() for kw in ("UFC", "BELLATOR", "PFL", "ONE"))
+            if not is_major:
+                continue
+        # V5: ITF/Challenger网球 + 溢价异常高 → 球员名错配高频, 直接拒绝
+        if sport == "tennis" and ev > 20 and any("溢价异常高" in f for f in flags):
+            is_low_tier = any(kw in (league or "").lower() for kw in ("itf", "challenger", "w15", "m15", "w25", "m25", "w35", "w50", "w75"))
+            if is_low_tier:
+                continue
 
         # MMA/拳击: BB 与 Pinnacle 赔率偏差 >25% → 映射错误
         if sport in ("mma", "boxing") and pin_odds > 0:
@@ -1536,8 +1543,10 @@ def _read_comparison_file(path):
         if match_score < min_score:
             continue
         # 球员冲突 + 时间匹配 → 过期数据，直接跳过整场比赛
-        # V4.5: 网球选手自然打多轮, 跳过此检查
         flags = match.get("flags", [])
+        # V5: 网球ITF低级别 + 球员冲突 → 肯定是错配, 直接跳过
+        if sport == "tennis" and any("球员冲突" in f for f in flags) and any("溢价异常高" in f for f in flags):
+            continue
         if sport != "tennis" and match_type == "time" and any("球员冲突" in f for f in flags):
             continue
         for mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"):
