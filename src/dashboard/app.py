@@ -17,7 +17,7 @@ from src.dashboard.pages import (
     overview, recommendations, portfolio, model_performance,
     arbitrage, clv_analysis,
     line_movement, power_ratings, system_health,
-    model_interpret, calibration, prediction_log,
+    model_interpret, calibration, prediction_log, v5_overview,
     odds_comparison, data_freshness, bet_search,
     settlement_report, backtest_report, paper_trading,
 )
@@ -30,6 +30,7 @@ st.set_page_config(
 
 # ── 侧边栏导航 ──
 PAGES = {
+    "🟢 V5 实时": v5_overview,
     "📊 总览": overview,
     "💰 投资组合": portfolio,
     "📜 模拟交易": paper_trading,
