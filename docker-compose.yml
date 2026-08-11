@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: sbp-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  orchestrator:
+    build: .
+    container_name: sbp-orchestrator
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./config:/app/config
+      - ./src:/app/src
+    restart: unless-stopped
+    command: python -m src.core.pipeline_orchestrator
+
+  health-checker:
+    build: .
+    container_name: sbp-health
+    depends_on:
+      - redis
+      - orchestrator
+    environment:
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+    command: python -m src.monitor.health_checker --push
+    # Run every 4 hours
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+
+volumes:
+  redis_data:
