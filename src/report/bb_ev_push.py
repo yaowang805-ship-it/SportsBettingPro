@@ -2258,14 +2258,12 @@ def _audit_log(action, key, opp, reason=""):
         pass  # 审计日志失败不影响推送
 
 
-def _filter_pushed(qualified: list) -> list:
-    """去重：一条机会推过一次就不再推送，除非溢价涨≥2%。
+def _filter_pushed(qualified: list, time_window: str = "") -> list:
+    """去重：一条机会推过一次就不再推送，除非溢价涨≥阈值。
 
-    规则极简，防崩：
-    1. key = sport|league|home|away|designation|sub_market|line|epoch[:10]
-    2. 新key → PUSHED; 已有key → SKIPPED (除非premium+≥2% → REPUSH)
-    3. 指纹永不过期(靠kickoff自清理: 开赛后自动作废)
+    V5: 临场<6h阈值1%, 中程/远端2%
     """
+    _threshold = 1.0 if time_window == "urgent" else 2.0
     import json as _json, fcntl as _fcntl, os as _os
 
     pushed_file = DATA_DIR / "pushed_opportunities.json"
@@ -2315,7 +2313,7 @@ def _filter_pushed(qualified: list) -> list:
         new_premium = ev_now
         premium_delta = new_premium - old_premium
 
-        if old_fair > 0 and premium_delta >= 2.0:
+        if old_fair > 0 and premium_delta >= _threshold:
             re_pushed += 1
             result.append(o)
             _audit_log("REPUSH", key, o, f"premium+{premium_delta:.1f}%")
@@ -2528,8 +2526,10 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
         s = o.get("sport", "unknown")
         pre_dedup_counts[s] = pre_dedup_counts.get(s, 0) + 1
 
+    # V5: 临场<6h去重阈值1%, 中程/远端2%
+    _is_urgent = incremental and label and ("<6h" in label or "临场" in label or "urgent" in label.lower())
     if not skip_dedup:
-        qualified = _filter_pushed(qualified)
+        qualified = _filter_pushed(qualified, time_window="urgent" if _is_urgent else "")
     if not qualified:
         logger.info("所有机会均已推送过，跳过")
         return
