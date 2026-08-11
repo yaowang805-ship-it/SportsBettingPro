@@ -1296,6 +1296,9 @@ def _collect_opportunities(match, market_key):
         # V4 的 get_min_ev 基于 Pinnacle 107K场数据
         from config.weight_matrix_v4 import get_min_ev
         v3_min_ev = get_min_ev(match.get("sport", ""), league, sub_market, bb_odds)
+        # V5: FB独有机会降门槛 — FB赔率比BB更接近Pin, edge天然低, 含金量更高
+        if price_source == "FB" and not platform_sources:
+            v3_min_ev = max(1.0, v3_min_ev * 0.6)  # 降到60%
         if ev < v3_min_ev:
             continue
 
@@ -1583,11 +1586,10 @@ def _diversify_and_rank(qualified: list) -> list:
             selected.append(o)
             selected_ids.add(id(o))
 
-    # --- 第三轮：按 score 填满剩余 ---
+    # --- 第三轮：V5 Bet Everything — 有edge就上, 不限数量 ---
     remaining = [o for o in qualified if id(o) not in selected_ids]
     remaining.sort(key=lambda o: (o.get("_tier", 3), -o["_score"]))
-    max_remaining = MAX_OPPORTUNITIES - len(selected)
-    selected.extend(remaining[:max_remaining])
+    selected.extend(remaining)  # V5: no cap
     qualified = selected
 
     # 最终展示排序：按运动 → Tier → 联赛名 → 开赛时间（同联赛紧挨着）
