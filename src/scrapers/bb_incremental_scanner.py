@@ -478,26 +478,19 @@ def run_incremental(time_window: str = "all"):
     # 8. 保存新快照 (near/far 各自独立)
     save_snapshot(bb_matches, _current_snap)
 
-    # 9. 推送新机会 (V5: 10分钟节流, 匹配5min扫描频率)
+    # 9. 推送新机会 (V5: 扫到就推, 扫描频次本身就是节流)
     push_ok = True
     _push_throttle_file = DATA_DIR / ".last_push_time"
-    _push_interval = 600  # V5: 10分钟 (was 30min)
-    now_ts = time.time()
-    last_push = float(_push_throttle_file.read_text().strip()) if _push_throttle_file.exists() else 0
 
     if new_result.get("details") or fb_had_new:
-        if now_ts - last_push >= _push_interval:
-            print(f"\n📣 新+EV机会 → 运行推送 [{label}]...")
-            push_ok = _run_push(label)
-            _push_throttle_file.write_text(str(now_ts))
-            # V5 fix: 推送成功后才保存指纹 (防节流跳过丢失)
-            _save_scan_fingerprints(new_result)
-        else:
-            remaining = int((_push_interval - (now_ts - last_push)) / 60)
-            print(f"\n⏳ 距下次推送还有 {remaining}min (每10分钟一批)")
+        # 聪明钱信号已清除节流; 直接推
+        print(f"\n📣 新+EV机会 → 运行推送 [{label}]...")
+        push_ok = _run_push(label)
+        _push_throttle_file.write_text(str(time.time()))
+        _save_scan_fingerprints(new_result)
     else:
         print("\n📭 无新+EV机会")
-        _save_scan_fingerprints(new_result)  # 无机会也要指纹, 防反复空扫
+        _save_scan_fingerprints(new_result)
 
     return new_result
 
