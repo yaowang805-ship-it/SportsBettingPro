@@ -1,5 +1,5 @@
 {
-  "balance": 10751.8,
+  "balance": 10623.8,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1396,6 +1396,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786485600,
       "created_at": "2026-08-11T10:06:26.319551+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_弗鲁米嫩塞RJ_门多萨独立_上半场客胜",
+      "sport": "football",
+      "league": "南美解放者杯",
+      "home_team": "弗鲁米嫩塞RJ",
+      "away_team": "门多萨独立",
+      "home_cn": "弗鲁米嫩塞RJ",
+      "away_cn": "门多萨独立",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 7.4,
+      "stake": 64,
+      "model_prob": 0.1625,
+      "ev_pct": 20.22,
+      "pin_odds": 5.84,
+      "fair_price": 6.1554,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786485600,
+      "created_at": "2026-08-11T10:19:34.294137+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_拉普拉塔大学生_智利天主大学_上半场客胜",
+      "sport": "football",
+      "league": "南美解放者杯",
+      "home_team": "拉普拉塔大学生",
+      "away_team": "智利天主大学",
+      "home_cn": "拉普拉塔大学生",
+      "away_cn": "智利天主大学",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 8.4,
+      "stake": 64,
+      "model_prob": 0.1469,
+      "ev_pct": 23.43,
+      "pin_odds": 6.46,
+      "fair_price": 6.8054,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786494600,
+      "created_at": "2026-08-11T10:19:34.294185+00:00",
       "track_only": false
     }
   ],
@@ -8731,8 +8777,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-11",
-    "used": 1427.0,
-    "bets": 27
+    "used": 1555.0,
+    "bets": 29
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
