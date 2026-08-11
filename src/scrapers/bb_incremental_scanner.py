@@ -409,10 +409,16 @@ def run_incremental(time_window: str = "all"):
     if pin_changed_leagues:
         print(f"  🔔 Pin变动: {len(pin_changed_leagues)}个联赛 → 立即对比")
     if pin_significant:
-        print(f"  🚨 聪明钱信号: {len(pin_significant)}个联赛Pin大幅变动 → 立即推送!")
-        # 对比后立即推送, 不等30分钟节流
-        _push_throttle_file = DATA_DIR / ".last_push_time"
-        _push_throttle_file.write_text("0")  # 清除节流, 允许立即推
+        # V5: 聪明钱信号防抖 — 5分钟内最多触发一次
+        _smart_money_file = DATA_DIR / ".last_smart_money_push"
+        _last_smart = float(_smart_money_file.read_text().strip()) if _smart_money_file.exists() else 0
+        if time.time() - _last_smart > 300:
+            print(f"  🚨 聪明钱信号: {len(pin_significant)}个联赛Pin大幅变动 → 立即推送!")
+            _smart_money_file.write_text(str(time.time()))
+            _push_throttle_file = DATA_DIR / ".last_push_time"
+            _push_throttle_file.write_text("0")  # 清除节流
+        else:
+            print(f"  🔔 Pin变动: {len(pin_significant)}个联赛 (上次聪明钱推送{time.time()-_last_smart:.0f}s前, 冷却中)")
     if not pin_changed_leagues and bb_changed_leagues:
         print(f"  📝 BB变动: {len(bb_changed_leagues)}个联赛 (Pin未动)")
 
