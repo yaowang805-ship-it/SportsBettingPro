@@ -319,7 +319,13 @@ def collect():
     logger.info("CLV 采集开始...")
 
     entries = _load_pending_entries()
-    logger.info("pending 记录: %d 条", len(entries))
+    total = len(entries)
+
+    # V5: 统计epoch质量
+    valid_epoch = sum(1 for e in entries if int(e.get("match_epoch", 0) or 0) > 100000)
+    no_epoch = sum(1 for e in entries if not e.get("match_epoch") or int(e.get("match_epoch", 0) or 0) == 0)
+    bad_epoch = total - valid_epoch - no_epoch
+    logger.info("pending: %d条 (有效epoch:%d, 无epoch:%d, 异常:%d)", total, valid_epoch, no_epoch, bad_epoch)
 
     if not entries:
         logger.info("无 pending 记录，跳过")

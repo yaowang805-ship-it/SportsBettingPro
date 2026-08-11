@@ -528,7 +528,7 @@ def _log_clv(opps: list):
                 o.get("ev_pct", 0),
                 o.get("_stake", 0),
                 o.get("_tier", 0),
-                o.get("_pin_epoch", ""),
+                o.get("_pin_epoch", 0) or 0,  # V5 fix: empty → 0, not ''
             ])
 
 
