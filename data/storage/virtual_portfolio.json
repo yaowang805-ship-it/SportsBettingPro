@@ -1351,6 +1351,29 @@
       "commence_time": 1786474800,
       "created_at": "2026-08-11T02:08:33.729882+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_格拉茨风暴_费内巴切_上半场主胜",
+      "sport": "football",
+      "league": "欧洲冠军联赛-资格赛",
+      "home_team": "格拉茨风暴",
+      "away_team": "费内巴切",
+      "home_cn": "格拉茨风暴",
+      "away_cn": "费内巴切",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.78,
+      "stake": 17,
+      "model_prob": 0.2146,
+      "ev_pct": 2.58,
+      "pin_odds": 4.41,
+      "fair_price": 4.66,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786473000,
+      "created_at": "2026-08-11T09:40:06.430041+00:00",
+      "track_only": true
     }
   ],
   "settled": {
@@ -8686,7 +8709,7 @@
   "daily_budget": {
     "date": "2026-08-11",
     "used": 1227.0,
-    "bets": 25
+    "bets": 26
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
