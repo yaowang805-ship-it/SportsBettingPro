@@ -14,9 +14,10 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 from src.scrapers.bb_data import detect_sport, extract_bb_1x2, TWO_WAY_SPORTS
 from src.scrapers.pinnacle_league_map import TEAM_NAME_MAP
 
-def team_name_score(bb_home, bb_away, pin_home, pin_away):
+def team_name_score(bb_home, bb_away, pin_home, pin_away,
+                    pin_candidates: list = None):
     """Score how well BB team names (Chinese) match Pinnacle team names (English).
-    Uses TEAM_NAME_MAP for known translations and fuzzy matching.
+    Uses TEAM_NAME_MAP + V5 TF-IDF/pinyin matcher for unknown names.
     Returns score 0.0-1.0.
     """
     def lookup_cn(name):
@@ -28,6 +29,15 @@ def team_name_score(bb_home, bb_away, pin_home, pin_away):
             return TEAM_NAME_MAP[name]
         if clean != name and clean in TEAM_NAME_MAP:
             return TEAM_NAME_MAP[clean]
+        # V5: TF-IDF+pinyin 智能匹配
+        if pin_candidates and _re.search(r'[一-鿿]', name):
+            try:
+                from src.scrapers.team_matcher import match_team
+                matched = match_team(name, pin_candidates, min_score=0.6)
+                if matched:
+                    return matched
+            except ImportError:
+                pass
         return name.lower()
 
     bb_home_en = lookup_cn(bb_home)
@@ -608,9 +618,17 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                 if tn_score < 0.35:
                     continue
             else:
+                # V5: 获取当前联赛的 Pinnacle 候选队名列表
+                _pin_candidates = set()
+                _bb_league = bb.get("league", "")
+                if _bb_league in pin_by_bb_league:
+                    for _pm in pin_by_bb_league[_bb_league]:
+                        _pin_candidates.add(_pm.get("home", ""))
+                        _pin_candidates.add(_pm.get("away", ""))
                 tn_score = team_name_score(
                     bb.get("home", ""), bb.get("away", ""),
-                    pin.get("home", ""), pin.get("away", "")
+                    pin.get("home", ""), pin.get("away", ""),
+                    pin_candidates=list(_pin_candidates) if _pin_candidates else None
                 )
                 if tn_score < 0.3 and _HAS_RAPIDFUZZ:
                     fs, _ = fuzzy_match_teams(
