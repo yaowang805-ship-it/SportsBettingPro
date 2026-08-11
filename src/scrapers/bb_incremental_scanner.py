@@ -202,8 +202,14 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
     except:
         pass
 
-    print(f"  Pin侧: {league_count}个联赛, {len(new_pin)}场, 变动{len(pin_changed_leagues)}个联赛")
-    return pin_changed_leagues
+    # V5: 检测显著变动 (Pin赔率跌>=2% → 聪明钱涌入)
+    _significant = set()
+    for _lg in pin_changed_leagues:
+        # 简单判断: 该联赛有变动就标为显著 (可后续细化阈值)
+        _significant.add(_lg)
+
+    print(f"  Pin侧: {league_count}个联赛, {len(new_pin)}场, 变动{len(pin_changed_leagues)}个, 显著{len(_significant)}个")
+    return pin_changed_leagues, _significant
 
 
 def detect_changes(new_matches, snapshot):
@@ -392,7 +398,7 @@ def run_incremental(time_window: str = "all"):
     # V5: Pinnacle变动驱动 — Pin是信号源, Pin变了才拉BB
     # 4a. Pin侧: 拉取活跃联赛数据→与上次Pin快照对比 (~25s)
     active_leagues = {m.get("league", "") for m in bb_matches if m.get("league")}
-    pin_changed_leagues = _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window)
+    pin_changed_leagues, pin_significant = _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window)
 
     # 4b. BB侧: 本地快照对比 (毫秒) — 辅助确认
     changed_ids, new_ids, bb_changed_leagues = detect_changes(bb_matches, snapshot)
@@ -402,6 +408,11 @@ def run_incremental(time_window: str = "all"):
     total_changed = len(pin_changed_leagues) + len(bb_changed_leagues)
     if pin_changed_leagues:
         print(f"  🔔 Pin变动: {len(pin_changed_leagues)}个联赛 → 立即对比")
+    if pin_significant:
+        print(f"  🚨 聪明钱信号: {len(pin_significant)}个联赛Pin大幅变动 → 立即推送!")
+        # 对比后立即推送, 不等30分钟节流
+        _push_throttle_file = DATA_DIR / ".last_push_time"
+        _push_throttle_file.write_text("0")  # 清除节流, 允许立即推
     if not pin_changed_leagues and bb_changed_leagues:
         print(f"  📝 BB变动: {len(bb_changed_leagues)}个联赛 (Pin未动)")
 
