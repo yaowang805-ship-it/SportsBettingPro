@@ -16,7 +16,12 @@ from datetime import datetime, timezone
 ROOT = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = ROOT / "data" / "storage"
 CONFIG_FILE = ROOT / "config" / "odds_strategy.json"
-MIN_BETS = 5  # 每桶最少样本
+# 职业标准: 按样本量分级调整权限 (TwoPlusTwo论坛 + Tom Dry实践)
+MIN_OBSERVE = 100     # 开始观察, 不调整
+MIN_ADJUST = 500      # 初步调整, 最多±5%
+MIN_CONFIDENT = 1000  # 可靠校准, 最多±10%
+MAX_ADJUSTMENT = 0.10  # 单次最多±10%
+FIRST_ADJUST_CAP = 0.05  # 首次调整最多±5%
 
 
 def load_all_settlement_data():
@@ -78,9 +83,12 @@ def load_all_settlement_data():
 def find_optimal_ev(bets: list, odds_min: float, odds_max: float) -> dict:
     """对给定赔率区间，找到最小盈利 EV 阈值。"""
     bucket = [b for b in bets if odds_min <= b["odds"] < odds_max and b["edge"] > 0]
+    all_bucket = [b for b in bets if odds_min <= b["odds"] < odds_max]
 
-    if len(bucket) < MIN_BETS:
-        return None
+    if len(bucket) < MIN_OBSERVE:
+        return {"odds_min": odds_min, "odds_max": odds_max, "n_all": len(all_bucket), "optimal_ev": 2.0,
+                "all_roi": sum(b["pnl"] for b in all_bucket)/sum(b["stake"] for b in all_bucket)*100 if sum(b["stake"] for b in all_bucket)>0 else 0,
+                "status": "insufficient"}
 
     total_s = sum(b["stake"] for b in bucket)
     total_p = sum(b["pnl"] for b in bucket)
@@ -130,20 +138,46 @@ def run_optimization():
 
         result = find_optimal_ev(bets, odds_min, odds_max)
 
-        if result and not result.get("needs_more_data"):
-            # Adjust if significantly different
-            old_ev = tier.get("min_ev", 2.0)
-            new_ev = result["optimal_ev"]
-            adjustment = min(0.3, abs(new_ev - old_ev) / max(old_ev, 0.01))
+        if result:
+            n = result.get("n_all", 0)
+            tier["_n_bets"] = n
+            tier["_current_roi"] = result.get("all_roi", 0)
 
-            tier["min_ev"] = round(old_ev + (new_ev - old_ev) * adjustment, 1)
-            tier["_n_bets"] = result["n_all"]
-            tier["_current_roi"] = result["all_roi"]
-            print(f"  {tier['label']}: EV {old_ev}% → {tier['min_ev']}% (ROI={result['all_roi']:+.1f}%, n={result['n_all']})")
-        elif result:
-            tier["_n_bets"] = result["n_all"]
-            tier["_current_roi"] = result["all_roi"]
-            print(f"  {tier['label']}: 保持 EV={tier.get('min_ev', 2.0)}% (数据不足, n={result['n_all']})")
+            if result.get("status") == "insufficient":
+                print(f"  {tier['label']}: 🔒 保持 (n={n}, 需{MIN_OBSERVE}笔开始观察)")
+
+            elif n >= MIN_CONFIDENT:
+                # 可靠校准: 最多±10%
+                old_ev = tier.get("min_ev", 2.0)
+                new_ev = result.get("optimal_ev", old_ev)
+                max_delta = MAX_ADJUSTMENT * old_ev
+                delta = max(-max_delta, min(max_delta, new_ev - old_ev))
+                tier["min_ev"] = round(old_ev + delta, 1)
+                tier["_confidence"] = "high"
+                print(f"  {tier['label']}: ✅ 校准 EV {old_ev}%→{tier['min_ev']}% (n={n}, 高置信)")
+
+            elif n >= MIN_ADJUST:
+                # 初步调整: 最多±5%
+                old_ev = tier.get("min_ev", 2.0)
+                new_ev = result.get("optimal_ev", old_ev)
+                max_delta = FIRST_ADJUST_CAP * old_ev
+                delta = max(-max_delta, min(max_delta, new_ev - old_ev))
+                tier["min_ev"] = round(old_ev + delta, 1)
+                tier["_confidence"] = "medium"
+                print(f"  {tier['label']}: 🟡 微调 EV {old_ev}%→{tier['min_ev']}% (n={n}, 中置信)")
+
+            elif n >= MIN_OBSERVE:
+                # 仅观察: 记录但不调整
+                tier["_confidence"] = "low"
+                old_ev = tier.get("min_ev", 2.0)
+                actual_roi = result.get("all_roi", 0)
+                if actual_roi < -10:
+                    print(f"  {tier['label']}: ⚠️ 观察中 (n={n}, ROI{actual_roi:+.1f}%, 需人工审查, 暂不调整)")
+                else:
+                    print(f"  {tier['label']}: 👁️ 观察中 (n={n}, 需{MIN_ADJUST}笔开始调整)")
+
+            else:
+                print(f"  {tier['label']}: 🔒 保持 (n={n}, 不足{MIN_OBSERVE}笔观察门槛)")
 
         new_tiers.append(tier)
 

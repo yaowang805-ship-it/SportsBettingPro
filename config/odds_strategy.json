@@ -1,6 +1,6 @@
 {
   "version": "5.1",
-  "updated": "2026-08-12T08:55:27.524757+00:00",
+  "updated": "2026-08-12T09:02:10.988288+00:00",
   "description": "赔率分层策略 — 基于10万+Pinnacle收盘数据+663笔实盘结算",
   "tiers": [
     {
@@ -10,7 +10,7 @@
       "kelly_mult": 0.8,
       "label": "<1.5x 薄利",
       "_n_bets": 9,
-      "_current_roi": 6.3
+      "_current_roi": 6.268342674720211
     },
     {
       "odds_min": 1.5,
@@ -19,7 +19,7 @@
       "kelly_mult": 1.0,
       "label": "1.5-2x 主力",
       "_n_bets": 196,
-      "_current_roi": 13.4
+      "_current_roi": 13.373901257422183
     },
     {
       "odds_min": 2.0,
@@ -28,7 +28,7 @@
       "kelly_mult": 1.0,
       "label": "2-3x 稳定",
       "_n_bets": 152,
-      "_current_roi": 14.6
+      "_current_roi": 14.578553680110673
     },
     {
       "odds_min": 3.0,
@@ -37,7 +37,7 @@
       "kelly_mult": 0.5,
       "label": "3-4x 保守",
       "_n_bets": 93,
-      "_current_roi": -21.6
+      "_current_roi": -21.606327728490143
     },
     {
       "odds_min": 4.0,
@@ -46,7 +46,7 @@
       "kelly_mult": 0.25,
       "label": "4-6x 极保守",
       "_n_bets": 156,
-      "_current_roi": -0.9
+      "_current_roi": -0.8559515822307437
     },
     {
       "odds_min": 6.0,
@@ -58,14 +58,19 @@
       ],
       "label": "6x+ 仅网球GS/ATP",
       "_n_bets": 117,
-      "_current_roi": -9.9
+      "_current_roi": -9.93248305643892
     }
   ],
   "auto_optimize": {
     "enabled": true,
     "schedule": "daily 09:15",
-    "min_new_bets": 10,
-    "max_adjustment": 0.3
+    "min_observe": 100,
+    "min_adjust": 500,
+    "min_confident": 1000,
+    "max_adjustment": 0.1,
+    "adjustment_cap_first": 0.05,
+    "require_human_review": true,
+    "review_threshold_roi_change": 0.05
   },
   "_total_bets": 723
 }
