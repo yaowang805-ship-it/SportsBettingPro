@@ -645,9 +645,11 @@ _MARKET_CN = {
 }
 
 
-def _min_ev_for_tier(tier: int) -> float:
-    """V4.3: 统一2% — 真正过滤交给_odds_weight(Pinnacle数据驱动)。"""
-    return 2.0
+def _min_ev_for_tier(tier: int, sport: str = "", league: str = "") -> float:
+    """V5.1: 全运动分层EV门槛 — T1=2%, T2=2.5-3%, T3=4-5%, T4=6%+"""
+    from config.constants import get_tier_strategy
+    strategy = get_tier_strategy(sport, league, tier)
+    return strategy["ev_floor"]
 
 # EV 上限 — EV > 此值几乎全是假阳性（队名匹配到错误比赛）
 # 使用 constants.EV_CAP (12.0)
@@ -812,17 +814,27 @@ def _calc_kelly_stakes(opps: list) -> list:
         if match_type == "time" and match_score < 0.90:
             stake_pct *= 0.80  # 低置信时间匹配 → 减 20%
 
-        # V4.5: 运动差异化单注上限 (按数据质量和波动率)
+        # V5.1: 全运动分层仓位上限 (Tier差异化)
         _SPORT_CAPS = {
             "football": 0.04, "basketball": 0.03, "baseball": 0.03,
             "american_football": 0.02, "ice_hockey": 0.02, "tennis": 0.02,
         }
         sport_cap = _SPORT_CAPS.get(sport, 0.02)
-        stake_pct = min(stake_pct, sport_cap)
+        # V5.1: 分层策略覆盖 (T3/T4更保守)
+        from config.constants import get_tier_strategy, get_league_tier
+        tier = get_league_tier(league)
+        tier_cfg = get_tier_strategy(sport, league, tier)
+        tier_cap = tier_cfg.get("max_stake_pct", sport_cap)
+        stake_pct = min(stake_pct, min(sport_cap, tier_cap))
+        max_odds = tier_cfg.get("max_odds", 20.0)
+        if odds > max_odds:
+            o["_stake"] = 0; o["_raw_stake"] = 0
+            continue
 
         stake = int(bankroll * stake_pct)
         o["_raw_stake"] = stake
-        o["_stake"] = stake if stake >= 30 else 0  # V4.5: 最低¥30, 过滤碎单
+        min_stake = tier_cfg.get("min_stake", 30)
+        o["_stake"] = stake if stake >= min_stake else 0  # V5.1: 分层最低投注
 
     # 第二遍：总额超预算时等比压缩
     daily_budget = bankroll  # V4.5: 动态日预算
@@ -1210,7 +1222,7 @@ def _collect_opportunities(match, market_key):
     # Tier 2/3: 非队名匹配且匹配分<0.80 不推送（防假阳性）
     if tier >= 2 and match_type != "name" and match_score < 0.80:
         return []
-    min_ev = _min_ev_for_tier(tier)
+    min_ev = _min_ev_for_tier(tier, sport=match.get("sport", ""), league=match.get("league", ""))
 
     # 确定该市场类型对应哪个平台提供了最高赔率
     _MK_TO_SOURCE_KEY = {
@@ -1820,11 +1832,29 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
             bb_odds = o["bb_odds"]
             ev_pct = o["ev_pct"]
             stake = o["_stake"]
-            # 预算耗尽时显示原始 Kelly 投注额（标注"建议"）
+            # V5.1: 分层策略 — T3/T4不显示"建议", 直接过滤
+            sport = o.get("sport", "")
+            league = o.get("league", "")
+            tier = o.get("_tier", 3)
+            from config.constants import get_tier_strategy
+            tier_cfg = get_tier_strategy(sport, league, tier)
+
+            # V5.1: 分层控制"建议"显示
             if stake < 30:
-                stake = o.get("_raw_stake", stake)
-                stake_note = " (建议)"
+                if tier_cfg.get("allow_suggest", True):
+                    stake = o.get("_raw_stake", stake)
+                    stake_note = " (建议)"
+                else:
+                    # T3/T4 低级别联赛不显示碎单建议, 直接跳过该机会
+                    stake = 0
+                    stake_note = ""
             else:
+                stake_note = ""
+
+            # V5.1: 分层最低投注额
+            min_stake = tier_cfg.get("min_stake", 0)
+            if min_stake > 0 and stake < min_stake:
+                stake = 0
                 stake_note = ""
             confidence = "✓" if o.get("_match_score", 0) >= 0.95 else "◷"
 
