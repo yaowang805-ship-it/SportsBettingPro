@@ -831,7 +831,7 @@ def _calc_kelly_stakes(opps: list) -> list:
         # 检查 odds_strategy 是否有更严格的限制
         try:
             from src.evolve.odds_strategy_optimizer import get_odds_strategy
-            odds_cfg = get_odds_strategy(bb_odds)
+            odds_cfg = get_odds_strategy(bb_odds, sport=o.get("sport", "football"))
             max_odds = min(max_odds, odds_cfg.get("max_odds", 20.0))
             # 动态EV门槛: 高赔率需要更高EV
             extra_ev = odds_cfg.get("min_ev", 2.0) - 2.0

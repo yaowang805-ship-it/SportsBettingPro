@@ -1,76 +1,93 @@
 {
   "version": "5.1",
-  "updated": "2026-08-12T09:02:10.988288+00:00",
-  "description": "赔率分层策略 — 基于10万+Pinnacle收盘数据+663笔实盘结算",
-  "tiers": [
-    {
-      "odds_min": 1.0,
-      "odds_max": 1.5,
-      "min_ev": 1.5,
-      "kelly_mult": 0.8,
-      "label": "<1.5x 薄利",
-      "_n_bets": 9,
-      "_current_roi": 6.268342674720211
-    },
-    {
-      "odds_min": 1.5,
-      "odds_max": 2.0,
-      "min_ev": 3.2,
-      "kelly_mult": 1.0,
-      "label": "1.5-2x 主力",
-      "_n_bets": 196,
-      "_current_roi": 13.373901257422183
-    },
-    {
-      "odds_min": 2.0,
-      "odds_max": 3.0,
-      "min_ev": 3.7,
-      "kelly_mult": 1.0,
-      "label": "2-3x 稳定",
-      "_n_bets": 152,
-      "_current_roi": 14.578553680110673
-    },
-    {
-      "odds_min": 3.0,
-      "odds_max": 4.0,
-      "min_ev": 6.0,
-      "kelly_mult": 0.5,
-      "label": "3-4x 保守",
-      "_n_bets": 93,
-      "_current_roi": -21.606327728490143
-    },
-    {
-      "odds_min": 4.0,
-      "odds_max": 6.0,
-      "min_ev": 5.6,
-      "kelly_mult": 0.25,
-      "label": "4-6x 极保守",
-      "_n_bets": 156,
-      "_current_roi": -0.8559515822307437
-    },
-    {
-      "odds_min": 6.0,
-      "odds_max": 99.0,
-      "min_ev": 8.5,
-      "kelly_mult": 0.1,
-      "sports_allow": [
-        "tennis"
+  "updated": "2026-08-12",
+  "description": "全运动赔率分层策略 — 基于10万+Pinnacle收盘+723笔实盘",
+  "default": {"min_ev": 2.0, "kelly_mult": 1.0, "max_odds": 20.0},
+  "sports": {
+    "football": {
+      "tiers": [
+        {"odds_max": 1.5, "min_ev": 1.5, "kelly_mult": 0.8},
+        {"odds_max": 2.0, "min_ev": 2.0, "kelly_mult": 1.0},
+        {"odds_max": 3.0, "min_ev": 2.5, "kelly_mult": 1.0},
+        {"odds_max": 4.0, "min_ev": 5.0, "kelly_mult": 0.5},
+        {"odds_max": 6.0, "min_ev": 7.0, "kelly_mult": 0.25},
+        {"odds_max": 99,  "min_ev": 10.0, "kelly_mult": 0.1}
       ],
-      "label": "6x+ 仅网球GS/ATP",
-      "_n_bets": 117,
-      "_current_roi": -9.93248305643892
+      "_n_bets": 240, "_source": "settlement_log + 247万Pinnacle收盘"
+    },
+    "tennis": {
+      "tiers": [
+        {"odds_max": 1.5, "min_ev": 1.5, "kelly_mult": 0.8},
+        {"odds_max": 2.0, "min_ev": 2.5, "kelly_mult": 1.0},
+        {"odds_max": 3.0, "min_ev": 2.0, "kelly_mult": 1.0},
+        {"odds_max": 5.0, "min_ev": 3.0, "kelly_mult": 0.8},
+        {"odds_max": 8.0, "min_ev": 5.0, "kelly_mult": 0.3},
+        {"odds_max": 99,  "min_ev": 8.0, "kelly_mult": 0.1}
+      ],
+      "_n_bets": 45000, "_source": "tennis-data.co.uk Pinnacle收盘 + Olivier GS 236场",
+      "_note": "3-5x有独树一帜的+3.4%正Edge, Pin对网球高赔定价偏保守"
+    },
+    "basketball": {
+      "tiers": [
+        {"odds_max": 1.5, "min_ev": 1.5, "kelly_mult": 0.8},
+        {"odds_max": 2.0, "min_ev": 3.0, "kelly_mult": 1.0},
+        {"odds_max": 3.0, "min_ev": 3.5, "kelly_mult": 0.8},
+        {"odds_max": 5.0, "min_ev": 5.0, "kelly_mult": 0.3},
+        {"odds_max": 99,  "min_ev": 8.0, "kelly_mult": 0.1}
+      ],
+      "_n_bets": 29500, "_source": "Kaggle NBA收盘 2008-2026",
+      "_note": "NBA 1.5-2x Pin Margin较宽(-2.1%), 需更高EV补偿"
+    },
+    "baseball": {
+      "tiers": [
+        {"odds_max": 1.5, "min_ev": 1.5, "kelly_mult": 0.8},
+        {"odds_max": 2.0, "min_ev": 2.0, "kelly_mult": 1.0},
+        {"odds_max": 3.0, "min_ev": 2.5, "kelly_mult": 0.8},
+        {"odds_max": 5.0, "min_ev": 5.0, "kelly_mult": 0.3},
+        {"odds_max": 99,  "min_ev": 8.0, "kelly_mult": 0.1}
+      ],
+      "_n_bets": 45500, "_source": "Kaggle MLB Vegas 2012-2021",
+      "_note": "MLB定价极准(edge<±1%), 低赔率可直接用"
+    },
+    "american_football": {
+      "tiers": [
+        {"odds_max": 1.5, "min_ev": 1.5, "kelly_mult": 0.8},
+        {"odds_max": 2.0, "min_ev": 2.5, "kelly_mult": 1.0},
+        {"odds_max": 3.0, "min_ev": 3.0, "kelly_mult": 0.8},
+        {"odds_max": 5.0, "min_ev": 5.0, "kelly_mult": 0.3},
+        {"odds_max": 99,  "min_ev": 8.0, "kelly_mult": 0.1}
+      ],
+      "_n_bets": 1600, "_source": "Kaggle MGM NFL 2021-2026", "_note": "样本少, 保守策略"
+    },
+    "ice_hockey": {
+      "tiers": [
+        {"odds_max": 1.5, "min_ev": 2.0, "kelly_mult": 0.8},
+        {"odds_max": 2.0, "min_ev": 3.0, "kelly_mult": 0.8},
+        {"odds_max": 3.0, "min_ev": 4.0, "kelly_mult": 0.5},
+        {"odds_max": 5.0, "min_ev": 6.0, "kelly_mult": 0.25},
+        {"odds_max": 99,  "min_ev": 10.0, "kelly_mult": 0.1}
+      ],
+      "_n_bets": 0, "_source": "无专有数据", "_note": "借用football策略, 更保守"
+    },
+    "mma": {
+      "tiers": [
+        {"odds_max": 1.5, "min_ev": 2.0, "kelly_mult": 0.8},
+        {"odds_max": 2.0, "min_ev": 3.0, "kelly_mult": 0.8},
+        {"odds_max": 3.0, "min_ev": 4.0, "kelly_mult": 0.5},
+        {"odds_max": 5.0, "min_ev": 6.0, "kelly_mult": 0.25},
+        {"odds_max": 99,  "min_ev": 10.0, "kelly_mult": 0.1}
+      ],
+      "_n_bets": 0, "_source": "无专有数据", "_note": "借用football策略, 更保守"
     }
-  ],
+  },
   "auto_optimize": {
     "enabled": true,
     "schedule": "daily 09:15",
     "min_observe": 100,
     "min_adjust": 500,
     "min_confident": 1000,
-    "max_adjustment": 0.1,
+    "max_adjustment": 0.10,
     "adjustment_cap_first": 0.05,
-    "require_human_review": true,
-    "review_threshold_roi_change": 0.05
-  },
-  "_total_bets": 723
+    "require_human_review": true
+  }
 }

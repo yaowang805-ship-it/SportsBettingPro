@@ -190,23 +190,34 @@ def run_optimization():
     return config
 
 
-def get_odds_strategy(bb_odds: float) -> dict:
-    """获取给定 BB 赔率的策略参数。"""
+def get_odds_strategy(bb_odds: float, sport: str = "football") -> dict:
+    """获取给定 (运动, BB赔率) 的策略参数。V5.1: per-sport tiers."""
     if not CONFIG_FILE.exists():
         return {"min_ev": 2.0, "kelly_mult": 1.0, "max_odds": 20.0}
 
     config = json.loads(CONFIG_FILE.read_text())
+    default = config.get("default", {"min_ev": 2.0, "kelly_mult": 1.0, "max_odds": 20.0})
 
-    for tier in config.get("tiers", []):
-        if tier["odds_min"] <= bb_odds < tier["odds_max"]:
+    # Try per-sport tier, fall back to generic
+    sport_cfg = config.get("sports", {}).get(sport, {})
+    tiers = sport_cfg.get("tiers", [])
+
+    if not tiers:
+        # Fallback to old format (generic tiers)
+        tiers = config.get("tiers", [])
+
+    for tier in tiers:
+        odds_max = tier.get("odds_max", 99)
+        if bb_odds < odds_max:
             return {
-                "min_ev": tier.get("min_ev", 2.0),
-                "kelly_mult": tier.get("kelly_mult", 1.0),
-                "max_odds": tier.get("odds_max", 20.0),
-                "label": tier.get("label", ""),
+                "min_ev": tier.get("min_ev", default["min_ev"]),
+                "kelly_mult": tier.get("kelly_mult", default["kelly_mult"]),
+                "max_odds": tier.get("odds_max", default["max_odds"]),
+                "label": f"{sport} <{odds_max}x",
             }
 
-    return {"min_ev": 2.0, "kelly_mult": 1.0, "max_odds": 20.0}
+    return {"min_ev": default["min_ev"], "kelly_mult": default["kelly_mult"],
+            "max_odds": default["max_odds"]}
 
 
 if __name__ == "__main__":
