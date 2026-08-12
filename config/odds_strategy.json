@@ -1,0 +1,71 @@
+{
+  "version": "5.1",
+  "updated": "2026-08-12T08:55:27.524757+00:00",
+  "description": "赔率分层策略 — 基于10万+Pinnacle收盘数据+663笔实盘结算",
+  "tiers": [
+    {
+      "odds_min": 1.0,
+      "odds_max": 1.5,
+      "min_ev": 1.5,
+      "kelly_mult": 0.8,
+      "label": "<1.5x 薄利",
+      "_n_bets": 9,
+      "_current_roi": 6.3
+    },
+    {
+      "odds_min": 1.5,
+      "odds_max": 2.0,
+      "min_ev": 3.2,
+      "kelly_mult": 1.0,
+      "label": "1.5-2x 主力",
+      "_n_bets": 196,
+      "_current_roi": 13.4
+    },
+    {
+      "odds_min": 2.0,
+      "odds_max": 3.0,
+      "min_ev": 3.7,
+      "kelly_mult": 1.0,
+      "label": "2-3x 稳定",
+      "_n_bets": 152,
+      "_current_roi": 14.6
+    },
+    {
+      "odds_min": 3.0,
+      "odds_max": 4.0,
+      "min_ev": 6.0,
+      "kelly_mult": 0.5,
+      "label": "3-4x 保守",
+      "_n_bets": 93,
+      "_current_roi": -21.6
+    },
+    {
+      "odds_min": 4.0,
+      "odds_max": 6.0,
+      "min_ev": 5.6,
+      "kelly_mult": 0.25,
+      "label": "4-6x 极保守",
+      "_n_bets": 156,
+      "_current_roi": -0.9
+    },
+    {
+      "odds_min": 6.0,
+      "odds_max": 99.0,
+      "min_ev": 8.5,
+      "kelly_mult": 0.1,
+      "sports_allow": [
+        "tennis"
+      ],
+      "label": "6x+ 仅网球GS/ATP",
+      "_n_bets": 117,
+      "_current_roi": -9.9
+    }
+  ],
+  "auto_optimize": {
+    "enabled": true,
+    "schedule": "daily 09:15",
+    "min_new_bets": 10,
+    "max_adjustment": 0.3
+  },
+  "_total_bets": 723
+}

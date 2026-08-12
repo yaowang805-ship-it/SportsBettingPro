@@ -509,9 +509,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "ATP挑战赛 - 托迪公开赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-12T07:16:28.649161+00:00",
+  "updated": "2026-08-12T08:25:05.117293+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
