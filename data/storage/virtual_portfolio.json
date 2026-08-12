@@ -1,5 +1,5 @@
 {
-  "balance": 8444.8,
+  "balance": 8296.8,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -2508,6 +2508,75 @@
       "commence_time": 1786646700,
       "created_at": "2026-08-12T01:27:02.090914+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_handicap_迪雷禾_沙特阿赫利_让球主胜(+15)",
+      "sport": "football",
+      "league": "沙特阿拉伯职业联赛",
+      "home_team": "迪雷禾",
+      "away_team": "沙特阿赫利",
+      "home_cn": "迪雷禾",
+      "away_cn": "沙特阿赫利",
+      "market": "handicap",
+      "market_type": "让球主胜(+1.5)",
+      "sub_market": "hc",
+      "line": "",
+      "odds": 2.01,
+      "stake": 57,
+      "model_prob": 0.5138,
+      "ev_pct": 3.27,
+      "pin_odds": 1.8475,
+      "fair_price": 1.9463,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786644000,
+      "created_at": "2026-08-12T02:16:44.969492+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_迪雷禾_沙特阿赫利_双重机会-主/和局",
+      "sport": "football",
+      "league": "沙特阿拉伯职业联赛",
+      "home_team": "迪雷禾",
+      "away_team": "沙特阿赫利",
+      "home_cn": "迪雷禾",
+      "away_cn": "沙特阿赫利",
+      "market": "1x2",
+      "market_type": "双重机会-主/和局",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 3.63,
+      "stake": 54,
+      "model_prob": 0.303,
+      "ev_pct": 10.0,
+      "pin_odds": 0,
+      "fair_price": 3.3001,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786644000,
+      "created_at": "2026-08-12T02:16:44.969548+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_库斯科_巴勃罗二队_上半场客胜",
+      "sport": "football",
+      "league": "秘鲁甲级联赛",
+      "home_team": "库斯科",
+      "away_team": "巴勃罗二队",
+      "home_cn": "库斯科",
+      "away_cn": "巴勃罗二队",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 7.5,
+      "stake": 37,
+      "model_prob": 0.1462,
+      "ev_pct": 9.66,
+      "pin_odds": 5.97,
+      "fair_price": 6.8394,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786748400,
+      "created_at": "2026-08-12T02:16:44.969593+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -10007,8 +10076,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-12",
-    "used": 2787.0,
-    "bets": 47
+    "used": 2935.0,
+    "bets": 50
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
