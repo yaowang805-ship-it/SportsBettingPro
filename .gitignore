@@ -19,6 +19,8 @@ database.sqlite
 data/backup_protected/
 
 # Large CSV data (40MB+ each)
+data/tennis_sackmann/
+data/tennis_data_uk/
 data/storage/shot_*.csv
 data/storage/nba_shot_charts.csv
 
