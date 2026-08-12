@@ -1561,8 +1561,9 @@ def _diversify_and_rank(qualified: list) -> list:
     selected_ids = set()
 
     # --- 第一轮：每种运动至少 1 条 ---
+    # V5.1: 乒乓/羽/排/拳击 已封杀 (零Pinnacle数据), 不参与推送
     for sport in ("football", "basketball", "tennis", "baseball", "american_football",
-                   "pingpong", "badminton", "volleyball", "boxing", "mma", "ice_hockey"):
+                   "mma", "ice_hockey"):
         sport_opps = [o for o in qualified if o.get("sport") == sport]
         if sport_opps:
             best = max(sport_opps, key=lambda x: (4 - x.get("_tier", 3), x["_score"]))

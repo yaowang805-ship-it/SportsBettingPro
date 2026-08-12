@@ -10,8 +10,8 @@ Kelly 0.75 回测: 真正滚动窗口 (2012-2014→2025), 全部存活
 数据源 (全量外部数据, 零结算数据):
   足球 1X2:  Pinnacle 111K收盘赔率 (20联赛×13季, football-data.co.uk)
   足球 OU:   Pinnacle 47K收盘赔率
-  网球:      Pinnacle 5K收盘赔率 (直接编码, 不再复用V3)
-  NBA:       模型57K + SBR 27K收盘赔率 (2011-2021)
+  网球:      tennis-data.co.uk Pinnacle 45K收盘赔率 (2016-2025, ATP/WTA逐赛事级)
+  NBA:       Kaggle 29.5K收盘赔率 (2008-2026, chevronronson/nba-stats-dataset) + SBR 27K (2011-2021)
   MLB:       SBR 25.6K (2011-2021) + OddsPortal 9.9K (2021-2024) → 70.9K 30bins
   NFL:       SBR 5.9K收盘赔率 (2011-2021)
   NHL:       Kaggle ESPN 6.8K收盘赔率 (2004-2025)
@@ -1206,11 +1206,26 @@ MLB_ODDSPORTAL_DATA = {
 #   bb_premium: BB vs Pinnacle 溢价估计 (%)
 # =====================================================================
 TENNIS_DATA = {
-    "Grand Slam": {0: (0.913, 1.08, 2064), 1: (0.830, 1.19, 788), 2: (0.755, 1.29, 891), 3: (0.692, 1.40, 954), 4: (0.608, 1.57, 1283), 5: (0.514, 1.77, 589), 6: (0.490, 1.97, 390), 7: (0.404, 2.23, 1045), 8: (0.340, 2.65, 893), 9: (0.261, 3.36, 1175), 10: (0.173, 4.27, 744), 11: (0.155, 5.24, 497), 12: (0.112, 6.61, 632), 13: (0.085, 8.48, 389), 14: (0.047, 11.25, 365), 15: (0.009, 23.56, 317)},
-    "Masters":   {0: (0.877, 1.09, 892), 1: (0.779, 1.19, 584), 2: (0.741, 1.29, 783), 3: (0.665, 1.40, 983), 4: (0.574, 1.57, 1350), 5: (0.525, 1.78, 718), 6: (0.464, 1.96, 466), 7: (0.427, 2.23, 1109), 8: (0.373, 2.65, 941), 9: (0.277, 3.34, 1074), 10: (0.218, 4.29, 524), 11: (0.213, 5.24, 286), 12: (0.117, 6.56, 317), 13: (0.124, 8.44, 153), 14: (0.069, 11.13, 145), 15: (0.036, 20.80, 83)},
-    "ATP 500":   {0: (0.896, 1.08, 280), 1: (0.750, 1.19, 164), 2: (0.706, 1.29, 214), 3: (0.670, 1.40, 282), 4: (0.566, 1.58, 334), 5: (0.488, 1.77, 168), 6: (0.523, 1.97, 107), 7: (0.422, 2.22, 289), 8: (0.375, 2.67, 240), 9: (0.300, 3.34, 307), 10: (0.254, 4.27, 142), 11: (0.167, 5.25, 90), 12: (0.135, 6.73, 96), 13: (0.047, 8.47, 43), 14: (0.040, 11.06, 50), 15: (0.115, 19.70, 26)},
-    "ATP 250":   {0: (0.885, 1.09, 4740), 1: (0.799, 1.19, 3589), 2: (0.751, 1.29, 4894), 3: (0.678, 1.40, 6518), 4: (0.586, 1.58, 9456), 5: (0.521, 1.78, 4666), 6: (0.470, 1.97, 3055), 7: (0.425, 2.23, 7759), 8: (0.345, 2.65, 6510), 9: (0.265, 3.34, 6814), 10: (0.201, 4.28, 3163), 11: (0.165, 5.22, 1725), 12: (0.129, 6.60, 1724), 13: (0.081, 8.41, 738), 14: (0.065, 11.12, 643), 15: (0.029, 22.27, 348)},
-    "WTA":       {0: (0.888, 1.09, 5022), 1: (0.790, 1.19, 3624), 2: (0.733, 1.29, 4735), 3: (0.666, 1.40, 6001), 4: (0.590, 1.57, 8557), 5: (0.515, 1.77, 4517), 6: (0.475, 1.97, 2882), 7: (0.427, 2.23, 6908), 8: (0.358, 2.64, 5871), 9: (0.278, 3.34, 6698), 10: (0.216, 4.27, 3205), 11: (0.175, 5.21, 1780), 12: (0.134, 6.57, 1795), 13: (0.076, 8.44, 890), 14: (0.054, 11.08, 829), 15: (0.022, 20.82, 324)},
+    # V5.1: tennis-data.co.uk Pinnacle收盘 2016-2025, 45,163 场比赛
+    "Grand Slam": {0: (0.953, 1.05, 727), 1: (0.863, 1.15, 793), 2: (0.798, 1.25, 554), 3: (0.740, 1.35, 570), 4: (0.705, 1.45, 414), 5: (0.612, 1.54, 402), 6: (0.579, 1.65, 363), 7: (0.598, 1.75, 276), 8: (0.483, 1.85, 242), 9: (0.497, 1.95, 147), 10: (0.509, 2.04, 175), 11: (0.489, 2.15, 186), 12: (0.364, 2.25, 209), 13: (0.409, 2.36, 159), 14: (0.461, 2.45, 128), 15: (0.199, 7.16, 3495)},
+    "Masters":   {0: (0.935, 1.06, 217), 1: (0.825, 1.15, 566), 2: (0.779, 1.25, 592), 3: (0.685, 1.35, 752), 4: (0.687, 1.45, 611), 5: (0.608, 1.54, 655), 6: (0.569, 1.65, 719), 7: (0.529, 1.75, 467), 8: (0.546, 1.85, 425), 9: (0.511, 1.95, 260), 10: (0.429, 2.04, 315), 11: (0.495, 2.15, 319), 12: (0.460, 2.25, 359), 13: (0.418, 2.35, 342), 14: (0.445, 2.45, 227), 15: (0.276, 4.53, 3458)},
+    "ATP 500":   {0: (0.930, 1.06, 171), 1: (0.838, 1.16, 413), 2: (0.807, 1.25, 399), 3: (0.726, 1.35, 547), 4: (0.728, 1.45, 382), 5: (0.617, 1.54, 415), 6: (0.591, 1.65, 445), 7: (0.547, 1.75, 316), 8: (0.540, 1.85, 287), 9: (0.476, 1.95, 168), 10: (0.477, 2.04, 197), 11: (0.493, 2.14, 225), 12: (0.417, 2.25, 242), 13: (0.416, 2.35, 197), 14: (0.387, 2.45, 163), 15: (0.245, 4.71, 2343)},
+    "ATP 250":   {0: (0.947, 1.06, 151), 1: (0.853, 1.16, 617), 2: (0.776, 1.25, 825), 3: (0.723, 1.35, 1235), 4: (0.692, 1.45, 1118), 5: (0.617, 1.54, 1376), 6: (0.568, 1.65, 1482), 7: (0.534, 1.75, 1012), 8: (0.543, 1.85, 940), 9: (0.499, 1.95, 659), 10: (0.454, 2.04, 681), 11: (0.459, 2.14, 712), 12: (0.458, 2.25, 815), 13: (0.441, 2.35, 657), 14: (0.432, 2.45, 507), 15: (0.283, 3.93, 5389)},
+    "WTA":       {0: (0.954, 1.06, 905), 1: (0.853, 1.15, 2352), 2: (0.780, 1.25, 2574), 3: (0.722, 1.35, 3342), 4: (0.678, 1.45, 2672), 5: (0.635, 1.54, 3099), 6: (0.590, 1.65, 3075), 7: (0.539, 1.75, 2217), 8: (0.505, 1.85, 2132), 9: (0.497, 1.95, 1427), 10: (0.507, 2.05, 1606), 11: (0.463, 2.15, 1569), 12: (0.448, 2.25, 1695), 13: (0.404, 2.35, 1316), 14: (0.408, 2.45, 1103), 15: (0.261, 4.42, 15032)},
+}
+
+# V5.1: Kaggle NBA 收盘赔率 (chevronronson/nba-stats-dataset, 2008-2026, 29,533 场)
+NBA_DATA_V5 = {
+    0: (0.920, 1.06, 1334),
+    1: (0.842, 1.15, 3647),
+    2: (0.777, 1.25, 3453),
+    3: (0.722, 1.35, 4622),
+    4: (0.667, 1.45, 3682),
+    5: (0.623, 1.54, 3683),
+    6: (0.583, 1.65, 3927),
+    7: (0.536, 1.75, 2297),
+    8: (0.532, 1.84, 2531),
+    9: (0.487, 1.92, 357),
 }
 
 # =====================================================================
@@ -1221,7 +1236,7 @@ BLOCKED_MARKETS = {"htft"}  # V4.3: DC 解封 (1X2推导公平价数学等价)
 
 # MMA/Boxing: 仅封杀高风险子类型 (时间匹配 + 球员冲突)
 # V4.2: name-matched + score≥0.95 的 MMA/Boxing 允许小额投注
-BLOCKED_SPORTS = set()  # 不再一刀切封杀运动
+BLOCKED_SPORTS = {"pingpong", "badminton", "volleyball", "boxing"}  # V5.1: 零数据运动封杀
 
 # 中超: Pinnacle 无覆盖 → 封杀
 BLOCKED_LEAGUES = {"中超", "Chinese Super League", "China Super League"}
@@ -1547,6 +1562,8 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
     sport_lower = (sport or "").lower()
 
     # ── 封杀 ──
+    if sport_lower in BLOCKED_SPORTS:
+        return 0.0
     if sub_market in BLOCKED_MARKETS:
         return 0.0
     for banned in BLOCKED_LEAGUES:
@@ -1740,18 +1757,29 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
     # ── Tennis (V4.5: ATP/WTA 6.9万场 Pinnacle收盘) ──
     elif sport_lower == "tennis":
         # 挑战赛/ITF 无可靠数据 → 封杀
-        for kw in ("Challenger", "ITF", "W15", "M15", "W25", "M25"):
+        for kw in ("Challenger", "ITF", "W15", "M15", "W25", "M25", "W35", "M35", "W50", "W75"):
             if kw.lower() in (league or "").lower():
                 return 0.0
 
-        # V4.5: 优先用6.9万场Pinnacle, 回退236场GS
+        # V5.1: tennis-data.co.uk 45K场 Pinnacle收盘 (按赛事级别)
         g = globals()
-        if "TENNIS_ATP_WTA_ML" in g:
-            data = g["TENNIS_ATP_WTA_ML"].get(_bin_index(odds, ODDS_BINS))
-        elif "TENNIS_DATA_EXT" in g:
-            data = g["TENNIS_DATA_EXT"].get(_bin_index(odds, ODDS_BINS))
+        level = league or ""
+        # 确定赛事级别
+        if "Grand Slam" in level or level in ("G",):
+            tour_level = "Grand Slam"
+        elif "Masters" in level or level in ("M", "Masters 1000"):
+            tour_level = "Masters"
+        elif "500" in level:
+            tour_level = "ATP 500"
+        elif "250" in level:
+            tour_level = "ATP 250"
+        elif "WTA" in level:
+            tour_level = "WTA"
         else:
-            data = None
+            tour_level = "ATP 250"  # 默认最保守
+
+        tour_data = TENNIS_DATA.get(tour_level, {})
+        data = tour_data.get(_bin_index(odds, ODDS_BINS))
         if not data or data[2] < 5:
             return 0.0
         wr, avg_o, n = data
@@ -1837,7 +1865,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                         wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
                         return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.75) * _settlement_multiplier(league)
                 # Fallback: ML derivation
-                data = NBA_DATA.get(idx)
+                data = NBA_DATA_V5.get(idx) or NBA_DATA.get(idx)
                 if data and data[2] >= MIN_N_MINIMUM:
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.75) * 0.7 * _settlement_multiplier(league)
@@ -1850,14 +1878,16 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                         wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
                         return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.75) * _settlement_multiplier(league)
                 # Fallback: ML derivation
-                data = NBA_DATA.get(idx)
+                data = NBA_DATA_V5.get(idx) or NBA_DATA.get(idx)
                 if data and data[2] >= MIN_N_MINIMUM:
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.05, n) * DISCOUNT_SBR_LARGE * 0.9 * _settlement_multiplier(league)
                 return 0.01
-            # Moneyline — V5: SBR共识收盘价独立标定
+            # Moneyline — V5.1: 优先 Kaggle 29.5K收盘, 回退旧SBR
             else:
-                data = NBA_DATA.get(idx)
+                data = NBA_DATA_V5.get(idx)  # V5.1: Kaggle 收盘赔率优先
+                if not data:
+                    data = NBA_DATA.get(idx)
                 if data and data[2] >= MIN_N_MINIMUM:
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.05, n) * DISCOUNT_SBR_LARGE * _settlement_multiplier(league)
