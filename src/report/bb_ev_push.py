@@ -831,7 +831,7 @@ def _calc_kelly_stakes(opps: list) -> list:
         odds_kelly_mult = 1.0  # 默认不改Kelly
         try:
             from src.evolve.odds_strategy_optimizer import get_odds_strategy
-            odds_cfg = get_odds_strategy(bb_odds, sport=sport)
+            odds_cfg = get_odds_strategy(odds, sport=sport)
             max_odds = min(max_odds, odds_cfg.get("max_odds", 20.0))
             odds_kelly_mult = odds_cfg.get("kelly_mult", 1.0)
             # 动态EV门槛: 高赔率需要更高EV
