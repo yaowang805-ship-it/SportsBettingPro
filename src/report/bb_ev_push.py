@@ -826,8 +826,6 @@ def _calc_kelly_stakes(opps: list) -> list:
         tier_cfg = get_tier_strategy(sport, league, tier)
         tier_cap = tier_cfg.get("max_stake_pct", sport_cap)
         stake_pct = min(stake_pct, min(sport_cap, tier_cap))
-        # V5.1: per-sport赔率策略Kelly乘数 (网球3-5x保持80%, 其他运动高赔率25-50%)
-        stake_pct *= odds_kelly_mult
         # V5.1: per-sport赔率策略 (10万+Pinnacle+723笔实盘)
         max_odds = tier_cfg.get("max_odds", 20.0)
         odds_kelly_mult = 1.0  # 默认不改Kelly
@@ -845,9 +843,9 @@ def _calc_kelly_stakes(opps: list) -> list:
         if odds > max_odds:
             o["_stake"] = 0; o["_raw_stake"] = 0
             continue
-            o["_stake"] = 0; o["_raw_stake"] = 0
-            continue
 
+        # V5.1: per-sport赔率策略Kelly乘数
+        stake_pct *= odds_kelly_mult
         stake = int(bankroll * stake_pct)
         o["_raw_stake"] = stake
         min_stake = tier_cfg.get("min_stake", 30)
