@@ -2363,19 +2363,8 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
             skipped += 1
             _audit_log("SKIPPED", key, o, f"premium_delta={premium_delta:.1f}%")
 
-    # 清理: 开赛超过24h的指纹删除
-    cleaned = {k: v for k, v in last_pushed.items()
-               if isinstance(v, dict) and v.get("kickoff", now_epoch + 86400) > now_epoch - 86400}
-    # 原子写入两个去重文件
-    for dst_file in (pushed_file, fp_file):
-        tmp = dst_file.with_suffix('.tmp')
-        try:
-            with open(tmp, 'w') as f:
-                _json.dump(cleaned, f, ensure_ascii=False)
-                f.flush(); _os.fsync(f.fileno())
-            _os.replace(tmp, dst_file)
-        except (OSError, Exception) as e:
-            logger.warning("指纹写入失败: %s", e)
+    # V5.1 铁律: 指纹只在推送成功后写入, _filter_pushed 不写磁盘
+    # cleaned + save 由 _save_qualified_fingerprints 在推送成功后执行
 
     if skipped: logger.info("去重: 跳过%d条", skipped)
     if re_pushed: logger.info("重推: %d条", re_pushed)
@@ -2593,10 +2582,8 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
         warnings = (warnings or []) + clv_warnings
     body = _format_body(qualified, warnings)
     if not body:
-        # 即使空推也存指纹, 防止下次增量扫描重复处理同样机会
-        if qualified:
-            _save_qualified_fingerprints(qualified)
-        logger.info("empty body, skip")
+        # V5.1 铁律: 指纹只在推送成功后写入 — 空推不存指纹
+        logger.info("empty body, skip (指纹未保存 — 下次扫描重新评估)")
         return
 
     # 扫描标记
