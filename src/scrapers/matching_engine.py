@@ -258,6 +258,37 @@ def _pinyin_match_names(bb_home: str, bb_away: str, pin_list: list) -> tuple:
     # 个人运动无交叉错配风险, 低分匹配+时间窗口+赔率校验三重保护
     if best_score >= 0.35:
         return best_match, best_score
+
+    # V5.1: pinyin失败 → team_matcher兜底 (TF-IDF+拼音, 对音译名更准)
+    if best_score < 0.35:
+        try:
+            from src.scrapers.team_matcher import match_team as _mt
+            all_names = []
+            for pin in pin_list:
+                all_names.extend([pin.get("home", ""), pin.get("away", "")])
+            all_names = list(set(n for n in all_names if n))
+
+            home_match = _mt(bb_home, all_names, min_score=0.55)
+            away_match = _mt(bb_away, all_names, min_score=0.55)
+
+            if home_match and away_match:
+                for pin in pin_list:
+                    if ((home_match == pin.get("home", "") and away_match == pin.get("away", "")) or
+                        (home_match == pin.get("away", "") and away_match == pin.get("home", ""))):
+                        return pin, 0.38  # team_matcher confidence
+                # If can't find exact pair, return best pin with both matched names
+                for pin in pin_list:
+                    ph, pa = pin.get("home", ""), pin.get("away", "")
+                    if (home_match in (ph, pa) and away_match in (ph, pa)):
+                        return pin, 0.35
+            elif home_match or away_match:
+                matched = home_match or away_match
+                for pin in pin_list:
+                    if matched in (pin.get("home", ""), pin.get("away", "")):
+                        return pin, 0.32  # partial match
+        except ImportError:
+            pass
+
     return None, 0.0
 
 
