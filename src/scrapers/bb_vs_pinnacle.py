@@ -394,10 +394,17 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         name = info.get('name', pin_id)
         with _fetch_lock:
             print(f"\n获取 [{name}] (ID={pin_id}) 赔率...")
-        matches = get_league_matchups_and_markets(pin_id)
+        first_try = get_league_matchups_and_markets(pin_id)
+        retried = False
+        # V5.1: 并行调用时偶发空返回, 重试一次
+        if not first_try:
+            time.sleep(0.5)
+            first_try = get_league_matchups_and_markets(pin_id)
+            retried = True
         with _fetch_lock:
-            print(f"  → [{name}] {len(matches)} 场比赛")
-        return matches
+            note = " (重试)" if retried else ""
+            print(f"  → [{name}] {len(first_try)} 场比赛{note}")
+        return first_try
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         fut_map = {executor.submit(_fetch_one, pid): pid for pid in pin_ids_to_fetch}
