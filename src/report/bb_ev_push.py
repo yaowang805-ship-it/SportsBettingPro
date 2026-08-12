@@ -1334,10 +1334,12 @@ def _collect_opportunities(match, market_key):
         if sport in ("mma", "boxing"):
             continue
         # V5: ITF/Challenger网球 + 溢价异常高 → 球员名错配高频, 直接拒绝
-        if sport == "tennis" and ev > 20 and any("溢价异常高" in f for f in flags):
-            is_low_tier = any(kw in (league or "").lower() for kw in ("itf", "challenger", "w15", "m15", "w25", "m25", "w35", "w50", "w75"))
+        # V5.1: ITF/Challenger/W系列 全部直接拒绝 (Pinnacle无覆盖/流动性差/诚信风险)
+        if sport == "tennis":
+            is_low_tier = any(kw in (league or "").lower() for kw in ("itf", "challenger", "w15", "m15", "w25", "m25", "w35", "w50", "w75", "挑战赛"))
             if is_low_tier:
                 continue
+        if sport == "tennis" and ev > 20 and any("溢价异常高" in f for f in flags):
 
         # MMA/拳击: BB 与 Pinnacle 赔率偏差 >25% → 映射错误
         if sport in ("mma", "boxing") and pin_odds > 0:
