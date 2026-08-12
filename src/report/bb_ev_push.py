@@ -1619,6 +1619,8 @@ def _diversify_and_rank(qualified: list) -> list:
 
     # Kelly 分配（预算耗尽时保留机会，stake=0 仅展示不投注）
     qualified = _calc_kelly_stakes(qualified)
+    # V5.1: ¥50以下投注额直接屏蔽 — 碎单浪费推送空间
+    qualified = [o for o in qualified if o.get("_stake", 0) >= 50]
 
     # V5: "Bet Everything" — 职业做法: 有edge就上, 不设数量上限
     qualified.sort(key=lambda o: o.get("_stake", 0), reverse=True)
