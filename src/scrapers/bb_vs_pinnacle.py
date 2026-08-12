@@ -404,6 +404,13 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         with _fetch_lock:
             note = " (重试)" if retried else ""
             print(f"  → [{name}] {len(first_try)} 场比赛{note}")
+        # V5.1: 存档赔率到本地历史数据库
+        if first_try:
+            try:
+                from src.evolve.odds_archiver import archive_matchups
+                sport = info.get('sport', '?')
+                archive_matchups(sport, pin_id, name, first_try, [])
+            except ImportError: pass
         return first_try
 
     # V5.1: 串行获取 (并行偶发联赛数据丢失 → 篮球/网球=0)
