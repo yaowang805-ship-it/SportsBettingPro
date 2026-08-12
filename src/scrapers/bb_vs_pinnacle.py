@@ -406,21 +406,19 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             print(f"  → [{name}] {len(first_try)} 场比赛{note}")
         return first_try
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        fut_map = {executor.submit(_fetch_one, pid): pid for pid in pin_ids_to_fetch}
-        for fut in concurrent.futures.as_completed(fut_map):
-            try:
-                result = fut.result()
-                all_pin_matches.extend(result)
-            except Exception as e:
-                pid = fut_map[fut]
-                from src.scrapers.pinnacle_league_map import lookup_pin_league
-                info = lookup_pin_league(all_pin_leagues, pid)
-                league_name = info.get('name', str(pid))
-                sport = info.get('sport', '?')
-                error_msg = f"获取联赛失败 [{league_name}] (ID={pid}, sport={sport}): {e}"
-                print(f"  ❌ {error_msg}")
-                _fetch_errors.append(error_msg)
+    # V5.1: 串行获取 (并行偶发联赛数据丢失 → 篮球/网球=0)
+    for pid in sorted(pin_ids_to_fetch):
+        try:
+            matches = _fetch_one(pid)
+            all_pin_matches.extend(matches)
+        except Exception as e:
+            from src.scrapers.pinnacle_league_map import lookup_pin_league
+            info = lookup_pin_league(all_pin_leagues, pid)
+            league_name = info.get('name', str(pid))
+            sport = info.get('sport', '?')
+            error_msg = f"获取联赛失败 [{league_name}] (ID={pid}, sport={sport}): {e}"
+            print(f"  ❌ {error_msg}")
+            _fetch_errors.append(error_msg)
 
     # 6. Group Pinnacle matches by BB league name for matching
     # V4.5: 优先按 league_id 匹配（比 league_name 字符串匹配更可靠）
@@ -446,6 +444,13 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         pin_by_bb_league[bb_league] = id_matches + name_matches
 
     # 7. Find overlapping matches by odds pattern matching
+    # V5.1: debug — log non-football leagues in pin_by_bb_league
+    _non_fb_count = sum(1 for league in pin_by_bb_league if any(
+        kw in league for kw in ('WNBA','NBA','ATP','WTA','MLB','NFL','UFC','拳击')))
+    _non_fb_matches = sum(len(v) for k, v in pin_by_bb_league.items() if any(
+        kw in k for kw in ('WNBA','NBA','ATP','WTA','MLB','NFL','UFC','拳击')))
+    if _non_fb_matches > 0:
+        print(f"  🔍 pin_by_bb_league: {_non_fb_count} 非足球联赛, {_non_fb_matches} Pinnacle场次")
     matched = find_matches_by_odds(bb_matches, pin_by_bb_league)
 
     # V4.5: Union-Find 去重 — 跨联赛同比赛只保留最高分
