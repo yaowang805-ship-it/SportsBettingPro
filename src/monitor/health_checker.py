@@ -153,7 +153,7 @@ def check_data_freshness(report):
         report.stats["pin_leagues"] = n
         if n < 50:
             report.add_issue(f"联赛缓存: 仅{n}条, 需重建")
-        elif n < 200:
+        elif n < 100:
             report.add_warning(f"联赛缓存: {n}条, 偏少")
         else:
             report.add_ok(f"联赛缓存: {n}条")
