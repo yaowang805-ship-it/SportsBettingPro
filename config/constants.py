@@ -8,8 +8,8 @@ from pathlib import Path
 from config.settings import DATA_DIR
 
 # ── 资金管理 ──
-BANKROLL = 10000.0                 # 日预算（基准）
-INITIAL_BALANCE = 10000.0          # 初始资金（与 BANKROLL 一致）
+BANKROLL = 20000.0                 # 日预算（基准）
+INITIAL_BALANCE = 20000.0          # 初始资金（与 BANKROLL 一致）
 
 
 def get_dynamic_bankroll() -> float:

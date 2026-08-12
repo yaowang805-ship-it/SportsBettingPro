@@ -378,8 +378,8 @@ def _get_kelly_for_market(sub_market: str) -> float:
     return KELLY_BY_MARKET.get(sub_market, KELLY_FRACTION)
 
 # ── 日预算总额控制 (取代分组预算上限) ──
-# 纯 Kelly 分配, 总额 ¥10,000/天, 按投注额比例压缩
-TOTAL_DAILY_BUDGET = 10000  # 日预算总额
+# 纯 Kelly 分配, 总额 ¥20,000/天, 按投注额比例压缩
+TOTAL_DAILY_BUDGET = 20000  # 日预算总额
 
 
 def _load_budget_tracker():
