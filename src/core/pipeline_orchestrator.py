@@ -477,14 +477,16 @@ class PipelineOrchestrator:
                 logger.warning("辅助对比跳过: %s", e)
             logger.info("Step 2c/3: 完成")
 
-            logger.info("Step 3/3: +EV 推送 (合并双对比)...")
-            from src.report.bb_ev_push import main as push
-            old_argv = sys.argv
-            sys.argv = ["bb_ev_push", "--no-bet"] if not bet else ["bb_ev_push"]
-            try:
-                push()
-            finally:
-                sys.argv = old_argv
+            logger.info("Step 3/3: +EV 推送 (子进程, 不阻塞扫描)...")
+            import subprocess, shutil
+            for pyc in (SRC_DIR / "src").rglob("__pycache__"):
+                try: shutil.rmtree(pyc)
+                except: pass
+            push_args = [sys.executable, "-m", "src.report.bb_ev_push"]
+            if not bet:
+                push_args.append("--no-bet")
+            subprocess.run(push_args, capture_output=True, text=True,
+                          cwd=SRC_DIR.parent, timeout=600)
             logger.info("Step 3/3: 完成")
         finally:
             os.environ["PUSH_LABEL"] = _prev_label
