@@ -826,19 +826,25 @@ def _calc_kelly_stakes(opps: list) -> list:
         tier_cfg = get_tier_strategy(sport, league, tier)
         tier_cap = tier_cfg.get("max_stake_pct", sport_cap)
         stake_pct = min(stake_pct, min(sport_cap, tier_cap))
-        # V5.1: 赔率分层策略 (基于10万+历史数据+723笔结算)
+        # V5.1: per-sport赔率策略Kelly乘数 (网球3-5x保持80%, 其他运动高赔率25-50%)
+        stake_pct *= odds_kelly_mult
+        # V5.1: per-sport赔率策略 (10万+Pinnacle+723笔实盘)
         max_odds = tier_cfg.get("max_odds", 20.0)
-        # 检查 odds_strategy 是否有更严格的限制
+        odds_kelly_mult = 1.0  # 默认不改Kelly
         try:
             from src.evolve.odds_strategy_optimizer import get_odds_strategy
-            odds_cfg = get_odds_strategy(bb_odds, sport=o.get("sport", "football"))
+            odds_cfg = get_odds_strategy(bb_odds, sport=sport)
             max_odds = min(max_odds, odds_cfg.get("max_odds", 20.0))
+            odds_kelly_mult = odds_cfg.get("kelly_mult", 1.0)
             # 动态EV门槛: 高赔率需要更高EV
             extra_ev = odds_cfg.get("min_ev", 2.0) - 2.0
             if extra_ev > 0 and ev < 2.0 + extra_ev:
-                continue  # EV不足, 跳过
+                o["_stake"] = 0; o["_raw_stake"] = 0
+                continue
         except ImportError: pass
         if odds > max_odds:
+            o["_stake"] = 0; o["_raw_stake"] = 0
+            continue
             o["_stake"] = 0; o["_raw_stake"] = 0
             continue
 
