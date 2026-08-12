@@ -31,13 +31,14 @@ MAX_STAKE_PCT = 0.06               # 单注最大仓位比例
 PER_MATCH_CAP_PCT = 1.0            # 单场不设限
 
 # ── 运动排序（推送展示用） ──
+# V5.1: 足球第一, 篮球=网球同等优先, 乒乓/羽/排/拳击封杀
 SPORT_ORDER = {
-    "football": 0, "basketball": 1, "tennis": 2,
-    "baseball": 3, "american_football": 4,
-    "pingpong": 5, "badminton": 6, "volleyball": 7,
-    "boxing": 8, "mma": 9, "ice_hockey": 10,
+    "football": 0,
+    "basketball": 1, "tennis": 1,     # 同等优先级
+    "baseball": 2, "american_football": 2,
+    "mma": 3, "ice_hockey": 3,
 }
-_SPORT_SORT_TUPLE = tuple(SPORT_ORDER.keys())
+_SPORT_SORT_TUPLE = tuple(sorted(SPORT_ORDER.keys(), key=lambda k: SPORT_ORDER[k]))
 
 
 def get_league_tier(league: str) -> int:

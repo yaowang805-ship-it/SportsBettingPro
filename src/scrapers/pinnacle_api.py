@@ -48,6 +48,19 @@ if not _PATCHED:
 
 # ── Session setup ──────────────────────────────────────────────────────
 
+# V5.1: DNS 绕过 Shadowrocket VPN劫持 → 直连 Pinnacle Cloudflare IP
+import urllib3.util.connection as _urllib3_conn
+_orig_create_connection = _urllib3_conn.create_connection
+_PIN_REAL = ('104.18.42.200', 443)
+_PIN_HOST = 'guest.api.arcadia.pinnacle.com'
+
+def _patched_create_connection(address, *args, **kwargs):
+    if address[0] == _PIN_HOST:
+        address = (_PIN_REAL[0], _PIN_REAL[1])
+    return _orig_create_connection(address, *args, **kwargs)
+
+_urllib3_conn.create_connection = _patched_create_connection
+
 SESSION = requests.Session()
 SESSION.trust_env = False
 SESSION.proxies = {"http": "", "https": ""}
