@@ -1,5 +1,5 @@
 {
-  "balance": 10600.8,
+  "balance": 10508.8,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1633,6 +1633,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786500000,
       "created_at": "2026-08-12T01:16:20.519289+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_洛杉矶火花_(女)_菲尼克斯水星_(女)_让分客胜(+25)",
+      "sport": "basketball",
+      "league": "WNBA 美国职业女子篮球联赛",
+      "home_team": "洛杉矶火花 (女)",
+      "away_team": "菲尼克斯水星 (女)",
+      "home_cn": "洛杉矶火花 (女)",
+      "away_cn": "菲尼克斯水星 (女)",
+      "market": "handicap",
+      "market_type": "让分客胜(+2.5)",
+      "sub_market": "hc",
+      "line": "",
+      "odds": 1.91,
+      "stake": 92,
+      "model_prob": 0.5412,
+      "ev_pct": 3.37,
+      "pin_odds": 1.7634,
+      "fair_price": 1.8478,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786500000,
+      "created_at": "2026-08-12T01:21:32.088218+00:00",
       "track_only": false
     }
   ],
@@ -9133,8 +9156,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-12",
-    "used": 631.0,
-    "bets": 9
+    "used": 723.0,
+    "bets": 10
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
