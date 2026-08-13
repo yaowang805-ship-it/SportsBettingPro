@@ -336,6 +336,15 @@ def _save_results(results):
 
 def collect():
     """主入口：采集所有 pending 比赛的收盘赔率并计算 CLV。"""
+    from src.storage.file_lock import task_lock
+    with task_lock("clv_collector") as acquired:
+        if not acquired:
+            logger.info("CLV 采集已在运行，跳过本次（防 crontab/pipeline 重叠）")
+            return 0
+        return _collect_inner()
+
+
+def _collect_inner():
     logger.info("CLV 采集开始...")
 
     entries = _load_pending_entries()

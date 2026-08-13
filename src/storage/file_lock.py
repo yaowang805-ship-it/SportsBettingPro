@@ -9,6 +9,7 @@
 """
 import fcntl
 import os
+from contextlib import contextmanager
 from pathlib import Path
 from typing import IO
 
@@ -57,3 +58,32 @@ class locked_open:
             except OSError:
                 pass
         return False
+
+
+@contextmanager
+def task_lock(task_name: str):
+    """任务级互斥锁 — 防止同一任务多进程/多实例重叠运行 (非阻塞, 抢不到就跳过)。
+
+    用法:
+        with task_lock("clv_collector") as acquired:
+            if not acquired:
+                logger.info("已有实例在跑, 跳过")
+                return
+            ...  # 任务逻辑
+
+    锁文件常驻 data/locks/ 下 (不删除), 靠 flock 自动释放 (进程退出即释放)。
+    """
+    lock_path = _LOCK_DIR / f"{task_name}.task.lock"
+    fd = os.open(str(lock_path), os.O_CREAT | os.O_RDWR, 0o644)
+    acquired = False
+    try:
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            acquired = True
+        except (BlockingIOError, OSError):
+            acquired = False
+        yield acquired
+    finally:
+        if acquired:
+            fcntl.flock(fd, fcntl.LOCK_UN)
+        os.close(fd)

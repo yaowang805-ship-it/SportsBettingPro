@@ -315,14 +315,20 @@ class PipelineOrchestrator:
         Args:
             background: True = 后台线程（settle/report），False = 同步运行（scan）
         """
-        if name in self._active_tasks:
+        # 扫描任务(full_scan/incremental) 共享 "scan" 互斥键, 防止全量/增量扫描重叠
+        _is_scan = ("scan" in name or "incremental" in name)
+        lock_key = "scan" if _is_scan else name
+        if background:
+            lock_key = f"{lock_key}_bg"
+
+        if lock_key in self._active_tasks:
             logger.warning("[%s] 上一轮还未完成，跳过本次调度", name)
             return False
 
         if background:
             # 后台线程运行，不阻塞主循环
             def _bg_runner():
-                self._active_tasks.add(f"{name}_bg")
+                self._active_tasks.add(lock_key)
                 logger.info("[%s] ====== START (后台) ======", name)
                 t0 = time.time()
                 try:
@@ -335,12 +341,12 @@ class PipelineOrchestrator:
                     logger.error(traceback.format_exc())
                     self._send_alert(name, str(e))
                 finally:
-                    self._active_tasks.discard(f"{name}_bg")
+                    self._active_tasks.discard(lock_key)
             t = threading.Thread(target=_bg_runner, daemon=True)
             t.start()
             return True
 
-        self._active_tasks.add(name)
+        self._active_tasks.add(lock_key)
         logger.info("[%s] ====== START ======", name)
         t0 = time.time()
 
@@ -388,7 +394,7 @@ class PipelineOrchestrator:
             return False
 
         finally:
-            self._active_tasks.discard(name)
+            self._active_tasks.discard(lock_key)
 
     def _send_alert(self, task_name: str, error: str):
         """发送 DingTalk 告警（带冷却：同一任务每 30 分钟最多一次）。"""
