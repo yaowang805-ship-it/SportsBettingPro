@@ -1,5 +1,5 @@
 {
-  "balance": 1127.0,
+  "balance": 922.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1288,6 +1288,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786838400,
       "created_at": "2026-08-13T07:01:55.947921+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_塔波斯科_奥帕瓦_小球(25)",
+      "sport": "football",
+      "league": "捷克乙级联赛",
+      "home_team": "塔波斯科",
+      "away_team": "奥帕瓦",
+      "home_cn": "塔波斯科",
+      "away_cn": "奥帕瓦",
+      "market": "over_under",
+      "market_type": "小球(2.5)",
+      "sub_market": "ou",
+      "line": "",
+      "odds": 1.87,
+      "stake": 205,
+      "model_prob": 0.5578,
+      "ev_pct": 4.32,
+      "pin_odds": 1.6803,
+      "fair_price": 1.7926,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786809600,
+      "created_at": "2026-08-13T08:03:26.366268+00:00",
       "track_only": false
     }
   ],
@@ -9223,8 +9246,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-13",
-    "used": 3629.8,
-    "bets": 23
+    "used": 3834.8,
+    "bets": 24
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
