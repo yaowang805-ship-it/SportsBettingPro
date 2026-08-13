@@ -760,6 +760,45 @@ def _run_monte_carlo(win_rate: float, avg_odds: float, n_sims: int = 10000, n_be
     }
 
 
+def _apply_risk_manager_safety(opps: list) -> list:
+    """V5.2: RiskManager 安全层 — 冷却停注 + 回撤/连败折扣。
+
+    只取 RiskManager 的冷却/回撤/连败保护（权重矩阵已算 Kelly，这里不重复）。
+    Fail-open: RiskManager 初始化异常时不阻断投注。
+    """
+    try:
+        from src.risk.manager import RiskManager, RISK_STATE_FILE
+        rm = RiskManager()
+    except Exception:
+        return opps
+
+    # 状态新鲜度检查：risk_state 超过 24h 未更新则 fail-open（不应用回撤/连败，避免陈旧状态误停投）
+    try:
+        if RISK_STATE_FILE.exists():
+            import time as _t
+            if _t.time() - RISK_STATE_FILE.stat().st_mtime > 24 * 3600:
+                return opps
+    except Exception:
+        pass
+
+    # 冷却停注（24h 冷却期内全部清零，仅展示不下注）
+    if rm._in_cool_off():
+        for o in opps:
+            if o.get("_stake", 0) > 0:
+                o["_stake"] = 0
+        return opps
+
+    # 回撤 + 连败折扣（0.4~1.0 乘数；0.0 = 停手）
+    dd_mult = rm._get_drawdown_multiplier()
+    streak_mult = rm._get_streak_multiplier()
+    mult = dd_mult * streak_mult
+    if mult < 1.0:
+        for o in opps:
+            if o.get("_stake", 0) > 0:
+                o["_stake"] = int(o["_stake"] * mult)
+    return opps
+
+
 def _calc_kelly_stakes(opps: list) -> list:
     """V4.4 简化纯 Kelly 仓位分配。
 
@@ -781,6 +820,7 @@ def _calc_kelly_stakes(opps: list) -> list:
       - streak: 赌徒谬误 (过去≠未来)
     """
     from config.constants import MAX_STAKE_PCT as _MAX_STAKE_PCT, PER_MATCH_CAP_PCT as _PER_MATCH_CAP_PCT, get_dynamic_bankroll as _get_bankroll
+    from config.constants import PER_LEAGUE_CAP_PCT as _PER_LEAGUE_CAP_PCT, PER_SPORT_CAP_PCT as _PER_SPORT_CAP_PCT
     from config.weight_matrix_v4 import get_kelly_stake_pct
 
     bankroll = _get_bankroll()
@@ -884,6 +924,34 @@ def _calc_kelly_stakes(opps: list) -> list:
             ratio = per_match_max / total
             for o in group:
                 o["_stake"] = max(0, round(o["_stake"] * ratio))
+
+    # 第四遍：单联赛/单运动总敞口上限（防集中度风险）
+    league_groups = defaultdict(list)
+    sport_groups = defaultdict(list)
+    for o in opps:
+        if o["_stake"] <= 0:
+            continue
+        league_groups[(o.get("sport", ""), o.get("league", ""))].append(o)
+        sport_groups[o.get("sport", "")].append(o)
+
+    per_league_max = bankroll * _PER_LEAGUE_CAP_PCT
+    for key, group in league_groups.items():
+        total = sum(o["_stake"] for o in group)
+        if total > per_league_max:
+            ratio = per_league_max / total
+            for o in group:
+                o["_stake"] = max(0, round(o["_stake"] * ratio))
+
+    per_sport_max = bankroll * _PER_SPORT_CAP_PCT
+    for key, group in sport_groups.items():
+        total = sum(o["_stake"] for o in group)
+        if total > per_sport_max:
+            ratio = per_sport_max / total
+            for o in group:
+                o["_stake"] = max(0, round(o["_stake"] * ratio))
+
+    # 第五遍：RiskManager 安全层（冷却停注 + 回撤/连败折扣）
+    opps = _apply_risk_manager_safety(opps)
 
     return opps
 

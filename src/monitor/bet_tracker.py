@@ -287,6 +287,25 @@ def settle_bet(push_id: str, result: str, home_score=None, away_score=None,
                 b["profit_simple"] = round(-simple_stake / 2, 2)
             else:
                 b["profit_simple"] = 0
+
+            # V5.2: 同步到 RiskManager（冷却/回撤/连败状态）— 仅 won/lost（void/half 不喂）
+            if result in ("won", "lost"):
+                try:
+                    from src.risk.manager import RiskManager
+                    rm = RiskManager()
+                    _odds = b.get("bb_odds", 2.0) or 2.0
+                    _fair = b.get("fair_price", 0) or 0
+                    _prob = 1.0 / _fair if _fair > 1.0 else (1.0 / _odds if _odds > 1.0 else 0.5)
+                    _stake = b.get("stake", 0) or 0
+                    rm.record_outcome(
+                        _stake, result == "won", _odds, _prob,
+                        sport=b.get("sport", ""),
+                        home_team=b.get("home", ""),
+                        away_team=b.get("away", ""),
+                        bet_type=b.get("sub_market", b.get("designation", "h2h")))
+                except Exception:
+                    pass
+
             save_tracked_bets(data)
             logger.info("✅ 结算: %s → %s (¥%.0f) [%s]", push_id[:60], result, profit, source)
             return True

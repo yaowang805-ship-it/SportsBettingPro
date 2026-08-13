@@ -59,7 +59,7 @@ python3 -m src.report.bb_ev_push --no-bet
 | 日预算 | ¥20,000 | 稳定不变 |
 | Kelly 分数 | 0.50 | 稳妥半凯利 |
 | 单注上限 | 6% (¥1200) | |
-| 每日最多 | 50 笔 | 质量优先 |
+| 每日最多 | 100 笔 | 质量优先 |
 | EV 上限 | 12% (动态) | max(12, (odds-1)×20) |
 
 ### V4 权重矩阵 (`config/weight_matrix_v4.py`) — 全量 Pinnacle 历史数据驱动

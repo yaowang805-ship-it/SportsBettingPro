@@ -53,11 +53,12 @@ def send_dingtalk(title: str, body: str, timeout: int = 10) -> bool:
         body = f"**{DINGTALK_KEYWORD} · {title}**\n\n{body}"
     return _real_send(body, msgtype="markdown", title=title)
 
-# 日预算默认值与 config.constants.BANKROLL 保持一致 (¥10,000)
-DEFAULT_BUDGET = int(os.getenv('DEFAULT_BUDGET', '10000'))
+# 日预算默认值与 config.constants.BANKROLL 保持一致 (¥20,000)
+DEFAULT_BUDGET = int(os.getenv('DEFAULT_BUDGET', '20000'))
 
 # ===== 职业资金管理参数 =====
-MAX_SINGLE_BET_PCT = float(os.getenv('MAX_SINGLE_BET_PCT', '0.05'))
+# 单注仓位上限与 config.constants.MAX_STAKE_PCT 保持一致 (6%)
+MAX_SINGLE_BET_PCT = float(os.getenv('MAX_SINGLE_BET_PCT', '0.06'))
 MAX_TOTAL_EXPOSURE = float(os.getenv('MAX_TOTAL_EXPOSURE', '0.30'))
 # Kelly 分数统一由 config.constants.KELLY_FRACTION 控制，此处不再重复定义
 
