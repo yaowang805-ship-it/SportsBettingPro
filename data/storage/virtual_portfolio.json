@@ -1,5 +1,5 @@
 {
-  "balance": 595.0,
+  "balance": 0.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1242,6 +1242,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786611600,
       "created_at": "2026-08-13T08:55:15.283247+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_起亚老虎_三星狮_主胜",
+      "sport": "baseball",
+      "league": "韩国职业棒球",
+      "home_team": "起亚老虎",
+      "away_team": "三星狮",
+      "home_cn": "起亚老虎",
+      "away_cn": "三星狮",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.52,
+      "stake": 353,
+      "model_prob": 0.426,
+      "ev_pct": 7.35,
+      "pin_odds": 2.24,
+      "fair_price": 2.3475,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786615200,
+      "created_at": "2026-08-13T09:22:04.739345+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_NC恐龙_KT巫师_让分客胜(-15)",
+      "sport": "baseball",
+      "league": "韩国职业棒球",
+      "home_team": "NC恐龙",
+      "away_team": "KT巫师",
+      "home_cn": "NC恐龙",
+      "away_cn": "KT巫师",
+      "market": "handicap",
+      "market_type": "让分客胜(-1.5)",
+      "sub_market": "hc",
+      "line": "",
+      "odds": 2.28,
+      "stake": 242.0,
+      "model_prob": 0.456,
+      "ev_pct": 3.97,
+      "pin_odds": 2.09,
+      "fair_price": 2.193,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786615200,
+      "created_at": "2026-08-13T09:22:04.739401+00:00",
       "track_only": false
     }
   ],
@@ -9222,8 +9268,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-13",
-    "used": 4306.8,
-    "bets": 26
+    "used": 4901.8,
+    "bets": 28
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
