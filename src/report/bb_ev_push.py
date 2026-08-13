@@ -1824,7 +1824,14 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
         tier = opps[0].get("_tier", 3)
         tier_label = _TIER_LABEL.get(tier, "")
         if league != prev_league:
-            lines.append(f"  [{tier_label}] {league}")
+            # V5.1: 风控敏感联赛标注 — 软书限额 sharp 玩家的利基市场
+            try:
+                from config.league_profile import is_sensitive_league
+                _sensitive = is_sensitive_league(league, sport)
+            except ImportError:
+                _sensitive = False
+            _sensitive_tag = " ⚠️风控敏感" if _sensitive else ""
+            lines.append(f"  [{tier_label}] {league}{_sensitive_tag}")
             prev_league = league
 
         match_idx += 1
