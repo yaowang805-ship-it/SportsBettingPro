@@ -59,6 +59,7 @@ def scrape_league(sport, league_url, season, market="1x2", out_path=None):
         page.set_default_timeout(60000)  # 慢页容错, 防 Locator 30s 超时
 
         page_no = 1
+        empty_retries = 0
         while True:
             target = url if page_no == 1 else f"{url}#/page/{page_no}"
             # 重试一次: 偶发 ERR_CONNECTION_CLOSED / 慢加载
@@ -127,7 +128,14 @@ def scrape_league(sport, league_url, season, market="1x2", out_path=None):
                 batch += 1
             print(f"  page {page_no}: +{batch} (累计 {len(games)})", flush=True)
             if batch == 0:
+                # 翻页偶发空(内容未加载) → 重试 2 次再放弃, 防漏整页数据
+                if page_no > 1 and empty_retries < 2:
+                    empty_retries += 1
+                    print(f"  [retry] page {page_no} 空, 重试 {empty_retries}/2", flush=True)
+                    page.wait_for_timeout(4000)
+                    continue
                 break
+            empty_retries = 0
             page_no += 1
             if page_no > 60:
                 break

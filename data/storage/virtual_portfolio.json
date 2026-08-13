@@ -1,5 +1,5 @@
 {
-  "balance": 1260.0,
+  "balance": 1127.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1265,6 +1265,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786647600,
       "created_at": "2026-08-13T03:24:47.120784+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_比尼亚德尔马埃弗顿_奥达斯_上半场大球(10)",
+      "sport": "football",
+      "league": "智利甲级联赛",
+      "home_team": "比尼亚德尔马埃弗顿",
+      "away_team": "奥达斯",
+      "home_cn": "比尼亚德尔马埃弗顿",
+      "away_cn": "奥达斯",
+      "market": "over_under",
+      "market_type": "上半场大球(1.0)",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 2.03,
+      "stake": 133,
+      "model_prob": 0.5083,
+      "ev_pct": 3.19,
+      "pin_odds": 1.8547,
+      "fair_price": 1.9673,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786838400,
+      "created_at": "2026-08-13T07:01:55.947921+00:00",
       "track_only": false
     }
   ],
@@ -9200,8 +9223,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-13",
-    "used": 3496.8,
-    "bets": 22
+    "used": 3629.8,
+    "bets": 23
   },
   "updated": "2026-08-09T16:16:09.144069"
 }

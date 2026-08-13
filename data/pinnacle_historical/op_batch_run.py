@@ -66,17 +66,25 @@ def main():
     for sport, lg, lg_url, season, out in tasks:
         out.parent.mkdir(parents=True, exist_ok=True)
         t0 = time.time()
-        try:
-            games = scrape_league(sport, lg_url, season, out_path=out)
+        # 年度联赛(MLS/巴甲等)用单年, 跨年用 YYYY-YYYY; 空则回退单年
+        seasons_to_try = [season]
+        if "-" in season:
+            seasons_to_try.append(season.split("-")[0])
+        games = []
+        for s in seasons_to_try:
+            try:
+                games = scrape_league(sport, lg_url, s, out_path=out)
+            except Exception as e:
+                log(f"[error] {sport}/{lg} {s}: {type(e).__name__}: {e}")
+                games = []
             if games:
-                done += 1
-                log(f"[ok] {sport}/{lg} {season}: {len(games)} 场 ({time.time()-t0:.0f}s)")
-            else:
-                fail += 1
-                log(f"[empty] {sport}/{lg} {season}: 0 场 ({time.time()-t0:.0f}s)")
-        except Exception as e:
+                break
+        if games:
+            done += 1
+            log(f"[ok] {sport}/{lg} {season}: {len(games)} 场 ({time.time()-t0:.0f}s)")
+        else:
             fail += 1
-            log(f"[error] {sport}/{lg} {season}: {type(e).__name__}: {e}")
+            log(f"[empty] {sport}/{lg} {season}: 0 场 ({time.time()-t0:.0f}s)")
     log(f"完成: {done} 成功, {fail} 失败/空, 共 {len(tasks)}")
 
 if __name__ == "__main__":
