@@ -24,8 +24,11 @@ logger = get_logger(__name__)
 TRACKING_FILE = DATA_DIR / "clv_tracking.csv"
 RESULTS_FILE = DATA_DIR / "clv_results.csv"
 
-# 采集窗口：比赛开始前 15 分钟 ~ 360 分钟拉取收盘赔率
-CLV_WINDOW_BEFORE_MIN = 15   # 比赛前 15 分钟 (原5)
+# 采集窗口：比赛开始前 1 分钟 ~ 360 分钟拉取收盘赔率
+# V5.1 修复: 下限从15→1, 捕捉开赛前最后一刻的"真收盘线"
+# 开赛后 30 分钟内也采集 (兜底, 防止守护进程重启错过窗口)
+CLV_WINDOW_BEFORE_MIN = 1     # 比赛前 1 分钟 (原15, 太严漏掉收盘线)
+CLV_WINDOW_AFTER_MAX = 30     # 开赛后 30 分钟内兜底采集 (滚球价作参考)
 CLV_WINDOW_BEFORE_MAX = 360  # 比赛前 360 分钟/6小时 (原120)
 CLV_MIN_AGE_SECONDS = 300    # 至少推送后 5 分钟才采集 (避免取到同一时刻的赔率)
 
@@ -107,9 +110,9 @@ def _fetch_close_odds(entries):
         if not match_epoch:
             continue
 
-        # 只采集比赛前 5-120 分钟的
+        # V5.1: 采集窗口 = 开赛后30分钟 ~ 开赛前360分钟
         minutes_to_match = (match_epoch - now_epoch) / 60
-        if minutes_to_match < CLV_WINDOW_BEFORE_MIN or minutes_to_match > CLV_WINDOW_BEFORE_MAX:
+        if minutes_to_match < -CLV_WINDOW_AFTER_MAX or minutes_to_match > CLV_WINDOW_BEFORE_MAX:
             continue
 
         # 推送时间必须在比赛前至少 5 分钟
@@ -311,7 +314,24 @@ def _save_results(results):
         for r in results:
             writer.writerow({k: r.get(k, "") for k in fieldnames})
 
-    logger.info("保存 %d 条 CLV 结果到 %s", len(results), RESULTS_FILE)
+    # V5.1: 同时落库到 clv_data 表 (之前只写CSV, SQLite一直空)
+    try:
+        from src.storage.database import db
+        for r in results:
+            try:
+                db.record_clv(
+                    match_key=r.get("match_key", ""),
+                    bookmaker="Pinnacle",
+                    market=f"{r.get('sub_market','')}/{r.get('designation','')}",
+                    opening=r.get("bb_odds", 0),     # 推送时BB赔率
+                    closing=r.get("close_fair_price", 0),  # 收盘公平价
+                )
+            except Exception:
+                pass
+    except ImportError:
+        pass
+
+    logger.info("保存 %d 条 CLV 结果到 %s + clv_data表", len(results), RESULTS_FILE)
 
 
 def collect():
