@@ -421,7 +421,7 @@
       "success_rate": 0.0
     },
     "墨西哥女子联赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -446,7 +446,7 @@
       "success_rate": 0.0
     },
     "挪威丙级联赛": {
-      "attempts": 6,
+      "attempts": 10,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -466,7 +466,7 @@
       "success_rate": 0.0
     },
     "日本职业棒球": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -549,9 +549,24 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "哥伦比亚乙级联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "葡萄牙甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "联赛杯 (在美国和加拿大和墨西哥)": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-13T08:52:21.426400+00:00",
+  "updated": "2026-08-13T12:45:28.307146+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
