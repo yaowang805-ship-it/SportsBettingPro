@@ -69,6 +69,7 @@ SCHEDULE = [
     ("full_scan_morning",  "07:00", "do_full_scan",  {"bet": True}),
     ("settle_morning",     "08:30", "do_settle",      {}),
     ("daily_report",       "09:00", "do_daily_report",{}),
+    ("data_sync_summary",  "09:00", "do_data_sync_summary",{}),  # V5.1: 数据积累量日报
     ("memory_update",      "09:05", "do_memory_update", {}),
     ("daily_cleanup",      "09:10", "do_cleanup",      {}),  # 指纹+临时文件清理
     ("evolve_daily",       "09:15", "do_evolve_daily", {}),  # V4 BB溢价累积
@@ -539,6 +540,61 @@ class PipelineOrchestrator:
             dr()
         finally:
             sys.argv = old_argv
+
+    def do_data_sync_summary(self):
+        """V5.1: 每日9点数据积累量摘要 — 各数据源条数统计推钉钉。"""
+        try:
+            import sqlite3, json, csv
+            from pathlib import Path
+            DATA = SRC_DIR / "data" / "storage"
+            lines = ["📊 数据积累日报", ""]
+
+            # 1. 结算系统
+            bet_log_n = 0
+            bet_db = DATA / "sportsbetting.db"
+            if bet_db.exists():
+                c = sqlite3.connect(str(bet_db))
+                bet_log_n = c.execute("SELECT COUNT(*) FROM bet_log").fetchone()[0]
+                c.close()
+            settle_csv = DATA / "settlement_log.csv"
+            settle_n = sum(1 for _ in open(settle_csv, encoding='utf-8-sig')) - 1 if settle_csv.exists() else 0
+            lines.append(f"💰 结算: bet_log {bet_log_n} + settlement_log {settle_n} 条")
+
+            # 2. CLV 追踪
+            clv_n = 0
+            clv_db = DATA / "storage" / "sportsbetting.db"
+            if clv_db.exists():
+                c = sqlite3.connect(str(clv_db))
+                clv_n = c.execute("SELECT COUNT(*) FROM push_clv").fetchone()[0]
+                c.close()
+            lines.append(f"📈 CLV追踪: {clv_n} 条")
+
+            # 3. Pin 历史赔率
+            arch_n = 0
+            arch_db = DATA / "pinnacle_odds_archive.db"
+            if arch_db.exists():
+                c = sqlite3.connect(str(arch_db))
+                arch_n = c.execute("SELECT COUNT(*) FROM odds_archive").fetchone()[0]
+                c.close()
+            lines.append(f"🗄️ Pin历史赔率: {arch_n} 条")
+
+            # 4. 实盘历史
+            bh = DATA / "bet_history.csv"
+            real_n = 0
+            if bh.exists():
+                real_n = sum(1 for r in csv.DictReader(open(bh, encoding='utf-8-sig')) if '2026' in r.get('date',''))
+            lines.append(f"🎯 实盘投注(2026): {real_n} 条")
+
+            # 5. 映射数据
+            tm = DATA / "team_name_map.json"
+            tm_n = len(json.load(open(tm))) - 1 if tm.exists() else 0
+            lines.append(f"🗺️ 队名映射: {tm_n} 条")
+
+            body = "\n".join(lines)
+            send_dingtalk("数据积累日报", body, timeout=10)
+            logger.info("数据积累日报已推送")
+        except Exception as e:
+            logger.error("数据日报异常: %s", e)
 
     def do_weekly_report(self):
         from src.report.periodic_report import main as pr
