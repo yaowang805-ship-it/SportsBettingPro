@@ -426,7 +426,7 @@ def run_incremental(time_window: str = "all"):
         # 即无变动，也要检查是否需要强制刷新：
         # 1. Pin 数据 >2h 未刷新 → 强制对比
         # 2. BB 数据比 Pin 新 >5min → BB 已更新但 Pin 未跟上 → 强制对比
-        window_file = COMPARISON_FILE_NEAR if time_window == "near" else COMPARISON_FILE_FAR
+        window_file = COMPARISON_FILE_NEAR if time_window in ("near", "urgent") else COMPARISON_FILE_FAR
         force_refresh = False
         try:
             if not window_file.exists():
@@ -458,7 +458,7 @@ def run_incremental(time_window: str = "all"):
 
     print(f"\n📊 双向变动: BB {len(bb_changed_leagues)}个联赛, Pin {len(pin_changed_leagues)}个联赛 → 合并 {len(all_changed)}个")
     print(f"\n🔄 实时全量对比 (拉取最新BB+Pin, ~2min)...")
-    window_file = COMPARISON_FILE_NEAR if time_window == "near" else COMPARISON_FILE_FAR
+    window_file = COMPARISON_FILE_NEAR if time_window in ("near", "urgent") else COMPARISON_FILE_FAR
     new_result = compare_bb_vs_pinnacle(
         bb_matches,
         all_pin_leagues,

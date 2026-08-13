@@ -1719,6 +1719,7 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
 
     # 数据新鲜度：读取文件 mtime 显示提取时间
     bb_file = DATA_DIR / "bb_odds_extracted.json"
+    # V5.1: Pin时间戳取所有对比文件(MAIN+NEAR+FAR)里最新的, 不是固定主文件
     pin_file = COMPARISON_FILE
     bb_time = ""
     pin_time = ""
@@ -1730,7 +1731,9 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
     except (OSError, ValueError):
         pass
     try:
-        if pin_file.exists():
+        _all_pin_files = [f for f in (COMPARISON_FILE, COMPARISON_FILE_NEAR, COMPARISON_FILE_FAR) if f.exists()]
+        if _all_pin_files:
+            pin_file = max(_all_pin_files, key=lambda f: f.stat().st_mtime)
             pin_mtime = datetime.fromtimestamp(pin_file.stat().st_mtime, tz=timezone.utc).astimezone()
             pin_time = pin_mtime.strftime("%m/%d %H:%M")
             # 检测 Pinnacle 数据过期
