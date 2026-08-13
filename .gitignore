@@ -24,6 +24,9 @@ data/tennis_data_uk/
 data/storage/shot_*.csv
 data/storage/nba_shot_charts.csv
 
+# OddsPortal 批量下载输出 (308 联赛历史赔率, 后台任务产出)
+data/oddsportal/
+
 # Processed features (auto-generated)
 data/processed/*.csv
 data/player_power_cache.csv
