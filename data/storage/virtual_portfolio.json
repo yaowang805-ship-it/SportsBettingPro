@@ -1,5 +1,5 @@
 {
-  "balance": 922.0,
+  "balance": 686.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1311,6 +1311,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786809600,
       "created_at": "2026-08-13T08:03:26.366268+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_埼玉西武狮二队_东京读卖巨人二队_小分(75)",
+      "sport": "baseball",
+      "league": "日本职业棒球后备队联赛",
+      "home_team": "埼玉西武狮二队",
+      "away_team": "东京读卖巨人二队",
+      "home_cn": "埼玉西武狮二队",
+      "away_cn": "东京读卖巨人二队",
+      "market": "over_under",
+      "market_type": "小分(7.5)",
+      "sub_market": "ou",
+      "line": "",
+      "odds": 1.98,
+      "stake": 236,
+      "model_prob": 0.5436,
+      "ev_pct": 7.63,
+      "pin_odds": 1.7634,
+      "fair_price": 1.8397,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786611600,
+      "created_at": "2026-08-13T08:22:05.709392+00:00",
       "track_only": false
     }
   ],
@@ -9246,8 +9269,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-13",
-    "used": 3834.8,
-    "bets": 24
+    "used": 4070.8,
+    "bets": 25
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
