@@ -2706,6 +2706,10 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
 
     from config.settings import send_dingtalk
     ok = send_dingtalk(title, body)
+    if not ok:
+        # 重试一次（偶发网络抖动）
+        time.sleep(2)
+        ok = send_dingtalk(title, body)
     if ok:
         # 记录本次推送的所有推荐比赛
         scan_type = "incremental" if incremental else "full"
@@ -2774,7 +2778,13 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
         # 自动同步: 清除 pyc + Git 提交
         _auto_sync()
     else:
-        logger.warning("BB vs Pinnacle push failed")
+        logger.warning("BB vs Pinnacle push failed (重试后仍失败)")
+        # 记录失败标志，供健康检查/日报告警（钉钉宕机时本地留痕）
+        try:
+            (DATA_DIR / "push_failure_flag.json").write_text(
+                json.dumps({"ts": time.time(), "title": title[:120]}, ensure_ascii=False))
+        except Exception:
+            pass
 
 
 # ── 格式验证（供 pre-commit 回归测试使用） ──

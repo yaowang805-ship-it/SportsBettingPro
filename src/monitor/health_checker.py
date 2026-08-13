@@ -195,6 +195,20 @@ def check_pipeline(report):
         else:
             report.add_ok(f"今日推送: {push_count}次")
 
+    # 推送失败标志 (钉钉宕机时本地留痕, bb_ev_push 写入)
+    flag_file = DATA_DIR / "push_failure_flag.json"
+    if flag_file.exists():
+        try:
+            flag = json.loads(flag_file.read_text())
+            ts = flag.get("ts", 0)
+            age_h = (time.time() - ts) / 3600
+            if age_h < 24:
+                report.add_issue(f"钉钉推送失败(最近24h): {flag.get('title', '')[:60]}")
+            else:
+                report.add_warning(f"钉钉推送失败(旧, {age_h:.0f}h前): {flag.get('title', '')[:60]}")
+        except Exception:
+            pass
+
         # Incremental scan frequency
         inc_count = 0
         with open(log_file) as f:
