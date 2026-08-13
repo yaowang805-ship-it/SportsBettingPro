@@ -482,7 +482,7 @@ class PipelineOrchestrator:
             for pyc in (SRC_DIR / "src").rglob("__pycache__"):
                 try: shutil.rmtree(pyc)
                 except: pass
-            push_args = [sys.executable, "-m", "src.report.bb_ev_push"]
+            push_args = [sys.executable, "-m", "src.report.bb_ev_push", "--incremental"]
             if not bet:
                 push_args.append("--no-bet")
             subprocess.run(push_args, capture_output=True, text=True,
