@@ -1329,13 +1329,13 @@ def _collect_opportunities(match, market_key):
         if ev < v3_min_ev:
             continue
 
-        # V5.1: WNBA 的 OU UNDER(小球)是-EV(-20.8%), 数据验证只过滤小球
+        # V5.1: WNBA 的 OU UNDER(小球)是-EV(-20.8%), 提高门槛而非过滤
         # 108场实测: 买OVER +10.9%, 买UNDER -20.8% → 市场系统性低估WNBA高进球
         if (match.get("sport", "") == "basketball" and "WNBA" in (league or "")
                 and sub_market == "ou"):
             _des = opp.get("designation", "") or ""
             if "小" in _des or "under" in _des.lower():
-                continue
+                v3_min_ev = max(v3_min_ev, 6.0)  # 小球提高门槛到6% (补偿-20.8%负期望)
 
         # 同时也要过旧的 Tier 底线（兜底）
         if ev < min_ev:
