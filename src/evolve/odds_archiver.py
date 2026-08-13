@@ -37,21 +37,27 @@ def archive_matchups(sport, league_id, league_name, matchups, markets):
         mu_id = mu.get("id") or mu.get("matchup_id")
         if not mu_id:
             continue
-        participants = mu.get("participants", [])
-        parent = mu.get("parent", {})
-        parent_parts = parent.get("participants", []) if parent else []
-        home, away = "", ""
-        for p in (parent_parts or participants):
-            a = str(p.get("alignment", ""))
-            n = str(p.get("name", ""))
-            if "home" in a:
-                home = n
-            elif "away" in a:
-                away = n
+        # 优先用顶层 home/away 字段 (处理后的 matchup), 回退 participants (原始格式)
+        home = mu.get("home", "") or ""
+        away = mu.get("away", "") or ""
+        if not home or not away:
+            participants = mu.get("participants", [])
+            parent = mu.get("parent", {})
+            parent_parts = parent.get("participants", []) if parent else []
+            for p in (parent_parts or participants):
+                a = str(p.get("alignment", ""))
+                n = str(p.get("name", ""))
+                if "home" in a:
+                    home = n
+                elif "away" in a:
+                    away = n
         if not home or not away:
             continue
         start = mu.get("startTime") or mu.get("start_time") or ""
-        for mkt in mu.get("moneyline", []) + mu.get("spread", []) + mu.get("total", []):
+        # 合并所有市场字段 (处理后的 matchup 直接有 moneyline/spread/total)
+        markets = (mu.get("moneyline", []) + mu.get("spread", []) + mu.get("total", [])
+                   + mu.get("ht_moneyline", []) + mu.get("ht_spread", []) + mu.get("ht_total", []))
+        for mkt in markets:
             if not isinstance(mkt, dict):
                 continue
             mt = mkt.get("type", mkt.get("market_type", ""))
