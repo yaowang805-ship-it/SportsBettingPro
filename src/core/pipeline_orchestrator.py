@@ -213,20 +213,24 @@ class PipelineOrchestrator:
             if data is None or not isinstance(data, expected_type) or len(data) < min_count:
                 errors.append(f"[自检] {fpath.name} 损坏 (type={type(data).__name__}, len={len(data) if data else 0})")
 
-        # 3) Pinnacle 结构格式验证 + 自动修复
+        # 3) Pinnacle 结构格式验证 — flat {league_id: info} 为标准格式
         pin_struct = safe_load_json(DATA_DIR / "pinnacle_league_structure.json")
         if pin_struct and isinstance(pin_struct, dict):
-            flat_count = sum(1 for v in pin_struct.values() if isinstance(v, dict) and "name" in v and isinstance(v["name"], str))
-            if flat_count > 0:
-                logger.warning("[自检] Pinnacle结构flat格式, 自动转换...")
-                nested = {}
-                for lid, info in pin_struct.items():
-                    sid = str(info.get("sport_id", 0))
-                    if sid not in nested: nested[sid] = {}
-                    nested[sid][lid] = info
-                from config.settings import DATA_DIR as _dd
-                (_dd / "pinnacle_league_structure.json").write_text(json.dumps(nested, ensure_ascii=False, indent=2))
-                logger.info("[自检] Pinnacle结构已自动修复 (flat→nested)")
+            # 历史 nested 格式 {sport_id: {league_id: info}} → 展平为 flat
+            nested_count = sum(1 for v in pin_struct.values()
+                               if isinstance(v, dict) and "name" not in v)
+            if nested_count > 0 and nested_count == len(pin_struct) and len(pin_struct) <= 20:
+                logger.warning("[自检] Pinnacle结构为历史nested格式, 自动展平...")
+                flat = {}
+                for sport_data in pin_struct.values():
+                    if isinstance(sport_data, dict):
+                        for lid, info in sport_data.items():
+                            if isinstance(info, dict):
+                                flat[str(lid)] = info
+                (DATA_DIR / "pinnacle_league_structure.json").write_text(
+                    json.dumps(flat, ensure_ascii=False, indent=2))
+                pin_struct = flat
+                logger.info("[自检] Pinnacle结构已自动修复 (nested→flat, %d 联赛)", len(flat))
 
         # 4) Pinnacle API 连通性检查 (Shadowrocket 必须运行)
         try:

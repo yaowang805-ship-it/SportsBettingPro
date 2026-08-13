@@ -87,11 +87,11 @@ class TestV4WeightMatrix:
 # ===================================================================
 class TestDedup:
     def test_fingerprint_persistence(self):
-        """指纹文件存在且包含合理条目."""
+        """指纹文件存在且为合法 JSON dict（允许为空 — 轮换后清空属正常）."""
         fp = ROOT / "data" / "storage" / "pushed_opportunities.json"
         assert fp.exists(), "指纹文件不存在"
         data = json.loads(fp.read_text())
-        assert len(data) > 0, "指纹文件为空"
+        assert isinstance(data, dict), "指纹文件格式错误"
 
     def test_filter_pushed_works(self):
         """_filter_pushed 第二次调用应返回空."""
@@ -140,11 +140,11 @@ class TestSettleability:
 # 4. 日预算
 # ===================================================================
 class TestDailyBudget:
-    def test_bankroll_is_10000(self):
-        """日预算固定¥10,000."""
+    def test_bankroll_is_20000(self):
+        """日预算固定¥20,000."""
         from config.constants import get_dynamic_bankroll, BANKROLL
-        assert BANKROLL == 10000.0, f"BANKROLL={BANKROLL}"
-        assert get_dynamic_bankroll() == 10000.0, f"get_dynamic_bankroll={get_dynamic_bankroll()}"
+        assert BANKROLL == 20000.0, f"BANKROLL={BANKROLL}"
+        assert get_dynamic_bankroll() == 20000.0, f"get_dynamic_bankroll={get_dynamic_bankroll()}"
 
 
 # ===================================================================

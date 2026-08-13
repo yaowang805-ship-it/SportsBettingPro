@@ -683,13 +683,19 @@ def _safe_get_name(info):
     return ""
 
 def lookup_pin_league(all_pin_leagues, league_id):
-    """V4.3: 在 nested 结构 {sport_id: {league_id: data}} 中穿透查找联赛。
+    """按 league_id 查找联赛 info（统一入口）。
 
-    统一入口 — 所有需要根据 league_id 查找 league data 的地方都应使用此函数。
+    V5.1: 标准格式为 flat {league_id: info}；为兼容历史 nested
+    {sport_id: {league_id: info}} 文件，做穿透兜底。
     """
+    lid = str(league_id)
+    info = all_pin_leagues.get(lid)
+    if isinstance(info, dict) and "name" in info:
+        return info
+    # 兼容 nested 格式: 穿透 sport_id 查找
     for sport_data in all_pin_leagues.values():
-        if isinstance(sport_data, dict) and str(league_id) in sport_data:
-            return sport_data[str(league_id)]
+        if isinstance(sport_data, dict) and lid in sport_data:
+            return sport_data[lid]
     return {}
 
 def _find_best_league(pin_name, all_sport_matchups):

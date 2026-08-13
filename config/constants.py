@@ -13,7 +13,7 @@ INITIAL_BALANCE = 20000.0          # 初始资金（与 BANKROLL 一致）
 
 
 def get_dynamic_bankroll() -> float:
-    """V4.5: 固定日预算 ¥10,000. 约30场/天 → 平均 ¥333/场."""
+    """固定日预算 ¥20,000."""
     return BANKROLL
 
 # ── EV 相关 ──
