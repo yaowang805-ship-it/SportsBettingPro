@@ -99,16 +99,21 @@ def check_connectivity(report):
     except Exception as e:
         report.add_issue(f"钉钉: {e}")
 
-    # Cookie freshness
+    # Cookie 有效性 — 真实 API 探测 (非仅文件时间)
     cookie_file = DATA_DIR / "pinnacle_cf_clearance.txt"
-    if cookie_file.exists():
-        age_h = (time.time() - cookie_file.stat().st_mtime) / 3600
-        if age_h > 24:
-            report.add_warning(f"Pinnacle Cookie: {age_h:.0f}h 未刷新")
-        else:
-            report.add_ok(f"Pinnacle Cookie: {age_h:.1f}h")
-    else:
+    if not cookie_file.exists():
         report.add_issue("Pinnacle Cookie: 文件不存在")
+    else:
+        try:
+            from src.scrapers.pinnacle_api import SESSION, API_BASE
+            resp = SESSION.get(f"{API_BASE}/sports", timeout=8)
+            if resp.status_code == 200:
+                n_sports = len(resp.json()) if isinstance(resp.json(), list) else 0
+                report.add_ok(f"Pinnacle Cookie: 有效 ({n_sports}运动)")
+            else:
+                report.add_issue(f"Pinnacle Cookie: 失效 (HTTP {resp.status_code})")
+        except Exception as e:
+            report.add_issue(f"Pinnacle Cookie: 探测失败 ({str(e)[:40]})")
 
 
 def check_data_freshness(report):
