@@ -27,6 +27,7 @@ logger = get_logger(__name__)
 from fetchers.espn_scores import (
     fetch_espn_scores as _espn_fetch,
     LEAGUE_ESPN_PATH as _ESPN_LEAGUES,
+    fetch_tennis_scores as _tennis_fetch,
 )
 
 # ── football-data.org ──
@@ -418,6 +419,16 @@ def get_completed_scores_by_sport(sport: str, days_back: int = 3) -> list:
     遍历该运动所有已知联赛，去重后返回合并结果。
     用于 auto_settle.py 的 sport 级联退避。
     """
+    # 网球: 无联赛概念，直接拉 ATP+WTA 全部已完赛
+    if sport == "tennis":
+        try:
+            results = _tennis_fetch(days_back)
+            logger.info("网球级联退避: 获得 %d 场比赛", len(results))
+            return results
+        except Exception as e:
+            logger.warning("网球比分获取失败: %s", e)
+            return []
+
     leagues = _SPORT_LEAGUES.get(sport)
     if not leagues:
         # 尝试模糊匹配：key 包含 sport 字符串
@@ -454,6 +465,10 @@ def get_completed_scores(league: str, days_back: int = 3) -> list:
     Returns:
         [{home_team, away_team, home_score, away_score, completed, scores}, ...]
     """
+
+    # 网球: 无联赛概念，拉全量 ATP+WTA 已完赛（按球员名匹配）
+    if any(kw in league for kw in ("ATP", "WTA", "ITF", "世界网球", "网球")):
+        return _tennis_fetch(max(days_back, 3))
 
     # 1. ESPN (免费，无需密钥)
     if league in _ESPN_LEAGUES:

@@ -323,6 +323,67 @@ def fetch_espn_scores(league: str, days_back: int = 3) -> List[dict]:
     return results
 
 
+def _parse_tennis_match(comp: dict) -> Optional[dict]:
+    """解析 ESPN 网球单场。网球用 winner 布尔标记，比分是盘数（结算只需胜负）。"""
+    competitors = comp.get("competitors", [])
+    if len(competitors) < 2:
+        return None
+    names = []
+    winner_flags = []
+    for c in competitors:
+        name = (c.get("athlete") or c.get("team") or {}).get("displayName", "")
+        names.append(name.strip())
+        winner_flags.append(bool(c.get("winner")))
+
+    status = comp.get("status", {}).get("type", {}).get("name", "")
+    if status != "STATUS_FINAL":
+        return None
+
+    # 胜负转成 1/0 比分，结算侧用 home_score > away_score 判主胜
+    if winner_flags[0]:
+        hs, gs = 1, 0
+    elif winner_flags[1]:
+        hs, gs = 0, 1
+    else:
+        hs = gs = 0
+    return {
+        "home_team": names[0],
+        "away_team": names[1],
+        "home_score": hs,
+        "away_score": gs,
+        "status": status,
+        "completed": True,
+        "game_date": comp.get("date", ""),
+    }
+
+
+def fetch_tennis_scores(days_back: int = 3) -> List[dict]:
+    """从 ESPN 获取 ATP + WTA 已完成网球比赛结果。
+
+    网球结构: events=赛事(tournament) → groupings=轮次 → competitions=单场。
+    返回: [{home_team, away_team, home_score, away_score, completed}]。
+    """
+    results = []
+    now = datetime.now(timezone.utc)
+    for tour in ("atp", "wta"):
+        for day_offset in range(days_back - 1, -1, -1):
+            date_str = (now - timedelta(days=day_offset)).strftime("%Y%m%d")
+            url = (
+                f"https://site.api.espn.com/apis/site/v2/sports/tennis/{tour}/scoreboard"
+                f"?dates={date_str}"
+            )
+            data = _fetch_json(url)
+            if not data:
+                continue
+            for event in data.get("events", []):
+                for grouping in event.get("groupings", []):
+                    for comp in grouping.get("competitions", []):
+                        game = _parse_tennis_match(comp)
+                        if game and game["completed"]:
+                            results.append(game)
+    return results
+
+
 def fetch_espn_scores_by_sport_key(sport_key: str, days_back: int = 3) -> List[dict]:
     """通过 Odds API sport_key 获取 ESPN 比分。
 

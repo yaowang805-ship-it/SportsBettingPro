@@ -51,11 +51,11 @@ def test_import_ev_push():
         _diversify_and_rank, _format_body, _min_ev_for_tier,
     )
     assert callable(build_report)
-    # V4.3: 统一 2% — 真正过滤交给 _odds_weight (Pinnacle 数据驱动)
-    assert _min_ev_for_tier(1) == 2.0
-    assert _min_ev_for_tier(2) == 2.0
-    assert _min_ev_for_tier(3) == 2.0
-    assert _min_ev_for_tier(4) == 2.0
+    # V5.1: 分层EV门槛 (football T1=2%, T2=2.5%, T3=4%, T4=6%)
+    assert _min_ev_for_tier(1, "football") == 2.0
+    assert _min_ev_for_tier(2, "football") == 2.5
+    assert _min_ev_for_tier(3, "football") == 4.0
+    assert _min_ev_for_tier(4, "football") == 6.0
 
 
 def test_import_virtual_bet():
