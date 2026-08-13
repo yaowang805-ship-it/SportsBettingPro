@@ -748,6 +748,19 @@ class RiskManager:
                 "message": f"🛑 周亏损 {weekly_loss_pct:.1%} 超过 20% 阈值，停止下注",
             }
 
+        # 3.5 单日亏损检查（硬熔断）
+        daily_loss = self.compute_daily_loss()
+        if daily_loss >= self.daily_loss_limit:
+            return {
+                "tripped": True,
+                "reason": "daily_loss",
+                "cool_off_remaining_hours": 0.0,
+                "consecutive_losses": self.consecutive_losses,
+                "drawdown_pct": round(dd, 4),
+                "balance": round(self.current_balance, 2),
+                "message": f"🛑 单日亏损 ¥{daily_loss:.0f} 超过限额 ¥{self.daily_loss_limit:.0f}，停止下注",
+            }
+
         # 4. 空仓 / 低回撤警告（未触发）
         warning = ""
         if dd >= 0.10:

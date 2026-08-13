@@ -781,14 +781,18 @@ def _apply_risk_manager_safety(opps: list) -> list:
     except Exception:
         pass
 
-    # 冷却停注（24h 冷却期内全部清零，仅展示不下注）
-    if rm._in_cool_off():
-        for o in opps:
-            if o.get("_stake", 0) > 0:
-                o["_stake"] = 0
-        return opps
+    # 硬熔断：冷却/回撤≥15%/周亏≥20%/单日亏≥10% → 全部清零，仅展示不下注
+    try:
+        cb = rm.circuit_breaker_status()
+        if cb.get("tripped"):
+            for o in opps:
+                if o.get("_stake", 0) > 0:
+                    o["_stake"] = 0
+            return opps
+    except Exception:
+        pass
 
-    # 回撤 + 连败折扣（0.4~1.0 乘数；0.0 = 停手）
+    # 软折扣：回撤 + 连败折扣（0.4~1.0 乘数；0.0 = 停手）
     dd_mult = rm._get_drawdown_multiplier()
     streak_mult = rm._get_streak_multiplier()
     mult = dd_mult * streak_mult
@@ -942,8 +946,15 @@ def _calc_kelly_stakes(opps: list) -> list:
             for o in group:
                 o["_stake"] = max(0, round(o["_stake"] * ratio))
 
-    per_sport_max = bankroll * _PER_SPORT_CAP_PCT
+    # 单运动总敞口上限 (用户指定: 足球主力40%, 篮球/网球各20%, 其他保守)
+    _SPORT_TOTAL_CAPS = {
+        "football": 0.40, "basketball": 0.20, "tennis": 0.20,
+        "baseball": 0.10, "american_football": 0.10, "ice_hockey": 0.10,
+        "mma": 0.05, "boxing": 0.05,
+    }
     for key, group in sport_groups.items():
+        sport_cap = _SPORT_TOTAL_CAPS.get(key, _PER_SPORT_CAP_PCT)
+        per_sport_max = bankroll * sport_cap
         total = sum(o["_stake"] for o in group)
         if total > per_sport_max:
             ratio = per_sport_max / total

@@ -30,7 +30,7 @@ KELLY_FRACTION = 0.50              # Kelly 分数（bb_virtual_bet 0.50 / 旧 bb
 MAX_STAKE_PCT = 0.06               # 单注最大仓位比例
 PER_MATCH_CAP_PCT = 0.06           # 单场总投注上限 (6% 日预算)
 PER_LEAGUE_CAP_PCT = 0.12          # 单联赛总投注上限 (12% 日预算)
-PER_SPORT_CAP_PCT = 0.20           # 单运动总投注上限 (20% 日预算)
+PER_SPORT_CAP_PCT = 0.20           # 单运动总投注上限默认值 (实际按运动: 足球40%/篮球20%/网球20%/棒球10%..., 见 bb_ev_push._SPORT_TOTAL_CAPS)
 
 # ── 运动排序（推送展示用） ──
 # V5.1: 足球第一, 篮球=网球同等优先, 乒乓/羽/排/拳击封杀
