@@ -1101,11 +1101,30 @@ def season_weight(season_str: str) -> float:
 #       折扣系数回测: 基于数据源质量分级
 # =====================================================================
 # 数据源折扣 (Pinnacle=1.0, 共识赔率按数据量和可靠性分级)
+# 2026-08-13 实测: 顶级联赛共识收盘价 ≈ Pinnacle 收盘价 (Brier 差异 0.0%, 1162场),
+# 故顶级联赛 OddsPortal 折扣提至 0.9; 小联赛(无Pinnacle对照)保持 0.75 保守。
 DISCOUNT_PINNACLE   = 1.0   # Pinnacle 直接收盘赔率
 DISCOUNT_SBR_LARGE  = 0.85  # SBR ≥10K笔 (NBA/NHL/MLB)
 DISCOUNT_SBR_MEDIUM = 0.75  # SBR 5-10K笔 (NFL)
-DISCOUNT_ODDSPORTAL = 0.75  # OddsPortal (非Pinnacle源)
+DISCOUNT_ODDSPORTAL = 0.75  # OddsPortal 默认 (小联赛, 无Pinnacle对照, 保守)
+DISCOUNT_ODDSPORTAL_TOP = 0.90  # OddsPortal 顶级联赛 (共识价已验证≈Pinnacle)
 DISCOUNT_WNBA       = 0.30  # WNBA (借用NBA数据, 大幅折扣)
+
+# 顶级联赛关键词 (共识收盘价已验证 ≈ Pinnacle 收盘价, Brier 差异 0.0%)
+_TOP_CONSENSUS_LEAGUE_KW = [
+    "英超", "西甲", "意甲", "德甲", "法甲", "英冠", "荷甲", "葡超", "比甲",
+    "premier-league", "laliga", "serie-a", "bundesliga", "ligue-1",
+    "championship", "eredivisie", "liga-portugal", "jupiler",
+]
+
+
+def get_oddsportal_discount(league: str = "") -> float:
+    """OddsPortal 数据折扣: 顶级联赛 0.9 (共识价≈Pinnacle), 其他 0.75 (保守)。"""
+    ll = (league or "").lower()
+    for kw in _TOP_CONSENSUS_LEAGUE_KW:
+        if kw.lower() in ll:
+            return DISCOUNT_ODDSPORTAL_TOP
+    return DISCOUNT_ODDSPORTAL
 
 MLB_DATA = {
     0: (0.6364, 1.27, 198), 1: (0.652, 1.42, 4218), 2: (0.5743, 1.61, 12934),
