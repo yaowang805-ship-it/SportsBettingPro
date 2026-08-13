@@ -2010,13 +2010,39 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
                 base_min_ev = 4.0
             else:
                 base_min_ev = 5.0
-        elif sub_market in ("dc", "dnb", "ht_dc"):
+        elif sub_market == "dnb":
+            # 平局退款: 平局退本金, 不受平局概率高估影响 → 保持低门槛
             if odds < 2.0:
-                base_min_ev = 2.0   # 1X2数学推导, 误差<1%
+                base_min_ev = 2.0
             elif odds < 3.5:
                 base_min_ev = 3.0
             else:
-                base_min_ev = 4.0   # V5: 5%→4% (high odds relaxation)
+                base_min_ev = 4.0
+        elif sub_market == "dc":
+            # 双重机会(含和局) — 1X2比例法去抽水高估平局概率, EV虚高
+            # 实证: 14条DC结算 ROI -54.8%, 而推送平均EV +7.7% → 需大幅提高门槛
+            if odds < 2.0:
+                base_min_ev = 4.0   # 从2.0提高 (补偿平局概率高估~2-3%)
+            elif odds < 3.5:
+                base_min_ev = 5.0   # 从3.0提高
+            else:
+                base_min_ev = 6.0   # 从4.0提高
+        elif sub_market == "ht_dc":
+            # 上半场双重机会 — 上半场平局率~45%远高于全场~27%, 偏差更大
+            if odds < 2.0:
+                base_min_ev = 5.0   # 更高门槛
+            elif odds < 3.5:
+                base_min_ev = 6.0
+            else:
+                base_min_ev = 7.0
+        elif sub_market == "ht":
+            # 上半场1X2/让球/大小 — 上半场平局率/进球率与全场差异大, 8-12实证全输
+            if odds < 2.0:
+                base_min_ev = 3.5   # 从2.0提高
+            elif odds < 3.5:
+                base_min_ev = 4.5
+            else:
+                base_min_ev = 6.0
         # V5: HC低赔率3%, OU有Pin数据4%
         elif sub_market in ("hc", "handicap"):
             base_min_ev = 3.0
