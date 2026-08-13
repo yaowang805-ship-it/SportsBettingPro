@@ -129,6 +129,13 @@ class PipelineOrchestrator:
         self._last_scan_success: float = 0             # 最后一次成功完成的时间戳
         self._scan_failure_count: int = 0              # 连续失败计数
         self._alert_cooldown: dict[str, float] = {}    # 告警冷却
+        # V5.1: 告警冷却持久化 — 防止守护进程重启后重复告警
+        self._cooldown_file = SRC_DIR / "data" / "storage" / "alert_cooldown.json"
+        try:
+            if self._cooldown_file.exists():
+                self._alert_cooldown = json.loads(self._cooldown_file.read_text())
+        except Exception:
+            pass
         self._setup_signal_handlers()
 
     # ------------------------------------------------------------------
@@ -387,6 +394,11 @@ class PipelineOrchestrator:
             logger.info("[%s] 告警冷却中，跳过 (%.0f秒前刚发过)", task_name, now - last)
             return
         self._alert_cooldown[task_name] = now
+        # V5.1: 持久化冷却时间, 防止重启后重复告警
+        try:
+            self._cooldown_file.write_text(json.dumps(self._alert_cooldown))
+        except Exception:
+            pass
 
         from datetime import timezone as _tz, timedelta as _td
         bj_time = datetime.now(_tz(_td(hours=8))).strftime('%m/%d %H:%M')
