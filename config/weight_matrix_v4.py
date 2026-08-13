@@ -2048,6 +2048,9 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
             base_min_ev = 3.0
         elif sub_market in ("ou", "over_under"):
             base_min_ev = 4.0   # V5: 5%→4% (median EV=4.4%, Pin ROI=-3.6%)
+            # V5.1: WNBA OU 门槛提到5% — Pin在WNBA样本仅261场, 公平价不准, EV虚高
+            if "WNBA" in (league or ""):
+                base_min_ev = 5.0
         elif pin_roi < -0.03:
             base_min_ev = 5.0
         else:
