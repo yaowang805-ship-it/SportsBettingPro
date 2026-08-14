@@ -29,12 +29,11 @@ def devig_shin(odds: list) -> list:
         return [1.0 / float(o) if o and float(o) > 1.0 else 0.0 for o in odds]
 
     b = [1.0 / o for o in clean]
-    sum_b2 = sum(x * x for x in b)
 
     def _sum_pi(z):
         s = 0.0
         for bi in b:
-            s += (math.sqrt(z * z + 4.0 * (1.0 - z) * bi * bi / sum_b2) - z) / (2.0 * (1.0 - z))
+            s += (math.sqrt(z * z + 4.0 * (1.0 - z) * bi * bi) - z) / (2.0 * (1.0 - z))
         return s
 
     # 二分求 z: sum_pi 随 z 单调递减, 目标是 sum_pi(z)=1
@@ -47,7 +46,7 @@ def devig_shin(odds: list) -> list:
             hi = mid
     z = (lo + hi) / 2.0
 
-    probs = [(math.sqrt(z * z + 4.0 * (1.0 - z) * bi * bi / sum_b2) - z) / (2.0 * (1.0 - z))
+    probs = [(math.sqrt(z * z + 4.0 * (1.0 - z) * bi * bi) - z) / (2.0 * (1.0 - z))
              for bi in b]
     # 归一化到精确和=1(消除浮点误差)
     total = sum(probs)
