@@ -668,7 +668,9 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                     )
                     tn_score = max(tn_score, fs)
                 if sport not in ("tennis", "boxing", "mma"):
-                    if tn_score < 0.3 and combined < 0.90:
+                    # V5.3: 时间匹配必须队名相似(tn_score>=0.3), 否则跳过。
+                    # 之前 combined>=0.90 放行 → 同联赛不同比赛(时间赔率相近)误配成假机会
+                    if tn_score < 0.3:
                         continue
             used_bb_keys.add(bb_key)
             used_pin_ids.add(pin_id)
