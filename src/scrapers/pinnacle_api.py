@@ -86,13 +86,14 @@ MAX_COOKIE_REFRESHES = 3           # 每次扫描最多刷新 3 次 cookie
 _ssl_fail_count = 0  # 全局 SSL 失败计数器（看门狗用）
 
 _last_req_time = 0.0
-_MIN_REQUEST_INTERVAL = 0.35       # V5: 0.5→0.35s (3 workers × ~8 req/s, 封禁线16)
+_MIN_REQUEST_INTERVAL = 0.6        # V5.2: 0.35→0.6s 降频防封(Cloudflare IP 封禁)
 _REQUEST_COUNT = 0                  # V5: 扫描内请求计数器
 _SCAN_PAUSE_UNTIL = 0.0            # V5: Cloudflare 封禁后自动暂停
 _REQUEST_BURST_WINDOW = 10         # V5: 10秒窗口
-_REQUEST_BURST_LIMIT = 15          # V5: 10秒内最多15个请求
+_REQUEST_BURST_LIMIT = 8           # V5.2: 15→8 降频(~0.8 req/s, 远离封禁线)
 _BURST_WINDOW_START = 0.0
 _BURST_COUNT = 0
+_ip_ban_notify_until = 0.0         # V5.2: IP 封禁钉钉告警节流(30min 内只发一次)
 
 _cookie_loaded = False  # 进程级标志，只记一次日志
 _cookie_refresh_count = 0          # 本次扫描 cookie 刷新次数
@@ -318,6 +319,24 @@ def _refresh_cookie_fast():
         browser.close()
 
 
+def _notify_ip_ban():
+    """IP 封禁时发钉钉提醒换节点(节流: 30min 内只发一次, 不阻塞扫描)。"""
+    global _ip_ban_notify_until
+    now = time.time()
+    if now < _ip_ban_notify_until:
+        return
+    _ip_ban_notify_until = now + 1800
+    try:
+        from config.dingtalk import send_dingtalk
+        msg = ("【投注推荐】⚠️ Pinnacle IP 被封禁\n\n"
+               "Cloudflare 已封禁当前出口 IP, 扫描自动暂停 30 分钟。\n"
+               "请切换到 Shadowrocket 其他节点(换 IP)后, 系统会自动恢复。")
+        send_dingtalk(msg, msgtype="text", title="Pinnacle 封禁告警")
+        logger.info("已发送钉钉 IP 封禁告警")
+    except Exception as e:
+        logger.error("发送 IP 封禁告警失败: %s", e)
+
+
 def _diagnose_response(resp, url: str) -> str:
     """诊断非 200 响应，返回错误类型: cloudflare_block/ip_ban/maintenance/rate_limit/unknown"""
     try:
@@ -389,6 +408,7 @@ def api_get(path, retry=True):
                 logger.error("Cloudflare IP 封禁 — 自动暂停扫描 30 分钟")
                 global _SCAN_PAUSE_UNTIL
                 _SCAN_PAUSE_UNTIL = time.time() + 1800  # 30 分钟冷却
+                _notify_ip_ban()  # V5.2: 钉钉提醒换节点(节流)
                 return None  # 不重试，重试也没用
 
             if err_type == "cookie_expired":
