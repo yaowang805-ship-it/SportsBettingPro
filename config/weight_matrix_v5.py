@@ -46,9 +46,15 @@ ODDS_BINS = [
     10.00, 12.00, 15.00, 20.00, float('inf')
 ]
 
+# 网球/篮球数据是 ~0.10 步长的细桶, 不能用粗桶 ODDS_BINS(0.20步长)索引
 TENNIS_ODDS_BINS = [
-    1.15, 1.25, 1.35, 1.50, 1.70, 1.90, 2.10,
-    2.50, 3.00, 4.00, 5.00, 6.00, 8.00, 10.00, 15.00, float('inf')
+    1.10, 1.20, 1.30, 1.40, 1.495, 1.595, 1.70, 1.80,
+    1.90, 1.995, 2.095, 2.20, 2.305, 2.405, 4.805, float('inf')
+]
+
+# NBA_DATA_V5 细桶边界 (avg_odds 1.06~1.92 的中点)
+NBA_FINE_BINS = [
+    1.105, 1.20, 1.30, 1.40, 1.495, 1.595, 1.70, 1.795, 1.88, float('inf')
 ]
 
 def _bin_index(odds: float, bins: list) -> int:
@@ -1021,6 +1027,15 @@ if _CALIBRATED:
 # V5: Beat the Bookie 共识收盘价 (32家博彩公司含Pinnacle, 479K场, 818联赛)
 try:
     from config.btb_calibrated import BTB_1X2_DATA
+    # BTB bin 键是字符串("0".."29"), 转 int 供 _bin_index 查询 (否则 .get(idx) 全 None)
+    _btb_converted = {}
+    for _lg, _bins in BTB_1X2_DATA.items():
+        if isinstance(_bins, dict):
+            _btb_converted[_lg] = {int(k): (tuple(v) if isinstance(v, list) else v)
+                                   for k, v in _bins.items()}
+        else:
+            _btb_converted[_lg] = _bins
+    BTB_1X2_DATA = _btb_converted
     BTB_1X2_AGGREGATE = BTB_1X2_DATA.get("_AGGREGATE", {})
 except ImportError:
     BTB_1X2_DATA = {}
@@ -1296,6 +1311,10 @@ SPECIAL_MARKET_CAPS = {
     "dnb":   {"max_stake": 0.02, "max_odds": 8.0},    # 无数据, 放宽至8.0
     "oe":    {"max_stake": 0.01, "max_odds": 4.0},    # 无数据, 放宽至4.0
     "corner":{"max_stake": 0.01, "max_odds": 5.0},    # 无数据, 放宽至5.0
+    # V5 修复: 上半场推导盘口/前5分钟不能按全场1X2全Kelly (原落到纯1X2分支)
+    "ht_dc":  {"max_stake": 0.01, "max_odds": 4.0},   # 上半场双重机会, 平局率45%偏差大
+    "ht_dnb": {"max_stake": 0.01, "max_odds": 4.0},   # 上半场平局退款
+    "f5":     {"max_stake": 0.01, "max_odds": 3.0},   # 前5分钟大小球, 极不稳定
 }
 
 
@@ -1329,6 +1348,19 @@ _LEAGUE_ALIASES = {
     "swiss super league": "瑞士超级联赛",
     "danish superliga": "丹麦超级联赛",
     "allsvenskan": "瑞典超级联赛", "swedish allsvenskan": "瑞典超级联赛",
+    # V5: 中文全称 → 短名 (BB 传"英格兰超级联赛"应匹配 PIN 的"英超")
+    "英格兰超级联赛": "英超", "英格兰冠军联赛": "英冠",
+    "英格兰甲级联赛": "英甲", "英格兰乙级联赛": "英乙",
+    "西班牙甲级联赛": "西甲", "西班牙乙级联赛": "西乙",
+    "意大利甲级联赛": "意甲", "意大利乙级联赛": "意乙",
+    "德国甲级联赛": "德甲", "德国乙级联赛": "德乙",
+    "法国甲级联赛": "法甲", "法国乙级联赛": "法乙",
+    "荷兰甲级联赛": "荷甲", "葡萄牙超级联赛": "葡超",
+    "葡萄牙甲级联赛": "葡甲", "比利时甲级联赛": "比甲",
+    "希腊超级联赛": "希超", "苏格兰超级联赛": "苏超",
+    "苏格兰甲级联赛": "苏甲", "苏格兰乙级联赛": "苏乙",
+    "苏格兰丙级联赛": "苏丙", "土耳其超级联赛": "土超",
+    "厄瓜多尔甲级联赛": "厄瓜多尔甲",
 }
 
 def _match_league(league: str, data_dict: dict):
@@ -1351,7 +1383,7 @@ def _match_league(league: str, data_dict: dict):
             continue
         if kw in (league or ""):
             return data_dict[kw]
-    return data_dict.get("_AGGREGATE")  # 仅未知联赛回退聚合
+    return None  # 未知联赛返回 None, 触发 BTB 回退 (原返回 _AGGREGATE 使 BTB 分支死代码)
 
 
 # V5: Beat the Bookie 英文联赛名 → BB中文名 映射
@@ -1619,6 +1651,10 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
     }
 
     if sport_lower in ("mma", "boxing"):
+        # 风控门必须最先: 低置信匹配(name+高分才放行)不能绕过
+        if _is_risky_mma_boxing(sport_lower, league or "", odds,
+                                match_type, match_score, flags):
+            return 0.0
         if sport_lower == "mma":
             # V4.5: 优先用新标定 521场 BookMaker 收盘
             try:
@@ -1636,9 +1672,6 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 wr, avg_o, n = data
                 if wr * avg_o - 1 <= 0.20:
                     return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.50)
-        if _is_risky_mma_boxing(sport_lower, league or "", odds,
-                                match_type, match_score, flags):
-            return 0.0
         # V4.5: 优先Betfair 663场, 回退保守1%
         if sport_lower == "boxing" and "BETFAIR_BOXING" in globals():
             idx = _bin_index(odds, ODDS_BINS)
@@ -1804,7 +1837,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             tour_level = "ATP 250"  # 默认最保守
 
         tour_data = TENNIS_DATA.get(tour_level, {})
-        data = tour_data.get(_bin_index(odds, ODDS_BINS))
+        data = tour_data.get(_bin_index(odds, TENNIS_ODDS_BINS))
         if not data or data[2] < 5:
             return 0.0
         wr, avg_o, n = data
@@ -1879,30 +1912,16 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
     # ── Basketball ──
     elif sport_lower == "basketball":
         if "NBA" in (league or ""):
-            idx = _bin_index(odds, ODDS_BINS)
-            # OU market — V5: SBR共识收盘价 OU独立标定
+            idx = _bin_index(odds, NBA_FINE_BINS)
+            # OU market — 用 ML 数据推导 (SBR OU线按盘口线分桶, 无法用赔率索引, 已移除)
             if sub_market in ("ou", "over_under"):
-                if NBA_TOTAL:
-                    # 使用实际OU收盘线数据 (binned by total line)
-                    _ou_bin = _bin_index(odds, OU_BINS) if 'OU_BINS' in dir() else idx
-                    data = NBA_TOTAL.get(idx) or NBA_TOTAL.get(str(idx))
-                    if data and isinstance(data, (list, tuple)) and len(data) >= 2 and data[1] >= 200:
-                        wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
-                        return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.75) * _settlement_multiplier(league)
-                # Fallback: ML derivation
                 data = NBA_DATA_V5.get(idx) or NBA_DATA.get(idx)
                 if data and data[2] >= MIN_N_MINIMUM:
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.75) * 0.7 * _settlement_multiplier(league)
                 return 0.0
-            # Spread market — V5: SBR实际spread收盘线独立标定
+            # Spread market — 用 ML 数据推导
             elif sub_market in ("hc", "handicap"):
-                if NBA_SPREAD:
-                    data = NBA_SPREAD.get(idx) or NBA_SPREAD.get(str(idx))
-                    if data and isinstance(data, (list, tuple)) and len(data) >= 2 and data[1] >= 200:
-                        wr, avg_line, n = data[0], data[1], data[2] if len(data) >= 3 else data[1]
-                        return kelly_075(wr, avg_line, 0.04, n, sport_confidence=0.75) * _settlement_multiplier(league)
-                # Fallback: ML derivation
                 data = NBA_DATA_V5.get(idx) or NBA_DATA.get(idx)
                 if data and data[2] >= MIN_N_MINIMUM:
                     wr, avg_o, n = data
