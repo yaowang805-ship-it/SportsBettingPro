@@ -1727,11 +1727,24 @@ def _diversify_and_rank(qualified: list) -> list:
             selected.append(o)
             selected_ids.add(id(o))
 
-    # --- 第三轮：V5 Bet Everything — 有edge就上, 不限数量 ---
+    # --- 第三轮：恢复单次推送上限 (V4.5: top N 按 Kelly 权重) ---
+    # 不能 "Bet Everything 不限数量": 941 条全选 → per-sport 40% 上限把预算
+    # 摊薄到每条 ~¥9 → 被 ¥50 门槛全删 → 一条都推不出去。
     remaining = [o for o in qualified if id(o) not in selected_ids]
     remaining.sort(key=lambda o: (o.get("_tier", 3), -o["_score"]))
-    selected.extend(remaining)  # V5: no cap
+    selected.extend(remaining)
     qualified = selected
+
+    # 按实际 Kelly 权重降序取 top N, 让预算集中在最优机会上
+    from config.weight_matrix_v5 import get_kelly_stake_pct as _kelly_pct_fn
+    for o in qualified:
+        o["_kelly_weight"] = _kelly_pct_fn(
+            o.get("sport", ""), o.get("league", ""),
+            o.get("_sub_market", "") or o.get("_market", ""),
+            o.get("bb_odds", 0), o.get("_match_type", ""), o.get("_match_score", 0))
+    _MAX_PUSH = 20
+    qualified.sort(key=lambda o: (-o.get("_kelly_weight", 0), o.get("_tier", 3), -o["_score"]))
+    qualified = qualified[:_MAX_PUSH]
 
     # 最终展示排序：按运动 → Tier → 联赛名 → 开赛时间（同联赛紧挨着）
     qualified.sort(key=lambda o: (
@@ -1746,7 +1759,6 @@ def _diversify_and_rank(qualified: list) -> list:
     # V5.1: ¥50以下投注额直接屏蔽 — 碎单浪费推送空间
     qualified = [o for o in qualified if o.get("_stake", 0) >= 50]
 
-    # V5: "Bet Everything" — 职业做法: 有edge就上, 不设数量上限
     qualified.sort(key=lambda o: o.get("_stake", 0), reverse=True)
     # Kelly>0 的保留, stake=0 的仅展示不投注 (已在 _calc_kelly_stakes 处理)
 
