@@ -6,7 +6,7 @@
   3. 手动: python3 -m src.backtest.weight_calibrator --force
 
 输出:
-  - 更新后的权重建议 (config/weight_matrix.py 中的数组)
+  - 更新后的权重建议 (config/weight_matrix_v5.py 中的数组)
   - 变动报告 (data/reports/weight_changes_YYYY-MM-DD.json)
 
 用法:
@@ -151,7 +151,7 @@ def generate_weight_recommendations(roi_matrix):
 
 def compare_with_current(recommendations):
     """对比建议权重与当前权重矩阵, 返回变动列表。"""
-    from config.weight_matrix import FB_1X2_WEIGHTS
+    from config.weight_matrix_v5 import FB_1X2_WEIGHTS
 
     changes = []
     for lg, new_weights in recommendations.items():
@@ -305,9 +305,9 @@ def run_calibration(force: bool = False, dry_run: bool = True):
 
 
 def _apply_weight_changes(changes: list):
-    """自动应用权重变动到 config/weight_matrix.py。"""
+    """自动应用权重变动到 config/weight_matrix_v5.py。"""
     # 读取当前文件
-    wm_file = ROOT / "config" / "weight_matrix.py"
+    wm_file = ROOT / "config" / "weight_matrix_v5.py"
     content = wm_file.read_text()
 
     # 对每个变动, 在文件中找到对应行并修改

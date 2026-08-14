@@ -160,7 +160,7 @@ def analyze_settlement_feedback():
     # 加载 V4 权重矩阵
     import sys
     sys.path.insert(0, str(PROJECT_ROOT))
-    from config.weight_matrix_v4 import PIN_1X2_DATA, ODDS_BINS, _bin_index
+    from config.weight_matrix_v5 import PIN_1X2_DATA, ODDS_BINS, _bin_index
 
     lines = settle_file.read_text().strip().split('\n')
     if len(lines) < 2:
@@ -366,7 +366,7 @@ def _recalibrate_odds_weights():
     """用全量 Pinnacle 数据重算赔率区间权重。"""
     import csv
     from collections import defaultdict
-    from config.weight_matrix_v4 import ODDS_BINS, _bb_premium_1x2
+    from config.weight_matrix_v5 import ODDS_BINS, _bb_premium_1x2
 
     pin_dir = DATA_DIR / "pinnacle_historical"
     bins = defaultdict(lambda: [0, 0, 0.0])  # wins, total, sum_odds
@@ -457,7 +457,7 @@ def bayesian_update_settlement(league, sub_market, odds, outcome, stake=0):
         except: pass
 
     # 找赔率bin
-    from config.weight_matrix_v4 import ODDS_BINS
+    from config.weight_matrix_v5 import ODDS_BINS
     def _bi(o):
         for i, t in enumerate(ODDS_BINS):
             if o <= t: return i

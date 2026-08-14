@@ -3,7 +3,7 @@
 Processes closing_odds.csv.gz (479K matches, 32 bookmakers avg incl. Pinnacle)
 into per-league, per-odds-bin win rates for the V4 weight matrix.
 
-Output: config/btb_calibrated.py — importable by weight_matrix_v4.py
+Output: config/btb_calibrated.py — importable by weight_matrix_v5.py
 """
 import gzip, csv, json, math, sys
 from pathlib import Path

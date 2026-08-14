@@ -847,7 +847,7 @@ def _calc_kelly_stakes(opps: list) -> list:
     """
     from config.constants import MAX_STAKE_PCT as _MAX_STAKE_PCT, PER_MATCH_CAP_PCT as _PER_MATCH_CAP_PCT, get_dynamic_bankroll as _get_bankroll
     from config.constants import PER_LEAGUE_CAP_PCT as _PER_LEAGUE_CAP_PCT, PER_SPORT_CAP_PCT as _PER_SPORT_CAP_PCT
-    from config.weight_matrix_v4 import get_kelly_stake_pct
+    from config.weight_matrix_v5 import get_kelly_stake_pct
 
     bankroll = _get_bankroll()
 
@@ -1422,7 +1422,7 @@ def _collect_opportunities(match, market_key):
 
         # ── V2 动态 EV 门槛: 赔率越高 → 门槛越高 ──
         # V4 的 get_min_ev 基于 Pinnacle 107K场数据
-        from config.weight_matrix_v4 import get_min_ev
+        from config.weight_matrix_v5 import get_min_ev
         v3_min_ev = get_min_ev(match.get("sport", ""), league, sub_market, bb_odds)
         # V5: FB独有机会降门槛 — FB赔率比BB更接近Pin, edge天然低, 含金量更高
         if price_source == "FB" and not platform_sources:
@@ -1448,7 +1448,7 @@ def _collect_opportunities(match, market_key):
             continue
 
         # ── V4 赔率上限: 基于 Pinnacle 全量数据 ──
-        from config.weight_matrix_v4 import get_odds_cap
+        from config.weight_matrix_v5 import get_odds_cap
         _odds_cap = get_odds_cap(match.get("sport", ""), league, sub_market)
         if _odds_cap > 0 and bb_odds > _odds_cap:
             continue

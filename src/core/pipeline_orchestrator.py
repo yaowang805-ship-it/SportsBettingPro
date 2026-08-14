@@ -183,7 +183,7 @@ class PipelineOrchestrator:
 
         # 1) 模块导入检查 (防代码bug)
         CRITICAL_MODULES = [
-            "config.weight_matrix_v4",
+            "config.weight_matrix_v5",
             "src.scrapers.bb_api_fetcher",
             "src.scrapers.bb_vs_pinnacle",
             "src.scrapers.pinnacle_api",

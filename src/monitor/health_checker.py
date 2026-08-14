@@ -348,7 +348,7 @@ def check_market_health(report):
 def check_v4_matrix(report):
     """检查 V4 矩阵数据源覆盖。"""
     try:
-        from config.weight_matrix_v4 import (
+        from config.weight_matrix_v5 import (
             PIN_1X2_DATA, PIN_OU_DATA, PIN_HC_DATA, TENNIS_DATA,
             NBA_DATA, MLB_DATA, NFL_DATA, NHL_DATA
         )
