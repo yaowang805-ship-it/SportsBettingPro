@@ -11,6 +11,10 @@ from config.logging_config import get_logger
 
 logger = get_logger(__name__)
 
+# 各运动"全场比分"的 pe 码 (tyg=5 为比分): 足球=1000, 篮球=3001
+# (棒球/美足 type=6 记录无 nsg 字段, 需另行查询, 暂未支持)
+FULLTIME_PE = {"football": 1000, "basketball": 3001}
+
 
 def fetch_bb_scores():
     """拉 BB 已结束比赛的比分 → {(home_cn, away_cn): [home_score, away_score]}"""
@@ -48,11 +52,12 @@ def fetch_bb_scores():
                 away = teams[1].get("na", "")
                 if not home or not away:
                     continue
-                # 足球 tyg=5 是比分 (其他运动 tyg 码不同, 后续扩展)
-                if sport_key != "football":
+                # 各运动"全场比分"的 pe 码 (tyg=5 为比分): 足球=1000, 篮球=3001
+                pe_full = FULLTIME_PE.get(sport_key)
+                if not pe_full:
                     continue
                 for sg in rec.get("nsg", []):
-                    if sg.get("pe") == 1000 and sg.get("tyg") == 5:
+                    if sg.get("pe") == pe_full and sg.get("tyg") == 5:
                         sc = sg.get("sc", [])
                         if len(sc) >= 2:
                             score_map[(home, away)] = [int(sc[0]), int(sc[1])]
