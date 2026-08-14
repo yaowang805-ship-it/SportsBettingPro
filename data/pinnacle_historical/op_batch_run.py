@@ -85,6 +85,7 @@ def main():
         else:
             fail += 1
             log(f"[empty] {sport}/{lg} {season}: 0 场 ({time.time()-t0:.0f}s)")
+        time.sleep(3)  # 联赛间延时, 防 OddsPortal 限流
     log(f"完成: {done} 成功, {fail} 失败/空, 共 {len(tasks)}")
 
 if __name__ == "__main__":

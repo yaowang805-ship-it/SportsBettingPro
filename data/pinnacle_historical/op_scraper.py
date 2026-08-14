@@ -60,28 +60,31 @@ def scrape_league(sport, league_url, season, market="1x2", out_path=None):
 
         page_no = 1
         empty_retries = 0
-        while True:
-            target = url if page_no == 1 else f"{url}#/page/{page_no}"
-            # 重试一次: 偶发 ERR_CONNECTION_CLOSED / 慢加载
-            ok = False
-            for attempt in range(2):
-                try:
-                    page.goto(target, wait_until="domcontentloaded", timeout=60000)
-                    ok = True
-                    break
-                except Exception as e:
-                    if attempt == 1:
-                        print(f"  [warn] page {page_no} goto fail: {e}", flush=True)
-                    else:
-                        page.wait_for_timeout(4000)
-            if not ok:
-                break
-            page.wait_for_timeout(6000)
-            # 滚动到底加载懒加载内容
+
+        def _scroll():
             for _ in range(6):
                 page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
                 page.wait_for_timeout(1200)
 
+        def _click_next():
+            """点击 Next 按钮翻页; 最后一页 Next 变 disabled span → 返回 False。"""
+            for _ in range(3):
+                btn = page.locator("nav[aria-label='Pagination'] button", has_text="Next")
+                if btn.count() == 0:
+                    return False
+                try:
+                    btn.first.click(timeout=10000)
+                    return True
+                except Exception:
+                    page.wait_for_timeout(3000)
+            return False
+
+        # 首页: 直接 goto (OddsPortal 现用 #page/N 而非 #/page/N, 旧 fragment goto 失效)
+        page.goto(url, wait_until="domcontentloaded", timeout=60000)
+        page.wait_for_timeout(6000)
+        _scroll()
+
+        while True:
             # 按文档顺序遍历 date-header + game-row
             nodes = page.locator("[data-testid='date-header'], [data-testid='game-row']")
             n = nodes.count()
@@ -128,17 +131,23 @@ def scrape_league(sport, league_url, season, market="1x2", out_path=None):
                 batch += 1
             print(f"  page {page_no}: +{batch} (累计 {len(games)})", flush=True)
             if batch == 0:
-                # 翻页偶发空(内容未加载) → 重试 2 次再放弃, 防漏整页数据
-                if page_no > 1 and empty_retries < 2:
+                # 空页 → 重试(加载慢/被限流); 重试 2 次仍空则放弃
+                if empty_retries < 2:
                     empty_retries += 1
                     print(f"  [retry] page {page_no} 空, 重试 {empty_retries}/2", flush=True)
                     page.wait_for_timeout(4000)
+                    _scroll()
                     continue
                 break
             empty_retries = 0
-            page_no += 1
-            if page_no > 60:
+            # 点击 Next 翻页 (fragment #/page/N 已失效)
+            if not _click_next():
                 break
+            page_no += 1
+            if page_no > 80:
+                break
+            page.wait_for_timeout(6000)
+            _scroll()
         browser.close()
 
     if out_path and games:
