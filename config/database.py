@@ -12,7 +12,7 @@ from typing import Optional
 
 from config.settings import DATA_DIR
 
-DB_PATH = DATA_DIR / "storage" / "sportsbetting.db"
+DB_PATH = DATA_DIR / "sportsbetting.db"
 
 _local = threading.local()
 
