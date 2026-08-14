@@ -2163,6 +2163,24 @@ def _save_fingerprints(fps: dict):
     tmp.replace(FINGERPRINT_FILE)
 
 
+def _parse_line(s):
+    """解析让球线: '+0/0.5'→0.25, '-0.5'→-0.5, '1'→1.0; 失败返回 None"""
+    if s is None:
+        return None
+    s = str(s).strip()
+    if not s:
+        return None
+    sign = -1 if s.startswith('-') else 1
+    s = s.lstrip('+-')
+    try:
+        if '/' in s:
+            parts = [float(p) for p in s.split('/')]
+            return sign * sum(parts) / len(parts)
+        return sign * float(s)
+    except (ValueError, TypeError):
+        return None
+
+
 def _verify_odds_freshness(qualified: list, max_ev_drop: float = 3.0) -> list:
     """推送前二次验价：重新拉取 Pinnacle 实时赔率，EV 下降 >3% 则过滤。
 
@@ -2222,10 +2240,20 @@ def _verify_odds_freshness(qualified: list, max_ev_drop: float = 3.0) -> list:
                         if p.get("designation", "").lower() in (o.get("designation", "").lower(),):
                             fresh_odds = p.get("price_decimal", 0)
             elif mkt == "hc":
+                target_line = _parse_line(o.get("line"))
+                target_desig = "away" if "客" in o.get("designation", "") else "home"
                 for sp in fresh.get("spread", []):
+                    sp_line = sp.get("line")
+                    # 盘口线必须匹配(±0.6 容差), 否则拿到的赔率是错的
+                    if (target_line is not None and sp_line is not None
+                            and abs(abs(sp_line) - abs(target_line)) > 0.6):
+                        continue
                     for p in sp.get("prices", []):
-                        if p.get("designation", "").lower() in ("home", "away"):
+                        if p.get("designation", "").lower() == target_desig:
                             fresh_odds = p.get("price_decimal", 0)
+                            break
+                    if fresh_odds:
+                        break
 
             if fresh_odds and fresh_odds > 0:
                 # 重新计算 EV (V4.4: fresh_odds 含 vig，比去抽水公平价低 2-4%
