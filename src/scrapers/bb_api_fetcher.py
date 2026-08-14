@@ -70,9 +70,10 @@ PINNACLE_SPORTS = {"football", "basketball", "tennis", "baseball",
 # Market type 映射 (按运动)
 MARKET_TYPES = {
     1: {  # 足球
-        "ml": 1005, "hc": 1000, "ou": 1007, "dnb": 1089, "dc": 1012, "btts": 1027,
+        "ml": 1005, "hc": 1000, "ou": 1007, "dnb": None, "dc": 1012, "btts": 1027,
         "oe": 1008, "htft": 1033,
         "corner_ml": 1009, "corner_ou": 1010, "corner_hc": 1011,
+        # 注: dnb 原映射 1089 实为"第3粒进球", BB 无平局退款盘口, 置 None 禁用
     },
     3: {  # 篮球 (3004=独赢, 3003=大小, 3002=让分)
         "ml": 3004, "ou": 3003, "hc": 3002,

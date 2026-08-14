@@ -297,7 +297,7 @@ class PipelineOrchestrator:
         diff = now_total - scheduled_total
         if wide_window:
             return diff >= 0
-        return 0 <= diff <= 2
+        return 0 <= diff <= 30
 
     def _should_run_wall_clock(self, name: str, now: datetime) -> bool:
         """判断定时任务是否该执行（每天一次）。"""
@@ -1106,7 +1106,9 @@ class PipelineOrchestrator:
         now = datetime.now()
 
         # 1) 定时任务 (settle/report → 后台线程)
-        _BACKGROUND_TASKS = {"settle", "report", "git_commit", "memory_update", "evolve", "incremental"}
+        _BACKGROUND_TASKS = {"settle", "report", "git_commit", "memory_update", "evolve", "incremental",
+                             "self_repair", "time_calibration", "health_check", "clv_collect",
+                             "cleanup", "download_data", "name_mapping"}
         for name, time_str, method_name, kwargs in SCHEDULE:
             weekday, dom, hour, minute = _parse_schedule_time(time_str)
             if not self._is_time_match(weekday, dom, hour, minute, now):
