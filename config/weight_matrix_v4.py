@@ -1250,9 +1250,11 @@ NBA_DATA_V5 = {
 # =====================================================================
 # 封杀规则 — V4.2: 数据化
 # =====================================================================
-# 推导盘口封杀: HTFT/HT/DC/HT-DC/DNB 都是从 1X2 推导, 平局概率高估 → 公平价低估 → EV虚高
-# 实证: HT ROI -31.3%(8笔), DC ROI -54.8%(14条), 实盘 HT/DC 几乎全输 → 直接封杀
-BLOCKED_MARKETS = {"htft", "ht", "dc", "ht_dc", "dnb"}
+# 封杀规则 — V4.2: 数据化
+# =====================================================================
+# HTFT: Pinnacle 无对应盘口 → 无法做公平价比较 → 封杀
+# DNB: BB 无此盘口(曾误读"第3粒进球") → 封杀
+BLOCKED_MARKETS = {"htft", "dnb"}
 
 # MMA/Boxing: 仅封杀高风险子类型 (时间匹配 + 球员冲突)
 # V4.2: name-matched + score≥0.95 的 MMA/Boxing 允许小额投注
@@ -2040,29 +2042,29 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
                 base_min_ev = 4.0
         elif sub_market == "dc":
             # 双重机会(含和局) — 1X2比例法去抽水高估平局概率, EV虚高
-            # 实证: 14条DC结算 ROI -54.8%, 而推送平均EV +7.7% → 需大幅提高门槛
+            # 实证: 14条DC结算 ROI -54.8%, 实盘6笔几乎全输 → 门槛大幅提高(6-8%)
             if odds < 2.0:
-                base_min_ev = 4.0   # 从2.0提高 (补偿平局概率高估~2-3%)
+                base_min_ev = 6.0
             elif odds < 3.5:
-                base_min_ev = 5.0   # 从3.0提高
+                base_min_ev = 7.0
             else:
-                base_min_ev = 6.0   # 从4.0提高
+                base_min_ev = 8.0
         elif sub_market == "ht_dc":
             # 上半场双重机会 — 上半场平局率~45%远高于全场~27%, 偏差更大
             if odds < 2.0:
-                base_min_ev = 5.0   # 更高门槛
-            elif odds < 3.5:
-                base_min_ev = 6.0
-            else:
                 base_min_ev = 7.0
-        elif sub_market == "ht":
-            # 上半场1X2/让球/大小 — 上半场平局率/进球率与全场差异大, 8-12实证全输
-            if odds < 2.0:
-                base_min_ev = 3.5   # 从2.0提高
             elif odds < 3.5:
-                base_min_ev = 4.5
+                base_min_ev = 8.0
             else:
+                base_min_ev = 9.0
+        elif sub_market == "ht":
+            # 上半场1X2/让球/大小 — 实证 ROI -31.3%(8笔1赢7输), 门槛提高(5-8%)
+            if odds < 2.0:
+                base_min_ev = 5.0
+            elif odds < 3.5:
                 base_min_ev = 6.0
+            else:
+                base_min_ev = 8.0
         # V5: HC低赔率3%, OU有Pin数据4%
         elif sub_market in ("hc", "handicap"):
             base_min_ev = 3.0
