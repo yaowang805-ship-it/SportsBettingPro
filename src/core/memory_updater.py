@@ -49,7 +49,7 @@ def update_current_state(dry_run: bool = False):
         return
 
     balance = pf.get("balance", 0)
-    initial = pf.get("initial_bankroll", 50000)
+    initial = pf.get("initial_bankroll", 20000)
     pending = pf.get("pending_bets", [])
     history = pf.get("history", [])
 

@@ -22,7 +22,7 @@ from config.settings import DATA_DIR
 
 logger = get_logger(__name__)
 
-_INITIAL_BALANCE = 10000.0
+_INITIAL_BALANCE = 20000.0  # 与 config.constants.INITIAL_BALANCE 一致
 _PORTFOLIO_FILE = DATA_DIR / "virtual_portfolio.json"
 _PRED_LOG_FILE = DATA_DIR / "prediction_log.csv"
 _STATE_FILE = DATA_DIR / "paper_trading.json"

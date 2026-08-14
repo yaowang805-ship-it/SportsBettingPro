@@ -30,7 +30,7 @@ def recalculate_balance(state: dict) -> float:
     Returns:
         重算后的 balance 值
     """
-    initial = state.get("initial_bankroll", 50000.0)
+    initial = state.get("initial_bankroll", 20000.0)
     history_profit = sum(
         h.get("profit", 0) or 0
         for h in state.get("history", [])
@@ -58,7 +58,7 @@ def check_and_fix(dry_run: bool = False, auto_fix: bool = True):
     stored = state.get("balance", 0)
     calculated = recalculate_balance(state)
 
-    initial = state.get("initial_bankroll", 50000)
+    initial = state.get("initial_bankroll", 20000)
     history_profit = sum(h.get("profit", 0) or 0 for h in state.get("history", []))
     pending_exposure = sum(b.get("stake", 0) for b in state.get("pending_bets", []))
     pending_count = len(state.get("pending_bets", []))

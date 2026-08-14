@@ -379,8 +379,11 @@ def place_bets(dry_run=False):
         return bets_placed
 
 
-def place_bets_from_push(opportunities, bankroll=50000.0):
-    """从推送的已筛选机会列表执行投注（stake 已预计算）。"""
+def place_bets_from_push(opportunities, bankroll=DAILY_BANKROLL):
+    """从推送的已筛选机会列表执行投注（stake 已预计算）。
+
+    bankroll 默认用 DAILY_BANKROLL(¥20000), 之前硬编码 50000 导致日预算/单注上限 2.5 倍偏高。
+    """
     if not opportunities:
         logger.info("空机会列表，跳过投注")
         return 0
