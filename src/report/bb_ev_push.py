@@ -792,14 +792,36 @@ def _apply_risk_manager_safety(opps: list) -> list:
     except Exception:
         pass
 
-    # 软折扣：回撤 + 连败折扣（0.4~1.0 乘数；0.0 = 停手）
-    dd_mult = rm._get_drawdown_multiplier()
-    streak_mult = rm._get_streak_multiplier()
-    mult = dd_mult * streak_mult
-    if mult < 1.0:
-        for o in opps:
-            if o.get("_stake", 0) > 0:
-                o["_stake"] = int(o["_stake"] * mult)
+    # 公开 API：can_place_bet 硬拒 + get_max_stake 软上限（替换私有方法调用）
+    for o in opps:
+        stake = o.get("_stake", 0)
+        if stake <= 0:
+            continue
+        # 硬拒门禁：单注限额/总敞口/回撤>25%
+        try:
+            ok, reason = rm.can_place_bet(stake)
+            if not ok:
+                o["_stake"] = 0
+                o["_risk_reject"] = reason
+                continue
+        except Exception:
+            pass
+        # 软上限：风险感知最大 stake（内部含回撤/连亏/ML动态仓位/联合凯利/分散度）
+        try:
+            fair = o.get("fair_price", 0)
+            prob = 1.0 / fair if fair and fair > 0 else 0
+            max_stake = rm.get_max_stake(
+                edge_or_prob=prob, odds=o.get("bb_odds", 0),
+                input_is_prob=True,
+                sport=o.get("sport", ""), home_team=o.get("home_cn", ""),
+                away_team=o.get("away_cn", ""), market=o.get("designation", ""),
+                league=o.get("league", ""),
+                market_type=o.get("_sub_market", "") or o.get("_market", ""),
+            )
+            if max_stake > 0 and max_stake < stake:
+                o["_stake"] = int(max_stake)
+        except Exception:
+            pass  # 字段缺失或计算失败 → 保留原 stake
     return opps
 
 
