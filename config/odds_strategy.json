@@ -81,7 +81,7 @@
     }
   },
   "auto_optimize": {
-    "enabled": true,
+    "enabled": false,
     "schedule": "daily 09:15",
     "min_observe": 100,
     "min_adjust": 500,
