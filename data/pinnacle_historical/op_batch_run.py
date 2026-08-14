@@ -20,7 +20,7 @@ RELEVANT_SPORTS = ["football", "basketball", "tennis", "baseball",
 SPORT_SEASONS = {
     "football": "2024-2025",
     "basketball": "2024-2025",
-    "tennis": "2025",
+    "tennis": "current",   # 网球赛事默认当前赛季, 无年份后缀 (wta-zhuhai-2025 会404)
     "baseball": "2025",
     "american-football": "2024-2025",
     "ice-hockey": "2024-2025",

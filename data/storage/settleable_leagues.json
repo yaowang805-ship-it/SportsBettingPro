@@ -536,7 +536,7 @@
       "success_rate": 0.0
     },
     "欧洲超级杯": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -561,12 +561,17 @@
       "success_rate": 0.0
     },
     "联赛杯 (在美国和加拿大和墨西哥)": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "英格兰伊斯米安超级联赛": {
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
     }
   },
-  "updated": "2026-08-13T12:45:28.307146+00:00",
+  "updated": "2026-08-14T01:06:04.402263+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
