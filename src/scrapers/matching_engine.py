@@ -366,8 +366,13 @@ def _bb_to_epoch(bb_match):
     if not period or not btime:
         return None
     try:
-        dt_str = f"2026-{period[:2]}-{period[3:5]}T{btime[:2]}:{btime[3:5]}:00"
+        year = datetime.now().year
+        dt_str = f"{year}-{period[:2]}-{period[3:5]}T{btime[:2]}:{btime[3:5]}:00"
         dt_naive = datetime.strptime(dt_str, "%Y-%m-%dT%H:%M:%S")
+        # 跨年: 若比当前晚超 6 个月, 应是上一年 (原硬编码 2026 致跨年解析错)
+        if (dt_naive - datetime.now()).days > 180:
+            dt_str = f"{year-1}-{period[:2]}-{period[3:5]}T{btime[:2]}:{btime[3:5]}:00"
+            dt_naive = datetime.strptime(dt_str, "%Y-%m-%dT%H:%M:%S")
         dt_utc = dt_naive - timedelta(hours=8)
         return int(dt_utc.replace(tzinfo=timezone.utc).timestamp())
     except (ValueError, IndexError):

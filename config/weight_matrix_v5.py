@@ -79,19 +79,30 @@ AH_DISCOUNT = 0.92
 # CLV 联赛调整 — V4.5: 从 CLV 采集数据动态加载正/负 CLV 联赛
 #   正 CLV: BB 赔率向 Pinnacle 收盘价收敛 → 早盘优势可靠 → +5%
 #   负 CLV: BB 赔率逆向移动 → 保持基准
+_CLV_DATA_CACHE = {"mtime": None, "data": None}
+
 def _load_clv_data() -> dict:
     """从 CLV 快照数据中加载各联赛的 CLV 表现。
     返回 {league: avg_clv_pct}，用于动态调整 Kelly。
     CLV > 0: BB 赔率向 Pinnacle 收敛 → 早盘优势可靠 → 加成
     CLV < 0: BB 赔率逆向移动 → 保守
+    (mtime 缓存: 最新快照变了才重读)
     """
     import json as _json
     from pathlib import Path
     from collections import defaultdict
     snap_dir = Path(__file__).resolve().parent.parent / "data" / "storage" / "odds_snapshots"
-    clv_by_league = defaultdict(list)
     try:
         files = sorted(snap_dir.glob("*.json"), key=lambda f: f.stat().st_mtime, reverse=True)
+    except Exception:
+        files = []
+    if not files:
+        return {}
+    _newest_mtime = files[0].stat().st_mtime
+    if _CLV_DATA_CACHE["mtime"] == _newest_mtime and _CLV_DATA_CACHE["data"] is not None:
+        return _CLV_DATA_CACHE["data"]
+    clv_by_league = defaultdict(list)
+    try:
         for f in files[:5]:  # 最近5个快照
             data = _json.loads(f.read_text())
             if isinstance(data, dict):
@@ -108,6 +119,8 @@ def _load_clv_data() -> dict:
     for lg, vals in clv_by_league.items():
         if len(vals) >= 3:
             result[lg] = sum(vals) / len(vals)
+    _CLV_DATA_CACHE["mtime"] = _newest_mtime
+    _CLV_DATA_CACHE["data"] = result
     return result
 
 
@@ -1493,9 +1506,12 @@ MIN_N_MINIMUM = 10    # 最低门槛 (CI ~52%)  — 边缘区间
 # =====================================================================
 # V4.5: 结算反馈环 — 实盘 ROI 自动校准权重
 # =====================================================================
+_SETTLEMENT_FEEDBACK_CACHE = {"mtime": None, "data": None}
+
 def _load_settlement_feedback() -> dict:
     """从 settlement_log.csv 加载各联赛的实盘 ROI。
     返回 {league: {"n": int, "roi": float, "avg_odds": float}}
+    (mtime 缓存: 文件变了才重读, 让实盘 ROI 反馈在长驻进程里生效)
     """
     import csv
     from pathlib import Path
@@ -1504,6 +1520,9 @@ def _load_settlement_feedback() -> dict:
     sp = Path(__file__).resolve().parent.parent / "data" / "storage" / "settlement_log.csv"
     if not sp.exists():
         return {}
+    _mtime = sp.stat().st_mtime
+    if _SETTLEMENT_FEEDBACK_CACHE["mtime"] == _mtime and _SETTLEMENT_FEEDBACK_CACHE["data"] is not None:
+        return _SETTLEMENT_FEEDBACK_CACHE["data"]
 
     by_lg = defaultdict(lambda: {"stake": 0.0, "profit": 0.0, "odds_sum": 0.0, "n": 0})
     with open(sp) as f:
@@ -1528,6 +1547,8 @@ def _load_settlement_feedback() -> dict:
                 "roi": d["profit"] / d["stake"],
                 "avg_odds": d["odds_sum"] / d["n"] if d["n"] > 0 else 0,
             }
+    _SETTLEMENT_FEEDBACK_CACHE["mtime"] = _mtime
+    _SETTLEMENT_FEEDBACK_CACHE["data"] = result
     return result
 
 
@@ -1604,7 +1625,6 @@ def _get_pin_market_roi(sport, sub_market) -> float:
     _PIN_MARKET_ROI[key] = roi
     return roi
 
-@lru_cache(maxsize=4096)
 def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                          match_type: str = "", match_score: float = 0,
                          flags: tuple = None) -> float:

@@ -89,13 +89,15 @@ def check_connectivity(report):
     except Exception as e:
         report.add_issue(f"Pinnacle API: {e}")
 
-    # DingTalk
+    # DingTalk — 只测连通性, 不真发消息 (原 send_dingtalk 每次巡检真发一条骚扰)
     try:
-        ok = send_dingtalk("健康检查", "系统自检中...", timeout=5)
-        if ok:
+        from config.dingtalk import _connect_with_fallback
+        _sock = _connect_with_fallback("oapi.dingtalk.com")
+        if _sock:
+            _sock.close()
             report.add_ok("钉钉: 连通")
         else:
-            report.add_warning("钉钉: 推送失败(关键词?)")
+            report.add_warning("钉钉: 连接失败")
     except Exception as e:
         report.add_issue(f"钉钉: {e}")
 
