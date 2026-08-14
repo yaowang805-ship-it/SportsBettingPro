@@ -2247,9 +2247,9 @@ def _verify_odds_freshness(qualified: list, max_ev_drop: float = 3.0) -> list:
                         if p.get("designation", "").lower() != target_desig:
                             continue
                         pts = p.get("points")
-                        # 盘口线必须匹配(±0.6 容差, 与对比层一致), 否则拿到的赔率是错的
+                        # 盘口线必须精确匹配(±0.1 带符号, 区分主让/受让与 0.25/0.5 档)
                         if (target_line is not None and pts is not None
-                                and abs(abs(pts) - abs(target_line)) > 0.6):
+                                and abs(pts - target_line) > 0.1):
                             continue
                         fresh_odds = p.get("price_decimal", 0)
                         break
