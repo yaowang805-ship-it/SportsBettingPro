@@ -153,8 +153,8 @@ def get_pin_spread(pin_match, target_line=None, source=None):
             best_diff = diff
             best = (home_p, away_p)
 
-    # 偏差超过 0.5 就认为线不匹配，丢弃
-    if best_diff > 0.5:
+    # 偏差超过 0.1 就认为线不匹配，丢弃（quarter-ball 0.25 一档，0.5 太松会错配到相邻线）
+    if best_diff > 0.1:
         return None, None, False
 
     is_alternate = best is not candidates[0]
