@@ -80,7 +80,6 @@ SCHEDULE = [
     ("health_check_noon",  "13:55", "do_health_check", {}),  # 午后巡检
     ("settle_noon",        "14:00", "do_settle",      {}),  # 午后结算
     ("settle_afternoon",   "17:00", "do_settle",      {}),  # 傍晚结算
-    ("full_scan_evening",  "20:00", "do_full_scan",   {"bet": True}),
     ("clv_collect",        "12:00", "do_clv_collect", {}),  # CLV收盘采集
     ("clv_collect",        "16:00", "do_clv_collect", {}),
     ("clv_collect",        "18:00", "do_clv_collect", {}),
@@ -126,6 +125,7 @@ class PipelineOrchestrator:
         self._last_inc_urgent: Optional[float] = None   # 临场<6h
         self._last_inc_near: Optional[float] = None      # 中程6-24h
         self._last_inc_far: Optional[float] = None       # 远端24-72h
+        self._full_scan_ok = False  # V5.4: 全量扫描成功+推送后才允许分层增量扫描
         self._last_scan_success: float = 0             # 最后一次成功完成的时间戳
         self._scan_failure_count: int = 0              # 连续失败计数
         self._alert_cooldown: dict[str, float] = {}    # 告警冷却
@@ -529,6 +529,7 @@ class PipelineOrchestrator:
             subprocess.run(push_args, capture_output=True, text=True,
                           cwd=SRC_DIR.parent, timeout=600)
             logger.info("Step 3/3: 完成")
+            self._full_scan_ok = True  # V5.4: 全量扫描+推送完成, 放行分层增量扫描
         finally:
             os.environ["PUSH_LABEL"] = _prev_label
 
@@ -1152,7 +1153,8 @@ class PipelineOrchestrator:
             self._last_run[name] = now.date()
 
         # 2) V5 分层增量扫描 — 临场5min/中程15min/远端60min (Pinnacle变动驱动)
-        if self._is_in_scan_window(now):
+        # V5.4: 全量扫描成功+推送后才放行(降频防风控, 用户要求)
+        if self._full_scan_ok and self._is_in_scan_window(now):
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
