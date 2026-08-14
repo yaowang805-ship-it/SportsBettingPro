@@ -715,6 +715,10 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                 if home_score is None or away_score is None:
                     continue
 
+                # ── 上半场/下半场盘口: 只有全场比分, 跳过避免错误结算 ──
+                if "上半场" in outcome or "下半场" in outcome:
+                    return None
+
                 # ── 大小球结算 ──
                 if is_over_under:
                     total = home_score + away_score
@@ -749,7 +753,7 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                     else:  # "no"
                         return "won" if not both_scored else "lost"
 
-                # ── 让球盘结算（handicap） ──
+                # ── 让球盘结算（handicap）— 区分主/客方向 ──
                 if is_handicap:
                     hc_line = None
                     # 从 line 字段解析
@@ -784,28 +788,30 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                                         pass
                     if hc_line is None:
                         return None  # 解析不出盘口线，跳过
-                    effective_home = home_score + hc_line
-                    if effective_home > away_score:
-                        return "won"  # 让球主胜
-                    elif effective_home < away_score:
-                        return "lost"  # 让球客胜
+                    # 方向: "让球客胜"/"让分客胜" → 客队+线; 否则主队+线
+                    is_away_hc = "客" in outcome and "胜" in outcome
+                    if is_away_hc:
+                        effective_away = away_score + hc_line
+                        if effective_away > home_score:
+                            return "won"  # 让球客胜
+                        elif effective_away < home_score:
+                            return "lost"
+                        else:
+                            return "push"
                     else:
-                        # 走水（平局） — 返还本金
-                        return "push"  # push = 本金返还，不赚不亏
+                        effective_home = home_score + hc_line
+                        if effective_home > away_score:
+                            return "won"  # 让球主胜
+                        elif effective_home < away_score:
+                            return "lost"
+                        else:
+                            return "push"  # 走水（平局）— 返还本金
 
-                # ── H2H 结算（主胜/客胜/平） ──
+                # ── H2H / 双重机会 / 平局退款 ──
                 is_home_win = home_score > away_score
                 is_draw = home_score == away_score
 
-                # 和局（"平"和"和"两种中文表达）
-                if "平" in outcome or "和" in outcome or "draw" in outcome.lower():
-                    return "won" if is_draw else "lost"
-                if "主胜" in outcome or "home" in outcome.lower():
-                    return "won" if is_home_win else "lost"
-                if "客胜" in outcome or "away" in outcome.lower():
-                    return "won" if (away_score > home_score) else "lost"
-
-                # ── 双重机会（Double Chance） ──
+                # 双重机会 (必须在"和/平"检查之前, 否则被截胡)
                 if "双重机会" in outcome or "double chance" in outcome.lower():
                     # "主/和局" = home/draw
                     if "主" in outcome and "和" in outcome:
@@ -817,6 +823,23 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                     if "主" in outcome and "客" in outcome:
                         return "won" if (is_home_win or away_score > home_score) else "lost"
                     return None  # 无法识别的双重机会组合
+
+                # 平局退款 (DNB): 平局→push, 否则看方向
+                if "平局退款" in outcome or "draw no bet" in outcome.lower():
+                    if is_draw:
+                        return "push"
+                    if "客" in outcome:
+                        return "won" if away_score > home_score else "lost"
+                    else:
+                        return "won" if is_home_win else "lost"
+
+                # 和局（"平"和"和"两种中文表达）
+                if "平" in outcome or "和" in outcome or "draw" in outcome.lower():
+                    return "won" if is_draw else "lost"
+                if "主胜" in outcome or "home" in outcome.lower():
+                    return "won" if is_home_win else "lost"
+                if "客胜" in outcome or "away" in outcome.lower():
+                    return "won" if (away_score > home_score) else "lost"
 
                 # 未识别的 market_type，保守返回 None 不误判
                 return None
