@@ -147,8 +147,6 @@ def get_league_matchups_and_markets(league_id):
                 continue
 
             entry = {"period": per, "prices": prices}
-            if mtype == "spread":
-                entry["line"] = mkt.get("line")  # 让球盘口线, 供二次验价匹配
             if mtype == "moneyline":
                 entry["prices_sorted"] = sort_ml_prices(prices)
                 if per == 0:

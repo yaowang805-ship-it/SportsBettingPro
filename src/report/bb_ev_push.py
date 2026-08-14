@@ -2243,15 +2243,16 @@ def _verify_odds_freshness(qualified: list, max_ev_drop: float = 3.0) -> list:
                 target_line = _parse_line(o.get("line"))
                 target_desig = "away" if "客" in o.get("designation", "") else "home"
                 for sp in fresh.get("spread", []):
-                    sp_line = sp.get("line")
-                    # 盘口线必须匹配(±0.6 容差), 否则拿到的赔率是错的
-                    if (target_line is not None and sp_line is not None
-                            and abs(abs(sp_line) - abs(target_line)) > 0.6):
-                        continue
                     for p in sp.get("prices", []):
-                        if p.get("designation", "").lower() == target_desig:
-                            fresh_odds = p.get("price_decimal", 0)
-                            break
+                        if p.get("designation", "").lower() != target_desig:
+                            continue
+                        pts = p.get("points")
+                        # 盘口线必须匹配(±0.6 容差, 与对比层一致), 否则拿到的赔率是错的
+                        if (target_line is not None and pts is not None
+                                and abs(abs(pts) - abs(target_line)) > 0.6):
+                            continue
+                        fresh_odds = p.get("price_decimal", 0)
+                        break
                     if fresh_odds:
                         break
 
