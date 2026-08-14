@@ -917,14 +917,15 @@ def _calc_kelly_stakes(opps: list) -> list:
         min_stake = tier_cfg.get("min_stake", 30)
         o["_stake"] = stake if stake >= min_stake else 0  # V5.1: 分层最低投注
 
-    # 第二遍：总额超预算时等比压缩
+    # 第二遍：总额超预算时, 按 stake 降序取 top 保留, 超出清零 (不摊薄, 集中在最优机会)
     daily_budget = bankroll  # V4.5: 动态日预算
-    total_wanted = sum(o["_stake"] for o in opps if o["_stake"] > 0)
-    if total_wanted > daily_budget:
-        ratio = daily_budget / total_wanted
-        for o in opps:
-            if o["_stake"] > 0:
-                o["_stake"] = max(30, round(o["_stake"] * ratio))  # V4.5: 最低¥30
+    _active = sorted([o for o in opps if o["_stake"] > 0], key=lambda o: -o["_stake"])
+    _cum = 0
+    for o in _active:
+        if _cum + o["_stake"] > daily_budget:
+            o["_stake"] = 0
+        else:
+            _cum += o["_stake"]
 
     # 第三遍：跨盘口相关性折扣 + 单场上限
     from collections import defaultdict
@@ -945,11 +946,13 @@ def _calc_kelly_stakes(opps: list) -> list:
                     o["_stake"] = max(0, round(o["_stake"] * discount))
                     o["_corr_discount"] = round(discount, 3)
 
-        total = sum(o["_stake"] for o in group)
-        if total > per_match_max:
-            ratio = per_match_max / total
-            for o in group:
-                o["_stake"] = max(0, round(o["_stake"] * ratio))
+        _active = sorted([o for o in group if o["_stake"] > 0], key=lambda o: -o["_stake"])
+        _cum = 0
+        for o in _active:
+            if _cum + o["_stake"] > per_match_max:
+                o["_stake"] = 0
+            else:
+                _cum += o["_stake"]
 
     # 第四遍：单联赛/单运动总敞口上限（防集中度风险）
     league_groups = defaultdict(list)
@@ -962,11 +965,13 @@ def _calc_kelly_stakes(opps: list) -> list:
 
     per_league_max = bankroll * _PER_LEAGUE_CAP_PCT
     for key, group in league_groups.items():
-        total = sum(o["_stake"] for o in group)
-        if total > per_league_max:
-            ratio = per_league_max / total
-            for o in group:
-                o["_stake"] = max(0, round(o["_stake"] * ratio))
+        _active = sorted([o for o in group if o["_stake"] > 0], key=lambda o: -o["_stake"])
+        _cum = 0
+        for o in _active:
+            if _cum + o["_stake"] > per_league_max:
+                o["_stake"] = 0
+            else:
+                _cum += o["_stake"]
 
     # 单运动总敞口上限 (用户指定: 足球主力40%, 篮球/网球各20%, 其他保守)
     _SPORT_TOTAL_CAPS = {
@@ -977,11 +982,13 @@ def _calc_kelly_stakes(opps: list) -> list:
     for key, group in sport_groups.items():
         sport_cap = _SPORT_TOTAL_CAPS.get(key, _PER_SPORT_CAP_PCT)
         per_sport_max = bankroll * sport_cap
-        total = sum(o["_stake"] for o in group)
-        if total > per_sport_max:
-            ratio = per_sport_max / total
-            for o in group:
-                o["_stake"] = max(0, round(o["_stake"] * ratio))
+        _active = sorted([o for o in group if o["_stake"] > 0], key=lambda o: -o["_stake"])
+        _cum = 0
+        for o in _active:
+            if _cum + o["_stake"] > per_sport_max:
+                o["_stake"] = 0
+            else:
+                _cum += o["_stake"]
 
     # 第五遍：RiskManager 安全层（冷却停注 + 回撤/连败折扣）
     opps = _apply_risk_manager_safety(opps)
@@ -1727,24 +1734,11 @@ def _diversify_and_rank(qualified: list) -> list:
             selected.append(o)
             selected_ids.add(id(o))
 
-    # --- 第三轮：恢复单次推送上限 (V4.5: top N 按 Kelly 权重) ---
-    # 不能 "Bet Everything 不限数量": 941 条全选 → per-sport 40% 上限把预算
-    # 摊薄到每条 ~¥9 → 被 ¥50 门槛全删 → 一条都推不出去。
+    # --- 第三轮：V5 Bet Everything — 有edge就上, 不限数量 ---
     remaining = [o for o in qualified if id(o) not in selected_ids]
     remaining.sort(key=lambda o: (o.get("_tier", 3), -o["_score"]))
-    selected.extend(remaining)
+    selected.extend(remaining)  # V5: no cap
     qualified = selected
-
-    # 按实际 Kelly 权重降序取 top N, 让预算集中在最优机会上
-    from config.weight_matrix_v5 import get_kelly_stake_pct as _kelly_pct_fn
-    for o in qualified:
-        o["_kelly_weight"] = _kelly_pct_fn(
-            o.get("sport", ""), o.get("league", ""),
-            o.get("_sub_market", "") or o.get("_market", ""),
-            o.get("bb_odds", 0), o.get("_match_type", ""), o.get("_match_score", 0))
-    _MAX_PUSH = 20
-    qualified.sort(key=lambda o: (-o.get("_kelly_weight", 0), o.get("_tier", 3), -o["_score"]))
-    qualified = qualified[:_MAX_PUSH]
 
     # 最终展示排序：按运动 → Tier → 联赛名 → 开赛时间（同联赛紧挨着）
     qualified.sort(key=lambda o: (
@@ -1760,7 +1754,6 @@ def _diversify_and_rank(qualified: list) -> list:
     qualified = [o for o in qualified if o.get("_stake", 0) >= 50]
 
     qualified.sort(key=lambda o: o.get("_stake", 0), reverse=True)
-    # Kelly>0 的保留, stake=0 的仅展示不投注 (已在 _calc_kelly_stakes 处理)
 
     return qualified
 
