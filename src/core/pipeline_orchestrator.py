@@ -124,7 +124,6 @@ class PipelineOrchestrator:
         self._last_incremental: Optional[float] = None
         self._last_inc_urgent: Optional[float] = None   # 临场<6h
         self._last_inc_near: Optional[float] = None      # 中程6-24h
-        self._last_inc_far: Optional[float] = None       # 远端24-72h
         self._full_scan_ok = False  # V5.4: 全量扫描成功+推送后才允许分层增量扫描
         self._last_scan_success: float = 0             # 最后一次成功完成的时间戳
         self._scan_failure_count: int = 0              # 连续失败计数
@@ -1158,8 +1157,9 @@ class PipelineOrchestrator:
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
-            # V5.4: 三层独立定时器 (urgent 15min / near 30min / far 120min, 大幅降频防风控)
-            for tw, interval, label in [("urgent", 900, "临场<6h"), ("near", 1800, "中程6-24h"), ("far", 7200, "远端24-72h")]:
+            # V5.4: 两层定时器 (urgent 15min / near 30min)。远端24-72h 已去掉:
+            # 全量扫描(07:00)已覆盖0-72h, 远端赔率变化慢且权重矩阵要的是收盘价。
+            for tw, interval, label in [("urgent", 900, "临场<6h"), ("near", 1800, "中程6-24h")]:
                 last_key = f"_last_inc_{tw}"
                 last_val = getattr(self, last_key, None)
                 if last_val is None:
@@ -1231,18 +1231,18 @@ class PipelineOrchestrator:
             os._exit(42)  # 特殊退出码, launchd KeepAlive 会自动重启
 
     def _watchdog(self):
-        """自检看门狗：检测增量扫描是否停滞，Pinnacle 连接是否异常。V5: 分层扫描, 只看最长的far间隔。"""
+        """自检看门狗：检测增量扫描是否停滞，Pinnacle 连接是否异常。V5: 分层扫描, 只看最长的near间隔。"""
         now = time.time()
         if not self._is_in_scan_window(datetime.now()):
             return
 
-        # V5: 使用最长的间隔(far=60min)作为看门狗基准, 允许2x容忍
-        _far_elapsed = now - self._last_inc_far if self._last_inc_far else 0
-        _far_timeout = 3600 * 2  # 120分钟
+        # V5.4: 远端24-72h层已移除, 最长的增量扫描间隔是near=30min, 允许2x容忍
+        _near_elapsed = now - self._last_inc_near if self._last_inc_near else 0
+        _near_timeout = 1800 * 2  # 60分钟
 
         warnings = []
-        if self._last_inc_far and _far_elapsed > _far_timeout:
-            warnings.append(f"增量扫描停滞 {_far_elapsed/60:.0f}分钟(预期60min)")
+        if self._last_inc_near and _near_elapsed > _near_timeout:
+            warnings.append(f"增量扫描停滞 {_near_elapsed/60:.0f}分钟(预期30min)")
 
         if warnings:
             logger.warning("🐕 看门狗(扫描): %s", "; ".join(warnings))

@@ -1,30 +1,7 @@
 {
-  "balance": 120.0,
+  "balance": 137.0,
   "initial_bankroll": 10000,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_格拉茨风暴_费内巴切_上半场主胜",
-      "sport": "football",
-      "league": "欧洲冠军联赛-资格赛",
-      "home_team": "格拉茨风暴",
-      "away_team": "费内巴切",
-      "home_cn": "格拉茨风暴",
-      "away_cn": "费内巴切",
-      "market": "1x2",
-      "market_type": "上半场主胜",
-      "sub_market": "ht",
-      "line": "",
-      "odds": 4.78,
-      "stake": 17,
-      "model_prob": 0.2146,
-      "ev_pct": 2.58,
-      "pin_odds": 4.41,
-      "fair_price": 4.66,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1786473000,
-      "created_at": "2026-08-11T09:40:06.430041+00:00",
-      "track_only": true
-    },
     {
       "id": "bb_vs_pin_1x2_奈梅亨_奥林匹亚科斯_双边进球-是",
       "sport": "football",
@@ -967,29 +944,6 @@
       "commence_time": 1786890600,
       "created_at": "2026-08-13T23:27:42.556008+00:00",
       "track_only": true
-    },
-    {
-      "id": "bb_vs_pin_over_under_伊凡诺沃_下诺夫哥罗德_上半场小球(10)",
-      "sport": "football",
-      "league": "俄罗斯甲级联赛",
-      "home_team": "伊凡诺沃",
-      "away_team": "下诺夫哥罗德",
-      "home_cn": "伊凡诺沃",
-      "away_cn": "下诺夫哥罗德",
-      "market": "over_under",
-      "market_type": "上半场小球(1.0)",
-      "sub_market": "ht",
-      "line": "",
-      "odds": 2.06,
-      "stake": 108,
-      "model_prob": 0.507,
-      "ev_pct": 4.45,
-      "pin_odds": 1.8403,
-      "fair_price": 1.9722,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1786802400,
-      "created_at": "2026-08-14T06:36:35.712813+00:00",
-      "track_only": false
     }
   ],
   "settled": {
@@ -9190,6 +9144,21 @@
       "home_cn": "里昂",
       "away_cn": "布拉格斯巴达",
       "market_type": "客胜"
+    },
+    {
+      "id": "bb_vs_pin_1x2_格拉茨风暴_费内巴切_上半场主胜",
+      "match": "17¥ @ 4.78 (超时作废)",
+      "date": "2026-08-14T10:06:31.149170+00:00",
+      "stake": 17,
+      "odds": 4.78,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "欧洲冠军联赛-资格赛",
+      "sport": "football",
+      "home_cn": "格拉茨风暴",
+      "away_cn": "费内巴切",
+      "market_type": "上半场主胜"
     }
   ],
   "daily_budget": {

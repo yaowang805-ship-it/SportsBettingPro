@@ -24,56 +24,56 @@ sys.path.insert(0, str(ROOT))
 class TestV4WeightMatrix:
     def test_football_1x2_has_kelly(self):
         """英超 1X2 @2.0 应有正 Kelly."""
-        from config.weight_matrix_v4 import get_kelly_stake_pct
+        from config.weight_matrix_v5 import get_kelly_stake_pct
         k = get_kelly_stake_pct("football", "英超", "1x2", 2.0)
         assert k >= 0, f"英超 1X2 Kelly={k}"
 
     def test_football_ou_has_kelly(self):
         """英超 OU @1.9 应有正 Kelly."""
-        from config.weight_matrix_v4 import get_kelly_stake_pct
+        from config.weight_matrix_v5 import get_kelly_stake_pct
         k = get_kelly_stake_pct("football", "英超", "ou", 1.9)
         assert k >= 0, f"英超 OU Kelly={k}"
 
     def test_football_hc_falls_back_to_1x2(self):
         """HC 不应返回固定 4% (已修复)."""
-        from config.weight_matrix_v4 import get_kelly_stake_pct
+        from config.weight_matrix_v5 import get_kelly_stake_pct
         k = get_kelly_stake_pct("football", "英超", "hc", 2.0)
         assert k < 0.04, f"HC Kelly={k} 不应是固定4%"
 
     def test_nba_ml_has_data(self):
         """NBA ML 有标定数据."""
-        from config.weight_matrix_v4 import get_kelly_stake_pct
+        from config.weight_matrix_v5 import get_kelly_stake_pct
         k = get_kelly_stake_pct("basketball", "NBA", "1x2", 2.5)
         assert k >= 0, f"NBA ML Kelly={k}"
 
     def test_mlb_ml_has_data(self):
         """MLB ML 有标定数据."""
-        from config.weight_matrix_v4 import get_kelly_stake_pct
+        from config.weight_matrix_v5 import get_kelly_stake_pct
         k = get_kelly_stake_pct("baseball", "MLB", "1x2", 2.5)
         assert k >= 0, f"MLB ML Kelly={k}"
 
     def test_nfl_ml_has_data(self):
         """NFL ML 有标定数据."""
-        from config.weight_matrix_v4 import get_kelly_stake_pct
+        from config.weight_matrix_v5 import get_kelly_stake_pct
         k = get_kelly_stake_pct("american_football", "NFL", "1x2", 2.0)
         assert k >= 0, f"NFL ML Kelly={k}"
 
     def test_dc_is_data_driven(self):
         """DC 现在从1X2推导, 不再是固定1.5%."""
-        from config.weight_matrix_v4 import get_kelly_stake_pct
+        from config.weight_matrix_v5 import get_kelly_stake_pct
         k = get_kelly_stake_pct("football", "英超", "dc", 1.8)
         # 应该 < 1.5% (固定cap), 数据驱动值应不同
         assert k <= 0.015, f"DC Kelly={k} 不应超过cap"
 
     def test_pin_roi_blocking_hc(self):
         """HC Pin全负ROI → min_ev=5%."""
-        from config.weight_matrix_v4 import get_min_ev
+        from config.weight_matrix_v5 import get_min_ev
         ev = get_min_ev("football", "英超", "hc", 2.0)
         assert ev >= 2.0, f"HC min_ev={ev}"
 
     def test_no_double_multiplier(self):
         """1X2不再有双重乘数bug."""
-        from config.weight_matrix_v4 import get_kelly_stake_pct
+        from config.weight_matrix_v5 import get_kelly_stake_pct
         k1 = get_kelly_stake_pct("football", "英超", "1x2", 2.0)
         k2 = get_kelly_stake_pct("football", "英超", "ou", 2.0)
         # 两者不应差超过3倍 (修复前1X2多乘2次系数)
@@ -205,7 +205,7 @@ class TestImports:
         import src.scrapers.bb_vs_pinnacle  # noqa
 
     def test_weight_matrix_import(self):
-        import config.weight_matrix_v4  # noqa
+        import config.weight_matrix_v5  # noqa
 
     def test_matching_engine_import(self):
         import src.scrapers.matching_engine  # noqa

@@ -89,12 +89,20 @@ def detect_sport(bb_match):
     return "football"
 
 
+_BB_ODDS_CACHE = {"path": None, "mtime": None, "data": None}
+
+
 def load_bb_odds(path=None):
     if path is None:
         path = DATA_DIR / "bb_odds_extracted.json"
     if not path.exists():
         return []
     mtime = path.stat().st_mtime
+    # 缓存: 同文件同 mtime 直接返回, 避免逐机会重读重解析 ~6MB JSON (性能关键)
+    if (_BB_ODDS_CACHE["path"] == str(path)
+            and _BB_ODDS_CACHE["mtime"] == mtime
+            and _BB_ODDS_CACHE["data"] is not None):
+        return _BB_ODDS_CACHE["data"]
     age_hours = (time.time() - mtime) / 3600
     if age_hours > 2 and path == DATA_DIR / "bb_odds_extracted.json":
         print(f"  ⚠ BB 数据 {age_hours:.1f}小时前抓取，可能已过期")
@@ -108,6 +116,9 @@ def load_bb_odds(path=None):
         if key not in seen:
             seen.add(key)
             unique.append(m)
+    _BB_ODDS_CACHE["path"] = str(path)
+    _BB_ODDS_CACHE["mtime"] = mtime
+    _BB_ODDS_CACHE["data"] = unique
     return unique
 
 
