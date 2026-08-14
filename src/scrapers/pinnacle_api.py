@@ -86,11 +86,11 @@ MAX_COOKIE_REFRESHES = 3           # 每次扫描最多刷新 3 次 cookie
 _ssl_fail_count = 0  # 全局 SSL 失败计数器（看门狗用）
 
 _last_req_time = 0.0
-_MIN_REQUEST_INTERVAL = 1.0        # V5.3: 0.6→1.0s 再降频(共享IP, 配合抖动伪装)
+_MIN_REQUEST_INTERVAL = 0.35       # V5: 0.5→0.35s (安全最快频率, 封禁线16 req/s)
 _REQUEST_COUNT = 0                  # V5: 扫描内请求计数器
 _SCAN_PAUSE_UNTIL = 0.0            # V5: Cloudflare 封禁后自动暂停
 _REQUEST_BURST_WINDOW = 10         # V5: 10秒窗口
-_REQUEST_BURST_LIMIT = 5           # V5.3: 8→5 再降频(~0.5 req/s)
+_REQUEST_BURST_LIMIT = 15          # V5: 10秒内最多15个请求(~1.5 req/s)
 _BURST_WINDOW_START = 0.0
 _BURST_COUNT = 0
 _ip_ban_notify_until = 0.0         # V5.2: IP 封禁钉钉告警节流(30min 内只发一次)
@@ -227,8 +227,8 @@ def _rate_limit():
     elapsed = time.time() - _last_req_time
     if elapsed < _MIN_REQUEST_INTERVAL:
         import random
-        # V5.3: 随机抖动 0~0.5s, 打破规律性机器节奏
-        time.sleep(_MIN_REQUEST_INTERVAL - elapsed + random.uniform(0, 0.5))
+        # 微抖动 0~0.2s 打破规律节奏, 几乎不影响速度
+        time.sleep(_MIN_REQUEST_INTERVAL - elapsed + random.uniform(0, 0.2))
     _last_req_time = time.time()
     _REQUEST_COUNT += 1
     _BURST_COUNT += 1

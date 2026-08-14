@@ -58,7 +58,7 @@ for _lf in sorted(LOG_DIR.iterdir()):
         print(f"  🗑️ 清理旧日志: {_lf.name} ({(int(_age_sec / 86400))}天前)")
 
 SCAN_WINDOW = (7, 22)              # 07:00 ~ 22:00
-INCREMENTAL_INTERVAL = 2700  # 45 分钟 — 0-72h全量对比 (V5.3: 30→45min 减请求量, BB+Pin同时拉, 无条件)
+INCREMENTAL_INTERVAL = 1800  # 30 分钟 — 0-72h全量对比 (BB+Pin同时拉, 无条件)
 CHECK_INTERVAL = 30                # 调度循环检查间隔（秒）
 
 # 定时任务表：(名称, HH:MM, 处理函数, 参数字典)
