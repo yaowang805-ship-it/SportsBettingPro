@@ -606,8 +606,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         match_score = m.get("match_score", 0)
         if match_type != "name":
             # 检查是否有任何队名相似性
-            bb_home = (bb.get("home_bb") or "").lower()
-            bb_away = (bb.get("away_bb") or "").lower()
+            bb_home = (bb.get("home") or "").lower()
+            bb_away = (bb.get("away") or "").lower()
             pin_home = (pin.get("home") or "").lower()
             pin_away = (pin.get("away") or "").lower()
             # 至少有一队名包含对方(时间匹配必须队名重叠, 不允许高分放行)

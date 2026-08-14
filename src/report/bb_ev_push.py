@@ -1529,6 +1529,8 @@ def _collect_opportunities(match, market_key):
             "start_time_bb": match.get("start_time_bb", ""),
             "_market_type": market_key,  # "opportunities"|"handicap"|"over_under"|...
             "_sub_market": sub_market,  # "1x2"|"ht"|"btts"|"dc"|"oe"|"htft"|...
+            "line": line,               # 盘口线 (让球/大小), 供二次验价+虚拟投注
+            "_match_type": match_type,  # "name"|"time", 供低置信时间匹配降仓
 
             "_match_score": match_score,
             "_score": score,
@@ -2370,7 +2372,7 @@ def _apply_match_exposure_cap(qualified: list) -> list:
     cooldown_file = DATA_DIR / "push_cooldown.json"
     now = time.time()
     from config.constants import get_dynamic_bankroll
-    match_cap = get_dynamic_bankroll() * 1.0   # V4.5: 动态资金
+    match_cap = get_dynamic_bankroll() * 0.06  # 单场累计≤6%日预算 (原 *1.0 是 bug, 100% 敞口)
 
     # 加载记录 {match_id: {timestamp, total_stake}}
     records = {}
@@ -2510,14 +2512,11 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
             _audit_log("PUSHED", key, o, "new")
             continue
 
-        # 旧key → 检查溢价增幅
-        old_bb = old.get("bb", 0)
-        old_fair = old.get("fair", 0)
-        old_premium = ((old_bb - old_fair) / old_fair * 100) if old_fair > 0 else old.get("ev", 0)
-        new_premium = ev_now
-        premium_delta = new_premium - old_premium
+        # 旧key → 检查溢价增幅 (指纹只存 ev/ts 无 fair, 直接用 ev 差)
+        old_ev = old.get("ev", 0)
+        premium_delta = ev_now - old_ev
 
-        if old_fair > 0 and premium_delta >= _threshold:
+        if premium_delta >= _threshold:
             re_pushed += 1
             result.append(o)
             _audit_log("REPUSH", key, o, f"premium+{premium_delta:.1f}%")

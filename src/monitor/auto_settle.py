@@ -1275,22 +1275,16 @@ def _auto_void_timeout(max_days: int = 5, skip_settleable: bool = False) -> int:
     remaining = []
     for bet in pending:
         created = bet.get("created_at", "")
+        dt = None
         if not created:
-            stake = bet.get("stake", 0)
-            bid = bet.get("id", "")
-            logger.info("  ⏰ 超时作废(无创建时间): %s (%.0f¥)", bid[:40], stake)
-            voided.append(bid)
-            continue
-        try:
-            dt = datetime.fromisoformat(created.replace("Z", "+00:00"))
-        except (ValueError, TypeError):
-            stake = bet.get("stake", 0)
-            bid = bet.get("id", "")
-            logger.info("  ⏰ 超时作废(时间格式无效): %s (%.0f¥)", bid[:40], stake)
-            voided.append(bid)
-            continue
+            logger.info("  ⏰ 超时作废(无创建时间): %s", bet.get("id", "")[:40])
+        else:
+            try:
+                dt = datetime.fromisoformat(created.replace("Z", "+00:00"))
+            except (ValueError, TypeError):
+                logger.info("  ⏰ 超时作废(时间格式无效): %s", bet.get("id", "")[:40])
 
-        if dt < cutoff:
+        if dt is None or dt < cutoff:
             bid = bet.get("id", "")
             stake = bet.get("stake", 0)
             odds = bet.get("odds", 0)
@@ -1319,7 +1313,7 @@ def _auto_void_timeout(max_days: int = 5, skip_settleable: bool = False) -> int:
                     record_void(league)
                 except ImportError:
                     pass
-            logger.info("  ⏰ 超时作废: %s (%.0f¥, 已 %d 天)", bid[:40], stake, (now - dt).days)
+            logger.info("  ⏰ 超时作废: %s (%.0f¥)", bid[:40], stake)
             voided += 1
         else:
             remaining.append(bet)
