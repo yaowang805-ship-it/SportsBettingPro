@@ -26,6 +26,7 @@ from src.scrapers.pinnacle_api import (
     API_BASE, SESSION, api_get, _rate_limit, _diagnose_pinnacle_error, us_to_decimal, get_decimal_price,
 )
 from src.scrapers.pinnacle_api import _rate_limit as _  # noqa: ensure rate_limit usable
+from src.scrapers.devig import shin_fair_odds  # Shin 法去抽水, 替代比例法
 
 API_BASE = API_BASE  # re-export for backward compat
 SESSION = SESSION
@@ -102,8 +103,8 @@ def _derive_btts_from_team_total(team_total_entries):
                 elif des == "under" and dec > 1:
                     under_dec = dec
         if over_dec and under_dec:
-            imp_total = 1.0 / over_dec + 1.0 / under_dec
-            prob_over = (1.0 / over_dec) / imp_total
+            _tt_fairs = shin_fair_odds([over_dec, under_dec])
+            prob_over = 1.0 / _tt_fairs[0] if _tt_fairs[0] > 0 else 0
             if side == "home":
                 home_prob = prob_over
             elif side == "away":
@@ -719,7 +720,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         if _ml_swapped:
             entry["flags"].append("已校准: BB主客反转(Pin主=BB客, Pin客=BB主)")
 
-        total_implied_ml = sum(1.0 / p for p in pin_ml if p and p > 0)
+        fair_ml = shin_fair_odds(pin_ml)  # Shin 去抽水公平价(整组一次算, 修正 favorite-longshot 偏差)
         for i in range(n_ml):
             bb_o = bb_ml[i]
             # 反转时交换 Pinnacle 赔率: 2-way → 交换 0↔1, 3-way → 交换 0↔2
@@ -729,7 +730,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 _pin_i = i
             pin_o = pin_ml[_pin_i]
             if pin_o and pin_o > 0:
-                fair_price = round(pin_o * total_implied_ml, 4) if total_implied_ml > 0 else round(pin_o, 2)
+                fair_price = fair_ml[_pin_i]
                 ev = (bb_o - fair_price) / fair_price * 100 if fair_price > 0 else 0
                 if ev > 1:
                     entry["opportunities"].append({
@@ -838,9 +839,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 hc_away_desig = hc_dict.get("away_line_str", "")
 
             # 去抽水公平价
-            total_implied_hc = 1.0 / pin_home_odds + 1.0 / pin_away_odds
-            pin_home_fair = round(pin_home_odds * total_implied_hc, 4)
-            pin_away_fair = round(pin_away_odds * total_implied_hc, 4)
+            _hc_fairs = shin_fair_odds([pin_home_odds, pin_away_odds])
+            pin_home_fair = _hc_fairs[0]
+            pin_away_fair = _hc_fairs[1]
 
             ev_h = (bb_hc_odds_for_pin_home - pin_home_fair) / pin_home_fair * 100 if pin_home_fair > 0 else 0
             ev_a = (bb_hc_odds_for_pin_away - pin_away_fair) / pin_away_fair * 100 if pin_away_fair > 0 else 0
@@ -899,9 +900,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             if not over_p or not under_p:
                 continue
 
-            total_implied_ou = 1.0 / get_decimal_price(over_p) + 1.0 / get_decimal_price(under_p)
-            over_fair = round(get_decimal_price(over_p) * total_implied_ou, 4)
-            under_fair = round(get_decimal_price(under_p) * total_implied_ou, 4)
+            _ou_fairs = shin_fair_odds([get_decimal_price(over_p), get_decimal_price(under_p)])
+            over_fair = _ou_fairs[0]
+            under_fair = _ou_fairs[1]
 
             # 校准：检查大小盘线是否对得上
             pin_ou_line = over_p.get("points")
@@ -950,12 +951,12 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 n_ht_ml = min(len(pin_ht_ml), len(ht_labels["ml"]))  # cap to available labels
                 bb_ht_ml = bb_ht["ml"]
                 if len(bb_ht_ml) >= n_ht_ml:
-                    total_implied_ht_ml = sum(1.0 / p for p in pin_ht_ml if p and p > 0)
+                    fair_ht_ml = shin_fair_odds(pin_ht_ml)
                     for i in range(n_ht_ml):
                         bb_o = bb_ht_ml[i]
                         pin_o = pin_ht_ml[i]
                         if pin_o and pin_o > 0:
-                            fair_price = round(pin_o * total_implied_ht_ml, 4) if total_implied_ht_ml > 0 else round(pin_o, 2)
+                            fair_price = fair_ht_ml[i]
                             ev = (bb_o - fair_price) / fair_price * 100 if fair_price > 0 else 0
                             if ev > 1:
                                 entry["opportunities"].append({
@@ -987,9 +988,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             mp_odds = next((get_decimal_price(p) or "?" for p in mp if p.get("designation") == "home"), "?")
                             entry["flags"].append(f"备用盘口: Pin主线={mp_line}@{mp_odds}")
                     if cal_ok:
-                        total_implied = 1.0 / pin_home_odds + 1.0 / pin_away_odds
-                        home_fair = round(pin_home_odds * total_implied, 4)
-                        away_fair = round(pin_away_odds * total_implied, 4)
+                        _hc_fairs = shin_fair_odds([pin_home_odds, pin_away_odds])
+                        home_fair = _hc_fairs[0]
+                        away_fair = _hc_fairs[1]
                         ev_h = (bb_ht_hc["home_odds"] - home_fair) / home_fair * 100 if home_fair > 0 else 0
                         ev_a = (bb_ht_hc["away_odds"] - away_fair) / away_fair * 100 if away_fair > 0 else 0
                         if ev_h > 1:
@@ -1022,9 +1023,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     pin_ou_line = over_p.get("points")
                     cal_ok, _ = _calibrate_market_line(sport, "ou", bb_ht_ou["line"], pin_ou_line, None, is_ht=True)
                     if cal_ok:
-                        total_implied = 1.0 / get_decimal_price(over_p) + 1.0 / get_decimal_price(under_p)
-                        over_fair = round(get_decimal_price(over_p) * total_implied, 4)
-                        under_fair = round(get_decimal_price(under_p) * total_implied, 4)
+                        _ou_fairs = shin_fair_odds([get_decimal_price(over_p), get_decimal_price(under_p)])
+                        over_fair = _ou_fairs[0]
+                        under_fair = _ou_fairs[1]
                         if get_decimal_price(over_p) and get_decimal_price(over_p) > 0:
                             ev_o = (bb_ht_ou["over_odds"] - over_fair) / over_fair * 100
                             if ev_o > 1:
@@ -1075,9 +1076,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         if over_p and under_p:
                             best_diff = abs((over_p.get("points") or 0) - (bb_line or 0))
                     if over_p and under_p and get_decimal_price(over_p) and get_decimal_price(under_p):
-                        total_implied = 1.0 / get_decimal_price(over_p) + 1.0 / get_decimal_price(under_p)
-                        over_fair = round(get_decimal_price(over_p) * total_implied, 4)
-                        under_fair = round(get_decimal_price(under_p) * total_implied, 4)
+                        _ou_fairs = shin_fair_odds([get_decimal_price(over_p), get_decimal_price(under_p)])
+                        over_fair = _ou_fairs[0]
+                        under_fair = _ou_fairs[1]
                         ev_o = (bb_f5_ou["over_odds"] - over_fair) / over_fair * 100 if over_fair > 0 else 0
                         ev_u = (bb_f5_ou["under_odds"] - under_fair) / under_fair * 100 if under_fair > 0 else 0
                         if ev_o > 1:
@@ -1141,8 +1142,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             dc_fair = None  # 触发 Path B
                         else:
                             # 去抽水 (multiplicative proportional method)
-                            dc_imp = sum(1.0 / v for v in dc_raw)
-                            dc_fair = [round(v * dc_imp, 4) for v in dc_raw]
+                            dc_fair = shin_fair_odds(dc_raw)
                             dc_pin_raw = dc_raw
                     break
 
@@ -1213,8 +1213,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         if any(v < 1.2 for v in dc_raw):
                             ht_dc_fair = None
                         else:
-                            dc_imp = sum(1.0 / v for v in dc_raw)
-                            ht_dc_fair = [round(v * dc_imp, 4) for v in dc_raw]
+                            ht_dc_fair = shin_fair_odds(dc_raw)
                             ht_dc_pin_raw = dc_raw
                     break
             # 路径B: 从 HT 1X2 推导
@@ -1265,9 +1264,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         elif p.get("designation") == "no":
                             no_price = get_decimal_price(p)
                     if yes_price and no_price:
-                        btts_imp = 1.0 / yes_price + 1.0 / no_price
-                        yes_fair = round(yes_price * btts_imp, 4)
-                        no_fair = round(no_price * btts_imp, 4)
+                        _btts_fairs = shin_fair_odds([yes_price, no_price])
+                        yes_fair = _btts_fairs[0]
+                        no_fair = _btts_fairs[1]
                         _add_btts_opportunities(entry, bb_ht_btts_yes, bb_ht_btts_no,
                                                 yes_fair, no_fair,
                                                 pin_yes=yes_price, pin_no=no_price,
@@ -1290,9 +1289,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         elif p.get("designation") == "even":
                             even_price = get_decimal_price(p)
                     if odd_price and even_price:
-                        oe_imp = 1.0 / odd_price + 1.0 / even_price
-                        odd_fair = round(odd_price * oe_imp, 4)
-                        even_fair = round(even_price * oe_imp, 4)
+                        _oe_fairs = shin_fair_odds([odd_price, even_price])
+                        odd_fair = _oe_fairs[0]
+                        even_fair = _oe_fairs[1]
                         _add_oe_opportunities(entry, bb_ht_oe_odd, bb_ht_oe_even,
                                               odd_fair, even_fair,
                                               pin_odd=odd_price, pin_even=even_price,
@@ -1331,8 +1330,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             h_price = prices[0].get("price_decimal", 0)
                             a_price = prices[1].get("price_decimal", 0)
                     if h_price and a_price and h_price > 1 and a_price > 1:
-                        imp_dnb = 1.0 / h_price + 1.0 / a_price
-                        dnb_fair = [round(h_price * imp_dnb, 4), round(a_price * imp_dnb, 4)]
+                        dnb_fair = shin_fair_odds([h_price, a_price])
                         dnb_pin_raw = [h_price, a_price]
                         break
             if not dnb_fair:
@@ -1388,9 +1386,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         continue
                     if not yes_price or not no_price:
                         continue
-                    btts_imp = 1.0 / yes_price + 1.0 / no_price
-                    yes_fair = round(yes_price * btts_imp, 4)
-                    no_fair = round(no_price * btts_imp, 4)
+                    _btts_fairs = shin_fair_odds([yes_price, no_price])
+                    yes_fair = _btts_fairs[0]
+                    no_fair = _btts_fairs[1]
                     _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, yes_fair, no_fair, pin_yes=yes_price, pin_no=no_price)
                     break
             else:
@@ -1422,9 +1420,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         elif des == "even" and val > 0: even_price = val
                     if odd_price <= 0 or even_price <= 0:
                         continue
-                    oe_imp = 1.0 / odd_price + 1.0 / even_price
-                    odd_fair = round(odd_price * oe_imp, 4)
-                    even_fair = round(even_price * oe_imp, 4)
+                    _oe_fairs = shin_fair_odds([odd_price, even_price])
+                    odd_fair = _oe_fairs[0]
+                    even_fair = _oe_fairs[1]
                     _add_oe_opportunities(entry, bb_oe_odd, bb_oe_even, odd_fair, even_fair, pin_odd=odd_price, pin_even=even_price)
                     break
 
