@@ -7,7 +7,7 @@ Kelly 0.75 回测: 真正滚动窗口 (2012-2014→2025), 全部存活
 核心理念: 每个赔率区间 × 联赛 × 盘口的权重 = 该区间的 Kelly 最优解
   0.75-Kelly仓位% = max(0, actual_wr × BB_odds - 1) / (BB_odds - 1) × 0.75
 
-数据源 (全量外部数据, 零结算数据):
+数据源 (权重矩阵本身全量外部数据; 最终仓位另乘结算ROI/CLV反馈系数):
   足球 1X2:  Pinnacle 111K收盘赔率 (20联赛×13季, football-data.co.uk)
   足球 OU:   Pinnacle 47K收盘赔率
   网球:      tennis-data.co.uk Pinnacle 45K收盘赔率 (2016-2025, ATP/WTA逐赛事级)
@@ -1496,27 +1496,25 @@ def _load_settlement_feedback() -> dict:
 
 
 def _settlement_multiplier(league: str) -> float:
-    """V4.5: 根据实盘结算 ROI 调整 sports_confidence。
-    - ROI > +15% → +10% (联赛被低估, 加仓)
-    - ROI +5% to +15% → 基准
-    - ROI -10% to +5% → -15% (略低, 微降)
-    - ROI < -10% → -30% (显著亏损, 大幅降仓)
-    - 样本 < 15 → 不调整 (×1.0)
+    """V4.5: 根据实盘结算 ROI 调整仓位。收紧过拟合(2026-08-14):
+    - 样本门槛 15→30(15 笔噪声太大, 单笔就摆动 ±7% ROI)
+    - 调整幅度 ±10/-30% → ±5/-15%(避免追涨杀跌)
+    - ROI > +15% → +5%; +5%~+15% → 基准; -10%~+5% → -8%; < -10% → -15%
     """
     fb = _load_settlement_feedback()
     data = fb.get(league)
-    if data is None or data["n"] < 15:
+    if data is None or data["n"] < 30:
         return 1.0
 
     roi = data["roi"]
     if roi > 0.15:
-        return 1.10
+        return 1.05
     elif roi > 0.05:
         return 1.00
     elif roi > -0.10:
-        return 0.85
+        return 0.92
     else:
-        return 0.70
+        return 0.85
 
 
 def _pin_market_roi(data_dict) -> float:
@@ -1576,7 +1574,8 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                          flags: tuple = None) -> float:
     """返回 Kelly 最优仓位 (小数, 0.06 = 6% of bankroll)。
 
-    纯粹由 Pinnacle 历史数据 + BB 溢价驱动, 没有任何结算数据参与。
+    核心 Kelly 权重由 Pinnacle 历史数据 + BB 溢价驱动。
+    注意: 最终仓位还会乘 _settlement_multiplier(结算ROI反馈) + _clv_multiplier(CLV反馈)。
 
     V4.5: Pin ROI 全为负的盘口 → 封杀, 除非 BB 实时溢价能覆盖.
     V4.2 新增参数: match_type, match_score, flags (用于 MMA/Boxing 风控)
