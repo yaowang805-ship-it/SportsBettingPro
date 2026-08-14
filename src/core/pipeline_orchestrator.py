@@ -459,8 +459,9 @@ class PipelineOrchestrator:
         preload_thread.start()
 
         try:
-            logger.info("Step 1/3: BB/FB API 提取 (联赛结构后台预加载中)...")
+            logger.info("Step 1/4: BB 提取 (获取联赛列表, 用于 Pin 联赛映射)...")
             from src.scrapers.bb_api_fetcher import main as fetch
+            from src.scrapers.bb_vs_pinnacle import main as compare
             # bb_api_fetcher.main() 读取 sys.argv，需要临时设置
             old_argv = sys.argv
             sys.argv = ["bb_api_fetcher", "--all-sports"]
@@ -468,19 +469,36 @@ class PipelineOrchestrator:
                 fetch()
             finally:
                 sys.argv = old_argv
-            logger.info("Step 1/3: 完成")
+            logger.info("Step 1/4: 完成")
 
             # 确保联赛预加载已完成
             preload_done.wait()
-            logger.info("Step 2/3: Pinnacle 对比 (BB+FB合并)...")
-            from src.scrapers.bb_vs_pinnacle import main as compare
-            old_argv = sys.argv
-            sys.argv = ["bb_vs_pinnacle"]
+            # Step 2/4: Pin 先拉取并缓存(慢, ~12min), 不对比
+            logger.info("Step 2/4: Pin 预取并缓存...")
+            sys.argv = ["bb_vs_pinnacle", "--pin-cache"]
             try:
                 compare()
             finally:
                 sys.argv = old_argv
-            logger.info("Step 2/3: 完成")
+            logger.info("Step 2/4: 完成")
+
+            # Step 3/4: Pin 拉取后再提取 BB, 保证 BB 赔率新鲜(消除 12min 时间错位)
+            logger.info("Step 3/4: BB 再提取 (新鲜赔率)...")
+            sys.argv = ["bb_api_fetcher", "--all-sports"]
+            try:
+                fetch()
+            finally:
+                sys.argv = old_argv
+            logger.info("Step 3/4: 完成")
+
+            # Step 4/4: 用缓存的 Pin + 新鲜的 BB 对比
+            logger.info("Step 4/4: Pinnacle 对比 (缓存Pin + 新鲜BB)...")
+            sys.argv = ["bb_vs_pinnacle", "--use-pin-cache"]
+            try:
+                compare()
+            finally:
+                sys.argv = old_argv
+            logger.info("Step 4/4: 完成")
 
             logger.info("Step 2b/3: Pinnacle 对比 (FB独立)...")
             sys.argv = ["bb_vs_pinnacle",
