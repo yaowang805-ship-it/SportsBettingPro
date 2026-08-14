@@ -76,6 +76,8 @@ def _fetch_close_odds(entries):
     from src.scrapers.pinnacle_api import get_decimal_price
 
     now_epoch = time.time()
+    _budget_start = time.time()
+    _MAX_RUNTIME = 600  # 单次采集 wall-clock 预算 10 分钟, 防卡死/无限重扫
     results = []
     league_cache = {}  # Pinnacle league ID → matchups cache
 
@@ -137,6 +139,9 @@ def _fetch_close_odds(entries):
                  "american_football": "🏈", "mma": "🥊", "boxing": "👊", "ice_hockey": "🏒"}
 
     for league, league_entries in by_league.items():
+        if time.time() - _budget_start > _MAX_RUNTIME:
+            logger.warning("CLV 采集超预算 %ds, 提前结束 (已处理 %d 条)", _MAX_RUNTIME, len(results))
+            break
         pin_ids = find_pinnacle_league_ids(league, ps)
         if not pin_ids:
             continue
@@ -197,9 +202,10 @@ def _fetch_close_odds(entries):
                     continue
 
                 # 提取对应市场的收盘赔率
-                close_odds = _extract_market_odds(best_pin, sub_market, designation)
-                if close_odds is None:
+                close_data = _extract_market_odds(best_pin, sub_market, designation)
+                if close_data is None:
                     continue
+                close_odds, bet_idx = close_data
 
                 # 计算真实 CLV
                 bb_odds = float(e.get("bb_odds", 0))
@@ -210,7 +216,7 @@ def _fetch_close_odds(entries):
                 total_implied = sum(1.0 / p for p in close_odds if p and p > 0)
                 if total_implied <= 0:
                     continue
-                close_fair = round(close_odds[0] * total_implied, 4)
+                close_fair = round(close_odds[bet_idx] * total_implied, 4)
 
                 true_clv = round((bb_odds - close_fair) / close_fair * 100, 2)
                 clv_delta = round(true_clv - push_ev, 2)  # 正=赔率朝有利方向移动
@@ -231,7 +237,7 @@ def _fetch_close_odds(entries):
                     "bb_odds": bb_odds,
                     "push_fair_price": fair_price,
                     "push_ev_pct": push_ev,
-                    "close_pin_odds": close_odds[0],
+                    "close_pin_odds": close_odds[bet_idx],
                     "close_fair_price": close_fair,
                     "close_total_implied": round(total_implied, 4),
                     "true_clv_pct": true_clv,
@@ -244,9 +250,20 @@ def _fetch_close_odds(entries):
 
 
 def _extract_market_odds(pin_matchup, sub_market, designation):
-    """从 Pinnacle matchup 中提取对应市场的收盘赔率。
-    Returns: list of decimal odds, or None if not found
+    """从 Pinnacle matchup 中提取对应市场的收盘赔率 + 投注选项索引。
+    Returns: (odds_list, bet_idx) 或 None。bet_idx 指向投注的 designation 对应选项。
     """
+    from src.scrapers.pinnacle_api import get_decimal_price
+    des = (designation or "").lower()
+
+    def _odds_from_prices(prices):
+        odds = []
+        for p in prices:
+            d = get_decimal_price(p)
+            if d and 1.01 <= d <= 51.0:
+                odds.append(d)
+        return odds
+
     if sub_market in ("1x2", "ht"):
         # 独赢/上半场 → moneyline
         for ml in pin_matchup.get("moneyline", []):
@@ -255,40 +272,34 @@ def _extract_market_odds(pin_matchup, sub_market, designation):
                 continue
             if sub_market == "1x2" and period != 0:
                 continue
-            odds = []
-            for p in ml.get("prices", []):
-                from src.scrapers.pinnacle_api import get_decimal_price
-                d = get_decimal_price(p)
-                if d and 1.01 <= d <= 51.0:
-                    odds.append(d)
+            odds = _odds_from_prices(ml.get("prices", []))
             if len(odds) >= 2:
-                return odds
+                n = len(odds)
+                if "和" in des or "draw" in des:
+                    idx = 1 if n >= 3 else 0
+                elif "客" in des or "away" in des:
+                    idx = n - 1
+                else:
+                    idx = 0
+                return odds, idx
     elif sub_market == "hc":
         # 让球 → spread
         for sp in pin_matchup.get("spread", []):
             if sp.get("period", 0) != 0:
                 continue
-            odds = []
-            for p in sp.get("prices", []):
-                from src.scrapers.pinnacle_api import get_decimal_price
-                d = get_decimal_price(p)
-                if d and 1.01 <= d <= 51.0:
-                    odds.append(d)
+            odds = _odds_from_prices(sp.get("prices", []))
             if len(odds) >= 2:
-                return odds
+                idx = 1 if ("客" in des or "away" in des) else 0
+                return odds, idx
     elif sub_market == "ou":
         # 大小球 → total
         for tot in pin_matchup.get("total", []):
             if tot.get("period", 0) != 0:
                 continue
-            odds = []
-            for p in tot.get("prices", []):
-                from src.scrapers.pinnacle_api import get_decimal_price
-                d = get_decimal_price(p)
-                if d and 1.01 <= d <= 51.0:
-                    odds.append(d)
+            odds = _odds_from_prices(tot.get("prices", []))
             if len(odds) >= 2:
-                return odds
+                idx = 1 if ("小" in des or "under" in des) else 0
+                return odds, idx
 
     return None
 

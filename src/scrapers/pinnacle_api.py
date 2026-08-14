@@ -38,10 +38,13 @@ if not _PATCHED:
                 chunk = _orig_safe_read(self, amt)
                 return data + chunk if chunk else data
             except http.client.IncompleteRead as e:
+                if not e.partial:
+                    return data  # 空 partial 无进展, 直接退出防 100% CPU 死循环
                 data += e.partial
                 amt -= len(e.partial)
                 if amt <= 0:
                     return data
+        return data
 
     http.client.HTTPResponse._safe_read = _safe_read_patched
     http.client.HTTPResponse._safe_read_is_patched = True  # marker on CLASS, survives reload()
@@ -208,8 +211,7 @@ def _rate_limit():
         remaining = _SCAN_PAUSE_UNTIL - time.time()
         if remaining > 0:
             logger.warning("Cloudflare 封禁冷却中, 跳过请求 (剩余 %.0fs)", remaining)
-            time.sleep(min(remaining, 60))  # 节流, 避免调用方 tight loop
-            return False  # 冷却中, 调用方应跳过本次请求
+            return False  # 冷却中立即跳过 (原 sleep60s 导致 N联赛×60s 小时级卡死)
         _SCAN_PAUSE_UNTIL = 0.0  # 到期, 清除标志
 
     # V5: 突发流量限制 — 10秒窗口内最多 15 请求
