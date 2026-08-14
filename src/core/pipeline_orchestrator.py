@@ -1325,6 +1325,15 @@ class PipelineOrchestrator:
         if not self.dry_run:
             self._catch_up_missed_tasks()
 
+        # V5.4: 启动时若近期有成功扫描(对比文件新鲜), 放行分层增量, 避免重启后整天不扫描
+        try:
+            _cmp = SRC_DIR / "data" / "storage" / "bb_vs_pinnacle_comparison.json"
+            if _cmp.exists() and (time.time() - _cmp.stat().st_mtime) < 6 * 3600:
+                self._full_scan_ok = True
+                logger.info("检测到近期成功扫描(对比文件新鲜), 放行分层增量扫描")
+        except Exception:
+            pass
+
         try:
             while self._running:
                 try:
