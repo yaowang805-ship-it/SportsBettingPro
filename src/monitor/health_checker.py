@@ -442,6 +442,35 @@ def check_git(report):
         report.add_ok(f"Git: {dirty}个未提交文件")
 
 
+def check_database(report):
+    """检查数据库大小(主DB + 归档DB), 过大告警。"""
+    try:
+        from src.storage.database import db
+        size = db.get_db_size()
+        size_mb = size / (1024 * 1024)
+        report.stats["db_size_mb"] = round(size_mb, 1)
+        if size_mb > 500:
+            report.add_issue(f"主数据库过大: {size_mb:.0f}MB (建议 VACUUM)")
+        elif size_mb > 200:
+            report.add_warning(f"主数据库偏大: {size_mb:.0f}MB")
+        else:
+            report.add_ok(f"主数据库: {size_mb:.1f}MB")
+    except Exception as e:
+        report.add_issue(f"主数据库检查失败: {str(e)[:40]}")
+    # 归档DB(赔率历史, 持续增长)
+    try:
+        archive = DATA_DIR / "pinnacle_odds_archive.db"
+        if archive.exists():
+            am = archive.stat().st_size / (1024 * 1024)
+            report.stats["archive_db_mb"] = round(am, 1)
+            if am > 2000:
+                report.add_warning(f"归档数据库过大: {am:.0f}MB (建议归档清理)")
+            else:
+                report.add_ok(f"归档数据库: {am:.0f}MB")
+    except Exception:
+        pass
+
+
 def run_health_check(push: bool = False, quiet: bool = False) -> HealthReport:
     """运行全量健康检查。"""
     report = HealthReport()
@@ -455,6 +484,7 @@ def run_health_check(push: bool = False, quiet: bool = False) -> HealthReport:
         ("盘口健康", check_market_health),
         ("V4矩阵", check_v4_matrix),
         ("CLV", check_clv),
+        ("数据库", check_database),
         ("Git", check_git),
     ]
 
