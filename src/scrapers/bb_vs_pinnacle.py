@@ -610,11 +610,10 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             bb_away = (bb.get("away_bb") or "").lower()
             pin_home = (pin.get("home") or "").lower()
             pin_away = (pin.get("away") or "").lower()
-            # 至少有一队名包含对方
+            # 至少有一队名包含对方(时间匹配必须队名重叠, 不允许高分放行)
             has_name_overlap = (
                 (bb_home and (bb_home in pin_home or pin_home in bb_home)) or
-                (bb_away and (bb_away in pin_away or pin_away in bb_away)) or
-                match_score >= 0.95  # 高分时间匹配(比分+赔率高度一致)可放行
+                (bb_away and (bb_away in pin_away or pin_away in bb_away))
             )
             if not has_name_overlap:
                 time_skip_count += 1
