@@ -13,33 +13,31 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 
 
-def test_dc_ev_threshold_raised():
-    """DC(含和局)门槛应大幅提高 — 修复平局概率高估."""
+def test_dc_ev_blocked():
+    """DC(双重机会)直接封杀 — 平局概率高估导致EV虚高, 实证ROI-54.8%."""
     from config.weight_matrix_v4 import get_min_ev
-    # DC 全场: 低赔 4%, 中赔 5%, 高赔 6%
-    assert get_min_ev("football", "英超", "dc", 1.8) == 4.0
-    assert get_min_ev("football", "英超", "dc", 3.0) == 5.0
-    assert get_min_ev("football", "英超", "dc", 4.0) == 6.0
+    assert get_min_ev("football", "英超", "dc", 1.8) == 999.0
+    assert get_min_ev("football", "英超", "dc", 4.0) == 999.0
 
 
-def test_ht_dc_ev_threshold_higher():
-    """上半场DC门槛应更高 — 上半场平局率45%偏差更大."""
+def test_ht_dc_ev_blocked():
+    """上半场DC直接封杀 — 上半场平局率45%偏差更大."""
     from config.weight_matrix_v4 import get_min_ev
-    assert get_min_ev("football", "英超", "ht_dc", 1.8) == 5.0
-    assert get_min_ev("football", "英超", "ht_dc", 4.0) == 7.0
+    assert get_min_ev("football", "英超", "ht_dc", 1.8) == 999.0
+    assert get_min_ev("football", "英超", "ht_dc", 4.0) == 999.0
 
 
-def test_ht_ev_threshold_raised():
-    """上半场盘口门槛提高."""
+def test_ht_ev_blocked():
+    """上半场盘口直接封杀 — 实证ROI-31.3%."""
     from config.weight_matrix_v4 import get_min_ev
-    assert get_min_ev("football", "英超", "ht", 1.8) == 3.5
-    assert get_min_ev("football", "英超", "ht", 4.0) == 6.0
+    assert get_min_ev("football", "英超", "ht", 1.8) == 999.0
+    assert get_min_ev("football", "英超", "ht", 4.0) == 999.0
 
 
-def test_dnb_ev_threshold_unchanged():
-    """DNB(平局退款)门槛保持低 — 不受平局概率高估影响."""
+def test_dnb_ev_blocked():
+    """DNB(平局退款)直接封杀 — BB无此盘口(曾误读'第3粒进球')."""
     from config.weight_matrix_v4 import get_min_ev
-    assert get_min_ev("football", "英超", "dnb", 1.8) == 2.0
+    assert get_min_ev("football", "英超", "dnb", 1.8) == 999.0
 
 
 def test_per_sport_odds_strategy():
