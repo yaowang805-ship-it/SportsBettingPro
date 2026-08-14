@@ -1,0 +1,51 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-05-01,play_off,Lulea,Brynas,5,2,2.15,4.00,3.03
+2025-04-28,play_off,Brynas,Lulea,2,6,2.23,3.95,2.85
+2025-04-26,play_off,Lulea,Brynas,3,5,2.25,3.95,2.83
+2025-04-23,play_off,Lulea,Brynas,5,1,2.22,3.95,2.90
+2025-04-21,play_off,Brynas,Lulea,2,5,2.05,4.00,3.00
+2025-04-19,play_off,Brynas,Lulea,2,1,2.05,4.00,3.00
+2025-04-15,play_off,Frolunda,Lulea,0,2,2.20,3.80,2.80
+2025-04-13,play_off,Lulea,Frolunda,5,1,2.30,3.80,2.70
+2025-04-12,play_off,Brynas,Skelleftea,4,1,2.10,3.90,3.00
+2025-04-11,play_off,Frolunda,Lulea,2,3,2.15,3.80,2.90
+2025-04-10,play_off,Skelleftea,Brynas,3,4,2.08,3.95,3.15
+2025-04-09,play_off,Frolunda,Lulea,5,3,2.15,3.95,2.98
+2025-04-08,play_off,Skelleftea,Brynas,5,1,2.13,3.95,3.05
+2025-04-07,play_off,Lulea,Frolunda,2,5,2.27,4.00,2.80
+2025-04-06,play_off,Brynas,Skelleftea,4,3,2.19,3.88,2.90
+2025-04-05,play_off,Lulea,Frolunda,4,2,2.15,3.80,3.10
+2025-04-04,play_off,Brynas,Skelleftea,4,1,2.28,3.95,2.75
+2025-03-31,play_off,Skelleftea,Farjestad,2,1,2.08,4.00,3.10
+2025-03-31,play_off,Timra,Frolunda,0,1,2.33,3.95,2.70
+2025-03-30,play_off,Malmo,Brynas,2,5,2.88,3.90,2.22
+2025-03-29,play_off,Farjestad,Skelleftea,2,1,2.33,3.95,2.65
+2025-03-29,play_off,Frolunda,Timra,6,2,2.05,3.95,3.20
+2025-03-28,play_off,Brynas,Malmo,3,2,1.62,4.68,4.50
+2025-03-28,play_off,Lulea,Vaxjo,3,2,2.05,3.90,3.20
+2025-03-27,play_off,Skelleftea,Farjestad,6,2,2.15,3.95,3.05
+2025-03-27,play_off,Timra,Frolunda,2,1,2.18,3.90,2.95
+2025-03-26,play_off,Malmo,Brynas,6,3,3.25,4.10,2.01
+2025-03-26,play_off,Vaxjo,Lulea,3,4,2.25,3.90,2.90
+2025-03-25,play_off,Skelleftea,Farjestad,4,2,2.19,3.95,2.95
+2025-03-25,play_off,Timra,Frolunda,3,4,2.23,3.80,2.90
+2025-03-25,play_off,HV 71,Modo,3,2,2.05,4.20,3.20
+2025-03-24,play_off,Malmo,Brynas,2,0,3.45,4.31,1.89
+2025-03-24,play_off,Vaxjo,Lulea,4,3,2.28,3.90,2.83
+2025-03-23,play_off,Modo,HV 71,0,4,2.35,4.00,2.80
+2025-03-23,play_off,Farjestad,Skelleftea,1,4,2.05,4.00,3.10
+2025-03-23,play_off,Frolunda,Timra,4,0,2.07,3.95,3.20
+2025-03-22,play_off,Brynas,Malmo,4,2,1.55,4.80,5.05
+2025-03-22,play_off,Lulea,Vaxjo,6,2,2.28,3.78,2.88
+2025-03-21,play_off,Farjestad,Skelleftea,6,2,2.13,4.00,3.00
+2025-03-21,play_off,Frolunda,Timra,2,4,2.14,3.90,3.05
+2025-03-21,play_off,HV 71,Modo,4,3,1.95,4.00,3.60
+2025-03-20,play_off,Brynas,Malmo,5,1,1.67,4.38,4.50
+2025-03-20,play_off,Lulea,Vaxjo,4,0,2.40,3.85,2.67
+2025-03-19,play_off,HV 71,Modo,5,0,2.00,4.30,3.30
+2025-03-17,play_off,Vaxjo,Orebro,3,0,1.86,3.90,3.90
+2025-03-16,play_off,Modo,HV 71,3,2,2.20,4.30,2.90
+2025-03-15,play_off,Rogle,Malmo,0,3,1.87,4.00,3.70
+2025-03-15,play_off,Vaxjo,Orebro,1,4,1.76,4.20,4.10
+2025-03-14,play_off,Modo,HV 71,4,2,2.10,4.20,3.10
+2025-03-13,play_off,Orebro,Vaxjo,3,4,2.59,3.78,2.48

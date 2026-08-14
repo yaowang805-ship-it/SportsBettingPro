@@ -1,0 +1,253 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-05-29,play_off,Reims,Metz,1,3,2.58,3.19,2.91
+2025-05-21,play_off,Metz,Reims,1,1,2.21,3.32,3.47
+2025-05-17,regular,Lyon,Angers,2,0,1.18,8.11,14.31
+2025-05-17,regular,PSG,Auxerre,3,1,1.13,9.60,18.44
+2025-05-17,regular,Nice,Brest,6,0,1.51,4.62,5.95
+2025-05-17,regular,Strasbourg,Le Havre,2,3,1.53,4.89,5.43
+2025-05-17,regular,Lens,Monaco,4,0,2.71,3.82,2.46
+2025-05-17,regular,Lille,Reims,2,1,1.38,4.96,8.69
+2025-05-17,regular,Marseille,Rennes,4,2,1.61,4.43,5.11
+2025-05-17,regular,Nantes,Montpellier,3,0,1.56,4.21,6.11
+2025-05-17,regular,St Etienne,Toulouse,2,3,2.31,3.77,2.89
+2025-05-17,play_off,Metz,Dunkerque,1,0,1.94,3.46,3.99
+2025-05-14,play_off,Dunkerque,Guingamp,1,0,2.36,3.24,3.09
+2025-05-10,regular,Angers,Strasbourg,2,1,4.37,3.74,1.82
+2025-05-10,regular,Auxerre,Nantes,1,1,2.82,3.32,2.60
+2025-05-10,regular,Brest,Lille,2,0,4.82,4.04,1.71
+2025-05-10,regular,Le Havre,Marseille,1,3,6.09,4.53,1.52
+2025-05-10,regular,Toulouse,Lens,1,1,2.26,3.53,3.20
+2025-05-10,regular,Monaco,Lyon,2,0,1.84,4.29,3.81
+2025-05-10,regular,Montpellier,PSG,1,4,6.64,5.52,1.41
+2025-05-10,regular,Rennes,Nice,2,0,3.19,3.79,2.15
+2025-05-10,regular,Reims,St Etienne,0,2,2.13,3.60,3.40
+2025-05-04,regular,Lille,Marseille,1,1,2.41,3.39,3.05
+2025-05-04,regular,Auxerre,Le Havre,1,2,2.44,3.52,2.90
+2025-05-04,regular,Brest,Montpellier,1,0,1.36,5.38,8.30
+2025-05-04,regular,Lyon,Lens,1,2,1.46,5.11,6.25
+2025-05-04,regular,Nantes,Angers,0,1,1.97,3.40,4.24
+2025-05-03,regular,St Etienne,Monaco,1,3,6.01,5.14,1.46
+2025-05-03,regular,Toulouse,Rennes,2,1,2.18,3.55,3.37
+2025-05-03,regular,Strasbourg,PSG,2,1,2.38,3.82,2.79
+2025-05-02,regular,Nice,Reims,1,0,1.39,5.12,7.90
+2025-04-27,regular,Marseille,Brest,4,1,1.37,5.29,7.89
+2025-04-27,regular,Lens,Auxerre,0,4,1.58,4.28,5.59
+2025-04-27,regular,Montpellier,Reims,0,0,4.22,3.71,1.86
+2025-04-27,regular,Nantes,Toulouse,0,0,2.89,3.17,2.65
+2025-04-27,regular,Angers,Lille,0,2,7.49,4.40,1.46
+2025-04-26,regular,Lyon,Rennes,4,1,1.65,4.41,4.87
+2025-04-26,regular,Le Havre,Monaco,1,1,7.72,5.21,1.38
+2025-04-26,regular,Strasbourg,St Etienne,3,1,1.55,4.62,5.53
+2025-04-25,regular,PSG,Nice,1,3,1.54,4.73,5.61
+2025-04-22,regular,Nantes,PSG,1,1,7.19,5.42,1.39
+2025-04-20,regular,St Etienne,Lyon,2,1,4.90,4.41,1.64
+2025-04-20,regular,Nice,Angers,2,1,1.40,4.90,8.08
+2025-04-20,regular,Brest,Lens,1,3,2.49,3.32,2.96
+2025-04-20,regular,Reims,Toulouse,1,0,3.64,3.50,2.10
+2025-04-20,regular,Lille,Auxerre,3,1,1.35,5.23,9.08
+2025-04-19,regular,Marseille,Montpellier,5,1,1.15,8.72,15.50
+2025-04-19,regular,Monaco,Strasbourg,0,0,1.51,4.71,5.89
+2025-04-19,regular,PSG,Le Havre,2,1,1.18,8.61,13.63
+2025-04-18,regular,Rennes,Nantes,2,1,1.82,3.66,4.62
+2025-05-17,regular,St Etienne,Auxerre,0,1,1.87,3.66,4.22
+2025-05-17,regular,Montpellier,Le Havre,0,2,2.53,3.36,2.87
+2025-05-17,regular,Reims,Strasbourg,0,1,3.53,3.56,2.11
+2025-05-17,regular,Lens,St Etienne,1,0,1.60,4.18,5.54
+2025-04-05,regular,Lyon,Lille,2,1,2.28,3.53,3.14
+2025-04-05,regular,Brest,Monaco,2,1,4.46,3.80,1.81
+2025-04-05,regular,PSG,Angers,1,0,1.13,9.07,18.88
+2025-04-04,regular,Nice,Nantes,1,2,1.50,4.33,6.76
+2025-03-30,regular,Lille,Lens,1,0,1.99,3.41,4.06
+2025-03-30,regular,Angers,Rennes,0,3,3.91,3.37,2.03
+2025-03-30,regular,Auxerre,Montpellier,1,0,1.81,3.84,4.35
+2025-03-30,regular,Le Havre,Nantes,3,2,3.04,3.23,2.47
+2025-03-30,regular,Toulouse,Brest,2,4,2.04,3.40,3.87
+2025-03-29,regular,Monaco,Nice,2,1,1.86,3.89,4.04
+2025-03-29,regular,St Etienne,PSG,1,6,11.36,7.04,1.23
+2025-03-29,regular,Reims,Marseille,3,1,5.30,3.93,1.66
+2025-03-28,regular,Strasbourg,Lyon,4,2,2.71,3.63,2.53
+2025-03-16,regular,PSG,Marseille,3,1,1.35,5.52,8.14
+2025-03-16,regular,Brest,Reims,0,0,1.70,3.77,5.32
+2025-03-16,regular,Strasbourg,Toulouse,2,1,2.57,3.30,2.90
+2025-03-16,regular,Lyon,Le Havre,4,2,1.29,6.16,9.51
+2025-03-15,regular,Lens,Rennes,1,0,2.05,3.44,3.81
+2025-03-15,regular,Angers,Monaco,0,2,7.31,4.96,1.42
+2025-03-15,regular,Nantes,Lille,1,0,4.18,3.40,1.97
+2025-03-14,regular,Nice,Auxerre,1,1,1.60,4.19,5.61
+2025-03-09,regular,Nice,Lyon,0,2,2.15,3.57,3.41
+2025-03-09,regular,Reims,Auxerre,0,2,2.52,3.28,2.96
+2025-03-09,regular,Le Havre,St Etienne,1,1,2.36,3.43,3.10
+2025-03-09,regular,Nantes,Strasbourg,0,1,3.01,3.44,2.40
+2025-03-09,regular,Brest,Angers,2,0,1.69,3.77,5.52
+2025-03-08,regular,Marseille,Lens,0,1,1.52,4.50,6.38
+2025-03-08,regular,Lille,Montpellier,1,0,1.43,4.81,7.70
+2025-03-08,regular,Rennes,PSG,1,4,4.89,4.10,1.70
+2025-03-07,regular,Toulouse,Monaco,1,1,3.28,3.52,2.23
+2025-03-02,regular,Marseille,Nantes,2,0,1.35,5.51,8.74
+2025-03-02,regular,Angers,Toulouse,0,4,3.96,3.29,2.08
+2025-03-02,regular,Auxerre,Strasbourg,0,1,3.12,3.36,2.39
+2025-03-02,regular,Montpellier,Rennes,0,4,3.85,3.50,2.04
+2025-03-02,regular,Lyon,Brest,2,1,1.73,4.06,4.72
+2025-03-01,regular,PSG,Lille,4,1,1.36,5.29,8.67
+2025-03-01,regular,Lens,Le Havre,3,4,1.42,4.82,8.02
+2025-04-13,regular,Auxerre,Lyon,1,3,4.30,3.83,1.83
+2025-04-13,regular,Angers,Montpellier,2,0,1.98,3.45,4.02
+2025-04-13,regular,Le Havre,Rennes,1,5,3.79,3.46,2.05
+2025-04-13,regular,St Etienne,Brest,3,3,3.62,3.70,2.02
+2025-04-12,regular,Strasbourg,Nice,2,2,2.84,3.46,2.50
+2025-04-12,regular,Toulouse,Lille,1,2,3.22,3.24,2.35
+2025-04-12,regular,Monaco,Marseille,3,0,1.91,3.96,3.73
+2025-04-11,regular,Lens,Reims,0,2,1.61,3.98,5.94
+2025-04-06,regular,Marseille,Toulouse,3,2,1.71,4.00,4.74
+2025-04-06,regular,Rennes,Auxerre,0,1,1.87,3.66,4.22
+2025-04-06,regular,Montpellier,Le Havre,0,2,2.53,3.36,2.87
+2025-04-06,regular,Reims,Strasbourg,0,1,3.53,3.56,2.11
+2025-04-06,regular,Lens,St Etienne,1,0,1.60,4.18,5.54
+2025-03-02,regular,Auxerre,Strasbourg,3,2,1.70,3.89,5.19
+2025-01-24,regular,Auxerre,St Etienne,1,1,1.94,3.62,4.03
+2025-01-19,regular,Marseille,Strasbourg,1,1,1.61,4.46,5.16
+2025-01-19,regular,Angers,Auxerre,2,0,2.29,3.30,3.34
+2025-01-19,regular,Reims,Le Havre,1,1,1.66,3.90,5.52
+2025-01-19,regular,St Etienne,Nantes,1,1,2.98,3.32,2.48
+2025-01-18,regular,Lyon,Toulouse,0,0,1.80,3.95,4.32
+2025-01-18,regular,Rennes,Brest,1,2,2.02,3.34,4.16
+2025-01-18,regular,Lens,PSG,1,2,3.99,3.93,1.89
+2025-01-17,regular,Lille,Nice,2,1,1.93,3.54,4.19
+2025-01-17,regular,Montpellier,Monaco,2,1,5.23,4.38,1.61
+2025-01-12,regular,PSG,St Etienne,2,1,1.10,11.81,21.64
+2025-01-12,regular,Montpellier,Angers,1,3,2.05,3.50,3.72
+2025-01-12,regular,Toulouse,Strasbourg,1,2,1.91,3.67,4.07
+2025-01-12,regular,Le Havre,Lens,1,2,5.72,4.02,1.63
+2025-01-11,regular,Rennes,Marseille,1,2,3.23,3.28,2.36
+2025-01-11,regular,Reims,Nice,2,4,2.80,3.36,2.61
+2025-01-11,regular,Brest,Lyon,2,1,3.41,3.62,2.13
+2025-01-10,regular,Auxerre,Lille,0,0,4.80,3.69,1.79
+2025-01-10,regular,Nantes,Monaco,2,2,3.91,3.40,2.04
+2025-01-05,regular,Marseille,Le Havre,5,1,1.32,5.51,10.05
+2025-01-05,regular,Angers,Brest,2,0,3.32,3.24,2.32
+2025-01-05,regular,Strasbourg,Auxerre,3,1,1.91,3.86,3.95
+2025-01-05,regular,Lens,Toulouse,0,1,1.94,3.62,4.02
+2025-01-04,regular,Lyon,Montpellier,1,0,1.37,5.62,7.78
+2025-01-04,regular,Lille,Nantes,1,1,1.53,4.31,6.49
+2025-01-04,regular,St Etienne,Reims,3,1,3.61,3.50,2.11
+2025-01-03,regular,Nice,Rennes,3,2,2.33,3.30,3.29
+2024-12-18,regular,Monaco,PSG,2,4,4.47,4.01,1.78
+2024-12-15,regular,PSG,Lyon,3,1,1.40,5.62,6.89
+2024-12-15,regular,Rennes,Angers,2,0,1.64,3.89,5.88
+2024-12-15,regular,Brest,Nantes,4,1,2.28,3.16,3.57
+2024-12-15,regular,Le Havre,Strasbourg,0,3,3.49,3.25,2.28
+2024-12-15,regular,Montpellier,Nice,2,2,2.87,3.78,2.36
+2024-12-14,regular,Reims,Monaco,0,0,3.40,3.41,2.22
+2024-12-14,regular,Auxerre,Lens,2,2,4.65,3.87,1.77
+2024-12-14,regular,Marseille,Lille,1,1,2.09,3.52,3.67
+2024-12-13,regular,Toulouse,St Etienne,2,1,1.45,4.58,7.73
+2024-12-08,regular,St Etienne,Marseille,0,2,6.11,4.23,1.57
+2024-12-08,regular,Nantes,Rennes,1,0,3.36,3.03,2.45
+2024-12-08,regular,Strasbourg,Reims,0,0,2.48,3.41,2.98
+2024-12-08,regular,Lens,Montpellier,2,0,1.42,4.86,8.05
+2024-12-07,regular,Angers,Lyon,0,3,5.43,4.22,1.62
+2024-12-07,regular,Nice,Le Havre,2,1,1.61,3.92,6.24
+2024-12-07,regular,Monaco,Toulouse,2,0,1.88,3.78,4.21
+2024-12-06,regular,Auxerre,PSG,0,0,10.00,5.96,1.29
+2024-12-06,regular,Lille,Brest,3,1,1.67,3.70,5.95
+2024-12-01,regular,Marseille,Monaco,2,1,2.66,3.44,2.71
+2024-12-01,regular,Le Havre,Angers,0,1,2.39,3.07,3.42
+2024-12-01,regular,Toulouse,Auxerre,2,0,1.70,3.80,5.44
+2024-12-01,regular,Lyon,Nice,4,1,1.71,4.26,4.64
+2024-12-01,regular,Montpellier,Lille,2,2,4.78,3.59,1.82
+2024-11-30,regular,PSG,Nantes,1,1,1.17,8.07,16.02
+2024-11-30,regular,Brest,Strasbourg,3,1,2.13,3.44,3.66
+2024-11-30,regular,Rennes,St Etienne,5,0,1.59,4.23,5.84
+2024-11-29,regular,Reims,Lens,0,2,3.24,3.37,2.32
+2024-11-24,regular,Nice,Strasbourg,2,1,1.79,3.84,4.65
+2024-11-24,regular,Auxerre,Angers,1,0,1.79,3.68,4.93
+2024-11-24,regular,Nantes,Le Havre,0,2,1.92,3.37,4.59
+2024-11-24,regular,Lille,Rennes,1,0,1.91,3.43,4.54
+2024-11-23,regular,Reims,Lyon,1,1,3.20,3.77,2.18
+2024-11-23,regular,St Etienne,Montpellier,1,0,2.39,3.36,3.12
+2024-11-23,regular,Lens,Marseille,1,3,2.34,3.39,3.19
+2024-11-22,regular,PSG,Toulouse,3,0,1.39,5.55,7.43
+2024-11-22,regular,Monaco,Brest,3,2,1.57,4.16,6.25
+2024-11-10,regular,Lyon,St Etienne,1,0,1.33,5.91,8.63
+2024-11-10,regular,Montpellier,Brest,3,1,2.97,3.26,2.56
+2024-11-10,regular,Le Havre,Reims,0,3,3.64,3.16,2.26
+2024-11-10,regular,Rennes,Toulouse,0,2,2.30,3.41,3.26
+2024-11-10,regular,Nice,Lille,2,2,2.36,3.29,3.27
+2024-11-09,regular,Angers,PSG,2,4,10.65,5.99,1.29
+2024-11-09,regular,Lens,Nantes,3,2,1.67,3.85,5.70
+2024-11-09,regular,Strasbourg,Monaco,1,3,3.93,3.68,1.97
+2024-11-08,regular,Marseille,Auxerre,1,3,1.45,4.93,6.86
+2024-11-03,regular,Nantes,Marseille,1,2,3.53,3.45,2.16
+2024-11-03,regular,Auxerre,Rennes,4,0,3.39,3.63,2.15
+2024-11-03,regular,Le Havre,Montpellier,1,0,2.27,3.40,3.31
+2024-11-03,regular,Toulouse,Reims,1,0,1.92,3.57,4.24
+2024-11-02,regular,St Etienne,Strasbourg,2,0,3.47,3.73,2.09
+2024-11-02,regular,Brest,Nice,0,1,3.05,3.15,2.56
+2024-11-02,regular,PSG,Lens,1,0,1.44,5.06,6.92
+2024-11-01,regular,Lille,Lyon,1,1,2.24,3.77,3.08
+2024-11-01,regular,Monaco,Angers,0,1,1.27,6.43,10.40
+2024-10-27,regular,Marseille,PSG,0,3,4.11,3.90,1.87
+2024-10-27,regular,Nice,Monaco,2,1,4.08,3.76,1.91
+2024-10-27,regular,Montpellier,Toulouse,0,3,3.28,3.73,2.17
+2024-10-27,regular,Strasbourg,Nantes,3,1,1.99,3.53,4.02
+2024-10-27,regular,Lyon,Auxerre,2,2,1.45,5.26,6.31
+2024-10-26,regular,Lens,Lille,0,2,2.12,3.40,3.70
+2024-10-26,regular,Reims,Brest,1,2,1.90,3.54,4.38
+2024-10-26,regular,Angers,St Etienne,4,2,2.28,3.47,3.24
+2024-10-25,regular,Rennes,Le Havre,1,0,1.54,4.11,6.89
+2024-10-20,regular,Montpellier,Marseille,0,5,4.61,4.06,1.74
+2024-10-20,regular,Toulouse,Angers,1,1,1.48,4.25,7.85
+2024-10-20,regular,Auxerre,Reims,2,1,3.38,3.49,2.22
+2024-10-20,regular,Nantes,Nice,1,1,2.90,3.17,2.66
+2024-10-20,regular,Le Havre,Lyon,0,4,4.98,3.91,1.72
+2024-10-19,regular,PSG,Strasbourg,4,2,1.31,6.02,9.54
+2024-10-19,regular,St Etienne,Lens,0,2,5.99,4.31,1.57
+2024-10-19,regular,Brest,Rennes,1,1,2.71,3.21,2.82
+2024-10-18,regular,Monaco,Lille,0,0,2.05,3.62,3.75
+2024-10-06,regular,Nice,PSG,1,1,5.53,4.35,1.60
+2024-10-06,regular,Brest,Le Havre,2,0,1.85,3.60,4.64
+2024-10-06,regular,Strasbourg,Lens,2,2,2.77,3.40,2.63
+2024-10-06,regular,Reims,Montpellier,4,2,1.67,4.15,5.03
+2024-11-09,regular,Montpellier,Auxerre,3,2,2.08,3.60,3.59
+2024-11-09,regular,Brest,Toulouse,2,0,2.81,3.24,2.70
+2024-11-09,regular,Monaco,Le Havre,3,1,1.44,4.82,7.42
+2024-09-21,regular,Reims,PSG,1,1,7.45,5.11,1.42
+2024-09-21,regular,Rennes,Lens,1,1,2.41,3.52,2.96
+2024-09-21,regular,Lille,Strasbourg,3,3,1.57,4.39,5.79
+2024-09-20,regular,Nice,St Etienne,8,0,1.49,4.36,7.27
+2024-09-15,regular,Lens,Lyon,0,0,1.82,3.95,4.27
+2024-09-15,regular,Strasbourg,Angers,1,1,1.64,4.05,5.55
+2024-09-15,regular,Toulouse,Le Havre,2,0,1.95,3.47,4.25
+2024-09-15,regular,Nantes,Reims,1,2,2.44,3.26,3.13
+2024-09-15,regular,Rennes,Montpellier,3,0,1.43,5.09,6.93
+2024-09-14,regular,PSG,Brest,3,1,1.30,6.03,9.69
+2024-09-14,regular,Auxerre,Monaco,0,3,4.58,3.95,1.78
+2024-09-14,regular,Marseille,Nice,2,0,1.90,3.56,4.40
+2024-09-13,regular,St Etienne,Lille,1,0,5.45,3.71,1.71
+2024-09-01,regular,Lille,PSG,1,3,4.40,3.92,1.81
+2024-09-01,regular,Angers,Nice,1,4,4.30,3.36,1.98
+2024-09-01,regular,Le Havre,Auxerre,3,1,2.85,3.30,2.61
+2024-09-01,regular,Reims,Rennes,2,1,3.26,3.45,2.26
+2024-09-01,regular,Monaco,Lens,1,1,1.97,3.81,3.73
+2024-08-31,regular,Toulouse,Marseille,1,3,3.24,3.68,2.19
+2024-08-31,regular,Montpellier,Nantes,1,3,2.27,3.55,3.18
+2024-08-31,regular,Brest,St Etienne,4,0,1.77,3.97,4.57
+2024-08-30,regular,Lyon,Strasbourg,4,3,2.06,3.64,3.63
+2024-08-25,regular,Marseille,Reims,2,2,1.35,5.48,8.60
+2024-08-25,regular,Nantes,Auxerre,2,0,2.60,3.37,2.83
+2024-08-25,regular,Nice,Toulouse,1,1,2.12,3.18,3.98
+2024-08-25,regular,Strasbourg,Rennes,3,1,3.34,3.27,2.32
+2024-08-25,regular,Lens,Brest,2,0,1.88,3.55,4.47
+2024-08-24,regular,St Etienne,Le Havre,0,2,2.06,3.39,3.91
+2024-08-24,regular,Lille,Angers,2,0,1.38,4.91,9.47
+2024-08-24,regular,Lyon,Monaco,0,2,2.75,3.81,2.45
+2024-08-23,regular,PSG,Montpellier,6,0,1.23,7.14,11.55
+2024-08-18,regular,Rennes,Lyon,3,0,2.40,3.42,3.05
+2024-08-18,regular,Angers,Lens,0,1,6.93,3.85,1.57
+2024-08-18,regular,Montpellier,Strasbourg,1,1,2.07,3.61,3.57
+2024-08-18,regular,Toulouse,Nantes,0,0,2.08,3.37,3.81
+2024-08-18,regular,Auxerre,Nice,2,1,3.01,3.39,2.42
+2024-08-17,regular,Monaco,St Etienne,1,0,1.35,5.55,8.25
+2024-08-17,regular,Reims,Lille,0,2,2.97,3.26,2.52
+2024-08-17,regular,Brest,Marseille,1,5,3.28,3.26,2.35
+2024-08-16,regular,Le Havre,PSG,1,4,7.30,4.78,1.44

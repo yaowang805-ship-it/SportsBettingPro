@@ -1,0 +1,170 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-06-08,play_off,Olympiacos,Panathinaikos,85,71,1.50,,2.53
+2025-06-06,play_off,Panathinaikos,Olympiacos,88,99,1.44,,2.70
+2025-06-01,play_off,Olympiacos,Panathinaikos,91,83,1.58,,2.34
+2025-05-30,play_off,Panathinaikos,Olympiacos,80,68,1.49,,2.57
+2025-05-19,play_off,AEK Athens,Promitheas,91,67,1.12,,5.72
+2025-05-17,play_off,Aris,Maroussi,114,109,1.50,,2.49
+2025-05-17,play_off,Kolossos Rhodes,Lavrio,120,80,1.17,,4.61
+2025-05-15,play_off,AEK Athens,Olympiacos,64,90,5.51,,1.13
+2025-05-14,play_off,Promitheas,Panathinaikos,59,97,9.64,,1.04
+2025-05-12,play_off,Panathinaikos,Promitheas,101,69,1.02,,12.71
+2025-05-10,play_off,Kolossos Rhodes,Aris,98,99,1.40,,2.86
+2025-05-10,play_off,Lavrio,Maroussi,81,95,2.17,,1.66
+2025-05-07,regular,PAOK,Panionios,94,78,1.47,,2.64
+2025-05-04,play_off,Olympiacos,AEK Athens,87,85,1.05,,9.40
+2025-05-03,regular,Panionios,Peristeri,102,93,1.48,,2.58
+2025-05-03,play_off,Aris,Lavrio,79,61,1.35,,3.11
+2025-05-03,play_off,Maroussi,Kolossos Rhodes,80,74,1.48,,2.61
+2025-05-03,regular,AS Karditsas,PAOK,90,76,1.68,,2.15
+2025-04-27,play_off,AEK Athens,PAOK,89,85,1.20,,4.35
+2025-04-26,play_off,Maroussi,Aris,91,68,1.56,,2.39
+2025-04-26,play_off,Lavrio,Kolossos Rhodes,74,83,1.92,,1.85
+2025-04-16,play_off,Promitheas,AS Karditsas,85,65,1.30,,3.38
+2025-04-14,play_off,Peristeri,Panathinaikos,82,97,8.11,,1.07
+2025-04-13,play_off,Panionios,Olympiacos,85,91,9.82,,1.05
+2025-04-12,play_off,AS Karditsas,Promitheas,75,74,1.57,,2.36
+2025-04-12,play_off,Maroussi,Lavrio,90,85,1.53,,2.44
+2025-04-12,play_off,PAOK,AEK Athens,94,69,2.01,,1.78
+2025-04-12,play_off,Aris,Kolossos Rhodes,84,86,1.45,,2.70
+2025-04-06,play_off,Panathinaikos,Peristeri,88,68,1.01,,16.01
+2025-04-06,play_off,Olympiacos,Panionios,106,67,1.01,,12.98
+2025-04-05,play_off,Promitheas,AS Karditsas,80,76,1.36,,3.07
+2025-04-05,play_off,Lavrio,Aris,75,89,1.80,,1.97
+2025-04-05,play_off,AEK Athens,PAOK,89,76,1.24,,3.98
+2025-04-05,play_off,Kolossos Rhodes,Maroussi,99,74,1.40,,2.87
+2025-04-01,play_off,Aris,Peristeri,78,83,1.41,,2.85
+2025-03-29,play_off,Peristeri,Lavrio,90,77,1.33,,3.26
+2025-03-29,play_off,Panionios,Aris,92,78,1.63,,2.24
+2025-03-23,regular,AEK Athens,Maroussi,104,83,1.15,,5.07
+2025-03-23,regular,AS Karditsas,Aris,76,82,1.50,,2.53
+2025-03-23,regular,Kolossos Rhodes,PAOK,84,83,1.60,,2.30
+2025-03-23,regular,Panathinaikos,Lavrio,98,70,1.02,,15.32
+2025-03-23,regular,Olympiacos,Panionios,95,64,1.05,,9.49
+2025-03-23,regular,Promitheas,Peristeri,86,70,1.33,,3.21
+2025-03-17,regular,Maroussi,Olympiacos,88,104,10.89,,1.03
+2025-03-17,regular,Aris,Panathinaikos,73,83,9.60,,1.04
+2025-03-16,regular,Panionios,Promitheas,93,101,1.52,,2.47
+2025-03-16,regular,Peristeri,Kolossos Rhodes,85,81,1.44,,2.71
+2025-03-15,regular,Lavrio,AEK Athens,79,90,2.43,,1.54
+2025-03-15,regular,PAOK,AS Karditsas,71,61,1.44,,2.73
+2025-03-10,regular,Aris,Lavrio,82,65,1.43,,2.76
+2025-03-09,regular,Panathinaikos,Panionios,97,66,1.02,,12.44
+2025-03-09,regular,Olympiacos,Kolossos Rhodes,95,76,1.01,,14.54
+2025-03-08,regular,AEK Athens,Peristeri,96,67,1.26,,3.68
+2025-03-08,regular,AS Karditsas,Maroussi,80,67,1.63,,2.24
+2025-03-08,regular,Promitheas,PAOK,87,76,1.42,,2.81
+2025-03-03,regular,Lavrio,AS Karditsas,82,89,1.52,,2.50
+2025-03-02,regular,Maroussi,Panathinaikos,95,102,7.99,,1.06
+2025-03-02,regular,Peristeri,Olympiacos,69,82,8.42,,1.06
+2025-03-01,regular,PAOK,Aris,75,63,1.42,,2.81
+2025-03-01,regular,Kolossos Rhodes,Promitheas,89,85,1.69,,2.13
+2025-03-01,regular,Panionios,AEK Athens,75,80,1.68,,2.15
+2025-02-10,regular,Olympiacos,PAOK,86,60,1.03,,11.35
+2025-02-09,regular,AS Karditsas,Peristeri,89,83,1.52,,2.49
+2025-02-09,regular,Lavrio,Maroussi,94,92,1.57,,2.37
+2025-02-09,regular,Panathinaikos,Kolossos Rhodes,94,82,1.02,,13.26
+2025-02-08,regular,AEK Athens,Promitheas,91,71,1.33,,3.27
+2025-02-08,regular,Aris,Panionios,80,72,1.59,,2.35
+2025-02-02,regular,Panionios,AS Karditsas,82,69,1.36,,3.11
+2025-02-02,regular,Promitheas,Olympiacos,74,77,7.17,,1.08
+2025-02-01,regular,Peristeri,Panathinaikos,84,99,5.71,,1.13
+2025-02-01,regular,PAOK,Lavrio,69,74,1.38,,3.01
+2025-02-01,regular,Maroussi,Aris,73,78,1.76,,2.04
+2025-02-01,regular,Kolossos Rhodes,AEK Athens,85,86,2.12,,1.71
+2025-01-27,regular,Panionios,Lavrio,86,80,1.39,,2.99
+2025-01-26,regular,Olympiacos,AEK Athens,89,70,1.03,,12.53
+2025-01-26,regular,Kolossos Rhodes,AS Karditsas,72,52,1.56,,2.42
+2025-01-25,regular,Peristeri,Aris,73,68,1.50,,2.57
+2025-01-25,regular,PAOK,Maroussi,93,84,1.46,,2.72
+2025-01-25,regular,Promitheas,Panathinaikos,78,84,6.06,,1.12
+2025-01-20,regular,Panathinaikos,Olympiacos,78,72,2.00,,1.81
+2025-01-19,regular,AS Karditsas,Promitheas,70,64,1.99,,1.80
+2025-01-19,regular,AEK Athens,PAOK,91,68,1.36,,3.14
+2025-01-18,regular,Maroussi,Panionios,65,64,1.64,,2.25
+2025-01-18,regular,Lavrio,Peristeri,64,69,1.76,,2.04
+2025-01-18,regular,Aris,Kolossos Rhodes,83,74,1.37,,3.08
+2025-01-13,regular,Kolossos Rhodes,Lavrio,83,100,1.32,,3.36
+2025-01-12,regular,AEK Athens,Panathinaikos,80,103,6.93,,1.10
+2025-01-12,regular,Olympiacos,AS Karditsas,93,72,1.01,,9.70
+2025-01-11,regular,PAOK,Panionios,98,105,1.48,,2.65
+2025-01-11,regular,Peristeri,Maroussi,81,86,1.46,,2.70
+2025-01-11,regular,Promitheas,Aris,106,96,1.53,,2.49
+2025-01-05,regular,Panathinaikos,PAOK,100,81,1.01,,14.77
+2025-01-04,regular,AS Karditsas,AEK Athens,85,83,2.02,,1.78
+2025-01-04,regular,Panionios,Peristeri,83,73,1.30,,3.50
+2025-01-04,regular,Lavrio,Promitheas,78,92,1.95,,1.84
+2025-01-04,regular,Aris,Olympiacos,77,88,9.54,,1.05
+2025-01-04,regular,Kolossos Rhodes,Maroussi,96,57,1.74,,2.08
+2024-12-29,regular,Panathinaikos,AS Karditsas,96,72,1.01,,14.19
+2024-12-29,regular,Olympiacos,Lavrio,87,77,1.02,,12.75
+2024-12-29,regular,PAOK,Peristeri,84,74,1.38,,3.09
+2024-12-28,regular,Promitheas,Maroussi,63,76,1.45,,2.76
+2024-12-28,regular,AEK Athens,Aris,102,89,1.13,,5.62
+2024-12-28,regular,Kolossos Rhodes,Panionios,83,67,2.04,,1.77
+2024-12-22,regular,Panathinaikos,Aris,126,74,1.02,,12.45
+2024-12-22,regular,Kolossos Rhodes,Peristeri,78,80,1.51,,2.55
+2024-12-22,regular,Olympiacos,Maroussi,106,94,1.02,,13.16
+2024-12-21,regular,AEK Athens,Lavrio,97,86,1.13,,5.75
+2024-12-21,regular,Promitheas,Panionios,85,87,1.55,,2.45
+2024-12-21,regular,AS Karditsas,PAOK,81,84,1.64,,2.25
+2024-12-15,regular,Lavrio,Panathinaikos,68,85,10.25,,1.05
+2024-12-15,regular,Panionios,Olympiacos,78,84,7.50,,1.08
+2024-12-15,regular,PAOK,Kolossos Rhodes,94,70,1.28,,3.62
+2024-12-14,regular,Aris,AS Karditsas,69,96,1.40,,2.95
+2024-12-14,regular,Peristeri,Promitheas,75,82,1.55,,2.46
+2024-12-14,regular,Maroussi,AEK Athens,81,83,1.79,,2.02
+2024-12-09,regular,PAOK,Promitheas,86,73,1.56,,2.43
+2024-12-08,regular,Panionios,Panathinaikos,83,85,8.00,,1.07
+2024-12-08,regular,Kolossos Rhodes,Olympiacos,73,88,13.40,,1.02
+2024-12-07,regular,Peristeri,AEK Athens,89,82,1.76,,2.06
+2024-12-07,regular,Maroussi,AS Karditsas,71,85,1.44,,2.77
+2024-12-07,regular,Lavrio,Aris,93,84,1.56,,2.42
+2024-12-01,regular,Aris,PAOK,88,82,1.48,,2.65
+2024-12-01,regular,Panathinaikos,Maroussi,100,74,1.01,,14.88
+2024-12-01,regular,Olympiacos,Peristeri,84,78,1.02,,13.85
+2024-11-30,regular,Promitheas,Kolossos Rhodes,78,64,1.19,,4.64
+2024-11-30,regular,AS Karditsas,Lavrio,87,70,1.55,,2.45
+2024-11-30,regular,AEK Athens,Panionios,75,71,1.28,,3.60
+2024-11-17,regular,PAOK,Olympiacos,60,90,9.50,,1.05
+2024-11-17,regular,Maroussi,Lavrio,80,84,1.37,,3.11
+2024-11-17,regular,Kolossos Rhodes,Panathinaikos,84,91,11.71,,1.03
+2024-11-16,regular,Panionios,Aris,79,62,1.52,,2.55
+2024-11-16,regular,Peristeri,AS Karditsas,71,78,1.27,,3.70
+2024-11-16,regular,Promitheas,AEK Athens,84,76,1.79,,2.02
+2024-11-11,regular,AS Karditsas,Panionios,72,63,1.74,,2.09
+2024-11-10,regular,Olympiacos,Promitheas,106,66,1.04,,10.78
+2024-11-10,regular,Panathinaikos,Peristeri,104,68,1.03,,12.67
+2024-11-09,regular,Aris,Maroussi,72,74,1.53,,2.50
+2024-11-09,regular,Lavrio,PAOK,96,71,2.28,,1.63
+2024-11-09,regular,AEK Athens,Kolossos Rhodes,86,75,1.11,,6.38
+2024-11-04,regular,Lavrio,Panionios,84,80,2.04,,1.78
+2024-11-03,regular,Panathinaikos,Promitheas,92,67,1.06,,8.91
+2024-11-03,regular,AEK Athens,Olympiacos,77,96,5.22,,1.16
+2024-11-02,regular,Maroussi,PAOK,80,81,1.67,,2.20
+2024-11-02,regular,AS Karditsas,Kolossos Rhodes,98,73,1.64,,2.26
+2024-11-02,regular,Aris,Peristeri,77,71,1.44,,2.78
+2024-10-28,regular,Peristeri,Lavrio,84,82,1.25,,3.91
+2024-10-27,regular,Olympiacos,Panathinaikos,71,78,1.56,,2.42
+2024-10-27,regular,Promitheas,AS Karditsas,96,79,1.17,,4.97
+2024-10-26,regular,Panionios,Maroussi,86,62,1.54,,2.48
+2024-10-26,regular,PAOK,AEK Athens,87,82,2.03,,1.78
+2024-10-26,regular,Kolossos Rhodes,Aris,84,85,1.88,,1.91
+2024-10-21,regular,Panathinaikos,AEK Athens,94,74,1.11,,6.54
+2024-10-21,regular,AS Karditsas,Olympiacos,61,77,11.99,,1.03
+2024-10-20,regular,Lavrio,Kolossos Rhodes,74,82,1.46,,2.71
+2024-10-19,regular,Panionios,PAOK,73,62,1.87,,1.93
+2024-10-19,regular,Maroussi,Peristeri,73,79,1.50,,2.57
+2024-10-19,regular,Aris,Promitheas,86,75,1.78,,2.03
+2024-10-14,regular,Promitheas,Lavrio,93,84,1.14,,5.57
+2024-10-13,regular,Peristeri,Panionios,82,72,1.46,,2.71
+2024-10-13,regular,Olympiacos,Aris,102,72,1.02,,13.52
+2024-10-12,regular,AEK Athens,AS Karditsas,96,65,1.14,,5.56
+2024-10-12,regular,Maroussi,Kolossos Rhodes,70,67,1.32,,3.34
+2024-10-12,regular,PAOK,Panathinaikos,93,96,9.18,,1.05
+2024-10-07,regular,Lavrio,Olympiacos,75,93,15.63,,1.01
+2024-10-06,regular,Panionios,Kolossos Rhodes,67,65,1.43,,2.80
+2024-10-06,regular,AS Karditsas,Panathinaikos,66,80,11.37,,1.04
+2024-10-05,regular,Peristeri,PAOK,72,80,1.36,,3.12
+2024-10-05,regular,Maroussi,Promitheas,80,84,1.68,,2.17
+2024-10-05,regular,Aris,AEK Athens,59,70,1.75,,2.07

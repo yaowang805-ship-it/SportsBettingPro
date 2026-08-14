@@ -1,0 +1,423 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-04-24,play_off,Lausanne,Zurich,2,3,2.40,3.80,2.63
+2025-04-22,play_off,Zurich,Lausanne,3,1,1.78,4.05,3.90
+2025-04-19,play_off,Lausanne,Zurich,4,2,2.40,3.80,2.55
+2025-04-17,play_off,Zurich,Lausanne,3,2,1.80,4.33,3.50
+2025-04-15,play_off,Lausanne,Zurich,0,3,2.20,3.80,2.80
+2025-04-12,play_off,Lausanne,Fribourg,5,1,1.90,3.90,3.50
+2025-04-10,play_off,Davos,Zurich,4,6,2.35,3.90,2.58
+2025-04-10,play_off,Fribourg,Lausanne,1,4,2.00,3.95,3.20
+2025-04-10,regular,Ajoie,Visp,5,1,1.49,5.00,5.13
+2025-04-08,play_off,Zurich,Davos,3,0,1.79,4.23,3.65
+2025-04-08,play_off,Lausanne,Fribourg,2,1,2.05,3.95,3.10
+2025-04-08,regular,Visp,Ajoie,0,3,2.60,3.95,2.33
+2025-04-05,play_off,Davos,Zurich,3,1,2.57,3.90,2.38
+2025-04-05,play_off,Fribourg,Lausanne,4,3,1.96,3.95,3.30
+2025-04-05,regular,Ajoie,Visp,3,2,1.61,4.63,4.27
+2025-04-03,play_off,Zurich,Davos,5,1,1.79,4.25,3.65
+2025-04-03,play_off,Lausanne,Fribourg,2,3,1.93,4.05,3.30
+2025-04-03,regular,Visp,Ajoie,4,5,3.28,4.25,1.90
+2025-04-01,play_off,Davos,Zurich,4,3,2.53,4.00,2.38
+2025-04-01,play_off,Fribourg,Lausanne,0,1,2.05,3.85,3.15
+2025-04-01,regular,Ajoie,Visp,2,3,1.23,6.63,9.88
+2025-03-29,play_off,Zurich,Davos,6,1,1.79,4.20,3.68
+2025-03-29,play_off,Lausanne,Fribourg,2,3,1.96,4.10,3.20
+2025-03-26,play_off,Bern,Fribourg,1,4,2.03,3.80,3.20
+2025-03-25,play_off,Lausanne,Langnau Tigers,6,2,1.69,4.25,4.20
+2025-03-25,play_off,Ajoie,Lugano,1,2,3.10,4.25,1.96
+2025-03-24,play_off,Fribourg,Bern,3,4,2.10,4.00,2.93
+2025-03-23,play_off,Langnau Tigers,Lausanne,3,2,2.59,3.85,2.35
+2025-03-23,play_off,Lugano,Ajoie,3,0,1.43,4.88,5.75
+2025-03-22,play_off,Bern,Fribourg,3,2,1.98,4.10,3.18
+2025-03-21,play_off,Zurich,EHC Kloten,5,2,1.48,4.88,5.38
+2025-03-21,play_off,Lausanne,Langnau Tigers,4,1,1.65,4.31,4.38
+2025-03-21,play_off,Ajoie,Lugano,3,4,3.20,4.15,1.95
+2025-03-20,play_off,Fribourg,Bern,2,1,1.99,4.15,3.10
+2025-03-20,play_off,Davos,Zug,5,2,2.00,4.20,3.00
+2025-03-19,play_off,EHC Kloten,Zurich,2,1,3.40,4.15,1.87
+2025-03-19,play_off,Langnau Tigers,Lausanne,3,2,2.50,3.80,2.45
+2025-03-19,play_off,Lugano,Ajoie,2,1,1.43,5.38,5.63
+2025-03-18,play_off,Bern,Fribourg,3,2,1.95,4.05,3.20
+2025-03-18,play_off,Zug,Davos,0,4,1.99,4.00,3.15
+2025-03-17,play_off,Zurich,EHC Kloten,1,0,1.49,5.00,5.13
+2025-03-17,play_off,Lausanne,Langnau Tigers,4,2,1.69,4.25,4.15
+2025-03-17,play_off,Ajoie,Lugano,3,1,3.45,4.50,1.81
+2025-03-16,play_off,Fribourg,Bern,3,0,2.11,4.20,2.83
+2025-03-16,play_off,Davos,Zug,5,1,2.18,4.15,2.72
+2025-03-15,play_off,EHC Kloten,Zurich,0,5,3.25,4.35,1.90
+2025-03-15,play_off,Langnau Tigers,Lausanne,4,3,2.65,4.10,2.25
+2025-03-15,play_off,Lugano,Ajoie,3,4,1.39,5.63,5.88
+2025-03-14,play_off,Bern,Fribourg,3,4,1.97,4.15,3.15
+2025-03-14,play_off,Zug,Davos,1,2,1.96,4.15,3.20
+2025-03-13,play_off,Zurich,EHC Kloten,5,1,1.60,4.68,4.45
+2025-03-13,play_off,Lausanne,Langnau Tigers,4,3,1.69,4.45,4.05
+2025-03-10,play_off,EHC Kloten,Ambri-Piotta,5,4,2.25,4.20,2.60
+2025-03-08,play_off,Ambri-Piotta,EHC Kloten,4,5,1.95,4.00,3.25
+2025-03-06,play_off,Rapperswil-Jona,Ambri-Piotta,3,3,1.91,4.75,2.95
+2025-03-06,play_off,EHC Kloten,Langnau Tigers,2,1,2.30,4.50,2.40
+2025-03-04,play_off,Ambri-Piotta,Rapperswil-Jona,2,1,2.05,4.10,2.95
+2025-03-04,play_off,Langnau Tigers,EHC Kloten,3,1,2.05,3.90,3.10
+2025-03-01,regular,Langnau Tigers,Ajoie,5,1,1.32,6.50,6.63
+2025-03-01,regular,Fribourg,Ambri-Piotta,4,1,1.69,4.31,4.06
+2025-03-01,regular,Bern,Servette,5,1,1.76,4.45,3.65
+2025-03-01,regular,Lugano,Biel,4,2,2.55,4.27,2.25
+2025-03-01,regular,Rapperswil-Jona,Davos,2,1,2.01,4.30,2.95
+2025-03-01,regular,Zurich,EHC Kloten,4,2,1.61,4.42,4.55
+2025-03-01,regular,Zug,Lausanne,4,1,1.96,4.20,3.10
+2025-02-27,regular,Ajoie,Rapperswil-Jona,4,5,3.95,4.75,1.66
+2025-02-27,regular,Ambri-Piotta,Bern,4,1,2.63,3.95,2.30
+2025-02-27,regular,Biel,Langnau Tigers,4,3,2.14,3.95,2.90
+2025-02-27,regular,Davos,Zurich,4,2,2.55,4.00,2.35
+2025-02-27,regular,Lausanne,Fribourg,0,2,2.18,3.85,2.88
+2025-02-27,regular,EHC Kloten,Zug,3,2,2.80,3.95,2.20
+2025-02-27,regular,Servette,Lugano,3,2,1.90,4.55,3.10
+2025-02-25,regular,Fribourg,Biel,3,4,1.87,4.10,3.50
+2025-02-25,regular,Zurich,Davos,3,5,1.90,3.98,3.50
+2025-02-25,regular,Servette,Zug,3,2,2.58,4.10,2.30
+2025-02-23,regular,Lugano,Ajoie,2,0,1.39,5.63,5.88
+2025-02-23,regular,EHC Kloten,Rapperswil-Jona,3,2,2.17,4.15,2.73
+2025-02-23,regular,Zurich,Langnau Tigers,3,2,1.64,4.58,4.20
+2025-02-22,regular,Ambri-Piotta,Biel,5,2,1.95,4.15,3.20
+2025-02-22,regular,Bern,Davos,4,0,1.85,4.28,3.40
+2025-02-22,regular,Fribourg,Servette,1,4,1.84,4.20,3.50
+2025-02-22,regular,Langnau Tigers,EHC Kloten,2,4,2.03,3.95,3.10
+2025-02-22,regular,Rapperswil-Jona,Lausanne,3,1,2.10,4.20,2.80
+2025-02-22,regular,Zug,Zurich,5,4,2.35,4.05,2.53
+2025-02-21,regular,Ajoie,Bern,1,4,3.90,4.28,1.73
+2025-02-21,regular,Servette,Ambri-Piotta,4,2,1.99,4.28,3.00
+2025-02-21,regular,Biel,Zug,6,2,2.78,4.05,2.17
+2025-02-21,regular,Davos,Fribourg,2,3,2.30,3.95,2.68
+2025-02-21,regular,Lausanne,Lugano,4,3,1.76,4.35,3.70
+2025-02-19,regular,Davos,Ambri-Piotta,0,2,1.90,4.20,3.30
+2025-02-15,regular,Ambri-Piotta,Ajoie,5,4,1.53,4.80,4.88
+2025-02-15,regular,Bern,EHC Kloten,3,4,1.60,4.50,4.50
+2025-02-15,regular,Rapperswil-Jona,Biel,3,1,2.03,4.10,3.05
+2025-02-15,regular,Fribourg,Lugano,2,3,1.82,4.28,3.55
+2025-02-15,regular,Servette,Langnau Tigers,5,4,1.92,4.23,3.23
+2025-02-15,regular,Lausanne,Zurich,3,4,2.22,4.05,2.70
+2025-02-14,regular,Ajoie,Davos,2,5,3.55,4.55,1.78
+2025-02-14,regular,Lugano,Bern,1,3,2.68,4.20,2.20
+2025-02-14,regular,Biel,Servette,7,4,2.35,4.00,2.58
+2025-02-14,regular,EHC Kloten,Lausanne,1,3,2.83,3.85,2.18
+2025-02-14,regular,Langnau Tigers,Ambri-Piotta,3,1,2.03,3.90,3.10
+2025-02-14,regular,Zurich,Fribourg,2,3,1.80,4.31,3.55
+2025-02-14,regular,Zug,Rapperswil-Jona,6,1,1.77,4.54,3.60
+2025-02-12,regular,Zurich,Ajoie,4,0,1.35,5.88,6.63
+2025-02-11,regular,Biel,Zurich,4,3,3.10,3.95,2.03
+2025-02-11,regular,Davos,Zug,4,5,2.35,4.00,2.55
+2025-02-11,regular,Lausanne,Rapperswil-Jona,4,2,1.83,4.35,3.45
+2025-02-11,regular,Servette,Lugano,5,2,2.15,4.20,2.75
+2025-02-03,regular,Lugano,Zurich,2,1,2.95,4.28,2.03
+2025-02-02,regular,Davos,Biel,3,2,1.89,4.20,3.35
+2025-02-02,regular,Lugano,Langnau Tigers,1,3,1.98,4.20,3.10
+2025-02-02,regular,Servette,Lausanne,1,0,2.03,4.23,2.93
+2025-02-01,regular,Ajoie,Zug,2,1,4.68,5.13,1.53
+2025-02-01,regular,Ambri-Piotta,EHC Kloten,3,1,1.79,4.50,3.45
+2025-02-01,regular,Bern,Zurich,5,2,2.40,4.00,2.50
+2025-02-01,regular,Fribourg,Rapperswil-Jona,3,2,1.73,4.15,4.00
+2025-01-31,regular,Biel,Ajoie,3,4,1.46,5.13,5.38
+2025-01-31,regular,Rapperswil-Jona,Ambri-Piotta,3,4,2.16,4.20,2.72
+2025-01-31,regular,Langnau Tigers,Bern,6,2,2.65,4.00,2.25
+2025-01-31,regular,Lausanne,Davos,3,0,1.77,4.42,3.65
+2025-01-31,regular,EHC Kloten,Fribourg,0,3,2.95,4.10,2.08
+2025-01-31,regular,Zug,Lugano,7,4,1.85,4.42,3.30
+2025-01-31,regular,Zurich,Servette,4,1,1.69,4.45,4.05
+2025-01-30,regular,Davos,Servette,3,2,1.85,4.20,3.45
+2025-01-29,regular,Langnau Tigers,Zurich,1,2,2.68,4.00,2.24
+2025-01-28,regular,Servette,Ajoie,2,4,1.46,5.13,5.38
+2025-01-28,regular,Ambri-Piotta,Lugano,2,1,2.15,4.20,2.78
+2025-01-28,regular,Bern,Biel,4,1,1.78,4.20,3.75
+2025-01-28,regular,Davos,EHC Kloten,4,1,1.71,4.45,3.85
+2025-01-28,regular,Fribourg,Zug,3,2,2.19,4.15,2.73
+2025-01-28,regular,Lausanne,Langnau Tigers,3,2,1.71,4.42,3.95
+2025-01-28,regular,Rapperswil-Jona,Zurich,4,2,2.55,3.95,2.35
+2025-01-26,regular,Rapperswil-Jona,Lugano,2,6,2.05,4.30,2.88
+2025-01-25,regular,Ajoie,Zurich,2,3,4.45,5.00,1.56
+2025-01-25,regular,Ambri-Piotta,Lausanne,2,4,2.30,4.15,2.58
+2025-01-25,regular,Bern,Rapperswil-Jona,3,2,1.78,4.40,3.60
+2025-01-25,regular,Biel,Fribourg,3,2,2.52,4.00,2.38
+2025-01-25,regular,Langnau Tigers,Davos,4,3,2.63,3.95,2.30
+2025-01-25,regular,Lugano,EHC Kloten,4,1,1.75,4.50,3.75
+2025-01-25,regular,Servette,Zug,1,2,2.24,3.95,2.68
+2025-01-24,regular,EHC Kloten,Ajoie,5,1,1.59,4.75,4.45
+2025-01-24,regular,Zug,Ambri-Piotta,3,4,1.65,4.42,4.25
+2025-01-24,regular,Lausanne,Bern,5,4,2.11,4.05,2.83
+2025-01-24,regular,Zurich,Biel,3,2,1.71,4.50,3.80
+2025-01-24,regular,Fribourg,Langnau Tigers,4,5,1.69,4.25,4.15
+2025-01-23,regular,Lugano,Servette,5,2,2.05,4.20,2.90
+2025-01-22,regular,Ambri-Piotta,Ajoie,7,3,1.53,4.75,4.93
+2025-01-22,regular,Bern,Lausanne,2,3,2.05,4.00,3.00
+2025-01-19,regular,Langnau Tigers,Rapperswil-Jona,3,1,2.22,3.95,2.75
+2025-01-18,regular,Fribourg,Bern,2,1,2.15,4.00,2.85
+2025-01-18,regular,Lausanne,Ajoie,3,0,1.35,5.88,6.50
+2025-01-18,regular,EHC Kloten,Biel,3,2,2.33,3.95,2.58
+2025-01-18,regular,Zug,Langnau Tigers,3,2,1.70,4.50,3.95
+2025-01-18,regular,Zurich,Lugano,4,1,1.62,4.63,4.30
+2025-01-18,regular,Rapperswil-Jona,Servette,7,3,1.95,4.27,3.20
+2025-01-17,regular,Ajoie,Fribourg,1,2,3.95,4.50,1.69
+2025-01-17,regular,Ambri-Piotta,Zurich,2,3,2.72,4.05,2.22
+2025-01-17,regular,Bern,Zug,1,5,2.15,4.23,2.73
+2025-01-17,regular,Lugano,Davos,6,3,2.40,4.27,2.43
+2025-01-17,regular,Servette,EHC Kloten,2,0,1.84,4.35,3.40
+2025-01-16,regular,Biel,Lausanne,3,2,2.65,4.00,2.28
+2025-01-15,regular,Rapperswil-Jona,Ajoie,3,1,1.53,4.75,4.93
+2025-01-15,regular,Bern,Ambri-Piotta,2,4,1.70,4.31,4.00
+2025-01-15,regular,Langnau Tigers,Biel,1,5,2.19,4.05,2.75
+2025-01-15,regular,Fribourg,Lausanne,4,1,2.05,4.05,3.00
+2025-01-15,regular,Zug,EHC Kloten,3,2,1.63,4.63,4.15
+2025-01-12,regular,Zug,Biel,4,1,1.73,4.31,3.85
+2025-01-11,regular,Ajoie,Lugano,3,1,3.10,4.45,1.91
+2025-01-11,regular,Biel,Ambri-Piotta,4,3,1.95,4.15,3.20
+2025-01-11,regular,Davos,Bern,3,2,2.05,4.15,2.93
+2025-01-11,regular,Servette,Fribourg,1,2,2.45,4.05,2.45
+2025-01-11,regular,EHC Kloten,Langnau Tigers,3,2,2.13,3.95,2.95
+2025-01-11,regular,Zurich,Zug,1,2,2.11,4.10,2.85
+2025-01-10,regular,Bern,Ajoie,5,1,1.33,5.88,6.88
+2025-01-10,regular,Ambri-Piotta,Servette,1,2,2.20,4.00,2.70
+2025-01-10,regular,Rapperswil-Jona,EHC Kloten,5,2,1.93,3.95,3.35
+2025-01-10,regular,Langnau Tigers,Zurich,0,1,3.00,4.10,2.03
+2025-01-10,regular,Lugano,Lausanne,1,3,2.43,4.10,2.43
+2025-01-09,regular,Fribourg,Davos,3,4,2.05,4.00,3.00
+2025-01-08,regular,Zug,Servette,7,4,1.78,4.50,3.50
+2025-01-07,regular,Ajoie,Langnau Tigers,1,0,2.72,4.15,2.18
+2025-01-07,regular,Ambri-Piotta,Fribourg,2,1,2.53,3.95,2.38
+2025-01-07,regular,Servette,Bern,2,3,2.33,3.95,2.58
+2025-01-07,regular,Biel,Lugano,2,1,2.10,4.05,2.88
+2025-01-07,regular,Davos,Rapperswil-Jona,5,3,1.85,4.23,3.45
+2025-01-07,regular,EHC Kloten,Zurich,5,4,3.28,4.25,1.90
+2025-01-06,regular,Lausanne,Zug,2,1,2.08,4.20,2.90
+2025-01-05,regular,Ajoie,Ambri-Piotta,3,4,3.35,4.45,1.85
+2025-01-05,regular,Lugano,Fribourg,1,5,2.27,4.05,2.65
+2025-01-05,regular,Servette,Langnau Tigers,3,2,1.85,4.28,3.40
+2025-01-05,regular,Zurich,Lausanne,1,2,1.84,4.15,3.60
+2025-01-04,regular,EHC Kloten,Bern,4,5,2.73,4.00,2.20
+2025-01-04,regular,Biel,Rapperswil-Jona,2,3,2.10,3.95,3.00
+2025-01-04,regular,Zug,Davos,4,1,1.91,4.31,3.18
+2025-01-04,regular,Langnau Tigers,Servette,3,0,2.43,4.00,2.45
+2025-01-03,regular,Davos,Ajoie,0,3,1.32,6.00,7.25
+2025-01-03,regular,Fribourg,Zurich,4,2,2.63,3.95,2.30
+2025-01-02,regular,Ambri-Piotta,Langnau Tigers,1,2,2.05,4.10,3.00
+2025-01-02,regular,Bern,Lugano,1,4,1.76,4.31,3.60
+2025-01-02,regular,Servette,Biel,6,4,1.91,4.10,3.28
+2025-01-02,regular,Rapperswil-Jona,Zug,5,3,2.55,4.15,2.30
+2025-01-02,regular,Lausanne,EHC Kloten,6,1,1.78,4.28,3.70
+2024-12-23,regular,Ajoie,Servette,2,4,3.30,4.50,1.85
+2024-12-23,regular,Lugano,Ambri-Piotta,4,1,2.00,4.10,3.10
+2024-12-23,regular,Biel,Bern,0,3,2.50,4.10,2.35
+2024-12-23,regular,EHC Kloten,Davos,4,3,2.70,4.00,2.23
+2024-12-23,regular,Zug,Fribourg,1,2,1.91,4.38,3.20
+2024-12-23,regular,Langnau Tigers,Lausanne,3,4,2.50,3.95,2.43
+2024-12-23,regular,Zurich,Rapperswil-Jona,4,1,1.70,4.31,4.00
+2024-12-21,regular,Zug,Ajoie,4,0,1.29,6.00,8.00
+2024-12-21,regular,EHC Kloten,Ambri-Piotta,5,6,2.05,4.20,2.90
+2024-12-21,regular,Zurich,Bern,2,3,1.92,4.15,3.25
+2024-12-21,regular,Biel,Davos,2,1,2.55,3.90,2.38
+2024-12-21,regular,Rapperswil-Jona,Fribourg,4,0,2.45,4.00,2.45
+2024-12-21,regular,Langnau Tigers,Lugano,4,3,2.11,4.30,2.75
+2024-12-21,regular,Lausanne,Servette,3,0,2.05,4.00,3.00
+2024-12-20,regular,Ajoie,Biel,5,2,3.03,4.10,2.03
+2024-12-20,regular,Ambri-Piotta,Rapperswil-Jona,3,6,1.85,4.30,3.40
+2024-12-20,regular,Bern,Langnau Tigers,5,4,1.73,4.42,3.78
+2024-12-20,regular,Davos,Lausanne,1,3,1.93,4.25,3.15
+2024-12-20,regular,Fribourg,EHC Kloten,0,2,1.70,4.45,3.95
+2024-12-20,regular,Lugano,Zug,5,2,2.63,4.25,2.20
+2024-12-20,regular,Servette,Zurich,2,3,2.70,4.05,2.22
+2024-12-18,regular,Lausanne,Ambri-Piotta,5,0,1.93,4.31,3.15
+2024-12-18,regular,Rapperswil-Jona,Bern,4,2,2.88,4.23,2.05
+2024-12-18,regular,Davos,Langnau Tigers,0,3,1.66,4.30,4.28
+2024-12-18,regular,EHC Kloten,Lugano,6,3,2.25,3.85,2.73
+2024-12-08,regular,Fribourg,Ajoie,5,0,1.42,5.25,5.88
+2024-12-08,regular,Davos,Lugano,2,1,1.79,4.35,3.50
+2024-12-08,regular,Servette,Rapperswil-Jona,3,2,1.91,4.05,3.35
+2024-12-07,regular,Ajoie,Lausanne,4,3,3.58,4.55,1.75
+2024-12-07,regular,Ambri-Piotta,Davos,1,0,2.55,4.05,2.33
+2024-12-07,regular,Bern,Fribourg,3,4,1.89,4.13,3.40
+2024-12-07,regular,Biel,EHC Kloten,5,0,1.95,4.00,3.30
+2024-12-07,regular,Langnau Tigers,Zug,2,4,2.88,4.45,2.03
+2024-12-07,regular,Lugano,Zurich,2,5,2.78,4.00,2.16
+2024-12-06,regular,Zurich,Ambri-Piotta,2,5,1.64,4.55,4.23
+2024-12-06,regular,EHC Kloten,Servette,3,2,2.50,3.90,2.45
+2024-12-06,regular,Rapperswil-Jona,Langnau Tigers,0,3,1.95,4.20,3.20
+2024-12-05,regular,Lausanne,Biel,1,0,1.66,4.55,4.00
+2024-12-05,regular,Servette,Davos,1,2,2.22,4.15,2.65
+2024-12-04,regular,Ajoie,EHC Kloten,2,3,3.20,4.15,1.95
+2024-12-04,regular,Ambri-Piotta,Zug,2,3,2.65,4.00,2.25
+2024-12-04,regular,Langnau Tigers,Fribourg,4,1,2.40,4.00,2.50
+2024-12-04,regular,Lugano,Rapperswil-Jona,2,0,1.95,4.28,3.10
+2024-12-01,regular,Ambri-Piotta,Lausanne,4,3,2.38,4.00,2.50
+2024-12-01,regular,Bern,Rapperswil-Jona,4,2,1.73,4.63,3.70
+2024-11-30,regular,Servette,Ajoie,4,3,1.40,5.63,5.88
+2024-11-30,regular,Davos,Biel,3,1,1.67,4.50,4.00
+2024-11-30,regular,EHC Kloten,Langnau Tigers,3,2,2.00,3.95,3.20
+2024-11-30,regular,Lugano,Fribourg,3,5,2.35,4.05,2.53
+2024-11-29,regular,Ajoie,Lugano,5,4,3.50,4.31,1.80
+2024-11-29,regular,Langnau Tigers,Ambri-Piotta,4,1,2.28,4.00,2.63
+2024-11-29,regular,Biel,Bern,0,1,2.78,3.95,2.20
+2024-11-29,regular,Fribourg,Zug,4,1,2.15,4.23,2.75
+2024-11-29,regular,Zurich,EHC Kloten,3,1,1.64,4.68,4.23
+2024-11-29,regular,Rapperswil-Jona,Servette,3,4,2.40,4.00,2.50
+2024-11-28,regular,Lausanne,Davos,2,6,2.13,4.20,2.80
+2024-11-28,regular,Zug,Zurich,0,4,2.22,4.10,2.68
+2024-11-27,regular,Bern,Ajoie,6,3,1.29,6.50,7.50
+2024-11-27,regular,Davos,Ambri-Piotta,3,4,1.77,4.45,3.65
+2024-11-27,regular,Servette,Fribourg,2,0,2.30,4.05,2.58
+2024-11-26,regular,Biel,Lausanne,6,1,2.43,4.00,2.48
+2024-11-26,regular,Zug,EHC Kloten,5,0,1.70,4.54,3.88
+2024-11-26,regular,Lugano,Langnau Tigers,3,5,1.83,4.38,3.50
+2024-11-26,regular,Rapperswil-Jona,Zurich,1,4,3.10,4.13,1.98
+2024-11-25,regular,Servette,Ambri-Piotta,6,5,1.95,4.28,3.10
+2024-11-24,regular,Lausanne,Langnau Tigers,4,1,1.62,4.75,4.20
+2024-11-23,regular,Davos,Ajoie,4,3,1.33,6.00,6.50
+2024-11-23,regular,Ambri-Piotta,Fribourg,5,3,2.25,4.00,2.65
+2024-11-23,regular,Servette,Bern,2,3,2.25,4.00,2.65
+2024-11-23,regular,EHC Kloten,Biel,4,3,2.10,4.00,2.90
+2024-11-23,regular,Zurich,Lugano,5,1,1.67,4.75,4.00
+2024-11-22,regular,Ajoie,Zurich,2,1,4.88,5.25,1.49
+2024-11-22,regular,Lugano,Ambri-Piotta,3,1,1.90,4.42,3.20
+2024-11-22,regular,Bern,Davos,3,6,2.08,4.15,2.88
+2024-11-22,regular,Biel,Zug,1,2,2.50,4.10,2.38
+2024-11-22,regular,Fribourg,Lausanne,2,3,2.13,4.15,2.78
+2024-11-22,regular,Rapperswil-Jona,EHC Kloten,1,2,2.09,4.20,2.85
+2024-11-22,regular,Langnau Tigers,Servette,4,5,2.73,4.00,2.23
+2024-11-21,regular,Zug,Rapperswil-Jona,5,2,1.68,4.75,3.90
+2024-11-17,regular,Rapperswil-Jona,Lugano,3,0,2.00,4.17,2.98
+2024-11-16,regular,Ajoie,Ambri-Piotta,4,2,3.50,4.31,1.80
+2024-11-16,regular,Bern,Zug,3,2,2.15,4.15,2.80
+2024-11-16,regular,Biel,Langnau Tigers,0,1,2.03,3.90,3.10
+2024-11-16,regular,Davos,Fribourg,2,3,1.98,4.05,3.20
+2024-11-16,regular,Servette,EHC Kloten,4,5,1.83,4.31,3.45
+2024-11-15,regular,EHC Kloten,Ajoie,5,2,1.64,4.75,4.10
+2024-11-15,regular,Fribourg,Bern,5,4,2.23,4.00,2.73
+2024-11-15,regular,Lugano,Biel,6,3,1.98,4.00,3.25
+2024-11-15,regular,Zurich,Davos,2,3,1.93,4.28,3.20
+2024-11-15,regular,Langnau Tigers,Rapperswil-Jona,4,5,2.50,3.95,2.40
+2024-11-15,regular,Zug,Lausanne,6,2,1.88,4.35,3.30
+2024-11-14,regular,Lausanne,Zurich,2,0,2.22,4.20,2.65
+2024-11-13,regular,Zug,Bern,1,6,1.87,4.42,3.23
+2024-11-13,regular,EHC Kloten,Davos,2,4,2.73,3.95,2.25
+2024-11-02,regular,Ajoie,Langnau Tigers,2,0,2.75,4.15,2.16
+2024-11-02,regular,Ambri-Piotta,Bern,2,3,2.43,4.20,2.40
+2024-11-02,regular,Servette,Biel,0,1,1.79,4.45,3.60
+2024-11-02,regular,Davos,Zug,3,2,2.38,4.20,2.45
+2024-11-02,regular,Zurich,Fribourg,2,1,1.81,4.30,3.60
+2024-11-02,regular,EHC Kloten,Lugano,5,2,2.33,4.20,2.53
+2024-11-02,regular,Lausanne,Rapperswil-Jona,6,3,1.89,4.45,3.25
+2024-11-01,regular,Biel,Ambri-Piotta,2,1,2.05,4.23,2.90
+2024-11-01,regular,Bern,Lausanne,7,2,2.05,4.20,2.90
+2024-11-01,regular,Rapperswil-Jona,Davos,0,3,2.35,4.20,2.48
+2024-11-01,regular,Lugano,Servette,1,3,1.96,4.30,3.08
+2024-10-31,regular,Fribourg,EHC Kloten,2,3,1.79,4.38,3.60
+2024-10-29,regular,Ajoie,Rapperswil-Jona,4,2,3.20,4.42,1.90
+2024-10-29,regular,Ambri-Piotta,Zug,2,3,2.75,4.35,2.13
+2024-10-29,regular,Bern,Lugano,1,3,1.93,4.35,3.15
+2024-10-29,regular,Biel,Fribourg,1,4,2.25,3.95,2.73
+2024-10-29,regular,Davos,Langnau Tigers,3,0,1.73,4.63,3.70
+2024-10-29,regular,Lausanne,EHC Kloten,3,0,1.59,4.80,4.38
+2024-10-29,regular,Servette,Zurich,1,3,2.53,4.15,2.33
+2024-10-27,regular,Zurich,Bern,4,3,1.87,4.25,3.35
+2024-10-26,regular,Ajoie,Biel,0,3,3.78,4.68,1.70
+2024-10-26,regular,Servette,Davos,1,3,1.93,4.38,3.15
+2024-10-26,regular,Rapperswil-Jona,Fribourg,2,1,2.23,4.20,2.63
+2024-10-26,regular,Langnau Tigers,Zug,0,4,3.10,4.20,1.98
+2024-10-26,regular,Lugano,Lausanne,2,3,2.25,4.25,2.60
+2024-10-25,regular,Lausanne,Ajoie,5,6,1.29,6.50,7.38
+2024-10-25,regular,Ambri-Piotta,Zurich,1,7,2.65,4.25,2.20
+2024-10-25,regular,Bern,EHC Kloten,3,2,1.69,4.38,4.00
+2024-10-25,regular,Biel,Rapperswil-Jona,3,1,2.08,4.10,2.95
+2024-10-25,regular,Davos,Lugano,8,1,2.03,3.90,2.90
+2024-10-25,regular,Fribourg,Langnau Tigers,2,3,1.66,4.45,4.10
+2024-10-25,regular,Zug,Servette,5,1,2.03,4.25,2.95
+2024-10-23,regular,Langnau Tigers,Bern,2,1,2.55,4.20,2.35
+2024-10-23,regular,Servette,Lausanne,2,3,2.11,4.30,2.75
+2024-10-22,regular,Ajoie,Fribourg,1,3,4.75,5.25,1.53
+2024-10-22,regular,Rapperswil-Jona,Ambri-Piotta,4,5,2.05,4.20,2.90
+2024-10-22,regular,Zurich,Biel,4,2,1.70,4.50,4.00
+2024-10-22,regular,Lugano,Zug,1,5,2.30,4.30,2.50
+2024-10-19,regular,Ajoie,Servette,3,6,4.75,5.25,1.50
+2024-10-19,regular,Lausanne,Ambri-Piotta,5,4,1.77,4.50,3.60
+2024-10-19,regular,Rapperswil-Jona,Bern,2,1,2.25,4.20,2.60
+2024-10-19,regular,Biel,Davos,2,1,2.25,4.00,2.70
+2024-10-19,regular,Fribourg,Lugano,4,0,2.05,4.30,2.80
+2024-10-19,regular,Langnau Tigers,EHC Kloten,0,2,1.90,4.30,3.30
+2024-10-19,regular,Zurich,Zug,5,4,1.85,4.50,3.30
+2024-10-18,regular,Lugano,Ajoie,4,3,1.30,6.50,7.00
+2024-10-18,regular,Ambri-Piotta,Langnau Tigers,3,4,1.90,4.30,3.30
+2024-10-18,regular,Davos,Lausanne,5,2,2.20,4.20,2.70
+2024-10-18,regular,Zug,Fribourg,4,2,1.85,4.50,3.30
+2024-10-18,regular,EHC Kloten,Zurich,3,2,3.40,4.50,1.83
+2024-10-18,regular,Servette,Rapperswil-Jona,5,3,1.87,4.50,3.30
+2024-10-17,regular,Bern,Biel,3,4,1.80,4.30,3.60
+2024-10-16,regular,Zug,Ajoie,7,1,1.22,7.50,9.00
+2024-10-13,regular,Biel,EHC Kloten,4,0,1.83,4.30,3.50
+2024-10-12,regular,Ajoie,Davos,0,3,4.50,5.00,1.56
+2024-10-12,regular,Fribourg,Ambri-Piotta,4,3,1.87,4.30,3.40
+2024-10-12,regular,Bern,Servette,5,2,2.10,4.20,2.90
+2024-10-12,regular,Langnau Tigers,Lausanne,0,1,2.60,4.20,2.25
+2024-10-12,regular,Rapperswil-Jona,Zug,4,3,2.35,4.30,2.45
+2024-10-11,regular,Zurich,Ajoie,5,4,1.25,7.00,8.50
+2024-10-11,regular,Ambri-Piotta,Lugano,2,1,2.25,4.20,2.60
+2024-10-11,regular,Zug,Biel,1,3,1.62,4.75,4.20
+2024-10-11,regular,Lausanne,Fribourg,6,0,2.00,4.30,3.00
+2024-10-11,regular,EHC Kloten,Rapperswil-Jona,3,0,2.35,4.20,2.50
+2024-10-10,regular,Davos,Bern,4,3,2.35,4.20,2.50
+2024-10-09,regular,EHC Kloten,Ambri-Piotta,1,2,2.25,4.20,2.60
+2024-10-06,regular,Davos,Zurich,2,3,2.90,4.20,2.11
+2024-10-06,regular,Lugano,Rapperswil-Jona,3,1,1.85,4.50,3.30
+2024-10-05,regular,Zug,Bern,4,2,1.95,4.30,3.10
+2024-10-05,regular,Langnau Tigers,Biel,4,1,2.05,4.20,3.00
+2024-10-05,regular,Fribourg,Davos,1,4,1.87,4.30,3.40
+2024-10-05,regular,EHC Kloten,Servette,2,5,2.55,4.20,2.35
+2024-10-05,regular,Zurich,Lausanne,6,3,1.83,4.30,3.50
+2024-10-04,regular,Ajoie,EHC Kloten,5,2,3.60,4.50,1.77
+2024-10-04,regular,Ambri-Piotta,Servette,5,4,2.35,4.20,2.50
+2024-10-04,regular,Bern,Fribourg,6,3,2.11,4.20,2.80
+2024-10-04,regular,Biel,Lugano,5,3,2.45,4.20,2.40
+2024-10-04,regular,Rapperswil-Jona,Langnau Tigers,4,1,1.80,4.50,3.50
+2024-10-04,regular,Lausanne,Zug,6,3,2.11,4.30,2.75
+2024-10-01,regular,Ajoie,Bern,0,5,4.75,5.25,1.50
+2024-10-01,regular,Ambri-Piotta,Davos,2,1,2.20,4.20,2.70
+2024-10-01,regular,Lausanne,Biel,2,1,1.73,4.50,3.70
+2024-10-01,regular,Fribourg,Servette,2,3,2.10,4.20,2.90
+2024-10-01,regular,EHC Kloten,Zug,4,3,2.90,4.30,2.00
+2024-10-01,regular,Langnau Tigers,Lugano,2,1,2.45,4.30,2.35
+2024-10-01,regular,Zurich,Rapperswil-Jona,4,3,1.73,4.50,3.70
+2024-09-29,regular,Davos,Rapperswil-Jona,4,3,2.00,4.30,3.00
+2024-09-28,regular,Langnau Tigers,Ajoie,4,1,1.48,5.25,5.00
+2024-09-28,regular,Bern,Ambri-Piotta,4,0,1.80,4.50,3.50
+2024-09-28,regular,Biel,Servette,0,4,2.25,4.00,2.70
+2024-09-28,regular,Zug,Davos,2,6,1.62,4.75,4.20
+2024-09-28,regular,Fribourg,Zurich,2,0,2.30,4.00,2.60
+2024-09-28,regular,Lugano,EHC Kloten,4,2,1.48,5.25,5.00
+2024-09-28,regular,Rapperswil-Jona,Lausanne,2,3,2.05,4.30,2.90
+2024-09-27,regular,Ajoie,Zug,1,3,5.50,5.75,1.42
+2024-09-27,regular,Ambri-Piotta,Biel,2,1,2.25,4.20,2.60
+2024-09-27,regular,Lausanne,Bern,3,2,1.80,4.50,3.50
+2024-09-27,regular,EHC Kloten,Fribourg,5,2,2.80,4.20,2.11
+2024-09-27,regular,Zurich,Langnau Tigers,1,0,1.50,5.25,4.75
+2024-09-24,regular,Rapperswil-Jona,Ajoie,6,2,1.50,5.00,4.75
+2024-09-24,regular,Lugano,Bern,6,4,2.05,4.30,2.90
+2024-09-24,regular,Fribourg,Biel,2,3,1.87,4.50,3.30
+2024-09-24,regular,Langnau Tigers,Davos,7,0,2.55,4.20,2.35
+2024-09-24,regular,EHC Kloten,Lausanne,3,1,3.00,4.30,2.00
+2024-09-24,regular,Zug,Ambri-Piotta,2,3,1.48,5.25,5.00
+2024-09-24,regular,Zurich,Servette,2,1,1.73,4.50,3.80
+2024-09-21,regular,Biel,Ajoie,4,1,1.50,5.25,4.75
+2024-09-21,regular,Ambri-Piotta,EHC Kloten,3,2,1.87,4.50,3.30
+2024-09-21,regular,Bern,Zurich,2,3,2.45,4.00,2.45
+2024-09-21,regular,Davos,Servette,3,2,2.25,4.20,2.65
+2024-09-21,regular,Fribourg,Rapperswil-Jona,1,2,1.75,4.50,3.70
+2024-09-21,regular,Zug,Langnau Tigers,6,2,1.48,5.25,5.25
+2024-09-21,regular,Lausanne,Lugano,2,4,1.95,4.30,3.10
+2024-09-20,regular,Ajoie,Lausanne,3,6,4.00,4.75,1.65
+2024-09-20,regular,Zurich,Ambri-Piotta,5,4,1.56,5.00,4.50
+2024-09-20,regular,EHC Kloten,Bern,2,1,2.75,4.20,2.18
+2024-09-20,regular,Rapperswil-Jona,Biel,3,2,2.18,4.00,2.80
+2024-09-20,regular,Langnau Tigers,Fribourg,4,2,3.10,4.30,1.95
+2024-09-19,regular,Lugano,Davos,4,2,1.95,4.30,3.10
+2024-09-18,regular,Bern,Langnau Tigers,3,1,1.65,4.75,4.00
+2024-09-17,regular,Fribourg,Ajoie,4,1,1.36,5.75,6.50
+2024-09-17,regular,Ambri-Piotta,Rapperswil-Jona,3,4,2.00,4.30,3.00
+2024-09-17,regular,Biel,Zurich,1,3,2.90,4.00,2.10
+2024-09-17,regular,Davos,EHC Kloten,2,3,1.59,5.00,4.30
+2024-09-17,regular,Lausanne,Servette,2,1,1.95,4.30,3.10
+2024-09-17,regular,Zug,Lugano,3,2,1.77,4.50,3.60

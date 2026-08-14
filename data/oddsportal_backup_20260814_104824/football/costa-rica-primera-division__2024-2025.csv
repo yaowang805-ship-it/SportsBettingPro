@@ -1,0 +1,280 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-05-29,play_off,Herediano,Alajuelense,1,0,2.90,2.84,2.66
+2025-05-26,play_off,Alajuelense,Herediano,0,0,1.93,3.05,4.40
+2025-05-22,play_off,Alajuelense,Saprissa,1,0,2.22,2.95,3.50
+2025-05-19,play_off,Saprissa,Alajuelense,3,3,2.20,2.93,3.57
+2025-05-15,play_off,Herediano,Saprissa,2,0,2.16,3.07,3.49
+2025-05-15,play_off,Alajuelense,Puntarenas FC,1,0,1.64,3.62,5.26
+2025-05-12,play_off,Puntarenas FC,Alajuelense,0,0,3.99,3.15,1.93
+2025-05-12,play_off,Saprissa,Herediano,4,0,2.00,3.14,4.03
+2025-05-08,regular,Alajuelense,Liberia,2,0,1.28,5.08,9.70
+2025-05-08,regular,Cartagines,Sporting FC,1,2,1.39,4.50,7.54
+2025-05-08,regular,Puntarenas FC,Santa Ana,3,0,1.46,4.22,6.42
+2025-05-08,regular,Zeledon,Saprissa,0,3,7.94,4.59,1.36
+2025-05-07,regular,San Carlos,AD Santos,,,1.92,3.25,4.08
+2025-05-05,regular,Saprissa,Guanacasteca,,,1.25,5.34,11.72
+2025-05-04,regular,Santa Ana,Alajuelense,1,1,8.32,4.70,1.35
+2025-05-04,regular,Herediano,Puntarenas FC,1,1,2.04,3.38,3.52
+2025-05-04,regular,Liberia,Cartagines,0,1,3.10,3.42,2.19
+2025-05-04,regular,AD Santos,Zeledon,3,1,2.10,3.24,3.51
+2025-05-03,regular,Sporting FC,San Carlos,1,0,1.94,3.37,3.86
+2025-04-28,regular,Puntarenas FC,Alajuelense,0,2,4.10,3.37,1.88
+2025-04-28,regular,Zeledon,Liberia,1,5,2.34,3.18,3.04
+2025-04-27,regular,Saprissa,Cartagines,1,1,1.77,3.33,4.80
+2025-04-27,regular,Guanacasteca,Sporting FC,,,2.36,3.19,2.92
+2025-04-27,regular,San Carlos,Herediano,1,1,4.00,3.27,1.96
+2025-04-26,regular,Santa Ana,AD Santos,3,3,1.87,3.56,3.92
+2025-04-22,regular,Alajuelense,Saprissa,1,1,1.97,3.15,4.05
+2025-04-21,regular,Sporting FC,Zeledon,0,0,1.77,3.43,4.65
+2025-04-21,regular,Herediano,Santa Ana,2,1,1.35,4.79,7.84
+2025-04-20,regular,Cartagines,Guanacasteca,,,1.46,3.87,7.22
+2025-04-20,regular,Liberia,San Carlos,0,1,2.02,3.36,3.70
+2025-04-20,regular,AD Santos,Puntarenas FC,1,1,2.78,2.92,2.71
+2025-04-17,regular,Alajuelense,Sporting FC,0,0,1.37,4.66,7.70
+2025-04-17,regular,San Carlos,Cartagines,1,2,3.36,3.33,2.13
+2025-04-17,regular,Santa Ana,Liberia,1,4,2.15,3.23,3.37
+2025-04-16,regular,Herediano,AD Santos,2,1,1.42,4.45,6.84
+2025-04-16,regular,Puntarenas FC,Saprissa,1,2,3.44,3.18,2.14
+2025-04-16,regular,Zeledon,Guanacasteca,3,0,1.75,3.36,4.77
+2025-04-14,regular,Guanacasteca,Alajuelense,1,1,6.97,3.91,1.47
+2025-04-13,regular,Saprissa,Santa Ana,3,0,1.38,4.73,7.17
+2025-04-13,regular,AD Santos,Sporting FC,2,3,2.16,3.12,3.47
+2025-04-13,regular,Cartagines,Zeledon,3,0,1.55,3.71,5.95
+2025-04-12,regular,Puntarenas FC,San Carlos,1,0,1.77,3.38,4.73
+2025-04-12,regular,Liberia,Herediano,0,1,3.06,3.22,2.29
+2025-04-07,regular,Alajuelense,AD Santos,2,0,1.31,4.88,8.91
+2025-04-07,regular,Liberia,Puntarenas FC,1,1,2.39,3.21,2.88
+2025-04-06,regular,Herediano,Cartagines,1,1,1.72,3.46,4.82
+2025-04-06,regular,Sporting FC,Saprissa,0,1,4.88,3.60,1.68
+2025-04-06,regular,Santa Ana,Guanacasteca,0,0,1.70,3.71,4.57
+2025-04-05,regular,San Carlos,Zeledon,0,2,1.99,3.16,3.95
+2025-04-01,regular,Zeledon,Alajuelense,1,2,5.07,3.52,1.68
+2025-04-01,regular,AD Santos,Liberia,0,1,2.18,3.21,3.31
+2025-03-31,regular,Sporting FC,Santa Ana,3,1,2.16,3.36,3.14
+2025-03-31,regular,Saprissa,Herediano,1,0,1.98,3.29,3.69
+2025-03-30,regular,Cartagines,Puntarenas FC,1,0,1.96,3.22,3.88
+2025-03-30,regular,Guanacasteca,San Carlos,0,2,2.01,3.19,3.81
+2025-03-28,regular,Alajuelense,San Carlos,0,0,1.35,4.29,10.04
+2025-03-28,regular,AD Santos,Saprissa,2,0,4.09,3.54,1.82
+2025-03-28,regular,Santa Ana,Cartagines,0,1,2.86,3.15,2.43
+2025-03-27,regular,Herediano,Zeledon,3,0,1.42,4.19,7.52
+2025-03-27,regular,Puntarenas FC,Sporting FC,2,1,1.72,3.41,4.94
+2025-03-26,regular,Liberia,Guanacasteca,1,1,1.82,3.46,4.21
+2025-03-17,regular,Sporting FC,Herediano,1,3,3.41,3.02,2.21
+2025-03-17,regular,Saprissa,Liberia,1,1,1.39,4.51,7.08
+2025-03-16,regular,Cartagines,Alajuelense,1,1,3.08,3.12,2.28
+2025-03-16,regular,Zeledon,Puntarenas FC,0,1,2.82,2.90,2.64
+2025-03-16,regular,San Carlos,Santa Ana,1,1,2.09,2.97,3.95
+2025-03-15,regular,Guanacasteca,AD Santos,0,1,2.22,3.09,3.27
+2025-03-10,regular,Puntarenas FC,Guanacasteca,2,2,1.63,3.54,5.49
+2025-03-10,regular,Saprissa,San Carlos,3,0,1.39,4.42,7.64
+2025-03-09,regular,Santa Ana,Zeledon,0,0,2.12,3.19,3.40
+2025-03-09,regular,Herediano,Alajuelense,1,2,2.43,2.79,3.24
+2025-03-09,regular,Liberia,Sporting FC,1,0,1.96,3.47,3.62
+2025-03-09,regular,AD Santos,Cartagines,1,1,2.78,3.04,2.55
+2025-03-06,regular,Puntarenas FC,Cartagines,1,0,2.14,3.09,3.57
+2025-03-04,regular,Sporting FC,Guanacasteca,2,1,1.89,3.26,4.09
+2025-03-03,regular,Cartagines,Saprissa,2,1,2.94,2.98,2.46
+2025-03-02,regular,Santa Ana,Herediano,1,1,3.86,3.31,1.94
+2025-03-02,regular,Zeledon,AD Santos,2,1,1.85,3.18,4.43
+2025-03-01,regular,Alajuelense,Puntarenas FC,0,0,1.45,4.09,6.67
+2025-03-01,regular,San Carlos,Liberia,1,0,2.16,3.34,3.17
+2025-02-24,regular,Zeledon,Cartagines,0,1,3.01,3.06,2.36
+2025-02-24,regular,AD Santos,Alajuelense,0,0,4.87,3.47,1.71
+2025-02-24,regular,Saprissa,Sporting FC,2,0,1.45,4.29,6.45
+2025-02-23,regular,Herediano,San Carlos,2,1,1.48,4.12,6.05
+2025-02-23,regular,Puntarenas FC,Liberia,2,0,1.97,3.24,3.79
+2025-02-22,regular,Guanacasteca,Santa Ana,0,0,2.04,3.24,3.57
+2025-02-18,regular,Sporting FC,AD Santos,0,3,1.82,3.40,4.17
+2025-02-17,regular,San Carlos,Puntarenas FC,0,1,2.92,3.07,2.42
+2025-02-17,regular,Santa Ana,Saprissa,2,1,5.91,4.19,1.48
+2025-02-16,regular,Cartagines,Herediano,0,1,2.53,3.16,2.71
+2025-02-16,regular,Alajuelense,Guanacasteca,1,0,1.24,5.53,10.52
+2025-02-15,regular,Liberia,Zeledon,2,1,1.76,3.52,4.31
+2025-02-14,regular,Cartagines,Santa Ana,2,1,1.48,4.06,6.41
+2025-02-14,regular,AD Santos,Herediano,2,2,3.98,3.20,1.95
+2025-02-13,regular,Saprissa,Puntarenas FC,0,0,1.61,3.69,5.24
+2025-02-13,regular,Sporting FC,Alajuelense,0,1,3.98,3.49,1.85
+2025-02-10,regular,Sporting FC,Puntarenas FC,2,4,2.09,3.31,3.36
+2025-02-10,regular,Guanacasteca,Cartagines,1,0,3.23,3.01,2.30
+2025-02-09,regular,Saprissa,Alajuelense,1,1,2.30,2.97,3.28
+2025-02-09,regular,Herediano,Liberia,2,1,1.63,3.72,5.01
+2025-02-09,regular,AD Santos,Santa Ana,2,3,1.94,3.36,3.77
+2025-02-08,regular,Zeledon,San Carlos,1,0,2.33,2.99,3.25
+2025-02-06,regular,Alajuelense,Herediano,1,1,1.92,3.27,3.87
+2025-02-05,regular,Guanacasteca,Saprissa,2,0,4.90,3.24,1.76
+2025-02-03,regular,Alajuelense,Cartagines,1,0,1.41,4.29,7.36
+2025-02-03,regular,Herediano,Sporting FC,2,0,1.70,3.66,4.65
+2025-02-03,regular,Puntarenas FC,Zeledon,2,1,1.83,3.29,4.48
+2025-02-02,regular,Liberia,Saprissa,2,3,2.94,3.26,2.32
+2025-02-02,regular,AD Santos,Guanacasteca,1,0,1.86,3.31,4.22
+2025-02-02,regular,Santa Ana,San Carlos,2,2,2.44,3.39,2.71
+2025-01-31,regular,Zeledon,Herediano,0,1,3.72,3.13,2.06
+2025-01-30,regular,Saprissa,AD Santos,1,0,1.39,4.39,7.49
+2025-01-30,regular,San Carlos,Alajuelense,0,0,4.98,3.49,1.68
+2025-01-30,regular,Guanacasteca,Puntarenas FC,1,1,2.63,3.07,2.63
+2025-01-29,regular,Sporting FC,Liberia,2,1,2.22,3.37,2.88
+2025-01-27,regular,Alajuelense,Zeledon,0,0,1.35,4.60,9.34
+2025-01-27,regular,San Carlos,Guanacasteca,1,1,1.80,3.72,4.16
+2025-01-26,regular,Santa Ana,Sporting FC,1,2,2.58,3.22,2.69
+2025-01-26,regular,Herediano,Saprissa,3,1,2.09,3.37,3.43
+2025-01-26,regular,Liberia,AD Santos,0,1,1.60,3.90,5.18
+2025-01-24,regular,Cartagines,San Carlos,2,1,1.71,3.58,4.74
+2025-01-24,regular,Guanacasteca,Zeledon,0,1,2.28,3.04,3.22
+2025-01-23,regular,Liberia,Santa Ana,4,0,1.55,3.96,5.55
+2025-01-21,regular,San Carlos,Sporting FC,0,1,2.32,3.07,3.11
+2025-01-20,regular,Zeledon,Santa Ana,1,0,1.90,3.14,4.19
+2025-01-19,regular,Cartagines,Liberia,0,1,1.93,3.34,3.76
+2025-01-19,regular,Puntarenas FC,AD Santos,2,1,1.86,3.26,4.12
+2025-01-17,regular,Saprissa,Zeledon,0,0,1.47,3.95,6.81
+2025-01-17,regular,Sporting FC,Cartagines,1,1,2.83,3.09,2.45
+2025-01-16,regular,Herediano,Guanacasteca,4,1,1.39,4.31,7.63
+2025-01-16,regular,Santa Ana,Puntarenas FC,1,2,2.42,3.25,2.75
+2025-01-16,regular,AD Santos,San Carlos,1,1,2.45,3.01,2.89
+2025-01-15,regular,Liberia,Alajuelense,1,3,3.79,3.24,1.93
+2025-01-13,regular,Puntarenas FC,Herediano,1,1,2.92,3.10,2.35
+2025-01-13,regular,Zeledon,Sporting FC,1,1,1.72,3.71,4.18
+2025-01-12,regular,Cartagines,AD Santos,5,0,1.85,3.37,3.98
+2025-01-12,regular,Alajuelense,Santa Ana,6,3,1.48,3.91,6.52
+2025-01-12,regular,San Carlos,Saprissa,0,1,2.97,3.22,2.27
+2025-01-11,regular,Guanacasteca,Liberia,1,0,2.72,3.03,2.55
+2024-12-28,play_off,Alajuelense,Herediano,2,1,1.58,4.12,5.21
+2024-12-23,play_off,Herediano,Alajuelense,2,0,2.41,3.17,2.87
+2024-12-19,play_off,Saprissa,Herediano,2,0,1.61,4.30,4.52
+2024-12-16,play_off,Herediano,Saprissa,3,0,2.42,3.02,3.07
+2024-12-12,play_off,Alajuelense,Herediano,2,2,1.50,3.95,6.46
+2024-12-11,play_off,Saprissa,San Carlos,2,0,1.67,3.79,4.76
+2024-12-09,play_off,Herediano,Alajuelense,2,0,2.87,2.97,2.59
+2024-12-07,play_off,San Carlos,Saprissa,2,2,3.43,3.07,2.20
+2024-12-02,regular,Herediano,AD Santos,0,2,1.31,5.08,8.87
+2024-12-02,regular,Puntarenas FC,San Carlos,0,1,3.95,3.68,1.83
+2024-12-02,regular,Saprissa,Santa Ana,2,1,1.34,5.09,7.92
+2024-12-02,regular,Sporting FC,Cartagines,6,2,3.40,3.51,2.04
+2024-12-01,regular,Zeledon,Liberia,0,1,2.21,3.32,3.13
+2024-12-01,regular,Guanacasteca,Alajuelense,1,0,1.93,3.32,3.89
+2024-11-29,regular,Liberia,Saprissa,0,1,3.81,3.61,1.87
+2024-11-26,regular,Santa Ana,Guanacasteca,2,1,2.22,3.30,3.12
+2024-11-25,regular,Liberia,Herediano,1,1,3.03,3.34,2.25
+2024-11-24,regular,Cartagines,Zeledon,2,0,1.79,3.37,4.59
+2024-11-24,regular,Alajuelense,Puntarenas FC,4,0,1.26,5.66,9.75
+2024-11-24,regular,San Carlos,Saprissa,0,0,2.46,3.17,2.92
+2024-11-24,regular,AD Santos,Sporting FC,2,1,1.86,3.54,3.98
+2024-11-21,regular,Guanacasteca,Puntarenas FC,2,1,1.83,3.50,4.19
+2024-11-20,regular,Alajuelense,Herediano,2,0,2.01,3.02,4.07
+2024-11-20,regular,Liberia,San Carlos,1,2,2.47,3.23,2.75
+2024-11-11,regular,Sporting FC,Zeledon,0,1,2.32,3.29,2.97
+2024-11-11,regular,Saprissa,AD Santos,3,3,1.29,5.19,9.50
+2024-11-10,regular,Santa Ana,Alajuelense,0,2,4.63,3.77,1.70
+2024-11-10,regular,Herediano,Guanacasteca,2,1,1.42,4.49,7.06
+2024-11-10,regular,Puntarenas FC,Cartagines,3,2,2.56,3.20,2.72
+2024-11-08,regular,Zeledon,Saprissa,1,2,3.83,3.25,1.99
+2024-11-08,regular,AD Santos,Santa Ana,1,0,2.00,3.20,3.89
+2024-11-07,regular,Alajuelense,Sporting FC,1,0,1.31,5.29,8.66
+2024-11-07,regular,San Carlos,Herediano,0,0,2.44,3.19,2.91
+2024-11-06,regular,Cartagines,Liberia,2,1,2.42,3.25,2.87
+2024-11-04,regular,Herediano,Zeledon,4,1,1.55,3.82,6.11
+2024-11-03,regular,Santa Ana,Puntarenas FC,1,1,2.00,3.28,3.81
+2024-11-03,regular,Saprissa,Alajuelense,3,0,2.26,3.27,3.13
+2024-11-03,regular,AD Santos,Cartagines,1,0,2.33,3.13,3.17
+2024-11-02,regular,Liberia,Sporting FC,1,1,1.73,3.69,4.65
+2024-11-02,regular,San Carlos,Guanacasteca,2,2,1.53,4.15,5.91
+2024-10-28,regular,Sporting FC,Herediano,1,3,3.16,3.30,2.22
+2024-10-28,regular,Guanacasteca,Liberia,2,0,2.37,3.52,2.76
+2024-10-27,regular,Alajuelense,San Carlos,3,1,1.67,3.93,4.67
+2024-10-27,regular,Cartagines,Saprissa,2,1,3.14,3.56,2.12
+2024-10-26,regular,Zeledon,Santa Ana,2,1,2.03,3.32,3.62
+2024-10-26,regular,Puntarenas FC,AD Santos,1,0,1.93,3.34,3.90
+2024-10-22,regular,Santa Ana,Cartagines,2,1,2.45,3.28,2.81
+2024-10-21,regular,San Carlos,Zeledon,1,1,1.71,3.73,4.62
+2024-10-21,regular,Saprissa,Sporting FC,1,0,1.52,4.11,5.91
+2024-10-21,regular,AD Santos,Guanacasteca,4,0,2.07,3.35,3.48
+2024-10-20,regular,Herediano,Alajuelense,1,1,2.92,3.18,2.44
+2024-10-20,regular,Liberia,Puntarenas FC,4,2,1.71,3.60,4.90
+2024-10-18,regular,Guanacasteca,Saprissa,2,0,3.82,3.59,1.88
+2024-10-18,regular,Sporting FC,Santa Ana,1,0,2.27,3.30,3.07
+2024-10-18,regular,Cartagines,San Carlos,4,4,3.13,3.35,2.21
+2024-10-17,regular,Alajuelense,Liberia,2,2,1.39,4.54,7.60
+2024-10-17,regular,Puntarenas FC,Herediano,0,2,3.09,3.23,2.29
+2024-10-17,regular,Zeledon,AD Santos,3,1,1.70,3.34,5.49
+2024-10-13,regular,Guanacasteca,AD Santos,2,1,1.88,3.52,3.95
+2024-10-07,regular,Saprissa,Puntarenas FC,2,3,1.31,5.19,8.72
+2024-10-07,regular,AD Santos,Alajuelense,1,3,5.48,3.77,1.59
+2024-10-06,regular,Herediano,Cartagines,0,2,1.64,3.82,4.97
+2024-10-06,regular,San Carlos,Sporting FC,2,0,1.63,3.99,4.76
+2024-10-06,regular,Guanacasteca,Zeledon,1,0,1.98,3.40,3.64
+2024-10-05,regular,Liberia,Santa Ana,2,3,1.55,4.28,5.14
+2024-10-01,regular,Sporting FC,Puntarenas FC,1,0,1.66,3.68,5.15
+2024-09-30,regular,Zeledon,Alajuelense,2,2,4.27,3.37,1.86
+2024-09-29,regular,Saprissa,Herediano,1,0,1.98,3.29,3.81
+2024-09-29,regular,Cartagines,Guanacasteca,1,1,1.90,3.39,4.02
+2024-09-29,regular,AD Santos,Liberia,0,1,2.74,3.35,2.46
+2024-09-28,regular,Santa Ana,San Carlos,3,4,3.40,3.40,2.08
+2024-09-24,regular,San Carlos,AD Santos,2,2,1.35,4.87,7.74
+2024-09-23,regular,Guanacasteca,Sporting FC,2,1,2.45,3.36,2.74
+2024-09-23,regular,Alajuelense,Cartagines,2,1,1.42,4.40,6.91
+2024-09-23,regular,Puntarenas FC,Zeledon,1,1,2.34,3.22,3.02
+2024-09-22,regular,Herediano,Santa Ana,2,1,1.46,4.40,6.26
+2024-09-20,regular,Sporting FC,Alajuelense,0,1,3.84,3.30,1.98
+2024-09-20,regular,Zeledon,Cartagines,0,0,2.73,2.95,2.76
+2024-09-19,regular,Saprissa,San Carlos,3,2,1.76,3.84,4.16
+2024-09-19,regular,Puntarenas FC,Guanacasteca,0,0,2.19,3.41,3.16
+2024-09-19,regular,Santa Ana,AD Santos,1,1,2.00,3.12,4.01
+2024-09-18,regular,Herediano,Liberia,5,4,1.51,4.09,5.95
+2024-09-16,regular,San Carlos,Puntarenas FC,2,1,1.42,4.31,7.23
+2024-09-16,regular,Santa Ana,Zeledon,0,0,2.11,3.36,3.35
+2024-09-15,regular,Cartagines,Sporting FC,1,0,2.15,3.24,3.36
+2024-09-15,regular,Liberia,Guanacasteca,0,1,1.54,4.17,5.44
+2024-09-15,regular,AD Santos,Saprissa,1,2,4.91,3.70,1.67
+2024-09-13,regular,Puntarenas FC,Alajuelense,1,1,6.10,3.87,1.53
+2024-09-12,regular,Saprissa,Zeledon,2,2,1.35,4.77,8.47
+2024-09-12,regular,Guanacasteca,Santa Ana,1,0,2.01,3.43,3.46
+2024-09-11,regular,Sporting FC,AD Santos,1,1,1.40,4.60,7.17
+2024-09-11,regular,Herediano,San Carlos,1,2,2.24,3.15,3.25
+2024-09-11,regular,Liberia,Cartagines,3,0,1.78,3.62,4.28
+2024-09-08,regular,Alajuelense,Guanacasteca,4,0,1.25,5.50,10.44
+2024-09-02,regular,Zeledon,Guanacasteca,1,1,2.11,3.43,3.19
+2024-09-02,regular,Alajuelense,Saprissa,1,1,1.88,3.31,4.05
+2024-09-01,regular,AD Santos,Herediano,3,4,4.80,3.46,1.71
+2024-09-01,regular,Cartagines,Puntarenas FC,1,0,1.53,3.80,6.07
+2024-08-31,regular,Santa Ana,Liberia,2,1,3.15,3.28,2.18
+2024-08-31,regular,Sporting FC,San Carlos,2,3,2.71,3.31,2.45
+2024-08-26,regular,Herediano,Sporting FC,2,0,1.88,3.40,3.99
+2024-08-26,regular,Liberia,Zeledon,1,0,1.38,4.58,7.51
+2024-08-26,regular,Puntarenas FC,Santa Ana,1,2,2.12,3.37,3.26
+2024-08-25,regular,Saprissa,Cartagines,1,0,1.47,4.19,6.12
+2024-08-25,regular,San Carlos,Alajuelense,0,0,2.53,3.29,2.63
+2024-08-19,regular,Sporting FC,Liberia,1,0,2.29,3.45,2.85
+2024-08-19,regular,Zeledon,Puntarenas FC,1,0,2.09,3.14,3.50
+2024-08-18,regular,Cartagines,Herediano,3,1,2.99,3.25,2.29
+2024-08-18,regular,AD Santos,San Carlos,0,4,3.90,3.65,1.81
+2024-08-17,regular,Santa Ana,Saprissa,0,3,5.95,4.44,1.45
+2024-08-12,regular,Herediano,Saprissa,2,0,2.75,3.16,2.50
+2024-08-12,regular,Puntarenas FC,Sporting FC,1,2,2.84,3.23,2.38
+2024-08-11,regular,Alajuelense,Zeledon,2,1,1.21,5.67,12.11
+2024-08-11,regular,San Carlos,Santa Ana,5,1,1.57,3.78,5.41
+2024-08-11,regular,Guanacasteca,Cartagines,1,3,2.22,3.19,3.18
+2024-08-10,regular,Liberia,AD Santos,4,0,1.45,4.31,6.28
+2024-08-05,regular,Zeledon,San Carlos,0,0,3.16,3.35,2.16
+2024-08-04,regular,Cartagines,Alajuelense,0,1,3.99,3.35,1.88
+2024-08-04,regular,Santa Ana,Herediano,1,1,4.12,3.70,1.76
+2024-08-04,regular,Saprissa,Liberia,2,2,1.61,4.03,4.79
+2024-08-04,regular,Sporting FC,Guanacasteca,2,2,1.96,3.44,3.55
+2024-08-03,regular,AD Santos,Puntarenas FC,0,0,2.05,3.33,3.39
+2024-07-30,regular,Zeledon,Sporting FC,0,2,2.90,3.25,2.31
+2024-07-29,regular,Alajuelense,Santa Ana,1,1,1.15,6.89,13.94
+2024-07-29,regular,Puntarenas FC,Saprissa,2,3,5.09,3.62,1.63
+2024-07-28,regular,Cartagines,AD Santos,2,1,1.59,3.85,5.23
+2024-07-28,regular,San Carlos,Liberia,1,2,2.06,3.54,3.19
+2024-07-28,regular,Guanacasteca,Herediano,2,1,3.68,3.46,1.92
+2024-07-26,regular,AD Santos,Zeledon,3,3,2.05,3.23,3.57
+2024-07-25,regular,Saprissa,Guanacasteca,3,1,1.26,5.53,9.45
+2024-07-25,regular,Liberia,Alajuelense,1,2,3.70,3.39,1.95
+2024-07-25,regular,San Carlos,Cartagines,0,0,2.30,3.52,2.81
+2024-07-24,regular,Herediano,Puntarenas FC,2,0,1.33,4.87,8.31
+2024-07-24,regular,Santa Ana,Sporting FC,0,2,2.81,3.42,2.32
+2024-07-22,regular,Alajuelense,AD Santos,2,1,1.25,5.92,9.39
+2024-07-21,regular,Zeledon,Herediano,0,0,5.54,3.84,1.56
+2024-07-21,regular,Sporting FC,Saprissa,3,1,5.18,3.91,1.58
+2024-07-21,regular,Cartagines,Santa Ana,4,0,1.75,3.45,4.57
+2024-07-20,regular,Puntarenas FC,Liberia,0,0,2.65,3.32,2.49
+2024-07-20,regular,Guanacasteca,San Carlos,,,2.90,3.16,2.40

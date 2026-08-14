@@ -1,0 +1,111 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-05-24,regular,PSG,Reims,3,0,1.16,8.12,17.58
+2025-04-02,regular,Cannes,Reims,1,2,4.19,3.50,1.87
+2025-04-01,regular,Dunkerque,PSG,2,4,25.22,10.67,1.09
+2025-02-26,regular,Stade Briochin,PSG,0,7,23.03,11.72,1.08
+2025-02-26,regular,Brest,Dunkerque,2,3,1.59,4.02,5.70
+2025-02-25,regular,Angers,Reims,1,2,3.15,3.16,2.41
+2025-02-25,regular,Cannes,Guingamp,3,1,3.19,3.35,2.26
+2025-02-06,regular,Bourgoin Jallieu,Reims,0,1,8.14,5.62,1.29
+2025-02-05,regular,Strasbourg,Angers,1,3,1.89,3.61,4.05
+2025-02-05,regular,Cannes,Dives,5,3,1.34,4.77,8.15
+2025-02-05,regular,Toulouse,Guingamp,0,2,1.55,4.10,5.87
+2025-02-05,regular,Stade Briochin,Nice,2,1,10.20,5.16,1.30
+2025-02-04,regular,Le Mans,PSG,0,2,18.52,8.83,1.13
+2025-02-04,regular,Troyes,Brest,1,2,2.91,3.26,2.46
+2025-02-04,regular,Lille,Dunkerque,1,2,1.26,5.95,10.13
+2025-01-22,regular,Haguenau,Dunkerque,1,3,5.17,3.77,1.64
+2025-01-15,regular,Espaly,PSG,2,4,37.32,17.47,1.02
+2025-01-15,regular,Quevilly Rouen,Angers,2,3,3.55,3.27,2.05
+2025-01-15,regular,Stade Briochin,Annecy,2,1,3.66,3.44,1.98
+2025-01-15,regular,Brest,Nantes,2,1,2.16,3.41,3.28
+2025-01-15,regular,Cannes,Lorient,2,1,3.98,3.70,1.83
+2025-01-15,regular,Toulouse,Laval,2,1,1.53,4.16,5.80
+2025-01-15,regular,Troyes,Rennes,1,0,5.08,3.65,1.67
+2025-01-15,regular,Thaon,Strasbourg,2,3,7.75,5.28,1.33
+2025-01-15,regular,Bourgoin Jallieu,Lyon,3,2,27.43,12.01,1.06
+2025-01-14,regular,Marseille,Lille,1,2,2.02,3.46,3.62
+2025-01-14,regular,Bastia,Nice,0,1,3.78,3.33,2.01
+2025-01-14,regular,Guingamp,Sochaux,3,2,1.32,4.97,9.56
+2025-01-14,regular,Le Mans,Valenciennes,2,1,1.86,3.36,4.32
+2025-01-14,regular,Dives,Le Puy-en-Velay,1,0,6.24,4.18,1.50
+2025-01-14,regular,Reims,Monaco,2,1,3.66,3.80,1.90
+2024-12-22,regular,Lens,PSG,1,2,5.08,4.17,1.62
+2024-12-22,regular,FC 93,Angers,0,1,4.65,3.89,1.65
+2024-12-22,regular,Guingamp,Caen,2,1,1.68,3.70,5.12
+2024-12-22,regular,Sochaux,Clermont,1,0,2.24,3.18,3.24
+2024-12-22,regular,Marmande,Le Mans,0,7,31.58,10.10,1.07
+2024-12-22,regular,Saint-Philbert,Quevilly Rouen,0,2,5.98,4.34,1.48
+2024-12-22,regular,Thionville,Valenciennes,2,3,2.97,3.31,2.28
+2024-12-22,regular,Auxerre,Dunkerque,0,1,1.63,4.03,4.83
+2024-12-22,regular,Bordeaux,Rennes,1,4,8.17,4.84,1.35
+2024-12-22,regular,St Etienne,Marseille,0,4,6.38,4.52,1.47
+2024-12-22,regular,Saint-Jean,Monaco,1,4,30.90,21.64,1.01
+2024-12-22,regular,Mutzig,Reims,1,3,28.54,21.92,1.01
+2024-12-21,regular,RC Calais,Strasbourg,0,3,19.63,9.21,1.07
+2024-12-21,regular,Thaon,Amiens,2,1,6.88,4.46,1.41
+2024-12-21,regular,Feignies-Aulnoye,Lyon,1,2,28.50,11.83,1.04
+2024-12-21,regular,JA Drancy,Nantes,0,4,25.83,11.77,1.04
+2024-12-21,regular,Le Puy-en-Velay,Montpellier,4,0,6.26,4.42,1.46
+2024-12-21,regular,Tours,Lorient,,,25.33,13.07,1.04
+2024-12-21,regular,Corte,Nice,1,2,29.81,14.52,1.03
+2024-12-21,regular,Bourgoin Jallieu,Martigues,4,1,3.19,4.29,1.89
+2024-12-21,regular,La Roche,Brest,0,1,9.50,5.62,1.27
+2024-12-21,regular,Cannes,Grenoble,3,2,3.16,3.33,2.22
+2024-12-21,regular,Hauts Lyonnais,Toulouse,0,1,28.61,11.51,1.06
+2024-12-21,regular,Stade Briochin,Le Havre,1,0,6.29,4.15,1.48
+2024-12-21,regular,Dives,Saint-Denis,2,0,1.96,3.34,3.75
+2024-12-20,regular,Rouen,Lille,0,1,12.12,6.23,1.22
+2024-12-20,regular,GOAL FC,Annecy,1,2,4.69,4.12,1.61
+2024-12-20,regular,Bastia,RC Saint Joseph,5,0,1.02,19.33,29.33
+2024-12-20,regular,Haguenau,Boulogne,4,1,3.86,3.83,1.80
+2024-12-20,regular,Espaly,Dijon,2,1,5.52,4.06,1.54
+2024-12-20,regular,SA Merignac,Laval,0,1,32.04,14.34,1.03
+2024-12-20,regular,Troyes,Metz,3,0,2.64,3.28,2.64
+2024-12-01,regular,Bordeaux,Les Herbiers,2,0,1.76,3.59,4.41
+2024-12-01,regular,Boulogne,Beauvais,4,2,1.57,4.03,5.32
+2024-11-30,regular,Dives,AS Dragon,6,1,1.58,4.21,4.84
+2024-11-30,regular,Ginglin Cesson,Rouen,0,3,12.88,5.60,1.22
+2024-11-30,regular,Bourgoin Jallieu,Olympique de Valence,3,0,1.57,3.99,5.24
+2024-11-30,regular,Tours,Cesson,3,0,1.86,3.60,3.83
+2024-11-30,regular,Dinan,Guingamp,1,4,6.48,4.07,1.49
+2024-11-30,regular,Le Mans,St. Colomban Locmine,4,0,1.58,3.74,5.73
+2024-11-30,regular,Saint-Jean,Versailles,2,1,10.49,5.38,1.26
+2024-11-30,regular,Colmar,Haguenau,1,2,1.95,3.31,3.80
+2024-11-30,regular,GFA74,GOAL FC,1,2,2.09,3.20,3.50
+2024-11-30,regular,Istres,Grenoble,0,4,6.25,3.74,1.54
+2024-11-30,regular,Jura Sud,Annecy,0,1,4.69,3.59,1.71
+2024-11-30,regular,Valenciennes,Neuilly Marne,4,3,1.22,6.22,10.59
+2024-11-30,regular,Liancourt Clermont,Quevilly Rouen,0,1,32.85,12.59,1.04
+2024-11-30,regular,Aubervilliers,Dunkerque,0,2,13.12,5.28,1.27
+2024-11-30,regular,FC 93,Red Star,3,2,3.19,3.95,1.97
+2024-11-30,regular,Saint-Philbert,Pau FC,2,1,29.33,14.16,1.03
+2024-11-30,regular,Laval,Concarneau,3,2,2.03,3.45,3.49
+2024-11-30,regular,Mutzig,Jeunesse,4,1,2.31,3.55,2.80
+2024-11-30,regular,Monnaie,Lorient,0,5,38.00,13.43,1.02
+2024-11-29,regular,Chambery,Dijon,0,2,8.10,4.05,1.42
+2024-11-29,regular,Bastia,Nancy,2,0,1.77,3.34,4.91
+2024-11-29,regular,Raon L Etape,Metz,0,1,23.06,12.68,1.05
+2024-11-29,regular,Orleans,La Roche,1,2,1.43,4.35,6.67
+2024-11-29,regular,Stade Briochin,Saint-Malo,1,0,3.25,2.96,2.32
+2024-11-17,regular,Chambery,Saint-Cyr Collonges,2,1,1.89,3.28,4.13
+2024-11-16,regular,Grenoble,Villefranche,2,1,1.69,3.80,4.53
+2024-11-16,regular,Fleury-Merogis,Amiens,1,2,2.91,3.19,2.38
+2024-11-16,regular,Beauvais,Chantilly,1,0,2.15,3.10,3.47
+2024-11-16,regular,Cesson,TA Rennes,3,2,2.54,3.23,2.68
+2024-11-16,regular,Colomiers,Vierzon Foot,2,3,2.28,3.22,3.06
+2024-11-16,regular,Epinal,Nancy,2,4,4.28,4.02,1.69
+2024-11-16,regular,Fontenay,ESOF La Roche,1,2,2.21,3.18,3.26
+2024-11-16,regular,JA Drancy,Pays de Cassel,2,1,2.27,3.05,3.26
+2024-11-16,regular,Vitre,Laval,0,1,17.87,8.59,1.12
+2024-11-16,regular,Saint-Philbert,Thouars,3,0,2.19,3.21,3.28
+2024-11-16,regular,ASJR Football,Bourgoin Jallieu,0,4,12.24,6.78,1.18
+2024-11-16,regular,Saumur Olympique,Concarneau,0,2,3.46,3.79,1.91
+2024-11-16,regular,Sarre Union,Thaon,0,2,2.68,3.07,2.65
+2024-11-16,regular,Milizac,Dinan,1,2,3.05,3.13,2.35
+2024-11-16,regular,Ginglin Cesson,Alencon,2,0,2.71,3.13,2.59
+2024-11-16,regular,Houilles,Boulogne,0,3,16.51,7.90,1.13
+2024-11-16,regular,Chartres,Caen,0,4,17.67,6.53,1.16
+2024-11-15,regular,Angouleme CFC,Rodez,2,1,5.48,3.97,1.58
+2024-11-15,regular,Paris FC,Quevilly Rouen,1,2,1.44,4.24,7.42
+2024-11-15,regular,Les Herbiers,AC Ajaccio,2,1,3.79,3.13,2.04

@@ -1,0 +1,558 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-06-01,play_off,Oldham,Southend,3,2,2.64,3.23,2.61
+2025-05-21,play_off,Forest Green,Southend,2,3,2.52,3.34,2.66
+2025-05-20,play_off,York City,Oldham,0,3,1.97,3.43,3.69
+2025-05-15,play_off,Rochdale,Southend,3,4,2.37,3.26,2.94
+2025-05-14,play_off,Oldham,FC Halifax,4,0,1.90,3.39,4.06
+2025-05-05,regular,AFC Fylde,Barnet,0,3,6.22,5.09,1.40
+2025-05-05,regular,Aldershot,Yeovil,2,1,2.21,3.24,3.23
+2025-05-05,regular,Altrincham,Tamworth,1,1,2.24,3.79,2.77
+2025-05-05,regular,Maidenhead,Boston Utd,3,0,1.61,3.96,5.13
+2025-05-05,regular,Braintree,Rochdale,2,0,2.48,3.45,2.65
+2025-05-05,regular,Solihull Moors,Dag & Red,1,1,4.81,3.81,1.66
+2025-05-05,regular,Eastleigh,York City,0,2,3.60,3.81,1.88
+2025-05-05,regular,Oldham,Ebbsfleet,2,0,1.30,5.00,9.50
+2025-05-05,regular,Hartlepool,Forest Green,1,1,2.98,3.36,2.29
+2025-05-05,regular,Gateshead,Southend,0,0,3.01,3.63,2.17
+2025-05-05,regular,Wealdstone,FC Halifax,3,1,1.61,3.94,5.06
+2025-05-05,regular,Sutton,Woking,1,1,1.94,3.71,3.52
+2025-04-29,regular,Solihull Moors,Rochdale,0,1,3.02,3.28,2.27
+2025-04-26,regular,Southend,Wealdstone,3,0,1.58,4.00,5.27
+2025-04-26,regular,Tamworth,AFC Fylde,4,3,1.54,4.28,5.33
+2025-04-26,regular,Barnet,Aldershot,4,0,1.24,5.75,11.30
+2025-04-26,regular,Dag & Red,Altrincham,6,1,2.75,3.50,2.38
+2025-04-26,regular,Boston Utd,Gateshead,2,1,2.33,3.46,2.85
+2025-04-26,regular,FC Halifax,Braintree,1,0,2.10,3.12,3.67
+2025-04-26,regular,Ebbsfleet,Maidenhead,0,2,5.38,4.27,1.53
+2025-04-26,regular,Forest Green,Oldham,1,0,2.29,3.33,3.01
+2025-04-26,regular,Rochdale,Hartlepool,5,1,1.66,3.70,5.08
+2025-04-26,regular,York City,Solihull Moors,2,0,1.52,4.32,5.54
+2025-04-26,regular,Yeovil,Sutton,1,2,2.47,2.97,3.05
+2025-04-26,regular,Woking,Eastleigh,2,2,2.18,3.32,3.24
+2025-04-21,regular,Rochdale,AFC Fylde,0,0,1.35,5.01,7.49
+2025-04-21,regular,FC Halifax,Altrincham,0,3,2.69,3.23,2.59
+2025-04-21,regular,Sutton,Barnet,1,3,6.29,4.37,1.46
+2025-04-21,regular,Solihull Moors,Boston Utd,3,2,2.55,3.07,2.86
+2025-04-21,regular,Braintree,Dag & Red,0,0,2.26,3.37,3.04
+2025-04-21,regular,Eastleigh,Yeovil,1,0,2.14,3.46,3.17
+2025-04-21,regular,Ebbsfleet,Southend,0,4,5.65,3.99,1.55
+2025-04-21,regular,Forest Green,Tamworth,3,0,1.86,3.60,3.85
+2025-04-21,regular,Hartlepool,Gateshead,3,2,2.37,3.70,2.64
+2025-04-21,regular,Wealdstone,Maidenhead,1,1,2.30,3.55,2.82
+2025-04-21,regular,York City,Oldham,1,1,1.66,3.85,4.78
+2025-04-21,regular,Woking,Aldershot,3,0,2.22,3.10,3.35
+2025-04-18,regular,Barnet,Eastleigh,1,1,1.24,5.75,10.80
+2025-04-18,regular,AFC Fylde,FC Halifax,0,1,3.12,3.25,2.27
+2025-04-18,regular,Aldershot,Sutton,1,1,2.18,3.48,3.09
+2025-04-18,regular,Altrincham,Rochdale,1,2,2.63,3.29,2.60
+2025-04-18,regular,Boston Utd,Wealdstone,2,0,1.96,3.29,3.97
+2025-04-18,regular,Dag & Red,Ebbsfleet,1,0,1.61,4.01,4.99
+2025-04-18,regular,Oldham,Hartlepool,2,1,2.16,3.40,3.20
+2025-04-18,regular,Maidenhead,Woking,2,2,1.92,3.44,3.86
+2025-04-18,regular,Southend,Braintree,0,0,1.81,3.51,4.26
+2025-04-18,regular,Yeovil,Forest Green,1,1,3.14,3.16,2.31
+2025-04-18,regular,Tamworth,Solihull Moors,1,2,1.79,3.69,4.11
+2025-04-18,regular,Gateshead,York City,1,3,2.96,3.48,2.24
+2025-04-12,regular,Forest Green,Gateshead,2,3,2.03,3.47,3.45
+2025-04-12,regular,Woking,AFC Fylde,1,0,1.74,3.79,4.33
+2025-04-12,regular,York City,Aldershot,7,2,1.55,4.16,5.28
+2025-04-12,regular,Boston Utd,Altrincham,1,0,2.53,3.53,2.52
+2025-04-12,regular,Tamworth,Braintree,4,2,2.05,3.62,3.27
+2025-04-12,regular,Dag & Red,Hartlepool,1,1,3.06,3.54,2.16
+2025-04-12,regular,Rochdale,Eastleigh,4,0,1.68,3.85,4.62
+2025-04-12,regular,Ebbsfleet,Sutton,4,1,3.76,3.88,1.83
+2025-04-12,regular,FC Halifax,Maidenhead,0,2,2.23,3.18,3.25
+2025-04-12,regular,Yeovil,Oldham,2,1,3.47,3.09,2.17
+2025-04-12,regular,Southend,Solihull Moors,0,1,1.56,4.04,5.53
+2025-04-12,regular,Barnet,Wealdstone,1,1,1.30,5.19,8.92
+2025-04-08,regular,Aldershot,Boston Utd,1,2,2.67,3.36,2.51
+2025-04-08,regular,Oldham,Woking,1,2,1.81,3.33,4.56
+2025-04-08,regular,Sutton,Rochdale,1,0,2.89,3.39,2.33
+2025-04-05,regular,Eastleigh,FC Halifax,1,1,2.57,3.03,2.86
+2025-04-05,regular,Altrincham,Yeovil,2,1,1.98,3.56,3.50
+2025-04-05,regular,Braintree,Barnet,2,1,6.00,4.25,1.50
+2025-04-05,regular,Gateshead,Dag & Red,2,1,1.82,3.73,3.98
+2025-04-05,regular,Hartlepool,Ebbsfleet,3,2,1.33,4.85,8.45
+2025-04-05,regular,Wealdstone,Forest Green,2,1,2.71,3.28,2.51
+2025-04-05,regular,Maidenhead,Tamworth,3,1,3.16,3.34,2.20
+2025-04-05,regular,Sutton,Southend,1,1,3.36,3.41,2.09
+2025-04-05,regular,AFC Fylde,York City,1,3,4.52,4.14,1.64
+2025-04-01,regular,Aldershot,AFC Fylde,2,0,1.76,3.72,4.27
+2025-04-01,regular,Wealdstone,Boston Utd,1,0,2.57,3.31,2.62
+2025-04-01,regular,Woking,Rochdale,1,1,3.28,3.28,2.17
+2025-03-29,regular,Southend,Oldham,1,0,2.09,3.23,3.53
+2025-03-29,regular,Yeovil,AFC Fylde,1,0,2.05,3.24,3.64
+2025-03-29,regular,Rochdale,Aldershot,4,0,1.82,3.58,4.12
+2025-03-29,regular,Ebbsfleet,Altrincham,2,2,4.54,3.88,1.68
+2025-03-29,regular,Barnet,Gateshead,3,1,1.35,4.88,8.04
+2025-03-29,regular,Boston Utd,Sutton,2,1,2.32,3.24,2.99
+2025-03-29,regular,Woking,Braintree,2,1,2.50,3.21,2.79
+2025-03-29,regular,Dag & Red,Maidenhead,1,0,2.26,3.30,3.09
+2025-03-29,regular,Tamworth,Eastleigh,2,0,1.96,3.39,3.79
+2025-03-29,regular,FC Halifax,Hartlepool,0,1,2.65,3.15,2.67
+2025-03-29,regular,York City,Wealdstone,3,0,1.45,4.36,6.62
+2025-03-29,regular,Forest Green,Solihull Moors,1,0,1.61,3.81,5.29
+2025-03-25,regular,Wealdstone,Aldershot,1,3,2.41,3.40,2.76
+2025-03-25,regular,Altrincham,Solihull Moors,1,1,1.88,3.52,3.94
+2025-03-25,regular,Boston Utd,Southend,3,0,3.48,3.31,2.10
+2025-03-25,regular,Woking,FC Halifax,0,0,2.86,3.01,2.56
+2025-03-25,regular,Rochdale,York City,0,4,2.59,3.18,2.71
+2025-03-22,regular,Altrincham,Barnet,0,1,5.14,4.16,1.57
+2025-03-22,regular,AFC Fylde,Forest Green,3,0,4.22,3.77,1.76
+2025-03-22,regular,Aldershot,Ebbsfleet,3,3,1.31,5.11,9.02
+2025-03-22,regular,Hartlepool,Boston Utd,4,1,2.14,3.44,3.22
+2025-03-22,regular,Braintree,York City,2,1,4.27,3.61,1.78
+2025-03-22,regular,Eastleigh,Southend,1,2,3.22,3.30,2.19
+2025-03-22,regular,Gateshead,Tamworth,0,2,2.34,3.56,2.72
+2025-03-22,regular,Oldham,FC Halifax,2,0,2.45,3.16,2.89
+2025-03-22,regular,Maidenhead,Rochdale,1,1,3.88,3.41,1.92
+2025-03-22,regular,Solihull Moors,Yeovil,0,3,1.96,3.29,3.90
+2025-03-22,regular,Wealdstone,Woking,1,0,2.37,3.19,2.99
+2025-03-22,regular,Sutton,Dag & Red,1,1,1.86,3.44,4.09
+2025-03-18,regular,AFC Fylde,Sutton,1,2,3.59,3.70,1.92
+2025-03-18,regular,Maidenhead,Aldershot,0,1,2.84,3.41,2.33
+2025-03-18,regular,Altrincham,Wealdstone,0,1,1.80,3.79,3.94
+2025-03-18,regular,Rochdale,Boston Utd,2,3,1.62,3.82,5.14
+2025-03-18,regular,Gateshead,Braintree,1,3,1.63,3.86,5.05
+2025-03-18,regular,FC Halifax,Dag & Red,0,1,1.58,3.87,5.57
+2025-03-15,regular,Hartlepool,Solihull Moors,1,1,2.00,3.40,3.60
+2025-03-15,regular,Ebbsfleet,AFC Fylde,1,0,2.88,3.49,2.28
+2025-03-15,regular,Altrincham,Aldershot,1,2,1.98,3.64,3.40
+2025-03-15,regular,Woking,Barnet,0,1,6.27,4.14,1.48
+2025-03-15,regular,Braintree,Boston Utd,0,1,2.48,3.14,2.84
+2025-03-15,regular,Dag & Red,Tamworth,1,3,2.95,3.27,2.35
+2025-03-15,regular,Wealdstone,Eastleigh,3,3,2.52,3.25,2.72
+2025-03-15,regular,Forest Green,Southend,2,2,2.12,3.43,3.25
+2025-03-15,regular,Gateshead,Maidenhead,0,2,1.50,4.38,5.56
+2025-03-15,regular,Sutton,FC Halifax,0,3,2.27,3.16,3.17
+2025-03-15,regular,Yeovil,York City,0,1,4.75,3.66,1.70
+2025-03-15,regular,Oldham,Rochdale,1,1,2.31,3.12,3.13
+2025-03-11,regular,Rochdale,Altrincham,3,0,2.03,3.41,3.49
+2025-03-11,regular,Yeovil,Boston Utd,0,3,2.65,3.14,2.63
+2025-03-11,regular,Oldham,Eastleigh,2,0,1.94,3.26,4.03
+2025-03-11,regular,Forest Green,Sutton,2,1,1.90,3.29,4.15
+2025-03-08,regular,York City,Forest Green,1,1,2.13,3.18,3.50
+2025-03-08,regular,AFC Fylde,Braintree,0,2,2.68,3.40,2.47
+2025-03-08,regular,Aldershot,Gateshead,3,1,2.61,3.48,2.50
+2025-03-08,regular,Southend,Altrincham,2,1,2.34,3.40,2.87
+2025-03-08,regular,Boston Utd,Woking,2,2,2.40,3.20,2.93
+2025-03-08,regular,Eastleigh,Hartlepool,1,1,2.38,3.38,2.83
+2025-03-08,regular,Solihull Moors,Ebbsfleet,2,1,1.38,4.90,6.84
+2025-03-08,regular,FC Halifax,Yeovil,1,0,1.91,3.36,4.03
+2025-03-08,regular,Maidenhead,Sutton,0,1,3.21,3.40,2.15
+2025-03-08,regular,Tamworth,Oldham,1,1,2.69,3.14,2.65
+2025-03-08,regular,Rochdale,Wealdstone,4,1,1.59,3.89,5.33
+2025-03-08,regular,Barnet,Dag & Red,1,0,1.23,5.59,12.25
+2025-03-04,regular,AFC Fylde,Hartlepool,2,1,3.82,3.83,1.81
+2025-03-04,regular,Aldershot,Dag & Red,0,0,1.88,3.40,4.04
+2025-03-04,regular,Barnet,Yeovil,5,0,1.33,4.89,8.50
+2025-03-04,regular,Boston Utd,Oldham,0,0,3.28,3.34,2.12
+2025-03-04,regular,Eastleigh,Ebbsfleet,2,0,1.58,3.82,5.46
+2025-03-04,regular,FC Halifax,Forest Green,2,1,3.15,3.11,2.29
+2025-03-04,regular,York City,Altrincham,1,2,1.72,3.73,4.40
+2025-03-04,regular,Maidenhead,Braintree,3,3,2.73,3.12,2.59
+2025-03-04,regular,Rochdale,Gateshead,1,0,2.27,3.43,2.92
+2025-03-04,regular,Solihull Moors,Sutton,1,1,2.48,3.29,2.72
+2025-03-04,regular,Southend,Woking,2,2,1.80,3.38,4.47
+2025-03-04,regular,Tamworth,Wealdstone,4,1,2.07,3.35,3.40
+2025-03-01,regular,Gateshead,AFC Fylde,1,1,1.40,4.80,6.57
+2025-03-01,regular,Oldham,Barnet,0,3,3.44,3.26,2.10
+2025-03-01,regular,Dag & Red,Boston Utd,1,3,2.13,3.36,3.22
+2025-03-01,regular,Braintree,Eastleigh,1,0,2.42,3.24,2.84
+2025-03-01,regular,Ebbsfleet,Tamworth,2,3,3.53,3.42,2.00
+2025-03-01,regular,Forest Green,Maidenhead,2,0,1.35,4.64,8.10
+2025-03-01,regular,Hartlepool,York City,0,1,3.06,3.32,2.23
+2025-03-01,regular,Yeovil,Southend,2,2,3.06,3.02,2.41
+2025-02-25,regular,Aldershot,Solihull Moors,3,1,2.20,3.24,3.24
+2025-02-25,regular,Eastleigh,Gateshead,1,1,3.14,3.48,2.13
+2025-02-25,regular,Maidenhead,York City,1,3,4.33,3.61,1.77
+2025-02-25,regular,Tamworth,Rochdale,1,1,2.95,3.36,2.28
+2025-02-22,regular,Altrincham,AFC Fylde,1,2,1.34,5.03,7.81
+2025-02-22,regular,Aldershot,Hartlepool,3,2,2.64,3.41,2.48
+2025-02-22,regular,Rochdale,Barnet,0,4,3.30,3.47,2.07
+2025-02-22,regular,Boston Utd,Eastleigh,1,2,2.54,3.18,2.73
+2025-02-22,regular,Sutton,Braintree,1,1,1.91,3.42,3.88
+2025-02-22,regular,Dag & Red,Oldham,2,2,3.89,3.57,1.86
+2025-02-22,regular,Wealdstone,Ebbsfleet,4,2,1.79,3.58,4.28
+2025-02-22,regular,Forest Green,Woking,1,1,1.65,3.41,5.66
+2025-02-22,regular,Solihull Moors,Gateshead,1,3,2.64,3.56,2.40
+2025-02-22,regular,York City,FC Halifax,2,2,1.55,3.81,5.91
+2025-02-22,regular,Maidenhead,Yeovil,0,2,2.43,3.21,2.85
+2025-02-22,regular,Tamworth,Southend,1,1,3.08,3.16,2.30
+2025-02-19,regular,Braintree,Wealdstone,1,2,2.36,3.29,2.87
+2025-02-19,regular,Eastleigh,Dag & Red,3,0,2.23,3.29,3.09
+2025-02-19,regular,FC Halifax,Rochdale,0,0,2.72,3.15,2.55
+2025-02-19,regular,Woking,Solihull Moors,1,0,2.43,3.30,2.78
+2025-02-18,regular,AFC Fylde,Boston Utd,1,2,2.62,3.52,2.44
+2025-02-18,regular,Southend,Aldershot,2,1,1.72,3.70,4.38
+2025-02-18,regular,Hartlepool,Altrincham,1,2,2.28,3.48,2.85
+2025-02-18,regular,Barnet,York City,3,1,2.17,3.21,3.28
+2025-02-18,regular,Ebbsfleet,Forest Green,0,0,6.01,4.06,1.50
+2025-02-18,regular,Gateshead,Sutton,4,3,1.84,3.66,3.81
+2025-02-18,regular,Oldham,Maidenhead,0,1,1.52,3.96,6.06
+2025-02-18,regular,Yeovil,Tamworth,2,1,2.16,3.32,3.19
+2025-02-15,regular,AFC Fylde,Dag & Red,1,1,2.96,3.56,2.20
+2025-02-15,regular,Eastleigh,Aldershot,2,0,2.57,3.41,2.55
+2025-02-15,regular,Gateshead,Altrincham,0,1,2.18,3.64,2.94
+2025-02-15,regular,Barnet,Solihull Moors,3,1,1.47,4.17,6.34
+2025-02-15,regular,FC Halifax,Boston Utd,1,0,2.08,3.08,3.70
+2025-02-15,regular,Braintree,Forest Green,2,0,4.24,3.48,1.82
+2025-02-15,regular,Ebbsfleet,York City,0,2,6.82,4.41,1.43
+2025-02-15,regular,Hartlepool,Maidenhead,0,0,1.48,4.26,6.01
+2025-02-15,regular,Oldham,Sutton,0,0,1.73,3.72,4.42
+2025-02-15,regular,Southend,Rochdale,1,1,2.39,3.24,2.88
+2025-02-15,regular,Woking,Tamworth,1,1,2.07,3.47,3.30
+2025-02-15,regular,Yeovil,Wealdstone,1,2,2.37,3.34,2.81
+2025-02-11,regular,Oldham,Altrincham,2,2,2.20,3.37,3.13
+2025-02-11,regular,Dag & Red,Woking,1,2,2.12,3.35,3.26
+2025-02-11,regular,Southend,FC Halifax,3,1,2.02,3.13,3.89
+2025-02-11,regular,Hartlepool,Tamworth,2,2,1.78,3.66,4.18
+2025-02-08,regular,Tamworth,FC Halifax,1,2,2.85,3.14,2.47
+2025-02-08,regular,Altrincham,Braintree,3,1,1.62,3.89,5.05
+2025-02-08,regular,Boston Utd,Barnet,0,0,5.92,4.06,1.52
+2025-02-08,regular,Dag & Red,Yeovil,1,1,2.37,3.14,3.01
+2025-02-08,regular,Forest Green,Eastleigh,2,1,1.53,4.04,5.84
+2025-02-08,regular,Rochdale,Ebbsfleet,0,0,1.24,5.55,11.26
+2025-02-08,regular,Wealdstone,Gateshead,0,4,2.89,3.47,2.30
+2025-02-08,regular,Sutton,Hartlepool,1,2,2.38,3.46,2.75
+2025-02-08,regular,Maidenhead,Southend,1,0,4.00,3.22,1.95
+2025-02-08,regular,Solihull Moors,Oldham,0,1,3.22,3.30,2.19
+2025-02-08,regular,York City,Woking,3,0,1.44,4.26,6.83
+2025-02-04,regular,FC Halifax,AFC Fylde,1,2,1.42,4.40,7.17
+2025-02-04,regular,Dag & Red,Forest Green,0,2,3.74,3.27,2.02
+2025-02-04,regular,Rochdale,Oldham,0,1,2.49,3.26,2.78
+2025-02-04,regular,Wealdstone,Tamworth,0,1,1.94,3.44,3.83
+2025-02-01,regular,AFC Fylde,Oldham,1,2,4.66,4.05,1.66
+2025-02-01,regular,Tamworth,Barnet,0,1,5.13,4.05,1.60
+2025-02-01,regular,Braintree,Hartlepool,1,1,3.37,3.38,2.12
+2025-02-01,regular,York City,Dag & Red,2,1,1.44,4.48,6.71
+2025-02-01,regular,FC Halifax,Ebbsfleet,2,0,1.37,4.60,8.07
+2025-02-01,regular,Wealdstone,Solihull Moors,1,1,2.64,3.45,2.52
+2025-01-28,regular,Southend,AFC Fylde,2,0,1.51,4.38,5.70
+2025-01-28,regular,Barnet,Hartlepool,2,0,1.57,4.23,5.17
+2025-01-25,regular,AFC Fylde,Wealdstone,2,0,2.75,3.69,2.27
+2025-01-25,regular,Aldershot,Tamworth,2,2,2.13,3.54,3.09
+2025-01-25,regular,Altrincham,Forest Green,1,1,2.58,3.31,2.59
+2025-01-25,regular,Barnet,Maidenhead,3,0,1.32,5.09,8.13
+2025-01-25,regular,Boston Utd,York City,3,1,4.40,3.76,1.72
+2025-01-25,regular,Ebbsfleet,Braintree,0,1,3.85,3.54,1.88
+2025-01-25,regular,Dag & Red,Southend,0,2,2.98,3.14,2.39
+2025-01-25,regular,Sutton,Eastleigh,1,0,1.91,3.52,3.77
+2025-01-25,regular,Gateshead,Oldham,1,1,2.85,3.57,2.26
+2025-01-25,regular,Solihull Moors,FC Halifax,0,2,2.11,3.38,3.30
+2025-01-25,regular,Hartlepool,Woking,1,1,1.65,3.86,4.72
+2025-01-25,regular,Rochdale,Yeovil,4,0,1.76,3.60,4.40
+2025-01-21,regular,Oldham,York City,0,2,2.32,3.23,3.05
+2025-01-18,regular,Maidenhead,AFC Fylde,4,1,2.07,3.52,3.21
+2025-01-18,regular,Oldham,Aldershot,1,3,1.56,4.14,5.27
+2025-01-18,regular,Eastleigh,Altrincham,1,2,2.75,3.46,2.38
+2025-01-18,regular,Southend,Barnet,0,3,2.68,3.33,2.49
+2025-01-18,regular,Braintree,Solihull Moors,1,0,3.42,3.63,1.97
+2025-01-18,regular,Forest Green,Rochdale,1,0,2.07,3.38,3.36
+2025-01-18,regular,Tamworth,Boston Utd,3,0,1.96,3.51,3.53
+2025-01-18,regular,Woking,Ebbsfleet,1,1,1.34,4.81,8.49
+2025-01-18,regular,Wealdstone,Hartlepool,1,1,3.08,3.50,2.16
+2025-01-18,regular,York City,Sutton,1,2,1.58,4.05,5.22
+2025-01-17,regular,Yeovil,Gateshead,0,0,2.53,3.53,2.52
+2025-01-15,regular,Sutton,Wealdstone,2,2,1.96,3.58,3.54
+2025-01-14,regular,Aldershot,Braintree,2,2,1.94,3.49,3.70
+2025-01-14,regular,Altrincham,Maidenhead,4,0,1.66,3.73,4.88
+2025-01-14,regular,Forest Green,Barnet,0,0,2.20,3.53,2.97
+2025-01-14,regular,Solihull Moors,Eastleigh,0,1,1.64,3.79,5.13
+2025-01-14,regular,Ebbsfleet,Yeovil,1,1,4.79,3.69,1.69
+2025-01-14,regular,Gateshead,FC Halifax,1,3,1.86,3.52,3.95
+2025-01-11,regular,Boston Utd,Ebbsfleet,2,2,1.53,3.92,6.17
+2025-01-11,regular,Yeovil,Woking,1,1,2.04,3.28,3.65
+2025-01-08,regular,Forest Green,Dag & Red,1,1,1.52,3.88,6.42
+2025-01-07,regular,Eastleigh,Oldham,2,2,3.01,3.22,2.34
+2025-01-01,regular,Braintree,Southend,0,1,3.49,3.24,2.11
+2025-01-01,regular,Sutton,Aldershot,1,1,1.93,3.75,3.54
+2025-01-01,regular,Eastleigh,Barnet,1,1,4.41,3.74,1.73
+2025-01-01,regular,Ebbsfleet,Dag & Red,0,2,4.56,3.85,1.69
+2025-01-01,regular,Forest Green,Yeovil,2,1,1.75,3.75,4.33
+2025-01-01,regular,York City,Gateshead,1,0,1.92,3.78,3.51
+2025-01-01,regular,Hartlepool,Oldham,2,1,2.80,3.52,2.33
+2025-01-01,regular,Woking,Maidenhead,3,1,2.16,3.23,3.36
+2024-12-31,regular,Solihull Moors,Tamworth,2,0,1.51,4.45,5.46
+2024-12-26,regular,AFC Fylde,Rochdale,1,3,3.54,3.72,1.93
+2024-12-26,regular,Aldershot,Woking,2,2,2.16,3.56,3.07
+2024-12-26,regular,Altrincham,FC Halifax,0,0,1.91,3.63,3.79
+2024-12-26,regular,Barnet,Sutton,3,3,1.50,4.23,6.21
+2024-12-26,regular,Boston Utd,Solihull Moors,0,1,3.65,3.43,1.97
+2024-12-26,regular,Dag & Red,Braintree,2,4,1.95,3.57,3.63
+2024-12-26,regular,Yeovil,Eastleigh,2,2,1.90,3.62,3.75
+2024-12-26,regular,Southend,Ebbsfleet,4,0,1.41,4.42,7.55
+2024-12-26,regular,Tamworth,Forest Green,1,1,4.50,3.72,1.73
+2024-12-26,regular,Gateshead,Hartlepool,4,3,1.87,3.89,3.63
+2024-12-26,regular,Maidenhead,Wealdstone,3,1,2.64,3.39,2.51
+2024-12-21,regular,Solihull Moors,AFC Fylde,4,1,1.60,4.19,4.94
+2024-12-21,regular,Forest Green,Aldershot,1,1,1.39,4.76,7.24
+2024-12-21,regular,Woking,Altrincham,2,1,2.81,3.40,2.41
+2024-12-21,regular,Barnet,FC Halifax,1,1,1.48,4.20,6.54
+2024-12-21,regular,Braintree,Oldham,0,2,3.69,3.37,2.02
+2024-12-21,regular,Wealdstone,Dag & Red,3,0,2.35,3.49,2.83
+2024-12-21,regular,Eastleigh,Maidenhead,1,0,1.71,3.69,4.70
+2024-12-21,regular,Ebbsfleet,Gateshead,1,4,6.18,5.01,1.42
+2024-12-21,regular,Hartlepool,Yeovil,2,1,1.92,3.53,3.81
+2024-12-21,regular,York City,Southend,3,0,1.63,3.83,5.23
+2024-12-21,regular,Sutton,Tamworth,1,2,1.59,4.02,5.35
+2024-12-17,regular,Rochdale,Tamworth,3,0,1.59,3.84,5.61
+2024-12-14,regular,Forest Green,Boston Utd,1,0,1.35,4.82,8.71
+2024-12-14,regular,AFC Fylde,Eastleigh,2,2,2.12,3.61,3.14
+2024-12-14,regular,Aldershot,FC Halifax,3,4,2.44,3.41,2.78
+2024-12-14,regular,Altrincham,Sutton,1,0,2.21,3.50,3.06
+2024-12-14,regular,Barnet,Ebbsfleet,4,1,1.16,7.17,15.01
+2024-12-14,regular,Yeovil,Braintree,3,1,1.73,3.59,4.84
+2024-12-14,regular,Dag & Red,Rochdale,1,0,3.03,3.54,2.22
+2024-12-14,regular,Gateshead,Woking,4,0,1.53,4.30,5.49
+2024-12-14,regular,Southend,Hartlepool,0,0,2.32,3.34,2.99
+2024-12-14,regular,Maidenhead,Solihull Moors,1,1,3.65,3.39,2.02
+2024-12-14,regular,Oldham,Wealdstone,3,2,1.43,4.63,6.56
+2024-12-14,regular,Tamworth,York City,1,1,4.46,3.93,1.71
+2024-12-10,regular,AFC Fylde,Ebbsfleet,2,0,1.53,4.38,5.42
+2024-12-10,regular,Solihull Moors,Aldershot,2,1,1.72,3.97,4.30
+2024-12-10,regular,Wealdstone,Altrincham,3,3,2.64,3.40,2.55
+2024-12-10,regular,FC Halifax,Sutton,0,0,2.82,3.03,2.64
+2024-11-30,regular,Sutton,AFC Fylde,2,0,1.53,4.24,5.52
+2024-11-30,regular,Hartlepool,Barnet,0,0,2.26,3.76,2.79
+2024-11-30,regular,Ebbsfleet,Boston Utd,0,0,2.72,3.60,2.36
+2024-11-30,regular,Braintree,Gateshead,2,2,3.41,3.61,2.00
+2024-11-30,regular,FC Halifax,Southend,0,2,2.55,3.16,2.77
+2024-11-30,regular,York City,Maidenhead,6,2,1.33,5.49,7.53
+2024-11-30,regular,Woking,Yeovil,0,2,2.69,2.99,2.77
+2024-11-27,regular,Yeovil,Barnet,1,2,3.92,3.69,1.84
+2024-11-27,regular,Ebbsfleet,Eastleigh,0,1,2.92,3.36,2.33
+2024-11-27,regular,Forest Green,FC Halifax,1,1,1.56,3.92,5.77
+2024-11-26,regular,Hartlepool,AFC Fylde,2,0,1.58,4.17,5.10
+2024-11-26,regular,Dag & Red,Aldershot,3,2,1.96,3.64,3.52
+2024-11-26,regular,Altrincham,York City,3,0,2.98,3.46,2.26
+2024-11-26,regular,Oldham,Boston Utd,4,0,1.41,4.44,7.18
+2024-11-26,regular,Braintree,Maidenhead,1,3,1.77,3.46,4.63
+2024-11-26,regular,Gateshead,Rochdale,0,1,2.26,3.40,3.02
+2024-11-26,regular,Sutton,Solihull Moors,1,0,2.33,3.48,2.82
+2024-11-26,regular,Woking,Southend,0,0,3.21,3.22,2.25
+2024-11-23,regular,Aldershot,Altrincham,2,1,3.07,3.63,2.15
+2024-11-23,regular,Barnet,Woking,2,0,1.34,5.01,8.05
+2024-11-23,regular,Boston Utd,Braintree,3,1,2.41,3.20,2.93
+2024-11-23,regular,Tamworth,Dag & Red,2,1,2.65,3.42,2.50
+2024-11-23,regular,Eastleigh,Wealdstone,1,1,2.48,3.44,2.69
+2024-11-23,regular,Southend,Forest Green,2,2,3.48,3.43,2.05
+2024-11-23,regular,Maidenhead,Gateshead,0,5,3.56,3.64,1.95
+2024-11-23,regular,Solihull Moors,Hartlepool,3,4,1.87,3.81,3.67
+2024-11-23,regular,York City,Yeovil,4,0,1.70,3.79,4.57
+2024-11-16,regular,Forest Green,York City,2,0,2.38,3.45,2.81
+2024-11-16,regular,Braintree,AFC Fylde,1,0,2.06,3.51,3.40
+2024-11-16,regular,Gateshead,Aldershot,2,2,1.47,4.58,5.97
+2024-11-16,regular,Altrincham,Southend,2,0,2.69,3.38,2.50
+2024-11-16,regular,Dag & Red,Barnet,3,4,3.00,3.66,2.17
+2024-11-16,regular,Hartlepool,Eastleigh,0,0,1.62,4.16,4.85
+2024-11-16,regular,Ebbsfleet,Solihull Moors,0,6,5.15,4.17,1.58
+2024-11-16,regular,Sutton,Maidenhead,1,0,1.86,3.71,3.84
+2024-11-16,regular,Oldham,Tamworth,4,0,1.46,4.51,6.20
+2024-11-16,regular,Woking,Boston Utd,1,0,2.03,3.57,3.40
+2024-11-16,regular,Yeovil,FC Halifax,0,1,2.34,3.16,3.12
+2024-11-16,regular,Wealdstone,Rochdale,2,0,3.13,3.69,2.11
+2024-11-09,regular,Barnet,Oldham,0,0,1.92,3.75,3.58
+2024-11-09,regular,AFC Fylde,Gateshead,3,0,4.04,3.79,1.80
+2024-11-09,regular,Solihull Moors,Altrincham,3,3,2.18,3.48,3.13
+2024-11-09,regular,Boston Utd,Dag & Red,1,1,3.27,3.68,2.05
+2024-11-09,regular,Eastleigh,Braintree,1,2,1.88,3.61,3.93
+2024-11-09,regular,Tamworth,Ebbsfleet,1,1,1.76,3.82,4.27
+2024-11-09,regular,Maidenhead,Forest Green,1,4,3.08,3.53,2.18
+2024-11-09,regular,FC Halifax,Woking,1,0,1.94,3.41,3.93
+2024-11-09,regular,Rochdale,Sutton,2,1,2.09,3.50,3.31
+2024-11-09,regular,Southend,Yeovil,0,1,1.62,3.78,5.37
+2024-11-09,regular,Aldershot,Wealdstone,0,2,2.09,3.61,3.22
+2024-11-09,regular,York City,Hartlepool,5,3,1.66,3.96,4.73
+2024-10-26,regular,AFC Fylde,Altrincham,0,5,3.21,3.75,2.06
+2024-10-26,regular,Hartlepool,Aldershot,2,0,2.05,3.57,3.45
+2024-10-26,regular,Barnet,Rochdale,2,1,1.69,3.93,4.60
+2024-10-26,regular,Eastleigh,Boston Utd,1,1,1.75,3.93,4.29
+2024-10-26,regular,Braintree,Sutton,0,1,2.24,3.49,3.03
+2024-10-26,regular,Oldham,Dag & Red,1,0,1.91,3.56,3.89
+2024-10-26,regular,Ebbsfleet,Wealdstone,2,2,2.65,3.53,2.47
+2024-10-26,regular,Woking,Forest Green,1,1,4.36,3.66,1.79
+2024-10-26,regular,Gateshead,Solihull Moors,1,0,1.98,3.75,3.41
+2024-10-26,regular,FC Halifax,York City,1,2,3.92,3.36,1.96
+2024-10-26,regular,Yeovil,Maidenhead,3,1,2.24,3.39,3.09
+2024-10-26,regular,Southend,Tamworth,2,0,1.50,4.07,6.65
+2024-10-23,regular,Boston Utd,AFC Fylde,1,2,2.45,3.51,2.69
+2024-10-23,regular,Aldershot,Southend,0,0,3.01,3.24,2.35
+2024-10-23,regular,Altrincham,Hartlepool,1,1,2.11,3.59,3.21
+2024-10-23,regular,Wealdstone,Braintree,3,2,2.41,3.44,2.80
+2024-10-23,regular,Sutton,Gateshead,0,1,2.76,3.69,2.32
+2024-10-23,regular,Solihull Moors,Woking,2,1,1.80,3.64,4.23
+2024-10-22,regular,York City,Barnet,3,1,2.57,3.51,2.57
+2024-10-22,regular,Dag & Red,Eastleigh,2,2,1.82,3.79,4.03
+2024-10-22,regular,Forest Green,Ebbsfleet,3,1,1.32,5.15,9.05
+2024-10-22,regular,Rochdale,FC Halifax,2,1,1.90,3.55,3.91
+2024-10-22,regular,Maidenhead,Oldham,2,2,3.08,3.50,2.20
+2024-10-22,regular,Tamworth,Yeovil,0,0,2.56,3.38,2.65
+2024-10-19,regular,Rochdale,Southend,0,1,2.17,3.46,3.14
+2024-10-19,regular,Dag & Red,AFC Fylde,4,0,1.47,4.52,6.13
+2024-10-19,regular,Aldershot,Eastleigh,2,1,2.30,3.71,2.78
+2024-10-19,regular,Altrincham,Gateshead,2,2,2.70,3.63,2.40
+2024-10-19,regular,Solihull Moors,Barnet,4,3,4.13,3.88,1.77
+2024-10-19,regular,Boston Utd,FC Halifax,0,1,3.29,3.47,2.13
+2024-10-19,regular,Forest Green,Braintree,2,1,1.53,4.10,6.03
+2024-10-19,regular,Maidenhead,Hartlepool,1,1,2.35,3.48,2.86
+2024-10-19,regular,Sutton,Oldham,1,3,2.53,3.47,2.63
+2024-10-19,regular,Tamworth,Woking,3,2,1.94,3.67,3.60
+2024-10-19,regular,Wealdstone,Yeovil,0,3,2.19,3.52,3.10
+2024-10-19,regular,York City,Ebbsfleet,4,0,1.31,5.00,9.68
+2024-10-08,regular,Tamworth,Gateshead,2,1,3.48,3.62,1.96
+2024-10-05,regular,Woking,York City,1,1,4.02,3.44,1.89
+2024-10-05,regular,AFC Fylde,Aldershot,5,2,2.61,3.63,2.43
+2024-10-05,regular,Braintree,Altrincham,2,0,3.34,3.33,2.12
+2024-10-05,regular,Barnet,Boston Utd,3,1,1.24,6.26,9.71
+2024-10-05,regular,Yeovil,Dag & Red,1,0,3.22,3.41,2.14
+2024-10-05,regular,Eastleigh,Forest Green,1,3,3.19,3.54,2.12
+2024-10-05,regular,Ebbsfleet,Rochdale,2,2,3.66,3.70,1.90
+2024-10-05,regular,Gateshead,Wealdstone,1,0,1.37,5.06,7.04
+2024-10-05,regular,FC Halifax,Tamworth,3,2,2.02,3.34,3.62
+2024-10-05,regular,Hartlepool,Sutton,4,3,2.66,3.20,2.64
+2024-10-05,regular,Southend,Maidenhead,0,2,1.73,3.79,4.50
+2024-10-05,regular,Oldham,Solihull Moors,2,3,1.89,3.57,3.84
+2024-09-28,regular,Ebbsfleet,Oldham,1,2,3.95,3.50,1.88
+2024-09-28,regular,Barnet,AFC Fylde,2,0,1.35,5.40,6.98
+2024-09-28,regular,Yeovil,Aldershot,1,1,2.18,3.42,3.14
+2024-09-28,regular,Tamworth,Altrincham,1,2,2.61,3.38,2.56
+2024-09-28,regular,Boston Utd,Maidenhead,1,2,2.36,3.38,2.86
+2024-09-28,regular,Rochdale,Braintree,1,0,1.45,4.33,6.68
+2024-09-28,regular,Dag & Red,Solihull Moors,1,1,1.92,3.49,3.78
+2024-09-28,regular,York City,Eastleigh,0,0,1.64,4.03,4.68
+2024-09-28,regular,Forest Green,Hartlepool,1,0,1.52,4.29,5.51
+2024-09-28,regular,Southend,Gateshead,1,3,2.95,3.26,2.35
+2024-09-28,regular,FC Halifax,Wealdstone,2,2,1.85,3.52,4.11
+2024-09-28,regular,Woking,Sutton,1,2,2.69,3.23,2.57
+2024-09-24,regular,AFC Fylde,Tamworth,1,2,2.22,3.50,3.01
+2024-09-24,regular,Aldershot,Barnet,0,1,4.23,4.10,1.69
+2024-09-24,regular,Altrincham,Dag & Red,2,1,2.57,3.44,2.56
+2024-09-24,regular,Gateshead,Boston Utd,2,0,1.38,4.88,6.98
+2024-09-24,regular,Braintree,FC Halifax,1,0,3.04,3.05,2.44
+2024-09-24,regular,Eastleigh,Woking,2,2,2.24,3.39,3.05
+2024-09-24,regular,Maidenhead,Ebbsfleet,2,1,2.28,3.39,2.96
+2024-09-24,regular,Oldham,Forest Green,1,0,2.58,3.21,2.70
+2024-09-24,regular,Hartlepool,Rochdale,0,3,2.80,3.37,2.41
+2024-09-24,regular,Solihull Moors,York City,0,3,3.13,3.43,2.18
+2024-09-24,regular,Wealdstone,Southend,1,1,3.36,3.49,2.07
+2024-09-24,regular,Sutton,Yeovil,0,0,2.04,3.53,3.39
+2024-09-21,regular,Wealdstone,Barnet,0,3,4.67,4.10,1.63
+2024-09-21,regular,AFC Fylde,Woking,1,1,2.44,3.58,2.64
+2024-09-21,regular,Aldershot,York City,0,0,3.51,3.64,1.95
+2024-09-21,regular,Altrincham,Boston Utd,2,2,1.78,3.98,3.94
+2024-09-21,regular,Braintree,Tamworth,0,1,2.24,3.29,3.14
+2024-09-21,regular,Hartlepool,Dag & Red,0,1,2.39,3.49,2.74
+2024-09-21,regular,Eastleigh,Rochdale,4,2,2.78,3.57,2.34
+2024-09-21,regular,Sutton,Ebbsfleet,3,2,1.67,4.05,4.52
+2024-09-21,regular,Gateshead,Forest Green,0,2,2.27,3.62,2.84
+2024-09-21,regular,Maidenhead,FC Halifax,0,1,3.28,3.29,2.19
+2024-09-21,regular,Oldham,Yeovil,1,0,1.86,3.64,3.91
+2024-09-21,regular,Solihull Moors,Southend,2,4,2.35,3.47,2.82
+2024-09-17,regular,AFC Fylde,Southend,2,1,3.29,3.54,2.08
+2024-09-14,regular,Dag & Red,Gateshead,7,1,3.35,3.53,2.07
+2024-09-14,regular,York City,AFC Fylde,3,0,1.47,4.39,6.30
+2024-09-14,regular,Boston Utd,Aldershot,1,1,2.98,3.55,2.23
+2024-09-14,regular,Yeovil,Altrincham,0,0,2.24,3.48,3.03
+2024-09-14,regular,Barnet,Braintree,3,1,1.35,4.88,8.08
+2024-09-14,regular,FC Halifax,Eastleigh,3,1,2.14,3.43,3.22
+2024-09-14,regular,Ebbsfleet,Hartlepool,1,0,3.06,3.40,2.24
+2024-09-14,regular,Forest Green,Wealdstone,2,2,1.45,4.52,6.38
+2024-09-14,regular,Tamworth,Maidenhead,3,1,2.50,3.26,2.76
+2024-09-14,regular,Woking,Oldham,1,3,3.22,3.27,2.21
+2024-09-14,regular,Rochdale,Solihull Moors,1,2,1.96,3.60,3.56
+2024-09-14,regular,Southend,Sutton,1,3,1.88,3.62,3.80
+2024-09-10,regular,Forest Green,AFC Fylde,3,0,1.47,4.32,6.20
+2024-09-10,regular,Ebbsfleet,Aldershot,0,0,3.09,3.65,2.12
+2024-09-10,regular,Barnet,Altrincham,2,1,1.55,4.41,5.01
+2024-09-10,regular,Boston Utd,Hartlepool,1,2,3.35,3.35,2.11
+2024-09-10,regular,York City,Braintree,2,1,1.67,3.72,4.83
+2024-09-10,regular,Dag & Red,Sutton,3,0,2.63,3.27,2.61
+2024-09-10,regular,Southend,Eastleigh,2,0,1.87,3.59,3.89
+2024-09-10,regular,FC Halifax,Oldham,1,1,2.89,3.03,2.53
+2024-09-10,regular,Rochdale,Maidenhead,3,1,1.67,3.72,5.00
+2024-09-10,regular,Yeovil,Solihull Moors,0,1,2.22,3.29,3.16
+2024-09-10,regular,Woking,Wealdstone,1,0,1.96,3.34,3.81
+2024-09-07,regular,Aldershot,Rochdale,0,2,2.33,3.72,2.66
+2024-09-07,regular,AFC Fylde,Yeovil,3,4,2.45,3.59,2.61
+2024-09-07,regular,Altrincham,Ebbsfleet,4,0,1.92,3.67,3.66
+2024-09-07,regular,Gateshead,Barnet,2,0,2.55,3.72,2.45
+2024-09-07,regular,Sutton,Boston Utd,0,3,1.45,4.37,6.41
+2024-09-07,regular,Braintree,Woking,0,0,2.87,3.24,2.43
+2024-09-07,regular,Maidenhead,Dag & Red,1,1,2.22,3.72,2.86
+2024-09-07,regular,Eastleigh,Tamworth,1,0,1.67,3.90,4.72
+2024-09-07,regular,Solihull Moors,Forest Green,0,1,3.56,3.62,1.96
+2024-09-07,regular,Hartlepool,FC Halifax,0,0,2.20,3.52,3.04
+2024-09-07,regular,Oldham,Southend,1,1,2.12,3.53,3.18
+2024-09-07,regular,Wealdstone,York City,0,2,3.15,3.68,2.09
+2024-08-31,regular,Sutton,Forest Green,1,2,2.37,3.48,2.76
+2024-08-31,regular,Aldershot,Maidenhead,4,3,2.20,3.61,2.92
+2024-08-31,regular,Altrincham,Oldham,1,1,3.07,3.45,2.18
+2024-08-31,regular,Barnet,Tamworth,7,0,1.36,5.11,7.12
+2024-08-31,regular,Boston Utd,Yeovil,1,3,3.08,3.28,2.25
+2024-08-31,regular,Hartlepool,Braintree,0,0,1.87,3.62,3.81
+2024-08-31,regular,Dag & Red,York City,0,2,2.59,3.28,2.62
+2024-08-31,regular,Gateshead,Eastleigh,2,1,1.60,4.06,4.91
+2024-08-31,regular,Ebbsfleet,FC Halifax,0,1,2.66,3.20,2.61
+2024-08-31,regular,Rochdale,Woking,3,0,2.11,3.36,3.31
+2024-08-31,regular,Solihull Moors,Wealdstone,1,1,2.07,3.72,3.12
+2024-08-26,regular,Braintree,Ebbsfleet,0,0,2.10,3.52,3.17
+2024-08-26,regular,Eastleigh,Sutton,1,1,2.46,3.40,2.69
+2024-08-26,regular,FC Halifax,Solihull Moors,0,1,2.47,3.37,2.68
+2024-08-26,regular,Wealdstone,AFC Fylde,1,0,1.95,3.69,3.44
+2024-08-26,regular,Tamworth,Aldershot,3,2,2.85,3.52,2.28
+2024-08-26,regular,Forest Green,Altrincham,2,1,1.88,3.67,3.73
+2024-08-26,regular,Maidenhead,Barnet,3,1,3.89,3.86,1.79
+2024-08-26,regular,York City,Boston Utd,0,2,1.40,4.47,7.32
+2024-08-26,regular,Southend,Dag & Red,2,2,1.78,3.58,4.32
+2024-08-26,regular,Oldham,Gateshead,1,1,2.58,3.49,2.51
+2024-08-26,regular,Woking,Hartlepool,3,2,2.58,3.25,2.65
+2024-08-26,regular,Yeovil,Rochdale,0,1,2.47,3.15,2.83
+2024-08-24,regular,AFC Fylde,Maidenhead,0,0,1.94,3.62,3.55
+2024-08-24,regular,Aldershot,Oldham,4,1,2.57,3.47,2.52
+2024-08-24,regular,Altrincham,Eastleigh,0,1,2.03,3.66,3.26
+2024-08-24,regular,Barnet,Southend,2,1,1.99,3.44,3.56
+2024-08-24,regular,Boston Utd,Tamworth,1,1,2.96,3.17,2.40
+2024-08-24,regular,Solihull Moors,Braintree,1,1,1.83,3.55,4.08
+2024-08-24,regular,Ebbsfleet,Woking,0,3,2.39,3.34,2.81
+2024-08-24,regular,Rochdale,Forest Green,0,0,2.33,3.55,2.75
+2024-08-24,regular,Hartlepool,Wealdstone,1,1,1.77,3.74,4.15
+2024-08-24,regular,Sutton,York City,2,2,2.43,3.35,2.76
+2024-08-24,regular,Gateshead,Yeovil,3,1,1.58,4.04,5.07
+2024-08-23,regular,Dag & Red,FC Halifax,1,1,2.27,3.26,3.07
+2024-08-20,regular,Oldham,AFC Fylde,1,1,1.89,3.65,3.68
+2024-08-20,regular,Braintree,Aldershot,2,1,3.32,3.43,2.08
+2024-08-20,regular,Maidenhead,Altrincham,0,1,2.53,3.33,2.65
+2024-08-20,regular,Barnet,Forest Green,1,0,1.86,3.78,3.69
+2024-08-20,regular,Southend,Boston Utd,2,0,1.32,4.81,8.46
+2024-08-20,regular,Woking,Dag & Red,1,0,2.49,3.23,2.76
+2024-08-20,regular,Eastleigh,Solihull Moors,2,1,2.62,3.47,2.47
+2024-08-20,regular,Yeovil,Ebbsfleet,3,2,1.82,3.47,4.23
+2024-08-20,regular,FC Halifax,Gateshead,1,1,3.18,3.40,2.14
+2024-08-20,regular,Tamworth,Hartlepool,0,1,2.76,3.36,2.42
+2024-08-20,regular,York City,Rochdale,1,0,2.38,3.30,2.87
+2024-08-20,regular,Wealdstone,Sutton,0,1,2.78,3.40,2.39
+2024-08-17,regular,Eastleigh,AFC Fylde,4,2,2.34,3.44,2.88
+2024-08-17,regular,FC Halifax,Aldershot,0,1,2.22,3.40,3.09
+2024-08-17,regular,Sutton,Altrincham,5,0,2.20,3.53,2.99
+2024-08-17,regular,Ebbsfleet,Barnet,1,2,3.57,3.64,1.95
+2024-08-17,regular,Boston Utd,Forest Green,0,4,3.87,3.49,1.91
+2024-08-17,regular,Braintree,Yeovil,0,1,2.78,3.08,2.60
+2024-08-17,regular,Rochdale,Dag & Red,1,1,2.06,3.43,3.41
+2024-08-17,regular,Woking,Gateshead,0,2,3.61,3.60,1.94
+2024-08-17,regular,Hartlepool,Southend,0,0,2.83,3.25,2.46
+2024-08-17,regular,Solihull Moors,Maidenhead,2,1,1.73,3.69,4.53
+2024-08-17,regular,Wealdstone,Oldham,0,1,2.76,3.23,2.53
+2024-08-17,regular,York City,Tamworth,2,0,1.98,3.39,3.71
+2024-08-10,regular,AFC Fylde,Solihull Moors,3,2,2.86,3.39,2.35
+2024-08-10,regular,Aldershot,Forest Green,3,3,2.44,3.41,2.73
+2024-08-10,regular,Altrincham,Woking,1,0,2.13,3.39,3.28
+2024-08-10,regular,Boston Utd,Rochdale,0,3,3.18,3.23,2.25
+2024-08-10,regular,Dag & Red,Wealdstone,2,1,1.90,3.50,3.88
+2024-08-10,regular,FC Halifax,Barnet,2,1,3.76,3.63,1.92
+2024-08-10,regular,Oldham,Braintree,3,0,1.80,3.41,4.55
+2024-08-10,regular,Maidenhead,Eastleigh,0,2,2.15,3.44,3.20
+2024-08-10,regular,Gateshead,Ebbsfleet,5,1,1.86,3.59,3.96
+2024-08-10,regular,Yeovil,Hartlepool,0,1,2.44,3.35,2.78
+2024-08-10,regular,Southend,York City,1,1,1.80,3.51,4.38
+2024-08-10,regular,Tamworth,Sutton,1,1,3.07,3.39,2.23

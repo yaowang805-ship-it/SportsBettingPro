@@ -1,0 +1,198 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-05-24,regular,Trencin,Z. Moravce-Vrable,4,2,1.50,4.16,6.12
+2025-05-23,play_off,Dun. Streda,Podbrezova,3,2,1.47,4.34,6.21
+2025-05-20,regular,Z. Moravce-Vrable,Trencin,1,1,1.85,3.59,3.95
+2025-05-20,play_off,Dun. Streda,Michalovce,2,1,1.45,4.46,6.46
+2025-05-20,play_off,Kosice,Podbrezova,2,3,2.08,3.38,3.44
+2025-05-17,regular,Zilina,Dun. Streda,0,1,1.96,3.64,3.49
+2025-05-17,regular,Slovan Bratislava,Kosice,1,0,1.13,8.36,14.59
+2025-05-17,regular,Trnava,Podbrezova,2,1,1.14,7.36,17.19
+2025-05-17,regular,Banska Bystrica,Michalovce,2,3,2.73,3.71,2.29
+2025-05-17,regular,Komarno,Ruzomberok,1,2,5.23,3.89,1.61
+2025-05-17,regular,Trencin,Skalica,2,0,1.70,3.74,4.65
+2025-05-11,regular,Dun. Streda,Trnava,1,0,1.95,3.35,3.83
+2025-05-11,regular,Michalovce,Komarno,4,5,1.61,3.92,5.06
+2025-05-10,regular,Kosice,Zilina,3,2,2.79,3.72,2.27
+2025-05-10,regular,Podbrezova,Slovan Bratislava,1,3,3.20,3.80,2.03
+2025-05-10,regular,Skalica,Banska Bystrica,3,1,1.59,3.79,5.66
+2025-05-10,regular,Ruzomberok,Trencin,1,0,1.78,3.69,4.20
+2025-05-04,regular,Trnava,Kosice,0,1,2.02,3.56,3.43
+2025-05-04,regular,Banska Bystrica,Ruzomberok,0,2,2.61,3.30,2.61
+2025-05-03,regular,Slovan Bratislava,Zilina,4,3,1.50,4.53,5.52
+2025-05-03,regular,Podbrezova,Dun. Streda,2,0,3.06,3.49,2.20
+2025-05-03,regular,Komarno,Trencin,0,0,2.85,3.34,2.39
+2025-05-03,regular,Michalovce,Skalica,2,4,2.21,3.24,3.26
+2025-04-27,regular,Zilina,Trnava,2,1,2.01,3.51,3.44
+2025-04-27,regular,Skalica,Komarno,0,1,1.86,3.25,4.49
+2025-04-26,regular,Dun. Streda,Slovan Bratislava,2,1,3.06,3.64,2.14
+2025-04-26,regular,Kosice,Podbrezova,1,1,1.98,3.64,3.46
+2025-04-26,regular,Ruzomberok,Michalovce,1,0,1.93,3.51,3.80
+2025-04-25,regular,Trencin,Banska Bystrica,2,2,1.88,3.53,3.97
+2025-04-23,regular,Zilina,Kosice,0,0,1.98,3.74,3.38
+2025-04-20,regular,Dun. Streda,Kosice,3,2,1.77,3.86,4.14
+2025-04-20,regular,Banska Bystrica,Komarno,0,1,2.15,3.08,3.62
+2025-04-19,regular,Trnava,Slovan Bratislava,2,3,4.21,3.83,1.76
+2025-04-19,regular,Podbrezova,Zilina,1,1,2.39,3.38,2.84
+2025-04-19,regular,Michalovce,Trencin,3,2,2.02,3.54,3.45
+2025-04-19,regular,Skalica,Ruzomberok,1,0,2.22,3.21,3.30
+2025-04-13,regular,Komarno,Skalica,1,1,2.61,2.90,2.92
+2025-04-12,regular,Slovan Bratislava,Dun. Streda,2,2,1.60,4.27,4.65
+2025-04-12,regular,Podbrezova,Trnava,1,2,2.96,3.31,2.31
+2025-04-12,regular,Michalovce,Banska Bystrica,3,3,1.75,3.59,4.50
+2025-04-12,regular,Trencin,Ruzomberok,2,2,2.17,3.42,3.13
+2025-04-06,regular,Kosice,Trnava,2,1,2.90,3.33,2.37
+2025-04-06,regular,Ruzomberok,Banska Bystrica,1,2,1.81,3.52,4.29
+2025-04-05,regular,Zilina,Slovan Bratislava,0,5,3.18,3.55,2.12
+2025-04-05,regular,Dun. Streda,Podbrezova,1,1,1.59,3.92,5.36
+2025-04-05,regular,Trencin,Komarno,1,0,1.89,3.45,4.03
+2025-04-05,regular,Skalica,Michalovce,1,0,2.06,3.29,3.59
+2025-03-30,regular,Trnava,Zilina,2,4,1.84,3.56,4.13
+2025-03-30,regular,Komarno,Michalovce,0,1,2.21,3.23,3.28
+2025-03-29,regular,Kosice,Dun. Streda,2,2,2.73,3.29,2.52
+2025-03-29,regular,Slovan Bratislava,Podbrezova,3,1,1.41,4.75,6.82
+2025-03-29,regular,Banska Bystrica,Trencin,2,3,2.38,3.20,2.98
+2025-03-29,regular,Ruzomberok,Skalica,3,2,2.19,3.19,3.36
+2025-03-16,regular,Podbrezova,Kosice,0,1,2.31,3.29,2.98
+2025-03-16,regular,Slovan Bratislava,Trnava,1,1,1.63,3.80,5.20
+2025-03-16,regular,Komarno,Banska Bystrica,2,1,1.95,3.28,3.96
+2025-03-15,regular,Dun. Streda,Zilina,3,1,2.06,3.34,3.51
+2025-03-15,regular,Michalovce,Ruzomberok,2,1,2.15,3.30,3.32
+2025-03-15,regular,Skalica,Trencin,1,0,2.16,3.16,3.39
+2025-03-09,regular,Kosice,Slovan Bratislava,2,3,4.00,3.81,1.78
+2025-03-09,regular,Trencin,Michalovce,3,2,2.11,3.47,3.27
+2025-03-08,regular,Trnava,Dun. Streda,1,1,2.19,3.21,3.35
+2025-03-08,regular,Zilina,Podbrezova,0,0,1.74,3.67,4.54
+2025-03-08,regular,Banska Bystrica,Skalica,0,2,2.23,3.02,3.48
+2025-03-08,regular,Ruzomberok,Komarno,0,1,1.83,3.56,4.18
+2025-03-01,regular,Banska Bystrica,Zilina,1,2,4.38,3.71,1.75
+2025-03-01,regular,Dun. Streda,Ruzomberok,3,0,1.42,4.70,6.70
+2025-03-01,regular,Kosice,Michalovce,3,2,1.81,3.55,4.27
+2025-03-01,regular,Podbrezova,Komarno,2,2,1.61,3.97,5.09
+2025-03-01,regular,Skalica,Trencin,0,0,1.96,3.39,3.80
+2025-03-01,regular,Slovan Bratislava,Trnava,0,1,1.70,3.88,4.50
+2025-02-25,regular,Komarno,Zilina,1,0,4.21,3.69,1.79
+2025-02-23,regular,Michalovce,Banska Bystrica,1,0,1.68,3.73,4.86
+2025-02-23,regular,Trnava,Podbrezova,1,1,1.61,3.83,5.34
+2025-02-22,regular,Zilina,Dun. Streda,1,1,2.46,3.43,2.69
+2025-02-22,regular,Ruzomberok,Kosice,2,1,2.92,3.33,2.35
+2025-02-22,regular,Komarno,Skalica,0,0,2.55,3.36,2.66
+2025-02-22,regular,Trencin,Slovan Bratislava,1,1,8.29,5.85,1.29
+2025-02-16,regular,Trnava,Dun. Streda,1,1,2.03,3.25,3.74
+2025-02-16,regular,Skalica,Ruzomberok,1,0,2.21,3.40,3.11
+2025-02-15,regular,Slovan Bratislava,Michalovce,1,1,1.15,8.12,13.13
+2025-02-15,regular,Kosice,Banska Bystrica,4,0,1.65,3.69,5.23
+2025-02-15,regular,Podbrezova,Trencin,2,1,1.69,3.77,4.77
+2025-02-09,regular,Trencin,Komarno,1,0,2.03,3.38,3.65
+2025-02-09,regular,Ruzomberok,Slovan Bratislava,1,5,4.53,4.22,1.64
+2025-02-08,regular,Zilina,Kosice,0,2,1.53,4.06,5.96
+2025-02-08,regular,Banska Bystrica,Trnava,1,4,5.05,3.43,1.73
+2025-02-08,regular,Dun. Streda,Skalica,3,1,1.49,4.21,6.20
+2025-02-08,regular,Michalovce,Podbrezova,2,2,2.37,3.39,2.88
+2024-12-15,regular,Komarno,Banska Bystrica,3,0,2.58,3.36,2.63
+2024-12-15,regular,Skalica,Zilina,0,0,3.97,3.80,1.83
+2024-12-14,regular,Slovan Bratislava,Dun. Streda,2,1,1.67,3.79,4.86
+2024-12-14,regular,Trnava,Kosice,1,0,1.43,4.32,7.35
+2024-12-14,regular,Trencin,Michalovce,0,0,2.20,3.48,3.08
+2024-12-14,regular,Podbrezova,Ruzomberok,2,0,1.85,3.58,4.01
+2024-12-08,regular,Dun. Streda,Trencin,3,3,1.39,4.58,7.70
+2024-12-08,regular,Kosice,Skalica,1,1,1.96,3.42,3.74
+2024-12-07,regular,Zilina,Slovan Bratislava,2,1,2.70,3.57,2.40
+2024-12-07,regular,Banska Bystrica,Podbrezova,0,2,2.53,3.27,2.74
+2024-12-07,regular,Ruzomberok,Trnava,0,2,3.20,3.41,2.16
+2024-12-07,regular,Michalovce,Komarno,0,0,1.57,4.06,5.44
+2024-12-04,regular,Slovan Bratislava,Komarno,6,0,1.20,7.10,11.32
+2024-12-01,regular,Slovan Bratislava,Banska Bystrica,3,1,1.35,5.00,7.99
+2024-12-01,regular,Komarno,Kosice,1,1,2.60,3.31,2.64
+2024-11-30,regular,Podbrezova,Dun. Streda,0,0,2.89,3.28,2.41
+2024-11-30,regular,Michalovce,Ruzomberok,4,2,1.96,3.56,3.63
+2024-11-30,regular,Trnava,Skalica,2,0,1.51,4.41,5.57
+2024-11-30,regular,Trencin,Zilina,2,4,3.94,3.81,1.81
+2024-11-24,regular,Ruzomberok,Komarno,1,3,1.58,4.03,5.36
+2024-11-23,regular,Zilina,Trnava,3,1,2.05,3.40,3.53
+2024-11-23,regular,Banska Bystrica,Trencin,6,1,1.75,3.72,4.37
+2024-11-23,regular,Dun. Streda,Michalovce,0,1,1.46,4.18,6.90
+2024-11-23,regular,Skalica,Podbrezova,1,2,2.44,3.30,2.83
+2024-11-22,regular,Kosice,Slovan Bratislava,1,1,4.27,3.66,1.79
+2024-11-10,regular,Dun. Streda,Banska Bystrica,0,0,1.45,4.42,6.46
+2024-11-10,regular,Podbrezova,Kosice,0,0,1.85,3.62,3.96
+2024-11-09,regular,Komarno,Trnava,1,2,5.23,4.03,1.60
+2024-11-09,regular,Michalovce,Zilina,1,1,3.88,3.67,1.86
+2024-11-09,regular,Trencin,Ruzomberok,0,0,2.25,3.52,2.96
+2024-11-09,regular,Slovan Bratislava,Skalica,3,1,1.30,5.60,8.47
+2024-11-03,regular,Skalica,Banska Bystrica,1,0,2.13,3.43,3.26
+2024-11-03,regular,Ruzomberok,Zilina,1,0,3.60,3.38,2.04
+2024-11-02,regular,Podbrezova,Slovan Bratislava,1,3,3.51,3.88,1.92
+2024-11-02,regular,Komarno,Dun. Streda,0,1,4.69,3.73,1.71
+2024-11-02,regular,Kosice,Trencin,0,0,1.86,3.68,3.90
+2024-11-02,regular,Trnava,Michalovce,3,1,1.42,4.44,7.37
+2024-10-30,regular,Trnava,Komarno,3,2,1.37,4.90,7.62
+2024-10-30,regular,Skalica,Slovan Bratislava,2,3,6.23,5.00,1.43
+2024-10-29,regular,Dun. Streda,Podbrezova,3,0,1.67,3.92,4.92
+2024-10-29,regular,Zilina,Ruzomberok,3,1,1.43,4.66,6.93
+2024-10-27,regular,Michalovce,Skalica,2,1,2.23,3.36,3.23
+2024-10-27,regular,Trencin,Trnava,2,3,3.88,3.33,2.01
+2024-10-26,regular,Dun. Streda,Kosice,1,3,1.50,4.22,6.54
+2024-10-26,regular,Banska Bystrica,Ruzomberok,2,1,2.49,3.41,2.76
+2024-10-26,regular,Zilina,Podbrezova,2,2,1.41,4.67,7.28
+2024-10-20,regular,Zilina,Banska Bystrica,2,0,1.37,5.08,7.50
+2024-10-20,regular,Komarno,Podbrezova,1,2,2.98,3.69,2.22
+2024-10-19,regular,Trnava,Slovan Bratislava,0,1,2.74,3.33,2.49
+2024-10-19,regular,Ruzomberok,Dun. Streda,1,1,3.69,3.39,2.01
+2024-10-19,regular,Michalovce,Kosice,3,2,2.52,3.32,2.72
+2024-10-19,regular,Trencin,Skalica,2,1,2.21,3.49,3.06
+2024-10-06,regular,Banska Bystrica,Michalovce,1,0,1.90,3.56,3.90
+2024-10-06,regular,Dun. Streda,Zilina,0,3,2.26,3.31,3.11
+2024-10-05,regular,Slovan Bratislava,Trencin,1,1,1.30,5.66,8.49
+2024-10-05,regular,Kosice,Ruzomberok,2,1,2.35,3.24,3.00
+2024-10-05,regular,Skalica,Komarno,3,0,2.03,3.52,3.47
+2024-10-05,regular,Podbrezova,Trnava,0,4,2.74,3.26,2.54
+2024-09-29,regular,Zilina,Komarno,2,1,1.31,5.07,9.26
+2024-09-29,regular,Ruzomberok,Skalica,1,2,1.87,3.47,4.10
+2024-09-28,regular,Dun. Streda,Trnava,0,0,2.04,3.27,3.79
+2024-09-28,regular,Banska Bystrica,Kosice,2,3,2.38,3.46,2.79
+2024-09-28,regular,Trencin,Podbrezova,1,1,2.22,3.68,2.91
+2024-09-27,regular,Michalovce,Slovan Bratislava,2,4,5.87,4.45,1.49
+2024-09-24,regular,Komarno,Ruzomberok,1,2,2.78,3.33,2.47
+2024-09-22,regular,Podbrezova,Michalovce,4,1,1.65,4.07,4.61
+2024-09-22,regular,Trnava,Banska Bystrica,1,0,1.42,4.42,7.06
+2024-09-21,regular,Slovan Bratislava,Ruzomberok,2,1,1.38,4.75,7.56
+2024-09-21,regular,Skalica,Dun. Streda,1,3,4.39,3.60,1.76
+2024-09-21,regular,Kosice,Zilina,1,2,4.07,3.75,1.78
+2024-09-21,regular,Komarno,Trencin,2,1,2.69,3.45,2.42
+2024-09-17,regular,Trencin,Dun. Streda,0,3,3.54,3.46,2.03
+2024-09-15,regular,Kosice,Trnava,1,1,3.74,3.30,2.02
+2024-09-15,regular,Ruzomberok,Podbrezova,1,0,2.30,3.40,2.96
+2024-09-14,regular,Dun. Streda,Slovan Bratislava,1,2,2.96,3.30,2.36
+2024-09-14,regular,Banska Bystrica,Komarno,2,3,1.73,3.77,4.45
+2024-09-14,regular,Michalovce,Trencin,1,1,2.71,3.31,2.54
+2024-09-14,regular,Zilina,Skalica,3,2,1.31,5.29,8.55
+2024-09-01,regular,Trnava,Ruzomberok,2,2,1.48,4.05,6.84
+2024-09-01,regular,Slovan Bratislava,Zilina,0,5,1.80,3.98,3.86
+2024-08-31,regular,Podbrezova,Banska Bystrica,1,1,1.89,3.85,3.60
+2024-08-31,regular,Skalica,Kosice,0,0,2.65,3.37,2.55
+2024-08-31,regular,Komarno,Michalovce,1,3,1.99,3.48,3.62
+2024-08-25,regular,Banska Bystrica,Slovan Bratislava,0,2,3.69,3.81,1.87
+2024-08-25,regular,Ruzomberok,Michalovce,2,2,1.94,3.54,3.77
+2024-08-24,regular,Zilina,Trencin,4,1,1.72,3.86,4.47
+2024-08-24,regular,Kosice,Komarno,0,1,1.62,3.89,5.18
+2024-08-24,regular,Skalica,Trnava,1,2,4.16,3.42,1.88
+2024-08-18,regular,Trnava,Zilina,0,0,2.43,3.20,2.93
+2024-08-17,regular,Trencin,Banska Bystrica,2,2,1.76,3.68,4.41
+2024-08-17,regular,Michalovce,Dun. Streda,0,3,4.24,3.53,1.83
+2024-08-17,regular,Slovan Bratislava,Kosice,2,1,1.45,4.54,6.35
+2024-08-17,regular,Podbrezova,Skalica,7,1,1.94,3.58,3.70
+2024-08-11,regular,Banska Bystrica,Dun. Streda,1,0,3.31,3.61,2.08
+2024-08-11,regular,Ruzomberok,Trencin,1,0,3.11,3.36,2.23
+2024-08-10,regular,Kosice,Podbrezova,3,0,2.28,3.40,3.01
+2024-08-10,regular,Zilina,Michalovce,3,1,1.37,4.90,7.48
+2024-08-04,regular,Dun. Streda,Komarno,2,0,1.39,4.90,6.91
+2024-08-04,regular,Michalovce,Trnava,0,0,4.77,3.59,1.73
+2024-08-03,regular,Slovan Bratislava,Podbrezova,1,0,1.27,6.04,8.48
+2024-08-03,regular,Trencin,Kosice,2,0,1.85,3.59,4.02
+2024-08-03,regular,Banska Bystrica,Skalica,1,1,2.10,3.38,3.37
+2024-07-28,regular,Ruzomberok,Banska Bystrica,1,1,2.31,3.38,2.97
+2024-07-28,regular,Kosice,Dun. Streda,2,2,3.66,3.39,2.00
+2024-07-28,regular,Trnava,Trencin,0,0,1.74,3.59,4.72
+2024-07-27,regular,Komarno,Slovan Bratislava,1,4,4.51,3.81,1.71
+2024-07-27,regular,Skalica,Michalovce,0,0,1.96,3.39,3.84
+2024-07-27,regular,Podbrezova,Zilina,0,0,3.17,3.74,2.07

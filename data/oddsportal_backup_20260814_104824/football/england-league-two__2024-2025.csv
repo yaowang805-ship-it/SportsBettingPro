@@ -1,0 +1,151 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-05-26,play_off,AFC Wimbledon,Walsall,1,0,2.73,2.84,2.89
+2025-05-17,play_off,AFC Wimbledon,Notts County,1,0,2.33,3.10,3.15
+2025-05-16,play_off,Walsall,Chesterfield,2,1,2.55,3.35,2.67
+2025-05-11,play_off,Chesterfield,Walsall,0,2,2.13,3.19,3.53
+2025-05-10,play_off,Notts County,AFC Wimbledon,0,1,2.23,3.07,3.47
+2025-05-03,regular,Accrington,Chesterfield,0,1,6.48,4.37,1.46
+2025-05-03,regular,Grimsby,AFC Wimbledon,0,1,2.64,2.97,2.84
+2025-05-03,regular,Colchester,Barrow,0,0,1.88,3.33,4.30
+2025-05-03,regular,Bradford City,Fleetwood,1,0,1.38,4.37,8.49
+2025-05-03,regular,Bromley,Cheltenham,3,0,2.14,3.79,2.99
+2025-05-03,regular,Carlisle,Salford,2,2,4.70,4.07,1.64
+2025-05-03,regular,Crewe,Walsall,0,1,5.95,4.22,1.50
+2025-05-03,regular,Notts County,Doncaster,1,2,2.77,3.64,2.32
+2025-05-03,regular,Port Vale,Gillingham,0,1,1.42,4.29,7.58
+2025-05-03,regular,Morecambe,Harrogate,1,2,2.73,3.52,2.40
+2025-05-03,regular,Swindon,MK Dons,0,0,1.77,3.84,4.16
+2025-05-03,regular,Newport,Tranmere,1,4,4.25,3.73,1.78
+2025-04-26,regular,Walsall,Accrington,0,1,1.61,3.69,5.67
+2025-04-26,regular,Barrow,Bromley,3,3,2.14,3.56,3.15
+2025-04-26,regular,Cheltenham,Carlisle,3,2,2.65,3.56,2.45
+2025-04-26,regular,Chesterfield,Morecambe,4,1,1.31,5.26,8.72
+2025-04-26,regular,Salford,Colchester,4,1,2.13,3.32,3.39
+2025-04-26,regular,Tranmere,Crewe,2,0,1.84,3.59,4.08
+2025-04-26,regular,Fleetwood,Newport,2,0,1.54,4.21,5.53
+2025-04-26,regular,Gillingham,Swindon,1,1,2.82,3.35,2.42
+2025-04-26,regular,MK Dons,Grimsby,0,0,3.13,3.55,2.15
+2025-04-26,regular,Harrogate,Notts County,1,3,4.67,3.99,1.67
+2025-04-26,regular,AFC Wimbledon,Port Vale,0,2,2.52,3.06,2.94
+2025-04-26,regular,Doncaster,Bradford City,2,1,2.18,3.37,3.21
+2025-04-21,regular,Accrington,Carlisle,1,1,2.32,3.31,3.02
+2025-04-21,regular,Gillingham,AFC Wimbledon,1,0,3.44,3.11,2.21
+2025-04-21,regular,Barrow,Tranmere,0,0,2.56,3.12,2.82
+2025-04-21,regular,Chesterfield,Bradford City,3,3,2.77,3.31,2.49
+2025-04-21,regular,Swindon,Bromley,0,1,1.81,3.79,3.99
+2025-04-21,regular,Notts County,Cheltenham,1,2,1.49,4.43,5.91
+2025-04-21,regular,Doncaster,Colchester,3,0,1.85,3.43,4.28
+2025-04-21,regular,Crewe,MK Dons,0,1,2.09,3.34,3.48
+2025-04-21,regular,Harrogate,Fleetwood,3,1,2.38,3.24,2.97
+2025-04-21,regular,Port Vale,Grimsby,2,2,2.04,3.17,3.83
+2025-04-21,regular,Morecambe,Salford,1,3,3.76,3.59,1.92
+2025-04-21,regular,Newport,Walsall,0,0,5.59,3.87,1.59
+2025-04-18,regular,Salford,Accrington,1,2,1.82,3.58,4.25
+2025-04-18,regular,AFC Wimbledon,Chesterfield,0,0,2.10,3.31,3.49
+2025-04-18,regular,Fleetwood,Barrow,0,0,2.61,3.15,2.73
+2025-04-18,regular,Bromley,Morecambe,1,0,1.79,3.71,4.21
+2025-04-18,regular,Carlisle,Port Vale,3,2,3.94,3.45,1.92
+2025-04-18,regular,Cheltenham,Gillingham,1,1,2.61,3.15,2.74
+2025-04-18,regular,Colchester,Crewe,0,0,1.95,3.30,4.00
+2025-04-18,regular,Tranmere,Doncaster,0,3,3.30,3.50,2.09
+2025-04-18,regular,Grimsby,Swindon,0,4,1.93,3.55,3.78
+2025-04-18,regular,Walsall,Harrogate,2,2,1.59,3.68,5.92
+2025-04-18,regular,MK Dons,Newport,0,0,1.55,4.05,5.74
+2025-04-17,regular,Bradford City,Notts County,1,1,2.12,3.28,3.48
+2025-04-15,regular,Salford,Doncaster,1,1,2.94,3.45,2.29
+2025-04-12,regular,Accrington,Tranmere,3,3,2.94,2.95,2.57
+2025-04-12,regular,Barrow,Walsall,2,0,3.26,3.22,2.22
+2025-04-12,regular,Port Vale,Bromley,5,0,1.70,3.61,4.93
+2025-04-12,regular,Morecambe,Carlisle,0,2,2.24,3.62,2.89
+2025-04-12,regular,Chesterfield,Fleetwood,3,0,2.01,3.41,3.62
+2025-04-12,regular,Newport,Colchester,0,2,5.05,3.63,1.68
+2025-04-12,regular,Gillingham,MK Dons,1,0,2.23,3.34,3.12
+2025-04-12,regular,Harrogate,Grimsby,2,2,3.95,3.38,1.92
+2025-04-12,regular,Doncaster,AFC Wimbledon,1,1,1.89,3.35,4.14
+2025-04-12,regular,Swindon,Bradford City,5,4,3.14,3.30,2.24
+2025-04-11,regular,Notts County,Salford,1,3,1.89,3.68,3.73
+2025-04-10,regular,Crewe,Cheltenham,2,3,1.66,3.66,5.20
+2025-04-08,regular,Chesterfield,Gillingham,1,1,1.92,3.45,3.85
+2025-04-05,regular,Bromley,Accrington,4,0,2.36,3.23,3.00
+2025-04-05,regular,AFC Wimbledon,Harrogate,1,0,1.61,3.56,5.96
+2025-04-05,regular,MK Dons,Barrow,0,3,2.35,3.33,2.93
+2025-04-05,regular,Bradford City,Crewe,2,0,1.80,3.28,4.80
+2025-04-05,regular,Carlisle,Newport,3,2,1.64,4.02,4.77
+2025-04-05,regular,Colchester,Notts County,1,0,2.80,3.16,2.53
+2025-04-05,regular,Fleetwood,Swindon,0,4,1.96,3.45,3.74
+2025-04-05,regular,Salford,Gillingham,2,2,2.15,3.18,3.47
+2025-04-05,regular,Grimsby,Morecambe,3,1,1.73,3.57,4.78
+2025-04-05,regular,Tranmere,Chesterfield,4,0,2.83,3.16,2.52
+2025-04-05,regular,Cheltenham,Doncaster,0,2,5.07,3.72,1.66
+2025-04-05,regular,Walsall,Port Vale,2,3,2.37,3.05,3.17
+2025-04-02,regular,Notts County,MK Dons,3,0,1.70,3.87,4.51
+2025-04-01,regular,Accrington,Fleetwood,1,4,2.77,3.01,2.66
+2025-04-01,regular,Swindon,AFC Wimbledon,2,1,3.31,3.29,2.16
+2025-04-01,regular,Barrow,Salford,1,1,2.65,3.10,2.69
+2025-04-01,regular,Port Vale,Bradford City,2,0,2.74,2.95,2.74
+2025-04-01,regular,Newport,Bromley,1,1,3.38,3.51,2.04
+2025-04-01,regular,Chesterfield,Carlisle,2,1,1.69,3.60,4.94
+2025-04-01,regular,Morecambe,Cheltenham,2,0,2.31,3.22,3.07
+2025-04-01,regular,Gillingham,Colchester,1,1,2.84,3.01,2.60
+2025-04-01,regular,Crewe,Grimsby,2,0,2.69,3.16,2.65
+2025-04-01,regular,Doncaster,Walsall,2,2,1.99,3.25,3.87
+2025-04-01,regular,Harrogate,Tranmere,3,2,2.80,2.98,2.66
+2025-03-29,regular,Walsall,AFC Wimbledon,1,1,2.41,3.01,3.12
+2025-03-29,regular,Barrow,Chesterfield,0,1,2.73,3.16,2.60
+2025-03-29,regular,Bromley,Salford,2,3,2.51,3.34,2.71
+2025-03-29,regular,Doncaster,Carlisle,3,0,1.52,4.10,5.95
+2025-03-29,regular,MK Dons,Fleetwood,2,4,2.13,3.29,3.38
+2025-03-29,regular,Harrogate,Gillingham,1,1,2.65,3.00,2.79
+2025-03-29,regular,Morecambe,Swindon,1,0,3.03,3.42,2.24
+2025-03-29,regular,Newport,Notts County,0,2,5.36,4.18,1.56
+2025-03-29,regular,Accrington,Bradford City,0,0,4.14,3.20,1.95
+2025-03-29,regular,Crewe,Port Vale,0,1,2.86,3.05,2.56
+2025-03-28,regular,Tranmere,Cheltenham,2,0,2.01,3.26,3.80
+2025-03-28,regular,Colchester,Grimsby,1,2,2.20,2.97,3.63
+2025-03-25,regular,Carlisle,MK Dons,2,2,2.38,3.41,2.81
+2025-03-25,regular,Port Vale,Barrow,0,1,1.92,3.21,4.23
+2025-03-22,regular,Swindon,Accrington,0,0,1.88,3.60,3.91
+2025-03-22,regular,AFC Wimbledon,Barrow,2,2,1.97,3.24,3.98
+2025-03-22,regular,Bradford City,Colchester,4,1,2.10,3.08,3.72
+2025-03-22,regular,Carlisle,Bromley,2,1,2.27,3.40,2.99
+2025-03-22,regular,Cheltenham,MK Dons,0,1,2.39,3.48,2.77
+2025-03-22,regular,Chesterfield,Harrogate,0,0,1.74,3.62,4.65
+2025-03-22,regular,Fleetwood,Tranmere,0,0,2.19,3.15,3.46
+2025-03-22,regular,Gillingham,Walsall,0,0,2.85,3.05,2.58
+2025-03-22,regular,Grimsby,Newport,1,0,1.42,4.50,7.05
+2025-03-22,regular,Port Vale,Morecambe,1,0,1.49,4.35,6.12
+2025-03-22,regular,Notts County,Crewe,0,0,1.93,3.57,3.69
+2025-03-15,regular,Accrington,Gillingham,1,1,2.48,2.83,3.21
+2025-03-15,regular,Carlisle,AFC Wimbledon,1,2,3.15,2.98,2.41
+2025-03-15,regular,Morecambe,Barrow,2,2,3.28,3.02,2.32
+2025-03-15,regular,Bradford City,Tranmere,0,1,1.59,3.55,6.38
+2025-03-15,regular,Notts County,Chesterfield,1,2,1.96,3.60,3.59
+2025-03-15,regular,Colchester,Fleetwood,3,0,2.11,2.97,3.90
+2025-03-15,regular,Grimsby,Salford,0,1,1.84,3.55,4.13
+2025-03-15,regular,Newport,Harrogate,3,0,2.90,3.07,2.50
+2025-03-15,regular,Port Vale,MK Dons,3,0,2.04,3.32,3.58
+2025-03-15,regular,Swindon,Cheltenham,3,3,1.90,3.52,3.88
+2025-03-15,regular,Crewe,Doncaster,1,1,3.32,3.29,2.16
+2025-03-13,regular,Bromley,Walsall,2,2,3.50,3.33,2.07
+2025-03-11,regular,Accrington,Newport,5,0,1.77,3.36,4.87
+2025-03-11,regular,AFC Wimbledon,Cheltenham,1,2,1.70,3.46,5.28
+2025-03-11,regular,Salford,Chesterfield,0,4,2.48,3.19,2.86
+2025-03-11,regular,Colchester,Port Vale,2,1,2.22,2.88,3.67
+2025-03-11,regular,Grimsby,Notts County,0,2,2.26,3.26,3.14
+2025-03-08,regular,Barrow,Accrington,2,0,2.04,3.16,3.83
+2025-03-08,regular,Gillingham,Bradford City,1,0,3.41,3.10,2.21
+2025-03-08,regular,Tranmere,Bromley,2,1,2.11,3.36,3.37
+2025-03-08,regular,Harrogate,Carlisle,1,0,2.81,3.00,2.63
+2025-03-08,regular,Cheltenham,Colchester,0,1,3.24,3.19,2.24
+2025-03-08,regular,Chesterfield,Newport,2,1,1.54,4.15,5.58
+2025-03-08,regular,Salford,Crewe,1,1,2.34,3.18,3.06
+2025-03-08,regular,Doncaster,Swindon,2,2,1.81,3.59,4.18
+2025-03-08,regular,Fleetwood,Port Vale,1,1,2.22,3.19,3.30
+2025-03-08,regular,MK Dons,Morecambe,2,1,1.82,3.61,4.18
+2025-03-08,regular,AFC Wimbledon,Notts County,2,0,2.42,3.14,2.96
+2025-03-08,regular,Walsall,Grimsby,1,3,1.88,3.55,3.95
+2025-03-04,regular,Accrington,MK Dons,2,0,2.54,3.31,2.69
+2025-03-04,regular,Bradford City,Cheltenham,3,0,1.66,3.56,5.42
+2025-03-04,regular,Bromley,Doncaster,1,0,3.70,3.45,1.97
+2025-03-04,regular,Carlisle,Walsall,1,1,3.28,3.25,2.19
+2025-03-04,regular,Colchester,Chesterfield,1,0,2.02,3.13,3.96

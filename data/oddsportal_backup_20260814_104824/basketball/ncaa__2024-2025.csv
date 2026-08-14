@@ -1,0 +1,3003 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-04-08,play_off,Houston,Florida,63,65,1.95,,1.87
+2025-04-06,play_off,Duke,Houston,67,70,1.40,,3.03
+2025-04-06,play_off,Auburn,Florida,73,79,2.25,,1.67
+2025-03-31,play_off,Auburn,Michigan State,70,64,1.42,,2.93
+2025-03-30,play_off,Houston,Tennessee,69,50,1.63,,2.35
+2025-03-30,play_off,Florida,Texas Tech,84,79,1.29,,3.78
+2025-03-29,play_off,Houston,Purdue,62,60,1.20,,4.75
+2025-03-29,play_off,Auburn,Michigan,78,65,1.24,,4.25
+2025-03-29,play_off,Tennessee,Kentucky,78,65,1.44,,2.85
+2025-03-29,play_off,Michigan State,Ole Miss,73,70,1.55,,2.52
+2025-03-28,play_off,Texas Tech,Arkansas,85,83,1.42,,2.93
+2025-03-28,play_off,Florida,Maryland,87,71,1.31,,3.60
+2025-03-24,play_off,Arizona,Oregon,87,83,1.49,,2.68
+2025-03-24,play_off,Michigan State,New Mexico,71,63,1.34,,3.35
+2025-03-24,play_off,Iowa State,Ole Miss,78,91,1.43,,2.90
+2025-03-24,play_off,Maryland,Colorado State,72,71,1.26,,4.00
+2025-03-24,play_off,Alabama,St. Marys (CA),80,66,1.42,,2.95
+2025-03-24,play_off,Kentucky,Illinois,84,75,2.23,,1.67
+2025-03-23,play_off,Duke,Baylor,89,66,1.10,,7.38
+2025-03-23,play_off,Florida,UConn,77,75,1.19,,4.83
+2025-03-23,play_off,Tennessee,UCLA,67,58,1.41,,2.98
+2025-03-23,play_off,Houston,Gonzaga,81,76,1.42,,2.93
+2025-03-23,play_off,Wisconsin,Brigham Young,89,91,1.83,,2.00
+2025-03-23,play_off,Auburn,Creighton,82,70,1.22,,4.42
+2025-03-23,play_off,Texas Tech,Drake,77,64,1.29,,3.75
+2025-03-23,play_off,Texas A&M,Michigan,79,91,1.64,,2.30
+2025-03-22,play_off,St. John's (N.Y.),Arkansas,66,75,1.33,,3.47
+2025-03-22,play_off,Purdue,McNeese State,76,62,1.36,,3.23
+2025-03-22,play_off,Oregon,Liberty,81,52,1.31,,3.55
+2025-03-22,play_off,Michigan State,Bryant University,87,62,1.04,,12.75
+2025-03-22,play_off,Illinois,Xavier,86,73,1.50,,2.68
+2025-03-22,play_off,UConn,Oklahoma,67,59,1.37,,3.20
+2025-03-22,play_off,Arizona,Akron,93,65,1.10,,7.63
+2025-03-22,play_off,Marquette,New Mexico,66,75,1.51,,2.60
+2025-03-22,play_off,Kentucky,Troy,76,57,1.15,,5.88
+2025-03-22,play_off,Florida,Norfolk State,95,69,1.01,,30.00
+2025-03-21,play_off,Maryland,Grand Canyon,81,49,1.21,,4.68
+2025-03-21,play_off,Ole Miss,North Carolina,71,64,2.08,,1.79
+2025-03-21,play_off,St. Marys (CA),Vanderbilt,59,56,1.48,,2.70
+2025-03-21,play_off,Duke,Mount St. Mary's,93,49,1.01,,31.50
+2025-03-21,play_off,Memphis,Colorado State,70,78,2.00,,1.83
+2025-03-21,play_off,Iowa State,Lipscomb,82,55,1.08,,8.88
+2025-03-21,play_off,Alabama,Robert Morris,90,81,1.02,,16.25
+2025-03-21,play_off,Mississippi St.,Baylor,72,75,1.83,,2.00
+2025-03-21,play_off,Texas Tech,NC Wilmington,82,72,1.06,,9.88
+2025-03-21,play_off,Michigan,UC San Diego,68,65,1.73,,2.15
+2025-03-21,play_off,St. John's (N.Y.),Nebraska O.,83,53,1.04,,13.50
+2025-03-21,play_off,UCLA,Utah State,72,47,1.40,,2.97
+2025-03-21,play_off,Missouri,Drake,57,67,1.40,,3.03
+2025-03-21,play_off,Texas A&M,Yale,80,71,1.33,,3.47
+2025-03-23,regular,Kentucky,Illinois,84,75,2.23,,1.67
+2025-03-22,regular,Texas A&M,Michigan,79,91,1.64,,2.30
+2025-03-21,play_off,Kansas,Arkansas,72,79,1.45,,2.80
+2025-03-21,play_off,Tennessee,Wofford,77,62,1.04,,13.50
+2025-03-20,play_off,Gonzaga,Georgia,89,68,1.30,,3.65
+2025-03-20,play_off,Brigham Young,VCU Rams,80,71,1.71,,2.18
+2025-03-20,play_off,Clemson,McNeese State,67,69,1.31,,3.58
+2025-03-20,play_off,Auburn,Alabama State,83,63,1.01,,30.00
+2025-03-20,play_off,Houston,Siu Edwardsville,78,40,1.01,,30.00
+2025-03-20,play_off,Wisconsin,Montana,85,66,1.06,,10.25
+2025-03-20,play_off,Purdue,High Point,75,63,1.28,,3.85
+2025-03-20,play_off,Louisville,Creighton,75,89,1.60,,2.40
+2025-03-20,play_off,Texas,Xavier,80,86,2.23,,1.69
+2025-03-20,play_off,American University,Mount St. Mary's,72,83,1.65,,2.30
+2025-03-19,play_off,San Diego State,North Carolina,68,95,2.78,,1.44
+2025-03-19,play_off,Alabama State,St. Francis (PA),70,68,1.58,,2.45
+2025-03-16,regular,Michigan,Wisconsin,59,53,2.75,,1.46
+2025-03-16,regular,Memphis,UAB,84,72,1.60,,2.40
+2025-03-16,regular,Florida,Tennessee,86,77,1.42,,2.95
+2025-03-16,regular,VCU Rams,George Mason,68,63,1.27,,3.90
+2025-03-16,regular,Yale,Cornell,90,84,1.46,,2.75
+2025-03-16,regular,Utah Valley State,Grand Canyon,82,89,2.80,,1.46
+2025-03-16,regular,Jackson State,Alabama State,56,60,1.73,,2.15
+2025-03-16,regular,UC San Diego,UC Irvine,75,61,1.42,,2.90
+2025-03-16,regular,Duke,Louisville,73,62,1.39,,3.10
+2025-03-16,regular,Liberty,Jacksonville State,79,67,1.41,,2.98
+2025-03-16,regular,Akron,Miami (Ohio),76,74,1.33,,3.45
+2025-03-16,regular,St. John's (N.Y.),Creighton,82,66,1.34,,3.35
+2025-03-16,regular,Houston,Arizona,72,64,1.38,,3.13
+2025-03-16,regular,Colorado State,Boise State,69,56,1.93,,1.89
+2025-03-16,regular,North Texas,UAB,56,66,1.69,,2.23
+2025-03-15,regular,Florida,Alabama,104,82,1.63,,2.35
+2025-03-15,regular,George Mason,Saint Josephs Hawks,74,64,2.10,,1.76
+2025-03-15,regular,Maryland,Michigan,80,81,1.48,,2.73
+2025-03-15,regular,Memphis,Tulane,78,77,1.23,,4.35
+2025-03-15,regular,Cornell,Dartmouth,87,71,1.42,,2.93
+2025-03-15,regular,Auburn,Tennessee,65,70,1.44,,2.88
+2025-03-15,regular,VCU Rams,Loyola Chicago,62,55,1.17,,5.13
+2025-03-15,regular,Michigan State,Wisconsin,74,77,1.71,,2.18
+2025-03-15,regular,Norfolk State,South Carolina St,66,65,1.83,,2.00
+2025-03-15,regular,Bryant University,Maine Black Bears,77,59,1.27,,3.85
+2025-03-15,regular,Yale,Princeton,59,57,,,
+2025-03-15,regular,Colorado State,Utah State,83,72,1.93,,1.89
+2025-03-15,regular,UC Irvine,Cal Poly,96,78,1.15,,5.38
+2025-03-15,regular,Grand Canyon,California Baptist,75,66,1.24,,4.00
+2025-03-15,regular,Alabama,Kentucky,99,70,1.25,,4.18
+2025-03-15,regular,Texas Tech,Arizona,80,86,1.89,,1.94
+2025-03-15,regular,New Mexico,Boise State,69,72,1.84,,1.99
+2025-03-15,regular,Louisville,Clemson,76,73,2.19,,1.71
+2025-03-15,regular,Michigan,Purdue,86,68,2.28,,1.66
+2025-03-15,regular,Utah Valley State,Seattle,68,55,1.61,,2.38
+2025-03-15,regular,UC San Diego,UC Santa Barbara,69,51,1.13,,6.13
+2025-03-15,regular,Creighton,UConn,71,62,2.55,,1.54
+2025-03-15,regular,UAB,East Carolina,94,77,1.42,,2.98
+2025-03-15,regular,Jackson State,Bethune-Cookman,71,50,1.59,,2.43
+2025-03-15,regular,Merrimack Warriors,Mount St. Mary's,55,57,,,
+2025-03-15,regular,South Carolina St,N. Carolina Central,88,67,1.31,,3.60
+2025-03-15,regular,Dayton,Saint Josephs Hawks,68,73,1.80,,2.05
+2025-03-15,regular,Miami (Ohio),Kent State,72,64,2.57,,1.53
+2025-03-15,regular,Houston,Brigham Young,74,54,1.35,,3.33
+2025-03-15,regular,Duke,North Carolina,74,71,1.33,,3.47
+2025-03-15,regular,Florida,Missouri,95,81,1.22,,4.42
+2025-03-15,regular,North Texas,Tulsa,77,59,1.08,,8.88
+2025-03-15,regular,Maryland,Illinois,88,65,1.82,,2.03
+2025-03-15,regular,St. John's (N.Y.),Marquette,79,63,1.57,,2.48
+2025-03-15,regular,Norfolk State,Morgan State,58,55,1.13,,6.50
+2025-03-15,regular,Akron,Toledo,100,90,1.25,,4.10
+2025-03-15,regular,George Mason,George Washington,80,65,1.53,,2.57
+2025-03-14,regular,Tennessee,Texas,83,72,1.19,,4.88
+2025-03-14,regular,Tulane,Florida Atlantic,83,76,2.38,,1.61
+2025-03-14,regular,Jacksonville State,Middle Tenn. St.,70,68,1.76,,2.10
+2025-03-14,regular,UCLA,Wisconsin,70,86,2.20,,1.69
+2025-03-14,regular,Alabama State,Grambling St.,64,62,1.67,,2.25
+2025-03-14,regular,Loyola Chicago,St. Louis Billikens,72,64,1.76,,2.10
+2025-03-14,regular,Auburn,Ole Miss,62,57,1.11,,7.25
+2025-03-14,regular,Memphis,Wichita State,83,80,1.23,,4.35
+2025-03-14,regular,Liberty,Kennesaw State,81,79,1.33,,3.43
+2025-03-14,regular,Michigan State,Oregon,74,64,1.35,,3.28
+2025-03-14,regular,VCU Rams,St. Bonaventure,76,59,1.13,,6.25
+2025-03-14,regular,UC Riverside,Cal Poly,83,96,1.45,,2.80
+2025-03-14,regular,California Baptist,Tarleton,55,51,1.42,,2.93
+2025-03-14,regular,Utah State,UNLV,70,58,1.27,,3.90
+2025-03-14,regular,Arizona,Kansas,88,77,1.63,,2.35
+2025-03-14,regular,Clemson,SMU Mustangs,57,54,1.33,,3.45
+2025-03-14,regular,UConn,Villanova,73,56,1.31,,3.55
+2025-03-14,regular,Kentucky,Oklahoma,85,84,1.34,,3.33
+2025-03-14,regular,Abilene Christian,Seattle,63,69,3.15,,1.37
+2025-03-14,regular,Colorado State,Nevada,67,59,1.45,,2.80
+2025-03-14,regular,CS Northridge,UC Santa Barbara,72,78,1.57,,2.48
+2025-03-14,regular,East Carolina,UTSA Roadrunners,70,65,1.45,,2.80
+2025-03-14,regular,Middle Tenn. St.,Louisiana Tech,77,75,1.75,,2.13
+2025-03-14,regular,Purdue,USC,76,71,1.17,,5.38
+2025-03-14,regular,Bethune-Cookman,Alcorn State,69,60,1.63,,2.35
+2025-03-14,regular,Delaware State,N. Carolina Central,77,79,1.83,,2.00
+2025-03-14,regular,Saint Josephs Hawks,La Salle,75,70,1.11,,6.88
+2025-03-14,regular,Texas Tech,Baylor,76,74,1.33,,3.40
+2025-03-14,regular,Creighton,DePaul,85,81,1.10,,7.50
+2025-03-14,regular,Louisville,Stanford,75,73,1.17,,5.38
+2025-03-14,regular,Missouri,Mississippi St.,85,73,1.59,,2.43
+2025-03-14,regular,Temple,Tulsa,71,75,1.58,,2.45
+2025-03-14,regular,Kennesaw State,New Mexico State,80,77,1.86,,1.96
+2025-03-14,regular,Kent State,Western Michigan,73,66,1.18,,5.00
+2025-03-14,regular,Illinois,Iowa,106,94,1.19,,4.80
+2025-03-14,regular,Howard,Morgan State,90,91,1.61,,2.40
+2025-03-14,regular,San Diego State,Boise State,52,62,2.10,,1.76
+2025-03-14,regular,George Washington,Fordham,88,81,1.34,,3.38
+2025-03-13,regular,Miami (Ohio),Eastern Michigan,81,75,1.44,,2.85
+2025-03-13,regular,Texas A&M,Texas,89,94,1.39,,3.10
+2025-03-13,regular,Houston,Colorado,77,68,1.03,,14.25
+2025-03-13,regular,New Mexico,San Jose State,63,52,1.07,,9.63
+2025-03-13,regular,Florida Atlantic,Charlotte,64,59,1.17,,5.38
+2025-03-13,regular,Xavier,Marquette,87,89,2.25,,1.67
+2025-03-13,regular,Wake Forest,North Carolina,59,68,3.05,,1.39
+2025-03-13,regular,Wisconsin,Northwestern,70,63,1.25,,4.15
+2025-03-13,regular,Texas Southern,Alabama State,79,84,1.93,,1.89
+2025-03-13,regular,St. Louis Billikens,Davidson,83,75,1.53,,2.58
+2025-03-13,regular,Toledo,Ohio,90,85,2.19,,1.71
+2025-03-13,regular,Ole Miss,Arkansas,83,80,1.48,,2.70
+2025-03-13,regular,Brigham Young,Iowa State,96,92,2.28,,1.66
+2025-03-13,regular,Wichita State,South Florida,73,68,1.63,,2.35
+2025-03-13,regular,St. John's (N.Y.),Butler,78,57,1.11,,7.25
+2025-03-13,regular,Duke,Georgia Tech,78,70,1.01,,21.00
+2025-03-13,regular,Oregon,Indiana,72,59,1.71,,2.18
+2025-03-13,regular,St. Bonaventure,Duquesne,64,59,1.71,,2.20
+2025-03-13,regular,Akron,Bowling Green,96,67,1.12,,6.63
+2025-03-13,regular,UC Davis,Cal Poly,76,86,2.03,,1.82
+2025-03-13,regular,Grand Canyon,UT Arlington,98,75,1.23,,4.29
+2025-03-13,regular,Northern Colorado,Montana,83,91,1.64,,2.30
+2025-03-13,regular,Georgia,Oklahoma,75,81,1.56,,2.48
+2025-03-13,regular,Kansas,UCF Knights,98,94,1.17,,5.25
+2025-03-13,regular,SMU Mustangs,Syracuse,73,53,1.23,,4.38
+2025-03-13,regular,UC Santa Barbara,CSU Bakersfield,71,66,1.39,,3.05
+2025-03-13,regular,Jacksonville State,Florida International,65,56,1.27,,3.85
+2025-03-13,regular,Villanova,Seton Hall,67,55,,,
+2025-03-13,regular,Utah Valley State,Utah Tech,74,57,1.10,,7.38
+2025-03-13,regular,South Carolina St,Coppin State,68,63,1.06,,9.88
+2025-03-13,regular,Jackson State,Florida A&M,91,76,1.34,,3.35
+2025-03-13,regular,UNLV,Air Force,68,59,1.10,,7.38
+2025-03-13,regular,American University,Navy,74,52,1.53,,2.57
+2025-03-13,regular,Baylor,Kansas State,70,56,1.40,,3.03
+2025-03-13,regular,Stanford,California,78,73,1.30,,3.63
+2025-03-13,regular,Mississippi St.,LSU,91,62,1.20,,4.75
+2025-03-13,regular,Georgetown,DePaul,67,71,1.48,,2.73
+2025-03-13,regular,Liberty,UTEP,81,60,1.30,,3.65
+2025-03-13,regular,Ohio State,Iowa,70,77,1.42,,2.95
+2025-03-13,regular,Norfolk State,Md.-East. Shore,77,70,1.05,,10.75
+2025-03-13,regular,McNeese State,Lamar,63,54,1.10,,7.50
+2025-03-12,regular,Nevada,Fresno State,86,71,1.09,,7.88
+2025-03-12,regular,UMass,La Salle,71,78,1.63,,2.35
+2025-03-12,regular,Providence,Butler,69,75,2.08,,1.78
+2025-03-12,regular,Minnesota,Northwestern,64,72,2.40,,1.60
+2025-03-12,regular,Vanderbilt,Texas,72,79,1.66,,2.28
+2025-03-12,regular,West Virginia,Colorado,60,67,1.34,,3.33
+2025-03-12,regular,North Carolina,Notre Dame,76,56,1.17,,5.50
+2025-03-12,regular,Rhode Island,Fordham,71,88,1.48,,2.70
+2025-03-12,regular,Southern Univ.,Grambling St.,62,65,1.36,,3.25
+2025-03-12,regular,San Jose State,Wyoming,66,61,1.93,,1.89
+2025-03-12,regular,Arkansas,South Carolina,72,68,1.50,,2.65
+2025-03-12,regular,Rice,Charlotte,61,64,1.57,,2.48
+2025-03-12,regular,Iowa State,Cincinnati,76,56,1.23,,4.35
+2025-03-12,regular,Georgia Tech,Virginia,66,60,1.85,,1.98
+2025-03-12,regular,Davidson,Richmond Spiders,69,65,1.37,,3.15
+2025-03-12,regular,Montana,Idaho,78,55,1.33,,3.45
+2025-03-12,regular,Lamar,Nicholls State,58,55,1.86,,1.96
+2025-03-12,regular,Utah Utes,UCF Knights,72,87,1.73,,2.15
+2025-03-12,regular,Bryant University,Albany Great Danes,91,78,1.16,,5.50
+2025-03-12,regular,Western Kentucky,Florida International,61,64,1.45,,2.80
+2025-03-12,regular,St. Marys (CA),Gonzaga,51,58,2.48,,1.56
+2025-03-12,regular,Northern Colorado,Montana State,72,45,1.43,,2.88
+2025-03-12,regular,Florida A&M,Prairie View A&M,75,66,1.32,,3.50
+2025-03-12,regular,Kansas State,Arizona State,71,66,1.35,,3.23
+2025-03-12,regular,Central Connecticut State,St. Francis (PA),43,46,1.12,,6.25
+2025-03-12,regular,NC Wilmington,Delaware,76,72,1.20,,4.50
+2025-03-12,regular,Florida State,Syracuse,62,66,1.57,,2.43
+2025-03-12,regular,Vermont,Maine Black Bears,42,57,1.51,,2.58
+2025-03-12,regular,McNeese State,Northwestern St.,83,64,1.05,,10.00
+2025-03-12,regular,Robert Morris,Youngstown State,89,78,1.52,,2.55
+2025-03-12,regular,UTEP,Sam Houston St.,79,65,1.71,,2.15
+2025-03-11,regular,Virginia Tech,California,73,82,2.60,,1.50
+2025-03-11,regular,Southern Utah,Utah Tech,65,72,2.73,,1.46
+2025-03-11,regular,TCU,Colorado,67,69,1.61,,2.38
+2025-03-11,regular,Grambling St.,Alabama A&M,73,56,1.49,,2.68
+2025-03-11,regular,Notre Dame,Pittsburgh,55,54,2.63,,1.52
+2025-03-11,regular,Oklahoma State,Cincinnati,68,87,3.33,,1.35
+2025-03-11,regular,Gonzaga,San Francisco,85,76,1.06,,9.75
+2025-03-11,regular,Portland State,Idaho,70,80,1.51,,2.65
+2025-03-11,regular,Cleveland State,Youngstown State,54,56,1.64,,2.33
+2025-03-11,regular,St. Marys (CA),Pepperdine,74,59,1.03,,15.00
+2025-03-11,regular,NC Wilmington,Charleston,68,67,1.45,,2.80
+2025-03-11,regular,Nicholls State,Incarnate Word,74,70,1.59,,2.43
+2025-03-11,regular,Idaho State,Montana State,60,80,2.03,,1.82
+2025-03-11,regular,Troy,Arkansas State,94,81,2.28,,1.64
+2025-03-11,regular,Furman,Wofford,85,92,1.96,,1.87
+2025-03-11,regular,Robert Morris,Oakland,79,76,1.60,,2.40
+2025-03-11,regular,Towson,Delaware,72,82,1.33,,3.40
+2025-03-11,regular,Northwestern St.,Texas A&M-CC,66,63,2.45,,1.58
+2025-03-10,regular,San Francisco,Washington State,86,75,1.37,,3.15
+2025-03-10,regular,Montana,Northern Arizona,74,65,1.42,,2.95
+2025-03-10,regular,Nebraska O.,St. Thomas (Minn.),85,75,2.48,,1.57
+2025-03-10,regular,SE Louisiana,Incarnate Word,67,71,1.58,,2.45
+2025-03-10,regular,James Madison,Troy,60,79,1.96,,1.86
+2025-03-10,regular,Santa Clara,Pepperdine,76,78,1.06,,10.00
+2025-03-10,regular,Northern Colorado,Weber State,76,52,1.13,,6.25
+2025-03-10,regular,Wofford,VMI,85,65,1.18,,5.00
+2025-03-10,regular,South Alabama,Arkansas State,71,74,2.52,,1.55
+2025-03-10,regular,NC Wilmington,Hampton,79,65,1.26,,4.05
+2025-03-10,regular,Texas A&M-CC,Houston Christian,62,48,1.34,,3.33
+2025-03-09,regular,Charlotte,UTSA Roadrunners,80,83,1.66,,2.28
+2025-03-09,regular,Chattanooga Mocs,Furman,77,80,1.75,,2.13
+2025-03-09,regular,Washington,Oregon,73,80,3.70,,1.29
+2025-03-09,regular,William & Mary,Delaware,78,100,1.56,,2.50
+2025-03-09,regular,Drake,Bradley,63,48,1.53,,2.58
+2025-03-09,regular,American University,Colgate,72,62,1.65,,2.30
+2025-03-09,regular,Lipscomb,North Alabama,76,65,1.42,,2.95
+2025-03-09,regular,Temple,North Texas,66,61,3.28,,1.36
+2025-03-09,regular,Tulane,UAB,85,68,2.38,,1.62
+2025-03-09,regular,Wichita State,Tulsa,63,73,1.12,,6.88
+2025-03-09,regular,Florida Atlantic,East Carolina,81,53,1.49,,2.68
+2025-03-09,regular,Nebraska,Iowa,68,83,1.29,,3.70
+2025-03-09,regular,Bucknell,Navy,77,83,1.42,,2.98
+2025-03-09,regular,Towson,Drexel,82,76,1.52,,2.63
+2025-03-09,regular,High Point,Winthrop,81,69,1.29,,3.70
+2025-03-09,regular,Michigan State,Michigan,79,62,1.31,,3.60
+2025-03-09,regular,Washington State,Loyola Marymount,94,77,1.58,,2.45
+2025-03-09,regular,UC Davis,UC San Diego,57,68,7.25,,1.11
+2025-03-09,regular,San Diego State,Nevada,80,61,1.32,,3.50
+2025-03-09,regular,St. Thomas (Minn.),North Dakota,85,69,1.27,,3.85
+2025-03-09,regular,Brigham Young,Utah Utes,85,74,1.12,,6.75
+2025-03-09,regular,Baylor,Houston,61,65,2.65,,1.51
+2025-03-09,regular,Northern Arizona,East. Washington,66,53,1.65,,2.30
+2025-03-09,regular,UC Santa Barbara,UC Irvine,88,97,2.40,,1.60
+2025-03-09,regular,CS Fullerton,UC Riverside,59,64,9.13,,1.07
+2025-03-09,regular,Troy,Old Dominion,75,59,1.13,,6.13
+2025-03-09,regular,Oregon State,Pepperdine,73,77,1.17,,5.38
+2025-03-09,regular,Utah Tech,Seattle,65,70,3.85,,1.28
+2025-03-09,regular,Southeast Missouri State,Siu Edwardsville,48,69,1.63,,2.35
+2025-03-09,regular,Samford,Furman,78,95,1.60,,2.40
+2025-03-09,regular,Arizona State,Texas Tech,57,85,7.38,,1.11
+2025-03-09,regular,California Baptist,UT Arlington,70,68,1.35,,3.33
+2025-03-09,regular,CS Northridge,Hawaii,82,73,1.16,,5.63
+2025-03-09,regular,St. Louis Billikens,Duquesne,90,88,1.36,,3.28
+2025-03-09,regular,Nebraska O.,South Dakota Coyotes,100,75,1.48,,2.72
+2025-03-09,regular,Texas,Oklahoma,72,76,1.42,,2.98
+2025-03-09,regular,Syracuse,Virginia,84,70,1.91,,1.91
+2025-03-09,regular,Tarleton,Utah Valley State,66,71,3.40,,1.33
+2025-03-09,regular,UCLA,USC,90,63,1.20,,4.75
+2025-03-09,regular,Weber State,Sacramento State,83,70,1.56,,2.45
+2025-03-09,regular,Albany Great Danes,Binghamton,69,66,1.25,,3.90
+2025-03-09,regular,Long Beach State,Cal Poly,69,83,2.48,,1.55
+2025-03-09,regular,Fairfield,Quinnipiac,83,74,2.15,,1.71
+2025-03-09,regular,North Carolina,Duke,69,82,4.83,,1.19
+2025-03-09,regular,Southern Univ.,Alabama A&M,71,57,1.10,,7.63
+2025-03-09,regular,Grambling St.,Alabama State,47,59,1.82,,2.03
+2025-03-09,regular,Arkansas-Pine Bluff,Alcorn State,63,65,2.88,,1.44
+2025-03-09,regular,Arkansas State,Marshall,77,74,1.27,,3.85
+2025-03-09,regular,Pittsburgh,Boston College,93,67,1.11,,7.00
+2025-03-09,regular,Bradley,Valparaiso,70,65,1.23,,4.35
+2025-03-09,regular,Creighton,Butler,87,74,1.13,,6.13
+2025-03-09,regular,Clemson,Virginia Tech,65,47,1.05,,12.00
+2025-03-09,regular,East Tennessee St,Wofford,60,72,1.80,,2.05
+2025-03-09,regular,Florida,Ole Miss,90,71,1.12,,6.75
+2025-03-09,regular,Richmond Spiders,George Mason,60,64,3.38,,1.34
+2025-03-09,regular,Northeastern,Hampton,65,70,1.87,,1.95
+2025-03-09,regular,Maine Black Bears,UMass Lowell,72,64,1.85,,1.98
+2025-03-09,regular,Bethune-Cookman,Florida A&M,76,75,1.44,,2.83
+2025-03-09,regular,Prairie View A&M,Texas Southern,68,80,3.65,,1.30
+2025-03-09,regular,San Jose State,Fresno State,92,68,1.37,,3.20
+2025-03-09,regular,West Virginia,UCF Knights,72,65,1.29,,3.75
+2025-03-09,regular,Kansas,Arizona,83,76,1.49,,2.70
+2025-03-09,regular,Abilene Christian,Grand Canyon,82,81,3.55,,1.31
+2025-03-09,regular,Utah State,Air Force,87,47,1.01,,24.50
+2025-03-09,regular,Bryant University,UMBC Retrievers,85,74,1.06,,10.00
+2025-03-09,regular,Notre Dame,California,112,110,1.55,,2.50
+2025-03-09,regular,Colorado,TCU,76,56,1.67,,2.25
+2025-03-09,regular,Florida State,SMU Mustangs,76,69,2.28,,1.65
+2025-03-09,regular,Iona,Sacred Heart,90,88,1.50,,2.65
+2025-03-09,regular,LSU,Texas A&M,52,66,3.43,,1.33
+2025-03-09,regular,Mount St. Mary's,Marist,62,52,1.75,,2.13
+2025-03-09,regular,Xavier,Providence,76,68,1.13,,6.50
+2025-03-08,regular,Indiana,Ohio State,66,60,1.69,,2.23
+2025-03-08,regular,Drake,Belmont,57,50,1.28,,3.80
+2025-03-08,regular,Miss. Valley St.,Jackson State,62,66,22.75,,1.01
+2025-03-08,regular,Sam Houston St.,New Mexico State,76,69,1.71,,2.18
+2025-03-08,regular,Oklahoma State,Cincinnati,78,67,2.45,,1.58
+2025-03-08,regular,Middle Tenn. St.,Florida International,78,56,1.13,,6.13
+2025-03-08,regular,Jacksonville State,Kennesaw State,70,74,1.53,,2.58
+2025-03-08,regular,Western Kentucky,Liberty,61,90,2.35,,1.63
+2025-03-08,regular,Louisiana Tech,UTEP,76,58,1.44,,2.83
+2025-03-08,regular,Maryland,Northwestern,74,61,1.14,,6.00
+2025-03-08,regular,Vermont,New Hampshire Wildcats,64,57,1.08,,9.13
+2025-03-08,regular,Auburn,Alabama,91,93,1.31,,3.55
+2025-03-08,regular,Campbell,Delaware,62,79,1.75,,2.13
+2025-03-08,regular,La Salle,Saint Josephs Hawks,81,74,5.00,,1.19
+2025-03-08,regular,NC Greensboro,VMI,57,64,1.17,,5.50
+2025-03-08,regular,UNC Asheville,Winthrop,67,86,2.03,,1.82
+2025-03-08,regular,Wake Forest,Georgia Tech,69,43,1.34,,3.33
+2025-03-08,regular,Brown,Yale,61,70,3.80,,1.28
+2025-03-08,regular,Cornell,Columbia,100,81,1.19,,4.88
+2025-03-08,regular,Harvard,Dartmouth,66,58,1.80,,2.05
+2025-03-08,regular,DePaul,Georgetown,83,77,1.99,,1.84
+2025-03-08,regular,Manhattan,Siena,78,66,1.59,,2.43
+2025-03-08,regular,Tennessee,South Carolina,75,65,1.07,,9.63
+2025-03-08,regular,Davidson,St. Bonaventure,61,64,1.75,,2.13
+2025-03-08,regular,Rhode Island,Fordham,86,67,1.34,,3.35
+2025-03-08,regular,Louisville,Stanford,68,48,1.15,,5.88
+2025-03-08,regular,Kansas State,Iowa State,57,73,3.05,,1.39
+2025-03-08,regular,Wisconsin,Penn State,75,86,1.13,,6.38
+2025-03-08,regular,UMass,Loyola Chicago,51,74,2.43,,1.59
+2025-03-08,regular,Arkansas,Mississippi St.,93,92,1.78,,2.08
+2025-03-08,regular,Chattanooga Mocs,Mercer,76,61,1.19,,4.88
+2025-03-08,regular,Drexel,Elon,91,74,2.08,,1.78
+2025-03-08,regular,Georgia,Vanderbilt,79,68,1.48,,2.73
+2025-03-08,regular,High Point,Radford,76,73,1.21,,4.68
+2025-03-08,regular,Missouri,Kentucky,83,91,1.40,,3.03
+2025-03-08,regular,LIU Sharks,St. Francis (PA),68,71,1.36,,3.30
+2025-03-08,regular,Marquette,St. John's (N.Y.),84,86,1.52,,2.63
+2025-03-08,regular,Miami (FL),NC State,72,70,2.19,,1.71
+2025-03-08,regular,Loyola Marymount,San Diego Toreros,100,74,1.25,,4.15
+2025-03-08,regular,Siu Edwardsville,Tennessee State,71,69,1.65,,2.30
+2025-03-08,regular,Boise State,Colorado State,73,83,1.38,,3.13
+2025-03-08,regular,New Mexico,UNLV,81,67,1.12,,6.75
+2025-03-08,regular,Northern Iowa,Valparaiso,63,64,1.23,,4.35
+2025-03-08,regular,South Dakota St.,North Dakota,69,85,1.26,,3.95
+2025-03-08,regular,Appalachian State,Old Dominion,56,61,1.26,,3.95
+2025-03-08,regular,Memphis,South Florida,84,68,1.10,,7.63
+2025-03-08,regular,Portland,Pepperdine,73,86,1.87,,1.95
+2025-03-08,regular,Winthrop,Longwood,88,79,1.48,,2.73
+2025-03-08,regular,Southeast Missouri State,UALR,78,59,1.63,,2.35
+2025-03-08,regular,Illinois,Purdue,88,80,1.49,,2.70
+2025-03-08,regular,VMI,Citadel,73,62,1.37,,3.20
+2025-03-08,regular,Akron,Buffalo,88,70,1.03,,13.75
+2025-03-08,regular,Bowling Green,Western Michigan,63,64,1.63,,2.35
+2025-03-08,regular,Bradley,Murray State,70,62,1.48,,2.70
+2025-03-08,regular,Central Michigan,Northern Illinois,81,83,1.06,,9.88
+2025-03-08,regular,VCU Rams,Dayton,76,79,1.19,,4.83
+2025-03-08,regular,Kent State,Eastern Michigan,76,70,1.13,,6.25
+2025-03-08,regular,North Dakota St,South Dakota Coyotes,84,85,1.79,,2.05
+2025-03-08,regular,Toledo,Ohio,96,82,2.10,,1.76
+2025-03-08,regular,Miami (Ohio),Ball State,79,66,1.17,,4.95
+2025-03-08,regular,UNC Asheville,Charleston Southern,80,60,1.34,,3.28
+2025-03-08,regular,Marshall,Georgia State,79,76,1.29,,3.63
+2025-03-08,regular,Mercer,Western Carolina,67,66,1.37,,3.15
+2025-03-08,regular,Hofstra,N. Carolina A&T,77,55,1.19,,4.88
+2025-03-07,regular,Belmont,Illinois State,76,63,1.87,,1.95
+2025-03-07,regular,Radford,Presbyterian,74,69,1.61,,2.40
+2025-03-07,regular,Delaware,Stony Brook,80,76,1.30,,3.63
+2025-03-07,regular,Drake,Southern Illinois,70,53,1.14,,6.00
+2025-03-07,regular,High Point,Gardner Webb,85,64,1.04,,11.00
+2025-03-07,regular,Cal Poly,CS Fullerton,100,61,1.08,,8.38
+2025-03-07,regular,California Baptist,Tarleton,68,48,1.27,,3.90
+2025-03-07,regular,UC Riverside,CS Northridge,94,79,2.00,,1.83
+2025-03-07,regular,UC San Diego,Long Beach State,70,63,1.01,,22.50
+2025-03-07,regular,Grambling St.,Alabama A&M,67,51,1.41,,2.98
+2025-03-07,regular,CSU Bakersfield,Hawaii,76,64,1.69,,2.22
+2025-03-07,regular,St. Thomas (Minn.),Denver,80,62,1.17,,5.13
+2025-03-07,regular,Illinois (Chi.),Valparaiso,50,67,1.55,,2.53
+2025-03-07,regular,Tennessee State,Lindenwood,69,55,1.58,,2.45
+2025-03-07,regular,Southern Univ.,Alabama State,65,66,1.39,,3.05
+2025-03-07,regular,North Texas,Charlotte,75,64,1.08,,8.38
+2025-03-07,regular,Grand Canyon,Utah Tech,90,68,1.06,,10.25
+2025-03-07,regular,UC Davis,UC Irvine,59,88,3.28,,1.36
+2025-03-07,regular,Miss. Valley St.,Alcorn State,64,72,13.75,,1.04
+2025-03-07,regular,Texas State,Old Dominion,61,64,1.35,,3.33
+2025-03-07,regular,Southern Utah,Seattle,39,62,3.95,,1.26
+2025-03-07,regular,Abilene Christian,Utah Valley State,60,73,2.35,,1.62
+2025-03-07,regular,Arkansas-Pine Bluff,Jackson State,69,76,4.80,,1.19
+2025-03-07,regular,Cleveland State,Northern Kentucky,68,63,1.53,,2.58
+2025-03-07,regular,Coppin State,Morgan State,82,75,2.68,,1.50
+2025-03-07,regular,Western Kentucky,Florida International,76,67,1.31,,3.60
+2025-03-07,regular,Iowa,Michigan State,84,91,3.45,,1.33
+2025-03-07,regular,Lipscomb,Queens Royals,81,75,1.19,,4.88
+2025-03-07,regular,Wisc. Milwaukee,Oakland,64,72,1.30,,3.68
+2025-03-07,regular,Rice,Wichita State,59,63,2.03,,1.82
+2025-03-07,regular,Robert Morris,Wright State,83,62,1.35,,3.33
+2025-03-07,regular,Delaware State,Md.-East. Shore,75,68,1.14,,6.00
+2025-03-07,regular,Howard,Norfolk State,69,81,2.83,,1.44
+2025-03-07,regular,Middle Tenn. St.,Liberty,81,86,1.82,,2.03
+2025-03-07,regular,Louisiana Tech,New Mexico State,55,67,1.46,,2.75
+2025-03-07,regular,South Carolina St,N. Carolina Central,87,71,1.20,,4.75
+2025-03-07,regular,Sam Houston St.,UTEP,89,87,1.76,,2.10
+2025-03-07,regular,American University,Lafayette,71,69,1.57,,2.48
+2025-03-07,regular,UALR,UT Martin,82,77,1.44,,2.83
+2025-03-07,regular,Colgate,Army,84,55,1.32,,3.50
+2025-03-07,regular,Boston University,Navy,78,86,1.63,,2.33
+2025-03-07,regular,Bucknell,Loyola Maryland,76,72,1.23,,4.33
+2025-03-07,regular,East Carolina,Tulane,73,64,1.44,,2.88
+2025-03-07,regular,Murray State,Evansville,74,53,1.40,,3.00
+2025-03-07,regular,Siena,Fairfield,68,64,1.28,,3.83
+2025-03-07,regular,UAB,Florida Atlantic,89,80,1.37,,3.15
+2025-03-07,regular,Youngstown State,IPFW,72,67,1.89,,1.93
+2025-03-07,regular,North Alabama,Jacksonville Dolphins,78,63,1.35,,3.30
+2025-03-07,regular,Manhattan,Sacred Heart,90,74,1.71,,2.18
+2025-03-07,regular,Marist,Merrimack Warriors,53,75,1.89,,1.93
+2025-03-07,regular,Quinnipiac,Mount St. Mary's,79,70,1.21,,4.68
+2025-03-07,regular,Nebraska O.,UMKC,70,61,1.46,,2.78
+2025-03-07,regular,Georgia State,Georgia Southern,80,71,2.17,,1.72
+2025-03-07,regular,Pacific,San Diego Toreros,77,81,1.75,,2.13
+2025-03-06,regular,Illinois State,Missouri State,70,54,1.37,,3.20
+2025-03-06,regular,Southern Illinois,Indiana State,86,85,1.99,,1.84
+2025-03-06,regular,USC,Washington,92,61,1.31,,3.55
+2025-03-06,regular,Lindenwood,Morehead State,73,65,2.13,,1.75
+2025-03-06,regular,Ole Miss,Tennessee,78,76,2.15,,1.73
+2025-03-06,regular,Louisville,California,85,68,1.08,,8.38
+2025-03-06,regular,Loyola Chicago,Davidson,82,72,1.40,,3.00
+2025-03-06,regular,Notre Dame,Stanford,56,54,1.99,,1.84
+2025-03-06,regular,UConn,Marquette,72,66,1.54,,2.55
+2025-03-06,regular,Old Dominion,Louisiana Lafayette,67,49,1.53,,2.57
+2025-03-06,regular,Minnesota,Wisconsin,67,74,3.33,,1.35
+2025-03-06,regular,Texas Tech,Colorado,91,75,1.03,,14.25
+2025-03-06,regular,Oklahoma,Missouri,96,84,2.73,,1.48
+2025-03-06,regular,UMKC,Oral Roberts,73,56,1.40,,3.03
+2025-03-06,regular,Gardner Webb,USC Upstate,83,63,1.38,,3.10
+2025-03-06,regular,Alabama,Florida,94,99,1.59,,2.43
+2025-03-06,regular,Boston College,Clemson,69,78,9.75,,1.06
+2025-03-06,regular,Butler,Xavier,78,91,2.48,,1.57
+2025-03-06,regular,Central Connecticut State,Le Moyne,86,67,1.08,,8.25
+2025-03-06,regular,LIU Sharks,Chicago State,68,57,1.09,,7.88
+2025-03-06,regular,Cincinnati,Kansas State,49,54,1.25,,4.13
+2025-03-06,regular,Fordham,George Washington,58,81,2.43,,1.59
+2025-03-06,regular,George Mason,La Salle,69,62,1.11,,7.13
+2025-03-06,regular,NC State,Pittsburgh,71,63,2.25,,1.67
+2025-03-06,regular,UCF Knights,Oklahoma State,83,70,1.37,,3.20
+2025-03-06,regular,Saint Josephs Hawks,Rhode Island,91,74,1.14,,6.00
+2025-03-06,regular,St. Bonaventure,UMass,73,72,1.27,,3.85
+2025-03-06,regular,St. Francis (PA),Wagner,58,55,1.71,,2.20
+2025-03-06,regular,Tennessee Tech,UT Martin,67,70,2.05,,1.80
+2025-03-06,regular,Providence,DePaul,77,80,1.26,,4.05
+2025-03-06,regular,Michigan,Maryland,65,71,1.80,,2.05
+2025-03-06,regular,Georgia Southern,Southern Miss,78,64,1.37,,3.20
+2025-03-05,regular,Arizona,Arizona State,113,100,1.05,,12.00
+2025-03-05,regular,UNLV,San Diego State,74,67,2.48,,1.56
+2025-03-05,regular,Vanderbilt,Arkansas,77,90,1.29,,3.78
+2025-03-05,regular,Fresno State,Wyoming,62,58,2.05,,1.80
+2025-03-05,regular,Air Force,Boise State,57,80,9.88,,1.05
+2025-03-05,regular,Texas A&M,Auburn,83,72,2.53,,1.53
+2025-03-05,regular,Iowa State,Brigham Young,85,88,1.21,,4.50
+2025-03-05,regular,Colorado State,San Jose State,83,56,1.04,,12.50
+2025-03-05,regular,Virginia,Florida State,60,57,1.51,,2.58
+2025-03-05,regular,Oregon,Indiana,73,64,1.32,,3.38
+2025-03-05,regular,Ohio State,Nebraska,116,114,1.35,,3.20
+2025-03-05,regular,Nevada,New Mexico,67,71,2.03,,1.80
+2025-03-05,regular,SMU Mustangs,Syracuse,77,75,1.08,,7.88
+2025-03-05,regular,Utah Utes,West Virginia,69,71,1.51,,2.58
+2025-03-05,regular,Louisiana Lafayette,Louisiana Monroe,73,69,1.42,,2.98
+2025-03-05,regular,TCU,Baylor,58,61,2.58,,1.53
+2025-03-05,regular,Georgetown,Villanova,75,73,3.00,,1.40
+2025-03-05,regular,Wright State,IU Indy,98,85,1.21,,4.55
+2025-03-05,regular,Mississippi St.,Texas,82,87,1.31,,3.55
+2025-03-05,regular,Tulsa,Temple,77,81,1.69,,2.22
+2025-03-05,regular,Buffalo,Miami (Ohio),69,84,4.18,,1.25
+2025-03-05,regular,Ohio,Eastern Michigan,79,83,1.21,,4.63
+2025-03-05,regular,Western Michigan,Kent State,76,77,3.65,,1.30
+2025-03-05,regular,Toledo,Akron,87,96,2.68,,1.50
+2025-03-05,regular,Vermont,Albany Great Danes,79,71,1.47,,2.75
+2025-03-05,regular,Ball State,Central Michigan,67,69,2.25,,1.67
+2025-03-05,regular,Northern Illinois,Bowling Green,58,71,2.68,,1.49
+2025-03-05,regular,Seton Hall,Creighton,61,79,,,
+2025-03-05,regular,Dayton,St. Louis Billikens,75,67,1.33,,3.43
+2025-03-05,regular,Northern Kentucky,Detroit,99,75,1.08,,8.50
+2025-03-05,regular,Duquesne,VCU Rams,62,71,4.88,,1.19
+2025-03-05,regular,Georgia Tech,Miami (FL),89,74,1.19,,4.95
+2025-03-05,regular,Lafayette,Holy Cross,69,68,1.33,,3.40
+2025-03-05,regular,Kentucky,LSU,95,64,1.11,,7.13
+2025-03-05,regular,Loyola Maryland,Lehigh,77,73,1.66,,2.28
+2025-03-05,regular,UTSA Roadrunners,Memphis,70,75,4.15,,1.25
+2025-03-05,regular,Virginia Tech,North Carolina,59,91,4.00,,1.26
+2025-03-05,regular,Oakland,Wisc. Green Bay,96,72,1.15,,5.75
+2025-03-05,regular,Bryant University,New Hampshire Wildcats,90,56,1.04,,13.25
+2025-03-05,regular,Southern Miss,Coastal Carolina,66,63,1.56,,2.50
+2025-03-05,regular,South Carolina,Georgia,64,73,1.96,,1.86
+2025-03-05,regular,Maine Black Bears,UMass Lowell,71,70,1.63,,2.35
+2025-03-04,regular,Montana,East. Washington,83,72,1.17,,5.13
+2025-03-04,regular,Portland State,Sacramento State,59,56,1.10,,7.50
+2025-03-04,regular,Houston,Kansas,65,59,1.19,,4.80
+2025-03-04,regular,Idaho State,Northern Arizona,79,82,1.33,,3.43
+2025-03-04,regular,Montana State,Idaho,75,60,1.42,,2.95
+2025-03-04,regular,Jackson State,Prairie View A&M,88,74,1.07,,9.63
+2025-03-04,regular,North Texas,Wichita State,68,66,1.31,,3.60
+2025-03-04,regular,Weber State,Northern Colorado,63,68,3.60,,1.31
+2025-03-04,regular,Northwestern,UCLA,69,73,2.38,,1.62
+2025-03-04,regular,Lipscomb,Central Arkansas,84,66,1.02,,15.75
+2025-03-04,regular,Coppin State,Md.-East. Shore,59,72,1.58,,2.40
+2025-03-04,regular,Lamar,Nicholls State,65,53,1.64,,2.25
+2025-03-04,regular,Texas A&M-CC,New Orleans,95,62,1.06,,9.38
+2025-03-04,regular,Morgan State,Delaware State,87,81,1.96,,1.86
+2025-03-04,regular,East Texas A&M,Houston Christian,63,59,2.18,,1.72
+2025-03-04,regular,South Carolina St,Howard,79,69,1.20,,4.75
+2025-03-04,regular,Northwestern St.,Incarnate Word,73,57,1.63,,2.35
+2025-03-04,regular,N. Carolina Central,Norfolk State,91,87,3.03,,1.40
+2025-03-04,regular,UTRGV,SE Louisiana,77,76,2.15,,1.73
+2025-03-04,regular,Alcorn State,Texas Southern,59,75,1.86,,1.96
+2025-03-04,regular,North Alabama,Austin Peay,90,64,1.12,,6.75
+2025-03-04,regular,Bethune-Cookman,Grambling St.,78,71,1.43,,2.88
+2025-03-04,regular,Duke,Wake Forest,93,60,1.02,,16.50
+2025-03-04,regular,Jacksonville Dolphins,Eastern Kentucky,78,67,1.69,,2.22
+2025-03-04,regular,Florida A&M,Southern Univ.,70,73,2.98,,1.42
+2025-03-04,regular,Florida Gulf Coast,Queens Royals,65,71,1.48,,2.73
+2025-03-04,regular,Stephen F. Austin,McNeese State,64,95,6.88,,1.11
+2025-03-03,regular,Austin Peay,North Florida,90,69,2.53,,1.53
+2025-03-03,regular,Stetson,Central Arkansas,72,77,1.86,,1.93
+2025-03-03,regular,UTSA Roadrunners,Rice,84,56,1.80,,2.05
+2025-03-03,regular,Kansas State,Colorado,65,56,1.33,,3.40
+2025-03-03,regular,UAB,Memphis,81,88,1.83,,2.00
+2025-03-02,regular,Michigan,Illinois,73,93,1.61,,2.40
+2025-03-02,regular,Belmont,Murray State,70,60,1.65,,2.28
+2025-03-02,regular,Drake,Missouri State,68,60,1.07,,9.25
+2025-03-02,regular,Illinois State,Evansville,62,53,1.16,,5.50
+2025-03-02,regular,Illinois (Chi.),Valparaiso,77,73,1.37,,3.20
+2025-03-02,regular,Bradley,Northern Iowa,73,56,1.46,,2.75
+2025-03-02,regular,Sacred Heart,Fairfield,83,62,1.39,,3.05
+2025-03-02,regular,Niagara,Manhattan,70,85,2.05,,1.80
+2025-03-02,regular,Merrimack Warriors,Quinnipiac,73,63,2.01,,1.83
+2025-03-02,regular,Mount St. Mary's,Siena,85,79,1.76,,2.10
+2025-03-02,regular,Michigan State,Wisconsin,71,62,1.48,,2.65
+2025-03-02,regular,Canisius,Iona,52,82,3.03,,1.40
+2025-03-02,regular,Indiana State,Southern Illinois,95,77,1.66,,2.28
+2025-03-02,regular,Liberty,Kennesaw State,80,85,1.25,,4.13
+2025-03-02,regular,East Carolina,Charlotte,78,76,1.17,,5.13
+2025-03-02,regular,South Florida,Florida Atlantic,63,69,2.28,,1.66
+2025-03-02,regular,Hawaii,UC Davis,78,70,1.61,,2.38
+2025-03-02,regular,San Francisco,Gonzaga,75,95,4.55,,1.21
+2025-03-02,regular,California,Boston College,82,71,1.25,,4.15
+2025-03-02,regular,Brigham Young,West Virginia,77,56,1.17,,5.13
+2025-03-02,regular,UC San Diego,CS Fullerton,100,55,,,
+2025-03-02,regular,Seattle,Grand Canyon,60,63,1.79,,2.05
+2025-03-02,regular,UC Irvine,Long Beach State,70,60,1.05,,11.25
+2025-03-02,regular,Northern Arizona,Northern Colorado,73,83,2.40,,1.60
+2025-03-02,regular,St. Marys (CA),Oregon State,74,64,1.11,,7.13
+2025-03-02,regular,Pepperdine,Washington State,83,90,2.63,,1.51
+2025-03-02,regular,San Diego Toreros,Portland,82,80,2.18,,1.71
+2025-03-02,regular,Iowa State,Arizona,84,67,1.39,,3.10
+2025-03-02,regular,Utah Tech,California Baptist,57,61,2.10,,1.77
+2025-03-02,regular,Florida,Texas A&M,89,70,1.23,,4.35
+2025-03-02,regular,Baylor,Oklahoma State,71,61,1.10,,7.38
+2025-03-02,regular,CS Northridge,UC Santa Barbara,103,77,1.46,,2.78
+2025-03-02,regular,Georgetown,Marquette,61,76,4.20,,1.25
+2025-03-02,regular,Texas,Georgia,67,83,1.40,,3.00
+2025-03-02,regular,Pacific,Santa Clara,66,97,7.50,,1.10
+2025-03-02,regular,Wyoming,San Diego State,69,72,3.63,,1.30
+2025-03-02,regular,St. Thomas (Minn.),UMKC,65,59,1.23,,4.29
+2025-03-02,regular,Utah Utes,Arizona State,99,73,1.25,,4.18
+2025-03-02,regular,Miss. Valley St.,Arkansas-Pine Bluff,58,83,4.75,,1.20
+2025-03-02,regular,Fresno State,Boise State,61,66,12.25,,1.04
+2025-03-02,regular,NC Wilmington,Delaware,88,58,1.15,,5.75
+2025-03-02,regular,Duke,Florida State,100,65,1.01,,20.00
+2025-03-02,regular,Lamar,McNeese State,66,68,4.20,,1.25
+2025-03-02,regular,Wisc. Green Bay,Oakland,84,87,4.27,,1.23
+2025-03-02,regular,Charleston,Campbell,87,65,1.30,,3.65
+2025-03-02,regular,Wagner,Central Connecticut State,48,55,3.40,,1.33
+2025-03-02,regular,Stony Brook,Elon,71,66,2.98,,1.41
+2025-03-02,regular,Vanderbilt,Missouri,97,93,2.13,,1.75
+2025-03-02,regular,New Mexico State,Western Kentucky,65,47,1.56,,2.50
+2025-03-02,regular,Columbia,Penn,87,92,1.61,,2.40
+2025-03-02,regular,Florida A&M,Grambling St.,73,68,1.66,,2.28
+2025-03-02,regular,George Washington,La Salle,71,60,1.21,,4.68
+2025-03-02,regular,Washington,Indiana,62,78,2.10,,1.76
+2025-03-02,regular,Louisville,Pittsburgh,79,68,1.17,,5.38
+2025-03-02,regular,Stephen F. Austin,Nicholls State,70,94,1.81,,2.03
+2025-03-02,regular,UMass,Rhode Island,91,88,1.72,,2.17
+2025-03-02,regular,UTRGV,New Orleans,88,78,1.17,,5.25
+2025-03-02,regular,Bethune-Cookman,Southern Univ.,70,69,2.18,,1.71
+2025-03-02,regular,Sam Houston St.,Louisiana Tech,66,90,1.76,,2.10
+2025-03-02,regular,Texas A&M-CC,SE Louisiana,68,54,1.63,,2.35
+2025-03-02,regular,Wake Forest,Notre Dame,74,71,1.21,,4.55
+2025-03-02,regular,Cal Poly,CSU Bakersfield,98,72,1.59,,2.43
+2025-03-02,regular,East. Washington,Idaho State,54,78,2.48,,1.57
+2025-03-02,regular,Idaho,Weber State,81,79,1.40,,3.05
+2025-03-02,regular,Portland State,Montana,79,76,1.62,,2.35
+2025-03-02,regular,South Dakota Coyotes,North Dakota,92,79,1.56,,2.50
+2025-03-02,regular,Stanford,SMU Mustangs,73,68,1.85,,1.98
+2025-03-02,regular,Siu Edwardsville,UALR,73,65,1.67,,2.25
+2025-03-02,regular,Buffalo,Toledo,87,74,3.45,,1.33
+2025-03-02,regular,Houston,Cincinnati,73,64,1.08,,8.50
+2025-03-02,regular,Xavier,Creighton,83,61,1.75,,2.13
+2025-03-02,regular,Eastern Illinois,Southeast Missouri State,73,58,2.85,,1.44
+2025-03-02,regular,Northwestern St.,Houston Christian,61,56,1.53,,2.58
+2025-03-02,regular,Stonehill,Le Moyne,85,79,1.39,,3.05
+2025-03-02,regular,Mercer,Western Carolina,81,69,1.26,,4.10
+2025-03-02,regular,UT Martin,Morehead State,47,59,1.44,,2.85
+2025-03-02,regular,Northern Illinois,Western Michigan,70,74,2.83,,1.44
+2025-03-02,regular,Tennessee State,Southern Indiana,74,69,1.28,,3.83
+2025-03-02,regular,Tennessee,Alabama,79,76,1.53,,2.57
+2025-03-02,regular,Alcorn State,Prairie View A&M,71,55,1.21,,4.68
+2025-03-02,regular,Dartmouth,Brown,78,58,1.83,,2.00
+2025-03-02,regular,Cleveland State,IPFW,68,57,1.67,,2.24
+2025-03-02,regular,Colorado State,Utah State,93,66,1.76,,2.10
+2025-03-02,regular,Delaware State,Coppin State,83,79,1.15,,5.63
+2025-03-02,regular,Wisc. Milwaukee,Detroit,89,67,1.05,,12.00
+2025-03-02,regular,Fairleigh Dickinson,LIU Sharks,55,74,,,
+2025-03-02,regular,Towson,Hampton,75,72,1.31,,3.60
+2025-03-02,regular,Harvard,Yale,74,69,5.25,,1.17
+2025-03-02,regular,Jackson State,Texas Southern,67,52,1.60,,2.40
+2025-03-02,regular,Tennessee Tech,Lindenwood,74,76,1.50,,2.65
+2025-03-02,regular,St. Louis Billikens,Loyola Chicago,98,67,1.76,,2.10
+2025-03-02,regular,Navy,Loyola Maryland,81,68,1.53,,2.58
+2025-03-02,regular,Md.-East. Shore,Morgan State,72,75,2.45,,1.58
+2025-03-02,regular,UTEP,Middle Tenn. St.,75,76,1.75,,2.13
+2025-03-02,regular,Sacramento State,Montana State,60,87,2.98,,1.41
+2025-03-02,regular,NC Greensboro,Samford,108,100,1.87,,1.95
+2025-03-02,regular,Oregon,USC,82,61,1.30,,3.63
+2025-03-02,regular,Utah Valley State,Southern Utah,100,59,1.07,,9.50
+2025-03-02,regular,TCU,UCF Knights,89,78,1.63,,2.35
+2025-03-02,regular,N. Carolina Central,Howard,72,68,1.63,,2.35
+2025-03-02,regular,Winthrop,UNC Asheville,103,90,1.57,,2.48
+2025-03-01,regular,Alabama State,Alabama A&M,94,52,1.31,,3.60
+2025-03-01,regular,Mississippi St.,LSU,81,69,1.13,,6.50
+2025-03-01,regular,East Texas A&M,Incarnate Word,68,75,2.65,,1.50
+2025-03-01,regular,UT Arlington,Abilene Christian,59,70,1.45,,2.80
+2025-03-01,regular,Denver,South Dakota St.,78,62,3.85,,1.28
+2025-03-01,regular,Georgia Tech,NC State,87,62,1.59,,2.43
+2025-03-01,regular,IU Indy,Wright State,91,84,2.57,,1.53
+2025-03-01,regular,Nebraska O.,Oral Roberts,80,57,1.17,,5.13
+2025-03-01,regular,New Mexico,Air Force,92,71,1.01,,19.25
+2025-03-01,regular,NJIT,Albany Great Danes,59,86,,,
+2025-03-01,regular,Bowling Green,Ball State,61,52,1.76,,2.10
+2025-03-01,regular,Maine Black Bears,Bryant University,72,80,2.10,,1.76
+2025-03-01,regular,Holy Cross,Bucknell,81,94,2.88,,1.44
+2025-03-01,regular,Radford,Charleston Southern,76,60,1.23,,4.38
+2025-03-01,regular,Dayton,Richmond Spiders,74,64,1.07,,9.13
+2025-03-01,regular,Duquesne,George Mason,85,68,2.13,,1.75
+2025-03-01,regular,Florida International,Jacksonville State,79,84,2.30,,1.65
+2025-03-01,regular,Wofford,Furman,75,78,1.59,,2.43
+2025-03-01,regular,Presbyterian,Gardner Webb,68,57,1.58,,2.45
+2025-03-01,regular,Hofstra,N. Carolina A&T,70,49,1.19,,4.88
+2025-03-01,regular,Kansas,Texas Tech,73,78,1.57,,2.48
+2025-03-01,regular,USC Upstate,Longwood,66,83,3.45,,1.33
+2025-03-01,regular,Nebraska,Minnesota,65,67,1.31,,3.58
+2025-03-01,regular,South Carolina St,Norfolk State,91,88,1.67,,2.25
+2025-03-01,regular,William & Mary,Northeastern,68,70,1.63,,2.33
+2025-03-01,regular,Ole Miss,Oklahoma,87,84,1.30,,3.65
+2025-03-01,regular,Tulsa,Tulane,77,79,2.40,,1.60
+2025-03-01,regular,South Carolina,Arkansas,72,53,1.78,,2.08
+2025-03-01,regular,Army,Lehigh,67,89,1.53,,2.58
+2025-03-01,regular,Kentucky,Auburn,78,94,2.73,,1.48
+2025-03-01,regular,UMass Lowell,Binghamton,79,53,1.26,,4.00
+2025-03-01,regular,Boston University,Lafayette,66,64,1.67,,2.25
+2025-03-01,regular,VMI,Chattanooga Mocs,70,91,4.38,,1.23
+2025-03-01,regular,St. Francis (PA),Chicago State,80,71,1.21,,4.63
+2025-03-01,regular,Citadel,East Tennessee St,66,81,6.38,,1.13
+2025-03-01,regular,Ohio,Miami (Ohio),75,66,1.39,,3.05
+2025-03-01,regular,Northern Kentucky,Youngstown State,88,79,1.64,,2.33
+2025-03-01,regular,UMBC Retrievers,Vermont,69,79,4.00,,1.26
+2025-03-01,regular,Colgate,American University,59,67,1.62,,2.38
+2025-03-01,regular,Villanova,Butler,80,70,1.26,,3.95
+2025-03-01,regular,Virginia,Clemson,58,71,3.35,,1.34
+2025-03-01,regular,Providence,UConn,63,75,3.65,,1.30
+2025-03-01,regular,Fordham,Saint Josephs Hawks,76,90,4.18,,1.25
+2025-03-01,regular,Penn State,Maryland,64,68,2.70,,1.48
+2025-03-01,regular,North Carolina,Miami (FL),92,73,1.04,,12.50
+2025-03-01,regular,Virginia Tech,Syracuse,101,95,1.58,,2.45
+2025-03-01,regular,UNLV,Nevada,68,55,2.15,,1.71
+2025-03-01,regular,Akron,Kent State,77,72,1.57,,2.48
+2025-03-01,regular,Marshall,Appalachian State,75,57,1.64,,2.30
+2025-03-01,regular,Northwestern,Iowa,68,57,1.48,,2.73
+2025-03-01,regular,South Alabama,Louisiana Lafayette,65,42,1.10,,7.50
+2025-03-01,regular,Southern Miss,Troy,58,70,5.00,,1.18
+2025-03-01,regular,Georgia Southern,Georgia State,76,75,1.42,,2.93
+2025-03-01,regular,Texas State,James Madison,102,93,2.13,,1.75
+2025-03-01,regular,Purdue,UCLA,76,66,1.40,,3.03
+2025-03-01,regular,Louisiana Monroe,Arkansas State,67,94,11.75,,1.05
+2025-03-01,regular,Coastal Carolina,Old Dominion,59,61,2.03,,1.82
+2025-03-01,regular,Canisius,Manhattan,72,77,3.20,,1.37
+2025-03-01,regular,Cornell,Penn,90,62,1.25,,4.13
+2025-03-01,regular,VCU Rams,Davidson,80,56,1.07,,9.50
+2025-03-01,regular,Fairfield,Mount St. Mary's,69,62,2.08,,1.79
+2025-03-01,regular,Sacred Heart,Marist,67,54,1.73,,2.15
+2025-03-01,regular,Niagara,Iona,63,65,1.89,,1.93
+2025-03-01,regular,Eastern Michigan,Central Michigan,84,73,2.25,,1.67
+2025-03-01,regular,Harvard,Brown,52,59,1.95,,1.84
+2025-03-01,regular,Dartmouth,Yale,67,72,3.95,,1.25
+2025-02-28,regular,Hawaii,UC Riverside,76,82,1.89,,1.93
+2025-02-28,regular,Loyola Marymount,St. Marys (CA),55,58,7.50,,1.10
+2025-02-28,regular,UC Santa Barbara,Cal Poly,96,77,1.33,,3.40
+2025-02-28,regular,Seattle,California Baptist,72,48,1.35,,3.28
+2025-02-28,regular,CS Fullerton,UC Irvine,51,76,12.00,,1.05
+2025-02-28,regular,CS Northridge,UC San Diego,71,77,3.05,,1.39
+2025-02-28,regular,Long Beach State,CSU Bakersfield,87,88,2.13,,1.75
+2025-02-28,regular,Portland State,Montana State,69,52,1.62,,2.35
+2025-02-28,regular,Sacramento State,Montana,54,60,3.93,,1.27
+2025-02-28,regular,Portland,Pepperdine,87,67,1.58,,2.45
+2025-02-28,regular,Washington State,San Diego Toreros,93,86,1.10,,7.63
+2025-02-28,regular,Wright State,Cleveland State,82,76,1.86,,1.96
+2025-02-28,regular,East. Washington,Weber State,64,66,1.52,,2.59
+2025-02-28,regular,Grand Canyon,UT Arlington,85,71,1.13,,6.13
+2025-02-28,regular,Idaho,Idaho State,65,69,1.84,,1.99
+2025-02-28,regular,New Mexico State,Middle Tenn. St.,66,71,1.80,,2.05
+2025-02-28,regular,Utah Tech,Southern Utah,75,82,1.57,,2.48
+2025-02-28,regular,Wichita State,UAB,72,80,1.91,,1.91
+2025-02-28,regular,UTEP,Western Kentucky,73,80,1.42,,2.93
+2025-02-28,regular,Eastern Illinois,UALR,71,60,3.15,,1.37
+2025-02-28,regular,Tennessee State,Morehead State,64,55,1.40,,3.03
+2025-02-28,regular,Siu Edwardsville,Southeast Missouri State,68,83,1.58,,2.45
+2025-02-28,regular,UT Martin,Southern Indiana,79,63,1.33,,3.45
+2025-02-28,regular,Tennessee Tech,Western Illinois,69,82,1.29,,3.75
+2025-02-28,regular,Tarleton,Abilene Christian,67,52,1.80,,2.05
+2025-02-28,regular,UMKC,Denver,64,56,1.29,,3.73
+2025-02-28,regular,St. Thomas (Minn.),North Dakota,86,71,1.18,,5.00
+2025-02-28,regular,Wisc. Milwaukee,Oakland,71,66,1.41,,2.98
+2025-02-28,regular,Oral Roberts,South Dakota St.,69,77,3.60,,1.31
+2025-02-28,regular,NC Greensboro,Chattanooga Mocs,63,75,1.84,,1.99
+2025-02-28,regular,Florida International,Kennesaw State,76,61,2.53,,1.55
+2025-02-28,regular,Liberty,Jacksonville State,59,55,1.33,,3.40
+2025-02-28,regular,Campbell,NC Wilmington,60,79,2.53,,1.55
+2025-02-28,regular,Central Connecticut State,Le Moyne,84,75,1.11,,7.25
+2025-02-28,regular,Charleston,Delaware,94,84,1.30,,3.65
+2025-02-28,regular,Mercyhurst Lakers,Chicago State,90,68,1.37,,3.15
+2025-02-28,regular,Wisc. Green Bay,Detroit,76,71,1.63,,2.33
+2025-02-28,regular,Drexel,Hampton,53,52,1.58,,2.45
+2025-02-28,regular,Florida Atlantic,North Texas,61,71,1.78,,2.08
+2025-02-28,regular,Stony Brook,Hofstra,59,56,3.30,,1.35
+2025-02-28,regular,IPFW,Northern Kentucky,74,79,1.32,,3.53
+2025-02-28,regular,LIU Sharks,Wagner,60,47,1.40,,3.03
+2025-02-28,regular,Longwood,Winthrop,59,85,1.86,,1.96
+2025-02-28,regular,New Hampshire Wildcats,Maine Black Bears,66,73,3.75,,1.29
+2025-02-28,regular,Northeastern,N. Carolina A&T,69,55,1.16,,5.63
+2025-02-28,regular,Towson,William & Mary,88,73,1.37,,3.20
+2025-02-28,regular,IU Indy,Robert Morris,68,82,3.63,,1.30
+2025-02-28,regular,UMBC Retrievers,Albany Great Danes,74,78,2.13,,1.75
+2025-02-28,regular,UMass Lowell,Bryant University,78,79,2.38,,1.61
+2025-02-28,regular,VMI,Samford,83,95,5.63,,1.15
+2025-02-27,regular,California,SMU Mustangs,77,81,2.53,,1.55
+2025-02-27,regular,Oregon State,San Francisco,72,74,1.60,,2.40
+2025-02-27,regular,Boise State,Utah State,82,65,1.53,,2.58
+2025-02-27,regular,USC,Ohio State,82,87,2.03,,1.82
+2025-02-27,regular,Arizona State,Brigham Young,81,91,3.65,,1.30
+2025-02-27,regular,Arizona,Utah Utes,83,66,1.06,,9.88
+2025-02-27,regular,Arkansas,Texas,86,81,1.69,,2.23
+2025-02-27,regular,Stanford,Boston College,78,60,1.14,,6.00
+2025-02-27,regular,Valparaiso,Bradley,65,76,2.73,,1.48
+2025-02-27,regular,Butler,St. John's (N.Y.),70,76,3.05,,1.39
+2025-02-27,regular,Creighton,DePaul,75,65,1.06,,10.25
+2025-02-27,regular,Oklahoma,Kentucky,82,83,2.43,,1.59
+2025-02-27,regular,Wake Forest,Virginia,75,83,1.31,,3.58
+2025-02-27,regular,Louisiana Lafayette,Arkansas State,64,83,6.38,,1.13
+2025-02-27,regular,Indiana,Penn State,83,78,1.41,,3.00
+2025-02-27,regular,Southern Miss,South Alabama,82,88,3.40,,1.33
+2025-02-27,regular,Missouri State,Belmont,65,74,2.01,,1.83
+2025-02-27,regular,Lipscomb,Central Arkansas,78,60,1.02,,16.00
+2025-02-27,regular,Evansville,Drake,61,65,4.27,,1.23
+2025-02-27,regular,Loyola Chicago,George Washington,77,57,1.46,,2.75
+2025-02-27,regular,Md.-East. Shore,N. Carolina Central,68,59,3.40,,1.33
+2025-02-27,regular,Memphis,Rice,84,72,1.10,,7.63
+2025-02-27,regular,North Dakota St,South Dakota Coyotes,82,78,1.30,,3.65
+2025-02-27,regular,Tulane,Charlotte,78,64,1.30,,3.63
+2025-02-27,regular,Coastal Carolina,Georgia State,80,74,2.33,,1.64
+2025-02-27,regular,Auburn,Ole Miss,106,76,1.11,,7.38
+2025-02-27,regular,West Georgia,Austin Peay,73,70,2.65,,1.50
+2025-02-27,regular,Florida Gulf Coast,Bellarmine,80,61,1.11,,7.13
+2025-02-27,regular,Furman,Citadel,85,42,1.06,,9.88
+2025-02-27,regular,Jacksonville Dolphins,Stetson,79,72,1.08,,8.38
+2025-02-27,regular,Texas A&M,Vanderbilt,84,86,1.26,,4.05
+2025-02-27,regular,Western Carolina,Wofford,67,90,4.18,,1.25
+2025-02-27,regular,American University,Navy,60,68,1.56,,2.50
+2025-02-27,regular,Loyola Maryland,Bucknell,67,70,2.15,,1.73
+2025-02-27,regular,Clemson,Notre Dame,83,68,1.08,,9.00
+2025-02-27,regular,Colgate,Holy Cross,81,73,1.17,,5.25
+2025-02-27,regular,Rhode Island,Dayton,77,85,2.65,,1.50
+2025-02-27,regular,North Florida,Eastern Kentucky,81,86,1.80,,2.05
+2025-02-27,regular,George Mason,Fordham,74,64,1.12,,6.63
+2025-02-27,regular,Gardner Webb,Radford,56,63,2.10,,1.76
+2025-02-27,regular,High Point,USC Upstate,88,66,1.03,,15.25
+2025-02-27,regular,Northern Iowa,Illinois (Chi.),74,52,1.29,,3.70
+2025-02-27,regular,UCF Knights,Kansas State,80,76,1.48,,2.73
+2025-02-27,regular,Syracuse,NC State,74,60,1.87,,1.96
+2025-02-27,regular,North Alabama,Queens Royals,74,69,1.33,,3.47
+2025-02-27,regular,Saint Josephs Hawks,St. Bonaventure,75,64,1.36,,3.30
+2025-02-27,regular,Temple,South Florida,73,71,2.23,,1.69
+2025-02-27,regular,UConn,Georgetown,93,79,1.08,,9.00
+2025-02-27,regular,La Salle,Duquesne,62,67,2.20,,1.71
+2025-02-27,regular,Maryland,Michigan State,55,58,1.50,,2.65
+2025-02-27,regular,UNC Asheville,Presbyterian,59,64,1.35,,3.35
+2025-02-27,regular,Lehigh,Boston University,68,79,1.73,,2.15
+2025-02-27,regular,East Tennessee St,Mercer,59,58,1.25,,4.15
+2025-02-26,regular,Santa Clara,Gonzaga,76,95,3.35,,1.34
+2025-02-26,regular,San Diego State,New Mexico,73,65,1.71,,2.18
+2025-02-26,regular,Nevada,Wyoming,84,61,1.10,,7.63
+2025-02-26,regular,San Jose State,UNLV,71,77,2.23,,1.69
+2025-02-26,regular,Air Force,Colorado State,55,77,6.75,,1.12
+2025-02-26,regular,Alabama,Mississippi St.,111,73,1.25,,4.13
+2025-02-26,regular,Illinois,Iowa,81,61,1.14,,6.00
+2025-02-26,regular,Virginia Tech,Louisville,66,71,5.13,,1.19
+2025-02-26,regular,LSU,Tennessee,59,65,5.25,,1.17
+2025-02-26,regular,Missouri,South Carolina,101,71,1.10,,7.38
+2025-02-26,regular,West Virginia,TCU,73,55,1.32,,3.50
+2025-02-26,regular,Wisconsin,Washington,88,62,1.09,,8.50
+2025-02-26,regular,Western Illinois,Lindenwood,86,81,1.98,,1.85
+2025-02-26,regular,Southern Illinois,Illinois State,88,79,2.05,,1.79
+2025-02-26,regular,Murray State,Indiana State,85,75,1.41,,3.00
+2025-02-26,regular,Oklahoma State,Iowa State,74,68,5.63,,1.16
+2025-02-26,regular,Texas State,Troy,69,74,2.08,,1.79
+2025-02-26,regular,Louisiana Monroe,James Madison,79,85,7.63,,1.10
+2025-02-26,regular,Ball State,Akron,82,87,3.43,,1.33
+2025-02-26,regular,Georgia Southern,Appalachian State,61,59,1.93,,1.89
+2025-02-26,regular,Central Michigan,Buffalo,73,69,1.09,,8.13
+2025-02-26,regular,Georgia,Florida,88,83,3.35,,1.34
+2025-02-26,regular,Kent State,Toledo,105,65,1.33,,3.40
+2025-02-26,regular,Marquette,Providence,82,52,1.10,,7.63
+2025-02-26,regular,Marshall,Old Dominion,83,66,1.19,,4.83
+2025-02-26,regular,Miami (Ohio),Northern Illinois,87,58,1.09,,7.75
+2025-02-26,regular,Minnesota,Northwestern,63,75,1.76,,2.10
+2025-02-26,regular,Western Michigan,Ohio,82,73,3.28,,1.36
+2025-02-26,regular,Richmond Spiders,VCU Rams,60,78,9.75,,1.06
+2025-02-26,regular,Lafayette,Army,81,65,1.54,,2.55
+2025-02-26,regular,Cincinnati,Baylor,69,67,1.75,,2.13
+2025-02-26,regular,Davidson,St. Louis Billikens,56,57,1.80,,2.05
+2025-02-26,regular,Miami (FL),Duke,60,97,28.50,,1.01
+2025-02-26,regular,Pittsburgh,Georgia Tech,67,73,1.23,,4.27
+2025-02-26,regular,Eastern Michigan,Bowling Green,60,65,1.53,,2.58
+2025-02-25,regular,Colorado,Kansas,64,71,3.50,,1.32
+2025-02-25,regular,Texas Tech,Houston,61,69,2.78,,1.44
+2025-02-25,regular,Alabama A&M,Florida A&M,77,66,1.86,,1.96
+2025-02-25,regular,Texas Southern,Arkansas-Pine Bluff,81,56,1.10,,7.38
+2025-02-25,regular,Coppin State,Howard,72,61,3.65,,1.30
+2025-02-25,regular,Houston Christian,Stephen F. Austin,72,56,1.93,,1.89
+2025-02-25,regular,Md.-East. Shore,South Carolina St,68,81,7.50,,1.10
+2025-02-25,regular,Nebraska,Michigan,46,49,2.05,,1.79
+2025-02-25,regular,Norfolk State,Morgan State,69,60,1.09,,7.75
+2025-02-25,regular,Delaware State,N. Carolina Central,86,84,1.63,,2.35
+2025-02-25,regular,Central Arkansas,North Alabama,70,93,5.88,,1.15
+2025-02-25,regular,New Orleans,East Texas A&M,71,73,2.00,,1.83
+2025-02-25,regular,Incarnate Word,Lamar,73,61,1.81,,2.03
+2025-02-25,regular,Nicholls State,Texas A&M-CC,71,69,1.53,,2.57
+2025-02-25,regular,Alabama State,Bethune-Cookman,68,70,1.56,,2.50
+2025-02-25,regular,Austin Peay,Lipscomb,78,95,3.53,,1.32
+2025-02-25,regular,Stetson,Bellarmine,69,67,2.00,,1.83
+2025-02-25,regular,Jacksonville Dolphins,Eastern Kentucky,59,55,1.64,,2.33
+2025-02-25,regular,Florida Gulf Coast,North Florida,86,82,1.30,,3.63
+2025-02-25,regular,Florida State,North Carolina,85,96,2.45,,1.58
+2025-02-25,regular,McNeese State,UTRGV,100,65,1.07,,9.13
+2025-02-25,regular,Prairie View A&M,Miss. Valley St.,64,56,1.05,,11.50
+2025-02-25,regular,SE Louisiana,Northwestern St.,69,72,1.31,,3.60
+2025-02-25,regular,West Georgia,Queens Royals,57,72,3.90,,1.27
+2025-02-25,regular,William & Mary,NC Wilmington,70,79,2.35,,1.63
+2025-02-24,regular,Hampton,Stony Brook,81,49,1.25,,4.18
+2025-02-24,regular,Kansas State,Arizona State,54,66,1.36,,3.28
+2025-02-24,regular,Creighton,Georgetown,80,69,1.10,,7.63
+2025-02-24,regular,Northern Iowa,Drake,58,64,1.84,,1.99
+2025-02-24,regular,UCF Knights,Utah Utes,76,72,1.58,,2.45
+2025-02-23,regular,UCLA,Ohio State,69,61,1.29,,3.75
+2025-02-23,regular,Oakland,Cleveland State,91,86,1.66,,2.28
+2025-02-23,regular,Siena,Canisius,88,93,1.12,,6.63
+2025-02-23,regular,East Carolina,UTSA Roadrunners,96,89,1.25,,4.15
+2025-02-23,regular,Memphis,Florida Atlantic,84,65,1.26,,4.00
+2025-02-23,regular,Navy,Holy Cross,83,77,1.33,,3.40
+2025-02-23,regular,Manhattan,Quinnipiac,71,74,2.68,,1.50
+2025-02-23,regular,Marist,Niagara,64,61,1.30,,3.68
+2025-02-23,regular,Robert Morris,Wisc. Milwaukee,72,59,1.83,,2.01
+2025-02-23,regular,South Dakota St.,UMKC,70,65,1.18,,5.00
+2025-02-23,regular,UAB,Temple,80,64,1.18,,5.00
+2025-02-23,regular,Wichita State,Tulane,78,67,1.50,,2.65
+2025-02-23,regular,Youngstown State,Wisc. Green Bay,81,77,1.09,,8.25
+2025-02-23,regular,Indiana,Purdue,73,58,2.55,,1.54
+2025-02-23,regular,Iona,Merrimack Warriors,70,77,1.89,,1.93
+2025-02-23,regular,Northern Kentucky,IU Indy,71,67,1.24,,4.23
+2025-02-23,regular,Bucknell,Army,84,53,1.32,,3.53
+2025-02-23,regular,Loyola Maryland,Colgate,84,65,2.60,,1.52
+2025-02-23,regular,St. John's (N.Y.),UConn,89,75,1.55,,2.53
+2025-02-23,regular,South Florida,North Texas,57,64,2.80,,1.45
+2025-02-23,regular,Arizona,Brigham Young,95,96,1.33,,3.45
+2025-02-23,regular,Stanford,California,66,61,1.34,,3.38
+2025-02-23,regular,UNLV,Colorado State,53,61,2.17,,1.72
+2025-02-23,regular,UC San Diego,Hawaii,83,44,1.07,,9.25
+2025-02-23,regular,CSU Bakersfield,UC Irvine,64,73,3.35,,1.34
+2025-02-23,regular,Loyola Marymount,Pepperdine,93,82,1.38,,3.13
+2025-02-23,regular,Montana State,Montana,85,89,1.76,,2.10
+2025-02-23,regular,Southern Indiana,Siu Edwardsville,82,68,2.68,,1.50
+2025-02-23,regular,South Carolina,Texas,84,69,2.19,,1.71
+2025-02-23,regular,Gonzaga,St. Marys (CA),67,74,1.35,,3.30
+2025-02-23,regular,Nebraska O.,South Dakota Coyotes,93,85,1.49,,2.68
+2025-02-23,regular,Arkansas,Missouri,92,85,1.78,,2.08
+2025-02-23,regular,DePaul,Butler,72,84,2.53,,1.55
+2025-02-23,regular,Grand Canyon,California Baptist,66,64,1.12,,6.63
+2025-02-23,regular,Illinois,Duke,67,110,4.38,,1.23
+2025-02-23,regular,Idaho State,Sacramento State,83,66,1.15,,5.63
+2025-02-23,regular,Northern Colorado,Idaho,92,74,1.21,,4.68
+2025-02-23,regular,Missouri State,Illinois State,68,70,2.30,,1.64
+2025-02-23,regular,Southern Miss,Louisiana Lafayette,60,62,1.54,,2.55
+2025-02-23,regular,Western Kentucky,Louisiana Tech,64,63,1.86,,1.96
+2025-02-23,regular,Oral Roberts,St. Thomas (Minn.),71,66,4.10,,1.26
+2025-02-23,regular,Utah State,San Diego State,79,71,1.40,,3.00
+2025-02-23,regular,UT Arlington,Tarleton,67,57,1.33,,3.45
+2025-02-23,regular,Abilene Christian,Utah Tech,80,71,1.33,,3.45
+2025-02-23,regular,Albany Great Danes,New Hampshire Wildcats,60,71,1.11,,7.25
+2025-02-23,regular,Yale,Columbia,90,64,1.06,,11.00
+2025-02-23,regular,Elon,William & Mary,70,79,1.58,,2.45
+2025-02-23,regular,Old Dominion,Georgia State,70,76,1.67,,2.25
+2025-02-23,regular,Long Beach State,UC Santa Barbara,56,58,3.73,,1.29
+2025-02-23,regular,Pacific,Portland,73,81,1.67,,2.25
+2025-02-23,regular,Southern Illinois,Valparaiso,79,83,1.37,,3.20
+2025-02-23,regular,Alabama,Kentucky,96,83,1.15,,5.88
+2025-02-23,regular,Miami (FL),Virginia Tech,68,81,1.88,,1.97
+2025-02-23,regular,Ohio,Akron,84,67,2.08,,1.79
+2025-02-23,regular,Belmont,Indiana State,77,75,1.44,,2.83
+2025-02-23,regular,Nevada,Boise State,69,70,1.86,,1.98
+2025-02-23,regular,Bradley,Murray State,85,83,1.33,,3.43
+2025-02-23,regular,Brown,Cornell,81,85,1.91,,1.91
+2025-02-23,regular,LSU,Florida,65,79,4.88,,1.19
+2025-02-23,regular,Penn,Harvard,78,79,1.66,,2.25
+2025-02-23,regular,Incarnate Word,Stephen F. Austin,63,61,1.83,,2.00
+2025-02-23,regular,Texas Southern,Miss. Valley St.,79,38,,,
+2025-02-23,regular,New Orleans,Northwestern St.,66,73,3.15,,1.38
+2025-02-23,regular,Washington State,Santa Clara,79,109,1.99,,1.84
+2025-02-23,regular,George Washington,UMass,74,52,1.33,,3.45
+2025-02-23,regular,Prairie View A&M,Arkansas-Pine Bluff,64,75,1.42,,2.93
+2025-02-23,regular,Grambling St.,Southern Univ.,64,71,2.38,,1.61
+2025-02-23,regular,Texas State,South Alabama,93,92,1.76,,2.10
+2025-02-23,regular,Alabama A&M,Bethune-Cookman,64,68,2.08,,1.79
+2025-02-23,regular,Cal Poly,UC Riverside,112,100,1.99,,1.84
+2025-02-23,regular,UC Davis,CS Northridge,62,65,2.55,,1.54
+2025-02-23,regular,Jacksonville State,UTEP,73,65,1.57,,2.48
+2025-02-23,regular,Kennesaw State,New Mexico State,49,60,1.52,,2.60
+2025-02-23,regular,Lafayette,Lehigh,78,70,1.73,,2.15
+2025-02-23,regular,McNeese State,Texas A&M-CC,73,57,1.12,,6.63
+2025-02-23,regular,San Diego Toreros,Oregon State,73,83,6.75,,1.12
+2025-02-23,regular,Southeast Missouri State,Lindenwood,74,58,1.19,,4.83
+2025-02-23,regular,Alabama State,Florida A&M,60,59,1.32,,3.43
+2025-02-23,regular,Troy,Coastal Carolina,83,66,1.05,,10.00
+2025-02-23,regular,Coppin State,Norfolk State,63,79,8.13,,1.07
+2025-02-23,regular,SE Louisiana,East Texas A&M,83,65,1.20,,4.55
+2025-02-23,regular,Northern Illinois,Eastern Michigan,76,79,2.78,,1.44
+2025-02-23,regular,Houston Christian,Lamar,58,66,2.10,,1.74
+2025-02-23,regular,Radford,Presbyterian,73,80,1.34,,3.28
+2025-02-23,regular,Vermont,UMass Lowell,85,61,1.48,,2.65
+2025-02-23,regular,Jackson State,Alcorn State,71,63,1.36,,3.23
+2025-02-23,regular,American University,Boston University,48,44,1.53,,2.57
+2025-02-23,regular,UALR,Western Illinois,75,61,1.17,,5.50
+2025-02-23,regular,Auburn,Georgia,82,70,1.06,,9.75
+2025-02-23,regular,Colorado,Baylor,76,74,3.05,,1.39
+2025-02-23,regular,Central Connecticut State,Stonehill,67,41,1.25,,4.13
+2025-02-23,regular,SMU Mustangs,Clemson,69,79,1.98,,1.85
+2025-02-23,regular,Delaware,Hofstra,65,78,1.75,,2.13
+2025-02-23,regular,Delaware State,South Carolina St,88,94,2.58,,1.53
+2025-02-23,regular,St. Bonaventure,Duquesne,70,63,1.39,,3.05
+2025-02-23,regular,Northern Arizona,East. Washington,87,67,1.56,,2.50
+2025-02-23,regular,VCU Rams,George Mason,70,54,1.15,,5.75
+2025-02-23,regular,James Madison,Georgia Southern,78,73,1.22,,4.50
+2025-02-23,regular,Morgan State,Howard,81,87,1.91,,1.91
+2025-02-23,regular,Iowa,Washington,85,79,1.36,,3.28
+2025-02-23,regular,Kansas,Oklahoma State,96,64,1.08,,8.88
+2025-02-23,regular,Le Moyne,LIU Sharks,61,76,2.00,,1.83
+2025-02-23,regular,Nicholls State,UTRGV,93,84,1.42,,2.95
+2025-02-23,regular,North Carolina,Virginia,81,66,1.18,,5.00
+2025-02-23,regular,Weber State,Portland State,60,58,2.38,,1.62
+2025-02-23,regular,Wyoming,San Jose State,73,82,1.45,,2.80
+2025-02-23,regular,Utah Valley State,Seattle,61,55,1.40,,3.00
+2025-02-22,regular,Morehead State,Eastern Illinois,62,67,1.42,,2.90
+2025-02-22,regular,Vanderbilt,Ole Miss,77,72,1.80,,2.05
+2025-02-22,regular,Air Force,Fresno State,72,69,1.56,,2.50
+2025-02-22,regular,Arkansas State,Louisiana Monroe,95,70,1.01,,18.50
+2025-02-22,regular,Illinois (Chi.),Evansville,82,77,1.30,,3.65
+2025-02-22,regular,Middle Tenn. St.,Sam Houston St.,74,70,1.45,,2.80
+2025-02-22,regular,Samford,Western Carolina,93,72,1.06,,10.50
+2025-02-22,regular,Ball State,Buffalo,80,66,1.21,,4.63
+2025-02-22,regular,St. Louis Billikens,Rhode Island,81,66,1.32,,3.50
+2025-02-22,regular,Notre Dame,Pittsburgh,76,72,2.35,,1.63
+2025-02-22,regular,Binghamton,Maine Black Bears,71,69,2.43,,1.59
+2025-02-22,regular,Boston College,Georgia Tech,69,54,2.08,,1.78
+2025-02-22,regular,Campbell,Towson,67,76,2.28,,1.65
+2025-02-22,regular,Charleston Southern,USC Upstate,69,79,1.36,,3.28
+2025-02-22,regular,Chattanooga Mocs,Citadel,76,75,1.04,,14.25
+2025-02-22,regular,Chicago State,Wagner,52,64,2.43,,1.59
+2025-02-22,regular,Fordham,Davidson,69,80,2.17,,1.72
+2025-02-22,regular,Wofford,East Tennessee St,68,73,1.56,,2.50
+2025-02-22,regular,Liberty,Florida International,58,45,1.09,,8.38
+2025-02-22,regular,Gardner Webb,High Point,67,90,3.93,,1.27
+2025-02-22,regular,Hampton,NC Wilmington,83,70,3.05,,1.39
+2025-02-22,regular,Houston,Iowa State,68,59,1.13,,6.38
+2025-02-22,regular,UNC Asheville,Longwood,87,82,1.62,,2.35
+2025-02-22,regular,Mercer,NC Greensboro,61,78,2.40,,1.60
+2025-02-22,regular,Minnesota,Penn State,60,69,1.65,,2.28
+2025-02-22,regular,N. Carolina A&T,Stony Brook,73,72,1.65,,2.30
+2025-02-22,regular,NC State,Wake Forest,85,73,2.48,,1.56
+2025-02-22,regular,North Dakota,North Dakota St,79,77,2.53,,1.55
+2025-02-22,regular,Rice,Tulsa,71,50,1.37,,3.20
+2025-02-22,regular,Tennessee Tech,Tennessee State,77,74,1.80,,2.05
+2025-02-22,regular,Appalachian State,Marshall,59,69,1.51,,2.58
+2025-02-22,regular,Western Michigan,Central Michigan,57,86,2.19,,1.69
+2025-02-22,regular,Oklahoma,Mississippi St.,93,87,2.58,,1.51
+2025-02-22,regular,Texas Tech,West Virginia,73,51,1.17,,5.00
+2025-02-22,regular,Saint Josephs Hawks,Richmond Spiders,78,62,1.08,,8.50
+2025-02-22,regular,Drexel,Charleston,64,55,2.03,,1.82
+2025-02-22,regular,Cincinnati,TCU,75,63,1.31,,3.60
+2025-02-22,regular,Louisville,Florida State,89,81,1.09,,7.88
+2025-02-22,regular,Furman,VMI,75,71,1.11,,7.00
+2025-02-22,regular,Wisconsin,Oregon,73,77,1.26,,4.05
+2025-02-22,regular,Texas A&M,Tennessee,69,77,1.76,,2.10
+2025-02-22,regular,Youngstown State,Wisc. Milwaukee,74,84,1.80,,2.05
+2025-02-22,regular,Miami (Ohio),Kent State,96,92,1.89,,1.93
+2025-02-22,regular,Michigan,Michigan State,62,75,1.63,,2.33
+2025-02-22,regular,Brown,Columbia,86,61,1.44,,2.83
+2025-02-22,regular,Marist,Canisius,89,81,1.11,,7.13
+2025-02-22,regular,Detroit,Cleveland State,65,73,4.18,,1.25
+2025-02-22,regular,Yale,Cornell,92,88,1.15,,5.75
+2025-02-22,regular,Penn,Dartmouth,88,75,1.75,,2.13
+2025-02-22,regular,Rider,Fairfield,49,69,,,
+2025-02-22,regular,IPFW,Oakland,80,66,1.54,,2.55
+2025-02-22,regular,Villanova,Marquette,81,66,2.10,,1.76
+2025-02-22,regular,Merrimack Warriors,Sacred Heart,59,60,1.42,,2.98
+2025-02-22,regular,Mount St. Mary's,St. Peters,69,58,,,
+2025-02-22,regular,Siena,Niagara,94,60,1.33,,3.40
+2025-02-22,regular,Wright State,Northern Kentucky,76,80,1.56,,2.50
+2025-02-22,regular,Robert Morris,Wisc. Green Bay,94,85,1.09,,8.50
+2025-02-22,regular,Loyola Chicago,Dayton,76,72,2.00,,1.83
+2025-02-22,regular,Princeton,Harvard,76,71,,,
+2025-02-22,regular,Iona,Manhattan,65,60,1.59,,2.43
+2025-02-22,regular,Toledo,Bowling Green,68,69,1.28,,3.80
+2025-02-21,regular,Santa Clara,Loyola Marymount,76,61,1.15,,5.75
+2025-02-21,regular,Cal Poly,UC San Diego,67,81,7.00,,1.11
+2025-02-21,regular,UC Santa Barbara,CS Fullerton,86,56,1.07,,9.25
+2025-02-21,regular,UC Irvine,CS Northridge,72,84,1.36,,3.23
+2025-02-21,regular,UC Riverside,Long Beach State,87,66,1.15,,5.63
+2025-02-21,regular,Pepperdine,Oregon State,78,84,3.65,,1.30
+2025-02-21,regular,San Francisco,Pacific,71,58,1.06,,10.00
+2025-02-21,regular,UC Davis,CSU Bakersfield,66,71,1.52,,2.60
+2025-02-21,regular,Florida Atlantic,Wichita State,68,75,1.31,,3.58
+2025-02-21,regular,Idaho State,Portland State,82,74,1.76,,2.10
+2025-02-21,regular,Middle Tenn. St.,Louisiana Tech,74,85,1.35,,3.30
+2025-02-21,regular,Weber State,Sacramento State,77,80,1.33,,3.40
+2025-02-21,regular,Western Kentucky,Sam Houston St.,62,78,1.55,,2.53
+2025-02-21,regular,Utah Tech,Utah Valley State,77,79,3.50,,1.32
+2025-02-21,regular,Southern Indiana,Eastern Illinois,54,63,1.64,,2.25
+2025-02-21,regular,Maryland,USC,88,71,1.13,,6.00
+2025-02-21,regular,Southeast Missouri State,Western Illinois,87,66,1.13,,5.88
+2025-02-21,regular,Tennessee Tech,UT Martin,71,66,1.71,,2.15
+2025-02-21,regular,Abilene Christian,Southern Utah,75,59,1.32,,3.50
+2025-02-21,regular,UALR,Lindenwood,92,93,1.21,,4.50
+2025-02-21,regular,Southern Miss,Coastal Carolina,78,87,1.37,,3.20
+2025-02-21,regular,Northern Colorado,East. Washington,95,76,1.23,,4.30
+2025-02-21,regular,Northern Arizona,Idaho,78,83,1.65,,2.28
+2025-02-21,regular,North Florida,Jacksonville Dolphins,77,73,1.87,,1.96
+2025-02-21,regular,Lipscomb,North Alabama,75,63,1.26,,4.10
+2025-02-21,regular,West Georgia,Central Arkansas,71,82,1.54,,2.55
+2025-02-21,regular,Morehead State,Siu Edwardsville,62,80,2.08,,1.78
+2025-02-21,regular,Queens Royals,Austin Peay,78,92,1.35,,3.35
+2025-02-21,regular,Vermont,Bryant University,59,55,2.08,,1.79
+2025-02-21,regular,N. Carolina A&T,Campbell,53,50,2.93,,1.42
+2025-02-21,regular,Chicago State,Central Connecticut State,75,81,6.25,,1.13
+2025-02-21,regular,Northeastern,Charleston,62,73,1.96,,1.87
+2025-02-21,regular,Elon,Towson,69,63,2.05,,1.80
+2025-02-21,regular,Stetson,Florida Gulf Coast,80,83,6.13,,1.13
+2025-02-21,regular,James Madison,Georgia State,83,63,1.14,,6.00
+2025-02-21,regular,Jacksonville State,New Mexico State,52,61,1.31,,3.60
+2025-02-21,regular,Kennesaw State,UTEP,83,73,1.50,,2.68
+2025-02-21,regular,Le Moyne,St. Francis (PA),76,81,1.56,,2.50
+2025-02-21,regular,Troy,Louisiana Lafayette,69,72,1.07,,9.50
+2025-02-21,regular,Radford,UNC Asheville,77,53,1.61,,2.38
+2025-02-21,regular,Wagner,Stonehill,63,57,1.69,,2.23
+2025-02-21,regular,Albany Great Danes,Maine Black Bears,79,68,2.13,,1.75
+2025-02-21,regular,Appalachian State,Georgia Southern,79,74,1.24,,4.23
+2025-02-21,regular,Bellarmine,Eastern Kentucky,80,74,3.95,,1.27
+2025-02-21,regular,Delaware,Drexel,74,78,1.67,,2.25
+2025-02-21,regular,Ohio State,Northwestern,49,70,1.21,,4.68
+2025-02-21,regular,Binghamton,New Hampshire Wildcats,79,60,1.23,,4.30
+2025-02-21,regular,UMass Lowell,UMBC Retrievers,98,79,1.39,,3.10
+2025-02-21,regular,Old Dominion,Marshall,77,81,2.55,,1.54
+2025-02-20,regular,Boise State,New Mexico,86,78,1.48,,2.73
+2025-02-20,regular,St. Marys (CA),Portland,79,66,1.01,,19.50
+2025-02-20,regular,Utah State,San Jose State,105,57,1.06,,10.50
+2025-02-20,regular,Missouri,Alabama,110,98,1.82,,2.03
+2025-02-20,regular,Auburn,Arkansas,67,60,1.06,,10.13
+2025-02-20,regular,Denver,Oral Roberts,71,60,1.65,,2.30
+2025-02-20,regular,DePaul,St. John's (N.Y.),58,82,6.63,,1.12
+2025-02-20,regular,Florida State,Miami (FL),74,66,1.23,,4.29
+2025-02-20,regular,Washington State,Gonzaga,63,84,6.50,,1.13
+2025-02-20,regular,Oklahoma State,UCF Knights,104,95,1.76,,2.10
+2025-02-20,regular,Iowa,Oregon,78,80,2.15,,1.73
+2025-02-20,regular,Texas State,Louisiana Monroe,80,63,1.11,,7.25
+2025-02-20,regular,Arkansas State,South Alabama,56,60,1.26,,3.95
+2025-02-20,regular,Illinois State,Bradley,82,71,1.89,,1.93
+2025-02-20,regular,Valparaiso,Missouri State,66,64,1.71,,2.20
+2025-02-20,regular,UMKC,Nebraska O.,66,78,1.67,,2.25
+2025-02-20,regular,South Dakota St.,North Dakota St,68,77,1.36,,3.25
+2025-02-20,regular,North Texas,Tulsa,63,44,1.08,,8.75
+2025-02-20,regular,Rice,UAB,89,90,2.57,,1.53
+2025-02-20,regular,South Dakota Coyotes,St. Thomas (Minn.),85,80,2.40,,1.60
+2025-02-20,regular,UTSA Roadrunners,South Florida,73,78,1.61,,2.40
+2025-02-20,regular,Belmont,Northern Iowa,75,82,1.87,,1.96
+2025-02-20,regular,Drake,Illinois (Chi.),74,57,1.17,,5.38
+2025-02-20,regular,Tulane,East Carolina,86,81,1.71,,2.20
+2025-02-20,regular,Samford,Furman,72,80,1.33,,3.45
+2025-02-20,regular,Boston University,Loyola Maryland,68,66,1.53,,2.58
+2025-02-20,regular,High Point,Charleston Southern,83,60,1.06,,10.50
+2025-02-20,regular,Chattanooga Mocs,Western Carolina,91,86,1.05,,10.75
+2025-02-20,regular,West Virginia,Cincinnati,62,59,1.63,,2.35
+2025-02-20,regular,Citadel,Mercer,52,62,3.65,,1.30
+2025-02-20,regular,Colgate,Navy,79,75,1.34,,3.35
+2025-02-20,regular,Detroit,IU Indy,71,80,1.82,,2.03
+2025-02-20,regular,Duquesne,Fordham,73,64,1.34,,3.35
+2025-02-20,regular,East Tennessee St,NC Greensboro,65,49,1.71,,2.20
+2025-02-20,regular,Indiana State,Evansville,74,79,1.30,,3.68
+2025-02-20,regular,Longwood,Gardner Webb,90,77,1.58,,2.45
+2025-02-20,regular,George Washington,Saint Josephs Hawks,68,79,2.20,,1.71
+2025-02-20,regular,Georgetown,Providence,93,72,1.91,,1.91
+2025-02-20,regular,Kentucky,Vanderbilt,82,61,1.44,,2.83
+2025-02-20,regular,Murray State,Southern Illinois,62,60,1.80,,2.05
+2025-02-20,regular,North Carolina,NC State,97,73,1.15,,5.63
+2025-02-20,regular,Notre Dame,SMU Mustangs,73,97,1.81,,2.03
+2025-02-20,regular,Presbyterian,Winthrop,77,81,2.28,,1.66
+2025-02-20,regular,La Salle,Richmond Spiders,58,63,1.55,,2.53
+2025-02-20,regular,Penn State,Nebraska,89,72,2.05,,1.79
+2025-02-20,regular,Army,American University,76,69,1.82,,2.03
+2025-02-20,regular,VMI,Wofford,43,82,2.98,,1.42
+2025-02-20,regular,Holy Cross,Lafayette,74,69,2.28,,1.66
+2025-02-20,regular,VCU Rams,UMass,80,51,1.05,,10.75
+2025-02-19,regular,Charlotte,Temple,78,72,1.98,,1.85
+2025-02-19,regular,San Diego State,Fresno State,83,60,1.05,,11.75
+2025-02-19,regular,UCLA,Minnesota,61,64,1.13,,6.50
+2025-02-19,regular,Arizona State,Houston,65,80,6.75,,1.12
+2025-02-19,regular,Boston College,Virginia Tech,54,36,2.05,,1.79
+2025-02-19,regular,Brigham Young,Kansas,91,57,1.65,,2.28
+2025-02-19,regular,Colorado State,Nevada,79,71,1.60,,2.40
+2025-02-19,regular,LSU,South Carolina,81,67,1.66,,2.25
+2025-02-19,regular,Wyoming,Air Force,69,62,1.23,,4.38
+2025-02-19,regular,Wisconsin,Illinois,95,74,1.53,,2.58
+2025-02-19,regular,UT Martin,Tennessee State,75,86,1.67,,2.25
+2025-02-19,regular,Xavier,Butler,76,63,1.31,,3.55
+2025-02-19,regular,Iowa State,Colorado,79,65,1.04,,12.50
+2025-02-19,regular,TCU,Texas Tech,69,66,3.60,,1.31
+2025-02-19,regular,Akron,Northern Illinois,73,63,1.04,,13.50
+2025-02-19,regular,Toledo,Ball State,67,66,1.29,,3.70
+2025-02-19,regular,Bowling Green,Kent State,84,91,3.03,,1.40
+2025-02-19,regular,Buffalo,Western Michigan,64,97,2.15,,1.73
+2025-02-19,regular,Queens Royals,Central Arkansas,89,72,1.08,,8.50
+2025-02-19,regular,Ohio,Central Michigan,84,82,1.44,,2.83
+2025-02-19,regular,Davidson,Loyola Chicago,69,77,1.73,,2.15
+2025-02-19,regular,Eastern Kentucky,Lipscomb,66,57,2.45,,1.58
+2025-02-19,regular,Florida,Oklahoma,85,63,1.07,,9.13
+2025-02-19,regular,Michigan State,Purdue,75,66,1.61,,2.38
+2025-02-19,regular,Mississippi St.,Texas A&M,70,54,1.66,,2.25
+2025-02-19,regular,North Alabama,West Georgia,80,62,1.05,,11.00
+2025-02-19,regular,Stetson,North Florida,71,79,3.20,,1.37
+2025-02-19,regular,Pittsburgh,Syracuse,80,69,1.15,,5.88
+2025-02-19,regular,Bellarmine,Austin Peay,94,68,2.73,,1.48
+2025-02-19,regular,UConn,Villanova,66,59,1.23,,4.33
+2025-02-19,regular,Eastern Michigan,Miami (Ohio),76,66,2.60,,1.52
+2025-02-19,regular,Florida Gulf Coast,Jacksonville Dolphins,72,56,1.66,,2.28
+2025-02-18,regular,Baylor,Arizona,67,74,1.67,,2.25
+2025-02-18,regular,Utah Utes,Kansas State,74,69,1.64,,2.33
+2025-02-18,regular,Southern Univ.,Texas Southern,66,57,1.33,,3.43
+2025-02-18,regular,Norfolk State,Delaware State,96,84,1.25,,4.13
+2025-02-18,regular,Virginia,Duke,62,80,9.00,,1.08
+2025-02-18,regular,Texas A&M-CC,Houston Christian,68,62,1.17,,5.25
+2025-02-18,regular,South Carolina St,Coppin State,87,57,1.05,,11.00
+2025-02-18,regular,East Texas A&M,Stephen F. Austin,74,76,2.93,,1.42
+2025-02-18,regular,Grambling St.,Prairie View A&M,70,48,1.22,,4.42
+2025-02-18,regular,UTRGV,Incarnate Word,60,66,1.50,,2.65
+2025-02-18,regular,Northwestern St.,Lamar,65,75,1.86,,1.96
+2025-02-18,regular,N. Carolina Central,Morgan State,78,92,1.22,,4.45
+2025-02-18,regular,New Orleans,Nicholls State,62,78,4.88,,1.19
+2025-02-18,regular,Arkansas-Pine Bluff,Alabama A&M,61,75,2.08,,1.79
+2025-02-18,regular,Florida A&M,Alcorn State,85,76,1.62,,2.38
+2025-02-18,regular,SE Louisiana,McNeese State,82,88,4.45,,1.22
+2025-02-18,regular,Miss. Valley St.,Alabama State,56,79,13.75,,1.03
+2025-02-18,regular,Bethune-Cookman,Jackson State,71,84,1.63,,2.35
+2025-02-18,regular,Bucknell,Lehigh,67,50,1.33,,3.40
+2025-02-18,regular,Murray State,Northern Iowa,67,74,2.10,,1.76
+2025-02-17,regular,Howard,Md.-East. Shore,86,62,1.11,,7.13
+2025-02-17,regular,Evansville,Valparaiso,79,69,2.08,,1.79
+2025-02-17,regular,Notre Dame,Louisville,60,75,3.78,,1.29
+2025-02-17,regular,Maryland,Iowa,101,75,1.14,,6.00
+2025-02-17,regular,New Mexico,Utah State,82,79,1.46,,2.78
+2025-02-17,regular,UAB,South Florida,85,78,1.26,,4.05
+2025-02-16,regular,St. John's (N.Y.),Creighton,79,73,1.36,,3.23
+2025-02-16,regular,Oakland,Detroit,93,83,1.09,,7.88
+2025-02-16,regular,Illinois (Chi.),Missouri State,63,58,1.42,,2.93
+2025-02-16,regular,Northwestern,Nebraska,64,68,2.15,,1.73
+2025-02-16,regular,Wisc. Milwaukee,Northern Kentucky,92,70,1.36,,3.23
+2025-02-16,regular,Wisc. Green Bay,Wright State,79,68,4.55,,1.21
+2025-02-16,regular,Drake,Bradley,59,61,1.39,,3.05
+2025-02-16,regular,Cleveland State,Youngstown State,60,68,1.62,,2.38
+2025-02-16,regular,Fairfield,Manhattan,67,80,1.99,,1.84
+2025-02-16,regular,Quinnipiac,Iona,79,74,1.36,,3.30
+2025-02-16,regular,Merrimack Warriors,Marist,60,61,1.45,,2.80
+2025-02-16,regular,South Dakota Coyotes,South Dakota St.,91,94,2.93,,1.42
+2025-02-16,regular,Canisius,Mount St. Mary's,66,73,3.55,,1.31
+2025-02-16,regular,Ohio State,Michigan,83,86,1.83,,2.00
+2025-02-16,regular,Temple,Florida Atlantic,81,83,2.75,,1.46
+2025-02-16,regular,Wichita State,Memphis,84,79,3.75,,1.29
+2025-02-16,regular,Sacred Heart,Siena,73,80,1.69,,2.23
+2025-02-16,regular,Hawaii,UC Irvine,49,66,2.83,,1.45
+2025-02-16,regular,San Diego State,Boise State,64,47,1.71,,2.18
+2025-02-16,regular,Gonzaga,Pepperdine,107,55,1.01,,22.50
+2025-02-16,regular,Utah Utes,Kansas,74,67,3.25,,1.36
+2025-02-16,regular,Portland,Loyola Marymount,89,78,2.78,,1.46
+2025-02-16,regular,San Diego Toreros,San Francisco,61,84,7.25,,1.11
+2025-02-16,regular,St. Marys (CA),Washington State,77,56,1.07,,9.63
+2025-02-16,regular,Brigham Young,Kansas State,80,65,1.29,,3.70
+2025-02-16,regular,California Baptist,Utah Tech,86,83,1.13,,6.50
+2025-02-16,regular,New Mexico State,Florida International,76,48,1.32,,3.50
+2025-02-16,regular,UTEP,Liberty,69,76,2.00,,1.83
+2025-02-16,regular,Montana,Weber State,65,58,1.19,,4.88
+2025-02-16,regular,Florida,South Carolina,88,67,1.09,,8.13
+2025-02-16,regular,Southern Utah,Utah Valley State,68,70,4.15,,1.25
+2025-02-16,regular,Arkansas State,Troy,70,71,1.36,,3.25
+2025-02-16,regular,CS Northridge,Cal Poly,89,85,1.19,,4.88
+2025-02-16,regular,Montana State,Idaho State,74,69,1.56,,2.50
+2025-02-16,regular,Texas,Kentucky,82,78,1.50,,2.65
+2025-02-16,regular,Louisiana Lafayette,Marshall,79,68,3.20,,1.37
+2025-02-16,regular,Western Kentucky,Middle Tenn. St.,77,87,1.67,,2.25
+2025-02-16,regular,St. Thomas (Minn.),Nebraska O.,95,84,1.28,,3.78
+2025-02-16,regular,Tarleton,Seattle,67,64,2.88,,1.43
+2025-02-16,regular,UC Riverside,UC Santa Barbara,81,69,1.91,,1.91
+2025-02-16,regular,Arizona State,TCU,70,74,1.50,,2.68
+2025-02-16,regular,Illinois,Michigan State,65,79,1.35,,3.30
+2025-02-16,regular,Central Michigan,Akron,82,85,2.52,,1.55
+2025-02-16,regular,Miss. Valley St.,Alabama A&M,70,82,7.63,,1.10
+2025-02-16,regular,Southern Illinois,Belmont,68,73,1.84,,1.99
+2025-02-16,regular,Chattanooga Mocs,East Tennessee St,78,71,1.34,,3.33
+2025-02-16,regular,East. Washington,Idaho,75,73,1.71,,2.19
+2025-02-16,regular,NC Wilmington,Elon,70,81,1.19,,4.95
+2025-02-16,regular,Fresno State,UNLV,51,52,3.90,,1.27
+2025-02-16,regular,UC San Diego,UC Davis,85,60,1.08,,8.50
+2025-02-16,regular,Arkansas-Pine Bluff,Alabama State,63,75,3.68,,1.30
+2025-02-16,regular,Bellarmine,West Georgia,76,81,1.67,,2.25
+2025-02-16,regular,Brown,Penn,82,72,1.54,,2.55
+2025-02-16,regular,Harvard,Columbia,87,75,1.63,,2.35
+2025-02-16,regular,Florida A&M,Jackson State,76,71,2.23,,1.69
+2025-02-16,regular,Richmond Spiders,Fordham,70,66,1.98,,1.85
+2025-02-16,regular,Longwood,Presbyterian,68,77,1.40,,3.03
+2025-02-16,regular,Oklahoma,LSU,79,82,1.28,,3.85
+2025-02-16,regular,New Orleans,McNeese State,64,78,15.00,,1.03
+2025-02-16,regular,Ole Miss,Mississippi St.,71,81,1.59,,2.43
+2025-02-16,regular,Syracuse,North Carolina,82,88,4.18,,1.25
+2025-02-16,regular,Oregon State,Pacific,79,65,1.10,,7.63
+2025-02-16,regular,Southern Univ.,Prairie View A&M,72,60,1.08,,9.00
+2025-02-16,regular,Providence,Villanova,75,62,2.23,,1.69
+2025-02-16,regular,SMU Mustangs,Wake Forest,66,77,1.35,,3.30
+2025-02-16,regular,Tulsa,UTSA Roadrunners,80,76,1.82,,2.03
+2025-02-16,regular,Bethune-Cookman,Alcorn State,74,78,1.41,,2.98
+2025-02-16,regular,Grambling St.,Texas Southern,60,67,1.75,,2.13
+2025-02-16,regular,UTRGV,Houston Christian,76,52,1.51,,2.63
+2025-02-16,regular,Austin Peay,Stetson,76,63,1.19,,4.88
+2025-02-16,regular,Dartmouth,Cornell,88,49,2.40,,1.60
+2025-02-16,regular,Lipscomb,Florida Gulf Coast,82,68,1.33,,3.47
+2025-02-16,regular,Portland State,Northern Colorado,82,71,1.87,,1.96
+2025-02-16,regular,Southeast Missouri State,Tennessee Tech,83,69,1.34,,3.33
+2025-02-16,regular,Central Arkansas,North Florida,84,83,4.18,,1.25
+2025-02-16,regular,UNC Asheville,Charleston Southern,75,72,1.15,,5.88
+2025-02-16,regular,N. Carolina Central,Coppin State,71,59,1.09,,8.13
+2025-02-16,regular,Eastern Illinois,UT Martin,68,72,2.15,,1.73
+2025-02-16,regular,Texas A&M-CC,Incarnate Word,69,55,1.30,,3.68
+2025-02-16,regular,Mercer,VMI,71,80,1.29,,3.75
+2025-02-16,regular,SE Louisiana,Nicholls State,84,81,1.82,,2.03
+2025-02-16,regular,Northwestern St.,Stephen F. Austin,68,70,1.69,,2.23
+2025-02-16,regular,Siu Edwardsville,Tennessee State,84,72,1.50,,2.65
+2025-02-16,regular,Alabama,Auburn,85,94,1.75,,2.13
+2025-02-16,regular,Delaware,Campbell,91,96,1.59,,2.43
+2025-02-16,regular,CSU Bakersfield,CS Fullerton,91,54,1.20,,4.75
+2025-02-16,regular,Eastern Kentucky,Queens Royals,86,80,1.72,,2.17
+2025-02-16,regular,Georgia Southern,Old Dominion,78,75,1.43,,2.90
+2025-02-16,regular,Louisiana Tech,Jacksonville State,68,70,1.65,,2.30
+2025-02-16,regular,South Alabama,Texas State,70,65,1.36,,3.28
+2025-02-16,regular,American University,Loyola Maryland,72,51,1.50,,2.65
+2025-02-16,regular,Georgia Tech,California,90,88,1.60,,2.40
+2025-02-16,regular,Charlotte,East Carolina,59,75,2.33,,1.64
+2025-02-16,regular,Iowa State,Cincinnati,81,70,1.13,,6.38
+2025-02-16,regular,Colorado State,Wyoming,88,53,1.17,,5.38
+2025-02-16,regular,Davidson,George Washington,67,74,1.58,,2.45
+2025-02-16,regular,Delaware State,Howard,90,69,1.86,,1.96
+2025-02-16,regular,Duke,Stanford,106,70,1.03,,14.00
+2025-02-16,regular,Rhode Island,La Salle,86,71,1.34,,3.35
+2025-02-16,regular,Md.-East. Shore,Norfolk State,63,75,8.13,,1.09
+2025-02-16,regular,USC,Minnesota,66,69,1.27,,3.85
+2025-02-16,regular,South Carolina St,Morgan State,90,62,1.22,,4.45
+2025-02-16,regular,Sacramento State,Northern Arizona,61,65,2.43,,1.59
+2025-02-15,regular,Western Carolina,Citadel,76,73,1.36,,3.23
+2025-02-15,regular,Eastern Michigan,Toledo,80,73,2.58,,1.53
+2025-02-15,regular,Georgia,Missouri,74,87,2.15,,1.73
+2025-02-15,regular,Sam Houston St.,Kennesaw State,78,76,1.69,,2.22
+2025-02-15,regular,Stonehill,Mercyhurst Lakers,85,73,1.44,,2.83
+2025-02-15,regular,Northeastern,Stony Brook,71,60,1.15,,5.75
+2025-02-15,regular,East Texas A&M,Lamar,55,65,2.80,,1.45
+2025-02-15,regular,Colorado,UCF Knights,76,63,1.81,,2.03
+2025-02-15,regular,USC Upstate,Gardner Webb,87,96,2.83,,1.44
+2025-02-15,regular,UT Arlington,Grand Canyon,75,82,3.70,,1.29
+2025-02-15,regular,Lindenwood,Southern Indiana,81,78,1.63,,2.33
+2025-02-15,regular,Louisiana Monroe,Southern Miss,81,74,2.55,,1.54
+2025-02-15,regular,Oklahoma State,Texas Tech,55,93,4.55,,1.21
+2025-02-15,regular,Dayton,Duquesne,77,76,1.17,,5.38
+2025-02-15,regular,Western Michigan,Miami (Ohio),78,70,3.23,,1.36
+2025-02-15,regular,Western Illinois,Morehead State,72,67,1.91,,1.91
+2025-02-15,regular,Georgia State,Appalachian State,70,65,2.43,,1.59
+2025-02-15,regular,Arizona,Houston,58,62,2.15,,1.73
+2025-02-15,regular,Ball State,Northern Illinois,89,83,1.20,,4.75
+2025-02-15,regular,Baylor,West Virginia,74,71,1.25,,4.15
+2025-02-15,regular,NC State,Boston College,70,62,1.25,,4.20
+2025-02-15,regular,Buffalo,Bowling Green,59,63,2.03,,1.81
+2025-02-15,regular,Butler,Georgetown,97,86,1.58,,2.45
+2025-02-15,regular,N. Carolina A&T,Charleston,59,69,4.68,,1.21
+2025-02-15,regular,Coastal Carolina,James Madison,73,74,4.63,,1.21
+2025-02-15,regular,North Dakota St,Denver,89,84,1.11,,7.13
+2025-02-15,regular,William & Mary,Drexel,72,59,1.71,,2.19
+2025-02-15,regular,LIU Sharks,Fairleigh Dickinson,62,58,,,
+2025-02-15,regular,Hampton,Hofstra,67,49,2.15,,1.73
+2025-02-15,regular,Lehigh,Holy Cross,72,60,1.44,,2.83
+2025-02-15,regular,Robert Morris,IPFW,76,69,1.67,,2.25
+2025-02-15,regular,North Alabama,Jacksonville Dolphins,92,79,1.48,,2.72
+2025-02-15,regular,Maine Black Bears,Vermont,61,65,1.60,,2.40
+2025-02-15,regular,North Dakota,Oral Roberts,88,77,1.36,,3.23
+2025-02-15,regular,Penn State,Washington,73,75,1.37,,3.15
+2025-02-15,regular,Wofford,Samford,68,76,1.93,,1.89
+2025-02-15,regular,Virginia Tech,Virginia,70,73,1.78,,2.08
+2025-02-15,regular,Winthrop,High Point,66,88,2.38,,1.61
+2025-02-15,regular,Navy,Army,61,54,1.59,,2.43
+2025-02-15,regular,Boston University,Colgate,93,91,2.50,,1.55
+2025-02-15,regular,Bryant University,UMBC Retrievers,81,79,1.13,,6.50
+2025-02-15,regular,Lafayette,Bucknell,69,75,2.10,,1.76
+2025-02-15,regular,Central Connecticut State,St. Francis (PA),83,67,1.13,,6.50
+2025-02-15,regular,Le Moyne,Chicago State,80,75,1.36,,3.23
+2025-02-15,regular,Indiana State,Illinois State,85,76,1.96,,1.87
+2025-02-15,regular,New Hampshire Wildcats,UMass Lowell,80,79,5.00,,1.19
+2025-02-15,regular,Purdue,Wisconsin,84,94,1.41,,3.00
+2025-02-15,regular,Tennessee,Vanderbilt,81,76,1.11,,7.13
+2025-02-15,regular,George Mason,Saint Josephs Hawks,58,57,1.48,,2.73
+2025-02-15,regular,Texas A&M,Arkansas,69,61,1.26,,3.95
+2025-02-15,regular,Florida State,Clemson,46,72,2.68,,1.49
+2025-02-15,regular,Xavier,DePaul,85,68,1.12,,6.88
+2025-02-15,regular,Furman,NC Greensboro,50,58,1.63,,2.35
+2025-02-15,regular,Pittsburgh,Miami (FL),74,65,1.13,,6.25
+2025-02-15,regular,Tulane,Rice,81,78,1.45,,2.80
+2025-02-15,regular,UMass,St. Bonaventure,59,73,1.83,,2.01
+2025-02-15,regular,San Jose State,Nevada,58,73,3.88,,1.27
+2025-02-15,regular,Indiana,UCLA,68,72,2.23,,1.69
+2025-02-15,regular,Wisc. Milwaukee,Wright State,88,80,1.37,,3.15
+2025-02-15,regular,Harvard,Cornell,75,73,3.28,,1.34
+2025-02-15,regular,Kent State,Ohio,76,75,1.45,,2.75
+2025-02-15,regular,Loyola Chicago,St. Louis Billikens,78,69,1.67,,2.22
+2025-02-15,regular,Manhattan,Merrimack Warriors,79,75,2.30,,1.62
+2025-02-15,regular,Siena,Marist,64,65,1.63,,2.30
+2025-02-15,regular,Wisc. Green Bay,Northern Kentucky,60,73,3.55,,1.30
+2025-02-15,regular,Yale,Penn,72,71,1.05,,9.88
+2025-02-15,regular,Sacred Heart,Quinnipiac,90,99,2.30,,1.62
+2025-02-15,regular,Niagara,Mount St. Mary's,83,84,1.84,,2.00
+2025-02-15,regular,Dartmouth,Columbia,78,56,1.79,,2.05
+2025-02-14,regular,Hawaii,Long Beach State,62,60,1.15,,5.75
+2025-02-14,regular,Gonzaga,San Francisco,88,77,1.06,,9.75
+2025-02-14,regular,UC Irvine,UC Santa Barbara,62,60,1.23,,4.35
+2025-02-14,regular,CS Fullerton,Cal Poly,83,98,3.20,,1.37
+2025-02-14,regular,Loyola Marymount,Pacific,58,83,1.13,,6.38
+2025-02-14,regular,Sacramento State,Northern Colorado,61,77,3.95,,1.26
+2025-02-14,regular,Portland,Oregon State,84,72,7.50,,1.10
+2025-02-14,regular,Pepperdine,San Diego Toreros,88,81,1.26,,4.10
+2025-02-14,regular,CSU Bakersfield,UC San Diego,54,73,7.50,,1.10
+2025-02-14,regular,UTEP,Florida International,77,63,1.22,,4.42
+2025-02-14,regular,Montana,Idaho State,81,68,1.45,,2.80
+2025-02-14,regular,New Mexico State,Liberty,54,64,2.35,,1.63
+2025-02-14,regular,South Florida,Memphis,65,80,3.47,,1.33
+2025-02-14,regular,Montana State,Weber State,74,66,1.26,,4.10
+2025-02-14,regular,North Dakota St,Oral Roberts,94,88,1.09,,7.88
+2025-02-14,regular,UC Davis,UC Riverside,75,74,1.76,,2.10
+2025-02-14,regular,Siu Edwardsville,UT Martin,71,76,1.37,,3.15
+2025-02-14,regular,Western Illinois,Southern Indiana,87,62,1.89,,1.93
+2025-02-14,regular,Eastern Illinois,Tennessee State,49,66,2.08,,1.78
+2025-02-14,regular,Lindenwood,Morehead State,73,60,1.93,,1.89
+2025-02-14,regular,Nebraska,Maryland,75,83,1.85,,1.98
+2025-02-14,regular,Southern Utah,Utah Tech,76,74,1.63,,2.35
+2025-02-14,regular,Lipscomb,Stetson,93,60,1.05,,12.00
+2025-02-14,regular,Abilene Christian,Seattle,75,59,2.28,,1.65
+2025-02-14,regular,UALR,Tennessee Tech,79,75,1.33,,3.45
+2025-02-14,regular,Austin Peay,Florida Gulf Coast,73,60,2.85,,1.44
+2025-02-14,regular,North Dakota,Denver,64,68,1.25,,4.18
+2025-02-14,regular,Tarleton,Grand Canyon,60,64,6.25,,1.13
+2025-02-14,regular,South Alabama,Marshall,91,82,1.50,,2.65
+2025-02-14,regular,South Dakota St.,Nebraska O.,98,85,1.24,,4.25
+2025-02-14,regular,South Dakota Coyotes,UMKC,79,72,1.67,,2.25
+2025-02-14,regular,Central Arkansas,Jacksonville Dolphins,62,77,6.75,,1.12
+2025-02-14,regular,Sam Houston St.,Jacksonville State,66,61,1.65,,2.28
+2025-02-14,regular,Louisiana Tech,Kennesaw State,47,69,1.48,,2.70
+2025-02-14,regular,Louisiana Monroe,Texas State,60,72,4.23,,1.24
+2025-02-14,regular,Coastal Carolina,Appalachian State,46,64,4.15,,1.25
+2025-02-14,regular,Northeastern,Campbell,67,58,1.45,,2.80
+2025-02-14,regular,Central Connecticut State,Mercyhurst Lakers,73,63,1.11,,7.13
+2025-02-14,regular,NC Wilmington,Charleston,86,66,1.44,,2.85
+2025-02-14,regular,Towson,Delaware,75,70,1.34,,3.35
+2025-02-14,regular,Hampton,Drexel,63,58,2.05,,1.80
+2025-02-14,regular,Eastern Kentucky,West Georgia,95,73,1.10,,7.63
+2025-02-14,regular,Elon,N. Carolina A&T,59,60,1.10,,7.50
+2025-02-14,regular,Georgia Southern,James Madison,72,77,2.48,,1.57
+2025-02-14,regular,Georgia State,Old Dominion,97,75,1.66,,2.28
+2025-02-14,regular,High Point,Longwood,83,72,1.17,,5.38
+2025-02-14,regular,William & Mary,Hofstra,61,60,1.67,,2.25
+2025-02-14,regular,Le Moyne,Wagner,72,68,1.73,,2.15
+2025-02-14,regular,Vermont,New Hampshire Wildcats,79,59,1.08,,9.00
+2025-02-14,regular,North Alabama,North Florida,83,70,1.21,,4.68
+2025-02-14,regular,Portland State,Northern Arizona,58,46,1.44,,2.83
+2025-02-14,regular,Stonehill,St. Francis (PA),79,74,1.59,,2.43
+2025-02-14,regular,Bellarmine,Queens Royals,87,92,3.63,,1.30
+2025-02-14,regular,UMass Lowell,Albany Great Danes,88,90,1.46,,2.78
+2025-02-14,regular,UMBC Retrievers,Binghamton,81,77,1.49,,2.68
+2025-02-14,regular,UT Arlington,California Baptist,82,79,2.05,,1.80
+2025-02-13,regular,New Mexico,Wyoming,71,67,1.05,,11.00
+2025-02-13,regular,Texas Tech,Arizona State,111,106,1.05,,10.75
+2025-02-13,regular,Arkansas,LSU,70,58,1.20,,4.75
+2025-02-13,regular,Boston College,Notre Dame,94,97,2.65,,1.50
+2025-02-13,regular,Duke,California,78,57,1.02,,20.25
+2025-02-13,regular,Illinois State,Drake,77,84,2.08,,1.78
+2025-02-13,regular,Missouri,Oklahoma,82,58,1.21,,4.68
+2025-02-13,regular,Arkansas State,Southern Miss,101,67,1.07,,9.25
+2025-02-13,regular,Louisiana Lafayette,Troy,56,74,4.83,,1.19
+2025-02-13,regular,Ohio State,Washington,93,69,1.13,,6.13
+2025-02-13,regular,Missouri State,Evansville,71,54,1.50,,2.65
+2025-02-13,regular,Providence,Xavier,82,91,2.35,,1.62
+2025-02-13,regular,Valparaiso,Belmont,101,86,2.70,,1.49
+2025-02-13,regular,Charleston Southern,Presbyterian,71,70,1.94,,1.89
+2025-02-13,regular,Samford,Chattanooga Mocs,68,82,1.44,,2.83
+2025-02-13,regular,Wichita State,UTSA Roadrunners,69,64,1.38,,3.13
+2025-02-13,regular,Loyola Maryland,Army,60,64,1.76,,2.10
+2025-02-13,regular,Bucknell,Boston University,76,60,1.42,,2.93
+2025-02-13,regular,Bradley,Southern Illinois,78,64,1.26,,4.10
+2025-02-13,regular,Citadel,Wofford,71,74,6.75,,1.12
+2025-02-13,regular,Cleveland State,Robert Morris,59,68,1.52,,2.59
+2025-02-13,regular,UMass,Davidson,68,77,1.83,,2.00
+2025-02-13,regular,Fordham,Dayton,76,93,3.85,,1.28
+2025-02-13,regular,Wake Forest,Florida State,70,72,1.36,,3.23
+2025-02-13,regular,Furman,Mercer,96,72,1.42,,2.95
+2025-02-13,regular,George Washington,VCU Rams,72,80,4.18,,1.25
+2025-02-13,regular,Georgia Tech,Stanford,60,52,2.13,,1.75
+2025-02-13,regular,Saint Josephs Hawks,La Salle,75,63,1.13,,6.50
+2025-02-13,regular,Navy,Lehigh,63,60,1.60,,2.40
+2025-02-13,regular,NC State,Louisville,66,91,4.00,,1.26
+2025-02-13,regular,NC Greensboro,VMI,80,54,1.19,,4.83
+2025-02-13,regular,TCU,Oklahoma State,73,72,1.44,,2.88
+2025-02-13,regular,South Carolina,Ole Miss,68,72,2.53,,1.55
+2025-02-13,regular,Rhode Island,St. Bonaventure,68,64,1.89,,1.93
+2025-02-13,regular,Temple,Tulsa,74,80,1.25,,4.15
+2025-02-13,regular,USC Upstate,UNC Asheville,85,92,4.83,,1.19
+2025-02-13,regular,Niagara,Canisius,71,60,1.23,,4.33
+2025-02-13,regular,Youngstown State,IPFW,93,71,1.96,,1.87
+2025-02-13,regular,IU Indy,Oakland,67,82,3.25,,1.36
+2025-02-13,regular,Winthrop,Radford,78,74,1.64,,2.30
+2025-02-13,regular,Holy Cross,Colgate,65,87,2.80,,1.45
+2025-02-13,regular,Western Carolina,East Tennessee St,76,67,5.00,,1.19
+2025-02-13,regular,Villanova,St. John's (N.Y.),73,71,2.18,,1.71
+2025-02-12,regular,Utah State,Colorado State,93,85,1.35,,3.33
+2025-02-12,regular,Oregon,Northwestern,81,75,1.20,,4.75
+2025-02-12,regular,San Jose State,San Diego State,66,69,4.58,,1.21
+2025-02-12,regular,St. Marys (CA),Santa Clara,73,64,1.12,,6.88
+2025-02-12,regular,UNLV,Air Force,77,52,1.08,,8.50
+2025-02-12,regular,Texas,Alabama,80,103,2.75,,1.46
+2025-02-12,regular,Kansas,Colorado,71,59,1.04,,12.50
+2025-02-12,regular,Creighton,UConn,66,70,1.56,,2.50
+2025-02-12,regular,Texas A&M,Georgia,69,53,1.29,,3.75
+2025-02-12,regular,Michigan State,Indiana,67,71,1.13,,6.25
+2025-02-12,regular,Pepperdine,Loyola Marymount,60,69,2.25,,1.67
+2025-02-12,regular,Rice,North Texas,61,67,3.05,,1.39
+2025-02-12,regular,USC,Penn State,92,67,1.54,,2.55
+2025-02-12,regular,SMU Mustangs,Pittsburgh,83,63,1.54,,2.55
+2025-02-12,regular,Marquette,DePaul,68,58,1.05,,12.00
+2025-02-12,regular,UALR,Southeast Missouri State,45,57,1.43,,2.83
+2025-02-12,regular,Murray State,Illinois (Chi.),63,53,1.53,,2.52
+2025-02-12,regular,Illinois,UCLA,83,78,1.33,,3.33
+2025-02-12,regular,Northern Iowa,Indiana State,88,73,1.25,,3.90
+2025-02-12,regular,Kansas State,Arizona,73,70,2.38,,1.59
+2025-02-12,regular,St. Louis Billikens,George Mason,74,76,1.77,,2.08
+2025-02-12,regular,Akron,Western Michigan,105,92,1.07,,9.13
+2025-02-12,regular,Vanderbilt,Auburn,68,80,4.75,,1.20
+2025-02-12,regular,Ball State,Eastern Michigan,86,84,1.50,,2.65
+2025-02-12,regular,Bowling Green,Ohio,81,86,2.60,,1.52
+2025-02-12,regular,West Virginia,Brigham Young,69,73,1.69,,2.22
+2025-02-12,regular,Northern Illinois,Buffalo,67,73,1.75,,2.13
+2025-02-12,regular,Kent State,Central Michigan,91,83,1.25,,4.15
+2025-02-12,regular,Cincinnati,Utah Utes,85,75,1.26,,4.10
+2025-02-12,regular,East Carolina,UAB,82,75,2.25,,1.67
+2025-02-12,regular,Mississippi St.,Florida,68,81,1.71,,2.18
+2025-02-12,regular,UCF Knights,Iowa State,65,77,3.70,,1.29
+2025-02-12,regular,Kentucky,Tennessee,75,64,2.40,,1.60
+2025-02-12,regular,Richmond Spiders,Loyola Chicago,80,87,2.90,,1.42
+2025-02-12,regular,Miami (FL),Syracuse,91,84,1.69,,2.22
+2025-02-12,regular,Miami (Ohio),Toledo,92,80,1.49,,2.68
+2025-02-12,regular,Michigan,Purdue,75,73,1.62,,2.38
+2025-02-11,regular,Nevada,Fresno State,94,69,1.07,,9.50
+2025-02-11,regular,Houston,Baylor,76,65,1.21,,4.68
+2025-02-11,regular,Florida Atlantic,Charlotte,87,75,1.09,,7.88
+2025-02-11,regular,Alabama A&M,Grambling St.,61,72,2.25,,1.67
+2025-02-11,regular,Jackson State,Arkansas-Pine Bluff,94,78,1.08,,8.38
+2025-02-11,regular,Texas Southern,Bethune-Cookman,77,80,1.79,,2.05
+2025-02-11,regular,Campbell,N. Carolina A&T,66,62,1.11,,7.25
+2025-02-11,regular,Houston Christian,SE Louisiana,60,69,1.79,,2.05
+2025-02-11,regular,Md.-East. Shore,Howard,57,77,3.33,,1.35
+2025-02-11,regular,Lamar,Texas A&M-CC,67,56,1.88,,1.94
+2025-02-11,regular,Incarnate Word,New Orleans,75,65,1.12,,6.75
+2025-02-11,regular,Nicholls State,Northwestern St.,60,72,1.33,,3.47
+2025-02-11,regular,Stephen F. Austin,UTRGV,85,75,1.76,,2.10
+2025-02-11,regular,Alabama State,Southern Univ.,82,81,2.08,,1.78
+2025-02-11,regular,Alcorn State,Miss. Valley St.,86,39,1.04,,12.50
+2025-02-11,regular,Clemson,North Carolina,85,65,1.52,,2.60
+2025-02-11,regular,McNeese State,East Texas A&M,67,51,1.03,,14.25
+2025-02-11,regular,Prairie View A&M,Florida A&M,67,78,1.79,,2.05
+2025-02-11,regular,American University,Lafayette,60,58,1.62,,2.38
+2025-02-09,regular,Oklahoma State,Arizona State,86,73,1.80,,2.05
+2025-02-09,regular,La Salle,UMass,55,78,1.83,,2.00
+2025-02-09,regular,Memphis,Temple,90,82,1.07,,9.50
+2025-02-09,regular,Nebraska,Ohio State,79,71,1.65,,2.30
+2025-02-09,regular,South Florida,Wichita State,70,75,1.73,,2.15
+2025-02-09,regular,St. Bonaventure,George Washington,52,62,1.49,,2.68
+2025-02-09,regular,Villanova,Xavier,80,68,1.66,,2.25
+2025-02-09,regular,Arizona,Texas Tech,82,73,1.55,,2.53
+2025-02-09,regular,Washington,Northwestern,76,71,1.62,,2.35
+2025-02-09,regular,UC Riverside,CSU Bakersfield,69,64,1.29,,3.75
+2025-02-09,regular,UC Santa Barbara,Hawaii,76,72,1.43,,2.90
+2025-02-09,regular,Oregon State,St. Marys (CA),49,63,2.65,,1.50
+2025-02-09,regular,UC Irvine,UC San Diego,67,85,1.87,,1.96
+2025-02-09,regular,Colorado State,San Diego State,68,63,1.69,,2.23
+2025-02-09,regular,CS Fullerton,UC Davis,49,65,3.40,,1.33
+2025-02-09,regular,Weber State,Idaho State,67,72,2.00,,1.84
+2025-02-09,regular,Loyola Marymount,San Francisco,66,72,2.30,,1.64
+2025-02-09,regular,New Mexico State,UTEP,63,66,1.82,,2.03
+2025-02-09,regular,Southern Utah,Abilene Christian,70,84,2.33,,1.64
+2025-02-09,regular,Arkansas,Alabama,81,85,2.93,,1.42
+2025-02-09,regular,LSU,Ole Miss,70,72,3.05,,1.39
+2025-02-09,regular,Southern Indiana,Southeast Missouri State,74,79,2.53,,1.55
+2025-02-09,regular,Evansville,Bradley,74,80,2.83,,1.45
+2025-02-09,regular,California Baptist,Grand Canyon,85,71,3.13,,1.38
+2025-02-09,regular,UTSA Roadrunners,East Carolina,79,80,2.05,,1.80
+2025-02-09,regular,Pacific,Gonzaga,61,78,27.50,,1.01
+2025-02-09,regular,Northern Colorado,Montana State,73,66,1.37,,3.20
+2025-02-09,regular,Northern Arizona,Montana,80,83,1.93,,1.89
+2025-02-09,regular,Oral Roberts,South Dakota Coyotes,74,75,2.00,,1.83
+2025-02-09,regular,Seattle,UT Arlington,67,65,1.22,,4.45
+2025-02-09,regular,Albany Great Danes,Vermont,62,68,1.86,,1.96
+2025-02-09,regular,Jacksonville Dolphins,Bellarmine,73,64,1.10,,7.63
+2025-02-09,regular,Long Beach State,CS Northridge,80,81,6.00,,1.14
+2025-02-09,regular,Fairfield,Sacred Heart,71,77,2.01,,1.83
+2025-02-09,regular,High Point,UNC Asheville,104,100,1.12,,6.63
+2025-02-09,regular,Marist,Iona,71,75,1.58,,2.45
+2025-02-09,regular,IPFW,Wisc. Green Bay,89,74,1.06,,10.13
+2025-02-09,regular,Wright State,IU Indy,91,73,1.19,,4.83
+2025-02-09,regular,Lamar,UTRGV,70,68,1.52,,2.63
+2025-02-09,regular,Stanford,NC State,74,73,1.35,,3.30
+2025-02-09,regular,Santa Clara,San Diego Toreros,93,70,1.03,,15.25
+2025-02-09,regular,Clemson,Duke,77,71,3.18,,1.37
+2025-02-09,regular,Cincinnati,Brigham Young,84,66,1.80,,2.05
+2025-02-09,regular,Charleston,Elon,88,83,1.61,,2.40
+2025-02-09,regular,Drake,Indiana State,85,81,1.10,,7.38
+2025-02-09,regular,Duquesne,Loyola Chicago,69,56,2.00,,1.83
+2025-02-09,regular,Texas Southern,Florida A&M,64,66,1.27,,3.90
+2025-02-09,regular,Georgia,Mississippi St.,75,76,1.79,,2.08
+2025-02-09,regular,Minnesota,Illinois,74,95,3.33,,1.35
+2025-02-09,regular,Northern Iowa,Illinois State,68,65,1.42,,2.95
+2025-02-09,regular,Incarnate Word,SE Louisiana,66,71,1.65,,2.30
+2025-02-09,regular,UMKC,North Dakota,80,69,1.61,,2.38
+2025-02-09,regular,Washington State,Pepperdine,87,86,1.17,,5.25
+2025-02-09,regular,Stephen F. Austin,Texas A&M-CC,78,64,2.18,,1.71
+2025-02-09,regular,Prairie View A&M,Bethune-Cookman,82,85,2.55,,1.54
+2025-02-09,regular,Virginia,Georgia Tech,75,61,1.71,,2.20
+2025-02-09,regular,Austin Peay,Central Arkansas,90,67,1.21,,4.58
+2025-02-09,regular,East. Washington,Portland State,72,67,2.23,,1.69
+2025-02-09,regular,North Florida,Florida Gulf Coast,70,84,2.25,,1.67
+2025-02-09,regular,Idaho,Sacramento State,78,76,1.28,,3.83
+2025-02-09,regular,Jacksonville State,Western Kentucky,85,83,1.56,,2.48
+2025-02-09,regular,Kennesaw State,Middle Tenn. St.,75,76,1.68,,2.23
+2025-02-09,regular,McNeese State,Northwestern St.,65,50,1.05,,12.00
+2025-02-09,regular,Alabama A&M,Southern Univ.,68,81,3.65,,1.30
+2025-02-09,regular,Belmont,Missouri State,85,68,1.30,,3.65
+2025-02-09,regular,California,Wake Forest,66,76,2.20,,1.71
+2025-02-09,regular,Central Michigan,Texas State,85,70,1.75,,2.13
+2025-02-09,regular,West Virginia,Utah Utes,72,61,1.31,,3.60
+2025-02-09,regular,Alabama State,Grambling St.,67,77,1.50,,2.65
+2025-02-09,regular,Chattanooga Mocs,Furman,85,72,1.44,,2.83
+2025-02-09,regular,Houston Christian,New Orleans,81,68,1.17,,5.38
+2025-02-09,regular,Tennessee State,Lindenwood,84,76,1.31,,3.58
+2025-02-09,regular,UT Martin,Western Illinois,81,70,1.28,,3.83
+2025-02-09,regular,Air Force,New Mexico,53,88,9.75,,1.06
+2025-02-09,regular,Alcorn State,Arkansas-Pine Bluff,79,60,1.27,,3.90
+2025-02-09,regular,Auburn,Florida,81,90,1.16,,5.50
+2025-02-09,regular,Colorado,Houston,59,69,9.38,,1.07
+2025-02-09,regular,Denver,St. Thomas (Minn.),76,79,5.13,,1.17
+2025-02-09,regular,East Tennessee St,Samford,66,59,1.91,,1.93
+2025-02-09,regular,Nicholls State,East Texas A&M,81,65,1.19,,5.00
+2025-02-09,regular,Tennessee Tech,Eastern Illinois,59,54,1.48,,2.70
+2025-02-09,regular,Stetson,Eastern Kentucky,58,83,4.18,,1.25
+2025-02-09,regular,George Mason,Rhode Island,82,67,1.23,,4.29
+2025-02-09,regular,Northeastern,Hampton,75,84,1.35,,3.30
+2025-02-09,regular,Hofstra,Stony Brook,75,80,1.11,,7.00
+2025-02-09,regular,Howard,N. Carolina Central,82,78,1.80,,2.05
+2025-02-09,regular,Jackson State,Miss. Valley St.,92,44,1.02,,16.00
+2025-02-09,regular,Liberty,Sam Houston St.,64,61,1.17,,5.50
+2025-02-09,regular,Valparaiso,Murray State,56,74,2.13,,1.75
+2025-02-09,regular,NC Greensboro,Western Carolina,74,70,1.10,,7.50
+2025-02-09,regular,North Carolina,Pittsburgh,67,66,1.44,,2.88
+2025-02-09,regular,UCLA,Penn State,78,54,1.18,,5.00
+2025-02-09,regular,Utah Valley State,Tarleton,81,56,1.08,,8.88
+2025-02-09,regular,Wyoming,UNLV,57,68,2.20,,1.71
+2025-02-08,regular,Charlotte,Rice,78,75,1.85,,1.98
+2025-02-08,regular,Missouri,Texas A&M,64,67,1.52,,2.63
+2025-02-08,regular,Syracuse,Boston College,95,86,1.32,,3.50
+2025-02-08,regular,Butler,Providence,82,81,1.50,,2.65
+2025-02-08,regular,Merrimack Warriors,Canisius,69,51,1.10,,7.63
+2025-02-08,regular,Cleveland State,Wisc. Milwaukee,77,60,1.81,,2.03
+2025-02-08,regular,Mercyhurst Lakers,Le Moyne,82,78,1.79,,2.05
+2025-02-08,regular,Longwood,Radford,69,71,1.64,,2.33
+2025-02-08,regular,North Texas,Tulane,76,66,1.20,,4.75
+2025-02-08,regular,Morehead State,UALR,62,76,2.18,,1.71
+2025-02-08,regular,Creighton,Marquette,77,67,1.58,,2.45
+2025-02-08,regular,Delaware,William & Mary,74,64,1.82,,2.03
+2025-02-08,regular,Drexel,NC Wilmington,79,81,2.20,,1.71
+2025-02-08,regular,Florida International,Louisiana Tech,71,82,2.40,,1.60
+2025-02-08,regular,Mercer,Wofford,66,77,1.99,,1.84
+2025-02-08,regular,Nebraska O.,North Dakota St,85,74,2.08,,1.78
+2025-02-08,regular,Quinnipiac,Niagara,75,76,1.15,,5.88
+2025-02-08,regular,West Georgia,North Alabama,61,78,5.00,,1.18
+2025-02-08,regular,Northern Kentucky,Robert Morris,76,81,1.79,,2.08
+2025-02-08,regular,Akron,South Alabama,80,65,1.32,,3.50
+2025-02-08,regular,Lehigh,American University,75,78,1.67,,2.25
+2025-02-08,regular,Ohio,Appalachian State,59,72,1.51,,2.65
+2025-02-08,regular,Kent State,Arkansas State,76,75,1.89,,1.93
+2025-02-08,regular,Ball State,Southern Miss,77,76,1.63,,2.35
+2025-02-08,regular,Baylor,UCF Knights,91,76,1.17,,5.38
+2025-02-08,regular,Binghamton,Bryant University,71,78,3.95,,1.26
+2025-02-08,regular,Bowling Green,Coastal Carolina,67,53,1.45,,2.80
+2025-02-08,regular,Columbia,Brown,74,72,1.71,,2.20
+2025-02-08,regular,Buffalo,Georgia State,75,80,2.25,,1.66
+2025-02-08,regular,Gardner Webb,Charleston Southern,72,79,1.33,,3.40
+2025-02-08,regular,Chicago State,St. Francis (PA),69,81,2.05,,1.80
+2025-02-08,regular,Colgate,Loyola Maryland,82,68,1.32,,3.50
+2025-02-08,regular,Cornell,Yale,88,103,2.45,,1.58
+2025-02-08,regular,Dartmouth,Harvard,76,56,1.73,,2.15
+2025-02-08,regular,Eastern Michigan,Old Dominion,76,70,1.80,,2.05
+2025-02-08,regular,Southern Illinois,Illinois (Chi.),79,67,1.91,,1.91
+2025-02-08,regular,Toledo,James Madison,72,69,2.03,,1.82
+2025-02-08,regular,Kansas State,Kansas,81,73,2.45,,1.58
+2025-02-08,regular,LIU Sharks,Stonehill,62,59,1.67,,2.25
+2025-02-08,regular,Northern Illinois,Louisiana Lafayette,64,66,1.98,,1.85
+2025-02-08,regular,Louisville,Miami (FL),88,78,1.04,,12.75
+2025-02-08,regular,Maine Black Bears,UMBC Retrievers,73,50,1.35,,3.30
+2025-02-08,regular,USC Upstate,Winthrop,95,105,4.45,,1.22
+2025-02-08,regular,Army,Bucknell,116,110,2.05,,1.80
+2025-02-08,regular,VMI,Citadel,82,70,1.19,,4.83
+2025-02-08,regular,Detroit,Youngstown State,72,87,3.75,,1.29
+2025-02-08,regular,Western Michigan,Georgia Southern,57,83,1.84,,1.99
+2025-02-08,regular,Indiana,Michigan,67,70,2.43,,1.59
+2025-02-08,regular,Iowa,Wisconsin,63,74,2.98,,1.42
+2025-02-08,regular,Lafayette,Navy,61,51,1.80,,2.05
+2025-02-08,regular,Queens Royals,Lipscomb,81,94,2.33,,1.64
+2025-02-08,regular,Miami (Ohio),Troy,69,62,2.05,,1.80
+2025-02-08,regular,Notre Dame,Virginia Tech,63,65,1.27,,3.93
+2025-02-08,regular,Vanderbilt,Texas,86,78,1.64,,2.33
+2025-02-08,regular,Holy Cross,Boston University,72,52,2.20,,1.71
+2025-02-08,regular,Davidson,Richmond Spiders,71,60,1.20,,4.75
+2025-02-08,regular,Tulsa,Florida Atlantic,55,79,3.10,,1.39
+2025-02-08,regular,Iowa State,TCU,82,52,1.06,,10.50
+2025-02-08,regular,Kentucky,South Carolina,80,57,1.15,,5.75
+2025-02-08,regular,Michigan State,Oregon,86,74,1.22,,4.45
+2025-02-08,regular,Oklahoma,Tennessee,52,70,2.95,,1.42
+2025-02-08,regular,Fresno State,Utah State,81,89,7.88,,1.09
+2025-02-08,regular,Boise State,San Jose State,79,52,1.08,,8.75
+2025-02-08,regular,Saint Josephs Hawks,St. Louis Billikens,76,63,1.36,,3.23
+2025-02-08,regular,UConn,St. John's (N.Y.),62,68,1.52,,2.63
+2025-02-08,regular,Dayton,VCU Rams,68,73,1.95,,1.87
+2025-02-08,regular,Penn,Princeton,59,61,,,
+2025-02-08,regular,Purdue,USC,90,72,1.09,,8.13
+2025-02-07,regular,Oregon State,Washington State,82,74,1.39,,3.05
+2025-02-07,regular,Tennessee Tech,Siu Edwardsville,58,75,,,
+2025-02-07,regular,Cal Poly,Hawaii,79,63,2.03,,1.82
+2025-02-07,regular,California Baptist,Southern Utah,57,60,1.09,,8.13
+2025-02-07,regular,CS Northridge,CS Fullerton,82,63,1.05,,11.25
+2025-02-07,regular,Long Beach State,UC Davis,65,73,2.40,,1.61
+2025-02-07,regular,Pacific,San Diego Toreros,71,69,1.56,,2.50
+2025-02-07,regular,Portland,Santa Clara,50,97,8.38,,1.08
+2025-02-07,regular,Seattle,Tarleton,91,54,1.21,,4.68
+2025-02-07,regular,UC San Diego,UC Riverside,91,71,1.13,,6.38
+2025-02-07,regular,CSU Bakersfield,UC Santa Barbara,75,81,2.40,,1.60
+2025-02-07,regular,Utah Tech,Abilene Christian,72,86,1.76,,2.13
+2025-02-07,regular,Denver,South Dakota Coyotes,79,86,2.05,,1.79
+2025-02-07,regular,East. Washington,Sacramento State,83,80,1.33,,3.43
+2025-02-07,regular,UNC Asheville,Gardner Webb,78,70,1.36,,3.25
+2025-02-07,regular,Gonzaga,Loyola Marymount,73,53,1.02,,16.00
+2025-02-07,regular,Idaho,Portland State,69,76,1.93,,1.89
+2025-02-07,regular,San Francisco,St. Marys (CA),65,64,2.85,,1.44
+2025-02-07,regular,Southern Indiana,UALR,56,74,2.48,,1.57
+2025-02-07,regular,UT Martin,Lindenwood,51,52,1.34,,3.33
+2025-02-07,regular,North Florida,Bellarmine,95,88,1.17,,5.25
+2025-02-07,regular,Liberty,Louisiana Tech,77,53,1.30,,3.63
+2025-02-07,regular,Northern Arizona,Montana State,69,64,1.89,,1.93
+2025-02-07,regular,Northern Colorado,Montana,78,86,1.40,,3.03
+2025-02-07,regular,Nebraska O.,North Dakota,80,77,1.43,,2.90
+2025-02-07,regular,UMKC,North Dakota St,72,78,2.13,,1.75
+2025-02-07,regular,South Dakota St.,St. Thomas (Minn.),102,86,1.54,,2.55
+2025-02-07,regular,Tennessee State,Western Illinois,87,69,1.24,,4.23
+2025-02-07,regular,Utah Valley State,UT Arlington,94,73,1.25,,4.10
+2025-02-07,regular,Morehead State,Southeast Missouri State,51,80,1.65,,2.28
+2025-02-07,regular,Campbell,Elon,76,58,1.91,,1.91
+2025-02-07,regular,Quinnipiac,Canisius,89,71,1.05,,11.00
+2025-02-07,regular,Chicago State,Mercyhurst Lakers,85,78,1.89,,1.93
+2025-02-07,regular,Drexel,William & Mary,86,66,1.60,,2.40
+2025-02-07,regular,Florida Gulf Coast,Eastern Kentucky,74,92,1.37,,3.20
+2025-02-07,regular,Fairfield,Marist,59,56,3.05,,1.39
+2025-02-07,regular,Florida International,Sam Houston St.,85,82,2.05,,1.80
+2025-02-07,regular,Hofstra,Northeastern,68,77,1.60,,2.40
+2025-02-07,regular,Mount St. Mary's,Iona,67,70,1.93,,1.89
+2025-02-07,regular,Stetson,Jacksonville Dolphins,65,74,4.18,,1.25
+2025-02-07,regular,Jacksonville State,Middle Tenn. St.,77,63,1.76,,2.10
+2025-02-07,regular,Kennesaw State,Western Kentucky,76,69,1.63,,2.35
+2025-02-07,regular,St. Francis (PA),Le Moyne,86,78,1.75,,2.13
+2025-02-07,regular,Wagner,LIU Sharks,47,60,1.96,,1.86
+2025-02-07,regular,Ohio State,Maryland,73,70,1.78,,2.08
+2025-02-07,regular,Merrimack Warriors,Niagara,64,59,1.26,,3.95
+2025-02-07,regular,New Hampshire Wildcats,UMBC Retrievers,79,78,4.10,,1.26
+2025-02-07,regular,Oakland,Youngstown State,75,84,1.48,,2.73
+2025-02-07,regular,South Florida,Temple,100,91,1.59,,2.43
+2025-02-07,regular,Delaware,NC Wilmington,67,77,3.40,,1.33
+2025-02-07,regular,Stony Brook,Towson,59,66,4.10,,1.26
+2025-02-07,regular,Binghamton,UMass Lowell,66,54,2.60,,1.52
+2025-02-07,regular,Bryant University,Albany Great Danes,63,68,1.14,,6.00
+2025-02-07,regular,Charleston,N. Carolina A&T,66,63,1.05,,11.75
+2025-02-06,regular,California,NC State,74,62,1.84,,1.99
+2025-02-06,regular,Stanford,Wake Forest,73,79,1.62,,2.38
+2025-02-06,regular,New Mexico,Colorado State,87,65,1.25,,4.10
+2025-02-06,regular,Washington,Nebraska,72,86,2.19,,1.71
+2025-02-06,regular,Texas,Arkansas,70,78,1.33,,3.40
+2025-02-06,regular,Marshall,Arkansas State,77,72,2.25,,1.67
+2025-02-06,regular,Bradley,Belmont,77,80,1.28,,3.80
+2025-02-06,regular,Utah Utes,Colorado,72,59,1.33,,3.43
+2025-02-06,regular,DePaul,Villanova,49,59,3.23,,1.36
+2025-02-06,regular,Georgia,LSU,81,62,1.25,,4.15
+2025-02-06,regular,Virginia Tech,SMU Mustangs,75,81,3.03,,1.40
+2025-02-06,regular,Providence,Creighton,69,80,2.40,,1.61
+2025-02-06,regular,Austin Peay,North Alabama,64,74,2.95,,1.42
+2025-02-06,regular,Evansville,Southern Illinois,59,68,1.82,,2.03
+2025-02-06,regular,Illinois (Chi.),Illinois State,79,81,1.63,,2.35
+2025-02-06,regular,Memphis,Tulsa,83,71,1.05,,10.75
+2025-02-06,regular,TCU,West Virginia,65,60,1.82,,2.03
+2025-02-06,regular,UTSA Roadrunners,Tulane,60,61,2.08,,1.79
+2025-02-06,regular,Central Arkansas,Queens Royals,47,63,4.05,,1.26
+2025-02-06,regular,Samford,Mercer,100,79,1.16,,5.50
+2025-02-06,regular,Bucknell,American University,71,49,1.51,,2.63
+2025-02-06,regular,Boston College,Louisville,58,84,8.25,,1.09
+2025-02-06,regular,Boston University,Navy,87,65,1.80,,2.05
+2025-02-06,regular,Charleston Southern,Winthrop,65,83,2.35,,1.62
+2025-02-06,regular,Wofford,Chattanooga Mocs,70,79,1.79,,2.05
+2025-02-06,regular,UCF Knights,Cincinnati,83,93,1.61,,2.38
+2025-02-06,regular,Citadel,NC Greensboro,61,76,7.50,,1.10
+2025-02-06,regular,Northern Kentucky,Cleveland State,85,75,1.73,,2.15
+2025-02-06,regular,Coastal Carolina,South Alabama,59,84,3.63,,1.30
+2025-02-06,regular,Robert Morris,Detroit,71,56,1.10,,7.38
+2025-02-06,regular,Syracuse,Duke,54,83,13.50,,1.04
+2025-02-06,regular,Richmond Spiders,Duquesne,73,68,2.25,,1.67
+2025-02-06,regular,East Carolina,Rice,60,73,1.30,,3.63
+2025-02-06,regular,Fordham,Rhode Island,80,79,2.08,,1.79
+2025-02-06,regular,Furman,Western Carolina,84,75,1.06,,9.88
+2025-02-06,regular,George Washington,George Mason,50,53,2.08,,1.78
+2025-02-06,regular,Georgia Southern,Louisiana Lafayette,83,82,1.34,,3.38
+2025-02-06,regular,Georgia State,Louisiana Monroe,97,64,1.33,,3.43
+2025-02-06,regular,Indiana State,Valparaiso,80,62,1.48,,2.73
+2025-02-06,regular,IPFW,Wright State,87,64,1.42,,2.95
+2025-02-06,regular,James Madison,Troy,64,61,1.71,,2.18
+2025-02-06,regular,Lafayette,Loyola Maryland,58,71,1.52,,2.60
+2025-02-06,regular,West Georgia,Lipscomb,67,76,6.63,,1.12
+2025-02-06,regular,Missouri State,Northern Iowa,61,66,2.63,,1.52
+2025-02-06,regular,Tennessee,Missouri,85,81,1.22,,4.50
+2025-02-06,regular,Old Dominion,Texas State,75,64,2.25,,1.67
+2025-02-06,regular,Presbyterian,USC Upstate,75,64,1.31,,3.55
+2025-02-06,regular,Radford,High Point,75,78,2.98,,1.41
+2025-02-06,regular,Appalachian State,Southern Miss,60,58,1.25,,4.15
+2025-02-06,regular,IU Indy,Wisc. Milwaukee,80,84,4.30,,1.23
+2025-02-06,regular,Michigan,Oregon,80,76,1.30,,3.68
+2025-02-06,regular,Army,Holy Cross,68,65,1.49,,2.68
+2025-02-06,regular,VMI,East Tennessee St,55,62,3.23,,1.36
+2025-02-05,regular,Brigham Young,Arizona,74,85,1.63,,2.35
+2025-02-05,regular,UNLV,Boise State,62,71,2.33,,1.64
+2025-02-05,regular,Arizona State,Kansas State,70,71,1.64,,2.30
+2025-02-05,regular,Fresno State,San Jose State,91,94,2.38,,1.62
+2025-02-05,regular,UCLA,Michigan State,63,61,1.76,,2.10
+2025-02-05,regular,Air Force,Nevada,60,74,5.25,,1.17
+2025-02-05,regular,Auburn,Oklahoma,98,70,1.05,,11.25
+2025-02-05,regular,Texas Tech,Baylor,73,59,1.28,,3.78
+2025-02-05,regular,Clemson,Georgia Tech,86,89,1.12,,6.88
+2025-02-05,regular,Wisconsin,Indiana,76,64,1.24,,4.20
+2025-02-05,regular,Loyola Chicago,St. Bonaventure,77,53,1.59,,2.43
+2025-02-05,regular,Northwestern,USC,77,75,1.58,,2.45
+2025-02-05,regular,Siu Edwardsville,Eastern Illinois,66,41,1.33,,3.43
+2025-02-05,regular,Xavier,Georgetown,74,69,1.25,,4.18
+2025-02-05,regular,Wyoming,Utah State,67,71,4.63,,1.21
+2025-02-05,regular,Houston,Oklahoma State,72,63,1.01,,22.00
+2025-02-05,regular,Akron,Ball State,81,73,1.10,,7.50
+2025-02-05,regular,Bowling Green,Northern Illinois,84,77,1.35,,3.33
+2025-02-05,regular,Toledo,Buffalo,87,74,1.12,,6.88
+2025-02-05,regular,Central Michigan,Miami (Ohio),70,76,1.79,,2.05
+2025-02-05,regular,Charlotte,Wichita State,58,66,2.10,,1.76
+2025-02-05,regular,Dayton,Davidson,69,63,1.20,,4.75
+2025-02-05,regular,Murray State,Drake,45,55,2.70,,1.48
+2025-02-05,regular,Florida,Vanderbilt,86,75,1.19,,5.13
+2025-02-05,regular,Florida State,Notre Dame,67,60,1.66,,2.25
+2025-02-05,regular,Iowa,Purdue,81,90,3.33,,1.34
+2025-02-05,regular,Ole Miss,Kentucky,98,84,1.42,,2.93
+2025-02-05,regular,VCU Rams,La Salle,96,66,1.04,,13.50
+2025-02-05,regular,Penn State,Minnesota,61,69,1.34,,3.35
+2025-02-05,regular,Ohio,Western Michigan,94,69,1.16,,5.63
+2025-02-05,regular,UMass,St. Louis Billikens,71,73,1.99,,1.84
+2025-02-05,regular,Arkansas-Pine Bluff,Texas Southern,69,68,4.75,,1.20
+2025-02-05,regular,Eastern Michigan,Kent State,49,70,3.95,,1.26
+2025-02-05,regular,St. John's (N.Y.),Marquette,70,64,1.69,,2.22
+2025-02-04,regular,Grambling St.,Alcorn State,53,60,1.44,,2.88
+2025-02-04,regular,Idaho State,Northern Colorado,72,86,1.93,,1.89
+2025-02-04,regular,Kansas,Iowa State,69,52,1.61,,2.40
+2025-02-04,regular,UAB,North Texas,64,61,1.63,,2.35
+2025-02-04,regular,Weber State,Northern Arizona,77,73,2.05,,1.80
+2025-02-04,regular,William & Mary,Charleston,90,75,1.98,,1.85
+2025-02-04,regular,Md.-East. Shore,Coppin State,57,62,1.59,,2.43
+2025-02-04,regular,East Texas A&M,Texas A&M-CC,66,78,3.63,,1.30
+2025-02-04,regular,Nicholls State,Houston Christian,75,67,1.29,,3.70
+2025-02-04,regular,New Orleans,Stephen F. Austin,85,88,4.00,,1.26
+2025-02-04,regular,Delaware State,Morgan State,84,82,1.42,,2.95
+2025-02-04,regular,Howard,South Carolina St,66,89,1.93,,1.89
+2025-02-04,regular,Southern Univ.,Jackson State,91,89,1.27,,3.95
+2025-02-04,regular,Northwestern St.,UTRGV,79,63,1.85,,1.98
+2025-02-04,regular,Bethune-Cookman,Alabama A&M,89,75,1.31,,3.60
+2025-02-04,regular,Florida A&M,Alabama State,66,67,2.08,,1.79
+2025-02-04,regular,McNeese State,Incarnate Word,67,65,1.06,,10.50
+2025-02-04,regular,SE Louisiana,Lamar,81,79,1.75,,2.13
+2025-02-04,regular,Norfolk State,N. Carolina Central,81,78,1.21,,4.58
+2025-02-04,regular,Pittsburgh,Virginia,57,73,1.10,,7.50
+2025-02-04,regular,Lehigh,Colgate,94,68,2.30,,1.64
+2025-02-03,regular,Oregon,Nebraska,71,77,1.34,,3.43
+2025-02-03,regular,Northern Iowa,Bradley,83,69,1.75,,2.13
+2025-02-03,regular,TCU,Colorado,68,57,1.36,,3.25
+2025-02-03,regular,St. Thomas (Minn.),North Dakota St,79,62,1.67,,2.25
+2025-02-02,regular,Belmont,Evansville,75,80,1.17,,5.50
+2025-02-02,regular,Wisc. Milwaukee,IPFW,79,81,1.52,,2.60
+2025-02-02,regular,Rice,Memphis,83,86,4.83,,1.19
+2025-02-02,regular,Cincinnati,West Virginia,50,63,1.38,,3.13
+2025-02-02,regular,East Tennessee St,Furman,72,69,1.63,,2.35
+2025-02-02,regular,Florida Atlantic,South Florida,94,72,1.30,,3.63
+2025-02-02,regular,Sacred Heart,Manhattan,74,72,1.45,,2.80
+2025-02-02,regular,Siena,Quinnipiac,84,75,2.78,,1.46
+2025-02-02,regular,Wright State,Robert Morris,66,64,1.65,,2.30
+2025-02-02,regular,Tulane,Tulsa,59,56,1.19,,4.83
+2025-02-02,regular,Iona,Fairfield,87,64,1.42,,2.93
+2025-02-02,regular,Illinois,Ohio State,87,79,1.35,,3.30
+2025-02-02,regular,Hawaii,CS Fullerton,82,57,1.13,,6.38
+2025-02-02,regular,St. Marys (CA),Gonzaga,62,58,2.25,,1.66
+2025-02-02,regular,California,Syracuse,66,75,1.45,,2.80
+2025-02-02,regular,UC Santa Barbara,Long Beach State,85,54,1.23,,4.30
+2025-02-02,regular,Nevada,UNLV,71,65,1.45,,2.80
+2025-02-02,regular,Pepperdine,Portland,64,84,1.22,,4.45
+2025-02-02,regular,San Francisco,Washington State,75,51,1.52,,2.63
+2025-02-02,regular,Utah State,New Mexico,63,82,1.55,,2.52
+2025-02-02,regular,Kentucky,Arkansas,79,89,1.23,,4.38
+2025-02-02,regular,North Alabama,Central Arkansas,94,65,1.07,,9.50
+2025-02-02,regular,South Carolina,Texas A&M,72,76,2.95,,1.42
+2025-02-02,regular,UC Riverside,Cal Poly,80,62,1.34,,3.35
+2025-02-02,regular,Marquette,UConn,69,77,1.35,,3.30
+2025-02-02,regular,CS Northridge,CSU Bakersfield,88,62,1.20,,4.75
+2025-02-02,regular,Nebraska O.,Denver,78,69,1.17,,5.25
+2025-02-02,regular,Grand Canyon,Utah Valley State,75,57,1.18,,5.00
+2025-02-02,regular,Louisiana Lafayette,South Alabama,58,62,3.50,,1.32
+2025-02-02,regular,Miami (FL),Notre Dame,63,57,3.75,,1.29
+2025-02-02,regular,Montana State,Portland State,74,73,1.58,,2.45
+2025-02-02,regular,Oral Roberts,UMKC,73,67,2.35,,1.63
+2025-02-02,regular,San Diego State,Wyoming,63,61,1.08,,9.00
+2025-02-02,regular,Tarleton,Southern Utah,75,58,1.38,,3.10
+2025-02-02,regular,Santa Clara,Pacific,83,49,1.05,,11.00
+2025-02-02,regular,Albany Great Danes,Binghamton,61,65,1.35,,3.33
+2025-02-02,regular,Central Michigan,Bowling Green,90,71,1.37,,3.20
+2025-02-02,regular,Elon,Northeastern,71,60,1.59,,2.43
+2025-02-02,regular,NC Wilmington,Stony Brook,80,70,1.05,,11.25
+2025-02-02,regular,Arkansas-Pine Bluff,Miss. Valley St.,76,79,1.11,,7.25
+2025-02-02,regular,Duke,North Carolina,87,70,1.09,,7.88
+2025-02-02,regular,Florida A&M,Alabama A&M,95,79,1.63,,2.35
+2025-02-02,regular,Southern Univ.,Alcorn State,74,69,1.12,,6.63
+2025-02-02,regular,UALR,UT Martin,75,57,1.54,,2.55
+2025-02-02,regular,Columbia,Dartmouth,89,95,1.59,,2.43
+2025-02-02,regular,Cornell,Harvard,75,60,1.21,,4.63
+2025-02-02,regular,Towson,Drexel,55,54,1.34,,3.35
+2025-02-02,regular,Incarnate Word,Houston Christian,74,64,1.58,,2.45
+2025-02-02,regular,Houston,Texas Tech,81,82,1.17,,5.25
+2025-02-02,regular,Jacksonville Dolphins,North Florida,78,81,1.32,,3.50
+2025-02-02,regular,San Diego Toreros,Loyola Marymount,62,78,3.63,,1.30
+2025-02-02,regular,LSU,Texas,58,89,2.05,,1.80
+2025-02-02,regular,Montana,Sacramento State,87,59,1.14,,6.00
+2025-02-02,regular,NC Greensboro,Wofford,62,74,1.67,,2.25
+2025-02-02,regular,North Texas,UTSA Roadrunners,50,54,1.07,,9.25
+2025-02-02,regular,Penn,Yale,61,90,6.38,,1.13
+2025-02-02,regular,SMU Mustangs,Stanford,85,61,1.30,,3.68
+2025-02-02,regular,Bethune-Cookman,Alabama State,67,64,1.80,,2.05
+2025-02-02,regular,Grambling St.,Jackson State,50,65,1.80,,2.05
+2025-02-02,regular,UTRGV,Texas A&M-CC,83,73,2.13,,1.75
+2025-02-02,regular,San Jose State,Air Force,75,64,1.22,,4.50
+2025-02-02,regular,Texas State,Arkansas State,74,85,3.00,,1.41
+2025-02-02,regular,Buffalo,Ball State,76,89,2.22,,1.69
+2025-02-02,regular,Lipscomb,Bellarmine,87,80,1.04,,12.75
+2025-02-02,regular,Kennesaw State,Florida International,73,67,1.29,,3.70
+2025-02-02,regular,Illinois State,Valparaiso,86,78,1.28,,3.80
+2025-02-02,regular,Jacksonville State,Liberty,72,61,2.38,,1.61
+2025-02-02,regular,Southeast Missouri State,Tennessee State,89,87,1.49,,2.70
+2025-02-02,regular,Coppin State,Delaware State,61,84,3.25,,1.36
+2025-02-02,regular,Lindenwood,Eastern Illinois,70,76,1.67,,2.25
+2025-02-02,regular,Southern Miss,Georgia Southern,72,68,1.75,,2.13
+2025-02-02,regular,Holy Cross,Lehigh,67,69,1.73,,2.15
+2025-02-02,regular,Troy,Louisiana Monroe,87,50,1.05,,12.00
+2025-02-02,regular,Nicholls State,McNeese State,71,63,,,
+2025-02-02,regular,USC,Michigan State,70,64,2.55,,1.54
+2025-02-02,regular,SE Louisiana,New Orleans,76,68,1.12,,6.63
+2025-02-02,regular,Norfolk State,South Carolina St,67,65,1.27,,3.90
+2025-02-02,regular,Western Illinois,Siu Edwardsville,65,69,2.65,,1.50
+2025-02-02,regular,Southern Indiana,Tennessee Tech,65,78,1.77,,2.10
+2025-02-02,regular,Alabama,Georgia,90,69,1.11,,7.00
+2025-02-02,regular,Eastern Kentucky,Austin Peay,88,82,1.26,,4.10
+2025-02-02,regular,Marshall,Coastal Carolina,67,62,1.13,,6.50
+2025-02-02,regular,James Madison,Old Dominion,68,54,1.17,,5.25
+2025-02-02,regular,Louisiana Tech,Sam Houston St.,66,61,1.29,,3.75
+2025-02-02,regular,Oakland,Northern Kentucky,75,84,1.36,,3.25
+2025-02-02,regular,Baylor,Kansas,81,70,1.75,,2.13
+2025-02-02,regular,Boise State,Fresno State,82,60,1.02,,17.00
+2025-02-02,regular,UCF Knights,Brigham Young,75,81,1.93,,1.89
+2025-02-02,regular,Davidson,George Mason,60,64,1.95,,1.87
+2025-02-02,regular,Idaho State,Idaho,87,71,1.48,,2.73
+2025-02-02,regular,Morgan State,Md.-East. Shore,76,63,1.25,,4.18
+2025-02-02,regular,Northern Colorado,Northern Arizona,87,69,1.30,,3.65
+2025-02-02,regular,VCU Rams,Richmond Spiders,90,49,1.03,,16.00
+2025-02-02,regular,UC Irvine,UC Davis,73,66,1.10,,7.63
+2025-02-02,regular,Virginia,Virginia Tech,74,75,1.55,,2.53
+2025-02-01,regular,Georgia Tech,Louisville,77,70,4.63,,1.21
+2025-02-01,regular,Fairleigh Dickinson,Mercyhurst Lakers,60,67,,,
+2025-02-01,regular,Miami (Ohio),Ohio,73,69,1.42,,2.98
+2025-02-01,regular,Rutgers,Michigan,63,66,,,
+2025-02-01,regular,Oklahoma,Vanderbilt,97,67,1.60,,2.40
+2025-02-01,regular,Texas Southern,Prairie View A&M,79,63,1.21,,4.58
+2025-02-01,regular,Western Carolina,VMI,76,80,2.10,,1.76
+2025-02-01,regular,East Texas A&M,Northwestern St.,72,50,2.45,,1.58
+2025-02-01,regular,Weber State,East. Washington,49,72,1.60,,2.40
+2025-02-01,regular,Howard,Hampton,79,80,2.15,,1.73
+2025-02-01,regular,Illinois (Chi.),Indiana State,83,88,1.29,,3.78
+2025-02-01,regular,Stephen F. Austin,Lamar,62,67,1.69,,2.23
+2025-02-01,regular,Middle Tenn. St.,UTEP,71,68,1.56,,2.50
+2025-02-01,regular,Missouri State,Murray State,77,56,2.35,,1.63
+2025-02-01,regular,Western Kentucky,New Mexico State,101,69,1.67,,2.25
+2025-02-01,regular,Oklahoma State,Utah Utes,81,72,1.87,,1.95
+2025-02-01,regular,UT Arlington,Utah Tech,73,71,1.19,,4.83
+2025-02-01,regular,La Salle,George Washington,73,67,2.15,,1.73
+2025-02-01,regular,American University,Army,71,68,1.50,,2.65
+2025-02-01,regular,Ole Miss,Auburn,82,92,3.03,,1.40
+2025-02-01,regular,Boston College,Florida State,77,76,3.05,,1.39
+2025-02-01,regular,Loyola Maryland,Boston University,69,67,1.89,,1.93
+2025-02-01,regular,Navy,Bucknell,75,85,1.61,,2.38
+2025-02-01,regular,Stonehill,Central Connecticut State,63,71,2.78,,1.46
+2025-02-01,regular,UAB,Charlotte,96,78,1.11,,7.00
+2025-02-01,regular,Chattanooga Mocs,Mercer,93,84,1.30,,3.65
+2025-02-01,regular,Colgate,Lafayette,61,76,1.23,,4.29
+2025-02-01,regular,Monmouth,Delaware,92,83,,,
+2025-02-01,regular,Southern Illinois,Drake,65,75,3.28,,1.36
+2025-02-01,regular,Duquesne,UMass,53,62,1.60,,2.40
+2025-02-01,regular,Temple,East Carolina,98,94,1.65,,2.30
+2025-02-01,regular,Winthrop,Gardner Webb,96,93,1.39,,3.05
+2025-02-01,regular,Iowa State,Kansas State,61,80,1.08,,9.00
+2025-02-01,regular,Youngstown State,IU Indy,79,84,1.17,,5.38
+2025-02-01,regular,Loyola Chicago,Saint Josephs Hawks,58,55,2.10,,1.76
+2025-02-01,regular,Vermont,Maine Black Bears,55,49,1.75,,2.13
+2025-02-01,regular,North Dakota,South Dakota St.,80,75,3.30,,1.35
+2025-02-01,regular,Toledo,Northern Illinois,89,85,1.09,,8.13
+2025-02-01,regular,Northwestern,Wisconsin,69,75,2.62,,1.51
+2025-02-01,regular,Radford,USC Upstate,79,69,1.11,,7.13
+2025-02-01,regular,Charleston Southern,Longwood,89,85,2.65,,1.50
+2025-02-01,regular,Presbyterian,High Point,72,84,4.42,,1.22
+2025-02-01,regular,NC State,Clemson,58,68,2.83,,1.44
+2025-02-01,regular,Appalachian State,Georgia State,80,76,1.13,,6.25
+2025-02-01,regular,Arizona State,Arizona,72,81,3.35,,1.34
+2025-02-01,regular,Campbell,Hofstra,75,52,2.00,,1.83
+2025-02-01,regular,Chicago State,LIU Sharks,73,67,2.80,,1.45
+2025-02-01,regular,Citadel,Samford,58,83,10.25,,1.06
+2025-02-01,regular,Villanova,Creighton,60,62,1.59,,2.43
+2025-02-01,regular,Detroit,Wisc. Green Bay,67,57,1.61,,2.38
+2025-02-01,regular,Western Michigan,Eastern Michigan,61,54,1.69,,2.22
+2025-02-01,regular,Florida Gulf Coast,Stetson,82,56,1.10,,7.75
+2025-02-01,regular,Wagner,Le Moyne,73,61,1.61,,2.38
+2025-02-01,regular,Mississippi St.,Missouri,61,88,1.36,,3.28
+2025-02-01,regular,Queens Royals,West Georgia,87,68,1.15,,5.75
+2025-02-01,regular,UMBC Retrievers,UMass Lowell,67,83,2.25,,1.67
+2025-02-01,regular,St. Bonaventure,Fordham,74,72,1.15,,5.75
+2025-02-01,regular,Tennessee,Florida,64,44,1.62,,2.35
+2025-02-01,regular,Minnesota,Washington,68,71,1.42,,2.95
+2025-02-01,regular,Wake Forest,Pittsburgh,76,74,1.71,,2.20
+2025-02-01,regular,St. John's (N.Y.),Providence,68,66,1.09,,7.88
+2025-02-01,regular,Marist,Siena,72,67,1.41,,2.98
+2025-02-01,regular,Purdue,Indiana,81,76,1.11,,6.88
+2025-02-01,regular,Kent State,Akron,71,85,1.57,,2.48
+2025-02-01,regular,Penn,Brown,79,88,1.87,,1.95
+2025-02-01,regular,Canisius,Niagara,63,64,2.50,,1.56
+2025-02-01,regular,Columbia,Harvard,82,90,2.46,,1.88
+2025-02-01,regular,Cornell,Dartmouth,76,64,1.17,,5.50
+2025-02-01,regular,St. Louis Billikens,Dayton,63,71,1.73,,2.15
+2025-02-01,regular,Quinnipiac,Fairfield,81,69,1.12,,6.75
+2025-02-01,regular,Manhattan,Iona,76,55,1.93,,1.89
+2025-02-01,regular,Merrimack Warriors,Mount St. Mary's,58,66,1.22,,4.45
+2025-02-01,regular,Georgetown,Butler,73,70,1.61,,2.38
+2025-01-31,regular,Hawaii,UC San Diego,63,74,3.60,,1.31
+2025-01-31,regular,Grand Canyon,Seattle,83,74,1.17,,5.25
+2025-01-31,regular,UCLA,Oregon,78,52,1.48,,2.73
+2025-01-31,regular,California Baptist,Abilene Christian,83,60,1.30,,3.63
+2025-01-31,regular,UC Santa Barbara,CS Northridge,71,78,1.62,,2.38
+2025-01-31,regular,Long Beach State,UC Irvine,75,80,9.50,,1.07
+2025-01-31,regular,Loyola Marymount,Portland,88,63,1.13,,6.50
+2025-01-31,regular,Pacific,Washington State,70,68,5.88,,1.15
+2025-01-31,regular,San Diego Toreros,Pepperdine,90,98,2.43,,1.59
+2025-01-31,regular,UC Riverside,UC Davis,60,58,1.40,,3.00
+2025-01-31,regular,CSU Bakersfield,Cal Poly,81,90,1.54,,2.55
+2025-01-31,regular,IPFW,Cleveland State,58,68,1.46,,2.75
+2025-01-31,regular,Denver,UMKC,69,68,2.50,,1.56
+2025-01-31,regular,Idaho State,East. Washington,78,70,1.34,,3.38
+2025-01-31,regular,Weber State,Idaho,74,82,1.76,,2.10
+2025-01-31,regular,Montana State,Sacramento State,70,58,1.17,,5.50
+2025-01-31,regular,Montana,Portland State,92,78,1.57,,2.48
+2025-01-31,regular,Tulane,Memphis,56,68,3.03,,1.40
+2025-01-31,regular,Western Illinois,Eastern Illinois,59,71,1.80,,2.05
+2025-01-31,regular,Nebraska,Illinois,80,74,2.68,,1.49
+2025-01-31,regular,Lindenwood,Siu Edwardsville,65,63,2.43,,1.59
+2025-01-31,regular,Southeast Missouri State,UT Martin,90,79,1.62,,2.38
+2025-01-31,regular,UALR,Tennessee State,70,72,1.34,,3.38
+2025-01-31,regular,Austin Peay,Bellarmine,86,77,1.24,,4.23
+2025-01-31,regular,Lipscomb,Eastern Kentucky,71,80,1.19,,4.75
+2025-01-31,regular,Kennesaw State,Liberty,68,76,2.45,,1.58
+2025-01-31,regular,Texas State,Louisiana Lafayette,61,70,1.13,,6.50
+2025-01-31,regular,South Alabama,Louisiana Monroe,58,62,1.06,,10.50
+2025-01-31,regular,North Dakota St,South Dakota St.,62,72,1.67,,2.25
+2025-01-31,regular,UT Arlington,Southern Utah,70,68,1.17,,5.13
+2025-01-31,regular,Tarleton,Utah Tech,61,54,1.36,,3.23
+2025-01-31,regular,Western Kentucky,UTEP,78,74,1.69,,2.23
+2025-01-31,regular,Middle Tenn. St.,New Mexico State,57,61,1.33,,3.40
+2025-01-31,regular,Morehead State,Tennessee Tech,64,72,1.39,,3.05
+2025-01-31,regular,UMBC Retrievers,Bryant University,86,92,2.83,,1.44
+2025-01-31,regular,Campbell,William & Mary,96,55,2.23,,1.69
+2025-01-31,regular,LIU Sharks,Central Connecticut State,50,63,2.55,,1.54
+2025-01-31,regular,James Madison,Coastal Carolina,73,64,1.08,,8.50
+2025-01-31,regular,Detroit,Northern Kentucky,68,57,3.73,,1.29
+2025-01-31,regular,Elon,Hofstra,63,74,1.61,,2.38
+2025-01-31,regular,Jacksonville State,Florida International,71,67,1.32,,3.50
+2025-01-31,regular,Troy,Georgia Southern,81,74,1.16,,5.50
+2025-01-31,regular,Marshall,Georgia State,81,85,1.11,,7.13
+2025-01-31,regular,Hampton,Northeastern,69,78,2.13,,1.75
+2025-01-31,regular,Robert Morris,IU Indy,106,53,1.22,,4.45
+2025-01-31,regular,Mercyhurst Lakers,St. Francis (PA),62,58,2.10,,1.77
+2025-01-31,regular,N. Carolina A&T,NC Wilmington,59,83,12.50,,1.04
+2025-01-31,regular,Oakland,Wisc. Green Bay,68,54,1.07,,9.38
+2025-01-31,regular,Stonehill,Wagner,73,61,1.59,,2.43
+2025-01-31,regular,Delaware,Towson,66,76,2.15,,1.73
+2025-01-31,regular,Penn State,Ohio State,64,83,1.57,,2.48
+2025-01-31,regular,Youngstown State,Wright State,88,86,1.73,,2.15
+2025-01-31,regular,Binghamton,Vermont,75,72,2.58,,1.53
+2025-01-31,regular,Charleston,Stony Brook,81,74,1.05,,11.00
+2025-01-31,regular,Maine Black Bears,New Hampshire Wildcats,71,46,1.07,,9.38
+2025-01-30,regular,Stanford,Syracuse,70,61,1.13,,6.38
+2025-01-30,regular,Boise State,Nevada,66,56,1.30,,3.68
+2025-01-30,regular,Utah State,UNLV,76,71,1.15,,5.75
+2025-01-30,regular,Mississippi St.,Alabama,84,88,1.83,,2.00
+2025-01-30,regular,Illinois State,Belmont,81,78,1.78,,2.08
+2025-01-30,regular,SMU Mustangs,California,76,65,1.10,,7.25
+2025-01-30,regular,Ole Miss,Texas,72,69,1.36,,3.25
+2025-01-30,regular,Santa Clara,St. Marys (CA),54,67,2.58,,1.53
+2025-01-30,regular,Southern Miss,Arkansas State,68,81,4.55,,1.21
+2025-01-30,regular,Creighton,Xavier,86,77,1.37,,3.20
+2025-01-30,regular,South Dakota Coyotes,Nebraska O.,91,87,2.05,,1.79
+2025-01-30,regular,St. Thomas (Minn.),Oral Roberts,86,71,1.09,,8.00
+2025-01-30,regular,Bradley,Illinois (Chi.),70,93,1.26,,3.95
+2025-01-30,regular,UConn,DePaul,72,61,1.08,,8.38
+2025-01-30,regular,Evansville,Murray State,78,74,2.88,,1.43
+2025-01-30,regular,Kansas State,Oklahoma State,85,57,1.31,,3.60
+2025-01-30,regular,Tulsa,UAB,68,78,3.53,,1.32
+2025-01-30,regular,Central Arkansas,West Georgia,75,70,1.80,,2.05
+2025-01-30,regular,Wichita State,North Texas,54,58,2.63,,1.52
+2025-01-30,regular,Lafayette,American University,68,75,1.93,,1.89
+2025-01-30,regular,LSU,Auburn,74,87,6.88,,1.11
+2025-01-30,regular,Bucknell,Loyola Maryland,79,67,1.44,,2.85
+2025-01-30,regular,Temple,Charlotte,90,89,1.22,,4.45
+2025-01-30,regular,Western Carolina,Chattanooga Mocs,60,84,5.63,,1.15
+2025-01-30,regular,Mercer,Citadel,80,46,1.10,,7.75
+2025-01-30,regular,Drake,Northern Iowa,66,52,1.30,,3.68
+2025-01-30,regular,Saint Josephs Hawks,Duquesne,76,72,1.20,,4.75
+2025-01-30,regular,NC Greensboro,East Tennessee St,70,65,1.75,,2.13
+2025-01-30,regular,Florida Atlantic,UTSA Roadrunners,94,74,1.23,,4.38
+2025-01-30,regular,Jacksonville Dolphins,Florida Gulf Coast,79,83,1.67,,2.25
+2025-01-30,regular,Florida State,Virginia Tech,66,76,1.14,,6.00
+2025-01-30,regular,La Salle,Fordham,72,88,1.61,,2.38
+2025-01-30,regular,Gardner Webb,Longwood,92,87,1.99,,1.84
+2025-01-30,regular,George Mason,Loyola Chicago,58,53,1.35,,3.30
+2025-01-30,regular,George Washington,Richmond Spiders,75,66,1.26,,3.95
+2025-01-30,regular,West Virginia,Houston,49,63,4.68,,1.21
+2025-01-30,regular,Indiana State,Missouri State,72,67,1.43,,2.90
+2025-01-30,regular,Lehigh,Navy,54,79,1.82,,2.03
+2025-01-30,regular,Maryland,Wisconsin,76,68,1.42,,2.95
+2025-01-30,regular,Miami (FL),Virginia,71,82,1.73,,2.14
+2025-01-30,regular,Queens Royals,North Alabama,75,67,2.38,,1.61
+2025-01-30,regular,North Florida,Stetson,101,100,1.21,,4.68
+2025-01-30,regular,Rhode Island,UMass,88,82,1.54,,2.55
+2025-01-30,regular,Texas Tech,TCU,71,57,1.11,,7.00
+2025-01-30,regular,Wofford,VMI,67,74,1.12,,6.63
+2025-01-30,regular,Appalachian State,Old Dominion,77,78,1.15,,5.75
+2025-01-30,regular,Winthrop,Presbyterian,76,67,1.30,,3.68
+2025-01-30,regular,UNC Asheville,Radford,72,65,1.78,,2.08
+2025-01-30,regular,Army,Colgate,84,72,2.75,,1.47
+2025-01-30,regular,USC Upstate,Charleston Southern,75,82,2.20,,1.71
+2025-01-30,regular,Furman,Samford,72,70,2.20,,1.71
+2025-01-29,regular,Gonzaga,Oregon State,98,60,1.08,,9.13
+2025-01-29,regular,San Diego State,San Jose State,71,68,1.08,,8.88
+2025-01-29,regular,Utah Utes,Cincinnati,69,66,1.87,,1.96
+2025-01-29,regular,Colorado State,Air Force,79,58,1.05,,11.00
+2025-01-29,regular,Colorado,Arizona State,68,70,1.58,,2.45
+2025-01-29,regular,Brigham Young,Baylor,93,89,1.56,,2.50
+2025-01-29,regular,Notre Dame,Georgia Tech,71,68,1.28,,3.80
+2025-01-29,regular,Pittsburgh,North Carolina,73,65,1.66,,2.28
+2025-01-29,regular,Texas A&M,Oklahoma,75,68,1.26,,4.05
+2025-01-29,regular,Butler,Marquette,69,78,4.18,,1.25
+2025-01-29,regular,Wyoming,Fresno State,83,72,1.25,,4.18
+2025-01-29,regular,St. Bonaventure,Dayton,75,53,2.28,,1.66
+2025-01-29,regular,Kansas,UCF Knights,91,87,1.12,,6.88
+2025-01-29,regular,Michigan State,Minnesota,73,51,1.08,,8.63
+2025-01-29,regular,Valparaiso,Southern Illinois,75,79,1.96,,1.87
+2025-01-29,regular,St. Louis Billikens,VCU Rams,78,69,3.00,,1.40
+2025-01-29,regular,Morehead State,Southern Indiana,66,65,1.31,,3.60
+2025-01-29,regular,Northern Illinois,Akron,70,80,9.88,,1.07
+2025-01-29,regular,Ball State,Western Michigan,71,74,1.49,,2.68
+2025-01-29,regular,Kent State,Bowling Green,75,57,1.11,,7.00
+2025-01-29,regular,Buffalo,Central Michigan,75,69,3.15,,1.37
+2025-01-29,regular,Miami (Ohio),Eastern Michigan,89,80,1.22,,4.48
+2025-01-29,regular,Georgia,South Carolina,71,60,1.28,,3.78
+2025-01-29,regular,Tennessee,Kentucky,73,78,1.17,,5.38
+2025-01-29,regular,Louisville,Wake Forest,72,59,1.21,,4.68
+2025-01-29,regular,Ohio,Toledo,83,86,1.58,,2.43
+2025-01-29,regular,South Florida,Rice,69,64,1.36,,3.23
+2025-01-29,regular,Georgetown,St. John's (N.Y.),41,66,2.80,,1.45
+2025-01-28,regular,Arizona,Iowa State,86,75,1.67,,2.25
+2025-01-28,regular,USC,UCLA,76,82,2.05,,1.80
+2025-01-28,regular,Northeastern,Towson,65,75,1.86,,1.96
+2025-01-28,regular,Alabama A&M,Prairie View A&M,98,82,1.71,,2.19
+2025-01-28,regular,Alabama State,Texas Southern,69,80,1.55,,2.52
+2025-01-28,regular,Duke,NC State,74,64,1.02,,19.25
+2025-01-28,regular,Stephen F. Austin,East Texas A&M,79,72,1.21,,4.68
+2025-01-28,regular,Miss. Valley St.,Southern Univ.,42,63,24.50,,1.01
+2025-01-28,regular,Jackson State,Florida A&M,62,72,1.25,,4.18
+2025-01-28,regular,New Orleans,Incarnate Word,58,74,3.00,,1.42
+2025-01-28,regular,Ohio State,Iowa,82,65,1.32,,3.53
+2025-01-28,regular,Lamar,Northwestern St.,69,59,1.48,,2.70
+2025-01-28,regular,Texas A&M-CC,McNeese State,73,74,4.03,,1.26
+2025-01-28,regular,Louisiana Monroe,South Alabama,77,66,7.13,,1.11
+2025-01-28,regular,UTRGV,Nicholls State,75,82,1.71,,2.18
+2025-01-28,regular,Arkansas-Pine Bluff,Grambling St.,77,81,2.83,,1.44
+2025-01-28,regular,Boston University,Holy Cross,69,59,1.60,,2.40
+2025-01-28,regular,SE Louisiana,Houston Christian,62,70,1.34,,3.35
+2025-01-28,regular,Michigan,Penn State,76,72,1.23,,4.30
+2025-01-28,regular,Alcorn State,Bethune-Cookman,70,61,2.28,,1.66
+2025-01-28,regular,Troy,Southern Miss,70,61,1.13,,6.25
+2025-01-27,regular,UALR,Eastern Illinois,54,56,1.17,,5.50
+2025-01-26,regular,Army,Navy,53,66,1.63,,2.35
+2025-01-26,regular,Illinois,Northwestern,83,74,1.28,,3.85
+2025-01-26,regular,Texas Tech,Oklahoma State,64,54,1.05,,12.00
+2025-01-26,regular,Tulsa,Wichita State,84,77,2.73,,1.48
+2025-01-26,regular,North Texas,Florida Atlantic,77,64,1.26,,3.95
+2025-01-26,regular,St. Francis (PA),Wagner,66,68,1.67,,2.25
+2025-01-26,regular,Central Connecticut State,Chicago State,81,64,1.06,,9.75
+2025-01-26,regular,Mercyhurst Lakers,LIU Sharks,85,80,2.18,,1.71
+2025-01-26,regular,Memphis,UAB,100,77,1.31,,3.58
+2025-01-26,regular,Wisconsin,Nebraska,83,55,1.29,,3.70
+2025-01-26,regular,Indiana,Maryland,78,79,2.22,,1.67
+2025-01-26,regular,Fordham,Duquesne,65,63,2.38,,1.59
+2025-01-26,regular,Brigham Young,Cincinnati,80,52,1.34,,3.35
+2025-01-26,regular,UC San Diego,CS Northridge,79,54,1.17,,5.25
+2025-01-26,regular,UC Irvine,Hawaii,71,55,1.15,,5.63
+2025-01-26,regular,Nevada,San Diego State,50,69,1.67,,2.25
+2025-01-26,regular,Pepperdine,Pacific,60,44,1.31,,3.55
+2025-01-26,regular,San Francisco,San Diego Toreros,81,69,1.05,,11.00
+2025-01-26,regular,Seattle,Utah Valley State,66,70,1.45,,2.80
+2025-01-26,regular,CSU Bakersfield,UC Riverside,79,83,1.91,,1.91
+2025-01-26,regular,CS Fullerton,UC Santa Barbara,75,83,3.95,,1.25
+2025-01-26,regular,Utah Tech,Grand Canyon,66,79,7.88,,1.08
+2025-01-26,regular,New Mexico State,Jacksonville State,59,65,1.48,,2.68
+2025-01-26,regular,UTEP,Kennesaw State,73,71,1.47,,2.70
+2025-01-26,regular,Montana,Montana State,77,70,1.51,,2.55
+2025-01-26,regular,Alabama,LSU,80,73,1.05,,11.00
+2025-01-26,regular,Arkansas,Oklahoma,62,65,1.60,,2.40
+2025-01-26,regular,Auburn,Tennessee,53,51,1.32,,3.50
+2025-01-26,regular,Southern Utah,California Baptist,60,76,2.60,,1.52
+2025-01-26,regular,California,Miami (FL),98,94,1.22,,4.50
+2025-01-26,regular,Xavier,UConn,76,72,1.79,,2.05
+2025-01-26,regular,Portland,Gonzaga,62,105,19.00,,1.01
+2025-01-26,regular,Louisiana Lafayette,Southern Miss,59,67,2.10,,1.76
+2025-01-26,regular,Oral Roberts,Nebraska O.,76,84,2.63,,1.52
+2025-01-26,regular,Washington State,St. Marys (CA),75,80,3.05,,1.39
+2025-01-26,regular,UMKC,St. Thomas (Minn.),65,68,2.13,,1.75
+2025-01-26,regular,San Jose State,Wyoming,67,58,1.64,,2.30
+2025-01-26,regular,North Alabama,Austin Peay,88,84,1.11,,7.00
+2025-01-26,regular,Central Michigan,Western Michigan,73,52,1.45,,2.80
+2025-01-26,regular,Elon,Charleston,62,76,1.63,,2.35
+2025-01-26,regular,Old Dominion,Coastal Carolina,74,52,1.54,,2.55
+2025-01-26,regular,Fresno State,Colorado State,64,69,6.25,,1.13
+2025-01-26,regular,Lamar,East Texas A&M,61,58,1.21,,4.68
+2025-01-26,regular,Fairfield,Merrimack Warriors,54,75,2.50,,1.56
+2025-01-26,regular,Stanford,Florida State,78,71,1.50,,2.65
+2025-01-26,regular,Miss. Valley St.,Grambling St.,54,65,12.00,,1.05
+2025-01-26,regular,NC Wilmington,Hampton,83,62,1.13,,6.13
+2025-01-26,regular,Lehigh,Lafayette,86,47,1.99,,1.84
+2025-01-26,regular,Arkansas-Pine Bluff,Southern Univ.,67,83,6.88,,1.11
+2025-01-26,regular,Kansas,Houston,86,92,1.87,,1.95
+2025-01-26,regular,Louisiana Tech,Middle Tenn. St.,75,69,1.65,,2.30
+2025-01-26,regular,Virginia,Notre Dame,59,74,2.10,,1.76
+2025-01-26,regular,Richmond Spiders,Davidson,66,72,2.65,,1.50
+2025-01-26,regular,Florida International,Liberty,59,82,3.40,,1.33
+2025-01-26,regular,New Orleans,Houston Christian,76,86,2.18,,1.71
+2025-01-26,regular,Kansas State,West Virginia,73,60,1.67,,2.25
+2025-01-26,regular,Missouri,Ole Miss,83,75,1.59,,2.43
+2025-01-26,regular,Oregon State,Santa Clara,83,69,1.75,,2.13
+2025-01-26,regular,Samford,Wofford,77,61,1.39,,3.10
+2025-01-26,regular,Troy,South Alabama,65,55,1.53,,2.57
+2025-01-26,regular,South Dakota St.,South Dakota Coyotes,90,71,1.12,,6.75
+2025-01-26,regular,Stephen F. Austin,Northwestern St.,54,57,1.63,,2.35
+2025-01-26,regular,UTRGV,McNeese State,63,93,4.75,,1.20
+2025-01-26,regular,Alabama A&M,Texas Southern,78,82,2.78,,1.46
+2025-01-26,regular,Cal Poly,Long Beach State,78,69,1.36,,3.30
+2025-01-26,regular,Virginia Tech,Clemson,57,72,4.25,,1.24
+2025-01-26,regular,East. Washington,Northern Colorado,62,67,2.80,,1.45
+2025-01-26,regular,Portland State,Idaho State,76,59,1.80,,2.05
+2025-01-26,regular,North Dakota St,North Dakota,87,82,1.17,,5.25
+2025-01-26,regular,Alcorn State,Florida A&M,64,65,,,
+2025-01-26,regular,N. Carolina Central,South Carolina St,82,77,1.79,,2.05
+2025-01-26,regular,Lindenwood,UALR,46,78,2.15,,1.73
+2025-01-26,regular,Northern Illinois,Ball State,76,66,3.33,,1.35
+2025-01-26,regular,Utah Utes,Baylor,61,76,2.25,,1.66
+2025-01-26,regular,Jackson State,Bethune-Cookman,86,81,1.72,,2.18
+2025-01-26,regular,Wake Forest,Duke,56,63,6.25,,1.13
+2025-01-26,regular,Eastern Illinois,Southern Indiana,60,64,1.98,,1.86
+2025-01-26,regular,Mercer,Furman,74,79,2.15,,1.73
+2025-01-26,regular,SE Louisiana,Incarnate Word,86,63,1.59,,2.43
+2025-01-26,regular,Siu Edwardsville,Morehead State,65,54,1.69,,2.22
+2025-01-26,regular,Texas A&M-CC,Nicholls State,61,57,1.51,,2.65
+2025-01-26,regular,Presbyterian,Radford,69,82,2.25,,1.66
+2025-01-26,regular,Western Illinois,Southeast Missouri State,51,72,2.35,,1.63
+2025-01-26,regular,UT Martin,Tennessee Tech,85,89,1.39,,3.05
+2025-01-26,regular,Md.-East. Shore,Delaware State,66,73,2.50,,1.56
+2025-01-26,regular,Abilene Christian,UT Arlington,76,79,1.87,,1.96
+2025-01-26,regular,Air Force,Utah State,58,87,9.13,,1.08
+2025-01-26,regular,Alabama State,Prairie View A&M,66,63,1.29,,3.73
+2025-01-26,regular,American University,Colgate,81,77,2.15,,1.73
+2025-01-26,regular,Murray State,Belmont,77,95,1.54,,2.55
+2025-01-26,regular,Butler,DePaul,86,69,1.39,,3.05
+2025-01-26,regular,East Tennessee St,Chattanooga Mocs,63,71,1.54,,2.55
+2025-01-26,regular,Morgan State,Coppin State,80,64,1.22,,4.45
+2025-01-26,regular,Missouri State,Drake,62,69,4.15,,1.25
+2025-01-26,regular,Eastern Kentucky,Florida Gulf Coast,81,77,2.20,,1.69
+2025-01-26,regular,Valparaiso,Evansville,68,78,1.32,,3.50
+2025-01-26,regular,Georgia State,James Madison,79,86,3.70,,1.29
+2025-01-26,regular,Mount St. Mary's,Manhattan,64,74,1.70,,2.20
+2025-01-26,regular,Minnesota,Oregon,77,69,2.60,,1.52
+2025-01-26,regular,Sacramento State,Weber State,81,87,2.38,,1.61
+2025-01-26,regular,UCF Knights,TCU,85,58,1.54,,2.55
+2025-01-26,regular,UTSA Roadrunners,Temple,88,79,2.18,,1.71
+2025-01-25,regular,Charleston Southern,UNC Asheville,61,69,2.38,,1.62
+2025-01-25,regular,Florida,Georgia,89,59,1.15,,5.88
+2025-01-25,regular,Sam Houston St.,Western Kentucky,66,75,1.65,,2.28
+2025-01-25,regular,Louisiana Monroe,Appalachian State,58,66,5.63,,1.15
+2025-01-25,regular,Arkansas State,Texas State,80,65,1.21,,4.63
+2025-01-25,regular,Bellarmine,Stetson,76,81,1.86,,1.96
+2025-01-25,regular,Cleveland State,Wisc. Green Bay,81,66,1.06,,9.75
+2025-01-25,regular,Georgia Southern,Marshall,67,71,2.20,,1.71
+2025-01-25,regular,Idaho,Northern Arizona,72,80,1.63,,2.35
+2025-01-25,regular,Arizona,Colorado,78,63,1.07,,9.38
+2025-01-25,regular,Illinois (Chi.),Southern Illinois,85,89,1.33,,3.40
+2025-01-25,regular,Longwood,USC Upstate,80,54,1.13,,6.13
+2025-01-25,regular,UNLV,New Mexico,73,75,2.38,,1.62
+2025-01-25,regular,Vanderbilt,Kentucky,74,69,2.25,,1.67
+2025-01-25,regular,Rice,Tulane,71,82,1.89,,1.93
+2025-01-25,regular,Texas A&M,Texas,69,70,2.00,,1.84
+2025-01-25,regular,North Carolina,Boston College,102,96,1.04,,13.25
+2025-01-25,regular,Akron,Miami (Ohio),102,75,1.29,,3.75
+2025-01-25,regular,Arizona State,Iowa State,61,76,4.88,,1.19
+2025-01-25,regular,Bryant University,Binghamton,83,69,1.10,,7.63
+2025-01-25,regular,Bradley,Illinois State,61,57,1.23,,4.29
+2025-01-25,regular,Brown,Dartmouth,83,84,1.42,,2.95
+2025-01-25,regular,Eastern Michigan,Buffalo,90,77,1.39,,3.05
+2025-01-25,regular,Central Arkansas,Lipscomb,55,68,7.25,,1.11
+2025-01-25,regular,Penn,Columbia,93,78,2.38,,1.62
+2025-01-25,regular,Drexel,Delaware,67,54,1.48,,2.73
+2025-01-25,regular,George Washington,St. Louis Billikens,67,61,1.96,,1.87
+2025-01-25,regular,Yale,Harvard,84,55,1.08,,8.63
+2025-01-25,regular,High Point,Winthrop,84,62,1.21,,4.68
+2025-01-25,regular,Loyola Maryland,Holy Cross,65,70,1.59,,2.43
+2025-01-25,regular,IU Indy,IPFW,80,91,4.00,,1.26
+2025-01-25,regular,La Salle,Rhode Island,70,64,1.98,,1.85
+2025-01-25,regular,UMass Lowell,New Hampshire Wildcats,97,80,1.06,,9.88
+2025-01-25,regular,Niagara,Sacred Heart,77,86,1.80,,2.05
+2025-01-25,regular,West Georgia,North Florida,92,72,3.73,,1.29
+2025-01-25,regular,Robert Morris,Oakland,73,71,1.79,,2.08
+2025-01-25,regular,Boston University,Bucknell,85,82,1.86,,1.96
+2025-01-25,regular,Canisius,Marist,47,70,4.23,,1.25
+2025-01-25,regular,Citadel,Western Carolina,78,80,1.83,,2.01
+2025-01-25,regular,Wright State,Detroit,67,50,1.09,,8.00
+2025-01-25,regular,East Carolina,South Florida,64,55,1.44,,2.88
+2025-01-25,regular,Indiana State,Northern Iowa,56,74,2.45,,1.58
+2025-01-25,regular,Iona,Siena,72,68,1.46,,2.78
+2025-01-25,regular,Queens Royals,Jacksonville Dolphins,77,87,1.91,,1.91
+2025-01-25,regular,South Carolina,Mississippi St.,60,65,3.47,,1.33
+2025-01-25,regular,VMI,NC Greensboro,57,60,3.73,,1.29
+2025-01-25,regular,Vermont,UMBC Retrievers,63,80,1.44,,2.83
+2025-01-25,regular,Providence,Georgetown,78,68,1.91,,1.91
+2025-01-25,regular,Norfolk State,Howard,92,75,1.13,,6.13
+2025-01-25,regular,Syracuse,Pittsburgh,73,77,3.85,,1.27
+2025-01-25,regular,Hofstra,Campbell,67,69,1.33,,3.40
+2025-01-25,regular,Stony Brook,N. Carolina A&T,89,74,1.75,,2.13
+2025-01-25,regular,NC State,SMU Mustangs,57,63,2.35,,1.63
+2025-01-25,regular,Washington,UCLA,60,65,2.90,,1.42
+2025-01-25,regular,Iowa,Penn State,76,75,1.54,,2.55
+2025-01-25,regular,VCU Rams,St. Bonaventure,75,61,1.10,,7.50
+2025-01-25,regular,Purdue,Michigan,91,64,1.53,,2.58
+2025-01-25,regular,Dayton,Saint Josephs Hawks,77,72,1.49,,2.70
+2025-01-25,regular,Ohio,Kent State,61,59,2.08,,1.79
+2025-01-25,regular,Le Moyne,Central Connecticut State,70,93,3.15,,1.38
+2025-01-25,regular,Stonehill,Chicago State,75,73,1.17,,5.25
+2025-01-25,regular,St. Francis (PA),LIU Sharks,74,64,1.82,,2.03
+2025-01-25,regular,Marquette,Villanova,87,74,1.21,,4.63
+2025-01-25,regular,Mercyhurst Lakers,Wagner,71,66,1.98,,1.85
+2025-01-25,regular,Northern Kentucky,Wisc. Milwaukee,59,79,1.93,,1.89
+2025-01-25,regular,Bowling Green,Toledo,71,84,2.25,,1.67
+2025-01-24,regular,California Baptist,Utah Valley State,69,74,1.69,,2.22
+2025-01-24,regular,Santa Clara,Washington State,93,65,1.44,,2.85
+2025-01-24,regular,CS Fullerton,CSU Bakersfield,68,71,2.63,,1.52
+2025-01-24,regular,CS Northridge,Long Beach State,86,76,1.09,,8.13
+2025-01-24,regular,Sacramento State,Idaho State,75,71,2.97,,1.41
+2025-01-24,regular,Pacific,Loyola Marymount,68,73,3.10,,1.39
+2025-01-24,regular,Portland,San Diego Toreros,92,82,1.67,,2.25
+2025-01-24,regular,Portland State,Weber State,74,56,1.58,,2.45
+2025-01-24,regular,UC Riverside,UC Irvine,84,80,3.40,,1.33
+2025-01-24,regular,UC San Diego,UC Santa Barbara,77,63,1.18,,5.00
+2025-01-24,regular,Oregon State,Pepperdine,83,63,1.10,,7.63
+2025-01-24,regular,Arkansas State,Appalachian State,65,55,1.29,,3.75
+2025-01-24,regular,East. Washington,Northern Arizona,61,70,1.69,,2.22
+2025-01-24,regular,Eastern Illinois,Morehead State,66,73,2.63,,1.52
+2025-01-24,regular,UC Davis,Hawaii,68,66,1.69,,2.23
+2025-01-24,regular,Idaho,Northern Colorado,77,76,2.50,,1.56
+2025-01-24,regular,Illinois,Maryland,70,91,1.39,,3.10
+2025-01-24,regular,UTEP,Jacksonville State,66,73,1.35,,3.30
+2025-01-24,regular,New Mexico State,Kennesaw State,56,69,1.34,,3.38
+2025-01-24,regular,St. Marys (CA),San Francisco,71,51,1.18,,5.00
+2025-01-24,regular,Western Illinois,UALR,51,62,2.58,,1.53
+2025-01-24,regular,Southern Utah,Grand Canyon,59,74,5.88,,1.15
+2025-01-24,regular,Lindenwood,Southeast Missouri State,72,68,2.08,,1.78
+2025-01-24,regular,Siu Edwardsville,Southern Indiana,82,76,1.33,,3.47
+2025-01-24,regular,Tennessee State,Tennessee Tech,89,77,1.53,,2.58
+2025-01-24,regular,Nebraska O.,St. Thomas (Minn.),89,78,2.50,,1.56
+2025-01-24,regular,Abilene Christian,Tarleton,67,56,1.54,,2.55
+2025-01-24,regular,Oral Roberts,Denver,68,70,1.42,,2.93
+2025-01-24,regular,North Dakota,South Dakota Coyotes,93,102,1.54,,2.55
+2025-01-24,regular,UT Arlington,Seattle,65,56,1.94,,1.90
+2025-01-24,regular,UMKC,South Dakota St.,64,65,2.60,,1.52
+2025-01-24,regular,Central Arkansas,Austin Peay,71,73,1.96,,1.87
+2025-01-24,regular,Sam Houston St.,Middle Tenn. St.,75,77,2.08,,1.79
+2025-01-24,regular,Canisius,Sacred Heart,84,93,3.15,,1.37
+2025-01-24,regular,Chattanooga Mocs,Samford,69,73,2.18,,1.71
+2025-01-24,regular,Eastern Kentucky,Stetson,66,67,1.13,,6.13
+2025-01-24,regular,Manhattan,Fairfield,84,87,1.66,,2.28
+2025-01-24,regular,Georgia State,Marshall,79,92,3.05,,1.39
+2025-01-24,regular,West Georgia,Jacksonville Dolphins,62,79,5.08,,1.18
+2025-01-24,regular,North Alabama,Lipscomb,74,64,1.91,,1.91
+2025-01-24,regular,Louisiana Tech,Western Kentucky,77,67,1.43,,2.90
+2025-01-24,regular,Siena,Mount St. Mary's,82,68,1.63,,2.35
+2025-01-24,regular,Queens Royals,North Florida,81,90,1.48,,2.73
+2025-01-24,regular,New Hampshire Wildcats,Bryant University,76,95,9.63,,1.07
+2025-01-24,regular,Stony Brook,Campbell,54,79,2.38,,1.62
+2025-01-24,regular,Charleston,NC Wilmington,83,85,1.71,,2.19
+2025-01-24,regular,Hofstra,Delaware,93,68,1.49,,2.68
+2025-01-24,regular,Northeastern,Drexel,70,61,1.54,,2.55
+2025-01-24,regular,Memphis,Wichita State,61,53,1.12,,6.75
+2025-01-24,regular,Towson,N. Carolina A&T,83,67,1.09,,8.13
+2025-01-24,regular,Albany Great Danes,UMBC Retrievers,87,92,1.52,,2.60
+2025-01-24,regular,Bellarmine,Florida Gulf Coast,61,77,6.63,,1.12
+2025-01-24,regular,Niagara,Marist,65,67,2.55,,1.54
+2025-01-24,regular,UMass Lowell,Maine Black Bears,85,86,1.50,,2.65
+2025-01-24,regular,William & Mary,Hampton,94,83,1.33,,3.40
+2025-01-24,regular,Louisiana Lafayette,Texas State,74,89,2.93,,1.42
+2025-01-23,regular,Georgia Southern,Coastal Carolina,85,58,1.37,,3.15
+2025-01-23,regular,Stanford,Miami (FL),88,51,1.14,,5.75
+2025-01-23,regular,Air Force,San Diego State,76,77,8.75,,1.08
+2025-01-23,regular,Arkansas,Georgia,68,65,1.91,,1.91
+2025-01-23,regular,Baylor,Kansas State,70,62,1.12,,6.63
+2025-01-23,regular,California,Florida State,77,68,2.35,,1.63
+2025-01-23,regular,Nebraska,USC,73,78,1.35,,3.35
+2025-01-23,regular,Utah State,Nevada,90,69,1.36,,3.23
+2025-01-23,regular,Ole Miss,Texas A&M,62,63,1.63,,2.35
+2025-01-23,regular,Colorado State,Boise State,75,72,2.03,,1.82
+2025-01-23,regular,Evansville,Illinois (Chi.),67,78,2.90,,1.42
+2025-01-23,regular,Loyola Chicago,Fordham,70,66,1.18,,5.00
+2025-01-23,regular,St. Louis Billikens,La Salle,64,52,1.19,,4.88
+2025-01-23,regular,North Texas,Temple,76,67,1.20,,4.75
+2025-01-23,regular,Presbyterian,Charleston Southern,71,61,1.67,,2.25
+2025-01-23,regular,Drake,Valparaiso,81,71,1.07,,9.25
+2025-01-23,regular,American University,Lehigh,68,67,1.37,,3.20
+2025-01-23,regular,Navy,Boston University,62,47,1.81,,2.03
+2025-01-23,regular,Charlotte,South Florida,69,61,2.15,,1.73
+2025-01-23,regular,Wofford,Citadel,79,68,1.06,,10.50
+2025-01-23,regular,Clemson,Syracuse,86,72,1.06,,10.50
+2025-01-23,regular,Cleveland State,Detroit,65,50,1.07,,9.38
+2025-01-23,regular,East Tennessee St,Western Carolina,85,58,1.07,,9.25
+2025-01-23,regular,South Carolina,Florida,69,70,6.00,,1.14
+2025-01-23,regular,UMass,George Washington,74,61,1.79,,2.05
+2025-01-23,regular,Georgia Tech,Virginia Tech,71,64,1.58,,2.45
+2025-01-23,regular,USC Upstate,High Point,77,86,9.25,,1.07
+2025-01-23,regular,Northwestern,Indiana,79,70,1.45,,2.80
+2025-01-23,regular,Oakland,IPFW,76,72,1.89,,1.93
+2025-01-23,regular,Wisc. Green Bay,IU Indy,77,86,2.15,,1.73
+2025-01-23,regular,Old Dominion,James Madison,60,74,3.20,,1.37
+2025-01-23,regular,TCU,Kansas,61,74,3.55,,1.31
+2025-01-23,regular,Loyola Maryland,Lafayette,59,80,1.78,,2.08
+2025-01-23,regular,NC Greensboro,Mercer,78,79,1.25,,4.18
+2025-01-23,regular,Southern Illinois,Murray State,64,74,2.03,,1.82
+2025-01-23,regular,St. John's (N.Y.),Xavier,79,71,1.32,,3.50
+2025-01-23,regular,Wright State,Wisc. Milwaukee,79,95,1.71,,2.20
+2025-01-23,regular,Gardner Webb,UNC Asheville,53,61,1.79,,2.05
+2025-01-23,regular,Radford,Longwood,74,77,1.59,,2.43
+2025-01-23,regular,Youngstown State,Robert Morris,70,72,1.65,,2.28
+2025-01-23,regular,Holy Cross,Army,71,76,2.03,,1.82
+2025-01-23,regular,VMI,Furman,91,82,4.63,,1.21
+2025-01-23,regular,Houston,Utah Utes,70,36,1.05,,11.50
+2025-01-22,regular,Colorado,Brigham Young,67,83,2.83,,1.44
+2025-01-22,regular,Oregon,Washington,82,71,1.11,,7.25
+2025-01-22,regular,UNLV,Wyoming,61,63,1.25,,4.18
+2025-01-22,regular,UCLA,Wisconsin,85,83,1.57,,2.48
+2025-01-22,regular,West Virginia,Arizona State,57,65,1.23,,4.33
+2025-01-22,regular,Oklahoma State,Arizona,78,92,4.18,,1.25
+2025-01-22,regular,DePaul,Creighton,49,73,3.55,,1.31
+2025-01-22,regular,Iowa,Minnesota,67,72,1.25,,4.18
+2025-01-22,regular,SMU Mustangs,Louisville,73,98,1.73,,2.15
+2025-01-22,regular,Texas,Missouri,61,53,1.64,,2.30
+2025-01-22,regular,Wake Forest,North Carolina,67,66,1.93,,1.89
+2025-01-22,regular,Tennessee State,UT Martin,81,80,1.82,,2.03
+2025-01-22,regular,Tulsa,East Carolina,76,85,2.73,,1.48
+2025-01-22,regular,Illinois State,Indiana State,85,81,1.31,,3.55
+2025-01-22,regular,Iowa State,UCF Knights,108,83,1.06,,10.25
+2025-01-22,regular,Northern Iowa,Missouri State,79,68,1.19,,5.00
+2025-01-22,regular,Belmont,Bradley,77,89,2.30,,1.65
+2025-01-22,regular,Purdue,Ohio State,70,73,1.18,,5.00
+2025-01-22,regular,UAB,UTSA Roadrunners,81,78,1.11,,7.00
+2025-01-22,regular,Buffalo,Akron,58,90,7.13,,1.11
+2025-01-22,regular,Alabama,Vanderbilt,103,87,1.12,,6.63
+2025-01-22,regular,Central Michigan,Ball State,80,82,1.53,,2.58
+2025-01-22,regular,Virginia,Boston College,74,56,1.25,,4.15
+2025-01-22,regular,Miami (Ohio),Bowling Green,84,76,1.19,,4.88
+2025-01-22,regular,UConn,Butler,80,78,1.08,,8.38
+2025-01-22,regular,Cincinnati,Texas Tech,71,81,2.05,,1.80
+2025-01-22,regular,Davidson,Saint Josephs Hawks,61,78,2.00,,1.83
+2025-01-22,regular,Duquesne,Dayton,62,82,2.38,,1.61
+2025-01-22,regular,St. Bonaventure,George Mason,62,75,1.83,,2.00
+2025-01-22,regular,Toledo,Kent State,64,83,1.83,,2.00
+2025-01-22,regular,Tennessee,Mississippi St.,68,56,1.23,,4.29
+2025-01-22,regular,Western Michigan,Northern Illinois,72,70,1.15,,5.75
+2025-01-22,regular,Rhode Island,VCU Rams,57,81,3.60,,1.31
+2025-01-22,regular,Eastern Michigan,Ohio,94,87,4.15,,1.25
+2025-01-21,regular,Montana State,East. Washington,74,64,1.40,,3.00
+2025-01-21,regular,N. Carolina A&T,Hampton,73,74,2.20,,1.71
+2025-01-21,regular,Montana,Idaho,72,67,1.46,,2.78
+2025-01-21,regular,Bethune-Cookman,Arkansas-Pine Bluff,73,64,1.11,,7.00
+2025-01-21,regular,Colgate,Bucknell,87,80,1.29,,3.73
+2025-01-21,regular,Florida A&M,Miss. Valley St.,83,53,1.07,,9.38
+2025-01-21,regular,Houston Christian,Texas A&M-CC,76,72,3.03,,1.40
+2025-01-21,regular,Le Moyne,Stonehill,73,72,2.08,,1.78
+2025-01-21,regular,Villanova,Georgetown,63,64,1.29,,3.73
+2025-01-21,regular,Incarnate Word,UTRGV,78,85,1.59,,2.43
+2025-01-21,regular,New Mexico,Fresno State,95,67,1.02,,17.00
+2025-01-21,regular,Texas Southern,Jackson State,81,73,1.52,,2.60
+2025-01-21,regular,McNeese State,Stephen F. Austin,79,59,1.06,,9.88
+2025-01-20,regular,Drexel,Hofstra,60,55,1.64,,2.33
+2025-01-20,regular,Prairie View A&M,Alcorn State,70,78,1.57,,2.48
+2025-01-20,regular,Cornell,Brown,82,83,1.26,,3.95
+2025-01-20,regular,Yale,Dartmouth,83,67,1.06,,10.75
+2025-01-20,regular,East Texas A&M,SE Louisiana,68,76,3.20,,1.37
+2025-01-20,regular,Harvard,Penn,67,82,1.33,,3.40
+2025-01-20,regular,Nicholls State,Lamar,74,78,1.54,,2.55
+2025-01-20,regular,LIU Sharks,Mercyhurst Lakers,72,63,1.30,,3.63
+2025-01-20,regular,Northwestern St.,New Orleans,73,61,1.22,,4.45
+2025-01-20,regular,Wagner,St. Francis (PA),70,68,1.66,,2.25
+2025-01-20,regular,NC Wilmington,William & Mary,85,74,1.34,,3.38
+2025-01-20,regular,Baylor,TCU,71,74,1.10,,7.50
+2025-01-19,regular,Charlotte,Memphis,68,77,6.25,,1.12
+2025-01-19,regular,Wisc. Milwaukee,Robert Morris,79,81,1.23,,4.15
+2025-01-19,regular,IU Indy,Cleveland State,62,73,3.05,,1.39
+2025-01-19,regular,UMass,La Salle,82,60,1.69,,2.23
+2025-01-19,regular,Michigan,Northwestern,80,76,1.21,,4.63
+2025-01-19,regular,Florida Atlantic,Rice,75,73,1.19,,4.83
+2025-01-19,regular,Temple,Tulane,80,77,1.55,,2.53
+2025-01-19,regular,Wisc. Green Bay,Youngstown State,69,73,3.93,,1.27
+2025-01-19,regular,Michigan State,Illinois,80,78,1.89,,1.93
+2025-01-19,regular,Maryland,Nebraska,69,66,1.20,,4.68
+2025-01-19,regular,Hawaii,CSU Bakersfield,81,70,1.34,,3.33
+2025-01-19,regular,UC Irvine,Cal Poly,101,71,1.07,,9.38
+2025-01-19,regular,San Francisco,Oregon State,81,70,1.51,,2.63
+2025-01-19,regular,Pepperdine,St. Marys (CA),50,74,8.50,,1.08
+2025-01-19,regular,Utah Utes,Brigham Young,73,72,2.00,,1.83
+2025-01-19,regular,Gonzaga,Santa Clara,99,103,1.07,,9.38
+2025-01-19,regular,Loyola Marymount,San Diego Toreros,77,70,1.13,,6.25
+2025-01-19,regular,Weber State,Montana State,71,80,1.98,,1.85
+2025-01-19,regular,Texas A&M,LSU,68,57,1.15,,5.88
+2025-01-19,regular,Boston College,Duke,63,88,21.00,,1.01
+2025-01-19,regular,St. Thomas (Minn.),Denver,74,62,1.06,,10.00
+2025-01-19,regular,Grand Canyon,Tarleton,88,64,1.06,,10.25
+2025-01-19,regular,Idaho State,Montana,86,62,1.75,,2.13
+2025-01-19,regular,Northern Arizona,Portland State,69,80,1.56,,2.50
+2025-01-19,regular,Northern Colorado,Sacramento State,68,64,1.05,,10.75
+2025-01-19,regular,San Diego State,UNLV,68,76,1.17,,5.25
+2025-01-19,regular,Seattle,Southern Utah,75,52,1.22,,4.45
+2025-01-19,regular,UC Riverside,UC San Diego,85,81,4.45,,1.22
+2025-01-19,regular,Abilene Christian,California Baptist,54,60,2.05,,1.80
+2025-01-19,regular,Lipscomb,Austin Peay,88,60,1.07,,9.50
+2025-01-19,regular,Eastern Kentucky,Bellarmine,72,69,1.08,,9.00
+2025-01-19,regular,Long Beach State,CS Fullerton,67,83,1.42,,2.90
+2025-01-19,regular,Idaho,East. Washington,83,76,1.67,,2.25
+2025-01-19,regular,Liberty,New Mexico State,68,60,1.34,,3.33
+2025-01-19,regular,Middle Tenn. St.,Western Kentucky,71,57,1.42,,2.93
+2025-01-19,regular,Wichita State,East Carolina,72,75,1.58,,2.45
+2025-01-19,regular,High Point,Presbyterian,77,66,1.08,,8.50
+2025-01-19,regular,Southern Illinois,Northern Iowa,73,49,2.73,,1.48
+2025-01-19,regular,Texas Southern,Alcorn State,66,57,1.23,,4.30
+2025-01-19,regular,Florida A&M,Arkansas-Pine Bluff,86,76,1.35,,3.30
+2025-01-19,regular,Missouri,Arkansas,83,65,1.41,,3.00
+2025-01-19,regular,NC State,California,62,65,1.39,,3.05
+2025-01-19,regular,Indiana State,Drake,53,71,3.65,,1.30
+2025-01-19,regular,Samford,East Tennessee St,60,65,1.37,,3.20
+2025-01-19,regular,Southern Univ.,Grambling St.,67,60,1.21,,4.58
+2025-01-19,regular,Incarnate Word,Texas A&M-CC,63,69,2.18,,1.71
+2025-01-19,regular,Wofford,Mercer,69,49,1.29,,3.75
+2025-01-19,regular,Mississippi St.,Ole Miss,84,81,1.40,,3.03
+2025-01-19,regular,Nevada,San Jose State,75,64,1.10,,7.63
+2025-01-19,regular,Washington State,Portland,92,70,1.06,,10.75
+2025-01-19,regular,Bethune-Cookman,Miss. Valley St.,83,58,1.01,,26.00
+2025-01-19,regular,Prairie View A&M,Jackson State,70,79,2.03,,1.81
+2025-01-19,regular,South Dakota St.,Oral Roberts,84,70,1.05,,10.75
+2025-01-19,regular,Alabama A&M,Alabama State,65,69,2.65,,1.50
+2025-01-19,regular,Charleston,Northeastern,87,85,1.34,,3.38
+2025-01-19,regular,Furman,Chattanooga Mocs,71,75,1.49,,2.70
+2025-01-19,regular,Illinois State,Missouri State,74,68,1.21,,4.55
+2025-01-19,regular,West Virginia,Iowa State,64,57,3.30,,1.35
+2025-01-19,regular,Jacksonville State,Sam Houston St.,70,62,1.75,,2.13
+2025-01-19,regular,Kennesaw State,Louisiana Tech,78,76,2.15,,1.73
+2025-01-19,regular,McNeese State,Lamar,75,64,1.07,,9.38
+2025-01-19,regular,Texas State,Southern Miss,85,82,1.22,,4.50
+2025-01-19,regular,Northwestern St.,SE Louisiana,64,65,1.85,,1.98
+2025-01-19,regular,Tennessee State,Eastern Illinois,84,65,1.40,,3.03
+2025-01-19,regular,Houston Christian,UTRGV,66,57,2.48,,1.57
+2025-01-19,regular,UT Martin,Siu Edwardsville,85,82,1.76,,2.10
+2025-01-19,regular,Southern Indiana,Western Illinois,78,66,1.57,,2.48
+2025-01-19,regular,James Madison,Appalachian State,50,58,1.61,,2.35
+2025-01-19,regular,Tennessee Tech,UALR,71,77,2.00,,1.82
+2025-01-19,regular,Murray State,Bradley,61,74,1.89,,1.89
+2025-01-19,regular,Bryant University,UMass Lowell,85,62,1.46,,2.73
+2025-01-19,regular,Bucknell,Navy,73,69,1.51,,2.58
+2025-01-19,regular,Wyoming,Colorado State,63,79,2.73,,1.46
+2025-01-19,regular,Dayton,Loyola Chicago,83,81,1.17,,5.08
+2025-01-19,regular,Florida,Texas,84,60,1.13,,5.75
+2025-01-19,regular,Valparaiso,Illinois (Chi.),74,81,2.10,,1.74
+2025-01-19,regular,Mount St. Mary's,Quinnipiac,57,91,2.43,,1.58
+2025-01-19,regular,Nicholls State,Stephen F. Austin,73,61,1.52,,2.55
+2025-01-19,regular,UTSA Roadrunners,North Texas,57,72,3.95,,1.25
+2025-01-19,regular,Syracuse,Notre Dame,77,69,2.63,,1.50
+2025-01-19,regular,Oklahoma,South Carolina,82,62,1.27,,3.75
+2025-01-19,regular,South Alabama,Troy,64,63,1.59,,2.40
+2025-01-19,regular,Stetson,West Georgia,82,78,1.83,,1.96
+2025-01-19,regular,UC Santa Barbara,UC Davis,60,64,1.24,,4.00
+2025-01-19,regular,Utah Valley State,Utah Tech,96,80,1.07,,8.13
+2025-01-19,regular,Gardner Webb,USC Upstate,97,68,1.31,,3.45
+2025-01-18,regular,Arkansas State,Georgia State,85,59,1.05,,10.75
+2025-01-18,regular,Coastal Carolina,Marshall,64,77,2.45,,1.58
+2025-01-18,regular,Old Dominion,Georgia Southern,63,67,1.71,,2.20
+2025-01-18,regular,Morehead State,Lindenwood,82,65,1.40,,3.03
+2025-01-18,regular,Vanderbilt,Tennessee,76,75,2.98,,1.41
+2025-01-18,regular,East Texas A&M,New Orleans,73,131,1.36,,3.28
+2025-01-18,regular,Jacksonville Dolphins,Central Arkansas,72,62,1.10,,7.63
+2025-01-18,regular,Oklahoma State,Colorado,83,73,1.58,,2.45
+2025-01-18,regular,Kent State,Miami (Ohio),61,70,1.46,,2.80
+2025-01-18,regular,Louisiana Monroe,Louisiana Lafayette,60,65,2.00,,1.83
+2025-01-18,regular,Merrimack Warriors,Siena,64,58,1.36,,3.23
+2025-01-18,regular,Western Carolina,NC Greensboro,55,83,3.28,,1.35
+2025-01-18,regular,South Dakota Coyotes,North Dakota St,77,103,2.45,,1.58
+2025-01-18,regular,Oregon,Purdue,58,65,1.69,,2.20
+2025-01-18,regular,South Florida,Tulsa,63,56,1.19,,4.83
+2025-01-18,regular,USC,Wisconsin,69,84,1.82,,2.03
+2025-01-18,regular,Richmond Spiders,St. Louis Billikens,59,63,3.25,,1.36
+2025-01-18,regular,North Carolina,Stanford,71,72,1.12,,6.63
+2025-01-18,regular,Binghamton,Albany Great Danes,65,70,2.15,,1.73
+2025-01-18,regular,Cincinnati,Arizona State,67,60,1.17,,5.50
+2025-01-18,regular,Texas Tech,Arizona,70,54,1.49,,2.68
+2025-01-18,regular,Ball State,Toledo,75,93,1.87,,1.95
+2025-01-18,regular,Evansville,Belmont,82,85,3.03,,1.40
+2025-01-18,regular,Bowling Green,Eastern Michigan,62,68,1.33,,3.40
+2025-01-18,regular,Brown,Harvard,67,80,1.50,,2.65
+2025-01-18,regular,Fairfield,Canisius,67,78,1.20,,4.75
+2025-01-18,regular,Northern Illinois,Central Michigan,66,71,4.68,,1.20
+2025-01-18,regular,Charleston Southern,Radford,58,54,2.38,,1.62
+2025-01-18,regular,Chicago State,Le Moyne,88,72,2.30,,1.65
+2025-01-18,regular,Columbia,Yale,88,92,3.95,,1.27
+2025-01-18,regular,Penn,Cornell,76,86,3.83,,1.28
+2025-01-18,regular,Rhode Island,Davidson,92,90,1.69,,2.23
+2025-01-18,regular,Delaware,Elon,79,77,1.93,,1.89
+2025-01-18,regular,Duquesne,St. Bonaventure,75,57,2.13,,1.75
+2025-01-18,regular,Florida Gulf Coast,Queens Royals,60,47,1.45,,2.80
+2025-01-18,regular,Florida International,UTEP,73,81,2.28,,1.66
+2025-01-18,regular,Lehigh,Loyola Maryland,60,76,1.73,,2.15
+2025-01-18,regular,LIU Sharks,St. Francis (PA),64,51,1.44,,2.83
+2025-01-18,regular,Manhattan,Niagara,72,65,1.73,,2.15
+2025-01-18,regular,Marquette,Xavier,57,59,1.18,,5.00
+2025-01-18,regular,Miami (FL),SMU Mustangs,74,117,3.03,,1.40
+2025-01-18,regular,North Florida,North Alabama,84,90,2.30,,1.65
+2025-01-18,regular,North Dakota,UMKC,76,72,1.69,,2.23
+2025-01-18,regular,Northern Kentucky,Wright State,70,78,1.80,,2.05
+2025-01-18,regular,Towson,Stony Brook,53,49,1.10,,7.63
+2025-01-18,regular,UNC Asheville,Winthrop,93,84,1.89,,1.93
+2025-01-18,regular,Virginia Tech,Wake Forest,63,72,2.50,,1.56
+2025-01-18,regular,Western Michigan,Buffalo,76,85,1.25,,4.18
+2025-01-18,regular,Citadel,VMI,70,75,1.93,,1.89
+2025-01-18,regular,Holy Cross,American University,65,74,2.08,,1.78
+2025-01-18,regular,Georgia,Auburn,68,70,3.00,,1.41
+2025-01-18,regular,Lafayette,Colgate,67,90,2.00,,1.84
+2025-01-18,regular,Detroit,Oakland,59,65,4.50,,1.22
+2025-01-18,regular,Kansas,Kansas State,84,74,1.07,,9.50
+2025-01-18,regular,UMBC Retrievers,Maine Black Bears,62,87,1.71,,2.18
+2025-01-18,regular,Wagner,Mercyhurst Lakers,65,69,1.45,,2.80
+2025-01-18,regular,George Mason,George Washington,80,77,1.25,,4.18
+2025-01-18,regular,Kentucky,Alabama,97,102,1.75,,2.13
+2025-01-18,regular,Army,Boston University,68,62,1.75,,2.13
+2025-01-18,regular,Pittsburgh,Clemson,75,78,1.60,,2.43
+2025-01-18,regular,UConn,Creighton,63,68,1.29,,3.78
+2025-01-18,regular,Florida State,Georgia Tech,91,78,1.19,,5.00
+2025-01-18,regular,UCF Knights,Houston,68,69,8.38,,1.08
+2025-01-18,regular,Louisville,Virginia,81,67,1.06,,9.88
+2025-01-18,regular,New Mexico,Boise State,84,65,1.57,,2.48
+2025-01-18,regular,Fresno State,Air Force,74,65,1.52,,2.60
+2025-01-18,regular,UCLA,Iowa,94,70,1.37,,3.15
+2025-01-18,regular,Georgetown,DePaul,68,73,1.35,,3.30
+2025-01-18,regular,Ohio State,Indiana,76,77,1.28,,3.80
+2025-01-18,regular,Wisc. Milwaukee,Youngstown State,79,64,1.39,,3.10
+2025-01-18,regular,Villanova,Providence,75,73,1.20,,4.68
+2025-01-18,regular,Wisc. Green Bay,Robert Morris,67,89,3.23,,1.36
+2025-01-18,regular,Saint Josephs Hawks,VCU Rams,69,78,2.47,,1.57
+2025-01-18,regular,Akron,Ohio,92,80,1.62,,2.38
+2025-01-17,regular,Hawaii,CS Northridge,60,83,1.59,,2.43
+2025-01-17,regular,Oregon State,Gonzaga,97,89,4.45,,1.22
+2025-01-17,regular,Cal Poly,UC Davis,54,65,1.41,,2.98
+2025-01-17,regular,UC Irvine,CS Fullerton,82,62,1.03,,15.25
+2025-01-17,regular,Long Beach State,UC San Diego,54,80,9.13,,1.08
+2025-01-17,regular,Loyola Marymount,Santa Clara,57,54,2.73,,1.48
+2025-01-17,regular,Portland,Pacific,84,81,1.56,,2.50
+2025-01-17,regular,Pepperdine,San Francisco,63,80,3.33,,1.35
+2025-01-17,regular,San Diego Toreros,Washington State,61,65,7.50,,1.10
+2025-01-17,regular,Seattle,Utah Tech,82,62,1.13,,6.38
+2025-01-17,regular,UC Santa Barbara,UC Riverside,66,63,1.37,,3.15
+2025-01-17,regular,Grand Canyon,Abilene Christian,88,58,1.09,,8.13
+2025-01-17,regular,Idaho State,Montana State,70,67,1.80,,2.05
+2025-01-17,regular,Liberty,UTEP,70,72,1.23,,4.29
+2025-01-17,regular,Northwestern,Maryland,76,74,2.23,,1.69
+2025-01-17,regular,Weber State,Montana,59,63,1.89,,1.93
+2025-01-17,regular,Nebraska,Rutgers,82,85,,,
+2025-01-17,regular,UT Martin,Eastern Illinois,68,63,1.37,,3.15
+2025-01-17,regular,Southern Indiana,Lindenwood,80,73,1.87,,1.95
+2025-01-17,regular,Tennessee State,Siu Edwardsville,80,87,1.91,,1.91
+2025-01-17,regular,Tennessee Tech,Southeast Missouri State,70,77,1.80,,2.05
+2025-01-17,regular,South Dakota St.,North Dakota,109,73,1.12,,6.75
+2025-01-17,regular,North Dakota St,UMKC,71,64,1.22,,4.45
+2025-01-17,regular,South Dakota Coyotes,Oral Roberts,92,82,1.30,,3.63
+2025-01-17,regular,UT Arlington,Utah Valley State,83,85,1.91,,1.91
+2025-01-17,regular,Arkansas State,Louisiana Lafayette,83,63,1.05,,11.00
+2025-01-17,regular,Austin Peay,Eastern Kentucky,97,90,2.28,,1.66
+2025-01-17,regular,Tarleton,California Baptist,67,57,2.40,,1.60
+2025-01-17,regular,Northern Arizona,Sacramento State,77,53,1.23,,4.38
+2025-01-17,regular,Northern Colorado,Portland State,72,69,1.20,,4.68
+2025-01-17,regular,Morehead State,Western Illinois,51,47,1.25,,4.15
+2025-01-17,regular,Old Dominion,Appalachian State,43,62,2.35,,1.62
+2025-01-17,regular,Vermont,Binghamton,72,64,1.16,,5.63
+2025-01-17,regular,Campbell,Charleston,61,67,2.60,,1.52
+2025-01-17,regular,Iona,Canisius,82,61,1.13,,6.25
+2025-01-17,regular,North Florida,Central Arkansas,92,80,1.15,,5.75
+2025-01-17,regular,Coastal Carolina,Georgia Southern,87,88,1.80,,2.05
+2025-01-17,regular,Drexel,Elon,54,65,1.80,,2.05
+2025-01-17,regular,Fairfield,Niagara,70,66,1.75,,2.13
+2025-01-17,regular,Florida International,New Mexico State,52,59,2.35,,1.63
+2025-01-17,regular,Hampton,William & Mary,64,67,2.53,,1.55
+2025-01-17,regular,Longwood,High Point,82,80,2.53,,1.55
+2025-01-17,regular,Towson,Hofstra,65,60,1.48,,2.73
+2025-01-17,regular,Jacksonville Dolphins,North Alabama,64,60,1.95,,1.87
+2025-01-17,regular,Jacksonville State,Louisiana Tech,63,61,2.35,,1.63
+2025-01-17,regular,James Madison,Marshall,67,64,1.32,,3.50
+2025-01-17,regular,Kennesaw State,Sam Houston St.,75,69,1.80,,2.05
+2025-01-17,regular,Temple,Memphis,88,81,3.58,,1.31
+2025-01-17,regular,Quinnipiac,Merrimack Warriors,81,76,1.52,,2.63
+2025-01-17,regular,Minnesota,Michigan,84,81,5.38,,1.17
+2025-01-17,regular,NC Wilmington,Northeastern,80,72,1.37,,3.20
+2025-01-17,regular,Stetson,Queens Royals,60,95,2.78,,1.46
+2025-01-17,regular,Siena,Sacred Heart,93,75,1.91,,1.91
+2025-01-17,regular,Albany Great Danes,Bryant University,79,89,2.33,,1.62
+2025-01-17,regular,Bellarmine,Lipscomb,53,87,9.88,,1.06
+2025-01-17,regular,Delaware,Stony Brook,84,74,1.14,,5.63
+2025-01-17,regular,Florida Gulf Coast,West Georgia,82,60,1.07,,8.00
+2025-01-17,regular,UMBC Retrievers,New Hampshire Wildcats,76,79,1.08,,7.75
+2025-01-16,regular,Coppin State,Cheyney Wolves,88,62,,,
+2025-01-16,regular,UNLV,Utah State,65,62,2.93,,1.42
+2025-01-16,regular,Oklahoma,Texas,73,77,1.69,,2.23
+2025-01-16,regular,Washington,Purdue,58,69,3.80,,1.28
+2025-01-16,regular,Colorado,Cincinnati,62,68,2.45,,1.58
+2025-01-16,regular,Denver,Nebraska O.,62,80,2.68,,1.49
+2025-01-16,regular,Drake,Illinois State,66,62,1.16,,5.63
+2025-01-16,regular,Florida State,Pittsburgh,82,70,2.28,,1.65
+2025-01-16,regular,Loyola Chicago,Rhode Island,81,77,1.46,,2.75
+2025-01-16,regular,Virginia,SMU Mustangs,52,54,2.88,,1.44
+2025-01-16,regular,Bradley,Indiana State,118,65,1.26,,3.95
+2025-01-16,regular,Tennessee,Georgia,74,56,1.12,,6.75
+2025-01-16,regular,Texas State,Georgia State,94,80,1.19,,4.83
+2025-01-16,regular,Houston,West Virginia,70,54,1.05,,11.00
+2025-01-16,regular,Illinois (Chi.),Murray State,97,93,1.64,,2.30
+2025-01-16,regular,South Alabama,Southern Miss,75,62,1.11,,7.00
+2025-01-16,regular,TCU,Utah Utes,65,73,1.53,,2.58
+2025-01-16,regular,Tulane,Florida Atlantic,80,65,2.13,,1.75
+2025-01-16,regular,Louisiana Monroe,Troy,58,77,7.88,,1.09
+2025-01-16,regular,Michigan State,Penn State,90,85,1.14,,6.00
+2025-01-16,regular,Bucknell,Holy Cross,86,82,1.39,,3.05
+2025-01-16,regular,North Carolina,California,79,53,1.06,,9.75
+2025-01-16,regular,Chattanooga Mocs,Wofford,83,81,1.67,,2.25
+2025-01-16,regular,NC Greensboro,Citadel,70,57,1.06,,9.88
+2025-01-16,regular,Cleveland State,Northern Kentucky,76,58,1.49,,2.70
+2025-01-16,regular,Navy,Colgate,66,73,2.25,,1.67
+2025-01-16,regular,Dayton,George Mason,59,67,1.30,,3.68
+2025-01-16,regular,George Washington,Duquesne,65,73,1.56,,2.50
+2025-01-16,regular,Furman,East Tennessee St,73,70,1.60,,2.43
+2025-01-16,regular,Fordham,UMass,118,120,1.91,,1.91
+2025-01-16,regular,Radford,Gardner Webb,79,75,1.39,,3.05
+2025-01-16,regular,Iowa State,Kansas,74,57,1.42,,2.98
+2025-01-16,regular,Wright State,IPFW,113,120,2.08,,1.79
+2025-01-16,regular,Oakland,IU Indy,72,59,1.21,,4.63
+2025-01-16,regular,Mercer,Samford,74,75,3.00,,1.40
+2025-01-16,regular,Missouri State,Southern Illinois,51,73,1.76,,2.10
+2025-01-16,regular,Virginia Tech,NC State,79,76,1.98,,1.85
+2025-01-16,regular,St. Bonaventure,Richmond Spiders,63,49,1.10,,7.50
+2025-01-16,regular,South Florida,UAB,83,92,2.30,,1.64
+2025-01-16,regular,Winthrop,Charleston Southern,102,97,1.17,,5.38
+2025-01-16,regular,La Salle,Davidson,79,76,2.15,,1.73
+2025-01-16,regular,Wake Forest,Stanford,80,67,1.39,,3.05
+2025-01-16,regular,UNC Asheville,USC Upstate,93,92,1.11,,7.13
+2025-01-16,regular,Army,Lafayette,70,68,1.79,,2.08
+2025-01-16,regular,Boston University,Lehigh,63,58,1.56,,2.50
+2025-01-16,regular,Vanderbilt,South Carolina,66,63,1.22,,4.45
+2025-01-16,regular,VMI,Western Carolina,66,50,1.80,,2.05
+2025-01-15,regular,Arizona State,UCF Knights,89,95,1.57,,2.48
+2025-01-15,regular,Arizona,Baylor,81,70,1.42,,2.90
+2025-01-15,regular,San Diego State,Colorado State,75,60,1.31,,3.55
+2025-01-15,regular,USC,Iowa,99,89,1.63,,2.33
+2025-01-15,regular,Nevada,Air Force,68,62,1.03,,16.00
+2025-01-15,regular,San Jose State,New Mexico,71,70,4.95,,1.19
+2025-01-15,regular,LSU,Arkansas,78,74,1.91,,1.91
+2025-01-15,regular,Boise State,Wyoming,96,55,1.10,,7.63
+2025-01-15,regular,Brigham Young,Oklahoma State,85,69,1.08,,8.50
+2025-01-15,regular,Georgia Tech,Clemson,59,70,3.20,,1.37
+2025-01-15,regular,Duke,Miami (FL),89,54,1.01,,21.00
+2025-01-15,regular,Florida,Missouri,82,83,1.17,,5.50
+2025-01-15,regular,Kansas State,Texas Tech,57,61,3.35,,1.34
+2025-01-15,regular,Wisconsin,Ohio State,70,68,1.34,,3.33
+2025-01-15,regular,Southeast Missouri State,UALR,71,73,1.75,,2.13
+2025-01-15,regular,Creighton,Providence,84,64,1.22,,4.50
+2025-01-15,regular,Northern Iowa,Evansville,73,56,1.08,,8.38
+2025-01-15,regular,Rice,UTSA Roadrunners,84,90,1.52,,2.60
+2025-01-15,regular,Belmont,Valparaiso,71,64,1.34,,3.38
+2025-01-15,regular,St. John's (N.Y.),Georgetown,63,58,1.19,,4.88
+2025-01-15,regular,Wichita State,Charlotte,68,59,1.16,,5.63
+2025-01-15,regular,Akron,Toledo,85,78,1.30,,3.65
+2025-01-15,regular,Alabama,Ole Miss,64,74,1.13,,6.50
+2025-01-15,regular,Auburn,Mississippi St.,88,66,1.30,,3.68
+2025-01-15,regular,Ohio,Ball State,86,71,1.21,,4.58
+2025-01-15,regular,Bowling Green,Buffalo,79,61,1.28,,3.80
+2025-01-15,regular,Central Michigan,Eastern Michigan,82,63,1.27,,3.90
+2025-01-15,regular,DePaul,Marquette,83,85,8.13,,1.09
+2025-01-15,regular,East Carolina,North Texas,60,69,2.25,,1.66
+2025-01-15,regular,Indiana,Illinois,69,94,3.00,,1.40
+2025-01-15,regular,Kent State,Western Michigan,83,94,1.10,,7.63
+2025-01-15,regular,Kentucky,Texas A&M,81,69,1.31,,3.55
+2025-01-15,regular,Syracuse,Louisville,61,85,4.10,,1.26
+2025-01-15,regular,Northern Illinois,Miami (Ohio),69,84,5.63,,1.15
+2025-01-15,regular,VCU Rams,St. Louis Billikens,78,62,1.18,,5.00
+2025-01-15,regular,Xavier,Villanova,69,63,1.64,,2.33
+2025-01-14,regular,Elon,Campbell,81,68,1.30,,3.63
+2025-01-14,regular,Jackson State,Alabama A&M,103,93,1.26,,4.05
+2025-01-14,regular,Houston Christian,McNeese State,59,75,10.13,,1.06
+2025-01-14,regular,Lamar,New Orleans,62,68,1.11,,7.38
+2025-01-14,regular,Texas A&M-CC,Northwestern St.,73,64,1.22,,4.42
+2025-01-14,regular,Southern Univ.,Bethune-Cookman,69,53,1.37,,3.15
+2025-01-14,regular,Howard,Coppin State,90,75,1.11,,7.13
+2025-01-14,regular,N. Carolina Central,Delaware State,75,72,1.36,,3.23
+2025-01-14,regular,UTRGV,East Texas A&M,57,55,1.12,,6.75
+2025-01-14,regular,Grambling St.,Florida A&M,79,72,1.28,,3.78
+2025-01-14,regular,Incarnate Word,Nicholls State,82,88,1.80,,2.05
+2025-01-14,regular,South Carolina St,Md.-East. Shore,78,64,1.08,,8.88
+2025-01-14,regular,Morgan State,Norfolk State,78,74,4.75,,1.19
+2025-01-14,regular,Stephen F. Austin,SE Louisiana,59,66,1.40,,3.03
+2025-01-14,regular,Alcorn State,Alabama State,67,65,2.58,,1.53
+2025-01-14,regular,Loyola Maryland,American University,54,73,1.80,,2.05
+2025-01-14,regular,Notre Dame,Boston College,78,60,1.14,,6.00
+2025-01-14,regular,Furman,Wofford,62,81,1.31,,3.60
+2025-01-14,regular,Miss. Valley St.,Texas Southern,53,82,10.50,,1.06
+2025-01-14,regular,Maryland,Minnesota,77,71,1.06,,10.25
+2025-01-14,regular,Arkansas-Pine Bluff,Prairie View A&M,64,75,2.25,,1.67
+2025-01-13,regular,Florida Atlantic,UAB,76,81,1.63,,2.35
+2025-01-13,regular,UALR,Southern Indiana,78,58,1.40,,3.00
+2025-01-13,regular,Penn State,Oregon,81,82,2.23,,1.69
+2025-01-12,regular,Western Carolina,Mercer,85,82,2.73,,1.48
+2025-01-12,regular,Tulsa,Charlotte,69,63,1.81,,2.03
+2025-01-12,regular,Colorado,West Virginia,70,78,1.67,,2.25
+2025-01-12,regular,Chicago State,Stonehill,52,68,2.43,,1.60
+2025-01-12,regular,Marist,Fairfield,61,51,1.33,,3.47
+2025-01-12,regular,Le Moyne,Mercyhurst Lakers,79,63,1.53,,2.58
+2025-01-12,regular,Merrimack Warriors,Manhattan,69,62,1.28,,3.83
+2025-01-12,regular,Michigan,Washington,91,75,1.08,,8.38
+2025-01-12,regular,Mount St. Mary's,Sacred Heart,73,71,1.57,,2.48
+2025-01-12,regular,Robert Morris,Wright State,75,72,1.91,,1.91
+2025-01-12,regular,Central Connecticut State,LIU Sharks,52,54,1.28,,3.80
+2025-01-12,regular,Iona,Quinnipiac,62,63,2.05,,1.80
+2025-01-12,regular,Chattanooga Mocs,VMI,91,66,1.08,,8.38
+2025-01-12,regular,Northwestern,Michigan State,68,78,2.15,,1.73
+2025-01-12,regular,Purdue,Nebraska,104,68,1.25,,4.10
+2025-01-12,regular,Seattle,Abilene Christian,66,64,1.23,,4.30
+2025-01-12,regular,Arizona,UCF Knights,88,80,1.05,,11.00
+2025-01-12,regular,Pacific,Oregon State,55,91,4.55,,1.21
+2025-01-12,regular,San Diego Toreros,St. Marys (CA),56,103,10.50,,1.06
+2025-01-12,regular,UC San Diego,UC Irvine,52,60,1.42,,2.93
+2025-01-12,regular,Arizona State,Baylor,66,72,3.25,,1.36
+2025-01-12,regular,CSU Bakersfield,CS Northridge,94,90,2.60,,1.52
+2025-01-12,regular,Utah State,Boise State,81,79,1.42,,2.93
+2025-01-12,regular,Gonzaga,Washington State,88,75,1.05,,12.00
+2025-01-12,regular,UTEP,New Mexico State,57,85,1.33,,3.45
+2025-01-12,regular,Utah Tech,Tarleton,58,54,1.80,,2.05
+2025-01-12,regular,Mississippi St.,Kentucky,90,95,1.45,,2.80
+2025-01-12,regular,Southern Utah,UT Arlington,73,68,1.67,,2.25
+2025-01-12,regular,Texas A&M,Alabama,88,94,2.43,,1.59
+2025-01-12,regular,Cal Poly,UC Santa Barbara,72,75,2.68,,1.50
+2025-01-12,regular,Idaho State,Weber State,69,77,1.52,,2.60
+2025-01-12,regular,Iowa,Indiana,85,60,1.49,,2.68
+2025-01-12,regular,Louisiana Tech,Liberty,79,74,1.98,,1.85
+2025-01-12,regular,Louisiana Lafayette,Louisiana Monroe,71,68,1.35,,3.30
+2025-01-12,regular,Montana State,Northern Arizona,58,53,1.34,,3.38
+2025-01-12,regular,Oral Roberts,North Dakota,83,79,2.20,,1.71
+2025-01-12,regular,St. Thomas (Minn.),South Dakota Coyotes,119,104,1.20,,4.68
+2025-01-12,regular,IPFW,Detroit,90,67,1.05,,11.25
+2025-01-12,regular,Fresno State,Nevada,66,77,7.13,,1.11
+2025-01-12,regular,High Point,Gardner Webb,96,55,1.10,,7.50
+2025-01-12,regular,Illinois State,Northern Iowa,84,85,1.83,,2.00
+2025-01-12,regular,Lamar,Stephen F. Austin,63,72,1.54,,2.55
+2025-01-12,regular,Miss. Valley St.,Prairie View A&M,65,74,8.25,,1.09
+2025-01-12,regular,Southern Illinois,Missouri State,88,78,1.76,,2.10
+2025-01-12,regular,Stony Brook,Northeastern,66,70,2.80,,1.45
+2025-01-12,regular,Utah Utes,Oklahoma State,83,62,1.31,,3.58
+2025-01-12,regular,Santa Clara,San Francisco,77,54,1.67,,2.25
+2025-01-12,regular,St. John's (N.Y.),Villanova,80,68,1.36,,3.30
+2025-01-12,regular,Bellarmine,North Florida,83,98,2.88,,1.44
+2025-01-12,regular,Drake,Evansville,63,40,1.05,,11.25
+2025-01-12,regular,Southern Univ.,Florida A&M,91,57,1.12,,6.75
+2025-01-12,regular,Georgia,Oklahoma,72,62,1.33,,3.40
+2025-01-12,regular,Middle Tenn. St.,Jacksonville State,81,64,1.41,,2.98
+2025-01-12,regular,Ole Miss,LSU,77,65,1.20,,4.75
+2025-01-12,regular,Montana,Northern Colorado,57,81,1.64,,2.33
+2025-01-12,regular,Samford,NC Greensboro,76,69,1.37,,3.20
+2025-01-12,regular,New Orleans,SE Louisiana,71,91,3.20,,1.37
+2025-01-12,regular,Northern Kentucky,Oakland,53,68,1.60,,2.40
+2025-01-12,regular,Richmond Spiders,Rhode Island,64,67,2.13,,1.75
+2025-01-12,regular,Texas,Tennessee,70,74,2.80,,1.45
+2025-01-12,regular,California,Virginia Tech,68,71,1.33,,3.47
+2025-01-12,regular,Kansas State,Houston,57,87,6.00,,1.14
+2025-01-12,regular,Grambling St.,Bethune-Cookman,59,65,1.91,,1.91
+2025-01-12,regular,Miami (FL),Wake Forest,78,88,2.48,,1.57
+2025-01-12,regular,Austin Peay,Queens Royals,60,67,1.95,,1.87
+2025-01-12,regular,Portland State,Idaho,75,63,1.67,,2.25
+2025-01-12,regular,Lipscomb,West Georgia,86,67,1.02,,15.75
+2025-01-12,regular,UC Davis,Long Beach State,73,84,1.40,,3.00
+2025-01-12,regular,Loyola Maryland,Navy,75,74,1.66,,2.25
+2025-01-12,regular,McNeese State,Nicholls State,80,71,1.06,,10.25
+2025-01-12,regular,Siu Edwardsville,Tennessee Tech,67,59,1.39,,3.10
+2025-01-12,regular,Southeast Missouri State,Morehead State,56,67,1.62,,2.38
+2025-01-12,regular,Jackson State,Alabama State,77,70,1.65,,2.30
+2025-01-12,regular,Troy,Arkansas State,78,84,1.73,,2.15
+2025-01-12,regular,Norfolk State,Coppin State,92,69,1.03,,15.75
+2025-01-12,regular,Houston Christian,Incarnate Word,81,76,2.03,,1.82
+2025-01-12,regular,Lindenwood,UT Martin,82,81,1.91,,1.91
+2025-01-12,regular,Western Illinois,Tennessee State,52,72,1.67,,2.25
+2025-01-12,regular,Texas A&M-CC,UTRGV,79,74,1.45,,2.80
+2025-01-12,regular,Alcorn State,Alabama A&M,62,52,1.58,,2.45
+2025-01-12,regular,American University,Bucknell,68,58,1.62,,2.35
+2025-01-12,regular,Arkansas,Florida,63,71,2.53,,1.55
+2025-01-12,regular,Bryant University,Vermont,73,53,1.60,,2.40
+2025-01-12,regular,Utah Valley State,California Baptist,75,69,1.44,,2.85
+2025-01-12,regular,East Tennessee St,Citadel,70,52,1.06,,10.75
+2025-01-12,regular,Georgia State,Coastal Carolina,79,74,1.61,,2.40
+2025-01-12,regular,Colorado State,UNLV,84,62,1.40,,3.03
+2025-01-12,regular,CS Fullerton,Hawaii,86,95,4.50,,1.22
+2025-01-12,regular,South Carolina St,Delaware State,75,76,1.21,,4.63
+2025-01-12,regular,DePaul,Xavier,63,77,2.65,,1.50
+2025-01-12,regular,Sacramento State,East. Washington,54,65,2.45,,1.58
+2025-01-12,regular,Eastern Kentucky,Jacksonville Dolphins,75,82,1.71,,2.18
+2025-01-12,regular,Marshall,Georgia Southern,81,69,1.29,,3.78
+2025-01-12,regular,SMU Mustangs,Georgia Tech,93,71,1.15,,5.63
+2025-01-12,regular,Howard,Morgan State,100,95,1.25,,4.15
+2025-01-12,regular,N. Carolina Central,Md.-East. Shore,88,69,1.17,,5.13
+2025-01-12,regular,Murray State,Valparaiso,58,47,1.33,,3.43
+2025-01-12,regular,NC State,North Carolina,61,63,2.65,,1.50
+2025-01-12,regular,Stetson,North Alabama,64,92,3.75,,1.29
+2025-01-12,regular,Stanford,Virginia,88,65,1.27,,3.85
+2025-01-12,regular,UTSA Roadrunners,Wichita State,88,75,2.93,,1.42
+2025-01-12,regular,Wisc. Milwaukee,Wisc. Green Bay,70,59,1.06,,10.38
+2025-01-11,regular,Eastern Michigan,Akron,81,105,3.83,,1.28
+2025-01-11,regular,Sam Houston St.,Florida International,81,74,1.26,,4.00
+2025-01-11,regular,Miami (Ohio),Western Michigan,91,71,1.21,,4.58
+2025-01-11,regular,Missouri,Vanderbilt,75,66,1.44,,2.85
+2025-01-11,regular,Denver,North Dakota St,50,69,4.88,,1.19
+2025-01-11,regular,Western Kentucky,Kennesaw State,85,69,1.28,,3.80
+2025-01-11,regular,South Alabama,Old Dominion,63,71,1.07,,9.38
+2025-01-11,regular,Southern Miss,Texas State,92,88,2.35,,1.62
+2025-01-11,regular,Air Force,San Jose State,62,69,2.13,,1.75
+2025-01-11,regular,Boston College,Syracuse,71,79,1.79,,2.05
+2025-01-11,regular,Illinois (Chi.),Bradley,60,61,2.33,,1.64
+2025-01-11,regular,Saint Josephs Hawks,Loyola Chicago,93,57,1.44,,2.85
+2025-01-11,regular,Maine Black Bears,Albany Great Danes,87,66,1.48,,2.70
+2025-01-11,regular,Lehigh,Army,69,74,1.62,,2.38
+2025-01-11,regular,Ball State,Bowling Green,91,69,1.44,,2.88
+2025-01-11,regular,Colgate,Boston University,87,50,1.63,,2.35
+2025-01-11,regular,TCU,Brigham Young,71,67,2.20,,1.71
+2025-01-11,regular,Florida Gulf Coast,Central Arkansas,77,71,1.13,,6.25
+2025-01-11,regular,Cincinnati,Kansas,40,54,1.93,,1.89
+2025-01-11,regular,Clemson,Florida State,77,57,1.28,,3.85
+2025-01-11,regular,Youngstown State,Cleveland State,72,80,1.48,,2.73
+2025-01-11,regular,Columbia,Cornell,83,94,1.91,,1.91
+2025-01-11,regular,Georgetown,UConn,60,68,2.78,,1.46
+2025-01-11,regular,Dartmouth,Penn,73,70,1.54,,2.55
+2025-01-11,regular,Davidson,Fordham,74,64,1.22,,4.45
+2025-01-11,regular,Hampton,Delaware,83,77,2.25,,1.67
+2025-01-11,regular,Drexel,Towson,82,93,1.78,,2.08
+2025-01-11,regular,Memphis,East Carolina,74,70,1.11,,7.13
+2025-01-11,regular,Northwestern St.,East Texas A&M,75,67,1.21,,4.55
+2025-01-11,regular,George Mason,UMass,77,70,1.13,,6.13
+2025-01-11,regular,Texas Tech,Iowa State,84,85,1.64,,2.33
+2025-01-11,regular,Winthrop,Longwood,95,76,1.66,,2.25
+2025-01-11,regular,William & Mary,N. Carolina A&T,81,78,1.13,,6.50
+2025-01-11,regular,Nebraska O.,South Dakota St.,87,80,2.63,,1.52
+2025-01-11,regular,Presbyterian,UNC Asheville,87,96,1.87,,1.95
+2025-01-11,regular,USC Upstate,Radford,67,80,2.88,,1.44
+2025-01-11,regular,Rice,Temple,70,73,1.83,,2.00
+2025-01-11,regular,Tulane,South Florida,73,70,1.57,,2.48
+2025-01-11,regular,Appalachian State,James Madison,86,66,1.82,,2.03
+2025-01-11,regular,South Carolina,Auburn,63,66,11.00,,1.05
+2025-01-11,regular,Indiana State,Belmont,79,84,1.64,,2.30
+2025-01-11,regular,New Hampshire Wildcats,Binghamton,79,72,3.05,,1.39
+2025-01-11,regular,Hofstra,NC Wilmington,66,63,1.69,,2.23
+2025-01-11,regular,Lafayette,Holy Cross,82,65,1.40,,3.03
+2025-01-11,regular,New Mexico,San Diego State,62,48,1.58,,2.45
+2025-01-11,regular,Ohio,Northern Illinois,108,70,1.02,,17.50
+2025-01-11,regular,Yale,Brown,79,58,1.19,,4.88
+2025-01-11,regular,Butler,Creighton,76,80,2.25,,1.67
+2025-01-11,regular,Duke,Notre Dame,86,78,1.02,,15.75
+2025-01-11,regular,Illinois,USC,72,82,1.10,,7.63
+2025-01-11,regular,St. Bonaventure,La Salle,82,83,1.11,,7.25
+2025-01-11,regular,Pittsburgh,Louisville,78,82,1.57,,2.48
+2025-01-11,regular,Toledo,Central Michigan,69,67,1.44,,2.85
+2025-01-11,regular,Maryland,UCLA,79,61,1.43,,2.90
+2025-01-11,regular,Central Connecticut State,Wagner,57,62,1.16,,5.63
+2025-01-11,regular,Fairfield,Iona,68,64,2.00,,1.84
+2025-01-11,regular,Manhattan,Mount St. Mary's,66,75,1.79,,2.05
+2025-01-11,regular,Quinnipiac,Siena,72,53,1.36,,3.25

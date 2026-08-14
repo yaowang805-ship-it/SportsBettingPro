@@ -1,0 +1,343 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-06-01,regular,Bodrumspor,Besiktas,0,4,4.62,4.09,1.67
+2025-06-01,regular,Samsunspor,Kayserispor,2,1,1.27,5.74,10.27
+2025-05-31,regular,Adana Demirspor,Gaziantep,2,2,5.89,5.23,1.43
+2025-05-31,regular,Alanyaspor,Sivasspor,2,0,1.85,4.12,3.63
+2025-05-31,regular,Fenerbahce,Konyaspor,2,1,1.27,5.89,9.49
+2025-05-31,regular,Rizespor,Hatayspor,5,2,1.24,7.11,8.92
+2025-05-30,regular,Antalyaspor,Trabzonspor,0,2,2.88,3.47,2.36
+2025-05-30,regular,Galatasaray,Basaksehir,2,0,1.44,5.22,5.67
+2025-05-30,regular,Kasimpasa,Goztepe,1,2,2.62,3.72,2.46
+2025-05-26,regular,Hatayspor,Fenerbahce,4,2,11.01,7.77,1.19
+2025-05-25,regular,Basaksehir,Adana Demirspor,2,3,1.09,10.40,20.23
+2025-05-25,regular,Konyaspor,Alanyaspor,1,2,2.65,3.26,2.67
+2025-05-25,regular,Besiktas,Rizespor,1,2,1.40,5.02,6.75
+2025-05-25,regular,Kayserispor,Bodrumspor,1,1,3.31,3.50,2.13
+2025-05-25,regular,Trabzonspor,Samsunspor,2,2,2.59,3.44,2.62
+2025-05-24,regular,Goztepe,Galatasaray,0,2,2.69,4.17,2.23
+2025-05-24,regular,Gaziantep,Kasimpasa,2,2,2.76,3.78,2.32
+2025-05-24,regular,Eyupspor,Antalyaspor,2,1,1.92,3.57,3.85
+2025-05-18,regular,Alanyaspor,Besiktas,1,1,3.29,3.51,2.13
+2025-05-18,regular,Antalyaspor,Gaziantep,0,0,2.41,3.16,3.09
+2025-05-18,regular,Kasimpasa,Basaksehir,2,3,2.41,3.58,2.77
+2025-05-18,regular,Bodrumspor,Trabzonspor,1,1,1.83,3.60,4.27
+2025-05-18,regular,Fenerbahce,Eyupspor,2,1,1.29,5.95,8.72
+2025-05-18,regular,Galatasaray,Kayserispor,3,0,1.16,8.09,13.92
+2025-05-18,regular,Rizespor,Goztepe,6,3,2.07,3.45,3.47
+2025-05-18,regular,Samsunspor,Sivasspor,1,0,1.74,3.72,4.66
+2025-05-17,regular,Adana Demirspor,Hatayspor,0,5,2.76,4.03,2.21
+2025-05-12,regular,Kayserispor,Antalyaspor,3,1,1.91,3.60,3.96
+2025-05-11,regular,Besiktas,Adana Demirspor,4,1,1.07,13.53,26.13
+2025-05-11,regular,Goztepe,Hatayspor,1,1,1.23,7.09,9.56
+2025-05-11,regular,Sivasspor,Bodrumspor,0,0,2.21,3.22,3.47
+2025-05-10,regular,Trabzonspor,Galatasaray,0,2,5.26,4.58,1.53
+2025-05-10,regular,Eyupspor,Kasimpasa,0,3,2.97,3.63,2.24
+2025-05-10,regular,Konyaspor,Rizespor,2,1,2.53,3.29,2.84
+2025-05-09,regular,Gaziantep,Alanyaspor,0,1,2.71,3.43,2.55
+2025-05-09,regular,Basaksehir,Fenerbahce,1,4,4.46,4.10,1.71
+2025-05-05,regular,Kasimpasa,Trabzonspor,1,1,2.23,3.87,2.87
+2025-05-04,regular,Adana Demirspor,Goztepe,1,2,10.14,6.66,1.23
+2025-05-04,regular,Fenerbahce,Besiktas,0,1,1.48,4.82,5.99
+2025-05-04,regular,Samsunspor,Eyupspor,3,0,2.17,3.35,3.39
+2025-05-03,regular,Hatayspor,Basaksehir,2,4,5.71,4.69,1.50
+2025-05-03,regular,Galatasaray,Sivasspor,4,1,1.13,9.31,16.11
+2025-05-03,regular,Alanyaspor,Kayserispor,1,1,2.25,3.31,3.25
+2025-05-03,regular,Rizespor,Gaziantep,2,0,1.69,4.12,4.62
+2025-05-02,regular,Antalyaspor,Konyaspor,1,0,2.66,3.20,2.74
+2025-04-28,regular,Goztepe,Basaksehir,4,1,2.32,3.32,3.12
+2025-04-27,regular,Eyupspor,Galatasaray,1,5,6.95,4.56,1.44
+2025-04-27,regular,Kayserispor,Rizespor,1,0,2.20,3.36,3.31
+2025-04-27,regular,Konyaspor,Adana Demirspor,3,1,1.20,7.50,11.99
+2025-04-27,regular,Trabzonspor,Alanyaspor,4,3,1.67,3.84,5.23
+2025-04-26,regular,Bodrumspor,Samsunspor,1,2,2.50,2.97,3.18
+2025-04-26,regular,Gaziantep,Fenerbahce,1,3,6.47,4.71,1.45
+2025-04-26,regular,Sivasspor,Antalyaspor,2,0,1.98,3.50,3.81
+2025-04-25,regular,Besiktas,Hatayspor,5,1,1.22,6.89,11.30
+2025-04-21,regular,Alanyaspor,Samsunspor,1,0,2.47,3.19,2.95
+2025-04-20,regular,Fenerbahce,Kayserispor,3,3,1.14,8.39,18.30
+2025-04-20,regular,Rizespor,Eyupspor,1,0,2.15,3.36,3.43
+2025-04-20,regular,Basaksehir,Gaziantep,2,1,1.64,4.07,4.99
+2025-04-19,regular,Goztepe,Besiktas,1,1,2.90,3.37,2.44
+2025-04-19,regular,Adana Demirspor,Trabzonspor,0,1,10.83,7.17,1.21
+2025-04-19,regular,Kasimpasa,Sivasspor,3,1,1.89,3.81,3.73
+2025-04-18,regular,Galatasaray,Bodrumspor,2,0,1.24,5.90,12.11
+2025-04-18,regular,Hatayspor,Konyaspor,2,3,4.22,4.04,1.74
+2025-04-14,regular,Eyupspor,Adana Demirspor,6,0,1.19,7.53,12.30
+2025-04-13,regular,Sivasspor,Fenerbahce,1,3,6.26,4.43,1.49
+2025-04-13,regular,Trabzonspor,Rizespor,2,0,1.93,3.50,3.99
+2025-04-13,regular,Gaziantep,Hatayspor,2,1,1.62,4.37,4.72
+2025-04-13,regular,Kayserispor,Kasimpasa,1,0,2.22,3.57,3.07
+2025-04-12,regular,Bodrumspor,Antalyaspor,0,0,1.88,3.40,4.34
+2025-04-12,regular,Besiktas,Basaksehir,0,2,1.84,3.63,4.23
+2025-04-12,regular,Konyaspor,Goztepe,1,0,2.66,3.19,2.73
+2025-04-11,regular,Samsunspor,Galatasaray,0,2,5.34,4.12,1.60
+2025-04-07,regular,Kasimpasa,Besiktas,1,1,3.61,3.65,1.97
+2025-04-07,regular,Goztepe,Gaziantep,1,1,1.53,4.20,5.93
+2025-04-06,regular,Fenerbahce,Trabzonspor,4,1,1.45,4.77,6.41
+2025-04-06,regular,Hatayspor,Eyupspor,0,1,4.07,3.99,1.78
+2025-04-06,regular,Alanyaspor,Bodrumspor,0,1,2.45,3.05,3.17
+2025-04-05,regular,Antalyaspor,Samsunspor,2,1,2.73,3.15,2.72
+2025-04-05,regular,Basaksehir,Konyaspor,1,0,1.81,3.46,4.63
+2025-04-05,regular,Rizespor,Sivasspor,1,1,1.93,3.78,3.65
+2025-04-04,regular,Adana Demirspor,Kayserispor,0,2,7.20,5.03,1.40
+2025-03-31,regular,Eyupspor,Basaksehir,1,3,2.78,3.17,2.64
+2025-03-29,regular,Besiktas,Galatasaray,2,1,3.23,3.56,2.16
+2025-03-29,regular,Trabzonspor,Goztepe,1,1,2.15,3.40,3.42
+2025-03-29,regular,Samsunspor,Kasimpasa,0,2,2.01,3.51,3.68
+2025-03-29,regular,Sivasspor,Adana Demirspor,5,1,1.28,6.14,9.72
+2025-03-28,regular,Bodrumspor,Fenerbahce,2,4,7.23,4.58,1.43
+2025-03-28,regular,Konyaspor,Gaziantep,1,0,2.20,3.33,3.37
+2025-03-28,regular,Antalyaspor,Alanyaspor,2,1,2.44,3.25,3.00
+2025-03-28,regular,Kayserispor,Hatayspor,5,0,1.50,4.47,6.20
+2025-03-16,regular,Fenerbahce,Samsunspor,0,0,1.42,4.66,7.46
+2025-03-16,regular,Goztepe,Eyupspor,1,1,1.73,3.71,4.77
+2025-03-16,regular,Hatayspor,Sivasspor,3,2,3.09,3.38,2.32
+2025-03-16,regular,Rizespor,Bodrumspor,0,2,1.99,3.10,4.35
+2025-03-15,regular,Basaksehir,Trabzonspor,0,3,2.36,3.15,3.22
+2025-03-15,regular,Konyaspor,Besiktas,1,0,3.40,3.51,2.11
+2025-03-15,regular,Kasimpasa,Alanyaspor,2,1,1.89,3.50,4.16
+2025-03-15,regular,Gaziantep,Kayserispor,1,0,2.24,3.32,3.30
+2025-03-14,regular,Galatasaray,Antalyaspor,4,0,1.22,6.64,11.62
+2025-03-10,regular,Besiktas,Gaziantep,1,2,1.40,4.81,7.53
+2025-03-09,regular,Alanyaspor,Galatasaray,1,2,5.38,4.32,1.57
+2025-03-09,regular,Samsunspor,Adana Demirspor,3,2,1.16,7.52,14.70
+2025-03-09,regular,Eyupspor,Konyaspor,2,1,2.16,3.33,3.43
+2025-03-09,regular,Sivasspor,Goztepe,3,1,3.46,3.22,2.20
+2025-03-08,regular,Trabzonspor,Hatayspor,1,2,1.38,5.11,7.44
+2025-03-08,regular,Antalyaspor,Rizespor,2,1,2.80,3.18,2.63
+2025-03-08,regular,Kayserispor,Basaksehir,3,1,3.05,3.26,2.39
+2025-03-07,regular,Bodrumspor,Kasimpasa,1,0,2.46,3.32,2.92
+2025-03-03,regular,Basaksehir,Sivasspor,1,0,1.48,4.24,6.95
+2025-03-03,regular,Goztepe,Samsunspor,2,2,1.82,3.34,4.93
+2025-03-03,regular,Gaziantep,Eyupspor,3,1,2.45,3.28,2.96
+2025-03-03,regular,Konyaspor,Trabzonspor,1,0,2.94,3.42,2.38
+2025-03-02,regular,Fenerbahce,Antalyaspor,3,0,1.22,6.93,11.42
+2025-03-02,regular,Kasimpasa,Galatasaray,3,3,4.96,4.33,1.62
+2025-03-02,regular,Rizespor,Alanyaspor,3,1,1.83,3.64,4.33
+2025-03-01,regular,Besiktas,Kayserispor,2,0,1.51,4.55,5.74
+2025-03-01,regular,Adana Demirspor,Bodrumspor,0,0,5.31,4.00,1.62
+2025-02-24,regular,Galatasaray,Fenerbahce,0,0,2.31,3.50,3.01
+2025-02-23,regular,Trabzonspor,Gaziantep,3,2,1.58,4.21,5.50
+2025-02-23,regular,Alanyaspor,Adana Demirspor,3,2,1.35,5.51,7.69
+2025-02-23,regular,Kayserispor,Goztepe,1,0,3.06,3.35,2.34
+2025-02-22,regular,Samsunspor,Rizespor,2,3,2.29,3.18,3.33
+2025-02-22,regular,Antalyaspor,Kasimpasa,2,1,2.51,3.38,2.80
+2025-02-22,regular,Sivasspor,Konyaspor,1,1,2.74,3.16,2.71
+2025-02-21,regular,Eyupspor,Besiktas,1,3,3.08,3.40,2.30
+2025-02-21,regular,Bodrumspor,Hatayspor,1,0,1.61,3.83,5.85
+2025-02-17,regular,Rizespor,Galatasaray,1,2,4.40,4.07,1.73
+2025-02-16,regular,Fenerbahce,Kasimpasa,3,1,1.39,5.34,6.91
+2025-02-16,regular,Eyupspor,Kayserispor,1,1,1.69,3.72,5.16
+2025-02-16,regular,Konyaspor,Samsunspor,0,1,2.55,3.06,2.99
+2025-02-16,regular,Hatayspor,Alanyaspor,1,0,3.18,3.53,2.20
+2025-02-15,regular,Besiktas,Trabzonspor,2,1,1.88,3.76,3.92
+2025-02-15,regular,Basaksehir,Bodrumspor,0,1,1.86,3.27,4.79
+2025-02-15,regular,Gaziantep,Sivasspor,2,1,1.94,3.62,3.83
+2025-02-14,regular,Adana Demirspor,Antalyaspor,1,1,5.08,4.01,1.65
+2025-02-10,regular,Bodrumspor,Goztepe,0,0,3.33,2.99,2.38
+2025-02-10,regular,Trabzonspor,Eyupspor,1,0,1.89,3.70,3.93
+2025-02-09,regular,Galatasaray,Adana Demirspor,,,1.07,12.73,24.88
+2025-02-09,regular,Antalyaspor,Basaksehir,0,0,3.32,3.45,2.16
+2025-02-09,regular,Alanyaspor,Fenerbahce,0,2,5.34,4.44,1.56
+2025-02-09,regular,Kasimpasa,Rizespor,3,2,2.17,3.65,3.13
+2025-02-08,regular,Sivasspor,Besiktas,0,2,3.75,3.61,1.99
+2025-02-08,regular,Kayserispor,Konyaspor,3,2,2.46,3.31,2.95
+2025-02-07,regular,Samsunspor,Hatayspor,2,0,1.48,4.53,6.39
+2025-02-03,regular,Gaziantep,Galatasaray,0,1,6.81,4.75,1.44
+2025-02-02,regular,Fenerbahce,Rizespor,3,2,1.34,5.22,8.90
+2025-02-02,regular,Goztepe,Alanyaspor,0,1,1.55,4.04,6.03
+2025-02-02,regular,Adana Demirspor,Kasimpasa,3,5,3.92,3.84,1.87
+2025-02-01,regular,Basaksehir,Samsunspor,4,0,2.14,3.27,3.47
+2025-02-01,regular,Kayserispor,Trabzonspor,0,0,3.42,3.57,2.09
+2025-02-01,regular,Hatayspor,Antalyaspor,2,3,2.95,3.36,2.41
+2025-01-31,regular,Konyaspor,Bodrumspor,3,1,1.96,3.30,4.20
+2025-01-31,regular,Eyupspor,Sivasspor,1,0,1.82,3.69,4.30
+2025-01-27,regular,Kasimpasa,Hatayspor,5,4,1.76,4.02,4.27
+2025-01-26,regular,Fenerbahce,Goztepe,3,2,1.61,4.10,5.34
+2025-01-26,regular,Antalyaspor,Besiktas,1,1,4.18,3.82,1.82
+2025-01-26,regular,Bodrumspor,Eyupspor,0,1,2.53,3.22,2.93
+2025-01-26,regular,Rizespor,Adana Demirspor,3,2,1.31,5.45,9.28
+2025-01-25,regular,Galatasaray,Konyaspor,1,0,1.22,7.09,10.65
+2025-01-25,regular,Alanyaspor,Basaksehir,5,4,3.05,3.08,2.52
+2025-01-25,regular,Sivasspor,Kayserispor,5,2,2.16,3.36,3.44
+2025-01-24,regular,Samsunspor,Gaziantep,2,1,1.68,3.95,4.97
+2025-01-20,regular,Trabzonspor,Sivasspor,4,0,1.57,4.37,5.29
+2025-01-19,regular,Adana Demirspor,Fenerbahce,0,4,13.71,7.94,1.18
+2025-01-19,regular,Eyupspor,Alanyaspor,3,0,2.10,3.21,3.69
+2025-01-19,regular,Konyaspor,Kasimpasa,3,3,2.00,3.38,3.79
+2025-01-19,regular,Goztepe,Antalyaspor,1,0,1.62,3.92,5.41
+2025-01-18,regular,Besiktas,Samsunspor,0,0,1.79,3.91,4.14
+2025-01-18,regular,Gaziantep,Bodrumspor,0,0,2.28,3.24,3.20
+2025-01-18,regular,Basaksehir,Rizespor,2,0,2.20,3.28,3.33
+2025-01-17,regular,Hatayspor,Galatasaray,1,1,8.74,5.54,1.31
+2025-01-13,regular,Konyaspor,Fenerbahce,2,3,7.47,4.93,1.38
+2025-01-13,regular,Goztepe,Kasimpasa,5,0,1.98,3.51,3.67
+2025-01-12,regular,Gaziantep,Adana Demirspor,1,0,1.50,4.66,5.55
+2025-01-12,regular,Basaksehir,Galatasaray,1,2,4.71,4.76,1.58
+2025-01-12,regular,Trabzonspor,Antalyaspor,5,0,1.47,4.72,6.15
+2025-01-12,regular,Sivasspor,Alanyaspor,1,1,2.90,3.25,2.45
+2025-01-11,regular,Besiktas,Bodrumspor,2,1,1.53,4.35,5.63
+2025-01-11,regular,Hatayspor,Rizespor,1,2,3.67,3.71,1.93
+2025-01-11,regular,Kayserispor,Samsunspor,0,1,3.43,3.51,2.06
+2025-01-05,regular,Fenerbahce,Hatayspor,2,1,1.12,8.70,20.17
+2025-01-05,regular,Bodrumspor,Kayserispor,1,1,2.03,3.30,3.79
+2025-01-05,regular,Kasimpasa,Gaziantep,2,2,1.66,4.08,4.85
+2025-01-04,regular,Samsunspor,Trabzonspor,2,1,2.30,3.45,3.01
+2025-01-04,regular,Galatasaray,Goztepe,2,1,1.29,6.21,8.59
+2025-01-04,regular,Antalyaspor,Eyupspor,1,4,2.80,3.38,2.46
+2025-01-04,regular,Adana Demirspor,Basaksehir,0,1,4.84,4.18,1.63
+2025-01-03,regular,Alanyaspor,Konyaspor,2,1,2.12,3.34,3.49
+2025-01-03,regular,Rizespor,Besiktas,1,1,2.55,3.55,2.60
+2024-12-23,regular,Hatayspor,Adana Demirspor,1,3,1.43,5.02,6.42
+2024-12-23,regular,Basaksehir,Kasimpasa,2,2,2.27,3.44,3.09
+2024-12-22,regular,Trabzonspor,Bodrumspor,1,0,1.73,3.76,4.87
+2024-12-22,regular,Kayserispor,Galatasaray,1,5,7.67,5.44,1.36
+2024-12-22,regular,Goztepe,Rizespor,3,0,2.22,3.27,3.40
+2024-12-22,regular,Gaziantep,Antalyaspor,2,0,1.99,3.62,3.73
+2024-12-21,regular,Besiktas,Alanyaspor,1,1,1.76,3.91,4.47
+2024-12-21,regular,Sivasspor,Samsunspor,0,0,3.42,3.48,2.14
+2024-12-20,regular,Eyupspor,Fenerbahce,1,1,5.48,4.38,1.56
+2024-12-16,regular,Galatasaray,Trabzonspor,4,3,1.38,5.42,7.12
+2024-12-16,regular,Adana Demirspor,Besiktas,2,1,5.79,4.64,1.51
+2024-12-15,regular,Fenerbahce,Basaksehir,3,1,1.46,4.94,6.06
+2024-12-15,regular,Antalyaspor,Kayserispor,2,0,2.07,3.48,3.55
+2024-12-15,regular,Hatayspor,Goztepe,1,1,2.98,3.39,2.37
+2024-12-14,regular,Alanyaspor,Gaziantep,3,0,1.71,3.99,4.60
+2024-12-14,regular,Rizespor,Konyaspor,1,1,1.94,3.33,4.23
+2024-12-13,regular,Bodrumspor,Sivasspor,2,0,2.28,3.29,3.22
+2024-12-13,regular,Kasimpasa,Eyupspor,2,0,2.52,3.50,2.69
+2024-12-09,regular,Gaziantep,Rizespor,1,0,2.89,3.40,2.40
+2024-12-08,regular,Basaksehir,Hatayspor,3,0,1.68,3.79,5.03
+2024-12-08,regular,Kayserispor,Alanyaspor,2,0,2.50,3.36,2.79
+2024-12-08,regular,Sivasspor,Galatasaray,2,3,8.79,6.43,1.26
+2024-12-08,regular,Eyupspor,Samsunspor,3,0,2.74,3.37,2.56
+2024-12-07,regular,Besiktas,Fenerbahce,1,0,3.79,3.80,1.88
+2024-12-07,regular,Goztepe,Adana Demirspor,3,1,1.25,6.06,10.51
+2024-12-07,regular,Konyaspor,Antalyaspor,1,1,2.00,3.37,3.89
+2024-12-06,regular,Trabzonspor,Kasimpasa,2,2,1.89,3.68,3.97
+2024-12-02,regular,Hatayspor,Besiktas,1,1,3.51,3.62,2.03
+2024-12-02,regular,Fenerbahce,Gaziantep,3,1,1.16,8.42,13.15
+2024-12-01,regular,Galatasaray,Eyupspor,2,2,1.19,7.79,11.65
+2024-12-01,regular,Rizespor,Kayserispor,3,0,1.69,3.87,4.86
+2024-11-30,regular,Alanyaspor,Trabzonspor,2,1,2.23,3.46,3.17
+2024-11-30,regular,Basaksehir,Goztepe,4,1,2.30,3.21,3.26
+2024-11-30,regular,Adana Demirspor,Konyaspor,0,1,3.59,3.47,2.06
+2024-11-30,regular,Samsunspor,Bodrumspor,4,0,1.58,3.90,6.00
+2024-11-29,regular,Antalyaspor,Sivasspor,2,1,2.06,3.51,3.55
+2024-11-25,regular,Trabzonspor,Adana Demirspor,5,0,1.52,4.52,5.71
+2024-11-24,regular,Besiktas,Goztepe,2,4,1.65,3.89,5.26
+2024-11-24,regular,Samsunspor,Alanyaspor,1,1,1.91,3.38,4.25
+2024-11-24,regular,Konyaspor,Hatayspor,1,1,1.86,3.52,4.30
+2024-11-24,regular,Sivasspor,Kasimpasa,0,0,3.06,3.33,2.34
+2024-11-23,regular,Bodrumspor,Galatasaray,0,1,7.78,5.11,1.37
+2024-11-23,regular,Gaziantep,Basaksehir,3,0,2.49,3.37,2.82
+2024-11-23,regular,Kayserispor,Fenerbahce,2,6,6.36,4.54,1.48
+2024-11-23,regular,Eyupspor,Rizespor,1,2,2.27,3.34,3.17
+2024-11-10,regular,Basaksehir,Besiktas,0,0,3.40,3.38,2.16
+2024-11-10,regular,Fenerbahce,Sivasspor,4,0,1.16,8.12,13.79
+2024-11-10,regular,Galatasaray,Samsunspor,3,2,1.39,5.18,7.05
+2024-11-10,regular,Goztepe,Konyaspor,2,0,1.96,3.49,3.93
+2024-11-09,regular,Adana Demirspor,Eyupspor,0,1,3.80,3.55,1.97
+2024-11-09,regular,Rizespor,Trabzonspor,3,1,2.44,3.43,2.84
+2024-11-09,regular,Hatayspor,Gaziantep,3,1,2.29,3.39,3.09
+2024-11-09,regular,Antalyaspor,Bodrumspor,3,2,2.34,3.05,3.34
+2024-11-08,regular,Kasimpasa,Kayserispor,1,2,1.79,3.65,4.49
+2024-11-04,regular,Samsunspor,Antalyaspor,2,0,1.56,3.88,6.34
+2024-11-03,regular,Trabzonspor,Fenerbahce,2,3,4.21,3.60,1.86
+2024-11-03,regular,Bodrumspor,Alanyaspor,0,0,2.42,3.12,3.14
+2024-11-03,regular,Eyupspor,Hatayspor,2,0,1.69,3.93,4.88
+2024-11-03,regular,Konyaspor,Basaksehir,3,2,2.51,3.14,2.94
+2024-11-02,regular,Besiktas,Kasimpasa,1,3,1.56,4.55,5.21
+2024-11-02,regular,Kayserispor,Adana Demirspor,0,0,1.47,4.73,6.05
+2024-11-02,regular,Sivasspor,Rizespor,2,1,2.61,3.25,2.76
+2024-11-01,regular,Gaziantep,Goztepe,2,1,2.37,3.46,2.93
+2024-10-28,regular,Galatasaray,Besiktas,2,1,1.71,4.19,4.30
+2024-10-28,regular,Basaksehir,Eyupspor,1,1,2.13,3.39,3.46
+2024-10-27,regular,Fenerbahce,Bodrumspor,2,0,1.28,5.76,10.54
+2024-10-27,regular,Alanyaspor,Antalyaspor,1,2,2.00,3.44,3.81
+2024-10-27,regular,Gaziantep,Konyaspor,3,1,2.55,3.35,2.76
+2024-10-26,regular,Goztepe,Trabzonspor,2,1,2.47,3.47,2.79
+2024-10-26,regular,Kasimpasa,Samsunspor,1,4,2.09,3.40,3.57
+2024-10-26,regular,Hatayspor,Kayserispor,0,1,2.13,3.45,3.37
+2024-10-25,regular,Adana Demirspor,Sivasspor,2,4,2.73,3.46,2.51
+2024-10-21,regular,Bodrumspor,Rizespor,0,1,2.40,3.10,3.21
+2024-10-20,regular,Alanyaspor,Kasimpasa,1,2,2.52,3.27,2.84
+2024-10-20,regular,Samsunspor,Fenerbahce,2,2,4.11,3.51,1.90
+2024-10-20,regular,Besiktas,Konyaspor,2,0,1.47,4.53,6.44
+2024-10-20,regular,Sivasspor,Hatayspor,3,2,2.21,3.35,3.32
+2024-10-19,regular,Antalyaspor,Galatasaray,0,3,6.06,4.49,1.51
+2024-10-19,regular,Eyupspor,Goztepe,1,0,2.02,3.50,3.67
+2024-10-19,regular,Trabzonspor,Basaksehir,1,0,2.12,3.36,3.52
+2024-10-19,regular,Kayserispor,Gaziantep,2,2,2.31,3.45,3.03
+2024-10-06,regular,Galatasaray,Alanyaspor,1,0,1.29,6.08,8.78
+2024-10-06,regular,Gaziantep,Besiktas,1,1,4.23,3.82,1.80
+2024-10-06,regular,Adana Demirspor,Samsunspor,1,3,4.90,3.95,1.67
+2024-10-06,regular,Konyaspor,Eyupspor,2,1,2.41,3.23,3.04
+2024-10-05,regular,Basaksehir,Kayserispor,1,1,1.71,3.92,4.62
+2024-10-05,regular,Hatayspor,Trabzonspor,1,1,3.24,3.29,2.27
+2024-10-05,regular,Goztepe,Sivasspor,3,2,1.70,3.72,5.07
+2024-10-05,regular,Kasimpasa,Bodrumspor,0,0,1.83,3.53,4.46
+2024-10-04,regular,Rizespor,Antalyaspor,2,1,1.87,3.70,4.02
+2024-09-30,regular,Kayserispor,Besiktas,0,3,4.89,4.14,1.65
+2024-09-29,regular,Bodrumspor,Adana Demirspor,3,1,1.80,3.64,4.41
+2024-09-29,regular,Antalyaspor,Fenerbahce,0,2,6.71,4.58,1.45
+2024-09-29,regular,Eyupspor,Gaziantep,3,2,1.74,3.74,4.74
+2024-09-29,regular,Trabzonspor,Konyaspor,3,2,1.84,3.50,4.48
+2024-09-28,regular,Alanyaspor,Rizespor,1,0,2.16,3.31,3.48
+2024-09-28,regular,Galatasaray,Kasimpasa,3,3,1.30,6.16,8.01
+2024-09-28,regular,Samsunspor,Goztepe,4,3,2.02,3.22,4.07
+2024-09-27,regular,Sivasspor,Basaksehir,1,2,2.89,3.24,2.51
+2024-09-23,regular,Gaziantep,Trabzonspor,0,0,3.16,3.47,2.23
+2024-09-23,regular,Goztepe,Kayserispor,3,0,1.77,3.78,4.49
+2024-09-22,regular,Adana Demirspor,Alanyaspor,0,2,3.13,3.53,2.22
+2024-09-22,regular,Besiktas,Eyupspor,2,1,1.42,4.98,6.66
+2024-09-22,regular,Kasimpasa,Antalyaspor,0,0,1.84,3.82,4.04
+2024-09-22,regular,Rizespor,Samsunspor,0,1,2.72,3.24,2.65
+2024-09-21,regular,Fenerbahce,Galatasaray,1,3,2.22,3.37,3.26
+2024-09-21,regular,Konyaspor,Sivasspor,0,0,1.90,3.40,4.29
+2024-09-20,regular,Hatayspor,Bodrumspor,0,1,2.20,3.07,3.61
+2024-09-19,regular,Trabzonspor,Kayserispor,2,2,1.57,4.09,5.78
+2024-09-18,regular,Samsunspor,Basaksehir,2,0,2.13,3.14,3.76
+2024-09-17,regular,Galatasaray,Gaziantep,3,1,1.22,6.92,10.99
+2024-09-16,regular,Antalyaspor,Adana Demirspor,2,1,1.79,3.98,4.10
+2024-09-15,regular,Alanyaspor,Hatayspor,0,0,1.77,3.65,4.62
+2024-09-15,regular,Trabzonspor,Besiktas,1,1,2.85,3.43,2.43
+2024-09-15,regular,Kayserispor,Eyupspor,2,2,2.52,3.45,2.72
+2024-09-15,regular,Kasimpasa,Fenerbahce,0,2,5.90,4.93,1.47
+2024-09-14,regular,Bodrumspor,Basaksehir,0,1,2.77,3.19,2.65
+2024-09-14,regular,Galatasaray,Rizespor,5,0,1.33,5.72,7.75
+2024-09-14,regular,Sivasspor,Gaziantep,3,2,2.10,3.35,3.60
+2024-09-14,regular,Samsunspor,Konyaspor,0,1,1.84,3.48,4.43
+2024-09-01,regular,Besiktas,Sivasspor,2,0,1.33,5.25,9.22
+2024-09-01,regular,Hatayspor,Samsunspor,0,3,3.63,3.32,2.14
+2024-09-01,regular,Basaksehir,Antalyaspor,5,2,1.83,3.62,4.35
+2024-09-01,regular,Eyupspor,Trabzonspor,0,0,2.48,3.43,2.82
+2024-08-31,regular,Adana Demirspor,Galatasaray,1,5,7.26,5.59,1.36
+2024-08-31,regular,Goztepe,Bodrumspor,2,0,2.21,3.18,3.63
+2024-08-31,regular,Rizespor,Kasimpasa,0,1,2.00,3.68,3.63
+2024-08-31,regular,Konyaspor,Kayserispor,0,0,2.01,3.41,3.89
+2024-08-30,regular,Fenerbahce,Alanyaspor,3,0,1.30,5.58,9.73
+2024-08-25,regular,Antalyaspor,Hatayspor,3,2,2.49,3.18,2.98
+2024-08-25,regular,Rizespor,Fenerbahce,0,5,4.67,3.94,1.71
+2024-08-25,regular,Kasimpasa,Adana Demirspor,2,2,1.56,4.35,5.47
+2024-08-24,regular,Bodrumspor,Konyaspor,3,1,2.48,2.98,3.17
+2024-08-24,regular,Sivasspor,Eyupspor,0,1,2.50,3.34,2.83
+2024-08-23,regular,Alanyaspor,Goztepe,1,1,2.22,3.20,3.44
+2024-08-19,regular,Eyupspor,Bodrumspor,4,1,2.20,3.15,3.57
+2024-08-19,regular,Hatayspor,Kasimpasa,1,1,2.55,3.24,2.83
+2024-08-18,regular,Besiktas,Antalyaspor,4,2,1.38,4.93,7.78
+2024-08-18,regular,Gaziantep,Samsunspor,0,1,3.06,3.20,2.42
+2024-08-18,regular,Basaksehir,Alanyaspor,4,2,2.09,3.39,3.59
+2024-08-17,regular,Adana Demirspor,Rizespor,1,2,3.04,3.38,2.33
+2024-08-17,regular,Goztepe,Fenerbahce,2,2,4.83,3.77,1.72
+2024-08-17,regular,Kayserispor,Sivasspor,1,2,2.33,3.34,3.06
+2024-08-16,regular,Konyaspor,Galatasaray,1,2,4.49,4.12,1.70
+2024-08-12,regular,Rizespor,Basaksehir,1,1,2.65,3.28,2.70
+2024-08-12,regular,Bodrumspor,Gaziantep,0,1,2.09,3.24,3.81
+2024-08-11,regular,Alanyaspor,Eyupspor,1,1,2.19,3.41,3.30
+2024-08-11,regular,Samsunspor,Besiktas,0,2,4.06,3.50,1.92
+2024-08-11,regular,Sivasspor,Trabzonspor,0,0,2.81,3.36,2.52
+2024-08-10,regular,Fenerbahce,Adana Demirspor,1,0,1.15,8.48,14.80
+2024-08-10,regular,Antalyaspor,Goztepe,0,0,2.33,3.38,3.08
+2024-08-10,regular,Kasimpasa,Konyaspor,2,3,2.01,3.56,3.68
+2024-08-09,regular,Galatasaray,Hatayspor,2,1,1.21,7.17,11.41

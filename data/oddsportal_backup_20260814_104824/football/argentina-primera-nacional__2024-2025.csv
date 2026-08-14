@@ -1,0 +1,453 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2024-12-08,play_off,Gimnasia Mendoza,San Martin S.J.,0,2,2.59,2.60,3.40
+2024-12-02,play_off,San Martin S.J.,Nueva Chicago,1,0,1.86,2.88,5.60
+2024-12-02,play_off,San Martin T.,Gimnasia Mendoza,0,1,2.34,2.77,3.64
+2024-11-26,play_off,Gimnasia Mendoza,San Martin T.,0,0,2.64,2.73,3.08
+2024-11-24,play_off,Nueva Chicago,San Martin S.J.,2,1,2.33,2.71,3.67
+2024-11-18,play_off,San Martin T.,San Telmo,2,0,1.78,3.00,5.73
+2024-11-18,play_off,San Martin S.J.,All Boys,2,2,1.94,2.88,4.97
+2024-11-17,play_off,Deportivo Madryn,Gimnasia Mendoza,1,0,1.71,3.18,5.86
+2024-11-16,play_off,Nueva Chicago,Quilmes,1,0,2.56,2.66,3.40
+2024-11-13,play_off,Talleres (R.E),Atl. Rafaela,2,1,3.50,2.64,2.50
+2024-11-11,play_off,Quilmes,Nueva Chicago,0,0,2.25,2.72,3.93
+2024-11-10,play_off,All Boys,San Martin S.J.,0,1,2.38,2.72,3.64
+2024-11-09,play_off,Gimnasia Mendoza,Deportivo Madryn,3,1,2.21,2.75,3.89
+2024-11-09,play_off,San Telmo,San Martin T.,1,2,2.51,2.77,3.29
+2024-11-05,play_off,All Boys,Colon Santa Fe,1,1,3.04,2.62,2.83
+2024-11-04,play_off,San Martin S.J.,Gimnasia y Tiro,2,1,1.84,3.09,5.08
+2024-11-03,play_off,Deportivo Madryn,San Miguel,0,0,1.85,3.02,4.96
+2024-11-03,play_off,Aldosivi,San Martin T.,2,0,3.59,2.89,2.27
+2024-11-03,play_off,Nueva Chicago,Racing Cordoba,1,1,2.13,2.90,3.97
+2024-11-03,play_off,Quilmes,Def. de Belgrano,2,0,2.10,2.74,4.48
+2024-11-02,play_off,Gimnasia Mendoza,CA Estudiantes,1,1,1.97,2.96,4.51
+2024-11-02,regular,Brown Adrogue,Atl. Rafaela,1,2,3.96,2.82,2.19
+2024-11-02,play_off,San Telmo,Gimnasia Jujuy,1,0,2.15,2.90,3.91
+2024-10-31,regular,Deportivo Moron,Temperley,0,0,3.87,3.04,2.09
+2024-10-27,regular,Agropecuario,Tristan Suarez,0,2,1.51,3.95,6.63
+2024-10-27,regular,Atletico Atlanta,All Boys,0,1,2.91,2.68,2.82
+2024-10-27,regular,Arsenal Sarandi,Alvarado,1,0,1.54,3.77,6.62
+2024-10-27,regular,CA Estudiantes,Deportivo Maipu,2,1,1.77,3.50,5.00
+2024-10-27,regular,Chacarita Juniors,Gimnasia Jujuy,0,0,3.24,2.66,2.62
+2024-10-27,regular,Talleres (R.E),Ferro,0,0,2.94,2.92,2.54
+2024-10-27,regular,Guillermo Brown,Patronato,1,3,3.54,2.88,2.31
+2024-10-27,regular,Quilmes,San Miguel,1,1,6.91,2.71,1.78
+2024-10-27,regular,San Martin S.J.,Racing Cordoba,1,2,3.34,2.96,2.33
+2024-10-27,regular,Almirante Brown,Defensores Unidos,1,1,1.34,4.71,9.15
+2024-10-27,regular,San Martin T.,Club A. Guemes,2,2,1.61,3.32,6.80
+2024-10-26,regular,Aldosivi,San Telmo,2,0,2.08,3.03,3.93
+2024-10-26,regular,Gimnasia Mendoza,Almagro,3,1,1.36,4.27,10.26
+2024-10-26,regular,Estudiantes Rio Cuarto,Atl. Rafaela,0,0,7.34,3.71,1.51
+2024-10-26,regular,Nueva Chicago,Brown Adrogue,1,1,1.52,3.88,6.37
+2024-10-26,regular,CA Mitre,Chaco For Ever,1,0,1.37,3.87,12.87
+2024-10-26,regular,Colon Santa Fe,Deportivo Madryn,1,1,2.85,2.73,2.81
+2024-10-26,regular,Gimnasia y Tiro,Def. de Belgrano,1,0,1.83,2.97,5.39
+2024-10-22,regular,Brown Adrogue,Gimnasia Mendoza,0,0,4.05,3.15,2.01
+2024-10-22,regular,All Boys,Agropecuario,3,0,1.99,2.90,4.64
+2024-10-21,regular,Tristan Suarez,Guillermo Brown,3,2,1.70,3.63,4.97
+2024-10-21,regular,Temperley,Nueva Chicago,0,0,2.27,2.93,3.56
+2024-10-21,regular,Patronato,San Martin S.J.,0,3,1.95,3.22,4.12
+2024-10-20,regular,Atl. Rafaela,Colon Santa Fe,0,0,2.76,2.70,2.96
+2024-10-20,regular,Deportivo Maipu,Talleres (R.E),0,0,1.94,3.12,4.27
+2024-10-20,regular,Gimnasia Jujuy,CA Estudiantes,2,1,2.11,2.82,4.33
+2024-11-17,regular,San Martin S.J.,All Boys,2,2,1.94,2.88,4.97
+2024-11-03,regular,San Martin S.J.,Gimnasia y Tiro,2,1,1.84,3.09,5.08
+2024-10-20,regular,Deportivo Madryn,Almirante Brown,5,1,1.27,4.71,13.65
+2024-10-20,regular,San Telmo,Estudiantes Rio Cuarto,2,0,2.46,2.77,3.37
+2024-10-19,regular,Chaco For Ever,Aldosivi,1,1,2.80,2.87,2.78
+2024-10-19,regular,Racing Cordoba,Arsenal Sarandi,3,1,1.55,3.99,6.02
+2024-10-19,regular,Alvarado,San Martin T.,0,2,2.21,2.88,3.76
+2024-10-19,regular,Almagro,Gimnasia y Tiro,0,3,3.23,2.88,2.45
+2024-10-19,regular,Defensores Unidos,Atletico Atlanta,0,1,2.32,3.02,3.29
+2024-10-19,regular,Def. de Belgrano,CA Mitre,0,0,2.18,2.88,3.85
+2024-10-19,regular,San Miguel,Deportivo Moron,0,1,1.65,3.28,6.55
+2024-10-19,regular,Ferro,Quilmes,0,2,2.01,3.09,4.03
+2024-10-19,regular,Club A. Guemes,Chacarita Juniors,2,1,1.76,3.13,5.59
+2024-10-15,regular,Atletico Atlanta,Deportivo Madryn,1,1,4.72,2.90,1.95
+2024-10-14,regular,Almirante Brown,Atl. Rafaela,1,2,5.66,3.31,1.70
+2024-10-14,regular,San Martin T.,Racing Cordoba,2,2,2.09,2.82,4.29
+2024-10-14,regular,Gimnasia Mendoza,Temperley,1,2,1.73,3.21,5.74
+2024-10-14,regular,Estudiantes Rio Cuarto,Chaco For Ever,0,0,1.62,3.26,7.36
+2024-10-13,regular,CA Mitre,Almagro,2,1,1.47,3.85,7.98
+2024-10-13,regular,Gimnasia y Tiro,Brown Adrogue,0,1,1.57,3.53,6.77
+2024-10-13,regular,Chacarita Juniors,Alvarado,2,1,2.46,2.90,3.19
+2024-10-13,regular,Defensores Unidos,Agropecuario,3,3,3.23,2.89,2.42
+2024-10-13,regular,Nueva Chicago,Deportivo Moron,1,1,1.61,3.42,6.68
+2024-10-13,regular,Guillermo Brown,All Boys,0,0,3.16,2.83,2.54
+2024-10-13,regular,Quilmes,Deportivo Maipu,3,0,1.87,3.11,4.75
+2024-10-13,regular,Talleres (R.E),Gimnasia Jujuy,0,1,2.85,2.52,3.09
+2024-10-12,regular,Colon Santa Fe,San Telmo,0,1,1.64,3.56,5.65
+2024-10-12,regular,San Martin S.J.,Tristan Suarez,3,2,1.82,3.11,5.11
+2024-10-12,regular,CA Estudiantes,Club A. Guemes,2,0,1.98,2.87,4.68
+2024-10-12,regular,Aldosivi,Def. de Belgrano,0,1,1.89,3.22,4.44
+2024-10-12,regular,Arsenal Sarandi,Patronato,2,0,2.77,2.66,3.04
+2024-10-12,regular,San Miguel,Ferro,0,0,2.52,2.91,3.06
+2024-10-08,regular,Deportivo Moron,Gimnasia Mendoza,0,1,3.83,2.89,2.18
+2024-10-08,regular,Ferro,Nueva Chicago,1,2,2.21,2.93,3.69
+2024-10-07,regular,Atl. Rafaela,Atletico Atlanta,2,0,2.25,3.00,3.47
+2024-10-06,regular,Deportivo Maipu,San Miguel,1,1,1.82,3.22,4.84
+2024-10-06,regular,Patronato,San Martin T.,0,1,2.77,2.79,2.92
+2024-10-06,regular,Gimnasia Jujuy,Quilmes,0,2,2.04,2.72,4.88
+2024-10-06,regular,Tristan Suarez,Arsenal Sarandi,2,0,1.92,3.17,4.35
+2024-10-06,regular,Deportivo Madryn,Defensores Unidos,3,0,1.45,3.85,8.58
+2024-10-06,regular,Brown Adrogue,CA Mitre,2,2,3.14,2.88,2.53
+2024-10-06,regular,Alvarado,CA Estudiantes,0,1,2.45,2.79,3.33
+2024-10-06,regular,All Boys,San Martin S.J.,4,0,2.97,2.47,3.08
+2024-10-05,regular,Chaco For Ever,Colon Santa Fe,0,0,3.68,2.76,2.32
+2024-10-05,regular,Agropecuario,Guillermo Brown,2,1,1.71,3.28,5.85
+2024-10-05,regular,Almagro,Aldosivi,1,2,3.38,2.90,2.36
+2024-10-05,regular,Temperley,Gimnasia y Tiro,1,1,2.00,2.82,4.75
+2024-10-05,regular,San Telmo,Almirante Brown,0,1,1.90,3.23,4.36
+2024-10-05,regular,Club A. Guemes,Talleres (R.E),2,1,1.75,3.26,5.51
+2024-10-05,regular,Racing Cordoba,Chacarita Juniors,1,1,1.73,3.26,5.55
+2024-10-04,regular,Def. de Belgrano,Estudiantes Rio Cuarto,0,0,2.34,2.68,3.79
+2024-10-01,regular,Atletico Atlanta,San Telmo,2,0,2.31,2.71,3.77
+2024-09-30,regular,Ferro,Deportivo Maipu,2,2,1.84,3.45,4.29
+2024-09-30,regular,Estudiantes Rio Cuarto,Almagro,1,0,1.71,3.25,5.85
+2024-09-30,regular,San Martin T.,Tristan Suarez,1,0,1.72,3.45,5.24
+2024-09-29,regular,CA Mitre,Temperley,0,0,2.30,2.65,3.96
+2024-09-29,regular,San Martin S.J.,Agropecuario,0,0,1.66,3.35,6.02
+2024-09-29,regular,Gimnasia Mendoza,Nueva Chicago,2,1,1.68,3.41,5.66
+2024-09-29,regular,Gimnasia y Tiro,Deportivo Moron,1,1,1.78,3.04,5.76
+2024-09-29,regular,Aldosivi,Brown Adrogue,2,0,1.64,3.53,5.79
+2024-09-29,regular,Almirante Brown,Chaco For Ever,3,0,2.13,2.70,4.42
+2024-09-29,regular,Defensores Unidos,Atl. Rafaela,0,0,2.58,2.75,3.20
+2024-09-29,regular,Arsenal Sarandi,All Boys,0,1,2.74,2.56,3.24
+2024-09-29,regular,Deportivo Madryn,Guillermo Brown,1,0,1.53,3.49,7.94
+2024-09-29,regular,Quilmes,Club A. Guemes,1,0,2.21,2.72,4.07
+2024-09-28,regular,Colon Santa Fe,Def. de Belgrano,2,0,1.86,3.13,4.81
+2024-09-28,regular,Talleres (R.E),Alvarado,0,2,2.19,2.84,3.88
+2024-09-28,regular,Chacarita Juniors,Patronato,1,0,2.60,2.85,3.05
+2024-09-28,regular,CA Estudiantes,Racing Cordoba,1,0,2.30,2.75,3.77
+2024-09-28,regular,San Miguel,Gimnasia Jujuy,1,1,2.27,2.75,3.84
+2024-09-24,regular,Racing Cordoba,Talleres (R.E),1,1,2.05,2.97,4.17
+2024-09-24,regular,Chaco For Ever,Atletico Atlanta,2,1,2.37,2.67,3.70
+2024-09-23,regular,Temperley,Aldosivi,0,0,2.24,2.84,3.78
+2024-09-23,regular,Def. de Belgrano,Almirante Brown,3,0,1.84,2.99,5.33
+2024-09-23,regular,San Telmo,Defensores Unidos,2,0,1.67,3.33,6.07
+2024-09-23,regular,All Boys,San Martin T.,0,1,3.14,2.63,2.75
+2024-09-23,regular,Agropecuario,Arsenal Sarandi,1,0,1.81,3.14,5.13
+2024-09-22,regular,Deportivo Maipu,Gimnasia Mendoza,0,0,3.04,3.01,2.49
+2024-09-22,regular,Patronato,CA Estudiantes,4,0,2.34,2.84,3.48
+2024-09-22,regular,Gimnasia Jujuy,Ferro,1,0,2.15,2.79,4.15
+2024-09-22,regular,Guillermo Brown,San Martin S.J.,0,2,4.15,2.86,2.10
+2024-09-22,regular,Nueva Chicago,Gimnasia y Tiro,2,0,2.02,2.86,4.55
+2024-09-22,regular,Alvarado,Quilmes,0,0,2.73,2.76,3.00
+2024-09-22,regular,Brown Adrogue,Estudiantes Rio Cuarto,0,0,3.62,2.61,2.48
+2024-09-22,regular,Deportivo Moron,CA Mitre,1,2,2.48,2.65,3.57
+2024-09-21,regular,Tristan Suarez,Chacarita Juniors,0,0,2.10,2.88,3.99
+2024-09-21,regular,Club A. Guemes,San Miguel,2,0,2.04,2.89,4.37
+2024-09-21,regular,Almagro,Colon Santa Fe,0,2,3.88,2.95,2.13
+2024-09-21,regular,Atl. Rafaela,Deportivo Madryn,0,0,2.81,2.61,3.05
+2024-09-17,regular,San Martin T.,Agropecuario,1,0,1.81,3.16,5.01
+2024-09-16,regular,Quilmes,Racing Cordoba,1,0,2.14,2.80,4.19
+2024-09-15,regular,Colon Santa Fe,Brown Adrogue,0,2,1.43,3.88,9.04
+2024-09-15,regular,CA Mitre,Nueva Chicago,0,0,2.14,2.82,4.11
+2024-09-15,regular,Deportivo Maipu,Gimnasia Jujuy,2,0,2.58,2.94,2.99
+2024-09-15,regular,Chacarita Juniors,All Boys,0,1,2.92,2.69,2.88
+2024-09-15,regular,Deportivo Madryn,San Telmo,1,0,1.81,3.30,4.84
+2024-09-15,regular,Atletico Atlanta,Def. de Belgrano,0,0,2.47,2.76,3.36
+2024-09-15,regular,Defensores Unidos,Chaco For Ever,0,0,2.58,2.92,3.01
+2024-09-15,regular,Ferro,Club A. Guemes,1,1,1.86,3.14,4.83
+2024-09-15,regular,Arsenal Sarandi,Guillermo Brown,2,0,2.04,2.92,4.27
+2024-09-15,regular,Atl. Rafaela,San Martin S.J.,0,0,3.60,2.91,2.25
+2024-09-15,regular,CA Estudiantes,Tristan Suarez,2,2,2.37,2.87,3.41
+2024-09-14,regular,Aldosivi,Deportivo Moron,3,0,1.81,3.11,5.32
+2024-09-14,regular,San Miguel,Alvarado,2,0,1.99,3.05,4.19
+2024-09-14,regular,Talleres (R.E),Patronato,1,0,2.10,2.96,3.94
+2024-09-14,regular,Estudiantes Rio Cuarto,Temperley,0,0,2.38,2.64,3.76
+2024-09-14,regular,Almirante Brown,Almagro,1,2,2.18,2.82,4.00
+2024-09-13,regular,Gimnasia y Tiro,Gimnasia Mendoza,1,0,3.20,2.69,2.64
+2024-09-09,regular,Patronato,Quilmes,1,1,2.24,2.83,3.77
+2024-09-09,regular,Deportivo Moron,Estudiantes Rio Cuarto,2,1,2.98,2.62,2.89
+2024-09-08,regular,All Boys,CA Estudiantes,0,0,2.58,2.67,3.31
+2024-09-08,regular,Racing Cordoba,San Miguel,1,0,2.16,2.91,3.87
+2024-09-08,regular,Gimnasia Mendoza,CA Mitre,1,1,1.82,3.11,5.25
+2024-09-08,regular,Gimnasia Jujuy,Gimnasia y Tiro,2,0,1.77,2.86,6.84
+2024-09-08,regular,Alvarado,Ferro,0,2,2.17,3.09,3.54
+2024-09-08,regular,Def. de Belgrano,Defensores Unidos,2,0,1.60,3.75,5.84
+2024-09-08,regular,Guillermo Brown,San Martin T.,0,1,3.72,2.77,2.30
+2024-09-08,regular,Brown Adrogue,Almirante Brown,2,2,2.47,2.79,3.33
+2024-09-08,regular,San Telmo,Atl. Rafaela,3,2,2.04,2.96,4.02
+2024-09-08,regular,Tristan Suarez,Talleres (R.E),2,2,2.14,2.95,3.86
+2024-09-07,regular,Chaco For Ever,Deportivo Madryn,0,1,2.18,2.58,4.54
+2024-09-07,regular,San Martin S.J.,Arsenal Sarandi,0,0,1.36,4.35,10.12
+2024-09-07,regular,Temperley,Colon Santa Fe,1,0,3.16,2.74,2.61
+2024-09-07,regular,Agropecuario,Chacarita Juniors,2,0,1.99,3.11,4.18
+2024-09-07,regular,Almagro,Atletico Atlanta,0,0,3.36,2.68,2.53
+2024-09-07,regular,Club A. Guemes,Deportivo Maipu,4,0,2.06,3.04,3.99
+2024-09-07,regular,Nueva Chicago,Aldosivi,2,1,2.32,2.83,3.56
+2024-09-03,regular,Atletico Atlanta,Brown Adrogue,1,0,1.91,2.91,5.05
+2024-09-03,regular,CA Estudiantes,Agropecuario,1,0,2.16,2.76,4.25
+2024-09-02,regular,Talleres (R.E),All Boys,2,2,2.19,2.61,4.16
+2024-09-02,regular,Defensores Unidos,Almagro,1,1,2.41,2.71,3.60
+2024-09-02,regular,San Telmo,Arsenal Sarandi,4,0,2.27,2.82,3.70
+2024-09-02,regular,San Miguel,Patronato,2,4,1.64,3.29,6.52
+2024-09-02,regular,Colon Santa Fe,Deportivo Moron,1,0,1.50,3.58,8.13
+2024-09-02,regular,Quilmes,Tristan Suarez,0,1,2.21,2.81,3.85
+2024-09-02,regular,Estudiantes Rio Cuarto,Nueva Chicago,1,0,2.05,2.80,4.24
+2024-09-01,regular,Deportivo Maipu,Alvarado,1,1,2.04,3.07,3.99
+2024-09-01,regular,CA Mitre,Gimnasia y Tiro,2,1,2.05,2.71,4.71
+2024-09-01,regular,Ferro,Racing Cordoba,2,0,1.96,3.11,4.18
+2024-09-01,regular,Almirante Brown,Temperley,0,0,2.90,2.63,2.99
+2024-09-01,regular,Chacarita Juniors,Guillermo Brown,1,0,1.95,3.07,4.33
+2024-09-01,regular,Deportivo Madryn,Def. de Belgrano,0,0,2.24,2.74,3.92
+2024-09-01,regular,Aldosivi,Gimnasia Mendoza,0,0,2.48,2.79,3.28
+2024-09-01,regular,Gimnasia Jujuy,Club A. Guemes,1,0,1.93,2.98,4.69
+2024-08-31,regular,San Martin T.,San Martin S.J.,1,0,2.48,2.60,3.60
+2024-08-31,regular,Atl. Rafaela,Chaco For Ever,0,1,2.76,2.59,3.16
+2024-08-27,regular,All Boys,Quilmes,0,0,2.61,2.60,3.24
+2024-08-26,regular,Nueva Chicago,Colon Santa Fe,1,0,3.75,2.80,2.19
+2024-08-25,regular,Racing Cordoba,Deportivo Maipu,3,2,2.19,2.95,3.71
+2024-08-25,regular,Agropecuario,Talleres (R.E),2,0,2.01,3.06,4.12
+2024-08-25,regular,San Martin S.J.,Chacarita Juniors,4,0,1.69,3.29,5.93
+2024-08-25,regular,Patronato,Ferro,1,3,2.64,3.02,2.80
+2024-08-25,regular,Chaco For Ever,San Telmo,1,0,2.33,2.88,3.43
+2024-08-25,regular,Gimnasia y Tiro,Aldosivi,1,0,2.66,2.64,3.22
+2024-08-25,regular,Gimnasia Mendoza,Estudiantes Rio Cuarto,0,0,1.94,3.00,4.58
+2024-08-25,regular,Almagro,Deportivo Madryn,0,1,3.31,2.65,2.58
+2024-08-25,regular,Alvarado,Gimnasia Jujuy,1,0,2.62,2.78,3.12
+2024-08-25,regular,Guillermo Brown,CA Estudiantes,3,1,3.04,2.73,2.71
+2024-08-25,regular,Temperley,Atletico Atlanta,1,1,2.30,2.73,3.75
+2024-08-25,regular,Deportivo Moron,Almirante Brown,0,1,2.29,2.80,3.72
+2024-08-25,regular,Def. de Belgrano,Atl. Rafaela,0,0,1.70,3.35,5.59
+2024-08-25,regular,Tristan Suarez,San Miguel,1,1,2.59,2.79,3.10
+2024-08-24,regular,Club A. Guemes,CA Mitre,0,0,2.28,2.71,3.86
+2024-08-24,regular,Brown Adrogue,Defensores Unidos,2,1,2.46,2.79,3.35
+2024-08-24,regular,Arsenal Sarandi,San Martin T.,1,1,3.79,2.77,2.27
+2024-08-20,regular,Atletico Atlanta,Deportivo Moron,1,0,2.02,2.95,4.31
+2024-08-20,regular,Quilmes,Agropecuario,1,0,2.13,2.96,3.90
+2024-08-19,regular,Talleres (R.E),Guillermo Brown,1,1,1.84,2.98,5.37
+2024-08-19,regular,Colon Santa Fe,Gimnasia Mendoza,1,0,2.05,2.97,4.13
+2024-08-19,regular,Atl. Rafaela,Almagro,2,3,1.99,2.97,4.41
+2024-08-19,regular,Almirante Brown,Nueva Chicago,0,1,2.81,2.73,2.92
+2024-08-18,regular,Estudiantes Rio Cuarto,Gimnasia y Tiro,0,1,1.80,2.95,5.88
+2024-08-18,regular,Gimnasia Jujuy,Racing Cordoba,0,1,1.97,3.02,4.38
+2024-08-18,regular,Deportivo Maipu,Patronato,3,1,1.91,3.24,4.26
+2024-08-18,regular,Aldosivi,CA Mitre,0,0,2.31,2.86,3.54
+2024-08-18,regular,Chacarita Juniors,Arsenal Sarandi,0,0,1.92,3.06,4.56
+2024-08-18,regular,San Telmo,Def. de Belgrano,1,2,2.24,2.82,3.79
+2024-08-18,regular,Defensores Unidos,Temperley,3,1,3.09,2.66,2.74
+2024-08-18,regular,Chaco For Ever,San Martin T.,0,1,3.02,2.72,2.76
+2024-08-17,regular,San Miguel,All Boys,2,1,1.98,2.93,4.54
+2024-08-17,regular,Club A. Guemes,Alvarado,2,1,1.76,3.19,5.38
+2024-08-17,regular,Ferro,Tristan Suarez,2,2,2.14,2.99,3.84
+2024-08-17,regular,CA Estudiantes,San Martin S.J.,0,0,2.72,2.70,3.09
+2024-08-17,regular,Deportivo Madryn,Brown Adrogue,2,1,1.60,3.42,6.72
+2024-08-13,regular,Temperley,Deportivo Madryn,0,1,2.34,2.71,3.71
+2024-08-12,regular,Gimnasia y Tiro,Colon Santa Fe,1,0,4.10,2.69,2.23
+2024-08-12,regular,All Boys,Ferro,3,0,2.96,2.74,2.74
+2024-08-11,regular,San Martin T.,Chacarita Juniors,1,0,1.76,3.31,5.03
+2024-08-11,regular,Racing Cordoba,Club A. Guemes,2,0,2.34,2.71,3.69
+2024-08-11,regular,Agropecuario,San Miguel,2,1,2.33,2.86,3.48
+2024-08-11,regular,CA Mitre,Estudiantes Rio Cuarto,0,0,2.24,2.74,3.90
+2024-08-11,regular,Patronato,Gimnasia Jujuy,1,0,2.44,2.85,3.26
+2024-08-11,regular,Alvarado,Aldosivi,1,0,3.14,2.74,2.61
+2024-08-11,regular,Almagro,San Telmo,1,1,3.26,2.66,2.62
+2024-08-11,regular,Gimnasia Mendoza,Almirante Brown,1,0,1.60,3.53,6.20
+2024-08-11,regular,Brown Adrogue,Atl. Rafaela,1,0,2.60,2.70,3.20
+2024-08-11,regular,Nueva Chicago,Atletico Atlanta,0,1,2.03,3.07,4.00
+2024-08-11,regular,Def. de Belgrano,Chaco For Ever,0,0,1.95,2.97,4.61
+2024-08-11,regular,Guillermo Brown,Quilmes,1,2,2.83,2.72,2.91
+2024-08-11,regular,Tristan Suarez,Deportivo Maipu,1,2,1.97,3.07,4.23
+2024-08-10,regular,San Martin S.J.,Talleres (R.E),3,1,1.69,3.31,5.80
+2024-08-10,regular,Arsenal Sarandi,CA Estudiantes,1,1,3.40,2.63,2.58
+2024-08-10,regular,Deportivo Moron,Defensores Unidos,1,1,1.99,3.03,4.31
+2024-08-06,regular,Colon Santa Fe,CA Mitre,1,2,1.60,3.35,6.95
+2024-08-06,regular,Quilmes,San Martin S.J.,0,1,2.56,2.72,3.26
+2024-08-06,regular,Atl. Rafaela,Temperley,1,0,2.79,2.72,2.97
+2024-08-06,regular,Estudiantes Rio Cuarto,Aldosivi,2,2,2.49,2.81,3.26
+2024-08-06,regular,Ferro,Agropecuario,3,0,2.14,3.04,3.74
+2024-08-06,regular,Atletico Atlanta,Gimnasia Mendoza,1,2,2.86,2.73,2.88
+2024-08-05,regular,Def. de Belgrano,Chacarita Juniors,2,2,2.08,2.95,4.08
+2024-08-04,regular,Alvarado,Racing Cordoba,3,0,2.36,2.85,3.48
+2024-08-04,regular,Gimnasia Jujuy,Tristan Suarez,1,0,1.93,3.21,4.35
+2024-08-04,regular,Deportivo Maipu,All Boys,1,2,2.06,2.83,4.40
+2024-08-04,regular,San Telmo,Brown Adrogue,3,0,1.69,3.39,5.51
+2024-08-04,regular,Talleres (R.E),Arsenal Sarandi,0,0,2.12,2.82,4.13
+2024-08-04,regular,Almirante Brown,Gimnasia y Tiro,0,0,2.25,2.71,4.02
+2024-08-03,regular,Chaco For Ever,Almagro,1,1,1.93,2.88,4.94
+2024-08-03,regular,Defensores Unidos,Nueva Chicago,1,2,3.11,2.72,2.66
+2024-08-03,regular,Deportivo Madryn,Deportivo Moron,0,0,1.62,3.27,7.30
+2024-08-03,regular,CA Estudiantes,San Martin T.,1,3,2.57,2.59,3.48
+2024-08-03,regular,Club A. Guemes,Patronato,2,1,2.01,2.84,4.71
+2024-08-03,regular,San Miguel,Guillermo Brown,1,0,1.71,3.33,5.47
+2024-07-31,regular,San Telmo,Aldosivi,1,2,2.41,2.89,3.28
+2024-07-29,regular,San Martin T.,Talleres (R.E),1,0,1.77,3.24,5.12
+2024-07-28,regular,Racing Cordoba,Estudiantes Rio Cuarto,0,1,2.26,2.92,3.46
+2024-07-28,regular,Agropecuario,Deportivo Maipu,0,0,1.93,3.28,4.08
+2024-07-28,regular,Patronato,Alvarado,1,3,2.12,2.92,4.06
+2024-07-28,regular,San Martin S.J.,San Miguel,2,0,1.92,3.01,4.80
+2024-07-28,regular,Gimnasia y Tiro,Atletico Atlanta,1,0,2.46,2.63,3.60
+2024-07-28,regular,All Boys,Gimnasia Jujuy,0,1,2.48,2.68,3.48
+2024-07-28,regular,Gimnasia Mendoza,Defensores Unidos,2,0,1.51,3.73,7.41
+2024-07-28,regular,Guillermo Brown,Ferro,3,1,3.29,2.79,2.49
+2024-07-28,regular,Deportivo Moron,Atl. Rafaela,1,1,2.00,2.93,4.46
+2024-07-27,regular,CA Mitre,Almirante Brown,2,1,1.85,2.94,5.34
+2024-07-27,regular,Aldosivi,Colon Santa Fe,1,0,2.87,2.77,2.82
+2024-07-27,regular,Arsenal Sarandi,Quilmes,0,0,3.13,2.75,2.60
+2024-07-27,regular,Brown Adrogue,Chaco For Ever,0,0,2.73,2.73,3.01
+2024-07-27,regular,Chacarita Juniors,CA Estudiantes,1,1,2.48,2.73,3.38
+2024-07-27,regular,Tristan Suarez,Club A. Guemes,1,1,2.06,2.72,4.71
+2024-07-27,regular,Nueva Chicago,Deportivo Madryn,1,1,2.41,2.87,3.32
+2024-07-27,regular,Temperley,San Telmo,0,0,2.45,2.70,3.49
+2024-07-26,regular,Almagro,Def. de Belgrano,1,0,3.33,2.64,2.61
+2024-07-23,regular,Quilmes,San Martin T.,1,2,2.31,2.74,3.76
+2024-07-22,regular,Atletico Atlanta,CA Mitre,0,0,2.04,2.82,4.52
+2024-07-21,regular,Talleres (R.E),Chacarita Juniors,2,1,2.44,2.82,3.33
+2024-07-21,regular,Racing Cordoba,Patronato,1,0,2.14,2.83,4.09
+2024-07-21,regular,Gimnasia Jujuy,Agropecuario,1,1,2.06,2.97,4.10
+2024-07-21,regular,Deportivo Madryn,Gimnasia Mendoza,0,2,2.14,2.82,4.11
+2024-07-21,regular,Deportivo Maipu,Guillermo Brown,1,0,1.79,3.30,5.04
+2024-07-21,regular,Defensores Unidos,Gimnasia y Tiro,0,1,2.28,2.66,3.97
+2024-07-21,regular,San Telmo,Deportivo Moron,1,1,1.86,3.07,5.00
+2024-07-21,regular,Ferro,San Martin S.J.,0,0,2.23,2.83,3.79
+2024-07-21,regular,Colon Santa Fe,Estudiantes Rio Cuarto,3,0,1.75,3.09,5.92
+2024-07-20,regular,Alvarado,Tristan Suarez,1,2,2.22,2.90,3.63
+2024-07-20,regular,Almirante Brown,Aldosivi,1,0,2.95,2.74,2.78
+2024-07-20,regular,Club A. Guemes,All Boys,2,1,2.15,2.71,4.29
+2024-07-20,regular,Almagro,CA Estudiantes,1,0,3.30,2.53,2.75
+2024-07-20,regular,San Miguel,Arsenal Sarandi,3,0,1.84,3.08,5.14
+2024-07-20,regular,Def. de Belgrano,Brown Adrogue,3,0,1.78,3.22,5.33
+2024-07-20,regular,Chaco For Ever,Temperley,0,1,2.53,2.66,3.44
+2024-07-20,regular,Atl. Rafaela,Nueva Chicago,1,5,2.32,2.79,3.46
+2024-07-15,regular,San Martin S.J.,Deportivo Maipu,1,0,1.75,3.15,5.49
+2024-07-14,regular,Agropecuario,Club A. Guemes,3,1,2.14,2.85,3.96
+2024-07-14,regular,Estudiantes Rio Cuarto,Almirante Brown,0,1,1.84,2.99,5.15
+2024-07-14,regular,CA Mitre,Defensores Unidos,1,0,1.83,3.05,5.09
+2024-07-14,regular,Patronato,Colon Santa Fe,1,0,3.45,2.97,2.24
+2024-07-14,regular,San Martin T.,San Miguel,1,0,1.96,2.90,4.59
+2024-07-14,regular,Gimnasia y Tiro,Deportivo Madryn,0,0,3.32,2.47,2.53
+2024-07-14,regular,Aldosivi,Atletico Atlanta,2,1,2.36,2.84,3.38
+2024-07-14,regular,Guillermo Brown,Gimnasia Jujuy,0,0,3.06,2.78,2.59
+2024-07-14,regular,Arsenal Sarandi,Ferro,0,0,3.17,2.88,2.43
+2024-07-14,regular,Nueva Chicago,San Telmo,0,3,2.36,2.80,3.40
+2024-07-14,regular,Tristan Suarez,Racing Cordoba,1,0,2.06,2.89,4.16
+2024-07-13,regular,Temperley,Def. de Belgrano,0,0,2.18,2.86,3.79
+2024-07-13,regular,All Boys,Alvarado,1,0,2.38,2.72,3.48
+2024-07-13,regular,Brown Adrogue,Almagro,0,2,2.37,2.69,3.55
+2024-07-13,regular,Gimnasia Mendoza,Atl. Rafaela,2,1,1.66,3.37,5.86
+2024-07-13,regular,CA Estudiantes,Talleres (R.E),2,1,1.88,2.88,5.15
+2024-07-13,regular,Chacarita Juniors,Quilmes,0,4,2.23,2.76,3.79
+2024-07-13,regular,Deportivo Moron,Chaco For Ever,1,0,2.35,2.64,3.70
+2024-07-08,regular,Ferro,San Martin T.,3,1,2.32,2.83,3.57
+2024-07-07,regular,Quilmes,CA Estudiantes,1,0,2.52,2.76,3.32
+2024-07-07,regular,Almirante Brown,Colon Santa Fe,0,0,4.04,2.98,2.07
+2024-07-07,regular,Chaco For Ever,Nueva Chicago,0,1,2.19,2.70,4.24
+2024-07-07,regular,Gimnasia Jujuy,San Martin S.J.,1,0,2.52,2.72,3.31
+2024-07-07,regular,Patronato,Tristan Suarez,3,0,2.42,2.96,3.20
+2024-07-07,regular,Deportivo Maipu,Arsenal Sarandi,1,0,1.86,3.25,4.49
+2024-07-07,regular,San Miguel,Chacarita Juniors,2,1,2.25,2.86,3.70
+2024-07-07,regular,Alvarado,Agropecuario,0,3,2.39,2.92,3.32
+2024-07-07,regular,Defensores Unidos,Aldosivi,1,0,2.81,2.78,2.86
+2024-07-07,regular,Racing Cordoba,All Boys,1,0,2.05,2.89,4.29
+2024-07-07,regular,Club A. Guemes,Guillermo Brown,1,1,1.76,3.19,5.40
+2024-07-07,regular,Def. de Belgrano,Deportivo Moron,0,0,1.94,3.11,4.36
+2024-07-07,regular,San Telmo,Gimnasia Mendoza,0,0,2.36,3.00,3.28
+2024-07-06,regular,Almagro,Temperley,0,0,2.84,2.74,2.85
+2024-07-06,regular,Atletico Atlanta,Estudiantes Rio Cuarto,1,1,2.27,2.77,3.77
+2024-07-06,regular,Brown Adrogue,Talleres (R.E),0,0,3.23,2.59,2.69
+2024-07-06,regular,Deportivo Madryn,CA Mitre,1,0,1.85,2.91,5.47
+2024-07-06,regular,Atl. Rafaela,Gimnasia y Tiro,0,0,2.30,2.63,3.96
+2024-07-02,regular,Talleres (R.E),Quilmes,1,0,2.14,2.92,3.84
+2024-07-01,regular,Colon Santa Fe,Atletico Atlanta,1,1,1.75,3.25,5.50
+2024-06-30,regular,San Martin T.,Deportivo Maipu,2,1,1.75,3.18,5.48
+2024-06-30,regular,CA Mitre,Atl. Rafaela,2,0,1.99,2.94,4.49
+2024-06-30,regular,San Martin S.J.,Club A. Guemes,1,0,1.80,3.04,5.53
+2024-06-30,regular,Estudiantes Rio Cuarto,Defensores Unidos,2,1,1.87,3.00,5.04
+2024-06-30,regular,Gimnasia y Tiro,San Telmo,0,3,2.27,2.72,3.91
+2024-06-30,regular,Nueva Chicago,Def. de Belgrano,0,0,2.24,2.79,3.85
+2024-06-30,regular,Aldosivi,Deportivo Madryn,1,0,2.37,2.74,3.58
+2024-06-30,regular,Deportivo Moron,Almagro,0,0,1.95,3.07,4.39
+2024-06-30,regular,Tristan Suarez,Almirante Brown,2,2,1.94,3.06,4.56
+2024-06-30,regular,Guillermo Brown,Alvarado,0,0,2.54,2.83,3.13
+2024-06-30,regular,Arsenal Sarandi,Gimnasia Jujuy,0,1,2.49,2.77,3.29
+2024-06-30,regular,Chacarita Juniors,Ferro,1,1,2.12,3.08,3.73
+2024-06-29,regular,CA Estudiantes,San Miguel,1,1,2.17,2.74,4.14
+2024-06-29,regular,Agropecuario,Racing Cordoba,2,4,2.09,3.00,3.89
+2024-06-29,regular,All Boys,Patronato,1,0,2.24,2.76,3.93
+2024-06-29,regular,Temperley,Brown Adrogue,1,0,1.74,3.22,5.53
+2024-06-29,regular,Gimnasia Mendoza,Chaco For Ever,1,0,1.97,3.00,4.48
+2024-06-25,regular,Atletico Atlanta,Almirante Brown,1,0,1.95,3.09,4.35
+2024-06-24,regular,Atl. Rafaela,Aldosivi,0,2,2.65,2.80,3.02
+2024-06-23,regular,Ferro,CA Estudiantes,2,2,2.17,2.88,3.88
+2024-06-23,regular,Patronato,Agropecuario,4,0,2.89,2.72,2.83
+2024-06-23,regular,Club A. Guemes,Arsenal Sarandi,0,1,1.91,2.92,4.93
+2024-06-23,regular,Chaco For Ever,Gimnasia y Tiro,0,1,1.99,2.72,5.06
+2024-06-23,regular,Gimnasia Jujuy,San Martin T.,2,0,2.91,2.63,2.91
+2024-06-23,regular,Defensores Unidos,Colon Santa Fe,2,1,3.80,3.23,2.04
+2024-06-23,regular,Alvarado,San Martin S.J.,0,0,2.63,2.71,3.17
+2024-06-23,regular,San Telmo,CA Mitre,0,0,1.93,3.09,4.53
+2024-06-23,regular,Deportivo Maipu,Chacarita Juniors,0,2,2.45,2.77,3.38
+2024-06-23,regular,Racing Cordoba,Guillermo Brown,1,2,1.89,3.06,4.85
+2024-06-22,regular,Temperley,Quilmes,1,0,2.39,2.90,3.29
+2024-06-22,regular,Tristan Suarez,All Boys,1,0,1.88,3.12,4.60
+2024-06-22,regular,Almagro,Nueva Chicago,1,2,2.88,2.74,2.82
+2024-06-22,regular,Brown Adrogue,Deportivo Moron,0,0,2.91,2.71,2.83
+2024-06-22,regular,Def. de Belgrano,Gimnasia Mendoza,0,1,2.18,2.92,3.79
+2024-06-22,regular,Deportivo Madryn,Estudiantes Rio Cuarto,1,0,2.07,2.69,4.83
+2024-06-22,regular,San Miguel,Talleres (R.E),0,0,2.21,2.87,3.87
+2024-06-12,regular,Gimnasia Jujuy,Chacarita Juniors,0,1,2.30,2.89,3.52
+2024-06-11,regular,Atl. Rafaela,Estudiantes Rio Cuarto,0,1,2.94,2.69,2.84
+2024-06-09,regular,Chaco For Ever,CA Mitre,1,1,1.99,2.85,4.71
+2024-06-09,regular,Ferro,Talleres (R.E),0,1,1.74,3.49,4.92
+2024-06-09,regular,Patronato,Guillermo Brown,0,0,1.91,3.22,4.37
+2024-06-09,regular,Deportivo Madryn,Colon Santa Fe,0,0,2.82,2.81,2.81
+2024-06-09,regular,Defensores Unidos,Almirante Brown,0,1,2.13,2.86,4.04
+2024-06-09,regular,Alvarado,Arsenal Sarandi,2,1,2.03,3.01,4.17
+2024-06-09,regular,Deportivo Maipu,CA Estudiantes,1,0,2.59,2.80,3.12
+2024-06-09,regular,Club A. Guemes,San Martin T.,0,0,3.11,2.62,2.77
+2024-06-09,regular,Racing Cordoba,San Martin S.J.,0,0,2.76,2.79,2.89
+2024-06-09,regular,Brown Adrogue,Nueva Chicago,0,0,2.98,2.72,2.74
+2024-06-09,regular,Temperley,Deportivo Moron,3,0,2.15,2.83,4.01
+2024-06-08,regular,All Boys,Atletico Atlanta,1,0,2.68,2.75,3.02
+2024-06-08,regular,San Miguel,Quilmes,1,0,2.29,2.92,3.48
+2024-06-08,regular,Tristan Suarez,Agropecuario,2,1,2.59,2.80,3.06
+2024-06-08,regular,Almagro,Gimnasia Mendoza,2,2,2.77,3.03,2.63
+2024-06-08,regular,Def. de Belgrano,Gimnasia y Tiro,1,0,1.96,2.97,4.51
+2024-06-04,regular,Agropecuario,All Boys,2,1,1.86,3.19,4.66
+2024-06-03,regular,Atletico Atlanta,Defensores Unidos,1,1,1.80,3.43,4.53
+2024-06-03,regular,Quilmes,Ferro,1,4,2.27,2.93,3.49
+2024-06-02,regular,San Martin T.,Alvarado,1,0,1.62,3.44,6.31
+2024-06-02,regular,Estudiantes Rio Cuarto,San Telmo,0,1,2.14,2.92,3.94
+2024-06-02,regular,Aldosivi,Chaco For Ever,1,1,1.93,3.15,4.37
+2024-06-02,regular,CA Mitre,Def. de Belgrano,2,0,2.45,2.79,3.32
+2024-06-02,regular,San Martin S.J.,Patronato,1,0,1.69,3.40,5.41
+2024-06-02,regular,Gimnasia y Tiro,Almagro,1,1,1.67,3.31,6.16
+2024-06-02,regular,Gimnasia Mendoza,Brown Adrogue,3,1,1.65,3.49,5.73
+2024-06-02,regular,Deportivo Moron,San Miguel,0,1,2.56,2.86,3.07
+2024-06-02,regular,CA Estudiantes,Gimnasia Jujuy,1,0,2.09,2.83,4.25
+2024-06-02,regular,Guillermo Brown,Tristan Suarez,2,1,2.58,2.85,3.00
+2024-06-02,regular,Almirante Brown,Deportivo Madryn,0,1,2.65,2.81,3.02
+2024-06-02,regular,Talleres (R.E),Deportivo Maipu,2,3,2.39,2.80,3.45
+2024-06-01,regular,Chacarita Juniors,Club A. Guemes,2,0,1.85,3.04,5.09
+2024-06-01,regular,Nueva Chicago,Temperley,1,0,2.31,2.83,3.58
+2024-06-01,regular,Colon Santa Fe,Atl. Rafaela,1,0,1.53,3.97,6.22
+2024-05-31,regular,Arsenal Sarandi,Racing Cordoba,0,2,2.25,2.89,3.63
+2024-05-28,regular,Temperley,Gimnasia Mendoza,1,3,2.08,2.96,4.03
+2024-05-28,regular,Def. de Belgrano,Aldosivi,0,2,2.16,3.09,3.61
+2024-05-26,regular,Racing Cordoba,San Martin T.,0,1,2.62,2.75,3.15
+2024-05-26,regular,Patronato,Arsenal Sarandi,0,0,2.28,2.80,3.70
+2024-05-26,regular,Chaco For Ever,Estudiantes Rio Cuarto,3,0,2.73,2.63,3.16
+2024-05-26,regular,Gimnasia Jujuy,Talleres (R.E),2,1,1.91,3.06,4.64
+2024-05-26,regular,All Boys,Guillermo Brown,1,1,2.03,3.01,4.17
+2024-05-26,regular,Almagro,CA Mitre,0,0,2.70,2.66,3.15
+2024-05-26,regular,Alvarado,Chacarita Juniors,2,1,3.52,2.84,2.34
+2024-05-26,regular,Deportivo Maipu,Quilmes,1,1,2.54,2.83,3.19
+2024-05-26,regular,Deportivo Moron,Nueva Chicago,1,0,2.57,2.80,3.10
+2024-05-26,regular,Deportivo Madryn,Atletico Atlanta,3,0,2.22,2.85,3.78
+2024-05-26,regular,Brown Adrogue,Gimnasia y Tiro,0,0,3.14,2.62,2.75
+2024-05-26,regular,Club A. Guemes,CA Estudiantes,1,0,2.75,2.63,3.18
+2024-05-26,regular,Ferro,San Miguel,1,0,1.96,3.12,4.27
+2024-05-26,regular,Atl. Rafaela,Almirante Brown,1,2,1.92,3.17,4.43
+2024-05-25,regular,Agropecuario,Defensores Unidos,0,0,1.74,3.29,5.41
+2024-05-25,regular,Tristan Suarez,San Martin S.J.,0,1,2.60,2.87,3.01
+2024-05-25,regular,San Telmo,Colon Santa Fe,2,0,3.73,3.00,2.15
+2024-05-21,regular,Nueva Chicago,Ferro,3,1,2.91,2.66,2.91
+2024-05-21,regular,CA Mitre,Brown Adrogue,1,0,1.62,3.37,6.56
+2024-05-21,regular,San Martin T.,Patronato,2,0,1.74,3.53,4.91
+2024-05-20,regular,Almirante Brown,San Telmo,0,0,2.88,2.92,2.67
+2024-05-20,regular,Estudiantes Rio Cuarto,Def. de Belgrano,1,1,2.19,2.82,3.97
+2024-05-19,regular,San Martin S.J.,All Boys,3,0,1.69,3.36,5.60
+2024-05-19,regular,Colon Santa Fe,Chaco For Ever,1,0,1.44,4.13,7.66
+2024-05-19,regular,Chacarita Juniors,Racing Cordoba,2,2,1.87,3.05,5.01
+2024-05-19,regular,Defensores Unidos,Deportivo Madryn,0,0,2.72,2.81,2.93

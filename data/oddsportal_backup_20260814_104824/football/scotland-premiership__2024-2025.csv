@@ -1,0 +1,235 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-05-26,regular,Ross County,Livingston,2,4,2.67,3.13,2.78
+2025-05-22,regular,Livingston,Ross County,1,1,1.89,3.47,4.23
+2025-05-18,regular,St Johnstone,Dundee FC,0,2,3.43,3.65,2.06
+2025-05-18,regular,Kilmarnock,Hearts,0,1,2.40,3.41,2.88
+2025-05-18,regular,Ross County,Motherwell,1,1,1.83,3.76,4.12
+2025-05-17,regular,Dundee Utd,Aberdeen,2,1,2.59,3.53,2.61
+2025-05-17,regular,Celtic,St. Mirren,1,1,1.23,6.93,10.75
+2025-05-17,regular,Hibernian,Rangers,2,2,3.42,4.09,1.92
+2025-05-16,regular,Livingston,Partick Thistle,2,0,1.74,3.62,4.72
+2025-05-14,regular,Aberdeen,Celtic,1,5,3.52,3.68,1.99
+2025-05-14,regular,Rangers,Dundee Utd,3,1,1.27,6.05,9.93
+2025-05-14,regular,St. Mirren,Hibernian,2,2,2.59,3.31,2.75
+2025-05-14,regular,Dundee FC,Ross County,1,1,1.94,3.64,3.81
+2025-05-14,regular,Hearts,St Johnstone,2,1,1.65,3.71,5.67
+2025-05-14,regular,Motherwell,Kilmarnock,3,0,2.70,3.15,2.76
+2025-05-13,regular,Partick Thistle,Livingston,0,2,3.49,3.26,2.10
+2025-05-11,regular,Rangers,Aberdeen,4,0,1.47,4.63,6.25
+2025-05-10,regular,Celtic,Hibernian,3,1,1.30,5.79,8.96
+2025-05-10,regular,Dundee Utd,St. Mirren,0,2,2.38,3.41,2.94
+2025-05-10,regular,Kilmarnock,Dundee FC,3,2,1.91,3.59,4.04
+2025-05-10,regular,Hearts,Motherwell,3,0,1.61,4.08,5.32
+2025-05-10,regular,St Johnstone,Ross County,2,1,2.00,3.41,3.85
+2025-05-09,regular,Ayr,Partick Thistle,0,2,1.99,3.54,3.60
+2025-05-06,regular,Partick Thistle,Ayr,0,1,2.72,3.31,2.57
+2025-05-04,regular,Rangers,Celtic,1,1,2.89,3.81,2.24
+2025-05-03,regular,St. Mirren,Aberdeen,1,0,2.40,3.37,2.95
+2025-05-03,regular,Hibernian,Dundee Utd,3,1,1.68,3.94,4.89
+2025-05-03,regular,Dundee FC,Motherwell,1,2,2.03,3.47,3.66
+2025-05-03,regular,Ross County,Hearts,1,3,4.13,3.54,1.89
+2025-05-03,regular,St Johnstone,Kilmarnock,0,2,3.00,3.31,2.41
+2025-04-26,regular,Aberdeen,Hibernian,1,0,2.42,3.41,2.88
+2025-04-26,regular,St. Mirren,Rangers,2,2,3.89,3.98,1.83
+2025-04-26,regular,Hearts,Dundee FC,0,1,1.54,4.23,5.97
+2025-04-26,regular,Kilmarnock,Ross County,2,0,1.80,3.40,4.92
+2025-04-26,regular,Motherwell,St Johnstone,3,2,2.05,3.35,3.77
+2025-04-26,regular,Dundee Utd,Celtic,0,5,8.81,5.28,1.33
+2025-04-13,regular,Hibernian,Dundee FC,4,0,1.49,4.53,6.00
+2025-04-13,regular,Aberdeen,Rangers,2,2,2.47,3.67,2.64
+2025-04-12,regular,Dundee Utd,St Johnstone,1,0,1.85,3.51,4.27
+2025-04-12,regular,Motherwell,Hearts,0,0,4.26,3.71,1.81
+2025-04-12,regular,St. Mirren,Ross County,3,2,1.55,3.97,6.19
+2025-04-12,regular,Celtic,Kilmarnock,5,1,1.18,6.92,14.39
+2025-04-06,regular,Hearts,Dundee Utd,0,1,1.73,3.77,4.73
+2025-04-06,regular,St Johnstone,Celtic,1,0,18.29,7.31,1.16
+2025-04-05,regular,Ross County,Aberdeen,0,1,3.73,3.50,1.98
+2025-04-05,regular,Dundee FC,St. Mirren,2,0,2.73,3.36,2.55
+2025-04-05,regular,Rangers,Hibernian,0,2,1.49,4.56,6.04
+2025-04-05,regular,Kilmarnock,Motherwell,2,0,1.77,3.63,4.60
+2025-03-30,regular,Ross County,Dundee Utd,0,1,3.02,3.21,2.44
+2025-03-29,regular,Dundee FC,Rangers,3,4,7.03,5.50,1.36
+2025-03-29,regular,Aberdeen,Motherwell,4,1,1.69,3.74,5.09
+2025-03-29,regular,Celtic,Hearts,3,0,1.21,6.88,11.41
+2025-03-29,regular,Hibernian,St Johnstone,3,0,1.63,3.81,5.58
+2025-03-29,regular,St. Mirren,Kilmarnock,5,1,2.34,3.24,3.14
+2025-03-16,regular,Dundee Utd,Dundee FC,2,4,1.83,3.72,4.14
+2025-03-16,regular,Celtic,Rangers,2,3,1.64,4.10,4.94
+2025-03-15,regular,St Johnstone,Aberdeen,0,0,2.96,3.26,2.44
+2025-03-15,regular,Hearts,Ross County,2,0,1.45,4.41,7.30
+2025-03-15,regular,Kilmarnock,Hibernian,1,1,2.42,3.27,3.01
+2025-03-15,regular,Motherwell,St. Mirren,2,2,2.86,3.04,2.67
+2025-03-02,regular,Aberdeen,Dundee Utd,2,2,2.05,3.41,3.66
+2025-03-02,regular,Hibernian,Hearts,2,1,2.52,3.28,2.85
+2025-03-01,regular,St. Mirren,Celtic,2,5,9.01,5.56,1.31
+2025-03-01,regular,Dundee FC,St Johnstone,1,1,2.31,3.31,3.16
+2025-03-01,regular,Ross County,Kilmarnock,1,0,3.14,3.09,2.44
+2025-03-01,regular,Rangers,Motherwell,1,2,1.13,8.27,20.26
+2025-02-26,regular,Kilmarnock,Rangers,2,4,6.41,4.48,1.48
+2025-02-26,regular,Motherwell,Dundee FC,2,1,2.33,3.36,3.07
+2025-02-26,regular,Dundee Utd,Hibernian,1,3,2.80,3.17,2.63
+2025-02-26,regular,Hearts,St. Mirren,3,1,1.79,3.67,4.48
+2025-02-26,regular,St Johnstone,Ross County,1,0,2.43,3.15,3.09
+2025-02-25,regular,Celtic,Aberdeen,5,1,1.13,9.00,16.92
+2025-02-23,regular,St Johnstone,Hearts,1,2,4.11,3.58,1.89
+2025-02-22,regular,Aberdeen,Kilmarnock,1,0,2.12,3.31,3.59
+2025-02-22,regular,Ross County,Dundee FC,3,1,2.33,3.22,3.19
+2025-02-22,regular,Dundee Utd,Motherwell,1,0,1.71,3.66,5.02
+2025-02-22,regular,Rangers,St. Mirren,0,2,1.17,7.09,16.02
+2025-02-22,regular,Hibernian,Celtic,2,1,6.82,4.45,1.46
+2025-02-16,regular,St. Mirren,Hibernian,0,0,2.88,3.18,2.55
+2025-02-16,regular,Hearts,Rangers,1,3,5.45,4.22,1.58
+2025-02-15,regular,Dundee FC,Aberdeen,1,2,2.70,3.43,2.55
+2025-02-15,regular,Celtic,Dundee Utd,3,0,1.18,7.28,14.07
+2025-02-15,regular,Kilmarnock,St Johnstone,3,1,1.85,3.44,4.47
+2025-02-15,regular,Motherwell,Ross County,0,3,2.10,3.14,3.88
+2025-02-05,regular,Celtic,Dundee FC,6,0,1.07,12.25,30.92
+2025-02-02,regular,Motherwell,Celtic,1,3,14.59,7.38,1.18
+2025-02-02,regular,Rangers,Ross County,4,0,1.09,10.79,24.05
+2025-02-01,regular,Kilmarnock,Dundee Utd,1,0,2.35,3.40,3.04
+2025-02-01,regular,Hibernian,Aberdeen,2,0,1.79,3.68,4.50
+2025-02-01,regular,Dundee FC,Hearts,0,6,3.24,3.44,2.22
+2025-02-01,regular,St. Mirren,St Johnstone,0,1,1.85,3.42,4.56
+2025-01-26,regular,Dundee Utd,Rangers,1,3,5.48,4.25,1.57
+2025-01-25,regular,Aberdeen,St. Mirren,0,3,2.00,3.47,3.73
+2025-01-25,regular,Hearts,Kilmarnock,3,2,1.87,3.60,4.19
+2025-01-25,regular,Ross County,Hibernian,1,1,4.04,3.45,1.94
+2025-01-25,regular,St Johnstone,Motherwell,2,1,2.10,3.24,3.73
+2025-01-15,regular,Rangers,Aberdeen,3,0,1.19,6.96,13.34
+2025-01-14,regular,Dundee FC,Celtic,3,3,12.49,7.20,1.20
+2025-01-12,regular,Aberdeen,Hearts,0,0,2.61,3.40,2.65
+2025-01-12,regular,Rangers,St Johnstone,3,1,1.11,8.85,21.50
+2025-01-11,regular,St. Mirren,Dundee Utd,0,1,2.63,3.00,2.92
+2025-01-11,regular,Hibernian,Motherwell,3,1,1.50,4.37,6.24
+2025-01-11,regular,Ross County,Celtic,1,4,14.30,6.39,1.21
+2025-01-09,regular,Dundee FC,Rangers,1,1,9.55,5.82,1.29
+2025-01-08,regular,Celtic,Dundee Utd,2,0,1.13,8.23,18.67
+2025-01-08,regular,Kilmarnock,Motherwell,0,0,1.85,3.49,4.37
+2025-01-05,regular,Celtic,St. Mirren,3,0,1.14,8.61,15.43
+2025-01-05,regular,St Johnstone,Dundee FC,1,3,2.54,3.29,2.77
+2025-01-05,regular,Dundee Utd,Hearts,0,1,2.44,3.29,2.94
+2025-01-05,regular,Kilmarnock,Ross County,0,1,1.59,3.91,5.84
+2025-01-05,regular,Motherwell,Aberdeen,2,0,2.74,3.27,2.59
+2025-01-05,regular,Hibernian,Rangers,3,3,5.87,4.42,1.52
+2025-01-02,regular,Dundee FC,Dundee Utd,1,2,3.13,3.43,2.26
+2025-01-02,regular,Aberdeen,Ross County,1,2,1.70,3.81,4.95
+2025-01-02,regular,Rangers,Celtic,3,0,3.25,3.69,2.10
+2025-01-02,regular,Hearts,Motherwell,1,0,1.69,3.78,5.04
+2025-01-02,regular,St Johnstone,Hibernian,1,1,3.80,3.50,1.98
+2025-01-02,regular,Kilmarnock,St. Mirren,2,0,2.23,3.24,3.37
+2024-12-29,regular,Dundee Utd,Aberdeen,1,0,2.26,3.49,3.07
+2024-12-29,regular,Celtic,St Johnstone,4,0,1.08,10.10,27.23
+2024-12-29,regular,St. Mirren,Dundee FC,1,2,1.89,3.64,4.01
+2024-12-29,regular,Ross County,Hearts,2,2,3.20,3.38,2.27
+2024-12-29,regular,Hibernian,Kilmarnock,1,0,1.95,3.56,3.87
+2024-12-29,regular,Motherwell,Rangers,2,2,8.15,5.25,1.35
+2024-12-26,regular,St. Mirren,Rangers,2,1,9.12,5.31,1.32
+2024-12-26,regular,Kilmarnock,Aberdeen,4,0,2.50,3.35,2.83
+2024-12-26,regular,Celtic,Motherwell,4,0,1.13,9.20,17.07
+2024-12-26,regular,Dundee FC,Ross County,0,3,1.80,3.63,4.51
+2024-12-26,regular,St Johnstone,Dundee Utd,1,2,3.08,3.21,2.41
+2024-12-26,regular,Hearts,Hibernian,1,2,2.14,3.47,3.39
+2024-12-22,regular,Hearts,St Johnstone,2,1,1.63,3.94,5.34
+2024-12-22,regular,Dundee Utd,Celtic,0,0,8.56,5.18,1.34
+2024-12-21,regular,Aberdeen,Hibernian,1,3,2.04,3.57,3.56
+2024-12-21,regular,Rangers,Dundee FC,1,0,1.08,11.86,23.70
+2024-12-21,regular,Ross County,St. Mirren,1,2,2.90,3.15,2.58
+2024-12-20,regular,Motherwell,Kilmarnock,1,1,2.09,3.44,3.56
+2024-12-15,regular,Kilmarnock,Hearts,1,0,2.74,3.26,2.63
+2024-12-14,regular,Motherwell,Dundee Utd,4,3,2.49,3.41,2.81
+2024-12-14,regular,Hibernian,Ross County,3,1,1.45,4.44,7.26
+2024-12-14,regular,St Johnstone,St. Mirren,2,3,2.83,3.23,2.57
+2024-12-08,regular,Ross County,Rangers,0,3,15.10,6.82,1.19
+2024-12-07,regular,Aberdeen,St Johnstone,1,1,1.62,4.09,5.30
+2024-12-07,regular,Celtic,Hibernian,3,0,1.18,7.56,14.48
+2024-12-07,regular,Hearts,Dundee FC,2,0,1.63,4.07,5.18
+2024-12-07,regular,Dundee Utd,Kilmarnock,1,1,1.98,3.46,3.92
+2024-12-07,regular,St. Mirren,Motherwell,0,1,1.87,3.50,4.38
+2024-12-04,regular,Aberdeen,Celtic,0,1,10.82,5.99,1.26
+2024-12-04,regular,Dundee FC,Motherwell,4,1,2.06,3.50,3.61
+2024-12-04,regular,Rangers,Kilmarnock,6,0,1.23,6.24,13.13
+2024-12-01,regular,Hearts,Aberdeen,1,1,1.88,3.64,4.09
+2024-12-01,regular,St Johnstone,Rangers,0,1,8.39,6.00,1.31
+2024-11-30,regular,Celtic,Ross County,5,0,1.06,11.88,30.20
+2024-11-30,regular,Kilmarnock,Dundee FC,1,1,2.01,3.49,3.72
+2024-11-30,regular,Dundee Utd,St. Mirren,2,0,2.31,3.36,3.12
+2024-11-30,regular,Motherwell,Hibernian,0,3,2.86,3.32,2.50
+2024-11-26,regular,Hibernian,Aberdeen,3,3,2.55,3.29,2.83
+2024-11-23,regular,Hearts,Celtic,1,4,6.60,4.68,1.45
+2024-11-23,regular,Dundee FC,Hibernian,4,1,2.84,3.31,2.51
+2024-11-23,regular,St. Mirren,Aberdeen,2,1,2.69,3.39,2.57
+2024-11-23,regular,Rangers,Dundee Utd,1,1,1.22,6.25,12.28
+2024-11-23,regular,Ross County,Motherwell,2,1,2.66,3.02,2.91
+2024-11-23,regular,St Johnstone,Kilmarnock,1,0,3.41,3.50,2.12
+2024-11-10,regular,Rangers,Hearts,1,0,1.38,4.97,7.72
+2024-11-10,regular,Kilmarnock,Celtic,0,2,10.61,5.96,1.27
+2024-11-09,regular,Aberdeen,Dundee FC,4,1,1.85,3.65,4.25
+2024-11-09,regular,Dundee Utd,Ross County,3,0,1.82,3.46,4.66
+2024-11-09,regular,Hibernian,St. Mirren,1,2,1.80,3.55,4.68
+2024-11-09,regular,Motherwell,St Johnstone,2,1,2.13,3.45,3.41
+2024-11-03,regular,Dundee FC,Kilmarnock,3,2,2.73,3.41,2.56
+2024-11-03,regular,Hibernian,Dundee Utd,1,1,1.81,3.65,4.46
+2024-11-02,regular,St Johnstone,Hearts,1,2,3.78,3.59,1.97
+2024-11-02,regular,St. Mirren,Ross County,0,0,1.74,3.55,5.16
+2024-10-30,regular,Aberdeen,Rangers,2,1,3.90,3.58,1.94
+2024-10-30,regular,Celtic,Dundee FC,2,0,1.17,7.75,14.47
+2024-10-30,regular,Dundee Utd,Motherwell,1,2,1.94,3.58,3.94
+2024-10-30,regular,Hearts,Kilmarnock,1,2,1.79,3.69,4.46
+2024-10-30,regular,Ross County,Hibernian,0,0,4.14,3.43,1.94
+2024-10-30,regular,St. Mirren,St Johnstone,3,1,1.98,3.40,3.97
+2024-10-27,regular,Motherwell,Celtic,0,3,10.72,7.19,1.23
+2024-10-27,regular,Rangers,St. Mirren,2,1,1.29,5.51,10.63
+2024-10-27,regular,Hibernian,Hearts,1,1,2.34,3.30,3.12
+2024-10-26,regular,Aberdeen,Dundee Utd,1,0,1.80,3.69,4.45
+2024-10-26,regular,Dundee FC,St Johnstone,1,2,1.78,3.72,4.54
+2024-10-26,regular,Ross County,Kilmarnock,2,1,3.83,3.37,2.02
+2024-10-20,regular,Kilmarnock,Rangers,1,0,5.83,4.35,1.54
+2024-10-19,regular,Celtic,Aberdeen,2,2,1.19,7.28,12.77
+2024-10-19,regular,Motherwell,Dundee FC,0,1,2.00,3.75,3.50
+2024-10-19,regular,Dundee Utd,Hibernian,3,2,2.84,3.33,2.51
+2024-10-19,regular,Hearts,St. Mirren,4,0,1.78,3.79,4.43
+2024-10-19,regular,St Johnstone,Ross County,3,0,2.60,3.17,2.84
+2024-10-06,regular,Rangers,St Johnstone,2,0,1.09,11.05,24.55
+2024-10-06,regular,Aberdeen,Hearts,3,2,1.83,3.83,4.12
+2024-10-06,regular,Ross County,Celtic,1,2,13.56,7.39,1.19
+2024-10-05,regular,Dundee FC,Kilmarnock,2,3,2.24,3.57,3.08
+2024-10-05,regular,St. Mirren,Dundee Utd,0,1,2.34,3.29,3.14
+2024-10-05,regular,Hibernian,Motherwell,1,2,1.83,3.64,4.32
+2024-09-29,regular,Rangers,Hibernian,1,0,1.30,5.45,10.30
+2024-09-28,regular,St Johnstone,Celtic,0,6,18.14,8.40,1.14
+2024-09-28,regular,Dundee FC,Aberdeen,1,2,3.05,3.69,2.21
+2024-09-28,regular,Hearts,Ross County,1,1,1.61,4.02,5.50
+2024-09-28,regular,Kilmarnock,Dundee Utd,3,3,2.09,3.37,3.62
+2024-09-28,regular,Motherwell,St. Mirren,2,1,2.16,3.31,3.49
+2024-09-21,regular,St. Mirren,Hearts,2,1,2.77,3.30,2.59
+2024-09-21,regular,Ross County,St Johnstone,3,3,1.89,3.50,4.27
+2024-09-15,regular,Dundee Utd,Rangers,0,1,5.98,4.42,1.52
+2024-09-14,regular,Aberdeen,Motherwell,2,1,1.68,3.78,5.22
+2024-09-14,regular,Celtic,Hearts,2,0,1.13,9.07,17.95
+2024-09-14,regular,Ross County,Dundee FC,2,0,2.83,3.58,2.39
+2024-09-14,regular,Hibernian,St Johnstone,2,0,1.58,4.17,5.45
+2024-09-14,regular,St. Mirren,Kilmarnock,2,2,2.41,3.20,3.07
+2024-09-01,regular,Hearts,Dundee Utd,0,1,1.88,3.69,3.99
+2024-09-01,regular,Kilmarnock,Hibernian,1,1,2.63,3.21,2.77
+2024-09-01,regular,Celtic,Rangers,3,0,1.66,4.08,4.90
+2024-08-31,regular,Ross County,Aberdeen,0,1,4.25,3.66,1.85
+2024-08-31,regular,Dundee FC,St. Mirren,2,2,2.27,3.39,3.20
+2024-08-31,regular,St Johnstone,Motherwell,1,2,3.01,3.41,2.35
+2024-08-25,regular,Aberdeen,Kilmarnock,2,0,1.76,3.49,5.06
+2024-08-25,regular,Motherwell,Hearts,3,1,3.12,3.31,2.34
+2024-08-25,regular,St. Mirren,Celtic,0,3,11.99,6.68,1.22
+2024-08-24,regular,Hibernian,Dundee FC,2,2,2.03,3.65,3.49
+2024-08-24,regular,Dundee Utd,St Johnstone,2,0,1.77,3.86,4.38
+2024-08-24,regular,Rangers,Ross County,6,0,1.16,8.01,15.24
+2024-08-11,regular,Aberdeen,St. Mirren,3,1,1.76,3.71,4.76
+2024-08-11,regular,Kilmarnock,St Johnstone,0,3,1.65,4.04,5.03
+2024-08-11,regular,Hibernian,Celtic,0,2,9.07,5.68,1.31
+2024-08-10,regular,Dundee FC,Hearts,3,1,3.08,3.50,2.28
+2024-08-10,regular,Ross County,Dundee Utd,1,1,3.17,3.42,2.28
+2024-08-10,regular,Rangers,Motherwell,2,1,1.20,7.37,12.65
+2024-08-05,regular,St Johnstone,Aberdeen,1,2,3.97,3.60,1.92
+2024-08-04,regular,Celtic,Kilmarnock,4,0,1.12,9.06,20.07
+2024-08-04,regular,St. Mirren,Hibernian,3,0,2.75,3.28,2.61
+2024-08-04,regular,Dundee Utd,Dundee FC,2,2,2.43,3.18,3.10
+2024-08-03,regular,Motherwell,Ross County,0,0,2.24,3.18,3.43
+2024-08-03,regular,Hearts,Rangers,0,0,4.46,4.21,1.70

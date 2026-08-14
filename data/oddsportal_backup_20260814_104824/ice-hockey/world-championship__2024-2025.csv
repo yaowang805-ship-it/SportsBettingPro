@@ -1,0 +1,65 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2024-05-26,play_off,Switzerland,Czech Republic,0,2,3.25,3.90,2.05
+2024-05-26,play_off,Sweden,Canada,4,2,2.25,4.60,2.55
+2024-05-25,play_off,Canada,Switzerland,2,3,1.77,4.40,3.70
+2024-05-25,play_off,Sweden,Czech Republic,3,7,1.95,3.90,3.40
+2024-05-23,play_off,USA,Czech Republic,0,1,2.15,4.20,2.80
+2024-05-23,play_off,Sweden,Finland,2,1,1.44,4.80,6.50
+2024-05-23,play_off,Canada,Slovakia,6,3,1.25,6.75,9.00
+2024-05-23,play_off,Switzerland,Germany,3,1,1.61,4.70,4.40
+2024-05-21,regular,Finland,Switzerland,1,3,3.25,4.20,1.95
+2024-05-21,regular,Sweden,Slovakia,6,1,1.44,5.25,5.50
+2024-05-21,regular,Canada,Czech Republic,4,3,2.00,4.40,3.10
+2024-05-21,regular,Latvia,USA,3,6,10.75,7.00,1.21
+2024-05-21,regular,Austria,Great Britain,2,4,1.21,7.00,10.75
+2024-05-21,regular,France,Germany,3,6,7.25,5.75,1.33
+2024-05-20,regular,Finland,Denmark,3,1,1.18,7.25,13.50
+2024-05-20,regular,Kazakhstan,Poland,3,1,1.74,4.50,3.90
+2024-05-20,regular,Sweden,France,3,1,1.06,12.50,31.00
+2024-05-20,regular,Great Britain,Norway,2,5,5.00,4.90,1.51
+2024-05-19,regular,Switzerland,Canada,2,3,3.40,4.50,1.83
+2024-05-19,regular,Slovakia,Latvia,2,3,1.42,5.25,5.75
+2024-05-19,regular,Norway,Austria,1,4,2.30,4.10,2.65
+2024-05-19,regular,USA,Kazakhstan,10,1,1.05,13.50,34.00
+2024-05-18,regular,Czech Republic,Great Britain,4,1,1.03,15.00,36.00
+2024-05-18,regular,France,Slovakia,2,4,9.50,6.75,1.25
+2024-05-18,regular,Canada,Finland,5,3,1.69,4.40,4.20
+2024-05-18,regular,Germany,Poland,4,2,1.08,11.00,24.00
+2024-05-18,regular,Denmark,Switzerland,0,8,8.50,6.00,1.29
+2024-05-18,regular,Latvia,Sweden,2,7,16.00,7.75,1.15
+2024-05-17,regular,Czech Republic,Austria,4,0,1.14,8.50,15.00
+2024-05-17,regular,Poland,USA,1,4,46.00,17.00,1.02
+2024-05-17,regular,Great Britain,Denmark,3,4,7.75,6.00,1.31
+2024-05-17,regular,Germany,Kazakhstan,8,2,1.26,6.50,9.00
+2024-05-16,regular,Canada,Norway,4,1,1.05,13.00,31.00
+2024-05-16,regular,USA,France,5,0,1.06,12.50,26.00
+2024-05-16,regular,Finland,Austria,2,3,1.11,9.25,21.00
+2024-05-16,regular,Kazakhstan,Sweden,1,3,31.00,13.50,1.05
+2024-05-15,regular,Switzerland,Great Britain,3,0,1.03,16.00,41.00
+2024-05-15,regular,Slovakia,Poland,4,0,1.05,13.50,29.00
+2024-05-15,regular,Czech Republic,Denmark,7,4,1.24,6.25,11.00
+2024-05-15,regular,Germany,Latvia,8,1,1.67,4.40,4.25
+2024-05-14,regular,Canada,Austria,7,6,1.02,16.00,41.00
+2024-05-14,regular,Poland,France,2,4,4.90,4.70,1.56
+2024-05-14,regular,Denmark,Norway,0,2,1.77,4.30,3.80
+2024-05-14,regular,Kazakhstan,Latvia,0,2,3.80,4.30,1.77
+2024-05-13,regular,Switzerland,Czech Republic,2,1,2.75,4.10,2.20
+2024-05-13,regular,Germany,Sweden,1,6,8.25,6.25,1.29
+2024-05-13,regular,Norway,Finland,1,4,17.00,7.75,1.15
+2024-05-13,regular,USA,Slovakia,4,5,1.32,6.00,7.00
+2024-05-12,regular,Austria,Switzerland,5,6,18.00,8.75,1.12
+2024-05-12,regular,Sweden,Poland,5,1,1.01,19.00,56.00
+2024-05-12,regular,Denmark,Canada,1,5,16.00,8.75,1.13
+2024-05-12,regular,Latvia,France,3,2,1.83,4.20,3.70
+2024-05-12,regular,Finland,Great Britain,8,0,1.04,13.50,41.00
+2024-05-12,regular,Slovakia,Kazakhstan,6,2,1.27,6.50,8.50
+2024-05-11,regular,Norway,Czech Republic,3,6,12.00,7.00,1.20
+2024-05-11,regular,USA,Germany,6,1,1.31,6.00,7.50
+2024-05-11,regular,Austria,Denmark,1,5,3.90,4.30,1.74
+2024-05-11,regular,Poland,Latvia,4,5,10.00,6.25,1.25
+2024-05-11,regular,Great Britain,Canada,2,4,51.00,20.00,1.01
+2024-05-11,regular,France,Kazakhstan,1,3,2.20,4.20,2.75
+2024-05-10,regular,Czech Republic,Finland,1,0,2.50,4.00,2.45
+2024-05-10,regular,Sweden,USA,5,2,2.45,4.20,2.45
+2024-05-10,regular,Slovakia,Germany,4,6,1.95,4.30,3.25
+2024-05-10,regular,Switzerland,Norway,5,2,1.20,6.75,12.50

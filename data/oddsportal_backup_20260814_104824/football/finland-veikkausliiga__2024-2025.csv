@@ -1,0 +1,170 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2024-11-02,play_off,SJK,Haka,2,2,1.63,4.22,4.69
+2024-10-30,play_off,Haka,SJK,1,2,3.41,3.61,2.06
+2024-10-27,regular,Lahti,Jaro,1,0,1.98,3.66,3.57
+2024-10-26,play_off,Haka,Gnistan,4,3,2.36,3.40,2.91
+2024-10-23,regular,Jaro,Lahti,2,0,2.39,2.93,3.46
+2024-10-23,play_off,VPS,Gnistan,0,1,1.98,3.57,3.67
+2024-10-23,play_off,Haka,Inter Turku,2,1,3.40,3.54,2.08
+2024-10-19,regular,Haka,VPS,2,3,2.31,3.97,2.70
+2024-10-19,regular,KuPS,HJK,1,0,1.57,4.58,5.12
+2024-10-19,regular,Ilves,SJK,4,0,1.57,4.56,5.01
+2024-10-19,regular,AC Oulu,Mariehamn,1,2,3.05,3.47,2.27
+2024-10-19,regular,Lahti,Ekenas,0,0,1.41,5.28,6.44
+2024-10-19,regular,Inter Turku,Gnistan,3,2,2.01,3.77,3.49
+2024-10-06,regular,HJK,Haka,0,1,1.53,4.72,5.16
+2024-10-06,regular,Mariehamn,Inter Turku,0,1,2.64,3.43,2.57
+2024-10-05,regular,SJK,KuPS,0,1,2.68,3.67,2.42
+2024-10-05,regular,Ekenas,AC Oulu,1,1,3.21,3.68,2.12
+2024-10-05,regular,Gnistan,Lahti,2,2,1.72,4.02,4.39
+2024-10-04,regular,VPS,Ilves,0,2,4.36,4.03,1.72
+2024-09-30,regular,Inter Turku,Lahti,3,1,1.60,4.23,5.19
+2024-09-29,regular,KuPS,Haka,2,0,1.35,4.96,8.41
+2024-09-28,regular,HJK,Ilves,0,1,2.48,3.55,2.65
+2024-09-28,regular,Mariehamn,Ekenas,3,0,1.67,4.10,4.76
+2024-09-28,regular,SJK,VPS,1,4,1.56,4.74,4.96
+2024-09-27,regular,Gnistan,AC Oulu,1,0,1.83,3.85,3.92
+2024-09-24,regular,Ilves,KuPS,1,0,2.20,3.60,3.10
+2024-09-24,regular,AC Oulu,Inter Turku,1,0,3.13,3.43,2.25
+2024-09-22,regular,Ekenas,Gnistan,3,1,5.16,4.46,1.57
+2024-09-20,regular,VPS,HJK,1,1,4.26,4.00,1.77
+2024-09-20,regular,Haka,SJK,0,3,3.54,4.09,1.90
+2024-09-19,regular,Lahti,Mariehamn,2,1,2.46,3.37,2.86
+2024-09-15,regular,Gnistan,Mariehamn,2,1,1.71,4.07,4.38
+2024-09-14,regular,KuPS,VPS,3,1,1.40,5.01,7.18
+2024-09-14,regular,Ilves,Haka,3,2,1.62,4.38,4.71
+2024-09-14,regular,AC Oulu,Lahti,3,0,2.30,3.31,3.10
+2024-09-14,regular,HJK,SJK,2,2,1.76,4.19,3.98
+2024-09-13,regular,Inter Turku,Ekenas,1,1,1.24,6.58,10.24
+2024-09-01,regular,Mariehamn,AC Oulu,2,1,2.55,3.23,2.73
+2024-09-01,regular,Ekenas,SJK,1,1,5.82,5.08,1.43
+2024-09-01,regular,Gnistan,Ilves,1,1,3.13,3.84,2.07
+2024-09-01,regular,Haka,Lahti,1,1,1.96,3.71,3.50
+2024-09-01,regular,VPS,HJK,1,3,3.10,3.55,2.18
+2024-09-01,regular,KuPS,Inter Turku,1,2,1.77,3.82,4.20
+2024-08-26,regular,SJK,Gnistan,0,1,1.85,3.93,3.74
+2024-08-25,regular,Lahti,VPS,0,0,3.02,3.51,2.24
+2024-08-25,regular,HJK,Inter Turku,1,0,2.33,3.43,2.94
+2024-08-25,regular,KuPS,Mariehamn,3,0,1.37,4.59,8.96
+2024-08-24,regular,AC Oulu,Haka,0,1,2.49,3.30,2.80
+2024-08-24,regular,Ilves,Ekenas,5,0,1.20,7.12,11.33
+2024-08-21,regular,Gnistan,Mariehamn,2,1,1.83,3.64,4.25
+2024-08-18,regular,VPS,Haka,3,2,1.89,3.87,3.67
+2024-08-18,regular,Mariehamn,Lahti,0,0,2.86,3.16,2.53
+2024-08-18,regular,Gnistan,AC Oulu,2,0,2.00,3.57,3.63
+2024-08-18,regular,Ekenas,HJK,0,3,5.64,4.55,1.52
+2024-08-18,regular,KuPS,Ilves,1,0,2.00,3.51,3.73
+2024-08-16,regular,Inter Turku,SJK,3,0,2.37,3.79,2.71
+2024-08-12,regular,SJK,VPS,3,1,1.87,3.91,3.78
+2024-08-11,regular,Haka,KuPS,2,2,3.82,3.73,1.89
+2024-08-11,regular,Ilves,Mariehamn,2,0,1.47,4.45,6.34
+2024-08-10,regular,AC Oulu,Inter Turku,1,0,3.68,3.49,2.00
+2024-08-09,regular,Lahti,Ekenas,4,0,1.94,3.58,3.81
+2024-08-04,regular,Ekenas,Haka,1,2,3.80,3.85,1.87
+2024-08-04,regular,Gnistan,VPS,3,0,2.85,3.52,2.37
+2024-08-04,regular,KuPS,SJK,2,1,2.29,3.65,2.94
+2024-08-04,regular,AC Oulu,Ilves,0,1,3.83,3.60,1.92
+2024-08-03,regular,Lahti,HJK,2,1,5.73,4.29,1.53
+2024-08-02,regular,Inter Turku,Mariehamn,3,0,1.61,4.03,5.26
+2024-07-28,regular,VPS,Mariehamn,2,1,1.60,4.07,5.33
+2024-07-28,regular,Ekenas,KuPS,1,2,6.06,4.07,1.54
+2024-07-28,regular,Haka,Gnistan,1,2,2.23,3.69,2.93
+2024-07-27,regular,HJK,AC Oulu,3,0,1.43,4.64,6.96
+2024-07-27,regular,SJK,Lahti,5,5,1.30,5.66,8.97
+2024-07-22,regular,Inter Turku,Gnistan,2,2,1.76,3.94,4.15
+2024-07-21,regular,KuPS,Lahti,1,0,1.45,4.48,6.99
+2024-07-21,regular,Ilves,VPS,3,2,1.56,4.51,5.31
+2024-07-21,regular,Mariehamn,SJK,0,4,4.39,3.63,1.79
+2024-07-20,regular,AC Oulu,Ekenas,2,0,1.54,4.22,5.76
+2024-07-20,regular,HJK,Haka,2,0,1.65,3.93,5.02
+2024-07-15,regular,Haka,Ilves,4,3,4.08,4.10,1.74
+2024-07-14,regular,Lahti,AC Oulu,1,2,3.14,3.36,2.24
+2024-07-14,regular,Ekenas,Inter Turku,0,7,5.15,4.22,1.58
+2024-07-08,regular,AC Oulu,SJK,1,2,3.66,3.57,1.96
+2024-07-08,regular,Inter Turku,Lahti,3,0,1.55,4.28,5.31
+2024-07-07,regular,KuPS,Gnistan,3,1,1.47,4.33,6.39
+2024-07-07,regular,Mariehamn,Haka,0,3,2.56,3.20,2.74
+2024-07-06,regular,VPS,Ekenas,2,3,1.33,5.34,7.94
+2024-07-06,regular,Ilves,HJK,3,0,2.28,3.52,2.92
+2024-06-30,regular,Gnistan,Ekenas,1,2,1.63,4.01,5.03
+2024-06-30,regular,Mariehamn,HJK,1,2,4.93,3.62,1.71
+2024-06-29,regular,Lahti,Ilves,2,2,6.32,4.45,1.47
+2024-06-29,regular,SJK,Haka,2,1,1.50,4.59,5.60
+2024-06-28,regular,AC Oulu,KuPS,1,0,3.85,3.44,1.95
+2024-06-28,regular,Inter Turku,VPS,3,1,2.36,3.51,2.86
+2024-06-19,regular,VPS,AC Oulu,1,1,1.53,4.35,5.68
+2024-06-19,regular,Ekenas,Mariehamn,1,2,2.90,3.12,2.50
+2024-06-19,regular,Lahti,Gnistan,3,3,3.03,3.27,2.35
+2024-06-19,regular,Haka,Inter Turku,0,0,2.44,3.66,2.64
+2024-06-19,regular,HJK,KuPS,3,1,2.38,3.19,3.05
+2024-06-19,regular,Ilves,SJK,2,2,1.75,3.96,4.16
+2024-06-12,regular,Gnistan,HJK,0,4,3.72,3.55,1.96
+2024-06-12,regular,AC Oulu,Lahti,2,2,1.95,3.57,3.70
+2024-06-12,regular,SJK,Ekenas,3,1,1.45,4.74,6.34
+2024-06-12,regular,KuPS,Haka,0,1,1.60,4.23,4.89
+2024-06-12,regular,Inter Turku,Ilves,0,2,3.06,3.58,2.19
+2024-06-12,regular,Mariehamn,VPS,0,0,3.73,3.47,1.97
+2024-06-08,regular,KuPS,AC Oulu,4,1,1.60,3.99,5.07
+2024-06-08,regular,Ekenas,Gnistan,1,0,3.34,3.30,2.15
+2024-06-07,regular,HJK,SJK,4,1,2.03,3.49,3.43
+2024-06-07,regular,Haka,Mariehamn,2,0,1.77,3.69,4.27
+2024-06-07,regular,VPS,Ilves,1,1,3.06,3.49,2.18
+2024-06-07,regular,Lahti,Inter Turku,0,2,3.63,3.61,1.94
+2024-06-02,regular,Ekenas,VPS,1,2,4.46,3.98,1.68
+2024-06-02,regular,Gnistan,Lahti,2,1,1.96,3.47,3.70
+2024-05-31,regular,AC Oulu,HJK,1,0,3.86,3.65,1.87
+2024-05-31,regular,Inter Turku,Haka,3,1,2.02,3.66,3.32
+2024-05-31,regular,Ilves,KuPS,1,2,2.05,3.40,3.48
+2024-05-31,regular,SJK,Mariehamn,0,2,1.53,4.14,5.81
+2024-05-27,regular,VPS,Inter Turku,3,1,2.00,3.48,3.56
+2024-05-27,regular,Lahti,SJK,0,4,3.87,3.67,1.86
+2024-05-26,regular,KuPS,Ekenas,4,1,1.31,5.09,9.17
+2024-05-26,regular,Mariehamn,Gnistan,1,1,2.43,3.22,2.86
+2024-05-25,regular,HJK,Ilves,1,1,2.28,3.53,2.87
+2024-05-24,regular,Haka,AC Oulu,4,3,2.17,3.54,3.10
+2024-05-22,regular,Ilves,Inter Turku,3,0,1.73,3.82,4.37
+2024-05-22,regular,HJK,Gnistan,1,0,1.41,4.83,6.66
+2024-05-22,regular,VPS,KuPS,1,3,2.46,2.99,3.03
+2024-05-19,regular,Ekenas,Lahti,1,1,3.04,3.25,2.31
+2024-05-19,regular,Gnistan,KuPS,0,0,4.51,3.69,1.74
+2024-05-17,regular,Ilves,Haka,5,0,2.08,3.63,3.23
+2024-05-17,regular,SJK,Inter Turku,3,1,2.44,3.50,2.66
+2024-05-17,regular,AC Oulu,Mariehamn,1,1,2.00,3.42,3.61
+2024-05-17,regular,HJK,VPS,1,2,1.86,3.56,3.98
+2024-05-12,regular,Ekenas,Ilves,0,2,5.46,4.14,1.55
+2024-05-12,regular,Lahti,Mariehamn,3,0,2.45,3.17,2.88
+2024-05-11,regular,Inter Turku,HJK,0,1,3.38,3.50,2.07
+2024-05-11,regular,AC Oulu,Gnistan,1,1,2.03,3.58,3.38
+2024-05-11,regular,Haka,SJK,2,0,2.74,3.45,2.41
+2024-05-10,regular,KuPS,VPS,2,1,2.09,3.28,3.49
+2024-05-05,regular,Mariehamn,Inter Turku,3,1,3.82,3.35,1.97
+2024-05-05,regular,Gnistan,Haka,0,3,2.48,3.43,2.67
+2024-05-04,regular,SJK,KuPS,1,1,2.84,3.23,2.45
+2024-05-04,regular,HJK,Ekenas,0,0,1.17,7.02,13.80
+2024-05-04,regular,Ilves,AC Oulu,3,2,1.71,3.98,4.33
+2024-05-03,regular,VPS,Lahti,3,0,1.58,4.13,5.18
+2024-04-28,regular,Mariehamn,Ilves,0,1,4.33,3.61,1.78
+2024-04-28,regular,Gnistan,SJK,0,1,2.83,3.62,2.25
+2024-04-27,regular,AC Oulu,VPS,1,2,2.97,3.30,2.30
+2024-04-27,regular,Lahti,KuPS,0,1,4.01,3.36,1.89
+2024-04-27,regular,Haka,HJK,1,1,3.83,3.31,1.94
+2024-04-26,regular,Inter Turku,Ekenas,2,1,1.49,3.96,6.47
+2024-04-24,regular,SJK,HJK,3,3,3.43,3.53,2.04
+2024-04-21,regular,Ekenas,AC Oulu,1,1,3.75,3.65,1.90
+2024-04-20,regular,VPS,Gnistan,3,2,2.00,3.57,3.56
+2024-04-20,regular,Lahti,Haka,1,1,2.96,3.22,2.38
+2024-04-20,regular,HJK,Mariehamn,2,1,1.36,4.87,7.95
+2024-04-19,regular,SJK,Ilves,1,0,2.66,3.55,2.44
+2024-04-19,regular,Inter Turku,KuPS,1,1,2.76,3.13,2.59
+2024-04-13,regular,Mariehamn,KuPS,2,2,4.14,3.37,1.87
+2024-04-13,regular,Ilves,Gnistan,4,6,1.65,3.81,5.02
+2024-04-12,regular,Inter Turku,AC Oulu,3,3,1.86,3.54,4.01
+2024-04-12,regular,VPS,SJK,1,1,2.45,3.30,2.77
+2024-04-12,regular,Haka,Ekenas,2,1,1.66,3.69,5.02
+2024-04-11,regular,HJK,Lahti,4,0,1.44,4.56,6.41
+2024-04-06,regular,KuPS,HJK,3,1,3.30,3.19,2.20
+2024-04-06,regular,SJK,AC Oulu,2,1,1.85,3.62,3.94
+2024-04-06,regular,Mariehamn,Ekenas,3,2,1.89,3.43,4.00
+2024-04-06,regular,Haka,VPS,1,2,2.18,3.22,3.34
+2024-04-06,regular,Ilves,Lahti,0,0,1.60,3.90,5.30
+2024-04-06,regular,Gnistan,Inter Turku,2,1,3.04,3.48,2.20

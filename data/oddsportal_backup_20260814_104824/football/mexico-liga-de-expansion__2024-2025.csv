@@ -1,0 +1,241 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-06-08,play_off,Leones Negros,Tapatio,1,2,1.68,3.86,4.51
+2025-06-01,play_off,Tapatio,Leones Negros,1,0,2.88,3.10,2.43
+2025-05-25,play_off,Leones Negros,Jaiba Brava,2,0,1.75,3.40,4.67
+2025-05-18,play_off,Jaiba Brava,Leones Negros,2,1,1.84,3.32,4.31
+2025-05-12,play_off,Zacatecas Mineros,Jaiba Brava,0,0,1.57,3.84,5.55
+2025-05-11,play_off,Leones Negros,Atl. Morelia,2,0,1.76,3.70,4.20
+2025-05-05,play_off,Jaiba Brava,Zacatecas Mineros,1,0,2.27,3.07,3.28
+2025-05-04,play_off,Atl. Morelia,Leones Negros,2,0,2.03,3.38,3.49
+2025-04-28,play_off,Zacatecas Mineros,Venados,2,0,1.48,4.43,5.78
+2025-04-27,play_off,Leones Negros,Tepatitlan de Morelos,2,1,1.89,3.64,3.69
+2025-04-27,play_off,Celaya,Jaiba Brava,0,0,1.60,3.77,5.40
+2025-04-27,play_off,Atlante,Atl. Morelia,2,3,1.98,3.53,3.51
+2025-04-25,play_off,Tepatitlan de Morelos,Leones Negros,2,1,2.79,3.27,2.42
+2025-04-25,play_off,Venados,Zacatecas Mineros,2,0,2.75,3.33,2.39
+2025-04-24,play_off,Jaiba Brava,Celaya,1,0,2.31,3.21,3.05
+2025-04-24,play_off,Atl. Morelia,Atlante,0,0,2.81,2.87,2.72
+2025-04-20,regular,Alebrijes Oaxaca,Dorados de Sinaloa,2,2,2.58,3.55,2.48
+2025-04-20,regular,Jaiba Brava,Atlante,1,1,2.71,3.06,2.64
+2025-04-20,regular,Cancun,Atletico La Paz,4,1,1.33,5.08,7.85
+2025-04-20,regular,Celaya,Tapatio,1,0,1.89,3.49,3.89
+2025-04-20,regular,Tlaxcala,Atl. Morelia,1,1,4.02,3.61,1.82
+2025-04-20,regular,Zacatecas Mineros,Tepatitlan de Morelos,1,2,1.96,3.44,3.67
+2025-04-19,regular,Leones Negros,Venados,3,1,1.69,3.96,4.32
+2025-04-13,regular,Celaya,Leones Negros,2,3,1.83,3.47,4.08
+2025-04-13,regular,Atl. Morelia,Cancun,2,1,1.81,3.54,4.19
+2025-04-13,regular,Atlante,Zacatecas Mineros,0,0,2.18,3.39,3.10
+2025-04-12,regular,Atletico La Paz,Dorados de Sinaloa,0,0,2.43,3.51,2.64
+2025-04-12,regular,Venados,Tlaxcala,2,1,1.58,4.24,4.88
+2025-04-12,regular,Tepatitlan de Morelos,Alebrijes Oaxaca,4,0,1.44,4.58,6.21
+2025-04-12,regular,Tapatio,Correcaminos,4,0,1.88,3.59,3.74
+2025-04-06,regular,Leones Negros,Jaiba Brava,1,2,2.00,3.46,3.43
+2025-04-06,regular,Dorados de Sinaloa,Venados,3,1,3.75,3.64,1.86
+2025-04-06,regular,Tlaxcala,Celaya,0,3,3.35,3.46,2.06
+2025-04-06,regular,Cancun,Tapatio,1,2,1.74,3.63,4.34
+2025-04-06,regular,Zacatecas Mineros,Atl. Morelia,1,1,1.69,3.69,4.63
+2025-04-05,regular,Alebrijes Oaxaca,Atletico La Paz,2,2,2.92,3.59,2.20
+2025-04-04,regular,Correcaminos,Atlante,2,0,5.50,4.09,1.54
+2025-03-30,regular,Jaiba Brava,Tepatitlan de Morelos,2,1,1.93,3.30,3.90
+2025-03-30,regular,Celaya,Alebrijes Oaxaca,3,0,1.18,6.96,11.56
+2025-03-30,regular,Tlaxcala,Dorados de Sinaloa,3,2,1.95,3.54,3.57
+2025-03-30,regular,Atlante,Cancun,4,1,1.46,4.08,6.58
+2025-03-30,regular,Atl. Morelia,Correcaminos,3,2,1.52,4.06,5.84
+2025-03-29,regular,Atletico La Paz,Leones Negros,3,1,2.62,3.63,2.37
+2025-03-29,regular,Venados,Zacatecas Mineros,2,0,2.30,3.41,2.87
+2025-03-23,regular,Dorados de Sinaloa,Jaiba Brava,0,1,2.36,3.20,2.97
+2025-03-23,regular,Cancun,Celaya,1,1,2.46,3.25,2.79
+2025-03-22,regular,Tepatitlan de Morelos,Atletico La Paz,4,1,1.54,4.11,5.53
+2025-03-22,regular,Alebrijes Oaxaca,Tlaxcala,2,3,2.94,3.58,2.22
+2025-03-21,regular,Leones Negros,Atl. Morelia,2,1,1.96,3.87,3.40
+2025-03-21,regular,Correcaminos,Venados,1,1,2.80,3.61,2.26
+2025-03-20,regular,Tapatio,Atlante,1,1,3.30,3.62,2.03
+2025-03-16,regular,Leones Negros,Alebrijes Oaxaca,3,2,1.23,6.02,10.25
+2025-03-16,regular,Dorados de Sinaloa,Tepatitlan de Morelos,1,0,2.69,3.38,2.49
+2025-03-16,regular,Jaiba Brava,Celaya,0,0,2.83,3.19,2.50
+2025-03-16,regular,Tlaxcala,Cancun,1,1,2.70,3.26,2.50
+2025-03-16,regular,Atl. Morelia,Atletico La Paz,4,1,1.74,3.90,4.10
+2025-03-15,regular,Zacatecas Mineros,Correcaminos,2,1,1.32,5.33,8.06
+2025-03-09,regular,Tapatio,Tlaxcala,1,0,1.85,3.65,3.87
+2025-03-09,regular,Jaiba Brava,Alebrijes Oaxaca,3,0,1.47,4.29,6.32
+2025-03-09,regular,Cancun,Dorados de Sinaloa,1,0,1.65,3.82,4.74
+2025-03-09,regular,Celaya,Atl. Morelia,1,0,1.49,4.23,5.82
+2025-03-09,regular,Atlante,Leones Negros,2,1,1.64,3.62,5.21
+2025-03-08,regular,Atletico La Paz,Zacatecas Mineros,0,2,3.23,3.71,2.02
+2025-03-07,regular,Correcaminos,Tepatitlan de Morelos,2,1,3.03,3.11,2.36
+2025-03-06,regular,Venados,Tapatio,4,2,1.69,3.95,4.36
+2025-03-03,regular,Atl. Morelia,Venados,1,0,2.03,3.51,3.32
+2025-03-02,regular,Dorados de Sinaloa,Atlante,1,4,4.32,3.41,1.82
+2025-03-02,regular,Zacatecas Mineros,Celaya,2,0,2.12,3.25,3.40
+2025-03-02,regular,Tlaxcala,Jaiba Brava,0,0,2.19,3.37,3.06
+2025-03-01,regular,Atletico La Paz,Tapatio,4,1,2.68,3.67,2.33
+2025-03-01,regular,Alebrijes Oaxaca,Correcaminos,0,1,2.11,3.50,3.17
+2025-03-01,regular,Tepatitlan de Morelos,Leones Negros,1,1,2.66,3.22,2.52
+2025-02-23,regular,Leones Negros,Cancun,1,0,1.50,4.18,5.76
+2025-02-23,regular,Tapatio,Zacatecas Mineros,0,1,2.80,3.40,2.33
+2025-02-23,regular,Jaiba Brava,Atletico La Paz,2,0,1.63,3.92,4.73
+2025-02-23,regular,Celaya,Tepatitlan de Morelos,3,1,1.67,3.76,4.69
+2025-02-23,regular,Atlante,Tlaxcala,2,1,1.31,5.12,8.38
+2025-02-22,regular,Venados,Alebrijes Oaxaca,2,1,1.37,4.93,6.73
+2025-02-21,regular,Correcaminos,Dorados de Sinaloa,3,1,3.49,3.37,2.02
+2025-02-16,regular,Dorados de Sinaloa,Atl. Morelia,5,1,1.98,3.26,3.73
+2025-02-16,regular,Cancun,Venados,1,2,2.19,3.31,3.12
+2025-02-15,regular,Zacatecas Mineros,Jaiba Brava,3,1,1.53,3.97,5.82
+2025-02-15,regular,Tepatitlan de Morelos,Tapatio,1,0,1.77,3.58,4.22
+2025-02-14,regular,Alebrijes Oaxaca,Atlante,2,0,6.55,4.63,1.41
+2025-02-14,regular,Correcaminos,Leones Negros,1,3,4.62,3.97,1.63
+2025-02-13,regular,Atletico La Paz,Celaya,2,3,5.07,4.25,1.54
+2025-02-09,regular,Jaiba Brava,Cancun,0,2,1.84,3.49,4.15
+2025-02-09,regular,Atl. Morelia,Alebrijes Oaxaca,2,1,1.46,4.28,6.56
+2025-02-09,regular,Celaya,Correcaminos,4,1,1.28,5.45,9.07
+2025-02-09,regular,Tlaxcala,Zacatecas Mineros,3,3,4.79,3.88,1.65
+2025-02-09,regular,Atlante,Tepatitlan de Morelos,1,0,1.61,3.81,5.15
+2025-02-08,regular,Venados,Atletico La Paz,2,1,1.54,4.31,5.21
+2025-02-08,regular,Tapatio,Dorados de Sinaloa,1,0,1.83,3.68,3.94
+2025-02-03,regular,Venados,Atlante,1,1,3.60,3.41,2.00
+2025-02-02,regular,Leones Negros,Tlaxcala,5,1,1.37,4.85,7.21
+2025-02-02,regular,Dorados de Sinaloa,Celaya,1,1,4.41,3.97,1.70
+2025-02-02,regular,Zacatecas Mineros,Cancun,1,1,1.58,4.01,5.27
+2025-02-01,regular,Tepatitlan de Morelos,Atl. Morelia,3,1,1.99,3.33,3.76
+2025-02-01,regular,Alebrijes Oaxaca,Tapatio,1,3,2.77,3.58,2.35
+2025-01-31,regular,Correcaminos,Jaiba Brava,2,1,3.19,3.06,2.32
+2025-01-26,regular,Celaya,Venados,1,1,1.51,4.28,5.79
+2025-01-26,regular,Jaiba Brava,Tapatio,1,0,2.03,3.39,3.59
+2025-01-26,regular,Cancun,Alebrijes Oaxaca,1,0,1.34,4.95,8.39
+2025-01-26,regular,Zacatecas Mineros,Leones Negros,0,0,2.35,3.31,2.91
+2025-01-26,regular,Tlaxcala,Tepatitlan de Morelos,2,2,2.88,3.20,2.45
+2025-01-26,regular,Atl. Morelia,Atlante,0,2,4.57,3.38,1.81
+2025-01-25,regular,Atletico La Paz,Correcaminos,1,1,1.90,3.79,3.63
+2025-01-19,regular,Leones Negros,Dorados de Sinaloa,4,0,1.30,5.28,8.76
+2025-01-19,regular,Atlante,Atletico La Paz,5,0,1.21,6.23,11.87
+2025-01-18,regular,Tapatio,Atl. Morelia,1,0,2.25,3.30,3.09
+2025-01-18,regular,Venados,Jaiba Brava,1,2,1.93,3.54,3.72
+2025-01-18,regular,Alebrijes Oaxaca,Zacatecas Mineros,0,1,4.96,3.80,1.65
+2025-01-18,regular,Tepatitlan de Morelos,Cancun,1,1,2.00,3.36,3.65
+2025-01-17,regular,Correcaminos,Tlaxcala,1,1,2.23,3.33,3.11
+2025-01-12,regular,Tapatio,Leones Negros,2,3,3.43,3.29,2.10
+2025-01-12,regular,Dorados de Sinaloa,Zacatecas Mineros,0,2,2.81,3.31,2.43
+2025-01-12,regular,Atlante,Celaya,3,0,1.77,3.55,4.51
+2025-01-12,regular,Cancun,Correcaminos,2,1,1.54,4.37,5.26
+2025-01-12,regular,Atl. Morelia,Jaiba Brava,1,0,2.09,3.11,3.67
+2025-01-11,regular,Atletico La Paz,Tlaxcala,4,4,2.15,3.38,3.22
+2025-01-11,regular,Tepatitlan de Morelos,Venados,2,2,2.13,3.37,3.30
+2024-11-24,play_off,Tapatio,Celaya,3,2,3.01,3.59,2.21
+2024-11-21,play_off,Celaya,Tapatio,1,2,1.65,3.78,5.15
+2024-11-18,play_off,Tapatio,Leones Negros,2,2,2.93,3.16,2.46
+2024-11-17,play_off,Atlante,Celaya,0,3,1.98,3.29,3.93
+2024-11-15,play_off,Leones Negros,Tapatio,2,2,1.72,3.59,4.87
+2024-11-15,play_off,Celaya,Atlante,1,1,2.79,2.79,2.88
+2024-11-11,play_off,Tapatio,Tepatitlan de Morelos,1,1,1.88,3.34,4.36
+2024-11-10,play_off,Atlante,Dorados de Sinaloa,3,0,1.33,5.29,8.20
+2024-11-10,play_off,Celaya,Venados,4,1,1.74,3.88,4.34
+2024-11-10,play_off,Leones Negros,Zacatecas Mineros,3,1,1.84,3.64,4.08
+2024-11-08,play_off,Dorados de Sinaloa,Atlante,3,1,4.48,3.54,1.79
+2024-11-08,play_off,Tepatitlan de Morelos,Tapatio,1,1,2.95,3.10,2.49
+2024-11-07,play_off,Zacatecas Mineros,Leones Negros,2,2,2.13,3.40,3.32
+2024-11-07,play_off,Venados,Celaya,3,4,2.21,3.47,3.09
+2024-11-04,regular,Atlante,Jaiba Brava,4,0,1.32,5.06,9.67
+2024-11-03,regular,Dorados de Sinaloa,Alebrijes Oaxaca,2,0,1.35,5.32,7.37
+2024-11-03,regular,Tepatitlan de Morelos,Zacatecas Mineros,1,1,2.00,3.47,3.61
+2024-11-02,regular,Atletico La Paz,Cancun,1,1,3.74,4.02,1.82
+2024-11-02,regular,Tapatio,Celaya,1,1,2.60,3.32,2.64
+2024-11-02,regular,Venados,Leones Negros,3,0,2.27,3.34,3.08
+2024-11-01,regular,Atl. Morelia,Tlaxcala,2,1,2.26,3.12,3.31
+2024-10-30,regular,Dorados de Sinaloa,Cancun,4,1,2.35,3.57,2.78
+2024-10-28,regular,Alebrijes Oaxaca,Tepatitlan de Morelos,0,2,2.92,3.40,2.34
+2024-10-27,regular,Leones Negros,Celaya,1,1,2.20,3.31,3.25
+2024-10-27,regular,Dorados de Sinaloa,Atletico La Paz,4,0,1.91,3.63,3.77
+2024-10-27,regular,Tlaxcala,Venados,1,1,2.60,3.36,2.63
+2024-10-26,regular,Zacatecas Mineros,Atlante,0,1,3.19,3.18,2.30
+2024-10-26,regular,Cancun,Atl. Morelia,3,1,1.66,3.65,5.03
+2024-10-25,regular,Correcaminos,Tapatio,0,3,3.85,3.74,1.86
+2024-10-23,regular,Jaiba Brava,Dorados de Sinaloa,4,3,1.89,3.49,4.02
+2024-10-21,regular,Atlante,Correcaminos,3,1,1.16,7.52,14.83
+2024-10-20,regular,Tapatio,Cancun,2,0,1.81,3.62,4.22
+2024-10-20,regular,Jaiba Brava,Leones Negros,3,2,2.79,3.16,2.58
+2024-10-20,regular,Celaya,Tlaxcala,1,0,1.41,4.66,6.99
+2024-10-19,regular,Atletico La Paz,Alebrijes Oaxaca,2,1,1.77,4.09,3.95
+2024-10-19,regular,Venados,Dorados de Sinaloa,4,0,1.51,4.46,5.55
+2024-10-18,regular,Atl. Morelia,Zacatecas Mineros,0,0,3.19,3.02,2.38
+2024-10-17,regular,Correcaminos,Cancun,1,3,2.52,3.75,2.48
+2024-10-14,regular,Alebrijes Oaxaca,Celaya,1,5,4.21,3.75,1.79
+2024-10-13,regular,Leones Negros,Atletico La Paz,3,0,1.33,5.17,8.00
+2024-10-13,regular,Dorados de Sinaloa,Tlaxcala,1,0,2.19,3.27,3.32
+2024-10-13,regular,Zacatecas Mineros,Venados,2,2,1.74,3.83,4.36
+2024-10-13,regular,Cancun,Atlante,1,1,4.72,3.35,1.81
+2024-10-12,regular,Tepatitlan de Morelos,Jaiba Brava,1,1,2.21,3.10,3.45
+2024-10-11,regular,Correcaminos,Atl. Morelia,3,0,3.36,3.26,2.16
+2024-10-06,regular,Tlaxcala,Alebrijes Oaxaca,2,1,1.91,3.75,3.65
+2024-10-06,regular,Celaya,Cancun,3,1,1.86,3.49,4.15
+2024-10-06,regular,Atl. Morelia,Leones Negros,0,2,2.92,3.15,2.47
+2024-10-05,regular,Atletico La Paz,Tepatitlan de Morelos,2,5,2.17,3.32,3.32
+2024-10-05,regular,Atlante,Tapatio,1,1,1.51,4.23,5.93
+2024-10-05,regular,Venados,Correcaminos,5,1,1.37,4.97,7.40
+2024-10-03,regular,Atl. Morelia,Celaya,2,0,3.21,3.18,2.28
+2024-09-30,regular,Alebrijes Oaxaca,Leones Negros,2,2,4.70,3.75,1.71
+2024-09-29,regular,Celaya,Jaiba Brava,0,0,1.56,3.99,5.77
+2024-09-29,regular,Cancun,Tlaxcala,5,2,1.64,3.70,5.34
+2024-09-28,regular,Atletico La Paz,Atl. Morelia,0,1,2.77,3.20,2.57
+2024-09-28,regular,Tepatitlan de Morelos,Dorados de Sinaloa,1,1,1.71,3.81,4.56
+2024-09-28,regular,Tapatio,Venados,2,2,1.82,3.57,4.27
+2024-09-27,regular,Correcaminos,Zacatecas Mineros,2,2,4.11,3.71,1.82
+2024-09-26,regular,Celaya,Atlante,0,1,2.66,3.12,2.71
+2024-09-23,regular,Alebrijes Oaxaca,Jaiba Brava,1,1,2.70,3.45,2.48
+2024-09-22,regular,Leones Negros,Atlante,3,3,2.72,3.03,2.74
+2024-09-22,regular,Tlaxcala,Tapatio,2,3,2.68,3.29,2.58
+2024-09-21,regular,Tepatitlan de Morelos,Correcaminos,6,0,1.69,3.90,4.60
+2024-09-19,regular,Zacatecas Mineros,Atletico La Paz,4,0,1.40,4.82,6.84
+2024-09-16,regular,Leones Negros,Tepatitlan de Morelos,1,0,1.57,4.04,5.53
+2024-09-15,regular,Tapatio,Atletico La Paz,1,0,1.46,4.68,5.97
+2024-09-15,regular,Jaiba Brava,Tlaxcala,0,1,1.91,3.38,4.17
+2024-09-15,regular,Celaya,Zacatecas Mineros,2,0,1.85,3.69,3.98
+2024-09-14,regular,Atlante,Dorados de Sinaloa,4,0,1.21,6.48,11.56
+2024-09-14,regular,Venados,Atl. Morelia,2,1,1.80,3.62,4.29
+2024-09-13,regular,Correcaminos,Alebrijes Oaxaca,1,3,1.80,4.02,3.86
+2024-09-09,regular,Alebrijes Oaxaca,Venados,1,0,4.16,3.70,1.81
+2024-09-08,regular,Dorados de Sinaloa,Correcaminos,3,1,2.05,3.59,3.38
+2024-09-08,regular,Tlaxcala,Atlante,1,0,6.34,3.87,1.54
+2024-09-08,regular,Cancun,Leones Negros,0,1,2.61,3.16,2.74
+2024-09-07,regular,Atletico La Paz,Jaiba Brava,2,1,2.48,3.11,2.93
+2024-09-07,regular,Zacatecas Mineros,Tapatio,3,1,2.15,3.47,3.18
+2024-09-07,regular,Tepatitlan de Morelos,Celaya,2,1,4.44,3.43,1.84
+2024-09-01,regular,Tapatio,Tepatitlan de Morelos,2,0,1.48,4.42,6.12
+2024-09-01,regular,Venados,Cancun,4,0,1.94,3.44,3.84
+2024-09-01,regular,Celaya,Atletico La Paz,5,0,1.39,4.87,7.01
+2024-09-01,regular,Atl. Morelia,Dorados de Sinaloa,1,1,1.58,4.16,5.18
+2024-08-31,regular,Leones Negros,Correcaminos,3,1,1.49,4.29,6.02
+2024-08-31,regular,Atlante,Alebrijes Oaxaca,6,0,1.16,7.23,15.88
+2024-08-31,regular,Jaiba Brava,Zacatecas Mineros,1,0,2.46,3.38,2.78
+2024-08-26,regular,Alebrijes Oaxaca,Atl. Morelia,1,1,3.19,3.61,2.11
+2024-08-25,regular,Tepatitlan de Morelos,Atlante,1,1,5.66,3.80,1.60
+2024-08-25,regular,Dorados de Sinaloa,Tapatio,3,3,4.24,3.70,1.79
+2024-08-25,regular,Cancun,Jaiba Brava,0,1,1.70,3.66,4.90
+2024-08-24,regular,Atletico La Paz,Venados,1,1,2.46,3.33,2.79
+2024-08-24,regular,Zacatecas Mineros,Tlaxcala,1,0,1.49,4.47,5.68
+2024-08-23,regular,Correcaminos,Celaya,1,1,3.44,3.42,2.08
+2024-08-19,regular,Celaya,Dorados de Sinaloa,3,1,1.38,4.94,7.21
+2024-08-18,regular,Tlaxcala,Leones Negros,1,2,3.74,3.46,1.97
+2024-08-18,regular,Cancun,Zacatecas Mineros,0,0,1.99,3.49,3.60
+2024-08-18,regular,Atl. Morelia,Tepatitlan de Morelos,2,1,1.76,3.67,4.47
+2024-08-17,regular,Tapatio,Alebrijes Oaxaca,6,0,1.53,4.26,5.67
+2024-08-17,regular,Atlante,Venados,1,0,1.44,4.34,7.19
+2024-08-16,regular,Jaiba Brava,Correcaminos,0,0,2.13,3.45,3.29
+2024-08-12,regular,Atlante,Atl. Morelia,3,1,1.39,4.47,8.12
+2024-08-11,regular,Leones Negros,Zacatecas Mineros,1,0,2.04,3.67,3.35
+2024-08-11,regular,Tepatitlan de Morelos,Tlaxcala,0,0,2.20,3.27,3.26
+2024-08-11,regular,Alebrijes Oaxaca,Cancun,0,2,3.70,3.34,2.02
+2024-08-10,regular,Tapatio,Jaiba Brava,2,0,1.77,3.61,4.50
+2024-08-10,regular,Venados,Celaya,1,1,2.36,3.32,2.94
+2024-08-09,regular,Correcaminos,Atletico La Paz,5,1,2.31,3.42,2.92
+2024-08-04,regular,Dorados de Sinaloa,Leones Negros,0,1,4.52,3.71,1.74
+2024-08-04,regular,Tlaxcala,Correcaminos,3,2,2.09,3.47,3.37
+2024-08-04,regular,Cancun,Tepatitlan de Morelos,2,0,1.50,4.08,6.27
+2024-08-03,regular,Atletico La Paz,Atlante,2,2,4.15,3.54,1.85
+2024-08-03,regular,Zacatecas Mineros,Alebrijes Oaxaca,3,0,1.48,4.62,5.74
+2024-08-03,regular,Jaiba Brava,Venados,0,0,2.13,3.27,3.41
+2024-08-02,regular,Atl. Morelia,Tapatio,1,4,,,
+2024-07-28,regular,Jaiba Brava,Atl. Morelia,1,1,2.38,3.36,2.81
+2024-07-28,regular,Zacatecas Mineros,Dorados de Sinaloa,1,0,1.41,4.60,6.84
+2024-07-28,regular,Tlaxcala,Atletico La Paz,0,2,2.29,3.44,2.90
+2024-07-27,regular,Leones Negros,Tapatio,1,1,1.82,3.62,4.07
+2024-07-27,regular,Venados,Tepatitlan de Morelos,1,1,1.43,4.30,6.99

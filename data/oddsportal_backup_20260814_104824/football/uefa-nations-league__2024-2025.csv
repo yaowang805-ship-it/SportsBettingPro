@@ -1,0 +1,189 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2026-03-31,regular,Latvia,Gibraltar,1,0,1.26,5.63,11.00
+2026-03-31,regular,Luxembourg,Malta,3,0,1.67,3.68,5.00
+2026-03-26,regular,Gibraltar,Latvia,0,1,6.38,3.78,1.52
+2026-03-26,regular,Malta,Luxembourg,0,2,3.78,2.88,2.13
+2025-06-08,play_off,Portugal,Spain,3,2,3.90,3.55,1.93
+2025-06-08,play_off,Germany,France,0,2,2.45,3.75,2.62
+2025-06-05,play_off,Spain,France,5,4,2.45,3.23,2.93
+2025-06-04,play_off,Germany,Portugal,1,2,1.90,3.78,3.85
+2025-03-23,play_off,France,Croatia,3,0,1.27,5.25,10.50
+2025-03-23,play_off,Portugal,Denmark,5,2,1.51,4.22,5.88
+2025-03-23,play_off,Germany,Italy,3,3,1.87,3.50,3.90
+2025-03-23,play_off,Spain,Netherlands,4,3,1.66,3.90,4.75
+2025-03-23,regular,Belgium,Ukraine,3,0,1.44,4.35,6.75
+2025-03-23,regular,Ireland,Bulgaria,2,1,1.59,3.75,5.88
+2025-03-23,regular,Serbia,Austria,2,0,2.85,3.00,2.55
+2025-03-23,regular,Scotland,Greece,0,3,2.55,3.10,2.84
+2025-03-23,regular,Hungary,Turkey,0,3,2.13,3.63,3.10
+2025-03-23,regular,Iceland,Kosovo,1,3,2.50,3.30,2.73
+2025-03-23,regular,Slovenia,Slovakia,1,0,2.53,2.70,3.25
+2025-03-23,regular,Georgia,Armenia,6,1,1.41,4.58,7.25
+2025-03-20,play_off,Croatia,France,2,0,4.33,3.40,1.90
+2025-03-20,play_off,Denmark,Portugal,1,0,3.50,3.20,2.20
+2025-03-20,play_off,Italy,Germany,1,2,2.70,3.10,2.70
+2025-03-20,play_off,Netherlands,Spain,2,2,3.20,3.40,2.30
+2025-03-20,regular,Austria,Serbia,1,1,1.67,3.60,5.50
+2025-03-20,regular,Ukraine,Belgium,3,1,4.33,3.30,1.91
+2025-03-20,regular,Greece,Scotland,0,1,1.91,3.40,4.20
+2025-03-20,regular,Bulgaria,Ireland,1,2,3.60,2.88,2.30
+2025-03-20,regular,Kosovo,Iceland,2,1,1.95,3.40,4.00
+2025-03-20,regular,Slovakia,Slovenia,0,0,2.05,3.10,3.90
+2025-03-20,regular,Turkey,Hungary,3,1,1.75,3.50,4.75
+2025-03-20,regular,Armenia,Georgia,0,3,3.40,3.25,2.15
+2024-11-19,regular,Bosnia & Herzegovina,Netherlands,1,1,8.00,5.38,1.33
+2024-11-19,regular,Hungary,Germany,1,1,5.38,4.33,1.56
+2024-11-19,regular,Albania,Ukraine,1,2,3.25,3.10,2.23
+2024-11-19,regular,Czech Republic,Georgia,2,1,2.03,3.25,3.58
+2024-11-19,regular,Wales,Iceland,4,1,1.74,3.40,4.80
+2024-11-19,regular,Montenegro,Turkey,3,1,5.88,4.27,1.51
+2024-11-19,regular,Sweden,Azerbaijan,6,0,1.12,9.13,18.00
+2024-11-19,regular,Slovakia,Estonia,1,0,1.25,5.88,11.00
+2024-11-19,regular,Malta,Andorra,0,0,1.56,3.35,6.88
+2024-11-18,regular,Croatia,Portugal,1,1,2.35,3.10,3.30
+2024-11-18,regular,Serbia,Denmark,0,0,2.55,3.40,2.75
+2024-11-18,regular,Poland,Scotland,1,2,2.25,3.40,3.25
+2024-11-18,regular,Spain,Switzerland,3,2,1.27,6.00,9.50
+2024-11-18,regular,Bulgaria,Belarus,1,1,2.10,3.10,3.75
+2024-11-18,regular,Romania,Cyprus,4,1,1.38,4.50,8.50
+2024-11-18,regular,Kosovo,Lithuania,1,0,1.38,4.75,8.00
+2024-11-18,regular,Luxembourg,Northern Ireland,2,2,3.70,2.88,2.25
+2024-11-18,regular,Liechtenstein,San Marino,1,3,1.83,3.10,5.00
+2024-11-17,regular,Israel,Belgium,1,0,5.25,4.33,1.57
+2024-11-17,regular,Italy,France,1,3,2.35,3.10,3.30
+2024-11-17,regular,Austria,Slovenia,1,1,1.40,4.75,7.50
+2024-11-17,regular,England,Ireland,5,0,1.22,6.50,12.00
+2024-11-17,regular,Finland,Greece,0,2,5.00,3.70,1.70
+2024-11-17,regular,Norway,Kazakhstan,5,0,1.09,10.00,23.00
+2024-11-17,regular,Latvia,Armenia,1,2,3.25,3.20,2.25
+2024-11-17,regular,North Macedonia,Faroe Islands,1,0,1.53,3.80,6.50
+2024-11-16,regular,Germany,Bosnia & Herzegovina,7,0,1.06,12.00,29.00
+2024-11-16,regular,Netherlands,Hungary,4,0,1.38,4.75,9.00
+2024-11-16,regular,Albania,Czech Republic,0,0,3.50,3.10,2.15
+2024-11-16,regular,Sweden,Slovakia,2,1,1.57,4.20,5.50
+2024-11-16,regular,Georgia,Ukraine,1,1,2.90,3.20,2.45
+2024-11-16,regular,Montenegro,Iceland,0,2,2.45,3.20,2.90
+2024-11-16,regular,Turkey,Wales,0,0,1.67,3.90,5.25
+2024-11-16,regular,Andorra,Moldova,0,1,4.75,3.00,1.90
+2024-11-16,regular,Azerbaijan,Estonia,0,0,1.70,3.50,5.25
+2024-11-15,regular,Scotland,Croatia,1,0,3.50,3.30,2.15
+2024-11-15,regular,Denmark,Spain,1,2,3.90,3.20,2.10
+2024-11-15,regular,Portugal,Poland,5,1,1.25,6.25,12.00
+2024-11-15,regular,Switzerland,Serbia,1,1,1.80,3.90,4.10
+2024-11-15,regular,Northern Ireland,Belarus,2,0,1.44,4.00,8.50
+2024-11-15,regular,Luxembourg,Bulgaria,0,1,2.88,3.00,2.60
+2024-11-15,regular,Romania,Kosovo,,,2.25,3.40,3.30
+2024-11-15,regular,San Marino,Gibraltar,1,1,3.60,2.60,2.40
+2024-11-15,regular,Cyprus,Lithuania,2,1,2.10,3.20,3.80
+2024-11-14,regular,Belgium,Italy,0,1,2.60,3.25,2.75
+2024-11-14,regular,France,Israel,0,0,1.13,9.50,17.00
+2024-11-14,regular,Greece,England,0,3,3.60,3.20,2.15
+2024-11-14,regular,Ireland,Finland,1,0,1.65,3.75,5.25
+2024-11-14,regular,Slovenia,Norway,1,4,2.75,3.20,2.63
+2024-11-14,regular,North Macedonia,Latvia,1,0,1.48,4.33,6.50
+2024-11-14,regular,Armenia,Faroe Islands,0,1,1.44,4.50,7.50
+2024-11-14,regular,Kazakhstan,Austria,0,2,12.00,8.00,1.18
+2024-10-15,regular,Poland,Croatia,3,3,2.88,3.40,2.50
+2024-10-15,regular,Switzerland,Denmark,2,2,2.10,3.30,3.50
+2024-10-15,regular,Scotland,Portugal,0,0,6.00,4.50,1.53
+2024-10-15,regular,Spain,Serbia,3,0,1.33,5.00,9.00
+2024-10-15,regular,Belarus,Luxembourg,1,1,2.88,2.88,2.75
+2024-10-15,regular,Northern Ireland,Bulgaria,5,0,1.80,3.25,5.25
+2024-10-15,regular,Kosovo,Cyprus,3,0,1.36,5.00,8.00
+2024-10-15,regular,Lithuania,Romania,1,2,5.00,3.75,1.67
+2024-10-14,regular,Belgium,France,1,2,3.00,3.30,2.35
+2024-10-14,regular,Bosnia & Herzegovina,Hungary,0,2,3.20,3.25,2.30
+2024-10-14,regular,Germany,Netherlands,1,0,1.83,4.10,3.70
+2024-10-14,regular,Italy,Israel,4,1,1.18,7.50,13.00
+2024-10-14,regular,Ukraine,Czech Republic,1,1,2.80,3.20,2.55
+2024-10-14,regular,Iceland,Turkey,2,4,4.20,3.60,1.83
+2024-10-14,regular,Wales,Montenegro,1,0,1.55,4.10,6.00
+2024-10-14,regular,Estonia,Sweden,0,3,15.00,6.50,1.20
+2024-10-14,regular,Georgia,Albania,0,1,1.75,3.50,4.75
+2024-10-14,regular,Azerbaijan,Slovakia,1,3,5.25,4.00,1.60
+2024-10-13,regular,Austria,Norway,5,1,1.90,3.40,4.00
+2024-10-13,regular,Greece,Ireland,2,0,1.80,3.25,4.75
+2024-10-13,regular,Faroe Islands,Latvia,1,1,2.63,2.90,3.00
+2024-10-13,regular,Finland,England,1,3,11.00,6.00,1.27
+2024-10-13,regular,Armenia,North Macedonia,0,2,2.50,3.20,2.90
+2024-10-13,regular,Liechtenstein,Gibraltar,0,0,2.10,2.90,3.80
+2024-10-13,regular,Malta,Moldova,1,0,2.70,2.63,3.20
+2024-10-13,regular,Kazakhstan,Slovenia,0,1,6.25,3.90,1.55
+2024-10-12,regular,Spain,Denmark,1,0,1.48,4.33,6.50
+2024-10-12,regular,Poland,Portugal,1,3,5.00,4.20,1.65
+2024-10-12,regular,Serbia,Switzerland,2,0,3.30,3.00,2.40
+2024-10-12,regular,Belarus,Northern Ireland,0,0,5.00,3.20,1.83
+2024-10-12,regular,Cyprus,Romania,0,3,5.25,3.75,1.65
+2024-10-12,regular,Croatia,Scotland,2,1,1.50,4.33,6.25
+2024-10-12,regular,Bulgaria,Luxembourg,0,0,1.85,3.20,4.50
+2024-10-12,regular,Lithuania,Kosovo,1,2,4.50,3.40,1.80
+2024-10-11,regular,Bosnia & Herzegovina,Germany,1,2,11.00,6.25,1.25
+2024-10-11,regular,Hungary,Netherlands,1,1,5.25,4.10,1.65
+2024-10-11,regular,Czech Republic,Albania,2,0,1.65,3.50,6.00
+2024-10-11,regular,Ukraine,Georgia,1,0,2.38,3.25,3.00
+2024-10-11,regular,Iceland,Wales,2,2,3.10,3.20,2.40
+2024-10-11,regular,Turkey,Montenegro,1,0,1.27,6.25,9.00
+2024-10-11,regular,Slovakia,Sweden,2,2,2.55,3.20,2.75
+2024-10-11,regular,Estonia,Azerbaijan,3,1,3.20,3.10,2.35
+2024-10-10,regular,Italy,Belgium,2,2,1.90,3.30,4.33
+2024-10-10,regular,Israel,France,1,4,13.00,7.00,1.20
+2024-10-10,regular,Austria,Kazakhstan,4,0,1.11,9.50,17.00
+2024-10-10,regular,England,Greece,1,2,1.27,5.50,11.00
+2024-10-10,regular,Finland,Ireland,1,2,3.20,3.00,2.38
+2024-10-10,regular,Norway,Slovenia,3,0,1.65,3.50,5.75
+2024-10-10,regular,Faroe Islands,Armenia,2,2,3.40,3.10,2.25
+2024-10-10,regular,Gibraltar,San Marino,1,0,1.60,3.60,6.25
+2024-10-10,regular,Latvia,North Macedonia,0,3,3.60,3.00,2.20
+2024-10-10,regular,Moldova,Andorra,2,0,1.42,3.70,11.00
+2024-09-10,regular,Hungary,Bosnia & Herzegovina,0,0,1.57,4.00,5.75
+2024-09-10,regular,Netherlands,Germany,2,2,2.45,3.50,2.70
+2024-09-10,regular,Albania,Georgia,0,1,2.40,3.20,3.00
+2024-09-10,regular,Czech Republic,Ukraine,3,2,2.45,3.25,2.90
+2024-09-10,regular,England,Finland,2,0,1.11,10.00,21.00
+2024-09-10,regular,Ireland,Greece,0,2,2.70,3.00,2.80
+2024-09-10,regular,North Macedonia,Armenia,2,0,2.10,3.30,3.50
+2024-09-10,regular,Andorra,Malta,0,1,3.50,2.63,2.40
+2024-09-10,regular,Latvia,Faroe Islands,1,0,2.05,3.20,3.90
+2024-09-09,regular,Israel,Italy,1,2,7.50,5.00,1.38
+2024-09-09,regular,Norway,Austria,2,1,2.15,3.50,3.20
+2024-09-09,regular,Turkey,Iceland,3,1,1.42,4.75,7.00
+2024-09-09,regular,Slovenia,Kazakhstan,3,0,1.30,5.00,9.50
+2024-09-09,regular,Montenegro,Wales,1,2,3.70,3.25,2.05
+2024-09-09,regular,France,Belgium,2,0,1.80,3.50,4.75
+2024-09-09,regular,Romania,Lithuania,3,1,1.25,5.50,12.00
+2024-09-09,regular,Cyprus,Kosovo,0,4,4.20,3.30,1.90
+2024-09-08,regular,Croatia,Poland,1,0,1.70,3.75,4.75
+2024-09-08,regular,Portugal,Scotland,2,1,1.25,6.00,11.00
+2024-09-08,regular,Switzerland,Spain,1,4,5.25,3.90,1.65
+2024-09-08,regular,Sweden,Estonia,3,0,1.14,8.00,17.00
+2024-09-08,regular,Denmark,Serbia,2,0,1.83,3.20,4.75
+2024-09-08,regular,Slovakia,Azerbaijan,2,0,1.33,5.25,8.00
+2024-09-08,regular,Bulgaria,Northern Ireland,1,0,3.10,2.90,2.45
+2024-09-08,regular,Gibraltar,Liechtenstein,2,2,1.90,3.10,4.33
+2024-09-08,regular,Luxembourg,Belarus,0,1,1.95,3.20,4.20
+2024-09-07,regular,Netherlands,Bosnia & Herzegovina,5,2,1.17,8.00,15.00
+2024-09-07,regular,Germany,Hungary,5,0,1.25,6.00,11.00
+2024-09-07,regular,Ukraine,Albania,1,2,1.83,3.40,4.50
+2024-09-07,regular,Greece,Finland,3,0,1.55,3.60,7.00
+2024-09-07,regular,Georgia,Czech Republic,4,1,3.20,3.20,2.30
+2024-09-07,regular,Ireland,England,0,2,6.50,4.10,1.53
+2024-09-07,regular,Armenia,Latvia,4,1,1.67,3.60,5.25
+2024-09-07,regular,Moldova,Malta,2,0,1.85,3.00,4.75
+2024-09-07,regular,Faroe Islands,North Macedonia,1,1,4.50,3.30,1.83
+2024-09-06,regular,Belgium,Israel,3,1,1.22,6.50,12.00
+2024-09-06,regular,France,Italy,1,3,1.60,3.90,5.75
+2024-09-06,regular,Slovenia,Austria,1,1,3.90,3.25,1.95
+2024-09-06,regular,Iceland,Montenegro,2,0,1.91,3.50,4.00
+2024-09-06,regular,Wales,Turkey,0,0,2.63,3.20,2.63
+2024-09-06,regular,Kosovo,Romania,0,3,2.15,3.30,3.40
+2024-09-06,regular,Lithuania,Cyprus,0,1,2.35,2.90,3.50
+2024-09-06,regular,Kazakhstan,Norway,0,0,9.50,5.75,1.29
+2024-09-05,regular,Portugal,Croatia,2,1,1.53,4.10,6.25
+2024-09-05,regular,Denmark,Switzerland,2,0,2.50,2.90,3.10
+2024-09-05,regular,Scotland,Poland,2,3,2.40,3.20,3.20
+2024-09-05,regular,Serbia,Spain,0,0,5.25,3.90,1.62
+2024-09-05,regular,Belarus,Bulgaria,0,0,3.50,3.20,2.15
+2024-09-05,regular,Estonia,Slovakia,0,1,7.50,3.90,1.48
+2024-09-05,regular,Northern Ireland,Luxembourg,2,0,1.62,3.50,6.50
+2024-09-05,regular,San Marino,Liechtenstein,1,0,3.10,2.75,2.60
+2024-09-05,regular,Azerbaijan,Sweden,1,3,5.50,4.00,1.60

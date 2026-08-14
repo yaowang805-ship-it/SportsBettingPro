@@ -1,0 +1,307 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2024-11-03,regular,Alianza Lima,Cusco,1,2,1.13,8.78,16.33
+2024-11-03,regular,FBC Melgar,Deportivo Garcilaso,1,1,1.19,6.28,14.42
+2024-11-03,regular,Los Chankas,U. de Deportes,0,0,6.90,4.26,1.47
+2024-11-03,regular,Sporting Cristal,Comerciantes Unidos,3,0,1.07,10.65,27.26
+2024-11-02,regular,Carlos Mannucci,Alianza Atl.,2,2,1.47,4.46,6.19
+2024-11-02,regular,Grau,Cesar Vallejo,3,1,2.25,3.64,2.79
+2024-11-02,regular,Cajamarca,Sport Huancayo,1,1,1.50,4.23,6.07
+2024-11-01,regular,AD Tarma,Sport Boys,1,0,1.29,5.23,9.54
+2024-11-01,regular,Cienciano,Union Comercio,7,0,1.01,25.25,49.25
+2024-10-29,regular,Cusco,Grau,0,1,2.07,3.07,3.96
+2024-10-28,regular,Comerciantes Unidos,AD Tarma,0,0,3.15,3.48,2.19
+2024-10-28,regular,Alianza Atl.,Los Chankas,1,0,1.52,4.02,6.43
+2024-10-28,regular,U. de Deportes,Cienciano,3,1,1.18,6.70,13.82
+2024-10-27,regular,Sport Huancayo,FBC Melgar,2,4,4.58,4.05,1.67
+2024-10-27,regular,Sport Boys,Cajamarca,1,1,2.55,3.14,2.87
+2024-10-27,regular,Union Comercio,Sporting Cristal,0,12,18.47,8.94,1.10
+2024-10-27,regular,Cesar Vallejo,Carlos Mannucci,0,2,2.23,3.22,3.25
+2024-10-27,regular,Deportivo Garcilaso,Alianza Lima,1,2,4.25,3.27,1.91
+2024-10-24,regular,Comerciantes Unidos,Sport Boys,0,0,2.51,2.59,3.54
+2024-10-24,regular,Sporting Cristal,U. de Deportes,2,1,3.14,2.91,2.49
+2024-10-24,regular,Carlos Mannucci,Cusco,4,1,2.36,3.73,2.65
+2024-10-24,regular,Cienciano,Alianza Atl.,3,0,1.60,3.44,6.64
+2024-10-23,regular,AD Tarma,Union Comercio,2,0,1.08,10.70,22.47
+2024-10-23,regular,Alianza Lima,Sport Huancayo,2,1,1.15,6.89,19.30
+2024-10-23,regular,FBC Melgar,Cajamarca,1,0,1.16,7.23,16.13
+2024-10-22,regular,Los Chankas,Cesar Vallejo,2,1,1.66,3.70,5.33
+2024-10-22,regular,Grau,Deportivo Garcilaso,2,2,1.55,3.81,6.32
+2024-10-20,regular,U. de Deportes,AD Tarma,2,1,1.24,5.18,13.70
+2024-10-19,regular,Alianza Atl.,Sporting Cristal,1,0,3.92,3.41,1.96
+2024-10-19,regular,Deportivo Garcilaso,Carlos Mannucci,1,0,1.39,4.70,7.59
+2024-10-19,regular,Cesar Vallejo,Cienciano,2,2,1.70,3.42,5.51
+2024-10-18,regular,Cajamarca,Alianza Lima,0,1,5.85,3.23,1.72
+2024-10-18,regular,Sport Boys,FBC Melgar,0,2,4.12,3.12,1.98
+2024-10-18,regular,Sport Huancayo,Grau,1,3,2.25,2.91,3.60
+2024-10-17,regular,Cusco,Los Chankas,2,1,1.45,4.59,6.33
+2024-10-17,regular,Union Comercio,Comerciantes Unidos,3,2,2.35,3.15,3.11
+2024-09-30,regular,Grau,Cajamarca,4,0,1.40,4.21,8.25
+2024-09-29,regular,Comerciantes Unidos,U. de Deportes,0,2,6.12,4.09,1.51
+2024-09-29,regular,Carlos Mannucci,Sport Huancayo,1,2,1.79,3.47,4.47
+2024-09-29,regular,Los Chankas,Deportivo Garcilaso,1,0,2.15,3.20,3.41
+2024-09-29,regular,Sporting Cristal,Cesar Vallejo,4,1,1.36,4.65,8.39
+2024-09-29,regular,Alianza Lima,FBC Melgar,1,1,1.64,3.31,6.57
+2024-09-29,regular,Cienciano,Cusco,1,2,2.97,3.13,2.41
+2024-09-28,regular,AD Tarma,Alianza Atl.,0,1,1.52,3.91,6.30
+2024-09-27,regular,Union Comercio,Sport Boys,0,2,2.94,3.03,2.49
+2024-09-24,regular,Cajamarca,Carlos Mannucci,2,0,1.80,3.47,4.42
+2024-09-24,regular,FBC Melgar,Grau,0,0,1.33,4.64,9.67
+2024-09-24,regular,Sport Huancayo,Los Chankas,3,1,1.85,3.48,4.08
+2024-09-23,regular,Alianza Atl.,Comerciantes Unidos,1,0,1.37,4.52,8.12
+2024-09-23,regular,Cesar Vallejo,AD Tarma,0,0,1.99,3.27,3.86
+2024-09-23,regular,U. de Deportes,Union Comercio,1,0,1.11,8.10,20.00
+2024-09-22,regular,Cusco,Sporting Cristal,1,1,2.10,3.36,3.35
+2024-09-22,regular,Sport Boys,Alianza Lima,0,3,7.89,4.03,1.43
+2024-09-22,regular,Deportivo Garcilaso,Cienciano,1,0,2.41,3.17,2.92
+2024-09-20,regular,Carlos Mannucci,FBC Melgar,1,1,5.37,3.81,1.60
+2024-09-19,regular,Los Chankas,Cajamarca,1,1,1.66,3.68,5.11
+2024-09-19,regular,Union Comercio,Alianza Atl.,1,2,2.89,3.06,2.50
+2024-09-19,regular,U. de Deportes,Sport Boys,3,0,1.28,5.19,11.02
+2024-09-19,regular,Cienciano,Sport Huancayo,3,1,1.66,3.61,5.17
+2024-09-18,regular,Comerciantes Unidos,Cesar Vallejo,2,0,2.84,3.03,2.59
+2024-09-18,regular,Grau,Alianza Lima,1,0,3.34,2.85,2.35
+2024-09-17,regular,AD Tarma,Cusco,1,2,2.02,3.43,3.53
+2024-09-17,regular,Sporting Cristal,Deportivo Garcilaso,1,0,1.31,5.45,8.35
+2024-09-15,regular,FBC Melgar,Los Chankas,2,0,1.24,5.80,10.97
+2024-09-15,regular,Alianza Atl.,U. de Deportes,0,3,4.33,2.98,1.98
+2024-09-15,regular,Alianza Lima,Carlos Mannucci,1,0,1.14,7.52,15.73
+2024-09-14,regular,Sport Huancayo,Sporting Cristal,1,2,2.68,3.32,2.52
+2024-09-14,regular,Sport Boys,Grau,0,0,2.58,3.03,2.82
+2024-09-14,regular,Cusco,Comerciantes Unidos,2,1,1.23,5.92,12.07
+2024-09-14,regular,Cesar Vallejo,Union Comercio,1,0,1.35,4.60,8.90
+2024-09-13,regular,Deportivo Garcilaso,AD Tarma,1,0,1.86,3.48,4.04
+2024-09-13,regular,Cajamarca,Cienciano,1,2,2.08,3.13,3.66
+2024-09-07,regular,FBC Melgar,Comerciantes Unidos,3,0,1.11,8.06,22.08
+2024-09-01,regular,Union Comercio,Grau,1,2,3.11,3.18,2.26
+2024-08-27,regular,Carlos Mannucci,Grau,1,1,3.02,3.06,2.40
+2024-08-26,regular,Union Comercio,Cusco,3,3,2.68,3.17,2.60
+2024-08-26,regular,Cienciano,FBC Melgar,3,1,3.76,3.22,2.02
+2024-08-25,regular,Comerciantes Unidos,Deportivo Garcilaso,2,1,3.11,3.28,2.24
+2024-08-25,regular,AD Tarma,Sport Huancayo,2,1,1.66,3.77,4.93
+2024-08-25,regular,Sporting Cristal,Cajamarca,4,0,1.32,5.02,8.81
+2024-08-25,regular,U. de Deportes,Cesar Vallejo,1,0,1.30,4.87,10.37
+2024-08-24,regular,Los Chankas,Alianza Lima,0,1,2.88,3.32,2.34
+2024-08-24,regular,Alianza Atl.,Sport Boys,2,0,1.70,3.41,5.26
+2024-08-22,regular,FBC Melgar,Sporting Cristal,2,0,1.65,3.92,4.75
+2024-08-21,regular,Deportivo Garcilaso,Union Comercio,3,1,1.31,5.15,9.32
+2024-08-21,regular,Grau,Los Chankas,1,1,1.55,3.91,5.74
+2024-08-21,regular,Sport Boys,Carlos Mannucci,2,6,1.69,3.76,4.59
+2024-08-21,regular,Alianza Lima,Cienciano,3,0,1.25,5.19,12.14
+2024-08-21,regular,Cusco,U. de Deportes,1,1,2.45,3.12,2.88
+2024-08-20,regular,Sport Huancayo,Comerciantes Unidos,2,2,1.43,4.47,6.68
+2024-08-20,regular,Cajamarca,AD Tarma,1,1,2.35,3.19,3.02
+2024-08-19,regular,Cesar Vallejo,Alianza Atl.,0,0,1.98,3.37,3.78
+2024-08-18,regular,Los Chankas,Carlos Mannucci,1,1,1.42,4.38,6.93
+2024-08-18,regular,Sporting Cristal,Alianza Lima,0,0,2.40,3.27,2.86
+2024-08-17,regular,Cienciano,Grau,1,0,1.97,3.29,3.86
+2024-08-17,regular,Union Comercio,Sport Huancayo,0,1,1.96,3.39,3.82
+2024-08-17,regular,U. de Deportes,Deportivo Garcilaso,3,1,1.25,5.61,10.78
+2024-08-16,regular,Cesar Vallejo,Sport Boys,2,2,1.98,3.24,3.94
+2024-08-16,regular,AD Tarma,FBC Melgar,1,1,2.61,3.19,2.69
+2024-08-15,regular,Comerciantes Unidos,Cajamarca,1,1,3.33,3.10,2.23
+2024-08-15,regular,Alianza Atl.,Cusco,1,1,1.88,3.11,4.56
+2024-08-12,regular,Cusco,Cesar Vallejo,2,1,1.55,3.84,5.71
+2024-08-11,regular,Sport Huancayo,U. de Deportes,1,1,3.25,3.23,2.18
+2024-08-11,regular,Carlos Mannucci,Cienciano,1,2,2.08,3.16,3.61
+2024-08-11,regular,Grau,Sporting Cristal,1,1,2.38,3.39,2.77
+2024-08-11,regular,Alianza Lima,AD Tarma,0,0,1.37,4.53,7.95
+2024-08-10,regular,Deportivo Garcilaso,Alianza Atl.,0,1,1.58,3.88,5.36
+2024-08-10,regular,Sport Boys,Los Chankas,2,1,1.75,3.56,4.50
+2024-08-09,regular,Cajamarca,Union Comercio,3,1,1.64,3.70,5.07
+2024-08-06,regular,Cusco,Sport Boys,3,1,1.50,3.92,6.78
+2024-08-05,regular,Alianza Atl.,Sport Huancayo,1,1,1.49,4.17,6.20
+2024-08-05,regular,U. de Deportes,Cajamarca,1,0,1.08,10.00,24.17
+2024-08-04,regular,AD Tarma,Grau,1,2,1.49,4.11,6.76
+2024-08-04,regular,Union Comercio,FBC Melgar,2,1,4.50,3.63,1.76
+2024-08-04,regular,Sporting Cristal,Carlos Mannucci,4,0,1.21,6.42,11.22
+2024-08-04,regular,Cesar Vallejo,Deportivo Garcilaso,0,2,1.65,3.72,5.18
+2024-08-04,regular,Cienciano,Los Chankas,0,0,2.06,3.33,3.51
+2024-08-03,regular,Comerciantes Unidos,Alianza Lima,1,3,6.03,3.77,1.56
+2024-08-01,regular,Cajamarca,Alianza Atl.,1,1,2.02,3.20,3.88
+2024-08-01,regular,FBC Melgar,U. de Deportes,1,0,1.95,3.12,4.25
+2024-08-01,regular,Carlos Mannucci,AD Tarma,3,2,3.32,3.02,2.29
+2024-07-31,regular,Los Chankas,Sporting Cristal,3,3,2.44,3.54,2.67
+2024-07-31,regular,Grau,Comerciantes Unidos,3,0,1.31,4.90,9.65
+2024-07-31,regular,Alianza Lima,Union Comercio,1,0,1.14,6.96,19.30
+2024-07-30,regular,Sport Huancayo,Cesar Vallejo,1,0,1.88,3.41,4.08
+2024-07-30,regular,Sport Boys,Cienciano,2,0,1.75,3.43,4.83
+2024-07-29,regular,Deportivo Garcilaso,Cusco,0,2,2.50,3.27,2.78
+2024-07-27,regular,AD Tarma,Los Chankas,2,1,1.51,4.20,5.68
+2024-07-27,regular,Sporting Cristal,Cienciano,5,1,1.35,5.05,7.68
+2024-07-27,regular,U. de Deportes,Alianza Lima,2,1,2.07,2.90,4.13
+2024-07-27,regular,Deportivo Garcilaso,Sport Boys,2,0,1.50,4.22,5.87
+2024-07-26,regular,Comerciantes Unidos,Carlos Mannucci,2,1,1.97,3.36,3.78
+2024-07-26,regular,Cesar Vallejo,Cajamarca,2,0,1.61,3.77,5.37
+2024-07-25,regular,Cusco,Sport Huancayo,3,0,1.63,3.90,4.92
+2024-07-25,regular,Alianza Atl.,FBC Melgar,3,1,3.51,2.95,2.22
+2024-07-22,regular,Cienciano,AD Tarma,0,1,2.22,3.24,3.17
+2024-07-21,regular,Sporting Cristal,Sport Boys,4,0,1.46,4.39,6.23
+2024-07-21,regular,Carlos Mannucci,Union Comercio,0,0,1.91,3.40,3.90
+2024-07-21,regular,Grau,U. de Deportes,1,1,3.60,3.25,2.03
+2024-07-21,regular,Alianza Lima,Alianza Atl.,2,0,1.21,5.67,13.72
+2024-07-20,regular,FBC Melgar,Cesar Vallejo,5,2,1.23,5.94,11.05
+2024-07-20,regular,Los Chankas,Comerciantes Unidos,2,0,1.49,4.15,6.24
+2024-07-19,regular,Sport Huancayo,Deportivo Garcilaso,1,0,2.58,3.30,2.62
+2024-07-19,regular,Cajamarca,Cusco,2,1,2.49,3.54,2.56
+2024-07-14,regular,Cusco,FBC Melgar,0,3,3.02,2.97,2.50
+2024-07-14,regular,Sport Boys,Sport Huancayo,2,1,1.82,3.18,4.87
+2024-07-14,regular,Alianza Atl.,Grau,0,0,2.79,2.93,2.72
+2024-07-14,regular,U. de Deportes,Carlos Mannucci,6,0,1.16,7.20,14.44
+2024-07-13,regular,Cesar Vallejo,Alianza Lima,2,3,3.67,3.06,2.11
+2024-07-13,regular,Comerciantes Unidos,Cienciano,1,2,2.90,3.14,2.43
+2024-07-13,regular,Deportivo Garcilaso,Cajamarca,1,0,1.58,4.07,5.25
+2024-07-12,regular,AD Tarma,Sporting Cristal,3,1,2.22,3.17,3.24
+2024-07-12,regular,Union Comercio,Los Chankas,1,2,2.09,3.38,3.36
+2024-05-27,regular,Union Comercio,Cienciano,1,1,2.50,3.21,2.80
+2024-05-26,regular,Sport Boys,AD Tarma,1,0,2.77,3.27,2.47
+2024-05-26,regular,Alianza Atl.,Carlos Mannucci,0,0,1.67,3.59,5.19
+2024-05-25,regular,Comerciantes Unidos,Sporting Cristal,0,1,5.64,4.48,1.50
+2024-05-25,regular,Deportivo Garcilaso,FBC Melgar,1,3,3.12,3.32,2.23
+2024-05-25,regular,U. de Deportes,Los Chankas,4,0,1.08,9.94,22.91
+2024-05-25,regular,Sport Huancayo,Cajamarca,1,1,1.66,3.97,4.56
+2024-05-25,regular,Cesar Vallejo,Grau,2,1,2.18,3.07,3.51
+2024-05-25,regular,Cusco,Alianza Lima,3,0,2.62,3.11,2.73
+2024-05-21,regular,Cienciano,U. de Deportes,0,0,3.42,3.35,2.08
+2024-05-20,regular,Cajamarca,Sport Boys,2,4,1.65,3.56,5.46
+2024-05-20,regular,Alianza Lima,Deportivo Garcilaso,3,2,1.24,5.44,12.41
+2024-05-20,regular,Carlos Mannucci,Cesar Vallejo,0,0,3.68,3.27,2.04
+2024-05-19,regular,Los Chankas,Alianza Atl.,2,0,1.54,3.87,5.97
+2024-05-19,regular,AD Tarma,Comerciantes Unidos,2,0,1.27,5.42,9.89
+2024-05-19,regular,FBC Melgar,Sport Huancayo,4,1,1.27,5.51,9.95
+2024-05-18,regular,Sporting Cristal,Union Comercio,5,1,1.18,6.67,12.80
+2024-05-17,regular,Grau,Cusco,4,0,1.68,3.65,4.97
+2024-05-13,regular,Alianza Atl.,Cienciano,0,1,1.88,3.42,3.95
+2024-05-13,regular,U. de Deportes,Sporting Cristal,4,1,1.95,3.42,3.83
+2024-05-12,regular,Deportivo Garcilaso,Grau,0,0,1.71,3.56,4.74
+2024-05-12,regular,Cajamarca,FBC Melgar,2,6,3.53,3.13,2.13
+2024-05-12,regular,Cesar Vallejo,Los Chankas,1,1,1.74,3.70,4.39
+2024-05-12,regular,Sport Huancayo,Alianza Lima,0,2,2.18,3.24,3.29
+2024-05-11,regular,Cusco,Carlos Mannucci,3,0,1.38,4.38,8.23
+2024-05-11,regular,Sport Boys,Comerciantes Unidos,1,1,1.60,3.84,5.80
+2024-05-10,regular,Union Comercio,AD Tarma,2,2,3.26,3.26,2.20
+2024-05-06,regular,Grau,Sport Huancayo,0,0,1.51,4.13,5.93
+2024-05-05,regular,FBC Melgar,Sport Boys,2,1,1.21,6.00,12.43
+2024-05-05,regular,Sporting Cristal,Alianza Atl.,2,1,1.19,6.97,12.28
+2024-05-04,regular,Carlos Mannucci,Deportivo Garcilaso,1,1,2.44,3.10,2.85
+2024-05-04,regular,Comerciantes Unidos,Union Comercio,3,1,2.10,3.31,3.34
+2024-05-04,regular,Los Chankas,Cusco,2,0,2.22,3.13,3.23
+2024-05-04,regular,Alianza Lima,Cajamarca,1,0,1.23,5.68,11.84
+2024-05-04,regular,Cienciano,Cesar Vallejo,1,1,1.60,3.90,5.09
+2024-05-03,regular,AD Tarma,U. de Deportes,2,0,2.36,3.34,2.84
+2024-04-30,regular,Cesar Vallejo,Sporting Cristal,2,1,3.71,3.53,1.94
+2024-04-29,regular,U. de Deportes,Comerciantes Unidos,6,0,1.18,6.46,13.89
+2024-04-29,regular,Deportivo Garcilaso,Los Chankas,1,1,1.72,3.71,4.41
+2024-04-29,regular,FBC Melgar,Alianza Lima,1,0,1.78,3.48,4.46
+2024-04-28,regular,Alianza Atl.,AD Tarma,1,2,2.56,2.95,2.90
+2024-04-28,regular,Cusco,Cienciano,2,0,2.48,3.18,2.78
+2024-04-27,regular,Cajamarca,Grau,3,2,2.16,3.15,3.49
+2024-04-27,regular,Sport Boys,Union Comercio,0,0,1.68,3.46,5.22
+2024-04-26,regular,Sport Huancayo,Carlos Mannucci,1,0,1.59,3.77,5.61
+2024-04-23,regular,Comerciantes Unidos,Alianza Atl.,0,0,2.00,3.21,3.85
+2024-04-21,regular,Grau,FBC Melgar,1,2,2.50,3.00,2.94
+2024-04-21,regular,Sporting Cristal,Cusco,2,0,1.23,5.85,12.08
+2024-04-20,regular,AD Tarma,Cesar Vallejo,1,0,1.64,3.74,5.00
+2024-04-20,regular,Carlos Mannucci,Cajamarca,2,0,2.32,3.10,3.14
+2024-04-20,regular,Los Chankas,Sport Huancayo,6,0,1.95,3.51,3.66
+2024-04-20,regular,Cienciano,Deportivo Garcilaso,0,2,2.39,3.46,2.76
+2024-04-19,regular,Union Comercio,U. de Deportes,1,2,6.31,3.98,1.51
+2024-04-19,regular,Alianza Lima,Sport Boys,3,0,1.31,4.97,9.74
+2024-04-16,regular,Deportivo Garcilaso,Sporting Cristal,2,3,2.89,3.31,2.41
+2024-04-15,regular,Cajamarca,Los Chankas,2,0,1.76,3.64,4.40
+2024-04-15,regular,Alianza Lima,Grau,2,0,1.34,4.65,9.13
+2024-04-15,regular,Cusco,AD Tarma,3,2,2.42,3.33,2.77
+2024-04-14,regular,Cesar Vallejo,Comerciantes Unidos,3,1,1.50,3.97,6.35
+2024-04-14,regular,Sport Boys,U. de Deportes,1,2,6.85,3.69,1.52
+2024-04-14,regular,FBC Melgar,Carlos Mannucci,2,0,1.23,5.66,10.95
+2024-04-13,regular,Alianza Atl.,Union Comercio,2,0,1.61,3.55,5.89
+2024-04-12,regular,Sport Huancayo,Cienciano,1,2,2.18,3.31,3.20
+2024-04-08,regular,Comerciantes Unidos,Cusco,0,1,2.40,3.22,2.90
+2024-04-07,regular,Sporting Cristal,Sport Huancayo,4,0,1.22,5.86,11.97
+2024-04-07,regular,AD Tarma,Deportivo Garcilaso,2,2,1.69,3.68,4.70
+2024-04-07,regular,Cienciano,Cajamarca,1,1,1.41,4.24,7.52
+2024-04-07,regular,Carlos Mannucci,Alianza Lima,0,4,4.40,3.52,1.77
+2024-04-06,regular,Union Comercio,Cesar Vallejo,2,2,3.08,3.34,2.20
+2024-04-06,regular,Los Chankas,FBC Melgar,2,2,3.53,3.26,2.07
+2024-04-06,regular,U. de Deportes,Alianza Atl.,1,0,1.23,5.80,11.22
+2024-04-05,regular,Grau,Sport Boys,0,0,1.53,3.92,5.89
+2024-03-31,regular,Cajamarca,Sporting Cristal,1,2,4.25,3.77,1.76
+2024-03-31,regular,Sport Boys,Alianza Atl.,0,0,1.72,3.73,4.55
+2024-03-31,regular,Sport Huancayo,AD Tarma,0,2,2.16,3.36,3.22
+2024-03-31,regular,Cesar Vallejo,U. de Deportes,0,0,2.94,3.16,2.41
+2024-03-31,regular,FBC Melgar,Cienciano,2,0,1.40,4.56,7.07
+2024-03-30,regular,Grau,Carlos Mannucci,3,0,1.61,3.82,5.37
+2024-03-30,regular,Cusco,Union Comercio,1,0,1.31,4.83,10.02
+2024-03-29,regular,Alianza Lima,Los Chankas,3,0,1.19,6.23,13.54
+2024-03-28,regular,Deportivo Garcilaso,Comerciantes Unidos,1,2,1.49,4.20,6.18
+2024-03-16,regular,AD Tarma,Cajamarca,2,1,1.51,4.00,6.51
+2024-03-15,regular,Los Chankas,Grau,0,1,2.10,3.32,3.54
+2024-03-15,regular,Union Comercio,Deportivo Garcilaso,0,4,2.20,3.30,3.22
+2024-03-15,regular,Carlos Mannucci,Sport Boys,1,0,1.87,3.40,4.13
+2024-03-14,regular,Comerciantes Unidos,Sport Huancayo,3,2,2.68,3.19,2.58
+2024-03-14,regular,Alianza Atl.,Cesar Vallejo,1,1,2.69,2.99,2.72
+2024-03-14,regular,Sporting Cristal,FBC Melgar,1,2,1.82,3.57,4.09
+2024-03-14,regular,Cienciano,Alianza Lima,2,1,2.27,3.30,3.00
+2024-03-13,regular,U. de Deportes,Cusco,1,0,1.22,5.74,12.87
+2024-03-10,regular,Sport Boys,Cesar Vallejo,2,0,2.46,3.30,2.77
+2024-03-10,regular,Sport Huancayo,Union Comercio,2,2,1.37,4.39,8.85
+2024-03-10,regular,Alianza Lima,Sporting Cristal,1,2,1.96,3.34,3.80
+2024-03-10,regular,Carlos Mannucci,Los Chankas,2,1,1.73,3.61,4.64
+2024-03-09,regular,FBC Melgar,AD Tarma,3,1,1.55,4.04,5.65
+2024-03-09,regular,Grau,Cienciano,1,1,1.59,3.88,5.33
+2024-03-09,regular,Deportivo Garcilaso,U. de Deportes,2,2,3.05,2.88,2.49
+2024-03-08,regular,Cajamarca,Comerciantes Unidos,2,3,2.13,3.18,3.51
+2024-03-07,regular,Cusco,Alianza Atl.,2,0,1.50,4.06,6.13
+2024-03-04,regular,Union Comercio,Cajamarca,2,0,2.12,3.28,3.36
+2024-03-04,regular,Cienciano,Carlos Mannucci,2,2,1.29,5.19,9.54
+2024-03-03,regular,Los Chankas,Sport Boys,2,0,1.57,3.84,5.48
+2024-03-03,regular,Cesar Vallejo,Cusco,2,2,1.50,4.24,5.69
+2024-03-02,regular,Comerciantes Unidos,FBC Melgar,0,0,4.32,3.61,1.76
+2024-03-02,regular,Sporting Cristal,Grau,1,0,1.44,4.58,6.20
+2024-03-02,regular,U. de Deportes,Sport Huancayo,2,0,1.29,4.79,10.73
+2024-03-01,regular,AD Tarma,Alianza Lima,2,0,2.61,3.35,2.54
+2024-02-29,regular,Alianza Atl.,Deportivo Garcilaso,3,0,2.01,3.37,3.57
+2024-02-26,regular,Los Chankas,Cienciano,1,2,2.07,3.41,3.41
+2024-02-26,regular,Deportivo Garcilaso,Cesar Vallejo,2,0,1.81,3.52,4.25
+2024-02-26,regular,Alianza Lima,Comerciantes Unidos,5,1,1.20,6.09,13.19
+2024-02-25,regular,Grau,AD Tarma,2,2,1.75,3.53,4.71
+2024-02-25,regular,Carlos Mannucci,Sporting Cristal,0,4,4.41,3.78,1.73
+2024-02-25,regular,FBC Melgar,Union Comercio,2,1,1.15,6.98,17.28
+2024-02-24,regular,Cajamarca,U. de Deportes,0,0,4.38,3.21,1.88
+2024-02-24,regular,Sport Boys,Cusco,3,0,1.63,3.76,5.19
+2024-02-23,regular,Sport Huancayo,Alianza Atl.,4,0,1.36,4.43,8.88
+2024-02-19,regular,Comerciantes Unidos,Grau,2,2,2.23,3.22,3.19
+2024-02-19,regular,Cesar Vallejo,Sport Huancayo,1,1,1.79,3.59,4.27
+2024-02-19,regular,Cienciano,Sport Boys,3,2,1.33,4.62,9.62
+2024-02-18,regular,Union Comercio,Alianza Lima,1,3,5.42,3.90,1.60
+2024-02-18,regular,U. de Deportes,FBC Melgar,2,0,1.55,3.77,6.07
+2024-02-18,regular,Cusco,Deportivo Garcilaso,1,0,2.61,3.28,2.61
+2024-02-17,regular,AD Tarma,Carlos Mannucci,4,0,1.41,4.46,7.34
+2024-02-16,regular,Alianza Atl.,Cajamarca,2,0,1.76,3.63,4.35
+2024-02-16,regular,Sporting Cristal,Los Chankas,4,1,1.29,5.31,9.12
+2024-02-12,regular,Grau,Union Comercio,1,0,1.65,3.78,5.04
+2024-02-12,regular,Sport Huancayo,Cusco,2,0,1.66,3.72,4.97
+2024-02-12,regular,Sport Boys,Deportivo Garcilaso,2,0,2.13,3.34,3.36
+2024-02-11,regular,Los Chankas,AD Tarma,2,0,2.15,3.47,3.11
+2024-02-11,regular,Alianza Lima,U. de Deportes,0,1,2.80,2.90,2.66
+2024-02-10,regular,Carlos Mannucci,Comerciantes Unidos,1,3,1.67,3.64,5.03
+2024-02-10,regular,FBC Melgar,Alianza Atl.,1,0,1.42,4.64,6.36
+2024-02-10,regular,Cienciano,Sporting Cristal,2,2,2.27,3.25,3.07
+2024-02-09,regular,Cajamarca,Cesar Vallejo,4,0,2.51,3.17,2.76
+2024-02-05,regular,Comerciantes Unidos,Los Chankas,3,2,2.29,3.30,2.97
+2024-02-05,regular,Deportivo Garcilaso,Sport Huancayo,0,2,2.22,3.23,3.15
+2024-02-05,regular,Sport Boys,Sporting Cristal,1,3,4.91,3.75,1.64
+2024-02-04,regular,Alianza Atl.,Alianza Lima,0,2,3.78,3.34,1.95
+2024-02-04,regular,U. de Deportes,Grau,1,0,1.30,4.96,9.63
+2024-02-03,regular,Union Comercio,Carlos Mannucci,2,2,2.12,3.28,3.36
+2024-02-03,regular,AD Tarma,Cienciano,1,1,2.04,3.31,3.55
+2024-02-03,regular,Cesar Vallejo,FBC Melgar,3,2,2.48,3.18,2.80
+2024-02-02,regular,Cusco,Cajamarca,1,1,1.76,3.55,4.44
+2024-01-29,regular,Los Chankas,Union Comercio,2,1,1.48,4.37,5.74
+2024-01-29,regular,Alianza Lima,Cesar Vallejo,2,1,1.67,3.44,5.42
+2024-01-29,regular,Carlos Mannucci,U. de Deportes,0,4,5.39,3.60,1.63
+2024-01-28,regular,Grau,Alianza Atl.,1,1,2.05,3.37,3.47
+2024-01-28,regular,Cienciano,Comerciantes Unidos,1,0,1.51,3.96,6.06
+2024-01-28,regular,Sport Huancayo,Sport Boys,1,0,1.35,4.55,8.66
+2024-01-27,regular,Sporting Cristal,AD Tarma,6,2,1.33,4.79,8.39
+2024-01-27,regular,FBC Melgar,Cusco,2,3,1.33,4.74,8.82
+2024-01-26,regular,Cajamarca,Deportivo Garcilaso,1,0,2.20,3.21,3.26

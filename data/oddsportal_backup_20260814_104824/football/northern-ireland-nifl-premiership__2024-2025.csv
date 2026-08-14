@@ -1,0 +1,234 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-05-11,play_off,Coleraine,Cliftonville,0,2,2.32,3.30,2.93
+2025-05-07,play_off,Glentoran,Cliftonville,0,2,2.12,3.37,3.26
+2025-05-07,play_off,Coleraine,Crusaders,1,0,1.91,3.64,3.61
+2025-05-02,regular,Carrick Rangers,Annagh,3,1,1.49,4.38,5.67
+2025-04-29,regular,Annagh,Carrick Rangers,2,5,3.37,3.37,2.01
+2025-04-26,regular,Coleraine,Linfield,1,0,2.98,3.58,2.18
+2025-04-26,regular,Dungannon,Crusaders,1,0,2.45,3.53,2.60
+2025-04-26,regular,Larne,Glentoran,0,0,2.09,3.29,3.45
+2025-04-26,regular,Portadown,Ballymena,2,1,1.64,3.98,4.77
+2025-04-26,regular,Loughgall,Cliftonville,1,4,8.69,5.60,1.28
+2025-04-26,regular,Carrick Rangers,Glenavon,0,4,5.10,4.07,1.58
+2025-04-19,regular,Crusaders,Coleraine,3,0,3.13,3.47,2.16
+2025-04-19,regular,Dungannon,Glentoran,3,2,3.91,3.76,1.82
+2025-04-19,regular,Glenavon,Ballymena,2,0,2.12,3.60,3.11
+2025-04-19,regular,Loughgall,Carrick Rangers,2,2,3.59,3.55,1.95
+2025-04-19,regular,Portadown,Cliftonville,2,0,2.77,3.30,2.39
+2025-04-18,regular,Larne,Linfield,2,1,2.24,3.31,3.09
+2025-04-12,regular,Coleraine,Larne,1,2,2.19,3.18,3.27
+2025-04-12,regular,Crusaders,Glentoran,0,4,3.30,3.29,2.13
+2025-04-12,regular,Linfield,Dungannon,2,0,1.44,4.51,6.50
+2025-04-12,regular,Ballymena,Carrick Rangers,1,1,1.95,3.40,3.70
+2025-04-12,regular,Cliftonville,Glenavon,2,0,1.70,3.84,4.34
+2025-04-12,regular,Portadown,Loughgall,3,1,1.56,4.05,5.34
+2025-04-05,regular,Coleraine,Dungannon,3,2,1.72,3.72,4.45
+2025-04-05,regular,Crusaders,Larne,2,2,3.06,3.26,2.26
+2025-04-05,regular,Cliftonville,Ballymena,5,0,1.77,3.73,4.19
+2025-04-05,regular,Carrick Rangers,Portadown,4,1,2.79,3.09,2.56
+2025-04-05,regular,Glenavon,Loughgall,0,1,1.43,4.40,6.84
+2025-04-05,regular,Linfield,Glentoran,2,1,1.69,3.65,4.77
+2025-04-01,regular,Glentoran,Coleraine,2,1,2.60,3.08,2.72
+2025-04-01,regular,Linfield,Crusaders,3,1,1.80,3.64,4.15
+2025-04-01,regular,Dungannon,Larne,1,1,3.35,3.32,2.12
+2025-04-01,regular,Ballymena,Loughgall,5,2,1.47,4.43,6.00
+2025-04-01,regular,Carrick Rangers,Cliftonville,1,3,3.62,3.35,2.02
+2025-04-01,regular,Portadown,Glenavon,1,1,2.54,3.29,2.63
+2025-03-24,regular,Dungannon,Linfield,0,3,5.32,4.05,1.56
+2025-03-22,regular,Loughgall,Ballymena,2,1,4.19,3.60,1.80
+2025-03-22,regular,Cliftonville,Carrick Rangers,3,0,1.59,3.89,5.35
+2025-03-22,regular,Coleraine,Portadown,1,0,1.53,3.88,6.09
+2025-03-22,regular,Glentoran,Crusaders,0,1,2.01,3.34,3.62
+2025-03-22,regular,Glenavon,Larne,0,1,2.84,3.41,2.35
+2025-03-18,regular,Coleraine,Cliftonville,2,2,1.92,3.57,3.71
+2025-03-18,regular,Glentoran,Larne,2,2,2.34,3.14,3.05
+2025-03-15,regular,Larne,Coleraine,1,1,2.35,3.10,3.08
+2025-03-15,regular,Portadown,Dungannon,1,1,2.41,3.27,2.85
+2025-03-15,regular,Ballymena,Cliftonville,1,0,3.34,3.36,2.11
+2025-03-15,regular,Carrick Rangers,Glentoran,0,0,3.62,3.54,1.95
+2025-03-15,regular,Crusaders,Loughgall,1,1,1.40,4.66,7.05
+2025-03-15,regular,Linfield,Glenavon,2,0,1.41,4.35,7.51
+2025-03-12,regular,Cliftonville,Dungannon,0,2,1.93,3.31,3.97
+2025-03-12,regular,Glentoran,Glenavon,3,3,1.80,3.68,4.09
+2025-03-11,regular,Ballymena,Larne,1,2,3.28,3.35,2.14
+2025-03-08,regular,Portadown,Carrick Rangers,1,0,2.00,3.28,3.72
+2025-03-08,regular,Dungannon,Ballymena,0,3,1.72,3.85,4.36
+2025-03-08,regular,Glenavon,Coleraine,0,1,2.95,3.32,2.30
+2025-03-08,regular,Loughgall,Larne,0,1,5.96,4.20,1.49
+2025-03-07,regular,Crusaders,Linfield,0,2,5.04,3.84,1.63
+2025-03-04,regular,Glentoran,Ballymena,1,0,1.47,4.23,6.25
+2025-03-04,regular,Carrick Rangers,Larne,1,0,4.28,3.33,1.84
+2025-03-04,regular,Loughgall,Glenavon,0,2,3.62,3.54,1.93
+2025-03-01,regular,Coleraine,Portadown,2,0,1.69,3.73,4.53
+2025-02-26,regular,Loughgall,Larne,1,4,4.70,4.03,1.63
+2025-02-22,regular,Ballymena,Portadown,2,0,2.83,3.26,2.39
+2025-02-22,regular,Carrick Rangers,Loughgall,0,0,1.78,3.63,4.10
+2025-02-22,regular,Linfield,Coleraine,0,2,1.70,3.74,4.47
+2025-02-22,regular,Glenavon,Crusaders,0,1,1.93,3.57,3.56
+2025-02-22,regular,Larne,Dungannon,0,1,1.87,3.60,3.79
+2025-02-21,regular,Cliftonville,Glentoran,2,0,2.71,3.24,2.53
+2025-02-18,regular,Ballymena,Glentoran,1,1,4.89,3.63,1.68
+2025-02-18,regular,Larne,Glenavon,1,1,1.71,3.70,4.52
+2025-02-15,regular,Portadown,Larne,2,0,3.17,3.11,2.28
+2025-02-15,regular,Crusaders,Ballymena,3,1,1.83,3.62,3.96
+2025-02-15,regular,Dungannon,Carrick Rangers,3,1,1.93,3.60,3.58
+2025-02-15,regular,Glenavon,Cliftonville,3,1,2.84,3.23,2.40
+2025-02-15,regular,Linfield,Loughgall,1,0,1.17,6.93,13.62
+2025-02-14,regular,Coleraine,Glentoran,1,2,2.37,3.22,2.93
+2025-02-12,regular,Cliftonville,Carrick Rangers,3,0,1.82,3.58,4.08
+2025-02-11,regular,Linfield,Larne,1,0,1.72,3.67,4.48
+2025-02-09,regular,Cliftonville,Portadown,2,2,1.91,3.44,3.97
+2025-02-08,regular,Carrick Rangers,Coleraine,0,1,3.18,3.51,2.15
+2025-02-08,regular,Larne,Crusaders,0,1,1.61,4.04,5.23
+2025-02-08,regular,Glentoran,Dungannon,1,0,1.74,3.88,4.31
+2025-02-07,regular,Ballymena,Linfield,2,2,6.54,4.47,1.45
+2025-02-04,regular,Carrick Rangers,Larne,1,2,4.11,3.27,1.89
+2025-02-04,regular,Coleraine,Cliftonville,0,0,2.13,3.38,3.28
+2025-02-01,regular,Larne,Portadown,1,1,1.64,3.56,5.65
+2025-01-28,regular,Linfield,Crusaders,2,1,1.33,5.02,8.49
+2025-01-25,regular,Linfield,Cliftonville,2,1,1.68,3.69,4.96
+2025-01-25,regular,Dungannon,Coleraine,1,1,2.63,3.43,2.49
+2025-01-25,regular,Larne,Ballymena,2,1,1.49,4.14,6.15
+2025-01-25,regular,Glenavon,Carrick Rangers,2,1,1.99,3.39,3.67
+2025-01-25,regular,Crusaders,Portadown,3,2,2.36,3.28,2.92
+2025-01-25,regular,Loughgall,Glentoran,1,2,6.07,4.30,1.48
+2025-01-18,regular,Carrick Rangers,Ballymena,0,0,1.99,3.39,3.67
+2025-01-18,regular,Cliftonville,Loughgall,2,0,1.36,5.33,7.12
+2025-01-18,regular,Coleraine,Crusaders,0,2,1.76,3.65,4.30
+2025-01-18,regular,Portadown,Linfield,1,3,4.79,3.53,1.73
+2025-01-17,regular,Dungannon,Glenavon,2,3,1.98,3.52,3.48
+2025-01-11,regular,Linfield,Carrick Rangers,3,0,1.38,4.85,7.25
+2025-01-11,regular,Crusaders,Dungannon,1,5,2.68,3.42,2.48
+2025-01-11,regular,Loughgall,Portadown,0,1,3.57,3.72,1.93
+2025-01-10,regular,Larne,Cliftonville,2,0,2.26,3.26,3.11
+2025-01-07,regular,Crusaders,Larne,1,3,3.49,3.23,2.11
+2024-12-30,regular,Ballymena,Glenavon,0,2,2.63,3.38,2.58
+2024-12-30,regular,Carrick Rangers,Crusaders,0,0,2.65,3.51,2.46
+2024-12-30,regular,Loughgall,Coleraine,1,3,4.44,4.07,1.67
+2024-12-30,regular,Portadown,Glentoran,0,2,3.63,3.56,1.95
+2024-12-26,regular,Coleraine,Ballymena,2,2,1.77,3.75,4.23
+2024-12-26,regular,Larne,Carrick Rangers,0,0,1.52,3.96,6.27
+2024-12-26,regular,Crusaders,Cliftonville,2,0,3.08,3.40,2.23
+2024-12-26,regular,Dungannon,Loughgall,2,1,1.50,4.51,5.56
+2024-12-26,regular,Glenavon,Portadown,2,0,2.50,3.34,2.73
+2024-12-26,regular,Glentoran,Linfield,0,0,3.13,3.04,2.40
+2024-12-23,regular,Dungannon,Larne,0,1,3.83,3.58,1.90
+2024-12-21,regular,Loughgall,Ballymena,2,3,3.35,3.37,2.12
+2024-12-21,regular,Cliftonville,Glentoran,1,2,2.43,3.29,2.85
+2024-12-21,regular,Portadown,Crusaders,1,0,2.20,3.40,3.16
+2024-12-21,regular,Linfield,Glenavon,1,0,1.30,5.41,8.74
+2024-12-17,regular,Glenavon,Crusaders,3,1,2.80,3.51,2.36
+2024-12-17,regular,Dungannon,Linfield,0,1,5.00,4.07,1.61
+2024-12-14,regular,Ballymena,Dungannon,0,1,2.37,3.23,2.98
+2024-12-14,regular,Carrick Rangers,Loughgall,0,0,1.75,3.94,4.16
+2024-12-14,regular,Portadown,Cliftonville,2,0,4.28,3.78,1.76
+2024-12-14,regular,Linfield,Coleraine,3,0,1.41,5.00,6.31
+2024-12-13,regular,Crusaders,Glentoran,1,3,2.91,3.26,2.40
+2024-12-01,regular,Larne,Cliftonville,1,1,2.28,3.18,3.19
+2024-11-30,regular,Ballymena,Carrick Rangers,1,2,1.95,3.53,3.71
+2024-11-30,regular,Glenavon,Coleraine,3,3,3.10,3.36,2.21
+2024-11-30,regular,Crusaders,Dungannon,2,2,1.85,3.78,3.80
+2024-11-30,regular,Loughgall,Glentoran,2,2,7.47,4.64,1.39
+2024-11-30,regular,Linfield,Portadown,2,1,1.29,5.49,9.09
+2024-11-24,regular,Coleraine,Crusaders,1,2,2.13,3.57,3.13
+2024-11-23,regular,Carrick Rangers,Dungannon,0,1,2.48,3.58,2.61
+2024-11-23,regular,Cliftonville,Loughgall,4,0,1.35,5.14,7.68
+2024-11-23,regular,Portadown,Glenavon,1,0,2.09,3.56,3.27
+2024-11-22,regular,Glentoran,Linfield,1,0,3.16,3.27,2.25
+2024-11-16,regular,Larne,Linfield,0,1,2.87,3.20,2.47
+2024-11-16,regular,Cliftonville,Ballymena,0,1,1.51,4.13,6.07
+2024-11-16,regular,Carrick Rangers,Crusaders,3,0,3.68,3.64,1.92
+2024-11-16,regular,Loughgall,Coleraine,0,4,3.72,3.84,1.86
+2024-11-16,regular,Dungannon,Glenavon,2,0,2.23,3.48,3.02
+2024-11-16,regular,Glentoran,Portadown,0,2,1.40,4.68,7.25
+2024-11-10,regular,Larne,Coleraine,2,1,1.76,3.56,4.60
+2024-11-09,regular,Linfield,Ballymena,2,0,1.35,4.92,8.06
+2024-11-09,regular,Portadown,Carrick Rangers,1,1,2.08,3.31,3.48
+2024-11-09,regular,Dungannon,Cliftonville,1,4,3.07,3.53,2.18
+2024-11-09,regular,Crusaders,Loughgall,3,1,1.46,4.63,6.22
+2024-11-09,regular,Glenavon,Glentoran,0,3,4.08,3.58,1.83
+2024-11-03,regular,Carrick Rangers,Linfield,1,3,6.43,4.78,1.43
+2024-11-02,regular,Coleraine,Dungannon,4,1,2.04,3.60,3.31
+2024-11-02,regular,Loughgall,Glenavon,3,0,3.26,3.34,2.20
+2024-11-02,regular,Glentoran,Larne,0,2,2.33,3.02,3.27
+2024-11-01,regular,Ballymena,Portadown,0,3,1.89,3.54,3.91
+2024-11-01,regular,Cliftonville,Crusaders,1,0,2.21,3.53,3.03
+2024-10-27,regular,Portadown,Larne,2,1,5.34,4.16,1.56
+2024-10-26,regular,Crusaders,Ballymena,1,0,1.75,3.70,4.50
+2024-10-26,regular,Glenavon,Carrick Rangers,1,1,2.27,3.40,3.02
+2024-10-26,regular,Linfield,Cliftonville,1,2,1.44,4.47,6.73
+2024-10-26,regular,Coleraine,Glentoran,2,1,3.60,3.52,1.98
+2024-10-26,regular,Dungannon,Loughgall,1,3,1.51,4.42,5.49
+2024-10-22,regular,Cliftonville,Coleraine,2,1,1.90,3.91,3.50
+2024-10-19,regular,Ballymena,Coleraine,0,1,2.33,3.57,2.79
+2024-10-19,regular,Glentoran,Carrick Rangers,1,1,1.43,4.56,6.67
+2024-10-19,regular,Larne,Crusaders,1,1,1.82,3.66,4.13
+2024-10-19,regular,Dungannon,Portadown,2,0,1.98,3.62,3.49
+2024-10-19,regular,Cliftonville,Glenavon,0,0,1.75,3.76,4.24
+2024-10-18,regular,Loughgall,Linfield,1,3,9.48,6.12,1.26
+2024-10-12,regular,Portadown,Loughgall,1,0,1.82,3.76,3.98
+2024-10-12,regular,Glenavon,Ballymena,0,1,2.79,3.31,2.45
+2024-10-12,regular,Carrick Rangers,Coleraine,2,1,2.97,3.68,2.19
+2024-10-12,regular,Crusaders,Linfield,2,3,4.21,3.68,1.80
+2024-10-12,regular,Glentoran,Dungannon,2,0,1.66,3.93,4.74
+2024-10-06,regular,Larne,Dungannon,0,3,1.41,4.59,6.82
+2024-10-05,regular,Ballymena,Loughgall,4,1,1.56,4.07,5.19
+2024-10-05,regular,Carrick Rangers,Cliftonville,2,0,4.92,4.12,1.59
+2024-10-05,regular,Crusaders,Coleraine,2,1,1.89,3.58,3.69
+2024-10-05,regular,Glenavon,Portadown,2,1,2.24,3.37,3.01
+2024-10-04,regular,Linfield,Glentoran,1,3,1.64,3.67,5.22
+2024-09-28,regular,Portadown,Ballymena,0,1,2.73,3.48,2.36
+2024-09-28,regular,Dungannon,Carrick Rangers,4,0,1.84,3.74,3.76
+2024-09-28,regular,Coleraine,Linfield,0,3,4.82,3.70,1.68
+2024-09-28,regular,Loughgall,Crusaders,0,4,4.52,3.95,1.65
+2024-09-28,regular,Glentoran,Glenavon,0,0,1.46,4.28,6.38
+2024-09-27,regular,Cliftonville,Larne,1,3,2.75,3.10,2.60
+2024-09-24,regular,Larne,Loughgall,2,0,1.15,7.14,15.15
+2024-09-21,regular,Ballymena,Cliftonville,3,2,3.88,3.62,1.86
+2024-09-21,regular,Linfield,Carrick Rangers,1,0,1.19,6.97,11.32
+2024-09-21,regular,Coleraine,Loughgall,2,0,1.48,4.46,5.60
+2024-09-21,regular,Crusaders,Portadown,0,3,1.48,4.26,6.09
+2024-09-21,regular,Glenavon,Dungannon,1,1,2.68,3.44,2.44
+2024-09-20,regular,Larne,Glentoran,2,0,1.92,3.21,4.14
+2024-09-17,regular,Carrick Rangers,Ballymena,1,4,2.38,3.46,2.75
+2024-09-17,regular,Cliftonville,Linfield,0,0,3.40,3.31,2.09
+2024-09-17,regular,Portadown,Coleraine,2,2,3.42,3.79,1.93
+2024-09-17,regular,Dungannon,Crusaders,1,0,3.12,3.42,2.18
+2024-09-17,regular,Glenavon,Larne,0,0,5.69,4.17,1.52
+2024-09-17,regular,Glentoran,Loughgall,2,0,1.33,5.10,8.06
+2024-09-14,regular,Ballymena,Glentoran,1,0,4.58,3.68,1.71
+2024-09-14,regular,Coleraine,Carrick Rangers,3,1,1.63,4.12,4.54
+2024-09-14,regular,Crusaders,Glenavon,0,1,1.41,4.57,6.94
+2024-09-14,regular,Loughgall,Cliftonville,1,5,4.21,4.05,1.69
+2024-09-14,regular,Linfield,Larne,0,1,1.81,3.59,4.11
+2024-09-13,regular,Portadown,Dungannon,2,1,2.89,3.61,2.22
+2024-09-07,regular,Larne,Ballymena,0,1,1.21,5.98,12.25
+2024-09-07,regular,Carrick Rangers,Portadown,0,1,1.81,3.59,4.11
+2024-09-07,regular,Dungannon,Glentoran,1,0,3.41,3.61,1.99
+2024-09-07,regular,Glenavon,Loughgall,2,2,2.03,3.63,3.28
+2024-09-01,regular,Coleraine,Larne,1,1,4.29,3.94,1.69
+2024-08-31,regular,Crusaders,Carrick Rangers,2,1,1.48,4.42,5.64
+2024-08-31,regular,Glentoran,Cliftonville,1,0,1.93,3.77,3.48
+2024-08-31,regular,Loughgall,Dungannon,0,2,2.86,3.71,2.18
+2024-08-30,regular,Ballymena,Glenavon,3,1,2.13,3.59,3.08
+2024-08-30,regular,Portadown,Linfield,2,2,11.23,6.61,1.20
+2024-08-24,regular,Dungannon,Ballymena,1,0,1.85,3.67,3.84
+2024-08-24,regular,Crusaders,Cliftonville,1,1,2.06,3.32,3.50
+2024-08-24,regular,Coleraine,Glenavon,0,2,1.71,3.80,4.47
+2024-08-24,regular,Linfield,Loughgall,5,1,1.20,6.81,10.90
+2024-08-23,regular,Carrick Rangers,Glentoran,2,3,3.11,3.56,2.13
+2024-08-20,regular,Ballymena,Crusaders,0,1,4.07,3.66,1.81
+2024-08-20,regular,Cliftonville,Dungannon,1,0,1.60,4.16,4.71
+2024-08-20,regular,Glentoran,Coleraine,0,0,1.71,3.99,4.20
+2024-08-20,regular,Glenavon,Linfield,0,3,6.03,4.68,1.44
+2024-08-20,regular,Loughgall,Portadown,2,2,2.01,3.78,3.22
+2024-08-17,regular,Loughgall,Carrick Rangers,3,0,3.51,3.69,1.93
+2024-08-17,regular,Glenavon,Cliftonville,1,2,3.29,3.76,2.01
+2024-08-17,regular,Linfield,Dungannon,3,1,1.31,5.42,8.07
+2024-08-17,regular,Portadown,Glentoran,1,2,4.65,4.13,1.63
+2024-08-16,regular,Coleraine,Ballymena,4,2,1.72,3.91,4.13
+2024-08-11,regular,Cliftonville,Portadown,1,0,1.33,5.46,6.99
+2024-08-10,regular,Ballymena,Linfield,0,2,6.83,4.49,1.42
+2024-08-10,regular,Carrick Rangers,Glenavon,2,0,1.95,3.78,3.39
+2024-08-10,regular,Dungannon,Coleraine,1,1,2.61,3.63,2.43
+2024-08-09,regular,Glentoran,Crusaders,0,1,2.07,3.55,3.22

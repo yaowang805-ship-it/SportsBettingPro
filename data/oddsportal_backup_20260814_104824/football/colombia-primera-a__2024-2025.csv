@@ -1,0 +1,440 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2024-12-23,play_off,Atl. Nacional,Deportes Tolima,2,0,1.82,3.26,5.17
+2024-12-19,play_off,Deportes Tolima,Atl. Nacional,1,1,2.35,2.93,3.46
+2024-12-09,regular,Santa Fe,Atl. Nacional,0,3,3.31,2.98,2.39
+2024-12-09,regular,Dep. Pasto,Millonarios,0,0,5.28,3.33,1.76
+2024-12-09,regular,America De Cali,Junior,1,0,2.46,3.33,2.87
+2024-12-09,regular,Deportes Tolima,Once Caldas,1,0,1.63,3.86,5.49
+2024-12-06,regular,Millonarios,Santa Fe,1,1,2.09,2.89,4.38
+2024-12-06,regular,Atl. Nacional,Dep. Pasto,2,1,1.58,3.80,6.15
+2024-12-05,regular,Junior,Deportes Tolima,3,2,2.58,3.08,2.93
+2024-12-05,regular,Once Caldas,America De Cali,3,0,2.57,2.88,3.14
+2024-12-03,regular,Atl. Nacional,Millonarios,1,1,2.11,3.09,3.86
+2024-12-03,regular,Santa Fe,Dep. Pasto,1,2,1.96,3.20,4.31
+2024-12-02,regular,Junior,Once Caldas,1,2,1.63,3.74,5.70
+2024-12-02,regular,America De Cali,Deportes Tolima,4,2,2.62,2.76,3.22
+2024-11-30,regular,Millonarios,Atl. Nacional,2,1,2.18,3.09,3.68
+2024-11-30,regular,Dep. Pasto,Santa Fe,1,0,2.38,2.91,3.42
+2024-11-28,regular,Once Caldas,Junior,2,2,2.01,3.08,4.32
+2024-11-28,regular,Deportes Tolima,America De Cali,1,0,2.20,2.93,3.83
+2024-11-27,regular,Santa Fe,Millonarios,0,1,3.14,2.87,2.57
+2024-11-25,regular,Deportes Tolima,Junior,1,0,1.85,3.41,4.55
+2024-11-25,regular,America De Cali,Once Caldas,1,1,1.68,3.35,5.95
+2024-11-24,regular,Dep. Pasto,Atl. Nacional,0,1,2.76,3.19,2.63
+2024-11-22,regular,Junior,America De Cali,1,0,2.27,3.02,3.52
+2024-11-22,regular,Once Caldas,Deportes Tolima,0,0,2.71,2.81,3.05
+2024-11-21,regular,Atl. Nacional,Santa Fe,5,0,1.99,3.10,4.36
+2024-11-21,regular,Millonarios,Dep. Pasto,2,1,1.74,3.27,5.68
+2024-11-15,regular,Fortaleza,Aguilas,0,1,1.31,4.62,11.65
+2024-11-15,regular,Alianza,Bucaramanga,0,4,2.90,2.96,2.67
+2024-11-15,regular,America De Cali,Once Caldas,3,0,2.20,2.99,3.75
+2024-11-15,regular,Deportes Tolima,Atl. Nacional,1,0,1.49,4.09,6.87
+2024-11-15,regular,Chico,Millonarios,1,5,4.26,3.00,2.03
+2024-11-15,regular,Junior,Dep. Cali,3,0,1.38,4.50,8.64
+2024-11-15,regular,Dep. Pasto,Patriotas,3,2,1.30,4.94,11.74
+2024-11-15,regular,Pereira,Inter Bogotá,4,3,1.71,3.49,5.35
+2024-11-15,regular,Ind. Medellin,Envigado,1,0,1.41,4.38,8.23
+2024-11-15,regular,Santa Fe,Jaguares de Cordoba,3,0,1.66,3.70,5.42
+2024-11-12,regular,America De Cali,Santa Fe,0,0,1.89,3.16,4.78
+2024-11-12,regular,Once Caldas,Junior,0,0,1.98,3.18,4.14
+2024-11-12,regular,Atl. Nacional,Ind. Medellin,1,1,2.43,3.34,2.90
+2024-11-11,regular,Inter Bogotá,Dep. Pasto,2,2,3.21,2.94,2.46
+2024-11-11,regular,Millonarios,Pereira,0,0,1.52,3.79,7.26
+2024-11-11,regular,Aguilas,Chico,0,1,1.89,3.28,4.51
+2024-11-11,regular,Jaguares de Cordoba,Alianza,0,0,1.80,3.35,5.04
+2024-11-11,regular,Envigado,Dep. Cali,1,0,2.52,3.11,2.95
+2024-11-10,regular,Patriotas,Deportes Tolima,2,1,3.60,2.98,2.26
+2024-11-10,regular,Bucaramanga,Fortaleza,1,0,2.11,3.14,3.81
+2024-11-09,regular,Santa Fe,Once Caldas,2,1,2.03,3.12,4.16
+2024-11-08,regular,Pereira,Atl. Nacional,1,1,2.75,2.97,2.77
+2024-11-08,regular,Dep. Pasto,America De Cali,3,1,1.86,3.20,4.90
+2024-11-08,regular,Junior,Millonarios,0,0,2.15,3.09,3.78
+2024-12-08,regular,America De Cali,Junior,1,0,2.46,3.33,2.87
+2024-12-08,regular,Deportes Tolima,Once Caldas,1,0,1.63,3.86,5.49
+2024-12-01,regular,America De Cali,Deportes Tolima,4,2,2.62,2.76,3.22
+2024-11-11,regular,Atl. Nacional,Ind. Medellin,1,1,2.43,3.34,2.90
+2024-11-10,regular,Jaguares de Cordoba,Alianza,0,0,1.80,3.35,5.04
+2024-11-10,regular,Envigado,Dep. Cali,1,0,2.52,3.11,2.95
+2024-11-07,regular,Junior,Millonarios,0,0,2.15,3.09,3.78
+2024-11-07,regular,Dep. Cali,Jaguares de Cordoba,1,2,1.67,3.66,5.38
+2024-11-07,regular,Ind. Medellin,Patriotas,3,0,1.30,5.02,10.97
+2024-11-07,regular,Deportes Tolima,Envigado,3,0,1.35,4.63,10.46
+2024-11-07,regular,Alianza,Aguilas,3,0,2.73,3.04,2.78
+2024-11-06,regular,Chico,Bucaramanga,1,1,2.53,2.85,3.23
+2024-11-06,regular,Fortaleza,Inter Bogotá,2,1,2.38,3.03,3.28
+2024-11-05,regular,Atl. Nacional,Santa Fe,1,1,1.90,3.24,4.59
+2024-11-04,regular,Bucaramanga,Ind. Medellin,2,3,2.41,2.89,3.41
+2024-11-04,regular,Millonarios,Dep. Pasto,1,0,1.75,3.28,5.70
+2024-11-04,regular,America De Cali,Dep. Cali,0,1,1.64,3.43,6.52
+2024-11-03,regular,Patriotas,Chico,3,0,2.27,3.03,3.51
+2024-11-03,regular,Aguilas,Deportes Tolima,0,1,3.06,2.90,2.60
+2024-11-03,regular,Envigado,Junior,0,0,3.71,3.43,2.03
+2024-11-02,regular,Inter Bogotá,Alianza,3,2,1.77,3.50,4.94
+2024-11-02,regular,Once Caldas,Fortaleza,0,2,1.74,3.41,5.33
+2024-11-02,regular,Jaguares de Cordoba,Pereira,1,2,2.82,2.91,2.80
+2024-10-30,regular,Pereira,Envigado,2,0,1.56,3.75,6.75
+2024-10-30,regular,Dep. Pasto,Aguilas,3,1,1.70,3.44,5.64
+2024-10-30,regular,Chico,Inter Bogotá,1,0,3.10,2.90,2.54
+2024-10-29,regular,Ind. Medellin,Jaguares de Cordoba,4,1,1.60,3.63,6.47
+2024-10-28,regular,Junior,America De Cali,3,1,2.64,2.90,3.00
+2024-10-28,regular,Dep. Cali,Bucaramanga,1,0,2.22,3.04,3.62
+2024-10-27,regular,Fortaleza,Atl. Nacional,0,1,3.41,3.06,2.28
+2024-10-27,regular,Santa Fe,Millonarios,0,1,3.11,2.80,2.62
+2024-10-27,regular,Alianza,Patriotas,1,1,1.81,3.44,4.89
+2024-10-26,regular,Deportes Tolima,Once Caldas,1,1,1.79,3.37,4.91
+2024-10-25,regular,Envigado,Aguilas,3,0,4.28,3.10,2.01
+2024-10-21,regular,Aguilas,Bucaramanga,1,3,2.28,2.82,3.82
+2024-10-21,regular,Junior,Pereira,3,1,1.78,3.24,5.46
+2024-10-20,regular,Inter Bogotá,America De Cali,2,2,3.89,2.97,2.17
+2024-10-20,regular,Deportes Tolima,Alianza,2,0,1.53,3.85,6.83
+2024-10-19,regular,Santa Fe,Ind. Medellin,1,1,1.83,3.28,4.90
+2024-10-17,regular,Millonarios,Fortaleza,2,1,1.78,3.41,5.14
+2024-10-16,regular,Jaguares de Cordoba,Chico,1,0,1.78,3.26,5.40
+2024-10-15,regular,Atl. Nacional,Envigado,2,1,1.44,4.32,7.85
+2024-10-15,regular,America De Cali,Ind. Medellin,1,0,2.18,3.17,3.63
+2024-10-15,regular,Once Caldas,Dep. Pasto,2,1,2.11,3.18,3.80
+2024-10-14,regular,Patriotas,Santa Fe,1,2,4.26,3.10,2.02
+2024-10-14,regular,Aguilas,Dep. Cali,1,1,2.03,3.01,4.44
+2024-10-13,regular,Bucaramanga,Pereira,1,1,2.17,2.82,4.17
+2024-10-13,regular,Inter Bogotá,Junior,1,0,2.41,2.77,3.49
+2024-10-12,regular,America De Cali,Millonarios,2,1,1.81,3.18,5.42
+2024-10-11,regular,Santa Fe,Chico,3,1,1.47,4.06,7.62
+2024-10-11,regular,Ind. Medellin,Alianza,2,0,1.45,4.25,7.36
+2024-10-10,regular,Atl. Nacional,Dep. Cali,1,1,1.78,3.55,4.66
+2024-10-10,regular,Envigado,Dep. Pasto,0,1,4.34,2.97,2.04
+2024-10-08,regular,Pereira,Deportes Tolima,1,0,3.13,2.79,2.62
+2024-10-08,regular,Fortaleza,Jaguares de Cordoba,3,1,1.55,3.67,6.75
+2024-10-07,regular,Junior,Patriotas,2,1,1.51,3.97,6.70
+2024-10-07,regular,Santa Fe,Aguilas,0,0,1.99,2.91,4.64
+2024-10-06,regular,Ind. Medellin,Inter Bogotá,0,0,1.55,3.75,6.53
+2024-10-06,regular,Alianza,Once Caldas,1,0,2.78,3.01,2.72
+2024-10-06,regular,Dep. Pasto,Atl. Nacional,1,2,2.43,2.99,3.15
+2024-10-06,regular,Chico,America De Cali,0,2,3.91,3.21,2.03
+2024-10-05,regular,Envigado,Bucaramanga,0,0,3.40,2.92,2.35
+2024-10-05,regular,Dep. Cali,Millonarios,0,1,3.45,2.91,2.34
+2024-10-04,regular,Santa Fe,Pereira,1,1,1.73,3.22,5.87
+2024-10-01,regular,Patriotas,Dep. Cali,2,2,2.35,2.93,3.39
+2024-09-30,regular,Dep. Pasto,Alianza,1,0,1.57,3.55,6.72
+2024-09-30,regular,Deportes Tolima,Santa Fe,0,0,2.00,3.03,4.44
+2024-09-30,regular,Jaguares de Cordoba,Junior,1,1,3.50,3.02,2.25
+2024-09-29,regular,Atl. Nacional,Chico,6,2,1.40,4.18,8.91
+2024-09-29,regular,Millonarios,Envigado,3,0,1.30,4.77,11.56
+2024-09-29,regular,America De Cali,Fortaleza,1,1,1.46,4.03,7.80
+2024-09-29,regular,Once Caldas,Ind. Medellin,0,2,2.06,3.08,3.99
+2024-09-28,regular,Inter Bogotá,Bucaramanga,0,1,2.34,2.82,3.60
+2024-09-28,regular,Aguilas,Pereira,1,1,1.97,2.96,4.61
+2024-09-27,regular,Atl. Nacional,Junior,,,1.69,3.55,5.25
+2024-09-27,regular,Santa Fe,Alianza,2,0,1.45,4.07,7.77
+2024-09-26,regular,Millonarios,Jaguares de Cordoba,0,0,1.22,5.71,15.10
+2024-09-24,regular,Bucaramanga,Atl. Nacional,1,0,3.35,2.97,2.35
+2024-09-23,regular,Junior,Aguilas,3,4,1.99,3.10,4.28
+2024-09-23,regular,Alianza,America De Cali,0,1,3.33,2.96,2.38
+2024-09-23,regular,Chico,Dep. Pasto,1,0,3.28,2.80,2.52
+2024-09-22,regular,Ind. Medellin,Deportes Tolima,0,1,3.83,3.04,2.13
+2024-09-22,regular,Fortaleza,Santa Fe,1,3,2.98,2.92,2.63
+2024-09-22,regular,Dep. Cali,Inter Bogotá,1,1,1.95,3.10,4.38
+2024-09-21,regular,Envigado,Once Caldas,0,1,3.96,3.37,1.96
+2024-09-21,regular,Pereira,Patriotas,0,1,1.74,3.46,5.10
+2024-09-16,regular,Inter Bogotá,Millonarios,1,3,3.92,2.93,2.14
+2024-09-16,regular,America De Cali,Pereira,1,0,1.58,3.73,6.15
+2024-09-15,regular,Aguilas,Ind. Medellin,1,1,1.88,3.12,4.72
+2024-09-15,regular,Fortaleza,Dep. Pasto,0,0,2.42,2.87,3.34
+2024-09-15,regular,Deportes Tolima,Chico,2,1,1.44,4.07,8.07
+2024-09-15,regular,Once Caldas,Dep. Cali,4,1,1.92,3.07,4.60
+2024-09-14,regular,Jaguares de Cordoba,Envigado,2,1,1.97,3.15,4.25
+2024-09-14,regular,Patriotas,Bucaramanga,1,2,2.37,2.70,3.71
+2024-09-13,regular,Pereira,Alianza,1,0,1.87,3.13,4.87
+2024-09-12,regular,America De Cali,Deportes Tolima,1,0,2.16,3.15,3.55
+2024-09-09,regular,Dep. Pasto,Ind. Medellin,1,0,2.52,2.75,3.33
+2024-09-09,regular,Alianza,Fortaleza,1,1,2.02,3.10,4.15
+2024-09-08,regular,Once Caldas,Millonarios,1,1,2.45,2.97,3.18
+2024-09-08,regular,Deportes Tolima,Dep. Cali,1,1,1.51,3.83,7.03
+2024-09-08,regular,America De Cali,Jaguares de Cordoba,1,0,1.43,4.21,8.03
+2024-09-07,regular,Patriotas,Envigado,2,0,1.90,3.22,4.40
+2024-09-04,regular,Pereira,Once Caldas,0,1,2.34,2.85,3.53
+2024-09-03,regular,Dep. Cali,Dep. Pasto,,,2.23,2.90,3.75
+2024-09-02,regular,Junior,Santa Fe,1,1,1.95,2.98,4.71
+2024-09-02,regular,Millonarios,Patriotas,3,0,1.70,3.44,5.47
+2024-09-01,regular,Bucaramanga,Deportes Tolima,0,2,3.06,2.81,2.65
+2024-09-01,regular,Chico,Fortaleza,2,2,2.74,2.86,2.90
+2024-09-01,regular,Jaguares de Cordoba,Atl. Nacional,0,2,4.14,3.38,1.90
+2024-08-29,regular,Dep. Pasto,Junior,1,0,1.82,3.02,5.49
+2024-08-27,regular,Fortaleza,Ind. Medellin,2,2,2.55,2.87,3.14
+2024-08-26,regular,Once Caldas,Jaguares de Cordoba,2,0,1.65,3.49,5.90
+2024-08-26,regular,Aguilas,Millonarios,2,1,2.97,2.75,2.80
+2024-08-25,regular,Deportes Tolima,Junior,0,1,2.00,3.18,4.07
+2024-08-25,regular,Alianza,Chico,4,0,1.99,3.12,4.23
+2024-08-24,regular,Patriotas,Inter Bogotá,0,0,2.76,2.77,2.95
+2024-08-24,regular,Dep. Pasto,Bucaramanga,1,2,1.95,2.98,4.72
+2024-08-21,regular,Dep. Cali,Santa Fe,1,3,2.66,2.88,2.95
+2024-08-20,regular,Jaguares de Cordoba,Deportes Tolima,0,2,3.59,3.04,2.20
+2024-08-20,regular,Patriotas,Once Caldas,3,1,2.89,2.74,2.87
+2024-08-19,regular,Chico,Envigado,0,0,1.93,3.05,4.66
+2024-08-19,regular,Bucaramanga,America De Cali,1,2,3.05,2.95,2.53
+2024-08-18,regular,Inter Bogotá,Aguilas,0,0,2.37,2.84,3.47
+2024-08-18,regular,Junior,Fortaleza,2,1,1.80,3.40,4.73
+2024-08-14,regular,Aguilas,Jaguares de Cordoba,1,0,1.83,3.31,4.80
+2024-08-13,regular,Fortaleza,Pereira,1,0,2.28,2.85,3.68
+2024-08-12,regular,Alianza,Envigado,1,1,1.60,3.81,5.96
+2024-08-12,regular,Once Caldas,Bucaramanga,2,1,2.08,3.01,4.07
+2024-08-11,regular,Chico,Dep. Cali,1,0,2.55,2.83,3.17
+2024-08-11,regular,Deportes Tolima,Inter Bogotá,5,1,1.68,3.51,5.46
+2024-08-10,regular,Atl. Nacional,Patriotas,3,1,1.42,4.19,7.99
+2024-08-08,regular,Bucaramanga,Santa Fe,0,1,2.27,2.88,3.62
+2024-08-07,regular,Pereira,Chico,1,0,1.89,3.28,4.44
+2024-08-06,regular,Atl. Nacional,Aguilas,1,1,1.58,3.71,6.19
+2024-08-05,regular,Dep. Cali,Ind. Medellin,2,0,3.10,2.88,2.56
+2024-08-05,regular,Junior,Alianza,2,2,1.50,4.09,6.65
+2024-08-04,regular,Patriotas,America De Cali,1,1,3.82,3.10,2.10
+2024-08-04,regular,Inter Bogotá,Once Caldas,1,1,2.57,2.75,3.26
+2024-08-04,regular,Jaguares de Cordoba,Dep. Pasto,0,0,2.32,2.90,3.51
+2024-08-03,regular,Envigado,Fortaleza,0,1,2.91,3.05,2.55
+2024-08-03,regular,Millonarios,Deportes Tolima,1,0,2.03,3.07,4.15
+2024-08-01,regular,Ind. Medellin,Chico,1,0,1.53,3.69,7.22
+2024-07-31,regular,Atl. Nacional,Inter Bogotá,0,1,1.55,3.72,6.60
+2024-07-31,regular,Aguilas,Patriotas,3,2,1.72,3.37,5.44
+2024-07-30,regular,Fortaleza,Dep. Cali,2,1,1.74,3.40,5.20
+2024-07-30,regular,Dep. Pasto,Pereira,2,0,2.23,2.89,3.72
+2024-07-29,regular,Alianza,Millonarios,2,1,2.78,3.01,2.71
+2024-07-28,regular,Bucaramanga,Jaguares de Cordoba,0,0,1.76,3.38,5.12
+2024-07-28,regular,Ind. Medellin,Junior,0,0,2.22,3.10,3.51
+2024-07-28,regular,Santa Fe,Inter Bogotá,0,1,1.87,3.17,4.77
+2024-07-28,regular,Once Caldas,Atl. Nacional,2,0,3.03,2.89,2.59
+2024-07-26,regular,America De Cali,Envigado,4,0,1.36,4.65,9.10
+2024-07-25,regular,Millonarios,Atl. Nacional,1,2,2.05,3.17,3.93
+2024-07-24,regular,Deportes Tolima,Dep. Pasto,2,1,1.59,3.63,6.42
+2024-07-24,regular,Inter Bogotá,Jaguares de Cordoba,1,0,1.57,3.66,6.56
+2024-07-24,regular,Patriotas,Fortaleza,0,2,2.87,2.86,2.70
+2024-07-23,regular,Pereira,Ind. Medellin,1,1,2.54,2.94,3.08
+2024-07-23,regular,Dep. Cali,Alianza,1,0,1.91,3.18,4.44
+2024-07-22,regular,Junior,Chico,2,1,1.42,4.37,7.71
+2024-07-22,regular,Atl. Nacional,America De Cali,2,1,2.23,3.00,3.57
+2024-07-21,regular,Millonarios,Bucaramanga,1,0,1.68,3.38,5.89
+2024-07-21,regular,Once Caldas,Aguilas,1,0,2.23,2.91,3.75
+2024-07-21,regular,Envigado,Santa Fe,0,1,3.68,2.89,2.26
+2024-07-20,regular,Fortaleza,Deportes Tolima,1,1,2.79,2.91,2.80
+2024-07-20,regular,Jaguares de Cordoba,Patriotas,0,0,1.82,3.21,5.02
+2024-07-19,regular,Ind. Medellin,Millonarios,1,1,2.31,3.03,3.36
+2024-07-19,regular,Bucaramanga,Junior,1,0,2.32,2.85,3.58
+2024-07-18,regular,Alianza,Atl. Nacional,0,2,3.76,2.99,2.17
+2024-07-18,regular,Santa Fe,Dep. Pasto,2,1,1.85,3.14,4.98
+2024-07-17,regular,Dep. Cali,Pereira,0,2,2.44,2.91,3.21
+2024-07-17,regular,Aguilas,America De Cali,1,2,3.04,2.97,2.53
+2024-07-17,regular,Envigado,Inter Bogotá,2,1,2.95,2.85,2.68
+2024-07-16,regular,Chico,Once Caldas,0,1,2.50,2.88,3.15
+2024-06-16,play_off,Santa Fe,Bucaramanga,3,3,1.70,3.30,5.86
+2024-06-09,play_off,Bucaramanga,Santa Fe,1,0,2.36,2.90,3.40
+2024-06-03,regular,Deportes Tolima,Santa Fe,1,2,1.98,3.07,4.33
+2024-06-03,regular,Bucaramanga,Pereira,3,1,2.13,2.98,3.87
+2024-06-03,regular,Millonarios,Junior,2,0,2.13,3.32,3.47
+2024-06-01,regular,Inter Bogotá,Once Caldas,1,2,2.12,3.02,3.84
+2024-05-27,regular,Once Caldas,Deportes Tolima,0,1,3.22,2.89,2.46
+2024-05-27,regular,Santa Fe,Inter Bogotá,2,0,1.63,3.60,5.97
+2024-05-26,regular,Junior,Bucaramanga,1,0,1.76,3.42,4.94
+2024-05-26,regular,Pereira,Millonarios,2,2,2.59,2.96,2.94
+2024-05-24,regular,Santa Fe,Once Caldas,1,0,1.92,3.16,4.48
+2024-05-24,regular,Deportes Tolima,Inter Bogotá,3,0,1.62,3.61,5.84
+2024-05-23,regular,Pereira,Junior,0,0,2.60,2.75,3.15
+2024-05-23,regular,Bucaramanga,Millonarios,0,0,2.38,2.75,3.66
+2024-05-20,regular,Millonarios,Bucaramanga,0,1,1.76,3.27,5.58
+2024-05-20,regular,Junior,Pereira,2,3,1.64,3.43,6.34
+2024-05-19,regular,Once Caldas,Santa Fe,0,0,2.85,2.78,2.83
+2024-05-19,regular,Inter Bogotá,Deportes Tolima,2,3,2.23,3.12,3.43
+2024-05-13,regular,Deportes Tolima,Once Caldas,1,1,1.71,3.46,5.19
+2024-05-13,regular,Inter Bogotá,Santa Fe,0,2,2.69,2.89,2.89
+2024-05-12,regular,Millonarios,Pereira,1,0,1.69,3.41,5.54
+2024-05-12,regular,Bucaramanga,Junior,0,0,2.64,2.84,2.97
+2024-05-06,regular,Once Caldas,Inter Bogotá,2,0,2.55,2.97,3.02
+2024-05-06,regular,Santa Fe,Deportes Tolima,1,0,1.97,3.17,4.11
+2024-05-05,regular,Junior,Millonarios,2,1,2.03,3.16,3.95
+2024-05-05,regular,Pereira,Bucaramanga,1,0,2.09,2.97,4.04
+2024-04-29,regular,Aguilas,Fortaleza,1,1,2.05,3.13,3.87
+2024-04-29,regular,Bucaramanga,Alianza,1,0,1.61,3.66,5.61
+2024-04-29,regular,Once Caldas,America De Cali,0,0,2.31,3.06,3.33
+2024-04-29,regular,Millonarios,Chico,3,0,1.39,4.37,8.55
+2024-04-29,regular,Dep. Cali,Junior,0,0,3.15,3.02,2.40
+2024-04-29,regular,Inter Bogotá,Pereira,0,2,2.24,3.06,3.41
+2024-04-29,regular,Envigado,Ind. Medellin,0,1,5.12,3.63,1.68
+2024-04-29,regular,Jaguares de Cordoba,Santa Fe,1,0,3.45,3.58,2.02
+2024-04-28,regular,Patriotas,Dep. Pasto,0,3,2.50,2.95,3.10
+2024-04-28,regular,Atl. Nacional,Deportes Tolima,3,1,2.36,3.10,3.06
+2024-04-23,regular,Dep. Pasto,Inter Bogotá,2,3,2.53,3.09,2.88
+2024-04-23,regular,Chico,Aguilas,1,2,2.61,3.07,2.80
+2024-04-23,regular,Fortaleza,Bucaramanga,0,2,1.75,3.39,5.16
+2024-04-22,regular,Deportes Tolima,Patriotas,2,1,1.43,4.09,8.33
+2024-04-22,regular,Ind. Medellin,Atl. Nacional,2,2,2.30,3.05,3.33
+2024-04-22,regular,Dep. Cali,Envigado,2,0,1.85,3.41,4.37
+2024-04-21,regular,Santa Fe,America De Cali,1,0,2.25,3.07,3.42
+2024-04-21,regular,Alianza,Jaguares de Cordoba,2,1,2.47,2.96,3.12
+2024-04-21,regular,Junior,Once Caldas,1,0,1.59,3.76,5.88
+2024-04-21,regular,Pereira,Millonarios,1,2,3.28,2.96,2.37
+2024-04-20,regular,Bucaramanga,Chico,2,3,1.69,3.44,5.49
+2024-04-19,regular,America De Cali,Dep. Pasto,0,0,1.44,4.10,7.95
+2024-04-19,regular,Patriotas,Ind. Medellin,2,3,3.07,3.52,2.19
+2024-04-19,regular,Inter Bogotá,Fortaleza,0,0,2.19,3.05,3.56
+2024-04-18,regular,Atl. Nacional,Pereira,0,1,1.87,3.31,4.44
+2024-04-18,regular,Millonarios,Junior,3,2,1.66,3.58,5.50
+2024-04-18,regular,Aguilas,Alianza,4,0,1.77,3.29,5.19
+2024-04-17,regular,Once Caldas,Santa Fe,0,1,3.15,2.83,2.58
+2024-04-17,regular,Jaguares de Cordoba,Dep. Cali,1,1,2.68,2.88,2.93
+2024-04-17,regular,Envigado,Deportes Tolima,0,2,3.37,3.19,2.23
+2024-04-15,regular,Alianza,Inter Bogotá,0,3,3.75,3.01,2.12
+2024-04-15,regular,Dep. Pasto,Millonarios,2,3,3.52,3.09,2.20
+2024-04-15,regular,Ind. Medellin,Bucaramanga,1,0,1.97,3.25,4.06
+2024-04-14,regular,Chico,Patriotas,1,2,2.14,2.98,3.87
+2024-04-14,regular,Pereira,Jaguares de Cordoba,0,0,1.66,3.46,5.75
+2024-04-14,regular,Junior,Envigado,1,1,1.31,5.00,9.84
+2024-04-14,regular,Santa Fe,Atl. Nacional,0,0,1.99,3.13,4.19
+2024-04-13,regular,Fortaleza,Once Caldas,2,0,1.94,3.20,4.23
+2024-04-13,regular,Dep. Cali,America De Cali,1,1,3.64,3.22,2.11
+2024-04-13,regular,Deportes Tolima,Aguilas,2,1,1.72,3.41,5.25
+2024-04-08,regular,Inter Bogotá,Chico,4,0,1.64,3.78,5.30
+2024-04-08,regular,Jaguares de Cordoba,Ind. Medellin,2,2,2.48,3.06,3.03
+2024-04-08,regular,Patriotas,Alianza,0,0,1.66,3.37,6.01
+2024-04-07,regular,America De Cali,Junior,4,1,1.46,4.15,7.28
+2024-04-07,regular,Bucaramanga,Dep. Cali,2,1,1.77,3.47,4.79
+2024-04-07,regular,Aguilas,Dep. Pasto,0,1,1.96,3.00,4.60
+2024-04-06,regular,Once Caldas,Deportes Tolima,2,1,2.84,2.86,2.77
+2024-04-06,regular,Atl. Nacional,Fortaleza,1,2,1.68,3.47,5.63
+2024-04-06,regular,Envigado,Pereira,1,1,3.11,3.01,2.45
+2024-04-01,regular,Dep. Cali,Aguilas,2,4,2.04,3.13,4.04
+2024-04-01,regular,Ind. Medellin,America De Cali,1,4,2.37,3.12,3.14
+2024-04-01,regular,Pereira,Bucaramanga,1,2,2.12,3.01,3.85
+2024-03-31,regular,Santa Fe,Patriotas,3,0,1.60,3.62,6.13
+2024-03-31,regular,Fortaleza,Millonarios,1,2,2.22,3.05,3.49
+2024-03-31,regular,Chico,Jaguares de Cordoba,1,0,1.56,3.82,5.85
+2024-03-31,regular,Dep. Pasto,Once Caldas,0,0,2.53,2.78,3.28
+2024-03-30,regular,Envigado,Atl. Nacional,0,1,3.99,3.30,1.95
+2024-03-30,regular,Junior,Inter Bogotá,1,0,1.62,3.69,5.70
+2024-03-30,regular,Alianza,Deportes Tolima,0,2,2.76,3.18,2.57
+2024-03-28,regular,Millonarios,Santa Fe,3,1,2.42,2.94,3.25
+2024-03-28,regular,Atl. Nacional,Jaguares de Cordoba,2,0,1.43,4.04,8.31
+2024-03-28,regular,Bucaramanga,Aguilas,1,0,2.01,3.14,4.11
+2024-03-26,regular,Once Caldas,Alianza,1,0,1.54,3.92,6.15
+2024-03-25,regular,Aguilas,Santa Fe,1,1,2.81,2.92,2.78
+2024-03-25,regular,Atl. Nacional,Dep. Pasto,1,0,1.77,3.35,5.23
+2024-03-25,regular,Bucaramanga,Envigado,3,1,1.62,3.71,5.75
+2024-03-24,regular,America De Cali,Chico,3,2,1.43,4.20,8.08
+2024-03-24,regular,Jaguares de Cordoba,Fortaleza,0,1,2.17,2.96,3.79
+2024-03-24,regular,Deportes Tolima,Pereira,2,1,2.00,3.11,4.17
+2024-03-23,regular,Millonarios,Dep. Cali,1,1,1.52,4.03,6.35
+2024-03-23,regular,Inter Bogotá,Ind. Medellin,1,2,1.91,3.28,4.40
+2024-03-23,regular,Patriotas,Junior,1,0,2.93,2.84,2.72
+2024-03-18,regular,Pereira,Aguilas,2,1,2.08,3.03,4.01
+2024-03-18,regular,Fortaleza,America De Cali,0,0,2.57,3.15,2.82
+2024-03-18,regular,Dep. Cali,Patriotas,0,1,1.58,3.82,5.96
+2024-03-17,regular,Envigado,Millonarios,1,1,4.26,3.25,1.95
+2024-03-17,regular,Ind. Medellin,Once Caldas,1,2,2.09,3.17,3.75
+2024-03-17,regular,Chico,Atl. Nacional,2,1,3.52,3.01,2.24
+2024-03-17,regular,Bucaramanga,Inter Bogotá,4,0,2.34,2.83,3.58
+2024-03-16,regular,Santa Fe,Deportes Tolima,1,1,2.13,3.03,3.82
+2024-03-16,regular,Junior,Jaguares de Cordoba,3,1,1.50,3.91,7.22
+2024-03-16,regular,Alianza,Dep. Pasto,1,1,1.86,3.31,4.50
+2024-03-11,regular,Patriotas,Pereira,0,2,2.60,2.88,3.05
+2024-03-11,regular,Jaguares de Cordoba,Millonarios,2,1,3.39,2.85,2.43
+2024-03-11,regular,Atl. Nacional,Bucaramanga,0,0,1.72,3.45,5.37
+2024-03-10,regular,Once Caldas,Envigado,2,1,1.78,3.38,5.06
+2024-03-10,regular,Deportes Tolima,Ind. Medellin,2,2,1.89,3.30,4.49
+2024-03-10,regular,America De Cali,Alianza,2,0,1.59,3.89,5.95
+2024-03-10,regular,Santa Fe,Fortaleza,2,0,2.03,3.09,4.14
+2024-03-09,regular,Dep. Pasto,Chico,2,1,2.28,2.87,3.72
+2024-03-09,regular,Inter Bogotá,Dep. Cali,2,0,1.78,3.49,4.78
+2024-03-09,regular,Aguilas,Junior,0,2,3.22,3.05,2.39
+2024-03-05,regular,Dep. Pasto,Fortaleza,1,0,2.65,2.93,2.88
+2024-03-04,regular,Alianza,Santa Fe,0,1,2.94,2.99,2.57
+2024-03-04,regular,Ind. Medellin,Aguilas,1,0,2.64,3.00,2.81
+2024-03-04,regular,Bucaramanga,Patriotas,3,0,1.80,3.31,4.80
+2024-03-03,regular,Junior,Atl. Nacional,0,0,1.85,3.38,4.46
+2024-03-03,regular,Pereira,America De Cali,2,0,2.90,3.05,2.53
+2024-03-03,regular,Millonarios,Inter Bogotá,1,2,2.01,3.08,4.09
+2024-03-02,regular,Dep. Cali,Once Caldas,0,1,2.00,3.25,3.90
+2024-03-02,regular,Chico,Deportes Tolima,1,1,2.15,3.18,3.48
+2024-03-02,regular,Envigado,Jaguares de Cordoba,2,2,2.05,3.25,3.71
+2024-03-01,regular,Ind. Medellin,Dep. Pasto,1,0,1.74,3.35,5.17
+2024-02-28,regular,Fortaleza,Alianza,1,2,1.80,3.47,4.59
+2024-02-28,regular,Millonarios,Once Caldas,0,2,1.79,3.33,5.05
+2024-02-28,regular,Envigado,Patriotas,1,0,2.08,3.15,3.85
+2024-02-27,regular,Dep. Cali,Deportes Tolima,1,2,3.42,2.99,2.30
+2024-02-27,regular,Chico,Santa Fe,1,2,3.05,3.04,2.48
+2024-02-26,regular,Pereira,Junior,3,3,2.40,3.11,3.11
+2024-02-26,regular,Inter Bogotá,Atl. Nacional,2,0,2.08,3.20,3.78
+2024-02-26,regular,Jaguares de Cordoba,America De Cali,1,1,3.48,3.09,2.23
+2024-02-25,regular,Patriotas,Millonarios,1,0,4.54,3.16,1.92
+2024-02-25,regular,Alianza,Ind. Medellin,2,0,2.50,3.09,2.96
+2024-02-24,regular,Dep. Pasto,Dep. Cali,0,1,2.09,3.28,3.65
+2024-02-24,regular,Aguilas,Envigado,2,0,1.94,3.34,4.10
+2024-02-24,regular,Fortaleza,Chico,1,1,1.89,3.39,4.24
+2024-02-23,regular,Once Caldas,Pereira,1,2,2.25,3.04,3.45
+2024-02-23,regular,America De Cali,Inter Bogotá,0,1,1.69,3.57,5.41
+2024-02-23,regular,Deportes Tolima,Bucaramanga,0,0,1.60,3.80,5.72
+2024-02-22,regular,Santa Fe,Junior,3,0,2.07,3.16,3.82
+2024-02-20,regular,Bucaramanga,Dep. Pasto,1,0,2.01,3.20,3.95
+2024-02-20,regular,Chico,Alianza,1,0,1.82,3.44,4.53
+2024-02-19,regular,Junior,Deportes Tolima,0,1,1.99,3.32,3.95
+2024-02-19,regular,Jaguares de Cordoba,Once Caldas,3,0,2.67,2.85,2.96
+2024-02-19,regular,Envigado,America De Cali,1,1,4.12,3.49,1.88
+2024-02-18,regular,Inter Bogotá,Patriotas,1,0,1.74,3.27,5.54
+2024-02-18,regular,Pereira,Santa Fe,1,0,2.27,3.09,3.34
+2024-02-18,regular,Ind. Medellin,Fortaleza,2,2,1.76,3.41,4.98
+2024-02-17,regular,Dep. Cali,Atl. Nacional,3,2,3.35,3.07,2.28
+2024-02-17,regular,Millonarios,Aguilas,0,1,1.70,3.39,5.63
+2024-02-16,regular,America De Cali,Bucaramanga,0,0,1.45,4.28,7.36
+2024-02-16,regular,Deportes Tolima,Jaguares de Cordoba,2,0,1.47,4.06,7.37
+2024-02-15,regular,Chico,Ind. Medellin,3,0,2.64,3.19,2.74
+2024-02-15,regular,Once Caldas,Patriotas,1,0,1.81,3.33,4.73
+2024-02-14,regular,Santa Fe,Dep. Cali,1,0,1.71,3.52,5.22
+2024-02-14,regular,Aguilas,Inter Bogotá,1,1,2.31,2.94,3.45
+2024-02-13,regular,Dep. Pasto,Envigado,0,1,1.90,3.26,4.34
+2024-02-12,regular,Alianza,Pereira,1,2,2.31,3.18,3.16
+2024-02-12,regular,Atl. Nacional,Millonarios,0,1,2.40,3.02,3.19
+2024-02-12,regular,Fortaleza,Junior,2,0,2.30,3.16,3.23
+2024-02-11,regular,Ind. Medellin,Santa Fe,1,1,2.09,3.22,3.71
+2024-02-11,regular,Bucaramanga,Once Caldas,1,1,2.22,3.00,3.63
+2024-02-11,regular,Inter Bogotá,Deportes Tolima,1,1,2.65,2.98,2.89
+2024-02-10,regular,Dep. Cali,Chico,4,0,1.67,3.65,5.34
+2024-02-10,regular,Jaguares de Cordoba,Aguilas,1,0,2.84,2.98,2.68
+2024-02-09,regular,Patriotas,Atl. Nacional,0,0,3.18,3.03,2.39
+2024-02-09,regular,Junior,Dep. Pasto,2,0,1.38,4.39,8.90
+2024-02-09,regular,Pereira,Fortaleza,2,0,1.81,3.29,4.82
+2024-02-08,regular,Millonarios,America De Cali,1,0,1.95,3.26,4.10
+2024-02-08,regular,Envigado,Alianza,1,2,2.07,3.26,3.65
+2024-02-07,regular,Santa Fe,Bucaramanga,0,1,1.63,3.66,5.84
+2024-02-07,regular,Once Caldas,Inter Bogotá,0,0,2.25,3.00,3.53
+2024-02-06,regular,Ind. Medellin,Dep. Cali,1,0,1.61,4.26,5.09
+2024-02-06,regular,Dep. Pasto,Jaguares de Cordoba,1,1,1.66,3.33,6.53
+2024-02-06,regular,Chico,Pereira,1,2,2.54,2.86,3.18
+2024-02-05,regular,Alianza,Junior,0,1,4.22,3.37,1.87
+2024-02-05,regular,Aguilas,Atl. Nacional,0,3,2.23,3.18,3.32
+2024-02-05,regular,Fortaleza,Envigado,1,1,1.66,3.85,5.13
+2024-02-04,regular,America De Cali,Patriotas,1,0,1.33,4.71,10.07
+2024-02-04,regular,Deportes Tolima,Millonarios,2,0,2.15,3.26,3.46
+2024-02-03,regular,Jaguares de Cordoba,Bucaramanga,0,1,2.43,2.97,3.17
+2024-02-02,regular,Junior,Ind. Medellin,3,0,1.85,3.40,4.41
+2024-02-02,regular,Atl. Nacional,Once Caldas,1,1,1.97,3.19,4.25
+2024-02-02,regular,Envigado,Chico,2,0,2.11,3.09,3.84
+2024-02-01,regular,Deportes Tolima,America De Cali,2,1,2.10,3.19,3.74
+2024-02-01,regular,Millonarios,Alianza,1,1,1.33,4.70,9.76
+2024-02-01,regular,Pereira,Dep. Pasto,0,1,1.69,3.54,5.33
+2024-01-31,regular,Inter Bogotá,Santa Fe,1,0,2.20,3.12,3.49
+2024-01-31,regular,Dep. Cali,Fortaleza,2,0,2.01,3.45,3.64
+2024-01-31,regular,Patriotas,Aguilas,0,0,3.31,3.17,2.25
+2024-01-29,regular,Bucaramanga,Millonarios,0,0,3.43,3.13,2.22
+2024-01-29,regular,America De Cali,Atl. Nacional,4,1,1.95,3.40,3.96
+2024-01-29,regular,Chico,Junior,2,2,2.25,3.14,3.37
+2024-01-28,regular,Ind. Medellin,Pereira,1,0,1.89,3.35,4.23
+2024-01-28,regular,Jaguares de Cordoba,Inter Bogotá,0,0,3.50,2.96,2.28
+2024-01-28,regular,Santa Fe,Envigado,3,1,1.53,3.95,6.39
+2024-01-27,regular,Alianza,Dep. Cali,3,3,2.55,3.08,2.87
+2024-01-27,regular,Dep. Pasto,Deportes Tolima,1,4,2.78,3.04,2.68
+2024-01-26,regular,Aguilas,Once Caldas,1,0,1.71,3.71,4.91
+2024-01-26,regular,Fortaleza,Patriotas,2,0,2.05,3.19,3.85
+2024-01-23,regular,Dep. Pasto,Santa Fe,0,1,2.65,3.05,2.83
+2024-01-23,regular,Inter Bogotá,Envigado,0,0,1.51,4.12,6.45
+2024-01-22,regular,Atl. Nacional,Alianza,3,1,1.58,3.83,6.11
+2024-01-22,regular,Junior,Bucaramanga,2,0,1.57,3.79,6.55
+2024-01-22,regular,Millonarios,Ind. Medellin,5,0,2.07,3.17,3.87
+2024-01-21,regular,America De Cali,Aguilas,0,1,2.01,3.31,3.87
+2024-01-21,regular,Deportes Tolima,Fortaleza,1,2,1.68,3.48,5.95
+2024-01-21,regular,Once Caldas,Chico,2,1,1.89,3.32,4.25
+2024-01-20,regular,Pereira,Dep. Cali,2,2,1.91,3.41,4.04
+2024-01-20,regular,Patriotas,Jaguares de Cordoba,0,1,1.95,3.14,4.35

@@ -1,0 +1,258 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-05-25,regular,Torino,AS Roma,0,2,5.52,4.33,1.59
+2025-05-25,regular,Atalanta,Parma,2,3,1.88,3.67,4.36
+2025-05-25,regular,Empoli,Verona,1,2,2.00,3.00,4.95
+2025-05-25,regular,Udinese,Fiorentina,2,3,3.09,3.38,2.38
+2025-05-25,regular,Venezia,Juventus,2,3,6.72,4.85,1.46
+2025-05-25,regular,Lazio,Lecce,0,1,1.46,4.49,7.65
+2025-05-24,regular,AC Milan,Monza,2,0,1.25,6.88,11.05
+2025-05-24,regular,Bologna,Genoa,1,3,1.50,4.28,7.14
+2025-05-23,regular,Napoli,Cagliari,2,0,1.19,7.31,16.51
+2025-05-23,regular,Como,Inter,0,2,4.47,4.13,1.74
+2025-05-18,regular,AS Roma,AC Milan,3,1,2.20,3.60,3.25
+2025-05-18,regular,Fiorentina,Bologna,3,2,3.05,3.04,2.59
+2025-05-18,regular,Cagliari,Venezia,3,0,2.83,2.96,2.85
+2025-05-18,regular,Verona,Como,1,1,3.23,3.08,2.45
+2025-05-18,regular,Monza,Empoli,1,3,5.16,3.58,1.75
+2025-05-18,regular,Inter,Lazio,2,2,1.68,4.00,5.04
+2025-05-18,regular,Juventus,Udinese,2,0,1.41,4.73,8.11
+2025-05-18,regular,Lecce,Torino,1,0,2.13,3.15,3.94
+2025-05-18,regular,Parma,Napoli,0,0,7.15,4.39,1.48
+2025-05-17,regular,Genoa,Atalanta,2,3,3.24,3.36,2.30
+2025-05-12,regular,Atalanta,AS Roma,2,1,2.07,3.50,3.73
+2025-05-12,regular,Venezia,Fiorentina,2,1,2.78,3.09,2.81
+2025-05-11,regular,Napoli,Genoa,2,2,1.29,5.56,11.52
+2025-05-11,regular,Torino,Inter,0,2,5.25,3.70,1.71
+2025-05-11,regular,Verona,Lecce,1,1,2.54,2.88,3.41
+2025-05-11,regular,Udinese,Monza,1,2,1.62,4.02,5.71
+2025-05-10,regular,Empoli,Parma,2,1,2.39,3.07,3.39
+2025-05-10,regular,Lazio,Juventus,1,1,2.45,3.13,3.25
+2025-05-10,regular,Como,Cagliari,3,1,1.78,3.79,4.65
+2025-05-09,regular,AC Milan,Bologna,3,1,2.23,3.41,3.39
+2025-05-05,regular,Genoa,AC Milan,1,2,4.79,3.80,1.77
+2025-05-04,regular,Bologna,Juventus,1,1,2.38,3.04,3.48
+2025-05-04,regular,AS Roma,Fiorentina,1,0,1.77,3.61,4.98
+2025-05-04,regular,Monza,Atalanta,0,4,13.03,6.79,1.23
+2025-05-04,regular,Empoli,Lazio,0,1,4.68,3.59,1.84
+2025-05-03,regular,Inter,Verona,1,0,1.46,4.42,7.52
+2025-05-03,regular,Lecce,Napoli,0,1,7.89,4.06,1.50
+2025-05-03,regular,Cagliari,Udinese,1,2,2.59,2.99,3.13
+2025-05-03,regular,Parma,Como,0,1,3.34,3.39,2.27
+2025-05-02,regular,Torino,Venezia,1,1,2.56,3.06,3.11
+2025-04-28,regular,Verona,Cagliari,0,2,2.44,2.76,3.75
+2025-04-28,regular,Lazio,Parma,2,2,1.38,5.05,8.66
+2025-04-28,regular,Udinese,Bologna,0,0,5.34,3.43,1.78
+2025-04-27,regular,Atalanta,Lecce,1,1,1.26,5.99,12.01
+2025-04-27,regular,Napoli,Torino,2,0,1.38,4.78,9.45
+2025-04-27,regular,Juventus,Monza,2,0,1.22,6.71,13.16
+2025-04-27,regular,Inter,AS Roma,0,1,1.78,3.70,4.83
+2025-04-27,regular,Fiorentina,Empoli,2,1,2.09,3.21,4.08
+2025-04-27,regular,Venezia,AC Milan,0,2,5.16,4.11,1.66
+2025-04-27,regular,Como,Genoa,1,0,1.79,3.64,4.93
+2025-05-11,regular,Udinese,Inter,0,2,5.25,3.70,1.71
+2025-04-23,regular,Cagliari,Fiorentina,1,2,3.07,3.08,2.58
+2025-04-23,regular,Genoa,Lazio,0,2,3.83,3.20,2.17
+2025-04-23,regular,Parma,Juventus,1,0,5.16,3.76,1.72
+2025-04-23,regular,Torino,Udinese,2,0,2.53,2.99,3.27
+2025-04-23,regular,Verona,Bologna,1,2,5.58,3.52,1.74
+2025-03-08,regular,Inter,Monza,3,2,1.15,8.37,19.74
+2025-03-08,regular,Lecce,AC Milan,2,3,4.86,3.55,1.82
+2025-03-08,regular,Como,Venezia,1,1,1.64,3.82,5.96
+2025-03-08,regular,Parma,Torino,2,2,3.54,3.24,2.24
+2025-03-07,regular,Cagliari,Genoa,1,1,2.51,2.94,3.31
+2025-03-03,regular,Juventus,Verona,2,0,1.34,5.07,10.55
+2025-03-02,regular,AC Milan,Lazio,1,2,2.15,3.47,3.55
+2025-03-02,regular,AS Roma,Como,2,1,2.00,3.38,4.16
+2025-03-02,regular,Bologna,Cagliari,2,1,1.73,3.58,5.57
+2025-03-02,regular,Genoa,Empoli,1,1,1.92,3.24,4.81
+2025-03-02,regular,Monza,Torino,0,2,4.69,3.30,1.92
+2025-03-01,regular,Udinese,Parma,1,0,1.90,3.56,4.35
+2025-03-01,regular,Napoli,Inter,1,1,3.16,3.11,2.52
+2025-03-01,regular,Atalanta,Venezia,0,0,1.21,7.12,14.73
+2025-02-28,regular,Fiorentina,Lecce,1,0,1.91,3.28,4.85
+2025-02-27,regular,Bologna,AC Milan,2,1,2.98,3.27,2.54
+2025-02-24,regular,AS Roma,Monza,4,0,1.27,5.90,12.16
+2025-02-23,regular,Cagliari,Juventus,0,1,4.79,3.43,1.86
+2025-02-23,regular,Empoli,Atalanta,0,5,6.73,4.53,1.49
+2025-02-23,regular,Verona,Fiorentina,1,0,3.92,3.33,2.08
+2025-02-23,regular,Como,Napoli,2,1,3.66,3.06,2.29
+2025-02-22,regular,Inter,Genoa,1,0,1.32,5.37,10.81
+2025-02-22,regular,Torino,AC Milan,2,1,4.16,3.72,1.90
+2025-02-22,regular,Parma,Bologna,2,0,4.82,3.69,1.79
+2025-02-22,regular,Venezia,Lazio,0,0,5.89,4.04,1.61
+2025-02-21,regular,Lecce,Udinese,0,1,3.04,3.00,2.66
+2025-02-17,regular,Genoa,Venezia,2,0,1.82,3.41,5.13
+2025-02-16,regular,Juventus,Inter,1,0,3.95,3.31,2.08
+2025-02-16,regular,Parma,AS Roma,0,1,3.85,3.40,2.08
+2025-02-16,regular,Udinese,Empoli,3,0,1.90,3.42,4.52
+2025-02-16,regular,Monza,Lecce,0,0,2.84,3.08,2.76
+2025-02-16,regular,Fiorentina,Como,0,2,2.39,3.19,3.28
+2025-02-15,regular,AC Milan,Verona,1,0,1.36,5.18,9.07
+2025-02-15,regular,Lazio,Napoli,2,2,2.49,3.11,3.23
+2025-02-15,regular,Atalanta,Cagliari,0,0,1.54,4.34,6.37
+2025-02-14,regular,Bologna,Torino,3,2,1.76,3.38,5.69
+2025-02-10,regular,Inter,Fiorentina,2,1,1.48,4.68,6.68
+2025-02-09,regular,Napoli,Udinese,1,1,1.46,4.34,8.15
+2025-02-09,regular,Lecce,Bologna,0,0,4.42,3.24,1.99
+2025-02-09,regular,Cagliari,Parma,2,1,1.94,3.62,4.04
+2025-02-09,regular,Lazio,Monza,5,1,1.32,5.53,10.34
+2025-02-09,regular,Venezia,AS Roma,0,1,4.38,3.56,1.89
+2025-02-08,regular,Torino,Genoa,1,1,2.37,2.92,3.61
+2025-02-08,regular,Empoli,AC Milan,0,2,5.30,3.95,1.67
+2025-02-08,regular,Verona,Atalanta,0,5,7.80,4.45,1.46
+2025-03-10,regular,Lazio,Udinese,1,1,1.84,3.45,4.85
+2025-03-09,regular,Juventus,Atalanta,0,4,2.69,3.11,2.92
+2025-03-09,regular,Empoli,AS Roma,0,1,4.06,3.22,2.08
+2025-03-09,regular,Napoli,Fiorentina,2,1,1.60,3.85,6.63
+2025-03-09,regular,Verona,Bologna,1,2,5.58,3.52,1.74
+2025-01-04,regular,Fiorentina,Napoli,0,3,3.58,3.10,2.31
+2025-01-04,regular,Venezia,Empoli,1,1,2.57,3.08,3.10
+2024-12-30,regular,Bologna,Verona,2,3,1.53,4.10,7.18
+2024-12-30,regular,Como,Lecce,2,0,1.69,3.77,5.58
+2024-12-29,regular,AC Milan,AS Roma,1,1,2.36,3.28,3.27
+2024-12-29,regular,Juventus,Fiorentina,2,2,1.90,3.39,4.65
+2024-12-29,regular,Napoli,Venezia,1,0,1.28,5.76,11.48
+2024-12-29,regular,Udinese,Torino,2,2,2.27,3.06,3.71
+2024-12-28,regular,Lazio,Atalanta,1,1,3.30,3.28,2.34
+2024-12-28,regular,Cagliari,Inter,0,3,8.07,4.90,1.41
+2024-12-28,regular,Empoli,Genoa,1,2,2.59,2.87,3.30
+2024-12-28,regular,Parma,Monza,2,1,2.52,3.36,2.94
+2024-12-23,regular,Inter,Como,2,0,1.34,5.25,9.77
+2024-12-23,regular,Fiorentina,Udinese,1,2,1.62,4.03,5.87
+2024-12-22,regular,Monza,Juventus,1,2,6.98,3.77,1.60
+2024-12-22,regular,Atalanta,Empoli,3,2,1.29,5.93,10.55
+2024-12-22,regular,Venezia,Cagliari,2,1,2.57,3.26,2.94
+2024-12-22,regular,AS Roma,Parma,5,0,1.39,4.93,8.63
+2024-12-21,regular,Lecce,Lazio,1,2,6.12,4.03,1.60
+2024-12-21,regular,Genoa,Napoli,1,2,5.80,3.56,1.72
+2024-12-21,regular,Torino,Bologna,0,2,3.66,2.82,2.45
+2024-12-20,regular,Verona,AC Milan,0,1,5.79,4.04,1.62
+2024-12-16,regular,Lazio,Inter,0,6,3.64,3.31,2.19
+2024-12-15,regular,AC Milan,Genoa,0,0,1.54,4.19,6.74
+2024-12-15,regular,Como,AS Roma,2,0,3.95,3.37,2.06
+2024-12-15,regular,Bologna,Fiorentina,1,0,2.79,3.13,2.80
+2024-12-15,regular,Parma,Verona,2,3,2.11,3.37,3.79
+2024-12-15,regular,Lecce,Monza,2,1,2.75,3.12,2.86
+2024-12-14,regular,Juventus,Venezia,2,2,1.39,4.78,9.15
+2024-12-14,regular,Udinese,Napoli,1,3,5.59,3.55,1.74
+2024-12-14,regular,Cagliari,Atalanta,0,1,5.70,4.28,1.59
+2024-12-13,regular,Empoli,Torino,0,1,2.57,2.88,3.35
+2024-12-09,regular,Monza,Udinese,1,2,2.80,2.93,2.95
+2024-12-08,regular,Napoli,Lazio,0,1,1.82,3.55,4.91
+2024-12-08,regular,Venezia,Como,2,2,2.86,3.12,2.74
+2024-12-08,regular,Verona,Empoli,1,4,2.70,2.84,3.22
+2024-12-08,regular,Fiorentina,Cagliari,1,0,1.57,4.22,6.21
+2024-12-07,regular,AS Roma,Lecce,4,1,1.50,4.17,7.53
+2024-12-07,regular,Juventus,Bologna,2,2,1.80,3.34,5.53
+2024-12-07,regular,Genoa,Torino,0,0,2.51,3.00,3.30
+2024-12-06,regular,Atalanta,AC Milan,2,1,2.10,3.50,3.68
+2024-12-06,regular,Inter,Parma,3,1,1.20,7.72,13.53
+2024-12-02,regular,AS Roma,Atalanta,0,2,3.61,3.45,2.14
+2024-12-01,regular,Lecce,Juventus,1,1,6.86,3.52,1.65
+2024-12-01,regular,Parma,Lazio,3,1,4.74,3.86,1.76
+2024-12-01,regular,Torino,Napoli,0,1,5.83,3.56,1.72
+2024-12-01,regular,Udinese,Genoa,0,2,1.97,3.42,4.27
+2024-11-30,regular,Bologna,Venezia,3,0,1.86,3.50,4.72
+2024-11-30,regular,AC Milan,Empoli,3,0,1.35,5.05,10.39
+2024-11-30,regular,Como,Monza,1,1,1.92,3.47,4.43
+2024-11-29,regular,Cagliari,Verona,1,0,1.95,3.53,4.16
+2024-11-25,regular,Venezia,Lecce,0,1,2.18,3.30,3.66
+2024-11-25,regular,Empoli,Udinese,1,1,3.14,2.86,2.72
+2024-11-24,regular,Lazio,Bologna,3,0,1.83,3.59,4.77
+2024-11-24,regular,Napoli,AS Roma,1,0,1.72,3.65,5.56
+2024-11-24,regular,Como,Fiorentina,0,2,4.25,3.51,1.94
+2024-11-24,regular,Torino,Monza,1,1,2.12,3.05,4.23
+2024-11-24,regular,Genoa,Cagliari,2,2,2.51,3.24,3.04
+2024-11-23,regular,Parma,Atalanta,1,3,5.96,4.53,1.55
+2024-11-23,regular,AC Milan,Juventus,0,0,2.39,3.25,3.26
+2024-11-23,regular,Verona,Inter,0,5,7.55,4.50,1.47
+2024-11-10,regular,Inter,Napoli,1,1,1.82,3.74,4.55
+2024-11-10,regular,Monza,Lazio,0,1,5.50,3.46,1.77
+2024-11-10,regular,AS Roma,Bologna,2,3,2.16,3.30,3.71
+2024-11-10,regular,Fiorentina,Verona,3,1,1.51,4.57,6.39
+2024-11-10,regular,Atalanta,Udinese,2,1,1.47,4.43,7.67
+2024-11-09,regular,Juventus,Torino,2,0,1.58,3.66,7.78
+2024-11-09,regular,Cagliari,AC Milan,3,3,5.15,4.09,1.67
+2024-11-09,regular,Venezia,Parma,1,2,2.23,3.62,3.23
+2024-11-08,regular,Lecce,Empoli,1,1,2.33,2.98,3.70
+2024-11-07,regular,Genoa,Como,1,1,3.32,3.09,2.43
+2024-11-04,regular,Lazio,Cagliari,2,1,1.56,4.10,6.62
+2024-11-04,regular,Empoli,Como,1,0,2.85,3.03,2.83
+2024-11-04,regular,Parma,Genoa,0,1,1.82,3.75,4.56
+2024-11-03,regular,Inter,Venezia,1,0,1.18,8.03,15.83
+2024-11-03,regular,Verona,AS Roma,3,2,5.13,3.54,1.79
+2024-11-03,regular,Torino,Fiorentina,0,1,3.89,3.15,2.18
+2024-11-03,regular,Napoli,Atalanta,0,3,2.27,3.26,3.51
+2024-11-02,regular,Monza,AC Milan,0,1,6.09,3.80,1.64
+2024-11-02,regular,Udinese,Juventus,0,2,4.35,3.17,2.06
+2024-11-02,regular,Bologna,Lecce,1,0,1.80,3.50,5.11
+2024-10-31,regular,AS Roma,Torino,1,0,1.81,3.63,4.84
+2024-10-31,regular,Como,Lazio,1,5,3.26,3.25,2.38
+2024-10-31,regular,Genoa,Fiorentina,0,1,5.31,3.86,1.69
+2024-10-30,regular,Atalanta,Monza,2,0,1.32,5.66,10.22
+2024-10-30,regular,Juventus,Parma,2,2,1.45,4.92,7.12
+2024-10-30,regular,Empoli,Inter,0,3,8.82,4.65,1.41
+2024-10-30,regular,Venezia,Udinese,3,2,2.75,3.23,2.77
+2024-10-29,regular,AC Milan,Napoli,0,2,2.79,3.24,2.72
+2024-10-29,regular,Cagliari,Bologna,0,2,3.16,3.38,2.36
+2024-10-29,regular,Lecce,Verona,1,0,2.30,3.16,3.50
+2024-10-27,regular,Fiorentina,AS Roma,5,1,2.51,3.28,3.03
+2024-10-27,regular,Inter,Juventus,4,4,1.82,3.59,4.82
+2024-10-27,regular,Lazio,Genoa,3,0,1.44,4.60,7.84
+2024-10-27,regular,Monza,Venezia,2,2,2.15,3.39,3.67
+2024-10-27,regular,Parma,Empoli,1,1,2.17,3.45,3.51
+2024-10-26,regular,Atalanta,Verona,6,1,1.30,5.61,11.40
+2024-10-26,regular,Napoli,Lecce,1,0,1.32,5.38,10.83
+2024-10-25,regular,Torino,Como,1,0,2.65,3.03,3.06
+2024-10-25,regular,Udinese,Cagliari,2,0,2.22,3.18,3.72
+2024-09-27,regular,AC Milan,Lecce,3,0,1.31,5.85,9.90
+2024-09-24,regular,Atalanta,Como,2,3,1.54,4.47,6.11
+2024-09-22,regular,Inter,AC Milan,1,2,1.68,3.93,5.40
+2024-09-22,regular,AS Roma,Udinese,3,0,1.71,4.11,4.82
+2024-09-22,regular,Monza,Bologna,1,2,3.27,2.95,2.58
+2024-09-22,regular,Fiorentina,Lazio,2,1,2.45,3.34,3.07
+2024-09-21,regular,Lecce,Parma,2,2,2.12,3.52,3.60
+2024-09-21,regular,Juventus,Napoli,0,0,2.46,3.24,3.18
+2024-09-21,regular,Venezia,Genoa,2,0,3.00,3.12,2.62
+2024-09-20,regular,Verona,Torino,2,3,2.92,3.02,2.77
+2024-09-20,regular,Cagliari,Empoli,0,2,2.10,3.31,3.88
+2024-09-16,regular,Lazio,Verona,2,1,1.58,4.05,6.45
+2024-09-16,regular,Parma,Udinese,2,3,2.27,3.47,3.22
+2024-09-15,regular,Monza,Inter,1,1,8.43,5.04,1.39
+2024-09-15,regular,Cagliari,Napoli,0,4,4.69,3.85,1.78
+2024-09-15,regular,Atalanta,Fiorentina,3,2,1.85,3.59,4.62
+2024-09-15,regular,Torino,Lecce,0,0,1.92,3.42,4.49
+2024-09-15,regular,Genoa,AS Roma,1,1,3.56,3.31,2.20
+2024-09-14,regular,AC Milan,Venezia,4,0,1.27,6.29,11.20
+2024-09-14,regular,Empoli,Juventus,0,0,6.26,3.76,1.64
+2024-09-14,regular,Como,Bologna,2,2,3.05,3.11,2.58
+2024-09-01,regular,Juventus,AS Roma,0,0,1.76,3.65,5.09
+2024-09-01,regular,Udinese,Como,1,0,2.21,3.31,3.56
+2024-09-01,regular,Fiorentina,Monza,2,2,1.84,3.55,4.76
+2024-09-01,regular,Genoa,Verona,0,2,2.07,3.31,3.98
+2024-08-31,regular,Lazio,AC Milan,2,2,2.87,3.43,2.54
+2024-08-31,regular,Napoli,Parma,2,1,1.45,4.74,7.31
+2024-08-31,regular,Bologna,Empoli,1,1,1.75,3.62,5.39
+2024-08-31,regular,Lecce,Cagliari,1,0,2.25,3.19,3.60
+2024-08-30,regular,Inter,Atalanta,4,0,1.53,4.42,6.47
+2024-08-30,regular,Venezia,Torino,0,1,3.45,3.34,2.25
+2024-08-26,regular,Verona,Juventus,0,3,4.81,3.51,1.85
+2024-08-26,regular,Cagliari,Como,1,1,2.22,3.34,3.51
+2024-08-25,regular,AS Roma,Empoli,1,2,1.47,4.48,7.53
+2024-08-25,regular,Napoli,Bologna,3,0,1.99,3.37,4.24
+2024-08-25,regular,Torino,Atalanta,2,1,3.59,3.28,2.21
+2024-08-25,regular,Fiorentina,Venezia,0,0,1.48,4.65,6.80
+2024-08-24,regular,Monza,Genoa,0,1,2.68,3.11,2.93
+2024-08-24,regular,Inter,Lecce,2,0,1.21,7.26,14.62
+2024-08-24,regular,Parma,AC Milan,2,1,5.54,4.23,1.62
+2024-08-24,regular,Udinese,Lazio,2,1,3.37,3.18,2.36
+2024-08-19,regular,Juventus,Como,3,0,1.56,4.16,6.55
+2024-08-19,regular,Lecce,Atalanta,0,4,3.73,3.42,2.12
+2024-08-18,regular,Cagliari,AS Roma,0,0,3.80,3.43,2.09
+2024-08-18,regular,Lazio,Venezia,3,1,1.42,4.54,8.76
+2024-08-18,regular,Bologna,Udinese,1,1,2.03,3.29,4.15
+2024-08-18,regular,Verona,Napoli,3,0,5.48,3.71,1.71
+2024-08-17,regular,AC Milan,Torino,2,2,1.51,4.30,6.92
+2024-08-17,regular,Empoli,Monza,0,0,2.43,3.15,3.23
+2024-08-17,regular,Parma,Fiorentina,1,1,3.63,3.36,2.14
+2024-08-17,regular,Genoa,Inter,2,2,7.45,4.26,1.49

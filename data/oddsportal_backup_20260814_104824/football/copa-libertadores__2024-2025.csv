@@ -1,0 +1,156 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2024-11-30,play_off,Atletico-MG (Bra),Botafogo RJ (Bra),1,3,4.39,3.21,1.95
+2024-10-31,play_off,Penarol (Uru),Botafogo RJ (Bra),3,1,2.44,3.19,3.03
+2024-10-30,play_off,River Plate (Arg),Atletico-MG (Bra),0,0,1.56,4.09,5.85
+2024-10-24,play_off,Botafogo RJ (Bra),Penarol (Uru),5,0,1.37,4.53,9.26
+2024-10-23,play_off,Atletico-MG (Bra),River Plate (Arg),3,0,2.37,2.79,3.63
+2024-09-27,play_off,Penarol (Uru),Flamengo RJ (Bra),0,0,3.73,3.13,2.13
+2024-09-26,play_off,Sao Paulo (Bra),Botafogo RJ (Bra),1,2,2.99,2.85,2.73
+2024-09-26,play_off,Atletico-MG (Bra),Fluminense (Bra),2,0,1.69,3.57,5.41
+2024-09-25,play_off,River Plate (Arg),Colo Colo (Chi),1,0,1.46,3.99,8.12
+2024-09-20,play_off,Flamengo RJ (Bra),Penarol (Uru),0,1,1.42,4.08,9.54
+2024-09-19,play_off,Botafogo RJ (Bra),Sao Paulo (Bra),0,0,1.70,3.49,5.60
+2024-09-19,play_off,Fluminense (Bra),Atletico-MG (Bra),1,0,2.40,2.81,3.54
+2024-09-18,play_off,Colo Colo (Chi),River Plate (Arg),1,1,3.35,2.93,2.42
+2024-08-23,play_off,Bolivar (Bol),Flamengo RJ (Bra),1,0,2.03,3.39,3.69
+2024-08-23,play_off,Sao Paulo (Bra),Nacional (Uru),2,0,1.64,3.45,6.25
+2024-08-22,play_off,Palmeiras (Bra),Botafogo RJ (Bra),2,2,1.71,3.74,4.90
+2024-08-22,play_off,River Plate (Arg),Talleres Cordoba (Arg),2,1,1.60,3.68,6.22
+2024-08-22,play_off,The Strongest (Bol),Penarol (Uru),1,0,1.75,3.97,4.34
+2024-08-21,play_off,Atletico-MG (Bra),San Lorenzo (Arg),1,0,1.49,3.82,8.18
+2024-08-21,play_off,Junior (Col),Colo Colo (Chi),1,2,2.16,3.03,3.83
+2024-08-21,play_off,Fluminense (Bra),Gremio (Bra),3,1,1.93,3.27,4.36
+2024-08-16,play_off,Flamengo RJ (Bra),Bolivar (Bol),2,0,1.17,7.60,13.67
+2024-08-16,play_off,Nacional (Uru),Sao Paulo (Bra),0,0,2.82,2.81,2.92
+2024-08-15,play_off,Botafogo RJ (Bra),Palmeiras (Bra),2,1,2.29,3.16,3.32
+2024-08-15,play_off,Talleres Cordoba (Arg),River Plate (Arg),0,1,3.55,2.77,2.43
+2024-08-15,play_off,Penarol (Uru),The Strongest (Bol),4,0,1.38,4.60,8.72
+2024-08-14,play_off,San Lorenzo (Arg),Atletico-MG (Bra),1,1,3.06,2.77,2.73
+2024-08-14,play_off,Colo Colo (Chi),Junior (Col),1,0,1.85,3.22,4.84
+2024-08-14,play_off,Gremio (Bra),Fluminense (Bra),2,1,1.99,2.92,4.74
+2024-06-09,regular,Gremio (Bra),Estudiantes L.P. (Arg),1,1,1.54,4.10,6.11
+2024-06-05,regular,Huachipato (Chi),Gremio (Bra),0,1,3.36,3.20,2.25
+2024-05-31,regular,Libertad Asuncion (Par),Nacional (Uru),2,1,2.91,3.25,2.47
+2024-05-31,regular,River Plate (Arg),Dep. Tachira (Ven),2,0,1.10,10.10,20.36
+2024-05-31,regular,Ind. del Valle (Ecu),Liverpool M. (Uru),2,1,1.18,7.22,14.14
+2024-05-31,regular,Palmeiras (Bra),San Lorenzo (Arg),0,0,1.45,4.14,8.03
+2024-05-30,regular,Fluminense (Bra),Alianza Lima (Per),3,2,1.54,4.18,6.08
+2024-05-30,regular,Barcelona SC (Ecu),Cobresal (Chi),2,1,1.36,4.78,8.95
+2024-05-30,regular,Cerro Porteno (Par),Colo Colo (Chi),1,1,2.18,3.19,3.55
+2024-05-30,regular,Sao Paulo (Bra),Talleres Cordoba (Arg),2,0,1.61,3.81,5.82
+2024-05-30,regular,Estudiantes L.P. (Arg),Huachipato (Chi),3,4,1.29,5.05,11.92
+2024-05-30,regular,Gremio (Bra),The Strongest (Bol),4,0,1.33,5.14,9.00
+2024-05-29,regular,Bolivar (Bol),Palestino (Chi),3,1,1.36,4.91,8.52
+2024-05-29,regular,Flamengo RJ (Bra),Millonarios (Col),3,0,1.16,7.49,17.09
+2024-05-29,regular,Atletico-MG (Bra),Caracas (Ven),4,0,1.07,11.35,28.32
+2024-05-29,regular,Junior (Col),Botafogo RJ (Bra),0,0,2.47,3.19,2.97
+2024-05-29,regular,LDU Quito (Ecu),U. de Deportes (Per),2,0,1.43,4.44,7.46
+2024-05-29,regular,Penarol (Uru),Rosario Central (Arg),2,1,1.95,3.15,4.39
+2024-05-17,regular,Sao Paulo (Bra),Barcelona SC (Ecu),0,0,1.40,4.48,8.46
+2024-05-17,regular,San Lorenzo (Arg),Liverpool M. (Uru),3,2,1.61,3.59,6.44
+2024-05-17,regular,Fluminense (Bra),Cerro Porteno (Par),2,1,1.67,3.50,5.79
+2024-05-17,regular,U. de Deportes (Per),Botafogo RJ (Bra),0,1,2.72,3.11,2.72
+2024-05-17,regular,Rosario Central (Arg),Caracas (Ven),4,1,1.24,5.66,13.15
+2024-05-16,regular,Flamengo RJ (Bra),Bolivar (Bol),4,0,1.13,8.66,17.48
+2024-05-16,regular,Palmeiras (Bra),Ind. del Valle (Ecu),2,1,1.38,4.82,7.91
+2024-05-16,regular,Alianza Lima (Per),Colo Colo (Chi),1,1,2.88,3.06,2.62
+2024-05-16,regular,Dep. Tachira (Ven),Nacional (Uru),0,1,4.02,3.42,1.94
+2024-05-16,regular,The Strongest (Bol),Huachipato (Chi),4,0,1.32,5.27,9.57
+2024-05-15,regular,Millonarios (Col),Palestino (Chi),1,1,1.62,3.73,5.84
+2024-05-15,regular,River Plate (Arg),Libertad Asuncion (Par),2,0,1.28,5.77,9.84
+2024-05-15,regular,Penarol (Uru),Atletico-MG (Bra),2,0,3.30,2.94,2.41
+2024-05-15,regular,Talleres Cordoba (Arg),Cobresal (Chi),1,0,1.22,6.49,11.10
+2024-05-15,regular,LDU Quito (Ecu),Junior (Col),0,1,1.51,4.12,6.50
+2024-05-10,regular,Colo Colo (Chi),Fluminense (Bra),0,1,2.42,3.12,3.09
+2024-05-10,regular,The Strongest (Bol),Estudiantes L.P. (Arg),1,0,1.61,3.91,5.46
+2024-05-10,regular,San Lorenzo (Arg),Ind. del Valle (Ecu),2,0,2.24,3.07,3.51
+2024-05-10,regular,Liverpool M. (Uru),Palmeiras (Bra),0,5,6.89,3.98,1.51
+2024-05-09,regular,Millonarios (Col),Bolivar (Bol),1,1,1.70,3.92,4.67
+2024-05-09,regular,Botafogo RJ (Bra),LDU Quito (Ecu),2,1,1.60,3.91,5.58
+2024-05-09,regular,Cobresal (Chi),Sao Paulo (Bra),1,3,7.75,4.14,1.45
+2024-05-09,regular,Alianza Lima (Per),Cerro Porteno (Par),1,1,2.42,3.05,3.17
+2024-05-09,regular,Talleres Cordoba (Arg),Barcelona SC (Ecu),3,1,1.51,4.08,6.41
+2024-05-08,regular,U. de Deportes (Per),Junior (Col),1,1,2.04,3.24,3.86
+2024-05-08,regular,Nacional (Uru),River Plate (Arg),2,2,3.60,3.61,2.00
+2024-05-08,regular,Dep. Tachira (Ven),Libertad Asuncion (Par),1,1,3.32,3.22,2.24
+2024-05-08,regular,Palestino (Chi),Flamengo RJ (Bra),1,0,6.67,4.21,1.49
+2024-05-08,regular,Rosario Central (Arg),Atletico-MG (Bra),0,1,3.63,2.98,2.22
+2024-05-08,regular,Caracas (Ven),Penarol (Uru),0,1,6.29,4.06,1.53
+2024-04-26,regular,Barcelona SC (Ecu),Sao Paulo (Bra),0,2,3.13,3.08,2.41
+2024-04-26,regular,Palestino (Chi),Millonarios (Col),3,1,2.88,3.12,2.57
+2024-04-26,regular,Cerro Porteno (Par),Fluminense (Bra),0,0,2.86,3.12,2.58
+2024-04-26,regular,Cobresal (Chi),Talleres Cordoba (Arg),0,2,4.08,3.60,1.87
+2024-04-25,regular,Bolivar (Bol),Flamengo RJ (Bra),2,1,2.06,3.43,3.55
+2024-04-25,regular,Ind. del Valle (Ecu),Palmeiras (Bra),2,3,2.72,2.93,2.87
+2024-04-25,regular,Libertad Asuncion (Par),River Plate (Arg),1,2,3.88,3.53,1.93
+2024-04-25,regular,Botafogo RJ (Bra),U. de Deportes (Per),3,1,1.51,4.09,6.40
+2024-04-25,regular,Nacional (Uru),Dep. Tachira (Ven),2,1,1.30,5.11,10.40
+2024-04-25,regular,Huachipato (Chi),The Strongest (Bol),0,0,1.64,4.12,4.78
+2024-04-24,regular,Junior (Col),LDU Quito (Ecu),1,1,2.15,3.17,3.60
+2024-04-24,regular,Colo Colo (Chi),Alianza Lima (Per),0,0,1.80,3.20,5.25
+2024-04-24,regular,Atletico-MG (Bra),Penarol (Uru),3,2,1.48,4.09,7.11
+2024-04-24,regular,Liverpool M. (Uru),San Lorenzo (Arg),1,0,3.16,3.02,2.43
+2024-04-24,regular,Caracas (Ven),Rosario Central (Arg),1,1,5.08,3.44,1.76
+2024-04-24,regular,Estudiantes L.P. (Arg),Gremio (Bra),0,1,1.75,3.49,4.93
+2024-04-12,regular,River Plate (Arg),Nacional (Uru),2,0,1.38,4.82,7.86
+2024-04-12,regular,Palmeiras (Bra),Liverpool M. (Uru),3,1,1.13,8.20,19.50
+2024-04-12,regular,Bolivar (Bol),Millonarios (Col),3,2,1.73,3.93,4.41
+2024-04-12,regular,LDU Quito (Ecu),Botafogo RJ (Bra),1,0,1.71,3.56,5.13
+2024-04-11,regular,Barcelona SC (Ecu),Talleres Cordoba (Arg),2,2,2.71,3.21,2.66
+2024-04-11,regular,Sao Paulo (Bra),Cobresal (Chi),2,0,1.13,8.08,20.30
+2024-04-11,regular,Flamengo RJ (Bra),Palestino (Chi),2,0,1.13,8.32,18.79
+2024-04-11,regular,Penarol (Uru),Caracas (Ven),5,0,1.28,5.47,10.99
+2024-04-11,regular,Cerro Porteno (Par),Alianza Lima (Per),1,0,1.82,3.58,4.38
+2024-04-11,regular,Atletico-MG (Bra),Rosario Central (Arg),2,1,1.45,4.13,7.77
+2024-04-11,regular,Ind. del Valle (Ecu),San Lorenzo (Arg),2,0,1.54,4.00,6.44
+2024-04-10,regular,Junior (Col),U. de Deportes (Per),1,1,1.79,3.50,4.64
+2024-04-10,regular,Fluminense (Bra),Colo Colo (Chi),2,1,1.63,3.58,6.06
+2024-04-10,regular,Libertad Asuncion (Par),Dep. Tachira (Ven),3,0,1.36,4.63,9.24
+2024-04-10,regular,Estudiantes L.P. (Arg),The Strongest (Bol),2,1,1.22,6.07,12.45
+2024-04-10,regular,Gremio (Bra),Huachipato (Chi),0,2,1.35,4.86,8.47
+2024-04-05,regular,Palestino (Chi),Bolivar (Bol),0,4,1.79,3.71,4.29
+2024-04-05,regular,Liverpool M. (Uru),Ind. del Valle (Ecu),1,1,4.04,3.25,1.99
+2024-04-05,regular,Talleres Cordoba (Arg),Sao Paulo (Bra),2,1,2.44,2.99,3.18
+2024-04-05,regular,Caracas (Ven),Atletico-MG (Bra),1,4,6.57,3.95,1.53
+2024-04-05,regular,Rosario Central (Arg),Penarol (Uru),1,0,2.05,3.10,4.02
+2024-04-04,regular,Alianza Lima (Per),Fluminense (Bra),1,1,3.62,3.33,2.07
+2024-04-04,regular,San Lorenzo (Arg),Palmeiras (Bra),1,1,2.68,2.96,2.86
+2024-04-04,regular,Colo Colo (Chi),Cerro Porteno (Par),1,0,1.88,3.28,4.49
+2024-04-04,regular,Botafogo RJ (Bra),Junior (Col),1,3,1.48,4.12,7.04
+2024-04-04,regular,Nacional (Uru),Libertad Asuncion (Par),2,0,2.28,3.25,3.18
+2024-04-04,regular,Huachipato (Chi),Estudiantes L.P. (Arg),1,1,3.53,3.22,2.14
+2024-04-03,regular,U. de Deportes (Per),LDU Quito (Ecu),2,1,2.50,3.03,3.00
+2024-04-03,regular,Dep. Tachira (Ven),River Plate (Arg),0,2,6.05,4.23,1.51
+2024-04-03,regular,The Strongest (Bol),Gremio (Bra),2,0,1.53,4.23,5.85
+2024-04-03,regular,Cobresal (Chi),Barcelona SC (Ecu),1,1,2.89,3.30,2.43
+2024-04-03,regular,Millonarios (Col),Flamengo RJ (Bra),1,1,4.17,3.27,1.94
+2024-03-15,regular,Nacional (Uru),Always Ready (Bol),3,1,1.16,7.36,15.52
+2024-03-14,regular,Bragantino (Bra),Botafogo RJ (Bra),1,1,2.17,3.32,3.32
+2024-03-14,regular,Colo Colo (Chi),Sportivo Trinidense (Par),2,1,1.26,5.41,11.44
+2024-03-13,regular,Palestino (Chi),Nacional Asuncion (Par),2,3,2.00,3.43,3.73
+2024-03-08,regular,Always Ready (Bol),Nacional (Uru),1,0,1.47,4.68,6.09
+2024-03-07,regular,Botafogo RJ (Bra),Bragantino (Bra),2,1,2.08,3.12,3.94
+2024-03-07,regular,Sportivo Trinidense (Par),Colo Colo (Chi),1,1,4.09,3.30,1.97
+2024-03-06,regular,Nacional Asuncion (Par),Palestino (Chi),0,2,2.14,3.17,3.65
+2024-03-01,regular,Colo Colo (Chi),Godoy Cruz (Arg),0,0,2.20,3.14,3.40
+2024-03-01,regular,EL Nacional (Ecu),Sportivo Trinidense (Par),0,1,1.49,4.32,5.95
+2024-02-29,regular,Atl. Nacional (Col),Nacional Asuncion (Par),0,3,1.44,4.18,7.26
+2024-02-29,regular,Botafogo RJ (Bra),Aurora (Bol),6,0,1.14,7.55,17.86
+2024-02-29,regular,Nacional (Uru),Puerto Cabello (Ven),2,0,1.49,4.09,6.49
+2024-02-28,regular,Bragantino (Bra),Aguilas (Col),1,0,1.27,5.38,10.98
+2024-02-28,regular,Sporting Cristal (Per),Always Ready (Bol),3,1,1.21,7.45,9.71
+2024-02-28,regular,Palestino (Chi),Portuguesa (Ven),2,1,1.44,4.26,7.40
+2024-02-23,regular,Godoy Cruz (Arg),Colo Colo (Chi),0,1,2.25,2.97,3.65
+2024-02-23,regular,Sportivo Trinidense (Par),EL Nacional (Ecu),1,1,1.92,3.69,3.88
+2024-02-22,regular,Nacional Asuncion (Par),Atl. Nacional (Col),1,0,2.69,3.16,2.74
+2024-02-22,regular,Aurora (Bol),Botafogo RJ (Bra),1,1,3.88,3.63,1.90
+2024-02-22,regular,Puerto Cabello (Ven),Nacional (Uru),0,2,3.28,3.15,2.29
+2024-02-21,regular,Aguilas (Col),Bragantino (Bra),0,0,4.06,3.34,1.96
+2024-02-21,regular,Always Ready (Bol),Sporting Cristal (Per),6,1,1.70,4.02,4.61
+2024-02-21,regular,Portuguesa (Ven),Palestino (Chi),1,2,3.30,3.33,2.20
+2024-02-16,regular,Nacional Asuncion (Par),Aucas (Ecu),3,0,1.97,3.37,3.74
+2024-02-15,regular,FBC Melgar (Per),Aurora (Bol),1,1,1.20,6.28,13.14
+2024-02-14,regular,Defensor Sp. (Uru),Puerto Cabello (Ven),1,1,1.52,4.19,5.64
+2024-02-09,regular,Aucas (Ecu),Nacional Asuncion (Par),1,0,1.47,4.14,7.13
+2024-02-08,regular,Aurora (Bol),FBC Melgar (Per),1,0,3.12,3.28,2.30
+2024-02-07,regular,Puerto Cabello (Ven),Defensor Sp. (Uru),3,2,2.51,2.99,3.06

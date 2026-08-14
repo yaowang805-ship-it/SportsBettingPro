@@ -1,0 +1,301 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-05-27,regular,Braunschweig,Saarbrucken,2,2,2.05,3.63,3.40
+2025-05-23,regular,Saarbrucken,Braunschweig,0,2,2.29,3.42,3.03
+2025-05-17,regular,Wehen,Alemannia Aachen,2,1,2.34,3.52,2.78
+2025-05-17,regular,Arminia Bielefeld,Mannheim,1,0,1.45,4.59,6.06
+2025-05-17,regular,Munich 1860,Aue,1,1,1.55,4.42,5.06
+2025-05-17,regular,Saarbrucken,Dortmund II,2,1,1.47,4.83,5.46
+2025-05-17,regular,SG Dynamo Dresden,Unterhaching,3,0,1.23,6.52,9.98
+2025-05-17,regular,Cottbus,Ingolstadt,1,4,1.51,4.80,5.03
+2025-05-17,regular,Sandhausen,Viktoria Koln,0,4,2.80,3.64,2.28
+2025-05-17,regular,Hannover II,Hansa Rostock,2,1,4.05,4.11,1.73
+2025-05-17,regular,Stuttgart II,RW Essen,1,1,2.20,3.51,3.03
+2025-05-17,regular,VfL Osnabruck,Verl,0,3,2.35,3.71,2.66
+2025-05-11,regular,Viktoria Koln,Hannover II,2,0,1.51,4.48,5.44
+2025-05-11,regular,RW Essen,VfL Osnabruck,3,1,2.21,3.54,2.99
+2025-05-11,regular,Unterhaching,Arminia Bielefeld,1,2,7.15,4.80,1.39
+2025-05-10,regular,Ingolstadt,Wehen,2,3,2.17,3.89,2.90
+2025-05-10,regular,Alemannia Aachen,Saarbrucken,4,2,3.08,3.40,2.23
+2025-05-10,regular,Aue,Sandhausen,2,3,2.08,3.61,3.28
+2025-05-10,regular,Mannheim,SG Dynamo Dresden,1,0,2.95,3.33,2.37
+2025-05-10,regular,Hansa Rostock,Cottbus,1,3,1.76,3.88,4.14
+2025-05-10,regular,Verl,Munich 1860,2,2,2.02,3.77,3.29
+2025-05-09,regular,Dortmund II,Stuttgart II,0,1,2.41,3.48,2.77
+2025-05-07,regular,Unterhaching,Hansa Rostock,0,2,6.12,4.45,1.47
+2025-05-04,regular,Hannover II,Unterhaching,0,0,1.77,3.93,4.02
+2025-05-04,regular,Aue,Ingolstadt,1,0,2.23,3.55,2.97
+2025-05-04,regular,Cottbus,Mannheim,2,4,2.19,3.48,3.07
+2025-05-03,regular,Arminia Bielefeld,SG Dynamo Dresden,1,1,1.96,3.62,3.58
+2025-05-03,regular,Stuttgart II,Alemannia Aachen,2,1,2.73,3.33,2.50
+2025-05-03,regular,Wehen,Dortmund II,4,2,2.33,3.53,2.83
+2025-05-03,regular,Sandhausen,Hansa Rostock,0,3,3.35,3.56,2.05
+2025-05-03,regular,Munich 1860,RW Essen,1,3,2.16,3.48,3.16
+2025-05-03,regular,Saarbrucken,Verl,4,3,2.04,3.45,3.46
+2025-05-02,regular,VfL Osnabruck,Viktoria Koln,2,0,2.11,3.48,3.26
+2025-04-27,regular,Mannheim,Stuttgart II,0,0,2.07,3.51,3.34
+2025-04-27,regular,Alemannia Aachen,VfL Osnabruck,1,0,2.31,3.07,3.24
+2025-04-27,regular,Ingolstadt,Arminia Bielefeld,0,3,3.28,3.74,2.02
+2025-04-26,regular,Verl,Aue,5,1,1.86,3.64,3.91
+2025-04-26,regular,Dortmund II,Hannover II,0,4,1.92,3.93,3.43
+2025-04-26,regular,SG Dynamo Dresden,Sandhausen,2,1,1.39,4.85,6.90
+2025-04-26,regular,Unterhaching,Cottbus,1,1,4.15,4.03,1.73
+2025-04-26,regular,Viktoria Koln,Wehen,2,0,2.20,3.44,3.12
+2025-04-26,regular,RW Essen,Saarbrucken,0,3,2.48,3.46,2.67
+2025-04-25,regular,Hansa Rostock,Munich 1860,1,0,2.18,3.29,3.30
+2025-04-20,regular,Aue,Dortmund II,2,1,2.54,3.09,2.88
+2025-04-20,regular,Hannover II,Mannheim,1,1,2.86,3.56,2.31
+2025-04-20,regular,Saarbrucken,SG Dynamo Dresden,1,4,2.30,3.36,3.05
+2025-04-19,regular,VfL Osnabruck,Ingolstadt,1,0,2.12,3.56,3.23
+2025-04-19,regular,Stuttgart II,Verl,1,1,2.63,3.48,2.52
+2025-04-19,regular,Munich 1860,Alemannia Aachen,2,1,2.29,3.07,3.32
+2025-04-19,regular,Sandhausen,RW Essen,0,2,2.87,3.45,2.34
+2025-04-19,regular,Arminia Bielefeld,Hansa Rostock,4,0,1.89,3.65,3.85
+2025-04-19,regular,Cottbus,Viktoria Koln,1,0,2.14,3.62,3.14
+2025-04-19,regular,Wehen,Unterhaching,3,0,1.64,3.99,4.90
+2025-04-13,regular,Viktoria Koln,Arminia Bielefeld,0,2,3.21,3.43,2.14
+2025-04-13,regular,Dortmund II,Cottbus,4,1,2.68,3.51,2.42
+2025-04-13,regular,Mannheim,Munich 1860,0,3,2.31,3.30,2.98
+2025-04-12,regular,Alemannia Aachen,Sandhausen,2,1,1.92,3.51,3.74
+2025-04-12,regular,RW Essen,Aue,4,2,1.83,3.58,4.08
+2025-04-12,regular,SG Dynamo Dresden,VfL Osnabruck,0,1,1.87,3.90,3.51
+2025-04-12,regular,Ingolstadt,Hannover II,3,3,1.63,4.20,4.58
+2025-04-12,regular,Hansa Rostock,Verl,4,0,2.21,3.27,3.20
+2025-04-12,regular,Unterhaching,Stuttgart II,2,2,2.80,3.64,2.28
+2025-04-11,regular,Wehen,Saarbrucken,1,1,3.13,3.24,2.26
+2025-04-09,regular,Verl,Dortmund II,0,1,1.77,3.72,4.19
+2025-04-09,regular,SG Dynamo Dresden,Ingolstadt,2,2,1.73,4.02,4.05
+2025-04-09,regular,Cottbus,RW Essen,0,1,2.12,3.49,3.19
+2025-04-09,regular,VfL Osnabruck,Hansa Rostock,0,1,2.13,3.36,3.27
+2025-04-09,regular,Munich 1860,Sandhausen,2,0,2.21,3.56,2.95
+2025-04-08,regular,Hannover II,Alemannia Aachen,1,1,3.06,3.48,2.18
+2025-04-08,regular,Arminia Bielefeld,Wehen,4,2,1.64,3.84,4.87
+2025-04-08,regular,Saarbrucken,Aue,2,0,1.71,3.72,4.49
+2025-04-08,regular,Stuttgart II,Viktoria Koln,1,2,2.44,3.50,2.65
+2025-04-08,regular,Mannheim,Unterhaching,0,2,1.50,4.31,5.66
+2025-04-06,regular,RW Essen,Hansa Rostock,2,1,2.29,3.28,3.05
+2025-04-06,regular,Sandhausen,Verl,1,3,2.90,3.39,2.31
+2025-04-06,regular,Dortmund II,Ingolstadt,3,3,2.90,3.43,2.30
+2025-04-05,regular,Alemannia Aachen,Arminia Bielefeld,0,1,2.73,3.21,2.54
+2025-04-05,regular,Aue,Stuttgart II,2,1,2.21,3.34,3.15
+2025-04-05,regular,Munich 1860,Cottbus,5,1,2.53,3.40,2.63
+2025-04-05,regular,Viktoria Koln,Unterhaching,3,1,1.72,3.81,4.44
+2025-04-05,regular,Wehen,Mannheim,2,2,2.71,3.20,2.57
+2025-04-05,regular,Saarbrucken,VfL Osnabruck,1,1,2.11,3.48,3.25
+2025-04-04,regular,Hannover II,SG Dynamo Dresden,2,3,4.25,4.33,1.66
+2025-03-30,regular,Stuttgart II,Sandhausen,2,1,2.41,3.51,2.69
+2025-03-30,regular,SG Dynamo Dresden,Wehen,2,0,1.69,3.83,4.62
+2025-03-30,regular,Ingolstadt,Viktoria Koln,3,1,2.11,3.50,3.24
+2025-03-29,regular,Arminia Bielefeld,Hannover II,2,2,1.42,4.69,6.51
+2025-03-29,regular,Unterhaching,Alemannia Aachen,0,2,3.52,3.37,2.04
+2025-03-29,regular,Cottbus,Aue,1,0,1.82,3.76,3.94
+2025-03-29,regular,Mannheim,Dortmund II,0,0,1.86,3.69,3.84
+2025-03-29,regular,Hansa Rostock,Saarbrucken,0,0,2.10,3.27,3.50
+2025-03-29,regular,VfL Osnabruck,Munich 1860,1,0,2.14,3.38,3.26
+2025-03-28,regular,Verl,RW Essen,3,0,2.22,3.43,3.05
+2025-03-16,regular,Alemannia Aachen,Hansa Rostock,2,1,2.30,3.04,3.32
+2025-03-16,regular,Aue,Mannheim,0,1,2.63,3.40,2.55
+2025-03-16,regular,Sandhausen,Cottbus,0,1,2.86,3.75,2.22
+2025-03-15,regular,Munich 1860,Unterhaching,2,1,1.79,3.78,4.08
+2025-03-15,regular,VfL Osnabruck,Arminia Bielefeld,0,1,3.24,3.41,2.16
+2025-03-15,regular,RW Essen,SG Dynamo Dresden,1,1,3.02,3.28,2.33
+2025-03-15,regular,Verl,Ingolstadt,1,4,2.13,3.39,3.34
+2025-03-15,regular,Dortmund II,Viktoria Koln,1,1,2.31,3.54,2.88
+2025-03-15,regular,Hannover II,Wehen,3,2,2.88,3.47,2.33
+2025-03-14,regular,Saarbrucken,Stuttgart II,0,2,1.66,3.85,4.95
+2025-03-12,regular,Hansa Rostock,Aue,4,1,2.03,3.23,3.83
+2025-03-12,regular,SG Dynamo Dresden,Dortmund II,0,0,1.45,4.77,5.84
+2025-03-12,regular,Viktoria Koln,RW Essen,1,0,2.70,3.26,2.59
+2025-03-12,regular,Mannheim,Sandhausen,3,2,2.04,3.55,3.42
+2025-03-12,regular,Wehen,Munich 1860,0,0,2.32,3.30,3.01
+2025-03-11,regular,Ingolstadt,Alemannia Aachen,0,3,2.41,3.25,2.90
+2025-03-11,regular,Arminia Bielefeld,Saarbrucken,3,1,2.17,3.29,3.32
+2025-03-11,regular,Cottbus,Hannover II,2,2,1.47,4.70,5.78
+2025-03-11,regular,Unterhaching,Verl,1,2,3.04,3.46,2.23
+2025-03-11,regular,Stuttgart II,VfL Osnabruck,1,2,2.99,3.45,2.25
+2025-03-09,regular,RW Essen,Mannheim,1,0,2.17,3.42,3.22
+2025-03-09,regular,Aue,Viktoria Koln,2,1,2.14,3.48,3.17
+2025-03-09,regular,Munich 1860,Dortmund II,1,0,2.04,3.65,3.32
+2025-03-08,regular,Verl,Arminia Bielefeld,2,1,3.06,3.29,2.31
+2025-03-08,regular,Alemannia Aachen,SG Dynamo Dresden,0,1,2.99,3.30,2.34
+2025-03-08,regular,Saarbrucken,Cottbus,2,1,2.12,3.45,3.35
+2025-03-08,regular,Stuttgart II,Hannover II,2,1,1.87,3.81,3.74
+2025-03-08,regular,Hansa Rostock,Ingolstadt,2,0,2.20,3.43,3.13
+2025-03-08,regular,Sandhausen,Unterhaching,2,2,1.84,3.77,3.92
+2025-03-07,regular,VfL Osnabruck,Wehen,0,1,1.97,3.45,3.77
+2025-03-02,regular,Arminia Bielefeld,Stuttgart II,4,1,1.69,3.75,4.80
+2025-03-02,regular,Mannheim,Alemannia Aachen,2,1,2.05,3.26,3.62
+2025-03-01,regular,SG Dynamo Dresden,Verl,3,0,1.86,3.84,3.68
+2025-03-01,regular,Wehen,Aue,0,2,2.22,3.38,3.09
+2025-03-01,regular,Dortmund II,RW Essen,0,1,2.83,3.55,2.31
+2025-03-01,regular,Cottbus,VfL Osnabruck,1,2,2.20,3.41,3.12
+2025-03-01,regular,Hannover II,Munich 1860,1,3,2.96,3.58,2.22
+2025-03-01,regular,Ingolstadt,Sandhausen,2,1,1.99,3.62,3.43
+2025-02-28,regular,Viktoria Koln,Saarbrucken,1,2,3.42,3.27,2.14
+2025-02-23,regular,Sandhausen,Wehen,0,1,2.47,3.40,2.71
+2025-02-23,regular,VfL Osnabruck,Mannheim,1,1,2.14,3.40,3.23
+2025-02-23,regular,Stuttgart II,Cottbus,2,0,2.91,3.60,2.22
+2025-02-22,regular,Saarbrucken,Hannover II,4,1,1.42,4.57,6.81
+2025-02-22,regular,Alemannia Aachen,Dortmund II,2,2,2.12,3.33,3.34
+2025-02-22,regular,Aue,Unterhaching,1,0,1.74,3.76,4.31
+2025-02-22,regular,Hansa Rostock,SG Dynamo Dresden,1,0,2.60,3.41,2.55
+2025-02-22,regular,Verl,Viktoria Koln,1,1,2.12,3.25,3.48
+2025-02-22,regular,RW Essen,Ingolstadt,2,0,2.32,3.49,2.84
+2025-02-21,regular,Munich 1860,Arminia Bielefeld,0,3,3.14,3.33,2.21
+2025-02-16,regular,SG Dynamo Dresden,Munich 1860,5,2,1.59,4.34,4.77
+2025-02-16,regular,Cottbus,Verl,1,0,2.25,3.62,2.88
+2025-02-16,regular,Unterhaching,Saarbrucken,2,0,4.44,3.83,1.71
+2025-02-15,regular,Dortmund II,Sandhausen,1,0,2.33,3.77,2.66
+2025-02-15,regular,Hannover II,VfL Osnabruck,1,5,3.12,3.51,2.17
+2025-02-15,regular,Mannheim,Hansa Rostock,5,0,2.79,3.24,2.49
+2025-02-15,regular,Ingolstadt,Stuttgart II,1,1,1.82,3.76,3.97
+2025-02-15,regular,Wehen,RW Essen,1,3,2.32,3.42,2.91
+2025-02-15,regular,Arminia Bielefeld,Aue,2,1,1.69,3.94,4.52
+2025-02-14,regular,Viktoria Koln,Alemannia Aachen,3,1,2.43,3.16,2.92
+2025-02-09,regular,VfL Osnabruck,Dortmund II,1,0,1.92,3.78,3.57
+2025-02-09,regular,Verl,Hannover II,1,0,1.72,3.87,4.33
+2025-02-09,regular,Hansa Rostock,Viktoria Koln,1,1,1.89,3.57,3.88
+2025-02-08,regular,Munich 1860,Ingolstadt,1,1,2.91,3.30,2.38
+2025-02-08,regular,Aue,Alemannia Aachen,1,1,2.34,3.24,3.02
+2025-02-08,regular,Stuttgart II,SG Dynamo Dresden,2,1,3.92,3.84,1.81
+2025-02-08,regular,Cottbus,Wehen,2,1,1.97,3.69,3.49
+2025-02-08,regular,Saarbrucken,Mannheim,2,1,2.12,3.41,3.29
+2025-02-08,regular,RW Essen,Unterhaching,1,1,1.63,4.15,4.63
+2025-02-07,regular,Sandhausen,Arminia Bielefeld,1,0,3.10,3.61,2.13
+2025-02-02,regular,Hannover II,Sandhausen,2,2,3.05,3.58,2.19
+2025-02-02,regular,Unterhaching,VfL Osnabruck,2,3,3.21,3.52,2.13
+2025-02-02,regular,Arminia Bielefeld,RW Essen,1,2,1.69,4.00,4.53
+2025-02-01,regular,Viktoria Koln,Munich 1860,1,2,2.13,3.39,3.35
+2025-02-01,regular,SG Dynamo Dresden,Aue,2,1,1.68,4.14,4.39
+2025-02-01,regular,Dortmund II,Hansa Rostock,0,2,3.31,3.32,2.18
+2025-02-01,regular,Ingolstadt,Saarbrucken,1,0,2.33,3.36,2.99
+2025-02-01,regular,Mannheim,Verl,2,2,2.53,3.38,2.70
+2025-02-01,regular,Wehen,Stuttgart II,2,0,2.01,3.54,3.51
+2025-01-31,regular,Alemannia Aachen,Cottbus,0,0,2.45,3.40,2.76
+2025-01-26,regular,Dortmund II,Arminia Bielefeld,0,4,3.06,3.46,2.23
+2025-01-26,regular,Ingolstadt,Unterhaching,3,1,1.52,4.35,5.57
+2025-01-26,regular,RW Essen,Hannover II,5,1,1.77,3.86,4.15
+2025-01-25,regular,Sandhausen,Saarbrucken,3,4,3.20,3.48,2.14
+2025-01-25,regular,Verl,Alemannia Aachen,2,1,2.15,3.15,3.50
+2025-01-25,regular,Aue,VfL Osnabruck,0,0,2.80,3.44,2.39
+2025-01-25,regular,Cottbus,SG Dynamo Dresden,1,1,2.92,3.55,2.26
+2025-01-25,regular,Hansa Rostock,Wehen,1,4,1.88,3.52,4.02
+2025-01-25,regular,Munich 1860,Stuttgart II,1,1,2.10,3.52,3.29
+2025-01-24,regular,Viktoria Koln,Mannheim,1,0,2.51,3.39,2.70
+2025-01-19,regular,Mannheim,Ingolstadt,0,0,2.96,3.45,2.25
+2025-01-19,regular,Alemannia Aachen,RW Essen,2,0,2.29,3.25,3.06
+2025-01-19,regular,SG Dynamo Dresden,Viktoria Koln,2,3,1.58,4.30,4.87
+2025-01-18,regular,Wehen,Verl,0,1,2.62,3.29,2.56
+2025-01-18,regular,Arminia Bielefeld,Cottbus,0,2,1.87,3.79,3.68
+2025-01-18,regular,Unterhaching,Dortmund II,1,2,3.02,3.56,2.18
+2025-01-18,regular,Stuttgart II,Hansa Rostock,0,3,2.80,3.34,2.43
+2025-01-18,regular,Saarbrucken,Munich 1860,4,0,1.67,4.00,4.61
+2025-01-18,regular,VfL Osnabruck,Sandhausen,3,2,2.14,3.50,3.16
+2025-01-17,regular,Hannover II,Aue,2,1,3.08,3.70,2.10
+2024-12-22,regular,Hansa Rostock,Hannover II,1,0,1.51,4.34,5.63
+2024-12-22,regular,Verl,VfL Osnabruck,1,1,1.97,3.63,3.49
+2024-12-22,regular,Mannheim,Arminia Bielefeld,1,1,3.09,3.37,2.23
+2024-12-21,regular,Alemannia Aachen,Wehen,0,0,2.29,3.33,3.04
+2024-12-21,regular,Aue,Munich 1860,3,1,2.28,3.58,2.86
+2024-12-21,regular,Dortmund II,Saarbrucken,0,0,2.91,3.61,2.26
+2024-12-21,regular,Viktoria Koln,Sandhausen,2,0,2.57,3.53,2.52
+2024-12-21,regular,RW Essen,Stuttgart II,2,2,2.08,3.69,3.20
+2024-12-21,regular,Unterhaching,SG Dynamo Dresden,0,3,5.21,4.32,1.55
+2024-12-20,regular,Ingolstadt,Cottbus,1,1,2.01,3.92,3.19
+2024-12-15,regular,Saarbrucken,Alemannia Aachen,1,1,2.01,3.55,3.59
+2024-12-15,regular,VfL Osnabruck,RW Essen,2,0,1.82,3.78,3.97
+2024-12-15,regular,Cottbus,Hansa Rostock,3,1,2.62,3.24,2.68
+2024-12-14,regular,Munich 1860,Verl,0,4,2.52,3.53,2.60
+2024-12-14,regular,Arminia Bielefeld,Unterhaching,3,3,1.44,4.50,6.83
+2024-12-14,regular,Sandhausen,Aue,4,6,2.10,3.69,3.18
+2024-12-14,regular,Stuttgart II,Dortmund II,0,3,2.47,3.68,2.56
+2024-12-14,regular,Hannover II,Viktoria Koln,1,2,2.61,3.64,2.46
+2024-12-14,regular,Wehen,Ingolstadt,2,5,2.55,3.69,2.50
+2024-12-13,regular,SG Dynamo Dresden,Mannheim,2,1,1.50,4.41,5.87
+2024-12-08,regular,Viktoria Koln,VfL Osnabruck,2,0,2.16,3.39,3.24
+2024-12-08,regular,SG Dynamo Dresden,Arminia Bielefeld,3,0,2.20,3.40,3.17
+2024-12-08,regular,RW Essen,Munich 1860,0,3,2.20,3.50,3.06
+2024-12-07,regular,Alemannia Aachen,Stuttgart II,2,1,2.11,3.39,3.36
+2024-12-07,regular,Ingolstadt,Aue,1,0,2.01,3.72,3.35
+2024-12-07,regular,Dortmund II,Wehen,2,2,2.82,3.66,2.29
+2024-12-07,regular,Mannheim,Cottbus,0,1,1.98,3.68,3.48
+2024-12-07,regular,Unterhaching,Hannover II,1,2,2.03,3.63,3.37
+2024-12-07,regular,Hansa Rostock,Sandhausen,1,0,1.98,3.56,3.56
+2024-12-06,regular,Verl,Saarbrucken,1,1,2.53,3.46,2.61
+2024-12-01,regular,Wehen,Viktoria Koln,3,1,2.10,3.54,3.25
+2024-12-01,regular,Saarbrucken,RW Essen,1,0,1.86,3.74,3.84
+2024-12-01,regular,VfL Osnabruck,Alemannia Aachen,1,1,2.48,3.37,2.73
+2024-11-30,regular,Stuttgart II,Mannheim,2,0,2.78,3.40,2.43
+2024-11-30,regular,Aue,Verl,2,5,2.56,3.50,2.54
+2024-11-30,regular,Hannover II,Dortmund II,2,0,2.63,3.75,2.35
+2024-11-30,regular,Sandhausen,SG Dynamo Dresden,2,4,2.90,3.51,2.27
+2024-11-30,regular,Cottbus,Unterhaching,2,0,1.50,4.57,5.40
+2024-11-30,regular,Munich 1860,Hansa Rostock,1,2,2.46,3.35,2.73
+2024-11-29,regular,Arminia Bielefeld,Ingolstadt,1,0,1.88,3.67,3.85
+2024-11-24,regular,Dortmund II,Aue,3,1,2.40,3.50,2.78
+2024-11-24,regular,Ingolstadt,VfL Osnabruck,4,2,1.87,3.85,3.71
+2024-11-24,regular,Mannheim,Hannover II,2,1,1.91,3.76,3.73
+2024-11-23,regular,Unterhaching,Wehen,1,1,2.89,3.55,2.30
+2024-11-23,regular,Alemannia Aachen,Munich 1860,1,1,2.64,3.35,2.59
+2024-11-23,regular,Hansa Rostock,Arminia Bielefeld,2,1,2.55,3.32,2.72
+2024-11-23,regular,SG Dynamo Dresden,Saarbrucken,1,1,1.88,3.79,3.77
+2024-11-23,regular,RW Essen,Sandhausen,1,1,2.44,3.51,2.73
+2024-11-23,regular,Verl,Stuttgart II,2,2,1.76,3.77,4.38
+2024-11-22,regular,Viktoria Koln,Cottbus,0,1,2.45,3.68,2.61
+2024-11-10,regular,Stuttgart II,Unterhaching,3,2,1.92,3.80,3.55
+2024-11-10,regular,Aue,RW Essen,2,1,2.40,3.52,2.76
+2024-11-10,regular,Hannover II,Ingolstadt,0,4,2.98,3.88,2.12
+2024-11-09,regular,Arminia Bielefeld,Viktoria Koln,2,0,1.82,3.75,4.06
+2024-11-09,regular,Sandhausen,Alemannia Aachen,4,0,2.33,3.27,3.08
+2024-11-09,regular,Cottbus,Dortmund II,3,3,1.78,4.20,3.83
+2024-11-09,regular,VfL Osnabruck,SG Dynamo Dresden,0,3,2.90,3.76,2.22
+2024-11-09,regular,Saarbrucken,Wehen,3,1,2.07,3.62,3.33
+2024-11-09,regular,Munich 1860,Mannheim,3,0,2.04,3.61,3.41
+2024-11-08,regular,Verl,Hansa Rostock,1,0,2.43,3.44,2.77
+2024-11-03,regular,Dortmund II,Verl,3,1,2.92,3.68,2.22
+2024-11-03,regular,Wehen,Arminia Bielefeld,0,0,2.77,3.42,2.44
+2024-11-03,regular,Unterhaching,Mannheim,1,1,3.20,3.50,2.15
+2024-11-02,regular,Alemannia Aachen,Hannover II,0,0,2.10,3.73,3.19
+2024-11-02,regular,Aue,Saarbrucken,1,1,2.69,3.42,2.52
+2024-11-02,regular,Ingolstadt,SG Dynamo Dresden,1,1,2.84,3.81,2.22
+2024-11-02,regular,RW Essen,Cottbus,4,0,2.36,4.06,2.55
+2024-11-02,regular,Hansa Rostock,VfL Osnabruck,2,0,2.12,3.60,3.22
+2024-11-02,regular,Sandhausen,Munich 1860,0,3,2.18,3.63,3.04
+2024-11-01,regular,Viktoria Koln,Stuttgart II,2,0,2.30,3.49,2.93
+2024-10-27,regular,Mannheim,Wehen,2,2,2.40,3.47,2.77
+2024-10-27,regular,Stuttgart II,Aue,0,1,2.48,3.51,2.65
+2024-10-27,regular,Cottbus,Munich 1860,5,1,2.14,3.73,3.03
+2024-10-26,regular,Verl,Sandhausen,1,1,2.30,3.59,2.84
+2024-10-26,regular,Hansa Rostock,RW Essen,4,0,1.99,3.67,3.46
+2024-10-26,regular,Arminia Bielefeld,Alemannia Aachen,1,1,1.65,3.90,4.89
+2024-10-26,regular,SG Dynamo Dresden,Hannover II,2,1,1.44,4.75,6.15
+2024-10-26,regular,Unterhaching,Viktoria Koln,1,1,2.70,3.56,2.41
+2024-10-26,regular,VfL Osnabruck,Saarbrucken,1,1,2.57,3.64,2.48
+2024-10-25,regular,Ingolstadt,Dortmund II,5,3,1.95,3.92,3.38
+2024-10-23,regular,Munich 1860,VfL Osnabruck,2,2,2.26,3.56,2.93
+2024-10-23,regular,Alemannia Aachen,Unterhaching,3,1,1.78,3.80,4.12
+2024-10-23,regular,Hannover II,Arminia Bielefeld,1,4,3.30,3.72,2.02
+2024-10-23,regular,Wehen,SG Dynamo Dresden,1,0,3.04,3.63,2.17
+2024-10-23,regular,RW Essen,Verl,1,3,2.22,3.66,2.94
+2024-10-22,regular,Aue,Cottbus,1,3,2.27,3.58,2.92
+2024-10-22,regular,Dortmund II,Mannheim,0,1,2.62,3.59,2.48
+2024-10-22,regular,Viktoria Koln,Ingolstadt,4,4,2.88,3.72,2.23
+2024-10-22,regular,Saarbrucken,Hansa Rostock,2,0,1.88,3.60,3.93
+2024-10-22,regular,Sandhausen,Stuttgart II,1,1,1.64,4.11,4.76
+2024-10-20,regular,Unterhaching,Munich 1860,2,2,2.77,3.52,2.39
+2024-10-20,regular,Arminia Bielefeld,VfL Osnabruck,3,1,2.06,3.49,3.38
+2024-10-20,regular,SG Dynamo Dresden,RW Essen,3,3,1.60,4.27,4.84
+2024-10-19,regular,Stuttgart II,Saarbrucken,2,3,3.63,3.86,1.90
+2024-10-19,regular,Hansa Rostock,Alemannia Aachen,1,2,2.03,3.37,3.70
+2024-10-19,regular,Viktoria Koln,Dortmund II,3,5,2.31,3.41,2.97
+2024-10-19,regular,Cottbus,Sandhausen,1,1,2.42,3.47,2.81
+2024-10-19,regular,Wehen,Hannover II,1,5,1.76,4.03,4.12
+2024-10-19,regular,Ingolstadt,Verl,1,1,2.21,3.74,2.92
+2024-10-18,regular,Mannheim,Aue,3,0,2.29,3.55,2.92
+2024-10-06,regular,VfL Osnabruck,Stuttgart II,1,0,1.74,4.02,4.07
+2024-10-06,regular,Saarbrucken,Arminia Bielefeld,0,0,2.16,3.52,3.12
+2024-10-06,regular,Hannover II,Cottbus,0,0,2.88,3.76,2.20
+2024-10-05,regular,Alemannia Aachen,Ingolstadt,1,1,2.77,3.41,2.42
+2024-10-05,regular,Aue,Hansa Rostock,1,2,2.26,3.43,2.99
+2024-10-05,regular,RW Essen,Viktoria Koln,2,1,1.94,3.66,3.62
+2024-10-05,regular,Sandhausen,Mannheim,2,1,2.06,3.63,3.28
+2024-10-05,regular,Munich 1860,Wehen,2,3,2.53,3.39,2.65

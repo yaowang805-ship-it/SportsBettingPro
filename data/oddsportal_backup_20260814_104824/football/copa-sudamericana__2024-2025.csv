@@ -1,0 +1,158 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2024-11-23,play_off,Racing Club (Arg),Cruzeiro (Bra),3,1,2.39,3.01,3.35
+2024-11-01,play_off,Racing Club (Arg),Corinthians (Bra),2,1,2.05,3.14,4.09
+2024-10-31,play_off,Lanus (Arg),Cruzeiro (Bra),0,1,2.38,2.88,3.50
+2024-10-25,play_off,Corinthians (Bra),Racing Club (Arg),2,2,1.75,3.50,5.17
+2024-10-24,play_off,Cruzeiro (Bra),Lanus (Arg),1,1,1.62,3.63,6.32
+2024-09-27,play_off,Racing Club (Arg),Athletico-PR (Bra),4,1,1.51,4.15,6.46
+2024-09-27,play_off,Cruzeiro (Bra),Libertad Asuncion (Par),1,1,1.55,3.97,6.21
+2024-09-26,play_off,Ind. Medellin (Col),Lanus (Arg),1,2,2.52,2.95,3.14
+2024-09-25,play_off,Corinthians (Bra),Fortaleza (Bra),3,0,1.97,3.45,3.92
+2024-09-20,play_off,Athletico-PR (Bra),Racing Club (Arg),1,0,2.04,3.35,3.79
+2024-09-20,play_off,Libertad Asuncion (Par),Cruzeiro (Bra),0,2,2.89,2.86,2.80
+2024-09-19,play_off,Lanus (Arg),Ind. Medellin (Col),0,0,1.69,3.60,5.51
+2024-09-18,play_off,Fortaleza (Bra),Corinthians (Bra),0,2,2.00,3.04,4.46
+2024-08-23,play_off,Cruzeiro (Bra),Boca Juniors (Arg),3,1,1.96,3.19,4.36
+2024-08-23,play_off,Belgrano (Arg),Athletico-PR (Bra),0,2,2.44,3.10,3.10
+2024-08-23,play_off,Ameliano (Par),Libertad Asuncion (Par),0,1,4.30,3.09,2.00
+2024-08-22,play_off,Ind. Medellin (Col),Palestino (Chi),4,0,1.91,3.17,4.65
+2024-08-22,play_off,Lanus (Arg),LDU Quito (Ecu),3,1,1.92,3.48,4.09
+2024-08-22,play_off,Fortaleza (Bra),Rosario Central (Arg),3,1,1.65,3.49,6.17
+2024-08-21,play_off,Corinthians (Bra),Bragantino (Bra),2,2,2.44,3.07,3.14
+2024-08-21,play_off,Racing Club (Arg),Huachipato (Chi),6,1,1.26,5.64,9.97
+2024-08-16,play_off,Boca Juniors (Arg),Cruzeiro (Bra),1,0,2.23,2.97,3.75
+2024-08-16,play_off,Athletico-PR (Bra),Belgrano (Arg),2,1,1.55,3.80,6.79
+2024-08-16,play_off,Libertad Asuncion (Par),Ameliano (Par),1,1,1.69,3.55,5.54
+2024-08-15,play_off,Palestino (Chi),Ind. Medellin (Col),2,2,2.59,2.82,3.16
+2024-08-15,play_off,LDU Quito (Ecu),Lanus (Arg),1,2,1.52,4.14,6.47
+2024-08-15,play_off,Rosario Central (Arg),Fortaleza (Bra),1,1,2.67,2.82,3.10
+2024-08-14,play_off,Bragantino (Bra),Corinthians (Bra),1,2,2.46,2.91,3.32
+2024-08-14,play_off,Huachipato (Chi),Racing Club (Arg),0,2,4.79,3.48,1.79
+2024-07-26,play_off,Always Ready (Bol),LDU Quito (Ecu),3,1,2.41,3.49,2.83
+2024-07-26,play_off,Athletico-PR (Bra),Cerro Porteno (Par),2,1,1.47,4.09,7.70
+2024-07-26,play_off,Cuiaba (Bra),Palestino (Chi),1,2,1.77,3.30,5.37
+2024-07-25,play_off,Bragantino (Bra),Barcelona SC (Ecu),3,2,1.63,3.66,5.58
+2024-07-25,play_off,Boca Juniors (Arg),Ind. del Valle (Ecu),1,0,2.00,3.09,4.39
+2024-07-25,play_off,U. Catolica (Ecu),Libertad Asuncion (Par),1,1,1.46,4.40,6.89
+2024-07-24,play_off,Internacional (Bra),Rosario Central (Arg),1,1,1.43,4.22,8.66
+2024-07-24,play_off,Racing Montevideo (Uru),Huachipato (Chi),0,2,2.20,3.30,3.37
+2024-07-19,play_off,LDU Quito (Ecu),Always Ready (Bol),3,0,1.26,5.70,11.31
+2024-07-19,play_off,Cerro Porteno (Par),Athletico-PR (Bra),1,1,2.81,2.97,2.76
+2024-07-19,play_off,Palestino (Chi),Cuiaba (Bra),1,1,2.82,2.88,2.83
+2024-07-18,play_off,Barcelona SC (Ecu),Bragantino (Bra),1,1,2.44,3.07,3.12
+2024-07-18,play_off,Ind. del Valle (Ecu),Boca Juniors (Arg),0,0,1.52,3.98,6.74
+2024-07-18,play_off,Libertad Asuncion (Par),U. Catolica (Ecu),2,0,1.97,3.36,4.01
+2024-07-17,play_off,Rosario Central (Arg),Internacional (Bra),1,0,2.84,2.76,2.92
+2024-07-17,play_off,Huachipato (Chi),Racing Montevideo (Uru),2,3,2.19,3.10,3.60
+2024-06-09,regular,Internacional (Bra),Delfin (Ecu),1,0,1.22,6.18,12.85
+2024-06-05,regular,Tomayapo (Bol),Internacional (Bra),0,2,11.34,6.49,1.24
+2024-05-31,regular,Union La Calera (Chi),Alianza (Col),0,1,2.16,3.15,3.66
+2024-05-31,regular,Cruzeiro (Bra),U. Catolica (Ecu),1,0,1.54,4.22,6.06
+2024-05-31,regular,Athletico-PR (Bra),Ameliano (Par),0,1,1.21,6.55,13.53
+2024-05-31,regular,Danubio (Uru),Rayo Zuliano (Ven),0,0,1.08,11.65,23.81
+2024-05-30,regular,Ind. Medellin (Col),Always Ready (Bol),4,0,1.52,3.95,6.99
+2024-05-30,regular,Boca Juniors (Arg),Nacional Potosi (Bol),4,0,1.06,12.13,31.83
+2024-05-30,regular,Defensa y Justicia (Arg),Cesar Vallejo (Per),0,1,1.42,4.66,7.43
+2024-05-30,regular,Fortaleza (Bra),Sportivo Trinidense (Par),2,1,1.10,9.22,27.34
+2024-05-30,regular,Lanus (Arg),Cuiaba (Bra),0,1,2.00,3.29,4.01
+2024-05-30,regular,Metropolitanos (Ven),Deportivo Garcilaso (Per),1,1,2.88,3.77,2.26
+2024-05-29,regular,Coquimbo (Chi),Bragantino (Bra),1,1,4.07,3.54,1.89
+2024-05-29,regular,Internacional (Bra),Belgrano (Arg),1,2,1.44,4.27,7.90
+2024-05-29,regular,Delfin (Ecu),Tomayapo (Bol),4,3,1.18,7.01,15.19
+2024-05-29,regular,Racing Club (Arg),Sp. Luqueno (Par),3,0,1.22,6.48,11.90
+2024-05-29,regular,Argentinos Jrs (Arg),Nacional Asuncion (Par),2,1,1.55,4.20,5.81
+2024-05-29,regular,Corinthians (Bra),Racing Montevideo (Uru),3,0,1.35,4.96,9.13
+2024-05-17,regular,U. Catolica (Ecu),Alianza (Col),0,0,1.11,9.11,19.23
+2024-05-17,regular,Sp. Luqueno (Par),Bragantino (Bra),2,3,6.00,3.93,1.56
+2024-05-17,regular,Cruzeiro (Bra),Union La Calera (Chi),1,0,1.19,6.31,15.88
+2024-05-17,regular,Racing Club (Arg),Coquimbo (Chi),3,0,1.33,5.17,8.53
+2024-05-16,regular,Cesar Vallejo (Per),Always Ready (Bol),2,2,2.70,3.42,2.52
+2024-05-16,regular,Boca Juniors (Arg),Fortaleza (Bra),1,1,1.76,3.48,4.90
+2024-05-16,regular,Cuiaba (Bra),Deportivo Garcilaso (Per),1,1,1.24,5.96,11.75
+2024-05-16,regular,Athletico-PR (Bra),Danubio (Uru),1,2,1.20,6.16,15.03
+2024-05-16,regular,Belgrano (Arg),Tomayapo (Bol),1,0,1.17,6.41,17.54
+2024-05-16,regular,Lanus (Arg),Metropolitanos (Ven),5,0,1.07,10.42,36.27
+2024-05-15,regular,Nacional Potosi (Bol),Sportivo Trinidense (Par),2,1,1.40,4.93,6.90
+2024-05-15,regular,Corinthians (Bra),Argentinos Jrs (Arg),4,0,1.58,3.78,6.14
+2024-05-15,regular,Defensa y Justicia (Arg),Ind. Medellin (Col),1,1,1.84,3.58,4.20
+2024-05-15,regular,Ameliano (Par),Rayo Zuliano (Ven),1,0,1.03,14.62,35.62
+2024-05-15,regular,Racing Montevideo (Uru),Nacional Asuncion (Par),2,1,1.56,3.90,6.08
+2024-05-10,regular,Deportivo Garcilaso (Per),Lanus (Arg),0,2,2.77,3.22,2.55
+2024-05-10,regular,U. Catolica (Ecu),Union La Calera (Chi),4,0,1.24,5.88,12.16
+2024-05-10,regular,Bragantino (Bra),Racing Club (Arg),2,1,2.20,3.34,3.28
+2024-05-10,regular,Belgrano (Arg),Delfin (Ecu),1,1,1.70,3.52,5.15
+2024-05-09,regular,Sportivo Trinidense (Par),Boca Juniors (Arg),1,2,8.77,4.54,1.37
+2024-05-09,regular,Cuiaba (Bra),Metropolitanos (Ven),3,0,1.22,5.89,12.89
+2024-05-09,regular,Nacional Potosi (Bol),Fortaleza (Bra),4,1,2.70,3.33,2.52
+2024-05-09,regular,Rayo Zuliano (Ven),Athletico-PR (Bra),1,5,12.57,6.13,1.22
+2024-05-09,regular,Sp. Luqueno (Par),Coquimbo (Chi),0,0,2.36,3.24,3.03
+2024-05-08,regular,Always Ready (Bol),Defensa y Justicia (Arg),3,0,1.72,3.51,5.09
+2024-05-08,regular,Alianza (Col),Cruzeiro (Bra),0,3,5.52,3.77,1.62
+2024-05-08,regular,Ameliano (Par),Danubio (Uru),2,1,2.20,3.03,3.59
+2024-05-08,regular,Cesar Vallejo (Per),Ind. Medellin (Col),1,5,3.28,3.30,2.21
+2024-05-08,regular,Racing Montevideo (Uru),Argentinos Jrs (Arg),2,1,3.24,3.13,2.29
+2024-05-08,regular,Nacional Asuncion (Par),Corinthians (Bra),0,2,4.87,3.57,1.72
+2024-04-26,regular,Ind. Medellin (Col),Defensa y Justicia (Arg),2,1,2.22,3.13,3.38
+2024-04-26,regular,Delfin (Ecu),Internacional (Bra),1,2,4.98,3.34,1.78
+2024-04-26,regular,Always Ready (Bol),Cesar Vallejo (Per),2,0,1.30,5.17,9.72
+2024-04-26,regular,Fortaleza (Bra),Boca Juniors (Arg),4,2,2.09,3.14,3.75
+2024-04-26,regular,Metropolitanos (Ven),Lanus (Arg),0,2,5.45,3.91,1.60
+2024-04-26,regular,Nacional Asuncion (Par),Racing Montevideo (Uru),2,2,2.74,3.05,2.70
+2024-04-25,regular,Rayo Zuliano (Ven),Ameliano (Par),0,4,3.31,3.22,2.21
+2024-04-25,regular,Tomayapo (Bol),Belgrano (Arg),0,2,4.61,3.21,1.87
+2024-04-25,regular,Bragantino (Bra),Sp. Luqueno (Par),2,1,1.39,4.66,7.68
+2024-04-25,regular,Danubio (Uru),Athletico-PR (Bra),0,1,4.17,3.20,1.96
+2024-04-25,regular,Coquimbo (Chi),Racing Club (Arg),1,2,3.76,3.27,2.03
+2024-04-24,regular,Alianza (Col),U. Catolica (Ecu),1,3,3.36,3.21,2.20
+2024-04-24,regular,Argentinos Jrs (Arg),Corinthians (Bra),1,0,2.80,2.99,2.66
+2024-04-24,regular,Deportivo Garcilaso (Per),Cuiaba (Bra),1,1,2.04,3.21,3.85
+2024-04-24,regular,Sportivo Trinidense (Par),Nacional Potosi (Bol),2,0,1.52,4.21,5.90
+2024-04-24,regular,Union La Calera (Chi),Cruzeiro (Bra),0,0,4.25,3.36,1.89
+2024-04-12,regular,Delfin (Ecu),Belgrano (Arg),1,1,2.49,3.14,2.90
+2024-04-12,regular,Cruzeiro (Bra),Alianza (Col),3,3,1.18,6.56,15.08
+2024-04-12,regular,Coquimbo (Chi),Sp. Luqueno (Par),1,0,2.04,3.38,3.64
+2024-04-12,regular,Metropolitanos (Ven),Cuiaba (Bra),0,2,4.18,3.41,1.88
+2024-04-12,regular,Lanus (Arg),Deportivo Garcilaso (Per),2,1,1.19,6.77,13.75
+2024-04-11,regular,Ind. Medellin (Col),Cesar Vallejo (Per),4,2,1.50,3.97,6.66
+2024-04-11,regular,Racing Club (Arg),Bragantino (Bra),3,0,2.04,3.24,3.75
+2024-04-11,regular,Internacional (Bra),Tomayapo (Bol),0,0,1.03,14.12,44.62
+2024-04-11,regular,Union La Calera (Chi),U. Catolica (Ecu),0,1,3.93,3.28,2.00
+2024-04-11,regular,Defensa y Justicia (Arg),Always Ready (Bol),1,1,1.26,5.50,11.28
+2024-04-11,regular,Fortaleza (Bra),Nacional Potosi (Bol),5,0,1.07,10.94,25.23
+2024-04-10,regular,Athletico-PR (Bra),Rayo Zuliano (Ven),6,0,1.03,14.39,41.94
+2024-04-10,regular,Danubio (Uru),Ameliano (Par),0,0,1.70,3.61,5.03
+2024-04-10,regular,Boca Juniors (Arg),Sportivo Trinidense (Par),1,0,1.19,6.44,14.93
+2024-04-10,regular,Argentinos Jrs (Arg),Racing Montevideo (Uru),0,3,1.34,4.73,9.56
+2024-04-10,regular,Corinthians (Bra),Nacional Asuncion (Par),4,0,1.21,5.97,14.62
+2024-04-05,regular,Always Ready (Bol),Ind. Medellin (Col),2,0,1.75,3.69,4.50
+2024-04-05,regular,Tomayapo (Bol),Delfin (Ecu),0,2,3.48,3.16,2.16
+2024-04-05,regular,U. Catolica (Ecu),Cruzeiro (Bra),0,0,2.07,3.37,3.49
+2024-04-05,regular,Sp. Luqueno (Par),Racing Club (Arg),0,2,4.48,3.59,1.78
+2024-04-05,regular,Deportivo Garcilaso (Per),Metropolitanos (Ven),3,2,1.29,5.17,10.04
+2024-04-04,regular,Alianza (Col),Union La Calera (Chi),0,1,1.99,3.24,3.98
+2024-04-04,regular,Nacional Potosi (Bol),Boca Juniors (Arg),0,0,1.98,3.37,3.78
+2024-04-04,regular,Bragantino (Bra),Coquimbo (Chi),1,0,1.28,5.19,11.31
+2024-04-04,regular,Sportivo Trinidense (Par),Fortaleza (Bra),0,2,4.29,3.47,1.85
+2024-04-04,regular,Cuiaba (Bra),Lanus (Arg),1,1,2.44,3.05,3.07
+2024-04-04,regular,Rayo Zuliano (Ven),Danubio (Uru),0,2,3.58,3.19,2.13
+2024-04-03,regular,Cesar Vallejo (Per),Defensa y Justicia (Arg),0,1,3.72,3.24,2.05
+2024-04-03,regular,Ameliano (Par),Athletico-PR (Bra),1,4,4.01,3.29,1.96
+2024-04-03,regular,Racing Montevideo (Uru),Corinthians (Bra),1,1,4.08,3.34,1.92
+2024-04-03,regular,Nacional Asuncion (Par),Argentinos Jrs (Arg),2,3,3.46,3.11,2.18
+2024-04-03,regular,Belgrano (Arg),Internacional (Bra),0,0,3.74,3.27,2.03
+2024-03-08,regular,Tecnico U. (Ecu),U. Catolica (Ecu),0,3,2.68,3.16,2.67
+2024-03-08,regular,Cesar Vallejo (Per),Sport Huancayo (Per),2,0,1.89,3.42,4.19
+2024-03-08,regular,Ameliano (Par),Olimpia Asuncion (Par),2,0,4.12,3.53,1.86
+2024-03-08,regular,Racing Montevideo (Uru),Cerro Largo (Uru),2,0,2.23,3.15,3.37
+2024-03-08,regular,Rayo Zuliano (Ven),La Guaira (Ven),1,0,3.14,3.27,2.26
+2024-03-07,regular,Alianza (Col),America De Cali (Col),2,1,4.38,3.42,1.84
+2024-03-07,regular,Wanderers (Uru),Danubio (Uru),0,1,2.84,3.10,2.59
+2024-03-07,regular,Dep. Cuenca (Ecu),Delfin (Ecu),2,5,2.29,3.17,3.21
+2024-03-07,regular,Guarani (Par),Sp. Luqueno (Par),0,1,2.39,3.30,2.96
+2024-03-07,regular,Universitario de Vinto (Bol),Nacional Potosi (Bol),0,2,2.25,3.29,3.14
+2024-03-07,regular,Everton (Chi),Union La Calera (Chi),0,1,2.08,3.30,3.58
+2024-03-06,regular,Deportes Tolima (Col),Ind. Medellin (Col),0,1,2.04,3.28,3.73
+2024-03-06,regular,Deportivo Garcilaso (Per),AD Tarma (Per),1,0,2.38,3.29,2.94
+2024-03-06,regular,Carabobo (Ven),Metropolitanos (Ven),1,2,2.04,3.17,3.85
+2024-03-06,regular,U. Catolica (Chi),Coquimbo (Chi),0,2,2.32,3.33,3.00
+2024-03-06,regular,Tomayapo (Bol),Wilstermann (Bol),1,0,2.36,3.33,2.93

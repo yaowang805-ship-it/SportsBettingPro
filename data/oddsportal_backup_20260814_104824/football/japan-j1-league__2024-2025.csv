@@ -1,0 +1,380 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2024-12-08,regular,Urawa Reds,Albirex Niigata,0,0,3.12,3.02,2.49
+2024-12-08,regular,Kawasaki Frontale,Avispa Fukuoka,3,1,1.59,4.02,5.71
+2024-12-08,regular,FC Tokyo,Cerezo Osaka,3,0,2.65,3.35,2.63
+2024-12-08,regular,Gamba Osaka,Sanfrecce Hiroshima,3,1,3.95,3.89,1.84
+2024-12-08,regular,Hokkaido Consadole Sapporo,Kashiwa Reysol,1,0,3.40,3.52,2.11
+2024-12-08,regular,Sagan Tosu,Iwata,3,0,2.88,3.58,2.34
+2024-12-08,regular,Kashima Antlers,Machida,3,1,3.10,3.18,2.41
+2024-12-08,regular,Kyoto,Verdy,0,0,2.62,3.31,2.70
+2024-12-08,regular,Yokohama F. Marinos,Nagoya Grampus,0,2,1.74,4.11,4.20
+2024-12-08,regular,Vissel Kobe,Shonan Bellmare,3,0,1.32,5.31,9.18
+2024-12-01,regular,Sanfrecce Hiroshima,Hokkaido Consadole Sapporo,5,1,1.33,5.53,8.15
+2024-11-30,regular,Albirex Niigata,Gamba Osaka,0,1,2.47,3.08,3.10
+2024-11-30,regular,Avispa Fukuoka,Urawa Reds,1,0,2.62,2.95,2.99
+2024-11-30,regular,Cerezo Osaka,Kashima Antlers,0,2,3.26,3.09,2.35
+2024-11-30,regular,Iwata,FC Tokyo,2,1,2.65,3.20,2.74
+2024-11-30,regular,Kashiwa Reysol,Vissel Kobe,1,1,3.70,2.95,2.26
+2024-11-30,regular,Verdy,Kawasaki Frontale,4,5,2.31,3.37,3.06
+2024-11-30,regular,Machida,Kyoto,1,0,1.71,4.07,4.48
+2024-11-30,regular,Nagoya Grampus,Sagan Tosu,0,3,1.68,3.84,4.88
+2024-11-30,regular,Shonan Bellmare,Yokohama F. Marinos,2,3,2.26,3.59,2.99
+2024-11-22,regular,Urawa Reds,Kawasaki Frontale,1,1,2.62,3.22,2.80
+2024-11-17,regular,Kyoto,Kashima Antlers,0,0,2.90,3.38,2.43
+2024-11-16,regular,Iwata,Yokohama F. Marinos,3,4,3.18,3.77,2.11
+2024-11-10,regular,Urawa Reds,Sanfrecce Hiroshima,3,0,4.62,3.80,1.74
+2024-11-10,regular,Verdy,Vissel Kobe,1,1,3.46,3.00,2.30
+2024-11-09,regular,Kashiwa Reysol,Albirex Niigata,1,1,2.40,3.14,3.16
+2024-11-09,regular,Cerezo Osaka,Avispa Fukuoka,1,0,2.32,3.02,3.41
+2024-11-09,regular,Iwata,Gamba Osaka,3,4,3.34,3.14,2.30
+2024-11-09,regular,Machida,FC Tokyo,3,0,1.92,3.52,4.06
+2024-11-09,regular,Shonan Bellmare,Hokkaido Consadole Sapporo,1,1,2.17,3.85,3.00
+2024-11-09,regular,Kashima Antlers,Nagoya Grampus,0,0,1.94,3.24,4.36
+2024-11-09,regular,Kyoto,Kawasaki Frontale,1,1,2.55,3.62,2.59
+2024-11-09,regular,Sagan Tosu,Yokohama F. Marinos,1,2,3.85,4.27,1.78
+2024-11-03,regular,Avispa Fukuoka,Kashiwa Reysol,2,1,3.25,3.00,2.42
+2024-11-03,regular,FC Tokyo,Shonan Bellmare,0,2,2.60,3.39,2.67
+2024-11-03,regular,Sagan Tosu,Machida,2,1,4.98,4.03,1.65
+2024-11-03,regular,Hokkaido Consadole Sapporo,Cerezo Osaka,1,1,2.46,3.55,2.75
+2024-11-03,regular,Sanfrecce Hiroshima,Kyoto,0,1,1.45,4.68,6.48
+2024-11-01,regular,Vissel Kobe,Iwata,2,0,1.38,4.81,7.97
+2024-11-01,regular,Kawasaki Frontale,Kashima Antlers,1,3,2.31,3.54,2.96
+2024-10-30,regular,Yokohama F. Marinos,Urawa Reds,0,0,2.46,3.44,2.75
+2024-10-23,regular,Urawa Reds,Kashiwa Reysol,1,0,2.72,3.05,2.74
+2024-10-23,regular,Albirex Niigata,Verdy,0,2,2.11,3.21,3.66
+2024-10-23,regular,Gamba Osaka,Nagoya Grampus,3,2,2.49,3.01,3.07
+2024-10-19,regular,Verdy,Urawa Reds,2,1,2.53,3.04,2.97
+2024-10-19,regular,Cerezo Osaka,Iwata,1,2,1.87,3.56,4.08
+2024-10-19,regular,Shonan Bellmare,Sanfrecce Hiroshima,2,1,4.76,3.71,1.73
+2024-10-19,regular,Kashima Antlers,Avispa Fukuoka,0,0,1.81,3.29,4.92
+2024-10-19,regular,Nagoya Grampus,Hokkaido Consadole Sapporo,0,2,1.89,3.61,3.91
+2024-10-19,regular,Kashiwa Reysol,Machida,1,1,2.56,3.22,2.79
+2024-10-19,regular,Kyoto,Sagan Tosu,2,0,1.56,4.32,5.18
+2024-10-18,regular,Yokohama F. Marinos,Albirex Niigata,0,0,2.54,3.79,2.48
+2024-10-18,regular,Vissel Kobe,FC Tokyo,0,2,1.41,4.53,7.51
+2024-10-18,regular,Kawasaki Frontale,Gamba Osaka,1,1,2.04,3.50,3.50
+2024-10-06,regular,Iwata,Sanfrecce Hiroshima,1,2,6.44,4.32,1.49
+2024-10-06,regular,Verdy,Shonan Bellmare,0,2,2.24,3.26,3.25
+2024-10-06,regular,Kyoto,Vissel Kobe,2,3,4.03,3.61,1.87
+2024-10-05,regular,Gamba Osaka,Hokkaido Consadole Sapporo,2,1,2.10,3.47,3.43
+2024-10-05,regular,Urawa Reds,Cerezo Osaka,0,1,2.22,3.37,3.18
+2024-10-05,regular,Kashiwa Reysol,Yokohama F. Marinos,1,0,1.82,4.13,3.72
+2024-10-05,regular,FC Tokyo,Sagan Tosu,1,1,1.86,3.76,3.90
+2024-10-05,regular,Machida,Kawasaki Frontale,1,4,2.21,3.54,3.10
+2024-10-05,regular,Albirex Niigata,Kashima Antlers,0,4,2.59,3.25,2.73
+2024-10-04,regular,Avispa Fukuoka,Nagoya Grampus,1,0,2.82,2.85,2.80
+2024-10-02,regular,Cerezo Osaka,Gamba Osaka,1,0,2.95,3.14,2.47
+2024-09-28,regular,Sagan Tosu,Avispa Fukuoka,0,0,2.93,3.00,2.59
+2024-09-28,regular,Shonan Bellmare,Kashima Antlers,3,2,2.49,3.37,2.76
+2024-09-28,regular,Vissel Kobe,Urawa Reds,1,0,1.61,3.94,5.39
+2024-09-28,regular,Cerezo Osaka,Kashiwa Reysol,0,0,2.90,3.27,2.44
+2024-09-28,regular,Yokohama F. Marinos,FC Tokyo,1,3,1.93,4.06,3.37
+2024-09-28,regular,Gamba Osaka,Verdy,1,1,2.11,3.34,3.48
+2024-09-28,regular,Nagoya Grampus,Iwata,2,0,1.95,3.40,3.95
+2024-09-28,regular,Hokkaido Consadole Sapporo,Kyoto,2,0,2.73,3.65,2.38
+2024-09-27,regular,Kawasaki Frontale,Albirex Niigata,5,1,2.09,3.62,3.27
+2024-09-22,regular,Shonan Bellmare,Cerezo Osaka,1,2,2.23,3.33,3.21
+2024-09-22,regular,Kyoto,Gamba Osaka,2,2,2.29,3.47,2.99
+2024-09-22,regular,Sanfrecce Hiroshima,Yokohama F. Marinos,6,2,1.46,4.80,5.85
+2024-09-22,regular,Albirex Niigata,Vissel Kobe,2,3,4.19,3.32,1.92
+2024-09-22,regular,Verdy,Sagan Tosu,2,0,1.68,3.97,4.68
+2024-09-22,regular,Nagoya Grampus,Kawasaki Frontale,2,0,2.91,3.20,2.48
+2024-09-21,regular,Iwata,Avispa Fukuoka,0,0,2.96,2.84,2.71
+2024-09-21,regular,Urawa Reds,FC Tokyo,0,2,1.91,3.59,3.92
+2024-09-21,regular,Machida,Hokkaido Consadole Sapporo,0,0,1.60,4.15,5.15
+2024-09-21,regular,Kashima Antlers,Kashiwa Reysol,0,0,2.53,3.42,2.69
+2024-09-18,regular,Nagoya Grampus,Albirex Niigata,3,0,2.71,3.05,2.77
+2024-09-14,regular,Albirex Niigata,Shonan Bellmare,3,1,2.19,3.37,3.25
+2024-09-14,regular,FC Tokyo,Nagoya Grampus,4,1,2.98,3.01,2.56
+2024-09-14,regular,Gamba Osaka,Urawa Reds,0,1,2.40,3.13,3.10
+2024-09-14,regular,Kashiwa Reysol,Iwata,0,2,1.63,3.97,5.20
+2024-09-14,regular,Avispa Fukuoka,Machida,0,3,3.27,3.04,2.35
+2024-09-14,regular,Kashima Antlers,Sanfrecce Hiroshima,2,2,3.18,3.28,2.28
+2024-09-14,regular,Hokkaido Consadole Sapporo,Verdy,0,2,2.67,3.31,2.59
+2024-09-13,regular,Vissel Kobe,Cerezo Osaka,2,1,1.71,3.70,4.88
+2024-09-13,regular,Kawasaki Frontale,Sagan Tosu,3,2,1.42,4.73,6.84
+2024-09-13,regular,Yokohama F. Marinos,Kyoto,1,2,1.85,3.87,3.85
+2024-09-01,regular,Avispa Fukuoka,Vissel Kobe,0,2,4.67,3.26,1.86
+2024-09-01,regular,Hokkaido Consadole Sapporo,Kawasaki Frontale,2,0,3.48,3.96,1.92
+2024-08-31,regular,Kashiwa Reysol,Verdy,2,3,2.46,3.30,2.85
+2024-08-31,regular,Sagan Tosu,Shonan Bellmare,1,2,3.33,3.54,2.09
+2024-08-31,regular,Sanfrecce Hiroshima,FC Tokyo,3,2,1.38,4.86,7.62
+2024-08-31,regular,Machida,Urawa Reds,2,2,2.12,3.34,3.48
+2024-08-25,regular,Albirex Niigata,Machida,0,0,2.97,3.24,2.42
+2024-08-25,regular,Iwata,Hokkaido Consadole Sapporo,0,2,2.50,3.37,2.74
+2024-08-25,regular,Vissel Kobe,Sagan Tosu,2,0,1.32,5.16,9.24
+2024-08-25,regular,Sanfrecce Hiroshima,Kashiwa Reysol,2,0,1.66,3.77,5.02
+2024-08-25,regular,Verdy,Kashima Antlers,2,1,2.95,3.14,2.48
+2024-08-24,regular,Yokohama F. Marinos,Cerezo Osaka,4,0,1.83,4.04,3.73
+2024-08-24,regular,Kyoto,FC Tokyo,3,0,2.03,3.62,3.44
+2024-08-24,regular,Shonan Bellmare,Nagoya Grampus,0,1,2.47,3.18,2.93
+2024-08-24,regular,Gamba Osaka,Avispa Fukuoka,2,2,1.99,3.14,4.14
+2024-08-17,regular,Avispa Fukuoka,Albirex Niigata,0,1,2.74,2.97,2.77
+2024-08-17,regular,Cerezo Osaka,Kyoto,3,5,2.12,3.39,3.42
+2024-08-17,regular,FC Tokyo,Verdy,0,0,3.08,3.26,2.35
+2024-08-17,regular,Vissel Kobe,Gamba Osaka,2,2,2.04,3.27,3.79
+2024-08-17,regular,Shonan Bellmare,Kashiwa Reysol,1,2,2.67,3.36,2.58
+2024-08-17,regular,Kawasaki Frontale,Yokohama F. Marinos,1,3,2.05,4.10,3.05
+2024-08-17,regular,Nagoya Grampus,Sanfrecce Hiroshima,1,2,4.10,3.28,1.95
+2024-08-17,regular,Machida,Iwata,4,0,1.54,4.08,5.96
+2024-08-17,regular,Kashima Antlers,Urawa Reds,0,0,2.17,3.44,3.21
+2024-08-16,regular,Hokkaido Consadole Sapporo,Sagan Tosu,5,3,2.16,3.74,3.03
+2024-08-12,regular,Albirex Niigata,Kyoto,2,0,2.04,3.44,3.62
+2024-08-11,regular,Yokohama F. Marinos,Vissel Kobe,1,2,2.49,3.62,2.62
+2024-08-11,regular,FC Tokyo,Kawasaki Frontale,0,3,3.38,3.69,2.02
+2024-08-11,regular,Kashiwa Reysol,Gamba Osaka,0,0,2.14,3.42,3.35
+2024-08-11,regular,Iwata,Kashima Antlers,2,1,4.90,3.76,1.68
+2024-08-11,regular,Nagoya Grampus,Verdy,1,0,2.45,3.01,3.12
+2024-08-11,regular,Sagan Tosu,Urawa Reds,1,1,3.43,3.77,1.99
+2024-08-11,regular,Sanfrecce Hiroshima,Cerezo Osaka,2,0,1.65,3.93,5.01
+2024-08-11,regular,Machida,Shonan Bellmare,0,1,1.97,3.52,3.74
+2024-08-10,regular,Hokkaido Consadole Sapporo,Avispa Fukuoka,2,2,2.44,3.25,2.91
+2024-08-07,regular,Yokohama F. Marinos,Hokkaido Consadole Sapporo,3,2,1.64,4.43,4.35
+2024-08-07,regular,Albirex Niigata,Iwata,2,2,1.78,3.69,4.41
+2024-08-07,regular,Shonan Bellmare,Avispa Fukuoka,1,1,2.26,3.17,3.34
+2024-08-07,regular,Cerezo Osaka,Machida,0,0,3.08,3.15,2.38
+2024-08-07,regular,Gamba Osaka,FC Tokyo,0,0,2.05,3.29,3.76
+2024-08-07,regular,Kashima Antlers,Sagan Tosu,3,0,1.60,4.20,5.05
+2024-08-07,regular,Kawasaki Frontale,Vissel Kobe,3,0,2.93,3.55,2.28
+2024-08-07,regular,Kyoto,Nagoya Grampus,3,2,3.00,3.18,2.41
+2024-08-07,regular,Verdy,Sanfrecce Hiroshima,0,1,4.59,3.66,1.76
+2024-07-21,regular,Sagan Tosu,Sanfrecce Hiroshima,1,4,4.81,4.02,1.65
+2024-07-20,regular,Cerezo Osaka,Albirex Niigata,1,2,2.04,3.41,3.64
+2024-07-20,regular,Avispa Fukuoka,Verdy,0,1,2.55,2.93,3.05
+2024-07-20,regular,Gamba Osaka,Shonan Bellmare,0,1,2.23,3.32,3.26
+2024-07-20,regular,Urawa Reds,Hokkaido Consadole Sapporo,3,4,1.71,4.06,4.41
+2024-07-20,regular,Iwata,Kyoto,1,2,2.75,3.12,2.66
+2024-07-20,regular,Kashiwa Reysol,Kawasaki Frontale,2,3,2.39,3.62,2.74
+2024-07-20,regular,Vissel Kobe,Nagoya Grampus,3,3,1.68,3.78,4.98
+2024-07-20,regular,Kashima Antlers,FC Tokyo,2,1,1.70,3.87,4.64
+2024-07-20,regular,Machida,Yokohama F. Marinos,1,2,2.08,3.63,3.28
+2024-07-14,regular,Yokohama F. Marinos,Kashima Antlers,4,1,2.70,3.69,2.40
+2024-07-14,regular,Kawasaki Frontale,Cerezo Osaka,1,1,2.27,3.56,2.96
+2024-07-14,regular,Sagan Tosu,Gamba Osaka,0,2,3.36,3.59,2.07
+2024-07-14,regular,Shonan Bellmare,Iwata,5,0,2.01,3.53,3.60
+2024-07-14,regular,Sanfrecce Hiroshima,Avispa Fukuoka,1,0,1.54,4.00,6.21
+2024-07-14,regular,Kyoto,Urawa Reds,0,0,3.52,3.69,1.98
+2024-07-14,regular,Nagoya Grampus,Kashiwa Reysol,2,1,2.74,3.09,2.69
+2024-07-14,regular,Verdy,Machida,0,1,3.91,3.23,2.02
+2024-07-13,regular,FC Tokyo,Albirex Niigata,2,0,2.20,3.55,3.08
+2024-07-13,regular,Hokkaido Consadole Sapporo,Vissel Kobe,1,1,6.12,4.22,1.52
+2024-07-07,regular,Avispa Fukuoka,Kyoto,1,2,1.94,3.12,4.49
+2024-07-06,regular,Kashiwa Reysol,FC Tokyo,3,2,1.86,3.76,3.86
+2024-07-06,regular,Gamba Osaka,Yokohama F. Marinos,4,0,2.33,3.65,2.81
+2024-07-06,regular,Albirex Niigata,Sagan Tosu,3,4,1.84,3.84,3.89
+2024-07-06,regular,Iwata,Kawasaki Frontale,2,2,3.16,3.56,2.15
+2024-07-06,regular,Urawa Reds,Shonan Bellmare,2,3,1.69,3.84,4.78
+2024-07-06,regular,Verdy,Cerezo Osaka,1,1,3.09,3.12,2.40
+2024-07-06,regular,Kashima Antlers,Hokkaido Consadole Sapporo,2,0,1.50,4.26,6.26
+2024-07-06,regular,Machida,Nagoya Grampus,1,0,1.86,3.49,4.25
+2024-07-05,regular,Sanfrecce Hiroshima,Vissel Kobe,1,3,2.14,3.40,3.35
+2024-07-03,regular,Yokohama F. Marinos,Sagan Tosu,0,1,1.46,4.88,5.85
+2024-06-30,regular,Vissel Kobe,Kashima Antlers,3,1,1.99,3.32,3.91
+2024-06-30,regular,Sagan Tosu,Kashiwa Reysol,1,4,4.04,3.82,1.82
+2024-06-30,regular,Shonan Bellmare,Kyoto,0,1,2.01,3.44,3.65
+2024-06-30,regular,FC Tokyo,Avispa Fukuoka,0,1,2.61,2.98,2.94
+2024-06-30,regular,Urawa Reds,Iwata,3,0,1.80,3.58,4.46
+2024-06-30,regular,Cerezo Osaka,Nagoya Grampus,2,1,2.27,3.06,3.44
+2024-06-30,regular,Gamba Osaka,Machida,1,3,3.08,3.08,2.43
+2024-06-29,regular,Kawasaki Frontale,Sanfrecce Hiroshima,1,1,3.16,3.65,2.12
+2024-06-29,regular,Yokohama F. Marinos,Verdy,1,2,1.68,3.99,4.58
+2024-06-29,regular,Hokkaido Consadole Sapporo,Albirex Niigata,0,1,3.01,3.28,2.34
+2024-06-26,regular,Sanfrecce Hiroshima,Albirex Niigata,1,1,1.41,4.68,7.32
+2024-06-26,regular,Avispa Fukuoka,Yokohama F. Marinos,2,1,2.38,3.36,2.93
+2024-06-26,regular,Cerezo Osaka,Sagan Tosu,1,0,1.71,3.82,4.66
+2024-06-26,regular,FC Tokyo,Hokkaido Consadole Sapporo,1,0,1.94,3.57,3.79
+2024-06-26,regular,Kashima Antlers,Gamba Osaka,0,0,1.99,3.32,3.86
+2024-06-26,regular,Iwata,Verdy,3,0,2.76,3.15,2.63
+2024-06-26,regular,Kyoto,Kashiwa Reysol,2,2,3.71,3.46,1.99
+2024-06-26,regular,Kawasaki Frontale,Shonan Bellmare,1,1,2.07,3.59,3.37
+2024-06-26,regular,Vissel Kobe,Machida,0,0,2.27,3.28,3.16
+2024-06-26,regular,Nagoya Grampus,Urawa Reds,0,1,2.53,3.13,2.89
+2024-06-23,regular,Hokkaido Consadole Sapporo,Yokohama F. Marinos,0,1,3.24,4.09,1.97
+2024-06-22,regular,Shonan Bellmare,FC Tokyo,0,1,2.40,3.37,2.87
+2024-06-22,regular,Urawa Reds,Kashima Antlers,2,2,2.28,3.31,3.12
+2024-06-22,regular,Kashiwa Reysol,Sanfrecce Hiroshima,0,1,3.70,3.53,1.96
+2024-06-22,regular,Sagan Tosu,Kyoto,3,0,2.64,3.33,2.59
+2024-06-22,regular,Iwata,Cerezo Osaka,1,1,3.15,3.29,2.29
+2024-06-22,regular,Gamba Osaka,Vissel Kobe,2,1,3.41,3.24,2.18
+2024-06-22,regular,Albirex Niigata,Kawasaki Frontale,2,2,2.32,3.55,2.89
+2024-06-22,regular,Verdy,Nagoya Grampus,1,0,2.86,2.99,2.67
+2024-06-22,regular,Machida,Avispa Fukuoka,0,0,1.75,3.38,5.17
+2024-06-19,regular,Yokohama F. Marinos,Sanfrecce Hiroshima,3,2,3.69,3.97,1.86
+2024-06-16,regular,Kashima Antlers,Albirex Niigata,1,1,1.87,3.45,4.22
+2024-06-16,regular,FC Tokyo,Iwata,1,1,1.95,3.41,3.93
+2024-06-16,regular,Gamba Osaka,Kashiwa Reysol,2,1,2.19,3.27,3.35
+2024-06-16,regular,Nagoya Grampus,Shonan Bellmare,1,1,1.99,3.40,3.82
+2024-06-16,regular,Avispa Fukuoka,Sagan Tosu,2,0,2.17,3.16,3.57
+2024-06-16,regular,Vissel Kobe,Kawasaki Frontale,1,0,1.86,3.82,3.80
+2024-06-15,regular,Cerezo Osaka,Urawa Reds,2,1,2.64,3.30,2.63
+2024-06-15,regular,Kyoto,Hokkaido Consadole Sapporo,2,0,2.13,3.40,3.37
+2024-06-15,regular,Sanfrecce Hiroshima,Verdy,4,1,1.50,4.10,6.78
+2024-06-15,regular,Yokohama F. Marinos,Machida,1,3,2.93,3.56,2.28
+2024-06-02,regular,Kashiwa Reysol,Avispa Fukuoka,0,2,2.03,3.27,3.85
+2024-06-02,regular,Kawasaki Frontale,Nagoya Grampus,2,1,2.25,3.51,3.03
+2024-06-02,regular,Verdy,Hokkaido Consadole Sapporo,5,3,2.16,3.30,3.42
+2024-06-01,regular,Kyoto,Cerezo Osaka,1,1,3.73,3.37,2.02
+2024-06-01,regular,Urawa Reds,Vissel Kobe,1,1,2.97,3.30,2.39
+2024-06-01,regular,Machida,Albirex Niigata,1,3,1.68,3.76,5.00
+2024-06-01,regular,Shonan Bellmare,Gamba Osaka,1,2,2.92,3.11,2.51
+2024-06-01,regular,Kashima Antlers,Yokohama F. Marinos,3,2,2.03,3.60,3.44
+2024-06-01,regular,Sanfrecce Hiroshima,Iwata,2,0,1.38,4.79,7.65
+2024-05-31,regular,Sagan Tosu,FC Tokyo,0,1,3.09,3.53,2.20
+2024-05-29,regular,Yokohama F. Marinos,Kashiwa Reysol,4,0,2.46,3.56,2.70
+2024-05-26,regular,Urawa Reds,Machida,1,2,2.68,3.09,2.73
+2024-05-26,regular,Cerezo Osaka,Sanfrecce Hiroshima,1,1,3.80,3.28,2.03
+2024-05-26,regular,FC Tokyo,Gamba Osaka,0,1,2.71,2.99,2.79
+2024-05-26,regular,Nagoya Grampus,Kyoto,1,1,1.88,3.36,4.38
+2024-05-26,regular,Vissel Kobe,Verdy,0,1,1.57,3.79,6.15
+2024-05-25,regular,Albirex Niigata,Avispa Fukuoka,1,2,2.23,3.05,3.53
+2024-05-25,regular,Kawasaki Frontale,Kashiwa Reysol,1,1,2.07,3.58,3.39
+2024-05-25,regular,Hokkaido Consadole Sapporo,Kashima Antlers,0,3,3.22,3.49,2.17
+2024-05-25,regular,Iwata,Shonan Bellmare,3,2,3.04,3.22,2.38
+2024-05-19,regular,Shonan Bellmare,Albirex Niigata,2,1,2.37,3.23,3.04
+2024-05-19,regular,Kashiwa Reysol,Hokkaido Consadole Sapporo,2,1,1.85,3.79,3.88
+2024-05-19,regular,FC Tokyo,Yokohama F. Marinos,1,1,2.82,3.63,2.32
+2024-05-19,regular,Gamba Osaka,Kawasaki Frontale,3,1,2.77,3.39,2.48
+2024-05-19,regular,Kashima Antlers,Vissel Kobe,1,0,3.16,3.29,2.28
+2024-05-19,regular,Iwata,Urawa Reds,1,1,3.87,3.66,1.89
+2024-05-19,regular,Kyoto,Sanfrecce Hiroshima,0,5,5.81,3.78,1.60
+2024-05-19,regular,Machida,Verdy,5,0,2.04,3.22,3.84
+2024-05-18,regular,Sagan Tosu,Nagoya Grampus,0,2,2.90,3.20,2.49
+2024-05-18,regular,Avispa Fukuoka,Cerezo Osaka,0,3,2.58,2.94,3.01
+2024-05-15,regular,Urawa Reds,Kyoto,3,0,1.66,3.82,5.12
+2024-05-15,regular,Albirex Niigata,Yokohama F. Marinos,3,1,2.42,3.52,2.77
+2024-05-15,regular,Vissel Kobe,Avispa Fukuoka,1,0,1.53,3.71,7.36
+2024-05-15,regular,Machida,Cerezo Osaka,2,1,1.81,3.55,4.48
+2024-05-15,regular,Nagoya Grampus,FC Tokyo,3,1,2.47,3.17,2.93
+2024-05-15,regular,Verdy,Gamba Osaka,0,0,2.62,3.12,2.80
+2024-05-15,regular,Hokkaido Consadole Sapporo,Iwata,1,0,1.99,3.60,3.60
+2024-05-15,regular,Sanfrecce Hiroshima,Kashima Antlers,1,3,1.68,3.92,4.80
+2024-05-15,regular,Kashiwa Reysol,Shonan Bellmare,2,1,1.94,3.49,3.92
+2024-05-15,regular,Sagan Tosu,Kawasaki Frontale,5,2,3.76,3.76,1.90
+2024-05-12,regular,Kashima Antlers,Verdy,3,3,1.88,3.29,4.44
+2024-05-11,regular,FC Tokyo,Kashiwa Reysol,3,3,2.68,3.11,2.71
+2024-05-11,regular,Cerezo Osaka,Vissel Kobe,1,4,3.58,3.29,2.08
+2024-05-11,regular,Nagoya Grampus,Gamba Osaka,0,1,2.38,2.99,3.26
+2024-05-11,regular,Kawasaki Frontale,Hokkaido Consadole Sapporo,3,0,1.66,4.15,4.65
+2024-05-11,regular,Shonan Bellmare,Machida,0,0,3.87,3.29,2.01
+2024-05-11,regular,Albirex Niigata,Urawa Reds,2,4,3.45,3.22,2.17
+2024-05-11,regular,Kyoto,Avispa Fukuoka,2,3,2.95,2.95,2.60
+2024-05-11,regular,Iwata,Sagan Tosu,0,3,1.93,3.61,3.71
+2024-05-06,regular,Urawa Reds,Yokohama F. Marinos,2,1,1.69,4.09,4.34
+2024-05-06,regular,Kashiwa Reysol,Kashima Antlers,1,2,2.46,2.99,3.07
+2024-05-06,regular,Shonan Bellmare,Sagan Tosu,2,1,1.97,3.45,3.70
+2024-05-06,regular,Sanfrecce Hiroshima,Nagoya Grampus,2,3,1.59,3.85,5.53
+2024-05-06,regular,Avispa Fukuoka,Kawasaki Frontale,1,1,3.67,3.26,2.05
+2024-05-06,regular,Hokkaido Consadole Sapporo,FC Tokyo,1,2,2.45,3.44,2.72
+2024-05-06,regular,Kyoto,Machida,0,3,3.66,3.18,2.09
+2024-05-06,regular,Gamba Osaka,Cerezo Osaka,1,0,3.11,3.00,2.44
+2024-05-06,regular,Vissel Kobe,Albirex Niigata,3,2,1.78,3.31,4.92
+2024-05-06,regular,Verdy,Iwata,3,2,2.28,3.05,3.36
+2024-05-03,regular,Nagoya Grampus,Vissel Kobe,0,2,3.66,3.27,2.06
+2024-05-03,regular,Avispa Fukuoka,Gamba Osaka,1,0,2.51,2.89,3.19
+2024-05-03,regular,Kawasaki Frontale,Urawa Reds,3,1,2.38,3.46,2.86
+2024-05-03,regular,Cerezo Osaka,Hokkaido Consadole Sapporo,1,1,1.72,3.80,4.58
+2024-05-03,regular,FC Tokyo,Kyoto,2,1,1.97,3.43,3.82
+2024-05-03,regular,Kashima Antlers,Shonan Bellmare,3,1,1.86,3.49,4.27
+2024-05-03,regular,Machida,Kashiwa Reysol,2,0,2.39,3.18,3.05
+2024-05-03,regular,Sagan Tosu,Verdy,0,2,3.10,3.25,2.33
+2024-05-03,regular,Albirex Niigata,Sanfrecce Hiroshima,1,1,4.47,3.51,1.80
+2024-05-03,regular,Yokohama F. Marinos,Iwata,1,1,1.77,4.03,4.11
+2024-04-28,regular,Gamba Osaka,Kashima Antlers,1,2,2.56,3.15,2.82
+2024-04-28,regular,Kashiwa Reysol,Sagan Tosu,1,1,1.65,3.89,5.02
+2024-04-28,regular,Urawa Reds,Nagoya Grampus,2,1,1.87,3.35,4.39
+2024-04-28,regular,Verdy,Avispa Fukuoka,0,0,2.45,2.90,3.22
+2024-04-28,regular,Sanfrecce Hiroshima,Kawasaki Frontale,2,2,1.66,4.05,4.74
+2024-04-27,regular,Cerezo Osaka,Yokohama F. Marinos,2,2,1.90,3.74,3.79
+2024-04-27,regular,Albirex Niigata,FC Tokyo,1,3,2.27,3.22,3.25
+2024-04-27,regular,Iwata,Machida,2,0,2.72,3.18,2.67
+2024-04-27,regular,Vissel Kobe,Kyoto,0,1,1.42,4.72,6.92
+2024-04-27,regular,Hokkaido Consadole Sapporo,Shonan Bellmare,3,3,2.21,3.51,3.11
+2024-04-21,regular,Nagoya Grampus,Cerezo Osaka,2,1,2.99,2.98,2.58
+2024-04-21,regular,FC Tokyo,Machida,1,2,2.63,3.11,2.80
+2024-04-20,regular,Urawa Reds,Gamba Osaka,0,1,1.92,3.49,3.95
+2024-04-20,regular,Kawasaki Frontale,Verdy,0,0,2.04,3.32,3.75
+2024-04-20,regular,Avispa Fukuoka,Iwata,2,2,2.28,3.03,3.43
+2024-04-20,regular,Shonan Bellmare,Vissel Kobe,0,1,5.17,3.88,1.64
+2024-04-20,regular,Kyoto,Albirex Niigata,0,1,2.81,3.22,2.54
+2024-04-20,regular,Hokkaido Consadole Sapporo,Sanfrecce Hiroshima,1,1,4.21,3.88,1.76
+2024-04-20,regular,Sagan Tosu,Kashima Antlers,4,2,4.58,3.56,1.78
+2024-04-14,regular,Gamba Osaka,Sagan Tosu,2,1,1.90,3.60,3.92
+2024-04-13,regular,Verdy,FC Tokyo,2,2,2.36,3.13,3.17
+2024-04-13,regular,Cerezo Osaka,Kawasaki Frontale,1,0,2.66,3.23,2.66
+2024-04-13,regular,Kashima Antlers,Kyoto,1,0,1.79,3.46,4.65
+2024-04-13,regular,Machida,Vissel Kobe,1,2,2.87,3.03,2.62
+2024-04-13,regular,Albirex Niigata,Hokkaido Consadole Sapporo,1,1,2.19,3.32,3.32
+2024-04-13,regular,Avispa Fukuoka,Sanfrecce Hiroshima,1,1,5.34,3.39,1.73
+2024-04-13,regular,Iwata,Nagoya Grampus,0,1,2.48,3.04,3.05
+2024-04-13,regular,Yokohama F. Marinos,Shonan Bellmare,2,2,2.18,3.67,3.04
+2024-04-12,regular,Kashiwa Reysol,Urawa Reds,1,0,3.01,3.18,2.43
+2024-04-10,regular,Yokohama F. Marinos,Gamba Osaka,2,0,1.94,3.66,3.67
+2024-04-07,regular,FC Tokyo,Kashima Antlers,2,0,3.62,3.26,2.10
+2024-04-07,regular,Nagoya Grampus,Avispa Fukuoka,0,0,2.63,2.89,2.98
+2024-04-07,regular,Kawasaki Frontale,Machida,0,1,2.33,3.24,3.13
+2024-04-07,regular,Urawa Reds,Sagan Tosu,3,0,1.67,3.79,4.99
+2024-04-07,regular,Albirex Niigata,Cerezo Osaka,0,1,2.55,3.14,2.86
+2024-04-07,regular,Kyoto,Iwata,0,3,2.25,3.34,3.16
+2024-04-07,regular,Sanfrecce Hiroshima,Shonan Bellmare,2,0,1.48,4.22,6.71
+2024-04-07,regular,Vissel Kobe,Yokohama F. Marinos,1,2,1.71,4.10,4.29
+2024-04-07,regular,Verdy,Kashiwa Reysol,1,1,2.93,3.16,2.49
+2024-04-06,regular,Hokkaido Consadole Sapporo,Gamba Osaka,1,0,2.42,3.50,2.79
+2024-04-03,regular,FC Tokyo,Urawa Reds,2,1,4.14,3.50,1.88
+2024-04-03,regular,Hokkaido Consadole Sapporo,Nagoya Grampus,1,2,2.24,3.30,3.24
+2024-04-03,regular,Iwata,Albirex Niigata,2,0,2.28,3.25,3.20
+2024-04-03,regular,Avispa Fukuoka,Kashima Antlers,1,0,3.79,2.95,2.19
+2024-04-03,regular,Kashiwa Reysol,Cerezo Osaka,1,1,2.35,3.19,3.11
+2024-04-03,regular,Gamba Osaka,Kyoto,0,0,2.14,3.24,3.51
+2024-04-03,regular,Yokohama F. Marinos,Kawasaki Frontale,0,0,2.64,3.65,2.45
+2024-04-03,regular,Machida,Sanfrecce Hiroshima,1,2,3.37,3.25,2.20
+2024-04-03,regular,Sagan Tosu,Vissel Kobe,0,0,6.12,4.00,1.54
+2024-04-03,regular,Shonan Bellmare,Verdy,1,2,2.77,3.13,2.64
+2024-03-30,regular,Cerezo Osaka,Shonan Bellmare,2,0,2.03,3.35,3.74
+2024-03-30,regular,Nagoya Grampus,Yokohama F. Marinos,2,1,2.76,3.44,2.47
+2024-03-30,regular,Urawa Reds,Avispa Fukuoka,2,1,2.00,3.11,4.23
+2024-03-30,regular,Kawasaki Frontale,FC Tokyo,3,0,1.94,3.63,3.69
+2024-03-30,regular,Kashima Antlers,Iwata,1,0,1.74,3.77,4.59
+2024-03-30,regular,Machida,Sagan Tosu,3,1,1.70,3.69,5.02
+2024-03-30,regular,Albirex Niigata,Kashiwa Reysol,1,1,2.49,3.03,3.04
+2024-03-30,regular,Vissel Kobe,Hokkaido Consadole Sapporo,6,1,1.57,4.08,5.57
+2024-03-30,regular,Sanfrecce Hiroshima,Gamba Osaka,1,1,1.51,4.11,6.44
+2024-03-29,regular,Verdy,Kyoto,2,2,2.61,3.07,2.84
+2024-03-17,regular,Kashima Antlers,Kawasaki Frontale,2,1,2.79,3.12,2.67
+2024-03-17,regular,Shonan Bellmare,Urawa Reds,4,4,3.10,3.12,2.42
+2024-03-17,regular,Kyoto,Yokohama F. Marinos,2,3,3.07,3.58,2.23
+2024-03-16,regular,Verdy,Albirex Niigata,2,2,2.81,2.94,2.77
+2024-03-16,regular,Sagan Tosu,Cerezo Osaka,0,2,3.50,3.32,2.14
+2024-03-16,regular,Gamba Osaka,Iwata,2,1,2.24,3.30,3.27
+2024-03-16,regular,Kashiwa Reysol,Nagoya Grampus,0,2,2.09,3.08,3.99
+2024-03-16,regular,Hokkaido Consadole Sapporo,Machida,1,2,2.92,3.52,2.35
+2024-03-16,regular,Vissel Kobe,Sanfrecce Hiroshima,0,0,3.01,3.23,2.41
+2024-03-16,regular,Avispa Fukuoka,FC Tokyo,1,3,2.36,3.03,3.30
+2024-03-10,regular,Hokkaido Consadole Sapporo,Urawa Reds,0,1,3.00,3.40,2.35
+2024-03-09,regular,Cerezo Osaka,Verdy,2,1,2.29,3.06,3.41
+2024-03-09,regular,FC Tokyo,Vissel Kobe,1,2,3.27,3.34,2.23
+2024-03-09,regular,Kawasaki Frontale,Kyoto,0,1,1.87,3.62,4.10
+2024-03-09,regular,Avispa Fukuoka,Shonan Bellmare,1,1,2.59,2.95,3.07
+2024-03-09,regular,Sanfrecce Hiroshima,Sagan Tosu,4,0,1.41,4.79,7.06
+2024-03-09,regular,Albirex Niigata,Nagoya Grampus,1,0,2.37,3.07,3.30
+2024-03-09,regular,Iwata,Kashiwa Reysol,0,1,3.18,3.11,2.38
+2024-03-09,regular,Machida,Kashima Antlers,1,0,2.72,3.11,2.74
+2024-03-03,regular,Urawa Reds,Verdy,1,1,1.83,3.50,4.45
+2024-03-02,regular,Gamba Osaka,Albirex Niigata,1,0,2.64,3.14,2.78
+2024-03-02,regular,Kashima Antlers,Cerezo Osaka,1,1,2.27,3.18,3.28
+2024-03-02,regular,FC Tokyo,Sanfrecce Hiroshima,1,1,4.23,3.68,1.81
+2024-03-02,regular,Sagan Tosu,Hokkaido Consadole Sapporo,4,0,3.46,3.51,2.06
+2024-03-02,regular,Kyoto,Shonan Bellmare,1,2,2.22,3.28,3.32
+2024-03-02,regular,Nagoya Grampus,Machida,0,1,2.20,3.23,3.36
+2024-03-02,regular,Vissel Kobe,Kashiwa Reysol,0,1,1.87,3.40,4.26
+2024-03-01,regular,Yokohama F. Marinos,Avispa Fukuoka,0,1,1.75,3.70,4.56
+2024-03-01,regular,Kawasaki Frontale,Iwata,4,5,1.64,3.97,5.06
+2024-02-25,regular,Kashiwa Reysol,Kyoto,1,1,2.16,3.17,3.60
+2024-02-25,regular,Verdy,Yokohama F. Marinos,1,2,3.72,3.68,1.93
+2024-02-24,regular,Cerezo Osaka,FC Tokyo,2,2,2.26,3.21,3.26
+2024-02-24,regular,Machida,Gamba Osaka,1,1,2.34,3.19,3.19
+2024-02-24,regular,Shonan Bellmare,Kawasaki Frontale,1,2,3.72,3.56,1.96
+2024-02-24,regular,Sagan Tosu,Albirex Niigata,1,2,2.99,3.16,2.45
+2024-02-24,regular,Avispa Fukuoka,Hokkaido Consadole Sapporo,0,0,2.93,3.20,2.49
+2024-02-24,regular,Iwata,Vissel Kobe,0,2,4.31,3.71,1.79
+2024-02-23,regular,Nagoya Grampus,Kashima Antlers,0,3,2.71,2.98,2.83
+2024-02-23,regular,Sanfrecce Hiroshima,Urawa Reds,2,0,2.12,3.26,3.57

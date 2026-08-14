@@ -1,0 +1,245 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-05-31,regular,Akhmat Grozny,Ural,2,0,1.70,3.83,4.93
+2025-05-31,regular,Pari NN,Sochi,1,3,2.87,3.43,2.36
+2025-05-28,regular,Sochi,Pari NN,1,2,1.81,3.37,4.95
+2025-05-28,regular,Ural,Akhmat Grozny,2,1,2.64,3.04,2.90
+2025-05-24,regular,Zenit,Akhmat Grozny,3,0,1.19,7.01,13.55
+2025-05-24,regular,Akron Togliatti,Lokomotiv Moscow,1,4,2.54,3.88,2.46
+2025-05-24,regular,CSKA Moscow,Pari NN,2,0,1.40,4.73,7.71
+2025-05-24,regular,Dynamo Makhachkala,FK Rostov,1,1,2.31,3.38,3.09
+2025-05-24,regular,Krasnodar,Dynamo Moscow,3,0,1.61,4.59,4.72
+2025-05-24,regular,Fakel Voronezh,Krylya Sovetov,1,1,2.56,3.22,2.84
+2025-05-24,regular,Spartak Moscow,Khimki,5,0,1.42,5.11,6.58
+2025-05-24,regular,Rubin Kazan,Orenburg,4,2,1.76,4.18,4.09
+2025-05-19,regular,Lokomotiv Moscow,CSKA Moscow,2,2,3.04,3.35,2.37
+2025-05-18,regular,FK Rostov,Zenit,0,1,9.27,5.17,1.32
+2025-05-18,regular,Dynamo Moscow,Akron Togliatti,2,1,1.39,5.49,6.74
+2025-05-18,regular,Akhmat Grozny,Dynamo Makhachkala,1,1,2.12,3.45,3.44
+2025-05-18,regular,Krylya Sovetov,Spartak Moscow,0,2,2.72,3.61,2.44
+2025-05-17,regular,Pari NN,Fakel Voronezh,1,1,1.99,3.29,4.11
+2025-05-17,regular,Khimki,Rubin Kazan,3,2,2.24,3.44,3.19
+2025-05-17,regular,Orenburg,Krasnodar,1,2,5.12,4.24,1.62
+2025-05-12,regular,Pari NN,Krylya Sovetov,5,2,3.27,3.18,2.37
+2025-05-11,regular,Dynamo Moscow,Spartak Moscow,2,0,2.82,3.59,2.44
+2025-05-11,regular,Rubin Kazan,FK Rostov,1,0,2.36,3.30,3.15
+2025-05-11,regular,Fakel Voronezh,Lokomotiv Moscow,0,1,2.74,3.33,2.65
+2025-05-11,regular,Akron Togliatti,Akhmat Grozny,3,2,3.35,3.37,2.23
+2025-05-10,regular,CSKA Moscow,Krasnodar,1,0,2.80,3.35,2.57
+2025-05-10,regular,Dynamo Makhachkala,Zenit,0,1,7.57,4.25,1.48
+2025-05-10,regular,Orenburg,Khimki,1,1,2.02,3.91,3.45
+2025-05-05,regular,Krylya Sovetov,Dynamo Moscow,1,3,2.53,3.63,2.69
+2025-05-04,regular,Khimki,FK Rostov,1,1,2.49,3.65,2.72
+2025-05-04,regular,Zenit,Pari NN,2,1,1.16,7.71,17.19
+2025-05-04,regular,Akhmat Grozny,CSKA Moscow,1,1,2.43,3.29,3.07
+2025-05-04,regular,Fakel Voronezh,Spartak Moscow,0,0,6.31,3.94,1.59
+2025-05-03,regular,Krasnodar,Rubin Kazan,2,1,1.39,4.84,8.26
+2025-05-03,regular,Lokomotiv Moscow,Orenburg,1,1,1.70,4.29,4.42
+2025-05-02,regular,Akron Togliatti,Dynamo Makhachkala,1,0,2.25,3.22,3.47
+2025-04-27,regular,Rubin Kazan,Fakel Voronezh,2,1,2.09,3.23,3.90
+2025-04-27,regular,Khimki,Akron Togliatti,2,2,2.64,3.27,2.79
+2025-04-27,regular,Krylya Sovetov,Orenburg,2,0,1.81,3.89,4.27
+2025-04-26,regular,Spartak Moscow,CSKA Moscow,1,2,1.66,3.81,5.50
+2025-04-26,regular,FK Rostov,Lokomotiv Moscow,1,1,2.33,3.76,2.86
+2025-04-26,regular,Pari NN,Akhmat Grozny,1,0,3.71,3.35,2.11
+2025-04-26,regular,Dynamo Moscow,Zenit,1,1,4.57,3.83,1.78
+2025-04-25,regular,Dynamo Makhachkala,Krasnodar,2,3,5.37,3.66,1.71
+2025-04-20,regular,CSKA Moscow,Krylya Sovetov,1,1,1.92,3.48,4.32
+2025-04-20,regular,Zenit,Khimki,1,0,1.12,10.10,19.56
+2025-04-20,regular,Dynamo Moscow,Rubin Kazan,3,1,1.75,3.81,4.76
+2025-04-20,regular,Fakel Voronezh,FK Rostov,0,2,3.43,3.43,2.18
+2025-04-19,regular,Krasnodar,Akhmat Grozny,3,1,1.78,3.58,4.90
+2025-04-19,regular,Lokomotiv Moscow,Pari NN,3,0,1.74,3.77,4.89
+2025-04-19,regular,Akron Togliatti,Spartak Moscow,2,3,5.24,4.23,1.62
+2025-04-19,regular,Orenburg,Dynamo Makhachkala,2,1,2.17,3.54,3.33
+2025-04-13,regular,Khimki,Krylya Sovetov,1,3,3.19,3.15,2.42
+2025-04-13,regular,Zenit,Krasnodar,4,1,1.63,3.97,5.60
+2025-04-13,regular,Akron Togliatti,Fakel Voronezh,1,0,1.87,3.54,4.38
+2025-04-12,regular,Akhmat Grozny,FK Rostov,2,1,2.16,3.34,3.52
+2025-04-12,regular,Rubin Kazan,Lokomotiv Moscow,1,0,3.15,3.33,2.34
+2025-04-12,regular,Pari NN,Dynamo Moscow,1,1,4.11,3.82,1.83
+2025-04-12,regular,Orenburg,CSKA Moscow,0,2,3.33,3.44,2.20
+2025-04-11,regular,Spartak Moscow,Dynamo Makhachkala,1,2,1.34,5.10,9.70
+2025-04-06,regular,CSKA Moscow,Dynamo Moscow,3,1,2.25,3.49,3.24
+2025-04-06,regular,FK Rostov,Spartak Moscow,0,3,3.08,3.51,2.32
+2025-04-06,regular,Dynamo Makhachkala,Khimki,4,1,2.05,3.31,3.98
+2025-04-05,regular,Krasnodar,Akron Togliatti,1,0,1.38,5.22,7.89
+2025-04-05,regular,Lokomotiv Moscow,Zenit,1,1,4.65,3.73,1.78
+2025-04-05,regular,Fakel Voronezh,Akhmat Grozny,0,0,3.93,3.23,2.09
+2025-04-05,regular,Krylya Sovetov,Rubin Kazan,1,1,2.14,3.27,3.73
+2025-04-04,regular,Pari NN,Orenburg,1,2,2.25,3.38,3.33
+2025-03-31,regular,Akron Togliatti,FK Rostov,2,3,3.43,3.58,2.12
+2025-03-30,regular,Zenit,Rubin Kazan,4,0,1.28,5.56,11.36
+2025-03-30,regular,Akhmat Grozny,Spartak Moscow,0,0,4.15,3.53,1.94
+2025-03-30,regular,Krasnodar,Fakel Voronezh,5,0,1.49,4.15,7.60
+2025-03-29,regular,CSKA Moscow,Dynamo Makhachkala,2,0,1.66,3.61,6.14
+2025-03-29,regular,Khimki,Pari NN,2,0,2.57,3.29,2.86
+2025-03-29,regular,Dynamo Moscow,Orenburg,5,1,1.42,5.12,7.07
+2025-03-28,regular,Krylya Sovetov,Lokomotiv Moscow,5,1,3.95,3.57,1.98
+2025-03-16,regular,Spartak Moscow,Zenit,2,1,2.70,3.04,2.93
+2025-03-16,regular,FK Rostov,Krasnodar,0,1,2.41,3.44,3.00
+2025-03-16,regular,Rubin Kazan,Pari NN,1,0,2.40,3.13,3.28
+2025-03-16,regular,Akron Togliatti,CSKA Moscow,1,2,4.33,3.40,1.96
+2025-03-15,regular,Lokomotiv Moscow,Dynamo Moscow,2,1,2.29,3.51,3.19
+2025-03-15,regular,Dynamo Makhachkala,Krylya Sovetov,4,0,2.39,3.12,3.36
+2025-03-15,regular,Khimki,Akhmat Grozny,1,1,3.10,3.45,2.35
+2025-03-15,regular,Orenburg,Fakel Voronezh,1,0,2.38,3.25,3.22
+2025-03-09,regular,Rubin Kazan,Spartak Moscow,2,1,5.30,3.65,1.75
+2025-03-09,regular,Krylya Sovetov,Akron Togliatti,0,2,2.26,3.22,3.51
+2025-03-08,regular,Dynamo Moscow,Dynamo Makhachkala,4,0,1.71,3.71,5.37
+2025-03-08,regular,CSKA Moscow,Khimki,1,0,1.69,3.96,5.18
+2025-03-08,regular,Fakel Voronezh,Zenit,0,2,8.39,4.32,1.44
+2025-03-08,regular,Orenburg,FK Rostov,1,2,3.78,4.00,1.91
+2025-03-07,regular,Lokomotiv Moscow,Akhmat Grozny,1,1,1.74,4.06,4.58
+2025-03-07,regular,Pari NN,Krasnodar,0,3,4.97,3.28,1.88
+2025-03-02,regular,FK Rostov,Dynamo Moscow,1,1,2.69,3.73,2.56
+2025-03-02,regular,Spartak Moscow,Orenburg,2,0,1.29,6.02,10.20
+2025-03-02,regular,Khimki,Fakel Voronezh,1,0,2.25,3.16,3.65
+2025-03-01,regular,Krasnodar,Krylya Sovetov,1,1,1.46,4.59,7.12
+2025-03-01,regular,Akhmat Grozny,Rubin Kazan,2,1,2.28,3.17,3.51
+2025-03-01,regular,Zenit,CSKA Moscow,0,0,1.85,3.46,4.74
+2025-03-01,regular,Pari NN,Akron Togliatti,2,1,2.59,3.31,2.86
+2025-02-28,regular,Dynamo Makhachkala,Lokomotiv Moscow,1,1,3.55,3.19,2.28
+2024-12-08,regular,Krasnodar,Lokomotiv Moscow,0,0,1.84,4.00,4.14
+2024-12-08,regular,Akhmat Grozny,Orenburg,1,0,1.78,3.79,4.67
+2024-12-08,regular,Fakel Voronezh,CSKA Moscow,0,1,4.65,3.03,2.02
+2024-12-08,regular,Dynamo Moscow,Khimki,4,1,1.41,5.48,6.70
+2024-12-07,regular,Dynamo Makhachkala,Rubin Kazan,2,3,2.93,2.79,2.95
+2024-12-07,regular,Zenit,Akron Togliatti,1,2,1.15,8.92,16.04
+2024-12-07,regular,FK Rostov,Krylya Sovetov,3,1,1.67,4.06,5.10
+2024-12-07,regular,Spartak Moscow,Pari NN,3,0,1.18,7.30,17.19
+2024-12-02,regular,Akhmat Grozny,Dynamo Moscow,1,1,3.30,3.92,2.08
+2024-12-01,regular,Krasnodar,Spartak Moscow,0,3,2.29,3.40,3.26
+2024-12-01,regular,Dynamo Makhachkala,Fakel Voronezh,0,0,2.26,2.84,4.11
+2024-12-01,regular,Zenit,Krylya Sovetov,2,3,1.25,6.39,11.50
+2024-12-01,regular,Lokomotiv Moscow,Khimki,1,3,1.59,4.47,5.35
+2024-11-30,regular,FK Rostov,Pari NN,4,0,1.51,4.29,6.91
+2024-11-30,regular,CSKA Moscow,Rubin Kazan,2,2,1.83,3.53,4.91
+2024-11-30,regular,Akron Togliatti,Orenburg,1,0,2.21,3.45,3.39
+2024-11-24,regular,Pari NN,Dynamo Makhachkala,0,0,3.43,2.90,2.49
+2024-11-24,regular,Fakel Voronezh,Dynamo Moscow,1,1,4.06,3.53,1.97
+2024-11-24,regular,Krylya Sovetov,Akhmat Grozny,2,1,2.33,3.29,3.29
+2024-11-23,regular,Spartak Moscow,Lokomotiv Moscow,5,2,2.13,3.69,3.34
+2024-11-23,regular,Khimki,Krasnodar,2,2,4.67,4.10,1.72
+2024-11-23,regular,CSKA Moscow,FK Rostov,1,2,1.87,3.60,4.43
+2024-11-23,regular,Orenburg,Zenit,0,1,7.51,4.97,1.41
+2024-11-22,regular,Rubin Kazan,Akron Togliatti,3,0,1.87,3.52,4.51
+2024-11-10,regular,Rubin Kazan,Krasnodar,1,1,4.52,3.56,1.87
+2024-11-10,regular,Akhmat Grozny,Zenit,1,2,7.15,4.38,1.49
+2024-11-10,regular,Spartak Moscow,Akron Togliatti,4,0,1.40,5.08,7.60
+2024-11-10,regular,Krylya Sovetov,CSKA Moscow,1,2,3.82,3.33,2.10
+2024-11-09,regular,Dynamo Moscow,Pari NN,3,1,1.33,5.86,8.48
+2024-11-09,regular,FK Rostov,Khimki,3,1,1.82,3.86,4.35
+2024-11-09,regular,Dynamo Makhachkala,Orenburg,2,1,2.42,3.05,3.37
+2024-11-09,regular,Lokomotiv Moscow,Fakel Voronezh,2,1,1.35,5.05,9.83
+2024-11-03,regular,Krasnodar,Orenburg,4,0,1.33,5.53,9.09
+2024-11-03,regular,Fakel Voronezh,Khimki,1,1,2.82,2.97,2.88
+2024-11-03,regular,Akhmat Grozny,Pari NN,0,2,1.74,3.73,5.15
+2024-11-03,regular,Akron Togliatti,Krylya Sovetov,2,0,3.68,3.41,2.04
+2024-11-02,regular,CSKA Moscow,Spartak Moscow,0,2,2.34,3.20,3.33
+2024-11-02,regular,Zenit,Dynamo Makhachkala,2,1,1.24,5.95,15.44
+2024-11-02,regular,Lokomotiv Moscow,Rubin Kazan,1,0,1.70,3.98,5.08
+2024-11-01,regular,Dynamo Moscow,FK Rostov,1,1,1.68,4.42,4.61
+2024-10-28,regular,Krylya Sovetov,Krasnodar,1,2,4.76,3.79,1.77
+2024-10-27,regular,Zenit,Lokomotiv Moscow,1,1,1.59,4.27,5.74
+2024-10-27,regular,Khimki,Dynamo Moscow,3,4,4.05,4.03,1.85
+2024-10-27,regular,Pari NN,Spartak Moscow,0,2,6.37,4.06,1.57
+2024-10-27,regular,Orenburg,Rubin Kazan,1,2,2.11,3.53,3.54
+2024-10-26,regular,FK Rostov,Akhmat Grozny,2,3,1.78,3.77,4.75
+2024-10-26,regular,CSKA Moscow,Fakel Voronezh,0,0,1.31,5.21,11.82
+2024-10-26,regular,Dynamo Makhachkala,Akron Togliatti,1,1,2.13,3.29,3.79
+2024-10-20,regular,Rubin Kazan,Dynamo Moscow,0,4,5.03,3.97,1.67
+2024-10-20,regular,Orenburg,Krylya Sovetov,2,2,2.50,3.64,2.75
+2024-10-19,regular,Dynamo Makhachkala,CSKA Moscow,0,1,5.45,3.52,1.75
+2024-10-19,regular,Khimki,Lokomotiv Moscow,2,0,4.45,4.18,1.75
+2024-10-19,regular,Spartak Moscow,Krasnodar,0,3,2.53,3.33,2.96
+2024-10-19,regular,Pari NN,FK Rostov,1,1,4.40,3.80,1.83
+2024-10-18,regular,Akhmat Grozny,Fakel Voronezh,2,3,1.81,3.44,5.09
+2024-10-18,regular,Akron Togliatti,Zenit,0,5,8.27,5.05,1.38
+2024-10-06,regular,Dynamo Moscow,CSKA Moscow,1,2,2.45,3.52,2.88
+2024-10-06,regular,Krasnodar,Khimki,4,0,1.37,5.36,8.01
+2024-10-06,regular,Lokomotiv Moscow,Krylya Sovetov,1,0,1.54,4.49,5.95
+2024-10-06,regular,Fakel Voronezh,Dynamo Makhachkala,1,1,2.98,2.71,3.00
+2024-10-05,regular,Rubin Kazan,Akhmat Grozny,2,0,2.27,3.32,3.37
+2024-10-05,regular,Spartak Moscow,FK Rostov,3,0,1.84,3.73,4.37
+2024-10-05,regular,Zenit,Orenburg,1,0,1.21,6.95,15.03
+2024-10-05,regular,Akron Togliatti,Pari NN,2,2,1.82,3.81,4.39
+2024-09-29,regular,Dynamo Makhachkala,Dynamo Moscow,0,1,4.72,3.71,1.79
+2024-09-29,regular,Krylya Sovetov,Khimki,0,0,1.95,3.68,3.91
+2024-09-28,regular,FK Rostov,Akron Togliatti,0,2,1.52,4.56,6.13
+2024-09-28,regular,Krasnodar,Zenit,2,0,3.43,3.18,2.34
+2024-09-28,regular,Lokomotiv Moscow,Spartak Moscow,3,1,2.72,3.46,2.64
+2024-09-28,regular,CSKA Moscow,Akhmat Grozny,3,0,1.51,4.34,6.72
+2024-09-27,regular,Fakel Voronezh,Rubin Kazan,0,0,3.30,2.94,2.53
+2024-09-27,regular,Orenburg,Pari NN,1,2,1.55,4.38,5.96
+2024-09-23,regular,Akhmat Grozny,Krylya Sovetov,1,1,2.45,3.50,2.90
+2024-09-22,regular,Pari NN,Lokomotiv Moscow,1,3,7.78,4.89,1.41
+2024-09-22,regular,FK Rostov,Dynamo Makhachkala,0,0,1.52,4.27,6.72
+2024-09-22,regular,Spartak Moscow,Dynamo Moscow,2,2,1.99,3.75,3.76
+2024-09-22,regular,Khimki,Orenburg,0,0,2.22,3.91,3.02
+2024-09-21,regular,Rubin Kazan,CSKA Moscow,1,1,3.51,3.42,2.20
+2024-09-21,regular,Zenit,Fakel Voronezh,3,1,1.18,7.32,17.42
+2024-09-21,regular,Akron Togliatti,Krasnodar,2,5,5.45,3.99,1.65
+2024-09-15,regular,Dynamo Makhachkala,Spartak Moscow,1,1,5.72,3.68,1.63
+2024-09-15,regular,Akron Togliatti,Khimki,3,0,2.76,3.53,2.55
+2024-09-15,regular,Dynamo Moscow,Akhmat Grozny,4,2,1.55,4.50,5.81
+2024-09-14,regular,Krasnodar,FK Rostov,2,0,1.99,3.48,4.04
+2024-09-14,regular,CSKA Moscow,Zenit,0,1,3.18,3.28,2.42
+2024-09-14,regular,Fakel Voronezh,Pari NN,0,0,1.97,3.13,4.71
+2024-09-14,regular,Orenburg,Lokomotiv Moscow,2,4,3.53,3.99,1.99
+2024-09-13,regular,Rubin Kazan,Krylya Sovetov,0,2,2.08,3.51,3.67
+2024-09-01,regular,FK Rostov,Fakel Voronezh,4,1,1.43,4.52,7.82
+2024-09-01,regular,Lokomotiv Moscow,Krasnodar,0,3,2.29,3.54,3.10
+2024-09-01,regular,Krylya Sovetov,Dynamo Makhachkala,0,1,1.74,3.64,5.25
+2024-09-01,regular,Orenburg,Dynamo Moscow,2,2,3.55,4.05,1.98
+2024-08-31,regular,Akhmat Grozny,Akron Togliatti,0,0,1.92,3.66,4.09
+2024-08-31,regular,Spartak Moscow,Rubin Kazan,1,0,1.52,4.45,6.24
+2024-08-31,regular,Pari NN,Zenit,0,3,10.97,5.29,1.31
+2024-08-31,regular,Khimki,CSKA Moscow,0,2,4.75,3.89,1.76
+2024-08-25,regular,Lokomotiv Moscow,FK Rostov,3,2,2.07,3.75,3.51
+2024-08-25,regular,Dynamo Moscow,Krasnodar,0,1,2.30,3.80,3.00
+2024-08-25,regular,Krylya Sovetov,Pari NN,3,1,1.72,3.87,4.98
+2024-08-24,regular,Akhmat Grozny,Khimki,3,3,2.23,3.51,3.31
+2024-08-24,regular,Fakel Voronezh,Orenburg,1,0,2.79,3.35,2.63
+2024-08-24,regular,Zenit,Spartak Moscow,0,0,1.87,3.69,4.26
+2024-08-24,regular,CSKA Moscow,Akron Togliatti,4,0,1.36,5.28,8.45
+2024-08-23,regular,Rubin Kazan,Dynamo Makhachkala,2,0,1.95,3.40,4.30
+2024-08-19,regular,Dynamo Makhachkala,Akhmat Grozny,1,0,3.22,2.93,2.58
+2024-08-19,regular,Akron Togliatti,Rubin Kazan,1,2,3.29,3.35,2.29
+2024-08-18,regular,Krasnodar,Pari NN,2,1,1.33,5.08,10.74
+2024-08-18,regular,CSKA Moscow,Lokomotiv Moscow,0,1,2.15,3.69,3.31
+2024-08-18,regular,Spartak Moscow,Fakel Voronezh,3,0,1.28,5.51,12.16
+2024-08-18,regular,Khimki,Zenit,1,1,8.55,5.14,1.37
+2024-08-17,regular,FK Rostov,Orenburg,3,2,1.65,4.24,5.02
+2024-08-17,regular,Dynamo Moscow,Krylya Sovetov,1,0,1.55,4.68,5.53
+2024-08-11,regular,Spartak Moscow,Akhmat Grozny,0,0,1.45,4.82,6.93
+2024-08-11,regular,Krylya Sovetov,Fakel Voronezh,2,0,1.93,3.39,4.51
+2024-08-10,regular,Krasnodar,CSKA Moscow,2,1,2.74,3.35,2.66
+2024-08-10,regular,Orenburg,Akron Togliatti,2,2,1.77,4.08,4.36
+2024-08-10,regular,Zenit,Dynamo Moscow,1,0,1.49,4.79,6.25
+2024-08-10,regular,Lokomotiv Moscow,Dynamo Makhachkala,2,0,1.49,4.44,6.96
+2024-08-09,regular,FK Rostov,Rubin Kazan,1,1,1.97,3.68,3.85
+2024-08-09,regular,Pari NN,Khimki,1,0,2.82,3.39,2.56
+2024-08-05,regular,Spartak Moscow,Krylya Sovetov,3,0,1.39,5.19,7.86
+2024-08-04,regular,Akhmat Grozny,Lokomotiv Moscow,0,5,3.17,4.12,2.09
+2024-08-04,regular,Dynamo Makhachkala,Pari NN,0,1,2.18,3.12,3.88
+2024-08-04,regular,Fakel Voronezh,Krasnodar,0,0,7.89,4.48,1.45
+2024-08-04,regular,CSKA Moscow,Orenburg,5,1,1.48,4.70,6.79
+2024-08-03,regular,Rubin Kazan,Khimki,2,3,1.76,3.89,4.70
+2024-08-03,regular,Zenit,FK Rostov,5,0,1.55,4.27,6.13
+2024-08-03,regular,Akron Togliatti,Dynamo Moscow,0,2,4.20,3.99,1.82
+2024-07-28,regular,Krasnodar,Dynamo Makhachkala,0,0,1.45,4.53,7.56
+2024-07-28,regular,Orenburg,Akhmat Grozny,0,0,2.23,3.68,3.15
+2024-07-28,regular,Khimki,Spartak Moscow,1,3,3.48,3.47,2.18
+2024-07-27,regular,Fakel Voronezh,Akron Togliatti,0,2,2.07,3.28,4.02
+2024-07-27,regular,Dynamo Moscow,Lokomotiv Moscow,3,1,2.15,3.86,3.22
+2024-07-27,regular,Rubin Kazan,Zenit,0,4,5.03,3.82,1.73
+2024-07-27,regular,Pari NN,CSKA Moscow,0,3,6.26,4.43,1.53
+2024-07-26,regular,Krylya Sovetov,FK Rostov,1,3,3.13,3.43,2.33
+2024-07-22,regular,Pari NN,Rubin Kazan,2,4,2.76,3.15,2.78
+2024-07-21,regular,Akhmat Grozny,Krasnodar,1,1,2.69,3.61,2.57
+2024-07-21,regular,Khimki,Dynamo Makhachkala,1,1,2.14,3.27,3.79
+2024-07-21,regular,Orenburg,Spartak Moscow,2,0,3.34,3.71,2.14
+2024-07-20,regular,FK Rostov,CSKA Moscow,0,0,2.75,3.40,2.62
+2024-07-20,regular,Dynamo Moscow,Fakel Voronezh,3,1,1.65,3.83,5.81
+2024-07-20,regular,Krylya Sovetov,Zenit,0,4,4.55,3.69,1.83
+2024-07-20,regular,Lokomotiv Moscow,Akron Togliatti,3,2,1.61,4.24,5.38

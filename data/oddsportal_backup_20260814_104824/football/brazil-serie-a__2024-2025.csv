@@ -1,0 +1,385 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2024-12-08,regular,Atletico-MG,Athletico-PR,1,0,2.07,3.12,4.07
+2024-12-08,regular,Bahia,Atletico GO,2,0,1.43,4.75,7.12
+2024-12-08,regular,Botafogo RJ,Sao Paulo,2,1,1.27,5.23,13.44
+2024-12-08,regular,Bragantino,Criciuma,5,1,1.39,4.84,7.85
+2024-12-08,regular,Gremio,Corinthians,0,3,2.70,3.39,2.60
+2024-12-08,regular,Juventude,Cruzeiro,0,1,2.13,3.39,3.48
+2024-12-08,regular,Cuiaba,Vasco,1,2,3.55,3.20,2.20
+2024-12-08,regular,Flamengo RJ,Vitoria,2,2,1.37,5.04,7.82
+2024-12-08,regular,Palmeiras,Fluminense,0,1,1.47,4.43,6.82
+2024-12-08,regular,Fortaleza,Internacional,3,0,2.60,3.21,2.84
+2024-12-06,regular,Athletico-PR,Bragantino,1,2,2.15,3.23,3.63
+2024-12-06,regular,Fluminense,Cuiaba,1,0,1.37,4.52,9.98
+2024-12-05,regular,Atletico GO,Fortaleza,3,1,2.63,3.25,2.78
+2024-12-05,regular,Internacional,Botafogo RJ,0,1,2.74,3.27,2.63
+2024-12-05,regular,Cruzeiro,Palmeiras,1,2,3.99,3.40,1.97
+2024-12-05,regular,Criciuma,Flamengo RJ,0,3,3.16,3.69,2.18
+2024-12-05,regular,Sao Paulo,Juventude,1,2,1.70,3.74,5.11
+2024-12-05,regular,Vitoria,Gremio,1,1,2.41,3.16,3.18
+2024-12-05,regular,Vasco,Atletico-MG,2,0,3.05,2.90,2.65
+2024-12-04,regular,Corinthians,Bahia,3,0,1.69,3.97,4.81
+2024-12-02,regular,Athletico-PR,Fluminense,1,1,2.28,2.94,3.68
+2024-12-02,regular,Bragantino,Cruzeiro,1,1,2.02,3.33,3.95
+2024-12-02,regular,Vitoria,Fortaleza,2,0,2.23,3.20,3.44
+2024-12-01,regular,Flamengo RJ,Internacional,3,2,1.91,3.42,4.28
+2024-12-01,regular,Gremio,Sao Paulo,2,1,2.35,3.17,3.23
+2024-12-01,regular,Vasco,Atletico GO,2,2,1.93,3.38,4.26
+2024-12-01,regular,Cuiaba,Bahia,1,2,4.23,3.43,1.92
+2024-12-01,regular,Criciuma,Corinthians,2,4,3.43,3.30,2.20
+2024-11-28,regular,Cruzeiro,Gremio,1,1,2.02,3.32,3.93
+2024-11-27,regular,Atletico-MG,Juventude,2,3,2.54,3.03,3.08
+2024-11-27,regular,Palmeiras,Botafogo RJ,1,3,2.04,3.24,4.01
+2024-11-27,regular,Fortaleza,Flamengo RJ,0,0,3.16,3.23,2.37
+2024-11-27,regular,Fluminense,Criciuma,0,0,1.63,3.67,6.02
+2024-11-24,regular,Bahia,Athletico-PR,1,1,1.71,3.99,4.63
+2024-11-24,regular,Internacional,Bragantino,4,1,1.58,4.18,5.58
+2024-11-24,regular,Corinthians,Vasco,3,1,1.60,3.95,5.72
+2024-11-24,regular,Sao Paulo,Atletico-MG,2,2,1.99,3.11,4.39
+2024-11-24,regular,Atletico GO,Palmeiras,0,1,8.35,5.20,1.35
+2024-11-24,regular,Botafogo RJ,Vitoria,1,1,1.38,4.83,8.56
+2024-11-24,regular,Juventude,Cuiaba,1,1,1.62,3.74,6.10
+2024-11-23,regular,Fluminense,Fortaleza,2,2,2.05,3.24,3.93
+2024-11-22,regular,Vasco,Internacional,0,1,3.65,3.28,2.13
+2024-11-21,regular,Atletico-MG,Botafogo RJ,0,0,3.99,3.22,2.05
+2024-11-21,regular,Cuiaba,Flamengo RJ,1,2,4.28,3.34,1.93
+2024-11-21,regular,Gremio,Juventude,2,2,1.81,3.62,4.49
+2024-11-21,regular,Bahia,Palmeiras,1,2,3.26,3.61,2.14
+2024-11-20,regular,Athletico-PR,Atletico GO,2,0,1.66,3.80,5.34
+2024-11-20,regular,Bragantino,Sao Paulo,1,1,2.49,3.08,3.09
+2024-11-20,regular,Criciuma,Vitoria,0,1,2.10,3.28,3.74
+2024-11-20,regular,Corinthians,Cruzeiro,2,1,1.49,4.23,6.92
+2024-12-01,regular,Athletico-PR,Fluminense,1,1,2.28,2.94,3.68
+2024-12-01,regular,Bragantino,Cruzeiro,1,1,2.02,3.33,3.95
+2024-12-01,regular,Vitoria,Fortaleza,2,0,2.23,3.20,3.44
+2024-11-20,regular,Bahia,Palmeiras,1,2,3.26,3.61,2.14
+2024-11-17,regular,Athletico-PR,Atletico-MG,1,0,2.32,3.22,3.24
+2024-11-14,regular,Flamengo RJ,Atletico-MG,0,0,1.99,3.30,4.09
+2024-11-10,regular,Sao Paulo,Athletico-PR,2,1,1.56,3.91,6.45
+2024-11-10,regular,Atletico GO,Bragantino,0,0,2.65,3.38,2.64
+2024-11-10,regular,Juventude,Bahia,2,1,2.48,3.44,2.81
+2024-11-10,regular,Cruzeiro,Criciuma,2,1,1.63,3.78,5.76
+2024-11-10,regular,Fortaleza,Vasco,3,0,1.72,3.73,4.97
+2024-11-09,regular,Botafogo RJ,Cuiaba,0,0,1.23,5.98,14.03
+2024-11-09,regular,Vitoria,Corinthians,1,2,3.15,3.12,2.44
+2024-11-09,regular,Palmeiras,Gremio,1,0,1.38,5.18,7.58
+2024-11-09,regular,Internacional,Fluminense,2,0,1.48,4.24,7.15
+2024-11-07,regular,Atletico GO,Atletico-MG,1,0,2.28,3.20,3.37
+2024-11-07,regular,Cruzeiro,Flamengo RJ,0,1,2.60,3.11,2.93
+2024-11-06,regular,Bahia,Sao Paulo,0,3,2.31,3.11,3.38
+2024-11-06,regular,Botafogo RJ,Vasco,3,0,1.39,4.76,8.21
+2024-11-06,regular,Internacional,Criciuma,2,0,1.36,5.05,8.26
+2024-11-05,regular,Corinthians,Palmeiras,2,0,3.17,3.25,2.35
+2024-11-03,regular,Athletico-PR,Vitoria,1,2,1.83,3.36,4.92
+2024-11-03,regular,Juventude,Fortaleza,0,3,2.52,3.22,2.92
+2024-11-02,regular,Bragantino,Cuiaba,0,0,1.70,3.46,5.90
+2024-11-02,regular,Fluminense,Gremio,2,2,2.10,3.23,3.75
+2024-10-31,regular,Internacional,Flamengo RJ,1,1,1.86,3.47,4.43
+2024-10-29,regular,Vasco,Bahia,3,2,2.83,3.35,2.52
+2024-10-29,regular,Cuiaba,Corinthians,0,1,3.30,3.06,2.37
+2024-10-27,regular,Criciuma,Sao Paulo,1,1,3.18,3.05,2.40
+2024-10-27,regular,Atletico-MG,Internacional,1,3,3.46,3.10,2.29
+2024-10-27,regular,Bragantino,Botafogo RJ,0,1,3.62,3.42,2.08
+2024-10-27,regular,Athletico-PR,Cruzeiro,3,0,1.86,3.46,4.44
+2024-10-26,regular,Gremio,Atletico GO,3,1,1.57,4.12,5.77
+2024-10-26,regular,Flamengo RJ,Juventude,4,2,1.35,4.94,9.32
+2024-10-26,regular,Vitoria,Fluminense,2,1,2.45,2.92,3.34
+2024-10-26,regular,Palmeiras,Fortaleza,2,2,1.37,5.05,8.19
+2024-10-25,regular,Vasco,Cuiaba,1,0,1.81,3.31,5.17
+2024-10-23,regular,Fluminense,Athletico-PR,1,0,1.79,3.40,5.04
+2024-10-21,regular,Juventude,Palmeiras,3,5,5.23,3.79,1.67
+2024-10-19,regular,Vitoria,Bragantino,1,0,2.23,3.14,3.50
+2024-10-19,regular,Internacional,Gremio,1,0,1.76,3.56,4.95
+2024-10-19,regular,Cruzeiro,Bahia,1,1,1.91,3.55,4.06
+2024-10-19,regular,Botafogo RJ,Criciuma,1,1,1.33,5.33,9.19
+2024-10-19,regular,Atletico GO,Cuiaba,0,0,2.20,3.12,3.67
+2024-10-18,regular,Corinthians,Athletico-PR,5,2,1.62,3.97,5.56
+2024-10-18,regular,Flamengo RJ,Fluminense,0,2,1.73,3.36,5.75
+2024-10-17,regular,Fortaleza,Atletico-MG,1,1,1.71,3.51,5.64
+2024-10-17,regular,Sao Paulo,Vasco,3,0,1.81,3.51,4.67
+2024-10-10,regular,Atletico-MG,Gremio,2,1,1.80,3.64,4.51
+2024-10-06,regular,Vasco,Juventude,1,1,1.75,3.62,5.02
+2024-10-06,regular,Bahia,Flamengo RJ,0,2,2.75,3.30,2.61
+2024-10-06,regular,Corinthians,Internacional,2,2,2.25,3.22,3.34
+2024-10-06,regular,Cuiaba,Sao Paulo,2,0,3.74,2.84,2.33
+2024-10-05,regular,Atletico-MG,Vitoria,2,2,1.79,3.31,5.35
+2024-10-05,regular,Athletico-PR,Botafogo RJ,0,1,3.19,3.52,2.19
+2024-10-05,regular,Bragantino,Palmeiras,0,0,4.35,3.62,1.83
+2024-10-05,regular,Gremio,Fortaleza,3,1,2.12,3.41,3.48
+2024-10-04,regular,Fluminense,Cruzeiro,1,0,2.45,2.99,3.25
+2024-10-04,regular,Criciuma,Atletico GO,2,0,1.86,3.56,4.27
+2024-09-30,regular,Flamengo RJ,Athletico-PR,1,0,1.67,3.80,5.26
+2024-09-30,regular,Bahia,Criciuma,1,0,1.62,4.04,5.33
+2024-09-30,regular,Cruzeiro,Vasco,1,1,1.80,3.52,4.71
+2024-09-30,regular,Internacional,Vitoria,3,1,1.39,4.81,8.21
+2024-09-29,regular,Atletico GO,Fluminense,1,0,2.49,3.15,3.03
+2024-09-29,regular,Sao Paulo,Corinthians,3,1,2.60,2.92,3.08
+2024-09-29,regular,Fortaleza,Cuiaba,1,0,1.74,3.61,5.06
+2024-09-29,regular,Juventude,Bragantino,1,1,2.62,3.16,2.85
+2024-09-29,regular,Botafogo RJ,Gremio,0,0,1.68,3.94,4.83
+2024-09-29,regular,Palmeiras,Atletico-MG,2,1,1.71,3.66,5.26
+2024-09-26,regular,Bragantino,Internacional,2,2,3.23,3.29,2.30
+2024-09-26,regular,Gremio,Criciuma,1,2,1.70,3.89,4.88
+2024-09-23,regular,Criciuma,Athletico-PR,0,0,2.23,3.38,3.31
+2024-09-23,regular,Cuiaba,Cruzeiro,0,0,2.83,2.90,2.85
+2024-09-23,regular,Gremio,Flamengo RJ,3,2,1.83,3.59,4.41
+2024-09-23,regular,Sao Paulo,Internacional,1,3,2.86,2.89,2.83
+2024-09-22,regular,Atletico-MG,Bragantino,3,0,2.17,3.36,3.45
+2024-09-22,regular,Vasco,Palmeiras,0,1,4.22,3.85,1.80
+2024-09-22,regular,Fortaleza,Bahia,4,1,2.58,3.23,2.84
+2024-09-22,regular,Fluminense,Botafogo RJ,0,1,3.45,3.18,2.25
+2024-09-21,regular,Corinthians,Atletico GO,3,0,1.60,3.81,6.14
+2024-09-21,regular,Vitoria,Juventude,1,0,2.03,3.27,3.99
+2024-09-17,regular,Internacional,Cuiaba,3,0,1.48,3.96,7.99
+2024-09-16,regular,Bahia,Atletico-MG,3,0,1.93,3.54,4.00
+2024-09-16,regular,Cruzeiro,Sao Paulo,0,1,1.85,3.24,5.02
+2024-09-16,regular,Flamengo RJ,Vasco,1,1,1.73,3.65,5.05
+2024-09-15,regular,Bragantino,Gremio,2,2,2.41,3.44,2.89
+2024-09-15,regular,Palmeiras,Criciuma,5,0,1.29,5.50,10.46
+2024-09-15,regular,Juventude,Fluminense,2,1,2.96,3.33,2.44
+2024-09-15,regular,Botafogo RJ,Corinthians,2,1,1.60,3.87,5.97
+2024-09-15,regular,Athletico-PR,Fortaleza,1,1,1.91,3.66,3.98
+2024-09-14,regular,Atletico GO,Vitoria,0,2,1.96,3.36,4.12
+2024-09-12,regular,Internacional,Fortaleza,2,1,2.02,3.32,3.92
+2024-09-06,regular,Cuiaba,Juventude,0,0,2.13,3.32,3.61
+2024-09-02,regular,Athletico-PR,Palmeiras,0,2,3.54,3.52,2.09
+2024-09-02,regular,Bragantino,Bahia,2,1,2.32,3.40,3.09
+2024-09-02,regular,Juventude,Internacional,1,3,3.40,3.27,2.23
+2024-09-02,regular,Fluminense,Sao Paulo,2,0,2.36,2.92,3.55
+2024-09-02,regular,Vitoria,Vasco,0,1,2.33,3.15,3.29
+2024-09-01,regular,Corinthians,Flamengo RJ,2,1,2.60,3.00,3.02
+2024-09-01,regular,Cruzeiro,Atletico GO,3,1,1.63,3.65,6.15
+2024-09-01,regular,Gremio,Atletico-MG,2,3,2.17,3.04,3.84
+2024-09-01,regular,Botafogo RJ,Fortaleza,2,0,1.62,4.01,5.53
+2024-09-01,regular,Cuiaba,Criciuma,2,1,2.04,3.28,3.97
+2024-08-29,regular,Cruzeiro,Internacional,0,0,2.25,3.19,3.46
+2024-08-29,regular,Criciuma,Bragantino,1,0,2.41,3.27,3.07
+2024-08-27,regular,Vasco,Athletico-PR,2,1,2.20,3.26,3.48
+2024-08-26,regular,Flamengo RJ,Bragantino,2,1,1.62,3.77,6.05
+2024-08-26,regular,Internacional,Cruzeiro,1,0,2.02,3.19,4.22
+2024-08-26,regular,Sao Paulo,Vitoria,2,1,1.72,3.58,5.31
+2024-08-25,regular,Bahia,Botafogo RJ,0,0,2.25,3.47,3.19
+2024-08-25,regular,Fortaleza,Corinthians,1,0,1.97,3.27,4.37
+2024-08-25,regular,Criciuma,Gremio,0,1,2.78,3.27,2.64
+2024-08-25,regular,Atletico-MG,Fluminense,0,2,1.94,3.18,4.60
+2024-08-25,regular,Palmeiras,Cuiaba,5,0,1.46,4.27,7.60
+2024-08-24,regular,Atletico GO,Juventude,2,1,1.81,3.55,4.64
+2024-08-20,regular,Vitoria,Cruzeiro,2,2,2.82,2.91,2.83
+2024-08-19,regular,Athletico-PR,Juventude,1,2,1.71,3.92,4.76
+2024-08-19,regular,Botafogo RJ,Flamengo RJ,4,1,2.35,3.18,3.25
+2024-08-18,regular,Atletico GO,Internacional,1,0,3.03,3.11,2.51
+2024-08-18,regular,Criciuma,Vasco,2,2,2.08,3.29,3.79
+2024-08-18,regular,Palmeiras,Sao Paulo,2,1,1.71,3.48,5.64
+2024-08-18,regular,Fluminense,Corinthians,0,0,2.56,2.91,3.16
+2024-08-18,regular,Bragantino,Fortaleza,1,2,2.57,3.21,2.87
+2024-08-17,regular,Atletico-MG,Cuiaba,1,1,1.86,3.22,5.07
+2024-08-17,regular,Gremio,Bahia,0,2,2.68,3.21,2.76
+2024-08-15,regular,Internacional,Juventude,2,1,1.57,4.24,5.52
+2024-08-12,regular,Internacional,Athletico-PR,2,2,1.96,3.27,4.27
+2024-08-11,regular,Sao Paulo,Atletico GO,1,0,1.87,3.39,4.64
+2024-08-11,regular,Bahia,Vitoria,2,0,1.65,3.67,5.77
+2024-08-11,regular,Flamengo RJ,Palmeiras,1,1,1.78,3.53,4.87
+2024-08-11,regular,Juventude,Botafogo RJ,3,2,3.66,3.38,2.08
+2024-08-11,regular,Cruzeiro,Atletico-MG,0,0,2.31,3.01,3.51
+2024-08-11,regular,Corinthians,Bragantino,1,1,2.19,3.08,3.75
+2024-08-11,regular,Vasco,Fluminense,2,0,2.67,3.05,2.87
+2024-08-11,regular,Cuiaba,Gremio,1,3,2.51,3.02,3.16
+2024-08-10,regular,Fortaleza,Criciuma,1,0,1.78,3.45,5.04
+2024-08-06,regular,Cruzeiro,Fortaleza,1,2,1.91,3.43,4.31
+2024-08-04,regular,Internacional,Palmeiras,1,1,2.37,3.23,3.13
+2024-08-04,regular,Athletico-PR,Gremio,0,2,1.67,3.91,5.10
+2024-08-04,regular,Fluminense,Bahia,1,0,2.07,3.30,3.78
+2024-08-04,regular,Corinthians,Juventude,1,1,1.64,3.75,5.69
+2024-08-04,regular,Sao Paulo,Flamengo RJ,1,0,2.24,3.04,3.70
+2024-08-04,regular,Atletico GO,Botafogo RJ,1,4,2.96,3.17,2.54
+2024-08-04,regular,Criciuma,Atletico-MG,2,1,3.94,3.46,1.96
+2024-08-04,regular,Vasco,Bragantino,2,2,1.93,3.89,3.68
+2024-08-03,regular,Vitoria,Cuiaba,1,0,2.85,2.88,2.82
+2024-07-29,regular,Cuiaba,Athletico-PR,1,2,2.42,3.09,3.20
+2024-07-29,regular,Atletico-MG,Corinthians,2,1,1.70,3.55,5.49
+2024-07-29,regular,Gremio,Vasco,1,0,2.05,3.30,3.87
+2024-07-28,regular,Flamengo RJ,Atletico GO,2,0,1.29,5.37,10.96
+2024-07-28,regular,Bragantino,Fluminense,0,1,2.34,3.18,3.24
+2024-07-28,regular,Botafogo RJ,Cruzeiro,0,3,2.10,3.27,3.72
+2024-07-28,regular,Fortaleza,Sao Paulo,1,0,2.30,2.91,3.71
+2024-07-28,regular,Bahia,Internacional,1,1,1.99,3.33,4.06
+2024-07-28,regular,Juventude,Criciuma,1,2,2.28,3.10,3.46
+2024-07-28,regular,Palmeiras,Vitoria,0,2,1.46,4.49,6.91
+2024-07-26,regular,Corinthians,Gremio,2,2,2.00,3.27,4.11
+2024-07-25,regular,Atletico GO,Bahia,1,1,3.09,3.24,2.40
+2024-07-25,regular,Fluminense,Palmeiras,1,0,3.13,3.18,2.44
+2024-07-25,regular,Vitoria,Flamengo RJ,1,2,5.11,3.66,1.72
+2024-07-25,regular,Sao Paulo,Botafogo RJ,2,2,2.27,2.99,3.65
+2024-07-25,regular,Criciuma,Fortaleza,1,1,2.74,3.14,2.72
+2024-07-25,regular,Cruzeiro,Juventude,2,0,1.47,4.21,7.49
+2024-07-22,regular,Cuiaba,Fluminense,0,1,2.52,3.04,3.09
+2024-07-22,regular,Bragantino,Athletico-PR,1,0,1.98,3.37,4.01
+2024-07-22,regular,Fortaleza,Atletico GO,3,1,1.72,3.61,5.21
+2024-07-22,regular,Juventude,Sao Paulo,0,0,3.78,3.28,2.08
+2024-07-21,regular,Atletico-MG,Vasco,2,0,1.70,3.82,4.97
+2024-07-21,regular,Bahia,Corinthians,0,1,1.69,3.81,5.22
+2024-07-21,regular,Gremio,Vitoria,2,0,1.81,3.39,4.91
+2024-07-21,regular,Palmeiras,Cruzeiro,2,0,1.71,3.75,4.97
+2024-07-21,regular,Botafogo RJ,Internacional,1,0,1.92,3.27,4.47
+2024-07-20,regular,Flamengo RJ,Criciuma,2,1,1.41,4.64,8.05
+2024-07-18,regular,Botafogo RJ,Palmeiras,1,0,2.81,3.28,2.57
+2024-07-18,regular,Fortaleza,Vitoria,3,1,1.64,3.79,5.62
+2024-07-18,regular,Sao Paulo,Gremio,1,0,1.57,3.79,6.72
+2024-07-18,regular,Atletico GO,Vasco,0,1,2.23,3.26,3.37
+2024-07-17,regular,Corinthians,Criciuma,2,1,1.79,3.58,4.65
+2024-07-17,regular,Juventude,Atletico-MG,1,1,3.97,3.49,1.95
+2024-07-13,regular,Bahia,Cuiaba,1,2,1.67,3.62,5.83
+2024-07-13,regular,Cruzeiro,Bragantino,2,1,2.09,3.36,3.64
+2024-07-12,regular,Atletico-MG,Sao Paulo,2,1,2.49,3.12,3.07
+2024-07-12,regular,Vitoria,Botafogo RJ,0,1,3.16,3.01,2.51
+2024-07-12,regular,Criciuma,Fluminense,1,1,2.02,3.26,4.06
+2024-07-12,regular,Flamengo RJ,Fortaleza,1,2,1.61,3.84,5.94
+2024-07-12,regular,Palmeiras,Atletico GO,3,1,1.39,4.75,8.22
+2024-07-11,regular,Athletico-PR,Bahia,1,3,2.31,3.37,3.15
+2024-07-11,regular,Vasco,Corinthians,2,0,2.32,3.12,3.37
+2024-07-11,regular,Gremio,Cruzeiro,0,2,2.52,3.26,2.88
+2024-07-08,regular,Botafogo RJ,Atletico-MG,3,0,1.98,3.51,3.85
+2024-07-08,regular,Atletico GO,Athletico-PR,1,2,2.00,3.38,3.96
+2024-07-08,regular,Palmeiras,Bahia,2,0,1.68,4.14,4.70
+2024-07-08,regular,Vitoria,Criciuma,2,1,2.22,3.16,3.57
+2024-07-08,regular,Internacional,Vasco,1,2,1.66,3.67,5.84
+2024-07-07,regular,Cruzeiro,Corinthians,3,0,1.80,3.65,4.54
+2024-07-07,regular,Juventude,Gremio,3,0,2.62,3.22,2.81
+2024-07-07,regular,Fortaleza,Fluminense,1,0,1.74,3.62,5.05
+2024-07-07,regular,Sao Paulo,Bragantino,2,0,1.94,3.35,4.17
+2024-07-07,regular,Flamengo RJ,Cuiaba,1,1,1.42,4.41,8.12
+2024-07-05,regular,Corinthians,Vitoria,3,2,1.85,3.34,4.79
+2024-07-05,regular,Fluminense,Internacional,1,1,2.75,3.07,2.77
+2024-07-05,regular,Bahia,Juventude,2,0,1.53,4.20,6.35
+2024-07-05,regular,Gremio,Palmeiras,2,2,3.14,3.25,2.37
+2024-07-04,regular,Atletico-MG,Flamengo RJ,2,4,2.79,3.13,2.69
+2024-07-04,regular,Athletico-PR,Sao Paulo,1,2,2.34,3.15,3.28
+2024-07-04,regular,Bragantino,Atletico GO,3,1,1.85,3.43,4.55
+2024-07-04,regular,Criciuma,Cruzeiro,1,0,2.48,3.05,3.12
+2024-07-04,regular,Vasco,Fortaleza,2,0,2.29,3.23,3.33
+2024-07-04,regular,Cuiaba,Botafogo RJ,1,2,2.56,3.04,3.06
+2024-07-02,regular,Palmeiras,Corinthians,2,0,1.60,4.07,5.67
+2024-07-01,regular,Vitoria,Athletico-PR,0,1,2.30,3.20,3.30
+2024-07-01,regular,Criciuma,Internacional,1,1,2.80,2.99,2.76
+2024-07-01,regular,Flamengo RJ,Cruzeiro,2,1,1.65,3.96,5.31
+2024-06-30,regular,Sao Paulo,Bahia,3,1,1.97,3.45,3.97
+2024-06-30,regular,Fortaleza,Juventude,2,1,1.64,3.77,5.73
+2024-06-30,regular,Gremio,Fluminense,1,0,1.92,3.31,4.41
+2024-06-30,regular,Atletico-MG,Atletico GO,1,1,2.01,3.50,3.74
+2024-06-30,regular,Vasco,Botafogo RJ,1,1,3.06,3.13,2.48
+2024-06-30,regular,Cuiaba,Bragantino,1,1,2.74,3.09,2.79
+2024-06-28,regular,Sao Paulo,Criciuma,2,1,1.55,4.10,6.15
+2024-06-28,regular,Fluminense,Vitoria,0,1,1.84,3.53,4.44
+2024-06-27,regular,Internacional,Atletico-MG,1,2,2.15,3.11,3.80
+2024-06-27,regular,Bahia,Vasco,2,1,1.61,3.96,5.59
+2024-06-27,regular,Fortaleza,Palmeiras,3,0,3.16,3.10,2.43
+2024-06-27,regular,Atletico GO,Gremio,1,1,2.22,3.19,3.53
+2024-06-27,regular,Corinthians,Cuiaba,1,1,2.01,3.24,4.15
+2024-06-27,regular,Juventude,Flamengo RJ,2,1,4.65,3.33,1.87
+2024-06-27,regular,Cruzeiro,Athletico-PR,2,0,2.16,3.13,3.73
+2024-06-27,regular,Botafogo RJ,Bragantino,2,1,1.96,3.44,4.00
+2024-06-24,regular,Atletico-MG,Fortaleza,1,1,1.75,3.60,5.00
+2024-06-24,regular,Bragantino,Vitoria,2,1,1.52,4.07,6.61
+2024-06-24,regular,Palmeiras,Juventude,3,1,1.41,4.47,8.22
+2024-06-23,regular,Athletico-PR,Corinthians,1,1,1.67,3.93,5.18
+2024-06-23,regular,Bahia,Cruzeiro,4,1,2.06,3.28,3.86
+2024-06-23,regular,Fluminense,Flamengo RJ,0,1,4.48,3.79,1.78
+2024-06-23,regular,Vasco,Sao Paulo,4,1,3.37,3.19,2.28
+2024-06-23,regular,Cuiaba,Atletico GO,0,0,2.05,3.22,3.97
+2024-06-22,regular,Gremio,Internacional,0,1,3.07,3.02,2.54
+2024-06-22,regular,Criciuma,Botafogo RJ,2,1,3.01,3.28,2.44
+2024-06-21,regular,Palmeiras,Bragantino,2,1,1.73,3.69,4.89
+2024-06-21,regular,Flamengo RJ,Bahia,2,1,1.61,3.98,5.57
+2024-06-21,regular,Vitoria,Atletico-MG,4,2,2.98,2.88,2.73
+2024-06-20,regular,Internacional,Corinthians,1,0,2.20,3.15,3.57
+2024-06-20,regular,Cruzeiro,Fluminense,2,0,1.76,3.58,4.94
+2024-06-20,regular,Sao Paulo,Cuiaba,0,1,1.55,3.76,7.45
+2024-06-20,regular,Juventude,Vasco,2,0,2.14,3.10,3.86
+2024-06-20,regular,Fortaleza,Gremio,1,0,1.91,3.41,4.35
+2024-06-20,regular,Botafogo RJ,Athletico-PR,1,1,1.99,3.26,4.15
+2024-06-20,regular,Atletico GO,Criciuma,1,2,1.68,3.73,5.35
+2024-06-18,regular,Atletico-MG,Palmeiras,0,4,2.63,3.11,2.85
+2024-06-17,regular,Criciuma,Bahia,2,2,3.53,3.22,2.20
+2024-06-17,regular,Gremio,Botafogo RJ,1,2,3.51,3.24,2.19
+2024-06-17,regular,Vasco,Cruzeiro,0,0,2.81,3.15,2.64
+2024-06-17,regular,Cuiaba,Fortaleza,5,0,3.26,2.90,2.52
+2024-06-16,regular,Athletico-PR,Flamengo RJ,1,1,2.60,3.15,2.86
+2024-06-16,regular,Corinthians,Sao Paulo,2,2,3.36,3.07,2.35
+2024-06-16,regular,Vitoria,Internacional,2,1,2.75,2.88,2.96
+2024-06-16,regular,Fluminense,Atletico GO,1,2,1.86,3.54,4.34
+2024-06-16,regular,Bragantino,Juventude,2,1,1.61,3.88,5.75
+2024-06-14,regular,Bahia,Fortaleza,1,0,1.88,3.63,4.18
+2024-06-14,regular,Palmeiras,Vasco,2,0,1.45,4.35,7.48
+2024-06-14,regular,Athletico-PR,Criciuma,3,1,1.49,4.28,6.86
+2024-06-14,regular,Flamengo RJ,Gremio,2,1,1.58,3.94,6.22
+2024-06-14,regular,Internacional,Sao Paulo,0,0,2.41,3.03,3.28
+2024-06-14,regular,Cruzeiro,Cuiaba,2,1,1.59,3.70,6.73
+2024-06-12,regular,Bragantino,Atletico-MG,1,2,2.31,3.18,3.29
+2024-06-12,regular,Botafogo RJ,Fluminense,1,0,1.96,3.36,4.10
+2024-06-12,regular,Atletico GO,Corinthians,2,2,2.61,3.12,2.90
+2024-06-12,regular,Juventude,Vitoria,1,1,1.98,3.17,4.31
+2024-06-09,regular,Criciuma,Cuiaba,2,5,2.11,3.13,3.83
+2024-06-06,regular,Cuiaba,Vitoria,0,0,2.19,2.98,3.87
+2024-06-06,regular,Juventude,Atletico GO,1,0,2.38,3.00,3.38
+2024-06-03,regular,Fortaleza,Athletico-PR,1,0,1.94,3.36,4.24
+2024-06-03,regular,Sao Paulo,Cruzeiro,2,0,1.95,3.24,4.35
+2024-06-02,regular,Atletico-MG,Bahia,1,1,1.80,3.67,4.51
+2024-06-02,regular,Criciuma,Palmeiras,1,2,4.67,3.32,1.87
+2024-06-02,regular,Vasco,Flamengo RJ,1,6,4.89,3.86,1.70
+2024-06-02,regular,Corinthians,Botafogo RJ,0,1,2.15,3.27,3.64
+2024-06-02,regular,Cuiaba,Internacional,0,1,3.77,3.03,2.20
+2024-06-02,regular,Fluminense,Juventude,1,1,1.58,4.14,5.74
+2024-06-01,regular,Vitoria,Atletico GO,0,2,2.24,3.14,3.53
+2024-06-01,regular,Gremio,Bragantino,0,2,3.22,3.17,2.37
+2024-05-14,regular,Sao Paulo,Fluminense,2,1,1.73,3.60,5.10
+2024-05-13,regular,Bahia,Bragantino,1,0,1.83,3.74,4.20
+2024-05-13,regular,Vasco,Vitoria,2,1,1.74,3.62,4.92
+2024-05-12,regular,Palmeiras,Athletico-PR,0,2,1.70,3.75,5.05
+2024-05-12,regular,Atletico GO,Cruzeiro,0,1,2.94,3.17,2.52
+2024-05-12,regular,Fortaleza,Botafogo RJ,1,1,2.00,3.36,3.96
+2024-05-11,regular,Flamengo RJ,Corinthians,2,0,1.60,3.90,5.81
+2024-05-06,regular,Botafogo RJ,Bahia,1,2,2.08,3.55,3.47
+2024-05-06,regular,Cuiaba,Palmeiras,0,2,5.03,3.22,1.84
+2024-05-05,regular,Athletico-PR,Vasco,1,0,1.66,3.87,5.20
+2024-05-05,regular,Vitoria,Sao Paulo,1,3,3.66,3.07,2.20
+2024-05-05,regular,Corinthians,Fortaleza,0,0,2.15,3.10,3.78
+2024-05-05,regular,Bragantino,Flamengo RJ,1,1,2.86,3.16,2.59
+2024-05-04,regular,Fluminense,Atletico-MG,2,2,3.40,3.27,2.22
+2024-04-30,regular,Sao Paulo,Palmeiras,0,0,2.65,2.92,3.00
+2024-04-29,regular,Internacional,Atletico GO,1,1,1.55,3.79,6.95
+2024-04-29,regular,Juventude,Athletico-PR,1,1,2.94,2.98,2.67
+2024-04-29,regular,Fortaleza,Bragantino,1,1,2.22,3.21,3.45
+2024-04-28,regular,Corinthians,Fluminense,3,0,2.19,3.17,3.54
+2024-04-28,regular,Cruzeiro,Vitoria,3,1,1.54,4.08,6.23
+2024-04-28,regular,Flamengo RJ,Botafogo RJ,0,2,1.59,4.11,5.57
+2024-04-28,regular,Bahia,Gremio,1,0,1.73,3.80,4.72
+2024-04-28,regular,Cuiaba,Atletico-MG,0,3,3.55,2.89,2.36
+2024-04-27,regular,Vasco,Criciuma,0,4,1.67,3.56,5.76
+2024-04-22,regular,Atletico GO,Sao Paulo,0,3,2.92,3.02,2.66
+2024-04-22,regular,Botafogo RJ,Juventude,5,1,1.60,3.83,6.08
+2024-04-21,regular,Athletico-PR,Internacional,1,0,2.00,3.42,3.87
+2024-04-21,regular,Vitoria,Bahia,2,2,3.34,3.26,2.29
+2024-04-21,regular,Palmeiras,Flamengo RJ,0,0,2.08,3.21,3.89
+2024-04-21,regular,Atletico-MG,Cruzeiro,3,0,1.88,3.43,4.36
+2024-04-21,regular,Bragantino,Corinthians,1,0,2.23,3.32,3.30
+2024-04-21,regular,Gremio,Cuiaba,1,0,1.71,3.46,5.65
+2024-04-20,regular,Fluminense,Vasco,2,1,1.96,3.41,4.01
+2024-04-19,regular,Botafogo RJ,Atletico GO,1,0,1.78,3.57,4.80
+2024-04-18,regular,Flamengo RJ,Sao Paulo,2,1,1.71,3.44,5.65
+2024-04-18,regular,Atletico-MG,Criciuma,1,1,1.42,4.35,8.04
+2024-04-18,regular,Juventude,Corinthians,2,0,3.47,2.97,2.34
+2024-04-18,regular,Fortaleza,Cruzeiro,1,1,1.96,3.33,4.14
+2024-04-18,regular,Palmeiras,Internacional,0,1,1.69,3.56,5.65
+2024-04-18,regular,Gremio,Athletico-PR,2,0,2.63,3.25,2.74
+2024-04-18,regular,Bragantino,Vasco,2,1,1.93,3.48,4.03
+2024-04-17,regular,Bahia,Fluminense,2,1,2.10,3.44,3.52
+2024-04-15,regular,Vitoria,Palmeiras,0,1,3.74,3.38,2.06
+2024-04-14,regular,Cruzeiro,Botafogo RJ,3,2,2.19,3.12,3.64
+2024-04-14,regular,Athletico-PR,Cuiaba,4,0,1.57,3.68,6.78
+2024-04-14,regular,Atletico GO,Flamengo RJ,1,2,4.81,3.73,1.73
+2024-04-14,regular,Corinthians,Atletico-MG,0,0,2.57,3.03,3.03
+2024-04-14,regular,Vasco,Gremio,2,1,2.17,3.27,3.44
+2024-04-14,regular,Fluminense,Bragantino,2,2,1.80,3.47,4.85
+2024-04-14,regular,Sao Paulo,Fortaleza,1,2,1.91,3.32,4.35
+2024-04-14,regular,Internacional,Bahia,2,1,1.87,3.43,4.40
+2024-04-14,regular,Criciuma,Juventude,1,1,2.14,3.07,3.92

@@ -1,0 +1,240 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-06-21,regular,Kabylie,ASO Chlef,1,0,1.31,4.26,12.64
+2025-06-21,regular,Olympique Akbou,CR Belouizdad,0,0,7.43,3.87,1.45
+2025-06-21,regular,MC Alger,Magra,0,0,1.19,5.70,16.11
+2025-06-21,regular,Paradou,Mostaganem,1,3,4.15,3.58,1.78
+2025-06-21,regular,Khenchela,El Bayadh,1,0,1.67,3.35,5.31
+2025-06-20,regular,Constantine,Saoura,2,2,2.74,2.98,2.64
+2025-06-20,regular,Oran,USM Alger,4,0,2.04,3.19,3.56
+2025-06-20,regular,ES Setif,Biskra,1,0,1.27,4.80,12.21
+2025-06-17,regular,Saoura,Paradou,3,2,1.79,3.31,4.50
+2025-06-17,regular,ASO Chlef,MC Alger,0,0,6.93,3.28,1.58
+2025-06-17,regular,Magra,Constantine,2,1,1.37,4.10,9.07
+2025-06-17,regular,CR Belouizdad,Oran,2,0,1.19,5.65,15.47
+2025-06-17,regular,El Bayadh,Olympique Akbou,0,1,1.57,3.46,6.63
+2025-06-17,regular,Mostaganem,Kabylie,0,0,3.09,3.02,2.34
+2025-06-16,regular,USM Alger,ES Setif,1,0,1.71,3.42,4.87
+2025-06-16,regular,Biskra,Khenchela,1,2,7.42,4.13,1.40
+2025-06-12,regular,Constantine,CR Belouizdad,0,2,4.25,3.08,1.92
+2025-06-12,regular,Kabylie,ES Setif,2,0,1.29,4.59,11.55
+2025-06-12,regular,Paradou,Magra,2,0,2.00,3.35,3.55
+2025-06-12,regular,MC Alger,Mostaganem,5,2,1.35,4.25,9.77
+2025-06-11,regular,ASO Chlef,Saoura,1,2,1.73,3.16,5.36
+2025-06-11,regular,Olympique Akbou,Biskra,2,0,1.07,8.83,29.86
+2025-06-11,regular,Oran,El Bayadh,3,2,1.55,3.34,7.43
+2025-06-11,regular,Khenchela,USM Alger,1,0,1.97,2.98,4.18
+2025-06-03,regular,Constantine,Khenchela,2,1,1.67,3.47,5.21
+2025-05-30,regular,Olympique Akbou,Constantine,0,0,1.59,3.53,6.13
+2025-05-27,regular,CR Belouizdad,Paradou,2,1,1.46,4.04,6.30
+2025-05-27,regular,Saoura,MC Alger,0,0,4.15,2.95,2.01
+2025-05-27,regular,El Bayadh,Constantine,1,1,2.54,2.97,2.87
+2025-05-26,regular,USM Alger,Olympique Akbou,1,1,1.59,3.64,5.68
+2025-05-26,regular,Biskra,Oran,0,2,7.98,3.83,1.47
+2025-05-25,regular,Mostaganem,ASO Chlef,1,0,1.60,3.51,5.79
+2025-05-25,regular,ES Setif,Khenchela,0,1,1.68,3.42,5.20
+2025-05-25,regular,Magra,Kabylie,1,3,2.49,2.87,3.05
+2025-05-23,regular,MC Alger,USM Alger,1,0,1.67,3.32,5.61
+2025-05-22,regular,Constantine,Oran,2,2,1.68,3.43,5.23
+2025-05-19,regular,ASO Chlef,CR Belouizdad,1,1,4.10,3.13,1.93
+2025-05-19,regular,MC Alger,ES Setif,4,1,1.45,3.74,8.20
+2025-05-18,regular,Constantine,Biskra,3,0,1.35,4.26,10.37
+2025-05-18,regular,Mostaganem,El Bayadh,0,0,1.52,3.50,7.43
+2025-05-17,regular,Paradou,USM Alger,3,1,3.51,3.14,2.11
+2025-05-17,regular,Kabylie,Saoura,1,2,1.44,3.95,7.63
+2025-05-16,regular,Olympique Akbou,Khenchela,2,1,1.69,3.25,5.48
+2025-05-16,regular,Oran,Magra,2,1,1.44,3.79,8.14
+2025-05-15,regular,ES Setif,Constantine,0,1,1.84,3.08,4.73
+2025-05-12,regular,Biskra,Paradou,0,1,1.97,3.08,4.08
+2025-05-12,regular,CR Belouizdad,MC Alger,1,1,2.77,2.70,2.81
+2025-05-12,regular,El Bayadh,Kabylie,1,2,3.19,2.74,2.50
+2025-05-11,regular,USM Alger,Constantine,2,1,1.91,3.28,4.09
+2025-05-11,regular,ES Setif,Olympique Akbou,1,0,1.66,3.32,5.77
+2025-05-10,regular,Saoura,Mostaganem,0,0,1.79,3.18,4.95
+2025-05-10,regular,Magra,ASO Chlef,2,0,1.56,3.53,6.78
+2025-05-10,regular,Khenchela,Oran,2,1,1.88,3.09,4.55
+2025-04-30,regular,USM Alger,ASO Chlef,1,2,1.93,3.14,4.29
+2025-04-26,regular,Kabylie,CR Belouizdad,3,2,2.57,2.83,3.01
+2025-04-26,regular,Saoura,USM Alger,2,1,2.72,2.72,2.91
+2025-04-26,regular,MC Alger,El Bayadh,0,0,1.23,5.31,14.70
+2025-04-26,regular,Mostaganem,Magra,2,1,1.96,2.95,4.46
+2025-04-25,regular,Oran,Olympique Akbou,1,0,1.67,3.16,6.29
+2025-04-25,regular,ASO Chlef,Biskra,1,1,1.56,3.52,6.79
+2025-04-24,regular,Paradou,ES Setif,0,0,2.45,2.75,3.31
+2025-04-19,regular,USM Alger,Kabylie,0,1,2.01,3.00,4.14
+2025-04-19,regular,CR Belouizdad,Mostaganem,3,2,1.32,4.36,12.15
+2025-04-19,regular,Biskra,MC Alger,0,1,5.51,3.09,1.77
+2025-04-19,regular,El Bayadh,ASO Chlef,2,1,2.46,2.69,3.42
+2025-04-18,regular,ES Setif,Oran,1,0,1.70,3.16,5.95
+2025-04-18,regular,Khenchela,Paradou,2,2,1.78,3.33,4.78
+2025-04-18,regular,Magra,Saoura,2,0,1.66,3.25,6.20
+2025-04-15,regular,Olympique Akbou,MC Alger,1,0,4.19,3.13,1.95
+2025-04-12,regular,Kabylie,Biskra,0,0,1.37,4.09,9.89
+2025-04-12,regular,Magra,Khenchela,2,0,1.84,3.16,4.80
+2025-04-11,regular,Paradou,El Bayadh,0,0,1.68,3.28,5.73
+2025-04-11,regular,ASO Chlef,ES Setif,0,1,2.02,2.90,4.31
+2025-04-10,regular,Saoura,CR Belouizdad,1,3,3.43,2.81,2.35
+2025-04-10,regular,Mostaganem,Olympique Akbou,1,1,1.78,3.10,5.25
+2025-04-05,regular,CR Belouizdad,Magra,4,0,1.42,3.78,9.60
+2025-04-05,regular,El Bayadh,Saoura,1,0,2.07,2.81,4.28
+2025-04-04,regular,Oran,Paradou,2,0,1.71,3.14,5.86
+2025-04-04,regular,Biskra,Mostaganem,0,0,2.13,2.82,4.00
+2025-04-04,regular,Khenchela,Kabylie,0,1,2.66,2.95,2.79
+2025-03-17,regular,CR Belouizdad,USM Alger,1,1,2.01,2.82,4.49
+2025-03-16,regular,Magra,El Bayadh,0,0,1.56,3.41,7.03
+2025-03-16,regular,MC Alger,Khenchela,2,2,1.30,4.56,11.60
+2025-03-15,regular,ASO Chlef,Olympique Akbou,0,0,1.78,3.08,5.35
+2025-03-15,regular,Saoura,Biskra,2,0,1.54,3.40,7.44
+2025-03-15,regular,Paradou,Constantine,2,0,2.52,2.84,3.05
+2025-03-15,regular,Mostaganem,ES Setif,1,0,2.08,2.71,4.44
+2025-03-15,regular,Kabylie,Oran,2,1,1.58,3.37,6.85
+2025-03-09,regular,Constantine,Kabylie,1,1,2.03,2.93,4.13
+2025-03-08,regular,Biskra,Magra,1,0,1.90,2.85,5.11
+2025-03-08,regular,ES Setif,Saoura,1,0,1.70,3.15,5.82
+2025-03-07,regular,Khenchela,ASO Chlef,3,2,2.02,2.83,4.38
+2025-03-07,regular,Oran,MC Alger,0,2,3.99,2.69,2.21
+2025-03-07,regular,USM Alger,Mostaganem,1,0,1.40,3.96,9.47
+2025-03-07,regular,Olympique Akbou,Paradou,1,2,1.75,3.28,5.01
+2025-03-06,regular,El Bayadh,CR Belouizdad,0,0,3.56,2.77,2.31
+2025-02-28,regular,MC Alger,Constantine,2,1,1.52,3.56,7.09
+2025-02-28,regular,Kabylie,Paradou,2,1,1.46,3.65,8.48
+2025-02-27,regular,Saoura,Olympique Akbou,2,1,1.95,2.91,4.50
+2025-02-27,regular,El Bayadh,USM Alger,2,1,3.81,2.66,2.27
+2025-02-26,regular,CR Belouizdad,Biskra,2,0,1.42,3.72,9.59
+2025-02-26,regular,Magra,ES Setif,0,0,2.53,2.58,3.39
+2025-02-25,regular,Mostaganem,Khenchela,2,0,2.02,2.94,4.08
+2025-02-25,regular,ASO Chlef,Oran,1,0,1.81,3.06,5.07
+2025-02-23,regular,Paradou,MC Alger,1,3,4.92,3.01,1.83
+2025-02-20,regular,ES Setif,CR Belouizdad,1,0,2.76,2.62,2.88
+2025-02-19,regular,Biskra,El Bayadh,0,0,1.72,3.12,5.51
+2025-02-19,regular,Oran,Mostaganem,1,0,2.04,2.71,4.51
+2025-02-19,regular,Olympique Akbou,Kabylie,0,0,2.57,2.72,3.09
+2025-02-18,regular,USM Alger,Magra,2,0,1.27,4.50,12.65
+2025-02-18,regular,Constantine,ASO Chlef,2,2,1.77,3.13,5.07
+2025-02-18,regular,Khenchela,Saoura,1,3,1.93,2.86,4.69
+2025-02-14,regular,Biskra,USM Alger,0,0,3.89,2.77,2.17
+2025-02-14,regular,Magra,Olympique Akbou,1,1,2.02,2.72,4.67
+2025-02-13,regular,MC Alger,Kabylie,3,2,1.92,2.87,4.84
+2025-02-13,regular,Mostaganem,Constantine,0,0,2.51,2.75,3.14
+2025-02-12,regular,CR Belouizdad,Khenchela,3,0,1.36,4.21,9.00
+2025-02-12,regular,Saoura,Oran,2,0,1.71,3.19,5.51
+2025-02-11,regular,ASO Chlef,Paradou,2,0,1.83,3.13,4.60
+2025-02-11,regular,El Bayadh,ES Setif,1,0,2.45,2.72,3.19
+2025-02-05,regular,USM Alger,Khenchela,3,0,1.36,4.11,8.90
+2025-02-03,regular,Oran,CR Belouizdad,1,2,2.76,2.63,3.04
+2025-02-02,regular,Mostaganem,MC Alger,1,1,4.66,2.82,1.97
+2025-02-01,regular,Olympique Akbou,USM Alger,0,0,3.01,2.93,2.48
+2025-01-30,regular,CR Belouizdad,Constantine,0,2,1.73,3.18,5.44
+2025-01-29,regular,MC Alger,Saoura,1,0,1.37,4.05,10.15
+2025-01-28,regular,USM Alger,Paradou,1,1,1.88,3.07,4.50
+2025-01-25,regular,Paradou,CR Belouizdad,1,2,3.77,2.80,2.23
+2025-01-25,regular,Constantine,El Bayadh,0,1,1.48,3.58,8.26
+2025-01-24,regular,USM Alger,MC Alger,0,3,2.29,2.76,3.64
+2025-01-21,regular,CR Belouizdad,Kabylie,1,1,1.76,2.97,5.67
+2025-01-01,regular,Paradou,Biskra,2,1,1.57,3.51,6.78
+2024-12-28,regular,ASO Chlef,Kabylie,1,0,2.31,2.85,3.49
+2024-12-28,regular,El Bayadh,Khenchela,1,2,1.94,2.97,4.33
+2024-12-27,regular,Biskra,ES Setif,0,0,1.88,3.10,4.74
+2024-12-27,regular,Saoura,Constantine,2,0,1.78,3.16,5.30
+2024-12-27,regular,CR Belouizdad,Olympique Akbou,1,0,1.37,4.21,9.30
+2024-12-26,regular,USM Alger,Oran,3,0,1.52,3.66,7.37
+2024-12-26,regular,Mostaganem,Paradou,0,2,2.18,2.98,3.59
+2024-12-26,regular,Magra,MC Alger,1,2,3.50,2.59,2.51
+2024-12-21,regular,ES Setif,USM Alger,1,1,2.95,2.88,2.61
+2024-12-21,regular,Kabylie,Mostaganem,2,1,1.42,4.05,8.56
+2024-12-21,regular,Constantine,Magra,0,0,1.55,3.54,6.94
+2024-12-21,regular,Paradou,Saoura,2,0,1.97,3.12,4.17
+2024-12-21,regular,Olympique Akbou,El Bayadh,0,1,1.55,3.52,7.18
+2024-12-20,regular,MC Alger,ASO Chlef,0,0,1.32,4.28,11.79
+2024-12-20,regular,Khenchela,Biskra,0,0,1.69,3.52,4.88
+2024-12-17,regular,Kabylie,El Bayadh,3,0,1.47,3.66,7.79
+2024-12-17,regular,ES Setif,Paradou,1,2,1.74,3.22,5.34
+2024-12-17,regular,CR Belouizdad,Saoura,3,0,1.59,3.37,6.95
+2024-12-14,regular,Biskra,Olympique Akbou,0,1,1.92,3.07,4.45
+2024-12-13,regular,ES Setif,Kabylie,2,2,2.15,2.79,3.95
+2024-12-13,regular,Saoura,ASO Chlef,1,1,1.67,3.40,5.64
+2024-12-13,regular,El Bayadh,Oran,1,0,2.70,2.74,2.97
+2024-12-13,regular,Magra,Paradou,1,1,2.42,2.84,3.29
+2024-12-08,regular,Oran,Biskra,1,0,1.65,3.30,6.28
+2024-12-08,regular,Kabylie,Magra,2,1,1.47,3.55,9.45
+2024-12-07,regular,ASO Chlef,Mostaganem,2,0,1.75,3.34,4.96
+2024-12-07,regular,Khenchela,ES Setif,2,3,2.02,3.01,4.11
+2024-12-02,regular,Biskra,Constantine,1,1,2.49,2.86,3.14
+2024-12-02,regular,Saoura,Kabylie,1,1,2.71,2.70,3.02
+2024-12-01,regular,CR Belouizdad,ASO Chlef,2,0,1.47,3.61,8.90
+2024-12-01,regular,ES Setif,MC Alger,0,0,2.68,2.71,3.09
+2024-11-30,regular,El Bayadh,Mostaganem,1,1,1.98,2.91,4.40
+2024-11-30,regular,Khenchela,Olympique Akbou,1,0,1.93,3.08,4.38
+2024-11-30,regular,Magra,Oran,2,1,2.54,2.58,3.48
+2024-11-23,regular,Mostaganem,Saoura,1,1,1.99,3.01,4.26
+2024-11-23,regular,ASO Chlef,Magra,2,2,1.71,3.05,6.58
+2024-11-23,regular,Olympique Akbou,ES Setif,0,1,1.74,3.28,5.24
+2024-11-22,regular,Oran,Khenchela,0,0,1.79,3.19,5.29
+2024-11-21,regular,Constantine,USM Alger,1,0,2.66,2.73,3.06
+2024-11-20,regular,MC Alger,CR Belouizdad,1,3,1.98,2.74,5.12
+2024-11-16,regular,USM Alger,Saoura,2,0,1.40,4.01,9.12
+2024-11-16,regular,Biskra,ASO Chlef,1,2,2.10,2.86,4.08
+2024-11-16,regular,Magra,Mostaganem,1,0,2.09,2.78,4.24
+2024-11-15,regular,Khenchela,Constantine,1,0,1.99,3.07,4.11
+2024-11-15,regular,El Bayadh,MC Alger,0,1,5.00,3.17,1.80
+2024-11-15,regular,Olympique Akbou,Oran,3,1,2.25,2.89,3.65
+2024-11-09,regular,Mostaganem,CR Belouizdad,0,2,3.33,2.77,2.46
+2024-11-09,regular,MC Alger,Biskra,0,0,1.39,3.89,10.99
+2024-11-09,regular,Kabylie,USM Alger,0,0,2.14,2.87,3.90
+2024-11-09,regular,Saoura,Magra,1,0,1.46,3.76,8.08
+2024-11-08,regular,Constantine,Olympique Akbou,2,1,1.85,3.22,4.63
+2024-11-08,regular,Paradou,Khenchela,4,0,1.88,3.19,4.51
+2024-11-08,regular,ASO Chlef,El Bayadh,2,0,1.55,3.56,7.09
+2024-11-07,regular,Oran,ES Setif,1,0,1.90,3.07,4.70
+2024-11-03,regular,Olympique Akbou,Mostaganem,1,2,1.72,3.16,5.87
+2024-11-03,regular,Biskra,Kabylie,0,1,2.71,2.74,2.90
+2024-11-02,regular,ES Setif,ASO Chlef,1,0,1.61,3.53,6.03
+2024-11-02,regular,Oran,Constantine,1,0,1.93,2.94,4.71
+2024-11-02,regular,El Bayadh,Paradou,1,1,1.98,3.00,4.29
+2024-11-02,regular,Khenchela,Magra,1,0,1.70,3.35,5.47
+2024-10-26,regular,Mostaganem,Biskra,1,0,2.01,3.20,3.95
+2024-10-26,regular,Kabylie,Khenchela,1,0,1.65,3.46,5.63
+2024-10-26,regular,ASO Chlef,USM Alger,0,0,2.89,2.84,2.67
+2024-10-25,regular,Paradou,Oran,2,2,2.39,2.90,3.23
+2024-10-25,regular,Constantine,ES Setif,2,1,1.88,3.20,4.43
+2024-10-25,regular,Saoura,El Bayadh,1,0,1.72,3.31,5.31
+2024-10-25,regular,Magra,CR Belouizdad,1,0,5.12,3.14,1.81
+2024-10-24,regular,MC Alger,Olympique Akbou,0,0,1.49,3.77,7.54
+2024-10-22,regular,ASO Chlef,Khenchela,1,1,1.59,3.48,6.58
+2024-10-19,regular,Oran,Kabylie,2,0,2.23,2.84,3.68
+2024-10-19,regular,Biskra,Saoura,2,1,2.03,2.92,4.09
+2024-10-19,regular,Constantine,Paradou,2,1,1.70,3.37,5.27
+2024-10-19,regular,El Bayadh,Magra,4,0,1.61,3.41,6.08
+2024-10-18,regular,USM Alger,CR Belouizdad,0,0,2.08,2.87,4.23
+2024-10-18,regular,ES Setif,Mostaganem,1,0,1.60,3.47,6.38
+2024-10-18,regular,Olympique Akbou,ASO Chlef,0,0,1.70,3.28,5.53
+2024-10-18,regular,Khenchela,MC Alger,0,1,2.82,2.83,2.76
+2024-10-12,regular,CR Belouizdad,El Bayadh,2,3,1.24,5.08,16.37
+2024-10-12,regular,Kabylie,Constantine,2,3,1.92,2.79,5.20
+2024-10-12,regular,Magra,Biskra,2,2,2.09,2.74,4.41
+2024-10-11,regular,MC Alger,Oran,1,0,1.40,4.07,9.33
+2024-10-11,regular,Saoura,ES Setif,3,2,1.96,3.11,4.27
+2024-10-11,regular,Paradou,Olympique Akbou,1,3,2.03,3.10,3.96
+2024-10-06,regular,USM Alger,El Bayadh,1,0,1.37,4.28,10.14
+2024-10-06,regular,Biskra,CR Belouizdad,0,0,4.10,2.76,2.18
+2024-10-06,regular,Constantine,MC Alger,1,1,2.63,2.83,3.00
+2024-10-06,regular,Paradou,Kabylie,0,3,2.32,2.88,3.42
+2024-10-06,regular,Khenchela,Mostaganem,2,0,2.08,3.07,3.86
+2024-10-04,regular,Oran,ASO Chlef,0,0,1.79,2.92,5.97
+2024-10-04,regular,ES Setif,Magra,0,0,1.59,3.44,6.97
+2024-10-04,regular,Olympique Akbou,Saoura,2,1,1.92,2.85,5.01
+2024-10-02,regular,USM Alger,Biskra,2,1,1.34,4.35,10.93
+2024-10-02,regular,Constantine,Mostaganem,0,0,1.86,3.08,4.86
+2024-10-02,regular,Khenchela,CR Belouizdad,0,0,2.92,2.82,2.71
+2024-10-01,regular,Kabylie,MC Alger,1,2,2.73,2.66,3.08
+2024-09-28,regular,Mostaganem,Oran,2,1,2.40,2.92,3.21
+2024-09-28,regular,Saoura,Khenchela,1,1,1.79,3.41,4.55
+2024-09-28,regular,Magra,USM Alger,0,0,3.48,2.70,2.46
+2024-09-27,regular,ASO Chlef,Constantine,0,0,2.19,3.00,3.57
+2024-09-27,regular,Kabylie,Olympique Akbou,2,1,1.84,3.19,4.79
+2024-09-27,regular,El Bayadh,Biskra,0,1,1.60,3.43,6.57
+2024-09-27,regular,CR Belouizdad,ES Setif,0,0,1.52,3.65,7.28
+2024-09-27,regular,MC Alger,Paradou,1,1,1.50,3.68,7.63
+2024-09-24,regular,Oran,Saoura,2,0,1.64,3.35,6.56
+2024-09-21,regular,Paradou,ASO Chlef,2,0,1.93,3.13,4.18
+2024-09-20,regular,Olympique Akbou,Magra,1,0,1.97,2.93,4.26
+2024-09-19,regular,ES Setif,El Bayadh,1,0,1.61,3.78,8.48

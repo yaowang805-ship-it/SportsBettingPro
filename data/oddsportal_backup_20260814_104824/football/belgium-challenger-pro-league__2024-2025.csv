@@ -1,0 +1,232 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-05-23,regular,Cercle Brugge KSV,Patro Eisden,3,1,1.46,4.60,6.12
+2025-05-18,regular,Patro Eisden,Cercle Brugge KSV,1,5,3.02,3.33,2.31
+2025-05-11,regular,Patro Eisden,Sporting Lokeren,1,1,2.07,3.46,3.33
+2025-05-03,regular,Sporting Lokeren,Patro Eisden,1,2,2.59,3.20,2.71
+2025-04-27,regular,Beveren,Patro Eisden,1,2,2.07,3.40,3.39
+2025-04-27,regular,RWDM Brussels,Sporting Lokeren,3,2,1.57,4.04,5.17
+2025-04-24,regular,Patro Eisden,Beveren,3,2,2.26,3.26,3.09
+2025-04-24,regular,Sporting Lokeren,RWDM Brussels,2,0,3.19,3.28,2.24
+2025-04-18,regular,Anderlecht U23,Beveren,0,4,5.20,4.52,1.52
+2025-04-18,regular,Club Brugge KV U23,Francs Borains,2,0,2.09,3.65,3.13
+2025-04-18,regular,Patro Eisden,Eupen,1,0,1.87,3.69,3.78
+2025-04-18,regular,Genk U23,K. Lierse S.K.,1,3,2.84,3.87,2.16
+2025-04-18,regular,Lommel SK,RAAL La Louviere,1,2,6.34,4.43,1.45
+2025-04-18,regular,Seraing,Sporting Lokeren,0,4,4.62,4.06,1.64
+2025-04-18,regular,Waregem,RWDM Brussels,2,1,2.41,3.45,2.74
+2025-04-13,regular,Francs Borains,Anderlecht U23,3,2,1.86,3.72,3.78
+2025-04-13,regular,RFC Liege,Genk U23,3,1,1.52,4.49,5.20
+2025-04-13,regular,Beveren,Club Brugge KV U23,2,2,1.70,3.80,4.53
+2025-04-12,regular,Sporting Lokeren,Waregem,2,0,5.11,4.24,1.55
+2025-04-12,regular,Eupen,Seraing,2,1,1.74,3.76,4.31
+2025-04-11,regular,K. Lierse S.K.,Patro Eisden,1,0,4.39,3.88,1.71
+2025-04-11,regular,RWDM Brussels,Lommel SK,0,1,1.28,5.57,9.28
+2025-04-06,regular,Seraing,Waregem,0,0,7.98,5.36,1.31
+2025-04-06,regular,RAAL La Louviere,Francs Borains,2,1,1.42,4.51,6.89
+2025-04-05,regular,Club Brugge KV U23,RFC Liege,2,1,2.53,3.64,2.45
+2025-04-05,regular,Lommel SK,Genk U23,2,0,2.00,3.63,3.32
+2025-04-05,regular,Anderlecht U23,Sporting Lokeren,0,2,2.88,3.65,2.21
+2025-04-04,regular,Beveren,Eupen,3,0,1.76,3.66,4.33
+2025-04-04,regular,Patro Eisden,RWDM Brussels,1,1,2.98,3.35,2.27
+2025-03-30,regular,Eupen,Club Brugge KV U23,1,0,2.75,3.71,2.27
+2025-03-30,regular,RFC Liege,Patro Eisden,2,2,2.99,3.40,2.22
+2025-03-30,regular,Sporting Lokeren,Lommel SK,1,0,1.99,3.44,3.57
+2025-03-29,regular,Waregem,Anderlecht U23,3,1,1.29,5.51,8.58
+2025-03-29,regular,K. Lierse S.K.,Beveren,0,1,3.63,3.66,1.91
+2025-03-29,regular,Genk U23,RAAL La Louviere,0,1,5.33,4.27,1.53
+2025-03-28,regular,RWDM Brussels,Seraing,3,0,1.29,5.02,9.81
+2025-03-15,regular,Lommel SK,Patro Eisden,0,1,4.21,3.91,1.74
+2025-03-15,regular,Sporting Lokeren,RFC Liege,2,1,2.84,3.51,2.30
+2025-03-15,regular,Anderlecht U23,Seraing,1,1,1.88,3.62,3.83
+2025-03-15,regular,Francs Borains,Waregem,1,3,4.47,3.83,1.72
+2025-03-14,regular,Club Brugge KV U23,Genk U23,3,0,1.87,3.77,3.72
+2025-03-14,regular,RAAL La Louviere,K. Lierse S.K.,2,1,1.46,4.51,6.34
+2025-03-14,regular,Beveren,RWDM Brussels,0,2,3.37,3.37,2.10
+2025-03-09,regular,RWDM Brussels,Sporting Lokeren,1,0,1.48,4.36,6.09
+2025-03-09,regular,Patro Eisden,Beveren,1,2,2.15,3.29,3.37
+2025-03-09,regular,RFC Liege,RAAL La Louviere,1,1,3.48,3.79,1.94
+2025-03-08,regular,Eupen,Francs Borains,3,1,2.46,3.25,2.85
+2025-03-08,regular,Waregem,Lommel SK,0,1,1.42,4.90,6.14
+2025-03-08,regular,K. Lierse S.K.,Anderlecht U23,3,1,2.31,3.63,2.79
+2025-03-07,regular,Seraing,Club Brugge KV U23,2,3,3.65,3.63,1.92
+2025-03-02,regular,Francs Borains,K. Lierse S.K.,1,0,1.84,3.65,3.97
+2025-03-02,regular,Lommel SK,Seraing,2,2,1.77,3.66,4.29
+2025-03-02,regular,Genk U23,Sporting Lokeren,1,2,2.56,3.43,2.56
+2025-03-01,regular,Anderlecht U23,RFC Liege,2,4,2.99,3.74,2.14
+2025-03-01,regular,Club Brugge KV U23,Patro Eisden,0,1,3.26,3.65,2.05
+2025-02-28,regular,RAAL La Louviere,Eupen,2,0,1.63,3.86,4.98
+2025-02-28,regular,Beveren,Waregem,3,2,3.26,3.21,2.20
+2025-02-23,regular,RFC Liege,K. Lierse S.K.,2,1,2.06,3.53,3.30
+2025-02-23,regular,Patro Eisden,RAAL La Louviere,1,1,2.81,3.32,2.40
+2025-02-22,regular,Eupen,Anderlecht U23,2,2,2.10,3.63,3.09
+2025-02-22,regular,Sporting Lokeren,Club Brugge KV U23,2,1,2.53,3.29,2.67
+2025-02-22,regular,Lommel SK,Beveren,1,2,3.09,3.44,2.18
+2025-02-21,regular,RWDM Brussels,Francs Borains,1,0,1.55,4.12,5.29
+2025-02-21,regular,Waregem,Genk U23,3,1,1.36,5.38,6.55
+2025-02-16,regular,Genk U23,Eupen,0,0,3.34,3.79,1.95
+2025-02-16,regular,Francs Borains,Sporting Lokeren,1,2,2.44,3.23,2.78
+2025-02-16,regular,Club Brugge KV U23,RWDM Brussels,0,1,4.56,3.80,1.69
+2025-02-15,regular,Anderlecht U23,Lommel SK,5,0,2.59,3.51,2.50
+2025-02-15,regular,Beveren,RFC Liege,3,1,2.03,3.41,3.48
+2025-02-15,regular,RAAL La Louviere,Seraing,4,1,1.38,4.72,7.40
+2025-02-14,regular,K. Lierse S.K.,Waregem,0,0,4.09,3.90,1.75
+2025-02-09,regular,Sporting Lokeren,RAAL La Louviere,0,5,3.88,3.30,1.96
+2025-02-09,regular,Seraing,Beveren,0,2,3.55,3.43,2.01
+2025-02-09,regular,Eupen,K. Lierse S.K.,1,3,1.99,3.52,3.53
+2025-02-08,regular,RWDM Brussels,Anderlecht U23,1,0,1.42,4.49,6.87
+2025-02-08,regular,Patro Eisden,Genk U23,1,0,1.50,4.57,5.36
+2025-02-08,regular,RFC Liege,Francs Borains,0,1,2.50,3.56,2.55
+2025-02-07,regular,Lommel SK,Club Brugge KV U23,0,2,2.19,3.63,2.99
+2025-02-02,regular,Genk U23,Beveren,3,3,3.02,3.53,2.21
+2025-02-02,regular,RAAL La Louviere,Waregem,0,0,2.46,3.33,2.78
+2025-02-02,regular,Francs Borains,Patro Eisden,1,3,2.93,3.31,2.37
+2025-02-01,regular,Eupen,Lommel SK,3,2,2.39,3.27,2.92
+2025-02-01,regular,K. Lierse S.K.,RWDM Brussels,0,0,4.11,3.80,1.78
+2025-02-01,regular,Anderlecht U23,Club Brugge KV U23,2,3,2.71,3.34,2.52
+2025-01-31,regular,RFC Liege,Seraing,2,1,1.89,3.62,3.79
+2025-01-29,regular,Lommel SK,Francs Borains,1,2,2.11,3.34,3.40
+2025-01-28,regular,Anderlecht U23,Genk U23,4,1,2.00,3.75,3.27
+2025-01-28,regular,Sporting Lokeren,Eupen,0,0,2.57,3.45,2.55
+2025-01-28,regular,Seraing,K. Lierse S.K.,0,2,3.31,3.67,2.02
+2025-01-26,regular,Club Brugge KV U23,RAAL La Louviere,2,1,3.78,3.76,1.87
+2025-01-26,regular,Lommel SK,RFC Liege,0,2,1.83,3.79,3.95
+2025-01-25,regular,Anderlecht U23,Patro Eisden,1,1,3.95,3.78,1.83
+2025-01-25,regular,Waregem,Eupen,3,2,1.51,4.59,5.27
+2025-01-25,regular,Seraing,Francs Borains,1,1,3.41,3.51,2.05
+2025-01-24,regular,RWDM Brussels,Genk U23,1,0,1.41,4.82,6.70
+2025-01-24,regular,Sporting Lokeren,K. Lierse S.K.,1,1,2.30,3.49,2.91
+2025-01-19,regular,Genk U23,Seraing,2,2,2.34,3.65,2.69
+2025-01-19,regular,K. Lierse S.K.,Club Brugge KV U23,1,3,2.05,3.63,3.29
+2025-01-19,regular,RFC Liege,Waregem,1,1,4.96,4.20,1.59
+2025-01-18,regular,RAAL La Louviere,Anderlecht U23,2,2,1.54,4.13,5.53
+2025-01-18,regular,Francs Borains,Beveren,0,0,2.57,3.17,2.75
+2025-01-18,regular,Eupen,RWDM Brussels,0,1,3.92,3.59,1.88
+2025-01-17,regular,Patro Eisden,Sporting Lokeren,4,1,1.74,3.69,4.41
+2025-01-12,regular,Beveren,RAAL La Louviere,0,0,3.14,3.25,2.22
+2025-01-11,regular,Waregem,Patro Eisden,3,2,1.93,3.52,3.66
+2025-01-11,regular,RWDM Brussels,RFC Liege,2,1,1.50,4.25,5.66
+2024-12-22,regular,K. Lierse S.K.,Lommel SK,1,0,3.00,3.56,2.15
+2024-12-22,regular,Patro Eisden,Seraing,2,3,1.43,4.50,6.79
+2024-12-22,regular,Sporting Lokeren,Beveren,0,1,2.78,3.17,2.56
+2024-12-21,regular,RAAL La Louviere,RWDM Brussels,0,0,2.30,3.35,3.01
+2024-12-21,regular,Eupen,RFC Liege,0,1,1.89,3.96,3.45
+2024-12-20,regular,Club Brugge KV U23,Waregem,0,3,4.44,4.29,1.63
+2024-12-20,regular,Francs Borains,Genk U23,2,2,1.97,3.89,3.29
+2024-12-15,regular,RWDM Brussels,Club Brugge KV U23,1,0,1.46,4.43,6.40
+2024-12-15,regular,RFC Liege,Sporting Lokeren,0,1,2.21,3.52,2.98
+2024-12-15,regular,Genk U23,Patro Eisden,1,3,4.89,3.96,1.63
+2024-12-14,regular,Anderlecht U23,Francs Borains,0,1,2.23,3.69,2.84
+2024-12-14,regular,Lommel SK,Waregem,1,2,3.22,3.43,2.14
+2024-12-13,regular,Beveren,K. Lierse S.K.,1,0,1.95,3.59,3.58
+2024-12-13,regular,Seraing,RAAL La Louviere,0,1,4.86,4.00,1.63
+2024-12-08,regular,Patro Eisden,Lommel SK,4,0,2.08,3.51,3.30
+2024-12-08,regular,Sporting Lokeren,RWDM Brussels,1,4,4.12,3.42,1.87
+2024-12-08,regular,Francs Borains,Eupen,3,2,2.82,3.57,2.30
+2024-12-07,regular,Waregem,Beveren,4,0,1.70,3.70,4.66
+2024-12-07,regular,RAAL La Louviere,Genk U23,2,1,1.46,4.71,5.72
+2024-12-06,regular,Club Brugge KV U23,Anderlecht U23,3,0,2.26,3.45,2.96
+2024-12-06,regular,Deinze,Seraing,0,1,12.17,5.74,1.22
+2024-12-06,regular,K. Lierse S.K.,RFC Liege,2,1,2.15,3.63,3.06
+2024-12-01,regular,Francs Borains,Club Brugge KV U23,1,2,2.28,3.44,2.97
+2024-12-01,regular,Eupen,RAAL La Louviere,3,4,2.92,3.45,2.30
+2024-12-01,regular,Seraing,RWDM Brussels,4,4,5.61,4.30,1.52
+2024-11-30,regular,Beveren,Patro Eisden,0,0,2.94,3.30,2.35
+2024-11-30,regular,Anderlecht U23,K. Lierse S.K.,2,0,2.31,3.47,2.87
+2024-11-29,regular,Genk U23,Waregem,2,3,5.40,4.67,1.50
+2024-11-29,regular,Lommel SK,Sporting Lokeren,1,1,1.74,3.74,4.42
+2024-11-24,regular,Waregem,Seraing,5,1,1.41,4.55,7.16
+2024-11-24,regular,RAAL La Louviere,Lommel SK,5,1,2.49,3.42,2.62
+2024-11-24,regular,Patro Eisden,RFC Liege,2,0,1.53,4.24,5.49
+2024-11-23,regular,Sporting Lokeren,Anderlecht U23,0,1,2.20,3.46,3.07
+2024-11-23,regular,RWDM Brussels,Beveren,0,2,1.73,3.73,4.42
+2024-11-23,regular,Deinze,Francs Borains,0,3,16.22,8.18,1.11
+2024-11-22,regular,Club Brugge KV U23,Eupen,0,4,2.54,3.49,2.57
+2024-11-22,regular,K. Lierse S.K.,Genk U23,2,2,1.84,3.81,3.81
+2024-11-10,regular,Eupen,Patro Eisden,0,4,2.64,3.31,2.56
+2024-11-10,regular,Seraing,Anderlecht U23,2,2,2.82,3.50,2.32
+2024-11-10,regular,Waregem,RAAL La Louviere,2,1,2.13,3.49,3.17
+2024-11-09,regular,Lommel SK,Deinze,1,1,2.41,3.43,2.76
+2024-11-09,regular,Beveren,Francs Borains,4,0,1.78,3.76,4.15
+2024-11-09,regular,Genk U23,Club Brugge KV U23,1,2,2.36,3.66,2.66
+2024-11-08,regular,K. Lierse S.K.,Sporting Lokeren,2,2,2.57,3.16,2.73
+2024-11-08,regular,RFC Liege,RWDM Brussels,2,1,3.97,3.93,1.77
+2024-11-03,regular,Patro Eisden,K. Lierse S.K.,3,3,1.45,4.51,6.38
+2024-11-03,regular,Deinze,Beveren,3,1,1.82,3.66,4.14
+2024-11-03,regular,Sporting Lokeren,Genk U23,4,0,2.14,3.37,3.28
+2024-11-03,regular,Francs Borains,Seraing,0,1,1.97,3.48,3.65
+2024-11-02,regular,RAAL La Louviere,RFC Liege,3,1,1.68,3.88,4.65
+2024-11-02,regular,Anderlecht U23,Eupen,2,2,2.73,3.62,2.35
+2024-11-01,regular,Club Brugge KV U23,Lommel SK,1,3,3.78,4.14,1.78
+2024-11-01,regular,RWDM Brussels,Waregem,2,1,2.03,3.67,3.33
+2024-10-27,regular,Eupen,Sporting Lokeren,0,1,1.76,3.59,4.51
+2024-10-27,regular,RFC Liege,Club Brugge KV U23,1,1,2.13,3.46,3.30
+2024-10-27,regular,K. Lierse S.K.,RAAL La Louviere,1,2,3.03,3.39,2.26
+2024-10-26,regular,Beveren,Anderlecht U23,1,1,1.71,3.86,4.55
+2024-10-26,regular,RWDM Brussels,Deinze,3,2,2.04,3.59,3.36
+2024-10-26,regular,Waregem,Francs Borains,2,2,1.43,4.91,6.06
+2024-10-25,regular,Genk U23,Lommel SK,0,4,3.75,3.62,1.92
+2024-10-25,regular,Seraing,Patro Eisden,0,0,5.28,3.99,1.59
+2024-10-20,regular,Sporting Lokeren,Seraing,0,1,1.90,3.51,3.89
+2024-10-20,regular,Patro Eisden,Waregem,0,1,2.47,3.54,2.64
+2024-10-20,regular,Anderlecht U23,RWDM Brussels,2,1,6.12,4.46,1.47
+2024-10-19,regular,Deinze,Genk U23,1,0,1.74,3.82,4.44
+2024-10-19,regular,Lommel SK,Eupen,1,1,2.11,3.43,3.33
+2024-10-19,regular,Club Brugge KV U23,K. Lierse S.K.,3,1,2.68,3.44,2.48
+2024-10-18,regular,Francs Borains,RFC Liege,1,2,2.49,3.49,2.65
+2024-10-18,regular,RAAL La Louviere,Beveren,2,0,2.04,3.49,3.46
+2024-10-06,regular,K. Lierse S.K.,Francs Borains,4,0,2.20,3.46,3.08
+2024-10-06,regular,Waregem,Club Brugge KV U23,2,1,1.55,4.46,5.04
+2024-10-06,regular,Genk U23,Anderlecht U23,1,0,2.01,3.81,3.26
+2024-10-05,regular,Seraing,Eupen,1,2,4.52,3.75,1.72
+2024-10-05,regular,RWDM Brussels,RAAL La Louviere,1,1,1.72,3.78,4.47
+2024-10-05,regular,Beveren,Sporting Lokeren,0,1,1.88,3.69,3.84
+2024-10-04,regular,Patro Eisden,Deinze,3,1,2.01,3.52,3.54
+2024-10-04,regular,RFC Liege,Lommel SK,1,1,3.16,3.44,2.18
+2024-09-29,regular,RAAL La Louviere,Patro Eisden,0,2,2.29,3.22,3.14
+2024-09-29,regular,Anderlecht U23,Waregem,2,3,4.95,4.05,1.63
+2024-09-29,regular,Seraing,RFC Liege,0,3,3.08,3.62,2.16
+2024-09-28,regular,Sporting Lokeren,Deinze,0,0,4.64,3.80,1.71
+2024-09-28,regular,Lommel SK,K. Lierse S.K.,1,1,1.65,4.09,4.67
+2024-09-28,regular,Club Brugge KV U23,Beveren,2,0,2.83,3.94,2.18
+2024-09-27,regular,Eupen,Genk U23,3,1,1.81,4.12,3.68
+2024-09-27,regular,Francs Borains,RWDM Brussels,1,2,5.05,4.08,1.60
+2024-09-22,regular,RAAL La Louviere,Sporting Lokeren,2,0,1.78,3.67,4.21
+2024-09-22,regular,Deinze,Club Brugge KV U23,2,0,1.54,4.39,5.14
+2024-09-22,regular,Waregem,RFC Liege,3,1,1.69,4.00,4.32
+2024-09-21,regular,Patro Eisden,Francs Borains,4,1,1.80,3.57,4.25
+2024-09-21,regular,Genk U23,RWDM Brussels,0,3,2.86,3.52,2.25
+2024-09-21,regular,K. Lierse S.K.,Eupen,3,0,3.98,3.83,1.76
+2024-09-20,regular,Lommel SK,Anderlecht U23,2,1,1.68,4.02,4.41
+2024-09-20,regular,Beveren,Seraing,0,0,1.48,4.47,5.90
+2024-09-15,regular,Deinze,RAAL La Louviere,1,2,1.89,3.72,3.61
+2024-09-15,regular,Beveren,Genk U23,3,2,1.96,3.81,3.27
+2024-09-15,regular,Eupen,Waregem,1,3,2.43,3.34,2.72
+2024-09-14,regular,RFC Liege,Anderlecht U23,3,3,1.74,3.79,4.14
+2024-09-14,regular,RWDM Brussels,K. Lierse S.K.,3,0,1.53,4.10,5.45
+2024-09-14,regular,Francs Borains,Lommel SK,1,3,3.37,3.44,2.04
+2024-09-13,regular,Club Brugge KV U23,Seraing,1,1,1.74,3.77,4.24
+2024-09-13,regular,Sporting Lokeren,Patro Eisden,2,2,3.21,3.32,2.14
+2024-09-01,regular,Seraing,Lommel SK,1,2,4.20,3.77,1.74
+2024-09-01,regular,K. Lierse S.K.,Deinze,0,1,3.43,3.55,2.00
+2024-09-01,regular,Genk U23,Francs Borains,1,2,1.96,3.70,3.43
+2024-08-31,regular,Patro Eisden,Club Brugge KV U23,2,2,1.75,3.77,4.28
+2024-08-31,regular,RFC Liege,Beveren,0,0,2.51,3.42,2.58
+2024-08-31,regular,Anderlecht U23,RAAL La Louviere,1,2,3.17,3.62,2.07
+2024-08-30,regular,RWDM Brussels,Eupen,2,1,2.32,3.42,2.86
+2024-08-30,regular,Waregem,Sporting Lokeren,1,0,1.51,4.49,5.26
+2024-08-25,regular,Genk U23,RFC Liege,4,1,2.60,3.67,2.39
+2024-08-25,regular,Deinze,Waregem,2,2,2.44,3.57,2.59
+2024-08-25,regular,Lommel SK,RWDM Brussels,0,2,2.38,3.42,2.76
+2024-08-24,regular,RAAL La Louviere,Club Brugge KV U23,1,1,1.93,3.56,3.65
+2024-08-24,regular,K. Lierse S.K.,Seraing,3,2,1.78,3.62,4.24
+2024-08-24,regular,Patro Eisden,Anderlecht U23,3,1,1.68,3.76,4.62
+2024-08-23,regular,Eupen,Beveren,2,2,1.95,3.46,3.68
+2024-08-23,regular,Sporting Lokeren,Francs Borains,0,1,2.28,3.43,2.90
+2024-08-18,regular,Waregem,K. Lierse S.K.,0,1,1.44,4.81,5.81
+2024-08-18,regular,RFC Liege,Eupen,0,3,2.20,3.53,2.96
+2024-08-18,regular,Francs Borains,RAAL La Louviere,0,1,2.55,3.60,2.44
+2024-08-17,regular,Beveren,Lommel SK,2,1,2.48,3.47,2.60
+2024-08-17,regular,RWDM Brussels,Patro Eisden,1,1,2.19,3.39,3.09
+2024-08-17,regular,Club Brugge KV U23,Sporting Lokeren,4,0,2.28,3.49,2.85
+2024-08-16,regular,Anderlecht U23,Deinze,1,4,3.06,3.55,2.14
+2024-08-16,regular,Seraing,Genk U23,0,2,3.54,3.66,1.92

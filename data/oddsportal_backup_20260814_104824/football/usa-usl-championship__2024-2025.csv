@@ -1,0 +1,423 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2024-11-23,play_off,Colorado Springs,Rhode Island,3,0,2.69,3.32,2.54
+2024-11-17,play_off,Colorado Springs,Las Vegas Lights,1,0,1.99,3.53,3.55
+2024-11-17,play_off,Charleston,Rhode Island,1,2,2.12,3.48,3.32
+2024-11-11,play_off,Colorado Springs,Orange County SC,2,1,1.62,3.75,5.50
+2024-11-10,play_off,Charleston,Tampa Bay,2,1,2.07,3.64,3.25
+2024-11-10,play_off,New Mexico,Las Vegas Lights,0,1,2.21,3.48,3.06
+2024-11-10,play_off,Louisville City,Rhode Island,0,3,1.63,4.23,4.55
+2024-11-04,play_off,New Mexico,Phoenix Rising,2,1,2.14,3.31,3.36
+2024-11-03,play_off,Indy Eleven,Rhode Island,2,3,2.73,3.33,2.49
+2024-11-03,play_off,Colorado Springs,Oakland Roots,2,0,1.55,4.04,5.69
+2024-11-03,play_off,Louisville City,North Carolina,3,2,1.52,4.35,5.43
+2024-11-03,play_off,Detroit,Tampa Bay,1,2,2.86,3.36,2.36
+2024-11-03,play_off,Charleston,Pittsburgh,1,0,1.91,3.32,4.08
+2024-11-02,play_off,Memphis,Orange County SC,0,1,1.82,3.68,3.98
+2024-11-02,play_off,Las Vegas Lights,Sacramento Republic,1,0,2.56,2.99,2.95
+2024-10-27,regular,Oakland Roots,Birmingham,0,5,2.34,3.70,2.69
+2024-10-27,regular,Sacramento Republic,Colorado Springs,0,1,1.81,3.81,4.03
+2024-10-27,regular,Orange County SC,Hartford Athletic,3,2,2.02,3.73,3.26
+2024-10-27,regular,San Antonio,Detroit,1,4,2.36,3.23,2.98
+2024-10-27,regular,FC Tulsa,Monterey Bay,2,1,2.02,3.56,3.47
+2024-10-27,regular,New Mexico,Memphis,2,3,2.11,3.62,3.15
+2024-10-27,regular,Rhode Island,Miami FC,8,1,1.13,7.06,16.67
+2024-10-27,regular,Tampa Bay,Indy Eleven,3,0,1.49,4.58,5.53
+2024-10-27,regular,Louisville City,Phoenix Rising,4,1,1.41,4.65,6.88
+2024-10-27,regular,Pittsburgh,El Paso,2,0,1.40,4.49,8.23
+2024-10-27,regular,North Carolina,Las Vegas Lights,2,1,1.72,4.14,4.06
+2024-10-27,regular,Charleston,Loudoun,2,1,1.57,4.18,5.18
+2024-10-24,regular,Tampa Bay,Hartford Athletic,2,2,1.63,4.14,4.73
+2024-10-20,regular,Las Vegas Lights,Oakland Roots,2,3,1.61,4.05,4.95
+2024-10-20,regular,Phoenix Rising,Memphis,0,1,2.03,3.53,3.42
+2024-10-20,regular,Monterey Bay,Colorado Springs,0,1,3.15,3.40,2.18
+2024-10-20,regular,Orange County SC,New Mexico,0,0,2.31,3.23,3.06
+2024-10-20,regular,El Paso,Sacramento Republic,2,1,3.41,3.42,2.08
+2024-10-20,regular,San Antonio,Louisville City,1,1,3.19,3.52,2.13
+2024-10-20,regular,Charleston,Rhode Island,1,1,1.93,3.64,3.67
+2024-10-20,regular,Indy Eleven,Birmingham,3,2,1.95,3.66,3.57
+2024-10-20,regular,FC Tulsa,Hartford Athletic,1,2,2.62,3.52,2.48
+2024-10-20,regular,Loudoun,Pittsburgh,0,2,2.71,3.23,2.60
+2024-10-20,regular,Tampa Bay,North Carolina,0,2,2.32,3.76,2.73
+2024-10-19,regular,Detroit,Miami FC,3,0,1.16,6.41,18.51
+2024-10-17,regular,El Paso,Orange County SC,0,2,2.29,3.33,3.01
+2024-10-14,regular,Birmingham,Las Vegas Lights,0,3,2.19,3.80,2.85
+2024-10-13,regular,Rhode Island,Loudoun,0,0,1.77,3.92,4.07
+2024-10-13,regular,Oakland Roots,Phoenix Rising,0,1,2.38,3.38,2.83
+2024-10-13,regular,FC Tulsa,New Mexico,1,1,2.87,3.81,2.19
+2024-10-13,regular,Colorado Springs,San Antonio,1,2,1.67,3.89,4.74
+2024-10-13,regular,Memphis,Sacramento Republic,0,0,2.22,3.40,3.08
+2024-10-13,regular,Hartford Athletic,North Carolina,4,3,2.86,3.60,2.26
+2024-10-13,regular,Louisville City,Tampa Bay,2,1,1.79,4.03,3.80
+2024-10-13,regular,Pittsburgh,Charleston,2,0,2.43,3.25,2.90
+2024-10-12,regular,Detroit,Indy Eleven,0,0,2.20,3.32,3.18
+2024-10-10,regular,Sacramento Republic,Monterey Bay,2,2,1.45,4.30,6.83
+2024-10-10,regular,Orange County SC,Colorado Springs,2,0,2.49,3.32,2.73
+2024-10-10,regular,El Paso,San Antonio,2,2,2.20,3.47,3.04
+2024-10-10,regular,New Mexico,Phoenix Rising,1,2,2.05,3.55,3.31
+2024-10-10,regular,North Carolina,FC Tulsa,2,0,1.40,5.02,6.42
+2024-10-09,regular,Loudoun,Indy Eleven,0,1,2.19,3.43,3.15
+2024-10-07,regular,Birmingham,North Carolina,2,3,2.69,3.76,2.33
+2024-10-06,regular,Las Vegas Lights,Orange County SC,1,1,1.64,4.16,4.62
+2024-10-06,regular,FC Tulsa,El Paso,0,1,2.01,3.78,3.29
+2024-10-06,regular,San Antonio,Sacramento Republic,2,1,3.48,3.35,2.07
+2024-10-06,regular,Memphis,Oakland Roots,1,1,1.56,4.16,5.10
+2024-10-06,regular,Rhode Island,Tampa Bay,3,1,2.14,3.95,2.89
+2024-10-06,regular,Hartford Athletic,Loudoun,0,2,2.57,3.70,2.44
+2024-10-06,regular,Indy Eleven,Louisville City,2,2,3.48,3.67,1.96
+2024-10-06,regular,Miami FC,Pittsburgh,0,4,10.19,4.86,1.31
+2024-10-05,regular,Charleston,Detroit,2,2,1.48,4.09,6.82
+2024-10-05,regular,Phoenix Rising,Monterey Bay,1,2,1.57,4.33,5.05
+2024-10-03,regular,Louisville City,Miami FC,3,0,1.09,10.29,23.94
+2024-09-30,regular,Sacramento Republic,New Mexico,4,0,1.83,3.57,4.19
+2024-09-30,regular,Oakland Roots,FC Tulsa,0,1,1.89,3.61,3.82
+2024-09-29,regular,Phoenix Rising,Las Vegas Lights,1,2,2.00,3.50,3.55
+2024-09-29,regular,Monterey Bay,Detroit,0,2,2.48,3.01,3.00
+2024-09-29,regular,San Antonio,Rhode Island,1,3,3.36,3.12,2.23
+2024-09-29,regular,Colorado Springs,Loudoun,1,1,1.76,3.82,4.20
+2024-09-29,regular,Louisville City,Memphis,4,2,1.57,4.26,5.00
+2024-09-29,regular,Pittsburgh,Birmingham,1,1,1.58,3.84,6.20
+2024-09-29,regular,Indy Eleven,Miami FC,4,0,1.23,6.14,11.12
+2024-09-28,regular,El Paso,North Carolina,1,0,3.18,3.57,2.11
+2024-09-26,regular,Orange County SC,Phoenix Rising,2,0,3.90,3.43,1.92
+2024-09-23,regular,Birmingham,Miami FC,1,0,1.32,5.37,8.15
+2024-09-22,regular,New Mexico,Loudoun,1,0,2.06,3.49,3.36
+2024-09-22,regular,Detroit,Louisville City,2,1,4.80,3.88,1.66
+2024-09-22,regular,Las Vegas Lights,Sacramento Republic,2,1,2.78,3.31,2.45
+2024-09-22,regular,Phoenix Rising,San Antonio,4,0,1.93,3.30,4.02
+2024-09-22,regular,Monterey Bay,Orange County SC,0,0,2.08,3.42,3.39
+2024-09-22,regular,El Paso,Colorado Springs,1,1,3.59,3.71,1.95
+2024-09-22,regular,Charleston,Tampa Bay,3,1,1.84,3.86,3.72
+2024-09-22,regular,Rhode Island,FC Tulsa,2,1,1.42,4.23,7.83
+2024-09-22,regular,North Carolina,Indy Eleven,2,0,1.90,3.79,3.61
+2024-09-22,regular,Hartford Athletic,Oakland Roots,2,0,2.07,3.52,3.23
+2024-09-19,regular,New Mexico,Sacramento Republic,3,1,2.49,2.96,3.04
+2024-09-15,regular,Las Vegas Lights,Monterey Bay,0,0,1.58,4.13,5.08
+2024-09-15,regular,Oakland Roots,San Antonio,0,1,2.67,3.06,2.70
+2024-09-15,regular,Orange County SC,Rhode Island,1,0,3.47,3.29,2.08
+2024-09-15,regular,Sacramento Republic,Phoenix Rising,2,0,1.78,3.62,4.25
+2024-09-15,regular,FC Tulsa,Louisville City,0,1,5.48,4.49,1.49
+2024-09-15,regular,Colorado Springs,Charleston,2,0,2.95,3.46,2.25
+2024-09-15,regular,Memphis,North Carolina,3,0,2.07,3.47,3.26
+2024-09-15,regular,Tampa Bay,Pittsburgh,2,1,1.95,3.38,3.76
+2024-09-15,regular,Loudoun,Birmingham,4,2,2.06,3.60,3.22
+2024-09-15,regular,Detroit,New Mexico,1,0,2.46,3.06,2.96
+2024-09-15,regular,Indy Eleven,El Paso,3,1,1.72,3.90,4.32
+2024-09-15,regular,Miami FC,Hartford Athletic,0,3,2.96,3.38,2.26
+2024-09-12,regular,FC Tulsa,Las Vegas Lights,1,1,2.95,3.60,2.20
+2024-09-12,regular,Birmingham,Tampa Bay,2,0,3.34,3.76,1.97
+2024-09-12,regular,Memphis,Hartford Athletic,0,0,1.58,4.07,5.09
+2024-09-08,regular,Monterey Bay,San Antonio,0,1,2.53,3.07,2.78
+2024-09-08,regular,Colorado Springs,Tampa Bay,4,2,2.67,3.53,2.37
+2024-09-08,regular,El Paso,Detroit,0,0,2.19,3.19,3.27
+2024-09-08,regular,Charleston,Sacramento Republic,2,1,1.69,3.69,4.61
+2024-09-08,regular,North Carolina,Oakland Roots,5,0,1.58,3.96,5.18
+2024-09-08,regular,Hartford Athletic,Indy Eleven,0,0,2.33,3.62,2.69
+2024-09-08,regular,Pittsburgh,Rhode Island,2,0,2.17,3.15,3.31
+2024-09-07,regular,Phoenix Rising,FC Tulsa,1,0,1.58,3.97,5.27
+2024-09-07,regular,New Mexico,Miami FC,1,0,1.22,6.44,10.47
+2024-09-07,regular,Louisville City,Loudoun,1,0,1.41,4.65,6.49
+2024-09-02,regular,FC Tulsa,Colorado Springs,1,4,2.83,3.37,2.34
+2024-09-01,regular,Orange County SC,Las Vegas Lights,2,3,2.59,3.32,2.58
+2024-09-01,regular,San Antonio,Charleston,1,1,3.59,3.68,1.90
+2024-09-01,regular,Rhode Island,Birmingham,2,0,1.71,3.66,4.55
+2024-09-01,regular,Loudoun,Phoenix Rising,0,1,2.04,3.34,3.54
+2024-09-01,regular,North Carolina,Louisville City,4,6,3.10,3.51,2.13
+2024-09-01,regular,Detroit,Hartford Athletic,1,1,1.94,3.45,3.70
+2024-09-01,regular,Indy Eleven,Pittsburgh,1,1,3.20,3.14,2.25
+2024-09-01,regular,Miami FC,Monterey Bay,1,0,3.08,3.65,2.10
+2024-09-01,regular,Oakland Roots,New Mexico,1,0,2.75,3.41,2.39
+2024-08-29,regular,Colorado Springs,Memphis,3,1,2.09,3.50,3.23
+2024-08-25,regular,Phoenix Rising,North Carolina,0,0,2.27,3.41,3.01
+2024-08-25,regular,Sacramento Republic,San Antonio,1,0,1.65,3.72,5.01
+2024-08-25,regular,Las Vegas Lights,Indy Eleven,3,2,1.93,3.68,3.58
+2024-08-25,regular,Monterey Bay,El Paso,0,0,2.06,3.42,3.35
+2024-08-25,regular,Oakland Roots,Memphis,1,1,3.06,3.44,2.18
+2024-08-25,regular,Colorado Springs,New Mexico,0,1,2.03,3.69,3.24
+2024-08-25,regular,Birmingham,Pittsburgh,0,3,2.67,3.14,2.62
+2024-08-25,regular,Charleston,Orange County SC,6,0,1.31,4.99,8.82
+2024-08-25,regular,Loudoun,Rhode Island,0,0,2.42,3.41,2.73
+2024-08-25,regular,Tampa Bay,Miami FC,2,0,1.16,7.65,12.15
+2024-08-25,regular,Detroit,FC Tulsa,0,1,1.90,3.45,3.83
+2024-08-25,regular,Hartford Athletic,Louisville City,2,1,5.24,4.17,1.55
+2024-08-22,regular,Tampa Bay,Detroit,2,3,1.49,4.49,5.58
+2024-08-18,regular,Orange County SC,El Paso,0,1,1.87,3.63,3.76
+2024-08-18,regular,New Mexico,Monterey Bay,3,2,1.56,4.28,5.05
+2024-08-18,regular,San Antonio,North Carolina,1,0,2.47,3.34,2.72
+2024-08-18,regular,Memphis,FC Tulsa,2,0,1.63,4.15,4.58
+2024-08-18,regular,Louisville City,Charleston,3,1,1.96,3.63,3.49
+2024-08-18,regular,Tampa Bay,Loudoun,0,2,1.58,4.64,4.38
+2024-08-18,regular,Rhode Island,Oakland Roots,1,1,1.56,4.16,5.20
+2024-08-18,regular,Pittsburgh,Colorado Springs,2,2,1.76,3.53,4.55
+2024-08-18,regular,Hartford Athletic,Las Vegas Lights,2,1,2.39,3.67,2.60
+2024-08-17,regular,Birmingham,Detroit,0,1,1.86,3.72,3.72
+2024-08-15,regular,Sacramento Republic,El Paso,2,0,1.57,4.13,5.11
+2024-08-15,regular,New Mexico,FC Tulsa,3,3,1.60,4.11,4.91
+2024-08-15,regular,Miami FC,Memphis,1,5,3.99,4.01,1.73
+2024-08-12,regular,Indy Eleven,New Mexico,1,3,2.27,3.48,2.86
+2024-08-11,regular,Phoenix Rising,Tampa Bay,0,0,3.49,3.44,2.02
+2024-08-11,regular,Las Vegas Lights,Detroit,1,1,1.88,3.57,3.77
+2024-08-11,regular,Monterey Bay,Birmingham,1,2,2.60,3.29,2.58
+2024-08-11,regular,Oakland Roots,Loudoun,3,1,2.47,3.38,2.65
+2024-08-11,regular,El Paso,Miami FC,2,1,1.44,4.42,6.67
+2024-08-11,regular,Louisville City,Sacramento Republic,4,3,1.74,3.57,4.56
+2024-08-11,regular,Charleston,Memphis,3,1,1.50,4.38,5.48
+2024-08-11,regular,North Carolina,Colorado Springs,4,1,2.23,3.19,3.17
+2024-08-11,regular,Rhode Island,Hartford Athletic,3,0,1.67,3.84,4.61
+2024-08-11,regular,Pittsburgh,San Antonio,0,0,1.86,3.37,4.13
+2024-08-10,regular,FC Tulsa,Orange County SC,0,0,1.86,3.67,3.78
+2024-08-08,regular,Detroit,Pittsburgh,0,0,3.29,3.01,2.29
+2024-08-08,regular,Indy Eleven,Rhode Island,1,0,2.22,3.49,2.98
+2024-08-04,regular,Monterey Bay,Tampa Bay,2,2,4.26,3.88,1.72
+2024-08-04,regular,Orange County SC,North Carolina,0,1,2.78,3.28,2.45
+2024-08-04,regular,Sacramento Republic,Pittsburgh,0,1,1.95,3.17,4.18
+2024-08-04,regular,Colorado Springs,Phoenix Rising,2,0,1.95,3.41,3.72
+2024-08-04,regular,San Antonio,FC Tulsa,1,3,1.66,3.81,4.76
+2024-08-04,regular,New Mexico,Louisville City,0,1,2.79,3.64,2.27
+2024-08-04,regular,Memphis,El Paso,0,0,1.57,4.08,5.20
+2024-08-04,regular,Birmingham,Hartford Athletic,2,2,1.61,4.08,4.67
+2024-08-04,regular,Loudoun,Miami FC,4,1,1.41,4.81,6.35
+2024-08-03,regular,Detroit,Rhode Island,1,1,2.81,3.42,2.35
+2024-08-03,regular,Charleston,Indy Eleven,5,0,1.41,4.64,6.63
+2024-08-01,regular,New Mexico,Las Vegas Lights,1,2,1.66,4.10,4.33
+2024-08-01,regular,Hartford Athletic,Detroit,1,0,2.47,3.26,2.74
+2024-07-28,regular,El Paso,New Mexico,1,2,2.85,3.32,2.37
+2024-07-28,regular,Memphis,San Antonio,1,0,2.26,3.37,2.98
+2024-07-28,regular,Louisville City,Monterey Bay,4,1,1.29,5.56,8.54
+2024-07-28,regular,Birmingham,Orange County SC,3,0,1.59,4.01,5.11
+2024-07-28,regular,Tampa Bay,Charleston,4,2,1.95,3.63,3.52
+2024-07-28,regular,Rhode Island,North Carolina,2,1,2.03,3.61,3.29
+2024-07-28,regular,Detroit,Sacramento Republic,0,1,2.83,3.18,2.47
+2024-07-28,regular,Pittsburgh,Loudoun,1,1,1.62,3.67,5.43
+2024-07-28,regular,Miami FC,Oakland Roots,1,2,3.14,3.75,2.05
+2024-07-27,regular,Colorado Springs,Las Vegas Lights,1,1,1.87,3.81,3.60
+2024-07-27,regular,FC Tulsa,Indy Eleven,0,0,2.49,3.60,2.54
+2024-07-27,regular,Hartford Athletic,Phoenix Rising,0,0,2.69,3.45,2.42
+2024-07-24,regular,Loudoun,Charleston,1,2,3.04,3.60,2.14
+2024-07-21,regular,Oakland Roots,Sacramento Republic,2,5,2.62,3.21,2.61
+2024-07-21,regular,Orange County SC,San Antonio,2,0,2.64,3.34,2.51
+2024-07-21,regular,New Mexico,Birmingham,1,1,1.82,3.62,3.97
+2024-07-21,regular,FC Tulsa,Memphis,1,0,3.14,3.54,2.11
+2024-07-21,regular,Pittsburgh,Hartford Athletic,3,1,1.46,4.37,6.21
+2024-07-21,regular,Indy Eleven,Tampa Bay,0,2,3.14,3.54,2.12
+2024-07-20,regular,Phoenix Rising,El Paso,2,0,1.60,3.93,5.17
+2024-07-20,regular,Louisville City,Colorado Springs,2,1,1.48,4.51,5.60
+2024-07-20,regular,Charleston,Miami FC,2,0,1.17,7.14,12.91
+2024-07-20,regular,North Carolina,Detroit,1,1,1.90,3.55,3.78
+2024-07-18,regular,Birmingham,Rhode Island,1,3,2.18,3.53,3.01
+2024-07-14,regular,Sacramento Republic,North Carolina,0,0,2.05,3.36,3.45
+2024-07-14,regular,Monterey Bay,FC Tulsa,0,0,1.98,3.57,3.45
+2024-07-14,regular,Birmingham,Colorado Springs,2,1,1.99,3.65,3.39
+2024-07-14,regular,Tampa Bay,Orange County SC,2,0,1.37,4.82,7.55
+2024-07-14,regular,Indy Eleven,Loudoun,1,1,1.89,3.75,3.58
+2024-07-14,regular,Miami FC,Rhode Island,2,3,4.76,4.26,1.59
+2024-07-14,regular,Pittsburgh,Oakland Roots,5,0,1.84,3.47,4.14
+2024-07-13,regular,Detroit,Memphis,0,1,2.49,3.32,2.70
+2024-07-13,regular,El Paso,Las Vegas Lights,0,2,2.54,3.44,2.56
+2024-07-13,regular,Hartford Athletic,Charleston,2,2,4.33,3.84,1.71
+2024-07-07,regular,Oakland Roots,Louisville City,1,0,3.33,3.64,2.01
+2024-07-07,regular,Orange County SC,Memphis,4,1,3.47,3.43,2.02
+2024-07-07,regular,San Antonio,Phoenix Rising,2,1,2.11,3.44,3.35
+2024-07-07,regular,North Carolina,Miami FC,4,1,1.33,5.19,7.87
+2024-07-07,regular,Detroit,Tampa Bay,1,1,3.06,3.33,2.23
+2024-07-07,regular,Pittsburgh,Monterey Bay,0,1,1.58,3.66,5.93
+2024-07-06,regular,Rhode Island,Indy Eleven,3,3,2.21,3.45,3.01
+2024-07-06,regular,Charleston,Birmingham,2,0,1.64,3.91,4.76
+2024-07-05,regular,Colorado Springs,FC Tulsa,1,0,1.57,4.23,4.97
+2024-07-04,regular,Sacramento Republic,Las Vegas Lights,0,1,1.70,3.82,4.42
+2024-07-04,regular,New Mexico,Orange County SC,2,0,1.59,4.07,4.94
+2024-07-04,regular,Loudoun,Hartford Athletic,3,0,1.96,3.69,3.36
+2024-06-30,regular,Sacramento Republic,Hartford Athletic,1,0,1.60,3.94,5.19
+2024-06-30,regular,Las Vegas Lights,Pittsburgh,2,0,2.68,3.36,2.49
+2024-06-30,regular,Orange County SC,Oakland Roots,0,2,2.23,3.32,3.10
+2024-06-30,regular,Colorado Springs,Monterey Bay,1,0,1.62,4.06,4.85
+2024-06-30,regular,San Antonio,New Mexico,2,3,2.09,3.61,3.19
+2024-06-30,regular,Birmingham,Louisville City,1,4,2.73,3.41,2.41
+2024-06-30,regular,Loudoun,Tampa Bay,2,0,3.84,3.75,1.82
+2024-06-30,regular,Miami FC,Detroit,0,4,3.38,3.40,2.07
+2024-06-29,regular,Memphis,Phoenix Rising,5,1,2.13,3.37,3.25
+2024-06-29,regular,Charleston,North Carolina,5,2,1.72,3.61,4.39
+2024-06-27,regular,Rhode Island,El Paso,3,0,1.63,3.98,4.72
+2024-06-27,regular,Detroit,Birmingham,1,2,2.30,3.32,2.95
+2024-06-23,regular,Phoenix Rising,Charleston,0,0,2.64,3.35,2.52
+2024-06-23,regular,Las Vegas Lights,Memphis,1,1,2.33,3.61,2.71
+2024-06-23,regular,New Mexico,Colorado Springs,1,0,1.89,3.60,3.80
+2024-06-23,regular,FC Tulsa,Sacramento Republic,0,0,3.60,3.54,1.95
+2024-06-23,regular,Louisville City,Rhode Island,2,5,1.47,4.33,6.12
+2024-06-23,regular,North Carolina,Pittsburgh,0,0,2.32,3.35,2.90
+2024-06-23,regular,Indy Eleven,Orange County SC,0,1,1.72,3.79,4.42
+2024-06-23,regular,Miami FC,Loudoun,2,2,3.11,3.43,2.16
+2024-06-23,regular,Monterey Bay,Oakland Roots,2,1,2.45,3.42,2.69
+2024-06-22,regular,Hartford Athletic,Tampa Bay,0,1,3.49,3.82,1.90
+2024-06-20,regular,Oakland Roots,El Paso,2,1,2.15,3.37,3.20
+2024-06-20,regular,FC Tulsa,Miami FC,2,1,1.59,4.04,5.06
+2024-06-20,regular,Birmingham,San Antonio,3,0,1.93,3.51,3.72
+2024-06-20,regular,Pittsburgh,Louisville City,0,1,2.43,3.33,2.74
+2024-06-19,regular,Las Vegas Lights,Colorado Springs,3,3,2.45,3.67,2.55
+2024-06-17,regular,North Carolina,Monterey Bay,2,0,1.63,3.91,4.92
+2024-06-16,regular,Sacramento Republic,Oakland Roots,2,3,1.62,3.73,5.20
+2024-06-16,regular,Colorado Springs,Orange County SC,4,2,1.71,3.65,4.62
+2024-06-16,regular,El Paso,Phoenix Rising,1,1,2.70,3.30,2.48
+2024-06-16,regular,Memphis,New Mexico,2,1,1.89,3.79,3.51
+2024-06-16,regular,Tampa Bay,Louisville City,3,2,2.37,3.48,2.74
+2024-06-16,regular,Hartford Athletic,Pittsburgh,2,0,2.92,3.40,2.26
+2024-06-16,regular,Indy Eleven,San Antonio,1,0,2.06,3.49,3.32
+2024-06-15,regular,Detroit,Charleston,2,0,3.07,3.38,2.21
+2024-06-15,regular,Loudoun,Las Vegas Lights,1,1,2.09,3.53,3.25
+2024-06-13,regular,Memphis,Rhode Island,2,2,2.67,3.20,2.57
+2024-06-10,regular,Birmingham,Indy Eleven,0,1,2.08,3.56,3.18
+2024-06-09,regular,Phoenix Rising,Orange County SC,2,1,1.75,3.64,4.54
+2024-06-09,regular,Las Vegas Lights,Miami FC,3,1,1.50,4.31,5.73
+2024-06-09,regular,Monterey Bay,Sacramento Republic,0,2,3.71,3.27,2.00
+2024-06-09,regular,Oakland Roots,Tampa Bay,1,0,3.94,3.64,1.83
+2024-06-09,regular,New Mexico,Hartford Athletic,1,0,1.63,4.14,4.61
+2024-06-09,regular,Memphis,Colorado Springs,1,1,1.70,3.93,4.28
+2024-06-09,regular,FC Tulsa,San Antonio,2,1,2.45,3.52,2.62
+2024-06-09,regular,Louisville City,North Carolina,2,1,1.57,4.10,5.07
+2024-06-09,regular,Charleston,Pittsburgh,0,0,1.80,3.53,4.22
+2024-06-09,regular,Rhode Island,Detroit,0,2,1.75,3.86,4.05
+2024-06-06,regular,San Antonio,El Paso,0,1,1.72,3.74,4.30
+2024-06-03,regular,Monterey Bay,New Mexico,1,0,2.45,3.61,2.57
+2024-06-02,regular,Las Vegas Lights,Phoenix Rising,0,0,3.05,3.50,2.21
+2024-06-02,regular,Orange County SC,Detroit,3,2,2.22,3.23,3.19
+2024-06-02,regular,Sacramento Republic,Tampa Bay,0,1,2.27,3.36,2.98
+2024-06-02,regular,El Paso,Birmingham,1,3,2.49,3.38,2.64
+2024-06-02,regular,Colorado Springs,Oakland Roots,1,0,1.69,3.63,4.73
+2024-06-02,regular,San Antonio,Memphis,1,0,2.16,3.53,3.07
+2024-06-02,regular,Loudoun,FC Tulsa,3,0,1.82,3.87,3.71
+2024-06-02,regular,Hartford Athletic,Rhode Island,1,1,2.78,3.63,2.28
+2024-06-02,regular,Pittsburgh,Indy Eleven,1,2,2.05,3.36,3.50
+2024-06-02,regular,Miami FC,Louisville City,1,2,7.50,4.64,1.38
+2024-05-30,regular,Monterey Bay,Charleston,0,0,4.01,3.67,1.82
+2024-05-30,regular,Louisville City,Detroit,5,1,1.36,4.63,8.16
+2024-05-26,regular,Sacramento Republic,Birmingham,0,0,1.67,3.78,4.75
+2024-05-26,regular,Orange County SC,Loudoun,0,2,1.82,3.65,3.95
+2024-05-26,regular,New Mexico,San Antonio,2,1,2.21,3.43,2.98
+2024-05-26,regular,Memphis,Pittsburgh,2,0,2.38,3.31,2.87
+2024-05-26,regular,Tampa Bay,Las Vegas Lights,1,0,1.36,5.16,6.89
+2024-05-26,regular,Indy Eleven,Phoenix Rising,2,1,2.10,3.71,3.05
+2024-05-26,regular,Miami FC,North Carolina,0,4,3.65,3.92,1.83
+2024-05-25,regular,Rhode Island,Louisville City,0,0,3.32,3.71,1.99
+2024-05-25,regular,FC Tulsa,Oakland Roots,0,1,2.16,3.66,2.97
+2024-05-25,regular,Charleston,El Paso,1,2,1.46,4.38,6.19
+2024-05-25,regular,Hartford Athletic,Monterey Bay,2,1,2.03,3.83,3.17
+2024-05-19,regular,Las Vegas Lights,Louisville City,2,2,3.99,3.81,1.77
+2024-05-19,regular,Phoenix Rising,Miami FC,2,0,1.37,4.81,7.18
+2024-05-19,regular,Oakland Roots,Orange County SC,2,1,2.63,3.37,2.50
+2024-05-19,regular,Tampa Bay,FC Tulsa,5,0,1.39,4.93,6.53
+2024-05-19,regular,Indy Eleven,Hartford Athletic,4,1,1.70,4.05,4.22
+2024-05-19,regular,Loudoun,Monterey Bay,3,0,2.40,3.31,2.82
+2024-05-19,regular,Pittsburgh,North Carolina,1,1,1.87,3.28,4.37
+2024-05-18,regular,Colorado Springs,Rhode Island,3,1,2.07,3.49,3.28
+2024-05-18,regular,El Paso,Memphis,1,2,2.64,3.36,2.51
+2024-05-16,regular,Birmingham,Charleston,0,1,3.04,3.57,2.15
+2024-05-15,regular,North Carolina,Loudoun,2,0,1.87,3.59,3.90
+2024-05-13,regular,Miami FC,Indy Eleven,1,3,3.04,3.32,2.20
+2024-05-12,regular,Monterey Bay,Memphis,2,2,2.38,3.39,2.72
+2024-05-12,regular,New Mexico,Oakland Roots,2,1,1.67,3.81,4.57
+2024-05-12,regular,FC Tulsa,Pittsburgh,2,2,2.80,3.28,2.38
+2024-05-12,regular,San Antonio,Las Vegas Lights,1,1,1.46,4.11,6.36
+2024-05-12,regular,Tampa Bay,Birmingham,0,1,1.64,4.02,4.61
+2024-05-12,regular,Louisville City,Orange County SC,3,0,1.56,3.99,5.55
+2024-05-12,regular,Rhode Island,Sacramento Republic,2,2,3.12,3.31,2.21
+2024-05-12,regular,Hartford Athletic,Colorado Springs,0,2,2.22,3.49,2.92
+2024-05-12,regular,Detroit,Phoenix Rising,1,1,2.33,3.24,2.95
+2024-05-11,regular,Loudoun,El Paso,0,2,2.12,3.37,3.22
+2024-05-05,regular,Las Vegas Lights,New Mexico,1,2,2.21,3.45,2.92
+2024-05-05,regular,Phoenix Rising,Sacramento Republic,1,1,3.04,3.21,2.26
+2024-05-05,regular,Monterey Bay,Indy Eleven,0,1,2.10,3.56,3.10
+2024-05-05,regular,Colorado Springs,El Paso,2,0,1.78,3.78,3.92
+2024-05-05,regular,San Antonio,Oakland Roots,2,2,1.21,6.18,10.55
+2024-05-05,regular,Birmingham,FC Tulsa,2,2,2.05,3.56,3.15
+2024-05-05,regular,Loudoun,Detroit,0,0,2.07,3.39,3.28
+2024-05-05,regular,Pittsburgh,Miami FC,1,0,1.41,4.48,6.68
+2024-05-05,regular,North Carolina,Rhode Island,0,0,2.23,3.35,2.97
+2024-05-05,regular,Charleston,Hartford Athletic,1,0,1.34,5.01,7.59
+2024-05-04,regular,Memphis,Tampa Bay,4,1,2.76,3.51,2.32
+2024-04-28,regular,Oakland Roots,Colorado Springs,0,2,2.40,3.40,2.70
+2024-04-28,regular,Sacramento Republic,Loudoun,3,1,1.34,4.65,8.50
+2024-04-28,regular,Orange County SC,Monterey Bay,2,0,2.17,3.23,3.23
+2024-04-28,regular,El Paso,FC Tulsa,0,1,2.01,3.48,3.51
+2024-04-28,regular,Birmingham,Memphis,0,3,2.36,3.54,2.67
+2024-04-28,regular,Louisville City,Hartford Athletic,6,0,1.44,5.01,5.43
+2024-04-28,regular,Tampa Bay,New Mexico,3,0,1.57,4.15,5.05
+2024-04-28,regular,Pittsburgh,Detroit,2,0,1.89,3.44,3.92
+2024-04-28,regular,Indy Eleven,North Carolina,2,1,2.39,3.41,2.71
+2024-04-28,regular,Miami FC,San Antonio,2,1,4.31,3.83,1.68
+2024-04-27,regular,Charleston,Las Vegas Lights,6,0,1.47,4.37,5.52
+2024-04-27,regular,Rhode Island,Phoenix Rising,1,3,2.26,3.43,2.90
+2024-04-21,regular,Phoenix Rising,Pittsburgh,1,3,2.20,2.99,3.48
+2024-04-21,regular,Orange County SC,Sacramento Republic,0,2,3.47,3.09,2.15
+2024-04-21,regular,Colorado Springs,Indy Eleven,1,1,2.02,3.65,3.26
+2024-04-21,regular,Las Vegas Lights,Rhode Island,1,2,2.16,3.53,3.00
+2024-04-21,regular,Memphis,Monterey Bay,1,2,1.95,3.58,3.55
+2024-04-21,regular,Tampa Bay,El Paso,1,1,1.52,4.13,5.75
+2024-04-21,regular,Miami FC,Birmingham,0,1,3.00,3.57,2.15
+2024-04-21,regular,North Carolina,New Mexico,2,3,1.95,3.62,3.48
+2024-04-21,regular,FC Tulsa,Charleston,1,4,3.24,3.69,2.02
+2024-04-21,regular,Hartford Athletic,San Antonio,1,3,2.37,3.67,2.57
+2024-04-20,regular,Detroit,Oakland Roots,3,1,1.85,3.48,4.03
+2024-04-20,regular,Loudoun,Louisville City,0,1,3.76,3.74,1.86
+2024-04-15,regular,North Carolina,Birmingham,1,1,1.97,3.64,3.39
+2024-04-14,regular,Phoenix Rising,Colorado Springs,1,0,2.03,3.53,3.30
+2024-04-14,regular,Sacramento Republic,FC Tulsa,1,1,1.55,3.95,5.64
+2024-04-14,regular,Monterey Bay,Las Vegas Lights,3,1,1.93,3.55,3.60
+2024-04-14,regular,El Paso,Oakland Roots,2,3,1.83,3.66,3.83
+2024-04-14,regular,San Antonio,Orange County SC,0,0,1.83,3.62,3.82
+2024-04-14,regular,Rhode Island,Pittsburgh,0,0,3.09,3.06,2.35
+2024-04-14,regular,Indy Eleven,Charleston,2,4,3.34,3.37,2.07
+2024-04-13,regular,Loudoun,Memphis,2,1,2.70,3.55,2.34
+2024-04-12,regular,Miami FC,Tampa Bay,2,5,3.37,3.60,1.99
+2024-04-10,regular,Charleston,Louisville City,3,2,2.18,3.44,3.03
+2024-04-08,regular,Birmingham,Loudoun,3,1,1.79,4.00,3.78
+2024-04-07,regular,Las Vegas Lights,San Antonio,1,0,3.69,3.65,1.91
+2024-04-07,regular,Oakland Roots,Monterey Bay,0,1,2.55,3.34,2.61
+2024-04-07,regular,New Mexico,El Paso,3,2,1.87,3.62,3.75
+2024-04-07,regular,Colorado Springs,Sacramento Republic,0,2,2.85,3.39,2.33
+2024-04-07,regular,Rhode Island,Charleston,0,0,3.54,3.82,1.87
+2024-04-07,regular,Pittsburgh,Tampa Bay,0,0,2.31,3.34,2.92
+2024-04-06,regular,Louisville City,Indy Eleven,5,3,1.67,3.73,4.85
+2024-04-06,regular,Memphis,Orange County SC,0,2,1.88,3.55,3.76
+2024-04-06,regular,Detroit,North Carolina,1,0,2.17,3.58,2.91
+2024-04-06,regular,Hartford Athletic,Miami FC,3,2,1.53,4.41,5.04
+2024-04-06,regular,FC Tulsa,Phoenix Rising,3,3,2.75,3.57,2.31
+2024-03-31,regular,Phoenix Rising,New Mexico,0,1,1.70,3.78,4.51
+2024-03-31,regular,Orange County SC,FC Tulsa,1,0,1.78,3.73,4.10
+2024-03-31,regular,Oakland Roots,Las Vegas Lights,0,3,2.31,3.41,2.83
+2024-03-31,regular,Sacramento Republic,Memphis,1,0,1.56,4.02,5.32
+2024-03-31,regular,San Antonio,Monterey Bay,2,1,1.52,4.26,5.39
+2024-03-31,regular,Tampa Bay,Rhode Island,4,1,1.67,3.86,4.24
+2024-03-31,regular,Miami FC,Charleston,1,2,5.88,4.11,1.51
+2024-03-31,regular,Indy Eleven,Detroit,1,2,1.74,3.66,4.39
+2024-03-30,regular,Louisville City,Birmingham,5,0,1.70,3.83,4.40
+2024-03-30,regular,North Carolina,Hartford Athletic,2,1,1.90,3.64,3.63
+2024-03-25,regular,Monterey Bay,Rhode Island,2,2,2.19,3.26,3.22
+2024-03-24,regular,Orange County SC,Miami FC,2,2,1.57,3.88,5.79
+2024-03-24,regular,Phoenix Rising,Oakland Roots,1,0,1.61,3.98,4.92
+2024-03-24,regular,San Antonio,Colorado Springs,2,0,1.87,3.69,3.78
+2024-03-24,regular,Las Vegas Lights,El Paso,1,0,2.29,3.52,2.83
+2024-03-24,regular,Charleston,New Mexico,4,0,1.61,3.85,5.09
+2024-03-24,regular,Indy Eleven,Sacramento Republic,1,1,2.52,3.21,2.69
+2024-03-24,regular,North Carolina,Tampa Bay,1,1,2.42,3.48,2.69
+2024-03-23,regular,Detroit,Loudoun,2,1,1.95,3.58,3.54
+2024-03-23,regular,Louisville City,Pittsburgh,3,1,2.07,3.35,3.45
+2024-03-23,regular,Hartford Athletic,Birmingham,1,0,2.52,3.60,2.49
+2024-03-17,regular,Oakland Roots,Charleston,1,1,2.76,3.42,2.40
+2024-03-17,regular,Monterey Bay,Phoenix Rising,1,0,2.69,3.66,2.32
+2024-03-17,regular,Colorado Springs,Detroit,1,2,1.53,4.11,5.55
+2024-03-17,regular,Las Vegas Lights,FC Tulsa,1,3,2.11,3.50,3.18
+2024-03-17,regular,Tampa Bay,San Antonio,2,2,2.24,3.40,3.10
+2024-03-17,regular,Miami FC,Sacramento Republic,0,1,4.10,3.63,1.82
+2024-03-17,regular,Pittsburgh,Orange County SC,0,2,2.02,3.32,3.59
+2024-03-16,regular,Memphis,Indy Eleven,1,2,2.05,3.56,3.28
+2024-03-16,regular,Loudoun,North Carolina,3,1,2.70,3.74,2.28
+2024-03-16,regular,El Paso,Louisville City,0,1,2.68,3.60,2.35
+2024-03-14,regular,El Paso,Monterey Bay,1,1,1.72,3.82,4.31
+2024-03-10,regular,Oakland Roots,Indy Eleven,2,1,2.53,3.42,2.60
+2024-03-10,regular,Sacramento Republic,Orange County SC,2,2,1.76,3.74,4.24
+2024-03-10,regular,Phoenix Rising,Birmingham,0,1,1.97,3.53,3.51
+2024-03-10,regular,El Paso,Hartford Athletic,0,1,1.86,3.83,3.65
+2024-03-10,regular,San Antonio,Loudoun,2,2,1.34,5.17,7.16
+2024-03-10,regular,North Carolina,Charleston,0,0,2.36,3.54,2.74
+2024-03-10,regular,Miami FC,Colorado Springs,2,0,3.15,3.48,2.15
+2024-03-10,regular,Memphis,Las Vegas Lights,2,1,1.55,4.34,5.00
+2024-03-10,regular,New Mexico,Pittsburgh,1,0,2.37,3.35,2.88

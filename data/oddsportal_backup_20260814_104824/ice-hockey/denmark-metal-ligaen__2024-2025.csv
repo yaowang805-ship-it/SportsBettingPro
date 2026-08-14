@@ -1,0 +1,250 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-04-25,play_off,Herning Blue Fox,Odense Bulldogs,1,2,1.75,4.50,3.40
+2025-04-23,play_off,Odense Bulldogs,Herning Blue Fox,3,1,3.10,4.20,1.91
+2025-04-22,play_off,Herning Blue Fox,Odense Bulldogs,2,4,1.50,5.00,4.50
+2025-04-11,play_off,Odense Bulldogs,Rungsted,4,1,1.80,4.00,3.50
+2025-04-11,play_off,Herning Blue Fox,Aalborg,3,4,1.46,4.75,5.00
+2025-04-08,play_off,Aalborg,Herning Blue Fox,2,4,3.20,4.50,1.80
+2025-04-08,play_off,Rungsted,Odense Bulldogs,5,6,2.30,4.20,2.40
+2025-04-06,play_off,Herning Blue Fox,Aalborg,3,4,1.36,5.75,5.75
+2025-04-06,play_off,Odense Bulldogs,Rungsted,3,1,1.90,4.00,3.20
+2025-04-04,play_off,Rungsted,Odense Bulldogs,1,4,2.11,3.80,2.80
+2025-04-04,play_off,Aalborg,Herning Blue Fox,2,6,2.75,4.20,2.05
+2025-04-01,play_off,Herning Blue Fox,Aalborg,4,0,1.56,4.30,4.75
+2025-04-01,play_off,Odense Bulldogs,Rungsted,3,7,1.75,4.30,3.50
+2025-03-28,play_off,Odense Bulldogs,Sonderjyske Ishockey,5,2,1.80,4.20,3.50
+2025-03-25,play_off,Sonderjyske Ishockey,Odense Bulldogs,1,0,2.25,4.00,2.55
+2025-03-23,play_off,Rungsted,Frederikshavn,2,1,1.65,4.50,3.80
+2025-03-23,play_off,Odense Bulldogs,Sonderjyske Ishockey,3,0,1.83,4.50,3.10
+2025-03-21,play_off,Esbjerg,Aalborg,0,5,2.50,4.00,2.25
+2025-03-21,play_off,Herlev,Herning Blue Fox,1,2,5.50,5.25,1.40
+2025-03-21,play_off,Frederikshavn,Rungsted,5,2,2.50,4.20,2.20
+2025-03-21,play_off,Sonderjyske Ishockey,Odense Bulldogs,1,3,2.25,4.30,2.40
+2025-03-18,play_off,Rungsted,Frederikshavn,4,1,1.87,4.20,3.20
+2025-03-18,play_off,Odense Bulldogs,Sonderjyske Ishockey,2,4,1.80,4.30,3.30
+2025-03-18,play_off,Aalborg,Esbjerg,3,2,1.56,4.75,4.20
+2025-03-18,play_off,Herning Blue Fox,Herlev,6,0,1.18,7.50,9.00
+2025-03-16,play_off,Frederikshavn,Rungsted,2,5,2.15,4.20,2.60
+2025-03-16,play_off,Esbjerg,Aalborg,2,4,2.30,4.00,2.45
+2025-03-16,play_off,Herlev,Herning Blue Fox,0,5,4.50,4.75,1.50
+2025-03-16,play_off,Sonderjyske Ishockey,Odense Bulldogs,5,4,2.11,4.20,2.65
+2025-03-14,play_off,Aalborg,Esbjerg,6,1,1.95,4.00,3.00
+2025-03-14,play_off,Herning Blue Fox,Herlev,9,2,1.33,6.00,6.00
+2025-03-14,play_off,Rungsted,Frederikshavn,3,0,1.91,4.30,3.00
+2025-03-14,play_off,Odense Bulldogs,Sonderjyske Ishockey,7,5,2.05,4.30,2.70
+2025-03-09,regular,Aalborg,Rodovre Mighty Bulls,6,1,1.02,14.50,29.00
+2025-03-09,regular,Herlev,Esbjerg,0,2,2.45,4.23,2.28
+2025-03-09,regular,Frederikshavn,Odense Bulldogs,5,3,2.65,4.23,2.13
+2025-03-09,regular,Herning Blue Fox,Rungsted,4,0,1.36,5.88,6.00
+2025-03-07,regular,Esbjerg,Herning Blue Fox,2,1,3.05,4.20,1.90
+2025-03-07,regular,Herlev,Frederikshavn,3,6,2.00,4.23,2.85
+2025-03-07,regular,Sonderjyske Ishockey,Odense Bulldogs,1,3,2.21,4.15,2.53
+2025-03-07,regular,Rodovre Mighty Bulls,Rungsted,2,7,24.50,13.25,1.04
+2025-03-05,regular,Rodovre Mighty Bulls,Sonderjyske Ishockey,1,7,17.00,11.00,1.05
+2025-03-04,regular,Odense Bulldogs,Aalborg,4,2,2.00,3.85,3.10
+2025-03-04,regular,Herning Blue Fox,Herlev,4,1,1.53,4.88,4.54
+2025-03-03,regular,Rungsted,Esbjerg,3,4,2.20,4.00,2.55
+2025-03-02,regular,Frederikshavn,Herning Blue Fox,4,1,3.60,4.75,1.67
+2025-02-28,regular,Aalborg,Frederikshavn,2,3,1.62,4.50,4.05
+2025-02-28,regular,Herlev,Rungsted,5,0,2.45,4.15,2.30
+2025-02-28,regular,Esbjerg,Sonderjyske Ishockey,2,5,2.20,4.42,2.48
+2025-02-28,regular,Odense Bulldogs,Rodovre Mighty Bulls,5,1,1.02,13.00,22.50
+2025-02-26,regular,Sonderjyske Ishockey,Herlev,7,4,1.93,4.55,2.90
+2025-02-26,regular,Rungsted,Odense Bulldogs,2,4,1.88,4.28,3.15
+2025-02-25,regular,Esbjerg,Aalborg,1,4,2.25,4.10,2.55
+2025-02-25,regular,Herning Blue Fox,Frederikshavn,7,3,1.46,4.88,5.13
+2025-02-23,regular,Herning Blue Fox,Rodovre Mighty Bulls,8,1,1.01,16.25,35.50
+2025-02-23,regular,Sonderjyske Ishockey,Rungsted,2,5,2.11,4.15,2.70
+2025-02-23,regular,Herlev,Aalborg,7,2,3.20,4.15,1.89
+2025-02-21,regular,Aalborg,Herning Blue Fox,3,2,2.05,4.31,2.73
+2025-02-21,regular,Frederikshavn,Sonderjyske Ishockey,5,1,2.58,4.00,2.25
+2025-02-21,regular,Rodovre Mighty Bulls,Herlev,0,5,8.13,7.38,1.19
+2025-02-21,regular,Odense Bulldogs,Esbjerg,2,1,2.00,4.55,2.73
+2025-02-19,regular,Rungsted,Frederikshavn,4,3,1.73,4.20,3.73
+2025-02-18,regular,Herning Blue Fox,Odense Bulldogs,3,4,1.49,5.00,4.65
+2025-02-17,regular,Aalborg,Sonderjyske Ishockey,4,2,1.83,4.28,3.45
+2025-02-17,regular,Rodovre Mighty Bulls,Esbjerg,1,8,11.25,8.75,1.14
+2025-02-16,regular,Frederikshavn,Herlev,4,1,1.93,4.25,3.00
+2025-02-14,regular,Herning Blue Fox,Aalborg,4,1,1.78,4.42,3.35
+2025-02-14,regular,Rungsted,Herlev,4,0,1.69,4.75,3.60
+2025-02-14,regular,Esbjerg,Odense Bulldogs,3,2,2.33,4.00,2.48
+2025-02-14,regular,Sonderjyske Ishockey,Rodovre Mighty Bulls,7,0,1.17,8.25,9.75
+2025-02-12,regular,Sonderjyske Ishockey,Aalborg,3,2,2.45,4.15,2.30
+2025-02-11,regular,Odense Bulldogs,Rungsted,2,3,2.20,4.00,2.63
+2025-02-10,regular,Esbjerg,Rodovre Mighty Bulls,6,2,1.38,5.50,5.63
+2025-02-04,regular,Rungsted,Aalborg,5,2,2.45,4.20,2.28
+2025-02-04,regular,Rodovre Mighty Bulls,Frederikshavn,5,4,4.75,4.75,1.49
+2025-02-04,regular,Odense Bulldogs,Herlev,2,1,1.75,4.45,3.45
+2025-02-04,regular,Sonderjyske Ishockey,Herning Blue Fox,2,8,3.10,4.42,1.87
+2025-02-02,regular,Rungsted,Herning Blue Fox,2,1,2.55,4.30,2.18
+2025-01-31,regular,Rodovre Mighty Bulls,Frederikshavn,1,4,4.20,4.68,1.59
+2025-01-31,regular,Aalborg,Esbjerg,5,2,1.70,4.63,3.55
+2025-01-31,regular,Herning Blue Fox,Sonderjyske Ishockey,4,5,1.49,4.88,4.88
+2025-01-31,regular,Odense Bulldogs,Herlev,5,1,1.89,4.10,3.25
+2025-01-29,regular,Sonderjyske Ishockey,Frederikshavn,5,0,1.61,4.63,4.10
+2025-01-29,regular,Herlev,Herning Blue Fox,1,4,4.42,4.88,1.53
+2025-01-28,regular,Aalborg,Odense Bulldogs,2,3,1.87,4.31,3.15
+2025-01-28,regular,Esbjerg,Rungsted,3,0,2.20,4.35,2.50
+2025-01-26,regular,Rodovre Mighty Bulls,Odense Bulldogs,4,7,4.38,5.13,1.52
+2025-01-26,regular,Esbjerg,Herlev,3,0,2.00,4.25,2.85
+2025-01-24,regular,Rodovre Mighty Bulls,Aalborg,0,6,5.25,6.00,1.38
+2025-01-24,regular,Frederikshavn,Rungsted,0,2,2.38,4.00,2.43
+2025-01-24,regular,Herning Blue Fox,Herlev,5,1,1.36,5.38,6.00
+2025-01-24,regular,Odense Bulldogs,Sonderjyske Ishockey,4,2,2.10,4.25,2.70
+2025-01-22,regular,Herlev,Sonderjyske Ishockey,2,3,2.43,3.80,2.43
+2025-01-21,regular,Frederikshavn,Esbjerg,4,3,1.91,4.05,3.15
+2025-01-21,regular,Herning Blue Fox,Rungsted,3,4,1.44,5.50,4.75
+2025-01-21,regular,Rodovre Mighty Bulls,Odense Bulldogs,4,3,5.38,5.13,1.41
+2025-01-19,regular,Aalborg,Rungsted,4,1,1.56,4.55,4.55
+2025-01-17,regular,Herlev,Esbjerg,3,4,2.25,4.10,2.50
+2025-01-17,regular,Frederikshavn,Rodovre Mighty Bulls,6,2,1.31,6.00,6.75
+2025-01-17,regular,Sonderjyske Ishockey,Herning Blue Fox,2,5,3.00,4.40,1.90
+2025-01-17,regular,Rungsted,Aalborg,3,1,2.23,4.40,2.45
+2025-01-15,regular,Aalborg,Herlev,7,3,1.65,4.40,3.90
+2025-01-14,regular,Rungsted,Sonderjyske Ishockey,5,4,2.38,4.20,2.35
+2025-01-14,regular,Esbjerg,Frederikshavn,4,0,1.82,4.27,3.30
+2025-01-14,regular,Odense Bulldogs,Herning Blue Fox,2,3,3.40,4.31,1.78
+2025-01-08,regular,Herning Blue Fox,Esbjerg,7,1,1.42,5.50,4.75
+2025-01-07,regular,Odense Bulldogs,Rodovre Mighty Bulls,7,6,1.32,6.25,6.13
+2025-01-05,regular,Rungsted,Rodovre Mighty Bulls,5,2,1.28,6.63,6.63
+2025-01-05,regular,Frederikshavn,Esbjerg,1,5,1.93,4.35,3.00
+2025-01-05,regular,Aalborg,Sonderjyske Ishockey,2,5,1.82,4.20,3.40
+2025-01-05,regular,Herlev,Odense Bulldogs,3,4,2.22,4.31,2.50
+2025-01-03,regular,Herning Blue Fox,Frederikshavn,5,1,1.36,5.63,5.75
+2025-01-03,regular,Rodovre Mighty Bulls,Herlev,2,3,5.13,5.00,1.46
+2025-01-03,regular,Esbjerg,Odense Bulldogs,0,3,1.91,4.13,3.10
+2025-01-03,regular,Sonderjyske Ishockey,Rungsted,4,3,1.78,4.35,3.40
+2024-12-30,regular,Esbjerg,Herning Blue Fox,1,5,3.35,4.35,1.78
+2024-12-30,regular,Rungsted,Odense Bulldogs,6,5,2.33,3.90,2.43
+2024-12-29,regular,Herlev,Rodovre Mighty Bulls,4,1,1.35,5.63,6.00
+2024-12-28,regular,Aalborg,Frederikshavn,4,3,1.56,4.55,4.55
+2024-12-28,regular,Esbjerg,Sonderjyske Ishockey,4,3,1.90,4.35,3.05
+2024-12-28,regular,Odense Bulldogs,Herning Blue Fox,4,1,3.40,4.10,1.83
+2024-12-28,regular,Rungsted,Herlev,3,0,2.33,4.05,2.48
+2024-12-27,regular,Frederikshavn,Aalborg,3,2,3.15,4.31,1.85
+2024-12-27,regular,Herning Blue Fox,Odense Bulldogs,5,2,1.44,5.25,4.75
+2024-12-27,regular,Rodovre Mighty Bulls,Rungsted,1,4,5.25,4.88,1.43
+2024-12-27,regular,Sonderjyske Ishockey,Esbjerg,3,4,2.11,4.27,2.63
+2024-12-21,regular,Odense Bulldogs,Frederikshavn,0,2,1.61,4.68,4.05
+2024-12-20,regular,Aalborg,Rodovre Mighty Bulls,3,0,1.17,7.88,10.25
+2024-12-20,regular,Rungsted,Esbjerg,7,3,3.38,4.53,1.77
+2024-12-20,regular,Frederikshavn,Odense Bulldogs,4,1,2.60,4.20,2.18
+2024-12-20,regular,Herning Blue Fox,Sonderjyske Ishockey,5,2,1.64,4.63,3.90
+2024-12-17,regular,Esbjerg,Aalborg,5,2,2.22,3.95,2.60
+2024-12-17,regular,Herlev,Frederikshavn,5,3,2.05,3.55,3.13
+2024-12-15,regular,Odense Bulldogs,Aalborg,4,1,2.25,4.00,2.58
+2024-12-15,regular,Frederikshavn,Sonderjyske Ishockey,4,1,3.00,4.35,1.90
+2024-12-13,regular,Aalborg,Herning Blue Fox,3,10,2.20,4.13,2.55
+2024-12-13,regular,Rodovre Mighty Bulls,Esbjerg,3,6,5.75,5.50,1.37
+2024-12-13,regular,Herlev,Rungsted,2,5,1.79,4.31,3.35
+2024-12-13,regular,Sonderjyske Ishockey,Odense Bulldogs,1,4,1.84,4.35,3.20
+2024-12-11,regular,Herlev,Aalborg,5,0,3.10,4.50,1.86
+2024-12-10,regular,Rodovre Mighty Bulls,Sonderjyske Ishockey,2,8,4.28,5.13,1.53
+2024-12-09,regular,Rungsted,Frederikshavn,5,1,2.00,4.00,2.95
+2024-12-08,regular,Sonderjyske Ishockey,Herlev,1,4,1.71,4.63,3.55
+2024-12-08,regular,Herning Blue Fox,Rodovre Mighty Bulls,10,2,1.09,9.63,14.25
+2024-12-06,regular,Aalborg,Esbjerg,4,0,1.92,4.40,2.98
+2024-12-06,regular,Frederikshavn,Herning Blue Fox,0,5,4.28,4.88,1.55
+2024-12-06,regular,Herlev,Rodovre Mighty Bulls,7,0,1.44,5.00,5.25
+2024-12-06,regular,Odense Bulldogs,Rungsted,4,3,1.48,5.13,4.75
+2024-12-03,regular,Aalborg,Rungsted,6,0,1.41,5.50,5.38
+2024-12-03,regular,Esbjerg,Frederikshavn,2,1,1.64,4.68,3.90
+2024-12-03,regular,Herlev,Odense Bulldogs,1,2,2.53,4.20,2.22
+2024-12-02,regular,Rodovre Mighty Bulls,Herning Blue Fox,1,5,5.75,6.38,1.33
+2024-12-01,regular,Sonderjyske Ishockey,Frederikshavn,5,4,1.62,4.75,3.75
+2024-11-29,regular,Aalborg,Herlev,6,3,1.62,4.88,3.90
+2024-11-29,regular,Herning Blue Fox,Esbjerg,5,2,1.83,4.55,3.15
+2024-11-29,regular,Rungsted,Rodovre Mighty Bulls,4,1,1.61,4.75,4.00
+2024-11-29,regular,Odense Bulldogs,Sonderjyske Ishockey,3,1,2.35,4.17,2.38
+2024-11-27,regular,Sonderjyske Ishockey,Aalborg,2,3,2.43,4.35,2.25
+2024-11-27,regular,Herlev,Herning Blue Fox,2,3,3.25,4.45,1.81
+2024-11-26,regular,Esbjerg,Rungsted,2,1,1.55,5.13,4.17
+2024-11-25,regular,Frederikshavn,Rodovre Mighty Bulls,6,1,1.57,4.50,4.15
+2024-11-24,regular,Aalborg,Odense Bulldogs,4,0,,,
+2024-11-22,regular,Rodovre Mighty Bulls,Aalborg,2,5,4.75,5.75,1.42
+2024-11-22,regular,Sonderjyske Ishockey,Esbjerg,1,5,1.91,4.50,2.90
+2024-11-22,regular,Odense Bulldogs,Frederikshavn,2,3,1.59,5.00,3.80
+2024-11-20,regular,Herning Blue Fox,Aalborg,2,3,2.08,4.42,2.68
+2024-11-20,regular,Esbjerg,Rodovre Mighty Bulls,5,0,1.27,6.75,7.00
+2024-11-20,regular,Frederikshavn,Rungsted,2,5,2.08,4.15,2.75
+2024-11-20,regular,Herlev,Sonderjyske Ishockey,2,5,2.93,4.55,1.91
+2024-11-17,regular,Esbjerg,Herlev,1,2,1.74,4.68,3.35
+2024-11-16,regular,Sonderjyske Ishockey,Rodovre Mighty Bulls,3,4,1.22,7.63,7.50
+2024-11-15,regular,Rungsted,Herning Blue Fox,1,5,3.00,4.63,1.88
+2024-11-15,regular,Odense Bulldogs,Esbjerg,3,4,2.28,4.40,2.38
+2024-11-13,regular,Rodovre Mighty Bulls,Herning Blue Fox,2,7,4.75,5.38,1.45
+2024-11-12,regular,Frederikshavn,Herlev,6,1,3.05,4.31,1.91
+2024-11-12,regular,Rungsted,Sonderjyske Ishockey,7,2,3.03,4.68,1.86
+2024-11-03,regular,Odense Bulldogs,Aalborg,4,2,2.33,4.35,2.35
+2024-11-03,regular,Herning Blue Fox,Rodovre Mighty Bulls,2,1,1.19,7.63,9.00
+2024-11-03,regular,Sonderjyske Ishockey,Rungsted,5,2,1.40,5.63,5.38
+2024-11-03,regular,Herlev,Frederikshavn,3,5,1.59,4.63,4.13
+2024-11-01,regular,Frederikshavn,Aalborg,2,1,4.31,4.88,1.54
+2024-11-01,regular,Rodovre Mighty Bulls,Herlev,3,4,4.23,5.13,1.54
+2024-11-01,regular,Herning Blue Fox,Sonderjyske Ishockey,2,1,1.82,4.50,3.15
+2024-11-01,regular,Esbjerg,Odense Bulldogs,2,4,1.84,4.68,3.05
+2024-10-30,regular,Odense Bulldogs,Rodovre Mighty Bulls,5,3,1.30,6.38,6.50
+2024-10-29,regular,Aalborg,Sonderjyske Ishockey,2,3,1.79,4.50,3.25
+2024-10-28,regular,Rungsted,Esbjerg,4,9,2.47,4.38,2.20
+2024-10-27,regular,Herning Blue Fox,Herlev,3,2,1.47,5.13,4.78
+2024-10-25,regular,Rodovre Mighty Bulls,Frederikshavn,0,4,2.27,4.31,2.43
+2024-10-25,regular,Herlev,Rungsted,4,1,1.58,5.00,4.05
+2024-10-25,regular,Esbjerg,Aalborg,2,1,2.13,4.55,2.53
+2024-10-25,regular,Sonderjyske Ishockey,Odense Bulldogs,2,3,1.65,5.00,3.60
+2024-10-22,regular,Frederikshavn,Esbjerg,4,3,3.30,4.50,1.77
+2024-10-22,regular,Odense Bulldogs,Herning Blue Fox,0,3,2.20,4.50,2.40
+2024-10-22,regular,Rungsted,Sonderjyske Ishockey,1,4,2.65,4.50,2.00
+2024-10-20,regular,Rodovre Mighty Bulls,Sonderjyske Ishockey,4,3,3.80,5.25,1.57
+2024-10-18,regular,Herning Blue Fox,Aalborg,4,5,2.18,4.30,2.55
+2024-10-18,regular,Rungsted,Frederikshavn,2,3,1.62,5.00,3.70
+2024-10-18,regular,Esbjerg,Sonderjyske Ishockey,5,2,2.15,4.50,2.50
+2024-10-18,regular,Odense Bulldogs,Herlev,3,4,2.05,4.50,2.65
+2024-10-15,regular,Herlev,Esbjerg,2,3,1.77,4.50,3.20
+2024-10-15,regular,Herning Blue Fox,Rungsted,4,2,1.48,5.50,4.30
+2024-10-14,regular,Frederikshavn,Odense Bulldogs,1,8,2.80,4.30,2.00
+2024-10-13,regular,Sonderjyske Ishockey,Rodovre Mighty Bulls,7,0,1.29,6.50,6.50
+2024-10-11,regular,Esbjerg,Herning Blue Fox,0,3,2.25,4.30,2.40
+2024-10-11,regular,Herlev,Aalborg,5,3,2.45,4.50,2.20
+2024-10-11,regular,Frederikshavn,Sonderjyske Ishockey,0,3,2.70,4.50,2.00
+2024-10-11,regular,Rodovre Mighty Bulls,Rungsted,4,1,3.80,5.25,1.57
+2024-10-09,regular,Aalborg,Rodovre Mighty Bulls,9,4,1.14,8.50,10.00
+2024-10-09,regular,Herning Blue Fox,Frederikshavn,6,3,1.30,6.00,6.00
+2024-10-07,regular,Rungsted,Odense Bulldogs,5,4,2.40,4.50,2.20
+2024-10-06,regular,Frederikshavn,Aalborg,1,2,3.80,5.00,1.61
+2024-10-06,regular,Sonderjyske Ishockey,Herlev,3,4,1.53,5.25,4.20
+2024-10-06,regular,Rodovre Mighty Bulls,Esbjerg,2,3,3.80,5.25,1.57
+2024-10-04,regular,Aalborg,Esbjerg,5,2,1.61,5.00,3.70
+2024-10-04,regular,Frederikshavn,Rungsted,2,3,1.70,4.75,3.50
+2024-10-04,regular,Herlev,Rodovre Mighty Bulls,5,0,1.42,5.50,4.75
+2024-10-04,regular,Odense Bulldogs,Sonderjyske Ishockey,5,6,2.15,4.50,2.45
+2024-10-01,regular,Aalborg,Odense Bulldogs,3,4,1.48,5.50,4.30
+2024-10-01,regular,Rungsted,Herning Blue Fox,4,3,2.20,4.75,2.35
+2024-09-29,regular,Esbjerg,Frederikshavn,1,2,1.61,5.00,3.70
+2024-09-27,regular,Herning Blue Fox,Esbjerg,7,3,1.83,4.75,3.00
+2024-09-27,regular,Frederikshavn,Herlev,0,3,2.35,4.50,2.25
+2024-09-27,regular,Rodovre Mighty Bulls,Odense Bulldogs,3,4,3.20,5.00,1.71
+2024-09-27,regular,Sonderjyske Ishockey,Aalborg,4,2,2.20,4.50,2.40
+2024-09-25,regular,Herlev,Sonderjyske Ishockey,5,4,3.20,4.75,1.75
+2024-09-24,regular,Aalborg,Rungsted,10,4,1.42,5.50,4.75
+2024-09-24,regular,Odense Bulldogs,Esbjerg,5,4,1.95,4.50,2.80
+2024-09-24,regular,Frederikshavn,Herning Blue Fox,3,2,4.50,5.50,1.48
+2024-09-22,regular,Herlev,Herning Blue Fox,4,1,3.60,5.00,1.65
+2024-09-20,regular,Aalborg,Herning Blue Fox,3,1,2.11,4.30,2.60
+2024-09-20,regular,Rungsted,Herlev,3,1,1.87,4.75,2.90
+2024-09-20,regular,Esbjerg,Rodovre Mighty Bulls,4,1,1.36,6.00,5.25
+2024-09-20,regular,Sonderjyske Ishockey,Frederikshavn,6,2,1.53,5.25,4.20
+2024-09-18,regular,Sonderjyske Ishockey,Esbjerg,3,4,1.77,5.00,3.10
+2024-09-17,regular,Rodovre Mighty Bulls,Aalborg,2,6,4.50,5.50,1.44
+2024-09-16,regular,Odense Bulldogs,Rungsted,5,1,1.67,4.75,3.60
+2024-09-13,regular,Rungsted,Aalborg,1,4,2.30,4.30,2.35
+2024-09-13,regular,Frederikshavn,Rodovre Mighty Bulls,3,2,1.42,5.75,4.75
+2024-09-13,regular,Herning Blue Fox,Odense Bulldogs,4,3,1.53,5.25,4.00
+2024-09-13,regular,Esbjerg,Herlev,2,3,1.48,5.50,4.30
+2024-09-10,regular,Aalborg,Herlev,3,4,1.30,6.50,6.00
+2024-09-10,regular,Odense Bulldogs,Frederikshavn,5,3,1.70,4.75,3.40
+2024-09-09,regular,Rodovre Mighty Bulls,Herning Blue Fox,3,5,4.20,5.50,1.48
+2024-09-08,regular,Esbjerg,Rungsted,3,4,1.61,5.00,3.70
+2024-09-06,regular,Aalborg,Frederikshavn,1,0,1.46,5.50,4.50
+2024-09-06,regular,Herlev,Odense Bulldogs,2,3,2.90,4.50,1.95
+2024-09-06,regular,Rungsted,Rodovre Mighty Bulls,5,6,1.39,5.75,5.25
+2024-09-03,regular,Sonderjyske Ishockey,Herning Blue Fox,3,4,2.00,4.50,2.70

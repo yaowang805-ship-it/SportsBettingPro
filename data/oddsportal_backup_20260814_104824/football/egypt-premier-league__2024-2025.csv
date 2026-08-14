@@ -1,0 +1,226 @@
+date,match_type,home_team,away_team,home_score,away_score,home_odds,draw_odds,away_odds
+2025-05-31,regular,Zamalek,Pharco,2,0,1.67,3.50,5.34
+2025-05-29,regular,Al Ittihad,Enppi,1,1,2.32,2.54,4.05
+2025-05-29,regular,El Gaish,Modern Sport,1,1,3.36,2.38,2.78
+2025-05-29,regular,Ghazl El Mahallah,El Ismaily,1,1,1.95,3.11,4.20
+2025-05-29,regular,ZED,Smouha,0,0,3.80,3.05,2.08
+2025-05-28,regular,Al Ahly,Pharco,6,0,1.16,6.85,15.24
+2025-05-28,regular,Al Masry,Haras El Hodood,2,0,1.33,4.93,8.53
+2025-05-28,regular,Ceramica Cleopatra,Pyramids,1,5,2.95,3.19,2.40
+2025-05-28,regular,Petrojet,National Bank Egypt,0,0,3.00,3.46,2.23
+2025-05-25,regular,Modern Sport,Al Ittihad,1,0,2.64,2.45,3.50
+2025-05-25,regular,El Gaish,Ghazl El Mahallah,1,1,2.59,2.72,3.17
+2025-05-25,regular,El Ismaily,El Gouna,3,0,2.69,2.80,2.88
+2025-05-25,regular,Enppi,ZED,1,1,4.10,2.86,2.08
+2025-05-24,regular,National Bank Egypt,Al Masry,0,1,2.50,3.07,2.90
+2025-05-24,regular,Ceramica Cleopatra,Haras El Hodood,2,0,1.27,5.26,10.83
+2025-05-24,regular,Petrojet,Zamalek,1,3,4.02,3.34,1.92
+2025-05-18,regular,Pharco,Haras El Hodood,0,0,2.20,2.97,3.57
+2025-05-17,regular,Al Ahly,National Bank Egypt,2,1,1.55,3.79,6.21
+2025-05-17,regular,Al Masry,Ceramica Cleopatra,0,4,2.42,3.13,2.98
+2025-05-17,regular,Petrojet,Pyramids,0,2,6.93,4.70,1.41
+2025-05-16,regular,Smouha,Al Ittihad,0,0,2.80,2.32,3.51
+2025-05-16,regular,El Gaish,Enppi,1,1,3.52,2.67,2.44
+2025-05-16,regular,Ghazl El Mahallah,El Gouna,0,4,2.18,2.67,4.18
+2025-05-16,regular,El Ismaily,Modern Sport,1,2,3.31,2.62,2.59
+2025-05-13,regular,Haras El Hodood,National Bank Egypt,1,1,5.98,3.77,1.57
+2025-05-13,regular,Zamalek,Pyramids,0,1,2.84,3.12,2.53
+2025-05-13,regular,Ceramica Cleopatra,Al Ahly,0,1,5.68,3.99,1.56
+2025-05-13,regular,Pharco,Al Masry,1,1,4.84,3.13,1.86
+2025-05-11,regular,El Gouna,El Gaish,0,1,3.47,2.47,2.70
+2025-05-11,regular,ZED,Modern Sport,2,2,2.86,2.78,2.79
+2025-05-11,regular,Smouha,Enppi,0,1,2.87,2.51,3.15
+2025-05-10,regular,Al Ittihad,Ghazl El Mahallah,0,0,2.54,2.57,3.57
+2025-05-09,regular,National Bank Egypt,Pyramids,4,2,4.26,3.71,1.79
+2025-05-09,regular,Pharco,Petrojet,2,2,2.64,3.01,2.82
+2025-05-09,regular,Ceramica Cleopatra,Zamalek,2,2,3.22,3.12,2.30
+2025-05-08,regular,Al Ahly,Al Masry,4,2,1.44,4.18,7.38
+2025-05-07,regular,El Ismaily,Enppi,0,1,3.39,2.45,2.78
+2025-05-07,regular,El Gouna,Modern Sport,0,1,3.44,2.55,2.64
+2025-05-06,regular,ZED,Al Ittihad,0,0,2.62,2.60,3.36
+2025-05-06,regular,Smouha,El Gaish,0,0,2.59,2.46,3.65
+2025-05-05,regular,National Bank Egypt,Zamalek,2,2,3.73,3.12,2.10
+2025-05-05,regular,Petrojet,Ceramica Cleopatra,0,2,3.21,3.34,2.20
+2025-05-04,regular,Al Ahly,Haras El Hodood,5,0,1.21,6.04,13.62
+2025-05-04,regular,Pharco,Pyramids,3,2,6.82,3.98,1.50
+2025-05-03,regular,Modern Sport,Ghazl El Mahallah,2,1,2.47,2.68,3.49
+2025-05-03,regular,Enppi,El Gouna,0,1,2.20,2.72,3.97
+2025-05-02,regular,ZED,El Gaish,0,0,3.03,2.65,2.79
+2025-05-02,regular,Smouha,El Ismaily,1,1,2.61,2.65,3.27
+2025-05-01,regular,Al Masry,Zamalek,0,0,3.06,2.84,2.58
+2025-05-01,regular,Ceramica Cleopatra,National Bank Egypt,2,4,2.37,3.17,3.05
+2025-04-30,regular,Petrojet,Al Ahly,2,3,7.95,4.35,1.41
+2025-04-30,regular,Haras El Hodood,Pyramids,1,2,8.05,3.94,1.45
+2025-04-29,regular,Enppi,Ghazl El Mahallah,1,0,2.48,2.59,3.72
+2025-04-28,regular,El Gaish,Al Ittihad,1,2,2.91,2.31,3.47
+2025-04-28,regular,El Ismaily,ZED,0,2,3.43,2.57,2.60
+2025-04-28,regular,El Gouna,Smouha,1,1,2.49,2.57,3.67
+2025-04-13,regular,Haras El Hodood,Zamalek,0,2,7.40,3.80,1.48
+2025-04-13,regular,Al Masry,Petrojet,4,0,2.18,2.99,3.68
+2025-04-12,regular,Pyramids,Al Ahly,1,1,3.47,2.93,2.28
+2025-04-12,regular,Pharco,Ceramica Cleopatra,0,2,4.30,3.05,1.97
+2025-04-11,regular,Ghazl El Mahallah,Smouha,1,0,2.39,2.77,3.51
+2025-04-11,regular,ZED,El Gouna,1,2,2.13,2.87,4.02
+2025-04-10,regular,El Ismaily,Al Ittihad,0,0,3.09,2.37,3.05
+2025-04-10,regular,Enppi,Modern Sport,2,1,3.96,2.55,2.33
+2025-03-13,regular,El Gaish,El Ismaily,0,1,2.22,2.85,3.79
+2025-03-12,regular,Pyramids,Al Masry,0,0,1.85,3.23,4.62
+2025-03-12,regular,Pharco,National Bank Egypt,2,1,3.49,2.82,2.36
+2025-03-12,regular,Ghazl El Mahallah,ZED,0,3,2.94,2.84,2.68
+2025-03-11,regular,Zamalek,Al Ahly,,,4.81,3.26,1.81
+2025-03-11,regular,Haras El Hodood,Petrojet,1,2,3.36,2.82,2.42
+2025-03-11,regular,El Gouna,Al Ittihad,2,0,3.15,2.43,2.96
+2025-03-11,regular,Modern Sport,Smouha,2,0,2.51,2.71,3.39
+2025-03-05,regular,Al Ahly,El Gaish,2,0,1.39,4.47,8.00
+2025-03-05,regular,Pyramids,Ceramica Cleopatra,2,1,1.66,3.72,5.07
+2025-03-05,regular,Petrojet,Ghazl El Mahallah,2,1,2.31,2.90,3.43
+2025-03-04,regular,Al Ittihad,Smouha,0,1,3.50,2.73,2.37
+2025-03-04,regular,ZED,El Ismaily,2,2,1.64,3.43,5.78
+2025-03-04,regular,Enppi,Zamalek,0,3,4.84,3.03,1.86
+2025-03-03,regular,Al Masry,Modern Sport,4,2,2.22,2.74,3.86
+2025-03-03,regular,Pharco,El Gouna,0,0,2.30,2.51,4.17
+2025-03-03,regular,National Bank Egypt,Haras El Hodood,2,1,2.04,2.90,4.20
+2025-02-28,regular,Al Ittihad,Pyramids,1,3,5.63,3.49,1.64
+2025-02-28,regular,Ceramica Cleopatra,Petrojet,4,1,1.90,3.13,4.37
+2025-02-28,regular,Ghazl El Mahallah,Enppi,3,0,2.31,2.63,3.84
+2025-02-27,regular,Zamalek,ZED,1,1,2.29,2.91,3.41
+2025-02-27,regular,Smouha,Al Masry,0,3,3.19,2.78,2.49
+2025-02-27,regular,El Gaish,National Bank Egypt,2,2,2.36,2.62,3.73
+2025-02-26,regular,El Ismaily,Pharco,0,2,2.97,2.50,2.96
+2025-02-26,regular,Haras El Hodood,Al Ahly,0,1,8.47,3.96,1.42
+2025-02-26,regular,Modern Sport,El Gouna,2,3,2.19,2.66,4.12
+2025-02-23,regular,Pyramids,El Gaish,2,1,1.55,3.56,6.78
+2025-02-23,regular,ZED,Ghazl El Mahallah,2,0,2.17,2.73,4.05
+2025-02-22,regular,Al Ahly,Zamalek,1,1,1.75,3.39,4.78
+2025-02-22,regular,Al Masry,El Ismaily,0,0,1.86,2.92,5.23
+2025-02-22,regular,El Gouna,Ceramica Cleopatra,2,0,5.68,3.02,1.78
+2025-02-21,regular,National Bank Egypt,Al Ittihad,3,2,2.16,2.82,3.91
+2025-02-21,regular,Petrojet,Haras El Hodood,2,2,2.09,2.91,4.00
+2025-02-21,regular,Enppi,Smouha,1,0,3.40,2.64,2.52
+2025-02-21,regular,Pharco,Modern Sport,0,0,2.56,2.65,3.27
+2025-02-18,regular,Ghazl El Mahallah,Al Masry,1,0,2.95,2.64,2.81
+2025-02-18,regular,El Gaish,ZED,1,0,3.11,2.48,2.87
+2025-02-17,regular,Al Ittihad,El Gouna,1,0,2.24,2.63,4.04
+2025-02-17,regular,Modern Sport,Pyramids,0,1,5.12,3.28,1.74
+2025-02-17,regular,Ceramica Cleopatra,Enppi,2,2,2.03,2.92,4.24
+2025-02-16,regular,El Ismaily,Al Ahly,0,4,8.73,3.97,1.42
+2025-02-16,regular,Haras El Hodood,Pharco,2,0,3.09,2.49,2.87
+2025-02-16,regular,Smouha,National Bank Egypt,1,4,2.77,2.54,3.15
+2025-02-16,regular,Zamalek,Petrojet,1,1,1.82,3.31,4.54
+2025-02-13,regular,Enppi,Al Ittihad,1,1,3.25,2.70,2.52
+2025-02-13,regular,Modern Sport,El Gaish,0,0,3.09,2.56,2.78
+2025-02-12,regular,Al Masry,National Bank Egypt,0,0,2.49,2.79,3.14
+2025-02-12,regular,Pyramids,Haras El Hodood,3,0,1.33,4.57,9.85
+2025-02-12,regular,ZED,Ceramica Cleopatra,1,1,3.23,2.66,2.55
+2025-02-12,regular,El Gouna,El Ismaily,2,0,2.93,2.48,3.02
+2025-02-11,regular,Al Ahly,Ghazl El Mahallah,1,0,1.28,5.07,10.59
+2025-02-11,regular,Petrojet,Smouha,0,1,2.98,2.76,2.65
+2025-02-11,regular,Pharco,Zamalek,0,1,3.90,3.17,1.99
+2025-02-08,regular,National Bank Egypt,ZED,1,1,2.51,2.75,3.23
+2025-02-08,regular,Al Ittihad,Al Masry,1,2,3.84,2.75,2.21
+2025-02-07,regular,El Gaish,El Gouna,0,0,1.93,2.89,4.75
+2025-02-07,regular,Zamalek,El Ismaily,2,0,1.58,3.60,6.03
+2025-02-07,regular,Haras El Hodood,Enppi,1,0,2.41,2.63,3.76
+2025-02-07,regular,Smouha,Pyramids,0,1,3.85,3.11,2.03
+2025-02-06,regular,Al Ahly,Petrojet,2,1,1.35,4.69,8.50
+2025-02-06,regular,Ceramica Cleopatra,Pharco,1,2,1.81,3.14,4.98
+2025-02-06,regular,Ghazl El Mahallah,Modern Sport,2,1,2.98,2.63,2.81
+2025-02-02,regular,Modern Sport,Al Ahly,1,3,5.00,3.20,1.79
+2025-02-02,regular,Ceramica Cleopatra,Smouha,0,1,1.98,3.16,4.01
+2025-02-01,regular,Petrojet,Al Ittihad,0,0,2.22,2.76,3.86
+2025-02-01,regular,Pharco,Ghazl El Mahallah,3,2,2.43,2.52,3.79
+2025-02-01,regular,ZED,Al Masry,1,1,3.14,2.79,2.53
+2025-02-01,regular,Enppi,National Bank Egypt,0,1,3.18,2.76,2.54
+2025-01-31,regular,Pyramids,Zamalek,3,0,2.14,3.09,3.56
+2025-01-31,regular,El Ismaily,El Gaish,1,2,2.87,2.52,3.08
+2025-01-31,regular,El Gouna,Haras El Hodood,0,1,2.22,2.72,3.93
+2025-01-28,regular,Smouha,ZED,2,1,2.41,2.84,3.18
+2025-01-28,regular,National Bank Egypt,Petrojet,0,2,2.28,2.75,3.55
+2025-01-27,regular,Al Masry,Enppi,2,1,1.95,2.90,4.45
+2025-01-27,regular,Haras El Hodood,Modern Sport,1,0,4.09,2.53,2.24
+2025-01-27,regular,Zamalek,El Gouna,4,1,1.45,3.80,7.93
+2025-01-26,regular,Al Ahly,Pyramids,2,2,2.49,2.90,3.13
+2025-01-26,regular,Ghazl El Mahallah,Ceramica Cleopatra,0,1,4.65,2.99,1.95
+2025-01-26,regular,Al Ittihad,El Ismaily,1,0,2.95,2.54,3.02
+2025-01-26,regular,El Gaish,Pharco,0,0,2.32,2.80,3.62
+2025-01-23,regular,Modern Sport,Zamalek,1,0,4.00,2.87,2.08
+2025-01-23,regular,Petrojet,Al Masry,2,1,3.61,2.72,2.28
+2025-01-22,regular,Ceramica Cleopatra,Al Ittihad,1,1,1.64,3.46,5.42
+2025-01-22,regular,ZED,Pyramids,0,1,3.88,2.91,2.07
+2025-01-22,regular,Pharco,Al Ahly,1,1,6.48,3.72,1.52
+2025-01-21,regular,Enppi,El Gaish,0,1,2.69,2.45,3.29
+2025-01-21,regular,El Ismaily,Smouha,1,0,3.30,2.82,2.34
+2025-01-21,regular,El Gouna,National Bank Egypt,1,2,3.34,2.60,2.50
+2025-01-21,regular,Ghazl El Mahallah,Haras El Hodood,0,1,2.03,2.72,4.47
+2025-01-16,regular,Al Masry,Pharco,1,0,1.99,2.90,4.06
+2025-01-16,regular,Zamalek,Haras El Hodood,3,2,1.36,4.26,8.71
+2025-01-15,regular,Al Ahly,El Gouna,2,0,1.29,4.53,10.56
+2025-01-15,regular,Pyramids,Ghazl El Mahallah,3,0,1.41,4.10,7.30
+2025-01-12,regular,Smouha,Modern Sport,1,0,2.26,2.62,3.65
+2025-01-11,regular,Al Ittihad,ZED,0,1,3.65,2.50,2.37
+2025-01-11,regular,National Bank Egypt,El Ismaily,1,0,2.08,2.70,4.11
+2025-01-10,regular,El Gaish,Ceramica Cleopatra,0,1,4.88,2.90,1.84
+2025-01-10,regular,Petrojet,Enppi,0,0,2.37,2.67,3.36
+2025-01-07,regular,Al Ahly,Smouha,2,0,1.30,4.46,10.71
+2025-01-01,regular,Ghazl El Mahallah,National Bank Egypt,0,1,3.29,2.66,2.61
+2025-01-01,regular,Modern Sport,El Ismaily,,,2.34,2.68,3.61
+2024-12-31,regular,Ceramica Cleopatra,Al Masry,1,1,2.61,2.91,2.96
+2024-12-30,regular,ZED,Petrojet,1,1,2.33,2.78,3.64
+2024-12-30,regular,Pharco,Smouha,2,1,3.58,3.08,2.14
+2024-12-30,regular,Enppi,Al Ahly,0,0,9.41,4.27,1.38
+2024-12-30,regular,El Gouna,Pyramids,0,1,6.33,3.49,1.60
+2024-12-29,regular,Zamalek,Al Ittihad,2,0,1.65,3.34,6.19
+2024-12-29,regular,Haras El Hodood,El Gaish,3,0,4.55,2.64,2.10
+2024-12-26,regular,Al Masry,Al Ahly,0,2,4.81,2.95,1.92
+2024-12-26,regular,Petrojet,El Gouna,1,0,2.28,2.69,3.86
+2024-12-26,regular,National Bank Egypt,Ceramica Cleopatra,1,2,3.15,2.86,2.50
+2024-12-26,regular,Smouha,Ghazl El Mahallah,2,4,1.74,3.33,5.26
+2024-12-25,regular,Pyramids,Pharco,3,0,1.43,4.27,7.28
+2024-12-25,regular,Al Ittihad,Modern Sport,0,0,3.04,2.62,2.83
+2024-12-25,regular,El Ismaily,Haras El Hodood,2,2,1.88,2.96,5.12
+2024-12-24,regular,El Gaish,Zamalek,2,2,5.05,3.27,1.78
+2024-12-24,regular,ZED,Enppi,0,0,2.04,3.11,3.92
+2024-12-21,regular,El Ismaily,Pyramids,1,1,4.29,3.19,1.91
+2024-12-21,regular,Ghazl El Mahallah,Al Ittihad,0,0,3.20,2.91,2.44
+2024-12-20,regular,Pharco,ZED,1,2,3.77,2.87,2.17
+2024-12-20,regular,El Gouna,Enppi,1,0,3.72,2.60,2.41
+2024-12-20,regular,Modern Sport,National Bank Egypt,0,1,2.62,2.93,2.89
+2024-12-19,regular,Zamalek,Ceramica Cleopatra,1,1,2.20,3.22,3.30
+2024-12-19,regular,Haras El Hodood,Al Masry,0,0,8.96,3.62,1.46
+2024-12-19,regular,El Gaish,Petrojet,0,1,2.80,2.76,2.83
+2024-12-02,regular,Ghazl El Mahallah,Zamalek,0,4,4.46,2.93,1.99
+2024-12-02,regular,Al Masry,Pyramids,1,0,3.47,3.09,2.19
+2024-12-02,regular,Petrojet,Pharco,1,2,2.39,2.84,3.35
+2024-12-01,regular,Smouha,El Gouna,0,0,1.63,3.55,5.76
+2024-12-01,regular,Enppi,El Ismaily,1,0,2.27,2.93,3.51
+2024-12-01,regular,National Bank Egypt,Al Ahly,0,0,5.70,3.64,1.61
+2024-11-30,regular,Al Ittihad,El Gaish,0,1,2.32,2.84,3.49
+2024-11-30,regular,Ceramica Cleopatra,Modern Sport,4,1,2.28,2.85,3.60
+2024-11-30,regular,ZED,Haras El Hodood,2,0,1.75,3.11,5.70
+2024-11-24,regular,Haras El Hodood,Ceramica Cleopatra,0,0,4.21,3.22,1.92
+2024-11-24,regular,Modern Sport,ZED,0,0,2.90,2.64,2.89
+2024-11-24,regular,El Ismaily,Petrojet,1,0,2.22,2.91,3.68
+2024-11-23,regular,Zamalek,Al Masry,0,1,2.36,3.09,3.11
+2024-11-23,regular,El Gaish,Smouha,0,0,3.50,2.94,2.26
+2024-11-23,regular,El Gouna,Ghazl El Mahallah,0,1,2.69,2.81,2.94
+2024-11-22,regular,Al Ahly,Al Ittihad,1,1,1.35,4.38,9.85
+2024-11-22,regular,Pharco,Enppi,4,3,2.67,2.66,3.18
+2024-11-22,regular,Pyramids,National Bank Egypt,3,1,1.65,3.54,5.55
+2024-11-09,regular,Ceramica Cleopatra,El Ismaily,1,0,1.88,3.26,4.34
+2024-11-09,regular,Al Masry,El Gouna,0,0,1.63,3.55,5.88
+2024-11-09,regular,National Bank Egypt,Pharco,0,0,1.94,3.07,4.36
+2024-11-08,regular,Enppi,Pyramids,1,2,4.85,3.30,1.80
+2024-11-08,regular,Petrojet,Modern Sport,1,1,3.86,3.26,2.00
+2024-11-08,regular,Smouha,Zamalek,0,2,2.65,3.12,2.70
+2024-11-07,regular,ZED,Al Ahly,0,1,6.45,3.75,1.54
+2024-11-07,regular,Al Ittihad,Haras El Hodood,1,0,1.90,3.23,4.33
+2024-11-07,regular,Ghazl El Mahallah,El Gaish,2,3,3.00,2.89,2.57
+2024-11-02,regular,Al Ahly,Ceramica Cleopatra,5,2,1.61,3.70,5.69
+2024-11-02,regular,El Ismaily,Ghazl El Mahallah,0,0,2.07,2.92,4.11
+2024-11-01,regular,Zamalek,National Bank Egypt,3,2,2.11,3.25,3.50
+2024-11-01,regular,Pharco,Al Ittihad,0,1,2.83,2.64,2.96
+2024-11-01,regular,Pyramids,Petrojet,1,1,1.21,5.47,16.54
+2024-10-31,regular,Modern Sport,Enppi,0,0,2.50,2.62,3.48
+2024-10-31,regular,El Gouna,ZED,0,0,4.11,2.81,2.14
+2024-10-30,regular,El Gaish,Al Masry,0,2,4.21,2.87,2.07
+2024-10-30,regular,Haras El Hodood,Smouha,1,3,3.95,2.67,2.26
