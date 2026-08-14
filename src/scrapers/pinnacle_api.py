@@ -202,14 +202,14 @@ def _check_hosts_file():
 def _rate_limit():
     global _last_req_time, _REQUEST_COUNT, _BURST_WINDOW_START, _BURST_COUNT, _SCAN_PAUSE_UNTIL
 
-    # V5: Cloudflare 封禁后自动暂停
+    # V5: Cloudflare 封禁后自动暂停 — 冷却中真正跳过请求(修复每60s重锤被封IP的bug)
     if _SCAN_PAUSE_UNTIL > 0:
         remaining = _SCAN_PAUSE_UNTIL - time.time()
         if remaining > 0:
-            logger.warning("Cloudflare 封禁冷却中, 暂停 %.0fs...", remaining)
-            time.sleep(min(remaining, 60))  # 每次最多等60秒
-            if time.time() < _SCAN_PAUSE_UNTIL:
-                return  # 还没到时间，直接返回（让调用者决定是否继续）
+            logger.warning("Cloudflare 封禁冷却中, 跳过请求 (剩余 %.0fs)", remaining)
+            time.sleep(min(remaining, 60))  # 节流, 避免调用方 tight loop
+            return False  # 冷却中, 调用方应跳过本次请求
+        _SCAN_PAUSE_UNTIL = 0.0  # 到期, 清除标志
 
     # V5: 突发流量限制 — 10秒窗口内最多 15 请求
     now = time.time()
@@ -229,6 +229,7 @@ def _rate_limit():
     _last_req_time = time.time()
     _REQUEST_COUNT += 1
     _BURST_COUNT += 1
+    return True
 
 
 def _backoff_sleep(attempt: int, extra: float = 0.0) -> float:
@@ -354,7 +355,8 @@ def api_get(path, retry=True):
     """
     global _ssl_fail_count
     _load_cookie()
-    _rate_limit()
+    if not _rate_limit():
+        return None  # Cloudflare 冷却中, 跳过本次请求
     url = f"{API_BASE}{path}"
     total_wait = 0.0
 
