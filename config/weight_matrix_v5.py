@@ -1818,7 +1818,9 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 if n < MIN_N_MINIMUM:
                     return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
                 bb_prem = _bb_premium_1x2(odds) * 0.85
-                stake = kelly_075(wr * 1.08, avg_o, bb_prem, n) * 0.5 * _data_discount
+                # V5.1: DC 推导无偏(91,250场回测), 折扣从 0.5 → 0.9; DNB 保持 0.5
+                _dc_discount = 0.9 if sub_market == "dc" else 0.5
+                stake = kelly_075(wr * 1.08, avg_o, bb_prem, n) * _dc_discount * _data_discount
                 return min(stake, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.02))
 
             # BTTS/OE from OU derivation (uses OU data, BTB doesn't have OU so no change)
@@ -1834,7 +1836,9 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 if n < MIN_N_MINIMUM:
                     return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
                 bb_prem = _bb_premium_ou(odds) * 0.8
-                stake = kelly_075(wr, avg_o, bb_prem, n, sport_confidence=0.6) * 0.35
+                # V5.1: BTTS 51.8% yes 可从OU推导, 折扣 0.35 → 0.5; OE 保持 0.35
+                _btts_discount = 0.5 if sub_market == "btts" else 0.35
+                stake = kelly_075(wr, avg_o, bb_prem, n, sport_confidence=0.6) * _btts_discount
                 return min(stake, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.03))
 
             if sub_market in SPECIAL_MARKET_CAPS:
@@ -2123,12 +2127,13 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
         if sub_market == "oe":
             base_min_ev = 1.0   # 结构性50/50, 不需要高门槛
         elif sub_market == "btts":
+            # V5.1: BTTS 51.8% yes, OU推导可验证 → 门槛从 3-5% 降到 2.5-3.5%
             if odds < 2.0:
-                base_min_ev = 3.0   # 推导误差补偿+1%
+                base_min_ev = 2.5
             elif odds < 3.5:
-                base_min_ev = 4.0
+                base_min_ev = 3.0
             else:
-                base_min_ev = 5.0
+                base_min_ev = 3.5
         elif sub_market == "dnb":
             # 平局退款: 平局退本金, 不受平局概率高估影响 → 保持低门槛
             if odds < 2.0:
@@ -2138,30 +2143,30 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
             else:
                 base_min_ev = 4.0
         elif sub_market == "dc":
-            # 双重机会(含和局) — 1X2比例法去抽水高估平局概率, EV虚高
-            # 实证: 14条DC结算 ROI -54.8%, 实盘6笔几乎全输 → 门槛大幅提高(6-8%)
+            # V5.1: Shin去抽水推导无偏(91,250场回测偏差0.0000), 旧的6-8%是比例法bug+14笔样本
+            # → 降到 2-3% (≈1X2 margin)
             if odds < 2.0:
-                base_min_ev = 6.0
+                base_min_ev = 2.0
             elif odds < 3.5:
-                base_min_ev = 7.0
+                base_min_ev = 2.5
             else:
-                base_min_ev = 8.0
+                base_min_ev = 3.0
         elif sub_market == "ht_dc":
-            # 上半场双重机会 — 上半场平局率~45%远高于全场~27%, 偏差更大
+            # 上半场双重机会 — 半场平局率42%高于全场, 略加缓冲 → 3-4%
             if odds < 2.0:
-                base_min_ev = 7.0
+                base_min_ev = 3.0
             elif odds < 3.5:
-                base_min_ev = 8.0
+                base_min_ev = 3.5
             else:
-                base_min_ev = 9.0
+                base_min_ev = 4.0
         elif sub_market == "ht":
-            # 上半场1X2/让球/大小 — 实证 ROI -31.3%(8笔1赢7输), 门槛提高(5-8%)
+            # V5.1: fair来自live HT赔率去抽水(正确), 旧的5-8%基于8笔样本 → 降到 3-4%
             if odds < 2.0:
-                base_min_ev = 5.0
+                base_min_ev = 3.0
             elif odds < 3.5:
-                base_min_ev = 6.0
+                base_min_ev = 3.5
             else:
-                base_min_ev = 8.0
+                base_min_ev = 4.0
         # V5: HC低赔率3%, OU有Pin数据4%
         elif sub_market in ("hc", "handicap"):
             base_min_ev = 3.0

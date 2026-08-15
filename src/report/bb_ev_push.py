@@ -359,19 +359,19 @@ def _get_market_weight(sub_market: str, sport: str = "") -> float:
 
 # --- Kelly 分市场差异化 (基于Pinnacle真实效率, 跨运动通用) ---
 # Pinnacle 近乎完美校准，所有市场都能信任。差异仅来自抽水。
-# 低抽水市场 → 公平价更可靠 → 略高 Kelly
-# 无Pinnacle收盘数据的市场 → 保守 Kelly
+# V5.2 数据质量导向: 有 Pinnacle 直接收盘数据的盘口 > 推导盘口
+# 数据量: 1X2 111K > HC 49K > OU 46K > 角球 5.7万; DC/HT/BTTS/DNB/OE 是推导(借数据)
 KELLY_BY_MARKET = {
-    "ou":   0.55,  # OU抽水最低(3.87%)→最可靠
-    "btts": 0.52,  # 学术研究支持
-    "hc":   0.50,  # 标准
-    "dnb":  0.50,  # 中性
-    "1x2":  0.45,  # 抽水稍高(4.29%)，且历史假阳性多→略降
-    "ht":   0.45,  # 半场1X2→对齐全场1X2（Pinnacle有HT数据，无理由更低）
-    "dc":   0.45,  # 从1X2推导
-    "oe":   0.35,  # 无Pinnacle数据
-    "corner": 0.45, # V5.1: 角球第4重要市场, 有 football-data.co.uk 角球AH数据
-    "htft": 0.25,  # 低流动性+高抽水(5-7%), EV可靠性低, 严格控制
+    "ou":   0.52,  # 抽水最低但数据只有46K, 与1X2对齐
+    "hc":   0.50,  # 49K AH数据, 标准
+    "1x2":  0.50,  # V5.2: 111K最多数据, devig已修(旧0.45是假阳性包袱)
+    "corner": 0.45, # V5.1: 5.7万 AH数据, 第4重要市场
+    "btts": 0.45,  # V5.2: 推导自OU, 无独立Pinnacle数据 → 下调
+    "dnb":  0.45,  # V5.2: 推导 → 下调
+    "dc":   0.40,  # V5.2: 推导 → 下调
+    "ht":   0.40,  # V5.2: 推导, 无历史HT赔率 → 下调
+    "oe":   0.30,  # V5.2: 无数据 → 下调
+    "htft": 0.25,  # 低流动性+高抽水(5-7%), 严格控制
 }
 def _get_kelly_for_market(sub_market: str) -> float:
     """根据市场类型返回对应的 Kelly 分数。"""
