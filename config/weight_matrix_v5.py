@@ -1084,6 +1084,12 @@ try:
 except ImportError:
     pass
 
+# V5.3: HC 按联赛重标定 (Pinnacle AH 分联赛, 补齐 HC 非按联赛的缺口)
+try:
+    from config.hc_by_league import PIN_HC_DATA_BY_LEAGUE
+except ImportError:
+    PIN_HC_DATA_BY_LEAGUE = {}
+
 # V5: SBR Consensus 收盘价 (SportsbookReview, 含Pinnacle, 56K场, 4运动)
 # 优先使用SBR数据, 但保留旧数据作为bin空缺时的回退
 try:
@@ -1761,9 +1767,13 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             return stake
 
         elif sub_market in ("hc", "handicap"):
-            # V4.5: HC 独立标定 — 使用 Pinnacle 亚洲让球收盘数据 (49K)
-            # V4.5 fix: ROI 健康检查 — 异常高 ROI (>15%) 说明数据源非 Pinnacle 收盘, 退回1X2
-            data = PIN_HC_DATA.get(idx)
+            # V5.3: HC 按联赛重标定 (Pinnacle AH 分联赛), 无联赛数据回退聚合, 再回退1X2
+            data = None
+            _hc_league = _match_league(league, PIN_HC_DATA_BY_LEAGUE) if PIN_HC_DATA_BY_LEAGUE else None
+            if _hc_league:
+                data = _hc_league.get(idx)
+            if not data:
+                data = PIN_HC_DATA.get(idx)
             if data and data[2] >= 20:
                 wr, avg_o, n = data
                 implied_roi = wr * avg_o - 1
