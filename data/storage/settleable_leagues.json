@@ -291,7 +291,7 @@
       "success_rate": 0.0
     },
     "欧洲冠军联赛-资格赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -561,7 +561,7 @@
       "success_rate": 0.0
     },
     "联赛杯 (在美国和加拿大和墨西哥)": {
-      "attempts": 3,
+      "attempts": 8,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -569,9 +569,29 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "英格兰北部超级联赛": {
+      "attempts": 4,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "英格兰南部超级联赛南": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "英格兰北部超级联赛甲组": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "葡萄牙新世代联赛 U23": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-14T10:06:31.149783+00:00",
+  "updated": "2026-08-14T23:55:57.051242+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
