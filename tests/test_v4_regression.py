@@ -59,11 +59,11 @@ class TestV4WeightMatrix:
         assert k >= 0, f"NFL ML Kelly={k}"
 
     def test_dc_is_data_driven(self):
-        """DC 现在从1X2推导, 不再是固定1.5%."""
+        """DC 现在从1X2推导(Shin已证无偏), 折扣1.0, 上限0.03."""
         from config.weight_matrix_v5 import get_kelly_stake_pct
         k = get_kelly_stake_pct("football", "英超", "dc", 1.8)
-        # 应该 < 1.5% (固定cap), 数据驱动值应不同
-        assert k <= 0.015, f"DC Kelly={k} 不应超过cap"
+        # 数据驱动值不应超过 cap (V5.3: 0.015→0.03)
+        assert k <= 0.03, f"DC Kelly={k} 不应超过cap(0.03)"
 
     def test_pin_roi_blocking_hc(self):
         """HC Pin全负ROI → min_ev=5%."""

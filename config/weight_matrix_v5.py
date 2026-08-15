@@ -1355,7 +1355,7 @@ def _is_risky_mma_boxing(sport: str, league: str, odds: float,
 # =====================================================================
 SPECIAL_MARKET_CAPS = {
     # V4.3: 无历史数据的市场放宽限制 (用结算数据慢慢验证)
-    "dc":    {"max_stake": 0.015, "max_odds": 8.0},   # 无数据, 放宽至8.0
+    "dc":    {"max_stake": 0.03, "max_odds": 8.0},    # V5.3: 推导已证无偏, 上限0.015→0.03对齐BTTS
     "btts":  {"max_stake": 0.03, "max_odds": 5.0},    # 无数据, 放宽至5.0
     "dnb":   {"max_stake": 0.02, "max_odds": 8.0},    # 无数据, 放宽至8.0
     "oe":    {"max_stake": 0.01, "max_odds": 4.0},    # 无数据, 放宽至4.0
@@ -1832,15 +1832,16 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 wr, avg_o, n = data
                 if n < MIN_N_MINIMUM:
                     return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
-                bb_prem = _bb_premium_1x2(odds) * 0.85
-                # V5.1: DC 推导无偏(91,250场回测), 折扣从 0.5 → 0.9; DNB 保持 0.5
-                _dc_discount = 0.9 if sub_market == "dc" else 0.5
+                bb_prem = _bb_premium_1x2(odds) * 0.95
+                # V5.3: DC 推导已证无偏(91,250场 Shin, 偏差0.0000), 折扣 0.9→1.0 对齐1X2;
+                # DNB 有平局退款风险, 折扣 0.5→0.75 (放宽但不取消)
+                _dc_discount = 1.0 if sub_market == "dc" else 0.75
                 stake = kelly_075(wr * 1.08, avg_o, bb_prem, n) * _dc_discount * _data_discount
                 return min(stake, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.02))
 
             # BTTS/OE from OU derivation (uses OU data, BTB doesn't have OU so no change)
             if sub_market in ("btts", "oe"):
-                # BTTS/OE 与总进球相关 → 用 OU 数据 × 0.35
+                # BTTS/OE 与总进球相关 → 用 OU 数据
                 ou_league_data = _match_league(league, PIN_OU_DATA)
                 if not ou_league_data:
                     return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
@@ -1850,10 +1851,10 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 wr, avg_o, n = data
                 if n < MIN_N_MINIMUM:
                     return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
-                bb_prem = _bb_premium_ou(odds) * 0.8
-                # V5.1: BTTS 51.8% yes 可从OU推导, 折扣 0.35 → 0.5; OE 保持 0.35
-                _btts_discount = 0.5 if sub_market == "btts" else 0.35
-                stake = kelly_075(wr, avg_o, bb_prem, n, sport_confidence=0.6) * _btts_discount
+                bb_prem = _bb_premium_ou(odds) * 0.9
+                # V5.3: BTTS 51.8% yes 与OU高度相关, 折扣 0.5→0.65; OE 0.35→0.5 (放宽)
+                _btts_discount = 0.65 if sub_market == "btts" else 0.5
+                stake = kelly_075(wr, avg_o, bb_prem, n, sport_confidence=0.65) * _btts_discount
                 return min(stake, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.03))
 
             if sub_market in SPECIAL_MARKET_CAPS:
@@ -2134,8 +2135,12 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
 
     # V5.3: 公平价已去抽水(devig), EV=(BB-公平价)/公平价 本身就是真实edge,
     # 门槛只需小buffer覆盖 devig误差+微小波动。之前用盈亏线表(4-9%)是把抽水算两次(错)。
-    # 直接盘口(1X2/HC/OU/corner): 2% buffer; 推导盘口(DC/DNB/BTTS/OE/HT类): 3% buffer(推导误差)
-    if sub_market in ("dc", "dnb", "btts", "oe", "ht", "ht_dc", "ht_hc", "ht_ou"):
+    # 直接盘口(1X2/HC/OU/corner): 2% buffer。
+    # 推导盘口: DC/DNB 推导自1X2(Shin已证无偏)→2% 对齐直接盘口;
+    #           BTTS/OE 推导自OU、HT类推导自半场分布(仍有一定推导误差)→3% buffer。
+    if sub_market in ("dc", "dnb"):
+        base_min_ev = 2.0
+    elif sub_market in ("btts", "oe", "ht", "ht_dc", "ht_hc", "ht_ou"):
         base_min_ev = 3.0
     else:
         base_min_ev = 2.0

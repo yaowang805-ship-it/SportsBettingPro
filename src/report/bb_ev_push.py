@@ -2333,9 +2333,7 @@ def _save_qualified_fingerprints(qualified: list):
             fp = _make_fingerprint(o)
             ev = o.get("ev_pct", 0)
             bb = o.get("bb_odds", 0)
-            new_fps[fp] = {"ev": ev, "ts": time.time()}
-            if bb > 0:
-                new_fps[fp + "_bb"] = bb
+            new_fps[fp] = {"ev": ev, "bb": bb, "ts": time.time()}
     add_fingerprints(new_fps)
     logger.info("指纹: %d条 (%d场)", len(new_fps), len(match_groups))
 
@@ -2468,9 +2466,11 @@ def _audit_log(action, key, opp, reason=""):
 
 
 def _filter_pushed(qualified: list, time_window: str = "") -> list:
-    """去重：一条机会推过一次就不再推送，除非溢价涨≥阈值。
+    """去重：一条机会推过一次就不再推送，除非 BB/FB 赔率上升 (或 EV 大涨兜底)。
 
-    V5: 临场<6h阈值1%, 中程/远端2%
+    V5.3 (2026-08-15): 重推条件从"EV增≥阈值(临场1%/其他2%)"改为
+    "BB赔率上升(>0.005ε)"——赔率上升=单笔EV严格增加=收益增加, 更直接灵敏。
+    保留 EV 大涨(≥阈值)作为兜底(线朝有利方向移动但赔率未动的场景)。
     """
     _threshold = 1.0 if time_window == "urgent" else 2.0
     import json as _json, fcntl as _fcntl, os as _os
@@ -2520,17 +2520,33 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
             _audit_log("PUSHED", key, o, "new")
             continue
 
-        # 旧key → 检查溢价增幅 (指纹只存 ev/ts 无 fair, 直接用 ev 差)
+        # 旧key → 重复推送规则
+        # 用户要求 (2026-08-15): 只要 BB/FB 赔率上升就重推 (即使 EV 仅略微增加)。
+        # 理由: BB赔率上升 = 同笔投注赔付更高 = 单笔 EV 严格增加, 收益随之增加。
+        # 旧规则"EV增≥1%/2%"太严, 改为"赔率上升即重推"(ε 防噪声)。
         old_ev = old.get("ev", 0)
+        old_bb = old.get("bb", 0)
+        # 兼容旧指纹: bb 曾存为独立 key {fp}_bb (值被 add_fingerprints 包成 {"ev": bb})
+        if not old_bb:
+            _legacy = last_pushed.get(key + "_bb", 0)
+            if isinstance(_legacy, dict):
+                old_bb = _legacy.get("ev", 0) or _legacy.get("bb", 0)
+            elif isinstance(_legacy, (int, float)):
+                old_bb = _legacy
         premium_delta = ev_now - old_ev
+        # 触发条件: BB赔率上升(>0.005防噪声, 且旧赔率已知) 或 EV大涨(≥阈值, 兜底)
+        bb_rose = old_bb > 0 and bb_now > old_bb + 0.005
+        ev_jumped = premium_delta >= _threshold
 
-        if premium_delta >= _threshold:
+        if bb_rose or ev_jumped:
             re_pushed += 1
             result.append(o)
-            _audit_log("REPUSH", key, o, f"premium+{premium_delta:.1f}%")
+            _audit_log("REPUSH", key, o,
+                       f"bb+{bb_now - old_bb:.2f}" if bb_rose else f"premium+{premium_delta:.1f}%")
         else:
             skipped += 1
-            _audit_log("SKIPPED", key, o, f"premium_delta={premium_delta:.1f}%")
+            _audit_log("SKIPPED", key, o,
+                       f"bb={bb_now}(旧{old_bb:.2f}) Δev={premium_delta:.1f}%")
 
     # V5.1 铁律: 指纹只在推送成功后写入, _filter_pushed 不写磁盘
     # cleaned + save 由 _save_qualified_fingerprints 在推送成功后执行

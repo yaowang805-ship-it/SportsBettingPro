@@ -14,25 +14,25 @@ sys.path.insert(0, str(ROOT / "src"))
 
 
 def test_dc_ev_threshold_raised():
-    """DC(双重机会)门槛大幅提高 — 平局概率高估, 实证ROI-54.8%."""
+    """DC(双重机会)推导已证无偏(Shin devig), 门槛对齐直接盘口 2%."""
     from config.weight_matrix_v5 import get_min_ev
-    assert get_min_ev("football", "英超", "dc", 1.8) == 6.0
-    assert get_min_ev("football", "英超", "dc", 3.0) == 7.0
-    assert get_min_ev("football", "英超", "dc", 4.0) == 8.0
+    assert get_min_ev("football", "英超", "dc", 1.8) == 2.0
+    assert get_min_ev("football", "英超", "dc", 3.0) == 2.0
+    assert get_min_ev("football", "英超", "dc", 4.0) == 2.0
 
 
 def test_ht_dc_ev_threshold_higher():
-    """上半场DC门槛更高 — 上半场平局率45%偏差更大."""
+    """上半场DC仍有一定推导误差 — 门槛 3%."""
     from config.weight_matrix_v5 import get_min_ev
-    assert get_min_ev("football", "英超", "ht_dc", 1.8) == 7.0
-    assert get_min_ev("football", "英超", "ht_dc", 4.0) == 9.0
+    assert get_min_ev("football", "英超", "ht_dc", 1.8) == 3.0
+    assert get_min_ev("football", "英超", "ht_dc", 4.0) == 3.0
 
 
 def test_ht_ev_threshold_raised():
-    """上半场盘口门槛提高 — 实证ROI-31.3%."""
+    """上半场盘口推导自半场分布 — 门槛 3% (待补真实半场数据后再校准)."""
     from config.weight_matrix_v5 import get_min_ev
-    assert get_min_ev("football", "英超", "ht", 1.8) == 5.0
-    assert get_min_ev("football", "英超", "ht", 4.0) == 8.0
+    assert get_min_ev("football", "英超", "ht", 1.8) == 3.0
+    assert get_min_ev("football", "英超", "ht", 4.0) == 3.0
 
 
 def test_dnb_ev_blocked():
@@ -61,7 +61,7 @@ def test_tier_strategy():
     assert t1["ev_floor"] < t3["ev_floor"], "T3门槛应高于T1"
     assert t1["max_stake_pct"] > t3["max_stake_pct"], "T1仓位应高于T3"
     assert t1["allow_suggest"], "T1应允许建议"
-    assert not t3["allow_suggest"], "T3不应显示建议"
+    assert t3["allow_suggest"], "T3允许建议(低于min_stake显示建议, V5.1放宽)"
 
 
 def test_odds_archiver_processed_format():

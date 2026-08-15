@@ -170,6 +170,13 @@ def _fetch_close_odds(entries):
                 match_epoch = int(e.get("match_epoch", 0))
                 sub_market = e.get("sub_market", "")
                 designation = e.get("designation", "").lower()
+                # 半场盘口 sub_market 被粗标成 "ht", 需从 designation 推断精确盘口:
+                #   "上半场让球..."→ht_hc, "上半场小球/大球..."→ht_ou, 否则=ht(独赢)
+                if sub_market == "ht":
+                    if "让球" in designation:
+                        sub_market = "ht_hc"
+                    elif ("小球" in designation) or ("大球" in designation):
+                        sub_market = "ht_ou"
 
                 best_pin = None
                 best_score = 0
@@ -181,6 +188,7 @@ def _fetch_close_odds(entries):
                     if pin_home_name and pin_away_name:
                         if pin_home_name == mu_home and pin_away_name == mu_away:
                             best_pin = mu
+                            best_score = 100  # 精确匹配最高分 (否则下面 best_score==0 会误丢)
                             break
 
                     # 其次用 BB 中文名子串匹配
@@ -201,22 +209,16 @@ def _fetch_close_odds(entries):
                 if not best_pin or best_score == 0:
                     continue
 
-                # 提取对应市场的收盘赔率
+                # 提取对应市场的收盘公平价 (直盘+推导盘口均支持)
                 close_data = _extract_market_odds(best_pin, sub_market, designation)
                 if close_data is None:
                     continue
-                close_odds, bet_idx = close_data
+                close_pin_odds, close_fair, total_implied = close_data
 
                 # 计算真实 CLV
                 bb_odds = float(e.get("bb_odds", 0))
                 fair_price = float(e.get("fair_price", 0))
                 push_ev = float(e.get("ev_pct", 0))
-
-                # 收盘公平价 = 收盘 Pin 赔率 × (1 / total_implied)
-                total_implied = sum(1.0 / p for p in close_odds if p and p > 0)
-                if total_implied <= 0:
-                    continue
-                close_fair = round(close_odds[bet_idx] * total_implied, 4)
 
                 true_clv = round((bb_odds - close_fair) / close_fair * 100, 2)
                 clv_delta = round(true_clv - push_ev, 2)  # 正=赔率朝有利方向移动
@@ -237,7 +239,7 @@ def _fetch_close_odds(entries):
                     "bb_odds": bb_odds,
                     "push_fair_price": fair_price,
                     "push_ev_pct": push_ev,
-                    "close_pin_odds": close_odds[bet_idx],
+                    "close_pin_odds": close_pin_odds,
                     "close_fair_price": close_fair,
                     "close_total_implied": round(total_implied, 4),
                     "true_clv_pct": true_clv,
@@ -250,57 +252,154 @@ def _fetch_close_odds(entries):
 
 
 def _extract_market_odds(pin_matchup, sub_market, designation):
-    """从 Pinnacle matchup 中提取对应市场的收盘赔率 + 投注选项索引。
-    Returns: (odds_list, bet_idx) 或 None。bet_idx 指向投注的 designation 对应选项。
+    """从 Pinnacle matchup 提取对应市场的收盘公平价。
+
+    Returns: (close_pin_odds, close_fair_price, total_implied) 或 None。
+    - close_pin_odds: 代表性收盘赔率 (直盘=选项原始收盘价; 推导盘=组合公平价)
+    - close_fair_price: 去抽水后的公平价 (proportional devig)
+    - total_implied: 隐含概率和 (去抽水前)
     """
     from src.scrapers.pinnacle_api import get_decimal_price
+    from src.scrapers.matching_engine import (
+        get_pin_ml_sorted_from_source, get_pin_spread, get_pin_total,
+    )
     des = (designation or "").lower()
 
-    def _odds_from_prices(prices):
-        odds = []
-        for p in prices:
-            d = get_decimal_price(p)
-            if d and 1.01 <= d <= 51.0:
-                odds.append(d)
-        return odds
+    def _devig(odds, selected_idx):
+        """proportional devig: 公平价 = odds[i] * sum(1/odds)。selected_idx 可为 int 或 list(组合)。"""
+        total = sum(1.0 / p for p in odds if p and p > 0)
+        if total <= 0:
+            return None, None
+        if isinstance(selected_idx, (list, tuple)):
+            prob = sum(1.0 / odds[i] for i in selected_idx if 0 <= i < len(odds))
+            fair = 1.0 / (prob / total) if prob > 0 else None
+        else:
+            fair = odds[selected_idx] * total
+        return fair, total
 
-    if sub_market in ("1x2", "ht"):
-        # 独赢/上半场 → moneyline
-        for ml in pin_matchup.get("moneyline", []):
-            period = ml.get("period", 0)
-            if sub_market == "ht" and period != 1:
-                continue
-            if sub_market == "1x2" and period != 0:
-                continue
-            odds = _odds_from_prices(ml.get("prices", []))
-            if len(odds) >= 2:
-                n = len(odds)
-                if "和" in des or "draw" in des:
-                    idx = 1 if n >= 3 else 0
-                elif "客" in des or "away" in des:
-                    idx = n - 1
-                else:
-                    idx = 0
-                return odds, idx
-    elif sub_market == "hc":
-        # 让球 → spread
-        for sp in pin_matchup.get("spread", []):
-            if sp.get("period", 0) != 0:
-                continue
-            odds = _odds_from_prices(sp.get("prices", []))
-            if len(odds) >= 2:
-                idx = 1 if ("客" in des or "away" in des) else 0
-                return odds, idx
-    elif sub_market == "ou":
-        # 大小球 → total
-        for tot in pin_matchup.get("total", []):
-            if tot.get("period", 0) != 0:
-                continue
-            odds = _odds_from_prices(tot.get("prices", []))
-            if len(odds) >= 2:
-                idx = 1 if ("小" in des or "under" in des) else 0
-                return odds, idx
+    def _parse_line(designation):
+        """从 designation 括号里解析线值, 如 (-0.5)/(2.5)/(-0/0.5)→-0.25。"""
+        import re
+        m = re.search(r'[（(]([^（）)]*)[）)]', designation or "")
+        if not m:
+            return None
+        s = m.group(1).strip()
+        sign = -1.0 if s.startswith('-') else 1.0
+        s = s.lstrip('+-')
+        if not s:
+            return None
+        if '/' in s:
+            parts = [float(x) for x in s.split('/')]
+            return sign * sum(parts) / len(parts)
+        try:
+            return sign * float(s)
+        except ValueError:
+            return None
 
+    # ── 独赢 / 双重机会 / 平局退款 (3-way moneyline 直接或推导) ──
+    if sub_market in ("1x2", "ht", "dc", "dnb", "ht_dc", "ht_dnb"):
+        # HT 独赢在 ht_moneyline 独立字段, 全场在 moneyline
+        src = pin_matchup.get("ht_moneyline", []) if sub_market.startswith("ht") \
+            else pin_matchup.get("moneyline", [])
+        odds = get_pin_ml_sorted_from_source(src, "football")  # [home, draw, away]
+        if len(odds) < 3:
+            return None
+
+        if sub_market in ("1x2", "ht"):
+            if "和" in des or "draw" in des or "平" in des:
+                idx = 1
+            elif "客" in des or "away" in des:
+                idx = 2
+            else:
+                idx = 0
+            fair, total = _devig(odds, idx)
+            if fair is None:
+                return None
+            return round(odds[idx], 4), round(fair, 4), round(total, 4)
+
+        elif sub_market in ("dc", "ht_dc"):
+            idx = set()
+            if "主" in des:
+                idx.add(0)
+            if "和" in des or "平" in des:
+                idx.add(1)
+            if "客" in des:
+                idx.add(2)
+            if not idx:
+                return None
+            fair, total = _devig(odds, sorted(idx))
+            if fair is None:
+                return None
+            return round(fair, 4), round(fair, 4), round(total, 4)
+
+        else:  # dnb / ht_dnb: 平局退款, 主或客
+            idx = 2 if ("客" in des or "away" in des) else 0
+            denom = (1.0 / odds[0] + 1.0 / odds[2])  # 排除平局
+            prob = (1.0 / odds[idx]) / denom if denom > 0 else 0
+            fair = 1.0 / prob if prob > 0 else None
+            if fair is None:
+                return None
+            return round(fair, 4), round(fair, 4), round(denom, 4)
+
+    # ── 让球 (全场/半场) ──
+    elif sub_market in ("hc", "ht_hc"):
+        src = pin_matchup.get("ht_spread", []) if sub_market == "ht_hc" \
+            else pin_matchup.get("spread", [])
+        # 让球线符号约定: get_pin_spread 按主队 points 匹配; 客胜要反转符号
+        _line = _parse_line(designation)
+        if _line is not None and ("客" in des or "away" in des):
+            _line = -_line
+        home_p, away_p, _ = get_pin_spread(pin_matchup, target_line=_line, source=src)
+        if not home_p or not away_p:
+            return None
+        h, a = get_decimal_price(home_p), get_decimal_price(away_p)
+        if not h or not a:
+            return None
+        idx = 1 if ("客" in des or "away" in des) else 0
+        odds = [h, a]
+        fair, total = _devig(odds, idx)
+        if fair is None:
+            return None
+        return round(odds[idx], 4), round(fair, 4), round(total, 4)
+
+    # ── 大小球 (全场/半场) ──
+    elif sub_market in ("ou", "ht_ou"):
+        src = pin_matchup.get("ht_total", []) if sub_market == "ht_ou" \
+            else pin_matchup.get("total", [])
+        over_p, under_p = get_pin_total(pin_matchup, target_line=_parse_line(designation), source=src)
+        if not over_p or not under_p:
+            return None
+        o, u = get_decimal_price(over_p), get_decimal_price(under_p)
+        if not o or not u:
+            return None
+        idx = 1 if ("小" in des or "under" in des) else 0
+        odds = [o, u]
+        fair, total = _devig(odds, idx)
+        if fair is None:
+            return None
+        return round(odds[idx], 4), round(fair, 4), round(total, 4)
+
+    # ── BTTS (全场) ──
+    elif sub_market == "btts":
+        for bt in pin_matchup.get("btts", []):
+            if bt.get("period", 0) != 0:
+                continue
+            yes = no = None
+            for p in bt.get("prices", []):
+                if p.get("designation") == "yes":
+                    yes = get_decimal_price(p)
+                elif p.get("designation") == "no":
+                    no = get_decimal_price(p)
+            if yes and no:
+                idx = 0 if ("是" in des or "yes" in des) else 1
+                odds = [yes, no]
+                fair, total = _devig(odds, idx)
+                if fair is None:
+                    return None
+                return round(odds[idx], 4), round(fair, 4), round(total, 4)
+        return None
+
+    # oe(单双) Pin matchup 无对应字段 → 暂不支持
     return None
 
 
