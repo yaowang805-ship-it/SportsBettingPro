@@ -1234,6 +1234,10 @@ def _verify_bb_price_exists(home: str, away: str, designation: str,
         odds_ft = m.get("odds_ft", {})
         candidates = []
 
+        # V5.2: DC/DNB/BTTS 是推导盘口, BB 原始数据无对应字段, phantom 价格检查不适用
+        if market_key in ("double_chance", "draw_no_bet", "btts"):
+            return True
+
         if market_key == "opportunities":
             ml = odds_ft.get("ml", [])
             candidates = [o for o in ml if o]
@@ -1752,8 +1756,8 @@ def _diversify_and_rank(qualified: list) -> list:
 
     # Kelly 分配（预算耗尽时保留机会，stake=0 仅展示不投注）
     qualified = _calc_kelly_stakes(qualified)
-    # V5.1: ¥50以下投注额直接屏蔽 — 碎单浪费推送空间
-    qualified = [o for o in qualified if o.get("_stake", 0) >= 50]
+    # V5.2: ¥30以下投注额直接屏蔽 (¥50太高, 砍掉太多真实机会)
+    qualified = [o for o in qualified if o.get("_stake", 0) >= 30]
 
     qualified.sort(key=lambda o: o.get("_stake", 0), reverse=True)
 

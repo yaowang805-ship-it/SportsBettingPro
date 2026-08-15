@@ -594,9 +594,14 @@
       "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "沙特阿拉伯职业联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-15T01:32:56.180924+00:00",
+  "updated": "2026-08-15T02:18:30.438724+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

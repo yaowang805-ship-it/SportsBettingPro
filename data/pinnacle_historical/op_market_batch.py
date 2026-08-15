@@ -22,7 +22,15 @@ from op_market_scraper import get_finished_matches, extract_market
 OUT_DIR = ROOT / "data" / "oddsportal_markets"
 LOG = ROOT / "data" / "logs" / "op_market_batch_download.log"
 
-MARKETS = [1, 2, 5, 4, 6, 13, 10]  # 1X2/OU/HC/DC/DNB/BTTS/OE
+# 各运动盘口: 足球有 DC/DNB/BTTS/OE (bt 4/6/13/10), 其他运动只有 1X2/OU/HC (bt 1/2/5)
+MARKETS_BY_SPORT = {
+    "football": [1, 2, 5, 4, 6, 13, 10],  # 1X2/OU/HC/DC/DNB/BTTS/OE
+    "basketball": [1, 2, 5],
+    "baseball": [1, 2, 5],
+    "ice-hockey": [1, 2, 5],
+    "tennis": [1, 2, 5],
+    "american-football": [1, 2, 5],
+}
 
 
 def log(msg):
@@ -50,7 +58,7 @@ def slug_to_path(slug, sport):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sports", default="football")
-    ap.add_argument("--max-per-league", type=int, default=50)
+    ap.add_argument("--max-per-league", type=int, default=30)
     args = ap.parse_args()
     sports = args.sports.split(",")
 
@@ -81,9 +89,10 @@ def main():
         t0 = time.time()
         try:
             matches = get_finished_matches(sport, path, season, max_matches=args.max_per_league)
+            markets = MARKETS_BY_SPORT.get(sport, [1, 2, 5])
             all_rows = []
             for m in matches:
-                for bt in MARKETS:
+                for bt in markets:
                     try:
                         for r in extract_market(m["match_id"], bt):
                             r.update({"match_id": m["match_id"], "home": m["home"], "away": m["away"],
@@ -91,7 +100,7 @@ def main():
                             all_rows.append(r)
                     except Exception:
                         pass
-                    time.sleep(0.8)  # 限速
+                    time.sleep(0.3)  # 限速 (V5.2: 0.8→0.3, 实测接口~2s/次)
             cols = ["match_id", "home", "away", "home_score", "away_score",
                     "market", "line", "side", "avg_odds", "n_bookies"]
             with open(out, "w", newline="") as f:

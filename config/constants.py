@@ -121,37 +121,38 @@ def get_tier_strategy(sport: str, league: str, tier: int = None) -> dict:
     }
     
     # ── 运动差异化 ──
+    # V5.2: ev_floor 数据化 (Pinnacle margin 1X2~2-3%/OU~4-7%), 旧的 T3=4%/T4=6% 过度保守
     if sport == "football":
         if tier == 1:
             strategy.update({"ev_floor": 2.0, "max_stake_pct": 0.04, "max_odds": 20.0, "allow_suggest": True})
         elif tier == 2:
             strategy.update({"ev_floor": 2.5, "max_stake_pct": 0.03, "max_odds": 10.0, "allow_suggest": True})
         elif tier == 3:
-            strategy.update({"ev_floor": 4.0, "max_stake_pct": 0.02, "max_odds": 5.0, "allow_suggest": False, "min_stake": 50})
+            strategy.update({"ev_floor": 3.0, "max_stake_pct": 0.03, "max_odds": 8.0, "allow_suggest": True, "min_stake": 30})
         elif tier == 4:
-            strategy.update({"ev_floor": 6.0, "max_stake_pct": 0.01, "max_odds": 3.0, "allow_suggest": False, "min_stake": 100})
-    
+            strategy.update({"ev_floor": 4.0, "max_stake_pct": 0.02, "max_odds": 5.0, "allow_suggest": True, "min_stake": 30})
+
     elif sport == "basketball":
         if tier == 1:  # NBA/WNBA
             strategy.update({"ev_floor": 2.0, "max_stake_pct": 0.03, "max_odds": 10.0})
         elif tier == 2:  # EuroLeague/ACB (有Pin覆盖)
             strategy.update({"ev_floor": 3.0, "max_stake_pct": 0.02, "max_odds": 5.0})
         elif tier in (3, 4):  # 拉美小联赛
-            strategy.update({"ev_floor": 5.0, "max_stake_pct": 0.01, "max_odds": 3.0, "allow_suggest": False, "min_stake": 50})
-    
+            strategy.update({"ev_floor": 3.5, "max_stake_pct": 0.02, "max_odds": 4.0, "allow_suggest": True, "min_stake": 30})
+
     elif sport == "tennis":
         if tier == 1:  # Grand Slam
             strategy.update({"ev_floor": 2.0, "max_stake_pct": 0.02, "max_odds": 5.0})
         elif tier == 2:  # Masters/ATP500/WTA
             strategy.update({"ev_floor": 2.5, "max_stake_pct": 0.02, "max_odds": 5.0})
         elif tier in (3, 4):  # ATP250 + 其他 (Challenger/ITF已在weight_matrix封杀)
-            strategy.update({"ev_floor": 4.0, "max_stake_pct": 0.01, "max_odds": 3.0, "allow_suggest": False, "min_stake": 50})
-    
+            strategy.update({"ev_floor": 3.0, "max_stake_pct": 0.02, "max_odds": 4.0, "allow_suggest": True, "min_stake": 30})
+
     elif sport == "baseball":
         if tier == 1:  # MLB
             strategy.update({"ev_floor": 2.5, "max_stake_pct": 0.03, "max_odds": 8.0})
         else:  # NPB/KBO/CPBL
-            strategy.update({"ev_floor": 4.0, "max_stake_pct": 0.01, "max_odds": 4.0, "allow_suggest": False, "min_stake": 50})
+            strategy.update({"ev_floor": 3.5, "max_stake_pct": 0.02, "max_odds": 5.0, "allow_suggest": True, "min_stake": 30})
     
     elif sport == "american_football":
         strategy.update({"ev_floor": 3.0, "max_stake_pct": 0.02, "max_odds": 5.0})  # NFL只有T1, 大学T2
