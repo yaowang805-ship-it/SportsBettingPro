@@ -27,7 +27,8 @@ from src.scrapers.bb_data import BB_SPORT_KEYWORDS
 
 # Pinnacle league structure (sport -> list of leagues -> ID/name), nearly static
 PINNACLE_LEAGUE_FILE = DATA_DIR / "pinnacle_league_structure.json"
-CACHE_TTL_DAYS = 7  # force refresh after this many days
+# V5.2: 7→1 天。网球赛事每周换一个(多伦多→辛辛那提), 7天TTL会导致联赛名过时→0场。
+CACHE_TTL_DAYS = 1  # force refresh after this many days
 
 # Team name mapping (Chinese -> English), loaded from file
 TEAM_NAME_MAP_FILE = DATA_DIR / "team_name_map.json"
