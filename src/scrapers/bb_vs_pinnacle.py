@@ -1624,6 +1624,35 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     if _lost_sports:
         print(f"⚠️ 运动数据丢失: {', '.join(sorted(_lost_sports))} — BB有数据但对比=0 (Pinnacle获取失败?)")
 
+    # ── 防御性护栏: 去抽水后公平价必须 >= Pin 原始赔率 ──
+    # fair_price < pin_odds 说明 devig 方向错误 (热门公平价被压低), 会制造假 +EV。
+    # 见 devig-shin-bug-20260814: 这类假机会曾一天推送 500+ 条。这里兜底剔除。
+    _fair_guard_removed = 0
+    for _e in opportunities:
+        for _mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"):
+            _kept = []
+            for _o in _e.get(_mk, []):
+                _fp = _o.get("fair_price")
+                _po = _o.get("pin_odds")
+                if (isinstance(_fp, (int, float)) and isinstance(_po, (int, float))
+                        and _po > 1.0 and _fp + 0.005 < _po):
+                    _fair_guard_removed += 1
+                    continue
+                _kept.append(_o)
+            _e[_mk] = _kept
+    if _fair_guard_removed:
+        print(f"  🛡️ 公平价护栏: 剔除 {_fair_guard_removed} 个 fair<Pin 异常机会 (去抽水方向错误)")
+        total_opps_1x2 = sum(len(o["opportunities"]) for o in opportunities)
+        total_hc = sum(len(o.get("handicap", [])) for o in opportunities)
+        total_ou = sum(len(o.get("over_under", [])) for o in opportunities)
+        total_dc = sum(len(o.get("double_chance", [])) for o in opportunities)
+        total_dnb = sum(len(o.get("draw_no_bet", [])) for o in opportunities)
+        total_btts = sum(1 for o in opportunities for x in o["opportunities"] if x.get("_market") == "btts")
+        total_oe = sum(1 for o in opportunities for x in o["opportunities"] if x.get("_market") == "oe")
+        total_htft = sum(1 for o in opportunities for x in o["opportunities"] if x.get("_market") == "htft")
+        total_1x2_only = total_opps_1x2 - total_btts - total_oe - total_htft
+        total_all = total_opps_1x2 + total_hc + total_ou + total_dc + total_dnb
+
     output = {
         "version": "2.0",
         "code_version": 3,  # 对比引擎版本号，升级后强制全量重建
