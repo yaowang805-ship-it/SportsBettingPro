@@ -1741,22 +1741,24 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 stake *= 0.75
             return stake * _settlement_multiplier(league) * _clv_multiplier(league)
 
-        elif sub_market == "ht":
-            # V4.3: HT封顶 4.8 (316K 赔率区间回测: @4.8+ BB EV全负)
-            if odds >= 4.8:
-                return 0.0
-            league_data = _match_league(league, PIN_1X2_DATA)
-            if not league_data:
-                return 0.0
-            data = league_data.get(idx)
+        elif sub_market in ("ht", "ht_hc", "ht_ou"):
+            # V5.2: 半场各盘口独立权重 — 从 95K场 HT结果分布推导 (半场平局42% vs 全场27%)
+            # 半场是直接盘口(Pin period=1 + BB ht), 结构完全不同, 不再借全场1X2×0.85
+            _HT_FAIR = {
+                # 半场独赢: 主33.5% 平42.1% 客24.4% → 公平赔率 主2.99/平2.38/客4.10
+                "ht": {6: (0.421, 2.38, 95462), 9: (0.335, 2.99, 95462), 14: (0.244, 4.10, 95462)},
+                # 半场让球: 净胜0走盘42.1%, 排除走盘 主57.9%/客42.1% → 公平赔率 主1.73/客2.37
+                "ht_hc": {3: (0.579, 1.73, 95462), 6: (0.421, 2.37, 95462)},
+                # 半场大小球: 大0.5=69.1% 大1.5=32.6% → 公平赔率 大0.5=1.45/大1.5=3.07
+                "ht_ou": {1: (0.691, 1.45, 95462), 9: (0.326, 3.07, 95462)},
+            }
+            data = _HT_FAIR.get(sub_market, {}).get(idx)
             if not data:
-                return 0.0
+                return SPECIAL_MARKET_CAPS.get("ht_dc", {}).get("max_stake", 0.01)
             wr, avg_o, n = data
-            if n < MIN_N_MINIMUM:
-                return 0.0
             bb_prem = _bb_premium_ht(odds)
-            stake = kelly_075(wr, avg_o, bb_prem, n)
-            return stake * _settlement_multiplier(league) * _clv_multiplier(league) * 0.85
+            stake = kelly_075(wr, avg_o, bb_prem, n, sport_confidence=0.6)
+            return stake
 
         elif sub_market in ("hc", "handicap"):
             # V4.5: HC 独立标定 — 使用 Pinnacle 亚洲让球收盘数据 (49K)

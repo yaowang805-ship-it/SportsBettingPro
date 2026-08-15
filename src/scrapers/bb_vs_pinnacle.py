@@ -1020,7 +1020,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                 "pin_odds": pin_home_odds,
                                 "fair_price": home_fair,
                                 "ev_pct": round(ev_h, 2),
-                                "_market": "ht",
+                                "_market": "ht_hc",
                             })
                         if ev_a > 1:
                             entry["handicap"].append({
@@ -1030,7 +1030,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                 "pin_odds": pin_away_odds,
                                 "fair_price": away_fair,
                                 "ev_pct": round(ev_a, 2),
-                                "_market": "ht",
+                                "_market": "ht_hc",
                             })
 
             # HT 大小
@@ -1055,7 +1055,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                     "pin_odds": get_decimal_price(over_p),
                                     "fair_price": over_fair,
                                     "ev_pct": round(ev_o, 2),
-                                    "_market": "ht",
+                                    "_market": "ht_ou",
                                 })
                         if get_decimal_price(under_p) and get_decimal_price(under_p) > 0:
                             ev_u = (bb_ht_ou["under_odds"] - under_fair) / under_fair * 100
@@ -1067,7 +1067,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                     "pin_odds": get_decimal_price(under_p),
                                     "fair_price": under_fair,
                                     "ev_pct": round(ev_u, 2),
-                                    "_market": "ht",
+                                    "_market": "ht_ou",
                                 })
 
         # --- 棒球 F5 (First 5 Innings) 对比：BB odds_f5 vs Pinnacle period=3 ---

@@ -69,6 +69,8 @@ _MARKET_KEY = {
     "dc": "1x2", "dnb": "1x2",  # DC/DNB 推导自 1X2, 用 1X2 盈亏线
     "btts": "ou", "oe": "ou",   # BTTS/OE 推导自 OU, 用 OU 盈亏线
     "ht_dc": "1x2",             # 上半场双机会 推导自 1X2
+    "ht_hc": "hc",              # 上半场让球 → 用让球盈亏线
+    "ht_ou": "ou",              # 上半场大小球 → 用大小球盈亏线
 }
 
 
