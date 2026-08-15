@@ -30,6 +30,12 @@ def devig_shin(odds: list) -> list:
 
     b = [1.0 / o for o in clean]
 
+    # 无抽水/underbroke 保护: 隐含概率和 <= 1 时没有 margin 可去,
+    # 此时 Shin 二分会退到 z=0, 后续归一化把概率放大 → fair < raw (方向错误)。
+    # 直接返回原始隐含概率 (fair odds = raw odds)。
+    if sum(b) <= 1.0 + 1e-9:
+        return [1.0 / float(o) if o and float(o) > 1.0 else 0.0 for o in odds]
+
     def _sum_pi(z):
         s = 0.0
         for bi in b:
