@@ -14,7 +14,7 @@ from src.scrapers.bb_data import (
 )
 from src.scrapers.pinnacle_league_map import TEAM_NAME_MAP
 from src.scrapers.pinnacle_api import get_decimal_price
-from src.scrapers.pinnacle_markets import get_league_matchups_and_markets
+from src.scrapers.pinnacle_markets import get_league_matchups_and_markets, get_league_corner_markets
 from src.scrapers.matching_engine import (
     get_pin_ml_sorted, get_pin_spread, get_pin_total, _pin_to_epoch,
 )
@@ -141,38 +141,36 @@ def add_htft_opportunities(entry, bb_htft_dict, pin_prices_list):
 # ── Corner (角球) ──
 
 def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
-    """角球市场对比：从 Pinnacle 角球联赛提取数据并与 BB 角球赔率对比。
+    """角球市场对比：从 Pinnacle 基础联赛提取角球数据并与 BB 角球赔率对比。
 
-    Pinnacle 角球联赛命名规则：原联赛名 + " Corners"
-    例如 "Brazil - Serie A" → "Brazil - Serie A Corners"
+    Pinnacle 角球是基础联赛里的子比赛 (league.name 以 " Corners" 结尾,
+    units == "Corners"), 不是独立联赛。所以映射 BB 联赛 → 基础联赛 id,
+    再用 get_league_corner_markets 从基础联赛 matchups 里提取角球市场。
 
     Returns list of corner opportunity entries (empty list if none).
     """
-    # 1. 找出所有 Pinnacle 角球联赛（含比赛）
-    pin_corner_by_base = {}
-    for lid, info in all_pin_leagues.items():
+    # 1. 找出哪些基础联赛名有 " Corners" 子比赛
+    corner_base_names = set()
+    for info in all_pin_leagues.values():
         name = info.get("name", "")
-        if name.endswith(" Corners") and info.get("matchup_count", 0) > 0:
-            base = name[:-8]
-            pin_corner_by_base[base] = {"id": lid, "name": name, "sport_id": info.get("sport_id")}
+        if name.endswith(" Corners"):
+            corner_base_names.add(name[:-8])
 
-    if not pin_corner_by_base:
+    if not corner_base_names:
         return []
 
-    # 2. 映射 BB 联赛 → 角球联赛
-    bb_league_to_corner = {}
+    # 2. 映射 BB 联赛 → 基础 Pinnacle 联赛 id (该基础联赛需有角球子比赛)
+    from src.scrapers.pinnacle_league_map import lookup_pin_league
+    bb_league_to_base = {}
     for bb_league in matched_leagues:
-        pin_ids = matched_leagues[bb_league]
-        for pid in pin_ids:
-            # V4.3 nested: 跨sport穿透查找
-            from src.scrapers.pinnacle_league_map import lookup_pin_league
+        for pid in matched_leagues[bb_league]:
             info = lookup_pin_league(all_pin_leagues, pid)
             base_name = info.get("name", "")
-            if base_name in pin_corner_by_base:
-                bb_league_to_corner[bb_league] = pin_corner_by_base[base_name]
+            if base_name in corner_base_names:
+                bb_league_to_base[bb_league] = pid
                 break
 
-    if not bb_league_to_corner:
+    if not bb_league_to_base:
         return []
 
     # 3. 收集有角球数据的 BB 比赛
@@ -181,7 +179,7 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
         if detect_sport(m) != "football":
             continue
         bb_league = m.get("league", "?")
-        if bb_league not in bb_league_to_corner:
+        if bb_league not in bb_league_to_base:
             continue
         odds_ft = m.get("odds_ft", {})
         if not isinstance(odds_ft, dict):
@@ -193,41 +191,38 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
     if not bb_corner_matches:
         return []
 
-    # 4. 获取 Pinnacle 角球比赛（联赛去重）
-    corner_leagues_to_fetch = {}
-    for bb_league, cinfo in bb_league_to_corner.items():
-        lid = cinfo["id"]
-        if lid not in corner_leagues_to_fetch:
-            corner_leagues_to_fetch[lid] = cinfo
-
-    league_names = sorted(cinfo["name"] for cinfo in corner_leagues_to_fetch.values())
+    # 4. 获取 Pinnacle 角球比赛（基础联赛去重）
+    base_leagues_to_fetch = sorted(set(bb_league_to_base.values()))
     print(f"\n{'='*60}")
-    print(f"📐 角球对比 ({len(corner_leagues_to_fetch)} 个联赛)")
+    print(f"📐 角球对比 ({len(base_leagues_to_fetch)} 个基础联赛)")
     print(f"{'='*60}")
-    for cn in league_names:
-        print(f"  • {cn}")
+    for lid in base_leagues_to_fetch:
+        info = lookup_pin_league(all_pin_leagues, lid)
+        print(f"  • {info.get('name', lid)}")
 
     pin_corner_matchups = []
     import concurrent.futures
 
-    def _fetch_one_corner(lid, cinfo):
+    def _fetch_one_corner(lid):
         time.sleep(random.uniform(0.1, 0.3))
-        matchups = get_league_matchups_and_markets(lid)
-        return lid, cinfo, matchups
+        matchups = get_league_corner_markets(lid)
+        return lid, matchups
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-        futures = {executor.submit(_fetch_one_corner, lid, cinfo): lid
-                   for lid, cinfo in corner_leagues_to_fetch.items()}
+        futures = {executor.submit(_fetch_one_corner, lid): lid
+                   for lid in base_leagues_to_fetch}
         for fut in concurrent.futures.as_completed(futures):
-            lid, cinfo, matchups = fut.result()
+            lid, matchups = fut.result()
+            info = lookup_pin_league(all_pin_leagues, lid)
+            name = info.get("name", lid)
             if matchups:
-                print(f"  [角球] {cinfo['name']}: {len(matchups)} 场")
+                print(f"  [角球] {name}: {len(matchups)} 场")
             else:
-                print(f"  [角球] {cinfo['name']}: ⚠️ 无数据")
+                print(f"  [角球] {name}: ⚠️ 无角球数据")
             pin_corner_matchups.extend(matchups)
 
     if not pin_corner_matchups:
-        print("  ⚠️ 全部角球联赛无返回数据")
+        print("  ⚠️ 全部基础联赛无角球返回数据")
         return []
 
     # 5. 匹配 BB → Pinnacle 角球 + EV 计算

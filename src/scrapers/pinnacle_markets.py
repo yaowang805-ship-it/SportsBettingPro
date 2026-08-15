@@ -506,3 +506,105 @@ def get_league_matchups_and_markets(league_id):
         result = _merged
 
     return result
+
+
+def get_league_corner_markets(league_id):
+    """从基础足球联赛提取 Pinnacle 角球(角球让球/角球大小)市场。
+
+    Pinnacle 把角球作为基础联赛里的子比赛返回: 子比赛 league.name 以
+    " Corners" 结尾, units == "Corners", participants 带 "(Corners)" 后缀,
+    parentId 指向主比赛。直接调 /leagues/{corner_league_id}/matchups 返回 0
+    (角球"联赛"ID 只出现在 /sports/{id}/matchups 里), 所以必须从基础联赛提取。
+
+    Returns: 与 get_league_matchups_and_markets 相同结构的比赛列表,
+             其中 spread=角球让球, total=角球大小, team_total=单队角球。
+             角球无独赢(moneyline)盘口。
+    """
+    matchups = api_get(f"/leagues/{league_id}/matchups")
+    if not matchups:
+        return []
+    markets = api_get(f"/leagues/{league_id}/markets/straight") or []
+
+    # 识别角球子比赛: units == "Corners" (最可靠), 兜底 league.name 结尾 " Corners"
+    corner_mus = {}
+    for m in matchups:
+        lg = m.get("league", {}) or {}
+        if m.get("units") == "Corners" or lg.get("name", "").endswith(" Corners"):
+            corner_mus[m["id"]] = m
+
+    if not corner_mus:
+        return []
+
+    # 按 matchupId 分组市场, 只保留角球子比赛的
+    mm = {}
+    for mk in markets:
+        mid = mk.get("matchupId")
+        if mid in corner_mus:
+            mm.setdefault(mid, []).append(mk)
+
+    result = []
+    for mid, mu in corner_mus.items():
+        # 干净队名优先从 parent.participants 取 (不带 "(Corners)" 后缀)
+        parent_parts = ((mu.get("parent") or {}).get("participants") or [])
+        home = away = ""
+        for p in parent_parts:
+            if p.get("alignment") == "home":
+                home = p.get("name", "")
+            elif p.get("alignment") == "away":
+                away = p.get("name", "")
+        if not home or not away:
+            # 兜底: 从自身 participants 去 "(Corners)" 后缀
+            for p in mu.get("participants", []):
+                nm = (p.get("name", "") or "").replace("(Corners)", "").replace(" (Corners)", "").strip()
+                if p.get("alignment") == "home":
+                    home = nm
+                elif p.get("alignment") == "away":
+                    away = nm
+        if not home or not away:
+            continue
+
+        spread, total, team_total = [], [], []
+        for mk in mm.get(mid, []):
+            if mk.get("status", "open") != "open":
+                continue
+            mtype = mk.get("type", "")
+            per = mk.get("period", 0)
+            prices = []
+            for p in mk.get("prices", []):
+                prices.append({
+                    "designation": p.get("designation", ""),
+                    "price_decimal": us_to_decimal(p.get("price")),
+                    "points": p.get("points"),
+                })
+            if not prices:
+                continue
+            entry = {"period": per, "prices": prices}
+            if mtype == "spread":
+                spread.append(entry)
+            elif mtype == "total":
+                total.append(entry)
+            elif mtype == "team_total":
+                entry["side"] = mk.get("side", "")
+                team_total.append(entry)
+
+        result.append({
+            "matchup_id": mid,
+            "league_id": league_id,
+            "league_name": (mu.get("league") or {}).get("name", ""),
+            "league_group": (mu.get("league") or {}).get("group", ""),
+            "home": home,
+            "away": away,
+            "start_time": mu.get("start_time", ""),
+            "moneyline": [],
+            "spread": spread,
+            "total": total,
+            "team_total": team_total,
+            "ht_moneyline": [],
+            "ht_spread": [],
+            "ht_total": [],
+            "btts": [],
+            "double_chance": [],
+            "draw_no_bet": [],
+        })
+
+    return result
