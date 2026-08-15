@@ -209,6 +209,9 @@ def analyze_clv():
 
     vals = [c["clv"] for c in clvs]
     pos = sum(1 for v in vals if v > 0)
+    # 实盘 Pin 收盘 CLV 的显著性 (t 检验: 均值是否显著 > 0)
+    pin_vals = [c["clv"] for c in clvs if c["src"] == "pin_close"]
+    pin_p = _ttest_pvalue(pin_vals) if len(pin_vals) >= 2 else None
     # 按 BB/FB 来源拆分 (仅 pin_close 有 bb_price_source)
     pin_srcs = [c.get("price_source", "") for c in clvs if c["src"] == "pin_close" and c.get("price_source")]
     return {
@@ -216,6 +219,10 @@ def analyze_clv():
         "mean_clv": round(statistics.mean(vals), 3),
         "median_clv": round(statistics.median(vals), 3),
         "positive_pct": round(pos / len(vals) * 100, 1),
+        "pin_close_n": len(pin_vals),
+        "pin_close_mean": round(statistics.mean(pin_vals), 3) if pin_vals else None,
+        "pin_close_p_value": round(pin_p, 4) if pin_p is not None else None,
+        "pin_close_significant": (pin_p < 0.05) if pin_p is not None else None,
         "by_src": {s: {"n": sum(1 for c in clvs if c["src"] == s),
                        "mean_clv": round(statistics.mean([c["clv"] for c in clvs if c["src"] == s]), 3)}
                    for s in set(c["src"] for c in clvs)},
@@ -286,11 +293,60 @@ def _print(report):
             print(f"    {s:<12} n={v['n']:<4} 均值CLV {v['mean_clv']:+.2f}%")
 
 
+def send_daily_report() -> dict:
+    """把 CLV 统计 (样本数+均值+显著性) 推送到钉钉日报。返回 clv 统计 dict。"""
+    rep = run()
+    clv = rep.get("clv", {})
+    roi = rep.get("roi", {})
+
+    lines = ["**投注推荐 · CLV 收盘价验证日报**", ""]
+    if clv.get("status") != "ok":
+        lines.append(f"⚠️ 无收盘价样本: {clv.get('message', '')}")
+    else:
+        lines.append("**BB 投注赔率 vs Pin 收盘价 (CLV)**")
+        lines.append(f"- 实盘Pin样本: **{clv.get('pin_close_n', 0)}** 笔")
+        pm = clv.get("pin_close_mean")
+        if pm is not None:
+            lines.append(f"- 均值 CLV: **{pm:+.2f}%**  | 中位 {clv.get('median_clv', 0):+.2f}%  | 正CLV率 {clv.get('positive_pct', 0)}%")
+        # 显著性
+        pv = clv.get("pin_close_p_value")
+        if pv is not None:
+            sig = clv.get("pin_close_significant")
+            verdict = "✅ 统计显著 (均值>0, p<0.05)" if sig else "⏳ 样本不足/尚未显著 (继续累积)"
+            lines.append(f"- 显著性: p={pv} → {verdict}")
+        else:
+            lines.append("- 显著性: 样本<2, 待累积")
+        # 按来源
+        bs = clv.get("by_bb_source") or {}
+        if bs:
+            src_line = "  ".join(f"{s}: n={v['n']} {v['mean_clv']:+.2f}%" for s, v in bs.items())
+            lines.append(f"- 按来源: {src_line}")
+        lines.append("")
+        lines.append(f"OddsPortal代理: {clv.get('by_src', {}).get('oddsportal', {}).get('n', 0)} 笔 "
+                     f"({clv.get('by_src', {}).get('oddsportal', {}).get('mean_clv', 0):+.2f}%)")
+
+    # 附一行实盘 ROI (ground truth)
+    if roi.get("status") == "ok":
+        lines.append("")
+        lines.append(f"实盘ROI: {roi.get('roi_pct', 0):+.2f}% "
+                     f"({roi.get('n_non_void', 0)} 笔已结算非走盘)")
+
+    body = "\n".join(lines)
+    from config.settings import send_dingtalk
+    ok = send_dingtalk("📊 CLV 收盘价验证日报", body)
+    logger.info("CLV 日报推送 %s", "成功" if ok else "失败(无webhook或发送异常)")
+    return clv
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--detail", action="store_true")
+    ap.add_argument("--dingtalk", action="store_true", help="推送日报到钉钉")
     args = ap.parse_args()
-    rep = run()
-    _print(rep)
-    if args.detail:
-        print("\n完整报告 →", REPORT_FILE)
+    if args.dingtalk:
+        send_daily_report()
+    else:
+        rep = run()
+        _print(rep)
+        if args.detail:
+            print("\n完整报告 →", REPORT_FILE)
