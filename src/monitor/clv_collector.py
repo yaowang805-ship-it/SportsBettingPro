@@ -24,12 +24,12 @@ logger = get_logger(__name__)
 TRACKING_FILE = DATA_DIR / "clv_tracking.csv"
 RESULTS_FILE = DATA_DIR / "clv_results.csv"
 
-# 采集窗口：比赛开始前 1 分钟 ~ 360 分钟拉取收盘赔率
+# 采集窗口：比赛开始前 1 分钟 ~ 720 分钟拉取收盘赔率
 # V5.1 修复: 下限从15→1, 捕捉开赛前最后一刻的"真收盘线"
-# 开赛后 30 分钟内也采集 (兜底, 防止守护进程重启错过窗口)
+# V5.3 调宽: BEFORE_MAX 360→720(12小时), AFTER_MAX 30→60 — 覆盖更多比赛累积CLV
 CLV_WINDOW_BEFORE_MIN = 1     # 比赛前 1 分钟 (原15, 太严漏掉收盘线)
-CLV_WINDOW_AFTER_MAX = 30     # 开赛后 30 分钟内兜底采集 (滚球价作参考)
-CLV_WINDOW_BEFORE_MAX = 360  # 比赛前 360 分钟/6小时 (原120)
+CLV_WINDOW_AFTER_MAX = 60     # 开赛后 60 分钟内兜底采集 (滚球价作参考)
+CLV_WINDOW_BEFORE_MAX = 720  # 比赛前 720 分钟/12小时 (原360, 调宽覆盖更多)
 CLV_MIN_AGE_SECONDS = 300    # 至少推送后 5 分钟才采集 (避免取到同一时刻的赔率)
 
 

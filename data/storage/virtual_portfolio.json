@@ -1,5 +1,5 @@
 {
-  "balance": 993.0,
+  "balance": 812.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -575,6 +575,75 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786787700,
       "created_at": "2026-08-15T04:40:55.971354+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_里奥夸尔托学生队_图库曼竞技_角球让球客胜(+1)",
+      "sport": "football",
+      "league": "阿根廷甲级联赛",
+      "home_team": "里奥夸尔托学生队",
+      "away_team": "图库曼竞技",
+      "home_cn": "里奥夸尔托学生队",
+      "away_cn": "图库曼竞技",
+      "market": "handicap",
+      "market_type": "角球让球客胜(+1)",
+      "sub_market": "corner",
+      "line": "+1",
+      "odds": 1.83,
+      "stake": 72,
+      "model_prob": 0.6096,
+      "ev_pct": 11.55,
+      "pin_odds": 1.5525,
+      "fair_price": 1.6405,
+      "source": "bb_vs_pinnacle",
+      "commence_time": null,
+      "created_at": "2026-08-15T05:09:26.043148+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_科尔多瓦中央_科尔多瓦学院_角球大球(大_8)",
+      "sport": "football",
+      "league": "阿根廷甲级联赛",
+      "home_team": "科尔多瓦中央",
+      "away_team": "科尔多瓦学院",
+      "home_cn": "科尔多瓦中央",
+      "away_cn": "科尔多瓦学院",
+      "market": "over_under",
+      "market_type": "角球大球(大 8)",
+      "sub_market": "corner",
+      "line": "大 8",
+      "odds": 1.84,
+      "stake": 69,
+      "model_prob": 0.6045,
+      "ev_pct": 11.23,
+      "pin_odds": 1.5882,
+      "fair_price": 1.6542,
+      "source": "bb_vs_pinnacle",
+      "commence_time": null,
+      "created_at": "2026-08-15T05:09:26.043189+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_拉科鲁尼亚_埃尔切_让球主胜(0)",
+      "sport": "football",
+      "league": "西班牙甲级联赛",
+      "home_team": "拉科鲁尼亚",
+      "away_team": "埃尔切",
+      "home_cn": "拉科鲁尼亚",
+      "away_cn": "埃尔切",
+      "market": "handicap",
+      "market_type": "让球主胜(0)",
+      "sub_market": "hc",
+      "line": "0",
+      "odds": 1.73,
+      "stake": 40,
+      "model_prob": 0.6112,
+      "ev_pct": 5.74,
+      "pin_odds": 1.6061,
+      "fair_price": 1.6361,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786993200,
+      "created_at": "2026-08-15T05:09:26.043217+00:00",
       "track_only": false
     }
   ],
@@ -9125,8 +9194,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-15",
-    "used": 290.0,
-    "bets": 6
+    "used": 471.0,
+    "bets": 9
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
