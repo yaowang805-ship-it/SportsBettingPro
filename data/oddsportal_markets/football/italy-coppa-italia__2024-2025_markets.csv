@@ -1,0 +1,2003 @@
+match_id,home,away,home_score,away_score,market,line,side,period,avg_odds,n_bookies
+fgY5VDRa,AC Milan,Bologna,0,0,1x2,0,home,ft,2.5,1
+fgY5VDRa,AC Milan,Bologna,0,0,1x2,0,draw,ft,3.1,1
+fgY5VDRa,AC Milan,Bologna,0,0,1x2,0,away,ft,3.5,1
+fgY5VDRa,AC Milan,Bologna,0,0,ou,0.50,over,ft,1.1,1
+fgY5VDRa,AC Milan,Bologna,0,0,ou,0.50,under,ft,10.5,1
+fgY5VDRa,AC Milan,Bologna,0,0,ou,1.50,over,ft,1.42,1
+fgY5VDRa,AC Milan,Bologna,0,0,ou,1.50,under,ft,3.3,1
+fgY5VDRa,AC Milan,Bologna,0,0,ou,2.50,over,ft,2.4,1
+fgY5VDRa,AC Milan,Bologna,0,0,ou,2.50,under,ft,1.71,1
+fgY5VDRa,AC Milan,Bologna,0,0,ou,3.50,over,ft,4.5,1
+fgY5VDRa,AC Milan,Bologna,0,0,ou,3.50,under,ft,1.28,1
+fgY5VDRa,AC Milan,Bologna,0,0,ou,4.50,over,ft,11.0,1
+fgY5VDRa,AC Milan,Bologna,0,0,ou,4.50,under,ft,1.09,1
+fgY5VDRa,AC Milan,Bologna,0,0,ou,5.50,over,ft,30.0,1
+fgY5VDRa,AC Milan,Bologna,0,0,ou,5.50,under,ft,1.03,1
+fgY5VDRa,AC Milan,Bologna,0,0,ou,6.50,over,ft,60.0,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,0,home,ft,1.7,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,0,away,ft,2.4,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-0.50,home,ft,2.5,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-0.50,away,ft,1.65,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,0.50,home,ft,1.38,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,0.50,away,ft,3.55,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-0.75,home,ft,3.07,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-0.75,away,ft,1.46,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,0.75,home,ft,1.26,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,0.75,away,ft,4.67,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-1.00,home,ft,4.32,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-1.00,away,ft,1.27,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,1.00,home,ft,1.13,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,1.00,away,ft,7.57,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-1.25,home,ft,4.93,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-1.25,away,ft,1.23,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,1.25,home,ft,1.12,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,1.25,away,ft,8.36,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-1.50,home,ft,5.53,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-1.50,away,ft,1.2,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,1.50,home,ft,1.11,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,1.50,away,ft,9.15,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-1.75,home,ft,7.9,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-1.75,away,ft,1.13,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,1.75,home,ft,1.06,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,1.75,away,ft,13.59,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-2.00,home,ft,15.37,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-2.00,away,ft,1.06,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,2.00,home,ft,1.02,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,2.00,away,ft,27.19,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-2.25,home,ft,16.43,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-2.25,away,ft,1.05,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,2.25,home,ft,1.02,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,2.25,away,ft,28.29,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-2.50,home,ft,17.5,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-2.50,away,ft,1.05,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,2.50,home,ft,1.02,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,2.50,away,ft,29.4,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-2.75,home,ft,26.54,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-2.75,away,ft,1.03,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,2.75,away,ft,47.33,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-3.00,home,ft,57.66,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-3.25,home,ft,58.83,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-3.50,home,ft,60.0,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-0.25,home,ft,2.1,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,-0.25,away,ft,1.89,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,0.25,home,ft,1.49,1
+fgY5VDRa,AC Milan,Bologna,0,0,hc,0.25,away,ft,2.97,1
+fgY5VDRa,AC Milan,Bologna,0,0,dc,0,home/draw,ft,1.39,1
+fgY5VDRa,AC Milan,Bologna,0,0,dc,0,home/away,ft,1.46,1
+fgY5VDRa,AC Milan,Bologna,0,0,dc,0,draw/away,ft,1.65,1
+vJReKf7d,Bologna,Empoli,2,2,1x2,0,home,ft,1.41,1
+vJReKf7d,Bologna,Empoli,2,2,1x2,0,draw,ft,5.0,1
+vJReKf7d,Bologna,Empoli,2,2,1x2,0,away,ft,10.5,1
+vJReKf7d,Bologna,Empoli,2,2,ou,0.50,over,ft,1.08,1
+vJReKf7d,Bologna,Empoli,2,2,ou,0.50,under,ft,13.0,1
+vJReKf7d,Bologna,Empoli,2,2,ou,1.50,over,ft,1.35,1
+vJReKf7d,Bologna,Empoli,2,2,ou,1.50,under,ft,3.65,1
+vJReKf7d,Bologna,Empoli,2,2,ou,2.50,over,ft,2.1,1
+vJReKf7d,Bologna,Empoli,2,2,ou,2.50,under,ft,1.89,1
+vJReKf7d,Bologna,Empoli,2,2,ou,3.50,over,ft,3.85,1
+vJReKf7d,Bologna,Empoli,2,2,ou,3.50,under,ft,1.34,1
+vJReKf7d,Bologna,Empoli,2,2,ou,4.50,over,ft,9.0,1
+vJReKf7d,Bologna,Empoli,2,2,ou,4.50,under,ft,1.12,1
+vJReKf7d,Bologna,Empoli,2,2,ou,5.50,over,ft,22.0,1
+vJReKf7d,Bologna,Empoli,2,2,ou,5.50,under,ft,1.04,1
+vJReKf7d,Bologna,Empoli,2,2,ou,6.50,over,ft,55.0,1
+vJReKf7d,Bologna,Empoli,2,2,hc,0,home,ft,1.12,1
+vJReKf7d,Bologna,Empoli,2,2,hc,0,away,ft,8.46,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-0.50,home,ft,1.41,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-0.50,away,ft,3.4,1
+vJReKf7d,Bologna,Empoli,2,2,hc,0.50,home,ft,1.1,1
+vJReKf7d,Bologna,Empoli,2,2,hc,0.50,away,ft,10.5,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-0.75,home,ft,1.5,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-0.75,away,ft,2.95,1
+vJReKf7d,Bologna,Empoli,2,2,hc,0.75,home,ft,1.06,1
+vJReKf7d,Bologna,Empoli,2,2,hc,0.75,away,ft,16.4,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-1.00,home,ft,1.65,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-1.00,away,ft,2.51,1
+vJReKf7d,Bologna,Empoli,2,2,hc,1.00,home,ft,1.02,1
+vJReKf7d,Bologna,Empoli,2,2,hc,1.00,away,ft,38.53,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-1.25,home,ft,1.94,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-1.25,away,ft,2.04,1
+vJReKf7d,Bologna,Empoli,2,2,hc,1.25,home,ft,1.02,1
+vJReKf7d,Bologna,Empoli,2,2,hc,1.25,away,ft,39.95,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-1.50,home,ft,2.24,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-1.50,away,ft,1.79,1
+vJReKf7d,Bologna,Empoli,2,2,hc,1.50,home,ft,1.02,1
+vJReKf7d,Bologna,Empoli,2,2,hc,1.50,away,ft,41.37,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-1.75,home,ft,2.64,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-1.75,away,ft,1.58,1
+vJReKf7d,Bologna,Empoli,2,2,hc,1.75,away,ft,73.67,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-2.00,home,ft,3.43,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-2.00,away,ft,1.37,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-2.25,home,ft,3.91,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-2.25,away,ft,1.31,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-2.50,home,ft,4.4,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-2.50,away,ft,1.26,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-2.75,home,ft,5.79,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-2.75,away,ft,1.18,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-3.00,home,ft,9.11,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-3.00,away,ft,1.1,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-3.25,home,ft,9.8,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-3.25,away,ft,1.09,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-3.50,home,ft,10.5,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-3.50,away,ft,1.09,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-3.75,home,ft,11.74,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-3.75,away,ft,1.06,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-4.00,home,ft,11.74,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-0.25,home,ft,1.26,1
+vJReKf7d,Bologna,Empoli,2,2,hc,-0.25,away,ft,4.64,1
+vJReKf7d,Bologna,Empoli,2,2,hc,0.25,home,ft,1.11,1
+vJReKf7d,Bologna,Empoli,2,2,hc,0.25,away,ft,9.46,1
+vJReKf7d,Bologna,Empoli,2,2,dc,0,home/draw,ft,1.1,1
+vJReKf7d,Bologna,Empoli,2,2,dc,0,home/away,ft,1.25,1
+vJReKf7d,Bologna,Empoli,2,2,dc,0,draw/away,ft,3.3,1
+f3FwBzH0,Inter,AC Milan,0,0,1x2,0,home,ft,2.28,1
+f3FwBzH0,Inter,AC Milan,0,0,1x2,0,draw,ft,3.5,1
+f3FwBzH0,Inter,AC Milan,0,0,1x2,0,away,ft,3.5,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,0.50,over,ft,1.06,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,0.50,under,ft,15.5,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,1.50,over,ft,1.3,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,1.50,under,ft,4.2,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,2.50,over,ft,1.91,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,2.50,under,ft,2.08,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,3.50,over,ft,3.25,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,3.50,under,ft,1.43,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,4.50,over,ft,7.0,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,4.50,under,ft,1.15,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,5.50,over,ft,17.5,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,5.50,under,ft,1.05,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,6.50,over,ft,38.0,1
+f3FwBzH0,Inter,AC Milan,0,0,ou,6.50,under,ft,1.02,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,0,home,ft,1.64,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,0,away,ft,2.51,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-0.50,home,ft,2.29,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-0.50,away,ft,1.75,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,0.50,home,ft,1.39,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,0.50,away,ft,3.5,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-0.75,home,ft,2.72,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-0.75,away,ft,1.56,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,0.75,home,ft,1.27,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,0.75,away,ft,4.57,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-1.00,home,ft,3.59,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-1.00,away,ft,1.36,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,1.00,home,ft,1.15,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,1.00,away,ft,7.25,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-1.25,home,ft,4.09,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-1.25,away,ft,1.3,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,1.25,home,ft,1.13,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,1.25,away,ft,7.97,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-1.50,home,ft,4.6,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-1.50,away,ft,1.26,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,1.50,home,ft,1.12,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,1.50,away,ft,8.7,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-1.75,home,ft,6.07,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-1.75,away,ft,1.18,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,1.75,home,ft,1.07,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,1.75,away,ft,12.54,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-2.00,home,ft,9.6,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-2.00,away,ft,1.09,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,2.00,home,ft,1.03,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,2.00,away,ft,24.01,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-2.25,home,ft,10.3,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-2.25,away,ft,1.09,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,2.25,home,ft,1.03,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,2.25,away,ft,25.02,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-2.50,home,ft,11.0,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-2.50,away,ft,1.08,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,2.50,home,ft,1.03,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,2.50,away,ft,26.0,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-2.75,home,ft,15.63,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-2.75,away,ft,1.05,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,2.75,away,ft,42.66,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-3.00,home,ft,28.27,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-3.00,away,ft,1.03,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-3.25,home,ft,29.13,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-3.25,away,ft,1.02,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-3.50,home,ft,30.0,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-3.50,away,ft,1.02,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-3.75,home,ft,30.0,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-0.25,home,ft,1.96,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,-0.25,away,ft,2.01,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,0.25,home,ft,1.48,1
+f3FwBzH0,Inter,AC Milan,0,0,hc,0.25,away,ft,3.0,1
+f3FwBzH0,Inter,AC Milan,0,0,dc,0,home/draw,ft,1.38,1
+f3FwBzH0,Inter,AC Milan,0,0,dc,0,home/away,ft,1.39,1
+f3FwBzH0,Inter,AC Milan,0,0,dc,0,draw/away,ft,1.75,1
+l6CVCdnl,AC Milan,Inter,1,1,1x2,0,home,ft,3.25,1
+l6CVCdnl,AC Milan,Inter,1,1,1x2,0,draw,ft,3.3,1
+l6CVCdnl,AC Milan,Inter,1,1,1x2,0,away,ft,2.5,1
+l6CVCdnl,AC Milan,Inter,1,1,ou,0.50,over,ft,1.07,1
+l6CVCdnl,AC Milan,Inter,1,1,ou,0.50,under,ft,13.5,1
+l6CVCdnl,AC Milan,Inter,1,1,ou,1.50,over,ft,1.32,1
+l6CVCdnl,AC Milan,Inter,1,1,ou,1.50,under,ft,3.95,1
+l6CVCdnl,AC Milan,Inter,1,1,ou,2.50,over,ft,2.06,1
+l6CVCdnl,AC Milan,Inter,1,1,ou,2.50,under,ft,1.94,1
+l6CVCdnl,AC Milan,Inter,1,1,ou,3.50,over,ft,3.6,1
+l6CVCdnl,AC Milan,Inter,1,1,ou,3.50,under,ft,1.37,1
+l6CVCdnl,AC Milan,Inter,1,1,ou,4.50,over,ft,8.0,1
+l6CVCdnl,AC Milan,Inter,1,1,ou,4.50,under,ft,1.14,1
+l6CVCdnl,AC Milan,Inter,1,1,ou,5.50,over,ft,19.0,1
+l6CVCdnl,AC Milan,Inter,1,1,ou,5.50,under,ft,1.05,1
+l6CVCdnl,AC Milan,Inter,1,1,ou,6.50,over,ft,50.0,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,0,home,ft,2.27,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,0,away,ft,1.76,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,0.50,home,ft,1.64,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,0.50,away,ft,2.52,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-0.50,home,ft,3.25,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-0.50,away,ft,1.43,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,0.75,home,ft,1.47,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,0.75,away,ft,3.06,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-0.75,home,ft,4.2,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-0.75,away,ft,1.3,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,1.00,home,ft,1.29,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,1.00,away,ft,4.2,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-1.00,home,ft,6.52,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-1.00,away,ft,1.16,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,1.25,home,ft,1.25,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,1.25,away,ft,4.75,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-1.25,home,ft,7.25,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-1.25,away,ft,1.14,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,1.50,home,ft,1.21,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,1.50,away,ft,5.3,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-1.50,home,ft,7.95,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-1.50,away,ft,1.13,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,1.75,home,ft,1.14,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,1.75,away,ft,7.18,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-1.75,home,ft,11.83,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-1.75,away,ft,1.08,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,2.00,home,ft,1.07,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,2.00,away,ft,11.8,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-2.00,home,ft,25.48,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-2.00,away,ft,1.03,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,2.25,home,ft,1.07,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,2.25,away,ft,12.37,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-2.25,home,ft,26.74,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-2.25,away,ft,1.03,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,2.50,home,ft,1.06,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,2.50,away,ft,13.1,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-2.50,home,ft,28.0,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-2.50,away,ft,1.03,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,2.75,home,ft,1.04,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,2.75,away,ft,19.24,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-2.75,home,ft,44.04,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,3.00,home,ft,1.02,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,3.00,away,ft,38.03,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,3.25,home,ft,1.02,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,3.25,away,ft,39.01,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,3.50,home,ft,1.02,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,3.50,away,ft,40.0,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,3.75,away,ft,40.0,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,0.25,home,ft,1.86,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,0.25,away,ft,2.14,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-0.25,home,ft,2.76,1
+l6CVCdnl,AC Milan,Inter,1,1,hc,-0.25,away,ft,1.55,1
+l6CVCdnl,AC Milan,Inter,1,1,dc,0,home/draw,ft,1.64,1
+l6CVCdnl,AC Milan,Inter,1,1,dc,0,home/away,ft,1.42,1
+l6CVCdnl,AC Milan,Inter,1,1,dc,0,draw/away,ft,1.43,1
+pKYnMGxp,Empoli,Bologna,0,0,1x2,0,home,ft,7.8,1
+pKYnMGxp,Empoli,Bologna,0,0,1x2,0,draw,ft,3.9,1
+pKYnMGxp,Empoli,Bologna,0,0,1x2,0,away,ft,1.61,1
+pKYnMGxp,Empoli,Bologna,0,0,ou,0.50,over,ft,1.1,1
+pKYnMGxp,Empoli,Bologna,0,0,ou,0.50,under,ft,10.0,1
+pKYnMGxp,Empoli,Bologna,0,0,ou,1.50,over,ft,1.43,1
+pKYnMGxp,Empoli,Bologna,0,0,ou,1.50,under,ft,3.25,1
+pKYnMGxp,Empoli,Bologna,0,0,ou,2.50,over,ft,2.32,1
+pKYnMGxp,Empoli,Bologna,0,0,ou,2.50,under,ft,1.74,1
+pKYnMGxp,Empoli,Bologna,0,0,ou,3.50,over,ft,4.5,1
+pKYnMGxp,Empoli,Bologna,0,0,ou,3.50,under,ft,1.27,1
+pKYnMGxp,Empoli,Bologna,0,0,ou,4.50,over,ft,11.0,1
+pKYnMGxp,Empoli,Bologna,0,0,ou,4.50,under,ft,1.09,1
+pKYnMGxp,Empoli,Bologna,0,0,ou,5.50,over,ft,28.0,1
+pKYnMGxp,Empoli,Bologna,0,0,ou,5.50,under,ft,1.03,1
+pKYnMGxp,Empoli,Bologna,0,0,ou,6.50,over,ft,75.0,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,0,home,ft,5.82,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,0,away,ft,1.2,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,0.50,home,ft,2.62,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,0.50,away,ft,1.61,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,-0.50,home,ft,7.8,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,-0.50,away,ft,1.14,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,0.75,home,ft,2.28,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,0.75,away,ft,1.76,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,-0.75,home,ft,12.08,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,-0.75,away,ft,1.08,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,1.00,home,ft,1.95,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,1.00,away,ft,2.04,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,-1.00,home,ft,30.93,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,-1.00,away,ft,1.03,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,1.25,home,ft,1.7,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,1.25,away,ft,2.39,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,-1.25,home,ft,32.63,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,-1.25,away,ft,1.03,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,1.50,home,ft,1.56,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,1.50,away,ft,2.74,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,-1.50,home,ft,34.33,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,-1.50,away,ft,1.02,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,1.75,home,ft,1.4,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,1.75,away,ft,3.41,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,-1.75,home,ft,54.53,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,2.00,home,ft,1.24,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,2.00,away,ft,4.94,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,2.25,home,ft,1.21,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,2.25,away,ft,5.57,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,2.50,home,ft,1.18,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,2.50,away,ft,6.2,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,2.75,home,ft,1.12,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,2.75,away,ft,8.67,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,3.00,home,ft,1.06,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,3.00,away,ft,15.25,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,3.25,home,ft,1.05,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,3.25,away,ft,16.14,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,3.50,home,ft,1.05,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,3.50,away,ft,17.0,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,3.75,home,ft,1.02,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,3.75,away,ft,17.0,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,0.25,home,ft,3.42,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,0.25,away,ft,1.4,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,-0.25,home,ft,6.81,1
+pKYnMGxp,Empoli,Bologna,0,0,hc,-0.25,away,ft,1.16,1
+pKYnMGxp,Empoli,Bologna,0,0,dc,0,home/draw,ft,2.62,1
+pKYnMGxp,Empoli,Bologna,0,0,dc,0,home/away,ft,1.34,1
+pKYnMGxp,Empoli,Bologna,0,0,dc,0,draw/away,ft,1.13,1
+G4MeT3Cs,Juventus,Empoli,1,1,1x2,0,home,ft,1.22,1
+G4MeT3Cs,Juventus,Empoli,1,1,1x2,0,draw,ft,7.2,1
+G4MeT3Cs,Juventus,Empoli,1,1,1x2,0,away,ft,22.0,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,0.50,over,ft,1.03,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,0.50,under,ft,26.0,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,1.50,over,ft,1.2,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,1.50,under,ft,5.9,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,2.50,over,ft,1.61,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,2.50,under,ft,2.6,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,3.50,over,ft,2.56,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,3.50,under,ft,1.63,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,4.50,over,ft,4.9,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,4.50,under,ft,1.25,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,5.50,over,ft,10.0,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,5.50,under,ft,1.1,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,6.50,over,ft,24.0,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,6.50,under,ft,1.03,1
+G4MeT3Cs,Juventus,Empoli,1,1,ou,7.50,over,ft,60.0,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,0,home,ft,1.05,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,0,away,ft,18.94,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,0.50,home,ft,1.04,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,0.50,away,ft,22.0,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-0.50,home,ft,1.22,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-0.50,away,ft,5.43,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,0.75,home,ft,1.02,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,0.75,away,ft,35.48,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-0.75,home,ft,1.25,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-0.75,away,ft,4.84,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,1.00,away,ft,96.45,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-1.00,home,ft,1.3,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-1.00,away,ft,4.25,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,1.25,away,ft,98.22,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-1.25,home,ft,1.48,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-1.25,away,ft,3.04,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-1.50,home,ft,1.66,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-1.50,away,ft,2.49,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-1.75,home,ft,1.83,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-1.75,away,ft,2.19,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-2.00,home,ft,2.09,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-2.00,away,ft,1.89,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-2.25,home,ft,2.42,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-2.25,away,ft,1.69,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-2.50,home,ft,2.75,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-2.50,away,ft,1.56,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-2.75,home,ft,3.27,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-2.75,away,ft,1.42,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-3.00,home,ft,4.24,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-3.00,away,ft,1.28,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-3.25,home,ft,4.67,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-3.25,away,ft,1.25,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-3.50,home,ft,5.07,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-3.50,away,ft,1.22,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-3.75,home,ft,6.34,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-3.75,away,ft,1.15,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-4.00,home,ft,8.69,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-4.00,away,ft,1.09,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,0.25,home,ft,1.04,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,0.25,away,ft,20.47,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-0.25,home,ft,1.13,1
+G4MeT3Cs,Juventus,Empoli,1,1,hc,-0.25,away,ft,8.1,1
+G4MeT3Cs,Juventus,Empoli,1,1,dc,0,home/draw,ft,1.04,1
+G4MeT3Cs,Juventus,Empoli,1,1,dc,0,home/away,ft,1.15,1
+G4MeT3Cs,Juventus,Empoli,1,1,dc,0,draw/away,ft,5.4,1
+INuKBl4e,Inter,Lazio,2,2,1x2,0,home,ft,1.92,1
+INuKBl4e,Inter,Lazio,2,2,1x2,0,draw,ft,3.75,1
+INuKBl4e,Inter,Lazio,2,2,1x2,0,away,ft,4.6,1
+INuKBl4e,Inter,Lazio,2,2,ou,0.50,over,ft,1.08,1
+INuKBl4e,Inter,Lazio,2,2,ou,0.50,under,ft,12.0,1
+INuKBl4e,Inter,Lazio,2,2,ou,1.50,over,ft,1.37,1
+INuKBl4e,Inter,Lazio,2,2,ou,1.50,under,ft,3.6,1
+INuKBl4e,Inter,Lazio,2,2,ou,2.50,over,ft,2.06,1
+INuKBl4e,Inter,Lazio,2,2,ou,2.50,under,ft,1.93,1
+INuKBl4e,Inter,Lazio,2,2,ou,3.50,over,ft,3.8,1
+INuKBl4e,Inter,Lazio,2,2,ou,3.50,under,ft,1.35,1
+INuKBl4e,Inter,Lazio,2,2,ou,4.50,over,ft,8.6,1
+INuKBl4e,Inter,Lazio,2,2,ou,4.50,under,ft,1.12,1
+INuKBl4e,Inter,Lazio,2,2,ou,5.50,over,ft,21.0,1
+INuKBl4e,Inter,Lazio,2,2,ou,5.50,under,ft,1.04,1
+INuKBl4e,Inter,Lazio,2,2,ou,6.50,over,ft,55.0,1
+INuKBl4e,Inter,Lazio,2,2,hc,0,home,ft,1.41,1
+INuKBl4e,Inter,Lazio,2,2,hc,0,away,ft,3.37,1
+INuKBl4e,Inter,Lazio,2,2,hc,-0.50,home,ft,1.92,1
+INuKBl4e,Inter,Lazio,2,2,hc,-0.50,away,ft,2.06,1
+INuKBl4e,Inter,Lazio,2,2,hc,0.50,home,ft,1.27,1
+INuKBl4e,Inter,Lazio,2,2,hc,0.50,away,ft,4.6,1
+INuKBl4e,Inter,Lazio,2,2,hc,-0.75,home,ft,2.22,1
+INuKBl4e,Inter,Lazio,2,2,hc,-0.75,away,ft,1.8,1
+INuKBl4e,Inter,Lazio,2,2,hc,0.75,home,ft,1.17,1
+INuKBl4e,Inter,Lazio,2,2,hc,0.75,away,ft,6.37,1
+INuKBl4e,Inter,Lazio,2,2,hc,-1.00,home,ft,2.8,1
+INuKBl4e,Inter,Lazio,2,2,hc,-1.00,away,ft,1.53,1
+INuKBl4e,Inter,Lazio,2,2,hc,1.00,home,ft,1.08,1
+INuKBl4e,Inter,Lazio,2,2,hc,1.00,away,ft,11.56,1
+INuKBl4e,Inter,Lazio,2,2,hc,-1.25,home,ft,3.27,1
+INuKBl4e,Inter,Lazio,2,2,hc,-1.25,away,ft,1.42,1
+INuKBl4e,Inter,Lazio,2,2,hc,1.25,home,ft,1.08,1
+INuKBl4e,Inter,Lazio,2,2,hc,1.25,away,ft,12.53,1
+INuKBl4e,Inter,Lazio,2,2,hc,-1.50,home,ft,3.75,1
+INuKBl4e,Inter,Lazio,2,2,hc,-1.50,away,ft,1.35,1
+INuKBl4e,Inter,Lazio,2,2,hc,1.50,home,ft,1.07,1
+INuKBl4e,Inter,Lazio,2,2,hc,1.50,away,ft,13.5,1
+INuKBl4e,Inter,Lazio,2,2,hc,-1.75,home,ft,4.82,1
+INuKBl4e,Inter,Lazio,2,2,hc,-1.75,away,ft,1.24,1
+INuKBl4e,Inter,Lazio,2,2,hc,1.75,home,ft,1.04,1
+INuKBl4e,Inter,Lazio,2,2,hc,1.75,away,ft,20.32,1
+INuKBl4e,Inter,Lazio,2,2,hc,-2.00,home,ft,7.3,1
+INuKBl4e,Inter,Lazio,2,2,hc,-2.00,away,ft,1.14,1
+INuKBl4e,Inter,Lazio,2,2,hc,2.00,away,ft,43.59,1
+INuKBl4e,Inter,Lazio,2,2,hc,-2.25,home,ft,7.95,1
+INuKBl4e,Inter,Lazio,2,2,hc,-2.25,away,ft,1.12,1
+INuKBl4e,Inter,Lazio,2,2,hc,2.25,away,ft,44.79,1
+INuKBl4e,Inter,Lazio,2,2,hc,-2.50,home,ft,8.6,1
+INuKBl4e,Inter,Lazio,2,2,hc,-2.50,away,ft,1.11,1
+INuKBl4e,Inter,Lazio,2,2,hc,2.50,away,ft,46.0,1
+INuKBl4e,Inter,Lazio,2,2,hc,-2.75,home,ft,11.92,1
+INuKBl4e,Inter,Lazio,2,2,hc,-2.75,away,ft,1.07,1
+INuKBl4e,Inter,Lazio,2,2,hc,2.75,away,ft,74.82,1
+INuKBl4e,Inter,Lazio,2,2,hc,-3.00,home,ft,19.67,1
+INuKBl4e,Inter,Lazio,2,2,hc,-3.00,away,ft,1.03,1
+INuKBl4e,Inter,Lazio,2,2,hc,-3.25,home,ft,20.4,1
+INuKBl4e,Inter,Lazio,2,2,hc,-3.25,away,ft,1.03,1
+INuKBl4e,Inter,Lazio,2,2,hc,-3.50,home,ft,21.13,1
+INuKBl4e,Inter,Lazio,2,2,hc,-3.50,away,ft,1.03,1
+INuKBl4e,Inter,Lazio,2,2,hc,-3.75,home,ft,21.13,1
+INuKBl4e,Inter,Lazio,2,2,hc,-0.25,home,ft,1.66,1
+INuKBl4e,Inter,Lazio,2,2,hc,-0.25,away,ft,2.47,1
+INuKBl4e,Inter,Lazio,2,2,hc,0.25,home,ft,1.32,1
+INuKBl4e,Inter,Lazio,2,2,hc,0.25,away,ft,3.98,1
+INuKBl4e,Inter,Lazio,2,2,dc,0,home/draw,ft,1.27,1
+INuKBl4e,Inter,Lazio,2,2,dc,0,home/away,ft,1.36,1
+INuKBl4e,Inter,Lazio,2,2,dc,0,draw/away,ft,2.06,1
+4dsrDMBc,AC Milan,AS Roma,3,3,1x2,0,home,ft,2.14,1
+4dsrDMBc,AC Milan,AS Roma,3,3,1x2,0,draw,ft,3.5,1
+4dsrDMBc,AC Milan,AS Roma,3,3,1x2,0,away,ft,4.0,1
+4dsrDMBc,AC Milan,AS Roma,3,3,ou,0.50,over,ft,1.08,1
+4dsrDMBc,AC Milan,AS Roma,3,3,ou,0.50,under,ft,13.0,1
+4dsrDMBc,AC Milan,AS Roma,3,3,ou,1.50,over,ft,1.34,1
+4dsrDMBc,AC Milan,AS Roma,3,3,ou,1.50,under,ft,3.9,1
+4dsrDMBc,AC Milan,AS Roma,3,3,ou,2.50,over,ft,2.02,1
+4dsrDMBc,AC Milan,AS Roma,3,3,ou,2.50,under,ft,1.97,1
+4dsrDMBc,AC Milan,AS Roma,3,3,ou,3.50,over,ft,3.7,1
+4dsrDMBc,AC Milan,AS Roma,3,3,ou,3.50,under,ft,1.36,1
+4dsrDMBc,AC Milan,AS Roma,3,3,ou,4.50,over,ft,7.6,1
+4dsrDMBc,AC Milan,AS Roma,3,3,ou,4.50,under,ft,1.14,1
+4dsrDMBc,AC Milan,AS Roma,3,3,ou,5.50,over,ft,18.5,1
+4dsrDMBc,AC Milan,AS Roma,3,3,ou,5.50,under,ft,1.05,1
+4dsrDMBc,AC Milan,AS Roma,3,3,ou,6.50,over,ft,46.0,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,0,home,ft,1.51,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,0,away,ft,2.92,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,0.50,home,ft,1.32,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,0.50,away,ft,4.1,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-0.50,home,ft,2.12,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-0.50,away,ft,1.88,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,0.75,home,ft,1.21,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,0.75,away,ft,5.49,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-0.75,home,ft,2.49,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-0.75,away,ft,1.65,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,1.00,home,ft,1.11,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,1.00,away,ft,9.18,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-1.00,home,ft,3.23,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-1.00,away,ft,1.42,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,1.25,home,ft,1.1,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,1.25,away,ft,10.0,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-1.25,home,ft,3.72,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-1.25,away,ft,1.34,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,1.50,home,ft,1.09,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,1.50,away,ft,10.82,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-1.50,home,ft,4.22,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-1.50,away,ft,1.29,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,1.75,home,ft,1.05,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,1.75,away,ft,15.9,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-1.75,home,ft,5.65,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-1.75,away,ft,1.2,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,2.00,home,ft,1.02,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,2.00,away,ft,30.04,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-2.00,home,ft,8.8,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-2.00,away,ft,1.11,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,2.25,home,ft,1.02,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,2.25,away,ft,31.02,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-2.25,home,ft,9.4,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-2.25,away,ft,1.1,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,2.50,home,ft,1.02,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,2.50,away,ft,32.0,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-2.50,home,ft,10.1,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-2.50,away,ft,1.09,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,2.75,away,ft,51.46,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-2.75,home,ft,14.5,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-2.75,away,ft,1.06,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-3.00,home,ft,27.31,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-3.00,away,ft,1.02,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-3.25,home,ft,28.15,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-3.25,away,ft,1.02,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-3.50,home,ft,29.0,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-3.50,away,ft,1.02,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-3.75,home,ft,29.0,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,0.25,home,ft,1.39,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,0.25,away,ft,3.51,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-0.25,home,ft,1.81,1
+4dsrDMBc,AC Milan,AS Roma,3,3,hc,-0.25,away,ft,2.21,1
+4dsrDMBc,AC Milan,AS Roma,3,3,dc,0,home/draw,ft,1.32,1
+4dsrDMBc,AC Milan,AS Roma,3,3,dc,0,home/away,ft,1.39,1
+4dsrDMBc,AC Milan,AS Roma,3,3,dc,0,draw/away,ft,1.88,1
+tM8uTfYp,Atalanta,Bologna,0,0,1x2,0,home,ft,2.02,1
+tM8uTfYp,Atalanta,Bologna,0,0,1x2,0,draw,ft,3.6,1
+tM8uTfYp,Atalanta,Bologna,0,0,1x2,0,away,ft,4.4,1
+tM8uTfYp,Atalanta,Bologna,0,0,ou,0.50,over,ft,1.08,1
+tM8uTfYp,Atalanta,Bologna,0,0,ou,0.50,under,ft,12.0,1
+tM8uTfYp,Atalanta,Bologna,0,0,ou,1.50,over,ft,1.37,1
+tM8uTfYp,Atalanta,Bologna,0,0,ou,1.50,under,ft,3.65,1
+tM8uTfYp,Atalanta,Bologna,0,0,ou,2.50,over,ft,2.1,1
+tM8uTfYp,Atalanta,Bologna,0,0,ou,2.50,under,ft,1.89,1
+tM8uTfYp,Atalanta,Bologna,0,0,ou,3.50,over,ft,3.9,1
+tM8uTfYp,Atalanta,Bologna,0,0,ou,3.50,under,ft,1.33,1
+tM8uTfYp,Atalanta,Bologna,0,0,ou,4.50,over,ft,8.8,1
+tM8uTfYp,Atalanta,Bologna,0,0,ou,4.50,under,ft,1.12,1
+tM8uTfYp,Atalanta,Bologna,0,0,ou,5.50,over,ft,21.0,1
+tM8uTfYp,Atalanta,Bologna,0,0,ou,5.50,under,ft,1.04,1
+tM8uTfYp,Atalanta,Bologna,0,0,ou,6.50,over,ft,55.0,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,0,home,ft,1.45,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,0,away,ft,3.17,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-0.50,home,ft,2.02,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-0.50,away,ft,1.98,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,0.50,home,ft,1.29,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,0.50,away,ft,4.4,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-0.75,home,ft,2.35,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-0.75,away,ft,1.73,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,0.75,home,ft,1.19,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,0.75,away,ft,5.98,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-1.00,home,ft,3.01,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-1.00,away,ft,1.48,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,1.00,home,ft,1.09,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,1.00,away,ft,10.27,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-1.25,home,ft,3.5,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-1.25,away,ft,1.38,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,1.25,home,ft,1.08,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,1.25,away,ft,11.13,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-1.50,home,ft,4.0,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-1.50,away,ft,1.31,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,1.50,home,ft,1.08,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,1.50,away,ft,11.84,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-1.75,home,ft,5.34,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-1.75,away,ft,1.22,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,1.75,home,ft,1.04,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,1.75,away,ft,18.74,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-2.00,home,ft,8.38,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-2.00,away,ft,1.12,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,2.00,away,ft,47.0,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-2.25,home,ft,9.08,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-2.25,away,ft,1.11,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,2.25,away,ft,48.5,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-2.50,home,ft,9.6,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-2.50,away,ft,1.1,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,2.50,away,ft,50.0,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-2.75,home,ft,13.89,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-2.75,away,ft,1.06,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,2.75,away,ft,82.66,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-3.00,home,ft,25.24,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-3.00,away,ft,1.03,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-3.25,home,ft,26.12,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-3.25,away,ft,1.03,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-3.50,home,ft,27.0,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-3.50,away,ft,1.03,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-3.75,home,ft,27.0,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-0.25,home,ft,1.73,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,-0.25,away,ft,2.35,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,0.25,home,ft,1.35,1
+tM8uTfYp,Atalanta,Bologna,0,0,hc,0.25,away,ft,3.78,1
+tM8uTfYp,Atalanta,Bologna,0,0,dc,0,home/draw,ft,1.29,1
+tM8uTfYp,Atalanta,Bologna,0,0,dc,0,home/away,ft,1.38,1
+tM8uTfYp,Atalanta,Bologna,0,0,dc,0,draw/away,ft,1.98,1
+4QtH4kYi,Inter,Udinese,2,2,1x2,0,home,ft,1.38,1
+4QtH4kYi,Inter,Udinese,2,2,1x2,0,draw,ft,5.4,1
+4QtH4kYi,Inter,Udinese,2,2,1x2,0,away,ft,10.0,1
+4QtH4kYi,Inter,Udinese,2,2,ou,0.50,over,ft,1.04,1
+4QtH4kYi,Inter,Udinese,2,2,ou,0.50,under,ft,21.0,1
+4QtH4kYi,Inter,Udinese,2,2,ou,1.50,over,ft,1.22,1
+4QtH4kYi,Inter,Udinese,2,2,ou,1.50,under,ft,5.3,1
+4QtH4kYi,Inter,Udinese,2,2,ou,2.50,over,ft,1.66,1
+4QtH4kYi,Inter,Udinese,2,2,ou,2.50,under,ft,2.48,1
+4QtH4kYi,Inter,Udinese,2,2,ou,3.50,over,ft,2.68,1
+4QtH4kYi,Inter,Udinese,2,2,ou,3.50,under,ft,1.58,1
+4QtH4kYi,Inter,Udinese,2,2,ou,4.50,over,ft,5.1,1
+4QtH4kYi,Inter,Udinese,2,2,ou,4.50,under,ft,1.23,1
+4QtH4kYi,Inter,Udinese,2,2,ou,5.50,over,ft,11.0,1
+4QtH4kYi,Inter,Udinese,2,2,ou,5.50,under,ft,1.09,1
+4QtH4kYi,Inter,Udinese,2,2,ou,6.50,over,ft,26.0,1
+4QtH4kYi,Inter,Udinese,2,2,ou,6.50,under,ft,1.03,1
+4QtH4kYi,Inter,Udinese,2,2,ou,7.50,over,ft,60.0,1
+4QtH4kYi,Inter,Udinese,2,2,hc,0,home,ft,1.13,1
+4QtH4kYi,Inter,Udinese,2,2,hc,0,away,ft,8.28,1
+4QtH4kYi,Inter,Udinese,2,2,hc,0.50,home,ft,1.1,1
+4QtH4kYi,Inter,Udinese,2,2,hc,0.50,away,ft,10.09,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-0.50,home,ft,1.38,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-0.50,away,ft,3.6,1
+4QtH4kYi,Inter,Udinese,2,2,hc,0.75,home,ft,1.06,1
+4QtH4kYi,Inter,Udinese,2,2,hc,0.75,away,ft,14.82,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-0.75,home,ft,1.46,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-0.75,away,ft,3.12,1
+4QtH4kYi,Inter,Udinese,2,2,hc,1.00,home,ft,1.02,1
+4QtH4kYi,Inter,Udinese,2,2,hc,1.00,away,ft,29.82,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-1.00,home,ft,1.59,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-1.00,away,ft,2.65,1
+4QtH4kYi,Inter,Udinese,2,2,hc,1.25,home,ft,1.02,1
+4QtH4kYi,Inter,Udinese,2,2,hc,1.25,away,ft,30.91,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-1.25,home,ft,1.87,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-1.25,away,ft,2.12,1
+4QtH4kYi,Inter,Udinese,2,2,hc,1.50,home,ft,1.02,1
+4QtH4kYi,Inter,Udinese,2,2,hc,1.50,away,ft,32.0,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-1.50,home,ft,2.14,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-1.50,away,ft,1.85,1
+4QtH4kYi,Inter,Udinese,2,2,hc,1.75,away,ft,50.75,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-1.75,home,ft,2.45,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-1.75,away,ft,1.65,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-2.00,home,ft,2.97,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-2.00,away,ft,1.46,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-2.25,home,ft,3.33,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-2.25,away,ft,1.38,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-2.50,home,ft,3.7,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-2.50,away,ft,1.33,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-2.75,home,ft,4.66,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-2.75,away,ft,1.24,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-3.00,home,ft,6.55,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-3.00,away,ft,1.14,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-3.25,home,ft,7.07,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-3.25,away,ft,1.13,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-3.50,home,ft,7.6,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-3.50,away,ft,1.12,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-3.75,home,ft,7.8,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-3.75,away,ft,1.08,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-4.00,home,ft,7.8,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-4.00,away,ft,1.04,1
+4QtH4kYi,Inter,Udinese,2,2,hc,0.25,home,ft,1.11,1
+4QtH4kYi,Inter,Udinese,2,2,hc,0.25,away,ft,9.18,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-0.25,home,ft,1.25,1
+4QtH4kYi,Inter,Udinese,2,2,hc,-0.25,away,ft,4.83,1
+4QtH4kYi,Inter,Udinese,2,2,dc,0,home/draw,ft,1.1,1
+4QtH4kYi,Inter,Udinese,2,2,dc,0,home/away,ft,1.21,1
+4QtH4kYi,Inter,Udinese,2,2,dc,0,draw/away,ft,3.55,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,1x2,0,home,ft,1.25,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,1x2,0,draw,ft,7.0,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,1x2,0,away,ft,16.0,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,0.50,over,ft,1.03,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,0.50,under,ft,25.0,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,1.50,over,ft,1.19,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,1.50,under,ft,6.0,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,2.50,over,ft,1.57,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,2.50,under,ft,2.7,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,3.50,over,ft,2.44,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,3.50,under,ft,1.68,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,4.50,over,ft,4.3,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,4.50,under,ft,1.28,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,5.50,over,ft,9.2,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,5.50,under,ft,1.12,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,6.50,over,ft,21.0,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,6.50,under,ft,1.04,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,ou,7.50,over,ft,50.0,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,0,home,ft,1.07,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,0,away,ft,13.73,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,0.50,home,ft,1.06,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,0.50,away,ft,16.0,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-0.50,home,ft,1.25,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-0.50,away,ft,4.9,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,0.75,home,ft,1.03,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,0.75,away,ft,23.72,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-0.75,home,ft,1.29,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-0.75,away,ft,4.33,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,1.00,away,ft,46.0,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-1.00,home,ft,1.34,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-1.00,away,ft,3.76,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,1.25,away,ft,47.0,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-1.25,home,ft,1.53,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-1.25,away,ft,2.76,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,1.50,away,ft,48.0,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-1.50,home,ft,1.73,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-1.50,away,ft,2.3,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,1.75,away,ft,78.76,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-1.75,home,ft,1.9,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-1.75,away,ft,2.05,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-2.00,home,ft,2.19,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-2.00,away,ft,1.79,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-2.25,home,ft,2.46,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-2.25,away,ft,1.61,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-2.50,home,ft,2.74,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-2.50,away,ft,1.51,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-2.75,home,ft,3.27,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-2.75,away,ft,1.39,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-3.00,home,ft,4.3,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-3.00,away,ft,1.26,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-3.25,home,ft,4.75,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-3.25,away,ft,1.23,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-3.50,home,ft,5.1,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-3.50,away,ft,1.21,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-3.75,home,ft,6.28,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-3.75,away,ft,1.14,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-4.00,home,ft,8.12,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-4.00,away,ft,1.08,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,0.25,home,ft,1.06,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,0.25,away,ft,14.86,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-0.25,home,ft,1.16,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,hc,-0.25,away,ft,6.97,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,dc,0,home/draw,ft,1.06,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,dc,0,home/away,ft,1.16,1
+bJ0o1p2t,AS Roma,Sampdoria,4,4,dc,0,draw/away,ft,4.9,1
+dhergCyo,Atalanta,Cesena,6,6,1x2,0,home,ft,1.21,1
+dhergCyo,Atalanta,Cesena,6,6,1x2,0,draw,ft,8.0,1
+dhergCyo,Atalanta,Cesena,6,6,1x2,0,away,ft,19.5,1
+dhergCyo,Atalanta,Cesena,6,6,ou,0.50,over,ft,1.03,1
+dhergCyo,Atalanta,Cesena,6,6,ou,0.50,under,ft,28.0,1
+dhergCyo,Atalanta,Cesena,6,6,ou,1.50,over,ft,1.17,1
+dhergCyo,Atalanta,Cesena,6,6,ou,1.50,under,ft,6.6,1
+dhergCyo,Atalanta,Cesena,6,6,ou,2.50,over,ft,1.53,1
+dhergCyo,Atalanta,Cesena,6,6,ou,2.50,under,ft,2.84,1
+dhergCyo,Atalanta,Cesena,6,6,ou,3.50,over,ft,2.32,1
+dhergCyo,Atalanta,Cesena,6,6,ou,3.50,under,ft,1.74,1
+dhergCyo,Atalanta,Cesena,6,6,ou,4.50,over,ft,4.1,1
+dhergCyo,Atalanta,Cesena,6,6,ou,4.50,under,ft,1.31,1
+dhergCyo,Atalanta,Cesena,6,6,ou,5.50,over,ft,8.2,1
+dhergCyo,Atalanta,Cesena,6,6,ou,5.50,under,ft,1.13,1
+dhergCyo,Atalanta,Cesena,6,6,ou,6.50,over,ft,18.5,1
+dhergCyo,Atalanta,Cesena,6,6,ou,6.50,under,ft,1.05,1
+dhergCyo,Atalanta,Cesena,6,6,ou,7.50,over,ft,40.0,1
+dhergCyo,Atalanta,Cesena,6,6,hc,0,home,ft,1.06,1
+dhergCyo,Atalanta,Cesena,6,6,hc,0,away,ft,17.06,1
+dhergCyo,Atalanta,Cesena,6,6,hc,0.50,home,ft,1.05,1
+dhergCyo,Atalanta,Cesena,6,6,hc,0.50,away,ft,19.5,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-0.50,home,ft,1.21,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-0.50,away,ft,5.62,1
+dhergCyo,Atalanta,Cesena,6,6,hc,0.75,home,ft,1.03,1
+dhergCyo,Atalanta,Cesena,6,6,hc,0.75,away,ft,29.63,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-0.75,home,ft,1.24,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-0.75,away,ft,5.03,1
+dhergCyo,Atalanta,Cesena,6,6,hc,1.00,away,ft,61.32,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-1.00,home,ft,1.28,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-1.00,away,ft,4.44,1
+dhergCyo,Atalanta,Cesena,6,6,hc,1.25,away,ft,62.45,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-1.25,home,ft,1.46,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-1.25,away,ft,3.13,1
+dhergCyo,Atalanta,Cesena,6,6,hc,1.50,away,ft,63.58,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-1.50,home,ft,1.63,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-1.50,away,ft,2.54,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-1.75,home,ft,1.77,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-1.75,away,ft,2.28,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-2.00,home,ft,1.96,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-2.00,away,ft,2.01,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-2.25,home,ft,2.22,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-2.25,away,ft,1.78,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-2.50,home,ft,2.48,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-2.50,away,ft,1.64,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-2.75,home,ft,2.89,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-2.75,away,ft,1.49,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-3.00,home,ft,3.62,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-3.00,away,ft,1.34,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-3.25,home,ft,4.01,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-3.25,away,ft,1.29,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-3.50,home,ft,4.4,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-3.50,away,ft,1.25,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-3.75,home,ft,5.34,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-3.75,away,ft,1.18,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-4.00,home,ft,6.88,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-4.00,away,ft,1.11,1
+dhergCyo,Atalanta,Cesena,6,6,hc,0.25,home,ft,1.05,1
+dhergCyo,Atalanta,Cesena,6,6,hc,0.25,away,ft,18.28,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-0.25,home,ft,1.13,1
+dhergCyo,Atalanta,Cesena,6,6,hc,-0.25,away,ft,8.17,1
+dhergCyo,Atalanta,Cesena,6,6,dc,0,home/draw,ft,1.05,1
+dhergCyo,Atalanta,Cesena,6,6,dc,0,home/away,ft,1.13,1
+dhergCyo,Atalanta,Cesena,6,6,dc,0,draw/away,ft,5.6,1
+KM2qbhal,Juventus,Cagliari,4,4,1x2,0,home,ft,1.41,1
+KM2qbhal,Juventus,Cagliari,4,4,1x2,0,draw,ft,5.1,1
+KM2qbhal,Juventus,Cagliari,4,4,1x2,0,away,ft,9.6,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,0.50,over,ft,1.06,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,0.50,under,ft,17.5,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,1.50,over,ft,1.26,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,1.50,under,ft,4.8,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,2.50,over,ft,1.77,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,2.50,under,ft,2.28,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,3.50,over,ft,3.0,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,3.50,under,ft,1.48,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,4.50,over,ft,6.0,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,4.50,under,ft,1.19,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,5.50,over,ft,14.0,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,5.50,under,ft,1.07,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,6.50,over,ft,32.0,1
+KM2qbhal,Juventus,Cagliari,4,4,ou,6.50,under,ft,1.02,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,0,home,ft,1.14,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,0,away,ft,7.9,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,0.50,home,ft,1.11,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,0.50,away,ft,9.8,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-0.50,home,ft,1.41,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-0.50,away,ft,3.38,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,0.75,home,ft,1.06,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,0.75,away,ft,14.66,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-0.75,home,ft,1.5,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-0.75,away,ft,2.92,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,1.00,home,ft,1.02,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,1.00,away,ft,29.73,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-1.00,home,ft,1.66,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-1.00,away,ft,2.47,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,1.25,home,ft,1.02,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,1.25,away,ft,30.86,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-1.25,home,ft,1.94,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-1.25,away,ft,2.01,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,1.50,home,ft,1.02,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,1.50,away,ft,32.0,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-1.50,home,ft,2.23,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-1.50,away,ft,1.77,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,1.75,away,ft,50.74,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-1.75,home,ft,2.59,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-1.75,away,ft,1.58,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-2.00,home,ft,3.27,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-2.00,away,ft,1.4,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-2.25,home,ft,3.67,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-2.25,away,ft,1.34,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-2.50,home,ft,4.07,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-2.50,away,ft,1.3,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-2.75,home,ft,5.07,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-2.75,away,ft,1.21,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-3.00,home,ft,7.03,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-3.00,away,ft,1.12,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-3.25,home,ft,7.51,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-3.25,away,ft,1.11,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-3.50,home,ft,8.0,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-3.50,away,ft,1.1,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-3.75,home,ft,8.78,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-3.75,away,ft,1.06,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-4.00,home,ft,8.78,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-4.00,away,ft,1.03,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,0.25,home,ft,1.12,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,0.25,away,ft,8.85,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-0.25,home,ft,1.27,1
+KM2qbhal,Juventus,Cagliari,4,4,hc,-0.25,away,ft,4.54,1
+KM2qbhal,Juventus,Cagliari,4,4,dc,0,home/draw,ft,1.11,1
+KM2qbhal,Juventus,Cagliari,4,4,dc,0,home/away,ft,1.23,1
+KM2qbhal,Juventus,Cagliari,4,4,dc,0,draw/away,ft,3.35,1
+S8cZDP8c,Lazio,Napoli,3,3,1x2,0,home,ft,2.44,1
+S8cZDP8c,Lazio,Napoli,3,3,1x2,0,draw,ft,3.35,1
+S8cZDP8c,Lazio,Napoli,3,3,1x2,0,away,ft,3.35,1
+S8cZDP8c,Lazio,Napoli,3,3,ou,0.50,over,ft,1.09,1
+S8cZDP8c,Lazio,Napoli,3,3,ou,0.50,under,ft,11.5,1
+S8cZDP8c,Lazio,Napoli,3,3,ou,1.50,over,ft,1.38,1
+S8cZDP8c,Lazio,Napoli,3,3,ou,1.50,under,ft,3.55,1
+S8cZDP8c,Lazio,Napoli,3,3,ou,2.50,over,ft,2.14,1
+S8cZDP8c,Lazio,Napoli,3,3,ou,2.50,under,ft,1.86,1
+S8cZDP8c,Lazio,Napoli,3,3,ou,3.50,over,ft,3.95,1
+S8cZDP8c,Lazio,Napoli,3,3,ou,3.50,under,ft,1.32,1
+S8cZDP8c,Lazio,Napoli,3,3,ou,4.50,over,ft,8.6,1
+S8cZDP8c,Lazio,Napoli,3,3,ou,4.50,under,ft,1.12,1
+S8cZDP8c,Lazio,Napoli,3,3,ou,5.50,over,ft,21.0,1
+S8cZDP8c,Lazio,Napoli,3,3,ou,5.50,under,ft,1.04,1
+S8cZDP8c,Lazio,Napoli,3,3,ou,6.50,over,ft,60.0,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,0,home,ft,1.71,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,0,away,ft,2.36,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,0.50,home,ft,1.41,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,0.50,away,ft,3.36,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-0.50,home,ft,2.44,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-0.50,away,ft,1.68,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,0.75,home,ft,1.28,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,0.75,away,ft,4.42,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-0.75,home,ft,2.96,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-0.75,away,ft,1.48,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,1.00,home,ft,1.15,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,1.00,away,ft,7.1,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-1.00,home,ft,4.06,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-1.00,away,ft,1.29,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,1.25,home,ft,1.13,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,1.25,away,ft,7.89,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-1.25,home,ft,4.59,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-1.25,away,ft,1.24,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,1.50,home,ft,1.12,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,1.50,away,ft,8.69,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-1.50,home,ft,5.15,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-1.50,away,ft,1.21,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,1.75,home,ft,1.07,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,1.75,away,ft,12.27,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-1.75,home,ft,7.18,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-1.75,away,ft,1.14,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,2.00,home,ft,1.03,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,2.00,away,ft,21.27,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-2.00,home,ft,11.9,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-2.00,away,ft,1.07,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,2.25,home,ft,1.03,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,2.25,away,ft,22.06,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-2.25,home,ft,12.71,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-2.25,away,ft,1.06,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,2.50,home,ft,1.03,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,2.50,away,ft,22.85,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-2.50,home,ft,13.5,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-2.50,away,ft,1.06,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,2.75,away,ft,33.99,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-2.75,home,ft,19.69,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-2.75,away,ft,1.04,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-3.00,home,ft,38.24,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-3.25,home,ft,39.12,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-3.50,home,ft,40.0,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,0.25,home,ft,1.52,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,0.25,away,ft,2.86,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-0.25,home,ft,2.07,1
+S8cZDP8c,Lazio,Napoli,3,3,hc,-0.25,away,ft,1.91,1
+S8cZDP8c,Lazio,Napoli,3,3,dc,0,home/draw,ft,1.41,1
+S8cZDP8c,Lazio,Napoli,3,3,dc,0,home/away,ft,1.41,1
+S8cZDP8c,Lazio,Napoli,3,3,dc,0,draw/away,ft,1.68,1
+vT2pKZWg,Fiorentina,Empoli,2,2,1x2,0,home,ft,1.31,1
+vT2pKZWg,Fiorentina,Empoli,2,2,1x2,0,draw,ft,6.0,1
+vT2pKZWg,Fiorentina,Empoli,2,2,1x2,0,away,ft,13.5,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,0.50,over,ft,1.05,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,0.50,under,ft,17.5,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,1.50,over,ft,1.26,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,1.50,under,ft,4.7,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,2.50,over,ft,1.78,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,2.50,under,ft,2.24,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,3.50,over,ft,3.0,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,3.50,under,ft,1.47,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,4.50,over,ft,5.7,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,4.50,under,ft,1.2,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,5.50,over,ft,12.5,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,5.50,under,ft,1.07,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,6.50,over,ft,32.0,1
+vT2pKZWg,Fiorentina,Empoli,2,2,ou,6.50,under,ft,1.02,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,0,home,ft,1.09,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,0,away,ft,11.25,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,0.50,home,ft,1.07,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,0.50,away,ft,13.5,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-0.50,home,ft,1.31,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-0.50,away,ft,4.15,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,0.75,home,ft,1.04,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,0.75,away,ft,20.93,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-0.75,home,ft,1.37,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-0.75,away,ft,3.63,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,1.00,away,ft,47.29,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-1.00,home,ft,1.46,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-1.00,away,ft,3.11,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,1.25,away,ft,48.64,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-1.25,home,ft,1.7,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-1.25,away,ft,2.39,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,1.50,away,ft,50.0,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-1.50,home,ft,1.95,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-1.50,away,ft,2.04,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,1.75,away,ft,75.66,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-1.75,home,ft,2.21,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-1.75,away,ft,1.8,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-2.00,home,ft,2.66,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-2.00,away,ft,1.57,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-2.25,home,ft,3.03,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-2.25,away,ft,1.46,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-2.50,home,ft,3.4,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-2.50,away,ft,1.39,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-2.75,home,ft,4.29,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-2.75,away,ft,1.28,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-3.00,home,ft,6.08,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-3.00,away,ft,1.17,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-3.25,home,ft,6.64,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-3.25,away,ft,1.15,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-3.50,home,ft,7.2,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-3.50,away,ft,1.14,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-3.75,home,ft,8.99,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-3.75,away,ft,1.1,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-4.00,home,ft,12.24,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-4.00,away,ft,1.05,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,0.25,home,ft,1.08,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,0.25,away,ft,12.37,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-0.25,home,ft,1.2,1
+vT2pKZWg,Fiorentina,Empoli,2,2,hc,-0.25,away,ft,5.82,1
+vT2pKZWg,Fiorentina,Empoli,2,2,dc,0,home/draw,ft,1.07,1
+vT2pKZWg,Fiorentina,Empoli,2,2,dc,0,home/away,ft,1.19,1
+vT2pKZWg,Fiorentina,Empoli,2,2,dc,0,draw/away,ft,4.1,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,1x2,0,home,ft,1.32,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,1x2,0,draw,ft,6.2,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,1x2,0,away,ft,11.5,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,0.50,over,ft,1.03,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,0.50,under,ft,26.0,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,1.50,over,ft,1.18,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,1.50,under,ft,6.2,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,2.50,over,ft,1.55,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,2.50,under,ft,2.78,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,3.50,over,ft,2.38,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,3.50,under,ft,1.69,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,4.50,over,ft,4.3,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,4.50,under,ft,1.29,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,5.50,over,ft,8.8,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,5.50,under,ft,1.12,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,6.50,over,ft,19.0,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,6.50,under,ft,1.05,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,ou,7.50,over,ft,44.0,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,0,home,ft,1.11,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,0,away,ft,9.64,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,0.50,home,ft,1.09,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,0.50,away,ft,11.5,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-0.50,home,ft,1.32,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-0.50,away,ft,4.03,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,0.75,home,ft,1.05,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,0.75,away,ft,17.12,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-0.75,home,ft,1.38,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-0.75,away,ft,3.52,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,1.00,home,ft,1.02,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,1.00,away,ft,33.86,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-1.00,home,ft,1.47,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-1.00,away,ft,3.02,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,1.25,home,ft,1.02,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,1.25,away,ft,34.93,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-1.25,home,ft,1.71,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-1.25,away,ft,2.34,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,1.50,home,ft,1.02,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,1.50,away,ft,36.0,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-1.50,home,ft,1.94,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-1.50,away,ft,2.01,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,1.75,away,ft,57.45,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-1.75,home,ft,2.17,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-1.75,away,ft,1.8,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-2.00,home,ft,2.53,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-2.00,away,ft,1.59,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-2.25,home,ft,2.84,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-2.25,away,ft,1.47,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-2.50,home,ft,3.15,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-2.50,away,ft,1.4,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-2.75,home,ft,3.88,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-2.75,away,ft,1.29,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-3.00,home,ft,5.36,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-3.00,away,ft,1.19,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-3.25,home,ft,5.88,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-3.25,away,ft,1.17,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-3.50,home,ft,6.4,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-3.50,away,ft,1.16,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-3.75,home,ft,8.31,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-3.75,away,ft,1.11,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-4.00,home,ft,8.69,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-4.00,away,ft,1.06,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,0.25,home,ft,1.09,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,0.25,away,ft,10.57,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-0.25,home,ft,1.21,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,hc,-0.25,away,ft,5.48,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,dc,0,home/draw,ft,1.09,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,dc,0,home/away,ft,1.18,1
+rRnHCGU1,AC Milan,Sassuolo,6,6,dc,0,draw/away,ft,4.0,1
+KIS7woMN,Bologna,Monza,4,4,1x2,0,home,ft,1.59,1
+KIS7woMN,Bologna,Monza,4,4,1x2,0,draw,ft,4.0,1
+KIS7woMN,Bologna,Monza,4,4,1x2,0,away,ft,7.6,1
+KIS7woMN,Bologna,Monza,4,4,ou,0.50,over,ft,1.09,1
+KIS7woMN,Bologna,Monza,4,4,ou,0.50,under,ft,11.0,1
+KIS7woMN,Bologna,Monza,4,4,ou,1.50,over,ft,1.42,1
+KIS7woMN,Bologna,Monza,4,4,ou,1.50,under,ft,3.25,1
+KIS7woMN,Bologna,Monza,4,4,ou,2.50,over,ft,2.26,1
+KIS7woMN,Bologna,Monza,4,4,ou,2.50,under,ft,1.77,1
+KIS7woMN,Bologna,Monza,4,4,ou,3.50,over,ft,4.2,1
+KIS7woMN,Bologna,Monza,4,4,ou,3.50,under,ft,1.3,1
+KIS7woMN,Bologna,Monza,4,4,ou,4.50,over,ft,10.0,1
+KIS7woMN,Bologna,Monza,4,4,ou,4.50,under,ft,1.1,1
+KIS7woMN,Bologna,Monza,4,4,ou,5.50,over,ft,26.0,1
+KIS7woMN,Bologna,Monza,4,4,ou,5.50,under,ft,1.03,1
+KIS7woMN,Bologna,Monza,4,4,ou,6.50,over,ft,75.0,1
+KIS7woMN,Bologna,Monza,4,4,hc,0,home,ft,1.2,1
+KIS7woMN,Bologna,Monza,4,4,hc,0,away,ft,5.72,1
+KIS7woMN,Bologna,Monza,4,4,hc,0.50,home,ft,1.14,1
+KIS7woMN,Bologna,Monza,4,4,hc,0.50,away,ft,7.6,1
+KIS7woMN,Bologna,Monza,4,4,hc,-0.50,home,ft,1.59,1
+KIS7woMN,Bologna,Monza,4,4,hc,-0.50,away,ft,2.63,1
+KIS7woMN,Bologna,Monza,4,4,hc,0.75,home,ft,1.09,1
+KIS7woMN,Bologna,Monza,4,4,hc,0.75,away,ft,11.38,1
+KIS7woMN,Bologna,Monza,4,4,hc,-0.75,home,ft,1.75,1
+KIS7woMN,Bologna,Monza,4,4,hc,-0.75,away,ft,2.28,1
+KIS7woMN,Bologna,Monza,4,4,hc,1.00,home,ft,1.03,1
+KIS7woMN,Bologna,Monza,4,4,hc,1.00,away,ft,25.31,1
+KIS7woMN,Bologna,Monza,4,4,hc,-1.00,home,ft,2.04,1
+KIS7woMN,Bologna,Monza,4,4,hc,-1.00,away,ft,1.94,1
+KIS7woMN,Bologna,Monza,4,4,hc,1.25,home,ft,1.03,1
+KIS7woMN,Bologna,Monza,4,4,hc,1.25,away,ft,26.65,1
+KIS7woMN,Bologna,Monza,4,4,hc,-1.25,home,ft,2.4,1
+KIS7woMN,Bologna,Monza,4,4,hc,-1.25,away,ft,1.68,1
+KIS7woMN,Bologna,Monza,4,4,hc,1.50,home,ft,1.03,1
+KIS7woMN,Bologna,Monza,4,4,hc,1.50,away,ft,28.0,1
+KIS7woMN,Bologna,Monza,4,4,hc,-1.50,home,ft,2.76,1
+KIS7woMN,Bologna,Monza,4,4,hc,-1.50,away,ft,1.54,1
+KIS7woMN,Bologna,Monza,4,4,hc,1.75,away,ft,45.43,1
+KIS7woMN,Bologna,Monza,4,4,hc,-1.75,home,ft,3.42,1
+KIS7woMN,Bologna,Monza,4,4,hc,-1.75,away,ft,1.39,1
+KIS7woMN,Bologna,Monza,4,4,hc,2.00,away,ft,87.78,1
+KIS7woMN,Bologna,Monza,4,4,hc,-2.00,home,ft,4.84,1
+KIS7woMN,Bologna,Monza,4,4,hc,-2.00,away,ft,1.24,1
+KIS7woMN,Bologna,Monza,4,4,hc,2.25,away,ft,88.89,1
+KIS7woMN,Bologna,Monza,4,4,hc,-2.25,home,ft,5.42,1
+KIS7woMN,Bologna,Monza,4,4,hc,-2.25,away,ft,1.2,1
+KIS7woMN,Bologna,Monza,4,4,hc,2.50,away,ft,90.0,1
+KIS7woMN,Bologna,Monza,4,4,hc,-2.50,home,ft,6.0,1
+KIS7woMN,Bologna,Monza,4,4,hc,-2.50,away,ft,1.18,1
+KIS7woMN,Bologna,Monza,4,4,hc,-2.75,home,ft,8.27,1
+KIS7woMN,Bologna,Monza,4,4,hc,-2.75,away,ft,1.12,1
+KIS7woMN,Bologna,Monza,4,4,hc,-3.00,home,ft,14.33,1
+KIS7woMN,Bologna,Monza,4,4,hc,-3.00,away,ft,1.06,1
+KIS7woMN,Bologna,Monza,4,4,hc,-3.25,home,ft,15.16,1
+KIS7woMN,Bologna,Monza,4,4,hc,-3.25,away,ft,1.05,1
+KIS7woMN,Bologna,Monza,4,4,hc,-3.50,home,ft,16.0,1
+KIS7woMN,Bologna,Monza,4,4,hc,-3.50,away,ft,1.05,1
+KIS7woMN,Bologna,Monza,4,4,hc,-3.75,home,ft,16.0,1
+KIS7woMN,Bologna,Monza,4,4,hc,-3.75,away,ft,1.02,1
+KIS7woMN,Bologna,Monza,4,4,hc,0.25,home,ft,1.17,1
+KIS7woMN,Bologna,Monza,4,4,hc,0.25,away,ft,6.66,1
+KIS7woMN,Bologna,Monza,4,4,hc,-0.25,home,ft,1.39,1
+KIS7woMN,Bologna,Monza,4,4,hc,-0.25,away,ft,3.43,1
+KIS7woMN,Bologna,Monza,4,4,dc,0,home/draw,ft,1.14,1
+KIS7woMN,Bologna,Monza,4,4,dc,0,home/away,ft,1.32,1
+KIS7woMN,Bologna,Monza,4,4,dc,0,draw/away,ft,2.66,1
+h8xCR9dC,Napoli,Palermo,5,5,1x2,0,home,ft,1.25,1
+h8xCR9dC,Napoli,Palermo,5,5,1x2,0,draw,ft,7.2,1
+h8xCR9dC,Napoli,Palermo,5,5,1x2,0,away,ft,14.5,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,0.50,over,ft,1.03,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,0.50,under,ft,26.0,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,1.50,over,ft,1.19,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,1.50,under,ft,6.0,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,2.50,over,ft,1.56,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,2.50,under,ft,2.72,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,3.50,over,ft,2.42,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,3.50,under,ft,1.67,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,4.50,over,ft,4.5,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,4.50,under,ft,1.28,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,5.50,over,ft,9.2,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,5.50,under,ft,1.11,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,6.50,over,ft,21.0,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,6.50,under,ft,1.04,1
+h8xCR9dC,Napoli,Palermo,5,5,ou,7.50,over,ft,50.0,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,0,home,ft,1.08,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,0,away,ft,12.68,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,0.50,home,ft,1.06,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,0.50,away,ft,14.71,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-0.50,home,ft,1.25,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-0.50,away,ft,4.84,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,0.75,home,ft,1.04,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,0.75,away,ft,23.03,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-0.75,home,ft,1.29,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-0.75,away,ft,4.26,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,1.00,away,ft,49.87,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-1.00,home,ft,1.35,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-1.00,away,ft,3.69,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,1.25,away,ft,51.18,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-1.25,home,ft,1.55,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-1.25,away,ft,2.7,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,1.50,away,ft,52.5,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-1.50,home,ft,1.75,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-1.50,away,ft,2.25,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-1.75,home,ft,1.93,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-1.75,away,ft,2.0,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-2.00,home,ft,2.25,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-2.00,away,ft,1.74,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-2.25,home,ft,2.59,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-2.25,away,ft,1.59,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-2.50,home,ft,2.92,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-2.50,away,ft,1.49,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-2.75,home,ft,3.56,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-2.75,away,ft,1.36,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-3.00,home,ft,4.7,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-3.00,away,ft,1.24,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-3.25,home,ft,5.16,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-3.25,away,ft,1.21,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-3.50,home,ft,5.6,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-3.50,away,ft,1.19,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-3.75,home,ft,6.86,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-3.75,away,ft,1.13,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-4.00,home,ft,8.69,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-4.00,away,ft,1.08,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,0.25,home,ft,1.07,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,0.25,away,ft,13.69,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-0.25,home,ft,1.16,1
+h8xCR9dC,Napoli,Palermo,5,5,hc,-0.25,away,ft,6.78,1
+h8xCR9dC,Napoli,Palermo,5,5,dc,0,home/draw,ft,1.06,1
+h8xCR9dC,Napoli,Palermo,5,5,dc,0,home/away,ft,1.15,1
+h8xCR9dC,Napoli,Palermo,5,5,dc,0,draw/away,ft,4.8,1
+OE5MGhrf,Monza,Brescia,3,3,1x2,0,home,ft,1.97,1
+OE5MGhrf,Monza,Brescia,3,3,1x2,0,draw,ft,3.6,1
+OE5MGhrf,Monza,Brescia,3,3,1x2,0,away,ft,4.5,1
+OE5MGhrf,Monza,Brescia,3,3,ou,0.50,over,ft,1.09,1
+OE5MGhrf,Monza,Brescia,3,3,ou,0.50,under,ft,11.5,1
+OE5MGhrf,Monza,Brescia,3,3,ou,1.50,over,ft,1.37,1
+OE5MGhrf,Monza,Brescia,3,3,ou,1.50,under,ft,3.55,1
+OE5MGhrf,Monza,Brescia,3,3,ou,2.50,over,ft,2.16,1
+OE5MGhrf,Monza,Brescia,3,3,ou,2.50,under,ft,1.84,1
+OE5MGhrf,Monza,Brescia,3,3,ou,3.50,over,ft,4.0,1
+OE5MGhrf,Monza,Brescia,3,3,ou,3.50,under,ft,1.31,1
+OE5MGhrf,Monza,Brescia,3,3,ou,4.50,over,ft,9.2,1
+OE5MGhrf,Monza,Brescia,3,3,ou,4.50,under,ft,1.11,1
+OE5MGhrf,Monza,Brescia,3,3,ou,5.50,over,ft,22.0,1
+OE5MGhrf,Monza,Brescia,3,3,ou,5.50,under,ft,1.03,1
+OE5MGhrf,Monza,Brescia,3,3,ou,6.50,over,ft,65.0,1
+OE5MGhrf,Monza,Brescia,3,3,hc,0,home,ft,1.42,1
+OE5MGhrf,Monza,Brescia,3,3,hc,0,away,ft,3.28,1
+OE5MGhrf,Monza,Brescia,3,3,hc,0.50,home,ft,1.27,1
+OE5MGhrf,Monza,Brescia,3,3,hc,0.50,away,ft,4.52,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-0.50,home,ft,1.97,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-0.50,away,ft,2.02,1
+OE5MGhrf,Monza,Brescia,3,3,hc,0.75,home,ft,1.17,1
+OE5MGhrf,Monza,Brescia,3,3,hc,0.75,away,ft,6.23,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-0.75,home,ft,2.27,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-0.75,away,ft,1.75,1
+OE5MGhrf,Monza,Brescia,3,3,hc,1.00,home,ft,1.08,1
+OE5MGhrf,Monza,Brescia,3,3,hc,1.00,away,ft,11.12,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-1.00,home,ft,2.87,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-1.00,away,ft,1.48,1
+OE5MGhrf,Monza,Brescia,3,3,hc,1.25,home,ft,1.07,1
+OE5MGhrf,Monza,Brescia,3,3,hc,1.25,away,ft,12.06,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-1.25,home,ft,3.33,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-1.25,away,ft,1.38,1
+OE5MGhrf,Monza,Brescia,3,3,hc,1.50,home,ft,1.07,1
+OE5MGhrf,Monza,Brescia,3,3,hc,1.50,away,ft,13.0,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-1.50,home,ft,3.8,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-1.50,away,ft,1.32,1
+OE5MGhrf,Monza,Brescia,3,3,hc,1.75,home,ft,1.04,1
+OE5MGhrf,Monza,Brescia,3,3,hc,1.75,away,ft,19.39,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-1.75,home,ft,5.0,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-1.75,away,ft,1.22,1
+OE5MGhrf,Monza,Brescia,3,3,hc,2.00,away,ft,37.92,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-2.00,home,ft,7.95,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-2.00,away,ft,1.12,1
+OE5MGhrf,Monza,Brescia,3,3,hc,2.25,away,ft,38.96,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-2.25,home,ft,8.69,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-2.25,away,ft,1.11,1
+OE5MGhrf,Monza,Brescia,3,3,hc,2.50,away,ft,40.0,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-2.50,home,ft,9.33,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-2.50,away,ft,1.1,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-2.75,home,ft,13.13,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-2.75,away,ft,1.06,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-3.00,home,ft,23.34,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-3.00,away,ft,1.03,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-3.25,home,ft,24.17,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-3.25,away,ft,1.02,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-3.50,home,ft,25.0,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-3.50,away,ft,1.02,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-3.75,home,ft,25.0,1
+OE5MGhrf,Monza,Brescia,3,3,hc,0.25,home,ft,1.33,1
+OE5MGhrf,Monza,Brescia,3,3,hc,0.25,away,ft,3.9,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-0.25,home,ft,1.69,1
+OE5MGhrf,Monza,Brescia,3,3,hc,-0.25,away,ft,2.41,1
+OE5MGhrf,Monza,Brescia,3,3,dc,0,home/draw,ft,1.27,1
+OE5MGhrf,Monza,Brescia,3,3,dc,0,home/away,ft,1.37,1
+OE5MGhrf,Monza,Brescia,3,3,dc,0,draw/away,ft,2.02,1
+baMp22np,Genoa,Sampdoria,1,1,1x2,0,home,ft,1.93,1
+baMp22np,Genoa,Sampdoria,1,1,1x2,0,draw,ft,3.55,1
+baMp22np,Genoa,Sampdoria,1,1,1x2,0,away,ft,4.9,1
+baMp22np,Genoa,Sampdoria,1,1,ou,0.50,over,ft,1.11,1
+baMp22np,Genoa,Sampdoria,1,1,ou,0.50,under,ft,9.4,1
+baMp22np,Genoa,Sampdoria,1,1,ou,1.50,over,ft,1.47,1
+baMp22np,Genoa,Sampdoria,1,1,ou,1.50,under,ft,3.0,1
+baMp22np,Genoa,Sampdoria,1,1,ou,2.50,over,ft,2.44,1
+baMp22np,Genoa,Sampdoria,1,1,ou,2.50,under,ft,1.67,1
+baMp22np,Genoa,Sampdoria,1,1,ou,3.50,over,ft,5.0,1
+baMp22np,Genoa,Sampdoria,1,1,ou,3.50,under,ft,1.24,1
+baMp22np,Genoa,Sampdoria,1,1,ou,4.50,over,ft,11.5,1
+baMp22np,Genoa,Sampdoria,1,1,ou,4.50,under,ft,1.09,1
+baMp22np,Genoa,Sampdoria,1,1,ou,5.50,over,ft,29.0,1
+baMp22np,Genoa,Sampdoria,1,1,ou,5.50,under,ft,1.03,1
+baMp22np,Genoa,Sampdoria,1,1,hc,0,home,ft,1.37,1
+baMp22np,Genoa,Sampdoria,1,1,hc,0,away,ft,3.5,1
+baMp22np,Genoa,Sampdoria,1,1,hc,0.50,home,ft,1.24,1
+baMp22np,Genoa,Sampdoria,1,1,hc,0.50,away,ft,4.84,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-0.50,home,ft,1.91,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-0.50,away,ft,2.05,1
+baMp22np,Genoa,Sampdoria,1,1,hc,0.75,home,ft,1.15,1
+baMp22np,Genoa,Sampdoria,1,1,hc,0.75,away,ft,5.81,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-0.75,home,ft,2.21,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-0.75,away,ft,1.76,1
+baMp22np,Genoa,Sampdoria,1,1,hc,1.00,home,ft,1.06,1
+baMp22np,Genoa,Sampdoria,1,1,hc,1.00,away,ft,9.33,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-1.00,home,ft,2.75,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-1.00,away,ft,1.48,1
+baMp22np,Genoa,Sampdoria,1,1,hc,1.25,home,ft,1.05,1
+baMp22np,Genoa,Sampdoria,1,1,hc,1.25,away,ft,9.67,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-1.25,home,ft,3.17,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-1.25,away,ft,1.39,1
+baMp22np,Genoa,Sampdoria,1,1,hc,1.50,home,ft,1.05,1
+baMp22np,Genoa,Sampdoria,1,1,hc,1.50,away,ft,9.33,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-1.50,home,ft,3.63,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-1.50,away,ft,1.32,1
+baMp22np,Genoa,Sampdoria,1,1,hc,1.75,home,ft,1.03,1
+baMp22np,Genoa,Sampdoria,1,1,hc,1.75,away,ft,21.3,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-1.75,home,ft,4.33,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-1.75,away,ft,1.22,1
+baMp22np,Genoa,Sampdoria,1,1,hc,2.00,away,ft,48.34,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-2.00,home,ft,6.0,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-2.00,away,ft,1.12,1
+baMp22np,Genoa,Sampdoria,1,1,hc,2.25,away,ft,49.8,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-2.25,home,ft,6.47,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-2.25,away,ft,1.11,1
+baMp22np,Genoa,Sampdoria,1,1,hc,2.50,away,ft,51.0,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-2.50,home,ft,7.7,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-2.50,away,ft,1.1,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-2.75,home,ft,9.33,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-2.75,away,ft,1.06,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-3.00,home,ft,21.89,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-3.00,away,ft,1.02,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-3.25,home,ft,22.55,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-3.25,away,ft,1.02,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-3.50,home,ft,22.86,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-3.50,away,ft,1.02,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-3.75,home,ft,22.86,1
+baMp22np,Genoa,Sampdoria,1,1,hc,0.25,home,ft,1.28,1
+baMp22np,Genoa,Sampdoria,1,1,hc,0.25,away,ft,3.69,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-0.25,home,ft,1.65,1
+baMp22np,Genoa,Sampdoria,1,1,hc,-0.25,away,ft,2.47,1
+baMp22np,Genoa,Sampdoria,1,1,dc,0,home/draw,ft,1.24,1
+baMp22np,Genoa,Sampdoria,1,1,dc,0,home/away,ft,1.39,1
+baMp22np,Genoa,Sampdoria,1,1,dc,0,draw/away,ft,2.02,1
+xCj1xWPj,Udinese,Salernitana,3,3,1x2,0,home,ft,1.54,1
+xCj1xWPj,Udinese,Salernitana,3,3,1x2,0,draw,ft,4.6,1
+xCj1xWPj,Udinese,Salernitana,3,3,1x2,0,away,ft,7.2,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,0.50,over,ft,1.05,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,0.50,under,ft,17.5,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,1.50,over,ft,1.25,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,1.50,under,ft,4.7,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,2.50,over,ft,1.78,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,2.50,under,ft,2.26,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,3.50,over,ft,3.0,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,3.50,under,ft,1.48,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,4.50,over,ft,5.9,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,4.50,under,ft,1.19,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,5.50,over,ft,13.0,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,5.50,under,ft,1.07,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,6.50,over,ft,32.0,1
+xCj1xWPj,Udinese,Salernitana,3,3,ou,6.50,under,ft,1.02,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,0,home,ft,1.19,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,0,away,ft,5.34,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,0.50,home,ft,1.15,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,0.50,away,ft,7.01,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-0.50,home,ft,1.54,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-0.50,away,ft,2.75,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,0.75,home,ft,1.09,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,0.75,away,ft,7.25,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-0.75,home,ft,1.66,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-0.75,away,ft,2.41,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,1.00,home,ft,1.04,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,1.00,away,ft,17.84,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-1.00,home,ft,1.89,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-1.00,away,ft,2.06,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,1.25,home,ft,1.03,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,1.25,away,ft,22.87,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-1.25,home,ft,2.19,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-1.25,away,ft,1.78,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,1.50,home,ft,1.03,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,1.50,away,ft,24.0,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-1.50,home,ft,2.49,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-1.50,away,ft,1.6,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,1.75,home,ft,1.02,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,1.75,away,ft,37.4,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-1.75,home,ft,2.96,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-1.75,away,ft,1.46,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-2.00,home,ft,3.94,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-2.00,away,ft,1.3,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-2.25,home,ft,4.44,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-2.25,away,ft,1.26,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-2.50,home,ft,4.86,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-2.50,away,ft,1.23,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-2.75,home,ft,6.55,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-2.75,away,ft,1.16,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-3.00,home,ft,8.19,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-3.00,away,ft,1.09,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-3.25,home,ft,8.14,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-3.25,away,ft,1.08,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-3.50,home,ft,8.92,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-3.50,away,ft,1.07,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-3.75,home,ft,11.0,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-3.75,away,ft,1.05,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-4.00,home,ft,11.5,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,0.25,home,ft,1.17,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,0.25,away,ft,6.26,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-0.25,home,ft,1.36,1
+xCj1xWPj,Udinese,Salernitana,3,3,hc,-0.25,away,ft,3.5,1
+xCj1xWPj,Udinese,Salernitana,3,3,dc,0,home/draw,ft,1.15,1
+xCj1xWPj,Udinese,Salernitana,3,3,dc,0,home/away,ft,1.27,1
+xCj1xWPj,Udinese,Salernitana,3,3,dc,0,draw/away,ft,2.78,1
+h2uVDr1f,Pisa,Cesena,0,0,1x2,0,home,ft,2.12,1
+h2uVDr1f,Pisa,Cesena,0,0,1x2,0,draw,ft,3.5,1
+h2uVDr1f,Pisa,Cesena,0,0,1x2,0,away,ft,4.0,1
+h2uVDr1f,Pisa,Cesena,0,0,ou,0.50,over,ft,1.08,1
+h2uVDr1f,Pisa,Cesena,0,0,ou,0.50,under,ft,11.5,1
+h2uVDr1f,Pisa,Cesena,0,0,ou,1.50,over,ft,1.37,1
+h2uVDr1f,Pisa,Cesena,0,0,ou,1.50,under,ft,3.6,1
+h2uVDr1f,Pisa,Cesena,0,0,ou,2.50,over,ft,2.14,1
+h2uVDr1f,Pisa,Cesena,0,0,ou,2.50,under,ft,1.86,1
+h2uVDr1f,Pisa,Cesena,0,0,ou,3.50,over,ft,4.0,1
+h2uVDr1f,Pisa,Cesena,0,0,ou,3.50,under,ft,1.31,1
+h2uVDr1f,Pisa,Cesena,0,0,ou,4.50,over,ft,9.2,1
+h2uVDr1f,Pisa,Cesena,0,0,ou,4.50,under,ft,1.11,1
+h2uVDr1f,Pisa,Cesena,0,0,ou,5.50,over,ft,21.0,1
+h2uVDr1f,Pisa,Cesena,0,0,ou,5.50,under,ft,1.04,1
+h2uVDr1f,Pisa,Cesena,0,0,ou,6.50,over,ft,60.0,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,0,home,ft,1.52,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,0,away,ft,2.87,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-0.50,home,ft,2.12,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-0.50,away,ft,1.88,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,0.50,home,ft,1.32,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,0.50,away,ft,4.0,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-0.75,home,ft,2.5,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-0.75,away,ft,1.64,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,0.75,home,ft,1.21,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,0.75,away,ft,5.4,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-1.00,home,ft,3.28,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-1.00,away,ft,1.39,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,1.00,home,ft,1.11,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,1.00,away,ft,8.87,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-1.25,home,ft,3.81,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-1.25,away,ft,1.32,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,1.25,home,ft,1.09,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,1.25,away,ft,9.68,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-1.50,home,ft,4.33,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-1.50,away,ft,1.27,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,1.50,home,ft,1.09,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,1.50,away,ft,10.5,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-1.75,home,ft,5.78,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-1.75,away,ft,1.18,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,1.75,home,ft,1.05,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,1.75,away,ft,10.5,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-2.00,home,ft,9.33,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-2.00,away,ft,1.1,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,2.00,away,ft,10.5,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-2.25,home,ft,9.95,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-2.25,away,ft,1.09,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,2.25,away,ft,10.5,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-2.50,home,ft,10.58,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-2.50,away,ft,1.08,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,2.50,away,ft,10.5,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-2.75,home,ft,11.0,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-2.75,away,ft,1.05,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-0.25,home,ft,1.82,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,-0.25,away,ft,2.19,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,0.25,home,ft,1.4,1
+h2uVDr1f,Pisa,Cesena,0,0,hc,0.25,away,ft,3.43,1
+h2uVDr1f,Pisa,Cesena,0,0,dc,0,home/draw,ft,1.32,1
+h2uVDr1f,Pisa,Cesena,0,0,dc,0,home/away,ft,1.38,1
+h2uVDr1f,Pisa,Cesena,0,0,dc,0,draw/away,ft,1.87,1
+SG7bDmCr,Torino,Empoli,1,1,1x2,0,home,ft,1.64,1
+SG7bDmCr,Torino,Empoli,1,1,1x2,0,draw,ft,3.95,1
+SG7bDmCr,Torino,Empoli,1,1,1x2,0,away,ft,7.0,1
+SG7bDmCr,Torino,Empoli,1,1,ou,0.50,over,ft,1.09,1
+SG7bDmCr,Torino,Empoli,1,1,ou,0.50,under,ft,11.0,1
+SG7bDmCr,Torino,Empoli,1,1,ou,1.50,over,ft,1.38,1
+SG7bDmCr,Torino,Empoli,1,1,ou,1.50,under,ft,3.5,1
+SG7bDmCr,Torino,Empoli,1,1,ou,2.50,over,ft,2.16,1
+SG7bDmCr,Torino,Empoli,1,1,ou,2.50,under,ft,1.83,1
+SG7bDmCr,Torino,Empoli,1,1,ou,3.50,over,ft,3.95,1
+SG7bDmCr,Torino,Empoli,1,1,ou,3.50,under,ft,1.32,1
+SG7bDmCr,Torino,Empoli,1,1,ou,4.50,over,ft,9.2,1
+SG7bDmCr,Torino,Empoli,1,1,ou,4.50,under,ft,1.11,1
+SG7bDmCr,Torino,Empoli,1,1,ou,5.50,over,ft,21.0,1
+SG7bDmCr,Torino,Empoli,1,1,ou,5.50,under,ft,1.03,1
+SG7bDmCr,Torino,Empoli,1,1,ou,6.50,over,ft,50.0,1
+SG7bDmCr,Torino,Empoli,1,1,hc,0,home,ft,1.22,1
+SG7bDmCr,Torino,Empoli,1,1,hc,0,away,ft,5.22,1
+SG7bDmCr,Torino,Empoli,1,1,hc,0.50,home,ft,1.16,1
+SG7bDmCr,Torino,Empoli,1,1,hc,0.50,away,ft,7.0,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-0.50,home,ft,1.64,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-0.50,away,ft,2.52,1
+SG7bDmCr,Torino,Empoli,1,1,hc,0.75,home,ft,1.09,1
+SG7bDmCr,Torino,Empoli,1,1,hc,0.75,away,ft,10.29,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-0.75,home,ft,1.81,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-0.75,away,ft,2.19,1
+SG7bDmCr,Torino,Empoli,1,1,hc,1.00,home,ft,1.03,1
+SG7bDmCr,Torino,Empoli,1,1,hc,1.00,away,ft,21.57,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-1.00,home,ft,2.1,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-1.00,away,ft,1.87,1
+SG7bDmCr,Torino,Empoli,1,1,hc,1.25,home,ft,1.03,1
+SG7bDmCr,Torino,Empoli,1,1,hc,1.25,away,ft,22.78,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-1.25,home,ft,2.47,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-1.25,away,ft,1.65,1
+SG7bDmCr,Torino,Empoli,1,1,hc,1.50,home,ft,1.03,1
+SG7bDmCr,Torino,Empoli,1,1,hc,1.50,away,ft,24.0,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-1.50,home,ft,2.83,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-1.50,away,ft,1.51,1
+SG7bDmCr,Torino,Empoli,1,1,hc,1.75,away,ft,38.95,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-1.75,home,ft,3.53,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-1.75,away,ft,1.37,1
+SG7bDmCr,Torino,Empoli,1,1,hc,2.00,away,ft,96.83,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-2.00,home,ft,5.13,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-2.00,away,ft,1.23,1
+SG7bDmCr,Torino,Empoli,1,1,hc,2.25,away,ft,98.41,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-2.25,home,ft,5.76,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-2.25,away,ft,1.19,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-2.50,home,ft,6.4,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-2.50,away,ft,1.17,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-2.75,home,ft,8.71,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-2.75,away,ft,1.11,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-3.00,home,ft,14.5,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-3.00,away,ft,1.06,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-3.25,home,ft,15.25,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-3.25,away,ft,1.05,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-3.50,home,ft,16.0,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-3.50,away,ft,1.05,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-3.75,home,ft,16.0,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-3.75,away,ft,1.02,1
+SG7bDmCr,Torino,Empoli,1,1,hc,0.25,home,ft,1.18,1
+SG7bDmCr,Torino,Empoli,1,1,hc,0.25,away,ft,6.11,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-0.25,home,ft,1.43,1
+SG7bDmCr,Torino,Empoli,1,1,hc,-0.25,away,ft,3.24,1
+SG7bDmCr,Torino,Empoli,1,1,dc,0,home/draw,ft,1.16,1
+SG7bDmCr,Torino,Empoli,1,1,dc,0,home/away,ft,1.32,1
+SG7bDmCr,Torino,Empoli,1,1,dc,0,draw/away,ft,2.52,1
+WjBv9U0S,Cagliari,Cremonese,1,1,1x2,0,home,ft,1.96,1
+WjBv9U0S,Cagliari,Cremonese,1,1,1x2,0,draw,ft,3.65,1
+WjBv9U0S,Cagliari,Cremonese,1,1,1x2,0,away,ft,4.5,1
+WjBv9U0S,Cagliari,Cremonese,1,1,ou,0.50,over,ft,1.07,1
+WjBv9U0S,Cagliari,Cremonese,1,1,ou,0.50,under,ft,13.5,1
+WjBv9U0S,Cagliari,Cremonese,1,1,ou,1.50,over,ft,1.31,1
+WjBv9U0S,Cagliari,Cremonese,1,1,ou,1.50,under,ft,4.0,1
+WjBv9U0S,Cagliari,Cremonese,1,1,ou,2.50,over,ft,1.97,1
+WjBv9U0S,Cagliari,Cremonese,1,1,ou,2.50,under,ft,2.0,1
+WjBv9U0S,Cagliari,Cremonese,1,1,ou,3.50,over,ft,3.5,1
+WjBv9U0S,Cagliari,Cremonese,1,1,ou,3.50,under,ft,1.37,1
+WjBv9U0S,Cagliari,Cremonese,1,1,ou,4.50,over,ft,7.6,1
+WjBv9U0S,Cagliari,Cremonese,1,1,ou,4.50,under,ft,1.14,1
+WjBv9U0S,Cagliari,Cremonese,1,1,ou,5.50,over,ft,17.5,1
+WjBv9U0S,Cagliari,Cremonese,1,1,ou,5.50,under,ft,1.05,1
+WjBv9U0S,Cagliari,Cremonese,1,1,ou,6.50,over,ft,50.0,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,0,home,ft,1.41,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,0,away,ft,3.35,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,0.50,home,ft,1.27,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,0.50,away,ft,4.6,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-0.50,home,ft,1.94,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-0.50,away,ft,2.05,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,0.75,home,ft,1.18,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,0.75,away,ft,6.27,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-0.75,home,ft,2.19,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-0.75,away,ft,1.78,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,1.00,home,ft,1.08,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,1.00,away,ft,10.78,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-1.00,home,ft,2.65,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-1.00,away,ft,1.52,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,1.25,home,ft,1.07,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,1.25,away,ft,11.64,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-1.25,home,ft,3.04,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-1.25,away,ft,1.41,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,1.50,home,ft,1.07,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,1.50,away,ft,12.5,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-1.50,home,ft,3.42,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-1.50,away,ft,1.34,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,1.75,home,ft,1.04,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,1.75,away,ft,18.52,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-1.75,home,ft,4.36,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-1.75,away,ft,1.24,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,2.00,away,ft,36.04,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-2.00,home,ft,6.49,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-2.00,away,ft,1.14,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,2.25,away,ft,37.07,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-2.25,home,ft,7.12,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-2.25,away,ft,1.13,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,2.50,away,ft,38.09,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-2.50,home,ft,7.6,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-2.50,away,ft,1.11,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,2.75,away,ft,44.22,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-2.75,home,ft,10.73,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-2.75,away,ft,1.07,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-3.00,home,ft,19.3,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-3.00,away,ft,1.03,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-3.25,home,ft,20.15,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-3.25,away,ft,1.03,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-3.50,home,ft,21.0,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-3.50,away,ft,1.03,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-3.75,home,ft,21.0,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,0.25,home,ft,1.32,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,0.25,away,ft,3.97,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-0.25,home,ft,1.67,1
+WjBv9U0S,Cagliari,Cremonese,1,1,hc,-0.25,away,ft,2.45,1
+WjBv9U0S,Cagliari,Cremonese,1,1,dc,0,home/draw,ft,1.27,1
+WjBv9U0S,Cagliari,Cremonese,1,1,dc,0,home/away,ft,1.36,1
+WjBv9U0S,Cagliari,Cremonese,1,1,dc,0,draw/away,ft,2.04,1
+O2Xm0vko,Lecce,Sassuolo,0,0,1x2,0,home,ft,1.81,1
+O2Xm0vko,Lecce,Sassuolo,0,0,1x2,0,draw,ft,3.85,1
+O2Xm0vko,Lecce,Sassuolo,0,0,1x2,0,away,ft,5.2,1
+O2Xm0vko,Lecce,Sassuolo,0,0,ou,0.50,over,ft,1.07,1
+O2Xm0vko,Lecce,Sassuolo,0,0,ou,0.50,under,ft,14.0,1
+O2Xm0vko,Lecce,Sassuolo,0,0,ou,1.50,over,ft,1.31,1
+O2Xm0vko,Lecce,Sassuolo,0,0,ou,1.50,under,ft,4.1,1
+O2Xm0vko,Lecce,Sassuolo,0,0,ou,2.50,over,ft,1.94,1
+O2Xm0vko,Lecce,Sassuolo,0,0,ou,2.50,under,ft,2.04,1
+O2Xm0vko,Lecce,Sassuolo,0,0,ou,3.50,over,ft,3.4,1
+O2Xm0vko,Lecce,Sassuolo,0,0,ou,3.50,under,ft,1.4,1
+O2Xm0vko,Lecce,Sassuolo,0,0,ou,4.50,over,ft,7.0,1
+O2Xm0vko,Lecce,Sassuolo,0,0,ou,4.50,under,ft,1.15,1
+O2Xm0vko,Lecce,Sassuolo,0,0,ou,5.50,over,ft,17.5,1
+O2Xm0vko,Lecce,Sassuolo,0,0,ou,5.50,under,ft,1.05,1
+O2Xm0vko,Lecce,Sassuolo,0,0,ou,6.50,over,ft,38.0,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,0,home,ft,1.34,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,0,away,ft,3.85,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,0.50,home,ft,1.23,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,0.50,away,ft,5.2,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-0.50,home,ft,1.81,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-0.50,away,ft,2.21,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,0.75,home,ft,1.15,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,0.75,away,ft,7.18,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-0.75,home,ft,2.04,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-0.75,away,ft,1.94,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,1.00,home,ft,1.07,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,1.00,away,ft,12.3,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-1.00,home,ft,2.45,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-1.00,away,ft,1.65,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,1.25,home,ft,1.06,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,1.25,away,ft,13.15,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-1.25,home,ft,2.85,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-1.25,away,ft,1.5,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,1.50,home,ft,1.06,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,1.50,away,ft,14.0,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-1.50,home,ft,3.25,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-1.50,away,ft,1.41,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,1.75,home,ft,1.04,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,1.75,away,ft,21.12,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-1.75,home,ft,4.12,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-1.75,away,ft,1.29,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,2.00,away,ft,45.68,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-2.00,home,ft,5.98,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-2.00,away,ft,1.17,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,2.25,away,ft,46.84,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-2.25,home,ft,6.59,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-2.25,away,ft,1.16,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,2.50,away,ft,48.0,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-2.50,home,ft,7.2,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-2.50,away,ft,1.14,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,2.75,away,ft,73.3,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-2.75,home,ft,9.59,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-2.75,away,ft,1.09,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-3.00,home,ft,14.83,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-3.00,away,ft,1.04,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-3.25,home,ft,15.41,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-3.25,away,ft,1.04,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-3.50,home,ft,16.0,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-3.50,away,ft,1.04,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-3.75,home,ft,16.0,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-3.75,away,ft,1.02,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,0.25,home,ft,1.27,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,0.25,away,ft,4.52,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-0.25,home,ft,1.57,1
+O2Xm0vko,Lecce,Sassuolo,0,0,hc,-0.25,away,ft,2.7,1
+O2Xm0vko,Lecce,Sassuolo,0,0,dc,0,home/draw,ft,1.23,1
+O2Xm0vko,Lecce,Sassuolo,0,0,dc,0,home/away,ft,1.34,1
+O2Xm0vko,Lecce,Sassuolo,0,0,dc,0,draw/away,ft,2.2,1
+8KIdPmPc,Cagliari,Carrarese,3,3,1x2,0,home,ft,1.4,1
+8KIdPmPc,Cagliari,Carrarese,3,3,1x2,0,draw,ft,5.1,1
+8KIdPmPc,Cagliari,Carrarese,3,3,1x2,0,away,ft,11.0,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,0.50,over,ft,1.06,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,0.50,under,ft,16.0,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,1.50,over,ft,1.26,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,1.50,under,ft,4.5,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,2.50,over,ft,1.82,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,2.50,under,ft,2.2,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,3.50,over,ft,3.1,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,3.50,under,ft,1.46,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,4.50,over,ft,6.2,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,4.50,under,ft,1.18,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,5.50,over,ft,14.0,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,5.50,under,ft,1.07,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,6.50,over,ft,34.0,1
+8KIdPmPc,Cagliari,Carrarese,3,3,ou,6.50,under,ft,1.02,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,0,home,ft,1.13,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,0,away,ft,8.48,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,0.50,home,ft,1.1,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,0.50,away,ft,10.5,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-0.50,home,ft,1.4,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-0.50,away,ft,3.43,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,0.75,home,ft,1.06,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,0.75,away,ft,15.68,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-0.75,home,ft,1.48,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-0.75,away,ft,3.0,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,1.00,home,ft,1.02,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,1.00,away,ft,32.22,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-1.00,home,ft,1.62,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-1.00,away,ft,2.58,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,1.25,home,ft,1.02,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,1.25,away,ft,33.36,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-1.25,home,ft,1.89,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-1.25,away,ft,2.08,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,1.50,home,ft,1.02,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,1.50,away,ft,34.5,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-1.50,home,ft,2.15,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-1.50,away,ft,1.83,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,1.75,away,ft,53.45,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-1.75,home,ft,2.5,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-1.75,away,ft,1.63,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-2.00,home,ft,3.14,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-2.00,away,ft,1.42,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-2.25,home,ft,3.53,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-2.25,away,ft,1.35,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-2.50,home,ft,3.95,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-2.50,away,ft,1.3,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-2.75,home,ft,5.1,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-2.75,away,ft,1.21,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-3.00,home,ft,7.6,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-3.00,away,ft,1.13,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-3.25,home,ft,8.2,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-3.25,away,ft,1.11,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-3.50,home,ft,8.8,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-3.50,away,ft,1.11,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-3.75,home,ft,8.8,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-3.75,away,ft,1.07,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-4.00,home,ft,8.8,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,0.25,home,ft,1.11,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,0.25,away,ft,9.49,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-0.25,home,ft,1.26,1
+8KIdPmPc,Cagliari,Carrarese,3,3,hc,-0.25,away,ft,4.67,1
+8KIdPmPc,Cagliari,Carrarese,3,3,dc,0,home/draw,ft,1.09,1
+8KIdPmPc,Cagliari,Carrarese,3,3,dc,0,home/away,ft,1.24,1
+8KIdPmPc,Cagliari,Carrarese,3,3,dc,0,draw/away,ft,3.45,1
+fNwTkrUF,Salernitana,Spezia,4,4,1x2,0,home,ft,2.62,1
+fNwTkrUF,Salernitana,Spezia,4,4,1x2,0,draw,ft,3.4,1
+fNwTkrUF,Salernitana,Spezia,4,4,1x2,0,away,ft,3.0,1
+fNwTkrUF,Salernitana,Spezia,4,4,ou,0.50,over,ft,1.08,1
+fNwTkrUF,Salernitana,Spezia,4,4,ou,0.50,under,ft,12.0,1
+fNwTkrUF,Salernitana,Spezia,4,4,ou,1.50,over,ft,1.34,1
+fNwTkrUF,Salernitana,Spezia,4,4,ou,1.50,under,ft,3.75,1
+fNwTkrUF,Salernitana,Spezia,4,4,ou,2.50,over,ft,2.06,1
+fNwTkrUF,Salernitana,Spezia,4,4,ou,2.50,under,ft,1.9,1
+fNwTkrUF,Salernitana,Spezia,4,4,ou,3.50,over,ft,3.7,1
+fNwTkrUF,Salernitana,Spezia,4,4,ou,3.50,under,ft,1.35,1
+fNwTkrUF,Salernitana,Spezia,4,4,ou,4.50,over,ft,8.0,1
+fNwTkrUF,Salernitana,Spezia,4,4,ou,4.50,under,ft,1.13,1
+fNwTkrUF,Salernitana,Spezia,4,4,ou,5.50,over,ft,19.5,1
+fNwTkrUF,Salernitana,Spezia,4,4,ou,5.50,under,ft,1.04,1
+fNwTkrUF,Salernitana,Spezia,4,4,ou,6.50,over,ft,50.0,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,0,home,ft,1.86,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,0,away,ft,2.14,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,0.50,home,ft,1.48,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,0.50,away,ft,3.03,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-0.50,home,ft,2.64,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-0.50,away,ft,1.6,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,0.75,home,ft,1.34,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,0.75,away,ft,3.81,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-0.75,home,ft,3.26,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-0.75,away,ft,1.43,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,1.00,home,ft,1.19,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,1.00,away,ft,5.55,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-1.00,home,ft,4.55,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-1.00,away,ft,1.25,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,1.25,home,ft,1.16,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,1.25,away,ft,6.17,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-1.25,home,ft,5.13,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-1.25,away,ft,1.21,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,1.50,home,ft,1.15,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,1.50,away,ft,6.8,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-1.50,home,ft,5.72,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-1.50,away,ft,1.19,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,1.75,home,ft,1.09,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,1.75,away,ft,9.66,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-1.75,home,ft,7.83,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-1.75,away,ft,1.13,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,2.00,home,ft,1.04,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,2.00,away,ft,17.85,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-2.00,home,ft,13.44,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-2.00,away,ft,1.06,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,2.25,home,ft,1.04,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,2.25,away,ft,18.71,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-2.25,home,ft,14.22,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-2.25,away,ft,1.06,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,2.50,home,ft,1.04,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,2.50,away,ft,19.56,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-2.50,home,ft,15.0,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-2.50,away,ft,1.06,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,2.75,home,ft,1.02,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,2.75,away,ft,29.54,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-2.75,home,ft,22.53,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-2.75,away,ft,1.03,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,3.00,away,ft,41.36,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-3.00,home,ft,30.0,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,3.25,away,ft,41.95,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-3.25,home,ft,30.53,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,3.50,away,ft,42.54,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-3.50,home,ft,31.07,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-3.75,home,ft,31.07,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,0.25,home,ft,1.62,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,0.25,away,ft,2.59,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-0.25,home,ft,2.25,1
+fNwTkrUF,Salernitana,Spezia,4,4,hc,-0.25,away,ft,1.79,1
+fNwTkrUF,Salernitana,Spezia,4,4,dc,0,home/draw,ft,1.47,1
+fNwTkrUF,Salernitana,Spezia,4,4,dc,0,home/away,ft,1.4,1
+fNwTkrUF,Salernitana,Spezia,4,4,dc,0,draw/away,ft,1.6,1
+42SH31wI,Lecce,Mantova,2,2,1x2,0,home,ft,1.47,1
+42SH31wI,Lecce,Mantova,2,2,1x2,0,draw,ft,4.6,1
+42SH31wI,Lecce,Mantova,2,2,1x2,0,away,ft,9.2,1
+42SH31wI,Lecce,Mantova,2,2,ou,0.50,over,ft,1.06,1
+42SH31wI,Lecce,Mantova,2,2,ou,0.50,under,ft,15.0,1
+42SH31wI,Lecce,Mantova,2,2,ou,1.50,over,ft,1.3,1
+42SH31wI,Lecce,Mantova,2,2,ou,1.50,under,ft,4.1,1
+42SH31wI,Lecce,Mantova,2,2,ou,2.50,over,ft,1.92,1
+42SH31wI,Lecce,Mantova,2,2,ou,2.50,under,ft,2.06,1
+42SH31wI,Lecce,Mantova,2,2,ou,3.50,over,ft,3.35,1
+42SH31wI,Lecce,Mantova,2,2,ou,3.50,under,ft,1.42,1
+42SH31wI,Lecce,Mantova,2,2,ou,4.50,over,ft,6.8,1
+42SH31wI,Lecce,Mantova,2,2,ou,4.50,under,ft,1.16,1
+42SH31wI,Lecce,Mantova,2,2,ou,5.50,over,ft,15.5,1
+42SH31wI,Lecce,Mantova,2,2,ou,5.50,under,ft,1.06,1
+42SH31wI,Lecce,Mantova,2,2,ou,6.50,over,ft,38.0,1
+42SH31wI,Lecce,Mantova,2,2,ou,6.50,under,ft,1.02,1
+42SH31wI,Lecce,Mantova,2,2,hc,0,home,ft,1.15,1
+42SH31wI,Lecce,Mantova,2,2,hc,0,away,ft,7.24,1
+42SH31wI,Lecce,Mantova,2,2,hc,0.50,home,ft,1.11,1
+42SH31wI,Lecce,Mantova,2,2,hc,0.50,away,ft,9.2,1
+42SH31wI,Lecce,Mantova,2,2,hc,-0.50,home,ft,1.47,1
+42SH31wI,Lecce,Mantova,2,2,hc,-0.50,away,ft,3.11,1
+42SH31wI,Lecce,Mantova,2,2,hc,0.75,home,ft,1.07,1
+42SH31wI,Lecce,Mantova,2,2,hc,0.75,away,ft,13.73,1
+42SH31wI,Lecce,Mantova,2,2,hc,-0.75,home,ft,1.58,1
+42SH31wI,Lecce,Mantova,2,2,hc,-0.75,away,ft,2.67,1
+42SH31wI,Lecce,Mantova,2,2,hc,1.00,home,ft,1.03,1
+42SH31wI,Lecce,Mantova,2,2,hc,1.00,away,ft,29.05,1
+42SH31wI,Lecce,Mantova,2,2,hc,-1.00,home,ft,1.78,1
+42SH31wI,Lecce,Mantova,2,2,hc,-1.00,away,ft,2.24,1
+42SH31wI,Lecce,Mantova,2,2,hc,1.25,home,ft,1.02,1
+42SH31wI,Lecce,Mantova,2,2,hc,1.25,away,ft,30.26,1
+42SH31wI,Lecce,Mantova,2,2,hc,-1.25,home,ft,2.1,1
+42SH31wI,Lecce,Mantova,2,2,hc,-1.25,away,ft,1.87,1
+42SH31wI,Lecce,Mantova,2,2,hc,1.50,home,ft,1.02,1
+42SH31wI,Lecce,Mantova,2,2,hc,1.50,away,ft,31.47,1
+42SH31wI,Lecce,Mantova,2,2,hc,-1.50,home,ft,2.42,1
+42SH31wI,Lecce,Mantova,2,2,hc,-1.50,away,ft,1.67,1
+42SH31wI,Lecce,Mantova,2,2,hc,1.75,away,ft,50.13,1
+42SH31wI,Lecce,Mantova,2,2,hc,-1.75,home,ft,2.88,1
+42SH31wI,Lecce,Mantova,2,2,hc,-1.75,away,ft,1.49,1
+42SH31wI,Lecce,Mantova,2,2,hc,-2.00,home,ft,3.74,1
+42SH31wI,Lecce,Mantova,2,2,hc,-2.00,away,ft,1.32,1
+42SH31wI,Lecce,Mantova,2,2,hc,-2.25,home,ft,4.2,1
+42SH31wI,Lecce,Mantova,2,2,hc,-2.25,away,ft,1.27,1
+42SH31wI,Lecce,Mantova,2,2,hc,-2.50,home,ft,4.63,1
+42SH31wI,Lecce,Mantova,2,2,hc,-2.50,away,ft,1.24,1
+42SH31wI,Lecce,Mantova,2,2,hc,-2.75,home,ft,6.11,1
+42SH31wI,Lecce,Mantova,2,2,hc,-2.75,away,ft,1.16,1
+42SH31wI,Lecce,Mantova,2,2,hc,-3.00,home,ft,9.63,1
+42SH31wI,Lecce,Mantova,2,2,hc,-3.00,away,ft,1.09,1
+42SH31wI,Lecce,Mantova,2,2,hc,-3.25,home,ft,10.33,1
+42SH31wI,Lecce,Mantova,2,2,hc,-3.25,away,ft,1.09,1
+42SH31wI,Lecce,Mantova,2,2,hc,-3.50,home,ft,11.0,1
+42SH31wI,Lecce,Mantova,2,2,hc,-3.50,away,ft,1.08,1
+42SH31wI,Lecce,Mantova,2,2,hc,-3.75,home,ft,11.0,1
+42SH31wI,Lecce,Mantova,2,2,hc,-3.75,away,ft,1.04,1
+42SH31wI,Lecce,Mantova,2,2,hc,0.25,home,ft,1.13,1
+42SH31wI,Lecce,Mantova,2,2,hc,0.25,away,ft,8.22,1
+42SH31wI,Lecce,Mantova,2,2,hc,-0.25,home,ft,1.31,1
+42SH31wI,Lecce,Mantova,2,2,hc,-0.25,away,ft,4.15,1
+42SH31wI,Lecce,Mantova,2,2,dc,0,home/draw,ft,1.11,1
+42SH31wI,Lecce,Mantova,2,2,dc,0,home/away,ft,1.26,1
+42SH31wI,Lecce,Mantova,2,2,dc,0,draw/away,ft,3.1,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,1x2,0,home,ft,2.4,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,1x2,0,draw,ft,3.25,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,1x2,0,away,ft,3.45,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,ou,0.50,over,ft,1.08,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,ou,0.50,under,ft,12.0,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,ou,1.50,over,ft,1.35,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,ou,1.50,under,ft,3.7,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,ou,2.50,over,ft,2.08,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,ou,2.50,under,ft,1.89,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,ou,3.50,over,ft,3.8,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,ou,3.50,under,ft,1.34,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,ou,4.50,over,ft,8.6,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,ou,4.50,under,ft,1.12,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,ou,5.50,over,ft,21.0,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,ou,5.50,under,ft,1.04,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,ou,6.50,over,ft,50.0,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,0,home,ft,1.66,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,0,away,ft,2.45,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,0.50,home,ft,1.38,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,0.50,away,ft,3.5,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-0.50,home,ft,2.4,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-0.50,away,ft,1.7,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,0.75,home,ft,1.25,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,0.75,away,ft,4.6,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-0.75,home,ft,2.91,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-0.75,away,ft,1.5,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,1.00,home,ft,1.13,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,1.00,away,ft,7.42,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-1.00,home,ft,4.03,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-1.00,away,ft,1.3,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,1.25,home,ft,1.12,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,1.25,away,ft,8.21,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-1.25,home,ft,4.61,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-1.25,away,ft,1.25,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,1.50,home,ft,1.1,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,1.50,away,ft,9.0,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-1.50,home,ft,5.14,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-1.50,away,ft,1.22,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,1.75,home,ft,1.07,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,1.75,away,ft,13.21,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-1.75,home,ft,7.09,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-1.75,away,ft,1.14,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,2.00,home,ft,1.03,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,2.00,away,ft,25.88,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-2.00,home,ft,11.91,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-2.00,away,ft,1.07,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,2.25,home,ft,1.03,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,2.25,away,ft,26.5,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-2.25,home,ft,12.71,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-2.25,away,ft,1.07,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,2.50,home,ft,1.03,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,2.50,away,ft,27.53,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-2.50,home,ft,13.51,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-2.50,away,ft,1.06,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,2.75,away,ft,43.18,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-2.75,home,ft,20.14,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-2.75,away,ft,1.04,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-3.00,home,ft,31.26,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-3.25,home,ft,31.97,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-3.50,home,ft,32.68,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-3.75,home,ft,32.68,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,0.25,home,ft,1.48,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,0.25,away,ft,2.97,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-0.25,home,ft,2.03,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,hc,-0.25,away,ft,1.94,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,dc,0,home/draw,ft,1.38,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,dc,0,home/away,ft,1.42,1
+Aeu0r0Mk,Frosinone,Pisa,0,0,dc,0,draw/away,ft,1.7,1
+ALOjHNNj,Torino,Cosenza,2,2,1x2,0,home,ft,1.29,1
+ALOjHNNj,Torino,Cosenza,2,2,1x2,0,draw,ft,6.2,1
+ALOjHNNj,Torino,Cosenza,2,2,1x2,0,away,ft,14.0,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,0.50,over,ft,1.04,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,0.50,under,ft,20.0,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,1.50,over,ft,1.23,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,1.50,under,ft,5.0,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,2.50,over,ft,1.72,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,2.50,under,ft,2.36,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,3.50,over,ft,2.84,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,3.50,under,ft,1.53,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,4.50,over,ft,5.4,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,4.50,under,ft,1.22,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,5.50,over,ft,12.0,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,5.50,under,ft,1.08,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,6.50,over,ft,26.0,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,6.50,under,ft,1.03,1
+ALOjHNNj,Torino,Cosenza,2,2,ou,7.50,over,ft,65.0,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,0,home,ft,1.08,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,0,away,ft,11.76,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,0.50,home,ft,1.07,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,0.50,away,ft,14.0,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-0.50,home,ft,1.29,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-0.50,away,ft,4.33,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,0.75,home,ft,1.04,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,0.75,away,ft,21.12,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-0.75,home,ft,1.34,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-0.75,away,ft,3.77,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,1.00,away,ft,45.57,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-1.00,home,ft,1.43,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-1.00,away,ft,3.2,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,1.25,away,ft,46.78,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-1.25,home,ft,1.68,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-1.25,away,ft,2.41,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,1.50,away,ft,48.0,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-1.50,home,ft,1.92,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-1.50,away,ft,2.03,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,1.75,away,ft,79.33,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-1.75,home,ft,2.17,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-1.75,away,ft,1.8,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-2.00,home,ft,2.61,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-2.00,away,ft,1.58,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-2.25,home,ft,2.95,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-2.25,away,ft,1.46,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-2.50,home,ft,3.3,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-2.50,away,ft,1.39,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-2.75,home,ft,4.12,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-2.75,away,ft,1.28,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-3.00,home,ft,5.87,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-3.00,away,ft,1.17,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-3.25,home,ft,6.43,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-3.25,away,ft,1.15,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-3.50,home,ft,7.0,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-3.50,away,ft,1.13,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-3.75,home,ft,7.97,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-3.75,away,ft,1.09,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-4.00,home,ft,7.93,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-4.00,away,ft,1.05,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,0.25,home,ft,1.08,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,0.25,away,ft,12.88,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-0.25,home,ft,1.18,1
+ALOjHNNj,Torino,Cosenza,2,2,hc,-0.25,away,ft,6.09,1
+ALOjHNNj,Torino,Cosenza,2,2,dc,0,home/draw,ft,1.07,1
+ALOjHNNj,Torino,Cosenza,2,2,dc,0,home/away,ft,1.18,1
+ALOjHNNj,Torino,Cosenza,2,2,dc,0,draw/away,ft,4.3,1
