@@ -1,30 +1,7 @@
 {
-  "balance": 962.0,
+  "balance": 1304.0,
   "initial_bankroll": 10000,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_handicap_黄泽林_(香港)_奥托维尔塔宁_(芬兰)_让盘客胜(-15)",
-      "sport": "tennis",
-      "league": "ATP - 辛辛那提公开赛",
-      "home_team": "黄泽林 (香港)",
-      "away_team": "奥托.维尔塔宁 (芬兰)",
-      "home_cn": "黄泽林 (香港)",
-      "away_cn": "奥托.维尔塔宁 (芬兰)",
-      "market": "handicap",
-      "market_type": "让盘客胜(-1.5)",
-      "sub_market": "hc",
-      "line": "",
-      "odds": 2.94,
-      "stake": 377,
-      "model_prob": 0.3535,
-      "ev_pct": 3.92,
-      "pin_odds": 2.7,
-      "fair_price": 2.829,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1786548600,
-      "created_at": "2026-08-12T10:26:24.550285+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_handicap_康坦哈里斯_(法国)_布云朝克特_(中国)_让盘主胜(-15)",
       "sport": "tennis",
@@ -529,6 +506,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786773600,
       "created_at": "2026-08-15T03:13:13.704271+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_威灵联_斯坦韦流浪_让球主胜(-0/05)",
+      "sport": "football",
+      "league": "英格兰伊斯米安超级联赛",
+      "home_team": "威灵联",
+      "away_team": "斯坦韦流浪",
+      "home_cn": "威灵联",
+      "away_cn": "斯坦韦流浪",
+      "market": "handicap",
+      "market_type": "让球主胜(-0/0.5)",
+      "sub_market": "hc",
+      "line": "-0/0.5",
+      "odds": 1.79,
+      "stake": 35,
+      "model_prob": 0.6186,
+      "ev_pct": 10.73,
+      "pin_odds": 1.5376,
+      "fair_price": 1.6166,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786802400,
+      "created_at": "2026-08-15T10:43:00.861890+00:00",
       "track_only": false
     }
   ],
@@ -9090,12 +9090,27 @@
       "home_cn": "雷科莱塔体育",
       "away_cn": "塔尔卡流浪者",
       "market_type": "让球主胜(0)"
+    },
+    {
+      "id": "bb_vs_pin_handicap_黄泽林_(香港)_奥托维尔塔宁_(芬兰)_让盘客胜(-15)",
+      "match": "377¥ @ 2.94 (超时作废)",
+      "date": "2026-08-15T10:31:17.597891+00:00",
+      "stake": 377,
+      "odds": 2.94,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "ATP - 辛辛那提公开赛",
+      "sport": "tennis",
+      "home_cn": "黄泽林 (香港)",
+      "away_cn": "奥托.维尔塔宁 (芬兰)",
+      "market_type": "让盘客胜(-1.5)"
     }
   ],
   "daily_budget": {
     "date": "2026-08-15",
-    "used": 471.0,
-    "bets": 9
+    "used": 506.0,
+    "bets": 10
   },
   "updated": "2026-08-09T16:16:09.144069"
 }

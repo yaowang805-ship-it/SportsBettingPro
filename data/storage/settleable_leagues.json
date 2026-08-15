@@ -604,9 +604,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "ATP - 辛辛那提公开赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-15T09:02:25.867349+00:00",
+  "updated": "2026-08-15T10:31:17.598188+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
