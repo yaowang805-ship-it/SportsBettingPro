@@ -14,6 +14,7 @@ from src.scrapers.bb_data import (
 )
 from src.scrapers.pinnacle_league_map import TEAM_NAME_MAP
 from src.scrapers.pinnacle_api import get_decimal_price
+from src.scrapers.devig import shin_fair_odds
 from src.scrapers.pinnacle_markets import get_league_matchups_and_markets, get_league_corner_markets
 from src.scrapers.matching_engine import (
     get_pin_ml_sorted, get_pin_spread, get_pin_total, _pin_to_epoch,
@@ -356,9 +357,9 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                 if home_sp and away_sp and get_decimal_price(home_sp) and get_decimal_price(away_sp):
                     pin_odds_h = get_decimal_price(home_sp)
                     pin_odds_a = get_decimal_price(away_sp)
-                    imp = 1.0 / pin_odds_h + 1.0 / pin_odds_a
-                    fair_h = round(pin_odds_h * imp, 4)
-                    fair_a = round(pin_odds_a * imp, 4)
+                    _fairs = shin_fair_odds([pin_odds_h, pin_odds_a])
+                    fair_h = _fairs[0]
+                    fair_a = _fairs[1]
 
                     ev_h = (bb_home_odds - fair_h) / fair_h * 100 if fair_h > 0 else 0
                     ev_a = (bb_away_odds - fair_a) / fair_a * 100 if fair_a > 0 else 0
@@ -398,9 +399,9 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                     if pin_line is not None and abs(bb_line - pin_line) > 0.1:
                         over_p = under_p = None  # 线不匹配, 拒绝
                 if over_p and under_p and get_decimal_price(over_p) and get_decimal_price(under_p):
-                    imp = 1.0 / get_decimal_price(over_p) + 1.0 / get_decimal_price(under_p)
-                    over_fair = round(get_decimal_price(over_p) * imp, 4)
-                    under_fair = round(get_decimal_price(under_p) * imp, 4)
+                    _fairs = shin_fair_odds([get_decimal_price(over_p), get_decimal_price(under_p)])
+                    over_fair = _fairs[0]
+                    under_fair = _fairs[1]
 
                     ev_over = (bb_over_odds - over_fair) / over_fair * 100 if over_fair > 0 else 0
                     ev_under = (bb_under_odds - under_fair) / under_fair * 100 if under_fair > 0 else 0

@@ -125,13 +125,10 @@ def _load_clv_data() -> dict:
 
 
 def _clv_multiplier(league: str) -> float:
-    """V4.5: CLV 动态调整 — 正CLV联赛加成, 负CLV联赛降权。"""
-    clv_data = _load_clv_data()
-    avg_clv = clv_data.get(league, 0)
-    if avg_clv > 3.0:   return 1.08   # 强正CLV: +8%
-    elif avg_clv > 1.0: return 1.04   # 正CLV: +4%
-    elif avg_clv < -3.0: return 0.88  # 强负CLV: -12%
-    elif avg_clv < -1.0: return 0.94  # 负CLV: -6%
+    """V5.2: CLV 动态调整暂时禁用 (CLV数据太稀疏, 采集窗口漏了96%, 不可靠)。
+
+    原逻辑: 正CLV联赛加成, 负CLV联赛降权。等CLV数据充足再启用。现在恒返回 1.0。
+    """
     return 1.0
 
 
@@ -172,12 +169,13 @@ def _odds_weight(odds: float) -> float:
 
 # =====================================================================
 def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
-              n_bets: int = 100, cap: float = 0.04,
+              n_bets: int = 100, cap: float = 0.06,
               sport_confidence: float = 1.0) -> float:
-    """V5 Half Kelly仓位 (返回小数, 0.04 = 4%)。
+    """V5.2 ¾ Kelly仓位 (返回小数, 0.06 = 6%)。
 
-    公式: half_kelly = max(0, wr×BB_odds - 1) / (BB_odds - 1) × 0.50 × confidence(n) × sport_discount
-    职业标准: Half Kelly 是平衡增长与生存的最优解
+    公式: kelly = max(0, wr×BB_odds - 1) / (BB_odds - 1) × 0.75 × confidence(n) × sport_discount
+    V5.2: Half Kelly(0.50) → ¾ Kelly(0.75), cap 0.04→0.06 — 保证日预算能投放出去
+    (用户要求: 适度放开, 日预算 ¥2万要花出去)
 
     V4.4: 连续置信度 + 运动级折扣
       n >= 100: confidence = 1.0
@@ -191,7 +189,7 @@ def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
     roi = actual_wr * bb_odds - 1.0
     if roi <= 0:
         return 0.0
-    kelly = roi / (bb_odds - 1.0) * 0.50   # V5: Half Kelly (was 0.75)
+    kelly = roi / (bb_odds - 1.0) * 0.75   # V5.2: ¾ Kelly (was Half 0.50)
     # V4.4: 连续样本量置信度 (替代4级阶梯)
     if n_bets >= 100:
         confidence = 1.0
@@ -201,7 +199,7 @@ def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
         confidence = 0.5 + 0.2 * (n_bets - 10) / 20.0
     else:
         confidence = 0.5  # n<10 仍然 0.5, MIN_N 由调用者控制
-    return min(cap, max(0.0, kelly * confidence * sport_confidence))  # V5: cap=0.04 (Half Kelly)
+    return min(cap, max(0.0, kelly * confidence * sport_confidence))  # V5.2: cap=0.06
 
 
 # =====================================================================
@@ -1075,6 +1073,17 @@ try:
 except ImportError:
     pass
 
+# V5.2: OU/HC 重校准用 Pinnacle收盘 (旧用平均价, 抽水过厚: OU -8.7%→-3.9%, HC -11.4%→-2.9%)
+try:
+    from config.ou_hc_calibrated import PIN_OU_DATA_FIXED, PIN_HC_DATA_FIXED
+    if PIN_OU_DATA_FIXED:
+        PIN_OU_DATA["_AGGREGATE"] = PIN_OU_DATA_FIXED
+        PIN_OU_AGGREGATE = PIN_OU_DATA_FIXED
+    if PIN_HC_DATA_FIXED:
+        PIN_HC_DATA = PIN_HC_DATA_FIXED
+except ImportError:
+    pass
+
 # V5: SBR Consensus 收盘价 (SportsbookReview, 含Pinnacle, 56K场, 4运动)
 # 优先使用SBR数据, 但保留旧数据作为bin空缺时的回退
 try:
@@ -1574,25 +1583,12 @@ def _load_settlement_feedback() -> dict:
 
 
 def _settlement_multiplier(league: str) -> float:
-    """V4.5: 根据实盘结算 ROI 调整仓位。收紧过拟合(2026-08-14):
-    - 样本门槛 15→30(15 笔噪声太大, 单笔就摆动 ±7% ROI)
-    - 调整幅度 ±10/-30% → ±5/-15%(避免追涨杀跌)
-    - ROI > +15% → +5%; +5%~+15% → 基准; -10%~+5% → -8%; < -10% → -15%
-    """
-    fb = _load_settlement_feedback()
-    data = fb.get(league)
-    if data is None or data["n"] < 30:
-        return 1.0
+    """V5.2: 实盘结算反馈暂时禁用 (用户要求: 样本太少, 不接入矩阵)。
 
-    roi = data["roi"]
-    if roi > 0.15:
-        return 1.05
-    elif roi > 0.05:
-        return 1.00
-    elif roi > -0.10:
-        return 0.92
-    else:
-        return 0.85
+    原逻辑: 根据实盘结算 ROI 调整仓位 (n<30 返回1.0)。
+    但实盘样本太少(单笔摆动±7%), 等样本足够再启用。现在恒返回 1.0。
+    """
+    return 1.0
 
 
 def _pin_market_roi(data_dict) -> float:

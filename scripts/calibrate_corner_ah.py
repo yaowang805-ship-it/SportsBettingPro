@@ -68,8 +68,8 @@ def process_file(path, league_name, data):
         hc = _f(r.get("HC"))
         ac = _f(r.get("AC"))
         line = _f(r.get("AHCh"))
-        home_odds = _f(r.get("AvgCAHH")) or _f(r.get("PCAHH"))
-        away_odds = _f(r.get("AvgCAHA")) or _f(r.get("PCAHA"))
+        home_odds = _f(r.get("PCAHH")) or _f(r.get("AvgCAHH"))
+        away_odds = _f(r.get("PCAHA")) or _f(r.get("AvgCAHA"))
         if hc is None or ac is None or line is None:
             continue
         # 主队结算
