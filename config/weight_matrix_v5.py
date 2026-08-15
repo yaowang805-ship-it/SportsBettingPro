@@ -2122,14 +2122,13 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
     if sub_market in BLOCKED_MARKETS:
         return 999.0
 
-    # V5.2: 盈亏线数据化 — 按 (运动, 联赛, 盘口) 查盈亏点 + 安全缓冲
-    # (91K场 football-data.co.uk Pinnacle收盘回测, 分联赛分盘口; 无数据联赛回退 tier聚合+2%缓冲)
-    try:
-        from config.break_even_table import get_break_even
-        from config.constants import get_league_tier
-        base_min_ev = get_break_even(sport_lower, league, sub_market, get_league_tier(league))
-    except ImportError:
-        base_min_ev = 4.0  # 兜底保守
+    # V5.3: 公平价已去抽水(devig), EV=(BB-公平价)/公平价 本身就是真实edge,
+    # 门槛只需小buffer覆盖 devig误差+微小波动。之前用盈亏线表(4-9%)是把抽水算两次(错)。
+    # 直接盘口(1X2/HC/OU/corner): 2% buffer; 推导盘口(DC/DNB/BTTS/OE/HT类): 3% buffer(推导误差)
+    if sub_market in ("dc", "dnb", "btts", "oe", "ht", "ht_dc", "ht_hc", "ht_ou"):
+        base_min_ev = 3.0
+    else:
+        base_min_ev = 2.0
 
     if sport_lower == "football":
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)
