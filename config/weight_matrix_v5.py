@@ -1061,6 +1061,13 @@ try:
 except ImportError:
     CORNER_HC_DATA = {}
 
+# V5.1: OddsPortal 平均收盘价 (op_scraper 下载的 212 联赛, 补 football-data.co.uk 没覆盖的联赛)
+try:
+    from config.oddsportal_calibrated import ODDSPORTAL_1X2_DATA, ODDSPORTAL_ML_DATA
+except ImportError:
+    ODDSPORTAL_1X2_DATA = {}
+    ODDSPORTAL_ML_DATA = {}
+
 # V5: SBR Consensus 收盘价 (SportsbookReview, 含Pinnacle, 56K场, 4运动)
 # 优先使用SBR数据, 但保留旧数据作为bin空缺时的回退
 try:
@@ -1786,14 +1793,19 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             return kelly_075(wr, avg_o, bb_prem, n, sport_confidence=0.6)
 
         else:  # 1X2 (incl. dc, dnb, btts, oe derived)
-            # V5: 优先使用 Pinnacle 联赛数据，无数据时回退 BTB 共识收盘价 (818联赛)
+            # V5: 优先 Pinnacle → BTB 共识(818) → OddsPortal(212联赛)
             league_data = _match_league(league, PIN_1X2_DATA)
+            _data_discount = 1.0
             if not league_data and BTB_1X2_DATA:
-                league_data = _match_btb_league(league)
-                # BTB 数据置信度折扣: Pinnacle单家 > 32家平均
-                _btb_discount = 0.85
-            else:
-                _btb_discount = 1.0
+                _b = _match_btb_league(league)
+                if _b:
+                    league_data = _b
+                    _data_discount = 0.85  # BTB: 32家平均 < Pinnacle单家
+            if not league_data and ODDSPORTAL_1X2_DATA:
+                _o = _match_league(league, ODDSPORTAL_1X2_DATA) or ODDSPORTAL_1X2_DATA.get("_AGGREGATE")
+                if _o:
+                    league_data = _o
+                    _data_discount = get_oddsportal_discount(league)
 
             # DC/DNB from 1X2 derivation
             if sub_market in ("dc", "dnb"):
@@ -1806,7 +1818,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 if n < MIN_N_MINIMUM:
                     return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
                 bb_prem = _bb_premium_1x2(odds) * 0.85
-                stake = kelly_075(wr * 1.08, avg_o, bb_prem, n) * 0.5 * _btb_discount
+                stake = kelly_075(wr * 1.08, avg_o, bb_prem, n) * 0.5 * _data_discount
                 return min(stake, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.02))
 
             # BTTS/OE from OU derivation (uses OU data, BTB doesn't have OU so no change)
@@ -1831,12 +1843,19 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                     return 0.0
                 return cfg["max_stake"]
 
-            # V5: 纯1X2 → 优先Pinnacle数据, 无数据回退BTB共识收盘价
+            # V5: 纯1X2 → 优先Pinnacle → BTB共识 → OddsPortal
             league_data = _match_league(league, PIN_1X2_DATA)
-            _btb_fallback = False
+            _data_src = "pin"
             if not league_data and BTB_1X2_DATA:
-                league_data = _match_btb_league(league)
-                _btb_fallback = True
+                _b = _match_btb_league(league)
+                if _b:
+                    league_data = _b
+                    _data_src = "btb"
+            if not league_data and ODDSPORTAL_1X2_DATA:
+                _o = _match_league(league, ODDSPORTAL_1X2_DATA) or ODDSPORTAL_1X2_DATA.get("_AGGREGATE")
+                if _o:
+                    league_data = _o
+                    _data_src = "oddsportal"
             if not league_data:
                 return 0.0
             data = league_data.get(idx)
@@ -1847,8 +1866,10 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             bb_prem = _bb_premium_1x2(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n)
-            if _btb_fallback:
+            if _data_src == "btb":
                 stake *= 0.85  # BTB共识价折扣 (32家平均 vs Pinnacle单家)
+            elif _data_src == "oddsportal":
+                stake *= get_oddsportal_discount(league)  # 顶级0.9/小联赛0.75
             return stake * _settlement_multiplier(league) * _clv_multiplier(league)
 
     # ── Tennis (V4.5: ATP/WTA 6.9万场 Pinnacle收盘) ──
@@ -1920,6 +1941,11 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             if sub_market in ("ou", "over_under"): stake *= 0.75
             elif sub_market in ("hc", "handicap"): stake *= 0.85
             return stake * _settlement_multiplier(league)
+        # OddsPortal 2-way ML fallback (DEL/KHL/SHL 等非NHL)
+        _od = (_match_league(league, ODDSPORTAL_ML_DATA) or ODDSPORTAL_ML_DATA.get("_AGGREGATE", {})).get(idx)
+        if _od and _od[2] >= 20:
+            wr, avg_o, n = _od
+            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.5) * get_oddsportal_discount(league) * _settlement_multiplier(league)
         return 0.0
 
     # ── Baseball (MLB) — V5: SBR共识收盘价 ──
@@ -1947,6 +1973,11 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         if data and data[2] >= 20:
             wr, avg_o, n = data
             return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.80) * _settlement_multiplier(league)
+        # OddsPortal 2-way ML fallback (日本棒球等)
+        _od = (_match_league(league, ODDSPORTAL_ML_DATA) or ODDSPORTAL_ML_DATA.get("_AGGREGATE", {})).get(idx)
+        if _od and _od[2] >= 20:
+            wr, avg_o, n = _od
+            return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.5) * get_oddsportal_discount(league) * _settlement_multiplier(league)
 
     # ── Basketball ──
     elif sport_lower == "basketball":
@@ -2012,6 +2043,11 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             if data and isinstance(data, (list, tuple)) and len(data) >= 3 and data[2] >= 20:
                 wr, avg_o, n = data
                 return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.40) * _settlement_multiplier(league)
+            # OddsPortal 2-way ML fallback (CBA/欧洲篮球/澳洲等非NBA)
+            _od = (_match_league(league, ODDSPORTAL_ML_DATA) or ODDSPORTAL_ML_DATA.get("_AGGREGATE", {})).get(idx)
+            if _od and _od[2] >= 20:
+                wr, avg_o, n = _od
+                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.45) * get_oddsportal_discount(league) * _settlement_multiplier(league)
             # Fallback: no data → conservative 1% (was the old BETFAIR_BASKET bug)
             return 0.01 if odds < 3.0 else 0.0
 
@@ -2131,6 +2167,8 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
             base_min_ev = 3.0
         elif sub_market in ("ou", "over_under"):
             base_min_ev = 4.0   # V5: 5%→4% (median EV=4.4%, Pin ROI=-3.6%)
+        elif sub_market == "corner":
+            base_min_ev = 3.0   # V5.1: 角球第4重要市场, 有 football-data.co.uk 角球AH数据
         elif pin_roi < -0.03:
             base_min_ev = 5.0
         else:
