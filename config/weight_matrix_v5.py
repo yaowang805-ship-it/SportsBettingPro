@@ -1054,6 +1054,13 @@ except ImportError:
     BTB_1X2_DATA = {}
     BTB_1X2_AGGREGATE = {}
 
+# V5.1: 角球亚洲让球 (football-data.co.uk 平均角球AH收盘价, ~5.7万场)
+# 角球是足球第4重要市场(独赢>让球>大小球>角球), 数据驱动替代 0.01 封杀
+try:
+    from config.corner_calibrated import CORNER_HC_DATA
+except ImportError:
+    CORNER_HC_DATA = {}
+
 # V5: SBR Consensus 收盘价 (SportsbookReview, 含Pinnacle, 56K场, 4运动)
 # 优先使用SBR数据, 但保留旧数据作为bin空缺时的回退
 try:
@@ -1765,6 +1772,18 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                 return 0.0
             bb_prem = _bb_premium_1x2(odds)
             return kelly_075(wr, avg_o, bb_prem, n) * 0.92
+
+        elif sub_market == "corner":
+            # V5.1: 角球让球独立标定 — football-data.co.uk 角球AH收盘 (~5.7万场, 2-way 近偶数)
+            # 角球是足球第4重要市场(独赢>让球>大小球>角球)。角球无独赢/大小球历史数据,
+            # 用角球让球(HC)数据近似角球市场整体 (角球OU/ML 同属2-way近偶数, 胜率~50%@~1.9)。
+            _corner_data = _match_league(league, CORNER_HC_DATA) or CORNER_HC_DATA.get("_AGGREGATE", {})
+            data = _corner_data.get(idx)
+            if not data or data[2] < 20:
+                return SPECIAL_MARKET_CAPS.get("corner", {}).get("max_stake", 0.01)
+            wr, avg_o, n = data
+            bb_prem = _bb_premium_1x2(odds) * 0.95
+            return kelly_075(wr, avg_o, bb_prem, n, sport_confidence=0.6)
 
         else:  # 1X2 (incl. dc, dnb, btts, oe derived)
             # V5: 优先使用 Pinnacle 联赛数据，无数据时回退 BTB 共识收盘价 (818联赛)

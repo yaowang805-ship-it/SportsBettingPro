@@ -370,7 +370,7 @@ KELLY_BY_MARKET = {
     "ht":   0.45,  # 半场1X2→对齐全场1X2（Pinnacle有HT数据，无理由更低）
     "dc":   0.45,  # 从1X2推导
     "oe":   0.35,  # 无Pinnacle数据
-    "corner": 0.35, # 无Pinnacle数据
+    "corner": 0.45, # V5.1: 角球第4重要市场, 有 football-data.co.uk 角球AH数据
     "htft": 0.25,  # 低流动性+高抽水(5-7%), EV可靠性低, 严格控制
 }
 def _get_kelly_for_market(sub_market: str) -> float:

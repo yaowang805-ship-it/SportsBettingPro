@@ -34,6 +34,24 @@ def test_shin_probabilities_sum_to_one():
         assert abs(sum(probs) - 1.0) < 1e-6, f"概率和 {sum(probs)} ≠ 1"
 
 
+def test_shin_underbroke_no_inflation():
+    """underbroke (隐含概率和 ≤1) 时不得把概率放大 → fair 不得 < raw。
+
+    2026-08-15 发现: 输入赔率和 ≤1 时 Shin 二分退到 z=0, 归一化放大概率
+    → 热门公平价 < 原始赔率 → 假 +EV。应直接返回原始隐含概率(fair=raw)。
+    """
+    from src.scrapers.devig import shin_fair_odds
+    underbroke = [
+        [1.4, 4.89],       # 1/1.4 + 1/4.89 = 0.919 < 1
+        [3.0, 2.48],       # 1/3.0 + 1/2.48 = 0.737 < 1
+        [2.0, 2.5, 5.0],   # 0.5 + 0.4 + 0.2 = 1.1 > 1 (不是 underbroke, 但验证不炸)
+    ]
+    for odds in underbroke:
+        fairs = shin_fair_odds(odds)
+        for f, o in zip(fairs, odds):
+            assert f >= o - 1e-6, f"underbroke 公平价 {f} < 原始 {o} (概率被错误放大)"
+
+
 def test_shin_close_to_proportional():
     """Shin 公平价不应与比例法偏差过大(<10%), 防止过度修正。"""
     from src.scrapers.devig import shin_fair_odds
