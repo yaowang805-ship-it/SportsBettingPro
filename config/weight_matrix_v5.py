@@ -1068,6 +1068,13 @@ except ImportError:
     ODDSPORTAL_1X2_DATA = {}
     ODDSPORTAL_ML_DATA = {}
 
+# V5.2: 网球重校准 (修正索引30/31 + bin错配, 旧TENNIS_DATA长尾胜率高估致假+EV)
+try:
+    from config.tennis_calibrated import TENNIS_DATA as _TENNIS_FIXED
+    TENNIS_DATA = _TENNIS_FIXED
+except ImportError:
+    pass
+
 # V5: SBR Consensus 收盘价 (SportsbookReview, 含Pinnacle, 56K场, 4运动)
 # 优先使用SBR数据, 但保留旧数据作为bin空缺时的回退
 try:
@@ -2117,69 +2124,14 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
     if sub_market in BLOCKED_MARKETS:
         return 999.0
 
-    # V4.5: Pin 全负ROI盘口 → 需更高EV (但仅对样本充足的运动)
-    pin_roi = _get_pin_market_roi(sport_lower, sub_market)
-    # 足球/篮球样本充足 → 严；其他运动样本少 → 宽
-    if sport_lower in ("football", "basketball"):
-        # V5: 推导盘口按赔率差异化 (无直接Pinnacle数据, 低赔率天然低EV)
-        # BTTS: team_total推导, 误差~2-3% → min_ev+1%
-        # OE: 50/50结构性市场, BB>fair即+EV → min_ev=1%
-        if sub_market == "oe":
-            base_min_ev = 1.0   # 结构性50/50, 不需要高门槛
-        elif sub_market == "btts":
-            # V5.1: BTTS 51.8% yes, OU推导可验证 → 门槛从 3-5% 降到 2.5-3.5%
-            if odds < 2.0:
-                base_min_ev = 2.5
-            elif odds < 3.5:
-                base_min_ev = 3.0
-            else:
-                base_min_ev = 3.5
-        elif sub_market == "dnb":
-            # 平局退款: 平局退本金, 不受平局概率高估影响 → 保持低门槛
-            if odds < 2.0:
-                base_min_ev = 2.0
-            elif odds < 3.5:
-                base_min_ev = 3.0
-            else:
-                base_min_ev = 4.0
-        elif sub_market == "dc":
-            # V5.1: Shin去抽水推导无偏(91,250场回测偏差0.0000), 旧的6-8%是比例法bug+14笔样本
-            # → 降到 2-3% (≈1X2 margin)
-            if odds < 2.0:
-                base_min_ev = 2.0
-            elif odds < 3.5:
-                base_min_ev = 2.5
-            else:
-                base_min_ev = 3.0
-        elif sub_market == "ht_dc":
-            # 上半场双重机会 — 半场平局率42%高于全场, 略加缓冲 → 3-4%
-            if odds < 2.0:
-                base_min_ev = 3.0
-            elif odds < 3.5:
-                base_min_ev = 3.5
-            else:
-                base_min_ev = 4.0
-        elif sub_market == "ht":
-            # V5.1: fair来自live HT赔率去抽水(正确), 旧的5-8%基于8笔样本 → 降到 3-4%
-            if odds < 2.0:
-                base_min_ev = 3.0
-            elif odds < 3.5:
-                base_min_ev = 3.5
-            else:
-                base_min_ev = 4.0
-        # V5: HC低赔率3%, OU有Pin数据4%
-        elif sub_market in ("hc", "handicap"):
-            base_min_ev = 3.0
-        elif sub_market in ("ou", "over_under"):
-            base_min_ev = 4.0   # V5: 5%→4% (median EV=4.4%, Pin ROI=-3.6%)
-        elif sub_market == "corner":
-            base_min_ev = 3.0   # V5.1: 角球第4重要市场, 有 football-data.co.uk 角球AH数据
-        elif pin_roi < -0.03:
-            base_min_ev = 5.0
-        else:
-            base_min_ev = 2.0
-    else:
-        base_min_ev = 2.0  # 样本少的运动不额外提高门槛
+    # V5.2: 盈亏线数据化 — 按 (运动, 联赛, 盘口) 查盈亏点 + 安全缓冲
+    # (91K场 football-data.co.uk Pinnacle收盘回测, 分联赛分盘口; 无数据联赛回退 tier聚合+2%缓冲)
+    try:
+        from config.break_even_table import get_break_even
+        from config.constants import get_league_tier
+        base_min_ev = get_break_even(sport_lower, league, sub_market, get_league_tier(league))
+    except ImportError:
+        base_min_ev = 4.0  # 兜底保守
 
     if sport_lower == "football":
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)

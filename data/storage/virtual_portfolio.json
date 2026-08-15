@@ -1,5 +1,5 @@
 {
-  "balance": 1086.0,
+  "balance": 1002.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -529,6 +529,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": null,
       "created_at": "2026-08-15T02:48:17.846987+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_奥林莫斯_U19_赫拉德茨克拉洛韦_U19_主胜",
+      "sport": "football",
+      "league": "捷克U19甲级联赛",
+      "home_team": "奥林莫斯 U19",
+      "away_team": "赫拉德茨克拉洛韦 U19",
+      "home_cn": "奥林莫斯 U19",
+      "away_cn": "赫拉德茨克拉洛韦 U19",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.19,
+      "stake": 52,
+      "model_prob": 0.3834,
+      "ev_pct": 22.32,
+      "pin_odds": 2.32,
+      "fair_price": 2.608,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786784400,
+      "created_at": "2026-08-15T03:13:13.704207+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_诺克斯袭击者_(女)_韦弗利猎鹰_(女)_让分客胜(+85)",
+      "sport": "basketball",
+      "league": "澳大利亚南部女子篮球联赛-季后赛",
+      "home_team": "诺克斯袭击者 (女)",
+      "away_team": "韦弗利猎鹰 (女)",
+      "home_cn": "诺克斯袭击者 (女)",
+      "away_cn": "韦弗利猎鹰 (女)",
+      "market": "handicap",
+      "market_type": "让分客胜(+8.5)",
+      "sub_market": "hc",
+      "line": "+8.5",
+      "odds": 1.83,
+      "stake": 32,
+      "model_prob": 0.5745,
+      "ev_pct": 5.14,
+      "pin_odds": 1.6452,
+      "fair_price": 1.7406,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786773600,
+      "created_at": "2026-08-15T03:13:13.704271+00:00",
       "track_only": false
     }
   ],
@@ -9064,8 +9110,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-15",
-    "used": 171.0,
-    "bets": 3
+    "used": 255.0,
+    "bets": 5
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
