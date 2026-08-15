@@ -396,7 +396,7 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                 # 校准: 角球大小线必须精确匹配
                 if over_p and under_p:
                     pin_line = over_p.get("points")
-                    if pin_line is not None and abs(bb_line - pin_line) > 0.1:
+                    if pin_line is not None and abs(bb_line - pin_line) > 0.01:
                         over_p = under_p = None  # 线不匹配, 拒绝
                 if over_p and under_p and get_decimal_price(over_p) and get_decimal_price(under_p):
                     _fairs = shin_fair_odds([get_decimal_price(over_p), get_decimal_price(under_p)])
