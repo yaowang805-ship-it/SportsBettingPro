@@ -24,13 +24,29 @@ logger = get_logger(__name__)
 TRACKING_FILE = DATA_DIR / "clv_tracking.csv"
 RESULTS_FILE = DATA_DIR / "clv_results.csv"
 
-# 采集窗口：比赛开始前 1 分钟 ~ 720 分钟拉取收盘赔率
-# V5.1 修复: 下限从15→1, 捕捉开赛前最后一刻的"真收盘线"
-# V5.3 调宽: BEFORE_MAX 360→720(12小时), AFTER_MAX 30→60 — 覆盖更多比赛累积CLV
+# 采集窗口：比赛开始前 20 分钟内拉取收盘赔率 (真收盘线)
+# V5.4 收窄: BEFORE_MAX 720→20, AFTER_MAX 60→0 — 用户要求开赛前20分钟,
+#           只在临开赛采集 Pin 价作"真收盘线", 不再用滚球价兜底(滚球价受赛况污染)。
 CLV_WINDOW_BEFORE_MIN = 1     # 比赛前 1 分钟 (原15, 太严漏掉收盘线)
-CLV_WINDOW_AFTER_MAX = 60     # 开赛后 60 分钟内兜底采集 (滚球价作参考)
-CLV_WINDOW_BEFORE_MAX = 720  # 比赛前 720 分钟/12小时 (原360, 调宽覆盖更多)
+CLV_WINDOW_AFTER_MAX = 0      # 开赛后不采集 (真收盘线=开赛前, 滚球价不可靠)
+CLV_WINDOW_BEFORE_MAX = 20    # 比赛前 20 分钟 (原720, 收窄到真收盘线)
 CLV_MIN_AGE_SECONDS = 300    # 至少推送后 5 分钟才采集 (避免取到同一时刻的赔率)
+
+
+def _infer_sub_market(sub_market: str, designation: str) -> str:
+    """半场盘口 sub_market 被粗标成 "ht", 从 designation 推断精确盘口。
+
+    追踪数据里 ht_hc/ht_ou 都被标成 "ht", 采集后结果存的是推断值(ht_hc/ht_ou),
+    去重 key 若用原始 "ht" 会与结果不匹配 → 重复采集。此函数统一口径:
+    "让球"→ht_hc, "小球/大球"→ht_ou, 否则保持原值。
+    """
+    if sub_market == "ht":
+        d = (designation or "").lower()
+        if "让球" in d:
+            return "ht_hc"
+        if ("小球" in d) or ("大球" in d):
+            return "ht_ou"
+    return sub_market
 
 
 def _load_existing_results():
@@ -56,10 +72,12 @@ def _load_pending_entries():
     entries = []
     with open(TRACKING_FILE, newline='') as f:
         for r in csv.DictReader(f):
+            # sub_market 统一推断口径 (ht→ht_hc/ht_ou), 否则去重 key 与结果不匹配
+            sm = _infer_sub_market(r.get("sub_market", ""), r.get("designation", ""))
             # 用 BB 中文名 + Pinnacle 英文名组合做 key
-            key = (r.get("home", ""), r.get("away", ""), r.get("sub_market", ""), r.get("designation", ""))
+            key = (r.get("home", ""), r.get("away", ""), sm, r.get("designation", ""))
             # 也尝试用 Pinnacle 名匹配
-            key_pin = (r.get("home_pin", ""), r.get("away_pin", ""), r.get("sub_market", ""), r.get("designation", ""))
+            key_pin = (r.get("home_pin", ""), r.get("away_pin", ""), sm, r.get("designation", ""))
             if key not in existing and key_pin not in existing:
                 entries.append(r)
     return entries
@@ -168,15 +186,9 @@ def _fetch_close_odds(entries):
                 pin_home_name = e.get("home_pin", "").lower().strip()  # Pinnacle 英文名
                 pin_away_name = e.get("away_pin", "").lower().strip()
                 match_epoch = int(e.get("match_epoch", 0))
-                sub_market = e.get("sub_market", "")
+                # sub_market 统一推断口径 (ht→ht_hc/ht_ou), 与去重 key 一致
+                sub_market = _infer_sub_market(e.get("sub_market", ""), e.get("designation", ""))
                 designation = e.get("designation", "").lower()
-                # 半场盘口 sub_market 被粗标成 "ht", 需从 designation 推断精确盘口:
-                #   "上半场让球..."→ht_hc, "上半场小球/大球..."→ht_ou, 否则=ht(独赢)
-                if sub_market == "ht":
-                    if "让球" in designation:
-                        sub_market = "ht_hc"
-                    elif ("小球" in designation) or ("大球" in designation):
-                        sub_market = "ht_ou"
 
                 best_pin = None
                 best_score = 0
@@ -236,6 +248,7 @@ def _fetch_close_odds(entries):
                     "designation": designation,
                     "sub_market": sub_market,
                     "tier": e.get("tier", ""),
+                    "bb_price_source": e.get("bb_price_source", ""),
                     "bb_odds": bb_odds,
                     "push_fair_price": fair_price,
                     "push_ev_pct": push_ev,
@@ -411,7 +424,7 @@ def _save_results(results):
     fieldnames = [
         "collect_time", "push_time", "match_key", "sport", "league", "home", "away",
         "home_pin", "away_pin",
-        "designation", "sub_market", "tier", "bb_odds", "push_fair_price", "push_ev_pct",
+        "designation", "sub_market", "tier", "bb_price_source", "bb_odds", "push_fair_price", "push_ev_pct",
         "close_pin_odds", "close_fair_price", "close_total_implied",
         "true_clv_pct", "clv_delta", "match_epoch", "minutes_before_match",
     ]

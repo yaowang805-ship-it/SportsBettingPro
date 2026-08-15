@@ -187,7 +187,9 @@ def analyze_clv():
                     clv = float(r.get("true_clv_pct", 0) or 0)
                 except (ValueError, TypeError):
                     clv = 0.0
-                clvs.append({"src": "pin_close", "clv": clv, "bb": float(r.get("bb_odds", 0) or 0),
+                clvs.append({"src": "pin_close", "clv": clv,
+                             "price_source": r.get("bb_price_source", ""),
+                             "bb": float(r.get("bb_odds", 0) or 0),
                              "close": float(r.get("close_fair_price", 0) or 0)})
         except Exception:
             pass
@@ -207,6 +209,8 @@ def analyze_clv():
 
     vals = [c["clv"] for c in clvs]
     pos = sum(1 for v in vals if v > 0)
+    # 按 BB/FB 来源拆分 (仅 pin_close 有 bb_price_source)
+    pin_srcs = [c.get("price_source", "") for c in clvs if c["src"] == "pin_close" and c.get("price_source")]
     return {
         "status": "ok", "n": len(clvs),
         "mean_clv": round(statistics.mean(vals), 3),
@@ -215,6 +219,9 @@ def analyze_clv():
         "by_src": {s: {"n": sum(1 for c in clvs if c["src"] == s),
                        "mean_clv": round(statistics.mean([c["clv"] for c in clvs if c["src"] == s]), 3)}
                    for s in set(c["src"] for c in clvs)},
+        "by_bb_source": {s: {"n": sum(1 for c in clvs if c.get("price_source") == s),
+                             "mean_clv": round(statistics.mean([c["clv"] for c in clvs if c.get("price_source") == s]), 3)}
+                         for s in set(pin_srcs)} if pin_srcs else {},
     }
 
 
