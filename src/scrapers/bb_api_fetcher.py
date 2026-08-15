@@ -23,6 +23,29 @@ from config.logging_config import get_logger
 
 logger = get_logger(__name__)
 
+# ── 联赛剔除名单 ──
+# 友谊赛/热身赛/季前赛/青年队(U19-U23)/3x3 等不靠谱联赛, 提取层直接丢弃,
+# 以后不再落盘 (bb_odds_extracted.json)。对比层 bb_vs_pinnacle 仍有兜底过滤。
+_BANNED_LEAGUES_CACHE = None
+
+
+def _load_banned_leagues():
+    """加载 banned_leagues.json (与 bb_vs_pinnacle/bb_ev_push 共用同一数据源)。"""
+    global _BANNED_LEAGUES_CACHE
+    if _BANNED_LEAGUES_CACHE is None:
+        _banned_file = DATA_DIR / "banned_leagues.json"
+        try:
+            _BANNED_LEAGUES_CACHE = json.loads(_banned_file.read_text())
+        except Exception:
+            _BANNED_LEAGUES_CACHE = []
+    return _BANNED_LEAGUES_CACHE
+
+
+def _is_banned_league(league):
+    """子串匹配: 联赛名含任一剔除关键词即视为不靠谱联赛。"""
+    league = league or ""
+    return any(b in league for b in _load_banned_leagues())
+
 # API 端点（BB体育）
 API_BASE = "https://api.infv1.com"
 
@@ -1331,10 +1354,17 @@ def _fetch_one_platform(platform_key: str):
         print(f"    共 {len(records)} 场比赛")
 
         matches = []
+        _banned_skipped = 0
         for rec in records:
             m = extract_match_odds(rec, sport_key, platform=platform_key)
             if m["home"] and m["away"]:
+                if _is_banned_league(m.get("league", "")):
+                    _banned_skipped += 1
+                    continue
                 matches.append(m)
+
+        if _banned_skipped:
+            print(f"    🚫 剔除 {_banned_skipped} 场不靠谱联赛(友谊赛/青年队/季前赛等)")
 
         sport_counts[sport_cn] = len(matches)
         platform_matches.extend(matches)
