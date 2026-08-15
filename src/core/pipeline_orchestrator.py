@@ -499,6 +499,15 @@ class PipelineOrchestrator:
                 sys.argv = old_argv
             logger.info("Step 4/4: 完成")
 
+            # Step 2a/3: FB 平台独立提取 (V5.1: 全量扫描补 FB, 之前只靠增量扫描导致 FB 数据陈旧→价格偏差极大)
+            logger.info("Step 2a/3: FB 平台独立提取...")
+            sys.argv = ["bb_api_fetcher", "--platform=FB"]
+            try:
+                fetch()
+            finally:
+                sys.argv = old_argv
+            logger.info("Step 2a/3: 完成")
+
             logger.info("Step 2b/3: Pinnacle 对比 (FB独立)...")
             sys.argv = ["bb_vs_pinnacle",
                          "--input=bb_odds_extracted_FB.json",
