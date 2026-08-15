@@ -2018,6 +2018,9 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
             source_label = f"{src}价"
 
             warn = o.get("_warn", "")
+            # 让球盘线易移动, 加提示 (避免用户看到线已不存在的推送)
+            if o.get("_sub_market", "") in ("hc", "ht_hc") and not warn:
+                warn = "⚠️让球线易移动"
             lines.append(
                 f"    [{oc}] {confidence} 公平价: {fair}"
                 + (f" | Pinnacle: {pinny}" if o.get("pin_odds", 0) > 0 else " | 推导: 1X2")
@@ -2049,7 +2052,7 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
              "公平价 = Pinnacle去抽水赔率 | "
              "溢价 = (售价 - 公平价) / 公平价 | "
              "来源: BB=BB价 FB=FB价 BB/FB=两平台相同 | "
-             "赔率实时变动，以 Pinnacle 网站当前价为准")
+             "⚠️ 赔率与盘口线实时变动，下注前请以 BB/Pinnacle 当前盘口为准（让球线尤其易移动）")
     if pnl_line:
         body += f"\n📊 {pnl_line}"
     # 策略参数快照 (Pinnacle 61,404场 + NBA 57,504场真实数据)
