@@ -451,7 +451,7 @@
       "success_rate": 0.0
     },
     "智利乙级联赛": {
-      "attempts": 2,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -606,12 +606,22 @@
       "success_rate": 0.0
     },
     "ATP - 辛辛那提公开赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "韩国甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "俄罗斯杯-资格赛": {
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
     }
   },
-  "updated": "2026-08-15T10:31:17.598188+00:00",
+  "updated": "2026-08-15T12:51:34.099340+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
