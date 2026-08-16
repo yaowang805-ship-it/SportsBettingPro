@@ -1336,9 +1336,9 @@ def _collect_opportunities(match, market_key):
     away_cn = match.get("away_bb_cn") or match.get("away_bb", "")
     league_mult = league_multiplier(league_cn)
 
-    # 屏蔽不靠谱联赛
+    # 屏蔽不靠谱联赛 (中英文都要检查 — BB EN切换后英文名不含中文关键词, 需同时查中文名)
     for banned in _BANNED_LEAGUES:
-        if banned in league:
+        if banned in league or banned in league_cn:
             return []
 
     # CLV 趋势暂停检查：连续负 CLV → 暂时跳过该 (sport, league)

@@ -1573,7 +1573,7 @@ def _fetch_one_platform(platform_key: str):
         for rec in records:
             m = extract_match_odds(rec, sport_key, platform=platform_key)
             if m["home"] and m["away"]:
-                if _is_banned_league(m.get("league", "")):
+                if _is_banned_league(m.get("league", "")) or _is_banned_league(m.get("league_cn", "")):
                     _banned_skipped += 1
                     continue
                 matches.append(m)

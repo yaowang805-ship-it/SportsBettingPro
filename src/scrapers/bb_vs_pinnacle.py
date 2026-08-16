@@ -1791,7 +1791,7 @@ def main():
         _banned = json.loads(_banned_file.read_text())
         _before_ban = len(bb_matches)
         bb_matches = [m for m in bb_matches
-                       if not any(b in (m.get("league") or "") for b in _banned)]
+                       if not any(b in (m.get("league") or "") or b in (m.get("league_cn") or "") for b in _banned)]
         _banned_filtered = _before_ban - len(bb_matches)
         if _banned_filtered:
             print(f"  🚫 已过滤 {_banned_filtered} 场禁区联赛比赛")
