@@ -342,8 +342,9 @@ def run_incremental(time_window: str = "all"):
     sys.stdout.reconfigure(line_buffering=True)
 
     from datetime import datetime, timezone, timedelta
-    _now_hour = datetime.now().hour
-    if _now_hour < 7 or _now_hour >= 22:
+    _now = datetime.now()
+    _now_min = _now.hour * 60 + _now.minute
+    if _now_min < 6 * 60 + 40 or _now_min >= 22 * 60:
         print(f"  ⏭️ 不在扫描时段，跳过")
         return
 

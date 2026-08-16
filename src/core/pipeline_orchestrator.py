@@ -57,7 +57,8 @@ for _lf in sorted(LOG_DIR.iterdir()):
         _lf.unlink()
         print(f"  🗑️ 清理旧日志: {_lf.name} ({(int(_age_sec / 86400))}天前)")
 
-SCAN_WINDOW = (7, 22)              # 07:00 ~ 22:00
+SCAN_START_MIN = 6 * 60 + 40       # 扫描起始 06:40 (2026-08-17 用户要求: 7点→6:40)
+SCAN_END_MIN = 22 * 60             # 扫描结束 22:00
 INCREMENTAL_INTERVAL = 120  # V5.5: 120秒(2分钟) — 准实时发现新机会 (BB自有账号高频轮询+Pin按需拉变动联赛)
 CHECK_INTERVAL = 30                # 调度循环检查间隔（秒）
 
@@ -66,7 +67,7 @@ SCHEDULE = [
     ("self_repair",       "06:45", "do_self_repair", {}),       # 自检+自动修复: 锁文件/缓存/指纹/连通性
     ("time_calibration",  "06:50", "do_time_calibration", {}),  # 时间校准: BB/Pin/系统时钟对齐
     ("health_check",       "06:55", "do_health_check", {}),
-    ("full_scan_morning",  "07:00", "do_full_scan",  {"bet": True}),
+    ("full_scan_morning",  "06:40", "do_full_scan",  {"bet": True}),
     ("settle_morning",     "08:30", "do_settle",      {}),
     ("daily_report",       "09:00", "do_daily_report",{}),
     ("data_sync_summary",  "09:00", "do_data_sync_summary",{}),  # V5.1: 数据积累量日报
@@ -279,7 +280,8 @@ class PipelineOrchestrator:
     # 调度逻辑
     # ------------------------------------------------------------------
     def _is_in_scan_window(self, now: datetime) -> bool:
-        return SCAN_WINDOW[0] <= now.hour < SCAN_WINDOW[1]
+        cur_min = now.hour * 60 + now.minute
+        return SCAN_START_MIN <= cur_min < SCAN_END_MIN
 
     def _is_time_match(self, weekday, dom, hour, minute, now: datetime, wide_window=False) -> bool:
         """检查当前时间是否符合调度条件。
@@ -1167,7 +1169,7 @@ class PipelineOrchestrator:
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
             # V5.7: 两层定时器 (urgent 1min / near 5min)。远端24-72h 已去掉:
-            # 全量扫描(07:00)已覆盖0-72h, 远端赔率变化慢且权重矩阵要的是收盘价。
+            # 全量扫描(06:40)已覆盖0-72h, 远端赔率变化慢且权重矩阵要的是收盘价。
             # 提速到1分钟推送(用户要求): urgent 900→60s, near 1800→300s, 代理池换节点兜底防封。
             for tw, interval, label in [("urgent", 60, "临场<6h"), ("near", 300, "中程6-24h")]:
                 last_key = f"_last_inc_{tw}"
@@ -1316,15 +1318,15 @@ class PipelineOrchestrator:
         self._startup_integrity_check()
         logger.info("=" * 50)
         logger.info("Pipeline Orchestrator 启动")
-        logger.info("扫描时段: %02d:00~%02d:00 | 增量: %dmin (0-72h全量)",
-                     SCAN_WINDOW[0], SCAN_WINDOW[1],
+        logger.info("扫描时段: %02d:%02d~%02d:00 | 增量: %dmin (0-72h全量)",
+                     SCAN_START_MIN // 60, SCAN_START_MIN % 60, SCAN_END_MIN // 60,
                      INCREMENTAL_INTERVAL // 60)
         logger.info("定时任务: %s", ", ".join(name for name, *_ in SCHEDULE))
         logger.info("dry-run: %s", self.dry_run)
         logger.info("=" * 50)
 
         if not self.dry_run and not self._is_in_scan_window(datetime.now()):
-            logger.info("当前不在扫描时段，等待 %02d:00...", SCAN_WINDOW[0])
+            logger.info("当前不在扫描时段，等待 %02d:%02d...", SCAN_START_MIN // 60, SCAN_START_MIN % 60)
 
         # 启动时设置增量扫描初始时间为 (now - interval + 60s)，首次 tick 即可触发
         # （避免与全量扫描同时触发，但不会等待完整的周期）

@@ -70,6 +70,9 @@ def main():
         seasons_to_try = [season]
         if "-" in season:
             seasons_to_try.append(season.split("-")[0])
+        # 网球 "current" 对已停办/尚未开赛的赛事返回空, 自动回退最近完成年份
+        if sport == "tennis" and str(season).lower() == "current":
+            seasons_to_try += ["2025", "2024", "2023"]
         games = []
         for s in seasons_to_try:
             try:
