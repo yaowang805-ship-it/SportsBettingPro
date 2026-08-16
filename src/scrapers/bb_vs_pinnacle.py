@@ -157,15 +157,15 @@ def _calibrate_market_line(sport, market_type, bb_line, pin_line, pin_points, is
     diff = abs(bb_line - ref)
 
     if market_type == "hc":
-        # 让球线允许 0.1 以内偏差（与 get_pin_spread 保持一致, quarter-ball 0.25 一档）
-        # HT 仍要求精确匹配
-        max_diff = 0.001 if is_ht else 0.1
+        # 让球线: quarter-ball 0.25 一档, 必须精确匹配 (0.01 容差仅容纳浮点误差)
+        # V5.5: 0.1 → 0.01, 防止 BB quarter线(-1/1.5=-1.25) 错配到 Pin 整球线(-1)
+        max_diff = 0.001 if is_ht else 0.01
         if diff > max_diff:
             tag = "HT" if is_ht else ""
             return False, f"{tag}让球线不一致: BB={bb_line} vs Pinnacle={ref}"
     elif market_type == "ou":
-        # 大小球线允许 0.1 偏差
-        max_diff = 0.001 if is_ht else 0.1
+        # 大小球线: 0.01 容差 (2.75 vs 3.0 是 0.25, 必须拒绝)
+        max_diff = 0.001 if is_ht else 0.01
         if diff > max_diff:
             tag = "HT" if is_ht else ""
             return False, f"{tag}大小盘线不一致: BB={bb_line} vs Pinnacle={ref}"

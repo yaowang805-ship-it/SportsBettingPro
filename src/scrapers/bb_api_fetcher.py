@@ -1074,12 +1074,13 @@ def _merge_single_match(platform_matches):
                 sources["ml"] = platform
 
         # Handicap: 取主客赔率最大值（前提是线一致）
+        # V5.5: 0.1 → 0.01, BB quarter线(-1/1.5)与FB整球线(-1)不能合并
         base_hc = base.get("odds_ft", {}).get("handicap")
         plat_hc = m.get("odds_ft", {}).get("handicap")
         if base_hc and plat_hc and isinstance(base_hc, dict) and isinstance(plat_hc, dict):
             base_line = base_hc.get("home_line") or base_hc.get("away_line")
             plat_line = plat_hc.get("home_line") or plat_hc.get("away_line")
-            if base_line is None or plat_line is None or abs(base_line - plat_line) <= 0.1:
+            if base_line is None or plat_line is None or abs(base_line - plat_line) <= 0.01:
                 _update_source("handicap", base_hc.get("home_odds", 0), plat_hc.get("home_odds", 0), platform)
                 _update_source("handicap", base_hc.get("away_odds", 0), plat_hc.get("away_odds", 0), platform)
                 if plat_hc.get("home_odds", 0) > base_hc.get("home_odds", 0):
@@ -1092,13 +1093,14 @@ def _merge_single_match(platform_matches):
             base["odds_ft"]["handicap"] = plat_hc
             sources["handicap"] = platform
 
-        # OU: 取大小盘赔率最大值
+        # OU: 取大小盘赔率最大值（前提是线一致）
+        # V5.5: 0.5 → 0.01, BB 2.75 vs FB 3.0 是不同盘口线, 不能合并
         base_ou = base.get("odds_ft", {}).get("total")
         plat_ou = m.get("odds_ft", {}).get("total")
         if base_ou and plat_ou and isinstance(base_ou, dict) and isinstance(plat_ou, dict):
             base_line = base_ou.get("line")
             plat_line = plat_ou.get("line")
-            if base_line is None or plat_line is None or abs(base_line - plat_line) <= 0.5:
+            if base_line is None or plat_line is None or abs(base_line - plat_line) <= 0.01:
                 _update_source("ou", base_ou.get("over_odds", 0), plat_ou.get("over_odds", 0), platform)
                 _update_source("ou", base_ou.get("under_odds", 0), plat_ou.get("under_odds", 0), platform)
                 if plat_ou.get("over_odds", 0) > base_ou.get("over_odds", 0):
