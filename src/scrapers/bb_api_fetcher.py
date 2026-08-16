@@ -96,6 +96,9 @@ MARKET_TYPES = {
         "ml": 1005, "hc": 1000, "ou": 1007, "dnb": None, "dc": 1012, "btts": 1027,
         "oe": 1008, "htft": 1033,
         "corner_ml": 1009, "corner_ou": 1010, "corner_hc": 1011,
+        # V5.5: 特殊盘口 (Pinnacle special 字段有对应)
+        "correct_score": 1188, "total_goals_range": 1101, "first_to_score": 1019,
+        "winning_margin": 1018,
         # 注: dnb 原映射 1089 实为"第3粒进球", BB 无平局退款盘口, 置 None 禁用
     },
     3: {  # 篮球 (3004=独赢, 3003=大小, 3002=让分)

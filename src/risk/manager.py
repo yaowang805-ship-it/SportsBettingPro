@@ -316,22 +316,18 @@ class RiskManager:
         return True
 
     def _in_cool_off(self) -> bool:
-        """是否处于冷却期（禁止所有下注）。"""
-        if self.cool_off_until is None:
-            return False
-        if datetime.now() < self.cool_off_until:
-            return True
-        # 冷却期已过，重置
-        self.cool_off_until = None
-        self.save_state()
+        """是否处于冷却期（禁止所有下注）。
+
+        V5.5: 风控冷却功能已移除(用户要求) — 恒返回 False, 不再停注。
+        """
         return False
 
     def _trigger_cool_off(self):
-        """触发冷却：停止下注 COOL_OFF_HOURS 小时。"""
-        self.cool_off_until = datetime.now() + timedelta(hours=self.COOL_OFF_HOURS)
-        logger.warning("  🛑 触发冷却停注 %d 小时（连败 %d 次，回撤 %.1f%%）",
-                      self.COOL_OFF_HOURS, self.consecutive_losses, self.drawdown_pct() * 100)
-        self.save_state()
+        """触发冷却：停止下注 COOL_OFF_HOURS 小时。
+
+        V5.5: 风控冷却功能已移除(用户要求) — no-op, 不再触发冷却。
+        """
+        return
 
     def load_state(self):
         if RISK_STATE_FILE.exists():
