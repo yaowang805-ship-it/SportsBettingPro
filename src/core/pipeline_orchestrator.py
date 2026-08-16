@@ -619,7 +619,7 @@ class PipelineOrchestrator:
 
             # 2. CLV 追踪
             clv_n = 0
-            clv_db = DATA / "storage" / "sportsbetting.db"
+            clv_db = DATA / "sportsbetting.db"
             if clv_db.exists():
                 c = sqlite3.connect(str(clv_db))
                 clv_n = c.execute("SELECT COUNT(*) FROM push_clv").fetchone()[0]
