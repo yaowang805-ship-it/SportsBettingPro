@@ -355,20 +355,14 @@ def run_incremental(time_window: str = "all"):
         if isinstance(_m, dict) and _m.get("league"):
             prev_active_leagues.add(_m["league"])
 
-    # 1. 并行: BB 拉取(主线程) + Pin 变动检测(后台线程, 用上次活跃联赛近似)
-    #    V5.7: 串行 ~51s(BB 26s + Pin 25s) → 并行 ~26s, 端到端压到 ~1min
-    print("\n📡 获取BB数据 + Pin变动检测(并行)...")
-    import threading
-    _pin_res = {}
-    def _pin_detect():
-        try:
-            _pin_res['changed'], _pin_res['significant'] = _detect_pin_changes(
-                None, all_pin_leagues, prev_active_leagues, time_window)
-        except Exception:
-            _pin_res['changed'], _pin_res['significant'] = set(), set()
-    _pin_thread = threading.Thread(target=_pin_detect, daemon=True)
-    _pin_thread.start()
+    # 1. Pin 先拉取并检测变动 (铁律: Pin时间≤BB时间, 公平价不能比零售价新鲜)
+    #    V5.7: 串行 Pin先BB后 (之前并行导致 Pin 反而晚于 BB, 违反铁律)
+    print("\n📡 Pin 先拉取并检测变动...")
+    pin_changed_leagues, pin_significant = _detect_pin_changes(
+        None, all_pin_leagues, prev_active_leagues, time_window)
 
+    # 2. BB 拉取 (Pin之后, 保证 BB 是最新鲜的零售价)
+    print("\n📡 获取BB数据...")
     bb_matches = _fetch_bb_data(time_window)
     if not bb_matches:
         print("  ❌ 获取BB数据失败")
@@ -394,11 +388,6 @@ def run_incremental(time_window: str = "all"):
         bb_matches = [m for m in bb_matches if h24_ms < int(m.get("bt", 0)) - now_ms <= h72_ms]
 
     print(f"  [{label}]: {len(bb_matches)} 场")
-
-    # 2. 等 Pin 检测完成
-    _pin_thread.join()
-    pin_changed_leagues = _pin_res.get('changed', set())
-    pin_significant = _pin_res.get('significant', set())
 
     # 3. FB 独立数据刷新 + 对比 — 只在 near/far 扫描做, urgent 临场扫描跳过以提速到 <1min
     #    (FB 机会不抹杀: near 每5min 仍会跑 FB 独立对比, 只是临场 urgent 不再等它)
