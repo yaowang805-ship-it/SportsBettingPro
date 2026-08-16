@@ -2838,6 +2838,12 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
         logger.info("所有机会均已推送过，跳过")
         return
 
+    # 双边拦截：同一场同一盘口已推过相反方向 → 跳过（防同场对倒）
+    qualified = _filter_opposite_side(qualified)
+    if not qualified:
+        logger.info("双边拦截后无机会，跳过")
+        return
+
     # 单场推送冷却：同一比赛 4 小时内最多推送 1 次（防止 EV 微小波动导致反复推送）
     qualified = _apply_match_exposure_cap(qualified)
 
