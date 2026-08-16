@@ -23,7 +23,7 @@ def fetch_bb_scores():
     score_map = {}
     for sid, sport_key, sport_cn in SPORTS:
         params = {"sportId": sid, "type": 6, "current": 1, "pageSize": 100,
-                  "isPC": True, "languageType": "EN"}
+                  "isPC": True, "languageType": "CMN"}
         try:
             resp = api_post("/v1/match/getList", params, platform="BB")
         except Exception:
@@ -82,8 +82,9 @@ def settle_via_bb(dry_run: bool = False) -> dict:
     settled = 0
     matched = 0
     for b in bets:
-        home = (b.get("home", "") or "").strip()
-        away = (b.get("away", "") or "").strip()
+        # V5.5: 优先用中文名(home_cn)匹配, 兼容旧中文投注和新英文投注(带home_cn)
+        home = (b.get("home_cn") or b.get("home", "") or "").strip()
+        away = (b.get("away_cn") or b.get("away", "") or "").strip()
         sc = score_map.get((home, away))
         swapped = False
         if sc is None:
