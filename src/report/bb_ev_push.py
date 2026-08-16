@@ -2139,11 +2139,20 @@ def build_report(skip_freshness: bool = False, incremental: bool = False):
         else:
             logger.info("⚡ 增量模式 — 使用已有对比文件 (%.0fmin前), 跳过实时拉取", pin_age_min)
     else:
-        # 🔴 铁律：全量推送前必须实时拉取赔率，不使用缓存
-        live_ok, errors = _refresh_live_odds()
-        if not live_ok:
-            _send_failure_alert(errors)
-            return None, None  # 不推送
+        # V5.5: 对比文件 < 5 分钟(刚跑完对比)则跳过重复实时拉取, 速度优先
+        _fresh = False
+        _cmp_age_min = 999.0
+        if COMPARISON_FILE.exists():
+            _cmp_age_min = (time.time() - COMPARISON_FILE.stat().st_mtime) / 60
+            _fresh = _cmp_age_min < 5
+        if _fresh:
+            logger.info("⚡ 对比文件 %.1fmin 前刚生成, 跳过重复实时拉取", _cmp_age_min)
+        else:
+            # 🔴 铁律：全量推送前必须实时拉取赔率，不使用缓存
+            live_ok, errors = _refresh_live_odds()
+            if not live_ok:
+                _send_failure_alert(errors)
+                return None, None  # 不推送
 
     qualified = _prepare_opportunities(skip_freshness=skip_freshness)
     if not qualified:
