@@ -328,12 +328,8 @@ def _prefetch_pin_cache_async(bb_matches, all_pin_leagues):
 
     def _run():
         try:
-            _old = sys.argv
-            sys.argv = ["bb_vs_pinnacle", "--pin-cache"]
-            try:
-                compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, save_path=None)
-            finally:
-                sys.argv = _old
+            # 用参数传 save_pin_cache, 不碰全局 sys.argv (避免并发线程读 sys.argv 时读到 --pin-cache 导致对比被跳过)
+            compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, save_path=None, save_pin_cache=True)
         except Exception:
             pass
 
@@ -487,18 +483,14 @@ def run_incremental(time_window: str = "all"):
     print(f"\n📊 双向变动: BB {len(bb_changed_leagues)}个联赛, Pin {len(pin_changed_leagues)}个联赛 → 合并 {len(all_changed)}个")
     print(f"\n🔄 实时全量对比 (拉取最新BB+Pin, ~2min)...")
     window_file = COMPARISON_FILE_NEAR if time_window in ("near", "urgent") else COMPARISON_FILE_FAR
-    # V5.7: 用上一次扫描后台预取的 Pin 缓存 (Pin时间早于BB, 铁律)
-    _old_argv = sys.argv
-    sys.argv = ["bb_vs_pinnacle", "--use-pin-cache"]
-    try:
-        new_result = compare_bb_vs_pinnacle(
-            bb_matches,
-            all_pin_leagues,
-            selected_leagues=None,
-            save_path=window_file,
-        )
-    finally:
-        sys.argv = _old_argv
+    # V5.7: 用上一次扫描后台预取的 Pin 缓存 (Pin时间早于BB, 铁律), 参数传 use_pin_cache 不碰全局 sys.argv
+    new_result = compare_bb_vs_pinnacle(
+        bb_matches,
+        all_pin_leagues,
+        selected_leagues=None,
+        save_path=window_file,
+        use_pin_cache=True,
+    )
 
     if new_result is None:
         print("  ⚠️ 增量对比无结果 — 仍然指纹本次扫描的比赛(防止无限重复推送)")

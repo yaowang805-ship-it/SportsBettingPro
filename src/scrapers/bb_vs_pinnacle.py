@@ -294,7 +294,8 @@ def _derive_dnb_fair(ml_odds):
     return 1.0 / (p_home / denom)
 
 
-def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, save_path=None):
+def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, save_path=None,
+                           use_pin_cache=False, save_pin_cache=False):
     """核心对比逻辑：联赛映射 -> Pinnacle抓取 -> 匹配 -> EV计算 -> 输出。
 
     Args:
@@ -442,8 +443,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         return first_try
 
     pin_cache_path = DATA_DIR / "pin_matches_cache.json"
-    _use_cache = "--use-pin-cache" in sys.argv
-    _save_cache = "--pin-cache" in sys.argv
+    _use_cache = use_pin_cache or ("--use-pin-cache" in sys.argv)
+    _save_cache = save_pin_cache or ("--pin-cache" in sys.argv)
 
     if _use_cache and pin_cache_path.exists():
         # Pin先→BB后 流程: 对比阶段从缓存加载 Pin 赔率, 不重新拉取
