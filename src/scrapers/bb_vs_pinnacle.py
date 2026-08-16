@@ -1596,7 +1596,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         opportunities.extend(special_entries)
         total_all += total_special
     if total_special:
-        print(f"  🎯 特殊盘口用时: {time.time()-special_start:.0f}s, +{total_special} 个机会")
+        print(f"  🎯 特殊盘口: +{total_special} 个机会")
 
     print(f"\n{'='*60}")
     if _fetch_errors:
