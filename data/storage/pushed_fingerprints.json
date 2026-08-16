@@ -196,6 +196,14 @@
     "ev": 3.86,
     "ts": 1786775615.963719
   },
+  "football|ASEAN Hyundai Cup|Malaysia|Vietnam|主胜|1x2|2026-08-16": {
+    "ev": 2.45,
+    "ts": 1786874699.2114098
+  },
+  "football|ASEAN Hyundai Cup|Malaysia|Vietnam|双边进球-是|btts|2026-08-16": {
+    "ev": 1.78,
+    "ts": 1786874699.211442
+  },
   "football|ASEAN Hyundai Cup|Malaysia|Vietnam|双重机会-主/和局|dc|2026-08-16": {
     "ev": 2.67,
     "ts": 1786870478.0781069
@@ -529,6 +537,10 @@
     "ev": 1.25,
     "ts": 1786855325.004679
   },
+  "football|Belgium Challenger Pro League|K Beerschot VA|KAA Gent II|上半场主胜|ht|2026-08-16": {
+    "ev": 1.0,
+    "ts": 1786874699.212197
+  },
   "football|Belgium Pro League|KV Mechelen|Standard Liege|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 1.62,
     "ts": 1786851693.268764
@@ -549,6 +561,10 @@
   "football|Belgium Pro League|S.K Beveren|RSC Anderlecht|上半场主胜|ht|2026-08-16": {
     "ev": 1.86,
     "ts": 1786851693.2687109
+  },
+  "football|Belgium Pro League|S.K Beveren|RSC Anderlecht|先进球neither|first_to_score|2026-08-16": {
+    "ev": 548.19,
+    "ts": 1786874699.215816
   },
   "football|Belgium Pro League|S.K Beveren|RSC Anderlecht|先进球neither|special|2026-08-16": {
     "ev": 555.87,
@@ -947,6 +963,10 @@
     "ev": 1.37,
     "ts": 1786851693.2699
   },
+  "football|England FA Community Shield|Arsenal FC|Manchester City FC|先进球neither|first_to_score|2026-08-16": {
+    "ev": 388.55,
+    "ts": 1786874699.216618
+  },
   "football|England FA Community Shield|Arsenal FC|Manchester City FC|和局|1x2|2026-08-16": {
     "ev": 2.02,
     "ts": 1786855325.000216
@@ -1061,6 +1081,10 @@
     "ev": 12.87,
     "ts": 1786867877.545674
   },
+  "football|Germany 2. Bundesliga|Dynamo Dresden|SV Darmstadt 98|总进球区间4-6|total_goals_range|2026-08-16": {
+    "ev": 12.87,
+    "ts": 1786874699.215623
+  },
   "football|Germany 2. Bundesliga|Dynamo Dresden|SV Darmstadt 98|总进球区间7+|special|2026-08-16": {
     "ev": 564.69,
     "ts": 1786870478.081179
@@ -1069,9 +1093,21 @@
     "ev": 7.71,
     "ts": 1786862117.4007082
   },
+  "football|Germany 2. Bundesliga|Dynamo Dresden|SV Darmstadt 98|总进球区间7+|total_goals_range|2026-08-16": {
+    "ev": 564.69,
+    "ts": 1786874699.215713
+  },
   "football|Germany 2. Bundesliga|Dynamo Dresden|SV Darmstadt 98|让球主胜|1x2|2026-08-16": {
     "ev": 1.01,
     "ts": 1786862117.397055
+  },
+  "football|Germany 2. Bundesliga|Dynamo Dresden|SV Darmstadt 98|让球客胜|1x2|2026-08-16": {
+    "ev": 1.7,
+    "ts": 1786874699.210606
+  },
+  "football|Germany 2. Bundesliga|Hannover 96|VfL Wolfsburg|让球主胜|1x2|2026-08-16": {
+    "ev": 1.53,
+    "ts": 1786874699.210568
   },
   "football|Germany 3rd Liga|Hansa Rostock|SV Waldhof Mannheim 07|先进球neither|special|9999-12-31": {
     "ev": 11.15,
@@ -1084,6 +1120,10 @@
   "football|Germany 3rd Liga|Jahn Regensburg|1. FC Saarbrucken|总进球区间7+|special|2026-08-16": {
     "ev": 4.21,
     "ts": 1786870478.0816278
+  },
+  "football|Germany 3rd Liga|Jahn Regensburg|1. FC Saarbrucken|总进球区间7+|total_goals_range|2026-08-16": {
+    "ev": 4.21,
+    "ts": 1786874699.216908
   },
   "football|Germany Regionalliga North|Bremer SV 1906|HSC Hannover|双重机会-主/和局|dc|2026-08-16": {
     "ev": 3.55,
@@ -1098,9 +1138,25 @@
     "bb": 1.84,
     "ts": 1786868219.0329971
   },
+  "football|Hungary NB I|Puskas Akademia FC|Paksi FC|先进球neither|first_to_score|2026-08-16": {
+    "ev": 3.05,
+    "ts": 1786874699.21743
+  },
   "football|Ireland FAI Cup|Bohemians Dublin FC|Longford Town FC|双重机会-和局/客|dc|2026-08-17": {
     "ev": 1.5,
     "ts": 1786853555.103164
+  },
+  "football|Ireland Leinster Senior League|Finglas United FC|Bangor Celtic FC|双重机会-和局/客|dc|2026-08-16": {
+    "ev": 6.08,
+    "ts": 1786874699.213262
+  },
+  "football|Ireland Leinster Senior League|Finglas United FC|Bangor Celtic FC|让球客胜|1x2|2026-08-16": {
+    "ev": 5.67,
+    "ts": 1786874699.2131999
+  },
+  "football|Ireland Leinster Senior League|Lucan United FC|Wayside Celtic FC|双重机会-主/和局|dc|2026-08-16": {
+    "ev": 1.48,
+    "ts": 1786874699.209322
   },
   "football|Ireland Leinster Senior League|St Mochtas FC|Malahide United|双重机会-主/和局|dc|2026-08-16": {
     "ev": 4.01,
@@ -1109,6 +1165,11 @@
   "football|Ireland Leinster Senior League|St Mochtas FC|Malahide United|让球主胜|1x2|2026-08-16": {
     "ev": 4.39,
     "ts": 1786851693.273477
+  },
+  "football|Ireland Leinster Senior League|芬格拉斯联|宾高凯尔特|让球主胜(-0/0.5)|hc|-0/0.5|2026-08-16": {
+    "ev": 4.24,
+    "bb": 1.86,
+    "ts": 1786874698.221937
   },
   "football|Japan J.League 2|Tokushima Vortis|Sagan Tosu|上半场主胜|ht|2026-08-16": {
     "ev": 1.32,
@@ -1129,6 +1190,18 @@
   "football|Japan J.League 2|Tokushima Vortis|Sagan Tosu|净胜球home_by3|special|2026-08-16": {
     "ev": 7.12,
     "ts": 1786872529.510879
+  },
+  "football|Japan J.League 2|Tokushima Vortis|Sagan Tosu|净胜球home_by3|winning_margin|2026-08-16": {
+    "ev": 4.6,
+    "ts": 1786874699.2148721
+  },
+  "football|Japan J.League 2|Tokushima Vortis|Sagan Tosu|角球小球|corner|9999-12-31": {
+    "ev": 2.85,
+    "ts": 1786874699.214505
+  },
+  "football|Japan J.League 2|Tokushima Vortis|Sagan Tosu|角球让球客胜|corner|9999-12-31": {
+    "ev": 10.46,
+    "ts": 1786874699.2144709
   },
   "football|Japan J.League 2|Tokushima Vortis|Sagan Tosu|让球主胜|1x2|2026-08-16": {
     "ev": 1.19,
@@ -1243,6 +1316,10 @@
     "ev": 5.85,
     "ts": 1786870478.071984
   },
+  "football|Netherlands Eredivisie|ADO Den Haag|FC Groningen|上半场双重机会-主/客|ht_dc|2026-08-16": {
+    "ev": 1.19,
+    "ts": 1786874699.209609
+  },
   "football|Netherlands Eredivisie|ADO Den Haag|FC Groningen|总进球区间4-6|special|9999-12-31": {
     "ev": 11.18,
     "ts": 1786862117.4003289
@@ -1255,9 +1332,17 @@
     "ev": 64.91,
     "ts": 1786862117.4003751
   },
+  "football|Netherlands Eredivisie|ADO Den Haag|FC Groningen|总进球区间7+|total_goals_range|2026-08-16": {
+    "ev": 8.44,
+    "ts": 1786874699.215104
+  },
   "football|Netherlands Eredivisie|ADO Den Haag|FC Groningen|让球客胜|1x2|2026-08-16": {
     "ev": 2.25,
     "ts": 1786855719.065452
+  },
+  "football|Netherlands Eredivisie|Ajax Amsterdam|SC Heerenveen|先进球neither|first_to_score|2026-08-16": {
+    "ev": 3.63,
+    "ts": 1786874699.217057
   },
   "football|Netherlands Eredivisie|Ajax Amsterdam|SC Heerenveen|先进球neither|special|2026-08-16": {
     "ev": 3.63,
@@ -1375,6 +1460,10 @@
     "ev": 1.07,
     "ts": 1786853555.102043
   },
+  "football|Norway Eliteserien|Molde FK|Tromso IL|上半场客胜|ht|2026-08-16": {
+    "ev": 1.25,
+    "ts": 1786874699.211133
+  },
   "football|Norway Eliteserien|SK Brann|HamKam|单双-双|oe|2026-08-16": {
     "ev": 1.41,
     "ts": 1786851693.27394
@@ -1423,9 +1512,17 @@
     "ev": 2.51,
     "ts": 1786851693.26933
   },
+  "football|Poland Ekstraklasa|MKS Cracovia Krakow|RKS Rakow Czestochowa|上半场客胜|ht|2026-08-16": {
+    "ev": 1.81,
+    "ts": 1786874699.2112079
+  },
   "football|Poland Ekstraklasa|MKS Cracovia Krakow|RKS Rakow Czestochowa|双边进球-是|btts|2026-08-16": {
     "ev": 2.75,
     "ts": 1786851693.269278
+  },
+  "football|Poland Ekstraklasa|MKS Cracovia Krakow|RKS Rakow Czestochowa|让球主胜|1x2|2026-08-16": {
+    "ev": 1.5,
+    "ts": 1786874699.211241
   },
   "football|Poland III Liga|Zaglebie Lubin II|Rakow Czestochowa II|双重机会-和局/客|dc|2026-08-16": {
     "ev": 1.47,
@@ -1509,6 +1606,10 @@
     "ev": 2.85,
     "ts": 1786851693.2715242
   },
+  "football|Portugal Segunda Liga|Amarante FC|Lusitania FC Lourosa|上半场双重机会-主/客|ht_dc|2026-08-16": {
+    "ev": 1.32,
+    "ts": 1786874699.213136
+  },
   "football|Portugal Segunda Liga|Amarante FC|Lusitania FC Lourosa|总进球区间0-1|special|2026-08-16": {
     "ev": 15.54,
     "ts": 1786870478.081398
@@ -1517,6 +1618,10 @@
     "ev": 15.49,
     "ts": 1786867877.545943
   },
+  "football|Portugal Segunda Liga|Amarante FC|Lusitania FC Lourosa|总进球区间0-1|total_goals_range|2026-08-16": {
+    "ev": 15.42,
+    "ts": 1786874699.216406
+  },
   "football|Portugal Segunda Liga|Amarante FC|Lusitania FC Lourosa|总进球区间4-6|special|2026-08-16": {
     "ev": 26.16,
     "ts": 1786870478.081435
@@ -1524,6 +1629,10 @@
   "football|Portugal Segunda Liga|Amarante FC|Lusitania FC Lourosa|总进球区间4-6|special|9999-12-31": {
     "ev": 26.1,
     "ts": 1786867877.5460129
+  },
+  "football|Portugal Segunda Liga|Amarante FC|Lusitania FC Lourosa|总进球区间4-6|total_goals_range|2026-08-16": {
+    "ev": 26.45,
+    "ts": 1786874699.2164989
   },
   "football|Portugal Segunda Liga|Leixoes SC|CD Tondela|上半场双重机会-主/客|ht_dc|2026-08-16": {
     "ev": 1.42,
@@ -1554,6 +1663,10 @@
     "ev": 1.25,
     "ts": 1786862117.39488
   },
+  "football|Portugal Segunda Liga|Portimonense SC|FC Vizela|单双-双|oe|2026-08-16": {
+    "ev": 1.57,
+    "ts": 1786874699.208777
+  },
   "football|Portugal Segunda Liga|Portimonense SC|FC Vizela|双边进球-是|btts|2026-08-16": {
     "ev": 1.66,
     "ts": 1786872529.502305
@@ -1569,6 +1682,10 @@
   "football|Portugal Segunda Liga|Portimonense SC|FC Vizela|总进球区间0-1|special|9999-12-31": {
     "ev": 33.01,
     "ts": 1786862117.4002051
+  },
+  "football|Portugal Segunda Liga|Portimonense SC|FC Vizela|总进球区间0-1|total_goals_range|2026-08-16": {
+    "ev": 15.59,
+    "ts": 1786874699.214989
   },
   "football|Portugal Segunda Liga|Portimonense SC|FC Vizela|总进球区间4-6|special|9999-12-31": {
     "ev": 7.72,
@@ -1713,6 +1830,14 @@
     "ev": 1.67,
     "ts": 1786857131.002309
   },
+  "football|Slovenia PrvaLiga|NK Radomlje|NK Aluminij|上半场双重机会-主/客|ht_dc|2026-08-16": {
+    "ev": 1.9,
+    "ts": 1786874699.212739
+  },
+  "football|Slovenia PrvaLiga|NK Radomlje|NK Aluminij|总进球区间7+|total_goals_range|2026-08-16": {
+    "ev": 7.22,
+    "ts": 1786874699.2173529
+  },
   "football|South Africa Premier Soccer League|Chippa United FC|Orlando Pirates FC|双重机会-主/和局|dc|2026-08-16": {
     "ev": 3.78,
     "ts": 1786851693.26977
@@ -1781,6 +1906,14 @@
     "ev": 2.18,
     "ts": 1786867877.542283
   },
+  "football|South Korea K-League 1|Ulsan HD FC|Gangwon FC|净胜球away_by2|winning_margin|2026-08-16": {
+    "ev": 102.16,
+    "ts": 1786874699.215219
+  },
+  "football|South Korea K-League 1|Ulsan HD FC|Gangwon FC|净胜球away_by3|winning_margin|2026-08-16": {
+    "ev": 140.47,
+    "ts": 1786874699.215327
+  },
   "football|South Korea K-League 1|Ulsan HD FC|Gangwon FC|和局|1x2|2026-08-16": {
     "ev": 1.8,
     "ts": 1786851693.267162
@@ -1828,6 +1961,10 @@
   "football|South Korea K-League 2|Paju Frontier FC|Seongnam Ilhwa|总进球区间4-6|special|9999-12-31": {
     "ev": 58.05,
     "ts": 1786862117.400495
+  },
+  "football|South Korea K-League 2|Paju Frontier FC|Seongnam Ilhwa|总进球区间4-6|total_goals_range|2026-08-16": {
+    "ev": 114.0,
+    "ts": 1786874699.215428
   },
   "football|South Korea K-League 2|Paju Frontier FC|Seongnam Ilhwa|让球客胜|1x2|2026-08-16": {
     "ev": 2.26,
@@ -1893,9 +2030,17 @@
     "ev": 80.98,
     "ts": 1786872529.512394
   },
+  "football|Spain LaLiga|Racing Santander|Villarreal CF|总进球区间0-1|total_goals_range|2026-08-16": {
+    "ev": 82.33,
+    "ts": 1786874699.2171679
+  },
   "football|Spain LaLiga|Racing Santander|Villarreal CF|总进球区间7+|special|2026-08-16": {
     "ev": 383.14,
     "ts": 1786872529.51245
+  },
+  "football|Spain LaLiga|Racing Santander|Villarreal CF|总进球区间7+|total_goals_range|2026-08-16": {
+    "ev": 383.14,
+    "ts": 1786874699.217249
   },
   "football|Spain LaLiga|Racing Santander|Villarreal CF|让球客胜|1x2|2026-08-16": {
     "ev": 1.99,
@@ -1913,9 +2058,17 @@
     "ev": 36.99,
     "ts": 1786872529.511808
   },
+  "football|Sweden Allsvenskan|Degerfors IF|IFK Goteborg|净胜球away_by2|winning_margin|2026-08-16": {
+    "ev": 38.0,
+    "ts": 1786874699.216198
+  },
   "football|Sweden Allsvenskan|Degerfors IF|IFK Goteborg|净胜球away_by3|special|2026-08-16": {
     "ev": 41.7,
     "ts": 1786872529.511868
+  },
+  "football|Sweden Allsvenskan|Degerfors IF|IFK Goteborg|净胜球away_by3|winning_margin|2026-08-16": {
+    "ev": 42.96,
+    "ts": 1786874699.216289
   },
   "football|Sweden Allsvenskan|Degerfors IF|IFK Goteborg|和局|1x2|2026-08-16": {
     "ev": 1.65,
@@ -1933,6 +2086,10 @@
     "ev": 2.42,
     "ts": 1786872529.5116212
   },
+  "football|Sweden Allsvenskan|Djurgardens IF|AIK|净胜球away_by2|winning_margin|2026-08-16": {
+    "ev": 1.26,
+    "ts": 1786874699.215913
+  },
   "football|Sweden Allsvenskan|GAIS|Malmo FF|上半场客胜|ht|2026-08-16": {
     "ev": 1.25,
     "ts": 1786851693.2689621
@@ -1941,9 +2098,17 @@
     "ev": 28.87,
     "ts": 1786870478.0815291
   },
+  "football|Sweden Allsvenskan|GAIS|Malmo FF|总进球区间0-1|total_goals_range|2026-08-16": {
+    "ev": 29.81,
+    "ts": 1786874699.2167182
+  },
   "football|Sweden Allsvenskan|GAIS|Malmo FF|总进球区间7+|special|2026-08-16": {
     "ev": 975.0,
     "ts": 1786870478.081559
+  },
+  "football|Sweden Allsvenskan|GAIS|Malmo FF|总进球区间7+|total_goals_range|2026-08-16": {
+    "ev": 930.2,
+    "ts": 1786874699.216795
   },
   "football|Sweden Allsvenskan|IF Brommapojkarna|Orgryte IS|上半场客胜|ht|2026-08-16": {
     "ev": 2.12,
@@ -1957,6 +2122,10 @@
     "ev": 52.07,
     "ts": 1786867877.5458088
   },
+  "football|Sweden Allsvenskan|IF Brommapojkarna|Orgryte IS|总进球区间0-1|total_goals_range|2026-08-16": {
+    "ev": 58.74,
+    "ts": 1786874699.216011
+  },
   "football|Sweden Allsvenskan|IF Brommapojkarna|Orgryte IS|总进球区间7+|special|2026-08-16": {
     "ev": 717.65,
     "ts": 1786870478.0813088
@@ -1964,6 +2133,10 @@
   "football|Sweden Allsvenskan|IF Brommapojkarna|Orgryte IS|总进球区间7+|special|9999-12-31": {
     "ev": 2.48,
     "ts": 1786862117.4010508
+  },
+  "football|Sweden Allsvenskan|IF Brommapojkarna|Orgryte IS|总进球区间7+|total_goals_range|2026-08-16": {
+    "ev": 715.04,
+    "ts": 1786874699.216104
   },
   "football|Sweden Allsvenskan|Kalmar FF|Hammarby IF|角球让球主胜|corner|9999-12-31": {
     "ev": 2.69,
@@ -2000,6 +2173,10 @@
   "football|Sweden Superettan|IFK Varnamo|Ostersunds FK|总进球区间7+|special|2026-08-16": {
     "ev": 1.29,
     "ts": 1786870478.081095
+  },
+  "football|Sweden Superettan|IFK Varnamo|Ostersunds FK|总进球区间7+|total_goals_range|2026-08-16": {
+    "ev": 1.36,
+    "ts": 1786874699.215523
   },
   "football|Sweden Superettan|IFK Varnamo|Ostersunds FK|让球主胜|1x2|2026-08-16": {
     "ev": 1.03,
@@ -4306,9 +4483,19 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "football|Ireland Leinster Senior League|芬格拉斯联|宾高凯尔特|让球主胜(-0/0.5)|hc|-0/0.5|2026-08-16": {
-    "ev": 4.24,
-    "bb": 1.86,
-    "ts": 1786874698.221937
+  "football|Norway 3rd Division|利勒斯特罗姆二队|哈斯塔|让球主胜(-0/0.5)|hc|-0/0.5|2026-08-16": {
+    "ev": 12.18,
+    "bb": 1.87,
+    "ts": 1786875163.6024761
+  },
+  "football|Germany 2. Bundesliga|德累斯顿迪纳摩|达姆施塔特 98|总进球区间4-6|total_goals_range|2026-08-16": {
+    "ev": 17.23,
+    "bb": 2.69,
+    "ts": 1786875163.602517
+  },
+  "football|Saudi Arabia Kings Cup|欧鲁巴|艾伯哈|让球客胜(-0/0.5)|hc|-0/0.5|2026-08-17": {
+    "ev": 4.77,
+    "bb": 1.69,
+    "ts": 1786875163.60255
   }
 }
