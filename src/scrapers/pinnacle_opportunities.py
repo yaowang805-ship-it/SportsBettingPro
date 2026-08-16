@@ -558,10 +558,11 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             pin_decimal = [v for v in norm_pin.values() if v > 1.0]
             fair_map = {}
             if pin_decimal:
+                # shin_fair_odds 返回公平十进制赔率(1/prob), 直接作为 fair_price
                 fairs = shin_fair_odds(pin_decimal)
                 for i, k in enumerate(norm_pin):
                     if i < len(fairs) and fairs[i] > 0:
-                        fair_map[k] = 1.0 / fairs[i]
+                        fair_map[k] = fairs[i]
             for name, bb_odds in norm_bb.items():
                 fair = fair_map.get(name)
                 if not fair or fair <= 0:
