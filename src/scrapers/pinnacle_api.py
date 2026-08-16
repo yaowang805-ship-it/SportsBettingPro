@@ -203,38 +203,43 @@ def _check_hosts_file():
     return False
 
 
+_rate_limit_lock = __import__('threading').Lock()  # V5.5: 并行拉取时保护限速计数器
+
+
 def _rate_limit():
     global _last_req_time, _REQUEST_COUNT, _BURST_WINDOW_START, _BURST_COUNT, _SCAN_PAUSE_UNTIL
 
-    # V5: Cloudflare 封禁后自动暂停 — 冷却中真正跳过请求(修复每60s重锤被封IP的bug)
-    if _SCAN_PAUSE_UNTIL > 0:
-        remaining = _SCAN_PAUSE_UNTIL - time.time()
-        if remaining > 0:
-            logger.warning("Cloudflare 封禁冷却中, 跳过请求 (剩余 %.0fs)", remaining)
-            return False  # 冷却中立即跳过 (原 sleep60s 导致 N联赛×60s 小时级卡死)
-        _SCAN_PAUSE_UNTIL = 0.0  # 到期, 清除标志
+    # V5.5: 加锁 — 8线程并行时全局计数器有竞争, 会超限被Cloudflare封禁(数据丢失)
+    with _rate_limit_lock:
+        # V5: Cloudflare 封禁后自动暂停 — 冷却中真正跳过请求(修复每60s重锤被封IP的bug)
+        if _SCAN_PAUSE_UNTIL > 0:
+            remaining = _SCAN_PAUSE_UNTIL - time.time()
+            if remaining > 0:
+                logger.warning("Cloudflare 封禁冷却中, 跳过请求 (剩余 %.0fs)", remaining)
+                return False  # 冷却中立即跳过 (原 sleep60s 导致 N联赛×60s 小时级卡死)
+            _SCAN_PAUSE_UNTIL = 0.0  # 到期, 清除标志
 
-    # V5: 突发流量限制 — 10秒窗口内最多 15 请求
-    now = time.time()
-    if now - _BURST_WINDOW_START > _REQUEST_BURST_WINDOW:
-        _BURST_WINDOW_START = now
-        _BURST_COUNT = 0
-    if _BURST_COUNT >= _REQUEST_BURST_LIMIT:
-        sleep_time = _REQUEST_BURST_WINDOW - (now - _BURST_WINDOW_START)
-        if sleep_time > 0:
-            time.sleep(sleep_time)
-            _BURST_WINDOW_START = time.time()
+        # V5: 突发流量限制 — 10秒窗口内最多 N 请求
+        now = time.time()
+        if now - _BURST_WINDOW_START > _REQUEST_BURST_WINDOW:
+            _BURST_WINDOW_START = now
             _BURST_COUNT = 0
+        if _BURST_COUNT >= _REQUEST_BURST_LIMIT:
+            sleep_time = _REQUEST_BURST_WINDOW - (now - _BURST_WINDOW_START)
+            if sleep_time > 0:
+                time.sleep(sleep_time)
+                _BURST_WINDOW_START = time.time()
+                _BURST_COUNT = 0
 
-    elapsed = time.time() - _last_req_time
-    if elapsed < _MIN_REQUEST_INTERVAL:
-        import random
-        # 微抖动 0~0.2s 打破规律节奏, 几乎不影响速度
-        time.sleep(_MIN_REQUEST_INTERVAL - elapsed + random.uniform(0, 0.2))
-    _last_req_time = time.time()
-    _REQUEST_COUNT += 1
-    _BURST_COUNT += 1
-    return True
+        elapsed = time.time() - _last_req_time
+        if elapsed < _MIN_REQUEST_INTERVAL:
+            import random
+            # 微抖动 0~0.2s 打破规律节奏, 几乎不影响速度
+            time.sleep(_MIN_REQUEST_INTERVAL - elapsed + random.uniform(0, 0.2))
+        _last_req_time = time.time()
+        _REQUEST_COUNT += 1
+        _BURST_COUNT += 1
+        return True
 
 
 def _backoff_sleep(attempt: int, extra: float = 0.0) -> float:
