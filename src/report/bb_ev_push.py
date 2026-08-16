@@ -2588,7 +2588,7 @@ def _refresh_live_odds():
         (live_ok, errors): live_ok=True 表示主对比(BB)实时比价全链路成功。
         errors 是警告列表，记录非致命失败（如 FB 失败但 BB 成功）。
     """
-    from src.scrapers.bb_api_fetcher import fetch_all_sports
+    from src.scrapers.bb_api_fetcher import fetch_all_sports, save_results
     from src.scrapers.bb_vs_pinnacle import compare_bb_vs_pinnacle
     from src.scrapers.bb_data import load_bb_odds
 
@@ -2600,7 +2600,10 @@ def _refresh_live_odds():
     bb_ok = False
     fb_ok = False
     try:
-        fetch_all_sports(with_fb=True)
+        # 🔴 铁律：fetch_all_sports 返回合并后的最新赔率, 必须落盘到 bb_odds_extracted.json,
+        #    否则下面 load_bb_odds() 读到的是上次扫描的陈旧文件(导致盘口线错配/过期赔率)。
+        fresh_matches = fetch_all_sports(with_fb=True)
+        save_results(fresh_matches)
         bb_ok = True
         fb_ok = True
         logger.info("  ✅ BB/FB 赔率实时拉取完成 (%.0fs)", time.time() - t0)

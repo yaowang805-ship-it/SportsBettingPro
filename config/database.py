@@ -206,7 +206,7 @@ def insert_push_clv(opps: list):
             o.get("ev_pct", 0),
             o.get("_stake", 0),
             o.get("_tier", 0),
-            o.get("_pin_epoch", 0),
+            o.get("_pin_epoch", 0) or 0,  # _pin_epoch 可能为 None(无 Pin 开赛时间) → 落 0, 避免 NOT NULL 约束崩
         ))
     get_conn().executemany(
         """INSERT INTO push_clv
