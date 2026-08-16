@@ -1,5 +1,5 @@
 {
-  "balance": 491.0,
+  "balance": 339.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1886,6 +1886,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786888800,
       "created_at": "2026-08-16T12:33:54.113588+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_维拉圣卡罗斯_联合防卫队_双重机会-和局/客",
+      "sport": "football",
+      "league": "阿根廷乙级曼特波里顿联赛",
+      "home_team": "维拉圣卡罗斯",
+      "away_team": "联合防卫队",
+      "home_cn": "维拉圣卡罗斯",
+      "away_cn": "联合防卫队",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 1.98,
+      "stake": 152,
+      "model_prob": 0.5826,
+      "ev_pct": 15.36,
+      "pin_odds": 0,
+      "fair_price": 1.7163,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786903200,
+      "created_at": "2026-08-16T12:39:02.079235+00:00",
       "track_only": false
     }
   ],
@@ -10676,8 +10699,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-16",
-    "used": 4205.0,
-    "bets": 78
+    "used": 4357.0,
+    "bets": 79
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
