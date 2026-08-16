@@ -1,5 +1,5 @@
 {
-  "balance": 789.0,
+  "balance": 727.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1725,6 +1725,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786879800,
       "created_at": "2026-08-16T11:27:42.604105+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_ADO_希姆斯克_赫尔克里斯_让球客胜(+05/1)",
+      "sport": "football",
+      "league": "荷兰丁级联赛",
+      "home_team": "ADO 希姆斯克",
+      "away_team": "赫尔克里斯",
+      "home_cn": "ADO 希姆斯克",
+      "away_cn": "赫尔克里斯",
+      "market": "handicap",
+      "market_type": "让球客胜(+0.5/1)",
+      "sub_market": "hc",
+      "line": "+0.5/1",
+      "odds": 1.83,
+      "stake": 62,
+      "model_prob": 0.6046,
+      "ev_pct": 10.64,
+      "pin_odds": 1.5714,
+      "fair_price": 1.654,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786881600,
+      "created_at": "2026-08-16T11:57:59.951379+00:00",
       "track_only": false
     }
   ],
@@ -10515,8 +10538,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-16",
-    "used": 3907.0,
-    "bets": 71
+    "used": 3969.0,
+    "bets": 72
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
