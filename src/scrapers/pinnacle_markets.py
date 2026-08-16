@@ -608,3 +608,52 @@ def get_league_corner_markets(league_id):
         })
 
     return result
+
+
+def get_league_special_markets(league_id):
+    """提取 Pinnacle 特殊盘口(正确比分/净胜球/总进球区间/先进球)。
+
+    这些是 matchups 里的 special 子比赛(有 parentId), 赔率在 /markets/straight
+    (type=moneyline, matchupId=子比赛id)。
+    返回 {parent_matchup_id: {special_key: [{name, odds}]}}
+    """
+    matchups = api_get(f"/leagues/{league_id}/matchups")
+    if not matchups:
+        return {}
+    markets = api_get(f"/leagues/{league_id}/markets/straight") or []
+
+    SPECIAL_MAP = {
+        "Correct Score": "correct_score",
+        "Winning Margin": "winning_margin",
+        "Total Goals Range": "total_goals_range",
+        "First Team To Score": "first_to_score",
+    }
+
+    mm = {}
+    for mk in markets:
+        mid = mk.get("matchupId")
+        if mid:
+            mm.setdefault(mid, []).append(mk)
+
+    result = {}
+    for mu in matchups:
+        desc = (mu.get("special") or {}).get("description", "")
+        key = SPECIAL_MAP.get(desc)
+        if not key:
+            continue
+        parent_id = mu.get("parentId")
+        mid = mu.get("id")
+        if not parent_id or not mid:
+            continue
+        prices = []
+        for mk in mm.get(mid, []):
+            if mk.get("type") != "moneyline":
+                continue
+            for p in mk.get("prices", []):
+                name = p.get("designation", "")
+                odds = us_to_decimal(p.get("price"))
+                if name and odds and odds > 1.0:
+                    prices.append({"name": name, "odds": odds})
+        if prices:
+            result.setdefault(parent_id, {})[key] = prices
+    return result
