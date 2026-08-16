@@ -1431,6 +1431,13 @@ def _match_league(league: str, data_dict: dict):
         cn_name = _LEAGUE_ALIASES[league_lower]
         if cn_name in data_dict:
             return data_dict[cn_name]
+    # V5.7: 英文名 → 别名关键词子串匹配 ("England Premier League" 含 "premier league" → "英超")
+    # 按关键词长度降序, 长关键词优先(避免 "serie a" 误匹配 "brazil serie a" 之类)
+    for alias_kw in sorted(_LEAGUE_ALIASES.keys(), key=lambda x: -len(x)):
+        if alias_kw in league_lower:
+            cn_name = _LEAGUE_ALIASES[alias_kw]
+            if cn_name in data_dict:
+                return data_dict[cn_name]
     # 子字符串模糊匹配
     for kw in sorted(data_dict.keys(), key=lambda x: -len(x)):
         if kw == "_AGGREGATE":

@@ -861,7 +861,7 @@ def _calc_kelly_stakes(opps: list) -> list:
         odds = o.get("bb_odds", 0)
         ev = o.get("ev_pct", 0)
         sport = o.get("sport", "")
-        league = o.get("league_cn", o.get("league", ""))  # V5.7: 用中文联赛名匹配 V5(键是中文)
+        league = o.get("league", "")
         sub = o.get("_sub_market", o.get("_market", ""))
         match_type = o.get("_match_type", "")
         match_score = o.get("_match_score", 0)
@@ -1471,7 +1471,7 @@ def _collect_opportunities(match, market_key):
 
         # ── V4 赔率上限: 基于 Pinnacle 全量数据 ──
         from config.weight_matrix_v5 import get_odds_cap
-        _odds_cap = get_odds_cap(match.get("sport", ""), league_cn, sub_market)
+        _odds_cap = get_odds_cap(match.get("sport", ""), league, sub_market)
         if _odds_cap > 0 and bb_odds > _odds_cap:
             continue
 
