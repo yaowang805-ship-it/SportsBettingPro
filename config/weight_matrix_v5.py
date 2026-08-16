@@ -1394,7 +1394,7 @@ _LEAGUE_ALIASES = {
     "scottish premiership": "苏超",
     "j1 league": "日本J1联赛", "j-league": "日本J1联赛",
     "k league 1": "韩国K1联赛",
-    "brazilian serie a": "巴西甲级联赛", "brasileirao": "巴西甲级联赛",
+    "brazilian serie a": "巴西甲级联赛", "brasileirao": "巴西甲级联赛", "brazil serie a": "巴西甲级联赛",
     "liga mx": "墨西哥超级联赛", "mexican liga mx": "墨西哥超级联赛",
     "argentine primera": "阿根廷甲级联赛",
     "super lig": "土超", "turkish super lig": "土超",
