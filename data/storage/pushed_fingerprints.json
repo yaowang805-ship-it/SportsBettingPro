@@ -394,6 +394,11 @@
     "ev": 4.66,
     "ts": 1786848646.6766121
   },
+  "football|Australia Northern Territory Premier League|帕默斯顿流浪|阿祖里|让球客胜(-4/4.5)|hc|-4/4.5|2026-08-16": {
+    "ev": 4.33,
+    "bb": 1.87,
+    "ts": 1786861497.301538
+  },
   "football|Australia Queensland Premier League 2|Brisbane Knights|Moreton City Excelsior II|主胜|1x2|2026-08-16": {
     "ev": 5.79,
     "ts": 1786848646.676207
@@ -685,6 +690,11 @@
     "ev": 11.5,
     "ts": 1786857131.0036612
   },
+  "football|Costa Rica Primera Division|佩雷斯泽莱东|国际森卡洛斯|双重机会-主/和局|dc|2026-08-17": {
+    "ev": 7.31,
+    "bb": 1.61,
+    "ts": 1786861497.301451
+  },
   "football|Costa Rica Primera Division|佩雷斯泽莱东|国际森卡洛斯|让球主胜(0)|hc|0|2026-08-17": {
     "ev": 8.02,
     "bb": 2.14,
@@ -742,6 +752,11 @@
   "football|England Championship League|Burnley FC|West Ham United|双边进球-是|btts|2026-08-16": {
     "ev": 1.03,
     "ts": 1786857130.999854
+  },
+  "football|England Championship League|Derby County|Cardiff City|先进球cardiff city|special|9999-12-31": {
+    "ev": 20.61,
+    "bb": 2.51,
+    "ts": 1786861497.3013198
   },
   "football|England FA Community Shield|Arsenal FC|Manchester City FC|上半场客胜|ht|2026-08-16": {
     "ev": 1.37,
@@ -941,6 +956,11 @@
     "ev": 2.34,
     "ts": 1786851693.266804
   },
+  "football|Netherlands Eredivisie|Go Ahead Eagles|ADO Den Haag|先进球ado den haag|special|9999-12-31": {
+    "ev": 12.8,
+    "bb": 2.55,
+    "ts": 1786861497.301717
+  },
   "football|Norway 1st Division Women|Frigg Oslo FK (w)|Odds BK (w)|双重机会-主/和局|dc|2026-08-16": {
     "ev": 4.02,
     "ts": 1786851693.2738419
@@ -1049,6 +1069,11 @@
   "football|Poland Ekstraklasa|MKS Cracovia Krakow|RKS Rakow Czestochowa|双边进球-是|btts|2026-08-16": {
     "ev": 2.75,
     "ts": 1786851693.269278
+  },
+  "football|Poland III Liga|卢宾扎格列比二队|琴斯托霍瓦二队|双重机会-和局/客|dc|2026-08-16": {
+    "ev": 12.64,
+    "bb": 2.42,
+    "ts": 1786861497.3016682
   },
   "football|Portugal Liga 3|Caldas SC|Lusitano GC|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 4.79,
@@ -1421,6 +1446,11 @@
   "football|USA Major League Soccer|Colorado Rapids|Sporting Kansas City|角球大球|corner|9999-12-31": {
     "ev": 1.71,
     "ts": 1786844149.176073
+  },
+  "football|USA Major League Soccer|Orlando City SC|Chicago Fire|先进球chicago fire|special|9999-12-31": {
+    "ev": 6.33,
+    "bb": 1.67,
+    "ts": 1786861497.3015912
   },
   "football|USA Major League Soccer|Seattle Sounders|Vancouver Whitecaps FC|角球小球|corner|9999-12-31": {
     "ev": 1.61,
@@ -3613,34 +3643,9 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "football|England Championship League|Derby County|Cardiff City|先进球cardiff city|special|9999-12-31": {
-    "ev": 20.61,
-    "bb": 2.51,
-    "ts": 1786861497.3013198
-  },
-  "football|Costa Rica Primera Division|佩雷斯泽莱东|国际森卡洛斯|双重机会-主/和局|dc|2026-08-17": {
-    "ev": 7.31,
-    "bb": 1.61,
-    "ts": 1786861497.301451
-  },
-  "football|Australia Northern Territory Premier League|帕默斯顿流浪|阿祖里|让球客胜(-4/4.5)|hc|-4/4.5|2026-08-16": {
-    "ev": 4.33,
-    "bb": 1.87,
-    "ts": 1786861497.301538
-  },
-  "football|USA Major League Soccer|Orlando City SC|Chicago Fire|先进球chicago fire|special|9999-12-31": {
-    "ev": 6.33,
-    "bb": 1.67,
-    "ts": 1786861497.3015912
-  },
-  "football|Poland III Liga|卢宾扎格列比二队|琴斯托霍瓦二队|双重机会-和局/客|dc|2026-08-16": {
-    "ev": 12.64,
-    "bb": 2.42,
-    "ts": 1786861497.3016682
-  },
-  "football|Netherlands Eredivisie|Go Ahead Eagles|ADO Den Haag|先进球ado den haag|special|9999-12-31": {
-    "ev": 12.8,
-    "bb": 2.55,
-    "ts": 1786861497.301717
+  "football|Austria Bundesliga Women|格拉茨 (女)|萨尔茨堡红牛 (女)|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-16": {
+    "ev": 4.09,
+    "bb": 1.78,
+    "ts": 1786862116.8641322
   }
 }
