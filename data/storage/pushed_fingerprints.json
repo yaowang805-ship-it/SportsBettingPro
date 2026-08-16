@@ -224,6 +224,11 @@
     "ev": 3.23,
     "ts": 1786851693.2731571
   },
+  "football|Africa Cup of Nations Women (In Morocco)|喀麦隆 (女)|马拉维 (女)|上半场双重机会-主/客|ht_dc|2026-08-17": {
+    "ev": 6.84,
+    "bb": 1.93,
+    "ts": 1786886095.309372
+  },
   "football|Argentina Cup|Deportivo Riestra|Gimnasia Y Esgrima La Plata|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 10.93,
     "bb": 2.24,
@@ -342,6 +347,10 @@
   "football|Argentina Torneo Promocional Amateur|Academia Control Orientado|Buenos Aires City|让球客胜|1x2|2026-08-16": {
     "ev": 1.85,
     "ts": 1786870478.078326
+  },
+  "football|Argentina Torneo Promocional Amateur|Club Atletico Pilar|Union Deportivo Provincial Lobos|双重机会-和局/客|dc|2026-08-17": {
+    "ev": 1.0,
+    "ts": 1786886396.554719
   },
   "football|Armenia Premier League|诺亚FC|艾拉斯克特埃里温|主胜|1x2|2026-08-18": {
     "ev": 6.37,
@@ -622,6 +631,10 @@
   "football|Azerbaijan Premier League|Zira FK|Safa|双重机会-和局/客|dc|2026-08-17": {
     "ev": 1.99,
     "ts": 1786879038.345804
+  },
+  "football|Azerbaijan Premier League|Zira FK|Safa|让球主胜|1x2|2026-08-17": {
+    "ev": 1.47,
+    "ts": 1786886095.753419
   },
   "football|Belgium Challenger Pro League|K Beerschot VA|KAA Gent II|上半场主胜|ht|2026-08-16": {
     "ev": 1.0,
@@ -1485,6 +1498,10 @@
     "ev": 9.92,
     "ts": 1786872529.509753
   },
+  "football|Finland Ykkosliiga|Mikkelin Palloilijat|Ekenas Idrottsforening|让球客胜|1x2|2026-08-16": {
+    "ev": 1.89,
+    "ts": 1786886095.755171
+  },
   "football|France Super Cup|RC Lens|Paris Saint Germain|上半场主胜|ht|2026-08-17": {
     "ev": 1.06,
     "ts": 1786853555.1070101
@@ -1937,6 +1954,10 @@
     "ev": 1.12,
     "ts": 1786870478.0808792
   },
+  "football|Netherlands Eredivisie|Ajax Amsterdam|SC Heerenveen|让球客胜|1x2|2026-08-16": {
+    "ev": 1.38,
+    "ts": 1786886095.752491
+  },
   "football|Netherlands Eredivisie|FC Twente|PEC Zwolle|上半场客胜|ht|2026-08-16": {
     "ev": 2.34,
     "ts": 1786851693.266804
@@ -2225,6 +2246,10 @@
     "ev": 5.91,
     "ts": 1786877196.136171
   },
+  "football|Norway Eliteserien|Sarpsborg 08|Sandefjord Fotball|大球|1x2|2026-08-16": {
+    "ev": 1.12,
+    "ts": 1786886396.5528908
+  },
   "football|Norway Eliteserien|Sarpsborg 08|Sandefjord Fotball|小球|1x2|2026-08-16": {
     "ev": 2.0,
     "ts": 1786877196.1326048
@@ -2293,6 +2318,10 @@
   "football|Peru Liga 1|Sporting Cristal|Sport Huancayo|让球客胜|1x2|2026-08-17": {
     "ev": 2.92,
     "ts": 1786880260.396693
+  },
+  "football|Poland Ekstraklasa|KS Gornik Zabrze|Wisla Krakow|上半场双重机会-主/客|ht_dc|2026-08-17": {
+    "ev": 1.13,
+    "ts": 1786886396.553709
   },
   "football|Poland Ekstraklasa|LKP Motor Lublin|GKS Katowice|上半场客胜|ht|2026-08-16": {
     "ev": 4.58,
@@ -2709,9 +2738,25 @@
     "ev": 1.72,
     "ts": 1786851693.272108
   },
+  "football|Slovakia Superliga|FC Spartak Trnava|MFK Zemplin Michalovce|上半场双重机会-主/客|ht_dc|2026-08-16": {
+    "ev": 1.94,
+    "ts": 1786886396.553501
+  },
+  "football|Slovakia Superliga|FC Spartak Trnava|MFK Zemplin Michalovce|双边进球-是|btts|2026-08-16": {
+    "ev": 3.07,
+    "ts": 1786886396.553418
+  },
+  "football|Slovakia Superliga|FC Spartak Trnava|MFK Zemplin Michalovce|大球|1x2|2026-08-16": {
+    "ev": 3.31,
+    "ts": 1786886396.553459
+  },
   "football|Slovakia Superliga|FC Spartak Trnava|MFK Zemplin Michalovce|小球|1x2|2026-08-16": {
     "ev": 1.89,
     "ts": 1786877196.134341
+  },
+  "football|Slovakia Superliga|FC Spartak Trnava|MFK Zemplin Michalovce|总进球区间7+|total_goals_range|2026-08-16": {
+    "ev": 10.32,
+    "ts": 1786886396.555987
   },
   "football|Slovakia Superliga|FC Spartak Trnava|MFK Zemplin Michalovce|让球主胜|1x2|2026-08-16": {
     "ev": 3.78,
@@ -3159,9 +3204,17 @@
     "ev": 3.23,
     "ts": 1786851693.26657
   },
+  "football|Sweden Division 2|IFK Ostersund|Lucksta IF|双重机会-和局/客|dc|2026-08-16": {
+    "ev": 1.07,
+    "ts": 1786886095.7519512
+  },
   "football|Sweden Division 2|Linero IF|Rappe Goif|双重机会-和局/客|dc|2026-08-16": {
     "ev": 2.54,
     "ts": 1786881480.3598258
+  },
+  "football|Sweden Division 2|Osterlen FF|Oskarshamns AIK|让球客胜|1x2|2026-08-16": {
+    "ev": 1.79,
+    "ts": 1786886396.551713
   },
   "football|Sweden Division 2|Skiljebo SK|Helges IF|双重机会-和局/客|dc|2026-08-16": {
     "ev": 15.8,
@@ -3289,6 +3342,10 @@
     "ev": 1.2,
     "ts": 1786875350.774679
   },
+  "football|Turkey Super Lig|Istanbul Basaksehir|Kocaelispor|主胜|1x2|2026-08-17": {
+    "ev": 1.88,
+    "ts": 1786886396.553976
+  },
   "football|Turkey Super Lig|Istanbul Basaksehir|Kocaelispor|角球大球|corner|9999-12-31": {
     "ev": 3.43,
     "ts": 1786851693.2748
@@ -3301,6 +3358,10 @@
   "football|Turkey Super Lig|Istanbul Basaksehir|Kocaelispor|角球让球主胜|corner|9999-12-31": {
     "ev": 4.27,
     "ts": 1786851693.27477
+  },
+  "football|Turkey Super Lig|Istanbul Basaksehir|Kocaelispor|让球主胜|1x2|2026-08-17": {
+    "ev": 1.37,
+    "ts": 1786886396.554013
   },
   "football|UAE Pro League|FC Baniyas|Al Ain FC|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 1.21,
@@ -3330,9 +3391,21 @@
     "ev": 2.23,
     "ts": 1786851693.2714088
   },
+  "football|UAE Pro League|Hatta SC|Al Jazira (UAE)|主胜|1x2|2026-08-16": {
+    "ev": 2.96,
+    "ts": 1786886396.551817
+  },
+  "football|UAE Pro League|Hatta SC|Al Jazira (UAE)|双重机会-主/和局|dc|2026-08-16": {
+    "ev": 4.72,
+    "ts": 1786886396.551899
+  },
   "football|UAE Pro League|Hatta SC|Al Jazira (UAE)|客胜|1x2|2026-08-16": {
     "ev": 5.68,
     "ts": 1786882098.852557
+  },
+  "football|UAE Pro League|Hatta SC|Al Jazira (UAE)|让球主胜|1x2|2026-08-16": {
+    "ev": 5.14,
+    "ts": 1786886396.551856
   },
   "football|UAE Pro League|Hatta SC|Al Jazira (UAE)|让球客胜|1x2|2026-08-16": {
     "ev": 4.59,
@@ -5642,9 +5715,19 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "football|Africa Cup of Nations Women (In Morocco)|喀麦隆 (女)|马拉维 (女)|上半场双重机会-主/客|ht_dc|2026-08-17": {
-    "ev": 6.84,
-    "bb": 1.93,
-    "ts": 1786886095.309372
+  "football|Norway 3rd Division|利勒斯特罗姆二队|哈斯塔|小球(5.75)|ou|5.75|2026-08-16": {
+    "ev": 13.51,
+    "bb": 1.87,
+    "ts": 1786886711.336123
+  },
+  "football|Sweden Division 2|奥斯特森德|卢克斯塔|主胜|1x2|2026-08-16": {
+    "ev": 13.68,
+    "bb": 1.94,
+    "ts": 1786886711.336181
+  },
+  "football|UAE Pro League|哈塔|阿尔贾泽拉|让球主胜(+1)|hc|+1|2026-08-16": {
+    "ev": 7.21,
+    "bb": 2.07,
+    "ts": 1786886711.336232
   }
 }
