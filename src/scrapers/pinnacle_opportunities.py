@@ -520,20 +520,45 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             continue
         bb_home = (m.get("home") or "").strip()
         bb_away = (m.get("away") or "").strip()
-        # 找 Pinnacle 特殊盘口(按 parent matchupId) — 简化: 用第一个含正确比分的
-        pin_specs = {}
-        for pid, specs in spec_map.items():
-            if specs:
-                pin_specs = specs
-                break
-        if not pin_specs:
+        # 找 Pinnacle 特殊盘口 — 按队名匹配父比赛(与角球一致), 不再用"第一个联赛"错配
+        bb_home_en = TEAM_NAME_MAP.get(bb_home, bb_home).lower()
+        bb_away_en = TEAM_NAME_MAP.get(bb_away, bb_away).lower()
+        pin_specs = None
+        best_score = 0.0
+        for pid, info in spec_map.items():
+            pin_home = (info.get("home") or "").strip().lower()
+            pin_away = (info.get("away") or "").strip().lower()
+            if not pin_home or not pin_away:
+                continue
+            _parts = []
+            if bb_home_en and pin_home:
+                if bb_home_en == pin_home:
+                    _parts.append(1.0)
+                elif bb_home_en in pin_home or pin_home in bb_home_en:
+                    _parts.append(0.9)
+                else:
+                    _parts.append(_SM(None, bb_home_en, pin_home).ratio() * 0.7)
+            if bb_away_en and pin_away:
+                if bb_away_en == pin_away:
+                    _parts.append(1.0)
+                elif bb_away_en in pin_away or pin_away in bb_away_en:
+                    _parts.append(0.9)
+                else:
+                    _parts.append(_SM(None, bb_away_en, pin_away).ratio() * 0.7)
+            if not _parts:
+                continue
+            _sc = sum(_parts) / len(_parts)
+            if _sc > best_score:
+                best_score = _sc
+                pin_specs = info.get("markets")
+        if not pin_specs or best_score < 0.70:
             continue
 
         ft = m.get("odds_ft", {})
         entry = {
             "league": bb_league,
             "market_type": "特殊盘口",
-            "match_type": "name",
+            "match_type": "name" if best_score >= 0.85 else "time",
             "home_bb": bb_home,
             "away_bb": bb_away,
             # V5.5: 中文名(展示用) — 与主对比循环对齐, 否则钉钉推送回退英文队名
@@ -542,7 +567,7 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             "league_cn": m.get("league_cn") or bb_league,
             "home_pin": bb_home,
             "away_pin": bb_away,
-            "match_score": 1.0,
+            "match_score": round(best_score, 3),
             "sport": "football",
             "flags": [],
             "opportunities": [],

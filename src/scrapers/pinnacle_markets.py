@@ -615,7 +615,8 @@ def get_league_special_markets(league_id):
 
     这些是 matchups 里的 special 子比赛(有 parentId), 赔率在 /markets/straight
     (type=moneyline, matchupId=子比赛id)。
-    返回 {parent_matchup_id: {special_key: [{name, odds}]}}
+    返回 {parent_matchup_id: {"home": str, "away": str, "markets": {special_key: [{name, odds}]}}}
+    home/away 是父比赛(parent matchup)的队名, 供调用方按队名匹配 BB(不再用"第一个联赛")。
     """
     matchups = api_get(f"/leagues/{league_id}/matchups")
     if not matchups:
@@ -634,6 +635,26 @@ def get_league_special_markets(league_id):
         mid = mk.get("matchupId")
         if mid:
             mm.setdefault(mid, []).append(mk)
+
+    # id → matchup 映射, 用于解析父比赛队名
+    mu_by_id = {mu.get("id"): mu for mu in matchups if mu.get("id")}
+
+    def _teams_of(mu):
+        """从 matchup 提取主客队名(优先 parent.participants, 与角球函数一致)。"""
+        parent_parts = ((mu.get("parent") or {}).get("participants") or [])
+        home = away = ""
+        for p in parent_parts:
+            if p.get("alignment") == "home":
+                home = p.get("name", "")
+            elif p.get("alignment") == "away":
+                away = p.get("name", "")
+        if not home or not away:
+            for p in mu.get("participants", []):
+                if p.get("alignment") == "home":
+                    home = p.get("name", "")
+                elif p.get("alignment") == "away":
+                    away = p.get("name", "")
+        return home, away
 
     result = {}
     for mu in matchups:
@@ -659,5 +680,12 @@ def get_league_special_markets(league_id):
             if _name and _odds and _odds > 1.0:
                 prices.append({"name": _name, "odds": _odds})
         if prices:
-            result.setdefault(parent_id, {})[key] = prices
+            slot = result.setdefault(parent_id, {"home": "", "away": "", "markets": {}})
+            # 队名优先从 special 子比赛 parent 字段, 兜底查父比赛 matchup
+            home, away = _teams_of(mu)
+            if not home or not away:
+                home, away = _teams_of(mu_by_id.get(parent_id, {}))
+            slot["home"] = slot["home"] or home
+            slot["away"] = slot["away"] or away
+            slot["markets"][key] = prices
     return result
