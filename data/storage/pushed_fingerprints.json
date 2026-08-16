@@ -906,10 +906,23 @@
     "ev": 1.87,
     "ts": 1786862117.3994071
   },
+  "football|Chinese League One|佛山南狮|石家庄功夫|上半场双重机会-主/客|ht_dc|2026-08-16": {
+    "ev": 6.57,
+    "bb": 1.94,
+    "ts": 1786877817.981481
+  },
   "football|Chinese League One|苏州东吴|南通支云|上半场双重机会-主/客|ht_dc|2026-08-16": {
     "ev": 5.88,
     "bb": 1.93,
     "ts": 1786845367.864643
+  },
+  "football|Chinese League Two|Ganzhou Ruishi FC|Guangzhou Dandelion Alpha FC|让球主胜|1x2|2026-08-16": {
+    "ev": 1.63,
+    "ts": 1786878422.104747
+  },
+  "football|Chinese League Two|Guangdong Mingtu|Wuhan Three Towns B|让球客胜|1x2|2026-08-16": {
+    "ev": 1.0,
+    "ts": 1786878422.107693
   },
   "football|Chinese League Two|Guizhou Zhucheng Athletic FC|Chengdu Rongcheng B|双重机会-和局/客|dc|2026-08-16": {
     "ev": 1.11,
@@ -935,6 +948,10 @@
     "ev": 8.96,
     "ts": 1786870478.0781739
   },
+  "football|Club Friendly Games|Nottingham Forest|Stade Brest 29|双重机会-和局/客|dc|2026-08-16": {
+    "ev": 1.08,
+    "ts": 1786877818.522531
+  },
   "football|Club Friendly Games|Nottingham Forest|Stade Brest 29|大球|1x2|2026-08-16": {
     "ev": 3.43,
     "ts": 1786855324.9998221
@@ -946,6 +963,23 @@
   "football|Club Friendly Games|Schalke 04|Real Madrid|双重机会-主/和局|dc|2026-08-16": {
     "ev": 10.42,
     "ts": 1786875350.773108
+  },
+  "football|Club Friendly Games|Tottenham Hotspur|TSG Hoffenheim|主胜|1x2|2026-08-16": {
+    "ev": 8.72,
+    "ts": 1786877818.522788
+  },
+  "football|Club Friendly Games|Tottenham Hotspur|TSG Hoffenheim|双重机会-主/和局|dc|2026-08-16": {
+    "ev": 2.37,
+    "ts": 1786877818.5228958
+  },
+  "football|Club Friendly Games|Tottenham Hotspur|TSG Hoffenheim|让球主胜|1x2|2026-08-16": {
+    "ev": 10.17,
+    "ts": 1786877818.5228422
+  },
+  "football|Club Friendly Games|托特纳姆热刺|霍芬海姆|让球主胜(-0/0.5)|hc|-0/0.5|2026-08-16": {
+    "ev": 10.17,
+    "bb": 1.88,
+    "ts": 1786877817.9813418
   },
   "football|Copa Libertadores|CD Universidad Catolica|Estudiantes de La Plata|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 6.56,
@@ -1354,6 +1388,10 @@
   "football|France Super Cup|RC Lens|Paris Saint Germain|让球主胜|1x2|2026-08-17": {
     "ev": 1.43,
     "ts": 1786851693.274592
+  },
+  "football|Germany 2. Bundesliga|Arminia Bielefeld|Energie Cottbus|净胜球away_by2|winning_margin|2026-08-16": {
+    "ev": 1.84,
+    "ts": 1786878422.110507
   },
   "football|Germany 2. Bundesliga|Arminia Bielefeld|Energie Cottbus|双重机会-和局/客|dc|2026-08-16": {
     "ev": 1.14,
@@ -2572,6 +2610,10 @@
     "ev": 3.56,
     "ts": 1786875777.5163
   },
+  "football|Spain LaLiga 2|Burgos CF|Cordoba CF|让球主胜|1x2|2026-08-17": {
+    "ev": 1.09,
+    "ts": 1786878113.456147
+  },
   "football|Spain LaLiga 2|Burgos CF|Cordoba CF|让球客胜|1x2|2026-08-17": {
     "ev": 1.28,
     "ts": 1786851693.27196
@@ -2689,6 +2731,10 @@
     "ev": 1.2,
     "ts": 1786851693.2689102
   },
+  "football|Sweden Allsvenskan|Djurgardens IF|AIK|净胜球away_by1|winning_margin|2026-08-16": {
+    "ev": 9.01,
+    "ts": 1786878113.4578419
+  },
   "football|Sweden Allsvenskan|Djurgardens IF|AIK|净胜球away_by2|special|2026-08-16": {
     "ev": 2.42,
     "ts": 1786872529.5116212
@@ -2697,9 +2743,21 @@
     "ev": 1.26,
     "ts": 1786874699.215913
   },
+  "football|Sweden Allsvenskan|Djurgardens IF|AIK|双边进球-是|btts|2026-08-16": {
+    "ev": 2.88,
+    "ts": 1786878113.453544
+  },
   "football|Sweden Allsvenskan|Djurgardens IF|AIK|双重机会-和局/客|dc|2026-08-16": {
     "ev": 3.43,
     "ts": 1786877196.132164
+  },
+  "football|Sweden Allsvenskan|Djurgardens IF|AIK|客胜|1x2|2026-08-16": {
+    "ev": 14.51,
+    "ts": 1786878113.4534972
+  },
+  "football|Sweden Allsvenskan|Djurgardens IF|AIK|让球客胜|1x2|2026-08-16": {
+    "ev": 8.5,
+    "ts": 1786878113.453584
   },
   "football|Sweden Allsvenskan|GAIS|Malmo FF|上半场客胜|ht|2026-08-16": {
     "ev": 1.25,
@@ -5219,14 +5277,9 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "football|Club Friendly Games|托特纳姆热刺|霍芬海姆|让球主胜(-0/0.5)|hc|-0/0.5|2026-08-16": {
-    "ev": 10.17,
-    "bb": 1.88,
-    "ts": 1786877817.9813418
-  },
-  "football|Chinese League One|佛山南狮|石家庄功夫|上半场双重机会-主/客|ht_dc|2026-08-16": {
-    "ev": 6.57,
-    "bb": 1.94,
-    "ts": 1786877817.981481
+  "football|Kazakhstan Premier League|伊尔提什巴甫洛达尔|杜保尔|让球主胜(0)|hc|0|2026-08-16": {
+    "ev": 9.43,
+    "bb": 1.85,
+    "ts": 1786878728.043222
   }
 }
