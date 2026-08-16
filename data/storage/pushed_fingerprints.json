@@ -1858,6 +1858,10 @@
     "ev": 2.34,
     "ts": 1786851693.266804
   },
+  "football|Netherlands Eredivisie|FC Twente|PEC Zwolle|先进球fc twente|first_to_score|2026-08-16": {
+    "ev": 1.42,
+    "ts": 1786882098.8570628
+  },
   "football|Netherlands Eredivisie|FC Twente|PEC Zwolle|角球大球|corner|9999-12-31": {
     "ev": 1.75,
     "ts": 1786875350.778761
@@ -1965,6 +1969,10 @@
   "football|Norway 2nd Division|Pors Grenland|Bjarg|大球|1x2|2026-08-16": {
     "ev": 1.04,
     "ts": 1786855324.997925
+  },
+  "football|Norway 2nd Division|Pors Grenland|Bjarg|客胜|1x2|2026-08-16": {
+    "ev": 4.0,
+    "ts": 1786882098.848991
   },
   "football|Norway 2nd Division|Pors Grenland|Bjarg|让球主胜|1x2|2026-08-16": {
     "ev": 1.75,
@@ -2142,6 +2150,10 @@
   "football|Poland Ekstraklasa|LKP Motor Lublin|GKS Katowice|上半场客胜|ht|2026-08-16": {
     "ev": 4.58,
     "ts": 1786877196.132865
+  },
+  "football|Poland Ekstraklasa|LKP Motor Lublin|GKS Katowice|双边进球-是|btts|2026-08-16": {
+    "ev": 1.39,
+    "ts": 1786882098.849139
   },
   "football|Poland Ekstraklasa|LKP Motor Lublin|GKS Katowice|让球主胜|1x2|2026-08-16": {
     "ev": 1.56,
@@ -3133,6 +3145,10 @@
   "football|UAE Pro League|Hatta SC|Al Jazira (UAE)|上半场客胜|ht|2026-08-16": {
     "ev": 2.23,
     "ts": 1786851693.2714088
+  },
+  "football|UAE Pro League|Hatta SC|Al Jazira (UAE)|客胜|1x2|2026-08-16": {
+    "ev": 5.68,
+    "ts": 1786882098.852557
   },
   "football|UAE Pro League|Hatta SC|Al Jazira (UAE)|让球客胜|1x2|2026-08-16": {
     "ev": 4.59,
@@ -5438,8 +5454,13 @@
     "ts": 1786798139.385747
   },
   "football|UAE Pro League|哈塔|阿尔贾泽拉|让球客胜(-1)|hc|-1|2026-08-16": {
-    "ev": 7.19,
-    "bb": 2.06,
-    "ts": 1786882098.375416
+    "ev": 8.23,
+    "bb": 2.08,
+    "ts": 1786882408.3611038
+  },
+  "football|Sweden Allsvenskan|卡尔马|哈马比|让球主胜(+1)|hc|+1|2026-08-16": {
+    "ev": 4.37,
+    "bb": 1.67,
+    "ts": 1786882408.361155
   }
 }
