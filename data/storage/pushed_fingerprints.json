@@ -37,9 +37,26 @@
     "ev": 1.48,
     "ts": 1786872529.507296
   },
+  "basketball|Mexico LNBP Basketball League|Gambusinos de Fresnillo|Diablos Rojos del Mexico|客胜|1x2|2026-08-17": {
+    "ev": 1.52,
+    "ts": 1786923392.713001
+  },
+  "basketball|Mexico LNBP Basketball League|Mineros de Zacatecas|Astros de Jalisco|客胜|1x2|2026-08-17": {
+    "ev": 6.48,
+    "ts": 1786923392.7131789
+  },
+  "basketball|Mexico LNBP Basketball League|Mineros de Zacatecas|Astros de Jalisco|让分客胜|1x2|2026-08-17": {
+    "ev": 8.97,
+    "ts": 1786923392.71326
+  },
   "basketball|Mexico LNBP Basketball League|Santos del Potosi|Soles de Mexicali|客胜|1x2|2026-08-17": {
     "ev": 2.73,
     "ts": 1786922194.515219
+  },
+  "basketball|Mexico LNBP Basketball League|萨卡特卡斯矿工|哈利斯科太空人|让分客胜(-2.5)|hc|-2.5|2026-08-17": {
+    "ev": 8.97,
+    "bb": 1.91,
+    "ts": 1786923392.362775
   },
   "basketball|Puerto Rico Baloncesto Superior Nacional|Santeros de Aguada|Vaqueros de Bayamon|让分客胜|1x2|2026-08-17": {
     "ev": 1.46,
@@ -5964,9 +5981,9 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "basketball|Mexico LNBP Basketball League|萨卡特卡斯矿工|哈利斯科太空人|让分客胜(-2.5)|hc|-2.5|2026-08-17": {
-    "ev": 8.97,
-    "bb": 1.91,
-    "ts": 1786923392.362775
+  "basketball|Mexico LNBP Basketball League|甘布西诺弗雷斯尼洛|墨西哥红恶鬼|让分客胜(-2.5)|hc|-2.5|2026-08-17": {
+    "ev": 6.46,
+    "bb": 1.85,
+    "ts": 1786923706.546425
   }
 }
