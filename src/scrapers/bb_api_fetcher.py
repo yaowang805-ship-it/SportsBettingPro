@@ -303,26 +303,30 @@ def api_post(endpoint, params, platform="BB"):
 
 _CN_CACHE_FILE = DATA_DIR / "team_cn_cache.json"
 _cn_cache = None
+_cn_cache_lock = __import__('threading').Lock()  # V5.5: 并行拉取时保护缓存
 
 
 def _load_cn_cache():
     global _cn_cache
     if _cn_cache is None:
-        try:
-            _cn_cache = json.loads(_CN_CACHE_FILE.read_text())
-        except Exception:
-            _cn_cache = {}
+        with _cn_cache_lock:
+            if _cn_cache is None:
+                try:
+                    _cn_cache = json.loads(_CN_CACHE_FILE.read_text())
+                except Exception:
+                    _cn_cache = {}
     return _cn_cache
 
 
 def _save_cn_cache():
     if _cn_cache is not None:
-        try:
-            tmp = _CN_CACHE_FILE.with_suffix(".tmp")
-            tmp.write_text(json.dumps(_cn_cache, ensure_ascii=False))
-            tmp.replace(_CN_CACHE_FILE)
-        except Exception:
-            pass
+        with _cn_cache_lock:
+            try:
+                tmp = _CN_CACHE_FILE.with_suffix(".tmp")
+                tmp.write_text(json.dumps(_cn_cache, ensure_ascii=False))
+                tmp.replace(_CN_CACHE_FILE)
+            except Exception:
+                pass
 
 
 def fetch_sport(sport_id, platform="BB", page_size=100):
