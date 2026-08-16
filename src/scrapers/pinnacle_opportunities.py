@@ -431,3 +431,151 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             corner_entries.append(entry)
 
     return corner_entries
+
+
+def _norm_scoreline(name):
+    """归一化比分线: '4-5' 或 'Arsenal 4, Coventry City 5' -> '4-5'"""
+    import re as _re
+    nums = _re.findall(r'\d+', str(name))
+    if len(nums) >= 2:
+        return f"{nums[0]}-{nums[1]}"
+    return str(name).strip()
+
+
+def _norm_special_name(name):
+    """归一化特殊盘口选项名(净胜球/总进球区间/先进球)。
+
+    'Maitland FC - Win By 1 Goal' -> 'win by 1'
+    'Arsenal By 1' -> 'by 1'
+    '2 - 3' -> '2-3'
+    'Neither' -> 'neither'
+    """
+    import re as _re
+    s = str(name).lower().strip()
+    s = _re.sub(r'\s+', ' ', s)
+    # 净胜球: "X - Win By N Goal(s)" 或 "X By N" -> "by n"
+    m = _re.search(r'by\s*(\d+)', s)
+    if m:
+        return f"by{m.group(1)}"
+    # 总进球区间: "2 - 3" -> "2-3"
+    m = _re.search(r'(\d+)\s*-\s*(\d+)', s)
+    if m:
+        return f"{m.group(1)}-{m.group(2)}"
+    if '7+' in s or '+7' in s:
+        return "7+"
+    # 先进球: "neither"/"none" -> "neither"
+    if 'neither' in s or 'none' in s or s == '无':
+        return "neither"
+    return s
+
+
+def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
+    """特殊盘口(正确比分/净胜球/总进球区间/先进球)对比。
+
+    BB mty=1188/1018/1101/1019 vs Pinnacle special 子比赛(Correct Score 等)。
+    返回 opportunity entries (复用 fetch_corner_opportunities 的结构)。
+    """
+    from src.scrapers.pinnacle_markets import get_league_special_markets
+    from src.scrapers.pinnacle_league_map import lookup_pin_league
+    from src.scrapers.devig import shin_fair_odds
+
+    # BB 有特殊盘口的比赛
+    bb_special_matches = []
+    for m in bb_matches:
+        ft = m.get("odds_ft", {})
+        if any(ft.get(k) for k in ("correct_score", "winning_margin", "total_goals_range", "first_to_score")):
+            bb_special_matches.append(m)
+    if not bb_special_matches:
+        return []
+
+    # 每个 matched 联赛拉特殊盘口
+    special_by_league = {}
+    for bb_league, pin_ids in matched_leagues.items():
+        for pid in pin_ids:
+            try:
+                spec = get_league_special_markets(pid)
+                if spec:
+                    special_by_league[bb_league] = spec
+                    break
+            except Exception:
+                continue
+
+    SPECIAL_KEY_TO_MKT = {
+        "correct_score": ("correct_score", "正确比分"),
+        "winning_margin": ("winning_margin", "净胜球"),
+        "total_goals_range": ("total_goals_range", "总进球区间"),
+        "first_to_score": ("first_to_score", "先进球"),
+    }
+
+    entries = []
+    for m in bb_special_matches:
+        bb_league = m.get("league", "?")
+        spec_map = special_by_league.get(bb_league)
+        if not spec_map:
+            continue
+        bb_home = (m.get("home") or "").strip()
+        bb_away = (m.get("away") or "").strip()
+        # 找 Pinnacle 特殊盘口(按 parent matchupId) — 简化: 用第一个含正确比分的
+        pin_specs = {}
+        for pid, specs in spec_map.items():
+            if specs:
+                pin_specs = specs
+                break
+        if not pin_specs:
+            continue
+
+        ft = m.get("odds_ft", {})
+        entry = {
+            "league": bb_league,
+            "market_type": "特殊盘口",
+            "match_type": "name",
+            "home_bb": bb_home,
+            "away_bb": bb_away,
+            "home_pin": bb_home,
+            "away_pin": bb_away,
+            "match_score": 1.0,
+            "sport": "football",
+            "flags": [],
+            "opportunities": [],
+            "handicap": [],
+            "over_under": [],
+            "double_chance": [],
+            "draw_no_bet": [],
+        }
+        for bb_key, (pin_key, label) in SPECIAL_KEY_TO_MKT.items():
+            bb_opts = ft.get(bb_key)
+            pin_opts = pin_specs.get(pin_key)
+            if not bb_opts or not pin_opts:
+                continue
+            # 归一化并匹配
+            if bb_key == "correct_score":
+                norm_bb = {_norm_scoreline(o["name"]): o["odds"] for o in bb_opts}
+                norm_pin = {_norm_scoreline(o["name"]): o["odds"] for o in pin_opts}
+            else:
+                norm_bb = {_norm_special_name(o["name"]): o["odds"] for o in bb_opts}
+                norm_pin = {_norm_special_name(o["name"]): o["odds"] for o in pin_opts}
+            # 去抽水 Pinnacle 公平价 (简化: 用所有选项的隐含概率)
+            pin_decimal = [v for v in norm_pin.values() if v > 1.0]
+            fair_map = {}
+            if pin_decimal:
+                fairs = shin_fair_odds(pin_decimal)
+                for i, k in enumerate(norm_pin):
+                    if i < len(fairs) and fairs[i] > 0:
+                        fair_map[k] = 1.0 / fairs[i]
+            for name, bb_odds in norm_bb.items():
+                fair = fair_map.get(name)
+                if not fair or fair <= 0:
+                    continue
+                ev = (bb_odds - fair) / fair * 100
+                if ev > 1:
+                    entry["opportunities"].append({
+                        "designation": f"{label}{name}",
+                        "bb_odds": bb_odds,
+                        "pin_odds": norm_pin.get(name, 0),
+                        "fair_price": round(fair, 4),
+                        "ev_pct": round(ev, 2),
+                        "_market": "special",
+                    })
+        if entry["opportunities"]:
+            entries.append(entry)
+    return entries

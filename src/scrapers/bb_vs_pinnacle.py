@@ -75,6 +75,7 @@ from src.scrapers.pinnacle_opportunities import (
     add_oe_opportunities as _add_oe_opportunities,
     add_htft_opportunities as _add_htft_opportunities,
     fetch_corner_opportunities as _fetch_corner_opportunities,
+    fetch_special_opportunities as _fetch_special_opportunities,
     HTFT_LABELS, HTFT_KEYS,
 )
 
@@ -1574,6 +1575,18 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         total_all += total_corner
     if total_corner:
         print(f"  ⏱ 角球用时: {time.time()-corner_start:.0f}s")
+
+    # V5.5: 特殊盘口对比(正确比分/净胜球/总进球区间/先进球)
+    special_start = time.time()
+    special_entries = _fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues)
+    total_special = 0
+    if special_entries:
+        for se in special_entries:
+            total_special += len(se.get("opportunities", []))
+        opportunities.extend(special_entries)
+        total_all += total_special
+    if total_special:
+        print(f"  🎯 特殊盘口用时: {time.time()-special_start:.0f}s, +{total_special} 个机会")
 
     print(f"\n{'='*60}")
     if _fetch_errors:
