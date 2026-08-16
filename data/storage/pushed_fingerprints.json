@@ -37,6 +37,10 @@
     "ev": 1.48,
     "ts": 1786872529.507296
   },
+  "basketball|Mexico LNBP Basketball League|Santos del Potosi|Soles de Mexicali|客胜|1x2|2026-08-17": {
+    "ev": 2.73,
+    "ts": 1786922194.515219
+  },
   "basketball|Puerto Rico Baloncesto Superior Nacional|Santeros de Aguada|Vaqueros de Bayamon|让分客胜|1x2|2026-08-17": {
     "ev": 1.46,
     "ts": 1786857131.00514
@@ -277,6 +281,11 @@
     "ev": 11.55,
     "bb": 1.83,
     "ts": 1786865347.610817
+  },
+  "football|Argentina Liga Profesional|科尔多瓦中央|科尔多瓦学院|让球主胜(+0.5/1)|hc|+0.5/1|2026-08-17": {
+    "ev": 2.03,
+    "bb": 1.61,
+    "ts": 1786922193.94943
   },
   "football|Argentina Liga Profesional|里奥夸尔托学生队|图库曼竞技|角球让球客胜(+1)|corner|9999-12-31": {
     "ev": 11.55,
@@ -771,6 +780,14 @@
   "football|Bolivia Division Profesional|Always Ready|Real Potosi|双重机会-和局/客|dc|2026-08-17": {
     "ev": 18.76,
     "ts": 1786851693.273098
+  },
+  "football|Bolivia Division Profesional|Independiente Petrolero|Gualberto Villarroel San Jose|主胜|1x2|2026-08-17": {
+    "ev": 1.09,
+    "ts": 1786922194.515326
+  },
+  "football|Bolivia Division Profesional|Independiente Petrolero|Gualberto Villarroel San Jose|和局|1x2|2026-08-17": {
+    "ev": 2.89,
+    "ts": 1786922776.9565609
   },
   "football|Brazil Campeonato Brasileiro Women|Botafogo FR RJ (w)|Sao Paulo FC SP (w)|双重机会-主/和局|dc|2026-08-16": {
     "ev": 5.46,
@@ -1319,6 +1336,10 @@
     "ev": 3.53,
     "ts": 1786851693.274646
   },
+  "football|Ecuador LigaPro Primera A|SD Aucas|LDU Quito|上半场主胜|ht|2026-08-17": {
+    "ev": 1.54,
+    "ts": 1786922194.5146172
+  },
   "football|Ecuador LigaPro Primera A|SD Aucas|LDU Quito|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 1.14,
     "ts": 1786851693.273045
@@ -1740,6 +1761,10 @@
     "ev": 5.94,
     "bb": 1.84,
     "ts": 1786868219.0329971
+  },
+  "football|Honduras Liga Nacional|Olancho FC|Juticalpa FC|双重机会-和局/客|dc|2026-08-17": {
+    "ev": 4.64,
+    "ts": 1786922194.5151129
   },
   "football|Hungary NB II|Szentlorinc SE|Aqvital FC Csakvar|小球|1x2|2026-08-16": {
     "ev": 1.07,
@@ -2419,6 +2444,10 @@
   "football|Peru Liga 1|CS Cienciano|Deportivo Garcilaso|让球主胜|1x2|2026-08-17": {
     "ev": 1.79,
     "ts": 1786853555.105153
+  },
+  "football|Peru Liga 1|CS Cienciano|Deportivo Garcilaso|让球客胜|1x2|2026-08-17": {
+    "ev": 1.19,
+    "ts": 1786922194.514485
   },
   "football|Peru Liga 1|FC Cajamarca|Universitario de Deportes|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 1.98,
@@ -3626,6 +3655,10 @@
     "ev": 1.07,
     "ts": 1786855325.003723
   },
+  "football|USA Major League Soccer|Austin FC|FC Dallas|和局|1x2|2026-08-17": {
+    "ev": 2.3,
+    "ts": 1786922194.514904
+  },
   "football|USA Major League Soccer|Austin FC|FC Dallas|总进球区间7+|total_goals_range|2026-08-17": {
     "ev": 8.1,
     "ts": 1786875163.889695
@@ -3650,6 +3683,10 @@
   "football|USA Major League Soccer|Seattle Sounders|Vancouver Whitecaps FC|角球让球客胜|corner|9999-12-31": {
     "ev": 8.3,
     "ts": 1786851693.274867
+  },
+  "football|USA Major League Soccer|Seattle Sounders|Vancouver Whitecaps FC|让球客胜|1x2|2026-08-17": {
+    "ev": 1.44,
+    "ts": 1786923081.24024
   },
   "football|USA National Women Soccer League|Angel City FC (w)|Washington Spirit (w)|让球客胜(0)|hc|0|2026-08-17": {
     "ev": 4.11,
@@ -5927,9 +5964,9 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "football|Argentina Liga Profesional|科尔多瓦中央|科尔多瓦学院|让球主胜(+0.5/1)|hc|+0.5/1|2026-08-17": {
-    "ev": 2.03,
-    "bb": 1.61,
-    "ts": 1786922193.94943
+  "basketball|Mexico LNBP Basketball League|萨卡特卡斯矿工|哈利斯科太空人|让分客胜(-2.5)|hc|-2.5|2026-08-17": {
+    "ev": 8.97,
+    "bb": 1.91,
+    "ts": 1786923392.362775
   }
 }
