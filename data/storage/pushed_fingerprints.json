@@ -40,10 +40,19 @@
     "ev": 7.05,
     "ts": 1786851693.273265
   },
+  "basketball|Rwanda National Basketball League Women|REG BBC (w)|APR BBC (w)|客胜|1x2|2026-08-16": {
+    "ev": 6.57,
+    "ts": 1786888225.7675278
+  },
   "basketball|Rwanda National Basketball League Women|卢旺达能源集团 (女)|APR BBC队 (女)|主胜|1x2|2026-08-16": {
     "ev": 11.41,
     "bb": 1.47,
     "ts": 1786872528.737441
+  },
+  "basketball|Rwanda National Basketball League Women|卢旺达能源集团 (女)|APR BBC队 (女)|客胜|1x2|2026-08-16": {
+    "ev": 6.57,
+    "bb": 2.74,
+    "ts": 1786888225.115464
   },
   "basketball|Rwanda National Basketball League Women|开普勒 (女)|霍普斯 (女)|主胜|1x2|2026-08-17": {
     "ev": 7.78,
@@ -1426,9 +1435,17 @@
     "ev": 3.35,
     "ts": 1786887933.124117
   },
+  "football|Faroe Islands Premier League|NSI Runavik|EB/Streymur|双边进球-是|btts|2026-08-16": {
+    "ev": 4.51,
+    "ts": 1786888225.7636921
+  },
   "football|Faroe Islands Premier League|NSI Runavik|EB/Streymur|双重机会-和局/客|dc|2026-08-16": {
     "ev": 2.04,
     "ts": 1786851693.2712939
+  },
+  "football|Faroe Islands Premier League|NSI Runavik|EB/Streymur|大球|1x2|2026-08-16": {
+    "ev": 2.05,
+    "ts": 1786888225.763745
   },
   "football|Fiji National Football League|Lautoka FC|Nadi FC|双重机会-和局/客|dc|2026-08-16": {
     "ev": 2.31,
@@ -1837,9 +1854,17 @@
     "ev": 5.48,
     "ts": 1786877196.132417
   },
+  "football|Kazakhstan Premier League|FC Kyzylzhar SK|FC Astana|双重机会-主/和局|dc|2026-08-16": {
+    "ev": 5.19,
+    "ts": 1786888225.76802
+  },
   "football|Kazakhstan Premier League|FC Kyzylzhar SK|FC Astana|客胜|1x2|2026-08-16": {
     "ev": 1.5,
     "ts": 1786876658.2486851
+  },
+  "football|Kazakhstan Premier League|FC Kyzylzhar SK|FC Astana|让球主胜|1x2|2026-08-16": {
+    "ev": 3.57,
+    "ts": 1786888225.767964
   },
   "football|Kazakhstan Premier League|FK Atyrau|FC Okzhetpes|小球|1x2|2026-08-16": {
     "ev": 1.57,
@@ -3648,6 +3673,10 @@
     "ev": 1.41,
     "ts": 1786875163.885515
   },
+  "football|Uruguay Primera Division|CA Progreso|Deportivo Maldonado|上半场主胜|ht|2026-08-16": {
+    "ev": 1.21,
+    "ts": 1786888225.7631192
+  },
   "football|Uruguay Primera Division|CA Progreso|Deportivo Maldonado|上半场双重机会-主/客|ht_dc|2026-08-16": {
     "ev": 1.28,
     "ts": 1786851693.271059
@@ -3659,6 +3688,10 @@
   "football|Uzbekistan Super League|FC Nasaf|FC Pakhtakor Tashkent|上半场双重机会-主/客|ht_dc|2026-08-16": {
     "ev": 3.48,
     "ts": 1786867877.545246
+  },
+  "football|Uzbekistan Super League|FC Nasaf|FC Pakhtakor Tashkent|让球客胜|1x2|2026-08-16": {
+    "ev": 1.89,
+    "ts": 1786888225.767848
   },
   "football|中国乙级联赛|江西庐山|厦门飞鹭|让球客胜|1x2|2026-08-16": {
     "ev": 1.71,
@@ -5811,9 +5844,9 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "basketball|Rwanda National Basketball League Women|卢旺达能源集团 (女)|APR BBC队 (女)|客胜|1x2|2026-08-16": {
-    "ev": 6.57,
-    "bb": 2.74,
-    "ts": 1786888225.115464
+  "basketball|Brazil Campeonato Paulista de Basquete|皮涅鲁斯|保利斯坦奴|客胜|1x2|2026-08-16": {
+    "ev": 4.86,
+    "bb": 1.41,
+    "ts": 1786888542.4500139
   }
 }
