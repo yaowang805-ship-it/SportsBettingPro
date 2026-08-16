@@ -1,5 +1,5 @@
 {
-  "balance": 1794.0,
+  "balance": 1588.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1403,6 +1403,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786888800,
       "created_at": "2026-08-16T09:28:48.718194+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_芬格拉斯联_宾高凯尔特_让球主胜(-0/05)",
+      "sport": "football",
+      "league": "爱尔兰伦斯特高级联赛",
+      "home_team": "芬格拉斯联",
+      "away_team": "宾高凯尔特",
+      "home_cn": "芬格拉斯联",
+      "away_cn": "宾高凯尔特",
+      "market": "handicap",
+      "market_type": "让球主胜(-0/0.5)",
+      "sub_market": "hc",
+      "line": "-0/0.5",
+      "odds": 1.86,
+      "stake": 206,
+      "model_prob": 0.5604,
+      "ev_pct": 4.24,
+      "pin_odds": 1.6803,
+      "fair_price": 1.7844,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786874400,
+      "created_at": "2026-08-16T10:04:58.153020+00:00",
       "track_only": false
     }
   ],
@@ -10193,8 +10216,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-16",
-    "used": 2902.0,
-    "bets": 57
+    "used": 3108.0,
+    "bets": 58
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
