@@ -2254,11 +2254,52 @@ def _parse_line(s):
         return None
 
 
-def _verify_odds_freshness(qualified: list, max_ev_drop: float = 3.0) -> list:
-    """推送前二次验价：重新拉取 Pinnacle 实时赔率，EV 下降 >3% 则过滤。
+def _lookup_fresh_pin_odds(fresh: dict, o: dict):
+    """从实时 Pinnacle matchup 数据里取对应方向/盘口的原始赔率。
 
-    防止对比文件过时导致推送的赔率与实时行情不一致。
-    只验证前 10 条（高频机会），避免过多 API 调用。
+    中文 designation（主胜/客胜/让分主胜…）→ Pinnacle 英文 home/away/draw 映射。
+    让球/大小盘必须盘口线精确匹配(±0.1 带符号)，否则取不到 → 返回 None 保守放行。
+    """
+    mkt = o.get("_sub_market", o.get("_market", ""))
+    designation = o.get("designation", "")
+    if mkt == "1x2":
+        # 中文/英文方向 → home/away/draw
+        target = "home"
+        if "客" in designation or "away" in designation.lower():
+            target = "away"
+        elif "和" in designation or "平" in designation or "draw" in designation.lower():
+            target = "draw"
+        for ml in fresh.get("moneyline", []):
+            for p in ml.get("prices", []):
+                if p.get("designation", "").lower() == target:
+                    return p.get("price_decimal", 0)
+    elif mkt == "hc":
+        target_line = _parse_line(o.get("line"))
+        target_desig = "away" if ("客" in designation or "away" in designation.lower()) else "home"
+        for sp in fresh.get("spread", []):
+            for p in sp.get("prices", []):
+                if p.get("designation", "").lower() != target_desig:
+                    continue
+                pts = p.get("points")
+                # 盘口线必须精确匹配(±0.1 带符号, 区分主让/受让与 0.25/0.5 档)
+                if (target_line is not None and pts is not None
+                        and abs(pts - target_line) > 0.1):
+                    continue
+                return p.get("price_decimal", 0)
+    return None
+
+
+def _verify_odds_freshness(qualified: list, max_pin_drift: float = 0.08) -> list:
+    """推送前二次验价：重新拉取 Pinnacle 实时赔率，与对比快照原始价偏差 > 8% 则过滤。
+
+    根因修复 (2026-08-16 卢旺达女篮"客胜+6.57%"幻影EV):
+      薄盘联赛 Pinnacle 几分钟内剧烈波动(该场客胜 2.24→2.83, 漂移26%), 对比快照用旧价
+      产生幻影+EV。原实现三处缺陷:
+        (1) 只验前10条 → T3/T4 低级别机会(如¥59客胜)漏验;
+        (2) 1x2 用英文 designation 直接比中文"主胜/客胜" → 永不匹配, 实际没验;
+        (3) EV 重算拿 raw 价比 devig 公平价, 方向错误。
+      改为"实时原始价 vs 快照原始价"直接判相对漂移, 覆盖全部机会, 中文方向转 home/away 再匹配。
+      实时数据找不到该场/该盘口时保守放行(不因无法验证而误杀)。
     """
     if not qualified:
         return qualified
@@ -2268,9 +2309,10 @@ def _verify_odds_freshness(qualified: list, max_ev_drop: float = 3.0) -> list:
         import json
 
         ps = json.loads((DATA_DIR / "pinnacle_league_structure.json").read_text())
-        # 只验前 10 条的联赛（高频机会）
+
+        # 收集全部机会涉及的联赛(不再只验前10条)
         leagues_to_check = set()
-        for o in qualified[:10]:
+        for o in qualified:
             lid = find_pinnacle_league_ids(o.get("league", ""), ps)
             if lid:
                 leagues_to_check.add(lid[0])
@@ -2278,76 +2320,45 @@ def _verify_odds_freshness(qualified: list, max_ev_drop: float = 3.0) -> list:
         if not leagues_to_check:
             return qualified
 
-        # 拉取实时数据
-        fresh_pin = {}
+        # 每联赛拉一次实时数据, 建 (home, away) → matchup 索引
+        fresh_index = {}
         for lid in leagues_to_check:
             try:
-                result = get_league_matchups_and_markets(lid)
-                for r in result:
-                    key = (r.get("home", ""), r.get("away", ""))
-                    fresh_pin[key] = r
+                for r in get_league_matchups_and_markets(lid):
+                    fresh_index[(r.get("home", ""), r.get("away", ""))] = r
             except Exception:
                 pass
 
-        if not fresh_pin:
+        if not fresh_index:
             return qualified
 
-        # 验证每条机会
         kept = []
         skipped = 0
         for o in qualified:
             pin_home = o.get("home_team", o.get("home_pin", ""))
             pin_away = o.get("away_team", o.get("away_pin", ""))
-            key = (pin_home, pin_away)
-            fresh = fresh_pin.get(key)
+            fresh = fresh_index.get((pin_home, pin_away))
             if not fresh:
-                kept.append(o)
+                kept.append(o)   # 实时数据无此场 → 无法验证, 保守放行
                 continue
 
-            # 找对应的实时赔率
-            mkt = o.get("_sub_market", o.get("_market", ""))
-            fresh_odds = None
-            if mkt == "1x2":
-                for ml in fresh.get("moneyline", []):
-                    for p in ml.get("prices", []):
-                        if p.get("designation", "").lower() in (o.get("designation", "").lower(),):
-                            fresh_odds = p.get("price_decimal", 0)
-            elif mkt == "hc":
-                target_line = _parse_line(o.get("line"))
-                target_desig = "away" if "客" in o.get("designation", "") else "home"
-                for sp in fresh.get("spread", []):
-                    for p in sp.get("prices", []):
-                        if p.get("designation", "").lower() != target_desig:
-                            continue
-                        pts = p.get("points")
-                        # 盘口线必须精确匹配(±0.1 带符号, 区分主让/受让与 0.25/0.5 档)
-                        if (target_line is not None and pts is not None
-                                and abs(pts - target_line) > 0.1):
-                            continue
-                        fresh_odds = p.get("price_decimal", 0)
-                        break
-                    if fresh_odds:
-                        break
+            fresh_odds = _lookup_fresh_pin_odds(fresh, o)
+            if not fresh_odds or fresh_odds <= 0:
+                kept.append(o)   # 实时数据无此盘口/方向 → 保守放行
+                continue
 
-            if fresh_odds and fresh_odds > 0:
-                # 重新计算 EV (V4.4: fresh_odds 含 vig，比去抽水公平价低 2-4%
-                # 所以 new_ev 会比旧 EV 系统性地低，需要 +2% 偏差修正)
-                bb_odds = o.get("bb_odds", 0)
-                raw_ev = round((bb_odds - fresh_odds) / fresh_odds * 100, 2)
-                new_ev = raw_ev + 2.0  # vig 修正
-                old_ev = o.get("ev_pct", 0)
-                ev_drop = old_ev - new_ev
-                if ev_drop > max_ev_drop:
-                    logger.info("验价过滤: %s EV从%.1f%%降至%.1f%% (Pin %.2f→%.2f)",
-                                o.get("designation", ""), old_ev, new_ev,
-                                o.get("pin_odds", 0), fresh_odds)
+            snap_pin = o.get("pin_odds", 0)
+            if snap_pin > 0:
+                drift = abs(fresh_odds - snap_pin) / snap_pin
+                if drift > max_pin_drift:
+                    logger.info("验价过滤(漂移%.0f%%): %s Pin %.2f→%.2f",
+                                drift * 100, o.get("designation", ""), snap_pin, fresh_odds)
                     skipped += 1
                     continue
-
             kept.append(o)
 
         if skipped:
-            logger.info("二次验价: 过滤 %d 条过时机会", skipped)
+            logger.info("二次验价: 过滤 %d 条漂移机会", skipped)
         return kept
     except Exception as e:
         logger.warning("二次验价失败(跳过): %s", e)
@@ -2592,6 +2603,58 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
     _fcntl.flock(_lock_fd.fileno(), _fcntl.LOCK_UN)
     _lock_fd.close()
     return result
+
+
+def _filter_opposite_side(qualified: list) -> list:
+    """同一场比赛同一盘口已推过相反方向 → 跳过（防同场双边下注）。
+
+    根因 (2026-08-16 卢旺达女篮): 17:28 推主胜(¥250) + 21:50 推客胜(¥59) 同场对倒。
+    2-way 市场里互斥方向先后都 +EV, 只能是盘口剧变/过期数据 → 幻影EV 的标志, 必须拦截。
+    实现: 读已推送指纹, 按"同场同盘口"分组(指纹去掉 designation), 若当前方向之外
+    已有其他方向被推过则跳过。同方向重推(赔率上升)不受影响, 仍由 _filter_pushed 决定。
+    """
+    if not qualified:
+        return qualified
+    from collections import defaultdict
+
+    pushed_desigs = defaultdict(set)  # match_key(不含 designation) → 已推方向集合
+    for src_file in (FINGERPRINT_FILE, DATA_DIR / "pushed_opportunities.json"):
+        if not src_file.exists():
+            continue
+        try:
+            data = json.loads(src_file.read_text())
+        except (json.JSONDecodeError, OSError):
+            continue
+        for k in data:
+            if k.startswith("_"):
+                continue
+            parts = k.split("|")
+            if len(parts) < 6:
+                continue
+            # key: sport|league|home|away|designation|sub_market[|line]|match_date
+            match_key = "|".join(parts[:4] + parts[5:])   # 去掉 designation(parts[4])
+            pushed_desigs[match_key].add(parts[4])
+
+    kept = []
+    skipped = 0
+    for o in qualified:
+        parts = _make_fingerprint(o).split("|")
+        if len(parts) < 6:
+            kept.append(o)
+            continue
+        match_key = "|".join(parts[:4] + parts[5:])
+        cur_desig = parts[4]
+        others = pushed_desigs.get(match_key, set()) - {cur_desig}
+        if others:
+            _audit_log("OPPOSITE", match_key, o, f"同场同盘口已推 {sorted(others)}")
+            skipped += 1
+            continue
+        kept.append(o)
+
+    if skipped:
+        logger.info("双边拦截: 跳过 %d 条", skipped)
+    return kept
+
 
 def _refresh_live_odds():
     """推送前强制实时拉取 BB/FB + Pinnacle 赔率并重新比价。
