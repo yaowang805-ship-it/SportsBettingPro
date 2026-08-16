@@ -568,6 +568,9 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                 fair = fair_map.get(name)
                 if not fair or fair <= 0:
                     continue
+                # 正确比分长尾线BB赔率封顶(~251/301)不可靠, 只比可靠区间
+                if bb_odds > 30:
+                    continue
                 ev = (bb_odds - fair) / fair * 100
                 if ev > 1:
                     entry["opportunities"].append({
