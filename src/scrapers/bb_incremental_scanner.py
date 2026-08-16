@@ -372,13 +372,15 @@ def run_incremental(time_window: str = "all"):
 
     print(f"  [{label}]: {len(bb_matches)} 场")
 
-    # 2. FB 独立数据刷新 + 对比（每次增量扫描都检查，独立于 BB 变动检测）
-    print(f"\n📡 检查FB数据新鲜度...")
-    _refresh_fb_data()
+    # 2. FB 独立数据刷新 + 对比 — 只在 near/far 扫描做, urgent 临场扫描跳过以提速到 <1min
+    #    (FB 机会不抹杀: near 每5min 仍会跑 FB 独立对比, 只是临场 urgent 不再等它)
     all_pin_leagues = _load_league_structure()
     fb_had_new = False
-    if all_pin_leagues:
-        fb_had_new = _run_fb_comparison(all_pin_leagues)
+    if time_window != "urgent":
+        print(f"\n📡 检查FB数据新鲜度...")
+        _refresh_fb_data()
+        if all_pin_leagues:
+            fb_had_new = _run_fb_comparison(all_pin_leagues)
 
     # 3. 加载快照（near/far 各自独立）
     snapshot = {"timestamp": "", "matches": {}}

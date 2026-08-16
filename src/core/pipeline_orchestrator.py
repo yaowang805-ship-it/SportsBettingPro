@@ -1166,9 +1166,10 @@ class PipelineOrchestrator:
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
-            # V5.4: 两层定时器 (urgent 15min / near 30min)。远端24-72h 已去掉:
+            # V5.7: 两层定时器 (urgent 1min / near 5min)。远端24-72h 已去掉:
             # 全量扫描(07:00)已覆盖0-72h, 远端赔率变化慢且权重矩阵要的是收盘价。
-            for tw, interval, label in [("urgent", 900, "临场<6h"), ("near", 1800, "中程6-24h")]:
+            # 提速到1分钟推送(用户要求): urgent 900→60s, near 1800→300s, 代理池换节点兜底防封。
+            for tw, interval, label in [("urgent", 60, "临场<6h"), ("near", 300, "中程6-24h")]:
                 last_key = f"_last_inc_{tw}"
                 last_val = getattr(self, last_key, None)
                 if last_val is None:
@@ -1245,9 +1246,9 @@ class PipelineOrchestrator:
         if not self._is_in_scan_window(datetime.now()):
             return
 
-        # V5.4: 远端24-72h层已移除, 最长的增量扫描间隔是near=30min, 允许2x容忍
+        # V5.7: 远端24-72h层已移除, 最长的增量扫描间隔是near=5min, 允许2x容忍
         _near_elapsed = now - self._last_inc_near if self._last_inc_near else 0
-        _near_timeout = 1800 * 2  # 60分钟
+        _near_timeout = 300 * 2  # 10分钟
 
         warnings = []
         if self._last_inc_near and _near_elapsed > _near_timeout:
