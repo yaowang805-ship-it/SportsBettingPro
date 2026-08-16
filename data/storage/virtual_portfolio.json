@@ -1,5 +1,5 @@
 {
-  "balance": 17002.32,
+  "balance": 16970.32,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1979,6 +1979,29 @@
       "commence_time": 1786889400,
       "created_at": "2026-08-16T13:25:11.305234+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_handicap_科尔多瓦中央_科尔多瓦学院_让球主胜(+05/1)",
+      "sport": "football",
+      "league": "阿根廷甲级联赛",
+      "home_team": "科尔多瓦中央",
+      "away_team": "科尔多瓦学院",
+      "home_cn": "科尔多瓦中央",
+      "away_cn": "科尔多瓦学院",
+      "market": "handicap",
+      "market_type": "让球主胜(+0.5/1)",
+      "sub_market": "hc",
+      "line": "+0.5/1",
+      "odds": 1.61,
+      "stake": 32,
+      "model_prob": 0.6337,
+      "ev_pct": 2.03,
+      "pin_odds": 1.5495,
+      "fair_price": 1.578,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786922100,
+      "created_at": "2026-08-16T23:16:33.921030+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -10835,9 +10858,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-08-16",
-    "used": 4696.0,
-    "bets": 86
+    "date": "2026-08-17",
+    "used": 32.0,
+    "bets": 1
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
