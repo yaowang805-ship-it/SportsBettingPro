@@ -1,5 +1,5 @@
 {
-  "balance": 1142.0,
+  "balance": 1017.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1541,6 +1541,75 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786903200,
       "created_at": "2026-08-16T10:22:56.991272+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_汉诺威96_沃尔夫斯堡_让球客胜(+0/05)",
+      "sport": "football",
+      "league": "德国乙级联赛",
+      "home_team": "汉诺威96",
+      "away_team": "沃尔夫斯堡",
+      "home_cn": "汉诺威96",
+      "away_cn": "沃尔夫斯堡",
+      "market": "handicap",
+      "market_type": "让球客胜(+0/0.5)",
+      "sub_market": "hc",
+      "line": "+0/0.5",
+      "odds": 1.88,
+      "stake": 55,
+      "model_prob": 0.5588,
+      "ev_pct": 5.06,
+      "pin_odds": 1.7407,
+      "fair_price": 1.7894,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786879800,
+      "created_at": "2026-08-16T10:46:35.683305+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_RAAL拿路维亚_根特_双边进球-是",
+      "sport": "football",
+      "league": "比利时甲级联赛",
+      "home_team": "RAAL拿路维亚",
+      "away_team": "根特",
+      "home_cn": "RAAL拿路维亚",
+      "away_cn": "根特",
+      "market": "1x2",
+      "market_type": "双边进球-是",
+      "sub_market": "btts",
+      "line": "",
+      "odds": 1.93,
+      "stake": 35,
+      "model_prob": 0.5537,
+      "ev_pct": 6.87,
+      "pin_odds": 1.7463,
+      "fair_price": 1.8059,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786888800,
+      "created_at": "2026-08-16T10:46:35.683357+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_IFK瓦纳默_厄斯特松德_双边进球-是",
+      "sport": "football",
+      "league": "瑞典超甲级联赛",
+      "home_team": "IFK瓦纳默",
+      "away_team": "厄斯特松德",
+      "home_cn": "IFK瓦纳默",
+      "away_cn": "厄斯特松德",
+      "market": "1x2",
+      "market_type": "双边进球-是",
+      "sub_market": "btts",
+      "line": "",
+      "odds": 1.67,
+      "stake": 35,
+      "model_prob": 0.6281,
+      "ev_pct": 4.89,
+      "pin_odds": 1.5405,
+      "fair_price": 1.5922,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786878000,
+      "created_at": "2026-08-16T10:46:35.683391+00:00",
       "track_only": false
     }
   ],
@@ -10331,8 +10400,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-16",
-    "used": 3554.0,
-    "bets": 63
+    "used": 3679.0,
+    "bets": 66
   },
   "updated": "2026-08-09T16:16:09.144069"
 }

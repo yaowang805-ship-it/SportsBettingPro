@@ -309,6 +309,11 @@
     "ev": 3.81,
     "ts": 1786851693.272635
   },
+  "football|Argentina Primera Nacional|特里斯顿|阿尔米兰提布朗|上半场双重机会-主/客|ht_dc|2026-08-17": {
+    "ev": 8.18,
+    "bb": 2.31,
+    "ts": 1786875777.0196888
+  },
   "football|Argentina Torneo Promocional Amateur|Academia Control Orientado|Buenos Aires City|让球客胜|1x2|2026-08-16": {
     "ev": 1.85,
     "ts": 1786870478.078326
@@ -561,6 +566,10 @@
     "ev": 1.25,
     "ts": 1786855325.004679
   },
+  "football|Austria Bundesliga|WSG Tirol|FC Salzburg|双重机会-主/和局|dc|2026-08-16": {
+    "ev": 1.13,
+    "ts": 1786876658.247809
+  },
   "football|Belgium Challenger Pro League|K Beerschot VA|KAA Gent II|上半场主胜|ht|2026-08-16": {
     "ev": 1.0,
     "ts": 1786874699.212197
@@ -774,6 +783,14 @@
   "football|Bulgaria First Professional League|PFC Lokomotiv Plovdiv|Dunav Ruse|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 1.1,
     "ts": 1786875163.886252
+  },
+  "football|Bulgaria First Professional League|PFC Lokomotiv Plovdiv|Dunav Ruse|主胜|1x2|2026-08-17": {
+    "ev": 3.58,
+    "ts": 1786875777.514923
+  },
+  "football|Bulgaria First Professional League|PFC Lokomotiv Plovdiv|Dunav Ruse|让球主胜|1x2|2026-08-17": {
+    "ev": 2.69,
+    "ts": 1786875777.5149598
   },
   "football|Chinese League One|Foshan Nanshi FC|Shijiazhuang Gongfu FC|上半场主胜|ht|2026-08-16": {
     "ev": 2.06,
@@ -1050,6 +1067,14 @@
     "ev": 1.03,
     "ts": 1786857130.999854
   },
+  "football|England Championship League|Burnley FC|West Ham United|让球主胜|1x2|2026-08-16": {
+    "ev": 1.33,
+    "ts": 1786876013.7083678
+  },
+  "football|England Championship League|Burnley FC|West Ham United|让球客胜|1x2|2026-08-16": {
+    "ev": 2.95,
+    "ts": 1786876966.746123
+  },
   "football|England Championship League|Derby County|Cardiff City|先进球cardiff city|special|9999-12-31": {
     "ev": 20.61,
     "bb": 2.51,
@@ -1180,6 +1205,10 @@
   "football|France Super Cup|RC Lens|Paris Saint Germain|让球主胜|1x2|2026-08-17": {
     "ev": 1.43,
     "ts": 1786851693.274592
+  },
+  "football|Germany 2. Bundesliga|Arminia Bielefeld|Energie Cottbus|双重机会-和局/客|dc|2026-08-16": {
+    "ev": 1.14,
+    "ts": 1786876966.7452438
   },
   "football|Germany 2. Bundesliga|Dynamo Dresden|SV Darmstadt 98|总进球区间4-6|special|2026-08-16": {
     "ev": 12.87,
@@ -1385,6 +1414,10 @@
     "bb": 1.93,
     "ts": 1786868219.032876
   },
+  "football|Kazakhstan Premier League|FC Kyzylzhar SK|FC Astana|客胜|1x2|2026-08-16": {
+    "ev": 1.5,
+    "ts": 1786876658.2486851
+  },
   "football|Lithuania A Lyga|Vilnius FK Zalgiris|FK Banga Gargzdai|上半场主胜|ht|2026-08-17": {
     "ev": 1.06,
     "ts": 1786855325.0047219
@@ -1509,6 +1542,10 @@
     "ev": 1.75,
     "ts": 1786875350.778761
   },
+  "football|Netherlands Eredivisie|Feyenoord|Go Ahead Eagles|上半场主胜|ht|2026-08-16": {
+    "ev": 1.27,
+    "ts": 1786876013.708514
+  },
   "football|Netherlands Eredivisie|Feyenoord|Go Ahead Eagles|净胜球away_by2|winning_margin|2026-08-16": {
     "ev": 13.99,
     "ts": 1786875350.779476
@@ -1589,6 +1626,10 @@
     "ev": 1.95,
     "ts": 1786851693.268171
   },
+  "football|Norway 3rd Division|Fauske Sprint|Finnsnes IL|大球|1x2|2026-08-16": {
+    "ev": 4.63,
+    "ts": 1786876658.2449589
+  },
   "football|Norway 3rd Division|Fauske Sprint|Finnsnes IL|客胜|1x2|2026-08-16": {
     "ev": 3.85,
     "ts": 1786851693.2682822
@@ -1617,6 +1658,10 @@
   "football|Norway Eliteserien|Aalesunds FK|Valerenga IF Oslo|让球主胜|1x2|2026-08-16": {
     "ev": 1.07,
     "ts": 1786853555.102043
+  },
+  "football|Norway Eliteserien|Fredrikstad FK|Kristiansund BK|上半场客胜|ht|2026-08-17": {
+    "ev": 1.38,
+    "ts": 1786875777.514255
   },
   "football|Norway Eliteserien|Fredrikstad FK|Kristiansund BK|角球大球|corner|9999-12-31": {
     "ev": 1.68,
@@ -1916,6 +1961,10 @@
     "ev": 13.12,
     "ts": 1786862117.40079
   },
+  "football|Russia Premier League|PFK Krylia Sovetov Samara|FC Dynamo Makhachkala|上半场主胜|ht|2026-08-16": {
+    "ev": 1.26,
+    "ts": 1786876013.707603
+  },
   "football|Russia Premier League|PFK Krylia Sovetov Samara|FC Dynamo Makhachkala|上半场双重机会-主/客|ht_dc|2026-08-16": {
     "ev": 2.83,
     "ts": 1786851693.26866
@@ -2157,9 +2206,17 @@
     "ev": 2.26,
     "ts": 1786851693.27368
   },
+  "football|South Korea K-League 2|Seoul E Land FC|Ansan Greeners|单双-双|oe|2026-08-16": {
+    "ev": 1.21,
+    "ts": 1786876013.710397
+  },
   "football|South Korea K-League 2|Seoul E Land FC|Ansan Greeners|双重机会-和局/客|dc|2026-08-16": {
     "ev": 3.17,
     "ts": 1786851693.273788
+  },
+  "football|South Korea K-League 2|Seoul E Land FC|Ansan Greeners|和局|1x2|2026-08-16": {
+    "ev": 5.01,
+    "ts": 1786876013.710367
   },
   "football|South Korea K-League 2|Seoul E Land FC|Ansan Greeners|让球主胜|1x2|2026-08-16": {
     "ev": 1.28,
@@ -2176,6 +2233,10 @@
   "football|Spain LaLiga 2|Burgos CF|Cordoba CF|小球|1x2|2026-08-17": {
     "ev": 2.56,
     "ts": 1786851693.2720058
+  },
+  "football|Spain LaLiga 2|Burgos CF|Cordoba CF|角球大球|corner|9999-12-31": {
+    "ev": 3.56,
+    "ts": 1786875777.5163
   },
   "football|Spain LaLiga 2|Burgos CF|Cordoba CF|让球客胜|1x2|2026-08-17": {
     "ev": 1.28,
@@ -2245,6 +2306,11 @@
     "ev": 1.99,
     "ts": 1786872529.507023
   },
+  "football|Spain LaLiga|马德里竞技|马拉加|总进球区间4-6|special|9999-12-31": {
+    "ev": 37.33,
+    "bb": 3.07,
+    "ts": 1786875777.019605
+  },
   "football|Sweden Allsvenskan|Degerfors IF|IFK Goteborg|上半场主胜|ht|2026-08-16": {
     "ev": 3.82,
     "ts": 1786851693.2688692
@@ -2309,6 +2375,10 @@
     "ev": 930.2,
     "ts": 1786874699.216795
   },
+  "football|Sweden Allsvenskan|GAIS|Malmo FF|角球让球客胜|corner|9999-12-31": {
+    "ev": 1.04,
+    "ts": 1786876966.749425
+  },
   "football|Sweden Allsvenskan|IF Brommapojkarna|Orgryte IS|上半场客胜|ht|2026-08-16": {
     "ev": 2.12,
     "ts": 1786862117.3973749
@@ -2369,6 +2439,14 @@
     "ev": 5.27,
     "ts": 1786851693.268236
   },
+  "football|Sweden Ettan Sodra|Trelleborgs FF|Eskilsminne IF|双重机会-和局/客|dc|2026-08-16": {
+    "ev": 3.46,
+    "ts": 1786876013.707274
+  },
+  "football|Sweden Ettan Sodra|Trelleborgs FF|Eskilsminne IF|让球客胜|1x2|2026-08-16": {
+    "ev": 1.15,
+    "ts": 1786876013.707228
+  },
   "football|Sweden Superettan|IFK Varnamo|Ostersunds FK|总进球区间7+|special|2026-08-16": {
     "ev": 1.29,
     "ts": 1786870478.081095
@@ -2380,6 +2458,10 @@
   "football|Sweden Superettan|IFK Varnamo|Ostersunds FK|让球主胜|1x2|2026-08-16": {
     "ev": 1.03,
     "ts": 1786867877.542593
+  },
+  "football|Sweden Superettan|IFK Varnamo|Ostersunds FK|让球客胜|1x2|2026-08-16": {
+    "ev": 2.11,
+    "ts": 1786876966.744738
   },
   "football|Sweden Women Damallsvenskan|Hammarby IF DFF (w)|Pitea IF DFF (w)|双重机会-和局/客|dc|2026-08-17": {
     "ev": 13.23,
@@ -4714,14 +4796,19 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "football|Spain LaLiga|马德里竞技|马拉加|总进球区间4-6|special|9999-12-31": {
-    "ev": 37.33,
-    "bb": 3.07,
-    "ts": 1786875777.019605
+  "football|Germany 2. Bundesliga|汉诺威96|沃尔夫斯堡|让球客胜(+0/0.5)|hc|+0/0.5|2026-08-16": {
+    "ev": 5.06,
+    "bb": 1.88,
+    "ts": 1786877195.780999
   },
-  "football|Argentina Primera Nacional|特里斯顿|阿尔米兰提布朗|上半场双重机会-主/客|ht_dc|2026-08-17": {
-    "ev": 8.18,
-    "bb": 2.31,
-    "ts": 1786875777.0196888
+  "football|Belgium Pro League|RAAL拿路维亚|根特|双边进球-是|btts|2026-08-16": {
+    "ev": 6.87,
+    "bb": 1.93,
+    "ts": 1786877195.7810402
+  },
+  "football|Sweden Superettan|IFK瓦纳默|厄斯特松德|双边进球-是|btts|2026-08-16": {
+    "ev": 4.89,
+    "bb": 1.67,
+    "ts": 1786877195.7810729
   }
 }
