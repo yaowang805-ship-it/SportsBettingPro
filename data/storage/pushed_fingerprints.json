@@ -782,6 +782,10 @@
     "ev": 1.58,
     "ts": 1786853555.103721
   },
+  "football|Brazil Serie A|Chapecoense SC|EC Bahia BA|和局|1x2|2026-08-16": {
+    "ev": 1.15,
+    "ts": 1786887012.268259
+  },
   "football|Brazil Serie A|Chapecoense SC|EC Bahia BA|客胜|1x2|2026-08-16": {
     "ev": 2.04,
     "ts": 1786885782.863772
@@ -1228,6 +1232,10 @@
     "ev": 2.87,
     "ts": 1786885165.72097
   },
+  "football|Denmark Superliga|Lyngby BK|FC Midtjylland|让球主胜|1x2|2026-08-16": {
+    "ev": 1.67,
+    "ts": 1786887314.580682
+  },
   "football|Denmark Superliga|Odense Boldklub|AC Horsens|上半场双重机会-主/客|ht_dc|2026-08-16": {
     "ev": 1.63,
     "ts": 1786851693.273891
@@ -1251,6 +1259,10 @@
   "football|Denmark Superliga|Randers FC|FC Copenhagen|客胜|1x2|2026-08-17": {
     "ev": 1.94,
     "ts": 1786877196.1322901
+  },
+  "football|Denmark Superliga|Randers FC|FC Copenhagen|角球让球主胜|corner|9999-12-31": {
+    "ev": 1.36,
+    "ts": 1786887012.273068
   },
   "football|Denmark Superliga|Randers FC|FC Copenhagen|让球客胜|1x2|2026-08-17": {
     "ev": 1.15,
@@ -1358,6 +1370,10 @@
   "football|England FA Community Shield|Arsenal FC|Manchester City FC|总进球区间4-6|special|9999-12-31": {
     "ev": 51.61,
     "ts": 1786867877.546088
+  },
+  "football|England FA Community Shield|Arsenal FC|Manchester City FC|角球小球|corner|9999-12-31": {
+    "ev": 2.16,
+    "ts": 1786887012.273008
   },
   "football|England FA Community Shield|Arsenal FC|Manchester City FC|让球主胜|1x2|2026-08-16": {
     "ev": 1.62,
@@ -1658,6 +1674,14 @@
     "ev": 1.07,
     "ts": 1786875350.774558
   },
+  "football|Hungary NB I|Debreceni VSC|ETO FC Gyor|让球主胜|1x2|2026-08-16": {
+    "ev": 2.44,
+    "ts": 1786887314.6179688
+  },
+  "football|Hungary NB I|Debreceni VSC|ETO FC Gyor|让球客胜|1x2|2026-08-16": {
+    "ev": 1.39,
+    "ts": 1786887012.272594
+  },
   "football|Hungary NB I|Puskas Akademia FC|Paksi FC|先进球neither|first_to_score|2026-08-16": {
     "ev": 3.05,
     "ts": 1786874699.21743
@@ -1803,6 +1827,10 @@
   "football|Kazakhstan Premier League|FK Atyrau|FC Okzhetpes|小球|1x2|2026-08-16": {
     "ev": 1.57,
     "ts": 1786877196.132351
+  },
+  "football|Kazakhstan Premier League|FK Atyrau|FC Okzhetpes|让球客胜|1x2|2026-08-16": {
+    "ev": 1.28,
+    "ts": 1786887314.5813491
   },
   "football|Kazakhstan Premier League|伊尔提什巴甫洛达尔|杜保尔|让球主胜(0)|hc|0|2026-08-16": {
     "ev": 9.43,
@@ -2192,6 +2220,11 @@
     "bb": 2.0,
     "ts": 1786885165.4458308
   },
+  "football|Norway 3rd Division|利勒斯特罗姆二队|哈斯塔|小球(5.75)|ou|5.75|2026-08-16": {
+    "ev": 13.51,
+    "bb": 1.87,
+    "ts": 1786886711.336123
+  },
   "football|Norway 3rd Division|利勒斯特罗姆二队|哈斯塔|让球主胜(-0/0.5)|hc|-0/0.5|2026-08-16": {
     "ev": 12.18,
     "bb": 1.87,
@@ -2242,9 +2275,21 @@
     "ev": 2.32,
     "ts": 1786877196.136103
   },
+  "football|Norway Eliteserien|SK Brann|HamKam|双重机会-和局/客|dc|2026-08-16": {
+    "ev": 1.6,
+    "ts": 1786887012.2727098
+  },
+  "football|Norway Eliteserien|SK Brann|HamKam|和局|1x2|2026-08-16": {
+    "ev": 2.76,
+    "ts": 1786887012.2726378
+  },
   "football|Norway Eliteserien|SK Brann|HamKam|大球|1x2|2026-08-16": {
     "ev": 5.91,
     "ts": 1786877196.136171
+  },
+  "football|Norway Eliteserien|SK Brann|HamKam|让球客胜|1x2|2026-08-16": {
+    "ev": 1.46,
+    "ts": 1786887012.272672
   },
   "football|Norway Eliteserien|Sarpsborg 08|Sandefjord Fotball|大球|1x2|2026-08-16": {
     "ev": 1.12,
@@ -2942,6 +2987,10 @@
     "ev": 1.21,
     "ts": 1786857131.001956
   },
+  "football|Spain LaLiga 2|Burgos CF|Cordoba CF|双边进球-是|btts|2026-08-17": {
+    "ev": 1.08,
+    "ts": 1786887314.616296
+  },
   "football|Spain LaLiga 2|Burgos CF|Cordoba CF|小球|1x2|2026-08-17": {
     "ev": 2.56,
     "ts": 1786851693.2720058
@@ -3204,6 +3253,10 @@
     "ev": 3.23,
     "ts": 1786851693.26657
   },
+  "football|Sweden Division 2|IFK Ostersund|Lucksta IF|主胜|1x2|2026-08-16": {
+    "ev": 13.68,
+    "ts": 1786886711.8018749
+  },
   "football|Sweden Division 2|IFK Ostersund|Lucksta IF|双重机会-和局/客|dc|2026-08-16": {
     "ev": 1.07,
     "ts": 1786886095.7519512
@@ -3227,6 +3280,11 @@
   "football|Sweden Division 2|Vaxjo Norra|Staffanstorp United|让球客胜|1x2|2026-08-16": {
     "ev": 1.35,
     "ts": 1786851693.266633
+  },
+  "football|Sweden Division 2|奥斯特森德|卢克斯塔|主胜|1x2|2026-08-16": {
+    "ev": 13.68,
+    "bb": 1.94,
+    "ts": 1786886711.336181
   },
   "football|Sweden Ettan Norra|FC Stockholm Internazionale|FC Arlanda|双重机会-和局/客|dc|2026-08-16": {
     "ev": 3.0,
@@ -3411,6 +3469,11 @@
     "ev": 4.59,
     "ts": 1786881791.1382039
   },
+  "football|UAE Pro League|哈塔|阿尔贾泽拉|让球主胜(+1)|hc|+1|2026-08-16": {
+    "ev": 7.21,
+    "bb": 2.07,
+    "ts": 1786886711.336232
+  },
   "football|UAE Pro League|哈塔|阿尔贾泽拉|让球客胜(-1)|hc|-1|2026-08-16": {
     "ev": 8.23,
     "bb": 2.08,
@@ -3503,6 +3566,10 @@
     "ev": 6.6,
     "bb": 1.98,
     "ts": 1786845367.864578
+  },
+  "football|Ukraine Premier League|FC Dynamo Kyiv|Kolos Kovalivka|小球|1x2|2026-08-16": {
+    "ev": 1.55,
+    "ts": 1786886711.803803
   },
   "football|Ukraine Premier League|FC Dynamo Kyiv|Kolos Kovalivka|让球主胜|1x2|2026-08-16": {
     "ev": 2.65,
@@ -5715,19 +5782,9 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "football|Norway 3rd Division|利勒斯特罗姆二队|哈斯塔|小球(5.75)|ou|5.75|2026-08-16": {
-    "ev": 13.51,
-    "bb": 1.87,
-    "ts": 1786886711.336123
-  },
-  "football|Sweden Division 2|奥斯特森德|卢克斯塔|主胜|1x2|2026-08-16": {
-    "ev": 13.68,
-    "bb": 1.94,
-    "ts": 1786886711.336181
-  },
-  "football|UAE Pro League|哈塔|阿尔贾泽拉|让球主胜(+1)|hc|+1|2026-08-16": {
-    "ev": 7.21,
-    "bb": 2.07,
-    "ts": 1786886711.336232
+  "football|Estonia Meistriliiga|纳尔瓦|派德|客胜|1x2|2026-08-16": {
+    "ev": 7.03,
+    "bb": 1.96,
+    "ts": 1786887623.242402
   }
 }
