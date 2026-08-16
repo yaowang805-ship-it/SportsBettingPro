@@ -53,7 +53,8 @@ def scrape_league(sport, league_url, season, market="1x2", out_path=None):
     games, seen = [], set()
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True, executable_path=CHROME,
-            args=["--disable-blink-features=AutomationControlled"])
+            args=["--disable-blink-features=AutomationControlled",
+                  "--no-proxy-server"])  # 绕过系统代理(127.0.0.1:8081已死), 直连
         ctx = browser.new_context(user_agent=UA)
         page = ctx.new_page()
         page.set_default_timeout(60000)  # 慢页容错, 防 Locator 30s 超时

@@ -321,7 +321,7 @@
       "success_rate": 0.0
     },
     "美国甲级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -556,12 +556,12 @@
       "success_rate": 0.0
     },
     "葡萄牙甲级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
     "联赛杯 (在美国和加拿大和墨西哥)": {
-      "attempts": 10,
+      "attempts": 11,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -621,7 +621,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-08-15T12:51:34.099340+00:00",
+  "updated": "2026-08-15T23:48:16.824041+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

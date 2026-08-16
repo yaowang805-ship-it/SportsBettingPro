@@ -74,3 +74,46 @@ def shin_fair_odds(odds: list) -> list:
     """Shin 法去抽水, 返回公平十进制赔率列表(1/prob)。"""
     probs = devig_shin(odds)
     return [round(1.0 / p, 4) if p and p > 0 else 0.0 for p in probs]
+
+
+def devig_mult(odds: list) -> list:
+    """比例法(multiplicative/proportional)去抽水, 返回公平概率(和=1)。
+
+    仅作 Shin 法的交叉验证基准, 不直接用于 EV 计算:
+    比例法会高估热门概率(低估热门公平赔率), 方向与 Shin 相反。
+    两者在热门端的分歧大小 = devig 方法不确定性。
+    """
+    clean = [float(o) for o in odds if o and float(o) > 1.0]
+    if len(clean) < 2:
+        return [1.0 / float(o) if o and float(o) > 1.0 else 0.0 for o in odds]
+    b = [1.0 / o for o in clean]
+    s = sum(b)
+    if s <= 1e-12:
+        return [0.0] * len(odds)
+    probs = [x / s for x in b]
+    result, idx = [], 0
+    for o in odds:
+        if o and float(o) > 1.0:
+            result.append(probs[idx])
+            idx += 1
+        else:
+            result.append(0.0)
+    return result
+
+
+def devig_favorite_divergence(odds: list) -> float:
+    """热门端 Shin vs 比例法 的公平赔率分歧(%)。
+
+    返回 (shin_fair[热门] - mult_fair[热门]) / mult_fair[热门] * 100。
+    负值 = Shin 把热门公平赔率算得更低 → 热门 EV 被 Shin 抬高(需警惕, 提门槛)。
+    """
+    shin = devig_shin(odds)
+    mult = devig_mult(odds)
+    valid = [(i, float(o)) for i, o in enumerate(odds) if o and float(o) > 1.0]
+    if len(valid) < 2:
+        return 0.0
+    fav_i, _ = min(valid, key=lambda x: x[1])  # 热门 = 最低有效赔率
+    p_s, p_m = shin[fav_i], mult[fav_i]
+    if p_s <= 0 or p_m <= 0:
+        return 0.0
+    return (1.0 / p_s - 1.0 / p_m) / (1.0 / p_m) * 100.0

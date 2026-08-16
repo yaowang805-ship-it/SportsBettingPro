@@ -1444,6 +1444,11 @@ def _collect_opportunities(match, market_key):
         # V5: FB独有机会降门槛 — FB赔率比BB更接近Pin, edge天然低, 含金量更高
         if price_source == "FB" and not platform_sources:
             v3_min_ev = max(1.0, v3_min_ev * 0.6)  # 降到60%
+        # V5.5: 热门 devig 交叉验证 — Shin 与比例法分歧>3% 且是热门(低赔)时,
+        #        Shin 可能高估热门 EV, 把门槛 +2% 补偿 devig 方法不确定性。
+        if (any("热门devig分歧" in f for f in match.get("flags", []))
+                and bb_odds < 2.5):
+            v3_min_ev += 2.0
         if ev < v3_min_ev:
             continue
 

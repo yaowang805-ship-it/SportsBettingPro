@@ -26,7 +26,7 @@ from src.scrapers.pinnacle_api import (
     API_BASE, SESSION, api_get, _rate_limit, _diagnose_pinnacle_error, us_to_decimal, get_decimal_price,
 )
 from src.scrapers.pinnacle_api import _rate_limit as _  # noqa: ensure rate_limit usable
-from src.scrapers.devig import shin_fair_odds  # Shin 法去抽水, 替代比例法
+from src.scrapers.devig import shin_fair_odds, devig_favorite_divergence  # Shin 法去抽水, 替代比例法
 
 API_BASE = API_BASE  # re-export for backward compat
 SESSION = SESSION
@@ -740,6 +740,13 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             entry["flags"].append("已校准: BB主客反转(Pin主=BB客, Pin客=BB主)")
 
         fair_ml = shin_fair_odds(pin_ml)  # Shin 去抽水公平价(整组一次算, 修正 favorite-longshot 偏差)
+
+        # V5.5 热门 devig 交叉验证: Shin vs 比例法在热门端分歧>3% → 标记(推送端提门槛)
+        # 实证(2931场Pin收盘): 热门端 Shin 公平赔率系统性比比例法低~2%(中位),
+        # 分歧>3%的占22.6% — 此时 Shin 可能高估热门 EV, 用 flag 让推送端保守。
+        _fav_div = devig_favorite_divergence(pin_ml)
+        if _fav_div < -3.0:
+            entry["flags"].append(f"热门devig分歧{abs(_fav_div):.1f}%")
         for i in range(n_ml):
             bb_o = bb_ml[i]
             # 反转时交换 Pinnacle 赔率: 2-way → 交换 0↔1, 3-way → 交换 0↔2
