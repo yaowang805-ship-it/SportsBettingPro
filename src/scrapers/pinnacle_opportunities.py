@@ -474,6 +474,27 @@ def _norm_special_name(name):
     return s
 
 
+def _norm_margin_side(name, bb_home, bb_away):
+    """净胜球选项名归一化, 区分主/客: 'Sogndal IL - Win By 1 Goal' -> 'home_by1' / 'away_by1' / 'draw'。
+
+    主客判断靠选项名包含主/客队名(允许子串), 避免原来 'by1' 主客碰撞导致赔率互相覆盖。
+    """
+    import re as _re
+    s = str(name).lower().strip()
+    s = _re.sub(r'\s+', ' ', s)
+    m = _re.search(r'by\s*(\d+)', s)
+    if not m:
+        return "draw" if 'draw' in s else s
+    byn = m.group(1)
+    hh = (bb_home or '').lower().strip()
+    aa = (bb_away or '').lower().strip()
+    if hh and (hh in s or s in hh):
+        return f"home_by{byn}"
+    if aa and (aa in s or s in aa):
+        return f"away_by{byn}"
+    return f"by{byn}"
+
+
 def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
     """特殊盘口(正确比分/净胜球/总进球区间/先进球)对比。
 
@@ -598,9 +619,17 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             if bb_key == "correct_score":
                 norm_bb = {_norm_scoreline(o["name"]): o["odds"] for o in bb_opts}
                 norm_pin = {_norm_scoreline(o["name"]): o["odds"] for o in pin_opts}
+            elif bb_key == "winning_margin":
+                # 净胜球: 主/客都要区分, 否则 "主赢1球"和"客赢1球"都归一化成 by1 碰撞(赔率互相覆盖)
+                norm_bb = {_norm_margin_side(o["name"], bb_home, bb_away): o["odds"] for o in bb_opts}
+                norm_pin = {_norm_margin_side(o["name"], bb_home, bb_away): o["odds"] for o in pin_opts}
             else:
                 norm_bb = {_norm_special_name(o["name"]): o["odds"] for o in bb_opts}
                 norm_pin = {_norm_special_name(o["name"]): o["odds"] for o in pin_opts}
+                # 先进球: BB mty=1019 的 "None" 选项 od=-999(不开放)→2-way(0-0走盘);
+                # Pin "First Team To Score" 是 3-way(含 Neither)。BB 无 neither 时, 去掉 Pin 的 neither 重归一化
+                if bb_key == "first_to_score" and "neither" not in norm_bb and "neither" in norm_pin:
+                    norm_pin.pop("neither")
             # 公平价: 正确比分用 Dixon-Coles 模型(最准), 其它用比例法去抽水
             fair_map = {}
             if bb_key == "correct_score":
