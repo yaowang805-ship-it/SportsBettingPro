@@ -32,7 +32,7 @@ COMPARISON_FILES = sorted(DATA_DIR.glob("bb_vs_pinnacle_comparison*.json"), key=
 BB_EXTRACTED = DATA_DIR / "bb_odds_extracted.json"
 DAEMON_LABEL = "com.sportsbettingpro.daemon"
 
-CHECK_INTERVAL = 15 * 60       # 心跳超时阈值(秒)
+CHECK_INTERVAL = 5 * 60        # 心跳超时阈值(秒) — 之前15min太松, 卡8分钟丢一堆机会才发现
 SCAN_STALE = 45 * 60           # 增量扫描停滞阈值(秒)
 BB_STALE = 3 * 3600            # BB 数据陈旧阈值(秒)
 

@@ -1919,31 +1919,44 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
                 parts.append(f"{emoji}{cn}无数据")
         sport_summary_line = " | ".join(parts)
 
-    # 按比赛分组：(sport, league, home_cn, away_cn)
+    # 按比赛分组：先按平台(BB/FB)再按 (sport, league, home_cn, away_cn)
+    # V5.7: BB/FB 分开展示, 用户投注时不用反复切换平台
     from collections import OrderedDict
     groups = OrderedDict()
     for o in qualified:
-        gkey = (o.get("sport", ""), o.get("league", ""), o.get("home_cn", ""), o.get("away_cn", ""))
+        src = o.get("bb_price_source", "BB")
+        platform = "FB" if src == "FB" else "BB"  # BB/FB 两平台都有的算 BB
+        gkey = (platform, o.get("sport", ""), o.get("league", ""), o.get("home_cn", ""), o.get("away_cn", ""))
         if gkey not in groups:
             groups[gkey] = []
         groups[gkey].append(o)
 
-    # 组间排序：按运动 → Tier → 联赛 → 最早开赛时间（同联赛紧挨着）
+    # 组间排序：平台(BB先) → 运动 → Tier → 联赛 → 最早开赛时间（同联赛紧挨着）
     def group_sort_key(item):
-        (sport, league, home, away), opps = item
+        (platform, sport, league, home, away), opps = item
         tier = opps[0].get("_tier", 3)
         min_epoch = min((o.get("_pin_epoch") or 9999999999) for o in opps)
-        return (SPORT_ORDER.get(sport, 99), tier, league or "", min_epoch)
+        return (0 if platform == "BB" else 1, SPORT_ORDER.get(sport, 99), tier, league or "", min_epoch)
     sorted_groups = sorted(groups.items(), key=group_sort_key)
 
     lines = list(warning_lines)
+    prev_platform = None
     prev_sport = None
     prev_league = None
     match_idx = 0
 
-    for (sport, league, home, away), opps in sorted_groups:
+    for (platform, sport, league, home, away), opps in sorted_groups:
         # 组内按加权 EV 降序（市场质量高的优先）
         opps.sort(key=lambda o: -o.get("_weighted_ev", o["ev_pct"]))
+
+        # 平台分隔：BB/FB 分开, 投注不用切换平台
+        if platform != prev_platform:
+            if prev_platform is not None:
+                lines.append("")
+            lines.append("## " + ("🟦 BB 平台" if platform == "BB" else "🟨 FB 平台"))
+            prev_platform = platform
+            prev_sport = None
+            prev_league = None
 
         sport_label = SPORT_CN.get(sport, "")
         if sport != prev_sport:
