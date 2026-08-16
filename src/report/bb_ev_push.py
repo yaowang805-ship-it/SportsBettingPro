@@ -1330,9 +1330,11 @@ def _collect_opportunities(match, market_key):
         if match_score < min_ok:
             return []
     league = match.get("league", "")
+    # V5.7: 用中文联赛名做 V5 矩阵匹配(V5 键是中文"英超/德甲"), 英文名匹配不上
+    league_cn = match.get("league_cn") or league
     home_cn = match.get("home_bb_cn") or match.get("home_bb", "")
     away_cn = match.get("away_bb_cn") or match.get("away_bb", "")
-    league_mult = league_multiplier(league)
+    league_mult = league_multiplier(league_cn)
 
     # 屏蔽不靠谱联赛
     for banned in _BANNED_LEAGUES:
