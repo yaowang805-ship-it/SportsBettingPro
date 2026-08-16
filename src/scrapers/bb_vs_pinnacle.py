@@ -272,6 +272,28 @@ def _preflight_check():
     return bb_ok and pin_ok
 
 
+def _derive_dnb_fair(ml_odds):
+    """由 Pin 独赢(1X2) 推导"平局退款(DNB)"主队公平赔率, 用于校验「0」让球线。
+
+    让球 0 本质 = 平局退款(DNB)。若让球0的公平价与 DNB 分歧大 → 让球线不自洽
+    (小联赛流动性差/挂单污染, 会产出假 +EV)。返回主队 DNB 公平赔率, 或 None(无法推导)。
+    """
+    if len(ml_odds) < 3:
+        return None
+    try:
+        _fairs = shin_fair_odds([ml_odds[0], ml_odds[1], ml_odds[2]])
+    except Exception:
+        return None
+    if any(not f or f <= 0 for f in _fairs):
+        return None
+    p_home = 1.0 / _fairs[0]
+    p_away = 1.0 / _fairs[2]
+    denom = p_home + p_away
+    if denom <= 0:
+        return None
+    return 1.0 / (p_home / denom)
+
+
 def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, save_path=None):
     """核心对比逻辑：联赛映射 -> Pinnacle抓取 -> 匹配 -> EV计算 -> 输出。
 
@@ -880,6 +902,18 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             _hc_fairs = shin_fair_odds([pin_home_odds, pin_away_odds])
             pin_home_fair = _hc_fairs[0]
             pin_away_fair = _hc_fairs[1]
+
+            # V5.7: 「0」让球线一致性校验 — 让球0≈平局退款(DNB), 与独赢推导的DNB分歧>3% → 让球线不自洽
+            # (小联赛流动性差/挂单污染会让让球0偏离DNB, 产出假+EV)
+            if pin_hc_line is not None and abs(pin_hc_line) <= 0.5:
+                _dnb_fair = _derive_dnb_fair(get_pin_ml_sorted(pin, sport))
+                if _dnb_fair and pin_home_fair > 0:
+                    _div = abs(pin_home_fair - _dnb_fair) / _dnb_fair
+                    if _div > 0.03:
+                        _flag = f"让球线不自洽: 让球0公平价{pin_home_fair:.2f} vs DNB{_dnb_fair:.2f}(差{_div*100:.0f}%)"
+                        if _flag not in entry["flags"]:
+                            entry["flags"].append(_flag)
+                        continue
 
             ev_h = (bb_hc_odds_for_pin_home - pin_home_fair) / pin_home_fair * 100 if pin_home_fair > 0 else 0
             ev_a = (bb_hc_odds_for_pin_away - pin_away_fair) / pin_away_fair * 100 if pin_away_fair > 0 else 0
