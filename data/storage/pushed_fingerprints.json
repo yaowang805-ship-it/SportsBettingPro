@@ -285,6 +285,11 @@
     "ev": 1.73,
     "ts": 1786853555.105739
   },
+  "football|Argentina Primera B Metropolitana|维拉圣卡罗斯|联合防卫队|双重机会-和局/客|dc|2026-08-17": {
+    "ev": 15.36,
+    "bb": 1.98,
+    "ts": 1786883942.094097
+  },
   "football|Argentina Primera B Metropolitana|维拉圣卡罗斯|联合防卫队|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-17": {
     "ev": 9.69,
     "bb": 1.65,
@@ -732,6 +737,10 @@
   "football|Brazil Campeonato Brasileiro Women|Botafogo FR RJ (w)|Sao Paulo FC SP (w)|双重机会-主/和局|dc|2026-08-16": {
     "ev": 5.46,
     "ts": 1786851693.271358
+  },
+  "football|Brazil Campeonato Brasileiro Women|SE Palmeiras SP (w)|EC Juventude RS (w)|大球|1x2|2026-08-16": {
+    "ev": 1.31,
+    "ts": 1786884250.32959
   },
   "football|Brazil Serie A|Atletico Mineiro MG|Gremio FB Porto Alegrense RS|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 2.63,
@@ -2048,6 +2057,10 @@
     "ev": 9.59,
     "ts": 1786851693.267931
   },
+  "football|Norway 2nd Division|Skeid Fotball|Levanger FK|让球主胜|1x2|2026-08-16": {
+    "ev": 3.62,
+    "ts": 1786883942.365747
+  },
   "football|Norway 2nd Division|Skeid Fotball|Levanger FK|让球客胜|1x2|2026-08-16": {
     "ev": 8.53,
     "ts": 1786851693.2679691
@@ -2231,6 +2244,10 @@
     "ev": 1.39,
     "ts": 1786882098.849139
   },
+  "football|Poland Ekstraklasa|LKP Motor Lublin|GKS Katowice|角球大球|corner|9999-12-31": {
+    "ev": 1.87,
+    "ts": 1786884250.33352
+  },
   "football|Poland Ekstraklasa|LKP Motor Lublin|GKS Katowice|让球主胜|1x2|2026-08-16": {
     "ev": 1.56,
     "ts": 1786870478.0778291
@@ -2400,6 +2417,10 @@
   "football|Portugal Segunda Liga|Leixoes SC|CD Tondela|上半场双重机会-主/客|ht_dc|2026-08-16": {
     "ev": 1.42,
     "ts": 1786872529.502702
+  },
+  "football|Portugal Segunda Liga|Leixoes SC|CD Tondela|上半场客胜|ht|2026-08-16": {
+    "ev": 1.07,
+    "ts": 1786884250.328017
   },
   "football|Portugal Segunda Liga|Leixoes SC|CD Tondela|单双-双|oe|2026-08-16": {
     "ev": 1.13,
@@ -5551,9 +5572,9 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "football|Argentina Primera B Metropolitana|维拉圣卡罗斯|联合防卫队|双重机会-和局/客|dc|2026-08-17": {
-    "ev": 15.36,
-    "bb": 1.98,
-    "ts": 1786883942.094097
+  "football|Norway 2nd Division|斯吉德|乐范格尔|让球主胜(+0.5/1)|hc|+0.5/1|2026-08-16": {
+    "ev": 5.39,
+    "bb": 1.79,
+    "ts": 1786884551.9995031
   }
 }

@@ -1,5 +1,5 @@
 {
-  "balance": 339.0,
+  "balance": 306.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1909,6 +1909,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786903200,
       "created_at": "2026-08-16T12:39:02.079235+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_斯吉德_乐范格尔_让球主胜(+05/1)",
+      "sport": "football",
+      "league": "挪威乙级联赛",
+      "home_team": "斯吉德",
+      "away_team": "乐范格尔",
+      "home_cn": "斯吉德",
+      "away_cn": "乐范格尔",
+      "market": "handicap",
+      "market_type": "让球主胜(+0.5/1)",
+      "sub_market": "hc",
+      "line": "+0.5/1",
+      "odds": 1.79,
+      "stake": 33,
+      "model_prob": 0.5888,
+      "ev_pct": 5.39,
+      "pin_odds": 1.6329,
+      "fair_price": 1.6985,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786885200,
+      "created_at": "2026-08-16T12:49:11.982006+00:00",
       "track_only": false
     }
   ],
@@ -10699,8 +10722,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-16",
-    "used": 4357.0,
-    "bets": 79
+    "used": 4390.0,
+    "bets": 80
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
