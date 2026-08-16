@@ -440,6 +440,18 @@ class PipelineOrchestrator:
     def do_full_scan(self, bet: bool = True):
         """全量扫描：提取 → 对比 → 推送。"""
         self._reload_critical_modules()
+        # 心跳保活: 全量扫描耗时~15min(Pin预取12min), 主循环阻塞期间后台线程持续写心跳,
+        # 防止自愈看门狗(5min阈值)误判卡死重启而打断扫描。
+        _scan_hb_stop = threading.Event()
+        def _scan_hb():
+            _hb_path = SRC_DIR / "data" / "storage" / ".pipeline_heartbeat"
+            while not _scan_hb_stop.is_set():
+                try:
+                    _hb_path.write_text(str(time.time()))
+                except Exception:
+                    pass
+                _scan_hb_stop.wait(60)  # 每60s写一次, 小于自愈5min阈值
+        threading.Thread(target=_scan_hb, daemon=True, name="scan-heartbeat").start()
         # 设置推送标签（保存/恢复避免影响增量扫描）
         _prev_label = os.environ.get("PUSH_LABEL", "")
         os.environ["PUSH_LABEL"] = "每日定时全量推送"
@@ -541,6 +553,7 @@ class PipelineOrchestrator:
             logger.info("Step 3/3: 完成")
             self._full_scan_ok = True  # V5.4: 全量扫描+推送完成, 放行分层增量扫描
         finally:
+            _scan_hb_stop.set()
             os.environ["PUSH_LABEL"] = _prev_label
 
     def do_incremental(self, time_window: str = "all"):
@@ -1045,7 +1058,7 @@ class PipelineOrchestrator:
         try:
             from src.scrapers.pinnacle_api import api_get as pin_get
             t0 = _time.time()
-            resp = pin_get('/0.1/leagues/29')  # Football sport, light endpoint
+            resp = pin_get('/leagues/29')  # Football sport, light endpoint (api_get 已自动加 /0.1 前缀)
             pin_time = _time.time()
             pin_latency = pin_time - t0
             logger.info(f"  Pinnacle API 延迟: {pin_latency:.1f}s")
