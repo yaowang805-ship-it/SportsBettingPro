@@ -305,6 +305,18 @@ def api_post(endpoint, params, platform="BB"):
 # ─── 提取函数 ─────────────────────────────────────────────────
 
 _CN_CACHE_FILE = DATA_DIR / "team_cn_cache.json"
+_LEAGUE_EN_TO_CN_FILE = DATA_DIR / "league_en_to_cn.json"
+_league_en_to_cn_cache = None
+
+
+def _load_league_en_to_cn():
+    global _league_en_to_cn_cache
+    if _league_en_to_cn_cache is None:
+        try:
+            _league_en_to_cn_cache = json.loads(_LEAGUE_EN_TO_CN_FILE.read_text())
+        except Exception:
+            _league_en_to_cn_cache = {}
+    return _league_en_to_cn_cache
 _cn_cache = None
 _cn_cache_lock = __import__('threading').Lock()  # V5.5: 并行拉取时保护缓存
 
@@ -489,7 +501,7 @@ def extract_match_odds(record, sport_key, platform="BB"):
         # V5.5: 中文名(展示用) — 从双语言拉取的 _cn_* 字段取
         "home_cn": record.get("_cn_home", ""),
         "away_cn": record.get("_cn_away", ""),
-        "league_cn": record.get("_cn_league", ""),
+        "league_cn": record.get("_cn_league", "") or _load_league_en_to_cn().get(league, ""),
         "sport": sport_key,
         "platform": platform,
         "sport_cn": {"football": "足球", "basketball": "篮球",
