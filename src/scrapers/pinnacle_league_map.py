@@ -1019,12 +1019,12 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
                 continue
             pin_words = set(pin_name.split())
             overlap = bb_en_set & pin_words
-            if len(overlap) >= 2:
+            # V5.5: 过滤通用词(premier/league等), 只保留有意义的词, 否则"Premier League"命中26个联赛
+            meaningful = overlap - _GENERIC_KEYWORD_BLACKLIST
+            if len(meaningful) >= 2:
                 matched_ids.add(lid)
-            # Single keyword only matches major league abbreviations
-            # to prevent "atp" matching ALL ATP leagues
-            elif len(overlap) == 1:
-                single_word = list(overlap)[0]
+            elif len(meaningful) == 1:
+                single_word = list(meaningful)[0]
                 if single_word in ("nba", "nfl", "mlb", "wnba", "ncaa"):
                     matched_ids.add(lid)
 
