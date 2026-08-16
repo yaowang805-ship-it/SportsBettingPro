@@ -2833,16 +2833,17 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
             logger.info("无可投注机会（全部被结算可行性过滤）")
         # 指纹永存 — 无论模式, 推送成功即记录
         _save_qualified_fingerprints(qualified)
-        # JSON 二次备份
+        # JSON 二次备份 (必须与 _save_qualified_fingerprints 同字段, 含 bb!)
+        # V5.5 bug修复: 原代码只写 {"ev","ts"} 丢了 bb, 导致 _filter_pushed 读 JSON 时
+        #   old_bb 恒为 0 → "BB赔率上升即重推"永远不触发 → 增量扫描每次只剩 1 场新比赛。
         existing = _load_fingerprints()
-        new_fps = {}
         for o in qualified:
             fp = _make_fingerprint(o)
-            new_fps[fp] = o.get("ev_pct", 0)
-        for fp, ev in new_fps.items():
+            ev = o.get("ev_pct", 0)
+            bb = o.get("bb_odds", 0)
             old_ev = existing[fp].get("ev", 0) if isinstance(existing.get(fp), dict) else (existing.get(fp) or 0)
             if fp not in existing or ev > old_ev:
-                existing[fp] = {"ev": ev, "ts": time.time()}
+                existing[fp] = {"ev": ev, "bb": bb, "ts": time.time()}
         _save_fingerprints(existing)
 
         # 预算修正：去除因指纹去重被过滤的机会，保留实际推送消耗
