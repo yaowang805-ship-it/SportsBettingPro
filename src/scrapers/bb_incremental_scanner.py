@@ -318,6 +318,28 @@ def _rebuild_output(details, existing, new_result):
     }
 
 
+def _prefetch_pin_cache_async(bb_matches, all_pin_leagues):
+    """后台预取 Pin 缓存(供下一次扫描用) — 实现 Pin时间早于BB, 且不阻塞本次扫描。
+
+    铁律: 公平价(Pin)必须是较早快照, 零售价(BB)必须最新。本函数在本次扫描结束后
+    后台拉 Pin 存缓存, 下一次扫描的对比直接 --use-pin-cache 读缓存, Pin 天然早于下次 BB。
+    """
+    import threading
+
+    def _run():
+        try:
+            _old = sys.argv
+            sys.argv = ["bb_vs_pinnacle", "--pin-cache"]
+            try:
+                compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, save_path=None)
+            finally:
+                sys.argv = _old
+        except Exception:
+            pass
+
+    threading.Thread(target=_run, daemon=True).start()
+
+
 def run_incremental(time_window: str = "all"):
     """增量扫描入口。time_window: near=24h内, far=24-72h, all=全部"""
     import sys
@@ -465,12 +487,18 @@ def run_incremental(time_window: str = "all"):
     print(f"\n📊 双向变动: BB {len(bb_changed_leagues)}个联赛, Pin {len(pin_changed_leagues)}个联赛 → 合并 {len(all_changed)}个")
     print(f"\n🔄 实时全量对比 (拉取最新BB+Pin, ~2min)...")
     window_file = COMPARISON_FILE_NEAR if time_window in ("near", "urgent") else COMPARISON_FILE_FAR
-    new_result = compare_bb_vs_pinnacle(
-        bb_matches,
-        all_pin_leagues,
-        selected_leagues=None,  # V4.5: 全量拉取最新BB+Pin, 不用增量
-        save_path=window_file,
-    )
+    # V5.7: 用上一次扫描后台预取的 Pin 缓存 (Pin时间早于BB, 铁律)
+    _old_argv = sys.argv
+    sys.argv = ["bb_vs_pinnacle", "--use-pin-cache"]
+    try:
+        new_result = compare_bb_vs_pinnacle(
+            bb_matches,
+            all_pin_leagues,
+            selected_leagues=None,
+            save_path=window_file,
+        )
+    finally:
+        sys.argv = _old_argv
 
     if new_result is None:
         print("  ⚠️ 增量对比无结果 — 仍然指纹本次扫描的比赛(防止无限重复推送)")
@@ -483,6 +511,9 @@ def run_incremental(time_window: str = "all"):
 
     # 8. 保存新快照 (near/far 各自独立)
     save_snapshot(bb_matches, _current_snap)
+
+    # 8.5 后台预取 Pin 缓存 (供下一次扫描用, Pin时间早于下次BB, 不阻塞本次)
+    _prefetch_pin_cache_async(bb_matches, all_pin_leagues)
 
     # 9. 推送新机会 (V5: 扫到就推, 扫描频次本身就是节流)
     push_ok = True
