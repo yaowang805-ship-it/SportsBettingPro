@@ -1,5 +1,5 @@
 {
-  "balance": 875.0,
+  "balance": 842.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1679,6 +1679,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786881600,
       "created_at": "2026-08-16T11:12:07.785633+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_沃特福德_南安普敦_让球客胜(0)",
+      "sport": "football",
+      "league": "英格兰冠军联赛",
+      "home_team": "沃特福德",
+      "away_team": "南安普敦",
+      "home_cn": "沃特福德",
+      "away_cn": "南安普敦",
+      "market": "handicap",
+      "market_type": "让球客胜(0)",
+      "sub_market": "hc",
+      "line": "0",
+      "odds": 1.59,
+      "stake": 33,
+      "model_prob": 0.6544,
+      "ev_pct": 4.05,
+      "pin_odds": 1.5025,
+      "fair_price": 1.5281,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786883400,
+      "created_at": "2026-08-16T11:22:14.118833+00:00",
       "track_only": false
     }
   ],
@@ -10469,8 +10492,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-16",
-    "used": 3821.0,
-    "bets": 69
+    "used": 3854.0,
+    "bets": 70
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
