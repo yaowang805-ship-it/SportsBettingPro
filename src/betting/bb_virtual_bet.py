@@ -462,7 +462,7 @@ def place_bets_from_push(opportunities, bankroll=DAILY_BANKROLL):
             outcome = o["designation"]
             home = o.get("home_cn", "")
             away = o.get("away_cn", "")
-            league = o.get("league", "")
+            league = o.get("league_cn") or o.get("league", "")
 
             # 从 upstream 传递的 _market_type 推断市场类型，兼容旧数据无此字段
             raw_mk = o.get("_market_type", "")
