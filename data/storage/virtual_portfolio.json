@@ -1,30 +1,7 @@
 {
-  "balance": 2034.0,
+  "balance": 2262.0,
   "initial_bankroll": 10000,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_over_under_利马瓦迪联_卡域克流浪_小球(275)",
-      "sport": "football",
-      "league": "北爱尔兰超级联赛",
-      "home_team": "利马瓦迪联",
-      "away_team": "卡域克流浪",
-      "home_cn": "利马瓦迪联",
-      "away_cn": "卡域克流浪",
-      "market": "over_under",
-      "market_type": "小球(2.75)",
-      "sub_market": "ou",
-      "line": "",
-      "odds": 1.87,
-      "stake": 228,
-      "model_prob": 0.5569,
-      "ev_pct": 4.15,
-      "pin_odds": 1.6944,
-      "fair_price": 1.7955,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1786802400,
-      "created_at": "2026-08-13T01:46:34.641548+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_over_under_塔波斯科_奥帕瓦_小球(25)",
       "sport": "football",
@@ -9715,6 +9692,21 @@
       "home_cn": "伯顿",
       "away_cn": "斯蒂文尼奇",
       "market_type": "上半场双重机会-主/客"
+    },
+    {
+      "id": "bb_vs_pin_over_under_利马瓦迪联_卡域克流浪_小球(275)",
+      "match": "228¥ @ 1.87 (超时作废)",
+      "date": "2026-08-16T02:10:02.953207+00:00",
+      "stake": 228,
+      "odds": 1.87,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "北爱尔兰超级联赛",
+      "sport": "football",
+      "home_cn": "利马瓦迪联",
+      "away_cn": "卡域克流浪",
+      "market_type": "小球(2.75)"
     }
   ],
   "daily_budget": {

@@ -306,6 +306,13 @@ def find_pin_match_by_name(bb_home, bb_away, pin_list):
     bb_home_en = (TEAM_NAME_MAP.get(bb_home) or TEAM_NAME_MAP.get(bb_home_clean, "")).lower()
     bb_away_en = (TEAM_NAME_MAP.get(bb_away) or TEAM_NAME_MAP.get(bb_away_clean, "")).lower()
 
+    # V5.5: 纯英文名直接用(EN切换后 BB 队名就是英文, 不再需要中文→英文映射)
+    # 之前英文名查 TEAM_NAME_MAP 失败→退回拼音匹配→英文名匹配失败→棒球/冰球/网球0匹配
+    if not bb_home_en and bb_home.isascii():
+        bb_home_en = bb_home.lower()
+    if not bb_away_en and bb_away.isascii():
+        bb_away_en = bb_away.lower()
+
     if not bb_home_en and not bb_away_en:
         return _pinyin_match_names(bb_home, bb_away, pin_list)
 
