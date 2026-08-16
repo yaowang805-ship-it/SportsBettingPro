@@ -639,9 +639,14 @@
       "attempts": 2,
       "successes": 2,
       "success_rate": 1.0
+    },
+    "Brazil Serie A": {
+      "attempts": 1,
+      "successes": 1,
+      "success_rate": 1.0
     }
   },
-  "updated": "2026-08-16T20:31:29.710498+00:00",
+  "updated": "2026-08-16T23:25:32.179492+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

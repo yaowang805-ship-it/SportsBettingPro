@@ -463,29 +463,6 @@
       "track_only": false
     },
     {
-      "id": "bb_vs_pin_handicap_Mirassol_FC_SP_CR_Flamengo_RJ_角球让球主胜(+1)",
-      "sport": "football",
-      "league": "Brazil Serie A",
-      "home_team": "Mirassol FC SP",
-      "away_team": "CR Flamengo RJ",
-      "home_cn": "Mirassol FC SP",
-      "away_cn": "CR Flamengo RJ",
-      "market": "handicap",
-      "market_type": "角球让球主胜(+1)",
-      "sub_market": "corner",
-      "line": "+1",
-      "odds": 1.96,
-      "stake": 55,
-      "model_prob": 0.531,
-      "ev_pct": 4.08,
-      "pin_odds": 1.7692,
-      "fair_price": 1.8832,
-      "source": "bb_vs_pinnacle",
-      "commence_time": null,
-      "created_at": "2026-08-16T01:41:18.345791+00:00",
-      "track_only": false
-    },
-    {
       "id": "bb_vs_pin_1x2_CD_Universidad_Catolica_Estudiantes_de_La_Plat",
       "sport": "football",
       "league": "Copa Libertadores",
@@ -2476,7 +2453,8 @@
     "bb_vs_pin_handicap_沃特福德_南安普敦_让球客胜(0)": "lost",
     "bb_vs_pin_handicap_卡尔马_哈马比_让球主胜(+1)": "lost",
     "bb_vs_pin_handicap_Istanbul_Basaksehir_Kocaelispor_角球让球主胜(-1": "won",
-    "bb_vs_pin_handicap_Besiktas_JK_Eyupspor_角球让球主胜(-3)": "lost"
+    "bb_vs_pin_handicap_Besiktas_JK_Eyupspor_角球让球主胜(-3)": "lost",
+    "bb_vs_pin_handicap_Mirassol_FC_SP_CR_Flamengo_RJ_角球让球主胜(+1)": "lost"
   },
   "history": [
     {
@@ -10854,6 +10832,22 @@
       "away_cn": "Eyupspor",
       "market_type": "handicap",
       "league": "Turkey Super Lig",
+      "sport": "football"
+    },
+    {
+      "id": "bb_vs_pin_handicap_Mirassol_FC_SP_CR_Flamengo_RJ_角球让球主胜(+1)",
+      "match": "55¥ @ 1.96",
+      "date": "2026-08-16T23:25:32.159769+00:00",
+      "stake": 55,
+      "odds": 1.96,
+      "profit": -55,
+      "result": "lost",
+      "status": "lost",
+      "source": "bb_vs_pinnacle",
+      "home_cn": "Mirassol FC SP",
+      "away_cn": "CR Flamengo RJ",
+      "market_type": "handicap",
+      "league": "Brazil Serie A",
       "sport": "football"
     }
   ],
