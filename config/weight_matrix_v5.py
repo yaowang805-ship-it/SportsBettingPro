@@ -1371,6 +1371,11 @@ SPECIAL_MARKET_CAPS = {
     "ht_dc":  {"max_stake": 0.01, "max_odds": 4.0},   # 上半场双重机会, 平局率45%偏差大
     "ht_dnb": {"max_stake": 0.01, "max_odds": 4.0},   # 上半场平局退款
     "f5":     {"max_stake": 0.01, "max_odds": 3.0},   # 前5分钟大小球, 极不稳定
+    # V5.7: 特殊盘口(正确比分等)固定小仓 — 以前 _market="special" 落到1X2全Kelly(隐性满仓风险)
+    "correct_score":     {"max_stake": 0.005, "max_odds": 30.0},  # 正确比分高方差长尾, 最保守
+    "winning_margin":    {"max_stake": 0.01,  "max_odds": 15.0},  # 净胜球
+    "total_goals_range": {"max_stake": 0.01,  "max_odds": 10.0},  # 总进球区间
+    "first_to_score":    {"max_stake": 0.01,  "max_odds": 8.0},   # 先进球(2-way已对齐)
 }
 
 
