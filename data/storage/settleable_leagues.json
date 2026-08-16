@@ -81,9 +81,9 @@
       "success_rate": 1.0
     },
     "瑞典超级联赛": {
-      "attempts": 12,
-      "successes": 11,
-      "success_rate": 0.917
+      "attempts": 13,
+      "successes": 12,
+      "success_rate": 0.923
     },
     "俄罗斯甲级联赛": {
       "attempts": 3,
@@ -636,7 +636,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-08-16T14:44:58.549658+00:00",
+  "updated": "2026-08-16T16:28:16.760617+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
