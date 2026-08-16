@@ -1401,9 +1401,18 @@
     "ev": 2.0,
     "ts": 1786851693.271178
   },
+  "football|Estonia Meistriliiga|JK Narva Trans|Paide Linnameeskond|客胜|1x2|2026-08-16": {
+    "ev": 7.03,
+    "ts": 1786887623.505353
+  },
   "football|Estonia Meistriliiga|Nomme Kalju FC|Parnu JK Vaprus|双重机会-和局/客|dc|2026-08-16": {
     "ev": 1.99,
     "ts": 1786867877.545316
+  },
+  "football|Estonia Meistriliiga|纳尔瓦|派德|客胜|1x2|2026-08-16": {
+    "ev": 7.03,
+    "bb": 1.96,
+    "ts": 1786887623.242402
   },
   "football|Faroe Islands Premier League|07 Vestur Sorvagur|B36 Torshavn|双重机会-主/和局|dc|2026-08-17": {
     "ev": 2.21,
@@ -1412,6 +1421,10 @@
   "football|Faroe Islands Premier League|HB Torshavn|Tofta Itrottarfelag B68|双重机会-和局/客|dc|2026-08-16": {
     "ev": 1.43,
     "ts": 1786851693.274158
+  },
+  "football|Faroe Islands Premier League|HB Torshavn|Tofta Itrottarfelag B68|客胜|1x2|2026-08-16": {
+    "ev": 3.35,
+    "ts": 1786887933.124117
   },
   "football|Faroe Islands Premier League|NSI Runavik|EB/Streymur|双重机会-和局/客|dc|2026-08-16": {
     "ev": 2.04,
@@ -1497,6 +1510,10 @@
     "ev": 9.92,
     "bb": 1.9,
     "ts": 1786872528.737505
+  },
+  "football|Finland Ykkosliiga|Mikkelin Palloilijat|Ekenas Idrottsforening|上半场主胜|ht|2026-08-16": {
+    "ev": 1.2,
+    "ts": 1786887933.123908
   },
   "football|Finland Ykkosliiga|Mikkelin Palloilijat|Ekenas Idrottsforening|上半场双重机会-主/客|ht_dc|2026-08-16": {
     "ev": 1.02,
@@ -2638,6 +2655,10 @@
     "ev": 4.07,
     "ts": 1786879334.936322
   },
+  "football|Romania Liga 1|Corvinul|FC CFR 1907 Cluj|让球主胜|1x2|2026-08-17": {
+    "ev": 2.39,
+    "ts": 1786887623.50953
+  },
   "football|Russia Football National League 2 Division A|FC Amkar Perm|Dinamo Stavropol|总进球区间0-1|special|9999-12-31": {
     "ev": 7.64,
     "ts": 1786862117.401263
@@ -3286,9 +3307,17 @@
     "bb": 1.94,
     "ts": 1786886711.336181
   },
+  "football|Sweden Ettan Norra|FBK Karlstad|Enkopings SK|让球客胜|1x2|2026-08-16": {
+    "ev": 3.24,
+    "ts": 1786887623.5051498
+  },
   "football|Sweden Ettan Norra|FC Stockholm Internazionale|FC Arlanda|双重机会-和局/客|dc|2026-08-16": {
     "ev": 3.0,
     "ts": 1786851693.26736
+  },
+  "football|Sweden Ettan Sodra|Aatvidabergs FF|Skovde AIK|让球主胜|1x2|2026-08-16": {
+    "ev": 1.4,
+    "ts": 1786887933.1211782
   },
   "football|Sweden Ettan Sodra|FC Rosengaard 1917|Utsiktens BK|双重机会-和局/客|dc|2026-08-16": {
     "ev": 5.27,
@@ -5782,9 +5811,9 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "football|Estonia Meistriliiga|纳尔瓦|派德|客胜|1x2|2026-08-16": {
-    "ev": 7.03,
-    "bb": 1.96,
-    "ts": 1786887623.242402
+  "basketball|Rwanda National Basketball League Women|卢旺达能源集团 (女)|APR BBC队 (女)|客胜|1x2|2026-08-16": {
+    "ev": 6.57,
+    "bb": 2.74,
+    "ts": 1786888225.115464
   }
 }
