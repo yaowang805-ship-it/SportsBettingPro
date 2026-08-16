@@ -634,9 +634,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "Turkey Super Lig": {
+      "attempts": 1,
+      "successes": 1,
+      "success_rate": 1.0
     }
   },
-  "updated": "2026-08-16T16:28:16.760617+00:00",
+  "updated": "2026-08-16T17:59:12.716946+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

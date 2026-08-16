@@ -1,5 +1,5 @@
 {
-  "balance": 16942.8,
+  "balance": 17002.32,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -690,29 +690,6 @@
       "source": "bb_vs_pinnacle",
       "commence_time": null,
       "created_at": "2026-08-16T01:41:18.345903+00:00",
-      "track_only": false
-    },
-    {
-      "id": "bb_vs_pin_handicap_Istanbul_Basaksehir_Kocaelispor_角球让球主胜(-1",
-      "sport": "football",
-      "league": "Turkey Super Lig",
-      "home_team": "Istanbul Basaksehir",
-      "away_team": "Kocaelispor",
-      "home_cn": "Istanbul Basaksehir",
-      "away_cn": "Kocaelispor",
-      "market": "handicap",
-      "market_type": "角球让球主胜(-1.5)",
-      "sub_market": "corner",
-      "line": "-1.5",
-      "odds": 1.86,
-      "stake": 32,
-      "model_prob": 0.5606,
-      "ev_pct": 4.27,
-      "pin_odds": 1.6849,
-      "fair_price": 1.7839,
-      "source": "bb_vs_pinnacle",
-      "commence_time": null,
-      "created_at": "2026-08-16T01:41:18.345915+00:00",
       "track_only": false
     },
     {
@@ -2497,7 +2474,8 @@
       "settled_at": "2026-08-09T16:16:09.144069"
     },
     "bb_vs_pin_handicap_沃特福德_南安普敦_让球客胜(0)": "lost",
-    "bb_vs_pin_handicap_卡尔马_哈马比_让球主胜(+1)": "lost"
+    "bb_vs_pin_handicap_卡尔马_哈马比_让球主胜(+1)": "lost",
+    "bb_vs_pin_handicap_Istanbul_Basaksehir_Kocaelispor_角球让球主胜(-1": "won"
   },
   "history": [
     {
@@ -10843,6 +10821,22 @@
       "away_cn": "哈马比",
       "market_type": "handicap",
       "league": "瑞典超级联赛",
+      "sport": "football"
+    },
+    {
+      "id": "bb_vs_pin_handicap_Istanbul_Basaksehir_Kocaelispor_角球让球主胜(-1",
+      "match": "32¥ @ 1.86",
+      "date": "2026-08-16T17:59:12.666167+00:00",
+      "stake": 32,
+      "odds": 1.86,
+      "profit": 27.52,
+      "result": "won",
+      "status": "won",
+      "source": "bb_vs_pinnacle",
+      "home_cn": "Istanbul Basaksehir",
+      "away_cn": "Kocaelispor",
+      "market_type": "handicap",
+      "league": "Turkey Super Lig",
       "sport": "football"
     }
   ],
