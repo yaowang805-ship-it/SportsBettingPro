@@ -509,9 +509,7 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
         "correct_score": ("correct_score", "正确比分"),
         "winning_margin": ("winning_margin", "净胜球"),
         "total_goals_range": ("total_goals_range", "总进球区间"),
-        # V5.5: 先进球(first_to_score)已移除 — BB mty=1019 的 "None" 选项 od=-999(不开放),
-        #       实为 2-way(0-0 走盘), 与 Pin "First Team To Score" 的 3-way(含 No Goals) 不对应,
-        #       直接比会产生假 +EV(且选项名是英文队名)。
+        "first_to_score": ("first_to_score", "先进球"),
     }
 
     entries = []
