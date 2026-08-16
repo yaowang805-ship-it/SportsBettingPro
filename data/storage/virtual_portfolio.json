@@ -1,5 +1,5 @@
 {
-  "balance": 0.0,
+  "balance": 16942.8,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1682,29 +1682,6 @@
       "track_only": false
     },
     {
-      "id": "bb_vs_pin_handicap_沃特福德_南安普敦_让球客胜(0)",
-      "sport": "football",
-      "league": "英格兰冠军联赛",
-      "home_team": "沃特福德",
-      "away_team": "南安普敦",
-      "home_cn": "沃特福德",
-      "away_cn": "南安普敦",
-      "market": "handicap",
-      "market_type": "让球客胜(0)",
-      "sub_market": "hc",
-      "line": "0",
-      "odds": 1.59,
-      "stake": 33,
-      "model_prob": 0.6544,
-      "ev_pct": 4.05,
-      "pin_odds": 1.5025,
-      "fair_price": 1.5281,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1786883400,
-      "created_at": "2026-08-16T11:22:14.118833+00:00",
-      "track_only": false
-    },
-    {
       "id": "bb_vs_pin_handicap_汉诺威96_沃尔夫斯堡_让球主胜(+0/05)",
       "sport": "football",
       "league": "德国乙级联赛",
@@ -2541,7 +2518,8 @@
       "outcome": "void_timeout",
       "profit": 0,
       "settled_at": "2026-08-09T16:16:09.144069"
-    }
+    },
+    "bb_vs_pin_handicap_沃特福德_南安普敦_让球客胜(0)": "lost"
   },
   "history": [
     {
@@ -10856,6 +10834,22 @@
       "home_cn": "东京读卖巨人",
       "away_cn": "阪神老虎",
       "market_type": "大分(6.5)"
+    },
+    {
+      "id": "bb_vs_pin_handicap_沃特福德_南安普敦_让球客胜(0)",
+      "match": "33¥ @ 1.59",
+      "date": "2026-08-16T14:44:58.529591+00:00",
+      "stake": 33,
+      "odds": 1.59,
+      "profit": -33,
+      "result": "lost",
+      "status": "lost",
+      "source": "bb_vs_pinnacle",
+      "home_cn": "沃特福德",
+      "away_cn": "南安普敦",
+      "market_type": "handicap",
+      "league": "英格兰冠军联赛",
+      "sport": "football"
     }
   ],
   "daily_budget": {
