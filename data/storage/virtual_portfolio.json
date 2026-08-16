@@ -1,5 +1,5 @@
 {
-  "balance": 727.0,
+  "balance": 695.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1748,6 +1748,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786881600,
       "created_at": "2026-08-16T11:57:59.951379+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_哈塔_阿尔贾泽拉_让球客胜(-1)",
+      "sport": "football",
+      "league": "阿联酋超级联赛",
+      "home_team": "哈塔",
+      "away_team": "阿尔贾泽拉",
+      "home_cn": "哈塔",
+      "away_cn": "阿尔贾泽拉",
+      "market": "handicap",
+      "market_type": "让球客胜(-1)",
+      "sub_market": "hc",
+      "line": "-1",
+      "odds": 2.06,
+      "stake": 32,
+      "model_prob": 0.5203,
+      "ev_pct": 7.19,
+      "pin_odds": 1.8547,
+      "fair_price": 1.9218,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786889400,
+      "created_at": "2026-08-16T12:08:18.357303+00:00",
       "track_only": false
     }
   ],
@@ -10538,8 +10561,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-16",
-    "used": 3969.0,
-    "bets": 72
+    "used": 4001.0,
+    "bets": 73
   },
   "updated": "2026-08-09T16:16:09.144069"
 }

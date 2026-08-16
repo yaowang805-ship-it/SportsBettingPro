@@ -1088,6 +1088,10 @@
     "ev": 1.9,
     "ts": 1786872529.506144
   },
+  "football|Czech Republic 1. Liga|FC Slovan Liberec|Slavia Prague|上半场双重机会-主/客|ht_dc|2026-08-17": {
+    "ev": 1.16,
+    "ts": 1786881791.1370409
+  },
   "football|Czech Republic CFL|AC Sparta Prague B|FK Admira Prague|双重机会-和局/客|dc|2026-08-16": {
     "ev": 1.25,
     "ts": 1786848646.676758
@@ -1772,6 +1776,19 @@
   "football|Mexico Liga MX|Pumas UNAM|Queretaro FC|和局|1x2|2026-08-17": {
     "ev": 1.09,
     "ts": 1786875163.885134
+  },
+  "football|Netherlands Derde Divisie|ADO 20|USV Hercules|双重机会-和局/客|dc|2026-08-16": {
+    "ev": 10.34,
+    "ts": 1786881480.364216
+  },
+  "football|Netherlands Derde Divisie|ADO 20|USV Hercules|让球客胜|1x2|2026-08-16": {
+    "ev": 10.64,
+    "ts": 1786881480.3641422
+  },
+  "football|Netherlands Derde Divisie|ADO 希姆斯克|赫尔克里斯|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-16": {
+    "ev": 10.64,
+    "bb": 1.83,
+    "ts": 1786881479.9682162
   },
   "football|Netherlands Derde Divisie|Groene Ster|RBC Roosendaal|小球|1x2|2026-08-16": {
     "ev": 1.36,
@@ -2954,6 +2971,10 @@
     "ev": 2.69,
     "ts": 1786870478.080846
   },
+  "football|Sweden Allsvenskan|Kalmar FF|Hammarby IF|让球主胜|1x2|2026-08-16": {
+    "ev": 1.87,
+    "ts": 1786881791.138314
+  },
   "football|Sweden Division 2|BK Forward|Syrianska FC|双重机会-和局/客|dc|2026-08-16": {
     "ev": 2.41,
     "ts": 1786857588.025339
@@ -2961,6 +2982,10 @@
   "football|Sweden Division 2|Enskede IK|Korsnas IF FK|双重机会-和局/客|dc|2026-08-16": {
     "ev": 3.23,
     "ts": 1786851693.26657
+  },
+  "football|Sweden Division 2|Linero IF|Rappe Goif|双重机会-和局/客|dc|2026-08-16": {
+    "ev": 2.54,
+    "ts": 1786881480.3598258
   },
   "football|Sweden Division 2|Skiljebo SK|Helges IF|双重机会-和局/客|dc|2026-08-16": {
     "ev": 15.8,
@@ -3108,6 +3133,10 @@
   "football|UAE Pro League|Hatta SC|Al Jazira (UAE)|上半场客胜|ht|2026-08-16": {
     "ev": 2.23,
     "ts": 1786851693.2714088
+  },
+  "football|UAE Pro League|Hatta SC|Al Jazira (UAE)|让球客胜|1x2|2026-08-16": {
+    "ev": 4.59,
+    "ts": 1786881791.1382039
   },
   "football|UEFA Champions League-Qualification|PFC Levski Sofia|AEK Athens|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 5.11,
@@ -5408,9 +5437,9 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "football|Netherlands Derde Divisie|ADO 希姆斯克|赫尔克里斯|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-16": {
-    "ev": 10.64,
-    "bb": 1.83,
-    "ts": 1786881479.9682162
+  "football|UAE Pro League|哈塔|阿尔贾泽拉|让球客胜(-1)|hc|-1|2026-08-16": {
+    "ev": 7.19,
+    "bb": 2.06,
+    "ts": 1786882098.375416
   }
 }
