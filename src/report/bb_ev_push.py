@@ -1330,8 +1330,8 @@ def _collect_opportunities(match, market_key):
         if match_score < min_ok:
             return []
     league = match.get("league", "")
-    home_cn = match.get("home_bb", "")
-    away_cn = match.get("away_bb", "")
+    home_cn = match.get("home_bb_cn") or match.get("home_bb", "")
+    away_cn = match.get("away_bb_cn") or match.get("away_bb", "")
     league_mult = league_multiplier(league)
 
     # 屏蔽不靠谱联赛
@@ -1530,6 +1530,7 @@ def _collect_opportunities(match, market_key):
         result.append({
             "sport": match.get("sport", ""),
             "league": league,
+            "league_cn": match.get("league_cn") or league,
             "home_cn": home_cn,
             "away_cn": away_cn,
             "home_team": match.get("home_pin", home_cn),
@@ -1962,7 +1963,8 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
             except ImportError:
                 _sensitive = False
             _sensitive_tag = " ⚠️风控敏感" if _sensitive else ""
-            lines.append(f"  [{tier_label}] {league}{_sensitive_tag}")
+            _league_display = opps[0].get("league_cn") or league
+            lines.append(f"  [{tier_label}] {_league_display}{_sensitive_tag}")
             prev_league = league
 
         match_idx += 1

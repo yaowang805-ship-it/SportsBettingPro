@@ -89,11 +89,11 @@ MAX_COOKIE_REFRESHES = 3           # 每次扫描最多刷新 3 次 cookie
 _ssl_fail_count = 0  # 全局 SSL 失败计数器（看门狗用）
 
 _last_req_time = 0.0
-_MIN_REQUEST_INTERVAL = 0.25       # V5.5: 0.35→0.25s (提速, 封禁线16 req/s, 远低于)
+_MIN_REQUEST_INTERVAL = 0.10       # V5.5: 0.10s (10 req/s, 封禁线16 req/s, 62%安全线)
 _REQUEST_COUNT = 0                  # V5: 扫描内请求计数器
 _SCAN_PAUSE_UNTIL = 0.0            # V5: Cloudflare 封禁后自动暂停
 _REQUEST_BURST_WINDOW = 10         # V5: 10秒窗口
-_REQUEST_BURST_LIMIT = 40          # V5.5: 15→40 (4 req/s, 仍远低于16 req/s封禁线)
+_REQUEST_BURST_LIMIT = 100         # V5.5: 100个/10s (10 req/s, 封禁线16 req/s的62%)
 _BURST_WINDOW_START = 0.0
 _BURST_COUNT = 0
 _ip_ban_notify_until = 0.0         # V5.2: IP 封禁钉钉告警节流(30min 内只发一次)
