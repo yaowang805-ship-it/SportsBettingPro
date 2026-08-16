@@ -299,6 +299,10 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             "match_type": "name" if best_score >= 0.85 else "time",
             "home_bb": bb_home,
             "away_bb": bb_away,
+            # V5.5: 中文名(展示用) — 与主对比循环对齐, 否则钉钉推送回退英文队名
+            "home_bb_cn": bb_m.get("home_cn") or bb_home,
+            "away_bb_cn": bb_m.get("away_cn") or bb_away,
+            "league_cn": bb_m.get("league_cn") or bb_league,
             "home_pin": best_pin.get("home", ""),
             "away_pin": best_pin.get("away", ""),
             "match_score": round(best_score, 3),
@@ -532,6 +536,10 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             "match_type": "name",
             "home_bb": bb_home,
             "away_bb": bb_away,
+            # V5.5: 中文名(展示用) — 与主对比循环对齐, 否则钉钉推送回退英文队名
+            "home_bb_cn": m.get("home_cn") or bb_home,
+            "away_bb_cn": m.get("away_cn") or bb_away,
+            "league_cn": m.get("league_cn") or bb_league,
             "home_pin": bb_home,
             "away_pin": bb_away,
             "match_score": 1.0,
