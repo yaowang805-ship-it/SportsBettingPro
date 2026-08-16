@@ -1564,21 +1564,31 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     total_1x2_only = total_opps_1x2 - total_btts - total_oe - total_htft
     total_all = total_opps_1x2 + total_hc + total_ou + total_dc + total_dnb
 
-    # 角球对比（在总计数之后合并，不污染已有统计）
-    corner_start = time.time()
-    corner_entries = _fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues)
+    # 角球 + 特殊盘口对比 — V5.5: 并行(串行时各~75s, 并行省一半)
+    import concurrent.futures as _cf
+    _sub_start = time.time()
+    _sub_results = {}
+    with _cf.ThreadPoolExecutor(max_workers=2) as _sub_exec:
+        _sub_futs = {
+            _sub_exec.submit(_fetch_corner_opportunities, bb_matches, all_pin_leagues, matched_leagues): "corner",
+            _sub_exec.submit(_fetch_special_opportunities, bb_matches, all_pin_leagues, matched_leagues): "special",
+        }
+        for _fut in _cf.as_completed(_sub_futs):
+            _k = _sub_futs[_fut]
+            try:
+                _sub_results[_k] = _fut.result() or []
+            except Exception as _e:
+                _sub_results[_k] = []
+
+    corner_entries = _sub_results.get("corner", [])
     total_corner = 0
     if corner_entries:
         for ce in corner_entries:
             total_corner += len(ce.get("opportunities", [])) + len(ce.get("handicap", [])) + len(ce.get("over_under", []))
         opportunities.extend(corner_entries)
         total_all += total_corner
-    if total_corner:
-        print(f"  ⏱ 角球用时: {time.time()-corner_start:.0f}s")
 
-    # V5.5: 特殊盘口对比(正确比分/净胜球/总进球区间/先进球)
-    special_start = time.time()
-    special_entries = _fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues)
+    special_entries = _sub_results.get("special", [])
     total_special = 0
     if special_entries:
         for se in special_entries:
