@@ -1425,33 +1425,22 @@ _LEAGUE_ALIASES = {
 }
 
 def _match_league(league: str, data_dict: dict):
-    """匹配联赛数据, 优先精确匹配, 然后中英文别名, 最后模糊匹配。"""
+    """匹配联赛数据: 精确 → 别名(中英文全称/简称)。不做子串模糊(会误配)。
+
+    V5.7 铁律: 子串模糊会误配(Ukraine Premier League 含 "premier league" 错配成英超;
+    "巴西乙级联赛" 含 "西乙" 错配成西乙), 一律删掉。匹配只靠精确 + 别名表。
+    """
     if not league:
         return data_dict.get("_AGGREGATE")
     if league in data_dict:
         return data_dict[league]
-    # V4.5: 英文名 → 中文名 别名查找
+    # 别名查找(中英文全称/简称 → V5键, 精确匹配)
     league_lower = league.lower().strip()
     if league_lower in _LEAGUE_ALIASES:
         cn_name = _LEAGUE_ALIASES[league_lower]
         if cn_name in data_dict:
             return data_dict[cn_name]
-    # V5.7: 英文名 → 别名关键词子串匹配 ("England Premier League" 含 "premier league" → "英超")
-    # 按关键词长度降序, 长关键词优先(避免 "serie a" 误匹配 "brazil serie a" 之类)
-    for alias_kw in sorted(_LEAGUE_ALIASES.keys(), key=lambda x: -len(x)):
-        if alias_kw in league_lower:
-            cn_name = _LEAGUE_ALIASES[alias_kw]
-            if cn_name in data_dict:
-                return data_dict[cn_name]
-    # 子字符串模糊匹配
-    for kw in sorted(data_dict.keys(), key=lambda x: -len(x)):
-        if kw == "_AGGREGATE":
-            continue
-        if len(kw) <= 2 and not (league or "").startswith(kw):
-            continue
-        if kw in (league or ""):
-            return data_dict[kw]
-    return None  # 未知联赛返回 None, 触发 BTB 回退 (原返回 _AGGREGATE 使 BTB 分支死代码)
+    return None  # 未知联赛返回 None, 触发 BTB 回退
 
 
 def _match_market_data(market: str, league: str):
