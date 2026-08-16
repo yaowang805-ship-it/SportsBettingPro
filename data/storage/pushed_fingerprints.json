@@ -1862,6 +1862,10 @@
     "ev": 1.42,
     "ts": 1786882098.8570628
   },
+  "football|Netherlands Eredivisie|FC Twente|PEC Zwolle|双边进球-否|btts|2026-08-16": {
+    "ev": 1.17,
+    "ts": 1786882408.65693
+  },
   "football|Netherlands Eredivisie|FC Twente|PEC Zwolle|角球大球|corner|9999-12-31": {
     "ev": 1.75,
     "ts": 1786875350.778761
@@ -1897,6 +1901,10 @@
   "football|Netherlands Eredivisie|Feyenoord|Go Ahead Eagles|客胜|1x2|2026-08-16": {
     "ev": 8.8,
     "ts": 1786880260.394182
+  },
+  "football|Netherlands Eredivisie|Feyenoord|Go Ahead Eagles|角球小球|corner|9999-12-31": {
+    "ev": 1.78,
+    "ts": 1786882408.660919
   },
   "football|Netherlands Eredivisie|Feyenoord|Go Ahead Eagles|让球客胜|1x2|2026-08-16": {
     "ev": 2.77,
@@ -2734,6 +2742,10 @@
     "ev": 3.03,
     "ts": 1786851693.272052
   },
+  "football|Spain LaLiga 2|Burgos CF|Cordoba CF|上半场客胜|ht|2026-08-17": {
+    "ev": 5.85,
+    "ts": 1786882408.659244
+  },
   "football|Spain LaLiga 2|Burgos CF|Cordoba CF|单双-双|oe|2026-08-17": {
     "ev": 1.21,
     "ts": 1786857131.001956
@@ -2987,6 +2999,11 @@
     "ev": 1.87,
     "ts": 1786881791.138314
   },
+  "football|Sweden Allsvenskan|卡尔马|哈马比|让球主胜(+1)|hc|+1|2026-08-16": {
+    "ev": 4.37,
+    "bb": 1.67,
+    "ts": 1786882408.361155
+  },
   "football|Sweden Division 2|BK Forward|Syrianska FC|双重机会-和局/客|dc|2026-08-16": {
     "ev": 2.41,
     "ts": 1786857588.025339
@@ -3153,6 +3170,11 @@
   "football|UAE Pro League|Hatta SC|Al Jazira (UAE)|让球客胜|1x2|2026-08-16": {
     "ev": 4.59,
     "ts": 1786881791.1382039
+  },
+  "football|UAE Pro League|哈塔|阿尔贾泽拉|让球客胜(-1)|hc|-1|2026-08-16": {
+    "ev": 8.23,
+    "bb": 2.08,
+    "ts": 1786882408.3611038
   },
   "football|UEFA Champions League-Qualification|PFC Levski Sofia|AEK Athens|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 5.11,
@@ -5453,14 +5475,14 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "football|UAE Pro League|哈塔|阿尔贾泽拉|让球客胜(-1)|hc|-1|2026-08-16": {
-    "ev": 8.23,
-    "bb": 2.08,
-    "ts": 1786882408.3611038
+  "football|Peru Liga 1|CD 莫克瓜|体育生队|上半场双重机会-主/客|ht_dc|2026-08-17": {
+    "ev": 7.22,
+    "bb": 1.97,
+    "ts": 1786882713.410699
   },
-  "football|Sweden Allsvenskan|卡尔马|哈马比|让球主胜(+1)|hc|+1|2026-08-16": {
-    "ev": 4.37,
-    "bb": 1.67,
-    "ts": 1786882408.361155
+  "football|England FA Community Shield|阿森纳|曼彻斯特城|让球客胜(0)|hc|0|2026-08-16": {
+    "ev": 5.56,
+    "bb": 1.85,
+    "ts": 1786882713.41074
   }
 }
