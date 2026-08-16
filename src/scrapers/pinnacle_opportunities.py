@@ -14,7 +14,7 @@ from src.scrapers.bb_data import (
 )
 from src.scrapers.pinnacle_league_map import TEAM_NAME_MAP
 from src.scrapers.pinnacle_api import get_decimal_price
-from src.scrapers.devig import devig_mult  # 比例法(正确比分等27结果Shin会严重高估冷门)
+from src.scrapers.devig import devig_mult, shin_fair_odds
 from src.scrapers.pinnacle_markets import get_league_matchups_and_markets, get_league_corner_markets
 from src.scrapers.matching_engine import (
     get_pin_ml_sorted, get_pin_spread, get_pin_total, _pin_to_epoch,
@@ -477,7 +477,7 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
     """
     from src.scrapers.pinnacle_markets import get_league_special_markets
     from src.scrapers.pinnacle_league_map import lookup_pin_league
-    from src.scrapers.devig import devig_mult  # 比例法(正确比分等27结果Shin会严重高估冷门)
+    from src.scrapers.devig import devig_mult, shin_fair_odds
 
     # BB 有特殊盘口的比赛
     bb_special_matches = []
