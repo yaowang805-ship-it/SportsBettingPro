@@ -1329,6 +1329,9 @@ class PipelineOrchestrator:
         # （避免与全量扫描同时触发，但不会等待完整的周期）
         now = time.time()
         self._last_incremental = now - INCREMENTAL_INTERVAL + 60
+        # V5.7: 分层扫描计时器也提前, 否则每次代码热更新重启后要等 15min 才扫(用户观察到长时间无推送)
+        self._last_inc_urgent = now - 900 + 60
+        self._last_inc_near = now - 1800 + 60
 
         # 启动时追赶今天已错过的定时任务
         if not self.dry_run:
