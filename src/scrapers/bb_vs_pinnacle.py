@@ -430,19 +430,25 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         except Exception:
             all_pin_matches = []
     else:
-        # V5.1: 串行获取 (并行偶发联赛数据丢失 → 篮球/网球=0)
-        for pid in sorted(pin_ids_to_fetch):
-            try:
-                matches = _fetch_one(pid)
-                all_pin_matches.extend(matches)
-            except Exception as e:
-                from src.scrapers.pinnacle_league_map import lookup_pin_league
-                info = lookup_pin_league(all_pin_leagues, pid)
-                league_name = info.get('name', str(pid))
-                sport = info.get('sport', '?')
-                error_msg = f"获取联赛失败 [{league_name}] (ID={pid}, sport={sport}): {e}"
-                print(f"  ❌ {error_msg}")
-                _fetch_errors.append(error_msg)
+        # V5.5: 并行获取(ThreadPoolExecutor) — 速度优先, 空返回重试已在 _fetch_one 内处理
+        # Pin 限速器是全局的(10 req/s), 并行只是隐藏 API 延迟, 不会突破限速
+        import concurrent.futures
+        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as _exec:
+            _futs = {_exec.submit(_fetch_one, pid): pid for pid in sorted(pin_ids_to_fetch)}
+            for _fut in concurrent.futures.as_completed(_futs):
+                _pid = _futs[_fut]
+                try:
+                    _matches = _fut.result()
+                    if _matches:
+                        all_pin_matches.extend(_matches)
+                except Exception as e:
+                    from src.scrapers.pinnacle_league_map import lookup_pin_league
+                    info = lookup_pin_league(all_pin_leagues, _pid)
+                    league_name = info.get('name', str(_pid))
+                    sport = info.get('sport', '?')
+                    error_msg = f"获取联赛失败 [{league_name}] (ID={_pid}, sport={sport}): {e}"
+                    print(f"  ❌ {error_msg}")
+                    _fetch_errors.append(error_msg)
         if _save_cache:
             # Pin先→BB后 流程: 只拉 Pin 并缓存, 对比由后续 do_full_scan 的 BB 重拉后完成
             try:
