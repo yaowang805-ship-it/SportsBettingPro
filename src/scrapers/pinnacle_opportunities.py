@@ -15,6 +15,7 @@ from src.scrapers.bb_data import (
 from src.scrapers.pinnacle_league_map import TEAM_NAME_MAP
 from src.scrapers.pinnacle_api import get_decimal_price
 from src.scrapers.devig import devig_mult, shin_fair_odds
+from src.scrapers.dixon_coles import correct_score_probs  # 正确比分公平概率
 from src.scrapers.pinnacle_markets import get_league_matchups_and_markets, get_league_corner_markets
 from src.scrapers.matching_engine import (
     get_pin_ml_sorted, get_pin_spread, get_pin_total, _pin_to_epoch,
@@ -554,16 +555,22 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             else:
                 norm_bb = {_norm_special_name(o["name"]): o["odds"] for o in bb_opts}
                 norm_pin = {_norm_special_name(o["name"]): o["odds"] for o in pin_opts}
-            # 去抽水 Pinnacle 公平价 (简化: 用所有选项的隐含概率)
-            pin_decimal = [v for v in norm_pin.values() if v > 1.0]
+            # 公平价: 正确比分用 Dixon-Coles 模型(最准), 其它用比例法去抽水
             fair_map = {}
-            if pin_decimal:
-                # 比例法去抽水(devig_mult 返回公平概率, 公平赔率=1/prob)
-                # 27结果正确比分 Shin 会严重高估冷门(如91.8→335.8), 比例法更稳(→121)
-                probs = devig_mult(pin_decimal)
-                for i, k in enumerate(norm_pin):
-                    if i < len(probs) and probs[i] > 0:
-                        fair_map[k] = 1.0 / probs[i]
+            if bb_key == "correct_score":
+                _dc = correct_score_probs(bb_home, bb_away)
+                for _name in norm_bb:
+                    _p = _dc.get(_name, 0.0)
+                    if _p > 0:
+                        fair_map[_name] = 1.0 / _p
+            if not fair_map:
+                pin_decimal = [v for v in norm_pin.values() if v > 1.0]
+                if pin_decimal:
+                    # 比例法去抽水(devig_mult 返回公平概率, 公平赔率=1/prob)
+                    probs = devig_mult(pin_decimal)
+                    for i, k in enumerate(norm_pin):
+                        if i < len(probs) and probs[i] > 0:
+                            fair_map[k] = 1.0 / probs[i]
             for name, bb_odds in norm_bb.items():
                 fair = fair_map.get(name)
                 if not fair or fair <= 0:
