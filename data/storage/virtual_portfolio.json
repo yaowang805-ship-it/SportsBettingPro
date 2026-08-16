@@ -1,30 +1,7 @@
 {
-  "balance": 1611.0,
+  "balance": 1794.0,
   "initial_bankroll": 10000,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_over_under_东京读卖巨人_阪神老虎_大分(65)",
-      "sport": "baseball",
-      "league": "日本职业棒球",
-      "home_team": "东京读卖巨人",
-      "away_team": "阪神老虎",
-      "home_cn": "东京读卖巨人",
-      "away_cn": "阪神老虎",
-      "market": "over_under",
-      "market_type": "大分(6.5)",
-      "sub_market": "ou",
-      "line": "",
-      "odds": 1.97,
-      "stake": 236,
-      "model_prob": 0.5725,
-      "ev_pct": 12.78,
-      "pin_odds": 1.6803,
-      "fair_price": 1.7468,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1786611600,
-      "created_at": "2026-08-13T08:55:15.283247+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_over_under_伊库伊奎_科比亚波_上半场大球(10)",
       "sport": "football",
@@ -1403,6 +1380,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786874400,
       "created_at": "2026-08-16T08:54:37.597501+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_MP米克力_EIF埃克纳斯_小球(275)",
+      "sport": "football",
+      "league": "芬兰甲级联赛",
+      "home_team": "MP米克力",
+      "away_team": "EIF埃克纳斯",
+      "home_cn": "MP米克力",
+      "away_cn": "EIF埃克纳斯",
+      "market": "over_under",
+      "market_type": "小球(2.75)",
+      "sub_market": "ou",
+      "line": "2.75",
+      "odds": 1.9,
+      "stake": 53,
+      "model_prob": 0.5785,
+      "ev_pct": 9.92,
+      "pin_odds": 1.6711,
+      "fair_price": 1.7286,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786888800,
+      "created_at": "2026-08-16T09:28:48.718194+00:00",
       "track_only": false
     }
   ],
@@ -10174,12 +10174,27 @@
       "home_cn": "埼玉西武狮二队",
       "away_cn": "东京读卖巨人二队",
       "market_type": "小分(7.5)"
+    },
+    {
+      "id": "bb_vs_pin_over_under_东京读卖巨人_阪神老虎_大分(65)",
+      "match": "236¥ @ 1.97 (超时作废)",
+      "date": "2026-08-16T09:18:37.884448+00:00",
+      "stake": 236,
+      "odds": 1.97,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "日本职业棒球",
+      "sport": "baseball",
+      "home_cn": "东京读卖巨人",
+      "away_cn": "阪神老虎",
+      "market_type": "大分(6.5)"
     }
   ],
   "daily_budget": {
     "date": "2026-08-16",
-    "used": 2849.0,
-    "bets": 56
+    "used": 2902.0,
+    "bets": 57
   },
   "updated": "2026-08-09T16:16:09.144069"
 }

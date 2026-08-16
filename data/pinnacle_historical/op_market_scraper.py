@@ -143,28 +143,11 @@ def _extract_named_outcomes(d: dict, bt: int):
     return rows
 
 
-def extract_market(match_id: str, bt: int, scope: int = 2):
-    """抓取并提取某盘口的平均收盘价。
-
-    返回 list of rows: [{market, line, side, avg_odds, n_bookies}]。
-    OU/HC 有多条线 (handicapValue), 每条线一行 over/under。
-    side 用 position (0/1/2), 由调用方按盘口映射到语义。
-
-    bt=8(正确比分)/9(半全场) 走 match-event 接口 (庄家均值, 多庄家), side 直接是比分线/半全场名;
-    其余 bt 走 betting-exchanges (Betfair 交易所价)。
-    """
-    if bt in (8, 9):
-        d = fetch_match_event(match_id, bt, scope)
-        if not d:
-            return []
-        return _extract_named_outcomes(d, bt)
-
-    d = fetch_exchange(match_id, bt, scope)
-    if not d:
-        return []
+def _extract_sided_outcomes(d: dict, bt: int):
+    """bt=1/2/5/4/6/13/10: 从 d.oddsdata.back 提取(handicapValue + outcomeId position → side)。"""
     back = (d.get("oddsdata") or {}).get("back", {})
     if not isinstance(back, dict):
-        return []  # 该盘口无交易所数据时 back 是空 list, 不是 dict
+        return []  # 该盘口无数据时 back 是空 list, 不是 dict
     # 各盘口的 side 语义 (position → 含义)
     SIDES = {
         1: ["home", "draw", "away"],   # 1X2
@@ -188,6 +171,34 @@ def extract_market(match_id: str, bt: int, scope: int = 2):
             rows.append({"market": mname, "line": line, "side": side,
                          "avg_odds": round(price, 3), "n_bookies": n})
     return rows
+
+
+def extract_market(match_id: str, bt: int, scope: int = 2):
+    """抓取并提取某盘口的平均收盘价。
+
+    返回 list of rows: [{market, line, side, avg_odds, n_bookies}]。
+    OU/HC 有多条线 (handicapValue), 每条线一行 over/under。
+    side 用 position (0/1/2), 由调用方按盘口映射到语义。
+
+    bt=8(正确比分)/9(半全场) 走 match-event(庄家均值, mixedParameterName 命名);
+    其余 bt 也优先 match-event(庄家均值, 覆盖篮球/网球/棒球, 交易所价对这些运动为空),
+    空则回退 betting-exchanges(Betfair 交易所价, 仅足球有)。
+    """
+    if bt in (8, 9):
+        d = fetch_match_event(match_id, bt, scope)
+        if not d:
+            return []
+        return _extract_named_outcomes(d, bt)
+
+    # bt=1/2/5/4/6/13/10: match-event 优先(多庄家均值), betting-exchanges 兜底
+    d = fetch_match_event(match_id, bt, scope)
+    rows = _extract_sided_outcomes(d, bt) if d else []
+    if rows:
+        return rows
+    d = fetch_exchange(match_id, bt, scope)
+    if not d:
+        return []
+    return _extract_sided_outcomes(d, bt)
 
 
 def get_finished_matches(sport: str, league_url: str, season: str, max_matches: int = 100):

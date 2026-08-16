@@ -1066,6 +1066,13 @@ except ImportError:
     ODDSPORTAL_1X2_DATA = {}
     ODDSPORTAL_ML_DATA = {}
 
+# V5.6: OddsPortal 各盘口收盘价 (op_market_batch 下载的 HC/OU/DC/DNB/BTTS/OE/正确比分)
+# 补 football-data.co.uk 没覆盖的盘口历史数据(尤其非足球 + 推导盘口)
+try:
+    from config.oddsportal_markets_calibrated import ODDSPORTAL_MARKET_DATA
+except ImportError:
+    ODDSPORTAL_MARKET_DATA = {}
+
 # V5.2: 网球重校准 (修正索引30/31 + bin错配, 旧TENNIS_DATA长尾胜率高估致假+EV)
 try:
     from config.tennis_calibrated import TENNIS_DATA as _TENNIS_FIXED
@@ -1435,6 +1442,29 @@ def _match_league(league: str, data_dict: dict):
     return None  # 未知联赛返回 None, 触发 BTB 回退 (原返回 _AGGREGATE 使 BTB 分支死代码)
 
 
+def _match_market_data(market: str, league: str):
+    """返回某盘口(hc/ou/dc/dnb/btts/oe/correct_score)的 OddsPortal 联赛数据, 回退 _AGGREGATE。"""
+    md = ODDSPORTAL_MARKET_DATA.get(market, {})
+    if not md:
+        return None
+    return _match_league(league, md)
+
+
+def _kelly_from_market(market: str, league: str, idx: int, odds: float, confidence: float = 0.6):
+    """用 OddsPortal 盘口数据算 Kelly。返回 stake 或 None(无数据/不可信)。"""
+    om = _match_market_data(market, league)
+    if not om:
+        return None
+    data = om.get(idx)
+    if not data or data[2] < 20:
+        return None
+    wr, avg_o, n = data
+    if wr * avg_o - 1 > 0.15:  # 收盘价胜率×均赔 >1.15 不可能, 说明样本噪声, 弃用
+        return None
+    bb_prem = _bb_premium_1x2(odds) * 0.95
+    return kelly_075(wr, avg_o, bb_prem, n, sport_confidence=confidence) * get_oddsportal_discount(league)
+
+
 # V5: Beat the Bookie 英文联赛名 → BB中文名 映射
 _BTB_LEAGUE_MAP = {
     "英格兰超级联赛": "England: Premier League",
@@ -1731,21 +1761,21 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
         if sub_market == "ou":
             # V4.4: 逐联赛 OU 权重, 小样本联赛折扣
             ou_league_data = _match_league(league, PIN_OU_DATA)
-            if not ou_league_data:
-                return 0.0
-            data = ou_league_data.get(idx)
-            if not data:
-                return 0.0
-            wr, avg_o, n = data
-            if n < MIN_N_MINIMUM:
-                return 0.0
-            bb_prem = _bb_premium_ou(odds)
-            stake = kelly_075(wr, avg_o, bb_prem, n)
-            # V4.4: 小样本OU联赛折扣 (<3000投注)
-            ou_total = sum(e[2] for e in ou_league_data.values())
-            if ou_total < 3000:
-                stake *= 0.75
-            return stake * _settlement_multiplier(league) * _clv_multiplier(league)
+            data = ou_league_data.get(idx) if ou_league_data else None
+            if data and data[2] >= MIN_N_MINIMUM:
+                wr, avg_o, n = data
+                bb_prem = _bb_premium_ou(odds)
+                stake = kelly_075(wr, avg_o, bb_prem, n)
+                # V4.4: 小样本OU联赛折扣 (<3000投注)
+                ou_total = sum(e[2] for e in ou_league_data.values())
+                if ou_total < 3000:
+                    stake *= 0.75
+                return stake * _settlement_multiplier(league) * _clv_multiplier(league)
+            # V5.6: OddsPortal 盘口数据回退 (补 PIN 没覆盖的联赛/非足球)
+            _mk = _kelly_from_market("ou", league, idx, odds)
+            if _mk is not None:
+                return _mk
+            return 0.0
 
         elif sub_market in ("ht", "ht_hc", "ht_ou"):
             # V5.2: 半场各盘口独立权重 — 从 95K场 HT结果分布推导 (半场平局42% vs 全场27%)
@@ -1784,16 +1814,16 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                     return kelly_075(wr, avg_o, bb_prem, n)
             # 回退到1X2数据
             league_data = _match_league(league, PIN_1X2_DATA)
-            if not league_data:
-                return 0.0
-            data = league_data.get(idx)
-            if not data:
-                return 0.0
-            wr, avg_o, n = data
-            if n < MIN_N_MINIMUM:
-                return 0.0
-            bb_prem = _bb_premium_1x2(odds)
-            return kelly_075(wr, avg_o, bb_prem, n) * 0.92
+            data = league_data.get(idx) if league_data else None
+            if data and data[2] >= MIN_N_MINIMUM:
+                wr, avg_o, n = data
+                bb_prem = _bb_premium_1x2(odds)
+                return kelly_075(wr, avg_o, bb_prem, n) * 0.92
+            # V5.6: OddsPortal 盘口数据回退 (补 PIN 没覆盖的联赛)
+            _mk = _kelly_from_market("hc", league, idx, odds)
+            if _mk is not None:
+                return _mk
+            return 0.0
 
         elif sub_market == "corner":
             # V5.1: 角球让球独立标定 — football-data.co.uk 角球AH收盘 (~5.7万场, 2-way 近偶数)
@@ -1824,38 +1854,38 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
 
             # DC/DNB from 1X2 derivation
             if sub_market in ("dc", "dnb"):
-                if not league_data:
-                    return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
-                data = league_data.get(idx)
-                if not data:
-                    return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
-                wr, avg_o, n = data
-                if n < MIN_N_MINIMUM:
-                    return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
-                bb_prem = _bb_premium_1x2(odds) * 0.95
-                # V5.3: DC 推导已证无偏(91,250场 Shin, 偏差0.0000), 折扣 0.9→1.0 对齐1X2;
-                # DNB 有平局退款风险, 折扣 0.5→0.75 (放宽但不取消)
-                _dc_discount = 1.0 if sub_market == "dc" else 0.75
-                stake = kelly_075(wr * 1.08, avg_o, bb_prem, n) * _dc_discount * _data_discount
-                return min(stake, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.02))
+                data = league_data.get(idx) if league_data else None
+                if data and data[2] >= MIN_N_MINIMUM:
+                    wr, avg_o, n = data
+                    bb_prem = _bb_premium_1x2(odds) * 0.95
+                    # V5.3: DC 推导已证无偏(91,250场 Shin, 偏差0.0000), 折扣 0.9→1.0 对齐1X2;
+                    # DNB 有平局退款风险, 折扣 0.5→0.75 (放宽但不取消)
+                    _dc_discount = 1.0 if sub_market == "dc" else 0.75
+                    stake = kelly_075(wr * 1.08, avg_o, bb_prem, n) * _dc_discount * _data_discount
+                    return min(stake, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.02))
+                # V5.6: OddsPortal 盘口直接数据回退(不再纯推导)
+                _mk = _kelly_from_market(sub_market, league, idx, odds)
+                if _mk is not None:
+                    return min(_mk, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.03))
+                return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
 
             # BTTS/OE from OU derivation (uses OU data, BTB doesn't have OU so no change)
             if sub_market in ("btts", "oe"):
                 # BTTS/OE 与总进球相关 → 用 OU 数据
                 ou_league_data = _match_league(league, PIN_OU_DATA)
-                if not ou_league_data:
-                    return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
-                data = ou_league_data.get(idx)
-                if not data:
-                    return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
-                wr, avg_o, n = data
-                if n < MIN_N_MINIMUM:
-                    return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
-                bb_prem = _bb_premium_ou(odds) * 0.9
-                # V5.3: BTTS 51.8% yes 与OU高度相关, 折扣 0.5→0.65; OE 0.35→0.5 (放宽)
-                _btts_discount = 0.65 if sub_market == "btts" else 0.5
-                stake = kelly_075(wr, avg_o, bb_prem, n, sport_confidence=0.65) * _btts_discount
-                return min(stake, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.03))
+                data = ou_league_data.get(idx) if ou_league_data else None
+                if data and data[2] >= MIN_N_MINIMUM:
+                    wr, avg_o, n = data
+                    bb_prem = _bb_premium_ou(odds) * 0.9
+                    # V5.3: BTTS 51.8% yes 与OU高度相关, 折扣 0.5→0.65; OE 0.35→0.5 (放宽)
+                    _btts_discount = 0.65 if sub_market == "btts" else 0.5
+                    stake = kelly_075(wr, avg_o, bb_prem, n, sport_confidence=0.65) * _btts_discount
+                    return min(stake, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.03))
+                # V5.6: OddsPortal 盘口直接数据回退(不再纯推导)
+                _mk = _kelly_from_market(sub_market, league, idx, odds)
+                if _mk is not None:
+                    return min(_mk, SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.03))
+                return SPECIAL_MARKET_CAPS.get(sub_market, {}).get("max_stake", 0.01)
 
             if sub_market in SPECIAL_MARKET_CAPS:
                 cfg = SPECIAL_MARKET_CAPS[sub_market]
