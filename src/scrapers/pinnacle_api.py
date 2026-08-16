@@ -328,8 +328,33 @@ def _refresh_cookie_fast():
         browser.close()
 
 
+def _auto_switch_node():
+    """IP 封禁后自动换 Shadowrocket 节点(换国家才换 IP), 后台线程执行, 成功后解除扫描暂停。
+
+    V5.5 方案①: 不再要求手动换节点。封禁 → 自动换国家 → 验证出口 IP → 自检 Pin → 恢复。
+    """
+    import threading
+    try:
+        from src.scrapers.pin_proxy_pool import load_nodes, do_recover
+
+        def _run():
+            try:
+                nodes = load_nodes()
+                ok = do_recover(nodes)
+                if ok:
+                    global _SCAN_PAUSE_UNTIL
+                    _SCAN_PAUSE_UNTIL = 0  # 换节点成功, 解除暂停
+                    logger.info("✅ 自动换节点成功, 已解除扫描暂停")
+            except Exception as e:
+                logger.error("自动换节点异常: %s", e)
+
+        threading.Thread(target=_run, daemon=True).start()
+    except Exception as e:
+        logger.error("自动换节点启动失败: %s", e)
+
+
 def _notify_ip_ban():
-    """IP 封禁时发钉钉提醒换节点(节流: 30min 内只发一次, 不阻塞扫描)。"""
+    """IP 封禁时发钉钉提醒 + 自动换节点(节流: 30min 内只发一次, 不阻塞扫描)。"""
     global _ip_ban_notify_until
     now = time.time()
     if now < _ip_ban_notify_until:
@@ -338,12 +363,12 @@ def _notify_ip_ban():
     try:
         from config.dingtalk import send_dingtalk
         msg = ("【投注推荐】⚠️ Pinnacle IP 被封禁\n\n"
-               "Cloudflare 已封禁当前出口 IP, 扫描自动暂停 30 分钟。\n"
-               "请切换到 Shadowrocket 其他节点(换 IP)后, 系统会自动恢复。")
+               "Cloudflare 已封禁当前出口 IP, 正在自动切换 Shadowrocket 节点恢复...")
         send_dingtalk(msg, msgtype="text", title="Pinnacle 封禁告警")
         logger.info("已发送钉钉 IP 封禁告警")
     except Exception as e:
         logger.error("发送 IP 封禁告警失败: %s", e)
+    _auto_switch_node()  # 自动换节点恢复
 
 
 def _diagnose_response(resp, url: str) -> str:
