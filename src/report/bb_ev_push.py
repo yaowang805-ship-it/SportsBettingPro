@@ -861,7 +861,7 @@ def _calc_kelly_stakes(opps: list) -> list:
         odds = o.get("bb_odds", 0)
         ev = o.get("ev_pct", 0)
         sport = o.get("sport", "")
-        league = o.get("league", "")
+        league = o.get("league_cn", o.get("league", ""))  # V5.7: 用中文联赛名匹配 V5(键是中文)
         sub = o.get("_sub_market", o.get("_market", ""))
         match_type = o.get("_match_type", "")
         match_score = o.get("_match_score", 0)
@@ -1351,13 +1351,13 @@ def _collect_opportunities(match, market_key):
         return []  # 跳过该场比赛的所有独赢机会
 
     # 联赛可信度分层过滤
-    tier = _get_league_tier(league)
+    tier = _get_league_tier(league_cn)
     if tier == 4:
         pass  # V4.3: Tier4不再封杀, 允许推送(低权重)
     # Tier 2/3: 非队名匹配且匹配分<0.80 不推送（防假阳性）
     if tier >= 2 and match_type != "name" and match_score < 0.80:
         return []
-    min_ev = _min_ev_for_tier(tier, sport=match.get("sport", ""), league=match.get("league", ""))
+    min_ev = _min_ev_for_tier(tier, sport=match.get("sport", ""), league=league_cn)
 
     # 确定该市场类型对应哪个平台提供了最高赔率
     _MK_TO_SOURCE_KEY = {
@@ -1442,7 +1442,7 @@ def _collect_opportunities(match, market_key):
         # ── V2 动态 EV 门槛: 赔率越高 → 门槛越高 ──
         # V4 的 get_min_ev 基于 Pinnacle 107K场数据
         from config.weight_matrix_v5 import get_min_ev
-        v3_min_ev = get_min_ev(match.get("sport", ""), league, sub_market, bb_odds)
+        v3_min_ev = get_min_ev(match.get("sport", ""), league_cn, sub_market, bb_odds)
         # V5: FB独有机会降门槛 — FB赔率比BB更接近Pin, edge天然低, 含金量更高
         if price_source == "FB" and not platform_sources:
             v3_min_ev = max(1.0, v3_min_ev * 0.6)  # 降到60%
@@ -1473,7 +1473,7 @@ def _collect_opportunities(match, market_key):
 
         # ── V4 赔率上限: 基于 Pinnacle 全量数据 ──
         from config.weight_matrix_v5 import get_odds_cap
-        _odds_cap = get_odds_cap(match.get("sport", ""), league, sub_market)
+        _odds_cap = get_odds_cap(match.get("sport", ""), league_cn, sub_market)
         if _odds_cap > 0 and bb_odds > _odds_cap:
             continue
 
