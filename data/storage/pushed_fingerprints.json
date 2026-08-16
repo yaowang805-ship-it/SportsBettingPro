@@ -115,6 +115,46 @@
     "ev": 3.86,
     "ts": 1786775615.963719
   },
+  "football|Argentina Cup|Deportivo Riestra|Gimnasia Y Esgrima La Plata|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 10.93,
+    "bb": 2.24,
+    "ts": 1786844478.359055
+  },
+  "football|Argentina Liga Profesional|Estudiantes Rio Cuarto|Atletico Tucuman|角球让球客胜(+1)|corner|9999-12-31": {
+    "ev": 11.55,
+    "bb": 1.83,
+    "ts": 1786844478.358857
+  },
+  "football|Belgium Pro League|KV Mechelen|Standard Liege|角球大球(o 9.5)|corner|9999-12-31": {
+    "ev": 4.43,
+    "bb": 1.89,
+    "ts": 1786844478.359951
+  },
+  "football|Brazil Serie A|Mirassol FC SP|CR Flamengo RJ|角球让球主胜(+1)|corner|9999-12-31": {
+    "ev": 4.08,
+    "bb": 1.96,
+    "ts": 1786844478.3590982
+  },
+  "football|Brazil Serie A|SC Corinthians SP|Cruzeiro EC MG|上半场双重机会-主/客|ht_dc|2026-08-17": {
+    "ev": 4.36,
+    "bb": 1.95,
+    "ts": 1786844478.358973
+  },
+  "football|Chinese League One|Suzhou Dongwu|Nantong Zhiyun FC|上半场双重机会-主/客|ht_dc|2026-08-16": {
+    "ev": 5.88,
+    "bb": 1.93,
+    "ts": 1786844478.359309
+  },
+  "football|Copa Libertadores|CD Universidad Catolica|Estudiantes de La Plata|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 6.56,
+    "bb": 1.97,
+    "ts": 1786844478.3591738
+  },
+  "football|Copa Libertadores|Independiente Rivadavia|Fluminense FC RJ|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 6.75,
+    "bb": 2.07,
+    "ts": 1786844478.359712
+  },
   "football|Costa Rica Primera Division|Deportivo Saprissa|CS Cartagines|上半场主胜|ht|2026-08-16": {
     "ev": 1.03,
     "ts": 1786844149.175759
@@ -139,9 +179,34 @@
     "ev": 1.32,
     "ts": 1786844149.175912
   },
+  "football|Portugal Segunda Liga|Leixoes SC|CD Tondela|和局|1x2|2026-08-16": {
+    "ev": 12.65,
+    "bb": 3.47,
+    "ts": 1786844478.359912
+  },
+  "football|Turkey Super Lig|Besiktas JK|Eyupspor|角球让球主胜(-3)|corner|9999-12-31": {
+    "ev": 5.56,
+    "bb": 1.88,
+    "ts": 1786844478.359346
+  },
+  "football|Turkey Super Lig|Istanbul Basaksehir|Kocaelispor|角球让球主胜(-1.5)|corner|9999-12-31": {
+    "ev": 4.27,
+    "bb": 1.86,
+    "ts": 1786844478.3599858
+  },
+  "football|UEFA Champions League-Qualification|PFC Levski Sofia|AEK Athens|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 5.11,
+    "bb": 1.85,
+    "ts": 1786844478.359787
+  },
   "football|USA Major League Soccer|Colorado Rapids|Sporting Kansas City|角球大球|corner|9999-12-31": {
     "ev": 1.71,
     "ts": 1786844149.176073
+  },
+  "football|USA National Women Soccer League|Angel City FC (w)|Washington Spirit (w)|让球客胜(0)|hc|0|2026-08-17": {
+    "ev": 4.11,
+    "bb": 1.76,
+    "ts": 1786844478.3598561
   },
   "football|USL Championship|Orange County SC|Louisville City FC|上半场主胜|ht|2026-08-16": {
     "ev": 2.98,
@@ -154,6 +219,11 @@
   "football|USL Championship|Sacramento Republic FC|Lexington SC|主胜|1x2|2026-08-16": {
     "ev": 1.22,
     "ts": 1786844149.175668
+  },
+  "football|Ukraine Persha Liga|FSC Mariupol|Kolos Kovalivka II|主胜|1x2|2026-08-16": {
+    "ev": 6.6,
+    "bb": 1.98,
+    "ts": 1786844478.359241
   },
   "football|中国乙级联赛|江西庐山|厦门飞鹭|让球客胜|1x2|2026-08-16": {
     "ev": 1.71,
@@ -2274,74 +2344,59 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "football|Argentina Liga Profesional|Estudiantes Rio Cuarto|Atletico Tucuman|角球让球客胜(+1)|corner|9999-12-31": {
-    "ev": 11.55,
-    "bb": 1.83,
-    "ts": 1786844478.358857
+  "basketball|Australia NBL1 East Women|曼利华令加海鹰 (女)|班克斯敦棕熊 (女)|主胜|1x2|2026-08-16": {
+    "ev": 4.12,
+    "bb": 1.3,
+    "ts": 1786845367.864223
   },
-  "football|Brazil Serie A|SC Corinthians SP|Cruzeiro EC MG|上半场双重机会-主/客|ht_dc|2026-08-17": {
-    "ev": 4.36,
-    "bb": 1.95,
-    "ts": 1786844478.358973
-  },
-  "football|Argentina Cup|Deportivo Riestra|Gimnasia Y Esgrima La Plata|上半场双重机会-主/客|ht_dc|2026-08-19": {
-    "ev": 10.93,
-    "bb": 2.24,
-    "ts": 1786844478.359055
-  },
-  "football|Brazil Serie A|Mirassol FC SP|CR Flamengo RJ|角球让球主胜(+1)|corner|9999-12-31": {
-    "ev": 4.08,
-    "bb": 1.96,
-    "ts": 1786844478.3590982
-  },
-  "football|Copa Libertadores|CD Universidad Catolica|Estudiantes de La Plata|上半场双重机会-主/客|ht_dc|2026-08-19": {
-    "ev": 6.56,
-    "bb": 1.97,
-    "ts": 1786844478.3591738
-  },
-  "football|Ukraine Persha Liga|FSC Mariupol|Kolos Kovalivka II|主胜|1x2|2026-08-16": {
-    "ev": 6.6,
-    "bb": 1.98,
-    "ts": 1786844478.359241
-  },
-  "football|Chinese League One|Suzhou Dongwu|Nantong Zhiyun FC|上半场双重机会-主/客|ht_dc|2026-08-16": {
-    "ev": 5.88,
-    "bb": 1.93,
-    "ts": 1786844478.359309
-  },
-  "football|Turkey Super Lig|Besiktas JK|Eyupspor|角球让球主胜(-3)|corner|9999-12-31": {
-    "ev": 5.56,
-    "bb": 1.88,
-    "ts": 1786844478.359346
-  },
-  "football|Copa Libertadores|Independiente Rivadavia|Fluminense FC RJ|上半场双重机会-主/客|ht_dc|2026-08-19": {
-    "ev": 6.75,
-    "bb": 2.07,
-    "ts": 1786844478.359712
-  },
-  "football|UEFA Champions League-Qualification|PFC Levski Sofia|AEK Athens|上半场双重机会-主/客|ht_dc|2026-08-19": {
+  "football|UEFA Champions League-Qualification|索菲亚列夫斯基|AEK雅典|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 5.11,
     "bb": 1.85,
-    "ts": 1786844478.359787
+    "ts": 1786845367.864317
   },
-  "football|USA National Women Soccer League|Angel City FC (w)|Washington Spirit (w)|让球客胜(0)|hc|0|2026-08-17": {
+  "football|Brazil Serie A|科林蒂安|克鲁塞罗MG|上半场双重机会-主/客|ht_dc|2026-08-17": {
+    "ev": 4.36,
+    "bb": 1.95,
+    "ts": 1786845367.8643851
+  },
+  "football|Argentina Cup|利斯特雷|拉普拉塔体操|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 10.93,
+    "bb": 2.24,
+    "ts": 1786845367.864449
+  },
+  "football|Copa Libertadores|智利天主大学|拉普拉塔大学生|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 6.56,
+    "bb": 1.97,
+    "ts": 1786845367.8645172
+  },
+  "football|Ukraine Persha Liga|马里乌波尔|高华尤夫卡二队|主胜|1x2|2026-08-16": {
+    "ev": 6.6,
+    "bb": 1.98,
+    "ts": 1786845367.864578
+  },
+  "football|Chinese League One|苏州东吴|南通支云|上半场双重机会-主/客|ht_dc|2026-08-16": {
+    "ev": 5.88,
+    "bb": 1.93,
+    "ts": 1786845367.864643
+  },
+  "football|Copa Libertadores|门多萨独立|弗鲁米嫩塞RJ|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 6.75,
+    "bb": 2.07,
+    "ts": 1786845367.864706
+  },
+  "football|Portugal Liga 3|塞尔纳谢|科维良|上半场双重机会-主/客|ht_dc|2026-08-17": {
+    "ev": 5.32,
+    "bb": 1.91,
+    "ts": 1786845367.86477
+  },
+  "football|USA National Women Soccer League|天使城 (女)|华盛顿精神 (女)|让球客胜(0)|hc|0|2026-08-17": {
     "ev": 4.11,
     "bb": 1.76,
-    "ts": 1786844478.3598561
+    "ts": 1786845367.864952
   },
-  "football|Portugal Segunda Liga|Leixoes SC|CD Tondela|和局|1x2|2026-08-16": {
+  "football|Portugal Segunda Liga|雷克斯欧斯|唐迪拉|和局|1x2|2026-08-16": {
     "ev": 12.65,
     "bb": 3.47,
-    "ts": 1786844478.359912
-  },
-  "football|Belgium Pro League|KV Mechelen|Standard Liege|角球大球(o 9.5)|corner|9999-12-31": {
-    "ev": 4.43,
-    "bb": 1.89,
-    "ts": 1786844478.359951
-  },
-  "football|Turkey Super Lig|Istanbul Basaksehir|Kocaelispor|角球让球主胜(-1.5)|corner|9999-12-31": {
-    "ev": 4.27,
-    "bb": 1.86,
-    "ts": 1786844478.3599858
+    "ts": 1786845367.865037
   }
 }
