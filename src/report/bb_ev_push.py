@@ -2666,30 +2666,11 @@ def _refresh_live_odds():
         logger.error("  ❌ Pinnacle 实时比价失败，无法推送")
         return False, errors
 
-    # 4. FB 独立数据 → 实时比价（非致命）
-    fb_extracted = DATA_DIR / "bb_odds_extracted_FB.json"
-    if fb_extracted.exists():
-        t2 = time.time()
-        try:
-            fb_matches = load_bb_odds(path=fb_extracted)
-            if fb_matches:
-                fb_result = compare_bb_vs_pinnacle(
-                    fb_matches, all_pin_leagues,
-                    save_path=FB_COMPARISON_FILE,
-                )
-                if fb_result:
-                    logger.info("  ✅ FB独立对比完成 (%.0fs), %d 场匹配, %d 个+EV",
-                                time.time() - t2,
-                                fb_result.get("matched_matches", 0),
-                                fb_result.get("opportunities_total", 0))
-                    fb_ok = True
-                else:
-                    logger.warning("  ⚠️ FB独立对比返回空结果（不影响主推送）")
-        except Exception as e:
-            logger.warning("  ⚠️ FB独立对比失败（不影响主推送）: %s", e)
-
-    if not fb_ok:
-        errors.append("FB 独立比价未完成（仅使用 BB 数据）")
+    # 4. FB 独立对比 — V5.5 已移除(冗余): BB/FB 已合并取高值, 再单独比 FB 只是重拉 Pin(+40s)
+    #    FB 独家机会(仅FB有BB无)边际价值低, 去掉以提速。若需恢复, 取消下面注释。
+    # fb_extracted = DATA_DIR / "bb_odds_extracted_FB.json"
+    # if fb_extracted.exists():
+    #     ... (FB 独立对比代码已移除)
 
     logger.info("🎯 实时赔率比价全部完成 (%.0fs)", time.time() - t0)
     return True, errors

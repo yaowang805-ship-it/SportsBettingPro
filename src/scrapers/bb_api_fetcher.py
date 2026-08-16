@@ -1622,7 +1622,13 @@ def save_results(matches, single_platform=None):
         out_path = DATA_DIR / f"bb_odds_extracted_{single_platform}.json"
     else:
         out_path = DATA_DIR / "bb_odds_extracted.json"
-    out_path.write_text(json.dumps(output, ensure_ascii=False, indent=2))
+    # V5.5: 文件锁 — 防止 orchestrator 增量扫描与手动拉取同时写同一文件(数据错乱)
+    try:
+        from src.storage.file_lock import locked_open
+        with locked_open(str(out_path), "w", encoding="utf-8") as f:
+            f.write(json.dumps(output, ensure_ascii=False, indent=2))
+    except ImportError:
+        out_path.write_text(json.dumps(output, ensure_ascii=False, indent=2))
     print(f"\n已保存到 {out_path}")
     return out_path
 
