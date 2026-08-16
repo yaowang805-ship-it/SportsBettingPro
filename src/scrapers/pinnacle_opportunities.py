@@ -509,7 +509,9 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
         "correct_score": ("correct_score", "正确比分"),
         "winning_margin": ("winning_margin", "净胜球"),
         "total_goals_range": ("total_goals_range", "总进球区间"),
-        "first_to_score": ("first_to_score", "先进球"),
+        # V5.5: 先进球(first_to_score)已移除 — BB mty=1019 的 "None" 选项 od=-999(不开放),
+        #       实为 2-way(0-0 走盘), 与 Pin "First Team To Score" 的 3-way(含 No Goals) 不对应,
+        #       直接比会产生假 +EV(且选项名是英文队名)。
     }
 
     entries = []
@@ -555,6 +557,16 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             continue
 
         ft = m.get("odds_ft", {})
+        # 开赛时间(北京时间) — 之前特殊盘口 entry 漏了, 推送显示"无时间"且不做开赛时间窗过滤
+        bb_start = ""
+        bb_bt = m.get("bt")
+        if bb_bt:
+            try:
+                bb_epoch = int(int(bb_bt) / 1000)
+                bb_dt = datetime.fromtimestamp(bb_epoch, tz=timezone.utc)
+                bb_start = bb_dt.astimezone(timezone(timedelta(hours=8))).strftime("%m/%d %H:%M")
+            except (ValueError, TypeError, OSError):
+                pass
         entry = {
             "league": bb_league,
             "market_type": "特殊盘口",
@@ -570,6 +582,8 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             "match_score": round(best_score, 3),
             "sport": "football",
             "flags": [],
+            "start_time_bb": bb_start,
+            "start_time_pin_epoch": bb_epoch if bb_bt else None,
             "opportunities": [],
             "handicap": [],
             "over_under": [],

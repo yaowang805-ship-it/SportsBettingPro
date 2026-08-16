@@ -1,4 +1,4 @@
-"""批量下载 OddsPortal 在用盘口(HC/OU/DC/DNB/BTTS/OE)收盘价 — 后台长任务。
+"""批量下载 OddsPortal 在用盘口(HC/OU/DC/DNB/BTTS/OE/正确比分/半全场)收盘价 — 后台长任务。
 
 遍历 data/oddsportal/ 已下载的 212 联赛, 对每个联赛:
   1. Playwright 抓结果列表页拿 matchId
@@ -22,9 +22,9 @@ from op_market_scraper import get_finished_matches, extract_market
 OUT_DIR = ROOT / "data" / "oddsportal_markets"
 LOG = ROOT / "data" / "logs" / "op_market_batch_download.log"
 
-# 各运动盘口: 足球有 DC/DNB/BTTS/OE (bt 4/6/13/10), 其他运动只有 1X2/OU/HC (bt 1/2/5)
+# 各运动盘口: 足球有 DC/DNB/BTTS/OE/CS/HTFT (bt 4/6/13/10/8/9), 其他运动只有 1X2/OU/HC (bt 1/2/5)
 MARKETS_BY_SPORT = {
-    "football": [1, 2, 5, 4, 6, 13, 10],  # 1X2/OU/HC/DC/DNB/BTTS/OE
+    "football": [1, 2, 5, 4, 6, 13, 10, 8, 9],  # 1X2/OU/HC/DC/DNB/BTTS/OE/正确比分/半全场
     "basketball": [1, 2, 5],
     "baseball": [1, 2, 5],
     "ice-hockey": [1, 2, 5],
