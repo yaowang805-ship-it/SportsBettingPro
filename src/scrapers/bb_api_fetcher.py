@@ -316,7 +316,7 @@ def fetch_sport(sport_id, platform="BB", page_size=100):
             "current": page,
             "pageSize": page_size,
             "isPC": True,
-            "languageType": "CMN",
+            "languageType": "EN",
         }
         resp = api_post("/v1/match/getList", params, platform=platform)
         if not resp or not resp.get("success"):

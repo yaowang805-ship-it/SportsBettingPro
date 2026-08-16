@@ -23,7 +23,7 @@ def fetch_bb_scores():
     score_map = {}
     for sid, sport_key, sport_cn in SPORTS:
         params = {"sportId": sid, "type": 6, "current": 1, "pageSize": 100,
-                  "isPC": True, "languageType": "CMN"}
+                  "isPC": True, "languageType": "EN"}
         try:
             resp = api_post("/v1/match/getList", params, platform="BB")
         except Exception:
