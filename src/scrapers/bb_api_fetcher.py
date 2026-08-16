@@ -301,13 +301,37 @@ def api_post(endpoint, params, platform="BB"):
 
 # ─── 提取函数 ─────────────────────────────────────────────────
 
+_CN_CACHE_FILE = DATA_DIR / "team_cn_cache.json"
+_cn_cache = None
+
+
+def _load_cn_cache():
+    global _cn_cache
+    if _cn_cache is None:
+        try:
+            _cn_cache = json.loads(_CN_CACHE_FILE.read_text())
+        except Exception:
+            _cn_cache = {}
+    return _cn_cache
+
+
+def _save_cn_cache():
+    if _cn_cache is not None:
+        try:
+            tmp = _CN_CACHE_FILE.with_suffix(".tmp")
+            tmp.write_text(json.dumps(_cn_cache, ensure_ascii=False))
+            tmp.replace(_CN_CACHE_FILE)
+        except Exception:
+            pass
+
+
 def fetch_sport(sport_id, platform="BB", page_size=100):
     """获取一个运动的所有比赛（含分页）。
 
     type=2 表示早盘/未来72小时，type=3 只返回当天少量比赛。
 
-    V5.5: 双语言拉取 — EN 用于匹配 Pinnacle(英文队名), CMN 用于展示(用户BB中文界面)。
-    按比赛 id 关联, 给每条记录附上 _cn_home/_cn_away/_cn_league 中文名字段。
+    V5.5: 双语言 — EN 用于匹配 Pinnacle(英文队名), CMN 用于展示(中文界面)。
+    中文名按 team_id/league_id 缓存到磁盘, 只在有新球队时补拉 CMN, 否则单倍速。
     """
     def _fetch_pages(lang):
         recs = []
@@ -336,25 +360,47 @@ def fetch_sport(sport_id, platform="BB", page_size=100):
             page += 1
         return recs
 
+    cache = _load_cn_cache()
+
     # 英文记录(用于匹配 Pinnacle)
     en_records = _fetch_pages("EN")
-    # 中文记录(用于展示) — 按比赛 id 关联
-    cn_records = _fetch_pages("CMN")
-    cn_map = {}
-    for rec in cn_records:
-        mid = rec.get("id")
-        if not mid:
-            continue
-        teams = rec.get("ts", [])
-        cn_map[mid] = {
-            "_cn_home": teams[0].get("na", "") if teams else "",
-            "_cn_away": teams[1].get("na", "") if len(teams) > 1 else "",
-            "_cn_league": (rec.get("lg") or {}).get("na", ""),
-        }
+
+    # 检查缓存是否缺失(新球队/新联赛)
+    need_cn = False
     for rec in en_records:
-        mid = rec.get("id")
-        if mid in cn_map:
-            rec.update(cn_map[mid])
+        for t in rec.get("ts", []):
+            tid = t.get("id")
+            if tid and f"t_{tid}" not in cache:
+                need_cn = True
+                break
+        if not need_cn:
+            lid = (rec.get("lg") or {}).get("id")
+            if lid and f"l_{lid}" not in cache:
+                need_cn = True
+        if need_cn:
+            break
+
+    # 有新球队/联赛时才补拉 CMN(全量, 顺便刷新缓存)
+    if need_cn:
+        cn_records = _fetch_pages("CMN")
+        for rec in cn_records:
+            for t in rec.get("ts", []):
+                tid = t.get("id")
+                if tid:
+                    cache[f"t_{tid}"] = t.get("na", "")
+            lg = rec.get("lg") or {}
+            if lg.get("id"):
+                cache[f"l_{lg.get('id')}"] = lg.get("na", "")
+        _save_cn_cache()
+    else:
+        print("    ♻️ 中文名缓存命中, 跳过 CMN 拉取")
+
+    # 从缓存 enrich 中文名
+    for rec in en_records:
+        teams = rec.get("ts", [])
+        rec["_cn_home"] = cache.get(f"t_{teams[0].get('id')}", "") if teams else ""
+        rec["_cn_away"] = cache.get(f"t_{teams[1].get('id')}", "") if len(teams) > 1 else ""
+        rec["_cn_league"] = cache.get(f"l_{(rec.get('lg') or {}).get('id')}", "")
     return en_records
 
 
