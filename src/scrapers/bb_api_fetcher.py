@@ -962,6 +962,32 @@ def extract_match_odds(record, sport_key, platform="BB"):
             return None
         return {"primary": lines[0], "alternates": lines[1:]}
 
+    def _extract_special_market(mty_code, period):
+        """提取特殊盘口(正确比分/净胜球/总进球区间/先进球), 返回 [{name, odds}]。
+
+        mty=1188 正确比分: 38个market, 每个1个比分选项(如"3-7");
+        其它(1018/1101/1019): 1个market, 多个选项。
+        """
+        if not mty_code:
+            return None
+        group = _find_market_group(record, mty_code, period)
+        if not group:
+            return None
+        markets = group.get("mks", group.get("markets", []))
+        if not markets:
+            return None
+        result = []
+        for mk in markets:
+            for op in _get_market_options(mk):
+                name = (op.get("na", "") or op.get("nm", "") or "").strip()
+                try:
+                    odds = float(op.get("od", 0))
+                except (TypeError, ValueError):
+                    odds = 0.0
+                if name and odds > 1.0:
+                    result.append({"name": name, "odds": odds})
+        return result or None
+
     # FT
     ft_ml = _extract_ml(ft_period)
     ft_hc = _extract_handicap(ft_period)
@@ -1006,6 +1032,14 @@ def extract_match_odds(record, sport_key, platform="BB"):
         if ft_corner_ou:
             ft_dict["corner_ou"] = ft_corner_ou["primary"]
             ft_dict["alternate_corner_ou"] = ft_corner_ou["alternates"]
+        # V5.5: 特殊盘口 (正确比分/净胜球/总进球区间/先进球) — Pinnacle special 有对应
+        for _key, _mty in [("correct_score", mt.get("correct_score")),
+                           ("winning_margin", mt.get("winning_margin")),
+                           ("total_goals_range", mt.get("total_goals_range")),
+                           ("first_to_score", mt.get("first_to_score"))]:
+            _spec = _extract_special_market(_mty, ft_period)
+            if _spec:
+                ft_dict[_key] = _spec
 
     # V5: 美式足球 OU/HC 数据交换 — FB API mty=6002/6003 数据错位
     # 让分线>20(如37.5)显然是大小球 → 交换 OU 和 HC
