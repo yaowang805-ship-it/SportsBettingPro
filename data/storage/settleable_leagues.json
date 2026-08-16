@@ -431,7 +431,7 @@
       "success_rate": 0.0
     },
     "捷克乙级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -629,9 +629,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "日本职业棒球后备队联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-16T02:10:02.953914+00:00",
+  "updated": "2026-08-16T08:45:54.065147+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

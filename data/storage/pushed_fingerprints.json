@@ -32,6 +32,11 @@
     "ev": 7.05,
     "ts": 1786851693.273265
   },
+  "basketball|Rwanda National Basketball League Women|卢旺达能源集团 (女)|APR BBC队 (女)|主胜|1x2|2026-08-16": {
+    "ev": 9.84,
+    "bb": 1.45,
+    "ts": 1786868219.0327199
+  },
   "basketball|Rwanda National Basketball League Women|开普勒 (女)|霍普斯 (女)|主胜|1x2|2026-08-17": {
     "ev": 7.78,
     "bb": 1.44,
@@ -86,6 +91,11 @@
   "basketball|William Jones Cup|Malaysia|California Irvine Anteaters|让分客胜|1x2|2026-08-16": {
     "ev": 1.95,
     "ts": 1786852094.0738611
+  },
+  "basketball|William Jones Cup|中华台北蓝|菲律宾劲旅|让分主胜(+4.5)|hc|+4.5|2026-08-16": {
+    "ev": 10.9,
+    "bb": 1.99,
+    "ts": 1786868219.032785
   },
   "basketball|国际女子友谊赛|德国 (女)|西班牙 (女)|让分客胜(-16.5)|hc|-16.5|2026-08-16": {
     "ev": 11.89,
@@ -173,6 +183,11 @@
     "ev": 3.23,
     "ts": 1786851693.2731571
   },
+  "football|Africa Cup of Nations Women (In Morocco)|喀麦隆 (女)|马拉维 (女)|上半场双重机会-主/客|ht_dc|2026-08-17": {
+    "ev": 5.87,
+    "bb": 1.9,
+    "ts": 1786868219.0330298
+  },
   "football|Argentina Cup|Deportivo Riestra|Gimnasia Y Esgrima La Plata|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 10.93,
     "bb": 2.24,
@@ -191,6 +206,11 @@
     "ev": 11.55,
     "bb": 1.83,
     "ts": 1786865347.610817
+  },
+  "football|Argentina Liga Profesional|里奥夸尔托学生队|图库曼竞技|角球让球客胜(+1)|corner|9999-12-31": {
+    "ev": 11.55,
+    "bb": 1.83,
+    "ts": 1786868219.032747
   },
   "football|Argentina Primera B Metropolitana|CD UAI Urquiza|Deportivo Armenio|小球|1x2|2026-08-17": {
     "ev": 1.73,
@@ -227,6 +247,16 @@
   "football|Argentina Primera Nacional|Tristan Suarez|Almirante Brown|上半场客胜|ht|2026-08-17": {
     "ev": 3.81,
     "ts": 1786851693.272635
+  },
+  "football|Armenia Premier League|诺亚FC|艾拉斯克特埃里温|主胜|1x2|2026-08-18": {
+    "ev": 6.37,
+    "bb": 1.82,
+    "ts": 1786868219.032848
+  },
+  "football|Armenia Premier League|诺亚FC|艾拉斯克特埃里温|让球主胜(-0.5/1)|hc|-0.5/1|2026-08-18": {
+    "ev": 5.88,
+    "bb": 2.05,
+    "ts": 1786868219.03282
   },
   "football|Australia NPL Capital Territory Women|Belconnen United (w)|Canberra Olympic (w)|双重机会-和局/客|dc|2026-08-16": {
     "ev": 26.23,
@@ -606,6 +636,11 @@
     "ev": 1.07,
     "ts": 1786853555.1035461
   },
+  "football|Brazil Serie B|累西腓航海|塞阿拉|单双-双|oe|2026-08-19": {
+    "ev": 6.38,
+    "bb": 1.9,
+    "ts": 1786868219.0329669
+  },
   "football|Brazil Serie D|Gama DF|EC Sao Jose RS|大球|1x2|2026-08-17": {
     "ev": 2.39,
     "ts": 1786851693.273209
@@ -813,6 +848,11 @@
     "ev": 3.62,
     "ts": 1786867877.5454788
   },
+  "football|Denmark Superliga|布隆德比|桑德捷斯基|角球让球主胜(-2)|corner|9999-12-31": {
+    "ev": 6.1,
+    "bb": 1.82,
+    "ts": 1786868219.032941
+  },
   "football|Ecuador LigaPro Primera A|CS Emelec|CD Tecnico Universitario|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 4.09,
     "ts": 1786851693.272989
@@ -951,6 +991,11 @@
     "ev": 1.16,
     "ts": 1786855324.998977
   },
+  "football|Germany Regionalliga North|圣保利二队|云达不莱梅二队|让球客胜(0)|hc|0|2026-08-16": {
+    "ev": 5.94,
+    "bb": 1.84,
+    "ts": 1786868219.0329971
+  },
   "football|Ireland FAI Cup|Bohemians Dublin FC|Longford Town FC|双重机会-和局/客|dc|2026-08-17": {
     "ev": 1.5,
     "ts": 1786853555.103164
@@ -1018,6 +1063,11 @@
   "football|Japan Regional League|Shibuya City FC|Nihon University|小球|1x2|2026-08-16": {
     "ev": 8.27,
     "ts": 1786854824.4021811
+  },
+  "football|Japan Regional League|涩谷城市|日本大学|小球(3.0)|ou|3.0|2026-08-16": {
+    "ev": 8.16,
+    "bb": 1.93,
+    "ts": 1786868219.032876
   },
   "football|Lithuania A Lyga|Vilnius FK Zalgiris|FK Banga Gargzdai|上半场主胜|ht|2026-08-17": {
     "ev": 1.06,
@@ -1109,6 +1159,11 @@
     "ev": 8.07,
     "bb": 1.98,
     "ts": 1786865347.611121
+  },
+  "football|Norway 1st Division|松达尔|桑德尼斯|先进球sandnes ulf|special|9999-12-31": {
+    "ev": 8.07,
+    "bb": 1.98,
+    "ts": 1786868219.032896
   },
   "football|Norway 2nd Division|Grorud IL|Tromsdalen UIL|主胜|1x2|2026-08-16": {
     "ev": 3.93,
@@ -1328,6 +1383,11 @@
   "football|Portugal Segunda Liga|Portimonense SC|FC Vizela|总进球区间4-6|special|9999-12-31": {
     "ev": 7.72,
     "ts": 1786862117.4002528
+  },
+  "football|Portugal Segunda Liga|雷克斯欧斯|唐迪拉|双边进球-是|btts|2026-08-16": {
+    "ev": 6.9,
+    "bb": 1.86,
+    "ts": 1786868219.032924
   },
   "football|Portugal Segunda Liga|雷克斯欧斯|唐迪拉|和局|1x2|2026-08-16": {
     "ev": 12.65,
@@ -3959,64 +4019,14 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "basketball|Rwanda National Basketball League Women|卢旺达能源集团 (女)|APR BBC队 (女)|主胜|1x2|2026-08-16": {
-    "ev": 9.84,
-    "bb": 1.45,
-    "ts": 1786868219.0327199
+  "basketball|William Jones Cup|中华台北白|约旦|让分主胜(+3.5)|hc|+3.5|2026-08-16": {
+    "ev": 9.64,
+    "bb": 1.96,
+    "ts": 1786870477.627567
   },
-  "football|Argentina Liga Profesional|里奥夸尔托学生队|图库曼竞技|角球让球客胜(+1)|corner|9999-12-31": {
-    "ev": 11.55,
-    "bb": 1.83,
-    "ts": 1786868219.032747
-  },
-  "basketball|William Jones Cup|中华台北蓝|菲律宾劲旅|让分主胜(+4.5)|hc|+4.5|2026-08-16": {
-    "ev": 10.9,
-    "bb": 1.99,
-    "ts": 1786868219.032785
-  },
-  "football|Armenia Premier League|诺亚FC|艾拉斯克特埃里温|让球主胜(-0.5/1)|hc|-0.5/1|2026-08-18": {
-    "ev": 5.88,
-    "bb": 2.05,
-    "ts": 1786868219.03282
-  },
-  "football|Armenia Premier League|诺亚FC|艾拉斯克特埃里温|主胜|1x2|2026-08-18": {
-    "ev": 6.37,
-    "bb": 1.82,
-    "ts": 1786868219.032848
-  },
-  "football|Japan Regional League|涩谷城市|日本大学|小球(3.0)|ou|3.0|2026-08-16": {
-    "ev": 8.16,
-    "bb": 1.93,
-    "ts": 1786868219.032876
-  },
-  "football|Norway 1st Division|松达尔|桑德尼斯|先进球sandnes ulf|special|9999-12-31": {
-    "ev": 8.07,
-    "bb": 1.98,
-    "ts": 1786868219.032896
-  },
-  "football|Portugal Segunda Liga|雷克斯欧斯|唐迪拉|双边进球-是|btts|2026-08-16": {
-    "ev": 6.9,
-    "bb": 1.86,
-    "ts": 1786868219.032924
-  },
-  "football|Denmark Superliga|布隆德比|桑德捷斯基|角球让球主胜(-2)|corner|9999-12-31": {
-    "ev": 6.1,
-    "bb": 1.82,
-    "ts": 1786868219.032941
-  },
-  "football|Brazil Serie B|累西腓航海|塞阿拉|单双-双|oe|2026-08-19": {
-    "ev": 6.38,
-    "bb": 1.9,
-    "ts": 1786868219.0329669
-  },
-  "football|Germany Regionalliga North|圣保利二队|云达不莱梅二队|让球客胜(0)|hc|0|2026-08-16": {
-    "ev": 5.94,
-    "bb": 1.84,
-    "ts": 1786868219.0329971
-  },
-  "football|Africa Cup of Nations Women (In Morocco)|喀麦隆 (女)|马拉维 (女)|上半场双重机会-主/客|ht_dc|2026-08-17": {
-    "ev": 5.87,
-    "bb": 1.9,
-    "ts": 1786868219.0330298
+  "football|Portugal Segunda Liga|波尔蒂芒人|维泽拉|让球客胜(0)|hc|0|2026-08-16": {
+    "ev": 8.11,
+    "bb": 1.74,
+    "ts": 1786870477.6276102
   }
 }

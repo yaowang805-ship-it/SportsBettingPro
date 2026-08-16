@@ -9,7 +9,7 @@
 
 用法: .venv312/bin/python data/pinnacle_historical/op_market_batch.py [--sports football,basketball] [--max-per-league 50]
 """
-import sys, csv, time, argparse
+import sys, csv, time, argparse, concurrent.futures, threading
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
@@ -40,6 +40,27 @@ def log(msg):
         f.write(line + "\n")
 
 
+# 全局限速器 — 多线程下把全局请求速率压到 ~N req/s, 防风控封禁
+_RATE_LOCK = threading.Lock()
+_RATE_MIN_INTERVAL = 0.15  # 秒/请求
+
+
+def _fetch_one_match_market(mbt):
+    """并行抓单个 (match, bt) 盘口, 带全局限速。返回 rows 列表。"""
+    m, bt = mbt
+    with _RATE_LOCK:
+        time.sleep(_RATE_MIN_INTERVAL)
+    rows = []
+    try:
+        for r in extract_market(m["match_id"], bt, scope=2):
+            r.update({"match_id": m["match_id"], "home": m["home"], "away": m["away"],
+                      "home_score": m["home_score"], "away_score": m["away_score"], "period": "ft"})
+            rows.append(r)
+    except Exception:
+        pass
+    return rows
+
+
 def slug_to_path(slug, sport):
     """从 oddsharvester 映射拿 URL, 提取 path (如 /football/france/ligue-1)。"""
     try:
@@ -59,6 +80,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sports", default="football")
     ap.add_argument("--max-per-league", type=int, default=30)
+    ap.add_argument("--workers", type=int, default=8)
     args = ap.parse_args()
     sports = args.sports.split(",")
 
@@ -91,16 +113,11 @@ def main():
             matches = get_finished_matches(sport, path, season, max_matches=args.max_per_league)
             markets = MARKETS_BY_SPORT.get(sport, [1, 2, 5])
             all_rows = []
-            for m in matches:
-                for bt in markets:
-                    try:
-                        for r in extract_market(m["match_id"], bt, scope=2):
-                            r.update({"match_id": m["match_id"], "home": m["home"], "away": m["away"],
-                                      "home_score": m["home_score"], "away_score": m["away_score"], "period": "ft"})
-                            all_rows.append(r)
-                    except Exception:
-                        pass
-                    time.sleep(0.3)  # 限速
+            # 多线程并行抓盘口(原串行 ~20min/联赛, 8 线程 ~3min)
+            _tasks = [(m, bt) for m in matches for bt in markets]
+            with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as _ex:
+                for rows in _ex.map(_fetch_one_match_market, _tasks):
+                    all_rows.extend(rows)
             cols = ["match_id", "home", "away", "home_score", "away_score",
                     "market", "line", "side", "period", "avg_odds", "n_bookies"]
             with open(out, "w", newline="") as f:
