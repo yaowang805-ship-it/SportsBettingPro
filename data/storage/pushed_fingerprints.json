@@ -224,11 +224,6 @@
     "ev": 3.23,
     "ts": 1786851693.2731571
   },
-  "football|Africa Cup of Nations Women (In Morocco)|喀麦隆 (女)|马拉维 (女)|上半场双重机会-主/客|ht_dc|2026-08-17": {
-    "ev": 5.87,
-    "bb": 1.9,
-    "ts": 1786868219.0330298
-  },
   "football|Argentina Cup|Deportivo Riestra|Gimnasia Y Esgrima La Plata|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 10.93,
     "bb": 2.24,
@@ -678,6 +673,10 @@
     "ev": 1.27,
     "ts": 1786855324.9988632
   },
+  "football|Belgium Pro League|Raal La Louviere|KAA Gent|上半场客胜|ht|2026-08-16": {
+    "ev": 1.98,
+    "ts": 1786885782.8645592
+  },
   "football|Belgium Pro League|Raal La Louviere|KAA Gent|双边进球-是|btts|2026-08-16": {
     "ev": 6.87,
     "ts": 1786877196.131731
@@ -770,6 +769,10 @@
     "ev": 1.58,
     "ts": 1786853555.103721
   },
+  "football|Brazil Serie A|Chapecoense SC|EC Bahia BA|客胜|1x2|2026-08-16": {
+    "ev": 2.04,
+    "ts": 1786885782.863772
+  },
   "football|Brazil Serie A|Chapecoense SC|EC Bahia BA|让球客胜|1x2|2026-08-16": {
     "ev": 1.85,
     "ts": 1786851693.270257
@@ -852,6 +855,15 @@
   "football|Brazil Serie B|Operario Ferroviario EC PR|Avai FC SC|上半场客胜|ht|2026-08-16": {
     "ev": 1.07,
     "ts": 1786853555.1035461
+  },
+  "football|Brazil Serie B|Operario Ferroviario EC PR|Avai FC SC|让球客胜|1x2|2026-08-16": {
+    "ev": 5.1,
+    "ts": 1786885782.86362
+  },
+  "football|Brazil Serie B|欧帕尔利奥|阿瓦伊|让球客胜(+1)|hc|+1|2026-08-16": {
+    "ev": 5.1,
+    "bb": 1.59,
+    "ts": 1786885782.531816
   },
   "football|Brazil Serie B|累西腓航海|塞阿拉|单双-双|oe|2026-08-19": {
     "ev": 6.38,
@@ -2192,6 +2204,10 @@
   "football|Norway Eliteserien|Molde FK|Tromso IL|上半场客胜|ht|2026-08-16": {
     "ev": 1.25,
     "ts": 1786874699.211133
+  },
+  "football|Norway Eliteserien|Molde FK|Tromso IL|小球|1x2|2026-08-16": {
+    "ev": 2.66,
+    "ts": 1786885782.866616
   },
   "football|Norway Eliteserien|Molde FK|Tromso IL|让球客胜|1x2|2026-08-16": {
     "ev": 4.74,
@@ -5626,9 +5642,9 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "football|Brazil Serie B|欧帕尔利奥|阿瓦伊|让球客胜(+1)|hc|+1|2026-08-16": {
-    "ev": 5.1,
-    "bb": 1.59,
-    "ts": 1786885782.531816
+  "football|Africa Cup of Nations Women (In Morocco)|喀麦隆 (女)|马拉维 (女)|上半场双重机会-主/客|ht_dc|2026-08-17": {
+    "ev": 6.84,
+    "bb": 1.93,
+    "ts": 1786886095.309372
   }
 }

@@ -1,5 +1,5 @@
 {
-  "balance": 91.0,
+  "balance": 56.0,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -1978,6 +1978,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786888800,
       "created_at": "2026-08-16T13:09:42.510960+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_喀麦隆_(女)_马拉维_(女)_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "非洲女子国家杯 (在摩洛哥)",
+      "home_team": "喀麦隆 (女)",
+      "away_team": "马拉维 (女)",
+      "home_cn": "喀麦隆 (女)",
+      "away_cn": "马拉维 (女)",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.93,
+      "stake": 35,
+      "model_prob": 0.5536,
+      "ev_pct": 6.84,
+      "pin_odds": 0,
+      "fair_price": 1.8065,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786906800,
+      "created_at": "2026-08-16T13:14:55.293837+00:00",
       "track_only": false
     }
   ],
@@ -10768,8 +10791,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-16",
-    "used": 4605.0,
-    "bets": 82
+    "used": 4640.0,
+    "bets": 83
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
