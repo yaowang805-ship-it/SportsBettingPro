@@ -555,29 +555,6 @@
       "track_only": false
     },
     {
-      "id": "bb_vs_pin_handicap_Besiktas_JK_Eyupspor_角球让球主胜(-3)",
-      "sport": "football",
-      "league": "Turkey Super Lig",
-      "home_team": "Besiktas JK",
-      "away_team": "Eyupspor",
-      "home_cn": "Besiktas JK",
-      "away_cn": "Eyupspor",
-      "market": "handicap",
-      "market_type": "角球让球主胜(-3)",
-      "sub_market": "corner",
-      "line": "-3",
-      "odds": 1.88,
-      "stake": 41,
-      "model_prob": 0.5615,
-      "ev_pct": 5.56,
-      "pin_odds": 1.6803,
-      "fair_price": 1.7809,
-      "source": "bb_vs_pinnacle",
-      "commence_time": null,
-      "created_at": "2026-08-16T01:41:18.345842+00:00",
-      "track_only": false
-    },
-    {
       "id": "bb_vs_pin_1x2_Independiente_Rivadavia_Fluminense_FC_RJ_上半场双重",
       "sport": "football",
       "league": "Copa Libertadores",
@@ -2475,7 +2452,8 @@
     },
     "bb_vs_pin_handicap_沃特福德_南安普敦_让球客胜(0)": "lost",
     "bb_vs_pin_handicap_卡尔马_哈马比_让球主胜(+1)": "lost",
-    "bb_vs_pin_handicap_Istanbul_Basaksehir_Kocaelispor_角球让球主胜(-1": "won"
+    "bb_vs_pin_handicap_Istanbul_Basaksehir_Kocaelispor_角球让球主胜(-1": "won",
+    "bb_vs_pin_handicap_Besiktas_JK_Eyupspor_角球让球主胜(-3)": "lost"
   },
   "history": [
     {
@@ -10835,6 +10813,22 @@
       "source": "bb_vs_pinnacle",
       "home_cn": "Istanbul Basaksehir",
       "away_cn": "Kocaelispor",
+      "market_type": "handicap",
+      "league": "Turkey Super Lig",
+      "sport": "football"
+    },
+    {
+      "id": "bb_vs_pin_handicap_Besiktas_JK_Eyupspor_角球让球主胜(-3)",
+      "match": "41¥ @ 1.88",
+      "date": "2026-08-16T20:31:29.681935+00:00",
+      "stake": 41,
+      "odds": 1.88,
+      "profit": -41,
+      "result": "lost",
+      "status": "lost",
+      "source": "bb_vs_pinnacle",
+      "home_cn": "Besiktas JK",
+      "away_cn": "Eyupspor",
       "market_type": "handicap",
       "league": "Turkey Super Lig",
       "sport": "football"
