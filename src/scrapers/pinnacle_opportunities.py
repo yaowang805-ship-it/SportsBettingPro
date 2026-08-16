@@ -661,7 +661,7 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                         "pin_odds": norm_pin.get(name, 0),
                         "fair_price": round(fair, 4),
                         "ev_pct": round(ev, 2),
-                        "_market": "special",
+                        "_market": bb_key,  # V5.7: 用真实盘口名(correct_score/winning_margin/...), 不再统一"special"按1X2满仓
                     })
         if entry["opportunities"]:
             entries.append(entry)
