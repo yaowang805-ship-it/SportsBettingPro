@@ -344,8 +344,31 @@ def run_incremental(time_window: str = "all"):
     print(f"BB体育 增量扫描 [{label}]")
     print("=" * 60)
 
-    # 1. 获取最新BB数据
-    print("\n📡 获取BB数据...")
+    # 0. 预加载快照 + 联赛结构 (供 Pin 检测与 BB 拉取并行)
+    snapshot = {"timestamp": "", "matches": {}}
+    if _current_snap.exists():
+        try: snapshot = json.loads(_current_snap.read_text())
+        except: pass
+    all_pin_leagues = _load_league_structure()
+    prev_active_leagues = set()
+    for _m in snapshot.get("matches", {}).values():
+        if isinstance(_m, dict) and _m.get("league"):
+            prev_active_leagues.add(_m["league"])
+
+    # 1. 并行: BB 拉取(主线程) + Pin 变动检测(后台线程, 用上次活跃联赛近似)
+    #    V5.7: 串行 ~51s(BB 26s + Pin 25s) → 并行 ~26s, 端到端压到 ~1min
+    print("\n📡 获取BB数据 + Pin变动检测(并行)...")
+    import threading
+    _pin_res = {}
+    def _pin_detect():
+        try:
+            _pin_res['changed'], _pin_res['significant'] = _detect_pin_changes(
+                None, all_pin_leagues, prev_active_leagues, time_window)
+        except Exception:
+            _pin_res['changed'], _pin_res['significant'] = set(), set()
+    _pin_thread = threading.Thread(target=_pin_detect, daemon=True)
+    _pin_thread.start()
+
     bb_matches = _fetch_bb_data(time_window)
     if not bb_matches:
         print("  ❌ 获取BB数据失败")
@@ -372,9 +395,13 @@ def run_incremental(time_window: str = "all"):
 
     print(f"  [{label}]: {len(bb_matches)} 场")
 
-    # 2. FB 独立数据刷新 + 对比 — 只在 near/far 扫描做, urgent 临场扫描跳过以提速到 <1min
+    # 2. 等 Pin 检测完成
+    _pin_thread.join()
+    pin_changed_leagues = _pin_res.get('changed', set())
+    pin_significant = _pin_res.get('significant', set())
+
+    # 3. FB 独立数据刷新 + 对比 — 只在 near/far 扫描做, urgent 临场扫描跳过以提速到 <1min
     #    (FB 机会不抹杀: near 每5min 仍会跑 FB 独立对比, 只是临场 urgent 不再等它)
-    all_pin_leagues = _load_league_structure()
     fb_had_new = False
     if time_window != "urgent":
         print(f"\n📡 检查FB数据新鲜度...")
@@ -382,25 +409,13 @@ def run_incremental(time_window: str = "all"):
         if all_pin_leagues:
             fb_had_new = _run_fb_comparison(all_pin_leagues)
 
-    # 3. 加载快照（near/far 各自独立）
-    snapshot = {"timestamp": "", "matches": {}}
-    if _current_snap.exists():
-        try: snapshot = json.loads(_current_snap.read_text())
-        except: pass
-
     # 4. 双向变动检测: BB快照 + Pin快照, 任一方变动都触发对比
-    #    先拉取双方数据, 再对比快照, 只对变动联赛跑昂贵的对比逻辑
     if not all_pin_leagues:
         all_pin_leagues = _load_league_structure()
         if not all_pin_leagues:
             print("  ❌ 无 Pinnacle 联赛结构数据")
             save_snapshot(bb_matches, _current_snap)
             return
-
-    # V5: Pinnacle变动驱动 — Pin是信号源, Pin变了才拉BB
-    # 4a. Pin侧: 拉取活跃联赛数据→与上次Pin快照对比 (~25s)
-    active_leagues = {m.get("league", "") for m in bb_matches if m.get("league")}
-    pin_changed_leagues, pin_significant = _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window)
 
     # 4b. BB侧: 本地快照对比 (毫秒) — 辅助确认
     changed_ids, new_ids, bb_changed_leagues = detect_changes(bb_matches, snapshot)
