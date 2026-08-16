@@ -1420,14 +1420,22 @@ def _fetch_one_platform(platform_key: str):
     platform_matches = []
     sport_counts = {}
 
-    for sport_id, sport_key, sport_cn in SPORTS:
-        print(f"\n--- {sport_cn} (sportId={sport_id}) ---")
-        records = fetch_sport(sport_id, platform=platform_key)
-        if not records:
-            print(f"    ⚠️ 无数据")
-            continue
+    # V5.5: 并行拉取各运动原始记录(网络IO), 提取结构化保持串行(避免打印错乱)
+    def _fetch_records(sid, sc):
+        return sc, fetch_sport(sid, platform=platform_key)
 
-        print(f"    共 {len(records)} 场比赛")
+    _sport_records = {}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as _exec:
+        _futs = {_exec.submit(_fetch_records, sid, sc): sc for sid, sk, sc in SPORTS}
+        for _fut in concurrent.futures.as_completed(_futs):
+            _sc, _recs = _fut.result()
+            _sport_records[_sc] = _recs
+
+    for sport_id, sport_key, sport_cn in SPORTS:
+        records = _sport_records.get(sport_cn, [])
+        if not records:
+            print(f"--- {sport_cn} (sportId={sport_id}): ⚠️ 无数据")
+            continue
 
         matches = []
         _banned_skipped = 0
@@ -1439,35 +1447,12 @@ def _fetch_one_platform(platform_key: str):
                     continue
                 matches.append(m)
 
-        if _banned_skipped:
-            print(f"    🚫 剔除 {_banned_skipped} 场不靠谱联赛(友谊赛/青年队/季前赛等)")
-
         sport_counts[sport_cn] = len(matches)
         platform_matches.extend(matches)
-        print(f"    → 结构化 {len(matches)} 场")
-
-        if matches:
-            sample = matches[0]
-            ml = sample["odds_ft"].get("ml", [])
-            hc = sample["odds_ft"].get("handicap", {})
-            ou = sample["odds_ft"].get("total", {})
-            print(f"    样例: {sample['league']} | {sample['home']} vs {sample['away']}")
-            print(f"      独赢: {ml}")
-            if hc:
-                print(f"      让球(主): {hc.get('home_line_str', '')} @ {hc.get('home_odds', '')}")
-                print(f"      让球(客): {hc.get('away_line_str', '')} @ {hc.get('away_odds', '')}")
-                alt_hc = sample["odds_ft"].get("alternate_handicaps", [])
-                if alt_hc:
-                    print(f"      其它让球线: {len(alt_hc)} 条")
-            if ou:
-                print(f"      大小: {ou.get('line_str', '')} @ {ou.get('over_odds', '')}/{ou.get('under_odds', '')}")
-                alt_ou = sample["odds_ft"].get("alternate_totals", [])
-                if alt_ou:
-                    print(f"      其它大小线: {len(alt_ou)} 条")
-            if sample["odds_ft"].get("dnb"):
-                print(f"      平局退款: {sample['odds_ft']['dnb']}")
-            if sample["odds_ft"].get("dc"):
-                print(f"      双重机会: {sample['odds_ft']['dc']}")
+        print(f"--- {sport_cn}: {len(matches)} 场", end="")
+        if _banned_skipped:
+            print(f" (🚫剔除{_banned_skipped}场不靠谱联赛)", end="")
+        print()
 
     print(f"\n  → {platform_config['label']} 合计: {len(platform_matches)} 场比赛")
     for name, count in sorted(sport_counts.items(), key=lambda x: -x[1]):
