@@ -666,17 +666,20 @@ def get_league_special_markets(league_id):
         mid = mu.get("id")
         if not parent_id or not mid:
             continue
-        # 特殊盘口 prices 无 designation, 只有 participantId; 按顺序与 participants 一一对应
+        # 特殊盘口 prices 无 designation, 只有 participantId; 按 participantId 匹配
+        # (prices 顺序可能与 participants 不一致, 之前 zip 按顺序对导致盘口/赔率错位)
         _parts = mu.get("participants", [])
         _ml_prices = []
         for mk in mm.get(mid, []):
             if mk.get("type") == "moneyline":
                 _ml_prices = mk.get("prices", [])
                 break
+        _price_by_id = {p.get("participantId"): p.get("price") for p in _ml_prices}
         prices = []
-        for _p, _pr in zip(_parts, _ml_prices):
+        for _p in _parts:
             _name = (_p.get("name") or "").strip()
-            _odds = us_to_decimal(_pr.get("price"))
+            _pr = _price_by_id.get(_p.get("id"))
+            _odds = us_to_decimal(_pr) if _pr is not None else None
             if _name and _odds and _odds > 1.0:
                 prices.append({"name": _name, "odds": _odds})
         if prices:
