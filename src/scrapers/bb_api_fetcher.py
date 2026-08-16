@@ -305,37 +305,57 @@ def fetch_sport(sport_id, platform="BB", page_size=100):
     """获取一个运动的所有比赛（含分页）。
 
     type=2 表示早盘/未来72小时，type=3 只返回当天少量比赛。
+
+    V5.5: 双语言拉取 — EN 用于匹配 Pinnacle(英文队名), CMN 用于展示(用户BB中文界面)。
+    按比赛 id 关联, 给每条记录附上 _cn_home/_cn_away/_cn_league 中文名字段。
     """
-    all_records = []
-    page = 1
+    def _fetch_pages(lang):
+        recs = []
+        page = 1
+        while True:
+            params = {
+                "sportId": sport_id,
+                "type": 2,
+                "current": page,
+                "pageSize": page_size,
+                "isPC": True,
+                "languageType": lang,
+            }
+            resp = api_post("/v1/match/getList", params, platform=platform)
+            if not resp or not resp.get("success"):
+                logger.warning("API 返回空 (page=%d, lang=%s)", page, lang)
+                break
+            data = resp.get("data", {})
+            records = data.get("records", [])
+            total = data.get("total", 0)
+            pages = data.get("pageTotal", 1)
+            recs.extend(records)
+            print(f"    第{page}/{pages} 页: {len(records)} 条 (累计 {len(recs)}/{total}, {lang})")
+            if page >= pages:
+                break
+            page += 1
+        return recs
 
-    while True:
-        params = {
-            "sportId": sport_id,
-            "type": 2,
-            "current": page,
-            "pageSize": page_size,
-            "isPC": True,
-            "languageType": "EN",
+    # 英文记录(用于匹配 Pinnacle)
+    en_records = _fetch_pages("EN")
+    # 中文记录(用于展示) — 按比赛 id 关联
+    cn_records = _fetch_pages("CMN")
+    cn_map = {}
+    for rec in cn_records:
+        mid = rec.get("id")
+        if not mid:
+            continue
+        teams = rec.get("ts", [])
+        cn_map[mid] = {
+            "_cn_home": teams[0].get("na", "") if teams else "",
+            "_cn_away": teams[1].get("na", "") if len(teams) > 1 else "",
+            "_cn_league": (rec.get("lg") or {}).get("na", ""),
         }
-        resp = api_post("/v1/match/getList", params, platform=platform)
-        if not resp or not resp.get("success"):
-            logger.warning("API 返回空 (page=%d)", page)
-            break
-
-        data = resp.get("data", {})
-        records = data.get("records", [])
-        total = data.get("total", 0)
-        pages = data.get("pageTotal", 1)
-
-        all_records.extend(records)
-        print(f"    第{page}/{pages} 页: {len(records)} 条 (累计 {len(all_records)}/{total})")
-
-        if page >= pages:
-            break
-        page += 1
-
-    return all_records
+    for rec in en_records:
+        mid = rec.get("id")
+        if mid in cn_map:
+            rec.update(cn_map[mid])
+    return en_records
 
 
 def _get_match_teams(record):
@@ -413,6 +433,10 @@ def extract_match_odds(record, sport_key, platform="BB"):
         "home": home,
         "away": away,
         "league": league,
+        # V5.5: 中文名(展示用) — 从双语言拉取的 _cn_* 字段取
+        "home_cn": record.get("_cn_home", ""),
+        "away_cn": record.get("_cn_away", ""),
+        "league_cn": record.get("_cn_league", ""),
         "sport": sport_key,
         "platform": platform,
         "sport_cn": {"football": "足球", "basketball": "篮球",

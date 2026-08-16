@@ -651,6 +651,10 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             "match_type": m.get("match_type", "?"),
             "home_bb": bb.get("home", "?"),
             "away_bb": bb.get("away", "?"),
+            # V5.5: 中文名(展示用) — 从双语言拉取携带
+            "home_bb_cn": bb.get("home_cn", bb.get("home", "")),
+            "away_bb_cn": bb.get("away_cn", bb.get("away", "")),
+            "league_cn": bb.get("league_cn", m.get("league", "")),
             "home_pin": pin.get("home", "?"),
             "away_pin": pin.get("away", "?"),
             "match_score": m["match_score"],
