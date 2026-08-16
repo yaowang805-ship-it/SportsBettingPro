@@ -302,6 +302,88 @@ def api_post(endpoint, params, platform="BB"):
             return None
 
 
+# ─── 比分获取 (getMatchDetail) ────────────────────────────────
+# BB 比分藏在 nsg 字段: pe=全场period + tyg=5(比分) → sc=[主队, 客队]
+# tyg 语义: 5=比分, 6=角球, 7=加时/点球 (见 settlement-clv 记忆)
+# 各运动"全场" period 码 (与 SPORT_PERIODS 的 ft 一致; 足球=1000 为让球盘, 即全场):
+SCORE_PE_BY_SID = {
+    1: 1000,   # 足球 全场
+    3: 3001,   # 篮球 全场
+    6: 6001,   # 美式足球 全场 (mg 结构实测 pe=6001 = 全场盘口)
+    7: 7001,   # 棒球 全场 (mg 结构实测 pe=7001 = 全场盘口)
+}
+
+_SID_TO_SPORT_KEY = {sid: sk for sid, sk, _cn in SPORTS}
+
+# 比赛状态码 ms → 标签 (实测: 4=未开赛[bt在未来,无nsg], 5=进行中[bt在过去,有nsg+sb])
+# 完赛码未实测到(探测窗口内无完赛样本), 3/6 为推测, 待完赛样本确认
+MATCH_STATUS_LABELS = {
+    4: "not_started",
+    5: "live",
+    3: "finished",   # 推测, 未验证
+    6: "finished",   # 推测, 未验证
+}
+
+
+def fetch_bb_match_result(match_id, language_type="EN"):
+    """用 /v1/match/getMatchDetail 拿单场比赛比分 (棒球/美足等 ESPN 覆盖不到的联赛)。
+
+    端点: POST {api_base}/v1/match/getMatchDetail, body {"matchId": id, "languageType": "EN"}
+    比分路径: data.nsg[] 中 pe=全场period + tyg=5 的条目 → sc=[主队, 客队]
+
+    Args:
+        match_id: BB 比赛 id (getList 记录的 `id` 字段, 如 4856615)
+        language_type: "EN"(英文队名) 或 "CMN"(中文队名)
+
+    Returns:
+        {
+            "id", "sport", "home", "away",
+            "home_score", "away_score",  # int; 无比分时 None
+            "status",   # "finished"/"live"/"not_started"/"ms_N"
+            "ms",       # 原始状态码
+            "completed",# status == "finished"
+        }
+        或 None (比赛不存在/接口失败)。
+    """
+    resp = api_post("/v1/match/getMatchDetail",
+                    {"matchId": match_id, "languageType": language_type},
+                    platform="BB")
+    if not resp or not resp.get("success"):
+        return None
+    data = resp.get("data") or {}
+    sid = data.get("sid")
+    teams = data.get("ts", [])
+    home = teams[0].get("na", "") if teams else ""
+    away = teams[1].get("na", "") if len(teams) > 1 else ""
+
+    home_score = away_score = None
+    pe_full = SCORE_PE_BY_SID.get(sid)
+    if pe_full:
+        for sg in data.get("nsg", []):
+            if sg.get("pe") == pe_full and sg.get("tyg") == 5:
+                sc = sg.get("sc", [])
+                if len(sc) >= 2:
+                    try:
+                        home_score, away_score = int(sc[0]), int(sc[1])
+                    except (ValueError, TypeError):
+                        pass
+                break
+
+    ms = data.get("ms")
+    status = MATCH_STATUS_LABELS.get(ms, f"ms_{ms}")
+    return {
+        "id": match_id,
+        "sport": _SID_TO_SPORT_KEY.get(sid, ""),
+        "home": home,
+        "away": away,
+        "home_score": home_score,
+        "away_score": away_score,
+        "status": status,
+        "ms": ms,
+        "completed": status == "finished",
+    }
+
+
 # ─── 提取函数 ─────────────────────────────────────────────────
 
 _CN_CACHE_FILE = DATA_DIR / "team_cn_cache.json"
