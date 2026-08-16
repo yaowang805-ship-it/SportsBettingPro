@@ -559,6 +559,7 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
         ft = m.get("odds_ft", {})
         # 开赛时间(北京时间) — 之前特殊盘口 entry 漏了, 推送显示"无时间"且不做开赛时间窗过滤
         bb_start = ""
+        bb_epoch = None
         bb_bt = m.get("bt")
         if bb_bt:
             try:
