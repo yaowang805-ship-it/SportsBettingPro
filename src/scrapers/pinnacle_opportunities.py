@@ -14,7 +14,7 @@ from src.scrapers.bb_data import (
 )
 from src.scrapers.pinnacle_league_map import TEAM_NAME_MAP
 from src.scrapers.pinnacle_api import get_decimal_price
-from src.scrapers.devig import shin_fair_odds
+from src.scrapers.devig import devig_mult  # 比例法(正确比分等27结果Shin会严重高估冷门)
 from src.scrapers.pinnacle_markets import get_league_matchups_and_markets, get_league_corner_markets
 from src.scrapers.matching_engine import (
     get_pin_ml_sorted, get_pin_spread, get_pin_total, _pin_to_epoch,
@@ -477,7 +477,7 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
     """
     from src.scrapers.pinnacle_markets import get_league_special_markets
     from src.scrapers.pinnacle_league_map import lookup_pin_league
-    from src.scrapers.devig import shin_fair_odds
+    from src.scrapers.devig import devig_mult  # 比例法(正确比分等27结果Shin会严重高估冷门)
 
     # BB 有特殊盘口的比赛
     bb_special_matches = []
@@ -558,11 +558,12 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             pin_decimal = [v for v in norm_pin.values() if v > 1.0]
             fair_map = {}
             if pin_decimal:
-                # shin_fair_odds 返回公平十进制赔率(1/prob), 直接作为 fair_price
-                fairs = shin_fair_odds(pin_decimal)
+                # 比例法去抽水(devig_mult 返回公平概率, 公平赔率=1/prob)
+                # 27结果正确比分 Shin 会严重高估冷门(如91.8→335.8), 比例法更稳(→121)
+                probs = devig_mult(pin_decimal)
                 for i, k in enumerate(norm_pin):
-                    if i < len(fairs) and fairs[i] > 0:
-                        fair_map[k] = fairs[i]
+                    if i < len(probs) and probs[i] > 0:
+                        fair_map[k] = 1.0 / probs[i]
             for name, bb_odds in norm_bb.items():
                 fair = fair_map.get(name)
                 if not fair or fair <= 0:
