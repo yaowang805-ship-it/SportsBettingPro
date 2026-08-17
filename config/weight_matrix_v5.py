@@ -1792,6 +1792,10 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             wr, avg_o, n = data
             bb_prem = _bb_premium_ht(odds)
             stake = kelly_075(wr, avg_o, bb_prem, n, sport_confidence=0.6)
+            # V5.8: 联赛未标定(后备/低级别)时 HT 也保守 — 与1X2/OU一致。
+            # 95K场HT聚合几乎全是主流联赛, 对后备联赛外推是过度自信, 应打折。
+            if not _match_league(league, PIN_1X2_DATA):
+                stake *= 0.6
             return stake
 
         elif sub_market in ("hc", "handicap"):
