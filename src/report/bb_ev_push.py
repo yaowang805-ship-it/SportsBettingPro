@@ -2605,19 +2605,38 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
     return result
 
 
-def _filter_opposite_side(qualified: list) -> list:
-    """同一场比赛同一盘口已推过相反方向 → 跳过（防同场双边下注）。
+def _opposite_direction(designation: str) -> str:
+    """从 designation 提取方向(主/客/和/大/小), 忽略盘口线。
 
-    根因 (2026-08-16 卢旺达女篮): 17:28 推主胜(¥250) + 21:50 推客胜(¥59) 同场对倒。
-    2-way 市场里互斥方向先后都 +EV, 只能是盘口剧变/过期数据 → 幻影EV 的标志, 必须拦截。
-    实现: 读已推送指纹, 按"同场同盘口"分组(指纹去掉 designation), 若当前方向之外
-    已有其他方向被推过则跳过。同方向重推(赔率上升)不受影响, 仍由 _filter_pushed 决定。
+    "让分主胜(-5.5)"→home, "让分客胜(+4.5)"→away, "大(141.5)"→over, "小"→under。
+    """
+    d = (designation or "").lower()
+    if "客" in d or "away" in d:
+        return "away"
+    if "主" in d or "home" in d:
+        return "home"
+    if "和" in d or "平" in d or "draw" in d:
+        return "draw"
+    if "大" in d or "over" in d:
+        return "over"
+    if "小" in d or "under" in d:
+        return "under"
+    return d
+
+
+def _filter_opposite_side(qualified: list) -> list:
+    """同一场比赛同一盘口已推过相反方向 → 跳过（防同场对倒）。
+
+    根因 (2026-08-16 卢旺达女篮 + 08-17 墨西哥篮球): 同场让分先推客胜(-2.5)又推主胜(+4.5)。
+    让分线带符号(-2.5/+4.5), 旧实现把盘口线塞进 match_key → 同盘口被误判为不同盘口漏拦截。
+    改为: match_key 去掉盘口线(同场同市场只按 主/客/大/小 方向判互斥), 方向用 _opposite_direction。
+    同方向重推(赔率上升)不受影响, 仍由 _filter_pushed 决定。
     """
     if not qualified:
         return qualified
     from collections import defaultdict
 
-    pushed_desigs = defaultdict(set)  # match_key(不含 designation) → 已推方向集合
+    pushed_dirs = defaultdict(set)  # match_key(sport|league|home|away|sub|date) → 已推方向集合
     for src_file in (FINGERPRINT_FILE, DATA_DIR / "pushed_opportunities.json"):
         if not src_file.exists():
             continue
@@ -2632,8 +2651,9 @@ def _filter_opposite_side(qualified: list) -> list:
             if len(parts) < 6:
                 continue
             # key: sport|league|home|away|designation|sub_market[|line]|match_date
-            match_key = "|".join(parts[:4] + parts[5:])   # 去掉 designation(parts[4])
-            pushed_desigs[match_key].add(parts[4])
+            # match_key 不含 designation 也不含盘口线 → 让分±符号不拆散同盘口
+            match_key = "|".join([parts[0], parts[1], parts[2], parts[3], parts[5], parts[-1]])
+            pushed_dirs[match_key].add(_opposite_direction(parts[4]))
 
     kept = []
     skipped = 0
@@ -2642,9 +2662,9 @@ def _filter_opposite_side(qualified: list) -> list:
         if len(parts) < 6:
             kept.append(o)
             continue
-        match_key = "|".join(parts[:4] + parts[5:])
-        cur_desig = parts[4]
-        others = pushed_desigs.get(match_key, set()) - {cur_desig}
+        match_key = "|".join([parts[0], parts[1], parts[2], parts[3], parts[5], parts[-1]])
+        cur_dir = _opposite_direction(parts[4])
+        others = pushed_dirs.get(match_key, set()) - {cur_dir}
         if others:
             _audit_log("OPPOSITE", match_key, o, f"同场同盘口已推 {sorted(others)}")
             skipped += 1
