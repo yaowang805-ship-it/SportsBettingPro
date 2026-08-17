@@ -320,6 +320,10 @@ def _rebuild_output(details, existing, new_result):
     }
 
 
+_prefetch_lock = __import__('threading').Lock()
+_prefetch_active = False  # V5.9: 预取线程是否在跑(防累积)
+
+
 def _prefetch_pin_cache_async(bb_matches, all_pin_leagues):
     """后台预取 Pin 缓存(供下一次扫描用) — 实现 Pin时间早于BB, 且不阻塞本次扫描。
 
@@ -328,12 +332,23 @@ def _prefetch_pin_cache_async(bb_matches, all_pin_leagues):
     """
     import threading
 
+    # V5.9: 预取加锁 — 每次扫描都 spawn 一个预取线程会累积(拉206联赛~2min vs urgent~86s),
+    # 导致多个线程同时拉Pin抢限速、写不进缓存。同一时间只允许一个预取线程在跑。
+    with _prefetch_lock:
+        if _prefetch_active:
+            return
+        _prefetch_active = True
+
     def _run():
+        global _prefetch_active
         try:
             # 用参数传 save_pin_cache, 不碰全局 sys.argv (避免并发线程读 sys.argv 时读到 --pin-cache 导致对比被跳过)
             compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, save_path=None, save_pin_cache=True)
         except Exception:
             pass
+        finally:
+            with _prefetch_lock:
+                _prefetch_active = False
 
     threading.Thread(target=_run, daemon=True).start()
 
