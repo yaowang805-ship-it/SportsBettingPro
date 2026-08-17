@@ -1380,6 +1380,18 @@ class PipelineOrchestrator:
         except Exception:
             pass
 
+        # 心跳保活线程: 独立于主循环, 即使 _tick() 阻塞在长扫描(全量/增量)也持续写心跳,
+        # 防止自愈看门狗误判卡死而反复 restart(否则会打断扫描、长时间无推送)。
+        def _heartbeat_loop():
+            _hb = SRC_DIR / "data" / "storage" / ".pipeline_heartbeat"
+            while self._running:
+                try:
+                    _hb.write_text(str(time.time()))
+                except Exception:
+                    pass
+                time.sleep(CHECK_INTERVAL)
+        threading.Thread(target=_heartbeat_loop, daemon=True, name="heartbeat").start()
+
         try:
             while self._running:
                 try:
@@ -1388,11 +1400,6 @@ class PipelineOrchestrator:
                     logger.error("主循环异常: %s", e)
                     logger.error(traceback.format_exc())
                     self._send_alert("main_loop_crash", str(e))
-                # V5.7: 心跳文件 — 供外部自愈看门狗检测守护进程是否卡死(挂了由 launchd KeepAlive 管)
-                try:
-                    (SRC_DIR / "data" / "storage" / ".pipeline_heartbeat").write_text(str(time.time()))
-                except Exception:
-                    pass
                 time.sleep(CHECK_INTERVAL)
 
         except KeyboardInterrupt:
