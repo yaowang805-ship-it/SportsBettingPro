@@ -1,5 +1,5 @@
 {
-  "balance": 19710.0,
+  "balance": 19641.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -70,14 +70,60 @@
       "commence_time": 1786996800,
       "created_at": "2026-08-17T04:09:50.290236+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_阿韦亚内达竞技足球俱乐部_贝尔格拉诺_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "阿根廷杯",
+      "home_team": "阿韦亚内达竞技足球俱乐部",
+      "away_team": "贝尔格拉诺",
+      "home_cn": "阿韦亚内达竞技足球俱乐部",
+      "away_cn": "贝尔格拉诺",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 2.05,
+      "stake": 38,
+      "model_prob": 0.5281,
+      "ev_pct": 8.27,
+      "pin_odds": 0,
+      "fair_price": 1.8935,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787177700,
+      "created_at": "2026-08-17T06:28:19.153346+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_斯达约珀兰_海于格松二队_大球(40)",
+      "sport": "football",
+      "league": "挪威丙级联赛",
+      "home_team": "斯达约珀兰",
+      "away_team": "海于格松二队",
+      "home_cn": "斯达约珀兰",
+      "away_cn": "海于格松二队",
+      "market": "over_under",
+      "market_type": "大球(4.0)",
+      "sub_market": "ou",
+      "line": "4.0",
+      "odds": 1.86,
+      "stake": 31,
+      "model_prob": 0.5674,
+      "ev_pct": 5.53,
+      "pin_odds": 1.6329,
+      "fair_price": 1.7625,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1786982400,
+      "created_at": "2026-08-17T06:28:19.153419+00:00",
+      "track_only": false
     }
   ],
   "settled": {},
   "history": [],
   "daily_budget": {
     "date": "2026-08-17",
-    "used": 290.0,
-    "bets": 3
+    "used": 359.0,
+    "bets": 5
   },
   "updated": null
 }
