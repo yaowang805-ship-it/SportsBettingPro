@@ -30,7 +30,13 @@ def load_tracked_bets():
     """加载所有已追踪投注。"""
     if TRACKED_BETS_FILE.exists():
         try:
-            return json.loads(TRACKED_BETS_FILE.read_text())
+            data = json.loads(TRACKED_BETS_FILE.read_text())
+            if not isinstance(data, dict):
+                data = {}
+            # 防御: 旧文件/重置可能缺 meta 或 bets 键, 补齐避免 record_bets KeyError('meta')
+            data.setdefault("bets", [])
+            data.setdefault("meta", {})
+            return data
         except (json.JSONDecodeError, OSError):
             logger.warning("追踪文件损坏，重建")
     return {"bets": [], "meta": {"created": datetime.now(timezone.utc).isoformat()}}
