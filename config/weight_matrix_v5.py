@@ -1548,20 +1548,16 @@ def _match_btb_league(bb_league: str) -> dict:
     en_name = _BTB_LEAGUE_MAP.get(bb_league)
     if en_name and en_name in BTB_1X2_DATA:
         return BTB_1X2_DATA[en_name]
-    # 子串匹配 (BB名含在BTB名中)
-    for btb_name in BTB_1X2_DATA:
-        if btb_name == "_AGGREGATE":
-            continue
-        if bb_league.lower() in btb_name.lower():
-            return BTB_1X2_DATA[btb_name]
-    # 反向子串 (BTB名含在BB名中)
-    for btb_name in BTB_1X2_DATA:
-        if btb_name == "_AGGREGATE":
-            continue
-        # 提取BTB名中的国家+联赛部分
-        parts = btb_name.split(": ")
-        if len(parts) == 2 and parts[1].lower() in bb_league.lower():
-            return BTB_1X2_DATA[btb_name]
+    # 归一化前向子串匹配: 统一 ": " 和空格后, 要求 BB 全名含在 BTB 全名中
+    # (旧反向匹配只比联赛名, "Premier League" 这类泛词会错配到 England → 已移除)
+    norm_bb = bb_league.lower().replace(": ", " ").strip()
+    if norm_bb:
+        for btb_name in BTB_1X2_DATA:
+            if btb_name == "_AGGREGATE":
+                continue
+            norm_btb = btb_name.lower().replace(": ", " ").strip()
+            if norm_bb in norm_btb:
+                return BTB_1X2_DATA[btb_name]
     return BTB_1X2_AGGREGATE
 
 
@@ -2035,16 +2031,17 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
     elif sport_lower == "basketball":
         if "NBA" in (league or ""):
             idx = _bin_index(odds, NBA_FINE_BINS)
+            coarse_idx = _bin_index(odds, ODDS_BINS)  # 旧 NBA_DATA 用粗桶, 索引语义不同, 不能复用 fine idx
             # OU market — 用 ML 数据推导 (SBR OU线按盘口线分桶, 无法用赔率索引, 已移除)
             if sub_market in ("ou", "over_under"):
-                data = NBA_DATA_V5.get(idx) or NBA_DATA.get(idx)
+                data = NBA_DATA_V5.get(idx) or NBA_DATA.get(coarse_idx)
                 if data and data[2] >= MIN_N_MINIMUM:
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.75) * 0.7 * _settlement_multiplier(league)
                 return 0.0
             # Spread market — 用 ML 数据推导
             elif sub_market in ("hc", "handicap"):
-                data = NBA_DATA_V5.get(idx) or NBA_DATA.get(idx)
+                data = NBA_DATA_V5.get(idx) or NBA_DATA.get(coarse_idx)
                 if data and data[2] >= MIN_N_MINIMUM:
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.05, n) * DISCOUNT_SBR_LARGE * 0.9 * _settlement_multiplier(league)
@@ -2053,7 +2050,7 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             else:
                 data = NBA_DATA_V5.get(idx)  # V5.1: Kaggle 收盘赔率优先
                 if not data:
-                    data = NBA_DATA.get(idx)
+                    data = NBA_DATA.get(coarse_idx)
                 if data and data[2] >= MIN_N_MINIMUM:
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.05, n) * DISCOUNT_SBR_LARGE * _settlement_multiplier(league)

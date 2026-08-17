@@ -225,9 +225,18 @@ def get_league_matchups_and_markets(league_id):
             continue
         mid = mu["id"]
         dc_markets = mm.get(mid, [])
-        # pnames → DC outcome labels (same order as participants)
+        # pnames → DC outcome labels (按 participantId 对齐, prices 顺序可能与 participants 不一致)
         # pnames = ["TeamA Or Draw", "Draw Or TeamB", "TeamA Or TeamB"]
-        dc_label_map = {0: "1X", 1: "2X", 2: "12"}
+        pid_to_label = {}
+        for _p in participants:
+            _n = _p.get("name", "")
+            if "Or Draw" in _n:
+                _lbl = "1X"
+            elif "Draw Or" in _n:
+                _lbl = "2X"
+            else:
+                _lbl = "12"
+            pid_to_label[_p.get("id")] = _lbl
 
         dc_prices = None
         for mkt in dc_markets:
@@ -236,8 +245,10 @@ def get_league_matchups_and_markets(league_id):
                 if len(raw_prices) < 3:
                     continue
                 prices = []
-                for i, p in enumerate(raw_prices):
-                    label = dc_label_map.get(i, p.get("designation", ""))
+                for p in raw_prices:
+                    label = pid_to_label.get(p.get("participantId"), "")
+                    if not label:
+                        continue
                     prices.append({
                         "designation": label,
                         "price_decimal": us_to_decimal(p.get("price")),
@@ -344,11 +355,14 @@ def get_league_matchups_and_markets(league_id):
             if mkt.get("type") != "moneyline":
                 continue
             period = mkt.get("period", 0)
-            # pnames = ["Odd", "Even"], 用 pnames 给价格打标签
+            # pnames = ["Odd", "Even"], 按 participantId 对齐 (prices 顺序可能与 participants 不一致)
+            _pid_to_name = {_p.get("id"): _p.get("name", "") for _p in mu.get("participants", [])}
             raw_prices = mkt.get("prices", [])
             labelled = []
-            for i, p in enumerate(raw_prices):
-                label = pnames[i] if i < len(pnames) else p.get("designation", "")
+            for p in raw_prices:
+                label = _pid_to_name.get(p.get("participantId"), p.get("designation", ""))
+                if not label:
+                    continue
                 labelled.append({
                     "designation": label,
                     "price_decimal": us_to_decimal(p.get("price")),
