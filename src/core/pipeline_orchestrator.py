@@ -1209,7 +1209,9 @@ class PipelineOrchestrator:
                     last_val = time.time()
                 if (now - datetime.fromtimestamp(last_val)).total_seconds() >= _jitter(interval):
                     setattr(self, last_key, time.time())
-                    self._run_task(f"incremental_{tw}", self.do_incremental, time_window=tw)
+                    # V5.9: 后台线程运行 — 同步运行会阻塞 _tick(near扫描~306s),
+                    # 导致 urgent(60s)退化成 ~5.6min 一次。后台+独立锁可真正 60s 一次。
+                    self._run_task(f"incremental_{tw}", self.do_incremental, background=True, time_window=tw)
 
         # 3) 自检看门狗
         self._watchdog()
