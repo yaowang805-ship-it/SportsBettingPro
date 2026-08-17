@@ -77,30 +77,43 @@ def fetch_bb_scores():
 
 
 def settle_via_bb(dry_run: bool = False) -> dict:
-    """用 BB 比分结算 pending 且比赛已结束的投注。"""
+    """用 BB 比分结算 pending 且比赛已结束的投注。
+
+    V5.8: 首选 getMatchDetail 按 bb_match_id 逐场拉比分(可靠, 已结束比赛仍可查);
+    type=6 批量仅作兜底 — 实测 type=6 只返回 bt∈[now-1h, now+10h] 窗口(多数 ms=4 未开赛),
+    已结束>1h 的比赛会掉出窗口导致漏结算, 故不能再作为主源。
+    """
     from src.monitor.result_fetcher import determine_result
     from src.monitor.bet_tracker import get_unsettled_bets, settle_bet
-
-    score_map, id_map = fetch_bb_scores()
-    if not score_map and not id_map:
-        logger.info("BB 未拉到已结束比分")
-        return {"settled": 0, "failed": 0, "matched": 0}
+    from src.scrapers.bb_api_fetcher import fetch_bb_match_result
 
     bets = get_unsettled_bets(hours_after_match=1.0)
     if not bets:
         return {"settled": 0, "failed": 0, "matched": 0}
 
+    # 兜底: type=6 批量(仅覆盖最近~1h 内开始、仍在线/刚结束的比赛)
+    score_map, id_map = fetch_bb_scores()
+
     settled = 0
     matched = 0
     for b in bets:
-        # 1. 优先按 BB match id 精确匹配(免队名错配)
+        home = (b.get("home_cn") or b.get("home", "") or "").strip()
+        away = (b.get("away_cn") or b.get("away", "") or "").strip()
         _bid = str(b.get("bb_match_id") or "").strip()
-        sc = id_map.get(_bid) if _bid else None
+        sc = None
         swapped = False
-        # 2. 回退队名匹配: 中文名 + BB英文名 + Pin英文名, 逐个尝试(兼容新旧投注命名)
+        # 1. 首选: getMatchDetail 按 bb_match_id 逐场拉(可靠, 已结束比赛仍可查, 无窗口限制)
+        if _bid:
+            _detail = fetch_bb_match_result(_bid, language_type="EN")
+            if (_detail and _detail.get("completed")
+                    and _detail.get("home_score") is not None
+                    and _detail.get("away_score") is not None):
+                sc = [_detail["home_score"], _detail["away_score"]]
+        # 2. 兜底: type=6 id_map 精确匹配(免队名错配)
         if sc is None:
-            home = (b.get("home_cn") or b.get("home", "") or "").strip()
-            away = (b.get("away_cn") or b.get("away", "") or "").strip()
+            sc = id_map.get(_bid) if _bid else None
+        # 3. 回退队名匹配: 中文名 + BB英文名 + Pin英文名, 逐个尝试(兼容新旧投注命名)
+        if sc is None:
             _candidates = [
                 (home, away),
                 ((b.get("home") or "").strip(), (b.get("away") or "").strip()),

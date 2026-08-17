@@ -57,7 +57,7 @@ def scrape_league(sport, league_url, season, market="1x2", out_path=None):
                   "--no-proxy-server"])  # 绕过系统代理(127.0.0.1:8081已死), 直连
         ctx = browser.new_context(user_agent=UA)
         page = ctx.new_page()
-        page.set_default_timeout(60000)  # 慢页容错, 防 Locator 30s 超时
+        page.set_default_timeout(30000)  # 30s: 慢页容错与超时浪费的平衡 (60s 导致空/坏页白等120s+)
 
         page_no = 1
         empty_retries = 0
@@ -81,7 +81,7 @@ def scrape_league(sport, league_url, season, market="1x2", out_path=None):
             return False
 
         # 首页: 直接 goto (OddsPortal 现用 #page/N 而非 #/page/N, 旧 fragment goto 失效)
-        page.goto(url, wait_until="domcontentloaded", timeout=60000)
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
         page.wait_for_timeout(6000)
         _scroll()
 
@@ -132,10 +132,10 @@ def scrape_league(sport, league_url, season, market="1x2", out_path=None):
                 batch += 1
             print(f"  page {page_no}: +{batch} (累计 {len(games)})", flush=True)
             if batch == 0:
-                # 空页 → 重试(加载慢/被限流); 重试 2 次仍空则放弃
-                if empty_retries < 2:
+                # 空页 → 重试(加载慢/被限流); 重试 1 次仍空则放弃 (提速, 老赛季空页多)
+                if empty_retries < 1:
                     empty_retries += 1
-                    print(f"  [retry] page {page_no} 空, 重试 {empty_retries}/2", flush=True)
+                    print(f"  [retry] page {page_no} 空, 重试 {empty_retries}/1", flush=True)
                     page.wait_for_timeout(4000)
                     _scroll()
                     continue

@@ -665,7 +665,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         bb_ml = m.get("bb_1x2", [])
         pin_ml = m.get("pin_1x2", [])
         # V4.5: 对齐数组长度 — tennis/boxing等2way运动pin_ml可能≠bb_ml长度
-        n_ml = len(bb_ml)
+        # V5.8: 2-way运动的 bb_ml 可能混入第3个赔率(如篮球带平局)导致 n_ml>len(ml), 越界崩溃
+        n_ml = min(len(bb_ml), len(mlabels["ml"]))
         if len(pin_ml) < n_ml:
             pin_ml = list(pin_ml) + [0] * (n_ml - len(pin_ml))
         elif len(pin_ml) > n_ml:
