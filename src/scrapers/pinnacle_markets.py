@@ -407,6 +407,7 @@ def get_league_matchups_and_markets(league_id):
                          "draw/home","draw/draw","draw/away",
                          "away/home","away/draw","away/away"]
         htft_label_map = {i: HTFT_POS_KEYS[i] for i in range(9)}
+        _pid_to_idx = {_p.get("id"): _i for _i, _p in enumerate(mu.get("participants", []))}
 
         htft_entries = []
         for mkt in htft_markets:
@@ -416,10 +417,13 @@ def get_league_matchups_and_markets(league_id):
             raw_prices = mkt.get("prices", [])
             if len(raw_prices) < 9:
                 continue
-            # 按 pnames 顺序给价格打标签
+            # 按 participantId 对齐 (prices 顺序可能与 participants 不一致)
             labelled_prices = []
-            for i, p in enumerate(raw_prices):
-                label = htft_label_map.get(i, p.get("designation", ""))
+            for p in raw_prices:
+                _i = _pid_to_idx.get(p.get("participantId"))
+                if _i is None or _i >= 9:
+                    continue
+                label = htft_label_map[_i]
                 labelled_prices.append({
                     "designation": label,
                     "price_decimal": us_to_decimal(p.get("price")),

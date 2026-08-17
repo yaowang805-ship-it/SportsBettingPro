@@ -793,21 +793,19 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                     # 方向: "让球客胜"/"让分客胜" → 客队+线; 否则主队+线
                     is_away_hc = "客" in outcome and "胜" in outcome
                     if is_away_hc:
-                        effective_away = away_score + hc_line
-                        if effective_away > home_score:
-                            return "won"  # 让球客胜
-                        elif effective_away < home_score:
-                            return "lost"
-                        else:
-                            return "push"
+                        effective_diff = (away_score + hc_line) - home_score
                     else:
-                        effective_home = home_score + hc_line
-                        if effective_home > away_score:
-                            return "won"  # 让球主胜
-                        elif effective_home < away_score:
-                            return "lost"
-                        else:
-                            return "push"  # 走水（平局）— 返还本金
+                        effective_diff = (home_score + hc_line) - away_score
+                    if effective_diff > 0.25:
+                        return "won"
+                    elif effective_diff == 0.25:
+                        return "half_won"   # 折中盘赢半
+                    elif effective_diff == -0.25:
+                        return "half_lost"  # 折中盘输半
+                    elif effective_diff == 0:
+                        return "push"
+                    else:
+                        return "lost"
 
                 # ── H2H / 双重机会 / 平局退款 ──
                 is_home_win = home_score > away_score
@@ -974,6 +972,10 @@ def auto_settle(dry_run: bool = False) -> int:
                         profit = stake * (odds - 1)
                         # 结算反馈: 胜投确认匹配正确, 自动学习队名映射
                         _learn_team_names_from_win(bet)
+                    elif result == "half_won":
+                        profit = stake * (odds - 1) * 0.5
+                    elif result == "half_lost":
+                        profit = -stake * 0.5
                     elif result == "push":
                         profit = 0.0
                     else:

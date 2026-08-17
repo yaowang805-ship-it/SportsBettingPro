@@ -124,9 +124,14 @@ def _check_daily_budget(portfolio: dict, daily_bankroll: float) -> tuple:
 
 
 def _make_bet_id(home, away, outcome, market="1x2"):
-    """生成唯一投注 ID。"""
+    """生成唯一投注 ID (哈希兜底避免长名截断碰撞)。"""
     key = f"{market}_{home}_{away}_{outcome}"
-    return f"bb_vs_pin_{key}".replace(" ", "_").replace(".", "")[:60]
+    full = f"bb_vs_pin_{key}".replace(" ", "_").replace(".", "")
+    if len(full) <= 60:
+        return full
+    import hashlib
+    digest = hashlib.md5(key.encode("utf-8")).hexdigest()[:8]
+    return f"{full[:51]}_{digest}"
 
 
 def _calc_kelly_stake(bb_odds: float, fair_price: float, balance: float, league: str = "") -> float:
@@ -451,7 +456,7 @@ def place_bets_from_push(opportunities, bankroll=DAILY_BANKROLL):
 
             if not track_only:
                 # 单注上限 + 预算检查 (仅实际投注)
-                stake = min(stake, bankroll * MAX_STAKE_PCT)
+                stake = min(stake, daily_bankroll * MAX_STAKE_PCT)  # 止损期用缩后预算, 防单注占比翻倍
                 stake = min(stake, daily_remaining)
                 if stake < 1:
                     continue
@@ -505,7 +510,7 @@ def place_bets_from_push(opportunities, bankroll=DAILY_BANKROLL):
                 "sub_market": o.get("_sub_market", o.get("_market", "")),
                 "line": o.get("line", ""),
                 "odds": bb_odds,
-                "stake": round(stake, 2),
+                "stake": round(stake, 2) if not track_only else 0,  # track_only 不虚增 PnL
                 "model_prob": round(1.0 / fair_price, 4) if fair_price > 1 else 0,
                 "ev_pct": ev,
                 "pin_odds": pin_odds,
