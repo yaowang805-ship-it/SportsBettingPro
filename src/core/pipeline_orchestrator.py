@@ -316,9 +316,10 @@ class PipelineOrchestrator:
         Args:
             background: True = 后台线程（settle/report），False = 同步运行（scan）
         """
-        # 扫描任务(full_scan/incremental) 共享 "scan" 互斥键, 防止全量/增量扫描重叠
+        # 扫描任务互斥键: full_scan 用 "scan"; 增量 urgent/near 各自独立锁 —
+        # 否则 near 扫描(~5-7min)会阻塞 urgent 临场扫描(60s), 导致临场退化到~6min一次
         _is_scan = ("scan" in name or "incremental" in name)
-        lock_key = "scan" if _is_scan else name
+        lock_key = name if "incremental" in name else "scan"
         if background:
             lock_key = f"{lock_key}_bg"
 

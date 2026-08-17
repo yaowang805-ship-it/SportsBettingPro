@@ -30,9 +30,11 @@ BB_EXTRACTED = DATA_DIR / "bb_odds_extracted.json"
 BB_SNAPSHOT = DATA_DIR / "bb_odds_snapshot.json"
 BB_SNAPSHOT_NEAR = DATA_DIR / "bb_odds_snapshot_near.json"   # 24h内独立快照
 BB_SNAPSHOT_FAR = DATA_DIR / "bb_odds_snapshot_far.json"      # 24-72h独立快照
+BB_SNAPSHOT_URGENT = DATA_DIR / "bb_odds_snapshot_urgent.json"  # V5.9: 临场<6h独立快照(与near分离, 互不阻塞)
 COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison.json"
 COMPARISON_FILE_NEAR = DATA_DIR / "bb_vs_pinnacle_comparison_near.json"    # 24h内
 COMPARISON_FILE_FAR = DATA_DIR / "bb_vs_pinnacle_comparison_far.json"      # 24-72h
+COMPARISON_FILE_URGENT = DATA_DIR / "bb_vs_pinnacle_comparison_urgent.json"  # V5.9: 临场<6h独立对比(与near分离)
 PIN_LEAGUE_STRUCTURE = DATA_DIR / "pinnacle_league_structure.json"
 
 # FB 独立对比通道
@@ -353,7 +355,7 @@ def run_incremental(time_window: str = "all"):
 
     # 设置当前扫描的快照/对比文件（urgent/near/far 独立，互不污染）
     if time_window == "urgent":
-        _current_snap = BB_SNAPSHOT_NEAR  # urgent 和 near 共享 near 快照
+        _current_snap = BB_SNAPSHOT_URGENT  # V5.9: 临场独立快照(与near分离, 互不阻塞)
     elif time_window == "near":
         _current_snap = BB_SNAPSHOT_NEAR
     else:
@@ -451,7 +453,8 @@ def run_incremental(time_window: str = "all"):
         # 即无变动，也要检查是否需要强制刷新：
         # 1. Pin 数据 >2h 未刷新 → 强制对比
         # 2. BB 数据比 Pin 新 >5min → BB 已更新但 Pin 未跟上 → 强制对比
-        window_file = COMPARISON_FILE_NEAR if time_window in ("near", "urgent") else COMPARISON_FILE_FAR
+        window_file = (COMPARISON_FILE_URGENT if time_window == "urgent"
+                   else (COMPARISON_FILE_NEAR if time_window == "near" else COMPARISON_FILE_FAR))
         force_refresh = False
         try:
             if not window_file.exists():
@@ -483,7 +486,8 @@ def run_incremental(time_window: str = "all"):
 
     print(f"\n📊 双向变动: BB {len(bb_changed_leagues)}个联赛, Pin {len(pin_changed_leagues)}个联赛 → 合并 {len(all_changed)}个")
     print(f"\n🔄 实时全量对比 (拉取最新BB+Pin, ~2min)...")
-    window_file = COMPARISON_FILE_NEAR if time_window in ("near", "urgent") else COMPARISON_FILE_FAR
+    window_file = (COMPARISON_FILE_URGENT if time_window == "urgent"
+                   else (COMPARISON_FILE_NEAR if time_window == "near" else COMPARISON_FILE_FAR))
     # V5.7: 用上一次扫描后台预取的 Pin 缓存 (Pin时间早于BB, 铁律), 参数传 use_pin_cache 不碰全局 sys.argv
     new_result = compare_bb_vs_pinnacle(
         bb_matches,
