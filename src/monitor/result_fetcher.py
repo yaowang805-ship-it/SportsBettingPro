@@ -348,21 +348,8 @@ def determine_result(bet: dict, match_result: dict) -> tuple:
 
     # ── 上半场 (独赢部分) ──
     if sub_market == "ht":
-        # 上半场比分需要单独获取，ESPN 不总是有，暂用全场比赛结果近似
-        # 标注为 "ht_approximate" 表示使用了全场比赛结果
-        if "主" in designation and "客" not in designation and "和" not in designation:
-            target = "home"
-        elif "客" in designation:
-            target = "away"
-        elif "和" in designation:
-            target = "draw"
-        else:
-            target = designation.lower()
-
-        # ⚠️ 实际应使用上半场比分，这里做近似
-        if target == outcome:
-            return "won", home_score, away_score, 1.0
-        return "lost", home_score, away_score, -1.0
+        # 上半场比分数据源不可用(ESPN 不提供), 用全场比分近似会判反盈亏 → 保守 void
+        return "void", home_score, away_score, 0
 
     # ── 双方进球 ──
     if sub_market == "btts":

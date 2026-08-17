@@ -211,13 +211,13 @@ def check_pipeline(report):
         except Exception:
             pass
 
-        # Incremental scan frequency
-        inc_count = 0
-        with open(log_file) as f:
-            for line in f:
-                if today in line and "[incremental] ====== DONE" in line:
-                    inc_count += 1
-        report.stats["incremental_scans"] = inc_count
+    # Incremental scan frequency
+    inc_count = 0
+    with open(log_file) as f:
+        for line in f:
+            if today in line and "[incremental] ====== DONE" in line:
+                inc_count += 1
+    report.stats["incremental_scans"] = inc_count
 
 
 def check_settlement(report):
@@ -404,8 +404,9 @@ def check_clv(report):
 
     total = len(rows)
     now = time.time()
+    # 与 clv_collector 的采集窗口一致: 赛前 0~20 分钟 (0 ~ 1200 秒)
     in_window = sum(1 for r in rows
-                    if 900 < int(r.get("match_epoch", 0)) - now < 21600)
+                    if 0 <= int(r.get("match_epoch") or 0) - now <= 20 * 60)
 
     report.stats["clv_total"] = total
     report.stats["clv_in_window"] = in_window

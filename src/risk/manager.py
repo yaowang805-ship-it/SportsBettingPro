@@ -345,6 +345,10 @@ class RiskManager:
                 if until:
                     self.cool_off_until = datetime.fromisoformat(until)
                 self.weekly_loss = state.get('weekly_loss', 0.0)
+                # 日亏损状态 (修复: 之前不持久化, 重启后日亏熔断被绕过)
+                self._daily_bets = state.get('daily_bets', [])
+                _lrd = state.get('last_reset_date')
+                self._last_reset_date = datetime.fromisoformat(_lrd).date() if _lrd else datetime.now().date()
             except Exception:
                 pass
 
@@ -359,6 +363,8 @@ class RiskManager:
                 'winning_bets': self.winning_bets,
                 'cool_off_until': self.cool_off_until.isoformat() if self.cool_off_until else None,
                 'weekly_loss': self.weekly_loss,
+                'daily_bets': self._daily_bets,
+                'last_reset_date': self._last_reset_date.isoformat() if self._last_reset_date else None,
                 'updated': datetime.now().isoformat(),
             }, f, ensure_ascii=False, indent=2)
 
@@ -393,8 +399,8 @@ class RiskManager:
             return 1.0
         elif self.consecutive_losses <= 3:
             return 0.7   # 2-3连败：减30%
-        elif self.consecutive_losses <= 5:
-            return 0.4   # 4-5连败：减60%
+        elif self.consecutive_losses <= 4:
+            return 0.4   # 4连败：减60%
         else:
             return 0.0   # 5+连败：停手
 
@@ -599,6 +605,13 @@ class RiskManager:
         model_name = self._sport_to_model_name(sport)
         self.model_decay_tracker.record_prediction(model_name, prob, win)
 
+        # 按周重置周亏损 (每周一归零, 修复跨周累计误触发"周亏20%")
+        from datetime import timedelta
+        _today = datetime.now().date()
+        _week_start = _today - timedelta(days=_today.weekday())
+        if self._week_start != _week_start:
+            self._week_start = _week_start
+            self.weekly_loss = 0.0
         # 滚动亏损跟踪
         self.weekly_loss = max(0.0, self.weekly_loss - pnl)
 

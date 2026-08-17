@@ -206,13 +206,14 @@ def _check_hosts_file():
 _rate_limit_lock = __import__('threading').Lock()  # V5.5: 并行拉取时保护限速计数器
 
 
-def _rate_limit():
+def _rate_limit(bypass_pause: bool = False):
     global _last_req_time, _REQUEST_COUNT, _BURST_WINDOW_START, _BURST_COUNT, _SCAN_PAUSE_UNTIL
 
     # V5.5: 加锁 — 8线程并行时全局计数器有竞争, 会超限被Cloudflare封禁(数据丢失)
     with _rate_limit_lock:
         # V5: Cloudflare 封禁后自动暂停 — 冷却中真正跳过请求(修复每60s重锤被封IP的bug)
-        if _SCAN_PAUSE_UNTIL > 0:
+        # bypass_pause=True 供换节点自检用: 自检必须真实请求 Pin, 不能被自己设的暂停挡住
+        if not bypass_pause and _SCAN_PAUSE_UNTIL > 0:
             remaining = _SCAN_PAUSE_UNTIL - time.time()
             if remaining > 0:
                 logger.warning("Cloudflare 封禁冷却中, 跳过请求 (剩余 %.0fs)", remaining)
@@ -401,14 +402,15 @@ def _diagnose_response(resp, url: str) -> str:
     return "unknown"
 
 
-def api_get(path, retry=True):
+def api_get(path, retry=True, bypass_pause=False):
     """调用 Pinnacle API，带自诊断和自动恢复。
 
     V4.5: 指数退避 + 封顶 + 抖动 + 累积超时保护。
+    bypass_pause=True 时跳过 Cloudflare 封禁冷却检查(换节点自检用)。
     """
     global _ssl_fail_count
     _load_cookie()
-    if not _rate_limit():
+    if not _rate_limit(bypass_pause=bypass_pause):
         return None  # Cloudflare 冷却中, 跳过本次请求
     url = f"{API_BASE}{path}"
     total_wait = 0.0

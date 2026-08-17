@@ -61,7 +61,10 @@ def fetch_bb_scores():
                     if sg.get("pe") == pe_full and sg.get("tyg") == 5:
                         sc = sg.get("sc", [])
                         if len(sc) >= 2:
-                            score_map[(home, away)] = [int(sc[0]), int(sc[1])]
+                            try:
+                                score_map[(home, away)] = [int(sc[0]), int(sc[1])]
+                            except (ValueError, TypeError):
+                                pass  # 非数字比分(如加时 "3+1"), 跳过该场
                         break
     return score_map
 

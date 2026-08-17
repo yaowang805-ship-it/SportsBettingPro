@@ -610,7 +610,7 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
     away_raw = bet.get("away_team", bet.get("away_cn", ""))
     home_cn = bet.get("home_cn", "")
     away_cn = bet.get("away_cn", "")
-    outcome = bet.get("market_type", bet.get("market_detail", ""))
+    outcome = bet.get("market_type") or bet.get("market_detail") or ""
     bet_market = bet.get("market", "")
 
     # 判断盘口类型
@@ -1030,7 +1030,7 @@ def auto_settle(dry_run: bool = False) -> int:
                 # V4.5: 结算后立即贝叶斯反馈 → V4权重矩阵自我进化
                 try:
                     from src.evolve.v4_evolver import bayesian_update_settlement
-                    outcome_str = result.get("outcome", "")
+                    outcome_str = result if isinstance(result, str) else ""
                     bayesian_update_settlement(
                         league=bet.get("league", ""),
                         sub_market=bet.get("market_type", "1x2"),

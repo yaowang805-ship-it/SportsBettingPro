@@ -118,7 +118,8 @@ def check_pin():
     """Pin 连通性自检。返回 (ok, detail)。"""
     try:
         from src.scrapers.pinnacle_api import api_get
-        data = api_get("/sports")
+        # bypass_pause=True: 自检必须真实请求, 不能被封禁暂停(自己设的)挡住
+        data = api_get("/sports", bypass_pause=True)
         if data:
             return True, f"连通(返回 {len(data)} 项)"
         return False, "API 返回空"
