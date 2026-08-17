@@ -1334,7 +1334,7 @@ BLOCKED_MARKETS = {"htft", "dnb"}
 
 # MMA/Boxing: 仅封杀高风险子类型 (时间匹配 + 球员冲突)
 # V4.2: name-matched + score≥0.95 的 MMA/Boxing 允许小额投注
-BLOCKED_SPORTS = {"pingpong", "badminton", "volleyball", "boxing"}  # V5.1: 零数据运动封杀
+BLOCKED_SPORTS = {"pingpong", "badminton"}  # V5.1: 零数据运动封杀 (拳击/排球 Pinnacle 有数据, 2026-08-17 解封)
 
 # 中超: Pinnacle 无覆盖 → 封杀
 BLOCKED_LEAGUES = {"中超", "Chinese Super League", "China Super League"}
