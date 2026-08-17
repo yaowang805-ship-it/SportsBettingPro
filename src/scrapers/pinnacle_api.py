@@ -101,6 +101,12 @@ _BAN_COUNT = 0                     # V5.9: 连续封禁计数 → 降级请求�
 _LAST_BAN_TIME = 0.0               # V5.9: 上次封禁时间(24h无封禁则重置计数)
 _BAN_RESET_HOURS = 24              # V5.9: 24h 无封禁则重置降级
 
+_CONSECUTIVE_FAILURES = 0          # V5.9: 连续失败计数(熔断器)
+_CIRCUIT_OPEN_UNTIL = 0.0          # V5.9: 熔断打开(暂停所有请求)到期时间
+_CIRCUIT_FAILURE_THRESHOLD = 10    # V5.9: 连续失败阈值
+_CIRCUIT_COOLDOWN = 600            # V5.9: 熔断冷却 10 分钟
+_CIRCUIT_NOTIFY_UNTIL = 0.0        # V5.9: 熔断告警节流(30min 一次)
+
 
 def _current_min_interval():
     """封禁降级: 连续封禁越多, 请求间隔越长(10→8 req/s), 降低 Cloudflare 反复封禁概率。
@@ -115,6 +121,40 @@ def _current_min_interval():
         _BAN_COUNT = 0
     interval = _MIN_REQUEST_INTERVAL + 0.0125 * min(_BAN_COUNT, 2)  # 最多降 2 档
     return min(interval, 0.125)
+
+
+def _circuit_open() -> bool:
+    """熔断器是否打开(暂停所有 Pin 请求)。"""
+    return _CIRCUIT_OPEN_UNTIL > time.time()
+
+
+def _record_pin_failure():
+    """记录一次 Pin 请求失败(非200)。连续失败超阈值 → 熔断打开, 暂停所有请求。
+
+    防风控: 正常提取是限速的, 被封几乎都是代码 bug 反复连 Pin(如404死循环)。
+    熔断器在连续失败时提前暂停, 避免把 Cloudflare 触发封禁。
+    """
+    global _CONSECUTIVE_FAILURES, _CIRCUIT_OPEN_UNTIL, _CIRCUIT_NOTIFY_UNTIL
+    _CONSECUTIVE_FAILURES += 1
+    if _CONSECUTIVE_FAILURES >= _CIRCUIT_FAILURE_THRESHOLD:
+        _CIRCUIT_OPEN_UNTIL = time.time() + _CIRCUIT_COOLDOWN
+        _CONSECUTIVE_FAILURES = 0
+        logger.error("⚠️ 熔断器: 连续 %d 次 Pin 请求失败 → 暂停所有请求 %d 分钟 (疑似代码bug反复连Pin, 防风控)",
+                     _CIRCUIT_FAILURE_THRESHOLD, _CIRCUIT_COOLDOWN // 60)
+        if time.time() >= _CIRCUIT_NOTIFY_UNTIL:
+            _CIRCUIT_NOTIFY_UNTIL = time.time() + 1800
+            try:
+                from config.dingtalk import send_dingtalk
+                send_dingtalk("【投注推荐】⚠️ Pin 请求熔断\n\n连续 10 次失败, 已暂停 10 分钟防风控。疑似代码 bug 反复连 Pin API, 请检查。",
+                              msgtype="text", title="Pin 熔断告警")
+            except Exception:
+                pass
+
+
+def _record_pin_success():
+    """记录一次 Pin 请求成功 → 重置连续失败计数。"""
+    global _CONSECUTIVE_FAILURES
+    _CONSECUTIVE_FAILURES = 0
 
 _cookie_loaded = False  # 进程级标志，只记一次日志
 _cookie_refresh_count = 0          # 本次扫描 cookie 刷新次数
@@ -237,6 +277,11 @@ def _rate_limit(bypass_pause: bool = False):
                 logger.warning("Cloudflare 封禁冷却中, 跳过请求 (剩余 %.0fs)", remaining)
                 return False  # 冷却中立即跳过 (原 sleep60s 导致 N联赛×60s 小时级卡死)
             _SCAN_PAUSE_UNTIL = 0.0  # 到期, 清除标志
+
+        # V5.9: 熔断器 — 连续失败超阈值时暂停所有请求(防风控: 代码bug反复连Pin)
+        if not bypass_pause and _circuit_open():
+            logger.warning("Pin 熔断冷却中, 跳过请求 (剩余 %.0fs)", _CIRCUIT_OPEN_UNTIL - time.time())
+            return False
 
         # V5: 突发流量限制 — 10秒窗口内最多 N 请求
         now = time.time()
@@ -485,6 +530,7 @@ def api_get(path, retry=True, bypass_pause=False):
 
             if resp.status_code == 200:
                 _ssl_fail_count = 0
+                _record_pin_success()  # V5.9: 成功 → 重置熔断失败计数
                 _maybe_notify_recovered()  # V5.9: 封禁后首次成功 → 发恢复通知(仅一次)
                 return resp.json()
 
@@ -533,6 +579,7 @@ def api_get(path, retry=True, bypass_pause=False):
                 continue
 
             _diagnose_pinnacle_error(url, resp.status_code)
+            _record_pin_failure()  # V5.9: 失败计数 → 连续失败熔断防风控
             return None
 
         except requests.exceptions.SSLError as e:
@@ -581,6 +628,7 @@ def api_get(path, retry=True, bypass_pause=False):
 
         except Exception as e:
             logger.error("Pinnacle API error (%s): %s", type(e).__name__, e)
+            _record_pin_failure()  # V5.9: 失败计数 → 熔断防风控
             return None
 
     return None
