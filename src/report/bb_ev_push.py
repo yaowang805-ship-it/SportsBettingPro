@@ -1552,6 +1552,7 @@ def _collect_opportunities(match, market_key):
             "_sub_market": sub_market,  # "1x2"|"ht"|"btts"|"dc"|"oe"|"htft"|...
             "line": line,               # 盘口线 (让球/大小), 供二次验价+虚拟投注
             "_match_type": match_type,  # "name"|"time", 供低置信时间匹配降仓
+            "_ml_swapped": any("主客反转" in f for f in match.get("flags", [])),  # 二次验价方向映射用
 
             "_match_score": match_score,
             "_score": score,
@@ -1652,7 +1653,8 @@ def _collect_opportunities_from_file():
         key_exact = (sport, league, home, away, designation)
         key_home_time = (sport, home, start, designation)
         key_away_time = (sport, away, start, designation)
-        key_time_only = (sport, start, designation)              # BB/FB队名完全不同时兜底
+        # 兜底key含联赛, 避免同运动同时刻同盘口的不同比赛被误合并(周六22:00十场足球全推"主胜")
+        key_time_only = (sport, league, start, designation)      # BB/FB队名完全不同时兜底
 
         existing = (best_per_match.get(key_exact) or
                     best_per_match.get(key_home_time) or
@@ -2272,6 +2274,9 @@ def _lookup_fresh_pin_odds(fresh: dict, o: dict):
             target = "away"
         elif "和" in designation or "平" in designation or "draw" in designation.lower():
             target = "draw"
+        # 主客反转校准后, pin_odds 已存交换后的对侧赔率, 方向映射要反向
+        if o.get("_ml_swapped") and target in ("home", "away"):
+            target = "away" if target == "home" else "home"
         for ml in fresh.get("moneyline", []):
             for p in ml.get("prices", []):
                 if p.get("designation", "").lower() == target:
@@ -2279,6 +2284,8 @@ def _lookup_fresh_pin_odds(fresh: dict, o: dict):
     elif mkt == "hc":
         target_line = _parse_line(o.get("line"))
         target_desig = "away" if ("客" in designation or "away" in designation.lower()) else "home"
+        if o.get("_ml_swapped"):
+            target_desig = "home" if target_desig == "away" else "away"
         for sp in fresh.get("spread", []):
             for p in sp.get("prices", []):
                 if p.get("designation", "").lower() != target_desig:

@@ -126,7 +126,7 @@ def _fetch_close_odds(entries):
     # 按联赛分组，减少 API 调用
     by_league = defaultdict(list)
     for e in entries:
-        match_epoch = int(e.get("match_epoch", 0))
+        match_epoch = int(e.get("match_epoch") or 0)
         if not match_epoch:
             continue
 
@@ -185,7 +185,7 @@ def _fetch_close_odds(entries):
                 bb_away = e.get("away", "").lower().strip()
                 pin_home_name = e.get("home_pin", "").lower().strip()  # Pinnacle 英文名
                 pin_away_name = e.get("away_pin", "").lower().strip()
-                match_epoch = int(e.get("match_epoch", 0))
+                match_epoch = int(e.get("match_epoch") or 0)
                 # sub_market 统一推断口径 (ht→ht_hc/ht_ou), 与去重 key 一致
                 sub_market = _infer_sub_market(e.get("sub_market", ""), e.get("designation", ""))
                 designation = e.get("designation", "").lower()
@@ -258,7 +258,7 @@ def _fetch_close_odds(entries):
                     "true_clv_pct": true_clv,
                     "clv_delta": clv_delta,  # + = 有利, - = 不利
                     "match_epoch": e.get("match_epoch", ""),
-                    "minutes_before_match": round((int(e.get("match_epoch", 0)) - time.time()) / 60, 1),
+                    "minutes_before_match": round((int(e.get("match_epoch") or 0) - time.time()) / 60, 1),
                 })
 
     return results

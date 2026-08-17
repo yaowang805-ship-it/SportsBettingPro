@@ -134,6 +134,7 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
     """
     from src.scrapers.pinnacle_league_map import find_pinnacle_league_ids
     from src.scrapers.pinnacle_api import api_get as pin_get
+    from src.scrapers.pinnacle_markets import get_league_matchups_and_markets
 
     pin_snap_path = DATA_DIR / f".pin_snapshot_{time_window}.json"
     old_pin = {}
@@ -158,11 +159,9 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
             if league_changed:
                 break
             try:
-                matchups = pin_get(f'/leagues/{pid}/matchups')  # api_get 已自动加 /0.1 前缀
-                if not matchups:
-                    continue
-                if isinstance(matchups, dict):
-                    matchups = matchups.get('matchups', matchups.get('data', []))
+                # 用 get_league_matchups_and_markets 拿含赔率的完整数据
+                # (旧代码用 /matchups 端点只返回元数据, 无 moneyline/spread/total → 赔率指纹恒空, 变动检测失效)
+                matchups = get_league_matchups_and_markets(pid)
                 if not isinstance(matchups, list):
                     continue
 
@@ -175,15 +174,15 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
 
                     # 提取赔率指纹: ML + Spread + Total (三者任一变动都触发)
                     odds_fp = []
-                    for mkt_type in ['moneyline', 'money_line', 'spread', 'total']:
-                        for mkt in mu.get(mkt_type, []):
+                    for mkt_type in ['moneyline', 'spread', 'total']:
+                        for mkt in mu.get(mkt_type, []) or []:
                             if isinstance(mkt, dict) and mkt.get('period', 0) == 0:
-                                for p in mkt.get('prices', []):
-                                    price = p.get('price', p.get('decimal', 0))
-                                    pts = p.get('points', p.get('handicap', ''))
+                                for p in mkt.get('prices', []) or []:
+                                    price = p.get('price_decimal', 0)
+                                    pts = p.get('points')
                                     if price:
                                         odds_fp.append(round(float(price), 4))
-                                    if pts:
+                                    if pts is not None:
                                         odds_fp.append(round(float(pts), 4))
 
                     odds_key = tuple(odds_fp) if odds_fp else None

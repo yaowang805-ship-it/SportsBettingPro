@@ -373,6 +373,29 @@ def determine_result(bet: dict, match_result: dict) -> tuple:
             return "won" if not both_scored else "lost", home_score, away_score, (1.0 if not both_scored else -1.0)
         return "void", home_score, away_score, 0
 
+    # ── 平局退款 (draw no bet) ──
+    if sub_market == "dnb":
+        if "客" in designation:
+            if outcome == "away":
+                return "won", home_score, away_score, 1.0
+            elif outcome == "draw":
+                return "void", home_score, away_score, 0  # 平局退款
+            else:
+                return "lost", home_score, away_score, -1.0
+        elif "主" in designation:
+            if outcome == "home":
+                return "won", home_score, away_score, 1.0
+            elif outcome == "draw":
+                return "void", home_score, away_score, 0  # 平局退款
+            else:
+                return "lost", home_score, away_score, -1.0
+        else:
+            return "void", home_score, away_score, 0
+
+    # ── 半场让球/大小/双重机会/退款 (需半场比分, 当前数据源无 → 保守 void, 避免用全场比分误判) ──
+    if sub_market in ("ht_hc", "ht_ou", "ht_dc", "ht_dnb"):
+        return "void", home_score, away_score, 0
+
     # ── 默认: 无法判定 → void ──
     return "void", home_score, away_score, 0
 

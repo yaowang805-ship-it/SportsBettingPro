@@ -594,7 +594,7 @@ def get_league_corner_markets(league_id):
             "league_group": (mu.get("league") or {}).get("group", ""),
             "home": home,
             "away": away,
-            "start_time": mu.get("start_time", ""),
+            "start_time": mu.get("startTime", ""),
             "moneyline": [],
             "spread": spread,
             "total": total,

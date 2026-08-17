@@ -711,9 +711,8 @@ def extract_match_odds(record, sport_key, platform="BB"):
             result.append(draw_od)
         if away_od:
             result.append(away_od)
-        if len(result) == 2:
-            result.insert(1, result[1])
-        return result if len(result) >= 3 else None
+        # 3-way 缺平局时不能伪造(旧代码把客队赔率复制成平局), 直接返回 None
+        return result if len(result) == 3 else None
 
     def _extract_handicap(period):
         mty_code = mt.get("hc")
