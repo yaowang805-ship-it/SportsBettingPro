@@ -54,7 +54,9 @@ def main():
                         continue
                     for season in seasons:
                         # 年度赛事(网球/棒球)默认单年; 其余用 --seasons
-                        season = SPORT_SEASONS.get(sport, season)
+                        # 显式传 --seasons(非默认 2024-2025)时尊重传入赛季(补历史赛季用)
+                        if args.seasons == "2024-2025":
+                            season = SPORT_SEASONS.get(sport, season)
                         out = OUT_DIR / sport / f"{lg}__{season}.csv"
                         if out.exists() and out.stat().st_size > 100:
                             continue

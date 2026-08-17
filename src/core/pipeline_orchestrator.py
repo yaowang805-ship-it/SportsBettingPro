@@ -885,7 +885,7 @@ class PipelineOrchestrator:
         evolve_weekly()
 
     def do_git_commit(self):
-        """自动 git 提交。"""
+        """自动 git 提交 + push。"""
         import subprocess
         result = subprocess.run(
             ["git", "add", "-u"],
@@ -903,17 +903,33 @@ class PipelineOrchestrator:
         )
         if result.returncode == 0:
             logger.info("无变更，跳过提交")
-            return
-        result = subprocess.run(
-            ["git", "commit", "-m", f"日常自动存档 {datetime.now().strftime('%Y-%m-%d')}"],
-            cwd=SRC_DIR,
-            capture_output=True,
-        )
-        if result.returncode == 0:
-            logger.info("已提交变更")
         else:
-            err = result.stderr.decode('utf-8', errors='replace')[:200] if result.stderr else ''
-            logger.warning("提交失败: %s", err)
+            result = subprocess.run(
+                ["git", "commit", "-m", f"日常自动存档 {datetime.now().strftime('%Y-%m-%d')}"],
+                cwd=SRC_DIR,
+                capture_output=True,
+            )
+            if result.returncode == 0:
+                logger.info("已提交变更")
+            else:
+                err = result.stderr.decode('utf-8', errors='replace')[:200] if result.stderr else ''
+                logger.warning("提交失败: %s", err)
+
+        # push 到 origin — 无论有无新提交, 清掉本地堆积的未推送提交 (2026-08-17)
+        try:
+            push_result = subprocess.run(
+                ["git", "push"],
+                cwd=SRC_DIR,
+                capture_output=True,
+                timeout=60,
+            )
+            if push_result.returncode == 0:
+                logger.info("已 push 到 origin")
+            else:
+                err = push_result.stderr.decode('utf-8', errors='replace')[:200] if push_result.stderr else ''
+                logger.warning("git push 失败: %s", err)
+        except Exception as e:
+            logger.warning("git push 异常: %s", e)
 
     def do_self_repair(self):
         """V4.5: 自检+自动修复 — 在每天任务开始前修复常见问题。
