@@ -1,5 +1,5 @@
 {
-  "balance": 16852.32,
+  "balance": 16672.32,
   "initial_bankroll": 10000,
   "pending_bets": [
     {
@@ -2001,6 +2001,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1786930200,
       "created_at": "2026-08-17T01:04:08.700870+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_里奥夸尔托学生队_图库曼竞技_角球让球客胜(+1)",
+      "sport": "football",
+      "league": "阿根廷甲级联赛",
+      "home_team": "里奥夸尔托学生队",
+      "away_team": "图库曼竞技",
+      "home_cn": "里奥夸尔托学生队",
+      "away_cn": "图库曼竞技",
+      "market": "handicap",
+      "market_type": "角球让球客胜(+1)",
+      "sub_market": "corner",
+      "line": "+1",
+      "odds": 1.85,
+      "stake": 106,
+      "model_prob": 0.6062,
+      "ev_pct": 12.15,
+      "pin_odds": 1.5618,
+      "fair_price": 1.6496,
+      "source": "bb_vs_pinnacle",
+      "commence_time": null,
+      "created_at": "2026-08-17T02:20:03.097298+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_圣塔菲_河床_上半场客胜",
+      "sport": "football",
+      "league": "南美俱乐部杯",
+      "home_team": "圣塔菲",
+      "away_team": "河床",
+      "home_cn": "圣塔菲",
+      "away_cn": "河床",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 3.19,
+      "stake": 74,
+      "model_prob": 0.3306,
+      "ev_pct": 5.47,
+      "pin_odds": 2.82,
+      "fair_price": 3.0247,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787185800,
+      "created_at": "2026-08-17T02:20:03.097478+00:00",
       "track_only": false
     }
   ],
@@ -10876,8 +10922,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-17",
-    "used": 150.0,
-    "bets": 2
+    "used": 330.0,
+    "bets": 4
   },
   "updated": "2026-08-09T16:16:09.144069"
 }
