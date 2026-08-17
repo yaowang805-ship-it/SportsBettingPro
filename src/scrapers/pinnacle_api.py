@@ -374,12 +374,20 @@ def _auto_switch_node():
 
 
 def _notify_ip_ban():
-    """IP 封禁时发钉钉提醒 + 自动换节点(节流: 30min 内只发一次, 不阻塞扫描)。"""
-    global _ip_ban_notify_until
+    """IP 封禁时发钉钉提醒 + 自动换节点。
+
+    节流用文件持久化(模块热重载会重置内存全局 _ip_ban_notify_until, 导致每次 tick 重发告警)。
+    30min 内只发一次封禁告警; 解禁后由 _maybe_notify_recovered 发恢复通知。
+    """
+    _throttle_file = DATA_DIR / ".ip_ban_notify.txt"
     now = time.time()
-    if now < _ip_ban_notify_until:
-        return
-    _ip_ban_notify_until = now + 1800
+    if _throttle_file.exists():
+        try:
+            if now - float(_throttle_file.read_text().strip()) < 1800:
+                return  # 30min 内已告警过, 不重复发
+        except (ValueError, OSError):
+            pass
+    _throttle_file.write_text(str(now))
     try:
         from config.dingtalk import send_dingtalk
         msg = ("【投注推荐】⚠️ Pinnacle IP 被封禁\n\n"
@@ -389,6 +397,33 @@ def _notify_ip_ban():
     except Exception as e:
         logger.error("发送 IP 封禁告警失败: %s", e)
     _auto_switch_node()  # 自动换节点恢复
+
+
+def _maybe_notify_recovered():
+    """解禁后发一条恢复通知(封禁告警发出过才发, 只发一次)。"""
+    _throttle_file = DATA_DIR / ".ip_ban_notify.txt"
+    _recovered_file = DATA_DIR / ".ip_ban_recovered.txt"
+    if not _throttle_file.exists():
+        return  # 从没发过封禁告警, 不发恢复
+    if _recovered_file.exists():
+        try:
+            if time.time() - float(_recovered_file.read_text().strip()) < 86400:
+                return  # 24h 内已发过恢复
+        except (ValueError, OSError):
+            pass
+    try:
+        from config.dingtalk import send_dingtalk
+        msg = "✅ Pinnacle 已恢复\n\nCloudflare 封禁已解除, 增量扫描/推送恢复正常。"
+        send_dingtalk(msg, msgtype="text", title="Pinnacle 恢复通知")
+        _recovered_file.write_text(str(time.time()))
+        logger.info("已发送钉钉 Pinnacle 恢复通知")
+        # 重置封禁节流文件, 下次封禁能立即发新告警(一个封禁/恢复周期各一条)
+        try:
+            _throttle_file.unlink(missing_ok=True)
+        except Exception:
+            pass
+    except Exception as e:
+        logger.error("发送恢复通知失败: %s", e)
 
 
 def _diagnose_response(resp, url: str) -> str:
@@ -450,6 +485,7 @@ def api_get(path, retry=True, bypass_pause=False):
 
             if resp.status_code == 200:
                 _ssl_fail_count = 0
+                _maybe_notify_recovered()  # V5.9: 封禁后首次成功 → 发恢复通知(仅一次)
                 return resp.json()
 
             # ── 自诊断 ──
