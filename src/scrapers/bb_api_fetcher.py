@@ -434,31 +434,43 @@ def fetch_sport(sport_id, platform="BB", page_size=100):
     V5.5: 双语言 — EN 用于匹配 Pinnacle(英文队名), CMN 用于展示(中文界面)。
     中文名按 team_id/league_id 缓存到磁盘, 只在有新球队时补拉 CMN, 否则单倍速。
     """
+    # V5.9: 网球(sportId=5)的 ATP/WTA 正赛(辛辛那提/Masters/大满贯)在 type=4, ITF/Challenger 在 type=2。
+    # 只拉 type=2 会漏掉正赛 → 网球拉 (2,4) 合并, 其他运动保持 type=2(72h窗口)。
+    _types = (2, 4) if sport_id == 5 else (2,)
+
     def _fetch_pages(lang):
         recs = []
-        page = 1
-        while True:
-            params = {
-                "sportId": sport_id,
-                "type": 2,
-                "current": page,
-                "pageSize": page_size,
-                "isPC": True,
-                "languageType": lang,
-            }
-            resp = api_post("/v1/match/getList", params, platform=platform)
-            if not resp or not resp.get("success"):
-                logger.warning("API 返回空 (page=%d, lang=%s)", page, lang)
-                break
-            data = resp.get("data", {})
-            records = data.get("records", [])
-            total = data.get("total", 0)
-            pages = data.get("pageTotal", 1)
-            recs.extend(records)
-            print(f"    第{page}/{pages} 页: {len(records)} 条 (累计 {len(recs)}/{total}, {lang})")
-            if page >= pages:
-                break
-            page += 1
+        seen = set()
+        for typ in _types:
+            page = 1
+            while True:
+                params = {
+                    "sportId": sport_id,
+                    "type": typ,
+                    "current": page,
+                    "pageSize": page_size,
+                    "isPC": True,
+                    "languageType": lang,
+                }
+                resp = api_post("/v1/match/getList", params, platform=platform)
+                if not resp or not resp.get("success"):
+                    logger.warning("API 返回空 (type=%d, page=%d, lang=%s)", typ, page, lang)
+                    break
+                data = resp.get("data", {})
+                records = data.get("records", [])
+                total = data.get("total", 0)
+                pages = data.get("pageTotal", 1)
+                for rec in records:
+                    mid = rec.get("id")
+                    if mid and mid in seen:
+                        continue
+                    if mid:
+                        seen.add(mid)
+                    recs.append(rec)
+                print(f"    type={typ} 第{page}/{pages} 页: {len(records)} 条 (累计 {len(recs)}/{total}, {lang})")
+                if page >= pages:
+                    break
+                page += 1
         return recs
 
     cache = _load_cn_cache()
