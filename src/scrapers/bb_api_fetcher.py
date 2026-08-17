@@ -1004,6 +1004,13 @@ def extract_match_odds(record, sport_key, platform="BB"):
             })
         if not lines:
             return None
+        # 主线=最接近0的线(角球让球主线最平衡)。BB API 市场顺序不稳定, 直接 lines[0]
+        # 会把备用线(如 +1)当主线, 与 Pinnacle 主线错位 → 幻影 EV。改为按 |线| 排序。
+        from src.scrapers.bb_data import parse_asian_line as _pal
+        def _line_abs(l):
+            v = _pal(l.get("home_line_str") or l.get("away_line_str") or "")
+            return abs(v) if v is not None else 999.0
+        lines.sort(key=_line_abs)
         return {"primary": lines[0], "alternates": lines[1:]}
 
     def _extract_corner_ou(period):

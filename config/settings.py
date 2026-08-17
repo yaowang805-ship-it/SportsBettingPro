@@ -40,7 +40,8 @@ if DINGTALK_WEBHOOK and _is_placeholder_webhook(DINGTALK_WEBHOOK):
 
 
 # 非投注推荐信息每日推送次数上限 (2026-08-17 用户要求: 健康报告/日报等别刷屏)
-_NON_BETTING_DAILY_LIMIT = 2
+# 合法日报: 数据日报1 + 结算报告1 + 健康报告2 + CLV日报1 = 5, 留1余量给自愈报告
+_NON_BETTING_DAILY_LIMIT = 6
 _NON_BETTING_QUOTA_FILE = DATA_DIR / "non_betting_push_quota.json"
 
 
