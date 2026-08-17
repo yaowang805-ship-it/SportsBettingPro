@@ -901,6 +901,9 @@ def _calc_kelly_stakes(opps: list) -> list:
         tier_cfg = get_tier_strategy(sport, league, tier)
         tier_cap = tier_cfg.get("max_stake_pct", sport_cap)
         stake_pct = min(stake_pct, min(sport_cap, tier_cap))
+        # V5.8: 低级别联赛(T3/T4)单注降权 — 薄盘幻影EV高, 实测全亏(23笔-100%), 额外打折
+        if tier >= 3:
+            stake_pct *= 0.6 if tier == 3 else 0.4
         # V5.1: per-sport赔率策略 (10万+Pinnacle+723笔实盘)
         max_odds = tier_cfg.get("max_odds", 20.0)
         odds_kelly_mult = 1.0  # 默认不改Kelly
@@ -2360,9 +2363,13 @@ def _verify_odds_freshness(qualified: list, max_pin_drift: float = 0.08) -> list
             snap_pin = o.get("pin_odds", 0)
             if snap_pin > 0:
                 drift = abs(fresh_odds - snap_pin) / snap_pin
-                if drift > max_pin_drift:
-                    logger.info("验价过滤(漂移%.0f%%): %s Pin %.2f→%.2f",
-                                drift * 100, o.get("designation", ""), snap_pin, fresh_odds)
+                # 低级别联赛(T3/T4)薄盘, Pinnacle 线波动大, 用更严的 5% 阈值压幻影 EV
+                _tier = o.get("_tier", 3)
+                drift_limit = 0.05 if _tier >= 3 else max_pin_drift
+                if drift > drift_limit:
+                    logger.info("验价过滤(漂移%.0f%%>%.0f%%): %s Pin %.2f→%.2f",
+                                drift * 100, drift_limit * 100, o.get("designation", ""),
+                                snap_pin, fresh_odds)
                     skipped += 1
                     continue
             kept.append(o)
