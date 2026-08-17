@@ -79,15 +79,17 @@ def _today_str() -> str:
 
 
 def _load_portfolio() -> dict:
-    """加载 current portfolio state."""
-    if PORTFOLIO_FILE.exists():
-        try:
-            pf = json.loads(PORTFOLIO_FILE.read_text())
-            # 确保 daily_budget 字段存在
-            pf.setdefault("daily_budget", {"date": "", "used": 0.0, "bets": 0})
-            return pf
-        except Exception:
-            pass
+    """加载 current portfolio state。主文件损坏时回退 .bak, 避免余额/历史清零。"""
+    _bak = PORTFOLIO_FILE.with_suffix(PORTFOLIO_FILE.suffix + ".bak")
+    for _f in (PORTFOLIO_FILE, _bak):
+        if _f.exists():
+            try:
+                pf = json.loads(_f.read_text())
+                # 确保 daily_budget 字段存在
+                pf.setdefault("daily_budget", {"date": "", "used": 0.0, "bets": 0})
+                return pf
+            except Exception:
+                continue
     return {
         "balance": INITIAL_BALANCE,
         "initial_bankroll": INITIAL_BALANCE,

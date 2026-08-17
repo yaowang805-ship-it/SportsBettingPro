@@ -2615,12 +2615,15 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
     return result
 
 
-def _opposite_direction(designation: str) -> str:
+def _opposite_direction(designation: str, sub_market: str = "") -> str:
     """从 designation 提取方向(主/客/和/大/小), 忽略盘口线。
 
     "让分主胜(-5.5)"→home, "让分客胜(+4.5)"→away, "大(141.5)"→over, "小"→under。
+    DC(双重机会)的 1X/12/X2 两两都有交集, 无"对倒"概念 → 返回完整 designation 避免误拦。
     """
     d = (designation or "").lower()
+    if sub_market == "dc":
+        return d
     if "客" in d or "away" in d:
         return "away"
     if "主" in d or "home" in d:
@@ -2663,7 +2666,7 @@ def _filter_opposite_side(qualified: list) -> list:
             # key: sport|league|home|away|designation|sub_market[|line]|match_date
             # match_key 不含 designation 也不含盘口线 → 让分±符号不拆散同盘口
             match_key = "|".join([parts[0], parts[1], parts[2], parts[3], parts[5], parts[-1]])
-            pushed_dirs[match_key].add(_opposite_direction(parts[4]))
+            pushed_dirs[match_key].add(_opposite_direction(parts[4], parts[5]))
 
     kept = []
     skipped = 0
@@ -2673,7 +2676,7 @@ def _filter_opposite_side(qualified: list) -> list:
             kept.append(o)
             continue
         match_key = "|".join([parts[0], parts[1], parts[2], parts[3], parts[5], parts[-1]])
-        cur_dir = _opposite_direction(parts[4])
+        cur_dir = _opposite_direction(parts[4], parts[5])
         others = pushed_dirs.get(match_key, set()) - {cur_dir}
         if others:
             _audit_log("OPPOSITE", match_key, o, f"同场同盘口已推 {sorted(others)}")
