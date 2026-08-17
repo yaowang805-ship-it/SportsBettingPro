@@ -39,14 +39,49 @@ if DINGTALK_WEBHOOK and _is_placeholder_webhook(DINGTALK_WEBHOOK):
     DINGTALK_WEBHOOK = None
 
 
+# 非投注推荐信息每日推送次数上限 (2026-08-17 用户要求: 健康报告/日报等别刷屏)
+_NON_BETTING_DAILY_LIMIT = 2
+_NON_BETTING_QUOTA_FILE = DATA_DIR / "non_betting_push_quota.json"
+
+
+def _is_betting_push(title: str) -> bool:
+    """投注推荐(标题含 +EV/投注推荐/机会)不受每日次数限制。"""
+    t = title or ""
+    return "+EV" in t or "投注推荐" in t or "机会" in t
+
+
+def _non_betting_quota_ok() -> bool:
+    """非投注推荐信息每天最多推 _NON_BETTING_DAILY_LIMIT 次。持久化到文件, 防重启绕过。"""
+    today = time.strftime("%Y-%m-%d")
+    q = {}
+    try:
+        q = json.loads(_NON_BETTING_QUOTA_FILE.read_text())
+    except (OSError, ValueError):
+        pass
+    if q.get("date") != today:
+        q = {"date": today, "count": 0}
+    if q.get("count", 0) >= _NON_BETTING_DAILY_LIMIT:
+        return False
+    q["count"] = q.get("count", 0) + 1
+    try:
+        _NON_BETTING_QUOTA_FILE.write_text(json.dumps(q, ensure_ascii=False))
+    except OSError:
+        pass
+    return True
+
+
 def send_dingtalk(title: str, body: str, timeout: int = 10) -> bool:
     """统一钉钉推送，返回 True=成功。
 
     委托给 config.dingtalk 的直连实现（绕过 Shadowrocket DNS 劫持）。
     自动确保正文包含机器人关键词。所有推送请走此函数。
+    投注推荐(+EV)不受限; 其余信息每天最多推 2 次。
     """
     from config.dingtalk import send_dingtalk as _real_send
     if not DINGTALK_WEBHOOK:
+        return False
+    # 非投注推荐信息每日限流
+    if not _is_betting_push(title) and not _non_betting_quota_ok():
         return False
     # 确保关键词存在
     if DINGTALK_KEYWORD not in body:

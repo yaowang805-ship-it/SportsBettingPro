@@ -247,7 +247,7 @@ def check_settlement(report):
         # Stuck bets (>72h pending)
         now = time.time()
         stuck = [b for b in pending
-                 if b.get("match_epoch", 0) > 0 and (now - b.get("match_epoch", 0)) > STUCK_BET_MAX_HOURS * 3600]
+                 if (b.get("match_epoch") or 0) > 0 and (now - (b.get("match_epoch") or 0)) > STUCK_BET_MAX_HOURS * 3600]
         if stuck:
             total_stuck = sum(b.get("stake", 0) for b in stuck)
             report.add_issue(f"卡住投注: {len(stuck)}笔, ¥{total_stuck:,.0f} (>72h未结算)")
