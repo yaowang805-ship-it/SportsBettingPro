@@ -308,10 +308,11 @@ def find_pin_match_by_name(bb_home, bb_away, pin_list):
 
     # V5.5: 纯英文名直接用(EN切换后 BB 队名就是英文, 不再需要中文→英文映射)
     # 之前英文名查 TEAM_NAME_MAP 失败→退回拼音匹配→英文名匹配失败→棒球/冰球/网球0匹配
+    # V5.9: 用 bb_home_clean(已去国家码), 否则 "Name (PAR)" vs "Name" 匹配失败(网球/拳击个人运动)
     if not bb_home_en and bb_home.isascii():
-        bb_home_en = bb_home.lower()
+        bb_home_en = bb_home_clean.lower()
     if not bb_away_en and bb_away.isascii():
-        bb_away_en = bb_away.lower()
+        bb_away_en = bb_away_clean.lower()
 
     if not bb_home_en and not bb_away_en:
         return _pinyin_match_names(bb_home, bb_away, pin_list)
