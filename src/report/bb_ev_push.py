@@ -799,13 +799,15 @@ def _apply_risk_manager_safety(opps: list) -> list:
         pass
 
     # 公开 API：can_place_bet 硬拒 + get_max_stake 软上限（替换私有方法调用）
+    cumulative_exposure = 0.0  # 已批准注单累计金额, 传入 can_place_bet 修复 30% 总敞口绕过
     for o in opps:
         stake = o.get("_stake", 0)
         if stake <= 0:
             continue
         # 硬拒门禁：单注限额/总敞口/回撤>25%
         try:
-            ok, reason = rm.can_place_bet(stake)
+            exposure_pct = (cumulative_exposure / rm.current_balance) if rm.current_balance > 0 else 0.0
+            ok, reason = rm.can_place_bet(stake, current_exposure_pct=exposure_pct)
             if not ok:
                 o["_stake"] = 0
                 o["_risk_reject"] = reason
@@ -828,6 +830,7 @@ def _apply_risk_manager_safety(opps: list) -> list:
                 o["_stake"] = int(max_stake)
         except Exception:
             pass  # 字段缺失或计算失败 → 保留原 stake
+        cumulative_exposure += o.get("_stake", 0)  # 用最终 stake 累计敞口
     return opps
 
 

@@ -774,11 +774,13 @@ def _match_bet(bet: dict, completed_games: list) -> Optional[str]:
                             if hcm:
                                 hc_str = hcm.group(1)
                                 if '/' in hc_str:
-                                    # 亚洲让球折中盘（如 +0/0.5 → 平均值 0.25）
-                                    parts = hc_str.split('/')
+                                    # 亚洲让球折中盘（如 -0.5/1 → -0.75, 符号由首字符决定）
+                                    _s = hc_str.strip()
+                                    _sign = -1 if _s.startswith('-') else 1
+                                    _s = _s.lstrip('+-')
                                     try:
-                                        vals = [float(p) for p in parts]
-                                        hc_line = sum(vals) / len(vals)
+                                        _vals = [float(p) for p in _s.split('/')]
+                                        hc_line = _sign * sum(_vals) / len(_vals)
                                     except (ValueError, TypeError):
                                         pass
                                 else:

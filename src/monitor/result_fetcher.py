@@ -378,15 +378,27 @@ def determine_result(bet: dict, match_result: dict) -> tuple:
 
 
 def _parse_handicap_line(line_str: str) -> float:
-    """解析亚洲让球线，如 '-0.5', '+0.5/1', '0', '-0/0.5'。"""
-    # 提取数字部分
-    nums = re.findall(r'[-+]?\d+\.?\d*', line_str.replace("/", " "))
-    if not nums:
+    """解析亚洲让球线，如 '-0.5', '+0.5/1', '0', '-0/0.5'。
+
+    折中线符号规则: '-0.5/1' = -0.5 和 -1 各半 = -0.75 (符号由首字符决定)。
+    旧实现用 re.findall 拆数字, '-0.5/1' 会把第二个数 '1' 当正数 → 得 +0.25, 判反盈亏。
+    """
+    if not line_str:
         return 0
-    values = [float(n) for n in nums]
-    if len(values) == 2:
-        return (values[0] + values[1]) / 2  # 如 0.5/1 → 0.75
-    return values[0]
+    # 提取带符号的盘口线 token (如 '让分主胜(-0.5/1)' → '-0.5/1')
+    m = re.search(r'[-+]?\d+(?:\.\d+)?(?:/[-+]?\d+(?:\.\d+)?)?', str(line_str))
+    if not m:
+        return 0
+    token = m.group(0)
+    sign = -1 if token.startswith('-') else 1
+    token = token.lstrip('+-')
+    try:
+        if '/' in token:
+            parts = [float(p) for p in token.split('/')]
+            return sign * sum(parts) / len(parts)
+        return sign * float(token)
+    except (ValueError, TypeError):
+        return 0
 
 
 def _parse_ou_line(line_str: str) -> float:

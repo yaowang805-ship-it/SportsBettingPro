@@ -198,12 +198,14 @@ class PortfolioOptimizer:
             return {"weights": np.array([]), "allocations": []}
 
         kelly_inputs = []
+        valid_bets = []  # 与 kelly_inputs 逐位对齐, 修复过滤后索引错位
         for bet in self.active_bets:
             prob = bet.get("model_prob", 0.5)
             odds = bet.get("odds", 2.0)
             if prob <= 0 or odds <= 1.0:
                 continue
             kelly_inputs.append({"prob": prob, "odds": odds})
+            valid_bets.append(bet)
 
         if not kelly_inputs:
             return {"weights": np.array([]), "allocations": []}
@@ -220,15 +222,15 @@ class PortfolioOptimizer:
             weights, meta = opt.solve(kelly_inputs)
 
         allocations = []
-        for i, bet in enumerate(self.active_bets):
-            if i < len(weights) and weights[i] > 0:
+        for bet, w in zip(valid_bets, weights):
+            if w > 0:
                 allocations.append({
                     "sport": bet.get("sport", ""),
                     "home_team": bet.get("home_team", ""),
                     "away_team": bet.get("away_team", ""),
                     "market": bet.get("market", ""),
-                    "weight_pct": round(float(weights[i]), 4),
-                    "stake": round(float(weights[i] * bankroll), 2),
+                    "weight_pct": round(float(w), 4),
+                    "stake": round(float(w * bankroll), 2),
                 })
 
         return {"weights": weights, "allocations": allocations, "meta": meta}

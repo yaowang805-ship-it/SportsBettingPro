@@ -173,9 +173,9 @@ def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
               sport_confidence: float = 1.0) -> float:
     """V5.2 ¾ Kelly仓位 (返回小数, 0.06 = 6%)。
 
-    公式: kelly = max(0, wr×BB_odds - 1) / (BB_odds - 1) × 0.75 × confidence(n) × sport_discount
-    V5.2: Half Kelly(0.50) → ¾ Kelly(0.75), cap 0.04→0.06 — 保证日预算能投放出去
-    (用户要求: 适度放开, 日预算 ¥2万要花出去)
+    公式: kelly = max(0, wr×BB_odds - 1) / (BB_odds - 1) × KELLY_FRACTION × confidence(n) × sport_discount
+    统一用 KELLY_FRACTION(0.50) 单一事实来源, 与 constants.py / bb_virtual_bet 一致
+    (原 V5.2 曾误用 0.75, 2026-08-17 审查修正为 0.50)
 
     V4.4: 连续置信度 + 运动级折扣
       n >= 100: confidence = 1.0
@@ -189,7 +189,8 @@ def kelly_075(actual_wr: float, avg_odds: float, bb_premium: float,
     roi = actual_wr * bb_odds - 1.0
     if roi <= 0:
         return 0.0
-    kelly = roi / (bb_odds - 1.0) * 0.75   # V5.2: ¾ Kelly (was Half 0.50)
+    from config.constants import KELLY_FRACTION  # 单一事实来源 (统一为 0.50)
+    kelly = roi / (bb_odds - 1.0) * KELLY_FRACTION
     # V4.4: 连续样本量置信度 (替代4级阶梯)
     if n_bets >= 100:
         confidence = 1.0
