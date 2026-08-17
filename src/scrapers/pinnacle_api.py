@@ -97,6 +97,24 @@ _REQUEST_BURST_LIMIT = 100         # V5.5: 100个/10s (10 req/s, 封禁线16 req
 _BURST_WINDOW_START = 0.0
 _BURST_COUNT = 0
 _ip_ban_notify_until = 0.0         # V5.2: IP 封禁钉钉告警节流(30min 内只发一次)
+_BAN_COUNT = 0                     # V5.9: 连续封禁计数 → 降级请求频率
+_LAST_BAN_TIME = 0.0               # V5.9: 上次封禁时间(24h无封禁则重置计数)
+_BAN_RESET_HOURS = 24              # V5.9: 24h 无封禁则重置降级
+
+
+def _current_min_interval():
+    """封禁降级: 连续封禁越多, 请求间隔越长(10→8 req/s), 降低 Cloudflare 反复封禁概率。
+
+    0 次封禁 → 0.10s (10 req/s, 默认安全线)
+    1 次封禁 → 0.1125s (8.9 req/s)
+    ≥2 次封禁 → 0.125s (8 req/s, 最低)
+    24h 内无封禁 → 自动重置回 10 req/s。
+    """
+    global _BAN_COUNT
+    if _LAST_BAN_TIME and time.time() - _LAST_BAN_TIME > _BAN_RESET_HOURS * 3600:
+        _BAN_COUNT = 0
+    interval = _MIN_REQUEST_INTERVAL + 0.0125 * min(_BAN_COUNT, 2)  # 最多降 2 档
+    return min(interval, 0.125)
 
 _cookie_loaded = False  # 进程级标志，只记一次日志
 _cookie_refresh_count = 0          # 本次扫描 cookie 刷新次数
@@ -233,10 +251,11 @@ def _rate_limit(bypass_pause: bool = False):
                 _BURST_COUNT = 0
 
         elapsed = time.time() - _last_req_time
-        if elapsed < _MIN_REQUEST_INTERVAL:
+        _interval = _current_min_interval()  # V5.9: 连续封禁降级(10→8 req/s)
+        if elapsed < _interval:
             import random
             # 微抖动 0~0.2s 打破规律节奏, 几乎不影响速度
-            time.sleep(_MIN_REQUEST_INTERVAL - elapsed + random.uniform(0, 0.2))
+            time.sleep(_interval - elapsed + random.uniform(0, 0.2))
         _last_req_time = time.time()
         _REQUEST_COUNT += 1
         _BURST_COUNT += 1
@@ -442,8 +461,10 @@ def api_get(path, retry=True, bypass_pause=False):
 
             if err_type == "ip_ban":
                 logger.error("Cloudflare IP 封禁 — 自动暂停扫描 30 分钟")
-                global _SCAN_PAUSE_UNTIL
+                global _SCAN_PAUSE_UNTIL, _BAN_COUNT, _LAST_BAN_TIME
                 _SCAN_PAUSE_UNTIL = time.time() + 1800  # 30 分钟冷却
+                _BAN_COUNT += 1                          # V5.9: 连续封禁计数 → 降级请求频率
+                _LAST_BAN_TIME = time.time()
                 _notify_ip_ban()  # V5.2: 钉钉提醒换节点(节流)
                 return None  # 不重试，重试也没用
 
