@@ -2323,6 +2323,16 @@ def _verify_odds_freshness(qualified: list, max_pin_drift: float = 0.08) -> list
     """
     if not qualified:
         return qualified
+    # 快速失败: Pinnacle 被 Cloudflare 封禁(SCAN_PAUSE 冷却)时直接放行,
+    # 不逐个联赛触发重试/等待 — 否则 30+ 联赛 × 每个失败等待会把推送卡到超时。
+    try:
+        from src.scrapers.pinnacle_api import _SCAN_PAUSE_UNTIL
+        import time as _time
+        if _SCAN_PAUSE_UNTIL > _time.time():
+            logger.info("Pinnacle Cloudflare 封禁冷却中, 跳过二次验价(直接放行 %d 条)", len(qualified))
+            return qualified
+    except Exception:
+        pass
     try:
         from src.scrapers.pinnacle_markets import get_league_matchups_and_markets
         from src.scrapers.pinnacle_league_map import find_pinnacle_league_ids
