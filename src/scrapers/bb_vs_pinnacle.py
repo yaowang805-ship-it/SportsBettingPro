@@ -476,7 +476,10 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         if _save_cache:
             # Pin先→BB后 流程: 只拉 Pin 并缓存, 对比由后续 do_full_scan 的 BB 重拉后完成
             try:
-                pin_cache_path.write_text(json.dumps(all_pin_matches, ensure_ascii=False))
+                # 原子写: tmp → rename, 防止读端读到写了一半的坏 JSON
+                _tmp = pin_cache_path.with_suffix(".tmp")
+                _tmp.write_text(json.dumps(all_pin_matches, ensure_ascii=False))
+                _tmp.replace(pin_cache_path)
                 print(f"  💾 已缓存 Pin 赔率 ({len(all_pin_matches)} 场), 跳过对比")
             except Exception as e:
                 print(f"  ⚠️ 缓存失败: {e}")

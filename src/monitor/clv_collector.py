@@ -130,9 +130,9 @@ def _fetch_close_odds(entries):
         if not match_epoch:
             continue
 
-        # V5.1: 采集窗口 = 开赛后30分钟 ~ 开赛前360分钟
+        # 采集窗口 = 赛前 1~20 分钟 (BEFORE_MIN 之前是死常量, 实际窗口却是 [0,20])
         minutes_to_match = (match_epoch - now_epoch) / 60
-        if minutes_to_match < -CLV_WINDOW_AFTER_MAX or minutes_to_match > CLV_WINDOW_BEFORE_MAX:
+        if minutes_to_match < CLV_WINDOW_BEFORE_MIN or minutes_to_match > CLV_WINDOW_BEFORE_MAX:
             continue
 
         # 推送时间必须在比赛前至少 5 分钟

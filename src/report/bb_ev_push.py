@@ -2437,6 +2437,12 @@ def _apply_match_exposure_cap(qualified: list) -> list:
     from config.constants import get_dynamic_bankroll
     match_cap = get_dynamic_bankroll() * 0.06  # 单场累计≤6%日预算 (原 *1.0 是 bug, 100% 敞口)
 
+    # 文件锁: 防止并发推送进程 read-modify-write 丢更新 (单场6%上限被绕过)
+    import fcntl as _fcntl
+    _lock_file = DATA_DIR / ".push_cooldown.lock"
+    _lock_fd = open(_lock_file, "w")
+    _fcntl.flock(_lock_fd.fileno(), _fcntl.LOCK_EX)  # 阻塞锁, 短操作
+
     # 加载记录 {match_id: {timestamp, total_stake}}
     records = {}
     if cooldown_file.exists():
@@ -2487,6 +2493,8 @@ def _apply_match_exposure_cap(qualified: list) -> list:
         }
 
     cooldown_file.write_text(json.dumps(records, ensure_ascii=False))
+    _fcntl.flock(_lock_fd.fileno(), _fcntl.LOCK_UN)
+    _lock_fd.close()
     if skipped:
         logger.info("单场超限跳过: %d 条 (累计已超 ¥%.0f)", skipped, match_cap)
     if capped:
