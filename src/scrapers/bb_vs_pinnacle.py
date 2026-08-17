@@ -403,7 +403,17 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
 
     # V4.3: 全量拉取, Pinnacle API自动过滤空联赛
     pin_ids_to_fetch = list(sorted(all_unique_pin_ids))
-    print(f"\n  待获取赔率的联赛: {len(pin_ids_to_fetch)} 个")
+    # V5.8 预取缓存(save_pin_cache/--pin-cache)模式: 拉全量联赛而非只拉当前BB窗口涉及的联赛 —
+    # 否则缓存残缺, 下次扫描 use_pin_cache 读到不完整缓存会丢足球/网球等主运动对比
+    # (根因: 增量扫描的预取线程只缓存了变动的~73个联赛, 没缓存全量206个)
+    if save_pin_cache or ("--pin-cache" in sys.argv):
+        _all_pin_ids = [lid for lid, info in all_pin_leagues.items()
+                        if isinstance(info, dict) and "name" in info]
+        pin_ids_to_fetch = list(sorted(set(pin_ids_to_fetch) | set(_all_pin_ids)))
+        print(f"\n  📦 预取缓存: 全量拉 {len(pin_ids_to_fetch)} 个联赛 "
+              f"(BB窗口 {len(all_unique_pin_ids)} 个 + 补齐 {len(_all_pin_ids)} 个)")
+    else:
+        print(f"\n  待获取赔率的联赛: {len(pin_ids_to_fetch)} 个")
 
     # 并行获取（4 个线程，短延时避免 Pinnacle 限流）
     MAX_WORKERS = 3  # V5.1: 并行, 配合文件锁防冲突
