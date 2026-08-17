@@ -37,17 +37,33 @@
     "ev": 1.48,
     "ts": 1786872529.507296
   },
+  "basketball|Mexico LNBP Basketball League|Abejas de Leon|Panteras de Aguascalientes|大分|1x2|2026-08-17": {
+    "ev": 1.24,
+    "ts": 1786924628.2070599
+  },
   "basketball|Mexico LNBP Basketball League|Gambusinos de Fresnillo|Diablos Rojos del Mexico|客胜|1x2|2026-08-17": {
     "ev": 1.52,
     "ts": 1786923392.713001
+  },
+  "basketball|Mexico LNBP Basketball League|Gambusinos de Fresnillo|Diablos Rojos del Mexico|让分主胜|1x2|2026-08-17": {
+    "ev": 2.04,
+    "ts": 1786924628.2070138
   },
   "basketball|Mexico LNBP Basketball League|Gambusinos de Fresnillo|Diablos Rojos del Mexico|让分客胜|1x2|2026-08-17": {
     "ev": 5.31,
     "ts": 1786923706.936116
   },
+  "basketball|Mexico LNBP Basketball League|Mineros de Zacatecas|Astros de Jalisco|主胜|1x2|2026-08-17": {
+    "ev": 1.73,
+    "ts": 1786924335.183981
+  },
   "basketball|Mexico LNBP Basketball League|Mineros de Zacatecas|Astros de Jalisco|客胜|1x2|2026-08-17": {
     "ev": 6.48,
     "ts": 1786923392.7131789
+  },
+  "basketball|Mexico LNBP Basketball League|Mineros de Zacatecas|Astros de Jalisco|让分主胜|1x2|2026-08-17": {
+    "ev": 4.3,
+    "ts": 1786924335.184064
   },
   "basketball|Mexico LNBP Basketball League|Mineros de Zacatecas|Astros de Jalisco|让分客胜|1x2|2026-08-17": {
     "ev": 8.97,
@@ -57,15 +73,28 @@
     "ev": 2.73,
     "ts": 1786922194.515219
   },
+  "basketball|Mexico LNBP Basketball League|Santos del Potosi|Soles de Mexicali|让分客胜|1x2|2026-08-17": {
+    "ev": 1.63,
+    "ts": 1786925282.3571389
+  },
   "basketball|Mexico LNBP Basketball League|甘布西诺弗雷斯尼洛|墨西哥红恶鬼|让分客胜(-2.5)|hc|-2.5|2026-08-17": {
     "ev": 6.46,
     "bb": 1.85,
     "ts": 1786923706.546425
   },
+  "basketball|Mexico LNBP Basketball League|萨卡特卡斯矿工|哈利斯科太空人|让分主胜(+4.5)|hc|+4.5|2026-08-17": {
+    "ev": 4.3,
+    "bb": 1.78,
+    "ts": 1786924334.671631
+  },
   "basketball|Mexico LNBP Basketball League|萨卡特卡斯矿工|哈利斯科太空人|让分客胜(-2.5)|hc|-2.5|2026-08-17": {
     "ev": 8.97,
     "bb": 1.91,
     "ts": 1786923392.362775
+  },
+  "basketball|Puerto Rico Baloncesto Superior Nacional|Santeros de Aguada|Vaqueros de Bayamon|小分|1x2|2026-08-17": {
+    "ev": 3.16,
+    "ts": 1786924335.184163
   },
   "basketball|Puerto Rico Baloncesto Superior Nacional|Santeros de Aguada|Vaqueros de Bayamon|让分客胜|1x2|2026-08-17": {
     "ev": 1.46,
@@ -2015,6 +2044,14 @@
     "ev": 5.59,
     "ts": 1786875163.889359
   },
+  "football|Mexico Liga MX|Club Santos Laguna|Guadalajara Chivas|客胜|1x2|2026-08-17": {
+    "ev": 2.07,
+    "ts": 1786927083.1076381
+  },
+  "football|Mexico Liga MX|Club Santos Laguna|Guadalajara Chivas|小球|1x2|2026-08-17": {
+    "ev": 2.71,
+    "ts": 1786926494.27028
+  },
   "football|Mexico Liga MX|Club Tijuana de Caliente|Cruz Azul|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 1.02,
     "ts": 1786851693.272456
@@ -3677,6 +3714,10 @@
     "bb": 1.85,
     "ts": 1786845367.864317
   },
+  "football|USA Major League Soccer|Austin FC|FC Dallas|上半场主胜|ht|2026-08-17": {
+    "ev": 1.52,
+    "ts": 1786924628.206812
+  },
   "football|USA Major League Soccer|Austin FC|FC Dallas|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 1.07,
     "ts": 1786855325.003723
@@ -3688,6 +3729,10 @@
   "football|USA Major League Soccer|Austin FC|FC Dallas|总进球区间7+|total_goals_range|2026-08-17": {
     "ev": 8.1,
     "ts": 1786875163.889695
+  },
+  "football|USA Major League Soccer|Austin FC|FC Dallas|让球客胜|1x2|2026-08-17": {
+    "ev": 2.34,
+    "ts": 1786925560.17537
   },
   "football|USA Major League Soccer|Colorado Rapids|Sporting Kansas City|角球大球|corner|9999-12-31": {
     "ev": 1.71,
@@ -5994,9 +6039,14 @@
     "ev": 3.75,
     "ts": 1786798139.385747
   },
-  "basketball|Mexico LNBP Basketball League|萨卡特卡斯矿工|哈利斯科太空人|让分主胜(+4.5)|hc|+4.5|2026-08-17": {
-    "ev": 4.3,
-    "bb": 1.78,
-    "ts": 1786924334.671631
+  "basketball|Mexico LNBP Basketball League|桑托斯波托西|墨西卡利太阳|让分客胜(-7.5)|hc|-7.5|2026-08-17": {
+    "ev": 7.98,
+    "bb": 1.87,
+    "ts": 1786928065.274841
+  },
+  "basketball|Mexico LNBP Basketball League|桑托斯波托西|墨西卡利太阳|客胜|1x2|2026-08-17": {
+    "ev": 8.03,
+    "bb": 1.3,
+    "ts": 1786928065.27488
   }
 }
