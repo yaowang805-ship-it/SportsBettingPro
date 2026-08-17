@@ -13,6 +13,8 @@ ARCHIVE_DB = DATA_DIR / "pinnacle_odds_archive.db"
 
 def _init():
     conn = sqlite3.connect(str(ARCHIVE_DB))
+    conn.execute("PRAGMA journal_mode=WAL")  # WAL: 允许并发读(CLV回溯)与写(归档), 避免 database is locked
+    conn.execute("PRAGMA busy_timeout=30000")  # 30s 等待, 不立即报 locked
     conn.execute("""CREATE TABLE IF NOT EXISTS odds_archive (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         sport TEXT, league_id INTEGER, league_name TEXT, matchup_id INTEGER,

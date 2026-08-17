@@ -92,6 +92,7 @@ def record_bets(opportunities: list, push_label: str = ""):
             "push_label": push_label,
             "sport": o.get("sport", ""),
             "league": o.get("league", ""),
+            "bb_match_id": o.get("bb_match_id", ""),  # BB比赛ID, 结算按ID精确匹配
             "home": o.get("home_cn", ""),
             "away": o.get("away_cn", ""),
             "home_pin": o.get("home_team", o.get("home_pin", "")),

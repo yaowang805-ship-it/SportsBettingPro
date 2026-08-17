@@ -22,51 +22,58 @@ def fetch_bb_scores():
     from src.scrapers.bb_api_fetcher import api_post, SPORTS
 
     score_map = {}
+    id_map = {}  # BB match id → [home_score, away_score] (精确匹配, 免队名错配)
     for sid, sport_key, sport_cn in SPORTS:
-        params = {"sportId": sid, "type": 6, "current": 1, "pageSize": 100,
-                  "isPC": True, "languageType": "CMN"}
-        try:
-            resp = api_post("/v1/match/getList", params, platform="BB")
-        except Exception:
-            continue
-        if not resp or not resp.get("success"):
-            continue
-        data = resp.get("data", {})
-        pages = data.get("pageTotal", 1)
-        for page in range(1, pages + 1):
-            if page > 1:
-                params["current"] = page
-                try:
-                    resp = api_post("/v1/match/getList", params, platform="BB")
-                except Exception:
-                    break
-                if not resp or not resp.get("success"):
-                    break
-                records = resp.get("data", {}).get("records", [])
-            else:
-                records = data.get("records", [])
-            for rec in records:
-                teams = rec.get("ts", [])
-                if len(teams) < 2:
-                    continue
-                home = teams[0].get("na", "")
-                away = teams[1].get("na", "")
-                if not home or not away:
-                    continue
-                # 各运动"全场比分"的 pe 码 (tyg=5 为比分): 足球=1000, 篮球=3001
-                pe_full = FULLTIME_PE.get(sport_key)
-                if not pe_full:
-                    continue
-                for sg in rec.get("nsg", []):
-                    if sg.get("pe") == pe_full and sg.get("tyg") == 5:
-                        sc = sg.get("sc", [])
-                        if len(sc) >= 2:
-                            try:
-                                score_map[(home, away)] = [int(sc[0]), int(sc[1])]
-                            except (ValueError, TypeError):
-                                pass  # 非数字比分(如加时 "3+1"), 跳过该场
+        # 同时拉中英文名, 兼容旧中文投注(CMN)和新英文投注(EN, 08-16切换英文队名)
+        for lang in ("CMN", "EN"):
+            params = {"sportId": sid, "type": 6, "current": 1, "pageSize": 100,
+                      "isPC": True, "languageType": lang}
+            try:
+                resp = api_post("/v1/match/getList", params, platform="BB")
+            except Exception:
+                continue
+            if not resp or not resp.get("success"):
+                continue
+            data = resp.get("data", {})
+            pages = data.get("pageTotal", 1)
+            for page in range(1, pages + 1):
+                if page > 1:
+                    params["current"] = page
+                    try:
+                        resp = api_post("/v1/match/getList", params, platform="BB")
+                    except Exception:
                         break
-    return score_map
+                    if not resp or not resp.get("success"):
+                        break
+                    records = resp.get("data", {}).get("records", [])
+                else:
+                    records = data.get("records", [])
+                for rec in records:
+                    teams = rec.get("ts", [])
+                    if len(teams) < 2:
+                        continue
+                    mid = rec.get("id", "")
+                    home = teams[0].get("na", "")
+                    away = teams[1].get("na", "")
+                    if not home or not away:
+                        continue
+                    # 各运动"全场比分"的 pe 码 (tyg=5 为比分): 足球=1000, 篮球=3001
+                    pe_full = FULLTIME_PE.get(sport_key)
+                    if not pe_full:
+                        continue
+                    for sg in rec.get("nsg", []):
+                        if sg.get("pe") == pe_full and sg.get("tyg") == 5:
+                            sc = sg.get("sc", [])
+                            if len(sc) >= 2:
+                                try:
+                                    hs_as = [int(sc[0]), int(sc[1])]
+                                    score_map[(home, away)] = hs_as
+                                    if mid:
+                                        id_map[str(mid)] = hs_as
+                                except (ValueError, TypeError):
+                                    pass  # 非数字比分(如加时 "3+1"), 跳过该场
+                            break
+    return score_map, id_map
 
 
 def settle_via_bb(dry_run: bool = False) -> dict:
@@ -74,8 +81,8 @@ def settle_via_bb(dry_run: bool = False) -> dict:
     from src.monitor.result_fetcher import determine_result
     from src.monitor.bet_tracker import get_unsettled_bets, settle_bet
 
-    score_map = fetch_bb_scores()
-    if not score_map:
+    score_map, id_map = fetch_bb_scores()
+    if not score_map and not id_map:
         logger.info("BB 未拉到已结束比分")
         return {"settled": 0, "failed": 0, "matched": 0}
 
@@ -86,14 +93,30 @@ def settle_via_bb(dry_run: bool = False) -> dict:
     settled = 0
     matched = 0
     for b in bets:
-        # V5.5: 优先用中文名(home_cn)匹配, 兼容旧中文投注和新英文投注(带home_cn)
-        home = (b.get("home_cn") or b.get("home", "") or "").strip()
-        away = (b.get("away_cn") or b.get("away", "") or "").strip()
-        sc = score_map.get((home, away))
+        # 1. 优先按 BB match id 精确匹配(免队名错配)
+        _bid = str(b.get("bb_match_id") or "").strip()
+        sc = id_map.get(_bid) if _bid else None
         swapped = False
+        # 2. 回退队名匹配: 中文名 + BB英文名 + Pin英文名, 逐个尝试(兼容新旧投注命名)
         if sc is None:
-            sc = score_map.get((away, home))
-            swapped = True
+            home = (b.get("home_cn") or b.get("home", "") or "").strip()
+            away = (b.get("away_cn") or b.get("away", "") or "").strip()
+            _candidates = [
+                (home, away),
+                ((b.get("home") or "").strip(), (b.get("away") or "").strip()),
+                ((b.get("home_pin") or "").strip(), (b.get("away_pin") or "").strip()),
+            ]
+            for _ch, _ca in _candidates:
+                if not _ch or not _ca:
+                    continue
+                sc = score_map.get((_ch, _ca))
+                if sc is not None:
+                    swapped = False
+                    break
+                sc = score_map.get((_ca, _ch))
+                if sc is not None:
+                    swapped = True
+                    break
         if not sc:
             continue
         matched += 1

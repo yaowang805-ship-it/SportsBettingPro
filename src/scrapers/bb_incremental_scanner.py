@@ -43,6 +43,7 @@ from scrapers.bb_api_fetcher import main as fetch_bb
 from scrapers.bb_vs_pinnacle import (
     compare_bb_vs_pinnacle,
     _load_league_structure,
+    refresh_league_structure,
     detect_sport,
     extract_bb_1x2,
 )
@@ -367,7 +368,7 @@ def run_incremental(time_window: str = "all"):
     if _current_snap.exists():
         try: snapshot = json.loads(_current_snap.read_text())
         except: pass
-    all_pin_leagues = _load_league_structure()
+    all_pin_leagues = refresh_league_structure()
     prev_active_leagues = set()
     for _m in snapshot.get("matches", {}).values():
         if isinstance(_m, dict) and _m.get("league"):

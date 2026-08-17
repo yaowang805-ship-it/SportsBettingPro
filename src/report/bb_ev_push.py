@@ -1551,6 +1551,7 @@ def _collect_opportunities(match, market_key):
             "ev_pct": ev,
             "_warn": "⚠️ 溢价异常高，请核对" if ev > 20 else "",
             "start_time_bb": match.get("start_time_bb", ""),
+            "bb_match_id": match.get("bb_match_id", ""),  # BB比赛ID, 结算按ID匹配
             "_market_type": market_key,  # "opportunities"|"handicap"|"over_under"|...
             "_sub_market": sub_market,  # "1x2"|"ht"|"btts"|"dc"|"oe"|"htft"|...
             "line": line,               # 盘口线 (让球/大小), 供二次验价+虚拟投注
@@ -1855,7 +1856,7 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
                    "pingpong": "🏓", "badminton": "🏸",
                    "volleyball": "🏐", "boxing": "👊",
                    "mma": "🥊", "ice_hockey": "🏒"}
-    _TIER_LABEL = {1: "T1", 2: "T2", 3: "T3"}
+    _TIER_LABEL = {1: "T1", 2: "T2", 3: "T3", 4: "T4"}
     now_str = datetime.now(timezone.utc).astimezone().strftime("%m/%d %H:%M")
     total_allocated = sum(o["_stake"] for o in qualified)
 

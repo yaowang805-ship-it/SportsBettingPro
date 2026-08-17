@@ -682,6 +682,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         entry = {
             "league": m["league"],
             "match_type": m.get("match_type", "?"),
+            "bb_match_id": bb.get("id", ""),  # BB 比赛ID, 结算时按ID精确匹配(免队名错配)
             "home_bb": bb.get("home", "?"),
             "away_bb": bb.get("away", "?"),
             # V5.5: 中文名(展示用) — 从双语言拉取携带

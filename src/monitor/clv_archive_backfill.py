@@ -51,6 +51,7 @@ def _load_archive():
     取每个 matchup 最后一次抓取的快照, 去抽水得公平收盘价。
     """
     db = sqlite3.connect(DATA_DIR / 'pinnacle_odds_archive.db')
+    db.execute("PRAGMA busy_timeout=30000")  # 归档库可能被扫描写入, 30s等待避免读时报locked
     cur = db.cursor()
     rows = cur.execute('''
         SELECT matchup_id, home, away, designation, points, price, fetched_at

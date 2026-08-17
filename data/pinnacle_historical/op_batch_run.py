@@ -7,6 +7,8 @@
 用法: .venv312/bin/python data/pinnacle_historical/op_batch_run.py [--seasons 2024-2025]
 """
 import sys, time, argparse
+import concurrent.futures
+import threading
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
@@ -28,11 +30,14 @@ SPORT_SEASONS = {
 OUT_DIR = ROOT / "data" / "oddsportal"
 LOG_FILE = ROOT / "data" / "logs" / "op_batch.log"
 
+_log_lock = threading.Lock()
+
 def log(msg):
     line = f"{time.strftime('%Y-%m-%d %H:%M:%S')} {msg}"
     print(line, flush=True)
-    with open(LOG_FILE, "a") as f:
-        f.write(line + "\n")
+    with _log_lock:
+        with open(LOG_FILE, "a") as f:
+            f.write(line + "\n")
 
 def main():
     ap = argparse.ArgumentParser()
@@ -64,8 +69,10 @@ def main():
                 break
 
     log(f"待下载任务: {len(tasks)} 个")
-    done = fail = 0
-    for sport, lg, lg_url, season, out in tasks:
+    MAX_WORKERS = 8  # 8线程并行(用户要求), Playwright浏览器重但可承受
+
+    def _process_task(task):
+        sport, lg, lg_url, season, out = task
         out.parent.mkdir(parents=True, exist_ok=True)
         t0 = time.time()
         # 年度联赛(MLS/巴甲等)用单年, 跨年用 YYYY-YYYY; 空则回退单年
@@ -85,12 +92,25 @@ def main():
             if games:
                 break
         if games:
-            done += 1
             log(f"[ok] {sport}/{lg} {season}: {len(games)} 场 ({time.time()-t0:.0f}s)")
+            return "ok"
         else:
-            fail += 1
             log(f"[empty] {sport}/{lg} {season}: 0 场 ({time.time()-t0:.0f}s)")
-        time.sleep(3)  # 联赛间延时, 防 OddsPortal 限流
+            return "empty"
+
+    done = fail = 0
+    with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        futures = [executor.submit(_process_task, t) for t in tasks]
+        for fut in concurrent.futures.as_completed(futures):
+            try:
+                r = fut.result()
+            except Exception as e:
+                log(f"[error] 任务异常: {type(e).__name__}: {e}")
+                r = "empty"
+            if r == "ok":
+                done += 1
+            else:
+                fail += 1
     log(f"完成: {done} 成功, {fail} 失败/空, 共 {len(tasks)}")
 
 if __name__ == "__main__":

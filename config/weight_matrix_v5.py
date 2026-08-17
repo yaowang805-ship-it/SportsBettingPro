@@ -2075,29 +2075,33 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                     wr, avg_o, n = data
                     return kelly_075(wr, avg_o, 0.04, n, sport_confidence=0.50) * _settlement_multiplier(league)
             return 0.0
-        # V5: 非NBA/WNBA用Betfair 24K篮球数据 (含FIBA世界杯/WNBA/ASEAN等)
+        # V5: 非NBA/WNBA — 优先 OddsPortal 逐联赛数据(CBA/欧洲篮球等), Betfair 聚合兜底
         else:
             idx = _bin_index(odds, ODDS_BINS)
+            # 1. OddsPortal 逐联赛(该联赛有独立标定时优先, 比 Betfair 聚合更精细)
+            _od = _match_league(league, ODDSPORTAL_ML_DATA) or {}
+            if _od.get(idx) and _od[idx][2] >= 20:
+                wr, avg_o, n = _od[idx]
+                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.45) * get_oddsportal_discount(league) * _settlement_multiplier(league)
+            # 2. Betfair 聚合回退 (exchange closing odds ~= Pinnacle)
             data = None
-            # 优先用Betfair数据 (exchange closing odds ~= Pinnacle)
             try:
                 from config.betfair_basketball_calibrated import BETFAIR_BASKETBALL
                 agg = BETFAIR_BASKETBALL.get("_AGGREGATE", {})
                 data = agg.get(str(idx))
             except ImportError:
                 pass
-            # 回退旧Betfair数据
             if not data and "BETFAIR_BASKET" in globals():
                 data = globals()["BETFAIR_BASKET"].get(idx)
             if data and isinstance(data, (list, tuple)) and len(data) >= 3 and data[2] >= 20:
                 wr, avg_o, n = data
                 return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.40) * _settlement_multiplier(league)
-            # OddsPortal 2-way ML fallback (CBA/欧洲篮球/澳洲等非NBA)
-            _od = (_match_league(league, ODDSPORTAL_ML_DATA) or ODDSPORTAL_ML_DATA.get("_AGGREGATE", {})).get(idx)
-            if _od and _od[2] >= 20:
-                wr, avg_o, n = _od
-                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.45) * get_oddsportal_discount(league) * _settlement_multiplier(league)
-            # Fallback: no data → conservative 1% (was the old BETFAIR_BASKET bug)
+            # 3. OddsPortal 聚合兜底
+            _od_agg = ODDSPORTAL_ML_DATA.get("_AGGREGATE", {}).get(idx)
+            if _od_agg and _od_agg[2] >= 20:
+                wr, avg_o, n = _od_agg
+                return kelly_075(wr, avg_o, 0.05, n, sport_confidence=0.40) * get_oddsportal_discount(league) * _settlement_multiplier(league)
+            # Fallback: no data → conservative 1%
             return 0.01 if odds < 3.0 else 0.0
 
     # ── American Football (NFL) ──
