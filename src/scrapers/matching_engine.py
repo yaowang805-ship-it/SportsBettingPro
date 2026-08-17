@@ -841,6 +841,10 @@ def try_date_independent_match(bb_matches, pin_matches_by_league, sport="tennis"
     from src.scrapers.pinnacle_league_map import find_pinnacle_league_ids
 
     for bb in bb_matches:
+        # 铁律: 只匹配个人运动本身 — 团队运动(足球/篮球)的 BB 比赛跳过, 防止被误配成网球/拳击/MMA
+        # (曾出现"乌拉圭足球后备队"被当网球匹配, 污染网球数据+产生假+EV)
+        if detect_sport(bb) != sport:
+            continue
         bb_league = bb.get("league", "")
         if bb_league not in pin_matches_by_league:
             continue
