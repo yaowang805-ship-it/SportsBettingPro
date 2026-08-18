@@ -420,7 +420,30 @@ def _extract_market_odds(pin_matchup, sub_market, designation):
                 return round(odds[idx], 4), round(fair, 4), round(total, 4)
         return None
 
-    # oe(单双) Pin matchup 无对应字段 → 暂不支持
+    elif sub_market == "oe":
+        # oe(单双) 在 matchup["oe"] 字段 (pinnacle_markets 已提取)
+        for oe in pin_matchup.get("oe", []):
+            if oe.get("period", 0) != 0:
+                continue
+            odd = even = None
+            for p in oe.get("prices", []):
+                pd = (p.get("designation") or "").lower()
+                val = p.get("price_decimal") or get_decimal_price(p)
+                if "odd" in pd:
+                    odd = val
+                elif "even" in pd:
+                    even = val
+            if odd and even:
+                odds = [odd, even]
+                idx = 0 if ("单" in des or "odd" in des) else 1
+                fair, total = _devig(odds, idx)
+                if fair is None:
+                    return None
+                return round(odds[idx], 4), round(fair, 4), round(total, 4)
+        return None
+
+    # correct_score/winning_margin/total_goals_range/first_to_score 在 get_league_special_markets
+    # (matchup 里无对应字段, 需在 _fetch_close_odds 里单独拉)
     return None
 
 
