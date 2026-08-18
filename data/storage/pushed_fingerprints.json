@@ -466,6 +466,49 @@
     "bb": 4.36,
     "ts": 1787029463.7983518
   },
+  "football|England Professional Development League|Bristol City U21|Wigan Athletic U21|客胜|1x2|2026-08-18": {
+    "ev": 18.38,
+    "ts": 1787052395.7824168
+  },
+  "football|England Professional Development League|Bristol City U21|Wigan Athletic U21|让球客胜|1x2|2026-08-18": {
+    "ev": 14.36,
+    "ts": 1787052395.782502
+  },
+  "football|England Professional Development League|Peterborough United U21|Queens Park Rangers U21|主胜|1x2|2026-08-18": {
+    "ev": 3.32,
+    "ts": 1787052830.419613
+  },
+  "football|England Professional Development League|Peterborough United U21|Queens Park Rangers U21|双重机会-和局/客|dc|2026-08-18": {
+    "ev": 2.15,
+    "ts": 1787052395.782314
+  },
+  "football|England Professional Development League|Peterborough United U21|Queens Park Rangers U21|客胜|1x2|2026-08-18": {
+    "ev": 2.72,
+    "ts": 1787052395.782112
+  },
+  "football|England Professional Development League|Peterborough United U21|Queens Park Rangers U21|让球主胜|1x2|2026-08-18": {
+    "ev": 3.78,
+    "ts": 1787053212.170487
+  },
+  "football|England Professional Development League|Peterborough United U21|Queens Park Rangers U21|让球客胜|1x2|2026-08-18": {
+    "ev": 6.02,
+    "ts": 1787052395.782212
+  },
+  "football|England Professional Development League|布里斯托尔城 U21|维冈竞技 U21|客胜|1x2|2026-08-18": {
+    "ev": 18.38,
+    "bb": 4.16,
+    "ts": 1787052395.4873312
+  },
+  "football|England Professional Development League|布里斯托尔城 U21|维冈竞技 U21|让球客胜(+1)|hc|+1|2026-08-18": {
+    "ev": 14.36,
+    "bb": 1.84,
+    "ts": 1787052395.487395
+  },
+  "football|England Professional Development League|彼德堡联 U21|女王公园巡游者 U21|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-18": {
+    "ev": 6.02,
+    "bb": 1.89,
+    "ts": 1787052395.487189
+  },
   "football|France Ligue 3|孔卡诺|维利法兰|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-21": {
     "ev": 4.57,
     "bb": 1.79,
@@ -500,6 +543,11 @@
     "ev": 10.52,
     "bb": 4.91,
     "ts": 1787038514.330166
+  },
+  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯 1968|让球客胜(+1.5)|hc|+1.5|2026-08-19": {
+    "ev": 3.86,
+    "bb": 2.0,
+    "ts": 1787052395.487262
   },
   "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯1968|双重机会-和局/客|dc|2026-08-19": {
     "ev": 9.17,
@@ -683,6 +731,10 @@
     "ev": 1.53,
     "ts": 1787032903.468022
   },
+  "tennis|ATP Challenger - Roehampton Open|Michael Geerts (BEL)|Billy Blaydes (GBR)|让盘主胜|1x2|2026-08-18": {
+    "ev": 2.44,
+    "ts": 1787053212.170611
+  },
   "tennis|ATP Challenger - Sion Open - Doubles|Maximilian Neuchrist (AUT) / David Poljak (CZE)|Luca Staeheli (SUI) / Patrick Zahraj (GER)|主胜|1x2|2026-08-18": {
     "ev": 11.05,
     "ts": 1787041147.930015
@@ -711,6 +763,14 @@
     "ev": 2.56,
     "ts": 1787025629.2470882
   },
+  "tennis|ITF - W35 Erwitte Women Singles|Arina Gabriela Vasilescu (ROU)|Tessa Johanna Brockmann (GER)|客胜|1x2|2026-08-18": {
+    "ev": 2.05,
+    "ts": 1787052395.782731
+  },
+  "tennis|ITF - W35 Erwitte Women Singles|Arina Gabriela Vasilescu (ROU)|Tessa Johanna Brockmann (GER)|让盘客胜|1x2|2026-08-18": {
+    "ev": 4.45,
+    "ts": 1787052395.78278
+  },
   "tennis|ITF - W35 Verbier Women Singles|Ana Grubor (CAN)|Federica Trevisan (ITA)|客胜|1x2|2026-08-18": {
     "ev": 1.11,
     "ts": 1787039050.968587
@@ -727,24 +787,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|England Professional Development League|彼德堡联 U21|女王公园巡游者 U21|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-18": {
-    "ev": 6.02,
-    "bb": 1.89,
-    "ts": 1787052395.487189
-  },
-  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯 1968|让球客胜(+1.5)|hc|+1.5|2026-08-19": {
-    "ev": 3.86,
-    "bb": 2.0,
-    "ts": 1787052395.487262
-  },
-  "football|England Professional Development League|布里斯托尔城 U21|维冈竞技 U21|客胜|1x2|2026-08-18": {
-    "ev": 18.38,
-    "bb": 4.16,
-    "ts": 1787052395.4873312
-  },
-  "football|England Professional Development League|布里斯托尔城 U21|维冈竞技 U21|让球客胜(+1)|hc|+1|2026-08-18": {
-    "ev": 14.36,
-    "bb": 1.84,
-    "ts": 1787052395.487395
+  "basketball|WNBA|康涅狄格阳光 (女)|洛杉矶火花 (女)|小分(169.5)|ou|169.5|2026-08-19": {
+    "ev": 3.22,
+    "bb": 1.94,
+    "ts": 1787053408.2065332
   }
 }
