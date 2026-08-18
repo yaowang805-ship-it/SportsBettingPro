@@ -1,5 +1,5 @@
 {
-  "balance": 16325.0,
+  "balance": 15431.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1174,14 +1174,83 @@
       "commence_time": 1787072400,
       "created_at": "2026-08-18T08:39:06.745076+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_芝加哥天空_(女)_纽约自由人_(女)_小分(1795)",
+      "sport": "basketball",
+      "league": "WNBA 美国职业女子篮球联赛",
+      "home_team": "芝加哥天空 (女)",
+      "away_team": "纽约自由人 (女)",
+      "home_cn": "芝加哥天空 (女)",
+      "away_cn": "纽约自由人 (女)",
+      "market": "over_under",
+      "market_type": "小分(179.5)",
+      "sub_market": "ou",
+      "line": "179.5",
+      "odds": 2.04,
+      "stake": 312,
+      "model_prob": 0.5093,
+      "ev_pct": 3.9,
+      "pin_odds": 1.8475,
+      "fair_price": 1.9635,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787101200,
+      "created_at": "2026-08-18T08:58:40.447050+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_拉斯维加斯王牌_(女)_亚特兰大梦想_(女)_让分主胜(-35)",
+      "sport": "basketball",
+      "league": "WNBA 美国职业女子篮球联赛",
+      "home_team": "拉斯维加斯王牌 (女)",
+      "away_team": "亚特兰大梦想 (女)",
+      "home_cn": "拉斯维加斯王牌 (女)",
+      "away_cn": "亚特兰大梦想 (女)",
+      "market": "handicap",
+      "market_type": "让分主胜(-3.5)",
+      "sub_market": "hc",
+      "line": "-3.5",
+      "odds": 1.9,
+      "stake": 304,
+      "model_prob": 0.5429,
+      "ev_pct": 3.15,
+      "pin_odds": 1.7576,
+      "fair_price": 1.842,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787101200,
+      "created_at": "2026-08-18T08:58:40.447165+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_拉斯维加斯王牌_(女)_亚特兰大梦想_(女)_小分(1765)",
+      "sport": "basketball",
+      "league": "WNBA 美国职业女子篮球联赛",
+      "home_team": "拉斯维加斯王牌 (女)",
+      "away_team": "亚特兰大梦想 (女)",
+      "home_cn": "拉斯维加斯王牌 (女)",
+      "away_cn": "亚特兰大梦想 (女)",
+      "market": "over_under",
+      "market_type": "小分(176.5)",
+      "sub_market": "ou",
+      "line": "176.5",
+      "odds": 2.0,
+      "stake": 278,
+      "model_prob": 0.5313,
+      "ev_pct": 6.27,
+      "pin_odds": 1.7812,
+      "fair_price": 1.882,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787101200,
+      "created_at": "2026-08-18T08:58:40.447275+00:00",
+      "track_only": false
     }
   ],
   "settled": {},
   "history": [],
   "daily_budget": {
     "date": "2026-08-18",
-    "used": 3316.0,
-    "bets": 46
+    "used": 4210.0,
+    "bets": 49
   },
   "updated": null
 }

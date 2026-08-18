@@ -12,6 +12,11 @@
     "ev": 1.66,
     "ts": 1787027658.84504
   },
+  "basketball|WNBA|康涅狄格阳光 (女)|洛杉矶火花 (女)|小分(170.5)|ou|170.5|2026-08-19": {
+    "ev": 5.34,
+    "bb": 2.0,
+    "ts": 1787042346.7519271
+  },
   "basketball|WNBA|芝加哥天空 (女)|纽约自由人 (女)|让分客胜(-3.5)|hc|-3.5|2026-08-19": {
     "ev": 2.19,
     "bb": 1.91,
@@ -63,6 +68,10 @@
     "ev": 6.14,
     "bb": 1.88,
     "ts": 1787027804.460613
+  },
+  "football|ASEAN Hyundai Cup|Thailand|Singapore|双边进球-是|btts|2026-08-18": {
+    "ev": 1.46,
+    "ts": 1787043153.8814101
   },
   "football|ASEAN Hyundai Cup|Thailand|Singapore|双重机会-和局/客|dc|2026-08-18": {
     "ev": 12.42,
@@ -212,6 +221,10 @@
     "ev": 3.62,
     "ts": 1787025629.247463
   },
+  "football|Copa Libertadores|Tolima|CSD Independiente del Valle|双边进球-是|btts|2026-08-19": {
+    "ev": 1.49,
+    "ts": 1787042347.3336582
+  },
   "football|Copa Libertadores|Tolima|CSD Independiente del Valle|和局|1x2|2026-08-19": {
     "ev": 1.08,
     "ts": 1787032510.460124
@@ -255,6 +268,10 @@
     "bb": 1.82,
     "ts": 1787039431.297716
   },
+  "football|Copa Sudamericana|Recoleta|Boca Juniors|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 1.63,
+    "ts": 1787042347.333806
+  },
   "football|Copa Sudamericana|Sao Paulo FC SP|Club Bolivar|上半场客胜|ht|2026-08-19": {
     "ev": 5.98,
     "ts": 1787025629.246689
@@ -281,6 +298,10 @@
     "ev": 4.19,
     "ts": 1787025629.2458591
   },
+  "football|Denmark DBU Pokalen|Nykobing FC|Naestved BK|让球主胜|1x2|2026-08-19": {
+    "ev": 1.06,
+    "ts": 1787042347.332599
+  },
   "football|Denmark DBU Pokalen|尼克宾|纳斯特维德|大球(2.25)|ou|2.25|2026-08-19": {
     "ev": 8.33,
     "bb": 1.73,
@@ -290,6 +311,11 @@
     "ev": 3.58,
     "bb": 1.9,
     "ts": 1787029463.798281
+  },
+  "football|Denmark DBU Pokalen|尼克宾|纳斯特维德|大球(2.75)|ou|2.75|2026-08-19": {
+    "ev": 9.25,
+    "bb": 2.13,
+    "ts": 1787042346.751998
   },
   "football|England EFL Trophy|Northampton Town|Brighton & Hove Albion FC U21|上半场主胜|ht|2026-08-19": {
     "ev": 2.42,
@@ -307,6 +333,10 @@
     "ev": 6.31,
     "bb": 4.95,
     "ts": 1787034729.9988852
+  },
+  "football|England National League North|Hebburn Town|Worksop Town|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 1.49,
+    "ts": 1787042347.3327
   },
   "football|England National League North|Marine FC|Chorley FC|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 2.58,
@@ -536,14 +566,19 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|WNBA|康涅狄格阳光 (女)|洛杉矶火花 (女)|小分(170.5)|ou|170.5|2026-08-19": {
-    "ev": 5.34,
-    "bb": 2.0,
-    "ts": 1787042346.7519271
+  "basketball|WNBA|芝加哥天空 (女)|纽约自由人 (女)|小分(179.5)|ou|179.5|2026-08-19": {
+    "ev": 3.9,
+    "bb": 2.04,
+    "ts": 1787043520.452517
   },
-  "football|Denmark DBU Pokalen|尼克宾|纳斯特维德|大球(2.75)|ou|2.75|2026-08-19": {
-    "ev": 9.25,
-    "bb": 2.13,
-    "ts": 1787042346.751998
+  "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|让分主胜(-3.5)|hc|-3.5|2026-08-19": {
+    "ev": 3.15,
+    "bb": 1.9,
+    "ts": 1787043520.452568
+  },
+  "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|小分(176.5)|ou|176.5|2026-08-19": {
+    "ev": 6.27,
+    "bb": 2.0,
+    "ts": 1787043520.452609
   }
 }
