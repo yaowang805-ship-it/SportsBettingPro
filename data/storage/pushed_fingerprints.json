@@ -3,6 +3,10 @@
     "ev": 1.01,
     "ts": 1787025629.2471528
   },
+  "baseball|MLB|Philadelphia Phillies|Miami Marlins|客胜|1x2|2026-08-19": {
+    "ev": 49.14,
+    "ts": 1787056770.717558
+  },
   "basketball|Mexico LNBP Basketball League|皇家部队|甘布西诺弗雷斯尼洛|让分客胜(+10.5)|hc|+10.5|2026-08-20": {
     "ev": 4.36,
     "bb": 1.73,
@@ -55,6 +59,11 @@
     "ev": 6.27,
     "bb": 2.0,
     "ts": 1787043520.452609
+  },
+  "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|让分主胜(-2.5)|hc|-2.5|2026-08-19": {
+    "ev": 3.7,
+    "bb": 1.93,
+    "ts": 1787056770.460829
   },
   "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|让分主胜(-3.5)|hc|-3.5|2026-08-19": {
     "ev": 3.15,
@@ -690,6 +699,10 @@
     "bb": 2.06,
     "ts": 1787020969.61725
   },
+  "football|UEFA Champions League-Qualification|Fenerbahce|Olympique Lyonnais|上半场客胜|ht|2026-08-19": {
+    "ev": 1.03,
+    "ts": 1787056770.716838
+  },
   "football|UEFA Champions League-Qualification|GNK Dinamo Zagreb|Viking FK|角球让球主胜|corner|2026-08-19": {
     "ev": 1.32,
     "ts": 1787036402.217886
@@ -811,6 +824,10 @@
     "ev": 1.05,
     "ts": 1787025629.247019
   },
+  "tennis|ITF - W15 Logrono Women Singles|Wozuko Mdlulwa (RSA)|Jenna Defalco (USA)|客胜|1x2|2026-08-19": {
+    "ev": 1.8,
+    "ts": 1787056770.7175198
+  },
   "tennis|ITF - W15 Tianjin Women Doubles|Kamonwan Yodpetch (THA) / Zhang Ruien (CHN)|Kim Yujin (KOR) / Funa Kozaki (JPN)|客胜|1x2|2026-08-18": {
     "ev": 77.91,
     "ts": 1787030488.288856
@@ -843,9 +860,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|让分主胜(-2.5)|hc|-2.5|2026-08-19": {
-    "ev": 3.7,
-    "bb": 1.93,
-    "ts": 1787056770.460829
+  "basketball|WNBA|多伦多节奏 (女)|印第安纳狂热 (女)|小分(190.5)|ou|190.5|2026-08-19": {
+    "ev": 4.43,
+    "bb": 1.97,
+    "ts": 1787057854.296161
   }
 }

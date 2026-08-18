@@ -1,5 +1,5 @@
 {
-  "balance": 12967.0,
+  "balance": 12567.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1588,14 +1588,37 @@
       "commence_time": 1787101200,
       "created_at": "2026-08-18T12:39:30.457356+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_多伦多节奏_(女)_印第安纳狂热_(女)_小分(1905)",
+      "sport": "basketball",
+      "league": "WNBA 美国职业女子篮球联赛",
+      "home_team": "多伦多节奏 (女)",
+      "away_team": "印第安纳狂热 (女)",
+      "home_cn": "多伦多节奏 (女)",
+      "away_cn": "印第安纳狂热 (女)",
+      "market": "over_under",
+      "market_type": "小分(190.5)",
+      "sub_market": "ou",
+      "line": "190.5",
+      "odds": 1.97,
+      "stake": 400,
+      "model_prob": 0.5301,
+      "ev_pct": 4.43,
+      "pin_odds": 1.7812,
+      "fair_price": 1.8864,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787094000,
+      "created_at": "2026-08-18T12:57:34.293202+00:00",
+      "track_only": false
     }
   ],
   "settled": {},
   "history": [],
   "daily_budget": {
     "date": "2026-08-18",
-    "used": 6674.0,
-    "bets": 64
+    "used": 7074.0,
+    "bets": 65
   },
   "updated": null
 }
