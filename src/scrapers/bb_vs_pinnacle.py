@@ -1704,7 +1704,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                    + len(entry.get("draw_no_bet", [])))
         sport_opp_counts[s] = sport_opp_counts.get(s, 0) + n_opps
 
-    # V5: 检测运动级数据丢失 (有BB数据但对比结果为0)
+    # V5: 检测运动级无 +EV (有BB数据但无 +EV 机会)
+    # 注意: 不是"对比=0", 而是"匹配了但 BB 赔率≤Pin 公平价, 无 +EV"(2026-08-18 排查确认)
     _bb_sports_with_data = set()
     for m in bb_matches:
         _s = m.get("sport", "")
@@ -1713,7 +1714,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     _cmp_sports_with_matches = set(sport_counts.keys())
     _lost_sports = _bb_sports_with_data - _cmp_sports_with_matches - {"pingpong", "badminton"}
     if _lost_sports:
-        print(f"⚠️ 运动数据丢失: {', '.join(sorted(_lost_sports))} — BB有数据但对比=0 (Pinnacle获取失败?)")
+        print(f"ℹ️ 运动无+EV: {', '.join(sorted(_lost_sports))} — BB有数据但无+EV机会 (BB赔率≤Pin公平价, 非对比失败)")
 
     # ── 防御性护栏: 去抽水后公平价必须 >= Pin 原始赔率 ──
     # fair_price < pin_odds 说明 devig 方向错误 (热门公平价被压低), 会制造假 +EV。

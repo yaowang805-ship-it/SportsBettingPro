@@ -16,6 +16,19 @@
     "ev": 2.73,
     "ts": 1786947450.587404
   },
+  "basketball|Chile LNB|CD 拉斯阿尼玛斯|瓦尔迪维亚|客胜|1x2|2026-08-18": {
+    "ev": 5.21,
+    "bb": 1.39,
+    "ts": 1786948099.1630569
+  },
+  "basketball|Chile LNB|Las Animas|Valdivia|客胜|1x2|2026-08-18": {
+    "ev": 5.21,
+    "ts": 1786949035.3051362
+  },
+  "basketball|Chile LNB|Universidad Catolica De Santiago|Colegio Los Leones|客胜|1x2|2026-08-18": {
+    "ev": 2.73,
+    "ts": 1786949035.305181
+  },
   "basketball|Chile LNB|圣地亚哥天主教大学|奎利普尔|客胜|1x2|2026-08-18": {
     "ev": 6.0,
     "bb": 1.34,
@@ -91,6 +104,10 @@
     "bb": 1.91,
     "ts": 1786923392.362775
   },
+  "basketball|Paraguay Liga Nacional de Basquetbol|Felix Perez Cardozo|Deportivo San Jose|让分主胜|1x2|2026-08-18": {
+    "ev": 8.26,
+    "ts": 1786954147.653748
+  },
   "basketball|Paraguay Liga Nacional de Basquetbol|菲利克斯佩雷斯|圣荷西|客胜|1x2|2026-08-18": {
     "ev": 5.09,
     "bb": 1.33,
@@ -127,10 +144,10 @@
     "bb": 2.24,
     "ts": 1786844478.359055
   },
-  "football|Argentina Cup|利斯特雷|拉普拉塔体操|上半场双重机会-主/客|ht_dc|2026-08-19": {
-    "ev": 10.93,
-    "bb": 2.24,
-    "ts": 1786845367.864449
+  "football|Argentina Cup|阿韦亚内达竞技足球俱乐部|贝尔格拉诺|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 8.27,
+    "bb": 2.05,
+    "ts": 1786948099.163131
   },
   "football|Argentina Liga Profesional|Barracas Central|Club Atletico Rosario Central|总进球区间4-6|total_goals_range|2026-08-17": {
     "ev": 142.36,
@@ -164,6 +181,10 @@
   "football|Argentina Liga Profesional|Gimnasia Y Esgrima Mendoza|CA Talleres de Cordoba|和局|1x2|2026-08-18": {
     "ev": 2.88,
     "ts": 1786947450.587741
+  },
+  "football|Argentina Liga Profesional|Gimnasia Y Esgrima Mendoza|Talleres de Cordoba|和局|1x2|2026-08-18": {
+    "ev": 2.22,
+    "ts": 1786949035.305377
   },
   "football|Argentina Liga Profesional|Velez Sarsfield|Defensa y Justicia|净胜球away_by2|winning_margin|2026-08-18": {
     "ev": 3.45,
@@ -213,6 +234,10 @@
     "ev": 9.69,
     "bb": 1.65,
     "ts": 1786883634.127855
+  },
+  "football|Argentina Primera Nacional|All Boys|Nueva Chicago|上半场双重机会-主/客|ht_dc|2026-08-18": {
+    "ev": 4.78,
+    "ts": 1786949035.3045812
   },
   "football|Argentina Primera Nacional|CA All Boys|Nueva Chicago|上半场双重机会-主/客|ht_dc|2026-08-18": {
     "ev": 3.83,
@@ -296,6 +321,10 @@
   "football|Austria Bundesliga|SK Rapid Wien|Grazer AK|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 1.16,
     "ts": 1786881177.247527
+  },
+  "football|Azerbaijan Premier League|Qarabag FK|Shamakhi FK|双重机会-和局/客|dc|2026-08-17": {
+    "ev": 1.35,
+    "ts": 1786951864.995141
   },
   "football|Azerbaijan Premier League|Zira FK|Safa|双重机会-和局/客|dc|2026-08-17": {
     "ev": 1.99,
@@ -398,6 +427,10 @@
     "ev": 1.22,
     "ts": 1786851693.270834
   },
+  "football|Brazil Serie A|Internacional RS|Clube Do Remo PA|上半场双重机会-主/客|ht_dc|2026-08-18": {
+    "ev": 1.42,
+    "ts": 1786949035.304853
+  },
   "football|Brazil Serie A|Mirassol FC SP|CR Flamengo RJ|上半场主胜|ht|2026-08-17": {
     "ev": 1.27,
     "ts": 1786851693.270314
@@ -486,6 +519,10 @@
     "ev": 7.11,
     "bb": 1.8,
     "ts": 1786865347.6110039
+  },
+  "football|Bulgaria First Professional League|FK Spartak 1918 Varna|FK Septemvri Sofia|上半场双重机会-主/客|ht_dc|2026-08-18": {
+    "ev": 1.06,
+    "ts": 1786951864.9969778
   },
   "football|Bulgaria First Professional League|FK Spartak 1918 Varna|FK Septemvri Sofia|上半场客胜|ht|2026-08-18": {
     "ev": 3.98,
@@ -585,9 +622,17 @@
     "ev": 1.08,
     "ts": 1786947450.586018
   },
+  "football|Coppa Italia|Pisa|Empoli FC|上半场双重机会-主/客|ht_dc|2026-08-18": {
+    "ev": 1.87,
+    "ts": 1786949035.304074
+  },
   "football|Coppa Italia|SC Pisa|Empoli FC|上半场双重机会-主/客|ht_dc|2026-08-18": {
     "ev": 1.87,
     "ts": 1786947450.585958
+  },
+  "football|Coppa Italia|US Cremonese|Sampdoria|上半场双重机会-主/客|ht_dc|2026-08-18": {
+    "ev": 1.27,
+    "ts": 1786950383.291511
   },
   "football|Costa Rica Primera Division|Perez Zeledon|Inter San Carlos|上半场主胜|ht|2026-08-17": {
     "ev": 11.28,
@@ -608,6 +653,10 @@
   "football|Costa Rica Primera Division|Sporting San Jose|CD Escorpiones Belen|总进球区间7+|total_goals_range|2026-08-18": {
     "ev": 3.81,
     "ts": 1786933203.703986
+  },
+  "football|Costa Rica Primera Division|Sporting San Jose|Escorpiones Belen|总进球区间7+|total_goals_range|2026-08-18": {
+    "ev": 3.81,
+    "ts": 1786949035.3056252
   },
   "football|Costa Rica Primera Division|佩雷斯泽莱东|国际森卡洛斯|双重机会-主/和局|dc|2026-08-17": {
     "ev": 7.31,
@@ -734,6 +783,10 @@
     "ev": 1.63,
     "ts": 1786947450.585825
   },
+  "football|Finland Ykkonen Women|Pallokerho Keski Uusimaa (w)|TPS (w)|让球客胜|1x2|2026-08-17": {
+    "ev": 3.27,
+    "ts": 1786951161.016181
+  },
   "football|Finland Ykkonen|VJS|JJK Jyvaskyla|角球大球|corner|9999-12-31": {
     "ev": 2.86,
     "ts": 1786888845.1846201
@@ -795,6 +848,14 @@
     "ev": 1.66,
     "ts": 1786947450.5858948
   },
+  "football|Iceland 1. deild|Afturelding|HK Kopavogur|上半场主胜|ht|2026-08-18": {
+    "ev": 1.52,
+    "ts": 1786951864.996324
+  },
+  "football|Iceland 1. deild|IR Reykjavik|UMF Njardvik|客胜|1x2|2026-08-18": {
+    "ev": 1.4,
+    "ts": 1786954832.6756952
+  },
   "football|Ireland FAI Cup|Bohemians Dublin FC|Longford Town FC|双重机会-和局/客|dc|2026-08-17": {
     "ev": 1.5,
     "ts": 1786853555.103164
@@ -826,6 +887,10 @@
   "football|Malta Premier League|Hamrun Spartans FC|Mosta FC|双重机会-和局/客|dc|2026-08-18": {
     "ev": 11.83,
     "ts": 1786947450.5860841
+  },
+  "football|Malta Premier League|Hamrun Spartans FC|Mosta FC|大球|1x2|2026-08-18": {
+    "ev": 2.27,
+    "ts": 1786949035.304186
   },
   "football|Mexico Liga De Expansion MX|Leones Negros UDEG|Jaiba Brava|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 1.46,
@@ -899,6 +964,10 @@
     "ev": 4.65,
     "ts": 1786944109.27619
   },
+  "football|Mexico Liga MX|Pachuca|Puebla FC|和局|1x2|2026-08-18": {
+    "ev": 1.71,
+    "ts": 1786949035.305044
+  },
   "football|Mexico Liga MX|Pumas UNAM|Queretaro FC|和局|1x2|2026-08-17": {
     "ev": 1.09,
     "ts": 1786875163.885134
@@ -943,21 +1012,62 @@
     "bb": 1.98,
     "ts": 1786868219.032896
   },
+  "football|Norway 3rd Division|Brann 2|Os|主胜|1x2|2026-08-18": {
+    "ev": 6.79,
+    "ts": 1786954832.6785028
+  },
+  "football|Norway 3rd Division|Brann 2|Os|双重机会-主/和局|dc|2026-08-18": {
+    "ev": 7.46,
+    "ts": 1786954832.678556
+  },
+  "football|Norway 3rd Division|Fram Larvik|Sarpsborg 08 2|双重机会-主/和局|dc|2026-08-18": {
+    "ev": 1.3,
+    "ts": 1786954147.654249
+  },
+  "football|Norway 3rd Division|Fram Larvik|Sarpsborg 08 2|客胜|1x2|2026-08-18": {
+    "ev": 2.24,
+    "ts": 1786955431.95352
+  },
   "football|Norway 3rd Division|Lillehammer FK|Lyn 1896 FK II|双重机会-和局/客|dc|2026-08-18": {
     "ev": 8.0,
     "ts": 1786947450.587626
+  },
+  "football|Norway 3rd Division|Lillehammer FK|Lyn 1896 FK II|大球|1x2|2026-08-18": {
+    "ev": 3.79,
+    "ts": 1786955431.9537358
+  },
+  "football|Norway 3rd Division|Lillehammer FK|Lyn 1896 FK II|让球客胜|1x2|2026-08-18": {
+    "ev": 4.14,
+    "ts": 1786954832.6787698
   },
   "football|Norway 3rd Division|Staal Joerpeland IL|FK Haugesund II|大球|1x2|2026-08-18": {
     "ev": 5.53,
     "ts": 1786947450.5855858
   },
+  "football|Norway 3rd Division|Staal Joerpeland IL|FK Haugesund II|客胜|1x2|2026-08-18": {
+    "ev": 2.85,
+    "ts": 1786954147.6522958
+  },
   "football|Norway 3rd Division|Viking FK 2|Madla|主胜|1x2|2026-08-18": {
     "ev": 2.03,
     "ts": 1786947450.5875158
   },
+  "football|Norway 3rd Division|Viking FK 2|Madla|双重机会-和局/客|dc|2026-08-18": {
+    "ev": 2.53,
+    "ts": 1786954832.6784441
+  },
   "football|Norway 3rd Division|Viking FK 2|Madla|大球|1x2|2026-08-18": {
     "ev": 3.53,
     "ts": 1786947450.587564
+  },
+  "football|Norway 3rd Division|Viking FK 2|Madla|让球客胜|1x2|2026-08-18": {
+    "ev": 1.14,
+    "ts": 1786954147.654369
+  },
+  "football|Norway 3rd Division|斯达约珀兰|海于格松二队|大球(4.0)|ou|4.0|2026-08-18": {
+    "ev": 5.53,
+    "bb": 1.86,
+    "ts": 1786948099.163193
   },
   "football|Norway Eliteserien|Aalesunds FK|Valerenga IF Oslo|角球大球|corner|9999-12-31": {
     "ev": 2.79,
@@ -1077,6 +1187,10 @@
     "bb": 1.91,
     "ts": 1786845367.86477
   },
+  "football|Portugal Primeira Liga|Casa Pia AC|SL Benfica|双重机会-主/和局|dc|2026-08-18": {
+    "ev": 1.25,
+    "ts": 1786951864.996567
+  },
   "football|Portugal Primeira Liga|FC Arouca|Moreirense FC|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 1.9,
     "ts": 1786857131.0017111
@@ -1120,6 +1234,10 @@
   "football|Romania Liga 1|Corvinul|FC CFR 1907 Cluj|让球主胜|1x2|2026-08-17": {
     "ev": 2.39,
     "ts": 1786887623.50953
+  },
+  "football|Romania Liga 1|FC Universitatea Cluj|FC UTA Arad|主胜|1x2|2026-08-17": {
+    "ev": 1.84,
+    "ts": 1786948099.562618
   },
   "football|Russia First League|Spartak Kostroma|FK Ufa|上半场双重机会-主/客|ht_dc|2026-08-18": {
     "ev": 3.9,
@@ -1234,6 +1352,14 @@
     "ev": 58.05,
     "ts": 1786862117.400495
   },
+  "football|Spain LaLiga 2|Almeria|Club Deportivo Eldense|单双-单|oe|2026-08-18": {
+    "ev": 1.2,
+    "ts": 1786953130.920614
+  },
+  "football|Spain LaLiga 2|Almeria|Club Deportivo Eldense|让球主胜|1x2|2026-08-18": {
+    "ev": 1.21,
+    "ts": 1786949035.304331
+  },
   "football|Spain LaLiga 2|Burgos CF|Cordoba CF|上半场双重机会-主/客|ht_dc|2026-08-17": {
     "ev": 3.03,
     "ts": 1786851693.272052
@@ -1298,6 +1424,26 @@
     "ev": 7.03,
     "ts": 1786875163.884403
   },
+  "football|Spain LaLiga|Deportivo La Coruna|Elche CF|上半场双重机会-主/客|ht_dc|2026-08-18": {
+    "ev": 4.28,
+    "ts": 1786949035.3048
+  },
+  "football|Spain LaLiga|Deportivo La Coruna|Elche CF|上半场客胜|ht|2026-08-18": {
+    "ev": 9.42,
+    "ts": 1786949035.3047109
+  },
+  "football|Spain LaLiga|Deportivo La Coruna|Elche CF|单双-双|oe|2026-08-18": {
+    "ev": 1.39,
+    "ts": 1786949035.3047512
+  },
+  "football|Spain LaLiga|Deportivo La Coruna|Elche CF|和局|1x2|2026-08-18": {
+    "ev": 2.86,
+    "ts": 1786949035.304672
+  },
+  "football|Spain LaLiga|Deportivo La Coruna|Elche CF|让球主胜|1x2|2026-08-18": {
+    "ev": 1.35,
+    "ts": 1786954832.677235
+  },
   "football|Spain LaLiga|RC Deportivo La Coruna|Elche CF|上半场双重机会-主/客|ht_dc|2026-08-18": {
     "ev": 2.99,
     "ts": 1786947450.586865
@@ -1305,6 +1451,10 @@
   "football|Spain LaLiga|RC Deportivo La Coruna|Elche CF|上半场客胜|ht|2026-08-18": {
     "ev": 5.88,
     "ts": 1786947450.586636
+  },
+  "football|Spain LaLiga|RC Deportivo La Coruna|Elche CF|单双-双|oe|2026-08-18": {
+    "ev": 1.39,
+    "ts": 1786948099.563841
   },
   "football|Spain LaLiga|RC Deportivo La Coruna|Elche CF|和局|1x2|2026-08-18": {
     "ev": 2.86,
@@ -1362,6 +1512,14 @@
   "football|Sweden Women Damallsvenskan|Hammarby IF DFF (w)|Pitea IF DFF (w)|双重机会-和局/客|dc|2026-08-17": {
     "ev": 13.23,
     "ts": 1786853555.1032488
+  },
+  "football|Turkey 1. Lig|Batman Petrolspor|Boluspor|上半场双重机会-主/客|ht_dc|2026-08-18": {
+    "ev": 1.38,
+    "ts": 1786949035.304627
+  },
+  "football|Turkey 1. Lig|Batman Petrolspor|Boluspor|上半场客胜|ht|2026-08-18": {
+    "ev": 2.68,
+    "ts": 1786948099.5636349
   },
   "football|Turkey 1. Lig|Batman Petrolspor|Boluspor|净胜球away_by2|winning_margin|2026-08-18": {
     "ev": 13.77,
@@ -2167,6 +2325,10 @@
     "ev": 2.27,
     "ts": 1786944310.028202
   },
+  "tennis|ITF - W50 Prague Women Singles|Lucie Havlickova (CZE)|Victoria Bervid (CZE)|客胜|1x2|2026-08-18": {
+    "ev": 26.87,
+    "ts": 1786954147.6541
+  },
   "tennis|Uruguay Primera Division Reserve League|阿尔比恩后备队|乌拉圭河床后备队|上半场主胜|ht|2026-08-22": {
     "ev": 14.63,
     "bb": 3.29,
@@ -2182,19 +2344,18 @@
     "bb": 1.87,
     "ts": 1786947449.8239691
   },
-  "basketball|Chile LNB|CD 拉斯阿尼玛斯|瓦尔迪维亚|客胜|1x2|2026-08-18": {
-    "ev": 5.21,
-    "bb": 1.39,
-    "ts": 1786948099.1630569
+  "tennis|WTA - Cincinnati Open|Magdalena Frech (POL)|Elena Rybakina (KAZ)|大分|1x2|2026-08-18": {
+    "ev": 1.56,
+    "ts": 1786949642.064802
   },
-  "football|Argentina Cup|阿韦亚内达竞技足球俱乐部|贝尔格拉诺|上半场双重机会-主/客|ht_dc|2026-08-20": {
-    "ev": 8.27,
-    "bb": 2.05,
-    "ts": 1786948099.163131
+  "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 6.13,
+    "bb": 2.06,
+    "ts": 1787017553.852128
   },
-  "football|Norway 3rd Division|斯达约珀兰|海于格松二队|大球(4.0)|ou|4.0|2026-08-18": {
-    "ev": 5.53,
-    "bb": 1.86,
-    "ts": 1786948099.163193
+  "football|Argentina Cup|利斯特雷|拉普拉塔体操|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 10.61,
+    "bb": 2.25,
+    "ts": 1787017553.852198
   }
 }
