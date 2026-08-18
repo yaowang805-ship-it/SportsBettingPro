@@ -506,6 +506,11 @@
     "bb": 4.85,
     "ts": 1787036401.359704
   },
+  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯1968|小球(3.0)|ou|3.0|2026-08-19": {
+    "ev": 4.08,
+    "bb": 1.66,
+    "ts": 1787051186.58382
+  },
   "football|Japan Emperor Cup|Kagoshima United|Renofa Yamaguchi|主胜|1x2|2026-08-19": {
     "ev": 8.07,
     "ts": 1787048414.282254
@@ -722,9 +727,24 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯1968|小球(3.0)|ou|3.0|2026-08-19": {
-    "ev": 4.08,
-    "bb": 1.66,
-    "ts": 1787051186.58382
+  "football|England Professional Development League|彼德堡联 U21|女王公园巡游者 U21|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-18": {
+    "ev": 6.02,
+    "bb": 1.89,
+    "ts": 1787052395.487189
+  },
+  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯 1968|让球客胜(+1.5)|hc|+1.5|2026-08-19": {
+    "ev": 3.86,
+    "bb": 2.0,
+    "ts": 1787052395.487262
+  },
+  "football|England Professional Development League|布里斯托尔城 U21|维冈竞技 U21|客胜|1x2|2026-08-18": {
+    "ev": 18.38,
+    "bb": 4.16,
+    "ts": 1787052395.4873312
+  },
+  "football|England Professional Development League|布里斯托尔城 U21|维冈竞技 U21|让球客胜(+1)|hc|+1|2026-08-18": {
+    "ev": 14.36,
+    "bb": 1.84,
+    "ts": 1787052395.487395
   }
 }
