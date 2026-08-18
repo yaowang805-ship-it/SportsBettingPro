@@ -599,6 +599,7 @@ def get_league_corner_markets(league_id):
             entry = {"period": per, "prices": prices}
             if mtype == "moneyline":
                 # V5.9: 角球独赢(Pinnacle 偶尔有 moneyline 角球盘, 之前硬编码 [] 漏掉)
+                entry["prices_sorted"] = sort_ml_prices(prices)  # 与主市场一致, 排成 [home, draw, away]
                 moneyline.append(entry)
             elif mtype == "spread":
                 spread.append(entry)
