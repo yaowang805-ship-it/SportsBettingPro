@@ -2288,40 +2288,87 @@ def _parse_line(s):
 def _lookup_fresh_pin_odds(fresh: dict, o: dict):
     """从实时 Pinnacle matchup 数据里取对应方向/盘口的原始赔率。
 
-    中文 designation（主胜/客胜/让分主胜…）→ Pinnacle 英文 home/away/draw 映射。
+    V5.9 全覆盖: 独赢/让球/大小/半场(独赢/让球/大小)/DC/BTTS/单双 (所有运动通用)。
+    中文 designation → Pinnacle 英文 home/away/draw/over/under/yes/no/odd/even。
     让球/大小盘必须盘口线精确匹配(±0.1 带符号)，否则取不到 → 返回 None 保守放行。
     """
     mkt = o.get("_sub_market", o.get("_market", ""))
     designation = o.get("designation", "")
-    if mkt == "1x2":
-        # 中文/英文方向 → home/away/draw
+    des = (designation or "").lower()
+
+    def _find_2way(field, target_desig, line=None):
+        """2-way 盘(spread/total): 按方向和线匹配, 返回 price_decimal 或 0."""
+        for entry in fresh.get(field, []) or []:
+            for p in entry.get("prices", []) or []:
+                if (p.get("designation", "") or "").lower() != target_desig:
+                    continue
+                if line is not None:
+                    pts = p.get("points")
+                    if pts is not None and abs(pts - line) > 0.1:
+                        continue
+                return p.get("price_decimal", 0)
+        return None
+
+    def _find_ml(field, target):
+        """moneyline(3-way): 按 home/away/draw 匹配."""
+        for ml in fresh.get(field, []) or []:
+            for p in ml.get("prices", []) or []:
+                if (p.get("designation", "") or "").lower() == target:
+                    return p.get("price_decimal", 0)
+        return None
+
+    if mkt in ("1x2", "ht"):
+        field = "moneyline" if mkt == "1x2" else "ht_moneyline"
         target = "home"
-        if "客" in designation or "away" in designation.lower():
+        if "客" in des or "away" in des:
             target = "away"
-        elif "和" in designation or "平" in designation or "draw" in designation.lower():
+        elif "和" in des or "平" in des or "draw" in des:
             target = "draw"
-        # 主客反转校准后, pin_odds 已存交换后的对侧赔率, 方向映射要反向
         if o.get("_ml_swapped") and target in ("home", "away"):
             target = "away" if target == "home" else "home"
-        for ml in fresh.get("moneyline", []):
-            for p in ml.get("prices", []):
-                if p.get("designation", "").lower() == target:
-                    return p.get("price_decimal", 0)
-    elif mkt == "hc":
-        target_line = _parse_line(o.get("line"))
-        target_desig = "away" if ("客" in designation or "away" in designation.lower()) else "home"
+        return _find_ml(field, target)
+
+    elif mkt in ("hc", "ht_hc"):
+        field = "spread" if mkt == "hc" else "ht_spread"
+        line = _parse_line(o.get("line"))
+        td = "away" if ("客" in des or "away" in des) else "home"
         if o.get("_ml_swapped"):
-            target_desig = "home" if target_desig == "away" else "away"
-        for sp in fresh.get("spread", []):
-            for p in sp.get("prices", []):
-                if p.get("designation", "").lower() != target_desig:
-                    continue
-                pts = p.get("points")
-                # 盘口线必须精确匹配(±0.1 带符号, 区分主让/受让与 0.25/0.5 档)
-                if (target_line is not None and pts is not None
-                        and abs(pts - target_line) > 0.1):
-                    continue
-                return p.get("price_decimal", 0)
+            td = "home" if td == "away" else "away"
+        return _find_2way(field, td, line)
+
+    elif mkt in ("ou", "ht_ou"):
+        field = "total" if mkt == "ou" else "ht_total"
+        line = _parse_line(o.get("line"))
+        td = "over" if ("大" in des or "over" in des) else "under"
+        return _find_2way(field, td, line)
+
+    elif mkt == "dc":
+        target = ""
+        if "主" in des and "客" in des:
+            target = "12"
+        elif "主" in des:
+            target = "1x"
+        elif "客" in des:
+            target = "2x"
+        for dc in fresh.get("double_chance", []) or []:
+            for p in dc.get("prices", []) or []:
+                if (p.get("designation", "") or "").lower() == target:
+                    return p.get("price_decimal", 0)
+
+    elif mkt == "btts":
+        td = "yes" if ("是" in des or "yes" in des) else "no"
+        for b in fresh.get("btts", []) or []:
+            for p in b.get("prices", []) or []:
+                if (p.get("designation", "") or "").lower() == td:
+                    return p.get("price_decimal", 0)
+
+    elif mkt == "oe":
+        td = "odd" if ("单" in des or "odd" in des) else "even"
+        for oe in fresh.get("oe", []) or []:
+            for p in oe.get("prices", []) or []:
+                if (p.get("designation", "") or "").lower() == td:
+                    return p.get("price_decimal", 0)
+
     return None
 
 
