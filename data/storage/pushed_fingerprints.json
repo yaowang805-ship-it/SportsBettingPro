@@ -403,6 +403,10 @@
     "ev": 1.63,
     "ts": 1787042347.333806
   },
+  "football|Copa Sudamericana|Recoleta|Boca Juniors|双边进球-否|btts|2026-08-19": {
+    "ev": 1.8,
+    "ts": 1787059556.331429
+  },
   "football|Copa Sudamericana|Recoleta|Boca Juniors|角球让球主胜|corner|2026-08-19": {
     "ev": 3.89,
     "ts": 1787055069.4936051
@@ -492,6 +496,10 @@
   "football|England National League North|Scarborough Athletic|Spennymoor Town FC|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 1.17,
     "ts": 1787025629.2460742
+  },
+  "football|England National League North|Scarborough Athletic|Spennymoor Town FC|上半场客胜|ht|2026-08-19": {
+    "ev": 1.53,
+    "ts": 1787060441.607324
   },
   "football|England National League North|Spalding United|Macclesfield Town|客胜|1x2|2026-08-19": {
     "ev": 1.48,
@@ -628,6 +636,11 @@
     "bb": 2.04,
     "ts": 1787058116.553169
   },
+  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯1968|让球主胜(-2)|hc|-2|2026-08-19": {
+    "ev": 8.0,
+    "bb": 2.2,
+    "ts": 1787059350.2093499
+  },
   "football|Japan Emperor Cup|Atletico Suzuka Club|Basara Hyogo|小球|1x2|2026-08-19": {
     "ev": 4.22,
     "ts": 1787055069.4925828
@@ -699,6 +712,14 @@
     "ev": 10.31,
     "ts": 1787025629.245635
   },
+  "football|Slovakia Cup|FC Topolcany|OFK Banik Lehota Pod Vtacnikom|让球主胜|1x2|2026-08-18": {
+    "ev": 4.03,
+    "ts": 1787060441.606835
+  },
+  "football|Slovakia Cup|MSK Spisske Podhradie|MFK Ruzomberok|大球|1x2|2026-08-18": {
+    "ev": 11.94,
+    "ts": 1787059733.330046
+  },
   "football|Slovakia Cup|MSK Spisske Podhradie|MFK Ruzomberok|小球|1x2|2026-08-18": {
     "ev": 9.76,
     "ts": 1787038514.5605912
@@ -721,6 +742,16 @@
     "bb": 1.85,
     "ts": 1787038514.3300748
   },
+  "football|Slovakia Cup|斯比斯克泊迪|鲁森比洛克|小球(5.0)|ou|5.0|2026-08-18": {
+    "ev": 6.18,
+    "bb": 1.77,
+    "ts": 1787059350.20944
+  },
+  "football|Slovakia Cup|斯比斯克泊迪|鲁森比洛克|让球主胜(+3.5/4)|hc|+3.5/4|2026-08-18": {
+    "ev": 3.46,
+    "bb": 1.91,
+    "ts": 1787059350.2095082
+  },
   "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 6.13,
     "bb": 2.06,
@@ -733,6 +764,10 @@
   "football|UEFA Champions League-Qualification|Fenerbahce|Olympique Lyonnais|双边进球-是|btts|2026-08-19": {
     "ev": 1.5,
     "ts": 1787058515.399702
+  },
+  "football|UEFA Champions League-Qualification|GNK Dinamo Zagreb|Viking FK|角球小球|corner|2026-08-19": {
+    "ev": 2.62,
+    "ts": 1787060096.666781
   },
   "football|UEFA Champions League-Qualification|GNK Dinamo Zagreb|Viking FK|角球让球主胜|corner|2026-08-19": {
     "ev": 1.32,
@@ -891,19 +926,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯1968|让球主胜(-2)|hc|-2|2026-08-19": {
-    "ev": 8.0,
-    "bb": 2.2,
-    "ts": 1787059350.2093499
-  },
-  "football|Slovakia Cup|斯比斯克泊迪|鲁森比洛克|小球(5.0)|ou|5.0|2026-08-18": {
-    "ev": 6.18,
-    "bb": 1.77,
-    "ts": 1787059350.20944
-  },
-  "football|Slovakia Cup|斯比斯克泊迪|鲁森比洛克|让球主胜(+3.5/4)|hc|+3.5/4|2026-08-18": {
-    "ev": 3.46,
-    "bb": 1.91,
-    "ts": 1787059350.2095082
+  "football|Denmark DBU Pokalen|尼克宾|纳斯特维德|主胜|1x2|2026-08-19": {
+    "ev": 5.22,
+    "bb": 1.99,
+    "ts": 1787060812.394443
   }
 }
