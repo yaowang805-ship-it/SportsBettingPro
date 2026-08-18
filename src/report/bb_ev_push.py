@@ -929,6 +929,9 @@ def _calc_kelly_stakes(opps: list) -> list:
 
         # V5.1: per-sport赔率策略Kelly乘数
         stake_pct *= odds_kelly_mult
+        # V5.9: 高赔率特殊盘方差折扣 — 正确比分/净胜球等高方差无历史盘, 赔率>8 再降仓 (防 ¥100 封顶顶格)
+        if sub in ("correct_score", "winning_margin", "total_goals_range", "first_to_score") and odds > 8.0:
+            stake_pct *= 0.3
         stake = int(bankroll * stake_pct)
         o["_raw_stake"] = stake
         min_stake = tier_cfg.get("min_stake", 30)

@@ -2170,15 +2170,17 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
     if sub_market in BLOCKED_MARKETS:
         return 999.0
 
-    # V5.3: 公平价已去抽水(devig), EV=(BB-公平价)/公平价 本身就是真实edge,
-    # 门槛只需小buffer覆盖 devig误差+微小波动。之前用盈亏线表(4-9%)是把抽水算两次(错)。
-    # 直接盘口(1X2/HC/OU/corner): 2% buffer。
-    # 推导盘口: DC/DNB 推导自1X2(Shin已证无偏)→2% 对齐直接盘口;
-    #           BTTS/OE 推导自OU、HT类推导自半场分布(仍有一定推导误差)→3% buffer。
+    # V5.9: 分盘口门槛 — 直接盘有历史数据(2%), 特殊/推导盘无独立验证(假阳性源)提门槛。
+    #   直接盘(1X2/HC/OU/corner): 2% — Pinnacle 历史数据驱动, 不动。
+    #   推导 dc/dnb: 4% — 1X2推导(Shin无偏)但仍非独立数据。
+    #   推导 btts/oe + Pinnacle直接特殊盘(correct_score/winning_margin/total_goals_range/first_to_score): 5%。
+    #   推导 ht/ht_dc/ht_hc/ht_ou/ht_dnb/f5: 6% — 半场推导, ht_dc霸屏假阳性源, 最严。
     if sub_market in ("dc", "dnb"):
-        base_min_ev = 2.0
-    elif sub_market in ("btts", "oe", "ht", "ht_dc", "ht_hc", "ht_ou"):
-        base_min_ev = 3.0
+        base_min_ev = 4.0
+    elif sub_market in ("btts", "oe", "correct_score", "winning_margin", "total_goals_range", "first_to_score"):
+        base_min_ev = 5.0
+    elif sub_market in ("ht", "ht_dc", "ht_hc", "ht_ou", "ht_dnb", "f5"):
+        base_min_ev = 6.0
     else:
         base_min_ev = 2.0
 
