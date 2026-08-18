@@ -2170,17 +2170,17 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
     if sub_market in BLOCKED_MARKETS:
         return 999.0
 
-    # V5.9: 分盘口门槛 — 直接盘有历史数据(2%), 特殊/推导盘无独立验证(假阳性源)提门槛。
-    #   直接盘(1X2/HC/OU/corner): 2% — Pinnacle 历史数据驱动, 不动。
-    #   推导 dc/dnb: 4% — 1X2推导(Shin无偏)但仍非独立数据。
-    #   推导 btts/oe + Pinnacle直接特殊盘(correct_score/winning_margin/total_goals_range/first_to_score): 5%。
-    #   推导 ht/ht_dc/ht_hc/ht_ou/ht_dnb/f5: 6% — 半场推导, ht_dc霸屏假阳性源, 最严。
+    # V5.9: 分盘口门槛 — 职业标准: 直接盘 2%, 推导盘 3-4%。
+    #   直接盘(1X2/HC/OU/corner): 2% — Pinnacle 历史数据驱动。
+    #   推导 dc/dnb: 3% — 1X2推导(Shin无偏)略高于直接盘。
+    #   推导 btts/oe + 特殊盘(correct_score/winning_margin/total_goals_range/first_to_score): 4%。
+    #   推导 ht/ht_dc/ht_hc/ht_ou/ht_dnb/f5: 4% — Shin 已修 favorite-longshot 偏差, 不再需要 6% 压制。
     if sub_market in ("dc", "dnb"):
-        base_min_ev = 4.0
+        base_min_ev = 3.0
     elif sub_market in ("btts", "oe", "correct_score", "winning_margin", "total_goals_range", "first_to_score"):
-        base_min_ev = 5.0
+        base_min_ev = 4.0
     elif sub_market in ("ht", "ht_dc", "ht_hc", "ht_ou", "ht_dnb", "f5"):
-        base_min_ev = 6.0
+        base_min_ev = 4.0
     else:
         base_min_ev = 2.0
 

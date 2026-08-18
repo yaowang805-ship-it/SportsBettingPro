@@ -14,25 +14,25 @@ sys.path.insert(0, str(ROOT / "src"))
 
 
 def test_dc_ev_threshold_raised():
-    """DC(双重机会)推导自1X2(Shin无偏)但非独立数据 — V5.9 门槛 4%."""
+    """DC(双重机会)推导自1X2(Shin无偏) — 职业标准门槛 3%."""
     from config.weight_matrix_v5 import get_min_ev
-    assert get_min_ev("football", "英超", "dc", 1.8) == 4.0
-    assert get_min_ev("football", "英超", "dc", 3.0) == 4.0
-    assert get_min_ev("football", "英超", "dc", 4.0) == 4.0
+    assert get_min_ev("football", "英超", "dc", 1.8) == 3.0
+    assert get_min_ev("football", "英超", "dc", 3.0) == 3.0
+    assert get_min_ev("football", "英超", "dc", 4.0) == 3.0
 
 
 def test_ht_dc_ev_threshold_higher():
-    """上半场DC纯推导(ht_dc霸屏假阳性源) — V5.9 门槛 6%."""
+    """上半场DC — 职业标准门槛 4% (Shin已修favorite-longshot偏差)."""
     from config.weight_matrix_v5 import get_min_ev
-    assert get_min_ev("football", "英超", "ht_dc", 1.8) == 6.0
-    assert get_min_ev("football", "英超", "ht_dc", 4.0) == 6.0
+    assert get_min_ev("football", "英超", "ht_dc", 1.8) == 4.0
+    assert get_min_ev("football", "英超", "ht_dc", 4.0) == 4.0
 
 
 def test_ht_ev_threshold_raised():
-    """上半场盘口推导自半场分布 — V5.9 门槛 6%."""
+    """上半场盘口 — 职业标准门槛 4%."""
     from config.weight_matrix_v5 import get_min_ev
-    assert get_min_ev("football", "英超", "ht", 1.8) == 6.0
-    assert get_min_ev("football", "英超", "ht", 4.0) == 6.0
+    assert get_min_ev("football", "英超", "ht", 1.8) == 4.0
+    assert get_min_ev("football", "英超", "ht", 4.0) == 4.0
 
 
 def test_dnb_ev_blocked():
