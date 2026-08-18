@@ -1,5 +1,5 @@
 {
-  "balance": 14969.0,
+  "balance": 14869.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1312,14 +1312,37 @@
       "commence_time": 1787185800,
       "created_at": "2026-08-18T10:20:13.977066+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_泰国_新加坡_让球主胜(-1)",
+      "sport": "football",
+      "league": "东南亚现代杯",
+      "home_team": "泰国",
+      "away_team": "新加坡",
+      "home_cn": "泰国",
+      "away_cn": "新加坡",
+      "market": "handicap",
+      "market_type": "让球主胜(-1)",
+      "sub_market": "hc",
+      "line": "-1",
+      "odds": 1.75,
+      "stake": 100,
+      "model_prob": 0.5976,
+      "ev_pct": 4.58,
+      "pin_odds": 1.5848,
+      "fair_price": 1.6733,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787058000,
+      "created_at": "2026-08-18T10:34:04.230343+00:00",
+      "track_only": false
     }
   ],
   "settled": {},
   "history": [],
   "daily_budget": {
     "date": "2026-08-18",
-    "used": 4672.0,
-    "bets": 52
+    "used": 4772.0,
+    "bets": 53
   },
   "updated": null
 }
