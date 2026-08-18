@@ -315,10 +315,19 @@
     "ev": 1.1,
     "ts": 1787025629.245709
   },
+  "football|Greece Cup-Qualification|Atromitos Athinon|PAS Pyrgos 1968|双重机会-和局/客|dc|2026-08-19": {
+    "ev": 9.17,
+    "ts": 1787036402.215677
+  },
   "football|Greece Cup-Qualification|莱瓦贾科斯|特里波利斯|让球主胜(0)|hc|0|2026-08-19": {
     "ev": 3.55,
     "bb": 1.57,
     "ts": 1787034729.998604
+  },
+  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯1968|双重机会-和局/客|dc|2026-08-19": {
+    "ev": 9.17,
+    "bb": 4.85,
+    "ts": 1787036401.359704
   },
   "football|Japan Emperor Cup|奥纳加钴矿石|赞岐釜玉海年|双重机会-主/和局|dc|2026-08-19": {
     "ev": 10.97,
@@ -353,6 +362,10 @@
     "ev": 6.13,
     "bb": 2.06,
     "ts": 1787020969.61725
+  },
+  "football|UEFA Champions League-Qualification|GNK Dinamo Zagreb|Viking FK|角球让球主胜|corner|2026-08-19": {
+    "ev": 1.32,
+    "ts": 1787036402.217886
   },
   "football|UEFA Champions League-Qualification|PFC Levski Sofia|AEK Athens|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 2.54,
@@ -424,13 +437,31 @@
     "ev": 2.56,
     "ts": 1787025629.2470882
   },
+  "tennis|ITF - W50 Prague Women Singles|Denisa Zoldakova (CZE)|Maria Aran Teixido Garcia (ESP)|主胜|1x2|2026-08-18": {
+    "ev": 2.22,
+    "ts": 1787037482.329034
+  },
+  "tennis|ITF - W50 Prague Women Singles|Denisa Zoldakova (CZE)|Maria Aran Teixido Garcia (ESP)|让盘客胜|1x2|2026-08-18": {
+    "ev": 2.0,
+    "ts": 1787037166.000642
+  },
   "tennis|WTA - Cincinnati Open|Aryna Sabalenka (BLR)|Wang Xinyu (CHN)|让盘客胜|1x2|2026-08-19": {
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯1968|双重机会-和局/客|dc|2026-08-19": {
-    "ev": 9.17,
-    "bb": 4.85,
-    "ts": 1787036401.359704
+  "football|Slovakia Cup|斯比斯克泊迪|鲁森比洛克|小球(4.75)|ou|4.75|2026-08-18": {
+    "ev": 9.76,
+    "bb": 1.85,
+    "ts": 1787038514.3300748
+  },
+  "football|Brazil Serie B|累西腓航海|塞阿拉|让球主胜(0)|hc|0|2026-08-19": {
+    "ev": 3.35,
+    "bb": 1.6,
+    "ts": 1787038514.330122
+  },
+  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯 1968|双重机会-和局/客|dc|2026-08-19": {
+    "ev": 10.52,
+    "bb": 4.91,
+    "ts": 1787038514.330166
   }
 }
