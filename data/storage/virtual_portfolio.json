@@ -1,5 +1,5 @@
 {
-  "balance": 17318.0,
+  "balance": 16885.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1059,14 +1059,83 @@
       "commence_time": 1787090400,
       "created_at": "2026-08-18T07:50:31.293885+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_圣保罗_玻利瓦尔_上半场客胜",
+      "sport": "football",
+      "league": "南美俱乐部杯",
+      "home_team": "圣保罗",
+      "away_team": "玻利瓦尔",
+      "home_cn": "圣保罗",
+      "away_cn": "玻利瓦尔",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 8.95,
+      "stake": 200,
+      "model_prob": 0.1184,
+      "ev_pct": 5.98,
+      "pin_odds": 6.87,
+      "fair_price": 8.4451,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787099400,
+      "created_at": "2026-08-18T08:19:07.291967+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_CS卡拉奥华大学_1948_阿拉特亚美尼亚_双重机会-和局/客",
+      "sport": "football",
+      "league": "欧足联欧洲联赛-资格赛",
+      "home_team": "CS卡拉奥华大学 1948",
+      "away_team": "阿拉特亚美尼亚",
+      "home_cn": "CS卡拉奥华大学 1948",
+      "away_cn": "阿拉特亚美尼亚",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 2.89,
+      "stake": 134,
+      "model_prob": 0.3579,
+      "ev_pct": 3.42,
+      "pin_odds": 0,
+      "fair_price": 2.7944,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787245200,
+      "created_at": "2026-08-18T08:19:07.292003+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_格拉斯哥流浪者_亚布洛内茨_双重机会-和局/客",
+      "sport": "football",
+      "league": "欧足联欧洲协会联赛-资格赛",
+      "home_team": "格拉斯哥流浪者",
+      "away_team": "亚布洛内茨",
+      "home_cn": "格拉斯哥流浪者",
+      "away_cn": "亚布洛内茨",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 3.2,
+      "stake": 99,
+      "model_prob": 0.3229,
+      "ev_pct": 3.33,
+      "pin_odds": 0,
+      "fair_price": 3.097,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787251500,
+      "created_at": "2026-08-18T08:19:07.292027+00:00",
+      "track_only": false
     }
   ],
   "settled": {},
   "history": [],
   "daily_budget": {
     "date": "2026-08-18",
-    "used": 2323.0,
-    "bets": 41
+    "used": 2756.0,
+    "bets": 44
   },
   "updated": null
 }
