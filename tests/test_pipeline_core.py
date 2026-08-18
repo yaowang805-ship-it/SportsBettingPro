@@ -51,11 +51,11 @@ def test_import_ev_push():
         _diversify_and_rank, _format_body, _min_ev_for_tier,
     )
     assert callable(build_report)
-    # V5.1: 分层EV门槛 (football T1=2%, T2=2.5%, T3=4%, T4=6%)
+    # V5.2: 分层EV门槛 (football T1=2%, T2=2.5%, T3=3%, T4=4%)
     assert _min_ev_for_tier(1, "football") == 2.0
     assert _min_ev_for_tier(2, "football") == 2.5
-    assert _min_ev_for_tier(3, "football") == 4.0
-    assert _min_ev_for_tier(4, "football") == 6.0
+    assert _min_ev_for_tier(3, "football") == 3.0
+    assert _min_ev_for_tier(4, "football") == 4.0
 
 
 def test_import_virtual_bet():
