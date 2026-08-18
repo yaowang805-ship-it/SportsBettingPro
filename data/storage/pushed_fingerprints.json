@@ -21,6 +21,10 @@
     "ev": 3.27,
     "ts": 1787025629.247624
   },
+  "basketball|William Jones Cup|Japan|Strong Group Athletics|客胜|1x2|2026-08-18": {
+    "ev": 1.74,
+    "ts": 1787035237.035729
+  },
   "basketball|William Jones Cup|Malaysia|Jordan|主胜|1x2|2026-08-18": {
     "ev": 2.23,
     "ts": 1787029075.078332
@@ -90,6 +94,11 @@
     "bb": 2.25,
     "ts": 1787020969.617389
   },
+  "football|Argentina Cup|班菲尔德|米德兰|上半场客胜|ht|2026-08-19": {
+    "ev": 7.05,
+    "bb": 6.55,
+    "ts": 1787034729.9986901
+  },
   "football|Argentina Cup|阿韦亚内达竞技足球俱乐部|贝尔格拉诺|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 9.41,
     "bb": 2.05,
@@ -151,6 +160,11 @@
     "bb": 1.91,
     "ts": 1787021144.061882
   },
+  "football|Brazil Serie B|累西腓航海|塞阿拉|和局|1x2|2026-08-19": {
+    "ev": 3.46,
+    "bb": 3.11,
+    "ts": 1787034729.998999
+  },
   "football|CONCACAF Central American Cup|肯塔吉内斯|维德斯|让球客胜(+4)|hc|+4|2026-08-19": {
     "ev": 3.93,
     "bb": 1.88,
@@ -185,6 +199,16 @@
     "ev": 4.78,
     "bb": 1.94,
     "ts": 1787021144.061728
+  },
+  "football|Copa Libertadores|智利天主大学|拉普拉塔大学生|正确比分1-1|correct_score|2026-08-19": {
+    "ev": 7.14,
+    "bb": 7.3,
+    "ts": 1787034729.998753
+  },
+  "football|Copa Libertadores|波特诺山丘|帕尔梅拉斯|正确比分1-1|correct_score|2026-08-20": {
+    "ev": 8.22,
+    "bb": 8.3,
+    "ts": 1787034729.999137
   },
   "football|Copa Libertadores|科其姆波|普拉腾斯|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 4.49,
@@ -244,6 +268,11 @@
     "ev": 4.38,
     "ts": 1787033631.574859
   },
+  "football|England EFL Trophy|斯托克港|埃弗顿 U21|双重机会-和局/客|dc|2026-08-19": {
+    "ev": 6.31,
+    "bb": 4.95,
+    "ts": 1787034729.9988852
+  },
   "football|England National League North|Marine FC|Chorley FC|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 2.58,
     "ts": 1787025629.246152
@@ -286,6 +315,11 @@
     "ev": 1.1,
     "ts": 1787025629.245709
   },
+  "football|Greece Cup-Qualification|莱瓦贾科斯|特里波利斯|让球主胜(0)|hc|0|2026-08-19": {
+    "ev": 3.55,
+    "bb": 1.57,
+    "ts": 1787034729.998604
+  },
   "football|Japan Emperor Cup|奥纳加钴矿石|赞岐釜玉海年|双重机会-主/和局|dc|2026-08-19": {
     "ev": 10.97,
     "bb": 3.62,
@@ -324,15 +358,39 @@
     "ev": 2.54,
     "ts": 1787025629.2463439
   },
+  "football|UEFA Champions League-Qualification|PFC Levski Sofia|AEK Athens|让球客胜|1x2|2026-08-19": {
+    "ev": 1.19,
+    "ts": 1787034730.34643
+  },
   "football|UEFA Europa Conference League-Qualification|亚特兰大|特拉维夫夏普尔|双重机会-和局/客|dc|2026-08-21": {
     "ev": 18.19,
     "bb": 5.55,
     "ts": 1787021144.0620348
   },
+  "football|UEFA Europa Conference League-Qualification|扎布热矿工|摩纳哥|主胜|1x2|2026-08-21": {
+    "ev": 9.53,
+    "bb": 5.95,
+    "ts": 1787034729.999209
+  },
+  "football|UEFA Europa Conference League-Qualification|赫塔菲|贝尔格莱德游击|双重机会-和局/客|dc|2026-08-21": {
+    "ev": 5.81,
+    "bb": 3.84,
+    "ts": 1787034729.998822
+  },
   "football|USA Major League Soccer|多伦多FC|夏洛特FC|正确比分1-1|correct_score|2026-08-20": {
     "ev": 21.57,
     "bb": 8.55,
     "ts": 1787021144.06165
+  },
+  "football|USA Major League Soccer|皇家盐湖城|达拉斯|和局|1x2|2026-08-20": {
+    "ev": 5.23,
+    "bb": 4.08,
+    "ts": 1787034729.998943
+  },
+  "football|USA Major League Soccer|西雅图海湾人|奥斯汀|正确比分1-1|correct_score|2026-08-20": {
+    "ev": 6.47,
+    "bb": 9.95,
+    "ts": 1787034729.999058
   },
   "football|Uzbekistan Super League|FC Sogdiana Jizzakh|Qizilqum Zarafshon|上半场双重机会-主/客|ht_dc|2026-08-18": {
     "ev": 1.6,
@@ -370,54 +428,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Greece Cup-Qualification|莱瓦贾科斯|特里波利斯|让球主胜(0)|hc|0|2026-08-19": {
-    "ev": 3.55,
-    "bb": 1.57,
-    "ts": 1787034729.998604
-  },
-  "football|Argentina Cup|班菲尔德|米德兰|上半场客胜|ht|2026-08-19": {
-    "ev": 7.05,
-    "bb": 6.55,
-    "ts": 1787034729.9986901
-  },
-  "football|Copa Libertadores|智利天主大学|拉普拉塔大学生|正确比分1-1|correct_score|2026-08-19": {
-    "ev": 7.14,
-    "bb": 7.3,
-    "ts": 1787034729.998753
-  },
-  "football|UEFA Europa Conference League-Qualification|赫塔菲|贝尔格莱德游击|双重机会-和局/客|dc|2026-08-21": {
-    "ev": 5.81,
-    "bb": 3.84,
-    "ts": 1787034729.998822
-  },
-  "football|England EFL Trophy|斯托克港|埃弗顿 U21|双重机会-和局/客|dc|2026-08-19": {
-    "ev": 6.31,
-    "bb": 4.95,
-    "ts": 1787034729.9988852
-  },
-  "football|USA Major League Soccer|皇家盐湖城|达拉斯|和局|1x2|2026-08-20": {
-    "ev": 5.23,
-    "bb": 4.08,
-    "ts": 1787034729.998943
-  },
-  "football|Brazil Serie B|累西腓航海|塞阿拉|和局|1x2|2026-08-19": {
-    "ev": 3.46,
-    "bb": 3.11,
-    "ts": 1787034729.998999
-  },
-  "football|USA Major League Soccer|西雅图海湾人|奥斯汀|正确比分1-1|correct_score|2026-08-20": {
-    "ev": 6.47,
-    "bb": 9.95,
-    "ts": 1787034729.999058
-  },
-  "football|Copa Libertadores|波特诺山丘|帕尔梅拉斯|正确比分1-1|correct_score|2026-08-20": {
-    "ev": 8.22,
-    "bb": 8.3,
-    "ts": 1787034729.999137
-  },
-  "football|UEFA Europa Conference League-Qualification|扎布热矿工|摩纳哥|主胜|1x2|2026-08-21": {
-    "ev": 9.53,
-    "bb": 5.95,
-    "ts": 1787034729.999209
+  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯1968|双重机会-和局/客|dc|2026-08-19": {
+    "ev": 9.17,
+    "bb": 4.85,
+    "ts": 1787036401.359704
   }
 }
