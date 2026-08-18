@@ -545,6 +545,126 @@ def run_incremental(time_window: str = "all"):
     return new_result
 
 
+# V5.9: 48h 全量扫描写入主对比文件 (解耦后, 推送读这个文件按时间窗口分频)
+COMPARISON_FILE_48H = DATA_DIR / "bb_vs_pinnacle_comparison.json"
+
+
+def run_incremental_scan():
+    """扫描(解耦): 拉全量48h BB+Pin, 比价, 写主对比文件。不推送。
+
+    推送由 run_incremental_push 按时间窗口分频(临场60s/近场300s), 避免远场幻影EV高频推。
+    """
+    import sys
+    sys.stdout.reconfigure(line_buffering=True)
+    from datetime import datetime
+    _now = datetime.now()
+    _now_min = _now.hour * 60 + _now.minute
+    if _now_min < 6 * 60 + 40 or _now_min >= 22 * 60:
+        print("  ⏭️ 不在扫描时段，跳过")
+        return
+
+    print("=" * 60)
+    print("BB体育 增量扫描 [48h全量]")
+    print("=" * 60)
+
+    snapshot = {"timestamp": "", "matches": {}}
+    if BB_SNAPSHOT_NEAR.exists():
+        try:
+            snapshot = json.loads(BB_SNAPSHOT_NEAR.read_text())
+        except Exception:
+            pass
+    all_pin_leagues = refresh_league_structure()
+    prev_active_leagues = set()
+    for _m in snapshot.get("matches", {}).values():
+        if isinstance(_m, dict) and _m.get("league"):
+            prev_active_leagues.add(_m["league"])
+
+    # 1. Pin 先拉取 (铁律: Pin≤BB)
+    print("\n📡 Pin 先拉取并检测变动...")
+    pin_changed_leagues, pin_significant = _detect_pin_changes(
+        None, all_pin_leagues, prev_active_leagues, "all")
+
+    # 2. BB 拉取
+    print("\n📡 获取BB数据...")
+    bb_matches = _fetch_bb_data("all")
+    if not bb_matches:
+        print("  ❌ 获取BB数据失败")
+        return
+
+    # 过滤已开赛 + 48h
+    now_ms = int(time.time() * 1000)
+    h48_ms = 48 * 3600 * 1000
+    bb_matches = [m for m in bb_matches if not m.get("bt") or int(m["bt"]) > now_ms]
+    bb_matches = [m for m in bb_matches if int(m.get("bt", 0)) - now_ms <= h48_ms]
+    print(f"  [48h]: {len(bb_matches)} 场")
+
+    # 3. FB 独立刷新 + 对比 (解耦后每次扫描都做, 保证 FB 对比文件新鲜)
+    _refresh_fb_data()
+    if all_pin_leagues:
+        _run_fb_comparison(all_pin_leagues)
+
+    if not all_pin_leagues:
+        all_pin_leagues = _load_league_structure()
+        if not all_pin_leagues:
+            print("  ❌ 无 Pinnacle 联赛结构数据")
+            save_snapshot(bb_matches, BB_SNAPSHOT_NEAR)
+            return
+
+    # 4. 双向变动检测
+    changed_ids, new_ids, bb_changed_leagues = detect_changes(bb_matches, snapshot)
+    total_changed = len(pin_changed_leagues) + len(bb_changed_leagues)
+
+    # 无变动检查强制刷新
+    if total_changed == 0:
+        force_refresh = False
+        try:
+            if not COMPARISON_FILE_48H.exists():
+                force_refresh = True
+            else:
+                pin_age_min = (time.time() - COMPARISON_FILE_48H.stat().st_mtime) / 60
+                if pin_age_min > 120:
+                    print(f"\n⏰ Pin数据 {pin_age_min:.0f}min 未刷新，强制全量对比")
+                    force_refresh = True
+                else:
+                    print(f"\n✅ BB+Pin均无变动，跳过对比")
+        except OSError:
+            pass
+        if not force_refresh:
+            save_snapshot(bb_matches, BB_SNAPSHOT_NEAR)
+            return
+
+    # 5. 全量对比 48h → 主对比文件
+    print(f"\n🔄 实时全量对比 (48h)...")
+    new_result = compare_bb_vs_pinnacle(
+        bb_matches,
+        all_pin_leagues,
+        selected_leagues=None,
+        save_path=COMPARISON_FILE_48H,
+        use_pin_cache=True,
+    )
+    if new_result is None:
+        save_snapshot(bb_matches, BB_SNAPSHOT_NEAR)
+        return
+
+    print(f"\n✅ 已保存实时结果 → {COMPARISON_FILE_48H.name} ({len(new_result.get('details', []))} 条)")
+
+    save_snapshot(bb_matches, BB_SNAPSHOT_NEAR)
+    _prefetch_pin_cache_async(bb_matches, all_pin_leagues)
+    _save_scan_fingerprints(new_result)
+    return new_result
+
+
+def run_incremental_push(time_window: str = "urgent"):
+    """推送(解耦): 读48h主对比文件, 按时间窗口分频推。time_window: urgent/near/far。"""
+    labels = {"urgent": "<6h临场", "near": "6-24h近场", "far": "24-48h早盘"}
+    label = labels.get(time_window, "增量扫描")
+    if not COMPARISON_FILE_48H.exists():
+        print("  ⏭️ 无48h对比文件，跳过推送")
+        return
+    print(f"\n📣 推送 [{label}]...")
+    _run_push(label)
+
+
 def run_full():
     """全量扫描入口 (保留现有流程)。"""
     print("=" * 60)
