@@ -512,7 +512,7 @@ def _log_clv(opps: list):
                 "home_pin", "away_pin",
                 "designation", "sub_market", "bb_odds", "pin_odds",
                 "fair_price", "ev_pct", "stake", "tier", "match_epoch",
-                "bb_price_source",
+                "bb_price_source", "pin_league_id", "pin_match_id",
             ])
         now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         for o in opps:
@@ -534,6 +534,8 @@ def _log_clv(opps: list):
                 o.get("_tier", 0),
                 o.get("_pin_epoch", 0) or 0,  # V5 fix: empty → 0, not ''
                 o.get("bb_price_source", ""),  # BB / FB / BB/FB
+                o.get("_pin_league_id", ""),
+                o.get("_pin_match_id", ""),
             ])
 
 
@@ -1560,6 +1562,8 @@ def _collect_opportunities(match, market_key):
             "_warn": "⚠️ 溢价异常高，请核对" if ev > 20 else "",
             "start_time_bb": match.get("start_time_bb", ""),
             "bb_match_id": match.get("bb_match_id", ""),  # BB比赛ID, 结算按ID匹配
+            "_pin_league_id": match.get("pin_league_id", ""),  # V5.9: 供CLV采集按ID直拉
+            "_pin_match_id": match.get("pin_match_id", ""),
             "_market_type": market_key,  # "opportunities"|"handicap"|"over_under"|...
             "_sub_market": sub_market,  # "1x2"|"ht"|"btts"|"dc"|"oe"|"htft"|...
             "line": line,               # 盘口线 (让球/大小), 供二次验价+虚拟投注

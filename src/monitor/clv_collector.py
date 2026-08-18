@@ -144,8 +144,11 @@ def _fetch_close_odds(entries):
             pass
 
         league = e.get("league", "")
-        if league:
-            by_league[league].append(e)
+        # V5.9: 优先用存储的 pin_league_id 分组(采集时按ID直拉, 免反查联赛名映射失败)
+        pin_lid = e.get("pin_league_id", "")
+        group_key = pin_lid if pin_lid else league
+        if group_key:
+            by_league[group_key].append(e)
 
     if not by_league:
         logger.info("无比赛在采集窗口内 (%.0f ~ %.0f 分钟前)",
