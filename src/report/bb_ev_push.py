@@ -872,9 +872,12 @@ def _calc_kelly_stakes(opps: list) -> list:
 
         stake_pct = get_kelly_stake_pct(sport, league, sub, odds, match_type, match_score)
         if stake_pct <= 0:
-            # V4.5: 历史均价可能低估当前BB赔率 → EV正值时给最低Kelly
-            if ev > 1.0 and odds > 1.5:
-                stake_pct = min(0.015, (ev / 100) / (odds - 1.0) * 0.25)
+            # V5.9: 权重矩阵该赔率区间历史ROI<=0(或联赛无历史数据)时, 不再硬否决当前+EV机会。
+            # 比价套利的核心信号是实时 devig EV — _kelly_pct 已按盘口Kelly+联赛权重算好(半Kelly)。
+            # 历史 bin 只该做置信度折扣, 不应把当前明确的 +EV 机会归零。
+            kelly_pct = o.get("_kelly_pct", 0)
+            if kelly_pct > 0 and ev > 1.0:
+                stake_pct = min(kelly_pct / 100, 0.02)
             else:
                 o["_stake"] = 0; o["_raw_stake"] = 0
                 continue
@@ -908,17 +911,18 @@ def _calc_kelly_stakes(opps: list) -> list:
         # V5.1: per-sport赔率策略 (10万+Pinnacle+723笔实盘)
         max_odds = tier_cfg.get("max_odds", 20.0)
         odds_kelly_mult = 1.0  # 默认不改Kelly
-        try:
-            from src.evolve.odds_strategy_optimizer import get_odds_strategy
-            odds_cfg = get_odds_strategy(odds, sport=sport)
-            max_odds = min(max_odds, odds_cfg.get("max_odds", 20.0))
-            odds_kelly_mult = odds_cfg.get("kelly_mult", 1.0)
-            # 动态EV门槛: 高赔率需要更高EV
-            extra_ev = odds_cfg.get("min_ev", 2.0) - 2.0
-            if extra_ev > 0 and ev < 2.0 + extra_ev:
-                o["_stake"] = 0; o["_raw_stake"] = 0
-                continue
-        except ImportError: pass
+        # V5.9: 赔率分层策略只对标定过的直接盘口(1X2/HC/OU)。特殊盘口(正确比分/半场/角球/DC/BTTS/OE等)
+        # 有独立的 SPECIAL_MARKET_CAPS 上限和 EV 门槛, 再套 1X2 赔率分层的 min_ev(高赔5-10%)
+        # 会把合法的特殊盘口高赔机会误杀归零。
+        if sub in ("1x2", "hc", "ou"):
+            try:
+                from src.evolve.odds_strategy_optimizer import get_odds_strategy
+                odds_cfg = get_odds_strategy(odds, sport=sport)
+                max_odds = min(max_odds, odds_cfg.get("max_odds", 20.0))
+                odds_kelly_mult = odds_cfg.get("kelly_mult", 1.0)
+                # V5.9: 不再二次 EV 门槛否决 — 收集阶段 get_min_ev + tier ev_floor 已过滤,
+                # 权重矩阵(历史ROI) + EV-Kelly兜底已按 edge 定仓。这里只保留 kelly_mult(降仓)+max_odds。
+            except ImportError: pass
         if odds > max_odds:
             o["_stake"] = 0; o["_raw_stake"] = 0
             continue
