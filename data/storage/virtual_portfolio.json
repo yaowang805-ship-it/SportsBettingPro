@@ -1,5 +1,5 @@
 {
-  "balance": 15431.0,
+  "balance": 14969.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1243,14 +1243,83 @@
       "commence_time": 1787101200,
       "created_at": "2026-08-18T08:58:40.447275+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_拉斯维加斯王牌_(女)_亚特兰大梦想_(女)_让分主胜(-45)",
+      "sport": "basketball",
+      "league": "WNBA 美国职业女子篮球联赛",
+      "home_team": "拉斯维加斯王牌 (女)",
+      "away_team": "亚特兰大梦想 (女)",
+      "home_cn": "拉斯维加斯王牌 (女)",
+      "away_cn": "亚特兰大梦想 (女)",
+      "market": "handicap",
+      "market_type": "让分主胜(-4.5)",
+      "sub_market": "hc",
+      "line": "-4.5",
+      "odds": 2.06,
+      "stake": 213,
+      "model_prob": 0.5166,
+      "ev_pct": 6.43,
+      "pin_odds": 1.8547,
+      "fair_price": 1.9356,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787101200,
+      "created_at": "2026-08-18T10:20:13.976989+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_索菲亚列夫斯基_AEK雅典_上半场主胜",
+      "sport": "football",
+      "league": "欧洲冠军联赛资格赛-附加赛",
+      "home_team": "索菲亚列夫斯基",
+      "away_team": "AEK雅典",
+      "home_cn": "索菲亚列夫斯基",
+      "away_cn": "AEK雅典",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.66,
+      "stake": 200,
+      "model_prob": 0.2237,
+      "ev_pct": 4.23,
+      "pin_odds": 4.15,
+      "fair_price": 4.4708,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787079600,
+      "created_at": "2026-08-18T10:20:13.977037+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_弗拉门戈_克鲁塞罗MG_和局",
+      "sport": "football",
+      "league": "南美解放者杯",
+      "home_team": "弗拉门戈",
+      "away_team": "克鲁塞罗MG",
+      "home_cn": "弗拉门戈",
+      "away_cn": "克鲁塞罗MG",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.85,
+      "stake": 49,
+      "model_prob": 0.2678,
+      "ev_pct": 3.12,
+      "pin_odds": 3.44,
+      "fair_price": 3.7335,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787185800,
+      "created_at": "2026-08-18T10:20:13.977066+00:00",
+      "track_only": false
     }
   ],
   "settled": {},
   "history": [],
   "daily_budget": {
     "date": "2026-08-18",
-    "used": 4210.0,
-    "bets": 49
+    "used": 4672.0,
+    "bets": 52
   },
   "updated": null
 }

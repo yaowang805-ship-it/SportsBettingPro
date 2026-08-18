@@ -8,14 +8,45 @@
     "bb": 1.73,
     "ts": 1787027658.612308
   },
+  "basketball|WNBA|Chicago Sky (w)|New York Liberty (w)|小分|1x2|2026-08-19": {
+    "ev": 3.9,
+    "ts": 1787043520.717037
+  },
   "basketball|WNBA|Chicago Sky (w)|New York Liberty (w)|让分客胜|1x2|2026-08-19": {
     "ev": 1.66,
     "ts": 1787027658.84504
+  },
+  "basketball|WNBA|Las Vegas Aces (w)|Atlanta Dream (w)|小分|1x2|2026-08-19": {
+    "ev": 6.27,
+    "ts": 1787043520.717325
+  },
+  "basketball|WNBA|Las Vegas Aces (w)|Atlanta Dream (w)|让分主胜|1x2|2026-08-19": {
+    "ev": 1.7,
+    "ts": 1787043520.717162
+  },
+  "basketball|WNBA|Toronto Tempo (w)|Indiana Fever (w)|小分|1x2|2026-08-19": {
+    "ev": 1.88,
+    "ts": 1787043520.717097
   },
   "basketball|WNBA|康涅狄格阳光 (女)|洛杉矶火花 (女)|小分(170.5)|ou|170.5|2026-08-19": {
     "ev": 5.34,
     "bb": 2.0,
     "ts": 1787042346.7519271
+  },
+  "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|小分(176.5)|ou|176.5|2026-08-19": {
+    "ev": 6.27,
+    "bb": 2.0,
+    "ts": 1787043520.452609
+  },
+  "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|让分主胜(-3.5)|hc|-3.5|2026-08-19": {
+    "ev": 3.15,
+    "bb": 1.9,
+    "ts": 1787043520.452568
+  },
+  "basketball|WNBA|芝加哥天空 (女)|纽约自由人 (女)|小分(179.5)|ou|179.5|2026-08-19": {
+    "ev": 3.9,
+    "bb": 2.04,
+    "ts": 1787043520.452517
   },
   "basketball|WNBA|芝加哥天空 (女)|纽约自由人 (女)|让分客胜(-3.5)|hc|-3.5|2026-08-19": {
     "ev": 2.19,
@@ -213,6 +244,10 @@
     "ev": 1.59,
     "ts": 1787025629.246567
   },
+  "football|Copa Libertadores|Independiente Rivadavia|Fluminense FC RJ|和局|1x2|2026-08-19": {
+    "ev": 2.01,
+    "ts": 1787043520.71645
+  },
   "football|Copa Libertadores|Independiente Rivadavia|Fluminense FC RJ|角球小球|corner|2026-08-19": {
     "ev": 4.78,
     "ts": 1787039431.643156
@@ -221,6 +256,10 @@
     "ev": 3.62,
     "ts": 1787025629.247463
   },
+  "football|Copa Libertadores|Tolima|CSD Independiente del Valle|上半场客胜|ht|2026-08-19": {
+    "ev": 2.31,
+    "ts": 1787043520.717818
+  },
   "football|Copa Libertadores|Tolima|CSD Independiente del Valle|双边进球-是|btts|2026-08-19": {
     "ev": 1.49,
     "ts": 1787042347.3336582
@@ -228,6 +267,10 @@
   "football|Copa Libertadores|Tolima|CSD Independiente del Valle|和局|1x2|2026-08-19": {
     "ev": 1.08,
     "ts": 1787032510.460124
+  },
+  "football|Copa Libertadores|Tolima|CSD Independiente del Valle|让球客胜|1x2|2026-08-19": {
+    "ev": 1.15,
+    "ts": 1787043520.717896
   },
   "football|Copa Libertadores|Universidad Catolica|Estudiantes de La Plata|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 2.02,
@@ -267,6 +310,10 @@
     "ev": 4.78,
     "bb": 1.82,
     "ts": 1787039431.297716
+  },
+  "football|Copa Sudamericana|Recoleta|Boca Juniors|上半场主胜|ht|2026-08-19": {
+    "ev": 4.26,
+    "ts": 1787043520.718024
   },
   "football|Copa Sudamericana|Recoleta|Boca Juniors|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 1.63,
@@ -431,6 +478,10 @@
     "ev": 1.46,
     "ts": 1787038514.5605261
   },
+  "football|Slovakia Cup|Tj Partizan Osrblie|Tatran Oravske Vesele|让球主胜|1x2|2026-08-18": {
+    "ev": 2.67,
+    "ts": 1787043520.715708
+  },
   "football|Slovakia Cup|托波尔卡尼|班尼卡莱奥塔|双重机会-主/和局|dc|2026-08-18": {
     "ev": 10.31,
     "bb": 4.87,
@@ -514,6 +565,10 @@
     "ev": 1.97,
     "ts": 1787038514.561801
   },
+  "football|Uzbekistan Super League|FK Buxoro|FK Neftchi Fargona|让球客胜|1x2|2026-08-18": {
+    "ev": 1.34,
+    "ts": 1787043723.041686
+  },
   "tennis|ATP Challenger - Roehampton Open|Alec Deckers (NED)|Patrick Brady (GBR)|让盘客胜|1x2|2026-08-18": {
     "ev": 1.11,
     "ts": 1787025629.246964
@@ -566,19 +621,19 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|WNBA|芝加哥天空 (女)|纽约自由人 (女)|小分(179.5)|ou|179.5|2026-08-19": {
-    "ev": 3.9,
-    "bb": 2.04,
-    "ts": 1787043520.452517
+  "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|让分主胜(-4.5)|hc|-4.5|2026-08-19": {
+    "ev": 6.43,
+    "bb": 2.06,
+    "ts": 1787048413.9831412
   },
-  "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|让分主胜(-3.5)|hc|-3.5|2026-08-19": {
-    "ev": 3.15,
-    "bb": 1.9,
-    "ts": 1787043520.452568
+  "football|UEFA Champions League-Qualification|索菲亚列夫斯基|AEK雅典|上半场主胜|ht|2026-08-19": {
+    "ev": 4.23,
+    "bb": 4.66,
+    "ts": 1787048413.983253
   },
-  "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|小分(176.5)|ou|176.5|2026-08-19": {
-    "ev": 6.27,
-    "bb": 2.0,
-    "ts": 1787043520.452609
+  "football|Copa Libertadores|弗拉门戈|克鲁塞罗MG|和局|1x2|2026-08-20": {
+    "ev": 3.12,
+    "bb": 3.85,
+    "ts": 1787048413.983396
   }
 }
