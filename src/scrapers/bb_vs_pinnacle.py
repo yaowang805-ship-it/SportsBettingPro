@@ -703,6 +703,9 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             "league_cn": bb.get("league_cn", m.get("league", "")),
             "home_pin": pin.get("home", "?"),
             "away_pin": pin.get("away", "?"),
+            # V5.9: 存 Pinnacle 联赛/比赛 ID, 供 CLV 采集器按 ID 直拉(免反查联赛名映射)
+            "pin_league_id": str(pin.get("league_id", "") or ""),
+            "pin_match_id": str(pin.get("matchup_id", "") or ""),
             "match_score": m["match_score"],
             "sport": sport,
             "flags": [],
