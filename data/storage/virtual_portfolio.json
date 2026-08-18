@@ -1,5 +1,5 @@
 {
-  "balance": 12304.0,
+  "balance": 11838.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1657,14 +1657,83 @@
       "commence_time": 1787099400,
       "created_at": "2026-08-18T13:11:52.326962+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_阿特罗米托斯_皮尔戈斯1968_让球主胜(-2)",
+      "sport": "football",
+      "league": "希腊杯-资格赛",
+      "home_team": "阿特罗米托斯",
+      "away_team": "皮尔戈斯1968",
+      "home_cn": "阿特罗米托斯",
+      "away_cn": "皮尔戈斯1968",
+      "market": "handicap",
+      "market_type": "让球主胜(-2)",
+      "sub_market": "hc",
+      "line": "-2",
+      "odds": 2.2,
+      "stake": 240,
+      "model_prob": 0.4909,
+      "ev_pct": 8.0,
+      "pin_odds": 1.8772,
+      "fair_price": 2.0371,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787068800,
+      "created_at": "2026-08-18T13:22:30.204566+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_斯比斯克泊迪_鲁森比洛克_小球(50)",
+      "sport": "football",
+      "league": "斯洛伐克杯",
+      "home_team": "斯比斯克泊迪",
+      "away_team": "鲁森比洛克",
+      "home_cn": "斯比斯克泊迪",
+      "away_cn": "鲁森比洛克",
+      "market": "over_under",
+      "market_type": "小球(5.0)",
+      "sub_market": "ou",
+      "line": "5.0",
+      "odds": 1.77,
+      "stake": 209,
+      "model_prob": 0.5999,
+      "ev_pct": 6.18,
+      "pin_odds": 1.565,
+      "fair_price": 1.667,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787065200,
+      "created_at": "2026-08-18T13:22:30.204618+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_斯比斯克泊迪_鲁森比洛克_让球主胜(+35/4)",
+      "sport": "football",
+      "league": "斯洛伐克杯",
+      "home_team": "斯比斯克泊迪",
+      "away_team": "鲁森比洛克",
+      "home_cn": "斯比斯克泊迪",
+      "away_cn": "鲁森比洛克",
+      "market": "handicap",
+      "market_type": "让球主胜(+3.5/4)",
+      "sub_market": "hc",
+      "line": "+3.5/4",
+      "odds": 1.91,
+      "stake": 17,
+      "model_prob": 0.5417,
+      "ev_pct": 3.46,
+      "pin_odds": 1.7194,
+      "fair_price": 1.8462,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787065200,
+      "created_at": "2026-08-18T13:22:30.204656+00:00",
+      "track_only": false
     }
   ],
   "settled": {},
   "history": [],
   "daily_budget": {
     "date": "2026-08-18",
-    "used": 7337.0,
-    "bets": 67
+    "used": 7803.0,
+    "bets": 70
   },
   "updated": null
 }
