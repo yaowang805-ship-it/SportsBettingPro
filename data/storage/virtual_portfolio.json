@@ -1,5 +1,5 @@
 {
-  "balance": 13245.0,
+  "balance": 13232.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1542,14 +1542,37 @@
       "commence_time": 1787133600,
       "created_at": "2026-08-18T12:11:09.223410+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_铃鹿得分手_巴萨罗_让球主胜(0)",
+      "sport": "football",
+      "league": "日本天皇杯",
+      "home_team": "铃鹿得分手",
+      "away_team": "巴萨罗",
+      "home_cn": "铃鹿得分手",
+      "away_cn": "巴萨罗",
+      "market": "handicap",
+      "market_type": "让球主胜(0)",
+      "sub_market": "hc",
+      "line": "0",
+      "odds": 1.96,
+      "stake": 13,
+      "model_prob": 0.5484,
+      "ev_pct": 7.49,
+      "pin_odds": 1.7042,
+      "fair_price": 1.8235,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787131800,
+      "created_at": "2026-08-18T12:25:18.463872+00:00",
+      "track_only": false
     }
   ],
   "settled": {},
   "history": [],
   "daily_budget": {
     "date": "2026-08-18",
-    "used": 6396.0,
-    "bets": 62
+    "used": 6409.0,
+    "bets": 63
   },
   "updated": null
 }

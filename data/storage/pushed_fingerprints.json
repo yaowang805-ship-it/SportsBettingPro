@@ -8,6 +8,10 @@
     "bb": 1.73,
     "ts": 1787027658.612308
   },
+  "basketball|WNBA|Chicago Sky (w)|New York Liberty (w)|大分|1x2|2026-08-19": {
+    "ev": 1.82,
+    "ts": 1787055069.4926531
+  },
   "basketball|WNBA|Chicago Sky (w)|New York Liberty (w)|小分|1x2|2026-08-19": {
     "ev": 3.9,
     "ts": 1787043520.717037
@@ -376,6 +380,10 @@
     "ev": 1.63,
     "ts": 1787042347.333806
   },
+  "football|Copa Sudamericana|Recoleta|Boca Juniors|角球让球主胜|corner|2026-08-19": {
+    "ev": 3.89,
+    "ts": 1787055069.4936051
+  },
   "football|Copa Sudamericana|Sao Paulo FC SP|Club Bolivar|上半场客胜|ht|2026-08-19": {
     "ev": 5.98,
     "ts": 1787025629.246689
@@ -479,6 +487,22 @@
     "ev": 14.36,
     "ts": 1787052395.782502
   },
+  "football|England Professional Development League|Cardiff City U21|Barnsley U21|客胜|1x2|2026-08-18": {
+    "ev": 6.15,
+    "ts": 1787055284.2927098
+  },
+  "football|England Professional Development League|Cardiff City U21|Barnsley U21|让球客胜|1x2|2026-08-18": {
+    "ev": 6.57,
+    "ts": 1787055284.292775
+  },
+  "football|England Professional Development League|Charlton Athletic U21|Bolton Wanderers U21|客胜|1x2|2026-08-18": {
+    "ev": 5.33,
+    "ts": 1787055284.292835
+  },
+  "football|England Professional Development League|Charlton Athletic U21|Bolton Wanderers U21|让球客胜|1x2|2026-08-18": {
+    "ev": 2.13,
+    "ts": 1787055284.292885
+  },
   "football|England Professional Development League|Peterborough United U21|Queens Park Rangers U21|主胜|1x2|2026-08-18": {
     "ev": 3.32,
     "ts": 1787052830.419613
@@ -564,6 +588,14 @@
     "bb": 1.66,
     "ts": 1787051186.58382
   },
+  "football|Japan Emperor Cup|Atletico Suzuka Club|Basara Hyogo|小球|1x2|2026-08-19": {
+    "ev": 4.22,
+    "ts": 1787055069.4925828
+  },
+  "football|Japan Emperor Cup|Atletico Suzuka Club|Basara Hyogo|让球主胜|1x2|2026-08-19": {
+    "ev": 2.55,
+    "ts": 1787055069.492513
+  },
   "football|Japan Emperor Cup|Kagoshima United|Renofa Yamaguchi|主胜|1x2|2026-08-19": {
     "ev": 8.07,
     "ts": 1787048414.282254
@@ -597,6 +629,16 @@
     "ev": 9.2,
     "bb": 3.19,
     "ts": 1787032510.1961799
+  },
+  "football|Japan Emperor Cup|铃鹿无限|巴萨罗|小球(2.75)|ou|2.75|2026-08-19": {
+    "ev": 4.22,
+    "bb": 1.76,
+    "ts": 1787055069.227616
+  },
+  "football|Japan Emperor Cup|鹿儿岛联|山口雷法|主胜|1x2|2026-08-19": {
+    "ev": 8.07,
+    "bb": 1.94,
+    "ts": 1787055069.2276852
   },
   "football|Mexico Liga De Expansion MX|莫雷利亚|克雷卡米诺斯|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-21": {
     "ev": 4.23,
@@ -792,14 +834,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Japan Emperor Cup|铃鹿无限|巴萨罗|小球(2.75)|ou|2.75|2026-08-19": {
-    "ev": 4.22,
-    "bb": 1.76,
-    "ts": 1787055069.227616
-  },
-  "football|Japan Emperor Cup|鹿儿岛联|山口雷法|主胜|1x2|2026-08-19": {
-    "ev": 8.07,
-    "bb": 1.94,
-    "ts": 1787055069.2276852
+  "football|Japan Emperor Cup|铃鹿得分手|巴萨罗|让球主胜(0)|hc|0|2026-08-19": {
+    "ev": 7.49,
+    "bb": 1.96,
+    "ts": 1787055918.468578
   }
 }
