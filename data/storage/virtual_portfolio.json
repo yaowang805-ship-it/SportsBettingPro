@@ -1,5 +1,5 @@
 {
-  "balance": 19073.0,
+  "balance": 19030.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -691,14 +691,37 @@
       "commence_time": 1787078700,
       "created_at": "2026-08-18T05:04:23.792799+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_肯塔吉内斯_维德斯_让球客胜(+4)",
+      "sport": "football",
+      "league": "中美洲杯",
+      "home_team": "肯塔吉内斯",
+      "away_team": "维德斯",
+      "home_cn": "肯塔吉内斯",
+      "away_cn": "维德斯",
+      "market": "handicap",
+      "market_type": "让球客胜(+4)",
+      "sub_market": "hc",
+      "line": "+4",
+      "odds": 1.88,
+      "stake": 43,
+      "model_prob": 0.5528,
+      "ev_pct": 3.93,
+      "pin_odds": 1.6944,
+      "fair_price": 1.8089,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787101200,
+      "created_at": "2026-08-18T05:39:29.587108+00:00",
+      "track_only": false
     }
   ],
   "settled": {},
   "history": [],
   "daily_budget": {
     "date": "2026-08-18",
-    "used": 568.0,
-    "bets": 25
+    "used": 611.0,
+    "bets": 26
   },
   "updated": null
 }

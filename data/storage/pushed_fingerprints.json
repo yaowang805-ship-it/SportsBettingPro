@@ -60,6 +60,11 @@
     "ev": 1.37,
     "ts": 1787025629.245437
   },
+  "football|ASEAN Hyundai Cup|泰国|新加坡|双重机会-和局/客|dc|2026-08-18": {
+    "ev": 14.52,
+    "bb": 3.24,
+    "ts": 1787029463.7981188
+  },
   "football|Argentina Cup|Banfield|Ferrocarril Midland|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 4.22,
     "ts": 1787025629.246439
@@ -97,6 +102,10 @@
   "football|Brazil Serie B|Londrina EC PR|Goianiense GO|单双-双|oe|2026-08-19": {
     "ev": 1.7,
     "ts": 1787025629.247537
+  },
+  "football|Brazil Serie B|Londrina EC PR|Goianiense GO|双边进球-是|btts|2026-08-19": {
+    "ev": 1.35,
+    "ts": 1787030488.2887192
   },
   "football|Brazil Serie B|Nautico PE|Ceara SC CE|双边进球-是|btts|2026-08-19": {
     "ev": 1.52,
@@ -189,6 +198,11 @@
     "bb": 1.73,
     "ts": 1787025628.968322
   },
+  "football|Denmark DBU Pokalen|尼克宾|纳斯特维德|大球(2.5)|ou|2.5|2026-08-19": {
+    "ev": 3.58,
+    "bb": 1.9,
+    "ts": 1787029463.798281
+  },
   "football|England EFL Trophy|Northampton Town|Brighton & Hove Albion FC U21|上半场主胜|ht|2026-08-19": {
     "ev": 2.42,
     "ts": 1787027658.845279
@@ -205,6 +219,10 @@
     "ev": 1.26,
     "ts": 1787025629.246204
   },
+  "football|England National League North|Morecambe FC|South Shields|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 4.05,
+    "ts": 1787029464.087317
+  },
   "football|England National League North|Oxford City|Harborough Town FC|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 1.06,
     "ts": 1787025629.246249
@@ -217,6 +235,11 @@
     "ev": 1.48,
     "ts": 1787025629.245939
   },
+  "football|England National League North|莫雷坎比|南希尔兹|上半场主胜|ht|2026-08-19": {
+    "ev": 7.6,
+    "bb": 4.36,
+    "ts": 1787029463.7983518
+  },
   "football|France Ligue 3|孔卡诺|维利法兰|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-21": {
     "ev": 4.57,
     "bb": 1.79,
@@ -225,6 +248,11 @@
   "football|Greece Cup-Qualification|APO Levadiakos FC|Asteras Tripolis|让球主胜|1x2|2026-08-19": {
     "ev": 1.1,
     "ts": 1787025629.245709
+  },
+  "football|Japan Emperor Cup|奥纳加钴矿石|赞岐釜玉海年|双重机会-主/和局|dc|2026-08-19": {
+    "ev": 10.97,
+    "bb": 3.62,
+    "ts": 1787029463.7982059
   },
   "football|Japan Emperor Cup|瑞拉克志贺FC|日本足球学院|双重机会-和局/客|dc|2026-08-19": {
     "ev": 8.86,
@@ -285,28 +313,21 @@
     "ev": 1.05,
     "ts": 1787025629.247019
   },
+  "tennis|ITF - W15 Tianjin Women Doubles|Kamonwan Yodpetch (THA) / Zhang Ruien (CHN)|Kim Yujin (KOR) / Funa Kozaki (JPN)|客胜|1x2|2026-08-18": {
+    "ev": 77.91,
+    "ts": 1787030488.288856
+  },
   "tennis|ITF - W15 Tianjin Women Singles|Peangtarn Plipuech (THA)|Thasaporn Naklo (THA)|客胜|1x2|2026-08-19": {
     "ev": 2.56,
     "ts": 1787025629.2470882
   },
-  "football|ASEAN Hyundai Cup|泰国|新加坡|双重机会-和局/客|dc|2026-08-18": {
-    "ev": 14.52,
-    "bb": 3.24,
-    "ts": 1787029463.7981188
+  "tennis|WTA - Cincinnati Open|Aryna Sabalenka (BLR)|Wang Xinyu (CHN)|让盘客胜|1x2|2026-08-19": {
+    "ev": 1.49,
+    "ts": 1787029464.08913
   },
-  "football|Japan Emperor Cup|奥纳加钴矿石|赞岐釜玉海年|双重机会-主/和局|dc|2026-08-19": {
-    "ev": 10.97,
-    "bb": 3.62,
-    "ts": 1787029463.7982059
-  },
-  "football|Denmark DBU Pokalen|尼克宾|纳斯特维德|大球(2.5)|ou|2.5|2026-08-19": {
-    "ev": 3.58,
-    "bb": 1.9,
-    "ts": 1787029463.798281
-  },
-  "football|England National League North|莫雷坎比|南希尔兹|上半场主胜|ht|2026-08-19": {
-    "ev": 7.6,
-    "bb": 4.36,
-    "ts": 1787029463.7983518
+  "football|CONCACAF Central American Cup|肯塔吉内斯|维德斯|让球客胜(+4)|hc|+4|2026-08-19": {
+    "ev": 3.93,
+    "bb": 1.88,
+    "ts": 1787031569.594357
   }
 }
