@@ -512,7 +512,7 @@ def _log_clv(opps: list):
                 "home_pin", "away_pin",
                 "designation", "sub_market", "bb_odds", "pin_odds",
                 "fair_price", "ev_pct", "stake", "tier", "match_epoch",
-                "bb_price_source", "pin_league_id", "pin_match_id",
+                "bb_price_source", "pin_league_id", "pin_match_id", "source",
             ])
         now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         for o in opps:
@@ -536,6 +536,7 @@ def _log_clv(opps: list):
                 o.get("bb_price_source", ""),  # BB / FB / BB/FB
                 o.get("_pin_league_id", ""),
                 o.get("_pin_match_id", ""),
+                "push",
             ])
 
 

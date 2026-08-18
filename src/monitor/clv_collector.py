@@ -540,7 +540,7 @@ def _save_results(results):
     fieldnames = [
         "collect_time", "push_time", "match_key", "sport", "league", "home", "away",
         "home_pin", "away_pin",
-        "designation", "sub_market", "tier", "bb_price_source", "bb_odds", "push_fair_price", "push_ev_pct",
+        "designation", "sub_market", "tier", "bb_price_source", "source", "bb_odds", "push_fair_price", "push_ev_pct",
         "close_pin_odds", "close_fair_price", "close_total_implied",
         "true_clv_pct", "clv_delta", "match_epoch", "minutes_before_match",
     ]

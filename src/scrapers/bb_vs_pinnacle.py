@@ -1800,6 +1800,14 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
 
     save_path.write_text(json.dumps(output, ensure_ascii=False, indent=2, default=str))
     print(f"\n已保存到 {save_path}")
+    # V5.9: 全量 EV>=2% 机会入库验证(只统计不下注, source=validate), 加速 CLV 样本积累
+    try:
+        from src.monitor.clv_collector import log_all_ev_opportunities
+        _added = log_all_ev_opportunities(save_path)
+        if _added:
+            print(f"  📊 CLV验证入库: +{_added} 条 EV>=2% 机会")
+    except Exception as _e:
+        print(f"  ⚠️ CLV验证入库失败: {_e}")
     return output
 
 
