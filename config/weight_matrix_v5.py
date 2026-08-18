@@ -1330,7 +1330,7 @@ NBA_DATA_V5 = {
 # =====================================================================
 # HTFT: Pinnacle 无对应盘口 → 无法做公平价比较 → 封杀
 # DNB: BB 无此盘口(曾误读"第3粒进球") → 封杀
-BLOCKED_MARKETS = {"htft", "dnb"}
+BLOCKED_MARKETS = {"htft", "dnb", "correct_score"}
 
 # MMA/Boxing: 仅封杀高风险子类型 (时间匹配 + 球员冲突)
 # V4.2: name-matched + score≥0.95 的 MMA/Boxing 允许小额投注

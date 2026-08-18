@@ -527,7 +527,8 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                 continue
 
     SPECIAL_KEY_TO_MKT = {
-        "correct_score": ("correct_score", "正确比分"),
+        # "correct_score" 已删除 (2026-08-18): BB mty=1188「正确比分」只有高比分(2-1/5-1/6-6),
+        # 无低比分(0-0/1-0/1-1), 与 Pinnacle Correct Score(含全部比分)错配, 赔率对不上波胆。
         "winning_margin": ("winning_margin", "净胜球"),
         "total_goals_range": ("total_goals_range", "总进球区间"),
         "first_to_score": ("first_to_score", "先进球"),
