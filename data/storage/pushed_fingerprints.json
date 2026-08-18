@@ -32,6 +32,11 @@
     "ev": 1.88,
     "ts": 1787043520.717097
   },
+  "basketball|WNBA|多伦多节奏 (女)|印第安纳狂热 (女)|小分(191.5)|ou|191.5|2026-08-19": {
+    "ev": 4.43,
+    "bb": 2.05,
+    "ts": 1787050535.6422231
+  },
   "basketball|WNBA|康涅狄格阳光 (女)|洛杉矶火花 (女)|小分(170.5)|ou|170.5|2026-08-19": {
     "ev": 5.34,
     "bb": 2.0,
@@ -286,6 +291,10 @@
     "ev": 4.78,
     "ts": 1787039431.643156
   },
+  "football|Copa Libertadores|Independiente Rivadavia|Fluminense FC RJ|角球让球主胜|corner|2026-08-19": {
+    "ev": 1.9,
+    "ts": 1787050535.899389
+  },
   "football|Copa Libertadores|Tolima|CSD Independiente del Valle|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 3.62,
     "ts": 1787025629.247463
@@ -305,6 +314,10 @@
   "football|Copa Libertadores|Tolima|CSD Independiente del Valle|让球客胜|1x2|2026-08-19": {
     "ev": 1.15,
     "ts": 1787043520.717896
+  },
+  "football|Copa Libertadores|Universidad Catolica|Estudiantes de La Plata|上半场主胜|ht|2026-08-19": {
+    "ev": 2.51,
+    "ts": 1787050535.8973289
   },
   "football|Copa Libertadores|Universidad Catolica|Estudiantes de La Plata|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 2.02,
@@ -709,9 +722,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|WNBA|多伦多节奏 (女)|印第安纳狂热 (女)|小分(191.5)|ou|191.5|2026-08-19": {
-    "ev": 4.43,
-    "bb": 2.05,
-    "ts": 1787050535.6422231
+  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯1968|小球(3.0)|ou|3.0|2026-08-19": {
+    "ev": 4.08,
+    "bb": 1.66,
+    "ts": 1787051186.58382
   }
 }
