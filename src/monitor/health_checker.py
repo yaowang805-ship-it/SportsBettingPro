@@ -211,13 +211,27 @@ def check_pipeline(report):
         except Exception:
             pass
 
-    # Incremental scan frequency
+    # Incremental scan frequency + 任务级失败检测
+    # V5.9: 旧逻辑匹配 "[incremental] ====== DONE"(实际日志是 [incremental_urgent]/[incremental_near],
+    # 永远匹配不上→恒0), 且只数 DONE 不查 FAILED, 导致任务级崩溃(UnboundLocalError)自检看不到。
     inc_count = 0
+    inc_failed = 0
+    last_inc_broken = False
     with open(log_file) as f:
         for line in f:
-            if today in line and "[incremental] ====== DONE" in line:
-                inc_count += 1
+            if today in line and "[incremental_" in line:
+                if "====== DONE" in line:
+                    inc_count += 1
+                    last_inc_broken = False
+                elif "FAILED after" in line:
+                    inc_failed += 1
+                    last_inc_broken = True
     report.stats["incremental_scans"] = inc_count
+    report.stats["incremental_failed"] = inc_failed
+    if last_inc_broken:
+        report.add_issue(f"增量扫描崩溃: 今日失败 {inc_failed} 次且最近一次仍失败")
+    elif inc_failed > 0:
+        report.add_warning(f"增量扫描今日失败 {inc_failed} 次(已恢复)")
 
 
 def check_settlement(report):
