@@ -1225,7 +1225,7 @@ class PipelineOrchestrator:
             if _scan_last is None:
                 setattr(self, _scan_key, time.time())
                 _scan_last = time.time()
-            if (now - datetime.fromtimestamp(_scan_last)).total_seconds() >= _jitter(60):
+            if (now - datetime.fromtimestamp(_scan_last)).total_seconds() >= _jitter(300):
                 setattr(self, _scan_key, time.time())
                 self._run_task("incremental_scan", self.do_incremental_scan, background=True)
 
