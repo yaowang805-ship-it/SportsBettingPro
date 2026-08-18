@@ -1211,33 +1211,23 @@ class PipelineOrchestrator:
             self._run_task(name, method, background=is_bg, **kwargs)
             self._last_run[name] = now.date()
 
-        # 2) V5 分层增量扫描 — 扫描与推送解耦 (用户 2026-08-18)
+        # 2) V5 分层增量扫描 — 临场60s/中程300s (Pinnacle变动驱动)
         # V5.4: 全量扫描成功+推送后才放行(降频防风控, 用户要求)
         if self._full_scan_ok and self._is_in_scan_window(now):
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
-            # V5.9 解耦: 扫描(48h全量)60s一次 + 推送按时间窗口分频
-            #   - 扫描: 拉全量48h BB+Pin 比价写主对比文件, 60s 一次 (省 Pin 请求: 原来 urgent/near 各扫一遍)
-            #   - 推送: 临场<6h 60s一次, 中程6-24h 300s一次 (远场24-48h由全量扫描覆盖)
-            _scan_key = "_last_scan_48h"
-            _scan_last = getattr(self, _scan_key, None)
-            if _scan_last is None:
-                setattr(self, _scan_key, time.time())
-                _scan_last = time.time()
-            if (now - datetime.fromtimestamp(_scan_last)).total_seconds() >= _jitter(300):
-                setattr(self, _scan_key, time.time())
-                self._run_task("incremental_scan", self.do_incremental_scan, background=True)
-
-            for tw, interval in [("urgent", 60), ("near", 300)]:
-                _push_key = f"_last_push_{tw}"
-                _push_last = getattr(self, _push_key, None)
-                if _push_last is None:
-                    setattr(self, _push_key, time.time())
-                    _push_last = time.time()
-                if (now - datetime.fromtimestamp(_push_last)).total_seconds() >= _jitter(interval):
-                    setattr(self, _push_key, time.time())
-                    self._run_task(f"push_{tw}", self.do_incremental_push, background=True, time_window=tw)
+            # V5.7: 两层定时器 (urgent 60s / near 300s)。扫描+推送一体。
+            # (解耦48h全量扫描触发Pin封禁, 已回退; 48h扫描太重要后续单独调)
+            for tw, interval, label in [("urgent", 60, "临场<6h"), ("near", 300, "中程6-24h")]:
+                last_key = f"_last_inc_{tw}"
+                last_val = getattr(self, last_key, None)
+                if last_val is None:
+                    setattr(self, last_key, time.time())
+                    last_val = time.time()
+                if (now - datetime.fromtimestamp(last_val)).total_seconds() >= _jitter(interval):
+                    setattr(self, last_key, time.time())
+                    self._run_task(f"incremental_{tw}", self.do_incremental, background=True, time_window=tw)
 
         # 3) 自检看门狗
         self._watchdog()
