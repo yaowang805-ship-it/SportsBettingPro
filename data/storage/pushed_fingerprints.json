@@ -117,9 +117,17 @@
     "ev": 12.42,
     "ts": 1787025629.245525
   },
+  "football|ASEAN Hyundai Cup|Thailand|Singapore|大球|1x2|2026-08-18": {
+    "ev": 1.78,
+    "ts": 1787049244.449302
+  },
   "football|ASEAN Hyundai Cup|Thailand|Singapore|小球|1x2|2026-08-18": {
     "ev": 2.63,
     "ts": 1787031569.881202
+  },
+  "football|ASEAN Hyundai Cup|Thailand|Singapore|让球主胜|1x2|2026-08-18": {
+    "ev": 4.58,
+    "ts": 1787049244.4492512
   },
   "football|ASEAN Hyundai Cup|Thailand|Singapore|让球客胜|1x2|2026-08-18": {
     "ev": 1.37,
@@ -129,6 +137,11 @@
     "ev": 14.52,
     "bb": 3.24,
     "ts": 1787029463.7981188
+  },
+  "football|ASEAN Hyundai Cup|泰国|新加坡|让球主胜(-1)|hc|-1|2026-08-18": {
+    "ev": 4.58,
+    "bb": 1.75,
+    "ts": 1787049244.235776
   },
   "football|Argentina Cup|Banfield|Ferrocarril Midland|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 4.22,
@@ -457,6 +470,14 @@
     "ev": 9.17,
     "ts": 1787036402.215677
   },
+  "football|Greece Cup-Qualification|Atromitos Athinon|PAS Pyrgos 1968|小球|1x2|2026-08-19": {
+    "ev": 3.83,
+    "ts": 1787049952.796702
+  },
+  "football|Greece Cup-Qualification|Atromitos Athinon|PAS Pyrgos 1968|让球客胜|1x2|2026-08-19": {
+    "ev": 1.82,
+    "ts": 1787049952.796659
+  },
   "football|Greece Cup-Qualification|莱瓦贾科斯|特里波利斯|让球主胜(0)|hc|0|2026-08-19": {
     "ev": 3.55,
     "bb": 1.57,
@@ -688,9 +709,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|ASEAN Hyundai Cup|泰国|新加坡|让球主胜(-1)|hc|-1|2026-08-18": {
-    "ev": 4.58,
-    "bb": 1.75,
-    "ts": 1787049244.235776
+  "basketball|WNBA|多伦多节奏 (女)|印第安纳狂热 (女)|小分(191.5)|ou|191.5|2026-08-19": {
+    "ev": 4.43,
+    "bb": 2.05,
+    "ts": 1787050535.6422231
   }
 }
