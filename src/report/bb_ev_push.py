@@ -1475,7 +1475,7 @@ def _collect_opportunities(match, market_key):
                 and sub_market == "ou"):
             _des = opp.get("designation", "") or ""
             if "小" in _des or "under" in _des.lower():
-                v3_min_ev = max(v3_min_ev, 6.0)  # 小球提高门槛到6% (补偿-20.8%负期望)
+                v3_min_ev = max(v3_min_ev, 3.0)  # 小球提高门槛到3% (补偿-20.8%负期望)
 
         if ev < v3_min_ev:
             continue
