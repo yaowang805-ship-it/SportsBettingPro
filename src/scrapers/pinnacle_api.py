@@ -134,21 +134,29 @@ def _record_pin_failure():
     防风控: 正常提取是限速的, 被封几乎都是代码 bug 反复连 Pin(如404死循环)。
     熔断器在连续失败时提前暂停, 避免把 Cloudflare 触发封禁。
     """
-    global _CONSECUTIVE_FAILURES, _CIRCUIT_OPEN_UNTIL, _CIRCUIT_NOTIFY_UNTIL
+    global _CONSECUTIVE_FAILURES, _CIRCUIT_OPEN_UNTIL
     _CONSECUTIVE_FAILURES += 1
     if _CONSECUTIVE_FAILURES >= _CIRCUIT_FAILURE_THRESHOLD:
         _CIRCUIT_OPEN_UNTIL = time.time() + _CIRCUIT_COOLDOWN
         _CONSECUTIVE_FAILURES = 0
         logger.error("⚠️ 熔断器: 连续 %d 次 Pin 请求失败 → 暂停所有请求 %d 分钟 (疑似代码bug反复连Pin, 防风控)",
                      _CIRCUIT_FAILURE_THRESHOLD, _CIRCUIT_COOLDOWN // 60)
-        if time.time() >= _CIRCUIT_NOTIFY_UNTIL:
-            _CIRCUIT_NOTIFY_UNTIL = time.time() + 1800
+        # 文件节流(模块热重载会重置内存全局, 必须文件持久化) — 30min 内只发一条熔断告警
+        _cb_file = DATA_DIR / ".pin_circuit_notify.txt"
+        now = time.time()
+        if _cb_file.exists():
             try:
-                from config.dingtalk import send_dingtalk
-                send_dingtalk("【投注推荐】⚠️ Pin 请求熔断\n\n连续 10 次失败, 已暂停 10 分钟防风控。疑似代码 bug 反复连 Pin API, 请检查。",
-                              msgtype="text", title="Pin 熔断告警")
-            except Exception:
+                if now - float(_cb_file.read_text().strip()) < 1800:
+                    return
+            except (ValueError, OSError):
                 pass
+        _cb_file.write_text(str(now))
+        try:
+            from config.dingtalk import send_dingtalk
+            send_dingtalk("【投注推荐】⚠️ Pin 请求熔断\n\n连续 10 次失败, 已暂停 10 分钟防风控。疑似代码 bug 反复连 Pin API, 请检查。",
+                          msgtype="text", title="Pin 熔断告警")
+        except Exception:
+            pass
 
 
 def _record_pin_success():
@@ -419,10 +427,11 @@ def _auto_switch_node():
 
 
 def _notify_ip_ban():
-    """IP 封禁时发钉钉提醒 + 自动换节点。
+    """IP 封禁时发钉钉提醒(一条)。
 
-    节流用文件持久化(模块热重载会重置内存全局 _ip_ban_notify_until, 导致每次 tick 重发告警)。
+    节流用文件持久化(模块热重载会重置内存全局, 导致每次 tick 重发告警)。
     30min 内只发一次封禁告警; 解禁后由 _maybe_notify_recovered 发恢复通知。
+    不再自动换节点(URL scheme/写文件对 macOS Shadowrocket 都不生效, 需手动换)。
     """
     _throttle_file = DATA_DIR / ".ip_ban_notify.txt"
     now = time.time()
@@ -436,12 +445,11 @@ def _notify_ip_ban():
     try:
         from config.dingtalk import send_dingtalk
         msg = ("【投注推荐】⚠️ Pinnacle IP 被封禁\n\n"
-               "Cloudflare 已封禁当前出口 IP, 正在自动切换 Shadowrocket 节点恢复...")
+               "Cloudflare 已封禁当前出口 IP, 请手动切换 Shadowrocket 节点(建议 HK/JP/TW/DE)恢复。")
         send_dingtalk(msg, msgtype="text", title="Pinnacle 封禁告警")
         logger.info("已发送钉钉 IP 封禁告警")
     except Exception as e:
         logger.error("发送 IP 封禁告警失败: %s", e)
-    _auto_switch_node()  # 自动换节点恢复
 
 
 def _maybe_notify_recovered():

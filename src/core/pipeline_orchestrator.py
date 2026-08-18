@@ -268,11 +268,13 @@ class PipelineOrchestrator:
         if errors:
             for e in errors:
                 logger.error(e)
-            # 仅API不可达时发告警, 文件问题继续启动(下次扫描会修复)
+            # API 不可达(403/封禁) → 告警但继续启动, 主循环用 _SCAN_PAUSE_UNTIL/熔断器跳过 Pin 请求。
+            # 不能 SystemExit: 否则 launchd(KeepAlive+ThrottleInterval=10) 每10s重启,
+            # 反复重锤被封 IP 加重风控(2026-08-17/18 根因, 曾 2911 次 403)。
             api_errors = [e for e in errors if "API" in e or "Shadowrocket" in e or "Pinnacle" in e]
             if api_errors:
                 self._send_alert("startup_check_failed", "\n".join(api_errors[:5]))
-                raise SystemExit(f"启动自检失败: {len(api_errors)} 项不通过")
+                logger.warning("[自检] Pinnacle API 不可用, 继续启动(主循环将暂停 Pin 请求, 不重锤被封IP)")
             else:
                 logger.warning("[自检] %d 项非致命问题, 继续启动", len(errors))
 
