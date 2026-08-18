@@ -573,9 +573,17 @@
     "ev": 9.17,
     "ts": 1787036402.215677
   },
+  "football|Greece Cup-Qualification|Atromitos Athinon|PAS Pyrgos 1968|大球|1x2|2026-08-19": {
+    "ev": 2.4,
+    "ts": 1787058116.781219
+  },
   "football|Greece Cup-Qualification|Atromitos Athinon|PAS Pyrgos 1968|小球|1x2|2026-08-19": {
     "ev": 3.83,
     "ts": 1787049952.796702
+  },
+  "football|Greece Cup-Qualification|Atromitos Athinon|PAS Pyrgos 1968|让球主胜|1x2|2026-08-19": {
+    "ev": 4.33,
+    "ts": 1787058116.7811358
   },
   "football|Greece Cup-Qualification|Atromitos Athinon|PAS Pyrgos 1968|让球客胜|1x2|2026-08-19": {
     "ev": 1.82,
@@ -605,6 +613,11 @@
     "ev": 4.08,
     "bb": 1.66,
     "ts": 1787051186.58382
+  },
+  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯1968|让球主胜(-1.5/2)|hc|-1.5/2|2026-08-19": {
+    "ev": 4.33,
+    "bb": 2.04,
+    "ts": 1787058116.553169
   },
   "football|Japan Emperor Cup|Atletico Suzuka Club|Basara Hyogo|小球|1x2|2026-08-19": {
     "ev": 4.22,
@@ -707,6 +720,10 @@
   "football|UEFA Champions League-Qualification|Fenerbahce|Olympique Lyonnais|上半场客胜|ht|2026-08-19": {
     "ev": 1.03,
     "ts": 1787056770.716838
+  },
+  "football|UEFA Champions League-Qualification|Fenerbahce|Olympique Lyonnais|双边进球-是|btts|2026-08-19": {
+    "ev": 1.5,
+    "ts": 1787058515.399702
   },
   "football|UEFA Champions League-Qualification|GNK Dinamo Zagreb|Viking FK|角球让球主胜|corner|2026-08-19": {
     "ev": 1.32,
@@ -865,9 +882,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯1968|让球主胜(-1.5/2)|hc|-1.5/2|2026-08-19": {
-    "ev": 4.33,
-    "bb": 2.04,
-    "ts": 1787058116.553169
+  "football|Copa Libertadores|托利马|约森独立队|让球客胜(0)|hc|0|2026-08-19": {
+    "ev": 2.68,
+    "bb": 1.79,
+    "ts": 1787058712.331852
   }
 }
