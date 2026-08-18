@@ -331,6 +331,7 @@ def _prefetch_pin_cache_async(bb_matches, all_pin_leagues):
     后台拉 Pin 存缓存, 下一次扫描的对比直接 --use-pin-cache 读缓存, Pin 天然早于下次 BB。
     """
     import threading
+    global _prefetch_active  # V5.9: 外层函数也赋值 _prefetch_active, 必须声明 global (否则 UnboundLocalError)
 
     # V5.9: 预取加锁 — 每次扫描都 spawn 一个预取线程会累积(拉206联赛~2min vs urgent~86s),
     # 导致多个线程同时拉Pin抢限速、写不进缓存。同一时间只允许一个预取线程在跑。

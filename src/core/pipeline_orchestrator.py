@@ -318,10 +318,16 @@ class PipelineOrchestrator:
         Args:
             background: True = 后台线程（settle/report），False = 同步运行（scan）
         """
-        # 扫描任务互斥键: full_scan 用 "scan"; 增量 urgent/near 各自独立锁 —
-        # 否则 near 扫描(~5-7min)会阻塞 urgent 临场扫描(60s), 导致临场退化到~6min一次
-        _is_scan = ("scan" in name or "incremental" in name)
-        lock_key = name if "incremental" in name else "scan"
+        # 任务互斥键: 增量 urgent/near/far 各自独立锁; full_scan_* 共享 "scan" 锁;
+        # 其余任务(settle/report/health/git_commit 等)各自独立锁。
+        # (旧逻辑 `else "scan"` 把 settle/daily_report/data_sync_summary 全塞进同一把 scan 锁,
+        #  导致 settle_morning 阻塞 daily_report → "上一轮还未完成" 死锁)
+        if "incremental" in name:
+            lock_key = name
+        elif "scan" in name:
+            lock_key = "scan"
+        else:
+            lock_key = name
         if background:
             lock_key = f"{lock_key}_bg"
 
