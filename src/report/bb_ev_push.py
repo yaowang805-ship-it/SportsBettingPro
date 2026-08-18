@@ -2626,9 +2626,8 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
             continue
 
         # 旧key → 重复推送规则
-        # 用户要求 (2026-08-15): 只要 BB/FB 赔率上升就重推 (即使 EV 仅略微增加)。
-        # 理由: BB赔率上升 = 同笔投注赔付更高 = 单笔 EV 严格增加, 收益随之增加。
-        # 旧规则"EV增≥1%/2%"太严, 改为"赔率上升即重推"(ε 防噪声)。
+        # 用户要求 (2026-08-18): 必须同时满足 EV 提升 >2% 且 BB/FB 赔率提升 >0.1 才重推。
+        # (旧"赔率上升>0.005 即重推"太灵敏, 导致同一盘口 5 分钟内刷屏 3 次)
         old_ev = old.get("ev", 0)
         old_bb = old.get("bb", 0)
         # 兼容旧指纹: bb 曾存为独立 key {fp}_bb (值被 add_fingerprints 包成 {"ev": bb})
@@ -2639,18 +2638,18 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
             elif isinstance(_legacy, (int, float)):
                 old_bb = _legacy
         premium_delta = ev_now - old_ev
-        # 触发条件: BB赔率上升(>0.005防噪声, 且旧赔率已知) 或 EV大涨(≥阈值, 兜底)
-        bb_rose = old_bb > 0 and bb_now > old_bb + 0.005
-        ev_jumped = premium_delta >= _threshold
+        # 触发条件: 同时满足 EV 提升>2% 且 赔率提升>0.1 (AND 关系, 缺一不重推)
+        bb_rose = old_bb > 0 and bb_now > old_bb + 0.1
+        ev_rose = premium_delta > 2.0
 
-        if bb_rose or ev_jumped:
+        if bb_rose and ev_rose:
             re_pushed += 1
-            reason = f"赔率↑{bb_now - old_bb:+.2f}" if bb_rose else f"EV↑{premium_delta:+.1f}%"
+            reason = f"赔率↑{bb_now - old_bb:+.2f}&EV↑{premium_delta:+.1f}%"
             o["_repush"] = True
             o["_repush_reason"] = reason
             result.append(o)
             _audit_log("REPUSH", key, o,
-                       f"bb+{bb_now - old_bb:.2f}" if bb_rose else f"premium+{premium_delta:.1f}%")
+                       f"bb+{bb_now - old_bb:.2f}/EV+{premium_delta:.1f}%")
         else:
             skipped += 1
             _audit_log("SKIPPED", key, o,
