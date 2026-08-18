@@ -2066,10 +2066,12 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
             # 让球盘线易移动, 加提示 (避免用户看到线已不存在的推送)
             if o.get("_sub_market", "") in ("hc", "ht_hc") and not warn:
                 warn = "⚠️让球线易移动"
+            repush = o.get("_repush_reason", "")
             lines.append(
                 f"    [{oc}] {confidence} 公平价: {fair}"
                 + (f" | Pinnacle: {pinny}" if o.get("pin_odds", 0) > 0 else " | 推导: 1X2")
                 + f" | {source_label}: {bb_odds} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}{stake_note}"
+                + (f" 🔄重推({repush})" if repush else "")
                 + (f" {warn}" if warn else "")
             )
 
@@ -2643,6 +2645,9 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
 
         if bb_rose or ev_jumped:
             re_pushed += 1
+            reason = f"赔率↑{bb_now - old_bb:+.2f}" if bb_rose else f"EV↑{premium_delta:+.1f}%"
+            o["_repush"] = True
+            o["_repush_reason"] = reason
             result.append(o)
             _audit_log("REPUSH", key, o,
                        f"bb+{bb_now - old_bb:.2f}" if bb_rose else f"premium+{premium_delta:.1f}%")
