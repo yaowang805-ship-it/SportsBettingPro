@@ -1786,8 +1786,8 @@ def _diversify_and_rank(qualified: list) -> list:
 
     # Kelly 分配（预算耗尽时保留机会，stake=0 仅展示不投注）
     qualified = _calc_kelly_stakes(qualified)
-    # V5.2: ¥30以下投注额直接屏蔽 (¥50太高, 砍掉太多真实机会)
-    qualified = [o for o in qualified if o.get("_stake", 0) >= 30]
+    # V5.9: ¥10以下投注额直接屏蔽 (与 constants.get_tier_strategy 的 min_stake 对齐, 旧 ¥30 砍掉太多)
+    qualified = [o for o in qualified if o.get("_stake", 0) >= 10]
 
     qualified.sort(key=lambda o: o.get("_stake", 0), reverse=True)
 
