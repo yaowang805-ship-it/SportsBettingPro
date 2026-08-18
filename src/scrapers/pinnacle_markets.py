@@ -581,7 +581,7 @@ def get_league_corner_markets(league_id):
         if not home or not away:
             continue
 
-        spread, total, team_total = [], [], []
+        moneyline, spread, total, team_total = [], [], [], []
         for mk in mm.get(mid, []):
             if mk.get("status", "open") != "open":
                 continue
@@ -597,7 +597,10 @@ def get_league_corner_markets(league_id):
             if not prices:
                 continue
             entry = {"period": per, "prices": prices}
-            if mtype == "spread":
+            if mtype == "moneyline":
+                # V5.9: 角球独赢(Pinnacle 偶尔有 moneyline 角球盘, 之前硬编码 [] 漏掉)
+                moneyline.append(entry)
+            elif mtype == "spread":
                 spread.append(entry)
             elif mtype == "total":
                 total.append(entry)
@@ -613,7 +616,7 @@ def get_league_corner_markets(league_id):
             "home": home,
             "away": away,
             "start_time": mu.get("startTime", ""),
-            "moneyline": [],
+            "moneyline": moneyline,
             "spread": spread,
             "total": total,
             "team_total": team_total,
