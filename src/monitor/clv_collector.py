@@ -261,6 +261,7 @@ def _fetch_close_odds(entries):
                     "sub_market": sub_market,
                     "tier": e.get("tier", ""),
                     "bb_price_source": e.get("bb_price_source", ""),
+                    "source": e.get("source", "push"),
                     "bb_odds": bb_odds,
                     "push_fair_price": fair_price,
                     "push_ev_pct": push_ev,
@@ -570,6 +571,100 @@ def _save_results(results):
         pass
 
     logger.info("保存 %d 条 CLV 结果到 %s + clv_data表", len(results), RESULTS_FILE)
+
+
+def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
+    """把对比文件里所有 EV>=min_ev 的机会(去重)追加进 clv_tracking.csv, 用于验证套利模型。
+
+    source='validate', stake=0 — 只用于统计 CLV 验证「EV>2% → 正CLV」是否成立, 不下注。
+    与推送的机会(source='push')分开, 统计时按 source 分组即可分别验模型/验过滤。
+    """
+    from config.constants import get_league_tier
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    if comparison_path is None:
+        comparison_path = DATA_DIR / "bb_vs_pinnacle_comparison.json"
+    comparison_path = Path(comparison_path)
+    if not comparison_path.exists():
+        return 0
+
+    # 读现有 tracking 的 key 去重
+    existing = set()
+    if TRACKING_FILE.exists():
+        try:
+            with open(TRACKING_FILE, encoding="utf-8-sig") as f:
+                for r in csv.DictReader(f):
+                    existing.add((r.get("home", ""), r.get("away", ""),
+                                  r.get("sub_market", ""), r.get("designation", ""),
+                                  r.get("match_epoch", "")))
+        except Exception:
+            pass
+
+    try:
+        data = json.loads(comparison_path.read_text())
+    except Exception:
+        return 0
+
+    _MK = {"opportunities": "1x2", "handicap": "hc", "over_under": "ou",
+           "double_chance": "dc", "draw_no_bet": "dnb", "btts": "btts"}
+    rows = []
+    seen = set(existing)
+    for m in data.get("details", []):
+        sport = m.get("sport", "")
+        league = m.get("league", "")
+        home = m.get("home_bb_cn") or m.get("home_bb", "")
+        away = m.get("away_bb_cn") or m.get("away_bb", "")
+        home_pin = m.get("home_pin", "")
+        away_pin = m.get("away_pin", "")
+        league_cn = m.get("league_cn") or league
+        epoch = m.get("start_time_pin_epoch", 0) or 0
+        src = m.get("bb_price_source", m.get("platform", "BB"))
+        pin_lid = m.get("pin_league_id", "")
+        pin_mid = m.get("pin_match_id", "")
+        try:
+            tier = get_league_tier(league_cn)
+        except Exception:
+            tier = 3
+        for mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet", "btts"):
+            for opp in m.get(mk, []) or []:
+                ev = opp.get("ev_pct", 0) or 0
+                if ev < min_ev:
+                    continue
+                sub = opp.get("_market", "") or _MK.get(mk, "1x2")
+                if sub == "main":
+                    sub = _MK.get(mk, "1x2")
+                desig = opp.get("designation", "")
+                key = (home, away, sub, desig, str(epoch))
+                if key in seen:
+                    continue
+                seen.add(key)
+                rows.append({
+                    "timestamp": now, "sport": sport, "league": league,
+                    "home": home, "away": away, "home_pin": home_pin, "away_pin": away_pin,
+                    "designation": desig, "sub_market": sub,
+                    "bb_odds": opp.get("bb_odds", 0), "pin_odds": opp.get("pin_odds", 0),
+                    "fair_price": opp.get("fair_price", 0), "ev_pct": ev,
+                    "stake": 0, "tier": tier, "match_epoch": epoch,
+                    "bb_price_source": src, "pin_league_id": pin_lid, "pin_match_id": pin_mid,
+                    "source": "validate",
+                })
+
+    if not rows:
+        return 0
+
+    fieldnames = ["timestamp", "sport", "league", "home", "away", "home_pin", "away_pin",
+                  "designation", "sub_market", "bb_odds", "pin_odds", "fair_price", "ev_pct",
+                  "stake", "tier", "match_epoch", "bb_price_source", "pin_league_id", "pin_match_id",
+                  "source"]
+    file_exists = TRACKING_FILE.exists()
+    with open(TRACKING_FILE, "a", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=fieldnames)
+        if not file_exists:
+            w.writeheader()
+        for r in rows:
+            w.writerow(r)
+    logger.info("CLV验证入库: +%d 条 EV>=%.0f%% 机会 (source=validate)", len(rows), min_ev)
+    return len(rows)
 
 
 def collect():
