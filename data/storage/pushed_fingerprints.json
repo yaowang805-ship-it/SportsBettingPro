@@ -132,6 +132,10 @@
     "ev": 1.35,
     "ts": 1787030488.2887192
   },
+  "football|Brazil Serie B|Nautico PE|Ceara SC CE|单双-双|oe|2026-08-19": {
+    "ev": 4.0,
+    "ts": 1787038514.561478
+  },
   "football|Brazil Serie B|Nautico PE|Ceara SC CE|双边进球-是|btts|2026-08-19": {
     "ev": 1.52,
     "ts": 1787025629.24683
@@ -164,6 +168,15 @@
     "ev": 3.46,
     "bb": 3.11,
     "ts": 1787034729.998999
+  },
+  "football|Brazil Serie B|累西腓航海|塞阿拉|让球主胜(0)|hc|0|2026-08-19": {
+    "ev": 3.35,
+    "bb": 1.6,
+    "ts": 1787038514.330122
+  },
+  "football|CONCACAF Central American Cup|Real Esteli FC|CS Herediano|主胜|1x2|2026-08-19": {
+    "ev": 3.48,
+    "ts": 1787038514.5616279
   },
   "football|CONCACAF Central American Cup|肯塔吉内斯|维德斯|让球客胜(+4)|hc|+4|2026-08-19": {
     "ev": 3.93,
@@ -324,6 +337,11 @@
     "bb": 1.57,
     "ts": 1787034729.998604
   },
+  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯 1968|双重机会-和局/客|dc|2026-08-19": {
+    "ev": 10.52,
+    "bb": 4.91,
+    "ts": 1787038514.330166
+  },
   "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯1968|双重机会-和局/客|dc|2026-08-19": {
     "ev": 9.17,
     "bb": 4.85,
@@ -353,10 +371,23 @@
     "ev": 10.31,
     "ts": 1787025629.245635
   },
+  "football|Slovakia Cup|MSK Spisske Podhradie|MFK Ruzomberok|小球|1x2|2026-08-18": {
+    "ev": 9.76,
+    "ts": 1787038514.5605912
+  },
+  "football|Slovakia Cup|MSK Spisske Podhradie|MFK Ruzomberok|让球主胜|1x2|2026-08-18": {
+    "ev": 1.46,
+    "ts": 1787038514.5605261
+  },
   "football|Slovakia Cup|托波尔卡尼|班尼卡莱奥塔|双重机会-主/和局|dc|2026-08-18": {
     "ev": 10.31,
     "bb": 4.87,
     "ts": 1787025628.968422
+  },
+  "football|Slovakia Cup|斯比斯克泊迪|鲁森比洛克|小球(4.75)|ou|4.75|2026-08-18": {
+    "ev": 9.76,
+    "bb": 1.85,
+    "ts": 1787038514.3300748
   },
   "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 6.13,
@@ -370,6 +401,10 @@
   "football|UEFA Champions League-Qualification|PFC Levski Sofia|AEK Athens|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 2.54,
     "ts": 1787025629.2463439
+  },
+  "football|UEFA Champions League-Qualification|PFC Levski Sofia|AEK Athens|单双-双|oe|2026-08-19": {
+    "ev": 1.07,
+    "ts": 1787038514.5611038
   },
   "football|UEFA Champions League-Qualification|PFC Levski Sofia|AEK Athens|让球客胜|1x2|2026-08-19": {
     "ev": 1.19,
@@ -413,6 +448,10 @@
     "ev": 1.6,
     "ts": 1787025629.247209
   },
+  "football|Uzbekistan Super League|FK Buxoro|FK Neftchi Fargona|上半场双重机会-主/客|ht_dc|2026-08-18": {
+    "ev": 1.97,
+    "ts": 1787038514.561801
+  },
   "tennis|ATP Challenger - Roehampton Open|Alec Deckers (NED)|Patrick Brady (GBR)|让盘客胜|1x2|2026-08-18": {
     "ev": 1.11,
     "ts": 1787025629.246964
@@ -437,6 +476,10 @@
     "ev": 2.56,
     "ts": 1787025629.2470882
   },
+  "tennis|ITF - W35 Verbier Women Singles|Ana Grubor (CAN)|Federica Trevisan (ITA)|客胜|1x2|2026-08-18": {
+    "ev": 1.11,
+    "ts": 1787039050.968587
+  },
   "tennis|ITF - W50 Prague Women Singles|Denisa Zoldakova (CZE)|Maria Aran Teixido Garcia (ESP)|主胜|1x2|2026-08-18": {
     "ev": 2.22,
     "ts": 1787037482.329034
@@ -449,19 +492,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Slovakia Cup|斯比斯克泊迪|鲁森比洛克|小球(4.75)|ou|4.75|2026-08-18": {
-    "ev": 9.76,
-    "bb": 1.85,
-    "ts": 1787038514.3300748
-  },
-  "football|Brazil Serie B|累西腓航海|塞阿拉|让球主胜(0)|hc|0|2026-08-19": {
-    "ev": 3.35,
-    "bb": 1.6,
-    "ts": 1787038514.330122
-  },
-  "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯 1968|双重机会-和局/客|dc|2026-08-19": {
-    "ev": 10.52,
-    "bb": 4.91,
-    "ts": 1787038514.330166
+  "football|Copa Libertadores|门多萨独立|弗鲁米嫩塞RJ|角球小球(o 9)|corner|2026-08-19": {
+    "ev": 4.78,
+    "bb": 1.82,
+    "ts": 1787039431.297716
   }
 }

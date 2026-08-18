@@ -26,7 +26,7 @@ from src.scrapers.pinnacle_api import (
     API_BASE, SESSION, api_get, _rate_limit, _diagnose_pinnacle_error, us_to_decimal, get_decimal_price,
 )
 from src.scrapers.pinnacle_api import _rate_limit as _  # noqa: ensure rate_limit usable
-from src.scrapers.devig import shin_fair_odds, devig_favorite_divergence  # Shin 法去抽水, 替代比例法
+from src.scrapers.devig import shin_fair_odds, devig_favorite_divergence, devig_shin  # Shin 法去抽水, 替代比例法
 
 API_BASE = API_BASE  # re-export for backward compat
 SESSION = SESSION
@@ -1237,12 +1237,13 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             dc_pin_raw = dc_raw
                     break
 
-            # 路径B：Pinnacle 无 DC 市场 → 从 1X2 推导公平价（去抽水后合并概率）
+            # 路径B：Pinnacle 无 DC 市场 → 从 1X2 推导公平价（Shin 去抽水后合并概率）
             if dc_fair is None:
                 h, d, a = pin_ml
                 if all(x and x > 0 for x in [h, d, a]):
-                    imp = 1/h + 1/d + 1/a
-                    p_h, p_d, p_a = (1/h)/imp, (1/d)/imp, (1/a)/imp
+                    # V5.9: 比例法有 favorite-longshot 偏差(高估热门/低估冷门)致"主/客"EV 虚高,
+                    # 改用 Shin 法(与主 1X2 一致)
+                    p_h, p_d, p_a = devig_shin([h, d, a])
                     dc_fair = [round(1/(p_h+p_d), 4), round(1/(p_d+p_a), 4), round(1/(p_h+p_a), 4)]
                     # 推导无原始 Pinnacle 价格，dc_pin_raw 保持 None → 推送会显示"推导: 1X2"
 
@@ -1313,8 +1314,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 if len(pin_ht_ml_for_dc) == 3:
                     hh, dd, aa = pin_ht_ml_for_dc
                     if all(x and x > 0 for x in [hh, dd, aa]):
-                        imp = 1/hh + 1/dd + 1/aa
-                        p_h, p_d, p_a = (1/hh)/imp, (1/dd)/imp, (1/aa)/imp
+                        # V5.9: 同 DC, 用 Shin 法修 favorite-longshot 偏差(主/客 EV 虚高)
+                        p_h, p_d, p_a = devig_shin([hh, dd, aa])
                         ht_dc_fair = [round(1/(p_h+p_d), 4), round(1/(p_d+p_a), 4), round(1/(p_h+p_a), 4)]
             if ht_dc_fair:
                 ht_dc_labels = ["上半场双重机会-主/和局", "上半场双重机会-和局/客", "上半场双重机会-主/客"]

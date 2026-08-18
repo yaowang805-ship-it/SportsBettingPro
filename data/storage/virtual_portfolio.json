@@ -1,5 +1,5 @@
 {
-  "balance": 17718.0,
+  "balance": 17318.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1036,14 +1036,37 @@
       "commence_time": 1787068800,
       "created_at": "2026-08-18T07:35:14.325323+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_门多萨独立_弗鲁米嫩塞RJ_角球小球(o_9)",
+      "sport": "football",
+      "league": "南美解放者杯",
+      "home_team": "门多萨独立",
+      "away_team": "弗鲁米嫩塞RJ",
+      "home_cn": "门多萨独立",
+      "away_cn": "弗鲁米嫩塞RJ",
+      "market": "over_under",
+      "market_type": "角球小球(o 9)",
+      "sub_market": "corner",
+      "line": "o 9",
+      "odds": 1.82,
+      "stake": 400,
+      "model_prob": 0.5757,
+      "ev_pct": 4.78,
+      "pin_odds": 1.6623,
+      "fair_price": 1.7369,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787090400,
+      "created_at": "2026-08-18T07:50:31.293885+00:00",
+      "track_only": false
     }
   ],
   "settled": {},
   "history": [],
   "daily_budget": {
     "date": "2026-08-18",
-    "used": 1923.0,
-    "bets": 40
+    "used": 2323.0,
+    "bets": 41
   },
   "updated": null
 }
