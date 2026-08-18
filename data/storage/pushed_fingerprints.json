@@ -499,6 +499,10 @@
     "ev": 5.33,
     "ts": 1787055284.292835
   },
+  "football|England Professional Development League|Charlton Athletic U21|Bolton Wanderers U21|让球主胜|1x2|2026-08-18": {
+    "ev": 3.18,
+    "ts": 1787056133.488408
+  },
   "football|England Professional Development League|Charlton Athletic U21|Bolton Wanderers U21|让球客胜|1x2|2026-08-18": {
     "ev": 2.13,
     "ts": 1787055284.292885
@@ -629,6 +633,11 @@
     "ev": 9.2,
     "bb": 3.19,
     "ts": 1787032510.1961799
+  },
+  "football|Japan Emperor Cup|铃鹿得分手|巴萨罗|让球主胜(0)|hc|0|2026-08-19": {
+    "ev": 7.49,
+    "bb": 1.96,
+    "ts": 1787055918.468578
   },
   "football|Japan Emperor Cup|铃鹿无限|巴萨罗|小球(2.75)|ou|2.75|2026-08-19": {
     "ev": 4.22,
@@ -834,9 +843,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Japan Emperor Cup|铃鹿得分手|巴萨罗|让球主胜(0)|hc|0|2026-08-19": {
-    "ev": 7.49,
-    "bb": 1.96,
-    "ts": 1787055918.468578
+  "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|让分主胜(-2.5)|hc|-2.5|2026-08-19": {
+    "ev": 3.7,
+    "bb": 1.93,
+    "ts": 1787056770.460829
   }
 }
