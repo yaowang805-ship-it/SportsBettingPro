@@ -870,6 +870,10 @@ def extract_match_odds(record, sport_key, platform="BB"):
             od = float(op.get("od", 0))
             if od > 1:
                 odds_list.append(od)
+            elif od <= 0:
+                # V5.9: od=-999 = 该选项关闭/不开放 (如 FB 的 DC「主/和局」在强热门时关闭),
+                # 保留 0 占位, 否则 len<3 导致整个 DC 盘口被丢弃 (FB DC 4.91 因此漏推)。
+                odds_list.append(0.0)
         if len(odds_list) >= 3:
             return odds_list[:3]
 
