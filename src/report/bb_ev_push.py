@@ -2369,6 +2369,25 @@ def _lookup_fresh_pin_odds(fresh: dict, o: dict):
                 if (p.get("designation", "") or "").lower() == td:
                     return p.get("price_decimal", 0)
 
+    elif mkt == "corner":
+        # 角球子比赛字段同主盘口(moneyline/spread/total), 从 designation 判断子盘口
+        if "让球" in des or "让分" in des:
+            line = _parse_line(o.get("line"))
+            td = "away" if ("客" in des or "away" in des) else "home"
+            return _find_2way("spread", td, line)
+        elif "大" in des or "小" in des or "over" in des or "under" in des:
+            line = _parse_line(o.get("line"))
+            td = "over" if ("大" in des or "over" in des) else "under"
+            return _find_2way("total", td, line)
+        else:
+            # 角球独赢
+            target = "home"
+            if "客" in des or "away" in des:
+                target = "away"
+            elif "和" in des or "draw" in des:
+                target = "draw"
+            return _find_ml("moneyline", target)
+
     return None
 
 
@@ -2405,10 +2424,13 @@ def _verify_odds_freshness(qualified: list, max_pin_drift: float = 0.08) -> list
 
         # 收集全部机会涉及的联赛(不再只验前10条)
         leagues_to_check = set()
+        corner_leagues = set()
         for o in qualified:
             lid = find_pinnacle_league_ids(o.get("league", ""), ps)
             if lid:
                 leagues_to_check.add(lid[0])
+                if o.get("_sub_market", o.get("_market", "")) == "corner":
+                    corner_leagues.add(lid[0])
 
         if not leagues_to_check:
             return qualified
@@ -2422,7 +2444,18 @@ def _verify_odds_freshness(qualified: list, max_pin_drift: float = 0.08) -> list
             except Exception:
                 pass
 
-        if not fresh_index:
+        # V5.9: 角球子比赛在 get_league_corner_markets (不在主盘口), 单独建索引
+        corner_index = {}
+        if corner_leagues:
+            from src.scrapers.pinnacle_markets import get_league_corner_markets
+            for lid in corner_leagues:
+                try:
+                    for r in get_league_corner_markets(lid):
+                        corner_index[(r.get("home", ""), r.get("away", ""))] = r
+                except Exception:
+                    pass
+
+        if not fresh_index and not corner_index:
             return qualified
 
         kept = []
@@ -2430,7 +2463,9 @@ def _verify_odds_freshness(qualified: list, max_pin_drift: float = 0.08) -> list
         for o in qualified:
             pin_home = o.get("home_team", o.get("home_pin", ""))
             pin_away = o.get("away_team", o.get("away_pin", ""))
-            fresh = fresh_index.get((pin_home, pin_away))
+            is_corner = (o.get("_sub_market", o.get("_market", "")) == "corner")
+            fresh = (corner_index.get((pin_home, pin_away)) if is_corner
+                     else fresh_index.get((pin_home, pin_away)))
             if not fresh:
                 kept.append(o)   # 实时数据无此场 → 无法验证, 保守放行
                 continue
