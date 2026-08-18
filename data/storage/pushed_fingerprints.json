@@ -3,6 +3,20 @@
     "ev": 1.01,
     "ts": 1787025629.2471528
   },
+  "basketball|Mexico LNBP Basketball League|皇家部队|甘布西诺弗雷斯尼洛|让分客胜(+10.5)|hc|+10.5|2026-08-20": {
+    "ev": 4.36,
+    "bb": 1.73,
+    "ts": 1787027658.612308
+  },
+  "basketball|WNBA|Chicago Sky (w)|New York Liberty (w)|让分客胜|1x2|2026-08-19": {
+    "ev": 1.66,
+    "ts": 1787027658.84504
+  },
+  "basketball|WNBA|芝加哥天空 (女)|纽约自由人 (女)|让分客胜(-3.5)|hc|-3.5|2026-08-19": {
+    "ev": 2.19,
+    "bb": 1.91,
+    "ts": 1787027658.61243
+  },
   "basketball|William Jones Cup|Chinese Taipei Blue|Wonju DB Promy|客胜|1x2|2026-08-18": {
     "ev": 3.27,
     "ts": 1787025629.247624
@@ -15,6 +29,11 @@
     "ev": 4.19,
     "bb": 1.14,
     "ts": 1787025628.968193
+  },
+  "basketball|William Jones Cup|马来西亚|约旦|让分主胜(+3.5)|hc|+3.5|2026-08-18": {
+    "ev": 4.96,
+    "bb": 2.02,
+    "ts": 1787027658.612374
   },
   "football|ASEAN Hyundai Cup|Thailand|Singapore|双重机会-和局/客|dc|2026-08-18": {
     "ev": 12.42,
@@ -58,6 +77,10 @@
   "football|Brazil Serie B|Goias EC GO|EC Juventude RS|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 4.55,
     "ts": 1787025629.2467399
+  },
+  "football|Brazil Serie B|Londrina EC PR|Goianiense GO|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 4.13,
+    "ts": 1787027658.845748
   },
   "football|Brazil Serie B|Londrina EC PR|Goianiense GO|单双-双|oe|2026-08-19": {
     "ev": 1.7,
@@ -154,6 +177,10 @@
     "bb": 1.73,
     "ts": 1787025628.968322
   },
+  "football|England EFL Trophy|Northampton Town|Brighton & Hove Albion FC U21|上半场主胜|ht|2026-08-19": {
+    "ev": 2.42,
+    "ts": 1787027658.845279
+  },
   "football|England EFL Trophy|Stockport County FC|Everton FC U21|双重机会-和局/客|dc|2026-08-19": {
     "ev": 2.87,
     "ts": 1787025629.247296
@@ -186,6 +213,11 @@
   "football|Greece Cup-Qualification|APO Levadiakos FC|Asteras Tripolis|让球主胜|1x2|2026-08-19": {
     "ev": 1.1,
     "ts": 1787025629.245709
+  },
+  "football|Japan Emperor Cup|瑞拉克志贺FC|日本足球学院|双重机会-和局/客|dc|2026-08-19": {
+    "ev": 8.86,
+    "bb": 3.18,
+    "ts": 1787027658.6124852
   },
   "football|Mexico Liga De Expansion MX|莫雷利亚|克雷卡米诺斯|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-21": {
     "ev": 4.23,
@@ -245,24 +277,9 @@
     "ev": 2.56,
     "ts": 1787025629.2470882
   },
-  "basketball|Mexico LNBP Basketball League|皇家部队|甘布西诺弗雷斯尼洛|让分客胜(+10.5)|hc|+10.5|2026-08-20": {
-    "ev": 4.36,
-    "bb": 1.73,
-    "ts": 1787027658.612308
-  },
-  "basketball|William Jones Cup|马来西亚|约旦|让分主胜(+3.5)|hc|+3.5|2026-08-18": {
-    "ev": 4.96,
-    "bb": 2.02,
-    "ts": 1787027658.612374
-  },
-  "basketball|WNBA|芝加哥天空 (女)|纽约自由人 (女)|让分客胜(-3.5)|hc|-3.5|2026-08-19": {
-    "ev": 2.19,
-    "bb": 1.91,
-    "ts": 1787027658.61243
-  },
-  "football|Japan Emperor Cup|瑞拉克志贺FC|日本足球学院|双重机会-和局/客|dc|2026-08-19": {
-    "ev": 8.86,
-    "bb": 3.18,
-    "ts": 1787027658.6124852
+  "basketball|William Jones Cup|马来西亚|约旦|让分主胜(+4.5)|hc|+4.5|2026-08-18": {
+    "ev": 6.14,
+    "bb": 1.88,
+    "ts": 1787027804.460613
   }
 }
