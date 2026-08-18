@@ -159,11 +159,16 @@ def _fetch_close_odds(entries):
     sport_map = {"football": "⚽", "basketball": "🏀", "tennis": "🎾", "baseball": "⚾",
                  "american_football": "🏈", "mma": "🥊", "boxing": "👊", "ice_hockey": "🏒"}
 
-    for league, league_entries in by_league.items():
+    for group_key, league_entries in by_league.items():
         if time.time() - _budget_start > _MAX_RUNTIME:
             logger.warning("CLV 采集超预算 %ds, 提前结束 (已处理 %d 条)", _MAX_RUNTIME, len(results))
             break
-        pin_ids = find_pinnacle_league_ids(league, ps)
+        league = league_entries[0].get("league", group_key)
+        # V5.9: group_key 是数字=存储的 pin_league_id 直拉; 否则是联赛名, 反查
+        if str(group_key).isdigit():
+            pin_ids = [group_key]
+        else:
+            pin_ids = find_pinnacle_league_ids(group_key, ps)
         if not pin_ids:
             continue
 
