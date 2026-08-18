@@ -17,9 +17,17 @@
     "bb": 1.91,
     "ts": 1787027658.61243
   },
+  "basketball|William Jones Cup|Chinese Taipei Blue|Wonju DB Promy|大分|1x2|2026-08-18": {
+    "ev": 1.03,
+    "ts": 1787042136.4657438
+  },
   "basketball|William Jones Cup|Chinese Taipei Blue|Wonju DB Promy|客胜|1x2|2026-08-18": {
     "ev": 3.27,
     "ts": 1787025629.247624
+  },
+  "basketball|William Jones Cup|Chinese Taipei Blue|Wonju DB Promy|让分客胜|1x2|2026-08-18": {
+    "ev": 2.79,
+    "ts": 1787042136.465686
   },
   "basketball|William Jones Cup|Japan|Strong Group Athletics|客胜|1x2|2026-08-18": {
     "ev": 1.74,
@@ -260,6 +268,11 @@
     "bb": 1.86,
     "ts": 1787021144.061766
   },
+  "football|Copa Sudamericana|圣保罗|玻利瓦尔|上半场客胜|ht|2026-08-19": {
+    "ev": 5.98,
+    "bb": 8.95,
+    "ts": 1787041147.299741
+  },
   "football|Denmark DBU Pokalen|Nykobing FC|Naestved BK|主胜|1x2|2026-08-19": {
     "ev": 2.94,
     "ts": 1787025629.2458
@@ -429,10 +442,20 @@
     "bb": 5.95,
     "ts": 1787034729.999209
   },
+  "football|UEFA Europa Conference League-Qualification|格拉斯哥流浪者|亚布洛内茨|双重机会-和局/客|dc|2026-08-21": {
+    "ev": 3.33,
+    "bb": 3.2,
+    "ts": 1787041147.2998898
+  },
   "football|UEFA Europa Conference League-Qualification|赫塔菲|贝尔格莱德游击|双重机会-和局/客|dc|2026-08-21": {
     "ev": 5.81,
     "bb": 3.84,
     "ts": 1787034729.998822
+  },
+  "football|UEFA Europa League-Qualification|CS卡拉奥华大学 1948|阿拉特亚美尼亚|双重机会-和局/客|dc|2026-08-21": {
+    "ev": 3.42,
+    "bb": 2.89,
+    "ts": 1787041147.2998211
   },
   "football|USA Major League Soccer|多伦多FC|夏洛特FC|正确比分1-1|correct_score|2026-08-20": {
     "ev": 21.57,
@@ -469,9 +492,21 @@
     "ev": 1.53,
     "ts": 1787032903.468022
   },
+  "tennis|ATP Challenger - Sion Open - Doubles|Maximilian Neuchrist (AUT) / David Poljak (CZE)|Luca Staeheli (SUI) / Patrick Zahraj (GER)|主胜|1x2|2026-08-18": {
+    "ev": 11.05,
+    "ts": 1787041147.930015
+  },
   "tennis|ITF - M15 Mistelbach Men Singles|Patrick Jozwicki (AUT)|Gabriele Maria Noce (ITA)|客胜|1x2|2026-08-18": {
     "ev": 1.41,
     "ts": 1787024666.141323
+  },
+  "tennis|ITF - M25 Slovenj Gradec Men Singles|Jan Kupcic (SLO)|Andrea Fiorentini (ITA)|客胜|1x2|2026-08-19": {
+    "ev": 1.49,
+    "ts": 1787041147.929616
+  },
+  "tennis|ITF - M25 Slovenj Gradec Men Singles|Miha Vetrih (SLO)|Samuele Pieri (ITA)|客胜|1x2|2026-08-19": {
+    "ev": 1.68,
+    "ts": 1787041147.9295309
   },
   "tennis|ITF - M25 Taipei Men Singles|Hiroki Moriya (JPN)|Kosuke Ogura (JPN)|客胜|1x2|2026-08-19": {
     "ev": 1.05,
@@ -501,19 +536,14 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Copa Sudamericana|圣保罗|玻利瓦尔|上半场客胜|ht|2026-08-19": {
-    "ev": 5.98,
-    "bb": 8.95,
-    "ts": 1787041147.299741
+  "basketball|WNBA|康涅狄格阳光 (女)|洛杉矶火花 (女)|小分(170.5)|ou|170.5|2026-08-19": {
+    "ev": 5.34,
+    "bb": 2.0,
+    "ts": 1787042346.7519271
   },
-  "football|UEFA Europa League-Qualification|CS卡拉奥华大学 1948|阿拉特亚美尼亚|双重机会-和局/客|dc|2026-08-21": {
-    "ev": 3.42,
-    "bb": 2.89,
-    "ts": 1787041147.2998211
-  },
-  "football|UEFA Europa Conference League-Qualification|格拉斯哥流浪者|亚布洛内茨|双重机会-和局/客|dc|2026-08-21": {
-    "ev": 3.33,
-    "bb": 3.2,
-    "ts": 1787041147.2998898
+  "football|Denmark DBU Pokalen|尼克宾|纳斯特维德|大球(2.75)|ou|2.75|2026-08-19": {
+    "ev": 9.25,
+    "bb": 2.13,
+    "ts": 1787042346.751998
   }
 }
