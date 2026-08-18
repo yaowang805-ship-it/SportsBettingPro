@@ -98,6 +98,7 @@ def _fetch_close_odds(entries):
     _MAX_RUNTIME = 600  # 单次采集 wall-clock 预算 10 分钟, 防卡死/无限重扫
     results = []
     league_cache = {}  # Pinnacle league ID → matchups cache
+    special_cache = {}  # Pinnacle league ID → special markets cache
 
     # 加载 Pinnacle 联赛结构
     ps_file = DATA_DIR / "pinnacle_league_structure.json"
@@ -231,6 +232,9 @@ def _fetch_close_odds(entries):
 
                 # 提取对应市场的收盘公平价 (直盘+推导盘口均支持)
                 close_data = _extract_market_odds(best_pin, sub_market, designation)
+                if close_data is None and sub_market in ("correct_score", "winning_margin", "total_goals_range", "first_to_score"):
+                    # V5.9: 特殊盘口在 get_league_special_markets (matchup 里没有)
+                    close_data = _extract_special_market_close(pin_id, e, special_cache)
                 if close_data is None:
                     continue
                 close_pin_odds, close_fair, total_implied = close_data
@@ -445,6 +449,86 @@ def _extract_market_odds(pin_matchup, sub_market, designation):
     # correct_score/winning_margin/total_goals_range/first_to_score 在 get_league_special_markets
     # (matchup 里无对应字段, 需在 _fetch_close_odds 里单独拉)
     return None
+
+
+def _extract_special_market_close(league_id, entry, special_cache):
+    """特殊盘口(正确比分/净胜球/总进球区间/先进球)收盘价 — 用 get_league_special_markets。
+
+    Returns: (close_pin_odds, close_fair_price, total_implied) 或 None。
+    """
+    from src.scrapers.pinnacle_markets import get_league_special_markets
+    from src.scrapers.pinnacle_opportunities import _norm_scoreline, _norm_margin_side, _norm_special_name
+
+    lid = str(league_id)
+    if lid not in special_cache:
+        try:
+            special_cache[lid] = get_league_special_markets(lid)
+        except Exception:
+            special_cache[lid] = {}
+    spec_map = special_cache[lid]
+    if not spec_map:
+        return None
+
+    sub = entry.get("sub_market", "")
+    designation = entry.get("designation", "")
+    home_pin = (entry.get("home_pin", "") or "").lower().strip()
+    away_pin = (entry.get("away_pin", "") or "").lower().strip()
+
+    # 按队名匹配 special slot (与 fetch_special_opportunities 一致)
+    best_markets = None
+    best_score = 0
+    for pid, info in spec_map.items():
+        ph = (info.get("home") or "").lower().strip()
+        pa = (info.get("away") or "").lower().strip()
+        if not ph or not pa:
+            continue
+        sc = 0
+        if home_pin and ph:
+            if home_pin == ph:
+                sc += 1
+            elif home_pin in ph or ph in home_pin:
+                sc += 0.5
+        if away_pin and pa:
+            if away_pin == pa:
+                sc += 1
+            elif away_pin in pa or pa in away_pin:
+                sc += 0.5
+        if sc > best_score:
+            best_score = sc
+            best_markets = info.get("markets")
+    if not best_markets or best_score < 0.5:
+        return None
+
+    prices = best_markets.get(sub, [])
+    if not prices:
+        return None
+
+    # 从 designation 剥离中文 label 前缀 (如 "正确比分1-1" → "1-1")
+    label = {"correct_score": "正确比分", "winning_margin": "净胜球",
+             "total_goals_range": "总进球区间", "first_to_score": "先进球"}.get(sub, "")
+    name_part = designation[len(label):] if label and designation.startswith(label) else designation
+
+    if sub == "correct_score":
+        norm_price = {_norm_scoreline(p["name"]): p["odds"] for p in prices}
+        target = _norm_scoreline(name_part)
+    elif sub == "winning_margin":
+        norm_price = {_norm_margin_side(p["name"], entry.get("home_pin", ""), entry.get("away_pin", "")): p["odds"] for p in prices}
+        target = name_part  # designation 已存 home_byN/away_byN
+    else:
+        norm_price = {_norm_special_name(p["name"]): p["odds"] for p in prices}
+        target = _norm_special_name(name_part)
+
+    close_odds = norm_price.get(target)
+    if not close_odds or close_odds <= 1.0:
+        return None
+    all_odds = [v for v in norm_price.values() if v and v > 1.0]
+    if not all_odds:
+        return None
+    total = sum(1.0 / o for o in all_odds)
+    if total <= 0:
+        return None
+    fair = close_odds * total  # proportional devig
+    return round(close_odds, 4), round(fair, 4), round(total, 4)
 
 
 def _save_results(results):
