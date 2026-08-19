@@ -45946,8 +45946,15 @@
     },
     "Newell´s Old Boys": {
       "sport": "football",
-      "n": 213,
+      "n": 230,
       "first": "2026-08-16",
+      "last": "2026-08-19",
+      "source": "auto"
+    },
+    "JKS 1909 Jarosław": {
+      "sport": "football",
+      "n": 4,
+      "first": "2026-08-19",
       "last": "2026-08-19",
       "source": "auto"
     }
@@ -53847,5 +53854,6 @@
   "哈拉帕城市": "ART Municipal Jalapa",
   "卡捷琳娜.斯尼科娃 / 泰勒.汤森": "Katerina Siniakova",
   "达里娅·尤拉克·施赖伯 / 吴芳娴": "Jessica Bouzas Maneiro",
-  "Newell´s Old Boys": "Newells Old Boys"
+  "Newell´s Old Boys": "Newells Old Boys",
+  "JKS 1909 Jarosław": "JKS 1909 Jaroslaw"
 }

@@ -1,34 +1,6 @@
 {
-  "210645": {
-    "name": "Uruguay - Liga Femenina",
-    "group": "Uruguay",
-    "sport": "篮球",
-    "sport_id": 4,
-    "matchup_count": 1
-  },
   "487": {
     "name": "NBA",
-    "group": "USA",
-    "sport": "篮球",
-    "sport_id": 4,
-    "matchup_count": 1
-  },
-  "209863": {
-    "name": "Uruguay - Metro League",
-    "group": "Uruguay",
-    "sport": "篮球",
-    "sport_id": 4,
-    "matchup_count": 1
-  },
-  "5699": {
-    "name": "Olympic Qualification Women",
-    "group": "Olympics",
-    "sport": "篮球",
-    "sport_id": 4,
-    "matchup_count": 1
-  },
-  "493": {
-    "name": "NCAA",
     "group": "USA",
     "sport": "篮球",
     "sport_id": 4,
@@ -41,16 +13,16 @@
     "sport_id": 4,
     "matchup_count": 1
   },
-  "5433": {
-    "name": "Puerto Rico - Superior Nacional",
-    "group": "USA",
+  "210483": {
+    "name": "Rwanda - National League",
+    "group": "Rwanda",
     "sport": "篮球",
     "sport_id": 4,
     "matchup_count": 1
   },
-  "206146": {
-    "name": "Brazil - Campeonato Paulista",
-    "group": "Brazil",
+  "5433": {
+    "name": "Puerto Rico - Superior Nacional",
+    "group": "USA",
     "sport": "篮球",
     "sport_id": 4,
     "matchup_count": 1
@@ -62,6 +34,41 @@
     "sport_id": 4,
     "matchup_count": 1
   },
+  "210645": {
+    "name": "Uruguay - Liga Femenina",
+    "group": "Uruguay",
+    "sport": "篮球",
+    "sport_id": 4,
+    "matchup_count": 1
+  },
+  "5699": {
+    "name": "Olympic Qualification Women",
+    "group": "Olympics",
+    "sport": "篮球",
+    "sport_id": 4,
+    "matchup_count": 1
+  },
+  "210644": {
+    "name": "Brazil - Paulista League Women",
+    "group": "Brazil",
+    "sport": "篮球",
+    "sport_id": 4,
+    "matchup_count": 1
+  },
+  "217273": {
+    "name": "Brazil - Paulista FPB U20",
+    "group": "Brazil",
+    "sport": "篮球",
+    "sport_id": 4,
+    "matchup_count": 1
+  },
+  "206146": {
+    "name": "Brazil - Campeonato Paulista",
+    "group": "Brazil",
+    "sport": "篮球",
+    "sport_id": 4,
+    "matchup_count": 1
+  },
   "486": {
     "name": "Mexico - Liga Nacional de Baloncesto Profesional",
     "group": "Mexico",
@@ -69,109 +76,32 @@
     "sport_id": 4,
     "matchup_count": 1
   },
-  "210483": {
-    "name": "Rwanda - National League",
-    "group": "Rwanda",
+  "271133": {
+    "name": "Uganda NBL",
+    "group": "Uganda",
     "sport": "篮球",
     "sport_id": 4,
     "matchup_count": 1
   },
-  "604": {
-    "name": "World - Club Friendlies",
-    "group": "World",
+  "209863": {
+    "name": "Uruguay - Metro League",
+    "group": "Uruguay",
     "sport": "篮球",
     "sport_id": 4,
     "matchup_count": 1
   },
-  "246": {
-    "name": "MLB",
-    "group": "USA",
-    "sport": "棒球",
-    "sport_id": 3,
-    "matchup_count": 1
-  },
-  "6227": {
-    "name": "Korea Professional Baseball",
-    "group": "South Korea",
-    "sport": "棒球",
-    "sport_id": 3,
-    "matchup_count": 1
-  },
-  "187703": {
-    "name": "Nippon Professional Baseball",
-    "group": "Japan",
-    "sport": "棒球",
-    "sport_id": 3,
-    "matchup_count": 1
-  },
-  "208753": {
-    "name": "Chinese Taipei - Professional League",
-    "group": "China",
-    "sport": "棒球",
-    "sport_id": 3,
-    "matchup_count": 1
-  },
-  "889": {
-    "name": "NFL",
-    "group": "USA",
-    "sport": "美式足球",
-    "sport_id": 15,
-    "matchup_count": 1
-  },
-  "880": {
+  "493": {
     "name": "NCAA",
     "group": "USA",
-    "sport": "美式足球",
-    "sport_id": 15,
+    "sport": "篮球",
+    "sport_id": 4,
     "matchup_count": 1
   },
-  "4347": {
-    "name": "NFL Pre Season",
-    "group": "USA",
-    "sport": "美式足球",
-    "sport_id": 15,
-    "matchup_count": 1
-  },
-  "876": {
-    "name": "Canadian Football",
-    "group": "Canada",
-    "sport": "美式足球",
-    "sport_id": 15,
-    "matchup_count": 1
-  },
-  "206253": {
-    "name": "ITF Women Verbier - R1",
-    "group": "Switzerland",
-    "sport": "网球",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "293678": {
-    "name": "ATP Challenger Sion - R1",
-    "group": "Switzerland",
-    "sport": "网球",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "237374": {
-    "name": "ITF Men Slovenj Gradec - R1",
-    "group": "Slovenia",
-    "sport": "网球",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "214886": {
-    "name": "ITF Women Erwitte - R1",
-    "group": "Germany",
-    "sport": "网球",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "293377": {
-    "name": "ATP Challenger Roehampton - R1",
-    "group": "United Kingdom",
-    "sport": "网球",
-    "sport_id": 33,
+  "271205": {
+    "name": "Uganda NBL Women",
+    "group": "Uganda",
+    "sport": "篮球",
+    "sport_id": 4,
     "matchup_count": 1
   },
   "227248": {
@@ -181,58 +111,16 @@
     "sport_id": 33,
     "matchup_count": 1
   },
-  "244591": {
-    "name": "ATP Cincinnati - R3",
+  "6502": {
+    "name": "WTA Cincinnati - R16",
     "group": "USA",
     "sport": "网球",
     "sport_id": 33,
     "matchup_count": 1
   },
-  "214120": {
-    "name": "ITF Men Idanha-A-Nova - R1",
-    "group": "Portugal",
-    "sport": "网球",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "236369": {
-    "name": "ITF Men Taipei - R1",
-    "group": "Taiwan",
-    "sport": "网球",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "273456": {
-    "name": "ATP Challenger Cancun - Qualifiers",
-    "group": "Mexico",
-    "sport": "网球",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "215170": {
-    "name": "ITF Men Lesa - R1",
-    "group": "Italy",
-    "sport": "网球",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "264630": {
-    "name": "ITF Men Bastad - R1",
-    "group": "Sweden",
-    "sport": "网球",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "215175": {
-    "name": "ITF Men Santander - R1",
-    "group": "Spain",
-    "sport": "网球",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "293663": {
-    "name": "ATP Challenger Quebec City - Qualifiers",
-    "group": "Canada",
+  "225117": {
+    "name": "ITF Men Kursumlijska Banja - R16",
+    "group": "Serbia",
     "sport": "网球",
     "sport_id": 33,
     "matchup_count": 1
@@ -244,23 +132,30 @@
     "sport_id": 33,
     "matchup_count": 1
   },
-  "244563": {
-    "name": "WTA Cincinnati - R3",
-    "group": "USA",
+  "264630": {
+    "name": "ITF Men Bastad - R1",
+    "group": "Sweden",
     "sport": "网球",
     "sport_id": 33,
     "matchup_count": 1
   },
-  "8841": {
-    "name": "ATP Challenger Prague - R1",
-    "group": "Czech Republic",
+  "214120": {
+    "name": "ITF Men Idanha-A-Nova - R1",
+    "group": "Portugal",
     "sport": "网球",
     "sport_id": 33,
     "matchup_count": 1
   },
-  "276142": {
-    "name": "ITF Men Krakow - R1",
-    "group": "Poland",
+  "225220": {
+    "name": "ITF Women Kursumlijska Banja - R1",
+    "group": "Serbia",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "8613": {
+    "name": "ITF Women Tianjin - R16",
+    "group": "China",
     "sport": "网球",
     "sport_id": 33,
     "matchup_count": 1
@@ -272,20 +167,6 @@
     "sport_id": 33,
     "matchup_count": 1
   },
-  "293676": {
-    "name": "ATP Challenger Sion - Qualifiers",
-    "group": "Switzerland",
-    "sport": "网球",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
-  "221609": {
-    "name": "ITF Men Lambermont - R1",
-    "group": "Belgium",
-    "sport": "网球",
-    "sport_id": 33,
-    "matchup_count": 1
-  },
   "276154": {
     "name": "ITF Women Logrono - R1",
     "group": "Spain",
@@ -293,29 +174,50 @@
     "sport_id": 33,
     "matchup_count": 1
   },
-  "276111": {
-    "name": "ITF Women Krakow - R1",
+  "214918": {
+    "name": "ITF Men Ueberlingen - R1",
+    "group": "Germany",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "242565": {
+    "name": "ITF Men Maanshan - R1",
+    "group": "China",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "276115": {
+    "name": "ITF Women Krakow - R16",
     "group": "Poland",
     "sport": "网球",
     "sport_id": 33,
     "matchup_count": 1
   },
-  "8535": {
-    "name": "ITF Women Prague - R1",
-    "group": "Czech Republic",
+  "214886": {
+    "name": "ITF Women Erwitte - R1",
+    "group": "Germany",
     "sport": "网球",
     "sport_id": 33,
     "matchup_count": 1
   },
-  "197237": {
-    "name": "ATP US Open",
-    "group": "USA",
+  "215176": {
+    "name": "ITF Men Santander - R16",
+    "group": "Spain",
     "sport": "网球",
     "sport_id": 33,
     "matchup_count": 1
   },
-  "197474": {
-    "name": "ATP Cincinnati",
+  "293379": {
+    "name": "ATP Challenger Roehampton - R16",
+    "group": "United Kingdom",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "197475": {
+    "name": "WTA Cincinnati",
     "group": "USA",
     "sport": "网球",
     "sport_id": 33,
@@ -328,9 +230,149 @@
     "sport_id": 33,
     "matchup_count": 1
   },
-  "197475": {
-    "name": "WTA Cincinnati",
+  "276142": {
+    "name": "ITF Men Krakow - R1",
+    "group": "Poland",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "236369": {
+    "name": "ITF Men Taipei - R1",
+    "group": "Taiwan",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "237374": {
+    "name": "ITF Men Slovenj Gradec - R1",
+    "group": "Slovenia",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "215170": {
+    "name": "ITF Men Lesa - R1",
+    "group": "Italy",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "8536": {
+    "name": "ITF Women Prague - R16",
+    "group": "Czech Republic",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "197474": {
+    "name": "ATP Cincinnati",
     "group": "USA",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "258489": {
+    "name": "ITF Men Asuncion - R16",
+    "group": "Paraguay",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "8842": {
+    "name": "ATP Challenger Prague - R16",
+    "group": "Czech Republic",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "293680": {
+    "name": "ATP Challenger Sion - R16",
+    "group": "Switzerland",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "206254": {
+    "name": "ITF Women Verbier - R16",
+    "group": "Switzerland",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "215087": {
+    "name": "ITF Women Wanfercee-Baulet - R1",
+    "group": "Belgium",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "3356": {
+    "name": "ATP Cincinnati - R16",
+    "group": "USA",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "293333": {
+    "name": "ITF Women Campos Do Jordao - R1",
+    "group": "Brazil",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "225116": {
+    "name": "ITF Men Kursumlijska Banja - R1",
+    "group": "Serbia",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "221609": {
+    "name": "ITF Men Lambermont - R1",
+    "group": "Belgium",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "273456": {
+    "name": "ATP Challenger Cancun - Qualifiers",
+    "group": "Mexico",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "206253": {
+    "name": "ITF Women Verbier - R1",
+    "group": "Switzerland",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "236370": {
+    "name": "ITF Men Taipei - R16",
+    "group": "Taiwan",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "197237": {
+    "name": "ATP US Open",
+    "group": "USA",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "273458": {
+    "name": "ATP Challenger Cancun - R1",
+    "group": "Mexico",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "225221": {
+    "name": "ITF Women Kursumlijska Banja - R16",
+    "group": "Serbia",
     "sport": "网球",
     "sport_id": 33,
     "matchup_count": 1
@@ -342,6 +384,83 @@
     "sport_id": 33,
     "matchup_count": 1
   },
+  "276156": {
+    "name": "ITF Women Logrono - R16",
+    "group": "Spain",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "244563": {
+    "name": "WTA Cincinnati - R3",
+    "group": "USA",
+    "sport": "网球",
+    "sport_id": 33,
+    "matchup_count": 1
+  },
+  "246": {
+    "name": "MLB",
+    "group": "USA",
+    "sport": "棒球",
+    "sport_id": 3,
+    "matchup_count": 1
+  },
+  "187703": {
+    "name": "Nippon Professional Baseball",
+    "group": "Japan",
+    "sport": "棒球",
+    "sport_id": 3,
+    "matchup_count": 1
+  },
+  "6227": {
+    "name": "Korea Professional Baseball",
+    "group": "South Korea",
+    "sport": "棒球",
+    "sport_id": 3,
+    "matchup_count": 1
+  },
+  "208753": {
+    "name": "Chinese Taipei - Professional League",
+    "group": "China",
+    "sport": "棒球",
+    "sport_id": 3,
+    "matchup_count": 1
+  },
+  "244": {
+    "name": "Mexican League",
+    "group": "Mexico",
+    "sport": "棒球",
+    "sport_id": 3,
+    "matchup_count": 1
+  },
+  "889": {
+    "name": "NFL",
+    "group": "USA",
+    "sport": "美式足球",
+    "sport_id": 15,
+    "matchup_count": 1
+  },
+  "4347": {
+    "name": "NFL Pre Season",
+    "group": "USA",
+    "sport": "美式足球",
+    "sport_id": 15,
+    "matchup_count": 1
+  },
+  "880": {
+    "name": "NCAA",
+    "group": "USA",
+    "sport": "美式足球",
+    "sport_id": 15,
+    "matchup_count": 1
+  },
+  "876": {
+    "name": "Canadian Football",
+    "group": "Canada",
+    "sport": "美式足球",
+    "sport_id": 15,
+    "matchup_count": 1
+  },
   "197047": {
     "name": "Boxing Matches",
     "group": "World",
@@ -349,51 +468,16 @@
     "sport_id": 6,
     "matchup_count": 1
   },
-  "2409": {
-    "name": "Russia - Cup",
-    "group": "Russian Federation",
-    "sport": "足球",
-    "sport_id": 29,
+  "1624": {
+    "name": "UFC",
+    "group": "World",
+    "sport": "MMA",
+    "sport_id": 22,
     "matchup_count": 1
   },
   "2663": {
     "name": "USA - Major League Soccer",
     "group": "USA",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1835": {
-    "name": "Brazil - Serie B",
-    "group": "Brazil",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1875": {
-    "name": "CONMEBOL - Copa Libertadores",
-    "group": "South America",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1904": {
-    "name": "Denmark - Division 1",
-    "group": "Denmark",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1951": {
-    "name": "England - National League North",
-    "group": "England",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2472": {
-    "name": "CONMEBOL - Copa Sudamericana",
-    "group": "South America",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
@@ -412,163 +496,16 @@
     "sport_id": 29,
     "matchup_count": 1
   },
-  "2632": {
-    "name": "UEFA - Europa League Qualifiers",
-    "group": "Europe",
+  "2472": {
+    "name": "CONMEBOL - Copa Sudamericana",
+    "group": "South America",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
   },
-  "10573": {
-    "name": "Panama - Primera Division",
-    "group": "Panama",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "205451": {
-    "name": "UEFA - Champions League Qualifiers",
-    "group": "Europe",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1980": {
-    "name": "England - Premier League",
-    "group": "England",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "6417": {
-    "name": "China - Super League",
-    "group": "China",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1728": {
-    "name": "Sweden - Allsvenskan",
-    "group": "Sweden",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "5591": {
-    "name": "Colombia - Primera A",
-    "group": "Colombia",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "198316": {
-    "name": "England - Professional Development League U21",
-    "group": "England",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1929": {
-    "name": "Netherlands - Eerste Divisie",
-    "group": "Netherlands",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1739": {
-    "name": "Argentina - Primera B Nacional",
-    "group": "Argentina",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1952": {
-    "name": "England - National League South",
-    "group": "England",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2242": {
-    "name": "Mexico - Liga MX",
-    "group": "Mexico",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2592": {
-    "name": "Turkey - Super League",
-    "group": "Turkey",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1741": {
-    "name": "Argentina - Cup",
-    "group": "Argentina",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "198379": {
-    "name": "Saudi Arabia - Kings Cup",
-    "group": "Saudi Arabia",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "35174": {
-    "name": "Russia - First League",
-    "group": "Russian Federation",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2436": {
-    "name": "Italy - Serie A",
-    "group": "Italy",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2395": {
-    "name": "Romania - Liga 1",
-    "group": "Romania",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2054": {
-    "name": "Germany - Super Cup",
-    "group": "Germany",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "271382": {
-    "name": "UEFA - Conference League Qualifiers",
-    "group": "Europe",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "201065": {
-    "name": "USA - USL Championship",
+  "6301": {
+    "name": "USA - Major League Soccer Corners",
     "group": "USA",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "9531": {
-    "name": "Costa Rica - Primera Division",
-    "group": "Costa Rica",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "202276": {
-    "name": "Portugal - U23 Championship",
-    "group": "Portugal",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
@@ -580,65 +517,23 @@
     "sport_id": 29,
     "matchup_count": 1
   },
-  "1958": {
-    "name": "England - League 2",
-    "group": "England",
+  "2453": {
+    "name": "Slovakia - Super Liga",
+    "group": "Slovakia",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
   },
-  "2406": {
-    "name": "Russia - Premier League",
-    "group": "Russian Federation",
+  "2436": {
+    "name": "Italy - Serie A",
+    "group": "Italy",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
   },
-  "1928": {
-    "name": "Netherlands - Eredivisie",
-    "group": "Netherlands",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "238234": {
-    "name": "England - National League Cup",
-    "group": "England",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "197559": {
-    "name": "England - EFL Trophy",
-    "group": "England",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "227146": {
-    "name": "CONCACAF - Central American Cup",
-    "group": "CONCACAF",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1834": {
-    "name": "Brazil - Serie A",
-    "group": "Brazil",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "210697": {
-    "name": "Argentina - Liga Pro",
-    "group": "Argentina",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2027": {
-    "name": "France - Ligue 3",
-    "group": "France",
+  "5591": {
+    "name": "Colombia - Primera A",
+    "group": "Colombia",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
@@ -650,121 +545,16 @@
     "sport_id": 29,
     "matchup_count": 1
   },
-  "2025": {
-    "name": "Finland - Ykkosliiga",
-    "group": "Finland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1957": {
-    "name": "England - League 1",
+  "1980": {
+    "name": "England - Premier League",
     "group": "England",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
   },
-  "9320": {
-    "name": "Bulgaria - First League",
-    "group": "Bulgaria",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "9394": {
-    "name": "Australia - Cup",
-    "group": "Australia",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "201159": {
-    "name": "Switzerland - 1. Liga Classic",
-    "group": "Switzerland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1982": {
-    "name": "England - EFL Cup",
-    "group": "England",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "200047": {
-    "name": "England - Premier League Cup U21",
-    "group": "England",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2160": {
-    "name": "Japan - Cup",
-    "group": "Japan",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2366": {
-    "name": "Peru - Liga 1",
-    "group": "Peru",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "226450": {
-    "name": "Argentina - Liga Pro Reserves",
-    "group": "Argentina",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2386": {
-    "name": "Portugal - Primeira Liga",
-    "group": "Portugal",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1769": {
-    "name": "Australia - NPL Victoria",
-    "group": "Australia",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2024": {
-    "name": "Finland - Veikkausliiga",
-    "group": "Finland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1857": {
-    "name": "Chile - Primera Division",
-    "group": "Chile",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2432": {
-    "name": "Spain - Segunda Division",
-    "group": "Spain",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "10419": {
-    "name": "Saudi Arabia - Pro League",
-    "group": "Saudi Arabia",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1978": {
-    "name": "England - National League",
-    "group": "England",
+  "1875": {
+    "name": "CONMEBOL - Copa Libertadores",
+    "group": "South America",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
@@ -776,338 +566,16 @@
     "sport_id": 29,
     "matchup_count": 1
   },
-  "209758": {
-    "name": "Mexico - Liga de Expansión MX",
+  "35174": {
+    "name": "Russia - First League",
+    "group": "Russian Federation",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2242": {
+    "name": "Mexico - Liga MX",
     "group": "Mexico",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2095": {
-    "name": "Hungary - NB 1",
-    "group": "Hungary",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "207552": {
-    "name": "Korea Republic - K League 2",
-    "group": "South Korea",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2457": {
-    "name": "Slovenia - Prva Liga",
-    "group": "Slovenia",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2518": {
-    "name": "Switzerland - Challenge League",
-    "group": "Switzerland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "207440": {
-    "name": "England - National League South Corners",
-    "group": "England",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1977": {
-    "name": "England - Championship",
-    "group": "England",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2067": {
-    "name": "Germany - Cup",
-    "group": "Germany",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2037": {
-    "name": "France - Ligue 2",
-    "group": "France",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "201165": {
-    "name": "Mexico - Liga MX Women",
-    "group": "Mexico",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2476": {
-    "name": "Sweden - Superettan",
-    "group": "Sweden",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "201290": {
-    "name": "USA - National Womens Soccer League",
-    "group": "USA",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2120": {
-    "name": "Ireland - Premier",
-    "group": "Ireland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "9885": {
-    "name": "Egypt - Premier League",
-    "group": "Egypt",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1842": {
-    "name": "Germany - Bundesliga",
-    "group": "Germany",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "198137": {
-    "name": "England - EFL Trophy Corners",
-    "group": "England",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "5593": {
-    "name": "Uruguay - Primera Division",
-    "group": "Uruguay",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "207551": {
-    "name": "Korea Republic - K League 1",
-    "group": "South Korea",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2102": {
-    "name": "Iceland - Premier League",
-    "group": "Iceland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "205452": {
-    "name": "UEFA - Champions League Qualifiers Corners",
-    "group": "Europe",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "6914": {
-    "name": "CONMEBOL - Copa Sudamericana Corners",
-    "group": "CONMEBOL",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2159": {
-    "name": "Japan - J2 League",
-    "group": "Japan",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1913": {
-    "name": "Denmark - Superliga",
-    "group": "Denmark",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "11693": {
-    "name": "England - Northern Premier League",
-    "group": "England",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2417": {
-    "name": "Scotland - Championship",
-    "group": "Scotland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "219077": {
-    "name": "Switzerland - Promotion League",
-    "group": "Switzerland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2136": {
-    "name": "Israel - Premier League",
-    "group": "Israel",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "5490": {
-    "name": "Spain - La Liga Corners",
-    "group": "Spain",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2259": {
-    "name": "Northern Ireland - Premiership",
-    "group": "Ireland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1773": {
-    "name": "Austria - 2. Liga",
-    "group": "Austria",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1880": {
-    "name": "Croatia - HNL",
-    "group": "Croatia",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1891": {
-    "name": "Czech Republic - First Liga",
-    "group": "Czech Republic",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2123": {
-    "name": "Ireland - Division 1",
-    "group": "Ireland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2387": {
-    "name": "Portugal - Liga 2",
-    "group": "Portugal",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2181": {
-    "name": "Korea Republic - FA Cup",
-    "group": "South Korea",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "201319": {
-    "name": "England - National League North Corners",
-    "group": "England",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2578": {
-    "name": "Turkey - 1st League",
-    "group": "Turkey",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1792": {
-    "name": "Austria - Bundesliga",
-    "group": "Austria",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2453": {
-    "name": "Slovakia - Super Liga",
-    "group": "Slovakia",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "8126": {
-    "name": "UAE - Pro League",
-    "group": "United Arab Emirates",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "8128": {
-    "name": "Qatar - Stars League",
-    "group": "Qatar",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2359": {
-    "name": "Paraguay - Division Profesional",
-    "group": "Paraguay",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "5598": {
-    "name": "Ecuador - Serie A",
-    "group": "Ecuador",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2081": {
-    "name": "Greece - Super League",
-    "group": "Greece",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1817": {
-    "name": "Belgium - Pro League",
-    "group": "Belgium",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "185632": {
-    "name": "Brazil - Serie B Corners",
-    "group": "Brazil",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "6633": {
-    "name": "Poland - 1st Liga",
-    "group": "Poland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "224987": {
-    "name": "England - Professional Development League U21 Corners",
-    "group": "England",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
@@ -1119,149 +587,86 @@
     "sport_id": 29,
     "matchup_count": 1
   },
-  "2517": {
-    "name": "Switzerland - Super League",
-    "group": "Switzerland",
+  "1835": {
+    "name": "Brazil - Serie B",
+    "group": "Brazil",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
   },
-  "2627": {
-    "name": "UEFA - Champions League",
-    "group": "Europe",
+  "2592": {
+    "name": "Turkey - Super League",
+    "group": "Turkey",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
   },
-  "2133": {
-    "name": "Israel - Ligat Leumit",
-    "group": "Israel",
+  "2024": {
+    "name": "Finland - Veikkausliiga",
+    "group": "Finland",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
   },
-  "221698": {
-    "name": "Denmark - Future Cup U21",
+  "207551": {
+    "name": "Korea Republic - K League 1",
+    "group": "South Korea",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2386": {
+    "name": "Portugal - Primeira Liga",
+    "group": "Portugal",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2432": {
+    "name": "Spain - Segunda Division",
+    "group": "Spain",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1904": {
+    "name": "Denmark - Division 1",
     "group": "Denmark",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
   },
-  "6283": {
-    "name": "CONMEBOL - Copa Libertadores Corners",
-    "group": "CONMEBOL",
+  "205451": {
+    "name": "UEFA - Champions League Qualifiers",
+    "group": "Europe",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
   },
-  "6267": {
-    "name": "France - Ligue 1 Corners",
-    "group": "France",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "218793": {
-    "name": "Russia - Cup Corners",
+  "2409": {
+    "name": "Russia - Cup",
     "group": "Russian Federation",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
   },
-  "2331": {
-    "name": "Norway - 1st Division",
-    "group": "Norway",
+  "1842": {
+    "name": "Germany - Bundesliga",
+    "group": "Germany",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
   },
-  "1908": {
-    "name": "Denmark - Cup",
-    "group": "Denmark",
+  "207552": {
+    "name": "Korea Republic - K League 2",
+    "group": "South Korea",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
   },
-  "2374": {
-    "name": "Poland - Ekstraklasa",
-    "group": "Poland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "197236": {
-    "name": "Iceland - 1. Deild Women",
-    "group": "Iceland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1863": {
-    "name": "Club Friendlies",
-    "group": "World",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2080": {
-    "name": "Greece - Cup",
-    "group": "Greece",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1744": {
-    "name": "ASEAN - Championship",
-    "group": "Asia",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2454": {
-    "name": "Slovakia - Cup",
-    "group": "Slovakia",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "2421": {
-    "name": "Scotland - Premiership",
-    "group": "Scotland",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "11670": {
-    "name": "China - Super League Corners",
-    "group": "China",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "219117": {
-    "name": "Australia - Western Australia State League 1",
-    "group": "Australia",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "5264": {
-    "name": "UEFA - EURO",
-    "group": "Europe",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "1818": {
-    "name": "Belgium - Challenger Pro League",
-    "group": "Belgium",
-    "sport": "足球",
-    "sport_id": 29,
-    "matchup_count": 1
-  },
-  "196767": {
-    "name": "Argentina - Cup Corners",
-    "group": "Argentina",
+  "2067": {
+    "name": "Germany - Cup",
+    "group": "Germany",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
@@ -1273,23 +678,870 @@
     "sport_id": 29,
     "matchup_count": 1
   },
-  "6423": {
-    "name": "Mexico - Liga MX Corners",
+  "196763": {
+    "name": "South Africa - PSL",
+    "group": "South Africa",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2037": {
+    "name": "France - Ligue 2",
+    "group": "France",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1952": {
+    "name": "England - National League South",
+    "group": "England",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "210697": {
+    "name": "Argentina - Liga Pro",
+    "group": "Argentina",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "201065": {
+    "name": "USA - USL Championship",
+    "group": "USA",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2632": {
+    "name": "UEFA - Europa League Qualifiers",
+    "group": "Europe",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "8126": {
+    "name": "UAE - Pro League",
+    "group": "United Arab Emirates",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "9885": {
+    "name": "Egypt - Premier League",
+    "group": "Egypt",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1957": {
+    "name": "England - League 1",
+    "group": "England",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "185632": {
+    "name": "Brazil - Serie B Corners",
+    "group": "Brazil",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1769": {
+    "name": "Australia - NPL Victoria",
+    "group": "Australia",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1773": {
+    "name": "Austria - 2. Liga",
+    "group": "Austria",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1977": {
+    "name": "England - Championship",
+    "group": "England",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "5597": {
+    "name": "Venezuela - Cup",
+    "group": "Venezuela",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1929": {
+    "name": "Netherlands - Eerste Divisie",
+    "group": "Netherlands",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "6417": {
+    "name": "China - Super League",
+    "group": "China",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2136": {
+    "name": "Israel - Premier League",
+    "group": "Israel",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2025": {
+    "name": "Finland - Ykkosliiga",
+    "group": "Finland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "201290": {
+    "name": "USA - National Womens Soccer League",
+    "group": "USA",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1728": {
+    "name": "Sweden - Allsvenskan",
+    "group": "Sweden",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2027": {
+    "name": "France - Ligue 3",
+    "group": "France",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "226450": {
+    "name": "Argentina - Liga Pro Reserves",
+    "group": "Argentina",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "10419": {
+    "name": "Saudi Arabia - Pro League",
+    "group": "Saudi Arabia",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "214731": {
+    "name": "Solomon Islands - S-League",
+    "group": "Solomon Islands",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "198379": {
+    "name": "Saudi Arabia - Kings Cup",
+    "group": "Saudi Arabia",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "6633": {
+    "name": "Poland - 1st Liga",
+    "group": "Poland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1792": {
+    "name": "Austria - Bundesliga",
+    "group": "Austria",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "5593": {
+    "name": "Uruguay - Primera Division",
+    "group": "Uruguay",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "6914": {
+    "name": "CONMEBOL - Copa Sudamericana Corners",
+    "group": "CONMEBOL",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1982": {
+    "name": "England - EFL Cup",
+    "group": "England",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2095": {
+    "name": "Hungary - NB 1",
+    "group": "Hungary",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "6416": {
+    "name": "Belarus - Premier League",
+    "group": "Belarus",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2123": {
+    "name": "Ireland - Division 1",
+    "group": "Ireland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2088": {
+    "name": "Guatemala - Liga Nacional",
+    "group": "Guatemala",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1739": {
+    "name": "Argentina - Primera B Nacional",
+    "group": "Argentina",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2259": {
+    "name": "Northern Ireland - Premiership",
+    "group": "Ireland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2406": {
+    "name": "Russia - Premier League",
+    "group": "Russian Federation",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2120": {
+    "name": "Ireland - Premier",
+    "group": "Ireland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2374": {
+    "name": "Poland - Ekstraklasa",
+    "group": "Poland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1978": {
+    "name": "England - National League",
+    "group": "England",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "10921": {
+    "name": "Colombia - Primera B",
+    "group": "Colombia",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "271382": {
+    "name": "UEFA - Conference League Qualifiers",
+    "group": "Europe",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "205452": {
+    "name": "UEFA - Champions League Qualifiers Corners",
+    "group": "Europe",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2181": {
+    "name": "Korea Republic - FA Cup",
+    "group": "South Korea",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "9320": {
+    "name": "Bulgaria - First League",
+    "group": "Bulgaria",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "11670": {
+    "name": "China - Super League Corners",
+    "group": "China",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2366": {
+    "name": "Peru - Liga 1",
+    "group": "Peru",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2160": {
+    "name": "Japan - Cup",
+    "group": "Japan",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2387": {
+    "name": "Portugal - Liga 2",
+    "group": "Portugal",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1891": {
+    "name": "Czech Republic - First Liga",
+    "group": "Czech Republic",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "5487": {
+    "name": "England - Premier League Corners",
+    "group": "England",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "209758": {
+    "name": "Mexico - Liga de Expansión MX",
     "group": "Mexico",
     "sport": "足球",
     "sport_id": 29,
     "matchup_count": 1
   },
-  "1624": {
-    "name": "UFC",
-    "group": "World",
-    "sport": "MMA",
-    "sport_id": 22,
+  "1928": {
+    "name": "Netherlands - Eredivisie",
+    "group": "Netherlands",
+    "sport": "足球",
+    "sport_id": 29,
     "matchup_count": 1
   },
-  "1325": {
-    "name": "Europe - Champions Hockey League",
+  "2518": {
+    "name": "Switzerland - Challenge League",
+    "group": "Switzerland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1857": {
+    "name": "Chile - Primera Division",
+    "group": "Chile",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2331": {
+    "name": "Norway - 1st Division",
+    "group": "Norway",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "6267": {
+    "name": "France - Ligue 1 Corners",
+    "group": "France",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1913": {
+    "name": "Denmark - Superliga",
+    "group": "Denmark",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2417": {
+    "name": "Scotland - Championship",
+    "group": "Scotland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2054": {
+    "name": "Germany - Super Cup",
+    "group": "Germany",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "205322": {
+    "name": "USA - USL League One",
+    "group": "USA",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "219077": {
+    "name": "Switzerland - Promotion League",
+    "group": "Switzerland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1834": {
+    "name": "Brazil - Serie A",
+    "group": "Brazil",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1880": {
+    "name": "Croatia - HNL",
+    "group": "Croatia",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1744": {
+    "name": "ASEAN - Championship",
+    "group": "Asia",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "5264": {
+    "name": "UEFA - EURO",
     "group": "Europe",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2395": {
+    "name": "Romania - Liga 1",
+    "group": "Romania",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "226736": {
+    "name": "USA - Major League Soccer Bookings",
+    "group": "USA",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2080": {
+    "name": "Greece - Cup",
+    "group": "Greece",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1958": {
+    "name": "England - League 2",
+    "group": "England",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2159": {
+    "name": "Japan - J2 League",
+    "group": "Japan",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "222733": {
+    "name": "International - Premier League Cup U21",
+    "group": "World",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "227146": {
+    "name": "CONCACAF - Central American Cup",
+    "group": "CONCACAF",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1863": {
+    "name": "Club Friendlies",
+    "group": "World",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "202276": {
+    "name": "Portugal - U23 Championship",
+    "group": "Portugal",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2048": {
+    "name": "Germany - Regionalliga North",
+    "group": "Germany",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "286307": {
+    "name": "Poland - 3rd Liga",
+    "group": "Poland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "196861": {
+    "name": "Norway - Toppserien Women",
+    "group": "Norway",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "5598": {
+    "name": "Ecuador - Serie A",
+    "group": "Ecuador",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1741": {
+    "name": "Argentina - Cup",
+    "group": "Argentina",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "5488": {
+    "name": "Italy - Serie A Corners",
+    "group": "Italy",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2517": {
+    "name": "Switzerland - Super League",
+    "group": "Switzerland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2359": {
+    "name": "Paraguay - Division Profesional",
+    "group": "Paraguay",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1818": {
+    "name": "Belgium - Challenger Pro League",
+    "group": "Belgium",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2476": {
+    "name": "Sweden - Superettan",
+    "group": "Sweden",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "201159": {
+    "name": "Switzerland - 1. Liga Classic",
+    "group": "Switzerland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1867": {
+    "name": "Colombia - Cup",
+    "group": "Colombia",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "5490": {
+    "name": "Spain - La Liga Corners",
+    "group": "Spain",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1833": {
+    "name": "Brazil - Cup",
+    "group": "Brazil",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "206882": {
+    "name": "USA - USL Championship Corners",
+    "group": "USA",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "220556": {
+    "name": "Australia - NPL Northern NSW Women",
+    "group": "Australia",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "198137": {
+    "name": "England - EFL Trophy Corners",
+    "group": "England",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "196767": {
+    "name": "Argentina - Cup Corners",
+    "group": "Argentina",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2102": {
+    "name": "Iceland - Premier League",
+    "group": "Iceland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "9394": {
+    "name": "Australia - Cup",
+    "group": "Australia",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "200797": {
+    "name": "Colombia - Primera B Corners",
+    "group": "Colombia",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "8705": {
+    "name": "Germany - Bundesliga U19",
+    "group": "Germany",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "8128": {
+    "name": "Qatar - Stars League",
+    "group": "Qatar",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2578": {
+    "name": "Turkey - 1st League",
+    "group": "Turkey",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "11693": {
+    "name": "England - Northern Premier League",
+    "group": "England",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2457": {
+    "name": "Slovenia - Prva Liga",
+    "group": "Slovenia",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "9531": {
+    "name": "Costa Rica - Primera Division",
+    "group": "Costa Rica",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "213349": {
+    "name": "China - League Two",
+    "group": "China",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "6820": {
+    "name": "Argentina - Primera B Nacional Corners",
+    "group": "Argentina",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "214836": {
+    "name": "Korea Republic - FA Cup Corners",
+    "group": "South Korea",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "197293": {
+    "name": "Iceland - 2. Deild",
+    "group": "Iceland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "187661": {
+    "name": "Denmark - Elitedivisionen Women",
+    "group": "Denmark",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1817": {
+    "name": "Belgium - Pro League",
+    "group": "Belgium",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "6283": {
+    "name": "CONMEBOL - Copa Libertadores Corners",
+    "group": "CONMEBOL",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1742": {
+    "name": "Armenia - Premier League",
+    "group": "Armenia",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2081": {
+    "name": "Greece - Super League",
+    "group": "Greece",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "201869": {
+    "name": "Iceland - 3. Deild",
+    "group": "Iceland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "207440": {
+    "name": "England - National League South Corners",
+    "group": "England",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "201845": {
+    "name": "Chile - Tercera Division A",
+    "group": "Chile",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "197559": {
+    "name": "England - EFL Trophy",
+    "group": "England",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "72425": {
+    "name": "Colombia - Primera A Corners",
+    "group": "Colombia",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "196765": {
+    "name": "South Africa - PSL Corners",
+    "group": "South Africa",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "197088": {
+    "name": "Iceland - Urvalsdeild Women",
+    "group": "Iceland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "201658": {
+    "name": "New Zealand - Northern League",
+    "group": "New Zealand",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "32746": {
+    "name": "Spain - La Liga Bookings",
+    "group": "Spain",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2627": {
+    "name": "UEFA - Champions League",
+    "group": "Europe",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "221698": {
+    "name": "Denmark - Future Cup U21",
+    "group": "Denmark",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "2421": {
+    "name": "Scotland - Premiership",
+    "group": "Scotland",
+    "sport": "足球",
+    "sport_id": 29,
+    "matchup_count": 1
+  },
+  "1602": {
+    "name": "World - Club Friendlies",
+    "group": "World",
     "sport": "冰球",
     "sport_id": 19,
     "matchup_count": 1
@@ -1297,6 +1549,20 @@
   "1456": {
     "name": "NHL",
     "group": "USA",
+    "sport": "冰球",
+    "sport_id": 19,
+    "matchup_count": 1
+  },
+  "220572": {
+    "name": "New Zealand - IHL",
+    "group": "New Zealand",
+    "sport": "冰球",
+    "sport_id": 19,
+    "matchup_count": 1
+  },
+  "1325": {
+    "name": "Europe - Champions Hockey League",
+    "group": "Europe",
     "sport": "冰球",
     "sport_id": 19,
     "matchup_count": 1

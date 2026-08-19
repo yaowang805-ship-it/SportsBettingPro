@@ -14,6 +14,33 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 from src.scrapers.bb_data import detect_sport, extract_bb_1x2, TWO_WAY_SPORTS
 from src.scrapers.pinnacle_league_map import TEAM_NAME_MAP
 
+— 双打 vs 单打分隔符 —
+# BB 的双打用 "A / B" 表示; Pinnacle 侧若不含任何配对分隔符即为单打。
+_PAIR_SEPARATORS = ("/", "&", "+")
+
+
+def _is_pair(name: str) -> bool:
+    """队名是否表示"两人组队"(网球/羽毛球双打等)。"""
+    return any(sep in (name or "") for sep in _PAIR_SEPARATORS)
+
+
+def _pair_structure_conflict(bb_home, bb_away, pin_home, pin_away) -> bool:
+    """BB 是双打而 Pinnacle 是单打(或反之) → 结构不对等, 不是同一场比赛。
+
+    实测(2026-08-19): Pinnacle 归档库 1260 场网球 / 829 个去重队名, 用 `/`、`&`、
+    `+`、逗号 任何分隔符去找都是 **0 个双打** —— Pinnacle 根本不开网球双打盘。
+    所以 BB 双打能"匹配"上的任何 Pin 场次都是构造上必然的假阳性。
+
+    出问题的路径: 下面 name_match() 用子串即算匹配, 再加上 lookup_cn 里
+    TF-IDF/拼音 match_team(min_score=0.6) 会把双打串「A / B」映射成其中**一个**
+    球员的英文名, 于是和 Pin 单打精确匹配拿到满分。实测造出 EV 19%/27%/33%
+    的假机会共 18-19 条(万幸全是 source=validate, 0 推送, ¥0 注额)。
+
+    按铁律: 结构不对等且无对齐对象 → 拒绝匹配, 而不是调阈值糊过去。
+    """
+    return (_is_pair(bb_home) or _is_pair(bb_away)) != (_is_pair(pin_home) or _is_pair(pin_away))
+
+
 def team_name_score(bb_home, bb_away, pin_home, pin_away,
                     pin_candidates: list = None):
     """Score how well BB team names (Chinese) match Pinnacle team names (English).
