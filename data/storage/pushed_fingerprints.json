@@ -98,6 +98,11 @@
     "bb": 2.04,
     "ts": 1787043520.452517
   },
+  "basketball|WNBA|芝加哥天空 (女)|纽约自由人 (女)|小分(180.5)|ou|180.5|2026-08-19": {
+    "ev": 4.93,
+    "bb": 2.0,
+    "ts": 1787101002.096802
+  },
   "basketball|WNBA|芝加哥天空 (女)|纽约自由人 (女)|让分客胜(-3.5)|hc|-3.5|2026-08-19": {
     "ev": 2.19,
     "bb": 1.91,
@@ -867,11 +872,6 @@
     "bb": 5.55,
     "ts": 1787021144.0620348
   },
-  "football|UEFA Europa Conference League-Qualification|扎布热矿工|摩纳哥|主胜|1x2|2026-08-21": {
-    "ev": 9.53,
-    "bb": 5.95,
-    "ts": 1787034729.999209
-  },
   "football|UEFA Europa Conference League-Qualification|格拉斯哥流浪者|亚布洛内茨|双重机会-和局/客|dc|2026-08-21": {
     "ev": 3.33,
     "bb": 3.2,
@@ -962,6 +962,10 @@
     "ev": 1.8,
     "ts": 1787056770.7175198
   },
+  "tennis|ITF - W15 Tianjin Women Doubles|Chen Meng Yi (CHN) / Peangtarn Plipuech (THA)|Choi Onyu (KOR) / Eva Marie Desvignes (SGP)|客胜|1x2|2026-08-19": {
+    "ev": 14.99,
+    "ts": 1787101359.913344
+  },
   "tennis|ITF - W15 Tianjin Women Doubles|Kamonwan Yodpetch (THA) / Zhang Ruien (CHN)|Kim Yujin (KOR) / Funa Kozaki (JPN)|客胜|1x2|2026-08-18": {
     "ev": 77.91,
     "ts": 1787030488.288856
@@ -994,9 +998,54 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|WNBA|芝加哥天空 (女)|纽约自由人 (女)|小分(180.5)|ou|180.5|2026-08-19": {
-    "ev": 4.93,
-    "bb": 2.0,
-    "ts": 1787101002.096802
+  "football|Argentina Liga Profesional|阿尔多斯维|圣塔菲联|让球客胜(0)|hc|0|2026-08-22": {
+    "ev": 4.15,
+    "bb": 1.66,
+    "ts": 1787101664.26252
+  },
+  "football|Poland Ekstraklasa|克拉科维亚|莫摩斯|大球(2.25)|ou|2.25|2026-08-22": {
+    "ev": 3.36,
+    "bb": 1.65,
+    "ts": 1787101664.262603
+  },
+  "baseball|MLB|休斯敦太空人|洛杉矶天使|客胜|1x2|2026-08-20": {
+    "ev": 6.54,
+    "bb": 2.27,
+    "ts": 1787101664.26267
+  },
+  "football|England EFL Trophy|曼斯菲特|曼彻斯特城 U21|小球(3.25)|ou|3.25|2026-08-20": {
+    "ev": 8.0,
+    "bb": 1.97,
+    "ts": 1787101664.2627468
+  },
+  "football|Copa Sudamericana|米内罗竞技|红牛布拉干蒂诺|上半场客胜|ht|2026-08-20": {
+    "ev": 5.14,
+    "bb": 4.8,
+    "ts": 1787101664.262835
+  },
+  "football|Italy Serie B|维琴察|卡坦萨罗 1929|双边进球-是|btts|2026-08-22": {
+    "ev": 4.13,
+    "bb": 1.88,
+    "ts": 1787101664.262892
+  },
+  "football|UAE Pro League|迪拜胜利|阿尔瓦赫达|和局|1x2|2026-08-22": {
+    "ev": 8.96,
+    "bb": 3.66,
+    "ts": 1787101664.262943
+  },
+  "football|France Ligue 2|克莱蒙|第戎|主胜|1x2|2026-08-22": {
+    "ev": 3.22,
+    "bb": 2.71,
+    "ts": 1787101664.262996
+  },
+  "football|Ireland First Division|条约联|科克城|和局|1x2|2026-08-22": {
+    "ev": 5.92,
+    "bb": 4.17,
+    "ts": 1787101664.26305
+  },
+  "football|UEFA Europa Conference League-Qualification|扎布热矿工|摩纳哥|主胜|1x2|2026-08-21": {
+    "ev": 17.81,
+    "bb": 6.4,
+    "ts": 1787101664.2631118
   }
 }
