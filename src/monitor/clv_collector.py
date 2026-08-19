@@ -815,6 +815,13 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
                     "timestamp": now, "sport": sport, "league": league,
                     "home": home, "away": away, "home_pin": home_pin, "away_pin": away_pin,
                     "designation": desig, "sub_market": sub,
+                    # V5.10: 显式存线值。实测 77% 的 hc/ou designation 里根本没有线值
+                    # (只有"小球"/"让球客胜"), 采集器只能去中文标签里正则抠 —— 抠不到时
+                    # get_pin_spread(target_line=None) 会 return candidates[0], 也就是
+                    # **随便拿 Pinnacle 的一条线来比**, 静默算出错的 CLV。
+                    # 对比文件的 line 字段实测 100% 存在且精确("0"/"2.25"/"+0.5/1"/"-1.5/2"),
+                    # 直接存下来, 不再依赖从展示用标签反推。
+                    "line": opp.get("line", ""),
                     "bb_odds": opp.get("bb_odds", 0), "pin_odds": opp.get("pin_odds", 0),
                     "fair_price": opp.get("fair_price", 0), "ev_pct": ev,
                     "stake": 0, "tier": tier, "match_epoch": epoch,
