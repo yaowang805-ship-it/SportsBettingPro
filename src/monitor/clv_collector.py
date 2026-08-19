@@ -762,13 +762,43 @@ def _save_results(results):
 
     _migrate_results_header(fieldnames)
 
-    file_exists = RESULTS_FILE.exists()
-    with open(RESULTS_FILE, 'a', newline='') as f:
+    def _rk(r):
+        return (str(r.get("home", "")).strip(), str(r.get("away", "")).strip(),
+                str(r.get("sub_market", "")).strip(), str(r.get("designation", "")).strip())
+
+    def _lag(r):
+        try:
+            return float(r.get("close_lag_min") or 1e9)
+        except (TypeError, ValueError):
+            return 1e9
+
+    # V5.10: 允许刷新后同一 key 会被采多次, 必须"覆盖"而不是"追加" ——
+    # 追加会让同一个机会在 CSV 里出现多行, 所有 CLV 统计直接被重复计数污染。
+    # 保留 close_lag_min 更小(更贴近开赛)的那条。
+    existing_rows = []
+    if RESULTS_FILE.exists():
+        try:
+            with open(RESULTS_FILE, encoding="utf-8-sig", newline="") as f:
+                existing_rows = list(csv.DictReader(f))
+        except Exception:
+            existing_rows = []
+
+    merged, order = {}, []
+    for r in existing_rows + list(results):
+        k = _rk(r)
+        if k not in merged:
+            merged[k] = r
+            order.append(k)
+        elif _lag(r) <= _lag(merged[k]):
+            merged[k] = r      # 新的更贴近开赛 → 覆盖
+
+    tmp = RESULTS_FILE.with_suffix(".csv.writing")
+    with open(tmp, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
-        if not file_exists:
-            writer.writeheader()
-        for r in results:
-            writer.writerow({k: r.get(k, "") for k in fieldnames})
+        writer.writeheader()
+        for k in order:
+            writer.writerow({fn: merged[k].get(fn, "") for fn in fieldnames})
+    tmp.replace(RESULTS_FILE)
 
     # V5.1: 同时落库到 clv_data 表 (之前只写CSV, SQLite一直空)
     try:
