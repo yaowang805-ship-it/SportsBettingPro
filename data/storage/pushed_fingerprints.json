@@ -1,4 +1,8 @@
 {
+  "baseball|MLB|Houston Astros|Los Angeles Angels|客胜|1x2|2026-08-20": {
+    "ev": 9.35,
+    "ts": 1787114648.6560059
+  },
   "baseball|MLB|Philadelphia Phillies|Miami Marlins|客胜|1x2|2026-08-19": {
     "ev": 49.14,
     "ts": 1787056770.717558
@@ -7,6 +11,20 @@
     "ev": 6.54,
     "bb": 2.27,
     "ts": 1787101664.26267
+  },
+  "basketball|Mexico LNBP Basketball League|Dorados de Chihuahua|Abejas de Leon|主胜|1x2|2026-08-20": {
+    "ev": 3.12,
+    "ts": 1787114648.655688
+  },
+  "basketball|Mexico LNBP Basketball League|墨西哥红恶鬼|罗伯斯普拉塔多斯|主胜|1x2|2026-08-21": {
+    "ev": 4.35,
+    "bb": 1.33,
+    "ts": 1787114647.96401
+  },
+  "basketball|Mexico LNBP Basketball League|皇家部队|弗雷斯尼洛虾|让分客胜(+4.5)|hc|+4.5|2026-08-20": {
+    "ev": 4.18,
+    "bb": 1.75,
+    "ts": 1787114647.9640949
   },
   "basketball|Mexico LNBP Basketball League|皇家部队|甘布西诺弗雷斯尼洛|让分客胜(+10.5)|hc|+10.5|2026-08-20": {
     "ev": 4.36,
@@ -57,6 +75,11 @@
   "basketball|WNBA|Toronto Tempo (w)|Indiana Fever (w)|小分|1x2|2026-08-19": {
     "ev": 1.88,
     "ts": 1787043520.717097
+  },
+  "basketball|WNBA|华盛顿神秘人 (女)|多伦多节奏报 (女)|大分(169.5)|ou|169.5|2026-08-20": {
+    "ev": 5.91,
+    "bb": 2.07,
+    "ts": 1787114647.964055
   },
   "basketball|WNBA|多伦多节奏 (女)|印第安纳狂热 (女)|小分(190.5)|ou|190.5|2026-08-19": {
     "ev": 4.43,
@@ -117,6 +140,10 @@
     "ev": 2.19,
     "bb": 1.91,
     "ts": 1787027658.61243
+  },
+  "football|ASEAN Hyundai Cup|Vietnam|Malaysia|双边进球-否|btts|2026-08-19": {
+    "ev": 3.98,
+    "ts": 1787114648.654193
   },
   "football|Argentina Cup|Banfield|Ferrocarril Midland|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 4.22,
@@ -488,6 +515,10 @@
     "bb": 2.13,
     "ts": 1787042346.751998
   },
+  "football|Denmark Elitedivisionen Women|DBK Fortuna Hjoerring (w)|AGF Aarhus (w)|客胜|1x2|2026-08-20": {
+    "ev": 1.68,
+    "ts": 1787114648.656053
+  },
   "football|England EFL Trophy|Mansfield Town|Manchester City FC U21|小球|1x2|2026-08-20": {
     "ev": 8.0,
     "ts": 1787101664.640929
@@ -554,6 +585,10 @@
     "ev": 7.6,
     "bb": 4.36,
     "ts": 1787029463.7983518
+  },
+  "football|England Northern Premier League|Avro FC|Workington AFC|小球|1x2|2026-08-20": {
+    "ev": 1.58,
+    "ts": 1787114648.654437
   },
   "football|France Ligue 2|克莱蒙|第戎|主胜|1x2|2026-08-22": {
     "ev": 3.22,
@@ -650,6 +685,10 @@
     "ev": 2.55,
     "ts": 1787055069.492513
   },
+  "football|Japan Emperor Cup|Gainare Tottori|Roasso Kumamoto|让球客胜|1x2|2026-08-19": {
+    "ev": 2.68,
+    "ts": 1787115048.557039
+  },
   "football|Japan Emperor Cup|Giravanz Kitakyushu|Okinawa SV|客胜|1x2|2026-08-19": {
     "ev": 1.31,
     "ts": 1787061700.4161909
@@ -733,6 +772,26 @@
     "bb": 1.65,
     "ts": 1787101664.262603
   },
+  "football|Poland III Liga|Zabkovia Zabki|Wigry Suwalki|主胜|1x2|2026-08-19": {
+    "ev": 1.5,
+    "ts": 1787114648.6540759
+  },
+  "football|Poland III Liga|Zabkovia Zabki|Wigry Suwalki|双重机会-主/和局|dc|2026-08-19": {
+    "ev": 2.99,
+    "ts": 1787114648.654141
+  },
+  "football|Poland III Liga|Zaglebie Sosnowiec|KS Sleza Wroclaw|客胜|1x2|2026-08-20": {
+    "ev": 2.18,
+    "ts": 1787114648.653982
+  },
+  "football|Russia First League|FC Kamaz Naberezhnye Chelny|FC Tekstilshchik Ivanovo|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 2.28,
+    "ts": 1787114648.654304
+  },
+  "football|Russia First League|FK Veles Moscow|FK Nizhny Novgorod|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 2.41,
+    "ts": 1787114648.6542468
+  },
   "football|Russia First League|图拉兵工厂|洛特伏尔加格勒|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 3.7,
     "bb": 1.95,
@@ -747,6 +806,11 @@
     "ev": 8.96,
     "bb": 3.66,
     "ts": 1787101664.262943
+  },
+  "football|UEFA Champions League Qualification-Playoff|贝尔谢巴工人|萨巴赫|让球主胜(0)|hc|0|2026-08-20": {
+    "ev": 3.76,
+    "bb": 1.75,
+    "ts": 1787114647.964133
   },
   "football|UEFA Champions League-Qualification|Fenerbahce|Olympique Lyonnais|上半场客胜|ht|2026-08-19": {
     "ev": 1.03,
@@ -822,13 +886,33 @@
     "bb": 2.89,
     "ts": 1787041147.2998211
   },
+  "football|USA Major League Soccer|Colorado Rapids|Los Angeles FC|总进球区间7+|total_goals_range|2026-08-20": {
+    "ev": 2.21,
+    "ts": 1787114648.656729
+  },
   "football|USA Major League Soccer|DC United|New England Revolution|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 2.75,
     "ts": 1787101664.641217
   },
+  "football|USA Major League Soccer|Orlando City SC|Chicago Fire|让球客胜|1x2|2026-08-20": {
+    "ev": 1.42,
+    "ts": 1787114648.655424
+  },
+  "football|USA Major League Soccer|Real Salt Lake|FC Dallas|和局|1x2|2026-08-20": {
+    "ev": 4.17,
+    "ts": 1787114648.6555169
+  },
+  "football|USA Major League Soccer|Real Salt Lake|FC Dallas|让球主胜|1x2|2026-08-20": {
+    "ev": 2.28,
+    "ts": 1787114648.655565
+  },
   "football|USA Major League Soccer|Toronto FC|Charlotte FC|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 3.15,
     "ts": 1787101664.641293
+  },
+  "football|USA Major League Soccer|Vancouver Whitecaps FC|Houston Dynamo|净胜球away_by2|winning_margin|2026-08-20": {
+    "ev": 8.11,
+    "ts": 1787114648.656781
   },
   "football|USA Major League Soccer|多伦多FC|夏洛特FC|正确比分1-1|correct_score|2026-08-20": {
     "ev": 21.57,
@@ -840,10 +924,23 @@
     "bb": 4.08,
     "ts": 1787034729.998943
   },
+  "football|USA Major League Soccer|皇家盐湖城|达拉斯|让球主胜(0)|hc|0|2026-08-20": {
+    "ev": 3.65,
+    "bb": 1.51,
+    "ts": 1787114647.964166
+  },
   "football|USA Major League Soccer|西雅图海湾人|奥斯汀|正确比分1-1|correct_score|2026-08-20": {
     "ev": 6.47,
     "bb": 9.95,
     "ts": 1787034729.999058
+  },
+  "tennis|ATP Challenger - Roehampton Open - Doubles|Conor Gannon (IRL) / James Mackinlay (GBR)|Charles Barry (IRL) / Charles Broom (GBR)|客胜|1x2|2026-08-19": {
+    "ev": 27.86,
+    "ts": 1787114648.656339
+  },
+  "tennis|ATP Challenger - Sion Open - Doubles|Petr Nesterov (BUL) / Oleksandr Ovcharenko (UKR)|Tommaso Compagnucci (ITA) / Giorgio Ricca (ITA)|客胜|1x2|2026-08-19": {
+    "ev": 8.44,
+    "ts": 1787114648.656244
   },
   "tennis|ITF - M15 Bastad Men Singles|Jack Karlsson Wistrand (SWE)|Jan Simonsson (SWE)|主胜|1x2|2026-08-19": {
     "ev": 4.14,
@@ -861,6 +958,10 @@
     "ev": 4.39,
     "ts": 1787101664.6408188
   },
+  "tennis|ITF - M15 Krakow Men Doubles|Daniel Aleksandar Amarandei (ITA) / Bruno Kokot (POL)|Benito Sanchez Martinez (GER) / Tom Zeuch (GER)|主胜|1x2|2026-08-19": {
+    "ev": 168.09,
+    "ts": 1787114648.6564312
+  },
   "tennis|ITF - M15 Krakow Men Singles|Peter Fajta (HUN)|Lorenzo Ferri (ITA)|让盘主胜|1x2|2026-08-19": {
     "ev": 1.26,
     "ts": 1787101664.640057
@@ -868,6 +969,10 @@
   "tennis|ITF - M15 Lambermont Men Singles|Max Van Nunen (NED)|Felipe Virgili Berini (ITA)|客胜|1x2|2026-08-19": {
     "ev": 2.31,
     "ts": 1787101664.639963
+  },
+  "tennis|ITF - M15 Lambermont Men Singles|Max Van Nunen (NED)|Felipe Virgili Berini (ITA)|让盘客胜|1x2|2026-08-19": {
+    "ev": 1.2,
+    "ts": 1787114648.655954
   },
   "tennis|ITF - M25 Slovenj Gradec Men Singles|Jan Kupcic (SLO)|Andrea Fiorentini (ITA)|客胜|1x2|2026-08-19": {
     "ev": 1.49,
@@ -905,33 +1010,22 @@
     "ev": 2.33,
     "ts": 1787101664.640325
   },
+  "tennis|ITF - W50 Prague Women Doubles|Tereza Krejcova (CZE) / Lucie Havlickova (CZE)|Julia Adams (USA) / Merel Hoedt (NED)|主胜|1x2|2026-08-19": {
+    "ev": 48.85,
+    "ts": 1787114648.656149
+  },
   "tennis|WTA - Cincinnati Open|Aryna Sabalenka (BLR)|Wang Xinyu (CHN)|让盘客胜|1x2|2026-08-19": {
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|Mexico LNBP Basketball League|墨西哥红恶鬼|罗伯斯普拉塔多斯|主胜|1x2|2026-08-21": {
-    "ev": 4.35,
-    "bb": 1.33,
-    "ts": 1787114647.96401
+  "football|Japan Emperor Cup|鸟取飞翔|熊本深红|让球客胜(0)|hc|0|2026-08-19": {
+    "ev": 5.51,
+    "bb": 1.86,
+    "ts": 1787115198.163255
   },
-  "basketball|WNBA|华盛顿神秘人 (女)|多伦多节奏报 (女)|大分(169.5)|ou|169.5|2026-08-20": {
-    "ev": 5.91,
-    "bb": 2.07,
-    "ts": 1787114647.964055
-  },
-  "basketball|Mexico LNBP Basketball League|皇家部队|弗雷斯尼洛虾|让分客胜(+4.5)|hc|+4.5|2026-08-20": {
-    "ev": 4.18,
-    "bb": 1.75,
-    "ts": 1787114647.9640949
-  },
-  "football|UEFA Champions League Qualification-Playoff|贝尔谢巴工人|萨巴赫|让球主胜(0)|hc|0|2026-08-20": {
-    "ev": 3.76,
-    "bb": 1.75,
-    "ts": 1787114647.964133
-  },
-  "football|USA Major League Soccer|皇家盐湖城|达拉斯|让球主胜(0)|hc|0|2026-08-20": {
-    "ev": 3.65,
-    "bb": 1.51,
-    "ts": 1787114647.964166
+  "football|Japan Emperor Cup|和歌山艾特里武|沼津青蓝|客胜|1x2|2026-08-19": {
+    "ev": 5.12,
+    "bb": 1.96,
+    "ts": 1787115198.163297
   }
 }
