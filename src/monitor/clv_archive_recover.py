@@ -37,6 +37,7 @@ from config.settings import DATA_DIR
 from config.logging_config import get_logger
 from src.monitor.clv_collector import (
     RESULTS_FILE, TRACKING_FILE, _extract_market_odds, _infer_sub_market, _save_results,
+    ev_is_plausible,
 )
 
 logger = get_logger(__name__)

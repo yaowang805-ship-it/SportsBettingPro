@@ -656,6 +656,26 @@ def _extract_special_market_close(league_id, entry, special_cache):
 
 MISS_LOG_FILE = DATA_DIR / "clv_miss_log.csv"
 
+
+def ev_is_plausible(ev_pct, bb_odds) -> bool:
+    """推送时的 EV 是否在系统自己认可的量级内。
+
+    投注路径有 EV 上限 max(12, (赔率-1)*20)(见 CLAUDE.md), 超过就不下注 —— 因为那种
+    量级的"优势"几乎必然是上游错配/坏价, 不是真机会。但 validate 路径为了积累样本
+    记录了所有 EV>=2% 的机会, **没套这个上限**, 于是把垃圾一起收了进来。
+    实测 792 条 tracking 里 49 条(6%)超限, 中位 EV 34%、最高 244%, 全部是 validate
+    (0 条 push, 所以没亏钱), 但它们会污染 CLV 统计 —— 归档回捞就曾把一条 EV=244%
+    的棒球记录算出 +174.8% 的 CLV。
+
+    统计口径要和投注口径一致: 投注路径不认的机会, CLV 也不该拿来当证据。
+    """
+    try:
+        ev = float(ev_pct)
+        odds = float(bb_odds)
+    except (TypeError, ValueError):
+        return True     # 字段异常不在这里拦, 交给各自的解析逻辑
+    return ev <= max(12.0, (odds - 1) * 20)
+
 # 增量扫描按时间窗分文件写(urgent<6h / near 6-24h / far 24-72h), MAIN 只有全量扫描才刷新。
 _COMPARISON_FILES = ("bb_vs_pinnacle_comparison_urgent.json",
                      "bb_vs_pinnacle_comparison_near.json",
