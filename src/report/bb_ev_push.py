@@ -2499,6 +2499,73 @@ def _verify_odds_freshness(qualified: list, max_pin_drift: float = 0.08) -> list
         return qualified
 
 
+# ── 同场同盘口「盘口线」推送配额 (用户规则 2026-08-19) ──
+# 同一场比赛的同一盘口(让球/大小球/...), 不同盘口线最多只推 2 次;
+# 第二次推送时标注上一次推的是哪条线。
+# 粒度按**盘口类型**算, 不分主客/大小 —— 即"让球主胜(-0.5)"和"让球客胜(+1.5)"
+# 共用同一份配额(用户 2026-08-19 明确选择的严格口径)。
+LINE_QUOTA_PER_MARKET = 2
+LINE_QUOTA_FILE = DATA_DIR / "pushed_line_quota.json"
+
+
+def _market_group_key(o: dict) -> str:
+    """同场同盘口的配额分组键: 指纹去掉 designation 和 line 两段。
+
+    直接复用 _make_fingerprint 保证队名归一化/比赛日期口径完全一致 ——
+    自己另写一套归一化必然和去重逻辑漂移(繁简体、俱乐部前缀那些坑)。
+    """
+    fp = _make_fingerprint(o)
+    parts = fp.split("|")
+    # 指纹格式: sport|league|home|away|designation(含线)|sub_market|line|date
+    # 去掉 designation 与 line, 只留 场次 + 盘口类型 + 日期
+    if len(parts) >= 8:
+        return "|".join(parts[:4] + [parts[5], parts[-1]])
+    return fp
+
+
+def _load_line_quota() -> dict:
+    """{group_key: {"lines": [线值字符串, ...], "ts": epoch}}"""
+    try:
+        import json as _json
+        data = _json.loads(LINE_QUOTA_FILE.read_text())
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def _save_line_quota(quota: dict):
+    """写回配额, 顺带清理 3 天前的记录防无限膨胀。"""
+    try:
+        import json as _json
+        cutoff = time.time() - 3 * 86400
+        pruned = {k: v for k, v in quota.items()
+                  if isinstance(v, dict) and v.get("ts", 0) > cutoff}
+        tmp = LINE_QUOTA_FILE.with_suffix(".json.tmp")
+        tmp.write_text(_json.dumps(pruned, ensure_ascii=False))
+        tmp.replace(LINE_QUOTA_FILE)
+    except Exception as e:
+        logger.warning("盘口线配额写入失败: %s", e)
+
+
+def _commit_line_quota(qualified: list):
+    """推送成功后才登记配额。
+
+    与"指纹只在推送成功后写入"同一条纪律 —— 若在过滤阶段就写, 推送失败会白白
+    吃掉配额, 真机会再也推不出去。
+    """
+    if not qualified:
+        return
+    quota = _load_line_quota()
+    for o in qualified:
+        line = str(o.get("line", "") or "")
+        gk = _market_group_key(o)
+        rec = quota.setdefault(gk, {"lines": [], "ts": time.time()})
+        if line not in rec["lines"]:
+            rec["lines"].append(line)
+        rec["ts"] = time.time()
+    _save_line_quota(quota)
+
+
 def _save_qualified_fingerprints(qualified: list):
     """保存指纹 (每场最多2条, 与同场冷却一致)。"""
     from collections import defaultdict
