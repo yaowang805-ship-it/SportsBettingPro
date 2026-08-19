@@ -697,10 +697,17 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     if comparison_path is None:
-        comparison_path = DATA_DIR / "bb_vs_pinnacle_comparison.json"
-    comparison_path = Path(comparison_path)
-    if not comparison_path.exists():
-        return 0
+        details = _load_freshest_comparison_details()
+        if not details:
+            return 0
+    else:
+        comparison_path = Path(comparison_path)
+        if not comparison_path.exists():
+            return 0
+        try:
+            details = json.loads(comparison_path.read_text()).get("details", [])
+        except Exception:
+            return 0
 
     # 读现有 tracking 的 key 去重
     existing = set()
@@ -713,11 +720,6 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
                                   r.get("match_epoch", "")))
         except Exception:
             pass
-
-    try:
-        data = json.loads(comparison_path.read_text())
-    except Exception:
-        return 0
 
     _MK = {"opportunities": "1x2", "handicap": "hc", "over_under": "ou",
            "double_chance": "dc", "draw_no_bet": "dnb", "btts": "btts"}
