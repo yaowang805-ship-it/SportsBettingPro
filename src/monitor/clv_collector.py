@@ -247,7 +247,8 @@ def _fetch_close_odds(entries):
 
                 # 提取对应市场的收盘公平价 (直盘+推导盘口均支持)
                 close_data = _extract_market_odds(best_pin, sub_market, designation,
-                                                  sport=e.get("sport", "football"))
+                                                  sport=e.get("sport", "football"),
+                                                  line=e.get("line", ""))
                 if close_data is None and sub_market in ("correct_score", "winning_margin", "total_goals_range", "first_to_score"):
                     # V5.9: 特殊盘口在 get_league_special_markets (matchup 里没有)
                     close_data = _extract_special_market_close(pin_id, e, special_cache)
@@ -465,7 +466,13 @@ def _extract_market_odds(pin_matchup, sub_market, designation, sport="football",
     elif sub_market in ("ou", "ht_ou"):
         src = pin_matchup.get("ht_total", []) if sub_market == "ht_ou" \
             else pin_matchup.get("total", [])
-        over_p, under_p = get_pin_total(pin_matchup, target_line=_parse_line(designation), source=src)
+        # V5.10: 同让球 —— 优先用显式 line, 拿不到线值就不比(避免随机挑线)
+        _line = _parse_line_str(line)
+        if _line is None:
+            _line = _parse_line(designation)
+        if _line is None:
+            return None
+        over_p, under_p = get_pin_total(pin_matchup, target_line=_line, source=src)
         if not over_p or not under_p:
             return None
         o, u = get_decimal_price(over_p), get_decimal_price(under_p)
