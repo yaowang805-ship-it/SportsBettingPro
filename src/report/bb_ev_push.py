@@ -2069,11 +2069,14 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
             if o.get("_sub_market", "") in ("hc", "ht_hc") and not warn:
                 warn = "⚠️让球线易移动"
             repush = o.get("_repush_reason", "")
+            # 同场同盘口的第 2 条线: 标注上一条推的是哪条, 便于对照(用户规则)
+            prev_line = o.get("_prev_line")
             lines.append(
                 f"    [{oc}] {confidence} 公平价: {fair}"
                 + (f" | Pinnacle: {pinny}" if o.get("pin_odds", 0) > 0 else " | 推导: 1X2")
                 + f" | {source_label}: {bb_odds} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}{stake_note}"
                 + (f" 🔄重推({repush})" if repush else "")
+                + (f" 📌本场该盘口上次推的线: {prev_line}" if prev_line else "")
                 + (f" {warn}" if warn else "")
             )
 
@@ -2730,6 +2733,7 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
     """
     _threshold = 1.0 if time_window == "urgent" else 2.0
     import json as _json, fcntl as _fcntl, os as _os
+    from collections import defaultdict
 
     pushed_file = DATA_DIR / "pushed_opportunities.json"
     fp_file = FINGERPRINT_FILE
@@ -2755,6 +2759,11 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
     now_epoch = time.time()
     result, skipped, re_pushed = [], 0, 0
 
+    # 同场同盘口的盘口线配额: 已推过的线 + 本轮已放行的线
+    _quota = _load_line_quota()
+    _batch_lines = defaultdict(list)
+    _quota_blocked = 0
+
     for o in qualified:
         # V4.5: 统一使用 _make_fingerprint 的 key 格式
         # sport|league|home|away|designation|sub_market|line|match_date(Beijing)
@@ -2764,6 +2773,21 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
         ev_now = o.get("ev_pct", 0)
         fair_now = o.get("fair_price", 0)
         kickoff = o.get("_pin_epoch", now_epoch + 86400)
+
+        # ── 同场同盘口「盘口线」配额 (最多 2 条线) ──
+        _line = str(o.get("line", "") or "")
+        _gk = _market_group_key(o)
+        _prev_lines = list((_quota.get(_gk) or {}).get("lines", [])) + _batch_lines[_gk]
+        if _line not in _prev_lines:
+            if len(_prev_lines) >= LINE_QUOTA_PER_MARKET:
+                _quota_blocked += 1
+                _audit_log("LINE_QUOTA", key, o,
+                           f"同场同盘口已推 {len(_prev_lines)} 条线({','.join(_prev_lines)}), 拦截线 {_line}")
+                continue
+            if _prev_lines:
+                # 第 2 条线 → 标注上一条线是多少
+                o["_prev_line"] = _prev_lines[-1]
+            _batch_lines[_gk].append(_line)
 
         # 更新指纹(会在下面save)
         old = last_pushed.get(key)
@@ -2811,6 +2835,9 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
 
     if skipped: logger.info("去重: 跳过%d条", skipped)
     if re_pushed: logger.info("重推: %d条", re_pushed)
+    if _quota_blocked:
+        logger.info("盘口线配额: 拦截%d条 (同场同盘口最多%d条线)",
+                    _quota_blocked, LINE_QUOTA_PER_MARKET)
     _fcntl.flock(_lock_fd.fileno(), _fcntl.LOCK_UN)
     _lock_fd.close()
     return result
@@ -3146,6 +3173,8 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
             logger.info("无可投注机会（全部被结算可行性过滤）")
         # 指纹永存 — 无论模式, 推送成功即记录
         _save_qualified_fingerprints(qualified)
+        # 同场同盘口的盘口线配额, 同样只在推送成功后登记
+        _commit_line_quota(qualified)
         # JSON 二次备份 (必须与 _save_qualified_fingerprints 同字段, 含 bb!)
         # V5.5 bug修复: 原代码只写 {"ev","ts"} 丢了 bb, 导致 _filter_pushed 读 JSON 时
         #   old_bb 恒为 0 → "BB赔率上升即重推"永远不触发 → 增量扫描每次只剩 1 场新比赛。
