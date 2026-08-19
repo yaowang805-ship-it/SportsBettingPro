@@ -49,6 +49,16 @@
     "ev": 4.18,
     "ts": 1787115444.852549
   },
+  "basketball|Mexico LNBP Basketball League|墨西卡利太阳|萨卡特卡斯矿工|客胜|1x2|2026-08-21": {
+    "ev": 7.25,
+    "bb": 2.22,
+    "ts": 1787183227.7264981
+  },
+  "basketball|Mexico LNBP Basketball League|墨西卡利太阳|萨卡特卡斯矿工|让分客胜(+2.5)|hc|+2.5|2026-08-21": {
+    "ev": 9.02,
+    "bb": 1.96,
+    "ts": 1787183227.726413
+  },
   "basketball|Mexico LNBP Basketball League|墨西哥红恶鬼|罗伯斯普拉塔多斯|主胜|1x2|2026-08-21": {
     "ev": 4.35,
     "bb": 1.33,
@@ -1614,6 +1624,10 @@
     "ev": 2.28,
     "ts": 1787114648.655565
   },
+  "football|USA Major League Soccer|Sporting Kansas City|Saint Louis City SC|小球|1x2|2026-08-20": {
+    "ev": 1.01,
+    "ts": 1787183361.792237
+  },
   "football|USA Major League Soccer|Sporting Kansas City|Saint Louis City SC|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 4.72,
     "ts": 1787181583.5603058
@@ -1909,14 +1923,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|Mexico LNBP Basketball League|墨西卡利太阳|萨卡特卡斯矿工|让分客胜(+2.5)|hc|+2.5|2026-08-21": {
-    "ev": 9.02,
-    "bb": 1.96,
-    "ts": 1787183227.726413
-  },
-  "basketball|Mexico LNBP Basketball League|墨西卡利太阳|萨卡特卡斯矿工|客胜|1x2|2026-08-21": {
-    "ev": 7.25,
-    "bb": 2.22,
-    "ts": 1787183227.7264981
+  "football|USA Major League Soccer|迈阿密国际|多伦多FC|让球客胜(+1.5/2)|hc|+1.5/2|2026-08-23": {
+    "ev": 4.56,
+    "bb": 1.73,
+    "ts": 1787183894.539603
   }
 }

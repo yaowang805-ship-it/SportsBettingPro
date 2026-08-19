@@ -1,5 +1,5 @@
 {
-  "balance": 8062.33,
+  "balance": 8040.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3037,6 +3037,29 @@
       "commence_time": 1787185800,
       "created_at": "2026-08-19T23:36:45.269760+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_迈阿密国际_多伦多FC_让球客胜(+15/2)",
+      "sport": "football",
+      "league": "美国职业大联盟",
+      "home_team": "迈阿密国际",
+      "away_team": "多伦多FC",
+      "home_cn": "迈阿密国际",
+      "away_cn": "多伦多FC",
+      "market": "handicap",
+      "market_type": "让球客胜(+1.5/2)",
+      "sub_market": "hc",
+      "line": "+1.5/2",
+      "odds": 1.73,
+      "stake": 22,
+      "model_prob": 0.6044,
+      "ev_pct": 4.56,
+      "pin_odds": 1.5952,
+      "fair_price": 1.6546,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787441400,
+      "created_at": "2026-08-19T23:58:14.527846+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3096,8 +3119,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 445.0,
-    "bets": 19
+    "used": 467.0,
+    "bets": 20
   },
   "updated": null
 }
