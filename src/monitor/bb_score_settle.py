@@ -154,6 +154,19 @@ def settle_via_bb(dry_run: bool = False) -> dict:
             settle_bet(b["push_id"], result, hs2, as2, source="bb")
         settled += 1
 
+    # 静默失效监控: 有待结算注却一笔都匹配不上 → 连续多次即告警。
+    # 这条链路曾因 completed 判定漏掉 ms=0 而完全失效, 从 8/15 死到 8/19,
+    # 期间每 30 分钟正常运行、正常退出、日志写着 matched:0, 无人发现。
+    if not dry_run:
+        try:
+            from src.monitor.silent_failure_watch import record_run
+            record_run("bb_score_settle", produced=matched, expected=len(bets),
+                       detail=(f"{len(bets)} 笔待结算注一笔都没匹配到比分。"
+                               f"排查方向: bb_match_id 是否缺失 / getMatchDetail 的 "
+                               f"completed 判定 / 队名匹配。"))
+        except Exception:
+            pass
+
     return {"settled": settled, "failed": 0, "matched": matched}
 
 

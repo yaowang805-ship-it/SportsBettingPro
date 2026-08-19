@@ -1018,6 +1018,22 @@ def _collect_inner():
     results = _fetch_close_odds(entries)
     logger.info("采集到 %d 条收盘赔率", len(results))
 
+    # 静默失效监控 — 只在"确实有比赛落在采集窗口内"时才算有活可干,
+    # 否则夜里空窗期会天天误报, 告警一旦变噪声就等于没有。
+    _now = time.time()
+    _in_window = sum(
+        1 for e in entries
+        if (int(e.get("match_epoch") or 0)
+            and CLV_WINDOW_BEFORE_MIN <= (int(e["match_epoch"]) - _now) / 60 <= CLV_WINDOW_BEFORE_MAX))
+    if _in_window:
+        try:
+            from src.monitor.silent_failure_watch import record_run
+            record_run("clv_collector", produced=len(results), expected=_in_window,
+                       detail=(f"{_in_window} 场比赛在采集窗口内却一条收盘价都没拿到。"
+                               f"排查方向: Pinnacle 连通性 / 联赛ID反查 / 队名匹配。"))
+        except Exception:
+            pass
+
     _save_results(results)
 
     # 统计
