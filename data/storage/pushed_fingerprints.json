@@ -297,6 +297,14 @@
     "bb": 1.6,
     "ts": 1787038514.330122
   },
+  "football|CONCACAF Central American Cup|CS Cartagines|Verdes FC|小球|1x2|2026-08-19": {
+    "ev": 7.55,
+    "ts": 1787100655.7191942
+  },
+  "football|CONCACAF Central American Cup|CS Cartagines|Verdes FC|让球客胜|1x2|2026-08-19": {
+    "ev": 8.91,
+    "ts": 1787100655.719114
+  },
   "football|CONCACAF Central American Cup|CSD Xelaju MC|Diriangen FC|小球|1x2|2026-08-19": {
     "ev": 6.48,
     "ts": 1787100150.5283918
@@ -305,10 +313,20 @@
     "ev": 3.48,
     "ts": 1787038514.5616279
   },
+  "football|CONCACAF Central American Cup|肯塔吉内斯|维德斯|小球(5.25)|ou|5.25|2026-08-19": {
+    "ev": 7.55,
+    "bb": 1.84,
+    "ts": 1787100655.375384
+  },
   "football|CONCACAF Central American Cup|肯塔吉内斯|维德斯|让球客胜(+4)|hc|+4|2026-08-19": {
     "ev": 3.93,
     "bb": 1.88,
     "ts": 1787031569.594357
+  },
+  "football|CONCACAF Central American Cup|肯塔吉内斯|维德斯|让球客胜(+4/4.5)|hc|+4/4.5|2026-08-19": {
+    "ev": 8.91,
+    "bb": 1.84,
+    "ts": 1787100655.375336
   },
   "football|Colombia Primera A|里奥内格罗老鹰|拉尼洛斯|双边进球-是|btts|2026-08-20": {
     "ev": 5.38,
@@ -976,14 +994,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|CONCACAF Central American Cup|肯塔吉内斯|维德斯|让球客胜(+4/4.5)|hc|+4/4.5|2026-08-19": {
-    "ev": 8.91,
-    "bb": 1.84,
-    "ts": 1787100655.375336
-  },
-  "football|CONCACAF Central American Cup|肯塔吉内斯|维德斯|小球(5.25)|ou|5.25|2026-08-19": {
-    "ev": 7.55,
-    "bb": 1.84,
-    "ts": 1787100655.375384
+  "basketball|WNBA|芝加哥天空 (女)|纽约自由人 (女)|小分(180.5)|ou|180.5|2026-08-19": {
+    "ev": 4.93,
+    "bb": 2.0,
+    "ts": 1787101002.096802
   }
 }
