@@ -71,7 +71,22 @@ def archive_matchups(sport, league_id, league_name, matchups, markets):
                         continue
                     des = p.get("designation", "")
                     pts = p.get("points", p.get("handicap"))
-                    conn.execute("""INSERT OR IGNORE INTO odds_archive
+                    # V5.10: 只在价格变化时插入。
+                    # 原先是 INSERT OR IGNORE + UNIQUE(...points): 让球/大小球每条线只
+                    # 留首见价(开盘价, 无法当收盘价用), 而独赢因 SQLite 的 UNIQUE 不约束
+                    # NULL 反而每次扫描都插一条重复价 —— 实测 95% 的库是重复的独赢行。
+                    # 表已重建去掉 UNIQUE(scripts/rebuild_odds_archive.py), 去重责任移到这里:
+                    # 与该 key 最后一条价格相同就跳过。结果是 hc/ou 首次获得真实时间序列,
+                    # 同时总行数反而大降(重建实测 3.94M → 0.69M)。
+                    # 注意: 去掉 UNIQUE 后若不做这个判断, 每次扫描会全量插入(实测约 1200 万行/天)。
+                    last = conn.execute(
+                        "SELECT price FROM odds_archive WHERE matchup_id=? AND market_type=? "
+                        "AND designation IS ? AND period=? AND points IS ? "
+                        "ORDER BY fetched_at DESC, id DESC LIMIT 1",
+                        (mu_id, mt, des, pd, pts)).fetchone()
+                    if last is not None and abs(float(last[0]) - price) < 1e-9:
+                        continue  # 价格没变, 不重复记
+                    conn.execute("""INSERT INTO odds_archive
                         (sport,league_id,league_name,matchup_id,home,away,market_type,designation,period,points,price,fetched_at,match_start)
                         VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                         (sport, league_id, league_name, mu_id, home, away,
