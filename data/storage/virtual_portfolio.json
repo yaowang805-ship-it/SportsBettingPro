@@ -1,5 +1,5 @@
 {
-  "balance": 8953.33,
+  "balance": 8913.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2255,6 +2255,29 @@
       "commence_time": 1787337900,
       "created_at": "2026-08-19T05:51:40.347202+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_札幌冈萨多_大宫松鼠_双边进球-是",
+      "sport": "football",
+      "league": "日本乙级联赛",
+      "home_team": "札幌冈萨多",
+      "away_team": "大宫松鼠",
+      "home_cn": "札幌冈萨多",
+      "away_cn": "大宫松鼠",
+      "market": "1x2",
+      "market_type": "双边进球-是",
+      "sub_market": "btts",
+      "line": "",
+      "odds": 1.68,
+      "stake": 40,
+      "model_prob": 0.6229,
+      "ev_pct": 4.65,
+      "pin_odds": 1.6053,
+      "fair_price": 1.6053,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787378400,
+      "created_at": "2026-08-19T06:18:52.148962+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2314,8 +2337,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-19",
-    "used": 3257.0,
-    "bets": 25
+    "used": 3297.0,
+    "bets": 26
   },
   "updated": null
 }
