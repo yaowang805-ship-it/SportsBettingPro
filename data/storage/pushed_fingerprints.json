@@ -178,6 +178,11 @@
     "ev": 2.73,
     "ts": 1787121080.634176
   },
+  "basketball|William Jones Cup|原州东浦新世代|菲律宾劲旅|客胜|1x2|2026-08-19": {
+    "ev": 3.8,
+    "bb": 1.37,
+    "ts": 1787121516.111941
+  },
   "basketball|William Jones Cup|原州东浦新世代|菲律宾劲旅|小分(172.5)|ou|172.5|2026-08-19": {
     "ev": 4.69,
     "bb": 1.95,
@@ -1162,6 +1167,14 @@
     "ev": 168.09,
     "ts": 1787114648.6564312
   },
+  "tennis|ITF - M15 Krakow Men Singles|Jan Sadzik (POL)|Ammar Elamin (IRL)|主胜|1x2|2026-08-19": {
+    "ev": 3.94,
+    "ts": 1787121516.513909
+  },
+  "tennis|ITF - M15 Krakow Men Singles|Jan Sadzik (POL)|Ammar Elamin (IRL)|让盘主胜|1x2|2026-08-19": {
+    "ev": 5.07,
+    "ts": 1787121516.5144992
+  },
   "tennis|ITF - M15 Krakow Men Singles|Peter Fajta (HUN)|Lorenzo Ferri (ITA)|让盘主胜|1x2|2026-08-19": {
     "ev": 1.26,
     "ts": 1787101664.640057
@@ -1222,9 +1235,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|William Jones Cup|原州东浦新世代|菲律宾劲旅|客胜|1x2|2026-08-19": {
-    "ev": 3.8,
-    "bb": 1.37,
-    "ts": 1787121516.111941
+  "football|Armenia Premier League|瓦尼|休尼克FC|让球主胜(0)|hc|0|2026-08-20": {
+    "ev": 8.41,
+    "bb": 1.97,
+    "ts": 1787121638.345408
   }
 }

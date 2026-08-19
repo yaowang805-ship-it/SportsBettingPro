@@ -1,5 +1,5 @@
 {
-  "balance": 8814.33,
+  "balance": 8798.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2347,6 +2347,29 @@
       "commence_time": 1787162400,
       "created_at": "2026-08-19T06:30:04.661136+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_瓦尼_休尼克FC_让球主胜(0)",
+      "sport": "football",
+      "league": "亚美尼亚超级联赛",
+      "home_team": "瓦尼",
+      "away_team": "休尼克FC",
+      "home_cn": "瓦尼",
+      "away_cn": "休尼克FC",
+      "market": "handicap",
+      "market_type": "让球主胜(0)",
+      "sub_market": "hc",
+      "line": "0",
+      "odds": 1.97,
+      "stake": 16,
+      "model_prob": 0.5503,
+      "ev_pct": 8.41,
+      "pin_odds": 1.7246,
+      "fair_price": 1.8172,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787227200,
+      "created_at": "2026-08-19T06:40:38.339345+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2406,8 +2429,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-19",
-    "used": 3396.0,
-    "bets": 29
+    "used": 3412.0,
+    "bets": 30
   },
   "updated": null
 }
