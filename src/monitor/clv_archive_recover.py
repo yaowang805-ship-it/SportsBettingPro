@@ -103,6 +103,29 @@ def _load_snapshots(conn, matchup_id):
         if kickoff:
             break
 
+    # V5.10: Pinnacle 会在开赛前后**重铸 matchup_id**(棒球尤其严重, 实测 175 场里
+    # 111 场有多个 id)。tracking 存的是推送那一刻匹配到的 id —— 棒球开盘早、开赛也早,
+    # 存下来的往往已经是"滚球 id", 而赛前快照全挂在那个随后消亡的旧 id 上。
+    # 实测: tracking 的 id 赛前快照 0 条, 同队名的其它 id 有 169~206 条。
+    # 这是棒球 CLV 采集 0/18 全灭的根因。
+    # 所以: 本 id 拿不到任何赛前快照时, 按队名 + 开赛时间归并同场的历史 id。
+    if kickoff and not any(_parse_ts(r[4]) and _parse_ts(r[4]) <= kickoff for r in rows):
+        sib = conn.execute(
+            "SELECT DISTINCT matchup_id, match_start FROM odds_archive "
+            "WHERE home = (SELECT home FROM odds_archive WHERE matchup_id=? LIMIT 1) "
+            "  AND away = (SELECT away FROM odds_archive WHERE matchup_id=? LIMIT 1) "
+            "  AND matchup_id != ?", (matchup_id, matchup_id, matchup_id)).fetchall()
+        for sid_, sms in sib:
+            sk = _parse_ts(sms)
+            # 必须是同一场: 开赛时间对得上(容差同上游错配护栏)
+            if sk is None or abs(sk - kickoff) > KICKOFF_TOLERANCE_MIN * 60:
+                continue
+            rows += conn.execute(
+                "SELECT designation, period, points, price, fetched_at, match_start "
+                "FROM odds_archive WHERE matchup_id = ? ORDER BY fetched_at", (sid_,)
+            ).fetchall()
+        rows.sort(key=lambda r: r[4] or "")
+
     # 重建"开赛时刻的盘面": 每个 (period, designation, points) 取赛前最后一个价格。
     #
     # V5.10 重要变更: 归档库重建后只存**价格变化点**(scripts/rebuild_odds_archive.py),
@@ -201,17 +224,12 @@ def recover(write=False):
 
         sub_market = _infer_sub_market(e.get("sub_market", ""), e.get("designation", ""))
         period = 1 if sub_market.startswith("ht") else 0
-        # V5.10: 暂时只回捞独赢类盘口。
-        # 让球/大小球要靠线值匹配, 而"开赛时刻盘面"是按 key 各取赛前最后值还原的,
-        # 会把历史上出现过、但开赛前 Pinnacle 早已撤掉的线一并复活, 再按 ±0.5 就近
-        # 匹配就可能选中当时根本不存在的盘口 —— 实测这样算出的 CLV 从 +76.9% 到
-        # -56.2%, 离散度远超真实收盘价差, 是噪声不是信号。
-        # 独赢没有线值歧义(腿就是 home/draw/away), 可信。
-        # hc/ou 要等归档器积累出"每次扫描时哪些线还开着"的信息后再放开。
-        if sub_market not in ("1x2", "ht"):
-            stats["跳过_让球/大小球暂不回捞(线值可信度未验证)"] += 1
-            continue
-
+        # V5.10: hc/ou 回捞已放开(此前因线值不可信被暂时禁用)。
+        # 当初禁用是因为 designation 里 77% 没有线值, _extract_market_odds 会退化成
+        # "随便挑一条 Pinnacle 的线", 算出 +76.9% ~ -56.2% 的噪声。
+        # 现在 tracking 有显式 line 列, 且 _extract_market_odds 在拿不到线值时直接
+        # return None —— 老记录(无 line)会被安全跳过, 新记录按精确线值匹配。
+        # 所以这里不再需要按盘口类型一刀切。
         legs = state.get(period) or state.get(0) or {}
         if not legs:
             stats["跳过_无对应半场数据"] += 1
