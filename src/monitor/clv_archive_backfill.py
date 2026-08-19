@@ -54,20 +54,32 @@ def _load_archive():
     db.execute("PRAGMA busy_timeout=30000")  # 归档库可能被扫描写入, 30s等待避免读时报locked
     cur = db.cursor()
     rows = cur.execute('''
-        SELECT matchup_id, home, away, designation, points, price, fetched_at
+        SELECT matchup_id, home, away, designation, points, price, fetched_at, match_start
         FROM odds_archive
         WHERE period = 0 AND designation IN ('home', 'draw', 'away', 'over', 'under')
     ''').fetchall()
     db.close()
 
-    # 按 matchup 取最后快照
-    latest = {}
-    for mid, h, a, des, pts, price, fa in rows:
+    # V5.10 修复两个 bug:
+    #  1) 原先取 max(fetched_at) 的快照当"收盘价", 不判断是否在开赛前。实测 26% 的
+    #     比赛归档里有开赛后的快照 → 拿滚球价当收盘价算 CLV。滚球价被比分推动,
+    #     算出来的是噪声不是 CLV(这是本口径 +6.7% 而实时口径 -1.1% 的原因)。
+    #     采集器自己的注释就写着"开赛后不采集, 滚球价不可靠", 这里漏了同一条规则。
+    #  2) 原先边扫边重置 latest[key], 同一快照里先于最新 fetched_at 出现的腿会被丢,
+    #     导致去抽水缺腿。改成先定最后一个赛前快照, 再收集该快照的全部腿。
+    best_fa = {}
+    for mid, h, a, des, pts, price, fa, ms in rows:
+        if ms and fa > ms:
+            continue  # 开赛后的快照, 不是收盘价
         key = (mid, h, a)
-        if key not in latest or fa > latest[key]['fa']:
-            latest[key] = {'fa': fa, 'p': {}}
-        if fa == latest[key]['fa']:
-            latest[key]['p'][(des, pts)] = price
+        if key not in best_fa or fa > best_fa[key]:
+            best_fa[key] = fa
+    latest = {}
+    for mid, h, a, des, pts, price, fa, ms in rows:
+        key = (mid, h, a)
+        if best_fa.get(key) != fa:
+            continue
+        latest.setdefault(key, {'fa': fa, 'p': {}})['p'][(des, pts)] = price
 
     out = {}
     for (mid, h, a), d in latest.items():
