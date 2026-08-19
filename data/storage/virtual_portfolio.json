@@ -1,5 +1,5 @@
 {
-  "balance": 8700.33,
+  "balance": 8662.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2439,6 +2439,52 @@
       "commence_time": 1787167800,
       "created_at": "2026-08-19T07:32:17.700041+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_萨坚索斯_基菲萨_小球(25)",
+      "sport": "football",
+      "league": "希腊杯-资格赛",
+      "home_team": "萨坚索斯",
+      "away_team": "基菲萨",
+      "home_cn": "萨坚索斯",
+      "away_cn": "基菲萨",
+      "market": "over_under",
+      "market_type": "小球(2.5)",
+      "sub_market": "ou",
+      "line": "2.5",
+      "odds": 1.95,
+      "stake": 25,
+      "model_prob": 0.5337,
+      "ev_pct": 4.07,
+      "pin_odds": 1.7752,
+      "fair_price": 1.8738,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787148000,
+      "created_at": "2026-08-19T07:45:56.034813+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_特罗申_谢拉玆_主胜",
+      "sport": "football",
+      "league": "波兰丙级联赛",
+      "home_team": "特罗申",
+      "away_team": "谢拉玆",
+      "home_cn": "特罗申",
+      "away_cn": "谢拉玆",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.72,
+      "stake": 13,
+      "model_prob": 0.2859,
+      "ev_pct": 6.34,
+      "pin_odds": 3.02,
+      "fair_price": 3.4981,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787151600,
+      "created_at": "2026-08-19T07:45:56.034874+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2498,8 +2544,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-19",
-    "used": 3510.0,
-    "bets": 33
+    "used": 3548.0,
+    "bets": 35
   },
   "updated": null
 }
