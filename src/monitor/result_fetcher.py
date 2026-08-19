@@ -257,6 +257,29 @@ def determine_result(bet: dict, match_result: dict) -> tuple:
     sub_market = bet.get("sub_market", "1x2")
     designation = bet.get("designation", "")
 
+    # V5.10: 半场盘口改用真实半场比分判定。
+    # 以前这里对 ht/ht_hc/ht_ou/ht_dc 一律 return "void"(注释写"ESPN 不提供半场比分"),
+    # 结果 133 笔 void 里 60 笔(45%)是这么白丢的, 涉及 ¥7,838 下注额。
+    # 现在 BB getMatchDetail 会给 ht_home_score/ht_away_score(且经 HT+2H==FT 自校验),
+    # 有半场比分时就把它当成"该场比分"递归走全场那套判定逻辑, 口径完全一致。
+    # 仍然拿不到半场比分时才退回 void —— 绝不用全场比分近似(会判反盈亏)。
+    if sub_market.startswith("ht"):
+        ht_h = match_result.get("ht_home_score")
+        ht_a = match_result.get("ht_away_score")
+        if ht_h is not None and ht_a is not None:
+            _base = {"ht": "1x2", "ht_hc": "hc", "ht_ou": "ou",
+                     "ht_dc": "dc", "ht_dnb": "dnb"}.get(sub_market)
+            if _base:
+                _bet = dict(bet)
+                _bet["sub_market"] = _base
+                _mr = dict(match_result)
+                _mr["home_score"], _mr["away_score"] = ht_h, ht_a
+                _mr.pop("ht_home_score", None)   # 防递归
+                _mr.pop("ht_away_score", None)
+                res, _h, _a, mult = determine_result(_bet, _mr)
+                # 比分回报半场分, 让结算记录如实反映判定依据
+                return res, ht_h, ht_a, mult
+
     # 判断比赛结果方向
     if home_score > away_score:
         outcome = "home"
