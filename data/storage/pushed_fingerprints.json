@@ -51,6 +51,11 @@
     "bb": 1.73,
     "ts": 1787027658.612308
   },
+  "basketball|Mexico LNBP Basketball League|皇家部队|甘布西诺弗雷斯尼洛|让分客胜(+3.5)|hc|+3.5|2026-08-20": {
+    "ev": 10.73,
+    "bb": 2.25,
+    "ts": 1787128534.995748
+  },
   "basketball|Olympic Tournament Pre-Qualifying Women|New Zealand (w)|Brazil (w)|让分主胜|1x2|2026-08-19": {
     "ev": 4.06,
     "ts": 1787103179.7748811
@@ -227,6 +232,10 @@
   "football|ASEAN Hyundai Cup|Vietnam|Malaysia|双边进球-否|btts|2026-08-19": {
     "ev": 3.98,
     "ts": 1787114648.654193
+  },
+  "football|ASEAN Hyundai Cup|Vietnam|Malaysia|大球|1x2|2026-08-19": {
+    "ev": 1.63,
+    "ts": 1787137779.41535
   },
   "football|ASEAN Hyundai Cup|Vietnam|Malaysia|小球|1x2|2026-08-19": {
     "ev": 1.83,
@@ -826,6 +835,14 @@
     "ev": 1.82,
     "ts": 1787049952.796659
   },
+  "football|Greece Cup-Qualification|Niki Volou 1924 PAE|Panionios Athens|双重机会-和局/客|dc|2026-08-19": {
+    "ev": 2.06,
+    "ts": 1787128646.719475
+  },
+  "football|Greece Cup-Qualification|Niki Volou 1924 PAE|Panionios Athens|客胜|1x2|2026-08-19": {
+    "ev": 5.15,
+    "ts": 1787128646.719383
+  },
   "football|Greece Cup-Qualification|Niki Volou 1924 PAE|Panionios Athens|让球主胜|1x2|2026-08-19": {
     "ev": 2.28,
     "ts": 1787126896.6674628
@@ -1124,6 +1141,10 @@
     "ev": 3.7,
     "bb": 1.95,
     "ts": 1787021144.061954
+  },
+  "football|Saudi Arabia Kings Cup|Jeddah Club|Al Kholood Club|双边进球-否|btts|2026-08-20": {
+    "ev": 1.27,
+    "ts": 1787137779.415649
   },
   "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 6.13,
@@ -1479,9 +1500,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|Mexico LNBP Basketball League|皇家部队|甘布西诺弗雷斯尼洛|让分客胜(+3.5)|hc|+3.5|2026-08-20": {
-    "ev": 10.73,
-    "bb": 2.25,
-    "ts": 1787128534.995748
+  "football|Copa Sudamericana|圣塔菲|河床|上半场主胜|ht|2026-08-20": {
+    "ev": 13.52,
+    "bb": 5.5,
+    "ts": 1787137779.643577
   }
 }

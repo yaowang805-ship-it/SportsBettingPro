@@ -1,5 +1,5 @@
 {
-  "balance": 8557.33,
+  "balance": 8540.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2554,6 +2554,29 @@
       "commence_time": 1787160600,
       "created_at": "2026-08-19T08:24:41.747894+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_圣塔菲_河床_上半场主胜",
+      "sport": "football",
+      "league": "南美俱乐部杯",
+      "home_team": "圣塔菲",
+      "away_team": "河床",
+      "home_cn": "圣塔菲",
+      "away_cn": "河床",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 5.5,
+      "stake": 17,
+      "model_prob": 0.2064,
+      "ev_pct": 13.52,
+      "pin_odds": 4.33,
+      "fair_price": 4.845,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787185800,
+      "created_at": "2026-08-19T11:09:39.633671+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2613,8 +2636,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-19",
-    "used": 3653.0,
-    "bets": 38
+    "used": 3670.0,
+    "bets": 39
   },
   "updated": null
 }
