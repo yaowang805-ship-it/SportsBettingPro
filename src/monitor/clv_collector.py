@@ -654,6 +654,7 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
     _MK = {"opportunities": "1x2", "handicap": "hc", "over_under": "ou",
            "double_chance": "dc", "draw_no_bet": "dnb", "btts": "btts"}
     rows = []
+    skipped_started = 0
     seen = set(existing)
     for m in data.get("details", []):
         sport = m.get("sport", "")
@@ -703,6 +704,8 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
                     "source": "validate",
                 })
 
+    if skipped_started:
+        logger.info("CLV验证入库: 跳过 %d 场已开赛比赛(滚球价, 不算赛前机会)", skipped_started)
     if not rows:
         return 0
 
