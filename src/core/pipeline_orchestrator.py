@@ -1158,8 +1158,15 @@ class PipelineOrchestrator:
         for name, time_str, method_name, kwargs in SCHEDULE:
             # git_commit 总是追赶
             # settle 只追赶 2 小时以上的, 且一次只追一个
-            if name != "git_commit" and "settle" not in name:
+            # full_scan_morning 也追赶 — Pin临时故障(如Shadowrocket代理抖动)导致全量扫描失败时,
+            #   重启后对比文件过期(>2h)则补跑, 否则增量扫描会一直卡在 _full_scan_ok=False
+            is_full_scan = (name == "full_scan_morning")
+            if name != "git_commit" and "settle" not in name and not is_full_scan:
                 continue
+            if is_full_scan:
+                _cmp_file = SRC_DIR / "data" / "storage" / "bb_vs_pinnacle_comparison.json"
+                if _cmp_file.exists() and (time.time() - _cmp_file.stat().st_mtime) < 7200:
+                    continue  # 对比文件新鲜(<2h), 无需补跑
             if "settle" in name and started_settle:
                 continue  # 已有结算在追, 跳过其他的
             for cd in check_dates:
