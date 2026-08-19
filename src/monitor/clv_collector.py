@@ -63,13 +63,19 @@ def _load_existing_results():
     return existing
 
 
-def _load_pending_entries():
-    """从 clv_tracking.csv 加载尚未采集收盘价的记录。"""
+def _load_pending_entries(return_expired=False):
+    """从 clv_tracking.csv 加载尚未采集收盘价的记录。
+
+    V5.10: 区分「真 pending」和「已过期」。以前两者混在一起, 日志天天写
+    "pending: 589条"看着像在排队, 其实一大半是比赛早就打完、窗口永久关闭、
+    再也不可能采到的死记录 —— 一个假装在工作的进度条, 把真实丢失率盖住了。
+    """
     if not TRACKING_FILE.exists():
-        return []
+        return ([], []) if return_expired else []
 
     existing = _load_existing_results()
-    entries = []
+    now = time.time()
+    entries, expired = [], []
     with open(TRACKING_FILE, newline='') as f:
         for r in csv.DictReader(f):
             # sub_market 统一推断口径 (ht→ht_hc/ht_ou), 否则去重 key 与结果不匹配
@@ -78,9 +84,14 @@ def _load_pending_entries():
             key = (r.get("home", ""), r.get("away", ""), sm, r.get("designation", ""))
             # 也尝试用 Pinnacle 名匹配
             key_pin = (r.get("home_pin", ""), r.get("away_pin", ""), sm, r.get("designation", ""))
-            if key not in existing and key_pin not in existing:
+            if key in existing or key_pin in existing:
+                continue
+            ep = int(r.get("match_epoch") or 0)
+            if ep and (ep - now) / 60 < CLV_WINDOW_BEFORE_MIN:
+                expired.append(r)   # 已开赛, 实时窗口关闭 → 只能靠归档回捞
+            else:
                 entries.append(r)
-    return entries
+    return (entries, expired) if return_expired else entries
 
 
 def _fetch_close_odds(entries):
