@@ -16,6 +16,39 @@ def sort_ml_prices(prices):
     return sorted_p
 
 
+def _market_entry(period, prices, mkt):
+    """构造盘口 entry, 附带此前一直被丢弃的 Pinnacle 元数据。
+
+    这些字段本来就在每次 /markets/straight 响应里, 采集它们**零额外请求**:
+
+    max_stake (limits[].maxRiskStake)
+        Pinnacle 自己声明的定价信心。实测分布 $100~$10,500(中位 $250),
+        NBA 中位 $750 vs 乌拉圭女足 $50 —— 15 倍差距。上限低 = Pin 自己没把握
+        = 我们拿它去抽水当公平价标尺不可靠 → 算出的 EV 大概率是噪声而非价值。
+        (与 CLV 实测吻合: 低上限的 T3/T4 正是中位 CLV 最差的档)
+
+    is_alternate
+        是否备用线。实测让球/大小球候选里 **82% 是备用线**, 而 get_pin_spread /
+        get_pin_total 只按线值就近(±0.5)挑, 根本不知道挑中的是主线还是备用线。
+        备用线抽水 5.48% vs 主线 4.71% → 挑中备用线时公平价系统性偏差约 0.39%。
+
+    cutoff_at
+        真实投注截止时间, 比 match_epoch 准, 可用于校正 CLV 采集窗口。
+    """
+    max_stake = None
+    for l in (mkt.get("limits") or []):
+        if l.get("type") == "maxRiskStake" and l.get("amount"):
+            max_stake = l["amount"]
+            break
+    return {
+        "period": period,
+        "prices": prices,
+        "max_stake": max_stake,
+        "is_alternate": bool(mkt.get("isAlternate")),
+        "cutoff_at": mkt.get("cutoffAt"),
+    }
+
+
 def get_league_matchups_and_markets(league_id):
     """Get matchups and markets for a specific league"""
     matchups = api_get(f"/leagues/{league_id}/matchups")
@@ -146,7 +179,7 @@ def get_league_matchups_and_markets(league_id):
             if not prices:
                 continue
 
-            entry = {"period": per, "prices": prices}
+            entry = _market_entry(per, prices, mkt)
             if mtype == "moneyline":
                 entry["prices_sorted"] = sort_ml_prices(prices)
                 if per == 0:
@@ -596,7 +629,7 @@ def get_league_corner_markets(league_id):
                 })
             if not prices:
                 continue
-            entry = {"period": per, "prices": prices}
+            entry = _market_entry(per, prices, mkt)
             if mtype == "moneyline":
                 # V5.9: 角球独赢(Pinnacle 偶尔有 moneyline 角球盘, 之前硬编码 [] 漏掉)
                 entry["prices_sorted"] = sort_ml_prices(prices)  # 与主市场一致, 排成 [home, draw, away]
