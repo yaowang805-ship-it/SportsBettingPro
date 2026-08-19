@@ -118,6 +118,23 @@ def _derive_btts_from_team_total(team_total_entries):
     return round(1.0 / btts_yes, 4), round(1.0 / (1.0 - btts_yes), 4)
 
 
+def _pin_main_max_stake(pin_match):
+    """取该场 Pinnacle 主盘口(全场独赢, 非备用线)的注额上限, 取不到就退到任意盘口最大值。
+
+    单场内不同盘口上限差异很大(实测同一联赛 $250 ~ $9,100), 用主独赢盘最能代表
+    Pinnacle 对"这场比赛"整体的定价信心。
+    """
+    try:
+        for e in pin_match.get("moneyline", []) or []:
+            if e.get("period") == 0 and not e.get("is_alternate") and e.get("max_stake"):
+                return e["max_stake"]
+        vals = [e.get("max_stake") for k in ("moneyline", "spread", "total")
+                for e in (pin_match.get(k) or []) if e.get("max_stake")]
+        return max(vals) if vals else None
+    except Exception:
+        return None
+
+
 def verify_match(bb_match, pin_match):
     """Verify a match by checking if team names correspond.
     Returns (verified: bool, note: str)."""
@@ -713,6 +730,12 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             # V5.9: 存 Pinnacle 联赛/比赛 ID, 供 CLV 采集器按 ID 直拉(免反查联赛名映射)
             "pin_league_id": str(pin.get("league_id", "") or ""),
             "pin_match_id": str(pin.get("matchup_id", "") or ""),
+            # V5.10: Pinnacle 主盘口注额上限 = 它对自己定价的信心。上限低 = 它没把握,
+            # 我们拿它的去抽水价当"公平价"标尺就不可靠, 算出的 EV 更可能是噪声。
+            # 实测 NBA 中位 $750 vs 乌拉圭女足 $50(15倍), 与 CLV 分档吻合(低上限的
+            # T3/T4 正是中位 CLV 最差的档)。**现阶段只采集入库不做过滤** —— 门槛要等
+            # 真实 CLV 数据验证「上限低→CLV 差」成立后再定, 别拿未验证的假设砍机会。
+            "pin_max_stake": _pin_main_max_stake(pin),
             "match_score": m["match_score"],
             "sport": sport,
             "flags": [],

@@ -786,6 +786,7 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
         src = m.get("bb_price_source", m.get("platform", "BB"))
         pin_lid = m.get("pin_league_id", "")
         pin_mid = m.get("pin_match_id", "")
+        pin_max_stake = m.get("pin_max_stake", "")
         try:
             tier = get_league_tier(league_cn)
         except Exception:
@@ -812,6 +813,7 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
                     "stake": 0, "tier": tier, "match_epoch": epoch,
                     "bb_price_source": src, "pin_league_id": pin_lid, "pin_match_id": pin_mid,
                     "source": "validate",
+                    "pin_max_stake": pin_max_stake if pin_max_stake is not None else "",
                 })
 
     if skipped_started:
