@@ -465,6 +465,11 @@ def get_completed_scores(league: str, days_back: int = 3) -> list:
     Returns:
         [{home_team, away_team, home_score, away_score, completed, scores}, ...]
     """
+    # V5.10: 联赛名语言归一化 —— 所有源的映射表 key 都是中文, 但 2026-08-16 起
+    # 推送链路改用英文联赛名(BB英文直配Pinnacle), 于是每一个源都 miss, 结算
+    # 永远返回空。实测 161 笔未结算里 148 笔是英文联赛名, 全部卡死在这里。
+    # league_en_to_cn.json 这张现成的翻译表一直存在, 只是结算链路没用它。
+    league = _normalize_league_name(league)
 
     # 网球: 无联赛概念，拉全量 ATP+WTA 已完赛（按球员名匹配）
     if any(kw in league for kw in ("ATP", "WTA", "ITF", "世界网球", "网球")):
