@@ -1052,6 +1052,11 @@
     "bb": 4.17,
     "ts": 1787101664.26305
   },
+  "football|Italy Serie A|帕尔马|卡利亚里|和局|1x2|2026-08-23": {
+    "ev": 3.15,
+    "bb": 3.2,
+    "ts": 1787180765.114099
+  },
   "football|Italy Serie A|热那亚|那不勒斯|上半场主胜|ht|2026-08-23": {
     "ev": 10.78,
     "bb": 6.3,
@@ -1347,6 +1352,11 @@
     "bb": 1.83,
     "ts": 1787127881.756763
   },
+  "football|Turkey Super Lig|里泽斯堡|萨姆松珀|和局|1x2|2026-08-23": {
+    "ev": 7.08,
+    "bb": 3.52,
+    "ts": 1787180765.1141372
+  },
   "football|UAE Pro League|迪拜胜利|阿尔瓦赫达|和局|1x2|2026-08-22": {
     "ev": 8.96,
     "bb": 3.66,
@@ -1433,6 +1443,10 @@
     "ev": 5.81,
     "bb": 3.84,
     "ts": 1787034729.998822
+  },
+  "football|UEFA Europa Conference League|KI Klaksvik|Riga FC|让球主胜|1x2|2026-08-21": {
+    "ev": 2.13,
+    "ts": 1787180765.386145
   },
   "football|UEFA Europa League-Qualification|Besiktas JK|FK Kauno Zalgiris|先进球neither|first_to_score|2026-08-20": {
     "ev": 2.5,
@@ -1615,6 +1629,11 @@
     "ev": 2.2,
     "ts": 1787124738.97732
   },
+  "football|USL Championship|底特律城|坦帕湾暴徒|和局|1x2|2026-08-23": {
+    "ev": 13.58,
+    "bb": 3.2,
+    "ts": 1787180765.114052
+  },
   "football|USL League One|One Knoxville SC|Portland Hearts of Pine|和局|1x2|2026-08-20": {
     "ev": 1.47,
     "ts": 1787179754.056044
@@ -1622,6 +1641,10 @@
   "football|USL League One|Sarasota Paradise|Chattanooga Red Wolves SC|让球主胜|1x2|2026-08-20": {
     "ev": 1.1,
     "ts": 1787180399.488995
+  },
+  "football|USL League One|Sarasota Paradise|Chattanooga Red Wolves SC|让球客胜|1x2|2026-08-20": {
+    "ev": 1.62,
+    "ts": 1787180869.5692081
   },
   "football|USL League One|萨拉索塔天堂|查塔努加红狼|让球主胜(0)|hc|0|2026-08-20": {
     "ev": 2.75,
@@ -1824,19 +1847,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|USL Championship|底特律城|坦帕湾暴徒|和局|1x2|2026-08-23": {
-    "ev": 13.58,
-    "bb": 3.2,
-    "ts": 1787180765.114052
-  },
-  "football|Italy Serie A|帕尔马|卡利亚里|和局|1x2|2026-08-23": {
-    "ev": 3.15,
-    "bb": 3.2,
-    "ts": 1787180765.114099
-  },
-  "football|Turkey Super Lig|里泽斯堡|萨姆松珀|和局|1x2|2026-08-23": {
-    "ev": 7.08,
-    "bb": 3.52,
-    "ts": 1787180765.1141372
+  "basketball|FIBA Olympic Pre Qualifier Tournament Women|菲律宾 (女)|加拿大 (女)|让分主胜(+27.5)|hc|+27.5|2026-08-20": {
+    "ev": 3.87,
+    "bb": 1.83,
+    "ts": 1787181348.3585632
   }
 }
