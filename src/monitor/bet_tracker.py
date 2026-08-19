@@ -169,7 +169,15 @@ def get_pnl_summary() -> dict:
     data = load_tracked_bets()
     bets = data.get("bets", [])
 
-    settled = [b for b in bets if b.get("status") == "settled"]
+    # V5.10: void 不能计入 ROI 分母。
+    # 实测 133 笔 void 里 118 笔连比分都没有(settle_source=timeout_void), 本质是
+    # "拿不到赛果"被一次性作废, 不是真正的退款。把它们算进 settled 会把分母从
+    # ¥6,361 稀释到 ¥20,461 —— 真实亏损 -14.4% 被掩盖成 -4.5%, 差 3.2 倍。
+    # 真实盈亏只看真正定了胜负的注; void 单列, 让"无法结算"这件事本身可见。
+    decided = [b for b in bets if b.get("result") in ("won", "lost")]
+    voided = [b for b in bets if b.get("status") == "settled"
+              and b.get("result") not in ("won", "lost")]
+    settled = decided
     pending = [b for b in bets if b.get("status") == "pending"]
 
     total_stake = sum(b["stake"] for b in settled)
@@ -200,8 +208,11 @@ def get_pnl_summary() -> dict:
 
     return {
         "total_bets": len(bets),
-        "settled": len(settled),
+        "settled": len(settled),          # 只含真正定了胜负的
         "pending": len(pending),
+        # V5.10: 无法结算的单列出来 —— 这个数越大, 上面的 ROI 代表性越弱
+        "unresolved": len(voided),
+        "unresolved_stake": sum(b.get("stake", 0) or 0 for b in voided),
         "total_stake": total_stake,
         "total_profit": total_profit,
         "roi_pct": round(total_profit / total_stake * 100, 2) if total_stake > 0 else 0,

@@ -453,6 +453,32 @@ def get_completed_scores_by_sport(sport: str, days_back: int = 3) -> list:
     return results
 
 
+_EN2CN_CACHE = None
+_EN2CN_MTIME = 0.0
+
+
+def _normalize_league_name(league: str) -> str:
+    """英文联赛名 → 中文(各赛果源映射表用的 key)。已是中文或查不到就原样返回。
+
+    翻译表 data/storage/league_en_to_cn.json 由对比链路维护(它同时有 league
+    与 league_cn 两个字段), 这里带 mtime 缓存热加载, 新联赛上线不用重启。
+    """
+    global _EN2CN_CACHE, _EN2CN_MTIME
+    if not league or any("一" <= c <= "鿿" for c in league):
+        return league  # 已经是中文
+    try:
+        import json as _json
+        from pathlib import Path as _Path
+        p = _Path(__file__).resolve().parent.parent / "data" / "storage" / "league_en_to_cn.json"
+        m = p.stat().st_mtime
+        if _EN2CN_CACHE is None or m != _EN2CN_MTIME:
+            _EN2CN_CACHE = _json.loads(p.read_text())
+            _EN2CN_MTIME = m
+    except Exception:
+        return league
+    return (_EN2CN_CACHE or {}).get(league, league)
+
+
 def get_completed_scores(league: str, days_back: int = 3) -> list:
     """多源获取指定联赛的已完成比赛结果。
 
