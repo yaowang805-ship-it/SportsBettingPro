@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 from src.scrapers.bb_data import detect_sport, extract_bb_1x2, TWO_WAY_SPORTS
 from src.scrapers.pinnacle_league_map import TEAM_NAME_MAP
 
-— 双打 vs 单打分隔符 —
+# ── 双打 vs 单打分隔符 ──
 # BB 的双打用 "A / B" 表示; Pinnacle 侧若不含任何配对分隔符即为单打。
 _PAIR_SEPARATORS = ("/", "&", "+")
 
