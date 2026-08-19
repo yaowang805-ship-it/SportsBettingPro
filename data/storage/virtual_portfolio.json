@@ -1,5 +1,5 @@
 {
-  "balance": 8150.33,
+  "balance": 8139.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2899,6 +2899,29 @@
       "commence_time": 1787180400,
       "created_at": "2026-08-19T22:58:06.277341+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_萨拉索塔天堂_查塔努加红狼_让球主胜(0)",
+      "sport": "football",
+      "league": "美国甲级联赛",
+      "home_team": "萨拉索塔天堂",
+      "away_team": "查塔努加红狼",
+      "home_cn": "萨拉索塔天堂",
+      "away_cn": "查塔努加红狼",
+      "market": "handicap",
+      "market_type": "让球主胜(0)",
+      "sub_market": "hc",
+      "line": "0",
+      "odds": 1.87,
+      "stake": 11,
+      "model_prob": 0.5495,
+      "ev_pct": 2.75,
+      "pin_odds": 1.7407,
+      "fair_price": 1.82,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787182200,
+      "created_at": "2026-08-19T23:02:30.175686+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2958,8 +2981,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 357.0,
-    "bets": 13
+    "used": 368.0,
+    "bets": 14
   },
   "updated": null
 }
