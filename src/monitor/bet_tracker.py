@@ -174,9 +174,10 @@ def get_pnl_summary() -> dict:
     # "拿不到赛果"被一次性作废, 不是真正的退款。把它们算进 settled 会把分母从
     # ¥6,361 稀释到 ¥20,461 —— 真实亏损 -14.4% 被掩盖成 -4.5%, 差 3.2 倍。
     # 真实盈亏只看真正定了胜负的注; void 单列, 让"无法结算"这件事本身可见。
-    decided = [b for b in bets if b.get("result") in ("won", "lost")]
+    # half_won/half_lost 是真实盈亏(半赢半输), 必须计入 decided, 不能算进 voided
+    decided = [b for b in bets if b.get("result") in ("won", "lost", "half_won", "half_lost")]
     voided = [b for b in bets if b.get("status") == "settled"
-              and b.get("result") not in ("won", "lost")]
+              and b.get("result") not in ("won", "lost", "half_won", "half_lost")]
     settled = decided
     pending = [b for b in bets if b.get("status") == "pending"]
 

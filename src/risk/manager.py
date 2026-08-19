@@ -616,6 +616,13 @@ class RiskManager:
         self.weekly_loss = max(0.0, self.weekly_loss - pnl)
 
         # V4.4: 填充 _daily_bets (之前从未填充, compute_daily_loss 始终返回0)
+        # V5.10 修复: 这里必须同步刷新 _last_reset_date —— 否则 record_outcome 跨天
+        # 追加, 而 compute_daily_loss 因 today != _last_reset_date 直接 return 0.0,
+        # 日亏损熔断从 8/17 起永久失效(实测 8/19 亏 ¥3,394 > 阈值 ¥2,000 却没触发)。
+        _today2 = datetime.now().date()
+        if self._last_reset_date != _today2:
+            self._daily_bets = []
+            self._last_reset_date = _today2
         self._daily_bets.append({
             "stake": stake, "win": win, "pnl": pnl,
             "sport": sport, "bet_type": bet_type,
