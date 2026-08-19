@@ -126,7 +126,14 @@ def verify_match(bb_match, pin_match):
     pin_home = pin_match.get("home", "")
     pin_away = pin_match.get("away", "")
 
-    ts = team_name_score(bb_home, bb_away, pin_home, pin_away)
+    # V5.10: 传 sport 以启用双打/单打结构护栏(仅个人项目生效)
+    _sport = bb_match.get("sport") or ""
+    if not _sport:
+        try:
+            _sport = detect_sport(bb_match) or ""
+        except Exception:
+            _sport = ""
+    ts = team_name_score(bb_home, bb_away, pin_home, pin_away, sport=_sport)
 
     if ts >= 1.0:
         return True, "队名完全匹配"

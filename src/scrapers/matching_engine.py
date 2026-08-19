@@ -709,10 +709,16 @@ def find_matches_by_odds(bb_matches, pin_matches_by_league):
                     for _pm in pin_matches_by_league[_bb_league]:
                         _pin_candidates.add(_pm.get("home", ""))
                         _pin_candidates.add(_pm.get("away", ""))
+                # V5.10: 双打/单打结构冲突直接跳过整个候选 —— 不能只把 team_name_score
+                # 判 0, 否则下面 tn_score<0.3 的 rapidfuzz 兜底会把分数又拉回来。
+                if _pair_structure_conflict(bb.get("home", ""), bb.get("away", ""),
+                                            pin.get("home", ""), pin.get("away", ""), sport):
+                    continue
                 tn_score = team_name_score(
                     bb.get("home", ""), bb.get("away", ""),
                     pin.get("home", ""), pin.get("away", ""),
-                    pin_candidates=list(_pin_candidates) if _pin_candidates else None
+                    pin_candidates=list(_pin_candidates) if _pin_candidates else None,
+                    sport=sport
                 )
                 if tn_score < 0.3 and _HAS_RAPIDFUZZ:
                     fs, _ = fuzzy_match_teams(
