@@ -1,5 +1,5 @@
 {
-  "balance": 8507.33,
+  "balance": 8496.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2600,6 +2600,29 @@
       "commence_time": 1787151600,
       "created_at": "2026-08-19T11:18:11.592269+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_蒙得维的亚城图尔克_泰格雷_上半场主胜",
+      "sport": "football",
+      "league": "南美俱乐部杯",
+      "home_team": "蒙得维的亚城图尔克",
+      "away_team": "泰格雷",
+      "home_cn": "蒙得维的亚城图尔克",
+      "away_cn": "泰格雷",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 5.65,
+      "stake": 11,
+      "model_prob": 0.2054,
+      "ev_pct": 16.05,
+      "pin_odds": 4.38,
+      "fair_price": 4.8684,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787185800,
+      "created_at": "2026-08-19T22:49:13.723302+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2658,9 +2681,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-08-19",
-    "used": 3703.0,
-    "bets": 40
+    "date": "2026-08-20",
+    "used": 11.0,
+    "bets": 1
   },
   "updated": null
 }

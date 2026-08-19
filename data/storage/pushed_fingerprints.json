@@ -339,6 +339,10 @@
     "ev": 2.53,
     "ts": 1787122299.60553
   },
+  "football|Argentina Liga Profesional Reserves|Banfield (Res)|Instituto AC Cordoba (Res)|小球|1x2|2026-08-20": {
+    "ev": 1.92,
+    "ts": 1787138299.1421509
+  },
   "football|Argentina Liga Profesional Reserves|Ferro Carril Oeste (Res)|San Martin de San Juan (Res)|小球|1x2|2026-08-20": {
     "ev": 1.83,
     "ts": 1787122299.6055849
@@ -1128,6 +1132,10 @@
     "ev": 2.13,
     "ts": 1787127882.010779
   },
+  "football|Poland III Liga|LKS Lodz II|KTS Weszlo Warszawa|小球|1x2|2026-08-19": {
+    "ev": 1.62,
+    "ts": 1787138292.122148
+  },
   "football|Poland III Liga|Rakow Czestochowa II|KS Stilon Gorzow Wlkp|主胜|1x2|2026-08-19": {
     "ev": 3.34,
     "ts": 1787117348.108347
@@ -1171,6 +1179,11 @@
   "football|Poland III Liga|Zks Kluczevia Stargard|KS Gedania Gdansk|让球客胜|1x2|2026-08-19": {
     "ev": 1.13,
     "ts": 1787124738.9766011
+  },
+  "football|Poland III Liga|克拉科夫维茨兹塔二队|哥伦布猎鹰|主胜|1x2|2026-08-19": {
+    "ev": 4.56,
+    "bb": 1.79,
+    "ts": 1787138291.598357
   },
   "football|Poland III Liga|卡利什1925|诺泰奇|大球(2.75)|ou|2.75|2026-08-19": {
     "ev": 11.05,
@@ -1353,6 +1366,10 @@
   "football|USA Major League Soccer|Orlando City SC|Chicago Fire|让球客胜|1x2|2026-08-20": {
     "ev": 1.42,
     "ts": 1787114648.655424
+  },
+  "football|USA Major League Soccer|Portland Timbers|San Diego FC|让球主胜|1x2|2026-08-20": {
+    "ev": 1.27,
+    "ts": 1787138299.1429539
   },
   "football|USA Major League Soccer|Real Salt Lake|FC Dallas|和局|1x2|2026-08-20": {
     "ev": 4.17,
@@ -1557,9 +1574,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Poland III Liga|克拉科夫维茨兹塔二队|哥伦布猎鹰|主胜|1x2|2026-08-19": {
-    "ev": 4.56,
-    "bb": 1.79,
-    "ts": 1787138291.598357
+  "football|Copa Sudamericana|蒙得维的亚城图尔克|泰格雷|上半场主胜|ht|2026-08-20": {
+    "ev": 16.05,
+    "bb": 5.65,
+    "ts": 1787179753.73553
   }
 }
