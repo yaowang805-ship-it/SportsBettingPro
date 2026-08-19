@@ -441,6 +441,11 @@
     "ev": 1.06,
     "ts": 1787042347.332599
   },
+  "football|Denmark DBU Pokalen|尼克宾|纳斯特维德|主胜|1x2|2026-08-19": {
+    "ev": 5.22,
+    "bb": 1.99,
+    "ts": 1787060812.394443
+  },
   "football|Denmark DBU Pokalen|尼克宾|纳斯特维德|大球(2.25)|ou|2.25|2026-08-19": {
     "ev": 8.33,
     "bb": 1.73,
@@ -459,6 +464,10 @@
   "football|England EFL Trophy|Northampton Town|Brighton & Hove Albion FC U21|上半场主胜|ht|2026-08-19": {
     "ev": 2.42,
     "ts": 1787027658.845279
+  },
+  "football|England EFL Trophy|Stockport County FC|Everton FC U21|上半场客胜|ht|2026-08-19": {
+    "ev": 1.68,
+    "ts": 1787060812.717443
   },
   "football|England EFL Trophy|Stockport County FC|Everton FC U21|双重机会-和局/客|dc|2026-08-19": {
     "ev": 2.87,
@@ -649,9 +658,21 @@
     "ev": 2.55,
     "ts": 1787055069.492513
   },
+  "football|Japan Emperor Cup|Giravanz Kitakyushu|Okinawa SV|客胜|1x2|2026-08-19": {
+    "ev": 1.31,
+    "ts": 1787061700.4161909
+  },
+  "football|Japan Emperor Cup|Giravanz Kitakyushu|Okinawa SV|让球客胜|1x2|2026-08-19": {
+    "ev": 1.37,
+    "ts": 1787061700.416255
+  },
   "football|Japan Emperor Cup|Kagoshima United|Renofa Yamaguchi|主胜|1x2|2026-08-19": {
     "ev": 8.07,
     "ts": 1787048414.282254
+  },
+  "football|Japan Emperor Cup|Kagoshima United|Renofa Yamaguchi|让球主胜|1x2|2026-08-19": {
+    "ev": 1.46,
+    "ts": 1787061700.416801
   },
   "football|Japan Emperor Cup|Nagano Parceiro|Fukui United FC|客胜|1x2|2026-08-19": {
     "ev": 44.16,
@@ -668,6 +689,10 @@
   "football|Japan Emperor Cup|Veroskronos Tsuno|Kamatamare Sanuki|双重机会-主/和局|dc|2026-08-19": {
     "ev": 1.3,
     "ts": 1787048414.282112
+  },
+  "football|Japan Emperor Cup|Veroskronos Tsuno|Kamatamare Sanuki|小球|1x2|2026-08-19": {
+    "ev": 1.74,
+    "ts": 1787061700.416529
   },
   "football|Japan Emperor Cup|Veroskronos Tsuno|Kamatamare Sanuki|让球主胜|1x2|2026-08-19": {
     "ev": 1.56,
@@ -711,6 +736,10 @@
   "football|Slovakia Cup|FC Topolcany|OFK Banik Lehota Pod Vtacnikom|双重机会-主/和局|dc|2026-08-18": {
     "ev": 10.31,
     "ts": 1787025629.245635
+  },
+  "football|Slovakia Cup|FC Topolcany|OFK Banik Lehota Pod Vtacnikom|大球|1x2|2026-08-18": {
+    "ev": 1.87,
+    "ts": 1787060812.71623
   },
   "football|Slovakia Cup|FC Topolcany|OFK Banik Lehota Pod Vtacnikom|让球主胜|1x2|2026-08-18": {
     "ev": 4.03,
@@ -838,6 +867,10 @@
     "bb": 9.95,
     "ts": 1787034729.999058
   },
+  "football|Uzbekistan Super League|FC Sogdiana Jizzakh|Qizilqum Zarafshon|上半场主胜|ht|2026-08-18": {
+    "ev": 1.63,
+    "ts": 1787061182.959862
+  },
   "football|Uzbekistan Super League|FC Sogdiana Jizzakh|Qizilqum Zarafshon|上半场双重机会-主/客|ht_dc|2026-08-18": {
     "ev": 1.6,
     "ts": 1787033631.574801
@@ -926,9 +959,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Denmark DBU Pokalen|尼克宾|纳斯特维德|主胜|1x2|2026-08-19": {
-    "ev": 5.22,
-    "bb": 1.99,
-    "ts": 1787060812.394443
+  "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|小分(179.5)|ou|179.5|2026-08-19": {
+    "ev": 13.5,
+    "bb": 2.06,
+    "ts": 1787100149.990637
   }
 }

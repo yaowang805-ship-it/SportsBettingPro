@@ -1,5 +1,5 @@
 {
-  "balance": 11649.0,
+  "balance": 11509.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1749,14 +1749,37 @@
       "commence_time": 1787072400,
       "created_at": "2026-08-18T13:46:52.379328+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_拉斯维加斯王牌_(女)_亚特兰大梦想_(女)_小分(1795)",
+      "sport": "basketball",
+      "league": "WNBA 美国职业女子篮球联赛",
+      "home_team": "拉斯维加斯王牌 (女)",
+      "away_team": "亚特兰大梦想 (女)",
+      "home_cn": "拉斯维加斯王牌 (女)",
+      "away_cn": "亚特兰大梦想 (女)",
+      "market": "over_under",
+      "market_type": "小分(179.5)",
+      "sub_market": "ou",
+      "line": "179.5",
+      "odds": 2.06,
+      "stake": 140,
+      "model_prob": 0.551,
+      "ev_pct": 13.5,
+      "pin_odds": 1.7092,
+      "fair_price": 1.8149,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787101200,
+      "created_at": "2026-08-19T00:42:29.959318+00:00",
+      "track_only": false
     }
   ],
   "settled": {},
   "history": [],
   "daily_budget": {
-    "date": "2026-08-18",
-    "used": 7992.0,
-    "bets": 71
+    "date": "2026-08-19",
+    "used": 140.0,
+    "bets": 1
   },
   "updated": null
 }
