@@ -132,6 +132,7 @@ def _fetch_close_odds(entries):
     _budget_start = time.time()
     _MAX_RUNTIME = 600  # 单次采集 wall-clock 预算 10 分钟, 防卡死/无限重扫
     results = []
+    _seen_results = {}  # (home,away,sub_market,designation) → (best_score, row) 本轮去重
     league_cache = {}  # Pinnacle league ID → matchups cache
     special_cache = {}  # Pinnacle league ID → special markets cache
 
@@ -288,7 +289,22 @@ def _fetch_close_odds(entries):
                 true_clv = round((bb_odds - close_fair) / close_fair * 100, 2)
                 clv_delta = round(true_clv - push_ev, 2)  # 正=赔率朝有利方向移动
 
-                results.append({
+                # V5.10: 同一条机会在本轮里只能产出一个结果。
+                # find_pinnacle_league_ids 可能返回多个 pin_id, 外层 for pin_id 会让
+                # 同一场 BB 比赛在两个 Pinnacle 联赛里各配到一次 —— 实测产出过同一
+                # 机会两行且 CLV 互相矛盾(24.57 vs 19.77、-14.8 vs -6.32), 其中必有
+                # 一个是错配。这里按队名匹配分数保留最优的那个。
+                _rkey = (e.get("home", ""), e.get("away", ""), sub_market, designation)
+                _prev = _seen_results.get(_rkey)
+                if _prev is not None and _prev[0] >= best_score:
+                    continue
+                if _prev is not None:
+                    try:
+                        results.remove(_prev[1])
+                    except ValueError:
+                        pass
+
+                _row = {
                     "collect_time": datetime.now(timezone.utc).isoformat(),
                     "push_time": e.get("timestamp", ""),
                     "match_key": f"{bb_home}|{bb_away}",
@@ -315,7 +331,9 @@ def _fetch_close_odds(entries):
                     "minutes_before_match": round((int(e.get("match_epoch") or 0) - time.time()) / 60, 1),
                     "close_source": "live",
                     "close_lag_min": round((int(e.get("match_epoch") or 0) - time.time()) / 60, 1),
-                })
+                }
+                results.append(_row)
+                _seen_results[_rkey] = (best_score, _row)
 
     # V5.10: 窗口即将关闭却还没采到的, 记一笔 —— 这些就是永久丢失的候选,
     # 之前它们只是悄悄消失, 日志里只有一句"采集到 0 条", 看不出丢了什么。
