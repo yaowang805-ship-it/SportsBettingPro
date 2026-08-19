@@ -12,6 +12,10 @@
     "bb": 1.73,
     "ts": 1787027658.612308
   },
+  "basketball|WNBA|Chicago Sky (w)|New York Liberty (w)|主胜|1x2|2026-08-19": {
+    "ev": 1.03,
+    "ts": 1787100361.014567
+  },
   "basketball|WNBA|Chicago Sky (w)|New York Liberty (w)|大分|1x2|2026-08-19": {
     "ev": 1.82,
     "ts": 1787055069.4926531
@@ -19,6 +23,10 @@
   "basketball|WNBA|Chicago Sky (w)|New York Liberty (w)|小分|1x2|2026-08-19": {
     "ev": 3.9,
     "ts": 1787043520.717037
+  },
+  "basketball|WNBA|Chicago Sky (w)|New York Liberty (w)|让分主胜|1x2|2026-08-19": {
+    "ev": 2.97,
+    "ts": 1787100361.014624
   },
   "basketball|WNBA|Chicago Sky (w)|New York Liberty (w)|让分客胜|1x2|2026-08-19": {
     "ev": 1.66,
@@ -64,6 +72,11 @@
     "ev": 6.27,
     "bb": 2.0,
     "ts": 1787043520.452609
+  },
+  "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|小分(179.5)|ou|179.5|2026-08-19": {
+    "ev": 13.5,
+    "bb": 2.06,
+    "ts": 1787100149.990637
   },
   "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|让分主胜(-2.5)|hc|-2.5|2026-08-19": {
     "ev": 3.7,
@@ -283,6 +296,10 @@
     "ev": 3.35,
     "bb": 1.6,
     "ts": 1787038514.330122
+  },
+  "football|CONCACAF Central American Cup|CSD Xelaju MC|Diriangen FC|小球|1x2|2026-08-19": {
+    "ev": 6.48,
+    "ts": 1787100150.5283918
   },
   "football|CONCACAF Central American Cup|Real Esteli FC|CS Herediano|主胜|1x2|2026-08-19": {
     "ev": 3.48,
@@ -959,9 +976,14 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|WNBA|拉斯维加斯王牌 (女)|亚特兰大梦想 (女)|小分(179.5)|ou|179.5|2026-08-19": {
-    "ev": 13.5,
-    "bb": 2.06,
-    "ts": 1787100149.990637
+  "football|CONCACAF Central American Cup|肯塔吉内斯|维德斯|让球客胜(+4/4.5)|hc|+4/4.5|2026-08-19": {
+    "ev": 8.91,
+    "bb": 1.84,
+    "ts": 1787100655.375336
+  },
+  "football|CONCACAF Central American Cup|肯塔吉内斯|维德斯|小球(5.25)|ou|5.25|2026-08-19": {
+    "ev": 7.55,
+    "bb": 1.84,
+    "ts": 1787100655.375384
   }
 }

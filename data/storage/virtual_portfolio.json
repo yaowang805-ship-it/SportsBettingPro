@@ -1,5 +1,5 @@
 {
-  "balance": 11509.0,
+  "balance": 11016.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1772,14 +1772,60 @@
       "commence_time": 1787101200,
       "created_at": "2026-08-19T00:42:29.959318+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_肯塔吉内斯_维德斯_小球(525)",
+      "sport": "football",
+      "league": "中美洲杯",
+      "home_team": "肯塔吉内斯",
+      "away_team": "维德斯",
+      "home_cn": "肯塔吉内斯",
+      "away_cn": "维德斯",
+      "market": "over_under",
+      "market_type": "小球(5.25)",
+      "sub_market": "ou",
+      "line": "5.25",
+      "odds": 1.84,
+      "stake": 348,
+      "model_prob": 0.5845,
+      "ev_pct": 7.55,
+      "pin_odds": 1.6024,
+      "fair_price": 1.7108,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787101200,
+      "created_at": "2026-08-19T00:50:55.370674+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_肯塔吉内斯_维德斯_让球客胜(+4/45)",
+      "sport": "football",
+      "league": "中美洲杯",
+      "home_team": "肯塔吉内斯",
+      "away_team": "维德斯",
+      "home_cn": "肯塔吉内斯",
+      "away_cn": "维德斯",
+      "market": "handicap",
+      "market_type": "让球客胜(+4/4.5)",
+      "sub_market": "hc",
+      "line": "+4/4.5",
+      "odds": 1.84,
+      "stake": 145,
+      "model_prob": 0.5919,
+      "ev_pct": 8.91,
+      "pin_odds": 1.5848,
+      "fair_price": 1.6894,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787101200,
+      "created_at": "2026-08-19T00:50:55.370722+00:00",
+      "track_only": false
     }
   ],
   "settled": {},
   "history": [],
   "daily_budget": {
     "date": "2026-08-19",
-    "used": 140.0,
-    "bets": 1
+    "used": 633.0,
+    "bets": 3
   },
   "updated": null
 }
