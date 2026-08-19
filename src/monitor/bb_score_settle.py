@@ -96,6 +96,7 @@ def settle_via_bb(dry_run: bool = False) -> dict:
 
     settled = 0
     matched = 0
+    addressable = 0   # BB 确实给了比分的注数(静默失效告警的分母)
     for b in bets:
         home = (b.get("home_cn") or b.get("home", "") or "").strip()
         away = (b.get("away_cn") or b.get("away", "") or "").strip()
@@ -166,10 +167,10 @@ def settle_via_bb(dry_run: bool = False) -> dict:
     if not dry_run:
         try:
             from src.monitor.silent_failure_watch import record_run
-            record_run("bb_score_settle", produced=matched, expected=len(bets),
-                       detail=(f"{len(bets)} 笔待结算注一笔都没匹配到比分。"
-                               f"排查方向: bb_match_id 是否缺失 / getMatchDetail 的 "
-                               f"completed 判定 / 队名匹配。"))
+            record_run("bb_score_settle", produced=matched, expected=addressable,
+                       detail=(f"BB 已返回比分的 {addressable} 笔注, 一笔都没能结算。"
+                               f"排查方向: getMatchDetail 的 completed 判定 / "
+                               f"determine_result 盘口分支 / 队名匹配。"))
         except Exception:
             pass
 
