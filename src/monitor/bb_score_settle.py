@@ -102,6 +102,7 @@ def settle_via_bb(dry_run: bool = False) -> dict:
         _bid = str(b.get("bb_match_id") or "").strip()
         sc = None
         swapped = False
+        ht_sc = None   # V5.10: 半场比分, 供 ht/ht_hc/ht_ou/ht_dc 盘口判定
         # 1. 首选: getMatchDetail 按 bb_match_id 逐场拉(可靠, 已结束比赛仍可查, 无窗口限制)
         if _bid:
             _detail = fetch_bb_match_result(_bid, language_type="EN")
@@ -109,6 +110,8 @@ def settle_via_bb(dry_run: bool = False) -> dict:
                     and _detail.get("home_score") is not None
                     and _detail.get("away_score") is not None):
                 sc = [_detail["home_score"], _detail["away_score"]]
+                if _detail.get("ht_home_score") is not None:
+                    ht_sc = [_detail["ht_home_score"], _detail["ht_away_score"]]
         # 2. 兜底: type=6 id_map 精确匹配(免队名错配)
         if sc is None:
             sc = id_map.get(_bid) if _bid else None
@@ -137,6 +140,9 @@ def settle_via_bb(dry_run: bool = False) -> dict:
         if swapped:
             hs, as_ = as_, hs
         match_result = {"home_score": hs, "away_score": as_}
+        if ht_sc:
+            _hh, _ha = (ht_sc[1], ht_sc[0]) if swapped else (ht_sc[0], ht_sc[1])
+            match_result["ht_home_score"], match_result["ht_away_score"] = _hh, _ha
         try:
             result, hs2, as2, mult = determine_result(b, match_result)
         except Exception as e:
