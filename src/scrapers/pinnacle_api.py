@@ -106,6 +106,8 @@ _CIRCUIT_OPEN_UNTIL = 0.0          # V5.9: 熔断打开(暂停所有请求)到�
 _CIRCUIT_FAILURE_THRESHOLD = 10    # V5.9: 连续失败阈值
 _CIRCUIT_COOLDOWN = 600            # V5.9: 熔断冷却 10 分钟
 _CIRCUIT_NOTIFY_UNTIL = 0.0        # V5.9: 熔断告警节流(30min 一次)
+_SHARED_BAN_CACHE = None           # V5.10: 全局封禁次数缓存(跨进程共享层读来的)
+_SHARED_BAN_CACHE_AT = 0.0
 
 
 def _current_min_interval():
@@ -116,10 +118,23 @@ def _current_min_interval():
     ≥2 次封禁 → 0.125s (8 req/s, 最低)
     24h 内无封禁 → 自动重置回 10 req/s。
     """
-    global _BAN_COUNT
+    global _BAN_COUNT, _SHARED_BAN_CACHE, _SHARED_BAN_CACHE_AT
     if _LAST_BAN_TIME and time.time() - _LAST_BAN_TIME > _BAN_RESET_HOURS * 3600:
         _BAN_COUNT = 0
-    interval = _MIN_REQUEST_INTERVAL + 0.0125 * min(_BAN_COUNT, 2)  # 最多降 2 档
+    # V5.10: 降级档位取全局封禁次数 —— 别的进程被封了, 本进程也该降速,
+    # 否则"降级"只在挨打的那个进程生效, 总速率纹丝不动。缓存 60s 免得每请求读库。
+    ban = _BAN_COUNT
+    now = time.time()
+    if now - _SHARED_BAN_CACHE_AT > 60:
+        try:
+            from src.scrapers import pin_rate_state
+            _SHARED_BAN_CACHE = pin_rate_state.get_ban_count()
+        except Exception:
+            _SHARED_BAN_CACHE = None
+        _SHARED_BAN_CACHE_AT = now
+    if _SHARED_BAN_CACHE is not None:
+        ban = max(ban, _SHARED_BAN_CACHE)
+    interval = _MIN_REQUEST_INTERVAL + 0.0125 * min(ban, 2)  # 最多降 2 档
     return min(interval, 0.125)
 
 
@@ -139,6 +154,12 @@ def _record_pin_failure():
     if _CONSECUTIVE_FAILURES >= _CIRCUIT_FAILURE_THRESHOLD:
         _CIRCUIT_OPEN_UNTIL = time.time() + _CIRCUIT_COOLDOWN
         _CONSECUTIVE_FAILURES = 0
+        # V5.10: 熔断同样要全进程共享 —— 单进程熔断挡不住别的进程继续锤 Pin
+        try:
+            from src.scrapers import pin_rate_state
+            pin_rate_state.open_circuit(_CIRCUIT_COOLDOWN)
+        except Exception:
+            pass
         logger.error("⚠️ 熔断器: 连续 %d 次 Pin 请求失败 → 暂停所有请求 %d 分钟 (疑似代码bug反复连Pin, 防风控)",
                      _CIRCUIT_FAILURE_THRESHOLD, _CIRCUIT_COOLDOWN // 60)
         # 文件节流(模块热重载会重置内存全局, 必须文件持久化) — 30min 内只发一条熔断告警
@@ -272,8 +293,44 @@ def _check_hosts_file():
 _rate_limit_lock = __import__('threading').Lock()  # V5.5: 并行拉取时保护限速计数器
 
 
+_REQUEST_PRIORITY = "high"   # V5.10: high=主扫描(带宽优先), low=CLV/回填等后台任务
+
+
+def set_request_priority(priority: str):
+    """标记本进程的 Pinnacle 请求优先级。
+
+    后台任务(clv_collector 等)设成 "low" 后, 在跨进程共享限速里只吃主扫描剩下的
+    带宽(自身 <=2 req/s), 保证增量扫描推送不受影响(扫描推送隔离铁律)。
+    """
+    global _REQUEST_PRIORITY
+    _REQUEST_PRIORITY = priority
+
+
 def _rate_limit(bypass_pause: bool = False):
     global _last_req_time, _REQUEST_COUNT, _BURST_WINDOW_START, _BURST_COUNT, _SCAN_PAUSE_UNTIL
+
+    # V5.10: 先走跨进程共享限速 —— 四个进程(pipeline/clv_collector/两个回填)各自
+    # 持有内存限速器时, 真实总速率可达单进程的数倍, 是反复被 Cloudflare 封的根因。
+    # 共享层不可用时返回 None, 直接 fail-open 落到下面的进程内限速, 绝不阻塞扫描。
+    if not bypass_pause:
+        try:
+            from src.scrapers import pin_rate_state
+            allowed, wait, reason = pin_rate_state.reserve(
+                _current_min_interval(), _REQUEST_BURST_LIMIT, _REQUEST_BURST_WINDOW,
+                priority=_REQUEST_PRIORITY)
+            if allowed is False:
+                logger.warning("Pin 全局限速: 跳过请求 (%s)", reason)
+                return False
+            if allowed is True:
+                if wait > 0:
+                    time.sleep(wait)
+                with _rate_limit_lock:
+                    _last_req_time = time.time()
+                    _REQUEST_COUNT += 1
+                    _BURST_COUNT += 1
+                return True
+        except Exception as e:
+            logger.debug("共享限速异常, 退回进程内限速: %s", e)
 
     # V5.5: 加锁 — 8线程并行时全局计数器有竞争, 会超限被Cloudflare封禁(数据丢失)
     with _rate_limit_lock:
@@ -555,6 +612,14 @@ def api_get(path, retry=True, bypass_pause=False):
                 _SCAN_PAUSE_UNTIL = time.time() + 1800  # 30 分钟冷却
                 _BAN_COUNT += 1                          # V5.9: 连续封禁计数 → 降级请求频率
                 _LAST_BAN_TIME = time.time()
+                # V5.10: 封禁是 IP 级的, 必须让所有进程一起停 —— 否则主扫描停了,
+                # CLV 采集器还在往被封的 IP 上打, 封禁只会被坐实、延长。
+                try:
+                    from src.scrapers import pin_rate_state
+                    pin_rate_state.set_pause(1800)
+                    pin_rate_state.record_ban()
+                except Exception:
+                    pass
                 _notify_ip_ban()  # V5.2: 钉钉提醒换节点(节流)
                 return None  # 不重试，重试也没用
 

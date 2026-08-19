@@ -259,7 +259,18 @@ def recover(write=False):
                     statistics.median([r["close_lag_min"] for r in usable]))
 
     if write and results:
-        _save_results(results)
+        # 只有真收盘价(archive)进 clv_results.csv —— 这个文件的语义是"有收盘价的样本",
+        # 掺进开盘价会让所有 CLV 统计失真。archive_open 单独落诊断文件, 等归档器
+        # 支持让球/大小球时间序列后可以重新回捞(不写进主表就不会被 _load_missed 判成已完成)。
+        _save_results(usable)
+        opens = [r for r in results if r["close_source"] == "archive_open"]
+        if opens:
+            path = DATA_DIR / "clv_archive_open_pending.csv"
+            with open(path, "w", newline="", encoding="utf-8") as f:
+                w = csv.DictWriter(f, fieldnames=list(opens[0].keys()))
+                w.writeheader()
+                w.writerows(opens)
+            logger.info("另有 %d 条只有开盘价(非收盘价), 未进主表, 存至 %s", len(opens), path.name)
     elif results:
         logger.info("演练模式, 未写入。加 --write 落盘。")
     return results
