@@ -122,14 +122,14 @@ def _load_snapshots(conn, matchup_id):
     return state, kickoff, last_seen
 
 
-def _build_matchup(snap_rows):
+def _build_matchup(state_rows):
     """把归档行拼成 _extract_market_odds 认识的 pin_matchup 结构。
 
     归档库 price 列存的是**十进制**赔率, 必须写进 price_decimal 键 —
     get_decimal_price 会把 price 键当美式赔率解析, 用错键会得到完全错误的赔率。
     """
     ml, spreads, totals = {}, defaultdict(dict), defaultdict(dict)
-    for des, points, price in snap_rows:
+    for des, points, price in state_rows:
         if not price or price <= 1:
             continue
         cell = {"designation": des, "points": points, "price_decimal": float(price)}
@@ -173,8 +173,8 @@ def recover(write=False):
             continue
         if mid not in cache:
             cache[mid] = _load_snapshots(conn, mid)
-        by_period, kickoff = cache[mid]
-        if not by_period:
+        state, kickoff, last_seen = cache[mid]
+        if not state:
             stats["跳过_归档库无此场"] += 1
             continue
 
