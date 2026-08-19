@@ -201,6 +201,17 @@ def recover(write=False):
 
         sub_market = _infer_sub_market(e.get("sub_market", ""), e.get("designation", ""))
         period = 1 if sub_market.startswith("ht") else 0
+        # V5.10: 暂时只回捞独赢类盘口。
+        # 让球/大小球要靠线值匹配, 而"开赛时刻盘面"是按 key 各取赛前最后值还原的,
+        # 会把历史上出现过、但开赛前 Pinnacle 早已撤掉的线一并复活, 再按 ±0.5 就近
+        # 匹配就可能选中当时根本不存在的盘口 —— 实测这样算出的 CLV 从 +76.9% 到
+        # -56.2%, 离散度远超真实收盘价差, 是噪声不是信号。
+        # 独赢没有线值歧义(腿就是 home/draw/away), 可信。
+        # hc/ou 要等归档器积累出"每次扫描时哪些线还开着"的信息后再放开。
+        if sub_market not in ("1x2", "ht"):
+            stats["跳过_让球/大小球暂不回捞(线值可信度未验证)"] += 1
+            continue
+
         legs = state.get(period) or state.get(0) or {}
         if not legs:
             stats["跳过_无对应半场数据"] += 1
