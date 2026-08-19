@@ -47,6 +47,11 @@ def team_name_score(bb_home, bb_away, pin_home, pin_away,
     Uses TEAM_NAME_MAP + V5 TF-IDF/pinyin matcher for unknown names.
     Returns score 0.0-1.0.
     """
+    # V5.10: 双打/单打结构不对等 → 直接判不匹配, 不进入下面的子串/拼音匹配。
+    # 必须放在最前面: lookup_cn 的 TF-IDF 匹配会把双打串映射成单个球员名, 一旦进去就晚了。
+    if _pair_structure_conflict(bb_home, bb_away, pin_home, pin_away):
+        return 0.0
+
     def lookup_cn(name):
         # V4.4: strip gender suffix (女) and country suffix before lookup
         import re as _re
