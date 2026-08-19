@@ -24,6 +24,10 @@
     "ev": 3.12,
     "ts": 1787114648.655688
   },
+  "basketball|Mexico LNBP Basketball League|Dorados de Chihuahua|Abejas de Leon|大分|1x2|2026-08-20": {
+    "ev": 7.4,
+    "ts": 1787127300.199687
+  },
   "basketball|Mexico LNBP Basketball League|Fuerza Regia|Gambusinos de Fresnillo|客胜|1x2|2026-08-20": {
     "ev": 1.23,
     "ts": 1787117348.1079638
@@ -787,6 +791,14 @@
     "ev": 1.1,
     "ts": 1787025629.245709
   },
+  "football|Greece Cup-Qualification|APS Zakynthos|AE Kifisia FC|主胜|1x2|2026-08-19": {
+    "ev": 2.83,
+    "ts": 1787127583.544012
+  },
+  "football|Greece Cup-Qualification|APS Zakynthos|AE Kifisia FC|双重机会-主/和局|dc|2026-08-19": {
+    "ev": 2.48,
+    "ts": 1787127583.544095
+  },
   "football|Greece Cup-Qualification|APS Zakynthos|AE Kifisia FC|小球|1x2|2026-08-19": {
     "ev": 1.13,
     "ts": 1787121005.13225
@@ -832,6 +844,11 @@
     "ev": 4.07,
     "bb": 1.95,
     "ts": 1787125556.161153
+  },
+  "football|Greece Cup-Qualification|萨坚索斯|基菲萨|让球主胜(+1)|hc|+1|2026-08-19": {
+    "ev": 4.66,
+    "bb": 1.93,
+    "ts": 1787127299.802239
   },
   "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯 1968|双重机会-和局/客|dc|2026-08-19": {
     "ev": 10.52,
@@ -1301,6 +1318,10 @@
     "ev": 8.44,
     "ts": 1787114648.656244
   },
+  "tennis|ATP Challenger - Sion Open|Jeffrey Von der Schulenburg (SUI)|Geoffrey Blancaneaux (FRA)|让盘主胜|1x2|2026-08-19": {
+    "ev": 1.26,
+    "ts": 1787127583.544669
+  },
   "tennis|ATP Challenger - Sion Open|Luca Staeheli (SUI)|Juan Manuel La Serna (ARG)|客胜|1x2|2026-08-19": {
     "ev": 1.55,
     "ts": 1787126497.1943092
@@ -1417,9 +1438,14 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Greece Cup-Qualification|萨坚索斯|基菲萨|让球主胜(+1)|hc|+1|2026-08-19": {
-    "ev": 4.66,
-    "bb": 1.93,
-    "ts": 1787127299.802239
+  "football|Poland III Liga|卡利什1925|诺泰奇|大球(2.75)|ou|2.75|2026-08-19": {
+    "ev": 11.05,
+    "bb": 1.89,
+    "ts": 1787127881.756682
+  },
+  "football|Switzerland Promotion League|布雷特雷|青年人二队|让球主胜(0)|hc|0|2026-08-20": {
+    "ev": 3.37,
+    "bb": 1.83,
+    "ts": 1787127881.756763
   }
 }

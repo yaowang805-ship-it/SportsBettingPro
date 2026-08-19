@@ -1,5 +1,5 @@
 {
-  "balance": 8652.33,
+  "balance": 8557.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2508,6 +2508,52 @@
       "commence_time": 1787148000,
       "created_at": "2026-08-19T08:14:59.795174+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_卡利什1925_诺泰奇_大球(275)",
+      "sport": "football",
+      "league": "波兰丙级联赛",
+      "home_team": "卡利什1925",
+      "away_team": "诺泰奇",
+      "home_cn": "卡利什1925",
+      "away_cn": "诺泰奇",
+      "market": "over_under",
+      "market_type": "大球(2.75)",
+      "sub_market": "ou",
+      "line": "2.75",
+      "odds": 1.89,
+      "stake": 72,
+      "model_prob": 0.5875,
+      "ev_pct": 11.05,
+      "pin_odds": 1.6024,
+      "fair_price": 1.702,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787151600,
+      "created_at": "2026-08-19T08:24:41.747823+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_布雷特雷_青年人二队_让球主胜(0)",
+      "sport": "football",
+      "league": "瑞士乙级联赛",
+      "home_team": "布雷特雷",
+      "away_team": "青年人二队",
+      "home_cn": "布雷特雷",
+      "away_cn": "青年人二队",
+      "market": "handicap",
+      "market_type": "让球主胜(0)",
+      "sub_market": "hc",
+      "line": "0",
+      "odds": 1.83,
+      "stake": 23,
+      "model_prob": 0.5649,
+      "ev_pct": 3.37,
+      "pin_odds": 1.6849,
+      "fair_price": 1.7703,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787160600,
+      "created_at": "2026-08-19T08:24:41.747894+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2567,8 +2613,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-19",
-    "used": 3558.0,
-    "bets": 36
+    "used": 3653.0,
+    "bets": 38
   },
   "updated": null
 }
