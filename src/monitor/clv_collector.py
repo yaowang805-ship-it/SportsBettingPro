@@ -664,6 +664,14 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
         away_pin = m.get("away_pin", "")
         league_cn = m.get("league_cn") or league
         epoch = m.get("start_time_pin_epoch", 0) or 0
+        # V5.10: 已开赛的比赛不进 validate 样本 —— 此时 BB/Pin 两边都是滚球价,
+        # 算出的"机会"不是赛前 +EV, 而且收盘价窗口早已关闭永远采不到。
+        # 实测 717 条 tracking 里有 36 条是开赛后才写入的(中位晚 22 分, 最长 207 分),
+        # 全部堆在 validate 一侧, 是 validate 中位CLV -3.34% 的污染源之一。
+        # 推送路径本身已正确过滤, 只有这里漏了。
+        if epoch and epoch <= time.time():
+            skipped_started += 1
+            continue
         src = m.get("bb_price_source", m.get("platform", "BB"))
         pin_lid = m.get("pin_league_id", "")
         pin_mid = m.get("pin_match_id", "")
