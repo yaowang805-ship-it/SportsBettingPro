@@ -96,6 +96,8 @@ def _load_pending_entries(return_expired=False):
             key = (r.get("home", ""), r.get("away", ""), sm, r.get("designation", ""))
             # 也尝试用 Pinnacle 名匹配
             key_pin = (r.get("home_pin", ""), r.get("away_pin", ""), sm, r.get("designation", ""))
+            if not ev_is_plausible(r.get("ev_pct"), r.get("bb_odds")):
+                continue    # 系统自己不认的 EV 量级, 不进 CLV 样本
             prev = existing.get(key) or existing.get(key_pin)
             ep = int(r.get("match_epoch") or 0)
             if prev is not None:

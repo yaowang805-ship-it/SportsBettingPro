@@ -206,6 +206,11 @@ def recover(write=False):
             continue
         if mid not in cache:
             cache[mid] = _load_snapshots(conn, mid)
+        # 系统自己都不认的 EV 量级, 不拿来当 CLV 证据(见 ev_is_plausible)
+        if not ev_is_plausible(e.get("ev_pct"), e.get("bb_odds")):
+            stats["跳过_EV超出系统上限(疑似上游坏价)"] += 1
+            continue
+
         state, kickoff, last_seen = cache[mid]
         if not state:
             stats["跳过_归档库无此场"] += 1
