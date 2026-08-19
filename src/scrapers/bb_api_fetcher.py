@@ -313,6 +313,18 @@ SCORE_PE_BY_SID = {
     7: 7001,   # 棒球 全场 (mg 结构实测 pe=7001 = 全场盘口)
 }
 
+# V5.10: 半场比分 period 码。实测 getMatchDetail 的 nsg 里足球有
+#   pe=1000/1001 全场, pe=1002 上半场, pe=1003 下半场 (tyg=5 为比分)
+# 且满足 HT + 2H == FT (5 场抽样 4 场自洽, 1 场异常 → 取值时做自校验)。
+# 此前半场比分一直没被提取, 导致 ht/ht_dc 盘口全部被无脑判 void ——
+# 实测 133 笔 void 里 60 笔(45%)是这么来的, 白白丢掉 ¥7,838 下注额的结算。
+HT_SCORE_PE_BY_SID = {
+    1: 1002,   # 足球 上半场
+}
+SECOND_HALF_PE_BY_SID = {
+    1: 1003,   # 足球 下半场 (仅用于自校验 HT+2H==FT)
+}
+
 _SID_TO_SPORT_KEY = {sid: sk for sid, sk, _cn in SPORTS}
 
 # 比赛状态码 ms → 标签 (实测: 4=未开赛[bt在未来,无nsg], 5=进行中[bt在过去,有nsg+sb])
@@ -358,16 +370,34 @@ def fetch_bb_match_result(match_id, language_type="EN"):
 
     home_score = away_score = None
     pe_full = SCORE_PE_BY_SID.get(sid)
-    if pe_full:
+
+    def _score_at(pe):
         for sg in data.get("nsg", []):
-            if sg.get("pe") == pe_full and sg.get("tyg") == 5:
+            if sg.get("pe") == pe and sg.get("tyg") == 5:
                 sc = sg.get("sc", [])
                 if len(sc) >= 2:
                     try:
-                        home_score, away_score = int(sc[0]), int(sc[1])
+                        return int(sc[0]), int(sc[1])
                     except (ValueError, TypeError):
-                        pass
-                break
+                        return None
+                return None
+        return None
+
+    if pe_full:
+        full = _score_at(pe_full)
+        if full:
+            home_score, away_score = full
+
+    # V5.10: 顺带取半场比分, 带自校验 —— HT + 2H 必须等于 FT, 对不上说明这场的
+    # period 语义异常(实测确有此类样本), 宁可不给也不能拿可疑比分去结算。
+    ht_home = ht_away = None
+    pe_ht = HT_SCORE_PE_BY_SID.get(sid)
+    pe_2h = SECOND_HALF_PE_BY_SID.get(sid)
+    if pe_ht and home_score is not None:
+        ht = _score_at(pe_ht)
+        h2 = _score_at(pe_2h) if pe_2h else None
+        if ht and h2 and ht[0] + h2[0] == home_score and ht[1] + h2[1] == away_score:
+            ht_home, ht_away = ht
 
     ms = data.get("ms")
     status = MATCH_STATUS_LABELS.get(ms, f"ms_{ms}")
