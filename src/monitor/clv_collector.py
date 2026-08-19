@@ -277,8 +277,13 @@ def _fetch_close_odds(entries):
     return results
 
 
-def _extract_market_odds(pin_matchup, sub_market, designation):
+def _extract_market_odds(pin_matchup, sub_market, designation, sport="football"):
     """从 Pinnacle matchup 提取对应市场的收盘公平价。
+
+    sport: 用于判定 2-way(篮球/网球/棒球等, ML 只有 [home, away]) 还是 3-way。
+           V5.10 修复: 原先硬编码 "football" → min_req=3, 2-way 运动的 ML 只有 2 个
+           价格永远 len<3 被判 None, 导致 2-way 运动的 1x2 盘口 CLV 采集率恒为 0
+           (实测 tracking 110 条 / results 0 条)。
 
     Returns: (close_pin_odds, close_fair_price, total_implied) 或 None。
     - close_pin_odds: 代表性收盘赔率 (直盘=选项原始收盘价; 推导盘=组合公平价)
