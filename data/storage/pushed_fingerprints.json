@@ -64,6 +64,10 @@
     "ev": 4.06,
     "ts": 1787103179.7748811
   },
+  "basketball|Olympic Tournament Pre-Qualifying Women|Senegal (w)|Mexico (w)|主胜|1x2|2026-08-20": {
+    "ev": 3.88,
+    "ts": 1787179754.057791
+  },
   "basketball|Olympic Tournament Pre-Qualifying Women|新西兰 (女)|巴西 (女)|让分主胜(+3.5)|hc|+3.5|2026-08-19": {
     "ev": 4.06,
     "bb": 1.85,
@@ -93,6 +97,10 @@
     "ev": 1.47,
     "ts": 1787048414.2823691
   },
+  "basketball|WNBA|Golden State Valkyries (w)|Minnesota Lynx (w)|让分主胜|1x2|2026-08-20": {
+    "ev": 1.48,
+    "ts": 1787179754.057749
+  },
   "basketball|WNBA|Las Vegas Aces (w)|Atlanta Dream (w)|小分|1x2|2026-08-19": {
     "ev": 6.27,
     "ts": 1787043520.717325
@@ -108,6 +116,10 @@
   "basketball|WNBA|Washington Mystics (w)|Toronto Tempo (w)|大分|1x2|2026-08-20": {
     "ev": 1.33,
     "ts": 1787121005.134243
+  },
+  "basketball|WNBA|Washington Mystics (w)|Toronto Tempo (w)|小分|1x2|2026-08-20": {
+    "ev": 1.95,
+    "ts": 1787179754.0577111
   },
   "basketball|WNBA|华盛顿神秘人 (女)|多伦多节奏报 (女)|大分(169.5)|ou|169.5|2026-08-20": {
     "ev": 5.91,
@@ -395,6 +407,10 @@
     "ev": 1.21,
     "ts": 1787101664.641015
   },
+  "football|Brazil Serie B|Botafogo FC SP|Criciuma EC SC|上半场客胜|ht|2026-08-20": {
+    "ev": 2.33,
+    "ts": 1787179754.057873
+  },
   "football|Brazil Serie B|Botafogo FC SP|Criciuma EC SC|单双-双|oe|2026-08-20": {
     "ev": 1.05,
     "ts": 1787120332.749423
@@ -450,6 +466,10 @@
   "football|Brazil Serie B|Vila Nova FC GO|AA Ponte Preta SP|上半场主胜|ht|2026-08-20": {
     "ev": 1.46,
     "ts": 1787101664.639688
+  },
+  "football|Brazil Serie B|Vila Nova FC GO|AA Ponte Preta SP|让球客胜|1x2|2026-08-20": {
+    "ev": 1.67,
+    "ts": 1787179882.794546
   },
   "football|Brazil Serie B|博塔弗戈SP|克里西乌马|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 3.67,
@@ -516,10 +536,22 @@
     "ev": 3.25,
     "ts": 1787101664.638818
   },
+  "football|Colombia Primera A|Cucuta Deportivo FC|Internacional de Bogota|让球主胜|1x2|2026-08-20": {
+    "ev": 1.12,
+    "ts": 1787179754.0578308
+  },
   "football|Colombia Primera A|里奥内格罗老鹰|拉尼洛斯|双边进球-是|btts|2026-08-20": {
     "ev": 5.38,
     "bb": 1.96,
     "ts": 1787025628.96825
+  },
+  "football|Copa Libertadores|CR Flamengo RJ|Cruzeiro EC MG|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 1.14,
+    "ts": 1787179882.79511
+  },
+  "football|Copa Libertadores|CR Flamengo RJ|Cruzeiro EC MG|上半场客胜|ht|2026-08-20": {
+    "ev": 8.52,
+    "ts": 1787179754.05746
   },
   "football|Copa Libertadores|Cerro Porteno|SE Palmeiras SP|上半场主胜|ht|2026-08-20": {
     "ev": 2.78,
@@ -659,6 +691,10 @@
     "ev": 1.27,
     "ts": 1787101664.639328
   },
+  "football|Copa Sudamericana|Independiente Santa Fe|River Plate|和局|1x2|2026-08-20": {
+    "ev": 1.47,
+    "ts": 1787179754.057513
+  },
   "football|Copa Sudamericana|Montevideo City Torque|Tigre|上半场主胜|ht|2026-08-20": {
     "ev": 1.93,
     "ts": 1787137779.955658
@@ -666,6 +702,10 @@
   "football|Copa Sudamericana|Montevideo City Torque|Tigre|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 1.68,
     "ts": 1787137779.9557388
+  },
+  "football|Copa Sudamericana|Montevideo City Torque|Tigre|净胜球home_by2|winning_margin|2026-08-20": {
+    "ev": 7.16,
+    "ts": 1787179754.0579991
   },
   "football|Copa Sudamericana|Montevideo City Torque|Tigre|净胜球home_by3|winning_margin|2026-08-20": {
     "ev": 3.04,
@@ -714,6 +754,11 @@
     "ev": 5.14,
     "bb": 4.8,
     "ts": 1787101664.262835
+  },
+  "football|Copa Sudamericana|蒙得维的亚城图尔克|泰格雷|上半场主胜|ht|2026-08-20": {
+    "ev": 16.05,
+    "bb": 5.65,
+    "ts": 1787179753.73553
   },
   "football|Denmark DBU Pokalen|Nykobing FC|Naestved BK|主胜|1x2|2026-08-19": {
     "ev": 2.94,
@@ -1327,6 +1372,14 @@
     "ev": 2.21,
     "ts": 1787114648.656729
   },
+  "football|USA Major League Soccer|Columbus Crew|Montreal|上半场客胜|ht|2026-08-20": {
+    "ev": 1.41,
+    "ts": 1787179754.0571678
+  },
+  "football|USA Major League Soccer|DC United|New England Revolution|和局|1x2|2026-08-20": {
+    "ev": 2.08,
+    "ts": 1787179754.0579488
+  },
   "football|USA Major League Soccer|DC United|New England Revolution|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 2.75,
     "ts": 1787101664.641217
@@ -1355,6 +1408,14 @@
     "ev": 1.19,
     "ts": 1787118701.175599
   },
+  "football|USA Major League Soccer|New York Red Bulls|Nashville SC|和局|1x2|2026-08-20": {
+    "ev": 5.0,
+    "ts": 1787179754.0564091
+  },
+  "football|USA Major League Soccer|New York Red Bulls|Nashville SC|小球|1x2|2026-08-20": {
+    "ev": 2.47,
+    "ts": 1787179754.0564868
+  },
   "football|USA Major League Soccer|New York Red Bulls|Nashville SC|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 1.08,
     "ts": 1787115444.853108
@@ -1362,6 +1423,14 @@
   "football|USA Major League Soccer|New York Red Bulls|Nashville SC|让球客胜|1x2|2026-08-20": {
     "ev": 1.67,
     "ts": 1787118701.1754858
+  },
+  "football|USA Major League Soccer|Orlando City SC|Chicago Fire|和局|1x2|2026-08-20": {
+    "ev": 4.64,
+    "ts": 1787179754.056742
+  },
+  "football|USA Major League Soccer|Orlando City SC|Chicago Fire|小球|1x2|2026-08-20": {
+    "ev": 1.7,
+    "ts": 1787179754.056818
   },
   "football|USA Major League Soccer|Orlando City SC|Chicago Fire|让球客胜|1x2|2026-08-20": {
     "ev": 1.42,
@@ -1378,6 +1447,10 @@
   "football|USA Major League Soccer|Real Salt Lake|FC Dallas|让球主胜|1x2|2026-08-20": {
     "ev": 2.28,
     "ts": 1787114648.655565
+  },
+  "football|USA Major League Soccer|Toronto FC|Charlotte FC|和局|1x2|2026-08-20": {
+    "ev": 1.99,
+    "ts": 1787179754.056907
   },
   "football|USA Major League Soccer|Toronto FC|Charlotte FC|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 3.15,
@@ -1420,6 +1493,10 @@
   "football|USA National Women Soccer League|Racing Louisville FC (w)|Seattle Reign FC (w)|让球主胜|1x2|2026-08-20": {
     "ev": 2.2,
     "ts": 1787124738.97732
+  },
+  "football|USL League One|One Knoxville SC|Portland Hearts of Pine|和局|1x2|2026-08-20": {
+    "ev": 1.47,
+    "ts": 1787179754.056044
   },
   "football|Uzbekistan Super League|FK Agmk Olmaliq|PFK Dinamo Samarqand|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 1.24,
@@ -1574,9 +1651,14 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Copa Sudamericana|蒙得维的亚城图尔克|泰格雷|上半场主胜|ht|2026-08-20": {
-    "ev": 16.05,
-    "bb": 5.65,
-    "ts": 1787179753.73553
+  "football|USA Major League Soccer|辛辛那提|纽约城|让球主胜(0)|hc|0|2026-08-20": {
+    "ev": 3.58,
+    "bb": 1.5,
+    "ts": 1787180004.525698
+  },
+  "basketball|WNBA|华盛顿神秘人 (女)|多伦多节奏 (女)|小分(169.5)|ou|169.5|2026-08-20": {
+    "ev": 3.97,
+    "bb": 2.06,
+    "ts": 1787180004.525749
   }
 }
