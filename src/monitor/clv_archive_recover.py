@@ -192,31 +192,24 @@ def recover(write=False):
 
         sub_market = _infer_sub_market(e.get("sub_market", ""), e.get("designation", ""))
         period = 1 if sub_market.startswith("ht") else 0
-        snaps = by_period.get(period) or by_period.get(0) or {}
-        if not snaps:
+        legs = state.get(period) or state.get(0) or {}
+        if not legs:
             stats["跳过_无对应半场数据"] += 1
             continue
 
-        # 赛前最后一个能算出公平价的快照 —— 从最靠近开赛的往前退
-        candidates = sorted(
-            ((ts, _parse_ts(ts)) for ts in snaps), key=lambda x: x[1] or 0, reverse=True
-        )
-        close_data, lag = None, None
-        for ts, epoch in candidates:
-            if epoch is None or epoch > kickoff:
-                continue  # 开赛后的快照是滚球价, 不能当收盘价
-            mu = _build_matchup(snaps[ts])
-            # ht_* 盘口的数据在 period=1, 这里已按 period 取好, 直接喂全场键
-            probe = sub_market[3:] if sub_market.startswith("ht_") else sub_market
-            probe = {"ht": "1x2"}.get(sub_market, probe)
-            close_data = _extract_market_odds(mu, probe, e.get("designation", ""),
-                                              sport=e.get("sport", "football"))
-            if close_data:
-                lag = (kickoff - epoch) / 60
-                break
+        # 用还原出来的开赛时刻盘面算公平价
+        mu = _build_matchup([(des, pts, price) for (des, pts), price in legs.items()])
+        # ht_* 盘口的数据在 period=1, 这里已按 period 取好, 直接喂全场键
+        probe = sub_market[3:] if sub_market.startswith("ht_") else sub_market
+        probe = {"ht": "1x2"}.get(sub_market, probe)
+        close_data = _extract_market_odds(mu, probe, e.get("designation", ""),
+                                          sport=e.get("sport", "football"))
         if not close_data:
             stats["跳过_归档库无此盘口"] += 1
             continue
+        # 新鲜度看"最后一次观测到这场比赛"而不是"价格最后一次变动" ——
+        # 归档库只存变化点, 价格长时间不变说明它一直有效, 不代表数据陈旧。
+        lag = (kickoff - last_seen) / 60 if last_seen else None
 
         close_pin_odds, close_fair, total_implied = close_data
         try:
