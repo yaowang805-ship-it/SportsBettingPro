@@ -2510,6 +2510,10 @@ def _verify_odds_freshness(qualified: list, max_pin_drift: float = 0.08) -> list
 LINE_QUOTA_PER_MARKET = 2
 LINE_QUOTA_FILE = DATA_DIR / "pushed_line_quota.json"
 
+# 用户规则 (2026-08-19): 同一盘口线, BB/FB 赔率与溢价**同时**较上次推送值相对上涨
+# 超过该比例 → 不限次数重推(并标注)。相对基准每次推送后抬高, 因此天然收敛。
+REPUSH_REL_THRESHOLD = 0.05
+
 
 def _market_group_key(o: dict) -> str:
     """同场同盘口的配额分组键: 指纹去掉 designation 和 line 两段。
@@ -2817,6 +2821,13 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
         bb_rose = old_bb > 0 and bb_now > old_bb + 0.1
         ev_rose = premium_delta > 2.0
 
+        # 用户规则 (2026-08-19): 同一盘口线, 只要 BB/FB 赔率**和**溢价同时较上次
+        # 推送值上涨超过 5%(相对), 就可以不限次数重推, 并标注涨幅。
+        # 注意是"相对上次推送值"而非固定基准 —— 每次重推都会把基准抬高, 所以要
+        # 连续再涨 5% 才会再推一次, 天然收敛, 不会无限刷屏。
+        bb_rose_pct = old_bb > 0 and bb_now > old_bb * (1 + REPUSH_REL_THRESHOLD)
+        ev_rose_pct = old_ev > 0 and ev_now > old_ev * (1 + REPUSH_REL_THRESHOLD)
+
         if bb_rose and ev_rose:
             re_pushed += 1
             reason = f"赔率↑{bb_now - old_bb:+.2f}&EV↑{premium_delta:+.1f}%"
@@ -2825,6 +2836,16 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
             result.append(o)
             _audit_log("REPUSH", key, o,
                        f"bb+{bb_now - old_bb:.2f}/EV+{premium_delta:.1f}%")
+        elif bb_rose_pct and ev_rose_pct:
+            re_pushed += 1
+            _bb_pct = (bb_now / old_bb - 1) * 100
+            _ev_pct = (ev_now / old_ev - 1) * 100
+            o["_repush"] = True
+            o["_repush_reason"] = (f"双涨≥5%: 赔率{old_bb:.2f}→{bb_now:.2f}(+{_bb_pct:.1f}%)"
+                                   f" EV{old_ev:.1f}%→{ev_now:.1f}%(+{_ev_pct:.1f}%)")
+            result.append(o)
+            _audit_log("REPUSH_REL", key, o,
+                       f"bb+{_bb_pct:.1f}%/EV+{_ev_pct:.1f}% (相对5%规则)")
         else:
             skipped += 1
             _audit_log("SKIPPED", key, o,
