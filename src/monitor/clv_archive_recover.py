@@ -128,7 +128,7 @@ def _build_matchup(state_rows):
     归档库 price 列存的是**十进制**赔率, 必须写进 price_decimal 键 —
     get_decimal_price 会把 price 键当美式赔率解析, 用错键会得到完全错误的赔率。
     """
-    ml, spreads, totals = {}, defaultdict(dict), defaultdict(dict)
+    ml, spread_legs, totals = {}, {}, defaultdict(dict)
     for des, points, price in state_rows:
         if not price or price <= 1:
             continue
@@ -136,16 +136,25 @@ def _build_matchup(state_rows):
         if points is None:
             ml[des] = cell
         elif des in ("over", "under"):
-            totals[points][des] = cell
+            totals[points][des] = cell     # 大小球两腿共用同一线值
         elif des in ("home", "away"):
-            spreads[points][des] = cell
+            spread_legs[(des, points)] = cell
 
     mu = {}
     order = [d for d in ("home", "draw", "away") if d in ml]
     if len(order) >= 2:
         mu["moneyline"] = [{"prices": [ml[d] for d in order]}]
-    mu["spread"] = [{"period": 0, "prices": [v["home"], v["away"]]}
-                    for v in spreads.values() if "home" in v and "away" in v]
+
+    # 让球两腿的 points **符号相反**(实测同一盘口 home=+1.0 / away=-1.0)。
+    # 按相同 points 配对会把两个不同盘口的腿凑一起, 去抽水得出隐含概率和 < 1
+    # 这种不可能的结果, 进而算出 +50% 的假 CLV。必须按 P ↔ -P 配对。
+    mu["spread"] = []
+    for (des, pts), cell in spread_legs.items():
+        if des != "home":
+            continue
+        opp = spread_legs.get(("away", -pts))
+        if opp:
+            mu["spread"].append({"period": 0, "prices": [cell, opp]})
     mu["total"] = [{"period": 0, "prices": [v["over"], v["under"]]}
                    for v in totals.values() if "over" in v and "under" in v]
     return mu
