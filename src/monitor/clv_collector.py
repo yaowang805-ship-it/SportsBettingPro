@@ -183,6 +183,10 @@ def _fetch_close_odds(entries):
                     time.sleep(0.3)  # 限速
                 except Exception as e:
                     logger.warning("拉取 Pinnacle 联赛 %s (ID=%s) 失败: %s", league, pin_id, e)
+                    # V5.10: 窗口内拉取失败要留痕。窗口只有 19 分钟, 一旦开赛就永久
+                    # 采不到了 —— 以前这里静默 continue, 丢了多少、丢在哪一步全看不见
+                    # (实测 175 条已开赛记录丢了 105 条, 日志里毫无痕迹)。
+                    _record_misses(league_entries, f"联赛拉取失败:{type(e).__name__}")
                     continue
 
             if not matchups:
@@ -276,6 +280,23 @@ def _fetch_close_odds(entries):
                     "close_source": "live",
                     "close_lag_min": round((int(e.get("match_epoch") or 0) - time.time()) / 60, 1),
                 })
+
+    # V5.10: 窗口即将关闭却还没采到的, 记一笔 —— 这些就是永久丢失的候选,
+    # 之前它们只是悄悄消失, 日志里只有一句"采集到 0 条", 看不出丢了什么。
+    got = {(r["home"], r["away"], r["sub_market"], r["designation"]) for r in results}
+    dying, _now = [], time.time()
+    for entries_ in by_league.values():
+        for e in entries_:
+            ep = int(e.get("match_epoch") or 0)
+            if not ep or (ep - _now) / 60 > 6:
+                continue  # 还有下一轮 cron(5min) 兜底, 不算丢
+            sm = _infer_sub_market(e.get("sub_market", ""), e.get("designation", ""))
+            if (e.get("home", ""), e.get("away", ""), sm,
+                    e.get("designation", "").lower()) not in got:
+                dying.append(e)
+    if dying:
+        logger.warning("⚠️ %d 条记录窗口即将关闭仍未采到收盘价(再过 6 分钟永久丢失)", len(dying))
+        _record_misses(dying, "窗口关闭前未采到")
 
     return results
 
@@ -546,6 +567,42 @@ def _extract_special_market_close(league_id, entry, special_cache):
         return None
     fair = close_odds * total  # proportional devig
     return round(close_odds, 4), round(fair, 4), round(total, 4)
+
+
+MISS_LOG_FILE = DATA_DIR / "clv_miss_log.csv"
+
+
+def _record_misses(entries, reason):
+    """记录窗口内没采到收盘价的条目 + 原因。
+
+    只记还没开赛的(还有救)和刚开赛的(已永久丢失), 供日报统计丢失率、
+    供归档回捞挑目标。写失败绝不能影响采集主流程, 全程吞异常。
+    """
+    if not entries:
+        return
+    try:
+        now = time.time()
+        exists = MISS_LOG_FILE.exists()
+        with open(MISS_LOG_FILE, "a", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, fieldnames=[
+                "logged_at", "reason", "sport", "league", "home", "away",
+                "sub_market", "designation", "match_epoch", "minutes_to_match",
+                "source", "ev_pct"])
+            if not exists:
+                w.writeheader()
+            for e in entries:
+                ep = int(e.get("match_epoch") or 0)
+                w.writerow({
+                    "logged_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "reason": reason, "sport": e.get("sport", ""),
+                    "league": e.get("league", ""), "home": e.get("home", ""),
+                    "away": e.get("away", ""), "sub_market": e.get("sub_market", ""),
+                    "designation": e.get("designation", ""), "match_epoch": ep,
+                    "minutes_to_match": round((ep - now) / 60, 1) if ep else "",
+                    "source": e.get("source", ""), "ev_pct": e.get("ev_pct", ""),
+                })
+    except Exception:
+        pass
 
 
 def _migrate_results_header(fieldnames):

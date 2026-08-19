@@ -80,6 +80,7 @@ SESSION.headers.update({
 })
 
 MAX_RETRIES = 5
+LOW_PRIORITY_MAX_RETRIES = 2       # V5.10: 后台任务(CLV采集等)快速失败, 见 api_get 注释
 RETRY_DELAY = 2.0
 MAX_BACKOFF = 8.0                  # 指数退避封顶
 MAX_TOTAL_WAIT = 30.0              # 累积等待超过此值放弃
@@ -579,7 +580,14 @@ def api_get(path, retry=True, bypass_pause=False):
     url = f"{API_BASE}{path}"
     total_wait = 0.0
 
-    for attempt in range(MAX_RETRIES if retry else 1):
+    # V5.10: 后台任务快速失败。5 次重试 × 指数退避 = 单个联赛烧 30~60 秒,
+    # 而 CLV 采集窗口只有 19 分钟 —— 实测 8-18 19:50 那次窗口, 两个联赛各锤 5 次、
+    # 白打 20 个请求、产出 0, 窗口就此关闭, 那批比赛的收盘价永久丢失。
+    # 更要命的是这 20 个请求全打在 Cloudflare 已经开始拒绝的时候, 是把封禁坐实的行为。
+    # 主扫描(high)保持 5 次不变 —— 它要的是可靠性, 且有下一轮兜底。
+    _max = MAX_RETRIES if _REQUEST_PRIORITY == "high" else LOW_PRIORITY_MAX_RETRIES
+
+    for attempt in range(_max if retry else 1):
         try:
             resp = SESSION.get(url, timeout=30)
 
@@ -587,7 +595,7 @@ def api_get(path, retry=True, bypass_pause=False):
                 slept = _backoff_sleep(attempt)
                 total_wait += slept
                 logger.warning("429 rate limited, retry in %.1fs (attempt %d/%d, total %.1fs)",
-                               slept, attempt + 1, MAX_RETRIES, total_wait)
+                               slept, attempt + 1, _max, total_wait)
                 if total_wait >= MAX_TOTAL_WAIT:
                     logger.error("Max total wait exceeded (%.0fs), giving up", MAX_TOTAL_WAIT)
                     return None
@@ -627,25 +635,25 @@ def api_get(path, retry=True, bypass_pause=False):
                 logger.warning("Cookie 过期 — 从 Chrome 恢复...")
                 if _refresh_cookie_from_chrome():
                     continue  # 重试
-                if attempt < MAX_RETRIES - 1:
+                if attempt < _max - 1:
                     continue
 
             if err_type == "rate_limit":
                 slept = _backoff_sleep(attempt, extra=5.0)
                 total_wait += slept
                 logger.warning("Pinnacle 限速, %.1fs 后重试 (attempt %d/%d, total %.1fs)",
-                               slept, attempt + 1, MAX_RETRIES, total_wait)
+                               slept, attempt + 1, _max, total_wait)
                 if total_wait >= MAX_TOTAL_WAIT:
                     logger.error("Max total wait exceeded (%.0fs), giving up", MAX_TOTAL_WAIT)
                     return None
                 continue
 
             # 其他错误: 重试 (指数退避 + 抖动)
-            if attempt < MAX_RETRIES - 1:
+            if attempt < _max - 1:
                 slept = _backoff_sleep(attempt)
                 total_wait += slept
                 logger.warning("HTTP %d, retrying (attempt %d/%d, total %.1fs)",
-                               resp.status_code, attempt + 1, MAX_RETRIES, total_wait)
+                               resp.status_code, attempt + 1, _max, total_wait)
                 if total_wait >= MAX_TOTAL_WAIT:
                     logger.error("Max total wait exceeded (%.0fs), giving up", MAX_TOTAL_WAIT)
                     return None
@@ -657,8 +665,8 @@ def api_get(path, retry=True, bypass_pause=False):
 
         except requests.exceptions.SSLError as e:
             _ssl_fail_count += 1
-            logger.warning("SSL error (attempt %d/%d): %s", attempt + 1, MAX_RETRIES, e)
-            if attempt < MAX_RETRIES - 1:
+            logger.warning("SSL error (attempt %d/%d): %s", attempt + 1, _max, e)
+            if attempt < _max - 1:
                 extra = 10.0 if _ssl_fail_count > 20 else 0.0
                 if extra:
                     logger.warning("SSL大面积故障(已%d次), 额外冷却%.0fs", _ssl_fail_count, extra)
@@ -668,7 +676,7 @@ def api_get(path, retry=True, bypass_pause=False):
                     logger.error("Max total wait exceeded (%.0fs), giving up", MAX_TOTAL_WAIT)
                     return None
                 continue
-            logger.error("SSL handshake failed after %d retries", MAX_RETRIES)
+            logger.error("SSL handshake failed after %d retries", _max)
             return None
 
         except requests.exceptions.ConnectionError as e:
@@ -676,21 +684,21 @@ def api_get(path, retry=True, bypass_pause=False):
             return None
 
         except requests.exceptions.Timeout:
-            if attempt < MAX_RETRIES - 1:
+            if attempt < _max - 1:
                 slept = _backoff_sleep(attempt)
                 total_wait += slept
                 logger.warning("timeout, retrying in %.1fs (attempt %d/%d, total %.1fs)...",
-                               slept, attempt + 1, MAX_RETRIES, total_wait)
+                               slept, attempt + 1, _max, total_wait)
                 if total_wait >= MAX_TOTAL_WAIT:
                     logger.error("Max total wait exceeded (%.0fs), giving up", MAX_TOTAL_WAIT)
                     return None
                 continue
-            logger.error("Pinnacle API timeout after %d retries", MAX_RETRIES)
+            logger.error("Pinnacle API timeout after %d retries", _max)
             return None
 
         except requests.exceptions.ChunkedEncodingError as e:
             logger.warning("ChunkedEncodingError (Python 3.14 bug), retrying... %s", e)
-            if attempt < MAX_RETRIES - 1:
+            if attempt < _max - 1:
                 slept = _backoff_sleep(attempt)
                 total_wait += slept
                 if total_wait >= MAX_TOTAL_WAIT:
