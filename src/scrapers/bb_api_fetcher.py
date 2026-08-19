@@ -408,6 +408,9 @@ def fetch_bb_match_result(match_id, language_type="EN"):
         "away": away,
         "home_score": home_score,
         "away_score": away_score,
+        # V5.10: 半场比分(通过 HT+2H==FT 自校验才给值, 否则为 None)
+        "ht_home_score": ht_home,
+        "ht_away_score": ht_away,
         "status": status,
         "ms": ms,
         "completed": status == "finished",
