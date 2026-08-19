@@ -322,6 +322,10 @@
     "ev": 1.03,
     "ts": 1787120332.749386
   },
+  "football|Argentina Liga Profesional Reserves|Gimnasia de La Plata (Res)|Sarmiento de Junin (Res)|让球主胜|1x2|2026-08-20": {
+    "ev": 5.79,
+    "ts": 1787124738.97763
+  },
   "football|Argentina Liga Profesional Reserves|Huracan (Res)|Independiente Rivadavia (Res)|主胜|1x2|2026-08-20": {
     "ev": 2.29,
     "ts": 1787120332.7484689
@@ -569,6 +573,11 @@
     "bb": 8.3,
     "ts": 1787034729.999137
   },
+  "football|Copa Libertadores|科其姆波|普拉腾斯|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 5.73,
+    "bb": 2.11,
+    "ts": 1787124737.707917
+  },
   "football|Copa Libertadores|科林蒂安|罗萨里奥中央|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 6.68,
     "bb": 2.09,
@@ -667,6 +676,10 @@
     "ev": 9.25,
     "bb": 2.13,
     "ts": 1787042346.751998
+  },
+  "football|Denmark Elitedivisionen Women|DBK Fortuna Hjoerring (w)|AGF Aarhus (w)|大球|1x2|2026-08-20": {
+    "ev": 9.08,
+    "ts": 1787124738.977586
   },
   "football|Denmark Elitedivisionen Women|DBK Fortuna Hjoerring (w)|AGF Aarhus (w)|客胜|1x2|2026-08-20": {
     "ev": 1.68,
@@ -962,6 +975,11 @@
     "bb": 1.65,
     "ts": 1787101664.262603
   },
+  "football|Poland Ekstraklasa|克拉科维亚|莫摩斯|让球主胜(0)|hc|0|2026-08-22": {
+    "ev": 3.95,
+    "bb": 1.58,
+    "ts": 1787124737.707789
+  },
   "football|Poland III Liga|Rakow Czestochowa II|KS Stilon Gorzow Wlkp|主胜|1x2|2026-08-19": {
     "ev": 3.34,
     "ts": 1787117348.108347
@@ -990,6 +1008,14 @@
     "ev": 2.18,
     "ts": 1787114648.653982
   },
+  "football|Poland III Liga|Zks Kluczevia Stargard|KS Gedania Gdansk|客胜|1x2|2026-08-19": {
+    "ev": 5.97,
+    "ts": 1787124738.976556
+  },
+  "football|Poland III Liga|Zks Kluczevia Stargard|KS Gedania Gdansk|让球客胜|1x2|2026-08-19": {
+    "ev": 1.13,
+    "ts": 1787124738.9766011
+  },
   "football|Russia First League|FC Kamaz Naberezhnye Chelny|FC Tekstilshchik Ivanovo|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 2.28,
     "ts": 1787114648.654304
@@ -1007,6 +1033,11 @@
     "ev": 6.13,
     "bb": 2.06,
     "ts": 1787020969.61725
+  },
+  "football|Switzerland Promotion League|布雷特雷|青年人 II|让球主胜(0)|hc|0|2026-08-20": {
+    "ev": 4.5,
+    "bb": 1.85,
+    "ts": 1787124737.707859
   },
   "football|UAE Pro League|迪拜胜利|阿尔瓦赫达|和局|1x2|2026-08-22": {
     "ev": 8.96,
@@ -1033,6 +1064,10 @@
   "football|UEFA Champions League-Qualification|GNK Dinamo Zagreb|Viking FK|角球让球主胜|corner|2026-08-19": {
     "ev": 1.32,
     "ts": 1787036402.217886
+  },
+  "football|UEFA Champions League-Qualification|Hapoel Beer Sheva FC|Sabah FK|单双-双|oe|2026-08-20": {
+    "ev": 1.25,
+    "ts": 1787124738.976784
   },
   "football|UEFA Champions League-Qualification|NEC Nijmegen|Bodo/Glimt|先进球neither|first_to_score|2026-08-20": {
     "ev": 4.85,
@@ -1182,9 +1217,26 @@
     "bb": 9.95,
     "ts": 1787034729.999058
   },
+  "football|USA National Women Soccer League|Racing Louisville FC (w)|Seattle Reign FC (w)|让球主胜|1x2|2026-08-20": {
+    "ev": 2.2,
+    "ts": 1787124738.97732
+  },
   "football|Uzbekistan Super League|FK Agmk Olmaliq|PFK Dinamo Samarqand|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 1.24,
     "ts": 1787120332.74834
+  },
+  "football|Venezuela Cup|Atletico Barinas|Zamora FC|主胜|1x2|2026-08-20": {
+    "ev": 3.55,
+    "ts": 1787124738.976822
+  },
+  "football|Venezuela Cup|Atletico Barinas|Zamora FC|双重机会-主/和局|dc|2026-08-20": {
+    "ev": 3.04,
+    "ts": 1787124738.9768589
+  },
+  "football|Venezuela Cup|巴里纳斯竞技|萨莫拉FC|双重机会-主/和局|dc|2026-08-20": {
+    "ev": 3.04,
+    "bb": 1.63,
+    "ts": 1787124737.707972
   },
   "tennis|ATP Challenger - Prague Open|Oleksii Krutykh (UKR)|Nick Hardt (DOM)|客胜|1x2|2026-08-19": {
     "ev": 4.7,
@@ -1306,24 +1358,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Poland Ekstraklasa|克拉科维亚|莫摩斯|让球主胜(0)|hc|0|2026-08-22": {
-    "ev": 3.95,
-    "bb": 1.58,
-    "ts": 1787124737.707789
-  },
-  "football|Switzerland Promotion League|布雷特雷|青年人 II|让球主胜(0)|hc|0|2026-08-20": {
-    "ev": 4.5,
-    "bb": 1.85,
-    "ts": 1787124737.707859
-  },
-  "football|Copa Libertadores|科其姆波|普拉腾斯|上半场双重机会-主/客|ht_dc|2026-08-20": {
-    "ev": 5.73,
-    "bb": 2.11,
-    "ts": 1787124737.707917
-  },
-  "football|Venezuela Cup|巴里纳斯竞技|萨莫拉FC|双重机会-主/和局|dc|2026-08-20": {
-    "ev": 3.04,
-    "bb": 1.63,
-    "ts": 1787124737.707972
+  "basketball|William Jones Cup|日本|中国台北蓝|让分主胜(+3.5)|hc|+3.5|2026-08-19": {
+    "ev": 3.85,
+    "bb": 1.9,
+    "ts": 1787125477.704515
   }
 }
