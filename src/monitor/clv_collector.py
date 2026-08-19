@@ -231,7 +231,8 @@ def _fetch_close_odds(entries):
                     continue
 
                 # 提取对应市场的收盘公平价 (直盘+推导盘口均支持)
-                close_data = _extract_market_odds(best_pin, sub_market, designation)
+                close_data = _extract_market_odds(best_pin, sub_market, designation,
+                                                  sport=e.get("sport", "football"))
                 if close_data is None and sub_market in ("correct_score", "winning_margin", "total_goals_range", "first_to_score"):
                     # V5.9: 特殊盘口在 get_league_special_markets (matchup 里没有)
                     close_data = _extract_special_market_close(pin_id, e, special_cache)
@@ -272,6 +273,8 @@ def _fetch_close_odds(entries):
                     "clv_delta": clv_delta,  # + = 有利, - = 不利
                     "match_epoch": e.get("match_epoch", ""),
                     "minutes_before_match": round((int(e.get("match_epoch") or 0) - time.time()) / 60, 1),
+                    "close_source": "live",
+                    "close_lag_min": round((int(e.get("match_epoch") or 0) - time.time()) / 60, 1),
                 })
 
     return results
@@ -332,15 +335,19 @@ def _extract_market_odds(pin_matchup, sub_market, designation, sport="football")
         # HT 独赢在 ht_moneyline 独立字段, 全场在 moneyline
         src = pin_matchup.get("ht_moneyline", []) if sub_market.startswith("ht") \
             else pin_matchup.get("moneyline", [])
-        odds = get_pin_ml_sorted_from_source(src, "football")  # [home, draw, away]
-        if len(odds) < 3:
+        # 3-way: [home, draw, away]; 2-way(篮/网/棒等): [home, away]
+        odds = get_pin_ml_sorted_from_source(src, sport)
+        if len(odds) < 2:
             return None
+        two_way = len(odds) == 2
 
         if sub_market in ("1x2", "ht"):
             if "和" in des or "draw" in des or "平" in des:
+                if two_way:
+                    return None  # 2-way 运动无平局选项
                 idx = 1
             elif "客" in des or "away" in des:
-                idx = 2
+                idx = len(odds) - 1  # 3-way→2, 2-way→1
             else:
                 idx = 0
             fair, total = _devig(odds, idx)
@@ -348,7 +355,11 @@ def _extract_market_odds(pin_matchup, sub_market, designation, sport="football")
                 return None
             return round(odds[idx], 4), round(fair, 4), round(total, 4)
 
-        elif sub_market in ("dc", "ht_dc"):
+        # 双重机会/平局退款依赖平局腿, 2-way 运动不适用
+        if two_way:
+            return None
+
+        if sub_market in ("dc", "ht_dc"):
             idx = set()
             if "主" in des:
                 idx.add(0)
@@ -548,7 +559,12 @@ def _save_results(results):
         "designation", "sub_market", "tier", "bb_price_source", "bb_odds", "push_fair_price", "push_ev_pct",
         "close_pin_odds", "close_fair_price", "close_total_implied",
         "true_clv_pct", "clv_delta", "match_epoch", "minutes_before_match", "source",
+        # V5.10: 收盘价来源 — live=窗口内实时拉Pin(最准); archive=归档库赛前最后快照回捞;
+        #        archive_open=归档库只有首见价(让球/大小球受 UNIQUE 约束去重, 非真收盘价)。
+        "close_source", "close_lag_min",
     ]
+
+    _migrate_results_header(fieldnames)
 
     file_exists = RESULTS_FILE.exists()
     with open(RESULTS_FILE, 'a', newline='') as f:
