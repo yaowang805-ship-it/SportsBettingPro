@@ -312,7 +312,25 @@ def _fetch_close_odds(entries):
     return results
 
 
-def _extract_market_odds(pin_matchup, sub_market, designation, sport="football"):
+def _parse_line_str(s):
+    """解析 tracking 里存的线值字符串: "0" / "2.25" / "+0.5/1" / "-1.5/2" → float。"""
+    s = (s or "").strip()
+    if not s:
+        return None
+    sign = -1.0 if s.startswith("-") else 1.0
+    s = s.lstrip("+-")
+    if not s:
+        return None
+    try:
+        if "/" in s:
+            parts = [float(x) for x in s.split("/")]
+            return sign * sum(parts) / len(parts)
+        return sign * float(s)
+    except ValueError:
+        return None
+
+
+def _extract_market_odds(pin_matchup, sub_market, designation, sport="football", line=None):
     """从 Pinnacle matchup 提取对应市场的收盘公平价。
 
     sport: 用于判定 2-way(篮球/网球/棒球等, ML 只有 [home, away]) 还是 3-way。
@@ -420,8 +438,15 @@ def _extract_market_odds(pin_matchup, sub_market, designation, sport="football")
         src = pin_matchup.get("ht_spread", []) if sub_market == "ht_hc" \
             else pin_matchup.get("spread", [])
         # 让球线符号约定: get_pin_spread 按主队 points 匹配; 客胜要反转符号
-        _line = _parse_line(designation)
-        if _line is not None and ("客" in des or "away" in des):
+        # V5.10: 优先用 tracking 显式存的 line, 回退到从中文标签正则抠(老数据没有 line 列)
+        _line = _parse_line_str(line)
+        if _line is None:
+            _line = _parse_line(designation)
+        if _line is None:
+            # 不知道线值就不能比 —— 以前这里会让 get_pin_spread 拿 candidates[0],
+            # 相当于随机挑一条 Pinnacle 的线, 静默产出错误 CLV。宁可不出数。
+            return None
+        if "客" in des or "away" in des:
             _line = -_line
         home_p, away_p, _ = get_pin_spread(pin_matchup, target_line=_line, source=src)
         if not home_p or not away_p:
@@ -840,7 +865,9 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
                   "stake", "tier", "match_epoch", "bb_price_source", "pin_league_id", "pin_match_id",
                   "source",
                   # V5.10: Pinnacle 主盘口注额上限(定价信心信号), 先采集不过滤
-                  "pin_max_stake"]
+                  "pin_max_stake",
+                  # V5.10: 让球/大小球的线值, 供采集器精确匹配 Pin 同线盘口
+                  "line"]
     _migrate_csv_header(TRACKING_FILE, fieldnames)
     file_exists = TRACKING_FILE.exists()
     with open(TRACKING_FILE, "a", newline="", encoding="utf-8") as f:
