@@ -29,7 +29,19 @@ RESULTS_FILE = DATA_DIR / "clv_results.csv"
 #           只在临开赛采集 Pin 价作"真收盘线", 不再用滚球价兜底(滚球价受赛况污染)。
 CLV_WINDOW_BEFORE_MIN = 1     # 比赛前 1 分钟 (原15, 太严漏掉收盘线)
 CLV_WINDOW_AFTER_MAX = 0      # 开赛后不采集 (真收盘线=开赛前, 滚球价不可靠)
-CLV_WINDOW_BEFORE_MAX = 20    # 比赛前 20 分钟 (原720, 收窄到真收盘线)
+# V5.10: 20 → 45 分钟。窗口只有 19 分钟 + cron 5 分钟一跑 = 每场只有约 4 次机会,
+# Pinnacle 一次 SSL 抽风就把整个窗口烧光、且窗口一过永久丢失 —— 实测 101 条历史
+# 丢失里 24 条(24%)是这么没的。放宽到 45 分钟给约 9 次机会。
+#
+# 放宽的代价已实测(400 场稠密快照, 与赛前 1 分钟公平价比):
+#     距开赛 45 分 → 偏差中位 0.00%, P90 2.51%
+#     距开赛 20 分 → 偏差中位 0.00%, P90 0.89%
+# 也就是绝大多数比赛赛前一小时根本不改价, 但最活跃的 10% 会偏 2.5%。
+# 所以**必须配套 CLV_ALLOW_REFRESH**: 早采保覆盖, 越接近开赛越要用新价覆盖旧值,
+# 只放宽不刷新会系统性拉低收盘价准确度。
+CLV_WINDOW_BEFORE_MAX = 45
+# 已采到的记录, 若本轮能拿到更接近开赛的价格则覆盖(以 close_lag_min 更小为准)
+CLV_ALLOW_REFRESH = True
 CLV_MIN_AGE_SECONDS = 300    # 至少推送后 5 分钟才采集 (避免取到同一时刻的赔率)
 
 
@@ -84,9 +96,21 @@ def _load_pending_entries(return_expired=False):
             key = (r.get("home", ""), r.get("away", ""), sm, r.get("designation", ""))
             # 也尝试用 Pinnacle 名匹配
             key_pin = (r.get("home_pin", ""), r.get("away_pin", ""), sm, r.get("designation", ""))
-            if key in existing or key_pin in existing:
-                continue
+            prev = existing.get(key) or existing.get(key_pin)
             ep = int(r.get("match_epoch") or 0)
+            if prev is not None:
+                # V5.10: 已采过的, 若比赛还没开赛就允许再采一次去覆盖 —— 窗口放宽到 45
+                # 分钟后, 第一次采到的可能离开赛还远(实测 P90 偏差 2.51%), 越靠近开赛
+                # 的价格越接近真收盘线。不刷新的话放宽窗口反而会拉低准确度。
+                if not (CLV_ALLOW_REFRESH and ep and (ep - now) / 60 >= CLV_WINDOW_BEFORE_MIN):
+                    continue
+                try:
+                    if float(prev.get("close_lag_min") or 0) <= 1.0:
+                        continue  # 已经贴着开赛采到了, 没有再刷新的价值
+                except (TypeError, ValueError):
+                    pass
+                entries.append(r)
+                continue
             if ep and (ep - now) / 60 < CLV_WINDOW_BEFORE_MIN:
                 expired.append(r)   # 已开赛, 实时窗口关闭 → 只能靠归档回捞
             else:
