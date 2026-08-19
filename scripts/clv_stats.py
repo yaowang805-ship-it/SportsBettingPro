@@ -13,8 +13,11 @@
 """
 import csv
 import statistics
+import time
 from pathlib import Path
 from collections import defaultdict
+
+LOSS_ALERT_THRESHOLD = 25.0  # 采集丢失率超过这个百分比就告警
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "storage"
@@ -52,6 +55,53 @@ def _bucket(ev):
         if lo <= ev < hi:
             return name
     return None
+
+
+def compute_coverage():
+    """采集覆盖率: 已开赛的 tracking 记录里, 有多少真的采到了收盘价。
+
+    这个数以前根本没人算 —— 统计只看 clv_results.csv 有多少条, 看不见
+    分母。实测丢失率一度 57%, 全程无告警。
+    Returns: (采到, 应采, 丢失率%)
+    """
+    if not TRACKING_FILE.exists():
+        return 0, 0, 0.0
+    done = set()
+    if RESULTS_FILE.exists():
+        with open(RESULTS_FILE, encoding="utf-8-sig") as f:
+            for r in csv.DictReader(f):
+                done.add((r.get("home", "").strip(), r.get("away", "").strip(),
+                          r.get("sub_market", "").strip(), r.get("designation", "").strip()))
+    now = time.time()
+    started, got, seen = 0, 0, set()
+    with open(TRACKING_FILE, encoding="utf-8-sig") as f:
+        for r in csv.DictReader(f):
+            ep = int(r.get("match_epoch") or 0)
+            if not ep or ep > now:
+                continue  # 还没开赛, 不算分母
+            k = (r.get("home", "").strip(), r.get("away", "").strip(),
+                 r.get("sub_market", "").strip(), r.get("designation", "").strip())
+            if k in seen:
+                continue
+            seen.add(k)
+            started += 1
+            if k in done:
+                got += 1
+    loss = (started - got) / started * 100 if started else 0.0
+    return got, started, loss
+
+
+def _print_coverage(close_src):
+    got, started, loss = compute_coverage()
+    print("### 采集覆盖率")
+    print(f"  已开赛记录 {started} 条 → 采到收盘价 {got} 条, 丢失 {started - got} 条 ({loss:.0f}%)")
+    if close_src:
+        label = {"live": "实时窗口", "archive": "归档回捞", "archive_open": "仅开盘价(不计入CLV)"}
+        print("  收盘价来源: " + ", ".join(
+            f"{label.get(k, k)} {v}" for k, v in sorted(close_src.items(), key=lambda x: -x[1])))
+    if loss > LOSS_ALERT_THRESHOLD:
+        print(f"  ⚠️ 丢失率超过 {LOSS_ALERT_THRESHOLD:.0f}% — CLV 样本严重不完整, 结论不可信")
+    print()
 
 
 def main():
@@ -115,6 +165,8 @@ def main():
             median = statistics.median(all_clvs)
             pos_rate = sum(1 for c in all_clvs if c > 0) / len(all_clvs) * 100
             print(f"  {src:<10} n={len(all_clvs):>3}  中位CLV={median:+.2f}%  正CLV率={pos_rate:.0f}%")
+
+    _print_coverage(close_src)
 
     print()
     print("判定标准: 中位CLV > +1% 且 正CLV率 > 55% → 比价 edge 成立")

@@ -76,11 +76,33 @@ def main(push: bool = True):
         else:
             lines.append(f"| {name} | 0 | — | — | — |")
     lines.append("")
-    if s_all:
+
+    # V5.10: 先报采集覆盖率再报结论 —— 样本残缺时结论没有意义。
+    # 这里以前只报"采到多少条", 没有分母, 丢失率一度 57% 却全程无感。
+    got = started = 0
+    loss = 0.0
+    try:
+        import sys
+        sys.path.insert(0, str(DATA_DIR.parent.parent))
+        from scripts.clv_stats import compute_coverage, LOSS_ALERT_THRESHOLD
+        got, started, loss = compute_coverage()
+    except Exception as e:
+        logger.debug("覆盖率计算失败: %s", e)
+        LOSS_ALERT_THRESHOLD = 25.0
+    if started:
+        lines.append(f"采集覆盖: 已开赛 {started} 条 → 采到 {got} 条，丢失 {started - got} 条 ({loss:.0f}%)")
+        if loss > LOSS_ALERT_THRESHOLD:
+            lines.append(f"⚠️ **丢失率 {loss:.0f}% 超阈值 {LOSS_ALERT_THRESHOLD:.0f}%** — "
+                         "样本不完整，下面的结论不可信。先查 Pinnacle 连通性与采集窗口。")
+        lines.append("")
+
+    if s_all and loss <= LOSS_ALERT_THRESHOLD:
         verdict = ("✅ 正 CLV，套利模式可能有效" if s_all['median'] > 1
                    else ("⚠️ CLV≈0，无优势(市场有效)" if abs(s_all['median']) <= 1
                          else "❌ 负 CLV，+EV 是幻影"))
         lines.append(f"结论: {verdict}")
+    elif s_all:
+        lines.append("结论: 暂缓判定 — 采集丢失率过高，样本有偏(丢的多是 Pin 连不上那批，非随机)")
     else:
         lines.append("结论: 暂无样本，等待新推送结算")
 
