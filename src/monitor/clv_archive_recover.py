@@ -95,15 +95,31 @@ def _load_snapshots(conn, matchup_id):
     """
     rows = conn.execute(
         "SELECT designation, period, points, price, fetched_at, match_start "
-        "FROM odds_archive WHERE matchup_id = ?", (matchup_id,)
+        "FROM odds_archive WHERE matchup_id = ? ORDER BY fetched_at", (matchup_id,)
     ).fetchall()
-    by_period = defaultdict(lambda: defaultdict(list))
     kickoff = None
-    for des, period, points, price, fetched_at, match_start in rows:
-        if kickoff is None:
-            kickoff = _parse_ts(match_start)
-        by_period[period or 0][fetched_at].append((des, points, price))
-    return by_period, kickoff
+    for r in rows:
+        kickoff = _parse_ts(r[5])
+        if kickoff:
+            break
+
+    # 重建"开赛时刻的盘面": 每个 (period, designation, points) 取赛前最后一个价格。
+    #
+    # V5.10 重要变更: 归档库重建后只存**价格变化点**(scripts/rebuild_odds_archive.py),
+    # 同一时刻只会写入发生变动的那条腿, 因此不再存在"某个 fetched_at 上凑齐全部腿"
+    # 的完整快照 —— 原先按单一时间戳取快照的做法在重建后会取不到数据。
+    # 正确做法是按 key 各自取赛前最后值来还原盘面: 价格三小时没变不代表它不是
+    # 收盘价, 恰恰说明它一直有效。
+    state = defaultdict(dict)   # period -> {(des, points): price}
+    last_seen = None            # 赛前最后一次"观测到这场比赛"的时刻(不管价格变没变)
+    for des, period, points, price, fetched_at, _ms in rows:
+        ts = _parse_ts(fetched_at)
+        if ts is None or (kickoff and ts > kickoff):
+            continue            # 开赛后的是滚球价, 不能当收盘价
+        state[period or 0][(des, points)] = price
+        if last_seen is None or ts > last_seen:
+            last_seen = ts
+    return state, kickoff, last_seen
 
 
 def _build_matchup(snap_rows):
