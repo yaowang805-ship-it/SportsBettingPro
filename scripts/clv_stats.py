@@ -62,6 +62,7 @@ def main():
     src_map = _load_source_map()
     groups = defaultdict(list)  # (source, bucket) -> [clv]
 
+    close_src = defaultdict(int)
     with open(RESULTS_FILE, encoding="utf-8-sig") as f:
         for r in csv.DictReader(f):
             try:
@@ -70,6 +71,12 @@ def main():
             except (ValueError, TypeError):
                 continue
             if ev < 2.0:  # 只统计 EV>=2% (比价门槛)
+                continue
+            # V5.10: 只有真收盘价能算 CLV。archive_open 是归档库的开盘价
+            # (让球/大小球受 UNIQUE 约束只留首见价), 掺进来会把 CLV 算成噪声。
+            cs = (r.get("close_source") or "live").strip() or "live"
+            close_src[cs] += 1
+            if cs == "archive_open":
                 continue
             src = (r.get("source") or "").strip()
             if not src:

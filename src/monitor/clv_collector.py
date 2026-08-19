@@ -805,7 +805,7 @@ def collect():
 def _collect_inner():
     logger.info("CLV 采集开始...")
 
-    entries = _load_pending_entries()
+    entries, expired = _load_pending_entries(return_expired=True)
     total = len(entries)
 
     # V5: 统计epoch质量
@@ -813,6 +813,14 @@ def _collect_inner():
     no_epoch = sum(1 for e in entries if not e.get("match_epoch") or int(e.get("match_epoch", 0) or 0) == 0)
     bad_epoch = total - valid_epoch - no_epoch
     logger.info("pending: %d条 (有效epoch:%d, 无epoch:%d, 异常:%d)", total, valid_epoch, no_epoch, bad_epoch)
+
+    # V5.10: 已开赛却没采到收盘价的 = 实时窗口永久丢失, 只能靠归档回捞。
+    # 单独报出来, 别再混进 pending 冒充"还在排队"。
+    if expired:
+        done = len(_load_existing_results())
+        rate = len(expired) / max(1, len(expired) + done) * 100
+        logger.warning("⚠️ 已过期未采到: %d 条 (实时窗口永久关闭, 丢失率 %.0f%%) — 归档回捞: "
+                       "python -m src.monitor.clv_archive_recover --write", len(expired), rate)
 
     if not entries:
         logger.info("无 pending 记录，跳过")
