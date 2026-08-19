@@ -14,8 +14,11 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 from src.scrapers.bb_data import detect_sport, extract_bb_1x2, TWO_WAY_SPORTS
 from src.scrapers.pinnacle_league_map import TEAM_NAME_MAP
 
-# ── 双打 vs 单打分隔符 ──
-# BB 的双打用 "A / B" 表示; Pinnacle 侧若不含任何配对分隔符即为单打。
+# ── 双打 vs 单打 ──
+# 只有个人项目才存在"双打"。团队项目的队名里也会出现这些符号但含义完全不同
+# (实测 Pinnacle 有 "Ullensaker/Kisa"、"Sudburgenland / Hartberg" 这类球队名,
+#  以及 "Texas A&M"), 所以护栏必须限定在个人项目, 否则会误杀正常球队匹配。
+_DOUBLES_SPORTS = {"tennis", "badminton", "pingpong"}
 _PAIR_SEPARATORS = ("/", "&", "+")
 
 
@@ -24,7 +27,7 @@ def _is_pair(name: str) -> bool:
     return any(sep in (name or "") for sep in _PAIR_SEPARATORS)
 
 
-def _pair_structure_conflict(bb_home, bb_away, pin_home, pin_away) -> bool:
+def _pair_structure_conflict(bb_home, bb_away, pin_home, pin_away, sport=None) -> bool:
     """BB 是双打而 Pinnacle 是单打(或反之) → 结构不对等, 不是同一场比赛。
 
     实测(2026-08-19): Pinnacle 归档库 1260 场网球 / 829 个去重队名, 用 `/`、`&`、
@@ -37,7 +40,12 @@ def _pair_structure_conflict(bb_home, bb_away, pin_home, pin_away) -> bool:
     的假机会共 18-19 条(万幸全是 source=validate, 0 推送, ¥0 注额)。
 
     按铁律: 结构不对等且无对齐对象 → 拒绝匹配, 而不是调阈值糊过去。
+
+    sport 为 None 时不启用(保守), 只对个人项目生效 —— 团队项目的队名同样含
+    "/"、"&"(Ullensaker/Kisa、Texas A&M), 一刀切会误杀正常匹配。
     """
+    if sport not in _DOUBLES_SPORTS:
+        return False
     return (_is_pair(bb_home) or _is_pair(bb_away)) != (_is_pair(pin_home) or _is_pair(pin_away))
 
 
