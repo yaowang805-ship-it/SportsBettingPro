@@ -192,6 +192,11 @@
     "bb": 1.95,
     "ts": 1787117180.1074739
   },
+  "basketball|William Jones Cup|原州东浦新世代|菲律宾劲旅|让分客胜(-5.5)|hc|-5.5|2026-08-19": {
+    "ev": 8.51,
+    "bb": 2.06,
+    "ts": 1787122512.3966541
+  },
   "basketball|William Jones Cup|原州东浦新世代|菲律宾劲旅|让分客胜(-6.5)|hc|-6.5|2026-08-19": {
     "ev": 12.95,
     "bb": 1.99,
@@ -564,11 +569,6 @@
     "bb": 8.3,
     "ts": 1787034729.999137
   },
-  "football|Copa Libertadores|科其姆波|普拉腾斯|上半场双重机会-主/客|ht_dc|2026-08-20": {
-    "ev": 4.49,
-    "bb": 1.98,
-    "ts": 1787021144.061804
-  },
   "football|Copa Libertadores|科林蒂安|罗萨里奥中央|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 6.68,
     "bb": 2.09,
@@ -844,6 +844,10 @@
     "ev": 2.44,
     "ts": 1787114459.930681
   },
+  "football|Japan Emperor Cup|Arterivo Wakayama|Azul Claro Numazu|小球|1x2|2026-08-19": {
+    "ev": 2.56,
+    "ts": 1787122968.6609669
+  },
   "football|Japan Emperor Cup|Atletico Suzuka Club|Basara Hyogo|小球|1x2|2026-08-19": {
     "ev": 4.22,
     "ts": 1787055069.4925828
@@ -961,6 +965,18 @@
   "football|Poland III Liga|Rakow Czestochowa II|KS Stilon Gorzow Wlkp|主胜|1x2|2026-08-19": {
     "ev": 3.34,
     "ts": 1787117348.108347
+  },
+  "football|Poland III Liga|Rakow Czestochowa II|KS Stilon Gorzow Wlkp|双重机会-和局/客|dc|2026-08-19": {
+    "ev": 4.85,
+    "ts": 1787124482.6426141
+  },
+  "football|Poland III Liga|Rakow Czestochowa II|KS Stilon Gorzow Wlkp|客胜|1x2|2026-08-19": {
+    "ev": 6.82,
+    "ts": 1787124482.642526
+  },
+  "football|Poland III Liga|Rakow Czestochowa II|KS Stilon Gorzow Wlkp|让球客胜|1x2|2026-08-19": {
+    "ev": 7.9,
+    "ts": 1787124482.642567
   },
   "football|Poland III Liga|Zabkovia Zabki|Wigry Suwalki|主胜|1x2|2026-08-19": {
     "ev": 1.5,
@@ -1182,6 +1198,10 @@
     "ev": 8.44,
     "ts": 1787114648.656244
   },
+  "tennis|ITF - M15 Asuncion Men Singles|Mateo Del Pino (ARG)|Santiago De La Fuente (ARG)|客胜|1x2|2026-08-19": {
+    "ev": 2.53,
+    "ts": 1787124307.205313
+  },
   "tennis|ITF - M15 Bastad Men Singles|Jack Karlsson Wistrand (SWE)|Jan Simonsson (SWE)|主胜|1x2|2026-08-19": {
     "ev": 4.14,
     "ts": 1787101664.6404219
@@ -1246,9 +1266,21 @@
     "ev": 2.56,
     "ts": 1787025629.2470882
   },
+  "tennis|ITF - W35 Bistrita Women Singles|Giulia Safina Popa (ROU)|Teodora Miron (ROU)|客胜|1x2|2026-08-19": {
+    "ev": 4.25,
+    "ts": 1787122658.510144
+  },
   "tennis|ITF - W35 Bistrita Women Singles|Mariia Drobysheva (UKR)|Ilinca Sagmar (ROU)|主胜|1x2|2026-08-19": {
     "ev": 2.64,
     "ts": 1787101664.64015
+  },
+  "tennis|ITF - W35 Bistrita Women Singles|Patricia Georgiana Goina (ROU)|Ana Ioana Varsa (ROU)|主胜|1x2|2026-08-19": {
+    "ev": 3.43,
+    "ts": 1787122658.510088
+  },
+  "tennis|ITF - W35 Erwitte Women Singles|Georgina Groth (GER)|Tahlia Kokkinis (AUS)|让盘主胜|1x2|2026-08-19": {
+    "ev": 4.6,
+    "ts": 1787124482.642286
   },
   "tennis|ITF - W35 Erwitte Women Singles|Marie Vogt (GER)|Polina Skliar (UKR)|客胜|1x2|2026-08-19": {
     "ev": 3.79,
@@ -1274,9 +1306,24 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|William Jones Cup|原州东浦新世代|菲律宾劲旅|让分客胜(-5.5)|hc|-5.5|2026-08-19": {
-    "ev": 8.51,
-    "bb": 2.06,
-    "ts": 1787122512.3966541
+  "football|Poland Ekstraklasa|克拉科维亚|莫摩斯|让球主胜(0)|hc|0|2026-08-22": {
+    "ev": 3.95,
+    "bb": 1.58,
+    "ts": 1787124737.707789
+  },
+  "football|Switzerland Promotion League|布雷特雷|青年人 II|让球主胜(0)|hc|0|2026-08-20": {
+    "ev": 4.5,
+    "bb": 1.85,
+    "ts": 1787124737.707859
+  },
+  "football|Copa Libertadores|科其姆波|普拉腾斯|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 5.73,
+    "bb": 2.11,
+    "ts": 1787124737.707917
+  },
+  "football|Venezuela Cup|巴里纳斯竞技|萨莫拉FC|双重机会-主/和局|dc|2026-08-20": {
+    "ev": 3.04,
+    "bb": 1.63,
+    "ts": 1787124737.707972
   }
 }
