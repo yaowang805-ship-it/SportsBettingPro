@@ -1,5 +1,5 @@
 {
-  "balance": 8139.33,
+  "balance": 8097.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2922,6 +2922,75 @@
       "commence_time": 1787182200,
       "created_at": "2026-08-19T23:02:30.175686+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_底特律城_坦帕湾暴徒_和局",
+      "sport": "football",
+      "league": "美国冠军联赛",
+      "home_team": "底特律城",
+      "away_team": "坦帕湾暴徒",
+      "home_cn": "底特律城",
+      "away_cn": "坦帕湾暴徒",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.2,
+      "stake": 22,
+      "model_prob": 0.3549,
+      "ev_pct": 13.58,
+      "pin_odds": 2.66,
+      "fair_price": 2.8173,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787439600,
+      "created_at": "2026-08-19T23:06:05.109339+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_帕尔马_卡利亚里_和局",
+      "sport": "football",
+      "league": "意大利甲级联赛",
+      "home_team": "帕尔马",
+      "away_team": "卡利亚里",
+      "home_cn": "帕尔马",
+      "away_cn": "卡利亚里",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.2,
+      "stake": 10,
+      "model_prob": 0.3224,
+      "ev_pct": 3.15,
+      "pin_odds": 3.0,
+      "fair_price": 3.1022,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787424300,
+      "created_at": "2026-08-19T23:06:05.109380+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_里泽斯堡_萨姆松珀_和局",
+      "sport": "football",
+      "league": "土耳其超级联赛",
+      "home_team": "里泽斯堡",
+      "away_team": "萨姆松珀",
+      "home_cn": "里泽斯堡",
+      "away_cn": "萨姆松珀",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.52,
+      "stake": 10,
+      "model_prob": 0.3042,
+      "ev_pct": 7.08,
+      "pin_odds": 3.11,
+      "fair_price": 3.2873,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787414400,
+      "created_at": "2026-08-19T23:06:05.109412+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2981,8 +3050,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 368.0,
-    "bets": 14
+    "used": 410.0,
+    "bets": 17
   },
   "updated": null
 }
