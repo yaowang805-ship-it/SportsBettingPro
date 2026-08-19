@@ -798,7 +798,13 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 _ml_swapped = True
 
         # 方式2：赔率模式检测 (适用于无队名映射的运动，如拳击/MMA/网球/篮球)
-        if not _ml_swapped and len(bb_ml) >= 2 and len(pin_ml) >= 2:
+        # V5.10 修复: 2-way 运动禁用方式2。
+        # 实测 NFL 公羊/钢人两场主客本就对齐, 但 BB 对热门队定价偏高一点, direct 与
+        # cross 的差值就跌破 0.85 阈值触发反转 —— 把冷门价硬对到热门 fair, 产出方向
+        # 完全相反的假 +EV(本应 -30% 变成 +14%)。2-way 只有两条腿、无 draw 锚点,
+        # 赔率模式对"轻微定价偏差 vs 真反转"不可分, 纯靠赔率猜主客太危险。
+        # 方式1(TEAM_NAME_MAP 交叉匹配)是可靠信号, 2-way 反转只信它。
+        if not _ml_swapped and len(bb_ml) >= 2 and len(pin_ml) >= 2 and n_ml != 2:
             _direct_diff = 0.0
             _cross_diff = 0.0
             _n_compare = min(len(bb_ml), len(pin_ml))  # V4.5: 防数组不等长
