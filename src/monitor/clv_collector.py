@@ -768,4 +768,10 @@ def _collect_inner():
 if __name__ == "__main__":
     from config.logging_config import setup_logging
     setup_logging()
+    # 后台任务, 在跨进程共享限速里只吃主扫描剩下的带宽(扫描推送隔离铁律)
+    try:
+        from src.scrapers.pinnacle_api import set_request_priority
+        set_request_priority("low")
+    except Exception:
+        pass
     collect()
