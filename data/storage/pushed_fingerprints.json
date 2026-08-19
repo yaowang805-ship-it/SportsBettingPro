@@ -13,6 +13,15 @@
     "bb": 1.73,
     "ts": 1787027658.612308
   },
+  "basketball|Olympic Tournament Pre-Qualifying Women|New Zealand (w)|Brazil (w)|让分主胜|1x2|2026-08-19": {
+    "ev": 4.06,
+    "ts": 1787103179.7748811
+  },
+  "basketball|Olympic Tournament Pre-Qualifying Women|新西兰 (女)|巴西 (女)|让分主胜(+3.5)|hc|+3.5|2026-08-19": {
+    "ev": 4.06,
+    "bb": 1.85,
+    "ts": 1787103179.0231879
+  },
   "basketball|WNBA|Chicago Sky (w)|New York Liberty (w)|主胜|1x2|2026-08-19": {
     "ev": 1.03,
     "ts": 1787100361.014567
@@ -629,6 +638,10 @@
     "bb": 1.88,
     "ts": 1787101664.262892
   },
+  "football|Japan Emperor Cup|Arterivo Wakayama|Azul Claro Numazu|客胜|1x2|2026-08-19": {
+    "ev": 2.44,
+    "ts": 1787114459.930681
+  },
   "football|Japan Emperor Cup|Atletico Suzuka Club|Basara Hyogo|小球|1x2|2026-08-19": {
     "ev": 4.22,
     "ts": 1787055069.4925828
@@ -672,6 +685,10 @@
   "football|Japan Emperor Cup|Veroskronos Tsuno|Kamatamare Sanuki|双重机会-主/和局|dc|2026-08-19": {
     "ev": 1.3,
     "ts": 1787048414.282112
+  },
+  "football|Japan Emperor Cup|Veroskronos Tsuno|Kamatamare Sanuki|双重机会-主/客|dc|2026-08-19": {
+    "ev": 1.05,
+    "ts": 1787114459.930885
   },
   "football|Japan Emperor Cup|Veroskronos Tsuno|Kamatamare Sanuki|小球|1x2|2026-08-19": {
     "ev": 1.74,
@@ -892,9 +909,29 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|Olympic Tournament Pre-Qualifying Women|新西兰 (女)|巴西 (女)|让分主胜(+3.5)|hc|+3.5|2026-08-19": {
-    "ev": 4.06,
-    "bb": 1.85,
-    "ts": 1787103179.0231879
+  "basketball|Mexico LNBP Basketball League|墨西哥红恶鬼|罗伯斯普拉塔多斯|主胜|1x2|2026-08-21": {
+    "ev": 4.35,
+    "bb": 1.33,
+    "ts": 1787114647.96401
+  },
+  "basketball|WNBA|华盛顿神秘人 (女)|多伦多节奏报 (女)|大分(169.5)|ou|169.5|2026-08-20": {
+    "ev": 5.91,
+    "bb": 2.07,
+    "ts": 1787114647.964055
+  },
+  "basketball|Mexico LNBP Basketball League|皇家部队|弗雷斯尼洛虾|让分客胜(+4.5)|hc|+4.5|2026-08-20": {
+    "ev": 4.18,
+    "bb": 1.75,
+    "ts": 1787114647.9640949
+  },
+  "football|UEFA Champions League Qualification-Playoff|贝尔谢巴工人|萨巴赫|让球主胜(0)|hc|0|2026-08-20": {
+    "ev": 3.76,
+    "bb": 1.75,
+    "ts": 1787114647.964133
+  },
+  "football|USA Major League Soccer|皇家盐湖城|达拉斯|让球主胜(0)|hc|0|2026-08-20": {
+    "ev": 3.65,
+    "bb": 1.51,
+    "ts": 1787114647.964166
   }
 }
