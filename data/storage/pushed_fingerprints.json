@@ -170,9 +170,17 @@
     "ev": 1.22,
     "ts": 1787119368.8764071
   },
+  "basketball|William Jones Cup|Japan|Chinese Taipei Blue|客胜|1x2|2026-08-19": {
+    "ev": 1.09,
+    "ts": 1787126267.080719
+  },
   "basketball|William Jones Cup|Japan|Chinese Taipei Blue|让分主胜|1x2|2026-08-19": {
     "ev": 3.41,
     "ts": 1787119368.876446
+  },
+  "basketball|William Jones Cup|Japan|Chinese Taipei Blue|让分客胜|1x2|2026-08-19": {
+    "ev": 6.99,
+    "ts": 1787126267.080759
   },
   "basketball|William Jones Cup|Wonju DB Promy|Strong Group Athletics|小分|1x2|2026-08-19": {
     "ev": 2.73,
@@ -783,6 +791,10 @@
     "ev": 1.13,
     "ts": 1787121005.13225
   },
+  "football|Greece Cup-Qualification|APS Zakynthos|AE Kifisia FC|让球主胜|1x2|2026-08-19": {
+    "ev": 2.71,
+    "ts": 1787125556.565034
+  },
   "football|Greece Cup-Qualification|Atromitos Athinon|PAS Pyrgos 1968|双重机会-和局/客|dc|2026-08-19": {
     "ev": 9.17,
     "ts": 1787036402.215677
@@ -803,10 +815,23 @@
     "ev": 1.82,
     "ts": 1787049952.796659
   },
+  "football|Greece Cup-Qualification|Niki Volou 1924 PAE|Panionios Athens|让球主胜|1x2|2026-08-19": {
+    "ev": 2.28,
+    "ts": 1787126896.6674628
+  },
+  "football|Greece Cup-Qualification|Niki Volou 1924 PAE|Panionios Athens|让球客胜|1x2|2026-08-19": {
+    "ev": 2.84,
+    "ts": 1787126192.8278139
+  },
   "football|Greece Cup-Qualification|莱瓦贾科斯|特里波利斯|让球主胜(0)|hc|0|2026-08-19": {
     "ev": 3.55,
     "bb": 1.57,
     "ts": 1787034729.998604
+  },
+  "football|Greece Cup-Qualification|萨坚索斯|基菲萨|小球(2.5)|ou|2.5|2026-08-19": {
+    "ev": 4.07,
+    "bb": 1.95,
+    "ts": 1787125556.161153
   },
   "football|Greece Cup-Qualification|阿特罗米托斯|皮尔戈斯 1968|双重机会-和局/客|dc|2026-08-19": {
     "ev": 10.52,
@@ -898,6 +923,10 @@
     "ev": 44.16,
     "ts": 1787048414.281549
   },
+  "football|Japan Emperor Cup|Nagano Parceiro|Fukui United FC|小球|1x2|2026-08-19": {
+    "ev": 2.34,
+    "ts": 1787126896.66736
+  },
   "football|Japan Emperor Cup|Reilac Shiga FC|Japan Soccer College|客胜|1x2|2026-08-19": {
     "ev": 56.68,
     "ts": 1787048414.2816918
@@ -985,6 +1014,14 @@
     "bb": 1.58,
     "ts": 1787124737.707789
   },
+  "football|Poland III Liga|KS CK Troszyn|KS Warta Sieradz|主胜|1x2|2026-08-19": {
+    "ev": 6.34,
+    "ts": 1787125556.565381
+  },
+  "football|Poland III Liga|KS CK Troszyn|KS Warta Sieradz|大球|1x2|2026-08-19": {
+    "ev": 2.44,
+    "ts": 1787125556.565519
+  },
   "football|Poland III Liga|Rakow Czestochowa II|KS Stilon Gorzow Wlkp|主胜|1x2|2026-08-19": {
     "ev": 3.34,
     "ts": 1787117348.108347
@@ -1013,6 +1050,10 @@
     "ev": 2.18,
     "ts": 1787114648.653982
   },
+  "football|Poland III Liga|Zaglebie Sosnowiec|KS Sleza Wroclaw|小球|1x2|2026-08-20": {
+    "ev": 2.64,
+    "ts": 1787125556.566184
+  },
   "football|Poland III Liga|Zks Kluczevia Stargard|KS Gedania Gdansk|客胜|1x2|2026-08-19": {
     "ev": 5.97,
     "ts": 1787124738.976556
@@ -1020,6 +1061,11 @@
   "football|Poland III Liga|Zks Kluczevia Stargard|KS Gedania Gdansk|让球客胜|1x2|2026-08-19": {
     "ev": 1.13,
     "ts": 1787124738.9766011
+  },
+  "football|Poland III Liga|特罗申|谢拉玆|主胜|1x2|2026-08-19": {
+    "ev": 6.34,
+    "bb": 3.72,
+    "ts": 1787125556.1611981
   },
   "football|Russia First League|FC Kamaz Naberezhnye Chelny|FC Tekstilshchik Ivanovo|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 2.28,
@@ -1255,6 +1301,14 @@
     "ev": 8.44,
     "ts": 1787114648.656244
   },
+  "tennis|ATP Challenger - Sion Open|Luca Staeheli (SUI)|Juan Manuel La Serna (ARG)|客胜|1x2|2026-08-19": {
+    "ev": 1.55,
+    "ts": 1787126497.1943092
+  },
+  "tennis|ATP Challenger - Sion Open|Ryan Nijboer (NED)|Tommaso Compagnucci (ITA)|小分|1x2|2026-08-19": {
+    "ev": 1.67,
+    "ts": 1787126497.19436
+  },
   "tennis|ITF - M15 Asuncion Men Singles|Mateo Del Pino (ARG)|Santiago De La Fuente (ARG)|客胜|1x2|2026-08-19": {
     "ev": 2.53,
     "ts": 1787124307.205313
@@ -1363,14 +1417,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Greece Cup-Qualification|萨坚索斯|基菲萨|小球(2.5)|ou|2.5|2026-08-19": {
-    "ev": 4.07,
-    "bb": 1.95,
-    "ts": 1787125556.161153
-  },
-  "football|Poland III Liga|特罗申|谢拉玆|主胜|1x2|2026-08-19": {
-    "ev": 6.34,
-    "bb": 3.72,
-    "ts": 1787125556.1611981
+  "football|Greece Cup-Qualification|萨坚索斯|基菲萨|让球主胜(+1)|hc|+1|2026-08-19": {
+    "ev": 4.66,
+    "bb": 1.93,
+    "ts": 1787127299.802239
   }
 }
