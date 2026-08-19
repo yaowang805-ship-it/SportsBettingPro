@@ -51,11 +51,6 @@
     "bb": 1.73,
     "ts": 1787027658.612308
   },
-  "basketball|Mexico LNBP Basketball League|皇家部队|甘布西诺弗雷斯尼洛|让分客胜(+3.5)|hc|+3.5|2026-08-20": {
-    "ev": 6.48,
-    "bb": 1.94,
-    "ts": 1787115444.587273
-  },
   "basketball|Olympic Tournament Pre-Qualifying Women|New Zealand (w)|Brazil (w)|让分主胜|1x2|2026-08-19": {
     "ev": 4.06,
     "ts": 1787103179.7748811
@@ -769,6 +764,10 @@
     "bb": 4.36,
     "ts": 1787029463.7983518
   },
+  "football|England National League South|Farnborough FC|Chesham United|大球|1x2|2026-08-20": {
+    "ev": 2.12,
+    "ts": 1787127882.009071
+  },
   "football|England Northern Premier League|Avro FC|Workington AFC|小球|1x2|2026-08-20": {
     "ev": 1.58,
     "ts": 1787114648.654437
@@ -916,6 +915,14 @@
     "ev": 2.55,
     "ts": 1787055069.492513
   },
+  "football|Japan Emperor Cup|FC Tokushima|Kawasoe Club|小球|1x2|2026-08-19": {
+    "ev": 1.75,
+    "ts": 1787127996.432429
+  },
+  "football|Japan Emperor Cup|FC Tokushima|Kawasoe Club|让球客胜|1x2|2026-08-19": {
+    "ev": 1.38,
+    "ts": 1787127996.429146
+  },
   "football|Japan Emperor Cup|Gainare Tottori|Roasso Kumamoto|让球客胜|1x2|2026-08-19": {
     "ev": 2.68,
     "ts": 1787115048.557039
@@ -947,6 +954,10 @@
   "football|Japan Emperor Cup|Reilac Shiga FC|Japan Soccer College|客胜|1x2|2026-08-19": {
     "ev": 56.68,
     "ts": 1787048414.2816918
+  },
+  "football|Japan Emperor Cup|Reilac Shiga FC|Japan Soccer College|小球|1x2|2026-08-19": {
+    "ev": 1.09,
+    "ts": 1787128192.795669
   },
   "football|Japan Emperor Cup|Reilac Shiga FC|Japan Soccer College|让球客胜|1x2|2026-08-19": {
     "ev": 1.7,
@@ -1031,6 +1042,10 @@
     "bb": 1.58,
     "ts": 1787124737.707789
   },
+  "football|Poland III Liga|KKS 1925 Kalisz|KS Notec Czarnkow|大球|1x2|2026-08-19": {
+    "ev": 11.05,
+    "ts": 1787127882.008899
+  },
   "football|Poland III Liga|KS CK Troszyn|KS Warta Sieradz|主胜|1x2|2026-08-19": {
     "ev": 6.34,
     "ts": 1787125556.565381
@@ -1038,6 +1053,14 @@
   "football|Poland III Liga|KS CK Troszyn|KS Warta Sieradz|大球|1x2|2026-08-19": {
     "ev": 2.44,
     "ts": 1787125556.565519
+  },
+  "football|Poland III Liga|Korona Kielce SA II|KS Hetman Zamosc|主胜|1x2|2026-08-19": {
+    "ev": 12.72,
+    "ts": 1787127882.01071
+  },
+  "football|Poland III Liga|Korona Kielce SA II|KS Hetman Zamosc|双重机会-主/和局|dc|2026-08-19": {
+    "ev": 2.13,
+    "ts": 1787127882.010779
   },
   "football|Poland III Liga|Rakow Czestochowa II|KS Stilon Gorzow Wlkp|主胜|1x2|2026-08-19": {
     "ev": 3.34,
@@ -1079,6 +1102,11 @@
     "ev": 1.13,
     "ts": 1787124738.9766011
   },
+  "football|Poland III Liga|卡利什1925|诺泰奇|大球(2.75)|ou|2.75|2026-08-19": {
+    "ev": 11.05,
+    "bb": 1.89,
+    "ts": 1787127881.756682
+  },
   "football|Poland III Liga|特罗申|谢拉玆|主胜|1x2|2026-08-19": {
     "ev": 6.34,
     "bb": 3.72,
@@ -1107,6 +1135,11 @@
     "bb": 1.85,
     "ts": 1787124737.707859
   },
+  "football|Switzerland Promotion League|布雷特雷|青年人二队|让球主胜(0)|hc|0|2026-08-20": {
+    "ev": 3.37,
+    "bb": 1.83,
+    "ts": 1787127881.756763
+  },
   "football|UAE Pro League|迪拜胜利|阿尔瓦赫达|和局|1x2|2026-08-22": {
     "ev": 8.96,
     "bb": 3.66,
@@ -1132,6 +1165,10 @@
   "football|UEFA Champions League-Qualification|GNK Dinamo Zagreb|Viking FK|角球让球主胜|corner|2026-08-19": {
     "ev": 1.32,
     "ts": 1787036402.217886
+  },
+  "football|UEFA Champions League-Qualification|Hapoel Beer Sheva FC|Sabah FK|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 1.32,
+    "ts": 1787127882.009173
   },
   "football|UEFA Champions League-Qualification|Hapoel Beer Sheva FC|Sabah FK|单双-双|oe|2026-08-20": {
     "ev": 1.25,
@@ -1214,6 +1251,10 @@
   "football|USA Major League Soccer|FC Cincinnati|New York City FC|让球主胜|1x2|2026-08-20": {
     "ev": 1.29,
     "ts": 1787115444.852302
+  },
+  "football|USA Major League Soccer|Los Angeles Galaxy|San Jose Earthquakes|让球主胜|1x2|2026-08-20": {
+    "ev": 1.41,
+    "ts": 1787127882.0102232
   },
   "football|USA Major League Soccer|Minnesota United FC|Atlanta United FC|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 1.91,
@@ -1438,14 +1479,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Poland III Liga|卡利什1925|诺泰奇|大球(2.75)|ou|2.75|2026-08-19": {
-    "ev": 11.05,
-    "bb": 1.89,
-    "ts": 1787127881.756682
-  },
-  "football|Switzerland Promotion League|布雷特雷|青年人二队|让球主胜(0)|hc|0|2026-08-20": {
-    "ev": 3.37,
-    "bb": 1.83,
-    "ts": 1787127881.756763
+  "basketball|Mexico LNBP Basketball League|皇家部队|甘布西诺弗雷斯尼洛|让分客胜(+3.5)|hc|+3.5|2026-08-20": {
+    "ev": 10.73,
+    "bb": 2.25,
+    "ts": 1787128534.995748
   }
 }
