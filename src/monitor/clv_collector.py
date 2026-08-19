@@ -582,6 +582,46 @@ def _extract_special_market_close(league_id, entry, special_cache):
 
 MISS_LOG_FILE = DATA_DIR / "clv_miss_log.csv"
 
+# 增量扫描按时间窗分文件写(urgent<6h / near 6-24h / far 24-72h), MAIN 只有全量扫描才刷新。
+_COMPARISON_FILES = ("bb_vs_pinnacle_comparison_urgent.json",
+                     "bb_vs_pinnacle_comparison_near.json",
+                     "bb_vs_pinnacle_comparison_far.json",
+                     "bb_vs_pinnacle_comparison_FB.json",
+                     "bb_vs_pinnacle_comparison.json")
+
+
+def _load_freshest_comparison_details():
+    """合并四个对比文件的 details, 同一机会取来自最新文件的那条。
+
+    V5.10: 原先只读 MAIN(bb_vs_pinnacle_comparison.json)。但增量扫描只写
+    _urgent/_near/_far, MAIN 要全量扫描才刷新 —— 实测 MAIN 陈旧 88 分钟, 而
+    _FB 才 3.5 分钟。拿 88 分钟前的快照当"当前机会"记进 validate, 结果就是
+    36 条记录在写入时比赛早已开赛(中位晚 22 分钟, 最长 207 分钟)。
+
+    不能只取最新的那一个文件: 各文件覆盖不同时间窗(实测 urgent 仅 2 场 /
+    near 27 场 / MAIN 216 场), 只取一个会大幅丢覆盖面。所以按新鲜度升序读、
+    后读的覆盖先读的, 既保覆盖又保新鲜。
+    """
+    files = []
+    for name in _COMPARISON_FILES:
+        p = DATA_DIR / name
+        if p.exists():
+            files.append((p.stat().st_mtime, p))
+    if not files:
+        return []
+    files.sort()  # 旧 → 新, 后写入的覆盖同 key
+    merged = {}
+    for _mtime, p in files:
+        try:
+            for d in json.loads(p.read_text()).get("details", []):
+                key = (d.get("home_bb_cn") or d.get("home_bb", ""),
+                       d.get("away_bb_cn") or d.get("away_bb", ""),
+                       d.get("start_time_pin_epoch", 0))
+                merged[key] = d
+        except Exception:
+            continue
+    return list(merged.values())
+
 
 def _record_misses(entries, reason):
     """记录窗口内没采到收盘价的条目 + 原因。
@@ -726,7 +766,7 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
     rows = []
     skipped_started = 0
     seen = set(existing)
-    for m in data.get("details", []):
+    for m in details:
         sport = m.get("sport", "")
         league = m.get("league", "")
         home = m.get("home_bb_cn") or m.get("home_bb", "")
