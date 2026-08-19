@@ -97,6 +97,10 @@
     "ev": 1.88,
     "ts": 1787043520.717097
   },
+  "basketball|WNBA|Washington Mystics (w)|Toronto Tempo (w)|大分|1x2|2026-08-20": {
+    "ev": 1.33,
+    "ts": 1787121005.134243
+  },
   "basketball|WNBA|华盛顿神秘人 (女)|多伦多节奏报 (女)|大分(169.5)|ou|169.5|2026-08-20": {
     "ev": 5.91,
     "bb": 2.07,
@@ -169,6 +173,10 @@
   "basketball|William Jones Cup|Japan|Chinese Taipei Blue|让分主胜|1x2|2026-08-19": {
     "ev": 3.41,
     "ts": 1787119368.876446
+  },
+  "basketball|William Jones Cup|Wonju DB Promy|Strong Group Athletics|小分|1x2|2026-08-19": {
+    "ev": 2.73,
+    "ts": 1787121080.634176
   },
   "basketball|William Jones Cup|原州东浦新世代|菲律宾劲旅|小分(172.5)|ou|172.5|2026-08-19": {
     "ev": 4.69,
@@ -248,6 +256,11 @@
     "bb": 2.05,
     "ts": 1787020969.617325
   },
+  "football|Argentina Cup|阿韦亚内达竞技足球俱乐部|贝尔格拉诺|和局|1x2|2026-08-20": {
+    "ev": 3.06,
+    "bb": 2.85,
+    "ts": 1787121004.6678138
+  },
   "football|Argentina Cup|阿韦亚内达竞技足球俱乐部|贝尔格拉诺|小球(2.0)|ou|2.0|2026-08-20": {
     "ev": 3.91,
     "bb": 1.79,
@@ -285,6 +298,11 @@
     "ev": 6.34,
     "bb": 1.67,
     "ts": 1787118700.352094
+  },
+  "football|Argentina Liga Profesional Reserves|飓风后备队|门多萨独立后备队|主胜|1x2|2026-08-20": {
+    "ev": 4.84,
+    "bb": 2.05,
+    "ts": 1787121004.667924
   },
   "football|Argentina Liga Profesional|阿尔多斯维|圣塔菲联|让球客胜(0)|hc|0|2026-08-22": {
     "ev": 4.15,
@@ -524,6 +542,11 @@
     "bb": 2.09,
     "ts": 1787021144.061548
   },
+  "football|Copa Libertadores|科金博联合|普拉腾斯|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 5.73,
+    "bb": 2.11,
+    "ts": 1787121004.667857
+  },
   "football|Copa Libertadores|门多萨独立|弗鲁米嫩塞RJ|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 5.59,
     "bb": 2.05,
@@ -705,6 +728,10 @@
   "football|Greece Cup-Qualification|APO Levadiakos FC|Asteras Tripolis|让球主胜|1x2|2026-08-19": {
     "ev": 1.1,
     "ts": 1787025629.245709
+  },
+  "football|Greece Cup-Qualification|APS Zakynthos|AE Kifisia FC|小球|1x2|2026-08-19": {
+    "ev": 1.13,
+    "ts": 1787121005.13225
   },
   "football|Greece Cup-Qualification|Atromitos Athinon|PAS Pyrgos 1968|双重机会-和局/客|dc|2026-08-19": {
     "ev": 9.17,
@@ -955,6 +982,10 @@
     "ev": 1.32,
     "ts": 1787036402.217886
   },
+  "football|UEFA Champions League-Qualification|NEC Nijmegen|Bodo/Glimt|先进球neither|first_to_score|2026-08-20": {
+    "ev": 4.85,
+    "ts": 1787121005.134628
+  },
   "football|UEFA Champions League-Qualification|PFC Levski Sofia|AEK Athens|上半场主胜|ht|2026-08-19": {
     "ev": 4.23,
     "ts": 1787048414.2800891
@@ -1191,19 +1222,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Argentina Cup|阿韦亚内达竞技足球俱乐部|贝尔格拉诺|和局|1x2|2026-08-20": {
-    "ev": 3.06,
-    "bb": 2.85,
-    "ts": 1787121004.6678138
-  },
-  "football|Copa Libertadores|科金博联合|普拉腾斯|上半场双重机会-主/客|ht_dc|2026-08-20": {
-    "ev": 5.73,
-    "bb": 2.11,
-    "ts": 1787121004.667857
-  },
-  "football|Argentina Liga Profesional Reserves|飓风后备队|门多萨独立后备队|主胜|1x2|2026-08-20": {
-    "ev": 4.84,
-    "bb": 2.05,
-    "ts": 1787121004.667924
+  "basketball|William Jones Cup|原州东浦新世代|菲律宾劲旅|客胜|1x2|2026-08-19": {
+    "ev": 3.8,
+    "bb": 1.37,
+    "ts": 1787121516.111941
   }
 }
