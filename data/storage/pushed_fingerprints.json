@@ -225,6 +225,14 @@
     "ev": 1.45,
     "ts": 1787101664.639524
   },
+  "football|Argentina Cup|Racing Club Avellaneda|Belgrano|单双-双|oe|2026-08-20": {
+    "ev": 1.75,
+    "ts": 1787120332.748977
+  },
+  "football|Argentina Cup|Racing Club Avellaneda|Belgrano|和局|1x2|2026-08-20": {
+    "ev": 1.61,
+    "ts": 1787120332.748904
+  },
   "football|Argentina Cup|利斯特雷|拉普拉塔体操|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 10.61,
     "bb": 2.25,
@@ -265,6 +273,14 @@
     "ev": 6.34,
     "ts": 1787118701.174467
   },
+  "football|Argentina Liga Profesional Reserves|Gimnasia de La Plata (Res)|Sarmiento de Junin (Res)|和局|1x2|2026-08-20": {
+    "ev": 1.03,
+    "ts": 1787120332.749386
+  },
+  "football|Argentina Liga Profesional Reserves|Huracan (Res)|Independiente Rivadavia (Res)|主胜|1x2|2026-08-20": {
+    "ev": 2.29,
+    "ts": 1787120332.7484689
+  },
   "football|Argentina Liga Profesional Reserves|拉费尔拿后备队|基尔梅斯后备队|让球主胜(+0.5/1)|hc|+0.5/1|2026-08-20": {
     "ev": 6.34,
     "bb": 1.67,
@@ -278,6 +294,10 @@
   "football|Brazil Serie B|Botafogo FC SP|Criciuma EC SC|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 1.21,
     "ts": 1787101664.641015
+  },
+  "football|Brazil Serie B|Botafogo FC SP|Criciuma EC SC|单双-双|oe|2026-08-20": {
+    "ev": 1.05,
+    "ts": 1787120332.749423
   },
   "football|Brazil Serie B|Cuiaba Esporte Clube MT|Operario Ferroviario EC PR|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 1.66,
@@ -860,6 +880,11 @@
     "bb": 1.94,
     "ts": 1787055069.2276852
   },
+  "football|Japan J.League 2|札幌冈萨多|大宫松鼠|双边进球-是|btts|2026-08-22": {
+    "ev": 4.65,
+    "bb": 1.68,
+    "ts": 1787120332.1635358
+  },
   "football|Mexico Liga De Expansion MX|莫雷利亚|克雷卡米诺斯|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-21": {
     "ev": 4.23,
     "bb": 1.92,
@@ -1070,6 +1095,10 @@
     "bb": 9.95,
     "ts": 1787034729.999058
   },
+  "football|Uzbekistan Super League|FK Agmk Olmaliq|PFK Dinamo Samarqand|上半场双重机会-主/客|ht_dc|2026-08-19": {
+    "ev": 1.24,
+    "ts": 1787120332.74834
+  },
   "tennis|ATP Challenger - Prague Open|Oleksii Krutykh (UKR)|Nick Hardt (DOM)|客胜|1x2|2026-08-19": {
     "ev": 4.7,
     "ts": 1787115585.355967
@@ -1150,6 +1179,10 @@
     "ev": 2.33,
     "ts": 1787101664.640325
   },
+  "tennis|ITF - W35 Erwitte Women Singles|Milena Steinkamp (GER)|Mary Lewis (USA)|主胜|1x2|2026-08-19": {
+    "ev": 8.8,
+    "ts": 1787120759.0794811
+  },
   "tennis|ITF - W50 Prague Women Doubles|Tereza Krejcova (CZE) / Lucie Havlickova (CZE)|Julia Adams (USA) / Merel Hoedt (NED)|主胜|1x2|2026-08-19": {
     "ev": 48.85,
     "ts": 1787114648.656149
@@ -1158,9 +1191,19 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Japan J.League 2|札幌冈萨多|大宫松鼠|双边进球-是|btts|2026-08-22": {
-    "ev": 4.65,
-    "bb": 1.68,
-    "ts": 1787120332.1635358
+  "football|Argentina Cup|阿韦亚内达竞技足球俱乐部|贝尔格拉诺|和局|1x2|2026-08-20": {
+    "ev": 3.06,
+    "bb": 2.85,
+    "ts": 1787121004.6678138
+  },
+  "football|Copa Libertadores|科金博联合|普拉腾斯|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 5.73,
+    "bb": 2.11,
+    "ts": 1787121004.667857
+  },
+  "football|Argentina Liga Profesional Reserves|飓风后备队|门多萨独立后备队|主胜|1x2|2026-08-20": {
+    "ev": 4.84,
+    "bb": 2.05,
+    "ts": 1787121004.667924
   }
 }

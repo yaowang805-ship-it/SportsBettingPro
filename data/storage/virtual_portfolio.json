@@ -1,5 +1,5 @@
 {
-  "balance": 8913.33,
+  "balance": 8814.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2278,6 +2278,75 @@
       "commence_time": 1787378400,
       "created_at": "2026-08-19T06:18:52.148962+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_阿韦亚内达竞技足球俱乐部_贝尔格拉诺_和局",
+      "sport": "football",
+      "league": "阿根廷杯",
+      "home_team": "阿韦亚内达竞技足球俱乐部",
+      "away_team": "贝尔格拉诺",
+      "home_cn": "阿韦亚内达竞技足球俱乐部",
+      "away_cn": "贝尔格拉诺",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.85,
+      "stake": 42,
+      "model_prob": 0.3616,
+      "ev_pct": 3.06,
+      "pin_odds": 2.53,
+      "fair_price": 2.7655,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787177700,
+      "created_at": "2026-08-19T06:30:04.661042+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_科金博联合_普拉腾斯_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "南美解放者杯",
+      "home_team": "科金博联合",
+      "away_team": "普拉腾斯",
+      "home_cn": "科金博联合",
+      "away_cn": "普拉腾斯",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 2.11,
+      "stake": 30,
+      "model_prob": 0.5011,
+      "ev_pct": 5.73,
+      "pin_odds": 0,
+      "fair_price": 1.9956,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787176800,
+      "created_at": "2026-08-19T06:30:04.661097+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_飓风后备队_门多萨独立后备队_主胜",
+      "sport": "football",
+      "league": "阿根廷后备联赛",
+      "home_team": "飓风后备队",
+      "away_team": "门多萨独立后备队",
+      "home_cn": "飓风后备队",
+      "away_cn": "门多萨独立后备队",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.05,
+      "stake": 27,
+      "model_prob": 0.5114,
+      "ev_pct": 4.84,
+      "pin_odds": 1.8696,
+      "fair_price": 1.9553,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787162400,
+      "created_at": "2026-08-19T06:30:04.661136+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2337,8 +2406,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-19",
-    "used": 3297.0,
-    "bets": 26
+    "used": 3396.0,
+    "bets": 29
   },
   "updated": null
 }
