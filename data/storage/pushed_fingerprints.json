@@ -24,6 +24,10 @@
     "ev": 3.12,
     "ts": 1787114648.655688
   },
+  "basketball|Mexico LNBP Basketball League|Fuerza Regia|Gambusinos de Fresnillo|客胜|1x2|2026-08-20": {
+    "ev": 1.23,
+    "ts": 1787117348.1079638
+  },
   "basketball|Mexico LNBP Basketball League|Fuerza Regia|Gambusinos de Fresnillo|让分客胜|1x2|2026-08-20": {
     "ev": 4.18,
     "ts": 1787115444.852549
@@ -163,6 +167,11 @@
     "bb": 1.95,
     "ts": 1787117180.1074739
   },
+  "basketball|William Jones Cup|日本|中华台北蓝|让分客胜(-4.5)|hc|-4.5|2026-08-19": {
+    "ev": 8.39,
+    "bb": 2.05,
+    "ts": 1787117347.713034
+  },
   "football|ASEAN Hyundai Cup|Vietnam|Malaysia|双边进球-否|btts|2026-08-19": {
     "ev": 3.98,
     "ts": 1787114648.654193
@@ -222,6 +231,11 @@
     "ev": 9.41,
     "bb": 2.05,
     "ts": 1787020969.617325
+  },
+  "football|Argentina Cup|阿韦亚内达竞技足球俱乐部|贝尔格拉诺|小球(2.0)|ou|2.0|2026-08-20": {
+    "ev": 3.91,
+    "bb": 1.79,
+    "ts": 1787117347.713077
   },
   "football|Argentina Liga Profesional Reserves|Atletico Tucuman (Res)|River Plate (Res)|客胜|1x2|2026-08-19": {
     "ev": 3.04,
@@ -817,6 +831,10 @@
     "bb": 1.65,
     "ts": 1787101664.262603
   },
+  "football|Poland III Liga|Rakow Czestochowa II|KS Stilon Gorzow Wlkp|主胜|1x2|2026-08-19": {
+    "ev": 3.34,
+    "ts": 1787117348.108347
+  },
   "football|Poland III Liga|Zabkovia Zabki|Wigry Suwalki|主胜|1x2|2026-08-19": {
     "ev": 1.5,
     "ts": 1787114648.6540759
@@ -980,6 +998,11 @@
     "bb": 8.55,
     "ts": 1787021144.06165
   },
+  "football|USA Major League Soccer|奥兰多城|芝加哥火焰|让球客胜(0)|hc|0|2026-08-20": {
+    "ev": 2.56,
+    "bb": 1.76,
+    "ts": 1787117347.713114
+  },
   "football|USA Major League Soccer|温哥华白帽|休斯敦迪纳摩|大球(3.0)|ou|3.0|2026-08-20": {
     "ev": 3.72,
     "bb": 2.04,
@@ -1088,19 +1111,19 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|William Jones Cup|日本|中华台北蓝|让分客胜(-4.5)|hc|-4.5|2026-08-19": {
-    "ev": 8.39,
-    "bb": 2.05,
-    "ts": 1787117347.713034
+  "football|Ireland First Division|凯里FC|都柏林大学|让球客胜(0)|hc|0|2026-08-22": {
+    "ev": 9.83,
+    "bb": 1.88,
+    "ts": 1787118700.351999
   },
-  "football|Argentina Cup|阿韦亚内达竞技足球俱乐部|贝尔格拉诺|小球(2.0)|ou|2.0|2026-08-20": {
-    "ev": 3.91,
-    "bb": 1.79,
-    "ts": 1787117347.713077
+  "football|Ireland First Division|凯里FC|都柏林大学|客胜|1x2|2026-08-22": {
+    "ev": 4.97,
+    "bb": 2.48,
+    "ts": 1787118700.352046
   },
-  "football|USA Major League Soccer|奥兰多城|芝加哥火焰|让球客胜(0)|hc|0|2026-08-20": {
-    "ev": 2.56,
-    "bb": 1.76,
-    "ts": 1787117347.713114
+  "football|Argentina Liga Profesional Reserves|拉费尔拿后备队|基尔梅斯后备队|让球主胜(+0.5/1)|hc|+0.5/1|2026-08-20": {
+    "ev": 6.34,
+    "bb": 1.67,
+    "ts": 1787118700.352094
   }
 }
