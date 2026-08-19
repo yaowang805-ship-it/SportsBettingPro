@@ -106,6 +106,12 @@ def settle_via_bb(dry_run: bool = False) -> dict:
         # 1. 首选: getMatchDetail 按 bb_match_id 逐场拉(可靠, 已结束比赛仍可查, 无窗口限制)
         if _bid:
             _detail = fetch_bb_match_result(_bid, language_type="EN")
+            # 静默失效判据: BB 确实返回了这场的数据(有比分)才算"本可结算"。
+            # BB 的 getMatchDetail 对过老的 id 会返回空壳(ms=None/nsg=0), 那种
+            # 属于数据过期、不是链路故障, 不能计入告警分母 —— 否则会对着一堆
+            # 永远救不回来的老账天天叫, 告警一旦变噪声就等于没做。
+            if _detail and _detail.get("home_score") is not None:
+                addressable += 1
             if (_detail and _detail.get("completed")
                     and _detail.get("home_score") is not None
                     and _detail.get("away_score") is not None):
