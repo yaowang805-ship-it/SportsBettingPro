@@ -28,6 +28,10 @@
     "ev": 7.4,
     "ts": 1787127300.199687
   },
+  "basketball|Mexico LNBP Basketball League|Freseros de Irapuato|El Calor de Cancun|让分客胜|1x2|2026-08-20": {
+    "ev": 1.48,
+    "ts": 1787137779.956435
+  },
   "basketball|Mexico LNBP Basketball League|Fuerza Regia|Gambusinos de Fresnillo|客胜|1x2|2026-08-20": {
     "ev": 1.23,
     "ts": 1787117348.1079638
@@ -366,10 +370,22 @@
     "bb": 1.66,
     "ts": 1787101664.26252
   },
+  "football|Argentina Primera Nacional|Chacarita Juniors|Guemes|上半场客胜|ht|2026-08-20": {
+    "ev": 3.16,
+    "ts": 1787137779.954975
+  },
   "football|Armenia Premier League|瓦尼|休尼克FC|让球主胜(0)|hc|0|2026-08-20": {
     "ev": 8.41,
     "bb": 1.97,
     "ts": 1787121638.345408
+  },
+  "football|Brazil Serie B|Avai FC SC|Recife PE|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 1.36,
+    "ts": 1787137779.956852
+  },
+  "football|Brazil Serie B|Avai FC SC|Recife PE|单双-双|oe|2026-08-20": {
+    "ev": 1.69,
+    "ts": 1787137779.9567769
   },
   "football|Brazil Serie B|Botafogo FC SP|Criciuma EC SC|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 1.21,
@@ -517,6 +533,10 @@
     "ev": 1.72,
     "ts": 1787101664.638964
   },
+  "football|Copa Libertadores|Coquimbo Unido|Platense|上半场客胜|ht|2026-08-20": {
+    "ev": 3.32,
+    "ts": 1787137779.9552991
+  },
   "football|Copa Libertadores|Independiente Rivadavia|Fluminense FC RJ|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 5.27,
     "ts": 1787025629.2466261
@@ -619,13 +639,33 @@
     "bb": 1.82,
     "ts": 1787039431.297716
   },
+  "football|Copa Sudamericana|Atletico Mineiro MG|Red Bull Bragantino SP|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 2.14,
+    "ts": 1787137779.955913
+  },
   "football|Copa Sudamericana|Atletico Mineiro MG|Red Bull Bragantino SP|上半场客胜|ht|2026-08-20": {
     "ev": 5.14,
     "ts": 1787101664.639435
   },
+  "football|Copa Sudamericana|Independiente Santa Fe|River Plate|上半场主胜|ht|2026-08-20": {
+    "ev": 13.52,
+    "ts": 1787137779.956002
+  },
   "football|Copa Sudamericana|Independiente Santa Fe|River Plate|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 1.27,
     "ts": 1787101664.639328
+  },
+  "football|Copa Sudamericana|Montevideo City Torque|Tigre|上半场主胜|ht|2026-08-20": {
+    "ev": 1.93,
+    "ts": 1787137779.955658
+  },
+  "football|Copa Sudamericana|Montevideo City Torque|Tigre|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 1.68,
+    "ts": 1787137779.9557388
+  },
+  "football|Copa Sudamericana|Montevideo City Torque|Tigre|净胜球home_by3|winning_margin|2026-08-20": {
+    "ev": 3.04,
+    "ts": 1787137779.9573739
   },
   "football|Copa Sudamericana|Recoleta|Boca Juniors|上半场主胜|ht|2026-08-19": {
     "ev": 4.26,
@@ -660,6 +700,11 @@
     "ev": 5.98,
     "bb": 8.95,
     "ts": 1787041147.299741
+  },
+  "football|Copa Sudamericana|圣塔菲|河床|上半场主胜|ht|2026-08-20": {
+    "ev": 13.52,
+    "bb": 5.5,
+    "ts": 1787137779.643577
   },
   "football|Copa Sudamericana|米内罗竞技|红牛布拉干蒂诺|上半场客胜|ht|2026-08-20": {
     "ev": 5.14,
@@ -1071,6 +1116,10 @@
     "ev": 2.44,
     "ts": 1787125556.565519
   },
+  "football|Poland III Liga|KS CK Troszyn|KS Warta Sieradz|客胜|1x2|2026-08-19": {
+    "ev": 4.42,
+    "ts": 1787138027.734076
+  },
   "football|Poland III Liga|Korona Kielce SA II|KS Hetman Zamosc|主胜|1x2|2026-08-19": {
     "ev": 12.72,
     "ts": 1787127882.01071
@@ -1094,6 +1143,10 @@
   "football|Poland III Liga|Rakow Czestochowa II|KS Stilon Gorzow Wlkp|让球客胜|1x2|2026-08-19": {
     "ev": 7.9,
     "ts": 1787124482.642567
+  },
+  "football|Poland III Liga|Wisla Plock II|LKS 1926 Lomza|客胜|1x2|2026-08-19": {
+    "ev": 1.58,
+    "ts": 1787138027.734262
   },
   "football|Poland III Liga|Zabkovia Zabki|Wigry Suwalki|主胜|1x2|2026-08-19": {
     "ev": 1.5,
@@ -1496,13 +1549,17 @@
     "ev": 48.85,
     "ts": 1787114648.656149
   },
+  "tennis|WTA - Cincinnati Open - Doubles|Marta Kostyuk (UKR) / Peyton Stearns (USA)|Guo Hanyu (CHN) / Kristina Mladenovic (FRA)|主胜|1x2|2026-08-20": {
+    "ev": 16.87,
+    "ts": 1787137779.9569652
+  },
   "tennis|WTA - Cincinnati Open|Aryna Sabalenka (BLR)|Wang Xinyu (CHN)|让盘客胜|1x2|2026-08-19": {
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Copa Sudamericana|圣塔菲|河床|上半场主胜|ht|2026-08-20": {
-    "ev": 13.52,
-    "bb": 5.5,
-    "ts": 1787137779.643577
+  "football|Poland III Liga|克拉科夫维茨兹塔二队|哥伦布猎鹰|主胜|1x2|2026-08-19": {
+    "ev": 4.56,
+    "bb": 1.79,
+    "ts": 1787138291.598357
   }
 }
