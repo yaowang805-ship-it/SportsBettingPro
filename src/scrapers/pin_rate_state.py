@@ -146,8 +146,33 @@ def open_circuit(seconds):
 
 
 def set_pause(seconds):
-    """Cloudflare 封禁冷却: 让所有进程一起暂停。"""
-    _set("pause_until", time.time() + seconds)
+    """Cloudflare 封禁冷却: 让所有进程一起暂停。
+
+    V5.10 修复: 只在**当前没有有效 pause** 时才设置新 pause, 不续期。
+    原先每次都 _set("pause_until", now+seconds) —— Pin 反复 403 封禁时,
+    每次封禁都把 pause 往后推 30 分钟, 密集封禁 = 无限期暂停。实测 2026-08-19
+    晚上 56 次封禁把 pause 反复续期, 比价从 19:18 停摆到扫描时段关闭。
+    封禁冷却的目的是"让 IP 解封", 不是"每触发一次就从头再冷却一遍"。
+    """
+    conn = _connect()
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        row = conn.execute("SELECT pause_until FROM pin_rate WHERE id=1").fetchone()
+        now = time.time()
+        cur = row[0] if row else 0
+        # 已有未过期的 pause 就保持原到期时间, 不延长
+        if cur <= now:
+            conn.execute("UPDATE pin_rate SET pause_until=? WHERE id=1",
+                         (now + seconds,))
+        conn.execute("COMMIT")
+    except Exception:
+        try:
+            conn.execute("ROLLBACK")
+        except Exception:
+            pass
+        _set("pause_until", time.time() + seconds)  # 降级兜底
+    finally:
+        conn.close()
 
 
 def record_ban():
