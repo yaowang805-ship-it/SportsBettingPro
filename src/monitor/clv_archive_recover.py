@@ -223,7 +223,8 @@ def recover(write=False):
         probe = sub_market[3:] if sub_market.startswith("ht_") else sub_market
         probe = {"ht": "1x2"}.get(sub_market, probe)
         close_data = _extract_market_odds(mu, probe, e.get("designation", ""),
-                                          sport=e.get("sport", "football"))
+                                          sport=e.get("sport", "football"),
+                                          line=e.get("line", ""))
         if not close_data:
             stats["跳过_归档库无此盘口"] += 1
             continue
