@@ -24,6 +24,11 @@
     "ev": 3.23,
     "ts": 1787115444.8525069
   },
+  "basketball|FIBA Olympic Pre Qualifier Tournament Women|菲律宾 (女)|加拿大 (女)|让分主胜(+27.5)|hc|+27.5|2026-08-20": {
+    "ev": 3.87,
+    "bb": 1.83,
+    "ts": 1787181348.3585632
+  },
   "basketball|Mexico LNBP Basketball League|Dorados de Chihuahua|Abejas de Leon|主胜|1x2|2026-08-20": {
     "ev": 3.12,
     "ts": 1787114648.655688
@@ -67,6 +72,10 @@
   "basketball|Olympic Tournament Pre-Qualifying Women|New Zealand (w)|Brazil (w)|让分主胜|1x2|2026-08-19": {
     "ev": 4.06,
     "ts": 1787103179.7748811
+  },
+  "basketball|Olympic Tournament Pre-Qualifying Women|Philippines (w)|Canada (w)|让分主胜|1x2|2026-08-20": {
+    "ev": 1.39,
+    "ts": 1787181737.754082
   },
   "basketball|Olympic Tournament Pre-Qualifying Women|Senegal (w)|Mexico (w)|主胜|1x2|2026-08-20": {
     "ev": 3.88,
@@ -570,6 +579,10 @@
   "football|Copa Libertadores|CR Flamengo RJ|Cruzeiro EC MG|上半场客胜|ht|2026-08-20": {
     "ev": 8.52,
     "ts": 1787179754.05746
+  },
+  "football|Copa Libertadores|CR Flamengo RJ|Cruzeiro EC MG|让球客胜|1x2|2026-08-20": {
+    "ev": 1.53,
+    "ts": 1787182350.849977
   },
   "football|Copa Libertadores|Cerro Porteno|SE Palmeiras SP|上半场主胜|ht|2026-08-20": {
     "ev": 2.78,
@@ -1497,9 +1510,17 @@
     "ev": 1.65,
     "ts": 1787122299.606603
   },
+  "football|USA Major League Soccer|FC Cincinnati|New York City FC|上半场客胜|ht|2026-08-20": {
+    "ev": 3.49,
+    "ts": 1787181737.753029
+  },
   "football|USA Major League Soccer|FC Cincinnati|New York City FC|主胜|1x2|2026-08-20": {
     "ev": 2.4,
     "ts": 1787180004.791334
+  },
+  "football|USA Major League Soccer|FC Cincinnati|New York City FC|客胜|1x2|2026-08-20": {
+    "ev": 4.66,
+    "ts": 1787182085.249481
   },
   "football|USA Major League Soccer|FC Cincinnati|New York City FC|小球|1x2|2026-08-20": {
     "ev": 3.66,
@@ -1508,6 +1529,10 @@
   "football|USA Major League Soccer|FC Cincinnati|New York City FC|让球主胜|1x2|2026-08-20": {
     "ev": 1.29,
     "ts": 1787115444.852302
+  },
+  "football|USA Major League Soccer|FC Cincinnati|New York City FC|让球客胜|1x2|2026-08-20": {
+    "ev": 2.09,
+    "ts": 1787181583.559547
   },
   "football|USA Major League Soccer|Los Angeles Galaxy|San Jose Earthquakes|让球主胜|1x2|2026-08-20": {
     "ev": 1.41,
@@ -1536,6 +1561,10 @@
   "football|USA Major League Soccer|New York Red Bulls|Nashville SC|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 1.08,
     "ts": 1787115444.853108
+  },
+  "football|USA Major League Soccer|New York Red Bulls|Nashville SC|让球主胜|1x2|2026-08-20": {
+    "ev": 1.25,
+    "ts": 1787181909.2515788
   },
   "football|USA Major League Soccer|New York Red Bulls|Nashville SC|让球客胜|1x2|2026-08-20": {
     "ev": 1.67,
@@ -1569,6 +1598,10 @@
     "ev": 2.28,
     "ts": 1787114648.655565
   },
+  "football|USA Major League Soccer|Sporting Kansas City|Saint Louis City SC|总进球区间7+|total_goals_range|2026-08-20": {
+    "ev": 4.72,
+    "ts": 1787181583.5603058
+  },
   "football|USA Major League Soccer|Toronto FC|Charlotte FC|和局|1x2|2026-08-20": {
     "ev": 1.99,
     "ts": 1787179754.056907
@@ -1580,6 +1613,10 @@
   "football|USA Major League Soccer|Toronto FC|Charlotte FC|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 3.15,
     "ts": 1787101664.641293
+  },
+  "football|USA Major League Soccer|Toronto FC|Charlotte FC|让球主胜|1x2|2026-08-20": {
+    "ev": 1.31,
+    "ts": 1787182350.849677
   },
   "football|USA Major League Soccer|Vancouver Whitecaps FC|Houston Dynamo|净胜球away_by2|winning_margin|2026-08-20": {
     "ev": 8.11,
@@ -1624,6 +1661,10 @@
     "ev": 3.58,
     "bb": 1.5,
     "ts": 1787180004.525698
+  },
+  "football|USA National Women Soccer League|Houston Dash (w)|Chicago Red Stars (w)|小球|1x2|2026-08-20": {
+    "ev": 1.79,
+    "ts": 1787182470.4566112
   },
   "football|USA National Women Soccer League|Racing Louisville FC (w)|Seattle Reign FC (w)|让球主胜|1x2|2026-08-20": {
     "ev": 2.2,
@@ -1847,9 +1888,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "basketball|FIBA Olympic Pre Qualifier Tournament Women|菲律宾 (女)|加拿大 (女)|让分主胜(+27.5)|hc|+27.5|2026-08-20": {
-    "ev": 3.87,
-    "bb": 1.83,
-    "ts": 1787181348.3585632
+  "football|USA Major League Soccer|明尼苏达联|亚特兰大联|主胜|1x2|2026-08-20": {
+    "ev": 2.25,
+    "bb": 1.69,
+    "ts": 1787182605.277452
   }
 }

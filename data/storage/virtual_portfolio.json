@@ -1,5 +1,5 @@
 {
-  "balance": 8073.33,
+  "balance": 8062.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3014,6 +3014,29 @@
       "commence_time": 1787182200,
       "created_at": "2026-08-19T23:15:48.353354+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_明尼苏达联_亚特兰大联_主胜",
+      "sport": "football",
+      "league": "美国职业大联盟",
+      "home_team": "明尼苏达联",
+      "away_team": "亚特兰大联",
+      "home_cn": "明尼苏达联",
+      "away_cn": "亚特兰大联",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.69,
+      "stake": 11,
+      "model_prob": 0.605,
+      "ev_pct": 2.25,
+      "pin_odds": 1.6329,
+      "fair_price": 1.6528,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787185800,
+      "created_at": "2026-08-19T23:36:45.269760+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3073,8 +3096,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 434.0,
-    "bets": 18
+    "used": 445.0,
+    "bets": 19
   },
   "updated": null
 }
