@@ -121,6 +121,11 @@
     "ev": 1.95,
     "ts": 1787179754.0577111
   },
+  "basketball|WNBA|华盛顿神秘人 (女)|多伦多节奏 (女)|小分(169.5)|ou|169.5|2026-08-20": {
+    "ev": 3.97,
+    "bb": 2.06,
+    "ts": 1787180004.525749
+  },
   "basketball|WNBA|华盛顿神秘人 (女)|多伦多节奏报 (女)|大分(169.5)|ou|169.5|2026-08-20": {
     "ev": 5.91,
     "bb": 2.07,
@@ -1380,6 +1385,10 @@
     "ev": 2.08,
     "ts": 1787179754.0579488
   },
+  "football|USA Major League Soccer|DC United|New England Revolution|小球|1x2|2026-08-20": {
+    "ev": 2.26,
+    "ts": 1787180004.792906
+  },
   "football|USA Major League Soccer|DC United|New England Revolution|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 2.75,
     "ts": 1787101664.641217
@@ -1387,6 +1396,10 @@
   "football|USA Major League Soccer|DC United|New England Revolution|让球主胜|1x2|2026-08-20": {
     "ev": 1.65,
     "ts": 1787122299.606603
+  },
+  "football|USA Major League Soccer|FC Cincinnati|New York City FC|主胜|1x2|2026-08-20": {
+    "ev": 2.4,
+    "ts": 1787180004.791334
   },
   "football|USA Major League Soccer|FC Cincinnati|New York City FC|让球主胜|1x2|2026-08-20": {
     "ev": 1.29,
@@ -1436,6 +1449,10 @@
     "ev": 1.42,
     "ts": 1787114648.655424
   },
+  "football|USA Major League Soccer|Philadelphia Union|Inter Miami CF|小球|1x2|2026-08-20": {
+    "ev": 1.12,
+    "ts": 1787180004.791578
+  },
   "football|USA Major League Soccer|Portland Timbers|San Diego FC|让球主胜|1x2|2026-08-20": {
     "ev": 1.27,
     "ts": 1787138299.1429539
@@ -1451,6 +1468,10 @@
   "football|USA Major League Soccer|Toronto FC|Charlotte FC|和局|1x2|2026-08-20": {
     "ev": 1.99,
     "ts": 1787179754.056907
+  },
+  "football|USA Major League Soccer|Toronto FC|Charlotte FC|小球|1x2|2026-08-20": {
+    "ev": 3.76,
+    "ts": 1787180004.791831
   },
   "football|USA Major League Soccer|Toronto FC|Charlotte FC|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 3.15,
@@ -1489,6 +1510,11 @@
     "ev": 6.47,
     "bb": 9.95,
     "ts": 1787034729.999058
+  },
+  "football|USA Major League Soccer|辛辛那提|纽约城|让球主胜(0)|hc|0|2026-08-20": {
+    "ev": 3.58,
+    "bb": 1.5,
+    "ts": 1787180004.525698
   },
   "football|USA National Women Soccer League|Racing Louisville FC (w)|Seattle Reign FC (w)|让球主胜|1x2|2026-08-20": {
     "ev": 2.2,
@@ -1651,14 +1677,34 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|USA Major League Soccer|辛辛那提|纽约城|让球主胜(0)|hc|0|2026-08-20": {
-    "ev": 3.58,
-    "bb": 1.5,
-    "ts": 1787180004.525698
+  "football|Poland Ekstraklasa|弗罗茨瓦夫|维德祖罗兹|双边进球-是|btts|2026-08-23": {
+    "ev": 5.03,
+    "bb": 1.67,
+    "ts": 1787180085.8711302
   },
-  "basketball|WNBA|华盛顿神秘人 (女)|多伦多节奏 (女)|小分(169.5)|ou|169.5|2026-08-20": {
-    "ev": 3.97,
-    "bb": 2.06,
-    "ts": 1787180004.525749
+  "football|Mexico Liga De Expansion MX|特帕蒂特兰|特拉斯卡拉|双边进球-是|btts|2026-08-21": {
+    "ev": 5.78,
+    "bb": 1.86,
+    "ts": 1787180085.871181
+  },
+  "football|Argentina Primera Nacional|帕特罗纳图|祖祖尔甘拿斯亚|大球(2.0)|ou|2.0|2026-08-23": {
+    "ev": 5.23,
+    "bb": 1.89,
+    "ts": 1787180085.871225
+  },
+  "football|England League Two|沃尔索尔|格林斯比|双边进球-是|btts|2026-08-22": {
+    "ev": 4.97,
+    "bb": 1.89,
+    "ts": 1787180085.871263
+  },
+  "football|Italy Serie B|恩波利|克雷莫纳|双边进球-是|btts|2026-08-23": {
+    "ev": 4.36,
+    "bb": 1.87,
+    "ts": 1787180085.871298
+  },
+  "football|Italy Serie A|热那亚|那不勒斯|上半场主胜|ht|2026-08-23": {
+    "ev": 10.78,
+    "bb": 6.3,
+    "ts": 1787180085.8713322
   }
 }
