@@ -16,6 +16,10 @@
     "bb": 2.27,
     "ts": 1787101664.26267
   },
+  "basketball|Brazil Campeonato Paulista de Basquete Women|Santo Andre (w)|Unimed Campinas (w)|客胜|1x2|2026-08-21": {
+    "ev": 1.72,
+    "ts": 1787180086.215321
+  },
   "basketball|Brazil Campeonato Paulista de Basquete|Bauru Basket SP|Sao Jose dos Campos|主胜|1x2|2026-08-20": {
     "ev": 3.23,
     "ts": 1787115444.8525069
@@ -395,10 +399,19 @@
     "ev": 3.16,
     "ts": 1787137779.954975
   },
+  "football|Argentina Primera Nacional|帕特罗纳图|祖祖尔甘拿斯亚|大球(2.0)|ou|2.0|2026-08-23": {
+    "ev": 5.23,
+    "bb": 1.89,
+    "ts": 1787180085.871225
+  },
   "football|Armenia Premier League|瓦尼|休尼克FC|让球主胜(0)|hc|0|2026-08-20": {
     "ev": 8.41,
     "bb": 1.97,
     "ts": 1787121638.345408
+  },
+  "football|Brazil Serie B|Athletic Club MG|CR Brasil AL|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 1.14,
+    "ts": 1787180086.2152529
   },
   "football|Brazil Serie B|Avai FC SC|Recife PE|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 1.36,
@@ -602,6 +615,14 @@
     "ev": 1.9,
     "ts": 1787050535.899389
   },
+  "football|Copa Libertadores|LDU Quito|Mirassol FC SP|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 1.14,
+    "ts": 1787180086.214936
+  },
+  "football|Copa Libertadores|LDU Quito|Mirassol FC SP|上半场客胜|ht|2026-08-21": {
+    "ev": 1.76,
+    "ts": 1787180086.2148328
+  },
   "football|Copa Libertadores|Tolima|CSD Independiente del Valle|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 3.62,
     "ts": 1787025629.247463
@@ -687,6 +708,14 @@
   "football|Copa Sudamericana|Atletico Mineiro MG|Red Bull Bragantino SP|上半场客胜|ht|2026-08-20": {
     "ev": 5.14,
     "ts": 1787101664.639435
+  },
+  "football|Copa Sudamericana|Club Olimpia|CR Vasco da Gama RJ|上半场主胜|ht|2026-08-21": {
+    "ev": 1.17,
+    "ts": 1787180086.215132
+  },
+  "football|Copa Sudamericana|Club Olimpia|CR Vasco da Gama RJ|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 2.88,
+    "ts": 1787180086.215193
   },
   "football|Copa Sudamericana|Independiente Santa Fe|River Plate|上半场主胜|ht|2026-08-20": {
     "ev": 13.52,
@@ -835,6 +864,11 @@
     "bb": 1.97,
     "ts": 1787101664.2627468
   },
+  "football|England League Two|沃尔索尔|格林斯比|双边进球-是|btts|2026-08-22": {
+    "ev": 4.97,
+    "bb": 1.89,
+    "ts": 1787180085.871263
+  },
   "football|England National League North|Hebburn Town|Worksop Town|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 1.49,
     "ts": 1787042347.3327
@@ -880,10 +914,18 @@
     "ev": 1.58,
     "ts": 1787114648.654437
   },
+  "football|Finland Ykkosliiga|KaPa Kapylan Pallo|JIPPO|总进球区间7+|total_goals_range|2026-08-20": {
+    "ev": 3.49,
+    "ts": 1787180086.2155771
+  },
   "football|France Ligue 2|克莱蒙|第戎|主胜|1x2|2026-08-22": {
     "ev": 3.22,
     "bb": 2.71,
     "ts": 1787101664.262996
+  },
+  "football|France Ligue 3|Football Bourg En Bresse Peronnas 01|Thionville Lusitanos|和局|1x2|2026-08-21": {
+    "ev": 3.33,
+    "ts": 1787180086.215062
   },
   "football|France Ligue 3|孔卡诺|维利法兰|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-21": {
     "ev": 4.57,
@@ -1009,6 +1051,16 @@
     "ev": 5.92,
     "bb": 4.17,
     "ts": 1787101664.26305
+  },
+  "football|Italy Serie A|热那亚|那不勒斯|上半场主胜|ht|2026-08-23": {
+    "ev": 10.78,
+    "bb": 6.3,
+    "ts": 1787180085.8713322
+  },
+  "football|Italy Serie B|恩波利|克雷莫纳|双边进球-是|btts|2026-08-23": {
+    "ev": 4.36,
+    "bb": 1.87,
+    "ts": 1787180085.871298
   },
   "football|Italy Serie B|维琴察|卡坦萨罗 1929|双边进球-是|btts|2026-08-22": {
     "ev": 4.13,
@@ -1139,6 +1191,11 @@
     "bb": 1.68,
     "ts": 1787120332.1635358
   },
+  "football|Mexico Liga De Expansion MX|特帕蒂特兰|特拉斯卡拉|双边进球-是|btts|2026-08-21": {
+    "ev": 5.78,
+    "bb": 1.86,
+    "ts": 1787180085.871181
+  },
   "football|Mexico Liga De Expansion MX|莫雷利亚|克雷卡米诺斯|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-21": {
     "ev": 4.23,
     "bb": 1.92,
@@ -1157,6 +1214,11 @@
     "ev": 3.95,
     "bb": 1.58,
     "ts": 1787124737.707789
+  },
+  "football|Poland Ekstraklasa|弗罗茨瓦夫|维德祖罗兹|双边进球-是|btts|2026-08-23": {
+    "ev": 5.03,
+    "bb": 1.67,
+    "ts": 1787180085.8711302
   },
   "football|Poland III Liga|KKS 1925 Kalisz|KS Notec Czarnkow|大球|1x2|2026-08-19": {
     "ev": 11.05,
@@ -1262,6 +1324,14 @@
     "ev": 1.27,
     "ts": 1787137779.415649
   },
+  "football|Spain LaLiga|Rayo Vallecano|Deportivo Alaves|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 4.17,
+    "ts": 1787180086.2147598
+  },
+  "football|Spain LaLiga|Rayo Vallecano|Deportivo Alaves|上半场客胜|ht|2026-08-21": {
+    "ev": 8.79,
+    "ts": 1787180086.214659
+  },
   "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 6.13,
     "bb": 2.06,
@@ -1340,6 +1410,10 @@
     "bb": 4.66,
     "ts": 1787048413.983253
   },
+  "football|UEFA Europa Conference League-Qualification|Atalanta BC|Hapoel Tel Aviv FC|上半场客胜|ht|2026-08-21": {
+    "ev": 8.5,
+    "ts": 1787180086.2145479
+  },
   "football|UEFA Europa Conference League-Qualification|亚特兰大|特拉维夫夏普尔|双重机会-和局/客|dc|2026-08-21": {
     "ev": 18.19,
     "bb": 5.55,
@@ -1368,6 +1442,10 @@
     "ev": 7.09,
     "ts": 1787101664.641385
   },
+  "football|UEFA Europa League-Qualification|Besiktas JK|FK Kauno Zalgiris|总进球区间7+|total_goals_range|2026-08-21": {
+    "ev": 4.82,
+    "ts": 1787180086.215661
+  },
   "football|UEFA Europa League-Qualification|CS卡拉奥华大学 1948|阿拉特亚美尼亚|双重机会-和局/客|dc|2026-08-21": {
     "ev": 3.42,
     "bb": 2.89,
@@ -1380,6 +1458,14 @@
   "football|USA Major League Soccer|Columbus Crew|Montreal|上半场客胜|ht|2026-08-20": {
     "ev": 1.41,
     "ts": 1787179754.0571678
+  },
+  "football|USA Major League Soccer|Columbus Crew|Montreal|小球|1x2|2026-08-20": {
+    "ev": 1.94,
+    "ts": 1787180180.64681
+  },
+  "football|USA Major League Soccer|Columbus Crew|Montreal|让球客胜|1x2|2026-08-20": {
+    "ev": 1.07,
+    "ts": 1787180180.646774
   },
   "football|USA Major League Soccer|DC United|New England Revolution|和局|1x2|2026-08-20": {
     "ev": 2.08,
@@ -1541,6 +1627,10 @@
     "bb": 1.63,
     "ts": 1787124737.707972
   },
+  "tennis|ATP Challenger - Cancun Open - Doubles|Luis Carlos Alvarez Valdes (MEX) / Alan Magadan (MEX)|Samuel Heredia (COL) / Divij Sharan (IND)|客胜|1x2|2026-08-20": {
+    "ev": 91.86,
+    "ts": 1787180086.215498
+  },
   "tennis|ATP Challenger - Prague Open|Oleksii Krutykh (UKR)|Nick Hardt (DOM)|客胜|1x2|2026-08-19": {
     "ev": 4.7,
     "ts": 1787115585.355967
@@ -1568,6 +1658,10 @@
   "tennis|ITF - M15 Asuncion Men Singles|Mateo Del Pino (ARG)|Santiago De La Fuente (ARG)|客胜|1x2|2026-08-19": {
     "ev": 2.53,
     "ts": 1787124307.205313
+  },
+  "tennis|ITF - M15 Bastad Men Doubles|Maties Torres Ramis (ESP) / Kristian Tumbas Kajgo (CRO)|Jayson Blando (USA) / Oren Vasser (USA)|客胜|1x2|2026-08-20": {
+    "ev": 17.8,
+    "ts": 1787180086.215408
   },
   "tennis|ITF - M15 Bastad Men Singles|Jack Karlsson Wistrand (SWE)|Jan Simonsson (SWE)|主胜|1x2|2026-08-19": {
     "ev": 4.14,
@@ -1677,34 +1771,24 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Poland Ekstraklasa|弗罗茨瓦夫|维德祖罗兹|双边进球-是|btts|2026-08-23": {
-    "ev": 5.03,
-    "bb": 1.67,
-    "ts": 1787180085.8711302
+  "football|Venezuela Cup|拉腊体育|祖利亚诺闪电|客胜|1x2|2026-08-20": {
+    "ev": 41.65,
+    "bb": 5.35,
+    "ts": 1787180286.2868218
   },
-  "football|Mexico Liga De Expansion MX|特帕蒂特兰|特拉斯卡拉|双边进球-是|btts|2026-08-21": {
-    "ev": 5.78,
-    "bb": 1.86,
-    "ts": 1787180085.871181
+  "football|Venezuela Cup|拉腊体育|祖利亚诺闪电|双重机会-和局/客|dc|2026-08-20": {
+    "ev": 20.56,
+    "bb": 2.2,
+    "ts": 1787180286.2869189
   },
-  "football|Argentina Primera Nacional|帕特罗纳图|祖祖尔甘拿斯亚|大球(2.0)|ou|2.0|2026-08-23": {
-    "ev": 5.23,
-    "bb": 1.89,
-    "ts": 1787180085.871225
+  "football|USA Major League Soccer|辛辛那提|纽约城|主胜|1x2|2026-08-20": {
+    "ev": 4.53,
+    "bb": 1.97,
+    "ts": 1787180286.286997
   },
-  "football|England League Two|沃尔索尔|格林斯比|双边进球-是|btts|2026-08-22": {
-    "ev": 4.97,
-    "bb": 1.89,
-    "ts": 1787180085.871263
-  },
-  "football|Italy Serie B|恩波利|克雷莫纳|双边进球-是|btts|2026-08-23": {
-    "ev": 4.36,
-    "bb": 1.87,
-    "ts": 1787180085.871298
-  },
-  "football|Italy Serie A|热那亚|那不勒斯|上半场主胜|ht|2026-08-23": {
-    "ev": 10.78,
-    "bb": 6.3,
-    "ts": 1787180085.8713322
+  "football|Venezuela Cup|阿维拉竞技|柏达利体育会|双重机会-主/和局|dc|2026-08-20": {
+    "ev": 3.34,
+    "bb": 1.78,
+    "ts": 1787180286.28707
   }
 }
