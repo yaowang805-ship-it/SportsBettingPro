@@ -178,6 +178,10 @@
     "ev": 2.73,
     "ts": 1787121080.634176
   },
+  "basketball|William Jones Cup|Wonju DB Promy|Strong Group Athletics|让分客胜|1x2|2026-08-19": {
+    "ev": 2.65,
+    "ts": 1787121717.264075
+  },
   "basketball|William Jones Cup|原州东浦新世代|菲律宾劲旅|客胜|1x2|2026-08-19": {
     "ev": 3.8,
     "bb": 1.37,
@@ -313,6 +317,11 @@
     "ev": 4.15,
     "bb": 1.66,
     "ts": 1787101664.26252
+  },
+  "football|Armenia Premier League|瓦尼|休尼克FC|让球主胜(0)|hc|0|2026-08-20": {
+    "ev": 8.41,
+    "bb": 1.97,
+    "ts": 1787121638.345408
   },
   "football|Brazil Serie B|Botafogo FC SP|Criciuma EC SC|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 1.21,
@@ -1227,6 +1236,10 @@
     "ev": 8.8,
     "ts": 1787120759.0794811
   },
+  "tennis|ITF - W35 Erwitte Women Singles|Milena Steinkamp (GER)|Mary Lewis (USA)|让盘主胜|1x2|2026-08-19": {
+    "ev": 17.66,
+    "ts": 1787121717.2639291
+  },
   "tennis|ITF - W50 Prague Women Doubles|Tereza Krejcova (CZE) / Lucie Havlickova (CZE)|Julia Adams (USA) / Merel Hoedt (NED)|主胜|1x2|2026-08-19": {
     "ev": 48.85,
     "ts": 1787114648.656149
@@ -1235,9 +1248,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Armenia Premier League|瓦尼|休尼克FC|让球主胜(0)|hc|0|2026-08-20": {
-    "ev": 8.41,
-    "bb": 1.97,
-    "ts": 1787121638.345408
+  "basketball|William Jones Cup|原州东浦新世代|菲律宾劲旅|让分客胜(-7.5)|hc|-7.5|2026-08-19": {
+    "ev": 4.23,
+    "bb": 1.98,
+    "ts": 1787121939.7548
   }
 }
