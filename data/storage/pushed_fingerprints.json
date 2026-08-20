@@ -119,6 +119,11 @@
     "bb": 2.02,
     "ts": 1787189015.644917
   },
+  "basketball|WNBA|金州瓦尔基里 (女)|明尼苏达山猫 (女)|小分(163.5)|ou|163.5|2026-08-20": {
+    "ev": 3.49,
+    "bb": 1.88,
+    "ts": 1787189324.402137
+  },
   "basketball|William Jones Cup|Chinese Taipei White|Malaysia|大分|1x2|2026-08-20": {
     "ev": 3.15,
     "ts": 1787189241.882921
@@ -126,6 +131,10 @@
   "basketball|William Jones Cup|Jordan|California Irvine Anteaters|客胜|1x2|2026-08-20": {
     "ev": 1.56,
     "ts": 1787182605.538065
+  },
+  "basketball|William Jones Cup|Jordan|California Irvine Anteaters|让分主胜|1x2|2026-08-20": {
+    "ev": 2.37,
+    "ts": 1787189734.027516
   },
   "basketball|William Jones Cup|中国台北白色|马来西亚|大分(146.5)|ou|146.5|2026-08-20": {
     "ev": 3.75,
@@ -812,9 +821,25 @@
     "ev": 2.09,
     "ts": 1787181583.559547
   },
+  "football|USA Major League Soccer|Los Angeles Galaxy|San Jose Earthquakes|上半场客胜|ht|2026-08-20": {
+    "ev": 4.18,
+    "ts": 1787189734.027255
+  },
+  "football|USA Major League Soccer|Los Angeles Galaxy|San Jose Earthquakes|双重机会-和局/客|dc|2026-08-20": {
+    "ev": 2.79,
+    "ts": 1787189734.027325
+  },
+  "football|USA Major League Soccer|Los Angeles Galaxy|San Jose Earthquakes|客胜|1x2|2026-08-20": {
+    "ev": 1.65,
+    "ts": 1787189734.027185
+  },
   "football|USA Major League Soccer|Los Angeles Galaxy|San Jose Earthquakes|让球主胜|1x2|2026-08-20": {
     "ev": 1.41,
     "ts": 1787127882.0102232
+  },
+  "football|USA Major League Soccer|Los Angeles Galaxy|San Jose Earthquakes|让球客胜|1x2|2026-08-20": {
+    "ev": 1.3,
+    "ts": 1787189625.918839
   },
   "football|USA Major League Soccer|Minnesota United FC|Atlanta United FC|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 1.91,
@@ -883,6 +908,10 @@
   "football|USA Major League Soccer|Philadelphia Union|Inter Miami CF|小球|1x2|2026-08-20": {
     "ev": 1.12,
     "ts": 1787180004.791578
+  },
+  "football|USA Major League Soccer|Portland Timbers|San Diego FC|小球|1x2|2026-08-20": {
+    "ev": 1.73,
+    "ts": 1787189458.569736
   },
   "football|USA Major League Soccer|Portland Timbers|San Diego FC|让球主胜|1x2|2026-08-20": {
     "ev": 1.27,
@@ -1131,9 +1160,24 @@
     "ev": 16.87,
     "ts": 1787137779.9569652
   },
-  "basketball|WNBA|金州瓦尔基里 (女)|明尼苏达山猫 (女)|小分(163.5)|ou|163.5|2026-08-20": {
-    "ev": 3.49,
-    "bb": 1.88,
-    "ts": 1787189324.402137
+  "football|USA Major League Soccer|洛杉矶银河|圣何塞地震|让球客胜(+0/0.5)|hc|+0/0.5|2026-08-20": {
+    "ev": 10.41,
+    "bb": 2.23,
+    "ts": 1787189848.024626
+  },
+  "football|USA Major League Soccer|洛杉矶银河|圣何塞地震|双重机会-和局/客|dc|2026-08-20": {
+    "ev": 7.76,
+    "bb": 1.95,
+    "ts": 1787189848.024705
+  },
+  "football|USA Major League Soccer|洛杉矶银河|圣何塞地震|上半场客胜|ht|2026-08-20": {
+    "ev": 4.73,
+    "bb": 3.79,
+    "ts": 1787189848.0247722
+  },
+  "football|USA Major League Soccer|波特兰伐木者|圣地亚哥FC|让球客胜(+1)|hc|+1|2026-08-20": {
+    "ev": 2.19,
+    "bb": 1.55,
+    "ts": 1787189848.024843
   }
 }
