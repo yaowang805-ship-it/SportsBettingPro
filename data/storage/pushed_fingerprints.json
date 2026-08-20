@@ -131,6 +131,15 @@
     "ev": 3.94,
     "ts": 1787196182.097499
   },
+  "basketball|Paraguay Liga Nacional de Basquetbol|Capiata Bulls|Felix Perez Cardozo|让分主胜|1x2|2026-08-21": {
+    "ev": 2.96,
+    "ts": 1787203065.44573
+  },
+  "basketball|Paraguay Liga Nacional de Basquetbol|卡皮亚塔公牛|菲利克斯佩雷斯|客胜|1x2|2026-08-21": {
+    "ev": 4.58,
+    "bb": 1.21,
+    "ts": 1787203065.165046
+  },
   "basketball|WNBA|Golden State Valkyries (w)|Minnesota Lynx (w)|小分|1x2|2026-08-20": {
     "ev": 1.56,
     "ts": 1787184957.597486
@@ -239,6 +248,10 @@
   "basketball|William Jones Cup|Strong Group Athletics|Chinese Taipei Blue|让分主胜|1x2|2026-08-20": {
     "ev": 4.62,
     "ts": 1787202218.270643
+  },
+  "basketball|William Jones Cup|Strong Group Athletics|Chinese Taipei Blue|让分客胜|1x2|2026-08-20": {
+    "ev": 6.46,
+    "ts": 1787203415.0993369
   },
   "basketball|William Jones Cup|Wonju DB Promy|Japan|主胜|1x2|2026-08-20": {
     "ev": 4.62,
@@ -755,6 +768,11 @@
     "ev": 3.49,
     "ts": 1787180086.2155771
   },
+  "football|France Ligue 1|特鲁瓦|巴黎FC|和局|1x2|2026-08-23": {
+    "ev": 3.36,
+    "bb": 3.79,
+    "ts": 1787203065.1652029
+  },
   "football|France Ligue 2|克莱蒙|第戎|主胜|1x2|2026-08-22": {
     "ev": 3.22,
     "bb": 2.71,
@@ -914,6 +932,14 @@
     "ev": 1.4,
     "ts": 1787199708.018656
   },
+  "football|Sweden Cup|Hassleholms IF|Landskrona BoIS|双重机会-和局/客|dc|2026-08-21": {
+    "ev": 1.38,
+    "ts": 1787203065.445013
+  },
+  "football|Sweden Cup|Hassleholms IF|Landskrona BoIS|大球|1x2|2026-08-21": {
+    "ev": 5.91,
+    "ts": 1787203065.444971
+  },
   "football|Sweden Cup|Hassleholms IF|Landskrona BoIS|客胜|1x2|2026-08-21": {
     "ev": 1.56,
     "ts": 1787196928.2403252
@@ -921,6 +947,21 @@
   "football|Sweden Cup|Hassleholms IF|Landskrona BoIS|让球客胜|1x2|2026-08-21": {
     "ev": 1.74,
     "ts": 1787196928.240365
+  },
+  "football|Sweden Cup|哈萨赫姆斯|兰斯科罗纳|大球(3.0)|ou|3.0|2026-08-21": {
+    "ev": 5.91,
+    "bb": 2.08,
+    "ts": 1787203065.1651661
+  },
+  "football|Sweden Cup|哈萨赫姆斯|兰斯科罗纳|客胜|1x2|2026-08-21": {
+    "ev": 9.31,
+    "bb": 2.03,
+    "ts": 1787203065.165132
+  },
+  "football|Sweden Cup|哈萨赫姆斯|兰斯科罗纳|让球客胜(-0/0.5)|hc|-0/0.5|2026-08-21": {
+    "ev": 9.26,
+    "bb": 1.8,
+    "ts": 1787203065.165096
   },
   "football|Switzerland Promotion League|布雷特雷|青年人 II|让球主胜(0)|hc|0|2026-08-20": {
     "ev": 4.5,
@@ -991,6 +1032,10 @@
   "football|UEFA Europa Conference League-Qualification|KS Gornik Zabrze|AS Monaco FC|让球客胜|1x2|2026-08-21": {
     "ev": 1.0,
     "ts": 1787188672.44005
+  },
+  "football|UEFA Europa Conference League-Qualification|Shamrock Rovers|Kuopion Palloseura|上半场客胜|ht|2026-08-21": {
+    "ev": 1.87,
+    "ts": 1787203065.446103
   },
   "football|UEFA Europa Conference League-Qualification|亚特兰大|特拉维夫夏普尔|双重机会-和局/客|dc|2026-08-21": {
     "ev": 18.19,
@@ -1685,29 +1730,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "basketball|Paraguay Liga Nacional de Basquetbol|卡皮亚塔公牛|菲利克斯佩雷斯|客胜|1x2|2026-08-21": {
-    "ev": 4.58,
-    "bb": 1.21,
-    "ts": 1787203065.165046
-  },
-  "football|Sweden Cup|哈萨赫姆斯|兰斯科罗纳|让球客胜(-0/0.5)|hc|-0/0.5|2026-08-21": {
-    "ev": 9.26,
-    "bb": 1.8,
-    "ts": 1787203065.165096
-  },
-  "football|Sweden Cup|哈萨赫姆斯|兰斯科罗纳|客胜|1x2|2026-08-21": {
-    "ev": 9.31,
-    "bb": 2.03,
-    "ts": 1787203065.165132
-  },
-  "football|Sweden Cup|哈萨赫姆斯|兰斯科罗纳|大球(3.0)|ou|3.0|2026-08-21": {
-    "ev": 5.91,
-    "bb": 2.08,
-    "ts": 1787203065.1651661
-  },
-  "football|France Ligue 1|特鲁瓦|巴黎FC|和局|1x2|2026-08-23": {
-    "ev": 3.36,
-    "bb": 3.79,
-    "ts": 1787203065.1652029
+  "basketball|William Jones Cup|菲律宾劲旅|中华台北蓝|让分客胜(+26.5)|hc|+26.5|2026-08-20": {
+    "ev": 12.9,
+    "bb": 1.93,
+    "ts": 1787203891.655443
   }
 }
