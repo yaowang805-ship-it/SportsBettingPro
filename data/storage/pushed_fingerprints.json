@@ -390,6 +390,11 @@
     "bb": 1.89,
     "ts": 1787196181.7685351
   },
+  "football|AFC Champions League Women|金边皇冠 (女)|卡雅 (女)|让球客胜(-2/2.5)|hc|-2/2.5|2026-08-20": {
+    "ev": 4.1,
+    "bb": 1.97,
+    "ts": 1787217132.0360188
+  },
   "football|Argentina Copa Santa Fe|Timbuense|Newell´s Old Boys|小球|1x2|2026-08-21": {
     "ev": 5.16,
     "ts": 1787196928.240706
@@ -2066,9 +2071,19 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|AFC Champions League Women|金边皇冠 (女)|卡雅 (女)|让球客胜(-2/2.5)|hc|-2/2.5|2026-08-20": {
-    "ev": 4.1,
-    "bb": 1.97,
-    "ts": 1787217132.0360188
+  "basketball|Australia NBL1|罗金厄姆火焰|堪培拉枪手|主胜|1x2|2026-08-21": {
+    "ev": 7.47,
+    "bb": 1.18,
+    "ts": 1787217306.230245
+  },
+  "basketball|FIBA Olympic Pre Qualifier Tournament Women|巴西 (女)|阿根廷 (女)|大分(122.5)|ou|122.5|2026-08-21": {
+    "ev": 6.73,
+    "bb": 1.94,
+    "ts": 1787217306.230332
+  },
+  "football|Uzbekistan Super League|曼干纳弗巴霍|纳萨夫|大球(2.25)|ou|2.25|2026-08-21": {
+    "ev": 3.78,
+    "bb": 1.96,
+    "ts": 1787217306.230398
   }
 }
