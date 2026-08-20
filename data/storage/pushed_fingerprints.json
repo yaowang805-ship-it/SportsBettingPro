@@ -576,6 +576,14 @@
     "ev": 6.48,
     "ts": 1787100150.5283918
   },
+  "football|CONCACAF Central American Cup|Marathon|Alianza FC San Salvador|客胜|1x2|2026-08-20": {
+    "ev": 3.46,
+    "ts": 1787185978.859136
+  },
+  "football|CONCACAF Central American Cup|Marathon|Alianza FC San Salvador|让球客胜|1x2|2026-08-20": {
+    "ev": 1.89,
+    "ts": 1787185978.8591812
+  },
   "football|CONCACAF Central American Cup|Real Esteli FC|CS Herediano|主胜|1x2|2026-08-19": {
     "ev": 3.48,
     "ts": 1787038514.5616279
@@ -798,6 +806,14 @@
     "ev": 3.04,
     "ts": 1787137779.9573739
   },
+  "football|Copa Sudamericana|Montevideo City Torque|Tigre|大球|1x2|2026-08-20": {
+    "ev": 1.1,
+    "ts": 1787185874.58998
+  },
+  "football|Copa Sudamericana|Montevideo City Torque|Tigre|总进球区间4-6|total_goals_range|2026-08-20": {
+    "ev": 1.88,
+    "ts": 1787185874.5906
+  },
   "football|Copa Sudamericana|Recoleta|Boca Juniors|上半场主胜|ht|2026-08-19": {
     "ev": 4.26,
     "ts": 1787043520.718024
@@ -846,6 +862,16 @@
     "ev": 5.14,
     "bb": 4.8,
     "ts": 1787101664.262835
+  },
+  "football|Copa Sudamericana|蒙得维的亚城图尔克|泰格雷|上半场主胜|ht|2026-08-20": {
+    "ev": 25.29,
+    "bb": 5.95,
+    "ts": 1787185874.3400362
+  },
+  "football|Copa Sudamericana|蒙得维的亚城图尔克|泰格雷|主胜|1x2|2026-08-20": {
+    "ev": 6.2,
+    "bb": 4.23,
+    "ts": 1787185874.340081
   },
   "football|Denmark DBU Pokalen|Nykobing FC|Naestved BK|主胜|1x2|2026-08-19": {
     "ev": 2.94,
@@ -1671,6 +1697,18 @@
     "ev": 2.28,
     "ts": 1787114648.655565
   },
+  "football|USA Major League Soccer|Seattle Sounders|Austin FC|上半场客胜|ht|2026-08-20": {
+    "ev": 3.86,
+    "ts": 1787185978.858956
+  },
+  "football|USA Major League Soccer|Seattle Sounders|Austin FC|和局|1x2|2026-08-20": {
+    "ev": 2.14,
+    "ts": 1787185978.858901
+  },
+  "football|USA Major League Soccer|Seattle Sounders|Austin FC|让球客胜|1x2|2026-08-20": {
+    "ev": 3.84,
+    "ts": 1787185978.8590028
+  },
   "football|USA Major League Soccer|Sporting Kansas City|Saint Louis City SC|小球|1x2|2026-08-20": {
     "ev": 1.01,
     "ts": 1787183361.792237
@@ -1980,14 +2018,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Copa Sudamericana|蒙得维的亚城图尔克|泰格雷|上半场主胜|ht|2026-08-20": {
-    "ev": 25.29,
-    "bb": 5.95,
-    "ts": 1787185874.3400362
-  },
-  "football|Copa Sudamericana|蒙得维的亚城图尔克|泰格雷|主胜|1x2|2026-08-20": {
-    "ev": 6.2,
-    "bb": 4.23,
-    "ts": 1787185874.340081
+  "football|USA Major League Soccer|西雅图海湾人|奥斯汀|让球客胜(+1)|hc|+1|2026-08-20": {
+    "ev": 2.95,
+    "bb": 1.68,
+    "ts": 1787186125.8671901
   }
 }
