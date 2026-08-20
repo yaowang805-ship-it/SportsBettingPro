@@ -87,6 +87,11 @@
     "bb": 1.75,
     "ts": 1787114647.9640949
   },
+  "basketball|Mexico LNBP Basketball League|皇家部队|甘布西诺弗雷斯尼洛|主胜|1x2|2026-08-20": {
+    "ev": 4.12,
+    "bb": 1.3,
+    "ts": 1787191217.239341
+  },
   "basketball|Mexico LNBP Basketball League|皇家部队|甘布西诺弗雷斯尼洛|让分客胜(+10.5)|hc|+10.5|2026-08-20": {
     "ev": 4.36,
     "bb": 1.73,
@@ -157,6 +162,11 @@
     "ev": 3.75,
     "bb": 2.01,
     "ts": 1787189241.4402099
+  },
+  "basketball|William Jones Cup|约旦|加州欧文食蚁兽|让分主胜(+13.5)|hc|+13.5|2026-08-20": {
+    "ev": 7.04,
+    "bb": 1.91,
+    "ts": 1787191217.23942
   },
   "football|Argentina Cup|Racing Club Avellaneda|Belgrano|上半场主胜|ht|2026-08-20": {
     "ev": 4.48,
@@ -1124,6 +1134,11 @@
     "bb": 1.5,
     "ts": 1787180004.525698
   },
+  "football|USA Major League Soccer|辛辛那提|西雅图海湾人|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-23": {
+    "ev": 3.18,
+    "bb": 1.75,
+    "ts": 1787191217.239488
+  },
   "football|USA Major League Soccer|迈阿密国际|多伦多FC|让球客胜(+1.5/2)|hc|+1.5/2|2026-08-23": {
     "ev": 4.56,
     "bb": 1.73,
@@ -1224,23 +1239,17 @@
     "ev": 17.8,
     "ts": 1787180086.215408
   },
+  "tennis|ITF - M15 Kursumlijska Banja Men Singles|Andrea Motta (ITA)|Anton Arzhankin (RUS)|客胜|1x2|2026-08-20": {
+    "ev": 4.0,
+    "ts": 1787191217.6514702
+  },
   "tennis|WTA - Cincinnati Open - Doubles|Marta Kostyuk (UKR) / Peyton Stearns (USA)|Guo Hanyu (CHN) / Kristina Mladenovic (FRA)|主胜|1x2|2026-08-20": {
     "ev": 16.87,
     "ts": 1787137779.9569652
   },
-  "basketball|Mexico LNBP Basketball League|皇家部队|甘布西诺弗雷斯尼洛|主胜|1x2|2026-08-20": {
-    "ev": 4.12,
+  "basketball|Olympic Tournament Pre-Qualifying Women|塞内加尔 (女)|墨西哥 (女)|主胜|1x2|2026-08-20": {
+    "ev": 5.43,
     "bb": 1.3,
-    "ts": 1787191217.239341
-  },
-  "basketball|William Jones Cup|约旦|加州欧文食蚁兽|让分主胜(+13.5)|hc|+13.5|2026-08-20": {
-    "ev": 7.04,
-    "bb": 1.91,
-    "ts": 1787191217.23942
-  },
-  "football|USA Major League Soccer|辛辛那提|西雅图海湾人|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-23": {
-    "ev": 3.18,
-    "bb": 1.75,
-    "ts": 1787191217.239488
+    "ts": 1787191569.4605849
   }
 }
