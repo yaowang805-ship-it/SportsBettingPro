@@ -236,6 +236,10 @@
     "ev": 2.59,
     "ts": 1787196182.097447
   },
+  "basketball|William Jones Cup|Strong Group Athletics|Chinese Taipei Blue|让分主胜|1x2|2026-08-20": {
+    "ev": 4.62,
+    "ts": 1787202218.270643
+  },
   "basketball|William Jones Cup|Wonju DB Promy|Japan|主胜|1x2|2026-08-20": {
     "ev": 4.62,
     "ts": 1787193332.6020339
@@ -258,6 +262,11 @@
     "ev": 7.04,
     "bb": 1.91,
     "ts": 1787191217.23942
+  },
+  "basketball|William Jones Cup|菲律宾劲旅|中国台北蓝|让分主胜(-19.5)|hc|-19.5|2026-08-20": {
+    "ev": 4.62,
+    "bb": 1.85,
+    "ts": 1787202217.916319
   },
   "football|AFC Champions League Women|Phnom Penh Crown (w)|Kaya FC Iloilo (w)|主胜|1x2|2026-08-20": {
     "ev": 25.38,
@@ -887,11 +896,6 @@
     "ev": 6.13,
     "bb": 2.06,
     "ts": 1787020969.61725
-  },
-  "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场客胜|ht|2026-08-21": {
-    "ev": 13.4,
-    "bb": 5.6,
-    "ts": 1787200682.425175
   },
   "football|Sweden Cup|FC Arlanda|Ostersunds FK|客胜|1x2|2026-08-21": {
     "ev": 1.4,
@@ -1668,9 +1672,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "basketball|William Jones Cup|菲律宾劲旅|中国台北蓝|让分主胜(-19.5)|hc|-19.5|2026-08-20": {
-    "ev": 4.62,
-    "bb": 1.85,
-    "ts": 1787202217.916319
+  "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场客胜|ht|2026-08-21": {
+    "ev": 16.37,
+    "bb": 5.75,
+    "ts": 1787202361.456373
   }
 }
