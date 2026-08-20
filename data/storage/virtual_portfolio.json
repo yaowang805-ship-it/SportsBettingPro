@@ -1,5 +1,5 @@
 {
-  "balance": 6838.33,
+  "balance": 6806.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3635,6 +3635,52 @@
       "commence_time": 1787194800,
       "created_at": "2026-08-20T02:33:03.327767+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_纳什维尔_哥伦布机员_让球客胜(+05/1)",
+      "sport": "football",
+      "league": "美国职业大联盟",
+      "home_team": "纳什维尔",
+      "away_team": "哥伦布机员",
+      "home_cn": "纳什维尔",
+      "away_cn": "哥伦布机员",
+      "market": "handicap",
+      "market_type": "让球客胜(+0.5/1)",
+      "sub_market": "hc",
+      "line": "+0.5/1",
+      "odds": 1.84,
+      "stake": 18,
+      "model_prob": 0.5548,
+      "ev_pct": 2.09,
+      "pin_odds": 1.7407,
+      "fair_price": 1.8024,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787445000,
+      "created_at": "2026-08-20T02:40:07.002688+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_巴列卡诺_阿拉维斯_上半场客胜",
+      "sport": "football",
+      "league": "西班牙甲级联赛",
+      "home_team": "巴列卡诺",
+      "away_team": "阿拉维斯",
+      "home_cn": "巴列卡诺",
+      "away_cn": "阿拉维斯",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 5.45,
+      "stake": 14,
+      "model_prob": 0.1996,
+      "ev_pct": 8.79,
+      "pin_odds": 4.63,
+      "fair_price": 5.0096,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787252400,
+      "created_at": "2026-08-20T02:40:07.002865+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3694,8 +3740,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 1669.0,
-    "bets": 45
+    "used": 1701.0,
+    "bets": 47
   },
   "updated": null
 }

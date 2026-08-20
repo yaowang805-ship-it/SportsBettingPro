@@ -167,10 +167,19 @@
     "ev": 2.37,
     "ts": 1787189734.027516
   },
+  "basketball|William Jones Cup|Wonju DB Promy|Japan|主胜|1x2|2026-08-20": {
+    "ev": 4.62,
+    "ts": 1787193332.6020339
+  },
   "basketball|William Jones Cup|中国台北白色|马来西亚|大分(146.5)|ou|146.5|2026-08-20": {
     "ev": 3.75,
     "bb": 2.01,
     "ts": 1787189241.4402099
+  },
+  "basketball|William Jones Cup|原州东浦新世代|日本|主胜|1x2|2026-08-20": {
+    "ev": 4.62,
+    "bb": 1.15,
+    "ts": 1787193332.172352
   },
   "basketball|William Jones Cup|约旦|加州欧文食蚁兽|让分主胜(+13.5)|hc|+13.5|2026-08-20": {
     "ev": 7.04,
@@ -1051,6 +1060,10 @@
     "ev": 1.12,
     "ts": 1787192921.880796
   },
+  "football|USA Major League Soccer|Vancouver Whitecaps FC|Houston Dynamo|总进球区间7+|total_goals_range|2026-08-20": {
+    "ev": 2.66,
+    "ts": 1787193437.174995
+  },
   "football|USA Major League Soccer|Vancouver Whitecaps FC|Houston Dynamo|让球主胜|1x2|2026-08-20": {
     "ev": 1.97,
     "ts": 1787190689.887043
@@ -1283,9 +1296,14 @@
     "ev": 16.87,
     "ts": 1787137779.9569652
   },
-  "basketball|William Jones Cup|原州东浦新世代|日本|主胜|1x2|2026-08-20": {
-    "ev": 4.62,
-    "bb": 1.15,
-    "ts": 1787193332.172352
+  "football|USA Major League Soccer|纳什维尔|哥伦布机员|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-23": {
+    "ev": 2.09,
+    "bb": 1.84,
+    "ts": 1787193607.0086432
+  },
+  "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场客胜|ht|2026-08-21": {
+    "ev": 8.79,
+    "bb": 5.45,
+    "ts": 1787193607.008692
   }
 }
