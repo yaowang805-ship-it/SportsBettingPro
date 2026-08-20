@@ -560,6 +560,10 @@
     "ev": 1.14,
     "ts": 1787180086.2152529
   },
+  "football|Brazil Serie B|Athletic Club MG|CR Brasil AL|让球主胜|1x2|2026-08-21": {
+    "ev": 2.38,
+    "ts": 1787222280.08448
+  },
   "football|Brazil Serie B|Athletic Club MG|CR Brasil AL|让球客胜|1x2|2026-08-21": {
     "ev": 1.88,
     "ts": 1787196182.098513
@@ -768,6 +772,10 @@
     "ev": 2.3,
     "ts": 1787199708.019595
   },
+  "football|Copa Sudamericana|CSD Macara|Santos FC SP|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 1.39,
+    "ts": 1787221392.5069
+  },
   "football|Copa Sudamericana|CSD Macara|Santos FC SP|双边进球-是|btts|2026-08-21": {
     "ev": 2.18,
     "ts": 1787209374.50043
@@ -876,14 +884,27 @@
     "ev": 1.94,
     "ts": 1787206888.6128561
   },
+  "football|Egypt Second Division A|El Mansoura|Baladiyet El Mahallah SC|单双-双|oe|2026-08-20": {
+    "ev": 1.09,
+    "ts": 1787220701.141361
+  },
   "football|Egypt Second Division A|El Mansoura|Baladiyet El Mahallah SC|和局|1x2|2026-08-20": {
     "ev": 1.55,
     "ts": 1787220491.487493
+  },
+  "football|Egypt Second Division A|El Mansoura|Baladiyet El Mahallah SC|小球|1x2|2026-08-20": {
+    "ev": 1.76,
+    "ts": 1787220701.141483
   },
   "football|Egypt Second Division A|斯卡哈迪德|特萨纳|让球主胜(0)|hc|0|2026-08-21": {
     "ev": 3.79,
     "bb": 1.8,
     "ts": 1787213579.561313
+  },
+  "football|Egypt Second Division A|曼苏拉|巴拉蒂耶|和局|1x2|2026-08-20": {
+    "ev": 3.51,
+    "bb": 2.64,
+    "ts": 1787220700.817324
   },
   "football|England EFL Trophy|Mansfield Town|Manchester City FC U21|小球|1x2|2026-08-20": {
     "ev": 8.0,
@@ -1143,6 +1164,10 @@
     "bb": 1.96,
     "ts": 1787209374.206896
   },
+  "football|Qatar Stars League|Al Wakrah|Qatar SC|让球主胜|1x2|2026-08-20": {
+    "ev": 1.8,
+    "ts": 1787220701.140757
+  },
   "football|Romania Cup-Qualification|CSA Steaua Bucuresti|FK Csikszereda Miercurea Ciuc|主胜|1x2|2026-08-20": {
     "ev": 27.86,
     "ts": 1787196182.098328
@@ -1213,6 +1238,10 @@
   "football|Spain LaLiga|Rayo Vallecano|Deportivo Alaves|双边进球-是|btts|2026-08-21": {
     "ev": 2.68,
     "ts": 1787206047.276612
+  },
+  "football|Spain LaLiga|Rayo Vallecano|Deportivo Alaves|和局|1x2|2026-08-21": {
+    "ev": 1.2,
+    "ts": 1787222280.083528
   },
   "football|Spain LaLiga|Rayo Vallecano|Deportivo Alaves|大球|1x2|2026-08-21": {
     "ev": 1.06,
@@ -1367,6 +1396,10 @@
   "football|UEFA Europa Conference League-Qualification|Lincoln Red Imps FC|Larne FC|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 1.23,
     "ts": 1787218756.4440289
+  },
+  "football|UEFA Europa Conference League-Qualification|Motherwell FC|Freiburg|上半场主胜|ht|2026-08-21": {
+    "ev": 1.3,
+    "ts": 1787221392.506104
   },
   "football|UEFA Europa Conference League-Qualification|PAOK Thessaloniki|SK Brann|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 1.24,
@@ -2114,6 +2147,10 @@
     "ev": 3.07,
     "ts": 1787217733.5026062
   },
+  "tennis|ITF - M25 Slovenj Gradec Men Doubles|Karlo Kajin (CRO) / Jan Kupcic (SLO)|Sebastian Dominko (SLO) / Lun Obrul (SLO)|客胜|1x2|2026-08-20": {
+    "ev": 54.59,
+    "ts": 1787220701.1419442
+  },
   "tennis|ITF - W15 Campos do Jordao Women Singles|Camila Romero (ECU)|Maria Jose Sanchez Uribe (COL)|让盘客胜|1x2|2026-08-20": {
     "ev": 1.48,
     "ts": 1787206047.277217
@@ -2175,9 +2212,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|Egypt Second Division A|曼苏拉|巴拉蒂耶|和局|1x2|2026-08-20": {
-    "ev": 3.51,
-    "bb": 2.64,
-    "ts": 1787220700.817324
+  "football|Russia First League|下卡姆斯克石油|索契|上半场主胜|ht|2026-08-20": {
+    "ev": 8.4,
+    "bb": 5.8,
+    "ts": 1787222307.371159
   }
 }
