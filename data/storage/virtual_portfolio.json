@@ -1,5 +1,5 @@
 {
-  "balance": 5602.46,
+  "balance": 5545.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -4394,6 +4394,29 @@
       "commence_time": 1787256900,
       "created_at": "2026-08-20T07:41:37.794884+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_拉珀斯维尔_温特图尔_大球(30)",
+      "sport": "football",
+      "league": "瑞士挑战联赛",
+      "home_team": "拉珀斯维尔",
+      "away_team": "温特图尔",
+      "home_cn": "拉珀斯维尔",
+      "away_cn": "温特图尔",
+      "market": "over_under",
+      "market_type": "大球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 1.96,
+      "stake": 57,
+      "model_prob": 0.5523,
+      "ev_pct": 8.25,
+      "pin_odds": 1.7143,
+      "fair_price": 1.8106,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787336100,
+      "created_at": "2026-08-20T07:56:23.350702+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -4470,8 +4493,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 3036.0,
-    "bets": 79
+    "used": 3093.0,
+    "bets": 80
   },
   "updated": null
 }
