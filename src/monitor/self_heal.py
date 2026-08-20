@@ -135,12 +135,22 @@ def main():
         statuses.append(f"守护进程: ✅ PID {pid} 心跳 {hb_age/60:.1f}min" if hb_age is not None else f"守护进程: ✅ PID {pid}(心跳文件未生成)")
 
     # 2) 增量扫描停滞
-    scan_age = _file_age(COMPARISON_FILES[0]) if COMPARISON_FILES else None
-    if scan_age is None:
+    # V5.10 修复: 原先用 glob 最新文件(COMPARISON_FILES[0]) —— 但 _FB.json 总是最
+    # 新鲜(独立刷新), 恒等于最新, 于是 urgent/near 停摆几小时也测不出来(实测 2026-08-19
+    # urgent/near 停摆 186 分钟而 _FB 仅 23 分钟, self_heal 全程误判"正常")。
+    # 改为分别检查 urgent 和 near 各自的 mtime, 只有两者都陈旧才算停滞。
+    _urgent_age = _file_age(DATA_DIR / "bb_vs_pinnacle_comparison_urgent.json")
+    _near_age = _file_age(DATA_DIR / "bb_vs_pinnacle_comparison_near.json")
+    _worst = None
+    for _a in (_urgent_age, _near_age):
+        if _a is not None and (_worst is None or _a > _worst):
+            _worst = _a
+    scan_age = _worst
+    if _urgent_age is None and _near_age is None:
         statuses.append("对比文件: ❌ 不存在")
         fixes.append("无对比文件 → 守护进程重启后会自动扫描")
-    elif scan_age > SCAN_STALE:
-        statuses.append(f"增量扫描: ⚠️ 对比文件 {scan_age/60:.0f}min 未更新(预期<45min)")
+    elif scan_age is not None and scan_age > SCAN_STALE:
+        statuses.append(f"增量扫描: ⚠️ 对比文件 {scan_age/60:.0f}min 未更新(urgent {(_urgent_age or 0)/60:.0f}min / near {(_near_age or 0)/60:.0f}min)")
         # 守护进程心跳正常但扫描停滞 → 可能 Pin 封禁卡住, 重启
         if _kickstart_daemon():
             fixes.append(f"增量扫描停滞({scan_age/60:.0f}min) → 已 kickstart 重启守护进程")

@@ -176,16 +176,14 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
                 if matchups:
                     try:
                         from src.evolve.odds_archiver import archive_matchups
-                        _sport_cn = {}
-                        for _pid_, _info in (all_pin_leagues or {}).items():
-                            if isinstance(_info, dict):
-                                _sport_cn[_pid_] = _info.get("sport", "")
                         _cn2en = {"足球": "football", "篮球": "basketball", "网球": "tennis",
                                   "棒球": "baseball", "美式足球": "american_football",
                                   "拳击": "boxing", "MMA": "mma", "冰球": "ice_hockey",
                                   "乒乓球": "pingpong", "羽毛球": "badminton", "排球": "volleyball"}
-                        _sport = _cn2en.get(_sport_cn.get(pid, ""), "?")
-                        _lname = _sport_cn.get(pid, str(pid))
+                        # all_pin_leagues 的 key 是 str, pid 可能是 int
+                        _info = (all_pin_leagues or {}).get(str(pid)) or (all_pin_leagues or {}).get(pid)
+                        _sport = _cn2en.get((_info or {}).get("sport", ""), "?") if isinstance(_info, dict) else "?"
+                        _lname = (_info or {}).get("name", str(pid)) if isinstance(_info, dict) else str(pid)
                         archive_matchups(_sport, pid, _lname, matchups, [])
                     except Exception:
                         pass

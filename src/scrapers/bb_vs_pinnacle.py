@@ -969,7 +969,10 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
 
             # V5.7: 「0」让球线一致性校验 — 让球0≈平局退款(DNB), 与独赢推导的DNB分歧>3% → 让球线不自洽
             # (小联赛流动性差/挂单污染会让让球0偏离DNB, 产出假+EV)
-            if pin_hc_line is not None and abs(pin_hc_line) <= 0.5:
+            # V5.10 修复: 这个关系只对**线=0**成立。原先 abs(line)<=0.5 把 ±0.5/±0.25
+            # 也纳入校验, 而 -0.5 线主胜本来就比 0 线主胜贵 40%+, 分歧大是必然的, 不是
+            # 不自洽 —— 实测误杀了 Kamaz(-0.5) 和 Veles(+0.75) 两条真实机会。收紧到 0 线。
+            if pin_hc_line is not None and abs(pin_hc_line) < 0.01:
                 _dnb_fair = _derive_dnb_fair(get_pin_ml_sorted(pin, sport))
                 if _dnb_fair and pin_home_fair > 0:
                     _div = abs(pin_home_fair - _dnb_fair) / _dnb_fair
@@ -1090,9 +1093,15 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     fair_ht_ml = shin_fair_odds(pin_ht_ml)
                     for i in range(n_ht_ml):
                         bb_o = bb_ht_ml[i]
-                        pin_o = pin_ht_ml[i]
+                        # V5.10: HT 独赢需复用全场独赢的 _ml_swapped —— 主客反转时
+                        # 交换 Pinnacle 腿(与全场一致), 否则把 BB 主价对到 Pin 客价
+                        if _ml_swapped:
+                            _pin_i = (n_ht_ml - 1 - i) if i in (0, n_ht_ml - 1) else i
+                        else:
+                            _pin_i = i
+                        pin_o = pin_ht_ml[_pin_i]
                         if pin_o and pin_o > 0:
-                            fair_price = fair_ht_ml[i]
+                            fair_price = fair_ht_ml[_pin_i]
                             ev = (bb_o - fair_price) / fair_price * 100 if fair_price > 0 else 0
                             if ev > 1:
                                 entry["opportunities"].append({
