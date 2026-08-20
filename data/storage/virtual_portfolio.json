@@ -1,5 +1,5 @@
 {
-  "balance": 5148.46,
+  "balance": 4654.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2393,6 +2393,75 @@
       "commence_time": 1787238000,
       "created_at": "2026-08-20T10:38:27.359577+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_阿兰达_厄斯特松德_双重机会-和局/客",
+      "sport": "football",
+      "league": "瑞典杯-资格赛",
+      "home_team": "阿兰达",
+      "away_team": "厄斯特松德",
+      "home_cn": "阿兰达",
+      "away_cn": "厄斯特松德",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 1.38,
+      "stake": 248,
+      "model_prob": 0.804,
+      "ev_pct": 10.95,
+      "pin_odds": 0,
+      "fair_price": 1.2438,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787243400,
+      "created_at": "2026-08-20T11:47:34.988380+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_亚潘_特雷普查89_大球(30)",
+      "sport": "football",
+      "league": "乌兹别克斯坦甲级联赛",
+      "home_team": "亚潘",
+      "away_team": "特雷普查89",
+      "home_cn": "亚潘",
+      "away_cn": "特雷普查89",
+      "market": "over_under",
+      "market_type": "大球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 1.83,
+      "stake": 212,
+      "model_prob": 0.6183,
+      "ev_pct": 13.14,
+      "pin_odds": 1.5208,
+      "fair_price": 1.6174,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787234400,
+      "created_at": "2026-08-20T11:47:34.988471+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_霍尔比_阿尔纳赛尔_让球客胜(+05)",
+      "sport": "football",
+      "league": "埃及乙级A组联赛",
+      "home_team": "霍尔比",
+      "away_team": "阿尔纳赛尔",
+      "home_cn": "霍尔比",
+      "away_cn": "阿尔纳赛尔",
+      "market": "handicap",
+      "market_type": "让球客胜(+0.5)",
+      "sub_market": "hc",
+      "line": "+0.5",
+      "odds": 1.8,
+      "stake": 34,
+      "model_prob": 0.5786,
+      "ev_pct": 4.14,
+      "pin_odds": 1.6494,
+      "fair_price": 1.7284,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787232600,
+      "created_at": "2026-08-20T11:47:34.988538+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2499,8 +2568,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 3559.0,
-    "bets": 95
+    "used": 4053.0,
+    "bets": 98
   },
   "updated": null
 }
