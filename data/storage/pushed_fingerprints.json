@@ -61,6 +61,14 @@
     "ev": 1.46,
     "ts": 1787194489.711956
   },
+  "basketball|Mexico LNBP Basketball League|Soles de Mexicali|Mineros de Zacatecas|主胜|1x2|2026-08-21": {
+    "ev": 1.02,
+    "ts": 1787195373.465791
+  },
+  "basketball|Mexico LNBP Basketball League|Soles de Mexicali|Mineros de Zacatecas|让分主胜|1x2|2026-08-21": {
+    "ev": 1.36,
+    "ts": 1787195373.465856
+  },
   "basketball|Mexico LNBP Basketball League|伊拉普阿托草莓|埃尔卡洛尔德坎昆|主胜|1x2|2026-08-20": {
     "ev": 7.53,
     "bb": 1.48,
@@ -131,6 +139,10 @@
     "ev": 2.46,
     "ts": 1787191804.613355
   },
+  "basketball|WNBA|Los Angeles Sparks (w)|Atlanta Dream (w)|小分|1x2|2026-08-21": {
+    "ev": 9.25,
+    "ts": 1787195373.465272
+  },
   "basketball|WNBA|Washington Mystics (w)|Toronto Tempo (w)|大分|1x2|2026-08-20": {
     "ev": 1.33,
     "ts": 1787121005.134243
@@ -149,6 +161,11 @@
     "bb": 2.07,
     "ts": 1787114647.964055
   },
+  "basketball|WNBA|洛杉矶火花 (女)|亚特兰大梦想 (女)|小分(180.5)|ou|180.5|2026-08-21": {
+    "ev": 9.25,
+    "bb": 2.07,
+    "ts": 1787195372.937131
+  },
   "basketball|WNBA|金州瓦尔基里 (女)|明尼苏达山猫 (女)|小分(162.5)|ou|162.5|2026-08-20": {
     "ev": 5.07,
     "bb": 2.02,
@@ -162,6 +179,10 @@
   "basketball|William Jones Cup|Chinese Taipei White|Malaysia|大分|1x2|2026-08-20": {
     "ev": 3.15,
     "ts": 1787189241.882921
+  },
+  "basketball|William Jones Cup|Chinese Taipei White|Malaysia|小分|1x2|2026-08-20": {
+    "ev": 6.54,
+    "ts": 1787195476.876023
   },
   "basketball|William Jones Cup|Jordan|California Irvine Anteaters|大分|1x2|2026-08-20": {
     "ev": 3.88,
@@ -1329,13 +1350,37 @@
     "ev": 4.0,
     "ts": 1787191217.6514702
   },
+  "tennis|ITF - W15 Logrono Women Singles|Diae El Jardi (MAR)|Charo Esquiva Banuls (ESP)|客胜|1x2|2026-08-20": {
+    "ev": 2.59,
+    "ts": 1787195671.516861
+  },
   "tennis|WTA - Cincinnati Open - Doubles|Marta Kostyuk (UKR) / Peyton Stearns (USA)|Guo Hanyu (CHN) / Kristina Mladenovic (FRA)|主胜|1x2|2026-08-20": {
     "ev": 16.87,
     "ts": 1787137779.9569652
   },
-  "basketball|WNBA|洛杉矶火花 (女)|亚特兰大梦想 (女)|小分(180.5)|ou|180.5|2026-08-21": {
-    "ev": 9.25,
-    "bb": 2.07,
-    "ts": 1787195372.937131
+  "football|AFC Champions League Women|金边皇冠 (女)|卡雅 (女)|小球(4.0)|ou|4.0|2026-08-20": {
+    "ev": 8.83,
+    "bb": 1.89,
+    "ts": 1787196181.7685351
+  },
+  "football|UEFA Europa Conference League|特温特|卡拉巴克|小球(2.75)|ou|2.75|2026-08-21": {
+    "ev": 6.29,
+    "bb": 1.9,
+    "ts": 1787196181.768616
+  },
+  "basketball|WNBA|达拉斯飞翼 (女)|印第安纳狂热 (女)|让分客胜(-3.5)|hc|-3.5|2026-08-21": {
+    "ev": 2.85,
+    "bb": 2.0,
+    "ts": 1787196181.7686882
+  },
+  "tennis|WTA - Cincinnati Open|阿曼达.阿尼西莫娃 (美国)|洁西卡.佩古拉 (美国)|大分(22.5)|ou|22.5|2026-08-21": {
+    "ev": 3.48,
+    "bb": 2.1,
+    "ts": 1787196181.768765
+  },
+  "football|Argentina Copa Santa Fe|蒂穆文塞竞技俱乐部|纽维尔老男孩|主胜|1x2|2026-08-21": {
+    "ev": 3.3,
+    "bb": 3.86,
+    "ts": 1787196181.768833
   }
 }
