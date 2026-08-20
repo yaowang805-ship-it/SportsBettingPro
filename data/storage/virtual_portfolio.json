@@ -1,5 +1,5 @@
 {
-  "balance": 6080.33,
+  "balance": 6034.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -4049,6 +4049,29 @@
       "commence_time": 1787220000,
       "created_at": "2026-08-20T04:16:36.057596+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_乔治罗尼亚_伊比利亚_1999_让球主胜(-1)",
+      "sport": "football",
+      "league": "欧足联欧洲联赛-资格赛",
+      "home_team": "乔治罗尼亚",
+      "away_team": "伊比利亚 1999",
+      "home_cn": "乔治罗尼亚",
+      "away_cn": "伊比利亚 1999",
+      "market": "handicap",
+      "market_type": "让球主胜(-1)",
+      "sub_market": "hc",
+      "line": "-1",
+      "odds": 1.64,
+      "stake": 46,
+      "model_prob": 0.635,
+      "ev_pct": 4.13,
+      "pin_odds": 1.5319,
+      "fair_price": 1.5749,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787241600,
+      "created_at": "2026-08-20T04:21:47.565521+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -4108,8 +4131,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 2427.0,
-    "bets": 63
+    "used": 2473.0,
+    "bets": 64
   },
   "updated": null
 }
