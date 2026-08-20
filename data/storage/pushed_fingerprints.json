@@ -258,6 +258,11 @@
     "bb": 2.07,
     "ts": 1787195372.937131
   },
+  "basketball|WNBA|达拉斯飞翼 (女)|印第安纳狂热 (女)|小分(184.5)|ou|184.5|2026-08-21": {
+    "ev": 3.51,
+    "bb": 1.95,
+    "ts": 1787220437.792012
+  },
   "basketball|WNBA|达拉斯飞翼 (女)|印第安纳狂热 (女)|让分客胜(-3.5)|hc|-3.5|2026-08-21": {
     "ev": 2.85,
     "bb": 2.0,
@@ -871,6 +876,10 @@
     "ev": 1.94,
     "ts": 1787206888.6128561
   },
+  "football|Egypt Second Division A|El Mansoura|Baladiyet El Mahallah SC|和局|1x2|2026-08-20": {
+    "ev": 1.55,
+    "ts": 1787220491.487493
+  },
   "football|Egypt Second Division A|斯卡哈迪德|特萨纳|让球主胜(0)|hc|0|2026-08-21": {
     "ev": 3.79,
     "bb": 1.8,
@@ -954,6 +963,10 @@
     "bb": 1.89,
     "ts": 1787213308.2380679
   },
+  "football|Finland Ykkosliiga|KaPa Kapylan Pallo|JIPPO|客胜|1x2|2026-08-20": {
+    "ev": 1.45,
+    "ts": 1787220491.4872801
+  },
   "football|Finland Ykkosliiga|KaPa Kapylan Pallo|JIPPO|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 3.49,
     "ts": 1787180086.2155771
@@ -979,6 +992,10 @@
   "football|France Ligue 3|FC Fleury 91|US Orleans|让球主胜|1x2|2026-08-21": {
     "ev": 3.16,
     "ts": 1787204594.790975
+  },
+  "football|France Ligue 3|FC Fleury 91|US Orleans|让球客胜|1x2|2026-08-21": {
+    "ev": 1.18,
+    "ts": 1787220438.106008
   },
   "football|France Ligue 3|FC Rouen|Quevilly Rouen Metropole|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 1.86,
@@ -1161,6 +1178,11 @@
   "football|Russia First League|PFK Arsenal Tula|SK Rotor Volgograd|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 1.84,
     "ts": 1787197898.01047
+  },
+  "football|Russia First League|下卡姆斯克石油|索契|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 4.29,
+    "bb": 1.83,
+    "ts": 1787220437.7920718
   },
   "football|Russia First League|图拉兵工厂|洛特伏尔加格勒|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 3.7,
@@ -1491,6 +1513,10 @@
   "football|UEFA Europa League-Qualification|KKS Lech Poznan|FC Thun|让球主胜|1x2|2026-08-21": {
     "ev": 1.23,
     "ts": 1787198999.6327748
+  },
+  "football|UEFA Europa League-Qualification|OFI Crete|PFC CSKA Sofia|双边进球-是|btts|2026-08-21": {
+    "ev": 1.13,
+    "ts": 1787220438.1051679
   },
   "football|UEFA Europa League-Qualification|SL Benfica|AGF Aarhus|双边进球-否|btts|2026-08-21": {
     "ev": 1.7,
@@ -2149,14 +2175,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "basketball|WNBA|达拉斯飞翼 (女)|印第安纳狂热 (女)|小分(184.5)|ou|184.5|2026-08-21": {
+  "football|Egypt Second Division A|曼苏拉|巴拉蒂耶|和局|1x2|2026-08-20": {
     "ev": 3.51,
-    "bb": 1.95,
-    "ts": 1787220437.792012
-  },
-  "football|Russia First League|下卡姆斯克石油|索契|上半场双重机会-主/客|ht_dc|2026-08-20": {
-    "ev": 4.29,
-    "bb": 1.83,
-    "ts": 1787220437.7920718
+    "bb": 2.64,
+    "ts": 1787220700.817324
   }
 }
