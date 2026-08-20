@@ -37,6 +37,10 @@
     "ev": 7.4,
     "ts": 1787127300.199687
   },
+  "basketball|Mexico LNBP Basketball League|Freseros de Irapuato|El Calor de Cancun|让分主胜|1x2|2026-08-20": {
+    "ev": 2.21,
+    "ts": 1787187687.4001868
+  },
   "basketball|Mexico LNBP Basketball League|Freseros de Irapuato|El Calor de Cancun|让分客胜|1x2|2026-08-20": {
     "ev": 1.48,
     "ts": 1787137779.956435
@@ -580,6 +584,10 @@
   "football|CONCACAF Central American Cup|CSD Xelaju MC|Diriangen FC|小球|1x2|2026-08-19": {
     "ev": 6.48,
     "ts": 1787100150.5283918
+  },
+  "football|CONCACAF Central American Cup|Marathon|Alianza FC San Salvador|大球|1x2|2026-08-20": {
+    "ev": 1.47,
+    "ts": 1787187456.6374872
   },
   "football|CONCACAF Central American Cup|Marathon|Alianza FC San Salvador|客胜|1x2|2026-08-20": {
     "ev": 3.46,
@@ -1450,6 +1458,11 @@
     "bb": 3.52,
     "ts": 1787180765.1141372
   },
+  "football|Turkey Super Lig|里泽斯堡|萨姆松珀|让球客胜(+0.5)|hc|+0.5|2026-08-23": {
+    "ev": 3.45,
+    "bb": 1.69,
+    "ts": 1787187225.707523
+  },
   "football|UAE Pro League|迪拜胜利|阿尔瓦赫达|和局|1x2|2026-08-22": {
     "ev": 8.96,
     "bb": 3.66,
@@ -1825,11 +1838,6 @@
     "bb": 9.95,
     "ts": 1787034729.999058
   },
-  "football|USA Major League Soccer|西雅图海湾人|奥斯汀|让球客胜(+1)|hc|+1|2026-08-20": {
-    "ev": 2.95,
-    "bb": 1.68,
-    "ts": 1787186125.8671901
-  },
   "football|USA Major League Soccer|辛辛那提|纽约城|主胜|1x2|2026-08-20": {
     "ev": 4.53,
     "bb": 1.97,
@@ -2071,9 +2079,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Turkey Super Lig|里泽斯堡|萨姆松珀|让球客胜(+0.5)|hc|+0.5|2026-08-23": {
-    "ev": 3.45,
-    "bb": 1.69,
-    "ts": 1787187225.707523
+  "football|USA Major League Soccer|西雅图海湾人|奥斯汀|让球客胜(+1)|hc|+1|2026-08-20": {
+    "ev": 4.82,
+    "bb": 1.97,
+    "ts": 1787188130.543401
   }
 }
