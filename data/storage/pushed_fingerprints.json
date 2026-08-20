@@ -127,6 +127,10 @@
     "bb": 1.3,
     "ts": 1787191569.4605849
   },
+  "basketball|Paraguay Liga Nacional de Basquetbol|Capiata Bulls|Felix Perez Cardozo|客胜|1x2|2026-08-21": {
+    "ev": 3.94,
+    "ts": 1787196182.097499
+  },
   "basketball|WNBA|Golden State Valkyries (w)|Minnesota Lynx (w)|小分|1x2|2026-08-20": {
     "ev": 1.56,
     "ts": 1787184957.597486
@@ -166,6 +170,11 @@
     "bb": 2.07,
     "ts": 1787195372.937131
   },
+  "basketball|WNBA|达拉斯飞翼 (女)|印第安纳狂热 (女)|让分客胜(-3.5)|hc|-3.5|2026-08-21": {
+    "ev": 2.85,
+    "bb": 2.0,
+    "ts": 1787196181.7686882
+  },
   "basketball|WNBA|金州瓦尔基里 (女)|明尼苏达山猫 (女)|小分(162.5)|ou|162.5|2026-08-20": {
     "ev": 5.07,
     "bb": 2.02,
@@ -196,6 +205,10 @@
     "ev": 2.37,
     "ts": 1787189734.027516
   },
+  "basketball|William Jones Cup|Strong Group Athletics|Chinese Taipei Blue|小分|1x2|2026-08-20": {
+    "ev": 2.59,
+    "ts": 1787196182.097447
+  },
   "basketball|William Jones Cup|Wonju DB Promy|Japan|主胜|1x2|2026-08-20": {
     "ev": 4.62,
     "ts": 1787193332.6020339
@@ -218,6 +231,20 @@
     "ev": 7.04,
     "bb": 1.91,
     "ts": 1787191217.23942
+  },
+  "football|AFC Champions League Women|Phnom Penh Crown (w)|Kaya FC Iloilo (w)|小球|1x2|2026-08-20": {
+    "ev": 8.83,
+    "ts": 1787196182.096713
+  },
+  "football|AFC Champions League Women|金边皇冠 (女)|卡雅 (女)|小球(4.0)|ou|4.0|2026-08-20": {
+    "ev": 8.83,
+    "bb": 1.89,
+    "ts": 1787196181.7685351
+  },
+  "football|Argentina Copa Santa Fe|蒂穆文塞竞技俱乐部|纽维尔老男孩|主胜|1x2|2026-08-21": {
+    "ev": 3.3,
+    "bb": 3.86,
+    "ts": 1787196181.768833
   },
   "football|Argentina Cup|Racing Club Avellaneda|Belgrano|上半场主胜|ht|2026-08-20": {
     "ev": 4.48,
@@ -332,6 +359,10 @@
   "football|Brazil Serie B|Athletic Club MG|CR Brasil AL|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 1.14,
     "ts": 1787180086.2152529
+  },
+  "football|Brazil Serie B|Athletic Club MG|CR Brasil AL|让球客胜|1x2|2026-08-21": {
+    "ev": 1.88,
+    "ts": 1787196182.098513
   },
   "football|Brazil Serie B|Avai FC SC|Recife PE|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 1.36,
@@ -625,6 +656,10 @@
     "bb": 3.48,
     "ts": 1787194489.4344919
   },
+  "football|Estonia Meistriliiga Women|Viimsi JK (w)|Harju JK Laagri (w)|客胜|1x2|2026-08-20": {
+    "ev": 27.59,
+    "ts": 1787196182.096779
+  },
   "football|Finland Ykkosliiga|KaPa Kapylan Pallo|JIPPO|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 3.49,
     "ts": 1787180086.2155771
@@ -633,6 +668,10 @@
     "ev": 3.22,
     "bb": 2.71,
     "ts": 1787101664.262996
+  },
+  "football|France Ligue 3|FC Rouen|Quevilly Rouen Metropole|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 1.86,
+    "ts": 1787196182.097009
   },
   "football|France Ligue 3|Football Bourg En Bresse Peronnas 01|Thionville Lusitanos|和局|1x2|2026-08-21": {
     "ev": 3.33,
@@ -724,6 +763,10 @@
   "football|Poland III Liga|Zaglebie Sosnowiec|KS Sleza Wroclaw|小球|1x2|2026-08-20": {
     "ev": 2.64,
     "ts": 1787125556.566184
+  },
+  "football|Romania Cup-Qualification|CSA Steaua Bucuresti|FK Csikszereda Miercurea Ciuc|主胜|1x2|2026-08-20": {
+    "ev": 27.86,
+    "ts": 1787196182.098328
   },
   "football|Russia First League|FK Veles Moscow|FK Nizhny Novgorod|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 2.41,
@@ -838,9 +881,22 @@
     "bb": 3.84,
     "ts": 1787034729.998822
   },
+  "football|UEFA Europa Conference League|FC Twente|Qarabag FK|小球|1x2|2026-08-21": {
+    "ev": 6.29,
+    "ts": 1787196182.096949
+  },
+  "football|UEFA Europa Conference League|FC Twente|Qarabag FK|让球客胜|1x2|2026-08-21": {
+    "ev": 1.01,
+    "ts": 1787196182.096915
+  },
   "football|UEFA Europa Conference League|KI Klaksvik|Riga FC|让球主胜|1x2|2026-08-21": {
     "ev": 2.13,
     "ts": 1787180765.386145
+  },
+  "football|UEFA Europa Conference League|特温特|卡拉巴克|小球(2.75)|ou|2.75|2026-08-21": {
+    "ev": 6.29,
+    "bb": 1.9,
+    "ts": 1787196181.768616
   },
   "football|UEFA Europa League-Qualification|Besiktas JK|FK Kauno Zalgiris|先进球neither|first_to_score|2026-08-20": {
     "ev": 2.5,
@@ -853,6 +909,10 @@
   "football|UEFA Europa League-Qualification|Besiktas JK|FK Kauno Zalgiris|总进球区间7+|total_goals_range|2026-08-21": {
     "ev": 4.82,
     "ts": 1787180086.215661
+  },
+  "football|UEFA Europa League-Qualification|CS Universitatea Craiova 1948|FC Ararat Armenia|总进球区间7+|total_goals_range|2026-08-21": {
+    "ev": 2.36,
+    "ts": 1787196182.099017
   },
   "football|UEFA Europa League-Qualification|CS卡拉奥华大学 1948|阿拉特亚美尼亚|双重机会-和局/客|dc|2026-08-21": {
     "ev": 3.42,
@@ -1342,45 +1402,93 @@
     "ev": 91.86,
     "ts": 1787180086.215498
   },
+  "tennis|ITF - M15 Arad Men Singles|Jacopo Bilardo (ITA)|Ignacio Monzon (ARG)|客胜|1x2|2026-08-20": {
+    "ev": 2.09,
+    "ts": 1787196182.097641
+  },
   "tennis|ITF - M15 Bastad Men Doubles|Maties Torres Ramis (ESP) / Kristian Tumbas Kajgo (CRO)|Jayson Blando (USA) / Oren Vasser (USA)|客胜|1x2|2026-08-20": {
     "ev": 17.8,
     "ts": 1787180086.215408
+  },
+  "tennis|ITF - M15 Krakow Men Singles|Wojciech Marek (POL)|Karol Filar (POL)|主胜|1x2|2026-08-20": {
+    "ev": 2.56,
+    "ts": 1787196182.0978649
+  },
+  "tennis|ITF - M15 Kursumlijska Banja Men Doubles|Roman Kharlamov (RUS) / Ruslan Tiukaev (RUS)|Nikola Jovic (SRB) / Tadija Radovanovic (SRB)|主胜|1x2|2026-08-20": {
+    "ev": 79.01,
+    "ts": 1787196182.098799
   },
   "tennis|ITF - M15 Kursumlijska Banja Men Singles|Andrea Motta (ITA)|Anton Arzhankin (RUS)|客胜|1x2|2026-08-20": {
     "ev": 4.0,
     "ts": 1787191217.6514702
   },
+  "tennis|ITF - M15 Mistelbach Men Doubles|Juan Ignacio Gallego (ARG) / Kabeer Kapasi (USA)|Gabriele Crivellaro (ITA) / Gabriele Maria Noce (ITA)|客胜|1x2|2026-08-20": {
+    "ev": 4.56,
+    "ts": 1787196182.098953
+  },
+  "tennis|ITF - M15 Mistelbach Men Doubles|Nikita Mashtakov (UKR) / Andriy Poritskyy (UKR)|Thilo Behrmann (AUT) / Florian Zimmer (AUT)|客胜|1x2|2026-08-20": {
+    "ev": 37.39,
+    "ts": 1787196182.098901
+  },
+  "tennis|ITF - M15 Mistelbach Men Singles|Benedikt Szerencsits (AUT)|Facundo Yunis (GER)|让盘客胜|1x2|2026-08-20": {
+    "ev": 1.49,
+    "ts": 1787196182.097688
+  },
+  "tennis|ITF - W15 Campos do Jordao Women Singles|Nathalia Pontes Tourinho (BRA)|Marjorie Souza (BRA)|客胜|1x2|2026-08-20": {
+    "ev": 3.44,
+    "ts": 1787196182.097975
+  },
   "tennis|ITF - W15 Logrono Women Singles|Diae El Jardi (MAR)|Charo Esquiva Banuls (ESP)|客胜|1x2|2026-08-20": {
     "ev": 2.59,
     "ts": 1787195671.516861
+  },
+  "tennis|ITF - W35 Bistrita Women Doubles|Federica Sacco (ITA) / Linda Sevcikova (CZE)|Adrienn Nagy (HUN) / Oana Georgeta Simion (ROU)|客胜|1x2|2026-08-20": {
+    "ev": 16.14,
+    "ts": 1787196182.0988522
+  },
+  "tennis|ITF - W35 Bistrita Women Doubles|Jessica Pieri (ITA) / Angelica Raggi (ITA)|Alesia Breaz (ROU) / Cristiana Nicoleta Todoni (ROU)|主胜|1x2|2026-08-20": {
+    "ev": 2.65,
+    "ts": 1787196182.097787
   },
   "tennis|WTA - Cincinnati Open - Doubles|Marta Kostyuk (UKR) / Peyton Stearns (USA)|Guo Hanyu (CHN) / Kristina Mladenovic (FRA)|主胜|1x2|2026-08-20": {
     "ev": 16.87,
     "ts": 1787137779.9569652
   },
-  "football|AFC Champions League Women|金边皇冠 (女)|卡雅 (女)|小球(4.0)|ou|4.0|2026-08-20": {
-    "ev": 8.83,
-    "bb": 1.89,
-    "ts": 1787196181.7685351
+  "tennis|WTA - Cincinnati Open|Amanda Anisimova (USA)|Jessica Pegula (USA)|大分|1x2|2026-08-21": {
+    "ev": 3.48,
+    "ts": 1787196182.0982761
   },
-  "football|UEFA Europa Conference League|特温特|卡拉巴克|小球(2.75)|ou|2.75|2026-08-21": {
-    "ev": 6.29,
-    "bb": 1.9,
-    "ts": 1787196181.768616
+  "tennis|WTA - Cincinnati Open|Amanda Anisimova (USA)|Jessica Pegula (USA)|让盘主胜|1x2|2026-08-21": {
+    "ev": 1.8,
+    "ts": 1787196182.098173
   },
-  "basketball|WNBA|达拉斯飞翼 (女)|印第安纳狂热 (女)|让分客胜(-3.5)|hc|-3.5|2026-08-21": {
-    "ev": 2.85,
-    "bb": 2.0,
-    "ts": 1787196181.7686882
+  "tennis|WTA - Cincinnati Open|Iga Swiatek (POL)|Elena Rybakina (KAZ)|大分|1x2|2026-08-21": {
+    "ev": 1.61,
+    "ts": 1787196182.098081
   },
   "tennis|WTA - Cincinnati Open|阿曼达.阿尼西莫娃 (美国)|洁西卡.佩古拉 (美国)|大分(22.5)|ou|22.5|2026-08-21": {
     "ev": 3.48,
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|Argentina Copa Santa Fe|蒂穆文塞竞技俱乐部|纽维尔老男孩|主胜|1x2|2026-08-21": {
-    "ev": 3.3,
-    "bb": 3.86,
-    "ts": 1787196181.768833
+  "basketball|WNBA|洛杉矶火花 (女)|亚特兰大梦想 (女)|小分(179.5)|ou|179.5|2026-08-21": {
+    "ev": 6.39,
+    "bb": 2.02,
+    "ts": 1787196927.91451
+  },
+  "football|Argentina Copa Santa Fe|蒂姆布恩斯|纽维尔老男孩|小球(2.0)|ou|2.0|2026-08-21": {
+    "ev": 5.16,
+    "bb": 2.02,
+    "ts": 1787196927.9145632
+  },
+  "football|Copa Libertadores|科林蒂安|罗萨里奥中央|上半场客胜|ht|2026-08-21": {
+    "ev": 22.13,
+    "bb": 7.85,
+    "ts": 1787196927.914603
+  },
+  "football|USA Major League Soccer|奥兰多城|皇家盐湖城|让球客胜(+0.5)|hc|+0.5|2026-08-23": {
+    "ev": 2.75,
+    "bb": 1.97,
+    "ts": 1787196927.9146419
   }
 }
