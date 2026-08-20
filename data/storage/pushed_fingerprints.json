@@ -843,6 +843,10 @@
     "bb": 1.97,
     "ts": 1787101664.2627468
   },
+  "football|England League One|Sheffield Wednesday|Bradford City|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 1.4,
+    "ts": 1787214637.704653
+  },
   "football|England League Two|沃尔索尔|格林斯比|双边进球-是|btts|2026-08-22": {
     "ev": 4.97,
     "bb": 1.89,
@@ -888,6 +892,11 @@
   "football|Estonia Meistriliiga Women|Viimsi JK (w)|Harju JK Laagri (w)|客胜|1x2|2026-08-20": {
     "ev": 27.59,
     "ts": 1787196182.096779
+  },
+  "football|Estonia Meistriliiga Women|科罗拉 (女)|佐久运动 (女)|双重机会-和局/客|dc|2026-08-20": {
+    "ev": 13.26,
+    "bb": 3.39,
+    "ts": 1787213939.857968
   },
   "football|Estonia Meistriliiga Women|科罗拉 (女)|佐久运动 (女)|让球客胜(+1.5)|hc|+1.5|2026-08-20": {
     "ev": 4.67,
@@ -1972,6 +1981,10 @@
     "ev": 4.69,
     "ts": 1787207004.6276102
   },
+  "tennis|ITF - W35 Bistrita Women Doubles|Federica Sacco (ITA) / Linda Sevcikova (CZE)|Adrienn Nagy (HUN) / Oana Georgeta Simion (ROU)|主胜|1x2|2026-08-20": {
+    "ev": 72.16,
+    "ts": 1787214699.11848
+  },
   "tennis|ITF - W35 Bistrita Women Doubles|Federica Sacco (ITA) / Linda Sevcikova (CZE)|Adrienn Nagy (HUN) / Oana Georgeta Simion (ROU)|客胜|1x2|2026-08-20": {
     "ev": 16.14,
     "ts": 1787196182.0988522
@@ -2001,9 +2014,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|Estonia Meistriliiga Women|科罗拉 (女)|佐久运动 (女)|双重机会-和局/客|dc|2026-08-20": {
-    "ev": 13.26,
-    "bb": 3.39,
-    "ts": 1787213939.857968
+  "football|Belarus Premier League|明斯克迪纳摩|若基诺鱼雷|让球客胜(+1)|hc|+1|2026-08-20": {
+    "ev": 3.25,
+    "bb": 1.72,
+    "ts": 1787216021.566179
   }
 }

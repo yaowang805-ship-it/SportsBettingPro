@@ -1,5 +1,5 @@
 {
-  "balance": 5467.46,
+  "balance": 5437.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -4486,6 +4486,29 @@
       "commence_time": 1787319000,
       "created_at": "2026-08-20T08:12:59.554863+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_明斯克迪纳摩_若基诺鱼雷_让球客胜(+1)",
+      "sport": "football",
+      "league": "白俄罗斯超级联赛",
+      "home_team": "明斯克迪纳摩",
+      "away_team": "若基诺鱼雷",
+      "home_cn": "明斯克迪纳摩",
+      "away_cn": "若基诺鱼雷",
+      "market": "handicap",
+      "market_type": "让球客胜(+1)",
+      "sub_market": "hc",
+      "line": "+1",
+      "odds": 1.72,
+      "stake": 30,
+      "model_prob": 0.6003,
+      "ev_pct": 3.25,
+      "pin_odds": 1.5952,
+      "fair_price": 1.6658,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787240700,
+      "created_at": "2026-08-20T08:53:41.554919+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -4562,8 +4585,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 3171.0,
-    "bets": 83
+    "used": 3201.0,
+    "bets": 84
   },
   "updated": null
 }
