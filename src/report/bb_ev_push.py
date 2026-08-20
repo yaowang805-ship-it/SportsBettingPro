@@ -3203,11 +3203,14 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
         title = f"+EV 投注推荐: {body.count('#####')} 条"
 
     from config.settings import send_dingtalk
-    ok = send_dingtalk(title, body)
-    if not ok:
-        # 重试一次（偶发网络抖动）
-        time.sleep(2)
+    # V5.10: skip_dingtalk=True(夜里) 时跳过钉钉, 但照常投注+记录 —— 加快真实投注样本积累
+    ok = True
+    if not skip_dingtalk:
         ok = send_dingtalk(title, body)
+        if not ok:
+            # 重试一次（偶发网络抖动）
+            time.sleep(2)
+            ok = send_dingtalk(title, body)
     if ok:
         # 记录本次推送的所有推荐比赛
         scan_type = "incremental" if incremental else "full"
