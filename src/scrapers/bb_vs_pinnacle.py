@@ -958,6 +958,15 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             pin_home_fair = _hc_fairs[0]
             pin_away_fair = _hc_fairs[1]
 
+            # V5.10 护栏: 让球两腿必须互补(隐含概率和≈1.0~1.35)。
+            # 网球等运动的让球 home/away 腿可能同向(实测 away -1.5 与 away +1.5,
+            # 隐含和 1.679), shin_fair_odds 会被迫把同向腿当互补腿, 造出假公平价
+            # → 假 +EV。隐含和超出 [1.0, 1.4] 直接丢弃, 绝不用可疑盘口算 EV。
+            _hc_implied = (1.0 / pin_home_odds + 1.0 / pin_away_odds) if pin_home_odds > 0 and pin_away_odds > 0 else 0
+            if _hc_implied > 1.4:
+                entry["flags"].append(f"让球腿非同向互补(隐含和{_hc_implied:.2f}), 丢弃")
+                continue
+
             # V5.7: 「0」让球线一致性校验 — 让球0≈平局退款(DNB), 与独赢推导的DNB分歧>3% → 让球线不自洽
             # (小联赛流动性差/挂单污染会让让球0偏离DNB, 产出假+EV)
             if pin_hc_line is not None and abs(pin_hc_line) <= 0.5:
@@ -1264,13 +1273,16 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         if idx is not None and val > 0:
                             dc_raw[idx] = val
                     if all(x and x > 0 for x in dc_raw):
-                        # V4.4: Pinnacle DC 价格 < 1.2 → 数据异常, 回退到1X2推导
+                        # V5.10 修复: 路径A 曾对 [1X, 2X, 12] 三条**非互斥**腿直接
+                        # shin_fair_odds 去抽水 —— 这三条腿概率本就互相重叠(和≈2.1),
+                        # Shin 会强推 Σp=1, 把每条 DC 公平价系统性抬高 40-90%, 产出
+                        # 假 +EV。正确做法是从 1X2 推导(组合概率), 即统一走路径B。
+                        # 这里直接把 dc_fair 置 None 触发路径B, 不再用路径A。
                         if any(v < 1.2 for v in dc_raw):
                             dc_fair = None  # 触发 Path B
                         else:
-                            # 去抽水 (multiplicative proportional method)
-                            dc_fair = shin_fair_odds(dc_raw)
-                            dc_pin_raw = dc_raw
+                            dc_fair = None  # V5.10: 路径A 禁用, 一律走 1X2 推导
+                            dc_pin_raw = None
                     break
 
             # 路径B：Pinnacle 无 DC 市场 → 从 1X2 推导公平价（Shin 去抽水后合并概率）
