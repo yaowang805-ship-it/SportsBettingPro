@@ -847,11 +847,6 @@
     "bb": 4.8,
     "ts": 1787101664.262835
   },
-  "football|Copa Sudamericana|蒙得维的亚城图尔克|泰格雷|上半场主胜|ht|2026-08-20": {
-    "ev": 22.13,
-    "bb": 5.8,
-    "ts": 1787185715.3906188
-  },
   "football|Denmark DBU Pokalen|Nykobing FC|Naestved BK|主胜|1x2|2026-08-19": {
     "ev": 2.94,
     "ts": 1787025629.2458
@@ -1487,9 +1482,17 @@
     "ev": 8.5,
     "ts": 1787180086.2145479
   },
+  "football|UEFA Europa Conference League-Qualification|FC Sion|Ajax Amsterdam|让球主胜|1x2|2026-08-21": {
+    "ev": 1.79,
+    "ts": 1787185832.907736
+  },
   "football|UEFA Europa Conference League-Qualification|KAA Gent|Hibernian FC|大球|1x2|2026-08-21": {
     "ev": 1.05,
     "ts": 1787185057.749401
+  },
+  "football|UEFA Europa Conference League-Qualification|KS Gornik Zabrze|AS Monaco FC|主胜|1x2|2026-08-21": {
+    "ev": 1.62,
+    "ts": 1787185832.90797
   },
   "football|UEFA Europa Conference League-Qualification|亚特兰大|特拉维夫夏普尔|双重机会-和局/客|dc|2026-08-21": {
     "ev": 18.19,
@@ -1725,6 +1728,11 @@
     "ev": 3.65,
     "bb": 1.51,
     "ts": 1787114647.964166
+  },
+  "football|USA Major League Soccer|纳什维尔|哥伦布机员|让球客胜(+1)|hc|+1|2026-08-23": {
+    "ev": 3.33,
+    "bb": 1.6,
+    "ts": 1787185832.65628
   },
   "football|USA Major League Soccer|西雅图海湾人|奥斯汀|正确比分1-1|correct_score|2026-08-20": {
     "ev": 6.47,
@@ -1972,9 +1980,14 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|USA Major League Soccer|纳什维尔|哥伦布机员|让球客胜(+1)|hc|+1|2026-08-23": {
-    "ev": 3.33,
-    "bb": 1.6,
-    "ts": 1787185832.65628
+  "football|Copa Sudamericana|蒙得维的亚城图尔克|泰格雷|上半场主胜|ht|2026-08-20": {
+    "ev": 25.29,
+    "bb": 5.95,
+    "ts": 1787185874.3400362
+  },
+  "football|Copa Sudamericana|蒙得维的亚城图尔克|泰格雷|主胜|1x2|2026-08-20": {
+    "ev": 6.2,
+    "bb": 4.23,
+    "ts": 1787185874.340081
   }
 }
