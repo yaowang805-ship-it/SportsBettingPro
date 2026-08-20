@@ -1,5 +1,5 @@
 {
-  "balance": 4654.46,
+  "balance": 4630.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2462,6 +2462,29 @@
       "commence_time": 1787232600,
       "created_at": "2026-08-20T11:47:34.988538+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_图拉兵工厂_洛特伏尔加格勒_让球客胜(+0/05)",
+      "sport": "football",
+      "league": "俄罗斯甲级联赛",
+      "home_team": "图拉兵工厂",
+      "away_team": "洛特伏尔加格勒",
+      "home_cn": "图拉兵工厂",
+      "away_cn": "洛特伏尔加格勒",
+      "market": "handicap",
+      "market_type": "让球客胜(+0/0.5)",
+      "sub_market": "hc",
+      "line": "+0/0.5",
+      "odds": 1.74,
+      "stake": 24,
+      "model_prob": 0.5902,
+      "ev_pct": 2.7,
+      "pin_odds": 1.6452,
+      "fair_price": 1.6943,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787239800,
+      "created_at": "2026-08-20T12:14:11.143007+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2568,8 +2591,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 4053.0,
-    "bets": 98
+    "used": 4077.0,
+    "bets": 99
   },
   "updated": null
 }

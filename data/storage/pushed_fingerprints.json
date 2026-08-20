@@ -906,6 +906,11 @@
     "bb": 2.64,
     "ts": 1787220700.817324
   },
+  "football|Egypt Second Division A|霍尔比|阿尔纳赛尔|让球客胜(+0.5)|hc|+0.5|2026-08-20": {
+    "ev": 4.14,
+    "bb": 1.8,
+    "ts": 1787226455.0002508
+  },
   "football|England EFL Trophy|Mansfield Town|Manchester City FC U21|小球|1x2|2026-08-20": {
     "ev": 8.0,
     "ts": 1787101664.640929
@@ -1212,6 +1217,10 @@
     "ev": 1.84,
     "ts": 1787197898.01047
   },
+  "football|Russia First League|PFK Arsenal Tula|SK Rotor Volgograd|让球客胜|1x2|2026-08-20": {
+    "ev": 1.13,
+    "ts": 1787227094.230735
+  },
   "football|Russia First League|下卡姆斯克石油|索契|上半场主胜|ht|2026-08-20": {
     "ev": 8.4,
     "bb": 5.8,
@@ -1317,6 +1326,11 @@
     "bb": 1.8,
     "ts": 1787203065.165096
   },
+  "football|Sweden Cup|阿兰达|厄斯特松德|双重机会-和局/客|dc|2026-08-21": {
+    "ev": 10.95,
+    "bb": 1.38,
+    "ts": 1787226455.000032
+  },
   "football|Sweden Ettan Norra|索伦蒂纳|卡尔斯塔德|客胜|1x2|2026-08-22": {
     "ev": 4.53,
     "bb": 2.05,
@@ -1385,6 +1399,10 @@
   "football|UEFA Europa Conference League-Qualification|Dinamo City|Pafos FC|上半场主胜|ht|2026-08-21": {
     "ev": 1.93,
     "ts": 1787199708.018466
+  },
+  "football|UEFA Europa Conference League-Qualification|FC Inter Turku|FC Copenhagen|小球|1x2|2026-08-21": {
+    "ev": 2.49,
+    "ts": 1787227094.231319
   },
   "football|UEFA Europa Conference League-Qualification|FC Sion|Ajax Amsterdam|小球|1x2|2026-08-21": {
     "ev": 1.28,
@@ -2042,6 +2060,11 @@
     "ev": 13.14,
     "ts": 1787226199.195128
   },
+  "football|Uzbekistan Pro League|亚潘|特雷普查89|大球(3.0)|ou|3.0|2026-08-20": {
+    "ev": 13.14,
+    "bb": 1.83,
+    "ts": 1787226455.000148
+  },
   "football|Uzbekistan Pro League|奥林匹克莫比乌斯|PFK 艾热努库斯|大球(2.25)|ou|2.25|2026-08-20": {
     "ev": 9.16,
     "bb": 1.96,
@@ -2237,19 +2260,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|Sweden Cup|阿兰达|厄斯特松德|双重机会-和局/客|dc|2026-08-21": {
-    "ev": 10.95,
-    "bb": 1.38,
-    "ts": 1787226455.000032
-  },
-  "football|Uzbekistan Pro League|亚潘|特雷普查89|大球(3.0)|ou|3.0|2026-08-20": {
-    "ev": 13.14,
-    "bb": 1.83,
-    "ts": 1787226455.000148
-  },
-  "football|Egypt Second Division A|霍尔比|阿尔纳赛尔|让球客胜(+0.5)|hc|+0.5|2026-08-20": {
-    "ev": 4.14,
-    "bb": 1.8,
-    "ts": 1787226455.0002508
+  "football|Russia First League|图拉兵工厂|洛特伏尔加格勒|让球客胜(+0/0.5)|hc|+0/0.5|2026-08-20": {
+    "ev": 2.7,
+    "bb": 1.74,
+    "ts": 1787228051.151127
   }
 }
