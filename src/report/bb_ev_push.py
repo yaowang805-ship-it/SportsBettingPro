@@ -3352,12 +3352,15 @@ def main():
     label_flag = os.environ.get("PUSH_LABEL", "")
 
     if "--no-push" not in sys.argv:
-        push_report(place_bets=("--no-bet" not in sys.argv),
+        # V5.10: --night = 夜里模式(不推钉钉, 但照常投注+记录到真实投注库)
+        _night = "--night" in sys.argv
+        push_report(place_bets=("--no-bet" not in sys.argv) or _night,
                     incremental=is_incremental,
                     qualified=qualified if qualified else None,
                     skip_dedup=skip_dedup,
                     skip_freshness=skip_freshness,
-                    label=label_flag)
+                    label=label_flag,
+                    skip_dingtalk=_night)
     return body
 
 
