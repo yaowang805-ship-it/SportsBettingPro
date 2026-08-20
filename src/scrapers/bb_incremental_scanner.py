@@ -168,6 +168,28 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
                 if not isinstance(matchups, list):
                     continue
 
+                # V5.10 修复归档断链: 增量扫描每 5 分钟拉一次每个联赛的完整赔率,
+                # 但此前从不归档(归档只在全量扫描的 _fetch_one 里), 导致归档库长时间
+                # 零写入, 实时采集错过窗口时归档回捞兜底是空的 —— 这是收盘价覆盖率
+                # 上不去的根因之一。现在每次拉到数据就顺手归档(归档器只存价格变化点,
+                # 实测开销约拉取的 3%, 不影响扫描速度)。
+                if matchups:
+                    try:
+                        from src.evolve.odds_archiver import archive_matchups
+                        _sport_cn = {}
+                        for _pid_, _info in (all_pin_leagues or {}).items():
+                            if isinstance(_info, dict):
+                                _sport_cn[_pid_] = _info.get("sport", "")
+                        _cn2en = {"足球": "football", "篮球": "basketball", "网球": "tennis",
+                                  "棒球": "baseball", "美式足球": "american_football",
+                                  "拳击": "boxing", "MMA": "mma", "冰球": "ice_hockey",
+                                  "乒乓球": "pingpong", "羽毛球": "badminton", "排球": "volleyball"}
+                        _sport = _cn2en.get(_sport_cn.get(pid, ""), "?")
+                        _lname = _sport_cn.get(pid, str(pid))
+                        archive_matchups(_sport, pid, _lname, matchups, [])
+                    except Exception:
+                        pass
+
                 for mu in matchups:
                     if not isinstance(mu, dict):
                         continue

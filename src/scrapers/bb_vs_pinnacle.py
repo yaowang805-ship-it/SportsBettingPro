@@ -1350,11 +1350,10 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         if idx is not None and val > 0:
                             dc_raw[idx] = val
                     if all(x and x > 0 for x in dc_raw):
-                        if any(v < 1.2 for v in dc_raw):
-                            ht_dc_fair = None
-                        else:
-                            ht_dc_fair = shin_fair_odds(dc_raw)
-                            ht_dc_pin_raw = dc_raw
+                        # V5.10: 同 FT DC, 路径A 禁用 —— 非互斥三腿不能 Shin 去抽水,
+                        # 一律走 HT 1X2 推导
+                        ht_dc_fair = None
+                        ht_dc_pin_raw = None
                     break
             # 路径B: 从 HT 1X2 推导
             if ht_dc_fair is None:

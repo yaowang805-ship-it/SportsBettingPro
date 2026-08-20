@@ -642,6 +642,13 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             if not fair_map:
                 pin_decimal = [v for v in norm_pin.values() if v > 1.0]
                 if pin_decimal:
+                    # V5.10 修复: devig_mult 必须只在「BB 与 Pin 选项集等价」时用全集去抽水。
+                    # 净胜球/总进球区间等市场 BB 往往只下注 Pin 全集里的少数几条腿,
+                    # 用 Pin 全集做 devig 分母会把其它腿的概率挤到 BB 有的腿上, 公平价
+                    # 系统性虚高(实测皇马净胜球 BB 下 2 条, 却算出 +47% 的假 EV)。
+                    # 选项集不等价时, 结构不对等 → 不出数(对齐后再算)。
+                    if set(norm_bb) != set(norm_pin):
+                        continue
                     # 比例法去抽水(devig_mult 返回公平概率, 公平赔率=1/prob)
                     probs = devig_mult(pin_decimal)
                     for i, k in enumerate(norm_pin):
