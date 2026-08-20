@@ -1,5 +1,5 @@
 {
-  "balance": 6899.33,
+  "balance": 6885.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3566,6 +3566,29 @@
       "commence_time": 1787441400,
       "created_at": "2026-08-20T02:00:17.192420+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_奥兰多城_皇家盐湖城_让球客胜(+05/1)",
+      "sport": "football",
+      "league": "美国职业大联盟",
+      "home_team": "奥兰多城",
+      "away_team": "皇家盐湖城",
+      "home_cn": "奥兰多城",
+      "away_cn": "皇家盐湖城",
+      "market": "handicap",
+      "market_type": "让球客胜(+0.5/1)",
+      "sub_market": "hc",
+      "line": "+0.5/1",
+      "odds": 1.75,
+      "stake": 14,
+      "model_prob": 0.5878,
+      "ev_pct": 2.86,
+      "pin_odds": 1.641,
+      "fair_price": 1.7013,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787441400,
+      "created_at": "2026-08-20T02:20:58.100256+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3625,8 +3648,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 1608.0,
-    "bets": 42
+    "used": 1622.0,
+    "bets": 43
   },
   "updated": null
 }

@@ -110,6 +110,11 @@
     "ev": 3.88,
     "ts": 1787179754.057791
   },
+  "basketball|Olympic Tournament Pre-Qualifying Women|塞内加尔 (女)|墨西哥 (女)|主胜|1x2|2026-08-20": {
+    "ev": 5.43,
+    "bb": 1.3,
+    "ts": 1787191569.4605849
+  },
   "basketball|WNBA|Golden State Valkyries (w)|Minnesota Lynx (w)|小分|1x2|2026-08-20": {
     "ev": 1.56,
     "ts": 1787184957.597486
@@ -117,6 +122,10 @@
   "basketball|WNBA|Golden State Valkyries (w)|Minnesota Lynx (w)|让分主胜|1x2|2026-08-20": {
     "ev": 1.48,
     "ts": 1787179754.057749
+  },
+  "basketball|WNBA|Las Vegas Aces (w)|Connecticut Sun (w)|让分主胜|1x2|2026-08-21": {
+    "ev": 2.46,
+    "ts": 1787191804.613355
   },
   "basketball|WNBA|Washington Mystics (w)|Toronto Tempo (w)|大分|1x2|2026-08-20": {
     "ev": 1.33,
@@ -1247,9 +1256,9 @@
     "ev": 16.87,
     "ts": 1787137779.9569652
   },
-  "basketball|Olympic Tournament Pre-Qualifying Women|塞内加尔 (女)|墨西哥 (女)|主胜|1x2|2026-08-20": {
-    "ev": 5.43,
-    "bb": 1.3,
-    "ts": 1787191569.4605849
+  "football|USA Major League Soccer|奥兰多城|皇家盐湖城|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-23": {
+    "ev": 2.86,
+    "bb": 1.75,
+    "ts": 1787192458.107693
   }
 }
