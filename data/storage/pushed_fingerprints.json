@@ -139,6 +139,10 @@
     "ev": 1.48,
     "ts": 1787179754.057749
   },
+  "basketball|WNBA|Las Vegas Aces (w)|Connecticut Sun (w)|小分|1x2|2026-08-21": {
+    "ev": 3.97,
+    "ts": 1787196928.2408268
+  },
   "basketball|WNBA|Las Vegas Aces (w)|Connecticut Sun (w)|让分主胜|1x2|2026-08-21": {
     "ev": 2.46,
     "ts": 1787191804.613355
@@ -164,6 +168,11 @@
     "ev": 5.91,
     "bb": 2.07,
     "ts": 1787114647.964055
+  },
+  "basketball|WNBA|洛杉矶火花 (女)|亚特兰大梦想 (女)|小分(179.5)|ou|179.5|2026-08-21": {
+    "ev": 6.39,
+    "bb": 2.02,
+    "ts": 1787196927.91451
   },
   "basketball|WNBA|洛杉矶火花 (女)|亚特兰大梦想 (女)|小分(180.5)|ou|180.5|2026-08-21": {
     "ev": 9.25,
@@ -240,6 +249,15 @@
     "ev": 8.83,
     "bb": 1.89,
     "ts": 1787196181.7685351
+  },
+  "football|Argentina Copa Santa Fe|Timbuense|Newell´s Old Boys|小球|1x2|2026-08-21": {
+    "ev": 5.16,
+    "ts": 1787196928.240706
+  },
+  "football|Argentina Copa Santa Fe|蒂姆布恩斯|纽维尔老男孩|小球(2.0)|ou|2.0|2026-08-21": {
+    "ev": 5.16,
+    "bb": 2.02,
+    "ts": 1787196927.9145632
   },
   "football|Argentina Copa Santa Fe|蒂穆文塞竞技俱乐部|纽维尔老男孩|主胜|1x2|2026-08-21": {
     "ev": 3.3,
@@ -502,6 +520,10 @@
     "ev": 2.86,
     "ts": 1787186329.958403
   },
+  "football|Copa Libertadores|Corinthians SP|Club Atletico Rosario Central|上半场客胜|ht|2026-08-21": {
+    "ev": 22.13,
+    "ts": 1787196928.240569
+  },
   "football|Copa Libertadores|LDU Quito|Mirassol FC SP|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 1.14,
     "ts": 1787180086.214936
@@ -529,6 +551,11 @@
     "ev": 6.68,
     "bb": 2.09,
     "ts": 1787021144.061548
+  },
+  "football|Copa Libertadores|科林蒂安|罗萨里奥中央|上半场客胜|ht|2026-08-21": {
+    "ev": 22.13,
+    "bb": 7.85,
+    "ts": 1787196927.914603
   },
   "football|Copa Libertadores|科金博联合|普拉腾斯|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 5.73,
@@ -798,6 +825,14 @@
     "ev": 8.79,
     "bb": 5.45,
     "ts": 1787193607.008692
+  },
+  "football|Sweden Cup|Hassleholms IF|Landskrona BoIS|客胜|1x2|2026-08-21": {
+    "ev": 1.56,
+    "ts": 1787196928.2403252
+  },
+  "football|Sweden Cup|Hassleholms IF|Landskrona BoIS|让球客胜|1x2|2026-08-21": {
+    "ev": 1.74,
+    "ts": 1787196928.240365
   },
   "football|Switzerland Promotion League|布雷特雷|青年人 II|让球主胜(0)|hc|0|2026-08-20": {
     "ev": 4.5,
@@ -1186,6 +1221,11 @@
     "bb": 8.55,
     "ts": 1787021144.06165
   },
+  "football|USA Major League Soccer|奥兰多城|皇家盐湖城|让球客胜(+0.5)|hc|+0.5|2026-08-23": {
+    "ev": 2.75,
+    "bb": 1.97,
+    "ts": 1787196927.9146419
+  },
   "football|USA Major League Soccer|奥兰多城|皇家盐湖城|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-23": {
     "ev": 2.86,
     "bb": 1.75,
@@ -1398,6 +1438,10 @@
     "bb": 1.78,
     "ts": 1787180286.28707
   },
+  "tennis|ATP Challenger - Cancun Open - Doubles|Luis Carlos Alvarez Valdes (MEX) / Alan Magadan (MEX)|Samuel Heredia (COL) / Divij Sharan (IND)|主胜|1x2|2026-08-20": {
+    "ev": 3.41,
+    "ts": 1787196928.241672
+  },
   "tennis|ATP Challenger - Cancun Open - Doubles|Luis Carlos Alvarez Valdes (MEX) / Alan Magadan (MEX)|Samuel Heredia (COL) / Divij Sharan (IND)|客胜|1x2|2026-08-20": {
     "ev": 91.86,
     "ts": 1787180086.215498
@@ -1471,24 +1515,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "basketball|WNBA|洛杉矶火花 (女)|亚特兰大梦想 (女)|小分(179.5)|ou|179.5|2026-08-21": {
-    "ev": 6.39,
-    "bb": 2.02,
-    "ts": 1787196927.91451
-  },
-  "football|Argentina Copa Santa Fe|蒂姆布恩斯|纽维尔老男孩|小球(2.0)|ou|2.0|2026-08-21": {
-    "ev": 5.16,
-    "bb": 2.02,
-    "ts": 1787196927.9145632
-  },
-  "football|Copa Libertadores|科林蒂安|罗萨里奥中央|上半场客胜|ht|2026-08-21": {
-    "ev": 22.13,
-    "bb": 7.85,
-    "ts": 1787196927.914603
-  },
-  "football|USA Major League Soccer|奥兰多城|皇家盐湖城|让球客胜(+0.5)|hc|+0.5|2026-08-23": {
-    "ev": 2.75,
-    "bb": 1.97,
-    "ts": 1787196927.9146419
+  "basketball|WNBA|拉斯维加斯王牌 (女)|康涅狄格阳光 (女)|小分(165.5)|ou|165.5|2026-08-21": {
+    "ev": 6.7,
+    "bb": 2.0,
+    "ts": 1787197897.696617
   }
 }
