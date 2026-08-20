@@ -220,6 +220,10 @@
     "ev": 1.56,
     "ts": 1787182605.538065
   },
+  "basketball|William Jones Cup|Jordan|California Irvine Anteaters|小分|1x2|2026-08-20": {
+    "ev": 7.68,
+    "ts": 1787201117.821579
+  },
   "basketball|William Jones Cup|Jordan|California Irvine Anteaters|让分主胜|1x2|2026-08-20": {
     "ev": 2.37,
     "ts": 1787189734.027516
@@ -341,6 +345,10 @@
   "football|Argentina Liga Profesional Reserves|Banfield (Res)|Instituto AC Cordoba (Res)|小球|1x2|2026-08-20": {
     "ev": 1.92,
     "ts": 1787138299.1421509
+  },
+  "football|Argentina Liga Profesional Reserves|Barracas Central (Res)|Tigre (Res)|大球|1x2|2026-08-21": {
+    "ev": 1.32,
+    "ts": 1787200682.731516
   },
   "football|Argentina Liga Profesional Reserves|Ferro Carril Oeste (Res)|San Martin de San Juan (Res)|小球|1x2|2026-08-20": {
     "ev": 1.83,
@@ -555,6 +563,10 @@
     "ev": 1.76,
     "ts": 1787180086.2148328
   },
+  "football|Copa Libertadores|LDU Quito|Mirassol FC SP|主胜|1x2|2026-08-21": {
+    "ev": 1.26,
+    "ts": 1787201588.91555
+  },
   "football|Copa Libertadores|弗拉门戈|克鲁塞罗MG|和局|1x2|2026-08-20": {
     "ev": 3.12,
     "bb": 3.85,
@@ -714,6 +726,10 @@
     "bb": 3.48,
     "ts": 1787194489.4344919
   },
+  "football|Estonia Esiliiga B|Parnu JK Vaprus II|Viljandi JK Tulevik|小球|1x2|2026-08-20": {
+    "ev": 2.68,
+    "ts": 1787200682.732411
+  },
   "football|Estonia Meistriliiga Women|FC Flora Tallinn (w)|Saku Sporting (w)|大球|1x2|2026-08-20": {
     "ev": 3.57,
     "ts": 1787197898.010417
@@ -742,6 +758,10 @@
   "football|France Ligue 3|Football Bourg En Bresse Peronnas 01|Thionville Lusitanos|让球主胜|1x2|2026-08-21": {
     "ev": 1.15,
     "ts": 1787199708.020212
+  },
+  "football|France Ligue 3|La Roche Vendee Football|AS Cannes|让球主胜|1x2|2026-08-21": {
+    "ev": 1.96,
+    "ts": 1787200682.732578
   },
   "football|France Ligue 3|孔卡诺|维利法兰|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-21": {
     "ev": 4.57,
@@ -867,6 +887,11 @@
     "ev": 6.13,
     "bb": 2.06,
     "ts": 1787020969.61725
+  },
+  "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场客胜|ht|2026-08-21": {
+    "ev": 13.4,
+    "bb": 5.6,
+    "ts": 1787200682.425175
   },
   "football|Sweden Cup|FC Arlanda|Ostersunds FK|客胜|1x2|2026-08-21": {
     "ev": 1.4,
@@ -1594,6 +1619,14 @@
     "ev": 1.49,
     "ts": 1787196182.097688
   },
+  "tennis|ITF - M15 Mistelbach Men Singles|David Wallechner (AUT)|Gregor Hausberger (AUT)|客胜|1x2|2026-08-20": {
+    "ev": 1.4,
+    "ts": 1787201588.9160042
+  },
+  "tennis|ITF - M15 Mistelbach Men Singles|David Wallechner (AUT)|Gregor Hausberger (AUT)|让盘客胜|1x2|2026-08-20": {
+    "ev": 1.95,
+    "ts": 1787201588.9160872
+  },
   "tennis|ITF - W15 Campos do Jordao Women Singles|Nathalia Pontes Tourinho (BRA)|Marjorie Souza (BRA)|客胜|1x2|2026-08-20": {
     "ev": 3.44,
     "ts": 1787196182.097975
@@ -1601,6 +1634,10 @@
   "tennis|ITF - W15 Logrono Women Singles|Diae El Jardi (MAR)|Charo Esquiva Banuls (ESP)|客胜|1x2|2026-08-20": {
     "ev": 2.59,
     "ts": 1787195671.516861
+  },
+  "tennis|ITF - W15 Wanfercee Baulet Women Doubles|Maria Andrienko (RUS) / Lisa Claeys (BEL)|Delia Gaillard (FRA) / Ava Schueller (AUT)|客胜|1x2|2026-08-20": {
+    "ev": 21.81,
+    "ts": 1787201588.9171782
   },
   "tennis|ITF - W35 Bistrita Women Doubles|Federica Sacco (ITA) / Linda Sevcikova (CZE)|Adrienn Nagy (HUN) / Oana Georgeta Simion (ROU)|客胜|1x2|2026-08-20": {
     "ev": 16.14,
@@ -1631,9 +1668,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场客胜|ht|2026-08-21": {
-    "ev": 13.4,
-    "bb": 5.6,
-    "ts": 1787200682.425175
+  "basketball|William Jones Cup|菲律宾劲旅|中国台北蓝|让分主胜(-19.5)|hc|-19.5|2026-08-20": {
+    "ev": 4.62,
+    "bb": 1.85,
+    "ts": 1787202217.916319
   }
 }
