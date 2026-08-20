@@ -169,6 +169,11 @@
     "bb": 2.07,
     "ts": 1787114647.964055
   },
+  "basketball|WNBA|拉斯维加斯王牌 (女)|康涅狄格阳光 (女)|小分(164.5)|ou|164.5|2026-08-21": {
+    "ev": 7.0,
+    "bb": 2.14,
+    "ts": 1787198999.244148
+  },
   "basketball|WNBA|拉斯维加斯王牌 (女)|康涅狄格阳光 (女)|小分(165.5)|ou|165.5|2026-08-21": {
     "ev": 6.7,
     "bb": 2.0,
@@ -583,6 +588,10 @@
     "ev": 2.88,
     "ts": 1787180086.215193
   },
+  "football|Copa Sudamericana|Club Olimpia|CR Vasco da Gama RJ|上半场客胜|ht|2026-08-21": {
+    "ev": 2.98,
+    "ts": 1787198999.635406
+  },
   "football|Copa Sudamericana|Independiente Santa Fe|River Plate|上半场主胜|ht|2026-08-20": {
     "ev": 13.52,
     "ts": 1787137779.956002
@@ -929,6 +938,30 @@
     "bb": 3.84,
     "ts": 1787034729.998822
   },
+  "football|UEFA Europa Conference League|FC Midtjylland|HNK Rijeka|小球|1x2|2026-08-21": {
+    "ev": 2.18,
+    "ts": 1787198999.6333911
+  },
+  "football|UEFA Europa Conference League|FC Nordsjaelland|FC St. Gallen 1879|上半场主胜|ht|2026-08-21": {
+    "ev": 1.51,
+    "ts": 1787198999.633528
+  },
+  "football|UEFA Europa Conference League|FC Nordsjaelland|FC St. Gallen 1879|主胜|1x2|2026-08-21": {
+    "ev": 1.67,
+    "ts": 1787198999.6334631
+  },
+  "football|UEFA Europa Conference League|FC Nordsjaelland|FC St. Gallen 1879|让球主胜|1x2|2026-08-21": {
+    "ev": 1.53,
+    "ts": 1787198999.633595
+  },
+  "football|UEFA Europa Conference League|FC Twente|Qarabag FK|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 2.18,
+    "ts": 1787198999.63373
+  },
+  "football|UEFA Europa Conference League|FC Twente|Qarabag FK|大球|1x2|2026-08-21": {
+    "ev": 2.8,
+    "ts": 1787198999.633667
+  },
   "football|UEFA Europa Conference League|FC Twente|Qarabag FK|小球|1x2|2026-08-21": {
     "ev": 6.29,
     "ts": 1787196182.096949
@@ -936,6 +969,10 @@
   "football|UEFA Europa Conference League|FC Twente|Qarabag FK|让球客胜|1x2|2026-08-21": {
     "ev": 1.01,
     "ts": 1787196182.096915
+  },
+  "football|UEFA Europa Conference League|KF Drita|Inter Club de Escaldes|让球客胜|1x2|2026-08-21": {
+    "ev": 1.42,
+    "ts": 1787198999.6352398
   },
   "football|UEFA Europa Conference League|KI Klaksvik|Riga FC|让球主胜|1x2|2026-08-21": {
     "ev": 2.13,
@@ -966,6 +1003,10 @@
     "ev": 3.42,
     "bb": 2.89,
     "ts": 1787041147.2998211
+  },
+  "football|UEFA Europa League-Qualification|KKS Lech Poznan|FC Thun|让球主胜|1x2|2026-08-21": {
+    "ev": 1.23,
+    "ts": 1787198999.6327748
   },
   "football|USA MLS Next Pro|North Texas SC|Austin FC II|小球|1x2|2026-08-20": {
     "ev": 1.31,
@@ -1403,6 +1444,11 @@
     "bb": 1.87,
     "ts": 1787180550.18134
   },
+  "football|Uruguay Primera Division|阿尔比恩|波士顿河|让球主胜(0)|hc|0|2026-08-22": {
+    "ev": 4.52,
+    "bb": 1.72,
+    "ts": 1787198999.2442298
+  },
   "football|Venezuela Cup|Atletico Avila FC|Deportivo Miranda|双重机会-主/和局|dc|2026-08-20": {
     "ev": 3.34,
     "ts": 1787180286.688482
@@ -1458,6 +1504,10 @@
   "tennis|ATP Challenger - Cancun Open - Doubles|Luis Carlos Alvarez Valdes (MEX) / Alan Magadan (MEX)|Samuel Heredia (COL) / Divij Sharan (IND)|客胜|1x2|2026-08-20": {
     "ev": 91.86,
     "ts": 1787180086.215498
+  },
+  "tennis|ATP Challenger - Roehampton Open - Doubles|Alastair Gray (GBR) / Alex Rybakov (USA)|Charles Barry (IRL) / Charles Broom (GBR)|主胜|1x2|2026-08-20": {
+    "ev": 20.14,
+    "ts": 1787198999.635954
   },
   "tennis|ITF - M15 Arad Men Singles|Jacopo Bilardo (ITA)|Ignacio Monzon (ARG)|客胜|1x2|2026-08-20": {
     "ev": 2.09,
@@ -1528,14 +1578,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "basketball|WNBA|拉斯维加斯王牌 (女)|康涅狄格阳光 (女)|小分(164.5)|ou|164.5|2026-08-21": {
-    "ev": 7.0,
-    "bb": 2.14,
-    "ts": 1787198999.244148
-  },
-  "football|Uruguay Primera Division|阿尔比恩|波士顿河|让球主胜(0)|hc|0|2026-08-22": {
-    "ev": 4.52,
-    "bb": 1.72,
-    "ts": 1787198999.2442298
+  "football|AFC Champions League Women|金边皇冠 (女)|卡雅 (女)|小球(3.75)|ou|3.75|2026-08-20": {
+    "ev": 6.91,
+    "bb": 1.79,
+    "ts": 1787199396.150274
   }
 }
