@@ -994,9 +994,17 @@
     "ev": 1.31,
     "ts": 1787182350.849677
   },
+  "football|USA Major League Soccer|Vancouver Whitecaps FC|Houston Dynamo|主胜|1x2|2026-08-20": {
+    "ev": 1.31,
+    "ts": 1787190689.8869991
+  },
   "football|USA Major League Soccer|Vancouver Whitecaps FC|Houston Dynamo|净胜球away_by2|winning_margin|2026-08-20": {
     "ev": 8.11,
     "ts": 1787114648.656781
+  },
+  "football|USA Major League Soccer|Vancouver Whitecaps FC|Houston Dynamo|让球主胜|1x2|2026-08-20": {
+    "ev": 1.97,
+    "ts": 1787190689.887043
   },
   "football|USA Major League Soccer|多伦多FC|夏洛特FC|正确比分1-1|correct_score|2026-08-20": {
     "ev": 21.57,
@@ -1116,6 +1124,15 @@
     "ev": 2.2,
     "ts": 1787124738.97732
   },
+  "football|USL Championship|Phoenix Rising FC|Colorado Springs Switchbacks FC|让球客胜|1x2|2026-08-20": {
+    "ev": 3.74,
+    "ts": 1787190689.886889
+  },
+  "football|USL Championship|凤凰重生|科罗拉多跃泉|让球客胜(+0/0.5)|hc|+0/0.5|2026-08-20": {
+    "ev": 3.74,
+    "bb": 1.91,
+    "ts": 1787190689.6075048
+  },
   "football|USL Championship|底特律城|坦帕湾暴徒|和局|1x2|2026-08-23": {
     "ev": 13.58,
     "bb": 3.2,
@@ -1198,9 +1215,9 @@
     "ev": 16.87,
     "ts": 1787137779.9569652
   },
-  "football|USL Championship|凤凰重生|科罗拉多跃泉|让球客胜(+0/0.5)|hc|+0/0.5|2026-08-20": {
-    "ev": 3.74,
-    "bb": 1.91,
-    "ts": 1787190689.6075048
+  "football|USA Major League Soccer|洛杉矶银河|圣何塞地震|让球客胜(+1)|hc|+1|2026-08-20": {
+    "ev": 2.45,
+    "bb": 1.68,
+    "ts": 1787190967.884591
   }
 }

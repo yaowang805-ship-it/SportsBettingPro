@@ -1,5 +1,5 @@
 {
-  "balance": 7072.33,
+  "balance": 6915.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3520,6 +3520,29 @@
       "commence_time": 1787191200,
       "created_at": "2026-08-20T01:51:29.597635+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_洛杉矶银河_圣何塞地震_让球客胜(+1)",
+      "sport": "football",
+      "league": "美国职业大联盟",
+      "home_team": "洛杉矶银河",
+      "away_team": "圣何塞地震",
+      "home_cn": "洛杉矶银河",
+      "away_cn": "圣何塞地震",
+      "market": "handicap",
+      "market_type": "让球客胜(+1)",
+      "sub_market": "hc",
+      "line": "+1",
+      "odds": 1.68,
+      "stake": 157,
+      "model_prob": 0.6098,
+      "ev_pct": 2.45,
+      "pin_odds": 1.6061,
+      "fair_price": 1.6398,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787193000,
+      "created_at": "2026-08-20T01:56:07.878692+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3579,8 +3602,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 1435.0,
-    "bets": 40
+    "used": 1592.0,
+    "bets": 41
   },
   "updated": null
 }
