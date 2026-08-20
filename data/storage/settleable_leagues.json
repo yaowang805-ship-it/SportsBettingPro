@@ -446,7 +446,7 @@
       "success_rate": 0.0
     },
     "挪威丙级联赛": {
-      "attempts": 10,
+      "attempts": 11,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -649,9 +649,14 @@
       "attempts": 1,
       "successes": 1,
       "success_rate": 1.0
+    },
+    "阿根廷杯": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-20T06:00:15.422761+00:00",
+  "updated": "2026-08-20T09:20:49.037293+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

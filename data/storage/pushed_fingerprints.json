@@ -8,6 +8,11 @@
     "bb": 2.27,
     "ts": 1787101664.26267
   },
+  "basketball|Australia NBL1|罗金厄姆火焰|堪培拉枪手|主胜|1x2|2026-08-21": {
+    "ev": 7.47,
+    "bb": 1.18,
+    "ts": 1787217306.230245
+  },
   "basketball|Brazil Campeonato Paulista de Basquete Women|Santo Andre (w)|Unimed Campinas (w)|客胜|1x2|2026-08-21": {
     "ev": 1.72,
     "ts": 1787180086.215321
@@ -19,6 +24,11 @@
   "basketball|Brazil Campeonato Paulista de Basquete|Sesi Franca BC SP|EC Pinheiros SP|让分客胜|1x2|2026-08-21": {
     "ev": 1.79,
     "ts": 1787213579.943209
+  },
+  "basketball|FIBA Olympic Pre Qualifier Tournament Women|巴西 (女)|阿根廷 (女)|大分(122.5)|ou|122.5|2026-08-21": {
+    "ev": 6.73,
+    "bb": 1.94,
+    "ts": 1787217306.230332
   },
   "basketball|FIBA Olympic Pre Qualifier Tournament Women|菲律宾 (女)|加拿大 (女)|让分主胜(+27.5)|hc|+27.5|2026-08-20": {
     "ev": 3.87,
@@ -1902,6 +1912,11 @@
     "ev": 1.72,
     "ts": 1787206888.611567
   },
+  "football|Uzbekistan Super League|曼干纳弗巴霍|纳萨夫|大球(2.25)|ou|2.25|2026-08-21": {
+    "ev": 3.78,
+    "bb": 1.96,
+    "ts": 1787217306.230398
+  },
   "football|Venezuela Cup|Atletico Avila FC|Deportivo Miranda|双重机会-主/和局|dc|2026-08-20": {
     "ev": 3.34,
     "ts": 1787180286.688482
@@ -1974,6 +1989,10 @@
     "ev": 17.8,
     "ts": 1787180086.215408
   },
+  "tennis|ITF - M15 Krakow Men Doubles|Lorenzo Berto (ITA) / Leonardo Iemmi (ITA)|Benito Sanchez Martinez (GER) / Tom Zeuch (GER)|客胜|1x2|2026-08-20": {
+    "ev": 7.87,
+    "ts": 1787217733.502677
+  },
   "tennis|ITF - M15 Krakow Men Singles|Wojciech Marek (POL)|Karol Filar (POL)|主胜|1x2|2026-08-20": {
     "ev": 2.56,
     "ts": 1787196182.0978649
@@ -2009,6 +2028,10 @@
   "tennis|ITF - M15 Mistelbach Men Singles|David Wallechner (AUT)|Gregor Hausberger (AUT)|让盘客胜|1x2|2026-08-20": {
     "ev": 1.95,
     "ts": 1787201588.9160872
+  },
+  "tennis|ITF - M25 Slovenj Gradec Men Doubles|Karlo Kajin (CRO) / Jan Kupcic (SLO)|Sebastian Dominko (SLO) / Lun Obrul (SLO)|主胜|1x2|2026-08-20": {
+    "ev": 3.07,
+    "ts": 1787217733.5026062
   },
   "tennis|ITF - W15 Campos do Jordao Women Singles|Camila Romero (ECU)|Maria Jose Sanchez Uribe (COL)|让盘客胜|1x2|2026-08-20": {
     "ev": 1.48,
@@ -2071,19 +2094,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "basketball|Australia NBL1|罗金厄姆火焰|堪培拉枪手|主胜|1x2|2026-08-21": {
-    "ev": 7.47,
-    "bb": 1.18,
-    "ts": 1787217306.230245
-  },
-  "basketball|FIBA Olympic Pre Qualifier Tournament Women|巴西 (女)|阿根廷 (女)|大分(122.5)|ou|122.5|2026-08-21": {
-    "ev": 6.73,
-    "bb": 1.94,
-    "ts": 1787217306.230332
-  },
-  "football|Uzbekistan Super League|曼干纳弗巴霍|纳萨夫|大球(2.25)|ou|2.25|2026-08-21": {
-    "ev": 3.78,
+  "football|Uzbekistan Pro League|奥林匹克莫比乌斯|PFK 艾热努库斯|大球(2.25)|ou|2.25|2026-08-20": {
+    "ev": 9.16,
     "bb": 1.96,
-    "ts": 1787217306.230398
+    "ts": 1787218201.349924
   }
 }
