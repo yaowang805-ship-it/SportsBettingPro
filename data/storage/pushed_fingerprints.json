@@ -440,6 +440,10 @@
     "ev": 1.32,
     "ts": 1787200682.731516
   },
+  "football|Argentina Liga Profesional Reserves|Boca Juniors (Res)|Central Cordoba SE (Res)|大球|1x2|2026-08-21": {
+    "ev": 1.02,
+    "ts": 1787212583.6080692
+  },
   "football|Argentina Liga Profesional Reserves|Ferro Carril Oeste (Res)|San Martin de San Juan (Res)|小球|1x2|2026-08-20": {
     "ev": 1.83,
     "ts": 1787122299.6055849
@@ -1126,6 +1130,11 @@
     "bb": 2.05,
     "ts": 1787211697.804645
   },
+  "football|Switzerland Challenge League|拉珀斯维尔|温特图尔|大球(3.0)|ou|3.0|2026-08-22": {
+    "ev": 8.25,
+    "bb": 1.96,
+    "ts": 1787212583.36037
+  },
   "football|Switzerland Promotion League|布雷特雷|青年人 II|让球主胜(0)|hc|0|2026-08-20": {
     "ev": 4.5,
     "bb": 1.85,
@@ -1277,6 +1286,10 @@
     "bb": 1.9,
     "ts": 1787196181.768616
   },
+  "football|UEFA Europa League-Qualification|Besiktas JK|FK Kauno Zalgiris|上半场客胜|ht|2026-08-21": {
+    "ev": 6.5,
+    "ts": 1787212583.6077938
+  },
   "football|UEFA Europa League-Qualification|Besiktas JK|FK Kauno Zalgiris|先进球neither|first_to_score|2026-08-20": {
     "ev": 2.5,
     "ts": 1787101664.6414669
@@ -1310,6 +1323,14 @@
     "ev": 4.13,
     "ts": 1787199708.018015
   },
+  "football|UEFA Europa League-Qualification|KKS Lech Poznan|FC Thun|双边进球-是|btts|2026-08-21": {
+    "ev": 3.61,
+    "ts": 1787212583.607692
+  },
+  "football|UEFA Europa League-Qualification|KKS Lech Poznan|FC Thun|大球|1x2|2026-08-21": {
+    "ev": 1.03,
+    "ts": 1787212583.607742
+  },
   "football|UEFA Europa League-Qualification|KKS Lech Poznan|FC Thun|让球主胜|1x2|2026-08-21": {
     "ev": 1.23,
     "ts": 1787198999.6327748
@@ -1326,6 +1347,10 @@
     "ev": 4.13,
     "bb": 1.64,
     "ts": 1787199707.5711691
+  },
+  "football|USA MLS Next Pro|Los Angeles II|Sporting Kansas City II|大球|1x2|2026-08-21": {
+    "ev": 1.69,
+    "ts": 1787212583.609014
   },
   "football|USA MLS Next Pro|North Texas SC|Austin FC II|小球|1x2|2026-08-20": {
     "ev": 1.31,
@@ -1933,9 +1958,14 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|Switzerland Challenge League|拉珀斯维尔|温特图尔|大球(3.0)|ou|3.0|2026-08-22": {
-    "ev": 8.25,
-    "bb": 1.96,
-    "ts": 1787212583.36037
+  "football|Estonia Meistriliiga Women|科罗拉 (女)|佐久运动 (女)|双重机会-和局/客|dc|2026-08-20": {
+    "ev": 6.24,
+    "bb": 3.18,
+    "ts": 1787213308.238024
+  },
+  "football|Estonia Meistriliiga Women|科罗拉 (女)|佐久运动 (女)|让球客胜(+1.5)|hc|+1.5|2026-08-20": {
+    "ev": 4.67,
+    "bb": 1.89,
+    "ts": 1787213308.2380679
   }
 }
