@@ -1,5 +1,5 @@
 {
-  "balance": 7449.33,
+  "balance": 7429.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3359,6 +3359,29 @@
       "commence_time": 1787191200,
       "created_at": "2026-08-20T01:23:35.639465+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_金州瓦尔基里_(女)_明尼苏达山猫_(女)_小分(1635)",
+      "sport": "basketball",
+      "league": "WNBA 美国职业女子篮球联赛",
+      "home_team": "金州瓦尔基里 (女)",
+      "away_team": "明尼苏达山猫 (女)",
+      "home_cn": "金州瓦尔基里 (女)",
+      "away_cn": "明尼苏达山猫 (女)",
+      "market": "over_under",
+      "market_type": "小分(163.5)",
+      "sub_market": "ou",
+      "line": "163.5",
+      "odds": 1.88,
+      "stake": 20,
+      "model_prob": 0.5505,
+      "ev_pct": 3.49,
+      "pin_odds": 1.7353,
+      "fair_price": 1.8166,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787191200,
+      "created_at": "2026-08-20T01:28:44.395584+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3418,8 +3441,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 1058.0,
-    "bets": 33
+    "used": 1078.0,
+    "bets": 34
   },
   "updated": null
 }

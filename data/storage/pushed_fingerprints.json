@@ -119,9 +119,18 @@
     "bb": 2.02,
     "ts": 1787189015.644917
   },
+  "basketball|William Jones Cup|Chinese Taipei White|Malaysia|大分|1x2|2026-08-20": {
+    "ev": 3.15,
+    "ts": 1787189241.882921
+  },
   "basketball|William Jones Cup|Jordan|California Irvine Anteaters|客胜|1x2|2026-08-20": {
     "ev": 1.56,
     "ts": 1787182605.538065
+  },
+  "basketball|William Jones Cup|中国台北白色|马来西亚|大分(146.5)|ou|146.5|2026-08-20": {
+    "ev": 3.75,
+    "bb": 2.01,
+    "ts": 1787189241.4402099
   },
   "football|Argentina Cup|Racing Club Avellaneda|Belgrano|上半场主胜|ht|2026-08-20": {
     "ev": 4.48,
@@ -1122,9 +1131,9 @@
     "ev": 16.87,
     "ts": 1787137779.9569652
   },
-  "basketball|William Jones Cup|中国台北白色|马来西亚|大分(146.5)|ou|146.5|2026-08-20": {
-    "ev": 3.75,
-    "bb": 2.01,
-    "ts": 1787189241.4402099
+  "basketball|WNBA|金州瓦尔基里 (女)|明尼苏达山猫 (女)|小分(163.5)|ou|163.5|2026-08-20": {
+    "ev": 3.49,
+    "bb": 1.88,
+    "ts": 1787189324.402137
   }
 }
