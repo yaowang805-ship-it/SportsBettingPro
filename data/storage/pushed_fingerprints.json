@@ -1729,6 +1729,10 @@
     "ev": 2.14,
     "ts": 1787185978.858901
   },
+  "football|USA Major League Soccer|Seattle Sounders|Austin FC|小球|1x2|2026-08-20": {
+    "ev": 2.26,
+    "ts": 1787186489.851848
+  },
   "football|USA Major League Soccer|Seattle Sounders|Austin FC|让球客胜|1x2|2026-08-20": {
     "ev": 3.84,
     "ts": 1787185978.8590028
@@ -1805,6 +1809,11 @@
     "ev": 4.88,
     "bb": 5.15,
     "ts": 1787186228.083758
+  },
+  "football|USA Major League Soccer|西雅图海湾人|奥斯汀|小球(3.0)|ou|3.0|2026-08-20": {
+    "ev": 2.26,
+    "bb": 1.84,
+    "ts": 1787186489.42011
   },
   "football|USA Major League Soccer|西雅图海湾人|奥斯汀|正确比分1-1|correct_score|2026-08-20": {
     "ev": 6.47,
@@ -2057,9 +2066,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|USA Major League Soccer|西雅图海湾人|奥斯汀|小球(3.0)|ou|3.0|2026-08-20": {
-    "ev": 2.26,
-    "bb": 1.84,
-    "ts": 1787186489.42011
+  "basketball|Mexico LNBP Basketball League|伊拉普阿托草莓|埃尔卡洛尔德坎昆|让分客胜(+5.5)|hc|+5.5|2026-08-20": {
+    "ev": 4.62,
+    "bb": 1.87,
+    "ts": 1787186951.176127
   }
 }
