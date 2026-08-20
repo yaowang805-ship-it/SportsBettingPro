@@ -180,6 +180,16 @@
     "bb": 1.82,
     "ts": 1787206888.351939
   },
+  "basketball|Puerto Rico Baloncesto Superior Nacional|桑特罗斯德|巴亚蒙牛仔|主胜|1x2|2026-08-22": {
+    "ev": 4.3,
+    "bb": 2.33,
+    "ts": 1787216720.2681139
+  },
+  "basketball|Puerto Rico Baloncesto Superior Nacional|桑特罗斯德|巴亚蒙牛仔|让分主胜(+3.5)|hc|+3.5|2026-08-22": {
+    "ev": 3.98,
+    "bb": 1.88,
+    "ts": 1787216720.268071
+  },
   "basketball|WNBA|Golden State Valkyries (w)|Minnesota Lynx (w)|小分|1x2|2026-08-20": {
     "ev": 1.56,
     "ts": 1787184957.597486
@@ -1191,6 +1201,11 @@
     "bb": 2.05,
     "ts": 1787211697.804645
   },
+  "football|Sweden Ettan Norra|索伦蒂纳|卡尔斯塔德|让球客胜(-0/0.5)|hc|-0/0.5|2026-08-22": {
+    "ev": 4.14,
+    "bb": 1.8,
+    "ts": 1787216720.2681868
+  },
   "football|Switzerland Challenge League|拉珀斯维尔|温特图尔|大球(3.0)|ou|3.0|2026-08-22": {
     "ev": 8.25,
     "bb": 1.96,
@@ -1241,6 +1256,10 @@
   "football|UEFA Europa Conference League-Qualification|Atalanta BC|Hapoel Tel Aviv FC|上半场客胜|ht|2026-08-21": {
     "ev": 8.5,
     "ts": 1787180086.2145479
+  },
+  "football|UEFA Europa Conference League-Qualification|Atalanta BC|Hapoel Tel Aviv FC|大球|1x2|2026-08-21": {
+    "ev": 1.59,
+    "ts": 1787216720.6356108
   },
   "football|UEFA Europa Conference League-Qualification|Dinamo City|Pafos FC|上半场主胜|ht|2026-08-21": {
     "ev": 1.93,
@@ -2047,19 +2066,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "basketball|Puerto Rico Baloncesto Superior Nacional|桑特罗斯德|巴亚蒙牛仔|让分主胜(+3.5)|hc|+3.5|2026-08-22": {
-    "ev": 3.98,
-    "bb": 1.88,
-    "ts": 1787216720.268071
-  },
-  "basketball|Puerto Rico Baloncesto Superior Nacional|桑特罗斯德|巴亚蒙牛仔|主胜|1x2|2026-08-22": {
-    "ev": 4.3,
-    "bb": 2.33,
-    "ts": 1787216720.2681139
-  },
-  "football|Sweden Ettan Norra|索伦蒂纳|卡尔斯塔德|让球客胜(-0/0.5)|hc|-0/0.5|2026-08-22": {
-    "ev": 4.14,
-    "bb": 1.8,
-    "ts": 1787216720.2681868
+  "football|AFC Champions League Women|金边皇冠 (女)|卡雅 (女)|让球客胜(-2/2.5)|hc|-2/2.5|2026-08-20": {
+    "ev": 4.1,
+    "bb": 1.97,
+    "ts": 1787217132.0360188
   }
 }
