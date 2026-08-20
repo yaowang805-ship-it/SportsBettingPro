@@ -224,6 +224,10 @@
     "ev": 2.37,
     "ts": 1787189734.027516
   },
+  "basketball|William Jones Cup|Jordan|California Irvine Anteaters|让分客胜|1x2|2026-08-20": {
+    "ev": 9.14,
+    "ts": 1787200407.875639
+  },
   "basketball|William Jones Cup|Strong Group Athletics|Chinese Taipei Blue|小分|1x2|2026-08-20": {
     "ev": 2.59,
     "ts": 1787196182.097447
@@ -589,6 +593,10 @@
     "ev": 5.14,
     "ts": 1787101664.639435
   },
+  "football|Copa Sudamericana|Botafogo FR RJ|CS Cienciano|双边进球-否|btts|2026-08-21": {
+    "ev": 2.3,
+    "ts": 1787199708.019595
+  },
   "football|Copa Sudamericana|Club Olimpia|CR Vasco da Gama RJ|上半场主胜|ht|2026-08-21": {
     "ev": 1.17,
     "ts": 1787180086.215132
@@ -731,6 +739,10 @@
     "ev": 3.33,
     "ts": 1787180086.215062
   },
+  "football|France Ligue 3|Football Bourg En Bresse Peronnas 01|Thionville Lusitanos|让球主胜|1x2|2026-08-21": {
+    "ev": 1.15,
+    "ts": 1787199708.020212
+  },
   "football|France Ligue 3|孔卡诺|维利法兰|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-21": {
     "ev": 4.57,
     "bb": 1.79,
@@ -822,6 +834,10 @@
     "ev": 27.86,
     "ts": 1787196182.098328
   },
+  "football|Romania Cup-Qualification|CSA Steaua Bucuresti|FK Csikszereda Miercurea Ciuc|小球|1x2|2026-08-20": {
+    "ev": 2.93,
+    "ts": 1787199708.0201359
+  },
   "football|Russia First League|FK Veles Moscow|FK Nizhny Novgorod|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 2.41,
     "ts": 1787114648.6542468
@@ -852,10 +868,9 @@
     "bb": 2.06,
     "ts": 1787020969.61725
   },
-  "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场客胜|ht|2026-08-21": {
-    "ev": 8.79,
-    "bb": 5.45,
-    "ts": 1787193607.008692
+  "football|Sweden Cup|FC Arlanda|Ostersunds FK|客胜|1x2|2026-08-21": {
+    "ev": 1.4,
+    "ts": 1787199708.018656
   },
   "football|Sweden Cup|Hassleholms IF|Landskrona BoIS|客胜|1x2|2026-08-21": {
     "ev": 1.56,
@@ -911,9 +926,17 @@
     "ev": 8.5,
     "ts": 1787180086.2145479
   },
+  "football|UEFA Europa Conference League-Qualification|Dinamo City|Pafos FC|上半场主胜|ht|2026-08-21": {
+    "ev": 1.93,
+    "ts": 1787199708.018466
+  },
   "football|UEFA Europa Conference League-Qualification|FC Sion|Ajax Amsterdam|让球主胜|1x2|2026-08-21": {
     "ev": 1.79,
     "ts": 1787185832.907736
+  },
+  "football|UEFA Europa Conference League-Qualification|Getafe CF|FK Partizan Belgrade|上半场客胜|ht|2026-08-21": {
+    "ev": 1.8,
+    "ts": 1787199708.018394
   },
   "football|UEFA Europa Conference League-Qualification|KAA Gent|Hibernian FC|大球|1x2|2026-08-21": {
     "ev": 1.05,
@@ -1013,9 +1036,26 @@
     "bb": 2.89,
     "ts": 1787041147.2998211
   },
+  "football|UEFA Europa League-Qualification|Jagiellonia Bialystok|Iberia 1999|总进球区间7+|total_goals_range|2026-08-21": {
+    "ev": 2.46,
+    "ts": 1787199708.0207338
+  },
+  "football|UEFA Europa League-Qualification|Jagiellonia Bialystok|Iberia 1999|让球主胜|1x2|2026-08-21": {
+    "ev": 4.13,
+    "ts": 1787199708.018015
+  },
   "football|UEFA Europa League-Qualification|KKS Lech Poznan|FC Thun|让球主胜|1x2|2026-08-21": {
     "ev": 1.23,
     "ts": 1787198999.6327748
+  },
+  "football|UEFA Europa League-Qualification|Trabzonspor|Ferencvarosi TC Budapest|总进球区间7+|total_goals_range|2026-08-21": {
+    "ev": 2.42,
+    "ts": 1787199708.020876
+  },
+  "football|UEFA Europa League-Qualification|乔治罗尼亚|伊比利亚 1999|让球主胜(-1)|hc|-1|2026-08-21": {
+    "ev": 4.13,
+    "bb": 1.64,
+    "ts": 1787199707.5711691
   },
   "football|USA MLS Next Pro|North Texas SC|Austin FC II|小球|1x2|2026-08-20": {
     "ev": 1.31,
@@ -1518,6 +1558,10 @@
     "ev": 20.14,
     "ts": 1787198999.635954
   },
+  "tennis|ATP Challenger - Roehampton Open|Oliver Tarvet (GBR)|Charles Broom (GBR)|让盘客胜|1x2|2026-08-20": {
+    "ev": 1.11,
+    "ts": 1787200160.590935
+  },
   "tennis|ITF - M15 Arad Men Singles|Jacopo Bilardo (ITA)|Ignacio Monzon (ARG)|客胜|1x2|2026-08-20": {
     "ev": 2.09,
     "ts": 1787196182.097641
@@ -1587,9 +1631,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|UEFA Europa League-Qualification|乔治罗尼亚|伊比利亚 1999|让球主胜(-1)|hc|-1|2026-08-21": {
-    "ev": 4.13,
-    "bb": 1.64,
-    "ts": 1787199707.5711691
+  "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场客胜|ht|2026-08-21": {
+    "ev": 13.4,
+    "bb": 5.6,
+    "ts": 1787200682.425175
   }
 }
