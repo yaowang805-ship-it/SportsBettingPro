@@ -120,6 +120,10 @@
     "ev": 1.47,
     "ts": 1787048414.2823691
   },
+  "basketball|WNBA|Golden State Valkyries (w)|Minnesota Lynx (w)|小分|1x2|2026-08-20": {
+    "ev": 1.56,
+    "ts": 1787184957.597486
+  },
   "basketball|WNBA|Golden State Valkyries (w)|Minnesota Lynx (w)|让分主胜|1x2|2026-08-20": {
     "ev": 1.48,
     "ts": 1787179754.057749
@@ -418,6 +422,16 @@
     "bb": 1.66,
     "ts": 1787101664.26252
   },
+  "football|Argentina Liga Profesional|飓风队|利斯特雷|小球(2.0)|ou|2.0|2026-08-23": {
+    "ev": 4.46,
+    "bb": 1.8,
+    "ts": 1787184411.695942
+  },
+  "football|Argentina Liga Profesional|飓风队|利斯特雷|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-23": {
+    "ev": 4.66,
+    "bb": 1.75,
+    "ts": 1787184411.695989
+  },
   "football|Argentina Primera Nacional|Chacarita Juniors|Guemes|上半场客胜|ht|2026-08-20": {
     "ev": 3.16,
     "ts": 1787137779.954975
@@ -455,6 +469,10 @@
   "football|Brazil Serie B|Botafogo FC SP|Criciuma EC SC|单双-双|oe|2026-08-20": {
     "ev": 1.05,
     "ts": 1787120332.749423
+  },
+  "football|Brazil Serie B|Botafogo FC SP|Criciuma EC SC|双边进球-是|btts|2026-08-20": {
+    "ev": 1.09,
+    "ts": 1787184776.947055
   },
   "football|Brazil Serie B|Cuiaba Esporte Clube MT|Operario Ferroviario EC PR|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 1.66,
@@ -768,6 +786,10 @@
     "ev": 1.68,
     "ts": 1787137779.9557388
   },
+  "football|Copa Sudamericana|Montevideo City Torque|Tigre|主胜|1x2|2026-08-20": {
+    "ev": 2.43,
+    "ts": 1787185241.604883
+  },
   "football|Copa Sudamericana|Montevideo City Torque|Tigre|净胜球home_by2|winning_margin|2026-08-20": {
     "ev": 7.16,
     "ts": 1787179754.0579991
@@ -819,11 +841,6 @@
     "ev": 5.14,
     "bb": 4.8,
     "ts": 1787101664.262835
-  },
-  "football|Copa Sudamericana|蒙得维的亚城图尔克|泰格雷|上半场主胜|ht|2026-08-20": {
-    "ev": 16.05,
-    "bb": 5.65,
-    "ts": 1787179753.73553
   },
   "football|Denmark DBU Pokalen|Nykobing FC|Naestved BK|主胜|1x2|2026-08-19": {
     "ev": 2.94,
@@ -1241,6 +1258,11 @@
     "ev": 1.58,
     "ts": 1787122149.0810292
   },
+  "football|Peru Liga 1|加西拉索|库斯科|和局|1x2|2026-08-23": {
+    "ev": 9.46,
+    "bb": 3.19,
+    "ts": 1787184411.6960268
+  },
   "football|Poland Ekstraklasa|克拉科维亚|莫摩斯|大球(2.25)|ou|2.25|2026-08-22": {
     "ev": 3.36,
     "bb": 1.65,
@@ -1455,6 +1477,10 @@
     "ev": 8.5,
     "ts": 1787180086.2145479
   },
+  "football|UEFA Europa Conference League-Qualification|KAA Gent|Hibernian FC|大球|1x2|2026-08-21": {
+    "ev": 1.05,
+    "ts": 1787185057.749401
+  },
   "football|UEFA Europa Conference League-Qualification|亚特兰大|特拉维夫夏普尔|双重机会-和局/客|dc|2026-08-21": {
     "ev": 18.19,
     "bb": 5.55,
@@ -1563,6 +1589,14 @@
   "football|USA Major League Soccer|Minnesota United FC|Atlanta United FC|主胜|1x2|2026-08-20": {
     "ev": 2.25,
     "ts": 1787182605.5366971
+  },
+  "football|USA Major League Soccer|Minnesota United FC|Atlanta United FC|和局|1x2|2026-08-20": {
+    "ev": 1.05,
+    "ts": 1787185241.604747
+  },
+  "football|USA Major League Soccer|Minnesota United FC|Atlanta United FC|小球|1x2|2026-08-20": {
+    "ev": 1.94,
+    "ts": 1787185241.604795
   },
   "football|USA Major League Soccer|Minnesota United FC|Atlanta United FC|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 1.23,
@@ -1928,19 +1962,14 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|Argentina Liga Profesional|飓风队|利斯特雷|小球(2.0)|ou|2.0|2026-08-23": {
-    "ev": 4.46,
-    "bb": 1.8,
-    "ts": 1787184411.695942
+  "football|Copa Sudamericana|蒙得维的亚城图尔克|泰格雷|上半场主胜|ht|2026-08-20": {
+    "ev": 22.13,
+    "bb": 5.8,
+    "ts": 1787185715.3906188
   },
-  "football|Argentina Liga Profesional|飓风队|利斯特雷|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-23": {
-    "ev": 4.66,
-    "bb": 1.75,
-    "ts": 1787184411.695989
-  },
-  "football|Peru Liga 1|加西拉索|库斯科|和局|1x2|2026-08-23": {
-    "ev": 9.46,
-    "bb": 3.19,
-    "ts": 1787184411.6960268
+  "football|Copa Sudamericana|圣塔菲|河床|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 4.01,
+    "bb": 2.07,
+    "ts": 1787185715.3906932
   }
 }
