@@ -227,9 +227,17 @@
     "ev": 3.15,
     "ts": 1787189241.882921
   },
+  "basketball|William Jones Cup|Chinese Taipei White|Malaysia|客胜|1x2|2026-08-20": {
+    "ev": 4.84,
+    "ts": 1787207228.883209
+  },
   "basketball|William Jones Cup|Chinese Taipei White|Malaysia|小分|1x2|2026-08-20": {
     "ev": 6.54,
     "ts": 1787195476.876023
+  },
+  "basketball|William Jones Cup|Chinese Taipei White|Malaysia|让分客胜|1x2|2026-08-20": {
+    "ev": 5.88,
+    "ts": 1787207228.8832698
   },
   "basketball|William Jones Cup|Jordan|California Irvine Anteaters|大分|1x2|2026-08-20": {
     "ev": 3.88,
@@ -275,6 +283,16 @@
     "ev": 3.75,
     "bb": 2.01,
     "ts": 1787189241.4402099
+  },
+  "basketball|William Jones Cup|中国台北白色|马来西亚|客胜|1x2|2026-08-20": {
+    "ev": 4.84,
+    "bb": 2.8,
+    "ts": 1787207228.4767191
+  },
+  "basketball|William Jones Cup|中国台北白色|马来西亚|让分客胜(+5.5)|hc|+5.5|2026-08-20": {
+    "ev": 5.88,
+    "bb": 1.9,
+    "ts": 1787207228.476674
   },
   "basketball|William Jones Cup|原州东浦新世代|日本|主胜|1x2|2026-08-20": {
     "ev": 4.62,
@@ -1790,14 +1808,14 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "basketball|William Jones Cup|中国台北白色|马来西亚|让分客胜(+5.5)|hc|+5.5|2026-08-20": {
-    "ev": 5.88,
-    "bb": 1.9,
-    "ts": 1787207228.476674
+  "basketball|William Jones Cup|中国台北白色|马来西亚|让分客胜(+4.5)|hc|+4.5|2026-08-20": {
+    "ev": 6.87,
+    "bb": 2.08,
+    "ts": 1787207449.990957
   },
-  "basketball|William Jones Cup|中国台北白色|马来西亚|客胜|1x2|2026-08-20": {
-    "ev": 4.84,
-    "bb": 2.8,
-    "ts": 1787207228.4767191
+  "basketball|William Jones Cup|中国台北白色|马来西亚|大分(168.5)|ou|168.5|2026-08-20": {
+    "ev": 8.82,
+    "bb": 1.97,
+    "ts": 1787207449.990998
   }
 }
