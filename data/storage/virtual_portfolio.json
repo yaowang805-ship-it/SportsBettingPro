@@ -1,5 +1,5 @@
 {
-  "balance": 7750.33,
+  "balance": 7587.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3244,6 +3244,29 @@
       "commence_time": 1787189400,
       "created_at": "2026-08-20T00:39:46.665120+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_西雅图海湾人_奥斯汀_小球(30)",
+      "sport": "football",
+      "league": "美国职业大联盟",
+      "home_team": "西雅图海湾人",
+      "away_team": "奥斯汀",
+      "home_cn": "西雅图海湾人",
+      "away_cn": "奥斯汀",
+      "market": "over_under",
+      "market_type": "小球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 1.84,
+      "stake": 163,
+      "model_prob": 0.5557,
+      "ev_pct": 2.26,
+      "pin_odds": 1.7519,
+      "fair_price": 1.7994,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787189400,
+      "created_at": "2026-08-20T00:41:29.407314+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3303,8 +3326,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 757.0,
-    "bets": 28
+    "used": 920.0,
+    "bets": 29
   },
   "updated": null
 }

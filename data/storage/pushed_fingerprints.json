@@ -1565,9 +1565,21 @@
     "bb": 2.89,
     "ts": 1787041147.2998211
   },
+  "football|USA MLS Next Pro|North Texas SC|Austin FC II|小球|1x2|2026-08-20": {
+    "ev": 1.31,
+    "ts": 1787186387.001884
+  },
+  "football|USA Major League Soccer|Colorado Rapids|Los Angeles FC|上半场客胜|ht|2026-08-20": {
+    "ev": 1.04,
+    "ts": 1787186387.001625
+  },
   "football|USA Major League Soccer|Colorado Rapids|Los Angeles FC|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 2.21,
     "ts": 1787114648.656729
+  },
+  "football|USA Major League Soccer|Colorado Rapids|Los Angeles FC|让球客胜|1x2|2026-08-20": {
+    "ev": 2.12,
+    "ts": 1787186387.001688
   },
   "football|USA Major League Soccer|Columbus Crew|Montreal|上半场客胜|ht|2026-08-20": {
     "ev": 1.41,
@@ -1648,6 +1660,10 @@
   "football|USA Major League Soccer|Minnesota United FC|Atlanta United FC|让球主胜|1x2|2026-08-20": {
     "ev": 1.76,
     "ts": 1787182605.536774
+  },
+  "football|USA Major League Soccer|Minnesota United FC|Atlanta United FC|让球客胜|1x2|2026-08-20": {
+    "ev": 5.09,
+    "ts": 1787186387.0018198
   },
   "football|USA Major League Soccer|New York Red Bulls|Nashville SC|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 1.19,
@@ -1774,6 +1790,11 @@
     "ev": 3.65,
     "bb": 1.51,
     "ts": 1787114647.964166
+  },
+  "football|USA Major League Soccer|科罗拉多急流|洛杉矶FC|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-20": {
+    "ev": 2.12,
+    "bb": 1.49,
+    "ts": 1787186386.6704042
   },
   "football|USA Major League Soccer|纳什维尔|哥伦布机员|让球客胜(+1)|hc|+1|2026-08-23": {
     "ev": 3.33,
@@ -2036,9 +2057,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|USA Major League Soccer|科罗拉多急流|洛杉矶FC|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-20": {
-    "ev": 2.12,
-    "bb": 1.49,
-    "ts": 1787186386.6704042
+  "football|USA Major League Soccer|西雅图海湾人|奥斯汀|小球(3.0)|ou|3.0|2026-08-20": {
+    "ev": 2.26,
+    "bb": 1.84,
+    "ts": 1787186489.42011
   }
 }
