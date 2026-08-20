@@ -36,9 +36,9 @@
       "success_rate": 0.182
     },
     "南美俱乐部杯": {
-      "attempts": 5,
-      "successes": 2,
-      "success_rate": 0.4
+      "attempts": 6,
+      "successes": 3,
+      "success_rate": 0.5
     },
     "墨西哥超级联赛": {
       "attempts": 7,
@@ -651,7 +651,7 @@
       "success_rate": 1.0
     }
   },
-  "updated": "2026-08-19T04:37:48.883174+00:00",
+  "updated": "2026-08-20T06:00:15.422761+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
