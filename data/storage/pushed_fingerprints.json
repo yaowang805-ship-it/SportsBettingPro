@@ -29,6 +29,10 @@
     "ev": 7.4,
     "ts": 1787127300.199687
   },
+  "basketball|Mexico LNBP Basketball League|Freseros de Irapuato|El Calor de Cancun|主胜|1x2|2026-08-20": {
+    "ev": 1.71,
+    "ts": 1787189848.257
+  },
   "basketball|Mexico LNBP Basketball League|Freseros de Irapuato|El Calor de Cancun|让分主胜|1x2|2026-08-20": {
     "ev": 2.21,
     "ts": 1787187687.4001868
@@ -917,6 +921,10 @@
     "ev": 1.27,
     "ts": 1787138299.1429539
   },
+  "football|USA Major League Soccer|Portland Timbers|San Diego FC|让球客胜|1x2|2026-08-20": {
+    "ev": 2.19,
+    "ts": 1787189848.256856
+  },
   "football|USA Major League Soccer|Real Salt Lake|FC Dallas|双边进球-是|btts|2026-08-20": {
     "ev": 1.46,
     "ts": 1787188131.3627
@@ -999,6 +1007,21 @@
     "ev": 2.25,
     "bb": 1.69,
     "ts": 1787182605.277452
+  },
+  "football|USA Major League Soccer|波特兰伐木者|圣地亚哥FC|让球客胜(+1)|hc|+1|2026-08-20": {
+    "ev": 2.19,
+    "bb": 1.55,
+    "ts": 1787189848.024843
+  },
+  "football|USA Major League Soccer|洛杉矶银河|圣何塞地震|双重机会-和局/客|dc|2026-08-20": {
+    "ev": 7.76,
+    "bb": 1.95,
+    "ts": 1787189848.024705
+  },
+  "football|USA Major League Soccer|洛杉矶银河|圣何塞地震|让球客胜(+0/0.5)|hc|+0/0.5|2026-08-20": {
+    "ev": 10.41,
+    "bb": 2.23,
+    "ts": 1787189848.024626
   },
   "football|USA Major League Soccer|温哥华白帽|休斯敦迪纳摩|大球(3.0)|ou|3.0|2026-08-20": {
     "ev": 3.72,
@@ -1160,24 +1183,19 @@
     "ev": 16.87,
     "ts": 1787137779.9569652
   },
-  "football|USA Major League Soccer|洛杉矶银河|圣何塞地震|让球客胜(+0/0.5)|hc|+0/0.5|2026-08-20": {
-    "ev": 10.41,
-    "bb": 2.23,
-    "ts": 1787189848.024626
-  },
-  "football|USA Major League Soccer|洛杉矶银河|圣何塞地震|双重机会-和局/客|dc|2026-08-20": {
-    "ev": 7.76,
-    "bb": 1.95,
-    "ts": 1787189848.024705
+  "football|USA Major League Soccer|洛杉矶银河|圣何塞地震|客胜|1x2|2026-08-20": {
+    "ev": 14.99,
+    "bb": 3.62,
+    "ts": 1787190018.1084642
   },
   "football|USA Major League Soccer|洛杉矶银河|圣何塞地震|上半场客胜|ht|2026-08-20": {
-    "ev": 4.73,
-    "bb": 3.79,
-    "ts": 1787189848.0247722
+    "ev": 7.77,
+    "bb": 3.9,
+    "ts": 1787190018.108511
   },
-  "football|USA Major League Soccer|波特兰伐木者|圣地亚哥FC|让球客胜(+1)|hc|+1|2026-08-20": {
-    "ev": 2.19,
-    "bb": 1.55,
-    "ts": 1787189848.024843
+  "basketball|Mexico LNBP Basketball League|伊拉普阿托草莓|埃尔卡洛尔德坎昆|主胜|1x2|2026-08-20": {
+    "ev": 7.53,
+    "bb": 1.48,
+    "ts": 1787190018.108556
   }
 }
