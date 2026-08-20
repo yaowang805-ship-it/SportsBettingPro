@@ -284,10 +284,20 @@
     "bb": 2.01,
     "ts": 1787189241.4402099
   },
+  "basketball|William Jones Cup|中国台北白色|马来西亚|大分(168.5)|ou|168.5|2026-08-20": {
+    "ev": 8.82,
+    "bb": 1.97,
+    "ts": 1787207449.990998
+  },
   "basketball|William Jones Cup|中国台北白色|马来西亚|客胜|1x2|2026-08-20": {
     "ev": 4.84,
     "bb": 2.8,
     "ts": 1787207228.4767191
+  },
+  "basketball|William Jones Cup|中国台北白色|马来西亚|让分客胜(+4.5)|hc|+4.5|2026-08-20": {
+    "ev": 6.87,
+    "bb": 2.08,
+    "ts": 1787207449.990957
   },
   "basketball|William Jones Cup|中国台北白色|马来西亚|让分客胜(+5.5)|hc|+5.5|2026-08-20": {
     "ev": 5.88,
@@ -1763,6 +1773,14 @@
     "ev": 1.48,
     "ts": 1787206047.277217
   },
+  "tennis|ITF - W15 Campos do Jordao Women Singles|Giovana Schincariol Delatorre Barbosa (BRA)|Isabella Barrera Aguirre (USA)|客胜|1x2|2026-08-21": {
+    "ev": 8.26,
+    "ts": 1787208093.117812
+  },
+  "tennis|ITF - W15 Campos do Jordao Women Singles|Giovana Schincariol Delatorre Barbosa (BRA)|Isabella Barrera Aguirre (USA)|让盘客胜|1x2|2026-08-21": {
+    "ev": 5.49,
+    "ts": 1787208093.1181262
+  },
   "tennis|ITF - W15 Campos do Jordao Women Singles|Nathalia Pontes Tourinho (BRA)|Marjorie Souza (BRA)|客胜|1x2|2026-08-20": {
     "ev": 3.44,
     "ts": 1787196182.097975
@@ -1808,14 +1826,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "basketball|William Jones Cup|中国台北白色|马来西亚|让分客胜(+4.5)|hc|+4.5|2026-08-20": {
-    "ev": 6.87,
-    "bb": 2.08,
-    "ts": 1787207449.990957
-  },
-  "basketball|William Jones Cup|中国台北白色|马来西亚|大分(168.5)|ou|168.5|2026-08-20": {
-    "ev": 8.82,
-    "bb": 1.97,
-    "ts": 1787207449.990998
+  "basketball|Mexico LNBP Basketball League|阿瓜斯卡连特斯黑豹|桑托斯波托西|主胜|1x2|2026-08-21": {
+    "ev": 7.05,
+    "bb": 1.34,
+    "ts": 1787208697.816159
   }
 }
