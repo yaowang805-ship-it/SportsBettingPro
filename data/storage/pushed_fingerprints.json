@@ -29,6 +29,14 @@
     "ev": 7.4,
     "ts": 1787127300.199687
   },
+  "basketball|Mexico LNBP Basketball League|Dorados de Chihuahua|Abejas de Leon|小分|1x2|2026-08-20": {
+    "ev": 1.91,
+    "ts": 1787191090.497301
+  },
+  "basketball|Mexico LNBP Basketball League|Dorados de Chihuahua|Abejas de Leon|让分客胜|1x2|2026-08-20": {
+    "ev": 1.88,
+    "ts": 1787191090.497236
+  },
   "basketball|Mexico LNBP Basketball League|Freseros de Irapuato|El Calor de Cancun|主胜|1x2|2026-08-20": {
     "ev": 1.71,
     "ts": 1787189848.257
@@ -1046,6 +1054,11 @@
     "bb": 2.23,
     "ts": 1787189848.024626
   },
+  "football|USA Major League Soccer|洛杉矶银河|圣何塞地震|让球客胜(+1)|hc|+1|2026-08-20": {
+    "ev": 2.45,
+    "bb": 1.68,
+    "ts": 1787190967.884591
+  },
   "football|USA Major League Soccer|温哥华白帽|休斯敦迪纳摩|大球(3.0)|ou|3.0|2026-08-20": {
     "ev": 3.72,
     "bb": 2.04,
@@ -1215,9 +1228,19 @@
     "ev": 16.87,
     "ts": 1787137779.9569652
   },
-  "football|USA Major League Soccer|洛杉矶银河|圣何塞地震|让球客胜(+1)|hc|+1|2026-08-20": {
-    "ev": 2.45,
-    "bb": 1.68,
-    "ts": 1787190967.884591
+  "basketball|Mexico LNBP Basketball League|皇家部队|甘布西诺弗雷斯尼洛|主胜|1x2|2026-08-20": {
+    "ev": 4.12,
+    "bb": 1.3,
+    "ts": 1787191217.239341
+  },
+  "basketball|William Jones Cup|约旦|加州欧文食蚁兽|让分主胜(+13.5)|hc|+13.5|2026-08-20": {
+    "ev": 7.04,
+    "bb": 1.91,
+    "ts": 1787191217.23942
+  },
+  "football|USA Major League Soccer|辛辛那提|西雅图海湾人|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-23": {
+    "ev": 3.18,
+    "bb": 1.75,
+    "ts": 1787191217.239488
   }
 }
