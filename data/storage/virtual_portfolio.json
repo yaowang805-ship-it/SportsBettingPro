@@ -1,5 +1,5 @@
 {
-  "balance": 6806.33,
+  "balance": 6747.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3681,6 +3681,75 @@
       "commence_time": 1787252400,
       "created_at": "2026-08-20T02:40:07.002865+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_圣地亚哥FC_科罗拉多急流_大球(30)",
+      "sport": "football",
+      "league": "美国职业大联盟",
+      "home_team": "圣地亚哥FC",
+      "away_team": "科罗拉多急流",
+      "home_cn": "圣地亚哥FC",
+      "away_cn": "科罗拉多急流",
+      "market": "over_under",
+      "market_type": "大球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 1.87,
+      "stake": 27,
+      "model_prob": 0.5516,
+      "ev_pct": 3.14,
+      "pin_odds": 1.7353,
+      "fair_price": 1.813,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787452200,
+      "created_at": "2026-08-20T02:54:49.426122+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_圣何塞地震_明尼苏达联_让球客胜(+05)",
+      "sport": "football",
+      "league": "美国职业大联盟",
+      "home_team": "圣何塞地震",
+      "away_team": "明尼苏达联",
+      "home_cn": "圣何塞地震",
+      "away_cn": "明尼苏达联",
+      "market": "handicap",
+      "market_type": "让球客胜(+0.5)",
+      "sub_market": "hc",
+      "line": "+0.5",
+      "odds": 1.82,
+      "stake": 20,
+      "model_prob": 0.562,
+      "ev_pct": 2.28,
+      "pin_odds": 1.7092,
+      "fair_price": 1.7794,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787452200,
+      "created_at": "2026-08-20T02:54:49.426164+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_伊普斯维奇_桑德兰_和局",
+      "sport": "football",
+      "league": "英格兰超级联赛",
+      "home_team": "伊普斯维奇",
+      "away_team": "桑德兰",
+      "home_cn": "伊普斯维奇",
+      "away_cn": "桑德兰",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.48,
+      "stake": 12,
+      "model_prob": 0.2935,
+      "ev_pct": 2.13,
+      "pin_odds": 3.28,
+      "fair_price": 3.4075,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787407200,
+      "created_at": "2026-08-20T02:54:49.426193+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3740,8 +3809,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 1701.0,
-    "bets": 47
+    "used": 1760.0,
+    "bets": 50
   },
   "updated": null
 }
