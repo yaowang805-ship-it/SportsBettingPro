@@ -648,6 +648,10 @@
     "ev": 3.32,
     "ts": 1787137779.9552991
   },
+  "football|Copa Libertadores|Corinthians SP|Club Atletico Rosario Central|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 2.86,
+    "ts": 1787186329.958403
+  },
   "football|Copa Libertadores|Independiente Rivadavia|Fluminense FC RJ|上半场双重机会-主/客|ht_dc|2026-08-19": {
     "ev": 5.27,
     "ts": 1787025629.2466261
@@ -1701,6 +1705,10 @@
     "ev": 3.86,
     "ts": 1787185978.858956
   },
+  "football|USA Major League Soccer|Seattle Sounders|Austin FC|净胜球away_by2|winning_margin|2026-08-20": {
+    "ev": 4.64,
+    "ts": 1787186228.394793
+  },
   "football|USA Major League Soccer|Seattle Sounders|Austin FC|和局|1x2|2026-08-20": {
     "ev": 2.14,
     "ts": 1787185978.858901
@@ -1771,6 +1779,11 @@
     "ev": 3.33,
     "bb": 1.6,
     "ts": 1787185832.65628
+  },
+  "football|USA Major League Soccer|西雅图海湾人|奥斯汀|上半场客胜|ht|2026-08-20": {
+    "ev": 4.88,
+    "bb": 5.15,
+    "ts": 1787186228.083758
   },
   "football|USA Major League Soccer|西雅图海湾人|奥斯汀|正确比分1-1|correct_score|2026-08-20": {
     "ev": 6.47,
@@ -2023,9 +2036,9 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|USA Major League Soccer|西雅图海湾人|奥斯汀|上半场客胜|ht|2026-08-20": {
-    "ev": 4.88,
-    "bb": 5.15,
-    "ts": 1787186228.083758
+  "football|USA Major League Soccer|科罗拉多急流|洛杉矶FC|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-20": {
+    "ev": 2.12,
+    "bb": 1.49,
+    "ts": 1787186386.6704042
   }
 }

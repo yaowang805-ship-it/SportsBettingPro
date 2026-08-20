@@ -1,5 +1,5 @@
 {
-  "balance": 7766.33,
+  "balance": 7750.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3221,6 +3221,29 @@
       "commence_time": 1787189400,
       "created_at": "2026-08-20T00:37:08.075751+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_科罗拉多急流_洛杉矶FC_让球客胜(+05/1)",
+      "sport": "football",
+      "league": "美国职业大联盟",
+      "home_team": "科罗拉多急流",
+      "away_team": "洛杉矶FC",
+      "home_cn": "科罗拉多急流",
+      "away_cn": "洛杉矶FC",
+      "market": "handicap",
+      "market_type": "让球客胜(+0.5/1)",
+      "sub_market": "hc",
+      "line": "+0.5/1",
+      "odds": 1.49,
+      "stake": 16,
+      "model_prob": 0.6854,
+      "ev_pct": 2.12,
+      "pin_odds": 1.4348,
+      "fair_price": 1.459,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787189400,
+      "created_at": "2026-08-20T00:39:46.665120+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3280,8 +3303,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 741.0,
-    "bets": 27
+    "used": 757.0,
+    "bets": 28
   },
   "updated": null
 }
