@@ -1,5 +1,5 @@
 {
-  "balance": 7088.33,
+  "balance": 7072.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3497,6 +3497,29 @@
       "commence_time": 1787193000,
       "created_at": "2026-08-20T01:40:18.102215+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_凤凰重生_科罗拉多跃泉_让球客胜(+0/05)",
+      "sport": "football",
+      "league": "美国冠军联赛",
+      "home_team": "凤凰重生",
+      "away_team": "科罗拉多跃泉",
+      "home_cn": "凤凰重生",
+      "away_cn": "科罗拉多跃泉",
+      "market": "handicap",
+      "market_type": "让球客胜(+0/0.5)",
+      "sub_market": "hc",
+      "line": "+0/0.5",
+      "odds": 1.91,
+      "stake": 16,
+      "model_prob": 0.5431,
+      "ev_pct": 3.74,
+      "pin_odds": 1.7812,
+      "fair_price": 1.8412,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787191200,
+      "created_at": "2026-08-20T01:51:29.597635+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3556,8 +3579,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 1419.0,
-    "bets": 39
+    "used": 1435.0,
+    "bets": 40
   },
   "updated": null
 }
