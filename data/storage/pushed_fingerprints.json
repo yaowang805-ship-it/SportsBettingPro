@@ -847,17 +847,43 @@
     "bb": 3.48,
     "ts": 1787194489.4344919
   },
+  "football|Estonia Esiliiga B|Parnu JK Vaprus II|Viljandi JK Tulevik|主胜|1x2|2026-08-20": {
+    "ev": 1.36,
+    "ts": 1787213308.6233249
+  },
   "football|Estonia Esiliiga B|Parnu JK Vaprus II|Viljandi JK Tulevik|小球|1x2|2026-08-20": {
     "ev": 2.68,
     "ts": 1787200682.732411
+  },
+  "football|Estonia Meistriliiga Women|FC Flora Tallinn (w)|Saku Sporting (w)|双重机会-和局/客|dc|2026-08-20": {
+    "ev": 6.24,
+    "ts": 1787213308.6230881
   },
   "football|Estonia Meistriliiga Women|FC Flora Tallinn (w)|Saku Sporting (w)|大球|1x2|2026-08-20": {
     "ev": 3.57,
     "ts": 1787197898.010417
   },
+  "football|Estonia Meistriliiga Women|FC Flora Tallinn (w)|Saku Sporting (w)|客胜|1x2|2026-08-20": {
+    "ev": 5.32,
+    "ts": 1787213308.622998
+  },
+  "football|Estonia Meistriliiga Women|FC Flora Tallinn (w)|Saku Sporting (w)|让球客胜|1x2|2026-08-20": {
+    "ev": 4.67,
+    "ts": 1787213308.623042
+  },
   "football|Estonia Meistriliiga Women|Viimsi JK (w)|Harju JK Laagri (w)|客胜|1x2|2026-08-20": {
     "ev": 27.59,
     "ts": 1787196182.096779
+  },
+  "football|Estonia Meistriliiga Women|科罗拉 (女)|佐久运动 (女)|双重机会-和局/客|dc|2026-08-20": {
+    "ev": 6.24,
+    "bb": 3.18,
+    "ts": 1787213308.238024
+  },
+  "football|Estonia Meistriliiga Women|科罗拉 (女)|佐久运动 (女)|让球客胜(+1.5)|hc|+1.5|2026-08-20": {
+    "ev": 4.67,
+    "bb": 1.89,
+    "ts": 1787213308.2380679
   },
   "football|Finland Ykkosliiga|KaPa Kapylan Pallo|JIPPO|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 3.49,
@@ -1958,14 +1984,14 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|Estonia Meistriliiga Women|科罗拉 (女)|佐久运动 (女)|双重机会-和局/客|dc|2026-08-20": {
-    "ev": 6.24,
-    "bb": 3.18,
-    "ts": 1787213308.238024
+  "basketball|Mexico LNBP Basketball League|阿瓜斯卡连特斯黑豹|桑托斯波托西|让分客胜(+6.5)|hc|+6.5|2026-08-21": {
+    "ev": 10.71,
+    "bb": 1.82,
+    "ts": 1787213579.561261
   },
-  "football|Estonia Meistriliiga Women|科罗拉 (女)|佐久运动 (女)|让球客胜(+1.5)|hc|+1.5|2026-08-20": {
-    "ev": 4.67,
-    "bb": 1.89,
-    "ts": 1787213308.2380679
+  "football|Egypt Second Division A|斯卡哈迪德|特萨纳|让球主胜(0)|hc|0|2026-08-21": {
+    "ev": 3.79,
+    "bb": 1.8,
+    "ts": 1787213579.561313
   }
 }
