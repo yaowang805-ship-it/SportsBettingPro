@@ -366,6 +366,10 @@
     "ev": 8.83,
     "ts": 1787196182.096713
   },
+  "football|AFC Champions League Women|Phnom Penh Crown (w)|Kaya FC Iloilo (w)|让球客胜|1x2|2026-08-20": {
+    "ev": 1.36,
+    "ts": 1787216107.1892018
+  },
   "football|AFC Champions League Women|金边皇冠 (女)|卡雅 (女)|小球(3.75)|ou|3.75|2026-08-20": {
     "ev": 6.91,
     "bb": 1.79,
@@ -512,6 +516,11 @@
     "ev": 8.41,
     "bb": 1.97,
     "ts": 1787121638.345408
+  },
+  "football|Belarus Premier League|明斯克迪纳摩|若基诺鱼雷|让球客胜(+1)|hc|+1|2026-08-20": {
+    "ev": 3.25,
+    "bb": 1.72,
+    "ts": 1787216021.566179
   },
   "football|Brazil Serie B|Athletic Club MG|CR Brasil AL|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 1.14,
@@ -1083,6 +1092,10 @@
     "ev": 2.93,
     "ts": 1787199708.0201359
   },
+  "football|Romania Cup-Qualification|CSA Steaua Bucuresti|FK Csikszereda Miercurea Ciuc|让球主胜|1x2|2026-08-20": {
+    "ev": 2.6,
+    "ts": 1787216683.82103
+  },
   "football|Romania Cup-Qualification|CSA Steaua Bucuresti|FK Csikszereda Miercurea Ciuc|让球客胜|1x2|2026-08-20": {
     "ev": 1.21,
     "ts": 1787204594.7914891
@@ -1367,6 +1380,14 @@
     "bb": 2.89,
     "ts": 1787041147.2998211
   },
+  "football|UEFA Europa League-Qualification|FC Kairat Almaty|RSC Anderlecht|上半场主胜|ht|2026-08-20": {
+    "ev": 1.85,
+    "ts": 1787216683.8207932
+  },
+  "football|UEFA Europa League-Qualification|FC Kairat Almaty|RSC Anderlecht|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 2.33,
+    "ts": 1787216021.8448188
+  },
   "football|UEFA Europa League-Qualification|Jagiellonia Bialystok|Iberia 1999|总进球区间7+|total_goals_range|2026-08-21": {
     "ev": 2.46,
     "ts": 1787199708.0207338
@@ -1386,6 +1407,14 @@
   "football|UEFA Europa League-Qualification|KKS Lech Poznan|FC Thun|让球主胜|1x2|2026-08-21": {
     "ev": 1.23,
     "ts": 1787198999.6327748
+  },
+  "football|UEFA Europa League-Qualification|SL Benfica|AGF Aarhus|双边进球-否|btts|2026-08-21": {
+    "ev": 1.7,
+    "ts": 1787216021.844876
+  },
+  "football|UEFA Europa League-Qualification|SL Benfica|AGF Aarhus|小球|1x2|2026-08-21": {
+    "ev": 1.48,
+    "ts": 1787216021.844918
   },
   "football|UEFA Europa League-Qualification|St. Truidense VV|Omonia Nicosia|双边进球-是|btts|2026-08-21": {
     "ev": 1.51,
@@ -1933,6 +1962,10 @@
     "ev": 4.0,
     "ts": 1787191217.6514702
   },
+  "tennis|ITF - M15 Kursumlijska Banja Men Singles|Semen Pankin (RUS)|Drazen Petrovic (BIH)|客胜|1x2|2026-08-20": {
+    "ev": 2.33,
+    "ts": 1787216365.77333
+  },
   "tennis|ITF - M15 Mistelbach Men Doubles|Juan Ignacio Gallego (ARG) / Kabeer Kapasi (USA)|Gabriele Crivellaro (ITA) / Gabriele Maria Noce (ITA)|客胜|1x2|2026-08-20": {
     "ev": 4.56,
     "ts": 1787196182.098953
@@ -2014,9 +2047,19 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|Belarus Premier League|明斯克迪纳摩|若基诺鱼雷|让球客胜(+1)|hc|+1|2026-08-20": {
-    "ev": 3.25,
-    "bb": 1.72,
-    "ts": 1787216021.566179
+  "basketball|Puerto Rico Baloncesto Superior Nacional|桑特罗斯德|巴亚蒙牛仔|让分主胜(+3.5)|hc|+3.5|2026-08-22": {
+    "ev": 3.98,
+    "bb": 1.88,
+    "ts": 1787216720.268071
+  },
+  "basketball|Puerto Rico Baloncesto Superior Nacional|桑特罗斯德|巴亚蒙牛仔|主胜|1x2|2026-08-22": {
+    "ev": 4.3,
+    "bb": 2.33,
+    "ts": 1787216720.2681139
+  },
+  "football|Sweden Ettan Norra|索伦蒂纳|卡尔斯塔德|让球客胜(-0/0.5)|hc|-0/0.5|2026-08-22": {
+    "ev": 4.14,
+    "bb": 1.8,
+    "ts": 1787216720.2681868
   }
 }
