@@ -1684,7 +1684,11 @@ def fetch_all_sports(with_fb=False):
             "match_count": len(plat_matches),
             "matches": plat_matches,
         }
-        plat_path.write_text(json.dumps(plat_output, ensure_ascii=False, default=str))
+        # V5.10 原子写: 直接 write_text 会在并发读时被读到半截文件(JSON解析失败,
+        # 实测让 near 扫描 FAILED 89 分钟)。先写 tmp 再 rename, 读端永远读不到半截。
+        _tmp = plat_path.with_suffix(".json.tmp")
+        _tmp.write_text(json.dumps(plat_output, ensure_ascii=False, default=str))
+        _tmp.replace(plat_path)
         print(f"  {PLATFORMS[plat_key]['label']} 原始数据已保存: {plat_path.name} ({len(plat_matches)} 场)")
 
     # 合并各平台结果（取最高赔率）

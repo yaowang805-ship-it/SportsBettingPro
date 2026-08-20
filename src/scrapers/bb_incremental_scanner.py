@@ -814,7 +814,15 @@ def _run_fb_comparison(all_pin_leagues):
         return False
 
     print(f"\n🔍 FB 独立对比...")
-    raw = json.loads(FB_EXTRACTED.read_text())
+    # V5.10 修复竞态: _fetch_fb_only 用 subprocess 非原子写 FB_EXTRACTED, 这里读的
+    # 时候可能正好读到 truncate 后的半截/空文件 → json.loads 抛 "Expecting value:
+    # line 1 column 1" → 整个 near 扫描 FAILED, 之后每轮重试撞同样竞态, 一卡 89 分钟。
+    # 读失败只跳过本轮 FB 对比, 下次扫描自愈, 绝不让 near 扫描整个挂掉。
+    try:
+        raw = json.loads(FB_EXTRACTED.read_text())
+    except Exception as e:
+        print(f"  ⚠️ FB 数据读取失败({type(e).__name__}), 跳过本轮 FB 对比(下次自愈)")
+        return False
     fb_matches = raw.get("matches", [])
     _now_ts = int(time.time() * 1000)
     fb_matches = [m for m in fb_matches if not m.get("bt") or int(m["bt"]) > _now_ts]
