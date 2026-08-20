@@ -697,6 +697,10 @@
     "ev": 22.13,
     "ts": 1787196928.240569
   },
+  "football|Copa Libertadores|Corinthians SP|Club Atletico Rosario Central|让球主胜|1x2|2026-08-21": {
+    "ev": 1.15,
+    "ts": 1787218756.444502
+  },
   "football|Copa Libertadores|LDU Quito|Mirassol FC SP|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 1.14,
     "ts": 1787180086.214936
@@ -903,9 +907,18 @@
     "ev": 1.36,
     "ts": 1787213308.6233249
   },
+  "football|Estonia Esiliiga B|Parnu JK Vaprus II|Viljandi JK Tulevik|大球|1x2|2026-08-20": {
+    "ev": 7.76,
+    "ts": 1787218340.4327831
+  },
   "football|Estonia Esiliiga B|Parnu JK Vaprus II|Viljandi JK Tulevik|小球|1x2|2026-08-20": {
     "ev": 2.68,
     "ts": 1787200682.732411
+  },
+  "football|Estonia Esiliiga B|帕尔努瓦夫鲁二队|土勒维克|大球(4.0)|ou|4.0|2026-08-20": {
+    "ev": 7.76,
+    "bb": 1.84,
+    "ts": 1787218340.040174
   },
   "football|Estonia Meistriliiga Women|FC Flora Tallinn (w)|Saku Sporting (w)|双重机会-和局/客|dc|2026-08-20": {
     "ev": 6.24,
@@ -1307,6 +1320,10 @@
   "football|UEFA Europa Conference League-Qualification|KS Gornik Zabrze|AS Monaco FC|让球客胜|1x2|2026-08-21": {
     "ev": 1.0,
     "ts": 1787188672.44005
+  },
+  "football|UEFA Europa Conference League-Qualification|Lincoln Red Imps FC|Larne FC|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 1.23,
+    "ts": 1787218756.4440289
   },
   "football|UEFA Europa Conference League-Qualification|PAOK Thessaloniki|SK Brann|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 1.24,
@@ -2099,9 +2116,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|Estonia Esiliiga B|帕尔努瓦夫鲁二队|土勒维克|大球(4.0)|ou|4.0|2026-08-20": {
-    "ev": 7.76,
-    "bb": 1.84,
-    "ts": 1787218340.040174
+  "football|South Korea K-League 1|富川FC 1995|浦项制铁|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 3.31,
+    "bb": 1.94,
+    "ts": 1787219317.12412
   }
 }
