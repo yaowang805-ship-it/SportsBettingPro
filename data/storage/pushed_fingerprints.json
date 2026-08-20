@@ -61,6 +61,10 @@
     "ev": 1.46,
     "ts": 1787194489.711956
   },
+  "basketball|Mexico LNBP Basketball League|Panteras de Aguascalientes|Santos del Potosi|让分主胜|1x2|2026-08-21": {
+    "ev": 1.2,
+    "ts": 1787208698.32288
+  },
   "basketball|Mexico LNBP Basketball League|Soles de Mexicali|Mineros de Zacatecas|主胜|1x2|2026-08-21": {
     "ev": 1.02,
     "ts": 1787195373.465791
@@ -118,6 +122,11 @@
     "ev": 10.73,
     "bb": 2.25,
     "ts": 1787128534.995748
+  },
+  "basketball|Mexico LNBP Basketball League|阿瓜斯卡连特斯黑豹|桑托斯波托西|主胜|1x2|2026-08-21": {
+    "ev": 7.05,
+    "bb": 1.34,
+    "ts": 1787208697.816159
   },
   "basketball|Olympic Tournament Pre-Qualifying Women|Philippines (w)|Canada (w)|让分主胜|1x2|2026-08-20": {
     "ev": 1.39,
@@ -636,6 +645,10 @@
     "ev": 1.26,
     "ts": 1787201588.91555
   },
+  "football|Copa Libertadores|LDU Quito|Mirassol FC SP|让球主胜|1x2|2026-08-21": {
+    "ev": 1.21,
+    "ts": 1787208698.322508
+  },
   "football|Copa Libertadores|弗拉门戈|克鲁塞罗MG|和局|1x2|2026-08-20": {
     "ev": 3.12,
     "bb": 3.85,
@@ -989,6 +1002,10 @@
   "football|Spain LaLiga|Rayo Vallecano|Deportivo Alaves|大球|1x2|2026-08-21": {
     "ev": 1.06,
     "ts": 1787206047.276653
+  },
+  "football|Spain LaLiga|Rayo Vallecano|Deportivo Alaves|让球主胜|1x2|2026-08-21": {
+    "ev": 1.21,
+    "ts": 1787208698.322149
   },
   "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 6.13,
@@ -1826,9 +1843,39 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "basketball|Mexico LNBP Basketball League|阿瓜斯卡连特斯黑豹|桑托斯波托西|主胜|1x2|2026-08-21": {
-    "ev": 7.05,
-    "bb": 1.34,
-    "ts": 1787208697.816159
+  "football|Japan J.League 2|山形山神|横滨FC|让球客胜(0)|hc|0|2026-08-22": {
+    "ev": 4.64,
+    "bb": 1.58,
+    "ts": 1787209374.206672
+  },
+  "football|Netherlands Eerste Divisie|布雷达|阿贾克斯青年队|让球客胜(+2)|hc|+2|2026-08-22": {
+    "ev": 4.43,
+    "bb": 1.89,
+    "ts": 1787209374.206718
+  },
+  "football|Argentina Liga Profesional|纽维尔老男孩|班菲尔德|让球主胜(0)|hc|0|2026-08-23": {
+    "ev": 3.14,
+    "bb": 1.66,
+    "ts": 1787209374.2067552
+  },
+  "football|Portugal Segunda Liga|维泽拉|阿马兰迪|主胜|1x2|2026-08-22": {
+    "ev": 4.26,
+    "bb": 1.96,
+    "ts": 1787209374.206896
+  },
+  "football|Netherlands Eerste Divisie|丹博斯治|FC埃因霍温|让球主胜(-0/0.5)|hc|-0/0.5|2026-08-22": {
+    "ev": 3.5,
+    "bb": 1.88,
+    "ts": 1787209374.206953
+  },
+  "football|Czech Republic 1. Liga|阿蒂斯布尔诺|布拉格斯巴达|让球客胜(-1/1.5)|hc|-1/1.5|2026-08-22": {
+    "ev": 5.31,
+    "bb": 1.96,
+    "ts": 1787209374.2069912
+  },
+  "football|Czech Republic 1. Liga|阿蒂斯布尔诺|布拉格斯巴达|大球(2.75)|ou|2.75|2026-08-22": {
+    "ev": 3.77,
+    "bb": 1.85,
+    "ts": 1787209374.2071838
   }
 }
