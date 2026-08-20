@@ -57,8 +57,11 @@ for _lf in sorted(LOG_DIR.iterdir()):
         _lf.unlink()
         print(f"  🗑️ 清理旧日志: {_lf.name} ({(int(_age_sec / 86400))}天前)")
 
-SCAN_START_MIN = 6 * 60 + 40       # 扫描起始 06:40 (2026-08-17 用户要求: 7点→6:40)
-SCAN_END_MIN = 22 * 60             # 扫描结束 22:00
+SCAN_START_MIN = 0                 # V5.10: 扫描全天(原06:40), 夜里也产出投注方案加快数据累计
+SCAN_END_MIN = 24 * 60             # V5.10: 扫描全天(原22:00)。推送时段已独立: _run_push 夜里加 --night(不推钉钉但照常投注)
+# 推送时段(仅钉钉通知): 06:40~22:00, 夜里 skip_dingtalk 但仍投注+记录(见 bb_incremental_scanner._run_push)
+PUSH_START_MIN = 6 * 60 + 40
+PUSH_END_MIN = 22 * 60
 INCREMENTAL_INTERVAL = 120  # V5.5: 120秒(2分钟) — 准实时发现新机会 (BB自有账号高频轮询+Pin按需拉变动联赛)
 CHECK_INTERVAL = 30                # 调度循环检查间隔（秒）
 
