@@ -1,5 +1,5 @@
 {
-  "balance": 6885.33,
+  "balance": 6838.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3589,6 +3589,52 @@
       "commence_time": 1787441400,
       "created_at": "2026-08-20T02:20:58.100256+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_CD法斯_穆尼斯帕尔_主胜",
+      "sport": "football",
+      "league": "中美洲杯",
+      "home_team": "CD法斯",
+      "away_team": "穆尼斯帕尔",
+      "home_cn": "CD法斯",
+      "away_cn": "穆尼斯帕尔",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.8,
+      "stake": 32,
+      "model_prob": 0.3712,
+      "ev_pct": 3.94,
+      "pin_odds": 2.5,
+      "fair_price": 2.6939,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787194800,
+      "created_at": "2026-08-20T02:33:03.327676+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_CD法斯_穆尼斯帕尔_让球主胜(+0/05)",
+      "sport": "football",
+      "league": "中美洲杯",
+      "home_team": "CD法斯",
+      "away_team": "穆尼斯帕尔",
+      "home_cn": "CD法斯",
+      "away_cn": "穆尼斯帕尔",
+      "market": "handicap",
+      "market_type": "让球主胜(+0/0.5)",
+      "sub_market": "hc",
+      "line": "+0/0.5",
+      "odds": 1.71,
+      "stake": 15,
+      "model_prob": 0.5968,
+      "ev_pct": 2.06,
+      "pin_odds": 1.6024,
+      "fair_price": 1.6755,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787194800,
+      "created_at": "2026-08-20T02:33:03.327767+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3648,8 +3694,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 1622.0,
-    "bets": 43
+    "used": 1669.0,
+    "bets": 45
   },
   "updated": null
 }
