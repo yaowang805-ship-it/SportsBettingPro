@@ -169,6 +169,11 @@
     "bb": 2.07,
     "ts": 1787114647.964055
   },
+  "basketball|WNBA|拉斯维加斯王牌 (女)|康涅狄格阳光 (女)|小分(165.5)|ou|165.5|2026-08-21": {
+    "ev": 6.7,
+    "bb": 2.0,
+    "ts": 1787197897.696617
+  },
   "basketball|WNBA|洛杉矶火花 (女)|亚特兰大梦想 (女)|小分(179.5)|ou|179.5|2026-08-21": {
     "ev": 6.39,
     "bb": 2.02,
@@ -683,6 +688,10 @@
     "bb": 3.48,
     "ts": 1787194489.4344919
   },
+  "football|Estonia Meistriliiga Women|FC Flora Tallinn (w)|Saku Sporting (w)|大球|1x2|2026-08-20": {
+    "ev": 3.57,
+    "ts": 1787197898.010417
+  },
   "football|Estonia Meistriliiga Women|Viimsi JK (w)|Harju JK Laagri (w)|客胜|1x2|2026-08-20": {
     "ev": 27.59,
     "ts": 1787196182.096779
@@ -798,6 +807,10 @@
   "football|Russia First League|FK Veles Moscow|FK Nizhny Novgorod|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 2.41,
     "ts": 1787114648.6542468
+  },
+  "football|Russia First League|PFK Arsenal Tula|SK Rotor Volgograd|上半场双重机会-主/客|ht_dc|2026-08-20": {
+    "ev": 1.84,
+    "ts": 1787197898.01047
   },
   "football|Russia First League|图拉兵工厂|洛特伏尔加格勒|上半场双重机会-主/客|ht_dc|2026-08-20": {
     "ev": 3.7,
@@ -1515,9 +1528,14 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "basketball|WNBA|拉斯维加斯王牌 (女)|康涅狄格阳光 (女)|小分(165.5)|ou|165.5|2026-08-21": {
-    "ev": 6.7,
-    "bb": 2.0,
-    "ts": 1787197897.696617
+  "basketball|WNBA|拉斯维加斯王牌 (女)|康涅狄格阳光 (女)|小分(164.5)|ou|164.5|2026-08-21": {
+    "ev": 7.0,
+    "bb": 2.14,
+    "ts": 1787198999.244148
+  },
+  "football|Uruguay Primera Division|阿尔比恩|波士顿河|让球主胜(0)|hc|0|2026-08-22": {
+    "ev": 4.52,
+    "bb": 1.72,
+    "ts": 1787198999.2442298
   }
 }
