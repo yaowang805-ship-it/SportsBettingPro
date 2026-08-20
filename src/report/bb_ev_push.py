@@ -661,6 +661,45 @@ def _min_ev_for_tier(tier: int, sport: str = "", league: str = "") -> float:
     strategy = get_tier_strategy(sport, league, tier)
     return strategy["ev_floor"]
 
+
+# ── V5.10 数据驱动 EV 门槛矩阵 ──
+# 由 scripts/compute_ev_thresholds.py 每晚从 clv_results.csv 重算。
+# 原理: 2% 统一门槛实测开在噪声里(2-3% 档 CLV -2.16%/正率35%), 必须按盘口/运动/时间分层。
+_threshold_matrix = None
+_threshold_matrix_ts = 0.0
+
+
+def _load_threshold_matrix():
+    global _threshold_matrix, _threshold_matrix_ts
+    mf = DATA_DIR / "ev_threshold_matrix.json"
+    if not mf.exists():
+        return None
+    try:
+        m = mf.stat().st_mtime
+        if _threshold_matrix is None or m != _threshold_matrix_ts:
+            _threshold_matrix = json.loads(mf.read_text())
+            _threshold_matrix_ts = m
+        return _threshold_matrix
+    except Exception:
+        return None
+
+
+def _matrix_min_ev(sub_market: str, sport: str, lead_minutes=None):
+    """返回该盘口的矩阵门槛; 矩阵不存在返回 None(回退 tier 门槛)。
+
+    门槛 = 盘口层 + 运动微调 + 临场规则(距开赛<1h 且主体盘口 +extra)。
+    """
+    mtx = _load_threshold_matrix()
+    if not mtx:
+        return None
+    markets = mtx.get("markets", {})
+    thr = markets.get(sub_market, mtx.get("default_threshold", 8.0))
+    thr += mtx.get("sport_adjust", {}).get(sport, 0.0)
+    if lead_minutes is not None and lead_minutes < mtx.get("in_play_hours", 1.0) * 60:
+        if sub_market in mtx.get("main_markets", ("1x2", "hc", "ou")):
+            thr += mtx.get("in_play_extra", 3.0)
+    return max(1.0, thr)
+
 # EV 上限 — EV > 此值几乎全是假阳性（队名匹配到错误比赛）
 # 使用 constants.EV_CAP (12.0)
 
@@ -1482,6 +1521,12 @@ def _collect_opportunities(match, market_key):
 
         # 同时也要过旧的 Tier 底线（兜底）
         if ev < min_ev:
+            continue
+
+        # V5.10 数据驱动门槛矩阵(盘口层+运动层+临场规则) — 每晚由 compute_ev_thresholds 重算
+        _lead_min = (pin_epoch - time.time()) / 60 if pin_epoch else None
+        _mtx_ev = _matrix_min_ev(sub_market, match.get("sport", ""), lead_minutes=_lead_min)
+        if _mtx_ev is not None and ev < _mtx_ev:
             continue
 
         # EV 上限过滤：高赔率天然高 EV，用动态上限防假阳性
