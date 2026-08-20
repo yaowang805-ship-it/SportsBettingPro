@@ -3111,7 +3111,7 @@ def _send_failure_alert(errors: list):
 
 
 def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup: bool = False,
-                skip_freshness: bool = False, label: str = ""):
+                skip_freshness: bool = False, label: str = "", skip_dingtalk: bool = False):
     """推送报告到钉钉。
 
     Args:
@@ -3121,6 +3121,8 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
         skip_dedup: 跳过指纹去重 (仅紧急手动重推, 需显式 --skip-dedup)。
         skip_freshness: 跳过对比文件新鲜度检查。
         label: 增量扫描类型标签（如 "24h内临场" 或 "24-72h早盘"）
+        skip_dingtalk: 不推送钉钉, 但照常投注+记录(夜里 22:00-6:40 用户休息时用,
+                       加快真实投注样本积累, 见 clv-threshold-matrix-todo 记忆)。
     """
     # 推送前二次验价（仅增量模式且 qualified 已由调用者提供时）
     if qualified and incremental:
