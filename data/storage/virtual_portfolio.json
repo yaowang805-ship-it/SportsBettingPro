@@ -1,5 +1,5 @@
 {
-  "balance": 5242.46,
+  "balance": 5173.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2301,6 +2301,52 @@
       "commence_time": 1787394600,
       "created_at": "2026-08-20T09:48:37.077642+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_达拉斯飞翼_(女)_印第安纳狂热_(女)_小分(1845)",
+      "sport": "basketball",
+      "league": "WNBA 美国职业女子篮球联赛",
+      "home_team": "达拉斯飞翼 (女)",
+      "away_team": "印第安纳狂热 (女)",
+      "home_cn": "达拉斯飞翼 (女)",
+      "away_cn": "印第安纳狂热 (女)",
+      "market": "over_under",
+      "market_type": "小分(184.5)",
+      "sub_market": "ou",
+      "line": "184.5",
+      "odds": 1.95,
+      "stake": 35,
+      "model_prob": 0.5308,
+      "ev_pct": 3.51,
+      "pin_odds": 1.7634,
+      "fair_price": 1.8838,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787270400,
+      "created_at": "2026-08-20T10:07:17.785683+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_下卡姆斯克石油_索契_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "俄罗斯甲级联赛",
+      "home_team": "下卡姆斯克石油",
+      "away_team": "索契",
+      "home_cn": "下卡姆斯克石油",
+      "away_cn": "索契",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.83,
+      "stake": 34,
+      "model_prob": 0.5699,
+      "ev_pct": 4.29,
+      "pin_odds": 0,
+      "fair_price": 1.7548,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787238000,
+      "created_at": "2026-08-20T10:07:17.785731+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2407,8 +2453,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 3465.0,
-    "bets": 91
+    "used": 3534.0,
+    "bets": 93
   },
   "updated": null
 }
