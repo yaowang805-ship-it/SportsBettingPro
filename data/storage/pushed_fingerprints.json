@@ -1697,6 +1697,11 @@
     "bb": 1.5,
     "ts": 1787180004.525698
   },
+  "football|USA Major League Soccer|迈阿密国际|多伦多FC|让球客胜(+1.5/2)|hc|+1.5/2|2026-08-23": {
+    "ev": 4.56,
+    "bb": 1.73,
+    "ts": 1787183894.539603
+  },
   "football|USA National Women Soccer League|Houston Dash (w)|Chicago Red Stars (w)|小球|1x2|2026-08-20": {
     "ev": 1.79,
     "ts": 1787182470.4566112
@@ -1923,9 +1928,19 @@
     "ev": 1.49,
     "ts": 1787029464.08913
   },
-  "football|USA Major League Soccer|迈阿密国际|多伦多FC|让球客胜(+1.5/2)|hc|+1.5/2|2026-08-23": {
-    "ev": 4.56,
-    "bb": 1.73,
-    "ts": 1787183894.539603
+  "football|Argentina Liga Profesional|飓风队|利斯特雷|小球(2.0)|ou|2.0|2026-08-23": {
+    "ev": 4.46,
+    "bb": 1.8,
+    "ts": 1787184411.695942
+  },
+  "football|Argentina Liga Profesional|飓风队|利斯特雷|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-23": {
+    "ev": 4.66,
+    "bb": 1.75,
+    "ts": 1787184411.695989
+  },
+  "football|Peru Liga 1|加西拉索|库斯科|和局|1x2|2026-08-23": {
+    "ev": 9.46,
+    "bb": 3.19,
+    "ts": 1787184411.6960268
   }
 }
