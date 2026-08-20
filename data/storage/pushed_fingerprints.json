@@ -57,6 +57,10 @@
     "ev": 4.18,
     "ts": 1787115444.852549
   },
+  "basketball|Mexico LNBP Basketball League|Panteras de Aguascalientes|Santos del Potosi|主胜|1x2|2026-08-21": {
+    "ev": 1.46,
+    "ts": 1787194489.711956
+  },
   "basketball|Mexico LNBP Basketball League|伊拉普阿托草莓|埃尔卡洛尔德坎昆|主胜|1x2|2026-08-20": {
     "ev": 7.53,
     "bb": 1.48,
@@ -159,6 +163,10 @@
     "ev": 3.15,
     "ts": 1787189241.882921
   },
+  "basketball|William Jones Cup|Jordan|California Irvine Anteaters|大分|1x2|2026-08-20": {
+    "ev": 3.88,
+    "ts": 1787194792.787849
+  },
   "basketball|William Jones Cup|Jordan|California Irvine Anteaters|客胜|1x2|2026-08-20": {
     "ev": 1.56,
     "ts": 1787182605.538065
@@ -170,6 +178,10 @@
   "basketball|William Jones Cup|Wonju DB Promy|Japan|主胜|1x2|2026-08-20": {
     "ev": 4.62,
     "ts": 1787193332.6020339
+  },
+  "basketball|William Jones Cup|Wonju DB Promy|Japan|让分主胜|1x2|2026-08-20": {
+    "ev": 2.37,
+    "ts": 1787194663.5171258
   },
   "basketball|William Jones Cup|中国台北白色|马来西亚|大分(146.5)|ou|146.5|2026-08-20": {
     "ev": 3.75,
@@ -586,6 +598,11 @@
   "football|England Northern Premier League|Avro FC|Workington AFC|小球|1x2|2026-08-20": {
     "ev": 1.58,
     "ts": 1787114648.654437
+  },
+  "football|England Premier League|伊普斯维奇|桑德兰|和局|1x2|2026-08-22": {
+    "ev": 2.13,
+    "bb": 3.48,
+    "ts": 1787194489.4344919
   },
   "football|Finland Ykkosliiga|KaPa Kapylan Pallo|JIPPO|总进球区间7+|total_goals_range|2026-08-20": {
     "ev": 3.49,
@@ -1073,6 +1090,16 @@
     "ev": 1.97,
     "ts": 1787190689.887043
   },
+  "football|USA Major League Soccer|圣何塞地震|明尼苏达联|让球客胜(+0.5)|hc|+0.5|2026-08-23": {
+    "ev": 2.28,
+    "bb": 1.82,
+    "ts": 1787194489.4343581
+  },
+  "football|USA Major League Soccer|圣地亚哥FC|科罗拉多急流|大球(3.0)|ou|3.0|2026-08-23": {
+    "ev": 3.14,
+    "bb": 1.87,
+    "ts": 1787194489.434279
+  },
   "football|USA Major League Soccer|多伦多FC|夏洛特FC|正确比分1-1|correct_score|2026-08-20": {
     "ev": 21.57,
     "bb": 8.55,
@@ -1306,19 +1333,9 @@
     "ev": 16.87,
     "ts": 1787137779.9569652
   },
-  "football|USA Major League Soccer|圣地亚哥FC|科罗拉多急流|大球(3.0)|ou|3.0|2026-08-23": {
-    "ev": 3.14,
-    "bb": 1.87,
-    "ts": 1787194489.434279
-  },
-  "football|USA Major League Soccer|圣何塞地震|明尼苏达联|让球客胜(+0.5)|hc|+0.5|2026-08-23": {
-    "ev": 2.28,
-    "bb": 1.82,
-    "ts": 1787194489.4343581
-  },
-  "football|England Premier League|伊普斯维奇|桑德兰|和局|1x2|2026-08-22": {
-    "ev": 2.13,
-    "bb": 3.48,
-    "ts": 1787194489.4344919
+  "basketball|WNBA|洛杉矶火花 (女)|亚特兰大梦想 (女)|小分(180.5)|ou|180.5|2026-08-21": {
+    "ev": 9.25,
+    "bb": 2.07,
+    "ts": 1787195372.937131
   }
 }
