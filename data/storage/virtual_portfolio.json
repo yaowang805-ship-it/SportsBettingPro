@@ -1,5 +1,5 @@
 {
-  "balance": 7957.33,
+  "balance": 7938.33,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3129,6 +3129,29 @@
       "commence_time": 1787443200,
       "created_at": "2026-08-20T00:06:51.691212+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_纳什维尔_哥伦布机员_让球客胜(+1)",
+      "sport": "football",
+      "league": "美国职业大联盟",
+      "home_team": "纳什维尔",
+      "away_team": "哥伦布机员",
+      "home_cn": "纳什维尔",
+      "away_cn": "哥伦布机员",
+      "market": "handicap",
+      "market_type": "让球客胜(+1)",
+      "sub_market": "hc",
+      "line": "+1",
+      "odds": 1.6,
+      "stake": 19,
+      "model_prob": 0.6458,
+      "ev_pct": 3.33,
+      "pin_odds": 1.5025,
+      "fair_price": 1.5485,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787445000,
+      "created_at": "2026-08-20T00:30:32.649147+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3188,8 +3211,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-20",
-    "used": 550.0,
-    "bets": 23
+    "used": 569.0,
+    "bets": 24
   },
   "updated": null
 }
