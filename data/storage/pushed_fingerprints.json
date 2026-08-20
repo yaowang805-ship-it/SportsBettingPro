@@ -350,6 +350,24 @@
     "bb": 1.91,
     "ts": 1787021144.061882
   },
+  "football|CONCACAF Central American Cup|CD法斯|穆尼斯帕尔|主胜|1x2|2026-08-20": {
+    "ev": 3.94,
+    "bb": 2.8,
+    "ts": 1787193183.3917272
+  },
+  "football|CONCACAF Central American Cup|CD法斯|穆尼斯帕尔|让球主胜(+0/0.5)|hc|+0/0.5|2026-08-20": {
+    "ev": 2.06,
+    "bb": 1.71,
+    "ts": 1787193183.391798
+  },
+  "football|CONCACAF Central American Cup|FAS|CSD Municipal|主胜|1x2|2026-08-20": {
+    "ev": 3.94,
+    "ts": 1787193183.7270951
+  },
+  "football|CONCACAF Central American Cup|FAS|CSD Municipal|让球主胜|1x2|2026-08-20": {
+    "ev": 2.06,
+    "ts": 1787193183.7271721
+  },
   "football|CONCACAF Central American Cup|Marathon|Alianza FC San Salvador|大球|1x2|2026-08-20": {
     "ev": 1.47,
     "ts": 1787187456.6374872
@@ -1265,14 +1283,9 @@
     "ev": 16.87,
     "ts": 1787137779.9569652
   },
-  "football|CONCACAF Central American Cup|CD法斯|穆尼斯帕尔|主胜|1x2|2026-08-20": {
-    "ev": 3.94,
-    "bb": 2.8,
-    "ts": 1787193183.3917272
-  },
-  "football|CONCACAF Central American Cup|CD法斯|穆尼斯帕尔|让球主胜(+0/0.5)|hc|+0/0.5|2026-08-20": {
-    "ev": 2.06,
-    "bb": 1.71,
-    "ts": 1787193183.391798
+  "basketball|William Jones Cup|原州东浦新世代|日本|主胜|1x2|2026-08-20": {
+    "ev": 4.62,
+    "bb": 1.15,
+    "ts": 1787193332.172352
   }
 }
