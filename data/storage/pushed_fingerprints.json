@@ -29,6 +29,15 @@
     "bb": 1.41,
     "ts": 1787309070.618907
   },
+  "basketball|Australia Big V|Hume City|Pakenham Warriors|客胜|1x2|2026-08-22": {
+    "ev": 18.67,
+    "ts": 1787313406.780896
+  },
+  "basketball|Australia Big V|休姆城|帕金汉姆勇士|客胜|1x2|2026-08-22": {
+    "ev": 18.67,
+    "bb": 2.74,
+    "ts": 1787313406.383623
+  },
   "basketball|Australia NBL1 Women|Bankstown Bruins (w)|Warwick Senators (w)|大分|1x2|2026-08-21": {
     "ev": 4.27,
     "ts": 1787300860.3439229
@@ -459,6 +468,22 @@
     "bb": 2.88,
     "ts": 1787297997.264788
   },
+  "football|Austria 2. Liga|Austria Salzburg|Kapfenberger SV|上半场主胜|ht|2026-08-22": {
+    "ev": 3.62,
+    "ts": 1787317188.337588
+  },
+  "football|Austria 2. Liga|Austria Salzburg|Kapfenberger SV|主胜|1x2|2026-08-22": {
+    "ev": 1.38,
+    "ts": 1787314640.035297
+  },
+  "football|Austria 2. Liga|Austria Salzburg|Kapfenberger SV|双重机会-主/和局|dc|2026-08-22": {
+    "ev": 2.37,
+    "ts": 1787317188.337705
+  },
+  "football|Austria 2. Liga|Austria Salzburg|Kapfenberger SV|让球主胜|1x2|2026-08-22": {
+    "ev": 3.49,
+    "ts": 1787316861.663307
+  },
   "football|Austria 2. Liga|Austria Salzburg|Kapfenberger SV|让球客胜|1x2|2026-08-22": {
     "ev": 2.42,
     "ts": 1787288717.549828
@@ -466,6 +491,10 @@
   "football|Austria 2. Liga|FC Liefering|FK Austria Vienna II|主胜|1x2|2026-08-22": {
     "ev": 2.11,
     "ts": 1787286576.038048
+  },
+  "football|Austria 2. Liga|FC Liefering|FK Austria Vienna II|让球主胜|1x2|2026-08-22": {
+    "ev": 1.05,
+    "ts": 1787314408.574904
   },
   "football|Austria 2. Liga|SKU Amstetten|FC Hertha Wels|角球大球|corner|2026-08-22": {
     "ev": 2.1,
@@ -731,6 +760,18 @@
     "bb": 5.25,
     "ts": 1787296957.9645581
   },
+  "football|Egypt Second Division A|El Sekka El Hadid|Tersana SC|主胜|1x2|2026-08-21": {
+    "ev": 2.95,
+    "ts": 1787317188.337143
+  },
+  "football|Egypt Second Division A|El Sekka El Hadid|Tersana SC|双重机会-主/和局|dc|2026-08-21": {
+    "ev": 1.57,
+    "ts": 1787317188.337292
+  },
+  "football|Egypt Second Division A|El Sekka El Hadid|Tersana SC|让球主胜|1x2|2026-08-21": {
+    "ev": 2.02,
+    "ts": 1787316861.663109
+  },
   "football|Egypt Second Division A|Ismaily SC|FC Masar|小球|1x2|2026-08-21": {
     "ev": 3.17,
     "ts": 1787304032.1156108
@@ -794,6 +835,10 @@
     "ev": 3.25,
     "ts": 1787299843.773748
   },
+  "football|Finland Ykkonen|KPV Kokkola|KuPS Akatemia|大球|1x2|2026-08-21": {
+    "ev": 2.72,
+    "ts": 1787315527.7470028
+  },
   "football|Finland Ykkonen|KPV Kokkola|KuPS Akatemia|小球|1x2|2026-08-21": {
     "ev": 4.7,
     "ts": 1787289659.5673
@@ -809,6 +854,10 @@
   "football|Finland Ykkosliiga|PK 35|JAPS|主胜|1x2|2026-08-22": {
     "ev": 2.31,
     "ts": 1787311747.185367
+  },
+  "football|Finland Ykkosliiga|PK 35|JAPS|单双-双|oe|2026-08-22": {
+    "ev": 1.73,
+    "ts": 1787313768.746064
   },
   "football|Finland Ykkosliiga|PK 35|JAPS|让球主胜|1x2|2026-08-22": {
     "ev": 2.54,
@@ -830,6 +879,10 @@
   "football|France Ligue 2|FC Sochaux Montbeliard|EA Guingamp|让球主胜|1x2|2026-08-22": {
     "ev": 1.18,
     "ts": 1787286576.038432
+  },
+  "football|France Ligue 2|Pau FC|AS Nancy Lorraine|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.73,
+    "ts": 1787314963.128942
   },
   "football|France Ligue 2|Pau FC|AS Nancy Lorraine|单双-双|oe|2026-08-22": {
     "ev": 1.17,
@@ -949,6 +1002,10 @@
     "ev": 14.22,
     "ts": 1787312889.061996
   },
+  "football|Georgia Erovnuli Liga|FC Meshakhte Tkibuli|FC Dinamo Batumi|大球|1x2|2026-08-21": {
+    "ev": 1.64,
+    "ts": 1787315527.746795
+  },
   "football|Georgia Erovnuli Liga|FC Meshakhte Tkibuli|FC Dinamo Batumi|客胜|1x2|2026-08-21": {
     "ev": 8.29,
     "ts": 1787283255.311892
@@ -1012,6 +1069,10 @@
     "ev": 5.0,
     "ts": 1787271530.090796
   },
+  "football|Ireland First Division|Treaty United|Cork City FC|总进球区间7+|total_goals_range|2026-08-22": {
+    "ev": 1.32,
+    "ts": 1787316019.591428
+  },
   "football|Ireland First Division|Wexford|Athlone Town AFC|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.25,
     "ts": 1787310944.182791
@@ -1065,6 +1126,10 @@
     "ev": 15.55,
     "bb": 6.55,
     "ts": 1787271529.643436
+  },
+  "football|Italy Serie B|LR Vicenza|US Catanzaro 1929|双边进球-是|btts|2026-08-22": {
+    "ev": 1.33,
+    "ts": 1787315138.240674
   },
   "football|Italy Serie B|恩波利|克雷莫纳|双边进球-是|btts|2026-08-23": {
     "ev": 4.36,
@@ -1169,6 +1234,10 @@
     "ev": 1.98,
     "ts": 1787301006.354435
   },
+  "football|Latvia Virsliga|FK Liepaja|Grobinas SC|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 1.63,
+    "ts": 1787313544.6091971
+  },
   "football|Malaysia Super League|Johor Darul Takzim FC|Kuching City FC|双边进球-是|btts|2026-08-21": {
     "ev": 1.99,
     "ts": 1787305615.392077
@@ -1231,6 +1300,10 @@
     "ev": 4.23,
     "bb": 1.92,
     "ts": 1787021144.0618439
+  },
+  "football|Mexico Liga MX Women|Pumas UNAM (w)|Queretaro FC (w)|上半场主胜|ht|2026-08-22": {
+    "ev": 1.26,
+    "ts": 1787314284.16978
   },
   "football|Mexico Liga MX|Club Leon|Monterrey|双边进球-是|btts|2026-08-22": {
     "ev": 1.56,
@@ -1297,6 +1370,10 @@
     "ev": 1.02,
     "ts": 1787271530.09275
   },
+  "football|Netherlands Eerste Divisie|Helmond Sport|RKC Waalwijk|让球主胜|1x2|2026-08-22": {
+    "ev": 3.55,
+    "ts": 1787314640.035658
+  },
   "football|Netherlands Eerste Divisie|Helmond Sport|RKC Waalwijk|让球客胜|1x2|2026-08-22": {
     "ev": 2.4,
     "ts": 1787271530.090157
@@ -1326,6 +1403,10 @@
     "ev": 4.43,
     "bb": 1.89,
     "ts": 1787209374.206718
+  },
+  "football|Norway Toppserien Women|FK Fortuna Alesund (w)|Haugesund (w)|客胜|1x2|2026-08-22": {
+    "ev": 5.27,
+    "ts": 1787314284.170851
   },
   "football|Norway Toppserien Women|SK Brann (w)|Roa IL (w)|小球|1x2|2026-08-22": {
     "ev": 1.48,
@@ -1383,6 +1464,10 @@
     "ev": 3.05,
     "ts": 1787275919.110312
   },
+  "football|Poland Ekstraklasa|MKS Cracovia Krakow|Wieczysta Krakow|双边进球-是|btts|2026-08-22": {
+    "ev": 1.13,
+    "ts": 1787315527.7477372
+  },
   "football|Poland Ekstraklasa|MKS Cracovia Krakow|Wieczysta Krakow|让球主胜|1x2|2026-08-22": {
     "ev": 2.18,
     "ts": 1787271530.0904582
@@ -1432,9 +1517,17 @@
     "ev": 3.22,
     "ts": 1787229439.4510841
   },
+  "football|Romania Liga 1|FC Petrolul Ploiesti|Rapid Bucuresti 1923|上半场主胜|ht|2026-08-22": {
+    "ev": 2.06,
+    "ts": 1787313544.609462
+  },
   "football|Romania Liga 1|FC Petrolul Ploiesti|Rapid Bucuresti 1923|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.15,
     "ts": 1787296958.33213
+  },
+  "football|Romania Liga 1|FC Petrolul Ploiesti|Rapid Bucuresti 1923|让球主胜|1x2|2026-08-22": {
+    "ev": 2.79,
+    "ts": 1787313544.609505
   },
   "football|Russia First League|FC Neftekhimik Nizhnekamsk|PFK Sochi|上半场主胜|ht|2026-08-21": {
     "ev": 6.52,
@@ -1468,6 +1561,10 @@
   "football|Saudi Arabia Professional League|Al Faisaly Harmah|NEOM SC|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.19,
     "ts": 1787310110.087214
+  },
+  "football|Saudi Arabia Professional League|Al Faisaly Harmah|NEOM SC|小球|1x2|2026-08-22": {
+    "ev": 2.31,
+    "ts": 1787314963.129335
   },
   "football|Slovenia PrvaLiga|Olimpija Ljubljana|Nafta 1903 Lendava|让球客胜|1x2|2026-08-22": {
     "ev": 1.4,
@@ -1503,6 +1600,10 @@
     "bb": 1.94,
     "ts": 1787219317.12412
   },
+  "football|Spain LaLiga 2|Cordoba CF|Girona FC|和局|1x2|2026-08-22": {
+    "ev": 2.6,
+    "ts": 1787316019.590044
+  },
   "football|Spain LaLiga|Rayo Vallecano|Deportivo Alaves|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 4.17,
     "ts": 1787180086.2147598
@@ -1530,6 +1631,10 @@
   "football|Spain LaLiga|Rayo Vallecano|Deportivo Alaves|让球主胜|1x2|2026-08-21": {
     "ev": 1.21,
     "ts": 1787208698.322149
+  },
+  "football|Spain LaLiga|Real Betis|Real Sociedad|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.07,
+    "ts": 1787316697.0209951
   },
   "football|Spain LaLiga|Real Betis|Real Sociedad|上半场客胜|ht|2026-08-22": {
     "ev": 2.55,
@@ -1671,6 +1776,10 @@
   "football|Turkey 1. Lig|Fatih Karagumruk Istanbul|Bursaspor|上半场主胜|ht|2026-08-22": {
     "ev": 5.34,
     "ts": 1787296958.332809
+  },
+  "football|Turkey 1. Lig|Fatih Karagumruk Istanbul|Bursaspor|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.22,
+    "ts": 1787313406.77948
   },
   "football|Turkey 1. Lig|卡拉古拉克|布尔萨体育|上半场主胜|ht|2026-08-22": {
     "ev": 5.34,
@@ -2055,6 +2164,14 @@
     "ev": 2.75,
     "ts": 1787288717.550407
   },
+  "football|Uruguay Segunda Division|Plaza Colonia|Colon FC|主胜|1x2|2026-08-22": {
+    "ev": 7.58,
+    "ts": 1787316019.5901482
+  },
+  "football|Uruguay Segunda Division|Plaza Colonia|Colon FC|让球主胜|1x2|2026-08-22": {
+    "ev": 5.22,
+    "ts": 1787316019.590188
+  },
   "football|Uzbekistan Super League|FC Pakhtakor Tashkent|FK Termez Surkhon|上半场主胜|ht|2026-08-21": {
     "ev": 1.33,
     "ts": 1787271530.091599
@@ -2062,6 +2179,14 @@
   "football|Uzbekistan Super League|FC Pakhtakor Tashkent|FK Termez Surkhon|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 1.12,
     "ts": 1787289659.568695
+  },
+  "football|Uzbekistan Super League|FC Pakhtakor Tashkent|FK Termez Surkhon|主胜|1x2|2026-08-21": {
+    "ev": 2.9,
+    "ts": 1787316861.664182
+  },
+  "football|Uzbekistan Super League|FC Pakhtakor Tashkent|FK Termez Surkhon|双边进球-否|btts|2026-08-21": {
+    "ev": 7.59,
+    "ts": 1787316861.6642509
   },
   "football|Uzbekistan Super League|FC Pakhtakor Tashkent|FK Termez Surkhon|让球主胜|1x2|2026-08-21": {
     "ev": 3.42,
@@ -2189,9 +2314,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "basketball|Australia Big V|休姆城|帕金汉姆勇士|客胜|1x2|2026-08-22": {
-    "ev": 18.67,
-    "bb": 2.74,
-    "ts": 1787313406.383623
+  "football|Spain LaLiga|皇家贝蒂斯|皇家社会|上半场客胜|ht|2026-08-22": {
+    "ev": 4.72,
+    "bb": 4.94,
+    "ts": 1787317488.998956
   }
 }

@@ -666,7 +666,7 @@
       "success_rate": 0.0
     },
     "日本天皇杯": {
-      "attempts": 2,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -676,7 +676,7 @@
       "success_rate": 0.0
     },
     "东南亚现代杯": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -691,7 +691,7 @@
       "success_rate": 0.0
     },
     "希腊杯-资格赛": {
-      "attempts": 3,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -699,9 +699,19 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "欧洲冠军联赛资格赛-附加赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "英格兰职业发展联赛": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-21T09:18:23.875342+00:00",
+  "updated": "2026-08-21T12:42:01.819361+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
