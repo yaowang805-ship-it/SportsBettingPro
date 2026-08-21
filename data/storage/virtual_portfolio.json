@@ -1,5 +1,5 @@
 {
-  "balance": 2049.46,
+  "balance": 1929.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2094,6 +2094,29 @@
       "commence_time": 1787326200,
       "created_at": "2026-08-21T15:10:59.223952+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_八户云罗里_仙台七夕_上半场主胜",
+      "sport": "football",
+      "league": "日本乙级联赛",
+      "home_team": "八户云罗里",
+      "away_team": "仙台七夕",
+      "home_cn": "八户云罗里",
+      "away_cn": "仙台七夕",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 5.6,
+      "stake": 120,
+      "model_prob": 0.1877,
+      "ev_pct": 5.09,
+      "pin_odds": 4.7,
+      "fair_price": 5.3286,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787385600,
+      "created_at": "2026-08-21T15:13:31.825846+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2695,8 +2718,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-21",
-    "used": 5908.0,
-    "bets": 41
+    "used": 6028.0,
+    "bets": 42
   },
   "updated": null
 }

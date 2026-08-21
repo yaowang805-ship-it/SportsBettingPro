@@ -971,13 +971,26 @@
     "ev": 4.7,
     "ts": 1787289659.5673
   },
+  "football|Finland Ykkonen|PK Keski Uusimaa|JJK Jyvaskyla|单双-双|oe|2026-08-21": {
+    "ev": 1.68,
+    "ts": 1787325059.486559
+  },
   "football|Finland Ykkonen|PK Keski Uusimaa|JJK Jyvaskyla|和局|1x2|2026-08-21": {
     "ev": 1.58,
     "ts": 1787323085.964757
   },
+  "football|Finland Ykkonen|中新地|韦斯屈莱|和局|1x2|2026-08-21": {
+    "ev": 13.48,
+    "bb": 4.12,
+    "ts": 1787325059.230376
+  },
   "football|Finland Ykkosliiga|FC Haka Valkeakoski|SJK Akatemia|上半场主胜|ht|2026-08-21": {
     "ev": 2.95,
     "ts": 1787279802.278744
+  },
+  "football|Finland Ykkosliiga|FC Haka Valkeakoski|SJK Akatemia|大球|1x2|2026-08-21": {
+    "ev": 1.03,
+    "ts": 1787325059.485496
   },
   "football|Finland Ykkosliiga|FC Haka Valkeakoski|SJK Akatemia|让球主胜|1x2|2026-08-21": {
     "ev": 5.17,
@@ -1795,6 +1808,10 @@
     "ev": 2.31,
     "ts": 1787314963.129335
   },
+  "football|Slovenia PrvaLiga|NK Aluminij|NK Brinje Grosuplje|单双-双|oe|2026-08-21": {
+    "ev": 1.46,
+    "ts": 1787325059.485566
+  },
   "football|Slovenia PrvaLiga|Olimpija Ljubljana|Nafta 1903 Lendava|让球客胜|1x2|2026-08-22": {
     "ev": 1.4,
     "ts": 1787289659.567349
@@ -2596,9 +2613,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Finland Ykkonen|中新地|韦斯屈莱|和局|1x2|2026-08-21": {
-    "ev": 13.48,
-    "bb": 4.12,
-    "ts": 1787325059.230376
+  "football|Japan J.League 2|八户云罗里|仙台七夕|上半场主胜|ht|2026-08-22": {
+    "ev": 5.09,
+    "bb": 5.6,
+    "ts": 1787325211.831202
   }
 }
