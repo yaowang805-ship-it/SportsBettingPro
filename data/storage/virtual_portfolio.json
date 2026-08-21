@@ -1,5 +1,5 @@
 {
-  "balance": 4167.46,
+  "balance": 4155.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2738,6 +2738,29 @@
       "commence_time": 1787394600,
       "created_at": "2026-08-21T02:36:41.053673+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_梅尔加_利马联盟_上半场主胜",
+      "sport": "football",
+      "league": "秘鲁甲级联赛",
+      "home_team": "梅尔加",
+      "away_team": "利马联盟",
+      "home_cn": "梅尔加",
+      "away_cn": "利马联盟",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 2.81,
+      "stake": 12,
+      "model_prob": 0.37,
+      "ev_pct": 3.97,
+      "pin_odds": 2.45,
+      "fair_price": 2.7026,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787517000,
+      "created_at": "2026-08-21T03:05:06.862763+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2844,8 +2867,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-21",
-    "used": 463.0,
-    "bets": 11
+    "used": 475.0,
+    "bets": 12
   },
   "updated": null
 }

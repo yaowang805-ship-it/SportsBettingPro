@@ -24,6 +24,10 @@
     "ev": 1.17,
     "ts": 1787272277.91918
   },
+  "basketball|Australia NBL1|Rockingham Flames|Canberra Gunners|大分|1x2|2026-08-21": {
+    "ev": 2.62,
+    "ts": 1787280651.843265
+  },
   "basketball|Australia NBL1|罗金厄姆火焰|堪培拉枪手|主胜|1x2|2026-08-21": {
     "ev": 7.47,
     "bb": 1.18,
@@ -406,6 +410,10 @@
     "bb": 1.86,
     "ts": 1787021144.061766
   },
+  "football|Costa Rica Primera Division|Puntarenas FC|Perez Zeledon|上半场主胜|ht|2026-08-22": {
+    "ev": 1.37,
+    "ts": 1787280651.843219
+  },
   "football|Croatia HNL League|NK Rudes Zagreb|NK Lokomotiva Zagreb|上半场客胜|ht|2026-08-22": {
     "ev": 2.01,
     "ts": 1787271530.090254
@@ -458,6 +466,10 @@
     "ev": 2.13,
     "bb": 3.48,
     "ts": 1787194489.4344919
+  },
+  "football|Finland Ykkosliiga|FC Haka Valkeakoski|SJK Akatemia|上半场主胜|ht|2026-08-21": {
+    "ev": 2.95,
+    "ts": 1787279802.278744
   },
   "football|France Ligue 1|特鲁瓦|巴黎FC|和局|1x2|2026-08-23": {
     "ev": 3.36,
@@ -773,6 +785,11 @@
   "football|Russia First League|Torpedo Moscow|Spartak Kostroma|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.32,
     "ts": 1787271530.0894668
+  },
+  "football|South Korea K-League 1|富川FC 1995|浦项制铁|上半场主胜|ht|2026-08-22": {
+    "ev": 5.74,
+    "bb": 4.13,
+    "ts": 1787279801.179585
   },
   "football|South Korea K-League 1|富川FC 1995|浦项制铁|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 3.31,
@@ -1303,9 +1320,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|South Korea K-League 1|富川FC 1995|浦项制铁|上半场主胜|ht|2026-08-22": {
-    "ev": 5.74,
-    "bb": 4.13,
-    "ts": 1787279801.179585
+  "football|Peru Liga 1|梅尔加|利马联盟|上半场主胜|ht|2026-08-24": {
+    "ev": 3.97,
+    "bb": 2.81,
+    "ts": 1787281506.868899
   }
 }
