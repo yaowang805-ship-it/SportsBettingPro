@@ -496,9 +496,17 @@
     "ev": 1.05,
     "ts": 1787314408.574904
   },
+  "football|Austria 2. Liga|SKU Amstetten|FC Hertha Wels|主胜|1x2|2026-08-22": {
+    "ev": 1.73,
+    "ts": 1787317547.180951
+  },
   "football|Austria 2. Liga|SKU Amstetten|FC Hertha Wels|角球大球|corner|2026-08-22": {
     "ev": 2.1,
     "ts": 1787311110.7154508
+  },
+  "football|Austria 2. Liga|SKU Amstetten|FC Hertha Wels|让球主胜|1x2|2026-08-22": {
+    "ev": 1.02,
+    "ts": 1787317894.7483919
   },
   "football|Austria 2. Liga|Wacker Innsbruck|SKN ST Polten|上半场主胜|ht|2026-08-22": {
     "ev": 1.58,
@@ -515,6 +523,10 @@
   "football|Austria Bundesliga|SV Ried|Grazer AK|让球主胜|1x2|2026-08-22": {
     "ev": 1.0,
     "ts": 1787288717.550022
+  },
+  "football|Belarus Premier League|FC Minsk|FC Vitebsk|让球客胜|1x2|2026-08-21": {
+    "ev": 2.78,
+    "ts": 1787317894.748279
   },
   "football|Belgium Challenger Pro League|KSC Lokeren Temse|KAS Eupen|让球主胜|1x2|2026-08-22": {
     "ev": 2.24,
@@ -1668,6 +1680,11 @@
     "bb": 4.23,
     "ts": 1787271529.6451268
   },
+  "football|Spain LaLiga|皇家贝蒂斯|皇家社会|上半场客胜|ht|2026-08-22": {
+    "ev": 4.72,
+    "bb": 4.94,
+    "ts": 1787317488.998956
+  },
   "football|Spain LaLiga|赫塔菲|桑坦德竞技|上半场双重机会-主/客|ht_dc|2026-08-24": {
     "ev": 6.12,
     "bb": 2.15,
@@ -2314,9 +2331,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Spain LaLiga|皇家贝蒂斯|皇家社会|上半场客胜|ht|2026-08-22": {
-    "ev": 4.72,
-    "bb": 4.94,
-    "ts": 1787317488.998956
+  "basketball|Australia Big V|休姆城野马|帕金汉姆勇士|主胜|1x2|2026-08-22": {
+    "ev": 12.38,
+    "bb": 1.73,
+    "ts": 1787318164.2288818
   }
 }
