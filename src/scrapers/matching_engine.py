@@ -167,6 +167,9 @@ def get_pin_spread(pin_match, target_line=None, source=None):
     for sp in entries:
         if source is None and sp.get("period", 0) != 0:
             continue
+        # V5.10(2026-08-21): 直接过滤备用线(is_alternate=True), 同 get_pin_total。
+        if sp.get("is_alternate"):
+            continue
         prices = sp.get("prices", [])
         home_p = None
         away_p = None
@@ -210,6 +213,11 @@ def get_pin_total(pin_match, target_line=None, source=None):
     entries = source if source is not None else pin_match.get("total", [])
     for t in entries:
         if source is None and t.get("period", 0) != 0:
+            continue
+        # V5.10(2026-08-21): 直接过滤备用线(is_alternate=True)。备用线抽水高、且 BB 的
+        # 非主流线(如大小球 4.0)很快向 Pin 主线(3.75)收敛, 用备用线对比会产出假机会
+        # (挪威女足"小球4.0"案例: BB 4.0 线几分钟后修正到 3.75, 对比却拿 Pin 备用 4.0 比出 +9%)。
+        if t.get("is_alternate"):
             continue
         prices = t.get("prices", [])
         over_p = None
