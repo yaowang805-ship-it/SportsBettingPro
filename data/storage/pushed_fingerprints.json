@@ -741,6 +741,11 @@
     "bb": 1.75,
     "ts": 1787204594.491412
   },
+  "football|Peru Liga 1|梅尔加|利马联盟|上半场主胜|ht|2026-08-24": {
+    "ev": 3.97,
+    "bb": 2.81,
+    "ts": 1787281506.868899
+  },
   "football|Poland Ekstraklasa|MKS Cracovia Krakow|Wieczysta Krakow|主胜|1x2|2026-08-22": {
     "ev": 3.05,
     "ts": 1787275919.110312
@@ -823,6 +828,10 @@
   "football|Spain LaLiga|Rayo Vallecano|Deportivo Alaves|让球主胜|1x2|2026-08-21": {
     "ev": 1.21,
     "ts": 1787208698.322149
+  },
+  "football|Spain LaLiga|Real Betis|Real Sociedad|让球主胜|1x2|2026-08-22": {
+    "ev": 1.43,
+    "ts": 1787282363.6162848
   },
   "football|Spain LaLiga|巴列卡诺|阿拉维斯|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 6.13,
@@ -1291,6 +1300,22 @@
     "bb": 1.96,
     "ts": 1787217306.230398
   },
+  "tennis|ITF - M15 Arad Men Singles|Robert Guna (ROU)|Ignacio Monzon (ARG)|客胜|1x2|2026-08-21": {
+    "ev": 4.6,
+    "ts": 1787282807.572761
+  },
+  "tennis|ITF - M15 Arad Men Singles|Robert Guna (ROU)|Ignacio Monzon (ARG)|让盘客胜|1x2|2026-08-21": {
+    "ev": 5.07,
+    "ts": 1787282807.572832
+  },
+  "tennis|ITF - M15 Bastad Men Singles|John Hallquist Lithen (SWE)|Davide Tortora (ITA)|主胜|1x2|2026-08-21": {
+    "ev": 1.54,
+    "ts": 1787282807.572899
+  },
+  "tennis|ITF - M15 Bastad Men Singles|John Hallquist Lithen (SWE)|Davide Tortora (ITA)|让盘主胜|1x2|2026-08-21": {
+    "ev": 1.45,
+    "ts": 1787282807.572962
+  },
   "tennis|ITF - M25 Lesa Men Doubles|Nico Hipfl (AUT) / Giovanni Oradini (ITA)|Lorenzo Beraldo (ITA) / Lorenzo Comino (ITA)|客胜|1x2|2026-08-21": {
     "ev": 58.24,
     "ts": 1787276868.060701
@@ -1320,9 +1345,14 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|Peru Liga 1|梅尔加|利马联盟|上半场主胜|ht|2026-08-24": {
-    "ev": 3.97,
-    "bb": 2.81,
-    "ts": 1787281506.868899
+  "football|Georgia Erovnuli Liga|梅夏特堤基布利|巴统迪纳摩|客胜|1x2|2026-08-21": {
+    "ev": 8.29,
+    "bb": 1.72,
+    "ts": 1787283255.079124
+  },
+  "football|Brazil Campeonato Brasileiro Women|维多利亚 (女)|桑托斯SP (女)|主胜|1x2|2026-08-23": {
+    "ev": 23.79,
+    "bb": 7.25,
+    "ts": 1787283255.079179
   }
 }

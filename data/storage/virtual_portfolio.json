@@ -1,5 +1,5 @@
 {
-  "balance": 4155.46,
+  "balance": 4072.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2761,6 +2761,52 @@
       "commence_time": 1787517000,
       "created_at": "2026-08-21T03:05:06.862763+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_梅夏特堤基布利_巴统迪纳摩_客胜",
+      "sport": "football",
+      "league": "格鲁吉亚甲级联赛",
+      "home_team": "梅夏特堤基布利",
+      "away_team": "巴统迪纳摩",
+      "home_cn": "梅夏特堤基布利",
+      "away_cn": "巴统迪纳摩",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.72,
+      "stake": 63,
+      "model_prob": 0.6296,
+      "ev_pct": 8.29,
+      "pin_odds": 1.5435,
+      "fair_price": 1.5884,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787317200,
+      "created_at": "2026-08-21T03:34:15.074857+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_维多利亚_(女)_桑托斯SP_(女)_主胜",
+      "sport": "football",
+      "league": "巴西女子甲级联赛",
+      "home_team": "维多利亚 (女)",
+      "away_team": "桑托斯SP (女)",
+      "home_cn": "维多利亚 (女)",
+      "away_cn": "桑托斯SP (女)",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 7.25,
+      "stake": 20,
+      "model_prob": 0.1707,
+      "ev_pct": 23.79,
+      "pin_odds": 4.8,
+      "fair_price": 5.8567,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787432400,
+      "created_at": "2026-08-21T03:34:15.074904+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2867,8 +2913,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-21",
-    "used": 475.0,
-    "bets": 12
+    "used": 558.0,
+    "bets": 14
   },
   "updated": null
 }
