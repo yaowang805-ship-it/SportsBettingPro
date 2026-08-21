@@ -573,6 +573,20 @@ class PipelineOrchestrator:
         self._reload_critical_modules()
         from src.scrapers.bb_incremental_scanner import run_incremental
         run_incremental(time_window=time_window)
+        # V5.10: 写扫描心跳 —— 对比文件只在"有变动"时才重写(run_incremental 无变动会
+        # 提前 return), 所以文件 mtime 不能当存活信号: self_heal 曾据此误判 near 停滞
+        # 813min 而每 5min kickstart 一次, 而 near 一轮要 8-9min → 每次都被杀在半路,
+        # 文件永远刷不新, 形成互杀死循环(2026-08-21 实测 20min 内重启 6 次, 全天零投注)。
+        # 心跳由本函数在 run_incremental 正常返回后写, 覆盖其全部 return 分支。
+        self._write_scan_heartbeat(time_window)
+
+    def _write_scan_heartbeat(self, time_window: str):
+        """记录某一层增量扫描"完整跑完一轮"的时刻(与是否有变动无关)。"""
+        try:
+            hb = SRC_DIR / "data" / "storage" / f".scan_heartbeat_{time_window}"
+            hb.write_text(str(time.time()))
+        except Exception as e:
+            logger.warning("扫描心跳写入失败(%s): %s", time_window, e)
 
     def do_incremental_scan(self):
         """48h全量扫描(解耦: 只扫描不推送)。"""

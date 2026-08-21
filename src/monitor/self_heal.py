@@ -139,25 +139,38 @@ def main():
     # 新鲜(独立刷新), 恒等于最新, 于是 urgent/near 停摆几小时也测不出来(实测 2026-08-19
     # urgent/near 停摆 186 分钟而 _FB 仅 23 分钟, self_heal 全程误判"正常")。
     # 改为分别检查 urgent 和 near 各自的 mtime, 只有两者都陈旧才算停滞。
-    _urgent_age = _file_age(DATA_DIR / "bb_vs_pinnacle_comparison_urgent.json")
-    _near_age = _file_age(DATA_DIR / "bb_vs_pinnacle_comparison_near.json")
+    # V5.10 再修: 对比文件 mtime 也不是可靠的存活信号 —— run_incremental 在"BB+Pin
+    # 均无变动"时提前 return 且不重写对比文件, 于是"跑了但无变动"和"死了"外观一致。
+    # 2026-08-21 实测: near 一轮需 8-9min, 而 self_heal 据 near 文件陈旧每 5min
+    # kickstart 一次, 每次都把 near 杀在半路 → 文件永远刷不新 → 无限重启(20min 内 6 次),
+    # 推送同样被杀, 全天零投注。改为读扫描心跳(每轮跑完必写, 与有无变动无关)。
+    _urgent_age = _file_age(DATA_DIR / ".scan_heartbeat_urgent")
+    _near_age = _file_age(DATA_DIR / ".scan_heartbeat_near")
     _worst = None
     for _a in (_urgent_age, _near_age):
         if _a is not None and (_worst is None or _a > _worst):
             _worst = _a
     scan_age = _worst
     if _urgent_age is None and _near_age is None:
-        statuses.append("对比文件: ❌ 不存在")
-        fixes.append("无对比文件 → 守护进程重启后会自动扫描")
+        # 心跳文件尚未生成(首次部署/刚重启) → 回退看对比文件, 避免误判为"必须重启"
+        _fallback = _file_age(DATA_DIR / "bb_vs_pinnacle_comparison_urgent.json")
+        if _fallback is None:
+            statuses.append("扫描心跳: ❌ 不存在(且无对比文件)")
+            fixes.append("无扫描心跳 → 守护进程重启后会自动生成")
+        else:
+            statuses.append(f"增量扫描: ⏳ 心跳未生成, 回退对比文件 {_fallback/60:.0f}min 前")
     elif scan_age is not None and scan_age > SCAN_STALE:
-        statuses.append(f"增量扫描: ⚠️ 对比文件 {scan_age/60:.0f}min 未更新(urgent {(_urgent_age or 0)/60:.0f}min / near {(_near_age or 0)/60:.0f}min)")
-        # 守护进程心跳正常但扫描停滞 → 可能 Pin 封禁卡住, 重启
-        if _kickstart_daemon():
-            fixes.append(f"增量扫描停滞({scan_age/60:.0f}min) → 已 kickstart 重启守护进程")
+        statuses.append(f"增量扫描: ⚠️ 心跳 {scan_age/60:.0f}min 未更新(urgent {(_urgent_age or 0)/60:.0f}min / near {(_near_age or 0)/60:.0f}min)")
+        # 在飞保护: 扫描/推送子进程还在跑就别重启 —— 长轮次(near 8-9min)被腰斩比停滞更糟
+        _busy = _scan_in_flight()
+        if _busy:
+            statuses.append(f"增量扫描: ⏳ 有子进程在跑({_busy}), 本轮不重启")
+        elif _kickstart_daemon():
+            fixes.append(f"增量扫描停滞({scan_age/60:.0f}min, 无子进程在跑) → 已 kickstart 重启守护进程")
         else:
             fixes.append("增量扫描停滞 → kickstart 失败")
     else:
-        statuses.append(f"增量扫描: ✅ 对比文件 {scan_age/60:.0f}min 前更新")
+        statuses.append(f"增量扫描: ✅ 心跳 {scan_age/60:.0f}min 前更新")
 
     # 3) BB 数据陈旧
     bb_age = _file_age(BB_EXTRACTED)
