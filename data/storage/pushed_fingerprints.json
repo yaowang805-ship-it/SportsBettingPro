@@ -635,6 +635,10 @@
     "ev": 2.31,
     "ts": 1787296958.333296
   },
+  "football|Chile Primera Division Women|Deportes Magallanes (w)|Palestino (w)|客胜|1x2|2026-08-21": {
+    "ev": 14.23,
+    "ts": 1787324156.8161988
+  },
   "football|Colombia Primera A|Alianza FC|CS Deportivo Pereira|主胜|1x2|2026-08-22": {
     "ev": 1.0,
     "ts": 1787273147.7858381
@@ -1362,6 +1366,10 @@
     "ev": 5.96,
     "ts": 1787283255.3122911
   },
+  "football|Latvia Virsliga|FK Auda|FK Tukums 2000|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 2.42,
+    "ts": 1787323795.072614
+  },
   "football|Latvia Virsliga|FK Auda|FK Tukums 2000|客胜|1x2|2026-08-21": {
     "ev": 1.38,
     "ts": 1787283255.312238
@@ -1378,9 +1386,18 @@
     "ev": 1.63,
     "ts": 1787313544.6091971
   },
+  "football|Latvia Virsliga|FK Liepaja|Grobinas SC|上半场客胜|ht|2026-08-21": {
+    "ev": 1.32,
+    "ts": 1787323795.072433
+  },
   "football|Latvia Virsliga|FK Liepaja|Grobinas SC|让球主胜|1x2|2026-08-21": {
     "ev": 1.44,
     "ts": 1787323521.118191
+  },
+  "football|Latvia Virsliga|奥达里加|图库姆斯|上半场主胜|ht|2026-08-21": {
+    "ev": 10.21,
+    "bb": 1.96,
+    "ts": 1787323794.777483
   },
   "football|Malaysia Super League|Johor Darul Takzim FC|Kuching City FC|双边进球-是|btts|2026-08-21": {
     "ev": 1.99,
@@ -1628,6 +1645,10 @@
   "football|Poland Ekstraklasa|MKS Cracovia Krakow|Wieczysta Krakow|主胜|1x2|2026-08-22": {
     "ev": 3.05,
     "ts": 1787275919.110312
+  },
+  "football|Poland Ekstraklasa|MKS Cracovia Krakow|Wieczysta Krakow|单双-双|oe|2026-08-22": {
+    "ev": 1.78,
+    "ts": 1787324156.817479
   },
   "football|Poland Ekstraklasa|MKS Cracovia Krakow|Wieczysta Krakow|双边进球-是|btts|2026-08-22": {
     "ev": 1.13,
@@ -2416,6 +2437,10 @@
     "bb": 1.96,
     "ts": 1787217306.230398
   },
+  "football|Venezuela Primera Division|Academia Anzoategui FC|Trujillanos FC|小球|1x2|2026-08-22": {
+    "ev": 3.41,
+    "ts": 1787323795.074261
+  },
   "football|Venezuela Primera Division|Caracas FC|Carabobo FC|客胜|1x2|2026-08-22": {
     "ev": 1.3,
     "ts": 1787301776.987742
@@ -2533,13 +2558,17 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
+  "volleyball|CEV European Championship Women|Azerbaijan (w)|Portugal (w)|客胜|1x2|2026-08-21": {
+    "ev": 3.93,
+    "ts": 1787324156.8177888
+  },
   "volleyball|CEV European Championship Women|Bulgaria (w)|Ukraine (w)|主胜|1x2|2026-08-21": {
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Latvia Virsliga|奥达里加|图库姆斯|上半场主胜|ht|2026-08-21": {
-    "ev": 10.21,
-    "bb": 1.96,
-    "ts": 1787323794.777483
+  "football|England Premier League|埃弗顿|水晶宫|上半场客胜|ht|2026-08-22": {
+    "ev": 5.21,
+    "bb": 4.36,
+    "ts": 1787324309.378083
   }
 }
