@@ -446,6 +446,11 @@
     "bb": 7.25,
     "ts": 1787296957.964441
   },
+  "football|Argentina Primera Nacional|玛德恩|米特雷圣地亚哥竞技|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 4.09,
+    "bb": 2.07,
+    "ts": 1787328492.964848
+  },
   "football|Australia NPL Western|Armadale SC|Perth Redstar FC|双重机会-和局/客|dc|2026-08-22": {
     "ev": 1.83,
     "ts": 1787297997.508317
@@ -597,6 +602,10 @@
   "football|Belgium Challenger Pro League|KSC Lokeren Temse|KAS Eupen|让球主胜|1x2|2026-08-22": {
     "ev": 2.24,
     "ts": 1787296958.333935
+  },
+  "football|Belgium Challenger Pro League|KSC Lokeren Temse|KAS Eupen|让球客胜|1x2|2026-08-22": {
+    "ev": 1.93,
+    "ts": 1787328493.424194
   },
   "football|Belgium Pro League|Standard Liege|Raal La Louviere|上半场客胜|ht|2026-08-22": {
     "ev": 1.14,
@@ -1882,6 +1891,14 @@
     "ev": 1.42,
     "ts": 1787323454.177332
   },
+  "football|Qatar Stars League|Al Arabi Doha SC|Al Shamal|单双-双|oe|2026-08-22": {
+    "ev": 2.85,
+    "ts": 1787328493.424039
+  },
+  "football|Qatar Stars League|Al Arabi Doha SC|Al Shamal|和局|1x2|2026-08-22": {
+    "ev": 4.03,
+    "ts": 1787328493.4239712
+  },
   "football|Qatar Stars League|Al Rayyan SC|Lusail City|让球客胜|1x2|2026-08-21": {
     "ev": 3.22,
     "ts": 1787229439.4510841
@@ -2773,9 +2790,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Argentina Primera Nacional|玛德恩|米特雷圣地亚哥竞技|上半场双重机会-主/客|ht_dc|2026-08-22": {
-    "ev": 4.09,
-    "bb": 2.07,
-    "ts": 1787328492.964848
+  "football|Netherlands Eerste Divisie|丹博斯治|FC埃因霍温|和局|1x2|2026-08-22": {
+    "ev": 9.85,
+    "bb": 4.03,
+    "ts": 1787328808.452201
   }
 }
