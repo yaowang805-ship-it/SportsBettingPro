@@ -1,5 +1,5 @@
 {
-  "balance": 3134.46,
+  "balance": 2734.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2094,6 +2094,29 @@
       "commence_time": 1787320800,
       "created_at": "2026-08-21T13:29:00.746202+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_敦达克_戈尔韦_主胜",
+      "sport": "football",
+      "league": "爱尔兰超级联赛",
+      "home_team": "敦达克",
+      "away_team": "戈尔韦",
+      "home_cn": "敦达克",
+      "away_cn": "戈尔韦",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.96,
+      "stake": 400,
+      "model_prob": 0.5596,
+      "ev_pct": 9.69,
+      "pin_odds": 1.7576,
+      "fair_price": 1.7869,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787337900,
+      "created_at": "2026-08-21T13:57:33.048443+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2620,8 +2643,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-21",
-    "used": 4072.0,
-    "bets": 33
+    "used": 4472.0,
+    "bets": 34
   },
   "updated": null
 }
