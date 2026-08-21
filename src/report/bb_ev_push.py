@@ -2343,6 +2343,53 @@ def _parse_line(s):
         return None
 
 
+def _lookup_bb_odds(match: dict, o: dict):
+    """从 BB 提取数据(bb_odds_extracted.json 的单场)取对应方向/盘口的当前赔率。
+
+    用于推送前 BB 漂移检测(零延迟: 只读本地已抓文件, 不额外调 BB API)。
+    取不到 → 返回 None 保守放行(不因无法验证而误杀)。
+    """
+    mkt = o.get("_sub_market", o.get("_market", ""))
+    des = (o.get("designation", "") or "").lower()
+    ft = match.get("odds_ft") or {}
+    ht = match.get("odds_ht") or {}
+
+    def _ml(field, idx):
+        ml = field.get("ml")
+        if isinstance(ml, (list, tuple)) and len(ml) > idx:
+            return ml[idx]
+        return None
+
+    def _side(target):
+        if "客" in des or "away" in des:
+            return "away"
+        if "主" in des or "home" in des:
+            return "home"
+        if "和" in des or "平" in des or "draw" in des:
+            return "draw"
+        return target
+
+    if mkt == "1x2":
+        idx = {"home": 0, "draw": 1, "away": 2}.get(_side("away"), 2)
+        return _ml(ft, idx)
+    if mkt == "ht":
+        idx = {"home": 0, "draw": 1, "away": 2}.get(_side("away"), 2)
+        return _ml(ht, idx)
+    if mkt == "hc":
+        hc = ft.get("handicap") or {}
+        return hc.get("away_odds") if _side("away") == "away" else hc.get("home_odds")
+    if mkt == "ht_hc":
+        hc = ht.get("handicap") or {}
+        return hc.get("away_odds") if _side("away") == "away" else hc.get("home_odds")
+    if mkt == "ou":
+        total = ft.get("total") or {}
+        return total.get("over_odds") if ("大" in des or "over" in des) else total.get("under_odds")
+    if mkt == "ht_ou":
+        total = ht.get("total") or {}
+        return total.get("over_odds") if ("大" in des or "over" in des) else total.get("under_odds")
+    return None
+
+
 def _lookup_fresh_pin_odds(fresh: dict, o: dict):
     """从实时 Pinnacle matchup 数据里取对应方向/盘口的原始赔率。
 
@@ -2549,9 +2596,72 @@ def _verify_odds_freshness(qualified: list, max_pin_drift: float = 0.08) -> list
 
         if skipped:
             logger.info("二次验价: 过滤 %d 条漂移机会", skipped)
-        return kept
+        return _verify_bb_drift(kept)
     except Exception as e:
         logger.warning("二次验价失败(跳过): %s", e)
+        return qualified
+
+
+def _verify_bb_drift(qualified: list, max_bb_drop: float = 0.10) -> list:
+    """推送前 BB 漂移检测(零延迟): 只读本地已抓的 bb_odds_extracted.json, 不额外调 BB API。
+
+    根因(2026-08-21 格鲁吉亚甲级"客胜 1.72→1.48"假机会): BB 是软博彩平台, 低级别联赛
+    定价粗、几分钟内大幅修正(该场 14%), 对比快照抓到的是"临时高价", 投注后成交价已崩
+    → 幻影 +EV。这里用本地最新 BB 数据对比快照 bb_odds, 若 BB 已大幅**下跌**(成交价会
+    变差) 则过滤。上涨不拦(成交价更好是真机会)。取不到该场/该盘口时保守放行。
+    零 API 调用: bb_odds_extracted.json 本就由扫描器定期抓取, 这里只读文件。
+    """
+    if not qualified:
+        return qualified
+    try:
+        bb_file = DATA_DIR / "bb_odds_extracted.json"
+        if not bb_file.exists():
+            return qualified
+        bb_data = json.loads(bb_file.read_text())
+        matches = bb_data.get("matches", []) if isinstance(bb_data, dict) else bb_data
+        if not matches:
+            return qualified
+        bb_index = {}
+        for m in matches:
+            mid = m.get("id")
+            if mid is not None:
+                bb_index[str(mid)] = m
+        if not bb_index:
+            return qualified
+
+        kept = []
+        skipped = 0
+        for o in qualified:
+            snap_bb = o.get("bb_odds", 0)
+            mid = o.get("bb_match_id")
+            if not snap_bb or snap_bb <= 0 or mid is None:
+                kept.append(o)
+                continue
+            bm = bb_index.get(str(mid))
+            if not bm:
+                kept.append(o)          # 本地 BB 数据无此场 → 保守放行
+                continue
+            fresh_bb = _lookup_bb_odds(bm, o)
+            if not fresh_bb or fresh_bb <= 0:
+                kept.append(o)          # 取不到该盘口 → 保守放行
+                continue
+            # 只拦截"下跌"(快照价虚高 → 实际成交价变差); 上涨是真机会不拦
+            if fresh_bb < snap_bb:
+                drop = (snap_bb - fresh_bb) / snap_bb
+                _tier = o.get("_tier", 3)
+                bb_limit = 0.08 if _tier >= 3 else max_bb_drop
+                if drop > bb_limit:
+                    logger.info("BB漂移过滤(跌%.0f%%>%.0f%%): %s BB %.2f→%.2f (临时高价假机会)",
+                                drop * 100, bb_limit * 100, o.get("designation", ""),
+                                snap_bb, fresh_bb)
+                    skipped += 1
+                    continue
+            kept.append(o)
+        if skipped:
+            logger.info("BB漂移检测: 过滤 %d 条临时高价假机会", skipped)
+        return kept
+    except Exception as e:
+        logger.warning("BB漂移检测失败(跳过): %s", e)
         return qualified
 
 
