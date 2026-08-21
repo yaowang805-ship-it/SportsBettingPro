@@ -529,6 +529,10 @@
     "ev": 2.42,
     "ts": 1787288717.549828
   },
+  "football|Austria 2. Liga|FC Admira Wacker Modling|First Vienna FC|让球主胜|1x2|2026-08-22": {
+    "ev": 2.01,
+    "ts": 1787328260.9822662
+  },
   "football|Austria 2. Liga|FC Liefering|FK Austria Vienna II|主胜|1x2|2026-08-22": {
     "ev": 2.11,
     "ts": 1787286576.038048
@@ -556,6 +560,10 @@
   "football|Austria 2. Liga|SKU Amstetten|FC Hertha Wels|让球主胜|1x2|2026-08-22": {
     "ev": 1.02,
     "ts": 1787317894.7483919
+  },
+  "football|Austria 2. Liga|SKU Amstetten|FC Hertha Wels|让球客胜|1x2|2026-08-22": {
+    "ev": 3.44,
+    "ts": 1787328260.9823291
   },
   "football|Austria 2. Liga|Wacker Innsbruck|SKN ST Polten|上半场主胜|ht|2026-08-22": {
     "ev": 1.58,
@@ -1386,6 +1394,11 @@
     "bb": 6.55,
     "ts": 1787271529.643436
   },
+  "football|Italy Serie A|热那亚|那不勒斯|和局|1x2|2026-08-23": {
+    "ev": 98.57,
+    "bb": 6.65,
+    "ts": 1787328114.72115
+  },
   "football|Italy Serie B|LR Vicenza|US Catanzaro 1929|双边进球-是|btts|2026-08-22": {
     "ev": 1.33,
     "ts": 1787315138.240674
@@ -1741,6 +1754,10 @@
   "football|Peru Liga 1|Alianza Atletico|Sporting Cristal|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 2.09,
     "ts": 1787286576.038226
+  },
+  "football|Peru Liga 1|Alianza Atletico|Sporting Cristal|上半场客胜|ht|2026-08-22": {
+    "ev": 1.56,
+    "ts": 1787328260.98249
   },
   "football|Peru Liga 1|Alianza Atletico|Sporting Cristal|双边进球-是|btts|2026-08-22": {
     "ev": 1.67,
@@ -2756,9 +2773,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Italy Serie A|热那亚|那不勒斯|和局|1x2|2026-08-23": {
-    "ev": 98.57,
-    "bb": 6.65,
-    "ts": 1787328114.72115
+  "football|Argentina Primera Nacional|玛德恩|米特雷圣地亚哥竞技|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 4.09,
+    "bb": 2.07,
+    "ts": 1787328492.964848
   }
 }
