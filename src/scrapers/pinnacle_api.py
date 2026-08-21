@@ -504,11 +504,14 @@ def _notify_ip_ban():
             pass
     _throttle_file.write_text(str(now))
     try:
-        from config.dingtalk import send_dingtalk
-        msg = ("【投注推荐】⚠️ Pinnacle IP 被封禁\n\n"
+        # 统一走 config.settings 入口(自动注入关键词 + urgent 跳过每日配额)
+        from config.settings import send_dingtalk
+        msg = ("⚠️ Pinnacle IP 被封禁\n\n"
                "Cloudflare 已封禁当前出口 IP, 请手动切换 Shadowrocket 节点(建议 HK/JP/TW/DE)恢复。")
-        send_dingtalk(msg, msgtype="text", title="Pinnacle 封禁告警")
-        logger.info("已发送钉钉 IP 封禁告警")
+        if send_dingtalk("Pinnacle 封禁告警", msg, urgent=True):
+            logger.info("已发送钉钉 IP 封禁告警")
+        else:
+            logger.error("IP 封禁告警未送达 —— 封禁期间用户可能收不到任何通知")
     except Exception as e:
         logger.error("发送 IP 封禁告警失败: %s", e)
 
