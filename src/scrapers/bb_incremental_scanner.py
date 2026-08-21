@@ -380,11 +380,9 @@ def run_incremental(time_window: str = "all"):
     sys.stdout.reconfigure(line_buffering=True)
 
     from datetime import datetime, timezone, timedelta
-    _now = datetime.now()
-    _now_min = _now.hour * 60 + _now.minute
-    if _now_min < 6 * 60 + 40 or _now_min >= 22 * 60:
-        print(f"  ⏭️ 不在扫描时段，跳过")
-        return
+    # V5.10(2026-08-21): 去掉 06:40~22:00 硬编码时段检查 —— 8-20 改 orchestrator 为 24h
+    # 扫描时漏改这里, 导致 22:00 后 scanner 直接 return, 夜里零扫描零投注。
+    # 时段由 orchestrator 调度控制(SCAN_START/END=24h), scanner 内部不再拦。
 
     labels = {"urgent": "<6h临场", "near": "6-24h近场", "far": "24-72h早盘", "all": "增量扫描"}
     label = labels.get(time_window, "增量扫描")
@@ -576,12 +574,7 @@ def run_incremental_scan():
     """
     import sys
     sys.stdout.reconfigure(line_buffering=True)
-    from datetime import datetime
-    _now = datetime.now()
-    _now_min = _now.hour * 60 + _now.minute
-    if _now_min < 6 * 60 + 40 or _now_min >= 22 * 60:
-        print("  ⏭️ 不在扫描时段，跳过")
-        return
+    # V5.10(2026-08-21): 去掉 06:40~22:00 硬编码时段检查(同 run_incremental), 夜里 24h 扫描。
 
     print("=" * 60)
     print("BB体育 增量扫描 [48h全量]")
