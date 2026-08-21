@@ -46,6 +46,26 @@
     "ev": 1.85,
     "ts": 1787269909.89614
   },
+  "basketball|Mexico LNBP Basketball League|Diablos Rojos del Mexico|Lobos Plateados|客胜|1x2|2026-08-21": {
+    "ev": 1.5,
+    "ts": 1787277190.958876
+  },
+  "basketball|Mexico LNBP Basketball League|Diablos Rojos del Mexico|Lobos Plateados|小分|1x2|2026-08-21": {
+    "ev": 1.84,
+    "ts": 1787276944.735756
+  },
+  "basketball|Mexico LNBP Basketball League|Diablos Rojos del Mexico|Lobos Plateados|让分主胜|1x2|2026-08-21": {
+    "ev": 5.99,
+    "ts": 1787277767.1187499
+  },
+  "basketball|Mexico LNBP Basketball League|Diablos Rojos del Mexico|Lobos Plateados|让分客胜|1x2|2026-08-21": {
+    "ev": 7.61,
+    "ts": 1787277058.597013
+  },
+  "basketball|Mexico LNBP Basketball League|Dorados de Chihuahua|Abejas de Leon|让分客胜|1x2|2026-08-21": {
+    "ev": 2.44,
+    "ts": 1787277495.755717
+  },
   "basketball|Mexico LNBP Basketball League|Fuerza Regia|Gambusinos de Fresnillo|主胜|1x2|2026-08-21": {
     "ev": 2.88,
     "ts": 1787210977.046355
@@ -136,6 +156,10 @@
     "bb": 1.88,
     "ts": 1787216720.268071
   },
+  "basketball|WNBA|Chicago Sky (w)|Golden State Valkyries (w)|大分|1x2|2026-08-22": {
+    "ev": 1.41,
+    "ts": 1787275919.110917
+  },
   "basketball|WNBA|Dallas Wings (w)|Indiana Fever (w)|小分|1x2|2026-08-21": {
     "ev": 4.48,
     "ts": 1787269909.896043
@@ -151,6 +175,10 @@
   "basketball|WNBA|Los Angeles Sparks (w)|Atlanta Dream (w)|小分|1x2|2026-08-21": {
     "ev": 9.25,
     "ts": 1787195373.465272
+  },
+  "basketball|WNBA|Washington Mystics (w)|Minnesota Lynx (w)|让分客胜|1x2|2026-08-22": {
+    "ev": 1.22,
+    "ts": 1787276868.060221
   },
   "basketball|WNBA|拉斯维加斯王牌 (女)|康涅狄格阳光 (女)|小分(164.5)|ou|164.5|2026-08-21": {
     "ev": 7.0,
@@ -632,6 +660,10 @@
     "bb": 1.92,
     "ts": 1787021144.0618439
   },
+  "football|Mexico Liga MX|Tigres UANL|Atlante FC|客胜|1x2|2026-08-22": {
+    "ev": 1.94,
+    "ts": 1787275919.110846
+  },
   "football|Netherlands Eerste Divisie|FC Dordrecht|Roda JC Kerkrade|总进球区间7+|total_goals_range|2026-08-22": {
     "ev": 4.07,
     "ts": 1787271530.0929039
@@ -648,9 +680,17 @@
     "ev": 2.4,
     "ts": 1787271530.090157
   },
+  "football|Netherlands Eerste Divisie|MVV Maastricht|FC Volendam|客胜|1x2|2026-08-22": {
+    "ev": 1.11,
+    "ts": 1787276868.0597272
+  },
   "football|Netherlands Eerste Divisie|Vitesse Arnhem|Almere City FC|总进球区间7+|total_goals_range|2026-08-22": {
     "ev": 3.71,
     "ts": 1787271530.092629
+  },
+  "football|Netherlands Eerste Divisie|Vitesse Arnhem|Almere City FC|让球客胜|1x2|2026-08-22": {
+    "ev": 2.44,
+    "ts": 1787277602.4621382
   },
   "football|Netherlands Eerste Divisie|丹博斯治|FC埃因霍温|让球主胜(-0/0.5)|hc|-0/0.5|2026-08-22": {
     "ev": 3.5,
@@ -675,6 +715,10 @@
     "ev": 2.87,
     "bb": 1.75,
     "ts": 1787204594.491412
+  },
+  "football|Poland Ekstraklasa|MKS Cracovia Krakow|Wieczysta Krakow|主胜|1x2|2026-08-22": {
+    "ev": 3.05,
+    "ts": 1787275919.110312
   },
   "football|Poland Ekstraklasa|MKS Cracovia Krakow|Wieczysta Krakow|让球主胜|1x2|2026-08-22": {
     "ev": 2.18,
@@ -858,6 +902,11 @@
     "ev": 3.66,
     "bb": 1.85,
     "ts": 1787271529.643593
+  },
+  "football|Turkey 1. Lig|贝拉迪亚士邦|伊斯坦堡士邦|让球主胜(+0.5)|hc|+0.5|2026-08-24": {
+    "ev": 8.45,
+    "bb": 1.89,
+    "ts": 1787275918.3704262
   },
   "football|Turkey Super Lig|里泽斯堡|萨姆松珀|和局|1x2|2026-08-23": {
     "ev": 7.08,
@@ -1212,6 +1261,10 @@
     "bb": 1.96,
     "ts": 1787217306.230398
   },
+  "tennis|ITF - M25 Lesa Men Doubles|Nico Hipfl (AUT) / Giovanni Oradini (ITA)|Lorenzo Beraldo (ITA) / Lorenzo Comino (ITA)|客胜|1x2|2026-08-21": {
+    "ev": 58.24,
+    "ts": 1787276868.060701
+  },
   "tennis|ITF - W15 Campos do Jordao Women Singles|Giovana Schincariol Delatorre Barbosa (BRA)|Isabella Barrera Aguirre (USA)|客胜|1x2|2026-08-21": {
     "ev": 8.26,
     "ts": 1787208093.117812
@@ -1237,9 +1290,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "football|Turkey 1. Lig|贝拉迪亚士邦|伊斯坦堡士邦|让球主胜(+0.5)|hc|+0.5|2026-08-24": {
-    "ev": 8.45,
-    "bb": 1.89,
-    "ts": 1787275918.3704262
+  "basketball|Mexico LNBP Basketball League|墨西哥红恶鬼|罗伯斯普拉塔多斯|让分主胜(-4.5)|hc|-4.5|2026-08-21": {
+    "ev": 17.37,
+    "bb": 1.96,
+    "ts": 1787277865.670099
   }
 }
