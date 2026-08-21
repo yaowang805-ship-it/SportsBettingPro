@@ -221,11 +221,17 @@ def main():
         body = "## 🔧 自愈看门狗修复报告 (投注推荐系统)\n\n"
         body += "**检查结果**:\n" + "\n".join(f"- {s}" for s in statuses) + "\n\n"
         body += "**自动修复**:\n" + "\n".join(f"- {f}" for f in fixes)
+        # 必须校验返回值: 原先无论成败都打印"已发送", 于是关键词被拒收(errcode 310000)
+        # 数月无人察觉 —— 告警自身的失败也必须可见, 否则看门狗哑了都不知道。
         try:
-            send_dingtalk(body, msgtype="markdown", title="自愈看门狗修复报告")
-        except Exception:
-            send_dingtalk(body, msgtype="text", title="自愈看门狗修复报告")
-        print("已发送修复报告:")
+            _sent = send_dingtalk(body, msgtype="markdown", title="自愈看门狗修复报告")
+        except Exception as e:
+            print(f"  ⚠️ markdown 发送异常({e}), 回退 text")
+            _sent = send_dingtalk(body, msgtype="text", title="自愈看门狗修复报告")
+        if _sent:
+            print("已发送修复报告:")
+        else:
+            print("⚠️ 修复报告发送失败(钉钉未送达, 检查关键词/网络), 内容如下:")
         for s in statuses:
             print(" ", s)
         for f in fixes:
