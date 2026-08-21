@@ -66,15 +66,17 @@ CONSERVATIVE_THRESHOLD = 8.0
 BANNED_LEAGUE_RE = re.compile(
     r"ITF|Challenger|W15|W25|W35|W50|W75|W100|M15|M25|World Tennis", re.I)
 
-# 运动层微调(相对盘口门槛的加/减, 基于运动整体 CLV 相对大盘口)
-SPORT_ADJUST = {
+# 运动层微调(相对盘口门槛的加/减)。
+# 样本≥30 的运动由 compute_sport_adjust 按实测 CLV 重算覆盖 —— 不再拍脑袋。
+# 以下仅是样本不足(n<30)时的**保守回退值**: 宁可更严, 不凭印象放低。
+SPORT_ADJUST_FALLBACK = {
     "football": 0.0,
-    "tennis": -0.5,      # 网球整体 +0.28%, 可略降
-    "basketball": 1.0,   # 篮球整体 -3.03%, 要抬高
+    "tennis": 0.0,        # 实测 -0.4% 负, 之前 -0.5 降门槛是拍脑袋, 回退改 0
+    "basketball": 2.0,    # 实测 -3.03% 显著负, 回退保守更严
     "baseball": 1.0,
     "american_football": 0.0,
     "ice_hockey": 0.0,
-    "mma": 2.0,          # MMA/拳击高风险, 更高门槛
+    "mma": 2.0,           # MMA/拳击高风险, 更高门槛
     "boxing": 2.0,
 }
 
@@ -111,7 +113,7 @@ def load_clean():
             if BANNED_LEAGUE_RE.search(r.get("league") or ""):
                 _dropped["封杀联赛"] += 1
                 continue
-            out.append((r.get("sub_market", "?"), clv, ev))
+            out.append((r.get("sub_market", "?"), r.get("sport", "?"), clv, ev))
     return out
 
 
@@ -147,11 +149,56 @@ def market_threshold(samples):
          + (f", 中位{top_med:+.1f}% 看似为正但未达 n≥{N_DIRECTIONAL})" if top_med is not None else ")"))
 
 
+def compute_sport_adjust(by_sport):
+    """按运动整体 CLV 数据驱动算运动层微调(相对盘口门槛的加/减)。
+
+    样本 n≥30 才数据驱动; 否则回退 SPORT_ADJUST_FALLBACK 的保守值。
+    映射(用 0.5% 容差带, 避免 -0.4% 这种噪声被误判成"该降/该抬"):
+      中位 CLV < -2%            → +2.0 (显著负)
+      中位 CLV < -0.5%          → +1.0 (轻微负)
+      -0.5% ≤ 中位 ≤ +0.5%      →  0.0 (持平, 噪声带内)
+      中位 > +0.5% 且 正率≥55%  → -1.0 (正 edge, 可降 1pp)
+      中位 > +0.5% 但 正率<55%  →  0.0 (正但不显著)
+    """
+    adjust = dict(SPORT_ADJUST_FALLBACK)
+    detail = {}
+    for sp, clvs in sorted(by_sport.items()):
+        if sp == "football":
+            # 足球是基准(盘口层门槛主要就是足球数据定的), 固定 0, 不参与运动层调整。
+            # 若也数据驱动, 足球整体中位 CLV 因主体盘口(1x2/hc/ou)负而被调成 +1,
+            # 会连累 ht/ht_dc 从 2% 被抬到 3% —— 而 ht 的正 edge 已在盘口层单独给了 2%。
+            adjust[sp] = 0.0
+            detail[sp] = {"n": len(clvs), "verdict": "基准(固定0)", "adjust": 0.0}
+            continue
+        n = len(clvs)
+        if n < N_DIRECTIONAL:
+            detail[sp] = {"n": n, "verdict": "样本不足→保守回退", "adjust": adjust.get(sp, 0.0)}
+            continue
+        med = statistics.median(clvs)
+        pos = sum(1 for c in clvs if c > 0) / n
+        if med < -2.0:
+            a = 2.0
+        elif med < -0.5:
+            a = 1.0
+        elif med <= 0.5:
+            a = 0.0
+        elif pos >= POS_RATE_MIN:
+            a = -1.0
+        else:
+            a = 0.0
+        adjust[sp] = a
+        detail[sp] = {"n": n, "median": round(med, 2), "pos_rate": round(pos * 100),
+                      "verdict": f"数据驱动→{a:+.1f}", "adjust": a}
+    return adjust, detail
+
+
 def main():
     clean = load_clean()
     by_market = defaultdict(list)
-    for sm, clv, ev in clean:
+    by_sport = defaultdict(list)
+    for sm, sp, clv, ev in clean:
         by_market[sm].append((clv, ev))
+        by_sport[sp].append(clv)
 
     markets = {}
     details = {}
@@ -175,15 +222,18 @@ def main():
             details[sm] = {"n": n, "verdict": f"保守回退({grade})",
                            "median": med, "pos_rate": pos}
 
+    sport_adjust, sport_detail = compute_sport_adjust(by_sport)
+
     matrix = {
         "generated_at": __import__("datetime").datetime.now().isoformat(),
         "markets": markets,
-        "sport_adjust": SPORT_ADJUST,
+        "sport_adjust": sport_adjust,
         "in_play_hours": IN_PLAY_HOURS,
         "in_play_extra": IN_PLAY_EXTRA,
         "main_markets": list(MAIN_MARKETS),
         "default_threshold": 8.0,
         "_details": details,
+        "_sport_details": sport_detail,
     }
     OUT.write_text(json.dumps(matrix, ensure_ascii=False, indent=2))
     print(f"✅ 门槛矩阵已生成 → {OUT.name}")
@@ -193,6 +243,10 @@ def main():
               ", ".join(f"{k} {v}条" for k, v in _dropped.most_common()))
     print(f"  样本纪律: ≥{N_CONFIRMED}确认 / {N_DIRECTIONAL}-{N_CONFIRMED}方向性 / "
           f"<{N_DIRECTIONAL}回退{CONSERVATIVE_THRESHOLD}% | 判定: 中位CLV>{MEDIAN_CLV_MIN}% 且 正率≥{POS_RATE_MIN*100:.0f}%")
+    print("  运动层微调(数据驱动):")
+    for sp in sorted(sport_adjust, key=lambda s: -(sport_detail.get(s, {}).get("n", 0))):
+        d = sport_detail.get(sp, {})
+        print(f"    {sp:<18} adjust={sport_adjust[sp]:>+5}  {d.get('verdict','')}")
     for sm in sorted(markets, key=lambda s: -by_market[s].__len__()):
         d = details[sm]
         v = d["verdict"]
