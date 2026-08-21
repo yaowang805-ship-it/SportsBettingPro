@@ -137,6 +137,10 @@
     "ev": 1.46,
     "ts": 1787194489.711956
   },
+  "basketball|Mexico LNBP Basketball League|Panteras de Aguascalientes|Santos del Potosi|主胜|1x2|2026-08-22": {
+    "ev": 1.65,
+    "ts": 1787324309.66277
+  },
   "basketball|Mexico LNBP Basketball League|Panteras de Aguascalientes|Santos del Potosi|让分主胜|1x2|2026-08-21": {
     "ev": 1.2,
     "ts": 1787208698.32288
@@ -469,6 +473,10 @@
   "football|Australia NPL Western|Olympic Kingsway SC|Fremantle City|让球主胜|1x2|2026-08-22": {
     "ev": 3.3,
     "ts": 1787296958.3335328
+  },
+  "football|Australia NPL Western|Olympic Kingsway SC|Fremantle City|让球客胜|1x2|2026-08-22": {
+    "ev": 3.3,
+    "ts": 1787324309.66105
   },
   "football|Australia NPL Western|Perth Azzurri|Sorrento|和局|1x2|2026-08-22": {
     "ev": 1.23,
@@ -871,6 +879,10 @@
     "ev": 1.4,
     "ts": 1787214637.704653
   },
+  "football|England League Two|Exeter City|Accrington Stanley|让球客胜|1x2|2026-08-22": {
+    "ev": 1.06,
+    "ts": 1787324309.662122
+  },
   "football|England League Two|Swindon Town|Cheltenham Town|让球客胜|1x2|2026-08-22": {
     "ev": 1.03,
     "ts": 1787323454.1770701
@@ -896,6 +908,10 @@
     "ev": 1.88,
     "ts": 1787285576.820648
   },
+  "football|England Premier League|Everton FC|Crystal Palace|上半场客胜|ht|2026-08-22": {
+    "ev": 5.21,
+    "ts": 1787324309.661576
+  },
   "football|England Premier League|Ipswich Town|Sunderland AFC|单双-双|oe|2026-08-22": {
     "ev": 1.49,
     "ts": 1787323454.1769311
@@ -908,10 +924,19 @@
     "ev": 1.33,
     "ts": 1787323454.176811
   },
+  "football|England Premier League|Nottingham Forest|Leeds United|上半场客胜|ht|2026-08-22": {
+    "ev": 1.02,
+    "ts": 1787324309.661657
+  },
   "football|England Premier League|伊普斯维奇|桑德兰|和局|1x2|2026-08-22": {
     "ev": 2.13,
     "bb": 3.48,
     "ts": 1787194489.4344919
+  },
+  "football|England Premier League|埃弗顿|水晶宫|上半场客胜|ht|2026-08-22": {
+    "ev": 5.21,
+    "bb": 4.36,
+    "ts": 1787324309.378083
   },
   "football|Estonia Meistriliiga|FCI Levadia Tallinn|JK Narva Trans|上半场客胜|ht|2026-08-22": {
     "ev": 1.5,
@@ -2566,9 +2591,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|England Premier League|埃弗顿|水晶宫|上半场客胜|ht|2026-08-22": {
-    "ev": 5.21,
-    "bb": 4.36,
-    "ts": 1787324309.378083
+  "football|Austria Bundesliga|里德|格拉茨AK|上半场客胜|ht|2026-08-22": {
+    "ev": 4.86,
+    "bb": 5.35,
+    "ts": 1787324705.011384
   }
 }
