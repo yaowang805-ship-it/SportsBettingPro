@@ -215,19 +215,20 @@ def main():
 
     # 报告
     if fixes:
-        from config.dingtalk import send_dingtalk
-        # 钉钉机器人配了关键词过滤(必须含"投注推荐"), 缺了会被服务端静默拒收 ——
-        # 2026-08-21 查出自愈报告因此从未送达过任何一次("关键词不匹配"), 等于看门狗哑了。
-        body = "## 🔧 自愈看门狗修复报告 (投注推荐系统)\n\n"
+        # 统一走 config.settings 入口: 自动注入机器人关键词(缺了会被服务端以 errcode
+        # 310000 静默拒收 —— 2026-08-21 查出自愈报告因此从未送达过一次, 看门狗等于哑的),
+        # 且 urgent=True 跳过非投注每日配额(自愈报告是故障告警, 不该被例行日报挤掉)。
+        from config.settings import send_dingtalk
+        body = "## 🔧 自愈看门狗修复报告\n\n"
         body += "**检查结果**:\n" + "\n".join(f"- {s}" for s in statuses) + "\n\n"
         body += "**自动修复**:\n" + "\n".join(f"- {f}" for f in fixes)
         # 必须校验返回值: 原先无论成败都打印"已发送", 于是关键词被拒收(errcode 310000)
         # 数月无人察觉 —— 告警自身的失败也必须可见, 否则看门狗哑了都不知道。
         try:
-            _sent = send_dingtalk(body, msgtype="markdown", title="自愈看门狗修复报告")
+            _sent = send_dingtalk("自愈看门狗修复报告", body, urgent=True)
         except Exception as e:
-            print(f"  ⚠️ markdown 发送异常({e}), 回退 text")
-            _sent = send_dingtalk(body, msgtype="text", title="自愈看门狗修复报告")
+            print(f"  ⚠️ 自愈报告发送异常: {e}")
+            _sent = False
         if _sent:
             print("已发送修复报告:")
         else:
