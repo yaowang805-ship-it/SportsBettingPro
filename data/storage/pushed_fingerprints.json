@@ -859,14 +859,30 @@
     "ev": 6.86,
     "ts": 1787288717.550724
   },
+  "football|England Championship League|Derby County|Cardiff City|上半场客胜|ht|2026-08-22": {
+    "ev": 1.05,
+    "ts": 1787323454.177006
+  },
   "football|England League One|Sheffield Wednesday|Bradford City|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 1.4,
     "ts": 1787214637.704653
+  },
+  "football|England League Two|Swindon Town|Cheltenham Town|让球客胜|1x2|2026-08-22": {
+    "ev": 1.03,
+    "ts": 1787323454.1770701
   },
   "football|England League Two|沃尔索尔|格林斯比|双边进球-是|btts|2026-08-22": {
     "ev": 4.97,
     "bb": 1.89,
     "ts": 1787180085.871263
+  },
+  "football|England National League North|Buxton FC|Hebburn Town|上半场主胜|ht|2026-08-22": {
+    "ev": 2.7,
+    "ts": 1787323454.177266
+  },
+  "football|England National League South|Chesham United|Walton & Hersham FC|上半场主胜|ht|2026-08-22": {
+    "ev": 2.67,
+    "ts": 1787323454.180493
   },
   "football|England Premier League|Arsenal FC|Coventry City|上半场客胜|ht|2026-08-22": {
     "ev": 23.93,
@@ -875,6 +891,18 @@
   "football|England Premier League|Arsenal FC|Coventry City|让球客胜|1x2|2026-08-22": {
     "ev": 1.88,
     "ts": 1787285576.820648
+  },
+  "football|England Premier League|Ipswich Town|Sunderland AFC|单双-双|oe|2026-08-22": {
+    "ev": 1.49,
+    "ts": 1787323454.1769311
+  },
+  "football|England Premier League|Ipswich Town|Sunderland AFC|和局|1x2|2026-08-22": {
+    "ev": 2.45,
+    "ts": 1787323454.1768699
+  },
+  "football|England Premier League|Nottingham Forest|Leeds United|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.33,
+    "ts": 1787323454.176811
   },
   "football|England Premier League|伊普斯维奇|桑德兰|和局|1x2|2026-08-22": {
     "ev": 2.13,
@@ -941,6 +969,10 @@
   "football|France Ligue 2|Clermont Foot|Dijon FCO|角球大球|corner|2026-08-22": {
     "ev": 1.27,
     "ts": 1787283255.3155808
+  },
+  "football|France Ligue 2|FC Metz|Stade Lavallois Mayenne FC|主胜|1x2|2026-08-22": {
+    "ev": 1.77,
+    "ts": 1787323454.1771379
   },
   "football|France Ligue 2|FC Nantes|Rodez Aveyron|让球客胜|1x2|2026-08-22": {
     "ev": 1.14,
@@ -1334,6 +1366,10 @@
     "ev": 1.38,
     "ts": 1787283255.312238
   },
+  "football|Latvia Virsliga|FK Auda|FK Tukums 2000|让球客胜|1x2|2026-08-21": {
+    "ev": 1.02,
+    "ts": 1787323521.118337
+  },
   "football|Latvia Virsliga|FK Liepaja|Grobinas SC|上半场主胜|ht|2026-08-21": {
     "ev": 1.98,
     "ts": 1787301006.354435
@@ -1341,6 +1377,10 @@
   "football|Latvia Virsliga|FK Liepaja|Grobinas SC|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 1.63,
     "ts": 1787313544.6091971
+  },
+  "football|Latvia Virsliga|FK Liepaja|Grobinas SC|让球主胜|1x2|2026-08-21": {
+    "ev": 1.44,
+    "ts": 1787323521.118191
   },
   "football|Malaysia Super League|Johor Darul Takzim FC|Kuching City FC|双边进球-是|btts|2026-08-21": {
     "ev": 1.99,
@@ -1498,6 +1538,14 @@
     "ev": 2.22,
     "ts": 1787285576.8200471
   },
+  "football|Netherlands Eerste Divisie|NAC Breda|Jong Ajax Amsterdam|上半场主胜|ht|2026-08-22": {
+    "ev": 1.28,
+    "ts": 1787323454.1775239
+  },
+  "football|Netherlands Eerste Divisie|NAC Breda|Jong Ajax Amsterdam|和局|1x2|2026-08-22": {
+    "ev": 2.6,
+    "ts": 1787323454.1774669
+  },
   "football|Netherlands Eerste Divisie|Vitesse Arnhem|Almere City FC|总进球区间7+|total_goals_range|2026-08-22": {
     "ev": 3.71,
     "ts": 1787271530.092629
@@ -1568,6 +1616,11 @@
     "bb": 2.81,
     "ts": 1787281506.868899
   },
+  "football|Peru Liga 1|阿利亚加|水晶竞技|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 4.06,
+    "bb": 1.8,
+    "ts": 1787323453.698667
+  },
   "football|Poland Ekstraklasa|MKS Cracovia Krakow|Wieczysta Krakow|上半场客胜|ht|2026-08-22": {
     "ev": 3.15,
     "ts": 1787296958.332746
@@ -1589,6 +1642,11 @@
     "bb": 3.65,
     "ts": 1787271529.6438642
   },
+  "football|Poland Ekstraklasa|克拉科维亚|莫摩斯|上半场客胜|ht|2026-08-22": {
+    "ev": 4.42,
+    "bb": 4.22,
+    "ts": 1787323453.698825
+  },
   "football|Poland Ekstraklasa|克拉科维亚|莫摩斯|大球(2.25)|ou|2.25|2026-08-22": {
     "ev": 3.36,
     "bb": 1.65,
@@ -1603,6 +1661,10 @@
     "ev": 5.03,
     "bb": 1.67,
     "ts": 1787180085.8711302
+  },
+  "football|Portugal Primeira Liga|Maritimo Madeira|Academico de Viseu FC|上半场客胜|ht|2026-08-22": {
+    "ev": 1.32,
+    "ts": 1787323454.177401
   },
   "football|Portugal Segunda Liga|SL Benfica B|Portimonense SC|和局|1x2|2026-08-22": {
     "ev": 1.03,
@@ -1624,6 +1686,10 @@
     "ev": 4.26,
     "bb": 1.96,
     "ts": 1787209374.206896
+  },
+  "football|Qatar Stars League|AL Duhail SC|Al Sailiya SC|上半场主胜|ht|2026-08-22": {
+    "ev": 1.42,
+    "ts": 1787323454.177332
   },
   "football|Qatar Stars League|Al Rayyan SC|Lusail City|让球客胜|1x2|2026-08-21": {
     "ev": 3.22,
@@ -2276,6 +2342,10 @@
     "ev": 2.24,
     "ts": 1787287614.009758
   },
+  "football|Uruguay Primera Division|Central Espanol FC|Juventud de Las Piedras|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.46,
+    "ts": 1787323454.1753888
+  },
   "football|Uruguay Primera Division|阿尔比恩|波士顿河|让球主胜(0)|hc|0|2026-08-22": {
     "ev": 4.52,
     "bb": 1.72,
@@ -2320,6 +2390,10 @@
   "football|Uzbekistan Super League|FC Pakhtakor Tashkent|FK Termez Surkhon|让球主胜|1x2|2026-08-21": {
     "ev": 3.42,
     "ts": 1787289659.56865
+  },
+  "football|Uzbekistan Super League|FC Pakhtakor Tashkent|FK Termez Surkhon|让球客胜|1x2|2026-08-21": {
+    "ev": 1.84,
+    "ts": 1787323521.1194398
   },
   "football|Uzbekistan Super League|PFK Navbahor Namangan|FC Nasaf|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 1.75,
@@ -2463,14 +2537,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Peru Liga 1|阿利亚加|水晶竞技|上半场双重机会-主/客|ht_dc|2026-08-22": {
-    "ev": 4.06,
-    "bb": 1.8,
-    "ts": 1787323453.698667
-  },
-  "football|Poland Ekstraklasa|克拉科维亚|莫摩斯|上半场客胜|ht|2026-08-22": {
-    "ev": 4.42,
-    "bb": 4.22,
-    "ts": 1787323453.698825
+  "football|Latvia Virsliga|奥达里加|图库姆斯|上半场主胜|ht|2026-08-21": {
+    "ev": 10.21,
+    "bb": 1.96,
+    "ts": 1787323794.777483
   }
 }
