@@ -302,8 +302,10 @@ def check_mappings(report):
     bb_teams = set()
     for m in bb.get("matches", []):
         bb_leagues[m.get("league", "")] += 1
-        bb_teams.add(m.get("home", ""))
-        bb_teams.add(m.get("away", ""))
+        # team_name_map.json 的 key 是中文队名, 必须用 home_cn/away_cn 查, 否则
+        # 英文队名查中文 key 恒不命中 → 假告警"队名映射 1/3069 (0%)"(2026-08-22)。
+        bb_teams.add(m.get("home_cn", "") or m.get("home", ""))
+        bb_teams.add(m.get("away_cn", "") or m.get("away", ""))
 
     # League mapping
     mapped = sum(1 for lg in bb_leagues if find_pinnacle_league_ids(lg, pin))
