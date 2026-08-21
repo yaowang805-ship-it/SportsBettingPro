@@ -6,7 +6,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
-from config.dingtalk import send_dingtalk
+# 必须用 config.settings 入口: config.dingtalk 不注入机器人关键词, 消息会被钉钉以
+# errcode 310000 静默拒收。本模块目前无调用者, 但若将来接线, 用错入口=接了等于没接。
+from config.settings import send_dingtalk
 from config.logging_config import get_logger
 
 logger = get_logger(__name__)
@@ -32,7 +34,8 @@ def alert(step: str, error: Exception, context: str = ""):
 
     logger.warning("Pipeline 告警: [%s] %s", step, tb)
     try:
-        send_dingtalk(msg, msgtype="text", title="Pipeline 告警")
+        if not send_dingtalk("Pipeline 告警", msg, urgent=True):
+            logger.error("Pipeline 告警未送达(钉钉返回失败)")
     except Exception as e:
         logger.error("发送 Pipeline 告警失败: %s", e)
 
