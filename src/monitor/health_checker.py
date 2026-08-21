@@ -544,10 +544,15 @@ def run_health_check(push: bool = False, quiet: bool = False) -> HealthReport:
                 lines.append(f"  ⚠️ {w}")
         body = "\n".join(lines)
         try:
-            send_dingtalk(f"系统健康报告 {report.score}/100", body, timeout=10)
-            logger.info("健康报告已推送")
-        except:
-            pass
+            _urgent = getattr(report, "score", 100) < 60
+            if send_dingtalk(f"系统健康报告 {report.score}/100", body,
+                             timeout=10, urgent=_urgent):
+                logger.info("健康报告已推送")
+            else:
+                logger.warning("健康报告未送达(配额用尽或钉钉失败), score=%s", report.score)
+        except Exception as e:
+            # 原为裸 except: pass —— 发送失败完全静默, 健康告警哑了也无从察觉
+            logger.warning("健康报告推送异常: %s", e)
 
     return report
 

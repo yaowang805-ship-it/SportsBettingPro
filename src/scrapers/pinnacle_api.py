@@ -174,11 +174,14 @@ def _record_pin_failure():
                 pass
         _cb_file.write_text(str(now))
         try:
-            from config.dingtalk import send_dingtalk
-            send_dingtalk("【投注推荐】⚠️ Pin 请求熔断\n\n连续 10 次失败, 已暂停 10 分钟防风控。疑似代码 bug 反复连 Pin API, 请检查。",
-                          msgtype="text", title="Pin 熔断告警")
-        except Exception:
-            pass
+            # 走 config.settings 统一入口(自动注入关键词 + urgent 跳过每日配额)。
+            # 原为裸 except: pass, 熔断告警发不出去完全静默 —— 熔断本身就是重故障, 不能哑。
+            from config.settings import send_dingtalk
+            _msg = "⚠️ Pin 请求熔断\n\n连续 10 次失败, 已暂停 10 分钟防风控。疑似代码 bug 反复连 Pin API, 请检查。"
+            if not send_dingtalk("Pin 熔断告警", _msg, urgent=True):
+                logger.warning("Pin 熔断告警未送达(钉钉返回失败)")
+        except Exception as e:
+            logger.warning("Pin 熔断告警推送异常: %s", e)
 
 
 def _record_pin_success():

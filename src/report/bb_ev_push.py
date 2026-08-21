@@ -3104,8 +3104,11 @@ def _send_failure_alert(errors: list):
     body = "\n".join(lines)
     title = "⚠️ 赔率拉取失败 — 未推送"
     try:
-        send_dingtalk(title, body)
-        logger.info("钉钉失败告警已发送")
+        # 赔率拉取失败属故障类 → urgent, 不能被例行日报挤掉
+        if send_dingtalk(title, body, urgent=True):
+            logger.info("钉钉失败告警已发送")
+        else:
+            logger.error("钉钉失败告警未送达(钉钉返回失败)")
     except Exception as e:
         logger.error("钉钉告警发送失败: %s", e)
 
