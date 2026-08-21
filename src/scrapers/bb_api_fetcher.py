@@ -1770,13 +1770,12 @@ def save_results(matches, single_platform=None):
         out_path = DATA_DIR / f"bb_odds_extracted_{single_platform}.json"
     else:
         out_path = DATA_DIR / "bb_odds_extracted.json"
-    # V5.5: 文件锁 — 防止 orchestrator 增量扫描与手动拉取同时写同一文件(数据错乱)
-    try:
-        from src.storage.file_lock import locked_open
-        with locked_open(str(out_path), "w", encoding="utf-8") as f:
-            f.write(json.dumps(output, ensure_ascii=False, indent=2))
-    except ImportError:
-        out_path.write_text(json.dumps(output, ensure_ascii=False, indent=2))
+    # V5.10 原子写: 主文件 bb_odds_extracted.json 与分平台文件一致, 都走 tmp+rename。
+    # 直接 write 会在增量扫描并发读时被读到半截(JSONDecodeError), 实测让 urgent
+    # 扫描间歇 FAILED(2026-08-21 13:55/14:00/15:05 三次)。rename 原子, 读端永读不到半截。
+    _tmp = out_path.with_suffix(".json.tmp")
+    _tmp.write_text(json.dumps(output, ensure_ascii=False, indent=2))
+    _tmp.replace(out_path)
     print(f"\n已保存到 {out_path}")
     return out_path
 

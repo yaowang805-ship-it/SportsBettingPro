@@ -651,7 +651,7 @@
       "success_rate": 1.0
     },
     "阿根廷杯": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -661,12 +661,12 @@
       "success_rate": 0.0
     },
     "丹麦杯": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
     "日本天皇杯": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -679,9 +679,29 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "英格兰足球全国联赛北区": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "中美洲杯": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "希腊杯-资格赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "英格兰锦标赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-21T04:11:00.096029+00:00",
+  "updated": "2026-08-21T06:33:08.217831+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

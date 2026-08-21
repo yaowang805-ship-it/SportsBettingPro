@@ -725,12 +725,29 @@ def run_full():
         vs_main()
 
 
+def _safe_load_bb(retries=3, delay=2.0):
+    """安全读 bb_odds_extracted.json。原子写后本不该读到半截, 但万一(旧代码/手动写)读到
+    半截 JSON, 重试几次而非让整个扫描 FAILED(2026-08-21 urgent 因此间歇 FAILED 3 次)。"""
+    import time as _t
+    for i in range(retries):
+        try:
+            return json.loads(BB_EXTRACTED.read_text())
+        except (json.JSONDecodeError, ValueError):
+            if i < retries - 1:
+                print(f"  ⚠️ BB数据读到半截(第{i+1}次), {delay:.0f}s后重试...")
+                _t.sleep(delay)
+    return None
+
+
 def _fetch_bb_data(time_window: str = "all"):
     """从BB提取文件中读取数据。near扫描阈值5分钟，far扫描15分钟。"""
     if not BB_EXTRACTED.exists():
         print("  ❌ 无BB数据，先运行 bb_api_fetcher")
         return None
-    raw = json.loads(BB_EXTRACTED.read_text())
+    raw = _safe_load_bb()
+    if raw is None:
+        print("  ❌ BB数据损坏(读不到完整JSON), 跳过本轮")
+        return None
     matches = raw.get("matches", [])
     # 每次增量扫描都强制重新抓取 BB 实时数据
     age_m = (time.time() - BB_EXTRACTED.stat().st_mtime) / 60
@@ -739,8 +756,9 @@ def _fetch_bb_data(time_window: str = "all"):
         if not _run_fetcher():
             print("  ❌ 重新抓取失败，继续使用旧数据")
         else:
-            raw = json.loads(BB_EXTRACTED.read_text())
-            matches = raw.get("matches", [])
+            raw = _safe_load_bb()
+            if raw is not None:
+                matches = raw.get("matches", [])
     return matches
 
 
