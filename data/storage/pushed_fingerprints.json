@@ -430,6 +430,10 @@
     "ev": 1.56,
     "ts": 1787330462.154017
   },
+  "football|Argentina Primera Nacional|Defensores de Belgrano|Almirante Brown|上半场客胜|ht|2026-08-23": {
+    "ev": 1.46,
+    "ts": 1787338579.631061
+  },
   "football|Argentina Primera Nacional|Deportivo Madryn|Mitre Santiago Del Estero|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 3.06,
     "ts": 1787271530.092192
@@ -437,6 +441,14 @@
   "football|Argentina Primera Nacional|Deportivo Madryn|Mitre Santiago Del Estero|上半场客胜|ht|2026-08-22": {
     "ev": 4.31,
     "ts": 1787271530.0916631
+  },
+  "football|Argentina Primera Nacional|Nueva Chicago|Club Atletico Atlanta|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 1.04,
+    "ts": 1787338579.632332
+  },
+  "football|Argentina Primera Nacional|San Miguel|Colon de Santa Fe|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 1.17,
+    "ts": 1787338579.630969
   },
   "football|Argentina Primera Nacional|San Telmo|Deportivo Moron|上半场主胜|ht|2026-08-22": {
     "ev": 2.74,
@@ -754,6 +766,10 @@
     "ev": 5.48,
     "ts": 1787333904.54804
   },
+  "football|Chile Primera B|San Marcos de Arica|CSD Rangers|客胜|1x2|2026-08-22": {
+    "ev": 10.34,
+    "ts": 1787337823.618897
+  },
   "football|Chile Primera B|San Marcos de Arica|CSD Rangers|让球客胜|1x2|2026-08-22": {
     "ev": 2.31,
     "ts": 1787296958.333296
@@ -762,6 +778,11 @@
     "ev": 5.48,
     "bb": 2.02,
     "ts": 1787333904.272303
+  },
+  "football|Chile Primera B|圣马洛科斯|塔尔卡流浪者|客胜|1x2|2026-08-22": {
+    "ev": 10.34,
+    "bb": 4.19,
+    "ts": 1787337823.3113532
   },
   "football|Chile Primera Division Women|Deportes Magallanes (w)|Palestino (w)|客胜|1x2|2026-08-21": {
     "ev": 14.23,
@@ -1199,6 +1220,10 @@
     "ev": 5.17,
     "ts": 1787301006.3545961
   },
+  "football|Finland Ykkosliiga|Klubi 04|Mikkelin Palloilijat|让球客胜|1x2|2026-08-23": {
+    "ev": 1.17,
+    "ts": 1787338579.628726
+  },
   "football|Finland Ykkosliiga|PK 35|JAPS|上半场主胜|ht|2026-08-22": {
     "ev": 1.05,
     "ts": 1787326461.9163818
@@ -1215,9 +1240,21 @@
     "ev": 2.54,
     "ts": 1787311747.185444
   },
+  "football|France Ligue 1|ES Troyes AC|Paris FC|总进球区间7+|total_goals_range|2026-08-23": {
+    "ev": 4.12,
+    "ts": 1787338579.6328561
+  },
   "football|France Ligue 1|Olympique Marseille|Strasbourg Alsace|上半场客胜|ht|2026-08-22": {
     "ev": 1.24,
     "ts": 1787326765.222731
+  },
+  "football|France Ligue 1|Olympique Marseille|Strasbourg Alsace|主胜|1x2|2026-08-22": {
+    "ev": 1.18,
+    "ts": 1787337823.618413
+  },
+  "football|France Ligue 1|Toulouse FC|Olympique Lyonnais|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 1.21,
+    "ts": 1787338579.629898
   },
   "football|France Ligue 1|特鲁瓦|巴黎FC|和局|1x2|2026-08-23": {
     "ev": 3.36,
@@ -1411,6 +1448,14 @@
     "ev": 5.34,
     "ts": 1787289659.5676632
   },
+  "football|Germany Super Cup|Borussia Dortmund|Bayern Munich|单双-双|oe|2026-08-23": {
+    "ev": 1.41,
+    "ts": 1787338579.631657
+  },
+  "football|Germany Super Cup|Borussia Dortmund|Bayern Munich|和局|1x2|2026-08-23": {
+    "ev": 2.74,
+    "ts": 1787338579.631587
+  },
   "football|Hong Kong Premier League|Southern District Football Club|Hong Kong FC|客胜|1x2|2026-08-22": {
     "ev": 1.26,
     "ts": 1787303712.199968
@@ -1566,9 +1611,49 @@
     "ev": 2.28,
     "ts": 1787337630.858752
   },
+  "football|Italy Serie A|Genoa CFC|SSC Napoli|上半场主胜|ht|2026-08-23": {
+    "ev": 15.11,
+    "ts": 1787338579.6302452
+  },
+  "football|Italy Serie A|Genoa CFC|SSC Napoli|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 2.34,
+    "ts": 1787338579.6304488
+  },
+  "football|Italy Serie A|Genoa CFC|SSC Napoli|单双-双|oe|2026-08-23": {
+    "ev": 3.43,
+    "ts": 1787338579.630309
+  },
+  "football|Italy Serie A|Genoa CFC|SSC Napoli|双重机会-和局/客|dc|2026-08-23": {
+    "ev": 19.09,
+    "ts": 1787338579.630379
+  },
+  "football|Italy Serie A|Genoa CFC|SSC Napoli|和局|1x2|2026-08-23": {
+    "ev": 99.12,
+    "ts": 1787338579.630183
+  },
+  "football|Italy Serie A|Genoa CFC|SSC Napoli|总进球区间2-3|total_goals_range|2026-08-23": {
+    "ev": 1288.2,
+    "ts": 1787338579.6327748
+  },
   "football|Italy Serie A|Inter Milan|Monza|上半场客胜|ht|2026-08-23": {
     "ev": 11.7,
     "ts": 1787331072.415373
+  },
+  "football|Italy Serie A|Parma Calcio|Cagliari Calcio|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 2.53,
+    "ts": 1787338579.6307242
+  },
+  "football|Italy Serie A|Parma Calcio|Cagliari Calcio|单双-双|oe|2026-08-23": {
+    "ev": 2.77,
+    "ts": 1787338579.630584
+  },
+  "football|Italy Serie A|Parma Calcio|Cagliari Calcio|双重机会-主/和局|dc|2026-08-23": {
+    "ev": 18.64,
+    "ts": 1787338579.630655
+  },
+  "football|Italy Serie A|Parma Calcio|Cagliari Calcio|和局|1x2|2026-08-23": {
+    "ev": 128.28,
+    "ts": 1787338579.630516
   },
   "football|Italy Serie A|Udinese Calcio|Como 1907|上半场主胜|ht|2026-08-23": {
     "ev": 9.06,
@@ -1598,6 +1683,18 @@
     "bb": 6.65,
     "ts": 1787328114.72115
   },
+  "football|Italy Serie B|Empoli FC|US Cremonese|单双-双|oe|2026-08-23": {
+    "ev": 1.78,
+    "ts": 1787339541.254324
+  },
+  "football|Italy Serie B|Empoli FC|US Cremonese|双边进球-是|btts|2026-08-23": {
+    "ev": 1.95,
+    "ts": 1787339541.254285
+  },
+  "football|Italy Serie B|Empoli FC|US Cremonese|和局|1x2|2026-08-23": {
+    "ev": 3.12,
+    "ts": 1787339541.254247
+  },
   "football|Italy Serie B|FC Sudtirol|Virtus Entella|上半场客胜|ht|2026-08-23": {
     "ev": 4.46,
     "ts": 1787332926.811033
@@ -1609,6 +1706,10 @@
   "football|Italy Serie B|LR Vicenza|US Catanzaro 1929|大球|1x2|2026-08-22": {
     "ev": 1.78,
     "ts": 1787325601.937702
+  },
+  "football|Italy Serie B|US Avellino 1912|SS Arezzo|单双-双|oe|2026-08-23": {
+    "ev": 1.15,
+    "ts": 1787339541.254206
   },
   "football|Italy Serie B|恩波利|克雷莫纳|双边进球-是|btts|2026-08-23": {
     "ev": 4.36,
@@ -1680,6 +1781,10 @@
   "football|Japan J.League 2|Oita Trinita|Iwaki FC|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.99,
     "ts": 1787307221.9449449
+  },
+  "football|Japan J.League 2|Tegevajaro Miyazaki|Shonan Bellmare|让球客胜|1x2|2026-08-22": {
+    "ev": 1.02,
+    "ts": 1787338579.627415
   },
   "football|Japan J.League 2|Vanraure Hachinohe FC|Vegalta Sendai|上半场主胜|ht|2026-08-22": {
     "ev": 2.53,
@@ -3186,9 +3291,14 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Chile Primera B|圣马洛科斯|塔尔卡流浪者|客胜|1x2|2026-08-22": {
-    "ev": 10.34,
-    "bb": 4.19,
-    "ts": 1787337823.3113532
+  "football|France Ligue 1|勒芒|布雷斯特|和局|1x2|2026-08-23": {
+    "ev": 100.13,
+    "bb": 7.2,
+    "ts": 1787340473.767859
+  },
+  "football|France Ligue 1|勒芒|布雷斯特|双重机会-和局/客|dc|2026-08-23": {
+    "ev": 11.12,
+    "bb": 1.78,
+    "ts": 1787340473.767902
   }
 }
