@@ -661,7 +661,7 @@
       "success_rate": 0.0
     },
     "丹麦杯": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -671,7 +671,7 @@
       "success_rate": 0.0
     },
     "斯洛伐克杯": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -691,7 +691,7 @@
       "success_rate": 0.0
     },
     "希腊杯-资格赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -701,7 +701,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-08-21T07:19:01.007647+00:00",
+  "updated": "2026-08-21T09:18:23.875342+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

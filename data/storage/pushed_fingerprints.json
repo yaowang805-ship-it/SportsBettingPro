@@ -1,7 +1,15 @@
 {
+  "baseball|Japan Professional Baseball|Chunichi Dragons|Tokyo Yakult Swallows|客胜|1x2|2026-08-21": {
+    "ev": 1.45,
+    "ts": 1787301930.288523
+  },
   "baseball|Korea Republic KBO League|Doosan Bears|Lotte Giants|大分|1x2|2026-08-21": {
     "ev": 4.45,
     "ts": 1787291338.734435
+  },
+  "baseball|Korea Republic KBO League|SSG Landers|KT Wiz|让分客胜|1x2|2026-08-21": {
+    "ev": 2.81,
+    "ts": 1787304338.546389
   },
   "baseball|MLB|Houston Astros|Athletics|客胜|1x2|2026-08-22": {
     "ev": 29.41,
@@ -11,6 +19,14 @@
     "ev": 29.41,
     "bb": 2.54,
     "ts": 1787271529.643331
+  },
+  "basketball|Australia Big V Women|Sherbrooke Suns (w)|Pakenham Warriors (w)|主胜|1x2|2026-08-22": {
+    "ev": 3.9,
+    "ts": 1787298948.4181828
+  },
+  "basketball|Australia NBL1 Women|Bankstown Bruins (w)|Warwick Senators (w)|大分|1x2|2026-08-21": {
+    "ev": 4.27,
+    "ts": 1787300860.3439229
   },
   "basketball|Australia NBL1 Women|Bankstown Bruins (w)|Warwick Senators (w)|客胜|1x2|2026-08-21": {
     "ev": 8.47,
@@ -346,6 +362,10 @@
     "ev": 3.24,
     "ts": 1787287614.009666
   },
+  "football|Argentina Primera Nacional|San Telmo|Deportivo Moron|让球主胜|1x2|2026-08-22": {
+    "ev": 1.34,
+    "ts": 1787298948.41771
+  },
   "football|Argentina Primera Nacional|圣胡安圣马丁|甘拿斯亚迪罗|上半场客胜|ht|2026-08-23": {
     "ev": 10.05,
     "bb": 6.9,
@@ -398,6 +418,11 @@
     "bb": 1.79,
     "ts": 1787296957.964302
   },
+  "football|Australia NPL Western|湾水市|珀斯光荣青年队|客胜|1x2|2026-08-22": {
+    "ev": 11.46,
+    "bb": 4.28,
+    "ts": 1787298948.147389
+  },
   "football|Australia NPL Western|阿马达尔|珀斯红星|客胜|1x2|2026-08-22": {
     "ev": 8.75,
     "bb": 2.88,
@@ -434,6 +459,10 @@
   "football|Belgium Pro League|Standard Liege|Raal La Louviere|上半场客胜|ht|2026-08-22": {
     "ev": 1.14,
     "ts": 1787271530.090602
+  },
+  "football|Belgium Pro League|Standard Liege|Raal La Louviere|主胜|1x2|2026-08-22": {
+    "ev": 1.22,
+    "ts": 1787301776.987461
   },
   "football|Belgium Pro League|Standard Liege|Raal La Louviere|让球主胜|1x2|2026-08-22": {
     "ev": 1.15,
@@ -594,6 +623,10 @@
     "bb": 1.96,
     "ts": 1787209374.2069912
   },
+  "football|Czech Republic CFL|FK Loko Prague|SK Aritma Prague|小球|1x2|2026-08-22": {
+    "ev": 1.78,
+    "ts": 1787302708.2303722
+  },
   "football|Czech Republic FNL|1.SK Prostejov|SK Kladno|大球|1x2|2026-08-22": {
     "ev": 7.5,
     "ts": 1787290860.1016781
@@ -635,6 +668,10 @@
     "bb": 5.25,
     "ts": 1787296957.9645581
   },
+  "football|Egypt Second Division A|Ismaily SC|FC Masar|小球|1x2|2026-08-21": {
+    "ev": 3.17,
+    "ts": 1787304032.1156108
+  },
   "football|Egypt Second Division A|Ismaily SC|FC Masar|让球客胜|1x2|2026-08-21": {
     "ev": 2.08,
     "ts": 1787284322.146463
@@ -670,9 +707,25 @@
     "bb": 3.48,
     "ts": 1787194489.4344919
   },
+  "football|Estonia Meistriliiga|FCI Levadia Tallinn|JK Narva Trans|上半场客胜|ht|2026-08-22": {
+    "ev": 1.5,
+    "ts": 1787298948.416546
+  },
   "football|Estonia Meistriliiga|FCI Levadia Tallinn|JK Narva Trans|大球|1x2|2026-08-22": {
     "ev": 1.22,
     "ts": 1787297997.507008
+  },
+  "football|Finland Veikkausliiga|Seinajoen JK|FC Lahti|上半场主胜|ht|2026-08-22": {
+    "ev": 3.57,
+    "ts": 1787299843.773712
+  },
+  "football|Finland Veikkausliiga|Seinajoen JK|FC Lahti|和局|1x2|2026-08-22": {
+    "ev": 1.39,
+    "ts": 1787302708.23231
+  },
+  "football|Finland Veikkausliiga|Seinajoen JK|FC Lahti|让球主胜|1x2|2026-08-22": {
+    "ev": 3.25,
+    "ts": 1787299843.773748
   },
   "football|Finland Ykkonen|KPV Kokkola|KuPS Akatemia|小球|1x2|2026-08-21": {
     "ev": 4.7,
@@ -681,6 +734,10 @@
   "football|Finland Ykkosliiga|FC Haka Valkeakoski|SJK Akatemia|上半场主胜|ht|2026-08-21": {
     "ev": 2.95,
     "ts": 1787279802.278744
+  },
+  "football|Finland Ykkosliiga|FC Haka Valkeakoski|SJK Akatemia|让球主胜|1x2|2026-08-21": {
+    "ev": 5.17,
+    "ts": 1787301006.3545961
   },
   "football|France Ligue 1|特鲁瓦|巴黎FC|和局|1x2|2026-08-23": {
     "ev": 3.36,
@@ -814,6 +871,10 @@
     "ev": 5.34,
     "ts": 1787289659.5676632
   },
+  "football|Hong Kong Premier League|Southern District Football Club|Hong Kong FC|客胜|1x2|2026-08-22": {
+    "ev": 1.26,
+    "ts": 1787303712.199968
+  },
   "football|Iceland 1. deild|Aegir|Afturelding|让球客胜|1x2|2026-08-22": {
     "ev": 1.07,
     "ts": 1787296958.332614
@@ -917,6 +978,18 @@
     "bb": 1.88,
     "ts": 1787101664.262892
   },
+  "football|Japan J.League 2|Blaublitz Akita|Ventforet Kofu|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 2.95,
+    "ts": 1787303712.199682
+  },
+  "football|Japan J.League 2|Blaublitz Akita|Ventforet Kofu|上半场客胜|ht|2026-08-22": {
+    "ev": 8.3,
+    "ts": 1787303712.199562
+  },
+  "football|Japan J.League 2|Blaublitz Akita|Ventforet Kofu|让球主胜|1x2|2026-08-22": {
+    "ev": 1.48,
+    "ts": 1787303712.199619
+  },
   "football|Japan J.League 2|Hokkaido Consadole Sapporo|Omiya Ardija|双边进球-是|btts|2026-08-22": {
     "ev": 4.22,
     "ts": 1787296958.3334131
@@ -924,6 +997,10 @@
   "football|Japan J.League 2|Hokkaido Consadole Sapporo|Omiya Ardija|和局|1x2|2026-08-22": {
     "ev": 1.75,
     "ts": 1787296958.333357
+  },
+  "football|Japan J.League 2|Vanraure Hachinohe FC|Vegalta Sendai|上半场主胜|ht|2026-08-22": {
+    "ev": 2.53,
+    "ts": 1787299843.7734962
   },
   "football|Japan J.League 2|大分三神|磐城市|上半场主胜|ht|2026-08-22": {
     "ev": 4.24,
@@ -952,6 +1029,10 @@
   "football|Latvia Virsliga|FK Auda|FK Tukums 2000|客胜|1x2|2026-08-21": {
     "ev": 1.38,
     "ts": 1787283255.312238
+  },
+  "football|Latvia Virsliga|FK Liepaja|Grobinas SC|上半场主胜|ht|2026-08-21": {
+    "ev": 1.98,
+    "ts": 1787301006.354435
   },
   "football|Malaysia Super League|Johor Darul Takzim FC|Kuching City FC|大球|1x2|2026-08-21": {
     "ev": 4.02,
@@ -1008,9 +1089,38 @@
     "bb": 1.92,
     "ts": 1787021144.0618439
   },
+  "football|Mexico Liga MX|Club Leon|Monterrey|双边进球-是|btts|2026-08-22": {
+    "ev": 1.56,
+    "ts": 1787302708.231969
+  },
+  "football|Mexico Liga MX|Club Leon|Monterrey|总进球区间7+|total_goals_range|2026-08-22": {
+    "ev": 5.69,
+    "ts": 1787302708.232807
+  },
+  "football|Mexico Liga MX|FC Juarez|America|角球大球|corner|2026-08-22": {
+    "ev": 4.38,
+    "ts": 1787299843.7742238
+  },
+  "football|Mexico Liga MX|FC Juarez|America|角球让球客胜|corner|2026-08-22": {
+    "ev": 2.79,
+    "ts": 1787299843.774184
+  },
   "football|Mexico Liga MX|Tigres UANL|Atlante FC|客胜|1x2|2026-08-22": {
     "ev": 1.94,
     "ts": 1787275919.110846
+  },
+  "football|Mexico Liga MX|圣路易斯|帕丘卡|角球大球(o 8.5)|corner|2026-08-24": {
+    "ev": 8.14,
+    "bb": 1.95,
+    "ts": 1787298948.147329
+  },
+  "football|Netherlands Eerste Divisie|FC Den Bosch|FC Eindhoven|让球客胜|1x2|2026-08-22": {
+    "ev": 1.14,
+    "ts": 1787301006.355437
+  },
+  "football|Netherlands Eerste Divisie|FC Dordrecht|Roda JC Kerkrade|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.63,
+    "ts": 1787299843.772904
   },
   "football|Netherlands Eerste Divisie|FC Dordrecht|Roda JC Kerkrade|总进球区间7+|total_goals_range|2026-08-22": {
     "ev": 4.07,
@@ -1699,6 +1809,10 @@
     "bb": 1.73,
     "ts": 1787183894.539603
   },
+  "football|USA National Women Soccer League|San Diego Wave FC (w)|Utah Royals FC (w)|让球客胜|1x2|2026-08-22": {
+    "ev": 4.64,
+    "ts": 1787303712.199501
+  },
   "football|USL Championship|底特律城|坦帕湾暴徒|和局|1x2|2026-08-23": {
     "ev": 13.58,
     "bb": 3.2,
@@ -1750,9 +1864,17 @@
     "bb": 1.96,
     "ts": 1787217306.230398
   },
+  "football|Venezuela Primera Division|Caracas FC|Carabobo FC|客胜|1x2|2026-08-22": {
+    "ev": 1.3,
+    "ts": 1787301776.987742
+  },
   "football|Venezuela Primera Division|Caracas FC|Carabobo FC|让球主胜|1x2|2026-08-22": {
     "ev": 1.7,
     "ts": 1787283255.313666
+  },
+  "football|Venezuela Primera Division|Caracas FC|Carabobo FC|让球客胜|1x2|2026-08-22": {
+    "ev": 1.43,
+    "ts": 1787301776.9877791
   },
   "tennis|ITF - M15 Arad Men Singles|Robert Guna (ROU)|Ignacio Monzon (ARG)|客胜|1x2|2026-08-21": {
     "ev": 4.6,
@@ -1802,6 +1924,10 @@
     "ev": 58.24,
     "ts": 1787276868.060701
   },
+  "tennis|ITF - W15 Campos do Jordao Women Doubles|Luiza Fullana (BRA) / Marjorie Souza (BRA)|Romina Ccuno (PER) / Rebeca Pereira (BRA)|主胜|1x2|2026-08-21": {
+    "ev": 41.55,
+    "ts": 1787299843.7741382
+  },
   "tennis|ITF - W15 Campos do Jordao Women Singles|Giovana Schincariol Delatorre Barbosa (BRA)|Isabella Barrera Aguirre (USA)|客胜|1x2|2026-08-21": {
     "ev": 8.26,
     "ts": 1787208093.117812
@@ -1847,14 +1973,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Mexico Liga MX|圣路易斯|帕丘卡|角球大球(o 8.5)|corner|2026-08-24": {
-    "ev": 8.14,
-    "bb": 1.95,
-    "ts": 1787298948.147329
-  },
-  "football|Australia NPL Western|湾水市|珀斯光荣青年队|客胜|1x2|2026-08-22": {
-    "ev": 11.46,
-    "bb": 4.28,
-    "ts": 1787298948.147389
+  "football|Norway Toppserien Women|SK白兰恩 (女)|罗亚 (女)|小球(4.0)|ou|4.0|2026-08-22": {
+    "ev": 9.0,
+    "bb": 1.86,
+    "ts": 1787304799.9603
   }
 }
