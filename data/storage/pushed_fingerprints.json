@@ -534,6 +534,10 @@
     "ev": 2.42,
     "ts": 1787288717.549828
   },
+  "football|Austria 2. Liga|FC Admira Wacker Modling|First Vienna FC|上半场主胜|ht|2026-08-22": {
+    "ev": 1.97,
+    "ts": 1787328808.7075899
+  },
   "football|Austria 2. Liga|FC Admira Wacker Modling|First Vienna FC|让球主胜|1x2|2026-08-22": {
     "ev": 2.01,
     "ts": 1787328260.9822662
@@ -574,9 +578,17 @@
     "ev": 1.58,
     "ts": 1787271530.089319
   },
+  "football|Austria 2. Liga|Wacker Innsbruck|SKN ST Polten|客胜|1x2|2026-08-22": {
+    "ev": 5.49,
+    "ts": 1787329080.0238552
+  },
   "football|Austria 2. Liga|Wacker Innsbruck|SKN ST Polten|让球主胜|1x2|2026-08-22": {
     "ev": 2.04,
     "ts": 1787327049.4307141
+  },
+  "football|Austria 2. Liga|Wacker Innsbruck|SKN ST Polten|让球客胜|1x2|2026-08-22": {
+    "ev": 5.25,
+    "ts": 1787329080.023912
   },
   "football|Austria Bundesliga|SV Ried|Grazer AK|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.06,
@@ -841,6 +853,14 @@
   "football|Czech Republic MSFL|SK Hranice|MFK Havirov|让球主胜|1x2|2026-08-22": {
     "ev": 1.63,
     "ts": 1787290860.10208
+  },
+  "football|Ecuador LigaPro Primera A|Club Leones Del Norte|CSD Independiente del Valle|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.06,
+    "ts": 1787329231.7714088
+  },
+  "football|Ecuador LigaPro Primera A|Cuenca|Mushuc Runa SC|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.0,
+    "ts": 1787329231.774008
   },
   "football|Ecuador LigaPro Primera A|Cuenca|Mushuc Runa SC|让球客胜|1x2|2026-08-22": {
     "ev": 2.04,
@@ -1520,6 +1540,10 @@
     "bb": 5.25,
     "ts": 1787296957.964724
   },
+  "football|Jordan Super Cup|Al Faisaly Amman|Al Wehdat Amman|双重机会-和局/客|dc|2026-08-22": {
+    "ev": 1.18,
+    "ts": 1787329371.5963159
+  },
   "football|Jordan Super Cup|Al Faisaly Amman|Al Wehdat Amman|让球客胜|1x2|2026-08-22": {
     "ev": 3.65,
     "ts": 1787323085.964937
@@ -1673,6 +1697,10 @@
     "ev": 1.97,
     "ts": 1787311609.7666109
   },
+  "football|Netherlands Eerste Divisie|FC Den Bosch|FC Eindhoven|单双-双|oe|2026-08-22": {
+    "ev": 1.68,
+    "ts": 1787328808.708553
+  },
   "football|Netherlands Eerste Divisie|FC Den Bosch|FC Eindhoven|和局|1x2|2026-08-22": {
     "ev": 1.73,
     "ts": 1787311609.766559
@@ -1732,6 +1760,11 @@
   "football|Netherlands Eerste Divisie|Vitesse Arnhem|Almere City FC|让球客胜|1x2|2026-08-22": {
     "ev": 2.44,
     "ts": 1787277602.4621382
+  },
+  "football|Netherlands Eerste Divisie|丹博斯治|FC埃因霍温|和局|1x2|2026-08-22": {
+    "ev": 9.85,
+    "bb": 4.03,
+    "ts": 1787328808.452201
   },
   "football|Netherlands Eerste Divisie|丹博斯治|FC埃因霍温|让球主胜(-0/0.5)|hc|-0/0.5|2026-08-22": {
     "ev": 3.5,
@@ -1960,6 +1993,10 @@
     "ev": 2.31,
     "ts": 1787314963.129335
   },
+  "football|Slovakia Superliga|MFK Ruzomberok|MFK Dukla Banska Bystrica|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 1.31,
+    "ts": 1787329231.77375
+  },
   "football|Slovenia PrvaLiga|NK Aluminij|NK Brinje Grosuplje|单双-双|oe|2026-08-21": {
     "ev": 1.46,
     "ts": 1787325059.485566
@@ -2110,6 +2147,10 @@
     "bb": 6.7,
     "ts": 1787271529.6434932
   },
+  "football|Sweden Allsvenskan|IK Sirius|BK Hacken|上半场客胜|ht|2026-08-22": {
+    "ev": 1.07,
+    "ts": 1787329371.595177
+  },
   "football|Sweden Allsvenskan|IK Sirius|BK Hacken|小球|1x2|2026-08-22": {
     "ev": 1.02,
     "ts": 1787323085.956585
@@ -2192,6 +2233,10 @@
     "ev": 2.21,
     "ts": 1787284322.146854
   },
+  "football|Switzerland Challenge League|FC Stade Nyonnais|Etoile Carouge FC|总进球区间7+|total_goals_range|2026-08-22": {
+    "ev": 2.07,
+    "ts": 1787329371.596506
+  },
   "football|Switzerland Challenge League|Neuchatel Xamax FC|Stade Lausanne Ouchy|单双-双|oe|2026-08-22": {
     "ev": 1.45,
     "ts": 1787271530.089872
@@ -2231,6 +2276,10 @@
     "ev": 8.45,
     "bb": 1.89,
     "ts": 1787275918.3704262
+  },
+  "football|Turkey Super Lig|Caykur Rizespor|Samsunspor|和局|1x2|2026-08-23": {
+    "ev": 1.35,
+    "ts": 1787329231.7737012
   },
   "football|Turkey Super Lig|里泽斯堡|萨姆松珀|和局|1x2|2026-08-23": {
     "ev": 7.08,
@@ -2790,9 +2839,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Netherlands Eerste Divisie|丹博斯治|FC埃因霍温|和局|1x2|2026-08-22": {
-    "ev": 9.85,
-    "bb": 4.03,
-    "ts": 1787328808.452201
+  "football|Sweden Allsvenskan|天狼星|赫根|双重机会-和局/客|dc|2026-08-22": {
+    "ev": 3.22,
+    "bb": 2.29,
+    "ts": 1787329619.644496
   }
 }
