@@ -1,5 +1,5 @@
 {
-  "balance": 707.46,
+  "balance": 693.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2301,6 +2301,29 @@
       "commence_time": 1787421600,
       "created_at": "2026-08-21T18:40:30.599160+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_圣马洛科斯_塔尔卡流浪者_客胜",
+      "sport": "football",
+      "league": "智利乙级联赛",
+      "home_team": "圣马洛科斯",
+      "away_team": "塔尔卡流浪者",
+      "home_cn": "圣马洛科斯",
+      "away_cn": "塔尔卡流浪者",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.19,
+      "stake": 14,
+      "model_prob": 0.2633,
+      "ev_pct": 10.34,
+      "pin_odds": 3.26,
+      "fair_price": 3.7975,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787358600,
+      "created_at": "2026-08-21T18:43:43.264526+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2902,8 +2925,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-22",
-    "used": 902.0,
-    "bets": 6
+    "used": 916.0,
+    "bets": 7
   },
   "updated": null
 }
