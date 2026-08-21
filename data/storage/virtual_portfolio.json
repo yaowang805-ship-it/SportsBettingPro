@@ -1,5 +1,5 @@
 {
-  "balance": 1809.46,
+  "balance": 1609.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2140,6 +2140,29 @@
       "commence_time": 1787410800,
       "created_at": "2026-08-21T15:30:13.414637+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_卡哈马卡FC_格劳竞技_上半场客胜",
+      "sport": "football",
+      "league": "秘鲁甲级联赛",
+      "home_team": "卡哈马卡FC",
+      "away_team": "格劳竞技",
+      "home_cn": "卡哈马卡FC",
+      "away_cn": "格劳竞技",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.51,
+      "stake": 200,
+      "model_prob": 0.2321,
+      "ev_pct": 4.66,
+      "pin_odds": 3.68,
+      "fair_price": 4.3091,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787331600,
+      "created_at": "2026-08-21T15:49:13.896369+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2741,8 +2764,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-21",
-    "used": 6148.0,
-    "bets": 43
+    "used": 6348.0,
+    "bets": 44
   },
   "updated": null
 }

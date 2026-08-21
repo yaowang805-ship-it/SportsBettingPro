@@ -462,6 +462,10 @@
     "ev": 1.41,
     "ts": 1787309071.076258
   },
+  "football|Australia NPL Western|Bayswater City|Perth Glory FC Youth|双重机会-和局/客|dc|2026-08-22": {
+    "ev": 3.18,
+    "ts": 1787326213.665996
+  },
   "football|Australia NPL Western|Bayswater City|Perth Glory FC Youth|客胜|1x2|2026-08-22": {
     "ev": 2.87,
     "ts": 1787297997.508626
@@ -469,6 +473,10 @@
   "football|Australia NPL Western|Bayswater City|Perth Glory FC Youth|让球主胜|1x2|2026-08-22": {
     "ev": 3.28,
     "ts": 1787296958.334189
+  },
+  "football|Australia NPL Western|Bayswater City|Perth Glory FC Youth|让球客胜|1x2|2026-08-22": {
+    "ev": 5.8,
+    "ts": 1787326213.665951
   },
   "football|Australia NPL Western|Olympic Kingsway SC|Fremantle City|主胜|1x2|2026-08-22": {
     "ev": 3.07,
@@ -552,6 +560,10 @@
   "football|Austria 2. Liga|Wacker Innsbruck|SKN ST Polten|上半场主胜|ht|2026-08-22": {
     "ev": 1.58,
     "ts": 1787271530.089319
+  },
+  "football|Austria 2. Liga|Wacker Innsbruck|SKN ST Polten|让球主胜|1x2|2026-08-22": {
+    "ev": 2.04,
+    "ts": 1787327049.4307141
   },
   "football|Austria Bundesliga|SV Ried|Grazer AK|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.06,
@@ -773,6 +785,18 @@
     "ev": 1.56,
     "ts": 1787318830.7029
   },
+  "football|Czech Republic CFL|FK Kraluv Dvur|FC Pisek|双重机会-和局/客|dc|2026-08-22": {
+    "ev": 2.42,
+    "ts": 1787326213.664115
+  },
+  "football|Czech Republic CFL|FK Kraluv Dvur|FC Pisek|客胜|1x2|2026-08-22": {
+    "ev": 2.91,
+    "ts": 1787326213.664046
+  },
+  "football|Czech Republic CFL|FK Kraluv Dvur|FC Pisek|让球客胜|1x2|2026-08-22": {
+    "ev": 8.98,
+    "ts": 1787326213.6640809
+  },
   "football|Czech Republic CFL|FK Loko Prague|SK Aritma Prague|小球|1x2|2026-08-22": {
     "ev": 1.78,
     "ts": 1787302708.2303722
@@ -788,6 +812,10 @@
   "football|Czech Republic FNL|FC Vysocina Jihlava|FC Silon Taborsko|小球|1x2|2026-08-22": {
     "ev": 1.17,
     "ts": 1787307345.8798552
+  },
+  "football|Czech Republic FNL|SFC Opava|FK Fotbal Trinec|主胜|1x2|2026-08-22": {
+    "ev": 1.36,
+    "ts": 1787326765.221778
   },
   "football|Czech Republic MSFL|SK Hranice|MFK Havirov|让球主胜|1x2|2026-08-22": {
     "ev": 1.63,
@@ -963,6 +991,10 @@
     "ev": 1.5,
     "ts": 1787298948.416546
   },
+  "football|Estonia Meistriliiga|FCI Levadia Tallinn|JK Narva Trans|和局|1x2|2026-08-22": {
+    "ev": 11.39,
+    "ts": 1787327049.4306428
+  },
   "football|Estonia Meistriliiga|FCI Levadia Tallinn|JK Narva Trans|大球|1x2|2026-08-22": {
     "ev": 1.22,
     "ts": 1787297997.507008
@@ -1016,6 +1048,10 @@
     "ev": 5.17,
     "ts": 1787301006.3545961
   },
+  "football|Finland Ykkosliiga|PK 35|JAPS|上半场主胜|ht|2026-08-22": {
+    "ev": 1.05,
+    "ts": 1787326461.9163818
+  },
   "football|Finland Ykkosliiga|PK 35|JAPS|主胜|1x2|2026-08-22": {
     "ev": 2.31,
     "ts": 1787311747.185367
@@ -1027,6 +1063,10 @@
   "football|Finland Ykkosliiga|PK 35|JAPS|让球主胜|1x2|2026-08-22": {
     "ev": 2.54,
     "ts": 1787311747.185444
+  },
+  "football|France Ligue 1|Olympique Marseille|Strasbourg Alsace|上半场客胜|ht|2026-08-22": {
+    "ev": 1.24,
+    "ts": 1787326765.222731
   },
   "football|France Ligue 1|特鲁瓦|巴黎FC|和局|1x2|2026-08-23": {
     "ev": 3.36,
@@ -1203,6 +1243,10 @@
   "football|Hong Kong Premier League|Southern District Football Club|Hong Kong FC|客胜|1x2|2026-08-22": {
     "ev": 1.26,
     "ts": 1787303712.199968
+  },
+  "football|Hungary NB I|MTK Budapest|Nyiregyhaza Spartacus FC|总进球区间7+|total_goals_range|2026-08-22": {
+    "ev": 7.51,
+    "ts": 1787327194.8346791
   },
   "football|Iceland 1. deild|Aegir|Afturelding|让球客胜|1x2|2026-08-22": {
     "ev": 1.07,
@@ -1922,6 +1966,11 @@
   "football|Spain LaLiga 2|Real Oviedo|Leganes|上半场客胜|ht|2026-08-22": {
     "ev": 1.55,
     "ts": 1787325212.1438239
+  },
+  "football|Spain LaLiga 2|皇家奥维耶多|莱加内斯|上半场客胜|ht|2026-08-22": {
+    "ev": 6.83,
+    "bb": 6.2,
+    "ts": 1787326213.422998
   },
   "football|Spain LaLiga|Athletic Bilbao|Sevilla FC|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 2.65,
@@ -2694,9 +2743,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Spain LaLiga 2|皇家奥维耶多|莱加内斯|上半场客胜|ht|2026-08-22": {
-    "ev": 6.83,
-    "bb": 6.2,
-    "ts": 1787326213.422998
+  "football|Peru Liga 1|卡哈马卡FC|格劳竞技|上半场客胜|ht|2026-08-22": {
+    "ev": 4.66,
+    "bb": 4.51,
+    "ts": 1787327353.906455
   }
 }
