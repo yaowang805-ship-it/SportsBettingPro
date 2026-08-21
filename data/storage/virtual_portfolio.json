@@ -1,5 +1,5 @@
 {
-  "balance": 4177.46,
+  "balance": 4167.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2715,6 +2715,29 @@
       "commence_time": 1787509800,
       "created_at": "2026-08-21T01:31:58.360304+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_富川FC_1995_浦项制铁_上半场主胜",
+      "sport": "football",
+      "league": "韩国K1联赛",
+      "home_team": "富川FC 1995",
+      "away_team": "浦项制铁",
+      "home_cn": "富川FC 1995",
+      "away_cn": "浦项制铁",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.13,
+      "stake": 10,
+      "model_prob": 0.256,
+      "ev_pct": 5.74,
+      "pin_odds": 3.61,
+      "fair_price": 3.9058,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787394600,
+      "created_at": "2026-08-21T02:36:41.053673+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2821,8 +2844,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-21",
-    "used": 453.0,
-    "bets": 10
+    "used": 463.0,
+    "bets": 11
   },
   "updated": null
 }

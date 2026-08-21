@@ -105,6 +105,11 @@
     "bb": 1.33,
     "ts": 1787114647.96401
   },
+  "basketball|Mexico LNBP Basketball League|墨西哥红恶鬼|罗伯斯普拉塔多斯|让分主胜(-4.5)|hc|-4.5|2026-08-21": {
+    "ev": 17.37,
+    "bb": 1.96,
+    "ts": 1787277865.670099
+  },
   "basketball|Mexico LNBP Basketball League|皇家部队|甘布西诺弗雷斯尼洛|主胜|1x2|2026-08-21": {
     "ev": 3.74,
     "bb": 1.2,
@@ -318,6 +323,10 @@
     "ev": 1.44,
     "ts": 1787272716.818929
   },
+  "football|CONCACAF Central American Cup|Luis Angel Firpo|Liga Deportiva Alajuelense|大球|1x2|2026-08-21": {
+    "ev": 3.2,
+    "ts": 1787278365.132393
+  },
   "football|Colombia Primera A|Alianza FC|CS Deportivo Pereira|主胜|1x2|2026-08-22": {
     "ev": 1.0,
     "ts": 1787273147.7858381
@@ -414,6 +423,10 @@
   "football|Ecuador LigaPro Primera A|Cuenca|Mushuc Runa SC|让球客胜|1x2|2026-08-22": {
     "ev": 2.04,
     "ts": 1787271530.092264
+  },
+  "football|Egypt Premier League|Wadi Degla SC|Zed FC|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 1.9,
+    "ts": 1787278551.894921
   },
   "football|Egypt Premier League|Wadi Degla SC|Zed FC|上半场客胜|ht|2026-08-21": {
     "ev": 2.24,
@@ -1290,9 +1303,9 @@
     "bb": 2.1,
     "ts": 1787196181.768765
   },
-  "basketball|Mexico LNBP Basketball League|墨西哥红恶鬼|罗伯斯普拉塔多斯|让分主胜(-4.5)|hc|-4.5|2026-08-21": {
-    "ev": 17.37,
-    "bb": 1.96,
-    "ts": 1787277865.670099
+  "football|South Korea K-League 1|富川FC 1995|浦项制铁|上半场主胜|ht|2026-08-22": {
+    "ev": 5.74,
+    "bb": 4.13,
+    "ts": 1787279801.179585
   }
 }
