@@ -96,6 +96,14 @@
     "ev": 1.72,
     "ts": 1787180086.215321
   },
+  "basketball|Brazil Campeonato Paulista de Basquete|Bauru Basket SP|Paulistano SP|主胜|1x2|2026-08-23": {
+    "ev": 2.54,
+    "ts": 1787346981.243577
+  },
+  "basketball|Brazil Campeonato Paulista de Basquete|Mogi das Cruzes|Corinthians Paulista|主胜|1x2|2026-08-23": {
+    "ev": 1.39,
+    "ts": 1787346981.243623
+  },
   "basketball|Brazil Campeonato Paulista de Basquete|Sesi Franca BC SP|EC Pinheiros SP|让分客胜|1x2|2026-08-21": {
     "ev": 1.79,
     "ts": 1787213579.943209
@@ -160,6 +168,10 @@
   "basketball|Mexico LNBP Basketball League|Soles de Mexicali|Mineros de Zacatecas|主胜|1x2|2026-08-22": {
     "ev": 1.17,
     "ts": 1787304800.244683
+  },
+  "basketball|Mexico LNBP Basketball League|Soles de Mexicali|Mineros de Zacatecas|客胜|1x2|2026-08-22": {
+    "ev": 2.34,
+    "ts": 1787349526.605511
   },
   "basketball|Mexico LNBP Basketball League|Soles de Mexicali|Mineros de Zacatecas|让分主胜|1x2|2026-08-21": {
     "ev": 1.36,
@@ -314,6 +326,10 @@
     "ev": 2.4,
     "ts": 1787309182.841263
   },
+  "boxing|Boxing International Matchups|George Liddard|Dario Morello|主胜|1x2|2026-08-23": {
+    "ev": 1.02,
+    "ts": 1787346981.243673
+  },
   "football|ASEAN Hyundai Cup|Thailand|Vietnam|大球|1x2|2026-08-22": {
     "ev": 3.15,
     "ts": 1787318164.5047328
@@ -348,6 +364,10 @@
     "ev": 1.02,
     "ts": 1787212583.6080692
   },
+  "football|Argentina Liga Profesional|Estudiantes Rio Cuarto|San Lorenzo de Almagro|大球|1x2|2026-08-22": {
+    "ev": 1.28,
+    "ts": 1787346802.1785119
+  },
   "football|Argentina Liga Profesional|Estudiantes Rio Cuarto|San Lorenzo de Almagro|角球让球客胜|corner|2026-08-22": {
     "ev": 2.78,
     "ts": 1787283255.3156312
@@ -364,6 +384,11 @@
     "ev": 3.14,
     "bb": 1.66,
     "ts": 1787209374.2067552
+  },
+  "football|Argentina Liga Profesional|里奥夸尔托学生队|圣洛伦索|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 3.12,
+    "bb": 2.22,
+    "ts": 1787346801.8598342
   },
   "football|Argentina Liga Profesional|阿尔多斯维|圣塔菲联|让球客胜(0)|hc|0|2026-08-22": {
     "ev": 4.15,
@@ -399,6 +424,10 @@
   "football|Argentina Primera B Metropolitana|CSCD Laferrere|Club Villa Dalmine|和局|1x2|2026-08-22": {
     "ev": 6.1,
     "ts": 1787296958.334063
+  },
+  "football|Argentina Primera B Metropolitana|CSCD Laferrere|Club Villa Dalmine|让球主胜|1x2|2026-08-22": {
+    "ev": 1.97,
+    "ts": 1787349526.605439
   },
   "football|Argentina Primera B Metropolitana|Comunicaciones|CS Italiano|让球客胜|1x2|2026-08-22": {
     "ev": 2.68,
@@ -732,6 +761,10 @@
     "ev": 1.11,
     "ts": 1787290860.1026702
   },
+  "football|Bolivia Division Profesional|The Strongest|Universitario de Vinto|客胜|1x2|2026-08-22": {
+    "ev": 4.69,
+    "ts": 1787350875.160162
+  },
   "football|Bosnia and Herzegovina Premier Liga|FK Sarajevo|FK BSK Banja Luka|和局|1x2|2026-08-22": {
     "ev": 1.2,
     "ts": 1787334999.2566888
@@ -740,10 +773,22 @@
     "ev": 3.43,
     "ts": 1787304800.242382
   },
+  "football|Brazil Campeonato Brasileiro Women|EC Vitoria BA (w)|Santos FC SP (w)|主胜|1x2|2026-08-23": {
+    "ev": 19.06,
+    "ts": 1787346981.243477
+  },
   "football|Brazil Campeonato Brasileiro Women|维多利亚 (女)|桑托斯SP (女)|主胜|1x2|2026-08-23": {
     "ev": 23.79,
     "bb": 7.25,
     "ts": 1787283255.079179
+  },
+  "football|Brazil Serie A|Internacional RS|Atletico Mineiro MG|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 1.35,
+    "ts": 1787349415.4502559
+  },
+  "football|Brazil Serie A|Internacional RS|Atletico Mineiro MG|和局|1x2|2026-08-23": {
+    "ev": 1.15,
+    "ts": 1787349415.4502132
   },
   "football|Brazil Serie B|Athletic Club MG|CR Brasil AL|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 1.14,
@@ -756,6 +801,10 @@
   "football|Brazil Serie B|Athletic Club MG|CR Brasil AL|让球客胜|1x2|2026-08-21": {
     "ev": 1.88,
     "ts": 1787196182.098513
+  },
+  "football|Brazil Serie B|Cuiaba Esporte Clube MT|Goias EC GO|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 2.77,
+    "ts": 1787349415.450463
   },
   "football|Brazil Serie B|Gremio Novorizontino SP|America FC MG|让球客胜|1x2|2026-08-21": {
     "ev": 1.18,
@@ -823,6 +872,10 @@
   "football|Colombia Primera A|Alianza FC|CS Deportivo Pereira|主胜|1x2|2026-08-22": {
     "ev": 1.0,
     "ts": 1787273147.7858381
+  },
+  "football|Colombia Primera A|Alianza FC|CS Deportivo Pereira|让球客胜|1x2|2026-08-22": {
+    "ev": 1.97,
+    "ts": 1787350100.631186
   },
   "football|Colombia Primera A|Jaguares de Cordoba|Boyaca Chico FC|让球客胜|1x2|2026-08-22": {
     "ev": 1.34,
@@ -907,6 +960,10 @@
     "ev": 1.37,
     "ts": 1787280651.843219
   },
+  "football|Costa Rica Primera Division|Puntarenas FC|Perez Zeledon|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.45,
+    "ts": 1787351214.091011
+  },
   "football|Costa Rica Primera Division|Puntarenas FC|Perez Zeledon|主胜|1x2|2026-08-22": {
     "ev": 2.34,
     "ts": 1787311609.7674491
@@ -918,6 +975,10 @@
   "football|Costa Rica Primera Division|Puntarenas FC|Perez Zeledon|总进球区间7+|total_goals_range|2026-08-22": {
     "ev": 1.79,
     "ts": 1787296958.334434
+  },
+  "football|Croatia HNL League|GNK Dinamo Zagreb|NK Varazdin|让球客胜|1x2|2026-08-23": {
+    "ev": 5.57,
+    "ts": 1787349415.449557
   },
   "football|Croatia HNL League|NK Rudes Zagreb|NK Lokomotiva Zagreb|上半场主胜|ht|2026-08-22": {
     "ev": 3.78,
@@ -1012,6 +1073,14 @@
   "football|Ecuador LigaPro Primera A|Cuenca|Mushuc Runa SC|让球客胜|1x2|2026-08-22": {
     "ev": 2.04,
     "ts": 1787271530.092264
+  },
+  "football|Ecuador LigaPro Primera A|Tecnico Universitario|Guayaquil City FC|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 1.71,
+    "ts": 1787349415.450353
+  },
+  "football|Ecuador LigaPro Primera A|Tecnico Universitario|Guayaquil City FC|主胜|1x2|2026-08-23": {
+    "ev": 2.16,
+    "ts": 1787349415.450305
   },
   "football|Egypt Premier League|Abo Qair Semads|National Bank of Egypt SC|上半场主胜|ht|2026-08-22": {
     "ev": 4.49,
@@ -1873,11 +1942,6 @@
     "bb": 5.6,
     "ts": 1787325211.831202
   },
-  "football|Japan J.League 2|大分三神|磐城市|上半场主胜|ht|2026-08-22": {
-    "ev": 4.24,
-    "bb": 6.25,
-    "ts": 1787296957.964776
-  },
   "football|Japan J.League 2|山形山神|横滨FC|让球客胜(0)|hc|0|2026-08-22": {
     "ev": 4.64,
     "bb": 1.58,
@@ -2016,6 +2080,18 @@
   "football|Mexico Liga MX Women|Pumas UNAM (w)|Queretaro FC (w)|双边进球-否|btts|2026-08-22": {
     "ev": 1.5,
     "ts": 1787341322.751105
+  },
+  "football|Mexico Liga MX Women|Pumas UNAM (w)|Queretaro FC (w)|双重机会-和局/客|dc|2026-08-22": {
+    "ev": 1.07,
+    "ts": 1787350265.728263
+  },
+  "football|Mexico Liga MX Women|Pumas UNAM (w)|Queretaro FC (w)|客胜|1x2|2026-08-22": {
+    "ev": 5.24,
+    "ts": 1787350265.728168
+  },
+  "football|Mexico Liga MX Women|Pumas UNAM (w)|Queretaro FC (w)|让球客胜|1x2|2026-08-22": {
+    "ev": 4.99,
+    "ts": 1787350265.728213
   },
   "football|Mexico Liga MX|Club Leon|Monterrey|双边进球-是|btts|2026-08-22": {
     "ev": 1.56,
@@ -2164,6 +2240,10 @@
   "football|Northern Ireland Premiership|Linfield FC|Cliftonville FC|主胜|1x2|2026-08-22": {
     "ev": 2.33,
     "ts": 1787336958.525155
+  },
+  "football|Norway 1st Division|Sandnes Ulf|Bryne FK|让球主胜|1x2|2026-08-22": {
+    "ev": 1.78,
+    "ts": 1787349415.448259
   },
   "football|Norway Toppserien Women|FK Fortuna Alesund (w)|Haugesund (w)|客胜|1x2|2026-08-22": {
     "ev": 5.27,
@@ -2541,6 +2621,10 @@
     "ev": 9.5,
     "ts": 1787325212.14368
   },
+  "football|Spain LaLiga|RCD Espanyol|Real Madrid|上半场主胜|ht|2026-08-23": {
+    "ev": 1.19,
+    "ts": 1787349415.448481
+  },
   "football|Spain LaLiga|Rayo Vallecano|Deportivo Alaves|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 4.17,
     "ts": 1787180086.2147598
@@ -2744,6 +2828,10 @@
     "bb": 1.8,
     "ts": 1787216720.2681868
   },
+  "football|Sweden Ettan Sodra|Jonkopings Sodra IF|FC Rosengaard 1917|让球客胜|1x2|2026-08-22": {
+    "ev": 2.25,
+    "ts": 1787349415.447712
+  },
   "football|Switzerland Challenge League|FC Stade Nyonnais|Etoile Carouge FC|客胜|1x2|2026-08-22": {
     "ev": 2.21,
     "ts": 1787284322.146854
@@ -2807,6 +2895,14 @@
   "football|Turkey Super Lig|Caykur Rizespor|Samsunspor|和局|1x2|2026-08-23": {
     "ev": 1.35,
     "ts": 1787329231.7737012
+  },
+  "football|Turkey Super Lig|Fenerbahce|Konyaspor|客胜|1x2|2026-08-23": {
+    "ev": 2.34,
+    "ts": 1787350394.2973728
+  },
+  "football|Turkey Super Lig|Fenerbahce|Konyaspor|让球客胜|1x2|2026-08-23": {
+    "ev": 1.01,
+    "ts": 1787349415.449047
   },
   "football|Turkey Super Lig|里泽斯堡|萨姆松珀|和局|1x2|2026-08-23": {
     "ev": 7.08,
@@ -3159,6 +3255,14 @@
     "ev": 5.17,
     "ts": 1787289079.885557
   },
+  "football|Ukraine Cup|UCSA Tarasivka|Kolos Kovalivka|客胜|1x2|2026-08-22": {
+    "ev": 4.35,
+    "ts": 1787347982.0197482
+  },
+  "football|Ukraine Cup|UCSA Tarasivka|Kolos Kovalivka|让球客胜|1x2|2026-08-22": {
+    "ev": 4.61,
+    "ts": 1787347982.019785
+  },
   "football|Uruguay Primera Division|Albion FC|Boston River|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 2.24,
     "ts": 1787287614.009758
@@ -3170,6 +3274,14 @@
   "football|Uruguay Primera Division|Central Espanol FC|Juventud de Las Piedras|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.46,
     "ts": 1787323454.1753888
+  },
+  "football|Uruguay Primera Division|Liverpool Montevideo|Cerro|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.89,
+    "ts": 1787348099.5360541
+  },
+  "football|Uruguay Primera Division|Liverpool Montevideo|Cerro|上半场客胜|ht|2026-08-22": {
+    "ev": 1.39,
+    "ts": 1787349526.605153
   },
   "football|Uruguay Primera Division|阿尔比恩|波士顿河|让球主胜(0)|hc|0|2026-08-22": {
     "ev": 4.52,
@@ -3378,9 +3490,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Argentina Liga Profesional|里奥夸尔托学生队|圣洛伦索|上半场双重机会-主/客|ht_dc|2026-08-22": {
-    "ev": 3.12,
-    "bb": 2.22,
-    "ts": 1787346801.8598342
+  "football|Japan J.League 2|大分三神|磐城市|上半场主胜|ht|2026-08-22": {
+    "ev": 11.03,
+    "bb": 6.55,
+    "ts": 1787351350.37829
   }
 }
