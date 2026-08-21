@@ -71,18 +71,25 @@ def _non_betting_quota_ok() -> bool:
     return True
 
 
-def send_dingtalk(title: str, body: str, timeout: int = 10) -> bool:
+def send_dingtalk(title: str, body: str, timeout: int = 10, urgent: bool = False) -> bool:
     """统一钉钉推送，返回 True=成功。
 
     委托给 config.dingtalk 的直连实现（绕过 Shadowrocket DNS 劫持）。
-    自动确保正文包含机器人关键词。所有推送请走此函数。
-    投注推荐(+EV)不受限; 其余信息每天最多推 2 次。
+    自动确保正文包含机器人关键词。所有推送请走此函数
+    —— 直接 import config.dingtalk.send_dingtalk 的签名是 (content, msgtype, title)，
+    与本函数的 (title, body, timeout) 不兼容且不注入关键词，混用会静默失效
+    (2026-08-21 查出 3 处告警因此从未送达)。
+
+    投注推荐(+EV)不受限; 其余信息每天最多推 _NON_BETTING_DAILY_LIMIT 次。
+
+    urgent=True: 故障类告警(看门狗/静默失效/封禁)跳过每日配额 —— 配额是防例行日报
+    刷屏的, 不该让故障告警被日报挤掉而静默丢失。此类告警调用方自身已各有节流。
     """
     from config.dingtalk import send_dingtalk as _real_send
     if not DINGTALK_WEBHOOK:
         return False
-    # 非投注推荐信息每日限流
-    if not _is_betting_push(title) and not _non_betting_quota_ok():
+    # 非投注推荐信息每日限流(urgent 故障告警除外)
+    if not urgent and not _is_betting_push(title) and not _non_betting_quota_ok():
         return False
     # 确保关键词存在
     if DINGTALK_KEYWORD not in body:

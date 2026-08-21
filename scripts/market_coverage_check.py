@@ -70,9 +70,13 @@ def main(push: bool):
             lines.append(f"  • {sm}: {age_h:.0f}h 无产出 (历史 {n} 条)")
         lines.append("\n可能原因: 匹配断链/异常被吞/数据源停。排查对应 fetch 函数。")
         try:
-            from config.dingtalk import send_dingtalk
-            send_dingtalk("盘口静默失效", "\n".join(lines), timeout=10)
-            print("  已推送钉钉告警")
+            # 用 config.settings 入口(自动注入关键词, 签名匹配)。原先误用 config.dingtalk
+            # 且传 timeout= → TypeError 被吞, 告警从未发出。
+            from config.settings import send_dingtalk
+            if send_dingtalk("盘口静默失效", "\n".join(lines), urgent=True):
+                print("  已推送钉钉告警")
+            else:
+                print("  ⚠️ 钉钉告警未送达")
         except Exception as e:
             print(f"  告警推送失败: {e}")
 

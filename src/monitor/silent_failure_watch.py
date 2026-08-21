@@ -105,8 +105,12 @@ def _alert(job, rec, expected, detail):
             "常规看门狗测不出来, 需人工排查。")
     logger.error("静默失效告警: %s 连续 %d 次零产出", job, rec["streak"])
     try:
-        from config.dingtalk import send_dingtalk
-        send_dingtalk("任务静默失效", msg, timeout=10)
+        # 必须用 config.settings 的入口: config.dingtalk 的签名是 (content,msgtype,title)
+        # 且不注入关键词 —— 原先 import 的是后者却按前者签名传 timeout=10, 抛 TypeError
+        # 被下面 except 吞掉, 于是"静默失效看门狗"自己静默失效, 从未告警过一次。
+        from config.settings import send_dingtalk
+        if not send_dingtalk("任务静默失效", msg, urgent=True):
+            logger.warning("静默失效告警未送达(钉钉返回失败)")
     except Exception as e:
         logger.warning("静默失效告警推送失败: %s", e)
 

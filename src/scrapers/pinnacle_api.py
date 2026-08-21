@@ -523,11 +523,13 @@ def _maybe_notify_recovered():
         except (ValueError, OSError):
             pass
     try:
-        from config.dingtalk import send_dingtalk
+        # 走 config.settings 入口自动注入机器人关键词 —— 原先直连 config.dingtalk 且
+        # 正文无"投注推荐", 被钉钉服务端以 errcode 310000 静默拒收, 恢复通知从未送达。
+        from config.settings import send_dingtalk
         msg = "✅ Pinnacle 已恢复\n\nCloudflare 封禁已解除, 增量扫描/推送恢复正常。"
-        send_dingtalk(msg, msgtype="text", title="Pinnacle 恢复通知")
+        _sent = send_dingtalk("Pinnacle 恢复通知", msg, urgent=True)
         _recovered_file.write_text(str(time.time()))
-        logger.info("已发送钉钉 Pinnacle 恢复通知")
+        logger.info("钉钉 Pinnacle 恢复通知: %s", "已送达" if _sent else "未送达")
         # 重置封禁节流文件, 下次封禁能立即发新告警(一个封禁/恢复周期各一条)
         try:
             _throttle_file.unlink(missing_ok=True)
