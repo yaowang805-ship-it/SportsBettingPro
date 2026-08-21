@@ -909,6 +909,10 @@
     "ev": 4.7,
     "ts": 1787289659.5673
   },
+  "football|Finland Ykkonen|PK Keski Uusimaa|JJK Jyvaskyla|和局|1x2|2026-08-21": {
+    "ev": 1.58,
+    "ts": 1787323085.964757
+  },
   "football|Finland Ykkosliiga|FC Haka Valkeakoski|SJK Akatemia|上半场主胜|ht|2026-08-21": {
     "ev": 2.95,
     "ts": 1787279802.278744
@@ -1123,6 +1127,19 @@
     "ev": 1.93,
     "ts": 1787290860.10212
   },
+  "football|Iceland Besta Deild Women|Thor/KA (w)|Valur Reykjavik (w)|主胜|1x2|2026-08-22": {
+    "ev": 3.85,
+    "ts": 1787323085.956896
+  },
+  "football|Iceland Besta Deild Women|Thor/KA (w)|Valur Reykjavik (w)|让球主胜|1x2|2026-08-22": {
+    "ev": 2.69,
+    "ts": 1787323085.9569669
+  },
+  "football|Iceland Besta deild Women|索尔阿克雷里 (女)|华路亚 (女)|主胜|1x2|2026-08-22": {
+    "ev": 10.48,
+    "bb": 2.04,
+    "ts": 1787321182.4409542
+  },
   "football|Ireland First Division|Finn Harps FC|Cobh Ramblers|让球主胜|1x2|2026-08-22": {
     "ev": 1.12,
     "ts": 1787271530.0909061
@@ -1304,6 +1321,10 @@
     "ev": 8.3,
     "bb": 5.25,
     "ts": 1787296957.964724
+  },
+  "football|Jordan Super Cup|Al Faisaly Amman|Al Wehdat Amman|让球客胜|1x2|2026-08-22": {
+    "ev": 3.65,
+    "ts": 1787323085.964937
   },
   "football|Latvia Virsliga|FK Auda|FK Tukums 2000|上半场主胜|ht|2026-08-21": {
     "ev": 5.96,
@@ -1777,6 +1798,10 @@
     "ev": 28.81,
     "bb": 6.7,
     "ts": 1787271529.6434932
+  },
+  "football|Sweden Allsvenskan|IK Sirius|BK Hacken|小球|1x2|2026-08-22": {
+    "ev": 1.02,
+    "ts": 1787323085.956585
   },
   "football|Sweden Allsvenskan|IK Sirius|BK Hacken|总进球区间7+|total_goals_range|2026-08-22": {
     "ev": 1.54,
@@ -2333,6 +2358,10 @@
     "ev": 2.31,
     "ts": 1787320347.586516
   },
+  "tennis|ATP - Cincinnati Open - Doubles|Luciano Darderi (ITA) / Tomas Martin Etcheverry (ARG)|Marcel Granollers (ESP) / Horacio Zeballos (ARG)|主胜|1x2|2026-08-21": {
+    "ev": 3.46,
+    "ts": 1787323085.964586
+  },
   "tennis|ATP - Cincinnati Open - Doubles|Luciano Darderi (ITA) / Tomas Martin Etcheverry (ARG)|Marcel Granollers (ESP) / Horacio Zeballos (ARG)|客胜|1x2|2026-08-21": {
     "ev": 3.01,
     "ts": 1787309915.295329
@@ -2434,9 +2463,14 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Iceland Besta deild Women|索尔阿克雷里 (女)|华路亚 (女)|主胜|1x2|2026-08-22": {
-    "ev": 10.48,
-    "bb": 2.04,
-    "ts": 1787321182.4409542
+  "football|Peru Liga 1|阿利亚加|水晶竞技|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 4.06,
+    "bb": 1.8,
+    "ts": 1787323453.698667
+  },
+  "football|Poland Ekstraklasa|克拉科维亚|莫摩斯|上半场客胜|ht|2026-08-22": {
+    "ev": 4.42,
+    "bb": 4.22,
+    "ts": 1787323453.698825
   }
 }
