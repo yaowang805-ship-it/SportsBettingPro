@@ -1,5 +1,5 @@
 {
-  "balance": 4220.46,
+  "balance": 4201.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2347,6 +2347,29 @@
       "commence_time": 1787416200,
       "created_at": "2026-08-21T04:46:53.735435+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_莫斯科鱼雷_科斯特罗马斯巴达_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "俄罗斯甲级联赛",
+      "home_team": "莫斯科鱼雷",
+      "away_team": "科斯特罗马斯巴达",
+      "home_cn": "莫斯科鱼雷",
+      "away_cn": "科斯特罗马斯巴达",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.87,
+      "stake": 19,
+      "model_prob": 0.5574,
+      "ev_pct": 4.24,
+      "pin_odds": 0,
+      "fair_price": 1.7939,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787329800,
+      "created_at": "2026-08-21T05:40:59.824618+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2558,8 +2581,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-21",
-    "used": 568.0,
-    "bets": 15
+    "used": 587.0,
+    "bets": 16
   },
   "updated": null
 }
