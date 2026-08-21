@@ -1,5 +1,5 @@
 {
-  "balance": 651.46,
+  "balance": 636.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2370,6 +2370,29 @@
       "commence_time": 1787424300,
       "created_at": "2026-08-21T19:27:53.757357+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_瓦伦西亚_维戈塞尔塔_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "西班牙甲级联赛",
+      "home_team": "瓦伦西亚",
+      "away_team": "维戈塞尔塔",
+      "home_cn": "瓦伦西亚",
+      "away_cn": "维戈塞尔塔",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.9,
+      "stake": 15,
+      "model_prob": 0.548,
+      "ev_pct": 4.13,
+      "pin_odds": 0,
+      "fair_price": 1.8247,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787419800,
+      "created_at": "2026-08-21T20:15:18.866307+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2971,8 +2994,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-22",
-    "used": 958.0,
-    "bets": 9
+    "used": 973.0,
+    "bets": 10
   },
   "updated": null
 }

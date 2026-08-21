@@ -412,6 +412,10 @@
     "ev": 4.39,
     "ts": 1787337630.858934
   },
+  "football|Argentina Primera B Metropolitana|Talleres de Remedios|Excursionistas|让球客胜|1x2|2026-08-23": {
+    "ev": 7.41,
+    "ts": 1787342397.83802
+  },
   "football|Argentina Primera B Metropolitana|塔勒雷斯雷米迪奥斯|伊希库斯尼斯塔史|双重机会-和局/客|dc|2026-08-23": {
     "ev": 5.02,
     "bb": 1.94,
@@ -761,6 +765,14 @@
   "football|CONCACAF Central American Cup|Luis Angel Firpo|Liga Deportiva Alajuelense|大球|1x2|2026-08-21": {
     "ev": 3.2,
     "ts": 1787278365.132393
+  },
+  "football|Chile Primera B|Puerto Montt|Deportes Iquique|客胜|1x2|2026-08-23": {
+    "ev": 1.91,
+    "ts": 1787341447.4177961
+  },
+  "football|Chile Primera B|Puerto Montt|Deportes Iquique|让球客胜|1x2|2026-08-23": {
+    "ev": 5.97,
+    "ts": 1787341447.417863
   },
   "football|Chile Primera B|San Marcos de Arica|CSD Rangers|双重机会-和局/客|dc|2026-08-22": {
     "ev": 5.48,
@@ -1244,6 +1256,14 @@
     "ev": 4.12,
     "ts": 1787338579.6328561
   },
+  "football|France Ligue 1|Le Mans FC|Stade Brest 29|双重机会-和局/客|dc|2026-08-23": {
+    "ev": 11.12,
+    "ts": 1787340474.022839
+  },
+  "football|France Ligue 1|Le Mans FC|Stade Brest 29|和局|1x2|2026-08-23": {
+    "ev": 100.13,
+    "ts": 1787340474.022795
+  },
   "football|France Ligue 1|Olympique Marseille|Strasbourg Alsace|上半场客胜|ht|2026-08-22": {
     "ev": 1.24,
     "ts": 1787326765.222731
@@ -1255,6 +1275,16 @@
   "football|France Ligue 1|Toulouse FC|Olympique Lyonnais|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 1.21,
     "ts": 1787338579.629898
+  },
+  "football|France Ligue 1|勒芒|布雷斯特|双重机会-和局/客|dc|2026-08-23": {
+    "ev": 11.12,
+    "bb": 1.78,
+    "ts": 1787340473.767902
+  },
+  "football|France Ligue 1|勒芒|布雷斯特|和局|1x2|2026-08-23": {
+    "ev": 100.13,
+    "bb": 7.2,
+    "ts": 1787340473.767859
   },
   "football|France Ligue 1|特鲁瓦|巴黎FC|和局|1x2|2026-08-23": {
     "ev": 3.36,
@@ -1707,6 +1737,10 @@
     "ev": 1.78,
     "ts": 1787325601.937702
   },
+  "football|Italy Serie B|US Avellino 1912|SS Arezzo|上半场客胜|ht|2026-08-23": {
+    "ev": 3.53,
+    "ts": 1787340474.023825
+  },
   "football|Italy Serie B|US Avellino 1912|SS Arezzo|单双-双|oe|2026-08-23": {
     "ev": 1.15,
     "ts": 1787339541.254206
@@ -1942,6 +1976,10 @@
   "football|Mexico Liga MX Women|Pumas UNAM (w)|Queretaro FC (w)|上半场主胜|ht|2026-08-22": {
     "ev": 1.26,
     "ts": 1787314284.16978
+  },
+  "football|Mexico Liga MX Women|Pumas UNAM (w)|Queretaro FC (w)|双边进球-否|btts|2026-08-22": {
+    "ev": 1.5,
+    "ts": 1787341322.751105
   },
   "football|Mexico Liga MX|Club Leon|Monterrey|双边进球-是|btts|2026-08-22": {
     "ev": 1.56,
@@ -3291,14 +3329,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|France Ligue 1|勒芒|布雷斯特|和局|1x2|2026-08-23": {
-    "ev": 100.13,
-    "bb": 7.2,
-    "ts": 1787340473.767859
-  },
-  "football|France Ligue 1|勒芒|布雷斯特|双重机会-和局/客|dc|2026-08-23": {
-    "ev": 11.12,
-    "bb": 1.78,
-    "ts": 1787340473.767902
+  "football|Spain LaLiga|瓦伦西亚|维戈塞尔塔|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 4.13,
+    "bb": 1.9,
+    "ts": 1787343318.87311
   }
 }
