@@ -1,5 +1,5 @@
 {
-  "balance": 1929.46,
+  "balance": 1809.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2117,6 +2117,29 @@
       "commence_time": 1787385600,
       "created_at": "2026-08-21T15:13:31.825846+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_皇家奥维耶多_莱加内斯_上半场客胜",
+      "sport": "football",
+      "league": "西班牙乙级联赛",
+      "home_team": "皇家奥维耶多",
+      "away_team": "莱加内斯",
+      "home_cn": "皇家奥维耶多",
+      "away_cn": "莱加内斯",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 6.2,
+      "stake": 120,
+      "model_prob": 0.1723,
+      "ev_pct": 6.83,
+      "pin_odds": 5.24,
+      "fair_price": 5.8035,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787410800,
+      "created_at": "2026-08-21T15:30:13.414637+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2718,8 +2741,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-21",
-    "used": 6028.0,
-    "bets": 42
+    "used": 6148.0,
+    "bets": 43
   },
   "updated": null
 }

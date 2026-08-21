@@ -208,6 +208,10 @@
     "ev": 2.96,
     "ts": 1787203065.44573
   },
+  "basketball|Paraguay Liga Nacional de Basquetbol|Deportivo San Jose|Olimpia Kings|主胜|1x2|2026-08-22": {
+    "ev": 7.42,
+    "ts": 1787325212.143979
+  },
   "basketball|Paraguay Liga Nacional de Basquetbol|卡皮亚塔公牛|菲利克斯佩雷斯|客胜|1x2|2026-08-21": {
     "ev": 4.58,
     "bb": 1.21,
@@ -751,6 +755,10 @@
     "ev": 2.01,
     "ts": 1787271530.090254
   },
+  "football|Czech Republic 1. Liga|SK Artis Brno|Sparta Prague|上半场客胜|ht|2026-08-22": {
+    "ev": 1.39,
+    "ts": 1787325212.143919
+  },
   "football|Czech Republic 1. Liga|阿蒂斯布尔诺|布拉格斯巴达|大球(2.75)|ou|2.75|2026-08-22": {
     "ev": 3.77,
     "bb": 1.85,
@@ -884,6 +892,10 @@
     "ev": 1.4,
     "ts": 1787214637.704653
   },
+  "football|England League One|Wycombe Wanderers|Plymouth Argyle|总进球区间7+|total_goals_range|2026-08-22": {
+    "ev": 1.67,
+    "ts": 1787325212.144566
+  },
   "football|England League Two|Exeter City|Accrington Stanley|让球客胜|1x2|2026-08-22": {
     "ev": 1.06,
     "ts": 1787324309.662122
@@ -932,6 +944,10 @@
   "football|England Premier League|Nottingham Forest|Leeds United|上半场客胜|ht|2026-08-22": {
     "ev": 1.02,
     "ts": 1787324309.661657
+  },
+  "football|England Premier League|Nottingham Forest|Leeds United|单双-双|oe|2026-08-22": {
+    "ev": 1.34,
+    "ts": 1787325212.142571
   },
   "football|England Premier League|伊普斯维奇|桑德兰|和局|1x2|2026-08-22": {
     "ev": 2.13,
@@ -987,6 +1003,10 @@
   "football|Finland Ykkosliiga|FC Haka Valkeakoski|SJK Akatemia|上半场主胜|ht|2026-08-21": {
     "ev": 2.95,
     "ts": 1787279802.278744
+  },
+  "football|Finland Ykkosliiga|FC Haka Valkeakoski|SJK Akatemia|双边进球-是|btts|2026-08-21": {
+    "ev": 1.13,
+    "ts": 1787325601.936895
   },
   "football|Finland Ykkosliiga|FC Haka Valkeakoski|SJK Akatemia|大球|1x2|2026-08-21": {
     "ev": 1.03,
@@ -1262,9 +1282,17 @@
     "bb": 4.17,
     "ts": 1787101664.26305
   },
+  "football|Ireland Premier Division|Drogheda United FC|Saint Patricks Athletic FC|客胜|1x2|2026-08-22": {
+    "ev": 2.35,
+    "ts": 1787325373.0310311
+  },
   "football|Ireland Premier Division|Drogheda United FC|Saint Patricks Athletic FC|让球主胜|1x2|2026-08-22": {
     "ev": 1.89,
     "ts": 1787274105.487998
+  },
+  "football|Ireland Premier Division|Drogheda United FC|Saint Patricks Athletic FC|让球客胜|1x2|2026-08-22": {
+    "ev": 2.06,
+    "ts": 1787325373.0310788
   },
   "football|Ireland Premier Division|Dundalk FC|Galway United FC|主胜|1x2|2026-08-22": {
     "ev": 2.41,
@@ -1309,6 +1337,10 @@
   "football|Italy Serie B|LR Vicenza|US Catanzaro 1929|双边进球-是|btts|2026-08-22": {
     "ev": 1.33,
     "ts": 1787315138.240674
+  },
+  "football|Italy Serie B|LR Vicenza|US Catanzaro 1929|大球|1x2|2026-08-22": {
+    "ev": 1.78,
+    "ts": 1787325601.937702
   },
   "football|Italy Serie B|恩波利|克雷莫纳|双边进球-是|btts|2026-08-23": {
     "ev": 4.36,
@@ -1380,6 +1412,19 @@
   "football|Japan J.League 2|Vanraure Hachinohe FC|Vegalta Sendai|上半场主胜|ht|2026-08-22": {
     "ev": 2.53,
     "ts": 1787299843.7734962
+  },
+  "football|Japan J.League 2|Vanraure Hachinohe FC|Vegalta Sendai|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 3.78,
+    "ts": 1787325212.1411562
+  },
+  "football|Japan J.League 2|Vanraure Hachinohe FC|Vegalta Sendai|大球|1x2|2026-08-22": {
+    "ev": 5.42,
+    "ts": 1787325212.1410801
+  },
+  "football|Japan J.League 2|八户云罗里|仙台七夕|上半场主胜|ht|2026-08-22": {
+    "ev": 5.09,
+    "bb": 5.6,
+    "ts": 1787325211.831202
   },
   "football|Japan J.League 2|大分三神|磐城市|上半场主胜|ht|2026-08-22": {
     "ev": 4.24,
@@ -1657,6 +1702,10 @@
     "ev": 1.7,
     "ts": 1787289659.5675678
   },
+  "football|Peru Liga 1|FC Cajamarca|Atletico Grau|上半场客胜|ht|2026-08-22": {
+    "ev": 1.75,
+    "ts": 1787325601.937079
+  },
   "football|Peru Liga 1|FC Cajamarca|Atletico Grau|双边进球-是|btts|2026-08-22": {
     "ev": 1.3,
     "ts": 1787285576.81983
@@ -1730,6 +1779,10 @@
     "ev": 1.32,
     "ts": 1787323454.177401
   },
+  "football|Portugal Segunda Liga|SL Benfica B|Portimonense SC|主胜|1x2|2026-08-22": {
+    "ev": 2.42,
+    "ts": 1787325919.535756
+  },
   "football|Portugal Segunda Liga|SL Benfica B|Portimonense SC|和局|1x2|2026-08-22": {
     "ev": 1.03,
     "ts": 1787289659.568738
@@ -1767,6 +1820,10 @@
     "ev": 1.15,
     "ts": 1787296958.33213
   },
+  "football|Romania Liga 1|FC Petrolul Ploiesti|Rapid Bucuresti 1923|双边进球-是|btts|2026-08-22": {
+    "ev": 1.98,
+    "ts": 1787325373.030144
+  },
   "football|Romania Liga 1|FC Petrolul Ploiesti|Rapid Bucuresti 1923|让球主胜|1x2|2026-08-22": {
     "ev": 2.79,
     "ts": 1787313544.609505
@@ -1799,6 +1856,10 @@
     "ev": 4.24,
     "bb": 1.87,
     "ts": 1787290859.847353
+  },
+  "football|Russia Premier League|RFK Akhmat Grozny|FK Rostov|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.25,
+    "ts": 1787325212.143075
   },
   "football|Saudi Arabia Professional League|Al Faisaly Harmah|NEOM SC|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.19,
@@ -1846,9 +1907,29 @@
     "bb": 1.94,
     "ts": 1787219317.12412
   },
+  "football|South Korea K-League 2|Suwon FC|Gimhae FC|客胜|1x2|2026-08-22": {
+    "ev": 5.09,
+    "ts": 1787325212.1421819
+  },
   "football|Spain LaLiga 2|Cordoba CF|Girona FC|和局|1x2|2026-08-22": {
     "ev": 2.6,
     "ts": 1787316019.590044
+  },
+  "football|Spain LaLiga 2|Real Oviedo|Leganes|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 2.65,
+    "ts": 1787325212.143866
+  },
+  "football|Spain LaLiga 2|Real Oviedo|Leganes|上半场客胜|ht|2026-08-22": {
+    "ev": 1.55,
+    "ts": 1787325212.1438239
+  },
+  "football|Spain LaLiga|Athletic Bilbao|Sevilla FC|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 2.65,
+    "ts": 1787325212.1437562
+  },
+  "football|Spain LaLiga|Athletic Bilbao|Sevilla FC|上半场客胜|ht|2026-08-22": {
+    "ev": 9.5,
+    "ts": 1787325212.14368
   },
   "football|Spain LaLiga|Rayo Vallecano|Deportivo Alaves|上半场双重机会-主/客|ht_dc|2026-08-21": {
     "ev": 4.17,
@@ -2613,9 +2694,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Japan J.League 2|八户云罗里|仙台七夕|上半场主胜|ht|2026-08-22": {
-    "ev": 5.09,
-    "bb": 5.6,
-    "ts": 1787325211.831202
+  "football|Spain LaLiga 2|皇家奥维耶多|莱加内斯|上半场客胜|ht|2026-08-22": {
+    "ev": 6.83,
+    "bb": 6.2,
+    "ts": 1787326213.422998
   }
 }
