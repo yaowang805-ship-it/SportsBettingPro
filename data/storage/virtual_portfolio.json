@@ -1,5 +1,5 @@
 {
-  "balance": 2085.46,
+  "balance": 2049.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2071,6 +2071,29 @@
       "commence_time": 1787333400,
       "created_at": "2026-08-21T15:05:05.004431+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_中新地_韦斯屈莱_和局",
+      "sport": "football",
+      "league": "芬兰乙级联赛",
+      "home_team": "中新地",
+      "away_team": "韦斯屈莱",
+      "home_cn": "中新地",
+      "away_cn": "韦斯屈莱",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.12,
+      "stake": 36,
+      "model_prob": 0.2754,
+      "ev_pct": 13.48,
+      "pin_odds": 3.35,
+      "fair_price": 3.6307,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787326200,
+      "created_at": "2026-08-21T15:10:59.223952+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2672,8 +2695,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-21",
-    "used": 5872.0,
-    "bets": 40
+    "used": 5908.0,
+    "bets": 41
   },
   "updated": null
 }
