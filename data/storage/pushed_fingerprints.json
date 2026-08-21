@@ -813,6 +813,10 @@
     "ev": 1.17,
     "ts": 1787307345.8798552
   },
+  "football|Czech Republic FNL|FK Usti nad Labem|FK Dukla Prague|让球客胜|1x2|2026-08-22": {
+    "ev": 2.5,
+    "ts": 1787327588.704445
+  },
   "football|Czech Republic FNL|SFC Opava|FK Fotbal Trinec|主胜|1x2|2026-08-22": {
     "ev": 1.36,
     "ts": 1787326765.221778
@@ -1002,6 +1006,10 @@
   "football|Finland Veikkausliiga|Seinajoen JK|FC Lahti|上半场主胜|ht|2026-08-22": {
     "ev": 3.57,
     "ts": 1787299843.773712
+  },
+  "football|Finland Veikkausliiga|Seinajoen JK|FC Lahti|双边进球-是|btts|2026-08-22": {
+    "ev": 1.37,
+    "ts": 1787327354.1966121
   },
   "football|Finland Veikkausliiga|Seinajoen JK|FC Lahti|和局|1x2|2026-08-22": {
     "ev": 1.39,
@@ -1763,6 +1771,11 @@
     "ev": 2.87,
     "bb": 1.75,
     "ts": 1787204594.491412
+  },
+  "football|Peru Liga 1|卡哈马卡FC|格劳竞技|上半场客胜|ht|2026-08-22": {
+    "ev": 4.66,
+    "bb": 4.51,
+    "ts": 1787327353.906455
   },
   "football|Peru Liga 1|梅尔加|利马联盟|上半场主胜|ht|2026-08-24": {
     "ev": 3.97,
@@ -2743,9 +2756,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Peru Liga 1|卡哈马卡FC|格劳竞技|上半场客胜|ht|2026-08-22": {
-    "ev": 4.66,
-    "bb": 4.51,
-    "ts": 1787327353.906455
+  "football|Italy Serie A|热那亚|那不勒斯|和局|1x2|2026-08-23": {
+    "ev": 98.57,
+    "bb": 6.65,
+    "ts": 1787328114.72115
   }
 }
