@@ -684,10 +684,11 @@ def _load_threshold_matrix():
         return None
 
 
-def _matrix_min_ev(sub_market: str, sport: str, lead_minutes=None):
+def _matrix_min_ev(sub_market: str, sport: str, league: str = "", lead_minutes=None):
     """返回该盘口的矩阵门槛; 矩阵不存在返回 None(回退 tier 门槛)。
 
-    门槛 = 盘口层 + 运动微调 + 临场规则(距开赛<1h 且主体盘口 +extra)。
+    门槛 = 盘口层 + 运动微调 + 联赛微调 + 临场规则(距开赛<1h 且主体盘口 +extra)。
+    三级回退: 联赛层(n≥30 才设) → 运动层 → 盘口层。
     """
     mtx = _load_threshold_matrix()
     if not mtx:
@@ -695,6 +696,11 @@ def _matrix_min_ev(sub_market: str, sport: str, lead_minutes=None):
     markets = mtx.get("markets", {})
     thr = markets.get(sub_market, mtx.get("default_threshold", 8.0))
     thr += mtx.get("sport_adjust", {}).get(sport, 0.0)
+    # 联赛层调整(数据驱动, 样本不足的联赛矩阵里没有, 自动回退运动层)
+    if league:
+        _la = mtx.get("league_adjust", {}).get(f"{sport}|{league}")
+        if _la is not None:
+            thr += _la
     if lead_minutes is not None and lead_minutes < mtx.get("in_play_hours", 1.0) * 60:
         if sub_market in mtx.get("main_markets", ("1x2", "hc", "ou")):
             thr += mtx.get("in_play_extra", 3.0)
@@ -1525,7 +1531,8 @@ def _collect_opportunities(match, market_key):
 
         # V5.10 数据驱动门槛矩阵(盘口层+运动层+临场规则) — 每晚由 compute_ev_thresholds 重算
         _lead_min = (pin_epoch - time.time()) / 60 if pin_epoch else None
-        _mtx_ev = _matrix_min_ev(sub_market, match.get("sport", ""), lead_minutes=_lead_min)
+        _mtx_ev = _matrix_min_ev(sub_market, match.get("sport", ""),
+                                  league=match.get("league", ""), lead_minutes=_lead_min)
         if _mtx_ev is not None and ev < _mtx_ev:
             continue
 

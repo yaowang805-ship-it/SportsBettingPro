@@ -41,7 +41,8 @@ RESULTS = DATA / "clv_results.csv"
 OUT = DATA / "ev_threshold_matrix.json"
 
 POS_RATE_MIN = 0.55     # 正 CLV 率下限
-MEDIAN_CLV_MIN = 2.0    # 中位 CLV 下限(%)
+MEDIAN_CLV_MIN = 1.0    # 正期望最低中位 CLV 阈值(%): >1% 才算"有正 edge"
+                        # (1~2% 勉强正, >2% 强正 —— 业界标准见 clv-threshold-matrix-todo)
 
 # 样本纪律(业界标准: CLV 100-200 注才可靠, 早期 CLV 是噪声 —— 80注+5% 到 340注 会掉到 +1.8%)
 #   n >= 100  → "确认", 可用数据驱动门槛
@@ -53,9 +54,11 @@ N_DIRECTIONAL = 30
 # 判定标准对两档一致(中位CLV>2% 且 正率>55%), n 只决定标签"确认"/"方向性" ——
 # 不额外加严: 加严会把 ht_dc(n=34/中位+3.17%/正率85%) 这种强信号误杀。
 
-# 从**低到高**遍历, 取第一个满足判定的即最低可行门槛(门槛越低放行越多)。
-# 原先顺序是 (8,5,3,2) 命中即返回, 实际返回的是最高可行门槛, 与注释"找最低可行"相反。
-EV_STEPS = (2, 3, 5, 8)
+# 从**低到高**遍历, 找"负转正"边界档 = 门槛。
+# 用户铁律(2026-08-21): 数据驱动 = 负期望的档就继续往上调, 直到正期望为止。
+# 扩展搜索范围到 20%, 避免 hc 这种"8% 还是负"的盘口被错误停在 8%。
+EV_STEPS = (2, 3, 5, 8, 10, 12, 15, 20)
+MIN_BAND_N = 10          # 一个 EV 档至少 10 条样本才认可其正/负判定(低于 10 视为不可判)
 
 # 不可执行机会过滤 —— clv_results.csv 里 ~80% 是 source=validate(所有 ≥2%EV 机会),
 # 并非真实投注。其中被封杀类别/超赔率上限的机会**永远不会被下注**, 拿它们算门槛
@@ -113,40 +116,46 @@ def load_clean():
             if BANNED_LEAGUE_RE.search(r.get("league") or ""):
                 _dropped["封杀联赛"] += 1
                 continue
-            out.append((r.get("sub_market", "?"), r.get("sport", "?"), clv, ev))
+            out.append((r.get("sub_market", "?"), r.get("sport", "?"), r.get("league", ""), clv, ev))
     return out
 
 
 def market_threshold(samples):
-    """对一个盘口的 (clv, ev) 样本, 找最低可行 EV 门槛。
+    """对一个盘口的 (clv, ev) 样本, 找"负转正"边界 EV 门槛。
 
-    返回 (门槛, n, 中位CLV, 正率%, 判定档)。门槛为 None 表示样本不足以支持任何
-    数据驱动门槛 —— 调用方须回退保守默认值, **不得**因"看起来是正的"就放低。
+    核心(用户 2026-08-21 铁律): 数据驱动 = 负期望的档就继续往上调, 直到正期望为止。
+    返回 (门槛, n, 中位CLV, 正率%, 判定档)。门槛为 None 表示样本不足, 调用方回退保守默认。
+
+    正期望档判据: 中位 CLV > 0 且 正率 ≥ 55% 且 n ≥ MIN_BAND_N。
     """
     n_max = 0
-    for thr in EV_STEPS:       # 低 → 高, 命中即最低可行门槛
+    last_neg_band = None   # 记录最后看到的负 edge 档(用于"无正期望档"时报告)
+    for thr in EV_STEPS:   # 低 → 高, 第一个正期望档即门槛
         sub = [(c, e) for c, e in samples if e >= thr]
         n = len(sub)
         n_max = max(n_max, n)
-        if n < N_DIRECTIONAL:
-            continue           # 样本不足的档不参与判定, 既不解锁也不据此否定
+        if n == 0:
+            break
         clvs = [c for c, _ in sub]
         pos_rate = sum(1 for c in clvs if c > 0) / n
         med = statistics.median(clvs)
+        if n < MIN_BAND_N:
+            continue          # 样本太少的档不可判, 跳过(既不据此放行也不据此否定)
         if pos_rate >= POS_RATE_MIN and med > MEDIAN_CLV_MIN:
-            return (thr, n, round(med, 2), round(pos_rate * 100),
-                    "确认" if n >= N_CONFIRMED else "方向性")
-    # 没有任何档达标。区分"确实没 edge"和"高EV档还没测够":
-    # 看最高档(EV_STEPS[-1]) —— 即便样本不足, 若其中位 CLV 仍 ≤0, 说明连最挑剔的
-    # 高EV机会都无正 edge → 停推; 若 >0 则只是没测够 → 保守回退, 别一棍子打死。
-    # (实测 1x2 在 EV≥8% 是 +10.29%/65% 仅 n=17, 若按"低档负就停推"会被误杀)
-    top = [c for c, e in samples if e >= EV_STEPS[-1]]
-    top_med = statistics.median(top) if top else None
-    if top_med is not None and top_med <= 0:
-        return None, n_max, round(top_med, 2), None, f"负edge(最高档EV≥{EV_STEPS[-1]}% n={len(top)} 中位{top_med:+.1f}%)"
-    return None, n_max, (round(top_med, 2) if top_med is not None else None), None, \
-        (f"高EV档样本不足(EV≥{EV_STEPS[-1]}% 仅 n={len(top)}"
-         + (f", 中位{top_med:+.1f}% 看似为正但未达 n≥{N_DIRECTIONAL})" if top_med is not None else ")"))
+            # 负转正边界: 这一档是有意义的正 edge → 门槛设这里
+            grade = "确认" if (n >= N_CONFIRMED and med > 2.0) else ("方向性" if n >= N_DIRECTIONAL else "样本偏少")
+            return (thr, n, round(med, 2), round(pos_rate * 100), grade)
+        if med <= 0:
+            last_neg_band = (thr, n, med)   # 负 edge, 继续往上搜
+        # 边界(0 < med 但正率不足): 继续往上找更稳的正档
+    # 搜遍所有档都没有"可信正期望档"。
+    # 区分: 盘口级样本足够(n≥N_DIRECTIONAL) = 数据明确说这盘口没有盈利档 → 门槛=最高档(实质不推, 数据结论非封杀);
+    #       样本不足 = 无法判定 → 返回 None 让调用方回退保守门槛(不封杀)。
+    total = len(samples)
+    if total >= N_DIRECTIONAL:
+        detail = f"负edge(全程负, 最高可测档EV≥{last_neg_band[0]}% 中位{last_neg_band[2]:+.1f}%)" if last_neg_band else "无正期望档"
+        return EV_STEPS[-1], n_max, None, None, detail
+    return None, n_max, None, None, f"样本不足 n={total}<{N_DIRECTIONAL}"
 
 
 def compute_sport_adjust(by_sport):
@@ -192,48 +201,96 @@ def compute_sport_adjust(by_sport):
     return adjust, detail
 
 
+def compute_league_adjust(by_sport_league):
+    """联赛层调整: 该联赛整体 CLV 相对运动整体 CLV 的偏离, 映射到加/减 pp。
+
+    这是朝 V5 权重矩阵(逐联赛逐盘口)迈出的第一步 —— 联赛层(sport×league)。
+    三维格(sport×league×market)现 0 格样本≥30, 做不了, 故先做联赛层:
+      n≥30 才数据驱动; 否则不设(推送层回退运动层)。
+    key = "sport|league"(英文联赛名, 与推送层 match.get("league") 对齐)。
+    映射(偏离 = 联赛中位 - 运动整体中位):
+      偏离 < -2pp   → +2.0 (联赛显著比运动差, 抬门槛)
+      偏离 < -0.5pp → +1.0
+      ±0.5pp 内     →  0.0
+      偏离 > +0.5pp 且 正率≥55% → -1.0 (联赛显著好, 可降)
+      偏离 > +0.5pp 但 正率<55%  →  0.0 (偏离大但正率不够, 不降)
+    """
+    by_sport = defaultdict(list)
+    for (sp, _lg), clvs in by_sport_league.items():
+        by_sport[sp].extend(clvs)
+    sport_med = {sp: statistics.median(v) for sp, v in by_sport.items()}
+
+    adjust = {}
+    detail = {}
+    for (sp, lg), clvs in sorted(by_sport_league.items()):
+        n = len(clvs)
+        if n < N_DIRECTIONAL:
+            continue        # 样本不足, 不设联赛层(回退运动层)
+        med = statistics.median(clvs)
+        pos = sum(1 for c in clvs if c > 0) / n
+        dev = med - sport_med.get(sp, 0.0)
+        if dev < -2.0:
+            a = 2.0
+        elif dev < -0.5:
+            a = 1.0
+        elif dev <= 0.5:
+            a = 0.0
+        elif pos >= POS_RATE_MIN:
+            a = -1.0
+        else:
+            a = 0.0
+        key = f"{sp}|{lg}"
+        adjust[key] = a
+        detail[key] = {"n": n, "median": round(med, 2), "dev": round(dev, 2),
+                       "adjust": a}
+    return adjust, detail
+
+
 def main():
     clean = load_clean()
     by_market = defaultdict(list)
     by_sport = defaultdict(list)
-    for sm, sp, clv, ev in clean:
+    by_sport_league = defaultdict(list)
+    for sm, sp, lg, clv, ev in clean:
         by_market[sm].append((clv, ev))
         by_sport[sp].append(clv)
+        by_sport_league[(sp, lg)].append(clv)
 
     markets = {}
     details = {}
     for sm in sorted(by_market, key=lambda s: -len(by_market[s])):
         thr, n, med, pos, grade = market_threshold(by_market[sm])
-        if thr is not None:
+        if grade.startswith(("负edge", "无正期望")):
+            # 数据明确说这盘口没有盈利档(样本够但全程负 CLV) → 门槛=最高档(实质不推)。
+            # 这是数据结论, 不是 999 代码封杀: 数据转正时门槛会自动降。
+            markets[sm] = float(thr)
+            details[sm] = {"n": n, "verdict": f"无正期望档→{thr}%({grade})",
+                           "median": med, "pos_rate": pos}
+        elif thr is not None:
             markets[sm] = float(thr)
             details[sm] = {"n": n, "verdict": f"data_driven({grade})",
                            "median": med, "pos_rate": pos}
-        elif grade.startswith("负edge"):
-            # 不封杀任何盘口(用户 2026-08-21 铁律)。数据说"连最高 EV 档中位 CLV 都 ≤0"时,
-            # 不写 999 拦掉一切 —— 改用最严格的最高档门槛(8%), 让数据自然把这个盘口
-            # 压到几乎推不出去, 而非代码层面封杀。样本/数据变好时它会自动跟着降。
-            markets[sm] = EV_STEPS[-1]  # 最严格档(8%)
-            details[sm] = {"n": n, "verdict": f"负edge→最高档门槛{EV_STEPS[-1]}%({grade})",
-                           "median": med, "pos_rate": pos}
         else:
-            # 各达标档 edge 不显著, 但高 EV 档看似为正只是样本不够 → 保守高门槛回退。
-            # 不停推(可能有真 edge 只是没测出来), 也不放低(没有证据支持)。攒够自动解锁。
+            # 样本不足 → 保守高门槛回退。不封杀(可能只是没测出来), 也不放低(没有证据)。
             markets[sm] = CONSERVATIVE_THRESHOLD
             details[sm] = {"n": n, "verdict": f"保守回退({grade})",
                            "median": med, "pos_rate": pos}
 
     sport_adjust, sport_detail = compute_sport_adjust(by_sport)
+    league_adjust, league_detail = compute_league_adjust(by_sport_league)
 
     matrix = {
         "generated_at": __import__("datetime").datetime.now().isoformat(),
         "markets": markets,
         "sport_adjust": sport_adjust,
+        "league_adjust": league_adjust,
         "in_play_hours": IN_PLAY_HOURS,
         "in_play_extra": IN_PLAY_EXTRA,
         "main_markets": list(MAIN_MARKETS),
         "default_threshold": 8.0,
         "_details": details,
         "_sport_details": sport_detail,
+        "_league_details": league_detail,
     }
     OUT.write_text(json.dumps(matrix, ensure_ascii=False, indent=2))
     print(f"✅ 门槛矩阵已生成 → {OUT.name}")
@@ -247,6 +304,13 @@ def main():
     for sp in sorted(sport_adjust, key=lambda s: -(sport_detail.get(s, {}).get("n", 0))):
         d = sport_detail.get(sp, {})
         print(f"    {sp:<18} adjust={sport_adjust[sp]:>+5}  {d.get('verdict','')}")
+    if league_adjust:
+        print("  联赛层调整(数据驱动, n≥30):")
+        for key in sorted(league_adjust, key=lambda k: -league_detail[k]["n"]):
+            d = league_detail[key]
+            print(f"    {key:<40} adjust={league_adjust[key]:>+5}  n={d['n']} 中位{d['median']:+.1f}% 偏离{d['dev']:+.1f}pp")
+    else:
+        print("  联赛层: 无联赛 n≥30(回退运动层)")
     for sm in sorted(markets, key=lambda s: -by_market[s].__len__()):
         d = details[sm]
         v = d["verdict"]
