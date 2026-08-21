@@ -29,6 +29,10 @@
     "bb": 1.41,
     "ts": 1787309070.618907
   },
+  "basketball|Australia Big V|Hume City|Pakenham Warriors|主胜|1x2|2026-08-22": {
+    "ev": 12.38,
+    "ts": 1787318164.5050292
+  },
   "basketball|Australia Big V|Hume City|Pakenham Warriors|客胜|1x2|2026-08-22": {
     "ev": 18.67,
     "ts": 1787313406.780896
@@ -37,6 +41,11 @@
     "ev": 18.67,
     "bb": 2.74,
     "ts": 1787313406.383623
+  },
+  "basketball|Australia Big V|休姆城野马|帕金汉姆勇士|主胜|1x2|2026-08-22": {
+    "ev": 12.38,
+    "bb": 1.73,
+    "ts": 1787318164.2288818
   },
   "basketball|Australia NBL1 Women|Bankstown Bruins (w)|Warwick Senators (w)|大分|1x2|2026-08-21": {
     "ev": 4.27,
@@ -288,6 +297,10 @@
   "basketball|William Jones Cup|Strong Group Athletics|Jordan|主胜|1x2|2026-08-21": {
     "ev": 2.4,
     "ts": 1787309182.841263
+  },
+  "football|ASEAN Hyundai Cup|Thailand|Vietnam|大球|1x2|2026-08-22": {
+    "ev": 3.15,
+    "ts": 1787318164.5047328
   },
   "football|Argentina Copa Santa Fe|Timbuense|Newell´s Old Boys|小球|1x2|2026-08-21": {
     "ev": 5.16,
@@ -715,9 +728,17 @@
     "bb": 1.96,
     "ts": 1787209374.2069912
   },
+  "football|Czech Republic CFL|FK Banik Most Sous|SK Benatky Nad Jizerou|小球|1x2|2026-08-22": {
+    "ev": 1.56,
+    "ts": 1787318830.7029
+  },
   "football|Czech Republic CFL|FK Loko Prague|SK Aritma Prague|小球|1x2|2026-08-22": {
     "ev": 1.78,
     "ts": 1787302708.2303722
+  },
+  "football|Czech Republic CFL|FK Varnsdorf|Horni Redice|大球|1x2|2026-08-22": {
+    "ev": 4.93,
+    "ts": 1787318830.7019432
   },
   "football|Czech Republic FNL|1.SK Prostejov|SK Kladno|大球|1x2|2026-08-22": {
     "ev": 7.5,
@@ -1361,6 +1382,10 @@
   "football|Netherlands Eerste Divisie|FC Den Bosch|FC Eindhoven|和局|1x2|2026-08-22": {
     "ev": 1.73,
     "ts": 1787311609.766559
+  },
+  "football|Netherlands Eerste Divisie|FC Den Bosch|FC Eindhoven|小球|1x2|2026-08-22": {
+    "ev": 1.61,
+    "ts": 1787318591.6698182
   },
   "football|Netherlands Eerste Divisie|FC Den Bosch|FC Eindhoven|让球客胜|1x2|2026-08-22": {
     "ev": 1.14,
@@ -2331,9 +2356,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "basketball|Australia Big V|休姆城野马|帕金汉姆勇士|主胜|1x2|2026-08-22": {
-    "ev": 12.38,
-    "bb": 1.73,
-    "ts": 1787318164.2288818
+  "football|Egypt Premier League|瓦迪格拉|ZED足球俱乐部|上半场双重机会-主/客|ht_dc|2026-08-21": {
+    "ev": 4.42,
+    "bb": 2.08,
+    "ts": 1787318940.750368
   }
 }

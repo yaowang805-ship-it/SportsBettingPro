@@ -1,5 +1,5 @@
 {
-  "balance": 3297.46,
+  "balance": 3134.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2071,6 +2071,29 @@
       "commence_time": 1787338800,
       "created_at": "2026-08-21T13:04:48.991184+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_瓦迪格拉_ZED足球俱乐部_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "埃及超级联赛",
+      "home_team": "瓦迪格拉",
+      "away_team": "ZED足球俱乐部",
+      "home_cn": "瓦迪格拉",
+      "away_cn": "ZED足球俱乐部",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 2.08,
+      "stake": 163,
+      "model_prob": 0.502,
+      "ev_pct": 4.42,
+      "pin_odds": 0,
+      "fair_price": 1.9919,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787320800,
+      "created_at": "2026-08-21T13:29:00.746202+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2597,8 +2620,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-21",
-    "used": 3909.0,
-    "bets": 32
+    "used": 4072.0,
+    "bets": 33
   },
   "updated": null
 }
