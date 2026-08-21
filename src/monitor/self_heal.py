@@ -62,6 +62,23 @@ def _file_age(p):
     return time.time() - p.stat().st_mtime
 
 
+def _scan_in_flight():
+    """扫描/推送子进程是否正在跑。返回进程名(便于日志)或 None。
+
+    kickstart -k 会硬杀守护进程连带其子进程。near 一轮 8-9min、推送一轮 1-3min,
+    在飞时重启等于永远跑不完(2026-08-21 全天零投注即此故障), 故重启前必须先看这个。
+    """
+    for pat, name in ((r"src\.report\.bb_ev_push", "bb_ev_push"),
+                      (r"src\.scrapers\.bb_api_fetcher", "bb_api_fetcher")):
+        try:
+            r = subprocess.run(["pgrep", "-f", pat], capture_output=True, text=True, timeout=10)
+            if r.returncode == 0 and r.stdout.strip():
+                return name
+        except Exception:
+            pass
+    return None
+
+
 def _kickstart_daemon():
     """重启守护进程(launchd kickstart)。"""
     uid = os.getuid()
@@ -196,7 +213,9 @@ def main():
     # 报告
     if fixes:
         from config.dingtalk import send_dingtalk
-        body = "## 🔧 自愈看门狗修复报告\n\n"
+        # 钉钉机器人配了关键词过滤(必须含"投注推荐"), 缺了会被服务端静默拒收 ——
+        # 2026-08-21 查出自愈报告因此从未送达过任何一次("关键词不匹配"), 等于看门狗哑了。
+        body = "## 🔧 自愈看门狗修复报告 (投注推荐系统)\n\n"
         body += "**检查结果**:\n" + "\n".join(f"- {s}" for s in statuses) + "\n\n"
         body += "**自动修复**:\n" + "\n".join(f"- {f}" for f in fixes)
         try:
