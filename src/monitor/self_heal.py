@@ -96,9 +96,12 @@ def _clear_stale_lock():
         return False
     try:
         txt = LOCK_FILE.read_text()
-        # 锁文件里通常有 "PID xxx"
+        # 锁文件内容是裸 PID(pipeline_orchestrator 写的是 str(os.getpid()), 无 "PID " 前缀
+        # —— "PID xxx 已锁定" 只出现在日志里)。原正则只认 r"PID\s+(\d+)", 永远匹配不上
+        # → 每轮都落到下面的 unlink(), 把**活着**的锁删掉, 单实例保护长期形同虚设。
+        # 兼容两种写法: 取文件里第一个整数即为持锁 PID。
         import re
-        m = re.search(r"PID\s+(\d+)", txt)
+        m = re.search(r"(?:PID\s+)?(\d+)", txt)
         if m:
             pid = int(m.group(1))
             # 检查该 PID 是否还活着
