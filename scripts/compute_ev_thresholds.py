@@ -162,9 +162,11 @@ def main():
             details[sm] = {"n": n, "verdict": f"data_driven({grade})",
                            "median": med, "pos_rate": pos}
         elif grade.startswith("负edge"):
-            # 连最高 EV 档中位 CLV 都 ≤0 → 停推(999, 推送层会拦掉)
-            markets[sm] = 999.0
-            details[sm] = {"n": n, "verdict": f"停推({grade})",
+            # 不封杀任何盘口(用户 2026-08-21 铁律)。数据说"连最高 EV 档中位 CLV 都 ≤0"时,
+            # 不写 999 拦掉一切 —— 改用最严格的最高档门槛(8%), 让数据自然把这个盘口
+            # 压到几乎推不出去, 而非代码层面封杀。样本/数据变好时它会自动跟着降。
+            markets[sm] = EV_STEPS[-1]  # 最严格档(8%)
+            details[sm] = {"n": n, "verdict": f"负edge→最高档门槛{EV_STEPS[-1]}%({grade})",
                            "median": med, "pos_rate": pos}
         else:
             # 各达标档 edge 不显著, 但高 EV 档看似为正只是样本不够 → 保守高门槛回退。
