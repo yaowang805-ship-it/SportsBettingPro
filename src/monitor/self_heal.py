@@ -114,22 +114,38 @@ def _clear_stale_lock():
 
 
 def check_pin():
-    try:
-        from src.scrapers.pinnacle_api import api_get
-        data = api_get("/sports")
-        return bool(data), (f"连通({len(data)}运动)" if data else "返回空")
-    except Exception as e:
-        return False, f"异常: {str(e)[:60]}"
+    # V5.10 修复(2026-08-21 用户"总是收到"自愈报告): 根因是 api_get 被"全局限速
+    # pause"拦住返回 None(SSL 风暴触发的保护), 而不是 Pin 真断连。检查必须
+    # bypass_pause=True 真实请求(同 pin_proxy_pool 的自检), 否则 pause 期间每 10 分钟
+    # 误报一次"断连→无需切换"的自相矛盾报告。
+    import time as _t
+    for i in range(3):
+        try:
+            from src.scrapers.pinnacle_api import api_get
+            data = api_get("/sports", bypass_pause=True)
+            if data:
+                return True, f"连通({len(data)}运动)"
+        except Exception as e:
+            pass
+        if i < 2:
+            _t.sleep(3)
+    return False, "返回空"
 
 
 def recover_pin():
-    """触发代理池自动换节点。"""
+    """触发代理池自动换节点。返回 (ok, detail, switched)。
+
+    switched=False 表示代理池判定"Pin 正常无需切换"(瞬时故障已自愈),
+    调用方不应把它当作一次"修复"发告警 —— 否则会出现"断连"却"无需切换"的自相矛盾报告。
+    """
     try:
         r = subprocess.run([sys.executable, "-m", "src.scrapers.pin_proxy_pool", "--recover"],
                            capture_output=True, text=True, timeout=300, cwd=ROOT)
-        return r.returncode == 0, (r.stdout or r.stderr)[-300:]
+        out = (r.stdout or r.stderr)
+        switched = "无需切换" not in out
+        return r.returncode == 0, out[-300:], switched
     except Exception as e:
-        return False, f"异常: {str(e)[:60]}"
+        return False, f"异常: {str(e)[:60]}", True
 
 
 def main():
@@ -203,9 +219,13 @@ def main():
     pin_ok, pin_detail = check_pin()
     statuses.append(f"Pinnacle: {'✅' if pin_ok else '❌'} {pin_detail}")
     if not pin_ok:
-        ok, detail = recover_pin()
-        if ok:
+        ok, detail, switched = recover_pin()
+        if ok and switched:
             fixes.append(f"Pinnacle 断连 → 自动换节点成功: {detail[:80]}")
+        elif ok and not switched:
+            # 瞬时故障(SSL EOF)已自愈: 代理池判定无需切换。不算修复, 否则每次都发
+            # 自相矛盾的"断连→无需切换"报告(用户 2026-08-21 反馈"总是收到")。
+            statuses.append("Pinnacle: ⏳ 瞬时断连已自愈(代理池判定无需切换)")
         else:
             fixes.append(f"Pinnacle 断连 → 自动换节点失败: {detail[:80]}")
 
