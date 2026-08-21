@@ -976,6 +976,10 @@
     "ev": 1.79,
     "ts": 1787296958.334434
   },
+  "football|Costa Rica Primera Division|Puntarenas FC|Perez Zeledon|让球客胜|1x2|2026-08-22": {
+    "ev": 1.89,
+    "ts": 1787351468.296309
+  },
   "football|Croatia HNL League|GNK Dinamo Zagreb|NK Varazdin|让球客胜|1x2|2026-08-23": {
     "ev": 5.57,
     "ts": 1787349415.449557
@@ -1201,6 +1205,10 @@
     "ev": 1.67,
     "ts": 1787325212.144566
   },
+  "football|England League Two|Bristol Rovers|Newport County|主胜|1x2|2026-08-22": {
+    "ev": 1.78,
+    "ts": 1787351350.645113
+  },
   "football|England League Two|Exeter City|Accrington Stanley|让球客胜|1x2|2026-08-22": {
     "ev": 1.06,
     "ts": 1787324309.662122
@@ -1217,6 +1225,10 @@
   "football|England National League North|Buxton FC|Hebburn Town|上半场主胜|ht|2026-08-22": {
     "ev": 2.7,
     "ts": 1787323454.177266
+  },
+  "football|England National League North|Worksop Town|Hereford FC|让球客胜|1x2|2026-08-22": {
+    "ev": 2.44,
+    "ts": 1787352314.593189
   },
   "football|England National League South|Chesham United|Walton & Hersham FC|上半场主胜|ht|2026-08-22": {
     "ev": 2.67,
@@ -1865,6 +1877,10 @@
     "bb": 1.88,
     "ts": 1787101664.262892
   },
+  "football|Japan J.League 2|Albirex Niigata|Fujieda MYFC|单双-双|oe|2026-08-22": {
+    "ev": 1.21,
+    "ts": 1787351350.643855
+  },
   "football|Japan J.League 2|Blaublitz Akita|Ventforet Kofu|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 2.95,
     "ts": 1787303712.199682
@@ -1897,6 +1913,10 @@
     "ev": 1.75,
     "ts": 1787296958.333357
   },
+  "football|Japan J.League 2|Jubilo Iwata|Tokushima Vortis|单双-双|oe|2026-08-22": {
+    "ev": 1.21,
+    "ts": 1787351350.644039
+  },
   "football|Japan J.League 2|Jubilo Iwata|Tokushima Vortis|双边进球-是|btts|2026-08-22": {
     "ev": 3.25,
     "ts": 1787307221.945407
@@ -1921,6 +1941,14 @@
     "ev": 1.99,
     "ts": 1787307221.9449449
   },
+  "football|Japan J.League 2|Sagan Tosu|Tochigi City FC|上半场客胜|ht|2026-08-22": {
+    "ev": 2.8,
+    "ts": 1787351350.6430862
+  },
+  "football|Japan J.League 2|Tegevajaro Miyazaki|Shonan Bellmare|上半场客胜|ht|2026-08-22": {
+    "ev": 1.02,
+    "ts": 1787351350.643784
+  },
   "football|Japan J.League 2|Tegevajaro Miyazaki|Shonan Bellmare|让球客胜|1x2|2026-08-22": {
     "ev": 1.02,
     "ts": 1787338579.627415
@@ -1941,6 +1969,11 @@
     "ev": 5.09,
     "bb": 5.6,
     "ts": 1787325211.831202
+  },
+  "football|Japan J.League 2|大分三神|磐城市|上半场主胜|ht|2026-08-22": {
+    "ev": 11.03,
+    "bb": 6.55,
+    "ts": 1787351350.37829
   },
   "football|Japan J.League 2|山形山神|横滨FC|让球客胜(0)|hc|0|2026-08-22": {
     "ev": 4.64,
@@ -3490,9 +3523,9 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Japan J.League 2|大分三神|磐城市|上半场主胜|ht|2026-08-22": {
-    "ev": 11.03,
-    "bb": 6.55,
-    "ts": 1787351350.37829
+  "football|England Championship League|林肯城|朴茨茅斯|上半场主胜|ht|2026-08-22": {
+    "ev": 4.05,
+    "bb": 3.12,
+    "ts": 1787353381.5188322
   }
 }
