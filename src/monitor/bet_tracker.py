@@ -331,3 +331,47 @@ def settle_bet(push_id: str, result: str, home_score=None, away_score=None,
 
     logger.warning("结算失败: push_id 未找到 — %s", push_id[:60])
     return False
+
+
+def mark_unsettleable(push_id: str, reason: str = ""):
+    """把一笔无法核实赛果的投注标记为 unsettleable(不参与 ROI 分母)。
+
+    与 void 严格区分: void = 比赛取消/退款(本金回来); unsettleable = 我们拿不到
+    赛果(联赛无源覆盖/超回查窗口/BB 无 id), 不是退款, 更不该算成"本金全回"去
+    稀释 ROI。多源赛果回查窗口约 3 天, 默认 7 天仍未结算即处置。
+    """
+    data = load_tracked_bets()
+    for b in data["bets"]:
+        if b.get("push_id") == push_id:
+            b["status"] = "unsettleable"
+            b["result"] = "unsettleable"
+            b["profit"] = 0
+            b["settled_at"] = datetime.now(timezone.utc).isoformat()
+            b["settle_source"] = "timeout"
+            if reason:
+                b["unsettleable_reason"] = reason
+            save_tracked_bets(data)
+            logger.info("⏱️ 超时作废: %s → unsettleable (%s)", push_id[:60], reason or "7天无赛果")
+            return True
+    return False
+
+
+def auto_mark_unsettleable(days: float = 7.0, dry_run: bool = False) -> int:
+    """兜底: pending 超过 days 天仍未结算的投注 → unsettleable。
+
+    不碰 void(退款语义), 不碰 settled。返回处理的笔数。
+    """
+    data = load_tracked_bets()
+    now = time.time()
+    threshold = days * 24 * 3600
+    hit = [b for b in data["bets"]
+           if b.get("status") == "pending"
+           and (b.get("match_epoch") or 0) > 0
+           and now - b["match_epoch"] > threshold]
+    if dry_run:
+        return len(hit)
+    n = 0
+    for b in hit:
+        if mark_unsettleable(b["push_id"], f"pending {days}天无赛果"):
+            n += 1
+    return n

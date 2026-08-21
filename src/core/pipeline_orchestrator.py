@@ -1356,6 +1356,20 @@ class PipelineOrchestrator:
                 pending = [b for b in tb.get("bets", []) if b.get("status") == "pending"]
                 now_ts = time.time()
                 stale_48h = sum(1 for b in pending if b.get("match_epoch", 0) > 0 and (now_ts - b["match_epoch"]) > 172800)
+                # V5.10: 7 天兜底 —— pending 超 7 天拿不到赛果的, 自动标 unsettleable。
+                # 这批老投注(08-13~08-18 无 bb_match_id)永久卡 pending 会让看门狗数字只增不减,
+                # 且污染 ROI 分母。unsettleable 与 void 语义分开(非退款, 见 bet_tracker)。
+                try:
+                    from src.monitor.bet_tracker import auto_mark_unsettleable
+                    _n = auto_mark_unsettleable(days=7.0)
+                    if _n:
+                        logger.info("🐕 看门狗(结算): %d 笔超7天无赛果 → 标 unsettleable", _n)
+                        # 处理完重读, 避免下面 stale_48h 把刚处置的也算进去
+                        tb = json.loads(tb_path.read_text())
+                        pending = [b for b in tb.get("bets", []) if b.get("status") == "pending"]
+                        stale_48h = sum(1 for b in pending if b.get("match_epoch", 0) > 0 and (now_ts - b["match_epoch"]) > 172800)
+                except Exception as _e:
+                    logger.warning("超时作废兜底异常: %s", _e)
                 if stale_48h > 5:  # V5: 只在新系统>5笔超时时告警
                     last_alert = self._alert_cooldown.get("settle_watchdog", 0)
                     if time.time() - last_alert > 28800:

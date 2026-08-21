@@ -150,7 +150,9 @@ def get_statistics(days: Optional[int] = None):
     won = [r for r in settled if r.get("result") == "won"]
     lost = [r for r in settled if r.get("result") == "lost"]
 
-    total_stake = sum(float(r.get("stake", 0)) for r in placed)
+    # ROI 分母只用已结算投注 —— 未结算(pending)与无法核实(unsettleable)的 stake
+    # 不该进分母, 否则"永远拿不到赛果"的投注会把 ROI 永久拉低(与 profit 口径错配)。
+    total_stake = sum(float(r.get("stake", 0)) for r in settled)
     total_profit = sum(float(r.get("profit", 0)) for r in settled)
 
     # 按扫描类型分类
