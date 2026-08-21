@@ -1,5 +1,5 @@
 {
-  "balance": 2566.46,
+  "balance": 2429.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2370,6 +2370,52 @@
       "commence_time": 1787382000,
       "created_at": "2026-08-21T07:39:57.257191+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_圣路易斯_帕丘卡_角球大球(o_85)",
+      "sport": "football",
+      "league": "墨西哥超级联赛",
+      "home_team": "圣路易斯",
+      "away_team": "帕丘卡",
+      "home_cn": "圣路易斯",
+      "away_cn": "帕丘卡",
+      "market": "over_under",
+      "market_type": "角球大球(o 8.5)",
+      "sub_market": "corner",
+      "line": "o 8.5",
+      "odds": 1.95,
+      "stake": 75,
+      "model_prob": 0.5546,
+      "ev_pct": 8.14,
+      "pin_odds": 1.7143,
+      "fair_price": 1.8032,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787526000,
+      "created_at": "2026-08-21T07:55:48.140673+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_湾水市_珀斯光荣青年队_客胜",
+      "sport": "football",
+      "league": "澳大利亚西部全国超级联赛",
+      "home_team": "湾水市",
+      "away_team": "珀斯光荣青年队",
+      "home_cn": "湾水市",
+      "away_cn": "珀斯光荣青年队",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.28,
+      "stake": 62,
+      "model_prob": 0.2604,
+      "ev_pct": 11.46,
+      "pin_odds": 3.39,
+      "fair_price": 3.8399,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787382000,
+      "created_at": "2026-08-21T07:55:48.140725+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2701,8 +2747,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-21",
-    "used": 2809.0,
-    "bets": 26
+    "used": 2946.0,
+    "bets": 28
   },
   "updated": null
 }

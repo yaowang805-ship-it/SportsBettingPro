@@ -12,6 +12,14 @@
     "bb": 2.54,
     "ts": 1787271529.643331
   },
+  "basketball|Australia NBL1 Women|Bankstown Bruins (w)|Warwick Senators (w)|客胜|1x2|2026-08-21": {
+    "ev": 8.47,
+    "ts": 1787298110.913454
+  },
+  "basketball|Australia NBL1 Women|Bankstown Bruins (w)|Warwick Senators (w)|让分客胜|1x2|2026-08-21": {
+    "ev": 7.81,
+    "ts": 1787298110.9135401
+  },
   "basketball|Australia NBL1 Women|Knox Raiders (w)|Sturt Sabres (w)|让分客胜|1x2|2026-08-21": {
     "ev": 6.35,
     "ts": 1787284071.3966012
@@ -353,6 +361,22 @@
     "bb": 7.25,
     "ts": 1787296957.964441
   },
+  "football|Australia NPL Western|Armadale SC|Perth Redstar FC|双重机会-和局/客|dc|2026-08-22": {
+    "ev": 1.83,
+    "ts": 1787297997.508317
+  },
+  "football|Australia NPL Western|Armadale SC|Perth Redstar FC|客胜|1x2|2026-08-22": {
+    "ev": 8.75,
+    "ts": 1787297997.508241
+  },
+  "football|Australia NPL Western|Armadale SC|Perth Redstar FC|让球客胜|1x2|2026-08-22": {
+    "ev": 8.55,
+    "ts": 1787297997.5082781
+  },
+  "football|Australia NPL Western|Bayswater City|Perth Glory FC Youth|客胜|1x2|2026-08-22": {
+    "ev": 2.87,
+    "ts": 1787297997.508626
+  },
   "football|Australia NPL Western|Bayswater City|Perth Glory FC Youth|让球主胜|1x2|2026-08-22": {
     "ev": 3.28,
     "ts": 1787296958.334189
@@ -365,10 +389,19 @@
     "ev": 3.3,
     "ts": 1787296958.3335328
   },
+  "football|Australia NPL Western|Perth Azzurri|Sorrento|和局|1x2|2026-08-22": {
+    "ev": 1.23,
+    "ts": 1787297997.508667
+  },
   "football|Australia NPL Western|奥林匹克金威|费雷曼特尔市|主胜|1x2|2026-08-22": {
     "ev": 9.82,
     "bb": 1.79,
     "ts": 1787296957.964302
+  },
+  "football|Australia NPL Western|阿马达尔|珀斯红星|客胜|1x2|2026-08-22": {
+    "ev": 8.75,
+    "bb": 2.88,
+    "ts": 1787297997.264788
   },
   "football|Austria 2. Liga|Austria Salzburg|Kapfenberger SV|让球客胜|1x2|2026-08-22": {
     "ev": 2.42,
@@ -636,6 +669,10 @@
     "ev": 2.13,
     "bb": 3.48,
     "ts": 1787194489.4344919
+  },
+  "football|Estonia Meistriliiga|FCI Levadia Tallinn|JK Narva Trans|大球|1x2|2026-08-22": {
+    "ev": 1.22,
+    "ts": 1787297997.507008
   },
   "football|Finland Ykkonen|KPV Kokkola|KuPS Akatemia|小球|1x2|2026-08-21": {
     "ev": 4.7,
@@ -1810,9 +1847,14 @@
     "ev": 4.74,
     "ts": 1787283255.31509
   },
-  "football|Australia NPL Western|阿马达尔|珀斯红星|客胜|1x2|2026-08-22": {
-    "ev": 8.75,
-    "bb": 2.88,
-    "ts": 1787297997.264788
+  "football|Mexico Liga MX|圣路易斯|帕丘卡|角球大球(o 8.5)|corner|2026-08-24": {
+    "ev": 8.14,
+    "bb": 1.95,
+    "ts": 1787298948.147329
+  },
+  "football|Australia NPL Western|湾水市|珀斯光荣青年队|客胜|1x2|2026-08-22": {
+    "ev": 11.46,
+    "bb": 4.28,
+    "ts": 1787298948.147389
   }
 }
