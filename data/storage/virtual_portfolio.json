@@ -1,5 +1,5 @@
 {
-  "balance": 2734.46,
+  "balance": 2334.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2117,6 +2117,29 @@
       "commence_time": 1787337900,
       "created_at": "2026-08-21T13:57:33.048443+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_索尔阿克雷里_(女)_华路亚_(女)_主胜",
+      "sport": "football",
+      "league": "冰岛超级联赛女子",
+      "home_team": "索尔阿克雷里 (女)",
+      "away_team": "华路亚 (女)",
+      "home_cn": "索尔阿克雷里 (女)",
+      "away_cn": "华路亚 (女)",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.04,
+      "stake": 400,
+      "model_prob": 0.5416,
+      "ev_pct": 10.48,
+      "pin_odds": 1.7752,
+      "fair_price": 1.8465,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787335200,
+      "created_at": "2026-08-21T14:06:22.435928+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2643,8 +2666,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-21",
-    "used": 4472.0,
-    "bets": 34
+    "used": 4872.0,
+    "bets": 35
   },
   "updated": null
 }
