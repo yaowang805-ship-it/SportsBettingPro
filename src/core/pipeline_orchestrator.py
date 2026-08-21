@@ -432,8 +432,11 @@ class PipelineOrchestrator:
             f"错误: {error[:200]}"
         )
         try:
-            send_dingtalk("Pipeline Alert", body)
-            logger.info("[%s] 告警已发送", task_name)
+            # 任务失败告警属故障类, urgent 跳过非投注每日配额(否则被例行日报挤掉而静默丢失)
+            if send_dingtalk("Pipeline Alert", body, urgent=True):
+                logger.info("[%s] 告警已发送", task_name)
+            else:
+                logger.error("[%s] 告警未送达(钉钉返回失败)", task_name)
         except Exception as e:
             logger.error("[%s] 告警发送失败: %s", task_name, e)
 
@@ -700,8 +703,11 @@ class PipelineOrchestrator:
             lines.append(f"🗺️ 队名映射: {tm_n} 条")
 
             body = "\n".join(lines)
-            send_dingtalk("数据积累日报", body, timeout=10)
-            logger.info("数据积累日报已推送")
+            # 例行日报, 不加 urgent(该受每日配额约束); 但必须如实记录成败
+            if send_dingtalk("数据积累日报", body, timeout=10):
+                logger.info("数据积累日报已推送")
+            else:
+                logger.warning("数据积累日报未送达(配额用尽或钉钉失败)")
         except Exception as e:
             logger.error("数据日报异常: %s", e)
 
@@ -1151,8 +1157,13 @@ class PipelineOrchestrator:
                     for w in report.warnings[:10]:
                         lines.append(f"  ⚠️ {w}")
                 body = "\n".join(lines)
-                send_dingtalk(f"系统健康报告 {report.score}/100", body, timeout=10)
-                logger.info("健康报告已推送")
+                # 健康分低于 60 视为故障告警走 urgent, 否则算例行报告受配额约束
+                _urgent = getattr(report, "score", 100) < 60
+                if send_dingtalk(f"系统健康报告 {report.score}/100", body,
+                                 timeout=10, urgent=_urgent):
+                    logger.info("健康报告已推送")
+                else:
+                    logger.warning("健康报告未送达(配额用尽或钉钉失败), score=%s", report.score)
         except Exception as e:
             logger.error("健康检查异常: %s", e)
 

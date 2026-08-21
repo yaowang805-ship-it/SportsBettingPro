@@ -27,9 +27,13 @@
 """
 import csv
 import json
+import re
 import statistics
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
+
+# 被过滤掉的不可执行样本计数(供报告用, 避免"静默丢弃"看不见)
+_dropped = Counter()
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "storage"
@@ -38,8 +42,29 @@ OUT = DATA / "ev_threshold_matrix.json"
 
 POS_RATE_MIN = 0.55     # 正 CLV 率下限
 MEDIAN_CLV_MIN = 2.0    # 中位 CLV 下限(%)
-MIN_N = 10              # 一个 EV 档至少多少样本才可信
-EV_STEPS = (8, 5, 3, 2) # 从高到低找最低可行门槛
+
+# 样本纪律(业界标准: CLV 100-200 注才可靠, 早期 CLV 是噪声 —— 80注+5% 到 340注 会掉到 +1.8%)
+#   n >= 100  → "确认", 可用数据驱动门槛
+#   30 <= n < 100 → "方向性", 可用但要求更严的 edge(中位 CLV 加倍)
+#   n < 30    → 样本不足, **一律回退保守高门槛**, 绝不据此放低
+# 原先 MIN_N=10 等于用 10 个样本就敢开 2% 门槛(实测 total_goals_range 正是如此), 已废弃。
+N_CONFIRMED = 100
+N_DIRECTIONAL = 30
+# 判定标准对两档一致(中位CLV>2% 且 正率>55%), n 只决定标签"确认"/"方向性" ——
+# 不额外加严: 加严会把 ht_dc(n=34/中位+3.17%/正率85%) 这种强信号误杀。
+
+# 从**低到高**遍历, 取第一个满足判定的即最低可行门槛(门槛越低放行越多)。
+# 原先顺序是 (8,5,3,2) 命中即返回, 实际返回的是最高可行门槛, 与注释"找最低可行"相反。
+EV_STEPS = (2, 3, 5, 8)
+
+# 不可执行机会过滤 —— clv_results.csv 里 ~80% 是 source=validate(所有 ≥2%EV 机会),
+# 并非真实投注。其中被封杀类别/超赔率上限的机会**永远不会被下注**, 拿它们算门槛
+# 等于让门槛建立在不可执行的信号上(实测 1x2 中位 CLV +23.92% 几乎全由这类样本撑起)。
+MAX_ODDS = 20.0         # 与 config/constants.py max_odds 一致: >20 全部负期望, 推送层已 _stake=0
+# 样本不足时的回退门槛(= default_threshold)。宁可少推不可推错。
+CONSERVATIVE_THRESHOLD = 8.0
+BANNED_LEAGUE_RE = re.compile(
+    r"ITF|Challenger|W15|W25|W35|W50|W75|W100|M15|M25|World Tennis", re.I)
 
 # 运动层微调(相对盘口门槛的加/减, 基于运动整体 CLV 相对大盘口)
 SPORT_ADJUST = {
@@ -79,22 +104,47 @@ def load_clean():
                 continue
             if od and ev > max(12.0, (od - 1) * 20):
                 continue  # EV 超系统上限 = 上游坏价垃圾
+            # 不可执行机会不参与门槛计算(推送层不会投注它们, 详见文件头注释)
+            if od and od > MAX_ODDS:
+                _dropped["odds>20"] += 1
+                continue
+            if BANNED_LEAGUE_RE.search(r.get("league") or ""):
+                _dropped["封杀联赛"] += 1
+                continue
             out.append((r.get("sub_market", "?"), clv, ev))
     return out
 
 
 def market_threshold(samples):
-    """对一个盘口的 (clv, ev) 样本, 找最低可行 EV 门槛。"""
-    for thr in EV_STEPS:
+    """对一个盘口的 (clv, ev) 样本, 找最低可行 EV 门槛。
+
+    返回 (门槛, n, 中位CLV, 正率%, 判定档)。门槛为 None 表示样本不足以支持任何
+    数据驱动门槛 —— 调用方须回退保守默认值, **不得**因"看起来是正的"就放低。
+    """
+    n_max = 0
+    for thr in EV_STEPS:       # 低 → 高, 命中即最低可行门槛
         sub = [(c, e) for c, e in samples if e >= thr]
-        if len(sub) < MIN_N:
-            continue
+        n = len(sub)
+        n_max = max(n_max, n)
+        if n < N_DIRECTIONAL:
+            continue           # 样本不足的档不参与判定, 既不解锁也不据此否定
         clvs = [c for c, _ in sub]
-        pos_rate = sum(1 for c in clvs if c > 0) / len(clvs)
+        pos_rate = sum(1 for c in clvs if c > 0) / n
         med = statistics.median(clvs)
         if pos_rate >= POS_RATE_MIN and med > MEDIAN_CLV_MIN:
-            return thr, len(sub), round(med, 2), round(pos_rate * 100)
-    return None, len(samples), None, None
+            return (thr, n, round(med, 2), round(pos_rate * 100),
+                    "确认" if n >= N_CONFIRMED else "方向性")
+    # 没有任何档达标。区分"确实没 edge"和"高EV档还没测够":
+    # 看最高档(EV_STEPS[-1]) —— 即便样本不足, 若其中位 CLV 仍 ≤0, 说明连最挑剔的
+    # 高EV机会都无正 edge → 停推; 若 >0 则只是没测够 → 保守回退, 别一棍子打死。
+    # (实测 1x2 在 EV≥8% 是 +10.29%/65% 仅 n=17, 若按"低档负就停推"会被误杀)
+    top = [c for c, e in samples if e >= EV_STEPS[-1]]
+    top_med = statistics.median(top) if top else None
+    if top_med is not None and top_med <= 0:
+        return None, n_max, round(top_med, 2), None, f"负edge(最高档EV≥{EV_STEPS[-1]}% n={len(top)} 中位{top_med:+.1f}%)"
+    return None, n_max, (round(top_med, 2) if top_med is not None else None), None, \
+        (f"高EV档样本不足(EV≥{EV_STEPS[-1]}% 仅 n={len(top)}"
+         + (f", 中位{top_med:+.1f}% 看似为正但未达 n≥{N_DIRECTIONAL})" if top_med is not None else ")"))
 
 
 def main():
@@ -106,14 +156,22 @@ def main():
     markets = {}
     details = {}
     for sm in sorted(by_market, key=lambda s: -len(by_market[s])):
-        thr, n, med, pos = market_threshold(by_market[sm])
-        if thr is None:
-            # 无档满足正 edge → 停推(用 999 表示, 推送层会拦掉)
-            markets[sm] = 999.0
-            details[sm] = {"n": n, "verdict": "停推(无档满足正edge)", "median": med, "pos_rate": pos}
-        else:
+        thr, n, med, pos, grade = market_threshold(by_market[sm])
+        if thr is not None:
             markets[sm] = float(thr)
-            details[sm] = {"n": n, "verdict": "data_driven", "median": med, "pos_rate": pos}
+            details[sm] = {"n": n, "verdict": f"data_driven({grade})",
+                           "median": med, "pos_rate": pos}
+        elif grade.startswith("负edge"):
+            # 连最高 EV 档中位 CLV 都 ≤0 → 停推(999, 推送层会拦掉)
+            markets[sm] = 999.0
+            details[sm] = {"n": n, "verdict": f"停推({grade})",
+                           "median": med, "pos_rate": pos}
+        else:
+            # 各达标档 edge 不显著, 但高 EV 档看似为正只是样本不够 → 保守高门槛回退。
+            # 不停推(可能有真 edge 只是没测出来), 也不放低(没有证据支持)。攒够自动解锁。
+            markets[sm] = CONSERVATIVE_THRESHOLD
+            details[sm] = {"n": n, "verdict": f"保守回退({grade})",
+                           "median": med, "pos_rate": pos}
 
     matrix = {
         "generated_at": __import__("datetime").datetime.now().isoformat(),
@@ -127,7 +185,12 @@ def main():
     }
     OUT.write_text(json.dumps(matrix, ensure_ascii=False, indent=2))
     print(f"✅ 门槛矩阵已生成 → {OUT.name}")
-    print(f"  样本 {len(clean)} 条, {len(markets)} 个盘口")
+    print(f"  可用样本 {len(clean)} 条, {len(markets)} 个盘口")
+    if _dropped:
+        print(f"  已剔除不可执行样本: " +
+              ", ".join(f"{k} {v}条" for k, v in _dropped.most_common()))
+    print(f"  样本纪律: ≥{N_CONFIRMED}确认 / {N_DIRECTIONAL}-{N_CONFIRMED}方向性 / "
+          f"<{N_DIRECTIONAL}回退{CONSERVATIVE_THRESHOLD}% | 判定: 中位CLV>{MEDIAN_CLV_MIN}% 且 正率≥{POS_RATE_MIN*100:.0f}%")
     for sm in sorted(markets, key=lambda s: -by_market[s].__len__()):
         d = details[sm]
         v = d["verdict"]
