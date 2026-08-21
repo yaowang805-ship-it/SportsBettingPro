@@ -1,5 +1,5 @@
 {
-  "balance": 2399.46,
+  "balance": 2236.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2301,6 +2301,29 @@
       "commence_time": 1787337000,
       "created_at": "2026-08-21T10:01:50.178572+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_圣德尔模_玛伦_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "阿根廷全国联赛",
+      "home_team": "圣德尔模",
+      "away_team": "玛伦",
+      "home_cn": "圣德尔模",
+      "away_cn": "玛伦",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 2.14,
+      "stake": 163,
+      "model_prob": 0.4886,
+      "ev_pct": 4.56,
+      "pin_odds": 0,
+      "fair_price": 2.0467,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787337000,
+      "created_at": "2026-08-21T10:44:30.608352+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -2677,8 +2700,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-21",
-    "used": 3546.0,
-    "bets": 30
+    "used": 3709.0,
+    "bets": 31
   },
   "updated": null
 }
