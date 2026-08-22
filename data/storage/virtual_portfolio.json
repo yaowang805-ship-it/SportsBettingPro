@@ -1,5 +1,5 @@
 {
-  "balance": 12626.46,
+  "balance": 12612.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2416,6 +2416,29 @@
       "commence_time": 1787398200,
       "created_at": "2026-08-21T23:03:01.511534+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_磐田喜悦_德岛漩涡_上半场客胜",
+      "sport": "football",
+      "league": "日本乙级联赛",
+      "home_team": "磐田喜悦",
+      "away_team": "德岛漩涡",
+      "home_cn": "磐田喜悦",
+      "away_cn": "德岛漩涡",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.15,
+      "stake": 14,
+      "model_prob": 0.2524,
+      "ev_pct": 4.75,
+      "pin_odds": 3.66,
+      "fair_price": 3.9618,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787392800,
+      "created_at": "2026-08-22T00:25:07.484783+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3034,8 +3057,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-22",
-    "used": 1010.0,
-    "bets": 12
+    "used": 1024.0,
+    "bets": 13
   },
   "updated": null
 }
