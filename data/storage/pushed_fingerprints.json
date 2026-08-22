@@ -893,6 +893,11 @@
     "bb": 6.55,
     "ts": 1787401337.861229
   },
+  "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 3.94,
+    "bb": 2.16,
+    "ts": 1787413612.615654
+  },
   "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场客胜|ht|2026-08-23": {
     "ev": 4.61,
     "bb": 5.35,
@@ -2625,6 +2630,15 @@
     "ev": 2.47,
     "ts": 1787331072.415024
   },
+  "football|Italy Serie A|Udinese Calcio|Como 1907|让球主胜|1x2|2026-08-23": {
+    "ev": 1.07,
+    "ts": 1787413612.959828
+  },
+  "football|Italy Serie A|乌迪内斯|科莫 1907|上半场主胜|ht|2026-08-23": {
+    "ev": 8.4,
+    "bb": 6.35,
+    "ts": 1787413612.6157131
+  },
   "football|Italy Serie A|乌迪内斯|科莫 1907|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 3.03,
     "bb": 1.83,
@@ -3669,6 +3683,14 @@
     "ev": 3.13,
     "ts": 1787398655.758676
   },
+  "football|Peru Liga 1|UTC de Cajamarca|Comerciantes Unidos|上半场主胜|ht|2026-08-23": {
+    "ev": 1.83,
+    "ts": 1787413612.958884
+  },
+  "football|Peru Liga 1|UTC de Cajamarca|Comerciantes Unidos|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 1.03,
+    "ts": 1787413612.959006
+  },
   "football|Peru Liga 1|UTC de Cajamarca|Comerciantes Unidos|上半场客胜|ht|2026-08-23": {
     "ev": 1.88,
     "ts": 1787373991.883599
@@ -3824,6 +3846,10 @@
   "football|Portugal Primeira Liga|Estoril Praia|Rio Ave FC|双边进球-是|btts|2026-08-23": {
     "ev": 1.46,
     "ts": 1787413337.533768
+  },
+  "football|Portugal Primeira Liga|Estoril Praia|Rio Ave FC|大球|1x2|2026-08-23": {
+    "ev": 3.15,
+    "ts": 1787413612.9613938
   },
   "football|Portugal Primeira Liga|Maritimo Madeira|Academico de Viseu FC|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.33,
@@ -5332,14 +5358,9 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场双重机会-主/客|ht_dc|2026-08-23": {
-    "ev": 3.94,
-    "bb": 2.16,
-    "ts": 1787413612.615654
-  },
-  "football|Italy Serie A|乌迪内斯|科莫 1907|上半场主胜|ht|2026-08-23": {
-    "ev": 8.4,
-    "bb": 6.35,
-    "ts": 1787413612.6157131
+  "football|Turkey 1. Lig|厄德尔|开塞利体育|上半场客胜|ht|2026-08-23": {
+    "ev": 2.55,
+    "bb": 3.36,
+    "ts": 1787414096.7448618
   }
 }
