@@ -400,6 +400,11 @@
     "bb": 2.07,
     "ts": 1787328492.964848
   },
+  "football|Argentina Primera Nacional|贝尔格拉诺防卫队|阿尔米兰提布朗|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 3.65,
+    "bb": 2.27,
+    "ts": 1787409789.0957959
+  },
   "football|Armenia Premier League|FC Shirak Gyumri|FC Urartu|客胜|1x2|2026-08-22": {
     "ev": 1.37,
     "ts": 1787399689.395137
@@ -578,6 +583,10 @@
   "football|Austria 2. Liga|SKU Amstetten|FC Hertha Wels|让球客胜|1x2|2026-08-22": {
     "ev": 3.44,
     "ts": 1787328260.9823291
+  },
+  "football|Austria 2. Liga|Schwarz Weiss Bregenz|SK Sturm Graz II|让球客胜|1x2|2026-08-22": {
+    "ev": 4.42,
+    "ts": 1787409789.537215
   },
   "football|Austria 2. Liga|Wacker Innsbruck|SKN ST Polten|上半场主胜|ht|2026-08-22": {
     "ev": 1.58,
@@ -4746,6 +4755,14 @@
     "ev": 2.62,
     "ts": 1787391363.512806
   },
+  "football|Turkey Super Lig|Corum FK|Kasimpasa|双边进球-是|btts|2026-08-23": {
+    "ev": 1.35,
+    "ts": 1787409789.537814
+  },
+  "football|Turkey Super Lig|Corum FK|Kasimpasa|大球|1x2|2026-08-23": {
+    "ev": 1.4,
+    "ts": 1787409789.5381398
+  },
   "football|Turkey Super Lig|Fenerbahce|Konyaspor|客胜|1x2|2026-08-23": {
     "ev": 2.34,
     "ts": 1787350394.2973728
@@ -5093,9 +5110,14 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Argentina Primera Nacional|贝尔格拉诺防卫队|阿尔米兰提布朗|上半场双重机会-主/客|ht_dc|2026-08-23": {
-    "ev": 3.65,
-    "bb": 2.27,
-    "ts": 1787409789.0957959
+  "football|France Ligue 1|尼斯|洛里昂|上半场客胜|ht|2026-08-23": {
+    "ev": 2.78,
+    "bb": 4.4,
+    "ts": 1787410113.74236
+  },
+  "football|Argentina Primera Nacional|贝尔格拉诺防卫队|阿尔米兰提布朗|上半场客胜|ht|2026-08-23": {
+    "ev": 2.54,
+    "bb": 6.7,
+    "ts": 1787410113.742422
   }
 }

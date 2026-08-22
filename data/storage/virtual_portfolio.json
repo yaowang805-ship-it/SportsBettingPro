@@ -1,5 +1,5 @@
 {
-  "balance": 12143.46,
+  "balance": 12111.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3106,6 +3106,52 @@
       "commence_time": 1787423400,
       "created_at": "2026-08-22T14:43:09.089148+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_尼斯_洛里昂_上半场客胜",
+      "sport": "football",
+      "league": "法国甲级联赛",
+      "home_team": "尼斯",
+      "away_team": "洛里昂",
+      "home_cn": "尼斯",
+      "away_cn": "洛里昂",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.4,
+      "stake": 25,
+      "model_prob": 0.2336,
+      "ev_pct": 2.78,
+      "pin_odds": 4.06,
+      "fair_price": 4.2811,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787424300,
+      "created_at": "2026-08-22T14:48:33.732506+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_贝尔格拉诺防卫队_阿尔米兰提布朗_上半场客胜",
+      "sport": "football",
+      "league": "阿根廷全国联赛",
+      "home_team": "贝尔格拉诺防卫队",
+      "away_team": "阿尔米兰提布朗",
+      "home_cn": "贝尔格拉诺防卫队",
+      "away_cn": "阿尔米兰提布朗",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 6.7,
+      "stake": 7,
+      "model_prob": 0.153,
+      "ev_pct": 2.54,
+      "pin_odds": 5.63,
+      "fair_price": 6.5341,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787423400,
+      "created_at": "2026-08-22T14:48:33.732554+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -4129,8 +4175,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-22",
-    "used": 3275.0,
-    "bets": 84
+    "used": 3307.0,
+    "bets": 86
   },
   "updated": null
 }
