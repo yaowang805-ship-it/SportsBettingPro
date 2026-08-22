@@ -917,6 +917,10 @@
     "ev": 1.34,
     "ts": 1787310944.182626
   },
+  "football|Bulgaria First Professional League|PFC Ludogorets 1945 Razgrad|PFC Slavia Sofia|大球|1x2|2026-08-23": {
+    "ev": 1.46,
+    "ts": 1787412666.0160692
+  },
   "football|Chile Primera B|Cobreloa Calama|Union Espanola|主胜|1x2|2026-08-23": {
     "ev": 1.5,
     "ts": 1787396948.7722628
@@ -3961,6 +3965,10 @@
     "ev": 2.01,
     "ts": 1787329934.826298
   },
+  "football|Romania Liga 1|FC UTA Arad|Corvinul|上半场主胜|ht|2026-08-22": {
+    "ev": 9.47,
+    "ts": 1787412666.0103931
+  },
   "football|Romania Liga 1|FC UTA Arad|Corvinul|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.63,
     "ts": 1787371971.619264
@@ -3969,14 +3977,41 @@
     "ev": 2.79,
     "ts": 1787401550.001705
   },
+  "football|Romania Liga 1|FC UTA Arad|Corvinul|主胜|1x2|2026-08-22": {
+    "ev": 8.35,
+    "ts": 1787412666.010263
+  },
+  "football|Romania Liga 1|FC UTA Arad|Corvinul|双重机会-主/和局|dc|2026-08-22": {
+    "ev": 4.72,
+    "ts": 1787412666.0105789
+  },
+  "football|Romania Liga 1|FC UTA Arad|Corvinul|让球主胜|1x2|2026-08-22": {
+    "ev": 10.82,
+    "ts": 1787412666.0104918
+  },
   "football|Romania Liga 1|FC UTA Arad|Corvinul|让球客胜|1x2|2026-08-22": {
     "ev": 1.01,
     "ts": 1787401550.001778
+  },
+  "football|Romania Liga 1|UTA阿拉德|科尔维努尔|上半场主胜|ht|2026-08-22": {
+    "ev": 9.47,
+    "bb": 3.23,
+    "ts": 1787412665.5736818
   },
   "football|Romania Liga 1|UTA阿拉德|科尔维努尔|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 2.81,
     "bb": 1.86,
     "ts": 1787411964.2763038
+  },
+  "football|Romania Liga 1|UTA阿拉德|科尔维努尔|主胜|1x2|2026-08-22": {
+    "ev": 8.35,
+    "bb": 2.4,
+    "ts": 1787412665.573735
+  },
+  "football|Romania Liga 1|UTA阿拉德|科尔维努尔|双重机会-主/和局|dc|2026-08-22": {
+    "ev": 4.72,
+    "bb": 1.41,
+    "ts": 1787412665.573781
   },
   "football|Romania Liga 1|UTA阿拉德|胡内多阿拉|上半场客胜|ht|2026-08-22": {
     "ev": 2.79,
@@ -5183,6 +5218,10 @@
     "ev": 1.08,
     "ts": 1787410114.1034539
   },
+  "football|Uruguay Segunda Division|CS Cerrito|Uruguay Montevideo FC|大球|1x2|2026-08-23": {
+    "ev": 1.02,
+    "ts": 1787412666.010947
+  },
   "football|Uruguay Segunda Division|CS Cerrito|Uruguay Montevideo FC|客胜|1x2|2026-08-23": {
     "ev": 1.9,
     "ts": 1787410114.103265
@@ -5276,19 +5315,9 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Romania Liga 1|UTA阿拉德|科尔维努尔|上半场主胜|ht|2026-08-22": {
-    "ev": 9.47,
-    "bb": 3.23,
-    "ts": 1787412665.5736818
-  },
-  "football|Romania Liga 1|UTA阿拉德|科尔维努尔|主胜|1x2|2026-08-22": {
-    "ev": 8.35,
-    "bb": 2.4,
-    "ts": 1787412665.573735
-  },
-  "football|Romania Liga 1|UTA阿拉德|科尔维努尔|双重机会-主/和局|dc|2026-08-22": {
-    "ev": 4.72,
-    "bb": 1.41,
-    "ts": 1787412665.573781
+  "football|Spain LaLiga|西班牙人|皇家马德里|上半场主胜|ht|2026-08-23": {
+    "ev": 2.72,
+    "bb": 8.0,
+    "ts": 1787413028.774883
   }
 }
