@@ -1,7 +1,10 @@
-"""每日虚拟投注结算报告 — 钉钉推送（纯中文）
+"""每日真实投注结算报告 — 钉钉推送（纯中文）
 
-读取 virtual_portfolio.json，汇总 bb_vs_pinnacle 投注的结算结果，
+读取 tracked_bets.json（真实投注库, 即推送的投注方案），汇总结算结果，
 包括当日新增结算、累计盈亏、待结算清单，推送到钉钉。
+
+2026-08-22 改: 原读 virtual_portfolio.json(虚拟投注组合), 与用户收到的推送投注方案
+(tracked_bets)不一致。现改为直接读 tracked_bets.json, 报告与推送一一对应。
 
 用法:
     python3 src/report/daily_settlement.py               # 生成报告并推送
@@ -20,14 +23,16 @@ from config.logging_config import get_logger
 
 logger = get_logger(__name__)
 
-PORTFOLIO_FILE = DATA_DIR / "virtual_portfolio.json"
+TRACKED_BETS_FILE = DATA_DIR / "tracked_bets.json"
 LAST_REPORT_FILE = DATA_DIR / "daily_settlement_last.json"
 
 
-def _load_portfolio() -> dict:
-    """委托给虚拟投注引擎的规范加载器。"""
-    from src.betting.bb_virtual_bet import _load_portfolio as _real_load
-    return _real_load()
+def _load_tracked_bets() -> list:
+    """加载真实投注库(tracked_bets.json)。返回 bet 列表。"""
+    if not TRACKED_BETS_FILE.exists():
+        return []
+    data = json.loads(TRACKED_BETS_FILE.read_text())
+    return data.get("bets", []) if isinstance(data, dict) else data
 
 
 def _load_last_cutoff() -> str:
@@ -54,52 +59,36 @@ def _get_settled_at(entry):
     return ""
 
 def _get_result(entry):
-    """统一提取 result，兼容旧数据用 status 字段。"""
+    """统一提取 result。tracked_bets 的 result 字段直接是 won/lost/void/half_won/half_lost。"""
     if isinstance(entry, dict):
-        r = entry.get("result")
-        if r:
-            return r
-        return entry.get("status", "")
+        return entry.get("result", "")
     return str(entry) if entry else ""
 
 
-def _format_bet_line(h: dict) -> str:
-    """格式化单笔结算明细行。"""
-    profit = h.get("profit", 0)
-    stake = h.get("stake", 0)
-    odds = h.get("odds", 0)
-    icon = "✅" if _get_result(h) == "won" else "❌"
+def _is_win(r):
+    return r in ("won", "half_won")
+
+
+def _is_loss(r):
+    return r in ("lost", "half_lost")
+
+
+def _format_bet_line(b: dict) -> str:
+    """格式化单笔结算明细行(tracked_bets 字段)。"""
+    profit = b.get("profit", 0)
+    stake = b.get("stake", 0)
+    odds = b.get("bb_odds", 0)
+    r = b.get("result", "")
+    icon = "✅" if _is_win(r) else "❌"
     profit_str = f"+¥{profit:.0f}" if profit > 0 else f"¥{profit:.0f}"
-
-    # 新格式：有 home_cn 字段
-    home = h.get("home_cn", "")
-    away = h.get("away_cn", "")
-    if home and away:
-        market = h.get("market_type", "")
-        league = h.get("league", "")
-        label = f"[{league}] {home} vs {away}" if league else f"{home} vs {away}"
-        if market:
-            return f"{icon} {label} | {market} @ {odds:.2f} | ¥{stake:.0f} → {profit_str}"
-        return f"{icon} {label} | @ {odds:.2f} | ¥{stake:.0f} → {profit_str}"
-
-    # 旧格式：从 bet_id 解析
-    bid = h.get("id", "")
-    raw = bid.replace("bb_vs_pin_", "", 1)
-    if "_" in raw:
-        parts = raw.split("_")
-        if len(parts) >= 4:
-            market = parts[0]
-            outcome = parts[-1]
-            team_parts = parts[1:-1]
-            if len(team_parts) >= 2:
-                home = team_parts[-2]
-                away = team_parts[-1]
-                if outcome == "客胜":
-                    return f"{icon} {home} vs {away} | {market} @ {odds:.2f} | ¥{stake:.0f} → {profit_str}"
-                return f"{icon} {home} vs {away} | {outcome} @ {odds:.2f} | ¥{stake:.0f} → {profit_str}"
-
-    # 最简回退
-    return f"{icon} ¥{stake:.0f} @ {odds:.2f} → {profit_str}"
+    home = b.get("home", "")
+    away = b.get("away", "")
+    market = b.get("designation", "")
+    league = b.get("league", "")
+    label = f"[{league}] {home} vs {away}" if league else f"{home} vs {away}"
+    if market:
+        return f"{icon} {label} | {market} @ {odds:.2f} | ¥{stake:.0f} → {profit_str}"
+    return f"{icon} {label} | @ {odds:.2f} | ¥{stake:.0f} → {profit_str}"
 
 
 def build_report():
