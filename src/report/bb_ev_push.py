@@ -2355,6 +2355,19 @@ def _lookup_bb_odds(match: dict, o: dict):
             return "draw"
         return target
 
+    def _dc(field):
+        # dc 数组顺序: [主/和(1X), 和/客(X2), 主/客(12)]
+        dc = field.get("dc")
+        if not isinstance(dc, (list, tuple)) or len(dc) < 3:
+            return None
+        if "主" in des and "和" in des:
+            return dc[0]
+        if "和" in des and "客" in des:
+            return dc[1]
+        if "主" in des and "客" in des:
+            return dc[2]
+        return None
+
     if mkt == "1x2":
         idx = {"home": 0, "draw": 1, "away": 2}.get(_side("away"), 2)
         return _ml(ft, idx)
@@ -2373,6 +2386,10 @@ def _lookup_bb_odds(match: dict, o: dict):
     if mkt == "ht_ou":
         total = ht.get("total") or {}
         return total.get("over_odds") if ("大" in des or "over" in des) else total.get("under_odds")
+    if mkt == "dc":
+        return _dc(ft)
+    if mkt == "ht_dc":
+        return _dc(ht)
     return None
 
 
