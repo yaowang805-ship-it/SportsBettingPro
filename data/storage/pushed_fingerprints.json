@@ -11,6 +11,10 @@
     "ev": 29.41,
     "ts": 1787271530.091331
   },
+  "baseball|MLB|San Diego Padres|Minnesota Twins|客胜|1x2|2026-08-23": {
+    "ev": 2.87,
+    "ts": 1787405525.539857
+  },
   "baseball|MLB|休斯敦太空人|奥克兰运动家队|客胜|1x2|2026-08-22": {
     "ev": 29.41,
     "bb": 2.54,
@@ -108,6 +112,10 @@
   "basketball|WNBA|Los Angeles Sparks (w)|Connecticut Sun (w)|小分|1x2|2026-08-23": {
     "ev": 3.92,
     "ts": 1787382591.2643788
+  },
+  "basketball|WNBA|Phoenix Mercury (w)|Atlanta Dream (w)|大分|1x2|2026-08-23": {
+    "ev": 1.29,
+    "ts": 1787405525.539757
   },
   "basketball|WNBA|Toronto Tempo (w)|Portland Fire (w)|主胜|1x2|2026-08-22": {
     "ev": 1.62,
@@ -810,6 +818,11 @@
     "bb": 2.04,
     "ts": 1787401337.860609
   },
+  "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场客胜|ht|2026-08-23": {
+    "ev": 4.61,
+    "bb": 5.35,
+    "ts": 1787405525.153009
+  },
   "football|Brazil Serie B|欧帕尔利奥|维拉诺瓦|上半场双重机会-主/客|ht_dc|2026-08-24": {
     "ev": 3.68,
     "bb": 1.9,
@@ -1028,6 +1041,10 @@
   "football|Czech Republic MSFL|SK Hranice|MFK Havirov|让球主胜|1x2|2026-08-22": {
     "ev": 1.63,
     "ts": 1787290860.10208
+  },
+  "football|Ecuador LigaPro Primera A|Barcelona SC|Orense SC|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 1.35,
+    "ts": 1787405525.534861
   },
   "football|Ecuador LigaPro Primera A|Barcelona SC|Orense SC|主胜|1x2|2026-08-23": {
     "ev": 2.25,
@@ -3474,11 +3491,6 @@
     "bb": 4.74,
     "ts": 1787400929.497602
   },
-  "football|Portugal Primeira Liga|马里迪莫|维塞乌|上半场客胜|ht|2026-08-22": {
-    "ev": 5.73,
-    "bb": 5.2,
-    "ts": 1787362070.0490282
-  },
   "football|Portugal Segunda Liga|FC Penafiel|Sporting Lisbon B|双边进球-是|btts|2026-08-23": {
     "ev": 1.36,
     "ts": 1787404541.5699441
@@ -3691,6 +3703,10 @@
     "ev": 1.47,
     "ts": 1787404541.5699031
   },
+  "football|Russia Premier League|FK Akron Tolyatti|PFK Krylia Sovetov Samara|总进球区间7+|total_goals_range|2026-08-23": {
+    "ev": 1.31,
+    "ts": 1787405525.541065
+  },
   "football|Russia Premier League|RFK Akhmat Grozny|FK Rostov|上半场主胜|ht|2026-08-22": {
     "ev": 2.16,
     "ts": 1787398655.755158
@@ -3778,6 +3794,11 @@
   "football|Scotland Championship|Raith Rovers FC|Ayr United FC|让球客胜|1x2|2026-08-22": {
     "ev": 1.44,
     "ts": 1787404241.775788
+  },
+  "football|Scotland Championship|女王公园|斯坦豪斯摩尔|双重机会-主/和局|dc|2026-08-22": {
+    "ev": 2.53,
+    "bb": 1.42,
+    "ts": 1787405525.1529531
   },
   "football|Scotland Premiership|Dundee United|FC Dundee|单双-双|oe|2026-08-23": {
     "ev": 1.27,
@@ -4743,14 +4764,19 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Scotland Championship|女王公园|斯坦豪斯摩尔|双重机会-主/和局|dc|2026-08-22": {
-    "ev": 2.53,
-    "bb": 1.42,
-    "ts": 1787405525.1529531
+  "football|Portugal Primeira Liga|马里迪莫|维塞乌|上半场客胜|ht|2026-08-22": {
+    "ev": 7.77,
+    "bb": 5.45,
+    "ts": 1787405706.770866
   },
-  "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场客胜|ht|2026-08-23": {
-    "ev": 4.61,
-    "bb": 5.35,
-    "ts": 1787405525.153009
+  "football|Belgium Challenger Pro League|登德尔|比尔肖特 VA|上半场客胜|ht|2026-08-22": {
+    "ev": 4.14,
+    "bb": 3.03,
+    "ts": 1787405706.770918
+  },
+  "football|Italy Serie B|阿维利诺 1912|阿雷佐|上半场客胜|ht|2026-08-23": {
+    "ev": 3.65,
+    "bb": 4.83,
+    "ts": 1787405706.7709591
   }
 }
