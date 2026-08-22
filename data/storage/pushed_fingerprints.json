@@ -874,11 +874,6 @@
     "bb": 3.46,
     "ts": 1787401337.860547
   },
-  "football|Brazil Serie A|巴西国际|米内罗竞技|上半场客胜|ht|2026-08-23": {
-    "ev": 3.29,
-    "bb": 5.1,
-    "ts": 1787410247.235744
-  },
   "football|Brazil Serie A|弗鲁米嫩塞RJ|瑞模贝雷|上半场客胜|ht|2026-08-23": {
     "ev": 6.93,
     "bb": 9.0,
@@ -914,6 +909,11 @@
     "bb": 6.55,
     "ts": 1787401337.861229
   },
+  "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 7.23,
+    "bb": 2.27,
+    "ts": 1787417974.064783
+  },
   "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场客胜|ht|2026-08-23": {
     "ev": 4.61,
     "bb": 5.35,
@@ -936,6 +936,14 @@
   "football|Brazil Serie C|Botafogo FC PB|Guarani FC SP|让球主胜|1x2|2026-08-23": {
     "ev": 1.45,
     "ts": 1787407891.366179
+  },
+  "football|Brazil Serie C|Volta Redonda FC RJ|Floresta EC CE|主胜|1x2|2026-08-23": {
+    "ev": 3.19,
+    "ts": 1787418340.6300108
+  },
+  "football|Brazil Serie C|Volta Redonda FC RJ|Floresta EC CE|让球主胜|1x2|2026-08-23": {
+    "ev": 1.84,
+    "ts": 1787418340.63007
   },
   "football|Bulgaria First Professional League|PFC Cherno More Varna|Dunav Ruse|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.34,
@@ -2824,6 +2832,11 @@
     "bb": 1.88,
     "ts": 1787101664.262892
   },
+  "football|Italy Serie B|苏迪路|恩特拉|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 3.43,
+    "bb": 2.0,
+    "ts": 1787417974.064949
+  },
   "football|Italy Serie B|苏迪路|恩特拉|上半场客胜|ht|2026-08-23": {
     "ev": 9.21,
     "bb": 6.0,
@@ -3753,6 +3766,10 @@
     "ev": 1.5,
     "ts": 1787389323.501135
   },
+  "football|Peru Liga 1|Juan Pablo II|Asociacion Deportiva Tarma|角球大球|corner|2026-08-23": {
+    "ev": 5.01,
+    "ts": 1787417975.8140879
+  },
   "football|Peru Liga 1|Sport Huancayo|Moquegua|上半场主胜|ht|2026-08-23": {
     "ev": 1.81,
     "ts": 1787383881.524298
@@ -3932,6 +3949,10 @@
   "football|Portugal Primeira Liga|Estoril Praia|Rio Ave FC|大球|1x2|2026-08-23": {
     "ev": 3.15,
     "ts": 1787413612.9613938
+  },
+  "football|Portugal Primeira Liga|Estoril Praia|Rio Ave FC|让球客胜|1x2|2026-08-23": {
+    "ev": 2.94,
+    "ts": 1787417975.803141
   },
   "football|Portugal Primeira Liga|Maritimo Madeira|Academico de Viseu FC|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.33,
@@ -4219,6 +4240,14 @@
   "football|Russia Premier League|CSKA Moscow|Lokomotiv Moscow|上半场客胜|ht|2026-08-23": {
     "ev": 2.19,
     "ts": 1787382591.262034
+  },
+  "football|Russia Premier League|CSKA Moscow|Lokomotiv Moscow|双边进球-是|btts|2026-08-23": {
+    "ev": 2.08,
+    "ts": 1787418340.6238348
+  },
+  "football|Russia Premier League|CSKA Moscow|Lokomotiv Moscow|大球|1x2|2026-08-23": {
+    "ev": 2.16,
+    "ts": 1787418340.6248288
   },
   "football|Russia Premier League|FC Fakel Voronezh|FC Orenburg|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.41,
@@ -5364,6 +5393,10 @@
     "ev": 1.61,
     "ts": 1787406445.318368
   },
+  "football|USL League One|Union Omaha SC|Sarasota Paradise|小球|1x2|2026-08-23": {
+    "ev": 1.84,
+    "ts": 1787418340.6314151
+  },
   "football|Ukraine Cup|UCSA Tarasivka|Kolos Kovalivka|客胜|1x2|2026-08-22": {
     "ev": 4.35,
     "ts": 1787347982.0197482
@@ -5514,14 +5547,14 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场双重机会-主/客|ht_dc|2026-08-23": {
-    "ev": 7.23,
-    "bb": 2.27,
-    "ts": 1787417974.064783
+  "football|Brazil Serie A|巴西国际|米内罗竞技|上半场客胜|ht|2026-08-23": {
+    "ev": 5.31,
+    "bb": 5.2,
+    "ts": 1787418737.488886
   },
-  "football|Italy Serie B|苏迪路|恩特拉|上半场双重机会-主/客|ht_dc|2026-08-23": {
-    "ev": 3.43,
-    "bb": 2.0,
-    "ts": 1787417974.064949
+  "football|Brazil Serie A|巴西国际|米内罗竞技|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 2.51,
+    "bb": 1.81,
+    "ts": 1787418737.488977
   }
 }

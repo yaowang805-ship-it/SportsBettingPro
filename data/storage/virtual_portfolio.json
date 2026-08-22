@@ -1,5 +1,5 @@
 {
-  "balance": 10284.46,
+  "balance": 10121.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3589,6 +3589,29 @@
       "commence_time": 1787418000,
       "created_at": "2026-08-22T16:59:34.048146+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_巴西国际_米内罗竞技_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "巴西甲级联赛",
+      "home_team": "巴西国际",
+      "away_team": "米内罗竞技",
+      "home_cn": "巴西国际",
+      "away_cn": "米内罗竞技",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.81,
+      "stake": 163,
+      "model_prob": 0.5664,
+      "ev_pct": 2.51,
+      "pin_odds": 0,
+      "fair_price": 1.7656,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787434200,
+      "created_at": "2026-08-22T17:12:17.475424+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -4612,8 +4635,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-23",
-    "used": 1083.0,
-    "bets": 5
+    "used": 1246.0,
+    "bets": 6
   },
   "updated": null
 }
