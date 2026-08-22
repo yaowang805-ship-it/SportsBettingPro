@@ -92,57 +92,45 @@ def _format_bet_line(b: dict) -> str:
 
 
 def build_report():
-    """构建结算报告。返回 (body_text, stats_dict)。"""
-    portfolio = _load_portfolio()
-    history = portfolio.get("history", [])
-    pending = portfolio.get("pending_bets", [])
-    settled_dict = portfolio.get("settled", {})
-    balance = portfolio.get("balance", 10000.0)
-    initial = portfolio.get("initial_bankroll", 10000.0)
-    daily_budget = portfolio.get("daily_budget", {})
-
-    # 只统计 bb_vs_pinnacle 投注（兼容旧数据无 source 字段）
-    bb_history = [h for h in history if h.get("source") == "bb_vs_pinnacle"]
-    if not bb_history:
-        bb_history = history  # 旧数据降级：所有记录都是 bb_vs_pinnacle
-
-    bb_pending = [b for b in pending if b.get("source") == "bb_vs_pinnacle"]
+    """构建结算报告。返回 (body_text, stats_dict)。数据源 = tracked_bets.json(真实投注)。"""
+    bets = _load_tracked_bets()
+    settled = [b for b in bets if b.get("status") == "settled"]
+    pending = [b for b in bets if b.get("status") == "pending"]
+    unsettleable = [b for b in bets if b.get("status") == "unsettleable"]
 
     today = _bj_now().strftime("%m/%d")
     lines = []
-    lines.append(f"📊 虚拟投注结算报告 {today}")
+    lines.append(f"📊 真实投注结算报告 {today}")
     lines.append("")
 
     # ── 今日新增结算 ──
     last_cutoff = _load_last_cutoff()
     if last_cutoff:
-        new_history = [h for h in bb_history if
-                       (h.get("settled_at") or h.get("date") or "") > last_cutoff]
+        new_settled = [b for b in settled if (b.get("settled_at") or "") > last_cutoff]
     else:
         day_ago = (_bj_now() - timedelta(hours=24)).isoformat()
-        new_history = [h for h in bb_history if
-                       (h.get("settled_at") or h.get("date") or "") > day_ago]
+        new_settled = [b for b in settled if (b.get("settled_at") or "") > day_ago]
 
-    new_won = sum(1 for h in new_history if _get_result(h) == "won")
-    new_lost = sum(1 for h in new_history if _get_result(h) == "lost")
-    new_profit = sum(h.get("profit", 0) for h in new_history)
+    new_won = sum(1 for b in new_settled if _is_win(b.get("result", "")))
+    new_lost = sum(1 for b in new_settled if _is_loss(b.get("result", "")))
+    new_profit = sum(b.get("profit", 0) for b in new_settled)
 
-    lines.append(f"**【今日结算】** {len(new_history)} 笔")
-    if new_history:
+    lines.append(f"**【今日结算】** {len(new_settled)} 笔")
+    if new_settled:
         lines.append(f"✅ 赢 {new_won} / ❌ 输 {new_lost} / 盈亏 {new_profit:+.0f}¥")
         lines.append("")
-        for h in new_history[-8:]:
-            icon = "✅" if _get_result(h) == "won" else "❌"
-            market = h.get("market_type", "?")
-            odds = h.get("odds", 0)
-            profit = h.get("profit", 0)
-            score = h.get("score", "")
-            home = h.get("home_cn", "?")
-            away = h.get("away_cn", "?")
+        for b in new_settled[-8:]:
+            icon = "✅" if _is_win(b.get("result", "")) else "❌"
+            home = b.get("home", "?")
+            away = b.get("away", "?")
+            market = b.get("designation", "?")
+            odds = b.get("bb_odds", 0)
+            profit = b.get("profit", 0)
+            hs, as_ = b.get("home_score"), b.get("away_score")
             lines.append(f"{icon} {home} vs {away}")
             s = f"   {market} @ {odds} | 盈亏 {profit:+.0f}¥"
-            if score:
-                s += f" | 比分 {score}"
+            if hs is not None and as_ is not None:
+                s += f" | 比分 {hs}-{as_}"
             lines.append(s)
         lines.append("")
     else:
@@ -151,58 +139,59 @@ def build_report():
 
     # ── 昨日推送统计 ──
     yesterday = (_bj_now() - timedelta(days=1)).strftime("%Y-%m-%d")
-    yester_hist = [h for h in bb_history if (h.get("settled_at") or h.get("date") or "").startswith(yesterday)]
-    yester_pend = [b for b in bb_pending if (b.get("created_at") or "").startswith(yesterday)]
-    yester_won = sum(1 for h in yester_hist if _get_result(h) == "won")
-    yester_lost = sum(1 for h in yester_hist if _get_result(h) == "lost")
-    yester_void = sum(1 for h in yester_hist if _get_result(h) in ("void", "push", "refund"))
-    yester_profit = sum(h.get("profit", 0) for h in yester_hist)
+    yester_settled = [b for b in settled if (b.get("settled_at") or "").startswith(yesterday)]
+    yester_pending = [b for b in pending if (b.get("push_time") or "").startswith(yesterday)]
+    yester_won = sum(1 for b in yester_settled if _is_win(b.get("result", "")))
+    yester_lost = sum(1 for b in yester_settled if _is_loss(b.get("result", "")))
+    yester_void = sum(1 for b in yester_settled if b.get("result") in ("void", "push", "refund"))
+    yester_profit = sum(b.get("profit", 0) for b in yester_settled)
 
-    if yester_hist or yester_pend:
+    if yester_settled or yester_pending:
         lines.append(f"**【昨日推送统计】** {yesterday}")
-        lines.append(f"已结算 {len(yester_hist)} 笔 / 待结算 {len(yester_pend)} 笔")
-        if yester_hist:
+        lines.append(f"已结算 {len(yester_settled)} 笔 / 待结算 {len(yester_pending)} 笔")
+        if yester_settled:
             lines.append(f"✅ 赢 {yester_won} / ❌ 输 {yester_lost} / ⓪ 无效 {yester_void} / 盈亏 {yester_profit:+.0f}¥")
         lines.append("")
 
-    # ── 截至现在的累计统计 ──
-    total_bets = len(bb_history)
-    won = sum(1 for h in bb_history if _get_result(h) == "won")
-    lost = sum(1 for h in bb_history if _get_result(h) == "lost")
-    void = sum(1 for h in bb_history if _get_result(h) in ("void", "push", "refund"))
-    total_profit = sum(h.get("profit", 0) for h in bb_history)
-    total_stake = sum(h.get("stake", 0) for h in bb_history)
+    # ── 累计统计 ──
+    total_bets = len(settled)
+    won = sum(1 for b in settled if _is_win(b.get("result", "")))
+    lost = sum(1 for b in settled if _is_loss(b.get("result", "")))
+    void = sum(1 for b in settled if b.get("result") in ("void", "push", "refund"))
+    total_profit = sum(b.get("profit", 0) for b in settled)
+    total_stake = sum(b.get("stake", 0) for b in settled)
     roi = round(total_profit / (total_stake or 1) * 100, 2)
     win_rate = round(won / ((won + lost) or 1) * 100, 1)
 
-    lines.append(f"**【累计统计】** {total_bets} 笔")
-    lines.append(f"✅ {won} / ❌ {lost} / ⓪ 无效 {void}")
+    lines.append(f"**【累计统计】** {total_bets} 笔(已结算)")
+    lines.append(f"✅ 赢 {won} / ❌ 输 {lost} / ⓪ 无效 {void}")
     lines.append(f"胜率 {win_rate}% | ROI {roi:+.2f}%")
-    lines.append(f"总盈亏 {total_profit:+.0f}¥ | 余额 {balance:.0f}¥")
+    lines.append(f"总盈亏 {total_profit:+.0f}¥")
+    if unsettleable:
+        lines.append(f"⚠️ 无法核实 {len(unsettleable)} 笔(拿不到赛果, 已剔除)")
     lines.append("")
 
     # ── 结算明细 ──
-    won_bets = [h for h in bb_history if _get_result(h) == "won"]
-    lost_bets = [h for h in bb_history if _get_result(h) == "lost"]
-    lines.append(f"**【结算明细】** {total_bets} 笔")
+    won_bets = [b for b in settled if _is_win(b.get("result", ""))]
+    lost_bets = [b for b in settled if _is_loss(b.get("result", ""))]
+    lines.append(f"**【结算明细】** {len(won_bets) + len(lost_bets)} 笔(赢输)")
     if won_bets:
         lines.append(f"✅ 赢 ({len(won_bets)})")
-        for h in won_bets[-10:]:
-            lines.append(f"  {_format_bet_line(h)}")
+        for b in won_bets[-10:]:
+            lines.append(f"  {_format_bet_line(b)}")
         lines.append("")
     if lost_bets:
         lines.append(f"❌ 输 ({len(lost_bets)})")
-        for h in lost_bets[-10:]:
-            lines.append(f"  {_format_bet_line(h)}")
+        for b in lost_bets[-10:]:
+            lines.append(f"  {_format_bet_line(b)}")
         lines.append("")
 
     # ── 止损状态 ──
-    # 按日汇总盈亏，计算连输天数
     daily_pnl = defaultdict(float)
-    for h in bb_history:
-        d = (h.get("settled_at") or h.get("date") or "")[:10]
+    for b in settled:
+        d = (b.get("settled_at") or "")[:10]
         if d:
-            daily_pnl[d] += h.get("profit", 0)
+            daily_pnl[d] += b.get("profit", 0)
     today_str = _bj_now().strftime("%Y-%m-%d")
     sorted_dates = sorted([d for d in daily_pnl if d < today_str], reverse=True)
     consecutive_loss = 0
@@ -224,16 +213,16 @@ def build_report():
         lines.append("")
 
     # ── 待结算 ──
-    pending_count = len(bb_pending)
+    pending_count = len(pending)
     if pending_count:
-        exposure = sum(b.get("stake", 0) for b in bb_pending)
+        exposure = sum(b.get("stake", 0) for b in pending)
         lines.append(f"**【待结算】** {pending_count} 笔（敞口 {exposure:.0f}¥）")
         lines.append("")
-        for b in bb_pending[:5]:
-            home = b.get("home_cn", "?")
-            away = b.get("away_cn", "?")
-            market = b.get("market_type", "?")
-            odds = b.get("odds", 0)
+        for b in pending[:5]:
+            home = b.get("home", "?")
+            away = b.get("away", "?")
+            market = b.get("designation", "?")
+            odds = b.get("bb_odds", 0)
             stake = b.get("stake", 0)
             ev = b.get("ev_pct", 0)
             lines.append(f"⏳ {home} vs {away}")
@@ -242,17 +231,17 @@ def build_report():
             lines.append(f"   ... 还有 {pending_count - 5} 笔")
         lines.append("")
 
-    # ── 当日预算 ──
-    budget_date = daily_budget.get("date", "")
-    budget_used = daily_budget.get("used", 0)
-    # 从 bb_virtual_bet 获取实际日预算，避免硬编码不一致
+    # ── 当日投注 ──
+    today_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    today_bets = [b for b in bets if (b.get("push_time") or "").startswith(today_utc)]
+    budget_used = sum(b.get("stake", 0) for b in today_bets)
     try:
-        from src.betting.bb_virtual_bet import DAILY_BANKROLL
+        from config.constants import BANKROLL
     except ImportError:
-        DAILY_BANKROLL = 50000.0
-    if budget_date and budget_used:
-        lines.append(f"**【当日投注】**")
-        lines.append(f"日期 {budget_date} | 已用 {budget_used:.0f}¥ / {DAILY_BANKROLL:.0f}¥")
+        BANKROLL = 20000.0
+    if today_bets:
+        lines.append("**【当日投注】**")
+        lines.append(f"日期 {today} | 已用 {budget_used:.0f}¥ / {BANKROLL:.0f}¥")
         lines.append("")
 
     # ── 待人工确认（三态结算 unresolved） ──
@@ -279,10 +268,10 @@ def build_report():
     stats = {
         "total_bets": total_bets, "won": won, "lost": lost, "void": void,
         "total_profit": total_profit, "roi": roi, "win_rate": win_rate,
-        "new_settled": len(new_history), "new_won": new_won, "new_lost": new_lost,
+        "new_settled": len(new_settled), "new_won": new_won, "new_lost": new_lost,
         "new_profit": new_profit, "pending": pending_count,
-        "exposure": sum(b.get("stake", 0) for b in bb_pending),
-        "balance": balance,
+        "exposure": sum(b.get("stake", 0) for b in pending),
+        "unsettleable": len(unsettleable),
     }
     return body, stats
 
