@@ -1,5 +1,5 @@
 {
-  "balance": 12737.46,
+  "balance": 12642.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2669,6 +2669,52 @@
       "commence_time": 1787407200,
       "created_at": "2026-08-22T13:27:05.074082+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_女王公园_斯坦豪斯摩尔_双重机会-主/和局",
+      "sport": "football",
+      "league": "苏格兰冠军联赛",
+      "home_team": "女王公园",
+      "away_team": "斯坦豪斯摩尔",
+      "home_cn": "女王公园",
+      "away_cn": "斯坦豪斯摩尔",
+      "market": "1x2",
+      "market_type": "双重机会-主/和局",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 1.42,
+      "stake": 95,
+      "model_prob": 0.7221,
+      "ev_pct": 2.53,
+      "pin_odds": 0,
+      "fair_price": 1.3849,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787407200,
+      "created_at": "2026-08-22T13:32:05.144688+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_库亚巴_戈伊亚斯_上半场客胜",
+      "sport": "football",
+      "league": "巴西乙级联赛",
+      "home_team": "库亚巴",
+      "away_team": "戈伊亚斯",
+      "home_cn": "库亚巴",
+      "away_cn": "戈伊亚斯",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 5.35,
+      "stake": 0,
+      "model_prob": 0.1955,
+      "ev_pct": 4.61,
+      "pin_odds": 4.69,
+      "fair_price": 5.1143,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787434200,
+      "created_at": "2026-08-22T13:32:05.144727+00:00",
+      "track_only": true
     }
   ],
   "settled": {
@@ -3692,8 +3738,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-22",
-    "used": 2681.0,
-    "bets": 65
+    "used": 2776.0,
+    "bets": 67
   },
   "updated": null
 }

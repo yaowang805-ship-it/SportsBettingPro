@@ -1244,9 +1244,17 @@
     "ev": 1.48,
     "ts": 1787404750.311517
   },
+  "football|England Championship League|Swansea City|Sheffield United FC|上半场主胜|ht|2026-08-22": {
+    "ev": 4.33,
+    "ts": 1787405225.374149
+  },
   "football|England Championship League|Swansea City|Sheffield United FC|上半场客胜|ht|2026-08-22": {
     "ev": 1.19,
     "ts": 1787373991.881012
+  },
+  "football|England Championship League|Swansea City|Sheffield United FC|主胜|1x2|2026-08-22": {
+    "ev": 1.1,
+    "ts": 1787405225.37406
   },
   "football|England Championship League|Swansea City|Sheffield United FC|双边进球-是|btts|2026-08-22": {
     "ev": 1.04,
@@ -1276,10 +1284,28 @@
     "ev": 1.93,
     "ts": 1787385855.797334
   },
+  "football|England Championship League|Wrexham AFC|Watford FC|上半场客胜|ht|2026-08-22": {
+    "ev": 2.81,
+    "ts": 1787405225.374458
+  },
+  "football|England Championship League|Wrexham AFC|Watford FC|让球客胜|1x2|2026-08-22": {
+    "ev": 1.97,
+    "ts": 1787405225.3745348
+  },
+  "football|England Championship League|斯旺西|谢菲尔德联队|上半场主胜|ht|2026-08-22": {
+    "ev": 4.33,
+    "bb": 3.5,
+    "ts": 1787405225.0812879
+  },
   "football|England Championship League|林肯城|朴茨茅斯|上半场主胜|ht|2026-08-22": {
     "ev": 4.05,
     "bb": 3.12,
     "ts": 1787353381.5188322
+  },
+  "football|England Championship League|雷克斯汉姆|沃特福德|上半场客胜|ht|2026-08-22": {
+    "ev": 2.81,
+    "bb": 5.0,
+    "ts": 1787405225.0813289
   },
   "football|England FA Cup-Qualification|Bognor Regis Town|East Grinstead Town|大球|1x2|2026-08-22": {
     "ev": 1.14,
@@ -1329,6 +1355,10 @@
     "ev": 1.97,
     "ts": 1787390523.405472
   },
+  "football|England League One|Stevenage FC|Oxford United|大球|1x2|2026-08-22": {
+    "ev": 1.98,
+    "ts": 1787405225.375243
+  },
   "football|England League One|Stevenage FC|Oxford United|让球客胜|1x2|2026-08-22": {
     "ev": 2.19,
     "ts": 1787363324.797631
@@ -1356,6 +1386,11 @@
   "football|England League One|Wycombe Wanderers|Plymouth Argyle|总进球区间7+|total_goals_range|2026-08-22": {
     "ev": 1.67,
     "ts": 1787325212.144566
+  },
+  "football|England League One|斯蒂文尼奇|牛津联|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 4.23,
+    "bb": 1.92,
+    "ts": 1787405225.081236
   },
   "football|England League Two|Bristol Rovers|Newport County|主胜|1x2|2026-08-22": {
     "ev": 1.78,
@@ -3042,6 +3077,10 @@
     "ev": 1.8,
     "ts": 1787401549.9971259
   },
+  "football|Norway NM Cup|Flekkefjord|IK Start|让球客胜|1x2|2026-08-22": {
+    "ev": 1.66,
+    "ts": 1787405225.376129
+  },
   "football|Norway NM Cup|Frigg Oslo FK|Kjelsas|主胜|1x2|2026-08-23": {
     "ev": 1.98,
     "ts": 1787387186.8577878
@@ -3727,6 +3766,10 @@
   "football|Scotland Championship|Inverness CT|Partick Thistle FC|和局|1x2|2026-08-22": {
     "ev": 8.46,
     "ts": 1787335680.397989
+  },
+  "football|Scotland Championship|Queens Park FC|Stenhousemuir FC|让球主胜|1x2|2026-08-22": {
+    "ev": 4.0,
+    "ts": 1787405225.375833
   },
   "football|Scotland Championship|Raith Rovers FC|Ayr United FC|上半场客胜|ht|2026-08-22": {
     "ev": 1.35,
@@ -4700,19 +4743,14 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|England League One|斯蒂文尼奇|牛津联|上半场双重机会-主/客|ht_dc|2026-08-22": {
-    "ev": 4.23,
-    "bb": 1.92,
-    "ts": 1787405225.081236
+  "football|Scotland Championship|女王公园|斯坦豪斯摩尔|双重机会-主/和局|dc|2026-08-22": {
+    "ev": 2.53,
+    "bb": 1.42,
+    "ts": 1787405525.1529531
   },
-  "football|England Championship League|斯旺西|谢菲尔德联队|上半场主胜|ht|2026-08-22": {
-    "ev": 4.33,
-    "bb": 3.5,
-    "ts": 1787405225.0812879
-  },
-  "football|England Championship League|雷克斯汉姆|沃特福德|上半场客胜|ht|2026-08-22": {
-    "ev": 2.81,
-    "bb": 5.0,
-    "ts": 1787405225.0813289
+  "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场客胜|ht|2026-08-23": {
+    "ev": 4.61,
+    "bb": 5.35,
+    "ts": 1787405525.153009
   }
 }
