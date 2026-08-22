@@ -1,5 +1,5 @@
 {
-  "balance": 12844.46,
+  "balance": 12737.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2600,6 +2600,75 @@
       "commence_time": 1787423400,
       "created_at": "2026-08-22T13:10:41.351793+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_斯蒂文尼奇_牛津联_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "英格兰甲级联赛",
+      "home_team": "斯蒂文尼奇",
+      "away_team": "牛津联",
+      "home_cn": "斯蒂文尼奇",
+      "away_cn": "牛津联",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.92,
+      "stake": 71,
+      "model_prob": 0.5429,
+      "ev_pct": 4.23,
+      "pin_odds": 0,
+      "fair_price": 1.842,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787407200,
+      "created_at": "2026-08-22T13:27:05.074018+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_斯旺西_谢菲尔德联队_上半场主胜",
+      "sport": "football",
+      "league": "英格兰冠军联赛",
+      "home_team": "斯旺西",
+      "away_team": "谢菲尔德联队",
+      "home_cn": "斯旺西",
+      "away_cn": "谢菲尔德联队",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 3.5,
+      "stake": 26,
+      "model_prob": 0.2981,
+      "ev_pct": 4.33,
+      "pin_odds": 3.21,
+      "fair_price": 3.3549,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787407200,
+      "created_at": "2026-08-22T13:27:05.074056+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_雷克斯汉姆_沃特福德_上半场客胜",
+      "sport": "football",
+      "league": "英格兰冠军联赛",
+      "home_team": "雷克斯汉姆",
+      "away_team": "沃特福德",
+      "home_cn": "雷克斯汉姆",
+      "away_cn": "沃特福德",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 5.0,
+      "stake": 10,
+      "model_prob": 0.2056,
+      "ev_pct": 2.81,
+      "pin_odds": 4.52,
+      "fair_price": 4.8635,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787407200,
+      "created_at": "2026-08-22T13:27:05.074082+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3623,8 +3692,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-22",
-    "used": 2574.0,
-    "bets": 62
+    "used": 2681.0,
+    "bets": 65
   },
   "updated": null
 }

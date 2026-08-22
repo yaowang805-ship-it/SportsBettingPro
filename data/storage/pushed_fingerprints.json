@@ -1188,6 +1188,10 @@
     "ev": 1.22,
     "ts": 1787398655.75571
   },
+  "football|England Championship League|Blackburn Rovers|Middlesbrough FC|小球|1x2|2026-08-22": {
+    "ev": 3.7,
+    "ts": 1787404241.775307
+  },
   "football|England Championship League|Derby County|Cardiff City|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.14,
     "ts": 1787375311.1805172
@@ -1236,6 +1240,10 @@
     "ev": 1.28,
     "ts": 1787398655.755764
   },
+  "football|England Championship League|Queens Park Rangers|Bolton Wanderers|主胜|1x2|2026-08-22": {
+    "ev": 1.48,
+    "ts": 1787404750.311517
+  },
   "football|England Championship League|Swansea City|Sheffield United FC|上半场客胜|ht|2026-08-22": {
     "ev": 1.19,
     "ts": 1787373991.881012
@@ -1244,6 +1252,14 @@
     "ev": 1.04,
     "ts": 1787402984.128621
   },
+  "football|England Championship League|Swansea City|Sheffield United FC|大球|1x2|2026-08-22": {
+    "ev": 1.46,
+    "ts": 1787404750.311424
+  },
+  "football|England Championship League|Swansea City|Sheffield United FC|让球主胜|1x2|2026-08-22": {
+    "ev": 2.84,
+    "ts": 1787404750.3113852
+  },
   "football|England Championship League|West Ham United|Charlton Athletic|上半场主胜|ht|2026-08-22": {
     "ev": 1.55,
     "ts": 1787345120.783395
@@ -1251,6 +1267,10 @@
   "football|England Championship League|West Ham United|Charlton Athletic|双边进球-否|btts|2026-08-22": {
     "ev": 1.93,
     "ts": 1787385855.797287
+  },
+  "football|England Championship League|West Ham United|Charlton Athletic|小球|1x2|2026-08-22": {
+    "ev": 2.35,
+    "ts": 1787404241.775218
   },
   "football|England Championship League|West Ham United|Charlton Athletic|让球主胜|1x2|2026-08-22": {
     "ev": 1.93,
@@ -1364,6 +1384,10 @@
   "football|England League Two|Port Vale|Tranmere Rovers|让球客胜|1x2|2026-08-22": {
     "ev": 2.47,
     "ts": 1787398136.373478
+  },
+  "football|England League Two|Rochdale AFC|Crawley Town|主胜|1x2|2026-08-22": {
+    "ev": 2.6,
+    "ts": 1787404750.311811
   },
   "football|England League Two|Rochdale AFC|Crawley Town|总进球区间7+|total_goals_range|2026-08-22": {
     "ev": 3.94,
@@ -1594,6 +1618,10 @@
     "ev": 2.45,
     "ts": 1787323454.1768699
   },
+  "football|England Premier League|Manchester City FC|AFC Bournemouth|让球客胜|1x2|2026-08-23": {
+    "ev": 1.09,
+    "ts": 1787404541.5695128
+  },
   "football|England Premier League|Nottingham Forest|Leeds United|上半场主胜|ht|2026-08-22": {
     "ev": 2.39,
     "ts": 1787403449.975657
@@ -1605,6 +1633,10 @@
   "football|England Premier League|Nottingham Forest|Leeds United|上半场客胜|ht|2026-08-22": {
     "ev": 1.02,
     "ts": 1787324309.661657
+  },
+  "football|England Premier League|Nottingham Forest|Leeds United|主胜|1x2|2026-08-22": {
+    "ev": 1.28,
+    "ts": 1787404241.774865
   },
   "football|England Premier League|Nottingham Forest|Leeds United|单双-双|oe|2026-08-22": {
     "ev": 1.34,
@@ -1863,6 +1895,10 @@
     "ev": 1.2,
     "ts": 1787399570.2584589
   },
+  "football|France Ligue 1|Toulouse FC|Olympique Lyonnais|大球|1x2|2026-08-23": {
+    "ev": 1.38,
+    "ts": 1787404750.3133252
+  },
   "football|France Ligue 1|Toulouse FC|Olympique Lyonnais|让球客胜|1x2|2026-08-23": {
     "ev": 1.5,
     "ts": 1787371971.619222
@@ -2012,9 +2048,17 @@
     "ev": 1.26,
     "ts": 1787303712.199968
   },
+  "football|Hungary Magyar Kupa|Veszprem FC|Szombathelyi Haladas VSE|主胜|1x2|2026-08-22": {
+    "ev": 2.25,
+    "ts": 1787404241.776608
+  },
   "football|Hungary Magyar Kupa|Veszprem FC|Szombathelyi Haladas VSE|客胜|1x2|2026-08-22": {
     "ev": 3.62,
     "ts": 1787386001.626965
+  },
+  "football|Hungary Magyar Kupa|Veszprem FC|Szombathelyi Haladas VSE|让球主胜|1x2|2026-08-22": {
+    "ev": 2.34,
+    "ts": 1787404241.7766452
   },
   "football|Hungary Magyar Kupa|Veszprem FC|Szombathelyi Haladas VSE|让球客胜|1x2|2026-08-22": {
     "ev": 1.73,
@@ -2749,6 +2793,10 @@
     "ev": 2.02,
     "ts": 1787403129.025732
   },
+  "football|Mexico Liga De Expansion MX|Piratas FC|Cancun FC|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 1.97,
+    "ts": 1787404541.5693052
+  },
   "football|Mexico Liga MX Women|Pumas UNAM (w)|Queretaro FC (w)|上半场主胜|ht|2026-08-22": {
     "ev": 1.26,
     "ts": 1787314284.16978
@@ -3392,6 +3440,10 @@
     "bb": 5.2,
     "ts": 1787362070.0490282
   },
+  "football|Portugal Segunda Liga|FC Penafiel|Sporting Lisbon B|双边进球-是|btts|2026-08-23": {
+    "ev": 1.36,
+    "ts": 1787404541.5699441
+  },
   "football|Portugal Segunda Liga|FC Vizela|Amarante FC|主胜|1x2|2026-08-22": {
     "ev": 1.78,
     "ts": 1787378877.225974
@@ -3550,6 +3602,14 @@
     "ev": 1.42,
     "ts": 1787391059.1483068
   },
+  "football|Russia First League|Leningradets|FC Chelyabinsk|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 3.02,
+    "ts": 1787404541.569597
+  },
+  "football|Russia First League|Leningradets|FC Chelyabinsk|双边进球-是|btts|2026-08-23": {
+    "ev": 1.78,
+    "ts": 1787404541.569557
+  },
   "football|Russia First League|Torpedo Moscow|Spartak Kostroma|上半场主胜|ht|2026-08-22": {
     "ev": 3.26,
     "ts": 1787290860.101823
@@ -3587,6 +3647,10 @@
   "football|Russia Premier League|FC Fakel Voronezh|FC Orenburg|上半场客胜|ht|2026-08-22": {
     "ev": 1.56,
     "ts": 1787359573.713632
+  },
+  "football|Russia Premier League|FK Akron Tolyatti|PFK Krylia Sovetov Samara|双边进球-是|btts|2026-08-23": {
+    "ev": 1.47,
+    "ts": 1787404541.5699031
   },
   "football|Russia Premier League|RFK Akhmat Grozny|FK Rostov|上半场主胜|ht|2026-08-22": {
     "ev": 2.16,
@@ -3668,9 +3732,17 @@
     "ev": 1.35,
     "ts": 1787403449.9773939
   },
+  "football|Scotland Championship|Raith Rovers FC|Ayr United FC|让球客胜|1x2|2026-08-22": {
+    "ev": 1.44,
+    "ts": 1787404241.775788
+  },
   "football|Scotland Premiership|Dundee United|FC Dundee|单双-双|oe|2026-08-23": {
     "ev": 1.27,
     "ts": 1787375311.1833
+  },
+  "football|Slovakia 2. Liga|1. FC Tatran Presov|FK Inter Bratislava|主胜|1x2|2026-08-23": {
+    "ev": 1.41,
+    "ts": 1787404750.3128908
   },
   "football|Slovakia 2. Liga|FK Humenne|MFK Tatran Liptovsky Mikulas|单双-单|oe|2026-08-22": {
     "ev": 2.95,
@@ -4238,6 +4310,10 @@
     "bb": 2.81,
     "ts": 1787400929.497196
   },
+  "football|Turkey 1. Lig|Bodrum Belediyesi Bodrumspor|Muglaspor|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 3.1,
+    "ts": 1787404241.777337
+  },
   "football|Turkey 1. Lig|Bodrum Belediyesi Bodrumspor|Muglaspor|让球客胜|1x2|2026-08-23": {
     "ev": 1.59,
     "ts": 1787376539.732998
@@ -4266,6 +4342,11 @@
     "ev": 5.34,
     "bb": 4.65,
     "ts": 1787296957.9646132
+  },
+  "football|Turkey 1. Lig|波德鲁姆士邦|慕拉斯堡|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 3.1,
+    "bb": 1.87,
+    "ts": 1787404241.357152
   },
   "football|Turkey 1. Lig|贝拉迪亚士邦|伊斯坦堡士邦|双重机会-主/和局|dc|2026-08-24": {
     "ev": 3.66,
@@ -4334,6 +4415,10 @@
   "football|UAE Pro League|Ajman Club|Hatta SC|让球客胜|1x2|2026-08-22": {
     "ev": 1.49,
     "ts": 1787391059.1502888
+  },
+  "football|UAE Pro League|Al Ain FC|Khor Fakkan Club|上半场客胜|ht|2026-08-23": {
+    "ev": 4.44,
+    "ts": 1787404750.3119261
   },
   "football|UAE Pro League|Al Ain FC|Khor Fakkan Club|双边进球-否|btts|2026-08-23": {
     "ev": 1.97,
@@ -4615,9 +4700,19 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Turkey 1. Lig|波德鲁姆士邦|慕拉斯堡|上半场双重机会-主/客|ht_dc|2026-08-23": {
-    "ev": 3.1,
-    "bb": 1.87,
-    "ts": 1787404241.357152
+  "football|England League One|斯蒂文尼奇|牛津联|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 4.23,
+    "bb": 1.92,
+    "ts": 1787405225.081236
+  },
+  "football|England Championship League|斯旺西|谢菲尔德联队|上半场主胜|ht|2026-08-22": {
+    "ev": 4.33,
+    "bb": 3.5,
+    "ts": 1787405225.0812879
+  },
+  "football|England Championship League|雷克斯汉姆|沃特福德|上半场客胜|ht|2026-08-22": {
+    "ev": 2.81,
+    "bb": 5.0,
+    "ts": 1787405225.0813289
   }
 }
