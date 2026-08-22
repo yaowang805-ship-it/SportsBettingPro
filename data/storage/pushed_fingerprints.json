@@ -914,11 +914,6 @@
     "bb": 6.55,
     "ts": 1787401337.861229
   },
-  "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场双重机会-主/客|ht_dc|2026-08-23": {
-    "ev": 3.94,
-    "bb": 2.16,
-    "ts": 1787413612.615654
-  },
   "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场客胜|ht|2026-08-23": {
     "ev": 4.61,
     "bb": 5.35,
@@ -1288,6 +1283,10 @@
   "football|Egypt Premier League|Al Masry Club|Smouha SC|上半场客胜|ht|2026-08-23": {
     "ev": 1.28,
     "ts": 1787402984.128892
+  },
+  "football|Egypt Premier League|Al Masry Club|Smouha SC|单双-双|oe|2026-08-23": {
+    "ev": 2.21,
+    "ts": 1787417702.040859
   },
   "football|Egypt Premier League|El Gouna FC|Modern Sport FC|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 2.81,
@@ -3963,6 +3962,11 @@
     "bb": 7.05,
     "ts": 1787401337.861048
   },
+  "football|Portugal Primeira Liga|埃斯托里尔|里奥阿维|上半场客胜|ht|2026-08-23": {
+    "ev": 7.28,
+    "bb": 5.1,
+    "ts": 1787417700.346703
+  },
   "football|Portugal Primeira Liga|马里迪莫|维塞乌|上半场客胜|ht|2026-08-22": {
     "ev": 7.77,
     "bb": 5.45,
@@ -4601,6 +4605,14 @@
   "football|Spain LaLiga 2|Ceuta|Las Palmas|上半场客胜|ht|2026-08-23": {
     "ev": 1.05,
     "ts": 1787376539.732815
+  },
+  "football|Spain LaLiga 2|Ceuta|Las Palmas|和局|1x2|2026-08-23": {
+    "ev": 1.45,
+    "ts": 1787417702.038408
+  },
+  "football|Spain LaLiga 2|Ceuta|Las Palmas|小球|1x2|2026-08-23": {
+    "ev": 1.43,
+    "ts": 1787417702.038538
   },
   "football|Spain LaLiga 2|Ceuta|Las Palmas|角球让球主胜|corner|2026-08-23": {
     "ev": 1.49,
@@ -5502,9 +5514,14 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Portugal Primeira Liga|埃斯托里尔|里奥阿维|上半场客胜|ht|2026-08-23": {
-    "ev": 7.28,
-    "bb": 5.1,
-    "ts": 1787417700.346703
+  "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 7.23,
+    "bb": 2.27,
+    "ts": 1787417974.064783
+  },
+  "football|Italy Serie B|苏迪路|恩特拉|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 3.43,
+    "bb": 2.0,
+    "ts": 1787417974.064949
   }
 }
