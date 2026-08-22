@@ -202,9 +202,21 @@
     "ev": 1.77,
     "ts": 1787286576.0382788
   },
+  "football|Argentina Liga Profesional|Huracan|Deportivo Riestra|上半场客胜|ht|2026-08-23": {
+    "ev": 8.24,
+    "ts": 1787441305.602705
+  },
   "football|Argentina Liga Profesional|Huracan|Deportivo Riestra|大球|1x2|2026-08-23": {
     "ev": 1.51,
     "ts": 1787440537.952672
+  },
+  "football|Argentina Liga Profesional|Newell´s Old Boys|Banfield|双边进球-是|btts|2026-08-23": {
+    "ev": 2.24,
+    "ts": 1787441478.7326741
+  },
+  "football|Argentina Liga Profesional|Newell´s Old Boys|Banfield|大球|1x2|2026-08-23": {
+    "ev": 2.13,
+    "ts": 1787441478.732724
   },
   "football|Argentina Liga Profesional|Newell´s Old Boys|Banfield|角球让球主胜|corner|2026-08-23": {
     "ev": 1.25,
@@ -224,6 +236,11 @@
     "ev": 4.15,
     "bb": 1.66,
     "ts": 1787101664.26252
+  },
+  "football|Argentina Liga Profesional|飓风队|利斯特雷|上半场客胜|ht|2026-08-23": {
+    "ev": 8.24,
+    "bb": 6.65,
+    "ts": 1787441305.067622
   },
   "football|Argentina Liga Profesional|飓风队|利斯特雷|小球(2.0)|ou|2.0|2026-08-23": {
     "ev": 4.46,
@@ -1269,6 +1286,10 @@
   "football|Ecuador LigaPro Primera A|Barcelona SC|Orense SC|主胜|1x2|2026-08-23": {
     "ev": 2.25,
     "ts": 1787380078.8357272
+  },
+  "football|Ecuador LigaPro Primera A|Barcelona SC|Orense SC|让球主胜|1x2|2026-08-23": {
+    "ev": 2.01,
+    "ts": 1787441631.8444831
   },
   "football|Ecuador LigaPro Primera A|Club Leones Del Norte|CSD Independiente del Valle|上半场主胜|ht|2026-08-22": {
     "ev": 1.12,
@@ -5374,6 +5395,14 @@
     "bb": 3.66,
     "ts": 1787101664.262943
   },
+  "football|USA Major League Soccer|Charlotte FC|DC United|和局|1x2|2026-08-23": {
+    "ev": 1.01,
+    "ts": 1787441305.6037729
+  },
+  "football|USA Major League Soccer|Charlotte FC|DC United|小球|1x2|2026-08-23": {
+    "ev": 2.91,
+    "ts": 1787441305.6038349
+  },
   "football|USA Major League Soccer|FC Cincinnati|Seattle Sounders|上半场主胜|ht|2026-08-23": {
     "ev": 1.33,
     "ts": 1787398763.836092
@@ -5382,9 +5411,29 @@
     "ev": 1.3,
     "ts": 1787398763.836044
   },
+  "football|USA Major League Soccer|FC Cincinnati|Seattle Sounders|角球大球|corner|2026-08-23": {
+    "ev": 2.47,
+    "ts": 1787441631.845939
+  },
+  "football|USA Major League Soccer|Inter Miami CF|Toronto FC|小球|1x2|2026-08-23": {
+    "ev": 1.19,
+    "ts": 1787441305.602635
+  },
+  "football|USA Major League Soccer|Inter Miami CF|Toronto FC|角球大球|corner|2026-08-23": {
+    "ev": 2.05,
+    "ts": 1787441631.8460531
+  },
+  "football|USA Major League Soccer|Inter Miami CF|Toronto FC|让球客胜|1x2|2026-08-23": {
+    "ev": 1.0,
+    "ts": 1787441305.602572
+  },
   "football|USA Major League Soccer|Montreal|Los Angeles Galaxy|上半场客胜|ht|2026-08-23": {
     "ev": 1.13,
     "ts": 1787440726.8977852
+  },
+  "football|USA Major League Soccer|Montreal|Los Angeles Galaxy|双重机会-和局/客|dc|2026-08-23": {
+    "ev": 1.66,
+    "ts": 1787441305.602498
   },
   "football|USA Major League Soccer|Montreal|Los Angeles Galaxy|和局|1x2|2026-08-23": {
     "ev": 2.45,
@@ -5683,9 +5732,9 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Argentina Liga Profesional|飓风队|利斯特雷|上半场客胜|ht|2026-08-23": {
-    "ev": 8.24,
-    "bb": 6.65,
-    "ts": 1787441305.067622
+  "football|Ecuador LigaPro Primera A|瓜亚基尔巴塞罗那|奥伦斯|上半场客胜|ht|2026-08-23": {
+    "ev": 4.63,
+    "bb": 6.35,
+    "ts": 1787441758.6394072
   }
 }
