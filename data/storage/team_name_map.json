@@ -45946,15 +45946,22 @@
     },
     "Newell´s Old Boys": {
       "sport": "football",
-      "n": 612,
+      "n": 613,
       "first": "2026-08-16",
       "last": "2026-08-22",
       "source": "auto"
     },
     "JKS 1909 Jarosław": {
       "sport": "football",
-      "n": 87,
+      "n": 88,
       "first": "2026-08-19",
+      "last": "2026-08-22",
+      "source": "auto"
+    },
+    "Banks O´Dee FC": {
+      "sport": "football",
+      "n": 1,
+      "first": "2026-08-22",
       "last": "2026-08-22",
       "source": "auto"
     }
@@ -53855,5 +53862,6 @@
   "卡捷琳娜.斯尼科娃 / 泰勒.汤森": "Katerina Siniakova",
   "达里娅·尤拉克·施赖伯 / 吴芳娴": "Jessica Bouzas Maneiro",
   "Newell´s Old Boys": "Newells Old Boys",
-  "JKS 1909 Jarosław": "JKS 1909 Jaroslaw"
+  "JKS 1909 Jarosław": "JKS 1909 Jaroslaw",
+  "Banks O´Dee FC": "Banks O´Dee"
 }
