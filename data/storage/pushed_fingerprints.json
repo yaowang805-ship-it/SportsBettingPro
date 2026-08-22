@@ -3934,6 +3934,11 @@
     "ev": 1.01,
     "ts": 1787401550.001778
   },
+  "football|Romania Liga 1|UTA阿拉德|科尔维努尔|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 2.81,
+    "bb": 1.86,
+    "ts": 1787411964.2763038
+  },
   "football|Romania Liga 1|UTA阿拉德|胡内多阿拉|上半场客胜|ht|2026-08-22": {
     "ev": 2.79,
     "bb": 4.59,
@@ -4823,6 +4828,10 @@
     "ev": 1.35,
     "ts": 1787329231.7737012
   },
+  "football|Turkey Super Lig|Caykur Rizespor|Samsunspor|让球客胜|1x2|2026-08-23": {
+    "ev": 1.37,
+    "ts": 1787411964.6675498
+  },
   "football|Turkey Super Lig|Corum FK|Kasimpasa|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 1.58,
     "ts": 1787410114.108099
@@ -4896,6 +4905,10 @@
   "football|UAE Pro League|Al Ain FC|Khor Fakkan Club|双边进球-否|btts|2026-08-23": {
     "ev": 1.97,
     "ts": 1787403449.977139
+  },
+  "football|UAE Pro League|Al Ain FC|Khor Fakkan Club|让球客胜|1x2|2026-08-23": {
+    "ev": 2.39,
+    "ts": 1787411964.6689532
   },
   "football|UAE Pro League|Al Nasr Dubai SC|Al Wahda FC|单双-双|oe|2026-08-22": {
     "ev": 2.3,
@@ -5198,9 +5211,29 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Romania Liga 1|UTA阿拉德|科尔维努尔|上半场双重机会-主/客|ht_dc|2026-08-22": {
-    "ev": 2.81,
-    "bb": 1.86,
-    "ts": 1787411964.2763038
+  "football|Guatemala Liga Nacional|拉科鲁尼亚米斯科|瓜斯塔托亚|和局|1x2|2026-08-24": {
+    "ev": 5.31,
+    "bb": 2.96,
+    "ts": 1787412385.081244
+  },
+  "football|France Ligue 1|勒阿弗尔|摩纳哥|和局|1x2|2026-08-23": {
+    "ev": 56.25,
+    "bb": 6.55,
+    "ts": 1787412385.081314
+  },
+  "football|Spain LaLiga 2|埃瓦尔|巴拉多利德|上半场客胜|ht|2026-08-23": {
+    "ev": 4.5,
+    "bb": 5.0,
+    "ts": 1787412385.081374
+  },
+  "football|Turkey Super Lig|埃于普体育|加济安泰普大都会|和局|1x2|2026-08-24": {
+    "ev": 5.18,
+    "bb": 3.43,
+    "ts": 1787412385.081429
+  },
+  "football|Brazil Serie B|欧帕尔利奥|维拉诺瓦|和局|1x2|2026-08-24": {
+    "ev": 5.4,
+    "bb": 3.14,
+    "ts": 1787412385.0814831
   }
 }
