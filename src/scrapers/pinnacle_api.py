@@ -5,6 +5,7 @@ cf_clearance cookie → 绕过 Cloudflare Turnstile
 DNS bypass → 绕过 Shadowrocket VPN 劫持
 """
 import time
+import os
 import logging
 from pathlib import Path
 
