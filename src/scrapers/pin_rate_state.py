@@ -175,6 +175,16 @@ def set_pause(seconds):
         conn.close()
 
 
+def clear_pause():
+    """清除封禁冷却 —— 换节点成功(Pin 恢复)后调用, 立即解除所有进程的暂停。
+
+    跨进程 pause 存 SQLite(pin_rate_limit.db), 换节点只清了进程内 _SCAN_PAUSE_UNTIL
+    却没清这里 → 独立进程(clv_collector 每 5min 一个进程)仍被 pause 拦住, 零产出直到
+    30 分钟过期(2026-08-22 实测 pause:1465s, clv_collector 连续 10 次零产出)。
+    """
+    _set("pause_until", 0.0)
+
+
 def record_ban():
     """记一次封禁, 返回全局连续封禁次数(用于降级请求频率)。"""
     try:

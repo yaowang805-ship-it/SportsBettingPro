@@ -477,7 +477,14 @@ def _auto_switch_node():
                 ok = do_recover(nodes)
                 if ok:
                     global _SCAN_PAUSE_UNTIL
-                    _SCAN_PAUSE_UNTIL = 0  # 换节点成功, 解除暂停
+                    _SCAN_PAUSE_UNTIL = 0  # 换节点成功, 解除进程内暂停
+                    # 同时清跨进程 pause(pin_rate_limit.db) —— 否则 clv_collector 等
+                    # 独立进程仍被 30 分钟冷却拦住(2026-08-22 实测连续 10 次零产出)
+                    try:
+                        from src.scrapers import pin_rate_state
+                        pin_rate_state.clear_pause()
+                    except Exception:
+                        pass
                     logger.info("✅ 自动换节点成功, 已解除扫描暂停")
             except Exception as e:
                 logger.error("自动换节点异常: %s", e)
