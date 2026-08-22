@@ -1102,12 +1102,14 @@ class PipelineOrchestrator:
         try:
             from src.scrapers.bb_api_fetcher import api_post
             t0 = _time.time()
-            resp = api_post('/api/v1/sports', {})  # Light endpoint
+            # Light endpoint: 用真实提取路径 /v1/match/getList(1条) 探连通, 不用 /api/v1/sports(已 403/404)
+            resp = api_post('/v1/match/getList', {"sportId": 1, "type": 2, "current": 1, "pageSize": 1, "isPC": True, "languageType": "EN"})
             bb_latency = _time.time() - t0
-            logger.info(f"  BB API 延迟: {bb_latency:.1f}s (status={'ok' if resp else 'fail'})")
+            bb_ok = bool(resp and resp.get("success"))
+            logger.info(f"  BB API 延迟: {bb_latency:.1f}s (status={'ok' if bb_ok else 'fail'})")
             if bb_latency > 10:
                 issues.append(f"BB API 延迟 {bb_latency:.0f}s (>10s)")
-            if resp is None:
+            if not bb_ok:
                 issues.append("BB API 不可达")
         except Exception as e:
             logger.warning(f"  BB API 连接失败: {e}")
