@@ -74,21 +74,17 @@ def _is_loss(r):
 
 
 def _format_bet_line(b: dict) -> str:
-    """格式化单笔结算明细行(tracked_bets 字段)。"""
+    """格式化单笔结算行(精简: 队名|盘口@赔率→盈亏)。"""
     profit = b.get("profit", 0)
-    stake = b.get("stake", 0)
     odds = b.get("bb_odds", 0)
     r = b.get("result", "")
     icon = "✅" if _is_win(r) else "❌"
-    profit_str = f"+¥{profit:.0f}" if profit > 0 else f"¥{profit:.0f}"
     home = b.get("home", "")
     away = b.get("away", "")
     market = b.get("designation", "")
     league = b.get("league", "")
     label = f"[{league}] {home} vs {away}" if league else f"{home} vs {away}"
-    if market:
-        return f"{icon} {label} | {market} @ {odds:.2f} | ¥{stake:.0f} → {profit_str}"
-    return f"{icon} {label} | @ {odds:.2f} | ¥{stake:.0f} → {profit_str}"
+    return f"{icon} {label} | {market} @{odds:.2f} → {profit:+.0f}¥"
 
 
 def build_report():
