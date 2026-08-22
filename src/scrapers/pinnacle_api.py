@@ -529,19 +529,34 @@ def _maybe_notify_recovered():
     _recovered_file = DATA_DIR / ".ip_ban_recovered.txt"
     if not _throttle_file.exists():
         return  # 从没发过封禁告警, 不发恢复
-    if _recovered_file.exists():
+
+    # V5.10(2026-08-22): 原子节流。原先"先 send 后 write_text", 多进程并发时各自都
+    # 通过了 exists 检查 → 各发一遍(实测封禁解除后 pipeline/clv_collector 等 5-6 个
+    # 进程并发, 恢复通知重复推 5-6 遍)。改用 O_CREAT|O_EXCL 原子创建: 只有一个进程
+    # 能创建成功, 其余 FileExistsError 直接跳过。
+    try:
+        fd = os.open(_recovered_file, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o644)
+    except FileExistsError:
+        # 文件已存在: 24h 内别的进程已发过 → 跳过; 超 24h 允许重发(删旧建新)
         try:
             if time.time() - float(_recovered_file.read_text().strip()) < 86400:
-                return  # 24h 内已发过恢复
-        except (ValueError, OSError):
-            pass
+                return
+            _recovered_file.unlink(missing_ok=True)
+            fd = os.open(_recovered_file, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o644)
+        except (ValueError, OSError, FileExistsError):
+            return
+    try:
+        os.write(fd, str(time.time()).encode())
+        os.close(fd)
+    except OSError:
+        pass
+
     try:
         # 走 config.settings 入口自动注入机器人关键词 —— 原先直连 config.dingtalk 且
         # 正文无"投注推荐", 被钉钉服务端以 errcode 310000 静默拒收, 恢复通知从未送达。
         from config.settings import send_dingtalk
         msg = "✅ Pinnacle 已恢复\n\nCloudflare 封禁已解除, 增量扫描/推送恢复正常。"
         _sent = send_dingtalk("Pinnacle 恢复通知", msg, urgent=True)
-        _recovered_file.write_text(str(time.time()))
         logger.info("钉钉 Pinnacle 恢复通知: %s", "已送达" if _sent else "未送达")
         # 重置封禁节流文件, 下次封禁能立即发新告警(一个封禁/恢复周期各一条)
         try:
