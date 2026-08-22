@@ -625,6 +625,10 @@
     "ev": 4.15,
     "ts": 1787384950.3461702
   },
+  "football|Austria Bundesliga|SCR Altach|TSV Hartberg|角球大球|corner|2026-08-22": {
+    "ev": 4.06,
+    "ts": 1787410506.142996
+  },
   "football|Austria Bundesliga|SCR Altach|TSV Hartberg|让球主胜|1x2|2026-08-22": {
     "ev": 2.78,
     "ts": 1787384950.346242
@@ -657,6 +661,14 @@
   "football|Austria Landesliga|Nussdorf|FC Lendorf|客胜|1x2|2026-08-22": {
     "ev": 4.36,
     "ts": 1787371971.619092
+  },
+  "football|Austria Regionalliga South|SVG Bleiburg|SK Austria Klagenfurt|主胜|1x2|2026-08-22": {
+    "ev": 3.04,
+    "ts": 1787410506.139848
+  },
+  "football|Austria Regionalliga South|SVG Bleiburg|SK Austria Klagenfurt|双重机会-主/和局|dc|2026-08-22": {
+    "ev": 2.87,
+    "ts": 1787410506.1399539
   },
   "football|Austria Regionalliga South|SVG Bleiburg|SK Austria Klagenfurt|让球主胜|1x2|2026-08-22": {
     "ev": 3.5,
@@ -844,6 +856,11 @@
     "ev": 9.22,
     "bb": 3.46,
     "ts": 1787401337.860547
+  },
+  "football|Brazil Serie A|巴西国际|米内罗竞技|上半场客胜|ht|2026-08-23": {
+    "ev": 3.29,
+    "bb": 5.1,
+    "ts": 1787410247.235744
   },
   "football|Brazil Serie A|弗鲁米嫩塞RJ|瑞模贝雷|上半场客胜|ht|2026-08-23": {
     "ev": 6.93,
@@ -1068,6 +1085,14 @@
   "football|Czech Republic 1. Liga|SK Artis Brno|Sparta Prague|上半场客胜|ht|2026-08-22": {
     "ev": 1.39,
     "ts": 1787325212.143919
+  },
+  "football|Czech Republic 1. Liga|SK Artis Brno|Sparta Prague|客胜|1x2|2026-08-22": {
+    "ev": 3.13,
+    "ts": 1787411148.660917
+  },
+  "football|Czech Republic 1. Liga|SK Artis Brno|Sparta Prague|让球客胜|1x2|2026-08-22": {
+    "ev": 5.95,
+    "ts": 1787411148.6610198
   },
   "football|Czech Republic 1. Liga|阿蒂斯布尔诺|布拉格斯巴达|大球(2.75)|ou|2.75|2026-08-22": {
     "ev": 3.77,
@@ -2008,6 +2033,10 @@
   "football|Finland Veikkausliiga|FF Jaro|Oulu|让球主胜|1x2|2026-08-22": {
     "ev": 1.24,
     "ts": 1787390001.118268
+  },
+  "football|Finland Veikkausliiga|Kuopion Palloseura|IFK Mariehamn|客胜|1x2|2026-08-23": {
+    "ev": 6.09,
+    "ts": 1787410247.53143
   },
   "football|Finland Veikkausliiga|Seinajoen JK|FC Lahti|上半场主胜|ht|2026-08-22": {
     "ev": 3.57,
@@ -3275,6 +3304,10 @@
     "ev": 1.3,
     "ts": 1787380260.414845
   },
+  "football|Netherlands Eredivisie|Cambuur|Feyenoord|上半场客胜|ht|2026-08-23": {
+    "ev": 2.03,
+    "ts": 1787411460.874806
+  },
   "football|Netherlands Eredivisie|Fortuna Sittard|AZ Alkmaar|小球|1x2|2026-08-22": {
     "ev": 2.07,
     "ts": 1787371971.618358
@@ -3461,11 +3494,6 @@
     "ev": 4.24,
     "bb": 2.65,
     "ts": 1787400929.4977002
-  },
-  "football|Norway NM Cup|弗立加|卡积沙斯|主胜|1x2|2026-08-23": {
-    "ev": 11.26,
-    "bb": 6.95,
-    "ts": 1787401546.613226
   },
   "football|Norway Toppserien Women|FK Fortuna Alesund (w)|Haugesund (w)|客胜|1x2|2026-08-22": {
     "ev": 5.27,
@@ -3695,6 +3723,10 @@
     "ev": 5.03,
     "bb": 1.67,
     "ts": 1787180085.8711302
+  },
+  "football|Poland III Liga|KS Stilon Gorzow Wlkp|MKS Kluczbork|双重机会-主/和局|dc|2026-08-22": {
+    "ev": 1.77,
+    "ts": 1787410506.142296
   },
   "football|Poland III Liga|LKS Goczalkowice Zdroj|KS Polonia Nysa|客胜|1x2|2026-08-22": {
     "ev": 2.84,
@@ -4513,6 +4545,10 @@
     "bb": 4.39,
     "ts": 1787401337.860289
   },
+  "football|Sweden Allsvenskan|Hammarby IF|GAIS|上半场主胜|ht|2026-08-23": {
+    "ev": 2.44,
+    "ts": 1787411460.874012
+  },
   "football|Sweden Allsvenskan|IFK Goteborg|IF Elfsborg|双边进球-是|btts|2026-08-23": {
     "ev": 1.29,
     "ts": 1787401338.34082
@@ -5148,9 +5184,14 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Brazil Serie A|巴西国际|米内罗竞技|上半场客胜|ht|2026-08-23": {
-    "ev": 3.29,
-    "bb": 5.1,
-    "ts": 1787410247.235744
+  "football|England Premier League|布伦特福德|托特纳姆热刺|上半场客胜|ht|2026-08-23": {
+    "ev": 2.34,
+    "bb": 4.15,
+    "ts": 1787411592.957976
+  },
+  "football|Norway NM Cup|弗立加|卡积沙斯|主胜|1x2|2026-08-23": {
+    "ev": 26.36,
+    "bb": 7.15,
+    "ts": 1787411592.9580622
   }
 }
