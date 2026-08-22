@@ -966,9 +966,10 @@ def _calc_kelly_stakes(opps: list) -> list:
             stake_pct *= 0.3
         stake = int(bankroll * stake_pct)
         o["_raw_stake"] = stake
-        # V5.10(2026-08-22 用户要求): 取消"stake<最低投注就清零"。只要 EV 过了盘口门槛
-        # 就推, 不因 Kelly 仓位低(低级别联赛/推导盘历史数据少)而清零。最低给 ¥10 占位。
-        o["_stake"] = stake if stake >= 10 else 10
+        # 用户(2026-08-22)澄清: 取消熔断/风控停注, 但保留最低投注额 ¥30 下限 ——
+        # 低于 ¥30 的不推送(太碎没意义), 高于 ¥30 的只要过盘口门槛就推。
+        min_stake = tier_cfg.get("min_stake", 30)
+        o["_stake"] = stake if stake >= min_stake else 0
 
     # 第二遍：总额超预算时, 按 stake 降序取 top 保留, 超出清零 (不摊薄, 集中在最优机会)
     daily_budget = bankroll  # V4.5: 动态日预算
