@@ -657,6 +657,11 @@
     "ev": 1.0,
     "ts": 1787288717.550022
   },
+  "football|Austria Bundesliga|格拉茨风暴|奥地利卢斯特瑙|上半场主胜|ht|2026-08-23": {
+    "ev": 2.92,
+    "bb": 1.86,
+    "ts": 1787417541.178457
+  },
   "football|Austria Bundesliga|里德|格拉茨AK|上半场客胜|ht|2026-08-22": {
     "ev": 4.86,
     "bb": 5.35,
@@ -718,6 +723,10 @@
     "ev": 4.14,
     "bb": 3.03,
     "ts": 1787405706.770918
+  },
+  "football|Belgium Pro League|Club Brugge|Cercle Brugge|上半场主胜|ht|2026-08-24": {
+    "ev": 3.01,
+    "ts": 1787417542.316808
   },
   "football|Belgium Pro League|Royal Antwerp FC|KRC Genk|双边进球-是|btts|2026-08-23": {
     "ev": 1.17,
@@ -2670,6 +2679,14 @@
     "ev": 1.07,
     "ts": 1787413612.959828
   },
+  "football|Italy Serie A|Venezia|US Lecce|上半场双重机会-主/客|ht_dc|2026-08-24": {
+    "ev": 3.44,
+    "ts": 1787417542.319137
+  },
+  "football|Italy Serie A|Venezia|US Lecce|上半场客胜|ht|2026-08-24": {
+    "ev": 6.67,
+    "ts": 1787417542.3190231
+  },
   "football|Italy Serie A|乌迪内斯|科莫 1907|上半场主胜|ht|2026-08-23": {
     "ev": 8.4,
     "bb": 6.35,
@@ -2694,6 +2711,11 @@
     "ev": 2.36,
     "bb": 1.89,
     "ts": 1787401337.8608608
+  },
+  "football|Italy Serie A|威尼斯|莱切|上半场客胜|ht|2026-08-24": {
+    "ev": 6.67,
+    "bb": 4.83,
+    "ts": 1787417541.178524
   },
   "football|Italy Serie A|帕尔马|卡利亚里|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 4.07,
@@ -3277,6 +3299,10 @@
   "football|Mexico Liga MX|Guadalajara Chivas|Club Tijuana de Caliente|上半场主胜|ht|2026-08-23": {
     "ev": 1.94,
     "ts": 1787373991.88599
+  },
+  "football|Mexico Liga MX|Puebla FC|Club Santos Laguna|上半场客胜|ht|2026-08-23": {
+    "ev": 1.06,
+    "ts": 1787417542.314164
   },
   "football|Mexico Liga MX|Queretaro FC|Deportivo Toluca FC|客胜|1x2|2026-08-22": {
     "ev": 2.19,
@@ -3937,11 +3963,6 @@
     "bb": 7.05,
     "ts": 1787401337.861048
   },
-  "football|Portugal Primeira Liga|埃斯托里尔|里奥阿维|上半场客胜|ht|2026-08-23": {
-    "ev": 4.81,
-    "bb": 4.74,
-    "ts": 1787400929.497602
-  },
   "football|Portugal Primeira Liga|马里迪莫|维塞乌|上半场客胜|ht|2026-08-22": {
     "ev": 7.77,
     "bb": 5.45,
@@ -4112,6 +4133,10 @@
     "ev": 2.79,
     "bb": 4.59,
     "ts": 1787401546.6131752
+  },
+  "football|Romania Liga 2|CSC 1599 Selimbar|CS Afumati|和局|1x2|2026-08-23": {
+    "ev": 2.69,
+    "ts": 1787417542.3156312
   },
   "football|Romania Liga 2|CSM Satu Mare|FC Bihor Oradea|大球|1x2|2026-08-22": {
     "ev": 1.2,
@@ -4932,9 +4957,17 @@
     "bb": 1.96,
     "ts": 1787212583.36037
   },
+  "football|Tunisia Ligue 1|Bizertin|AS Marsa|主胜|1x2|2026-08-23": {
+    "ev": 5.27,
+    "ts": 1787417542.318453
+  },
   "football|Tunisia Ligue 1|Bizertin|AS Marsa|双重机会-和局/客|dc|2026-08-23": {
     "ev": 2.1,
     "ts": 1787416415.695913
+  },
+  "football|Tunisia Ligue 1|Bizertin|AS Marsa|让球主胜|1x2|2026-08-23": {
+    "ev": 3.96,
+    "ts": 1787417542.318551
   },
   "football|Tunisia Ligue 1|Bizertin|AS Marsa|让球客胜|1x2|2026-08-23": {
     "ev": 6.84,
@@ -4981,6 +5014,11 @@
     "ev": 11.01,
     "bb": 2.81,
     "ts": 1787400929.497196
+  },
+  "football|Tunisia Ligue 1|比瑟汀|AS马沙|主胜|1x2|2026-08-23": {
+    "ev": 5.27,
+    "bb": 1.96,
+    "ts": 1787417541.178366
   },
   "football|Turkey 1. Lig|Bodrum Belediyesi Bodrumspor|Muglaspor|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 3.1,
@@ -5464,19 +5502,9 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Tunisia Ligue 1|比瑟汀|AS马沙|主胜|1x2|2026-08-23": {
-    "ev": 5.27,
-    "bb": 1.96,
-    "ts": 1787417541.178366
-  },
-  "football|Austria Bundesliga|格拉茨风暴|奥地利卢斯特瑙|上半场主胜|ht|2026-08-23": {
-    "ev": 2.92,
-    "bb": 1.86,
-    "ts": 1787417541.178457
-  },
-  "football|Italy Serie A|威尼斯|莱切|上半场客胜|ht|2026-08-24": {
-    "ev": 6.67,
-    "bb": 4.83,
-    "ts": 1787417541.178524
+  "football|Portugal Primeira Liga|埃斯托里尔|里奥阿维|上半场客胜|ht|2026-08-23": {
+    "ev": 7.28,
+    "bb": 5.1,
+    "ts": 1787417700.346703
   }
 }
