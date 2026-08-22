@@ -405,6 +405,11 @@
     "bb": 2.27,
     "ts": 1787409789.0957959
   },
+  "football|Argentina Primera Nacional|贝尔格拉诺防卫队|阿尔米兰提布朗|上半场客胜|ht|2026-08-23": {
+    "ev": 2.54,
+    "bb": 6.7,
+    "ts": 1787410113.742422
+  },
   "football|Armenia Premier League|FC Shirak Gyumri|FC Urartu|客胜|1x2|2026-08-22": {
     "ev": 1.37,
     "ts": 1787399689.395137
@@ -652,6 +657,10 @@
   "football|Austria Landesliga|Nussdorf|FC Lendorf|客胜|1x2|2026-08-22": {
     "ev": 4.36,
     "ts": 1787371971.619092
+  },
+  "football|Austria Regionalliga South|SVG Bleiburg|SK Austria Klagenfurt|让球主胜|1x2|2026-08-22": {
+    "ev": 3.5,
+    "ts": 1787410114.10204
   },
   "football|Azerbaijan Premier League|Gabala FK|Safa|主胜|1x2|2026-08-22": {
     "ev": 1.57,
@@ -1227,6 +1236,10 @@
   "football|Egypt Premier League|Ghazl El Mahallah|Pyramids FC|上半场客胜|ht|2026-08-23": {
     "ev": 1.61,
     "ts": 1787393127.0033998
+  },
+  "football|Egypt Premier League|Ghazl El Mahallah|Pyramids FC|小球|1x2|2026-08-23": {
+    "ev": 1.03,
+    "ts": 1787410114.1052642
   },
   "football|Egypt Premier League|Ghazl El Mahallah|Pyramids FC|让球客胜|1x2|2026-08-23": {
     "ev": 1.39,
@@ -2147,6 +2160,11 @@
     "bb": 1.8,
     "ts": 1787401337.8608
   },
+  "football|France Ligue 1|尼斯|洛里昂|上半场客胜|ht|2026-08-23": {
+    "ev": 2.78,
+    "bb": 4.4,
+    "ts": 1787410113.74236
+  },
   "football|France Ligue 1|特鲁瓦|巴黎FC|和局|1x2|2026-08-23": {
     "ev": 3.36,
     "bb": 3.79,
@@ -2361,6 +2379,10 @@
   "football|Ireland First Division|Kerry FC|University College Dublin|总进球区间7+|total_goals_range|2026-08-22": {
     "ev": 3.48,
     "ts": 1787274105.48858
+  },
+  "football|Ireland First Division|Longford Town FC|Bray Wanderers AFC|让球客胜|1x2|2026-08-23": {
+    "ev": 1.25,
+    "ts": 1787410114.106824
   },
   "football|Ireland First Division|Treaty United|Cork City FC|上半场客胜|ht|2026-08-22": {
     "ev": 3.41,
@@ -4751,6 +4773,10 @@
     "ev": 1.35,
     "ts": 1787329231.7737012
   },
+  "football|Turkey Super Lig|Corum FK|Kasimpasa|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 1.58,
+    "ts": 1787410114.108099
+  },
   "football|Turkey Super Lig|Corum FK|Kasimpasa|上半场客胜|ht|2026-08-23": {
     "ev": 2.62,
     "ts": 1787391363.512806
@@ -5025,6 +5051,18 @@
     "ev": 2.27,
     "ts": 1787384950.346988
   },
+  "football|Uruguay Segunda Division|CS Cerrito|Uruguay Montevideo FC|双重机会-和局/客|dc|2026-08-23": {
+    "ev": 1.08,
+    "ts": 1787410114.1034539
+  },
+  "football|Uruguay Segunda Division|CS Cerrito|Uruguay Montevideo FC|客胜|1x2|2026-08-23": {
+    "ev": 1.9,
+    "ts": 1787410114.103265
+  },
+  "football|Uruguay Segunda Division|CS Cerrito|Uruguay Montevideo FC|让球客胜|1x2|2026-08-23": {
+    "ev": 5.0,
+    "ts": 1787410114.1033542
+  },
   "football|Uruguay Segunda Division|Miramar Misiones|Rentistas|客胜|1x2|2026-08-22": {
     "ev": 2.46,
     "ts": 1787289659.5680058
@@ -5110,14 +5148,9 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|France Ligue 1|尼斯|洛里昂|上半场客胜|ht|2026-08-23": {
-    "ev": 2.78,
-    "bb": 4.4,
-    "ts": 1787410113.74236
-  },
-  "football|Argentina Primera Nacional|贝尔格拉诺防卫队|阿尔米兰提布朗|上半场客胜|ht|2026-08-23": {
-    "ev": 2.54,
-    "bb": 6.7,
-    "ts": 1787410113.742422
+  "football|Brazil Serie A|巴西国际|米内罗竞技|上半场客胜|ht|2026-08-23": {
+    "ev": 3.29,
+    "bb": 5.1,
+    "ts": 1787410247.235744
   }
 }
