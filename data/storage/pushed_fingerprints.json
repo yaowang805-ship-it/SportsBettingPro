@@ -652,6 +652,10 @@
     "ev": 6.02,
     "ts": 1787393729.990775
   },
+  "football|Belgium Challenger Pro League|FCV Dender EH|K Beerschot VA|上半场客胜|ht|2026-08-22": {
+    "ev": 4.14,
+    "ts": 1787405707.085439
+  },
   "football|Belgium Challenger Pro League|FCV Dender EH|K Beerschot VA|总进球区间7+|total_goals_range|2026-08-22": {
     "ev": 21.91,
     "ts": 1787345120.792023
@@ -667,6 +671,11 @@
   "football|Belgium Challenger Pro League|KSC Lokeren Temse|KAS Eupen|让球客胜|1x2|2026-08-22": {
     "ev": 1.93,
     "ts": 1787328493.424194
+  },
+  "football|Belgium Challenger Pro League|登德尔|比尔肖特 VA|上半场客胜|ht|2026-08-22": {
+    "ev": 4.14,
+    "bb": 3.03,
+    "ts": 1787405706.770918
   },
   "football|Belgium Pro League|Royal Charleroi SC|KV Mechelen|上半场主胜|ht|2026-08-23": {
     "ev": 1.38,
@@ -1364,6 +1373,10 @@
     "ev": 4.13,
     "ts": 1787373991.886204
   },
+  "football|England League One|Stevenage FC|Oxford United|上半场主胜|ht|2026-08-22": {
+    "ev": 2.23,
+    "ts": 1787405707.084513
+  },
   "football|England League One|Stevenage FC|Oxford United|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 2.06,
     "ts": 1787371971.616765
@@ -1566,6 +1579,18 @@
     "ev": 1.3,
     "ts": 1787385855.7985852
   },
+  "football|England National League South|Maidenhead United FC|Farnborough FC|上半场客胜|ht|2026-08-22": {
+    "ev": 1.9,
+    "ts": 1787405707.0854988
+  },
+  "football|England National League South|Maidenhead United FC|Farnborough FC|主胜|1x2|2026-08-22": {
+    "ev": 2.77,
+    "ts": 1787406159.7394712
+  },
+  "football|England National League South|Maidenhead United FC|Farnborough FC|让球主胜|1x2|2026-08-22": {
+    "ev": 1.58,
+    "ts": 1787406159.739511
+  },
   "football|England National League South|Salisbury FC|Hemel Hempstead|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 3.51,
     "ts": 1787385855.7986329
@@ -1693,6 +1718,10 @@
   "football|England Premier League|Nottingham Forest|Leeds United|单双-双|oe|2026-08-22": {
     "ev": 1.34,
     "ts": 1787325212.142571
+  },
+  "football|England Premier League|Nottingham Forest|Leeds United|和局|1x2|2026-08-22": {
+    "ev": 1.37,
+    "ts": 1787405707.0840828
   },
   "football|England Premier League|Nottingham Forest|Leeds United|让球主胜|1x2|2026-08-22": {
     "ev": 1.39,
@@ -2467,6 +2496,11 @@
     "bb": 6.0,
     "ts": 1787400929.497494
   },
+  "football|Italy Serie B|阿维利诺 1912|阿雷佐|上半场客胜|ht|2026-08-23": {
+    "ev": 3.65,
+    "bb": 4.83,
+    "ts": 1787405706.7709591
+  },
   "football|Japan J.League 2|Albirex Niigata|Fujieda MYFC|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.41,
     "ts": 1787378522.134069
@@ -2793,6 +2827,22 @@
     "ev": 3.65,
     "ts": 1787323085.964937
   },
+  "football|Jordan Super Cup|Ramtha SC|Al Hussein Irbid|双重机会-主/和局|dc|2026-08-23": {
+    "ev": 1.4,
+    "ts": 1787405707.092334
+  },
+  "football|Jordan Super Cup|Ramtha SC|Al Hussein Irbid|和局|1x2|2026-08-23": {
+    "ev": 9.76,
+    "ts": 1787405707.092149
+  },
+  "football|Jordan Super Cup|Ramtha SC|Al Hussein Irbid|小球|1x2|2026-08-23": {
+    "ev": 9.43,
+    "ts": 1787405707.092272
+  },
+  "football|Jordan Super Cup|Ramtha SC|Al Hussein Irbid|让球主胜|1x2|2026-08-23": {
+    "ev": 1.31,
+    "ts": 1787405707.0922081
+  },
   "football|Latvia Virsliga|Ogre United|FS Jelgava|上半场主胜|ht|2026-08-22": {
     "ev": 2.47,
     "ts": 1787403449.977458
@@ -3069,6 +3119,14 @@
   "football|Northern Ireland Premiership|Linfield FC|Cliftonville FC|主胜|1x2|2026-08-22": {
     "ev": 2.33,
     "ts": 1787336958.525155
+  },
+  "football|Norway 1st Division|Sandnes Ulf|Bryne FK|双边进球-是|btts|2026-08-22": {
+    "ev": 2.32,
+    "ts": 1787406159.739059
+  },
+  "football|Norway 1st Division|Sandnes Ulf|Bryne FK|大球|1x2|2026-08-22": {
+    "ev": 4.64,
+    "ts": 1787406159.7390962
   },
   "football|Norway 1st Division|Sandnes Ulf|Bryne FK|总进球区间7+|total_goals_range|2026-08-22": {
     "ev": 5.08,
@@ -3491,6 +3549,11 @@
     "bb": 4.74,
     "ts": 1787400929.497602
   },
+  "football|Portugal Primeira Liga|马里迪莫|维塞乌|上半场客胜|ht|2026-08-22": {
+    "ev": 7.77,
+    "bb": 5.45,
+    "ts": 1787405706.770866
+  },
   "football|Portugal Segunda Liga|FC Penafiel|Sporting Lisbon B|双边进球-是|btts|2026-08-23": {
     "ev": 1.36,
     "ts": 1787404541.5699441
@@ -3782,6 +3845,10 @@
   "football|Scotland Championship|Inverness CT|Partick Thistle FC|和局|1x2|2026-08-22": {
     "ev": 8.46,
     "ts": 1787335680.397989
+  },
+  "football|Scotland Championship|Queens Park FC|Stenhousemuir FC|和局|1x2|2026-08-22": {
+    "ev": 2.01,
+    "ts": 1787405707.0849438
   },
   "football|Scotland Championship|Queens Park FC|Stenhousemuir FC|让球主胜|1x2|2026-08-22": {
     "ev": 4.0,
@@ -4265,6 +4332,10 @@
   "football|Sweden Ettan Norra|Sollentuna FK|IF Karlstad Fotboll|大球|1x2|2026-08-22": {
     "ev": 1.55,
     "ts": 1787377698.08716
+  },
+  "football|Sweden Ettan Norra|Sollentuna FK|IF Karlstad Fotboll|小球|1x2|2026-08-22": {
+    "ev": 1.2,
+    "ts": 1787406159.7390149
   },
   "football|Sweden Ettan Norra|索伦蒂纳|卡尔斯塔德|客胜|1x2|2026-08-22": {
     "ev": 4.53,
@@ -4764,19 +4835,9 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Portugal Primeira Liga|马里迪莫|维塞乌|上半场客胜|ht|2026-08-22": {
-    "ev": 7.77,
-    "bb": 5.45,
-    "ts": 1787405706.770866
-  },
-  "football|Belgium Challenger Pro League|登德尔|比尔肖特 VA|上半场客胜|ht|2026-08-22": {
-    "ev": 4.14,
-    "bb": 3.03,
-    "ts": 1787405706.770918
-  },
-  "football|Italy Serie B|阿维利诺 1912|阿雷佐|上半场客胜|ht|2026-08-23": {
-    "ev": 3.65,
-    "bb": 4.83,
-    "ts": 1787405706.7709591
+  "football|Ecuador LigaPro Primera A|理工大学竞技|瓜亚基尔城|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 2.55,
+    "bb": 1.95,
+    "ts": 1787406444.9943092
   }
 }
