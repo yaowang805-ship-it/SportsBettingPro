@@ -2615,6 +2615,31 @@ def _verify_odds_freshness(qualified: list, max_pin_drift: float = 0.08) -> list
         return qualified
 
 
+def _append_bb_drift_log(rows: list):
+    """把每次推送前 BB 漂移的逐笔数据写到 bb_drift_log.csv(攒精确数据, 供与 CLV 关联)。
+
+    之前 _verify_bb_drift 只 log 被拦的, 无法量化"3-8% 漂移区间"的误杀代价。
+    这里记录全部有 bb_match_id 且取得到最新价的机会: drift_pct>0=下跌, <0=上涨。
+    列与 clv_results.csv 对齐(sport/league/home/away/home_pin/away_pin/sub_market/designation),
+    方便事后按 (sport|league|home|away|designation|sub_market|日期) join 出"漂移 vs CLV"。
+    """
+    import csv
+    f = DATA_DIR / "bb_drift_log.csv"
+    cols = ["collect_time", "sport", "league", "home", "away", "home_pin", "away_pin",
+            "sub_market", "designation", "tier", "bb_match_id",
+            "snap_bb", "fresh_bb", "drift_pct", "action"]
+    try:
+        exists = f.exists() and f.stat().st_size > 0
+        with open(f, "a", newline="") as fh:
+            w = csv.DictWriter(fh, fieldnames=cols)
+            if not exists:
+                w.writeheader()
+            for r in rows:
+                w.writerow(r)
+    except Exception as e:
+        logger.warning("BB漂移日志写失败: %s", e)
+
+
 def _verify_bb_drift(qualified: list, max_bb_drop: float = 0.10) -> list:
     """推送前 BB 漂移检测(零延迟): 只读本地已抓的 bb_odds_extracted.json, 不额外调 BB API。
 
@@ -2644,6 +2669,8 @@ def _verify_bb_drift(qualified: list, max_bb_drop: float = 0.10) -> list:
 
         kept = []
         skipped = 0
+        drift_rows = []   # 逐笔漂移数据(全部可验证机会, 不只被拦的)
+        now_iso = datetime.now(timezone.utc).isoformat()
         for o in qualified:
             snap_bb = o.get("bb_odds", 0)
             mid = o.get("bb_match_id")
@@ -2658,20 +2685,42 @@ def _verify_bb_drift(qualified: list, max_bb_drop: float = 0.10) -> list:
             if not fresh_bb or fresh_bb <= 0:
                 kept.append(o)          # 取不到该盘口 → 保守放行
                 continue
-            # 只拦截"下跌"(快照价虚高 → 实际成交价变差); 上涨是真机会不拦
-            if fresh_bb < snap_bb:
-                drop = (snap_bb - fresh_bb) / snap_bb
-                _tier = o.get("_tier", 3)
-                bb_limit = 0.08 if _tier >= 3 else max_bb_drop
-                if drop > bb_limit:
-                    logger.info("BB漂移过滤(跌%.0f%%>%.0f%%): %s BB %.2f→%.2f (临时高价假机会)",
-                                drop * 100, bb_limit * 100, o.get("designation", ""),
-                                snap_bb, fresh_bb)
-                    skipped += 1
-                    continue
+            # drift_pct: 正值=下跌(成交价变差), 负值=上涨(成交价更好)
+            drift_pct = (snap_bb - fresh_bb) / snap_bb * 100
+            _tier = o.get("_tier", 3)
+            bb_limit = 0.08 if _tier >= 3 else max_bb_drop
+            _row = {
+                "collect_time": now_iso,
+                "sport": o.get("sport", ""),
+                "league": o.get("league", ""),
+                "home": o.get("home_cn", o.get("home", "")),
+                "away": o.get("away_cn", o.get("away", "")),
+                "home_pin": o.get("home_team", ""),
+                "away_pin": o.get("away_team", ""),
+                "sub_market": o.get("_sub_market", ""),
+                "designation": o.get("designation", ""),
+                "tier": _tier,
+                "bb_match_id": mid,
+                "snap_bb": snap_bb,
+                "fresh_bb": fresh_bb,
+                "drift_pct": round(drift_pct, 2),
+            }
+            # 只拦截"下跌"超过阈值(快照价虚高 → 临时高价假机会); 上涨不拦
+            if drift_pct > bb_limit * 100:
+                logger.info("BB漂移过滤(跌%.0f%%>%.0f%%): %s BB %.2f→%.2f (临时高价假机会)",
+                            drift_pct, bb_limit * 100, o.get("designation", ""),
+                            snap_bb, fresh_bb)
+                skipped += 1
+                _row["action"] = "filtered"
+                drift_rows.append(_row)
+                continue
+            _row["action"] = "kept"
+            drift_rows.append(_row)
             kept.append(o)
         if skipped:
             logger.info("BB漂移检测: 过滤 %d 条临时高价假机会", skipped)
+        if drift_rows:
+            _append_bb_drift_log(drift_rows)
         return kept
     except Exception as e:
         logger.warning("BB漂移检测失败(跳过): %s", e)
