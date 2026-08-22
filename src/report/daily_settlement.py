@@ -287,7 +287,9 @@ def push_report():
     _save_last_cutoff(now_utc)
 
     title = f"结算报告 {_bj_now().strftime('%m/%d')}"
-    ok = send_dingtalk(title, body)
+    # urgent=True: 结算报告是核心业务报告, 不应被非投注每日配额(6条/天)挤掉。
+    # 否则早上被时间校准/健康报告用满配额后, 结算报告就发不出去(2026-08-22 实测)。
+    ok = send_dingtalk(title, body, urgent=True)
     if ok:
         logger.info("结算报告已推送: %s", title)
     else:
