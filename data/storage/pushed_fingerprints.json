@@ -1275,6 +1275,11 @@
     "bb": 2.0,
     "ts": 1787400929.497389
   },
+  "football|Egypt Premier League|马斯里|史莫哈|上半场客胜|ht|2026-08-23": {
+    "ev": 8.27,
+    "bb": 5.75,
+    "ts": 1787409418.6257322
+  },
   "football|El Salvador Primera Division|Inter Santa Tecla|Inca|客胜|1x2|2026-08-22": {
     "ev": 5.48,
     "ts": 1787306510.478108
@@ -4676,6 +4681,10 @@
     "ev": 3.1,
     "ts": 1787404241.777337
   },
+  "football|Turkey 1. Lig|Bodrum Belediyesi Bodrumspor|Muglaspor|上半场客胜|ht|2026-08-23": {
+    "ev": 3.76,
+    "ts": 1787409419.339052
+  },
   "football|Turkey 1. Lig|Bodrum Belediyesi Bodrumspor|Muglaspor|让球客胜|1x2|2026-08-23": {
     "ev": 1.59,
     "ts": 1787376539.732998
@@ -4709,6 +4718,11 @@
     "ev": 3.1,
     "bb": 1.87,
     "ts": 1787404241.357152
+  },
+  "football|Turkey 1. Lig|波德鲁姆士邦|慕拉斯堡|上半场客胜|ht|2026-08-23": {
+    "ev": 3.76,
+    "bb": 6.0,
+    "ts": 1787409418.6257868
   },
   "football|Turkey 1. Lig|贝拉迪亚士邦|伊斯坦堡士邦|双重机会-主/和局|dc|2026-08-24": {
     "ev": 3.66,
@@ -4777,6 +4791,10 @@
   "football|UAE Pro League|Ajman Club|Hatta SC|让球客胜|1x2|2026-08-22": {
     "ev": 1.49,
     "ts": 1787391059.1502888
+  },
+  "football|UAE Pro League|Al Ain FC|Khor Fakkan Club|上半场主胜|ht|2026-08-23": {
+    "ev": 1.1,
+    "ts": 1787409419.341839
   },
   "football|UAE Pro League|Al Ain FC|Khor Fakkan Club|上半场客胜|ht|2026-08-23": {
     "ev": 4.44,
@@ -5075,14 +5093,9 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Egypt Premier League|马斯里|史莫哈|上半场客胜|ht|2026-08-23": {
-    "ev": 8.27,
-    "bb": 5.75,
-    "ts": 1787409418.6257322
-  },
-  "football|Turkey 1. Lig|波德鲁姆士邦|慕拉斯堡|上半场客胜|ht|2026-08-23": {
-    "ev": 3.76,
-    "bb": 6.0,
-    "ts": 1787409418.6257868
+  "football|Argentina Primera Nacional|贝尔格拉诺防卫队|阿尔米兰提布朗|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 3.65,
+    "bb": 2.27,
+    "ts": 1787409789.0957959
   }
 }
