@@ -3098,6 +3098,11 @@
     "ev": 1.31,
     "ts": 1787405707.0922081
   },
+  "football|Jordan Super Cup|连姆沙|胡塞因|和局|1x2|2026-08-23": {
+    "ev": 6.1,
+    "bb": 4.18,
+    "ts": 1787413336.924843
+  },
   "football|Latvia Virsliga|Ogre United|FS Jelgava|上半场主胜|ht|2026-08-22": {
     "ev": 2.47,
     "ts": 1787403449.977458
@@ -3820,6 +3825,10 @@
   "football|Portugal Primeira Liga|Estoril Praia|Rio Ave FC|上半场客胜|ht|2026-08-23": {
     "ev": 2.25,
     "ts": 1787376539.732306
+  },
+  "football|Portugal Primeira Liga|Estoril Praia|Rio Ave FC|双边进球-是|btts|2026-08-23": {
+    "ev": 1.46,
+    "ts": 1787413337.533768
   },
   "football|Portugal Primeira Liga|Maritimo Madeira|Academico de Viseu FC|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.33,
@@ -5328,9 +5337,9 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Jordan Super Cup|连姆沙|胡塞因|和局|1x2|2026-08-23": {
-    "ev": 6.1,
-    "bb": 4.18,
-    "ts": 1787413336.924843
+  "football|Costa Rica Primera Division|贝伦蝎子|肯塔吉内斯|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 2.73,
+    "bb": 1.81,
+    "ts": 1787413349.749602
   }
 }
