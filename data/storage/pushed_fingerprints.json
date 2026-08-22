@@ -741,6 +741,10 @@
     "bb": 7.25,
     "ts": 1787283255.079179
   },
+  "football|Brazil Copa Paulista|Juventus SP|Osasco Sporting|客胜|1x2|2026-08-23": {
+    "ev": 2.02,
+    "ts": 1787402025.210185
+  },
   "football|Brazil Serie A|Cruzeiro EC MG|CR Flamengo RJ|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 1.91,
     "ts": 1787356831.1660821
@@ -777,11 +781,6 @@
     "ev": 9.22,
     "bb": 3.46,
     "ts": 1787401337.860547
-  },
-  "football|Brazil Serie A|弗鲁米嫩塞RJ|瑞模贝雷|上半场客胜|ht|2026-08-23": {
-    "ev": 2.77,
-    "bb": 8.65,
-    "ts": 1787401337.861289
   },
   "football|Brazil Serie A|沙佩科恩斯|圣保罗|上半场主胜|ht|2026-08-24": {
     "ev": 5.6,
@@ -1085,6 +1084,10 @@
     "ev": 1.04,
     "ts": 1787332926.810472
   },
+  "football|Egypt Premier League|Al Masry Club|Smouha SC|上半场客胜|ht|2026-08-23": {
+    "ev": 1.28,
+    "ts": 1787402984.128892
+  },
   "football|Egypt Premier League|Ghazl El Mahallah|Pyramids FC|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 1.59,
     "ts": 1787393127.0034811
@@ -1231,6 +1234,10 @@
   "football|England Championship League|Swansea City|Sheffield United FC|上半场客胜|ht|2026-08-22": {
     "ev": 1.19,
     "ts": 1787373991.881012
+  },
+  "football|England Championship League|Swansea City|Sheffield United FC|双边进球-是|btts|2026-08-22": {
+    "ev": 1.04,
+    "ts": 1787402984.128621
   },
   "football|England Championship League|West Ham United|Charlton Athletic|上半场主胜|ht|2026-08-22": {
     "ev": 1.55,
@@ -1558,6 +1565,10 @@
     "ev": 1.93,
     "ts": 1787378522.135176
   },
+  "football|England Premier League|Ipswich Town|Sunderland AFC|上半场主胜|ht|2026-08-22": {
+    "ev": 1.14,
+    "ts": 1787402984.128355
+  },
   "football|England Premier League|Ipswich Town|Sunderland AFC|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.02,
     "ts": 1787343319.2100601
@@ -1706,6 +1717,10 @@
     "ev": 3.58,
     "ts": 1787390523.406486
   },
+  "football|Finland Veikkausliiga|FF Jaro|Oulu|总进球区间7+|total_goals_range|2026-08-22": {
+    "ev": 3.44,
+    "ts": 1787402025.2103329
+  },
   "football|Finland Veikkausliiga|FF Jaro|Oulu|让球主胜|1x2|2026-08-22": {
     "ev": 1.24,
     "ts": 1787390001.118268
@@ -1805,6 +1820,10 @@
   "football|France Ligue 1|OGC Nice|FC Lorient|上半场客胜|ht|2026-08-23": {
     "ev": 3.11,
     "ts": 1787388136.480963
+  },
+  "football|France Ligue 1|OGC Nice|FC Lorient|让球主胜|1x2|2026-08-23": {
+    "ev": 1.62,
+    "ts": 1787402182.415313
   },
   "football|France Ligue 1|Olympique Marseille|Strasbourg Alsace|上半场客胜|ht|2026-08-22": {
     "ev": 1.24,
@@ -2660,6 +2679,10 @@
     "ev": 2.68,
     "ts": 1787384950.3447108
   },
+  "football|Latvia Virsliga|Ogre United|FS Jelgava|上半场客胜|ht|2026-08-22": {
+    "ev": 2.1,
+    "ts": 1787402984.1292422
+  },
   "football|Latvia Virsliga|Ogre United|FS Jelgava|大球|1x2|2026-08-22": {
     "ev": 5.95,
     "ts": 1787384950.34467
@@ -2937,6 +2960,10 @@
     "ev": 3.78,
     "ts": 1787371971.617055
   },
+  "football|Norway NM Cup|Fana|Bjarg|让球主胜|1x2|2026-08-22": {
+    "ev": 1.8,
+    "ts": 1787401549.9971259
+  },
   "football|Norway NM Cup|Frigg Oslo FK|Kjelsas|主胜|1x2|2026-08-23": {
     "ev": 1.98,
     "ts": 1787387186.8577878
@@ -3005,6 +3032,14 @@
     "ev": 1.06,
     "ts": 1787398655.754646
   },
+  "football|Norway NM Cup|Rade IL|Follo|主胜|1x2|2026-08-22": {
+    "ev": 3.78,
+    "ts": 1787402025.206511
+  },
+  "football|Norway NM Cup|Rade IL|Follo|让球主胜|1x2|2026-08-22": {
+    "ev": 1.18,
+    "ts": 1787401549.997059
+  },
   "football|Norway NM Cup|Rade IL|Follo|让球客胜|1x2|2026-08-22": {
     "ev": 3.1,
     "ts": 1787381309.420545
@@ -3034,6 +3069,11 @@
     "ev": 4.24,
     "bb": 2.65,
     "ts": 1787400929.4977002
+  },
+  "football|Norway NM Cup|弗立加|卡积沙斯|主胜|1x2|2026-08-23": {
+    "ev": 11.26,
+    "bb": 6.95,
+    "ts": 1787401546.613226
   },
   "football|Norway Toppserien Women|FK Fortuna Alesund (w)|Haugesund (w)|客胜|1x2|2026-08-22": {
     "ev": 5.27,
@@ -3427,6 +3467,19 @@
     "ev": 1.63,
     "ts": 1787371971.619264
   },
+  "football|Romania Liga 1|FC UTA Arad|Corvinul|上半场客胜|ht|2026-08-22": {
+    "ev": 2.79,
+    "ts": 1787401550.001705
+  },
+  "football|Romania Liga 1|FC UTA Arad|Corvinul|让球客胜|1x2|2026-08-22": {
+    "ev": 1.01,
+    "ts": 1787401550.001778
+  },
+  "football|Romania Liga 1|UTA阿拉德|胡内多阿拉|上半场客胜|ht|2026-08-22": {
+    "ev": 2.79,
+    "bb": 4.59,
+    "ts": 1787401546.6131752
+  },
   "football|Romania Liga 2|CSM Satu Mare|FC Bihor Oradea|大球|1x2|2026-08-22": {
     "ev": 1.2,
     "ts": 1787371434.814199
@@ -3530,6 +3583,16 @@
     "ev": 2.73,
     "bb": 5.15,
     "ts": 1787401337.8604858
+  },
+  "football|Russia Premier League|沃罗涅日火炬|奥伦堡|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 3.36,
+    "bb": 1.9,
+    "ts": 1787401546.613019
+  },
+  "football|Russia Premier League|沃罗涅日火炬|奥伦堡|上半场客胜|ht|2026-08-22": {
+    "ev": 2.8,
+    "bb": 4.1,
+    "ts": 1787401546.613111
   },
   "football|Saudi Arabia Professional League|Al Ahli Saudi FC|Abha Club|客胜|1x2|2026-08-23": {
     "ev": 2.87,
@@ -4500,24 +4563,19 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Russia Premier League|沃罗涅日火炬|奥伦堡|上半场双重机会-主/客|ht_dc|2026-08-22": {
-    "ev": 3.36,
-    "bb": 1.9,
-    "ts": 1787401546.613019
+  "football|South Korea K-League 1|光州FC|仁川联|上半场主胜|ht|2026-08-23": {
+    "ev": 6.39,
+    "bb": 6.65,
+    "ts": 1787403128.589517
   },
-  "football|Russia Premier League|沃罗涅日火炬|奥伦堡|上半场客胜|ht|2026-08-22": {
-    "ev": 2.8,
-    "bb": 4.1,
-    "ts": 1787401546.613111
+  "football|South Korea K-League 1|光州FC|仁川联|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 2.93,
+    "bb": 1.88,
+    "ts": 1787403128.5895941
   },
-  "football|Romania Liga 1|UTA阿拉德|胡内多阿拉|上半场客胜|ht|2026-08-22": {
-    "ev": 2.79,
-    "bb": 4.59,
-    "ts": 1787401546.6131752
-  },
-  "football|Norway NM Cup|弗立加|卡积沙斯|主胜|1x2|2026-08-23": {
-    "ev": 11.26,
-    "bb": 6.95,
-    "ts": 1787401546.613226
+  "football|Brazil Serie A|弗鲁米嫩塞RJ|瑞模贝雷|上半场客胜|ht|2026-08-23": {
+    "ev": 6.93,
+    "bb": 9.0,
+    "ts": 1787403128.5896618
   }
 }
