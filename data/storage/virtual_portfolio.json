@@ -1,5 +1,5 @@
 {
-  "balance": 12324.46,
+  "balance": 12264.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2968,6 +2968,52 @@
       "commence_time": 1787439600,
       "created_at": "2026-08-22T14:03:20.578676+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_格罗兹尼特里克_罗斯托夫_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "俄罗斯超级联赛",
+      "home_team": "格罗兹尼特里克",
+      "away_team": "罗斯托夫",
+      "home_cn": "格罗兹尼特里克",
+      "away_cn": "罗斯托夫",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.92,
+      "stake": 60,
+      "model_prob": 0.5391,
+      "ev_pct": 3.51,
+      "pin_odds": 0,
+      "fair_price": 1.8549,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787410800,
+      "created_at": "2026-08-22T14:05:24.474506+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_萨格勒布迪纳摩_瓦拉兹丁_上半场客胜",
+      "sport": "football",
+      "league": "克罗地亚足球联赛",
+      "home_team": "萨格勒布迪纳摩",
+      "away_team": "瓦拉兹丁",
+      "home_cn": "萨格勒布迪纳摩",
+      "away_cn": "瓦拉兹丁",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 6.45,
+      "stake": 0,
+      "model_prob": 0.1618,
+      "ev_pct": 4.38,
+      "pin_odds": 5.4,
+      "fair_price": 6.1793,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787425200,
+      "created_at": "2026-08-22T14:05:24.474543+00:00",
+      "track_only": true
     }
   ],
   "settled": {
@@ -3991,8 +4037,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-22",
-    "used": 3094.0,
-    "bets": 78
+    "used": 3154.0,
+    "bets": 80
   },
   "updated": null
 }
