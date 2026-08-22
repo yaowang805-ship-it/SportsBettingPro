@@ -1,5 +1,5 @@
 {
-  "balance": 11924.46,
+  "balance": 11426.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3336,6 +3336,75 @@
       "commence_time": 1787518800,
       "created_at": "2026-08-22T15:26:25.070745+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_UTA阿拉德_科尔维努尔_主胜",
+      "sport": "football",
+      "league": "罗马尼亚甲级联赛",
+      "home_team": "UTA阿拉德",
+      "away_team": "科尔维努尔",
+      "home_cn": "UTA阿拉德",
+      "away_cn": "科尔维努尔",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.4,
+      "stake": 253,
+      "model_prob": 0.4514,
+      "ev_pct": 8.35,
+      "pin_odds": 2.15,
+      "fair_price": 2.2151,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787412600,
+      "created_at": "2026-08-22T15:31:05.566651+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_UTA阿拉德_科尔维努尔_双重机会-主/和局",
+      "sport": "football",
+      "league": "罗马尼亚甲级联赛",
+      "home_team": "UTA阿拉德",
+      "away_team": "科尔维努尔",
+      "home_cn": "UTA阿拉德",
+      "away_cn": "科尔维努尔",
+      "market": "1x2",
+      "market_type": "双重机会-主/和局",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 1.41,
+      "stake": 182,
+      "model_prob": 0.7427,
+      "ev_pct": 4.72,
+      "pin_odds": 0,
+      "fair_price": 1.3465,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787412600,
+      "created_at": "2026-08-22T15:31:05.566699+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_UTA阿拉德_科尔维努尔_上半场主胜",
+      "sport": "football",
+      "league": "罗马尼亚甲级联赛",
+      "home_team": "UTA阿拉德",
+      "away_team": "科尔维努尔",
+      "home_cn": "UTA阿拉德",
+      "away_cn": "科尔维努尔",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 3.23,
+      "stake": 63,
+      "model_prob": 0.3389,
+      "ev_pct": 9.47,
+      "pin_odds": 2.8,
+      "fair_price": 2.9507,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787412600,
+      "created_at": "2026-08-22T15:31:05.566734+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -4359,8 +4428,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-22",
-    "used": 3494.0,
-    "bets": 94
+    "used": 3992.0,
+    "bets": 97
   },
   "updated": null
 }

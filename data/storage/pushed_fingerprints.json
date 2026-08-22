@@ -900,6 +900,11 @@
     "bb": 1.9,
     "ts": 1787401337.8603551
   },
+  "football|Brazil Serie B|欧帕尔利奥|维拉诺瓦|和局|1x2|2026-08-24": {
+    "ev": 5.4,
+    "bb": 3.14,
+    "ts": 1787412385.0814831
+  },
   "football|Brazil Serie C|Botafogo FC PB|Guarani FC SP|和局|1x2|2026-08-23": {
     "ev": 3.59,
     "ts": 1787343319.21347
@@ -2059,6 +2064,10 @@
     "ev": 3.25,
     "ts": 1787299843.773748
   },
+  "football|Finland Veikkausliiga|TPS Turku|FC Inter Turku|小球|1x2|2026-08-23": {
+    "ev": 1.87,
+    "ts": 1787412385.42853
+  },
   "football|Finland Veikkausliiga|Tampereen Ilves|Vaasan Palloseura|上半场客胜|ht|2026-08-22": {
     "ev": 1.59,
     "ts": 1787371971.621693
@@ -2118,6 +2127,22 @@
   "football|France Ligue 1|ES Troyes AC|Paris FC|总进球区间7+|total_goals_range|2026-08-23": {
     "ev": 4.12,
     "ts": 1787338579.6328561
+  },
+  "football|France Ligue 1|Le Havre AC|AS Monaco FC|双重机会-和局/客|dc|2026-08-23": {
+    "ev": 15.71,
+    "ts": 1787412385.428884
+  },
+  "football|France Ligue 1|Le Havre AC|AS Monaco FC|和局|1x2|2026-08-23": {
+    "ev": 56.25,
+    "ts": 1787412385.428732
+  },
+  "football|France Ligue 1|Le Havre AC|AS Monaco FC|总进球区间4-6|total_goals_range|2026-08-23": {
+    "ev": 84.5,
+    "ts": 1787412385.430445
+  },
+  "football|France Ligue 1|Le Havre AC|AS Monaco FC|让球客胜|1x2|2026-08-23": {
+    "ev": 1.46,
+    "ts": 1787412385.428807
   },
   "football|France Ligue 1|Le Mans FC|Stade Brest 29|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 1.57,
@@ -2192,6 +2217,11 @@
     "ev": 100.13,
     "bb": 7.2,
     "ts": 1787340473.767859
+  },
+  "football|France Ligue 1|勒阿弗尔|摩纳哥|和局|1x2|2026-08-23": {
+    "ev": 56.25,
+    "bb": 6.55,
+    "ts": 1787412385.081314
   },
   "football|France Ligue 1|尼斯|洛里昂|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 2.19,
@@ -2320,6 +2350,11 @@
   "football|Germany Super Cup|Borussia Dortmund|Bayern Munich|和局|1x2|2026-08-23": {
     "ev": 2.74,
     "ts": 1787338579.631587
+  },
+  "football|Guatemala Liga Nacional|拉科鲁尼亚米斯科|瓜斯塔托亚|和局|1x2|2026-08-24": {
+    "ev": 5.31,
+    "bb": 2.96,
+    "ts": 1787412385.081244
   },
   "football|Hong Kong Premier League|Hong Kong Rangers|Kitchee SC|主胜|1x2|2026-08-22": {
     "ev": 1.51,
@@ -3316,6 +3351,10 @@
   "football|Netherlands Eredivisie|Cambuur|Feyenoord|上半场客胜|ht|2026-08-23": {
     "ev": 2.03,
     "ts": 1787411460.874806
+  },
+  "football|Netherlands Eredivisie|Cambuur|Feyenoord|主胜|1x2|2026-08-23": {
+    "ev": 4.02,
+    "ts": 1787412385.4298902
   },
   "football|Netherlands Eredivisie|Fortuna Sittard|AZ Alkmaar|小球|1x2|2026-08-22": {
     "ev": 2.07,
@@ -4448,6 +4487,27 @@
     "ev": 1.28,
     "ts": 1787333904.550946
   },
+  "football|Spain LaLiga 2|SD Eibar|Real Valladolid|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 1.78,
+    "ts": 1787412385.429442
+  },
+  "football|Spain LaLiga 2|SD Eibar|Real Valladolid|上半场客胜|ht|2026-08-23": {
+    "ev": 4.5,
+    "ts": 1787412385.42929
+  },
+  "football|Spain LaLiga 2|SD Eibar|Real Valladolid|单双-双|oe|2026-08-23": {
+    "ev": 3.19,
+    "ts": 1787412385.429363
+  },
+  "football|Spain LaLiga 2|SD Eibar|Real Valladolid|和局|1x2|2026-08-23": {
+    "ev": 1.31,
+    "ts": 1787412385.429215
+  },
+  "football|Spain LaLiga 2|埃瓦尔|巴拉多利德|上半场客胜|ht|2026-08-23": {
+    "ev": 4.5,
+    "bb": 5.0,
+    "ts": 1787412385.081374
+  },
   "football|Spain LaLiga 2|埃登斯|加的斯|上半场客胜|ht|2026-08-23": {
     "ev": 7.33,
     "bb": 4.6,
@@ -4856,6 +4916,11 @@
     "ev": 1.01,
     "ts": 1787349415.449047
   },
+  "football|Turkey Super Lig|埃于普体育|加济安泰普大都会|和局|1x2|2026-08-24": {
+    "ev": 5.18,
+    "bb": 3.43,
+    "ts": 1787412385.081429
+  },
   "football|Turkey Super Lig|里泽斯堡|萨姆松珀|和局|1x2|2026-08-23": {
     "ev": 7.08,
     "bb": 3.52,
@@ -5211,29 +5276,19 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Guatemala Liga Nacional|拉科鲁尼亚米斯科|瓜斯塔托亚|和局|1x2|2026-08-24": {
-    "ev": 5.31,
-    "bb": 2.96,
-    "ts": 1787412385.081244
+  "football|Romania Liga 1|UTA阿拉德|科尔维努尔|上半场主胜|ht|2026-08-22": {
+    "ev": 9.47,
+    "bb": 3.23,
+    "ts": 1787412665.5736818
   },
-  "football|France Ligue 1|勒阿弗尔|摩纳哥|和局|1x2|2026-08-23": {
-    "ev": 56.25,
-    "bb": 6.55,
-    "ts": 1787412385.081314
+  "football|Romania Liga 1|UTA阿拉德|科尔维努尔|主胜|1x2|2026-08-22": {
+    "ev": 8.35,
+    "bb": 2.4,
+    "ts": 1787412665.573735
   },
-  "football|Spain LaLiga 2|埃瓦尔|巴拉多利德|上半场客胜|ht|2026-08-23": {
-    "ev": 4.5,
-    "bb": 5.0,
-    "ts": 1787412385.081374
-  },
-  "football|Turkey Super Lig|埃于普体育|加济安泰普大都会|和局|1x2|2026-08-24": {
-    "ev": 5.18,
-    "bb": 3.43,
-    "ts": 1787412385.081429
-  },
-  "football|Brazil Serie B|欧帕尔利奥|维拉诺瓦|和局|1x2|2026-08-24": {
-    "ev": 5.4,
-    "bb": 3.14,
-    "ts": 1787412385.0814831
+  "football|Romania Liga 1|UTA阿拉德|科尔维努尔|双重机会-主/和局|dc|2026-08-22": {
+    "ev": 4.72,
+    "bb": 1.41,
+    "ts": 1787412665.573781
   }
 }
