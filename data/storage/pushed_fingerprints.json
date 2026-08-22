@@ -782,6 +782,11 @@
     "bb": 3.46,
     "ts": 1787401337.860547
   },
+  "football|Brazil Serie A|弗鲁米嫩塞RJ|瑞模贝雷|上半场客胜|ht|2026-08-23": {
+    "ev": 6.93,
+    "bb": 9.0,
+    "ts": 1787403128.5896618
+  },
   "football|Brazil Serie A|沙佩科恩斯|圣保罗|上半场主胜|ht|2026-08-24": {
     "ev": 5.6,
     "bb": 5.2,
@@ -2719,6 +2724,10 @@
     "ev": 1.11,
     "ts": 1787354497.3853528
   },
+  "football|Mexico Liga De Expansion MX|Jaiba Brava|Alebrijes de Oaxaca FC|上半场客胜|ht|2026-08-23": {
+    "ev": 2.02,
+    "ts": 1787403129.025732
+  },
   "football|Mexico Liga MX Women|Pumas UNAM (w)|Queretaro FC (w)|上半场主胜|ht|2026-08-22": {
     "ev": 1.26,
     "ts": 1787314284.16978
@@ -3798,6 +3807,16 @@
     "ev": 3.31,
     "ts": 1787391059.1517398
   },
+  "football|South Korea K-League 1|光州FC|仁川联|上半场主胜|ht|2026-08-23": {
+    "ev": 6.39,
+    "bb": 6.65,
+    "ts": 1787403128.589517
+  },
+  "football|South Korea K-League 1|光州FC|仁川联|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 2.93,
+    "bb": 1.88,
+    "ts": 1787403128.5895941
+  },
   "football|South Korea K-League 1|富川FC 1995|浦项制铁|上半场主胜|ht|2026-08-22": {
     "ev": 5.74,
     "bb": 4.13,
@@ -4563,19 +4582,9 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|South Korea K-League 1|光州FC|仁川联|上半场主胜|ht|2026-08-23": {
-    "ev": 6.39,
-    "bb": 6.65,
-    "ts": 1787403128.589517
-  },
-  "football|South Korea K-League 1|光州FC|仁川联|上半场双重机会-主/客|ht_dc|2026-08-23": {
-    "ev": 2.93,
-    "bb": 1.88,
-    "ts": 1787403128.5895941
-  },
-  "football|Brazil Serie A|弗鲁米嫩塞RJ|瑞模贝雷|上半场客胜|ht|2026-08-23": {
-    "ev": 6.93,
-    "bb": 9.0,
-    "ts": 1787403128.5896618
+  "football|England Premier League|诺丁汉森林|利兹联|上半场主胜|ht|2026-08-22": {
+    "ev": 2.39,
+    "bb": 3.28,
+    "ts": 1787403449.1985579
   }
 }
