@@ -692,6 +692,10 @@ def api_get(path, retry=True, bypass_pause=False):
                     return None
                 continue
             logger.error("SSL handshake failed after %d retries", _max)
+            # V5.10(2026-08-22): SSL 失败也计入熔断器。节点失效的表现就是 SSL EOF,
+            # 若不熔断, 主扫描会按 MAX_RETRIES=5 对每个联赛重锤, 实测 10:00-10:07 节点
+            # 失效期间重锤 195 次, 把 Cloudflare 从"节点断"升级成"IP 封禁"。
+            _record_pin_failure()
             return None
 
         except requests.exceptions.ConnectionError as e:
