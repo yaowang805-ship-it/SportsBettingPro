@@ -1296,6 +1296,14 @@
     "ev": 1.28,
     "ts": 1787398655.755764
   },
+  "football|England Championship League|Preston North End|Wolverhampton Wanderers FC|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.0,
+    "ts": 1787407094.351582
+  },
+  "football|England Championship League|Preston North End|Wolverhampton Wanderers FC|大球|1x2|2026-08-22": {
+    "ev": 1.15,
+    "ts": 1787407094.3515
+  },
   "football|England Championship League|Queens Park Rangers|Bolton Wanderers|主胜|1x2|2026-08-22": {
     "ev": 1.48,
     "ts": 1787404750.311517
@@ -1319,6 +1327,10 @@
   "football|England Championship League|Swansea City|Sheffield United FC|大球|1x2|2026-08-22": {
     "ev": 1.46,
     "ts": 1787404750.311424
+  },
+  "football|England Championship League|Swansea City|Sheffield United FC|角球小球|corner|2026-08-22": {
+    "ev": 1.82,
+    "ts": 1787407094.3602428
   },
   "football|England Championship League|Swansea City|Sheffield United FC|让球主胜|1x2|2026-08-22": {
     "ev": 2.84,
@@ -1352,6 +1364,11 @@
     "ev": 4.33,
     "bb": 3.5,
     "ts": 1787405225.0812879
+  },
+  "football|England Championship League|普雷斯顿|狼队|上半场主胜|ht|2026-08-22": {
+    "ev": 4.61,
+    "bb": 4.85,
+    "ts": 1787407093.9757938
   },
   "football|England Championship League|林肯城|朴茨茅斯|上半场主胜|ht|2026-08-22": {
     "ev": 4.05,
@@ -3133,6 +3150,10 @@
     "ev": 2.07,
     "ts": 1787371971.618358
   },
+  "football|Netherlands Eredivisie|Fortuna Sittard|AZ Alkmaar|让球主胜|1x2|2026-08-22": {
+    "ev": 1.15,
+    "ts": 1787407094.3547451
+  },
   "football|Netherlands Eredivisie|Sparta Rotterdam|FC Utrecht|和局|1x2|2026-08-23": {
     "ev": 1.22,
     "ts": 1787332123.680116
@@ -3186,6 +3207,14 @@
     "ev": 3.78,
     "ts": 1787371971.617055
   },
+  "football|Norway NM Cup|FK Eik Toensberg 871|Honefoss BK|主胜|1x2|2026-08-22": {
+    "ev": 4.58,
+    "ts": 1787407094.358937
+  },
+  "football|Norway NM Cup|FK Eik Toensberg 871|Honefoss BK|小球|1x2|2026-08-22": {
+    "ev": 1.29,
+    "ts": 1787407094.358987
+  },
   "football|Norway NM Cup|Fana|Bjarg|让球主胜|1x2|2026-08-22": {
     "ev": 1.8,
     "ts": 1787401549.9971259
@@ -3213,6 +3242,10 @@
   "football|Norway NM Cup|Frigg Oslo FK|Kjelsas|让球主胜|1x2|2026-08-23": {
     "ev": 3.0,
     "ts": 1787393127.0024111
+  },
+  "football|Norway NM Cup|Gamle Oslo FK|Drobak Frogn|双重机会-和局/客|dc|2026-08-22": {
+    "ev": 1.06,
+    "ts": 1787407094.3534322
   },
   "football|Norway NM Cup|Gamle Oslo FK|Drobak Frogn|大球|1x2|2026-08-22": {
     "ev": 2.15,
@@ -3608,6 +3641,10 @@
     "ev": 4.07,
     "ts": 1787391593.335229
   },
+  "football|Portugal Segunda Liga|Lusitania FC Lourosa|SCU Torreense|双边进球-是|btts|2026-08-23": {
+    "ev": 1.13,
+    "ts": 1787407094.359714
+  },
   "football|Portugal Segunda Liga|Lusitania FC Lourosa|SCU Torreense|和局|1x2|2026-08-23": {
     "ev": 1.23,
     "ts": 1787383881.5243819
@@ -3884,6 +3921,14 @@
     "ev": 8.46,
     "ts": 1787335680.397989
   },
+  "football|Scotland Championship|Queens Park FC|Stenhousemuir FC|单双-双|oe|2026-08-22": {
+    "ev": 1.28,
+    "ts": 1787407094.352957
+  },
+  "football|Scotland Championship|Queens Park FC|Stenhousemuir FC|双边进球-是|btts|2026-08-22": {
+    "ev": 4.52,
+    "ts": 1787407094.352885
+  },
   "football|Scotland Championship|Queens Park FC|Stenhousemuir FC|和局|1x2|2026-08-22": {
     "ev": 2.01,
     "ts": 1787405707.0849438
@@ -3891,6 +3936,10 @@
   "football|Scotland Championship|Queens Park FC|Stenhousemuir FC|让球主胜|1x2|2026-08-22": {
     "ev": 4.0,
     "ts": 1787405225.375833
+  },
+  "football|Scotland Championship|Raith Rovers FC|Ayr United FC|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.66,
+    "ts": 1787407094.3526669
   },
   "football|Scotland Championship|Raith Rovers FC|Ayr United FC|上半场客胜|ht|2026-08-22": {
     "ev": 1.35,
@@ -4371,6 +4420,10 @@
     "ev": 1.55,
     "ts": 1787377698.08716
   },
+  "football|Sweden Ettan Norra|Sollentuna FK|IF Karlstad Fotboll|客胜|1x2|2026-08-22": {
+    "ev": 1.73,
+    "ts": 1787407094.353034
+  },
   "football|Sweden Ettan Norra|Sollentuna FK|IF Karlstad Fotboll|小球|1x2|2026-08-22": {
     "ev": 1.2,
     "ts": 1787406159.7390149
@@ -4477,6 +4530,11 @@
   "football|Tunisia Ligue 1|US Ben Guerdane|Club S Hammam Lif|让球客胜|1x2|2026-08-22": {
     "ev": 5.31,
     "ts": 1787393729.990399
+  },
+  "football|Tunisia Ligue 1|古尔达尼|CS哈曼利弗|双重机会-和局/客|dc|2026-08-22": {
+    "ev": 3.52,
+    "bb": 1.93,
+    "ts": 1787407093.9757462
   },
   "football|Tunisia Ligue 1|古尔达尼|CS哈曼利弗|和局|1x2|2026-08-22": {
     "ev": 11.01,
@@ -4881,14 +4939,29 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Tunisia Ligue 1|古尔达尼|CS哈曼利弗|双重机会-和局/客|dc|2026-08-22": {
-    "ev": 3.52,
-    "bb": 1.93,
-    "ts": 1787407093.9757462
+  "football|Peru Liga 1|加西拉索|库斯科|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 4.48,
+    "bb": 1.89,
+    "ts": 1787407400.5885959
   },
-  "football|England Championship League|普雷斯顿|狼队|上半场主胜|ht|2026-08-22": {
-    "ev": 4.61,
-    "bb": 4.85,
-    "ts": 1787407093.9757938
+  "football|Ecuador LigaPro Primera A|瓜亚基尔巴塞罗那|奥伦斯|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 3.51,
+    "bb": 1.81,
+    "ts": 1787407400.5886679
+  },
+  "football|Mexico Liga De Expansion MX|杜兰戈阿拉克拉内斯|瓜达拉哈拉大学|上半场客胜|ht|2026-08-23": {
+    "ev": 4.16,
+    "bb": 4.96,
+    "ts": 1787407400.588732
+  },
+  "football|Mexico Liga De Expansion MX|杜兰戈阿拉克拉内斯|瓜达拉哈拉大学|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 3.47,
+    "bb": 1.79,
+    "ts": 1787407400.588792
+  },
+  "football|USL Championship|底特律城|坦帕湾暴徒|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 5.74,
+    "bb": 1.92,
+    "ts": 1787407400.588848
   }
 }
