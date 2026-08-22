@@ -291,7 +291,7 @@
       "success_rate": 0.0
     },
     "欧洲冠军联赛-资格赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -316,7 +316,7 @@
       "success_rate": 0.0
     },
     "爱尔兰甲级联赛": {
-      "attempts": 4,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -461,7 +461,7 @@
       "success_rate": 0.0
     },
     "波兰丙级联赛": {
-      "attempts": 3,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -526,7 +526,7 @@
       "success_rate": 0.0
     },
     "亚美尼亚超级联赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -651,7 +651,7 @@
       "success_rate": 1.0
     },
     "阿根廷杯": {
-      "attempts": 3,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -666,7 +666,7 @@
       "success_rate": 0.0
     },
     "日本天皇杯": {
-      "attempts": 5,
+      "attempts": 7,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -676,7 +676,7 @@
       "success_rate": 0.0
     },
     "东南亚现代杯": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -691,7 +691,7 @@
       "success_rate": 0.0
     },
     "希腊杯-资格赛": {
-      "attempts": 7,
+      "attempts": 9,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -719,9 +719,29 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "阿根廷后备联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "日本乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "瑞士乙级联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "委内瑞拉杯": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-22T02:19:13.413446+00:00",
+  "updated": "2026-08-22T09:12:24.094306+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

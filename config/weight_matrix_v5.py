@@ -2180,7 +2180,11 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
     elif sub_market in ("btts", "oe", "correct_score", "winning_margin", "total_goals_range", "first_to_score"):
         base_min_ev = 4.0
     elif sub_market in ("ht", "ht_dc", "ht_hc", "ht_ou", "ht_dnb", "f5"):
-        base_min_ev = 4.0
+        # V5.10(2026-08-22): ht 门槛 4% → 2%, 与数据驱动门槛矩阵一致。
+        # 矩阵每晚从 CLV 重算: ht 实测中位 CLV +5.6%/正率74%(唯一强正 edge 盘口),
+        # 2% 即正 edge。原 4% 是"推导盘"静态保守, 与数据驱动结论冲突, 把主流联赛
+        # ht 2-4% 机会(英超 2.8%/3.7%)全砍掉, 导致 2026-08-22 整天无推送。
+        base_min_ev = 2.0
     else:
         base_min_ev = 2.0
 

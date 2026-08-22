@@ -836,33 +836,17 @@ def _apply_risk_manager_safety(opps: list) -> list:
     except Exception:
         pass
 
-    # 硬熔断：冷却/回撤≥15%/周亏≥20%/单日亏≥10% → 全部清零，仅展示不下注
-    try:
-        cb = rm.circuit_breaker_status()
-        if cb.get("tripped"):
-            for o in opps:
-                if o.get("_stake", 0) > 0:
-                    o["_stake"] = 0
-            return opps
-    except Exception:
-        pass
+    # V5.10(2026-08-22 用户要求): 取消熔断机制和风控停止下注。
+    # 比价套利的核心是抓住转瞬即逝的 +EV 机会, 止损会错过机会。用户明确要求
+    # 不因"单日亏损/回撤/连败"停注 —— 之前的 daily_loss 熔断(单日亏¥2325>¥2000)
+    # 把全部 _stake 清零, 导致整天无推送。只保留软上限(降低 stake), 不停止下注。
 
-    # 公开 API：can_place_bet 硬拒 + get_max_stake 软上限（替换私有方法调用）
-    cumulative_exposure = 0.0  # 已批准注单累计金额, 传入 can_place_bet 修复 30% 总敞口绕过
+    # 公开 API：只取 get_max_stake 软上限（内部含回撤/连亏/ML动态仓位/联合凯利/分散度）
+    cumulative_exposure = 0.0
     for o in opps:
         stake = o.get("_stake", 0)
         if stake <= 0:
             continue
-        # 硬拒门禁：单注限额/总敞口/回撤>25%
-        try:
-            exposure_pct = (cumulative_exposure / rm.current_balance) if rm.current_balance > 0 else 0.0
-            ok, reason = rm.can_place_bet(stake, current_exposure_pct=exposure_pct)
-            if not ok:
-                o["_stake"] = 0
-                o["_risk_reject"] = reason
-                continue
-        except Exception:
-            pass
         # 软上限：风险感知最大 stake（内部含回撤/连亏/ML动态仓位/联合凯利/分散度）
         try:
             fair = o.get("fair_price", 0)
