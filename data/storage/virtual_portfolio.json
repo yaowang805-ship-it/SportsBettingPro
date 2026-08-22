@@ -1,5 +1,5 @@
 {
-  "balance": 9921.46,
+  "balance": 9521.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3635,6 +3635,52 @@
       "commence_time": 1787420700,
       "created_at": "2026-08-22T17:17:34.912243+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_克鲁塞罗MG_弗拉门戈_上半场主胜",
+      "sport": "football",
+      "league": "巴西甲级联赛",
+      "home_team": "克鲁塞罗MG",
+      "away_team": "弗拉门戈",
+      "home_cn": "克鲁塞罗MG",
+      "away_cn": "弗拉门戈",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.53,
+      "stake": 200,
+      "model_prob": 0.229,
+      "ev_pct": 3.74,
+      "pin_odds": 4.1,
+      "fair_price": 4.3666,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787441400,
+      "created_at": "2026-08-22T23:18:43.918307+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_皇家埃斯特利_迪里亚_和局",
+      "sport": "football",
+      "league": "尼加拉瓜甲级联赛",
+      "home_team": "皇家埃斯特利",
+      "away_team": "迪里亚",
+      "home_cn": "皇家埃斯特利",
+      "away_cn": "迪里亚",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.16,
+      "stake": 200,
+      "model_prob": 0.3711,
+      "ev_pct": 17.27,
+      "pin_odds": 2.42,
+      "fair_price": 2.6946,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787446800,
+      "created_at": "2026-08-22T23:18:43.918343+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -4658,8 +4704,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-23",
-    "used": 1446.0,
-    "bets": 7
+    "used": 1846.0,
+    "bets": 9
   },
   "updated": null
 }
