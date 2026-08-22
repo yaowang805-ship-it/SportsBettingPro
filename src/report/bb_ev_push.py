@@ -966,8 +966,9 @@ def _calc_kelly_stakes(opps: list) -> list:
             stake_pct *= 0.3
         stake = int(bankroll * stake_pct)
         o["_raw_stake"] = stake
-        min_stake = tier_cfg.get("min_stake", 30)
-        o["_stake"] = stake if stake >= min_stake else 0  # V5.1: 分层最低投注
+        # V5.10(2026-08-22 用户要求): 取消"stake<最低投注就清零"。只要 EV 过了盘口门槛
+        # 就推, 不因 Kelly 仓位低(低级别联赛/推导盘历史数据少)而清零。最低给 ¥10 占位。
+        o["_stake"] = stake if stake >= 10 else 10
 
     # 第二遍：总额超预算时, 按 stake 降序取 top 保留, 超出清零 (不摊薄, 集中在最优机会)
     daily_budget = bankroll  # V4.5: 动态日预算
@@ -1832,8 +1833,8 @@ def _diversify_and_rank(qualified: list) -> list:
 
     # Kelly 分配（预算耗尽时保留机会，stake=0 仅展示不投注）
     qualified = _calc_kelly_stakes(qualified)
-    # V5.9: ¥10以下投注额直接屏蔽 (与 constants.get_tier_strategy 的 min_stake 对齐, 旧 ¥30 砍掉太多)
-    qualified = [o for o in qualified if o.get("_stake", 0) >= 10]
+    # V5.10(2026-08-22 用户要求): 不再因 stake 小就屏蔽 —— _calc_kelly_stakes 已保证
+    # 每个过了盘口门槛的机会 _stake>=10, 这里无需再过滤。
 
     qualified.sort(key=lambda o: o.get("_stake", 0), reverse=True)
 
