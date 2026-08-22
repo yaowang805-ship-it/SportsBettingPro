@@ -3799,6 +3799,10 @@
     "ev": 2.58,
     "ts": 1787358307.8102899
   },
+  "football|Peru Liga 1|Deportivo Garcilaso|Cusco FC|双重机会-和局/客|dc|2026-08-23": {
+    "ev": 2.41,
+    "ts": 1787441050.608551
+  },
   "football|Peru Liga 1|Deportivo Garcilaso|Cusco FC|和局|1x2|2026-08-23": {
     "ev": 6.05,
     "ts": 1787358307.8102112
@@ -3879,6 +3883,11 @@
     "ev": 4.48,
     "bb": 1.89,
     "ts": 1787407400.5885959
+  },
+  "football|Peru Liga 1|加西拉索|库斯科|上半场客胜|ht|2026-08-23": {
+    "ev": 5.24,
+    "bb": 3.62,
+    "ts": 1787441050.243639
   },
   "football|Peru Liga 1|加西拉索|库斯科|和局|1x2|2026-08-23": {
     "ev": 9.46,
@@ -5377,6 +5386,14 @@
     "ev": 1.13,
     "ts": 1787440726.8977852
   },
+  "football|USA Major League Soccer|Montreal|Los Angeles Galaxy|和局|1x2|2026-08-23": {
+    "ev": 2.45,
+    "ts": 1787441050.605309
+  },
+  "football|USA Major League Soccer|Montreal|Los Angeles Galaxy|让球客胜|1x2|2026-08-23": {
+    "ev": 3.4,
+    "ts": 1787441050.6054451
+  },
   "football|USA Major League Soccer|Nashville SC|Columbus Crew|上半场客胜|ht|2026-08-23": {
     "ev": 1.15,
     "ts": 1787401338.3407
@@ -5400,6 +5417,10 @@
   "football|USA Major League Soccer|Saint Louis City SC|Houston Dynamo|上半场客胜|ht|2026-08-23": {
     "ev": 2.41,
     "ts": 1787359573.717293
+  },
+  "football|USA Major League Soccer|San Jose Earthquakes|Minnesota United FC|上半场客胜|ht|2026-08-23": {
+    "ev": 1.16,
+    "ts": 1787441050.6043782
   },
   "football|USA Major League Soccer|圣何塞地震|明尼苏达联|让球客胜(+0.5)|hc|+0.5|2026-08-23": {
     "ev": 2.28,
@@ -5430,6 +5451,11 @@
     "ev": 3.33,
     "bb": 1.6,
     "ts": 1787185832.65628
+  },
+  "football|USA Major League Soccer|蒙特利尔|洛杉矶银河|上半场客胜|ht|2026-08-23": {
+    "ev": 7.49,
+    "bb": 4.49,
+    "ts": 1787441050.243534
   },
   "football|USA Major League Soccer|辛辛那提|西雅图海湾人|让球客胜(+0.5/1)|hc|+0.5/1|2026-08-23": {
     "ev": 3.18,
@@ -5657,14 +5683,9 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|USA Major League Soccer|蒙特利尔|洛杉矶银河|上半场客胜|ht|2026-08-23": {
-    "ev": 7.49,
-    "bb": 4.49,
-    "ts": 1787441050.243534
-  },
-  "football|Peru Liga 1|加西拉索|库斯科|上半场客胜|ht|2026-08-23": {
-    "ev": 5.24,
-    "bb": 3.62,
-    "ts": 1787441050.243639
+  "football|Argentina Liga Profesional|飓风队|利斯特雷|上半场客胜|ht|2026-08-23": {
+    "ev": 8.24,
+    "bb": 6.65,
+    "ts": 1787441305.067622
   }
 }

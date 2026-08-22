@@ -1,5 +1,5 @@
 {
-  "balance": 9158.46,
+  "balance": 8958.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3727,6 +3727,29 @@
       "commence_time": 1787443200,
       "created_at": "2026-08-22T23:24:10.195871+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_飓风队_利斯特雷_上半场客胜",
+      "sport": "football",
+      "league": "阿根廷甲级联赛",
+      "home_team": "飓风队",
+      "away_team": "利斯特雷",
+      "home_cn": "飓风队",
+      "away_cn": "利斯特雷",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 6.65,
+      "stake": 200,
+      "model_prob": 0.1628,
+      "ev_pct": 8.24,
+      "pin_odds": 5.55,
+      "fair_price": 6.1439,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787443200,
+      "created_at": "2026-08-22T23:28:25.048908+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -4750,8 +4773,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-23",
-    "used": 2209.0,
-    "bets": 11
+    "used": 2409.0,
+    "bets": 12
   },
   "updated": null
 }
