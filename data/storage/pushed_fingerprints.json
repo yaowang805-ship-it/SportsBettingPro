@@ -55,6 +55,10 @@
     "ev": 3.4,
     "ts": 1787371434.814064
   },
+  "basketball|Australia NBL1|Forestville Eagles|Gold Coast Rollers|客胜|1x2|2026-08-23": {
+    "ev": 24.76,
+    "ts": 1787440726.900117
+  },
   "basketball|Australia NBL1|Frankston Blues|Forestville Eagles|客胜|1x2|2026-08-22": {
     "ev": 10.44,
     "ts": 1787372384.281409
@@ -62,6 +66,11 @@
   "basketball|Australia NBL1|Norths Bears|Rockingham Flames|客胜|1x2|2026-08-22": {
     "ev": 12.82,
     "ts": 1787377372.01399
+  },
+  "basketball|Australia NBL1|森林维尔老鹰|黄金海岸压路机|客胜|1x2|2026-08-23": {
+    "ev": 24.76,
+    "bb": 4.78,
+    "ts": 1787440723.927924
   },
   "basketball|Brazil Campeonato Paulista de Basquete|Bauru Basket SP|Paulistano SP|主胜|1x2|2026-08-23": {
     "ev": 2.54,
@@ -888,6 +897,11 @@
   "football|Brazil Serie A|Internacional RS|Atletico Mineiro MG|和局|1x2|2026-08-23": {
     "ev": 1.15,
     "ts": 1787349415.4502132
+  },
+  "football|Brazil Serie A|克鲁塞罗MG|弗拉门戈|上半场主胜|ht|2026-08-23": {
+    "ev": 3.74,
+    "bb": 4.53,
+    "ts": 1787440723.927733
   },
   "football|Brazil Serie A|博塔弗戈RJ|巴拉纳竞技|和局|1x2|2026-08-25": {
     "ev": 9.22,
@@ -3547,6 +3561,11 @@
     "ev": 17.27,
     "ts": 1787440537.953415
   },
+  "football|Nicaragua Primera Division|皇家埃斯特利|迪里亚|和局|1x2|2026-08-23": {
+    "ev": 17.27,
+    "bb": 3.16,
+    "ts": 1787440723.927792
+  },
   "football|Northern Ireland Championship|Newington YC|Rathfriland Rangers|客胜|1x2|2026-08-22": {
     "ev": 16.57,
     "ts": 1787384950.345294
@@ -5354,6 +5373,10 @@
     "ev": 1.3,
     "ts": 1787398763.836044
   },
+  "football|USA Major League Soccer|Montreal|Los Angeles Galaxy|上半场客胜|ht|2026-08-23": {
+    "ev": 1.13,
+    "ts": 1787440726.8977852
+  },
   "football|USA Major League Soccer|Nashville SC|Columbus Crew|上半场客胜|ht|2026-08-23": {
     "ev": 1.15,
     "ts": 1787401338.3407
@@ -5634,19 +5657,14 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Brazil Serie A|克鲁塞罗MG|弗拉门戈|上半场主胜|ht|2026-08-23": {
-    "ev": 3.74,
-    "bb": 4.53,
-    "ts": 1787440723.927733
+  "football|USA Major League Soccer|蒙特利尔|洛杉矶银河|上半场客胜|ht|2026-08-23": {
+    "ev": 7.49,
+    "bb": 4.49,
+    "ts": 1787441050.243534
   },
-  "football|Nicaragua Primera Division|皇家埃斯特利|迪里亚|和局|1x2|2026-08-23": {
-    "ev": 17.27,
-    "bb": 3.16,
-    "ts": 1787440723.927792
-  },
-  "basketball|Australia NBL1|森林维尔老鹰|黄金海岸压路机|客胜|1x2|2026-08-23": {
-    "ev": 24.76,
-    "bb": 4.78,
-    "ts": 1787440723.927924
+  "football|Peru Liga 1|加西拉索|库斯科|上半场客胜|ht|2026-08-23": {
+    "ev": 5.24,
+    "bb": 3.62,
+    "ts": 1787441050.243639
   }
 }
