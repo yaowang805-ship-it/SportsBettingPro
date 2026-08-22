@@ -2494,6 +2494,14 @@
     "ev": 3.48,
     "ts": 1787274105.48858
   },
+  "football|Ireland First Division|Longford Town FC|Bray Wanderers AFC|大球|1x2|2026-08-23": {
+    "ev": 3.49,
+    "ts": 1787416620.5243049
+  },
+  "football|Ireland First Division|Longford Town FC|Bray Wanderers AFC|总进球区间7+|total_goals_range|2026-08-23": {
+    "ev": 5.53,
+    "ts": 1787416620.5259311
+  },
   "football|Ireland First Division|Longford Town FC|Bray Wanderers AFC|让球客胜|1x2|2026-08-23": {
     "ev": 1.25,
     "ts": 1787410114.106824
@@ -3406,6 +3414,11 @@
     "bb": 1.89,
     "ts": 1787209374.206718
   },
+  "football|Netherlands Eredivisie Women|ADO海牙 (女)|特温特 (女)|客胜|1x2|2026-08-23": {
+    "ev": 5.11,
+    "bb": 1.25,
+    "ts": 1787416415.403588
+  },
   "football|Netherlands Eredivisie Women|Feyenoord (w)|AZ Alkmaar (w)|主胜|1x2|2026-08-22": {
     "ev": 1.72,
     "ts": 1787383881.521201
@@ -4312,6 +4325,10 @@
     "bb": 1.42,
     "ts": 1787405525.1529531
   },
+  "football|Scotland Premiership|Dundee United|FC Dundee|主胜|1x2|2026-08-23": {
+    "ev": 1.66,
+    "ts": 1787417186.8827882
+  },
   "football|Scotland Premiership|Dundee United|FC Dundee|单双-双|oe|2026-08-23": {
     "ev": 1.27,
     "ts": 1787375311.1833
@@ -4915,6 +4932,14 @@
     "bb": 1.96,
     "ts": 1787212583.36037
   },
+  "football|Tunisia Ligue 1|Bizertin|AS Marsa|双重机会-和局/客|dc|2026-08-23": {
+    "ev": 2.1,
+    "ts": 1787416415.695913
+  },
+  "football|Tunisia Ligue 1|Bizertin|AS Marsa|让球客胜|1x2|2026-08-23": {
+    "ev": 6.84,
+    "ts": 1787416415.6958652
+  },
   "football|Tunisia Ligue 1|ES Hammam Sousse|US Monastir|让球主胜|1x2|2026-08-22": {
     "ev": 1.55,
     "ts": 1787378877.228221
@@ -4968,6 +4993,10 @@
   "football|Turkey 1. Lig|Bodrum Belediyesi Bodrumspor|Muglaspor|让球客胜|1x2|2026-08-23": {
     "ev": 1.59,
     "ts": 1787376539.732998
+  },
+  "football|Turkey 1. Lig|Boluspor|Mardin 1969 Spor|总进球区间7+|total_goals_range|2026-08-24": {
+    "ev": 8.81,
+    "ts": 1787416415.696639
   },
   "football|Turkey 1. Lig|Fatih Karagumruk Istanbul|Bursaspor|上半场主胜|ht|2026-08-22": {
     "ev": 5.34,
@@ -5435,9 +5464,19 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Netherlands Eredivisie Women|ADO海牙 (女)|特温特 (女)|客胜|1x2|2026-08-23": {
-    "ev": 5.11,
-    "bb": 1.25,
-    "ts": 1787416415.403588
+  "football|Tunisia Ligue 1|比瑟汀|AS马沙|主胜|1x2|2026-08-23": {
+    "ev": 5.27,
+    "bb": 1.96,
+    "ts": 1787417541.178366
+  },
+  "football|Austria Bundesliga|格拉茨风暴|奥地利卢斯特瑙|上半场主胜|ht|2026-08-23": {
+    "ev": 2.92,
+    "bb": 1.86,
+    "ts": 1787417541.178457
+  },
+  "football|Italy Serie A|威尼斯|莱切|上半场客胜|ht|2026-08-24": {
+    "ev": 6.67,
+    "bb": 4.83,
+    "ts": 1787417541.178524
   }
 }
