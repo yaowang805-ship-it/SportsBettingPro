@@ -1051,6 +1051,10 @@
     "ev": 1.63,
     "ts": 1787290860.10208
   },
+  "football|Ecuador LigaPro Primera A|Barcelona SC|Orense SC|上半场主胜|ht|2026-08-23": {
+    "ev": 1.38,
+    "ts": 1787406445.318065
+  },
   "football|Ecuador LigaPro Primera A|Barcelona SC|Orense SC|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 1.35,
     "ts": 1787405525.534861
@@ -1094,6 +1098,11 @@
   "football|Ecuador LigaPro Primera A|Universidad Catolica del Ecuador|Manta FC|上半场主胜|ht|2026-08-23": {
     "ev": 2.08,
     "ts": 1787373991.884844
+  },
+  "football|Ecuador LigaPro Primera A|理工大学竞技|瓜亚基尔城|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 2.55,
+    "bb": 1.95,
+    "ts": 1787406444.9943092
   },
   "football|Egypt Premier League|Abo Qair Semads|National Bank of Egypt SC|上半场主胜|ht|2026-08-22": {
     "ev": 4.49,
@@ -4705,6 +4714,10 @@
     "ev": 2.57,
     "ts": 1787387186.864383
   },
+  "football|USL League One|Spokane Velocity FC|Greenville Triumph SC|主胜|1x2|2026-08-23": {
+    "ev": 1.61,
+    "ts": 1787406445.318368
+  },
   "football|Ukraine Cup|UCSA Tarasivka|Kolos Kovalivka|客胜|1x2|2026-08-22": {
     "ev": 4.35,
     "ts": 1787347982.0197482
@@ -4835,9 +4848,9 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Ecuador LigaPro Primera A|理工大学竞技|瓜亚基尔城|上半场双重机会-主/客|ht_dc|2026-08-23": {
-    "ev": 2.55,
-    "bb": 1.95,
-    "ts": 1787406444.9943092
+  "football|Croatia HNL League|萨格勒布迪纳摩|NK瓦拉兹丁|上半场客胜|ht|2026-08-23": {
+    "ev": 4.38,
+    "bb": 6.45,
+    "ts": 1787406638.8700318
   }
 }
