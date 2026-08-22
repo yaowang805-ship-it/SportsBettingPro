@@ -2095,6 +2095,11 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
             if min_stake > 0 and stake < min_stake:
                 stake = 0
                 stake_note = ""
+
+            # 铁律(2026-08-22 no-stop-betting-rule): 投注额归零(赔率超上限/低于最低额)
+            # 的机会不得推送 —— 之前注释写"跳过"但缺 continue, 导致"投注:¥0"仍被推。
+            if stake <= 0:
+                continue
             confidence = "✓" if o.get("_match_score", 0) >= 0.95 else "◷"
 
             # 来源平台标签
@@ -2368,12 +2373,17 @@ def _lookup_bb_odds(match: dict, o: dict):
             return dc[2]
         return None
 
+    def _ml_idx(field):
+        # 2-way 运动(篮球/网球/棒球/美足等) ml=[home, away]; 3-way(足球) ml=[home, draw, away]
+        _ml_arr = field.get("ml")
+        if isinstance(_ml_arr, (list, tuple)) and len(_ml_arr) >= 3:
+            return {"home": 0, "draw": 1, "away": 2}.get(_side("away"), 2)
+        return {"home": 0, "away": 1}.get(_side("away"), 1)
+
     if mkt == "1x2":
-        idx = {"home": 0, "draw": 1, "away": 2}.get(_side("away"), 2)
-        return _ml(ft, idx)
+        return _ml(ft, _ml_idx(ft))
     if mkt == "ht":
-        idx = {"home": 0, "draw": 1, "away": 2}.get(_side("away"), 2)
-        return _ml(ht, idx)
+        return _ml(ht, _ml_idx(ht))
     if mkt == "hc":
         hc = ft.get("handicap") or {}
         return hc.get("away_odds") if _side("away") == "away" else hc.get("home_odds")
