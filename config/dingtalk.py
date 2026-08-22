@@ -120,7 +120,14 @@ def _connect_with_fallback(hostname: str):
         sock.settimeout(_TIMEOUT)
         try:
             sock.connect((ip, 443))
-            ctx = ssl.create_default_context()
+            # V5.10(2026-08-22): 用系统 CA 文件而非 certifi 默认。钉钉证书是
+            # GlobalSign GCC R3 OV TLS CA 2024, Python 的 certifi 库里缺这张中间证书,
+            # 导致 SSL 握手 EOF/验证失败(实测 08-22 10:01 起钉钉推送全挂, curl 却正常
+            # 因为 curl 走 /etc/ssl/cert.pem 系统证书)。
+            try:
+                ctx = ssl.create_default_context(cafile="/etc/ssl/cert.pem")
+            except Exception:
+                ctx = ssl.create_default_context()  # 回退 certifi(非 macOS 环境)
             ssock = ctx.wrap_socket(sock, server_hostname=hostname)
             labels = ["硬编码", "DNS(8.8.8.8)", "系统DNS"]
             logger.info(f"  钉钉连接成功 ({labels[attempt]} IP: {ip})")
