@@ -1912,6 +1912,11 @@
     "bb": 4.36,
     "ts": 1787324309.378083
   },
+  "football|England Premier League|布伦特福德|托特纳姆热刺|上半场客胜|ht|2026-08-23": {
+    "ev": 2.34,
+    "bb": 4.15,
+    "ts": 1787411592.957976
+  },
   "football|England Premier League|诺丁汉森林|利兹联|上半场主胜|ht|2026-08-22": {
     "ev": 2.39,
     "bb": 3.28,
@@ -2125,6 +2130,10 @@
   "football|France Ligue 1|Le Mans FC|Stade Brest 29|和局|1x2|2026-08-23": {
     "ev": 100.13,
     "ts": 1787340474.022795
+  },
+  "football|France Ligue 1|Lens|AJ Auxerre|让球客胜|1x2|2026-08-22": {
+    "ev": 1.72,
+    "ts": 1787411593.92918
   },
   "football|France Ligue 1|OGC Nice|FC Lorient|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 2.35,
@@ -3494,6 +3503,11 @@
     "ev": 4.24,
     "bb": 2.65,
     "ts": 1787400929.4977002
+  },
+  "football|Norway NM Cup|弗立加|卡积沙斯|主胜|1x2|2026-08-23": {
+    "ev": 26.36,
+    "bb": 7.15,
+    "ts": 1787411592.9580622
   },
   "football|Norway Toppserien Women|FK Fortuna Alesund (w)|Haugesund (w)|客胜|1x2|2026-08-22": {
     "ev": 5.27,
@@ -5184,14 +5198,9 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|England Premier League|布伦特福德|托特纳姆热刺|上半场客胜|ht|2026-08-23": {
-    "ev": 2.34,
-    "bb": 4.15,
-    "ts": 1787411592.957976
-  },
-  "football|Norway NM Cup|弗立加|卡积沙斯|主胜|1x2|2026-08-23": {
-    "ev": 26.36,
-    "bb": 7.15,
-    "ts": 1787411592.9580622
+  "football|Romania Liga 1|UTA阿拉德|科尔维努尔|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 2.81,
+    "bb": 1.86,
+    "ts": 1787411964.2763038
   }
 }

@@ -1,5 +1,5 @@
 {
-  "balance": 12076.46,
+  "balance": 12024.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3198,6 +3198,29 @@
       "commence_time": 1787416200,
       "created_at": "2026-08-22T15:13:12.924613+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_UTA阿拉德_科尔维努尔_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "罗马尼亚甲级联赛",
+      "home_team": "UTA阿拉德",
+      "away_team": "科尔维努尔",
+      "home_cn": "UTA阿拉德",
+      "away_cn": "科尔维努尔",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.86,
+      "stake": 52,
+      "model_prob": 0.5528,
+      "ev_pct": 2.81,
+      "pin_odds": 0,
+      "fair_price": 1.8091,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787412600,
+      "created_at": "2026-08-22T15:19:24.269437+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -4221,8 +4244,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-22",
-    "used": 3342.0,
-    "bets": 88
+    "used": 3394.0,
+    "bets": 89
   },
   "updated": null
 }
