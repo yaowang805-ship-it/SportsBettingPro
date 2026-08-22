@@ -689,6 +689,14 @@
     "ev": 3.31,
     "ts": 1787371971.617663
   },
+  "football|Belgium Pro League|SV Zulte Waregem|S.K Beveren|和局|1x2|2026-08-22": {
+    "ev": 1.02,
+    "ts": 1787406639.370527
+  },
+  "football|Belgium Pro League|SV Zulte Waregem|S.K Beveren|小球|1x2|2026-08-22": {
+    "ev": 1.49,
+    "ts": 1787406639.370592
+  },
   "football|Belgium Pro League|Standard Liege|Raal La Louviere|上半场客胜|ht|2026-08-22": {
     "ev": 1.14,
     "ts": 1787271530.090602
@@ -944,6 +952,14 @@
     "bb": 4.85,
     "ts": 1787358856.228238
   },
+  "football|Croatia HNL League|GNK Dinamo Zagreb|NK Varazdin|上半场双重机会-和局/客|ht_dc|2026-08-23": {
+    "ev": 1.55,
+    "ts": 1787406639.375884
+  },
+  "football|Croatia HNL League|GNK Dinamo Zagreb|NK Varazdin|上半场客胜|ht|2026-08-23": {
+    "ev": 4.38,
+    "ts": 1787406639.37579
+  },
   "football|Croatia HNL League|GNK Dinamo Zagreb|NK Varazdin|让球客胜|1x2|2026-08-23": {
     "ev": 5.57,
     "ts": 1787349415.449557
@@ -976,6 +992,11 @@
     "ev": 5.1,
     "bb": 4.34,
     "ts": 1787401337.861111
+  },
+  "football|Croatia HNL League|萨格勒布迪纳摩|NK瓦拉兹丁|上半场客胜|ht|2026-08-23": {
+    "ev": 4.38,
+    "bb": 6.45,
+    "ts": 1787406638.8700318
   },
   "football|Czech Republic 1. Liga|FK Mlada Boleslav|1.FC Slovacko|主胜|1x2|2026-08-22": {
     "ev": 1.09,
@@ -1668,6 +1689,10 @@
     "ev": 1.09,
     "ts": 1787403449.975921
   },
+  "football|England Premier League|Everton FC|Crystal Palace|角球让球客胜|corner|2026-08-22": {
+    "ev": 1.35,
+    "ts": 1787406639.378064
+  },
   "football|England Premier League|Hull City|Manchester United FC|上半场主胜|ht|2026-08-22": {
     "ev": 1.82,
     "ts": 1787393729.98718
@@ -1984,6 +2009,10 @@
   "football|France Ligue 1|Toulouse FC|Olympique Lyonnais|上半场客胜|ht|2026-08-23": {
     "ev": 1.2,
     "ts": 1787399570.2584589
+  },
+  "football|France Ligue 1|Toulouse FC|Olympique Lyonnais|双边进球-是|btts|2026-08-23": {
+    "ev": 1.02,
+    "ts": 1787406639.374788
   },
   "football|France Ligue 1|Toulouse FC|Olympique Lyonnais|大球|1x2|2026-08-23": {
     "ev": 1.38,
@@ -4738,6 +4767,10 @@
     "ev": 1.46,
     "ts": 1787323454.1753888
   },
+  "football|Uruguay Primera Division|Central Espanol FC|Juventud de Las Piedras|小球|1x2|2026-08-22": {
+    "ev": 1.28,
+    "ts": 1787406639.37168
+  },
   "football|Uruguay Primera Division|Cerro Largo|Defensor Sporting|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 1.88,
     "ts": 1787380078.833179
@@ -4848,9 +4881,14 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Croatia HNL League|萨格勒布迪纳摩|NK瓦拉兹丁|上半场客胜|ht|2026-08-23": {
-    "ev": 4.38,
-    "bb": 6.45,
-    "ts": 1787406638.8700318
+  "football|Tunisia Ligue 1|古尔达尼|CS哈曼利弗|双重机会-和局/客|dc|2026-08-22": {
+    "ev": 3.52,
+    "bb": 1.93,
+    "ts": 1787407093.9757462
+  },
+  "football|England Championship League|普雷斯顿|狼队|上半场主胜|ht|2026-08-22": {
+    "ev": 4.61,
+    "bb": 4.85,
+    "ts": 1787407093.9757938
   }
 }
