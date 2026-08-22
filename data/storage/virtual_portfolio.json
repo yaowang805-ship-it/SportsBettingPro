@@ -1,5 +1,5 @@
 {
-  "balance": 12551.46,
+  "balance": 12523.46,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2508,6 +2508,29 @@
       "commence_time": 1787409000,
       "created_at": "2026-08-22T01:27:50.038092+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_布里克菲尔德_匹赫高_客胜",
+      "sport": "football",
+      "league": "威尔士冠军联赛北部组",
+      "home_team": "布里克菲尔德",
+      "away_team": "匹赫高",
+      "home_cn": "布里克菲尔德",
+      "away_cn": "匹赫高",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 6.0,
+      "stake": 28,
+      "model_prob": 0.2212,
+      "ev_pct": 32.7,
+      "pin_odds": 3.81,
+      "fair_price": 4.5215,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787405400,
+      "created_at": "2026-08-22T01:48:44.544329+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3126,8 +3149,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-22",
-    "used": 1085.0,
-    "bets": 16
+    "used": 1113.0,
+    "bets": 17
   },
   "updated": null
 }

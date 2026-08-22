@@ -788,6 +788,10 @@
     "ev": 1.04,
     "ts": 1787332926.810472
   },
+  "football|Egypt Premier League|Talaea El Gaish|Al Mokawloon Al Arab|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 5.11,
+    "ts": 1787362070.4176252
+  },
   "football|Egypt Premier League|Zamalek SC|Al Ittihad Alexandria|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 1.25,
     "ts": 1787289659.568515
@@ -795,6 +799,11 @@
   "football|Egypt Premier League|Zamalek SC|Al Ittihad Alexandria|让球客胜|1x2|2026-08-22": {
     "ev": 1.13,
     "ts": 1787310450.340204
+  },
+  "football|Egypt Premier League|杰艾斯|阿拉伯建筑|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 5.11,
+    "bb": 2.3,
+    "ts": 1787362070.048971
   },
   "football|El Salvador Primera Division|Inter Santa Tecla|Inca|客胜|1x2|2026-08-22": {
     "ev": 5.48,
@@ -828,6 +837,10 @@
     "ev": 4.05,
     "bb": 3.12,
     "ts": 1787353381.5188322
+  },
+  "football|England League One|Luton Town|Notts County|上半场主胜|ht|2026-08-22": {
+    "ev": 1.97,
+    "ts": 1787362070.417026
   },
   "football|England League One|Wycombe Wanderers|Plymouth Argyle|总进球区间7+|total_goals_range|2026-08-22": {
     "ev": 1.67,
@@ -1273,6 +1286,10 @@
     "ev": 11.7,
     "ts": 1787331072.415373
   },
+  "football|Italy Serie A|Parma Calcio|Cagliari Calcio|上半场主胜|ht|2026-08-23": {
+    "ev": 2.01,
+    "ts": 1787362070.419986
+  },
   "football|Italy Serie A|Parma Calcio|Cagliari Calcio|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 2.53,
     "ts": 1787338579.6307242
@@ -1513,6 +1530,14 @@
   "football|Malta Premier League|Marsaxlokk FC|Hibernians FC Paola|小球|1x2|2026-08-22": {
     "ev": 3.53,
     "ts": 1787320094.767461
+  },
+  "football|Mexico Liga De Expansion MX|Alacranes de Durango|Leones Negros UDEG|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 1.24,
+    "ts": 1787362070.423303
+  },
+  "football|Mexico Liga De Expansion MX|Alacranes de Durango|Leones Negros UDEG|双边进球-是|btts|2026-08-23": {
+    "ev": 2.86,
+    "ts": 1787362070.423192
   },
   "football|Mexico Liga De Expansion MX|Club Atletico La Paz|Cruz Azul Hidalgo|客胜|1x2|2026-08-22": {
     "ev": 1.11,
@@ -1857,6 +1882,11 @@
     "ev": 1.32,
     "ts": 1787323454.177401
   },
+  "football|Portugal Primeira Liga|马里迪莫|维塞乌|上半场客胜|ht|2026-08-22": {
+    "ev": 5.73,
+    "bb": 5.2,
+    "ts": 1787362070.0490282
+  },
   "football|Portugal Segunda Liga|Lusitania FC Lourosa|SCU Torreense|让球主胜|1x2|2026-08-23": {
     "ev": 1.55,
     "ts": 1787346100.228745
@@ -1926,6 +1956,10 @@
     "ev": 2.01,
     "ts": 1787329934.826298
   },
+  "football|Russia First League|FC Volga Ulyanovsk|FC Shinnik Yaroslavl|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 1.71,
+    "ts": 1787362070.4154098
+  },
   "football|Russia First League|FK Ural Yekaterinburg|FC Tekstilshchik Ivanovo|上半场主胜|ht|2026-08-22": {
     "ev": 1.44,
     "ts": 1787310110.086751
@@ -1994,6 +2028,10 @@
   "football|Scotland Championship|Inverness CT|Partick Thistle FC|和局|1x2|2026-08-22": {
     "ev": 8.46,
     "ts": 1787335680.397989
+  },
+  "football|Slovakia 2. Liga|FK Humenne|MFK Tatran Liptovsky Mikulas|小球|1x2|2026-08-22": {
+    "ev": 5.2,
+    "ts": 1787362070.418321
   },
   "football|Slovakia Superliga|MFK Ruzomberok|MFK Dukla Banska Bystrica|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 1.31,
@@ -2378,6 +2416,10 @@
     "ev": 12.31,
     "ts": 1787354319.584498
   },
+  "football|USL Championship|San Antonio FC|Oakland Roots SC|总进球区间7+|total_goals_range|2026-08-23": {
+    "ev": 1.19,
+    "ts": 1787362070.4251258
+  },
   "football|USL Championship|底特律城|坦帕湾暴徒|和局|1x2|2026-08-23": {
     "ev": 13.58,
     "bb": 3.2,
@@ -2468,14 +2510,9 @@
     "ev": 4.68,
     "ts": 1787358307.817287
   },
-  "football|Egypt Premier League|杰艾斯|阿拉伯建筑|上半场双重机会-主/客|ht_dc|2026-08-22": {
-    "ev": 5.11,
-    "bb": 2.3,
-    "ts": 1787362070.048971
-  },
-  "football|Portugal Primeira Liga|马里迪莫|维塞乌|上半场客胜|ht|2026-08-22": {
-    "ev": 5.73,
-    "bb": 5.2,
-    "ts": 1787362070.0490282
+  "football|Wales Cymru Championship North|布里克菲尔德|匹赫高|客胜|1x2|2026-08-22": {
+    "ev": 32.7,
+    "bb": 6.0,
+    "ts": 1787363324.553032
   }
 }
