@@ -358,6 +358,11 @@
     "bb": 3.74,
     "ts": 1787306510.187029
   },
+  "football|Argentina Primera Nacional|圣米格尔|科隆竞技|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 3.06,
+    "bb": 2.23,
+    "ts": 1787401337.860984
+  },
   "football|Argentina Primera Nacional|圣胡安圣马丁|甘拿斯亚迪罗|上半场客胜|ht|2026-08-23": {
     "ev": 10.05,
     "bb": 6.9,
@@ -768,6 +773,21 @@
     "ev": 1.15,
     "ts": 1787349415.4502132
   },
+  "football|Brazil Serie A|博塔弗戈RJ|巴拉纳竞技|和局|1x2|2026-08-25": {
+    "ev": 9.22,
+    "bb": 3.46,
+    "ts": 1787401337.860547
+  },
+  "football|Brazil Serie A|弗鲁米嫩塞RJ|瑞模贝雷|上半场客胜|ht|2026-08-23": {
+    "ev": 2.77,
+    "bb": 8.65,
+    "ts": 1787401337.861289
+  },
+  "football|Brazil Serie A|沙佩科恩斯|圣保罗|上半场主胜|ht|2026-08-24": {
+    "ev": 5.6,
+    "bb": 5.2,
+    "ts": 1787401337.861171
+  },
   "football|Brazil Serie B|Cuiaba Esporte Clube MT|Goias EC GO|上半场双重机会-主/客|ht_dc|2026-08-23": {
     "ev": 2.77,
     "ts": 1787349415.450463
@@ -775,6 +795,21 @@
   "football|Brazil Serie B|Cuiaba Esporte Clube MT|Goias EC GO|上半场客胜|ht|2026-08-23": {
     "ev": 2.48,
     "ts": 1787373991.885033
+  },
+  "football|Brazil Serie B|克里西乌马|福塔雷萨|上半场客胜|ht|2026-08-24": {
+    "ev": 3.58,
+    "bb": 6.55,
+    "ts": 1787401337.861229
+  },
+  "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 3.44,
+    "bb": 2.04,
+    "ts": 1787401337.860609
+  },
+  "football|Brazil Serie B|欧帕尔利奥|维拉诺瓦|上半场双重机会-主/客|ht_dc|2026-08-24": {
+    "ev": 3.68,
+    "bb": 1.9,
+    "ts": 1787401337.8603551
   },
   "football|Brazil Serie C|Botafogo FC PB|Guarani FC SP|和局|1x2|2026-08-23": {
     "ev": 3.59,
@@ -787,6 +822,10 @@
   "football|Chile Primera B|Cobreloa Calama|Union Espanola|主胜|1x2|2026-08-23": {
     "ev": 1.5,
     "ts": 1787396948.7722628
+  },
+  "football|Chile Primera B|Cobreloa Calama|Union Espanola|让球主胜|1x2|2026-08-23": {
+    "ev": 3.51,
+    "ts": 1787401338.3402271
   },
   "football|Chile Primera B|Puerto Montt|Deportes Iquique|客胜|1x2|2026-08-23": {
     "ev": 1.91,
@@ -906,6 +945,11 @@
   "football|Croatia HNL League|NK Slaven|HNK Gorica|双边进球-是|btts|2026-08-23": {
     "ev": 1.39,
     "ts": 1787331072.4154181
+  },
+  "football|Croatia HNL League|哈伊杜克斯普利特|奥斯杰克|上半场客胜|ht|2026-08-24": {
+    "ev": 5.1,
+    "bb": 4.34,
+    "ts": 1787401337.861111
   },
   "football|Czech Republic 1. Liga|FK Mlada Boleslav|1.FC Slovacko|主胜|1x2|2026-08-22": {
     "ev": 1.09,
@@ -1577,6 +1621,11 @@
     "ev": 2.96,
     "ts": 1787387415.1980228
   },
+  "football|Estonia Meistriliiga|派德|诺米联|上半场主胜|ht|2026-08-23": {
+    "ev": 4.3,
+    "bb": 1.92,
+    "ts": 1787401337.8599539
+  },
   "football|Faroe Islands 1st Deild|HB Torshavn II|FC Hoyvik|双重机会-主/和局|dc|2026-08-22": {
     "ev": 2.49,
     "ts": 1787394246.495616
@@ -1786,6 +1835,11 @@
     "ev": 100.13,
     "bb": 7.2,
     "ts": 1787340473.767859
+  },
+  "football|France Ligue 1|尼斯|洛里昂|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 2.19,
+    "bb": 1.8,
+    "ts": 1787401337.8608
   },
   "football|France Ligue 1|特鲁瓦|巴黎FC|和局|1x2|2026-08-23": {
     "ev": 3.36,
@@ -2159,6 +2213,31 @@
     "ev": 3.03,
     "bb": 1.83,
     "ts": 1787400929.497757
+  },
+  "football|Italy Serie A|亚特兰大|萨索洛|和局|1x2|2026-08-24": {
+    "ev": 60.82,
+    "bb": 7.65,
+    "ts": 1787401337.860916
+  },
+  "football|Italy Serie A|博洛尼亚|拉齐奥|上半场双重机会-主/客|ht_dc|2026-08-25": {
+    "ev": 2.58,
+    "bb": 1.88,
+    "ts": 1787401337.8606741
+  },
+  "football|Italy Serie A|威尼斯|莱切|上半场双重机会-主/客|ht_dc|2026-08-24": {
+    "ev": 2.36,
+    "bb": 1.89,
+    "ts": 1787401337.8608608
+  },
+  "football|Italy Serie A|帕尔马|卡利亚里|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 4.07,
+    "bb": 1.97,
+    "ts": 1787401337.8600352
+  },
+  "football|Italy Serie A|帕尔马|卡利亚里|上半场客胜|ht|2026-08-23": {
+    "ev": 2.48,
+    "bb": 4.16,
+    "ts": 1787401337.860097
   },
   "football|Italy Serie A|帕尔马|卡利亚里|和局|1x2|2026-08-23": {
     "ev": 3.15,
@@ -3228,6 +3307,11 @@
     "ev": 1.35,
     "ts": 1787378877.227625
   },
+  "football|Portugal Primeira Liga|吉维森特|卡萨皮亚|上半场客胜|ht|2026-08-25": {
+    "ev": 9.6,
+    "bb": 7.05,
+    "ts": 1787401337.861048
+  },
   "football|Portugal Primeira Liga|埃斯托里尔|里奥阿维|上半场客胜|ht|2026-08-23": {
     "ev": 4.81,
     "bb": 4.74,
@@ -3399,6 +3483,11 @@
     "ev": 5.97,
     "ts": 1787290860.101857
   },
+  "football|Russia First League|列宁格勒达|车里雅宾斯克|上半场双重机会-主/客|ht_dc|2026-08-23": {
+    "ev": 2.71,
+    "bb": 1.93,
+    "ts": 1787401337.8607402
+  },
   "football|Russia First League|莫斯科鱼雷|科斯特罗马斯巴达|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 4.24,
     "bb": 1.87,
@@ -3431,6 +3520,16 @@
   "football|Russia Premier League|RFK Akhmat Grozny|FK Rostov|单双-双|oe|2026-08-22": {
     "ev": 1.27,
     "ts": 1787371971.617483
+  },
+  "football|Russia Premier League|巴蒂卡|喀山红宝石|上半场双重机会-主/客|ht_dc|2026-08-25": {
+    "ev": 3.47,
+    "bb": 1.91,
+    "ts": 1787401337.8604228
+  },
+  "football|Russia Premier League|巴蒂卡|喀山红宝石|上半场客胜|ht|2026-08-25": {
+    "ev": 2.73,
+    "bb": 5.15,
+    "ts": 1787401337.8604858
   },
   "football|Saudi Arabia Professional League|Al Ahli Saudi FC|Abha Club|客胜|1x2|2026-08-23": {
     "ev": 2.87,
@@ -3738,6 +3837,11 @@
     "ev": 1.28,
     "ts": 1787333904.550946
   },
+  "football|Spain LaLiga 2|埃登斯|加的斯|上半场客胜|ht|2026-08-23": {
+    "ev": 7.33,
+    "bb": 4.6,
+    "ts": 1787401337.861347
+  },
   "football|Spain LaLiga 2|皇家奥维耶多|莱加内斯|上半场双重机会-主/客|ht_dc|2026-08-22": {
     "ev": 3.0,
     "bb": 1.91,
@@ -3835,6 +3939,24 @@
     "bb": 6.7,
     "ts": 1787271529.6434932
   },
+  "football|Spain LaLiga|马拉加|拉科鲁尼亚|上半场双重机会-主/客|ht_dc|2026-08-25": {
+    "ev": 4.1,
+    "bb": 2.01,
+    "ts": 1787401337.86023
+  },
+  "football|Spain LaLiga|马拉加|拉科鲁尼亚|上半场客胜|ht|2026-08-25": {
+    "ev": 2.23,
+    "bb": 4.39,
+    "ts": 1787401337.860289
+  },
+  "football|Sweden Allsvenskan|IFK Goteborg|IF Elfsborg|双边进球-是|btts|2026-08-23": {
+    "ev": 1.29,
+    "ts": 1787401338.34082
+  },
+  "football|Sweden Allsvenskan|IFK Goteborg|IF Elfsborg|总进球区间7+|total_goals_range|2026-08-23": {
+    "ev": 12.47,
+    "ts": 1787401338.341272
+  },
   "football|Sweden Allsvenskan|IK Sirius|BK Hacken|上半场客胜|ht|2026-08-22": {
     "ev": 1.07,
     "ts": 1787329371.595177
@@ -3874,6 +3996,19 @@
   "football|Sweden Allsvenskan|Orgryte IS|Halmstads BK|上半场客胜|ht|2026-08-22": {
     "ev": 1.18,
     "ts": 1787396204.739583
+  },
+  "football|Sweden Allsvenskan|Vasteras SK|Kalmar FF|双边进球-是|btts|2026-08-23": {
+    "ev": 2.68,
+    "ts": 1787401338.340886
+  },
+  "football|Sweden Allsvenskan|Vasteras SK|Kalmar FF|和局|1x2|2026-08-23": {
+    "ev": 3.44,
+    "ts": 1787401338.3408551
+  },
+  "football|Sweden Allsvenskan|哈马比|哥德堡盖斯|上半场主胜|ht|2026-08-23": {
+    "ev": 4.07,
+    "bb": 1.97,
+    "ts": 1787401337.860162
   },
   "football|Sweden Allsvenskan|天狼星|赫根|双重机会-和局/客|dc|2026-08-22": {
     "ev": 3.22,
@@ -4134,6 +4269,10 @@
     "ev": 1.3,
     "ts": 1787398763.836044
   },
+  "football|USA Major League Soccer|Nashville SC|Columbus Crew|上半场客胜|ht|2026-08-23": {
+    "ev": 1.15,
+    "ts": 1787401338.3407
+  },
   "football|USA Major League Soccer|Nashville SC|Columbus Crew|主胜|1x2|2026-08-23": {
     "ev": 1.35,
     "ts": 1787395068.7578728
@@ -4361,119 +4500,24 @@
     "ev": 1.65,
     "ts": 1787394729.806304
   },
-  "football|Estonia Meistriliiga|派德|诺米联|上半场主胜|ht|2026-08-23": {
-    "ev": 4.3,
-    "bb": 1.92,
-    "ts": 1787401337.8599539
-  },
-  "football|Italy Serie A|帕尔马|卡利亚里|上半场双重机会-主/客|ht_dc|2026-08-23": {
-    "ev": 4.07,
-    "bb": 1.97,
-    "ts": 1787401337.8600352
-  },
-  "football|Italy Serie A|帕尔马|卡利亚里|上半场客胜|ht|2026-08-23": {
-    "ev": 2.48,
-    "bb": 4.16,
-    "ts": 1787401337.860097
-  },
-  "football|Sweden Allsvenskan|哈马比|哥德堡盖斯|上半场主胜|ht|2026-08-23": {
-    "ev": 4.07,
-    "bb": 1.97,
-    "ts": 1787401337.860162
-  },
-  "football|Spain LaLiga|马拉加|拉科鲁尼亚|上半场双重机会-主/客|ht_dc|2026-08-25": {
-    "ev": 4.1,
-    "bb": 2.01,
-    "ts": 1787401337.86023
-  },
-  "football|Spain LaLiga|马拉加|拉科鲁尼亚|上半场客胜|ht|2026-08-25": {
-    "ev": 2.23,
-    "bb": 4.39,
-    "ts": 1787401337.860289
-  },
-  "football|Brazil Serie B|欧帕尔利奥|维拉诺瓦|上半场双重机会-主/客|ht_dc|2026-08-24": {
-    "ev": 3.68,
+  "football|Russia Premier League|沃罗涅日火炬|奥伦堡|上半场双重机会-主/客|ht_dc|2026-08-22": {
+    "ev": 3.36,
     "bb": 1.9,
-    "ts": 1787401337.8603551
+    "ts": 1787401546.613019
   },
-  "football|Russia Premier League|巴蒂卡|喀山红宝石|上半场双重机会-主/客|ht_dc|2026-08-25": {
-    "ev": 3.47,
-    "bb": 1.91,
-    "ts": 1787401337.8604228
+  "football|Russia Premier League|沃罗涅日火炬|奥伦堡|上半场客胜|ht|2026-08-22": {
+    "ev": 2.8,
+    "bb": 4.1,
+    "ts": 1787401546.613111
   },
-  "football|Russia Premier League|巴蒂卡|喀山红宝石|上半场客胜|ht|2026-08-25": {
-    "ev": 2.73,
-    "bb": 5.15,
-    "ts": 1787401337.8604858
+  "football|Romania Liga 1|UTA阿拉德|胡内多阿拉|上半场客胜|ht|2026-08-22": {
+    "ev": 2.79,
+    "bb": 4.59,
+    "ts": 1787401546.6131752
   },
-  "football|Brazil Serie A|博塔弗戈RJ|巴拉纳竞技|和局|1x2|2026-08-25": {
-    "ev": 9.22,
-    "bb": 3.46,
-    "ts": 1787401337.860547
-  },
-  "football|Brazil Serie B|库亚巴|戈伊亚斯|上半场双重机会-主/客|ht_dc|2026-08-23": {
-    "ev": 3.44,
-    "bb": 2.04,
-    "ts": 1787401337.860609
-  },
-  "football|Italy Serie A|博洛尼亚|拉齐奥|上半场双重机会-主/客|ht_dc|2026-08-25": {
-    "ev": 2.58,
-    "bb": 1.88,
-    "ts": 1787401337.8606741
-  },
-  "football|Russia First League|列宁格勒达|车里雅宾斯克|上半场双重机会-主/客|ht_dc|2026-08-23": {
-    "ev": 2.71,
-    "bb": 1.93,
-    "ts": 1787401337.8607402
-  },
-  "football|France Ligue 1|尼斯|洛里昂|上半场双重机会-主/客|ht_dc|2026-08-23": {
-    "ev": 2.19,
-    "bb": 1.8,
-    "ts": 1787401337.8608
-  },
-  "football|Italy Serie A|威尼斯|莱切|上半场双重机会-主/客|ht_dc|2026-08-24": {
-    "ev": 2.36,
-    "bb": 1.89,
-    "ts": 1787401337.8608608
-  },
-  "football|Italy Serie A|亚特兰大|萨索洛|和局|1x2|2026-08-24": {
-    "ev": 60.82,
-    "bb": 7.65,
-    "ts": 1787401337.860916
-  },
-  "football|Argentina Primera Nacional|圣米格尔|科隆竞技|上半场双重机会-主/客|ht_dc|2026-08-23": {
-    "ev": 3.06,
-    "bb": 2.23,
-    "ts": 1787401337.860984
-  },
-  "football|Portugal Primeira Liga|吉维森特|卡萨皮亚|上半场客胜|ht|2026-08-25": {
-    "ev": 9.6,
-    "bb": 7.05,
-    "ts": 1787401337.861048
-  },
-  "football|Croatia HNL League|哈伊杜克斯普利特|奥斯杰克|上半场客胜|ht|2026-08-24": {
-    "ev": 5.1,
-    "bb": 4.34,
-    "ts": 1787401337.861111
-  },
-  "football|Brazil Serie A|沙佩科恩斯|圣保罗|上半场主胜|ht|2026-08-24": {
-    "ev": 5.6,
-    "bb": 5.2,
-    "ts": 1787401337.861171
-  },
-  "football|Brazil Serie B|克里西乌马|福塔雷萨|上半场客胜|ht|2026-08-24": {
-    "ev": 3.58,
-    "bb": 6.55,
-    "ts": 1787401337.861229
-  },
-  "football|Brazil Serie A|弗鲁米嫩塞RJ|瑞模贝雷|上半场客胜|ht|2026-08-23": {
-    "ev": 2.77,
-    "bb": 8.65,
-    "ts": 1787401337.861289
-  },
-  "football|Spain LaLiga 2|埃登斯|加的斯|上半场客胜|ht|2026-08-23": {
-    "ev": 7.33,
-    "bb": 4.6,
-    "ts": 1787401337.861347
+  "football|Norway NM Cup|弗立加|卡积沙斯|主胜|1x2|2026-08-23": {
+    "ev": 11.26,
+    "bb": 6.95,
+    "ts": 1787401546.613226
   }
 }
