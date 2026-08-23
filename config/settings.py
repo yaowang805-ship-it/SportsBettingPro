@@ -44,6 +44,12 @@ if DINGTALK_WEBHOOK and _is_placeholder_webhook(DINGTALK_WEBHOOK):
 _NON_BETTING_DAILY_LIMIT = 6
 _NON_BETTING_QUOTA_FILE = DATA_DIR / "non_betting_push_quota.json"
 
+# 全局防重复(用户 2026-08-23 铁律: 所有消息都不能短时间内重复发)。
+# 非投注消息(告警/日报)按标题节流 —— 同一标题在 _TITLE_COOLDOWN_SEC 内只发一次。
+# 投注推荐(title 含 +EV/投注推荐/机会)每次内容都不同, 不受此限制。
+_TITLE_COOLDOWN_FILE = DATA_DIR / "dingtalk_title_cooldown.json"
+_TITLE_COOLDOWN_SEC = 30 * 60   # 30 分钟
+
 
 def _is_betting_push(title: str) -> bool:
     """投注推荐(标题含 +EV/投注推荐/机会)不受每日次数限制。"""
@@ -71,6 +77,27 @@ def _non_betting_quota_ok() -> bool:
     return True
 
 
+def _title_cooldown_ok(title: str) -> bool:
+    """非投注消息同标题短时间防重复: 同一标题 _TITLE_COOLDOWN_SEC 内只发一次。返回 True=可发。"""
+    key = (title or "").strip() or "untitled"
+    now = time.time()
+    m = {}
+    try:
+        m = json.loads(_TITLE_COOLDOWN_FILE.read_text())
+    except (OSError, ValueError):
+        pass
+    # 清理过期项
+    m = {k: v for k, v in m.items() if now - v < _TITLE_COOLDOWN_SEC}
+    if key in m:
+        return False
+    m[key] = now
+    try:
+        _TITLE_COOLDOWN_FILE.write_text(json.dumps(m, ensure_ascii=False))
+    except OSError:
+        pass
+    return True
+
+
 def send_dingtalk(title: str, body: str, timeout: int = 10, urgent: bool = False) -> bool:
     """统一钉钉推送，返回 True=成功。
 
@@ -83,10 +110,15 @@ def send_dingtalk(title: str, body: str, timeout: int = 10, urgent: bool = False
     投注推荐(+EV)不受限; 其余信息每天最多推 _NON_BETTING_DAILY_LIMIT 次。
 
     urgent=True: 故障类告警(看门狗/静默失效/封禁)跳过每日配额 —— 配额是防例行日报
-    刷屏的, 不该让故障告警被日报挤掉而静默丢失。此类告警调用方自身已各有节流。
+    刷屏的, 不该让故障告警被日报挤掉而静默丢失。
+    防重复: 非投注消息同标题 30 分钟内只发一次(用户 2026-08-23 铁律"所有消息都不能
+    短时间内重复发"), 投注推荐每次内容不同不受限。
     """
     from config.dingtalk import send_dingtalk as _real_send
     if not DINGTALK_WEBHOOK:
+        return False
+    # 非投注消息(告警/日报)按标题节流: 同标题短时间只发一次(防自愈看门狗刷屏)
+    if not _is_betting_push(title) and not _title_cooldown_ok(title):
         return False
     # 非投注推荐信息每日限流(urgent 故障告警除外)
     if not urgent and not _is_betting_push(title) and not _non_betting_quota_ok():
