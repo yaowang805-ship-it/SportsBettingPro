@@ -131,12 +131,14 @@ def save_snapshot(bb_matches, snap_file=None):
 def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window):
     """拉取 Pinnacle 数据并与上次快照对比，检测 Pin 侧赔率变动。
 
-    Pinnacle API 是联赛级接口，无法单场查询。对所有活跃联赛拉取数据
-    （约 50-100 个联赛，每联赛一个 API 调用，0.25s间隔 → ~25s），
+    Pinnacle API 是联赛级接口，无法单场查询。对所有活跃联赛拉取数据，
     然后与上次 Pinnacle 快照对比，找出 Pin 侧变动。
+
+    2026-08-23 并行化: 之前串行逐个拉取(每联赛一个 API 调用, Pin 慢时 5.6s/次 ×
+    100+ 联赛 = 9min+), near 扫描一轮 45min 起, 触发 self_heal 互杀。改为先并行
+    拉取(8 线程), 再串行归档+指纹对比(SQLite 写串行避免锁竞争)。
     """
     from src.scrapers.pinnacle_league_map import find_pinnacle_league_ids
-    from src.scrapers.pinnacle_api import api_get as pin_get
     from src.scrapers.pinnacle_markets import get_league_matchups_and_markets
 
     pin_snap_path = DATA_DIR / f".pin_snapshot_{time_window}.json"
@@ -147,76 +149,92 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
         except:
             pass
 
-    new_pin = {}
-    pin_changed_leagues = set()
-
-    league_count = 0
+    # 1. 串行做联赛名→Pin ID 匹配(纯字符串匹配, 快), 生成待拉取列表 (league, pid)
+    league_pids = []   # 保持 active_leagues 顺序
     for bb_league in active_leagues:
         pin_ids = find_pinnacle_league_ids(bb_league, all_pin_leagues)
         if not pin_ids:
             continue
-        league_count += 1
-        league_changed = False
+        league_pids.append((bb_league, pin_ids[:3]))
+    league_count = len(league_pids)
 
-        for pid in pin_ids[:3]:
-            if league_changed:
-                break
+    # 2. 并行拉取(网络 I/O 是瓶颈, Pin 慢时 8 线程把 ~5.6s/联赛 压到 ~8x)
+    import concurrent.futures
+
+    def _fetch_one(bb_league, pid):
+        try:
+            return (bb_league, pid, get_league_matchups_and_markets(pid))
+        except Exception:
+            return (bb_league, pid, None)
+
+    _fetched = {}   # (bb_league, pid) -> matchups
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as _exec:
+        _futs = [_exec.submit(_fetch_one, lg, pid) for lg, pids in league_pids for pid in pids]
+        for _f in concurrent.futures.as_completed(_futs):
             try:
-                # 用 get_league_matchups_and_markets 拿含赔率的完整数据
-                # (旧代码用 /matchups 端点只返回元数据, 无 moneyline/spread/total → 赔率指纹恒空, 变动检测失效)
-                matchups = get_league_matchups_and_markets(pid)
-                if not isinstance(matchups, list):
-                    continue
-
-                # V5.10 修复归档断链: 增量扫描每 5 分钟拉一次每个联赛的完整赔率,
-                # 但此前从不归档(归档只在全量扫描的 _fetch_one 里), 导致归档库长时间
-                # 零写入, 实时采集错过窗口时归档回捞兜底是空的 —— 这是收盘价覆盖率
-                # 上不去的根因之一。现在每次拉到数据就顺手归档(归档器只存价格变化点,
-                # 实测开销约拉取的 3%, 不影响扫描速度)。
-                if matchups:
-                    try:
-                        from src.evolve.odds_archiver import archive_matchups
-                        _cn2en = {"足球": "football", "篮球": "basketball", "网球": "tennis",
-                                  "棒球": "baseball", "美式足球": "american_football",
-                                  "拳击": "boxing", "MMA": "mma", "冰球": "ice_hockey",
-                                  "乒乓球": "pingpong", "羽毛球": "badminton", "排球": "volleyball"}
-                        # all_pin_leagues 的 key 是 str, pid 可能是 int
-                        _info = (all_pin_leagues or {}).get(str(pid)) or (all_pin_leagues or {}).get(pid)
-                        _sport = _cn2en.get((_info or {}).get("sport", ""), "?") if isinstance(_info, dict) else "?"
-                        _lname = (_info or {}).get("name", str(pid)) if isinstance(_info, dict) else str(pid)
-                        archive_matchups(_sport, pid, _lname, matchups, [])
-                    except Exception:
-                        pass
-
-                for mu in matchups:
-                    if not isinstance(mu, dict):
-                        continue
-                    mu_id = mu.get('matchup_id', mu.get('id', ''))
-                    if not mu_id:
-                        continue
-
-                    # 提取赔率指纹: ML + Spread + Total (三者任一变动都触发)
-                    odds_fp = []
-                    for mkt_type in ['moneyline', 'spread', 'total']:
-                        for mkt in mu.get(mkt_type, []) or []:
-                            if isinstance(mkt, dict) and mkt.get('period', 0) == 0:
-                                for p in mkt.get('prices', []) or []:
-                                    price = p.get('price_decimal', 0)
-                                    pts = p.get('points')
-                                    if price:
-                                        odds_fp.append(round(float(price), 4))
-                                    if pts is not None:
-                                        odds_fp.append(round(float(pts), 4))
-
-                    odds_key = tuple(odds_fp) if odds_fp else None
-                    if odds_key:
-                        new_pin[str(mu_id)] = odds_key
-                        old_key = old_pin.get(str(mu_id))
-                        if old_key != odds_key:
-                            league_changed = True
-                            pin_changed_leagues.add(bb_league)
+                _lg, _pid, _m = _f.result()
+                _fetched[(_lg, _pid)] = _m
             except Exception:
                 pass
+
+    # 3. 串行处理结果(归档 SQLite 写 + 指纹对比, 保持原逻辑与顺序)
+    new_pin = {}
+    pin_changed_leagues = set()
+
+    for bb_league, pids in league_pids:
+        league_changed = False
+        for pid in pids:
+            if league_changed:
+                break
+            matchups = _fetched.get((bb_league, pid))
+            if not isinstance(matchups, list):
+                continue
+
+            # V5.10 修复归档断链: 增量扫描每 5 分钟拉一次每个联赛的完整赔率,
+            # 此前从不归档(归档只在全量扫描的 _fetch_one 里), 归档库长时间零写入,
+            # 实时采集错过窗口时归档回捞兜底是空的。现在每次拉到数据就顺手归档。
+            if matchups:
+                try:
+                    from src.evolve.odds_archiver import archive_matchups
+                    _cn2en = {"足球": "football", "篮球": "basketball", "网球": "tennis",
+                              "棒球": "baseball", "美式足球": "american_football",
+                              "拳击": "boxing", "MMA": "mma", "冰球": "ice_hockey",
+                              "乒乓球": "pingpong", "羽毛球": "badminton", "排球": "volleyball"}
+                    # all_pin_leagues 的 key 是 str, pid 可能是 int
+                    _info = (all_pin_leagues or {}).get(str(pid)) or (all_pin_leagues or {}).get(pid)
+                    _sport = _cn2en.get((_info or {}).get("sport", ""), "?") if isinstance(_info, dict) else "?"
+                    _lname = (_info or {}).get("name", str(pid)) if isinstance(_info, dict) else str(pid)
+                    archive_matchups(_sport, pid, _lname, matchups, [])
+                except Exception:
+                    pass
+
+            for mu in matchups:
+                if not isinstance(mu, dict):
+                    continue
+                mu_id = mu.get('matchup_id', mu.get('id', ''))
+                if not mu_id:
+                    continue
+
+                # 提取赔率指纹: ML + Spread + Total (三者任一变动都触发)
+                odds_fp = []
+                for mkt_type in ['moneyline', 'spread', 'total']:
+                    for mkt in mu.get(mkt_type, []) or []:
+                        if isinstance(mkt, dict) and mkt.get('period', 0) == 0:
+                            for p in mkt.get('prices', []) or []:
+                                price = p.get('price_decimal', 0)
+                                pts = p.get('points')
+                                if price:
+                                    odds_fp.append(round(float(price), 4))
+                                if pts is not None:
+                                    odds_fp.append(round(float(pts), 4))
+
+                odds_key = tuple(odds_fp) if odds_fp else None
+                if odds_key:
+                    new_pin[str(mu_id)] = odds_key
+                    old_key = old_pin.get(str(mu_id))
+                    if old_key != odds_key:
+                        league_changed = True
+                        pin_changed_leagues.add(bb_league)
 
     # 保存新快照
     try:
