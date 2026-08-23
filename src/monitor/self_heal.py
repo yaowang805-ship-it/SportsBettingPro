@@ -34,6 +34,7 @@ DAEMON_LABEL = "com.sportsbettingpro.daemon"
 
 CHECK_INTERVAL = 5 * 60        # 心跳超时阈值(秒) — 之前15min太松, 卡8分钟丢一堆机会才发现
 SCAN_STALE = 45 * 60           # 增量扫描停滞阈值(秒)
+SCAN_START_STALE = 15 * 60     # 扫描"开始"心跳新鲜阈值(秒): 15min 内有开始 = 在飞不杀
 BB_STALE = 3 * 3600            # BB 数据陈旧阈值(秒)
 
 
@@ -199,8 +200,19 @@ def main():
         statuses.append(f"增量扫描: ⚠️ 心跳 {scan_age/60:.0f}min 未更新(urgent {(_urgent_age or 0)/60:.0f}min / near {(_near_age or 0)/60:.0f}min)")
         # 在飞保护: 扫描/推送子进程还在跑就别重启 —— 长轮次(near 8-9min)被腰斩比停滞更糟
         _busy = _scan_in_flight()
+        # 扫描开始心跳: near 一轮要 5min+, .scan_heartbeat_near 在跑完前一直是旧的,
+        # pgrep 又认不到进程内线程 → 光看 _scan_in_flight 会误判"停滞"反复 kickstart(互杀)。
+        # 最近 SCAN_START_STALE 内有"开始"信号 = 扫描在飞, 不杀。
+        _start_fresh = False
+        for _tier in ("urgent", "near"):
+            _sa = _file_age(DATA_DIR / f".scan_start_{_tier}")
+            if _sa is not None and _sa < SCAN_START_STALE:
+                _start_fresh = True
+                break
         if _busy:
             statuses.append(f"增量扫描: ⏳ 有子进程在跑({_busy}), 本轮不重启")
+        elif _start_fresh:
+            statuses.append("增量扫描: ⏳ 扫描在飞(开始心跳新鲜), 本轮不重启")
         elif _kickstart_daemon():
             fixes.append(f"增量扫描停滞({scan_age/60:.0f}min, 无子进程在跑) → 已 kickstart 重启守护进程")
         else:

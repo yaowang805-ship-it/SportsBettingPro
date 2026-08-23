@@ -574,6 +574,11 @@ class PipelineOrchestrator:
     def do_incremental(self, time_window: str = "all"):
         """增量扫描。time_window = "near" | "far" | "all" """
         self._reload_critical_modules()
+        # 扫描开始心跳: self_heal 用 .scan_heartbeat_* 判"跑完", 但 near 一轮要 5min+,
+        # 期间 .scan_heartbeat_near 是旧的 → self_heal 误判"停滞"每 5min kickstart 一次,
+        # 把跑到一半的 near 杀在半路 → 永远跑不完(互杀, 2026-08-23 排查)。开始心跳让
+        # self_heal 知道"near 在跑", 不要杀。
+        self._write_scan_start(time_window)
         from src.scrapers.bb_incremental_scanner import run_incremental
         run_incremental(time_window=time_window)
         # V5.10: 写扫描心跳 —— 对比文件只在"有变动"时才重写(run_incremental 无变动会
@@ -582,6 +587,14 @@ class PipelineOrchestrator:
         # 文件永远刷不新, 形成互杀死循环(2026-08-21 实测 20min 内重启 6 次, 全天零投注)。
         # 心跳由本函数在 run_incremental 正常返回后写, 覆盖其全部 return 分支。
         self._write_scan_heartbeat(time_window)
+
+    def _write_scan_start(self, time_window: str):
+        """记录某一层增量扫描"开始跑"的时刻(self_heal 据此判在飞, 避免误杀慢扫描)。"""
+        try:
+            hb = SRC_DIR / "data" / "storage" / f".scan_start_{time_window}"
+            hb.write_text(str(time.time()))
+        except Exception as e:
+            logger.warning("扫描开始心跳写入失败(%s): %s", time_window, e)
 
     def _write_scan_heartbeat(self, time_window: str):
         """记录某一层增量扫描"完整跑完一轮"的时刻(与是否有变动无关)。"""
