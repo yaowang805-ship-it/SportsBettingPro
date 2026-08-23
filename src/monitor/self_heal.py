@@ -36,6 +36,10 @@ CHECK_INTERVAL = 5 * 60        # 心跳超时阈值(秒) — 之前15min太松, 
 SCAN_STALE = 45 * 60           # 增量扫描停滞阈值(秒)
 SCAN_START_STALE = 15 * 60     # 扫描"开始"心跳新鲜阈值(秒): 15min 内有开始 = 在飞不杀
 BB_STALE = 3 * 3600            # BB 数据陈旧阈值(秒)
+PIN_CACHE = DATA_DIR / "pin_matches_cache.json"
+PIN_CACHE_STALE = 10 * 60      # Pin 缓存空/陈旧阈值(秒): 空且>此值, 或陈旧>1h, 且 Pin 可达 → 主动重拉
+PIN_CACHE_REPAIR_COOLDOWN_FILE = DATA_DIR / "pin_cache_repair_cooldown.json"
+PIN_CACHE_REPAIR_COOLDOWN = 30 * 60  # 缓存修复冷却(秒): 30min 只修一次, 避免每 5min 重拉
 
 
 def _daemon_pid():
@@ -109,6 +113,39 @@ def _clear_stale_lock():
             if subprocess.run(["ps", "-p", str(pid)], capture_output=True).returncode == 0:
                 return False  # 锁的进程还活着, 不动
         LOCK_FILE.unlink()
+        return True
+    except Exception:
+        return False
+
+
+def _cache_repair_allowed():
+    """缓存修复冷却: 30min 内只修一次, 避免每 5min 重拉(重拉要 1min+ 且打 Pin)。"""
+    try:
+        m = json.loads(PIN_CACHE_REPAIR_COOLDOWN_FILE.read_text())
+        last = m.get("ts", 0)
+    except (OSError, ValueError):
+        last = 0
+    return time.time() - last > PIN_CACHE_REPAIR_COOLDOWN
+
+
+def _mark_cache_repair():
+    try:
+        PIN_CACHE_REPAIR_COOLDOWN_FILE.write_text(json.dumps({"ts": time.time()}))
+    except OSError:
+        pass
+
+
+def _repopulate_pin_cache():
+    """主动修复: 重拉 Pin 缓存(打破"空缓存→对比无结果→提前return→预取被跳过→缓存
+    继续空"的死循环)。用 subprocess 跑 --pin-cache(全量拉 415 联赛存缓存), nice 10 不抢增量扫描。
+    """
+    try:
+        subprocess.Popen(
+            [sys.executable, "-m", "src.scrapers.bb_vs_pinnacle", "--pin-cache"],
+            cwd=str(ROOT),
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
         return True
     except Exception:
         return False
