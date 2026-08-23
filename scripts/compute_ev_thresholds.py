@@ -7,10 +7,10 @@
 
 判定标准(业界标准):
     一个格子 EV≥X 时, 只有当「正 CLV 率 ≥55% 且 中位 CLV > +2%」才认为 X 是该格子
-    门槛; 否则抬高到满足为止。无任何档满足 → 停推(门槛=999)。
+    门槛; 否则抬高到满足为止。无任何档满足 → 停推(门槛=最高档 20%, 实质不推非封杀)。
 
-样本纪律:
-    CLV≥100 注 = 确认; 30-100 = 方向性; <30 = 用保守高门槛回退(不拍脑袋放低)。
+样本纪律(shrinkage: 样本越少要求越高的中位):
+    n≥100 确认(中位>2%); 30-100 方向性(中位>3%); <30 用保守高门槛回退(不拍脑袋放低)。
 
 输出:
     data/storage/ev_threshold_matrix.json
@@ -18,8 +18,9 @@
       "generated_at": "...",
       "markets": {"1x2": 5.0, "ou": 8.0, "ht": 2.0, ...},
       "sport_adjust": {"tennis": -0.5, "basketball": +1.0, ...},
-      "in_play_extra": 3.0,   # 临场<1h 且主体盘口 额外加门槛
-      "main_markets": ["1x2","hc","ou"],   # 临场规则适用盘口
+      "league_adjust": {"football|MLS": 2.0, ...},
+      "time_adjust": [{"min_minutes":0,"max_minutes":60,"label":"临场<1h","adjust":2.0}, ...],
+      "main_markets": ["1x2","hc","ou"],   # 时间维度适用盘口
       "default_threshold": 8.0,  # 样本不足盘口的保守回退
     }
 
@@ -30,6 +31,7 @@ import json
 import re
 import statistics
 from collections import Counter, defaultdict
+from datetime import datetime
 from pathlib import Path
 
 # 被过滤掉的不可执行样本计数(供报告用, 避免"静默丢弃"看不见)
@@ -41,24 +43,31 @@ RESULTS = DATA / "clv_results.csv"
 OUT = DATA / "ev_threshold_matrix.json"
 
 POS_RATE_MIN = 0.55     # 正 CLV 率下限
-MEDIAN_CLV_MIN = 1.0    # 正期望最低中位 CLV 阈值(%): >1% 才算"有正 edge"
-                        # (1~2% 勉强正, >2% 强正 —— 业界标准见 clv-threshold-matrix-todo)
+MEDIAN_CLV_MIN = 2.0    # 正期望最低中位 CLV 阈值(%): >2% 才算"强正" edge
+                        # (业界标准: +2%~+4% 强/勉强, +4% 卓越。1~2% 只是勉强正, 不足以解锁低门槛)
+SHRINK_MARGIN = 1.0     # 方向性档(30≤n<100)要求的中位 CLV 额外余量: 小样本点估计不可靠, 需更高中位补偿
 
 # 样本纪律(业界标准: CLV 100-200 注才可靠, 早期 CLV 是噪声 —— 80注+5% 到 340注 会掉到 +1.8%)
-#   n >= 100  → "确认", 可用数据驱动门槛
-#   30 <= n < 100 → "方向性", 可用但要求更严的 edge(中位 CLV 加倍)
-#   n < 30    → 样本不足, **一律回退保守高门槛**, 绝不据此放低
-# 原先 MIN_N=10 等于用 10 个样本就敢开 2% 门槛(实测 total_goals_range 正是如此), 已废弃。
+#   n >= 100  → "确认",   中位 CLV > 2%          且 正率≥55%
+#   30<=n<100 → "方向性", 中位 CLV > 2%+1%(shrink) 且 正率≥55% —— 小样本要更严
+#   n < 30    → 样本不足, **一律回退保守高门槛(8%)**, 绝不据此放低
 N_CONFIRMED = 100
 N_DIRECTIONAL = 30
-# 判定标准对两档一致(中位CLV>2% 且 正率>55%), n 只决定标签"确认"/"方向性" ——
-# 不额外加严: 加严会把 ht_dc(n=34/中位+3.17%/正率85%) 这种强信号误杀。
 
 # 从**低到高**遍历, 找"负转正"边界档 = 门槛。
 # 用户铁律(2026-08-21): 数据驱动 = 负期望的档就继续往上调, 直到正期望为止。
 # 扩展搜索范围到 20%, 避免 hc 这种"8% 还是负"的盘口被错误停在 8%。
 EV_STEPS = (2, 3, 5, 8, 10, 12, 15, 20)
-MIN_BAND_N = 10          # 一个 EV 档至少 10 条样本才认可其正/负判定(低于 10 视为不可判)
+
+# 时间维度: 距开赛分钟数分桶(主体盘口才用), 数据驱动调整门槛。
+# 2026-08-23 实测: 主体盘口(1x2/hc/ou) 各时间桶全负(临场-2.34%/早盘-2.75%/近场-1.27%),
+# 之前记忆里"24-72h 早盘 +2.39%"是小样本(n=26)噪声, 现 n=127 推翻。故时间维度也数据驱动。
+TIME_BUCKETS = (
+    (0, 60, "临场<1h"),
+    (60, 360, "近1-6h"),
+    (360, 1440, "中6-24h"),
+    (1440, 4320, "早24-72h"),
+)
 
 # 不可执行机会过滤 —— clv_results.csv 里 ~80% 是 source=validate(所有 ≥2%EV 机会),
 # 并非真实投注。其中被封杀类别/超赔率上限的机会**永远不会被下注**, 拿它们算门槛
@@ -83,9 +92,7 @@ SPORT_ADJUST_FALLBACK = {
     "boxing": 2.0,
 }
 
-# 临场规则: 距开赛<1h 且主体盘口 → 额外加门槛(临场 Pin 最准, BB 偏离是滞后噪声)
-IN_PLAY_HOURS = 1.0
-IN_PLAY_EXTRA = 3.0
+# 主体盘口定义(时间维度调整只对主体盘口生效; 临场/早盘见 TIME_BUCKETS + compute_time_adjust)
 MAIN_MARKETS = ("1x2", "hc", "ou")
 
 
@@ -93,6 +100,16 @@ def f(v):
     try:
         return float(v)
     except (TypeError, ValueError):
+        return None
+
+
+def ts(v):
+    """ISO 时间串 → epoch 秒; 解析失败返回 None。"""
+    if not v:
+        return None
+    try:
+        return datetime.fromisoformat(str(v).replace("Z", "+00:00")).timestamp()
+    except (ValueError, TypeError):
         return None
 
 
@@ -116,7 +133,13 @@ def load_clean():
             if BANNED_LEAGUE_RE.search(r.get("league") or ""):
                 _dropped["封杀联赛"] += 1
                 continue
-            out.append((r.get("sub_market", "?"), r.get("sport", "?"), r.get("league", ""), clv, ev))
+            # 距开赛分钟数(用 match_epoch-push_time 自己算; clv_results 里的 minutes_before_match 字段已坏, 恒<60)
+            lead = None
+            pt = ts(r.get("push_time"))
+            me = f(r.get("match_epoch"))
+            if pt and me:
+                lead = (me - pt) / 60.0
+            out.append((r.get("sub_market", "?"), r.get("sport", "?"), r.get("league", ""), clv, ev, lead))
     return out
 
 
@@ -126,7 +149,10 @@ def market_threshold(samples):
     核心(用户 2026-08-21 铁律): 数据驱动 = 负期望的档就继续往上调, 直到正期望为止。
     返回 (门槛, n, 中位CLV, 正率%, 判定档)。门槛为 None 表示样本不足, 调用方回退保守默认。
 
-    正期望档判据: 中位 CLV > 0 且 正率 ≥ 55% 且 n ≥ MIN_BAND_N。
+    正期望档判据(样本越多越精准, 小样本要求更高中位 = shrinkage):
+      n >= N_CONFIRMED(100): 中位 CLV > MEDIAN_CLV_MIN(2%)         且 正率≥55%
+      30 <= n < 100:         中位 CLV > MEDIAN_CLV_MIN+SHRINK_MARGIN(3%) 且 正率≥55%
+      n < 30:                样本不足, 不可判, 不据此解锁低门槛(回退保守 8%)
     """
     n_max = 0
     last_neg_band = None   # 记录最后看到的负 edge 档(用于"无正期望档"时报告)
@@ -139,11 +165,12 @@ def market_threshold(samples):
         clvs = [c for c, _ in sub]
         pos_rate = sum(1 for c in clvs if c > 0) / n
         med = statistics.median(clvs)
-        if n < MIN_BAND_N:
-            continue          # 样本太少的档不可判, 跳过(既不据此放行也不据此否定)
-        if pos_rate >= POS_RATE_MIN and med > MEDIAN_CLV_MIN:
+        if n < N_DIRECTIONAL:
+            continue          # 样本不足的档不可判(既不据此放行也不据此否定)
+        required = MEDIAN_CLV_MIN + (SHRINK_MARGIN if n < N_CONFIRMED else 0.0)
+        if pos_rate >= POS_RATE_MIN and med > required:
             # 负转正边界: 这一档是有意义的正 edge → 门槛设这里
-            grade = "确认" if (n >= N_CONFIRMED and med > 2.0) else ("方向性" if n >= N_DIRECTIONAL else "样本偏少")
+            grade = "确认" if n >= N_CONFIRMED else "方向性"
             return (thr, n, round(med, 2), round(pos_rate * 100), grade)
         if med <= 0:
             last_neg_band = (thr, n, med)   # 负 edge, 继续往上搜
@@ -246,15 +273,66 @@ def compute_league_adjust(by_sport_league):
     return adjust, detail
 
 
+def compute_time_adjust(by_time):
+    """时间维度调整(主体盘口 1x2/hc/ou): 按距开赛时间分档, 相对基准(中6-24h)的偏离映射加/减 pp。
+
+    数据驱动(样本 n≥30/桶才设), 否则回退 0(不动)。
+    基准 = 中6-24h 桶(样本最多最稳)。映射(偏离 = 桶中位 - 基准中位):
+      偏离 < -2pp   → +2.0 (显著比基准差, 抬门槛)
+      偏离 < -0.5pp → +1.0
+      ±0.5pp 内     →  0.0
+      偏离 > +0.5pp 且 正率≥55% → -1.0 (显著好, 可降)
+      偏离 > +0.5pp 但 正率<55%  →  0.0
+    返回 (adjust, detail)。adjust 是 label→pp 的 dict。
+    """
+    base = None
+    if len(by_time.get("中6-24h", [])) >= N_DIRECTIONAL:
+        base = statistics.median(by_time["中6-24h"])
+    adjust = {}
+    detail = {}
+    for lo, hi, label in TIME_BUCKETS:
+        clvs = by_time.get(label, [])
+        n = len(clvs)
+        if n < N_DIRECTIONAL:
+            detail[label] = {"n": n, "verdict": "样本不足→回退0", "adjust": 0.0}
+            continue
+        med = statistics.median(clvs)
+        pos = sum(1 for c in clvs if c > 0) / n
+        dev = med - base if base is not None else None
+        if dev is None:
+            a = 0.0
+        elif dev < -2.0:
+            a = 2.0
+        elif dev < -0.5:
+            a = 1.0
+        elif dev <= 0.5:
+            a = 0.0
+        elif pos >= POS_RATE_MIN:
+            a = -1.0
+        else:
+            a = 0.0
+        adjust[label] = a
+        detail[label] = {"n": n, "median": round(med, 2),
+                         "dev": round(dev, 2) if dev is not None else None,
+                         "verdict": f"数据驱动→{a:+.1f}", "adjust": a}
+    return adjust, detail
+
+
 def main():
     clean = load_clean()
     by_market = defaultdict(list)
     by_sport = defaultdict(list)
     by_sport_league = defaultdict(list)
-    for sm, sp, lg, clv, ev in clean:
+    by_time = defaultdict(list)
+    for sm, sp, lg, clv, ev, lead in clean:
         by_market[sm].append((clv, ev))
         by_sport[sp].append(clv)
         by_sport_league[(sp, lg)].append(clv)
+        if sm in MAIN_MARKETS and lead is not None:
+            for lo, hi, label in TIME_BUCKETS:
+                if lo <= lead < hi:
+                    by_time[label].append(clv)
+                    break
 
     markets = {}
     details = {}
@@ -278,19 +356,24 @@ def main():
 
     sport_adjust, sport_detail = compute_sport_adjust(by_sport)
     league_adjust, league_detail = compute_league_adjust(by_sport_league)
+    time_adjust, time_detail = compute_time_adjust(by_time)
 
     matrix = {
         "generated_at": __import__("datetime").datetime.now().isoformat(),
         "markets": markets,
         "sport_adjust": sport_adjust,
         "league_adjust": league_adjust,
-        "in_play_hours": IN_PLAY_HOURS,
-        "in_play_extra": IN_PLAY_EXTRA,
+        "time_adjust": [
+            {"min_minutes": lo, "max_minutes": hi, "label": label,
+             "adjust": time_adjust.get(label, 0.0)}
+            for lo, hi, label in TIME_BUCKETS
+        ],
         "main_markets": list(MAIN_MARKETS),
         "default_threshold": 8.0,
         "_details": details,
         "_sport_details": sport_detail,
         "_league_details": league_detail,
+        "_time_details": time_detail,
     }
     OUT.write_text(json.dumps(matrix, ensure_ascii=False, indent=2))
     print(f"✅ 门槛矩阵已生成 → {OUT.name}")
@@ -298,8 +381,12 @@ def main():
     if _dropped:
         print(f"  已剔除不可执行样本: " +
               ", ".join(f"{k} {v}条" for k, v in _dropped.most_common()))
-    print(f"  样本纪律: ≥{N_CONFIRMED}确认 / {N_DIRECTIONAL}-{N_CONFIRMED}方向性 / "
-          f"<{N_DIRECTIONAL}回退{CONSERVATIVE_THRESHOLD}% | 判定: 中位CLV>{MEDIAN_CLV_MIN}% 且 正率≥{POS_RATE_MIN*100:.0f}%")
+    print(f"  样本纪律: ≥{N_CONFIRMED}确认(中位>{MEDIAN_CLV_MIN}%) / {N_DIRECTIONAL}-{N_CONFIRMED}方向性(中位>{MEDIAN_CLV_MIN+SHRINK_MARGIN}%) / "
+          f"<{N_DIRECTIONAL}回退{CONSERVATIVE_THRESHOLD}% | 正率≥{POS_RATE_MIN*100:.0f}%")
+    print("  时间维度调整(数据驱动, 主体盘口):")
+    for lo, hi, label in TIME_BUCKETS:
+        d = time_detail.get(label, {})
+        print(f"    {label:<10} adjust={time_adjust.get(label, 0.0):>+5}  n={d.get('n',0):>4}  {d.get('verdict','')}")
     print("  运动层微调(数据驱动):")
     for sp in sorted(sport_adjust, key=lambda s: -(sport_detail.get(s, {}).get("n", 0))):
         d = sport_detail.get(sp, {})

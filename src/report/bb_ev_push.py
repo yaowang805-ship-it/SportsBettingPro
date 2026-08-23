@@ -687,7 +687,7 @@ def _load_threshold_matrix():
 def _matrix_min_ev(sub_market: str, sport: str, league: str = "", lead_minutes=None):
     """返回该盘口的矩阵门槛; 矩阵不存在返回 None(回退 tier 门槛)。
 
-    门槛 = 盘口层 + 运动微调 + 联赛微调 + 临场规则(距开赛<1h 且主体盘口 +extra)。
+    门槛 = 盘口层 + 运动微调 + 联赛微调 + 时间维度(距开赛时间分档, 主体盘口)。
     三级回退: 联赛层(n≥30 才设) → 运动层 → 盘口层。
     """
     mtx = _load_threshold_matrix()
@@ -701,9 +701,12 @@ def _matrix_min_ev(sub_market: str, sport: str, league: str = "", lead_minutes=N
         _la = mtx.get("league_adjust", {}).get(f"{sport}|{league}")
         if _la is not None:
             thr += _la
-    if lead_minutes is not None and lead_minutes < mtx.get("in_play_hours", 1.0) * 60:
-        if sub_market in mtx.get("main_markets", ("1x2", "hc", "ou")):
-            thr += mtx.get("in_play_extra", 3.0)
+    # 时间维度调整(数据驱动): 主体盘口按距开赛分钟数找对应桶加/减门槛
+    if lead_minutes is not None and sub_market in mtx.get("main_markets", ("1x2", "hc", "ou")):
+        for _b in mtx.get("time_adjust", []):
+            if _b.get("min_minutes", 0) <= lead_minutes < _b.get("max_minutes", 10**9):
+                thr += _b.get("adjust", 0.0)
+                break
     return max(1.0, thr)
 
 # EV 上限 — EV > 此值几乎全是假阳性（队名匹配到错误比赛）
