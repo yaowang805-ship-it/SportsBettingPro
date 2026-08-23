@@ -484,7 +484,27 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         # Pin先→BB后 流程: 对比阶段从缓存加载 Pin 赔率, 不重新拉取
         try:
             all_pin_matches = json.loads(pin_cache_path.read_text())
-            print(f"  📦 使用缓存 Pin 赔率 ({len(all_pin_matches)} 场比赛)")
+            # 按时间窗过滤: 缓存是全量 415 联赛(含 near/far/urgent), 但本次扫描只匹配
+            # 当前 BB 窗口的比赛。按 BB 比赛的起止时间过滤缓存, 减少队名匹配量
+            # (near 窗口 599 场 BB 匹配全量 ~1300 场缓存, 匹配量差 3 倍 —— 2026-08-23)。
+            _cache_before = len(all_pin_matches)
+            _bb_bts = [int(m.get("bt", 0)) for m in bb_matches if m.get("bt")]
+            if _bb_bts and all_pin_matches:
+                _lo_s = (min(_bb_bts) - 2 * 3600 * 1000) / 1000.0  # ±2h 缓冲
+                _hi_s = (max(_bb_bts) + 2 * 3600 * 1000) / 1000.0
+                _kept = []
+                for _pm in all_pin_matches:
+                    _st = _pm.get("start_time") or ""
+                    try:
+                        _ts = datetime.fromisoformat(str(_st).replace("Z", "+00:00")).timestamp()
+                    except (ValueError, TypeError):
+                        _kept.append(_pm)  # 解析不了时间 → 保守保留
+                        continue
+                    if _lo_s <= _ts <= _hi_s:
+                        _kept.append(_pm)
+                all_pin_matches = _kept
+            print(f"  📦 使用缓存 Pin 赔率 ({len(all_pin_matches)} 场比赛"
+                  + (f", 时间窗过滤 {_cache_before}→{len(all_pin_matches)}" if _bb_bts else "") + ")")
         except Exception:
             all_pin_matches = []
     else:
