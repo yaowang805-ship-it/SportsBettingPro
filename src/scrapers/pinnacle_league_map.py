@@ -253,12 +253,36 @@ def _save_league_keywords(data):
     print(f"  \U0001f4c1 联赛关键词已保存 ({len(data)} 条)")
 
 
+# 已知"无法映射到 Pinnacle"的联赛黑名单(持久化)。
+# _auto_map_leagues 每轮扫描对未匹配联赛做 difflib 模糊匹配, FB 对比常有 ~76 个未匹配小联赛,
+# 每次都重试一遍(76×415×difflib)把 near 扫描拖到 45min+。映射失败过一次就记黑名单,
+# 之后扫描直接跳过, 不再重试。用户 2026-08-23 修 near 扫描慢时引入。
+_UNMAPPABLE_FILE = DATA_DIR / "unmappable_leagues.json"
+
+
+def _load_unmappable_leagues():
+    try:
+        if _UNMAPPABLE_FILE.exists():
+            return set(json.loads(_UNMAPPABLE_FILE.read_text()))
+    except (OSError, ValueError):
+        pass
+    return set()
+
+
+def _save_unmappable_leagues(data):
+    try:
+        _UNMAPPABLE_FILE.write_text(json.dumps(sorted(data), ensure_ascii=False))
+    except OSError:
+        pass
+
+
 # ---------------------------------------------------------------------------
 # Module-level mutable data (initialised at import time)
 # ---------------------------------------------------------------------------
 
 TEAM_NAME_MAP = _load_team_name_map()
 LEAGUE_KEYWORDS = _load_league_keywords()
+UNMAPPABLE_LEAGUES = _load_unmappable_leagues()
 
 
 # 通用英文关键词：单独出现不足以确定联赛身份
@@ -348,6 +372,9 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
 
     for bb_name in sorted(unmatched_bb_leagues):
         if bb_name.lower() in _BANNED_AUTO_MAP:
+            continue
+        # 已知无法映射的联赛: 之前试过没映射上, 不再重试(difflib 重跑 76 个联赛是 near 扫描慢的主因)
+        if bb_name in UNMAPPABLE_LEAGUES:
             continue
         # ITF网球: 走地点匹配(_find_itf_league_ids), 不靠auto-map
         if bb_name.startswith('ITF'):
