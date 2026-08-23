@@ -845,10 +845,14 @@ def _run_fb_comparison(all_pin_leagues):
     print(f"  FB 比赛数: {len(fb_matches)}")
 
     from scrapers.bb_vs_pinnacle import compare_bb_vs_pinnacle
+    # 用 Pin 缓存(与主对比一致): 之前不带 use_pin_cache, 每次 near 扫描都对 FB 的 ~240 个
+    # 联赛全量拉 Pin 赔率+归档(1GB 归档库 INSERT OR IGNORE), 一轮 45min+ → near 永远跑不完,
+    # self_heal 误判停滞反复 kickstart(2026-08-23 排查)。缓存由预取线程维护, 直接读即可。
     fb_result = compare_bb_vs_pinnacle(
         fb_matches,
         all_pin_leagues,
         save_path=FB_COMPARISON_FILE,
+        use_pin_cache=True,
     )
 
     if fb_result is None:
