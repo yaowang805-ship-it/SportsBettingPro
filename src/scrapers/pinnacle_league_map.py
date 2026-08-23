@@ -585,6 +585,14 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
     else:
         print(f"  ℹ️ 自动映射: 无新联赛可匹配")
 
+    # 把本轮仍没映射上的联赛记入黑名单, 下次扫描不再重试(difflib 模糊匹配是 near 扫描慢的主因)
+    if not dry_run:
+        _still_unmapped = {n for n in unmatched_bb_leagues if n not in new_mappings and not n.startswith('ITF') and "双打" not in n}
+        _fresh = _still_unmapped - UNMAPPABLE_LEAGUES
+        if _fresh:
+            UNMAPPABLE_LEAGUES.update(_fresh)
+            _save_unmappable_leagues(UNMAPPABLE_LEAGUES)
+
     return new_mappings
 
 
