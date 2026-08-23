@@ -754,9 +754,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "阿根廷职业联赛": {
+      "attempts": 1,
+      "successes": 1,
+      "success_rate": 1.0
     }
   },
-  "updated": "2026-08-23T01:40:16.219323+00:00",
+  "updated": "2026-08-23T02:17:49.523634+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
