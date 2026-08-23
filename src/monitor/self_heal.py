@@ -12,6 +12,9 @@
   3. BB 数据陈旧(bb_odds_extracted.json mtime > 3h) → 告警(不自动重拉, 避免并发推送)
   4. Pinnacle 连通(api_get /sports):
        - 断 → 触发代理池自动换节点(pin_proxy_pool --recover)
+  4b. Pin 缓存健康(pin_matches_cache.json):
+       - 空(0场)或陈旧(>1h) 且 Pin 可达 → 主动重拉缓存(--pin-cache, 30min 冷却)
+         (空缓存会致增量扫描读空缓存→对比无结果→不推, 心跳却正常, 是静默失效)
   5. 陈旧锁文件(.pipeline_daemon.lock 的 PID 已死) → 清除
 
 只发"修复报告"当本轮有动作; 否则静默(不打扰)。launchd 每 10 分钟跑一次。
@@ -277,6 +280,30 @@ def main():
             statuses.append("Pinnacle: ⏳ 瞬时断连已自愈(代理池判定无需切换)")
         else:
             fixes.append(f"Pinnacle 断连 → 自动换节点失败: {detail[:80]}")
+
+    # 4b) Pin 缓存健康: 缓存空了(0场)会致增量扫描读空缓存→对比无结果→不推, 且
+    # 扫描心跳正常(跑完了但没产出) —— 传统"看心跳/进程"看门狗测不出的静默失效。
+    # 主动修复: 空缓存/陈旧且 Pin 可达 → 重拉缓存(30min 冷却)。
+    if PIN_CACHE.exists():
+        _cache_age = _file_age(PIN_CACHE)
+        try:
+            _cache_count = len(json.loads(PIN_CACHE.read_text()))
+        except Exception:
+            _cache_count = 0
+        _cache_stale_h = _cache_age is not None and _cache_age > 3600
+        if pin_ok and (_cache_count == 0 or _cache_stale_h):
+            _why = "空(0场)" if _cache_count == 0 else f"{_cache_count}场陈旧"
+            statuses.append(f"Pin 缓存: ⚠️ {_why} {(_cache_age or 0)/60:.0f}min 未更新")
+            if _cache_repair_allowed():
+                if _repopulate_pin_cache():
+                    fixes.append("Pin 缓存空/陈旧 → 已触发重拉缓存")
+                    _mark_cache_repair()
+        elif _cache_count == 0:
+            statuses.append("Pin 缓存: ⚠️ 空(0场), 但 Pin 不可达, 待恢复后重拉")
+        else:
+            statuses.append(f"Pin 缓存: ✅ {_cache_count}场 {(_cache_age or 0)/60:.0f}min 前更新")
+    else:
+        statuses.append("Pin 缓存: ⚠️ 文件不存在")
 
     # 5) 陈旧锁文件
     if _clear_stale_lock():
