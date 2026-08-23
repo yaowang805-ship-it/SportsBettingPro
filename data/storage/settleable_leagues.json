@@ -231,7 +231,7 @@
       "success_rate": 0.0
     },
     "美国冠军联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -321,7 +321,7 @@
       "success_rate": 0.0
     },
     "美国甲级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -656,7 +656,7 @@
       "success_rate": 0.0
     },
     "墨西哥甲级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -711,7 +711,7 @@
       "success_rate": 0.0
     },
     "意大利乙级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -736,12 +736,27 @@
       "success_rate": 0.0
     },
     "委内瑞拉杯": {
+      "attempts": 4,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "英格兰乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "土耳其超级联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "FIBA奥运女子资格赛": {
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
     }
   },
-  "updated": "2026-08-22T12:20:25.818687+00:00",
+  "updated": "2026-08-23T01:40:16.219323+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

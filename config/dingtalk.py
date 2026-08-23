@@ -9,6 +9,7 @@ import socket
 import ssl
 import struct
 import random
+import time
 
 from config.logging_config import get_logger
 from config.settings import DINGTALK_WEBHOOK
@@ -116,30 +117,35 @@ def _connect_with_fallback(hostname: str):
         else:
             ip = ips[0]
 
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(_TIMEOUT)
-        try:
-            sock.connect((ip, 443))
-            # V5.10(2026-08-22): 用系统 CA 文件而非 certifi 默认。钉钉证书是
-            # GlobalSign GCC R3 OV TLS CA 2024, Python 的 certifi 库里缺这张中间证书,
-            # 导致 SSL 握手 EOF/验证失败(实测 08-22 10:01 起钉钉推送全挂, curl 却正常
-            # 因为 curl 走 /etc/ssl/cert.pem 系统证书)。
+        # 每个 IP 重试 3 次「TCP连接 + TLS握手」(间歇性 SSL EOF, 2026-08-23 实测
+        # 连测 5 次全挂、再测 2 次全好 —— 单次握手失败不代表连接不可用, 重试扛过瞬时抖动)。
+        for _retry in range(3):
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(_TIMEOUT)
             try:
-                ctx = ssl.create_default_context(cafile="/etc/ssl/cert.pem")
+                sock.connect((ip, 443))
+                # V5.10(2026-08-22): 用系统 CA 文件而非 certifi 默认。钉钉证书是
+                # GlobalSign GCC R3 OV TLS CA 2024, Python 的 certifi 库里缺这张中间证书,
+                # 导致 SSL 握手 EOF/验证失败(实测 08-22 10:01 起钉钉推送全挂, curl 却正常
+                # 因为 curl 走 /etc/ssl/cert.pem 系统证书)。
+                try:
+                    ctx = ssl.create_default_context(cafile="/etc/ssl/cert.pem")
+                except Exception:
+                    ctx = ssl.create_default_context()  # 回退 certifi(非 macOS 环境)
+                ssock = ctx.wrap_socket(sock, server_hostname=hostname)
+                labels = ["硬编码", "DNS(8.8.8.8)", "系统DNS"]
+                logger.info(f"  钉钉连接成功 ({labels[attempt]} IP: {ip})")
+                return ssock
             except Exception:
-                ctx = ssl.create_default_context()  # 回退 certifi(非 macOS 环境)
-            ssock = ctx.wrap_socket(sock, server_hostname=hostname)
-            labels = ["硬编码", "DNS(8.8.8.8)", "系统DNS"]
-            logger.info(f"  钉钉连接成功 ({labels[attempt]} IP: {ip})")
-            return ssock
-        except Exception:
-            try:
-                sock.close()
-            except Exception:
-                pass
-            if attempt == 0:
-                logger.warning(f"  硬编码 IP {_REAL_IP} 连接失败")
-            continue
+                try:
+                    sock.close()
+                except Exception:
+                    pass
+                if _retry < 2:
+                    time.sleep(1.5)   # 瞬时抖动, 等 1.5s 再试同一 IP
+        if attempt == 0:
+            logger.warning(f"  硬编码 IP {_REAL_IP} 连接失败(重试3次)")
+        # 继续下一个 IP
 
     return None
 
