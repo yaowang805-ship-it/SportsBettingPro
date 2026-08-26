@@ -30,7 +30,6 @@ COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison.json"
 COMPARISON_FILE_NEAR = DATA_DIR / "bb_vs_pinnacle_comparison_near.json"
 COMPARISON_FILE_FAR = DATA_DIR / "bb_vs_pinnacle_comparison_far.json"
 COMPARISON_FILE_URGENT = DATA_DIR / "bb_vs_pinnacle_comparison_urgent.json"
-FB_COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison_FB.json"
 ODDSAPI_COMPARISON_FILE = DATA_DIR / "bb_vs_oddsapi_comparison.json"
 FINGERPRINT_FILE = DATA_DIR / "pushed_fingerprints.json"
 CLV_LOG_FILE = DATA_DIR / "clv_tracking.csv"
@@ -502,42 +501,67 @@ def _log_clv(opps: list):
     insert_push_clv(opps)
 
     # CSV 备份
+    # V5.11: 改 DictWriter 按表头写。之前用 csv.writer 定长 20 列, 而 clv_tracking.csv
+    # 表头是 22 列(validate 侧加过 pin_max_stake/line) —— 真实投注行的 line 恒空,
+    # 采集器对 hc/ou 拿不到线值就直接跳过, 真实投注的让球/大小球永远采不到收盘价。
+    # 同时 designation 写**原始**标签(不带"(线值)"后缀), 与 validate 口径一致。
     import csv
+    fieldnames = ["timestamp", "sport", "league", "home", "away", "home_pin", "away_pin",
+                  "designation", "sub_market", "bb_odds", "pin_odds", "fair_price", "ev_pct",
+                  "stake", "tier", "match_epoch", "bb_price_source", "pin_league_id",
+                  "pin_match_id", "source", "pin_max_stake", "line"]
     exists = CLV_LOG_FILE.exists()
-    with open(CLV_LOG_FILE, "a", newline="") as f:
-        writer = csv.writer(f)
+    if exists:
+        # 表头以磁盘为准: validate 侧(clv_collector)加列时会重排表头, 这边若按自己的
+        # 顺序写就又会错位 —— 正是这次丢掉 3 天真实投注数据的原因。缺列先就地迁移
+        # (复用采集器的幂等迁移), 再按磁盘表头顺序写。
+        try:
+            from src.monitor.clv_collector import _migrate_csv_header
+            _migrate_csv_header(CLV_LOG_FILE, fieldnames)
+        except Exception:
+            pass
+        try:
+            with open(CLV_LOG_FILE, encoding="utf-8-sig", newline="") as f:
+                disk_header = next(csv.reader(f), None)
+            if disk_header and set(disk_header) >= set(fieldnames):
+                fieldnames = disk_header
+        except (OSError, StopIteration):
+            pass
+    with open(CLV_LOG_FILE, "a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
         if not exists:
-            writer.writerow([
-                "timestamp", "sport", "league", "home", "away",
-                "home_pin", "away_pin",
-                "designation", "sub_market", "bb_odds", "pin_odds",
-                "fair_price", "ev_pct", "stake", "tier", "match_epoch",
-                "bb_price_source", "pin_league_id", "pin_match_id", "source",
-            ])
+            writer.writeheader()
         now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         for o in opps:
-            writer.writerow([
-                now,
-                o.get("sport", ""),
-                o.get("league", ""),
-                o.get("home_cn", ""),
-                o.get("away_cn", ""),
-                o.get("home_team", o.get("home_pin", "")),  # Pinnacle 英文名
-                o.get("away_team", o.get("away_pin", "")),  # Pinnacle 英文名
-                o.get("designation", ""),
-                o.get("_sub_market", o.get("_market", "")),
-                o.get("bb_odds", 0),
-                o.get("pin_odds", 0),
-                o.get("fair_price", 0),
-                o.get("ev_pct", 0),
-                o.get("_stake", 0),
-                o.get("_tier", 0),
-                o.get("_pin_epoch", 0) or 0,  # V5 fix: empty → 0, not ''
-                o.get("bb_price_source", ""),  # BB / FB / BB/FB
-                o.get("_pin_league_id", ""),
-                o.get("_pin_match_id", ""),
-                "push",
-            ])
+            line = str(o.get("line", "") or "")
+            desig = o.get("designation", "")
+            # 推送用的 designation 是展示名 "让球主胜(+0/0.5)", 剥回原始标签
+            if line and desig.endswith(f"({line})"):
+                desig = desig[: -(len(line) + 2)]
+            writer.writerow({
+                "timestamp": now,
+                "sport": o.get("sport", ""),
+                "league": o.get("league", ""),
+                "home": o.get("home_cn", ""),
+                "away": o.get("away_cn", ""),
+                "home_pin": o.get("home_team", o.get("home_pin", "")),   # Pinnacle 英文名
+                "away_pin": o.get("away_team", o.get("away_pin", "")),   # Pinnacle 英文名
+                "designation": desig,
+                "sub_market": o.get("_sub_market", o.get("_market", "")),
+                "bb_odds": o.get("bb_odds", 0),
+                "pin_odds": o.get("pin_odds", 0),
+                "fair_price": o.get("fair_price", 0),
+                "ev_pct": o.get("ev_pct", 0),
+                "stake": o.get("_stake", 0),
+                "tier": o.get("_tier", 0),
+                "match_epoch": o.get("_pin_epoch", 0) or 0,  # V5 fix: empty → 0, not ''
+                "bb_price_source": o.get("bb_price_source", ""),  # BB / FB / BB/FB
+                "pin_league_id": o.get("_pin_league_id", ""),
+                "pin_match_id": o.get("_pin_match_id", ""),
+                "source": "push",
+                "pin_max_stake": o.get("pin_max_stake", "") or o.get("_pin_max_stake", ""),
+                "line": line,
+            })
 
 
 # ── CLV 趋势检查 ──
@@ -687,26 +711,41 @@ def _load_threshold_matrix():
 def _matrix_min_ev(sub_market: str, sport: str, league: str = "", lead_minutes=None):
     """返回该盘口的矩阵门槛; 矩阵不存在返回 None(回退 tier 门槛)。
 
-    门槛 = 盘口层 + 运动微调 + 联赛微调 + 时间维度(距开赛时间分档, 主体盘口)。
+    门槛 = 盘口层(时间窗×盘口独立门槛优先, 否则 base+time pp) + 运动微调 + 联赛微调。
     三级回退: 联赛层(n≥30 才设) → 运动层 → 盘口层。
     """
     mtx = _load_threshold_matrix()
     if not mtx:
         return None
     markets = mtx.get("markets", {})
-    thr = markets.get(sub_market, mtx.get("default_threshold", 8.0))
-    thr += mtx.get("sport_adjust", {}).get(sport, 0.0)
+    is_main = sub_market in mtx.get("main_markets", ("1x2", "hc", "ou"))
+    # 运动×盘口独立门槛(2026-08-25): 非足球运动 n≥30 用各自数据; 足球走时间×盘口维度。
+    if sport != "football":
+        sm_thr = mtx.get("sport_market", {}).get(sport, {}).get(sub_market)
+        if sm_thr is not None:
+            thr = sm_thr
+        else:
+            # 非足球但样本不足: base + sport_adjust(不加足球主导的时间维度)
+            thr = markets.get(sub_market, mtx.get("default_threshold", 8.0))
+            thr += mtx.get("sport_adjust", {}).get(sport, 0.0)
+    else:
+        # 足球: base + 时间窗×盘口独立门槛(该格有数据则用它, 否则 time_adjust pp)
+        thr = markets.get(sub_market, mtx.get("default_threshold", 8.0))
+        market_time = mtx.get("market_time", {})
+        if lead_minutes is not None and market_time:
+            for _b in mtx.get("time_adjust", []):
+                if _b.get("min_minutes", 0) <= lead_minutes < _b.get("max_minutes", 10**9):
+                    _t = market_time.get(sub_market, {}).get(_b.get("label"))
+                    if _t is not None:
+                        thr = _t
+                    elif is_main:
+                        thr += _b.get("adjust", 0.0)
+                    break
     # 联赛层调整(数据驱动, 样本不足的联赛矩阵里没有, 自动回退运动层)
     if league:
         _la = mtx.get("league_adjust", {}).get(f"{sport}|{league}")
         if _la is not None:
             thr += _la
-    # 时间维度调整(数据驱动): 主体盘口按距开赛分钟数找对应桶加/减门槛
-    if lead_minutes is not None and sub_market in mtx.get("main_markets", ("1x2", "hc", "ou")):
-        for _b in mtx.get("time_adjust", []):
-            if _b.get("min_minutes", 0) <= lead_minutes < _b.get("max_minutes", 10**9):
-                thr += _b.get("adjust", 0.0)
-                break
     return max(1.0, thr)
 
 # EV 上限 — EV > 此值几乎全是假阳性（队名匹配到错误比赛）
@@ -1343,6 +1382,29 @@ def _verify_bb_price_exists(home: str, away: str, designation: str,
     return True  # 比赛不在 BB 数据中，放行
 
 
+def _ml_dir_source(platform_sources, sub_market, designation):
+    """返回该方向(主/和/客)真正的赔率来源平台(BB/FB)。
+
+    之前 platform_sources["ml"] 是整场单值, FB 主/和高就整场标 FB, 导致
+    "客胜其实 BB 更高、却标 FB价"的错标(2026-08-23 用户反馈)。现按 ml_dir/ht_ml_dir
+    逐方向取来源, 取不到回退 None(调用方用整场 price_source)。
+    """
+    des = (designation or "").lower()
+    key = "ht_ml_dir" if str(sub_market).startswith("ht") else "ml_dir"
+    dirs = platform_sources.get(key)
+    if not isinstance(dirs, list):
+        return None
+    if "和" in des or "draw" in des:
+        idx = 1
+    elif "客" in des or "away" in des:
+        idx = 2 if len(dirs) >= 3 else 1
+    else:  # 主
+        idx = 0
+    if idx < len(dirs):
+        return dirs[idx]
+    return None
+
+
 def _collect_opportunities(match, market_key):
     """从指定市场收集 +EV 机会。校准过滤：时间匹配必须高分才推送。
 
@@ -1526,7 +1588,13 @@ def _collect_opportunities(match, market_key):
             continue
 
         # EV 上限过滤：高赔率天然高 EV，用动态上限防假阳性
-        _dynamic_cap = max(EV_CAP, (bb_odds - 1) * 20)
+        # 特殊盘口(先进球/正确比分/半场/角球等)Pin定价粗, 高EV可能是真机会不是错配
+        # (用户 2026-08-23: 先进球不要因高EV拦截, 先判错配, 没错配就收集数据驱动)。
+        # 只对主体盘口(1x2/hc/ou)用12%上限; 特殊盘口放宽到50%, 靠队名匹配score+CLV数据拦截。
+        if sub_market in ("1x2", "hc", "ou"):
+            _dynamic_cap = max(EV_CAP, (bb_odds - 1) * 20)
+        else:
+            _dynamic_cap = max(50.0, (bb_odds - 1) * 40)
         if ev > _dynamic_cap:
             continue
 
@@ -1544,6 +1612,12 @@ def _collect_opportunities(match, market_key):
 
         # V4.2: 溢价异常高检查改为 per-opportunity (不再用 match-level flag 误伤无辜)
         flags = match.get("flags", [])
+
+        # 球员冲突 = 同一队出现在 Pin 多场比赛(赛前+滚球两个 matchup), 匹配到的 Pin 价
+        # 可能来自错误的场次 → 假 EV(实测 MLB 赛前[1.56,2.59] 被滚球[...,1.91] 错配, 假EV 23.67%)。
+        # 直接过滤, 不推送(用户 2026-08-23 反馈)。
+        if any("球员冲突" in f for f in flags):
+            continue
 
         # 仅保留 HTFT ev>30 的直接封杀（BB/Pin 半全场定义不一致，产品不同）
         if sub_market == "htft" and ev > 30:
@@ -1610,6 +1684,7 @@ def _collect_opportunities(match, market_key):
             "_market_type": market_key,  # "opportunities"|"handicap"|"over_under"|...
             "_sub_market": sub_market,  # "1x2"|"ht"|"btts"|"dc"|"oe"|"htft"|...
             "line": line,               # 盘口线 (让球/大小), 供二次验价+虚拟投注
+            "pin_max_stake": match.get("pin_max_stake", ""),  # Pin 注额上限=定价信心, 进CLV库供后续分析
             "_match_type": match_type,  # "name"|"time", 供低置信时间匹配降仓
             "_ml_swapped": any("主客反转" in f for f in match.get("flags", [])),  # 二次验价方向映射用
 
@@ -1620,7 +1695,8 @@ def _collect_opportunities(match, market_key):
             "_kelly_pct": kelly_pct,
             "_tier": tier,
             "_pin_epoch": match.get("start_time_pin_epoch"),  # 用于显示开赛时间
-            "bb_price_source": price_source,  # 标记赔率来源平台
+            "bb_price_source": _ml_dir_source(platform_sources, sub_market,
+                                              opp.get("designation", "")) or price_source,
         })
     return result
 
@@ -1662,8 +1738,12 @@ def _collect_opportunities_from_file():
     同时读取主对比(BB+FB合并)和FB独立对比文件，去重合并。
     同场比赛同一盘口取最高赔率（跨文件联赛名可能不同导致指纹不匹配）。
     """
-    # 读取主对比文件
-    main_opps = _read_comparison_file(COMPARISON_FILE)
+    # 全量扫描(PUSH_LABEL 含"全量扫描")读 MAIN(24-72h远盘); 增量扫描只读 near/urgent(<24h),
+    # 不读 MAIN —— 否则远盘机会被增量提前推掉, 全量扫描反而没新机会(2026-08-26 用户反馈)。
+    import os as _os
+    _is_full_scan = "全量扫描" in _os.environ.get("PUSH_LABEL", "")
+    # 读取主对比文件(仅全量扫描)
+    main_opps = _read_comparison_file(COMPARISON_FILE) if _is_full_scan else []
     # 读取 near/far/urgent 独立对比文件
     near_opps = _read_comparison_file(COMPARISON_FILE_NEAR)
     far_opps = _read_comparison_file(COMPARISON_FILE_FAR)
@@ -1671,8 +1751,6 @@ def _collect_opportunities_from_file():
     if near_opps: main_opps.extend(near_opps)
     if far_opps: main_opps.extend(far_opps)
     if urgent_opps: main_opps.extend(urgent_opps)
-    # 读取FB独立对比文件
-    fb_opps = _read_comparison_file(FB_COMPARISON_FILE)
     # 读取辅助对比文件 (the-odds-api: WNBA/NCAAF/Boxing等)
     aux_opps = _read_comparison_file(ODDSAPI_COMPARISON_FILE)
     # 合并辅助对比机会 (WNBA/NCAAF/Boxing等)
@@ -1680,21 +1758,8 @@ def _collect_opportunities_from_file():
         main_opps.extend(aux_opps)
         logger.info("辅助对比(the-odds-api): 添加 %d 个机会", len(aux_opps))
 
-    if not fb_opps:
-        return main_opps
-
-    # 去重合并：FB机会中指纹不在主列表的才添加
-    main_fps = {_make_fingerprint(o) for o in main_opps}
+    # FB 已通过 --with-fb 合并进主对比(取最高赔率), 不再单独读 FB 对比文件(2026-08-23)
     merged = list(main_opps)
-    added = 0
-    for o in fb_opps:
-        fp = _make_fingerprint(o)
-        if fp not in main_fps:
-            merged.append(o)
-            main_fps.add(fp)
-            added += 1
-    if added:
-        logger.info("FB独立对比: 添加 %d 个独有机会", added)
 
     # 二次去重：同场比赛同一盘口只保留最高赔率。
     # 队名可能因 BB/FB 平台翻译不同而完全不同 (如 "弗雷斯尼洛虾" vs "甘布西诺弗雷斯尼洛")，
@@ -1871,8 +1936,8 @@ def _compute_sport_summary():
         except Exception:
             pass
 
-    # 从对比文件读匹配数据和机会数据（主对比 + FB 独立对比）
-    for fpath in (COMPARISON_FILE, FB_COMPARISON_FILE):
+    # 从对比文件读匹配数据和机会数据（FB 已通过 --with-fb 合并进主对比, 不再单独读 FB 文件）
+    for fpath in (COMPARISON_FILE,):
         if fpath.exists():
             try:
                 data = json.loads(fpath.read_text())
@@ -2017,6 +2082,10 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
     for (platform, sport, league, home, away), opps in sorted_groups:
         # 组内按加权 EV 降序（市场质量高的优先）
         opps.sort(key=lambda o: -o.get("_weighted_ev", o["ev_pct"]))
+        # 该组所有机会都因投注额归零被过滤(低于¥30/赔率超上限) → 整组跳过,
+        # 否则会推送"只有队名没有赔率/投注额"的空壳标题(2026-08-23 用户反馈)。
+        if not any(o.get("_stake", 0) > 0 for o in opps):
+            continue
 
         # 平台分隔：BB/FB 分开, 投注不用切换平台
         if platform != prev_platform:
@@ -3237,10 +3306,18 @@ def _refresh_live_odds():
         return False, errors
 
     pin_ok = False
+    # 🔴 铁律(Pin先BB后): 推送前不能先拉BB后拉Pin —— 公平价(Pin)必须先于零售价(BB),
+    #    否则 BB 比 Pin 旧, 比价会用陈旧零售价对新鲜公平价(假edge)。
+    #    全量扫描 Step2 已预取 Pin 缓存, 这里优先用 6h 内的缓存(Pin 早于本次 BB);
+    #    缓存过期才回退到实时拉 Pin(顺序不完美但功能兜底)。
+    pin_cache_path = DATA_DIR / "pin_matches_cache.json"
+    _use_pin_cache = (pin_cache_path.exists()
+                      and (time.time() - pin_cache_path.stat().st_mtime) < 6 * 3600)
     try:
         result = compare_bb_vs_pinnacle(
             bb_matches, all_pin_leagues,
             save_path=COMPARISON_FILE,
+            use_pin_cache=_use_pin_cache,
         )
         if result is not None:
             logger.info("  ✅ BB主对比完成 (%.0fs), %d 场匹配, %d 个+EV",
@@ -3370,9 +3447,10 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
     if clv_warnings:
         warnings = (warnings or []) + clv_warnings
     body = _format_body(qualified, warnings)
-    if not body:
+    if not body or body.count('#####') == 0:
         # V5.1 铁律: 指纹只在推送成功后写入 — 空推不存指纹
-        logger.info("empty body, skip (指纹未保存 — 下次扫描重新评估)")
+        # 0 条机会(全被门槛/注额过滤)不推, 只留日志(2026-08-23 用户反馈"0条"空推刷屏)
+        logger.info("empty body or 0 机会 (指纹未保存 — 下次扫描重新评估)")
         return
 
     # 扫描标记

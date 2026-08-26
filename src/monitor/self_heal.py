@@ -11,7 +11,7 @@
        - > 45min 没更新(预期 urgent 15min + 抖动) → kickstart 重启守护进程
   3. BB 数据陈旧(bb_odds_extracted.json mtime > 3h) → 告警(不自动重拉, 避免并发推送)
   4. Pinnacle 连通(api_get /sports):
-       - 断 → 触发代理池自动换节点(pin_proxy_pool --recover)
+       - 断 → 仅告警, 不自动换节点(2026-08-24 用户铁律: 换节点由用户手动决定)
   4b. Pin 缓存健康(pin_matches_cache.json):
        - 空(0场)或陈旧(>1h) 且 Pin 可达 → 主动重拉缓存(--pin-cache, 30min 冷却)
          (空缓存会致增量扫描读空缓存→对比无结果→不推, 心跳却正常, 是静默失效)
@@ -271,15 +271,8 @@ def main():
     pin_ok, pin_detail = check_pin()
     statuses.append(f"Pinnacle: {'✅' if pin_ok else '❌'} {pin_detail}")
     if not pin_ok:
-        ok, detail, switched = recover_pin()
-        if ok and switched:
-            fixes.append(f"Pinnacle 断连 → 自动换节点成功: {detail[:80]}")
-        elif ok and not switched:
-            # 瞬时故障(SSL EOF)已自愈: 代理池判定无需切换。不算修复, 否则每次都发
-            # 自相矛盾的"断连→无需切换"报告(用户 2026-08-21 反馈"总是收到")。
-            statuses.append("Pinnacle: ⏳ 瞬时断连已自愈(代理池判定无需切换)")
-        else:
-            fixes.append(f"Pinnacle 断连 → 自动换节点失败: {detail[:80]}")
+        # 铁律(2026-08-24 用户): 看门狗只告警, 不允许自动换节点。换节点由用户手动决定。
+        fixes.append(f"Pinnacle 断连: {pin_detail} → 仅告警, 不自动换节点(请手动处理)")
 
     # 4b) Pin 缓存健康: 缓存空了(0场)会致增量扫描读空缓存→对比无结果→不推, 且
     # 扫描心跳正常(跑完了但没产出) —— 传统"看心跳/进程"看门狗测不出的静默失效。

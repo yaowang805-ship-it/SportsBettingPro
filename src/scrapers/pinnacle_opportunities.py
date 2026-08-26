@@ -295,6 +295,7 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
 
         entry = {
             "league": bb_league,
+            "bb_match_id": bb_m.get("id", ""),  # BB比赛ID, 结算按ID精确匹配(角球漏了, 2026-08-25 补)
             "market_type": "角球",
             "match_type": "name" if best_score >= 0.85 else "time",
             "home_bb": bb_home,
@@ -590,6 +591,7 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                 pass
         entry = {
             "league": bb_league,
+            "bb_match_id": m.get("id", ""),  # BB比赛ID, 结算按ID精确匹配(特殊盘口漏了, 2026-08-25 补)
             "market_type": "特殊盘口",
             "match_type": "name" if best_score >= 0.85 else "time",
             "home_bb": bb_home,

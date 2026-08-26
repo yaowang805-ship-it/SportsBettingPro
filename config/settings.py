@@ -123,9 +123,15 @@ def send_dingtalk(title: str, body: str, timeout: int = 10, urgent: bool = False
     # 非投注推荐信息每日限流(urgent 故障告警除外)
     if not urgent and not _is_betting_push(title) and not _non_betting_quota_ok():
         return False
-    # 确保关键词存在
+    # 确保关键词存在。关键词只作钉钉机器人校验, 不放抬头(抬头应是 title 本身),
+    # 否则所有消息抬头都是"投注推荐"(2026-08-25 用户反馈)。
     if DINGTALK_KEYWORD not in body:
-        body = f"**{DINGTALK_KEYWORD} · {title}**\n\n{body}"
+        if _is_betting_push(title):
+            # 投注推荐正文已有 header(如 "全量扫描·24-72h +EV 机会"), 不重复 prepend title,
+            # 否则抬头和正文 header 重复(2026-08-26 用户反馈)。
+            body = f"{body}\n\n---\n*（{DINGTALK_KEYWORD}）*"
+        else:
+            body = f"**{title}**\n\n{body}\n\n---\n*（{DINGTALK_KEYWORD}）*"
     return _real_send(body, msgtype="markdown", title=title)
 
 # 日预算默认值与 config.constants.BANKROLL 保持一致 (¥20,000)

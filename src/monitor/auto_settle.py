@@ -883,8 +883,11 @@ def auto_settle(dry_run: bool = False) -> int:
     league_groups = {}
     skipped_leagues = 0
     for bet in pending:
-        key = (bet.get("sport", ""), bet.get("league", ""))
-        lg_name = bet.get("league", "")
+        # 结算源(LEAGUE_SPORT_MAP/settleable_leagues)用中文联赛名, 投注存英文 league,
+        # 要用 league_cn(中文)匹配, 否则英文对不上中文 → 0 次尝试跳过(2026-08-24 修)。
+        lg_cn = bet.get("league_cn") or bet.get("league", "")
+        key = (bet.get("sport", ""), lg_cn)
+        lg_name = lg_cn
         # 跳过已证明失败的联赛
         fc = _failure_cache.get(lg_name, {})
         if fc.get("consecutive", 0) >= 3:
@@ -1293,7 +1296,7 @@ def _auto_void_timeout(max_days: int = 5, skip_settleable: bool = False) -> int:
     if skip_settleable:
         from src.core.settleability import is_league_settleable
         pending = [b for b in pending if not is_league_settleable(
-            b.get("league", ""), b.get("sport", "")
+            b.get("league_cn") or b.get("league", ""), b.get("sport", "")
         )]
 
     now = datetime.now(timezone.utc)

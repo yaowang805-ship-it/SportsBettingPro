@@ -1116,6 +1116,10 @@ def extract_match_odds(record, sport_key, platform="BB"):
             })
         if not lines:
             return None
+        # 主线 = 大小赔率最平衡(|over-under| 最小)的线。BB API 市场顺序不稳定, 直接 lines[0]
+        # 可能把备用线(如 8.5)当主线, 与 Pinnacle 主线(9.0)错位 → 线值错配杀光机会。
+        # 改为按 |over_odds-under_odds| 排序取最平衡的当主线(与 _extract_corner_hc 按 |线| 排序同理)。
+        lines.sort(key=lambda l: abs(l.get("over_odds", 0) - l.get("under_odds", 0)))
         return {"primary": lines[0], "alternates": lines[1:]}
 
     def _extract_special_market(mty_code, period):
@@ -1318,6 +1322,10 @@ def _merge_single_match(platform_matches):
     # sources 初始标记为第一个平台，只有某平台真正有更高赔率时才标记为它
     first_plat = platform_matches[0][0]
     sources = {key: first_plat for key in ["ml", "handicap", "ou", "dnb", "dc"]}
+    # 逐方向(主/和/客)的来源 —— 之前 sources["ml"] 是整场单值, FB 的主/和高就整场标 FB,
+    # 导致"客胜其实是 BB 更高、却被标成 FB价"的错标(2026-08-23 用户反馈)。
+    sources["ml_dir"] = None
+    sources["ht_ml_dir"] = None
 
     def _update_source(market_key, base_val, plat_val, platform):
         """当 base_val < plat_val 时才更新 source 为指定平台，否则不变。"""
@@ -1330,12 +1338,15 @@ def _merge_single_match(platform_matches):
         base_ml = base.get("odds_ft", {}).get("ml", [])
         plat_ml = m.get("odds_ft", {}).get("ml", [])
         if plat_ml and len(plat_ml) >= len(base_ml):
+            if sources["ml_dir"] is None or len(sources["ml_dir"]) != len(base_ml):
+                sources["ml_dir"] = [first_plat] * len(base_ml)
             for i in range(min(len(base_ml), len(plat_ml))):
                 if plat_ml[i] > base_ml[i]:
                     # 安全校验: 同场比赛不同平台赔率差异不应>25%
                     if base_ml[i] > 0 and plat_ml[i] / base_ml[i] < 1.25:
                         base_ml[i] = plat_ml[i]
                         sources["ml"] = platform
+                        sources["ml_dir"][i] = platform
             if len(plat_ml) > len(base_ml):
                 base["odds_ft"]["ml"] = plat_ml
                 sources["ml"] = platform
@@ -1416,9 +1427,12 @@ def _merge_single_match(platform_matches):
             base_ht_ml = base_ht.get("ml", [])
             plat_ht_ml = plat_ht.get("ml", [])
             if plat_ht_ml and len(plat_ht_ml) >= len(base_ht_ml):
+                if sources["ht_ml_dir"] is None or len(sources["ht_ml_dir"]) != len(base_ht_ml):
+                    sources["ht_ml_dir"] = [first_plat] * len(base_ht_ml)
                 for i in range(min(len(base_ht_ml), len(plat_ht_ml))):
                     if plat_ht_ml[i] > base_ht_ml[i]:
                         base_ht_ml[i] = plat_ht_ml[i]
+                        sources["ht_ml_dir"][i] = platform
                 if len(plat_ht_ml) > len(base_ht_ml):
                     base_ht["ml"] = plat_ht_ml
 
@@ -1593,9 +1607,14 @@ def _merge_platform_results(platform_results):
     merged = []
     for key, platform_matches in groups.items():
         if len(platform_matches) == 1:
+            only_platform = platform_matches[0][0]
+            # FB-only 场次(BB 不覆盖)不放行: FB 只用于 BB 也覆盖的比赛上"取更高赔率",
+            # 不补 BB 没有的比赛(2026-08-24 用户要求)。
+            if only_platform == "FB":
+                continue
             m = platform_matches[0][1].copy()
-            m["platform"] = platform_matches[0][0]
-            m["platform_sources"] = {"main": platform_matches[0][0]}
+            m["platform"] = only_platform
+            m["platform_sources"] = {"main": only_platform}
             merged.append(m)
         else:
             merged.append(_merge_single_match(platform_matches))

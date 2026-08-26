@@ -38,8 +38,6 @@ COMPARISON_FILE_URGENT = DATA_DIR / "bb_vs_pinnacle_comparison_urgent.json"  # V
 PIN_LEAGUE_STRUCTURE = DATA_DIR / "pinnacle_league_structure.json"
 
 # FB 独立对比通道
-FB_EXTRACTED = DATA_DIR / "bb_odds_extracted_FB.json"
-FB_COMPARISON_FILE = DATA_DIR / "bb_vs_pinnacle_comparison_FB.json"
 
 from scrapers.bb_api_fetcher import main as fetch_bb
 from scrapers.bb_vs_pinnacle import (
@@ -462,14 +460,8 @@ def run_incremental(time_window: str = "all"):
 
     print(f"  [{label}]: {len(bb_matches)} 场")
 
-    # 3. FB 独立数据刷新 + 对比 — 只在 near/far 扫描做, urgent 临场扫描跳过以提速到 <1min
-    #    (FB 机会不抹杀: near 每5min 仍会跑 FB 独立对比, 只是临场 urgent 不再等它)
-    fb_had_new = False
-    if time_window != "urgent":
-        print(f"\n📡 检查FB数据新鲜度...")
-        _refresh_fb_data()
-        if all_pin_leagues:
-            fb_had_new = _run_fb_comparison(all_pin_leagues)
+    # 3. FB 已通过 --with-fb 合并进 BB(取最高赔率), 不再单独跑 FB 独立对比
+    #    (用户 2026-08-23 要求: BB/FB 同时提取取最高赔率, 不要"BB不覆盖才用FB")
 
     # 4. 双向变动检测: BB快照 + Pin快照, 任一方变动都触发对比
     if not all_pin_leagues:
@@ -568,7 +560,7 @@ def run_incremental(time_window: str = "all"):
     push_ok = True
     _push_throttle_file = DATA_DIR / ".last_push_time"
 
-    if new_result.get("details") or fb_had_new:
+    if new_result.get("details"):
         # 聪明钱信号已清除节流; 直接推
         print(f"\n📣 新+EV机会 → 运行推送 [{label}]...")
         push_ok = _run_push(label)
@@ -629,10 +621,7 @@ def run_incremental_scan():
     bb_matches = [m for m in bb_matches if int(m.get("bt", 0)) - now_ms <= h48_ms]
     print(f"  [48h]: {len(bb_matches)} 场")
 
-    # 3. FB 独立刷新 + 对比 (解耦后每次扫描都做, 保证 FB 对比文件新鲜)
-    _refresh_fb_data()
-    if all_pin_leagues:
-        _run_fb_comparison(all_pin_leagues)
+    # 3. FB 已通过 --with-fb 合并进 BB(取最高赔率), 不再单独跑 FB 独立对比
 
     if not all_pin_leagues:
         all_pin_leagues = _load_league_structure()
@@ -774,14 +763,19 @@ def _fetch_bb_data(time_window: str = "all"):
 
 
 def _run_fetcher():
-    """运行BB API抓取。"""
+    """运行BB API抓取(同时抓 BB+FB, 合并取最高赔率)。
+
+    用户要求(2026-08-23 澄清): BB/FB 同时提取, 哪个赔率高就用哪个跟 Pin 公平价比价推送。
+    之前只跑 --all-sports(默认 with_fb=False, 只拉BB), 另开 FB-only 独立对比 = "BB不覆盖才用FB"。
+    改为 --with-fb 让增量扫描也拉 BB+FB 合并(取最高赔率)。
+    """
     import subprocess
     import sys
     try:
         result = subprocess.run(
-            [sys.executable, "-m", "src.scrapers.bb_api_fetcher", "--all-sports"],
+            [sys.executable, "-m", "src.scrapers.bb_api_fetcher", "--all-sports", "--with-fb"],
             capture_output=True, text=True, cwd=SRC_DIR.parent,
-            timeout=120,
+            timeout=180,
         )
         if result.returncode != 0:
             print(f"  ❌ bb_api_fetcher 失败: {result.stderr[:200]}")
@@ -790,96 +784,6 @@ def _run_fetcher():
     except subprocess.TimeoutExpired:
         print("  ❌ bb_api_fetcher 超时 (120s)")
         return False
-
-
-def _refresh_fb_data():
-    """检查 FB 提取数据是否过时，过时则重新抓取。"""
-    if not FB_EXTRACTED.exists():
-        print("  📥 FB 数据不存在，开始抓取...")
-        return _fetch_fb_only()
-
-    # FB 数据也每次增量扫描都实时抓取, 与 BB 保持一致
-    age_m = (time.time() - FB_EXTRACTED.stat().st_mtime) / 60 if FB_EXTRACTED.exists() else 999
-    if age_m > 0:  # 总是重新抓取
-        print(f"  📥 FB 数据 {age_m:.0f} 分钟前，重新抓取...")
-        return _fetch_fb_only()
-    return True
-
-
-def _fetch_fb_only():
-    """仅抓取 FB 平台数据。"""
-    import subprocess
-    import sys
-    try:
-        result = subprocess.run(
-            [sys.executable, "-m", "src.scrapers.bb_api_fetcher", "--platform=FB"],
-            capture_output=True, text=True, cwd=SRC_DIR.parent,
-            timeout=180,
-        )
-        for line in (result.stdout or "").splitlines()[-10:]:
-            print(f"    {line}")
-        if result.returncode != 0:
-            print(f"  ❌ FB 抓取失败: {result.stderr[:200]}")
-            return False
-        return True
-    except subprocess.TimeoutExpired:
-        print("  ❌ FB 抓取超时 (180s)")
-        return False
-
-
-def _run_fb_comparison(all_pin_leagues):
-    """对 FB 数据进行独立对比，更新 FB 对比文件。
-
-    Returns:
-        bool: True 如果发现新的 +EV 机会
-    """
-    if not FB_EXTRACTED.exists():
-        print("  ⏭️ 无 FB 数据，跳过 FB 对比")
-        return False
-
-    age_m = (time.time() - FB_EXTRACTED.stat().st_mtime) / 60
-    if age_m > 150:
-        print(f"  ⏭️ FB 数据仍过时 ({age_m:.0f} 分钟)，跳过 FB 对比")
-        return False
-
-    print(f"\n🔍 FB 独立对比...")
-    # V5.10 修复竞态: _fetch_fb_only 用 subprocess 非原子写 FB_EXTRACTED, 这里读的
-    # 时候可能正好读到 truncate 后的半截/空文件 → json.loads 抛 "Expecting value:
-    # line 1 column 1" → 整个 near 扫描 FAILED, 之后每轮重试撞同样竞态, 一卡 89 分钟。
-    # 读失败只跳过本轮 FB 对比, 下次扫描自愈, 绝不让 near 扫描整个挂掉。
-    try:
-        raw = json.loads(FB_EXTRACTED.read_text())
-    except Exception as e:
-        print(f"  ⚠️ FB 数据读取失败({type(e).__name__}), 跳过本轮 FB 对比(下次自愈)")
-        return False
-    fb_matches = raw.get("matches", [])
-    _now_ts = int(time.time() * 1000)
-    fb_matches = [m for m in fb_matches if not m.get("bt") or int(m["bt"]) > _now_ts]
-
-    if not fb_matches:
-        print("  ⏭️ 无未开赛 FB 比赛")
-        return False
-
-    print(f"  FB 比赛数: {len(fb_matches)}")
-
-    from scrapers.bb_vs_pinnacle import compare_bb_vs_pinnacle
-    # 用 Pin 缓存(与主对比一致): 之前不带 use_pin_cache, 每次 near 扫描都对 FB 的 ~240 个
-    # 联赛全量拉 Pin 赔率+归档(1GB 归档库 INSERT OR IGNORE), 一轮 45min+ → near 永远跑不完,
-    # self_heal 误判停滞反复 kickstart(2026-08-23 排查)。缓存由预取线程维护, 直接读即可。
-    fb_result = compare_bb_vs_pinnacle(
-        fb_matches,
-        all_pin_leagues,
-        save_path=FB_COMPARISON_FILE,
-        use_pin_cache=True,
-    )
-
-    if fb_result is None:
-        print("  ⚠️ FB 对比无结果")
-        return False
-
-    n_fb = len(fb_result.get("details", []))
-    print(f"  ✅ FB 对比完成: {n_fb} 条")
-    return n_fb > 0
 
 
 def _save_scan_fingerprints(scan_result: dict):

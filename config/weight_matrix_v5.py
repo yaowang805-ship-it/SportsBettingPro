@@ -1676,6 +1676,43 @@ def _get_pin_market_roi(sport, sub_market) -> float:
     _PIN_MARKET_ROI[key] = roi
     return roi
 
+def _load_self_calibration() -> dict:
+    """加载自有标定(真实投注 Pin收盘价+赛果 标定的胜率), 带 mtime 缓存。"""
+    import os
+    global _SELF_CAL_CACHE, _SELF_CAL_TS
+    _f = Path(__file__).resolve().parent.parent / "data" / "storage" / "v5_self_calibration.json"
+    if _f.exists():
+        _mt = _f.stat().st_mtime
+        if _SELF_CAL_CACHE is None or _mt > _SELF_CAL_TS:
+            try:
+                import json as _json
+                _SELF_CAL_CACHE = _json.loads(_f.read_text())
+                _SELF_CAL_TS = _mt
+            except Exception:
+                _SELF_CAL_CACHE = {}
+    return _SELF_CAL_CACHE or {}
+
+
+def _self_calibration_kelly(sport: str, sub_market: str, odds: float):
+    """自有标定优先: 该(运动,盘口,收盘赔率桶)若有 n≥30, 用真实胜率算半凯利; 否则 None。"""
+    cal = _load_self_calibration()
+    if not cal.get("cells"):
+        return None
+    bin_i = _bin_index(odds, ODDS_BINS)
+    cell = cal["cells"].get(f"{sport}|{sub_market}|{bin_i}")
+    if not cell or cell.get("n", 0) < 30:
+        return None
+    wr = cell.get("win_rate", 0.0)
+    kelly = (wr * odds - 1.0) / (odds - 1.0)
+    if kelly <= 0:
+        return 0.0
+    return min(kelly * 0.5, 0.06)  # 半凯利, 上限 6%
+
+
+_SELF_CAL_CACHE = None
+_SELF_CAL_TS = 0.0
+
+
 def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
                          match_type: str = "", match_score: float = 0,
                          flags: tuple = None) -> float:
@@ -1697,6 +1734,11 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
     for banned in BLOCKED_LEAGUES:
         if banned in (league or ""):
             return 0.0
+
+    # 自有标定优先(2026-08-25): 用真实投注(Pin收盘价+赛果)标定的胜率, 覆盖 V5 无外部数据的格子
+    _self = _self_calibration_kelly(sport, sub_market, odds)
+    if _self is not None:
+        return _self
 
     # V4.5: 高赔率条件放行 — EV必须覆盖Pin负ROI
     if odds > 10.0:
@@ -1776,27 +1818,12 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             return 0.0
 
         elif sub_market in ("ht", "ht_hc", "ht_ou"):
-            # V5.2: 半场各盘口独立权重 — 从 95K场 HT结果分布推导 (半场平局42% vs 全场27%)
-            # 半场是直接盘口(Pin period=1 + BB ht), 结构完全不同, 不再借全场1X2×0.85
-            _HT_FAIR = {
-                # 半场独赢: 主33.5% 平42.1% 客24.4% → 公平赔率 主2.99/平2.38/客4.10
-                "ht": {6: (0.421, 2.38, 95462), 9: (0.335, 2.99, 95462), 14: (0.244, 4.10, 95462)},
-                # 半场让球: 净胜0走盘42.1%, 排除走盘 主57.9%/客42.1% → 公平赔率 主1.73/客2.37
-                "ht_hc": {3: (0.579, 1.73, 95462), 6: (0.421, 2.37, 95462)},
-                # 半场大小球: 大0.5=69.1% 大1.5=32.6% → 公平赔率 大0.5=1.45/大1.5=3.07
-                "ht_ou": {1: (0.691, 1.45, 95462), 9: (0.326, 3.07, 95462)},
-            }
-            data = _HT_FAIR.get(sub_market, {}).get(idx)
-            if not data:
-                return SPECIAL_MARKET_CAPS.get("ht_dc", {}).get("max_stake", 0.01)
-            wr, avg_o, n = data
-            bb_prem = _bb_premium_ht(odds)
-            stake = kelly_075(wr, avg_o, bb_prem, n, sport_confidence=0.6)
-            # V5.8: 联赛未标定(后备/低级别)时 HT 也保守 — 与1X2/OU一致。
-            # 95K场HT聚合几乎全是主流联赛, 对后备联赛外推是过度自信, 应打折。
-            if not _match_league(league, PIN_1X2_DATA):
-                stake *= 0.6
-            return stake
+            # V5.11(2026-08-25): 半场盘口不用静态 _HT_FAIR 3点表(平2.38/主2.99/客4.10)。
+            # 该表只有 3 个离散点, BB 赔率偏离就查表 miss → fallback 0.3%, 导致几乎所有
+            # ht 投注都一刀切 ¥60(用户抓出)。治本: 返回 0 让 _calc_kelly_stakes 走
+            # EV-Kelly fallback —— _kelly_pct 已在收集阶段用 ev/fair_price 算好, fair_price
+            # 是 devig 出来的、已含半场 42% 平局率, 比 3 点平均表准且连续。
+            return 0.0
 
         elif sub_market in ("hc", "handicap"):
             # V5.3: HC 按联赛重标定 (Pinnacle AH 分联赛), 无联赛数据回退聚合, 再回退1X2
@@ -1831,10 +1858,14 @@ def get_kelly_stake_pct(sport: str, league: str, sub_market: str, odds: float,
             # V5.1: 角球让球独立标定 — football-data.co.uk 角球AH收盘 (~5.7万场, 2-way 近偶数)
             # 角球是足球第4重要市场(独赢>让球>大小球>角球)。角球无独赢/大小球历史数据,
             # 用角球让球(HC)数据近似角球市场整体 (角球OU/ML 同属2-way近偶数, 胜率~50%@~1.9)。
+            if odds > SPECIAL_MARKET_CAPS.get("corner", {}).get("max_odds", 5.0):
+                return 0.0  # 角球 >5.0 无数据(SPECIAL_MARKET_CAPS max_odds=5.0 此前未生效)
             _corner_data = _match_league(league, CORNER_HC_DATA) or CORNER_HC_DATA.get("_AGGREGATE", {})
             data = _corner_data.get(idx)
             if not data or data[2] < 20:
-                return SPECIAL_MARKET_CAPS.get("corner", {}).get("max_stake", 0.01)
+                # 角球赔率偏离 2-way ~1.9 标准档 → 无可靠历史数据, 返回 0 走 EV-Kelly fallback
+                # (与 ht 一致, 避免 flat 0.01 一刀切)
+                return 0.0
             wr, avg_o, n = data
             bb_prem = _bb_premium_1x2(odds) * 0.95
             return kelly_075(wr, avg_o, bb_prem, n, sport_confidence=0.6)

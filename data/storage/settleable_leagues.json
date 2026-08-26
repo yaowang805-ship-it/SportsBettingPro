@@ -21,9 +21,9 @@
       "success_rate": 1.0
     },
     "巴西甲级联赛": {
-      "attempts": 24,
-      "successes": 16,
-      "success_rate": 0.667
+      "attempts": 25,
+      "successes": 17,
+      "success_rate": 0.68
     },
     "美国职业大联盟": {
       "attempts": 31,
@@ -231,7 +231,7 @@
       "success_rate": 0.0
     },
     "美国冠军联赛": {
-      "attempts": 2,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -246,7 +246,7 @@
       "success_rate": 0.0
     },
     "罗马尼亚甲级联赛": {
-      "attempts": 1,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -306,7 +306,7 @@
       "success_rate": 0.5
     },
     "葡萄牙超级联赛": {
-      "attempts": 1,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -341,12 +341,12 @@
       "success_rate": 1.0
     },
     "哥斯达黎加甲级联赛": {
-      "attempts": 2,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
     "爱沙尼亚甲级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -366,7 +366,7 @@
       "success_rate": 0.0
     },
     "危地马拉全国联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -386,7 +386,7 @@
       "success_rate": 0.0
     },
     "阿根廷乙级曼特波里顿联赛": {
-      "attempts": 2,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -411,12 +411,12 @@
       "success_rate": 0.0
     },
     "奥地利甲级联赛": {
-      "attempts": 1,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
     "苏格兰冠军联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -426,7 +426,7 @@
       "success_rate": 0.0
     },
     "尼加拉瓜甲级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -451,12 +451,12 @@
       "success_rate": 0.0
     },
     "智利乙级联赛": {
-      "attempts": 4,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
     "捷克甲级联赛": {
-      "attempts": 2,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -521,7 +521,7 @@
       "success_rate": 0.0
     },
     "土耳其甲级联赛": {
-      "attempts": 3,
+      "attempts": 8,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -556,7 +556,7 @@
       "success_rate": 0.0
     },
     "葡萄牙甲级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -626,7 +626,7 @@
       "success_rate": 0.5
     },
     "英格兰甲级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -656,7 +656,7 @@
       "success_rate": 0.0
     },
     "墨西哥甲级联赛": {
-      "attempts": 2,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -686,7 +686,7 @@
       "success_rate": 0.0
     },
     "中美洲杯": {
-      "attempts": 3,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -711,7 +711,7 @@
       "success_rate": 0.0
     },
     "意大利乙级联赛": {
-      "attempts": 2,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -726,7 +726,7 @@
       "success_rate": 0.0
     },
     "日本乙级联赛": {
-      "attempts": 1,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -746,12 +746,12 @@
       "success_rate": 0.0
     },
     "土耳其超级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
     "FIBA奥运女子资格赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -759,9 +759,159 @@
       "attempts": 1,
       "successes": 1,
       "success_rate": 1.0
+    },
+    "亚足联女子冠军联赛": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "阿根廷圣菲杯": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "瑞典杯": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "荷兰乙级联赛": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "冰岛丁级联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "瑞典北部甲级联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "爱沙尼亚女子甲级联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "埃及乙级A组联赛": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "乌兹别克斯坦甲级联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "爱沙尼亚丙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "瑞典杯-资格赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "英格兰超级联赛": {
+      "attempts": 1,
+      "successes": 1,
+      "success_rate": 1.0
+    },
+    "意大利甲级联赛": {
+      "attempts": 2,
+      "successes": 2,
+      "success_rate": 1.0
+    },
+    "西班牙甲级联赛": {
+      "attempts": 2,
+      "successes": 2,
+      "success_rate": 1.0
+    },
+    "格鲁吉亚甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "澳大利亚西部全国超级联赛": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "埃及超级联赛": {
+      "attempts": 7,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "挪威女子超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "爱尔兰超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "冰岛超级联赛女子": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "芬兰乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "西班牙乙级联赛": {
+      "attempts": 4,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "威尔士冠军联赛北部组": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "突尼斯甲级联赛": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "挪威杯": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "北爱尔兰冠军联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "克罗地亚足球联赛": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "比利时乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "约旦超级杯": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "荷兰女子甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-23T02:17:49.523634+00:00",
+  "updated": "2026-08-26T00:47:39.444077+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

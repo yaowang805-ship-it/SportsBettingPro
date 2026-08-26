@@ -67,10 +67,13 @@ CHECK_INTERVAL = 30                # 调度循环检查间隔（秒）
 
 # 定时任务表：(名称, HH:MM, 处理函数, 参数字典)
 SCHEDULE = [
-    ("self_repair",       "06:45", "do_self_repair", {}),       # 自检+自动修复: 锁文件/缓存/指纹/连通性
-    ("time_calibration",  "06:50", "do_time_calibration", {}),  # 时间校准: BB/Pin/系统时钟对齐
-    ("health_check",       "06:55", "do_health_check", {}),
+    # 早晨任务错开(2026-08-23): full_scan 06:40 是重任务(Pin 415联赛+BB/FB提取, 10-20min, 内部8线程),
+    # self_repair/time_calibration/health_check 之前排在 06:45/06:50/06:55, 与 full_scan 重叠打 Pin →
+    # 并发 SSL EOF / 熔断器 / Cloudflare 风控。错开到 full_scan 之后 30min, 给全量扫描独立窗口。
     ("full_scan_morning",  "06:40", "do_full_scan",  {"bet": True}),
+    ("self_repair",       "07:10", "do_self_repair", {}),       # 自检+自动修复: 锁文件/缓存/指纹/连通性
+    ("time_calibration",  "07:15", "do_time_calibration", {}),  # 时间校准: BB/Pin/系统时钟对齐
+    ("health_check",       "07:20", "do_health_check", {}),
     ("settle_morning",     "08:30", "do_settle",      {}),
     ("daily_report",       "09:00", "do_daily_report",{}),
     ("data_sync_summary",  "09:00", "do_data_sync_summary",{}),  # V5.1: 数据积累量日报
@@ -423,17 +426,25 @@ class PipelineOrchestrator:
         except Exception:
             pass
 
+        # 任务名中文化(2026-08-25 用户要求: 钉钉信息必须全中文)
+        _task_cn = {
+            "full_scan_morning": "全量扫描", "startup_check_failed": "启动自检",
+            "settle_watchdog": "结算看门狗", "scan_watchdog": "扫描看门狗",
+            "main_loop_crash": "主循环崩溃", "settle": "结算",
+        }
+        _cn = _task_cn.get(task_name, task_name)
+
         from datetime import timezone as _tz, timedelta as _td
         bj_time = datetime.now(_tz(_td(hours=8))).strftime('%m/%d %H:%M')
         body = (
-            f"**Pipeline Alert**\n\n"
-            f"任务: {task_name}\n"
+            f"**流水线告警**\n\n"
+            f"任务: {_cn}\n"
             f"时间: {bj_time} (北京时间)\n"
             f"错误: {error[:200]}"
         )
         try:
             # 任务失败告警属故障类, urgent 跳过非投注每日配额(否则被例行日报挤掉而静默丢失)
-            if send_dingtalk("Pipeline Alert", body, urgent=True):
+            if send_dingtalk("流水线告警", body, urgent=True):
                 logger.info("[%s] 告警已发送", task_name)
             else:
                 logger.error("[%s] 告警未送达(钉钉返回失败)", task_name)
@@ -469,7 +480,7 @@ class PipelineOrchestrator:
         threading.Thread(target=_scan_hb, daemon=True, name="scan-heartbeat").start()
         # 设置推送标签（保存/恢复避免影响增量扫描）
         _prev_label = os.environ.get("PUSH_LABEL", "")
-        os.environ["PUSH_LABEL"] = "每日定时全量推送"
+        os.environ["PUSH_LABEL"] = "全量扫描·24-72h"
 
         # 后台预加载 Pinnacle 联赛结构（与 BB 提取并行，省 10-20s）
         preload_done = threading.Event()
@@ -492,6 +503,8 @@ class PipelineOrchestrator:
             from src.scrapers.bb_vs_pinnacle import main as compare
             # bb_api_fetcher.main() 读取 sys.argv，需要临时设置
             old_argv = sys.argv
+            # 铁律(Pin先BB后): Step1 只拉 BB(获取联赛列表), 不能拉 FB —— FB 是零售价, 必须和 BB
+            # 一起在 Pin 之后(Step3)拉, 否则 FB 早于 Pin = FB 陈旧(2026-08-23 用户提醒)。
             sys.argv = ["bb_api_fetcher", "--all-sports"]
             try:
                 fetch()
@@ -512,7 +525,7 @@ class PipelineOrchestrator:
 
             # Step 3/4: Pin 拉取后再提取 BB, 保证 BB 赔率新鲜(消除 12min 时间错位)
             logger.info("Step 3/4: BB 再提取 (新鲜赔率)...")
-            sys.argv = ["bb_api_fetcher", "--all-sports"]
+            sys.argv = ["bb_api_fetcher", "--all-sports", "--with-fb"]
             try:
                 fetch()
             finally:
@@ -528,25 +541,8 @@ class PipelineOrchestrator:
                 sys.argv = old_argv
             logger.info("Step 4/4: 完成")
 
-            # Step 2a/3: FB 平台独立提取 (V5.1: 全量扫描补 FB, 之前只靠增量扫描导致 FB 数据陈旧→价格偏差极大)
-            logger.info("Step 2a/3: FB 平台独立提取...")
-            sys.argv = ["bb_api_fetcher", "--platform=FB"]
-            try:
-                fetch()
-            finally:
-                sys.argv = old_argv
-            logger.info("Step 2a/3: 完成")
-
-            logger.info("Step 2b/3: Pinnacle 对比 (FB独立)...")
-            sys.argv = ["bb_vs_pinnacle",
-                         "--input=bb_odds_extracted_FB.json",
-                         "--output=bb_vs_pinnacle_comparison_FB.json"]
-            try:
-                compare()
-            finally:
-                sys.argv = old_argv
-            logger.info("Step 2b/3: 完成")
-
+            # (2026-08-24 删除 FB 独立提取/对比: BB/FB 已在 Step3 --with-fb 合并取高值,
+            #  FB 独立对比文件 bb_vs_pinnacle_comparison_FB.json 不再生成, 避免"FB 补 BB 缺口")
             logger.info("Step 2c/3: 辅助数据源对比 (the-odds-api)...")
             try:
                 from src.scrapers.odds_api_compare import run_all
@@ -1128,14 +1124,16 @@ class PipelineOrchestrator:
             logger.warning(f"  BB API 连接失败: {e}")
             issues.append(f"BB API 连接失败: {str(e)[:50]}")
 
-        # 3. Pinnacle API 时间（从 league 数据推断）
+        # 3. Pinnacle API 延迟（用 /sports 轻量端点; 原 /leagues/29 已 404 废弃, 2026-08-24 修）
         try:
             from src.scrapers.pinnacle_api import api_get as pin_get
             t0 = _time.time()
-            resp = pin_get('/leagues/29')  # Football sport, light endpoint (api_get 已自动加 /0.1 前缀)
+            resp = pin_get('/sports')  # 轻量端点 (api_get 已自动加 /0.1 前缀)
             pin_time = _time.time()
             pin_latency = pin_time - t0
             logger.info(f"  Pinnacle API 延迟: {pin_latency:.1f}s")
+            if not resp:
+                issues.append("Pinnacle API 返回空")
             if pin_latency > 10:
                 issues.append(f"Pinnacle API 延迟 {pin_latency:.0f}s (>10s)")
         except Exception as e:
@@ -1263,7 +1261,9 @@ class PipelineOrchestrator:
 
         # 2) V5 分层增量扫描 — 临场60s/中程300s (Pinnacle变动驱动)
         # V5.4: 全量扫描成功+推送后才放行(降频防风控, 用户要求)
-        if self._full_scan_ok and self._is_in_scan_window(now):
+        # 全量扫描运行中(scan/scan_bg 锁 active)时跳过增量, 防并发抢 Pin(2026-08-23)
+        _full_scan_running = "scan" in self._active_tasks or "scan_bg" in self._active_tasks
+        if self._full_scan_ok and self._is_in_scan_window(now) and not _full_scan_running:
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
@@ -1345,6 +1345,10 @@ class PipelineOrchestrator:
         now = time.time()
         if not self._is_in_scan_window(datetime.now()):
             return
+        # 全量扫描运行中时, 增量扫描被有意跳过(防抢Pin, 见 _tick 的 _full_scan_running guard),
+        # 这不是停滞, 别告警(2026-08-23 重启追赶全量扫描时误报"停滞30min")。
+        if "scan" in self._active_tasks or "scan_bg" in self._active_tasks:
+            return
 
         # V5.7: 远端24-72h层已移除, 最长的增量扫描间隔是near=5min, 允许2x容忍
         _near_elapsed = now - self._last_inc_near if self._last_inc_near else 0
@@ -1371,14 +1375,14 @@ class PipelineOrchestrator:
                 pending = [b for b in tb.get("bets", []) if b.get("status") == "pending"]
                 now_ts = time.time()
                 stale_48h = sum(1 for b in pending if b.get("match_epoch", 0) > 0 and (now_ts - b["match_epoch"]) > 172800)
-                # V5.10: 7 天兜底 —— pending 超 7 天拿不到赛果的, 自动标 unsettleable。
-                # 这批老投注(08-13~08-18 无 bb_match_id)永久卡 pending 会让看门狗数字只增不减,
-                # 且污染 ROI 分母。unsettleable 与 void 语义分开(非退款, 见 bet_tracker)。
+                # V5.10: 1 天兜底 —— pending 超 1 天拿不到赛果的, 自动标 unsettleable。
+                # BB 赛果 API 有 ~24-48h 时效窗口(老比赛 getMatchDetail 返回空壳), 超过窗口
+                # 赛果永久丢失, 再挂 pending 只会污染看门狗和 ROI 分母(2026-08-25 实测)。
                 try:
                     from src.monitor.bet_tracker import auto_mark_unsettleable
-                    _n = auto_mark_unsettleable(days=7.0)
+                    _n = auto_mark_unsettleable(days=1.0)
                     if _n:
-                        logger.info("🐕 看门狗(结算): %d 笔超7天无赛果 → 标 unsettleable", _n)
+                        logger.info("🐕 看门狗(结算): %d 笔超1天无赛果 → 标 unsettleable", _n)
                         # 处理完重读, 避免下面 stale_48h 把刚处置的也算进去
                         tb = json.loads(tb_path.read_text())
                         pending = [b for b in tb.get("bets", []) if b.get("status") == "pending"]

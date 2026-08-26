@@ -48,7 +48,6 @@ def accumulate_bb_premium():
     """
     _ensure_dirs()
     comp_file = STORAGE_DIR / "bb_vs_pinnacle_comparison.json"
-    fb_file = STORAGE_DIR / "bb_vs_pinnacle_comparison_FB.json"
 
     if not comp_file.exists():
         return
@@ -59,7 +58,7 @@ def accumulate_bb_premium():
         accum = json.loads(BB_PREMIUM_ACCUMULATOR.read_text())
 
     new_samples = 0
-    for fpath in [comp_file, fb_file]:
+    for fpath in [comp_file]:
         if not fpath.exists():
             continue
         data = json.loads(fpath.read_text())

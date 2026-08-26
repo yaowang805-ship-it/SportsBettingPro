@@ -546,6 +546,12 @@ def _auto_map_leagues(unmatched_bb_leagues, all_pin_leagues, dry_run=False):
             if _SPORT_MAP.get(best_pin_sport, '') not in ('', bb_sport):
                 continue  # 跨运动→拒绝
 
+            # 拒绝映射到"轮次"联赛(网球 R1/QF/SF/Final/Qualifiers 等)——轮次每周变, 映射
+            # 一次就陈旧, 是 LEAGUE_KEYWORDS 污染主源(2026-08-23 清理了 352 条陈旧映射)。
+            # 只拦"名称末尾 - 轮次"的格式, 不误伤 "FA Cup - Round 1" 这种真联赛。
+            if _re.search(r' - (R\d+|QF|SF|Final|Qualifiers|Qualifying)$', best_pin_name, _re.I):
+                continue
+
             # 防误映射: 只靠通用词匹配且分低→拒绝
             meaningful_tokens = bb_en_set - _GENERIC_KEYWORD_BLACKLIST
             if not meaningful_tokens and best_score < 0.70:

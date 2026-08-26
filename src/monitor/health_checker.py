@@ -283,10 +283,9 @@ def check_settlement(report):
 
 
 def check_mappings(report):
-    """检查联赛和队名映射覆盖率。"""
+    """检查联赛映射覆盖率(队名映射已移除, 见下方注释)。"""
     bb_file = DATA_DIR / "bb_odds_extracted.json"
     kw_file = DATA_DIR / "league_keywords.json"
-    tm_file = DATA_DIR / "team_name_map.json"
     pin_file = DATA_DIR / "pinnacle_league_structure.json"
 
     if not all(f.exists() for f in [bb_file, kw_file, pin_file]):
@@ -299,13 +298,8 @@ def check_mappings(report):
     from src.scrapers.pinnacle_league_map import find_pinnacle_league_ids
 
     bb_leagues = defaultdict(int)
-    bb_teams = set()
     for m in bb.get("matches", []):
         bb_leagues[m.get("league", "")] += 1
-        # team_name_map.json 的 key 是中文队名, 必须用 home_cn/away_cn 查, 否则
-        # 英文队名查中文 key 恒不命中 → 假告警"队名映射 1/3069 (0%)"(2026-08-22)。
-        bb_teams.add(m.get("home_cn", "") or m.get("home", ""))
-        bb_teams.add(m.get("away_cn", "") or m.get("away", ""))
 
     # League mapping
     mapped = sum(1 for lg in bb_leagues if find_pinnacle_league_ids(lg, pin))
@@ -317,17 +311,8 @@ def check_mappings(report):
     else:
         report.add_ok(f"联赛映射: {mapped}/{total} ({pct:.0f}%)")
 
-    # Team name mapping
-    tm = json.loads(tm_file.read_text()) if tm_file.exists() else {}
-    tm_count = len([v for v in tm.values() if isinstance(v, str)])
-    mapped_teams = sum(1 for t in bb_teams if t in tm)
-    team_pct = mapped_teams / len(bb_teams) * 100 if bb_teams else 0
-    report.stats["team_coverage"] = round(team_pct)
-    report.stats["team_map_size"] = tm_count
-    if team_pct < 70:
-        report.add_warning(f"队名映射: {mapped_teams}/{len(bb_teams)} ({team_pct:.0f}%)")
-    else:
-        report.add_ok(f"队名映射: {mapped_teams}/{len(bb_teams)} ({team_pct:.0f}%)")
+    # 队名映射检查已移除(2026-08-25): 中文名→英文映射覆盖率是伪指标——主匹配早改英文直配,
+    # 低级别球队本就没有 Pin 英文名, 覆盖 67% 是固有现象非 bug, 天天刷假告警。
 
 
 def check_market_health(report):

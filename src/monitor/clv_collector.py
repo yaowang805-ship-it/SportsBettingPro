@@ -61,14 +61,27 @@ def _infer_sub_market(sub_market: str, designation: str) -> str:
     return sub_market
 
 
+def _src(r):
+    """归一化 source: 空 → push(老数据默认)。"""
+    return (r.get("source") or "push").strip() or "push"
+
+
 def _load_existing_results():
-    """加载已采集的 CLV 结果，返回 {match_key: result}。"""
+    """加载已采集的 CLV 结果，返回 {match_key: result}。
+
+    V5.11: key 里必须带 source。之前不带 —— 同一个机会 validate 侧(所有≥2%EV机会)
+    先被采到后, 真实投注(push)行就被当成"已采过"永久跳过。实测 8/21 起真实投注
+    61/112/65 笔, 采到的 push 结果只有 2/3/0 条, 真实投注库事实上停止积累。
+    两者是**两个数据库**: validate=观察样本(赔率是发现时刻的), push=真实下注样本
+    (赔率是下注时刻的), CLV 口径不同, 必须各存一行。
+    """
     existing = {}
     if RESULTS_FILE.exists():
         try:
             with open(RESULTS_FILE, newline='') as f:
                 for r in csv.DictReader(f):
-                    key = (r.get("home", ""), r.get("away", ""), r.get("sub_market", ""), r.get("designation", ""))
+                    key = (r.get("home", ""), r.get("away", ""), r.get("sub_market", ""),
+                           r.get("designation", ""), _src(r))
                     existing[key] = r
         except Exception:
             pass
@@ -93,9 +106,9 @@ def _load_pending_entries(return_expired=False):
             # sub_market 统一推断口径 (ht→ht_hc/ht_ou), 否则去重 key 与结果不匹配
             sm = _infer_sub_market(r.get("sub_market", ""), r.get("designation", ""))
             # 用 BB 中文名 + Pinnacle 英文名组合做 key
-            key = (r.get("home", ""), r.get("away", ""), sm, r.get("designation", ""))
+            key = (r.get("home", ""), r.get("away", ""), sm, r.get("designation", ""), _src(r))
             # 也尝试用 Pinnacle 名匹配
-            key_pin = (r.get("home_pin", ""), r.get("away_pin", ""), sm, r.get("designation", ""))
+            key_pin = (r.get("home_pin", ""), r.get("away_pin", ""), sm, r.get("designation", ""), _src(r))
             if not ev_is_plausible(r.get("ev_pct"), r.get("bb_odds")):
                 continue    # 系统自己不认的 EV 量级, 不进 CLV 样本
             prev = existing.get(key) or existing.get(key_pin)
@@ -296,7 +309,7 @@ def _fetch_close_odds(entries):
                 # 同一场 BB 比赛在两个 Pinnacle 联赛里各配到一次 —— 实测产出过同一
                 # 机会两行且 CLV 互相矛盾(24.57 vs 19.77、-14.8 vs -6.32), 其中必有
                 # 一个是错配。这里按队名匹配分数保留最优的那个。
-                _rkey = (e.get("home", ""), e.get("away", ""), sub_market, designation)
+                _rkey = (e.get("home", ""), e.get("away", ""), sub_market, designation, _src(e))
                 _prev = _seen_results.get(_rkey)
                 if _prev is not None and _prev[0] >= best_score:
                     continue
@@ -339,7 +352,8 @@ def _fetch_close_odds(entries):
 
     # V5.10: 窗口即将关闭却还没采到的, 记一笔 —— 这些就是永久丢失的候选,
     # 之前它们只是悄悄消失, 日志里只有一句"采集到 0 条", 看不出丢了什么。
-    got = {(r["home"], r["away"], r["sub_market"], r["designation"]) for r in results}
+    got = {(r["home"], r["away"], r["sub_market"], r["designation"].lower(), _src(r))
+           for r in results}
     dying, _now = [], time.time()
     for entries_ in by_league.values():
         for e in entries_:
@@ -348,7 +362,7 @@ def _fetch_close_odds(entries):
                 continue  # 还有下一轮 cron(5min) 兜底, 不算丢
             sm = _infer_sub_market(e.get("sub_market", ""), e.get("designation", ""))
             if (e.get("home", ""), e.get("away", ""), sm,
-                    e.get("designation", "").lower()) not in got:
+                    e.get("designation", "").lower(), _src(e)) not in got:
                 dying.append(e)
     if dying:
         logger.warning("⚠️ %d 条记录窗口即将关闭仍未采到收盘价(再过 6 分钟永久丢失)", len(dying))
@@ -679,10 +693,10 @@ def ev_is_plausible(ev_pct, bb_odds) -> bool:
     return ev <= max(12.0, (odds - 1) * 20)
 
 # 增量扫描按时间窗分文件写(urgent<6h / near 6-24h / far 24-72h), MAIN 只有全量扫描才刷新。
+# 2026-08-24 去掉 bb_vs_pinnacle_comparison_FB.json: FB 已合并进主对比(取高值), 独立对比不再生成
 _COMPARISON_FILES = ("bb_vs_pinnacle_comparison_urgent.json",
                      "bb_vs_pinnacle_comparison_near.json",
                      "bb_vs_pinnacle_comparison_far.json",
-                     "bb_vs_pinnacle_comparison_FB.json",
                      "bb_vs_pinnacle_comparison.json")
 
 
@@ -803,8 +817,10 @@ def _save_results(results):
     _migrate_results_header(fieldnames)
 
     def _rk(r):
+        # V5.11: 带 source —— push(真实投注) 与 validate(观察) 是两套样本, 不能互相覆盖。
         return (str(r.get("home", "")).strip(), str(r.get("away", "")).strip(),
-                str(r.get("sub_market", "")).strip(), str(r.get("designation", "")).strip())
+                str(r.get("sub_market", "")).strip(), str(r.get("designation", "")).strip(),
+                _src(r))
 
     def _lag(r):
         try:

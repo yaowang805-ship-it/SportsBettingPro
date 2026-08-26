@@ -106,6 +106,22 @@ def main(push: bool = True):
     else:
         lines.append("结论: 暂无样本，等待新推送结算")
 
+    # 门槛精细化进度: 离"每个运动×联赛×盘口都数据驱动"还有多远(scripts/clv_cell_coverage.py 产出)
+    cov_file = DATA_DIR / "clv_cell_coverage.json"
+    if cov_file.exists():
+        try:
+            cov = json.loads(cov_file.read_text())
+            lines.append("")
+            lines.append(f"门槛下沉进度(样本 {cov['n_samples']} 条 / 其中真实投注 {cov['n_push']} 条, "
+                         f"{cov['rate_per_day']:.0f} 条/天):")
+            for lvl, d in cov.get("levels", {}).items():
+                lines.append(f"- {lvl}: {d['confirmed']}确认 / {d['directional']}方向性 "
+                             f"/ {d['insufficient']}样本不足 (共{d['cells']}格)")
+            ready = cov.get("push_ready_markets") or []
+            lines.append(f"- 真实投注库已达 n≥30 的盘口: {'、'.join(ready) if ready else '无'}")
+        except (json.JSONDecodeError, ValueError, KeyError, OSError) as e:
+            logger.debug("格子覆盖读取失败: %s", e)
+
     body = "\n".join(lines)
     logger.info("CLV 日报: 实时%d + 归档%d = %d", len(fwd), len(arc), len(all_clv))
     if push:

@@ -53,8 +53,11 @@ KICKOFF_TOLERANCE_MIN = 15
 
 
 def _key(r):
+    # V5.11: 带 source —— push(真实投注)/validate(观察) 是两套样本, 各自要回捞一次,
+    # 否则 validate 采到后 push 行被当"已回捞"跳过(与采集器同一个坑)。
     return (r.get("home", "").strip(), r.get("away", "").strip(),
-            r.get("sub_market", "").strip(), r.get("designation", "").strip())
+            r.get("sub_market", "").strip(), r.get("designation", "").strip(),
+            (r.get("source") or "push").strip() or "push")
 
 
 def _load_missed():

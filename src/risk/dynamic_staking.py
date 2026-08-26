@@ -37,7 +37,7 @@ logger = get_logger(__name__)
 
 MODEL_FILE = DATA_DIR / "dynamic_staking_model.json"
 BET_LOG_FILE = DATA_DIR / "bet_history.csv"
-MIN_TRAIN_SAMPLES = 50
+MIN_TRAIN_SAMPLES = 5000
 
 # 基于文献和经验的先验乘数（当 ML 模型不可用时回退）
 PRIOR_MULTIPLIERS = {
@@ -205,7 +205,7 @@ class DynamicStakingModel:
             features: 至少含 self.feature_cols 中字段的 dict
 
         Returns:
-            乘数 (0.1~1.0)，乘以 KELLY_FRACTION 得到最终分数
+            乘数 (0.3~1.0)，乘以 KELLY_FRACTION 得到最终分数
         """
         if not self.is_trained or not hasattr(self, "_sk_model") or self._sk_model is None:
             return self._rule_based_multiplier(features)
@@ -213,26 +213,19 @@ class DynamicStakingModel:
         try:
             X = pd.DataFrame([features])[self.feature_cols].values
             pred = self._sk_model.predict(X)[0]
-            return float(np.clip(pred, 0.1, 1.0))
+            return float(np.clip(pred, 0.3, 1.0))
         except Exception as e:
             logger.warning("ML 预测失败 (%s)，回退到规则", e)
             return self._rule_based_multiplier(features)
 
     def _rule_based_multiplier(self, features: Dict[str, float]) -> float:
-        """阈值式回退：与 RiskManager._get_confidence_tier 一致。"""
-        edge = features.get("edge", 0)
+        """阈值式回退：只含回撤/连败风险因子，不含 edge 分档。
+
+        edge 是 Kelly 的职责(Kelly 已按 edge+赔率分配), dyn_mult 只管"现在该不该
+        更谨慎"(回撤/连败), 否则 edge 被双重惩罚(2026-08-26 用户指出)。
+        """
         drawdown = features.get("drawdown_pct", 0)
         consecutive = features.get("consecutive_losses", 0)
-
-        # 置信度分档
-        if edge >= 0.15:
-            conf = 1.0
-        elif edge >= 0.10:
-            conf = 0.8
-        elif edge >= 0.06:
-            conf = 0.6
-        else:
-            conf = 0.3
 
         # 回撤调整
         if drawdown <= 0.0:
@@ -256,7 +249,7 @@ class DynamicStakingModel:
         else:
             streak_mult = 0.0
 
-        return conf * dd_mult * streak_mult
+        return dd_mult * streak_mult
 
     # ── 持久化 ─────────────────────────────────────
 
