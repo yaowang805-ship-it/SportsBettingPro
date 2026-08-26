@@ -250,6 +250,10 @@
     "ev": 2.94,
     "ts": 1787766008.781163
   },
+  "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|上半场客胜|ht|2026-08-28": {
+    "ev": 15.04,
+    "ts": 1787781683.380777
+  },
   "football|Argentina Cup|拉普拉塔大学生|巴拉卡斯中央队|上半场客胜|ht|2026-08-28": {
     "ev": 13.95,
     "bb": 8.85,
@@ -702,9 +706,18 @@
     "ev": 2.63,
     "ts": 1787741432.3806238
   },
+  "football|Brazil Serie D-Playoff|EC Sao Jose RS|Goiatuba EC GO|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 9.99,
+    "ts": 1787781634.400834
+  },
   "football|Brazil Serie D-Playoff|EC Sao Jose RS|Goiatuba EC GO|让球客胜|1x2|2026-08-27": {
     "ev": 1.25,
     "ts": 1787742426.6663082
+  },
+  "football|Brazil Serie D-Playoff|圣约瑟波|戈亚图巴|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 9.99,
+    "bb": 1.73,
+    "ts": 1787781632.90958
   },
   "football|CONCACAF Central American Cup|CS Herediano|Antigua GFC|主胜|1x2|2026-08-27": {
     "ev": 2.22,
@@ -3647,6 +3660,10 @@
     "ev": 5.38,
     "ts": 1787767551.562529
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|双边进球-是|btts|2026-08-28": {
+    "ev": 2.6,
+    "ts": 1787781683.380146
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|大球|1x2|2026-08-28": {
     "ev": 1.39,
     "ts": 1787767551.562569
@@ -3943,6 +3960,10 @@
     "ev": 1.24,
     "ts": 1787768155.7485151
   },
+  "football|UEFA Europa League-Qualification Playoff|AGF Aarhus|SL Benfica|让球主胜|1x2|2026-08-28": {
+    "ev": 1.38,
+    "ts": 1787782283.845804
+  },
   "football|UEFA Europa League-Qualification Playoff|FC Viktoria Plzen|FK Crvena Zvezda Belgrade|主胜|1x2|2026-08-28": {
     "ev": 1.43,
     "ts": 1787764120.65018
@@ -3980,6 +4001,10 @@
   "football|USL Championship|El Paso Locomotive FC|Pittsburgh Riverhounds|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 2.53,
     "ts": 1787771442.3640552
+  },
+  "football|USL Championship|El Paso Locomotive FC|Pittsburgh Riverhounds|让球客胜|1x2|2026-08-27": {
+    "ev": 11.13,
+    "ts": 1787781755.22817
   },
   "football|USL Championship|New Mexico United|Lexington SC|总进球区间7+|total_goals_range|2026-08-27": {
     "ev": 6.9,
@@ -4472,9 +4497,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Brazil Serie D-Playoff|圣约瑟波|戈亚图巴|双重机会-和局/客|dc|2026-08-27": {
-    "ev": 9.99,
-    "bb": 1.73,
-    "ts": 1787781632.90958
+  "football|UEFA Europa League-Qualification Playoff|奥胡斯|本菲卡|主胜|1x2|2026-08-28": {
+    "ev": 9.31,
+    "bb": 6.6,
+    "ts": 1787782652.520023
   }
 }
