@@ -3576,6 +3576,10 @@
     "ev": 5.4,
     "ts": 1787756587.437453
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|大球|1x2|2026-08-28": {
+    "ev": 1.75,
+    "ts": 1787771219.462948
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|让球客胜|1x2|2026-08-28": {
     "ev": 2.23,
     "ts": 1787770918.452298
@@ -3999,6 +4003,10 @@
     "ev": 3.07,
     "ts": 1787763994.294883
   },
+  "football|Venezuela Cup|Deportivo Miranda|Academia Anzoategui FC|主胜|1x2|2026-08-27": {
+    "ev": 2.44,
+    "ts": 1787771142.467165
+  },
   "football|Venezuela Cup|Deportivo Miranda|Academia Anzoategui FC|双重机会-和局/客|dc|2026-08-27": {
     "ev": 1.95,
     "ts": 1787726478.287337
@@ -4007,9 +4015,17 @@
     "ev": 4.17,
     "ts": 1787725906.350142
   },
+  "football|Venezuela Cup|Mineros de Guayana|Dynamo Puerto FC|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 5.2,
+    "ts": 1787771013.912202
+  },
   "football|Venezuela Cup|Mineros de Guayana|Dynamo Puerto FC|大球|1x2|2026-08-27": {
     "ev": 7.83,
     "ts": 1787740602.211187
+  },
+  "football|Venezuela Cup|Mineros de Guayana|Dynamo Puerto FC|客胜|1x2|2026-08-27": {
+    "ev": 11.95,
+    "ts": 1787771013.9121149
   },
   "football|Venezuela Cup|Mineros de Guayana|Dynamo Puerto FC|小球|1x2|2026-08-27": {
     "ev": 5.03,
@@ -4054,6 +4070,11 @@
     "ev": 27.84,
     "bb": 3.87,
     "ts": 1787766008.1199749
+  },
+  "football|Venezuela Cup|麦尼拉斯|波多港|客胜|1x2|2026-08-27": {
+    "ev": 11.95,
+    "bb": 3.68,
+    "ts": 1787771012.980155
   },
   "tennis|ATP - Grand Slam US Open|Arthur Gea (FRA)|Sumit Nagal (IND)|让盘主胜|1x2|2026-08-26": {
     "ev": 1.1,
@@ -4317,9 +4338,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Venezuela Cup|麦尼拉斯|波多港|客胜|1x2|2026-08-27": {
-    "ev": 11.95,
-    "bb": 3.68,
-    "ts": 1787771012.980155
+  "football|Venezuela Cup|柏达利体育会|安佐阿特吉|主胜|1x2|2026-08-27": {
+    "ev": 13.2,
+    "bb": 2.42,
+    "ts": 1787771289.7909288
   }
 }

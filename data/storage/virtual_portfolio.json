@@ -1,5 +1,5 @@
 {
-  "balance": 10631.36,
+  "balance": 10391.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2875,6 +2875,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787772600,
       "created_at": "2026-08-26T19:03:32.966656+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_柏达利体育会_安佐阿特吉_主胜",
+      "sport": "football",
+      "league": "委内瑞拉杯",
+      "home_team": "柏达利体育会",
+      "away_team": "安佐阿特吉",
+      "home_cn": "柏达利体育会",
+      "away_cn": "安佐阿特吉",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.42,
+      "stake": 240,
+      "model_prob": 0.4678,
+      "ev_pct": 13.2,
+      "pin_odds": 1.9901,
+      "fair_price": 2.1378,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787785200,
+      "created_at": "2026-08-26T19:08:09.775908+00:00",
       "track_only": false
     }
   ],
@@ -6118,8 +6141,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 1431.0,
-    "bets": 14
+    "used": 1671.0,
+    "bets": 15
   },
   "updated": null
 }
