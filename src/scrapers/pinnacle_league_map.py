@@ -973,7 +973,6 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
        Limited: only expand short names (no " - " in original mapped name)
     3. For unmapped leagues, use English keyword controlled fuzzy matching
     """
-    bb_lower = bb_league_name.lower().strip()
     matched_ids = set()
 
     # Phase 1: LEAGUE_KEYWORDS exact mapping
