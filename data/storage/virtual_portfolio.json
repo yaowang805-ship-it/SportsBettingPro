@@ -1,5 +1,5 @@
 {
-  "balance": 9902.36,
+  "balance": 9790.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3059,6 +3059,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787853600,
       "created_at": "2026-08-26T22:17:32.504696+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_拉普拉塔大学生_巴拉卡斯中央队_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "阿根廷杯",
+      "home_team": "拉普拉塔大学生",
+      "away_team": "巴拉卡斯中央队",
+      "home_cn": "拉普拉塔大学生",
+      "away_cn": "巴拉卡斯中央队",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.95,
+      "stake": 112,
+      "model_prob": 0.5354,
+      "ev_pct": 4.4,
+      "pin_odds": 0,
+      "fair_price": 1.8678,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787868000,
+      "created_at": "2026-08-26T22:34:10.179308+00:00",
       "track_only": false
     }
   ],
@@ -6302,8 +6325,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 2160.0,
-    "bets": 22
+    "used": 2272.0,
+    "bets": 23
   },
   "updated": null
 }

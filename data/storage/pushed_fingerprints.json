@@ -1163,6 +1163,10 @@
     "ev": 7.59,
     "ts": 1787750159.3419468
   },
+  "football|Denmark DBU Pokalen|Vejle BK|Silkeborg IF|大球|1x2|2026-08-28": {
+    "ev": 1.88,
+    "ts": 1787782981.0622962
+  },
   "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.56,
     "ts": 1787771507.293268
@@ -3676,6 +3680,10 @@
     "ev": 1.32,
     "ts": 1787764120.650102
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|FK Borac Banja Luka|Vikingur Reykjavik|大球|1x2|2026-08-28": {
+    "ev": 1.33,
+    "ts": 1787782653.225651
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|FK Partizan Belgrade|Getafe CF|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.24,
     "ts": 1787770918.452352
@@ -3988,6 +3996,11 @@
     "ev": 1.59,
     "ts": 1787769403.866255
   },
+  "football|UEFA Europa League-Qualification Playoff|奥胡斯|本菲卡|主胜|1x2|2026-08-28": {
+    "ev": 9.31,
+    "bb": 6.6,
+    "ts": 1787782652.520023
+  },
   "football|UEFA Europa League-Qualification|安德莱赫特|阿拉木图凯拉特|上半场主胜|ht|2026-08-28": {
     "ev": 5.66,
     "bb": 2.08,
@@ -4001,6 +4014,10 @@
   "football|USL Championship|El Paso Locomotive FC|Pittsburgh Riverhounds|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 2.53,
     "ts": 1787771442.3640552
+  },
+  "football|USL Championship|El Paso Locomotive FC|Pittsburgh Riverhounds|上半场客胜|ht|2026-08-27": {
+    "ev": 1.94,
+    "ts": 1787783069.801688
   },
   "football|USL Championship|El Paso Locomotive FC|Pittsburgh Riverhounds|让球客胜|1x2|2026-08-27": {
     "ev": 11.13,
@@ -4497,9 +4514,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|UEFA Europa League-Qualification Playoff|奥胡斯|本菲卡|主胜|1x2|2026-08-28": {
-    "ev": 9.31,
-    "bb": 6.6,
-    "ts": 1787782652.520023
+  "football|Argentina Cup|拉普拉塔大学生|巴拉卡斯中央队|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 4.4,
+    "bb": 1.95,
+    "ts": 1787783650.193635
   }
 }
