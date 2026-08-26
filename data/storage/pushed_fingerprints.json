@@ -142,6 +142,10 @@
     "ev": 3.48,
     "ts": 1787677467.142796
   },
+  "basketball|WNBA|Connecticut Sun (w)|Golden State Valkyries (w)|让分客胜|1x2|2026-08-27": {
+    "ev": 2.0,
+    "ts": 1787750066.66384
+  },
   "basketball|WNBA|Dallas Wings (w)|Portland Fire (w)|大分|1x2|2026-08-26": {
     "ev": 3.89,
     "ts": 1787653481.667041
@@ -546,6 +550,10 @@
     "ev": 2.22,
     "ts": 1787747955.248833
   },
+  "football|CONCACAF Central American Cup|CS Herediano|Antigua GFC|小球|1x2|2026-08-27": {
+    "ev": 1.49,
+    "ts": 1787750391.011908
+  },
   "football|CONCACAF Central American Cup|CS Herediano|Antigua GFC|让球主胜|1x2|2026-08-27": {
     "ev": 6.92,
     "ts": 1787747955.2489018
@@ -589,6 +597,11 @@
   "football|Chile Primera Division|Coquimbo Unido|Universidad Catolica|角球大球|corner|2026-08-27": {
     "ev": 2.08,
     "ts": 1787724076.0348392
+  },
+  "football|Chile Primera Division|科金博联合|智利天主大学|上半场客胜|ht|2026-08-27": {
+    "ev": 2.78,
+    "bb": 4.57,
+    "ts": 1787749730.541996
   },
   "football|Colombia Primera A|Boyaca Chico FC|Fortaleza CEIF|单双-双|oe|2026-08-27": {
     "ev": 1.12,
@@ -880,6 +893,10 @@
   "football|Denmark DBU Pokalen|FC Fredericia|Odense Boldklub|大球|1x2|2026-08-27": {
     "ev": 1.25,
     "ts": 1787749302.779073
+  },
+  "football|Denmark DBU Pokalen|FC Fredericia|Odense Boldklub|让球主胜|1x2|2026-08-27": {
+    "ev": 7.59,
+    "ts": 1787750159.3419468
   },
   "football|Egypt Premier League|National Bank of Egypt SC|Zamalek SC|上半场主胜|ht|2026-08-27": {
     "ev": 1.54,
@@ -2201,6 +2218,10 @@
     "ev": 1.93,
     "ts": 1787673869.851155
   },
+  "football|Norway 1st Division|Stromsgodset IF|Hodd|上半场客胜|ht|2026-08-27": {
+    "ev": 1.85,
+    "ts": 1787750279.96403
+  },
   "football|Norway 1st Division|Stromsgodset IF|Hodd|大球|1x2|2026-08-27": {
     "ev": 6.11,
     "ts": 1787719293.70943
@@ -2894,11 +2915,6 @@
     "ev": 1.11,
     "ts": 1787747955.248009
   },
-  "football|UEFA Champions League-Qualification Playoff|AEK雅典|索菲亚列夫斯基|上半场客胜|ht|2026-08-27": {
-    "ev": 3.8,
-    "bb": 9.65,
-    "ts": 1787748187.350979
-  },
   "football|UEFA Champions League-Qualification Playoff|Bodo/Glimt|NEC Nijmegen|让球客胜|1x2|2026-08-26": {
     "ev": 1.14,
     "ts": 1787628976.570356
@@ -3196,6 +3212,10 @@
     "ev": 3.51,
     "ts": 1787718647.8035352
   },
+  "football|Uzbekistan Super League|Lokomotiv Tashkent|FC Bunyodkor|上半场客胜|ht|2026-08-26": {
+    "ev": 2.28,
+    "ts": 1787750159.340957
+  },
   "football|Uzbekistan Super League|Lokomotiv Tashkent|FC Bunyodkor|主胜|1x2|2026-08-26": {
     "ev": 1.32,
     "ts": 1787720225.2376142
@@ -3203,6 +3223,10 @@
   "football|Uzbekistan Super League|Lokomotiv Tashkent|FC Bunyodkor|让球主胜|1x2|2026-08-26": {
     "ev": 1.7,
     "ts": 1787720022.433236
+  },
+  "football|Uzbekistan Super League|Lokomotiv Tashkent|FC Bunyodkor|让球客胜|1x2|2026-08-26": {
+    "ev": 2.92,
+    "ts": 1787749953.190979
   },
   "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|上半场主胜|ht|2026-08-26": {
     "ev": 41.07,
@@ -3253,6 +3277,10 @@
     "ev": 4.28,
     "bb": 2.16,
     "ts": 1787720955.546731
+  },
+  "football|Venezuela Cup|Aragua FC|Yaracuyanos FC|让球主胜|1x2|2026-08-27": {
+    "ev": 1.58,
+    "ts": 1787750391.011671
   },
   "football|Venezuela Cup|Bolivar SC|Monagas SC|大球|1x2|2026-08-27": {
     "ev": 1.88,
@@ -3577,9 +3605,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Chile Primera Division|科金博联合|智利天主大学|上半场客胜|ht|2026-08-27": {
-    "ev": 2.78,
-    "bb": 4.57,
-    "ts": 1787749730.541996
+  "football|UEFA Champions League-Qualification Playoff|AEK雅典|索菲亚列夫斯基|上半场客胜|ht|2026-08-27": {
+    "ev": 6.04,
+    "bb": 9.85,
+    "ts": 1787750586.5718122
   }
 }
