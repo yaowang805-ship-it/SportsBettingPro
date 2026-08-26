@@ -308,6 +308,10 @@
     "bb": 2.09,
     "ts": 1787697897.538123
   },
+  "football|Bolivia Division Profesional|Blooming Santa Cruz|CDT Real Oruro|小球|1x2|2026-08-27": {
+    "ev": 1.3,
+    "ts": 1787718342.713012
+  },
   "football|Bolivia Division Profesional|Gualberto Villarroel San Jose|Oriente Petrolero|主胜|1x2|2026-08-26": {
     "ev": 7.6,
     "ts": 1787649776.918575
@@ -411,6 +415,10 @@
     "bb": 6.1,
     "ts": 1787697897.538198
   },
+  "football|Chile Cup|Deportes Recoleta|O Higgins|小球|1x2|2026-08-27": {
+    "ev": 5.02,
+    "ts": 1787718003.934643
+  },
   "football|Colombia Primera A|Cucuta Deportivo FC|Alianza FC|主胜|1x2|2026-08-26": {
     "ev": 2.73,
     "ts": 1787643386.2104309
@@ -456,6 +464,14 @@
     "ev": 1.53,
     "ts": 1787707153.4448981
   },
+  "football|Croatian Cup|NK Dinamo Predavac|NK Hrvatski Dragovoljac|客胜|1x2|2026-08-26": {
+    "ev": 5.22,
+    "ts": 1787718003.93293
+  },
+  "football|Croatian Cup|NK Dinamo Predavac|NK Hrvatski Dragovoljac|小球|1x2|2026-08-26": {
+    "ev": 1.4,
+    "ts": 1787718003.9330041
+  },
   "football|Czech Republic Cup|1. BFK Frydlant Nad Ostravici|FC Zbrojovka Brno|双重机会-主/客|dc|2026-08-26": {
     "ev": 1.13,
     "ts": 1787716320.497486
@@ -487,6 +503,14 @@
   "football|Czech Republic Cup|FC Pisek|FK Pardubice|客胜|1x2|2026-08-26": {
     "ev": 6.03,
     "ts": 1787716320.497702
+  },
+  "football|Czech Republic Cup|FC Spartak Velka Bites|1.FC Slovacko|客胜|1x2|2026-08-26": {
+    "ev": 2.25,
+    "ts": 1787718003.933245
+  },
+  "football|Czech Republic Cup|FC Spartak Velka Bites|1.FC Slovacko|让球客胜|1x2|2026-08-26": {
+    "ev": 2.4,
+    "ts": 1787718003.933312
   },
   "football|Czech Republic Cup|FK Admira Prague|FC Silon Taborsko|大球|1x2|2026-08-26": {
     "ev": 1.39,
@@ -589,6 +613,10 @@
     "ev": 3.85,
     "ts": 1787666558.3309639
   },
+  "football|Egypt Premier League|Smouha SC|Asyut Petroleum|上半场客胜|ht|2026-08-26": {
+    "ev": 6.56,
+    "ts": 1787718003.9327738
+  },
   "football|Egypt Premier League|Smouha SC|Asyut Petroleum|单双-双|oe|2026-08-26": {
     "ev": 1.12,
     "ts": 1787707153.4444318
@@ -602,6 +630,11 @@
     "ev": 18.66,
     "bb": 3.02,
     "ts": 1787533611.279916
+  },
+  "football|Egypt Premier League|史莫哈|佩特雷姆|上半场客胜|ht|2026-08-26": {
+    "ev": 6.56,
+    "bb": 9.85,
+    "ts": 1787718002.442977
   },
   "football|Egypt Premier League|未来FC|马哈拉|和局|1x2|2026-08-27": {
     "ev": 11.14,
@@ -824,6 +857,10 @@
   "football|England League Cup|Ipswich Town|Leicester City FC|小球|1x2|2026-08-26": {
     "ev": 1.02,
     "ts": 1787670753.381999
+  },
+  "football|England League Cup|Newcastle United FC|West Bromwich Albion|上半场主胜|ht|2026-08-27": {
+    "ev": 2.21,
+    "ts": 1787718647.804679
   },
   "football|England League Cup|Newcastle United FC|West Bromwich Albion|让球客胜|1x2|2026-08-27": {
     "ev": 1.39,
@@ -1139,6 +1176,14 @@
     "bb": 1.91,
     "ts": 1787657386.659769
   },
+  "football|Georgia Cup|FC Gagra|FC Aragvi Dusheti|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 1.45,
+    "ts": 1787718003.933883
+  },
+  "football|Georgia Cup|FC Gagra|FC Aragvi Dusheti|让球客胜|1x2|2026-08-27": {
+    "ev": 3.82,
+    "ts": 1787718003.933813
+  },
   "football|Germany Regionalliga Northeast|1. FC Lokomotive Leipzig|Chemnitzer FC|主胜|1x2|2026-08-26": {
     "ev": 1.3,
     "ts": 1787661266.381192
@@ -1154,6 +1199,10 @@
   "football|Germany Regionalliga Northeast|1. FC Magdeburg II|BSG Chemie Leipzig|让球客胜|1x2|2026-08-26": {
     "ev": 1.75,
     "ts": 1787633955.953523
+  },
+  "football|Hungary NB I Women|Budapest Honved FC (w)|ETO FC Gyor (w)|主胜|1x2|2026-08-26": {
+    "ev": 7.15,
+    "ts": 1787718003.9344718
   },
   "football|Iceland 1. deild|Afturelding|Grotta|上半场主胜|ht|2026-08-26": {
     "ev": 3.12,
@@ -1194,6 +1243,11 @@
   "football|Japan Emperor Cup|Montedio Yamagata|Fujieda MYFC|让球客胜|1x2|2026-08-26": {
     "ev": 3.41,
     "ts": 1787717723.091181
+  },
+  "football|Japan Emperor Cup|新泻天鹅|鹿儿岛联|客胜|1x2|2026-08-26": {
+    "ev": 6.08,
+    "bb": 4.22,
+    "ts": 1787718002.44304
   },
   "football|Kuwait Premier League|Al Fahaheel FC|Qadsia SC|主胜|1x2|2026-08-26": {
     "ev": 4.94,
@@ -1718,11 +1772,6 @@
     "bb": 1.87,
     "ts": 1787490186.243403
   },
-  "football|South Korea K-League 1|江原FC|光州FC|上半场客胜|ht|2026-08-26": {
-    "ev": 10.56,
-    "bb": 9.15,
-    "ts": 1787712543.684924
-  },
   "football|Spain LaLiga|Real Madrid|Real Sociedad|上半场主胜|ht|2026-08-27": {
     "ev": 2.12,
     "ts": 1787684748.287504
@@ -1934,6 +1983,26 @@
     "bb": 4.54,
     "ts": 1787590192.126327
   },
+  "football|UEFA Europa Cup Women-Qualification|Seasters Odesa (w)|Rosenborg BK (w)|主胜|1x2|2026-08-26": {
+    "ev": 85.07,
+    "ts": 1787718003.933084
+  },
+  "football|UEFA Europa Cup Women-Qualification|Seasters Odesa (w)|Rosenborg BK (w)|让球客胜|1x2|2026-08-26": {
+    "ev": 2.69,
+    "ts": 1787718647.80411
+  },
+  "football|UEFA Europa Cup Women-Qualification|ZNK Hajduk Split (w)|DBK Fortuna Hjoerring (w)|主胜|1x2|2026-08-26": {
+    "ev": 116.62,
+    "ts": 1787718342.713826
+  },
+  "football|UEFA Europa Cup Women-Qualification|ZNK Hajduk Split (w)|DBK Fortuna Hjoerring (w)|让球客胜|1x2|2026-08-26": {
+    "ev": 1.05,
+    "ts": 1787718647.805105
+  },
+  "football|UEFA Europa Cup Women-Qualification|ZNK SFK 2000 Sarajevo (w)|FC Slovan Liberec (w)|小球|1x2|2026-08-26": {
+    "ev": 1.39,
+    "ts": 1787718003.9331698
+  },
   "football|UEFA Europa League-Qualification|安德莱赫特|阿拉木图凯拉特|上半场主胜|ht|2026-08-28": {
     "ev": 5.66,
     "bb": 2.08,
@@ -1947,6 +2016,10 @@
   "football|USL Championship|New Mexico United|Lexington SC|总进球区间7+|total_goals_range|2026-08-27": {
     "ev": 6.9,
     "ts": 1787708394.902696
+  },
+  "football|Uzbekistan Super League|Lokomotiv Tashkent|FC Bunyodkor|上半场主胜|ht|2026-08-26": {
+    "ev": 3.51,
+    "ts": 1787718647.8035352
   },
   "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|上半场客胜|ht|2026-08-26": {
     "ev": 1.46,
@@ -2130,6 +2203,10 @@
     "ev": 2.91,
     "ts": 1787678048.387667
   },
+  "tennis|ITF - W35 Barueri Women Singles|Marjorie Souza (BRA)|Carolyn Ansari (USA)|让盘主胜|1x2|2026-08-27": {
+    "ev": 2.47,
+    "ts": 1787718003.9342961
+  },
   "tennis|ITF - W50 Kursumlijska Banja Women Singles|Antonia Vergara Rivera (CHI)|Lidia Encheva (BUL)|主胜|1x2|2026-08-26": {
     "ev": 8.6,
     "ts": 1787666558.3312361
@@ -2166,14 +2243,9 @@
     "ev": 1.37,
     "ts": 1787673486.2149382
   },
-  "football|Egypt Premier League|史莫哈|佩特雷姆|上半场客胜|ht|2026-08-26": {
-    "ev": 6.56,
-    "bb": 9.85,
-    "ts": 1787718002.442977
-  },
-  "football|Japan Emperor Cup|新泻天鹅|鹿儿岛联|客胜|1x2|2026-08-26": {
-    "ev": 6.08,
-    "bb": 4.22,
-    "ts": 1787718002.44304
+  "football|South Korea K-League 1|江原FC|光州FC|上半场客胜|ht|2026-08-26": {
+    "ev": 14.94,
+    "bb": 9.5,
+    "ts": 1787718671.095722
   }
 }
