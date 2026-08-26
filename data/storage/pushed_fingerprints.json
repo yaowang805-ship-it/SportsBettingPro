@@ -15,6 +15,14 @@
     "ev": 4.23,
     "ts": 1787685420.392719
   },
+  "baseball|MLB|Atlanta Braves|Los Angeles Dodgers|客胜|1x2|2026-08-27": {
+    "ev": 3.81,
+    "ts": 1787766588.335209
+  },
+  "baseball|MLB|Atlanta Braves|Los Angeles Dodgers|让分客胜|1x2|2026-08-27": {
+    "ev": 2.57,
+    "ts": 1787766701.014761
+  },
   "baseball|MLB|Chicago White Sox|Texas Rangers|客胜|1x2|2026-08-26": {
     "ev": 4.01,
     "ts": 1787685262.075883
@@ -426,11 +434,6 @@
   "football|Argentina Primera Nacional|Patronato Parana|Club Atletico Atlanta|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 1.12,
     "ts": 1787747560.57094
-  },
-  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|客胜|1x2|2026-08-27": {
-    "ev": 5.28,
-    "bb": 4.04,
-    "ts": 1787766422.6980648
   },
   "football|Argentina Primera Nacional|玛德恩|戈多伊克鲁斯|上半场双重机会-主/客|ht_dc|2026-08-26": {
     "ev": 2.5,
@@ -1500,6 +1503,22 @@
     "ev": 1.0,
     "ts": 1787660197.3470562
   },
+  "football|England League Cup|Preston North End|Everton FC|主胜|1x2|2026-08-27": {
+    "ev": 6.37,
+    "ts": 1787766588.333832
+  },
+  "football|England League Cup|Preston North End|Everton FC|双边进球-是|btts|2026-08-27": {
+    "ev": 1.36,
+    "ts": 1787766588.333911
+  },
+  "football|England League Cup|Preston North End|Everton FC|双重机会-主/和局|dc|2026-08-27": {
+    "ev": 4.16,
+    "ts": 1787766588.3341079
+  },
+  "football|England League Cup|Preston North End|Everton FC|小球|1x2|2026-08-27": {
+    "ev": 1.19,
+    "ts": 1787766588.334039
+  },
   "football|England League Cup|Preston North End|Everton FC|让球主胜|1x2|2026-08-27": {
     "ev": 2.99,
     "ts": 1787706149.114911
@@ -1571,6 +1590,10 @@
   "football|England League Cup|Tottenham Hotspur|Charlton Athletic|客胜|1x2|2026-08-27": {
     "ev": 17.24,
     "ts": 1787765834.6363552
+  },
+  "football|England League Cup|Tottenham Hotspur|Charlton Athletic|让球主胜|1x2|2026-08-27": {
+    "ev": 2.19,
+    "ts": 1787766886.656488
   },
   "football|England League Cup|Tottenham Hotspur|Charlton Athletic|让球客胜|1x2|2026-08-27": {
     "ev": 2.59,
@@ -1655,6 +1678,11 @@
     "ev": 3.07,
     "bb": 3.92,
     "ts": 1787649776.160597
+  },
+  "football|England League Cup|普雷斯顿|埃弗顿|主胜|1x2|2026-08-27": {
+    "ev": 6.37,
+    "bb": 9.9,
+    "ts": 1787766587.936332
   },
   "football|England League Cup|沃特福德|彼德堡联|和局|1x2|2026-08-26": {
     "ev": 5.17,
@@ -1815,6 +1843,10 @@
   "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|双边进球-是|btts|2026-08-27": {
     "ev": 1.29,
     "ts": 1787731363.1894321
+  },
+  "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|大球|1x2|2026-08-27": {
+    "ev": 2.21,
+    "ts": 1787766886.657436
   },
   "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|客胜|1x2|2026-08-27": {
     "ev": 16.38,
@@ -3371,6 +3403,10 @@
     "ev": 1.3,
     "ts": 1787630577.485267
   },
+  "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|上半场客胜|ht|2026-08-27": {
+    "ev": 12.63,
+    "ts": 1787766588.334191
+  },
   "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|单双-双|oe|2026-08-27": {
     "ev": 1.85,
     "ts": 1787741819.3045068
@@ -3378,6 +3414,10 @@
   "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|双边进球-是|btts|2026-08-27": {
     "ev": 2.36,
     "ts": 1787722521.7273118
+  },
+  "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|双重机会-主/和局|dc|2026-08-27": {
+    "ev": 1.23,
+    "ts": 1787766588.3342779
   },
   "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|和局|1x2|2026-08-27": {
     "ev": 1.11,
@@ -3402,6 +3442,11 @@
   "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|让球客胜|1x2|2026-08-27": {
     "ev": 1.9,
     "ts": 1787696742.810018
+  },
+  "football|UEFA Champions League-Qualification Playoff|维京|萨格勒布迪纳摩|上半场客胜|ht|2026-08-27": {
+    "ev": 12.63,
+    "bb": 3.54,
+    "ts": 1787766587.9362931
   },
   "football|UEFA Champions League-Qualification Playoff|萨巴赫|贝尔谢巴工人|上半场客胜|ht|2026-08-26": {
     "ev": 4.35,
@@ -4147,18 +4192,13 @@
     "ts": 1787722069.444042
   },
   "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|上半场客胜|ht|2026-08-27": {
-    "ev": 17.78,
-    "bb": 6.15,
-    "ts": 1787766587.936238
+    "ev": 20.38,
+    "bb": 6.85,
+    "ts": 1787767016.682888
   },
-  "football|UEFA Champions League-Qualification Playoff|维京|萨格勒布迪纳摩|上半场客胜|ht|2026-08-27": {
-    "ev": 12.63,
-    "bb": 3.54,
-    "ts": 1787766587.9362931
-  },
-  "football|England League Cup|普雷斯顿|埃弗顿|主胜|1x2|2026-08-27": {
-    "ev": 6.37,
-    "bb": 9.9,
-    "ts": 1787766587.936332
+  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|客胜|1x2|2026-08-27": {
+    "ev": 6.25,
+    "bb": 4.55,
+    "ts": 1787767016.682933
   }
 }
