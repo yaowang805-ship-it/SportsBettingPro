@@ -210,6 +210,10 @@
     "ev": 2.95,
     "ts": 1787709336.927027
   },
+  "basketball|WNBA|Seattle Storm (w)|Toronto Tempo (w)|让分客胜|1x2|2026-08-27": {
+    "ev": 1.51,
+    "ts": 1787780257.928138
+  },
   "football|ASEAN Hyundai Cup|Vietnam|Thailand|双重机会-和局/客|dc|2026-08-26": {
     "ev": 2.27,
     "ts": 1787738193.2317069
@@ -255,6 +259,11 @@
     "ev": 4.26,
     "bb": 3.43,
     "ts": 1787653481.172247
+  },
+  "football|Argentina Cup|阿尔多斯维|门多萨独立|上半场主胜|ht|2026-08-27": {
+    "ev": 25.31,
+    "bb": 7.95,
+    "ts": 1787779229.392321
   },
   "football|Argentina Cup|阿尔多斯维|门多萨独立|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 3.08,
@@ -357,6 +366,10 @@
   "football|Argentina Primera B Metropolitana|Club Villa Dalmine|Talleres de Remedios|让球客胜|1x2|2026-08-26": {
     "ev": 2.95,
     "ts": 1787674472.5615501
+  },
+  "football|Argentina Primera B Metropolitana|Deportivo Merlo|CS Dock Sud|让球主胜|1x2|2026-08-27": {
+    "ev": 3.81,
+    "ts": 1787781510.042764
   },
   "football|Argentina Primera B Metropolitana|Excursionistas|Argentino de Merlo|主胜|1x2|2026-08-26": {
     "ev": 1.09,
@@ -3938,6 +3951,10 @@
     "ev": 14.3,
     "ts": 1787763777.7606778
   },
+  "football|UEFA Europa League-Qualification Playoff|Omonia Nicosia|St. Truidense VV|让球客胜|1x2|2026-08-28": {
+    "ev": 3.38,
+    "ts": 1787781017.897918
+  },
   "football|UEFA Europa League-Qualification Playoff|PFC CSKA Sofia|OFI Crete|上半场主胜|ht|2026-08-28": {
     "ev": 2.04,
     "ts": 1787767551.562878
@@ -4455,9 +4472,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Argentina Cup|阿尔多斯维|门多萨独立|上半场主胜|ht|2026-08-27": {
-    "ev": 25.31,
-    "bb": 7.95,
-    "ts": 1787779229.392321
+  "football|Brazil Serie D-Playoff|圣约瑟波|戈亚图巴|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 9.99,
+    "bb": 1.73,
+    "ts": 1787781632.90958
   }
 }
