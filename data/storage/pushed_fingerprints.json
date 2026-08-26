@@ -456,9 +456,73 @@
     "ev": 1.53,
     "ts": 1787707153.4448981
   },
+  "football|Czech Republic Cup|1. BFK Frydlant Nad Ostravici|FC Zbrojovka Brno|双重机会-主/客|dc|2026-08-26": {
+    "ev": 1.13,
+    "ts": 1787716320.497486
+  },
+  "football|Czech Republic Cup|1. BFK Frydlant Nad Ostravici|FC Zbrojovka Brno|大球|1x2|2026-08-26": {
+    "ev": 2.87,
+    "ts": 1787716320.497445
+  },
+  "football|Czech Republic Cup|1. BFK Frydlant Nad Ostravici|FC Zbrojovka Brno|客胜|1x2|2026-08-26": {
+    "ev": 6.93,
+    "ts": 1787716320.4974022
+  },
+  "football|Czech Republic Cup|FC Krimice|FK Teplice|大球|1x2|2026-08-26": {
+    "ev": 3.13,
+    "ts": 1787716320.497567
+  },
+  "football|Czech Republic Cup|FC Krimice|FK Teplice|让球客胜|1x2|2026-08-26": {
+    "ev": 1.91,
+    "ts": 1787716320.4975302
+  },
+  "football|Czech Republic Cup|FC Pisek|FK Pardubice|大球|1x2|2026-08-26": {
+    "ev": 1.57,
+    "ts": 1787716320.497741
+  },
+  "football|Czech Republic Cup|FC Pisek|FK Pardubice|客胜|1x2|2026-08-26": {
+    "ev": 6.03,
+    "ts": 1787716320.497702
+  },
+  "football|Czech Republic Cup|FK Admira Prague|FC Silon Taborsko|大球|1x2|2026-08-26": {
+    "ev": 1.39,
+    "ts": 1787716320.49727
+  },
+  "football|Czech Republic Cup|FK Admira Prague|FC Silon Taborsko|客胜|1x2|2026-08-26": {
+    "ev": 6.52,
+    "ts": 1787716320.4972281
+  },
+  "football|Czech Republic Cup|FK Kraluv Dvur|FK Loko Prague|双重机会-和局/客|dc|2026-08-26": {
+    "ev": 3.14,
+    "ts": 1787716320.497353
+  },
+  "football|Czech Republic Cup|FK Kraluv Dvur|FK Loko Prague|小球|1x2|2026-08-26": {
+    "ev": 2.18,
+    "ts": 1787716320.497314
+  },
   "football|Czech Republic Cup|Hluboka|FK Viktoria Zizkov|客胜|1x2|2026-08-26": {
     "ev": 1.02,
     "ts": 1787635855.477563
+  },
+  "football|Czech Republic Cup|MFK Vitkovice|SK Polanka Nad Odrou|主胜|1x2|2026-08-26": {
+    "ev": 19.45,
+    "ts": 1787716320.4976158
+  },
+  "football|Czech Republic Cup|MFK Vitkovice|SK Polanka Nad Odrou|双重机会-主/和局|dc|2026-08-26": {
+    "ev": 4.49,
+    "ts": 1787716320.497659
+  },
+  "football|Czech Republic Cup|SK Benatky Nad Jizerou|Neratovice Byskovice|让球客胜|1x2|2026-08-26": {
+    "ev": 1.66,
+    "ts": 1787716320.498286
+  },
+  "football|Czech Republic Cup|Tatran Vsechovice|1.SK Prostejov|客胜|1x2|2026-08-26": {
+    "ev": 6.68,
+    "ts": 1787716320.497136
+  },
+  "football|Czech Republic Cup|Tatran Vsechovice|1.SK Prostejov|让球客胜|1x2|2026-08-26": {
+    "ev": 13.07,
+    "ts": 1787716320.497175
   },
   "football|Denmark DBU Pokalen|Bronshoj BK|AB Gladsaxe|大球|1x2|2026-08-26": {
     "ev": 4.35,
@@ -656,6 +720,10 @@
     "ev": 1.32,
     "ts": 1787702193.7031019
   },
+  "football|England League Cup|Bradford City|Burnley FC|让球主胜|1x2|2026-08-27": {
+    "ev": 2.96,
+    "ts": 1787714427.229503
+  },
   "football|England League Cup|Cambridge United|Millwall FC|上半场主胜|ht|2026-08-26": {
     "ev": 2.31,
     "ts": 1787662529.0401978
@@ -739,6 +807,10 @@
   "football|England League Cup|Ipswich Town|Leicester City FC|小球|1x2|2026-08-26": {
     "ev": 1.02,
     "ts": 1787670753.381999
+  },
+  "football|England League Cup|Newcastle United FC|West Bromwich Albion|让球客胜|1x2|2026-08-27": {
+    "ev": 1.39,
+    "ts": 1787713218.4210749
   },
   "football|England League Cup|Nottingham Forest|Leeds United|上半场双重机会-主/客|ht_dc|2026-08-26": {
     "ev": 1.14,
@@ -1147,6 +1219,10 @@
     "ev": 1.47,
     "ts": 1787710389.089182
   },
+  "football|Norway 1st Division|Strommen IF|Raufoss IL|大球|1x2|2026-08-27": {
+    "ev": 1.61,
+    "ts": 1787715621.154051
+  },
   "football|Norway 1st Division|Strommen IF|Raufoss IL|总进球区间7+|total_goals_range|2026-08-27": {
     "ev": 1.93,
     "ts": 1787673869.851155
@@ -1543,6 +1619,10 @@
     "bb": 6.95,
     "ts": 1787676630.259209
   },
+  "football|South Korea K-League 1|Daejeon Hana Citizen FC|Ulsan HD FC|上半场客胜|ht|2026-08-26": {
+    "ev": 1.41,
+    "ts": 1787712544.143467
+  },
   "football|South Korea K-League 1|Daejeon Hana Citizen FC|Ulsan HD FC|总进球区间7+|total_goals_range|2026-08-26": {
     "ev": 3.03,
     "ts": 1787654157.395209
@@ -1562,6 +1642,10 @@
   "football|South Korea K-League 1|FC Anyang|Incheon United FC|上半场客胜|ht|2026-08-26": {
     "ev": 3.26,
     "ts": 1787683117.999615
+  },
+  "football|South Korea K-League 1|FC Anyang|Incheon United FC|双边进球-是|btts|2026-08-26": {
+    "ev": 1.81,
+    "ts": 1787712544.1424692
   },
   "football|South Korea K-League 1|FC Anyang|Incheon United FC|和局|1x2|2026-08-26": {
     "ev": 1.52,
@@ -1592,6 +1676,11 @@
     "ev": 2.51,
     "bb": 1.87,
     "ts": 1787490186.243403
+  },
+  "football|South Korea K-League 1|江原FC|光州FC|上半场客胜|ht|2026-08-26": {
+    "ev": 10.56,
+    "bb": 9.15,
+    "ts": 1787712543.684924
   },
   "football|Spain LaLiga|Real Madrid|Real Sociedad|上半场主胜|ht|2026-08-27": {
     "ev": 2.12,
@@ -1767,9 +1856,17 @@
     "ev": 1.72,
     "ts": 1787699224.460193
   },
+  "football|UEFA Champions League-Qualification Playoff|NK Celje|SK Slovan Bratislava|让球客胜|1x2|2026-08-27": {
+    "ev": 2.56,
+    "ts": 1787712544.143167
+  },
   "football|UEFA Champions League-Qualification Playoff|Olympique Lyonnais|Fenerbahce|主胜|1x2|2026-08-27": {
     "ev": 2.03,
     "ts": 1787699224.459956
+  },
+  "football|UEFA Champions League-Qualification Playoff|Olympique Lyonnais|Fenerbahce|总进球区间7+|total_goals_range|2026-08-27": {
+    "ev": 2.34,
+    "ts": 1787715029.135047
   },
   "football|UEFA Champions League-Qualification Playoff|Olympique Lyonnais|Fenerbahce|让球主胜|1x2|2026-08-27": {
     "ev": 1.0,
@@ -1864,6 +1961,10 @@
     "ev": 19.57,
     "ts": 1787710389.0902
   },
+  "tennis|ITF - M15 Cap D Agde Men Doubles|Victor Barreira Bonzom (FRA) / Lenny Couturier (FRA)|Matisse Martin (FRA) / Timeo Trufelli (FRA)|客胜|1x2|2026-08-26": {
+    "ev": 32.6,
+    "ts": 1787715621.154804
+  },
   "tennis|ITF - M15 Kursumlijska Banja Men Doubles|Kirill Mishkin (RUS) / Vitali Shvets (RUS)|Stefano Dagostino (ITA) / Andrea Motta (ITA)|客胜|1x2|2026-08-26": {
     "ev": 57.53,
     "ts": 1787712027.774087
@@ -1880,6 +1981,10 @@
     "ev": 6.06,
     "ts": 1787690048.413858
   },
+  "tennis|ITF - M15 Monastir Men Singles|Stevan Popovic (GER)|Nav Dayal (USA)|让盘客胜|1x2|2026-08-26": {
+    "ev": 2.25,
+    "ts": 1787714170.151989
+  },
   "tennis|ITF - M15 Monastir Men Singles|Thando Longwe Smit (RSA)|Toufik Sahtali (ALG)|让盘主胜|1x2|2026-08-26": {
     "ev": 3.17,
     "ts": 1787656356.89522
@@ -1891,6 +1996,10 @@
   "tennis|ITF - M25 Maribor Men Singles|Vaal Urankar (SLO)|Nicolo Toffanin (ITA)|让盘主胜|1x2|2026-08-26": {
     "ev": 2.19,
     "ts": 1787706149.115335
+  },
+  "tennis|ITF - M25 Oldenzaal Men Doubles|Manvydas Balciunas (NED) / Pieter De Lange (NED)|Lorenzo Angelini (ITA) / Lucio Ratti (ARG)|客胜|1x2|2026-08-26": {
+    "ev": 49.85,
+    "ts": 1787713877.695185
   },
   "tennis|ITF - M25 Poznan Men Doubles|Jan Sadzik (POL) / Alan Wazny (POL)|Jan Chlodnicki (POL) / Oliwier Sterniczuk (POL)|客胜|1x2|2026-08-26": {
     "ev": 86.4,
@@ -2008,9 +2117,9 @@
     "ev": 1.37,
     "ts": 1787673486.2149382
   },
-  "football|South Korea K-League 1|江原FC|光州FC|上半场客胜|ht|2026-08-26": {
-    "ev": 10.56,
-    "bb": 9.15,
-    "ts": 1787712543.684924
+  "football|Czech Republic Cup|维特科维斯|波兰卡奥多鲁|主胜|1x2|2026-08-26": {
+    "ev": 12.9,
+    "bb": 1.96,
+    "ts": 1787716926.6313138
   }
 }
