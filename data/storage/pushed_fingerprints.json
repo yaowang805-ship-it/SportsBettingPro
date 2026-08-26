@@ -71,6 +71,10 @@
     "ev": 10.28,
     "ts": 1787689853.576307
   },
+  "baseball|MLB|St Louis Cardinals|Baltimore Orioles|主胜|1x2|2026-08-27": {
+    "ev": 11.07,
+    "ts": 1787778374.001239
+  },
   "baseball|MLB|St Louis Cardinals|Baltimore Orioles|客胜|1x2|2026-08-26": {
     "ev": 2.21,
     "ts": 1787685262.076115
@@ -251,11 +255,6 @@
     "ev": 4.26,
     "bb": 3.43,
     "ts": 1787653481.172247
-  },
-  "football|Argentina Cup|阿尔多斯维|门多萨独立|上半场主胜|ht|2026-08-27": {
-    "ev": 16.7,
-    "bb": 7.85,
-    "ts": 1787755101.515496
   },
   "football|Argentina Cup|阿尔多斯维|门多萨独立|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 3.08,
@@ -783,9 +782,17 @@
     "ev": 1.12,
     "ts": 1787723772.619092
   },
+  "football|Colombia Primera A|Boyaca Chico FC|Fortaleza CEIF|和局|1x2|2026-08-27": {
+    "ev": 1.28,
+    "ts": 1787778026.1926882
+  },
   "football|Colombia Primera A|Boyaca Chico FC|Fortaleza CEIF|让球主胜|1x2|2026-08-27": {
     "ev": 1.38,
     "ts": 1787775200.32556
+  },
+  "football|Colombia Primera A|Boyaca Chico FC|Fortaleza CEIF|让球客胜|1x2|2026-08-27": {
+    "ev": 12.87,
+    "ts": 1787777802.580022
   },
   "football|Colombia Primera A|Cucuta Deportivo FC|Alianza FC|主胜|1x2|2026-08-26": {
     "ev": 2.73,
@@ -1138,6 +1145,10 @@
     "ev": 1.91,
     "ts": 1787763777.759779
   },
+  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|让球主胜|1x2|2026-08-28": {
+    "ev": 1.98,
+    "ts": 1787777227.116971
+  },
   "football|Egypt Premier League|Modern Sport FC|Ghazl El Mahallah|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 2.08,
     "ts": 1787753277.917762
@@ -1285,6 +1296,11 @@
     "ev": 2.73,
     "bb": 2.2,
     "ts": 1787754641.937054
+  },
+  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
+    "ev": 4.28,
+    "bb": 6.05,
+    "ts": 1787775986.203489
   },
   "football|Egypt Premier League|未来FC|马哈拉|和局|1x2|2026-08-27": {
     "ev": 11.14,
@@ -1483,6 +1499,14 @@
   "football|England League Cup|Cardiff City|Norwich City|让球客胜|1x2|2026-08-26": {
     "ev": 9.45,
     "ts": 1787661499.9580429
+  },
+  "football|England League Cup|Chelsea FC|Luton Town|上半场客胜|ht|2026-08-28": {
+    "ev": 1.26,
+    "ts": 1787777227.117596
+  },
+  "football|England League Cup|Chelsea FC|Luton Town|大球|1x2|2026-08-28": {
+    "ev": 1.03,
+    "ts": 1787777550.082431
   },
   "football|England League Cup|Doncaster Rovers|Middlesbrough FC|上半场客胜|ht|2026-08-26": {
     "ev": 1.26,
@@ -2694,6 +2718,10 @@
   "football|Qatar Stars League|Al Gharafa SC|Al Shamal|总进球区间7+|total_goals_range|2026-08-27": {
     "ev": 4.21,
     "ts": 1787753967.509995
+  },
+  "football|Qatar Stars League|Al Gharafa SC|Al Shamal|让球客胜|1x2|2026-08-27": {
+    "ev": 7.75,
+    "ts": 1787777550.082567
   },
   "football|Qatar Stars League|Al Wakrah|Al Rayyan SC|单双-双|oe|2026-08-28": {
     "ev": 2.17,
@@ -4427,9 +4455,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
-    "ev": 4.28,
-    "bb": 6.05,
-    "ts": 1787775986.203489
+  "football|Argentina Cup|阿尔多斯维|门多萨独立|上半场主胜|ht|2026-08-27": {
+    "ev": 25.31,
+    "bb": 7.95,
+    "ts": 1787779229.392321
   }
 }
