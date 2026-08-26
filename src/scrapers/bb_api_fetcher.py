@@ -401,12 +401,12 @@ def fetch_bb_match_result(match_id, language_type="EN"):
 
     ms = data.get("ms")
     status = MATCH_STATUS_LABELS.get(ms, f"ms_{ms}")
-    # V5.10: ms=0 实测就是"已完赛"。原先 MATCH_STATUS_LABELS 只把 3/6 当完赛, 且注释
-    # 写明"完赛码未实测到, 3/6 为推测" —— 结果 completed 恒为 False, 整条 BB 比分结算
-    # 兜底链路形同虚设(日志里 8/15 之后再无成功记录)。
-    # 实测证据: 25 场抽样 20 场 ms=0 且有比分, 含开赛 37 小时后比分 3-4 的; 未开赛是 ms=4。
-    # 保守起见只在"有比分"时才认完赛, 避免把异常态误判成结束。
-    if ms == 0 and home_score is not None and away_score is not None:
+    # 完赛判定(2026-08-26 收严后改): 完赛码 0/3/6/7 各不相同, 枚举总漏 —— ms=0 曾死4天
+    # (8/15→8/19 链路全失效), 现在 ms=7 又被漏(Scotland Challenge Cup 5390765 比分1:0、
+    # ms=7 却结算不了, 触发静默失效告警)。改为以"有最终比分"为准:
+    #   home+away 都非 None 且 不是未开赛(4)/进行中(5) = 完赛。
+    # 这样 0/3/6/7 全都能结算, 且仍保守(无比分 或 live/未开赛 不会误判)。
+    if home_score is not None and away_score is not None and ms not in (4, 5):
         status = "finished"
     return {
         "id": match_id,
