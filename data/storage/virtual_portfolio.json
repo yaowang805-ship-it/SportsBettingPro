@@ -1,5 +1,5 @@
 {
-  "balance": 10958.36,
+  "balance": 10821.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2783,6 +2783,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787853600,
       "created_at": "2026-08-26T18:05:51.132994+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_帕特罗纳图_阿特兰大竞技_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "阿根廷全国联赛",
+      "home_team": "帕特罗纳图",
+      "away_team": "阿特兰大竞技",
+      "home_cn": "帕特罗纳图",
+      "away_cn": "阿特兰大竞技",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 2.12,
+      "stake": 137,
+      "model_prob": 0.4837,
+      "ev_pct": 2.55,
+      "pin_odds": 0,
+      "fair_price": 2.0672,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787769000,
+      "created_at": "2026-08-26T18:06:55.718111+00:00",
       "track_only": false
     }
   ],
@@ -6026,8 +6049,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 1104.0,
-    "bets": 10
+    "used": 1241.0,
+    "bets": 11
   },
   "updated": null
 }

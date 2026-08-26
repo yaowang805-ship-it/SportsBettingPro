@@ -3493,6 +3493,14 @@
     "bb": 4.9,
     "ts": 1787738116.2345128
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|上半场主胜|ht|2026-08-28": {
+    "ev": 5.38,
+    "ts": 1787767551.562529
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|大球|1x2|2026-08-28": {
+    "ev": 1.39,
+    "ts": 1787767551.562569
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|上半场主胜|ht|2026-08-28": {
     "ev": 1.63,
     "ts": 1787764120.649885
@@ -3521,6 +3529,11 @@
     "ev": 4.38,
     "bb": 1.93,
     "ts": 1787764120.197126
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|阿贾克斯|锡永|上半场主胜|ht|2026-08-28": {
+    "ev": 5.38,
+    "bb": 1.83,
+    "ts": 1787767551.145806
   },
   "football|UEFA Europa Cup Women-Qualification|Apollon Limassol LFC (w)|FH Hafnarfjordur (w)|主胜|1x2|2026-08-26": {
     "ev": 1.42,
@@ -3754,6 +3767,14 @@
   "football|UEFA Europa League-Qualification Playoff|FK Kauno Zalgiris|Besiktas JK|总进球区间7+|total_goals_range|2026-08-28": {
     "ev": 14.3,
     "ts": 1787763777.7606778
+  },
+  "football|UEFA Europa League-Qualification Playoff|PFC CSKA Sofia|OFI Crete|上半场主胜|ht|2026-08-28": {
+    "ev": 2.04,
+    "ts": 1787767551.562878
+  },
+  "football|UEFA Europa League-Qualification Playoff|PFC CSKA Sofia|OFI Crete|总进球区间7+|total_goals_range|2026-08-28": {
+    "ev": 6.16,
+    "ts": 1787767551.5630772
   },
   "football|UEFA Europa League-Qualification|安德莱赫特|阿拉木图凯拉特|上半场主胜|ht|2026-08-28": {
     "ev": 5.66,
@@ -4225,9 +4246,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|UEFA Europa Conference League-Qualification Playoff|阿贾克斯|锡永|上半场主胜|ht|2026-08-28": {
-    "ev": 5.38,
-    "bb": 1.83,
-    "ts": 1787767551.145806
+  "football|Argentina Primera Nacional|帕特罗纳图|阿特兰大竞技|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 2.55,
+    "bb": 2.12,
+    "ts": 1787767615.7320561
   }
 }
