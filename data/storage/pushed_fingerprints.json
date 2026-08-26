@@ -190,6 +190,10 @@
     "ev": 3.46,
     "ts": 1787702193.703412
   },
+  "football|Argentina Cup|Aldosivi|Independiente Rivadavia|客胜|1x2|2026-08-27": {
+    "ev": 1.93,
+    "ts": 1787765834.6374452
+  },
   "football|Argentina Cup|拉普拉塔大学生|巴拉卡斯中央队|上半场客胜|ht|2026-08-28": {
     "ev": 13.95,
     "bb": 8.85,
@@ -666,6 +670,10 @@
   "football|Colombia Primera A|America de Cali|Junior FC|小球|1x2|2026-08-27": {
     "ev": 1.17,
     "ts": 1787755412.8543801
+  },
+  "football|Colombia Primera A|America de Cali|Junior FC|让球客胜|1x2|2026-08-27": {
+    "ev": 2.22,
+    "ts": 1787764120.6502452
   },
   "football|Colombia Primera A|Boyaca Chico FC|Fortaleza CEIF|单双-双|oe|2026-08-27": {
     "ev": 1.12,
@@ -1404,6 +1412,10 @@
     "ev": 2.21,
     "ts": 1787718647.804679
   },
+  "football|England League Cup|Newcastle United FC|West Bromwich Albion|小球|1x2|2026-08-27": {
+    "ev": 1.9,
+    "ts": 1787765711.158946
+  },
   "football|England League Cup|Newcastle United FC|West Bromwich Albion|让球客胜|1x2|2026-08-27": {
     "ev": 1.39,
     "ts": 1787713218.4210749
@@ -1515,6 +1527,14 @@
   "football|England League Cup|Tottenham Hotspur|Charlton Athletic|上半场客胜|ht|2026-08-27": {
     "ev": 1.52,
     "ts": 1787735295.876129
+  },
+  "football|England League Cup|Tottenham Hotspur|Charlton Athletic|双边进球-是|btts|2026-08-27": {
+    "ev": 3.89,
+    "ts": 1787765834.63654
+  },
+  "football|England League Cup|Tottenham Hotspur|Charlton Athletic|客胜|1x2|2026-08-27": {
+    "ev": 17.24,
+    "ts": 1787765834.6363552
   },
   "football|England League Cup|Tottenham Hotspur|Charlton Athletic|让球客胜|1x2|2026-08-27": {
     "ev": 2.59,
@@ -3335,6 +3355,10 @@
     "ev": 5.27,
     "ts": 1787730659.7099168
   },
+  "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|角球小球|corner|2026-08-27": {
+    "ev": 2.17,
+    "ts": 1787765017.8037398
+  },
   "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|让球主胜|1x2|2026-08-27": {
     "ev": 1.41,
     "ts": 1787722822.286294
@@ -3358,6 +3382,14 @@
     "bb": 4.9,
     "ts": 1787738116.2345128
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|上半场主胜|ht|2026-08-28": {
+    "ev": 1.63,
+    "ts": 1787764120.649885
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|FC Hradec Kralove|Panathinaikos Athens|上半场主胜|ht|2026-08-28": {
+    "ev": 1.32,
+    "ts": 1787764120.650102
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Kuopion Palloseura|Shamrock Rovers|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 1.52,
     "ts": 1787756587.4375098
@@ -3373,6 +3405,11 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|上半场主胜|ht|2026-08-28": {
     "ev": 3.29,
     "ts": 1787763777.760244
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|里加FC|克拉克斯维克|上半场主胜|ht|2026-08-28": {
+    "ev": 4.38,
+    "bb": 1.93,
+    "ts": 1787764120.197126
   },
   "football|UEFA Europa Cup Women-Qualification|Apollon Limassol LFC (w)|FH Hafnarfjordur (w)|主胜|1x2|2026-08-26": {
     "ev": 1.42,
@@ -3594,6 +3631,10 @@
     "ev": 5.57,
     "bb": 2.46,
     "ts": 1787737835.049088
+  },
+  "football|UEFA Europa League-Qualification Playoff|FC Viktoria Plzen|FK Crvena Zvezda Belgrade|主胜|1x2|2026-08-28": {
+    "ev": 1.43,
+    "ts": 1787764120.65018
   },
   "football|UEFA Europa League-Qualification Playoff|FK Kauno Zalgiris|Besiktas JK|总进球区间7+|total_goals_range|2026-08-28": {
     "ev": 14.3,
@@ -4051,9 +4092,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|UEFA Europa Conference League-Qualification Playoff|里加FC|克拉克斯维克|上半场主胜|ht|2026-08-28": {
-    "ev": 4.38,
-    "bb": 1.93,
-    "ts": 1787764120.197126
+  "football|Venezuela Cup|艾尔维吉亚|巴里纳斯竞技|客胜|1x2|2026-08-27": {
+    "ev": 27.84,
+    "bb": 3.87,
+    "ts": 1787766008.1199749
   }
 }
