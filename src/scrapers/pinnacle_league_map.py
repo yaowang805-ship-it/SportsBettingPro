@@ -1066,31 +1066,30 @@ def find_pinnacle_league_ids(bb_league_name, all_sport_matchups):
 
         return sorted(matched_ids)
 
-    # Phase 2: Only for unmatched leagues, do English keyword fuzzy matching
+    # Phase 2: 英文关键词模糊匹配(规范化对齐) — 集合相等防跨层误配
+    # 2026-08-26 重写: 旧逻辑"重叠词≥2"配不上 "Chile Primera Division" vs "Chile - Primera Division"
+    # (division/primera 被当通用词滤掉, 只剩国家词1个)。改为规范化(去连字符+序数→数字)+
+    # 集合相等: 分层词保留作判别词, "Primera"≠"Segunda" 天然防跨层误配。
     import re as _re
-    bb_en_parts = _re.findall(r'[A-Za-z]{2,}', bb_lower)
-    bb_en_set = set(w.lower() for w in bb_en_parts)
+    bb_meaningful = set(_re.findall(r'[a-z0-9]+', _normalize_league_name(bb_league_name))) - _TIER_BLACKLIST
 
-    if bb_en_set:
+    if bb_meaningful:
         for lid, info in all_sport_matchups.items():
             # 兼容两种格式: 旧格式(flat dict)有name字段, 网球格式(nested)需穿透
             if isinstance(info, dict) and "name" in info:
-                pin_name = _safe_get_name(info).lower()
+                pin_name = _safe_get_name(info)
             elif isinstance(info, dict):
                 # Nested: {league_id: {name: ...}} → 取第一个league的name
                 first = next(iter(info.values()), {}) if info else {}
-                pin_name = (first.get("name", "") if isinstance(first, dict) else str(first)).lower()
+                pin_name = first.get("name", "") if isinstance(first, dict) else str(first)
             else:
                 continue
-            pin_words = set(pin_name.split())
-            overlap = bb_en_set & pin_words
-            # V5.5: 过滤通用词(premier/league等), 只保留有意义的词, 否则"Premier League"命中26个联赛
-            meaningful = overlap - _GENERIC_KEYWORD_BLACKLIST
-            if len(meaningful) >= 2:
+            pin_meaningful = set(_re.findall(r'[a-z0-9]+', _normalize_league_name(pin_name))) - _TIER_BLACKLIST
+            if not pin_meaningful or pin_meaningful != bb_meaningful:
+                continue
+            if len(bb_meaningful) >= 2:
                 matched_ids.add(lid)
-            elif len(meaningful) == 1:
-                single_word = list(meaningful)[0]
-                if single_word in ("nba", "nfl", "mlb", "wnba", "ncaa"):
-                    matched_ids.add(lid)
+            elif next(iter(bb_meaningful)) in ("nba", "nfl", "mlb", "wnba", "ncaa"):
+                matched_ids.add(lid)
 
     return sorted(matched_ids) if matched_ids else []
