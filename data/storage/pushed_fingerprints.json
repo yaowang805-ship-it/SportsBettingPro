@@ -1479,6 +1479,10 @@
     "ev": 14.54,
     "ts": 1787731979.781625
   },
+  "football|Japan Emperor Cup|FC Tokyo|Nagano Parceiro|主胜|1x2|2026-08-26": {
+    "ev": 2.14,
+    "ts": 1787732503.038157
+  },
   "football|Japan Emperor Cup|Gamba Osaka|Reilac Shiga FC|让球客胜|1x2|2026-08-26": {
     "ev": 1.69,
     "ts": 1787717038.066756
@@ -1538,6 +1542,15 @@
   "football|Japan Emperor Cup|Sanfrecce Hiroshima|Okinawa SV|主胜|1x2|2026-08-26": {
     "ev": 1.46,
     "ts": 1787719797.7859688
+  },
+  "football|Japan Emperor Cup|Tokyo Verdy|Thespa Gunma|客胜|1x2|2026-08-26": {
+    "ev": 2.09,
+    "ts": 1787732503.0382762
+  },
+  "football|Japan Emperor Cup|大阪樱花|FC岐埠|双重机会-和局/客|dc|2026-08-26": {
+    "ev": 21.41,
+    "bb": 3.78,
+    "ts": 1787732231.306157
   },
   "football|Japan Emperor Cup|新泻天鹅|鹿儿岛联|客胜|1x2|2026-08-26": {
     "ev": 6.08,
@@ -2787,9 +2800,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Japan Emperor Cup|大阪樱花|FC岐埠|双重机会-和局/客|dc|2026-08-26": {
-    "ev": 21.41,
-    "bb": 3.78,
-    "ts": 1787732231.306157
+  "football|UEFA Champions League-Qualification Playoff|采列|布拉迪斯拉发|上半场客胜|ht|2026-08-27": {
+    "ev": 6.69,
+    "bb": 4.42,
+    "ts": 1787732598.925787
   }
 }
