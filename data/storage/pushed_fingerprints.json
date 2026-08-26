@@ -194,6 +194,10 @@
     "ev": 1.93,
     "ts": 1787765834.6374452
   },
+  "football|Argentina Cup|Aldosivi|Independiente Rivadavia|让球客胜|1x2|2026-08-27": {
+    "ev": 2.94,
+    "ts": 1787766008.781163
+  },
   "football|Argentina Cup|拉普拉塔大学生|巴拉卡斯中央队|上半场客胜|ht|2026-08-28": {
     "ev": 13.95,
     "bb": 8.85,
@@ -3748,6 +3752,14 @@
     "ev": 7.46,
     "ts": 1787750816.28354
   },
+  "football|Venezuela Cup|Atletico El Vigia|Atletico Barinas|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 16.72,
+    "ts": 1787766008.780847
+  },
+  "football|Venezuela Cup|Atletico El Vigia|Atletico Barinas|客胜|1x2|2026-08-27": {
+    "ev": 27.84,
+    "ts": 1787766008.780766
+  },
   "football|Venezuela Cup|Bolivar SC|Monagas SC|大球|1x2|2026-08-27": {
     "ev": 1.88,
     "ts": 1787720022.4339762
@@ -3829,6 +3841,11 @@
     "ev": 18.72,
     "bb": 5.4,
     "ts": 1787763993.9216452
+  },
+  "football|Venezuela Cup|艾尔维吉亚|巴里纳斯竞技|客胜|1x2|2026-08-27": {
+    "ev": 27.84,
+    "bb": 3.87,
+    "ts": 1787766008.1199749
   },
   "tennis|ATP - Grand Slam US Open|Arthur Gea (FRA)|Sumit Nagal (IND)|让盘主胜|1x2|2026-08-26": {
     "ev": 1.1,
@@ -4092,9 +4109,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Venezuela Cup|艾尔维吉亚|巴里纳斯竞技|客胜|1x2|2026-08-27": {
-    "ev": 27.84,
-    "bb": 3.87,
-    "ts": 1787766008.1199749
+  "football|Venezuela Cup|艾尔维吉亚|巴里纳斯竞技|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 22.78,
+    "bb": 2.23,
+    "ts": 1787766166.95769
   }
 }
