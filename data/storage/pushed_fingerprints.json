@@ -1407,11 +1407,6 @@
     "bb": 4.86,
     "ts": 1787676204.3072
   },
-  "football|England League Cup|布拉德福德|伯恩利|上半场主胜|ht|2026-08-27": {
-    "ev": 3.36,
-    "bb": 4.35,
-    "ts": 1787748975.240469
-  },
   "football|England League Cup|布拉德福德|伯恩利|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 3.03,
     "bb": 1.8,
@@ -2198,6 +2193,10 @@
     "ev": 1.32,
     "ts": 1787724759.9756742
   },
+  "football|Norway 1st Division|Stabaek IF|Ranheim|总进球区间0-1|total_goals_range|2026-08-27": {
+    "ev": 1.29,
+    "ts": 1787750587.148083
+  },
   "football|Norway 1st Division|Stabaek IF|Ranheim|角球大球|corner|2026-08-27": {
     "ev": 2.09,
     "ts": 1787738469.387467
@@ -2915,6 +2914,11 @@
     "ev": 1.11,
     "ts": 1787747955.248009
   },
+  "football|UEFA Champions League-Qualification Playoff|AEK雅典|索菲亚列夫斯基|上半场客胜|ht|2026-08-27": {
+    "ev": 6.04,
+    "bb": 9.85,
+    "ts": 1787750586.5718122
+  },
   "football|UEFA Champions League-Qualification Playoff|Bodo/Glimt|NEC Nijmegen|让球客胜|1x2|2026-08-26": {
     "ev": 1.14,
     "ts": 1787628976.570356
@@ -3605,9 +3609,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|UEFA Champions League-Qualification Playoff|AEK雅典|索菲亚列夫斯基|上半场客胜|ht|2026-08-27": {
-    "ev": 6.04,
-    "bb": 9.85,
-    "ts": 1787750586.5718122
+  "football|England League Cup|布拉德福德|伯恩利|上半场主胜|ht|2026-08-27": {
+    "ev": 6.16,
+    "bb": 4.46,
+    "ts": 1787750737.1903749
   }
 }
