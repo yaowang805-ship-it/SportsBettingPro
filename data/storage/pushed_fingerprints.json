@@ -763,6 +763,10 @@
     "ev": 8.3,
     "ts": 1787744485.161244
   },
+  "football|Czech Republic Cup|MFK Vitkovice|SK Polanka Nad Odrou|让球主胜|1x2|2026-08-26": {
+    "ev": 2.33,
+    "ts": 1787744784.546247
+  },
   "football|Czech Republic Cup|MFK Vitkovice|SK Polanka Nad Odrou|让球客胜|1x2|2026-08-26": {
     "ev": 8.96,
     "ts": 1787744485.161283
@@ -872,6 +876,10 @@
     "ev": 1.91,
     "ts": 1787678048.387135
   },
+  "football|Egypt Premier League|Petrojet FC|Talaea El Gaish|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 1.42,
+    "ts": 1787745278.694735
+  },
   "football|Egypt Premier League|Petrojet FC|Talaea El Gaish|和局|1x2|2026-08-27": {
     "ev": 10.82,
     "ts": 1787678048.387081
@@ -879,6 +887,10 @@
   "football|Egypt Premier League|Petrojet FC|Talaea El Gaish|让球主胜|1x2|2026-08-27": {
     "ev": 1.33,
     "ts": 1787719593.1329322
+  },
+  "football|Egypt Premier League|Petrojet FC|Talaea El Gaish|让球客胜|1x2|2026-08-27": {
+    "ev": 12.49,
+    "ts": 1787744631.778351
   },
   "football|Egypt Premier League|Smouha SC|Asyut Petroleum|上半场主胜|ht|2026-08-26": {
     "ev": 1.15,
@@ -895,6 +907,11 @@
   "football|Egypt Premier League|Smouha SC|Asyut Petroleum|单双-双|oe|2026-08-26": {
     "ev": 1.12,
     "ts": 1787707153.4444318
+  },
+  "football|Egypt Premier League|佩特捷德|杰艾斯|上半场主胜|ht|2026-08-27": {
+    "ev": 3.63,
+    "bb": 4.44,
+    "ts": 1787744631.1222038
   },
   "football|Egypt Premier League|佩特捷德|杰艾斯|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 3.16,
@@ -1989,6 +2006,10 @@
   "football|Kuwait Premier League|Al Shabab Kuwait|Al Jahra|小球|1x2|2026-08-26": {
     "ev": 4.52,
     "ts": 1787672999.3211038
+  },
+  "football|Kuwait Premier League|Al Shabab Kuwait|Al Jahra|让球客胜|1x2|2026-08-26": {
+    "ev": 1.2,
+    "ts": 1787745127.007935
   },
   "football|Kuwait Premier League|Kazma SC|Al Tadhamon|让球客胜|1x2|2026-08-26": {
     "ev": 1.05,
@@ -3389,9 +3410,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Egypt Premier League|佩特捷德|杰艾斯|上半场主胜|ht|2026-08-27": {
-    "ev": 3.63,
-    "bb": 4.44,
-    "ts": 1787744631.1222038
+  "football|UEFA Europa Cup Women-Qualification|SFK萨拉热窝 (女)|利贝雷茨 (女)|主胜|1x2|2026-08-26": {
+    "ev": 14.77,
+    "bb": 2.48,
+    "ts": 1787745609.398713
   }
 }
