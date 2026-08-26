@@ -749,10 +749,14 @@ def _fetch_bb_data(time_window: str = "all"):
         print("  ❌ BB数据损坏(读不到完整JSON), 跳过本轮")
         return None
     matches = raw.get("matches", [])
-    # 每次增量扫描都强制重新抓取 BB 实时数据
-    age_m = (time.time() - BB_EXTRACTED.stat().st_mtime) / 60
-    if age_m > 0:  # 总是实时抓取
-        print(f"  ⚠️ BB数据 {age_m:.0f} 分钟前，重新抓取...")
+    # BB 数据新鲜度按时间窗分 TTL(2026-08-26): urgent 每 60s 全量抓 BB+FB 一次, near/far
+    # 完全复用同一份文件即可。之前 `age_m > 0` 永远为真, 导致 near 每次扫描都重跑一遍
+    # ~40-60s 的 BB+FB 抓取 subprocess(日志 1001 次"重新抓取"、数据 0-1 分钟前还在抓)。
+    # 6-24h 赔率变动慢, 复用 urgent 刚抓的数据(<60s 旧)不影响质量, 省掉重复 subprocess。
+    ttl_sec = {"urgent": 0, "near": 300, "far": 900}.get(time_window, 0)
+    age_s = time.time() - BB_EXTRACTED.stat().st_mtime
+    if age_s > ttl_sec:
+        print(f"  ⚠️ BB数据 {age_s/60:.1f} 分钟前，重新抓取...")
         if not _run_fetcher():
             print("  ❌ 重新抓取失败，继续使用旧数据")
         else:
