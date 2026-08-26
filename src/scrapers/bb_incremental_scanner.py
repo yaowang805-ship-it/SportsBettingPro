@@ -247,6 +247,33 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
         _significant.add(_lg)
 
     print(f"  Pin侧: {league_count}个联赛, {len(new_pin)}场, 变动{len(pin_changed_leagues)}个, 显著{len(_significant)}个")
+
+    # 2026-08-26 合并 Pin 预取: 本函数已拉全量活跃联赛的 Pin 赔率(格式与缓存一致), 顺手存
+    # 缓存, 替代原先 run_incremental 里的 _prefetch_pin_cache_async(那个会在每次扫描后再用
+    # 同一函数把全量 Pin 拉一遍 = 同一批数据拉两遍, ~200 个联赛的冗余请求)。
+    # 这里存的是"活跃联赛"(BB 当前窗口涉及的), 正是对比需要的集合; 比预取的"全量 206 联赛"
+    # 更省(预取是过度拉取 Pin 有但 BB 无的联赛)。本函数在 BB 拉取之前跑, Pin 天然早于 BB, 铁律不变。
+    try:
+        _seen = set()
+        _cache = []
+        for (_lg, _pid), _ms in _fetched.items():
+            if not isinstance(_ms, list):
+                continue
+            for _m in _ms:
+                if not isinstance(_m, dict):
+                    continue
+                _mid = _m.get("matchup_id") or _m.get("id")
+                if not _mid or _mid in _seen:
+                    continue
+                _seen.add(_mid)
+                _cache.append(_m)
+        if _cache:
+            _tmp = (DATA_DIR / "pin_matches_cache.json").with_suffix(".tmp")
+            _tmp.write_text(json.dumps(_cache, ensure_ascii=False))
+            _tmp.replace(DATA_DIR / "pin_matches_cache.json")
+    except Exception:
+        pass
+
     return pin_changed_leagues, _significant
 
 
@@ -553,8 +580,8 @@ def run_incremental(time_window: str = "all"):
     # 8. 保存新快照 (near/far 各自独立)
     save_snapshot(bb_matches, _current_snap)
 
-    # 8.5 后台预取 Pin 缓存 (供下一次扫描用, Pin时间早于下次BB, 不阻塞本次)
-    _prefetch_pin_cache_async(bb_matches, all_pin_leagues)
+    # 8.5 (已移除 2026-08-26) 原先后台预取 Pin 缓存, 现由 _detect_pin_changes 顺手写缓存,
+    # 不再每次扫描后再全量拉一遍 Pin(同一批数据拉两遍)。
 
     # 9. 推送新机会 (V5: 扫到就推, 扫描频次本身就是节流)
     push_ok = True
