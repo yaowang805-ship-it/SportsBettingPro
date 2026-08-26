@@ -471,6 +471,10 @@
     "ev": 1.51,
     "ts": 1787701096.3137531
   },
+  "football|Brazil Copa do Brasil|SE Palmeiras SP|Santos FC SP|主胜|1x2|2026-08-27": {
+    "ev": 1.52,
+    "ts": 1787743029.2002711
+  },
   "football|Brazil Copa do Brasil|克鲁塞罗MG|米内罗竞技|上半场客胜|ht|2026-08-26": {
     "ev": 3.54,
     "bb": 5.55,
@@ -529,6 +533,10 @@
   "football|CONCACAF Central American Cup|Marathon|Real Esteli FC|让球主胜|1x2|2026-08-27": {
     "ev": 1.65,
     "ts": 1787734787.106167
+  },
+  "football|Chile Cup|Colo Colo|Union Espanola|主胜|1x2|2026-08-27": {
+    "ev": 2.0,
+    "ts": 1787743954.719211
   },
   "football|Chile Cup|Colo Colo|Union Espanola|让球客胜|1x2|2026-08-27": {
     "ev": 1.47,
@@ -619,6 +627,10 @@
     "ev": 1.38,
     "ts": 1787739713.484543
   },
+  "football|Croatian Cup|NK Tomislav Drnje|Uljanik|小球|1x2|2026-08-26": {
+    "ev": 2.03,
+    "ts": 1787744015.652809
+  },
   "football|Croatian Cup|NK Tomislav Drnje|Uljanik|让球主胜|1x2|2026-08-26": {
     "ev": 1.39,
     "ts": 1787740203.9501262
@@ -666,6 +678,10 @@
   "football|Czech Republic Cup|FC Pisek|FK Pardubice|客胜|1x2|2026-08-26": {
     "ev": 6.03,
     "ts": 1787716320.497702
+  },
+  "football|Czech Republic Cup|FC Pisek|FK Pardubice|让球主胜|1x2|2026-08-26": {
+    "ev": 3.05,
+    "ts": 1787744344.924654
   },
   "football|Czech Republic Cup|FC Pisek|FK Pardubice|让球客胜|1x2|2026-08-26": {
     "ev": 5.65,
@@ -735,6 +751,22 @@
     "ev": 4.49,
     "ts": 1787716320.497659
   },
+  "football|Czech Republic Cup|MFK Vitkovice|SK Polanka Nad Odrou|双重机会-和局/客|dc|2026-08-26": {
+    "ev": 4.73,
+    "ts": 1787744485.161366
+  },
+  "football|Czech Republic Cup|MFK Vitkovice|SK Polanka Nad Odrou|大球|1x2|2026-08-26": {
+    "ev": 1.89,
+    "ts": 1787744145.481164
+  },
+  "football|Czech Republic Cup|MFK Vitkovice|SK Polanka Nad Odrou|客胜|1x2|2026-08-26": {
+    "ev": 8.3,
+    "ts": 1787744485.161244
+  },
+  "football|Czech Republic Cup|MFK Vitkovice|SK Polanka Nad Odrou|让球客胜|1x2|2026-08-26": {
+    "ev": 8.96,
+    "ts": 1787744485.161283
+  },
   "football|Czech Republic Cup|SK Benatky Nad Jizerou|Neratovice Byskovice|主胜|1x2|2026-08-26": {
     "ev": 8.98,
     "ts": 1787736256.265462
@@ -742,6 +774,10 @@
   "football|Czech Republic Cup|SK Benatky Nad Jizerou|Neratovice Byskovice|让球客胜|1x2|2026-08-26": {
     "ev": 1.66,
     "ts": 1787716320.498286
+  },
+  "football|Czech Republic Cup|Tatran Vsechovice|1.SK Prostejov|主胜|1x2|2026-08-26": {
+    "ev": 3.56,
+    "ts": 1787744344.924573
   },
   "football|Czech Republic Cup|Tatran Vsechovice|1.SK Prostejov|客胜|1x2|2026-08-26": {
     "ev": 6.68,
@@ -787,6 +823,10 @@
   "football|Denmark DBU Pokalen|Bronshoj BK|AB Gladsaxe|让球客胜|1x2|2026-08-26": {
     "ev": 1.03,
     "ts": 1787662047.6871
+  },
+  "football|Denmark DBU Pokalen|FA 2000|Lyngby BK|客胜|1x2|2026-08-27": {
+    "ev": 1.66,
+    "ts": 1787743709.89697
   },
   "football|Egypt Premier League|National Bank of Egypt SC|Zamalek SC|上半场主胜|ht|2026-08-27": {
     "ev": 1.54,
@@ -2883,6 +2923,10 @@
     "ev": 4.22,
     "ts": 1787720956.0171049
   },
+  "football|UEFA Europa Cup Women-Qualification|SK Sturm Graz (w)|FK Gintra Siauliai (w)|让球主胜|1x2|2026-08-27": {
+    "ev": 5.61,
+    "ts": 1787743532.277802
+  },
   "football|UEFA Europa Cup Women-Qualification|SK Sturm Graz (w)|FK Gintra Siauliai (w)|让球客胜|1x2|2026-08-27": {
     "ev": 8.38,
     "ts": 1787720956.017034
@@ -3034,6 +3078,10 @@
     "ev": 3.18,
     "ts": 1787732600.591224
   },
+  "football|Venezuela Cup|Bolivar SC|Monagas SC|让球主胜|1x2|2026-08-27": {
+    "ev": 4.74,
+    "ts": 1787743954.718952
+  },
   "football|Venezuela Cup|Bolivar SC|Monagas SC|让球客胜|1x2|2026-08-27": {
     "ev": 2.98,
     "ts": 1787732600.59132
@@ -3045,6 +3093,10 @@
   "football|Venezuela Cup|Caracas FC|Barquisimeto SC|和局|1x2|2026-08-27": {
     "ev": 11.36,
     "ts": 1787739352.410892
+  },
+  "football|Venezuela Cup|Caracas FC|Barquisimeto SC|让球主胜|1x2|2026-08-27": {
+    "ev": 4.28,
+    "ts": 1787743314.499906
   },
   "football|Venezuela Cup|Deportivo Miranda|Academia Anzoategui FC|双重机会-和局/客|dc|2026-08-27": {
     "ev": 1.95,
@@ -3069,6 +3121,11 @@
   "football|Venezuela Cup|Trujillanos FC|Deportivo Lara|让球主胜|1x2|2026-08-27": {
     "ev": 11.5,
     "ts": 1787702193.703239
+  },
+  "football|Venezuela Cup|加拉加斯|巴基西梅托|和局|1x2|2026-08-27": {
+    "ev": 14.63,
+    "bb": 4.92,
+    "ts": 1787743028.551947
   },
   "tennis|ATP - Grand Slam US Open|Arthur Gea (FRA)|Sumit Nagal (IND)|让盘主胜|1x2|2026-08-26": {
     "ev": 1.1,
@@ -3332,9 +3389,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Venezuela Cup|加拉加斯|巴基西梅托|和局|1x2|2026-08-27": {
-    "ev": 14.63,
-    "bb": 4.92,
-    "ts": 1787743028.551947
+  "football|Egypt Premier League|佩特捷德|杰艾斯|上半场主胜|ht|2026-08-27": {
+    "ev": 3.63,
+    "bb": 4.44,
+    "ts": 1787744631.1222038
   }
 }
