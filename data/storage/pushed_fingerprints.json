@@ -475,6 +475,10 @@
     "ev": 1.52,
     "ts": 1787743029.2002711
   },
+  "football|Brazil Copa do Brasil|SE Palmeiras SP|Santos FC SP|小球|1x2|2026-08-27": {
+    "ev": 1.03,
+    "ts": 1787746681.5104132
+  },
   "football|Brazil Copa do Brasil|克鲁塞罗MG|米内罗竞技|上半场客胜|ht|2026-08-26": {
     "ev": 3.54,
     "bb": 5.55,
@@ -796,6 +800,10 @@
     "bb": 1.96,
     "ts": 1787716926.6313138
   },
+  "football|Denmark DBU Pokalen|BK Marienlyst|VSK Aarhus|大球|1x2|2026-08-26": {
+    "ev": 1.59,
+    "ts": 1787746568.981044
+  },
   "football|Denmark DBU Pokalen|BK Marienlyst|VSK Aarhus|客胜|1x2|2026-08-26": {
     "ev": 2.34,
     "ts": 1787732600.589945
@@ -907,6 +915,10 @@
   "football|Egypt Premier League|Smouha SC|Asyut Petroleum|单双-双|oe|2026-08-26": {
     "ev": 1.12,
     "ts": 1787707153.4444318
+  },
+  "football|Egypt Premier League|Smouha SC|Asyut Petroleum|让球客胜|1x2|2026-08-26": {
+    "ev": 1.45,
+    "ts": 1787746287.7070332
   },
   "football|Egypt Premier League|佩特捷德|杰艾斯|上半场主胜|ht|2026-08-27": {
     "ev": 3.63,
@@ -2936,6 +2948,11 @@
     "ev": 1.46,
     "ts": 1787728551.719167
   },
+  "football|UEFA Europa Cup Women-Qualification|SFK萨拉热窝 (女)|利贝雷茨 (女)|主胜|1x2|2026-08-26": {
+    "ev": 14.77,
+    "bb": 2.48,
+    "ts": 1787745609.398713
+  },
   "football|UEFA Europa Cup Women-Qualification|SK Sturm Graz (w)|FK Gintra Siauliai (w)|客胜|1x2|2026-08-27": {
     "ev": 18.22,
     "ts": 1787720956.016959
@@ -3011,6 +3028,10 @@
   "football|UEFA Europa Cup Women-Qualification|ZNK SFK 2000 Sarajevo (w)|FC Slovan Liberec (w)|主胜|1x2|2026-08-26": {
     "ev": 3.21,
     "ts": 1787729269.828209
+  },
+  "football|UEFA Europa Cup Women-Qualification|ZNK SFK 2000 Sarajevo (w)|FC Slovan Liberec (w)|双重机会-主/和局|dc|2026-08-26": {
+    "ev": 5.23,
+    "ts": 1787745610.6282089
   },
   "football|UEFA Europa Cup Women-Qualification|ZNK SFK 2000 Sarajevo (w)|FC Slovan Liberec (w)|小球|1x2|2026-08-26": {
     "ev": 1.39,
@@ -3134,6 +3155,10 @@
   "football|Venezuela Cup|Mineros de Guayana|Dynamo Puerto FC|小球|1x2|2026-08-27": {
     "ev": 5.03,
     "ts": 1787742759.00643
+  },
+  "football|Venezuela Cup|Mineros de Guayana|Dynamo Puerto FC|让球客胜|1x2|2026-08-27": {
+    "ev": 6.41,
+    "ts": 1787746036.284532
   },
   "football|Venezuela Cup|Rayo Zuliano|Urena SC|主胜|1x2|2026-08-27": {
     "ev": 3.53,
@@ -3410,9 +3435,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|UEFA Europa Cup Women-Qualification|SFK萨拉热窝 (女)|利贝雷茨 (女)|主胜|1x2|2026-08-26": {
-    "ev": 14.77,
-    "bb": 2.48,
-    "ts": 1787745609.398713
+  "football|Malaysia Super League|吉隆坡市|古晋城|双重机会-主/和局|dc|2026-08-26": {
+    "ev": 32.3,
+    "bb": 6.45,
+    "ts": 1787746713.9700859
   }
 }

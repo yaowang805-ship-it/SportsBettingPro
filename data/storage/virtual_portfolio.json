@@ -1,5 +1,5 @@
 {
-  "balance": 12915.36,
+  "balance": 12638.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2461,6 +2461,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787756400,
       "created_at": "2026-08-26T12:00:09.381771+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_吉隆坡市_古晋城_双重机会-主/和局",
+      "sport": "football",
+      "league": "马来西亚超级联赛",
+      "home_team": "吉隆坡市",
+      "away_team": "古晋城",
+      "home_cn": "吉隆坡市",
+      "away_cn": "古晋城",
+      "market": "1x2",
+      "market_type": "双重机会-主/和局",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 6.45,
+      "stake": 277,
+      "model_prob": 0.2051,
+      "ev_pct": 32.3,
+      "pin_odds": 0,
+      "fair_price": 4.8752,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787749200,
+      "created_at": "2026-08-26T12:18:33.958350+00:00",
       "track_only": false
     }
   ],
@@ -5674,8 +5697,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 3339.0,
-    "bets": 44
+    "used": 3616.0,
+    "bets": 45
   },
   "updated": null
 }
