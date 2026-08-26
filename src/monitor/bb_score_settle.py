@@ -11,9 +11,9 @@ from config.logging_config import get_logger
 
 logger = get_logger(__name__)
 
-# 各运动"全场比分"的 pe 码 (tyg=5 为比分): 足球=1000, 篮球=3001, 棒球=7001, 美足=6001
+# 各运动"全场比分"的 pe 码 (tyg=5 为比分): 足球=1000, 篮球=3001, 网球=5000(盘分), 棒球=7001, 美足=6001
 # (棒球/美足 type=6 记录其实也有 nsg 字段 — 2026-08-16 探测确认, 之前注释有误)
-FULLTIME_PE = {"football": 1000, "basketball": 3001,
+FULLTIME_PE = {"football": 1000, "basketball": 3001, "tennis": 5000,
                "baseball": 7001, "american_football": 6001}
 
 

@@ -309,6 +309,7 @@ def api_post(endpoint, params, platform="BB"):
 SCORE_PE_BY_SID = {
     1: 1000,   # 足球 全场
     3: 3001,   # 篮球 全场
+    5: 5000,   # 网球 全场盘分 (pe=5000 tyg=5 = [主队盘数, 客队盘数], 2026-08-26 实测)
     6: 6001,   # 美式足球 全场 (mg 结构实测 pe=6001 = 全场盘口)
     7: 7001,   # 棒球 全场 (mg 结构实测 pe=7001 = 全场盘口)
 }
@@ -371,9 +372,9 @@ def fetch_bb_match_result(match_id, language_type="EN"):
     home_score = away_score = None
     pe_full = SCORE_PE_BY_SID.get(sid)
 
-    def _score_at(pe):
+    def _score_at(pe, tyg=5):
         for sg in data.get("nsg", []):
-            if sg.get("pe") == pe and sg.get("tyg") == 5:
+            if sg.get("pe") == pe and sg.get("tyg") == tyg:
                 sc = sg.get("sc", [])
                 if len(sc) >= 2:
                     try:
@@ -387,6 +388,14 @@ def fetch_bb_match_result(match_id, language_type="EN"):
         full = _score_at(pe_full)
         if full:
             home_score, away_score = full
+
+    # 网球: 额外取总局数(让盘/大小盘口用, 线是局数不是盘数)。pe=5001 tyg=5556 = [主局数, 客局数]
+    # (2026-08-26 实测 16:15/13:9)。独赢仍用盘分(home_score/away_score)。
+    games_home = games_away = None
+    if sid == 5 and home_score is not None:
+        g = _score_at(5001, tyg=5556)
+        if g:
+            games_home, games_away = g
 
     # V5.10: 顺带取半场比分, 带自校验 —— HT + 2H 必须等于 FT, 对不上说明这场的
     # period 语义异常(实测确有此类样本), 宁可不给也不能拿可疑比分去结算。
@@ -418,6 +427,9 @@ def fetch_bb_match_result(match_id, language_type="EN"):
         # V5.10: 半场比分(通过 HT+2H==FT 自校验才给值, 否则为 None)
         "ht_home_score": ht_home,
         "ht_away_score": ht_away,
+        # 网球: 总局数(让盘/大小判定用, 线是局数)
+        "games_home": games_home,
+        "games_away": games_away,
         "status": status,
         "ms": ms,
         "completed": status == "finished",

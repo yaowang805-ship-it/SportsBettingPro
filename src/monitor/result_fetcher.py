@@ -257,6 +257,15 @@ def determine_result(bet: dict, match_result: dict) -> tuple:
     sub_market = bet.get("sub_market", "1x2")
     designation = bet.get("designation", "")
 
+    # 网球: hc(让盘)/ou(大小)的线是局数(如"让盘+1.5局""大分22.5局"), 用总局数判定;
+    # 独赢(1x2)用盘数(home_score 本身就是盘分)。BB getMatchDetail 会额外给 games_home/games_away。
+    # (2026-08-26 之前 BB 拿不到网球比分, 网球 hc/ou 要么 ESPN 要么超时作废)
+    if bet.get("sport") == "tennis" and sub_market in ("hc", "ou"):
+        _gh = match_result.get("games_home")
+        _ga = match_result.get("games_away")
+        if _gh is not None and _ga is not None:
+            home_score, away_score = _gh, _ga
+
     # V5.10: 半场盘口改用真实半场比分判定。
     # 以前这里对 ht/ht_hc/ht_ou/ht_dc 一律 return "void"(注释写"ESPN 不提供半场比分"),
     # 结果 133 笔 void 里 60 笔(45%)是这么白丢的, 涉及 ¥7,838 下注额。
