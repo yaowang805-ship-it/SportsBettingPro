@@ -359,6 +359,10 @@
     "ev": 1.96,
     "ts": 1787649459.741886
   },
+  "football|Argentina Primera Nacional|Patronato Parana|Club Atletico Atlanta|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 1.12,
+    "ts": 1787747560.57094
+  },
   "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|上半场客胜|ht|2026-08-27": {
     "ev": 5.81,
     "bb": 6.05,
@@ -618,6 +622,14 @@
   "football|Copa Sudamericana|River Plate|Independiente Santa Fe|上半场客胜|ht|2026-08-27": {
     "ev": 8.75,
     "ts": 1787721851.1756349
+  },
+  "football|Copa Sudamericana|River Plate|Independiente Santa Fe|客胜|1x2|2026-08-27": {
+    "ev": 5.86,
+    "ts": 1787747351.077544
+  },
+  "football|Copa Sudamericana|River Plate|Independiente Santa Fe|让球客胜|1x2|2026-08-27": {
+    "ev": 3.4,
+    "ts": 1787747351.0776908
   },
   "football|Croatian Cup|NK Dinamo Predavac|NK Hrvatski Dragovoljac|客胜|1x2|2026-08-26": {
     "ev": 5.22,
@@ -2048,6 +2060,10 @@
     "ev": 22.71,
     "ts": 1787731341.065793
   },
+  "football|Malaysia Super League|Kuala Lumpur City FC|Kuching City FC|双边进球-否|btts|2026-08-26": {
+    "ev": 6.06,
+    "ts": 1787747560.569463
+  },
   "football|Malaysia Super League|Kuala Lumpur City FC|Kuching City FC|双边进球-是|btts|2026-08-26": {
     "ev": 2.59,
     "ts": 1787731341.0660028
@@ -2060,6 +2076,10 @@
     "ev": 1.49,
     "ts": 1787733101.252696
   },
+  "football|Malaysia Super League|Kuala Lumpur City FC|Kuching City FC|小球|1x2|2026-08-26": {
+    "ev": 3.52,
+    "ts": 1787746714.931495
+  },
   "football|Malaysia Super League|Kuala Lumpur City FC|Kuching City FC|让球主胜|1x2|2026-08-26": {
     "ev": 6.24,
     "ts": 1787731341.0661418
@@ -2067,6 +2087,11 @@
   "football|Malaysia Super League|Kuala Lumpur City FC|Kuching City FC|让球客胜|1x2|2026-08-26": {
     "ev": 1.19,
     "ts": 1787727363.854774
+  },
+  "football|Malaysia Super League|吉隆坡市|古晋城|双重机会-主/和局|dc|2026-08-26": {
+    "ev": 32.3,
+    "bb": 6.45,
+    "ts": 1787746713.9700859
   },
   "football|Norway 1st Division|FK Haugesund|Egersunds IK|上半场主胜|ht|2026-08-27": {
     "ev": 2.21,
@@ -2425,6 +2450,14 @@
   "football|Slovenia Cup|ND Adria|NK Bilje|大球|1x2|2026-08-27": {
     "ev": 2.07,
     "ts": 1787740904.909309
+  },
+  "football|Slovenia Cup|ND Adria|NK Bilje|客胜|1x2|2026-08-27": {
+    "ev": 3.67,
+    "ts": 1787747560.570833
+  },
+  "football|Slovenia Cup|ND Adria|NK Bilje|让球主胜|1x2|2026-08-27": {
+    "ev": 1.11,
+    "ts": 1787746873.2643042
   },
   "football|Slovenia Cup|NK IB 1975 Ljubljana|NK Litija|主胜|1x2|2026-08-26": {
     "ev": 1.59,
@@ -3435,9 +3468,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Malaysia Super League|吉隆坡市|古晋城|双重机会-主/和局|dc|2026-08-26": {
-    "ev": 32.3,
-    "bb": 6.45,
-    "ts": 1787746713.9700859
+  "football|Copa Sudamericana|河床|圣塔菲|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 4.26,
+    "bb": 1.75,
+    "ts": 1787747661.257889
   }
 }
