@@ -1,5 +1,5 @@
 {
-  "balance": 13615.36,
+  "balance": 13546.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2323,6 +2323,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787770800,
       "created_at": "2026-08-26T09:55:16.194641+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_安养FC_仁川联_上半场主胜",
+      "sport": "football",
+      "league": "韩国甲级联赛",
+      "home_team": "安养FC",
+      "away_team": "仁川联",
+      "home_cn": "安养FC",
+      "away_cn": "仁川联",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 5.15,
+      "stake": 69,
+      "model_prob": 0.2182,
+      "ev_pct": 12.35,
+      "pin_odds": 4.28,
+      "fair_price": 4.5838,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787740200,
+      "created_at": "2026-08-26T10:09:40.051524+00:00",
       "track_only": false
     }
   ],
@@ -5536,8 +5559,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 2639.0,
-    "bets": 38
+    "used": 2708.0,
+    "bets": 39
   },
   "updated": null
 }
