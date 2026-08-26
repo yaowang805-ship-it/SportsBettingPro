@@ -83,6 +83,10 @@
     "ev": 9.42,
     "ts": 1787766320.172112
   },
+  "baseball|MLB|Toronto Blue Jays|Kansas City Royals|大分|1x2|2026-08-27": {
+    "ev": 1.73,
+    "ts": 1787775074.075348
+  },
   "baseball|MLB|Toronto Blue Jays|Kansas City Royals|客胜|1x2|2026-08-27": {
     "ev": 14.52,
     "ts": 1787740602.211814
@@ -217,6 +221,10 @@
   "football|Algeria Ligue 1|ES Setif|ES Ben Aknoun|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 2.59,
     "ts": 1787771507.293365
+  },
+  "football|Algeria Ligue 1|MC Alger|MC Oran|上半场客胜|ht|2026-08-28": {
+    "ev": 14.25,
+    "ts": 1787774511.775601
   },
   "football|Argentina Cup|Aldosivi|Independiente Rivadavia|上半场主胜|ht|2026-08-27": {
     "ev": 5.97,
@@ -582,6 +590,14 @@
     "ev": 4.71,
     "ts": 1787668482.598082
   },
+  "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 1.07,
+    "ts": 1787774167.417143
+  },
+  "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|上半场客胜|ht|2026-08-27": {
+    "ev": 2.74,
+    "ts": 1787774037.1674051
+  },
   "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|单双-双|oe|2026-08-27": {
     "ev": 1.33,
     "ts": 1787771442.363915
@@ -622,6 +638,11 @@
     "ev": 3.54,
     "bb": 5.55,
     "ts": 1787678500.252825
+  },
+  "football|Brazil Copa do Brasil|瓦斯科达伽马|维多利亚|上半场客胜|ht|2026-08-27": {
+    "ev": 2.74,
+    "bb": 8.3,
+    "ts": 1787774036.803308
   },
   "football|Brazil Serie B|EC Juventude RS|CR Brasil AL|上半场双重机会-主/客|ht_dc|2026-08-26": {
     "ev": 1.1,
@@ -761,6 +782,10 @@
   "football|Colombia Primera A|Boyaca Chico FC|Fortaleza CEIF|单双-双|oe|2026-08-27": {
     "ev": 1.12,
     "ts": 1787723772.619092
+  },
+  "football|Colombia Primera A|Boyaca Chico FC|Fortaleza CEIF|让球主胜|1x2|2026-08-27": {
+    "ev": 1.38,
+    "ts": 1787775200.32556
   },
   "football|Colombia Primera A|Cucuta Deportivo FC|Alianza FC|主胜|1x2|2026-08-26": {
     "ev": 2.73,
@@ -1936,6 +1961,10 @@
   "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|让球客胜|1x2|2026-08-27": {
     "ev": 2.44,
     "ts": 1787731009.077031
+  },
+  "football|France Ligue 3|SM Caen|Bastia|上半场主胜|ht|2026-08-28": {
+    "ev": 1.47,
+    "ts": 1787774511.775687
   },
   "football|Georgia Cup|FC Dila Gori|FC Samgurali Tskaltubo|主胜|1x2|2026-08-26": {
     "ev": 2.53,
@@ -4389,9 +4418,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Brazil Copa do Brasil|瓦斯科达伽马|维多利亚|上半场客胜|ht|2026-08-27": {
-    "ev": 2.74,
-    "bb": 8.3,
-    "ts": 1787774036.803308
+  "football|UEFA Europa Conference League-Qualification Playoff|拉恩|林肯红魔鬼|上半场客胜|ht|2026-08-28": {
+    "ev": 4.47,
+    "bb": 4.64,
+    "ts": 1787775701.515438
   }
 }
