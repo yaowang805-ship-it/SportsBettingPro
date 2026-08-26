@@ -1,5 +1,5 @@
 {
-  "balance": 14861.36,
+  "balance": 14560.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2116,6 +2116,75 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787765400,
       "created_at": "2026-08-26T07:36:21.030850+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_哥里迪拉_萨古拉利_主胜",
+      "sport": "football",
+      "league": "格鲁吉亚杯",
+      "home_team": "哥里迪拉",
+      "away_team": "萨古拉利",
+      "home_cn": "哥里迪拉",
+      "away_cn": "萨古拉利",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.64,
+      "stake": 121,
+      "model_prob": 0.4112,
+      "ev_pct": 8.55,
+      "pin_odds": 2.23,
+      "fair_price": 2.432,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787756400,
+      "created_at": "2026-08-26T07:50:59.162014+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_哥里迪拉_萨古拉利_双重机会-主/和局",
+      "sport": "football",
+      "league": "格鲁吉亚杯",
+      "home_team": "哥里迪拉",
+      "away_team": "萨古拉利",
+      "home_cn": "哥里迪拉",
+      "away_cn": "萨古拉利",
+      "market": "1x2",
+      "market_type": "双重机会-主/和局",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 1.46,
+      "stake": 39,
+      "model_prob": 0.708,
+      "ev_pct": 3.37,
+      "pin_odds": 0,
+      "fair_price": 1.4124,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787756400,
+      "created_at": "2026-08-26T07:50:59.162182+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_古泰斯鱼雷_巴统迪纳摩_双重机会-主/和局",
+      "sport": "football",
+      "league": "格鲁吉亚杯",
+      "home_team": "古泰斯鱼雷",
+      "away_team": "巴统迪纳摩",
+      "home_cn": "古泰斯鱼雷",
+      "away_cn": "巴统迪纳摩",
+      "market": "1x2",
+      "market_type": "双重机会-主/和局",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 1.5,
+      "stake": 141,
+      "model_prob": 0.6868,
+      "ev_pct": 3.01,
+      "pin_odds": 0,
+      "fair_price": 1.4561,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787763600,
+      "created_at": "2026-08-26T07:56:48.323796+00:00",
       "track_only": false
     }
   ],
@@ -5269,8 +5338,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 1268.0,
-    "bets": 24
+    "used": 1569.0,
+    "bets": 27
   },
   "updated": null
 }

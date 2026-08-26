@@ -1,4 +1,8 @@
 {
+  "baseball|Japan Professional Baseball|Hiroshima Toyo Carp|Yokohama Dena Baystars|大分|1x2|2026-08-26": {
+    "ev": 3.21,
+    "ts": 1787730249.872162
+  },
   "baseball|MLB|Arizona Diamondbacks|Chicago Cubs|小分|1x2|2026-08-26": {
     "ev": 1.44,
     "ts": 1787705429.542597
@@ -616,6 +620,10 @@
     "ev": 5.67,
     "ts": 1787716927.807999
   },
+  "football|Czech Republic Cup|FK Prepere|FC Slovan Liberec|客胜|1x2|2026-08-26": {
+    "ev": 2.09,
+    "ts": 1787730353.0364769
+  },
   "football|Czech Republic Cup|Hluboka|FK Viktoria Zizkov|客胜|1x2|2026-08-26": {
     "ev": 1.02,
     "ts": 1787635855.477563
@@ -762,6 +770,10 @@
     "ev": 11.14,
     "bb": 2.74,
     "ts": 1787580178.453536
+  },
+  "football|El Salvador Primera Division|Platense Municipal Zacatecoluca|Alianza FC San Salvador|让球主胜|1x2|2026-08-27": {
+    "ev": 10.65,
+    "ts": 1787729782.1633248
   },
   "football|England EFL Trophy|Bristol Rovers|Chelsea FC U21|上半场主胜|ht|2026-08-26": {
     "ev": 3.19,
@@ -1310,6 +1322,10 @@
     "ev": 2.53,
     "ts": 1787728551.7193758
   },
+  "football|Georgia Cup|FC Dila Gori|FC Samgurali Tskaltubo|双重机会-主/和局|dc|2026-08-26": {
+    "ev": 3.37,
+    "ts": 1787730659.7082791
+  },
   "football|Georgia Cup|FC Dila Gori|FC Samgurali Tskaltubo|让球客胜|1x2|2026-08-26": {
     "ev": 4.89,
     "ts": 1787728551.719475
@@ -1325,6 +1341,10 @@
   "football|Georgia Cup|FC Gagra|FC Aragvi Dusheti|小球|1x2|2026-08-27": {
     "ev": 3.03,
     "ts": 1787720624.696863
+  },
+  "football|Georgia Cup|FC Gagra|FC Aragvi Dusheti|让球主胜|1x2|2026-08-27": {
+    "ev": 4.08,
+    "ts": 1787730659.708126
   },
   "football|Georgia Cup|FC Gagra|FC Aragvi Dusheti|让球客胜|1x2|2026-08-27": {
     "ev": 3.82,
@@ -1343,6 +1363,16 @@
     "ev": 14.24,
     "bb": 6.3,
     "ts": 1787720624.0425029
+  },
+  "football|Georgia Cup|哥里迪拉|萨古拉利|主胜|1x2|2026-08-26": {
+    "ev": 8.55,
+    "bb": 2.64,
+    "ts": 1787730659.177372
+  },
+  "football|Georgia Cup|哥里迪拉|萨古拉利|双重机会-主/和局|dc|2026-08-26": {
+    "ev": 3.37,
+    "bb": 1.46,
+    "ts": 1787730659.17743
   },
   "football|Germany Regionalliga Northeast|1. FC Lokomotive Leipzig|Chemnitzer FC|主胜|1x2|2026-08-26": {
     "ev": 1.3,
@@ -1439,6 +1469,14 @@
   "football|Japan Emperor Cup|Montedio Yamagata|Fujieda MYFC|让球客胜|1x2|2026-08-26": {
     "ev": 3.41,
     "ts": 1787717723.091181
+  },
+  "football|Japan Emperor Cup|Nagoya Grampus|Gainare Tottori|主胜|1x2|2026-08-26": {
+    "ev": 1.03,
+    "ts": 1787729847.341613
+  },
+  "football|Japan Emperor Cup|Nagoya Grampus|Gainare Tottori|让球客胜|1x2|2026-08-26": {
+    "ev": 1.34,
+    "ts": 1787730684.077941
   },
   "football|Japan Emperor Cup|Omiya Ardija|Vanraure Hachinohe FC|客胜|1x2|2026-08-26": {
     "ev": 1.29,
@@ -2231,6 +2269,14 @@
     "ev": 2.36,
     "ts": 1787722521.7273118
   },
+  "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|和局|1x2|2026-08-27": {
+    "ev": 1.11,
+    "ts": 1787729782.164176
+  },
+  "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|总进球区间7+|total_goals_range|2026-08-27": {
+    "ev": 5.27,
+    "ts": 1787730659.7099168
+  },
   "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|让球主胜|1x2|2026-08-27": {
     "ev": 1.41,
     "ts": 1787722822.286294
@@ -2244,9 +2290,17 @@
     "bb": 4.54,
     "ts": 1787590192.126327
   },
+  "football|UEFA Europa Cup Women-Qualification|Breidablik Kopavogur (w)|FK Csikszereda Miercurea Ciuc (w)|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 4.16,
+    "ts": 1787729782.160026
+  },
   "football|UEFA Europa Cup Women-Qualification|Breidablik Kopavogur (w)|FK Csikszereda Miercurea Ciuc (w)|客胜|1x2|2026-08-27": {
     "ev": 22.09,
     "ts": 1787722822.28349
+  },
+  "football|UEFA Europa Cup Women-Qualification|RSC Anderlecht (w)|Feyenoord (w)|主胜|1x2|2026-08-27": {
+    "ev": 3.85,
+    "ts": 1787730353.035709
   },
   "football|UEFA Europa Cup Women-Qualification|RSC Anderlecht (w)|Feyenoord (w)|让球主胜|1x2|2026-08-27": {
     "ev": 6.5,
@@ -2328,6 +2382,11 @@
     "ev": 1.08,
     "ts": 1787729269.828287
   },
+  "football|UEFA Europa Cup Women-Qualification|贝雷达比历克 (女)|米耶尔库雷亚丘克 (女)|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 4.16,
+    "bb": 2.82,
+    "ts": 1787729781.130016
+  },
   "football|UEFA Europa Cup Women-Qualification|贝雷达比历克 (女)|米耶尔库雷亚丘克 (女)|客胜|1x2|2026-08-27": {
     "ev": 16.96,
     "bb": 5.45,
@@ -2362,6 +2421,19 @@
   "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|上半场客胜|ht|2026-08-26": {
     "ev": 1.46,
     "ts": 1787674200.05846
+  },
+  "football|Uzbekistan Super League|Qizilqum Zarafshon|FC Nasaf|上半场主胜|ht|2026-08-26": {
+    "ev": 3.48,
+    "ts": 1787729782.165083
+  },
+  "football|Uzbekistan Super League|Qizilqum Zarafshon|FC Nasaf|上半场双重机会-主/客|ht_dc|2026-08-26": {
+    "ev": 5.26,
+    "ts": 1787729782.165183
+  },
+  "football|Uzbekistan Super League|克孜勒库姆|纳萨夫|上半场双重机会-主/客|ht_dc|2026-08-26": {
+    "ev": 5.26,
+    "bb": 1.94,
+    "ts": 1787729781.129861
   },
   "football|Uzbekistan Super League|塔什干火车头|本尤德科|上半场主胜|ht|2026-08-26": {
     "ev": 4.28,
@@ -2634,14 +2706,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Uzbekistan Super League|克孜勒库姆|纳萨夫|上半场双重机会-主/客|ht_dc|2026-08-26": {
-    "ev": 5.26,
-    "bb": 1.94,
-    "ts": 1787729781.129861
-  },
-  "football|UEFA Europa Cup Women-Qualification|贝雷达比历克 (女)|米耶尔库雷亚丘克 (女)|双重机会-和局/客|dc|2026-08-27": {
-    "ev": 4.16,
-    "bb": 2.82,
-    "ts": 1787729781.130016
+  "football|Georgia Cup|古泰斯鱼雷|巴统迪纳摩|双重机会-主/和局|dc|2026-08-27": {
+    "ev": 3.01,
+    "bb": 1.5,
+    "ts": 1787731008.34047
   }
 }
