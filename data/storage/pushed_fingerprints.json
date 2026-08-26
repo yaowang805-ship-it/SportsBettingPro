@@ -1678,6 +1678,10 @@
     "ev": 1.42,
     "ts": 1787717723.091094
   },
+  "football|Japan Emperor Cup|Kyoto Sanga FC|Maruyasu Okazaki|主胜|1x2|2026-08-26": {
+    "ev": 1.22,
+    "ts": 1787737983.263476
+  },
   "football|Japan Emperor Cup|Kyoto Sanga FC|Maruyasu Okazaki|小球|1x2|2026-08-26": {
     "ev": 2.14,
     "ts": 1787717723.0910342
@@ -2696,6 +2700,22 @@
     "bb": 4.42,
     "ts": 1787732598.925787
   },
+  "football|UEFA Europa Cup Women-Qualification|Apollon Limassol LFC (w)|FH Hafnarfjordur (w)|主胜|1x2|2026-08-26": {
+    "ev": 1.42,
+    "ts": 1787737983.2640672
+  },
+  "football|UEFA Europa Cup Women-Qualification|Apollon Limassol LFC (w)|FH Hafnarfjordur (w)|客胜|1x2|2026-08-26": {
+    "ev": 5.57,
+    "ts": 1787737835.497802
+  },
+  "football|UEFA Europa Cup Women-Qualification|Apollon Limassol LFC (w)|FH Hafnarfjordur (w)|让球主胜|1x2|2026-08-26": {
+    "ev": 1.27,
+    "ts": 1787737983.264141
+  },
+  "football|UEFA Europa Cup Women-Qualification|Apollon Limassol LFC (w)|FH Hafnarfjordur (w)|让球客胜|1x2|2026-08-26": {
+    "ev": 4.32,
+    "ts": 1787737835.497848
+  },
   "football|UEFA Europa Cup Women-Qualification|Breidablik Kopavogur (w)|FK Csikszereda Miercurea Ciuc (w)|双重机会-和局/客|dc|2026-08-27": {
     "ev": 4.16,
     "ts": 1787729782.160026
@@ -2809,6 +2829,11 @@
     "ev": 16.96,
     "bb": 5.45,
     "ts": 1787723772.1859179
+  },
+  "football|UEFA Europa Cup Women-Qualification|阿波罗利马索尔 (女)|哈夫纳夫约杜尔 (女)|客胜|1x2|2026-08-26": {
+    "ev": 5.57,
+    "bb": 2.46,
+    "ts": 1787737835.049088
   },
   "football|UEFA Europa League-Qualification|安德莱赫特|阿拉木图凯拉特|上半场主胜|ht|2026-08-28": {
     "ev": 5.66,
@@ -3160,9 +3185,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|UEFA Europa Cup Women-Qualification|阿波罗利马索尔 (女)|哈夫纳夫约杜尔 (女)|客胜|1x2|2026-08-26": {
-    "ev": 5.57,
-    "bb": 2.46,
-    "ts": 1787737835.049088
+  "football|UEFA Champions League-Qualification Playoff|里昂|费内巴切|上半场客胜|ht|2026-08-27": {
+    "ev": 2.51,
+    "bb": 4.9,
+    "ts": 1787738116.2345128
   }
 }

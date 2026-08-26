@@ -1,5 +1,5 @@
 {
-  "balance": 13630.36,
+  "balance": 13615.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2300,6 +2300,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787756400,
       "created_at": "2026-08-26T09:50:35.036808+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_里昂_费内巴切_上半场客胜",
+      "sport": "football",
+      "league": "欧洲冠军联赛-资格赛附加赛",
+      "home_team": "里昂",
+      "away_team": "费内巴切",
+      "home_cn": "里昂",
+      "away_cn": "费内巴切",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.9,
+      "stake": 15,
+      "model_prob": 0.2092,
+      "ev_pct": 2.51,
+      "pin_odds": 4.41,
+      "fair_price": 4.7799,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787770800,
+      "created_at": "2026-08-26T09:55:16.194641+00:00",
       "track_only": false
     }
   ],
@@ -5513,8 +5536,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 2624.0,
-    "bets": 37
+    "used": 2639.0,
+    "bets": 38
   },
   "updated": null
 }
