@@ -468,6 +468,10 @@
     "ev": 6.93,
     "ts": 1787716320.4974022
   },
+  "football|Czech Republic Cup|CSK Uhersky Brod|SK Artis Brno|客胜|1x2|2026-08-26": {
+    "ev": 1.56,
+    "ts": 1787716927.808328
+  },
   "football|Czech Republic Cup|FC Krimice|FK Teplice|大球|1x2|2026-08-26": {
     "ev": 3.13,
     "ts": 1787716320.497567
@@ -500,6 +504,14 @@
     "ev": 2.18,
     "ts": 1787716320.497314
   },
+  "football|Czech Republic Cup|FK Meteor Prague VIII|FK Mlada Boleslav|双重机会-主/客|dc|2026-08-26": {
+    "ev": 1.52,
+    "ts": 1787716927.8080692
+  },
+  "football|Czech Republic Cup|FK Meteor Prague VIII|FK Mlada Boleslav|客胜|1x2|2026-08-26": {
+    "ev": 5.67,
+    "ts": 1787716927.807999
+  },
   "football|Czech Republic Cup|Hluboka|FK Viktoria Zizkov|客胜|1x2|2026-08-26": {
     "ev": 1.02,
     "ts": 1787635855.477563
@@ -523,6 +535,11 @@
   "football|Czech Republic Cup|Tatran Vsechovice|1.SK Prostejov|让球客胜|1x2|2026-08-26": {
     "ev": 13.07,
     "ts": 1787716320.497175
+  },
+  "football|Czech Republic Cup|维特科维斯|波兰卡奥多鲁|主胜|1x2|2026-08-26": {
+    "ev": 12.9,
+    "bb": 1.96,
+    "ts": 1787716926.6313138
   },
   "football|Denmark DBU Pokalen|Bronshoj BK|AB Gladsaxe|大球|1x2|2026-08-26": {
     "ev": 4.35,
@@ -1158,6 +1175,26 @@
     "ev": 3.0,
     "ts": 1787650395.1425018
   },
+  "football|Japan Emperor Cup|Albirex Niigata|Kagoshima United|客胜|1x2|2026-08-26": {
+    "ev": 6.33,
+    "ts": 1787717038.066871
+  },
+  "football|Japan Emperor Cup|Gamba Osaka|Reilac Shiga FC|让球客胜|1x2|2026-08-26": {
+    "ev": 1.69,
+    "ts": 1787717038.066756
+  },
+  "football|Japan Emperor Cup|Kawasaki Frontale|Tochigi SC|让球客胜|1x2|2026-08-26": {
+    "ev": 1.42,
+    "ts": 1787717723.091094
+  },
+  "football|Japan Emperor Cup|Kyoto Sanga FC|Maruyasu Okazaki|小球|1x2|2026-08-26": {
+    "ev": 2.14,
+    "ts": 1787717723.0910342
+  },
+  "football|Japan Emperor Cup|Montedio Yamagata|Fujieda MYFC|让球客胜|1x2|2026-08-26": {
+    "ev": 3.41,
+    "ts": 1787717723.091181
+  },
   "football|Kuwait Premier League|Al Fahaheel FC|Qadsia SC|主胜|1x2|2026-08-26": {
     "ev": 4.94,
     "ts": 1787677776.552738
@@ -1210,6 +1247,10 @@
   "football|Norway 1st Division|Moss FK|Sogndal IL|让球客胜|1x2|2026-08-27": {
     "ev": 1.02,
     "ts": 1787688385.297651
+  },
+  "football|Norway 1st Division|Odds BK|Kongsvinger IL Fotball|小球|1x2|2026-08-27": {
+    "ev": 1.2,
+    "ts": 1787716927.809037
   },
   "football|Norway 1st Division|Odds BK|Kongsvinger IL Fotball|让球主胜|1x2|2026-08-27": {
     "ev": 8.21,
@@ -1989,6 +2030,10 @@
     "ev": 3.17,
     "ts": 1787656356.89522
   },
+  "tennis|ITF - M15 Pecs Men Singles|Peter Sallay (HUN)|John Hallquist Lithen (SWE)|客胜|1x2|2026-08-26": {
+    "ev": 2.44,
+    "ts": 1787717038.067232
+  },
   "tennis|ITF - M15 Vienna Men Singles|Bastian Berenz (AUT)|Corentin Denolly (FRA)|客胜|1x2|2026-08-26": {
     "ev": 2.03,
     "ts": 1787695112.3549
@@ -2000,6 +2045,10 @@
   "tennis|ITF - M25 Oldenzaal Men Doubles|Manvydas Balciunas (NED) / Pieter De Lange (NED)|Lorenzo Angelini (ITA) / Lucio Ratti (ARG)|客胜|1x2|2026-08-26": {
     "ev": 49.85,
     "ts": 1787713877.695185
+  },
+  "tennis|ITF - M25 Oviedo Men Singles|Pedro Vives Marcos (ESP)|Bernardo Munk Mesa (ESP)|主胜|1x2|2026-08-26": {
+    "ev": 2.23,
+    "ts": 1787717038.06706
   },
   "tennis|ITF - M25 Poznan Men Doubles|Jan Sadzik (POL) / Alan Wazny (POL)|Jan Chlodnicki (POL) / Oliwier Sterniczuk (POL)|客胜|1x2|2026-08-26": {
     "ev": 86.4,
@@ -2117,9 +2166,14 @@
     "ev": 1.37,
     "ts": 1787673486.2149382
   },
-  "football|Czech Republic Cup|维特科维斯|波兰卡奥多鲁|主胜|1x2|2026-08-26": {
-    "ev": 12.9,
-    "bb": 1.96,
-    "ts": 1787716926.6313138
+  "football|Egypt Premier League|史莫哈|佩特雷姆|上半场客胜|ht|2026-08-26": {
+    "ev": 6.56,
+    "bb": 9.85,
+    "ts": 1787718002.442977
+  },
+  "football|Japan Emperor Cup|新泻天鹅|鹿儿岛联|客胜|1x2|2026-08-26": {
+    "ev": 6.08,
+    "bb": 4.22,
+    "ts": 1787718002.44304
   }
 }
