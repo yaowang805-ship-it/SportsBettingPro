@@ -1,5 +1,5 @@
 {
-  "balance": 11154.36,
+  "balance": 10958.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2760,6 +2760,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787769900,
       "created_at": "2026-08-26T17:49:47.928303+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_阿贾克斯_锡永_上半场主胜",
+      "sport": "football",
+      "league": "欧足联欧洲协会联赛-资格赛附加赛",
+      "home_team": "阿贾克斯",
+      "away_team": "锡永",
+      "home_cn": "阿贾克斯",
+      "away_cn": "锡永",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 1.83,
+      "stake": 196,
+      "model_prob": 0.5759,
+      "ev_pct": 5.38,
+      "pin_odds": 1.6579,
+      "fair_price": 1.7365,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787853600,
+      "created_at": "2026-08-26T18:05:51.132994+00:00",
       "track_only": false
     }
   ],
@@ -6003,8 +6026,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 908.0,
-    "bets": 9
+    "used": 1104.0,
+    "bets": 10
   },
   "updated": null
 }

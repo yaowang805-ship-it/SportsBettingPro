@@ -435,6 +435,20 @@
     "ev": 1.12,
     "ts": 1787747560.57094
   },
+  "football|Argentina Primera Nacional|Patronato Parana|Club Atletico Atlanta|让球客胜|1x2|2026-08-27": {
+    "ev": 2.62,
+    "ts": 1787767017.007369
+  },
+  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|上半场客胜|ht|2026-08-27": {
+    "ev": 20.38,
+    "bb": 6.85,
+    "ts": 1787767016.682888
+  },
+  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|客胜|1x2|2026-08-27": {
+    "ev": 6.25,
+    "bb": 4.55,
+    "ts": 1787767016.682933
+  },
   "football|Argentina Primera Nacional|玛德恩|戈多伊克鲁斯|上半场双重机会-主/客|ht_dc|2026-08-26": {
     "ev": 2.5,
     "bb": 2.08,
@@ -1582,6 +1596,10 @@
   "football|England League Cup|Tottenham Hotspur|Charlton Athletic|上半场客胜|ht|2026-08-27": {
     "ev": 1.52,
     "ts": 1787735295.876129
+  },
+  "football|England League Cup|Tottenham Hotspur|Charlton Athletic|主胜|1x2|2026-08-27": {
+    "ev": 1.87,
+    "ts": 1787767129.1047611
   },
   "football|England League Cup|Tottenham Hotspur|Charlton Athletic|双边进球-是|btts|2026-08-27": {
     "ev": 3.89,
@@ -3242,6 +3260,10 @@
     "ev": 1.87,
     "ts": 1787631505.0991921
   },
+  "football|Switzerland 1. Liga Classic|FC Meyrin|Servette II|客胜|1x2|2026-08-27": {
+    "ev": 4.38,
+    "ts": 1787767249.363307
+  },
   "football|UEFA Champions League Women-Qualification|AFC Ajax (w)|Real Madrid CF (w)|让球客胜|1x2|2026-08-27": {
     "ev": 3.71,
     "ts": 1787761194.871307
@@ -3309,6 +3331,10 @@
   "football|UEFA Champions League-Qualification Playoff|AEK Athens|PFC Levski Sofia|大球|1x2|2026-08-27": {
     "ev": 1.35,
     "ts": 1787752176.885791
+  },
+  "football|UEFA Champions League-Qualification Playoff|AEK Athens|PFC Levski Sofia|小球|1x2|2026-08-27": {
+    "ev": 2.5,
+    "ts": 1787767469.360489
   },
   "football|UEFA Champions League-Qualification Playoff|AEK雅典|索菲亚列夫斯基|上半场客胜|ht|2026-08-27": {
     "ev": 6.04,
@@ -3406,6 +3432,10 @@
   "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|上半场客胜|ht|2026-08-27": {
     "ev": 12.63,
     "ts": 1787766588.334191
+  },
+  "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|主胜|1x2|2026-08-27": {
+    "ev": 1.03,
+    "ts": 1787767017.0060139
   },
   "football|UEFA Champions League-Qualification Playoff|Viking FK|GNK Dinamo Zagreb|单双-双|oe|2026-08-27": {
     "ev": 1.85,
@@ -3636,6 +3666,10 @@
   "football|UEFA Europa Cup Women-Qualification|ZFK Spartak (w)|Brondby IF (w)|大球|1x2|2026-08-27": {
     "ev": 1.66,
     "ts": 1787734787.106611
+  },
+  "football|UEFA Europa Cup Women-Qualification|ZFK Spartak (w)|Brondby IF (w)|小球|1x2|2026-08-27": {
+    "ev": 2.3,
+    "ts": 1787767129.106786
   },
   "football|UEFA Europa Cup Women-Qualification|ZFK Spartak (w)|Brondby IF (w)|让球客胜|1x2|2026-08-27": {
     "ev": 5.15,
@@ -4191,14 +4225,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|上半场客胜|ht|2026-08-27": {
-    "ev": 20.38,
-    "bb": 6.85,
-    "ts": 1787767016.682888
-  },
-  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|客胜|1x2|2026-08-27": {
-    "ev": 6.25,
-    "bb": 4.55,
-    "ts": 1787767016.682933
+  "football|UEFA Europa Conference League-Qualification Playoff|阿贾克斯|锡永|上半场主胜|ht|2026-08-28": {
+    "ev": 5.38,
+    "bb": 1.83,
+    "ts": 1787767551.145806
   }
 }
