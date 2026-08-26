@@ -3,6 +3,7 @@
 用于比赛结果结算，无配额限制。支持 NBA + 五大联赛。
 """
 from datetime import datetime, timezone, timedelta
+import time
 from typing import Dict, List, Optional, Tuple
 
 import requests
@@ -59,8 +60,8 @@ LEAGUE_ESPN_PATH = {
     "欧联": ("soccer/uefa.europa", "欧联"),
     "欧足联欧洲联赛": ("soccer/uefa.europa", "欧联"),
     "欧足联欧洲联赛-资格赛": ("soccer/uefa.europa", "欧联"),
-    "欧足联欧洲协会联赛": ("soccer/uefa.conference", "欧协联"),
-    "欧足联欧洲协会联赛-资格赛": ("soccer/uefa.conference", "欧协联"),
+    "欧足联欧洲协会联赛": ("soccer/uefa.europa.conf", "欧协联"),
+    "欧足联欧洲协会联赛-资格赛": ("soccer/uefa.europa.conf", "欧协联"),
     "NFL": ("football/nfl", "NFL"),
     "世界杯": ("soccer/fifa.world", "世界杯"),
     "WNBA": ("basketball/wnba", "WNBA"),
@@ -285,6 +286,21 @@ def _parse_espn_game(event: dict) -> Optional[dict]:
     }
 
 
+# 失败冷却: 永久性 400/404 的联赛 slug 冷却 1 小时, 避免每次结算循环都重试同一个坏 slug
+# (uefa.conference 曾 10 分钟 43 次 400 空转耗 CPU)
+_FAILED_COOLDOWN = {}   # sport_path -> 到期时间戳
+_FAILED_TTL = 3600      # 1 小时
+
+
+def _cooled_down(sport_path: str) -> bool:
+    """该联赛 slug 是否在失败冷却期内(此前全量拉取失败)。"""
+    now = time.time()
+    expired = [k for k, v in _FAILED_COOLDOWN.items() if v <= now]
+    for k in expired:
+        _FAILED_COOLDOWN.pop(k, None)
+    return _FAILED_COOLDOWN.get(sport_path, 0) > now
+
+
 def fetch_espn_scores(league: str, days_back: int = 3) -> List[dict]:
     """从 ESPN 获取指定联赛的已完成比赛结果。
 
@@ -301,9 +317,12 @@ def fetch_espn_scores(league: str, days_back: int = 3) -> List[dict]:
         return []
 
     sport_path, _ = path_info
+    if _cooled_down(sport_path):
+        return []
     now = datetime.now(timezone.utc)
 
     results = []
+    got_any = False
     for day_offset in range(days_back - 1, -1, -1):
         date_str = (now - timedelta(days=day_offset)).strftime("%Y%m%d")
         url = (
@@ -313,6 +332,7 @@ def fetch_espn_scores(league: str, days_back: int = 3) -> List[dict]:
         data = _fetch_json(url)
         if not data:
             continue
+        got_any = True
 
         events = data.get("events", [])
         for event in events:
@@ -320,6 +340,8 @@ def fetch_espn_scores(league: str, days_back: int = 3) -> List[dict]:
             if game and game["completed"]:
                 results.append(game)
 
+    if not got_any:
+        _FAILED_COOLDOWN[sport_path] = time.time() + _FAILED_TTL
     return results
 
 

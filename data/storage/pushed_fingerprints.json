@@ -3,6 +3,10 @@
     "ev": 3.21,
     "ts": 1787730249.872162
   },
+  "baseball|Korea Republic KBO League|LG Twins|NC Dinos|主胜|1x2|2026-08-26": {
+    "ev": 1.49,
+    "ts": 1787734824.914047
+  },
   "baseball|MLB|Arizona Diamondbacks|Chicago Cubs|小分|1x2|2026-08-26": {
     "ev": 1.44,
     "ts": 1787705429.542597
@@ -319,6 +323,10 @@
     "bb": 7.1,
     "ts": 1787694662.811641
   },
+  "football|Belgium First Amateur Division|ROC Charleroi Marchienne|Standard Liege II|小球|1x2|2026-08-27": {
+    "ev": 4.12,
+    "ts": 1787732600.592937
+  },
   "football|Belgium First Amateur Division|Royale Union Saint Gilloise II|Union Rochefortoise|客胜|1x2|2026-08-27": {
     "ev": 1.34,
     "ts": 1787681556.3232262
@@ -455,6 +463,14 @@
     "bb": 6.1,
     "ts": 1787697897.538198
   },
+  "football|CONCACAF Central American Cup|Marathon|Real Esteli FC|让球主胜|1x2|2026-08-27": {
+    "ev": 1.65,
+    "ts": 1787734787.106167
+  },
+  "football|Chile Cup|Colo Colo|Union Espanola|让球客胜|1x2|2026-08-27": {
+    "ev": 1.47,
+    "ts": 1787732600.591729
+  },
   "football|Chile Cup|Deportes Recoleta|O Higgins|小球|1x2|2026-08-27": {
     "ev": 5.02,
     "ts": 1787718003.934643
@@ -543,6 +559,10 @@
   "football|Czech Republic Cup|1. BFK Frydlant Nad Ostravici|FC Zbrojovka Brno|客胜|1x2|2026-08-26": {
     "ev": 6.93,
     "ts": 1787716320.4974022
+  },
+  "football|Czech Republic Cup|1. BFK Frydlant Nad Ostravici|FC Zbrojovka Brno|让球主胜|1x2|2026-08-26": {
+    "ev": 2.0,
+    "ts": 1787734039.040832
   },
   "football|Czech Republic Cup|CSK Uhersky Brod|SK Artis Brno|客胜|1x2|2026-08-26": {
     "ev": 1.56,
@@ -653,9 +673,21 @@
     "bb": 1.96,
     "ts": 1787716926.6313138
   },
+  "football|Denmark DBU Pokalen|BK Marienlyst|VSK Aarhus|客胜|1x2|2026-08-26": {
+    "ev": 2.34,
+    "ts": 1787732600.589945
+  },
   "football|Denmark DBU Pokalen|BK Marienlyst|VSK Aarhus|小球|1x2|2026-08-26": {
     "ev": 5.53,
     "ts": 1787721538.74997
+  },
+  "football|Denmark DBU Pokalen|BK Marienlyst|VSK Aarhus|让球主胜|1x2|2026-08-26": {
+    "ev": 1.39,
+    "ts": 1787734039.0410829
+  },
+  "football|Denmark DBU Pokalen|BK Marienlyst|VSK Aarhus|让球客胜|1x2|2026-08-26": {
+    "ev": 2.18,
+    "ts": 1787733578.786777
   },
   "football|Denmark DBU Pokalen|Bronshoj BK|AB Gladsaxe|大球|1x2|2026-08-26": {
     "ev": 4.35,
@@ -1203,6 +1235,10 @@
     "ev": 2.38,
     "ts": 1787670045.3843899
   },
+  "football|England Northern Premier League|Avro FC|Leek Town FC|大球|1x2|2026-08-27": {
+    "ev": 3.1,
+    "ts": 1787733578.787401
+  },
   "football|England Northern Premier League|Avro FC|Leek Town FC|小球|1x2|2026-08-27": {
     "ev": 2.69,
     "ts": 1787695112.354683
@@ -1326,6 +1362,10 @@
     "ev": 16.38,
     "ts": 1787731363.1893141
   },
+  "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|让球主胜|1x2|2026-08-27": {
+    "ev": 3.13,
+    "ts": 1787734787.10731
+  },
   "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|让球客胜|1x2|2026-08-27": {
     "ev": 2.44,
     "ts": 1787731009.077031
@@ -1377,6 +1417,10 @@
   "football|Georgia Cup|FC Torpedo Kutaisi|FC Dinamo Batumi|双重机会-主/和局|dc|2026-08-27": {
     "ev": 3.01,
     "ts": 1787731009.075247
+  },
+  "football|Georgia Cup|FC Torpedo Kutaisi|FC Dinamo Batumi|大球|1x2|2026-08-27": {
+    "ev": 5.36,
+    "ts": 1787733291.980939
   },
   "football|Georgia Cup|FC Torpedo Kutaisi|FC Dinamo Batumi|让球客胜|1x2|2026-08-27": {
     "ev": 2.83,
@@ -1479,9 +1523,25 @@
     "ev": 14.54,
     "ts": 1787731979.781625
   },
+  "football|Japan Emperor Cup|FC Imabari|Blaublitz Akita|客胜|1x2|2026-08-26": {
+    "ev": 2.34,
+    "ts": 1787734048.049454
+  },
+  "football|Japan Emperor Cup|FC Imabari|Blaublitz Akita|让球客胜|1x2|2026-08-26": {
+    "ev": 5.26,
+    "ts": 1787734048.049522
+  },
   "football|Japan Emperor Cup|FC Tokyo|Nagano Parceiro|主胜|1x2|2026-08-26": {
     "ev": 2.14,
     "ts": 1787732503.038157
+  },
+  "football|Japan Emperor Cup|FC Tokyo|Nagano Parceiro|小球|1x2|2026-08-26": {
+    "ev": 1.58,
+    "ts": 1787734325.759108
+  },
+  "football|Japan Emperor Cup|FC Tokyo|Nagano Parceiro|让球主胜|1x2|2026-08-26": {
+    "ev": 3.61,
+    "ts": 1787732650.742074
   },
   "football|Japan Emperor Cup|Gamba Osaka|Reilac Shiga FC|让球客胜|1x2|2026-08-26": {
     "ev": 1.69,
@@ -1519,6 +1579,10 @@
     "ev": 1.32,
     "ts": 1787729195.030032
   },
+  "football|Japan Emperor Cup|Machida Zelvia|Grulla Morioka|让球主胜|1x2|2026-08-26": {
+    "ev": 3.5,
+    "ts": 1787733514.326388
+  },
   "football|Japan Emperor Cup|Montedio Yamagata|Fujieda MYFC|让球客胜|1x2|2026-08-26": {
     "ev": 3.41,
     "ts": 1787717723.091181
@@ -1526,6 +1590,10 @@
   "football|Japan Emperor Cup|Nagoya Grampus|Gainare Tottori|主胜|1x2|2026-08-26": {
     "ev": 1.03,
     "ts": 1787729847.341613
+  },
+  "football|Japan Emperor Cup|Nagoya Grampus|Gainare Tottori|客胜|1x2|2026-08-26": {
+    "ev": 4.3,
+    "ts": 1787732960.6891708
   },
   "football|Japan Emperor Cup|Nagoya Grampus|Gainare Tottori|让球客胜|1x2|2026-08-26": {
     "ev": 1.34,
@@ -1539,13 +1607,41 @@
     "ev": 1.19,
     "ts": 1787720125.325858
   },
+  "football|Japan Emperor Cup|Sagan Tosu|Kataller Toyama|客胜|1x2|2026-08-26": {
+    "ev": 1.23,
+    "ts": 1787733270.3978
+  },
+  "football|Japan Emperor Cup|Sagan Tosu|Kataller Toyama|让球客胜|1x2|2026-08-26": {
+    "ev": 3.93,
+    "ts": 1787733270.397898
+  },
   "football|Japan Emperor Cup|Sanfrecce Hiroshima|Okinawa SV|主胜|1x2|2026-08-26": {
     "ev": 1.46,
     "ts": 1787719797.7859688
   },
+  "football|Japan Emperor Cup|Tokushima Vortis|FC Tokushima|主胜|1x2|2026-08-26": {
+    "ev": 3.89,
+    "ts": 1787734048.048964
+  },
+  "football|Japan Emperor Cup|Tokushima Vortis|FC Tokushima|大球|1x2|2026-08-26": {
+    "ev": 2.35,
+    "ts": 1787734048.049057
+  },
+  "football|Japan Emperor Cup|Tokushima Vortis|FC Tokushima|让球客胜|1x2|2026-08-26": {
+    "ev": 1.6,
+    "ts": 1787734436.2806962
+  },
+  "football|Japan Emperor Cup|Tokyo Verdy|Thespa Gunma|主胜|1x2|2026-08-26": {
+    "ev": 1.34,
+    "ts": 1787734325.759213
+  },
   "football|Japan Emperor Cup|Tokyo Verdy|Thespa Gunma|客胜|1x2|2026-08-26": {
     "ev": 2.09,
     "ts": 1787732503.0382762
+  },
+  "football|Japan Emperor Cup|Tokyo Verdy|Thespa Gunma|让球主胜|1x2|2026-08-26": {
+    "ev": 1.04,
+    "ts": 1787734436.280464
   },
   "football|Japan Emperor Cup|大阪樱花|FC岐埠|双重机会-和局/客|dc|2026-08-26": {
     "ev": 21.41,
@@ -1613,6 +1709,10 @@
   "football|Malaysia Super League|Kuala Lumpur City FC|Kuching City FC|双重机会-主/和局|dc|2026-08-26": {
     "ev": 10.05,
     "ts": 1787731341.066265
+  },
+  "football|Malaysia Super League|Kuala Lumpur City FC|Kuching City FC|大球|1x2|2026-08-26": {
+    "ev": 1.49,
+    "ts": 1787733101.252696
   },
   "football|Malaysia Super League|Kuala Lumpur City FC|Kuching City FC|让球主胜|1x2|2026-08-26": {
     "ev": 6.24,
@@ -2058,6 +2158,10 @@
     "ev": 1.41,
     "ts": 1787712544.143467
   },
+  "football|South Korea K-League 1|Daejeon Hana Citizen FC|Ulsan HD FC|和局|1x2|2026-08-26": {
+    "ev": 2.3,
+    "ts": 1787733101.253108
+  },
   "football|South Korea K-League 1|Daejeon Hana Citizen FC|Ulsan HD FC|总进球区间7+|total_goals_range|2026-08-26": {
     "ev": 3.03,
     "ts": 1787654157.395209
@@ -2085,6 +2189,10 @@
   "football|South Korea K-League 1|FC Anyang|Incheon United FC|上半场客胜|ht|2026-08-26": {
     "ev": 3.26,
     "ts": 1787683117.999615
+  },
+  "football|South Korea K-League 1|FC Anyang|Incheon United FC|单双-双|oe|2026-08-26": {
+    "ev": 1.04,
+    "ts": 1787734158.232835
   },
   "football|South Korea K-League 1|FC Anyang|Incheon United FC|双边进球-是|btts|2026-08-26": {
     "ev": 1.81,
@@ -2255,6 +2363,10 @@
     "ev": 1.53,
     "ts": 1787721538.751722
   },
+  "football|UEFA Champions League Women-Qualification|PSV Eindhoven (w)|HB Koge (w)|主胜|1x2|2026-08-27": {
+    "ev": 2.27,
+    "ts": 1787733291.981073
+  },
   "football|UEFA Champions League Women-Qualification|SK Brann (w)|FK Austria Vienna (w)|双重机会-和局/客|dc|2026-08-26": {
     "ev": 4.7,
     "ts": 1787672813.5263429
@@ -2376,6 +2488,11 @@
     "bb": 4.54,
     "ts": 1787590192.126327
   },
+  "football|UEFA Champions League-Qualification Playoff|采列|布拉迪斯拉发|上半场客胜|ht|2026-08-27": {
+    "ev": 6.69,
+    "bb": 4.42,
+    "ts": 1787732598.925787
+  },
   "football|UEFA Europa Cup Women-Qualification|Breidablik Kopavogur (w)|FK Csikszereda Miercurea Ciuc (w)|双重机会-和局/客|dc|2026-08-27": {
     "ev": 4.16,
     "ts": 1787729782.160026
@@ -2439,6 +2556,14 @@
   "football|UEFA Europa Cup Women-Qualification|ZFK Spartak (w)|Brondby IF (w)|双重机会-主/和局|dc|2026-08-27": {
     "ev": 1.4,
     "ts": 1787727920.651189
+  },
+  "football|UEFA Europa Cup Women-Qualification|ZFK Spartak (w)|Brondby IF (w)|大球|1x2|2026-08-27": {
+    "ev": 1.66,
+    "ts": 1787734787.106611
+  },
+  "football|UEFA Europa Cup Women-Qualification|ZFK Spartak (w)|Brondby IF (w)|让球客胜|1x2|2026-08-27": {
+    "ev": 5.15,
+    "ts": 1787734787.1064808
   },
   "football|UEFA Europa Cup Women-Qualification|ZNK Hajduk Split (w)|DBK Fortuna Hjoerring (w)|主胜|1x2|2026-08-26": {
     "ev": 116.62,
@@ -2520,6 +2645,10 @@
     "ev": 5.26,
     "ts": 1787729782.165183
   },
+  "football|Uzbekistan Super League|Qizilqum Zarafshon|FC Nasaf|让球主胜|1x2|2026-08-26": {
+    "ev": 1.43,
+    "ts": 1787732922.1618729
+  },
   "football|Uzbekistan Super League|克孜勒库姆|纳萨夫|上半场双重机会-主/客|ht_dc|2026-08-26": {
     "ev": 5.26,
     "bb": 1.94,
@@ -2534,6 +2663,14 @@
     "ev": 1.88,
     "ts": 1787720022.4339762
   },
+  "football|Venezuela Cup|Bolivar SC|Monagas SC|客胜|1x2|2026-08-27": {
+    "ev": 3.18,
+    "ts": 1787732600.591224
+  },
+  "football|Venezuela Cup|Bolivar SC|Monagas SC|让球客胜|1x2|2026-08-27": {
+    "ev": 2.98,
+    "ts": 1787732600.59132
+  },
   "football|Venezuela Cup|Caracas FC|Barquisimeto SC|主胜|1x2|2026-08-27": {
     "ev": 1.35,
     "ts": 1787719017.9511302
@@ -2545,6 +2682,10 @@
   "football|Venezuela Cup|Deportivo Miranda|Academia Anzoategui FC|让球客胜|1x2|2026-08-27": {
     "ev": 4.17,
     "ts": 1787725906.350142
+  },
+  "football|Venezuela Cup|Rayo Zuliano|Urena SC|主胜|1x2|2026-08-27": {
+    "ev": 3.53,
+    "ts": 1787734039.042829
   },
   "football|Venezuela Cup|Trujillanos FC|Deportivo Lara|让球主胜|1x2|2026-08-27": {
     "ev": 11.5,
@@ -2800,9 +2941,14 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|UEFA Champions League-Qualification Playoff|采列|布拉迪斯拉发|上半场客胜|ht|2026-08-27": {
-    "ev": 6.69,
-    "bb": 4.42,
-    "ts": 1787732598.925787
+  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|上半场客胜|ht|2026-08-27": {
+    "ev": 5.81,
+    "bb": 6.05,
+    "ts": 1787735012.132087
+  },
+  "football|Japan Emperor Cup|大宫松鼠|八户云罗里|客胜|1x2|2026-08-26": {
+    "ev": 5.1,
+    "bb": 4.99,
+    "ts": 1787735012.132203
   }
 }
