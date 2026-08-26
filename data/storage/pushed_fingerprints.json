@@ -1010,6 +1010,10 @@
     "ev": 7.59,
     "ts": 1787750159.3419468
   },
+  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|单双-双|oe|2026-08-28": {
+    "ev": 1.91,
+    "ts": 1787763777.759779
+  },
   "football|Egypt Premier League|Modern Sport FC|Ghazl El Mahallah|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 2.08,
     "ts": 1787753277.917762
@@ -1049,6 +1053,10 @@
   "football|Egypt Premier League|National Bank of Egypt SC|Zamalek SC|大球|1x2|2026-08-27": {
     "ev": 2.14,
     "ts": 1787762600.7441878
+  },
+  "football|Egypt Premier League|National Bank of Egypt SC|Zamalek SC|小球|1x2|2026-08-27": {
+    "ev": 1.17,
+    "ts": 1787763490.405708
   },
   "football|Egypt Premier League|National Bank of Egypt SC|Zamalek SC|让球主胜|1x2|2026-08-27": {
     "ev": 3.03,
@@ -1143,6 +1151,11 @@
     "ev": 2.8,
     "bb": 4.71,
     "ts": 1787726476.978128
+  },
+  "football|Egypt Premier League|埃及国家银行|扎马雷克|和局|1x2|2026-08-27": {
+    "ev": 4.73,
+    "bb": 3.08,
+    "ts": 1787763278.102262
   },
   "football|Egypt Premier League|未来FC|马哈拉|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 2.73,
@@ -2396,6 +2409,10 @@
     "ev": 2.21,
     "ts": 1787693261.0478919
   },
+  "football|Norway 1st Division|FK Haugesund|Egersunds IK|小球|1x2|2026-08-27": {
+    "ev": 1.28,
+    "ts": 1787763391.338447
+  },
   "football|Norway 1st Division|FK Haugesund|Egersunds IK|让球客胜|1x2|2026-08-27": {
     "ev": 1.18,
     "ts": 1787759938.0997581
@@ -3341,6 +3358,14 @@
     "ev": 5.4,
     "ts": 1787756587.437453
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Pafos FC|Dinamo City|上半场主胜|ht|2026-08-28": {
+    "ev": 1.36,
+    "ts": 1787763777.7601001
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|上半场主胜|ht|2026-08-28": {
+    "ev": 3.29,
+    "ts": 1787763777.760244
+  },
   "football|UEFA Europa Cup Women-Qualification|Apollon Limassol LFC (w)|FH Hafnarfjordur (w)|主胜|1x2|2026-08-26": {
     "ev": 1.42,
     "ts": 1787737983.2640672
@@ -3562,6 +3587,10 @@
     "bb": 2.46,
     "ts": 1787737835.049088
   },
+  "football|UEFA Europa League-Qualification Playoff|FK Kauno Zalgiris|Besiktas JK|总进球区间7+|total_goals_range|2026-08-28": {
+    "ev": 14.3,
+    "ts": 1787763777.7606778
+  },
   "football|UEFA Europa League-Qualification|安德莱赫特|阿拉木图凯拉特|上半场主胜|ht|2026-08-28": {
     "ev": 5.66,
     "bb": 2.08,
@@ -3733,11 +3762,6 @@
   "football|Venezuela Cup|Zamora FC|Real Frontera FC|主胜|1x2|2026-08-27": {
     "ev": 1.48,
     "ts": 1787760966.5384362
-  },
-  "football|Venezuela Cup|加拉加斯|巴基西梅托|和局|1x2|2026-08-27": {
-    "ev": 14.63,
-    "bb": 4.92,
-    "ts": 1787743028.551947
   },
   "tennis|ATP - Grand Slam US Open|Arthur Gea (FRA)|Sumit Nagal (IND)|让盘主胜|1x2|2026-08-26": {
     "ev": 1.1,
@@ -4001,9 +4025,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Egypt Premier League|埃及国家银行|扎马雷克|和局|1x2|2026-08-27": {
-    "ev": 4.73,
-    "bb": 3.08,
-    "ts": 1787763278.102262
+  "football|Venezuela Cup|加拉加斯|巴基西梅托|和局|1x2|2026-08-27": {
+    "ev": 15.42,
+    "bb": 5.25,
+    "ts": 1787763791.1475909
   }
 }
