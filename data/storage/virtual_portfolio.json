@@ -1,5 +1,5 @@
 {
-  "balance": 12508.36,
+  "balance": 12380.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2484,6 +2484,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787781600,
       "created_at": "2026-08-26T13:08:50.533765+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_海星敖德萨_(女)_罗森伯格_(女)_客胜",
+      "sport": "football",
+      "league": "欧洲女子欧罗巴杯-资格赛",
+      "home_team": "海星敖德萨 (女)",
+      "away_team": "罗森伯格 (女)",
+      "home_cn": "海星敖德萨 (女)",
+      "away_cn": "罗森伯格 (女)",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.24,
+      "stake": 128,
+      "model_prob": 0.8745,
+      "ev_pct": 8.44,
+      "pin_odds": 1.1311,
+      "fair_price": 1.1435,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787756400,
+      "created_at": "2026-08-26T14:09:24.733117+00:00",
       "track_only": false
     }
   ],
@@ -5727,8 +5750,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 4164.0,
-    "bets": 51
+    "used": 4292.0,
+    "bets": 52
   },
   "updated": null
 }
