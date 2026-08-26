@@ -196,6 +196,11 @@
     "bb": 3.43,
     "ts": 1787653481.172247
   },
+  "football|Argentina Cup|阿尔多斯维|门多萨独立|上半场主胜|ht|2026-08-27": {
+    "ev": 16.7,
+    "bb": 7.85,
+    "ts": 1787755101.515496
+  },
   "football|Argentina Liga Profesional Reserves|Banfield (Res)|Talleres de Cordoba (Res)|小球|1x2|2026-08-27": {
     "ev": 1.55,
     "ts": 1787724354.178043
@@ -365,6 +370,10 @@
   "football|Argentina Primera Nacional|Club Atletico Acassuso|San Telmo|让球主胜|1x2|2026-08-27": {
     "ev": 2.51,
     "ts": 1787754735.7905128
+  },
+  "football|Argentina Primera Nacional|Club Atletico Acassuso|San Telmo|让球客胜|1x2|2026-08-27": {
+    "ev": 8.07,
+    "ts": 1787755145.826973
   },
   "football|Argentina Primera Nacional|Deportivo Madryn|Godoy Cruz|上半场主胜|ht|2026-08-26": {
     "ev": 1.95,
@@ -642,6 +651,10 @@
     "ev": 1.89,
     "ts": 1787751432.808914
   },
+  "football|Colombia Primera A|America de Cali|Junior FC|小球|1x2|2026-08-27": {
+    "ev": 1.17,
+    "ts": 1787755412.8543801
+  },
   "football|Colombia Primera A|Boyaca Chico FC|Fortaleza CEIF|单双-双|oe|2026-08-27": {
     "ev": 1.12,
     "ts": 1787723772.619092
@@ -804,6 +817,10 @@
     "ev": 6.52,
     "ts": 1787716320.4972281
   },
+  "football|Czech Republic Cup|FK Banik Most Sous|1. FK Pribram|客胜|1x2|2026-08-26": {
+    "ev": 1.17,
+    "ts": 1787755145.827733
+  },
   "football|Czech Republic Cup|FK Kozlovice|MFK Karvina|客胜|1x2|2026-08-26": {
     "ev": 2.82,
     "ts": 1787724759.975212
@@ -812,6 +829,10 @@
     "ev": 2.41,
     "ts": 1787724759.975276
   },
+  "football|Czech Republic Cup|FK Kraluv Dvur|FK Loko Prague|主胜|1x2|2026-08-26": {
+    "ev": 3.7,
+    "ts": 1787756203.165087
+  },
   "football|Czech Republic Cup|FK Kraluv Dvur|FK Loko Prague|双重机会-和局/客|dc|2026-08-26": {
     "ev": 3.14,
     "ts": 1787716320.497353
@@ -819,6 +840,10 @@
   "football|Czech Republic Cup|FK Kraluv Dvur|FK Loko Prague|小球|1x2|2026-08-26": {
     "ev": 2.18,
     "ts": 1787716320.497314
+  },
+  "football|Czech Republic Cup|FK Kraluv Dvur|FK Loko Prague|让球主胜|1x2|2026-08-26": {
+    "ev": 2.2,
+    "ts": 1787756203.1651762
   },
   "football|Czech Republic Cup|FK Meteor Prague VIII|FK Mlada Boleslav|主胜|1x2|2026-08-26": {
     "ev": 27.07,
@@ -2865,6 +2890,10 @@
     "ev": 1.23,
     "ts": 1787725613.070923
   },
+  "football|Spain LaLiga|Real Madrid|Real Sociedad|让球客胜|1x2|2026-08-27": {
+    "ev": 1.19,
+    "ts": 1787755566.0256798
+  },
   "football|Spain LaLiga|Valencia CF|Real Betis|上半场主胜|ht|2026-08-26": {
     "ev": 1.8,
     "ts": 1787645303.5224152
@@ -3194,6 +3223,10 @@
   "football|UEFA Europa Cup Women-Qualification|KFF Mitrovica (w)|FC Kharkiv (w)|双重机会-主/和局|dc|2026-08-26": {
     "ev": 1.12,
     "ts": 1787751621.029334
+  },
+  "football|UEFA Europa Cup Women-Qualification|KFF Mitrovica (w)|FC Kharkiv (w)|小球|1x2|2026-08-26": {
+    "ev": 1.02,
+    "ts": 1787755321.812001
   },
   "football|UEFA Europa Cup Women-Qualification|KFF Mitrovica (w)|FC Kharkiv (w)|让球主胜|1x2|2026-08-26": {
     "ev": 3.48,
@@ -3803,9 +3836,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Argentina Cup|阿尔多斯维|门多萨独立|上半场主胜|ht|2026-08-27": {
-    "ev": 16.7,
-    "bb": 7.85,
-    "ts": 1787755101.515496
+  "football|Kuwait Premier League|科威特沙巴布|阿尔杰拉|主胜|1x2|2026-08-26": {
+    "ev": 11.45,
+    "bb": 2.36,
+    "ts": 1787756445.0940402
   }
 }
