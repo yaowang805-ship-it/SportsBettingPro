@@ -297,6 +297,10 @@
     "ev": 2.19,
     "ts": 1787723772.618944
   },
+  "football|Argentina Primera Nacional|Chaco For Ever|San Miguel|让球客胜|1x2|2026-08-27": {
+    "ev": 1.51,
+    "ts": 1787736855.793686
+  },
   "football|Argentina Primera Nacional|Club Atletico Acassuso|San Telmo|角球大球|corner|2026-08-27": {
     "ev": 3.16,
     "ts": 1787702193.704433
@@ -1399,6 +1403,10 @@
     "ev": 3.37,
     "ts": 1787730659.7082791
   },
+  "football|Georgia Cup|FC Dila Gori|FC Samgurali Tskaltubo|大球|1x2|2026-08-26": {
+    "ev": 3.49,
+    "ts": 1787736707.8828878
+  },
   "football|Georgia Cup|FC Dila Gori|FC Samgurali Tskaltubo|让球主胜|1x2|2026-08-26": {
     "ev": 3.31,
     "ts": 1787731009.0749812
@@ -1524,9 +1532,30 @@
     "ev": 2.46,
     "ts": 1787724354.1779468
   },
+  "football|Iraq Stars League|纳弗特|杜赫克|和局|1x2|2026-08-26": {
+    "ev": 5.92,
+    "bb": 2.89,
+    "ts": 1787736707.189111
+  },
+  "football|Japan Emperor Cup|Albirex Niigata|Kagoshima United|主胜|1x2|2026-08-26": {
+    "ev": 4.44,
+    "ts": 1787736917.045111
+  },
+  "football|Japan Emperor Cup|Albirex Niigata|Kagoshima United|双重机会-和局/客|dc|2026-08-26": {
+    "ev": 1.65,
+    "ts": 1787737050.022
+  },
   "football|Japan Emperor Cup|Albirex Niigata|Kagoshima United|客胜|1x2|2026-08-26": {
     "ev": 6.33,
     "ts": 1787717038.066871
+  },
+  "football|Japan Emperor Cup|Albirex Niigata|Kagoshima United|让球主胜|1x2|2026-08-26": {
+    "ev": 3.49,
+    "ts": 1787736917.045235
+  },
+  "football|Japan Emperor Cup|Albirex Niigata|Kagoshima United|让球客胜|1x2|2026-08-26": {
+    "ev": 3.84,
+    "ts": 1787737050.021924
   },
   "football|Japan Emperor Cup|Cerezo Osaka|FC Gifu|双重机会-和局/客|dc|2026-08-26": {
     "ev": 19.16,
@@ -1567,6 +1596,10 @@
   "football|Japan Emperor Cup|FC Tokyo|Nagano Parceiro|主胜|1x2|2026-08-26": {
     "ev": 2.14,
     "ts": 1787732503.038157
+  },
+  "football|Japan Emperor Cup|FC Tokyo|Nagano Parceiro|双重机会-和局/客|dc|2026-08-26": {
+    "ev": 1.79,
+    "ts": 1787737050.0218391
   },
   "football|Japan Emperor Cup|FC Tokyo|Nagano Parceiro|小球|1x2|2026-08-26": {
     "ev": 1.58,
@@ -1661,6 +1694,10 @@
     "ev": 2.53,
     "ts": 1787735866.637844
   },
+  "football|Japan Emperor Cup|Montedio Yamagata|Fujieda MYFC|让球主胜|1x2|2026-08-26": {
+    "ev": 1.52,
+    "ts": 1787736707.882432
+  },
   "football|Japan Emperor Cup|Montedio Yamagata|Fujieda MYFC|让球客胜|1x2|2026-08-26": {
     "ev": 3.41,
     "ts": 1787717723.091181
@@ -1680,6 +1717,10 @@
   "football|Japan Emperor Cup|Omiya Ardija|Vanraure Hachinohe FC|客胜|1x2|2026-08-26": {
     "ev": 1.29,
     "ts": 1787720434.581613
+  },
+  "football|Japan Emperor Cup|Omiya Ardija|Vanraure Hachinohe FC|小球|1x2|2026-08-26": {
+    "ev": 3.51,
+    "ts": 1787736917.041743
   },
   "football|Japan Emperor Cup|Omiya Ardija|Vanraure Hachinohe FC|让球客胜|1x2|2026-08-26": {
     "ev": 1.19,
@@ -1736,6 +1777,14 @@
   "football|Japan Emperor Cup|Tokyo Verdy|Thespa Gunma|让球主胜|1x2|2026-08-26": {
     "ev": 1.04,
     "ts": 1787734436.280464
+  },
+  "football|Japan Emperor Cup|V Varen Nagasaki|Ehime FC|主胜|1x2|2026-08-26": {
+    "ev": 1.35,
+    "ts": 1787736917.0465431
+  },
+  "football|Japan Emperor Cup|V Varen Nagasaki|Ehime FC|让球客胜|1x2|2026-08-26": {
+    "ev": 2.47,
+    "ts": 1787737050.022756
   },
   "football|Japan Emperor Cup|Vegalta Sendai|Tochigi City FC|小球|1x2|2026-08-26": {
     "ev": 3.42,
@@ -2344,11 +2393,6 @@
     "ev": 2.51,
     "bb": 1.87,
     "ts": 1787490186.243403
-  },
-  "football|South Korea K-League 1|江原FC|光州FC|上半场客胜|ht|2026-08-26": {
-    "ev": 14.94,
-    "bb": 9.5,
-    "ts": 1787718671.095722
   },
   "football|Spain LaLiga|Real Madrid|Real Sociedad|上半场主胜|ht|2026-08-27": {
     "ev": 2.12,
@@ -3058,6 +3102,10 @@
     "ev": 1.24,
     "ts": 1787630577.4875891
   },
+  "tennis|WTA - Grand Slam US Open|Kristina Liutova (RUS)|Lola Radivojevic (SRB)|让盘主胜|1x2|2026-08-27": {
+    "ev": 5.03,
+    "ts": 1787736855.794537
+  },
   "tennis|WTA - Grand Slam US Open|Ku Yeon Woo (KOR)|Astra Sharma (AUS)|让盘主胜|1x2|2026-08-26": {
     "ev": 1.37,
     "ts": 1787673486.2149382
@@ -3066,9 +3114,14 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Iraq Stars League|纳弗特|杜赫克|和局|1x2|2026-08-26": {
-    "ev": 5.92,
-    "bb": 2.89,
-    "ts": 1787736707.189111
+  "football|Japan Emperor Cup|长崎成功丸|爱媛FC|主胜|1x2|2026-08-26": {
+    "ev": 7.3,
+    "bb": 1.44,
+    "ts": 1787737212.4480882
+  },
+  "football|South Korea K-League 1|江原FC|光州FC|上半场客胜|ht|2026-08-26": {
+    "ev": 21.38,
+    "bb": 9.9,
+    "ts": 1787737212.4483142
   }
 }
