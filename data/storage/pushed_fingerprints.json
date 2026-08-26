@@ -1318,6 +1318,18 @@
     "ev": 6.85,
     "ts": 1787719593.13504
   },
+  "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|双边进球-是|btts|2026-08-27": {
+    "ev": 1.29,
+    "ts": 1787731363.1894321
+  },
+  "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|客胜|1x2|2026-08-27": {
+    "ev": 16.38,
+    "ts": 1787731363.1893141
+  },
+  "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|让球客胜|1x2|2026-08-27": {
+    "ev": 2.44,
+    "ts": 1787731009.077031
+  },
   "football|Georgia Cup|FC Dila Gori|FC Samgurali Tskaltubo|主胜|1x2|2026-08-26": {
     "ev": 2.53,
     "ts": 1787728551.7193758
@@ -1326,9 +1338,17 @@
     "ev": 3.37,
     "ts": 1787730659.7082791
   },
+  "football|Georgia Cup|FC Dila Gori|FC Samgurali Tskaltubo|让球主胜|1x2|2026-08-26": {
+    "ev": 3.31,
+    "ts": 1787731009.0749812
+  },
   "football|Georgia Cup|FC Dila Gori|FC Samgurali Tskaltubo|让球客胜|1x2|2026-08-26": {
     "ev": 4.89,
     "ts": 1787728551.719475
+  },
+  "football|Georgia Cup|FC Gagra|FC Aragvi Dusheti|主胜|1x2|2026-08-27": {
+    "ev": 1.22,
+    "ts": 1787731009.074731
   },
   "football|Georgia Cup|FC Gagra|FC Aragvi Dusheti|双重机会-和局/客|dc|2026-08-27": {
     "ev": 1.45,
@@ -1350,6 +1370,14 @@
     "ev": 3.82,
     "ts": 1787718003.933813
   },
+  "football|Georgia Cup|FC Torpedo Kutaisi|FC Dinamo Batumi|主胜|1x2|2026-08-27": {
+    "ev": 2.57,
+    "ts": 1787731009.07514
+  },
+  "football|Georgia Cup|FC Torpedo Kutaisi|FC Dinamo Batumi|双重机会-主/和局|dc|2026-08-27": {
+    "ev": 3.01,
+    "ts": 1787731009.075247
+  },
   "football|Georgia Cup|FC Torpedo Kutaisi|FC Dinamo Batumi|让球客胜|1x2|2026-08-27": {
     "ev": 2.83,
     "ts": 1787725057.705454
@@ -1363,6 +1391,11 @@
     "ev": 14.24,
     "bb": 6.3,
     "ts": 1787720624.0425029
+  },
+  "football|Georgia Cup|古泰斯鱼雷|巴统迪纳摩|双重机会-主/和局|dc|2026-08-27": {
+    "ev": 3.01,
+    "bb": 1.5,
+    "ts": 1787731008.34047
   },
   "football|Georgia Cup|哥里迪拉|萨古拉利|主胜|1x2|2026-08-26": {
     "ev": 8.55,
@@ -1426,6 +1459,10 @@
     "ev": 6.33,
     "ts": 1787717038.066871
   },
+  "football|Japan Emperor Cup|Cerezo Osaka|FC Gifu|双重机会-和局/客|dc|2026-08-26": {
+    "ev": 19.16,
+    "ts": 1787731871.1120498
+  },
   "football|Japan Emperor Cup|Cerezo Osaka|FC Gifu|大球|1x2|2026-08-26": {
     "ev": 1.84,
     "ts": 1787721613.339005
@@ -1433,6 +1470,14 @@
   "football|Japan Emperor Cup|Cerezo Osaka|FC Gifu|客胜|1x2|2026-08-26": {
     "ev": 1.55,
     "ts": 1787724512.684785
+  },
+  "football|Japan Emperor Cup|Cerezo Osaka|FC Gifu|小球|1x2|2026-08-26": {
+    "ev": 2.52,
+    "ts": 1787731871.111989
+  },
+  "football|Japan Emperor Cup|Cerezo Osaka|FC Gifu|让球客胜|1x2|2026-08-26": {
+    "ev": 14.54,
+    "ts": 1787731979.781625
   },
   "football|Japan Emperor Cup|Gamba Osaka|Reilac Shiga FC|让球客胜|1x2|2026-08-26": {
     "ev": 1.69,
@@ -1461,6 +1506,10 @@
   "football|Japan Emperor Cup|Machida Zelvia|Grulla Morioka|主胜|1x2|2026-08-26": {
     "ev": 1.65,
     "ts": 1787726611.764877
+  },
+  "football|Japan Emperor Cup|Machida Zelvia|Grulla Morioka|大球|1x2|2026-08-26": {
+    "ev": 1.5,
+    "ts": 1787731979.781865
   },
   "football|Japan Emperor Cup|Machida Zelvia|Grulla Morioka|小球|1x2|2026-08-26": {
     "ev": 1.32,
@@ -1539,6 +1588,22 @@
     "ev": 2.54,
     "bb": 4.13,
     "ts": 1787651365.893697
+  },
+  "football|Malaysia Super League|Kuala Lumpur City FC|Kuching City FC|主胜|1x2|2026-08-26": {
+    "ev": 22.71,
+    "ts": 1787731341.065793
+  },
+  "football|Malaysia Super League|Kuala Lumpur City FC|Kuching City FC|双边进球-是|btts|2026-08-26": {
+    "ev": 2.59,
+    "ts": 1787731341.0660028
+  },
+  "football|Malaysia Super League|Kuala Lumpur City FC|Kuching City FC|双重机会-主/和局|dc|2026-08-26": {
+    "ev": 10.05,
+    "ts": 1787731341.066265
+  },
+  "football|Malaysia Super League|Kuala Lumpur City FC|Kuching City FC|让球主胜|1x2|2026-08-26": {
+    "ev": 6.24,
+    "ts": 1787731341.0661418
   },
   "football|Malaysia Super League|Kuala Lumpur City FC|Kuching City FC|让球客胜|1x2|2026-08-26": {
     "ev": 1.19,
@@ -2221,6 +2286,14 @@
     "ev": 1.0,
     "ts": 1787683395.867994
   },
+  "football|UEFA Champions League-Qualification Playoff|NK Celje|SK Slovan Bratislava|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 1.99,
+    "ts": 1787731009.075857
+  },
+  "football|UEFA Champions League-Qualification Playoff|NK Celje|SK Slovan Bratislava|上半场客胜|ht|2026-08-27": {
+    "ev": 1.11,
+    "ts": 1787731363.187489
+  },
   "football|UEFA Champions League-Qualification Playoff|NK Celje|SK Slovan Bratislava|单双-双|oe|2026-08-27": {
     "ev": 1.58,
     "ts": 1787684748.2874649
@@ -2301,6 +2374,10 @@
   "football|UEFA Europa Cup Women-Qualification|RSC Anderlecht (w)|Feyenoord (w)|主胜|1x2|2026-08-27": {
     "ev": 3.85,
     "ts": 1787730353.035709
+  },
+  "football|UEFA Europa Cup Women-Qualification|RSC Anderlecht (w)|Feyenoord (w)|小球|1x2|2026-08-27": {
+    "ev": 1.14,
+    "ts": 1787731009.074168
   },
   "football|UEFA Europa Cup Women-Qualification|RSC Anderlecht (w)|Feyenoord (w)|让球主胜|1x2|2026-08-27": {
     "ev": 6.5,
@@ -2534,6 +2611,10 @@
     "ev": 6.06,
     "ts": 1787690048.413858
   },
+  "tennis|ITF - M15 Mar Del Plata Men Singles|Federico Aguilar Cardozo (URU)|Dakotah Bobo (USA)|主胜|1x2|2026-08-26": {
+    "ev": 3.59,
+    "ts": 1787731499.535444
+  },
   "tennis|ITF - M15 Monastir Men Singles|Stevan Popovic (GER)|Nav Dayal (USA)|让盘客胜|1x2|2026-08-26": {
     "ev": 2.25,
     "ts": 1787714170.151989
@@ -2706,9 +2787,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Georgia Cup|古泰斯鱼雷|巴统迪纳摩|双重机会-主/和局|dc|2026-08-27": {
-    "ev": 3.01,
-    "bb": 1.5,
-    "ts": 1787731008.34047
+  "football|Japan Emperor Cup|大阪樱花|FC岐埠|双重机会-和局/客|dc|2026-08-26": {
+    "ev": 21.41,
+    "bb": 3.78,
+    "ts": 1787732231.306157
   }
 }
