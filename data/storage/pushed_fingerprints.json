@@ -877,6 +877,10 @@
     "ev": 1.66,
     "ts": 1787743709.89697
   },
+  "football|Denmark DBU Pokalen|FC Fredericia|Odense Boldklub|大球|1x2|2026-08-27": {
+    "ev": 1.25,
+    "ts": 1787749302.779073
+  },
   "football|Egypt Premier League|National Bank of Egypt SC|Zamalek SC|上半场主胜|ht|2026-08-27": {
     "ev": 1.54,
     "ts": 1787725613.0676322
@@ -1662,6 +1666,11 @@
     "ev": 3.01,
     "bb": 1.5,
     "ts": 1787731008.34047
+  },
+  "football|Georgia Cup|古泰斯鱼雷|巴统迪纳摩|客胜|1x2|2026-08-27": {
+    "ev": 9.72,
+    "bb": 2.37,
+    "ts": 1787749155.832316
   },
   "football|Georgia Cup|哥里迪拉|萨古拉利|主胜|1x2|2026-08-26": {
     "ev": 14.69,
@@ -3190,6 +3199,10 @@
     "ev": 1.7,
     "ts": 1787720022.433236
   },
+  "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|上半场主胜|ht|2026-08-26": {
+    "ev": 41.07,
+    "ts": 1787749302.778801
+  },
   "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|上半场双重机会-主/客|ht_dc|2026-08-26": {
     "ev": 1.19,
     "ts": 1787737652.828831
@@ -3197,6 +3210,14 @@
   "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|上半场客胜|ht|2026-08-26": {
     "ev": 1.46,
     "ts": 1787674200.05846
+  },
+  "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|主胜|1x2|2026-08-26": {
+    "ev": 12.33,
+    "ts": 1787749302.778752
+  },
+  "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|双重机会-主/和局|dc|2026-08-26": {
+    "ev": 6.82,
+    "ts": 1787749302.7788439
   },
   "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|小球|1x2|2026-08-26": {
     "ev": 1.28,
@@ -3551,9 +3572,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Georgia Cup|古泰斯鱼雷|巴统迪纳摩|客胜|1x2|2026-08-27": {
-    "ev": 9.72,
-    "bb": 2.37,
-    "ts": 1787749155.832316
+  "football|England League Cup|布拉德福德|伯恩利|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 3.03,
+    "bb": 1.8,
+    "ts": 1787749612.386932
   }
 }

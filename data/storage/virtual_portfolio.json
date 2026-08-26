@@ -1,5 +1,5 @@
 {
-  "balance": 12560.36,
+  "balance": 12527.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2438,6 +2438,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787763600,
       "created_at": "2026-08-26T12:59:15.822109+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_布拉德福德_伯恩利_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "英格兰联赛杯",
+      "home_team": "布拉德福德",
+      "away_team": "伯恩利",
+      "home_cn": "布拉德福德",
+      "away_cn": "伯恩利",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.8,
+      "stake": 33,
+      "model_prob": 0.5724,
+      "ev_pct": 3.03,
+      "pin_odds": 0,
+      "fair_price": 1.7471,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787769900,
+      "created_at": "2026-08-26T13:06:52.377682+00:00",
       "track_only": false
     }
   ],
@@ -5681,8 +5704,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 4112.0,
-    "bets": 49
+    "used": 4145.0,
+    "bets": 50
   },
   "updated": null
 }
