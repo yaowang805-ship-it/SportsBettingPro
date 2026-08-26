@@ -87,6 +87,10 @@
     "ev": 14.52,
     "ts": 1787740602.211814
   },
+  "baseball|MLB|Washington Nationals|Colorado Rockies|主胜|1x2|2026-08-27": {
+    "ev": 2.01,
+    "ts": 1787773951.983732
+  },
   "baseball|MLB|Washington Nationals|Colorado Rockies|客胜|1x2|2026-08-27": {
     "ev": 13.05,
     "ts": 1787740602.2116852
@@ -210,6 +214,10 @@
     "ev": 2.57,
     "ts": 1787737652.828373
   },
+  "football|Algeria Ligue 1|ES Setif|ES Ben Aknoun|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 2.59,
+    "ts": 1787771507.293365
+  },
   "football|Argentina Cup|Aldosivi|Independiente Rivadavia|上半场主胜|ht|2026-08-27": {
     "ev": 5.97,
     "ts": 1787696742.810224
@@ -240,6 +248,11 @@
     "ev": 16.7,
     "bb": 7.85,
     "ts": 1787755101.515496
+  },
+  "football|Argentina Cup|阿尔多斯维|门多萨独立|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 3.08,
+    "bb": 2.04,
+    "ts": 1787771441.9713652
   },
   "football|Argentina Liga Profesional Reserves|Banfield (Res)|Talleres de Cordoba (Res)|小球|1x2|2026-08-27": {
     "ev": 1.55,
@@ -568,6 +581,14 @@
   "football|Bolivia Division Profesional|Universitario de Vinto|Nacional Potosi|让球客胜|1x2|2026-08-26": {
     "ev": 4.71,
     "ts": 1787668482.598082
+  },
+  "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|单双-双|oe|2026-08-27": {
+    "ev": 1.33,
+    "ts": 1787771442.363915
+  },
+  "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|大球|1x2|2026-08-27": {
+    "ev": 1.11,
+    "ts": 1787773951.983487
   },
   "football|Brazil Copa do Brasil|Cruzeiro EC MG|Atletico Mineiro MG|上半场双重机会-主/客|ht_dc|2026-08-26": {
     "ev": 2.09,
@@ -1083,6 +1104,10 @@
   "football|Denmark DBU Pokalen|FC Fredericia|Odense Boldklub|让球主胜|1x2|2026-08-27": {
     "ev": 7.59,
     "ts": 1787750159.3419468
+  },
+  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 1.56,
+    "ts": 1787771507.293268
   },
   "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|单双-双|oe|2026-08-28": {
     "ev": 1.91,
@@ -3160,6 +3185,10 @@
     "bb": 9.9,
     "ts": 1787737212.4483142
   },
+  "football|Spain LaLiga|Celta Vigo|Osasuna|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 1.17,
+    "ts": 1787771507.2935958
+  },
   "football|Spain LaLiga|Celta Vigo|Osasuna|上半场客胜|ht|2026-08-28": {
     "ev": 4.93,
     "ts": 1787769403.866369
@@ -3592,6 +3621,10 @@
     "ev": 3.29,
     "ts": 1787763777.760244
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|SK Brann|PAOK Thessaloniki|小球|1x2|2026-08-28": {
+    "ev": 5.98,
+    "ts": 1787772733.655804
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|里加FC|克拉克斯维克|上半场主胜|ht|2026-08-28": {
     "ev": 4.38,
     "bb": 1.93,
@@ -3861,9 +3894,18 @@
     "bb": 1.99,
     "ts": 1787594606.293751
   },
+  "football|USL Championship|El Paso Locomotive FC|Pittsburgh Riverhounds|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 2.53,
+    "ts": 1787771442.3640552
+  },
   "football|USL Championship|New Mexico United|Lexington SC|总进球区间7+|total_goals_range|2026-08-27": {
     "ev": 6.9,
     "ts": 1787708394.902696
+  },
+  "football|USL Championship|埃尔帕索机车|匹兹堡猎犬河队|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 2.53,
+    "bb": 1.91,
+    "ts": 1787771441.971432
   },
   "football|Uzbekistan Super League|Lokomotiv Tashkent|FC Bunyodkor|上半场主胜|ht|2026-08-26": {
     "ev": 3.51,
@@ -4347,14 +4389,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Argentina Cup|阿尔多斯维|门多萨独立|上半场双重机会-主/客|ht_dc|2026-08-27": {
-    "ev": 3.08,
-    "bb": 2.04,
-    "ts": 1787771441.9713652
-  },
-  "football|USL Championship|埃尔帕索机车|匹兹堡猎犬河队|上半场双重机会-主/客|ht_dc|2026-08-27": {
-    "ev": 2.53,
-    "bb": 1.91,
-    "ts": 1787771441.971432
+  "football|Brazil Copa do Brasil|瓦斯科达伽马|维多利亚|上半场客胜|ht|2026-08-27": {
+    "ev": 2.74,
+    "bb": 8.3,
+    "ts": 1787774036.803308
   }
 }
