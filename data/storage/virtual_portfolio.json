@@ -1,5 +1,5 @@
 {
-  "balance": 14139.36,
+  "balance": 14044.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2208,6 +2208,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787738400,
       "created_at": "2026-08-26T09:17:45.440053+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_磐田喜悦_宫崎棒牛鸟_主胜",
+      "sport": "football",
+      "league": "日本天皇杯",
+      "home_team": "磐田喜悦",
+      "away_team": "宫崎棒牛鸟",
+      "home_cn": "磐田喜悦",
+      "away_cn": "宫崎棒牛鸟",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.64,
+      "stake": 95,
+      "model_prob": 0.4041,
+      "ev_pct": 6.68,
+      "pin_odds": 2.34,
+      "fair_price": 2.4746,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787738400,
+      "created_at": "2026-08-26T09:22:51.840616+00:00",
       "track_only": false
     }
   ],
@@ -5421,8 +5444,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 2115.0,
-    "bets": 33
+    "used": 2210.0,
+    "bets": 34
   },
   "updated": null
 }

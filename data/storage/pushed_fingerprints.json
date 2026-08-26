@@ -1462,11 +1462,6 @@
     "bb": 1.5,
     "ts": 1787731008.34047
   },
-  "football|Georgia Cup|哥里迪拉|萨古拉利|主胜|1x2|2026-08-26": {
-    "ev": 8.55,
-    "bb": 2.64,
-    "ts": 1787730659.177372
-  },
   "football|Georgia Cup|哥里迪拉|萨古拉利|双重机会-主/和局|dc|2026-08-26": {
     "ev": 3.37,
     "bb": 1.46,
@@ -1637,6 +1632,10 @@
     "ev": 3.5,
     "ts": 1787733514.326388
   },
+  "football|Japan Emperor Cup|Machida Zelvia|Grulla Morioka|让球客胜|1x2|2026-08-26": {
+    "ev": 2.53,
+    "ts": 1787735866.637844
+  },
   "football|Japan Emperor Cup|Montedio Yamagata|Fujieda MYFC|让球客胜|1x2|2026-08-26": {
     "ev": 3.41,
     "ts": 1787717723.091181
@@ -1664,6 +1663,10 @@
   "football|Japan Emperor Cup|Sagan Tosu|Kataller Toyama|客胜|1x2|2026-08-26": {
     "ev": 1.23,
     "ts": 1787733270.3978
+  },
+  "football|Japan Emperor Cup|Sagan Tosu|Kataller Toyama|小球|1x2|2026-08-26": {
+    "ev": 5.55,
+    "ts": 1787735866.638098
   },
   "football|Japan Emperor Cup|Sagan Tosu|Kataller Toyama|让球客胜|1x2|2026-08-26": {
     "ev": 3.93,
@@ -1710,6 +1713,11 @@
     "ev": 21.41,
     "bb": 3.78,
     "ts": 1787732231.306157
+  },
+  "football|Japan Emperor Cup|川崎前锋|枥木SC|主胜|1x2|2026-08-26": {
+    "ev": 9.0,
+    "bb": 1.32,
+    "ts": 1787735865.7090838
   },
   "football|Japan Emperor Cup|新泻天鹅|鹿儿岛联|客胜|1x2|2026-08-26": {
     "ev": 6.08,
@@ -3016,9 +3024,14 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Japan Emperor Cup|川崎前锋|枥木SC|主胜|1x2|2026-08-26": {
-    "ev": 9.0,
-    "bb": 1.32,
-    "ts": 1787735865.7090838
+  "football|Georgia Cup|哥里迪拉|萨古拉利|主胜|1x2|2026-08-26": {
+    "ev": 14.69,
+    "bb": 3.08,
+    "ts": 1787736171.855659
+  },
+  "football|Japan Emperor Cup|磐田喜悦|宫崎棒牛鸟|主胜|1x2|2026-08-26": {
+    "ev": 6.68,
+    "bb": 2.64,
+    "ts": 1787736171.855725
   }
 }
