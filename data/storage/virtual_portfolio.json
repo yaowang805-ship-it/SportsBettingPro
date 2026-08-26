@@ -1,5 +1,5 @@
 {
-  "balance": 15044.36,
+  "balance": 14861.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2070,6 +2070,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787752800,
       "created_at": "2026-08-26T07:32:13.403800+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_克孜勒库姆_纳萨夫_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "乌兹别克斯坦超级联赛",
+      "home_team": "克孜勒库姆",
+      "away_team": "纳萨夫",
+      "home_cn": "克孜勒库姆",
+      "away_cn": "纳萨夫",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.94,
+      "stake": 130,
+      "model_prob": 0.5426,
+      "ev_pct": 5.26,
+      "pin_odds": 0,
+      "fair_price": 1.843,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787756400,
+      "created_at": "2026-08-26T07:36:21.030728+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_贝雷达比历克_(女)_米耶尔库雷亚丘克_(女)_双重机会-和局/客",
+      "sport": "football",
+      "league": "欧洲足联女欧罗巴杯-资格赛",
+      "home_team": "贝雷达比历克 (女)",
+      "away_team": "米耶尔库雷亚丘克 (女)",
+      "home_cn": "贝雷达比历克 (女)",
+      "away_cn": "米耶尔库雷亚丘克 (女)",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 2.82,
+      "stake": 53,
+      "model_prob": 0.3694,
+      "ev_pct": 4.16,
+      "pin_odds": 0,
+      "fair_price": 2.7074,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787765400,
+      "created_at": "2026-08-26T07:36:21.030850+00:00",
       "track_only": false
     }
   ],
@@ -5223,8 +5269,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 1085.0,
-    "bets": 22
+    "used": 1268.0,
+    "bets": 24
   },
   "updated": null
 }

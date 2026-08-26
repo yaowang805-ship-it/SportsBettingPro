@@ -701,6 +701,10 @@
     "ev": 3.16,
     "ts": 1787702193.702764
   },
+  "football|Egypt Premier League|Petrojet FC|Talaea El Gaish|上半场客胜|ht|2026-08-27": {
+    "ev": 1.97,
+    "ts": 1787729535.610668
+  },
   "football|Egypt Premier League|Petrojet FC|Talaea El Gaish|单双-双|oe|2026-08-27": {
     "ev": 1.91,
     "ts": 1787678048.387135
@@ -738,6 +742,11 @@
     "ev": 18.66,
     "bb": 3.02,
     "ts": 1787533611.279916
+  },
+  "football|Egypt Premier League|史莫哈|佩特雷姆|上半场双重机会-主/客|ht_dc|2026-08-26": {
+    "ev": 4.05,
+    "bb": 1.97,
+    "ts": 1787729533.437212
   },
   "football|Egypt Premier League|史莫哈|佩特雷姆|上半场客胜|ht|2026-08-26": {
     "ev": 6.56,
@@ -2625,9 +2634,14 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Egypt Premier League|史莫哈|佩特雷姆|上半场双重机会-主/客|ht_dc|2026-08-26": {
-    "ev": 4.05,
-    "bb": 1.97,
-    "ts": 1787729533.437212
+  "football|Uzbekistan Super League|克孜勒库姆|纳萨夫|上半场双重机会-主/客|ht_dc|2026-08-26": {
+    "ev": 5.26,
+    "bb": 1.94,
+    "ts": 1787729781.129861
+  },
+  "football|UEFA Europa Cup Women-Qualification|贝雷达比历克 (女)|米耶尔库雷亚丘克 (女)|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 4.16,
+    "bb": 2.82,
+    "ts": 1787729781.130016
   }
 }
