@@ -1,5 +1,5 @@
 {
-  "balance": 10724.36,
+  "balance": 10631.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2852,6 +2852,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787855400,
       "created_at": "2026-08-26T18:36:43.512856+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_麦尼拉斯_波多港_客胜",
+      "sport": "football",
+      "league": "委内瑞拉杯",
+      "home_team": "麦尼拉斯",
+      "away_team": "波多港",
+      "home_cn": "麦尼拉斯",
+      "away_cn": "波多港",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.68,
+      "stake": 93,
+      "model_prob": 0.3042,
+      "ev_pct": 11.95,
+      "pin_odds": 2.92,
+      "fair_price": 3.2871,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787772600,
+      "created_at": "2026-08-26T19:03:32.966656+00:00",
       "track_only": false
     }
   ],
@@ -6095,8 +6118,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 1338.0,
-    "bets": 13
+    "used": 1431.0,
+    "bets": 14
   },
   "updated": null
 }

@@ -549,6 +549,10 @@
     "ev": 2.37,
     "ts": 1787720225.2408068
   },
+  "football|Bolivia Division Profesional|San Antonio Bulo Bulo|The Strongest|让球主胜|1x2|2026-08-27": {
+    "ev": 1.37,
+    "ts": 1787770713.40451
+  },
   "football|Bolivia Division Profesional|Universitario de Vinto|Nacional Potosi|主胜|1x2|2026-08-26": {
     "ev": 1.71,
     "ts": 1787696647.707885
@@ -3156,6 +3160,10 @@
     "bb": 9.9,
     "ts": 1787737212.4483142
   },
+  "football|Spain LaLiga|Celta Vigo|Osasuna|上半场客胜|ht|2026-08-28": {
+    "ev": 4.93,
+    "ts": 1787769403.866369
+  },
   "football|Spain LaLiga|Real Madrid|Real Sociedad|上半场主胜|ht|2026-08-27": {
     "ev": 2.12,
     "ts": 1787684748.287504
@@ -3167,6 +3175,10 @@
   "football|Spain LaLiga|Real Madrid|Real Sociedad|主胜|1x2|2026-08-27": {
     "ev": 1.34,
     "ts": 1787769081.783713
+  },
+  "football|Spain LaLiga|Real Madrid|Real Sociedad|双边进球-是|btts|2026-08-27": {
+    "ev": 1.08,
+    "ts": 1787770713.404344
   },
   "football|Spain LaLiga|Real Madrid|Real Sociedad|双重机会-和局/客|dc|2026-08-27": {
     "ev": 1.64,
@@ -3225,6 +3237,11 @@
     "ev": 3.43,
     "bb": 1.83,
     "ts": 1787457222.318167
+  },
+  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
+    "ev": 4.93,
+    "bb": 5.75,
+    "ts": 1787769403.523433
   },
   "football|Sweden Superettan|Orebro SK|Varbergs BoIS|上半场客胜|ht|2026-08-26": {
     "ev": 1.76,
@@ -3543,6 +3560,14 @@
     "ev": 1.32,
     "ts": 1787764120.650102
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|FK Partizan Belgrade|Getafe CF|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 1.24,
+    "ts": 1787770918.452352
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|HNK Rijeka|FC Midtjylland|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 1.59,
+    "ts": 1787769957.915342
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Kuopion Palloseura|Shamrock Rovers|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 1.52,
     "ts": 1787756587.4375098
@@ -3550,6 +3575,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Kuopion Palloseura|Shamrock Rovers|上半场客胜|ht|2026-08-27": {
     "ev": 5.4,
     "ts": 1787756587.437453
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|让球客胜|1x2|2026-08-28": {
+    "ev": 2.23,
+    "ts": 1787770918.452298
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Pafos FC|Dinamo City|上半场主胜|ht|2026-08-28": {
     "ev": 1.36,
@@ -3813,6 +3842,10 @@
   "football|UEFA Europa League-Qualification Playoff|PFC CSKA Sofia|OFI Crete|总进球区间7+|total_goals_range|2026-08-28": {
     "ev": 6.16,
     "ts": 1787767551.5630772
+  },
+  "football|UEFA Europa League-Qualification Playoff|RSC Anderlecht|FC Kairat Almaty|上半场主胜|ht|2026-08-28": {
+    "ev": 1.59,
+    "ts": 1787769403.866255
   },
   "football|UEFA Europa League-Qualification|安德莱赫特|阿拉木图凯拉特|上半场主胜|ht|2026-08-28": {
     "ev": 5.66,
@@ -4284,9 +4317,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
-    "ev": 4.93,
-    "bb": 5.75,
-    "ts": 1787769403.523433
+  "football|Venezuela Cup|麦尼拉斯|波多港|客胜|1x2|2026-08-27": {
+    "ev": 11.95,
+    "bb": 3.68,
+    "ts": 1787771012.980155
   }
 }
