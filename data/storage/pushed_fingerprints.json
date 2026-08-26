@@ -665,6 +665,10 @@
     "ev": 4.49,
     "ts": 1787716320.497659
   },
+  "football|Czech Republic Cup|SK Benatky Nad Jizerou|Neratovice Byskovice|主胜|1x2|2026-08-26": {
+    "ev": 8.98,
+    "ts": 1787736256.265462
+  },
   "football|Czech Republic Cup|SK Benatky Nad Jizerou|Neratovice Byskovice|让球客胜|1x2|2026-08-26": {
     "ev": 1.66,
     "ts": 1787716320.498286
@@ -1462,6 +1466,11 @@
     "bb": 1.5,
     "ts": 1787731008.34047
   },
+  "football|Georgia Cup|哥里迪拉|萨古拉利|主胜|1x2|2026-08-26": {
+    "ev": 14.69,
+    "bb": 3.08,
+    "ts": 1787736171.855659
+  },
   "football|Georgia Cup|哥里迪拉|萨古拉利|双重机会-主/和局|dc|2026-08-26": {
     "ev": 3.37,
     "bb": 1.46,
@@ -1567,6 +1576,10 @@
     "ev": 3.61,
     "ts": 1787732650.742074
   },
+  "football|Japan Emperor Cup|FC Tokyo|Nagano Parceiro|让球客胜|1x2|2026-08-26": {
+    "ev": 3.38,
+    "ts": 1787736172.758112
+  },
   "football|Japan Emperor Cup|FC今治|秋田蓝闪电|主胜|1x2|2026-08-26": {
     "ev": 5.02,
     "bb": 2.54,
@@ -1579,6 +1592,18 @@
   "football|Japan Emperor Cup|Hokkaido Consadole Sapporo|Ventforet Kofu|小球|1x2|2026-08-26": {
     "ev": 2.33,
     "ts": 1787735367.624467
+  },
+  "football|Japan Emperor Cup|Jubilo Iwata|Tegevajaro Miyazaki|主胜|1x2|2026-08-26": {
+    "ev": 6.68,
+    "ts": 1787736172.757969
+  },
+  "football|Japan Emperor Cup|Jubilo Iwata|Tegevajaro Miyazaki|双重机会-主/和局|dc|2026-08-26": {
+    "ev": 1.23,
+    "ts": 1787736172.758065
+  },
+  "football|Japan Emperor Cup|Jubilo Iwata|Tegevajaro Miyazaki|让球主胜|1x2|2026-08-26": {
+    "ev": 7.2,
+    "ts": 1787736172.758015
   },
   "football|Japan Emperor Cup|Jubilo Iwata|Tegevajaro Miyazaki|让球客胜|1x2|2026-08-26": {
     "ev": 9.57,
@@ -1680,6 +1705,10 @@
     "ev": 1.38,
     "ts": 1787735544.580873
   },
+  "football|Japan Emperor Cup|Sanfrecce Hiroshima|Okinawa SV|让球客胜|1x2|2026-08-26": {
+    "ev": 1.53,
+    "ts": 1787736172.757392
+  },
   "football|Japan Emperor Cup|Tokushima Vortis|FC Tokushima|主胜|1x2|2026-08-26": {
     "ev": 3.89,
     "ts": 1787734048.048964
@@ -1687,6 +1716,10 @@
   "football|Japan Emperor Cup|Tokushima Vortis|FC Tokushima|大球|1x2|2026-08-26": {
     "ev": 2.35,
     "ts": 1787734048.049057
+  },
+  "football|Japan Emperor Cup|Tokushima Vortis|FC Tokushima|客胜|1x2|2026-08-26": {
+    "ev": 8.11,
+    "ts": 1787736337.91915
   },
   "football|Japan Emperor Cup|Tokushima Vortis|FC Tokushima|让球客胜|1x2|2026-08-26": {
     "ev": 1.6,
@@ -1703,6 +1736,10 @@
   "football|Japan Emperor Cup|Tokyo Verdy|Thespa Gunma|让球主胜|1x2|2026-08-26": {
     "ev": 1.04,
     "ts": 1787734436.280464
+  },
+  "football|Japan Emperor Cup|Vegalta Sendai|Tochigi City FC|小球|1x2|2026-08-26": {
+    "ev": 3.42,
+    "ts": 1787736562.7191172
   },
   "football|Japan Emperor Cup|大宫松鼠|八户云罗里|客胜|1x2|2026-08-26": {
     "ev": 5.1,
@@ -1723,6 +1760,11 @@
     "ev": 6.08,
     "bb": 4.22,
     "ts": 1787718002.44304
+  },
+  "football|Japan Emperor Cup|磐田喜悦|宫崎棒牛鸟|主胜|1x2|2026-08-26": {
+    "ev": 6.68,
+    "bb": 2.64,
+    "ts": 1787736171.855725
   },
   "football|Kuwait Premier League|Al Fahaheel FC|Qadsia SC|主胜|1x2|2026-08-26": {
     "ev": 4.94,
@@ -3024,14 +3066,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Georgia Cup|哥里迪拉|萨古拉利|主胜|1x2|2026-08-26": {
-    "ev": 14.69,
-    "bb": 3.08,
-    "ts": 1787736171.855659
-  },
-  "football|Japan Emperor Cup|磐田喜悦|宫崎棒牛鸟|主胜|1x2|2026-08-26": {
-    "ev": 6.68,
-    "bb": 2.64,
-    "ts": 1787736171.855725
+  "football|Iraq Stars League|纳弗特|杜赫克|和局|1x2|2026-08-26": {
+    "ev": 5.92,
+    "bb": 2.89,
+    "ts": 1787736707.189111
   }
 }
