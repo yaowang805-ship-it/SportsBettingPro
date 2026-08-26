@@ -1,5 +1,5 @@
 {
-  "balance": 13706.36,
+  "balance": 13630.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2277,6 +2277,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787738400,
       "created_at": "2026-08-26T09:40:12.432528+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_阿波罗利马索尔_(女)_哈夫纳夫约杜尔_(女)_客胜",
+      "sport": "football",
+      "league": "欧洲女子欧罗巴杯-资格赛",
+      "home_team": "阿波罗利马索尔 (女)",
+      "away_team": "哈夫纳夫约杜尔 (女)",
+      "home_cn": "阿波罗利马索尔 (女)",
+      "away_cn": "哈夫纳夫约杜尔 (女)",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.46,
+      "stake": 76,
+      "model_prob": 0.4292,
+      "ev_pct": 5.57,
+      "pin_odds": 2.11,
+      "fair_price": 2.3301,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787756400,
+      "created_at": "2026-08-26T09:50:35.036808+00:00",
       "track_only": false
     }
   ],
@@ -5490,8 +5513,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 2548.0,
-    "bets": 36
+    "used": 2624.0,
+    "bets": 37
   },
   "updated": null
 }

@@ -140,6 +140,10 @@
     "ev": 1.04,
     "ts": 1787725906.348483
   },
+  "football|ASEAN Hyundai Cup|Vietnam|Thailand|让球客胜|1x2|2026-08-26": {
+    "ev": 2.57,
+    "ts": 1787737652.828373
+  },
   "football|Argentina Cup|Aldosivi|Independiente Rivadavia|上半场主胜|ht|2026-08-27": {
     "ev": 5.97,
     "ts": 1787696742.810224
@@ -296,6 +300,10 @@
   "football|Argentina Primera Nacional|Chaco For Ever|San Miguel|上半场客胜|ht|2026-08-27": {
     "ev": 2.19,
     "ts": 1787723772.618944
+  },
+  "football|Argentina Primera Nacional|Chaco For Ever|San Miguel|客胜|1x2|2026-08-27": {
+    "ev": 1.5,
+    "ts": 1787737799.665113
   },
   "football|Argentina Primera Nacional|Chaco For Ever|San Miguel|让球客胜|1x2|2026-08-27": {
     "ev": 1.51,
@@ -1585,6 +1593,10 @@
     "ev": 2.34,
     "ts": 1787734048.049454
   },
+  "football|Japan Emperor Cup|FC Imabari|Blaublitz Akita|小球|1x2|2026-08-26": {
+    "ev": 1.72,
+    "ts": 1787737333.638918
+  },
   "football|Japan Emperor Cup|FC Imabari|Blaublitz Akita|让球主胜|1x2|2026-08-26": {
     "ev": 1.73,
     "ts": 1787735544.5810199
@@ -1645,6 +1657,10 @@
   "football|Japan Emperor Cup|Kawasaki Frontale|Tochigi SC|主胜|1x2|2026-08-26": {
     "ev": 1.57,
     "ts": 1787735179.311451
+  },
+  "football|Japan Emperor Cup|Kawasaki Frontale|Tochigi SC|和局|1x2|2026-08-26": {
+    "ev": 5.83,
+    "ts": 1787737513.870962
   },
   "football|Japan Emperor Cup|Kawasaki Frontale|Tochigi SC|大球|1x2|2026-08-26": {
     "ev": 1.75,
@@ -1782,9 +1798,21 @@
     "ev": 1.35,
     "ts": 1787736917.0465431
   },
+  "football|Japan Emperor Cup|V Varen Nagasaki|Ehime FC|小球|1x2|2026-08-26": {
+    "ev": 1.2,
+    "ts": 1787737333.6401238
+  },
+  "football|Japan Emperor Cup|V Varen Nagasaki|Ehime FC|让球主胜|1x2|2026-08-26": {
+    "ev": 5.57,
+    "ts": 1787737213.077601
+  },
   "football|Japan Emperor Cup|V Varen Nagasaki|Ehime FC|让球客胜|1x2|2026-08-26": {
     "ev": 2.47,
     "ts": 1787737050.022756
+  },
+  "football|Japan Emperor Cup|Vegalta Sendai|Tochigi City FC|主胜|1x2|2026-08-26": {
+    "ev": 1.3,
+    "ts": 1787737213.0768352
   },
   "football|Japan Emperor Cup|Vegalta Sendai|Tochigi City FC|小球|1x2|2026-08-26": {
     "ev": 3.42,
@@ -1814,6 +1842,11 @@
     "ev": 6.68,
     "bb": 2.64,
     "ts": 1787736171.855725
+  },
+  "football|Japan Emperor Cup|长崎成功丸|爱媛FC|主胜|1x2|2026-08-26": {
+    "ev": 7.3,
+    "bb": 1.44,
+    "ts": 1787737212.4480882
   },
   "football|Kuwait Premier League|Al Fahaheel FC|Qadsia SC|主胜|1x2|2026-08-26": {
     "ev": 4.94,
@@ -2394,6 +2427,11 @@
     "bb": 1.87,
     "ts": 1787490186.243403
   },
+  "football|South Korea K-League 1|江原FC|光州FC|上半场客胜|ht|2026-08-26": {
+    "ev": 21.38,
+    "bb": 9.9,
+    "ts": 1787737212.4483142
+  },
   "football|Spain LaLiga|Real Madrid|Real Sociedad|上半场主胜|ht|2026-08-27": {
     "ev": 2.12,
     "ts": 1787684748.287504
@@ -2798,6 +2836,10 @@
     "ev": 1.7,
     "ts": 1787720022.433236
   },
+  "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|上半场双重机会-主/客|ht_dc|2026-08-26": {
+    "ev": 1.19,
+    "ts": 1787737652.828831
+  },
   "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|上半场客胜|ht|2026-08-26": {
     "ev": 1.46,
     "ts": 1787674200.05846
@@ -3062,6 +3104,10 @@
     "ev": 2.91,
     "ts": 1787678048.387667
   },
+  "tennis|ITF - W35 Barueri Women Singles|Camila Romero (ECU)|Carolina Bohrer Martins (BRA)|客胜|1x2|2026-08-26": {
+    "ev": 1.42,
+    "ts": 1787737333.63996
+  },
   "tennis|ITF - W35 Barueri Women Singles|Marjorie Souza (BRA)|Carolyn Ansari (USA)|让盘主胜|1x2|2026-08-27": {
     "ev": 2.47,
     "ts": 1787718003.9342961
@@ -3114,14 +3160,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Japan Emperor Cup|长崎成功丸|爱媛FC|主胜|1x2|2026-08-26": {
-    "ev": 7.3,
-    "bb": 1.44,
-    "ts": 1787737212.4480882
-  },
-  "football|South Korea K-League 1|江原FC|光州FC|上半场客胜|ht|2026-08-26": {
-    "ev": 21.38,
-    "bb": 9.9,
-    "ts": 1787737212.4483142
+  "football|UEFA Europa Cup Women-Qualification|阿波罗利马索尔 (女)|哈夫纳夫约杜尔 (女)|客胜|1x2|2026-08-26": {
+    "ev": 5.57,
+    "bb": 2.46,
+    "ts": 1787737835.049088
   }
 }
