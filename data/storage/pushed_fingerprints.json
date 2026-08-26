@@ -348,6 +348,10 @@
     "bb": 7.1,
     "ts": 1787694662.811641
   },
+  "football|Armenian Cup|FC Mika Yerevan|FC Bentonit|大球|1x2|2026-08-26": {
+    "ev": 2.19,
+    "ts": 1787740062.60275
+  },
   "football|Belgium First Amateur Division|ROC Charleroi Marchienne|Standard Liege II|小球|1x2|2026-08-27": {
     "ev": 4.12,
     "ts": 1787732600.592937
@@ -572,6 +576,18 @@
   "football|Croatian Cup|NK Dinamo Predavac|NK Hrvatski Dragovoljac|小球|1x2|2026-08-26": {
     "ev": 1.4,
     "ts": 1787718003.9330041
+  },
+  "football|Croatian Cup|NK Tomislav Drnje|Uljanik|客胜|1x2|2026-08-26": {
+    "ev": 1.38,
+    "ts": 1787739713.484543
+  },
+  "football|Croatian Cup|NK Tomislav Drnje|Uljanik|让球主胜|1x2|2026-08-26": {
+    "ev": 1.39,
+    "ts": 1787740203.9501262
+  },
+  "football|Croatian Cup|NK Tomislav Drnje|Uljanik|让球客胜|1x2|2026-08-26": {
+    "ev": 3.72,
+    "ts": 1787739713.484603
   },
   "football|Czech Republic Cup|1. BFK Frydlant Nad Ostravici|FC Zbrojovka Brno|双重机会-主/客|dc|2026-08-26": {
     "ev": 1.13,
@@ -1957,6 +1973,10 @@
     "ev": 2.09,
     "ts": 1787738469.387467
   },
+  "football|Norway 1st Division|Strommen IF|Raufoss IL|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 1.31,
+    "ts": 1787740374.945615
+  },
   "football|Norway 1st Division|Strommen IF|Raufoss IL|主胜|1x2|2026-08-27": {
     "ev": 1.47,
     "ts": 1787710389.089182
@@ -2279,6 +2299,10 @@
     "bb": 1.36,
     "ts": 1787641234.282191
   },
+  "football|Slovenia Cup|NK IB 1975 Ljubljana|NK Litija|主胜|1x2|2026-08-26": {
+    "ev": 1.59,
+    "ts": 1787739400.08801
+  },
   "football|South Africa Premier Soccer League|Kruger United|Durban City FC|上半场主胜|ht|2026-08-26": {
     "ev": 1.05,
     "ts": 1787677467.141536
@@ -2428,6 +2452,10 @@
   "football|South Korea K-League 1|FC Anyang|Incheon United FC|大球|1x2|2026-08-26": {
     "ev": 1.92,
     "ts": 1787738667.34595
+  },
+  "football|South Korea K-League 1|FC Anyang|Incheon United FC|角球大球|corner|2026-08-26": {
+    "ev": 1.06,
+    "ts": 1787740062.603938
   },
   "football|South Korea K-League 1|FC Anyang|Incheon United FC|让球主胜|1x2|2026-08-26": {
     "ev": 2.26,
@@ -2948,6 +2976,10 @@
     "ev": 1.35,
     "ts": 1787719017.9511302
   },
+  "football|Venezuela Cup|Caracas FC|Barquisimeto SC|和局|1x2|2026-08-27": {
+    "ev": 11.36,
+    "ts": 1787739352.410892
+  },
   "football|Venezuela Cup|Deportivo Miranda|Academia Anzoategui FC|双重机会-和局/客|dc|2026-08-27": {
     "ev": 1.95,
     "ts": 1787726478.287337
@@ -2963,6 +2995,11 @@
   "football|Venezuela Cup|Trujillanos FC|Deportivo Lara|让球主胜|1x2|2026-08-27": {
     "ev": 11.5,
     "ts": 1787702193.703239
+  },
+  "football|Venezuela Cup|加拉加斯|巴基西梅托|和局|1x2|2026-08-27": {
+    "ev": 11.36,
+    "bb": 4.78,
+    "ts": 1787739352.0693052
   },
   "tennis|ATP - Grand Slam US Open|Arthur Gea (FRA)|Sumit Nagal (IND)|让盘主胜|1x2|2026-08-26": {
     "ev": 1.1,
@@ -3226,9 +3263,14 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Venezuela Cup|加拉加斯|巴基西梅托|和局|1x2|2026-08-27": {
-    "ev": 11.36,
-    "bb": 4.78,
-    "ts": 1787739352.0693052
+  "baseball|MLB|圣地亚哥教士|匹兹堡海盗|客胜|1x2|2026-08-27": {
+    "ev": 14.29,
+    "bb": 2.06,
+    "ts": 1787740601.53183
+  },
+  "baseball|MLB|华盛顿国民|科罗拉多洛矶|客胜|1x2|2026-08-27": {
+    "ev": 13.05,
+    "bb": 2.03,
+    "ts": 1787740601.531886
   }
 }
