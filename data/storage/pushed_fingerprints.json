@@ -195,6 +195,10 @@
     "ev": 1.28,
     "ts": 1787680912.542002
   },
+  "football|Argentina Liga Profesional Reserves|San Lorenzo de Almagro (Res)|Godoy Cruz AT (Res)|小球|1x2|2026-08-27": {
+    "ev": 1.23,
+    "ts": 1787735013.434006
+  },
   "football|Argentina Liga Profesional Reserves|San Martin de San Juan (Res)|Huracan (Res)|双重机会-和局/客|dc|2026-08-26": {
     "ev": 1.83,
     "ts": 1787680774.034394
@@ -312,6 +316,11 @@
   "football|Argentina Primera Nacional|Deportivo Madryn|Godoy Cruz|让球客胜|1x2|2026-08-26": {
     "ev": 1.96,
     "ts": 1787649459.741886
+  },
+  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|上半场客胜|ht|2026-08-27": {
+    "ev": 5.81,
+    "bb": 6.05,
+    "ts": 1787735012.132087
   },
   "football|Argentina Primera Nacional|玛德恩|戈多伊克鲁斯|上半场双重机会-主/客|ht_dc|2026-08-26": {
     "ev": 2.5,
@@ -1140,6 +1149,10 @@
     "ev": 1.26,
     "ts": 1787684142.84274
   },
+  "football|England League Cup|Tottenham Hotspur|Charlton Athletic|上半场客胜|ht|2026-08-27": {
+    "ev": 1.52,
+    "ts": 1787735295.876129
+  },
   "football|England League Cup|Walsall FC|Leyton Orient|上半场主胜|ht|2026-08-26": {
     "ev": 1.75,
     "ts": 1787676204.772948
@@ -1354,6 +1367,10 @@
     "ev": 6.85,
     "ts": 1787719593.13504
   },
+  "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|双边进球-否|btts|2026-08-27": {
+    "ev": 1.42,
+    "ts": 1787735013.435641
+  },
   "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|双边进球-是|btts|2026-08-27": {
     "ev": 1.29,
     "ts": 1787731363.1894321
@@ -1421,6 +1438,10 @@
   "football|Georgia Cup|FC Torpedo Kutaisi|FC Dinamo Batumi|大球|1x2|2026-08-27": {
     "ev": 5.36,
     "ts": 1787733291.980939
+  },
+  "football|Georgia Cup|FC Torpedo Kutaisi|FC Dinamo Batumi|客胜|1x2|2026-08-27": {
+    "ev": 7.0,
+    "ts": 1787735295.875649
   },
   "football|Georgia Cup|FC Torpedo Kutaisi|FC Dinamo Batumi|让球客胜|1x2|2026-08-27": {
     "ev": 2.83,
@@ -1523,9 +1544,17 @@
     "ev": 14.54,
     "ts": 1787731979.781625
   },
+  "football|Japan Emperor Cup|FC Imabari|Blaublitz Akita|主胜|1x2|2026-08-26": {
+    "ev": 2.53,
+    "ts": 1787735544.580981
+  },
   "football|Japan Emperor Cup|FC Imabari|Blaublitz Akita|客胜|1x2|2026-08-26": {
     "ev": 2.34,
     "ts": 1787734048.049454
+  },
+  "football|Japan Emperor Cup|FC Imabari|Blaublitz Akita|让球主胜|1x2|2026-08-26": {
+    "ev": 1.73,
+    "ts": 1787735544.5810199
   },
   "football|Japan Emperor Cup|FC Imabari|Blaublitz Akita|让球客胜|1x2|2026-08-26": {
     "ev": 5.26,
@@ -1547,9 +1576,25 @@
     "ev": 1.69,
     "ts": 1787717038.066756
   },
+  "football|Japan Emperor Cup|Hokkaido Consadole Sapporo|Ventforet Kofu|小球|1x2|2026-08-26": {
+    "ev": 2.33,
+    "ts": 1787735367.624467
+  },
+  "football|Japan Emperor Cup|Jubilo Iwata|Tegevajaro Miyazaki|让球客胜|1x2|2026-08-26": {
+    "ev": 9.57,
+    "ts": 1787735179.3115032
+  },
+  "football|Japan Emperor Cup|Kawasaki Frontale|Tochigi SC|主胜|1x2|2026-08-26": {
+    "ev": 1.57,
+    "ts": 1787735179.311451
+  },
   "football|Japan Emperor Cup|Kawasaki Frontale|Tochigi SC|小球|1x2|2026-08-26": {
     "ev": 2.83,
     "ts": 1787721488.670872
+  },
+  "football|Japan Emperor Cup|Kawasaki Frontale|Tochigi SC|让球主胜|1x2|2026-08-26": {
+    "ev": 3.6,
+    "ts": 1787735544.580825
   },
   "football|Japan Emperor Cup|Kawasaki Frontale|Tochigi SC|让球客胜|1x2|2026-08-26": {
     "ev": 1.42,
@@ -1619,6 +1664,10 @@
     "ev": 1.46,
     "ts": 1787719797.7859688
   },
+  "football|Japan Emperor Cup|Sanfrecce Hiroshima|Okinawa SV|小球|1x2|2026-08-26": {
+    "ev": 1.38,
+    "ts": 1787735544.580873
+  },
   "football|Japan Emperor Cup|Tokushima Vortis|FC Tokushima|主胜|1x2|2026-08-26": {
     "ev": 3.89,
     "ts": 1787734048.048964
@@ -1642,6 +1691,11 @@
   "football|Japan Emperor Cup|Tokyo Verdy|Thespa Gunma|让球主胜|1x2|2026-08-26": {
     "ev": 1.04,
     "ts": 1787734436.280464
+  },
+  "football|Japan Emperor Cup|大宫松鼠|八户云罗里|客胜|1x2|2026-08-26": {
+    "ev": 5.1,
+    "bb": 4.99,
+    "ts": 1787735012.132203
   },
   "football|Japan Emperor Cup|大阪樱花|FC岐埠|双重机会-和局/客|dc|2026-08-26": {
     "ev": 21.41,
@@ -2411,6 +2465,10 @@
     "ev": 1.0,
     "ts": 1787683395.867994
   },
+  "football|UEFA Champions League-Qualification Playoff|NK Celje|SK Slovan Bratislava|上半场主胜|ht|2026-08-27": {
+    "ev": 1.25,
+    "ts": 1787735295.876251
+  },
   "football|UEFA Champions League-Qualification Playoff|NK Celje|SK Slovan Bratislava|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 1.99,
     "ts": 1787731009.075857
@@ -2438,6 +2496,10 @@
   "football|UEFA Champions League-Qualification Playoff|NK Celje|SK Slovan Bratislava|让球客胜|1x2|2026-08-27": {
     "ev": 2.56,
     "ts": 1787712544.143167
+  },
+  "football|UEFA Champions League-Qualification Playoff|Olympique Lyonnais|Fenerbahce|上半场客胜|ht|2026-08-27": {
+    "ev": 1.26,
+    "ts": 1787735295.876359
   },
   "football|UEFA Champions League-Qualification Playoff|Olympique Lyonnais|Fenerbahce|主胜|1x2|2026-08-27": {
     "ev": 2.03,
@@ -2901,6 +2963,10 @@
     "ev": 2.47,
     "ts": 1787718003.9342961
   },
+  "tennis|ITF - W35 Trieste Women Doubles|Matilde Mariani (ITA) / Federica Sacco (ITA)|Pia Lovric (SLO) / Adrienn Nagy (HUN)|主胜|1x2|2026-08-26": {
+    "ev": 96.29,
+    "ts": 1787735179.312244
+  },
   "tennis|ITF - W50 Kursumlijska Banja Women Singles|Antonia Vergara Rivera (CHI)|Lidia Encheva (BUL)|主胜|1x2|2026-08-26": {
     "ev": 8.6,
     "ts": 1787666558.3312361
@@ -2941,14 +3007,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|上半场客胜|ht|2026-08-27": {
-    "ev": 5.81,
-    "bb": 6.05,
-    "ts": 1787735012.132087
-  },
-  "football|Japan Emperor Cup|大宫松鼠|八户云罗里|客胜|1x2|2026-08-26": {
-    "ev": 5.1,
-    "bb": 4.99,
-    "ts": 1787735012.132203
+  "football|Japan Emperor Cup|FC今治|秋田蓝闪电|主胜|1x2|2026-08-26": {
+    "ev": 5.02,
+    "bb": 2.54,
+    "ts": 1787735689.3444118
   }
 }
