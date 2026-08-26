@@ -3399,7 +3399,7 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
         if "urgent" in label.lower() or "<6h" in label:
             qualified = [o for o in qualified
                         if o.get("_pin_epoch") and (o["_pin_epoch"] - now_ts) <= h6_sec]
-        elif "24h内" in label or "临场" in label or "near" in label.lower():
+        elif "近场" in label or "6-24h" in label or "24h内" in label or "near" in label.lower():
             qualified = [o for o in qualified
                         if o.get("_pin_epoch") and h6_sec < (o["_pin_epoch"] - now_ts) <= h24_sec]
         elif "72h" in label or "早盘" in label or "far" in label.lower():
