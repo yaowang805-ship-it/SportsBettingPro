@@ -1572,6 +1572,11 @@
     "ev": 3.61,
     "ts": 1787732650.742074
   },
+  "football|Japan Emperor Cup|FC今治|秋田蓝闪电|主胜|1x2|2026-08-26": {
+    "ev": 5.02,
+    "bb": 2.54,
+    "ts": 1787735689.3444118
+  },
   "football|Japan Emperor Cup|Gamba Osaka|Reilac Shiga FC|让球客胜|1x2|2026-08-26": {
     "ev": 1.69,
     "ts": 1787717038.066756
@@ -1587,6 +1592,10 @@
   "football|Japan Emperor Cup|Kawasaki Frontale|Tochigi SC|主胜|1x2|2026-08-26": {
     "ev": 1.57,
     "ts": 1787735179.311451
+  },
+  "football|Japan Emperor Cup|Kawasaki Frontale|Tochigi SC|大球|1x2|2026-08-26": {
+    "ev": 1.75,
+    "ts": 1787735690.843971
   },
   "football|Japan Emperor Cup|Kawasaki Frontale|Tochigi SC|小球|1x2|2026-08-26": {
     "ev": 2.83,
@@ -3007,9 +3016,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Japan Emperor Cup|FC今治|秋田蓝闪电|主胜|1x2|2026-08-26": {
-    "ev": 5.02,
-    "bb": 2.54,
-    "ts": 1787735689.3444118
+  "football|Japan Emperor Cup|川崎前锋|枥木SC|主胜|1x2|2026-08-26": {
+    "ev": 9.0,
+    "bb": 1.32,
+    "ts": 1787735865.7090838
   }
 }
