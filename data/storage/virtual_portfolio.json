@@ -1,5 +1,5 @@
 {
-  "balance": 12527.36,
+  "balance": 12508.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2461,6 +2461,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787769900,
       "created_at": "2026-08-26T13:06:52.377682+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_科金博联合_智利天主大学_上半场客胜",
+      "sport": "football",
+      "league": "智利甲级联赛",
+      "home_team": "科金博联合",
+      "away_team": "智利天主大学",
+      "home_cn": "科金博联合",
+      "away_cn": "智利天主大学",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.57,
+      "stake": 19,
+      "model_prob": 0.2249,
+      "ev_pct": 2.78,
+      "pin_odds": 4.13,
+      "fair_price": 4.4466,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787781600,
+      "created_at": "2026-08-26T13:08:50.533765+00:00",
       "track_only": false
     }
   ],
@@ -5704,8 +5727,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 4145.0,
-    "bets": 50
+    "used": 4164.0,
+    "bets": 51
   },
   "updated": null
 }
