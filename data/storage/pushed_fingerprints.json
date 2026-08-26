@@ -3719,6 +3719,10 @@
     "ev": 1.35,
     "ts": 1787719017.9511302
   },
+  "football|Venezuela Cup|Caracas FC|Barquisimeto SC|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 2.95,
+    "ts": 1787763791.438068
+  },
   "football|Venezuela Cup|Caracas FC|Barquisimeto SC|和局|1x2|2026-08-27": {
     "ev": 11.36,
     "ts": 1787739352.410892
@@ -3762,6 +3766,11 @@
   "football|Venezuela Cup|Zamora FC|Real Frontera FC|主胜|1x2|2026-08-27": {
     "ev": 1.48,
     "ts": 1787760966.5384362
+  },
+  "football|Venezuela Cup|加拉加斯|巴基西梅托|和局|1x2|2026-08-27": {
+    "ev": 15.42,
+    "bb": 5.25,
+    "ts": 1787763791.1475909
   },
   "tennis|ATP - Grand Slam US Open|Arthur Gea (FRA)|Sumit Nagal (IND)|让盘主胜|1x2|2026-08-26": {
     "ev": 1.1,
@@ -4025,9 +4034,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Venezuela Cup|加拉加斯|巴基西梅托|和局|1x2|2026-08-27": {
+  "football|Venezuela Cup|加拉加斯|巴基西梅托 SC|和局|1x2|2026-08-27": {
     "ev": 15.42,
     "bb": 5.25,
-    "ts": 1787763791.1475909
+    "ts": 1787763907.5850859
   }
 }
