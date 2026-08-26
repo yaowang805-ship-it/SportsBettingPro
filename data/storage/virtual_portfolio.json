@@ -1,5 +1,5 @@
 {
-  "balance": 11922.36,
+  "balance": 11789.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2599,6 +2599,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787781600,
       "created_at": "2026-08-26T17:05:07.571176+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_里加FC_克拉克斯维克_上半场主胜",
+      "sport": "football",
+      "league": "欧足联欧洲协会联赛-资格赛附加赛",
+      "home_team": "里加FC",
+      "away_team": "克拉克斯维克",
+      "home_cn": "里加FC",
+      "away_cn": "克拉克斯维克",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 1.93,
+      "stake": 133,
+      "model_prob": 0.5408,
+      "ev_pct": 4.38,
+      "pin_odds": 1.7752,
+      "fair_price": 1.8491,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787850000,
+      "created_at": "2026-08-26T17:08:40.183113+00:00",
       "track_only": false
     }
   ],
@@ -5842,8 +5865,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 140.0,
-    "bets": 2
+    "used": 273.0,
+    "bets": 3
   },
   "updated": null
 }

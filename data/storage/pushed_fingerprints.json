@@ -142,6 +142,10 @@
     "ev": 3.48,
     "ts": 1787677467.142796
   },
+  "basketball|WNBA|Connecticut Sun (w)|Golden State Valkyries (w)|小分|1x2|2026-08-27": {
+    "ev": 1.02,
+    "ts": 1787764119.496439
+  },
   "basketball|WNBA|Connecticut Sun (w)|Golden State Valkyries (w)|让分客胜|1x2|2026-08-27": {
     "ev": 2.0,
     "ts": 1787750066.66384
@@ -2306,6 +2310,10 @@
     "ev": 1.06,
     "ts": 1787748660.6954932
   },
+  "football|Kuwait Premier League|Al Salmiyah|Al Nasr SC|让球主胜|1x2|2026-08-27": {
+    "ev": 2.04,
+    "ts": 1787764119.4965959
+  },
   "football|Kuwait Premier League|Al Shabab Kuwait|Al Jahra|主胜|1x2|2026-08-26": {
     "ev": 11.45,
     "ts": 1787756445.450656
@@ -3731,6 +3739,10 @@
     "ev": 4.28,
     "ts": 1787743314.499906
   },
+  "football|Venezuela Cup|Caracas FC|Barquisimeto SC|让球客胜|1x2|2026-08-27": {
+    "ev": 3.07,
+    "ts": 1787763994.294883
+  },
   "football|Venezuela Cup|Deportivo Miranda|Academia Anzoategui FC|双重机会-和局/客|dc|2026-08-27": {
     "ev": 1.95,
     "ts": 1787726478.287337
@@ -3771,6 +3783,11 @@
     "ev": 15.42,
     "bb": 5.25,
     "ts": 1787763907.5850859
+  },
+  "football|Venezuela Cup|加拉加斯|巴基西梅托|和局|1x2|2026-08-27": {
+    "ev": 18.72,
+    "bb": 5.4,
+    "ts": 1787763993.9216452
   },
   "tennis|ATP - Grand Slam US Open|Arthur Gea (FRA)|Sumit Nagal (IND)|让盘主胜|1x2|2026-08-26": {
     "ev": 1.1,
@@ -4034,9 +4051,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Venezuela Cup|加拉加斯|巴基西梅托|和局|1x2|2026-08-27": {
-    "ev": 18.72,
-    "bb": 5.4,
-    "ts": 1787763993.9216452
+  "football|UEFA Europa Conference League-Qualification Playoff|里加FC|克拉克斯维克|上半场主胜|ht|2026-08-28": {
+    "ev": 4.38,
+    "bb": 1.93,
+    "ts": 1787764120.197126
   }
 }
