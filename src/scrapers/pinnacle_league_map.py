@@ -715,6 +715,30 @@ def _match_pin_name(pn, pin_name):
     return False
 
 
+# 规范化匹配用黑名单: 比 _GENERIC_KEYWORD_BLACKLIST 更小 —— 保留分层词(division/primera/
+# segunda/liga/serie/序数)作为有效判别词。因为 Phase 2 用"规范化后集合相等"匹配, 分层词
+# 本身就能防跨层误配("Chile Primera" ≠ "Chile Segunda"), 不必再当通用词滤掉。
+_TIER_BLACKLIST = {"open", "cup", "league", "tour", "tournament", "series", "masters",
+                   "grand", "slam", "classic", "trophy", "final", "qualifiers", "group",
+                   "club", "international", "championship"}
+
+_ORDINAL_WORDS = {"first": "1", "1st": "1", "second": "2", "2nd": "2", "third": "3", "3rd": "3"}
+
+
+def _normalize_league_name(name):
+    """规范化联赛名用于英文模糊匹配: 小写、去连字符/点、序数词→数字。
+
+    对齐 BB 与 Pin 命名差异:
+      "Chile Primera Division"  vs Pin "Chile - Primera Division"  (连字符)
+      "Denmark 1st Division"    vs Pin "Denmark - Division 1"      (序数写法)
+    """
+    import re as _re
+    s = name.lower().replace("-", " ").replace(".", " ")
+    for w, d in _ORDINAL_WORDS.items():
+        s = _re.sub(rf"\b{w}\b", d, s)
+    return s
+
+
 def _safe_get_name(info):
     """安全获取联赛名 — 兼容 flat {name:..} 和 nested {league_id: {name:..}}"""
     if not isinstance(info, dict): return ""
