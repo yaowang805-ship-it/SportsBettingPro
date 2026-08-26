@@ -3634,6 +3634,10 @@
     "ev": 5.4,
     "ts": 1787756587.437453
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|上半场客胜|ht|2026-08-28": {
+    "ev": 4.47,
+    "ts": 1787775701.909222
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|大球|1x2|2026-08-28": {
     "ev": 1.75,
     "ts": 1787771219.462948
@@ -3653,6 +3657,11 @@
   "football|UEFA Europa Conference League-Qualification Playoff|SK Brann|PAOK Thessaloniki|小球|1x2|2026-08-28": {
     "ev": 5.98,
     "ts": 1787772733.655804
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|拉恩|林肯红魔鬼|上半场客胜|ht|2026-08-28": {
+    "ev": 4.47,
+    "bb": 4.64,
+    "ts": 1787775701.515438
   },
   "football|UEFA Europa Conference League-Qualification Playoff|里加FC|克拉克斯维克|上半场主胜|ht|2026-08-28": {
     "ev": 4.38,
@@ -4418,9 +4427,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|UEFA Europa Conference League-Qualification Playoff|拉恩|林肯红魔鬼|上半场客胜|ht|2026-08-28": {
-    "ev": 4.47,
-    "bb": 4.64,
-    "ts": 1787775701.515438
+  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
+    "ev": 4.28,
+    "bb": 6.05,
+    "ts": 1787775986.203489
   }
 }
