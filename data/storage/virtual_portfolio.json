@@ -1,5 +1,5 @@
 {
-  "balance": 13546.36,
+  "balance": 13515.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2346,6 +2346,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787740200,
       "created_at": "2026-08-26T10:09:40.051524+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_加拉加斯_巴基西梅托_和局",
+      "sport": "football",
+      "league": "委内瑞拉杯",
+      "home_team": "加拉加斯",
+      "away_team": "巴基西梅托",
+      "home_cn": "加拉加斯",
+      "away_cn": "巴基西梅托",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.78,
+      "stake": 31,
+      "model_prob": 0.233,
+      "ev_pct": 11.36,
+      "pin_odds": 3.51,
+      "fair_price": 4.2922,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787781600,
+      "created_at": "2026-08-26T10:15:52.059400+00:00",
       "track_only": false
     }
   ],
@@ -5559,8 +5582,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 2708.0,
-    "bets": 39
+    "used": 2739.0,
+    "bets": 40
   },
   "updated": null
 }
