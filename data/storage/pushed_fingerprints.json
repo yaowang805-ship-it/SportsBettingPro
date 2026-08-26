@@ -435,9 +435,22 @@
     "ev": 1.12,
     "ts": 1787747560.57094
   },
+  "football|Argentina Primera Nacional|Patronato Parana|Club Atletico Atlanta|上半场客胜|ht|2026-08-27": {
+    "ev": 8.04,
+    "ts": 1787768180.5879219
+  },
+  "football|Argentina Primera Nacional|Patronato Parana|Club Atletico Atlanta|客胜|1x2|2026-08-27": {
+    "ev": 1.75,
+    "ts": 1787768180.587879
+  },
   "football|Argentina Primera Nacional|Patronato Parana|Club Atletico Atlanta|让球客胜|1x2|2026-08-27": {
     "ev": 2.62,
     "ts": 1787767017.007369
+  },
+  "football|Argentina Primera Nacional|帕特罗纳图|阿特兰大竞技|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 2.55,
+    "bb": 2.12,
+    "ts": 1787767615.7320561
   },
   "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|上半场客胜|ht|2026-08-27": {
     "ev": 20.38,
@@ -1465,9 +1478,17 @@
     "ev": 3.31,
     "ts": 1787766423.505835
   },
+  "football|England League Cup|Newcastle United FC|West Bromwich Albion|主胜|1x2|2026-08-27": {
+    "ev": 2.77,
+    "ts": 1787767746.720188
+  },
   "football|England League Cup|Newcastle United FC|West Bromwich Albion|小球|1x2|2026-08-27": {
     "ev": 1.9,
     "ts": 1787765711.158946
+  },
+  "football|England League Cup|Newcastle United FC|West Bromwich Albion|让球主胜|1x2|2026-08-27": {
+    "ev": 1.35,
+    "ts": 1787767616.364755
   },
   "football|England League Cup|Newcastle United FC|West Bromwich Albion|让球客胜|1x2|2026-08-27": {
     "ev": 1.39,
@@ -3760,6 +3781,10 @@
     "bb": 2.46,
     "ts": 1787737835.049088
   },
+  "football|UEFA Europa League-Qualification Playoff|AGF Aarhus|SL Benfica|主胜|1x2|2026-08-28": {
+    "ev": 1.24,
+    "ts": 1787768155.7485151
+  },
   "football|UEFA Europa League-Qualification Playoff|FC Viktoria Plzen|FK Crvena Zvezda Belgrade|主胜|1x2|2026-08-28": {
     "ev": 1.43,
     "ts": 1787764120.65018
@@ -4246,9 +4271,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Argentina Primera Nacional|帕特罗纳图|阿特兰大竞技|上半场双重机会-主/客|ht_dc|2026-08-27": {
-    "ev": 2.55,
-    "bb": 2.12,
-    "ts": 1787767615.7320561
+  "football|England League Cup|纽卡斯尔联|西布罗姆维奇|上半场客胜|ht|2026-08-27": {
+    "ev": 7.14,
+    "bb": 9.8,
+    "ts": 1787768698.055834
   }
 }
