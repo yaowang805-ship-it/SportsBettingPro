@@ -375,6 +375,10 @@
     "bb": 1.81,
     "ts": 1787637075.619364
   },
+  "football|Argentina Primera Nacional|Central Norte Salta|Deportivo Moron|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 1.15,
+    "ts": 1787769081.784446
+  },
   "football|Argentina Primera Nacional|Central Norte Salta|Deportivo Moron|让球主胜|1x2|2026-08-27": {
     "ev": 14.62,
     "ts": 1787726478.286996
@@ -1727,6 +1731,11 @@
     "ev": 5.17,
     "bb": 3.95,
     "ts": 1787681567.230885
+  },
+  "football|England League Cup|纽卡斯尔联|西布罗姆维奇|上半场客胜|ht|2026-08-27": {
+    "ev": 7.14,
+    "bb": 9.8,
+    "ts": 1787768698.055834
   },
   "football|England Northern Premier League|Alfreton Town FC|Hyde United FC|主胜|1x2|2026-08-26": {
     "ev": 3.84,
@@ -3155,6 +3164,10 @@
     "ev": 6.91,
     "ts": 1787752332.271181
   },
+  "football|Spain LaLiga|Real Madrid|Real Sociedad|主胜|1x2|2026-08-27": {
+    "ev": 1.34,
+    "ts": 1787769081.783713
+  },
   "football|Spain LaLiga|Real Madrid|Real Sociedad|双重机会-和局/客|dc|2026-08-27": {
     "ev": 1.64,
     "ts": 1787757910.2820091
@@ -4271,9 +4284,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|England League Cup|纽卡斯尔联|西布罗姆维奇|上半场客胜|ht|2026-08-27": {
-    "ev": 7.14,
-    "bb": 9.8,
-    "ts": 1787768698.055834
+  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
+    "ev": 4.93,
+    "bb": 5.75,
+    "ts": 1787769403.523433
   }
 }
