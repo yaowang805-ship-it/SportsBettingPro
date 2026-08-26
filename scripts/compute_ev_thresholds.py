@@ -59,13 +59,12 @@ N_DIRECTIONAL = 30
 # 扩展搜索范围到 20%, 避免 hc 这种"8% 还是负"的盘口被错误停在 8%。
 EV_STEPS = (2, 3, 5, 8, 10, 12, 15, 20)
 
-# 时间维度: 距开赛分钟数分桶(主体盘口才用), 数据驱动调整门槛。
-# 2026-08-23 实测: 主体盘口(1x2/hc/ou) 各时间桶全负(临场-2.34%/早盘-2.75%/近场-1.27%),
-# 之前记忆里"24-72h 早盘 +2.39%"是小样本(n=26)噪声, 现 n=127 推翻。故时间维度也数据驱动。
+# 时间维度: 距开赛分钟数分桶, 数据驱动调整门槛。
+# 2026-08-25 改 3 窗(与扫描/下注窗口对齐: 临场<6h / 近6-24h / 早24-72h),
+# 用于"时间窗×盘口"独立门槛; time_adjust 保留作样本不足格子的 fallback。
 TIME_BUCKETS = (
-    (0, 60, "临场<1h"),
-    (60, 360, "近1-6h"),
-    (360, 1440, "中6-24h"),
+    (0, 360, "临场<6h"),
+    (360, 1440, "近6-24h"),
     (1440, 4320, "早24-72h"),
 )
 
@@ -113,13 +112,26 @@ def ts(v):
         return None
 
 
-def load_clean():
+def load_clean(mode="all"):
+    """读取干净样本用于算门槛。
+
+    注(2026-08-23): 用户最终目标是"门槛用真实投注(push)数据"。但现在 push 只有 ~300 条,
+    分到各盘口样本不足(n<30)算不出可靠门槛。暂用全部干净样本(validate+push), 等 push 积累到
+    足够样本(各盘口 n≥30)再切换到只用 push。validate 单独统计见 load_validate(不参与门槛)。
+
+    mode: all=validate+push(线上口径) / push=只用真实投注 / validate=只用观察样本。
+          push/validate 是**实验口径**, 结果默认只写 candidate 文件, 不覆盖线上矩阵
+          (2026-08-23 有过一次 push-only 实验产物静默覆盖线上矩阵, 把 ht/ht_dc 从 2%
+           抬到 8% —— 唯一被验证的正 edge 盘口被关掉, 真实投注库跟着停止积累)。
+    """
     if not RESULTS.exists():
         return []
     out = []
     with open(RESULTS, encoding="utf-8-sig") as fh:
         for r in csv.DictReader(fh):
             if (r.get("close_source") or "live").strip() == "archive_open":
+                continue
+            if mode != "all" and (r.get("source") or "push").strip() != mode:
                 continue
             clv, ev, od = f(r.get("true_clv_pct")), f(r.get("push_ev_pct")), f(r.get("bb_odds"))
             if clv is None or ev is None or ev < 2:
@@ -140,6 +152,34 @@ def load_clean():
             if pt and me:
                 lead = (me - pt) / 60.0
             out.append((r.get("sub_market", "?"), r.get("sport", "?"), r.get("league", ""), clv, ev, lead))
+    return out
+
+
+def load_validate():
+    """读取 validate(所有≥2%EV机会, 只记录不推送)样本, 单独统计做参考, 不参与门槛。
+
+    用户 2026-08-23: 最终目标是用真实投注(push)算准门槛, validate 只是数据积累,
+    观察"所有≥2%机会"的 CLV 分布(哪些盘口理论上该有机会), 等它们变成 push 才参与门槛。
+    """
+    if not RESULTS.exists():
+        return []
+    out = []
+    with open(RESULTS, encoding="utf-8-sig") as fh:
+        for r in csv.DictReader(fh):
+            if (r.get("source") or "").strip() != "validate":
+                continue
+            if (r.get("close_source") or "live").strip() == "archive_open":
+                continue
+            clv, ev, od = f(r.get("true_clv_pct")), f(r.get("push_ev_pct")), f(r.get("bb_odds"))
+            if clv is None or ev is None or ev < 2:
+                continue
+            if od and ev > max(12.0, (od - 1) * 20):
+                continue
+            if od and od > MAX_ODDS:
+                continue
+            if BANNED_LEAGUE_RE.search(r.get("league") or ""):
+                continue
+            out.append((r.get("sub_market", "?"), r.get("sport", "?"), r.get("league", ""), clv, ev))
     return out
 
 
@@ -180,6 +220,12 @@ def market_threshold(samples):
     #       样本不足 = 无法判定 → 返回 None 让调用方回退保守门槛(不封杀)。
     total = len(samples)
     if total >= N_DIRECTIONAL:
+        # 负edge判定收紧(2026-08-26): 只有"整个分布为负"(总体中位<0)才算"数据明确无盈利档"→封20%。
+        # 若总体中位≥0但无单档过严格门槛(中位>2%且正率≥55%), 是"弱正/未确认", 硬封20%会把
+        # 好窗口误封(ou 近6-24h 总体+0.4%/54%, 8%+档+4.5%/77%只是n=13判不出) → 返回 None 回退 base 门槛。
+        overall_med = statistics.median([c for c, _ in samples])
+        if overall_med >= 0:
+            return None, n_max, None, None, f"弱正未确认(总体中位{overall_med:+.1f}%≥0, 无单档过严格门槛)→回退base"
         detail = f"负edge(全程负, 最高可测档EV≥{last_neg_band[0]}% 中位{last_neg_band[2]:+.1f}%)" if last_neg_band else "无正期望档"
         return EV_STEPS[-1], n_max, None, None, detail
     return None, n_max, None, None, f"样本不足 n={total}<{N_DIRECTIONAL}"
@@ -286,8 +332,8 @@ def compute_time_adjust(by_time):
     返回 (adjust, detail)。adjust 是 label→pp 的 dict。
     """
     base = None
-    if len(by_time.get("中6-24h", [])) >= N_DIRECTIONAL:
-        base = statistics.median(by_time["中6-24h"])
+    if len(by_time.get("近6-24h", [])) >= N_DIRECTIONAL:
+        base = statistics.median(by_time["近6-24h"])
     adjust = {}
     detail = {}
     for lo, hi, label in TIME_BUCKETS:
@@ -318,20 +364,62 @@ def compute_time_adjust(by_time):
     return adjust, detail
 
 
-def main():
-    clean = load_clean()
+def write_matrix(matrix, mode="all", force=False, dry_run=False):
+    """落盘门槛矩阵 —— 原子写 + 防误覆盖护栏。
+
+    护栏(2026-08-23 事故后加): 线上矩阵只接受 mode=all 的产出, 且样本数不得比上一版
+    骤降 >50%。不满足就写到 *_candidate.json 并告警, 不动线上文件 —— 一次口径实验
+    不该在没人察觉的情况下把全系统门槛换掉。--force 可显式覆盖。
+    """
+    target = OUT
+    reason = None
+    if mode != "all" and not force:
+        reason = f"实验口径 mode={mode}"
+    else:
+        prev_n = None
+        if OUT.exists():
+            try:
+                prev_n = json.loads(OUT.read_text()).get("n_samples")
+            except (json.JSONDecodeError, ValueError, OSError):
+                prev_n = None
+        n_new = matrix.get("n_samples", 0)
+        if prev_n and n_new < prev_n * 0.5 and not force:
+            reason = f"样本骤降 {prev_n}→{n_new}(<50%)"
+    if reason:
+        target = OUT.with_name(OUT.stem + "_candidate.json")
+        print(f"\n⚠️ 不覆盖线上矩阵({reason}) → 写入 {target.name}; 确认无误加 --force")
+    if dry_run:
+        print(f"\n(演练)未落盘。将写 {target.name}")
+        return target
+    tmp = target.with_suffix(".tmp")
+    tmp.write_text(json.dumps(matrix, ensure_ascii=False, indent=2))
+    tmp.replace(target)      # 原子替换: 推送侧随时在读, 不能读到半截
+    return target
+
+
+def main(mode="all", force=False, dry_run=False):
+    clean = load_clean(mode)
     by_market = defaultdict(list)
     by_sport = defaultdict(list)
     by_sport_league = defaultdict(list)
     by_time = defaultdict(list)
+    by_market_time = defaultdict(list)   # (盘口, 时间窗) → [(clv, ev)], 时间窗×盘口独立门槛
+    by_sport_market = defaultdict(list)  # (运动, 盘口) → [(clv, ev)], 运动×盘口独立门槛
     for sm, sp, lg, clv, ev, lead in clean:
         by_market[sm].append((clv, ev))
         by_sport[sp].append(clv)
         by_sport_league[(sp, lg)].append(clv)
+        by_sport_market[(sp, sm)].append((clv, ev))
         if sm in MAIN_MARKETS and lead is not None:
             for lo, hi, label in TIME_BUCKETS:
                 if lo <= lead < hi:
                     by_time[label].append(clv)
+                    break
+        # 时间窗×盘口: 所有盘口都按时间窗分桶(不只主体盘口)
+        if lead is not None:
+            for lo, hi, label in TIME_BUCKETS:
+                if lo <= lead < hi:
+                    by_market_time[(sm, label)].append((clv, ev))
                     break
 
     markets = {}
@@ -354,6 +442,29 @@ def main():
             details[sm] = {"n": n, "verdict": f"保守回退({grade})",
                            "median": med, "pos_rate": pos}
 
+    # 时间窗×盘口独立门槛(2026-08-25): 每格(盘口,时间窗) n≥30 才数据驱动设门槛,
+    # 否则不设 → 推送侧回退到 base 盘口门槛 + time_adjust pp。
+    market_time = {}
+    market_time_details = {}
+    for (sm, label), samples in sorted(by_market_time.items()):
+        thr, n, med, pos, grade = market_threshold(samples)
+        if thr is not None:
+            market_time.setdefault(sm, {})[label] = float(thr)
+            market_time_details[f"{sm}|{label}"] = {"n": n, "verdict": grade,
+                                                    "median": med, "pos_rate": pos}
+
+    # 运动×盘口独立门槛(2026-08-25): 每格(运动,盘口) n≥30 才数据驱动设门槛,
+    # 否则不设 → 推送侧回退 base 盘口门槛 + sport_adjust pp。足球是 base(全盘口 n≥100),
+    # 这里也为其算, 但推送侧只对非足球用(足球走时间×盘口维度)。
+    sport_market = {}
+    sport_market_details = {}
+    for (sp, sm), samples in sorted(by_sport_market.items()):
+        thr, n, med, pos, grade = market_threshold(samples)
+        if thr is not None:
+            sport_market.setdefault(sp, {})[sm] = float(thr)
+            sport_market_details[f"{sp}|{sm}"] = {"n": n, "verdict": grade,
+                                                  "median": med, "pos_rate": pos}
+
     sport_adjust, sport_detail = compute_sport_adjust(by_sport)
     league_adjust, league_detail = compute_league_adjust(by_sport_league)
     time_adjust, time_detail = compute_time_adjust(by_time)
@@ -361,6 +472,8 @@ def main():
     matrix = {
         "generated_at": __import__("datetime").datetime.now().isoformat(),
         "markets": markets,
+        "market_time": market_time,
+        "sport_market": sport_market,
         "sport_adjust": sport_adjust,
         "league_adjust": league_adjust,
         "time_adjust": [
@@ -370,14 +483,20 @@ def main():
         ],
         "main_markets": list(MAIN_MARKETS),
         "default_threshold": 8.0,
+        # 口径留档: 这版矩阵是用哪批样本、多少条算出来的。没有这两个字段就无法回溯
+        # "门槛为什么变了"(2026-08-23 就发生过实验口径静默覆盖线上矩阵)。
+        "sample_mode": mode,
+        "n_samples": len(clean),
         "_details": details,
+        "_market_time_details": market_time_details,
+        "_sport_market_details": sport_market_details,
         "_sport_details": sport_detail,
         "_league_details": league_detail,
         "_time_details": time_detail,
     }
-    OUT.write_text(json.dumps(matrix, ensure_ascii=False, indent=2))
-    print(f"✅ 门槛矩阵已生成 → {OUT.name}")
-    print(f"  可用样本 {len(clean)} 条, {len(markets)} 个盘口")
+    written = write_matrix(matrix, mode=mode, force=force, dry_run=dry_run)
+    print(f"✅ 门槛矩阵已生成 → {written.name}")
+    print(f"  口径 mode={mode}, 可用样本 {len(clean)} 条, {len(markets)} 个盘口")
     if _dropped:
         print(f"  已剔除不可执行样本: " +
               ", ".join(f"{k} {v}条" for k, v in _dropped.most_common()))
@@ -403,6 +522,30 @@ def main():
         v = d["verdict"]
         print(f"    {sm:<22} 门槛 {markets[sm]:>6}  n={d['n']:>4}  {v}")
 
+    # validate 单独统计(参考, 不参与门槛): 观察"所有≥2%EV机会"的 CLV 分布,
+    # 哪些盘口理论上该有机会(正CLV), 等它们变成 push(真实投注)才参与门槛。
+    val = load_validate()
+    if val:
+        print("\n  validate 单独统计(参考, 不参与门槛):")
+        val_by_market = defaultdict(list)
+        for sm, sp, lg, clv, ev in val:
+            val_by_market[sm].append(clv)
+        for sm in sorted(val_by_market, key=lambda s: -len(val_by_market[s])):
+            clvs = val_by_market[sm]
+            n = len(clvs)
+            if n < 10:
+                continue
+            med = statistics.median(clvs)
+            pos = sum(1 for c in clvs if c > 0) / n * 100
+            print(f"    {sm:<22} n={n:>4} 中位CLV={med:+.2f}% 正率={pos:.0f}%")
+
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    _ap = argparse.ArgumentParser(description="数据驱动 EV 门槛矩阵")
+    _ap.add_argument("--mode", choices=("all", "push", "validate"), default="all",
+                     help="样本口径: all=validate+push(线上) / push=只用真实投注 / validate=只用观察样本")
+    _ap.add_argument("--force", action="store_true", help="强制覆盖线上矩阵(绕过护栏)")
+    _ap.add_argument("--dry-run", action="store_true", help="只算不落盘")
+    _a = _ap.parse_args()
+    main(mode=_a.mode, force=_a.force, dry_run=_a.dry_run)
