@@ -1,5 +1,5 @@
 {
-  "balance": 12725.36,
+  "balance": 12560.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2415,6 +2415,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787769900,
       "created_at": "2026-08-26T12:56:15.226051+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_古泰斯鱼雷_巴统迪纳摩_客胜",
+      "sport": "football",
+      "league": "格鲁吉亚杯",
+      "home_team": "古泰斯鱼雷",
+      "away_team": "巴统迪纳摩",
+      "home_cn": "古泰斯鱼雷",
+      "away_cn": "巴统迪纳摩",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.37,
+      "stake": 165,
+      "model_prob": 0.463,
+      "ev_pct": 9.72,
+      "pin_odds": 1.9804,
+      "fair_price": 2.16,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787763600,
+      "created_at": "2026-08-26T12:59:15.822109+00:00",
       "track_only": false
     }
   ],
@@ -5658,8 +5681,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 3947.0,
-    "bets": 48
+    "used": 4112.0,
+    "bets": 49
   },
   "updated": null
 }

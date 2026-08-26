@@ -1386,6 +1386,11 @@
     "bb": 4.86,
     "ts": 1787676204.3072
   },
+  "football|England League Cup|布拉德福德|伯恩利|上半场主胜|ht|2026-08-27": {
+    "ev": 3.36,
+    "bb": 4.35,
+    "ts": 1787748975.240469
+  },
   "football|England League Cup|布莱克浦|林肯城|上半场主胜|ht|2026-08-26": {
     "ev": 2.74,
     "bb": 4.47,
@@ -3027,6 +3032,10 @@
     "ev": 3.85,
     "ts": 1787730353.035709
   },
+  "football|UEFA Europa Cup Women-Qualification|RSC Anderlecht (w)|Feyenoord (w)|大球|1x2|2026-08-27": {
+    "ev": 1.83,
+    "ts": 1787748975.556264
+  },
   "football|UEFA Europa Cup Women-Qualification|RSC Anderlecht (w)|Feyenoord (w)|小球|1x2|2026-08-27": {
     "ev": 1.14,
     "ts": 1787731009.074168
@@ -3188,6 +3197,14 @@
   "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|上半场客胜|ht|2026-08-26": {
     "ev": 1.46,
     "ts": 1787674200.05846
+  },
+  "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|小球|1x2|2026-08-26": {
+    "ev": 1.28,
+    "ts": 1787748975.5571048
+  },
+  "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|让球主胜|1x2|2026-08-26": {
+    "ev": 3.16,
+    "ts": 1787748975.557059
   },
   "football|Uzbekistan Super League|Qizilqum Zarafshon|FC Nasaf|上半场主胜|ht|2026-08-26": {
     "ev": 3.48,
@@ -3534,9 +3551,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|England League Cup|布拉德福德|伯恩利|上半场主胜|ht|2026-08-27": {
-    "ev": 3.36,
-    "bb": 4.35,
-    "ts": 1787748975.240469
+  "football|Georgia Cup|古泰斯鱼雷|巴统迪纳摩|客胜|1x2|2026-08-27": {
+    "ev": 9.72,
+    "bb": 2.37,
+    "ts": 1787749155.832316
   }
 }
