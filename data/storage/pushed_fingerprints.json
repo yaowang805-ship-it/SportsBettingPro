@@ -27,6 +27,14 @@
     "ev": 24.91,
     "ts": 1787684975.352586
   },
+  "baseball|MLB|New York Mets|Milwaukee Brewers|主胜|1x2|2026-08-27": {
+    "ev": 10.5,
+    "ts": 1787766423.507105
+  },
+  "baseball|MLB|New York Mets|Milwaukee Brewers|让分主胜|1x2|2026-08-27": {
+    "ev": 9.67,
+    "ts": 1787766423.507176
+  },
   "baseball|MLB|New York Yankees|Houston Astros|客胜|1x2|2026-08-27": {
     "ev": 2.46,
     "ts": 1787766320.172034
@@ -419,10 +427,10 @@
     "ev": 1.12,
     "ts": 1787747560.57094
   },
-  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|上半场客胜|ht|2026-08-27": {
-    "ev": 5.81,
-    "bb": 6.05,
-    "ts": 1787735012.132087
+  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|客胜|1x2|2026-08-27": {
+    "ev": 5.28,
+    "bb": 4.04,
+    "ts": 1787766422.6980648
   },
   "football|Argentina Primera Nacional|玛德恩|戈多伊克鲁斯|上半场双重机会-主/客|ht_dc|2026-08-26": {
     "ev": 2.5,
@@ -1435,6 +1443,10 @@
   "football|England League Cup|Newcastle United FC|West Bromwich Albion|上半场主胜|ht|2026-08-27": {
     "ev": 2.21,
     "ts": 1787718647.804679
+  },
+  "football|England League Cup|Newcastle United FC|West Bromwich Albion|上半场客胜|ht|2026-08-27": {
+    "ev": 3.31,
+    "ts": 1787766423.505835
   },
   "football|England League Cup|Newcastle United FC|West Bromwich Albion|小球|1x2|2026-08-27": {
     "ev": 1.9,
@@ -4134,9 +4146,19 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|客胜|1x2|2026-08-27": {
-    "ev": 5.28,
-    "bb": 4.04,
-    "ts": 1787766422.6980648
+  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|上半场客胜|ht|2026-08-27": {
+    "ev": 17.78,
+    "bb": 6.15,
+    "ts": 1787766587.936238
+  },
+  "football|UEFA Champions League-Qualification Playoff|维京|萨格勒布迪纳摩|上半场客胜|ht|2026-08-27": {
+    "ev": 12.63,
+    "bb": 3.54,
+    "ts": 1787766587.9362931
+  },
+  "football|England League Cup|普雷斯顿|埃弗顿|主胜|1x2|2026-08-27": {
+    "ev": 6.37,
+    "bb": 9.9,
+    "ts": 1787766587.936332
   }
 }
