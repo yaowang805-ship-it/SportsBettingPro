@@ -1,5 +1,5 @@
 {
-  "balance": 15079.36,
+  "balance": 15040.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2139,6 +2139,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787752800,
       "created_at": "2026-08-26T05:09:15.538184+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_贝雷达比历克_(女)_米耶尔库雷亚丘克_(女)_客胜",
+      "sport": "football",
+      "league": "欧洲足联女欧罗巴杯-资格赛",
+      "home_team": "贝雷达比历克 (女)",
+      "away_team": "米耶尔库雷亚丘克 (女)",
+      "home_cn": "贝雷达比历克 (女)",
+      "away_cn": "米耶尔库雷亚丘克 (女)",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 5.45,
+      "stake": 39,
+      "model_prob": 0.2146,
+      "ev_pct": 16.96,
+      "pin_odds": 3.78,
+      "fair_price": 4.6596,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787765400,
+      "created_at": "2026-08-26T05:56:12.172826+00:00",
       "track_only": false
     }
   ],
@@ -5217,8 +5240,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 978.0,
-    "bets": 19
+    "used": 1017.0,
+    "bets": 20
   },
   "updated": null
 }
