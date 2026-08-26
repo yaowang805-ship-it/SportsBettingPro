@@ -1,5 +1,5 @@
 {
-  "balance": 15080.36,
+  "balance": 15063.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2047,6 +2047,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787765400,
       "created_at": "2026-08-26T05:56:12.172826+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_埃及国家银行_扎马雷克_上半场主胜",
+      "sport": "football",
+      "league": "埃及超级联赛",
+      "home_team": "埃及国家银行",
+      "away_team": "扎马雷克",
+      "home_cn": "埃及国家银行",
+      "away_cn": "扎马雷克",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.71,
+      "stake": 17,
+      "model_prob": 0.2183,
+      "ev_pct": 2.8,
+      "pin_odds": 4.18,
+      "fair_price": 4.5818,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787763600,
+      "created_at": "2026-08-26T06:41:16.961670+00:00",
       "track_only": false
     }
   ],
@@ -5185,8 +5208,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 1017.0,
-    "bets": 20
+    "used": 1034.0,
+    "bets": 21
   },
   "updated": null
 }
