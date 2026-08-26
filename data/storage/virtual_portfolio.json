@@ -1,30 +1,7 @@
 {
-  "balance": 15063.36,
+  "balance": 15044.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_杰米纳尔竞技_圣马丁门多萨_和局",
-      "sport": "football",
-      "league": "阿根廷全国甲级联赛A-附加赛",
-      "home_team": "杰米纳尔竞技",
-      "away_team": "圣马丁门多萨",
-      "home_cn": "杰米纳尔竞技",
-      "away_cn": "圣马丁门多萨",
-      "market": "1x2",
-      "market_type": "和局",
-      "sub_market": "1x2",
-      "line": "",
-      "odds": 2.89,
-      "stake": 32,
-      "model_prob": 0.3724,
-      "ev_pct": 7.63,
-      "pin_odds": 2.43,
-      "fair_price": 2.6851,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1787508000,
-      "created_at": "2026-08-23T06:25:08.598130+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_赫尔城_(女)_诺维奇_(女)_客胜",
       "sport": "football",
@@ -2070,6 +2047,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787763600,
       "created_at": "2026-08-26T06:41:16.961670+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_史莫哈_佩特雷姆_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "埃及超级联赛",
+      "home_team": "史莫哈",
+      "away_team": "佩特雷姆",
+      "home_cn": "史莫哈",
+      "away_cn": "佩特雷姆",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.97,
+      "stake": 51,
+      "model_prob": 0.5282,
+      "ev_pct": 4.05,
+      "pin_odds": 0,
+      "fair_price": 1.8934,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787752800,
+      "created_at": "2026-08-26T07:32:13.403800+00:00",
       "track_only": false
     }
   ],
@@ -5204,12 +5204,27 @@
       "home_cn": "比萨",
       "away_cn": "帕多瓦",
       "market_type": "上半场客胜"
+    },
+    {
+      "id": "bb_vs_pin_1x2_杰米纳尔竞技_圣马丁门多萨_和局",
+      "match": "32¥ @ 2.89 (超时作废)",
+      "date": "2026-08-26T06:51:14.084803+00:00",
+      "stake": 32,
+      "odds": 2.89,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "阿根廷全国甲级联赛A-附加赛",
+      "sport": "football",
+      "home_cn": "杰米纳尔竞技",
+      "away_cn": "圣马丁门多萨",
+      "market_type": "和局"
     }
   ],
   "daily_budget": {
     "date": "2026-08-26",
-    "used": 1034.0,
-    "bets": 21
+    "used": 1085.0,
+    "bets": 22
   },
   "updated": null
 }
