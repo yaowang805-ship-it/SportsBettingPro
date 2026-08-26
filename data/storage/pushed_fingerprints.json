@@ -27,6 +27,14 @@
     "ev": 24.91,
     "ts": 1787684975.352586
   },
+  "baseball|MLB|New York Yankees|Houston Astros|客胜|1x2|2026-08-27": {
+    "ev": 2.46,
+    "ts": 1787766320.172034
+  },
+  "baseball|MLB|New York Yankees|Houston Astros|让分客胜|1x2|2026-08-27": {
+    "ev": 1.25,
+    "ts": 1787766320.1720698
+  },
   "baseball|MLB|Oakland Athletics|Minnesota Twins|主胜|1x2|2026-08-26": {
     "ev": 24.63,
     "ts": 1787687029.792522
@@ -54,6 +62,10 @@
   "baseball|MLB|St. Louis Cardinals|Baltimore Orioles|客胜|1x2|2026-08-27": {
     "ev": 4.9,
     "ts": 1787740602.2117498
+  },
+  "baseball|MLB|Toronto Blue Jays|Kansas City Royals|主胜|1x2|2026-08-27": {
+    "ev": 9.42,
+    "ts": 1787766320.172112
   },
   "baseball|MLB|Toronto Blue Jays|Kansas City Royals|客胜|1x2|2026-08-27": {
     "ev": 14.52,
@@ -1319,6 +1331,14 @@
   "football|England League Cup|Bradford City|Burnley FC|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 1.32,
     "ts": 1787702193.7031019
+  },
+  "football|England League Cup|Bradford City|Burnley FC|主胜|1x2|2026-08-27": {
+    "ev": 1.8,
+    "ts": 1787766320.171277
+  },
+  "football|England League Cup|Bradford City|Burnley FC|双重机会-主/和局|dc|2026-08-27": {
+    "ev": 1.72,
+    "ts": 1787766320.1713972
   },
   "football|England League Cup|Bradford City|Burnley FC|让球主胜|1x2|2026-08-27": {
     "ev": 2.96,
@@ -3842,6 +3862,11 @@
     "bb": 5.4,
     "ts": 1787763993.9216452
   },
+  "football|Venezuela Cup|艾尔维吉亚|巴里纳斯竞技|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 22.78,
+    "bb": 2.23,
+    "ts": 1787766166.95769
+  },
   "football|Venezuela Cup|艾尔维吉亚|巴里纳斯竞技|客胜|1x2|2026-08-27": {
     "ev": 27.84,
     "bb": 3.87,
@@ -4109,9 +4134,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Venezuela Cup|艾尔维吉亚|巴里纳斯竞技|双重机会-和局/客|dc|2026-08-27": {
-    "ev": 22.78,
-    "bb": 2.23,
-    "ts": 1787766166.95769
+  "football|Argentina Primera Nacional|查克佛伊维|圣米格尔|客胜|1x2|2026-08-27": {
+    "ev": 5.28,
+    "bb": 4.04,
+    "ts": 1787766422.6980648
   }
 }
