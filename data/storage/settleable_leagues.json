@@ -241,7 +241,7 @@
       "success_rate": 1.0
     },
     "斯洛文尼亚甲级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -356,7 +356,7 @@
       "success_rate": 0.0
     },
     "法罗群岛超级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -461,7 +461,7 @@
       "success_rate": 0.0
     },
     "波兰丙级联赛": {
-      "attempts": 6,
+      "attempts": 7,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -611,7 +611,7 @@
       "success_rate": 0.0
     },
     "韩国甲级联赛": {
-      "attempts": 1,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -746,7 +746,7 @@
       "success_rate": 0.0
     },
     "土耳其超级联赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -866,7 +866,7 @@
       "success_rate": 0.0
     },
     "西班牙乙级联赛": {
-      "attempts": 4,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -881,7 +881,7 @@
       "success_rate": 0.0
     },
     "挪威杯": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -909,9 +909,34 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "日本WE联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "挪威女子甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "南非 MTN 8": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "希腊超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "保加利亚乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-26T00:47:39.444077+00:00",
+  "updated": "2026-08-26T04:35:08.232864+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

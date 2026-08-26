@@ -332,6 +332,10 @@
     "ev": 1.35,
     "ts": 1787661173.938844
   },
+  "football|Bolivia Division Profesional|Real Potosi|Real Tomayapo|让球客胜|1x2|2026-08-27": {
+    "ev": 2.37,
+    "ts": 1787720225.2408068
+  },
   "football|Bolivia Division Profesional|Universitario de Vinto|Nacional Potosi|主胜|1x2|2026-08-26": {
     "ev": 1.71,
     "ts": 1787696647.707885
@@ -504,6 +508,10 @@
     "ev": 6.03,
     "ts": 1787716320.497702
   },
+  "football|Czech Republic Cup|FC Pisek|FK Pardubice|让球客胜|1x2|2026-08-26": {
+    "ev": 5.65,
+    "ts": 1787719293.7092512
+  },
   "football|Czech Republic Cup|FC Spartak Velka Bites|1.FC Slovacko|客胜|1x2|2026-08-26": {
     "ev": 2.25,
     "ts": 1787718003.933245
@@ -593,6 +601,10 @@
     "ev": 2.57,
     "ts": 1787678048.3869598
   },
+  "football|Egypt Premier League|National Bank of Egypt SC|Zamalek SC|让球客胜|1x2|2026-08-27": {
+    "ev": 1.0,
+    "ts": 1787719593.13277
+  },
   "football|Egypt Premier League|Petrojet FC|Talaea El Gaish|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 3.16,
     "ts": 1787702193.702764
@@ -604,6 +616,10 @@
   "football|Egypt Premier League|Petrojet FC|Talaea El Gaish|和局|1x2|2026-08-27": {
     "ev": 10.82,
     "ts": 1787678048.387081
+  },
+  "football|Egypt Premier League|Petrojet FC|Talaea El Gaish|让球主胜|1x2|2026-08-27": {
+    "ev": 1.33,
+    "ts": 1787719593.1329322
   },
   "football|Egypt Premier League|Smouha SC|Asyut Petroleum|上半场主胜|ht|2026-08-26": {
     "ev": 1.15,
@@ -1176,6 +1192,10 @@
     "bb": 1.91,
     "ts": 1787657386.659769
   },
+  "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|上半场客胜|ht|2026-08-27": {
+    "ev": 6.85,
+    "ts": 1787719593.13504
+  },
   "football|Georgia Cup|FC Gagra|FC Aragvi Dusheti|双重机会-和局/客|dc|2026-08-27": {
     "ev": 1.45,
     "ts": 1787718003.933883
@@ -1224,6 +1244,10 @@
     "ev": 3.0,
     "ts": 1787650395.1425018
   },
+  "football|Iraq Stars League|Al Kahraba|Al Karma SC|客胜|1x2|2026-08-26": {
+    "ev": 17.28,
+    "ts": 1787719017.9515252
+  },
   "football|Japan Emperor Cup|Albirex Niigata|Kagoshima United|客胜|1x2|2026-08-26": {
     "ev": 6.33,
     "ts": 1787717038.066871
@@ -1240,9 +1264,25 @@
     "ev": 2.14,
     "ts": 1787717723.0910342
   },
+  "football|Japan Emperor Cup|Kyoto Sanga FC|Maruyasu Okazaki|让球主胜|1x2|2026-08-26": {
+    "ev": 1.64,
+    "ts": 1787720434.5819168
+  },
   "football|Japan Emperor Cup|Montedio Yamagata|Fujieda MYFC|让球客胜|1x2|2026-08-26": {
     "ev": 3.41,
     "ts": 1787717723.091181
+  },
+  "football|Japan Emperor Cup|Omiya Ardija|Vanraure Hachinohe FC|客胜|1x2|2026-08-26": {
+    "ev": 1.29,
+    "ts": 1787720434.581613
+  },
+  "football|Japan Emperor Cup|Omiya Ardija|Vanraure Hachinohe FC|让球客胜|1x2|2026-08-26": {
+    "ev": 1.19,
+    "ts": 1787720125.325858
+  },
+  "football|Japan Emperor Cup|Sanfrecce Hiroshima|Okinawa SV|主胜|1x2|2026-08-26": {
+    "ev": 1.46,
+    "ts": 1787719797.7859688
   },
   "football|Japan Emperor Cup|新泻天鹅|鹿儿岛联|客胜|1x2|2026-08-26": {
     "ev": 6.08,
@@ -1321,6 +1361,14 @@
   "football|Norway 1st Division|Strommen IF|Raufoss IL|总进球区间7+|total_goals_range|2026-08-27": {
     "ev": 1.93,
     "ts": 1787673869.851155
+  },
+  "football|Norway 1st Division|Stromsgodset IF|Hodd|大球|1x2|2026-08-27": {
+    "ev": 6.11,
+    "ts": 1787719293.70943
+  },
+  "football|Norway 1st Division|Stromsgodset IF|Hodd|让球主胜|1x2|2026-08-27": {
+    "ev": 1.53,
+    "ts": 1787719293.709394
   },
   "football|Romania Liga 2|FC Unirea 2004 Slobozia|Metaloglobus Bucuresti|主胜|1x2|2026-08-26": {
     "ev": 1.58,
@@ -1722,6 +1770,10 @@
     "ev": 3.03,
     "ts": 1787654157.395209
   },
+  "football|South Korea K-League 1|Daejeon Hana Citizen FC|Ulsan HD FC|角球让球客胜|corner|2026-08-26": {
+    "ev": 1.25,
+    "ts": 1787719074.149469
+  },
   "football|South Korea K-League 1|Daejeon Hana Citizen FC|Ulsan HD FC|让球客胜|1x2|2026-08-26": {
     "ev": 1.44,
     "ts": 1787706149.115479
@@ -1771,6 +1823,11 @@
     "ev": 2.51,
     "bb": 1.87,
     "ts": 1787490186.243403
+  },
+  "football|South Korea K-League 1|江原FC|光州FC|上半场客胜|ht|2026-08-26": {
+    "ev": 14.94,
+    "bb": 9.5,
+    "ts": 1787718671.095722
   },
   "football|Spain LaLiga|Real Madrid|Real Sociedad|上半场主胜|ht|2026-08-27": {
     "ev": 2.12,
@@ -1995,6 +2052,18 @@
     "ev": 116.62,
     "ts": 1787718342.713826
   },
+  "football|UEFA Europa Cup Women-Qualification|ZNK Hajduk Split (w)|DBK Fortuna Hjoerring (w)|双重机会-主/和局|dc|2026-08-26": {
+    "ev": 18.31,
+    "ts": 1787720022.4343061
+  },
+  "football|UEFA Europa Cup Women-Qualification|ZNK Hajduk Split (w)|DBK Fortuna Hjoerring (w)|双重机会-和局/客|dc|2026-08-26": {
+    "ev": 12.6,
+    "ts": 1787719293.710033
+  },
+  "football|UEFA Europa Cup Women-Qualification|ZNK Hajduk Split (w)|DBK Fortuna Hjoerring (w)|客胜|1x2|2026-08-26": {
+    "ev": 49.09,
+    "ts": 1787719293.7099872
+  },
   "football|UEFA Europa Cup Women-Qualification|ZNK Hajduk Split (w)|DBK Fortuna Hjoerring (w)|让球客胜|1x2|2026-08-26": {
     "ev": 1.05,
     "ts": 1787718647.805105
@@ -2021,9 +2090,25 @@
     "ev": 3.51,
     "ts": 1787718647.8035352
   },
+  "football|Uzbekistan Super League|Lokomotiv Tashkent|FC Bunyodkor|主胜|1x2|2026-08-26": {
+    "ev": 1.32,
+    "ts": 1787720225.2376142
+  },
+  "football|Uzbekistan Super League|Lokomotiv Tashkent|FC Bunyodkor|让球主胜|1x2|2026-08-26": {
+    "ev": 1.7,
+    "ts": 1787720022.433236
+  },
   "football|Uzbekistan Super League|PFK Mash AL Mubarek|PFK Navbahor Namangan|上半场客胜|ht|2026-08-26": {
     "ev": 1.46,
     "ts": 1787674200.05846
+  },
+  "football|Venezuela Cup|Bolivar SC|Monagas SC|大球|1x2|2026-08-27": {
+    "ev": 1.88,
+    "ts": 1787720022.4339762
+  },
+  "football|Venezuela Cup|Caracas FC|Barquisimeto SC|主胜|1x2|2026-08-27": {
+    "ev": 1.35,
+    "ts": 1787719017.9511302
   },
   "football|Venezuela Cup|Trujillanos FC|Deportivo Lara|让球主胜|1x2|2026-08-27": {
     "ev": 11.5,
@@ -2243,9 +2328,14 @@
     "ev": 1.37,
     "ts": 1787673486.2149382
   },
-  "football|South Korea K-League 1|江原FC|光州FC|上半场客胜|ht|2026-08-26": {
-    "ev": 14.94,
-    "bb": 9.5,
-    "ts": 1787718671.095722
+  "football|Georgia Cup|加格拉|阿拉吉夫杜塞提|客胜|1x2|2026-08-27": {
+    "ev": 14.24,
+    "bb": 6.3,
+    "ts": 1787720624.0425029
+  },
+  "football|Georgia Cup|加格拉|阿拉吉夫杜塞提|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 9.36,
+    "bb": 2.42,
+    "ts": 1787720624.042573
   }
 }
