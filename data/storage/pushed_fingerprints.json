@@ -129,6 +129,11 @@
     "ev": 2.44,
     "ts": 1787783650.98156
   },
+  "basketball|Brazil Campeonato Paulista de Basquete|科林蒂安|巴乌鲁|客胜|1x2|2026-08-27": {
+    "ev": 38.4,
+    "bb": 3.01,
+    "ts": 1787784916.920661
+  },
   "basketball|Mexico LNBP Basketball League|Abejas de Leon|Diablos Rojos del Mexico|客胜|1x2|2026-08-26": {
     "ev": 4.96,
     "ts": 1787634598.148631
@@ -437,6 +442,10 @@
     "ev": 1.15,
     "ts": 1787769081.784446
   },
+  "football|Argentina Primera Nacional|Central Norte Salta|Deportivo Moron|客胜|1x2|2026-08-27": {
+    "ev": 2.3,
+    "ts": 1787786101.0679622
+  },
   "football|Argentina Primera Nacional|Central Norte Salta|Deportivo Moron|让球主胜|1x2|2026-08-27": {
     "ev": 14.62,
     "ts": 1787726478.286996
@@ -643,6 +652,10 @@
     "ev": 1.11,
     "ts": 1787773951.983487
   },
+  "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|让球主胜|1x2|2026-08-27": {
+    "ev": 1.56,
+    "ts": 1787787968.835027
+  },
   "football|Brazil Copa do Brasil|Cruzeiro EC MG|Atletico Mineiro MG|上半场双重机会-主/客|ht_dc|2026-08-26": {
     "ev": 2.09,
     "ts": 1787666950.140291
@@ -776,9 +789,17 @@
     "ev": 1.47,
     "ts": 1787732600.591729
   },
+  "football|Chile Cup|Deportes Recoleta|O Higgins|客胜|1x2|2026-08-27": {
+    "ev": 4.83,
+    "ts": 1787788964.949898
+  },
   "football|Chile Cup|Deportes Recoleta|O Higgins|小球|1x2|2026-08-27": {
     "ev": 5.02,
     "ts": 1787718003.934643
+  },
+  "football|Chile Cup|Deportes Recoleta|O Higgins|让球客胜|1x2|2026-08-27": {
+    "ev": 3.01,
+    "ts": 1787789153.804553
   },
   "football|Chile Primera Division|Coquimbo Unido|Universidad Catolica|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 1.46,
@@ -864,6 +885,10 @@
   "football|Colombia Primera A|Cucuta Deportivo FC|Alianza FC|让球主胜|1x2|2026-08-26": {
     "ev": 1.63,
     "ts": 1787641919.5523012
+  },
+  "football|Colombia Primera A|Llaneros FC|Millonarios FC|单双-双|oe|2026-08-28": {
+    "ev": 1.1,
+    "ts": 1787786203.598855
   },
   "football|Copa Libertadores|CSD Independiente del Valle|Tolima|上半场双重机会-主/客|ht_dc|2026-08-26": {
     "ev": 2.11,
@@ -4065,6 +4090,10 @@
     "bb": 1.91,
     "ts": 1787771441.971432
   },
+  "football|USL League One|FC Naples|Union Omaha SC|让球主胜|1x2|2026-08-27": {
+    "ev": 1.48,
+    "ts": 1787785559.590542
+  },
   "football|Uzbekistan Super League|Lokomotiv Tashkent|FC Bunyodkor|上半场主胜|ht|2026-08-26": {
     "ev": 3.51,
     "ts": 1787718647.8035352
@@ -4547,9 +4576,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "basketball|Brazil Campeonato Paulista de Basquete|科林蒂安|巴乌鲁|客胜|1x2|2026-08-27": {
-    "ev": 38.4,
-    "bb": 3.01,
-    "ts": 1787784916.920661
+  "football|Bolivia Division Profesional|布鲁明|奥鲁罗|和局|1x2|2026-08-27": {
+    "ev": 12.15,
+    "bb": 5.95,
+    "ts": 1787789296.28179
   }
 }

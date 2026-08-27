@@ -1,5 +1,5 @@
 {
-  "balance": 9790.36,
+  "balance": 9735.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3082,6 +3082,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787868000,
       "created_at": "2026-08-26T22:34:10.179308+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_布鲁明_奥鲁罗_和局",
+      "sport": "football",
+      "league": "玻利维亚甲级联赛",
+      "home_team": "布鲁明",
+      "away_team": "奥鲁罗",
+      "home_cn": "布鲁明",
+      "away_cn": "奥鲁罗",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 5.95,
+      "stake": 55,
+      "model_prob": 0.1885,
+      "ev_pct": 12.15,
+      "pin_odds": 4.41,
+      "fair_price": 5.3056,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787790600,
+      "created_at": "2026-08-27T00:08:16.266049+00:00",
       "track_only": false
     }
   ],
@@ -6325,8 +6348,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 2272.0,
-    "bets": 23
+    "used": 2327.0,
+    "bets": 24
   },
   "updated": null
 }
