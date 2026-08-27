@@ -796,6 +796,10 @@
     "ev": 10.72,
     "ts": 1787752990.607056
   },
+  "football|Egypt Premier League|Modern Sport FC|Ghazl El Mahallah|大球|1x2|2026-08-27": {
+    "ev": 2.51,
+    "ts": 1787822414.8842628
+  },
   "football|Egypt Premier League|Modern Sport FC|Ghazl El Mahallah|让球客胜|1x2|2026-08-27": {
     "ev": 1.09,
     "ts": 1787800575.4437819
@@ -896,6 +900,16 @@
     "ev": 4.73,
     "bb": 3.08,
     "ts": 1787763278.102262
+  },
+  "football|Egypt Premier League|未来FC|马哈拉|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 6.25,
+    "bb": 2.31,
+    "ts": 1787822414.426616
+  },
+  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
+    "ev": 18.56,
+    "bb": 7.15,
+    "ts": 1787822414.426551
   },
   "football|Egypt Premier League|未来FC|马哈拉|和局|1x2|2026-08-27": {
     "ev": 11.14,
@@ -1238,6 +1252,10 @@
   "football|India Calcutta Premier Division|Suruchi Sangha|Wari AC|客胜|1x2|2026-08-27": {
     "ev": 2.51,
     "ts": 1787822081.662126
+  },
+  "football|India Calcutta Premier Division|Suruchi Sangha|Wari AC|让球主胜|1x2|2026-08-27": {
+    "ev": 2.15,
+    "ts": 1787822872.075219
   },
   "football|Kuwait Premier League|Al Salmiyah|Al Nasr SC|主胜|1x2|2026-08-27": {
     "ev": 1.06,
@@ -1698,6 +1716,10 @@
     "ev": 1.33,
     "ts": 1787782653.225651
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|上半场主胜|ht|2026-08-28": {
+    "ev": 1.73,
+    "ts": 1787822816.54208
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.06,
     "ts": 1787819941.1558049
@@ -1821,6 +1843,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Pafos FC|Dinamo City|双边进球-是|btts|2026-08-28": {
     "ev": 1.2,
     "ts": 1787813967.824121
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Pafos FC|Dinamo City|大球|1x2|2026-08-28": {
+    "ev": 1.54,
+    "ts": 1787822461.885866
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Pafos FC|Dinamo City|客胜|1x2|2026-08-28": {
     "ev": 1.27,
@@ -2359,14 +2385,9 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
-    "ev": 18.56,
-    "bb": 7.15,
-    "ts": 1787822414.426551
-  },
-  "football|Egypt Premier League|未来FC|马哈拉|上半场双重机会-主/客|ht_dc|2026-08-27": {
-    "ev": 6.25,
-    "bb": 2.31,
-    "ts": 1787822414.426616
+  "football|UEFA Europa Conference League-Qualification Playoff|亚布洛内茨|格拉斯哥流浪者|上半场主胜|ht|2026-08-28": {
+    "ev": 4.95,
+    "bb": 3.92,
+    "ts": 1787823089.504419
   }
 }

@@ -1,5 +1,5 @@
 {
-  "balance": 10105.36,
+  "balance": 10069.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2875,6 +2875,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787832000,
       "created_at": "2026-08-27T08:41:33.156022+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_亚布洛内茨_格拉斯哥流浪者_上半场主胜",
+      "sport": "football",
+      "league": "欧足联欧洲协会联赛-资格赛附加赛",
+      "home_team": "亚布洛内茨",
+      "away_team": "格拉斯哥流浪者",
+      "home_cn": "亚布洛内茨",
+      "away_cn": "格拉斯哥流浪者",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 3.92,
+      "stake": 36,
+      "model_prob": 0.2677,
+      "ev_pct": 4.95,
+      "pin_odds": 3.38,
+      "fair_price": 3.7352,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787846400,
+      "created_at": "2026-08-27T09:31:29.489485+00:00",
       "track_only": false
     }
   ],
@@ -6433,8 +6456,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 4170.0,
-    "bets": 45
+    "used": 4206.0,
+    "bets": 46
   },
   "updated": null
 }
