@@ -237,11 +237,6 @@
     "bb": 2.11,
     "ts": 1787846370.447871
   },
-  "football|Argentina Cup|拉普拉塔大学生|巴拉卡斯中央队|上半场客胜|ht|2026-08-28": {
-    "ev": 13.95,
-    "bb": 8.85,
-    "ts": 1787609035.245292
-  },
   "football|Argentina Cup|普拉腾斯|科尔多瓦学院|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 6.03,
     "bb": 2.04,
@@ -424,6 +419,10 @@
     "ev": 9.45,
     "ts": 1787851996.2712471
   },
+  "football|Bahrain Premier League|Al Muharraq SC|Al Ahli SC Manama|单双-双|oe|2026-08-29": {
+    "ev": 3.5,
+    "ts": 1787856316.6495192
+  },
   "football|Bahrain Premier League|Al Muharraq SC|Al Ahli SC Manama|和局|1x2|2026-08-29": {
     "ev": 10.59,
     "ts": 1787846657.878884
@@ -492,6 +491,10 @@
   "football|Bolivia Division Profesional|Always Ready|Club Aurora|主胜|1x2|2026-08-28": {
     "ev": 4.45,
     "ts": 1787855595.727542
+  },
+  "football|Bolivia Division Profesional|Always Ready|Club Aurora|和局|1x2|2026-08-28": {
+    "ev": 4.01,
+    "ts": 1787856363.792897
   },
   "football|Bolivia Division Profesional|Always Ready|Club Aurora|让球主胜|1x2|2026-08-28": {
     "ev": 4.02,
@@ -1429,6 +1432,10 @@
     "ev": 2.44,
     "ts": 1787731009.077031
   },
+  "football|France Ligue 1|Lille OSC|Paris Saint Germain|客胜|1x2|2026-08-29": {
+    "ev": 1.24,
+    "ts": 1787856970.083793
+  },
   "football|France Ligue 2|AS Nancy Lorraine|USL Dunkerque|单双-双|oe|2026-08-29": {
     "ev": 1.28,
     "ts": 1787853874.780192
@@ -1642,9 +1649,34 @@
     "ev": 2.15,
     "ts": 1787822872.075219
   },
+  "football|Ireland First Division|Cobh Ramblers|Longford Town FC|总进球区间7+|total_goals_range|2026-08-29": {
+    "ev": 6.59,
+    "ts": 1787856621.4589949
+  },
+  "football|Ireland First Division|Cobh Ramblers|Longford Town FC|让球客胜|1x2|2026-08-29": {
+    "ev": 13.85,
+    "ts": 1787856621.458241
+  },
+  "football|Ireland First Division|Cork City FC|Wexford|上半场主胜|ht|2026-08-29": {
+    "ev": 2.94,
+    "ts": 1787856621.458196
+  },
+  "football|Ireland First Division|University College Dublin|Finn Harps FC|上半场主胜|ht|2026-08-29": {
+    "ev": 1.87,
+    "ts": 1787856970.0830002
+  },
+  "football|Ireland Premier Division|Saint Patricks Athletic FC|Waterford FC|客胜|1x2|2026-08-29": {
+    "ev": 2.58,
+    "ts": 1787856621.458785
+  },
   "football|Italy Serie B|US Cremonese|Modena FC|上半场客胜|ht|2026-08-29": {
     "ev": 1.16,
     "ts": 1787855729.885847
+  },
+  "football|Italy Serie B|克雷莫纳|摩德纳|上半场客胜|ht|2026-08-29": {
+    "ev": 4.57,
+    "bb": 6.6,
+    "ts": 1787855983.402108
   },
   "football|Kuwait Premier League|Al Salmiyah|Al Nasr SC|主胜|1x2|2026-08-27": {
     "ev": 1.06,
@@ -1678,9 +1710,21 @@
     "ev": 8.28,
     "ts": 1787828190.236257
   },
+  "football|Mexico Liga De Expansion MX|Cancun FC|Club Atletico La Paz|上半场客胜|ht|2026-08-28": {
+    "ev": 1.18,
+    "ts": 1787856621.4574459
+  },
   "football|Mexico Liga De Expansion MX|Cancun FC|Club Atletico La Paz|主胜|1x2|2026-08-28": {
     "ev": 1.37,
     "ts": 1787828190.2360268
+  },
+  "football|Mexico Liga De Expansion MX|Cancun FC|Club Atletico La Paz|双边进球-是|btts|2026-08-28": {
+    "ev": 2.03,
+    "ts": 1787856621.457529
+  },
+  "football|Mexico Liga De Expansion MX|Cancun FC|Club Atletico La Paz|让球主胜|1x2|2026-08-28": {
+    "ev": 1.79,
+    "ts": 1787856316.648588
   },
   "football|Mexico Liga De Expansion MX|奥哈卡|塔巴蒂奥|上半场主胜|ht|2026-08-28": {
     "ev": 5.14,
@@ -2491,6 +2535,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Hibernian FC|KAA Gent|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 2.18,
     "ts": 1787814295.2298229
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Hibernian FC|KAA Gent|双边进球-是|btts|2026-08-28": {
+    "ev": 1.91,
+    "ts": 1787856919.018555
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Hibernian FC|KAA Gent|大球|1x2|2026-08-28": {
     "ev": 1.36,
@@ -3422,13 +3470,22 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
+  "volleyball|Asian Volleyball Championship Women|Indonesia (w)|Iran (w)|主胜|1x2|2026-08-28": {
+    "ev": 2.2,
+    "ts": 1787856316.649277
+  },
   "volleyball|Mediterranean Volleyball Games Women|Turkey (w)|Greece (w)|主胜|1x2|2026-08-27": {
     "ev": 6.98,
     "ts": 1787833695.998558
   },
-  "football|Italy Serie B|克雷莫纳|摩德纳|上半场客胜|ht|2026-08-29": {
-    "ev": 4.57,
-    "bb": 6.6,
-    "ts": 1787855983.402108
+  "football|UEFA Europa Conference League-Qualification Playoff|拉恩|林肯红魔鬼|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 4.05,
+    "bb": 1.89,
+    "ts": 1787857105.912471
+  },
+  "football|Argentina Cup|拉普拉塔大学生|巴拉卡斯中央队|上半场客胜|ht|2026-08-28": {
+    "ev": 24.87,
+    "bb": 9.5,
+    "ts": 1787857105.912537
   }
 }

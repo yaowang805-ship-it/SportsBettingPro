@@ -1,5 +1,5 @@
 {
-  "balance": 9203.36,
+  "balance": 8974.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3105,6 +3105,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787941800,
       "created_at": "2026-08-27T18:39:43.386025+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_拉恩_林肯红魔鬼_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "欧足联欧洲协会联赛-资格赛附加赛",
+      "home_team": "拉恩",
+      "away_team": "林肯红魔鬼",
+      "home_cn": "拉恩",
+      "away_cn": "林肯红魔鬼",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.89,
+      "stake": 229,
+      "model_prob": 0.5505,
+      "ev_pct": 4.05,
+      "pin_odds": 0,
+      "fair_price": 1.8164,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787857200,
+      "created_at": "2026-08-27T18:58:25.895349+00:00",
       "track_only": false
     }
   ],
@@ -6678,8 +6701,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 548.0,
-    "bets": 4
+    "used": 777.0,
+    "bets": 5
   },
   "updated": null
 }
