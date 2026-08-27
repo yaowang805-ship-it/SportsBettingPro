@@ -196,6 +196,10 @@
     "ev": 3.29,
     "ts": 1787834680.8043
   },
+  "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|角球大球|corner|2026-08-28": {
+    "ev": 1.0,
+    "ts": 1787865043.669442
+  },
   "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|让球主胜|1x2|2026-08-28": {
     "ev": 3.98,
     "ts": 1787834371.347317
@@ -472,6 +476,10 @@
     "ev": 1.28,
     "ts": 1787819030.6942248
   },
+  "football|Bahrain Premier League|East Riffa|Al Hidd|让球客胜|1x2|2026-08-29": {
+    "ev": 10.62,
+    "ts": 1787864346.7365718
+  },
   "football|Bahrain Premier League|Sitra Club|Malkiya Club|单双-双|oe|2026-08-28": {
     "ev": 1.13,
     "ts": 1787803551.2291589
@@ -723,6 +731,10 @@
   "football|CONCACAF Central American Cup|CS Herediano|Antigua GFC|让球主胜|1x2|2026-08-27": {
     "ev": 6.92,
     "ts": 1787747955.2489018
+  },
+  "football|CONCACAF Central American Cup|Deportivo Mixco|Alianza FC Panama|让球客胜|1x2|2026-08-28": {
+    "ev": 1.55,
+    "ts": 1787867054.583395
   },
   "football|CONCACAF Central American Cup|Liga Deportiva Alajuelense|Plaza Amador|主胜|1x2|2026-08-27": {
     "ev": 3.7,
@@ -982,6 +994,10 @@
     "ev": 1.73,
     "ts": 1787834216.18047
   },
+  "football|Egypt Premier League|Al Ittihad Alexandria|Ceramica Cleopatra|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.61,
+    "ts": 1787864007.948873
+  },
   "football|Egypt Premier League|Al Ittihad Alexandria|Ceramica Cleopatra|单双-双|oe|2026-08-29": {
     "ev": 1.78,
     "ts": 1787850376.936714
@@ -1022,9 +1038,17 @@
     "ev": 1.98,
     "ts": 1787777227.116971
   },
+  "football|Egypt Premier League|El Qanah|El Gouna FC|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 1.76,
+    "ts": 1787865244.545565
+  },
   "football|Egypt Premier League|Enppi Club|Wadi Degla SC|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 2.57,
     "ts": 1787846370.8160791
+  },
+  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|单双-双|oe|2026-08-28": {
+    "ev": 2.54,
+    "ts": 1787864346.736518
   },
   "football|Egypt Premier League|Enppi Club|Wadi Degla SC|和局|1x2|2026-08-28": {
     "ev": 1.51,
@@ -1165,6 +1189,11 @@
   "football|Egypt Premier League|Pyramids FC|Abo Qair Semads|让球客胜|1x2|2026-08-28": {
     "ev": 4.97,
     "ts": 1787848788.79377
+  },
+  "football|Egypt Premier League|伊蒂哈德亚历山大|瑟亚米卡|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.61,
+    "bb": 2.15,
+    "ts": 1787864007.473695
   },
   "football|Egypt Premier League|佩特捷德|杰艾斯|上半场主胜|ht|2026-08-27": {
     "ev": 3.63,
@@ -1788,11 +1817,6 @@
     "ev": 1.79,
     "ts": 1787856316.648588
   },
-  "football|Mexico Liga De Expansion MX|奥哈卡|塔巴蒂奥|上半场主胜|ht|2026-08-28": {
-    "ev": 5.14,
-    "bb": 3.0,
-    "ts": 1787828189.827786
-  },
   "football|Mexico Liga De Expansion MX|奥哈卡|塔巴蒂奥|主胜|1x2|2026-08-28": {
     "ev": 8.99,
     "bb": 2.33,
@@ -1805,6 +1829,10 @@
   "football|Netherlands Eerste Divisie|Jong AZ Alkmaar|MVV Maastricht|单双-双|oe|2026-08-29": {
     "ev": 1.81,
     "ts": 1787853874.780608
+  },
+  "football|Netherlands Eerste Divisie|Jong Ajax Amsterdam|Helmond Sport|总进球区间7+|total_goals_range|2026-08-29": {
+    "ev": 10.5,
+    "ts": 1787866528.12753
   },
   "football|Norway 1st Division|Asane Fotball|Lyn 1896 FK|客胜|1x2|2026-08-27": {
     "ev": 1.86,
@@ -3569,9 +3597,9 @@
     "ev": 6.98,
     "ts": 1787833695.998558
   },
-  "football|Egypt Premier League|伊蒂哈德亚历山大|瑟亚米卡|上半场双重机会-主/客|ht_dc|2026-08-29": {
-    "ev": 3.61,
-    "bb": 2.15,
-    "ts": 1787864007.473695
+  "football|Mexico Liga De Expansion MX|奥哈卡|塔巴蒂奥|上半场主胜|ht|2026-08-28": {
+    "ev": 5.93,
+    "bb": 4.22,
+    "ts": 1787867642.927812
   }
 }
