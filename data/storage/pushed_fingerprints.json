@@ -106,6 +106,10 @@
     "ev": 2.85,
     "ts": 1787813967.825045
   },
+  "basketball|WNBA|New York Liberty (w)|Golden State Valkyries (w)|让分客胜|1x2|2026-08-28": {
+    "ev": 1.52,
+    "ts": 1787833178.181818
+  },
   "basketball|WNBA|Phoenix Mercury (w)|Washington Mystics (w)|让分主胜|1x2|2026-08-28": {
     "ev": 2.5,
     "ts": 1787814571.319257
@@ -241,6 +245,10 @@
   "football|Argentina Liga Profesional Reserves|Colon de Santa Fe (Res)|Lanus (Res)|小球|1x2|2026-08-27": {
     "ev": 1.37,
     "ts": 1787722162.108181
+  },
+  "football|Argentina Liga Profesional Reserves|Independiente Rivadavia (Res)|Estudiantes de Rio Cuarto (Res)|大球|1x2|2026-08-28": {
+    "ev": 2.18,
+    "ts": 1787832696.88713
   },
   "football|Argentina Liga Profesional Reserves|Quilmes AC (Res)|Independiente (Res)|双重机会-主/和局|dc|2026-08-27": {
     "ev": 2.44,
@@ -792,9 +800,17 @@
     "ev": 1.56,
     "ts": 1787771507.293268
   },
+  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|主胜|1x2|2026-08-28": {
+    "ev": 2.01,
+    "ts": 1787832696.8860018
+  },
   "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|单双-双|oe|2026-08-28": {
     "ev": 1.91,
     "ts": 1787763777.759779
+  },
+  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|双重机会-主/和局|dc|2026-08-28": {
+    "ev": 1.64,
+    "ts": 1787832696.886243
   },
   "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|小球|1x2|2026-08-28": {
     "ev": 1.21,
@@ -942,20 +958,24 @@
     "bb": 2.31,
     "ts": 1787822414.426616
   },
-  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
-    "ev": 28.62,
-    "bb": 8.3,
-    "ts": 1787830528.497426
-  },
   "football|Egypt Premier League|未来FC|马哈拉|和局|1x2|2026-08-27": {
     "ev": 11.14,
     "bb": 2.74,
     "ts": 1787580178.453536
   },
+  "football|Egypt Premier League|阿拉伯建筑|马斯里|上半场主胜|ht|2026-08-28": {
+    "ev": 6.84,
+    "bb": 5.25,
+    "ts": 1787832696.468742
+  },
   "football|Egypt Premier League|阿拉伯建筑|马斯里|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 2.94,
     "bb": 2.07,
     "ts": 1787812694.51632
+  },
+  "football|Egypt Second Division A|Team FC|El Sekka El Hadid|让球主胜|1x2|2026-08-27": {
+    "ev": 12.1,
+    "ts": 1787832991.604186
   },
   "football|Egypt Second Division A|Tersana SC|La Viena FC|让球客胜|1x2|2026-08-27": {
     "ev": 2.43,
@@ -1786,6 +1806,10 @@
     "ev": 1.45,
     "ts": 1787832544.565206
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Brighton & Hove Albion FC|Tromso IL|让球主胜|1x2|2026-08-28": {
+    "ev": 3.11,
+    "ts": 1787833178.180949
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|上半场主胜|ht|2026-08-28": {
     "ev": 1.63,
     "ts": 1787764120.649885
@@ -1797,6 +1821,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|小球|1x2|2026-08-28": {
     "ev": 1.39,
     "ts": 1787831818.5823638
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|让球主胜|1x2|2026-08-28": {
+    "ev": 2.01,
+    "ts": 1787832991.604705
   },
   "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|让球客胜|1x2|2026-08-28": {
     "ev": 1.96,
@@ -1841,6 +1869,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|让球主胜|1x2|2026-08-28": {
     "ev": 1.77,
     "ts": 1787809786.9133499
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|让球客胜|1x2|2026-08-28": {
+    "ev": 1.64,
+    "ts": 1787833247.224093
   },
   "football|UEFA Europa Conference League-Qualification Playoff|FK Partizan Belgrade|Getafe CF|上半场主胜|ht|2026-08-28": {
     "ev": 6.29,
@@ -2596,9 +2628,9 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|Egypt Premier League|阿拉伯建筑|马斯里|上半场主胜|ht|2026-08-28": {
-    "ev": 6.84,
-    "bb": 5.25,
-    "ts": 1787832696.468742
+  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
+    "ev": 31.43,
+    "bb": 8.85,
+    "ts": 1787833510.745544
   }
 }
