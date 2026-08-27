@@ -421,6 +421,11 @@
     "bb": 1.73,
     "ts": 1787781632.90958
   },
+  "football|CONCACAF Central American Cup|CD奥林匹亚|萨普里萨|和局|1x2|2026-08-28": {
+    "ev": 26.65,
+    "bb": 3.33,
+    "ts": 1787798108.875679
+  },
   "football|CONCACAF Central American Cup|CS Herediano|Antigua GFC|主胜|1x2|2026-08-27": {
     "ev": 2.22,
     "ts": 1787747955.248833
@@ -448,6 +453,18 @@
   "football|CONCACAF Central American Cup|Marathon|Real Esteli FC|让球客胜|1x2|2026-08-27": {
     "ev": 1.2,
     "ts": 1787748549.52916
+  },
+  "football|CONCACAF Central American Cup|Olimpia Tegucigalpa|Deportivo Saprissa|双重机会-主/和局|dc|2026-08-28": {
+    "ev": 3.57,
+    "ts": 1787798109.248291
+  },
+  "football|CONCACAF Central American Cup|Olimpia Tegucigalpa|Deportivo Saprissa|和局|1x2|2026-08-28": {
+    "ev": 26.65,
+    "ts": 1787798109.2481542
+  },
+  "football|CONCACAF Central American Cup|Olimpia Tegucigalpa|Deportivo Saprissa|让球客胜|1x2|2026-08-28": {
+    "ev": 12.78,
+    "ts": 1787798109.2482188
   },
   "football|Chile Cup|Colo Colo|Union Espanola|主胜|1x2|2026-08-27": {
     "ev": 2.0,
@@ -610,6 +627,10 @@
   "football|Denmark DBU Pokalen|Vejle BK|Silkeborg IF|大球|1x2|2026-08-28": {
     "ev": 1.88,
     "ts": 1787782981.0622962
+  },
+  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|上半场主胜|ht|2026-08-28": {
+    "ev": 1.22,
+    "ts": 1787798388.213254
   },
   "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.56,
@@ -1433,6 +1454,10 @@
     "ev": 1.33,
     "ts": 1787782653.225651
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|单双-双|oe|2026-08-28": {
+    "ev": 1.1,
+    "ts": 1787799532.784346
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|FK Partizan Belgrade|Getafe CF|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.24,
     "ts": 1787770918.452352
@@ -1817,9 +1842,9 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|CONCACAF Central American Cup|CD奥林匹亚|萨普里萨|和局|1x2|2026-08-28": {
-    "ev": 26.65,
-    "bb": 3.33,
-    "ts": 1787798108.875679
+  "football|UEFA Europa Conference League-Qualification Playoff|库奥皮奥|沙姆洛克流浪|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 4.31,
+    "bb": 1.92,
+    "ts": 1787799934.1262872
   }
 }
