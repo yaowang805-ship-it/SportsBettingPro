@@ -2012,6 +2012,8 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
     # 来源平台统计
     source_counts = {}
     for o in qualified:
+        if o.get("_stake", 0) < 30:
+            continue
         src = o.get("bb_price_source", "BB")
         label = {"BB": "BB", "FB": "FB", "BOTH": "BB/FB"}.get(src, src)
         source_counts[label] = source_counts.get(label, 0) + 1
