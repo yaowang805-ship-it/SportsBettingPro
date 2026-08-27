@@ -868,10 +868,8 @@ def _run_push(label: str = ""):
         push_args = [sys.executable, "-m", "src.report.bb_ev_push"]
         if label != "全量扫描":  # 增量扫描才传 --incremental
             push_args.append("--incremental")
-        # V5.10: 夜里(22:00-6:40)不推钉钉但照常投注+记录(加快真实投注样本积累)
-        _h = datetime.now().astimezone(timezone(timedelta(hours=8))).hour
-        if _h >= 22 or _h < 6:
-            push_args.append("--night")
+        # (2026-08-27 用户要求) 取消夜里推送限制, 全天推送钉钉。原 --night 逻辑删除:
+        # 之前 22:00-6:40 不推钉钉但照常投注, 现改为全天推钉钉。
         result = subprocess.run(
             push_args,
             capture_output=True, text=True, cwd=SRC_DIR.parent,
