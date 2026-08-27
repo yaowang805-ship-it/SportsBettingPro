@@ -2090,7 +2090,8 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
         opps.sort(key=lambda o: -o.get("_weighted_ev", o["ev_pct"]))
         # 该组所有机会都因投注额归零被过滤(低于¥30/赔率超上限) → 整组跳过,
         # 否则会推送"只有队名没有赔率/投注额"的空壳标题(2026-08-23 用户反馈)。
-        if not any(o.get("_stake", 0) > 0 for o in opps):
+        # 2026-08-27: _stake 现在保留真实值(stake<30 也非0), 门槛是 >=30, 不是 >0
+        if not any(o.get("_stake", 0) >= 30 for o in opps):
             continue
 
         # 平台分隔：BB/FB 分开, 投注不用切换平台
