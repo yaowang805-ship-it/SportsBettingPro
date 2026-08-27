@@ -531,6 +531,11 @@
     "bb": 2.15,
     "ts": 1787789946.3201358
   },
+  "football|Argentina Primera Nacional|北索尔塔中央|玛伦|上半场客胜|ht|2026-08-27": {
+    "ev": 4.41,
+    "bb": 5.1,
+    "ts": 1787790558.795003
+  },
   "football|Argentina Primera Nacional|帕特罗纳图|阿特兰大竞技|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 2.55,
     "bb": 2.12,
@@ -891,6 +896,10 @@
   "football|Colombia Primera A|America de Cali|Junior FC|让球客胜|1x2|2026-08-27": {
     "ev": 2.22,
     "ts": 1787764120.6502452
+  },
+  "football|Colombia Primera A|Atletico Nacional Medellin|Deportivo Cali|主胜|1x2|2026-08-27": {
+    "ev": 1.02,
+    "ts": 1787791150.9315798
   },
   "football|Colombia Primera A|Boyaca Chico FC|Fortaleza CEIF|单双-双|oe|2026-08-27": {
     "ev": 1.12,
@@ -4626,9 +4635,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Argentina Primera Nacional|北索尔塔中央|玛伦|上半场客胜|ht|2026-08-27": {
-    "ev": 4.41,
-    "bb": 5.1,
-    "ts": 1787790558.795003
+  "football|USL Championship|埃尔帕索机车|匹兹堡猎犬河队|上半场客胜|ht|2026-08-27": {
+    "ev": 5.34,
+    "bb": 4.67,
+    "ts": 1787792212.572232
   }
 }

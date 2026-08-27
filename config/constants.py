@@ -65,13 +65,17 @@ def get_league_tier(league: str) -> int:
                                      'Premier League','La Liga','Serie A','Bundesliga','Ligue 1',
                                      'Champions League','Europa League','World Cup']):
         return 1
-    # T2: 次级/挑战赛
+    # T2: 次级/挑战赛 (含英文对应词, 2026-08-27 补: 之前只有中文关键词, 导致"智利甲级联赛"=T2
+    # 而"Chile Primera Division"落默认T3, 中文/英文名 tier 不一致)
     if any(kw in league for kw in ['Challenger','冠军联赛','欧联','欧会','甲级','超级','Major',
-                                     'NCAA','夏季联赛','季前赛','公开赛']):
+                                     'NCAA','夏季联赛','季前赛','公开赛',
+                                     'Primera Division','1st Division','Division 1','1. Liga',
+                                     'Super League','Superliga','Super Lig','Conference League']):
         return 2
     # T4: 明显低级别
     if any(kw in league for kw in ['U19','U20','U21','U23','后备','青年','丁级','丙级',
-                                     '友谊赛','女子','女篮','3x3','室内']):
+                                     '友谊赛','女子','女篮','3x3','室内',
+                                     'Women','Women\'s','3rd Division','4th Division','Reserves','Youth']):
         return 4
     return 3  # default
 
