@@ -212,24 +212,31 @@ def _warn_suspicious(ev_pct, match_score, verified):
 
 
 def _check_pinnacle():
-    """启动时检测 Pinnacle API 直连连通性。"""
+    """启动时检测 Pinnacle API 直连连通性(2026-08-27 加 ReadTimeout 重试)。
+
+    之前一次 15s 超时就返回 False → 全量扫描直接取消。ReadTimeout/SSL EOF 是瞬时抖动,
+    重试 2 次(间隔 3s)再判不可用。
+    """
     test_url = f"{API_BASE}/sports/29/matchups"
     SESSION.proxies = {}
 
-    try:
-        resp = SESSION.get(test_url, timeout=15)
-        if resp.status_code == 200:
-            print(f"  ✅ Pinnacle API 连通正常")
-            return True
-        print(f"  ⚠️  Pinnacle API 返回 {resp.status_code}")
-    except requests.exceptions.SSLError as e:
-        print(f"  ❌ Pinnacle API SSL 失败: {e}")
-        print(f"     → 检查系统时间 / 更新 CA 证书")
-    except requests.exceptions.ConnectionError as e:
-        print(f"  ❌ Pinnacle API 直连失败: {e}")
-        print(f"     → 检查网络连接")
-    except Exception as e:
-        print(f"  ❌ Pinnacle API 异常 ({type(e).__name__}): {e}")
+    for attempt in range(3):  # 最多 3 次尝试
+        try:
+            resp = SESSION.get(test_url, timeout=15)
+            if resp.status_code == 200:
+                print(f"  ✅ Pinnacle API 连通正常")
+                return True
+            print(f"  ⚠️  Pinnacle API 返回 {resp.status_code}")
+        except requests.exceptions.SSLError as e:
+            print(f"  ❌ Pinnacle API SSL 失败(第{attempt+1}次): {e}")
+            print(f"     → 检查系统时间 / 更新 CA 证书")
+        except requests.exceptions.ConnectionError as e:
+            print(f"  ❌ Pinnacle API 直连失败(第{attempt+1}次): {e}")
+            print(f"     → 检查网络连接")
+        except Exception as e:
+            print(f"  ❌ Pinnacle API 异常 (第{attempt+1}次, {type(e).__name__}): {e}")
+        if attempt < 2:
+            time.sleep(3)  # 瞬时抖动, 等 3s 重试
 
     print(f"\n  💡 诊断: Pinnacle API 不可用")
     print(f"    可能原因: 网络连接问题 / Python 3.14 http.client chunked bug")
