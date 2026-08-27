@@ -1008,10 +1008,8 @@ def _calc_kelly_stakes(opps: list) -> list:
             stake_pct *= 0.3
         stake = int(bankroll * stake_pct)
         o["_raw_stake"] = stake
-        # 铁律(2026-08-27 用户): stake<30 一律拦截, 不分层 —— 原 tier_cfg.get("min_stake",30)
-        # 里 T1/T2 是 0, 导致智利甲(中文名tier2)等 stake<30 的碎单被推+记录。统一 30。
-        min_stake = 30
-        o["_stake"] = stake if stake >= min_stake else 0
+        # 2026-08-27 用户澄清: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库(record_bets)
+        o["_stake"] = stake
 
     # 第二遍：总额超预算时, 按 stake 降序取 top 保留, 超出清零 (不摊薄, 集中在最优机会)
     daily_budget = bankroll  # V4.5: 动态日预算
@@ -1981,7 +1979,7 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
                    "mma": "🥊", "ice_hockey": "🏒"}
     _TIER_LABEL = {1: "T1", 2: "T2", 3: "T3", 4: "T4"}
     now_str = datetime.now(timezone.utc).astimezone().strftime("%m/%d %H:%M")
-    total_allocated = sum(o["_stake"] for o in qualified)
+    total_allocated = sum(o["_stake"] for o in qualified if o["_stake"] >= 30)
 
     # 数据新鲜度：读取文件 mtime 显示提取时间
     bb_file = DATA_DIR / "bb_odds_extracted.json"
