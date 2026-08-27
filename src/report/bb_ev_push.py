@@ -1008,9 +1008,9 @@ def _calc_kelly_stakes(opps: list) -> list:
             stake_pct *= 0.3
         stake = int(bankroll * stake_pct)
         o["_raw_stake"] = stake
-        # 用户(2026-08-22)澄清: 取消熔断/风控停注, 但保留最低投注额 ¥30 下限 ——
-        # 低于 ¥30 的不推送(太碎没意义), 高于 ¥30 的只要过盘口门槛就推。
-        min_stake = tier_cfg.get("min_stake", 30)
+        # 铁律(2026-08-27 用户): stake<30 一律拦截, 不分层 —— 原 tier_cfg.get("min_stake",30)
+        # 里 T1/T2 是 0, 导致智利甲(中文名tier2)等 stake<30 的碎单被推+记录。统一 30。
+        min_stake = 30
         o["_stake"] = stake if stake >= min_stake else 0
 
     # 第二遍：总额超预算时, 按 stake 降序取 top 保留, 超出清零 (不摊薄, 集中在最优机会)
