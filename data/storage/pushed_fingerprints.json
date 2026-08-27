@@ -568,6 +568,10 @@
     "bb": 2.09,
     "ts": 1787697897.538123
   },
+  "football|Bolivia Division Profesional|Blooming Santa Cruz|CDT Real Oruro|和局|1x2|2026-08-27": {
+    "ev": 12.15,
+    "ts": 1787789296.642145
+  },
   "football|Bolivia Division Profesional|Blooming Santa Cruz|CDT Real Oruro|小球|1x2|2026-08-27": {
     "ev": 1.3,
     "ts": 1787718342.713012
@@ -635,6 +639,11 @@
   "football|Bolivia Division Profesional|Universitario de Vinto|Nacional Potosi|让球客胜|1x2|2026-08-26": {
     "ev": 4.71,
     "ts": 1787668482.598082
+  },
+  "football|Bolivia Division Profesional|布鲁明|奥鲁罗|和局|1x2|2026-08-27": {
+    "ev": 12.15,
+    "bb": 5.95,
+    "ts": 1787789296.28179
   },
   "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 1.07,
@@ -4046,11 +4055,6 @@
     "ev": 1.59,
     "ts": 1787769403.866255
   },
-  "football|UEFA Europa League-Qualification Playoff|奥胡斯|本菲卡|主胜|1x2|2026-08-28": {
-    "ev": 9.31,
-    "bb": 6.6,
-    "ts": 1787782652.520023
-  },
   "football|UEFA Europa League-Qualification|安德莱赫特|阿拉木图凯拉特|上半场主胜|ht|2026-08-28": {
     "ev": 5.66,
     "bb": 2.08,
@@ -4576,9 +4580,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Bolivia Division Profesional|布鲁明|奥鲁罗|和局|1x2|2026-08-27": {
-    "ev": 12.15,
-    "bb": 5.95,
-    "ts": 1787789296.28179
+  "football|UEFA Europa League-Qualification Playoff|奥胡斯|本菲卡|主胜|1x2|2026-08-28": {
+    "ev": 11.57,
+    "bb": 6.75,
+    "ts": 1787789618.871101
   }
 }
