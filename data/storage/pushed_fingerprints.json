@@ -184,9 +184,17 @@
     "ev": 2.87,
     "ts": 1787800575.444531
   },
+  "football|Argentina Cup|Platense|Instituto AC Cordoba|双边进球-是|btts|2026-08-28": {
+    "ev": 2.6,
+    "ts": 1787829417.4122272
+  },
   "football|Argentina Cup|Platense|Instituto AC Cordoba|和局|1x2|2026-08-28": {
     "ev": 2.16,
     "ts": 1787810708.020983
+  },
+  "football|Argentina Cup|Platense|Instituto AC Cordoba|大球|1x2|2026-08-28": {
+    "ev": 1.8,
+    "ts": 1787829093.408142
   },
   "football|Argentina Cup|拉普拉塔大学生|巴拉卡斯中央队|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 4.4,
@@ -711,6 +719,10 @@
     "ev": 1.1,
     "ts": 1787786203.598855
   },
+  "football|Colombia Primera A|Llaneros FC|Millonarios FC|让球客胜|1x2|2026-08-28": {
+    "ev": 2.44,
+    "ts": 1787828772.15502
+  },
   "football|Copa Sudamericana|River Plate|Independiente Santa Fe|上半场主胜|ht|2026-08-27": {
     "ev": 1.6,
     "ts": 1787704659.620775
@@ -917,11 +929,6 @@
     "ev": 6.25,
     "bb": 2.31,
     "ts": 1787822414.426616
-  },
-  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
-    "ev": 24.13,
-    "bb": 7.65,
-    "ts": 1787824587.154131
   },
   "football|Egypt Premier League|未来FC|马哈拉|和局|1x2|2026-08-27": {
     "ev": 11.14,
@@ -1277,13 +1284,43 @@
     "ev": 2.04,
     "ts": 1787764119.4965959
   },
+  "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|上半场主胜|ht|2026-08-28": {
+    "ev": 5.14,
+    "ts": 1787828190.236183
+  },
   "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|主胜|1x2|2026-08-28": {
     "ev": 1.98,
     "ts": 1787804146.3366468
   },
+  "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|双边进球-是|btts|2026-08-28": {
+    "ev": 3.07,
+    "ts": 1787828772.155075
+  },
+  "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|双重机会-主/和局|dc|2026-08-28": {
+    "ev": 2.24,
+    "ts": 1787828190.2363331
+  },
   "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|大球|1x2|2026-08-28": {
     "ev": 2.87,
     "ts": 1787804146.336689
+  },
+  "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|让球主胜|1x2|2026-08-28": {
+    "ev": 8.28,
+    "ts": 1787828190.236257
+  },
+  "football|Mexico Liga De Expansion MX|Cancun FC|Club Atletico La Paz|主胜|1x2|2026-08-28": {
+    "ev": 1.37,
+    "ts": 1787828190.2360268
+  },
+  "football|Mexico Liga De Expansion MX|奥哈卡|塔巴蒂奥|上半场主胜|ht|2026-08-28": {
+    "ev": 5.14,
+    "bb": 3.0,
+    "ts": 1787828189.827786
+  },
+  "football|Mexico Liga De Expansion MX|奥哈卡|塔巴蒂奥|主胜|1x2|2026-08-28": {
+    "ev": 8.99,
+    "bb": 2.33,
+    "ts": 1787828189.827708
   },
   "football|Norway 1st Division|Asane Fotball|Lyn 1896 FK|客胜|1x2|2026-08-27": {
     "ev": 1.86,
@@ -1429,6 +1466,10 @@
   "football|South Korea K-League 2|Ansan Greeners|Daegu FC|客胜|1x2|2026-08-28": {
     "ev": 2.98,
     "ts": 1787826886.8890948
+  },
+  "football|South Korea K-League 2|Jeonnam Dragons|Cheonan City FC|让球主胜|1x2|2026-08-28": {
+    "ev": 9.28,
+    "ts": 1787828451.538971
   },
   "football|Spain LaLiga|Celta Vigo|Osasuna|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.17,
@@ -1816,9 +1857,17 @@
     "ev": 2.08,
     "ts": 1787810708.021614
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Inter Club de Escaldes|KF Drita|主胜|1x2|2026-08-28": {
+    "ev": 4.9,
+    "ts": 1787828190.2367418
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Inter Club de Escaldes|KF Drita|双边进球-是|btts|2026-08-28": {
     "ev": 1.25,
     "ts": 1787807046.254911
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Inter Club de Escaldes|KF Drita|让球主胜|1x2|2026-08-28": {
+    "ev": 3.48,
+    "ts": 1787828190.236821
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Kuopion Palloseura|Shamrock Rovers|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 1.52,
@@ -1831,6 +1880,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Kuopion Palloseura|Shamrock Rovers|主胜|1x2|2026-08-27": {
     "ev": 1.11,
     "ts": 1787826832.4243588
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Kuopion Palloseura|Shamrock Rovers|单双-双|oe|2026-08-27": {
+    "ev": 1.21,
+    "ts": 1787828808.370668
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Kuopion Palloseura|Shamrock Rovers|双边进球-是|btts|2026-08-27": {
     "ev": 3.05,
@@ -2146,6 +2199,18 @@
     "ev": 1.45,
     "ts": 1787812073.040223
   },
+  "football|UEFA Europa League-Qualification Playoff|FC Thun|KKS Lech Poznan|双边进球-是|btts|2026-08-28": {
+    "ev": 1.58,
+    "ts": 1787829760.684824
+  },
+  "football|UEFA Europa League-Qualification Playoff|FC Thun|KKS Lech Poznan|大球|1x2|2026-08-28": {
+    "ev": 2.35,
+    "ts": 1787829760.684872
+  },
+  "football|UEFA Europa League-Qualification Playoff|FC Thun|KKS Lech Poznan|总进球区间7+|total_goals_range|2026-08-28": {
+    "ev": 3.73,
+    "ts": 1787829760.686062
+  },
   "football|UEFA Europa League-Qualification Playoff|FC Viktoria Plzen|FK Crvena Zvezda Belgrade|主胜|1x2|2026-08-28": {
     "ev": 1.43,
     "ts": 1787764120.65018
@@ -2193,6 +2258,10 @@
   "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|小球|1x2|2026-08-28": {
     "ev": 1.25,
     "ts": 1787828006.194272
+  },
+  "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|总进球区间7+|total_goals_range|2026-08-28": {
+    "ev": 1.59,
+    "ts": 1787830196.349973
   },
   "football|UEFA Europa League-Qualification Playoff|Lillestrom SK|KF Egnatia Rrogozhine|总进球区间7+|total_goals_range|2026-08-28": {
     "ev": 4.11,
@@ -2454,6 +2523,10 @@
     "ev": 20.2,
     "ts": 1787803221.375676
   },
+  "tennis|ITF - W35 Barueri Women Doubles|Jennifer Rosa Dourado (BRA) / Catarina Melleiro (BRA)|Maria Fernanda Navarro (MEX) / Camila Romero (ECU)|客胜|1x2|2026-08-28": {
+    "ev": 10.45,
+    "ts": 1787828190.23717
+  },
   "tennis|ITF - W35 Barueri Women Singles|Marjorie Souza (BRA)|Carolyn Ansari (USA)|让盘主胜|1x2|2026-08-27": {
     "ev": 2.47,
     "ts": 1787718003.9342961
@@ -2462,14 +2535,9 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|Mexico Liga De Expansion MX|奥哈卡|塔巴蒂奥|主胜|1x2|2026-08-28": {
-    "ev": 8.99,
-    "bb": 2.33,
-    "ts": 1787828189.827708
-  },
-  "football|Mexico Liga De Expansion MX|奥哈卡|塔巴蒂奥|上半场主胜|ht|2026-08-28": {
-    "ev": 5.14,
-    "bb": 3.0,
-    "ts": 1787828189.827786
+  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
+    "ev": 26.29,
+    "bb": 8.15,
+    "ts": 1787830338.0109499
   }
 }
