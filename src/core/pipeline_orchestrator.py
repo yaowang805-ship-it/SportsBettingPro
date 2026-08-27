@@ -787,6 +787,23 @@ class PipelineOrchestrator:
         except Exception as e:
             logger.warning("SQLite指纹清理失败: %s", e)
 
+        # 2. 清理归档库旧数据 (>7天) — 归档每天涨100万+条, 不清理会无限膨胀(2026-08-27)
+        try:
+            import sqlite3 as _sqlite3
+            from datetime import datetime as _dt, timezone as _tz, timedelta as _td
+            _arch = SRC_DIR / "data" / "storage" / "pinnacle_odds_archive.db"
+            if _arch.exists():
+                _cutoff = (_dt.now(_tz.utc) - _td(days=7)).isoformat()
+                _conn = _sqlite3.connect(_arch)
+                _n = _conn.execute("DELETE FROM odds_archive WHERE fetched_at < ?", (_cutoff,)).rowcount
+                _conn.commit()
+                _conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+                _conn.close()
+                if _n:
+                    logger.info("归档库清理: 删除 %d 条(>7天)", _n)
+        except Exception as e:
+            logger.warning("归档库清理失败: %s", e)
+
         # 清理文件去重中的过期记录
         try:
             opps_file = SRC_DIR / "data" / "storage" / "pushed_opportunities.json"
