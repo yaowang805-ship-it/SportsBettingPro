@@ -87,7 +87,7 @@ def settle_via_bb(dry_run: bool = False) -> dict:
     from src.monitor.bet_tracker import get_unsettled_bets, settle_bet
     from src.scrapers.bb_api_fetcher import fetch_bb_match_result
 
-    bets = get_unsettled_bets(hours_after_match=1.0)
+    bets = get_unsettled_bets(hours_after_match=0.5)  # 2026-08-27: 提前到结束后0.5h(卡进BB~5h赛果窗口)
     if not bets:
         return {"settled": 0, "failed": 0, "matched": 0}
 

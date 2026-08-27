@@ -131,6 +131,7 @@ class PipelineOrchestrator:
         self._last_incremental: Optional[float] = None
         self._last_inc_urgent: Optional[float] = None   # 临场<6h
         self._last_inc_near: Optional[float] = None      # 中程6-24h
+        self._last_bb_settle: Optional[float] = None     # 高频BB结算(110min)
         self._full_scan_ok = False  # V5.4: 全量扫描成功+推送后才允许分层增量扫描
         self._last_scan_success: float = 0             # 最后一次成功完成的时间戳
         self._scan_failure_count: int = 0              # 连续失败计数
@@ -651,6 +652,21 @@ class PipelineOrchestrator:
                                summary["settled"], summary["total_profit"], summary["roi_pct"])
         except Exception as e:
             logger.warning("追踪投注结算失败: %s", e)
+
+    def do_settle_bb(self):
+        """高频 BB 比分结算(2026-08-27): 只跑 settle_via_bb, 每 110min 一次。
+
+        BB 赛果窗口实测只有 ~5h(开赛起), 而原 settle 一天只跑 4 次(间隙 3-12h),
+        导致比赛结束到结算之间经常超窗口、BB 比分被清 → 大量注 timeout_void/unsettleable。
+        这个高频任务只跑 BB(轻量), 不跑 auto_settle(ESPN,重), 保证每场结束 ~1h 内就结算。
+        """
+        try:
+            from src.monitor.bb_score_settle import settle_via_bb
+            r = settle_via_bb()
+            if r.get("settled"):
+                logger.info("高频BB结算: %d 笔", r["settled"])
+        except Exception as e:
+            logger.warning("高频BB结算失败: %s", e)
 
     def do_daily_report(self):
         """日报推送。"""
