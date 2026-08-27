@@ -1,5 +1,5 @@
 {
-  "balance": 9771.36,
+  "balance": 9737.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2967,6 +2967,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787855400,
       "created_at": "2026-08-27T11:53:42.005591+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_阿拉伯建筑_马斯里_上半场主胜",
+      "sport": "football",
+      "league": "埃及超级联赛",
+      "home_team": "阿拉伯建筑",
+      "away_team": "马斯里",
+      "home_cn": "阿拉伯建筑",
+      "away_cn": "马斯里",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 5.25,
+      "stake": 34,
+      "model_prob": 0.2035,
+      "ev_pct": 6.84,
+      "pin_odds": 4.44,
+      "fair_price": 4.9137,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787850000,
+      "created_at": "2026-08-27T12:11:36.457518+00:00",
       "track_only": false
     }
   ],
@@ -6525,8 +6548,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 4504.0,
-    "bets": 49
+    "used": 4538.0,
+    "bets": 50
   },
   "updated": null
 }

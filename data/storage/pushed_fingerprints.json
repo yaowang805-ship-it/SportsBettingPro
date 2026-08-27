@@ -168,6 +168,14 @@
     "ev": 15.04,
     "ts": 1787781683.380777
   },
+  "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|主胜|1x2|2026-08-28": {
+    "ev": 2.31,
+    "ts": 1787831978.237103
+  },
+  "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|让球客胜|1x2|2026-08-28": {
+    "ev": 1.04,
+    "ts": 1787832248.4107132
+  },
   "football|Argentina Cup|Platense|Instituto AC Cordoba|上半场主胜|ht|2026-08-28": {
     "ev": 2.42,
     "ts": 1787810708.021045
@@ -1549,6 +1557,11 @@
     "bb": 1.91,
     "ts": 1787812694.516361
   },
+  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
+    "ev": 16.35,
+    "bb": 6.4,
+    "ts": 1787831622.015797
+  },
   "football|Switzerland 1. Liga Classic|FC Meyrin|Servette II|客胜|1x2|2026-08-27": {
     "ev": 4.38,
     "ts": 1787767249.363307
@@ -1769,6 +1782,10 @@
     "ev": 5.19,
     "ts": 1787824144.415589
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Brighton & Hove Albion FC|Tromso IL|双边进球-否|btts|2026-08-28": {
+    "ev": 1.45,
+    "ts": 1787832544.565206
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|上半场主胜|ht|2026-08-28": {
     "ev": 1.63,
     "ts": 1787764120.649885
@@ -1776,6 +1793,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|双边进球-是|btts|2026-08-28": {
     "ev": 2.11,
     "ts": 1787814295.230326
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|小球|1x2|2026-08-28": {
+    "ev": 1.39,
+    "ts": 1787831818.5823638
   },
   "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|让球客胜|1x2|2026-08-28": {
     "ev": 1.96,
@@ -1852,6 +1873,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|HNK Rijeka|FC Midtjylland|大球|1x2|2026-08-28": {
     "ev": 1.37,
     "ts": 1787820912.229702
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|HNK Rijeka|FC Midtjylland|让球主胜|1x2|2026-08-28": {
+    "ev": 2.33,
+    "ts": 1787831978.2366421
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Hapoel Tel Aviv FC|Atalanta BC|主胜|1x2|2026-08-28": {
     "ev": 2.03,
@@ -2275,6 +2300,10 @@
     "ev": 1.55,
     "ts": 1787803551.2290702
   },
+  "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|客胜|1x2|2026-08-28": {
+    "ev": 1.35,
+    "ts": 1787832238.4887402
+  },
   "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|小球|1x2|2026-08-28": {
     "ev": 1.25,
     "ts": 1787828006.194272
@@ -2282,6 +2311,10 @@
   "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|总进球区间7+|total_goals_range|2026-08-28": {
     "ev": 1.59,
     "ts": 1787830196.349973
+  },
+  "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|让球客胜|1x2|2026-08-28": {
+    "ev": 1.95,
+    "ts": 1787832238.488826
   },
   "football|UEFA Europa League-Qualification Playoff|Lillestrom SK|KF Egnatia Rrogozhine|双边进球-是|btts|2026-08-28": {
     "ev": 1.04,
@@ -2563,9 +2596,9 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
-    "ev": 16.35,
-    "bb": 6.4,
-    "ts": 1787831622.015797
+  "football|Egypt Premier League|阿拉伯建筑|马斯里|上半场主胜|ht|2026-08-28": {
+    "ev": 6.84,
+    "bb": 5.25,
+    "ts": 1787832696.468742
   }
 }
