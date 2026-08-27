@@ -1,5 +1,5 @@
 {
-  "balance": 8935.36,
+  "balance": 8735.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3151,6 +3151,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787860800,
       "created_at": "2026-08-27T19:41:13.318802+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_伊蒂哈德亚历山大_瑟亚米卡_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "埃及超级联赛",
+      "home_team": "伊蒂哈德亚历山大",
+      "away_team": "瑟亚米卡",
+      "home_cn": "伊蒂哈德亚历山大",
+      "away_cn": "瑟亚米卡",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 2.15,
+      "stake": 200,
+      "model_prob": 0.4819,
+      "ev_pct": 3.61,
+      "pin_odds": 0,
+      "fair_price": 2.0751,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787936400,
+      "created_at": "2026-08-27T20:53:27.458271+00:00",
       "track_only": false
     }
   ],
@@ -6724,8 +6747,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 816.0,
-    "bets": 6
+    "used": 1016.0,
+    "bets": 7
   },
   "updated": null
 }

@@ -85,6 +85,10 @@
     "ev": 2.44,
     "ts": 1787783650.98156
   },
+  "basketball|Brazil Campeonato Paulista de Basquete|Sesi Franca BC SP|Mogi das Cruzes|客胜|1x2|2026-08-28": {
+    "ev": 1.15,
+    "ts": 1787862309.682323
+  },
   "basketball|Brazil Campeonato Paulista de Basquete|科林蒂安|巴乌鲁|客胜|1x2|2026-08-27": {
     "ev": 38.4,
     "bb": 3.01,
@@ -220,6 +224,10 @@
     "ev": 2.6,
     "ts": 1787829417.4122272
   },
+  "football|Argentina Cup|Platense|Instituto AC Cordoba|双重机会-和局/客|dc|2026-08-28": {
+    "ev": 1.41,
+    "ts": 1787861908.674189
+  },
   "football|Argentina Cup|Platense|Instituto AC Cordoba|和局|1x2|2026-08-28": {
     "ev": 2.16,
     "ts": 1787810708.020983
@@ -231,6 +239,10 @@
   "football|Argentina Cup|Platense|Instituto AC Cordoba|小球|1x2|2026-08-28": {
     "ev": 1.07,
     "ts": 1787849741.410936
+  },
+  "football|Argentina Cup|Platense|Instituto AC Cordoba|让球主胜|1x2|2026-08-28": {
+    "ev": 18.62,
+    "ts": 1787862853.475185
   },
   "football|Argentina Cup|Platense|Instituto AC Cordoba|让球客胜|1x2|2026-08-28": {
     "ev": 2.95,
@@ -496,6 +508,10 @@
     "ev": 3.44,
     "ts": 1787681556.323273
   },
+  "football|Belgium Pro League|KRC Genk|S.K Beveren|上半场主胜|ht|2026-08-29": {
+    "ev": 1.03,
+    "ts": 1787863025.0971541
+  },
   "football|Belgium Pro League|亨克|贝弗伦|上半场主胜|ht|2026-08-29": {
     "ev": 4.85,
     "bb": 2.09,
@@ -654,6 +670,11 @@
     "ev": 2.95,
     "bb": 1.92,
     "ts": 1787846370.447745
+  },
+  "football|Brazil Copa do Brasil|巴西国际|格雷米奥|上半场客胜|ht|2026-08-28": {
+    "ev": 7.32,
+    "bb": 6.45,
+    "ts": 1787861664.158737
   },
   "football|Brazil Copa do Brasil|瓦斯科达伽马|维多利亚|上半场客胜|ht|2026-08-27": {
     "ev": 2.74,
@@ -965,6 +986,10 @@
     "ev": 1.78,
     "ts": 1787850376.936714
   },
+  "football|Egypt Premier League|Al Ittihad Alexandria|Ceramica Cleopatra|和局|1x2|2026-08-29": {
+    "ev": 1.56,
+    "ts": 1787863686.061576
+  },
   "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|上半场主胜|ht|2026-08-28": {
     "ev": 1.22,
     "ts": 1787798388.213254
@@ -1000,6 +1025,10 @@
   "football|Egypt Premier League|Enppi Club|Wadi Degla SC|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 2.57,
     "ts": 1787846370.8160791
+  },
+  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|和局|1x2|2026-08-28": {
+    "ev": 1.51,
+    "ts": 1787863686.0607228
   },
   "football|Egypt Premier League|Modern Sport FC|Ghazl El Mahallah|上半场主胜|ht|2026-08-27": {
     "ev": 12.51,
@@ -3540,9 +3569,9 @@
     "ev": 6.98,
     "ts": 1787833695.998558
   },
-  "football|Brazil Copa do Brasil|巴西国际|格雷米奥|上半场客胜|ht|2026-08-28": {
-    "ev": 7.32,
-    "bb": 6.45,
-    "ts": 1787861664.158737
+  "football|Egypt Premier League|伊蒂哈德亚历山大|瑟亚米卡|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.61,
+    "bb": 2.15,
+    "ts": 1787864007.473695
   }
 }
