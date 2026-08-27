@@ -906,11 +906,6 @@
     "bb": 2.31,
     "ts": 1787822414.426616
   },
-  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
-    "ev": 18.56,
-    "bb": 7.15,
-    "ts": 1787822414.426551
-  },
   "football|Egypt Premier League|未来FC|马哈拉|和局|1x2|2026-08-27": {
     "ev": 11.14,
     "bb": 2.74,
@@ -1908,6 +1903,11 @@
     "ev": 5.98,
     "ts": 1787772733.655804
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|亚布洛内茨|格拉斯哥流浪者|上半场主胜|ht|2026-08-28": {
+    "ev": 4.95,
+    "bb": 3.92,
+    "ts": 1787823089.504419
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|卡拉巴克|特温特|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 4.57,
     "bb": 1.72,
@@ -2104,6 +2104,10 @@
   "football|UEFA Europa League-Qualification Playoff|FC Viktoria Plzen|FK Crvena Zvezda Belgrade|让球主胜|1x2|2026-08-28": {
     "ev": 1.44,
     "ts": 1787812694.980312
+  },
+  "football|UEFA Europa League-Qualification Playoff|FK Kauno Zalgiris|Besiktas JK|上半场主胜|ht|2026-08-28": {
+    "ev": 1.33,
+    "ts": 1787823769.26016
   },
   "football|UEFA Europa League-Qualification Playoff|FK Kauno Zalgiris|Besiktas JK|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.03,
@@ -2385,9 +2389,9 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|UEFA Europa Conference League-Qualification Playoff|亚布洛内茨|格拉斯哥流浪者|上半场主胜|ht|2026-08-28": {
-    "ev": 4.95,
-    "bb": 3.92,
-    "ts": 1787823089.504419
+  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
+    "ev": 21.7,
+    "bb": 7.5,
+    "ts": 1787824085.239003
   }
 }
