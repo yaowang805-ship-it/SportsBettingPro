@@ -106,6 +106,10 @@
     "ev": 2.59,
     "ts": 1787771507.293365
   },
+  "football|Algeria Ligue 1|ES Setif|ES Ben Aknoun|上半场客胜|ht|2026-08-28": {
+    "ev": 4.37,
+    "ts": 1787808040.706787
+  },
   "football|Algeria Ligue 1|MC Alger|MC Oran|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.73,
     "ts": 1787783650.981201
@@ -113,6 +117,11 @@
   "football|Algeria Ligue 1|MC Alger|MC Oran|上半场客胜|ht|2026-08-28": {
     "ev": 14.25,
     "ts": 1787774511.775601
+  },
+  "football|Algeria Ligue 1|塞堤夫|阿科诺|上半场客胜|ht|2026-08-28": {
+    "ev": 4.37,
+    "bb": 7.25,
+    "ts": 1787808040.287719
   },
   "football|Argentina Cup|Aldosivi|Independiente Rivadavia|上半场主胜|ht|2026-08-27": {
     "ev": 5.97,
@@ -316,6 +325,10 @@
   "football|Bahrain Premier League|Sitra Club|Malkiya Club|双边进球-是|btts|2026-08-28": {
     "ev": 1.11,
     "ts": 1787803843.9288452
+  },
+  "football|Bahrain Premier League|Sitra Club|Malkiya Club|和局|1x2|2026-08-28": {
+    "ev": 2.89,
+    "ts": 1787810154.0188549
   },
   "football|Bahrain Premier League|Sitra Club|Malkiya Club|让球客胜|1x2|2026-08-28": {
     "ev": 14.38,
@@ -1021,6 +1034,14 @@
     "ev": 1.47,
     "ts": 1787774511.775687
   },
+  "football|France Ligue 3|SM Caen|Bastia|小球|1x2|2026-08-28": {
+    "ev": 2.46,
+    "ts": 1787808040.706909
+  },
+  "football|France Ligue 3|SM Caen|Bastia|总进球区间7+|total_goals_range|2026-08-28": {
+    "ev": 13.55,
+    "ts": 1787808040.7077498
+  },
   "football|Georgia Cup|FC Gagra|FC Aragvi Dusheti|主胜|1x2|2026-08-27": {
     "ev": 1.22,
     "ts": 1787731009.074731
@@ -1539,6 +1560,10 @@
     "ev": 1.38,
     "ts": 1787792323.271183
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|FK Austria Wien|Braga|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 1.3,
+    "ts": 1787808331.310296
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|FK Borac Banja Luka|Vikingur Reykjavik|大球|1x2|2026-08-28": {
     "ev": 1.33,
     "ts": 1787782653.225651
@@ -1546,6 +1571,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|单双-双|oe|2026-08-28": {
     "ev": 1.1,
     "ts": 1787799532.784346
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|让球主胜|1x2|2026-08-28": {
+    "ev": 1.77,
+    "ts": 1787809786.9133499
   },
   "football|UEFA Europa Conference League-Qualification Playoff|FK Partizan Belgrade|Getafe CF|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.24,
@@ -1654,6 +1683,11 @@
     "ev": 4.47,
     "bb": 4.64,
     "ts": 1787775701.515438
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|赫拉德茨克拉洛韦|帕纳辛纳科斯|上半场主胜|ht|2026-08-28": {
+    "ev": 3.03,
+    "bb": 4.55,
+    "ts": 1787808040.287773
   },
   "football|UEFA Europa Conference League-Qualification Playoff|赫拉德茨克拉洛韦|帕纳辛纳科斯|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 3.75,
@@ -1807,6 +1841,10 @@
   "football|UEFA Europa League-Qualification Playoff|Lillestrom SK|KF Egnatia Rrogozhine|总进球区间7+|total_goals_range|2026-08-28": {
     "ev": 4.11,
     "ts": 1787804146.3375201
+  },
+  "football|UEFA Europa League-Qualification Playoff|Omonia Nicosia|St. Truidense VV|主胜|1x2|2026-08-28": {
+    "ev": 1.31,
+    "ts": 1787808755.5115561
   },
   "football|UEFA Europa League-Qualification Playoff|Omonia Nicosia|St. Truidense VV|让球客胜|1x2|2026-08-28": {
     "ev": 3.38,
@@ -2015,6 +2053,10 @@
     "bb": 3.68,
     "ts": 1787771012.980155
   },
+  "tennis|ITF - W15 Brasov Women Doubles|Simona Cucu (ROU) / Ioana Maria Sandru (ROU)|Stefania Bojica (ROU) / Anastasia Safta (ROU)|主胜|1x2|2026-08-27": {
+    "ev": 3.82,
+    "ts": 1787810209.0073442
+  },
   "tennis|ITF - W35 Barueri Women Doubles|Isabella Barrera Aguirre (USA) / Carolina Bohrer Martins (BRA)|Virginia Crocker (USA) / Krisha Mahendran (IND)|客胜|1x2|2026-08-27": {
     "ev": 20.2,
     "ts": 1787803221.375676
@@ -2027,14 +2069,9 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|Algeria Ligue 1|塞堤夫|阿科诺|上半场客胜|ht|2026-08-28": {
-    "ev": 4.37,
-    "bb": 7.25,
-    "ts": 1787808040.287719
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|赫拉德茨克拉洛韦|帕纳辛纳科斯|上半场主胜|ht|2026-08-28": {
-    "ev": 3.03,
-    "bb": 4.55,
-    "ts": 1787808040.287773
+  "football|UEFA Europa Conference League-Qualification Playoff|贝尔格莱德游击|赫塔菲|上半场主胜|ht|2026-08-28": {
+    "ev": 6.29,
+    "bb": 4.79,
+    "ts": 1787810707.1304598
   }
 }
