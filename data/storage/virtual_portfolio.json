@@ -1,5 +1,5 @@
 {
-  "balance": 10898.36,
+  "balance": 10698.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2737,6 +2737,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787792400,
       "created_at": "2026-08-27T00:56:52.539059+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_CD奥林匹亚_萨普里萨_和局",
+      "sport": "football",
+      "league": "中美洲杯",
+      "home_team": "CD奥林匹亚",
+      "away_team": "萨普里萨",
+      "home_cn": "CD奥林匹亚",
+      "away_cn": "萨普里萨",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.33,
+      "stake": 200,
+      "model_prob": 0.3803,
+      "ev_pct": 26.65,
+      "pin_odds": 2.42,
+      "fair_price": 2.6293,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787884200,
+      "created_at": "2026-08-27T02:35:08.836606+00:00",
       "track_only": false
     }
   ],
@@ -6160,8 +6183,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 2695.0,
-    "bets": 27
+    "used": 2895.0,
+    "bets": 28
   },
   "updated": null
 }

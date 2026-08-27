@@ -619,6 +619,10 @@
     "ev": 1.91,
     "ts": 1787763777.759779
   },
+  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|小球|1x2|2026-08-28": {
+    "ev": 1.21,
+    "ts": 1787796456.848792
+  },
   "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|让球主胜|1x2|2026-08-28": {
     "ev": 1.98,
     "ts": 1787777227.116971
@@ -736,6 +740,11 @@
     "ev": 2.73,
     "bb": 2.2,
     "ts": 1787754641.937054
+  },
+  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
+    "ev": 8.28,
+    "bb": 6.2,
+    "ts": 1787796456.306993
   },
   "football|Egypt Premier League|未来FC|马哈拉|和局|1x2|2026-08-27": {
     "ev": 11.14,
@@ -1162,6 +1171,10 @@
   "football|Spain LaLiga|Celta Vigo|Osasuna|上半场客胜|ht|2026-08-28": {
     "ev": 4.93,
     "ts": 1787769403.866369
+  },
+  "football|Spain LaLiga|FC Barcelona|Athletic Bilbao|让球客胜|1x2|2026-08-28": {
+    "ev": 1.01,
+    "ts": 1787797428.331808
   },
   "football|Spain LaLiga|Real Madrid|Real Sociedad|上半场主胜|ht|2026-08-27": {
     "ev": 2.12,
@@ -1804,9 +1817,9 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
-    "ev": 8.28,
-    "bb": 6.2,
-    "ts": 1787796456.306993
+  "football|CONCACAF Central American Cup|CD奥林匹亚|萨普里萨|和局|1x2|2026-08-28": {
+    "ev": 26.65,
+    "bb": 3.33,
+    "ts": 1787798108.875679
   }
 }
