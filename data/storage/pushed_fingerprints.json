@@ -274,6 +274,10 @@
     "ev": 2.07,
     "ts": 1787853060.459219
   },
+  "football|Argentina Liga Profesional Reserves|Central Cordoba SE (Res)|Ferro Carril Oeste (Res)|让球客胜|1x2|2026-08-28": {
+    "ev": 1.23,
+    "ts": 1787860582.6274571
+  },
   "football|Argentina Liga Profesional Reserves|Colon de Santa Fe (Res)|Lanus (Res)|小球|1x2|2026-08-27": {
     "ev": 1.37,
     "ts": 1787722162.108181
@@ -1641,6 +1645,10 @@
   "football|Iceland 2. deild|Hviti Riddarinn|Fjolnir|主胜|1x2|2026-08-28": {
     "ev": 3.8,
     "ts": 1787803221.375063
+  },
+  "football|Iceland 2. deild|Hviti Riddarinn|Fjolnir|大球|1x2|2026-08-28": {
+    "ev": 2.37,
+    "ts": 1787860726.3508632
   },
   "football|India Calcutta Premier Division|Kidderpore SC|East Bengal II|主胜|1x2|2026-08-27": {
     "ev": 2.11,
@@ -3513,8 +3521,8 @@
     "ts": 1787833695.998558
   },
   "football|Iceland 2. deild|白色骑士|弗约尼尔|主胜|1x2|2026-08-28": {
-    "ev": 5.0,
-    "bb": 3.64,
-    "ts": 1787859673.331913
+    "ev": 8.23,
+    "bb": 3.94,
+    "ts": 1787860822.049407
   }
 }
