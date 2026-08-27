@@ -1,5 +1,5 @@
 {
-  "balance": 9535.36,
+  "balance": 9471.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3128,6 +3128,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787790600,
       "created_at": "2026-08-27T00:19:06.310005+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_北索尔塔中央_玛伦_上半场客胜",
+      "sport": "football",
+      "league": "阿根廷全国联赛",
+      "home_team": "北索尔塔中央",
+      "away_team": "玛伦",
+      "home_cn": "北索尔塔中央",
+      "away_cn": "玛伦",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 5.1,
+      "stake": 64,
+      "model_prob": 0.2047,
+      "ev_pct": 4.41,
+      "pin_odds": 4.39,
+      "fair_price": 4.8846,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787790600,
+      "created_at": "2026-08-27T00:29:18.779842+00:00",
       "track_only": false
     }
   ],
@@ -6371,8 +6394,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 2527.0,
-    "bets": 25
+    "used": 2591.0,
+    "bets": 26
   },
   "updated": null
 }

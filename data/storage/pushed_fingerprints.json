@@ -526,6 +526,11 @@
     "ev": 2.62,
     "ts": 1787767017.007369
   },
+  "football|Argentina Primera Nacional|北索尔塔中央|玛伦|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 2.64,
+    "bb": 2.15,
+    "ts": 1787789946.3201358
+  },
   "football|Argentina Primera Nacional|帕特罗纳图|阿特兰大竞技|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 2.55,
     "bb": 2.12,
@@ -673,6 +678,10 @@
     "ev": 1.11,
     "ts": 1787773951.983487
   },
+  "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|角球大球|corner|2026-08-27": {
+    "ev": 2.63,
+    "ts": 1787790055.861325
+  },
   "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|让球主胜|1x2|2026-08-27": {
     "ev": 1.56,
     "ts": 1787787968.835027
@@ -697,9 +706,21 @@
     "ev": 1.51,
     "ts": 1787701096.3137531
   },
+  "football|Brazil Copa do Brasil|SE Palmeiras SP|Santos FC SP|上半场客胜|ht|2026-08-27": {
+    "ev": 1.69,
+    "ts": 1787790131.7475479
+  },
   "football|Brazil Copa do Brasil|SE Palmeiras SP|Santos FC SP|主胜|1x2|2026-08-27": {
     "ev": 1.52,
     "ts": 1787743029.2002711
+  },
+  "football|Brazil Copa do Brasil|SE Palmeiras SP|Santos FC SP|双边进球-是|btts|2026-08-27": {
+    "ev": 1.14,
+    "ts": 1787790055.861165
+  },
+  "football|Brazil Copa do Brasil|SE Palmeiras SP|Santos FC SP|大球|1x2|2026-08-27": {
+    "ev": 1.28,
+    "ts": 1787789946.8681002
   },
   "football|Brazil Copa do Brasil|SE Palmeiras SP|Santos FC SP|小球|1x2|2026-08-27": {
     "ev": 1.03,
@@ -940,9 +961,17 @@
     "ev": 8.75,
     "ts": 1787721851.1756349
   },
+  "football|Copa Sudamericana|River Plate|Independiente Santa Fe|双边进球-否|btts|2026-08-27": {
+    "ev": 2.0,
+    "ts": 1787790055.8611
+  },
   "football|Copa Sudamericana|River Plate|Independiente Santa Fe|客胜|1x2|2026-08-27": {
     "ev": 5.86,
     "ts": 1787747351.077544
+  },
+  "football|Copa Sudamericana|River Plate|Independiente Santa Fe|小球|1x2|2026-08-27": {
+    "ev": 1.43,
+    "ts": 1787790257.570415
   },
   "football|Copa Sudamericana|River Plate|Independiente Santa Fe|让球客胜|1x2|2026-08-27": {
     "ev": 3.4,
@@ -4597,9 +4626,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Argentina Primera Nacional|北索尔塔中央|玛伦|上半场双重机会-主/客|ht_dc|2026-08-27": {
-    "ev": 2.64,
-    "bb": 2.15,
-    "ts": 1787789946.3201358
+  "football|Argentina Primera Nacional|北索尔塔中央|玛伦|上半场客胜|ht|2026-08-27": {
+    "ev": 4.41,
+    "bb": 5.1,
+    "ts": 1787790558.795003
   }
 }
