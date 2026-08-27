@@ -1014,7 +1014,7 @@ def _calc_kelly_stakes(opps: list) -> list:
 
     # 第二遍：总额超预算时, 按 stake 降序取 top 保留, 超出清零 (不摊薄, 集中在最优机会)
     daily_budget = bankroll  # V4.5: 动态日预算
-    _active = sorted([o for o in opps if o["_stake"] > 0], key=lambda o: -o["_stake"])
+    _active = sorted([o for o in opps if o["_stake"] >= 30], key=lambda o: -o["_stake"])
     _cum = 0
     for o in _active:
         if _cum + o["_stake"] > daily_budget:
@@ -1026,7 +1026,7 @@ def _calc_kelly_stakes(opps: list) -> list:
     from collections import defaultdict
     match_groups = defaultdict(list)
     for o in opps:
-        if o["_stake"] <= 0:
+        if o["_stake"] < 30:
             continue
         key = (o.get("sport", ""), o.get("home_cn", "").strip(), o.get("away_cn", "").strip())
         match_groups[key].append(o)
@@ -1041,7 +1041,7 @@ def _calc_kelly_stakes(opps: list) -> list:
                     o["_stake"] = max(0, round(o["_stake"] * discount))
                     o["_corr_discount"] = round(discount, 3)
 
-        _active = sorted([o for o in group if o["_stake"] > 0], key=lambda o: -o["_stake"])
+        _active = sorted([o for o in group if o["_stake"] >= 30], key=lambda o: -o["_stake"])
         _cum = 0
         for o in _active:
             if _cum + o["_stake"] > per_match_max:
@@ -1053,14 +1053,14 @@ def _calc_kelly_stakes(opps: list) -> list:
     league_groups = defaultdict(list)
     sport_groups = defaultdict(list)
     for o in opps:
-        if o["_stake"] <= 0:
+        if o["_stake"] < 30:
             continue
         league_groups[(o.get("sport", ""), o.get("league", ""))].append(o)
         sport_groups[o.get("sport", "")].append(o)
 
     per_league_max = bankroll * _PER_LEAGUE_CAP_PCT
     for key, group in league_groups.items():
-        _active = sorted([o for o in group if o["_stake"] > 0], key=lambda o: -o["_stake"])
+        _active = sorted([o for o in group if o["_stake"] >= 30], key=lambda o: -o["_stake"])
         _cum = 0
         for o in _active:
             if _cum + o["_stake"] > per_league_max:
@@ -1077,7 +1077,7 @@ def _calc_kelly_stakes(opps: list) -> list:
     for key, group in sport_groups.items():
         sport_cap = _SPORT_TOTAL_CAPS.get(key, _PER_SPORT_CAP_PCT)
         per_sport_max = bankroll * sport_cap
-        _active = sorted([o for o in group if o["_stake"] > 0], key=lambda o: -o["_stake"])
+        _active = sorted([o for o in group if o["_stake"] >= 30], key=lambda o: -o["_stake"])
         _cum = 0
         for o in _active:
             if _cum + o["_stake"] > per_sport_max:
@@ -1195,7 +1195,7 @@ def _cross_market_correlation_discount(group: list) -> float:
 def _correct_budget_tracker(opps: list):
     """推送成功后重算预算消耗，排除因指纹去重被过滤的机会。"""
     spent, today = _load_budget_tracker()
-    total = sum(o["_stake"] for o in opps if o["_stake"] > 0)
+    total = sum(o["_stake"] for o in opps if o["_stake"] >= 30)
     # 保留当天之前推送的累积，加上本次实际
     prev_total = sum(spent.values()) if spent else 0
     _save_budget_tracker({"total": prev_total + total}, today)
