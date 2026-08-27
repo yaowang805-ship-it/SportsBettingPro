@@ -660,6 +660,8 @@ class PipelineOrchestrator:
         导致比赛结束到结算之间经常超窗口、BB 比分被清 → 大量注 timeout_void/unsettleable。
         这个高频任务只跑 BB(轻量), 不跑 auto_settle(ESPN,重), 保证每场结束 ~1h 内就结算。
         """
+        if self._active_tasks_settle():
+            return  # 已有 settle 任务在跑, 跳过(避免并发读写 tracked_bets)
         try:
             from src.monitor.bb_score_settle import settle_via_bb
             r = settle_via_bb()
