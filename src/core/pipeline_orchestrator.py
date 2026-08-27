@@ -1295,6 +1295,16 @@ class PipelineOrchestrator:
                     setattr(self, last_key, time.time())
                     self._run_task(f"incremental_{tw}", self.do_incremental, background=True, time_window=tw)
 
+        # 2b) 高频 BB 结算(2026-08-27): 每 110min 一次, 保证卡进 BB ~5h 赛果窗口。
+        # 原 settle 一天只跑 4 次(08:30/14:00/17:00/20:30, 间隙 3-12h), 比赛结束到结算之间
+        # 常超 5h 窗口 → BB 比分被清 → 大量 timeout_void/unsettleable。高频只跑 BB(轻量)。
+        _bb_interval = 110 * 60
+        if self._last_bb_settle is None:
+            self._last_bb_settle = time.time()
+        if (now - datetime.fromtimestamp(self._last_bb_settle)).total_seconds() >= _bb_interval:
+            self._last_bb_settle = time.time()
+            self._run_task("settle_bb_highfreq", self.do_settle_bb, background=True)
+
         # 3) 自检看门狗
         self._watchdog()
 
