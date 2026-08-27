@@ -1367,6 +1367,11 @@
     "ev": 1.19,
     "ts": 1787755566.0256798
   },
+  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
+    "ev": 9.78,
+    "bb": 6.0,
+    "ts": 1787812378.990624
+  },
   "football|Switzerland 1. Liga Classic|FC Meyrin|Servette II|客胜|1x2|2026-08-27": {
     "ev": 4.38,
     "ts": 1787767249.363307
@@ -1886,6 +1891,10 @@
     "ev": 3.24,
     "ts": 1787811842.2901871
   },
+  "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|先进球neither|first_to_score|2026-08-28": {
+    "ev": 2.42,
+    "ts": 1787812379.403195
+  },
   "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|双边进球-否|btts|2026-08-28": {
     "ev": 1.55,
     "ts": 1787803551.2290702
@@ -2134,9 +2143,14 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
-    "ev": 9.78,
-    "bb": 6.0,
-    "ts": 1787812378.990624
+  "football|Egypt Premier League|阿拉伯建筑|马斯里|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 2.94,
+    "bb": 2.07,
+    "ts": 1787812694.51632
+  },
+  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 2.98,
+    "bb": 1.91,
+    "ts": 1787812694.516361
   }
 }
