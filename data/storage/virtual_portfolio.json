@@ -1,5 +1,5 @@
 {
-  "balance": 8974.36,
+  "balance": 8935.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3128,6 +3128,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787857200,
       "created_at": "2026-08-27T18:58:25.895349+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_白色骑士_弗约尼尔_主胜",
+      "sport": "football",
+      "league": "冰岛乙级联赛",
+      "home_team": "白色骑士",
+      "away_team": "弗约尼尔",
+      "home_cn": "白色骑士",
+      "away_cn": "弗约尼尔",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.64,
+      "stake": 39,
+      "model_prob": 0.2885,
+      "ev_pct": 5.0,
+      "pin_odds": 3.11,
+      "fair_price": 3.4666,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787860800,
+      "created_at": "2026-08-27T19:41:13.318802+00:00",
       "track_only": false
     }
   ],
@@ -6701,8 +6724,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 777.0,
-    "bets": 5
+    "used": 816.0,
+    "bets": 6
   },
   "updated": null
 }

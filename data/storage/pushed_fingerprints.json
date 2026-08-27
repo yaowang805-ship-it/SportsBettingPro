@@ -237,6 +237,11 @@
     "bb": 2.11,
     "ts": 1787846370.447871
   },
+  "football|Argentina Cup|拉普拉塔大学生|巴拉卡斯中央队|上半场客胜|ht|2026-08-28": {
+    "ev": 24.87,
+    "bb": 9.5,
+    "ts": 1787857105.912537
+  },
   "football|Argentina Cup|普拉腾斯|科尔多瓦学院|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 6.03,
     "bb": 2.04,
@@ -604,6 +609,10 @@
   "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|主胜|1x2|2026-08-28": {
     "ev": 2.17,
     "ts": 1787834046.711872
+  },
+  "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|大球|1x2|2026-08-28": {
+    "ev": 3.65,
+    "ts": 1787858762.3590379
   },
   "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|小球|1x2|2026-08-28": {
     "ev": 2.31,
@@ -1396,6 +1405,10 @@
     "ev": 2.26,
     "ts": 1787853874.7815092
   },
+  "football|England Premier League|Crystal Palace|Manchester City FC|上半场主胜|ht|2026-08-29": {
+    "ev": 1.96,
+    "ts": 1787857299.218401
+  },
   "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|上半场主胜|ht|2026-08-27": {
     "ev": 1.32,
     "ts": 1787751466.740027
@@ -1965,6 +1978,10 @@
     "ev": 9.28,
     "ts": 1787828451.538971
   },
+  "football|Spain LaLiga 2|Tenerife CD|Sporting Gijon|上半场客胜|ht|2026-08-29": {
+    "ev": 2.35,
+    "ts": 1787857625.260948
+  },
   "football|Spain LaLiga|Celta Vigo|Osasuna|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.17,
     "ts": 1787771507.2935958
@@ -2087,6 +2104,10 @@
   "football|UAE Pro League|United FC|Al Ittihad Kalba|让球主胜|1x2|2026-08-28": {
     "ev": 1.88,
     "ts": 1787839275.8269608
+  },
+  "football|UAE Pro League|United FC|Al Ittihad Kalba|让球客胜|1x2|2026-08-28": {
+    "ev": 6.57,
+    "ts": 1787858204.867
   },
   "football|UEFA Champions League Women-Qualification|AFC Ajax (w)|Real Madrid CF (w)|让球客胜|1x2|2026-08-27": {
     "ev": 3.71,
@@ -2612,6 +2633,10 @@
     "ev": 4.47,
     "ts": 1787775701.909222
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|主胜|1x2|2026-08-28": {
+    "ev": 1.86,
+    "ts": 1787857106.418476
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|双边进球-是|btts|2026-08-28": {
     "ev": 1.3,
     "ts": 1787820212.794923
@@ -2619,6 +2644,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|大球|1x2|2026-08-28": {
     "ev": 1.75,
     "ts": 1787771219.462948
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|让球主胜|1x2|2026-08-28": {
+    "ev": 2.58,
+    "ts": 1787857223.97055
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|让球客胜|1x2|2026-08-28": {
     "ev": 2.23,
@@ -2811,6 +2840,11 @@
     "ev": 4.31,
     "bb": 1.92,
     "ts": 1787799934.1262872
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|拉恩|林肯红魔鬼|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 4.05,
+    "bb": 1.89,
+    "ts": 1787857105.912471
   },
   "football|UEFA Europa Conference League-Qualification Playoff|拉恩|林肯红魔鬼|上半场客胜|ht|2026-08-28": {
     "ev": 4.47,
@@ -3478,14 +3512,9 @@
     "ev": 6.98,
     "ts": 1787833695.998558
   },
-  "football|UEFA Europa Conference League-Qualification Playoff|拉恩|林肯红魔鬼|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 4.05,
-    "bb": 1.89,
-    "ts": 1787857105.912471
-  },
-  "football|Argentina Cup|拉普拉塔大学生|巴拉卡斯中央队|上半场客胜|ht|2026-08-28": {
-    "ev": 24.87,
-    "bb": 9.5,
-    "ts": 1787857105.912537
+  "football|Iceland 2. deild|白色骑士|弗约尼尔|主胜|1x2|2026-08-28": {
+    "ev": 5.0,
+    "bb": 3.64,
+    "ts": 1787859673.331913
   }
 }
