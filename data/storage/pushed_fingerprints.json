@@ -232,6 +232,10 @@
     "ev": 1.07,
     "ts": 1787849741.410936
   },
+  "football|Argentina Cup|Platense|Instituto AC Cordoba|让球客胜|1x2|2026-08-28": {
+    "ev": 2.95,
+    "ts": 1787861088.6296582
+  },
   "football|Argentina Cup|拉普拉塔大学生|巴拉卡斯中央队|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 5.02,
     "bb": 2.11,
@@ -650,11 +654,6 @@
     "ev": 2.95,
     "bb": 1.92,
     "ts": 1787846370.447745
-  },
-  "football|Brazil Copa do Brasil|巴西国际|格雷米奥|上半场客胜|ht|2026-08-28": {
-    "ev": 3.25,
-    "bb": 5.95,
-    "ts": 1787846370.4477901
   },
   "football|Brazil Copa do Brasil|瓦斯科达伽马|维多利亚|上半场客胜|ht|2026-08-27": {
     "ev": 2.74,
@@ -1385,6 +1384,10 @@
     "bb": 9.8,
     "ts": 1787768698.055834
   },
+  "football|England National League North|Oxford City|Buxton FC|让球客胜|1x2|2026-08-29": {
+    "ev": 8.73,
+    "ts": 1787861516.630909
+  },
   "football|England Northern Premier League|Avro FC|Leek Town FC|大球|1x2|2026-08-27": {
     "ev": 3.1,
     "ts": 1787733578.787401
@@ -1650,6 +1653,11 @@
     "ev": 2.37,
     "ts": 1787860726.3508632
   },
+  "football|Iceland 2. deild|白色骑士|弗约尼尔|主胜|1x2|2026-08-28": {
+    "ev": 8.23,
+    "bb": 3.94,
+    "ts": 1787860822.049407
+  },
   "football|India Calcutta Premier Division|Kidderpore SC|East Bengal II|主胜|1x2|2026-08-27": {
     "ev": 2.11,
     "ts": 1787814261.364979
@@ -1689,6 +1697,10 @@
   "football|Ireland Premier Division|Saint Patricks Athletic FC|Waterford FC|客胜|1x2|2026-08-29": {
     "ev": 2.58,
     "ts": 1787856621.458785
+  },
+  "football|Italy Serie A|Milan|Venezia|先进球neither|first_to_score|2026-08-29": {
+    "ev": 2.66,
+    "ts": 1787861516.6319292
   },
   "football|Italy Serie B|US Cremonese|Modena FC|上半场客胜|ht|2026-08-29": {
     "ev": 1.16,
@@ -1901,6 +1913,10 @@
     "ev": 1.66,
     "ts": 1787853874.779677
   },
+  "football|Romania Liga 1|FC Universitatea Cluj|FC Petrolul Ploiesti|单双-双|oe|2026-08-29": {
+    "ev": 1.18,
+    "ts": 1787861516.629559
+  },
   "football|Russia First League|FC Neftekhimik Nizhnekamsk|FK Ufa|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.33,
     "ts": 1787848452.9476779
@@ -1985,6 +2001,10 @@
   "football|South Korea K-League 2|Jeonnam Dragons|Cheonan City FC|让球主胜|1x2|2026-08-28": {
     "ev": 9.28,
     "ts": 1787828451.538971
+  },
+  "football|Spain LaLiga 2|Tenerife CD|Sporting Gijon|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 1.12,
+    "ts": 1787861516.6310642
   },
   "football|Spain LaLiga 2|Tenerife CD|Sporting Gijon|上半场客胜|ht|2026-08-29": {
     "ev": 2.35,
@@ -3520,9 +3540,9 @@
     "ev": 6.98,
     "ts": 1787833695.998558
   },
-  "football|Iceland 2. deild|白色骑士|弗约尼尔|主胜|1x2|2026-08-28": {
-    "ev": 8.23,
-    "bb": 3.94,
-    "ts": 1787860822.049407
+  "football|Brazil Copa do Brasil|巴西国际|格雷米奥|上半场客胜|ht|2026-08-28": {
+    "ev": 7.32,
+    "bb": 6.45,
+    "ts": 1787861664.158737
   }
 }
