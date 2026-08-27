@@ -351,6 +351,11 @@
     "ev": 1.95,
     "ts": 1787819852.032523
   },
+  "football|Armenian Cup|萨达拉帕特|休尼克FC|主胜|1x2|2026-08-27": {
+    "ev": 11.59,
+    "bb": 2.01,
+    "ts": 1787820093.1678421
+  },
   "football|Bahrain Premier League|Al Najma Manama|AL Khalidiyah|大球|1x2|2026-08-28": {
     "ev": 1.28,
     "ts": 1787803221.375471
@@ -682,9 +687,17 @@
     "ev": 2.38,
     "ts": 1787793553.6431592
   },
+  "football|Colombia Primera A|Internacional de Bogota|Pasto|双边进球-是|btts|2026-08-28": {
+    "ev": 1.55,
+    "ts": 1787821514.6914098
+  },
   "football|Colombia Primera A|Internacional de Bogota|Pasto|和局|1x2|2026-08-28": {
     "ev": 1.59,
     "ts": 1787793923.306985
+  },
+  "football|Colombia Primera A|Internacional de Bogota|Pasto|让球客胜|1x2|2026-08-28": {
+    "ev": 2.96,
+    "ts": 1787821764.032684
   },
   "football|Colombia Primera A|Llaneros FC|Millonarios FC|单双-双|oe|2026-08-28": {
     "ev": 1.1,
@@ -884,16 +897,6 @@
     "bb": 3.08,
     "ts": 1787763278.102262
   },
-  "football|Egypt Premier League|未来FC|马哈拉|上半场双重机会-主/客|ht_dc|2026-08-27": {
-    "ev": 2.73,
-    "bb": 2.2,
-    "ts": 1787754641.937054
-  },
-  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
-    "ev": 16.16,
-    "bb": 7.05,
-    "ts": 1787807045.899913
-  },
   "football|Egypt Premier League|未来FC|马哈拉|和局|1x2|2026-08-27": {
     "ev": 11.14,
     "bb": 2.74,
@@ -903,6 +906,10 @@
     "ev": 2.94,
     "bb": 2.07,
     "ts": 1787812694.51632
+  },
+  "football|Egypt Second Division A|Tersana SC|La Viena FC|让球客胜|1x2|2026-08-27": {
+    "ev": 2.43,
+    "ts": 1787820773.836534
   },
   "football|El Salvador Primera Division|Platense Municipal Zacatecoluca|Alianza FC San Salvador|让球主胜|1x2|2026-08-27": {
     "ev": 10.65,
@@ -1220,6 +1227,18 @@
     "ev": 2.11,
     "ts": 1787814261.364979
   },
+  "football|India Calcutta Premier Division|Kidderpore SC|East Bengal II|双重机会-主/和局|dc|2026-08-27": {
+    "ev": 2.21,
+    "ts": 1787821786.205041
+  },
+  "football|India Calcutta Premier Division|Suruchi Sangha|Wari AC|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 3.04,
+    "ts": 1787822081.662189
+  },
+  "football|India Calcutta Premier Division|Suruchi Sangha|Wari AC|客胜|1x2|2026-08-27": {
+    "ev": 2.51,
+    "ts": 1787822081.662126
+  },
   "football|Kuwait Premier League|Al Salmiyah|Al Nasr SC|主胜|1x2|2026-08-27": {
     "ev": 1.06,
     "ts": 1787748660.6954932
@@ -1335,6 +1354,18 @@
   "football|Qatar Stars League|Al Wakrah|Al Rayyan SC|单双-双|oe|2026-08-28": {
     "ev": 2.17,
     "ts": 1787761957.1612191
+  },
+  "football|Saudi Arabia Division 1|AL Jabalain FC|Al Jeel|上半场主胜|ht|2026-08-28": {
+    "ev": 3.47,
+    "ts": 1787820912.232967
+  },
+  "football|Saudi Arabia Division 1|AL Jabalain FC|Al Jeel|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 1.33,
+    "ts": 1787820912.2330399
+  },
+  "football|Saudi Arabia Division 1|AL Jabalain FC|Al Jeel|让球主胜|1x2|2026-08-28": {
+    "ev": 2.21,
+    "ts": 1787821225.9477062
   },
   "football|Slovenia Cup|ND Adria|NK Bilje|主胜|1x2|2026-08-27": {
     "ev": 3.17,
@@ -1675,6 +1706,10 @@
     "ev": 1.1,
     "ts": 1787799532.784346
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|双边进球-是|btts|2026-08-28": {
+    "ev": 3.01,
+    "ts": 1787820212.7947378
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|让球主胜|1x2|2026-08-28": {
     "ev": 1.77,
     "ts": 1787809786.9133499
@@ -1702,6 +1737,14 @@
   "football|UEFA Europa Conference League-Qualification Playoff|HNK Rijeka|FC Midtjylland|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.59,
     "ts": 1787769957.915342
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|HNK Rijeka|FC Midtjylland|双边进球-是|btts|2026-08-28": {
+    "ev": 2.58,
+    "ts": 1787820558.2091131
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|HNK Rijeka|FC Midtjylland|大球|1x2|2026-08-28": {
+    "ev": 1.37,
+    "ts": 1787820912.229702
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Hapoel Tel Aviv FC|Atalanta BC|主胜|1x2|2026-08-28": {
     "ev": 2.03,
@@ -1731,6 +1774,18 @@
     "ev": 5.4,
     "ts": 1787756587.437453
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Kuopion Palloseura|Shamrock Rovers|双边进球-是|btts|2026-08-27": {
+    "ev": 3.05,
+    "ts": 1787821584.764843
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Kuopion Palloseura|Shamrock Rovers|小球|1x2|2026-08-27": {
+    "ev": 1.38,
+    "ts": 1787822194.916037
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Kuopion Palloseura|Shamrock Rovers|让球客胜|1x2|2026-08-27": {
+    "ev": 1.52,
+    "ts": 1787820912.2325618
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.98,
     "ts": 1787814295.230243
@@ -1738,6 +1793,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|上半场客胜|ht|2026-08-28": {
     "ev": 4.47,
     "ts": 1787775701.909222
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|双边进球-是|btts|2026-08-28": {
+    "ev": 1.3,
+    "ts": 1787820212.794923
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|大球|1x2|2026-08-28": {
     "ev": 1.75,
@@ -1763,6 +1822,10 @@
     "ev": 1.2,
     "ts": 1787813967.824121
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Pafos FC|Dinamo City|客胜|1x2|2026-08-28": {
+    "ev": 1.27,
+    "ts": 1787820212.794454
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.21,
     "ts": 1787801639.999705
@@ -1786,6 +1849,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 4.48,
     "ts": 1787807046.253939
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|上半场客胜|ht|2026-08-28": {
+    "ev": 1.1,
+    "ts": 1787820912.2301812
   },
   "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|双边进球-是|btts|2026-08-28": {
     "ev": 2.82,
@@ -2272,6 +2339,10 @@
     "ev": 4.99,
     "ts": 1787814895.415358
   },
+  "tennis|ITF - M25 Oldenzaal Men Doubles|Jayson Blando (USA) / Oren Vasser (USA)|Eero Vasa (FIN) / Iiro Vasa (FIN)|客胜|1x2|2026-08-27": {
+    "ev": 6.25,
+    "ts": 1787821290.458287
+  },
   "tennis|ITF - W15 Brasov Women Doubles|Simona Cucu (ROU) / Ioana Maria Sandru (ROU)|Stefania Bojica (ROU) / Anastasia Safta (ROU)|主胜|1x2|2026-08-27": {
     "ev": 3.82,
     "ts": 1787810209.0073442
@@ -2288,9 +2359,14 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|Armenian Cup|萨达拉帕特|休尼克FC|主胜|1x2|2026-08-27": {
-    "ev": 11.59,
-    "bb": 2.01,
-    "ts": 1787820093.1678421
+  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
+    "ev": 18.56,
+    "bb": 7.15,
+    "ts": 1787822414.426551
+  },
+  "football|Egypt Premier League|未来FC|马哈拉|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 6.25,
+    "bb": 2.31,
+    "ts": 1787822414.426616
   }
 }
