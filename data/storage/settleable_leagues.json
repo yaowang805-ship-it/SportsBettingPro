@@ -356,7 +356,7 @@
       "success_rate": 0.0
     },
     "法罗群岛超级联赛": {
-      "attempts": 3,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -506,7 +506,7 @@
       "success_rate": 0.0
     },
     "塞尔维亚超级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -521,7 +521,7 @@
       "success_rate": 0.0
     },
     "土耳其甲级联赛": {
-      "attempts": 8,
+      "attempts": 10,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -651,7 +651,7 @@
       "success_rate": 1.0
     },
     "阿根廷杯": {
-      "attempts": 5,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -711,7 +711,7 @@
       "success_rate": 0.0
     },
     "意大利乙级联赛": {
-      "attempts": 8,
+      "attempts": 9,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -841,7 +841,7 @@
       "success_rate": 0.0
     },
     "埃及超级联赛": {
-      "attempts": 8,
+      "attempts": 9,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -936,7 +936,7 @@
       "success_rate": 0.0
     },
     "阿根廷全国甲级联赛A-附加赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -954,9 +954,24 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "意大利丙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "比利时甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "阿塞拜疆超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-26T12:46:41.932745+00:00",
+  "updated": "2026-08-27T01:11:50.513807+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
