@@ -793,6 +793,10 @@
     "ev": 12.49,
     "ts": 1787744631.778351
   },
+  "football|Egypt Premier League|Pyramids FC|Abo Qair Semads|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 1.55,
+    "ts": 1787807381.652779
+  },
   "football|Egypt Premier League|佩特捷德|杰艾斯|上半场主胜|ht|2026-08-27": {
     "ev": 3.63,
     "bb": 4.44,
@@ -822,6 +826,11 @@
     "ev": 2.73,
     "bb": 2.2,
     "ts": 1787754641.937054
+  },
+  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
+    "ev": 16.16,
+    "bb": 7.05,
+    "ts": 1787807045.899913
   },
   "football|Egypt Premier League|未来FC|马哈拉|和局|1x2|2026-08-27": {
     "ev": 11.14,
@@ -1546,6 +1555,10 @@
     "ev": 1.59,
     "ts": 1787769957.915342
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Inter Club de Escaldes|KF Drita|双边进球-是|btts|2026-08-28": {
+    "ev": 1.25,
+    "ts": 1787807046.254911
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Kuopion Palloseura|Shamrock Rovers|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 1.52,
     "ts": 1787756587.4375098
@@ -1589,6 +1602,22 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|大球|1x2|2026-08-28": {
     "ev": 1.73,
     "ts": 1787803551.228381
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|角球小球|corner|2026-08-28": {
+    "ev": 2.11,
+    "ts": 1787807662.7567291
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 4.48,
+    "ts": 1787807046.253939
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|双边进球-是|btts|2026-08-28": {
+    "ev": 2.82,
+    "ts": 1787807046.253769
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|大球|1x2|2026-08-28": {
+    "ev": 2.03,
+    "ts": 1787807046.253824
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|上半场主胜|ht|2026-08-28": {
     "ev": 3.29,
@@ -1998,9 +2027,14 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
-    "ev": 16.16,
-    "bb": 7.05,
-    "ts": 1787807045.899913
+  "football|Algeria Ligue 1|塞堤夫|阿科诺|上半场客胜|ht|2026-08-28": {
+    "ev": 4.37,
+    "bb": 7.25,
+    "ts": 1787808040.287719
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|赫拉德茨克拉洛韦|帕纳辛纳科斯|上半场主胜|ht|2026-08-28": {
+    "ev": 3.03,
+    "bb": 4.55,
+    "ts": 1787808040.287773
   }
 }

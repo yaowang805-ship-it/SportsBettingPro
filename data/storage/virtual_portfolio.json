@@ -1,5 +1,5 @@
 {
-  "balance": 10355.36,
+  "balance": 10341.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2853,6 +2853,52 @@
       "commence_time": 1787846400,
       "created_at": "2026-08-27T04:05:50.904269+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_塞堤夫_阿科诺_上半场客胜",
+      "sport": "football",
+      "league": "阿尔及利亚甲级联赛",
+      "home_team": "塞堤夫",
+      "away_team": "阿科诺",
+      "home_cn": "塞堤夫",
+      "away_cn": "阿科诺",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 7.25,
+      "stake": 14,
+      "model_prob": 0.144,
+      "ev_pct": 4.37,
+      "pin_odds": 5.52,
+      "fair_price": 6.9467,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787853600,
+      "created_at": "2026-08-27T05:20:40.277114+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_赫拉德茨克拉洛韦_帕纳辛纳科斯_上半场主胜",
+      "sport": "football",
+      "league": "欧足联欧洲协会联赛-资格赛附加赛",
+      "home_team": "赫拉德茨克拉洛韦",
+      "away_team": "帕纳辛纳科斯",
+      "home_cn": "赫拉德茨克拉洛韦",
+      "away_cn": "帕纳辛纳科斯",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.55,
+      "stake": 0,
+      "model_prob": 0.2264,
+      "ev_pct": 3.03,
+      "pin_odds": 3.91,
+      "fair_price": 4.416,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787850000,
+      "created_at": "2026-08-27T05:20:40.277169+00:00",
+      "track_only": true
     }
   ],
   "settled": {
@@ -6290,8 +6336,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 3374.0,
-    "bets": 33
+    "used": 3388.0,
+    "bets": 35
   },
   "updated": null
 }
