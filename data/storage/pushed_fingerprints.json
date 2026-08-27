@@ -98,6 +98,10 @@
     "ev": 2.0,
     "ts": 1787750066.66384
   },
+  "basketball|WNBA|New York Liberty (w)|Golden State Valkyries (w)|让分主胜|1x2|2026-08-28": {
+    "ev": 2.85,
+    "ts": 1787813967.825045
+  },
   "basketball|WNBA|Seattle Storm (w)|Toronto Tempo (w)|让分客胜|1x2|2026-08-27": {
     "ev": 1.51,
     "ts": 1787780257.928138
@@ -1179,6 +1183,10 @@
     "ev": 3.8,
     "ts": 1787803221.375063
   },
+  "football|India Calcutta Premier Division|Kidderpore SC|East Bengal II|主胜|1x2|2026-08-27": {
+    "ev": 2.11,
+    "ts": 1787814261.364979
+  },
   "football|Kuwait Premier League|Al Salmiyah|Al Nasr SC|主胜|1x2|2026-08-27": {
     "ev": 1.06,
     "ts": 1787748660.6954932
@@ -1670,6 +1678,10 @@
     "ev": 1.36,
     "ts": 1787763777.7601001
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Pafos FC|Dinamo City|双边进球-是|btts|2026-08-28": {
+    "ev": 1.2,
+    "ts": 1787813967.824121
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.21,
     "ts": 1787801639.999705
@@ -1753,6 +1765,11 @@
     "ev": 4.38,
     "bb": 1.93,
     "ts": 1787764120.197126
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|里耶卡|中日德兰|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 3.16,
+    "bb": 1.81,
+    "ts": 1787813656.2400808
   },
   "football|UEFA Europa Conference League-Qualification Playoff|阿贾克斯|锡永|上半场主胜|ht|2026-08-28": {
     "ev": 5.38,
@@ -2165,9 +2182,9 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|UEFA Europa Conference League-Qualification Playoff|里耶卡|中日德兰|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 3.16,
-    "bb": 1.81,
-    "ts": 1787813656.2400808
+  "football|UEFA Europa Conference League-Qualification Playoff|贝尔格莱德游击|赫塔菲|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 4.03,
+    "bb": 1.84,
+    "ts": 1787814294.748628
   }
 }
