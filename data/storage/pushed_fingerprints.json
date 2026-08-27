@@ -275,6 +275,10 @@
     "ev": 15.04,
     "ts": 1787781683.380777
   },
+  "football|Argentina Cup|Platense|Instituto AC Cordoba|上半场客胜|ht|2026-08-28": {
+    "ev": 1.82,
+    "ts": 1787789850.79289
+  },
   "football|Argentina Cup|拉普拉塔大学生|巴拉卡斯中央队|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 4.4,
     "bb": 1.95,
@@ -441,6 +445,10 @@
   "football|Argentina Primera Nacional|Central Norte Salta|Deportivo Moron|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 1.15,
     "ts": 1787769081.784446
+  },
+  "football|Argentina Primera Nacional|Central Norte Salta|Deportivo Moron|上半场客胜|ht|2026-08-27": {
+    "ev": 2.36,
+    "ts": 1787789848.756722
   },
   "football|Argentina Primera Nacional|Central Norte Salta|Deportivo Moron|客胜|1x2|2026-08-27": {
     "ev": 2.3,
@@ -639,6 +647,11 @@
   "football|Bolivia Division Profesional|Universitario de Vinto|Nacional Potosi|让球客胜|1x2|2026-08-26": {
     "ev": 4.71,
     "ts": 1787668482.598082
+  },
+  "football|Bolivia Division Profesional|布鲁明|奥鲁罗|和局|1x2|2026-08-27": {
+    "ev": 14.97,
+    "bb": 6.1,
+    "ts": 1787789848.345975
   },
   "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 1.07,
@@ -4584,9 +4597,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|Bolivia Division Profesional|布鲁明|奥鲁罗|和局|1x2|2026-08-27": {
-    "ev": 14.97,
-    "bb": 6.1,
-    "ts": 1787789848.345975
+  "football|Argentina Primera Nacional|北索尔塔中央|玛伦|上半场双重机会-主/客|ht_dc|2026-08-27": {
+    "ev": 2.64,
+    "bb": 2.15,
+    "ts": 1787789946.3201358
   }
 }
