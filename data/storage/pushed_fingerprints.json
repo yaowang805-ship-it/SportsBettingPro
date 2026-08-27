@@ -122,6 +122,10 @@
     "ev": 4.6,
     "ts": 1787803145.605834
   },
+  "football|Algeria Ligue 1|ES Setif|ES Ben Aknoun|上半场主胜|ht|2026-08-28": {
+    "ev": 4.16,
+    "ts": 1787834105.410927
+  },
   "football|Algeria Ligue 1|ES Setif|ES Ben Aknoun|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 2.59,
     "ts": 1787771507.293365
@@ -175,6 +179,10 @@
   "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|主胜|1x2|2026-08-28": {
     "ev": 2.31,
     "ts": 1787831978.237103
+  },
+  "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|让球主胜|1x2|2026-08-28": {
+    "ev": 3.98,
+    "ts": 1787834371.347317
   },
   "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|让球客胜|1x2|2026-08-28": {
     "ev": 1.04,
@@ -522,6 +530,10 @@
     "ev": 1.72,
     "ts": 1787812694.979427
   },
+  "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|主胜|1x2|2026-08-28": {
+    "ev": 2.17,
+    "ts": 1787834046.711872
+  },
   "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|小球|1x2|2026-08-28": {
     "ev": 2.31,
     "ts": 1787831302.6738591
@@ -792,6 +804,10 @@
     "ev": 1.88,
     "ts": 1787782981.0622962
   },
+  "football|Denmark DBU Pokalen|Vejle BK|Silkeborg IF|让球客胜|1x2|2026-08-28": {
+    "ev": 1.73,
+    "ts": 1787834216.18047
+  },
   "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|上半场主胜|ht|2026-08-28": {
     "ev": 1.22,
     "ts": 1787798388.213254
@@ -958,6 +974,11 @@
     "bb": 2.31,
     "ts": 1787822414.426616
   },
+  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
+    "ev": 31.43,
+    "bb": 8.85,
+    "ts": 1787833510.745544
+  },
   "football|Egypt Premier League|未来FC|马哈拉|和局|1x2|2026-08-27": {
     "ev": 11.14,
     "bb": 2.74,
@@ -1020,6 +1041,10 @@
   "football|England League Cup|Chelsea FC|Luton Town|大球|1x2|2026-08-28": {
     "ev": 1.03,
     "ts": 1787777550.082431
+  },
+  "football|England League Cup|Chelsea FC|Luton Town|小球|1x2|2026-08-28": {
+    "ev": 1.49,
+    "ts": 1787834364.366404
   },
   "football|England League Cup|Chelsea FC|Luton Town|让球客胜|1x2|2026-08-28": {
     "ev": 1.5,
@@ -1577,11 +1602,6 @@
     "bb": 1.91,
     "ts": 1787812694.516361
   },
-  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
-    "ev": 16.35,
-    "bb": 6.4,
-    "ts": 1787831622.015797
-  },
   "football|Switzerland 1. Liga Classic|FC Meyrin|Servette II|客胜|1x2|2026-08-27": {
     "ev": 4.38,
     "ts": 1787767249.363307
@@ -1805,6 +1825,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Brighton & Hove Albion FC|Tromso IL|双边进球-否|btts|2026-08-28": {
     "ev": 1.45,
     "ts": 1787832544.565206
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Brighton & Hove Albion FC|Tromso IL|小球|1x2|2026-08-28": {
+    "ev": 1.53,
+    "ts": 1787833959.767943
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Brighton & Hove Albion FC|Tromso IL|让球主胜|1x2|2026-08-28": {
     "ev": 3.11,
@@ -2061,6 +2085,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|大球|1x2|2026-08-28": {
     "ev": 2.03,
     "ts": 1787807046.253824
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|让球客胜|1x2|2026-08-28": {
+    "ev": 2.41,
+    "ts": 1787833602.697338
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|上半场主胜|ht|2026-08-28": {
     "ev": 3.29,
@@ -2450,6 +2478,10 @@
     "ev": 1.48,
     "ts": 1787785559.590542
   },
+  "football|Ukraine Premier League|Kolos Kovalivka|FC Obolon Kiev|上半场客胜|ht|2026-08-28": {
+    "ev": 2.59,
+    "ts": 1787834046.712044
+  },
   "football|Venezuela Cup|Aragua FC|Yaracuyanos FC|客胜|1x2|2026-08-27": {
     "ev": 3.77,
     "ts": 1787750816.2835
@@ -2624,13 +2656,21 @@
     "ev": 2.47,
     "ts": 1787718003.9342961
   },
+  "tennis|ITF - W50 Oldenzaal Women Doubles|Josy Daems (GER) / Anastasiia Firman (UKR)|Tessa Johanna Brockmann (GER) / Joelle Lilly Sophie Steur (GER)|主胜|1x2|2026-08-27": {
+    "ev": 52.82,
+    "ts": 1787834216.180991
+  },
   "tennis|WTA - Grand Slam US Open|Kristina Liutova (RUS)|Lola Radivojevic (SRB)|让盘主胜|1x2|2026-08-27": {
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
-    "ev": 31.43,
-    "bb": 8.85,
-    "ts": 1787833510.745544
+  "volleyball|Mediterranean Volleyball Games Women|Turkey (w)|Greece (w)|主胜|1x2|2026-08-27": {
+    "ev": 6.98,
+    "ts": 1787833695.998558
+  },
+  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
+    "ev": 18.47,
+    "bb": 6.65,
+    "ts": 1787834457.511413
   }
 }
