@@ -2150,19 +2150,14 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
             from config.constants import get_tier_strategy
             tier_cfg = get_tier_strategy(sport, league, tier)
 
-            # V5.1: 分层控制"建议"显示
+            # 铁律(2026-08-27 用户): stake<30 一律拦截, 不再"建议"推送碎单
             if stake < 30:
-                if tier_cfg.get("allow_suggest", True):
-                    stake = o.get("_raw_stake", stake)
-                    stake_note = " (建议)"
-                else:
-                    # T3/T4 低级别联赛不显示碎单建议, 直接跳过该机会
-                    stake = 0
-                    stake_note = ""
+                stake = 0
+                stake_note = ""
             else:
                 stake_note = ""
 
-            # V5.1: 分层最低投注额
+            # V5.1: 分层最低投注额 (T3/T4 min_stake=30 仍作为第二道防线)
             min_stake = tier_cfg.get("min_stake", 0)
             if min_stake > 0 and stake < min_stake:
                 stake = 0
