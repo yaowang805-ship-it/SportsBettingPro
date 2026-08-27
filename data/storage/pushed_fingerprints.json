@@ -506,6 +506,10 @@
     "ev": 1.72,
     "ts": 1787812694.979427
   },
+  "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|小球|1x2|2026-08-28": {
+    "ev": 2.31,
+    "ts": 1787831302.6738591
+  },
   "football|Brazil Copa do Brasil|SE Palmeiras SP|Santos FC SP|上半场客胜|ht|2026-08-27": {
     "ev": 1.69,
     "ts": 1787790131.7475479
@@ -929,6 +933,11 @@
     "ev": 6.25,
     "bb": 2.31,
     "ts": 1787822414.426616
+  },
+  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
+    "ev": 28.62,
+    "bb": 8.3,
+    "ts": 1787830528.497426
   },
   "football|Egypt Premier League|未来FC|马哈拉|和局|1x2|2026-08-27": {
     "ev": 11.14,
@@ -1410,6 +1419,10 @@
     "ev": 1.53,
     "ts": 1787719293.709394
   },
+  "football|Qatar Stars League|Al Gharafa SC|Al Shamal|小球|1x2|2026-08-27": {
+    "ev": 1.38,
+    "ts": 1787831388.7190049
+  },
   "football|Qatar Stars League|Al Gharafa SC|Al Shamal|总进球区间7+|total_goals_range|2026-08-27": {
     "ev": 4.21,
     "ts": 1787753967.509995
@@ -1535,11 +1548,6 @@
     "ev": 2.98,
     "bb": 1.91,
     "ts": 1787812694.516361
-  },
-  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
-    "ev": 13.53,
-    "bb": 6.25,
-    "ts": 1787817321.591131
   },
   "football|Switzerland 1. Liga Classic|FC Meyrin|Servette II|客胜|1x2|2026-08-27": {
     "ev": 4.38,
@@ -1933,6 +1941,10 @@
     "ev": 1.34,
     "ts": 1787804146.335733
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Maccabi Tel Aviv FC|FC Lugano|主胜|1x2|2026-08-28": {
+    "ev": 1.84,
+    "ts": 1787830980.5764558
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Maccabi Tel Aviv FC|FC Lugano|小球|1x2|2026-08-28": {
     "ev": 1.87,
     "ts": 1787824926.338913
@@ -2000,6 +2012,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|双边进球-是|btts|2026-08-28": {
     "ev": 1.07,
     "ts": 1787816847.949038
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|大球|1x2|2026-08-28": {
+    "ev": 2.46,
+    "ts": 1787831533.670957
   },
   "football|UEFA Europa Conference League-Qualification Playoff|SK Brann|PAOK Thessaloniki|上半场主胜|ht|2026-08-28": {
     "ev": 1.12,
@@ -2267,6 +2283,10 @@
     "ev": 1.59,
     "ts": 1787830196.349973
   },
+  "football|UEFA Europa League-Qualification Playoff|Lillestrom SK|KF Egnatia Rrogozhine|双边进球-是|btts|2026-08-28": {
+    "ev": 1.04,
+    "ts": 1787831309.5125482
+  },
   "football|UEFA Europa League-Qualification Playoff|Lillestrom SK|KF Egnatia Rrogozhine|总进球区间7+|total_goals_range|2026-08-28": {
     "ev": 4.11,
     "ts": 1787804146.3375201
@@ -2511,6 +2531,10 @@
     "ev": 4.99,
     "ts": 1787814895.415358
   },
+  "tennis|ITF - M25 Oldenzaal Men Doubles|Jayson Blando (USA) / Oren Vasser (USA)|Eero Vasa (FIN) / Iiro Vasa (FIN)|主胜|1x2|2026-08-27": {
+    "ev": 44.29,
+    "ts": 1787830791.7437608
+  },
   "tennis|ITF - M25 Oldenzaal Men Doubles|Jayson Blando (USA) / Oren Vasser (USA)|Eero Vasa (FIN) / Iiro Vasa (FIN)|客胜|1x2|2026-08-27": {
     "ev": 6.25,
     "ts": 1787821290.458287
@@ -2539,9 +2563,9 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
-    "ev": 28.62,
-    "bb": 8.3,
-    "ts": 1787830528.497426
+  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
+    "ev": 16.35,
+    "bb": 6.4,
+    "ts": 1787831622.015797
   }
 }

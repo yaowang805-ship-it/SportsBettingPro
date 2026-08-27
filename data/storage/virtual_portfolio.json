@@ -1,5 +1,5 @@
 {
-  "balance": 9899.36,
+  "balance": 9771.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2944,6 +2944,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787878800,
       "created_at": "2026-08-27T10:56:29.812379+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_维戈塞尔塔_奥萨苏纳_上半场客胜",
+      "sport": "football",
+      "league": "西班牙甲级联赛",
+      "home_team": "维戈塞尔塔",
+      "away_team": "奥萨苏纳",
+      "home_cn": "维戈塞尔塔",
+      "away_cn": "奥萨苏纳",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 6.4,
+      "stake": 128,
+      "model_prob": 0.1818,
+      "ev_pct": 16.35,
+      "pin_odds": 5.12,
+      "fair_price": 5.5005,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787855400,
+      "created_at": "2026-08-27T11:53:42.005591+00:00",
       "track_only": false
     }
   ],
@@ -6502,8 +6525,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 4376.0,
-    "bets": 48
+    "used": 4504.0,
+    "bets": 49
   },
   "updated": null
 }
