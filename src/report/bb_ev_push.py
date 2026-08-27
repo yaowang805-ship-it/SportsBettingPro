@@ -1551,6 +1551,11 @@ def _collect_opportunities(match, market_key):
             }
             sub_market = _MK_TO_SUB.get(market_key, "1x2")
 
+        # 2026-08-27 观察模式盘口: 正确比分/先进球 刚修完错配, 只进观察库(validate/CLV采集),
+        # 不推送钉钉, 等 CLV 数据攒够能统计 edge 再开推(用户要求)。
+        if sub_market in ("correct_score", "first_to_score"):
+            continue
+
         # ── V2 动态 EV 门槛: 赔率越高 → 门槛越高 ──
         # V4 的 get_min_ev 基于 Pinnacle 107K场数据
         from config.weight_matrix_v5 import get_min_ev
