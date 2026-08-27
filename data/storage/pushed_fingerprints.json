@@ -448,6 +448,10 @@
     "ev": 1.56,
     "ts": 1787787968.835027
   },
+  "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 1.72,
+    "ts": 1787812694.979427
+  },
   "football|Brazil Copa do Brasil|SE Palmeiras SP|Santos FC SP|上半场客胜|ht|2026-08-27": {
     "ev": 1.69,
     "ts": 1787790131.7475479
@@ -861,6 +865,11 @@
     "ev": 11.14,
     "bb": 2.74,
     "ts": 1787580178.453536
+  },
+  "football|Egypt Premier League|阿拉伯建筑|马斯里|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 2.94,
+    "bb": 2.07,
+    "ts": 1787812694.51632
   },
   "football|El Salvador Primera Division|Platense Municipal Zacatecoluca|Alianza FC San Salvador|让球主胜|1x2|2026-08-27": {
     "ev": 10.65,
@@ -1366,6 +1375,11 @@
   "football|Spain LaLiga|Real Madrid|Real Sociedad|让球客胜|1x2|2026-08-27": {
     "ev": 1.19,
     "ts": 1787755566.0256798
+  },
+  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 2.98,
+    "bb": 1.91,
+    "ts": 1787812694.516361
   },
   "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
     "ev": 9.78,
@@ -1875,6 +1889,10 @@
     "ev": 1.75,
     "ts": 1787804146.337474
   },
+  "football|UEFA Europa League-Qualification Playoff|FC Viktoria Plzen|FK Crvena Zvezda Belgrade|让球主胜|1x2|2026-08-28": {
+    "ev": 1.44,
+    "ts": 1787812694.980312
+  },
   "football|UEFA Europa League-Qualification Playoff|FK Kauno Zalgiris|Besiktas JK|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.03,
     "ts": 1787811842.290418
@@ -1922,6 +1940,10 @@
   "football|UEFA Europa League-Qualification Playoff|RSC Anderlecht|FC Kairat Almaty|上半场主胜|ht|2026-08-28": {
     "ev": 1.59,
     "ts": 1787769403.866255
+  },
+  "football|UEFA Europa League-Qualification Playoff|RSC Anderlecht|FC Kairat Almaty|单双-双|oe|2026-08-28": {
+    "ev": 1.18,
+    "ts": 1787812694.98016
   },
   "football|UEFA Europa League-Qualification Playoff|RSC Anderlecht|FC Kairat Almaty|客胜|1x2|2026-08-28": {
     "ev": 1.41,
@@ -2143,14 +2165,9 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|Egypt Premier League|阿拉伯建筑|马斯里|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 2.94,
-    "bb": 2.07,
-    "ts": 1787812694.51632
-  },
-  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 2.98,
-    "bb": 1.91,
-    "ts": 1787812694.516361
+  "football|UEFA Europa Conference League-Qualification Playoff|里耶卡|中日德兰|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 3.16,
+    "bb": 1.81,
+    "ts": 1787813656.2400808
   }
 }

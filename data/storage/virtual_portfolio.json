@@ -1,30 +1,7 @@
 {
-  "balance": 10054.36,
+  "balance": 10063.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_保尼玫瑰_格拉斯哥流浪二队_主胜",
-      "sport": "football",
-      "league": "苏格兰挑战杯",
-      "home_team": "保尼玫瑰",
-      "away_team": "格拉斯哥流浪二队",
-      "home_cn": "保尼玫瑰",
-      "away_cn": "格拉斯哥流浪二队",
-      "market": "1x2",
-      "market_type": "主胜",
-      "sub_market": "1x2",
-      "line": "",
-      "odds": 3.89,
-      "stake": 92,
-      "model_prob": 0.2899,
-      "ev_pct": 12.76,
-      "pin_odds": 2.96,
-      "fair_price": 3.4497,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1787683500,
-      "created_at": "2026-08-24T06:34:51.338061+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_克罗托内_福贾_主胜",
       "sport": "football",
@@ -2947,29 +2924,6 @@
       "track_only": false
     },
     {
-      "id": "bb_vs_pin_1x2_维戈塞尔塔_奥萨苏纳_上半场客胜",
-      "sport": "football",
-      "league": "西班牙甲级联赛",
-      "home_team": "维戈塞尔塔",
-      "away_team": "奥萨苏纳",
-      "home_cn": "维戈塞尔塔",
-      "away_cn": "奥萨苏纳",
-      "market": "1x2",
-      "market_type": "上半场客胜",
-      "sub_market": "ht",
-      "line": "",
-      "odds": 6.0,
-      "stake": 83,
-      "model_prob": 0.183,
-      "ev_pct": 9.78,
-      "pin_odds": 5.01,
-      "fair_price": 5.4655,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1787855400,
-      "created_at": "2026-08-27T06:32:58.974982+00:00",
-      "track_only": false
-    },
-    {
       "id": "bb_vs_pin_1x2_阿拉伯建筑_马斯里_上半场双重机会-主/客",
       "sport": "football",
       "league": "埃及超级联赛",
@@ -2993,26 +2947,26 @@
       "track_only": false
     },
     {
-      "id": "bb_vs_pin_1x2_维戈塞尔塔_奥萨苏纳_上半场双重机会-主/客",
+      "id": "bb_vs_pin_1x2_里耶卡_中日德兰_上半场双重机会-主/客",
       "sport": "football",
-      "league": "西班牙甲级联赛",
-      "home_team": "维戈塞尔塔",
-      "away_team": "奥萨苏纳",
-      "home_cn": "维戈塞尔塔",
-      "away_cn": "奥萨苏纳",
+      "league": "欧足联欧洲协会联赛-资格赛附加赛",
+      "home_team": "里耶卡",
+      "away_team": "中日德兰",
+      "home_cn": "里耶卡",
+      "away_cn": "中日德兰",
       "market": "1x2",
       "market_type": "上半场双重机会-主/客",
       "sub_market": "ht_dc",
       "line": "",
-      "odds": 1.91,
-      "stake": 16,
-      "model_prob": 0.5392,
-      "ev_pct": 2.98,
+      "odds": 1.81,
+      "stake": 83,
+      "model_prob": 0.57,
+      "ev_pct": 3.16,
       "pin_odds": 0,
-      "fair_price": 1.8547,
+      "fair_price": 1.7545,
       "source": "bb_vs_pinnacle",
-      "commence_time": 1787855400,
-      "created_at": "2026-08-27T06:38:14.507592+00:00",
+      "commence_time": 1787856300,
+      "created_at": "2026-08-27T06:54:16.222362+00:00",
       "track_only": false
     }
   ],
@@ -6447,12 +6401,27 @@
       "home_cn": "阿特拿斯 (女)",
       "away_cn": "提华纳 (女)",
       "market_type": "客胜"
+    },
+    {
+      "id": "bb_vs_pin_1x2_保尼玫瑰_格拉斯哥流浪二队_主胜",
+      "match": "92¥ @ 3.89 (超时作废)",
+      "date": "2026-08-27T06:50:13.852885+00:00",
+      "stake": 92,
+      "odds": 3.89,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "苏格兰挑战杯",
+      "sport": "football",
+      "home_cn": "保尼玫瑰",
+      "away_cn": "格拉斯哥流浪二队",
+      "market_type": "主胜"
     }
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 3675.0,
-    "bets": 40
+    "used": 3758.0,
+    "bets": 41
   },
   "updated": null
 }
