@@ -98,9 +98,17 @@
     "ev": 2.0,
     "ts": 1787750066.66384
   },
+  "basketball|WNBA|New York Liberty (w)|Golden State Valkyries (w)|主胜|1x2|2026-08-28": {
+    "ev": 3.12,
+    "ts": 1787814571.3193011
+  },
   "basketball|WNBA|New York Liberty (w)|Golden State Valkyries (w)|让分主胜|1x2|2026-08-28": {
     "ev": 2.85,
     "ts": 1787813967.825045
+  },
+  "basketball|WNBA|Phoenix Mercury (w)|Washington Mystics (w)|让分主胜|1x2|2026-08-28": {
+    "ev": 2.5,
+    "ts": 1787814571.319257
   },
   "basketball|WNBA|Seattle Storm (w)|Toronto Tempo (w)|让分客胜|1x2|2026-08-27": {
     "ev": 1.51,
@@ -1179,6 +1187,10 @@
     "ev": 1.11,
     "ts": 1787806743.759278
   },
+  "football|Iceland 1. deild Women|HK Kopavogur (w)|Keflavik (w)|大球|1x2|2026-08-28": {
+    "ev": 1.05,
+    "ts": 1787815561.9927092
+  },
   "football|Iceland 2. deild|Hviti Riddarinn|Fjolnir|主胜|1x2|2026-08-28": {
     "ev": 3.8,
     "ts": 1787803221.375063
@@ -1389,11 +1401,6 @@
     "bb": 1.91,
     "ts": 1787812694.516361
   },
-  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
-    "ev": 9.78,
-    "bb": 6.0,
-    "ts": 1787812378.990624
-  },
   "football|Switzerland 1. Liga Classic|FC Meyrin|Servette II|客胜|1x2|2026-08-27": {
     "ev": 4.38,
     "ts": 1787767249.363307
@@ -1598,6 +1605,14 @@
     "ev": 1.63,
     "ts": 1787764120.649885
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|双边进球-是|btts|2026-08-28": {
+    "ev": 2.11,
+    "ts": 1787814295.230326
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|让球客胜|1x2|2026-08-28": {
+    "ev": 1.96,
+    "ts": 1787814295.230405
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|FC Hradec Kralove|Panathinaikos Athens|上半场主胜|ht|2026-08-28": {
     "ev": 1.32,
     "ts": 1787764120.650102
@@ -1638,6 +1653,14 @@
     "ev": 1.59,
     "ts": 1787769957.915342
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Hapoel Tel Aviv FC|Atalanta BC|让球主胜|1x2|2026-08-28": {
+    "ev": 2.01,
+    "ts": 1787815561.99088
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Hibernian FC|KAA Gent|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 2.18,
+    "ts": 1787814295.2298229
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Inter Club de Escaldes|KF Drita|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 2.08,
     "ts": 1787810708.021614
@@ -1653,6 +1676,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Kuopion Palloseura|Shamrock Rovers|上半场客胜|ht|2026-08-27": {
     "ev": 5.4,
     "ts": 1787756587.437453
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 1.98,
+    "ts": 1787814295.230243
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|上半场客胜|ht|2026-08-28": {
     "ev": 4.47,
@@ -1698,6 +1725,10 @@
     "ev": 2.11,
     "ts": 1787807662.7567291
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|让球客胜|1x2|2026-08-28": {
+    "ev": 1.82,
+    "ts": 1787815277.359562
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 4.48,
     "ts": 1787807046.253939
@@ -1713,6 +1744,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|上半场主胜|ht|2026-08-28": {
     "ev": 3.29,
     "ts": 1787763777.760244
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|双边进球-是|btts|2026-08-28": {
+    "ev": 1.07,
+    "ts": 1787816847.949038
   },
   "football|UEFA Europa Conference League-Qualification Playoff|SK Brann|PAOK Thessaloniki|上半场主胜|ht|2026-08-28": {
     "ev": 1.12,
@@ -1750,6 +1785,11 @@
     "ev": 6.29,
     "bb": 4.79,
     "ts": 1787810707.1304598
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|贝尔格莱德游击|赫塔菲|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 4.03,
+    "bb": 1.84,
+    "ts": 1787814294.748628
   },
   "football|UEFA Europa Conference League-Qualification Playoff|赫拉德茨克拉洛韦|帕纳辛纳科斯|上半场主胜|ht|2026-08-28": {
     "ev": 3.03,
@@ -1882,6 +1922,10 @@
     "ev": 1.38,
     "ts": 1787782283.845804
   },
+  "football|UEFA Europa League-Qualification Playoff|FC Ararat Armenia|CS Universitatea Craiova 1948|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 1.13,
+    "ts": 1787816274.084648
+  },
   "football|UEFA Europa League-Qualification Playoff|FC Ararat Armenia|CS Universitatea Craiova 1948|单双-双|oe|2026-08-28": {
     "ev": 1.75,
     "ts": 1787803551.229801
@@ -1893,6 +1937,10 @@
   "football|UEFA Europa League-Qualification Playoff|FC Salzburg|Mjallby AIF|上半场主胜|ht|2026-08-28": {
     "ev": 1.89,
     "ts": 1787806743.758979
+  },
+  "football|UEFA Europa League-Qualification Playoff|FC Salzburg|Mjallby AIF|上半场客胜|ht|2026-08-28": {
+    "ev": 12.88,
+    "ts": 1787816847.949229
   },
   "football|UEFA Europa League-Qualification Playoff|FC Salzburg|Mjallby AIF|让球主胜|1x2|2026-08-28": {
     "ev": 1.45,
@@ -2166,6 +2214,10 @@
     "ev": 4.67,
     "ts": 1787811154.8634639
   },
+  "tennis|ITF - M15 Champaign Men Singles|Zachary Viiala (AUS)|Marko Mesarovic (USA)|让盘客胜|1x2|2026-08-28": {
+    "ev": 4.99,
+    "ts": 1787814895.415358
+  },
   "tennis|ITF - W15 Brasov Women Doubles|Simona Cucu (ROU) / Ioana Maria Sandru (ROU)|Stefania Bojica (ROU) / Anastasia Safta (ROU)|主胜|1x2|2026-08-27": {
     "ev": 3.82,
     "ts": 1787810209.0073442
@@ -2182,9 +2234,14 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|UEFA Europa Conference League-Qualification Playoff|贝尔格莱德游击|赫塔菲|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 4.03,
-    "bb": 1.84,
-    "ts": 1787814294.748628
+  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
+    "ev": 13.53,
+    "bb": 6.25,
+    "ts": 1787817321.591131
+  },
+  "football|Algeria Ligue 1|塞堤夫|阿科诺|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 4.99,
+    "bb": 1.9,
+    "ts": 1787817321.591228
   }
 }
