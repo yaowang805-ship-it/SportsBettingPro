@@ -640,11 +640,6 @@
     "ev": 4.71,
     "ts": 1787668482.598082
   },
-  "football|Bolivia Division Profesional|布鲁明|奥鲁罗|和局|1x2|2026-08-27": {
-    "ev": 12.15,
-    "bb": 5.95,
-    "ts": 1787789296.28179
-  },
   "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|上半场双重机会-主/客|ht_dc|2026-08-27": {
     "ev": 1.07,
     "ts": 1787774167.417143
@@ -652,6 +647,10 @@
   "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|上半场客胜|ht|2026-08-27": {
     "ev": 2.74,
     "ts": 1787774037.1674051
+  },
+  "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|主胜|1x2|2026-08-27": {
+    "ev": 1.15,
+    "ts": 1787789751.664051
   },
   "football|Brazil Copa do Brasil|CR Vasco da Gama RJ|EC Vitoria BA|单双-双|oe|2026-08-27": {
     "ev": 1.33,
@@ -4055,6 +4054,11 @@
     "ev": 1.59,
     "ts": 1787769403.866255
   },
+  "football|UEFA Europa League-Qualification Playoff|奥胡斯|本菲卡|主胜|1x2|2026-08-28": {
+    "ev": 11.57,
+    "bb": 6.75,
+    "ts": 1787789618.871101
+  },
   "football|UEFA Europa League-Qualification|安德莱赫特|阿拉木图凯拉特|上半场主胜|ht|2026-08-28": {
     "ev": 5.66,
     "bb": 2.08,
@@ -4580,9 +4584,9 @@
     "ev": 2.8,
     "ts": 1787722069.444042
   },
-  "football|UEFA Europa League-Qualification Playoff|奥胡斯|本菲卡|主胜|1x2|2026-08-28": {
-    "ev": 11.57,
-    "bb": 6.75,
-    "ts": 1787789618.871101
+  "football|Bolivia Division Profesional|布鲁明|奥鲁罗|和局|1x2|2026-08-27": {
+    "ev": 14.97,
+    "bb": 6.1,
+    "ts": 1787789848.345975
   }
 }
