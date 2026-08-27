@@ -1,4 +1,8 @@
 {
+  "baseball|Korea Republic KBO League|Lotte Giants|LG Twins|让分客胜|1x2|2026-08-28": {
+    "ev": 1.02,
+    "ts": 1787854475.688593
+  },
   "baseball|MLB|Atlanta Braves|Los Angeles Dodgers|客胜|1x2|2026-08-27": {
     "ev": 3.81,
     "ts": 1787766588.335209
@@ -484,6 +488,14 @@
     "ev": 4.85,
     "bb": 2.09,
     "ts": 1787697897.538123
+  },
+  "football|Bolivia Division Profesional|Always Ready|Club Aurora|主胜|1x2|2026-08-28": {
+    "ev": 4.45,
+    "ts": 1787855595.727542
+  },
+  "football|Bolivia Division Profesional|Always Ready|Club Aurora|让球主胜|1x2|2026-08-28": {
+    "ev": 4.02,
+    "ts": 1787855913.2138739
   },
   "football|Bolivia Division Profesional|Always Ready|Club Aurora|让球客胜|1x2|2026-08-28": {
     "ev": 2.81,
@@ -1369,6 +1381,18 @@
     "ev": 2.12,
     "ts": 1787707818.723802
   },
+  "football|England Premier League 2|Nottingham Forest U21|Manchester City FC U21|双边进球-否|btts|2026-08-29": {
+    "ev": 6.04,
+    "ts": 1787853874.781427
+  },
+  "football|England Premier League 2|Nottingham Forest U21|Manchester City FC U21|客胜|1x2|2026-08-29": {
+    "ev": 5.71,
+    "ts": 1787853874.781342
+  },
+  "football|England Premier League 2|Nottingham Forest U21|Manchester City FC U21|让球客胜|1x2|2026-08-29": {
+    "ev": 2.26,
+    "ts": 1787853874.7815092
+  },
   "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|上半场主胜|ht|2026-08-27": {
     "ev": 1.32,
     "ts": 1787751466.740027
@@ -1404,6 +1428,55 @@
   "football|FIFA Intercontinental Cup|Al Ahli Saudi FC|Auckland FC|让球客胜|1x2|2026-08-27": {
     "ev": 2.44,
     "ts": 1787731009.077031
+  },
+  "football|France Ligue 2|AS Nancy Lorraine|USL Dunkerque|单双-双|oe|2026-08-29": {
+    "ev": 1.28,
+    "ts": 1787853874.780192
+  },
+  "football|France Ligue 2|AS Nancy Lorraine|USL Dunkerque|总进球区间7+|total_goals_range|2026-08-29": {
+    "ev": 2.75,
+    "ts": 1787854187.63277
+  },
+  "football|France Ligue 2|Clermont Foot|FC Sochaux Montbeliard|单双-双|oe|2026-08-29": {
+    "ev": 1.34,
+    "ts": 1787853874.78053
+  },
+  "football|France Ligue 2|Montpellier HSC|US Boulogne|小球|1x2|2026-08-29": {
+    "ev": 1.18,
+    "ts": 1787853874.7802691
+  },
+  "football|France Ligue 2|Rodez Aveyron|Pau FC|主胜|1x2|2026-08-29": {
+    "ev": 5.59,
+    "ts": 1787853874.780333
+  },
+  "football|France Ligue 2|Rodez Aveyron|Pau FC|单双-双|oe|2026-08-29": {
+    "ev": 2.13,
+    "ts": 1787853874.780396
+  },
+  "football|France Ligue 2|Rodez Aveyron|Pau FC|总进球区间7+|total_goals_range|2026-08-29": {
+    "ev": 22.84,
+    "ts": 1787854187.63286
+  },
+  "football|France Ligue 2|Rodez Aveyron|Pau FC|让球主胜|1x2|2026-08-29": {
+    "ev": 4.87,
+    "ts": 1787853874.7804549
+  },
+  "football|France Ligue 2|Stade Lavallois Mayenne FC|Grenoble Foot|单双-双|oe|2026-08-29": {
+    "ev": 3.39,
+    "ts": 1787853874.780116
+  },
+  "football|France Ligue 2|Stade Lavallois Mayenne FC|Grenoble Foot|双边进球-是|btts|2026-08-29": {
+    "ev": 3.16,
+    "ts": 1787853874.7800472
+  },
+  "football|France Ligue 2|Stade Lavallois Mayenne FC|Grenoble Foot|和局|1x2|2026-08-29": {
+    "ev": 10.15,
+    "ts": 1787853874.779975
+  },
+  "football|France Ligue 2|拉瓦勒|格勒诺布尔|和局|1x2|2026-08-29": {
+    "ev": 10.15,
+    "bb": 3.44,
+    "ts": 1787853874.383737
   },
   "football|France Ligue 3|SM Caen|Bastia|上半场主胜|ht|2026-08-28": {
     "ev": 1.47,
@@ -1533,6 +1606,10 @@
     "ev": 3.93,
     "ts": 1787762983.960414
   },
+  "football|Hungary NB I|Debreceni VSC|MTK Budapest|先进球neither|first_to_score|2026-08-29": {
+    "ev": 13.06,
+    "ts": 1787853874.7817569
+  },
   "football|Iceland 1. deild Women|HK Kopavogur (w)|Keflavik (w)|主胜|1x2|2026-08-28": {
     "ev": 1.11,
     "ts": 1787806743.759278
@@ -1564,6 +1641,10 @@
   "football|India Calcutta Premier Division|Suruchi Sangha|Wari AC|让球主胜|1x2|2026-08-27": {
     "ev": 2.15,
     "ts": 1787822872.075219
+  },
+  "football|Italy Serie B|US Cremonese|Modena FC|上半场客胜|ht|2026-08-29": {
+    "ev": 1.16,
+    "ts": 1787855729.885847
   },
   "football|Kuwait Premier League|Al Salmiyah|Al Nasr SC|主胜|1x2|2026-08-27": {
     "ev": 1.06,
@@ -1610,6 +1691,14 @@
     "ev": 8.99,
     "bb": 2.33,
     "ts": 1787828189.827708
+  },
+  "football|Netherlands Eerste Divisie|Jong AZ Alkmaar|MVV Maastricht|上半场主胜|ht|2026-08-29": {
+    "ev": 1.04,
+    "ts": 1787854187.63106
+  },
+  "football|Netherlands Eerste Divisie|Jong AZ Alkmaar|MVV Maastricht|单双-双|oe|2026-08-29": {
+    "ev": 1.81,
+    "ts": 1787853874.780608
   },
   "football|Norway 1st Division|Asane Fotball|Lyn 1896 FK|客胜|1x2|2026-08-27": {
     "ev": 1.86,
@@ -1699,6 +1788,14 @@
     "ev": 1.53,
     "ts": 1787719293.709394
   },
+  "football|Poland Ekstraklasa|Legia Warszawa|WKS Slask Wroclaw|上半场主胜|ht|2026-08-29": {
+    "ev": 1.53,
+    "ts": 1787855729.886018
+  },
+  "football|Poland Ekstraklasa|Legia Warszawa|WKS Slask Wroclaw|让球主胜|1x2|2026-08-29": {
+    "ev": 2.45,
+    "ts": 1787855729.886056
+  },
   "football|Poland Ekstraklasa|Wisla Plock|Korona Kielce|单双-双|oe|2026-08-29": {
     "ev": 1.23,
     "ts": 1787847247.2368388
@@ -1734,6 +1831,10 @@
   "football|Qatar Stars League|Al Wakrah|Al Rayyan SC|总进球区间7+|total_goals_range|2026-08-28": {
     "ev": 4.01,
     "ts": 1787841047.731421
+  },
+  "football|Romania Liga 1|FC Universitatea Cluj|FC Petrolul Ploiesti|主胜|1x2|2026-08-29": {
+    "ev": 1.66,
+    "ts": 1787853874.779677
   },
   "football|Russia First League|FC Neftekhimik Nizhnekamsk|FK Ufa|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.33,
@@ -1926,6 +2027,10 @@
   "football|Turkey 1. Lig|Pendikspor|Bandirmaspor|先进球neither|first_to_score|2026-08-29": {
     "ev": 1.14,
     "ts": 1787847247.2372549
+  },
+  "football|Turkey Super Lig|Genclerbirligi SK|Erzurumspor FK|总进球区间7+|total_goals_range|2026-08-29": {
+    "ev": 3.84,
+    "ts": 1787855729.8864808
   },
   "football|UAE Pro League|United FC|Al Ittihad Kalba|主胜|1x2|2026-08-28": {
     "ev": 2.3,
@@ -2386,6 +2491,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Hibernian FC|KAA Gent|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 2.18,
     "ts": 1787814295.2298229
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Hibernian FC|KAA Gent|大球|1x2|2026-08-28": {
+    "ev": 1.36,
+    "ts": 1787855913.21369
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Hibernian FC|KAA Gent|让球主胜|1x2|2026-08-28": {
     "ev": 1.02,
@@ -3317,9 +3426,9 @@
     "ev": 6.98,
     "ts": 1787833695.998558
   },
-  "football|France Ligue 2|拉瓦勒|格勒诺布尔|和局|1x2|2026-08-29": {
-    "ev": 10.15,
-    "bb": 3.44,
-    "ts": 1787853874.383737
+  "football|Italy Serie B|克雷莫纳|摩德纳|上半场客胜|ht|2026-08-29": {
+    "ev": 4.57,
+    "bb": 6.6,
+    "ts": 1787855983.402108
   }
 }
