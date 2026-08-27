@@ -1675,6 +1675,10 @@
     "ev": 5.38,
     "ts": 1787767551.562529
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|单双-单|oe|2026-08-28": {
+    "ev": 1.21,
+    "ts": 1787824490.1713011
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|双边进球-是|btts|2026-08-28": {
     "ev": 2.6,
     "ts": 1787781683.380146
@@ -1682,6 +1686,10 @@
   "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|大球|1x2|2026-08-28": {
     "ev": 1.39,
     "ts": 1787767551.562569
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Brighton & Hove Albion FC|Tromso IL|上半场客胜|ht|2026-08-28": {
+    "ev": 5.19,
+    "ts": 1787824144.415589
   },
   "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|上半场主胜|ht|2026-08-28": {
     "ev": 1.63,
@@ -2153,6 +2161,10 @@
     "ev": 6.16,
     "ts": 1787767551.5630772
   },
+  "football|UEFA Europa League-Qualification Playoff|PFC CSKA Sofia|OFI Crete|让球主胜|1x2|2026-08-28": {
+    "ev": 1.41,
+    "ts": 1787824490.170632
+  },
   "football|UEFA Europa League-Qualification Playoff|RSC Anderlecht|FC Kairat Almaty|上半场主胜|ht|2026-08-28": {
     "ev": 1.59,
     "ts": 1787769403.866255
@@ -2390,8 +2402,8 @@
     "ts": 1787736855.794537
   },
   "football|Egypt Premier League|未来FC|马哈拉|上半场客胜|ht|2026-08-27": {
-    "ev": 21.7,
-    "bb": 7.5,
-    "ts": 1787824085.239003
+    "ev": 24.13,
+    "bb": 7.65,
+    "ts": 1787824587.154131
   }
 }
