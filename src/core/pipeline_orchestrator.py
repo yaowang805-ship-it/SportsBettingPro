@@ -240,17 +240,26 @@ class PipelineOrchestrator:
                 logger.info("[自检] Pinnacle结构已自动修复 (nested→flat, %d 联赛)", len(flat))
 
         # 4) Pinnacle API 连通性检查 (Shadowrocket 必须运行)
-        try:
-            from src.scrapers.pinnacle_api import SESSION, API_BASE, _load_cookie
-            _load_cookie()
-            r = SESSION.get(f"{API_BASE}/sports", timeout=10)
-            if r.status_code == 200:
-                sports = r.json()
-                logger.info("[自检] Pinnacle API 连通 ✅ (%d 运动)", len(sports))
-            else:
-                errors.append(f"[自检] Pinnacle API HTTP {r.status_code} — Shadowrocket运行了吗?")
-        except Exception as e:
-            errors.append(f"[自检] Pinnacle API 不可达: {e} — 请启动 Shadowrocket")
+        # 2026-08-27 加重试: SSL EOF 是瞬时抖动, 单次失败就告警会刷屏。重试2次再判不可达。
+        _pin_ok = False
+        _pin_err = None
+        for _pin_attempt in range(3):
+            try:
+                from src.scrapers.pinnacle_api import SESSION, API_BASE, _load_cookie
+                _load_cookie()
+                r = SESSION.get(f"{API_BASE}/sports", timeout=10)
+                if r.status_code == 200:
+                    sports = r.json()
+                    logger.info("[自检] Pinnacle API 连通 ✅ (%d 运动)", len(sports))
+                    _pin_ok = True
+                    break
+                _pin_err = f"[自检] Pinnacle API HTTP {r.status_code} — Shadowrocket运行了吗?"
+            except Exception as e:
+                _pin_err = f"[自检] Pinnacle API 不可达: {e} — 请启动 Shadowrocket"
+            if _pin_attempt < 2:
+                time.sleep(2)
+        if not _pin_ok:
+            errors.append(_pin_err)
 
         # 5) 联赛缓存最低数量检查 — 防误删: 从 manual_backup 恢复 > 直接删除
         if pin_struct and isinstance(pin_struct, dict) and len(pin_struct) < 50:
