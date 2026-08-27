@@ -134,6 +134,11 @@
     "ev": 14.25,
     "ts": 1787774511.775601
   },
+  "football|Algeria Ligue 1|塞堤夫|阿科诺|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 4.99,
+    "bb": 1.9,
+    "ts": 1787817321.591228
+  },
   "football|Algeria Ligue 1|塞堤夫|阿科诺|上半场客胜|ht|2026-08-28": {
     "ev": 4.37,
     "bb": 7.25,
@@ -338,9 +343,25 @@
     "ev": 3.24,
     "ts": 1787801032.128767
   },
+  "football|Armenian Cup|Sardarapat FC|FC Syunik|双重机会-和局/客|dc|2026-08-27": {
+    "ev": 1.61,
+    "ts": 1787819852.032604
+  },
+  "football|Armenian Cup|Sardarapat FC|FC Syunik|客胜|1x2|2026-08-27": {
+    "ev": 1.95,
+    "ts": 1787819852.032523
+  },
   "football|Bahrain Premier League|Al Najma Manama|AL Khalidiyah|大球|1x2|2026-08-28": {
     "ev": 1.28,
     "ts": 1787803221.375471
+  },
+  "football|Bahrain Premier League|Al Najma Manama|AL Khalidiyah|客胜|1x2|2026-08-28": {
+    "ev": 1.85,
+    "ts": 1787819030.694186
+  },
+  "football|Bahrain Premier League|Al Najma Manama|AL Khalidiyah|让球客胜|1x2|2026-08-28": {
+    "ev": 1.28,
+    "ts": 1787819030.6942248
   },
   "football|Bahrain Premier League|Sitra Club|Malkiya Club|单双-双|oe|2026-08-28": {
     "ev": 1.13,
@@ -1401,6 +1422,11 @@
     "bb": 1.91,
     "ts": 1787812694.516361
   },
+  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
+    "ev": 13.53,
+    "bb": 6.25,
+    "ts": 1787817321.591131
+  },
   "football|Switzerland 1. Liga Classic|FC Meyrin|Servette II|客胜|1x2|2026-08-27": {
     "ev": 4.38,
     "ts": 1787767249.363307
@@ -1589,6 +1615,18 @@
     "bb": 4.9,
     "ts": 1787738116.2345128
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|AS Monaco FC|KS Gornik Zabrze|双重机会-和局/客|dc|2026-08-28": {
+    "ev": 2.95,
+    "ts": 1787818483.184314
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|AS Monaco FC|KS Gornik Zabrze|客胜|1x2|2026-08-28": {
+    "ev": 5.45,
+    "ts": 1787818483.184139
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|AS Monaco FC|KS Gornik Zabrze|让球客胜|1x2|2026-08-28": {
+    "ev": 2.39,
+    "ts": 1787818483.184205
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|上半场主胜|ht|2026-08-28": {
     "ev": 5.38,
     "ts": 1787767551.562529
@@ -1629,6 +1667,10 @@
     "ev": 1.33,
     "ts": 1787782653.225651
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 1.06,
+    "ts": 1787819941.1558049
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|单双-双|oe|2026-08-28": {
     "ev": 1.1,
     "ts": 1787799532.784346
@@ -1649,9 +1691,21 @@
     "ev": 4.21,
     "ts": 1787811504.6713831
   },
+  "football|UEFA Europa Conference League-Qualification Playoff|Freiburg|Motherwell FC|上半场客胜|ht|2026-08-28": {
+    "ev": 4.19,
+    "ts": 1787819659.985054
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Freiburg|Motherwell FC|让球客胜|1x2|2026-08-28": {
+    "ev": 1.87,
+    "ts": 1787817958.9785879
+  },
   "football|UEFA Europa Conference League-Qualification Playoff|HNK Rijeka|FC Midtjylland|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.59,
     "ts": 1787769957.915342
+  },
+  "football|UEFA Europa Conference League-Qualification Playoff|Hapoel Tel Aviv FC|Atalanta BC|主胜|1x2|2026-08-28": {
+    "ev": 2.03,
+    "ts": 1787817958.978487
   },
   "football|UEFA Europa Conference League-Qualification Playoff|Hapoel Tel Aviv FC|Atalanta BC|让球主胜|1x2|2026-08-28": {
     "ev": 2.01,
@@ -2234,14 +2288,9 @@
     "ev": 5.03,
     "ts": 1787736855.794537
   },
-  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
-    "ev": 13.53,
-    "bb": 6.25,
-    "ts": 1787817321.591131
-  },
-  "football|Algeria Ligue 1|塞堤夫|阿科诺|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 4.99,
-    "bb": 1.9,
-    "ts": 1787817321.591228
+  "football|Armenian Cup|萨达拉帕特|休尼克FC|主胜|1x2|2026-08-27": {
+    "ev": 11.59,
+    "bb": 2.01,
+    "ts": 1787820093.1678421
   }
 }

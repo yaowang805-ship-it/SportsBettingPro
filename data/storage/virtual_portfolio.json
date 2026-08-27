@@ -1,30 +1,7 @@
 {
-  "balance": 10160.36,
+  "balance": 9944.36,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_格拉纳达_马洛卡_上半场主胜",
-      "sport": "football",
-      "league": "西班牙乙级联赛",
-      "home_team": "格拉纳达",
-      "away_team": "马洛卡",
-      "home_cn": "格拉纳达",
-      "away_cn": "马洛卡",
-      "market": "1x2",
-      "market_type": "上半场主胜",
-      "sub_market": "ht",
-      "line": "",
-      "odds": 4.35,
-      "stake": 24,
-      "model_prob": 0.2374,
-      "ev_pct": 3.25,
-      "pin_odds": 3.96,
-      "fair_price": 4.213,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1787599800,
-      "created_at": "2026-08-24T07:54:36.259496+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_佩尔勒斯_瓦里AC_客胜",
       "sport": "football",
@@ -2924,29 +2901,6 @@
       "track_only": false
     },
     {
-      "id": "bb_vs_pin_1x2_维戈塞尔塔_奥萨苏纳_上半场客胜",
-      "sport": "football",
-      "league": "西班牙甲级联赛",
-      "home_team": "维戈塞尔塔",
-      "away_team": "奥萨苏纳",
-      "home_cn": "维戈塞尔塔",
-      "away_cn": "奥萨苏纳",
-      "market": "1x2",
-      "market_type": "上半场客胜",
-      "sub_market": "ht",
-      "line": "",
-      "odds": 6.25,
-      "stake": 109,
-      "model_prob": 0.1817,
-      "ev_pct": 13.53,
-      "pin_odds": 5.06,
-      "fair_price": 5.505,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1787855400,
-      "created_at": "2026-08-27T07:55:21.493499+00:00",
-      "track_only": false
-    },
-    {
       "id": "bb_vs_pin_1x2_塞堤夫_阿科诺_上半场双重机会-主/客",
       "sport": "football",
       "league": "阿尔及利亚甲级联赛",
@@ -2967,6 +2921,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787853600,
       "created_at": "2026-08-27T07:55:21.493628+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_萨达拉帕特_休尼克FC_主胜",
+      "sport": "football",
+      "league": "亚美尼亚杯",
+      "home_team": "萨达拉帕特",
+      "away_team": "休尼克FC",
+      "home_cn": "萨达拉帕特",
+      "away_cn": "休尼克FC",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.01,
+      "stake": 240,
+      "model_prob": 0.5552,
+      "ev_pct": 11.59,
+      "pin_odds": 1.7092,
+      "fair_price": 1.8013,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787832000,
+      "created_at": "2026-08-27T08:41:33.156022+00:00",
       "track_only": false
     }
   ],
@@ -6461,12 +6438,27 @@
       "home_cn": "加拉茨钢铁",
       "away_cn": "阿格斯皮特什蒂",
       "market_type": "和局"
+    },
+    {
+      "id": "bb_vs_pin_1x2_格拉纳达_马洛卡_上半场主胜",
+      "match": "24¥ @ 4.35 (超时作废)",
+      "date": "2026-08-27T08:11:13.327720+00:00",
+      "stake": 24,
+      "odds": 4.35,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "西班牙乙级联赛",
+      "sport": "football",
+      "home_cn": "格拉纳达",
+      "away_cn": "马洛卡",
+      "market_type": "上半场主胜"
     }
   ],
   "daily_budget": {
     "date": "2026-08-27",
-    "used": 3930.0,
-    "bets": 44
+    "used": 4170.0,
+    "bets": 45
   },
   "updated": null
 }
