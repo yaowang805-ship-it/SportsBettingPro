@@ -638,6 +638,18 @@
     "ev": 29.6,
     "ts": 1787934476.309398
   },
+  "football|Belgium Pro League|Oud Heverlee Leuven|Standard Liege|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 9.05,
+    "ts": 1787942981.640064
+  },
+  "football|Belgium Pro League|Oud Heverlee Leuven|Standard Liege|上半场正确比分2-0|correct_score_ht|2026-08-30": {
+    "ev": 11.75,
+    "ts": 1787942981.6400168
+  },
+  "football|Belgium Pro League|Oud Heverlee Leuven|Standard Liege|半/全场-客/主|htft|2026-08-30": {
+    "ev": 4.7,
+    "ts": 1787942981.629208
+  },
   "football|Belgium Pro League|Raal La Louviere|KV Mechelen|半/全场-主/和局|htft|2026-08-29": {
     "ev": 2.61,
     "ts": 1787926455.762327
@@ -2172,6 +2184,10 @@
     "ev": 2.19,
     "ts": 1787926738.896103
   },
+  "football|England League Two|Walsall FC|crington Stanley|让球主胜|1x2|2026-08-29": {
+    "ev": 2.9,
+    "ts": 1787942981.625408
+  },
   "football|England League Two|id:5227189|-|上半场主胜|ht|2026-08-29": {
     "ev": 5.23,
     "bb": 2.25,
@@ -2232,6 +2248,11 @@
   "football|England Northern Premier League|Workington AFC|Leek Town FC|让球主胜|1x2|2026-08-29": {
     "ev": 1.39,
     "ts": 1787937282.263216
+  },
+  "football|England Northern Premier League|id:5321890|-|主胜|1x2|2026-08-29": {
+    "ev": 11.09,
+    "bb": 1.99,
+    "ts": 1787942473.49951
   },
   "football|England Premier League 2|Nottingham Forest U21|Manchester City FC U21|双边进球-否|btts|2026-08-29": {
     "ev": 6.04,
@@ -2530,6 +2551,22 @@
   "football|France Ligue 1|Lille OSC|Paris Saint Germain|让球主胜|1x2|2026-08-29": {
     "ev": 2.09,
     "ts": 1787933584.395065
+  },
+  "football|France Ligue 1|Olympique Lyonnais|Le Havre AC|正确比分1-2|correct_score|2026-08-30": {
+    "ev": 1.44,
+    "ts": 1787942981.63996
+  },
+  "football|France Ligue 1|Stade Brest 29|Toulouse FC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 11.91,
+    "ts": 1787942981.639863
+  },
+  "football|France Ligue 1|Stade Brest 29|Toulouse FC|上半场正确比分2-0|correct_score_ht|2026-08-30": {
+    "ev": 12.0,
+    "ts": 1787942981.639819
+  },
+  "football|France Ligue 1|Stade Brest 29|Toulouse FC|上半场正确比分others|correct_score_ht|2026-08-30": {
+    "ev": 11.68,
+    "ts": 1787942981.6399071
   },
   "football|France Ligue 1|Strasbourg Alsace|Lens|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.23,
@@ -3005,6 +3042,10 @@
     "ev": 14.58,
     "ts": 1787942388.641354
   },
+  "football|Germany 2. Bundesliga|FC Nuremberg|Arminia Bielefeld|上半场正确比分2-0|correct_score_ht|2026-08-30": {
+    "ev": 1.4,
+    "ts": 1787942711.309663
+  },
   "football|Germany 2. Bundesliga|Karlsruher SC|VfL Wolfsburg|上半场正确比分2-0|correct_score_ht|2026-08-29": {
     "ev": 8.96,
     "ts": 1787915358.341233
@@ -3288,6 +3329,10 @@
     "ev": 17.15,
     "ts": 1787883483.010925
   },
+  "football|Ireland First Division|Athlone Town AFC|Bray Wanderers AFC|半/全场-客/主|htft|2026-08-29": {
+    "ev": 8.35,
+    "ts": 1787942474.377173
+  },
   "football|Ireland First Division|Athlone Town AFC|Bray Wanderers AFC|大球|1x2|2026-08-29": {
     "ev": 1.78,
     "ts": 1787929065.377671
@@ -3460,6 +3505,10 @@
     "ev": 1.23,
     "ts": 1787915109.4214022
   },
+  "football|Ireland Premier Division|Galway United FC|Shelbourne FC|上半场客胜|ht|2026-08-29": {
+    "ev": 2.7,
+    "ts": 1787942646.870531
+  },
   "football|Ireland Premier Division|Galway United FC|Shelbourne FC|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 8.01,
     "ts": 1787883483.010714
@@ -3484,6 +3533,10 @@
     "ev": 1.87,
     "ts": 1787904346.117632
   },
+  "football|Ireland Premier Division|Galway United FC|Shelbourne FC|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 2.23,
+    "ts": 1787942646.870666
+  },
   "football|Ireland Premier Division|Galway United FC|Shelbourne FC|小球|1x2|2026-08-29": {
     "ev": 1.54,
     "ts": 1787914207.477033
@@ -3491,6 +3544,10 @@
   "football|Ireland Premier Division|Galway United FC|Shelbourne FC|让球主胜|1x2|2026-08-29": {
     "ev": 1.99,
     "ts": 1787941075.5921888
+  },
+  "football|Ireland Premier Division|Galway United FC|Shelbourne FC|让球客胜|1x2|2026-08-29": {
+    "ev": 3.91,
+    "ts": 1787942474.376908
   },
   "football|Ireland Premier Division|Saint Patricks Athletic FC|Waterford FC|上半场正确比分0-1|correct_score_ht|2026-08-29": {
     "ev": 1.21,
@@ -3630,6 +3687,10 @@
     "ev": 35.15,
     "bb": 1.54,
     "ts": 1787881347.650337
+  },
+  "football|Italy Serie A|Juventus|Parma Calcio|上半场正确比分0-1|correct_score_ht|2026-08-30": {
+    "ev": 32.9,
+    "ts": 1787942981.639771
   },
   "football|Italy Serie A|Milan|Venezia|上半场主胜|ht|2026-08-29": {
     "ev": 1.68,
@@ -3867,6 +3928,26 @@
     "ev": 1.2,
     "ts": 1787940511.630643
   },
+  "football|Italy Serie C|Barletta Calcio|SSC Bari|上半场客胜|ht|2026-08-29": {
+    "ev": 1.65,
+    "ts": 1787942646.871752
+  },
+  "football|Italy Serie C|Barletta Calcio|SSC Bari|单双-双|oe|2026-08-29": {
+    "ev": 1.78,
+    "ts": 1787943068.435429
+  },
+  "football|Italy Serie C|Barletta Calcio|SSC Bari|和局|1x2|2026-08-29": {
+    "ev": 1.13,
+    "ts": 1787942883.6553369
+  },
+  "football|Italy Serie C|Barletta Calcio|SSC Bari|客胜|1x2|2026-08-29": {
+    "ev": 1.39,
+    "ts": 1787942646.87171
+  },
+  "football|Italy Serie C|Barletta Calcio|SSC Bari|让球客胜|1x2|2026-08-29": {
+    "ev": 1.2,
+    "ts": 1787942646.871795
+  },
   "football|Italy Serie C|Ravenna FC 1913|US Latina Calcio 1932|上半场主胜|ht|2026-08-30": {
     "ev": 2.35,
     "ts": 1787933216.275025
@@ -3911,6 +3992,10 @@
     "ev": 1.31,
     "ts": 1787903995.908907
   },
+  "football|Italy Serie C|US Pianese|Vado FC|上半场客胜|ht|2026-08-29": {
+    "ev": 3.65,
+    "ts": 1787942883.6554408
+  },
   "football|Italy Serie C|US Pianese|Vado FC|主胜|1x2|2026-08-29": {
     "ev": 2.98,
     "ts": 1787942269.066689
@@ -3918,6 +4003,10 @@
   "football|Italy Serie C|US Pianese|Vado FC|让球主胜|1x2|2026-08-29": {
     "ev": 2.0,
     "ts": 1787942103.289477
+  },
+  "football|Italy Serie C|afatese Calcio 1922|AZ Picerno|单双-双|oe|2026-08-29": {
+    "ev": 1.68,
+    "ts": 1787943068.4355772
   },
   "football|Italy Serie C|id:5390901|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 4.1,
@@ -3940,6 +4029,14 @@
   "football|Italy Serie C|vese 1919|USD Audace Cerignola|上半场客胜|ht|2026-08-29": {
     "ev": 1.73,
     "ts": 1787942103.289325
+  },
+  "football|Italy Serie C|vese 1919|USD Audace Cerignola|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 3.29,
+    "ts": 1787942646.871661
+  },
+  "football|Italy Serie C|vese 1919|USD Audace Cerignola|客胜|1x2|2026-08-29": {
+    "ev": 3.12,
+    "ts": 1787942646.871565
   },
   "football|Italy Serie C|vese 1919|USD Audace Cerignola|小球|1x2|2026-08-29": {
     "ev": 1.02,
@@ -4269,6 +4366,18 @@
   "football|Malta Premier League|Valletta FC|Marsaxlokk FC|主胜|1x2|2026-08-29": {
     "ev": 5.31,
     "ts": 1787942103.289529
+  },
+  "football|Malta Premier League|Valletta FC|Marsaxlokk FC|双重机会-主/和局|dc|2026-08-29": {
+    "ev": 1.67,
+    "ts": 1787942883.6555898
+  },
+  "football|Malta Premier League|Valletta FC|Marsaxlokk FC|和局|1x2|2026-08-29": {
+    "ev": 1.69,
+    "ts": 1787942883.655489
+  },
+  "football|Malta Premier League|Valletta FC|Marsaxlokk FC|让球主胜|1x2|2026-08-29": {
+    "ev": 3.69,
+    "ts": 1787942474.3794901
   },
   "football|Malta Premier League|id:5414507|-|主胜|1x2|2026-08-29": {
     "ev": 5.31,
@@ -4691,6 +4800,11 @@
     "ev": 3.17,
     "ts": 1787929065.377861
   },
+  "football|Northern Ireland Premiership|id:5363982|-|主胜|1x2|2026-08-29": {
+    "ev": 5.7,
+    "bb": 8.85,
+    "ts": 1787942473.499585
+  },
   "football|Peru Liga 1|Comerciantes Unidos|FC Cajamarca|上半场主胜|ht|2026-08-29": {
     "ev": 1.01,
     "ts": 1787870176.198184
@@ -4724,6 +4838,14 @@
     "ev": 4.57,
     "bb": 2.23,
     "ts": 1787939208.0139499
+  },
+  "football|Poland Ekstraklasa|LKP Motor Lublin|GKS Piast Gliwice|上半场正确比分0-2|correct_score_ht|2026-08-29": {
+    "ev": 10.94,
+    "ts": 1787942981.6325219
+  },
+  "football|Poland Ekstraklasa|LKP Motor Lublin|GKS Piast Gliwice|总进球区间7+|total_goals_range|2026-08-29": {
+    "ev": 17.93,
+    "ts": 1787942981.632475
   },
   "football|Poland Ekstraklasa|LKP Motor Lublin|GKS Piast Gliwice|让球客胜|1x2|2026-08-29": {
     "ev": 12.29,
@@ -6429,6 +6551,10 @@
     "ev": 1.78,
     "ts": 1787934197.168971
   },
+  "football|Switzerland Super League|FC Lausanne Sport|FC Zurich|小球|1x2|2026-08-30": {
+    "ev": 1.45,
+    "ts": 1787942981.6294131
+  },
   "football|Switzerland Super League|Servette Geneva|FC Luzern|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 7.07,
     "ts": 1787933216.28177
@@ -7932,14 +8058,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|England Northern Premier League|id:5321890|-|主胜|1x2|2026-08-29": {
-    "ev": 11.09,
-    "bb": 1.99,
-    "ts": 1787942473.49951
-  },
-  "football|Northern Ireland Premiership|id:5363982|-|主胜|1x2|2026-08-29": {
-    "ev": 5.7,
-    "bb": 8.85,
-    "ts": 1787942473.499585
+  "football|England Premier League|id:5130751|-|和局|1x2|2026-08-29": {
+    "ev": 5.73,
+    "bb": 4.53,
+    "ts": 1787943246.5513449
   }
 }
