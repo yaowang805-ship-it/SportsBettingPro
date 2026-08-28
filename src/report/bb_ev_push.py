@@ -2377,7 +2377,14 @@ def _make_fingerprint(o: dict) -> str:
     # 盘口线参与指纹: 让球/大小球线变了 → 新机会, 不拦截
     line = o.get("line", "") or o.get("_line", "")
     line_str = f"|{line}" if line and sub in ("hc", "handicap", "ou", "over_under") else ""
-    return f"{_norm(o.get('sport',''))}|{_norm(o.get('league',''))}|{_norm_team(o.get('home_cn',''))}|{_norm_team(o.get('away_cn',''))}|{_norm(o.get('designation',''))}|{sub}{line_str}|{match_date}"
+    # V5.11: 用稳定的 bb_match_id 标识比赛, 回退到归一化队名 — BB 中文名翻译抖动
+    # (SC波尔塔瓦↔波尔塔瓦)会改队名导致去重失效; bb_match_id 是 BB 比赛ID, 恒定不变。
+    _mid = o.get("bb_match_id", "")
+    if _mid:
+        _match_key = f"id:{_mid}"
+    else:
+        _match_key = f"{_norm_team(o.get('home_cn',''))}|{_norm_team(o.get('away_cn',''))}"
+    return f"{_norm(o.get('sport',''))}|{_norm(o.get('league',''))}|{_match_key}|{_norm(o.get('designation',''))}|{sub}{line_str}|{match_date}"
 
 
 def _load_fingerprints() -> dict:
