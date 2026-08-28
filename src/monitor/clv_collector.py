@@ -586,6 +586,45 @@ def _extract_market_odds(pin_matchup, sub_market, designation, sport="football",
                 return round(odds[idx], 4), round(fair, 4), round(total, 4)
         return None
 
+    elif sub_market == "htft":
+        # htft(半全场) 在 matchup["htft"] 字段 (_SPECIAL_DESC 已提取), designation 是
+        # "{半场队名} - {全场队名}", 映射成 home/home 等 HTFT_KEYS 再找收盘价。
+        for ht in pin_matchup.get("htft", []):
+            if ht.get("period", 0) != 0:
+                continue
+            prices = ht.get("prices", [])
+            if len(prices) < 9:
+                continue
+            from src.scrapers.pinnacle_opportunities import (map_htft_designations,
+                                                             HTFT_LABELS, HTFT_KEYS)
+            mapped = map_htft_designations(prices, pin_matchup.get("home", ""), pin_matchup.get("away", ""))
+            by_key = {}
+            for p in mapped:
+                k = (p.get("designation") or "").lower().replace(" ", "")
+                v = get_decimal_price(p) or p.get("price_decimal") or 0
+                if v > 0 and k:
+                    by_key[k] = v
+            if len(by_key) < 9:
+                continue
+            # entry 的 designation 是 "半/全场-主/主" 等 HTFT_LABELS, 映射到 HTFT_KEYS
+            target = None
+            for i, lbl in enumerate(HTFT_LABELS):
+                if designation == lbl:
+                    target = HTFT_KEYS[i]
+                    break
+            if not target:
+                return None
+            close_odds = by_key.get(target)
+            if not close_odds or close_odds <= 1.0:
+                return None
+            all_odds = [v for v in by_key.values() if v > 1.0]
+            total = sum(1.0 / o for o in all_odds)
+            if total <= 0:
+                return None
+            fair = close_odds * total  # proportional devig (与 correct_score 等一致)
+            return round(close_odds, 4), round(fair, 4), round(total, 4)
+        return None
+
     # correct_score/winning_margin/total_goals_range/first_to_score 在 get_league_special_markets
     # (matchup 里无对应字段, 需在 _fetch_close_odds 里单独拉)
     return None
