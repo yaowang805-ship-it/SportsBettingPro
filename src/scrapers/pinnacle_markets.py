@@ -472,6 +472,10 @@ def get_league_special_markets(league_id):
         "Total Goals Range 1st Half": "total_goals_range_ht",
         "First Team To Score": "first_to_score",
         "First Team To Score 1st Half": "first_to_score_ht",
+        # V5.11: 精确进球(0/1/2/3+...) — 与 "Total Goals Range"(进球区间0-1/2-3) 是不同盘口。
+        # BB 只有半场版(mty=1103), 无全场版; 故只接 exact_goals_ht。
+        "Exact Total Goals": "exact_goals",
+        "Exact Total Goals 1st Half": "exact_goals_ht",
     }
 
     mm = {}
