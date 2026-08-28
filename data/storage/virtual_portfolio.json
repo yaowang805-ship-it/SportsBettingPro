@@ -1,5 +1,5 @@
 {
-  "balance": 9575.69,
+  "balance": 9370.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3105,6 +3105,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787920200,
       "created_at": "2026-08-28T04:15:30.445376+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_比摩治_科尔卡_双重机会-和局/客",
+      "sport": "football",
+      "league": "斯洛文尼亚乙级联赛",
+      "home_team": "比摩治",
+      "away_team": "科尔卡",
+      "home_cn": "比摩治",
+      "away_cn": "科尔卡",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 1.85,
+      "stake": 122,
+      "model_prob": 0.6467,
+      "ev_pct": 19.65,
+      "pin_odds": 0,
+      "fair_price": 1.5462,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787932800,
+      "created_at": "2026-08-28T04:24:48.996099+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_比摩治_科尔卡_客胜",
+      "sport": "football",
+      "league": "斯洛文尼亚乙级联赛",
+      "home_team": "比摩治",
+      "away_team": "科尔卡",
+      "home_cn": "比摩治",
+      "away_cn": "科尔卡",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.42,
+      "stake": 83,
+      "model_prob": 0.385,
+      "ev_pct": 31.67,
+      "pin_odds": 2.36,
+      "fair_price": 2.5975,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787932800,
+      "created_at": "2026-08-28T04:24:48.996155+00:00",
       "track_only": false
     }
   ],
@@ -6920,8 +6966,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 4025.0,
-    "bets": 29
+    "used": 4230.0,
+    "bets": 31
   },
   "updated": null
 }
