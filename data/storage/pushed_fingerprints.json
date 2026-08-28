@@ -697,6 +697,10 @@
     "ev": 1.38,
     "ts": 1787888205.308096
   },
+  "football|Costa Rica Primera Division|Sporting San Jose|Inter San Carlos|主胜|1x2|2026-08-29": {
+    "ev": 1.15,
+    "ts": 1787909844.5426931
+  },
   "football|Costa Rica Primera Division|Sporting San Jose|Inter San Carlos|小球|1x2|2026-08-29": {
     "ev": 1.98,
     "ts": 1787898636.428331
@@ -1473,6 +1477,14 @@
     "ev": 13.05,
     "ts": 1787900716.228162
   },
+  "football|Germany 2. Bundesliga|VFL Bochum|VfL 1899 Osnabruck|上半场客胜|ht|2026-08-29": {
+    "ev": 1.4,
+    "ts": 1787909844.5402792
+  },
+  "football|Germany 2. Bundesliga|VFL Bochum|VfL 1899 Osnabruck|小球|1x2|2026-08-29": {
+    "ev": 1.01,
+    "ts": 1787909844.540344
+  },
   "football|Germany 3rd Liga|Fortuna Dusseldorf|VFB Stuttgart II|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 25.42,
     "ts": 1787883483.009238
@@ -1835,6 +1847,18 @@
     "ev": 1.36,
     "ts": 1787907762.723032
   },
+  "football|Japan J.League 2|Kataller Toyama|Fujieda MYFC|上半场正确比分2-0|correct_score_ht|2026-08-29": {
+    "ev": 5.94,
+    "ts": 1787909844.548662
+  },
+  "football|Japan J.League 2|Kataller Toyama|Fujieda MYFC|主胜|1x2|2026-08-29": {
+    "ev": 1.67,
+    "ts": 1787909844.542751
+  },
+  "football|Japan J.League 2|Kataller Toyama|Fujieda MYFC|小球|1x2|2026-08-29": {
+    "ev": 1.38,
+    "ts": 1787909844.5428019
+  },
   "football|Japan J.League 2|Tochigi City FC|Jubilo Iwata|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 19.39,
     "ts": 1787907762.723166
@@ -1846,6 +1870,15 @@
   "football|Japan J.League 2|Tochigi City FC|Jubilo Iwata|上半场正确比分others|correct_score_ht|2026-08-29": {
     "ev": 18.79,
     "ts": 1787907762.723225
+  },
+  "football|Japan J.League 2|Vanraure Hachinohe FC|Blaublitz Akita|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.24,
+    "ts": 1787909844.54293
+  },
+  "football|Japan J.League 2|id:5164151|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.24,
+    "bb": 1.96,
+    "ts": 1787909843.999684
   },
   "football|Japan J.League 2|id:5164279|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 3.55,
@@ -2195,6 +2228,10 @@
   "football|Poland Ekstraklasa|Wisla Plock|Korona Kielce|双边进球-是|btts|2026-08-29": {
     "ev": 3.2,
     "ts": 1787894469.961331
+  },
+  "football|Poland Ekstraklasa|Wisla Plock|Korona Kielce|和局|1x2|2026-08-29": {
+    "ev": 1.04,
+    "ts": 1787909844.5393121
   },
   "football|Poland III Liga|KSS Kotwica Kornik|Chemik Bydgoszcz|客胜|1x2|2026-08-28": {
     "ev": 2.48,
@@ -2793,6 +2830,10 @@
   "football|Switzerland Challenge League|Kriens|FC Stade Nyonnais|大球|1x2|2026-08-29": {
     "ev": 3.89,
     "ts": 1787907762.716531
+  },
+  "football|Switzerland Challenge League|Kriens|FC Stade Nyonnais|小球|1x2|2026-08-29": {
+    "ev": 2.98,
+    "ts": 1787910295.638838
   },
   "football|Switzerland Challenge League|Yverdon Sport FC|FC Wil 1900|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 25.8,
@@ -3966,9 +4007,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Japan J.League 2|id:5164151|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
-    "ev": 3.24,
-    "bb": 1.96,
-    "ts": 1787909843.999684
+  "football|Czech Republic MSFL|id:5348476|-|客胜|1x2|2026-08-28": {
+    "ev": 6.8,
+    "bb": 2.0,
+    "ts": 1787910336.261207
   }
 }
