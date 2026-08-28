@@ -1,5 +1,5 @@
 {
-  "balance": 8181.69,
+  "balance": 8146.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3151,6 +3151,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788008400,
       "created_at": "2026-08-28T13:31:51.851896+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_迪拜联合_伊蒂哈德卡尔巴_主胜",
+      "sport": "football",
+      "league": "阿联酋超级联赛",
+      "home_team": "迪拜联合",
+      "away_team": "伊蒂哈德卡尔巴",
+      "home_cn": "迪拜联合",
+      "away_cn": "伊蒂哈德卡尔巴",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.47,
+      "stake": 35,
+      "model_prob": 0.4256,
+      "ev_pct": 5.13,
+      "pin_odds": 2.27,
+      "fair_price": 2.3495,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787925300,
+      "created_at": "2026-08-28T13:47:15.544946+00:00",
       "track_only": false
     }
   ],
@@ -7296,8 +7319,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 6048.0,
-    "bets": 71
+    "used": 6083.0,
+    "bets": 72
   },
   "updated": null
 }

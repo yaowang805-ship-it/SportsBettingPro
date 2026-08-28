@@ -246,9 +246,17 @@
     "ev": 2.3,
     "ts": 1787883483.0089111
   },
+  "football|Austria 2. Liga|ASK Voitsberg|FC Liefering|主胜|1x2|2026-08-29": {
+    "ev": 3.59,
+    "ts": 1787924605.039118
+  },
   "football|Austria 2. Liga|ASK Voitsberg|FC Liefering|小球|1x2|2026-08-29": {
     "ev": 1.49,
     "ts": 1787889085.0794759
+  },
+  "football|Austria 2. Liga|ASK Voitsberg|FC Liefering|让球主胜|1x2|2026-08-29": {
+    "ev": 1.68,
+    "ts": 1787924605.03919
   },
   "football|Austria 2. Liga|FC Hertha Wels|FC Admira Wacker Modling|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 1.35,
@@ -592,6 +600,10 @@
     "ev": 1.03,
     "ts": 1787879994.1047838
   },
+  "football|Brazil Serie B|Gremio Novorizontino SP|Recife PE|主胜|1x2|2026-08-29": {
+    "ev": 1.85,
+    "ts": 1787924822.904997
+  },
   "football|Brazil Serie B|Gremio Novorizontino SP|Recife PE|半/全场-主/和局|htft|2026-08-29": {
     "ev": 3.76,
     "ts": 1787888205.308834
@@ -839,6 +851,14 @@
   "football|Cyprus 1st Division|Olympiakos Nicosia|Nea Salamina Famagusta|上半场精确进球others|exact_goals_ht|2026-08-29": {
     "ev": 20.75,
     "ts": 1787909168.4162781
+  },
+  "football|Cyprus 1st Division|Olympiakos Nicosia|Nea Salamina Famagusta|主胜|1x2|2026-08-29": {
+    "ev": 2.14,
+    "ts": 1787924605.0434098
+  },
+  "football|Cyprus 1st Division|Olympiakos Nicosia|Nea Salamina Famagusta|让球客胜|1x2|2026-08-29": {
+    "ev": 7.46,
+    "ts": 1787924605.043485
   },
   "football|Cyprus 1st Division|Ypsonas FC|ALS Omonia|上半场主胜|ht|2026-08-29": {
     "ev": 1.49,
@@ -1197,15 +1217,15 @@
     "bb": 2.13,
     "ts": 1787903995.0646951
   },
-  "football|Egypt Premier League|id:5404771|-|上半场主胜|ht|2026-08-28": {
-    "ev": 2.85,
-    "bb": 4.24,
-    "ts": 1787923766.682395
-  },
   "football|Egypt Premier League|id:5404771|-|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 3.25,
     "bb": 2.02,
     "ts": 1787917111.655741
+  },
+  "football|Egypt Premier League|id:5480971|-|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 5.83,
+    "bb": 2.33,
+    "ts": 1787924604.590295
   },
   "football|Egypt Premier League|伊蒂哈德亚历山大|瑟亚米卡|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 3.61,
@@ -3049,6 +3069,10 @@
   "football|Netherlands Eredivisie|FC Groningen|Fortuna Sittard|让球客胜|1x2|2026-08-29": {
     "ev": 1.13,
     "ts": 1787901091.622368
+  },
+  "football|North Macedonia 1. MFL|FK Sileks Kratovo|FK Shkendija|让球客胜|1x2|2026-08-28": {
+    "ev": 2.1,
+    "ts": 1787924605.0380301
   },
   "football|Peru Liga 1|Comerciantes Unidos|FC Cajamarca|上半场主胜|ht|2026-08-29": {
     "ev": 1.01,
@@ -5211,9 +5235,19 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Egypt Premier League|id:5480971|-|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 5.83,
-    "bb": 2.33,
-    "ts": 1787924604.590295
+  "football|Egypt Premier League|id:5404771|-|上半场主胜|ht|2026-08-28": {
+    "ev": 15.1,
+    "bb": 4.78,
+    "ts": 1787924835.554247
+  },
+  "football|UAE Pro League|id:5304708|-|主胜|1x2|2026-08-28": {
+    "ev": 5.13,
+    "bb": 2.47,
+    "ts": 1787924835.554285
+  },
+  "football|Finland Kakkonen|id:5508774|-|客胜|1x2|2026-08-28": {
+    "ev": 10.4,
+    "bb": 7.7,
+    "ts": 1787924835.554315
   }
 }
