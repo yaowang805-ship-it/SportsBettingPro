@@ -455,9 +455,13 @@ def get_league_special_markets(league_id):
 
     SPECIAL_MAP = {
         "Correct Score": "correct_score",
+        "Correct Score 1st Half": "correct_score_ht",
         "Winning Margin": "winning_margin",
+        "Winning Margin 1st Half": "winning_margin_ht",
         "Total Goals Range": "total_goals_range",
+        "Total Goals Range 1st Half": "total_goals_range_ht",
         "First Team To Score": "first_to_score",
+        "First Team To Score 1st Half": "first_to_score_ht",
     }
 
     mm = {}
