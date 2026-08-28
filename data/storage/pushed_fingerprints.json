@@ -1016,6 +1016,10 @@
     "ev": 9.6,
     "ts": 1787936722.703177
   },
+  "football|Cyprus 1st Division|Aris Limassol FC|Apollon Limassol|上半场正确比分2-0|correct_score_ht|2026-08-30": {
+    "ev": 2.38,
+    "ts": 1787939592.078212
+  },
   "football|Cyprus 1st Division|Aris Limassol FC|Apollon Limassol|上半场正确比分others|correct_score_ht|2026-08-30": {
     "ev": 12.24,
     "ts": 1787936722.703263
@@ -3869,6 +3873,10 @@
     "ev": 15.31,
     "ts": 1787915109.423485
   },
+  "football|Japan J.League 2|Tokushima Vortis|Oita Trinita|让球主胜|1x2|2026-08-29": {
+    "ev": 2.01,
+    "ts": 1787939592.050768
+  },
   "football|Japan J.League 2|Vanraure Hachinohe FC|Blaublitz Akita|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 3.24,
     "ts": 1787909844.54293
@@ -4571,6 +4579,14 @@
   "football|Portugal Primeira Liga|Alverca Futebol|Santa Clara Azores|上半场客胜|ht|2026-08-29": {
     "ev": 1.07,
     "ts": 1787939295.664213
+  },
+  "football|Portugal Primeira Liga|Alverca Futebol|Santa Clara Azores|双边进球-是|btts|2026-08-29": {
+    "ev": 1.23,
+    "ts": 1787939592.057106
+  },
+  "football|Portugal Primeira Liga|Alverca Futebol|Santa Clara Azores|大球|1x2|2026-08-29": {
+    "ev": 2.99,
+    "ts": 1787939592.057198
   },
   "football|Portugal Primeira Liga|FC Arouca|Maritimo Madeira|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.74,
@@ -5721,6 +5737,10 @@
   "football|Spain LaLiga|Real Sociedad|D Espanyol|上半场正确比分others|correct_score_ht|2026-08-30": {
     "ev": 15.32,
     "ts": 1787936722.7028952
+  },
+  "football|Spain LaLiga|Real Sociedad|D Espanyol|半/全场-主/和局|htft|2026-08-30": {
+    "ev": 1.55,
+    "ts": 1787939592.057312
   },
   "football|Spain LaLiga|Real Sociedad|D Espanyol|正确比分3-0|correct_score|2026-08-30": {
     "ev": 2.02,
@@ -7247,6 +7267,10 @@
     "ev": 1.08,
     "ts": 1787890041.678944
   },
+  "football|Ukraine Persha Liga|UCSA Tarasivka|FC Inhulets Petrove|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 6.33,
+    "ts": 1787939592.051798
+  },
   "football|Ukraine Persha Liga|UCSA Tarasivka|FC Inhulets Petrove|大球|1x2|2026-08-29": {
     "ev": 8.51,
     "ts": 1787939295.6547189
@@ -7258,6 +7282,11 @@
   "football|Ukraine Persha Liga|UCSA Tarasivka|FC Inhulets Petrove|让球客胜|1x2|2026-08-29": {
     "ev": 7.33,
     "ts": 1787939295.654618
+  },
+  "football|Ukraine Persha Liga|id:5489941|-|客胜|1x2|2026-08-29": {
+    "ev": 18.81,
+    "bb": 3.57,
+    "ts": 1787939591.500343
   },
   "football|Ukraine Persha Liga|高华尤夫卡二队|SC波尔塔瓦|客胜|1x2|2026-08-28": {
     "ev": 17.65,
@@ -7411,9 +7440,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Ukraine Persha Liga|id:5489941|-|客胜|1x2|2026-08-29": {
-    "ev": 18.81,
-    "bb": 3.57,
-    "ts": 1787939591.500343
+  "football|France Ligue 2|id:5087586|-|上半场客胜|ht|2026-08-29": {
+    "ev": 7.85,
+    "bb": 5.05,
+    "ts": 1787939656.172692
   }
 }
