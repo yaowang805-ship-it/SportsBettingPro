@@ -1,5 +1,5 @@
 {
-  "balance": 8227.69,
+  "balance": 8155.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3381,6 +3381,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787941800,
       "created_at": "2026-08-28T11:37:00.394810+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_查普斯_卡亚尼卡帕_主胜",
+      "sport": "football",
+      "league": "芬兰甲级联赛",
+      "home_team": "查普斯",
+      "away_team": "卡亚尼卡帕",
+      "home_cn": "查普斯",
+      "away_cn": "卡亚尼卡帕",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.08,
+      "stake": 58,
+      "model_prob": 0.5109,
+      "ev_pct": 6.27,
+      "pin_odds": 1.9091,
+      "fair_price": 1.9572,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787931000,
+      "created_at": "2026-08-28T12:24:52.074175+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_索非亚斯拉维亚_塞普特姆里_上半场客胜",
+      "sport": "football",
+      "league": "保加利亚甲级联赛",
+      "home_team": "索非亚斯拉维亚",
+      "away_team": "塞普特姆里",
+      "home_cn": "索非亚斯拉维亚",
+      "away_cn": "塞普特姆里",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 6.35,
+      "stake": 14,
+      "model_prob": 0.1696,
+      "ev_pct": 7.69,
+      "pin_odds": 5.18,
+      "fair_price": 5.8966,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787932800,
+      "created_at": "2026-08-28T12:24:52.074258+00:00",
       "track_only": false
     }
   ],
@@ -7361,8 +7407,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 5810.0,
-    "bets": 64
+    "used": 5882.0,
+    "bets": 66
   },
   "updated": null
 }
