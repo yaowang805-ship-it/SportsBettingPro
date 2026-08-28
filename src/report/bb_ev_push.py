@@ -2379,12 +2379,16 @@ def _make_fingerprint(o: dict) -> str:
     line_str = f"|{line}" if line and sub in ("hc", "handicap", "ou", "over_under") else ""
     # V5.11: 用稳定的 bb_match_id 标识比赛, 回退到归一化队名 — BB 中文名翻译抖动
     # (SC波尔塔瓦↔波尔塔瓦)会改队名导致去重失效; bb_match_id 是 BB 比赛ID, 恒定不变。
+    # 注意: 保持 key 为 8 段(sport|league|home|away|designation|sub|line|date),
+    # 下游 _opposite_direction 双边拦截按 parts[2..5] 索引, 段数不能变。
     _mid = o.get("bb_match_id", "")
     if _mid:
-        _match_key = f"id:{_mid}"
+        _home_part = f"id:{_mid}"
+        _away_part = "-"
     else:
-        _match_key = f"{_norm_team(o.get('home_cn',''))}|{_norm_team(o.get('away_cn',''))}"
-    return f"{_norm(o.get('sport',''))}|{_norm(o.get('league',''))}|{_match_key}|{_norm(o.get('designation',''))}|{sub}{line_str}|{match_date}"
+        _home_part = _norm_team(o.get('home_cn', ''))
+        _away_part = _norm_team(o.get('away_cn', ''))
+    return f"{_norm(o.get('sport',''))}|{_norm(o.get('league',''))}|{_home_part}|{_away_part}|{_norm(o.get('designation',''))}|{sub}{line_str}|{match_date}"
 
 
 def _load_fingerprints() -> dict:
