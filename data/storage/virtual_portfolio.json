@@ -1,5 +1,5 @@
 {
-  "balance": 5851.69,
+  "balance": 5771.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -4164,6 +4164,29 @@
       "commence_time": 1787941800,
       "created_at": "2026-08-28T17:21:04.292095+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_卡维塞_1919_切里尼奥拉_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "意大利丙级联赛",
+      "home_team": "卡维塞 1919",
+      "away_team": "切里尼奥拉",
+      "home_cn": "卡维塞 1919",
+      "away_cn": "切里尼奥拉",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.97,
+      "stake": 80,
+      "model_prob": 0.5284,
+      "ev_pct": 4.1,
+      "pin_odds": 0,
+      "fair_price": 1.8925,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787943600,
+      "created_at": "2026-08-28T17:24:44.996711+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -8308,8 +8331,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-29",
-    "used": 634.0,
-    "bets": 15
+    "used": 714.0,
+    "bets": 16
   },
   "updated": null
 }

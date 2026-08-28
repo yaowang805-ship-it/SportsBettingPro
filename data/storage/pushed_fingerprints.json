@@ -790,6 +790,10 @@
     "ev": 1.05,
     "ts": 1787913904.410985
   },
+  "football|Bulgaria First Professional League|FC CSKA 1948|PFC Lokomotiv Plovdiv|主胜|1x2|2026-08-29": {
+    "ev": 1.47,
+    "ts": 1787937665.210001
+  },
   "football|Bulgaria First Professional League|FC CSKA 1948|PFC Lokomotiv Plovdiv|半/全场-客/主|htft|2026-08-29": {
     "ev": 3.63,
     "ts": 1787914868.510091
@@ -2479,6 +2483,11 @@
     "ev": 1.45,
     "ts": 1787930538.005415
   },
+  "football|France Ligue 1|id:5440667|-|和局|1x2|2026-08-29": {
+    "ev": 6.52,
+    "bb": 4.54,
+    "ts": 1787937664.315766
+  },
   "football|France Ligue 1|里尔|巴黎圣日耳曼|上半场双重机会-主/和局|ht_dc|2026-08-29": {
     "ev": 28.94,
     "bb": 1.6,
@@ -3053,6 +3062,11 @@
     "bb": 2.14,
     "ts": 1787923911.868893
   },
+  "football|Germany Bundesliga|id:5200944|-|上半场客胜|ht|2026-08-29": {
+    "ev": 2.12,
+    "bb": 9.7,
+    "ts": 1787937664.315913
+  },
   "football|Greece Super League|Volos NFC|Iraklis 1908 FC|半/全场-主/客|htft|2026-08-30": {
     "ev": 6.13,
     "ts": 1787934743.911247
@@ -3335,6 +3349,11 @@
     "bb": 7.35,
     "ts": 1787933583.858187
   },
+  "football|Ireland Premier Division|id:5326074|-|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 8.2,
+    "bb": 4.63,
+    "ts": 1787937664.315846
+  },
   "football|Ireland Premier Division|id:5326075|-|客胜|1x2|2026-08-29": {
     "ev": 7.57,
     "bb": 7.4,
@@ -3466,6 +3485,11 @@
   "football|Italy Serie A|Sassuolo Calcio|Torino FC|和局|1x2|2026-08-30": {
     "ev": 1.07,
     "ts": 1787936989.3356328
+  },
+  "football|Italy Serie A|id:5112831|-|上半场客胜|ht|2026-08-29": {
+    "ev": 3.17,
+    "bb": 8.1,
+    "ts": 1787937664.3159711
   },
   "football|Italy Serie A|id:5112848|-|上半场客胜|ht|2026-08-30": {
     "ev": 4.98,
@@ -5110,6 +5134,10 @@
     "ev": 1.7,
     "ts": 1787926859.390028
   },
+  "football|Scotland League Two|Edinburgh City FC|Forfar Athletic FC|让球客胜|1x2|2026-08-29": {
+    "ev": 1.06,
+    "ts": 1787937665.2111712
+  },
   "football|Scotland League Two|Spartans FC|Clyde FC|主胜|1x2|2026-08-29": {
     "ev": 4.37,
     "ts": 1787926455.762454
@@ -5403,11 +5431,6 @@
     "ev": 3.05,
     "bb": 1.92,
     "ts": 1787930397.159806
-  },
-  "football|Spain LaLiga 2|id:5376058|-|上半场客胜|ht|2026-08-29": {
-    "ev": 6.21,
-    "bb": 4.81,
-    "ts": 1787903995.064754
   },
   "football|Spain LaLiga 2|特内里费|希洪竞技|上半场客胜|ht|2026-08-29": {
     "ev": 4.51,
@@ -7215,24 +7238,24 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|France Ligue 1|id:5440667|-|和局|1x2|2026-08-29": {
-    "ev": 6.52,
-    "bb": 4.54,
-    "ts": 1787937664.315766
+  "football|Italy Serie C|id:5390901|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 4.1,
+    "bb": 1.97,
+    "ts": 1787937885.0149848
   },
-  "football|Ireland Premier Division|id:5326074|-|双重机会-和局/客|dc|2026-08-29": {
-    "ev": 8.2,
-    "bb": 4.63,
-    "ts": 1787937664.315846
+  "football|Spain LaLiga 2|id:5376058|-|上半场客胜|ht|2026-08-29": {
+    "ev": 8.33,
+    "bb": 4.91,
+    "ts": 1787937885.015031
   },
-  "football|Germany Bundesliga|id:5200944|-|上半场客胜|ht|2026-08-29": {
-    "ev": 2.12,
+  "football|Germany Bundesliga|id:5002587|-|上半场客胜|ht|2026-08-29": {
+    "ev": 2.9,
     "bb": 9.7,
-    "ts": 1787937664.315913
+    "ts": 1787937885.0150678
   },
-  "football|Italy Serie A|id:5112831|-|上半场客胜|ht|2026-08-29": {
-    "ev": 3.17,
-    "bb": 8.1,
-    "ts": 1787937664.3159711
+  "football|France Ligue 2|id:5348620|-|上半场客胜|ht|2026-08-29": {
+    "ev": 3.28,
+    "bb": 6.45,
+    "ts": 1787937885.0151
   }
 }
