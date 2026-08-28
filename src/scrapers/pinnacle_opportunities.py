@@ -532,9 +532,12 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
     SPECIAL_KEY_TO_MKT = {
         # "correct_score" 已删除 (2026-08-18): BB mty=1188「正确比分」只有高比分(2-1/5-1/6-6),
         # 无低比分(0-0/1-0/1-1), 与 Pinnacle Correct Score(含全部比分)错配, 赔率对不上波胆。
+        # V5.11: correct_score_ht 半场正确比分 — BB mty=1100 含全比分(0-0/1-0/.../Others),
+        # 与 Pinnacle "Correct Score 1st Half" 对齐(半场比分上限低, 9条显式+兜底, 无错配)。
         "winning_margin": ("winning_margin", "净胜球"),
         "total_goals_range": ("total_goals_range", "总进球区间"),
         "first_to_score": ("first_to_score", "先进球"),
+        "correct_score_ht": ("correct_score_ht", "上半场正确比分"),
     }
 
     entries = []
@@ -580,6 +583,7 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             continue
 
         ft = m.get("odds_ft", {})
+        ht = m.get("odds_ht", {})  # V5.11: 半场特殊盘(correct_score_ht)从 odds_ht 取
         # 开赛时间(北京时间) — 之前特殊盘口 entry 漏了, 推送显示"无时间"且不做开赛时间窗过滤
         bb_start = ""
         bb_epoch = None
@@ -616,12 +620,13 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             "draw_no_bet": [],
         }
         for bb_key, (pin_key, label) in SPECIAL_KEY_TO_MKT.items():
-            bb_opts = ft.get(bb_key)
+            # V5.11: correct_score_ht 从 odds_ht 取, 其余从 odds_ft 取
+            bb_opts = (ht if bb_key.endswith("_ht") else ft).get(bb_key)
             pin_opts = pin_specs.get(pin_key)
             if not bb_opts or not pin_opts:
                 continue
             # 归一化并匹配
-            if bb_key == "correct_score":
+            if bb_key in ("correct_score", "correct_score_ht"):
                 norm_bb = {_norm_scoreline(o["name"]): o["odds"] for o in bb_opts}
                 norm_pin = {_norm_scoreline(o["name"]): o["odds"] for o in pin_opts}
             elif bb_key == "winning_margin":
