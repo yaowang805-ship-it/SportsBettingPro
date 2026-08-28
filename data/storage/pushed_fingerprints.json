@@ -3770,6 +3770,14 @@
     "ev": 2.53,
     "ts": 1787905738.657262
   },
+  "football|Malta Premier League|Hamrun Spartans FC|Floriana FC|主胜|1x2|2026-08-30": {
+    "ev": 2.35,
+    "ts": 1787936457.07213
+  },
+  "football|Malta Premier League|Hamrun Spartans FC|Floriana FC|让球主胜|1x2|2026-08-30": {
+    "ev": 4.6,
+    "ts": 1787936457.072187
+  },
   "football|Malta Premier League|Hibernians FC Paola|Zabbar Saint Patrick FC|主胜|1x2|2026-08-29": {
     "ev": 4.13,
     "ts": 1787933050.7956128
@@ -4054,6 +4062,10 @@
     "ev": 3.45,
     "ts": 1787892880.302909
   },
+  "football|Netherlands Eredivisie|AZ Alkmaar|Go Ahead Eagles|先进球neither|first_to_score|2026-08-30": {
+    "ev": 13.19,
+    "ts": 1787936457.0864089
+  },
   "football|Netherlands Eredivisie|FC Groningen|Fortuna Sittard|上半场正确比分1-2|correct_score_ht|2026-08-29": {
     "ev": 3.35,
     "ts": 1787883483.009501
@@ -4286,6 +4298,10 @@
     "ev": 1.39,
     "ts": 1787890530.9852202
   },
+  "football|Portugal Segunda Liga|Leiria|Tondela|主胜|1x2|2026-08-29": {
+    "ev": 3.95,
+    "ts": 1787935643.871704
+  },
   "football|Portugal Segunda Liga|Leiria|Tondela|半/全场-主/客|htft|2026-08-29": {
     "ev": 1.13,
     "ts": 1787904902.3762739
@@ -4305,6 +4321,10 @@
   "football|Portugal Segunda Liga|Leiria|Tondela|客胜|1x2|2026-08-29": {
     "ev": 1.44,
     "ts": 1787933283.492636
+  },
+  "football|Portugal Segunda Liga|Leiria|Tondela|让球主胜|1x2|2026-08-29": {
+    "ev": 1.97,
+    "ts": 1787935643.871857
   },
   "football|Portugal Segunda Liga|Leiria|Tondela|让球客胜|1x2|2026-08-29": {
     "ev": 2.88,
@@ -4389,9 +4409,33 @@
     "ev": 6.81,
     "ts": 1787885738.0678039
   },
+  "football|Qatar Stars League|Al Shahaniya|Al Sailiya SC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 24.11,
+    "ts": 1787936457.08624
+  },
+  "football|Qatar Stars League|Al Shahaniya|Al Sailiya SC|上半场正确比分1-2|correct_score_ht|2026-08-30": {
+    "ev": 7.74,
+    "ts": 1787936457.086287
+  },
+  "football|Qatar Stars League|Al Shahaniya|Al Sailiya SC|上半场正确比分2-0|correct_score_ht|2026-08-30": {
+    "ev": 7.3,
+    "ts": 1787936457.0860958
+  },
+  "football|Qatar Stars League|Al Shahaniya|Al Sailiya SC|上半场正确比分2-1|correct_score_ht|2026-08-30": {
+    "ev": 2.68,
+    "ts": 1787936457.086186
+  },
+  "football|Qatar Stars League|Al Shahaniya|Al Sailiya SC|上半场正确比分others|correct_score_ht|2026-08-30": {
+    "ev": 45.25,
+    "ts": 1787936457.086334
+  },
   "football|Qatar Stars League|Al Shahaniya|Al Sailiya SC|双边进球-是|btts|2026-08-30": {
     "ev": 2.05,
     "ts": 1787934743.912935
+  },
+  "football|Qatar Stars League|Al Shahaniya|Al Sailiya SC|总进球区间7+|total_goals_range|2026-08-30": {
+    "ev": 43.97,
+    "ts": 1787936457.086004
   },
   "football|Qatar Stars League|Al Wakrah|Al Rayyan SC|单双-双|oe|2026-08-28": {
     "ev": 2.17,
@@ -4826,9 +4870,17 @@
     "ev": 1.59,
     "ts": 1787926173.277178
   },
+  "football|Scotland League One|Ross County FC|East Kilbride|主胜|1x2|2026-08-30": {
+    "ev": 1.28,
+    "ts": 1787936457.0699468
+  },
   "football|Scotland League One|Ross County FC|East Kilbride|客胜|1x2|2026-08-30": {
     "ev": 6.97,
     "ts": 1787934743.910005
+  },
+  "football|Scotland League One|Ross County FC|East Kilbride|让球主胜|1x2|2026-08-30": {
+    "ev": 1.75,
+    "ts": 1787936457.069997
   },
   "football|Scotland League Two|Edinburgh City FC|Forfar Athletic FC|主胜|1x2|2026-08-29": {
     "ev": 1.77,
@@ -5101,6 +5153,11 @@
     "ev": 1.44,
     "ts": 1787896603.604297
   },
+  "football|Spain LaLiga 2|id:5192818|-|上半场客胜|ht|2026-08-29": {
+    "ev": 8.87,
+    "bb": 4.91,
+    "ts": 1787935315.020161
+  },
   "football|Spain LaLiga 2|id:5376058|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 3.05,
     "bb": 1.92,
@@ -5256,11 +5313,6 @@
     "ev": 3.33,
     "bb": 4.44,
     "ts": 1787931669.1334138
-  },
-  "football|Spain LaLiga|id:5192184|-|上半场客胜|ht|2026-08-29": {
-    "ev": 2.55,
-    "bb": 4.31,
-    "ts": 1787907761.176141
   },
   "football|Spain LaLiga|id:5192184|-|和局|1x2|2026-08-29": {
     "ev": 5.2,
@@ -6885,9 +6937,19 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Spain LaLiga 2|id:5192818|-|上半场客胜|ht|2026-08-29": {
-    "ev": 8.87,
-    "bb": 4.91,
-    "ts": 1787935315.020161
+  "football|France Ligue 2|id:5087577|-|上半场客胜|ht|2026-08-29": {
+    "ev": 9.61,
+    "bb": 6.95,
+    "ts": 1787936545.822701
+  },
+  "football|Spain LaLiga|id:5192184|-|上半场客胜|ht|2026-08-29": {
+    "ev": 5.6,
+    "bb": 4.55,
+    "ts": 1787936545.822749
+  },
+  "football|Ireland Premier Division|id:5326075|-|客胜|1x2|2026-08-29": {
+    "ev": 7.57,
+    "bb": 7.4,
+    "ts": 1787936545.822787
   }
 }
