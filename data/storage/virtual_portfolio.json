@@ -1,5 +1,5 @@
 {
-  "balance": 7503.69,
+  "balance": 7215.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3473,6 +3473,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788012000,
       "created_at": "2026-08-28T14:29:01.751516+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_爱丁堡_福弗尔竞技_主胜",
+      "sport": "football",
+      "league": "苏格兰乙级联赛",
+      "home_team": "爱丁堡",
+      "away_team": "福弗尔竞技",
+      "home_cn": "爱丁堡",
+      "away_cn": "福弗尔竞技",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.97,
+      "stake": 240,
+      "model_prob": 0.5568,
+      "ev_pct": 9.68,
+      "pin_odds": 1.7299,
+      "fair_price": 1.7961,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787942700,
+      "created_at": "2026-08-28T14:30:47.110952+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_克莱蒙_索肖_和局",
+      "sport": "football",
+      "league": "法国乙级联赛",
+      "home_team": "克莱蒙",
+      "away_team": "索肖",
+      "home_cn": "克莱蒙",
+      "away_cn": "索肖",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.31,
+      "stake": 48,
+      "model_prob": 0.3182,
+      "ev_pct": 5.32,
+      "pin_odds": 3.02,
+      "fair_price": 3.1427,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787940000,
+      "created_at": "2026-08-28T14:30:47.111015+00:00",
       "track_only": false
     }
   ],
@@ -7618,8 +7664,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 6726.0,
-    "bets": 85
+    "used": 7014.0,
+    "bets": 87
   },
   "updated": null
 }
