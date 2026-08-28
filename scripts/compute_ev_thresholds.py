@@ -94,6 +94,14 @@ SPORT_ADJUST_FALLBACK = {
 # 主体盘口定义(时间维度调整只对主体盘口生效; 临场/早盘见 TIME_BUCKETS + compute_time_adjust)
 MAIN_MARKETS = ("1x2", "hc", "ou")
 
+# 改版时间切分(2026-08-28): 推导→直接提取的盘口, 改版前的 CLV 数据被推导偏差污染。
+#   实测 btts 从 team_total 推导公平价系统性偏低 3~5%(假+EV→真实CLV负), dc 的 2X 腿
+#   从 1X2 推导高估 1.5~6.5% —— 改版前这两盘口的负 CLV(-4.5%/-4.7%)主要是推导偏差,
+#   不是真负 edge。故这两盘口只统计改版后(直接提取)的样本, 避免污染数据永久拖低门槛。
+#   push_time 是 UTC(Z), 用 UTC 2026-08-28T00:00:00 作切分点(≈北京时间08:00, 改版当天上午)。
+REVISION_CUTOFF_UTC = datetime.fromisoformat("2026-08-28T00:00:00+00:00").timestamp()
+REVISION_MARKETS = {"btts", "dc"}
+
 
 def f(v):
     try:
@@ -151,7 +159,12 @@ def load_clean(mode="all"):
             me = f(r.get("match_epoch"))
             if pt and me:
                 lead = (me - pt) / 60.0
-            out.append((r.get("sub_market", "?"), r.get("sport", "?"), r.get("league", ""), clv, ev, lead))
+            # 改版时间切分: 推导→直接提取的盘口只统计改版后样本(push_time 缺失视为改版前, 保守跳过)
+            sub = r.get("sub_market", "?")
+            if sub in REVISION_MARKETS and (pt is None or pt < REVISION_CUTOFF_UTC):
+                _dropped["改版前推导"] += 1
+                continue
+            out.append((sub, r.get("sport", "?"), r.get("league", ""), clv, ev, lead))
     return out
 
 
