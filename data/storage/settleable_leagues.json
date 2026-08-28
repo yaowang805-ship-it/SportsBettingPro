@@ -931,7 +931,7 @@
       "success_rate": 0.0
     },
     "保加利亚乙级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -976,7 +976,7 @@
       "success_rate": 0.0
     },
     "印度加尔各答超级联赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -994,9 +994,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "南非超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-28T02:08:32.858865+00:00",
+  "updated": "2026-08-28T05:39:41.855355+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
