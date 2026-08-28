@@ -524,11 +524,6 @@
     "ev": 3.38,
     "ts": 1787892330.9731998
   },
-  "football|Bulgaria First Professional League|索非亚斯拉维亚|塞普特姆里|上半场客胜|ht|2026-08-29": {
-    "ev": 2.95,
-    "bb": 5.7,
-    "ts": 1787877489.71968
-  },
   "football|CONCACAF Central American Cup|CD奥林匹亚|萨普里萨|和局|1x2|2026-08-28": {
     "ev": 26.65,
     "bb": 3.33,
@@ -3152,6 +3147,11 @@
     "bb": 2.17,
     "ts": 1787895699.673293
   },
+  "football|Ukraine Persha Liga|高华尤夫卡二队|波尔塔瓦|客胜|1x2|2026-08-28": {
+    "ev": 12.33,
+    "bb": 2.17,
+    "ts": 1787896550.598038
+  },
   "football|Ukraine Premier League|Kolos Kovalivka|FC Obolon Kiev|上半场客胜|ht|2026-08-28": {
     "ev": 2.59,
     "ts": 1787834046.712044
@@ -3202,9 +3202,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Ukraine Persha Liga|高华尤夫卡二队|波尔塔瓦|客胜|1x2|2026-08-28": {
-    "ev": 12.33,
-    "bb": 2.17,
-    "ts": 1787896550.598038
+  "football|Bulgaria First Professional League|索非亚斯拉维亚|塞普特姆里|上半场客胜|ht|2026-08-29": {
+    "ev": 7.79,
+    "bb": 6.05,
+    "ts": 1787896602.5922282
   }
 }
