@@ -1,5 +1,5 @@
 {
-  "balance": 9689.69,
+  "balance": 9575.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3036,6 +3036,75 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787942700,
       "created_at": "2026-08-28T04:07:20.970983+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_艾卡纳_艾尔格纳_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "埃及超级联赛",
+      "home_team": "艾卡纳",
+      "away_team": "艾尔格纳",
+      "home_cn": "艾卡纳",
+      "away_cn": "艾尔格纳",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 2.19,
+      "stake": 83,
+      "model_prob": 0.4693,
+      "ev_pct": 2.77,
+      "pin_odds": 2.03,
+      "fair_price": 2.131,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787925600,
+      "created_at": "2026-08-28T04:15:30.445287+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_内卡萨_蓝十字_上半场主胜",
+      "sport": "football",
+      "league": "墨西哥超级联赛",
+      "home_team": "内卡萨",
+      "away_team": "蓝十字",
+      "home_cn": "内卡萨",
+      "away_cn": "蓝十字",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.28,
+      "stake": 17,
+      "model_prob": 0.241,
+      "ev_pct": 3.16,
+      "pin_odds": 3.88,
+      "fair_price": 4.1487,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787965200,
+      "created_at": "2026-08-28T04:15:30.445340+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_高华尤夫卡_奥博隆_上半场客胜",
+      "sport": "football",
+      "league": "乌克兰超级联赛",
+      "home_team": "高华尤夫卡",
+      "away_team": "奥博隆",
+      "home_cn": "高华尤夫卡",
+      "away_cn": "奥博隆",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 8.3,
+      "stake": 14,
+      "model_prob": 0.1276,
+      "ev_pct": 5.93,
+      "pin_odds": 6.06,
+      "fair_price": 7.835,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787920200,
+      "created_at": "2026-08-28T04:15:30.445376+00:00",
       "track_only": false
     }
   ],
@@ -6851,8 +6920,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 3911.0,
-    "bets": 26
+    "used": 4025.0,
+    "bets": 29
   },
   "updated": null
 }
