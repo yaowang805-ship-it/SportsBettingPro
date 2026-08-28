@@ -3329,6 +3329,10 @@
     "ev": 34.45,
     "ts": 1787934743.927244
   },
+  "football|Italy Serie A|Sassuolo Calcio|Torino FC|上半场客胜|ht|2026-08-30": {
+    "ev": 4.98,
+    "ts": 1787935143.61864
+  },
   "football|Italy Serie A|Sassuolo Calcio|Torino FC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 19.22,
     "ts": 1787934743.926986
@@ -3340,6 +3344,11 @@
   "football|Italy Serie A|Sassuolo Calcio|Torino FC|上半场正确比分others|correct_score_ht|2026-08-30": {
     "ev": 26.98,
     "ts": 1787934743.927052
+  },
+  "football|Italy Serie A|id:5112848|-|上半场客胜|ht|2026-08-30": {
+    "ev": 4.98,
+    "bb": 4.47,
+    "ts": 1787935143.051571
   },
   "football|Italy Serie A|id:5112850|-|上半场主胜|ht|2026-08-30": {
     "ev": 2.58,
@@ -5092,11 +5101,6 @@
     "ev": 1.44,
     "ts": 1787896603.604297
   },
-  "football|Spain LaLiga 2|id:5192818|-|上半场客胜|ht|2026-08-29": {
-    "ev": 6.81,
-    "bb": 4.64,
-    "ts": 1787898635.455533
-  },
   "football|Spain LaLiga 2|id:5376058|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 3.05,
     "bb": 1.92,
@@ -5715,6 +5719,10 @@
   "football|UAE Division 1|Dibba Al Fujairah|Gulf United|让球客胜|1x2|2026-08-28": {
     "ev": 1.13,
     "ts": 1787912783.7332292
+  },
+  "football|UAE Pro League|Al Ain FC|Al Nasr Dubai SC|上半场主胜|ht|2026-08-30": {
+    "ev": 1.41,
+    "ts": 1787935143.6204329
   },
   "football|UAE Pro League|Al Jazira (UAE)|Ajman Club|上半场正确比分1-2|correct_score_ht|2026-08-29": {
     "ev": 1.84,
@@ -6877,9 +6885,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Italy Serie A|id:5112848|-|上半场客胜|ht|2026-08-30": {
-    "ev": 4.98,
-    "bb": 4.47,
-    "ts": 1787935143.051571
+  "football|Spain LaLiga 2|id:5192818|-|上半场客胜|ht|2026-08-29": {
+    "ev": 8.87,
+    "bb": 4.91,
+    "ts": 1787935315.020161
   }
 }
