@@ -1332,16 +1332,13 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         if idx is not None and val > 0:
                             dc_raw[idx] = val
                     if all(x and x > 0 for x in dc_raw):
-                        # V5.10 修复: 路径A 曾对 [1X, 2X, 12] 三条**非互斥**腿直接
-                        # shin_fair_odds 去抽水 —— 这三条腿概率本就互相重叠(和≈2.1),
-                        # Shin 会强推 Σp=1, 把每条 DC 公平价系统性抬高 40-90%, 产出
-                        # 假 +EV。正确做法是从 1X2 推导(组合概率), 即统一走路径B。
-                        # 这里直接把 dc_fair 置 None 触发路径B, 不再用路径A。
-                        if any(v < 1.2 for v in dc_raw):
-                            dc_fair = None  # 触发 Path B
-                        else:
-                            dc_fair = None  # V5.10: 路径A 禁用, 一律走 1X2 推导
-                            dc_pin_raw = None
+                        # 2026-08-28 启用路径A: Pin 有 double_chance 真实盘口, 用 _devig_dc
+                        # (比例法归一化到和=2) 去抽水。之前禁用是因为 Shin 强推Σ=1 虚高40-90%,
+                        # 而"从1X2推导"又有 HT平局高估偏差。现在和=2 的比例法两者都避开了。
+                        _dc_fair = _devig_dc(dc_raw)
+                        if _dc_fair:
+                            dc_fair = _dc_fair
+                            dc_pin_raw = dc_raw
                     break
 
             # 路径B：Pinnacle 无 DC 市场 → 从 1X2 推导公平价（Shin 去抽水后合并概率）
@@ -1409,10 +1406,12 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         if idx is not None and val > 0:
                             dc_raw[idx] = val
                     if all(x and x > 0 for x in dc_raw):
-                        # V5.10: 同 FT DC, 路径A 禁用 —— 非互斥三腿不能 Shin 去抽水,
-                        # 一律走 HT 1X2 推导
-                        ht_dc_fair = None
-                        ht_dc_pin_raw = None
+                        # 2026-08-28 启用路径A: Pin 有 Double Chance 1st Half 真实盘口,
+                        # 用 _devig_dc(和=2比例法) 去抽水, 替代 HT 1X2 推导(那个有 21pp 偏差)。
+                        _ht_dc_fair = _devig_dc(dc_raw)
+                        if _ht_dc_fair:
+                            ht_dc_fair = _ht_dc_fair
+                            ht_dc_pin_raw = dc_raw
                     break
             # 路径B: 从 HT 1X2 推导
             if ht_dc_fair is None:
