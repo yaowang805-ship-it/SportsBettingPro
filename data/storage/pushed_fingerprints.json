@@ -225,6 +225,11 @@
     "ev": 2.74,
     "ts": 1787916359.143195
   },
+  "football|Argentina Primera Nacional|id:5474564|-|上半场客胜|ht|2026-08-29": {
+    "ev": 5.15,
+    "bb": 6.55,
+    "ts": 1787917020.410301
+  },
   "football|Austria 2. Liga|ASK Voitsberg|FC Liefering|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 2.3,
     "ts": 1787883483.0089111
@@ -576,6 +581,14 @@
     "ev": 3.63,
     "ts": 1787914868.510091
   },
+  "football|Bulgaria First Professional League|FC CSKA 1948|PFC Lokomotiv Plovdiv|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 2.03,
+    "ts": 1787917021.545043
+  },
+  "football|Bulgaria First Professional League|FC CSKA 1948|PFC Lokomotiv Plovdiv|让球客胜|1x2|2026-08-29": {
+    "ev": 1.27,
+    "ts": 1787917021.544951
+  },
   "football|Bulgaria First Professional League|PFC Slavia Sofia|FK Septemvri Sofia|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 2.14,
     "ts": 1787888205.306344
@@ -828,6 +841,15 @@
   "football|Denmark 2nd Division|Nykobing FC|FC Roskilde|让球主胜|1x2|2026-08-29": {
     "ev": 1.04,
     "ts": 1787891089.635916
+  },
+  "football|Denmark 2nd Division|VSK Aarhus|FA 2000|主胜|1x2|2026-08-29": {
+    "ev": 10.57,
+    "ts": 1787917021.55003
+  },
+  "football|Denmark 2nd Division|id:5203364|-|主胜|1x2|2026-08-29": {
+    "ev": 10.57,
+    "bb": 1.79,
+    "ts": 1787917020.410212
   },
   "football|Denmark DBU Pokalen|Vejle BK|Silkeborg IF|主胜|1x2|2026-08-28": {
     "ev": 5.44,
@@ -1208,6 +1230,42 @@
     "bb": 2.23,
     "ts": 1787892879.770259
   },
+  "football|England Championship League|Derby County|Swansea City|上半场正确比分0-2|correct_score_ht|2026-08-29": {
+    "ev": 25.81,
+    "ts": 1787917021.557647
+  },
+  "football|England Championship League|Derby County|Swansea City|上半场正确比分2-0|correct_score_ht|2026-08-29": {
+    "ev": 6.03,
+    "ts": 1787917021.557564
+  },
+  "football|England Championship League|Derby County|Swansea City|上半场正确比分others|correct_score_ht|2026-08-29": {
+    "ev": 28.03,
+    "ts": 1787917021.557732
+  },
+  "football|England Championship League|Derby County|Swansea City|半/全场-主/客|htft|2026-08-29": {
+    "ev": 14.46,
+    "ts": 1787917021.546588
+  },
+  "football|England Championship League|Derby County|Swansea City|正确比分3-0|correct_score|2026-08-29": {
+    "ev": 17.86,
+    "ts": 1787917021.557397
+  },
+  "football|England Championship League|Derby County|Swansea City|正确比分3-1|correct_score|2026-08-29": {
+    "ev": 8.67,
+    "ts": 1787917021.5574799
+  },
+  "football|England Championship League|Middlesbrough FC|West Bromwich Albion|上半场正确比分others|correct_score_ht|2026-08-29": {
+    "ev": 7.0,
+    "ts": 1787917021.557825
+  },
+  "football|England Championship League|Middlesbrough FC|West Bromwich Albion|半/全场-主/客|htft|2026-08-29": {
+    "ev": 5.72,
+    "ts": 1787917021.546679
+  },
+  "football|England Championship League|Wolverhampton Wanderers FC|Stoke City|半/全场-主/客|htft|2026-08-29": {
+    "ev": 9.57,
+    "ts": 1787917021.547062
+  },
   "football|England Championship League|Wrexham AFC|Birmingham City|上半场客胜|ht|2026-08-29": {
     "ev": 5.37,
     "ts": 1787906559.7829099
@@ -1300,6 +1358,27 @@
   "football|England League Cup|Fulham FC|AFC Wimbledon|让球客胜|1x2|2026-08-28": {
     "ev": 1.14,
     "ts": 1787841280.314795
+  },
+  "football|England League Two|Barnet FC|Cheltenham Town|上半场主胜|ht|2026-08-29": {
+    "ev": 5.23,
+    "ts": 1787917021.549788
+  },
+  "football|England League Two|Barnet FC|Cheltenham Town|半/全场-主/和局|htft|2026-08-29": {
+    "ev": 2.34,
+    "ts": 1787917021.549866
+  },
+  "football|England League Two|Barnet FC|Cheltenham Town|大球|1x2|2026-08-29": {
+    "ev": 1.51,
+    "ts": 1787917021.549941
+  },
+  "football|England League Two|Barnet FC|Cheltenham Town|总进球区间7+|total_goals_range|2026-08-29": {
+    "ev": 6.11,
+    "ts": 1787917021.557914
+  },
+  "football|England League Two|id:5227189|-|上半场主胜|ht|2026-08-29": {
+    "ev": 5.23,
+    "bb": 2.25,
+    "ts": 1787917020.410261
   },
   "football|England National League North|Hednesford Town|Harborough Town FC|让球主胜|1x2|2026-08-29": {
     "ev": 7.08,
@@ -1953,6 +2032,10 @@
     "ev": 5.76,
     "ts": 1787888205.3072572
   },
+  "football|Italy Serie B|US Cremonese|Modena FC|双边进球-是|btts|2026-08-29": {
+    "ev": 1.47,
+    "ts": 1787917021.545366
+  },
   "football|Italy Serie B|US Cremonese|Modena FC|双重机会-和局/客|dc|2026-08-29": {
     "ev": 32.91,
     "ts": 1787881348.354893
@@ -2219,6 +2302,11 @@
     "ev": 3.24,
     "bb": 1.96,
     "ts": 1787909843.999684
+  },
+  "football|Japan J.League 2|id:5164168|-|上半场客胜|ht|2026-08-29": {
+    "ev": 8.02,
+    "bb": 6.6,
+    "ts": 1787917020.410368
   },
   "football|Japan J.League 2|id:5164279|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 3.55,
@@ -2988,6 +3076,11 @@
     "ev": 1.71,
     "ts": 1787913509.727654
   },
+  "football|South Korea K-League 1|id:5155545|-|上半场客胜|ht|2026-08-29": {
+    "ev": 5.66,
+    "bb": 4.53,
+    "ts": 1787917020.410336
+  },
   "football|South Korea K-League 1|id:5356869|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 2.53,
     "bb": 1.8,
@@ -3484,6 +3577,11 @@
     "ev": 2.59,
     "bb": 1.86,
     "ts": 1787915108.897302
+  },
+  "football|Turkey Super Lig|id:5248175|-|上半场客胜|ht|2026-08-29": {
+    "ev": 2.54,
+    "bb": 5.4,
+    "ts": 1787917020.410398
   },
   "football|UAE Division 1|Al Dhaid|Dubai City FC|大球|1x2|2026-08-28": {
     "ev": 4.03,
@@ -4583,34 +4681,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Denmark 2nd Division|id:5203364|-|主胜|1x2|2026-08-29": {
-    "ev": 10.57,
-    "bb": 1.79,
-    "ts": 1787917020.410212
-  },
-  "football|England League Two|id:5227189|-|上半场主胜|ht|2026-08-29": {
-    "ev": 5.23,
-    "bb": 2.25,
-    "ts": 1787917020.410261
-  },
-  "football|Argentina Primera Nacional|id:5474564|-|上半场客胜|ht|2026-08-29": {
-    "ev": 5.15,
-    "bb": 6.55,
-    "ts": 1787917020.410301
-  },
-  "football|South Korea K-League 1|id:5155545|-|上半场客胜|ht|2026-08-29": {
-    "ev": 5.66,
-    "bb": 4.53,
-    "ts": 1787917020.410336
-  },
-  "football|Japan J.League 2|id:5164168|-|上半场客胜|ht|2026-08-29": {
-    "ev": 8.02,
-    "bb": 6.6,
-    "ts": 1787917020.410368
-  },
-  "football|Turkey Super Lig|id:5248175|-|上半场客胜|ht|2026-08-29": {
-    "ev": 2.54,
-    "bb": 5.4,
-    "ts": 1787917020.410398
+  "football|Egypt Premier League|id:5404771|-|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 3.25,
+    "bb": 2.02,
+    "ts": 1787917111.655741
   }
 }
