@@ -1,5 +1,5 @@
 {
-  "balance": 8479.36,
+  "balance": 11931.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3039,29 +3039,6 @@
       "track_only": false
     },
     {
-      "id": "bb_vs_pin_1x2_维戈塞尔塔_奥萨苏纳_客胜",
-      "sport": "football",
-      "league": "西班牙甲级联赛",
-      "home_team": "维戈塞尔塔",
-      "away_team": "奥萨苏纳",
-      "home_cn": "维戈塞尔塔",
-      "away_cn": "奥萨苏纳",
-      "market": "1x2",
-      "market_type": "客胜",
-      "sub_market": "1x2",
-      "line": "",
-      "odds": 4.79,
-      "stake": 27,
-      "model_prob": 0.2175,
-      "ev_pct": 4.19,
-      "pin_odds": 4.37,
-      "fair_price": 4.5973,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1787855400,
-      "created_at": "2026-08-27T17:20:49.703863+00:00",
-      "track_only": false
-    },
-    {
       "id": "bb_vs_pin_1x2_拉瓦勒_格勒诺布尔_和局",
       "sport": "football",
       "league": "法国乙级联赛",
@@ -3198,6 +3175,52 @@
       "commence_time": 1787877000,
       "created_at": "2026-08-28T00:25:12.533909+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_索非亚斯拉维亚_塞普特姆里_上半场客胜",
+      "sport": "football",
+      "league": "保加利亚甲级联赛",
+      "home_team": "索非亚斯拉维亚",
+      "away_team": "塞普特姆里",
+      "home_cn": "索非亚斯拉维亚",
+      "away_cn": "塞普特姆里",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 5.7,
+      "stake": 32,
+      "model_prob": 0.1806,
+      "ev_pct": 2.95,
+      "pin_odds": 4.85,
+      "fair_price": 5.5367,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787932800,
+      "created_at": "2026-08-28T00:38:09.706099+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_特内里费_希洪竞技_上半场客胜",
+      "sport": "football",
+      "league": "西班牙乙级联赛",
+      "home_team": "特内里费",
+      "away_team": "希洪竞技",
+      "home_cn": "特内里费",
+      "away_cn": "希洪竞技",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.87,
+      "stake": 30,
+      "model_prob": 0.2146,
+      "ev_pct": 4.51,
+      "pin_odds": 4.31,
+      "fair_price": 4.6597,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787943600,
+      "created_at": "2026-08-28T00:38:09.706154+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -3212,7 +3235,8 @@
     "bb_vs_pin_1x2_威尼斯_莱切_双重机会-和局/客": "won",
     "bb_vs_pin_1x2_威尼斯_莱切_和局": "lost",
     "bb_vs_pin_1x2_赫塔菲_桑坦德竞技_和局": "lost",
-    "bb_vs_pin_1x2_马拉加_拉科鲁尼亚_和局": "won"
+    "bb_vs_pin_1x2_马拉加_拉科鲁尼亚_和局": "won",
+    "bb_vs_pin_1x2_维戈塞尔塔_奥萨苏纳_客胜": "won"
   },
   "history": [
     {
@@ -6766,12 +6790,28 @@
       "home_cn": "高卡尔利",
       "away_cn": "阿美德",
       "market_type": "上半场双重机会-主/客"
+    },
+    {
+      "id": "bb_vs_pin_1x2_维戈塞尔塔_奥萨苏纳_客胜",
+      "match": "27¥ @ 4.79",
+      "date": "2026-08-28T00:35:41.173339+00:00",
+      "stake": 27,
+      "odds": 4.79,
+      "profit": 102.33,
+      "result": "won",
+      "status": "won",
+      "source": "bb_vs_pinnacle",
+      "home_cn": "维戈塞尔塔",
+      "away_cn": "奥萨苏纳",
+      "market_type": "1x2",
+      "league": "西班牙甲级联赛",
+      "sport": "football"
     }
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 1272.0,
-    "bets": 8
+    "used": 1334.0,
+    "bets": 10
   },
   "updated": null
 }
