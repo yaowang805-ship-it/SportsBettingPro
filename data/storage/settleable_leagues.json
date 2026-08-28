@@ -271,7 +271,7 @@
       "success_rate": 0.0
     },
     "英格兰联赛杯": {
-      "attempts": 5,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -571,7 +571,7 @@
       "success_rate": 0.0
     },
     "英格兰北部超级联赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -651,7 +651,7 @@
       "success_rate": 1.0
     },
     "阿根廷杯": {
-      "attempts": 6,
+      "attempts": 7,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -661,7 +661,7 @@
       "success_rate": 0.0
     },
     "丹麦杯": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -696,7 +696,7 @@
       "success_rate": 0.0
     },
     "英格兰锦标赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -706,7 +706,7 @@
       "success_rate": 0.0
     },
     "英格兰职业发展联赛": {
-      "attempts": 4,
+      "attempts": 7,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -721,7 +721,7 @@
       "success_rate": 0.0
     },
     "阿根廷后备联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -971,7 +971,7 @@
       "success_rate": 0.0
     },
     "苏格兰挑战杯": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -996,7 +996,7 @@
       "success_rate": 0.0
     },
     "南非超级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1006,7 +1006,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-08-28T09:36:56.125561+00:00",
+  "updated": "2026-08-28T12:55:44.639579+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
