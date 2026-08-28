@@ -1551,9 +1551,11 @@ def _collect_opportunities(match, market_key):
             }
             sub_market = _MK_TO_SUB.get(market_key, "1x2")
 
-        # 2026-08-27 观察模式盘口: 正确比分/先进球 刚修完错配, 只进观察库(validate/CLV采集),
+        # 2026-08-27/28 观察模式盘口: 刚修完错配/新接的半场特殊盘口, 只进观察库(validate/CLV采集),
         # 不推送钉钉, 等 CLV 数据攒够能统计 edge 再开推(用户要求)。
-        if sub_market in ("correct_score", "first_to_score"):
+        if sub_market in ("correct_score", "first_to_score",
+                          "correct_score_ht", "winning_margin_ht",
+                          "total_goals_range_ht", "first_to_score_ht"):
             continue
 
         # ── V2 动态 EV 门槛: 赔率越高 → 门槛越高 ──
