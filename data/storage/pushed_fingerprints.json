@@ -978,6 +978,10 @@
     "ev": 8.73,
     "ts": 1787861516.630909
   },
+  "football|England Northern Premier League|Ashton United FC|Gainsborough Trinity|大球|1x2|2026-08-29": {
+    "ev": 1.25,
+    "ts": 1787894469.9655821
+  },
   "football|England Premier League 2|Nottingham Forest U21|Manchester City FC U21|双边进球-否|btts|2026-08-29": {
     "ev": 6.04,
     "ts": 1787853874.781427
@@ -1281,6 +1285,18 @@
     "ev": 5.34,
     "ts": 1787885738.066693
   },
+  "football|Ireland Premier Division|Bohemians Dublin FC|Sligo Rovers FC|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 13.13,
+    "ts": 1787894469.965423
+  },
+  "football|Ireland Premier Division|Bohemians Dublin FC|Sligo Rovers FC|客胜|1x2|2026-08-29": {
+    "ev": 12.63,
+    "ts": 1787894469.965135
+  },
+  "football|Ireland Premier Division|Bohemians Dublin FC|Sligo Rovers FC|让球客胜|1x2|2026-08-29": {
+    "ev": 3.93,
+    "ts": 1787894469.965301
+  },
   "football|Ireland Premier Division|Drogheda United FC|Dundalk FC|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 4.05,
     "ts": 1787883483.011422
@@ -1361,6 +1377,10 @@
   "football|Italy Serie B|US Cremonese|Modena FC|双重机会-和局/客|dc|2026-08-29": {
     "ev": 32.91,
     "ts": 1787881348.354893
+  },
+  "football|Italy Serie B|US Cremonese|Modena FC|和局|1x2|2026-08-29": {
+    "ev": 1.3,
+    "ts": 1787894469.9650009
   },
   "football|Italy Serie B|克雷莫纳|摩德纳|上半场客胜|ht|2026-08-29": {
     "ev": 4.57,
@@ -1533,9 +1553,21 @@
     "ev": 3.63,
     "ts": 1787892330.97412
   },
+  "football|Netherlands Eerste Divisie|FC Volendam|FC Dordrecht|上半场主胜|ht|2026-08-29": {
+    "ev": 1.74,
+    "ts": 1787894469.964885
+  },
   "football|Netherlands Eerste Divisie|FC Volendam|FC Dordrecht|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 13.53,
     "ts": 1787883483.0099552
+  },
+  "football|Netherlands Eerste Divisie|FC Volendam|FC Dordrecht|主胜|1x2|2026-08-29": {
+    "ev": 8.08,
+    "ts": 1787894469.9648151
+  },
+  "football|Netherlands Eerste Divisie|FC Volendam|FC Dordrecht|让球主胜|1x2|2026-08-29": {
+    "ev": 6.42,
+    "ts": 1787894469.964939
   },
   "football|Netherlands Eerste Divisie|Jong AZ Alkmaar|MVV Maastricht|上半场主胜|ht|2026-08-29": {
     "ev": 1.04,
@@ -1593,6 +1625,10 @@
     "ev": 5.46,
     "ts": 1787892880.3028748
   },
+  "football|Netherlands Eerste Divisie|TOP Oss|Jong FC Utrecht|大球|1x2|2026-08-29": {
+    "ev": 1.02,
+    "ts": 1787894469.968253
+  },
   "football|Netherlands Eerste Divisie|TOP Oss|Jong FC Utrecht|让球主胜|1x2|2026-08-29": {
     "ev": 3.45,
     "ts": 1787892880.302909
@@ -1628,6 +1664,10 @@
   "football|Poland Ekstraklasa|Wisla Plock|Korona Kielce|单双-双|oe|2026-08-29": {
     "ev": 1.23,
     "ts": 1787847247.2368388
+  },
+  "football|Poland Ekstraklasa|Wisla Plock|Korona Kielce|双边进球-是|btts|2026-08-29": {
+    "ev": 3.2,
+    "ts": 1787894469.961331
   },
   "football|Portugal Segunda Liga|Leiria|Tondela|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 25.89,
@@ -2036,6 +2076,15 @@
     "bb": 4.12,
     "ts": 1787880945.041016
   },
+  "football|Sweden Women Damallsvenskan|IK Uppsala (w)|Eskilstuna United DFF (w)|双重机会-主/和局|dc|2026-08-29": {
+    "ev": 15.51,
+    "ts": 1787894469.964293
+  },
+  "football|Sweden Women Damallsvenskan|IK乌普撒拉 (女)|埃斯基尔图纳 (女)|双重机会-主/和局|dc|2026-08-29": {
+    "ev": 15.51,
+    "bb": 4.99,
+    "ts": 1787894469.271914
+  },
   "football|Switzerland Challenge League|Etoile Carouge FC|FC Rapperswil Jona|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 3.63,
     "ts": 1787883483.010239
@@ -2075,6 +2124,10 @@
   "football|Switzerland Challenge League|Yverdon Sport FC|FC Wil 1900|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 25.8,
     "ts": 1787883483.00946
+  },
+  "football|Switzerland Challenge League|Yverdon Sport FC|FC Wil 1900|上半场正确比分1-2|correct_score_ht|2026-08-29": {
+    "ev": 4.65,
+    "ts": 1787894469.970825
   },
   "football|Switzerland Challenge League|阿劳|纳沙泰尔|双重机会-和局/客|dc|2026-08-29": {
     "ev": 36.25,
@@ -2148,6 +2201,14 @@
   "football|Turkey Super Lig|Genclerbirligi SK|Erzurumspor FK|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 3.84,
     "ts": 1787855729.8864808
+  },
+  "football|UAE Division 1|Al Dhaid|Dubai City FC|小球|1x2|2026-08-28": {
+    "ev": 5.51,
+    "ts": 1787894469.967658
+  },
+  "football|UAE Division 1|Al Dhaid|Dubai City FC|让球客胜|1x2|2026-08-28": {
+    "ev": 1.39,
+    "ts": 1787894469.9676
   },
   "football|UAE Pro League|Al Wasl FC|Shabab Al Ahli|上半场正确比分2-0|correct_score_ht|2026-08-29": {
     "ev": 6.4,
@@ -3079,9 +3140,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Sweden Women Damallsvenskan|IK乌普撒拉 (女)|埃斯基尔图纳 (女)|双重机会-主/和局|dc|2026-08-29": {
-    "ev": 15.51,
-    "bb": 4.99,
-    "ts": 1787894469.271914
+  "football|Italy Serie A|AC米兰|威尼斯|上半场主胜|ht|2026-08-29": {
+    "ev": 2.59,
+    "bb": 1.99,
+    "ts": 1787895097.650602
   }
 }

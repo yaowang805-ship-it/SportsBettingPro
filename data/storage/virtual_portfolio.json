@@ -1,5 +1,5 @@
 {
-  "balance": 9174.69,
+  "balance": 9122.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3197,6 +3197,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787936400,
       "created_at": "2026-08-28T05:21:09.250547+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_AC米兰_威尼斯_上半场主胜",
+      "sport": "football",
+      "league": "意大利甲级联赛",
+      "home_team": "AC米兰",
+      "away_team": "威尼斯",
+      "home_cn": "AC米兰",
+      "away_cn": "威尼斯",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 1.99,
+      "stake": 52,
+      "model_prob": 0.5155,
+      "ev_pct": 2.59,
+      "pin_odds": 1.9009,
+      "fair_price": 1.9397,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787942700,
+      "created_at": "2026-08-28T05:31:37.633818+00:00",
       "track_only": false
     }
   ],
@@ -7012,8 +7035,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 4426.0,
-    "bets": 33
+    "used": 4478.0,
+    "bets": 34
   },
   "updated": null
 }
