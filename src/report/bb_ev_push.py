@@ -1554,7 +1554,7 @@ def _collect_opportunities(match, market_key):
         # 2026-08-27/28 观察模式盘口: 刚修完错配/新接的半场特殊盘口, 只进观察库(validate/CLV采集),
         # 不推送钉钉, 等 CLV 数据攒够能统计 edge 再开推(用户要求)。
         if sub_market in ("correct_score", "first_to_score",
-                          "correct_score_ht", "winning_margin_ht",
+                          "correct_score_ht", "exact_goals_ht", "winning_margin_ht",
                           "total_goals_range_ht", "first_to_score_ht"):
             continue
 
