@@ -217,6 +217,14 @@
     "ev": 1.03,
     "ts": 1787880946.174865
   },
+  "football|Argentina Liga Profesional|Boca Juniors|Atletico Lanus|双边进球-否|btts|2026-08-29": {
+    "ev": 1.28,
+    "ts": 1787931669.765567
+  },
+  "football|Argentina Liga Profesional|Boca Juniors|Atletico Lanus|小球|1x2|2026-08-29": {
+    "ev": 8.04,
+    "ts": 1787931669.765666
+  },
   "football|Argentina Liga Profesional|Union de Santa Fe|Sarmiento|主胜|1x2|2026-08-29": {
     "ev": 2.63,
     "ts": 1787868659.525126
@@ -855,6 +863,10 @@
   "football|Chile Primera Division|Cobresal|Palestino|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 39.22,
     "ts": 1787870176.1993952
+  },
+  "football|Chile Primera Division|Cobresal|Palestino|角球小球|corner|2026-08-29": {
+    "ev": 3.88,
+    "ts": 1787931974.080435
   },
   "football|Chile Primera Division|Cobresal|Palestino|角球让球主胜|corner|2026-08-29": {
     "ev": 1.44,
@@ -2917,6 +2929,10 @@
     "ev": 3.31,
     "ts": 1787871494.0718799
   },
+  "football|Iceland 2. deild|Kormakur/Hvot|KFA|让球客胜|1x2|2026-08-29": {
+    "ev": 4.36,
+    "ts": 1787931669.771465
+  },
   "football|Iceland 2. deild|白色骑士|弗约尼尔|主胜|1x2|2026-08-28": {
     "ev": 8.23,
     "bb": 3.94,
@@ -3855,6 +3871,10 @@
     "ev": 4.58,
     "ts": 1787899569.028613
   },
+  "football|Netherlands Eredivisie|FC Groningen|Fortuna Sittard|正确比分0-0|correct_score|2026-08-29": {
+    "ev": 4.96,
+    "ts": 1787932190.588576
+  },
   "football|Netherlands Eredivisie|FC Groningen|Fortuna Sittard|正确比分1-2|correct_score|2026-08-29": {
     "ev": 4.01,
     "ts": 1787912895.625153
@@ -3950,6 +3970,18 @@
   "football|Poland Ekstraklasa|Radomiak Radom|MKS Cracovia Krakow|上半场正确比分2-0|correct_score_ht|2026-08-29": {
     "ev": 17.96,
     "ts": 1787912895.6279511
+  },
+  "football|Poland Ekstraklasa|Wisla Krakow|Wieczysta Krakow|上半场正确比分0-2|correct_score_ht|2026-08-29": {
+    "ev": 14.68,
+    "ts": 1787931669.782172
+  },
+  "football|Poland Ekstraklasa|Wisla Krakow|Wieczysta Krakow|主胜|1x2|2026-08-29": {
+    "ev": 2.75,
+    "ts": 1787931669.7667358
+  },
+  "football|Poland Ekstraklasa|Wisla Krakow|Wieczysta Krakow|先进球neither|first_to_score|2026-08-29": {
+    "ev": 2.75,
+    "ts": 1787931669.782128
   },
   "football|Poland Ekstraklasa|Wisla Plock|Korona Kielce|上半场主胜|ht|2026-08-29": {
     "ev": 3.34,
@@ -4250,6 +4282,19 @@
   "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|让球客胜|1x2|2026-08-28": {
     "ev": 1.68,
     "ts": 1787897959.383065
+  },
+  "football|Romania Liga 1|S Champions FC Arges|S Sepsi OSK Sfantu Gheorghe|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.0,
+    "ts": 1787931669.772941
+  },
+  "football|Romania Liga 1|S Champions FC Arges|S Sepsi OSK Sfantu Gheorghe|半/全场-主/客|htft|2026-08-29": {
+    "ev": 33.46,
+    "ts": 1787931669.7728581
+  },
+  "football|Romania Liga 1|id:5296812|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.0,
+    "bb": 1.98,
+    "ts": 1787931669.133355
   },
   "football|Romania Liga 1|克卢日大学|佩特罗鲁|上半场双重机会-和局/客|ht_dc|2026-08-29": {
     "ev": 24.98,
@@ -4632,6 +4677,14 @@
     "ev": 18.83,
     "ts": 1787883483.0101519
   },
+  "football|Slovenia PrvaLiga|NK Radomlje|Olimpija Ljubljana|上半场正确比分2-1|correct_score_ht|2026-08-29": {
+    "ev": 3.93,
+    "ts": 1787931669.7822568
+  },
+  "football|Slovenia PrvaLiga|NK Radomlje|Olimpija Ljubljana|总进球区间7+|total_goals_range|2026-08-29": {
+    "ev": 26.88,
+    "ts": 1787931669.782217
+  },
   "football|South Africa National First Division|Orbit College FC|Hungry Lion|小球|1x2|2026-08-29": {
     "ev": 1.2,
     "ts": 1787903995.9068642
@@ -4935,6 +4988,11 @@
     "ev": 1.46,
     "ts": 1787879651.274324
   },
+  "football|Spain LaLiga|id:5192166|-|上半场主胜|ht|2026-08-29": {
+    "ev": 3.33,
+    "bb": 4.44,
+    "ts": 1787931669.1334138
+  },
   "football|Spain LaLiga|id:5192184|-|上半场客胜|ht|2026-08-29": {
     "ev": 2.55,
     "bb": 4.31,
@@ -4999,6 +5057,10 @@
     "ev": 9.99,
     "ts": 1787906559.78226
   },
+  "football|Sweden Allsvenskan|Halmstads BK|Kalmar FF|上半场主胜|ht|2026-08-29": {
+    "ev": 1.16,
+    "ts": 1787932309.5902562
+  },
   "football|Sweden Allsvenskan|IF Elfsborg|Degerfors IF|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.23,
     "ts": 1787925472.508464
@@ -5022,6 +5084,10 @@
   "football|Sweden Superettan|Landskrona BoIS|Ostersunds FK|半/全场-主/客|htft|2026-08-29": {
     "ev": 12.64,
     "ts": 1787915358.3370502
+  },
+  "football|Sweden Superettan|Landskrona BoIS|Ostersunds FK|半/全场-客/主|htft|2026-08-29": {
+    "ev": 7.82,
+    "ts": 1787931974.077472
   },
   "football|Sweden Superettan|Landskrona BoIS|Ostersunds FK|单双-双|oe|2026-08-29": {
     "ev": 1.15,
@@ -5210,6 +5276,10 @@
   "football|Turkey 1. Lig|Pendikspor|Bandirmaspor|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 2.46,
     "ts": 1787896145.795594
+  },
+  "football|Turkey 1. Lig|Pendikspor|Bandirmaspor|上半场客胜|ht|2026-08-29": {
+    "ev": 2.24,
+    "ts": 1787931980.063822
   },
   "football|Turkey 1. Lig|Pendikspor|Bandirmaspor|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 13.55,
@@ -6460,14 +6530,14 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Romania Liga 1|id:5296812|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
-    "ev": 3.0,
-    "bb": 1.98,
-    "ts": 1787931669.133355
+  "football|Germany 2. Bundesliga|id:5203036|-|上半场客胜|ht|2026-08-29": {
+    "ev": 2.48,
+    "bb": 5.0,
+    "ts": 1787932440.969267
   },
-  "football|Spain LaLiga|id:5192166|-|上半场主胜|ht|2026-08-29": {
-    "ev": 3.33,
-    "bb": 4.44,
-    "ts": 1787931669.1334138
+  "football|Turkey 1. Lig|id:5480984|-|上半场客胜|ht|2026-08-29": {
+    "ev": 3.38,
+    "bb": 4.53,
+    "ts": 1787932440.969325
   }
 }
