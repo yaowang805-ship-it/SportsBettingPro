@@ -1,5 +1,5 @@
 {
-  "balance": 6383.69,
+  "balance": 6239.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3910,6 +3910,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787942700,
       "created_at": "2026-08-28T16:13:03.840179+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_卡塔尔SC_阿尔萨德_双重机会-主/和局",
+      "sport": "football",
+      "league": "卡塔尔联赛",
+      "home_team": "卡塔尔SC",
+      "away_team": "阿尔萨德",
+      "home_cn": "卡塔尔SC",
+      "away_cn": "阿尔萨德",
+      "market": "1x2",
+      "market_type": "双重机会-主/和局",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 2.91,
+      "stake": 133,
+      "model_prob": 0.3809,
+      "ev_pct": 10.85,
+      "pin_odds": 2.52,
+      "fair_price": 2.6252,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787934600,
+      "created_at": "2026-08-28T16:20:44.988361+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_卡塔尔SC_阿尔萨德_主胜",
+      "sport": "football",
+      "league": "卡塔尔联赛",
+      "home_team": "卡塔尔SC",
+      "away_team": "阿尔萨德",
+      "home_cn": "卡塔尔SC",
+      "away_cn": "阿尔萨德",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 5.95,
+      "stake": 11,
+      "model_prob": 0.1771,
+      "ev_pct": 5.4,
+      "pin_odds": 5.0,
+      "fair_price": 5.6452,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787934600,
+      "created_at": "2026-08-28T16:20:44.988436+00:00",
       "track_only": false
     }
   ],
@@ -8055,8 +8101,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-29",
-    "used": 102.0,
-    "bets": 4
+    "used": 246.0,
+    "bets": 6
   },
   "updated": null
 }
