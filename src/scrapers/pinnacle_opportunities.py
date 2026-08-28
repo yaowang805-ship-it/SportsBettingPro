@@ -448,6 +448,36 @@ def _norm_scoreline(name):
     return str(name).strip()
 
 
+def _norm_correct_score_ht(opts):
+    """归一化半场正确比分选项, 兜底项聚合成单一 'others' 桶。
+
+    BB mty=1100 只有 9 条显式比分 + 单个 "Others"; Pinnacle 可能有多个兜底
+    ("Any Other Home Win"/"Any Other Away Win"/"Any Other Draw") 或更多显式比分。
+    兜底项按隐含概率(1/price)求和合并, 避免 dict 覆盖丢概率。
+    返回 {归一化名: 赔率}, 兜底统一为 'others'。
+    """
+    import re as _re
+    norm = {}
+    others_inv = 0.0
+    for o in opts:
+        name = str(o.get("name", "") or "").strip()
+        odds = o.get("odds", 0) or 0
+        if not name or odds <= 1.0:
+            continue
+        s = name.lower()
+        if "other" in s or "其余" in s:
+            others_inv += 1.0 / odds
+            continue
+        nums = _re.findall(r'\d+', s)
+        if len(nums) >= 2:
+            key = f"{nums[0]}-{nums[1]}"
+            if key not in norm:
+                norm[key] = odds
+    if others_inv > 0:
+        norm["others"] = 1.0 / others_inv
+    return norm
+
+
 def _norm_special_name(name):
     """归一化特殊盘口选项名(净胜球/总进球区间/先进球)。
 
