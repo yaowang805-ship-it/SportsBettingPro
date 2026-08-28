@@ -279,7 +279,17 @@ def get_league_matchups_and_markets(league_id):
                 _name = _pid_to_name.get(str(p.get("participantId", "")), "")
                 _desig = p.get("designation", "")
                 if not _desig or _desig == "None":
-                    _desig = _name
+                    # DC 三条腿要映射成 1X/2X/12(对比层 dc_desig_map 只认这三个码, 否则
+                    # 回退位置顺序会错配主/客 vs 主/平); 其余盘口(BTTS/DNB/OE)用参与者名。
+                    if _key == "double_chance":
+                        if "Or Draw" in _name:
+                            _desig = "1X"
+                        elif "Draw Or" in _name:
+                            _desig = "2X"
+                        else:
+                            _desig = "12"
+                    else:
+                        _desig = _name
                 _prices.append({
                     "designation": _desig,
                     "price_decimal": us_to_decimal(p.get("price")),
