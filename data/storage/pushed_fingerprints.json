@@ -469,6 +469,10 @@
     "ev": 1.57,
     "ts": 1787881348.353823
   },
+  "football|Belgium Challenger Pro League|RFC de Liege|FCV Dender EH|让球主胜|1x2|2026-08-29": {
+    "ev": 11.33,
+    "ts": 1787926173.2785149
+  },
   "football|Belgium Challenger Pro League|Sporting Hasselt|KAA Gent II|上半场主胜|ht|2026-08-29": {
     "ev": 1.04,
     "ts": 1787906175.862647
@@ -1390,6 +1394,30 @@
     "bb": 2.23,
     "ts": 1787892879.770259
   },
+  "football|England Championship League|Blackburn Rovers|Queens Park Rangers|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 1.27,
+    "ts": 1787926173.2752562
+  },
+  "football|England Championship League|Bolton Wanderers|Lincoln City|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 1.72,
+    "ts": 1787926173.2751732
+  },
+  "football|England Championship League|Bolton Wanderers|Lincoln City|先进球neither|first_to_score|2026-08-29": {
+    "ev": 2.28,
+    "ts": 1787926173.279553
+  },
+  "football|England Championship League|Bristol City|Portsmouth FC|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 1.04,
+    "ts": 1787926173.275092
+  },
+  "football|England Championship League|Bristol City|Portsmouth FC|上半场客胜|ht|2026-08-29": {
+    "ev": 1.55,
+    "ts": 1787926173.275018
+  },
+  "football|England Championship League|Charlton Athletic|Preston North End|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 1.41,
+    "ts": 1787926173.274934
+  },
   "football|England Championship League|Derby County|Swansea City|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.74,
     "ts": 1787925472.5072262
@@ -1540,6 +1568,14 @@
     "ev": 1.14,
     "ts": 1787841280.314795
   },
+  "football|England League One|Plymouth Argyle|Bradford City|先进球neither|first_to_score|2026-08-29": {
+    "ev": 3.4,
+    "ts": 1787926173.2796302
+  },
+  "football|England League One|Stevenage FC|Doncaster Rovers|上半场客胜|ht|2026-08-29": {
+    "ev": 1.05,
+    "ts": 1787926173.275337
+  },
   "football|England League Two|Barnet FC|Cheltenham Town|上半场主胜|ht|2026-08-29": {
     "ev": 5.23,
     "ts": 1787917021.549788
@@ -1568,6 +1604,22 @@
     "ev": 6.11,
     "ts": 1787917021.557914
   },
+  "football|England League Two|Colchester United|Rochdale AFC|主胜|1x2|2026-08-29": {
+    "ev": 2.48,
+    "ts": 1787926173.275997
+  },
+  "football|England League Two|Crawley Town|Bristol Rovers|双边进球-是|btts|2026-08-29": {
+    "ev": 1.27,
+    "ts": 1787926173.2757719
+  },
+  "football|England League Two|Grimsby Town|Fleetwood Town|先进球neither|first_to_score|2026-08-29": {
+    "ev": 1.08,
+    "ts": 1787926173.279706
+  },
+  "football|England League Two|Newport County|Tranmere Rovers|双边进球-是|btts|2026-08-29": {
+    "ev": 2.37,
+    "ts": 1787926173.276073
+  },
   "football|England League Two|Port Vale|Crewe Alexandra|先进球neither|first_to_score|2026-08-29": {
     "ev": 13.99,
     "ts": 1787925472.5101619
@@ -1575,6 +1627,14 @@
   "football|England League Two|Rotherham United|Chesterfield FC|双边进球-是|btts|2026-08-29": {
     "ev": 1.29,
     "ts": 1787925472.50762
+  },
+  "football|England League Two|Walsall FC|crington Stanley|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 1.36,
+    "ts": 1787926173.275926
+  },
+  "football|England League Two|Walsall FC|crington Stanley|主胜|1x2|2026-08-29": {
+    "ev": 1.93,
+    "ts": 1787926173.275851
   },
   "football|England League Two|id:5227189|-|上半场主胜|ht|2026-08-29": {
     "ev": 5.23,
@@ -1596,6 +1656,10 @@
   "football|England National League North|Oxford City|Buxton FC|让球客胜|1x2|2026-08-29": {
     "ev": 8.73,
     "ts": 1787861516.630909
+  },
+  "football|England National League South|Torquay United|Hampton & Richmond|客胜|1x2|2026-08-29": {
+    "ev": 1.61,
+    "ts": 1787926173.278593
   },
   "football|England Northern Premier League|Ashton United FC|Gainsborough Trinity|大球|1x2|2026-08-29": {
     "ev": 1.25,
@@ -1621,6 +1685,26 @@
     "ev": 2.26,
     "ts": 1787853874.7815092
   },
+  "football|England Premier League|AFC Bournemouth|Everton FC|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 2.15,
+    "ts": 1787926173.274605
+  },
+  "football|England Premier League|Coventry City|Hull City|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 1.74,
+    "ts": 1787926173.274726
+  },
+  "football|England Premier League|Coventry City|Hull City|上半场客胜|ht|2026-08-29": {
+    "ev": 1.89,
+    "ts": 1787926173.274685
+  },
+  "football|England Premier League|Coventry City|Hull City|先进球neither|first_to_score|2026-08-29": {
+    "ev": 6.32,
+    "ts": 1787926173.279469
+  },
+  "football|England Premier League|Coventry City|Hull City|和局|1x2|2026-08-29": {
+    "ev": 1.97,
+    "ts": 1787926173.274646
+  },
   "football|England Premier League|Crystal Palace|Manchester City FC|上半场主胜|ht|2026-08-29": {
     "ev": 1.96,
     "ts": 1787857299.218401
@@ -1645,6 +1729,11 @@
     "ev": 2.66,
     "bb": 6.0,
     "ts": 1787907761.176283
+  },
+  "football|England Premier League|id:5354731|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 2.15,
+    "bb": 1.74,
+    "ts": 1787926172.799658
   },
   "football|Finland Kakkonen|GBK Kokkola|FF Jaro II|双重机会-和局/客|dc|2026-08-28": {
     "ev": 2.05,
@@ -3349,6 +3438,16 @@
     "ev": 13.13,
     "ts": 1787923619.1403131
   },
+  "football|Portugal Segunda Liga|id:5331418|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.75,
+    "bb": 1.97,
+    "ts": 1787926172.799825
+  },
+  "football|Portugal Segunda Liga|id:5331418|-|和局|1x2|2026-08-29": {
+    "ev": 13.13,
+    "bb": 3.3,
+    "ts": 1787926172.799775
+  },
   "football|Portugal Segunda Liga|id:5466552|-|和局|1x2|2026-08-29": {
     "ev": 13.13,
     "bb": 3.3,
@@ -3500,6 +3599,18 @@
     "ev": 34.46,
     "ts": 1787885738.066014
   },
+  "football|Russia First League|FC Tekstilshchik Ivanovo|FK Veles Moscow|上半场正确比分0-2|correct_score_ht|2026-08-29": {
+    "ev": 3.75,
+    "ts": 1787926173.280297
+  },
+  "football|Russia First League|FC Tekstilshchik Ivanovo|FK Veles Moscow|上半场正确比分2-0|correct_score_ht|2026-08-29": {
+    "ev": 26.91,
+    "ts": 1787926173.2802298
+  },
+  "football|Russia First League|FC Tekstilshchik Ivanovo|FK Veles Moscow|半/全场-客/主|htft|2026-08-29": {
+    "ev": 31.83,
+    "ts": 1787926173.277514
+  },
   "football|Russia First League|Leningradets|FC Kamaz Naberezhnye Chelny|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.05,
     "ts": 1787923619.1400142
@@ -3507,6 +3618,35 @@
   "football|Russia First League|Leningradets|FC Kamaz Naberezhnye Chelny|双边进球-是|btts|2026-08-29": {
     "ev": 2.25,
     "ts": 1787923619.1399739
+  },
+  "football|Russia First League|PFK Arsenal Tula|FK Ural Yekaterinburg|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 4.2,
+    "ts": 1787926173.277676
+  },
+  "football|Russia First League|PFK Arsenal Tula|FK Ural Yekaterinburg|上半场正确比分0-2|correct_score_ht|2026-08-29": {
+    "ev": 12.7,
+    "ts": 1787926173.2800791
+  },
+  "football|Russia First League|PFK Arsenal Tula|FK Ural Yekaterinburg|上半场正确比分2-0|correct_score_ht|2026-08-29": {
+    "ev": 34.01,
+    "ts": 1787926173.2799292
+  },
+  "football|Russia First League|PFK Arsenal Tula|FK Ural Yekaterinburg|上半场正确比分2-1|correct_score_ht|2026-08-29": {
+    "ev": 3.3,
+    "ts": 1787926173.280004
+  },
+  "football|Russia First League|PFK Arsenal Tula|FK Ural Yekaterinburg|上半场正确比分others|correct_score_ht|2026-08-29": {
+    "ev": 1.86,
+    "ts": 1787926173.280155
+  },
+  "football|Russia First League|PFK Arsenal Tula|FK Ural Yekaterinburg|半/全场-客/主|htft|2026-08-29": {
+    "ev": 32.32,
+    "ts": 1787926173.277598
+  },
+  "football|Russia First League|id:5358240|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 4.2,
+    "bb": 1.88,
+    "ts": 1787926172.799723
   },
   "football|Russia First League|id:5490543|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 5.2,
@@ -3670,6 +3810,10 @@
   "football|Scotland Championship|Dunfermline Athletic FC|Raith Rovers FC|上半场正确比分others|correct_score_ht|2026-08-29": {
     "ev": 39.09,
     "ts": 1787883483.010518
+  },
+  "football|Scotland League One|Hamilton Academical FC|Cove Rangers FC|客胜|1x2|2026-08-29": {
+    "ev": 1.59,
+    "ts": 1787926173.277178
   },
   "football|Scotland League Two|Edinburgh City FC|Forfar Athletic FC|双重机会-和局/客|dc|2026-08-29": {
     "ev": 2.14,
@@ -5439,24 +5583,14 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|England Premier League|id:5354731|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
-    "ev": 2.15,
-    "bb": 1.74,
-    "ts": 1787926172.799658
+  "football|Spain LaLiga|id:5348552|-|和局|1x2|2026-08-29": {
+    "ev": 5.2,
+    "bb": 3.99,
+    "ts": 1787926314.3580532
   },
-  "football|Russia First League|id:5358240|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
-    "ev": 4.2,
-    "bb": 1.88,
-    "ts": 1787926172.799723
-  },
-  "football|Portugal Segunda Liga|id:5331418|-|和局|1x2|2026-08-29": {
-    "ev": 13.13,
-    "bb": 3.3,
-    "ts": 1787926172.799775
-  },
-  "football|Portugal Segunda Liga|id:5331418|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
-    "ev": 3.75,
-    "bb": 1.97,
-    "ts": 1787926172.799825
+  "football|England Championship League|id:5331294|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 2.98,
+    "bb": 1.87,
+    "ts": 1787926314.35812
   }
 }
