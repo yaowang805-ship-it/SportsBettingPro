@@ -225,6 +225,14 @@
     "ev": 8.04,
     "ts": 1787931669.765666
   },
+  "football|Argentina Liga Profesional|Deportivo Riestra|Velez Sarsfield|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 2.4,
+    "ts": 1787939295.653156
+  },
+  "football|Argentina Liga Profesional|Deportivo Riestra|Velez Sarsfield|小球|1x2|2026-08-30": {
+    "ev": 1.68,
+    "ts": 1787939295.653006
+  },
   "football|Argentina Liga Profesional|Union de Santa Fe|Sarmiento|主胜|1x2|2026-08-29": {
     "ev": 2.63,
     "ts": 1787868659.525126
@@ -3366,6 +3374,10 @@
     "ev": 2.58,
     "ts": 1787856621.458785
   },
+  "football|Ireland Premier Division|Saint Patricks Athletic FC|Waterford FC|小球|1x2|2026-08-29": {
+    "ev": 1.93,
+    "ts": 1787939445.788249
+  },
   "football|Ireland Premier Division|Saint Patricks Athletic FC|Waterford FC|角球小球|corner|2026-08-29": {
     "ev": 1.65,
     "ts": 1787903995.911171
@@ -4555,6 +4567,10 @@
   "football|Poland III Liga|Zks Kluczevia Stargard|SKS Unia Swarzedz|让球客胜|1x2|2026-08-28": {
     "ev": 1.06,
     "ts": 1787928791.092754
+  },
+  "football|Portugal Primeira Liga|Alverca Futebol|Santa Clara Azores|上半场客胜|ht|2026-08-29": {
+    "ev": 1.07,
+    "ts": 1787939295.664213
   },
   "football|Portugal Primeira Liga|FC Arouca|Maritimo Madeira|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.74,
@@ -7231,6 +7247,18 @@
     "ev": 1.08,
     "ts": 1787890041.678944
   },
+  "football|Ukraine Persha Liga|UCSA Tarasivka|FC Inhulets Petrove|大球|1x2|2026-08-29": {
+    "ev": 8.51,
+    "ts": 1787939295.6547189
+  },
+  "football|Ukraine Persha Liga|UCSA Tarasivka|FC Inhulets Petrove|客胜|1x2|2026-08-29": {
+    "ev": 8.83,
+    "ts": 1787939295.654508
+  },
+  "football|Ukraine Persha Liga|UCSA Tarasivka|FC Inhulets Petrove|让球客胜|1x2|2026-08-29": {
+    "ev": 7.33,
+    "ts": 1787939295.654618
+  },
   "football|Ukraine Persha Liga|高华尤夫卡二队|SC波尔塔瓦|客胜|1x2|2026-08-28": {
     "ev": 17.65,
     "bb": 2.17,
@@ -7244,6 +7272,10 @@
   "football|Ukraine Premier League|FC Livyi Bereh Kyiv|Karpaty Lviv|上半场主胜|ht|2026-08-29": {
     "ev": 5.2,
     "ts": 1787920458.047182
+  },
+  "football|Ukraine Premier League|FK Kudrivka|FC Epitsentr Kamianets Podilskyi|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 1.09,
+    "ts": 1787939295.66699
   },
   "football|Ukraine Premier League|Kolos Kovalivka|FC Obolon Kiev|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 1.14,
@@ -7380,8 +7412,8 @@
     "ts": 1787879714.342423
   },
   "football|Ukraine Persha Liga|id:5489941|-|客胜|1x2|2026-08-29": {
-    "ev": 8.83,
-    "bb": 3.27,
-    "ts": 1787939294.77791
+    "ev": 18.81,
+    "bb": 3.57,
+    "ts": 1787939591.500343
   }
 }
