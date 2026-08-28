@@ -2310,6 +2310,10 @@
     "ev": 1.19,
     "ts": 1787901410.873982
   },
+  "football|France Ligue 1|Lille OSC|Paris Saint Germain|和局|1x2|2026-08-29": {
+    "ev": 4.07,
+    "ts": 1787932441.755451
+  },
   "football|France Ligue 1|Lille OSC|Paris Saint Germain|大球|1x2|2026-08-29": {
     "ev": 2.25,
     "ts": 1787901091.624639
@@ -2742,6 +2746,11 @@
   "football|Germany 2. Bundesliga|VFL Bochum|VfL 1899 Osnabruck|让球主胜|1x2|2026-08-29": {
     "ev": 4.04,
     "ts": 1787931661.737803
+  },
+  "football|Germany 2. Bundesliga|id:5203036|-|上半场客胜|ht|2026-08-29": {
+    "ev": 2.48,
+    "bb": 5.0,
+    "ts": 1787932440.969267
   },
   "football|Germany 2. Bundesliga|id:5315209|-|上半场客胜|ht|2026-08-29": {
     "ev": 2.3,
@@ -5322,6 +5331,11 @@
     "bb": 1.84,
     "ts": 1787925322.444559
   },
+  "football|Turkey 1. Lig|id:5480984|-|上半场客胜|ht|2026-08-29": {
+    "ev": 3.38,
+    "bb": 4.53,
+    "ts": 1787932440.969325
+  },
   "football|Turkey 1. Lig|佩迪卡斯堡|班迪马士邦|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 2.89,
     "bb": 1.79,
@@ -6530,14 +6544,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Germany 2. Bundesliga|id:5203036|-|上半场客胜|ht|2026-08-29": {
-    "ev": 2.48,
-    "bb": 5.0,
-    "ts": 1787932440.969267
-  },
-  "football|Turkey 1. Lig|id:5480984|-|上半场客胜|ht|2026-08-29": {
-    "ev": 3.38,
-    "bb": 4.53,
-    "ts": 1787932440.969325
+  "football|England Premier League|id:5130740|-|上半场客胜|ht|2026-08-29": {
+    "ev": 2.84,
+    "bb": 5.4,
+    "ts": 1787932607.798113
   }
 }
