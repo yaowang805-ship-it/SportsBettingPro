@@ -584,6 +584,11 @@
     "ev": 3.38,
     "ts": 1787892330.9731998
   },
+  "football|Bulgaria First Professional League|id:5348496|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.65,
+    "bb": 1.93,
+    "ts": 1787915001.628829
+  },
   "football|Bulgaria First Professional League|id:5348496|-|上半场客胜|ht|2026-08-29": {
     "ev": 2.54,
     "bb": 5.45,
@@ -760,6 +765,11 @@
   "football|Cyprus 1st Division|Ypsonas FC|ALS Omonia|让球主胜|1x2|2026-08-29": {
     "ev": 1.43,
     "ts": 1787898271.397991
+  },
+  "football|Cyprus 1st Division|id:5281133|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.88,
+    "bb": 1.79,
+    "ts": 1787915001.628901
   },
   "football|Czech Republic Divize|FC Strani|FK Nove Sady|主胜|1x2|2026-08-28": {
     "ev": 2.45,
@@ -3135,6 +3145,10 @@
     "ev": 1.53,
     "ts": 1787888205.306211
   },
+  "football|Turkey 1. Lig|Keciorengucu|Umraniyespor|先进球neither|first_to_score|2026-08-29": {
+    "ev": 2.85,
+    "ts": 1787915002.0863302
+  },
   "football|Turkey 1. Lig|Keciorengucu|Umraniyespor|半/全场-主/客|htft|2026-08-29": {
     "ev": 13.92,
     "ts": 1787885738.06588
@@ -4302,14 +4316,44 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Bulgaria First Professional League|id:5348496|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
-    "ev": 3.65,
-    "bb": 1.93,
-    "ts": 1787915001.628829
+  "football|Japan J.League 2|id:5356824|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 4.72,
+    "bb": 2.03,
+    "ts": 1787915108.897102
   },
-  "football|Cyprus 1st Division|id:5281133|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
-    "ev": 3.88,
-    "bb": 1.79,
-    "ts": 1787915001.628901
+  "football|Japan J.League 2|id:5356788|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.22,
+    "bb": 1.88,
+    "ts": 1787915108.897172
+  },
+  "football|South Korea K-League 1|id:5356869|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 2.53,
+    "bb": 1.8,
+    "ts": 1787915108.897241
+  },
+  "football|Turkey Super Lig|id:5248175|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 2.59,
+    "bb": 1.86,
+    "ts": 1787915108.897302
+  },
+  "football|Ecuador LigaPro Primera A|id:5356608|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 2.59,
+    "bb": 1.96,
+    "ts": 1787915108.897368
+  },
+  "football|Japan J.League 2|id:5356849|-|上半场客胜|ht|2026-08-29": {
+    "ev": 8.02,
+    "bb": 6.6,
+    "ts": 1787915108.897426
+  },
+  "football|Japan J.League 2|id:5356849|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 6.19,
+    "bb": 2.04,
+    "ts": 1787915108.897481
+  },
+  "football|South Korea K-League 1|id:5356870|-|上半场客胜|ht|2026-08-29": {
+    "ev": 5.66,
+    "bb": 4.53,
+    "ts": 1787915108.897538
   }
 }
