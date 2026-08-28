@@ -1,5 +1,5 @@
 {
-  "balance": 6239.69,
+  "balance": 6200.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3956,6 +3956,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787934600,
       "created_at": "2026-08-28T16:20:44.988436+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_蒙扎_乌迪内斯_上半场主胜",
+      "sport": "football",
+      "league": "意大利甲级联赛",
+      "home_team": "蒙扎",
+      "away_team": "乌迪内斯",
+      "home_cn": "蒙扎",
+      "away_cn": "乌迪内斯",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.34,
+      "stake": 39,
+      "model_prob": 0.2364,
+      "ev_pct": 2.58,
+      "pin_odds": 3.97,
+      "fair_price": 4.231,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788021000,
+      "created_at": "2026-08-28T16:32:23.301432+00:00",
       "track_only": false
     }
   ],
@@ -8101,8 +8124,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-29",
-    "used": 246.0,
-    "bets": 6
+    "used": 285.0,
+    "bets": 7
   },
   "updated": null
 }
