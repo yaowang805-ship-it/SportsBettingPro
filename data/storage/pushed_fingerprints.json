@@ -556,6 +556,10 @@
     "ev": 1.05,
     "ts": 1787913904.410985
   },
+  "football|Bulgaria First Professional League|FC CSKA 1948|PFC Lokomotiv Plovdiv|半/全场-客/主|htft|2026-08-29": {
+    "ev": 3.63,
+    "ts": 1787914868.510091
+  },
   "football|Bulgaria First Professional League|PFC Slavia Sofia|FK Septemvri Sofia|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 2.14,
     "ts": 1787888205.306344
@@ -1100,6 +1104,10 @@
     "ev": 7.5,
     "ts": 1787900716.2274098
   },
+  "football|Egypt Second Division A|FC Masar|Dayrout SC|客胜|1x2|2026-08-28": {
+    "ev": 5.57,
+    "ts": 1787914571.3155708
+  },
   "football|Egypt Second Division A|FC Masar|Dayrout SC|让球客胜|1x2|2026-08-28": {
     "ev": 2.89,
     "ts": 1787913850.6564941
@@ -1127,6 +1135,11 @@
   "football|Egypt Second Division A|Telecom Egypt SC|Ismaily SC|让球主胜|1x2|2026-08-28": {
     "ev": 1.22,
     "ts": 1787905858.186317
+  },
+  "football|Egypt Second Division A|id:5285145|-|双重机会-和局/客|dc|2026-08-28": {
+    "ev": 16.96,
+    "bb": 3.85,
+    "ts": 1787914570.812059
   },
   "football|Egypt Second Division A|阿尔纳赛尔|哈伊赫多|客胜|1x2|2026-08-28": {
     "ev": 8.74,
@@ -1643,6 +1656,18 @@
     "ev": 19.33,
     "ts": 1787897204.803487
   },
+  "football|Ireland First Division|Kerry FC|Treaty United|上半场正确比分2-0|correct_score_ht|2026-08-29": {
+    "ev": 2.07,
+    "ts": 1787914868.514606
+  },
+  "football|Ireland First Division|Kerry FC|Treaty United|上半场精确进球others|exact_goals_ht|2026-08-29": {
+    "ev": 1.45,
+    "ts": 1787914868.514694
+  },
+  "football|Ireland First Division|Kerry FC|Treaty United|半/全场-客/主|htft|2026-08-29": {
+    "ev": 1.74,
+    "ts": 1787914868.5107121
+  },
   "football|Ireland First Division|University College Dublin|Finn Harps FC|上半场主胜|ht|2026-08-29": {
     "ev": 1.87,
     "ts": 1787856970.0830002
@@ -2029,6 +2054,10 @@
   "football|Malaysia Super League|Sabah FA|Penang FA|主胜|1x2|2026-08-28": {
     "ev": 2.81,
     "ts": 1787890530.979199
+  },
+  "football|Malaysia Super League|Sabah FA|Penang FA|双边进球-是|btts|2026-08-28": {
+    "ev": 1.53,
+    "ts": 1787914571.315232
   },
   "football|Malaysia Super League|Sabah FA|Penang FA|双重机会-和局/客|dc|2026-08-28": {
     "ev": 4.61,
@@ -2698,6 +2727,11 @@
     "ev": 31.67,
     "ts": 1787891089.634807
   },
+  "football|Slovenia 2nd Liga|id:5513619|-|客胜|1x2|2026-08-29": {
+    "ev": 5.15,
+    "bb": 3.42,
+    "ts": 1787914570.812104
+  },
   "football|Slovenia 2nd Liga|比摩治|科尔卡|双重机会-和局/客|dc|2026-08-29": {
     "ev": 19.65,
     "bb": 1.85,
@@ -3205,6 +3239,14 @@
   "football|UAE Pro League|Al Wasl FC|Shabab Al Ahli|上半场正确比分2-0|correct_score_ht|2026-08-29": {
     "ev": 6.4,
     "ts": 1787883483.008868
+  },
+  "football|UAE Pro League|Al Wasl FC|Shabab Al Ahli|上半场正确比分others|correct_score_ht|2026-08-29": {
+    "ev": 3.19,
+    "ts": 1787914781.5947251
+  },
+  "football|UAE Pro League|Al Wasl FC|Shabab Al Ahli|总进球区间7+|total_goals_range|2026-08-29": {
+    "ev": 3.05,
+    "ts": 1787914781.59463
   },
   "football|UAE Pro League|United FC|Al Ittihad Kalba|上半场正确比分0-2|correct_score_ht|2026-08-28": {
     "ev": 10.69,
@@ -4260,14 +4302,14 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Egypt Second Division A|id:5285145|-|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 16.96,
-    "bb": 3.85,
-    "ts": 1787914570.812059
+  "football|Bulgaria First Professional League|id:5348496|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.65,
+    "bb": 1.93,
+    "ts": 1787915001.628829
   },
-  "football|Slovenia 2nd Liga|id:5513619|-|客胜|1x2|2026-08-29": {
-    "ev": 5.15,
-    "bb": 3.42,
-    "ts": 1787914570.812104
+  "football|Cyprus 1st Division|id:5281133|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.88,
+    "bb": 1.79,
+    "ts": 1787915001.628901
   }
 }
