@@ -1359,6 +1359,10 @@
     "ev": 35.15,
     "ts": 1787881348.3550348
   },
+  "football|Italy Serie A|Milan|Venezia|上半场客胜|ht|2026-08-29": {
+    "ev": 4.68,
+    "ts": 1787896145.796333
+  },
   "football|Italy Serie A|Milan|Venezia|上半场正确比分0-1|correct_score_ht|2026-08-29": {
     "ev": 5.72,
     "ts": 1787883483.010561
@@ -2210,6 +2214,10 @@
   "football|Turkey 1. Lig|Muglaspor|Boluspor|半/全场-主/客|htft|2026-08-29": {
     "ev": 30.36,
     "ts": 1787885738.0658
+  },
+  "football|Turkey 1. Lig|Pendikspor|Bandirmaspor|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 2.46,
+    "ts": 1787896145.795594
   },
   "football|Turkey 1. Lig|Pendikspor|Bandirmaspor|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 13.55,
@@ -3127,6 +3135,10 @@
     "ev": 9.2,
     "ts": 1787890041.693465
   },
+  "football|Ukraine Persha Liga|Kolos Kovalivka II|Poltava|双重机会-和局/客|dc|2026-08-28": {
+    "ev": 1.79,
+    "ts": 1787895700.388681
+  },
   "football|Ukraine Persha Liga|Kolos Kovalivka II|Poltava|客胜|1x2|2026-08-28": {
     "ev": 3.25,
     "ts": 1787890041.678852
@@ -3134,6 +3146,11 @@
   "football|Ukraine Persha Liga|Kolos Kovalivka II|Poltava|让球客胜|1x2|2026-08-28": {
     "ev": 1.08,
     "ts": 1787890041.678944
+  },
+  "football|Ukraine Persha Liga|高华尤夫卡二队|SC波尔塔瓦|客胜|1x2|2026-08-28": {
+    "ev": 17.65,
+    "bb": 2.17,
+    "ts": 1787895699.673293
   },
   "football|Ukraine Premier League|Kolos Kovalivka|FC Obolon Kiev|上半场客胜|ht|2026-08-28": {
     "ev": 2.59,
@@ -3185,9 +3202,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Ukraine Persha Liga|高华尤夫卡二队|SC波尔塔瓦|客胜|1x2|2026-08-28": {
-    "ev": 17.65,
+  "football|Ukraine Persha Liga|高华尤夫卡二队|波尔塔瓦|客胜|1x2|2026-08-28": {
+    "ev": 12.33,
     "bb": 2.17,
-    "ts": 1787895699.673293
+    "ts": 1787896550.598038
   }
 }

@@ -1,5 +1,5 @@
 {
-  "balance": 9192.69,
+  "balance": 9086.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3082,6 +3082,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787914800,
       "created_at": "2026-08-28T05:41:39.654028+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_高华尤夫卡二队_波尔塔瓦_客胜",
+      "sport": "football",
+      "league": "乌克兰甲级联赛",
+      "home_team": "高华尤夫卡二队",
+      "away_team": "波尔塔瓦",
+      "home_cn": "高华尤夫卡二队",
+      "away_cn": "波尔塔瓦",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.17,
+      "stake": 106,
+      "model_prob": 0.5177,
+      "ev_pct": 12.33,
+      "pin_odds": 1.8197,
+      "fair_price": 1.9318,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787914800,
+      "created_at": "2026-08-28T05:55:50.584859+00:00",
       "track_only": false
     }
   ],
@@ -6942,8 +6965,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 4630.0,
-    "bets": 35
+    "used": 4736.0,
+    "bets": 36
   },
   "updated": null
 }
