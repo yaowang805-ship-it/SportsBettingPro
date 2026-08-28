@@ -1284,6 +1284,10 @@ class PipelineOrchestrator:
         self._reload_critical_modules()  # V4.5: 每次tick前重载, 代码0延迟生效
         now = datetime.now()
 
+        # 全量扫描运行中(scan/scan_bg 锁 active) — 增量扫描+定时任务都跳过, 防并发抢 Pin 风控
+        # (2026-08-28: 全量扫描移到 09:00, 期间暂停其他任务, 等它结束再放行)
+        _full_scan_running = "scan" in self._active_tasks or "scan_bg" in self._active_tasks
+
         # 1) 定时任务 (settle/report → 后台线程)
         _BACKGROUND_TASKS = {"settle", "report", "git_commit", "memory_update", "evolve", "incremental",
                              "self_repair", "time_calibration", "health_check", "clv_collect",
@@ -1297,6 +1301,9 @@ class PipelineOrchestrator:
             method = getattr(self, method_name, None)
             if not method:
                 continue
+            # 全量扫描运行中, 暂停其他定时任务(只放行 full_scan 本身) — 防并发抢 Pin/资源(2026-08-28)
+            if _full_scan_running and name != "full_scan_morning":
+                continue
             is_settle = "settle" in name
             is_bg = any(t in name for t in _BACKGROUND_TASKS) or is_settle
             if is_settle and self._active_tasks_settle():
@@ -1306,8 +1313,7 @@ class PipelineOrchestrator:
 
         # 2) V5 分层增量扫描 — 临场60s/中程300s (Pinnacle变动驱动)
         # V5.4: 全量扫描成功+推送后才放行(降频防风控, 用户要求)
-        # 全量扫描运行中(scan/scan_bg 锁 active)时跳过增量, 防并发抢 Pin(2026-08-23)
-        _full_scan_running = "scan" in self._active_tasks or "scan_bg" in self._active_tasks
+        # 全量扫描运行中跳过增量(上方已算 _full_scan_running), 防并发抢 Pin
         if self._full_scan_ok and self._is_in_scan_window(now) and not _full_scan_running:
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
