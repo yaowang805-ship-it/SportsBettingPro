@@ -1,5 +1,5 @@
 {
-  "balance": 4406.69,
+  "balance": 4192.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -4578,6 +4578,29 @@
       "commence_time": 1787943600,
       "created_at": "2026-08-28T18:54:06.535832+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_洛里昂_特鲁瓦_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "法国甲级联赛",
+      "home_team": "洛里昂",
+      "away_team": "特鲁瓦",
+      "home_cn": "洛里昂",
+      "away_cn": "特鲁瓦",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.79,
+      "stake": 214,
+      "model_prob": 0.5775,
+      "ev_pct": 3.38,
+      "pin_odds": 1.6623,
+      "fair_price": 1.7315,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788029100,
+      "created_at": "2026-08-28T19:01:06.524176+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -8722,8 +8745,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-29",
-    "used": 2079.0,
-    "bets": 33
+    "used": 2293.0,
+    "bets": 34
   },
   "updated": null
 }
