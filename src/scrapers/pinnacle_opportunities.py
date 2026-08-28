@@ -478,6 +478,34 @@ def _norm_correct_score_ht(opts):
     return norm
 
 
+def _norm_exact_goals(opts):
+    """归一化精确进球选项, 兜底项聚合成单一 'others' 桶。
+
+    BB mty=1103 是 0/1/2/3+; Pinnacle "Exact Total Goals 1st Half" 是 0/1/2/3/4+
+    (全场版还有 5/6+)。BB 的 "3+" = Pin 的 "3"+"4+" 之和, 按隐含概率(1/price)合并。
+    返回 {归一化名: 赔率}, 显式为 '0'/'1'/'2', 兜底统一为 'others'。
+    """
+    import re as _re
+    norm = {}
+    others_inv = 0.0
+    for o in opts:
+        name = str(o.get("name", "") or "").strip()
+        odds = o.get("odds", 0) or 0
+        if not name or odds <= 1.0:
+            continue
+        m = _re.match(r'^(\d+)(\+)?$', name)
+        if not m:
+            continue
+        n = int(m.group(1))
+        if m.group(2) == '+' or n >= 3:
+            others_inv += 1.0 / odds  # 3+/4+/5+/6+ 或显式 ≥3 全进兜底
+        elif n in (0, 1, 2) and str(n) not in norm:
+            norm[str(n)] = odds
+    if others_inv > 0:
+        norm["others"] = 1.0 / others_inv
+    return norm
+
+
 def _norm_special_name(name):
     """归一化特殊盘口选项名(净胜球/总进球区间/先进球)。
 
@@ -542,7 +570,7 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
         ft = m.get("odds_ft", {})
         ht = m.get("odds_ht", {})
         if any(ft.get(k) for k in ("correct_score", "winning_margin", "total_goals_range", "first_to_score")) \
-                or any(ht.get(k) for k in ("correct_score_ht",)):
+                or any(ht.get(k) for k in ("correct_score_ht", "exact_goals_ht")):
             bb_special_matches.append(m)
     if not bb_special_matches:
         return []
@@ -560,14 +588,16 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                 continue
 
     SPECIAL_KEY_TO_MKT = {
-        # "correct_score" 已删除 (2026-08-18): BB mty=1188「正确比分」只有高比分(2-1/5-1/6-6),
-        # 无低比分(0-0/1-0/1-1), 与 Pinnacle Correct Score(含全部比分)错配, 赔率对不上波胆。
-        # V5.11: correct_score_ht 半场正确比分 — BB mty=1100 含全比分(0-0/1-0/.../Others),
-        # 与 Pinnacle "Correct Score 1st Half" 对齐(半场比分上限低, 9条显式+兜底, 无错配)。
+        # correct_score 恢复 (V5.11): 旧删除理由是 "BB mty=1188 只有高比分(2-1/5-1/6-6)",
+        # 但 BB 现已改用 mty=1099 = 全场全比分(0-0~4-4 共25条显式, 实测), 论据过时。
+        # 公平价走 Dixon-Coles(独立模型, 不依赖 Pin 选项集), 队名匹配不上自动不出数。
+        "correct_score": ("correct_score", "正确比分"),
         "winning_margin": ("winning_margin", "净胜球"),
         "total_goals_range": ("total_goals_range", "总进球区间"),
         "first_to_score": ("first_to_score", "先进球"),
+        # V5.11: 半场正确比分(BB 1100) + 半场精确进球(BB 1103) — 兜底项聚合去抽水
         "correct_score_ht": ("correct_score_ht", "上半场正确比分"),
+        "exact_goals_ht": ("exact_goals_ht", "上半场精确进球"),
     }
 
     entries = []
@@ -663,6 +693,10 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                 # 半场正确比分: 兜底项("Others"/"Any Other*")聚合成单一 'others' 桶
                 norm_bb = _norm_correct_score_ht(bb_opts)
                 norm_pin = _norm_correct_score_ht(pin_opts)
+            elif bb_key == "exact_goals_ht":
+                # 半场精确进球: BB "3+" = Pin "3"+"4+" 之和, 聚合成单一 'others' 桶
+                norm_bb = _norm_exact_goals(bb_opts)
+                norm_pin = _norm_exact_goals(pin_opts)
             elif bb_key == "winning_margin":
                 # 净胜球: 主/客都要区分, 否则 "主赢1球"和"客赢1球"都归一化成 by1 碰撞(赔率互相覆盖)
                 norm_bb = {_norm_margin_side(o["name"], bb_home, bb_away): o["odds"] for o in bb_opts}
@@ -682,10 +716,10 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                     _p = _dc.get(_name, 0.0)
                     if _p > 0:
                         fair_map[_name] = 1.0 / _p
-            elif bb_key == "correct_score_ht":
-                # 半场正确比分: BB 只有 9 条显式 + 单一 "others" 兜底, 而 Pin 可能有多条兜底或
-                # 更多显式比分。BB 的 "others" 桶 = Pin 中所有不在 BB 显式集里的结果之和,
-                # 用 Pin 价重建成 {BB显式 ∪ 单一others} 再去抽水, 保证 "others" 口径一致。
+            elif bb_key in ("correct_score_ht", "exact_goals_ht"):
+                # 半场正确比分/精确进球: BB 只有少量显式 + 单一 "others" 兜底, 而 Pin 可能有
+                # 更多显式比分或多条兜底。BB 的 "others" 桶 = Pin 中所有不在 BB 显式集里的结果
+                # 之和, 用 Pin 价重建成 {BB显式 ∪ 单一others} 再去抽水, 保证口径一致。
                 _bb_explicit = {k for k in norm_bb if k != "others"}
                 if not _bb_explicit or not _bb_explicit.issubset(norm_pin.keys()):
                     continue  # BB 显式比分 Pin 没有(不该发生) → 结构不对等不出数
