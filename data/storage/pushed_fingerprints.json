@@ -683,11 +683,6 @@
     "bb": 1.93,
     "ts": 1787915001.628829
   },
-  "football|Bulgaria First Professional League|id:5348496|-|上半场客胜|ht|2026-08-29": {
-    "ev": 2.54,
-    "bb": 5.45,
-    "ts": 1787903995.064866
-  },
   "football|Bulgaria First Professional League|id:5453661|-|上半场客胜|ht|2026-08-29": {
     "ev": 7.69,
     "bb": 6.35,
@@ -855,6 +850,10 @@
   "football|Cyprus 1st Division|Olympiakos Nicosia|Nea Salamina Famagusta|主胜|1x2|2026-08-29": {
     "ev": 2.14,
     "ts": 1787924605.0434098
+  },
+  "football|Cyprus 1st Division|Olympiakos Nicosia|Nea Salamina Famagusta|小球|1x2|2026-08-29": {
+    "ev": 1.38,
+    "ts": 1787925081.518403
   },
   "football|Cyprus 1st Division|Olympiakos Nicosia|Nea Salamina Famagusta|让球客胜|1x2|2026-08-29": {
     "ev": 7.46,
@@ -1139,6 +1138,10 @@
     "ev": 2.57,
     "ts": 1787846370.8160791
   },
+  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|上半场精确进球others|exact_goals_ht|2026-08-28": {
+    "ev": 2.26,
+    "ts": 1787924836.1206331
+  },
   "football|Egypt Premier League|Enppi Club|Wadi Degla SC|半/全场-主/和局|htft|2026-08-28": {
     "ev": 5.6,
     "ts": 1787888205.3059158
@@ -1158,6 +1161,10 @@
   "football|Egypt Premier League|Enppi Club|Wadi Degla SC|让球主胜|1x2|2026-08-28": {
     "ev": 16.38,
     "ts": 1787869842.484436
+  },
+  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|让球客胜|1x2|2026-08-28": {
+    "ev": 10.83,
+    "ts": 1787925081.514946
   },
   "football|Egypt Premier League|Pyramids FC|Abo Qair Semads|上半场主胜|ht|2026-08-28": {
     "ev": 1.65,
@@ -1207,15 +1214,15 @@
     "ev": 2.41,
     "ts": 1787892330.9726841
   },
-  "football|Egypt Premier League|id:5348443|-|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 9.36,
-    "bb": 2.34,
-    "ts": 1787903995.0646532
-  },
   "football|Egypt Premier League|id:5348585|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 5.46,
     "bb": 2.13,
     "ts": 1787903995.0646951
+  },
+  "football|Egypt Premier League|id:5404771|-|上半场主胜|ht|2026-08-28": {
+    "ev": 15.1,
+    "bb": 4.78,
+    "ts": 1787924835.554247
   },
   "football|Egypt Premier League|id:5404771|-|上半场双重机会-主/客|ht_dc|2026-08-28": {
     "ev": 3.25,
@@ -1568,9 +1575,21 @@
     "bb": 6.0,
     "ts": 1787907761.176283
   },
+  "football|Finland Kakkonen|GBK Kokkola|FF Jaro II|双重机会-和局/客|dc|2026-08-28": {
+    "ev": 2.05,
+    "ts": 1787925081.515192
+  },
+  "football|Finland Kakkonen|GBK Kokkola|FF Jaro II|客胜|1x2|2026-08-28": {
+    "ev": 10.4,
+    "ts": 1787924836.113914
+  },
   "football|Finland Kakkonen|GBK Kokkola|FF Jaro II|让球主胜|1x2|2026-08-28": {
     "ev": 2.37,
     "ts": 1787917374.068644
+  },
+  "football|Finland Kakkonen|GBK Kokkola|FF Jaro II|让球客胜|1x2|2026-08-28": {
+    "ev": 1.75,
+    "ts": 1787924836.1139781
   },
   "football|Finland Kakkonen|Jakobstads Bollklubb|Narpes Kraft|双重机会-和局/客|dc|2026-08-28": {
     "ev": 3.69,
@@ -3387,9 +3406,21 @@
     "ev": 3.85,
     "ts": 1787885001.2395499
   },
+  "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|双边进球-是|btts|2026-08-28": {
+    "ev": 2.16,
+    "ts": 1787924836.119483
+  },
+  "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|双重机会-主/和局|dc|2026-08-28": {
+    "ev": 3.81,
+    "ts": 1787924836.119618
+  },
   "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|客胜|1x2|2026-08-28": {
     "ev": 1.03,
     "ts": 1787897959.385359
+  },
+  "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|让球主胜|1x2|2026-08-28": {
+    "ev": 5.79,
+    "ts": 1787924836.119549
   },
   "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|让球客胜|1x2|2026-08-28": {
     "ev": 1.5,
@@ -4189,6 +4220,10 @@
     "ev": 1.05,
     "ts": 1787902884.881021
   },
+  "football|UAE Pro League|United FC|Al Ittihad Kalba|双重机会-主/和局|dc|2026-08-28": {
+    "ev": 1.32,
+    "ts": 1787925081.517757
+  },
   "football|UAE Pro League|United FC|Al Ittihad Kalba|总进球区间7+|total_goals_range|2026-08-28": {
     "ev": 7.9,
     "ts": 1787838979.6460018
@@ -4204,6 +4239,11 @@
   "football|UAE Pro League|United FC|Al Ittihad Kalba|让球客胜|1x2|2026-08-28": {
     "ev": 6.57,
     "ts": 1787858204.867
+  },
+  "football|UAE Pro League|id:5304708|-|主胜|1x2|2026-08-28": {
+    "ev": 5.13,
+    "bb": 2.47,
+    "ts": 1787924835.554285
   },
   "football|UEFA Europa Conference League-Qualification Playoff|AS Monaco FC|KS Gornik Zabrze|双边进球-否|btts|2026-08-28": {
     "ev": 1.76,
@@ -5235,19 +5275,54 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Egypt Premier League|id:5404771|-|上半场主胜|ht|2026-08-28": {
-    "ev": 15.1,
-    "bb": 4.78,
-    "ts": 1787924835.554247
+  "football|Egypt Premier League|id:5348443|-|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 12.36,
+    "bb": 2.46,
+    "ts": 1787925322.444292
   },
-  "football|UAE Pro League|id:5304708|-|主胜|1x2|2026-08-28": {
-    "ev": 5.13,
-    "bb": 2.47,
-    "ts": 1787924835.554285
+  "football|Denmark 2nd Division|id:5199100|-|主胜|1x2|2026-08-29": {
+    "ev": 5.96,
+    "bb": 1.91,
+    "ts": 1787925322.444355
+  },
+  "football|Austria 2. Liga|id:5317157|-|主胜|1x2|2026-08-29": {
+    "ev": 6.3,
+    "bb": 2.31,
+    "ts": 1787925322.444403
+  },
+  "football|Saudi Arabia Professional League|id:5348510|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.48,
+    "bb": 1.85,
+    "ts": 1787925322.44446
+  },
+  "football|Cyprus 1st Division|id:5281138|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 2.53,
+    "bb": 1.73,
+    "ts": 1787925322.444513
+  },
+  "football|Turkey 1. Lig|id:5348509|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 2.95,
+    "bb": 1.84,
+    "ts": 1787925322.444559
+  },
+  "football|Bulgaria First Professional League|id:5348496|-|上半场客胜|ht|2026-08-29": {
+    "ev": 8.32,
+    "bb": 6.35,
+    "ts": 1787925322.44461
+  },
+  "football|Egypt Premier League|id:5348442|-|上半场主胜|ht|2026-08-28": {
+    "ev": 10.93,
+    "bb": 4.97,
+    "ts": 1787925322.4446578
+  },
+  "football|England Championship League|id:5331294|-|上半场客胜|ht|2026-08-29": {
+    "ev": 2.71,
+    "bb": 4.54,
+    "ts": 1787925322.444708
   },
   "football|Finland Kakkonen|id:5508774|-|客胜|1x2|2026-08-28": {
-    "ev": 10.4,
-    "bb": 7.7,
-    "ts": 1787924835.554315
+    "ev": 13.27,
+    "bb": 7.9,
+    "ts": 1787925322.4447548
   }
 }
