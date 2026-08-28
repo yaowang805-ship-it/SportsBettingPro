@@ -2365,7 +2365,9 @@ def _make_fingerprint(o: dict) -> str:
     def _norm_team(s):
         import re as _re
         s = (s or "").strip()
-        s = _re.sub(r'^(CD|CA|CF|AC|SC|AD|UD|RC)\s+', '', s, flags=_re.I)
+        # \s* 而非 \s+: 中文队名 "SC波尔塔瓦" 的 SC 直接连汉字无空格, \s+ 剥不掉
+        # → "SC波尔塔瓦" vs "波尔塔瓦" 被当成两队, 同一场独赢客胜重复推送(2026-08-28 实锤)
+        s = _re.sub(r'^(CD|CA|CF|AC|SC|AD|UD|RC)\s*', '', s, flags=_re.I)
         return _norm(s)
     sub = o.get("_sub_market", o.get("_market", ""))
     # V4.5: 归一化 sub_market (opportunities/"" → "1x2", 与扫描器一致)
