@@ -656,9 +656,13 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             if not bb_opts or not pin_opts:
                 continue
             # 归一化并匹配
-            if bb_key in ("correct_score", "correct_score_ht"):
+            if bb_key == "correct_score":
                 norm_bb = {_norm_scoreline(o["name"]): o["odds"] for o in bb_opts}
                 norm_pin = {_norm_scoreline(o["name"]): o["odds"] for o in pin_opts}
+            elif bb_key == "correct_score_ht":
+                # 半场正确比分: 兜底项("Others"/"Any Other*")聚合成单一 'others' 桶
+                norm_bb = _norm_correct_score_ht(bb_opts)
+                norm_pin = _norm_correct_score_ht(pin_opts)
             elif bb_key == "winning_margin":
                 # 净胜球: 主/客都要区分, 否则 "主赢1球"和"客赢1球"都归一化成 by1 碰撞(赔率互相覆盖)
                 norm_bb = {_norm_margin_side(o["name"], bb_home, bb_away): o["odds"] for o in bb_opts}
@@ -678,6 +682,24 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                     _p = _dc.get(_name, 0.0)
                     if _p > 0:
                         fair_map[_name] = 1.0 / _p
+            elif bb_key == "correct_score_ht":
+                # 半场正确比分: BB 只有 9 条显式 + 单一 "others" 兜底, 而 Pin 可能有多条兜底或
+                # 更多显式比分。BB 的 "others" 桶 = Pin 中所有不在 BB 显式集里的结果之和,
+                # 用 Pin 价重建成 {BB显式 ∪ 单一others} 再去抽水, 保证 "others" 口径一致。
+                _bb_explicit = {k for k in norm_bb if k != "others"}
+                if not _bb_explicit or not _bb_explicit.issubset(norm_pin.keys()):
+                    continue  # BB 显式比分 Pin 没有(不该发生) → 结构不对等不出数
+                _others_inv = sum(1.0 / v for k, v in norm_pin.items()
+                                  if k not in _bb_explicit and v > 1.0)
+                if _others_inv <= 0:
+                    continue
+                _combined = {k: norm_pin[k] for k in _bb_explicit}
+                _combined["others"] = 1.0 / _others_inv
+                norm_pin = _combined  # 口径对齐: Pin 重建成 BB 的 {显式 + others}
+                _probs = devig_mult(list(_combined.values()))
+                for _k, _p in zip(_combined.keys(), _probs):
+                    if _p > 0:
+                        fair_map[_k] = 1.0 / _p
             if not fair_map:
                 pin_decimal = [v for v in norm_pin.values() if v > 1.0]
                 if pin_decimal:
