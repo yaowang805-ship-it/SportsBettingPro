@@ -118,6 +118,29 @@ def _derive_btts_from_team_total(team_total_entries):
     return round(1.0 / btts_yes, 4), round(1.0 / (1.0 - btts_yes), 4)
 
 
+def _devig_dc(dc_odds):
+    """DC(双重机会)去抽水 — 三条**非互斥**腿, 公平概率和=2(不是1)。
+
+    之前对 [1X,2X,12] 直接用 shin_fair_odds 会强推 Σp=1, 把每条 DC 公平价
+    抬高 40-90%(假+EV); 而"从 1X2 推导"又有 HT 平局高估的 21pp 偏差。
+    正确做法: 比例法归一化到和=2(三条腿覆盖两个结果, 公平和=2)。
+
+    Args:
+        dc_odds: [odds_1X, odds_2X, odds_12] 十进制赔率(顺序对应 dc_labels)
+    Returns:
+        [fair_1X, fair_2X, fair_12] 公平十进制赔率; 无效则 None
+    """
+    b = [1.0 / float(o) for o in dc_odds if o and float(o) > 1.0]
+    if len(b) < 3:
+        return None
+    s = sum(b)
+    if s <= 2.0 + 1e-9:
+        fair_probs = b
+    else:
+        fair_probs = [bi * 2.0 / s for bi in b]  # 归一化到和=2
+    return [round(1.0 / fp, 4) for fp in fair_probs]
+
+
 def _pin_main_max_stake(pin_match):
     """取该场 Pinnacle 主盘口(全场独赢, 非备用线)的注额上限, 取不到就退到任意盘口最大值。
 
