@@ -113,11 +113,10 @@ MARKET_TYPES = {
         "ml": 3004, "ou": 3003, "hc": 3002,
         "ht_ml": 3020,  # V5.11: 篮球半场独赢是独立 mty(3020), 全场 ml=3004 在 pe=3003 下不存在
     },
-    5: {  # 网球 (5001=独赢, 5004=让盘Set Handicap, 5003=大小/总局数)
-        # 注: BB 还有 5002=让局(Game Handicap, Pin 有 Games spread) 和 5012=盘胜者(Set Winner),
-        # 但让局/让盘是两盘口(hc 单一盘口只能接一个), 且第1盘盘口 label 语义是"第1盘"非"上半场",
-        # 需对比层 label 重构后才接。当前只接全场让盘+局数大小。
+    5: {  # 网球 (5001=独赢, 5004=让盘Set Handicap, 5003=总局数, 5002=让局Game Handicap, 5012=盘胜者)
         "ml": 5001, "hc": 5004, "ou": 5003,
+        "hc_games": 5002,  # 让局(Game Handicap) — 与让盘(5004)是两个盘口, Pin 有 games_spread 对应
+        "ht_ml": 5012,     # 第1盘盘胜者(Set Winner-1st Set) — 全场独赢5001 在 pe=5002 下不存在
     },
     7: {  # 棒球
         "ml": 7003, "hc": 7001, "ou": [7002, 7005],  # 7002=全场 7005=备选; 7004=F5(前5局)已剔除, 避免F5的4.5被当全场大小球
@@ -794,8 +793,9 @@ def extract_match_odds(record, sport_key, platform="BB"):
         # 3-way 缺平局时不能伪造(旧代码把客队赔率复制成平局), 直接返回 None
         return result if len(result) == 3 else None
 
-    def _extract_handicap(period):
-        mty_code = mt.get("hc")
+    def _extract_handicap(period, mty_code=None):
+        if mty_code is None:
+            mty_code = mt.get("hc")
         if not mty_code:
             return None
         group = _find_market_group(record, mty_code, period)
@@ -1190,6 +1190,13 @@ def extract_match_odds(record, sport_key, platform="BB"):
     if ft_ou:
         ft_dict["total"] = ft_ou["primary"]
         ft_dict["alternate_totals"] = ft_ou["alternates"]
+
+    # V5.11: 网球让局(Game Handicap) — 与让盘(Set Handicap)是两个盘口
+    if sport_key == "tennis" and mt.get("hc_games"):
+        ft_hc_games = _extract_handicap(ft_period, mt.get("hc_games"))
+        if ft_hc_games:
+            ft_dict["games_handicap"] = ft_hc_games["primary"]
+            ft_dict["alternate_games_handicaps"] = ft_hc_games["alternates"]
 
     if sport_key == "football":
         ft_dnb = _extract_dnb(ft_period)
