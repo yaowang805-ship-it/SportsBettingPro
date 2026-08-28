@@ -506,11 +506,13 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
     from src.scrapers.pinnacle_league_map import lookup_pin_league
     from src.scrapers.devig import devig_mult, shin_fair_odds
 
-    # BB 有特殊盘口的比赛
+    # BB 有特殊盘口的比赛 (V5.11: 补半场特殊盘 correct_score_ht, 从 odds_ht 取)
     bb_special_matches = []
     for m in bb_matches:
         ft = m.get("odds_ft", {})
-        if any(ft.get(k) for k in ("correct_score", "winning_margin", "total_goals_range", "first_to_score")):
+        ht = m.get("odds_ht", {})
+        if any(ft.get(k) for k in ("correct_score", "winning_margin", "total_goals_range", "first_to_score")) \
+                or any(ht.get(k) for k in ("correct_score_ht",)):
             bb_special_matches.append(m)
     if not bb_special_matches:
         return []

@@ -102,6 +102,11 @@ MARKET_TYPES = {
         "correct_score": 1099, "total_goals_range": 1101, "first_to_score": 1089,
         "winning_margin": 1018,
         # 注: dnb 无平局退款盘口, 置 None 禁用
+        # V5.11: 半场特殊盘口 — BB 半场用独立 mty 码(全场码 1099/1101/1018/1089 在 HT period
+        # 下不存在)。实测仅两个半场特殊盘: 正确比分上半场=1100(全比分含0-0), 精确进球上半场=1103。
+        # 1100 对应 Pinnacle "Correct Score 1st Half"; 1103("Exact Goals"0/1/2/3+)Pinnacle 无对应
+        # (Pin 只有 "Total Goals Range" 进球区间), 故只接 1100。
+        "correct_score_ht": 1100,
     },
     3: {  # 篮球 (3004=独赢, 3003=大小, 3002=让分)
         "ml": 3004, "ou": 3003, "hc": 3002,
@@ -1263,6 +1268,12 @@ def extract_match_odds(record, sport_key, platform="BB"):
             if ht_corner_ou:
                 ht_dict["corner_ou"] = ht_corner_ou["primary"]
                 ht_dict["alternate_corner_ou"] = ht_corner_ou["alternates"]
+
+            # V5.11: 半场特殊盘口(正确比分上半场) — 对应 Pinnacle "Correct Score 1st Half"
+            for _key, _mty in [("correct_score_ht", mt.get("correct_score_ht"))]:
+                _spec = _extract_special_market(_mty, ht_period)
+                if _spec:
+                    ht_dict[_key] = _spec
 
     # V5: 美式足球 OU/HC 交换
     _fix_af_ou_hc(ht_dict, sport_key)
