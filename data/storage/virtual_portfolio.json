@@ -1,5 +1,5 @@
 {
-  "balance": 4753.69,
+  "balance": 4673.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -4463,6 +4463,29 @@
       "commence_time": 1788022800,
       "created_at": "2026-08-28T18:19:35.609670+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_瓦莱塔_马沙斯洛克_主胜",
+      "sport": "football",
+      "league": "马耳他超级联赛",
+      "home_team": "瓦莱塔",
+      "away_team": "马沙斯洛克",
+      "home_cn": "瓦莱塔",
+      "away_cn": "马沙斯洛克",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.16,
+      "stake": 80,
+      "model_prob": 0.4876,
+      "ev_pct": 5.31,
+      "pin_odds": 1.9524,
+      "fair_price": 2.051,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787943600,
+      "created_at": "2026-08-28T18:35:02.761792+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -8607,8 +8630,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-29",
-    "used": 1732.0,
-    "bets": 28
+    "used": 1812.0,
+    "bets": 29
   },
   "updated": null
 }

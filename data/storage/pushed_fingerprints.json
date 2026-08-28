@@ -11,6 +11,10 @@
     "ev": 2.48,
     "ts": 1787920739.471122
   },
+  "baseball|MLB|Detroit Tigers|Los Angeles Dodgers|客胜|1x2|2026-08-29": {
+    "ev": 2.44,
+    "ts": 1787941948.654467
+  },
   "baseball|MLB|New York Mets|Houston Astros|客胜|1x2|2026-08-29": {
     "ev": 4.34,
     "ts": 1787903573.6358101
@@ -2205,6 +2209,10 @@
     "ev": 1.25,
     "ts": 1787894469.9655821
   },
+  "football|England Northern Premier League|Ashton United FC|Gainsborough Trinity|让球客胜|1x2|2026-08-29": {
+    "ev": 1.55,
+    "ts": 1787941948.653621
+  },
   "football|England Northern Premier League|Cleethorpes Town FC|Curzon Ashton FC|主胜|1x2|2026-08-29": {
     "ev": 1.32,
     "ts": 1787915705.2651541
@@ -2321,6 +2329,11 @@
     "ev": 2.84,
     "bb": 5.4,
     "ts": 1787932607.798113
+  },
+  "football|England Premier League|id:5130751|-|上半场主胜|ht|2026-08-29": {
+    "ev": 5.1,
+    "bb": 6.15,
+    "ts": 1787941558.11295
   },
   "football|England Premier League|id:5231944|-|上半场主胜|ht|2026-08-29": {
     "ev": 2.7,
@@ -3279,6 +3292,10 @@
     "ev": 8.6,
     "ts": 1787883483.0109792
   },
+  "football|Ireland First Division|Cobh Ramblers|Longford Town FC|半/全场-主/和局|htft|2026-08-29": {
+    "ev": 5.11,
+    "ts": 1787941558.68908
+  },
   "football|Ireland First Division|Cobh Ramblers|Longford Town FC|半/全场-主/客|htft|2026-08-29": {
     "ev": 3.6,
     "ts": 1787885738.0668201
@@ -3286,6 +3303,10 @@
   "football|Ireland First Division|Cobh Ramblers|Longford Town FC|半/全场-客/主|htft|2026-08-29": {
     "ev": 2.09,
     "ts": 1787895491.2595031
+  },
+  "football|Ireland First Division|Cobh Ramblers|Longford Town FC|单双-双|oe|2026-08-29": {
+    "ev": 1.34,
+    "ts": 1787941758.139214
   },
   "football|Ireland First Division|Cobh Ramblers|Longford Town FC|小球|1x2|2026-08-29": {
     "ev": 2.03,
@@ -3342,6 +3363,14 @@
   "football|Ireland First Division|University College Dublin|Finn Harps FC|双重机会-和局/客|dc|2026-08-29": {
     "ev": 268.73,
     "ts": 1787881348.355204
+  },
+  "football|Ireland First Division|University College Dublin|Finn Harps FC|小球|1x2|2026-08-29": {
+    "ev": 4.45,
+    "ts": 1787941948.653504
+  },
+  "football|Ireland First Division|University College Dublin|Finn Harps FC|让球客胜|1x2|2026-08-29": {
+    "ev": 3.89,
+    "ts": 1787941948.653452
   },
   "football|Ireland Premier Division|Bohemians Dublin FC|Sligo Rovers FC|上半场客胜|ht|2026-08-29": {
     "ev": 11.72,
@@ -4592,6 +4621,10 @@
     "ev": 1.72,
     "ts": 1787926738.897134
   },
+  "football|Northern Ireland Premiership|Portadown FC|Coleraine FC|主胜|1x2|2026-08-29": {
+    "ev": 5.7,
+    "ts": 1787941758.139422
+  },
   "football|Northern Ireland Premiership|Portadown FC|Coleraine FC|双重机会-主/和局|dc|2026-08-29": {
     "ev": 3.17,
     "ts": 1787929065.377861
@@ -4787,6 +4820,10 @@
   "football|Portugal Primeira Liga|Rio Ave FC|Sporting CP|双重机会-主/和局|dc|2026-08-29": {
     "ev": 1.4,
     "ts": 1787907112.222485
+  },
+  "football|Portugal Primeira Liga|Rio Ave FC|Sporting CP|小球|1x2|2026-08-29": {
+    "ev": 1.22,
+    "ts": 1787941758.1402082
   },
   "football|Portugal Primeira Liga|Rio Ave FC|Sporting CP|让球主胜|1x2|2026-08-29": {
     "ev": 1.55,
@@ -5439,6 +5476,14 @@
     "ev": 1.55,
     "ts": 1787940926.099092
   },
+  "football|Scotland Championship|Dunfermline Athletic FC|Raith Rovers FC|角球大球|corner|2026-08-29": {
+    "ev": 1.6,
+    "ts": 1787941758.141008
+  },
+  "football|Scotland Championship|Dunfermline Athletic FC|Raith Rovers FC|让球主胜|1x2|2026-08-29": {
+    "ev": 13.32,
+    "ts": 1787941758.138966
+  },
   "football|Scotland Championship|Partick Thistle FC|Queens Park FC|上半场主胜|ht|2026-08-29": {
     "ev": 2.47,
     "ts": 1787937282.263108
@@ -5876,6 +5921,10 @@
   "football|Spain LaLiga|Deportivo Alaves|Villarreal CF|角球小球|corner|2026-08-29": {
     "ev": 1.68,
     "ts": 1787900716.2306712
+  },
+  "football|Spain LaLiga|Deportivo Alaves|Villarreal CF|让球客胜|1x2|2026-08-29": {
+    "ev": 1.0,
+    "ts": 1787941758.140306
   },
   "football|Spain LaLiga|FC Barcelona|Athletic Bilbao|上半场客胜|ht|2026-08-28": {
     "ev": 5.68,
@@ -7733,9 +7782,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|England Premier League|id:5130751|-|上半场主胜|ht|2026-08-29": {
-    "ev": 5.1,
-    "bb": 6.15,
-    "ts": 1787941558.11295
+  "football|Malta Premier League|id:5414507|-|主胜|1x2|2026-08-29": {
+    "ev": 5.31,
+    "bb": 2.16,
+    "ts": 1787942102.779634
   }
 }
