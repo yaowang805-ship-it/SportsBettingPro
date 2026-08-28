@@ -1,5 +1,5 @@
 {
-  "balance": 9055.69,
+  "balance": 9018.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3128,6 +3128,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787932800,
       "created_at": "2026-08-28T05:56:42.566926+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_佩迪卡斯堡_班迪马士邦_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "土耳其甲级联赛",
+      "home_team": "佩迪卡斯堡",
+      "away_team": "班迪马士邦",
+      "home_cn": "佩迪卡斯堡",
+      "away_cn": "班迪马士邦",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.79,
+      "stake": 37,
+      "model_prob": 0.5748,
+      "ev_pct": 2.89,
+      "pin_odds": 1.6494,
+      "fair_price": 1.7397,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787932800,
+      "created_at": "2026-08-28T06:06:43.867764+00:00",
       "track_only": false
     }
   ],
@@ -6988,8 +7011,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 4767.0,
-    "bets": 37
+    "used": 4804.0,
+    "bets": 38
   },
   "updated": null
 }

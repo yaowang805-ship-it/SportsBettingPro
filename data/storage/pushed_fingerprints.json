@@ -524,6 +524,11 @@
     "ev": 3.38,
     "ts": 1787892330.9731998
   },
+  "football|Bulgaria First Professional League|索非亚斯拉维亚|塞普特姆里|上半场客胜|ht|2026-08-29": {
+    "ev": 7.79,
+    "bb": 6.05,
+    "ts": 1787896602.5922282
+  },
   "football|CONCACAF Central American Cup|CD奥林匹亚|萨普里萨|和局|1x2|2026-08-28": {
     "ev": 26.65,
     "bb": 3.33,
@@ -1535,6 +1540,10 @@
     "ev": 2.98,
     "ts": 1787879048.102082
   },
+  "football|Mexico Liga MX|Necaxa|Cruz Azul|上半场正确比分0-2|correct_score_ht|2026-08-29": {
+    "ev": 1.43,
+    "ts": 1787896603.618578
+  },
   "football|Mexico Liga MX|Necaxa|Cruz Azul|上半场正确比分2-0|correct_score_ht|2026-08-29": {
     "ev": 28.62,
     "ts": 1787883483.012131
@@ -1693,6 +1702,10 @@
     "ev": 3.2,
     "ts": 1787894469.961331
   },
+  "football|Poland III Liga|KSS Kotwica Kornik|Chemik Bydgoszcz|客胜|1x2|2026-08-28": {
+    "ev": 2.48,
+    "ts": 1787896603.597279
+  },
   "football|Portugal Primeira Liga|Rio Ave FC|Sporting CP|让球主胜|1x2|2026-08-29": {
     "ev": 1.55,
     "ts": 1787895098.732737
@@ -1819,6 +1832,10 @@
     "ev": 3.61,
     "bb": 1.96,
     "ts": 1787881347.650441
+  },
+  "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|上半场主胜|ht|2026-08-28": {
+    "ev": 1.71,
+    "ts": 1787896603.6095612
   },
   "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|上半场正确比分2-1|correct_score_ht|2026-08-28": {
     "ev": 3.85,
@@ -1989,6 +2006,10 @@
   "football|Spain LaLiga 2|Tenerife CD|Sporting Gijon|让球主胜|1x2|2026-08-29": {
     "ev": 3.99,
     "ts": 1787895098.732322
+  },
+  "football|Spain LaLiga 2|Tenerife CD|Sporting Gijon|让球客胜|1x2|2026-08-29": {
+    "ev": 1.44,
+    "ts": 1787896603.604297
   },
   "football|Spain LaLiga 2|特内里费|希洪竞技|上半场客胜|ht|2026-08-29": {
     "ev": 4.51,
@@ -3202,9 +3223,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Bulgaria First Professional League|索非亚斯拉维亚|塞普特姆里|上半场客胜|ht|2026-08-29": {
-    "ev": 7.79,
-    "bb": 6.05,
-    "ts": 1787896602.5922282
+  "football|Turkey 1. Lig|佩迪卡斯堡|班迪马士邦|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 2.89,
+    "bb": 1.79,
+    "ts": 1787897203.885932
   }
 }
