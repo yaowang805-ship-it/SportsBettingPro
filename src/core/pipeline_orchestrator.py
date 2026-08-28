@@ -67,21 +67,22 @@ CHECK_INTERVAL = 30                # 调度循环检查间隔（秒）
 
 # 定时任务表：(名称, HH:MM, 处理函数, 参数字典)
 SCHEDULE = [
-    # 早晨任务错开(2026-08-23): full_scan 06:40 是重任务(Pin 415联赛+BB/FB提取, 10-20min, 内部8线程),
-    # self_repair/time_calibration/health_check 之前排在 06:45/06:50/06:55, 与 full_scan 重叠打 Pin →
-    # 并发 SSL EOF / 熔断器 / Cloudflare 风控。错开到 full_scan 之后 30min, 给全量扫描独立窗口。
-    ("full_scan_morning",  "06:40", "do_full_scan",  {"bet": True}),
-    ("self_repair",       "07:10", "do_self_repair", {}),       # 自检+自动修复: 锁文件/缓存/指纹/连通性
-    ("time_calibration",  "07:15", "do_time_calibration", {}),  # 时间校准: BB/Pin/系统时钟对齐
-    ("health_check",       "07:20", "do_health_check", {}),
-    ("settle_morning",     "08:30", "do_settle",      {}),
-    ("daily_report",       "09:00", "do_daily_report",{}),
-    ("data_sync_summary",  "09:00", "do_data_sync_summary",{}),  # V5.1: 数据积累量日报
-    ("memory_update",      "09:05", "do_memory_update", {}),
-    ("daily_cleanup",      "09:10", "do_cleanup",      {}),  # 指纹+临时文件清理
-    ("evolve_daily",       "09:15", "do_evolve_daily", {}),  # V4 BB溢价累积
-    ("download_data",      "09:20", "do_download_data", {}), # V4.5: 自动下载新数据源
-    ("name_mapping",       "09:25", "do_name_mapping", {}), # V4.5: 拼音自动名映射
+    # 全量扫描 09:00 独立窗口(2026-08-28 改): 从 06:40 移到 09:00 — 机器常睡眠导致 06:40 错过
+    # (09:08 才追赶, 2026-08-28 实锤)。09:00 机器已醒, 全量扫描更稳。full_scan 是重任务
+    # (Pin 415联赛+BB/FB提取, 10-20min, 内部8线程), 其他任务错开到 full_scan 之后 30min+,
+    # 且 full_scan 运行中增量扫描+定时任务都跳过(_tick 里 _full_scan_running 检查), 防并发抢 Pin 风控。
+    ("full_scan_morning",  "09:00", "do_full_scan",  {"bet": True}),
+    ("self_repair",       "09:30", "do_self_repair", {}),       # 自检+自动修复: 锁文件/缓存/指纹/连通性
+    ("time_calibration",  "09:35", "do_time_calibration", {}),  # 时间校准: BB/Pin/系统时钟对齐
+    ("health_check",       "09:40", "do_health_check", {}),
+    ("settle_morning",     "09:45", "do_settle",      {}),
+    ("daily_report",       "09:50", "do_daily_report",{}),
+    ("data_sync_summary",  "09:50", "do_data_sync_summary",{}),  # V5.1: 数据积累量日报
+    ("memory_update",      "09:55", "do_memory_update", {}),
+    ("daily_cleanup",      "10:00", "do_cleanup",      {}),  # 指纹+临时文件清理
+    ("evolve_daily",       "10:05", "do_evolve_daily", {}),  # V4 BB溢价累积
+    ("download_data",      "10:10", "do_download_data", {}), # V4.5: 自动下载新数据源
+    ("name_mapping",       "10:15", "do_name_mapping", {}), # V4.5: 拼音自动名映射
     # 周报：周日 21:00
     ("evolve_weekly",      "Mon 06:07", "do_evolve_weekly", {}),  # V4 每周进化(结算反馈+溢价重算)
     ("health_check_noon",  "13:55", "do_health_check", {}),  # 午后巡检
