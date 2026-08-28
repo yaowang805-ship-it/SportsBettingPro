@@ -247,285 +247,60 @@ def get_league_matchups_and_markets(league_id):
     for r in result:
         r.pop("_is_games", None)
 
-    # --- 第二阶段：从子比赛识别 Pinnacle 特殊市场 ---
-    # Pinnacle 对 DC/BTTS 等特殊市场不返回独立 mtype，而是用子比赛（child matchups）
-    # 并通过参与者名称标识。所有子比赛市场类型都是 moneyline。
-    # 双重机会 (DC): ["TeamA Or Draw", "Draw Or TeamB", "TeamA Or TeamB"]
+    # --- 第二阶段：从子比赛识别 Pinnacle 特殊市场(2026-08-28 重写) ---
+    # 之前按参与者名(" Or Draw"/"Yes No")+只认全场 period=0, 实测漏掉 Double Chance/BTTS/DNB/单双
+    # 及其半场变体(全返回 0 条)。改用 special.description 精确识别, 全场+半场都接。
+    _SPECIAL_DESC = {
+        "Double Chance": ("double_chance", 0),
+        "Double Chance 1st Half": ("double_chance", 1),
+        "Both Teams To Score?": ("btts", 0),
+        "Both Teams To Score? 1st Half": ("btts", 1),
+        "Draw No Bet": ("draw_no_bet", 0),
+        "Draw No Bet 1st Half": ("draw_no_bet", 1),
+        "Total Goals Odd/Even": ("oe", 0),
+        "Total Goals Odd/Even 1st Half": ("oe", 1),
+        "Half-Time/Full-Time": ("htft", 0),
+    }
     for mu in matchups:
-        participants = mu.get("participants", [])
-        pnames = [p.get("name", "") for p in participants]
-        if len(pnames) != 3 or not any(" Or Draw" in n for n in pnames):
+        _spec = mu.get("special") or {}
+        _desc = _spec.get("description", "")
+        if _desc not in _SPECIAL_DESC:
             continue
-        mid = mu["id"]
-        dc_markets = mm.get(mid, [])
-        # pnames → DC outcome labels (按 participantId 对齐, prices 顺序可能与 participants 不一致)
-        # pnames = ["TeamA Or Draw", "Draw Or TeamB", "TeamA Or TeamB"]
-        pid_to_label = {}
-        for _p in participants:
-            _n = _p.get("name", "")
-            if "Or Draw" in _n:
-                _lbl = "1X"
-            elif "Draw Or" in _n:
-                _lbl = "2X"
-            else:
-                _lbl = "12"
-            pid_to_label[_p.get("id")] = _lbl
-
-        dc_prices = None
-        for mkt in dc_markets:
-            if mkt.get("type") == "moneyline" and mkt.get("period") == 0:
-                raw_prices = mkt.get("prices", [])
-                if len(raw_prices) < 3:
-                    continue
-                prices = []
-                for p in raw_prices:
-                    label = pid_to_label.get(p.get("participantId"), "")
-                    if not label:
-                        continue
-                    prices.append({
-                        "designation": label,
-                        "price_decimal": us_to_decimal(p.get("price")),
-                        "points": p.get("points"),
-                    })
-                dc_prices = prices
-                break
-        if not dc_prices:
-            continue
-        home_dc = pnames[0].replace(" Or Draw", "").strip()
-        away_dc = pnames[1].replace("Draw Or ", "").strip()
-        if not home_dc or not away_dc:
-            continue
-        for entry in result:
-            eh = entry.get("home", "")
-            ea = entry.get("away", "")
-            if not eh or not ea:
-                continue
-            if (home_dc.lower() in eh.lower() or eh.lower() in home_dc.lower()) and \
-               (away_dc.lower() in ea.lower() or ea.lower() in away_dc.lower()):
-                entry["double_chance"] = [{
-                    "period": 0,
-                    "prices": dc_prices,
-                }]
-                break
-
-    # --- 双边进球 (BTTS)：["Yes", "No"] 子比赛 ---
-    # 注意：Pinnacle 有多种 Yes/No 子比赛（BTTS、Either Team To Score、
-    # TeamX To Score、Win to Nil 等），必须用 special.description 区分。
-    for mu in matchups:
-        parent_id = mu.get("parentId")
-        if not parent_id:
-            continue
-        pnames = [p.get("name", "") for p in mu.get("participants", [])]
-        if pnames != ["Yes", "No"]:
-            continue
-        spec = mu.get("special", {})
-        desc = spec.get("description", "")
-        if "Both Teams To Score" not in desc:
-            continue
-        mid = mu["id"]
-        btts_markets = mm.get(mid, [])
-        if not btts_markets:
-            continue
-        # 建立 participantId → name 映射
-        pid_to_name = {str(p.get("id")): p.get("name", "") for p in mu.get("participants", [])}
-
-        btts_entries = []
-        for mkt in btts_markets:
+        _key, _period = _SPECIAL_DESC[_desc]
+        _pid_to_name = {str(p.get("id")): (p.get("name") or "").strip()
+                        for p in mu.get("participants", [])}
+        _mkts = mm.get(mu.get("id"), [])
+        _entries = []
+        for mkt in _mkts:
             if mkt.get("type") != "moneyline":
                 continue
-            period = mkt.get("period", 0)
-            prices = []
+            _prices = []
             for p in mkt.get("prices", []):
-                pid = str(p.get("participantId", ""))
-                name = pid_to_name.get(pid, "")
-                # 用 participantId 映射到正确的 Yes/No 标签
-                desig = p.get("designation", "")
-                if not desig or desig == "None":
-                    desig = name.lower() if name else ""
-                prices.append({
-                    "designation": desig,
+                _name = _pid_to_name.get(str(p.get("participantId", "")), "")
+                _desig = p.get("designation", "")
+                if not _desig or _desig == "None":
+                    _desig = _name
+                _prices.append({
+                    "designation": _desig,
                     "price_decimal": us_to_decimal(p.get("price")),
                     "points": p.get("points"),
                 })
-            if len(prices) >= 2:
-                btts_entries.append({"period": period, "prices": prices})
-        if not btts_entries:
+            if _prices:
+                _entries.append({"period": _period, "prices": _prices})
+        if not _entries:
             continue
+        _parent_id = mu.get("parentId")
         for entry in result:
-            if entry.get("matchup_id") != parent_id:
+            if str(entry.get("matchup_id")) != str(_parent_id):
                 continue
-            existing = entry.get("btts", [])
-            if not existing:
-                entry["btts"] = btts_entries
+            _existing = entry.get(_key, [])
+            if not _existing:
+                entry[_key] = _entries
             else:
-                existing_periods = {e["period"] for e in existing if "period" in e}
-                for be in btts_entries:
-                    if be["period"] not in existing_periods:
-                        existing.append(be)
-            break
-
-    # --- 单/双 (Odd/Even)：["Odd", "Even"] 子比赛 ---
-    for mu in matchups:
-        parent_id = mu.get("parentId")
-        if not parent_id:
-            continue
-        pnames = [p.get("name", "") for p in mu.get("participants", [])]
-        if pnames != ["Odd", "Even"]:
-            continue
-        spec = mu.get("special", {})
-        desc = spec.get("description", "")
-        if "Odd/Even" not in desc:
-            continue
-        # 只取"Total Goals Odd/Even"（跳过球队级别的"X Goals Odd/Even"）
-        if not desc.startswith("Total Goals Odd/Even"):
-            continue
-        mid = mu["id"]
-        oe_markets = mm.get(mid, [])
-        if not oe_markets:
-            continue
-        oe_entries = []
-        for mkt in oe_markets:
-            if mkt.get("type") != "moneyline":
-                continue
-            period = mkt.get("period", 0)
-            # pnames = ["Odd", "Even"], 按 participantId 对齐 (prices 顺序可能与 participants 不一致)
-            _pid_to_name = {_p.get("id"): _p.get("name", "") for _p in mu.get("participants", [])}
-            raw_prices = mkt.get("prices", [])
-            labelled = []
-            for p in raw_prices:
-                label = _pid_to_name.get(p.get("participantId"), p.get("designation", ""))
-                if not label:
-                    continue
-                labelled.append({
-                    "designation": label,
-                    "price_decimal": us_to_decimal(p.get("price")),
-                    "points": p.get("points"),
-                })
-            if len(labelled) >= 2:
-                oe_entries.append({"period": period, "prices": labelled})
-        if not oe_entries:
-            continue
-        for entry in result:
-            if entry.get("matchup_id") != parent_id:
-                continue
-            existing = entry.get("oe", [])
-            if not existing:
-                entry["oe"] = oe_entries
-            else:
-                existing_periods = {e["period"] for e in existing if "period" in e}
-                for oe in oe_entries:
-                    if oe["period"] not in existing_periods:
-                        existing.append(oe)
-            break
-
-    # --- 半全场 (HT/FT)：9 个参与者子比赛 ---
-    for mu in matchups:
-        parent_id = mu.get("parentId")
-        if not parent_id:
-            continue
-        pnames = [p.get("name", "") for p in mu.get("participants", [])]
-        if len(pnames) != 9:
-            continue
-        spec = mu.get("special", {})
-        desc = spec.get("description", "")
-        if "Half-Time/Full-Time" not in desc:
-            continue
-        mid = mu["id"]
-        htft_markets = mm.get(mid, [])
-        if not htft_markets:
-            continue
-        # HTFT 9个价格按固定顺序对应 HTFT_KEYS(用位置, 不用pnames值)
-        # Pinnacle pnames是具体队名(如\"sportivoluqueno-sportivoluqueno\"), 不是通用标签
-        HTFT_POS_KEYS = ["home/home","home/draw","home/away",
-                         "draw/home","draw/draw","draw/away",
-                         "away/home","away/draw","away/away"]
-        htft_label_map = {i: HTFT_POS_KEYS[i] for i in range(9)}
-        _pid_to_idx = {_p.get("id"): _i for _i, _p in enumerate(mu.get("participants", []))}
-
-        htft_entries = []
-        for mkt in htft_markets:
-            if mkt.get("type") != "moneyline":
-                continue
-            period = mkt.get("period", 0)
-            raw_prices = mkt.get("prices", [])
-            if len(raw_prices) < 9:
-                continue
-            # 按 participantId 对齐 (prices 顺序可能与 participants 不一致)
-            labelled_prices = []
-            for p in raw_prices:
-                _i = _pid_to_idx.get(p.get("participantId"))
-                if _i is None or _i >= 9:
-                    continue
-                label = htft_label_map[_i]
-                labelled_prices.append({
-                    "designation": label,
-                    "price_decimal": us_to_decimal(p.get("price")),
-                    "points": p.get("points"),
-                })
-            htft_entries.append({"period": period, "prices": labelled_prices})
-        if not htft_entries:
-            continue
-        for entry in result:
-            if entry.get("matchup_id") != parent_id:
-                continue
-            existing = entry.get("htft", [])
-            if not existing:
-                entry["htft"] = htft_entries
-            else:
-                existing_periods = {e["period"] for e in existing if "period" in e}
-                for htft in htft_entries:
-                    if htft["period"] not in existing_periods:
-                        existing.append(htft)
-            break
-
-    # --- 平局退款 (DNB)：["Home Or Draw", "Away Or Draw"] 子比赛 ---
-    # 注意：Pinnacle 用 "Or Draw" 区分 DC(三结果)和 DNB(两结果)
-    for mu in matchups:
-        parent_id = mu.get("parentId")
-        if not parent_id:
-            continue
-        pnames = [p.get("name", "") for p in mu.get("participants", [])]
-        if len(pnames) != 2:
-            continue
-        if not all("Or Draw" in n for n in pnames):
-            continue
-        # 排除 DC（DC 有3个参与者，DNB有2个）
-        spec = mu.get("special", {})
-        desc = spec.get("description", "")
-        if "Double Chance" in desc:
-            continue  # 这是DC, 跳过
-        mid = mu["id"]
-        dnb_markets = mm.get(mid, [])
-        if not dnb_markets:
-            continue
-        pid_to_name = {str(p.get("id")): p.get("name", "") for p in mu.get("participants", [])}
-        dnb_entries = []
-        for mkt in dnb_markets:
-            if mkt.get("type") != "moneyline":
-                continue
-            period = mkt.get("period", 0)
-            prices = []
-            for p in mkt.get("prices", []):
-                pid = str(p.get("participantId", ""))
-                name = pid_to_name.get(pid, "")
-                desig = p.get("designation", "")
-                if not desig or desig == "None":
-                    desig = name.lower() if name else ""
-                prices.append({
-                    "designation": desig,
-                    "price_decimal": us_to_decimal(p.get("price")),
-                    "points": p.get("points"),
-                })
-            if len(prices) >= 2:
-                dnb_entries.append({"period": period, "prices": prices})
-        if not dnb_entries:
-            continue
-        for entry in result:
-            if entry.get("matchup_id") != parent_id:
-                continue
-            existing = entry.get("draw_no_bet", [])
-            if not existing:
-                entry["draw_no_bet"] = dnb_entries
+                _seen = {e.get("period") for e in _existing if isinstance(e, dict)}
+                for _e in _entries:
+                    if _e["period"] not in _seen:
+                        _existing.append(_e)
             break
 
     # 非足球 parent-child 去重合并：同一 parent 的多个子比赛合并为一个条目
