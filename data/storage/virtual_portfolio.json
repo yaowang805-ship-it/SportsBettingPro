@@ -1,5 +1,5 @@
 {
-  "balance": 5771.69,
+  "balance": 5678.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -4187,6 +4187,29 @@
       "commence_time": 1787943600,
       "created_at": "2026-08-28T17:24:44.996711+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_科梅次安特斯尤尼杜斯_卡哈马卡FC_上半场主胜",
+      "sport": "football",
+      "league": "秘鲁甲级联赛",
+      "home_team": "科梅次安特斯尤尼杜斯",
+      "away_team": "卡哈马卡FC",
+      "home_cn": "科梅次安特斯尤尼杜斯",
+      "away_cn": "卡哈马卡FC",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 2.23,
+      "stake": 93,
+      "model_prob": 0.4689,
+      "ev_pct": 4.57,
+      "pin_odds": 1.9901,
+      "fair_price": 2.1326,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787947200,
+      "created_at": "2026-08-28T17:46:47.990905+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -8331,8 +8354,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-29",
-    "used": 714.0,
-    "bets": 16
+    "used": 807.0,
+    "bets": 17
   },
   "updated": null
 }
