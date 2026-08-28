@@ -1,5 +1,5 @@
 {
-  "balance": 7148.69,
+  "balance": 6968.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3542,6 +3542,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788013800,
       "created_at": "2026-08-28T14:39:04.689100+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_贝拉马尔_拉马斯_主胜",
+      "sport": "football",
+      "league": "葡萄牙杯",
+      "home_team": "贝拉马尔",
+      "away_team": "拉马斯",
+      "home_cn": "贝拉马尔",
+      "away_cn": "拉马斯",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.97,
+      "stake": 180,
+      "model_prob": 0.5424,
+      "ev_pct": 6.85,
+      "pin_odds": 1.7634,
+      "fair_price": 1.8437,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787943600,
+      "created_at": "2026-08-28T14:53:10.607785+00:00",
       "track_only": false
     }
   ],
@@ -7687,8 +7710,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 7081.0,
-    "bets": 88
+    "used": 7261.0,
+    "bets": 89
   },
   "updated": null
 }

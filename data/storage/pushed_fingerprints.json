@@ -478,6 +478,10 @@
     "ev": 1.57,
     "ts": 1787881348.353823
   },
+  "football|Belarus Premier League|FC Vitebsk|Naftan Novopolotsk|让球主胜|1x2|2026-08-28": {
+    "ev": 1.99,
+    "ts": 1787927947.287402
+  },
   "football|Belgium Challenger Pro League|RFC de Liege|FCV Dender EH|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 1.01,
     "ts": 1787927665.909226
@@ -513,6 +517,10 @@
   "football|Belgium Pro League|KRC Genk|S.K Beveren|上半场主胜|ht|2026-08-29": {
     "ev": 1.03,
     "ts": 1787863025.0971541
+  },
+  "football|Belgium Pro League|KRC Genk|S.K Beveren|半/全场-和局/客|htft|2026-08-29": {
+    "ev": 1.96,
+    "ts": 1787927947.289193
   },
   "football|Belgium Pro League|KRC Genk|S.K Beveren|双重机会-和局/客|dc|2026-08-29": {
     "ev": 115.19,
@@ -797,6 +805,10 @@
   "football|Chile Primera Division|Cobresal|Palestino|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 39.22,
     "ts": 1787870176.1993952
+  },
+  "football|Chile Primera Division|Cobresal|Palestino|让球客胜|1x2|2026-08-29": {
+    "ev": 1.32,
+    "ts": 1787928288.426381
   },
   "football|Colombia Primera A|Internacional de Bogota|Pasto|单双-双|oe|2026-08-28": {
     "ev": 2.38,
@@ -1659,6 +1671,11 @@
     "ev": 13.91,
     "ts": 1787879994.103712
   },
+  "football|England Championship League|id:5221393|-|上半场客胜|ht|2026-08-29": {
+    "ev": 3.28,
+    "bb": 4.85,
+    "ts": 1787927944.702291
+  },
   "football|England Championship League|id:5221450|-|上半场客胜|ht|2026-08-29": {
     "ev": 5.54,
     "bb": 4.64,
@@ -1887,6 +1904,14 @@
     "ev": 1.29,
     "ts": 1787925472.50762
   },
+  "football|England League Two|Shrewsbury Town|Salford City|半/全场-客/主|htft|2026-08-29": {
+    "ev": 3.73,
+    "ts": 1787928288.428021
+  },
+  "football|England League Two|Shrewsbury Town|Salford City|让球主胜|1x2|2026-08-29": {
+    "ev": 1.23,
+    "ts": 1787928288.4280589
+  },
   "football|England League Two|Walsall FC|crington Stanley|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.36,
     "ts": 1787926173.275926
@@ -1923,6 +1948,14 @@
   "football|England National League South|Torquay United|Hampton & Richmond|客胜|1x2|2026-08-29": {
     "ev": 1.61,
     "ts": 1787926173.278593
+  },
+  "football|England Northern Premier League|Alfreton Town FC|Warrington Rylands 1906 FC|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 2.48,
+    "ts": 1787928565.1333618
+  },
+  "football|England Northern Premier League|Alfreton Town FC|Warrington Rylands 1906 FC|客胜|1x2|2026-08-29": {
+    "ev": 4.93,
+    "ts": 1787928565.1333141
   },
   "football|England Northern Premier League|Alfreton Town FC|Warrington Rylands 1906 FC|让球客胜|1x2|2026-08-29": {
     "ev": 1.41,
@@ -2098,6 +2131,10 @@
   "football|Finland Ykkosliiga|FC KTP Kotka|FC Haka Valkeakoski|总进球区间7+|total_goals_range|2026-08-28": {
     "ev": 5.36,
     "ts": 1787877270.9053729
+  },
+  "football|Finland Ykkosliiga|FC KTP Kotka|FC Haka Valkeakoski|让球主胜|1x2|2026-08-28": {
+    "ev": 1.01,
+    "ts": 1787928201.908416
   },
   "football|Finland Ykkosliiga|JAPS|KaPa Kapylan Pallo|上半场正确比分0-2|correct_score_ht|2026-08-28": {
     "ev": 20.17,
@@ -2408,6 +2445,10 @@
     "ev": 17.02,
     "ts": 1787923619.1405282
   },
+  "football|France Ligue 3|FC Villefranche Beaujolais|FC Rouen|上半场正确比分0-2|correct_score_ht|2026-08-29": {
+    "ev": 1.56,
+    "ts": 1787927945.166813
+  },
   "football|France Ligue 3|FC Villefranche Beaujolais|FC Rouen|上半场正确比分2-0|correct_score_ht|2026-08-29": {
     "ev": 17.41,
     "ts": 1787923619.1428502
@@ -2576,6 +2617,10 @@
     "ev": 2.28,
     "ts": 1787918926.0148952
   },
+  "football|Germany 3rd Liga|TSG 1899 Hoffenheim II|Jahn Regensburg|上半场正确比分2-0|correct_score_ht|2026-08-29": {
+    "ev": 1.29,
+    "ts": 1787927945.170275
+  },
   "football|Germany 3rd Liga|Verl|Fortuna Cologne|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 8.79,
     "ts": 1787918594.815114
@@ -2587,6 +2632,10 @@
   "football|Germany Bundesliga Women|FC Koln (w)|TSG Hoffenheim (w)|让球客胜|1x2|2026-08-29": {
     "ev": 3.89,
     "ts": 1787851192.2115772
+  },
+  "football|Germany Bundesliga|Bayern Munich|VFB Stuttgart|上半场客胜|ht|2026-08-29": {
+    "ev": 2.93,
+    "ts": 1787928482.127677
   },
   "football|Germany Bundesliga|Bayern Munich|VFB Stuttgart|双重机会-和局/客|dc|2026-08-29": {
     "ev": 1.78,
@@ -3428,6 +3477,10 @@
     "ev": 1.15,
     "ts": 1787903995.909394
   },
+  "football|Mexico Liga MX|Club Tijuana de Caliente|Pumas UNAM|上半场客胜|ht|2026-08-29": {
+    "ev": 2.07,
+    "ts": 1787928288.42643
+  },
   "football|Mexico Liga MX|Club Tijuana de Caliente|Pumas UNAM|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 28.03,
     "ts": 1787887003.188185
@@ -3630,6 +3683,10 @@
     "ev": 2.99,
     "ts": 1787927665.9093492
   },
+  "football|Netherlands Eredivisie|SBV Excelsior|Sparta Rotterdam|正确比分3-1|correct_score|2026-08-29": {
+    "ev": 14.84,
+    "ts": 1787928565.1394932
+  },
   "football|Netherlands Eredivisie|SBV Excelsior|Sparta Rotterdam|让球客胜|1x2|2026-08-29": {
     "ev": 11.21,
     "ts": 1787927665.903548
@@ -3741,6 +3798,11 @@
   "football|Portugal Primeira Liga|Rio Ave FC|Sporting CP|让球主胜|1x2|2026-08-29": {
     "ev": 1.55,
     "ts": 1787895098.732737
+  },
+  "football|Portugal Primeira Liga|id:5500138|-|上半场客胜|ht|2026-08-29": {
+    "ev": 5.02,
+    "bb": 4.8,
+    "ts": 1787927944.702228
   },
   "football|Portugal Segunda Liga|Leiria|Tondela|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 25.89,
@@ -3937,6 +3999,10 @@
   "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|单双-双|oe|2026-08-28": {
     "ev": 1.21,
     "ts": 1787925323.1598358
+  },
+  "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|双边进球-是|btts|2026-08-28": {
+    "ev": 1.12,
+    "ts": 1787928482.1264489
   },
   "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|让球主胜|1x2|2026-08-28": {
     "ev": 1.01,
@@ -6062,14 +6128,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Portugal Primeira Liga|id:5500138|-|上半场客胜|ht|2026-08-29": {
-    "ev": 5.02,
-    "bb": 4.8,
-    "ts": 1787927944.702228
-  },
-  "football|England Championship League|id:5221393|-|上半场客胜|ht|2026-08-29": {
-    "ev": 3.28,
-    "bb": 4.85,
-    "ts": 1787927944.702291
+  "football|Taca de Portugal|id:5502828|-|主胜|1x2|2026-08-29": {
+    "ev": 6.85,
+    "bb": 1.97,
+    "ts": 1787928790.620339
   }
 }
