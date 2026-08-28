@@ -221,6 +221,10 @@
     "ev": 2.63,
     "ts": 1787868659.525126
   },
+  "football|Argentina Primera Nacional|Gimnasia Y Tiro de Salta|Chacarita Juniors|上半场主胜|ht|2026-08-29": {
+    "ev": 2.84,
+    "ts": 1787924489.504012
+  },
   "football|Argentina Primera Nacional|Gimnasia Y Tiro de Salta|Chacarita Juniors|上半场客胜|ht|2026-08-29": {
     "ev": 3.38,
     "ts": 1787879048.10213
@@ -228,6 +232,10 @@
   "football|Argentina Primera Nacional|Gimnasia Y Tiro de Salta|Chacarita Juniors|主胜|1x2|2026-08-29": {
     "ev": 2.74,
     "ts": 1787916359.143195
+  },
+  "football|Argentina Primera Nacional|Gimnasia Y Tiro de Salta|Chacarita Juniors|让球主胜|1x2|2026-08-29": {
+    "ev": 2.01,
+    "ts": 1787924489.5040598
   },
   "football|Argentina Primera Nacional|id:5474564|-|上半场客胜|ht|2026-08-29": {
     "ev": 5.15,
@@ -269,6 +277,10 @@
   "football|Austria 2. Liga|First Vienna FC|SKU Amstetten|主胜|1x2|2026-08-29": {
     "ev": 5.23,
     "ts": 1787923533.901685
+  },
+  "football|Austria 2. Liga|First Vienna FC|SKU Amstetten|半/全场-客/主|htft|2026-08-29": {
+    "ev": 1.22,
+    "ts": 1787924027.64702
   },
   "football|Austria 2. Liga|First Vienna FC|SKU Amstetten|让球主胜|1x2|2026-08-29": {
     "ev": 1.77,
@@ -1195,11 +1207,6 @@
     "bb": 2.02,
     "ts": 1787917111.655741
   },
-  "football|Egypt Premier League|id:5480971|-|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 3.29,
-    "bb": 2.21,
-    "ts": 1787898635.4554539
-  },
   "football|Egypt Premier League|伊蒂哈德亚历山大|瑟亚米卡|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 3.61,
     "bb": 2.15,
@@ -1604,6 +1611,10 @@
   "football|Finland Ykkosliiga|JAPS|KaPa Kapylan Pallo|主胜|1x2|2026-08-28": {
     "ev": 1.16,
     "ts": 1787919606.4074922
+  },
+  "football|Finland Ykkosliiga|JAPS|KaPa Kapylan Pallo|小球|1x2|2026-08-28": {
+    "ev": 4.3,
+    "ts": 1787924027.646542
   },
   "football|Finland Ykkosliiga|JAPS|KaPa Kapylan Pallo|总进球区间7+|total_goals_range|2026-08-28": {
     "ev": 1.01,
@@ -2028,6 +2039,47 @@
   "football|Germany Bundesliga|Bayern Munich|VFB Stuttgart|双重机会-和局/客|dc|2026-08-29": {
     "ev": 1.78,
     "ts": 1787882776.11408
+  },
+  "football|Germany Bundesliga|Bayern Munich|VFB Stuttgart|让球客胜|1x2|2026-08-29": {
+    "ev": 1.62,
+    "ts": 1787924299.965864
+  },
+  "football|Germany Bundesliga|FC Koln|TSG Hoffenheim|上半场正确比分2-0|correct_score_ht|2026-08-29": {
+    "ev": 8.6,
+    "ts": 1787923913.346317
+  },
+  "football|Germany Bundesliga|RB Leipzig|Borussia Monchengladbach|先进球neither|first_to_score|2026-08-29": {
+    "ev": 6.51,
+    "ts": 1787923913.3462772
+  },
+  "football|Germany Bundesliga|SV 07 Elversberg|Bayer Leverkusen|上半场客胜|ht|2026-08-29": {
+    "ev": 2.01,
+    "ts": 1787923913.343065
+  },
+  "football|Germany Bundesliga|SV 07 Elversberg|Bayer Leverkusen|上半场正确比分2-0|correct_score_ht|2026-08-29": {
+    "ev": 7.84,
+    "ts": 1787923913.34608
+  },
+  "football|Germany Bundesliga|Union Berlin|Eintracht Frankfurt|上半场正确比分0-2|correct_score_ht|2026-08-29": {
+    "ev": 3.95,
+    "ts": 1787923913.346237
+  },
+  "football|Germany Bundesliga|Union Berlin|Eintracht Frankfurt|上半场正确比分2-0|correct_score_ht|2026-08-29": {
+    "ev": 6.36,
+    "ts": 1787923913.346199
+  },
+  "football|Germany Bundesliga|Union Berlin|Eintracht Frankfurt|先进球neither|first_to_score|2026-08-29": {
+    "ev": 6.89,
+    "ts": 1787923913.3461602
+  },
+  "football|Germany Bundesliga|Union Berlin|Eintracht Frankfurt|正确比分3-1|correct_score|2026-08-29": {
+    "ev": 5.99,
+    "ts": 1787923913.346122
+  },
+  "football|Germany Bundesliga|id:5198486|-|上半场客胜|ht|2026-08-29": {
+    "ev": 2.01,
+    "bb": 2.14,
+    "ts": 1787923911.868893
   },
   "football|Guatemala Liga Nacional|Suchitepequez|CSD Coban Imperial|主胜|1x2|2026-08-29": {
     "ev": 1.54,
@@ -2574,6 +2626,10 @@
   "football|Japan J.League 2|Vanraure Hachinohe FC|Blaublitz Akita|和局|1x2|2026-08-29": {
     "ev": 1.11,
     "ts": 1787912895.623449
+  },
+  "football|Japan J.League 2|Vanraure Hachinohe FC|Blaublitz Akita|让球客胜|1x2|2026-08-29": {
+    "ev": 1.59,
+    "ts": 1787924489.504616
   },
   "football|Japan J.League 2|Vegalta Sendai|Tegevajaro Miyazaki|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.84,
@@ -3122,6 +3178,11 @@
     "ev": 13.13,
     "ts": 1787923619.1403131
   },
+  "football|Portugal Segunda Liga|id:5466552|-|和局|1x2|2026-08-29": {
+    "ev": 13.13,
+    "bb": 3.3,
+    "ts": 1787923911.868942
+  },
   "football|Qatar Stars League|Al Ahli Doha SC|Lusail City|上半场正确比分0-2|correct_score_ht|2026-08-28": {
     "ev": 25.27,
     "ts": 1787883483.008113
@@ -3437,6 +3498,10 @@
   "football|Slovenia 2nd Liga|ND Primorje|NK Krka|客胜|1x2|2026-08-29": {
     "ev": 31.67,
     "ts": 1787891089.634807
+  },
+  "football|Slovenia 2nd Liga|ND Slovan|ND Ilirija 1911|大球|1x2|2026-08-28": {
+    "ev": 1.0,
+    "ts": 1787924027.6489248
   },
   "football|Slovenia 2nd Liga|NK Tabor Sezana|NK Brezice 1919|大球|1x2|2026-08-29": {
     "ev": 2.66,
@@ -4059,6 +4124,14 @@
   "football|UAE Pro League|Al Wasl FC|Shabab Al Ahli|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 3.05,
     "ts": 1787914781.59463
+  },
+  "football|UAE Pro League|Al Wasl FC|Shabab Al Ahli|让球客胜|1x2|2026-08-29": {
+    "ev": 10.36,
+    "ts": 1787924299.964124
+  },
+  "football|UAE Pro League|United FC|Al Ittihad Kalba|上半场主胜|ht|2026-08-28": {
+    "ev": 1.11,
+    "ts": 1787924299.9670222
   },
   "football|UAE Pro League|United FC|Al Ittihad Kalba|上半场客胜|ht|2026-08-28": {
     "ev": 2.25,
@@ -5138,14 +5211,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Germany Bundesliga|id:5198486|-|上半场客胜|ht|2026-08-29": {
-    "ev": 2.01,
-    "bb": 2.14,
-    "ts": 1787923911.868893
-  },
-  "football|Portugal Segunda Liga|id:5466552|-|和局|1x2|2026-08-29": {
-    "ev": 13.13,
-    "bb": 3.3,
-    "ts": 1787923911.868942
+  "football|Egypt Premier League|id:5480971|-|上半场双重机会-主/客|ht_dc|2026-08-28": {
+    "ev": 5.83,
+    "bb": 2.33,
+    "ts": 1787924604.590295
   }
 }
