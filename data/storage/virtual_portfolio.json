@@ -1,5 +1,5 @@
 {
-  "balance": 4673.69,
+  "balance": 4642.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -4486,6 +4486,29 @@
       "commence_time": 1787943600,
       "created_at": "2026-08-28T18:35:02.761792+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_皮阿尼斯_瓦多_上半场主胜",
+      "sport": "football",
+      "league": "意大利丙级联赛",
+      "home_team": "皮阿尼斯",
+      "away_team": "瓦多",
+      "home_cn": "皮阿尼斯",
+      "away_cn": "瓦多",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 3.25,
+      "stake": 31,
+      "model_prob": 0.32,
+      "ev_pct": 4.01,
+      "pin_odds": 2.88,
+      "fair_price": 3.1248,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787943600,
+      "created_at": "2026-08-28T18:37:48.250404+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -8630,8 +8653,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-29",
-    "used": 1812.0,
-    "bets": 29
+    "used": 1843.0,
+    "bets": 30
   },
   "updated": null
 }

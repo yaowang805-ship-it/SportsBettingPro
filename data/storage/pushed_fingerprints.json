@@ -3328,6 +3328,10 @@
     "ev": 2.94,
     "ts": 1787856621.458196
   },
+  "football|Ireland First Division|Cork City FC|Wexford|上半场正确比分0-1|correct_score_ht|2026-08-29": {
+    "ev": 2.65,
+    "ts": 1787942103.2902982
+  },
   "football|Ireland First Division|Kerry FC|Treaty United|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.54,
     "ts": 1787915109.421591
@@ -3879,6 +3883,10 @@
     "ev": 1.31,
     "ts": 1787903995.908907
   },
+  "football|Italy Serie C|US Pianese|Vado FC|让球主胜|1x2|2026-08-29": {
+    "ev": 2.0,
+    "ts": 1787942103.289477
+  },
   "football|Italy Serie C|id:5390901|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 4.1,
     "bb": 1.97,
@@ -3892,9 +3900,17 @@
     "ev": 2.85,
     "ts": 1787903995.908767
   },
+  "football|Italy Serie C|vese 1919|USD Audace Cerignola|上半场客胜|ht|2026-08-29": {
+    "ev": 1.73,
+    "ts": 1787942103.289325
+  },
   "football|Italy Serie C|vese 1919|USD Audace Cerignola|小球|1x2|2026-08-29": {
     "ev": 1.02,
     "ts": 1787898271.397194
+  },
+  "football|Italy Serie C|vese 1919|USD Audace Cerignola|让球主胜|1x2|2026-08-29": {
+    "ev": 5.43,
+    "ts": 1787942103.289377
   },
   "football|Italy Serie C|卡萨拉诺|久加连奴 1928|上半场主胜|ht|2026-08-29": {
     "ev": 4.27,
@@ -4212,6 +4228,15 @@
   "football|Malta Premier League|Hibernians FC Paola|Zabbar Saint Patrick FC|让球主胜|1x2|2026-08-29": {
     "ev": 4.98,
     "ts": 1787933050.7956579
+  },
+  "football|Malta Premier League|Valletta FC|Marsaxlokk FC|主胜|1x2|2026-08-29": {
+    "ev": 5.31,
+    "ts": 1787942103.289529
+  },
+  "football|Malta Premier League|id:5414507|-|主胜|1x2|2026-08-29": {
+    "ev": 5.31,
+    "bb": 2.16,
+    "ts": 1787942102.779634
   },
   "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|上半场主胜|ht|2026-08-28": {
     "ev": 5.14,
@@ -5827,6 +5852,10 @@
   "football|Spain LaLiga 2|Tenerife CD|Sporting Gijon|半/全场-主/客|htft|2026-08-29": {
     "ev": 18.05,
     "ts": 1787885738.0669482
+  },
+  "football|Spain LaLiga 2|Tenerife CD|Sporting Gijon|半/全场-客/主|htft|2026-08-29": {
+    "ev": 22.69,
+    "ts": 1787942103.289115
   },
   "football|Spain LaLiga 2|Tenerife CD|Sporting Gijon|让球主胜|1x2|2026-08-29": {
     "ev": 3.99,
@@ -7782,9 +7811,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Malta Premier League|id:5414507|-|主胜|1x2|2026-08-29": {
-    "ev": 5.31,
-    "bb": 2.16,
-    "ts": 1787942102.779634
+  "football|Italy Serie C|id:5506455|-|上半场主胜|ht|2026-08-29": {
+    "ev": 4.01,
+    "bb": 3.25,
+    "ts": 1787942268.267066
   }
 }
