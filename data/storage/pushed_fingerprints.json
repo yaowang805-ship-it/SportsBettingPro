@@ -197,6 +197,10 @@
     "ev": 1.64,
     "ts": 1787848452.9479601
   },
+  "football|Austria 2. Liga|Kapfenberger SV|Blau Weiss Linz|双重机会-主/和局|dc|2026-08-29": {
+    "ev": 180.88,
+    "ts": 1787881348.356321
+  },
   "football|Austria 2. Liga|SKN ST Polten|Austria Salzburg|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 2.64,
     "ts": 1787848452.948128
@@ -209,9 +213,22 @@
     "ev": 9.45,
     "ts": 1787851996.2712471
   },
+  "football|Austria Bundesliga|Austria Lustenau|WSG Tirol|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 18.73,
+    "ts": 1787881348.3541949
+  },
+  "football|Austria Bundesliga|奥地利卢斯特瑙|WSG蒂罗尔|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 18.73,
+    "bb": 1.62,
+    "ts": 1787881347.6501372
+  },
   "football|Bahrain Premier League|Al Muharraq SC|Al Ahli SC Manama|单双-双|oe|2026-08-29": {
     "ev": 3.5,
     "ts": 1787856316.6495192
+  },
+  "football|Bahrain Premier League|Al Muharraq SC|Al Ahli SC Manama|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 6.88,
+    "ts": 1787881348.3562791
   },
   "football|Bahrain Premier League|Al Muharraq SC|Al Ahli SC Manama|和局|1x2|2026-08-29": {
     "ev": 10.59,
@@ -265,9 +282,21 @@
     "ev": 14.38,
     "ts": 1787760270.2266161
   },
+  "football|Belarus Premier League|FC Gomel|FC Belshina Bobruisk|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 6.2,
+    "ts": 1787881348.356044
+  },
+  "football|Belarus Premier League|FC Vitebsk|Naftan Novopolotsk|双重机会-和局/客|dc|2026-08-28": {
+    "ev": 1.57,
+    "ts": 1787881348.353823
+  },
   "football|Belgium Pro League|KRC Genk|S.K Beveren|上半场主胜|ht|2026-08-29": {
     "ev": 1.03,
     "ts": 1787863025.0971541
+  },
+  "football|Belgium Pro League|KRC Genk|S.K Beveren|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 115.19,
+    "ts": 1787881348.35508
   },
   "football|Belgium Pro League|亨克|贝弗伦|上半场主胜|ht|2026-08-29": {
     "ev": 4.85,
@@ -381,6 +410,11 @@
     "ev": 3.01,
     "bb": 6.1,
     "ts": 1787697897.538198
+  },
+  "football|Brazil Serie B|累西腓航海|毕尔巴鄂竞技MG|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.12,
+    "bb": 1.88,
+    "ts": 1787881347.6504772
   },
   "football|Bulgaria First Professional League|PFC Slavia Sofia|FK Septemvri Sofia|上半场客胜|ht|2026-08-29": {
     "ev": 2.95,
@@ -708,9 +742,18 @@
     "ev": 5.36,
     "ts": 1787877270.9053729
   },
+  "football|France Ligue 1|Lille OSC|Paris Saint Germain|上半场双重机会-主/和局|ht_dc|2026-08-29": {
+    "ev": 28.94,
+    "ts": 1787881348.356365
+  },
   "football|France Ligue 1|Lille OSC|Paris Saint Germain|客胜|1x2|2026-08-29": {
     "ev": 1.24,
     "ts": 1787856970.083793
+  },
+  "football|France Ligue 1|里尔|巴黎圣日耳曼|上半场双重机会-主/和局|ht_dc|2026-08-29": {
+    "ev": 28.94,
+    "bb": 1.6,
+    "ts": 1787881347.650302
   },
   "football|France Ligue 2|AS Nancy Lorraine|USL Dunkerque|单双-双|oe|2026-08-29": {
     "ev": 1.28,
@@ -727,6 +770,10 @@
   "football|France Ligue 2|Clermont Foot|FC Sochaux Montbeliard|单双-双|oe|2026-08-29": {
     "ev": 1.34,
     "ts": 1787853874.78053
+  },
+  "football|France Ligue 2|Montpellier HSC|US Boulogne|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 56.48,
+    "ts": 1787881348.3548002
   },
   "football|France Ligue 2|Montpellier HSC|US Boulogne|小球|1x2|2026-08-29": {
     "ev": 1.18,
@@ -801,6 +848,10 @@
     "ev": 3.89,
     "ts": 1787851192.2115772
   },
+  "football|Germany Bundesliga|Bayern Munich|VFB Stuttgart|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 1.78,
+    "ts": 1787882776.11408
+  },
   "football|Hungary NB I|Debreceni VSC|MTK Budapest|先进球neither|first_to_score|2026-08-29": {
     "ev": 13.06,
     "ts": 1787853874.7817569
@@ -846,22 +897,48 @@
     "ev": 1.87,
     "ts": 1787856970.0830002
   },
+  "football|Ireland First Division|University College Dublin|Finn Harps FC|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 268.73,
+    "ts": 1787881348.355204
+  },
   "football|Ireland Premier Division|Saint Patricks Athletic FC|Waterford FC|客胜|1x2|2026-08-29": {
     "ev": 2.58,
     "ts": 1787856621.458785
+  },
+  "football|Italy Serie A|AC米兰|威尼斯|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 35.15,
+    "bb": 1.54,
+    "ts": 1787881347.650337
+  },
+  "football|Italy Serie A|Milan|Venezia|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 35.15,
+    "ts": 1787881348.3550348
   },
   "football|Italy Serie A|Milan|Venezia|先进球neither|first_to_score|2026-08-29": {
     "ev": 2.66,
     "ts": 1787861516.6319292
   },
+  "football|Italy Serie A|Milan|Venezia|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 3.24,
+    "ts": 1787881348.354976
+  },
   "football|Italy Serie B|US Cremonese|Modena FC|上半场客胜|ht|2026-08-29": {
     "ev": 1.16,
     "ts": 1787855729.885847
+  },
+  "football|Italy Serie B|US Cremonese|Modena FC|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 32.91,
+    "ts": 1787881348.354893
   },
   "football|Italy Serie B|克雷莫纳|摩德纳|上半场客胜|ht|2026-08-29": {
     "ev": 4.57,
     "bb": 6.6,
     "ts": 1787855983.402108
+  },
+  "football|Italy Serie B|克雷莫纳|摩德纳|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 32.91,
+    "bb": 1.88,
+    "ts": 1787881347.650183
   },
   "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|上半场主胜|ht|2026-08-28": {
     "ev": 5.14,
@@ -933,6 +1010,10 @@
     "bb": 2.33,
     "ts": 1787828189.827708
   },
+  "football|Mexico Liga MX|Atlante FC|Club Leon|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 16.75,
+    "ts": 1787881348.355607
+  },
   "football|Mexico Liga MX|Atlante FC|Club Leon|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 7.98,
     "ts": 1787879651.2746408
@@ -948,6 +1029,11 @@
   "football|Mexico Liga MX|Necaxa|Cruz Azul|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 1.3,
     "ts": 1787879048.102699
+  },
+  "football|Mexico Liga MX|亚特兰特|莱昂|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 16.75,
+    "bb": 1.67,
+    "ts": 1787881347.650406
   },
   "football|Netherlands Eerste Divisie|Jong AZ Alkmaar|MVV Maastricht|上半场主胜|ht|2026-08-29": {
     "ev": 1.04,
@@ -977,6 +1063,10 @@
     "ev": 1.23,
     "ts": 1787847247.2368388
   },
+  "football|Qatar Stars League|Al Ahli Doha SC|Lusail City|双重机会-和局/客|dc|2026-08-28": {
+    "ev": 84.45,
+    "ts": 1787881348.353559
+  },
   "football|Qatar Stars League|Al Wakrah|Al Rayyan SC|单双-双|oe|2026-08-28": {
     "ev": 2.17,
     "ts": 1787761957.1612191
@@ -985,9 +1075,22 @@
     "ev": 4.01,
     "ts": 1787841047.731421
   },
+  "football|Qatar Stars League|Qatar SC|Al Sadd SC|上半场双重机会-主/和局|ht_dc|2026-08-29": {
+    "ev": 29.76,
+    "ts": 1787881348.3537102
+  },
   "football|Qatar Stars League|Qatar SC|Al Sadd SC|上半场客胜|ht|2026-08-29": {
     "ev": 1.22,
     "ts": 1787868341.602752
+  },
+  "football|Qatar Stars League|卡塔尔SC|阿尔萨德|上半场双重机会-主/和局|ht_dc|2026-08-29": {
+    "ev": 29.76,
+    "bb": 1.89,
+    "ts": 1787881347.6502268
+  },
+  "football|Romania Liga 1|FC Universitatea Cluj|FC Petrolul Ploiesti|上半场双重机会-和局/客|ht_dc|2026-08-29": {
+    "ev": 24.98,
+    "ts": 1787881348.353765
   },
   "football|Romania Liga 1|FC Universitatea Cluj|FC Petrolul Ploiesti|主胜|1x2|2026-08-29": {
     "ev": 1.66,
@@ -997,9 +1100,19 @@
     "ev": 1.18,
     "ts": 1787861516.629559
   },
+  "football|Romania Liga 1|克卢日大学|佩特罗鲁|上半场双重机会-和局/客|ht_dc|2026-08-29": {
+    "ev": 24.98,
+    "bb": 1.51,
+    "ts": 1787881347.650372
+  },
   "football|Russia First League|FC Neftekhimik Nizhnekamsk|FK Ufa|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.33,
     "ts": 1787848452.9476779
+  },
+  "football|Russia First League|下卡姆斯克石油|乌法|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.61,
+    "bb": 1.96,
+    "ts": 1787881347.650441
   },
   "football|Saudi Arabia Division 1|AL Jabalain FC|Al Jeel|上半场主胜|ht|2026-08-28": {
     "ev": 3.47,
@@ -1162,9 +1275,18 @@
     "bb": 4.12,
     "ts": 1787880945.041016
   },
+  "football|Switzerland Challenge League|FC Aarau|Neuchatel Xamax FC|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 36.25,
+    "ts": 1787881348.354239
+  },
   "football|Switzerland Challenge League|FC Winterthur|Stade Lausanne Ouchy|和局|1x2|2026-08-29": {
     "ev": 1.6,
     "ts": 1787880946.173982
+  },
+  "football|Switzerland Challenge League|阿劳|纳沙泰尔|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 36.25,
+    "bb": 1.8,
+    "ts": 1787881347.650265
   },
   "football|Turkey 1. Lig|Pendikspor|Bandirmaspor|先进球neither|first_to_score|2026-08-29": {
     "ev": 1.14,
@@ -2050,54 +2172,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Austria Bundesliga|奥地利卢斯特瑙|WSG蒂罗尔|双重机会-和局/客|dc|2026-08-29": {
-    "ev": 18.73,
-    "bb": 1.62,
-    "ts": 1787881347.6501372
-  },
-  "football|Italy Serie B|克雷莫纳|摩德纳|双重机会-和局/客|dc|2026-08-29": {
-    "ev": 32.91,
-    "bb": 1.88,
-    "ts": 1787881347.650183
-  },
-  "football|Qatar Stars League|卡塔尔SC|阿尔萨德|上半场双重机会-主/和局|ht_dc|2026-08-29": {
-    "ev": 29.76,
-    "bb": 1.89,
-    "ts": 1787881347.6502268
-  },
-  "football|Switzerland Challenge League|阿劳|纳沙泰尔|双重机会-和局/客|dc|2026-08-29": {
-    "ev": 36.25,
-    "bb": 1.8,
-    "ts": 1787881347.650265
-  },
-  "football|France Ligue 1|里尔|巴黎圣日耳曼|上半场双重机会-主/和局|ht_dc|2026-08-29": {
-    "ev": 28.94,
-    "bb": 1.6,
-    "ts": 1787881347.650302
-  },
-  "football|Italy Serie A|AC米兰|威尼斯|上半场双重机会-主/客|ht_dc|2026-08-29": {
-    "ev": 35.15,
-    "bb": 1.54,
-    "ts": 1787881347.650337
-  },
-  "football|Romania Liga 1|克卢日大学|佩特罗鲁|上半场双重机会-和局/客|ht_dc|2026-08-29": {
-    "ev": 24.98,
-    "bb": 1.51,
-    "ts": 1787881347.650372
-  },
-  "football|Mexico Liga MX|亚特兰特|莱昂|上半场双重机会-主/客|ht_dc|2026-08-29": {
-    "ev": 16.75,
-    "bb": 1.67,
-    "ts": 1787881347.650406
-  },
-  "football|Russia First League|下卡姆斯克石油|乌法|上半场双重机会-主/客|ht_dc|2026-08-29": {
-    "ev": 3.61,
-    "bb": 1.96,
-    "ts": 1787881347.650441
-  },
-  "football|Brazil Serie B|累西腓航海|毕尔巴鄂竞技MG|上半场双重机会-主/客|ht_dc|2026-08-29": {
-    "ev": 3.12,
-    "bb": 1.88,
-    "ts": 1787881347.6504772
+  "football|CONCACAF Central American Cup|拉科鲁尼亚米斯科|阿利亚|客胜|1x2|2026-08-28": {
+    "ev": 5.64,
+    "bb": 3.85,
+    "ts": 1787883209.823296
   }
 }
