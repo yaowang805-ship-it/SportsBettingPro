@@ -1,5 +1,5 @@
 {
-  "balance": 8846.69,
+  "balance": 8778.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3289,6 +3289,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787943600,
       "created_at": "2026-08-28T09:02:41.153934+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_弗里德克_奥洛穆茨二队_客胜",
+      "sport": "football",
+      "league": "捷克丙级联赛MSFL组",
+      "home_team": "弗里德克",
+      "away_team": "奥洛穆茨二队",
+      "home_cn": "弗里德克",
+      "away_cn": "奥洛穆茨二队",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.0,
+      "stake": 68,
+      "model_prob": 0.534,
+      "ev_pct": 6.8,
+      "pin_odds": 1.7634,
+      "fair_price": 1.8726,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787931000,
+      "created_at": "2026-08-28T09:33:27.902448+00:00",
       "track_only": false
     }
   ],
@@ -7164,8 +7187,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 4998.0,
-    "bets": 48
+    "used": 5066.0,
+    "bets": 49
   },
   "updated": null
 }
