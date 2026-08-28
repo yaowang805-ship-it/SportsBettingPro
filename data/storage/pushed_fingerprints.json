@@ -3286,6 +3286,10 @@
     "ev": 12.63,
     "ts": 1787894469.965135
   },
+  "football|Ireland Premier Division|Bohemians Dublin FC|Sligo Rovers FC|让球主胜|1x2|2026-08-29": {
+    "ev": 2.3,
+    "ts": 1787939208.6613288
+  },
   "football|Ireland Premier Division|Bohemians Dublin FC|Sligo Rovers FC|让球客胜|1x2|2026-08-29": {
     "ev": 3.93,
     "ts": 1787894469.965301
@@ -3584,6 +3588,10 @@
     "ev": 1.47,
     "ts": 1787917021.545366
   },
+  "football|Italy Serie B|US Cremonese|Modena FC|双重机会-主/和局|dc|2026-08-29": {
+    "ev": 1.77,
+    "ts": 1787939208.660613
+  },
   "football|Italy Serie B|US Cremonese|Modena FC|双重机会-和局/客|dc|2026-08-29": {
     "ev": 32.91,
     "ts": 1787881348.354893
@@ -3595,6 +3603,10 @@
   "football|Italy Serie B|US Cremonese|Modena FC|小球|1x2|2026-08-29": {
     "ev": 5.92,
     "ts": 1787915705.264459
+  },
+  "football|Italy Serie B|US Cremonese|Modena FC|让球主胜|1x2|2026-08-29": {
+    "ev": 4.66,
+    "ts": 1787939208.660514
   },
   "football|Italy Serie B|Virtus Entella|Cesena FC|上半场客胜|ht|2026-08-30": {
     "ev": 4.49,
@@ -4428,6 +4440,11 @@
   "football|Peru Liga 1|Comerciantes Unidos|FC Cajamarca|让球客胜|1x2|2026-08-29": {
     "ev": 3.4,
     "ts": 1787937069.9415512
+  },
+  "football|Peru Liga 1|id:5413586|-|上半场主胜|ht|2026-08-29": {
+    "ev": 4.57,
+    "bb": 2.23,
+    "ts": 1787939208.0139499
   },
   "football|Poland Ekstraklasa|LKP Motor Lublin|GKS Piast Gliwice|让球客胜|1x2|2026-08-29": {
     "ev": 12.29,
@@ -5324,6 +5341,10 @@
     "ev": 31.67,
     "bb": 3.42,
     "ts": 1787891089.015685
+  },
+  "football|Slovenia PrvaLiga|NK Aluminij|FC Koper|上半场正确比分0-2|correct_score_ht|2026-08-29": {
+    "ev": 1.97,
+    "ts": 1787939208.665361
   },
   "football|Slovenia PrvaLiga|NK Aluminij|FC Koper|上半场正确比分2-0|correct_score_ht|2026-08-29": {
     "ev": 18.83,
@@ -7358,9 +7379,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Peru Liga 1|id:5413586|-|上半场主胜|ht|2026-08-29": {
-    "ev": 4.57,
-    "bb": 2.23,
-    "ts": 1787939208.0139499
+  "football|Ukraine Persha Liga|id:5489941|-|客胜|1x2|2026-08-29": {
+    "ev": 8.83,
+    "bb": 3.27,
+    "ts": 1787939294.77791
   }
 }
