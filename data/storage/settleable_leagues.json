@@ -271,7 +271,7 @@
       "success_rate": 0.0
     },
     "英格兰联赛杯": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -706,7 +706,7 @@
       "success_rate": 0.0
     },
     "英格兰职业发展联赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -806,7 +806,7 @@
       "success_rate": 0.0
     },
     "爱沙尼亚丙级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -971,7 +971,7 @@
       "success_rate": 0.0
     },
     "苏格兰挑战杯": {
-      "attempts": 1,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -996,12 +996,17 @@
       "success_rate": 0.0
     },
     "南非超级联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "科威特超级联赛": {
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
     }
   },
-  "updated": "2026-08-28T06:45:02.414473+00:00",
+  "updated": "2026-08-28T09:36:56.125561+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
