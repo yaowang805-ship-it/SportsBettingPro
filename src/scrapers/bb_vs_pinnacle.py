@@ -1130,10 +1130,13 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         # --- 上半场 (HT) 对比：从 DOM odds_ht 读，与 Pinnacle period=1 对比 ---
         bb_ht = bb.get("odds_ht", {})
         if bb_ht and bb_ht.get("ml"):
+            # V5.11: period 名称按运动区分 — 足球/篮球/美式足球是"半场", 网球/排球是"第1盘", 冰球是"第1节"
+            _ht_period = {"football": "上半场", "basketball": "上半场", "american_football": "上半场",
+                          "tennis": "第1盘", "volleyball": "第1盘", "ice_hockey": "第1节"}.get(sport, "上半场")
             ht_labels = {
-                "ml": ["上半场主胜", "上半场和局", "上半场客胜"] if sport == "football" else ["上半场主胜", "上半场客胜"],
-                "hc_home": "上半场让球主胜", "hc_away": "上半场让球客胜",
-                "over": "上半场大球", "under": "上半场小球",
+                "ml": [f"{_ht_period}主胜", f"{_ht_period}和局", f"{_ht_period}客胜"] if sport == "football" else [f"{_ht_period}主胜", f"{_ht_period}客胜"],
+                "hc_home": f"{_ht_period}让球主胜", "hc_away": f"{_ht_period}让球客胜",
+                "over": f"{_ht_period}大球", "under": f"{_ht_period}小球",
             }
             # HT 独赢
             pin_ht_ml = get_pin_ml_sorted_from_source(pin.get("ht_moneyline", []), sport)
