@@ -1,5 +1,5 @@
 {
-  "balance": 8233.69,
+  "balance": 8181.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3105,6 +3105,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787925600,
       "created_at": "2026-08-28T13:29:26.669694+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_艾禾斯堡_勒沃库森_上半场客胜",
+      "sport": "football",
+      "league": "德国甲级联赛",
+      "home_team": "艾禾斯堡",
+      "away_team": "勒沃库森",
+      "home_cn": "艾禾斯堡",
+      "away_cn": "勒沃库森",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 2.14,
+      "stake": 35,
+      "model_prob": 0.4767,
+      "ev_pct": 2.01,
+      "pin_odds": 2.05,
+      "fair_price": 2.0978,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788010200,
+      "created_at": "2026-08-28T13:31:51.851840+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_科英布拉大学_路西塔尼亚_和局",
+      "sport": "football",
+      "league": "葡萄牙甲级联赛",
+      "home_team": "科英布拉大学",
+      "away_team": "路西塔尼亚",
+      "home_cn": "科英布拉大学",
+      "away_cn": "路西塔尼亚",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.3,
+      "stake": 17,
+      "model_prob": 0.3428,
+      "ev_pct": 13.13,
+      "pin_odds": 2.77,
+      "fair_price": 2.917,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788008400,
+      "created_at": "2026-08-28T13:31:51.851896+00:00",
       "track_only": false
     }
   ],
@@ -7250,8 +7296,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 5996.0,
-    "bets": 69
+    "used": 6048.0,
+    "bets": 71
   },
   "updated": null
 }
