@@ -1,5 +1,5 @@
 {
-  "balance": 7954.69,
+  "balance": 7663.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3312,6 +3312,75 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787925600,
       "created_at": "2026-08-28T13:59:45.624742+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_伯恩茅斯_埃弗顿_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "英格兰超级联赛",
+      "home_team": "伯恩茅斯",
+      "away_team": "埃弗顿",
+      "home_cn": "伯恩茅斯",
+      "away_cn": "埃弗顿",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.74,
+      "stake": 148,
+      "model_prob": 0.5871,
+      "ev_pct": 2.15,
+      "pin_odds": 1.6329,
+      "fair_price": 1.7034,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788012000,
+      "created_at": "2026-08-28T14:09:32.787343+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_图拉兵工厂_乌拉尔_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "俄罗斯甲级联赛",
+      "home_team": "图拉兵工厂",
+      "away_team": "乌拉尔",
+      "home_cn": "图拉兵工厂",
+      "away_cn": "乌拉尔",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.88,
+      "stake": 121,
+      "model_prob": 0.5543,
+      "ev_pct": 4.2,
+      "pin_odds": 1.6993,
+      "fair_price": 1.8042,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788012000,
+      "created_at": "2026-08-28T14:09:32.787404+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_科英布拉大学_路西塔尼亚_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "葡萄牙甲级联赛",
+      "home_team": "科英布拉大学",
+      "away_team": "路西塔尼亚",
+      "home_cn": "科英布拉大学",
+      "away_cn": "路西塔尼亚",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.97,
+      "stake": 22,
+      "model_prob": 0.5266,
+      "ev_pct": 3.75,
+      "pin_odds": 1.8,
+      "fair_price": 1.8988,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788008400,
+      "created_at": "2026-08-28T14:09:32.787447+00:00",
       "track_only": false
     }
   ],
@@ -7457,8 +7526,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 6275.0,
-    "bets": 78
+    "used": 6566.0,
+    "bets": 81
   },
   "updated": null
 }

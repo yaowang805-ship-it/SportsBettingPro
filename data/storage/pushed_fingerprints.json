@@ -1182,6 +1182,10 @@
     "ev": 1.51,
     "ts": 1787863686.0607228
   },
+  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|大球|1x2|2026-08-28": {
+    "ev": 1.22,
+    "ts": 1787925586.2593431
+  },
   "football|Egypt Premier League|Enppi Club|Wadi Degla SC|让球主胜|1x2|2026-08-28": {
     "ev": 16.38,
     "ts": 1787869842.484436
@@ -5362,6 +5366,10 @@
     "ev": 2.69,
     "ts": 1787920829.749505
   },
+  "football|Uzbekistan Pro League|Gazalkent|Fardu Ferghana|双重机会-和局/客|dc|2026-08-28": {
+    "ev": 8.63,
+    "ts": 1787925586.2596521
+  },
   "football|Uzbekistan Pro League|Gazalkent|Fardu Ferghana|客胜|1x2|2026-08-28": {
     "ev": 5.58,
     "ts": 1787923533.900906
@@ -5373,6 +5381,16 @@
   "football|Uzbekistan Pro League|Gazalkent|Fardu Ferghana|让球主胜|1x2|2026-08-28": {
     "ev": 3.95,
     "ts": 1787907196.081779
+  },
+  "football|Uzbekistan Pro League|id:5396774|-|双重机会-和局/客|dc|2026-08-28": {
+    "ev": 8.63,
+    "bb": 1.85,
+    "ts": 1787925585.637892
+  },
+  "football|Uzbekistan Pro League|id:5396774|-|客胜|1x2|2026-08-28": {
+    "ev": 9.25,
+    "bb": 3.17,
+    "ts": 1787925585.6378539
   },
   "football|Wales Cymru Championship North|Newtown AFC|Llanuwchllyn|客胜|1x2|2026-08-29": {
     "ev": 11.4,
@@ -5421,14 +5439,24 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Uzbekistan Pro League|id:5396774|-|客胜|1x2|2026-08-28": {
-    "ev": 9.25,
-    "bb": 3.17,
-    "ts": 1787925585.6378539
+  "football|England Premier League|id:5354731|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 2.15,
+    "bb": 1.74,
+    "ts": 1787926172.799658
   },
-  "football|Uzbekistan Pro League|id:5396774|-|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 8.63,
-    "bb": 1.85,
-    "ts": 1787925585.637892
+  "football|Russia First League|id:5358240|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 4.2,
+    "bb": 1.88,
+    "ts": 1787926172.799723
+  },
+  "football|Portugal Segunda Liga|id:5331418|-|和局|1x2|2026-08-29": {
+    "ev": 13.13,
+    "bb": 3.3,
+    "ts": 1787926172.799775
+  },
+  "football|Portugal Segunda Liga|id:5331418|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 3.75,
+    "bb": 1.97,
+    "ts": 1787926172.799825
   }
 }
