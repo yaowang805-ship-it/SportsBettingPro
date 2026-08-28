@@ -683,8 +683,9 @@ def extract_match_odds(record, sport_key, platform="BB"):
 
     # ─── FT ──────────────────────────────────────────────
 
-    def _extract_ml(period):
-        mty_code = mt.get("ml")
+    def _extract_ml(period, mty_code=None):
+        if mty_code is None:
+            mty_code = mt.get("ml")
         if not mty_code:
             return None
         group = _find_market_group(record, mty_code, period)
