@@ -289,7 +289,8 @@ def _fetch_close_odds(entries):
                 close_data = _extract_market_odds(best_pin, sub_market, designation,
                                                   sport=e.get("sport", "football"),
                                                   line=e.get("line", ""))
-                if close_data is None and sub_market in ("correct_score", "winning_margin", "total_goals_range", "first_to_score"):
+                if close_data is None and sub_market in ("correct_score", "correct_score_ht", "exact_goals_ht",
+                                                          "winning_margin", "total_goals_range", "first_to_score"):
                     # V5.9: 特殊盘口在 get_league_special_markets (matchup 里没有)
                     close_data = _extract_special_market_close(pin_id, e, special_cache)
                 if close_data is None:
@@ -596,7 +597,8 @@ def _extract_special_market_close(league_id, entry, special_cache):
     Returns: (close_pin_odds, close_fair_price, total_implied) 或 None。
     """
     from src.scrapers.pinnacle_markets import get_league_special_markets
-    from src.scrapers.pinnacle_opportunities import _norm_scoreline, _norm_margin_side, _norm_special_name
+    from src.scrapers.pinnacle_opportunities import (_norm_scoreline, _norm_margin_side, _norm_special_name,
+                                                     _norm_correct_score_ht, _norm_exact_goals)
 
     lid = str(league_id)
     if lid not in special_cache:
@@ -643,13 +645,20 @@ def _extract_special_market_close(league_id, entry, special_cache):
         return None
 
     # 从 designation 剥离中文 label 前缀 (如 "正确比分1-1" → "1-1")
-    label = {"correct_score": "正确比分", "winning_margin": "净胜球",
-             "total_goals_range": "总进球区间", "first_to_score": "先进球"}.get(sub, "")
+    label = {"correct_score": "正确比分", "correct_score_ht": "上半场正确比分",
+             "winning_margin": "净胜球", "total_goals_range": "总进球区间",
+             "first_to_score": "先进球", "exact_goals_ht": "上半场精确进球"}.get(sub, "")
     name_part = designation[len(label):] if label and designation.startswith(label) else designation
 
     if sub == "correct_score":
         norm_price = {_norm_scoreline(p["name"]): p["odds"] for p in prices}
         target = _norm_scoreline(name_part)
+    elif sub == "correct_score_ht":
+        norm_price = _norm_correct_score_ht(prices)
+        target = name_part  # designation 存归一化后比分("1-0"/"others")
+    elif sub == "exact_goals_ht":
+        norm_price = _norm_exact_goals(prices)
+        target = name_part  # designation 存 "0"/"1"/"2"/"others"
     elif sub == "winning_margin":
         norm_price = {_norm_margin_side(p["name"], entry.get("home_pin", ""), entry.get("away_pin", "")): p["odds"] for p in prices}
         target = name_part  # designation 已存 home_byN/away_byN
