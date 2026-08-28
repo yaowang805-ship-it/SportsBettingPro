@@ -877,6 +877,10 @@
     "ev": 1.91,
     "ts": 1787891089.634401
   },
+  "football|Egypt Second Division A|Al Nasr Cairo|Haras El Hodood|让球客胜|1x2|2026-08-28": {
+    "ev": 7.05,
+    "ts": 1787892880.2997792
+  },
   "football|Egypt Second Division A|Telecom Egypt SC|Ismaily SC|和局|1x2|2026-08-28": {
     "ev": 1.8,
     "ts": 1787875898.3080928
@@ -884,6 +888,11 @@
   "football|Egypt Second Division A|Telecom Egypt SC|Ismaily SC|大球|1x2|2026-08-28": {
     "ev": 2.0,
     "ts": 1787891870.318173
+  },
+  "football|Egypt Second Division A|阿尔纳赛尔|哈伊赫多|客胜|1x2|2026-08-28": {
+    "ev": 8.74,
+    "bb": 2.23,
+    "ts": 1787892879.770259
   },
   "football|England Championship League|Wrexham AFC|Birmingham City|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 13.99,
@@ -1053,6 +1062,10 @@
   "football|France Ligue 2|Clermont Foot|FC Sochaux Montbeliard|和局|1x2|2026-08-29": {
     "ev": 1.03,
     "ts": 1787890530.980978
+  },
+  "football|France Ligue 2|Clermont Foot|FC Sochaux Montbeliard|让球客胜|1x2|2026-08-29": {
+    "ev": 1.45,
+    "ts": 1787892880.301265
   },
   "football|France Ligue 2|Montpellier HSC|US Boulogne|双重机会-和局/客|dc|2026-08-29": {
     "ev": 56.48,
@@ -1309,6 +1322,10 @@
     "bb": 1.54,
     "ts": 1787881347.650337
   },
+  "football|Italy Serie A|Milan|Venezia|上半场主胜|ht|2026-08-29": {
+    "ev": 1.68,
+    "ts": 1787892880.301648
+  },
   "football|Italy Serie A|Milan|Venezia|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 35.15,
     "ts": 1787881348.3550348
@@ -1324,6 +1341,10 @@
   "football|Italy Serie A|Milan|Venezia|双重机会-和局/客|dc|2026-08-29": {
     "ev": 3.24,
     "ts": 1787881348.354976
+  },
+  "football|Italy Serie A|Milan|Venezia|让球主胜|1x2|2026-08-29": {
+    "ev": 1.93,
+    "ts": 1787892880.301687
   },
   "football|Italy Serie B|US Cremonese|Modena FC|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.84,
@@ -1403,6 +1424,10 @@
   "football|Mexico Liga De Expansion MX|CSD Dorados Sinaloa|Atletico Morelia|双边进球-是|btts|2026-08-29": {
     "ev": 3.29,
     "ts": 1787879651.273557
+  },
+  "football|Mexico Liga De Expansion MX|CSD Dorados Sinaloa|Atletico Morelia|让球主胜|1x2|2026-08-29": {
+    "ev": 1.6,
+    "ts": 1787892880.302463
   },
   "football|Mexico Liga De Expansion MX|Cancun FC|Club Atletico La Paz|上半场客胜|ht|2026-08-28": {
     "ev": 1.18,
@@ -1563,6 +1588,14 @@
   "football|Netherlands Eerste Divisie|TOP Oss|Jong FC Utrecht|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 6.36,
     "ts": 1787883483.009699
+  },
+  "football|Netherlands Eerste Divisie|TOP Oss|Jong FC Utrecht|主胜|1x2|2026-08-29": {
+    "ev": 5.46,
+    "ts": 1787892880.3028748
+  },
+  "football|Netherlands Eerste Divisie|TOP Oss|Jong FC Utrecht|让球主胜|1x2|2026-08-29": {
+    "ev": 3.45,
+    "ts": 1787892880.302909
   },
   "football|Netherlands Eredivisie|FC Groningen|Fortuna Sittard|上半场正确比分1-2|correct_score_ht|2026-08-29": {
     "ev": 3.35,
@@ -1798,6 +1831,10 @@
   "football|Scotland Championship|Dunfermline Athletic FC|Raith Rovers FC|上半场正确比分others|correct_score_ht|2026-08-29": {
     "ev": 39.09,
     "ts": 1787883483.010518
+  },
+  "football|Slovakia 2. Liga|FK Pohronie|1. FC Tatran Presov|客胜|1x2|2026-08-29": {
+    "ev": 1.07,
+    "ts": 1787892880.3007371
   },
   "football|Slovenia 2nd Liga|ND Primorje|NK Krka|双重机会-和局/客|dc|2026-08-29": {
     "ev": 19.65,
@@ -2095,6 +2132,10 @@
   "football|Turkey 1. Lig|Pendikspor|Bandirmaspor|半/全场-客/主|htft|2026-08-29": {
     "ev": 6.98,
     "ts": 1787885738.065838
+  },
+  "football|Turkey 1. Lig|Pendikspor|Bandirmaspor|双边进球-是|btts|2026-08-29": {
+    "ev": 2.64,
+    "ts": 1787892880.3001258
   },
   "football|Turkey Super Lig|Genclerbirligi SK|Erzurumspor FK|上半场客胜|ht|2026-08-29": {
     "ev": 1.92,
@@ -3038,9 +3079,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Egypt Second Division A|阿尔纳赛尔|哈伊赫多|客胜|1x2|2026-08-28": {
-    "ev": 8.74,
-    "bb": 2.23,
-    "ts": 1787892879.770259
+  "football|Sweden Women Damallsvenskan|IK乌普撒拉 (女)|埃斯基尔图纳 (女)|双重机会-主/和局|dc|2026-08-29": {
+    "ev": 15.51,
+    "bb": 4.99,
+    "ts": 1787894469.271914
   }
 }
