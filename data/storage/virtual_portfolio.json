@@ -1,5 +1,5 @@
 {
-  "balance": 6968.69,
+  "balance": 6891.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3565,6 +3565,75 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787943600,
       "created_at": "2026-08-28T14:53:10.607785+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_戈伊亚斯_圣贝尔纳多_上半场客胜",
+      "sport": "football",
+      "league": "巴西乙级联赛",
+      "home_team": "戈伊亚斯",
+      "away_team": "圣贝尔纳多",
+      "home_cn": "戈伊亚斯",
+      "away_cn": "圣贝尔纳多",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 5.85,
+      "stake": 28,
+      "model_prob": 0.1802,
+      "ev_pct": 5.43,
+      "pin_odds": 5.04,
+      "fair_price": 5.5489,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787956200,
+      "created_at": "2026-08-28T15:15:07.656869+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_莱万特_皇家贝蒂斯_上半场双重机会-主/客",
+      "sport": "football",
+      "league": "西班牙甲级联赛",
+      "home_team": "莱万特",
+      "away_team": "皇家贝蒂斯",
+      "home_cn": "莱万特",
+      "away_cn": "皇家贝蒂斯",
+      "market": "1x2",
+      "market_type": "上半场双重机会-主/客",
+      "sub_market": "ht_dc",
+      "line": "",
+      "odds": 1.78,
+      "stake": 25,
+      "model_prob": 0.5765,
+      "ev_pct": 2.61,
+      "pin_odds": 1.6623,
+      "fair_price": 1.7347,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788015600,
+      "created_at": "2026-08-28T15:15:07.656923+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_莱万特_皇家贝蒂斯_上半场主胜",
+      "sport": "football",
+      "league": "西班牙甲级联赛",
+      "home_team": "莱万特",
+      "away_team": "皇家贝蒂斯",
+      "home_cn": "莱万特",
+      "away_cn": "皇家贝蒂斯",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.44,
+      "stake": 24,
+      "model_prob": 0.2327,
+      "ev_pct": 3.33,
+      "pin_odds": 4.04,
+      "fair_price": 4.2969,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788015600,
+      "created_at": "2026-08-28T15:15:07.656960+00:00",
       "track_only": false
     }
   ],
@@ -7710,8 +7779,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 7261.0,
-    "bets": 89
+    "used": 7338.0,
+    "bets": 92
   },
   "updated": null
 }
