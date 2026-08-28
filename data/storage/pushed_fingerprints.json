@@ -530,6 +530,10 @@
     "ev": 1.03,
     "ts": 1787863025.0971541
   },
+  "football|Belgium Pro League|KRC Genk|S.K Beveren|主胜|1x2|2026-08-29": {
+    "ev": 3.02,
+    "ts": 1787930640.959116
+  },
   "football|Belgium Pro League|KRC Genk|S.K Beveren|半/全场-和局/客|htft|2026-08-29": {
     "ev": 1.96,
     "ts": 1787927947.289193
@@ -542,6 +546,10 @@
     "ev": 2.35,
     "ts": 1787903573.635148
   },
+  "football|Belgium Pro League|KRC Genk|S.K Beveren|让球主胜|1x2|2026-08-29": {
+    "ev": 2.92,
+    "ts": 1787930640.959241
+  },
   "football|Belgium Pro League|Raal La Louviere|KV Mechelen|半/全场-主/和局|htft|2026-08-29": {
     "ev": 2.61,
     "ts": 1787926455.762327
@@ -549,6 +557,11 @@
   "football|Belgium Pro League|Raal La Louviere|KV Mechelen|半/全场-客/主|htft|2026-08-29": {
     "ev": 17.27,
     "ts": 1787926738.897048
+  },
+  "football|Belgium Pro League|id:5130012|-|上半场主胜|ht|2026-08-29": {
+    "ev": 2.8,
+    "bb": 2.08,
+    "ts": 1787930640.411198
   },
   "football|Belgium Pro League|亨克|贝弗伦|上半场主胜|ht|2026-08-29": {
     "ev": 4.85,
@@ -992,6 +1005,10 @@
   "football|Czech Republic MSFL|Fotbal Frydek Mistek|SK Sigma Olomouc B|小球|1x2|2026-08-28": {
     "ev": 1.09,
     "ts": 1787918407.526062
+  },
+  "football|Czech Republic MSFL|Fotbal Frydek Mistek|SK Sigma Olomouc B|让球主胜|1x2|2026-08-28": {
+    "ev": 1.55,
+    "ts": 1787930640.960789
   },
   "football|Czech Republic MSFL|Fotbal Frydek Mistek|SK Sigma Olomouc B|让球客胜|1x2|2026-08-28": {
     "ev": 1.6,
@@ -6327,9 +6344,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Belgium Pro League|id:5130012|-|上半场主胜|ht|2026-08-29": {
-    "ev": 2.8,
-    "bb": 2.08,
-    "ts": 1787930640.411198
+  "football|Germany 2. Bundesliga|id:5315209|-|上半场客胜|ht|2026-08-29": {
+    "ev": 2.3,
+    "bb": 3.09,
+    "ts": 1787930882.10189
   }
 }
