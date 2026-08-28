@@ -111,6 +111,7 @@ MARKET_TYPES = {
     },
     3: {  # 篮球 (3004=独赢, 3003=大小, 3002=让分)
         "ml": 3004, "ou": 3003, "hc": 3002,
+        "ht_ml": 3020,  # V5.11: 篮球半场独赢是独立 mty(3020), 全场 ml=3004 在 pe=3003 下不存在
     },
     5: {  # 网球 (5001=独赢, 5004=让盘, 5003=大小/总局数, 5012=下一盘)
         "ml": 5001, "hc": 5004, "ou": 5003,
@@ -161,10 +162,10 @@ MARKET_LABELS = {
 # 各运动的 period 编码
 SPORT_PERIODS = {
     1: {"ft": 1001, "ht": 1002, "2h": 1003},
-    3: {"ft": 3001},
+    3: {"ft": 3001, "ht": 3003},  # 篮球半场 pe=3003 (1st Half)
     5: {"ft": 5001, "ht": 5002, "2h": 5003},
     7: {"ft": 7001, "f5": 7004},  # F5 = First 5 Innings (Pinnacle period 3)
-    6: {"ft": 6001},
+    6: {"ft": 6001, "ht": 6003},  # 美式足球半场 pe=6003 (1st Half)
     15: {"ft": 15001},
     19: {"ft": 19001},
     18: {"ft": 18001},
@@ -1228,7 +1229,7 @@ def extract_match_odds(record, sport_key, platform="BB"):
     result["odds_ft"] = ft_dict
 
     # HT
-    ht_ml = _extract_ml(ht_period) if ht_period else None
+    ht_ml = _extract_ml(ht_period, mt.get("ht_ml")) if ht_period else None
     ht_hc = _extract_handicap(ht_period) if ht_period else None
     ht_ou = _extract_ou(ht_period) if ht_period else None
 
