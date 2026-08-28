@@ -1,5 +1,5 @@
 {
-  "balance": 8032.69,
+  "balance": 7954.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3266,6 +3266,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787943600,
       "created_at": "2026-08-28T13:55:22.428974+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_加扎尔肯特_法杜尔费尔加纳_客胜",
+      "sport": "football",
+      "league": "乌兹别克斯坦甲级联赛",
+      "home_team": "加扎尔肯特",
+      "away_team": "法杜尔费尔加纳",
+      "home_cn": "加扎尔肯特",
+      "away_cn": "法杜尔费尔加纳",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.17,
+      "stake": 43,
+      "model_prob": 0.3446,
+      "ev_pct": 9.25,
+      "pin_odds": 2.62,
+      "fair_price": 2.9016,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787925600,
+      "created_at": "2026-08-28T13:59:45.624681+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_加扎尔肯特_法杜尔费尔加纳_双重机会-和局/客",
+      "sport": "football",
+      "league": "乌兹别克斯坦甲级联赛",
+      "home_team": "加扎尔肯特",
+      "away_team": "法杜尔费尔加纳",
+      "home_cn": "加扎尔肯特",
+      "away_cn": "法杜尔费尔加纳",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 1.85,
+      "stake": 35,
+      "model_prob": 0.5872,
+      "ev_pct": 8.63,
+      "pin_odds": 0,
+      "fair_price": 1.7031,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787925600,
+      "created_at": "2026-08-28T13:59:45.624742+00:00",
       "track_only": false
     }
   ],
@@ -7411,8 +7457,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-28",
-    "used": 6197.0,
-    "bets": 76
+    "used": 6275.0,
+    "bets": 78
   },
   "updated": null
 }
