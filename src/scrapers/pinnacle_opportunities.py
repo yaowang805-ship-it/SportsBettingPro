@@ -97,6 +97,40 @@ HTFT_KEYS = [
 ]
 
 
+def map_htft_designations(pin_prices, home, away):
+    """把 Pin HTFT 的 designation("{主队} - {主队}"/"Draw - {客队}") 映射成 HTFT_KEYS 格式。
+
+    Pin 的 "Half-Time/Full-Time" 9 结果 participant name 是 "{半场结果} - {全场结果}",
+    结果 ∈ {home, Draw, away}。add_htft_opportunities 只认 home/home / home/draw / ...
+    所以这里按主客队名把 "Gillingham - Draw" → "home/draw"。
+    """
+    home_l = (home or "").lower().strip()
+    away_l = (away or "").lower().strip()
+
+    def _map_side(s):
+        s = s.lower().strip()
+        if home_l and s == home_l:
+            return "home"
+        if away_l and s == away_l:
+            return "away"
+        if s == "draw":
+            return "draw"
+        return s.replace(" ", "")
+
+    out = []
+    for p in pin_prices:
+        des = (p.get("designation") or "").strip()
+        if " - " in des:
+            half, full = des.split(" - ", 1)
+            des = f"{_map_side(half)}/{_map_side(full)}"
+        else:
+            des = _map_side(des)
+        p2 = dict(p)
+        p2["designation"] = des
+        out.append(p2)
+    return out
+
+
 def add_htft_opportunities(entry, bb_htft_dict, pin_prices_list):
     """计算并添加 HT/FT (半全场) 机会到 entry。
 
