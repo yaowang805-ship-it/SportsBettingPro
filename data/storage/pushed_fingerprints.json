@@ -1431,6 +1431,10 @@
     "ev": 2.41,
     "ts": 1787892330.9726841
   },
+  "football|Egypt Premier League|Zed FC|AL Ahly SC|让球客胜|1x2|2026-08-29": {
+    "ev": 1.0,
+    "ts": 1787934857.9234638
+  },
   "football|Egypt Premier League|id:5348442|-|上半场主胜|ht|2026-08-28": {
     "ev": 10.93,
     "bb": 4.97,
@@ -2012,6 +2016,10 @@
     "ev": 1.08,
     "ts": 1787926173.279706
   },
+  "football|England League Two|Newport County|Tranmere Rovers|半/全场-客/主|htft|2026-08-29": {
+    "ev": 5.67,
+    "ts": 1787934743.9073348
+  },
   "football|England League Two|Newport County|Tranmere Rovers|双边进球-是|btts|2026-08-29": {
     "ev": 2.37,
     "ts": 1787926173.276073
@@ -2192,6 +2200,14 @@
   "football|England Premier League|Liverpool FC|Nottingham Forest|正确比分2-2|correct_score|2026-08-29": {
     "ev": 3.7,
     "ts": 1787917298.831151
+  },
+  "football|England Premier League|Tottenham Hotspur|Newcastle United FC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 9.65,
+    "ts": 1787934743.926826
+  },
+  "football|England Premier League|Tottenham Hotspur|Newcastle United FC|上半场正确比分others|correct_score_ht|2026-08-30": {
+    "ev": 14.4,
+    "ts": 1787934743.926883
   },
   "football|England Premier League|id:5130740|-|上半场客胜|ht|2026-08-29": {
     "ev": 2.84,
@@ -2960,6 +2976,10 @@
     "bb": 2.14,
     "ts": 1787923911.868893
   },
+  "football|Greece Super League|Volos NFC|Iraklis 1908 FC|半/全场-主/客|htft|2026-08-30": {
+    "ev": 6.13,
+    "ts": 1787934743.911247
+  },
   "football|Guatemala Liga Nacional|Suchitepequez|CSD Coban Imperial|主胜|1x2|2026-08-29": {
     "ev": 1.54,
     "ts": 1787883830.723246
@@ -3288,6 +3308,39 @@
   "football|Italy Serie A|Milan|Venezia|让球主胜|1x2|2026-08-29": {
     "ev": 1.93,
     "ts": 1787892880.301687
+  },
+  "football|Italy Serie A|Monza|inese Calcio|上半场主胜|ht|2026-08-30": {
+    "ev": 2.58,
+    "ts": 1787934743.911139
+  },
+  "football|Italy Serie A|Monza|inese Calcio|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 10.25,
+    "ts": 1787934743.927198
+  },
+  "football|Italy Serie A|Monza|inese Calcio|上半场正确比分2-0|correct_score_ht|2026-08-30": {
+    "ev": 28.26,
+    "ts": 1787934743.9271371
+  },
+  "football|Italy Serie A|Monza|inese Calcio|上半场正确比分others|correct_score_ht|2026-08-30": {
+    "ev": 34.45,
+    "ts": 1787934743.927244
+  },
+  "football|Italy Serie A|Sassuolo Calcio|Torino FC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 19.22,
+    "ts": 1787934743.926986
+  },
+  "football|Italy Serie A|Sassuolo Calcio|Torino FC|上半场正确比分2-0|correct_score_ht|2026-08-30": {
+    "ev": 2.23,
+    "ts": 1787934743.9269419
+  },
+  "football|Italy Serie A|Sassuolo Calcio|Torino FC|上半场正确比分others|correct_score_ht|2026-08-30": {
+    "ev": 26.98,
+    "ts": 1787934743.927052
+  },
+  "football|Italy Serie A|id:5112850|-|上半场主胜|ht|2026-08-30": {
+    "ev": 2.58,
+    "bb": 4.34,
+    "ts": 1787934743.317987
   },
   "football|Italy Serie A|id:5348676|-|上半场客胜|ht|2026-08-29": {
     "ev": 2.42,
@@ -4318,6 +4371,10 @@
     "ev": 6.81,
     "ts": 1787885738.0678039
   },
+  "football|Qatar Stars League|Al Shahaniya|Al Sailiya SC|双边进球-是|btts|2026-08-30": {
+    "ev": 2.05,
+    "ts": 1787934743.912935
+  },
   "football|Qatar Stars League|Al Wakrah|Al Rayyan SC|单双-双|oe|2026-08-28": {
     "ev": 2.17,
     "ts": 1787761957.1612191
@@ -4750,6 +4807,10 @@
   "football|Scotland League One|Hamilton Academical FC|Cove Rangers FC|客胜|1x2|2026-08-29": {
     "ev": 1.59,
     "ts": 1787926173.277178
+  },
+  "football|Scotland League One|Ross County FC|East Kilbride|客胜|1x2|2026-08-30": {
+    "ev": 6.97,
+    "ts": 1787934743.910005
   },
   "football|Scotland League Two|Edinburgh City FC|Forfar Athletic FC|主胜|1x2|2026-08-29": {
     "ev": 1.77,
@@ -5320,6 +5381,10 @@
   "football|Sweden Women Damallsvenskan|IK Uppsala (w)|Eskilstuna United DFF (w)|客胜|1x2|2026-08-29": {
     "ev": 1.59,
     "ts": 1787895098.7301838
+  },
+  "football|Sweden Women Damallsvenskan|IK Uppsala (w)|Eskilstuna United DFF (w)|让球客胜|1x2|2026-08-29": {
+    "ev": 2.46,
+    "ts": 1787934857.923636
   },
   "football|Sweden Women Damallsvenskan|IK乌普撒拉 (女)|埃斯基尔图纳 (女)|双重机会-主/和局|dc|2026-08-29": {
     "ev": 15.51,
@@ -6803,9 +6868,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Italy Serie A|id:5112850|-|上半场主胜|ht|2026-08-30": {
-    "ev": 2.58,
-    "bb": 4.34,
-    "ts": 1787934743.317987
+  "football|Italy Serie B|id:5388988|-|和局|1x2|2026-08-29": {
+    "ev": 5.81,
+    "bb": 3.44,
+    "ts": 1787935057.524759
   }
 }
