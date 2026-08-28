@@ -530,6 +530,10 @@
     "ev": 1.03,
     "ts": 1787863025.0971541
   },
+  "football|Belgium Pro League|KRC Genk|S.K Beveren|上半场正确比分1-2|correct_score_ht|2026-08-29": {
+    "ev": 3.81,
+    "ts": 1787930882.554135
+  },
   "football|Belgium Pro League|KRC Genk|S.K Beveren|主胜|1x2|2026-08-29": {
     "ev": 3.02,
     "ts": 1787930640.959116
@@ -2083,6 +2087,10 @@
     "ev": 3.5,
     "ts": 1787890530.987711
   },
+  "football|England Premier League|Crystal Palace|Manchester City FC|和局|1x2|2026-08-29": {
+    "ev": 2.66,
+    "ts": 1787930882.551127
+  },
   "football|England Premier League|Crystal Palace|Manchester City FC|让球主胜|1x2|2026-08-29": {
     "ev": 1.16,
     "ts": 1787883483.007353
@@ -2187,9 +2195,17 @@
     "ev": 5.36,
     "ts": 1787877270.9053729
   },
+  "football|Finland Ykkosliiga|FC KTP Kotka|FC Haka Valkeakoski|角球大球|corner|2026-08-28": {
+    "ev": 1.15,
+    "ts": 1787930882.553306
+  },
   "football|Finland Ykkosliiga|FC KTP Kotka|FC Haka Valkeakoski|让球主胜|1x2|2026-08-28": {
     "ev": 1.01,
     "ts": 1787928201.908416
+  },
+  "football|Finland Ykkosliiga|FC KTP Kotka|FC Haka Valkeakoski|让球客胜|1x2|2026-08-28": {
+    "ev": 9.83,
+    "ts": 1787930882.547816
   },
   "football|Finland Ykkosliiga|JAPS|KaPa Kapylan Pallo|上半场正确比分0-2|correct_score_ht|2026-08-28": {
     "ev": 20.17,
@@ -2597,6 +2613,10 @@
     "ev": 2.7,
     "ts": 1787925472.5081768
   },
+  "football|Germany 2. Bundesliga|Eintracht Braunschweig|Hertha BSC|上半场客胜|ht|2026-08-29": {
+    "ev": 2.3,
+    "ts": 1787930882.548697
+  },
   "football|Germany 2. Bundesliga|Eintracht Braunschweig|Hertha BSC|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 8.0,
     "ts": 1787883483.0087838
@@ -2664,6 +2684,11 @@
   "football|Germany 2. Bundesliga|VFL Bochum|VfL 1899 Osnabruck|小球|1x2|2026-08-29": {
     "ev": 1.01,
     "ts": 1787909844.540344
+  },
+  "football|Germany 2. Bundesliga|id:5315209|-|上半场客胜|ht|2026-08-29": {
+    "ev": 2.3,
+    "bb": 3.09,
+    "ts": 1787930882.10189
   },
   "football|Germany 3rd Liga|Alemannia Aachen|SV Meppen 1912|半/全场-和局/客|htft|2026-08-29": {
     "ev": 1.23,
@@ -3913,6 +3938,10 @@
     "ev": 2.48,
     "ts": 1787896603.597279
   },
+  "football|Poland III Liga|KSS Kotwica Kornik|Chemik Bydgoszcz|让球主胜|1x2|2026-08-28": {
+    "ev": 2.36,
+    "ts": 1787930882.547912
+  },
   "football|Poland III Liga|Zks Kluczevia Stargard|SKS Unia Swarzedz|主胜|1x2|2026-08-28": {
     "ev": 1.74,
     "ts": 1787923533.900969
@@ -4358,6 +4387,10 @@
   "football|Saudi Arabia Professional League|AL Fayha FC|Abha Club|半/全场-主/客|htft|2026-08-29": {
     "ev": 22.63,
     "ts": 1787885738.0673778
+  },
+  "football|Saudi Arabia Professional League|AL Fayha FC|Abha Club|小球|1x2|2026-08-29": {
+    "ev": 1.03,
+    "ts": 1787930882.552609
   },
   "football|Saudi Arabia Professional League|AL Fayha FC|Abha Club|让球主胜|1x2|2026-08-29": {
     "ev": 2.92,
@@ -6344,9 +6377,19 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Germany 2. Bundesliga|id:5315209|-|上半场客胜|ht|2026-08-29": {
-    "ev": 2.3,
-    "bb": 3.09,
-    "ts": 1787930882.10189
+  "football|Czech Republic FNL|id:5156481|-|主胜|1x2|2026-08-29": {
+    "ev": 5.09,
+    "bb": 1.95,
+    "ts": 1787931277.570616
+  },
+  "football|Cyprus 1st Division|id:5358244|-|上半场主胜|ht|2026-08-29": {
+    "ev": 6.49,
+    "bb": 3.4,
+    "ts": 1787931277.570657
+  },
+  "football|Poland Ekstraklasa|id:5092645|-|上半场客胜|ht|2026-08-29": {
+    "ev": 6.66,
+    "bb": 3.8,
+    "ts": 1787931277.570689
   }
 }
