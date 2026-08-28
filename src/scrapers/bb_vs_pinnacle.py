@@ -1066,6 +1066,46 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     opp.setdefault("tags", []).append(line_info)
                 entry["handicap"].append(opp)
 
+        # V5.11: 网球让局(Game Handicap) — 独立盘口, 与让盘(Set Handicap)分开, 用 Pin games_spread 对比
+        if sport == "tennis":
+            bb_games_hc = bb.get("odds_ft", {}).get("games_handicap")
+            if isinstance(bb_games_hc, dict) and bb_games_hc.get("home_odds") and bb_games_hc.get("away_odds"):
+                bb_gl = bb_games_hc.get("home_line") if bb_games_hc.get("home_line") is not None else bb_games_hc.get("away_line")
+                if bb_gl is not None:
+                    home_sp, away_sp, _ = get_pin_spread(pin, target_line=bb_gl, source=pin.get("games_spread", []))
+                    if home_sp and away_sp and get_decimal_price(home_sp) and get_decimal_price(away_sp):
+                        pin_home_odds = get_decimal_price(home_sp)
+                        pin_away_odds = get_decimal_price(away_sp)
+                        pin_gl = home_sp.get("points")
+                        bb_gl_val = bb_games_hc.get("home_line") if bb_games_hc.get("home_line") is not None else bb_games_hc.get("away_line")
+                        cal_ok, _ = _calibrate_market_line(sport, "hc", bb_gl_val, pin_gl, None)
+                        if cal_ok:
+                            _fairs = shin_fair_odds([pin_home_odds, pin_away_odds])
+                            home_fair = _fairs[0]
+                            away_fair = _fairs[1]
+                            ev_h = (bb_games_hc["home_odds"] - home_fair) / home_fair * 100 if home_fair > 0 else 0
+                            ev_a = (bb_games_hc["away_odds"] - away_fair) / away_fair * 100 if away_fair > 0 else 0
+                            if ev_h > 1:
+                                entry["handicap"].append({
+                                    "designation": "让局主胜",
+                                    "line": bb_games_hc.get("home_line_str", ""),
+                                    "bb_odds": bb_games_hc["home_odds"],
+                                    "pin_odds": pin_home_odds,
+                                    "fair_price": home_fair,
+                                    "ev_pct": round(ev_h, 2),
+                                    "_market": "hc_games",
+                                })
+                            if ev_a > 1:
+                                entry["handicap"].append({
+                                    "designation": "让局客胜",
+                                    "line": bb_games_hc.get("away_line_str", ""),
+                                    "bb_odds": bb_games_hc["away_odds"],
+                                    "pin_odds": pin_away_odds,
+                                    "fair_price": away_fair,
+                                    "ev_pct": round(ev_a, 2),
+                                    "_market": "hc_games",
+                                })
+
         # --- 大小 (Over/Under) 带去抽水 ---
         ou_candidates = []
         bb_ou = extract_bb_ou(bb, sport) if not _is_doubles_mismatch else None
