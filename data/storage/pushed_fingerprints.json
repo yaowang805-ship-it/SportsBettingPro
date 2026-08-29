@@ -1330,6 +1330,10 @@
     "ev": 3.56,
     "ts": 1787995703.855125
   },
+  "football|Brazil Serie C|Ferroviaria SP|Confianca SE|主胜|1x2|2026-08-30": {
+    "ev": 1.77,
+    "ts": 1788006405.916836
+  },
   "football|Brazil Serie C|Ferroviaria SP|Confianca SE|单双-单|oe|2026-08-30": {
     "ev": 2.28,
     "ts": 1787969186.447364
@@ -6973,6 +6977,18 @@
     "ev": 2.39,
     "ts": 1787992059.105387
   },
+  "football|Kazakhstan Premier League|FK Zhenys|FC Altay|主胜|1x2|2026-08-29": {
+    "ev": 8.52,
+    "ts": 1788005995.5057971
+  },
+  "football|Kazakhstan Premier League|FK Zhenys|FC Altay|双重机会-主/和局|dc|2026-08-29": {
+    "ev": 1.26,
+    "ts": 1788005995.505908
+  },
+  "football|Kazakhstan Premier League|FK Zhenys|FC Altay|让球主胜|1x2|2026-08-29": {
+    "ev": 7.11,
+    "ts": 1788005995.5058382
+  },
   "football|Kazakhstan Premier League|Ulytau FC|FC Zhetysu|主胜|1x2|2026-08-29": {
     "ev": 8.83,
     "ts": 1788002896.114312
@@ -6985,10 +7001,27 @@
     "ev": 3.02,
     "ts": 1788001940.834988
   },
+  "football|Kazakhstan Premier League|spiy Aktau|Tobol Kostanay|大球|1x2|2026-08-30": {
+    "ev": 6.99,
+    "ts": 1788006405.919214
+  },
+  "football|Kazakhstan Premier League|spiy Aktau|Tobol Kostanay|客胜|1x2|2026-08-30": {
+    "ev": 1.7,
+    "ts": 1788006405.919135
+  },
+  "football|Kazakhstan Premier League|spiy Aktau|Tobol Kostanay|让球客胜|1x2|2026-08-30": {
+    "ev": 2.23,
+    "ts": 1788006405.919175
+  },
   "football|Kazakhstan Premier League|乌利陶FC|捷迪苏|主胜|1x2|2026-08-29": {
     "ev": 8.83,
     "bb": 1.98,
     "ts": 1788002895.353028
+  },
+  "football|Kazakhstan Premier League|热尼斯|阿勒泰瑟美|主胜|1x2|2026-08-29": {
+    "ev": 8.52,
+    "bb": 2.06,
+    "ts": 1788005994.453679
   },
   "football|Latvia Virsliga|FK Auda|SK Super Nova|双重机会-和局/客|dc|2026-08-30": {
     "ev": 8.38,
@@ -7149,6 +7182,10 @@
   "football|Mexico Liga De Expansion MX|Cruz Azul Hidalgo|Tepatitlan FC|让球主胜|1x2|2026-08-30": {
     "ev": 2.99,
     "ts": 1787977258.293806
+  },
+  "football|Mexico Liga De Expansion MX|Cruz Azul Hidalgo|Tepatitlan FC|让球客胜|1x2|2026-08-30": {
+    "ev": 2.6,
+    "ts": 1788005995.505219
   },
   "football|Mexico Liga De Expansion MX|Leones Negros UDEG|Piratas FC|双边进球-是|btts|2026-08-31": {
     "ev": 3.73,
@@ -10453,6 +10490,10 @@
     "ev": 24.38,
     "ts": 1787963003.150378
   },
+  "football|Sweden Superettan|Falkenbergs FF|IK Brage|让球客胜|1x2|2026-08-29": {
+    "ev": 2.45,
+    "ts": 1788005995.4990551
+  },
   "football|Sweden Superettan|GIF Sundsvall|Norrby IF|双边进球-是|btts|2026-09-01": {
     "ev": 2.73,
     "ts": 1787975485.209641
@@ -11700,6 +11741,10 @@
     "ev": 4.5,
     "ts": 1787963720.655274
   },
+  "football|USL Championship|FC Tulsa|Rhode Island FC|让球主胜|1x2|2026-08-30": {
+    "ev": 5.46,
+    "ts": 1788006405.917175
+  },
   "football|USL Championship|FC Tulsa|Rhode Island FC|让球客胜|1x2|2026-08-30": {
     "ev": 1.71,
     "ts": 1787977258.2944992
@@ -12018,9 +12063,9 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Kazakhstan Premier League|热尼斯|阿勒泰瑟美|主胜|1x2|2026-08-29": {
-    "ev": 8.52,
-    "bb": 2.06,
-    "ts": 1788005994.453679
+  "football|Hungary NB II|迪欧斯捷尔|布达佩斯瓦苏塔斯|主胜|1x2|2026-08-29": {
+    "ev": 5.99,
+    "bb": 1.84,
+    "ts": 1788006540.435452
   }
 }
