@@ -1019,9 +1019,19 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "格鲁吉亚杯": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "欧洲足联女欧罗巴杯-资格赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-29T04:31:00.161870+00:00",
+  "updated": "2026-08-29T06:14:11.098163+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
