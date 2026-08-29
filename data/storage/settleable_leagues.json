@@ -611,7 +611,7 @@
       "success_rate": 0.0
     },
     "韩国甲级联赛": {
-      "attempts": 5,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -666,7 +666,7 @@
       "success_rate": 0.0
     },
     "日本天皇杯": {
-      "attempts": 10,
+      "attempts": 14,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -981,7 +981,7 @@
       "success_rate": 0.0
     },
     "欧洲冠军联赛-资格赛附加赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1029,9 +1029,19 @@
       "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "伊拉克超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "欧洲女子欧罗巴杯-资格赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-29T09:14:18.894114+00:00",
+  "updated": "2026-08-29T10:14:19.423640+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
