@@ -271,12 +271,12 @@
       "success_rate": 0.0
     },
     "英格兰联赛杯": {
-      "attempts": 6,
+      "attempts": 10,
       "successes": 0,
       "success_rate": 0.0
     },
     "巴西杯": {
-      "attempts": 6,
+      "attempts": 7,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -571,7 +571,7 @@
       "success_rate": 0.0
     },
     "英格兰北部超级联赛": {
-      "attempts": 5,
+      "attempts": 7,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -611,7 +611,7 @@
       "success_rate": 0.0
     },
     "韩国甲级联赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -841,7 +841,7 @@
       "success_rate": 0.0
     },
     "埃及超级联赛": {
-      "attempts": 10,
+      "attempts": 11,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -961,7 +961,7 @@
       "success_rate": 0.0
     },
     "比利时甲级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -971,7 +971,7 @@
       "success_rate": 0.0
     },
     "苏格兰挑战杯": {
-      "attempts": 4,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -996,7 +996,7 @@
       "success_rate": 0.0
     },
     "南非超级联赛": {
-      "attempts": 3,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1009,9 +1009,14 @@
       "attempts": 1,
       "successes": 1,
       "success_rate": 1.0
+    },
+    "ATP - 大满贯美国网球公开赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-29T00:18:24.159951+00:00",
+  "updated": "2026-08-29T00:26:07.153068+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
