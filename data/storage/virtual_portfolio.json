@@ -1,5 +1,5 @@
 {
-  "balance": 3816.69,
+  "balance": 5902.69,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3384,29 +3384,6 @@
       "track_only": false
     },
     {
-      "id": "bb_vs_pin_1x2_桑坦德竞技_埃尔切_和局",
-      "sport": "football",
-      "league": "西班牙甲级联赛",
-      "home_team": "桑坦德竞技",
-      "away_team": "埃尔切",
-      "home_cn": "桑坦德竞技",
-      "away_cn": "埃尔切",
-      "market": "1x2",
-      "market_type": "和局",
-      "sub_market": "1x2",
-      "line": "",
-      "odds": 3.99,
-      "stake": 87,
-      "model_prob": 0.2637,
-      "ev_pct": 5.2,
-      "pin_odds": 3.65,
-      "fair_price": 3.7926,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1787936400,
-      "created_at": "2026-08-28T14:11:54.345157+00:00",
-      "track_only": false
-    },
-    {
       "id": "bb_vs_pin_1x2_雷克斯汉姆_伯明翰_上半场双重机会-主/客",
       "sport": "football",
       "league": "英格兰冠军联赛",
@@ -4708,7 +4685,8 @@
     "bb_vs_pin_1x2_威尼斯_莱切_和局": "lost",
     "bb_vs_pin_1x2_赫塔菲_桑坦德竞技_和局": "lost",
     "bb_vs_pin_1x2_马拉加_拉科鲁尼亚_和局": "won",
-    "bb_vs_pin_1x2_维戈塞尔塔_奥萨苏纳_客胜": "won"
+    "bb_vs_pin_1x2_维戈塞尔塔_奥萨苏纳_客胜": "won",
+    "bb_vs_pin_1x2_桑坦德竞技_埃尔切_和局": "lost"
   },
   "history": [
     {
@@ -8833,6 +8811,22 @@
       "home_cn": "博尔顿 U21",
       "away_cn": "科切斯特联 U21",
       "market_type": "双重机会-和局/客"
+    },
+    {
+      "id": "bb_vs_pin_1x2_桑坦德竞技_埃尔切_和局",
+      "match": "87¥ @ 3.99",
+      "date": "2026-08-29T00:13:26.904711+00:00",
+      "stake": 87,
+      "odds": 3.99,
+      "profit": -87,
+      "result": "lost",
+      "status": "lost",
+      "source": "bb_vs_pinnacle",
+      "home_cn": "桑坦德竞技",
+      "away_cn": "埃尔切",
+      "market_type": "1x2",
+      "league": "西班牙甲级联赛",
+      "sport": "football"
     }
   ],
   "daily_budget": {

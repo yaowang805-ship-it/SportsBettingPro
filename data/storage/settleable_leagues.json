@@ -826,8 +826,8 @@
       "success_rate": 1.0
     },
     "西班牙甲级联赛": {
-      "attempts": 3,
-      "successes": 3,
+      "attempts": 4,
+      "successes": 4,
       "success_rate": 1.0
     },
     "格鲁吉亚甲级联赛": {
@@ -1006,7 +1006,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-08-28T12:55:44.639579+00:00",
+  "updated": "2026-08-29T00:13:26.934005+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
