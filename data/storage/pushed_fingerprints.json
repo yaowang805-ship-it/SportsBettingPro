@@ -171,6 +171,10 @@
     "ev": 8.04,
     "ts": 1787931669.765666
   },
+  "football|Argentina Liga Profesional|Club Atletico Rosario Central|Gimnasia Y Esgrima La Plata|小球|1x2|2026-08-30": {
+    "ev": 2.85,
+    "ts": 1788001734.74491
+  },
   "football|Argentina Liga Profesional|Club Atletico Rosario Central|Gimnasia Y Esgrima La Plata|角球让球客胜|corner|2026-08-30": {
     "ev": 1.21,
     "ts": 1787992059.106671
@@ -5899,6 +5903,10 @@
     "ev": 1.28,
     "ts": 1787999017.431135
   },
+  "football|Italy Serie C|Inter Milan II|ASD Team Altamura|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 1.75,
+    "ts": 1788001734.7452219
+  },
   "football|Italy Serie C|Novara Calcio|US Folgore Caratese|上半场主胜|ht|2026-09-01": {
     "ev": 4.82,
     "ts": 1787983581.115445
@@ -6908,6 +6916,10 @@
     "ev": 1.29,
     "ts": 1788000428.456633
   },
+  "football|Mexico Liga MX|Atlas FC|Queretaro FC|上半场客胜|ht|2026-08-30": {
+    "ev": 3.23,
+    "ts": 1788001734.743541
+  },
   "football|Mexico Liga MX|Atlas FC|Queretaro FC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 34.32,
     "ts": 1787963003.165099
@@ -7055,6 +7067,11 @@
     "ev": 3.16,
     "bb": 4.28,
     "ts": 1787890530.455148
+  },
+  "football|Mexico Liga MX|阿特拉斯|克雷塔罗|上半场客胜|ht|2026-08-30": {
+    "ev": 3.23,
+    "bb": 4.52,
+    "ts": 1788001733.297893
   },
   "football|Netherlands Eerste Divisie|De Graafschap|Almere City FC|上半场正确比分others|correct_score_ht|2026-08-29": {
     "ev": 1.39,
@@ -11517,9 +11534,14 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Mexico Liga MX|阿特拉斯|克雷塔罗|上半场客胜|ht|2026-08-30": {
-    "ev": 3.23,
-    "bb": 4.52,
-    "ts": 1788001733.297893
+  "football|England League One|布莱克浦|彼德堡联|上半场客胜|ht|2026-08-29": {
+    "ev": 4.62,
+    "bb": 4.1,
+    "ts": 1788001940.175065
+  },
+  "football|Russia Premier League|沃罗涅日火炬|圣彼得堡泽尼特|上半场主胜|ht|2026-08-29": {
+    "ev": 5.79,
+    "bb": 7.7,
+    "ts": 1788001940.175134
   }
 }
