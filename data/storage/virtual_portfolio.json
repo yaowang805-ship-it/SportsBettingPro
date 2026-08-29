@@ -1,5 +1,5 @@
 {
-  "balance": 5671.53,
+  "balance": 5447.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3519,6 +3519,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788021000,
       "created_at": "2026-08-29T16:29:54.812511+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_哈塔_沙瑞加_上半场客胜",
+      "sport": "football",
+      "league": "阿联酋超级联赛",
+      "home_team": "哈塔",
+      "away_team": "沙瑞加",
+      "home_cn": "哈塔",
+      "away_cn": "沙瑞加",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 2.26,
+      "stake": 211,
+      "model_prob": 0.512,
+      "ev_pct": 15.72,
+      "pin_odds": 1.8696,
+      "fair_price": 1.953,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788098100,
+      "created_at": "2026-08-29T16:32:23.835383+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_那不勒斯_科莫_1907_和局",
+      "sport": "football",
+      "league": "意大利甲级联赛",
+      "home_team": "那不勒斯",
+      "away_team": "科莫 1907",
+      "home_cn": "那不勒斯",
+      "away_cn": "科莫 1907",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.31,
+      "stake": 13,
+      "model_prob": 0.3247,
+      "ev_pct": 7.48,
+      "pin_odds": 2.98,
+      "fair_price": 3.0797,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788107400,
+      "created_at": "2026-08-29T16:32:23.835427+00:00",
       "track_only": false
     }
   ],
@@ -8401,8 +8447,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 432.0,
-    "bets": 6
+    "used": 656.0,
+    "bets": 8
   },
   "updated": null
 }
