@@ -243,6 +243,10 @@
     "ev": 10.18,
     "ts": 1787981781.431394
   },
+  "football|Argentina Primera Nacional|Atletico de Rafaela|Tristan Suarez|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 2.31,
+    "ts": 1788004181.189981
+  },
   "football|Argentina Primera Nacional|Atletico de Rafaela|Tristan Suarez|客胜|1x2|2026-08-30": {
     "ev": 2.46,
     "ts": 1787944008.929954
@@ -250,6 +254,10 @@
   "football|Argentina Primera Nacional|Atletico de Rafaela|Tristan Suarez|让球主胜|1x2|2026-08-30": {
     "ev": 15.83,
     "ts": 1787976637.445942
+  },
+  "football|Argentina Primera Nacional|Ciudad De Bolivar|Defensores de Belgrano|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 1.71,
+    "ts": 1788004181.189767
   },
   "football|Argentina Primera Nacional|Colegiales|Maipu|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.02,
@@ -262,6 +270,10 @@
   "football|Argentina Primera Nacional|Estudiantes|Ferro Carril Oeste|上半场双重机会-主/客|ht_dc|2026-08-31": {
     "ev": 1.49,
     "ts": 1787975485.2218728
+  },
+  "football|Argentina Primera Nacional|Ferrocarril Midland|Nueva Chicago|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 1.15,
+    "ts": 1788004181.1898339
   },
   "football|Argentina Primera Nacional|Ferrocarril Midland|Nueva Chicago|上半场客胜|ht|2026-08-30": {
     "ev": 1.44,
@@ -1298,6 +1310,10 @@
     "ev": 1.15,
     "ts": 1787963003.1463182
   },
+  "football|Brazil Serie C|Anapolis FC GO|Santa Cruz FC PE|让球主胜|1x2|2026-08-30": {
+    "ev": 1.47,
+    "ts": 1788004181.193506
+  },
   "football|Brazil Serie C|Anapolis FC GO|Santa Cruz FC PE|让球客胜|1x2|2026-08-30": {
     "ev": 12.68,
     "ts": 1787980055.903727
@@ -1305,6 +1321,10 @@
   "football|Brazil Serie C|Barra FC|Volta Redonda FC RJ|主胜|1x2|2026-08-30": {
     "ev": 2.91,
     "ts": 1787995703.855087
+  },
+  "football|Brazil Serie C|Barra FC|Volta Redonda FC RJ|单双-双|oe|2026-08-30": {
+    "ev": 1.36,
+    "ts": 1788004181.1915781
   },
   "football|Brazil Serie C|Barra FC|Volta Redonda FC RJ|让球主胜|1x2|2026-08-30": {
     "ev": 3.56,
@@ -6045,6 +6065,10 @@
     "ev": 2.37,
     "ts": 1787975485.215163
   },
+  "football|Italy Serie C|Forli FC|Delfino Pescara 1936|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 2.12,
+    "ts": 1788004181.19133
+  },
   "football|Italy Serie C|Forli FC|Delfino Pescara 1936|小球|1x2|2026-08-30": {
     "ev": 1.28,
     "ts": 1787999017.431135
@@ -9142,6 +9166,10 @@
     "ev": 7.79,
     "ts": 1787933216.282027
   },
+  "football|Slovakia Superliga|MFK Dukla Banska Bystrica|KFC Komarno|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 3.07,
+    "ts": 1788004181.190662
+  },
   "football|Slovakia Superliga|MFK Dukla Banska Bystrica|KFC Komarno|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 2.33,
     "ts": 1787992059.118009
@@ -11468,6 +11496,11 @@
     "ev": 2.98,
     "ts": 1787897204.797944
   },
+  "football|USA National Women Soccer League|丹佛巅峰 (女)|芝加哥红星 (女)|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 9.85,
+    "bb": 3.94,
+    "ts": 1788004180.766308
+  },
   "football|USL Championship|Brooklyn FC|Sporting JAX|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 11.75,
     "ts": 1787963003.165447
@@ -11802,9 +11835,14 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|USA National Women Soccer League|丹佛巅峰 (女)|芝加哥红星 (女)|双重机会-和局/客|dc|2026-08-30": {
-    "ev": 9.85,
-    "bb": 3.94,
-    "ts": 1788004180.766308
+  "football|Malta Premier League|阿姆伦斯巴达|佛罗里亚纳|主胜|1x2|2026-08-30": {
+    "ev": 5.13,
+    "bb": 1.64,
+    "ts": 1788004364.968964
+  },
+  "football|Poland III Liga|特罗申|威兹洛|主胜|1x2|2026-08-29": {
+    "ev": 7.8,
+    "bb": 4.4,
+    "ts": 1788004364.9690392
   }
 }
