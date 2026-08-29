@@ -171,6 +171,34 @@ def main():
     print()
     print("判定标准: 中位CLV > +1% 且 正CLV率 > 55% → 比价 edge 成立")
 
+    _check_limit_risk()
+
+
+def _check_limit_risk():
+    """2026-08-29 限注预警(职业团队): 博彩公司对持续平均CLV>+10% 且 n>300 的账户自动降注额上限。
+
+    我们跟踪自己 push 侧的平均 CLV, 超过阈值就告警"被限注风险"。
+    """
+    push_clvs = []
+    if RESULTS_FILE.exists():
+        with open(RESULTS_FILE, encoding="utf-8-sig") as f:
+            for r in csv.DictReader(f):
+                if r.get("source") != "push":
+                    continue
+                try:
+                    push_clvs.append(float(r["true_clv_pct"]))
+                except (TypeError, ValueError):
+                    continue
+    if not push_clvs:
+        return
+    n = len(push_clvs)
+    avg = statistics.mean(push_clvs)
+    print()
+    if n > 300 and avg > 10.0:
+        print(f"⚠️ 限注预警: push 侧平均 CLV={avg:+.2f}% 超 +10%, n={n} 超 300 注 — 被博彩公司限注风险高!")
+    else:
+        print(f"限注检查: push 侧平均 CLV={avg:+.2f}% (n={n}), 未触发限注预警阈值(+10%/300注)")
+
 
 if __name__ == "__main__":
     main()
