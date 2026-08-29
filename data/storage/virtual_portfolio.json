@@ -1,5 +1,5 @@
 {
-  "balance": 4818.53,
+  "balance": 4783.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -4209,6 +4209,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788039000,
       "created_at": "2026-08-29T02:06:24.529844+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_八户云罗里_秋田蓝闪电_和局",
+      "sport": "football",
+      "league": "日本乙级联赛",
+      "home_team": "八户云罗里",
+      "away_team": "秋田蓝闪电",
+      "home_cn": "八户云罗里",
+      "away_cn": "秋田蓝闪电",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.24,
+      "stake": 35,
+      "model_prob": 0.3213,
+      "ev_pct": 4.11,
+      "pin_odds": 2.96,
+      "fair_price": 3.112,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787995800,
+      "created_at": "2026-08-29T03:31:36.186792+00:00",
       "track_only": false
     }
   ],
@@ -8671,8 +8694,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-29",
-    "used": 4606.0,
-    "bets": 68
+    "used": 4641.0,
+    "bets": 69
   },
   "updated": null
 }
