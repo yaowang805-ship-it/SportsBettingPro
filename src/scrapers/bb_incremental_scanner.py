@@ -253,13 +253,14 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
     except:
         pass
 
-    # V5: 检测显著变动 (Pin赔率跌>=2% → 聪明钱涌入)
+    # 2026-08-29 steam 信号(职业团队): 只有赔率大幅变动(>5%相对)才算"显著 sharp money"，
+    # 小漂移不算 steam。之前把所有变动都标显著, 无法区分真 sharp 钱 vs 正常波动。
     _significant = set()
     for _lg in pin_changed_leagues:
-        # 简单判断: 该联赛有变动就标为显著 (可后续细化阈值)
-        _significant.add(_lg)
+        if _mag_by_league.get(_lg, 0.0) > 0.05:
+            _significant.add(_lg)
 
-    print(f"  Pin侧: {league_count}个联赛, {len(new_pin)}场, 变动{len(pin_changed_leagues)}个, 显著{len(_significant)}个")
+    print(f"  Pin侧: {league_count}个联赛, {len(new_pin)}场, 变动{len(pin_changed_leagues)}个, steam显著{len(_significant)}个")
     return pin_changed_leagues, _significant
 
 

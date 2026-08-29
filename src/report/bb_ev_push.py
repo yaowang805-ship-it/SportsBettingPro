@@ -1710,6 +1710,9 @@ def _collect_opportunities(match, market_key):
             "_sub_market": sub_market,  # "1x2"|"ht"|"btts"|"dc"|"oe"|"htft"|...
             "line": line,               # 盘口线 (让球/大小), 供二次验价+虚拟投注
             "pin_max_stake": match.get("pin_max_stake", ""),  # Pin 注额上限=定价信心, 进CLV库供后续分析
+            # 2026-08-29 薄市场信号: Pin 注额上限低=定价信心低=薄市场, 限注/假edge 风险高
+            "_thin_market": (lambda v: bool(v and isinstance(v, (int, float)) and v < 100))(
+                match.get("pin_max_stake", 0)),
             "_match_type": match_type,  # "name"|"time", 供低置信时间匹配降仓
             "_ml_swapped": any("主客反转" in f for f in match.get("flags", [])),  # 二次验价方向映射用
 
