@@ -1434,6 +1434,10 @@
     "ev": 2.63,
     "ts": 1787985178.356079
   },
+  "football|Bulgaria Second Professional League|PFC Dobrudzha Dobrich|PFC Rilski Sportist Samokov|让球客胜|1x2|2026-08-30": {
+    "ev": 1.48,
+    "ts": 1788002291.3425071
+  },
   "football|Bulgaria Second Professional League|弗拉特里亚|CSKA 索菲亚二队|主胜|1x2|2026-08-30": {
     "ev": 11.29,
     "bb": 1.79,
@@ -2462,6 +2466,10 @@
     "ev": 1.25,
     "ts": 1787976637.438325
   },
+  "football|England Championship League|Norwich City|Burnley FC|小球|1x2|2026-08-29": {
+    "ev": 1.4,
+    "ts": 1788001940.8296142
+  },
   "football|England Championship League|Norwich City|Burnley FC|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 3.07,
     "ts": 1787969807.181227
@@ -2716,6 +2724,10 @@
     "ev": 5.01,
     "ts": 1787981781.43723
   },
+  "football|England League One|Mansfield Town|Luton Town|让球客胜|1x2|2026-08-30": {
+    "ev": 8.53,
+    "ts": 1788002630.834858
+  },
   "football|England League One|Milton Keynes Dons|Leicester City FC|主胜|1x2|2026-08-29": {
     "ev": 1.91,
     "ts": 1787976297.712081
@@ -2819,6 +2831,11 @@
   "football|England League One|mbridge United|Huddersfield Town|让球客胜|1x2|2026-08-29": {
     "ev": 11.66,
     "ts": 1787969186.435832
+  },
+  "football|England League One|布莱克浦|彼德堡联|上半场客胜|ht|2026-08-29": {
+    "ev": 4.62,
+    "bb": 4.1,
+    "ts": 1788001940.175065
   },
   "football|England League Two|Barnet FC|Cheltenham Town|上半场主胜|ht|2026-08-29": {
     "ev": 5.23,
@@ -3004,6 +3021,10 @@
     "ev": 1.53,
     "ts": 1787985178.349034
   },
+  "football|England League Two|Oldham Athletic|Swindon Town|让球客胜|1x2|2026-08-29": {
+    "ev": 1.85,
+    "ts": 1788001940.830243
+  },
   "football|England League Two|Port Vale|Crewe Alexandra|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 10.62,
     "ts": 1787926738.8999732
@@ -3019,6 +3040,10 @@
   "football|England League Two|Port Vale|Crewe Alexandra|半/全场-主/客|htft|2026-08-29": {
     "ev": 24.32,
     "ts": 1787926738.895954
+  },
+  "football|England League Two|Port Vale|Crewe Alexandra|半/全场-客/主|htft|2026-08-29": {
+    "ev": 5.43,
+    "ts": 1788001940.830163
   },
   "football|England League Two|Port Vale|Crewe Alexandra|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 24.98,
@@ -3364,6 +3389,10 @@
   "football|England Premier League|Liverpool FC|Nottingham Forest|让球客胜|1x2|2026-08-29": {
     "ev": 1.28,
     "ts": 1787995548.744084
+  },
+  "football|England Premier League|Manchester United FC|Ipswich Town|上半场客胜|ht|2026-08-30": {
+    "ev": 1.26,
+    "ts": 1788002630.834466
   },
   "football|England Premier League|Manchester United FC|Ipswich Town|上半场正确比分0-1|correct_score_ht|2026-08-30": {
     "ev": 3.42,
@@ -4452,6 +4481,10 @@
     "ev": 9.63,
     "ts": 1787975485.207925
   },
+  "football|Germany 3rd Liga|Alemannia Aachen|SV Meppen 1912|上半场正确比分1-2|correct_score_ht|2026-08-29": {
+    "ev": 8.23,
+    "ts": 1788001940.83628
+  },
   "football|Germany 3rd Liga|Alemannia Aachen|SV Meppen 1912|半/全场-和局/客|htft|2026-08-29": {
     "ev": 1.23,
     "ts": 1787918594.810862
@@ -4648,6 +4681,10 @@
   "football|Germany Bundesliga|Borussia Dortmund|Hamburger SV|正确比分1-2|correct_score|2026-08-30": {
     "ev": 3.46,
     "ts": 1787973134.9249458
+  },
+  "football|Germany Bundesliga|Borussia Dortmund|Hamburger SV|角球小球|corner|2026-08-30": {
+    "ev": 2.28,
+    "ts": 1788002291.3446221
   },
   "football|Germany Bundesliga|FC Augsburg|halke 04|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.7,
@@ -5271,6 +5308,10 @@
     "ev": 2.28,
     "ts": 1787936722.687275
   },
+  "football|Israel Premier League|Hapoel Haifa FC|Hapoel Tel Aviv FC|半/全场-客/主|htft|2026-08-31": {
+    "ev": 2.47,
+    "ts": 1788002630.849973
+  },
   "football|Israel Premier League|Hapoel Ironi Kiryat Shmona FC|Ironi Tiberias|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.1,
     "ts": 1788000428.4573581
@@ -5306,6 +5347,10 @@
   "football|Israel Premier League|Hapoel Petah Tikva FC|Hapoel Jerusalem FC|上半场精确进球others|exact_goals_ht|2026-08-30": {
     "ev": 9.2,
     "ts": 1787937965.181176
+  },
+  "football|Israel Premier League|Hapoel Petah Tikva FC|Hapoel Jerusalem FC|半/全场-主/和局|htft|2026-08-30": {
+    "ev": 9.71,
+    "ts": 1788001940.834945
   },
   "football|Israel Premier League|Hapoel Petah Tikva FC|Hapoel Jerusalem FC|半/全场-客/主|htft|2026-08-30": {
     "ev": 9.86,
@@ -5365,6 +5410,10 @@
   "football|Italy Serie A|Juventus|Parma Calcio|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.08,
     "ts": 1787976637.44486
+  },
+  "football|Italy Serie A|Juventus|Parma Calcio|上半场客胜|ht|2026-08-30": {
+    "ev": 2.56,
+    "ts": 1788002770.94266
   },
   "football|Italy Serie A|Juventus|Parma Calcio|上半场正确比分0-1|correct_score_ht|2026-08-30": {
     "ev": 32.9,
@@ -6694,6 +6743,10 @@
     "ev": 2.39,
     "ts": 1787992059.105387
   },
+  "football|Kazakhstan Premier League|Ulytau FC|FC Zhetysu|让球客胜|1x2|2026-08-29": {
+    "ev": 3.02,
+    "ts": 1788001940.834988
+  },
   "football|Latvia Virsliga|FK Auda|SK Super Nova|双重机会-和局/客|dc|2026-08-30": {
     "ev": 8.38,
     "ts": 1787993927.302016
@@ -7368,6 +7421,10 @@
   "football|Netherlands Eredivisie|PEC Zwolle|NEC Nijmegen|正确比分0-4|correct_score|2026-08-30": {
     "ev": 4.29,
     "ts": 1787944008.9680278
+  },
+  "football|Netherlands Eredivisie|PEC Zwolle|NEC Nijmegen|正确比分1-3|correct_score|2026-08-30": {
+    "ev": 1.58,
+    "ts": 1788002770.9466481
   },
   "football|Netherlands Eredivisie|PEC Zwolle|NEC Nijmegen|正确比分1-4|correct_score|2026-08-30": {
     "ev": 4.95,
@@ -8429,6 +8486,10 @@
     "ev": 1.86,
     "ts": 1787926173.280155
   },
+  "football|Russia First League|PFK Arsenal Tula|FK Ural Yekaterinburg|上半场精确进球others|exact_goals_ht|2026-08-29": {
+    "ev": 2.23,
+    "ts": 1788002291.347405
+  },
   "football|Russia First League|PFK Arsenal Tula|FK Ural Yekaterinburg|半/全场-客/主|htft|2026-08-29": {
     "ev": 32.32,
     "ts": 1787926173.277598
@@ -8594,6 +8655,11 @@
     "ev": 6.65,
     "bb": 8.85,
     "ts": 1787969184.622596
+  },
+  "football|Russia Premier League|沃罗涅日火炬|圣彼得堡泽尼特|上半场主胜|ht|2026-08-29": {
+    "ev": 5.79,
+    "bb": 7.7,
+    "ts": 1788001940.175134
   },
   "football|Saudi Arabia Division 1|Damac FC|Al Orobah FC|上半场主胜|ht|2026-08-29": {
     "ev": 2.11,
@@ -8933,6 +8999,10 @@
   "football|Slovakia Superliga|MFK Dukla Banska Bystrica|KFC Komarno|半/全场-客/主|htft|2026-08-30": {
     "ev": 4.87,
     "ts": 1787942388.630542
+  },
+  "football|Slovakia Superliga|MFK Dukla Banska Bystrica|KFC Komarno|大球|1x2|2026-08-30": {
+    "ev": 1.17,
+    "ts": 1788002770.942615
   },
   "football|Slovakia Superliga|MFK Skalica|DAC 1904 Dunajska Streda|半/全场-客/主|htft|2026-08-30": {
     "ev": 2.63,
@@ -9942,6 +10012,10 @@
   "football|Sweden Allsvenskan|IK Sirius|Malmo FF|上半场正确比分0-2|correct_score_ht|2026-09-01": {
     "ev": 9.74,
     "ts": 1787981781.445166
+  },
+  "football|Sweden Allsvenskan|IK Sirius|Malmo FF|上半场正确比分others|correct_score_ht|2026-09-01": {
+    "ev": 1.82,
+    "ts": 1788002630.8747761
   },
   "football|Sweden Allsvenskan|IK Sirius|Malmo FF|半/全场-主/客|htft|2026-09-01": {
     "ev": 2.32,
@@ -11196,6 +11270,14 @@
     "ev": 1.17,
     "ts": 1787981994.422234
   },
+  "football|USA Major League Soccer|Toronto FC|New York City FC|和局|1x2|2026-08-30": {
+    "ev": 1.71,
+    "ts": 1788002770.943412
+  },
+  "football|USA Major League Soccer|Toronto FC|New York City FC|小球|1x2|2026-08-30": {
+    "ev": 2.01,
+    "ts": 1788002770.943451
+  },
   "football|USA Major League Soccer|Toronto FC|New York City FC|总进球区间7+|total_goals_range|2026-08-30": {
     "ev": 5.27,
     "ts": 1787963003.1660109
@@ -11307,6 +11389,10 @@
   "football|USL Championship|Pittsburgh Riverhounds|Tampa Bay Rowdies|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 19.38,
     "ts": 1787963003.164705
+  },
+  "football|USL Championship|Pittsburgh Riverhounds|Tampa Bay Rowdies|上半场正确比分2-1|correct_score_ht|2026-08-30": {
+    "ev": 5.4,
+    "ts": 1788002086.5872772
   },
   "football|USL Championship|Pittsburgh Riverhounds|Tampa Bay Rowdies|上半场正确比分others|correct_score_ht|2026-08-30": {
     "ev": 10.21,
@@ -11530,18 +11616,32 @@
     "bb": 6.7,
     "ts": 1787890040.992121
   },
+  "tennis|WTA - Grand Slam US Open|Thea Frodin (USA)|Elena Rybakina (KAZ)|让盘客胜|1x2|2026-09-01": {
+    "ev": 2.47,
+    "ts": 1788002630.851732
+  },
   "volleyball|Asian Volleyball Championship Women|Japan (w)|Thailand (w)|主胜|1x2|2026-08-29": {
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|England League One|布莱克浦|彼德堡联|上半场客胜|ht|2026-08-29": {
-    "ev": 4.62,
-    "bb": 4.1,
-    "ts": 1788001940.175065
+  "football|Kazakhstan Premier League|乌利陶FC|捷迪苏|主胜|1x2|2026-08-29": {
+    "ev": 8.83,
+    "bb": 1.98,
+    "ts": 1788002895.353028
   },
-  "football|Russia Premier League|沃罗涅日火炬|圣彼得堡泽尼特|上半场主胜|ht|2026-08-29": {
-    "ev": 5.79,
-    "bb": 7.7,
-    "ts": 1788001940.175134
+  "football|Lithuania 1 Lyga|FK 特兰西二队|乔纳瓦|客胜|1x2|2026-08-29": {
+    "ev": 5.48,
+    "bb": 1.94,
+    "ts": 1788002895.3531048
+  },
+  "football|Malta Premier League|阿姆伦斯巴达|佛罗里亚纳|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 12.48,
+    "bb": 2.21,
+    "ts": 1788002895.353177
+  },
+  "football|Russia First League|图拉兵工厂|乌拉尔|上半场主胜|ht|2026-08-29": {
+    "ev": 4.15,
+    "bb": 4.76,
+    "ts": 1788002895.3532429
   }
 }
