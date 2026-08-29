@@ -87,6 +87,10 @@
     "ev": 2.59,
     "ts": 1787905295.077587
   },
+  "basketball|Mexico LNBP Basketball League|Panteras de Aguascalientes|Correcaminos UAT Victoria|主胜|1x2|2026-08-30": {
+    "ev": 3.9,
+    "ts": 1788020820.1300118
+  },
   "basketball|Mexico LNBP Basketball League|Panteras de Aguascalientes|Correcaminos UAT Victoria|让分客胜|1x2|2026-08-29": {
     "ev": 5.32,
     "ts": 1787888754.01937
@@ -3244,6 +3248,10 @@
     "ev": 2.25,
     "ts": 1788012313.8452249
   },
+  "football|England League One|Mansfield Town|Luton Town|先进球neither|first_to_score|2026-08-30": {
+    "ev": 3.85,
+    "ts": 1788020331.470252
+  },
   "football|England League One|Mansfield Town|Luton Town|大球|1x2|2026-08-30": {
     "ev": 1.03,
     "ts": 1787975485.209887
@@ -5555,6 +5563,10 @@
     "ev": 3.34,
     "ts": 1788019458.0268438
   },
+  "football|Germany Bundesliga|Borussia Dortmund|Hamburger SV|小球|1x2|2026-08-30": {
+    "ev": 1.0,
+    "ts": 1788020613.402986
+  },
   "football|Germany Bundesliga|Borussia Dortmund|Hamburger SV|正确比分1-2|correct_score|2026-08-30": {
     "ev": 3.46,
     "ts": 1787973134.9249458
@@ -6545,6 +6557,10 @@
     "ev": 1.59,
     "ts": 1787983267.401186
   },
+  "football|Italy Serie A|Monza|inese Calcio|小球|1x2|2026-08-30": {
+    "ev": 5.87,
+    "ts": 1788020613.403212
+  },
   "football|Italy Serie A|Monza|inese Calcio|角球大球|corner|2026-08-30": {
     "ev": 1.17,
     "ts": 1788003393.205659
@@ -6673,11 +6689,6 @@
     "ev": 13.58,
     "bb": 9.45,
     "ts": 1787975483.3793862
-  },
-  "football|Italy Serie A|萨索洛|都灵|上半场客胜|ht|2026-08-30": {
-    "ev": 5.39,
-    "bb": 4.46,
-    "ts": 1787987964.900307
   },
   "football|Italy Serie A|蒙扎|乌迪内斯|上半场主胜|ht|2026-08-30": {
     "ev": 3.46,
@@ -9034,6 +9045,14 @@
   "football|Peru Liga 1|Comerciantes Unidos|FC Cajamarca|让球客胜|1x2|2026-08-29": {
     "ev": 3.4,
     "ts": 1787937069.9415512
+  },
+  "football|Peru Liga 1|Los Chankas CYC|Juan Pablo II|主胜|1x2|2026-08-30": {
+    "ev": 1.1,
+    "ts": 1788020613.4048488
+  },
+  "football|Peru Liga 1|Los Chankas CYC|Juan Pablo II|让球主胜|1x2|2026-08-30": {
+    "ev": 2.24,
+    "ts": 1788020613.4048882
   },
   "football|Peru Liga 1|Sport Boys Association|Sporting Cristal|让球主胜|1x2|2026-08-31": {
     "ev": 12.76,
@@ -12822,6 +12841,11 @@
     "bb": 4.45,
     "ts": 1788019791.739007
   },
+  "football|Turkey Super Lig|埃于普体育|阿拉尼亚体育|上半场主胜|ht|2026-08-31": {
+    "ev": 6.72,
+    "bb": 4.45,
+    "ts": 1788020330.648285
+  },
   "football|UAE Pro League|Al Ain FC|Al Nasr Dubai SC|上半场主胜|ht|2026-08-30": {
     "ev": 1.41,
     "ts": 1787935143.6204329
@@ -13093,6 +13117,10 @@
   "football|USA Major League Soccer|DC United|Los Angeles FC|上半场主胜|ht|2026-08-30": {
     "ev": 1.82,
     "ts": 1788008517.038233
+  },
+  "football|USA Major League Soccer|DC United|Los Angeles FC|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 1.03,
+    "ts": 1788020331.468684
   },
   "football|USA Major League Soccer|DC United|Los Angeles FC|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 21.11,
@@ -13757,9 +13785,9 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Turkey Super Lig|埃于普体育|阿拉尼亚体育|上半场主胜|ht|2026-08-31": {
-    "ev": 6.72,
-    "bb": 4.45,
-    "ts": 1788020330.648285
+  "football|Italy Serie A|萨索洛|都灵|上半场客胜|ht|2026-08-30": {
+    "ev": 9.74,
+    "bb": 4.62,
+    "ts": 1788020994.828685
   }
 }
