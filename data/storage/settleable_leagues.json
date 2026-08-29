@@ -736,7 +736,7 @@
       "success_rate": 0.0
     },
     "委内瑞拉杯": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -841,7 +841,7 @@
       "success_rate": 0.0
     },
     "埃及超级联赛": {
-      "attempts": 14,
+      "attempts": 15,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -981,7 +981,7 @@
       "success_rate": 0.0
     },
     "欧洲冠军联赛-资格赛附加赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1036,12 +1036,17 @@
       "success_rate": 0.0
     },
     "欧洲女子欧罗巴杯-资格赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "马来西亚超级联赛": {
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
     }
   },
-  "updated": "2026-08-29T10:14:19.423640+00:00",
+  "updated": "2026-08-29T12:43:46.313863+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
