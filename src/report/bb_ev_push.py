@@ -2412,17 +2412,13 @@ def _make_fingerprint(o: dict) -> str:
     # 盘口线参与指纹: 让球/大小球线变了 → 新机会, 不拦截
     line = o.get("line", "") or o.get("_line", "")
     line_str = f"|{line}" if line and sub in ("hc", "handicap", "ou", "over_under") else ""
-    # V5.11: 用稳定的 bb_match_id 标识比赛, 回退到归一化队名 — BB 中文名翻译抖动
-    # (SC波尔塔瓦↔波尔塔瓦)会改队名导致去重失效; bb_match_id 是 BB 比赛ID, 恒定不变。
+    # 2026-08-29 修复: 不再用 bb_match_id 当指纹 —— BB 会重铸 match_id(同一场 id 会变,
+    # 实测八户云罗里vs秋田蓝闪电 5164151→5356824), 导致同一场同一盘口被当两场重复推。
+    # 改用归一化队名(剥俱乐部前缀 SC/CD/CA... + 简繁体统一)当稳定标识, 队名抖动已由 _norm_team 吸收。
     # 注意: 保持 key 为 8 段(sport|league|home|away|designation|sub|line|date),
     # 下游 _opposite_direction 双边拦截按 parts[2..5] 索引, 段数不能变。
-    _mid = o.get("bb_match_id", "")
-    if _mid:
-        _home_part = f"id:{_mid}"
-        _away_part = "-"
-    else:
-        _home_part = _norm_team(o.get('home_cn', ''))
-        _away_part = _norm_team(o.get('away_cn', ''))
+    _home_part = _norm_team(o.get('home_cn', ''))
+    _away_part = _norm_team(o.get('away_cn', ''))
     return f"{_norm(o.get('sport',''))}|{_norm(o.get('league',''))}|{_home_part}|{_away_part}|{_norm(o.get('designation',''))}|{sub}{line_str}|{match_date}"
 
 
