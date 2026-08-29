@@ -1621,11 +1621,6 @@
     "bb": 4.93,
     "ts": 1787987964.900022
   },
-  "football|Brazil Serie A|瓦斯科达伽马|克鲁塞罗MG|上半场客胜|ht|2026-08-30": {
-    "ev": 4.89,
-    "bb": 5.0,
-    "ts": 1787980439.862255
-  },
   "football|Brazil Serie A|米内罗竞技|维多利亚|上半场客胜|ht|2026-08-30": {
     "ev": 5.72,
     "bb": 6.3,
@@ -1766,6 +1761,10 @@
   "football|Brazil Serie B|Gremio Novorizontino SP|Recife PE|让球客胜|1x2|2026-08-29": {
     "ev": 1.94,
     "ts": 1787930537.996395
+  },
+  "football|Brazil Serie B|Londrina EC PR|EC Juventude RS|上半场双重机会-主/客|ht_dc|2026-09-02": {
+    "ev": 1.98,
+    "ts": 1788047421.792023
   },
   "football|Brazil Serie B|Nautico PE|Athletic Club MG|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.15,
@@ -2984,6 +2983,10 @@
     "ev": 1.93,
     "ts": 1788024320.279945
   },
+  "football|Ecuador LigaPro Primera A|Delfin SC|Tecnico Universitario|上半场双重机会-主/客|ht_dc|2026-09-02": {
+    "ev": 2.18,
+    "ts": 1788047421.792468
+  },
   "football|Ecuador LigaPro Primera A|Guayaquil City FC|LDU Quito|上半场主胜|ht|2026-08-30": {
     "ev": 1.29,
     "ts": 1788036999.890822
@@ -3816,6 +3819,10 @@
     "ev": 3.63,
     "ts": 1787992117.15906
   },
+  "football|England League One|Bradford City|mbridge United|上半场双重机会-主/客|ht_dc|2026-09-02": {
+    "ev": 1.53,
+    "ts": 1788047421.792191
+  },
   "football|England League One|Bradford City|mbridge United|上半场精确进球others|exact_goals_ht|2026-09-02": {
     "ev": 1.88,
     "ts": 1788041558.115811
@@ -3995,6 +4002,10 @@
   "football|England League One|Wycombe Wanderers|Sheffield Wednesday|上半场正确比分others|correct_score_ht|2026-09-02": {
     "ev": 10.19,
     "ts": 1788041558.115993
+  },
+  "football|England League One|Wycombe Wanderers|Sheffield Wednesday|先进球neither|first_to_score|2026-09-02": {
+    "ev": 9.24,
+    "ts": 1788047421.7929301
   },
   "football|England League One|Wycombe Wanderers|Sheffield Wednesday|总进球区间7+|total_goals_range|2026-09-02": {
     "ev": 7.14,
@@ -10242,6 +10253,10 @@
     "ev": 1.7,
     "ts": 1788021480.359575
   },
+  "football|Norway 3rd Division|FK Fyllingsdalen|Austevoll|主胜|1x2|2026-08-30": {
+    "ev": 22.88,
+    "ts": 1788047205.259648
+  },
   "football|Norway 3rd Division|FK Fyllingsdalen|Austevoll|双重机会-主/和局|dc|2026-08-30": {
     "ev": 3.52,
     "ts": 1788046265.872212
@@ -10253,6 +10268,11 @@
   "football|Norway 3rd Division|Konnerud|Baerum SK|客胜|1x2|2026-08-30": {
     "ev": 1.68,
     "ts": 1787983581.112258
+  },
+  "football|Norway 3rd Division|费林根达伦|奥斯特沃尔|主胜|1x2|2026-08-30": {
+    "ev": 22.88,
+    "bb": 3.87,
+    "ts": 1788047204.754595
   },
   "football|Norway Eliteserien|Bodo/Glimt|Rosenborg BK|上半场主胜|ht|2026-08-30": {
     "ev": 1.25,
@@ -15305,6 +15325,10 @@
     "ev": 1.34,
     "ts": 1788047031.458144
   },
+  "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|上半场主胜|ht|2026-08-30": {
+    "ev": 1.47,
+    "ts": 1788047393.360167
+  },
   "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|上半场客胜|ht|2026-08-30": {
     "ev": 1.18,
     "ts": 1788045187.9762712
@@ -15752,9 +15776,9 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Norway 3rd Division|费林根达伦|奥斯特沃尔|主胜|1x2|2026-08-30": {
-    "ev": 22.88,
-    "bb": 3.87,
-    "ts": 1788047204.754595
+  "football|Brazil Serie A|瓦斯科达伽马|克鲁塞罗MG|上半场客胜|ht|2026-08-30": {
+    "ev": 9.2,
+    "bb": 5.4,
+    "ts": 1788047693.259691
   }
 }
