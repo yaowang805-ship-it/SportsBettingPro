@@ -844,6 +844,10 @@
     "ev": 101.66,
     "ts": 1787981781.437802
   },
+  "football|Belgium Challenger Pro League|Royal Excelsior Virton|Royal Francs Borains|让球主胜|1x2|2026-08-30": {
+    "ev": 1.43,
+    "ts": 1788012575.8091772
+  },
   "football|Belgium Challenger Pro League|Sporting Hasselt|KAA Gent II|上半场主胜|ht|2026-08-29": {
     "ev": 1.04,
     "ts": 1787906175.862647
@@ -2060,9 +2064,21 @@
     "bb": 1.95,
     "ts": 1787931277.570616
   },
+  "football|Czech Republic MSFL|CSK Uhersky Brod|FC Vsetin|客胜|1x2|2026-08-29": {
+    "ev": 2.86,
+    "ts": 1788012468.0408409
+  },
+  "football|Czech Republic MSFL|CSK Uhersky Brod|FC Vsetin|让球客胜|1x2|2026-08-29": {
+    "ev": 4.51,
+    "ts": 1788012468.040878
+  },
   "football|Czech Republic MSFL|SFK Vrchovina|MFK Karvina II|主胜|1x2|2026-08-29": {
     "ev": 6.54,
     "ts": 1788011504.105383
+  },
+  "football|Czech Republic MSFL|SFK Vrchovina|MFK Karvina II|客胜|1x2|2026-08-29": {
+    "ev": 4.15,
+    "ts": 1788012468.040802
   },
   "football|Czech Republic MSFL|SFK Vrchovina|MFK Karvina II|让球主胜|1x2|2026-08-29": {
     "ev": 5.34,
@@ -7439,6 +7455,10 @@
     "ev": 1.1,
     "ts": 1787979717.3822982
   },
+  "football|Kazakhstan Premier League|FC Ordabasy|FC Kyzylzhar SK|大球|1x2|2026-08-29": {
+    "ev": 6.45,
+    "ts": 1788012468.047032
+  },
   "football|Kazakhstan Premier League|FC Ordabasy|FC Kyzylzhar SK|让球主胜|1x2|2026-08-29": {
     "ev": 1.55,
     "ts": 1788006540.942636
@@ -7700,6 +7720,10 @@
   "football|Mexico Liga MX Women|Queretaro FC (w)|Monterrey (w)|双边进球-否|btts|2026-08-30": {
     "ev": 4.68,
     "ts": 1787977795.2563741
+  },
+  "football|Mexico Liga MX Women|Queretaro FC (w)|Monterrey (w)|双重机会-主/和局|dc|2026-08-30": {
+    "ev": 1.89,
+    "ts": 1788012575.80804
   },
   "football|Mexico Liga MX Women|Tigres UANL (w)|Pachuca (w)|小球|1x2|2026-08-30": {
     "ev": 1.89,
@@ -9036,6 +9060,18 @@
     "ev": 3.06,
     "ts": 1787963003.138943
   },
+  "football|Qatar Stars League|AL Duhail SC|Al Arabi Doha SC|单双-双|oe|2026-08-29": {
+    "ev": 1.87,
+    "ts": 1788012468.0404348
+  },
+  "football|Qatar Stars League|AL Duhail SC|Al Arabi Doha SC|双边进球-是|btts|2026-08-29": {
+    "ev": 1.11,
+    "ts": 1788012468.0403929
+  },
+  "football|Qatar Stars League|AL Duhail SC|Al Arabi Doha SC|和局|1x2|2026-08-29": {
+    "ev": 2.19,
+    "ts": 1788012468.040336
+  },
   "football|Qatar Stars League|AL Duhail SC|Al Arabi Doha SC|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 2.52,
     "ts": 1787963003.1563451
@@ -9862,6 +9898,10 @@
     "ev": 1.0,
     "ts": 1787985826.8278122
   },
+  "football|Scotland Premiership|FC Dundee|Hibernian FC|上半场主胜|ht|2026-08-30": {
+    "ev": 3.86,
+    "ts": 1788012575.808587
+  },
   "football|Scotland Premiership|FC Dundee|Hibernian FC|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 3.66,
     "ts": 1787987584.693233
@@ -9873,6 +9913,10 @@
   "football|Scotland Premiership|FC Dundee|Hibernian FC|双边进球-是|btts|2026-08-30": {
     "ev": 1.99,
     "ts": 1787981781.420736
+  },
+  "football|Scotland Premiership|FC Dundee|Hibernian FC|总进球区间7+|total_goals_range|2026-08-30": {
+    "ev": 20.21,
+    "ts": 1788012807.84312
   },
   "football|Scotland Premiership|FC Dundee|Hibernian FC|正确比分0-3|correct_score|2026-08-30": {
     "ev": 4.38,
@@ -9906,13 +9950,29 @@
     "ev": 2.25,
     "ts": 1788010925.694368
   },
+  "football|Serbia Superliga|FK Cukaricki Belgrade|FK Vojvodina Novi Sad|双重机会-主/和局|dc|2026-08-30": {
+    "ev": 2.23,
+    "ts": 1788012468.046071
+  },
   "football|Serbia Superliga|FK Cukaricki Belgrade|FK Vojvodina Novi Sad|客胜|1x2|2026-08-30": {
     "ev": 1.04,
     "ts": 1787944008.928759
   },
+  "football|Serbia Superliga|FK Cukaricki Belgrade|FK Vojvodina Novi Sad|让球主胜|1x2|2026-08-30": {
+    "ev": 1.52,
+    "ts": 1788012468.045989
+  },
   "football|Serbia Superliga|FK Radnicki Nis|FK Radnicki 1923 Kragujevac|让球主胜|1x2|2026-08-30": {
     "ev": 11.62,
     "ts": 1787976637.4485178
+  },
+  "football|Slovakia 2. Liga|FC STK 1914 Samorin|MSK Zilina B|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 2.66,
+    "ts": 1788012468.0469692
+  },
+  "football|Slovakia 2. Liga|FK Inter Bratislava|MFK Zvolen|客胜|1x2|2026-08-29": {
+    "ev": 9.34,
+    "ts": 1788012468.040916
   },
   "football|Slovakia 2. Liga|FK Pohronie|1. FC Tatran Presov|客胜|1x2|2026-08-29": {
     "ev": 1.07,
@@ -9925,6 +9985,11 @@
   "football|Slovakia 2. Liga|Vion Zlate Moravce|FK Slovan Galanta|小球|1x2|2026-08-30": {
     "ev": 1.02,
     "ts": 1787980440.82273
+  },
+  "football|Slovakia 2. Liga|国际巴迪斯拉华|泽沃伦火车头|客胜|1x2|2026-08-29": {
+    "ev": 9.34,
+    "bb": 3.33,
+    "ts": 1788012467.554975
   },
   "football|Slovakia Superliga|AS Trencin|MFK Ruzomberok|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 4.53,
@@ -12838,9 +12903,24 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Slovakia 2. Liga|国际巴迪斯拉华|泽沃伦火车头|客胜|1x2|2026-08-29": {
-    "ev": 9.34,
-    "bb": 3.33,
-    "ts": 1788012467.554975
+  "football|Czech Republic 1. Liga|帕尔杜比斯|SK阿尔蒂斯布杰诺|主胜|1x2|2026-08-29": {
+    "ev": 5.41,
+    "bb": 1.77,
+    "ts": 1788012993.579454
+  },
+  "football|Netherlands Eredivisie|SBV精英|鹿特丹斯巴达|上半场客胜|ht|2026-08-29": {
+    "ev": 5.96,
+    "bb": 3.8,
+    "ts": 1788012993.579558
+  },
+  "football|Spain LaLiga 2|萨瓦德尔|阿尔梅里亚|上半场主胜|ht|2026-08-29": {
+    "ev": 4.02,
+    "bb": 3.73,
+    "ts": 1788012993.579703
+  },
+  "football|Russia Premier League|格罗兹尼特里克|苏维埃之翼|上半场客胜|ht|2026-08-30": {
+    "ev": 3.02,
+    "bb": 5.6,
+    "ts": 1788012993.5797818
   }
 }
