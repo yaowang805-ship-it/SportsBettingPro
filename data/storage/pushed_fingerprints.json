@@ -5315,6 +5315,19 @@
     "ev": 1.06,
     "ts": 1788000426.1957362
   },
+  "football|Iceland 2. deild|Vikingur Olafsvik|Haukar Hafnarfjordur|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 3.24,
+    "ts": 1788009393.180192
+  },
+  "football|Iceland 2. deild|Vikingur Olafsvik|Haukar Hafnarfjordur|客胜|1x2|2026-08-29": {
+    "ev": 5.09,
+    "ts": 1788009393.180127
+  },
+  "football|Iceland 2. deild|奥拉夫斯维克维京|豪卡尔|客胜|1x2|2026-08-29": {
+    "ev": 5.09,
+    "bb": 2.26,
+    "ts": 1788009392.7149282
+  },
   "football|India Mizoram Premier League|Dinthar FC|Kanan FC|双重机会-和局/客|dc|2026-08-29": {
     "ev": 2.25,
     "ts": 1787993033.533103
@@ -6502,6 +6515,11 @@
     "ev": 4.27,
     "bb": 3.03,
     "ts": 1787890040.992046
+  },
+  "football|Italy Serie C|科森察|波坦察|上半场客胜|ht|2026-08-30": {
+    "ev": 4.34,
+    "bb": 3.12,
+    "ts": 1788009392.714973
   },
   "football|Japan Football League|Briobecca Urayasu|Minebea Mitsumi FC|主胜|1x2|2026-08-29": {
     "ev": 14.25,
@@ -7999,6 +8017,10 @@
     "ev": 1.06,
     "ts": 1788008200.749216
   },
+  "football|Netherlands Tweede Divisie|Amsterdamsche FC|Rohda Raalte|大球|1x2|2026-08-29": {
+    "ev": 2.3,
+    "ts": 1788009393.177502
+  },
   "football|Netherlands Tweede Divisie|HSV Hoek|SV Spakenburg|主胜|1x2|2026-08-29": {
     "ev": 4.55,
     "ts": 1788005362.848149
@@ -9472,6 +9494,10 @@
     "ev": 17.33,
     "ts": 1787981781.434956
   },
+  "football|Scotland Premiership|Celtic Glasgow|Falkirk FC|上半场主胜|ht|2026-08-29": {
+    "ev": 4.02,
+    "ts": 1788009393.178771
+  },
   "football|Scotland Premiership|Celtic Glasgow|Falkirk FC|上半场客胜|ht|2026-08-29": {
     "ev": 2.76,
     "ts": 1787926455.76237
@@ -9492,6 +9518,10 @@
     "ev": 1.99,
     "ts": 1788009035.897873
   },
+  "football|Scotland Premiership|Celtic Glasgow|Falkirk FC|总进球区间7+|total_goals_range|2026-08-29": {
+    "ev": 2.1,
+    "ts": 1788009393.18733
+  },
   "football|Scotland Premiership|Celtic Glasgow|Falkirk FC|正确比分2-2|correct_score|2026-08-29": {
     "ev": 8.33,
     "ts": 1787926738.9023302
@@ -9499,6 +9529,10 @@
   "football|Scotland Premiership|Celtic Glasgow|Falkirk FC|正确比分3-2|correct_score|2026-08-29": {
     "ev": 4.8,
     "ts": 1787926738.9022899
+  },
+  "football|Scotland Premiership|Celtic Glasgow|Falkirk FC|让球主胜|1x2|2026-08-29": {
+    "ev": 8.78,
+    "ts": 1788009393.178828
   },
   "football|Scotland Premiership|Celtic Glasgow|Falkirk FC|让球客胜|1x2|2026-08-29": {
     "ev": 1.0,
@@ -11600,6 +11634,10 @@
     "ev": 2.06,
     "ts": 1788008701.671736
   },
+  "football|UAE Pro League|Al Jazira (UAE)|Ajman Club|客胜|1x2|2026-08-29": {
+    "ev": 2.53,
+    "ts": 1788009393.177713
+  },
   "football|UAE Pro League|Al Jazira (UAE)|Ajman Club|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 14.28,
     "ts": 1787926738.9009001
@@ -12020,6 +12058,10 @@
     "ev": 2.98,
     "ts": 1787897204.797944
   },
+  "football|USA National Women Soccer League|Kansas City Current (w)|North Carolina Courage (w)|大球|1x2|2026-08-30": {
+    "ev": 2.83,
+    "ts": 1788009765.816483
+  },
   "football|USA National Women Soccer League|丹佛巅峰 (女)|芝加哥红星 (女)|双重机会-和局/客|dc|2026-08-30": {
     "ev": 9.85,
     "bb": 3.94,
@@ -12391,14 +12433,9 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Iceland 2. deild|奥拉夫斯维克维京|豪卡尔|客胜|1x2|2026-08-29": {
-    "ev": 5.09,
-    "bb": 2.26,
-    "ts": 1788009392.7149282
-  },
-  "football|Italy Serie C|科森察|波坦察|上半场客胜|ht|2026-08-30": {
-    "ev": 4.34,
-    "bb": 3.12,
-    "ts": 1788009392.714973
+  "football|England League One|谢周三|布罗姆利|主胜|1x2|2026-08-29": {
+    "ev": 6.24,
+    "bb": 1.96,
+    "ts": 1788009794.533772
   }
 }
