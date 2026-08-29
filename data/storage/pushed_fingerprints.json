@@ -2831,6 +2831,10 @@
     "ev": 3.33,
     "ts": 1787994272.53228
   },
+  "football|Czech Republic MSFL|SK Unicov|TJ Unie Hlubina|客胜|1x2|2026-08-30": {
+    "ev": 3.32,
+    "ts": 1788044652.507657
+  },
   "football|Czech Republic MSFL|SK Unicov|TJ Unie Hlubina|让球主胜|1x2|2026-08-30": {
     "ev": 1.04,
     "ts": 1787993927.307035
@@ -2931,6 +2935,10 @@
   "football|Ecuador LigaPro Primera A|CS Emelec|Club Leones Del Norte|上半场双重机会-主/客|ht_dc|2026-08-31": {
     "ev": 2.87,
     "ts": 1787975485.218014
+  },
+  "football|Ecuador LigaPro Primera A|CS Emelec|Club Leones Del Norte|主胜|1x2|2026-08-31": {
+    "ev": 1.35,
+    "ts": 1788044963.304244
   },
   "football|Ecuador LigaPro Primera A|CS Emelec|Club Leones Del Norte|半/全场-客/主|htft|2026-08-31": {
     "ev": 15.98,
@@ -4738,6 +4746,10 @@
   "football|England Premier League|AFC Bournemouth|Everton FC|正确比分3-1|correct_score|2026-08-29": {
     "ev": 3.55,
     "ts": 1787926738.900984
+  },
+  "football|England Premier League|Chelsea FC|Brighton & Hove Albion FC|上半场客胜|ht|2026-08-30": {
+    "ev": 1.51,
+    "ts": 1788044652.509196
   },
   "football|England Premier League|Chelsea FC|Brighton & Hove Albion FC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 14.65,
@@ -10257,6 +10269,10 @@
     "ev": 2.64,
     "ts": 1787996317.132619
   },
+  "football|Peru Liga 1|Alianza Lima|Deportivo Garcilaso|上半场客胜|ht|2026-08-30": {
+    "ev": 5.92,
+    "ts": 1788044533.223888
+  },
   "football|Peru Liga 1|Alianza Lima|Deportivo Garcilaso|单双-双|oe|2026-08-30": {
     "ev": 2.7,
     "ts": 1787963720.620418
@@ -10320,6 +10336,14 @@
   "football|Peru Liga 1|Los Chankas CYC|Juan Pablo II|让球主胜|1x2|2026-08-30": {
     "ev": 2.24,
     "ts": 1788020613.4048882
+  },
+  "football|Peru Liga 1|Moquegua|Alianza Atletico|上半场主胜|ht|2026-08-31": {
+    "ev": 3.31,
+    "ts": 1788044652.5130072
+  },
+  "football|Peru Liga 1|Moquegua|Alianza Atletico|让球主胜|1x2|2026-08-31": {
+    "ev": 1.11,
+    "ts": 1788044963.305228
   },
   "football|Peru Liga 1|Sport Boys Association|Sporting Cristal|让球主胜|1x2|2026-08-31": {
     "ev": 12.76,
@@ -14553,6 +14577,10 @@
     "ev": 19.1,
     "ts": 1788021144.4538581
   },
+  "football|UAE Pro League|Hatta SC|Sharjah FC|总进球区间7+|total_goals_range|2026-08-30": {
+    "ev": 30.02,
+    "ts": 1788044963.306756
+  },
   "football|UAE Pro League|Hatta SC|Sharjah FC|让球客胜|1x2|2026-08-30": {
     "ev": 3.2,
     "ts": 1788021480.360173
@@ -14666,6 +14694,10 @@
     "ev": 1.56,
     "ts": 1787982573.423678
   },
+  "football|USA Major League Soccer|Atlanta United FC|Charlotte FC|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 1.17,
+    "ts": 1788044533.223115
+  },
   "football|USA Major League Soccer|Atlanta United FC|Charlotte FC|和局|1x2|2026-08-30": {
     "ev": 1.39,
     "ts": 1787963003.1404219
@@ -14677,6 +14709,10 @@
   "football|USA Major League Soccer|Atlanta United FC|Charlotte FC|正确比分1-1|correct_score|2026-08-30": {
     "ev": 4.71,
     "ts": 1787963003.165521
+  },
+  "football|USA Major League Soccer|Atlanta United FC|Charlotte FC|让球客胜|1x2|2026-08-30": {
+    "ev": 2.99,
+    "ts": 1788044533.22304
   },
   "football|USA Major League Soccer|Colorado Rapids|Real Salt Lake|上半场客胜|ht|2026-08-30": {
     "ev": 1.77,
@@ -14870,6 +14906,10 @@
     "ev": 32.06,
     "ts": 1787963003.166213
   },
+  "football|USA Major League Soccer|New York Red Bulls|Philadelphia Union|双重机会-主/和局|dc|2026-08-30": {
+    "ev": 2.28,
+    "ts": 1788044533.2232609
+  },
   "football|USA Major League Soccer|New York Red Bulls|Philadelphia Union|和局|1x2|2026-08-30": {
     "ev": 1.38,
     "ts": 1788031979.91574
@@ -14877,6 +14917,10 @@
   "football|USA Major League Soccer|New York Red Bulls|Philadelphia Union|总进球区间7+|total_goals_range|2026-08-30": {
     "ev": 1.76,
     "ts": 1788030300.8599029
+  },
+  "football|USA Major League Soccer|New York Red Bulls|Philadelphia Union|让球主胜|1x2|2026-08-30": {
+    "ev": 3.5,
+    "ts": 1788044533.223221
   },
   "football|USA Major League Soccer|Portland Timbers|Austin FC|上半场正确比分1-2|correct_score_ht|2026-08-30": {
     "ev": 11.67,
@@ -14917,6 +14961,10 @@
   "football|USA Major League Soccer|Saint Louis City SC|FC Dallas|上半场正确比分0-2|correct_score_ht|2026-08-31": {
     "ev": 26.27,
     "ts": 1787981781.443865
+  },
+  "football|USA Major League Soccer|Saint Louis City SC|FC Dallas|小球|1x2|2026-08-31": {
+    "ev": 1.26,
+    "ts": 1788044963.3054059
   },
   "football|USA Major League Soccer|San Diego FC|Los Angeles Galaxy|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 25.69,
@@ -15014,6 +15062,10 @@
     "ev": 1.17,
     "ts": 1787981994.422234
   },
+  "football|USA Major League Soccer|Toronto FC|New York City FC|双重机会-主/和局|dc|2026-08-30": {
+    "ev": 2.03,
+    "ts": 1788044533.223396
+  },
   "football|USA Major League Soccer|Toronto FC|New York City FC|和局|1x2|2026-08-30": {
     "ev": 1.71,
     "ts": 1788002770.943412
@@ -15033,6 +15085,15 @@
   "football|USA Major League Soccer|Toronto FC|New York City FC|正确比分1-1|correct_score|2026-08-30": {
     "ev": 6.33,
     "ts": 1787963003.165875
+  },
+  "football|USA Major League Soccer|Toronto FC|New York City FC|让球主胜|1x2|2026-08-30": {
+    "ev": 5.22,
+    "ts": 1788044533.223336
+  },
+  "football|USA Major League Soccer|多伦多FC|纽约城|和局|1x2|2026-08-30": {
+    "ev": 10.45,
+    "bb": 4.15,
+    "ts": 1788044532.496573
   },
   "football|USA National Women Soccer League|Denver Summit FC (w)|Chicago Red Stars (w)|双重机会-和局/客|dc|2026-08-30": {
     "ev": 9.85,
@@ -15167,6 +15228,10 @@
     "ev": 1.23,
     "ts": 1788029947.794682
   },
+  "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|客胜|1x2|2026-08-30": {
+    "ev": 2.45,
+    "ts": 1788044852.479367
+  },
   "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|让球主胜|1x2|2026-08-30": {
     "ev": 1.94,
     "ts": 1788012313.839608
@@ -15222,6 +15287,10 @@
   "football|USL Championship|Phoenix Rising FC|Indy Eleven|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 17.54,
     "ts": 1788029117.28273
+  },
+  "football|USL Championship|Phoenix Rising FC|Indy Eleven|让球客胜|1x2|2026-08-30": {
+    "ev": 1.0,
+    "ts": 1788044533.2236202
   },
   "football|USL Championship|Pittsburgh Riverhounds|Tampa Bay Rowdies|上半场主胜|ht|2026-08-30": {
     "ev": 3.99,
@@ -15590,9 +15659,9 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|USA Major League Soccer|多伦多FC|纽约城|和局|1x2|2026-08-30": {
-    "ev": 10.45,
-    "bb": 4.15,
-    "ts": 1788044532.496573
+  "football|Japan Regional League|七滨SC|大山SC|主胜|1x2|2026-08-30": {
+    "ev": 30.73,
+    "bb": 5.7,
+    "ts": 1788045187.366828
   }
 }

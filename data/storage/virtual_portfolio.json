@@ -1,5 +1,5 @@
 {
-  "balance": 4830.53,
+  "balance": 4762.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3818,6 +3818,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788046200,
       "created_at": "2026-08-29T23:02:12.478095+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_七滨SC_大山SC_主胜",
+      "sport": "football",
+      "league": "日本地区联赛",
+      "home_team": "七滨SC",
+      "away_team": "大山SC",
+      "home_cn": "七滨SC",
+      "away_cn": "大山SC",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 5.7,
+      "stake": 68,
+      "model_prob": 0.2294,
+      "ev_pct": 30.73,
+      "pin_odds": 3.54,
+      "fair_price": 4.36,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788066000,
+      "created_at": "2026-08-29T23:13:07.355095+00:00",
       "track_only": false
     }
   ],
@@ -8700,8 +8723,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 1273.0,
-    "bets": 19
+    "used": 1341.0,
+    "bets": 20
   },
   "updated": null
 }
