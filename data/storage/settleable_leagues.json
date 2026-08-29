@@ -816,8 +816,8 @@
       "success_rate": 0.0
     },
     "英格兰超级联赛": {
-      "attempts": 1,
-      "successes": 1,
+      "attempts": 3,
+      "successes": 3,
       "success_rate": 1.0
     },
     "意大利甲级联赛": {
@@ -1004,9 +1004,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "法国甲级联赛": {
+      "attempts": 1,
+      "successes": 1,
+      "success_rate": 1.0
     }
   },
-  "updated": "2026-08-29T00:13:26.934005+00:00",
+  "updated": "2026-08-29T00:18:24.159951+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

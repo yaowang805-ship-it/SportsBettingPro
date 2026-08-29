@@ -670,6 +670,10 @@
     "ev": 17.27,
     "ts": 1787926738.897048
   },
+  "football|Belgium Pro League|Raal La Louviere|KV Mechelen|单双-双|oe|2026-08-29": {
+    "ev": 2.04,
+    "ts": 1787944820.5178509
+  },
   "football|Belgium Pro League|id:5130012|-|上半场主胜|ht|2026-08-29": {
     "ev": 2.8,
     "bb": 2.08,
@@ -2537,6 +2541,10 @@
     "bb": 2.08,
     "ts": 1787919892.0994408
   },
+  "football|France Ligue 1|AJ Auxerre|Angers SCO|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 3.05,
+    "ts": 1787944820.645698
+  },
   "football|France Ligue 1|AJ Auxerre|Angers SCO|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 4.84,
     "ts": 1787944382.543915
@@ -2593,9 +2601,17 @@
     "ev": 2.09,
     "ts": 1787933584.395065
   },
+  "football|France Ligue 1|Olympique Lyonnais|Le Havre AC|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 1.4,
+    "ts": 1787944820.646205
+  },
   "football|France Ligue 1|Olympique Lyonnais|Le Havre AC|正确比分1-2|correct_score|2026-08-30": {
     "ev": 1.44,
     "ts": 1787942981.63996
+  },
+  "football|France Ligue 1|Stade Brest 29|Toulouse FC|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 2.66,
+    "ts": 1787944820.645948
   },
   "football|France Ligue 1|Stade Brest 29|Toulouse FC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 11.91,
@@ -2633,6 +2649,11 @@
     "ev": 3.38,
     "bb": 1.79,
     "ts": 1787943666.653431
+  },
+  "football|France Ligue 1|id:5316933|-|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 3.05,
+    "bb": 1.8,
+    "ts": 1787944816.419326
   },
   "football|France Ligue 1|id:5440667|-|和局|1x2|2026-08-29": {
     "ev": 6.52,
@@ -3278,6 +3299,10 @@
     "bb": 9.7,
     "ts": 1787937664.315913
   },
+  "football|Greece Super League|Panetolikos|PAE PS Kalamata|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 3.32,
+    "ts": 1787944820.6565309
+  },
   "football|Greece Super League|Panetolikos|PAE PS Kalamata|半/全场-主/客|htft|2026-08-30": {
     "ev": 27.03,
     "ts": 1787942388.630791
@@ -3289,6 +3314,11 @@
   "football|Greece Super League|Volos NFC|Iraklis 1908 FC|半/全场-客/主|htft|2026-08-30": {
     "ev": 4.86,
     "ts": 1787942388.630742
+  },
+  "football|Greece Super League|id:5355988|-|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 3.32,
+    "bb": 1.94,
+    "ts": 1787944816.419533
   },
   "football|Guatemala Liga Nacional|Suchitepequez|CSD Coban Imperial|主胜|1x2|2026-08-29": {
     "ev": 1.54,
@@ -3861,6 +3891,10 @@
     "bb": 4.43,
     "ts": 1787941175.62528
   },
+  "football|Italy Serie B|Ascoli Calcio 1898 FC|rrarese Calcio 1908|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 1.19,
+    "ts": 1787944820.6569338
+  },
   "football|Italy Serie B|Ascoli Calcio 1898 FC|rrarese Calcio 1908|上半场客胜|ht|2026-08-30": {
     "ev": 4.12,
     "ts": 1787944382.387818
@@ -3877,9 +3911,21 @@
     "ev": 3.39,
     "ts": 1787936722.6871612
   },
+  "football|Italy Serie B|US Avellino 1912|LR Vicenza|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 1.25,
+    "ts": 1787944820.65819
+  },
   "football|Italy Serie B|US Avellino 1912|LR Vicenza|上半场客胜|ht|2026-08-30": {
     "ev": 3.44,
     "ts": 1787944382.388122
+  },
+  "football|Italy Serie B|US Avellino 1912|LR Vicenza|半/全场-主/和局|htft|2026-08-30": {
+    "ev": 4.98,
+    "ts": 1787944820.658017
+  },
+  "football|Italy Serie B|US Avellino 1912|LR Vicenza|单双-双|oe|2026-08-30": {
+    "ev": 1.36,
+    "ts": 1787944820.657875
   },
   "football|Italy Serie B|US Avellino 1912|LR Vicenza|和局|1x2|2026-08-30": {
     "ev": 2.48,
@@ -3969,6 +4015,11 @@
     "bb": 6.55,
     "ts": 1787941175.62531
   },
+  "football|Italy Serie B|id:5357686|-|上半场客胜|ht|2026-08-30": {
+    "ev": 4.12,
+    "bb": 6.1,
+    "ts": 1787944816.419847
+  },
   "football|Italy Serie B|id:5388988|-|上半场客胜|ht|2026-08-29": {
     "ev": 5.3,
     "bb": 5.35,
@@ -3983,6 +4034,10 @@
     "ev": 7.49,
     "bb": 6.55,
     "ts": 1787937281.7204611
+  },
+  "football|Italy Serie B|lcio Padova|Hellas Verona|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 1.66,
+    "ts": 1787944820.6574268
   },
   "football|Italy Serie B|克雷莫纳|摩德纳|上半场客胜|ht|2026-08-29": {
     "ev": 4.57,
@@ -6747,6 +6802,10 @@
     "ev": 6.57,
     "ts": 1787933216.281899
   },
+  "football|Turkey 1. Lig|Kayserispor|Bursaspor|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 2.74,
+    "ts": 1787944820.647739
+  },
   "football|Turkey 1. Lig|Kayserispor|Bursaspor|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 20.8,
     "ts": 1787933216.281857
@@ -6860,6 +6919,11 @@
     "ev": 4.92,
     "bb": 1.73,
     "ts": 1787940510.893879
+  },
+  "football|Turkey 1. Lig|id:5357499|-|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 2.74,
+    "bb": 1.87,
+    "ts": 1787944816.419702
   },
   "football|Turkey 1. Lig|id:5480984|-|上半场客胜|ht|2026-08-29": {
     "ev": 3.38,
@@ -8188,24 +8252,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|France Ligue 1|id:5316933|-|上半场双重机会-主/客|ht_dc|2026-08-30": {
-    "ev": 3.05,
-    "bb": 1.8,
-    "ts": 1787944816.419326
-  },
-  "football|Greece Super League|id:5355988|-|上半场双重机会-主/客|ht_dc|2026-08-30": {
-    "ev": 3.32,
-    "bb": 1.94,
-    "ts": 1787944816.419533
-  },
-  "football|Turkey 1. Lig|id:5357499|-|上半场双重机会-主/客|ht_dc|2026-08-30": {
-    "ev": 2.74,
-    "bb": 1.87,
-    "ts": 1787944816.419702
-  },
-  "football|Italy Serie B|id:5357686|-|上半场客胜|ht|2026-08-30": {
-    "ev": 4.12,
-    "bb": 6.1,
-    "ts": 1787944816.419847
+  "football|Mexico Liga MX|id:5083824|-|上半场客胜|ht|2026-08-29": {
+    "ev": 4.37,
+    "bb": 4.51,
+    "ts": 1787962880.058812
   }
 }
