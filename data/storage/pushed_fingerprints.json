@@ -2052,6 +2052,14 @@
     "bb": 1.95,
     "ts": 1787931277.570616
   },
+  "football|Czech Republic MSFL|SFK Vrchovina|MFK Karvina II|主胜|1x2|2026-08-29": {
+    "ev": 6.54,
+    "ts": 1788011504.105383
+  },
+  "football|Czech Republic MSFL|SFK Vrchovina|MFK Karvina II|让球主胜|1x2|2026-08-29": {
+    "ev": 5.34,
+    "ts": 1788011504.105449
+  },
   "football|Czech Republic MSFL|SFK Vrchovina|MFK Karvina II|让球客胜|1x2|2026-08-29": {
     "ev": 3.97,
     "ts": 1787929729.050066
@@ -2067,6 +2075,11 @@
   "football|Czech Republic MSFL|SK Unicov|TJ Unie Hlubina|让球客胜|1x2|2026-08-30": {
     "ev": 2.7,
     "ts": 1787997962.062922
+  },
+  "football|Czech Republic MSFL|维霍维纳|卡尔维纳二队|主胜|1x2|2026-08-29": {
+    "ev": 6.54,
+    "bb": 1.99,
+    "ts": 1788011503.57785
   },
   "football|Denmark 2nd Division Women|Ballerup Skovlunde Fodbold (w)|Fredensborg BI (w)|主胜|1x2|2026-08-29": {
     "ev": 7.85,
@@ -2457,6 +2470,10 @@
   "football|England Championship League|Blackburn Rovers|Queens Park Rangers|正确比分3-0|correct_score|2026-08-29": {
     "ev": 3.11,
     "ts": 1787969807.182443
+  },
+  "football|England Championship League|Blackburn Rovers|Queens Park Rangers|角球大球|corner|2026-08-29": {
+    "ev": 1.15,
+    "ts": 1788011504.112781
   },
   "football|England Championship League|Blackburn Rovers|Queens Park Rangers|让球主胜|1x2|2026-08-29": {
     "ev": 2.37,
@@ -2976,6 +2993,10 @@
     "ev": 4.89,
     "ts": 1787985178.357059
   },
+  "football|England League One|Notts County|Burton Albion|单双-双|oe|2026-08-29": {
+    "ev": 1.17,
+    "ts": 1788011504.10384
+  },
   "football|England League One|Notts County|Burton Albion|双边进球-是|btts|2026-08-29": {
     "ev": 1.9,
     "ts": 1787976637.439279
@@ -3194,6 +3215,10 @@
     "ev": 1.27,
     "ts": 1787926173.2757719
   },
+  "football|England League Two|Crawley Town|Bristol Rovers|双重机会-主/和局|dc|2026-08-29": {
+    "ev": 5.8,
+    "ts": 1788011504.104099
+  },
   "football|England League Two|Crawley Town|Bristol Rovers|大球|1x2|2026-08-29": {
     "ev": 1.43,
     "ts": 1787926455.7613409
@@ -3242,6 +3267,10 @@
     "ev": 1.1,
     "ts": 1787985178.348819
   },
+  "football|England League Two|Grimsby Town|Fleetwood Town|上半场正确比分0-2|correct_score_ht|2026-08-29": {
+    "ev": 20.25,
+    "ts": 1788011504.1155999
+  },
   "football|England League Two|Grimsby Town|Fleetwood Town|上半场正确比分2-0|correct_score_ht|2026-08-29": {
     "ev": 3.04,
     "ts": 1787995228.1348338
@@ -3277,6 +3306,10 @@
   "football|England League Two|Newport County|Tranmere Rovers|双边进球-是|btts|2026-08-29": {
     "ev": 2.37,
     "ts": 1787926173.276073
+  },
+  "football|England League Two|Newport County|Tranmere Rovers|让球客胜|1x2|2026-08-29": {
+    "ev": 11.78,
+    "ts": 1788011504.104165
   },
   "football|England League Two|Oldham Athletic|Swindon Town|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.5,
@@ -3637,6 +3670,10 @@
     "ev": 6.32,
     "ts": 1787926173.279469
   },
+  "football|England Premier League|Coventry City|Hull City|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 2.27,
+    "ts": 1788011504.103241
+  },
   "football|England Premier League|Coventry City|Hull City|和局|1x2|2026-08-29": {
     "ev": 1.97,
     "ts": 1787926173.274646
@@ -3838,6 +3875,10 @@
   "football|Estonia Meistriliiga|FC Kuressaare|Parnu JK Vaprus|上半场主胜|ht|2026-08-29": {
     "ev": 1.45,
     "ts": 1788010925.702396
+  },
+  "football|Estonia Meistriliiga|FC Kuressaare|Parnu JK Vaprus|主胜|1x2|2026-08-29": {
+    "ev": 1.36,
+    "ts": 1788011504.111371
   },
   "football|Estonia Meistriliiga|FC Kuressaare|Parnu JK Vaprus|让球主胜|1x2|2026-08-29": {
     "ev": 1.5,
@@ -8750,6 +8791,11 @@
     "ev": 1.76,
     "ts": 1787981781.440953
   },
+  "football|Portugal Primeira Liga|艾华卡|圣克拉拉|上半场客胜|ht|2026-08-29": {
+    "ev": 4.65,
+    "bb": 4.21,
+    "ts": 1788011503.577898
+  },
   "football|Portugal Segunda Liga|AVS Futebol Sad|Feirense|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.38,
     "ts": 1787983581.111915
@@ -9666,6 +9712,14 @@
     "ev": 1.06,
     "ts": 1787937665.2111712
   },
+  "football|Scotland League Two|Elgin City FC|Stirling Albion FC|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 4.21,
+    "ts": 1788011504.105064
+  },
+  "football|Scotland League Two|Elgin City FC|Stirling Albion FC|客胜|1x2|2026-08-29": {
+    "ev": 6.63,
+    "ts": 1788011504.1049972
+  },
   "football|Scotland League Two|Spartans FC|Clyde FC|主胜|1x2|2026-08-29": {
     "ev": 4.37,
     "ts": 1787926455.762454
@@ -9839,6 +9893,10 @@
   "football|Slovakia Superliga|MFK Dukla Banska Bystrica|KFC Komarno|大球|1x2|2026-08-30": {
     "ev": 1.17,
     "ts": 1788002770.942615
+  },
+  "football|Slovakia Superliga|MFK Dukla Banska Bystrica|KFC Komarno|总进球区间7+|total_goals_range|2026-08-30": {
+    "ev": 1.1,
+    "ts": 1788011504.120116
   },
   "football|Slovakia Superliga|MFK Skalica|DAC 1904 Dunajska Streda|半/全场-客/主|htft|2026-08-30": {
     "ev": 2.63,
@@ -12696,14 +12754,24 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Czech Republic MSFL|维霍维纳|卡尔维纳二队|主胜|1x2|2026-08-29": {
-    "ev": 6.54,
-    "bb": 1.99,
-    "ts": 1788011503.57785
+  "football|England League Two|克劳利|布里斯托尔城流浪|客胜|1x2|2026-08-29": {
+    "ev": 14.7,
+    "bb": 2.03,
+    "ts": 1788011843.773417
   },
-  "football|Portugal Primeira Liga|艾华卡|圣克拉拉|上半场客胜|ht|2026-08-29": {
-    "ev": 4.65,
-    "bb": 4.21,
-    "ts": 1788011503.577898
+  "football|Iceland 3. deild|雷弗图尔|艾格纳比利克|主胜|1x2|2026-08-30": {
+    "ev": 5.57,
+    "bb": 1.34,
+    "ts": 1788011843.773464
+  },
+  "football|England Premier League|考文垂|赫尔城|和局|1x2|2026-08-29": {
+    "ev": 6.77,
+    "bb": 4.24,
+    "ts": 1788011843.773503
+  },
+  "football|England League Two|科切斯特联|罗奇代尔|上半场客胜|ht|2026-08-29": {
+    "ev": 5.15,
+    "bb": 4.98,
+    "ts": 1788011843.77354
   }
 }
