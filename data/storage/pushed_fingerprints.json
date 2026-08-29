@@ -1,12 +1,4 @@
 {
-  "baseball|Japan Professional Baseball|Hanshin Tigers|Yomiuri Giants|大分|1x2|2026-08-28": {
-    "ev": 2.01,
-    "ts": 1787900459.728234
-  },
-  "baseball|Korea Republic KBO League|Lotte Giants|LG Twins|让分客胜|1x2|2026-08-28": {
-    "ev": 1.02,
-    "ts": 1787854475.688593
-  },
   "baseball|MLB|Cleveland Guardians|Kansas City Royals|小分|1x2|2026-08-29": {
     "ev": 2.48,
     "ts": 1787920739.471122
@@ -31,14 +23,6 @@
     "ev": 10.72,
     "ts": 1787943453.207219
   },
-  "basketball|Brazil Campeonato Paulista de Basquete|Sao Jose dos Campos|EC Pinheiros SP|主胜|1x2|2026-08-28": {
-    "ev": 2.44,
-    "ts": 1787783650.98156
-  },
-  "basketball|Brazil Campeonato Paulista de Basquete|Sesi Franca BC SP|Mogi das Cruzes|客胜|1x2|2026-08-28": {
-    "ev": 1.15,
-    "ts": 1787862309.682323
-  },
   "basketball|Mexico LNBP Basketball League|Panteras de Aguascalientes|Correcaminos UAT Victoria|主胜|1x2|2026-08-29": {
     "ev": 2.59,
     "ts": 1787905295.077587
@@ -46,6 +30,10 @@
   "basketball|Mexico LNBP Basketball League|Panteras de Aguascalientes|Correcaminos UAT Victoria|让分客胜|1x2|2026-08-29": {
     "ev": 5.32,
     "ts": 1787888754.01937
+  },
+  "basketball|WNBA|Las Vegas Aces (w)|Toronto Tempo (w)|让分客胜|1x2|2026-08-29": {
+    "ev": 1.5,
+    "ts": 1787966939.267094
   },
   "basketball|WNBA|Los Angeles Sparks (w)|Washington Mystics (w)|大分|1x2|2026-08-29": {
     "ev": 1.11,
@@ -59,176 +47,6 @@
     "ev": 1.39,
     "ts": 1787914483.03113
   },
-  "basketball|WNBA|New York Liberty (w)|Golden State Valkyries (w)|主胜|1x2|2026-08-28": {
-    "ev": 3.12,
-    "ts": 1787814571.3193011
-  },
-  "basketball|WNBA|New York Liberty (w)|Golden State Valkyries (w)|大分|1x2|2026-08-28": {
-    "ev": 2.02,
-    "ts": 1787873471.388881
-  },
-  "basketball|WNBA|New York Liberty (w)|Golden State Valkyries (w)|让分主胜|1x2|2026-08-28": {
-    "ev": 2.85,
-    "ts": 1787813967.825045
-  },
-  "basketball|WNBA|New York Liberty (w)|Golden State Valkyries (w)|让分客胜|1x2|2026-08-28": {
-    "ev": 1.52,
-    "ts": 1787833178.181818
-  },
-  "basketball|WNBA|Phoenix Mercury (w)|Washington Mystics (w)|大分|1x2|2026-08-28": {
-    "ev": 1.43,
-    "ts": 1787872556.990092
-  },
-  "basketball|WNBA|Phoenix Mercury (w)|Washington Mystics (w)|小分|1x2|2026-08-28": {
-    "ev": 1.96,
-    "ts": 1787849741.411349
-  },
-  "basketball|WNBA|Phoenix Mercury (w)|Washington Mystics (w)|让分主胜|1x2|2026-08-28": {
-    "ev": 2.5,
-    "ts": 1787814571.319257
-  },
-  "football|Algeria Ligue 1|ES Setif|ES Ben Aknoun|上半场主胜|ht|2026-08-28": {
-    "ev": 4.16,
-    "ts": 1787834105.410927
-  },
-  "football|Algeria Ligue 1|ES Setif|ES Ben Aknoun|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 2.59,
-    "ts": 1787771507.293365
-  },
-  "football|Algeria Ligue 1|ES Setif|ES Ben Aknoun|上半场客胜|ht|2026-08-28": {
-    "ev": 4.37,
-    "ts": 1787808040.706787
-  },
-  "football|Algeria Ligue 1|MC Alger|MC Oran|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.73,
-    "ts": 1787783650.981201
-  },
-  "football|Algeria Ligue 1|MC Alger|MC Oran|上半场客胜|ht|2026-08-28": {
-    "ev": 14.25,
-    "ts": 1787774511.775601
-  },
-  "football|Algeria Ligue 1|塞堤夫|阿科诺|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 4.99,
-    "bb": 1.9,
-    "ts": 1787817321.591228
-  },
-  "football|Algeria Ligue 1|塞堤夫|阿科诺|上半场客胜|ht|2026-08-28": {
-    "ev": 4.37,
-    "bb": 7.25,
-    "ts": 1787808040.287719
-  },
-  "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 4.4,
-    "ts": 1787783650.981481
-  },
-  "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|上半场客胜|ht|2026-08-28": {
-    "ev": 15.04,
-    "ts": 1787781683.380777
-  },
-  "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|主胜|1x2|2026-08-28": {
-    "ev": 2.31,
-    "ts": 1787831978.237103
-  },
-  "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|大球|1x2|2026-08-28": {
-    "ev": 3.29,
-    "ts": 1787834680.8043
-  },
-  "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|角球大球|corner|2026-08-28": {
-    "ev": 1.0,
-    "ts": 1787865043.669442
-  },
-  "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|让球主胜|1x2|2026-08-28": {
-    "ev": 3.98,
-    "ts": 1787834371.347317
-  },
-  "football|Argentina Cup|Estudiantes de La Plata|Barracas Central|让球客胜|1x2|2026-08-28": {
-    "ev": 1.04,
-    "ts": 1787832248.4107132
-  },
-  "football|Argentina Cup|Platense|Instituto AC Cordoba|上半场主胜|ht|2026-08-28": {
-    "ev": 2.42,
-    "ts": 1787810708.021045
-  },
-  "football|Argentina Cup|Platense|Instituto AC Cordoba|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 6.03,
-    "ts": 1787800575.444567
-  },
-  "football|Argentina Cup|Platense|Instituto AC Cordoba|上半场客胜|ht|2026-08-28": {
-    "ev": 1.82,
-    "ts": 1787789850.79289
-  },
-  "football|Argentina Cup|Platense|Instituto AC Cordoba|单双-双|oe|2026-08-28": {
-    "ev": 2.87,
-    "ts": 1787800575.444531
-  },
-  "football|Argentina Cup|Platense|Instituto AC Cordoba|双边进球-是|btts|2026-08-28": {
-    "ev": 2.6,
-    "ts": 1787829417.4122272
-  },
-  "football|Argentina Cup|Platense|Instituto AC Cordoba|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 1.09,
-    "ts": 1787873818.223433
-  },
-  "football|Argentina Cup|Platense|Instituto AC Cordoba|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 1.41,
-    "ts": 1787861908.674189
-  },
-  "football|Argentina Cup|Platense|Instituto AC Cordoba|和局|1x2|2026-08-28": {
-    "ev": 2.16,
-    "ts": 1787810708.020983
-  },
-  "football|Argentina Cup|Platense|Instituto AC Cordoba|大球|1x2|2026-08-28": {
-    "ev": 1.8,
-    "ts": 1787829093.408142
-  },
-  "football|Argentina Cup|Platense|Instituto AC Cordoba|小球|1x2|2026-08-28": {
-    "ev": 1.07,
-    "ts": 1787849741.410936
-  },
-  "football|Argentina Cup|Platense|Instituto AC Cordoba|让球主胜|1x2|2026-08-28": {
-    "ev": 18.62,
-    "ts": 1787862853.475185
-  },
-  "football|Argentina Cup|Platense|Instituto AC Cordoba|让球客胜|1x2|2026-08-28": {
-    "ev": 2.95,
-    "ts": 1787861088.6296582
-  },
-  "football|Argentina Cup|拉普拉塔大学生|巴拉卡斯中央队|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 5.02,
-    "bb": 2.11,
-    "ts": 1787846370.447871
-  },
-  "football|Argentina Cup|拉普拉塔大学生|巴拉卡斯中央队|上半场客胜|ht|2026-08-28": {
-    "ev": 24.87,
-    "bb": 9.5,
-    "ts": 1787857105.912537
-  },
-  "football|Argentina Cup|普拉腾斯|科尔多瓦学院|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 6.03,
-    "bb": 2.04,
-    "ts": 1787800574.927899
-  },
-  "football|Argentina Cup|普拉腾斯|科尔多瓦学院|上半场客胜|ht|2026-08-28": {
-    "ev": 4.26,
-    "bb": 3.43,
-    "ts": 1787653481.172247
-  },
-  "football|Argentina Liga Profesional Reserves|Central Cordoba SE (Res)|Ferro Carril Oeste (Res)|主胜|1x2|2026-08-28": {
-    "ev": 1.91,
-    "ts": 1787839850.28323
-  },
-  "football|Argentina Liga Profesional Reserves|Central Cordoba SE (Res)|Ferro Carril Oeste (Res)|小球|1x2|2026-08-28": {
-    "ev": 2.07,
-    "ts": 1787853060.459219
-  },
-  "football|Argentina Liga Profesional Reserves|Central Cordoba SE (Res)|Ferro Carril Oeste (Res)|让球客胜|1x2|2026-08-28": {
-    "ev": 1.23,
-    "ts": 1787860582.6274571
-  },
-  "football|Argentina Liga Profesional Reserves|Independiente Rivadavia (Res)|Estudiantes de Rio Cuarto (Res)|大球|1x2|2026-08-28": {
-    "ev": 2.18,
-    "ts": 1787832696.88713
-  },
   "football|Argentina Liga Profesional|Atletico Tucuman|Belgrano|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.77,
     "ts": 1787963720.620061
@@ -241,9 +59,17 @@
     "ev": 1.05,
     "ts": 1787963720.619945
   },
+  "football|Argentina Liga Profesional|Atletico Tucuman|Belgrano|双边进球-是|btts|2026-08-30": {
+    "ev": 1.04,
+    "ts": 1787965916.489006
+  },
   "football|Argentina Liga Profesional|Atletico Tucuman|Belgrano|和局|1x2|2026-08-30": {
     "ev": 1.18,
     "ts": 1787964094.4048178
+  },
+  "football|Argentina Liga Profesional|Atletico Tucuman|Belgrano|大球|1x2|2026-08-30": {
+    "ev": 3.42,
+    "ts": 1787965916.4892411
   },
   "football|Argentina Liga Profesional|Boca Juniors|Atletico Lanus|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.73,
@@ -284,6 +110,10 @@
   "football|Argentina Liga Profesional|Huracan|Estudiantes Rio Cuarto|上半场精确进球others|exact_goals_ht|2026-08-30": {
     "ev": 6.89,
     "ts": 1787963003.1650271
+  },
+  "football|Argentina Liga Profesional|Huracan|Estudiantes Rio Cuarto|大球|1x2|2026-08-30": {
+    "ev": 1.64,
+    "ts": 1787965916.4897878
   },
   "football|Argentina Liga Profesional|Talleres de Cordoba|Central Cordoba SE|上半场精确进球others|exact_goals_ht|2026-08-30": {
     "ev": 5.67,
@@ -497,6 +327,10 @@
     "ev": 2.49,
     "ts": 1787936546.459601
   },
+  "football|Austria Bundesliga|Grazer AK|Wolfsberger AC|上半场正确比分0-2|correct_score_ht|2026-08-29": {
+    "ev": 2.45,
+    "ts": 1787967491.968835
+  },
   "football|Austria Bundesliga|Grazer AK|Wolfsberger AC|上半场正确比分2-0|correct_score_ht|2026-08-29": {
     "ev": 14.76,
     "ts": 1787929729.056621
@@ -538,26 +372,6 @@
     "ev": 1.84,
     "ts": 1787892330.9754071
   },
-  "football|Bahrain Premier League|Al Najma Manama|AL Khalidiyah|主胜|1x2|2026-08-28": {
-    "ev": 4.57,
-    "ts": 1787846271.302964
-  },
-  "football|Bahrain Premier League|Al Najma Manama|AL Khalidiyah|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 1.81,
-    "ts": 1787846271.3030038
-  },
-  "football|Bahrain Premier League|Al Najma Manama|AL Khalidiyah|大球|1x2|2026-08-28": {
-    "ev": 1.28,
-    "ts": 1787803221.375471
-  },
-  "football|Bahrain Premier League|Al Najma Manama|AL Khalidiyah|客胜|1x2|2026-08-28": {
-    "ev": 1.85,
-    "ts": 1787819030.694186
-  },
-  "football|Bahrain Premier League|Al Najma Manama|AL Khalidiyah|让球客胜|1x2|2026-08-28": {
-    "ev": 1.28,
-    "ts": 1787819030.6942248
-  },
   "football|Bahrain Premier League|East Riffa|Al Hidd|客胜|1x2|2026-08-29": {
     "ev": 2.27,
     "ts": 1787901091.621701
@@ -569,30 +383,6 @@
   "football|Bahrain Premier League|East Riffa|Al Hidd|让球客胜|1x2|2026-08-29": {
     "ev": 10.62,
     "ts": 1787864346.7365718
-  },
-  "football|Bahrain Premier League|Sitra Club|Malkiya Club|单双-双|oe|2026-08-28": {
-    "ev": 1.13,
-    "ts": 1787803551.2291589
-  },
-  "football|Bahrain Premier League|Sitra Club|Malkiya Club|双边进球-是|btts|2026-08-28": {
-    "ev": 1.11,
-    "ts": 1787803843.9288452
-  },
-  "football|Bahrain Premier League|Sitra Club|Malkiya Club|和局|1x2|2026-08-28": {
-    "ev": 2.89,
-    "ts": 1787810154.0188549
-  },
-  "football|Bahrain Premier League|Sitra Club|Malkiya Club|大球|1x2|2026-08-28": {
-    "ev": 1.32,
-    "ts": 1787826832.4242601
-  },
-  "football|Bahrain Premier League|Sitra Club|Malkiya Club|让球主胜|1x2|2026-08-28": {
-    "ev": 1.23,
-    "ts": 1787827887.221489
-  },
-  "football|Bahrain Premier League|Sitra Club|Malkiya Club|让球客胜|1x2|2026-08-28": {
-    "ev": 14.38,
-    "ts": 1787760270.2266161
   },
   "football|Belarus Premier League|FC Gomel|FC Belshina Bobruisk|双重机会-和局/客|dc|2026-08-29": {
     "ev": 6.2,
@@ -613,14 +403,6 @@
   "football|Belarus Premier League|FC Gomel|FC Belshina Bobruisk|让球客胜|1x2|2026-08-29": {
     "ev": 1.93,
     "ts": 1787933584.394797
-  },
-  "football|Belarus Premier League|FC Vitebsk|Naftan Novopolotsk|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 1.57,
-    "ts": 1787881348.353823
-  },
-  "football|Belarus Premier League|FC Vitebsk|Naftan Novopolotsk|让球主胜|1x2|2026-08-28": {
-    "ev": 1.99,
-    "ts": 1787927947.287402
   },
   "football|Belgium Challenger Pro League|Patro Eisden Maasmechelen|Club NXT|上半场正确比分1-2|correct_score_ht|2026-08-30": {
     "ev": 30.66,
@@ -747,89 +529,6 @@
     "ev": 4.85,
     "bb": 2.09,
     "ts": 1787697897.538123
-  },
-  "football|Bolivia Division Profesional|Always Ready|Club Aurora|主胜|1x2|2026-08-28": {
-    "ev": 4.45,
-    "ts": 1787855595.727542
-  },
-  "football|Bolivia Division Profesional|Always Ready|Club Aurora|和局|1x2|2026-08-28": {
-    "ev": 4.01,
-    "ts": 1787856363.792897
-  },
-  "football|Bolivia Division Profesional|Always Ready|Club Aurora|让球主胜|1x2|2026-08-28": {
-    "ev": 4.02,
-    "ts": 1787855913.2138739
-  },
-  "football|Bolivia Division Profesional|Always Ready|Club Aurora|让球客胜|1x2|2026-08-28": {
-    "ev": 2.81,
-    "ts": 1787835312.662841
-  },
-  "football|Bolivia Division Profesional|Club Bolivar|Academia de Balompie Boliviano|主胜|1x2|2026-08-28": {
-    "ev": 2.47,
-    "ts": 1787802005.0072289
-  },
-  "football|Bolivia Division Profesional|Club Bolivar|Academia de Balompie Boliviano|双重机会-主/客|dc|2026-08-28": {
-    "ev": 1.08,
-    "ts": 1787804146.337277
-  },
-  "football|Bolivia Division Profesional|Club Bolivar|Academia de Balompie Boliviano|大球|1x2|2026-08-28": {
-    "ev": 10.81,
-    "ts": 1787802005.0072691
-  },
-  "football|Bolivia Division Profesional|Club Bolivar|Academia de Balompie Boliviano|让球主胜|1x2|2026-08-28": {
-    "ev": 2.12,
-    "ts": 1787846657.8787131
-  },
-  "football|Bolivia Division Profesional|Club Bolivar|Academia de Balompie Boliviano|让球客胜|1x2|2026-08-28": {
-    "ev": 5.52,
-    "ts": 1787803843.9295511
-  },
-  "football|Bolivia Division Profesional|玻利瓦尔|玻利维亚巴洛比学院|主胜|1x2|2026-08-28": {
-    "ev": 8.95,
-    "bb": 1.2,
-    "ts": 1787876712.547251
-  },
-  "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.72,
-    "ts": 1787812694.979427
-  },
-  "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|上半场客胜|ht|2026-08-28": {
-    "ev": 4.2,
-    "ts": 1787834945.8576949
-  },
-  "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|主胜|1x2|2026-08-28": {
-    "ev": 2.17,
-    "ts": 1787834046.711872
-  },
-  "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|大球|1x2|2026-08-28": {
-    "ev": 3.65,
-    "ts": 1787858762.3590379
-  },
-  "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|小球|1x2|2026-08-28": {
-    "ev": 2.31,
-    "ts": 1787831302.6738591
-  },
-  "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|角球小球|corner|2026-08-28": {
-    "ev": 1.13,
-    "ts": 1787870713.3645701
-  },
-  "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|角球让球客胜|corner|2026-08-28": {
-    "ev": 3.01,
-    "ts": 1787837158.4883718
-  },
-  "football|Brazil Copa do Brasil|Internacional RS|Gremio FB Porto Alegrense RS|让球主胜|1x2|2026-08-28": {
-    "ev": 1.97,
-    "ts": 1787871534.3925629
-  },
-  "football|Brazil Copa do Brasil|巴西国际|格雷米奥|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 2.95,
-    "bb": 1.92,
-    "ts": 1787846370.447745
-  },
-  "football|Brazil Copa do Brasil|巴西国际|格雷米奥|上半场客胜|ht|2026-08-28": {
-    "ev": 7.32,
-    "bb": 6.45,
-    "ts": 1787861664.158737
   },
   "football|Brazil Serie A|Atletico Mineiro MG|EC Vitoria BA|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 2.46,
@@ -972,6 +671,14 @@
     "bb": 1.88,
     "ts": 1787881347.6504772
   },
+  "football|Brazil Serie C|AO Itabaiana SE|Botafogo FC PB|主胜|1x2|2026-08-30": {
+    "ev": 1.92,
+    "ts": 1787968171.489242
+  },
+  "football|Brazil Serie C|AO Itabaiana SE|Botafogo FC PB|让球客胜|1x2|2026-08-30": {
+    "ev": 8.11,
+    "ts": 1787968171.489345
+  },
   "football|Brazil Serie C|Amazonas FC AM|Ypiranga FC RS|和局|1x2|2026-08-30": {
     "ev": 1.08,
     "ts": 1787963003.140379
@@ -1056,44 +763,6 @@
     "bb": 6.05,
     "ts": 1787896602.5922282
   },
-  "football|CONCACAF Central American Cup|CD奥林匹亚|萨普里萨|和局|1x2|2026-08-28": {
-    "ev": 26.65,
-    "bb": 3.33,
-    "ts": 1787798108.875679
-  },
-  "football|CONCACAF Central American Cup|Deportivo Mixco|Alianza FC Panama|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 2.41,
-    "ts": 1787883210.85844
-  },
-  "football|CONCACAF Central American Cup|Deportivo Mixco|Alianza FC Panama|客胜|1x2|2026-08-28": {
-    "ev": 5.64,
-    "ts": 1787883210.858359
-  },
-  "football|CONCACAF Central American Cup|Deportivo Mixco|Alianza FC Panama|让球客胜|1x2|2026-08-28": {
-    "ev": 1.55,
-    "ts": 1787867054.583395
-  },
-  "football|CONCACAF Central American Cup|Olimpia Tegucigalpa|Deportivo Saprissa|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 3.57,
-    "ts": 1787798109.248291
-  },
-  "football|CONCACAF Central American Cup|Olimpia Tegucigalpa|Deportivo Saprissa|和局|1x2|2026-08-28": {
-    "ev": 26.65,
-    "ts": 1787798109.2481542
-  },
-  "football|CONCACAF Central American Cup|Olimpia Tegucigalpa|Deportivo Saprissa|大球|1x2|2026-08-28": {
-    "ev": 2.09,
-    "ts": 1787841728.0267441
-  },
-  "football|CONCACAF Central American Cup|Olimpia Tegucigalpa|Deportivo Saprissa|让球客胜|1x2|2026-08-28": {
-    "ev": 12.78,
-    "ts": 1787798109.2482188
-  },
-  "football|CONCACAF Central American Cup|拉科鲁尼亚米斯科|阿利亚|客胜|1x2|2026-08-28": {
-    "ev": 5.64,
-    "bb": 3.85,
-    "ts": 1787883209.823296
-  },
   "football|Chile Primera Division|Cobresal|Palestino|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 6.99,
     "ts": 1787883483.0117881
@@ -1141,58 +810,6 @@
   "football|Chile Primera Division|Nublense|Deportes Concepcion|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 4.13,
     "ts": 1787963003.166368
-  },
-  "football|Colombia Primera A|Internacional de Bogota|Pasto|单双-双|oe|2026-08-28": {
-    "ev": 2.38,
-    "ts": 1787793553.6431592
-  },
-  "football|Colombia Primera A|Internacional de Bogota|Pasto|双边进球-是|btts|2026-08-28": {
-    "ev": 1.55,
-    "ts": 1787821514.6914098
-  },
-  "football|Colombia Primera A|Internacional de Bogota|Pasto|和局|1x2|2026-08-28": {
-    "ev": 1.59,
-    "ts": 1787793923.306985
-  },
-  "football|Colombia Primera A|Internacional de Bogota|Pasto|角球大球|corner|2026-08-28": {
-    "ev": 1.14,
-    "ts": 1787846370.816565
-  },
-  "football|Colombia Primera A|Internacional de Bogota|Pasto|让球客胜|1x2|2026-08-28": {
-    "ev": 2.96,
-    "ts": 1787821764.032684
-  },
-  "football|Colombia Primera A|Llaneros FC|Millonarios FC|单双-双|oe|2026-08-28": {
-    "ev": 1.1,
-    "ts": 1787786203.598855
-  },
-  "football|Colombia Primera A|Llaneros FC|Millonarios FC|双边进球-是|btts|2026-08-28": {
-    "ev": 1.81,
-    "ts": 1787838979.6457
-  },
-  "football|Colombia Primera A|Llaneros FC|Millonarios FC|和局|1x2|2026-08-28": {
-    "ev": 3.12,
-    "ts": 1787838462.9248111
-  },
-  "football|Colombia Primera A|Llaneros FC|Millonarios FC|大球|1x2|2026-08-28": {
-    "ev": 1.97,
-    "ts": 1787845757.1386812
-  },
-  "football|Colombia Primera A|Llaneros FC|Millonarios FC|小球|1x2|2026-08-28": {
-    "ev": 8.86,
-    "ts": 1787838462.924937
-  },
-  "football|Colombia Primera A|Llaneros FC|Millonarios FC|角球小球|corner|2026-08-28": {
-    "ev": 7.69,
-    "ts": 1787871418.61466
-  },
-  "football|Colombia Primera A|Llaneros FC|Millonarios FC|让球主胜|1x2|2026-08-28": {
-    "ev": 1.05,
-    "ts": 1787850002.158144
-  },
-  "football|Colombia Primera A|Llaneros FC|Millonarios FC|让球客胜|1x2|2026-08-28": {
-    "ev": 2.44,
-    "ts": 1787828772.15502
   },
   "football|Colombia Primera B|Union Magdalena|Deportes Quindio|主胜|1x2|2026-08-29": {
     "ev": 3.11,
@@ -1346,10 +963,6 @@
     "ev": 1.05,
     "ts": 1787963003.1409652
   },
-  "football|Czech Republic Divize|FC Strani|FK Nove Sady|主胜|1x2|2026-08-28": {
-    "ev": 2.45,
-    "ts": 1787900451.1452491
-  },
   "football|Czech Republic FNL|FK Dukla Prague|FC Vysocina Jihlava|主胜|1x2|2026-08-29": {
     "ev": 5.09,
     "ts": 1787931278.1987
@@ -1367,39 +980,9 @@
     "bb": 1.95,
     "ts": 1787931277.570616
   },
-  "football|Czech Republic MSFL|Fotbal Frydek Mistek|SK Sigma Olomouc B|大球|1x2|2026-08-28": {
-    "ev": 5.23,
-    "ts": 1787902884.881469
-  },
-  "football|Czech Republic MSFL|Fotbal Frydek Mistek|SK Sigma Olomouc B|客胜|1x2|2026-08-28": {
-    "ev": 5.11,
-    "ts": 1787901091.624232
-  },
-  "football|Czech Republic MSFL|Fotbal Frydek Mistek|SK Sigma Olomouc B|小球|1x2|2026-08-28": {
-    "ev": 1.09,
-    "ts": 1787918407.526062
-  },
-  "football|Czech Republic MSFL|Fotbal Frydek Mistek|SK Sigma Olomouc B|让球主胜|1x2|2026-08-28": {
-    "ev": 1.55,
-    "ts": 1787930640.960789
-  },
-  "football|Czech Republic MSFL|Fotbal Frydek Mistek|SK Sigma Olomouc B|让球客胜|1x2|2026-08-28": {
-    "ev": 1.6,
-    "ts": 1787898636.4295192
-  },
   "football|Czech Republic MSFL|SFK Vrchovina|MFK Karvina II|让球客胜|1x2|2026-08-29": {
     "ev": 3.97,
     "ts": 1787929729.050066
-  },
-  "football|Czech Republic MSFL|id:5342816|-|客胜|1x2|2026-08-28": {
-    "ev": 6.8,
-    "bb": 2.0,
-    "ts": 1787909607.9141812
-  },
-  "football|Czech Republic MSFL|id:5348476|-|客胜|1x2|2026-08-28": {
-    "ev": 6.8,
-    "bb": 2.0,
-    "ts": 1787910336.261207
   },
   "football|Denmark 2nd Division|BK Fremad Amager|Thisted FC|双重机会-和局/客|dc|2026-08-29": {
     "ev": 1.34,
@@ -1456,33 +1039,9 @@
     "ev": 1.57,
     "ts": 1787926738.8976378
   },
-  "football|Denmark DBU Pokalen|Vejle BK|Silkeborg IF|主胜|1x2|2026-08-28": {
-    "ev": 5.44,
-    "ts": 1787848026.087609
-  },
-  "football|Denmark DBU Pokalen|Vejle BK|Silkeborg IF|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 2.23,
-    "ts": 1787848026.087751
-  },
-  "football|Denmark DBU Pokalen|Vejle BK|Silkeborg IF|和局|1x2|2026-08-28": {
-    "ev": 1.62,
-    "ts": 1787851680.3639529
-  },
-  "football|Denmark DBU Pokalen|Vejle BK|Silkeborg IF|大球|1x2|2026-08-28": {
-    "ev": 1.88,
-    "ts": 1787782981.0622962
-  },
-  "football|Denmark DBU Pokalen|Vejle BK|Silkeborg IF|小球|1x2|2026-08-28": {
-    "ev": 1.45,
-    "ts": 1787851680.3640552
-  },
-  "football|Denmark DBU Pokalen|Vejle BK|Silkeborg IF|让球主胜|1x2|2026-08-28": {
-    "ev": 4.28,
-    "ts": 1787848026.087679
-  },
-  "football|Denmark DBU Pokalen|Vejle BK|Silkeborg IF|让球客胜|1x2|2026-08-28": {
-    "ev": 1.73,
-    "ts": 1787834216.18047
+  "football|Denmark 3rd Division|Ringsted IF|Sundby BK|大球|1x2|2026-08-29": {
+    "ev": 1.2,
+    "ts": 1787967822.759435
   },
   "football|Ecuador LigaPro Primera A|Guayaquil City FC|LDU Quito|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 2.64,
@@ -1608,134 +1167,6 @@
     "ev": 2.44,
     "ts": 1787909168.415037
   },
-  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|上半场主胜|ht|2026-08-28": {
-    "ev": 1.22,
-    "ts": 1787798388.213254
-  },
-  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.56,
-    "ts": 1787771507.293268
-  },
-  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|主胜|1x2|2026-08-28": {
-    "ev": 2.01,
-    "ts": 1787832696.8860018
-  },
-  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|单双-双|oe|2026-08-28": {
-    "ev": 1.91,
-    "ts": 1787763777.759779
-  },
-  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 1.64,
-    "ts": 1787832696.886243
-  },
-  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|和局|1x2|2026-08-28": {
-    "ev": 3.64,
-    "ts": 1787848997.030963
-  },
-  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|小球|1x2|2026-08-28": {
-    "ev": 1.21,
-    "ts": 1787796456.848792
-  },
-  "football|Egypt Premier League|Al Mokawloon Al Arab|Al Masry Club|让球主胜|1x2|2026-08-28": {
-    "ev": 1.98,
-    "ts": 1787777227.116971
-  },
-  "football|Egypt Premier League|El Qanah|El Gouna FC|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.76,
-    "ts": 1787865244.545565
-  },
-  "football|Egypt Premier League|El Qanah|El Gouna FC|上半场客胜|ht|2026-08-28": {
-    "ev": 2.5,
-    "ts": 1787890041.68591
-  },
-  "football|Egypt Premier League|El Qanah|El Gouna FC|半/全场-主/和局|htft|2026-08-28": {
-    "ev": 8.55,
-    "ts": 1787888205.308319
-  },
-  "football|Egypt Premier League|El Qanah|El Gouna FC|半/全场-客/主|htft|2026-08-28": {
-    "ev": 43.89,
-    "ts": 1787885738.067169
-  },
-  "football|Egypt Premier League|El Qanah|El Gouna FC|单双-双|oe|2026-08-28": {
-    "ev": 1.05,
-    "ts": 1787907003.711159
-  },
-  "football|Egypt Premier League|El Qanah|El Gouna FC|大球|1x2|2026-08-28": {
-    "ev": 1.91,
-    "ts": 1787885001.237982
-  },
-  "football|Egypt Premier League|El Qanah|El Gouna FC|让球主胜|1x2|2026-08-28": {
-    "ev": 18.5,
-    "ts": 1787916887.498074
-  },
-  "football|Egypt Premier League|El Qanah|El Gouna FC|让球客胜|1x2|2026-08-28": {
-    "ev": 2.09,
-    "ts": 1787917566.1223009
-  },
-  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|上半场主胜|ht|2026-08-28": {
-    "ev": 2.35,
-    "ts": 1787891455.6484962
-  },
-  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 2.57,
-    "ts": 1787846370.8160791
-  },
-  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|上半场精确进球others|exact_goals_ht|2026-08-28": {
-    "ev": 2.26,
-    "ts": 1787924836.1206331
-  },
-  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|半/全场-主/和局|htft|2026-08-28": {
-    "ev": 5.6,
-    "ts": 1787888205.3059158
-  },
-  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|半/全场-客/主|htft|2026-08-28": {
-    "ev": 40.94,
-    "ts": 1787885738.065459
-  },
-  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|单双-双|oe|2026-08-28": {
-    "ev": 2.54,
-    "ts": 1787864346.736518
-  },
-  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|和局|1x2|2026-08-28": {
-    "ev": 1.51,
-    "ts": 1787863686.0607228
-  },
-  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|大球|1x2|2026-08-28": {
-    "ev": 1.22,
-    "ts": 1787925586.2593431
-  },
-  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|让球主胜|1x2|2026-08-28": {
-    "ev": 16.38,
-    "ts": 1787869842.484436
-  },
-  "football|Egypt Premier League|Enppi Club|Wadi Degla SC|让球客胜|1x2|2026-08-28": {
-    "ev": 10.83,
-    "ts": 1787925081.514946
-  },
-  "football|Egypt Premier League|Pyramids FC|Abo Qair Semads|上半场主胜|ht|2026-08-28": {
-    "ev": 1.65,
-    "ts": 1787825406.3673458
-  },
-  "football|Egypt Premier League|Pyramids FC|Abo Qair Semads|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.55,
-    "ts": 1787807381.652779
-  },
-  "football|Egypt Premier League|Pyramids FC|Abo Qair Semads|双边进球-否|btts|2026-08-28": {
-    "ev": 3.06,
-    "ts": 1787838164.3326468
-  },
-  "football|Egypt Premier League|Pyramids FC|Abo Qair Semads|小球|1x2|2026-08-28": {
-    "ev": 1.07,
-    "ts": 1787839112.666774
-  },
-  "football|Egypt Premier League|Pyramids FC|Abo Qair Semads|让球主胜|1x2|2026-08-28": {
-    "ev": 1.89,
-    "ts": 1787838397.605271
-  },
-  "football|Egypt Premier League|Pyramids FC|Abo Qair Semads|让球客胜|1x2|2026-08-28": {
-    "ev": 4.97,
-    "ts": 1787848788.79377
-  },
   "football|Egypt Premier League|Zed FC|AL Ahly SC|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 2.6,
     "ts": 1787903995.905088
@@ -1768,153 +1199,15 @@
     "ev": 1.0,
     "ts": 1787934857.9234638
   },
-  "football|Egypt Premier League|id:5348442|-|上半场主胜|ht|2026-08-28": {
-    "ev": 10.93,
-    "bb": 4.97,
-    "ts": 1787925322.4446578
-  },
-  "football|Egypt Premier League|id:5348443|-|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 12.36,
-    "bb": 2.46,
-    "ts": 1787925322.444292
-  },
   "football|Egypt Premier League|id:5348585|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 5.46,
     "bb": 2.13,
     "ts": 1787903995.0646951
   },
-  "football|Egypt Premier League|id:5404771|-|上半场主胜|ht|2026-08-28": {
-    "ev": 15.1,
-    "bb": 4.78,
-    "ts": 1787924835.554247
-  },
-  "football|Egypt Premier League|id:5404771|-|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 3.25,
-    "bb": 2.02,
-    "ts": 1787917111.655741
-  },
-  "football|Egypt Premier League|id:5480971|-|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 5.83,
-    "bb": 2.33,
-    "ts": 1787924604.590295
-  },
   "football|Egypt Premier League|伊蒂哈德亚历山大|瑟亚米卡|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 3.61,
     "bb": 2.15,
     "ts": 1787864007.473695
-  },
-  "football|Egypt Premier League|恩比|瓦迪格拉|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 2.57,
-    "bb": 2.05,
-    "ts": 1787846370.4478312
-  },
-  "football|Egypt Premier League|艾卡纳|艾尔格纳|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 2.77,
-    "bb": 2.19,
-    "ts": 1787890530.4550889
-  },
-  "football|Egypt Premier League|阿拉伯建筑|马斯里|上半场主胜|ht|2026-08-28": {
-    "ev": 14.17,
-    "bb": 6.05,
-    "ts": 1787850035.6481578
-  },
-  "football|Egypt Premier League|阿拉伯建筑|马斯里|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 2.94,
-    "bb": 2.07,
-    "ts": 1787812694.51632
-  },
-  "football|Egypt Second Division A|Al Nasr Cairo|Haras El Hodood|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 4.99,
-    "ts": 1787906745.1221251
-  },
-  "football|Egypt Second Division A|Al Nasr Cairo|Haras El Hodood|客胜|1x2|2026-08-28": {
-    "ev": 1.91,
-    "ts": 1787891089.634401
-  },
-  "football|Egypt Second Division A|Al Nasr Cairo|Haras El Hodood|让球主胜|1x2|2026-08-28": {
-    "ev": 5.03,
-    "ts": 1787906745.1219041
-  },
-  "football|Egypt Second Division A|Al Nasr Cairo|Haras El Hodood|让球客胜|1x2|2026-08-28": {
-    "ev": 7.05,
-    "ts": 1787892880.2997792
-  },
-  "football|Egypt Second Division A|Baladiyet El Mahallah SC|El Daklyeh|大球|1x2|2026-08-28": {
-    "ev": 1.88,
-    "ts": 1787903063.417709
-  },
-  "football|Egypt Second Division A|FC Masar|Dayrout SC|主胜|1x2|2026-08-28": {
-    "ev": 2.85,
-    "ts": 1787900716.227366
-  },
-  "football|Egypt Second Division A|FC Masar|Dayrout SC|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 1.55,
-    "ts": 1787912978.830904
-  },
-  "football|Egypt Second Division A|FC Masar|Dayrout SC|大球|1x2|2026-08-28": {
-    "ev": 7.5,
-    "ts": 1787900716.2274098
-  },
-  "football|Egypt Second Division A|FC Masar|Dayrout SC|客胜|1x2|2026-08-28": {
-    "ev": 5.57,
-    "ts": 1787914571.3155708
-  },
-  "football|Egypt Second Division A|FC Masar|Dayrout SC|让球主胜|1x2|2026-08-28": {
-    "ev": 11.35,
-    "ts": 1787915449.822336
-  },
-  "football|Egypt Second Division A|FC Masar|Dayrout SC|让球客胜|1x2|2026-08-28": {
-    "ev": 2.89,
-    "ts": 1787913850.6564941
-  },
-  "football|Egypt Second Division A|Pharco FC|El Mansoura|主胜|1x2|2026-08-28": {
-    "ev": 3.17,
-    "ts": 1787907505.9634979
-  },
-  "football|Egypt Second Division A|Pharco FC|El Mansoura|让球主胜|1x2|2026-08-28": {
-    "ev": 1.84,
-    "ts": 1787907505.963543
-  },
-  "football|Egypt Second Division A|Telecom Egypt SC|Ismaily SC|主胜|1x2|2026-08-28": {
-    "ev": 1.35,
-    "ts": 1787902386.8200588
-  },
-  "football|Egypt Second Division A|Telecom Egypt SC|Ismaily SC|和局|1x2|2026-08-28": {
-    "ev": 1.8,
-    "ts": 1787875898.3080928
-  },
-  "football|Egypt Second Division A|Telecom Egypt SC|Ismaily SC|大球|1x2|2026-08-28": {
-    "ev": 2.0,
-    "ts": 1787891870.318173
-  },
-  "football|Egypt Second Division A|Telecom Egypt SC|Ismaily SC|让球主胜|1x2|2026-08-28": {
-    "ev": 1.22,
-    "ts": 1787905858.186317
-  },
-  "football|Egypt Second Division A|id:5285145|-|主胜|1x2|2026-08-28": {
-    "ev": 6.12,
-    "bb": 1.33,
-    "ts": 1787915245.157234
-  },
-  "football|Egypt Second Division A|id:5285145|-|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 16.96,
-    "bb": 3.85,
-    "ts": 1787914570.812059
-  },
-  "football|Egypt Second Division A|id:5393166|-|主胜|1x2|2026-08-28": {
-    "ev": 6.12,
-    "bb": 1.33,
-    "ts": 1787915449.3284
-  },
-  "football|Egypt Second Division A|id:5393166|-|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 12.79,
-    "bb": 4.07,
-    "ts": 1787915449.3283389
-  },
-  "football|Egypt Second Division A|阿尔纳赛尔|哈伊赫多|客胜|1x2|2026-08-28": {
-    "ev": 8.74,
-    "bb": 2.23,
-    "ts": 1787892879.770259
   },
   "football|El Salvador Primera Division|Platense Municipal Zacatecoluca|Inter Santa Tecla|双重机会-主/和局|dc|2026-08-30": {
     "ev": 1.1,
@@ -2208,54 +1501,6 @@
   "football|England Championship League|rdiff City|Sheffield United FC|上半场正确比分others|correct_score_ht|2026-08-29": {
     "ev": 13.37,
     "ts": 1787926738.901582
-  },
-  "football|England League Cup|Chelsea FC|Luton Town|上半场客胜|ht|2026-08-28": {
-    "ev": 1.26,
-    "ts": 1787777227.117596
-  },
-  "football|England League Cup|Chelsea FC|Luton Town|双边进球-否|btts|2026-08-28": {
-    "ev": 1.74,
-    "ts": 1787806743.7592351
-  },
-  "football|England League Cup|Chelsea FC|Luton Town|大球|1x2|2026-08-28": {
-    "ev": 1.03,
-    "ts": 1787777550.082431
-  },
-  "football|England League Cup|Chelsea FC|Luton Town|小球|1x2|2026-08-28": {
-    "ev": 1.49,
-    "ts": 1787834364.366404
-  },
-  "football|England League Cup|Chelsea FC|Luton Town|总进球区间0-1|total_goals_range|2026-08-28": {
-    "ev": 1.0,
-    "ts": 1787842613.287112
-  },
-  "football|England League Cup|Chelsea FC|Luton Town|让球客胜|1x2|2026-08-28": {
-    "ev": 1.5,
-    "ts": 1787810708.02067
-  },
-  "football|England League Cup|Fulham FC|AFC Wimbledon|上半场客胜|ht|2026-08-28": {
-    "ev": 6.05,
-    "ts": 1787811154.8625238
-  },
-  "football|England League Cup|Fulham FC|AFC Wimbledon|双边进球-否|btts|2026-08-28": {
-    "ev": 3.19,
-    "ts": 1787834945.857385
-  },
-  "football|England League Cup|Fulham FC|AFC Wimbledon|客胜|1x2|2026-08-28": {
-    "ev": 3.33,
-    "ts": 1787853329.250774
-  },
-  "football|England League Cup|Fulham FC|AFC Wimbledon|小球|1x2|2026-08-28": {
-    "ev": 2.07,
-    "ts": 1787834945.857428
-  },
-  "football|England League Cup|Fulham FC|AFC Wimbledon|让球主胜|1x2|2026-08-28": {
-    "ev": 2.47,
-    "ts": 1787836563.295444
-  },
-  "football|England League Cup|Fulham FC|AFC Wimbledon|让球客胜|1x2|2026-08-28": {
-    "ev": 1.14,
-    "ts": 1787841280.314795
   },
   "football|England League One|Blackpool|Peterborough United|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 22.39,
@@ -2685,51 +1930,6 @@
     "ev": 4.76,
     "ts": 1787937069.93956
   },
-  "football|Finland Kakkonen|GBK Kokkola|FF Jaro II|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 2.05,
-    "ts": 1787925081.515192
-  },
-  "football|Finland Kakkonen|GBK Kokkola|FF Jaro II|客胜|1x2|2026-08-28": {
-    "ev": 10.4,
-    "ts": 1787924836.113914
-  },
-  "football|Finland Kakkonen|GBK Kokkola|FF Jaro II|小球|1x2|2026-08-28": {
-    "ev": 2.98,
-    "ts": 1787926314.9651232
-  },
-  "football|Finland Kakkonen|GBK Kokkola|FF Jaro II|让球主胜|1x2|2026-08-28": {
-    "ev": 2.37,
-    "ts": 1787917374.068644
-  },
-  "football|Finland Kakkonen|GBK Kokkola|FF Jaro II|让球客胜|1x2|2026-08-28": {
-    "ev": 1.75,
-    "ts": 1787924836.1139781
-  },
-  "football|Finland Kakkonen|Jakobstads Bollklubb|Narpes Kraft|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 3.69,
-    "ts": 1787918672.760229
-  },
-  "football|Finland Kakkonen|Jakobstads Bollklubb|Narpes Kraft|和局|1x2|2026-08-28": {
-    "ev": 4.79,
-    "ts": 1787918894.553785
-  },
-  "football|Finland Kakkonen|Jakobstads Bollklubb|Narpes Kraft|大球|1x2|2026-08-28": {
-    "ev": 4.21,
-    "ts": 1787926616.264926
-  },
-  "football|Finland Kakkonen|Jakobstads Bollklubb|Narpes Kraft|小球|1x2|2026-08-28": {
-    "ev": 1.06,
-    "ts": 1787918672.7601678
-  },
-  "football|Finland Kakkonen|Jakobstads Bollklubb|Narpes Kraft|让球客胜|1x2|2026-08-28": {
-    "ev": 2.48,
-    "ts": 1787918407.525717
-  },
-  "football|Finland Kakkonen|id:5508774|-|客胜|1x2|2026-08-28": {
-    "ev": 13.27,
-    "bb": 7.9,
-    "ts": 1787925322.4447548
-  },
   "football|Finland Ykkonen|Oulun Luistinseura|Tampere United|双重机会-和局/客|dc|2026-08-29": {
     "ev": 1.12,
     "ts": 1787918276.416149
@@ -2746,66 +1946,6 @@
     "ev": 3.28,
     "ts": 1787926738.8977761
   },
-  "football|Finland Ykkosliiga|FC KTP Kotka|FC Haka Valkeakoski|上半场正确比分0-2|correct_score_ht|2026-08-28": {
-    "ev": 11.03,
-    "ts": 1787883483.0083551
-  },
-  "football|Finland Ykkosliiga|FC KTP Kotka|FC Haka Valkeakoski|上半场正确比分2-0|correct_score_ht|2026-08-28": {
-    "ev": 3.21,
-    "ts": 1787890530.983974
-  },
-  "football|Finland Ykkosliiga|FC KTP Kotka|FC Haka Valkeakoski|上半场正确比分others|correct_score_ht|2026-08-28": {
-    "ev": 7.85,
-    "ts": 1787919353.48275
-  },
-  "football|Finland Ykkosliiga|FC KTP Kotka|FC Haka Valkeakoski|半/全场-客/主|htft|2026-08-28": {
-    "ev": 3.63,
-    "ts": 1787929065.3759072
-  },
-  "football|Finland Ykkosliiga|FC KTP Kotka|FC Haka Valkeakoski|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 5.36,
-    "ts": 1787877270.9053729
-  },
-  "football|Finland Ykkosliiga|FC KTP Kotka|FC Haka Valkeakoski|角球大球|corner|2026-08-28": {
-    "ev": 1.15,
-    "ts": 1787930882.553306
-  },
-  "football|Finland Ykkosliiga|FC KTP Kotka|FC Haka Valkeakoski|让球主胜|1x2|2026-08-28": {
-    "ev": 1.01,
-    "ts": 1787928201.908416
-  },
-  "football|Finland Ykkosliiga|FC KTP Kotka|FC Haka Valkeakoski|让球客胜|1x2|2026-08-28": {
-    "ev": 9.83,
-    "ts": 1787930882.547816
-  },
-  "football|Finland Ykkosliiga|JAPS|KaPa Kapylan Pallo|上半场正确比分0-2|correct_score_ht|2026-08-28": {
-    "ev": 20.17,
-    "ts": 1787883483.008275
-  },
-  "football|Finland Ykkosliiga|JAPS|KaPa Kapylan Pallo|上半场正确比分1-2|correct_score_ht|2026-08-28": {
-    "ev": 4.7,
-    "ts": 1787918407.5269399
-  },
-  "football|Finland Ykkosliiga|JAPS|KaPa Kapylan Pallo|上半场正确比分2-0|correct_score_ht|2026-08-28": {
-    "ev": 1.42,
-    "ts": 1787891089.639143
-  },
-  "football|Finland Ykkosliiga|JAPS|KaPa Kapylan Pallo|主胜|1x2|2026-08-28": {
-    "ev": 1.16,
-    "ts": 1787919606.4074922
-  },
-  "football|Finland Ykkosliiga|JAPS|KaPa Kapylan Pallo|小球|1x2|2026-08-28": {
-    "ev": 4.3,
-    "ts": 1787924027.646542
-  },
-  "football|Finland Ykkosliiga|JAPS|KaPa Kapylan Pallo|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 1.01,
-    "ts": 1787918407.5267782
-  },
-  "football|Finland Ykkosliiga|JAPS|KaPa Kapylan Pallo|让球主胜|1x2|2026-08-28": {
-    "ev": 3.5,
-    "ts": 1787919892.8172889
-  },
   "football|Finland Ykkosliiga|Mikkelin Palloilijat|PK 35|客胜|1x2|2026-08-29": {
     "ev": 1.94,
     "ts": 1787944008.932286
@@ -2813,11 +1953,6 @@
   "football|Finland Ykkosliiga|Mikkelin Palloilijat|PK 35|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 9.43,
     "ts": 1787923619.143174
-  },
-  "football|Finland Ykkosliiga|id:5217408|-|主胜|1x2|2026-08-28": {
-    "ev": 6.27,
-    "bb": 2.08,
-    "ts": 1787919892.0994408
   },
   "football|France Ligue 1|AJ Auxerre|Angers SCO|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 3.05,
@@ -3263,26 +2398,6 @@
     "ev": 1.48,
     "ts": 1787923619.1398442
   },
-  "football|France Ligue 3|SM Caen|Bastia|上半场主胜|ht|2026-08-28": {
-    "ev": 1.47,
-    "ts": 1787774511.775687
-  },
-  "football|France Ligue 3|SM Caen|Bastia|主胜|1x2|2026-08-28": {
-    "ev": 1.89,
-    "ts": 1787839460.279598
-  },
-  "football|France Ligue 3|SM Caen|Bastia|小球|1x2|2026-08-28": {
-    "ev": 2.46,
-    "ts": 1787808040.706909
-  },
-  "football|France Ligue 3|SM Caen|Bastia|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 13.55,
-    "ts": 1787808040.7077498
-  },
-  "football|France Ligue 3|SM Caen|Bastia|让球客胜|1x2|2026-08-28": {
-    "ev": 1.76,
-    "ts": 1787811154.862608
-  },
   "football|France Ligue 3|Thionville Lusitanos|Paris 13 Atletico|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 2.4,
     "ts": 1787925472.5081081
@@ -3399,6 +2514,10 @@
   "football|Germany 2. Bundesliga|FC Nuremberg|Arminia Bielefeld|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 1.4,
     "ts": 1787942711.309663
+  },
+  "football|Germany 2. Bundesliga|Karlsruher SC|VfL Wolfsburg|上半场正确比分0-2|correct_score_ht|2026-08-29": {
+    "ev": 1.45,
+    "ts": 1787968171.491811
   },
   "football|Germany 2. Bundesliga|Karlsruher SC|VfL Wolfsburg|上半场正确比分2-0|correct_score_ht|2026-08-29": {
     "ev": 8.96,
@@ -3624,22 +2743,6 @@
     "ev": 1.28,
     "ts": 1787906175.863462
   },
-  "football|Hong Kong Premier League|Lee Man FC|Sha Tin|双边进球-否|btts|2026-08-28": {
-    "ev": 1.82,
-    "ts": 1787897318.531792
-  },
-  "football|Hong Kong Premier League|Lee Man FC|Sha Tin|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 7.21,
-    "ts": 1787890041.685843
-  },
-  "football|Hong Kong Premier League|Lee Man FC|Sha Tin|小球|1x2|2026-08-28": {
-    "ev": 1.0,
-    "ts": 1787916176.304605
-  },
-  "football|Hong Kong Premier League|Lee Man FC|Sha Tin|让球客胜|1x2|2026-08-28": {
-    "ev": 1.8,
-    "ts": 1787918407.524905
-  },
   "football|Hungary NB I|Budapest Honved FC|Zalaegerszeg TE|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 7.18,
     "ts": 1787929729.056663
@@ -3668,22 +2771,6 @@
     "ev": 5.32,
     "ts": 1787938610.627242
   },
-  "football|Iceland 1. deild Women|HK Kopavogur (w)|Keflavik (w)|主胜|1x2|2026-08-28": {
-    "ev": 1.11,
-    "ts": 1787806743.759278
-  },
-  "football|Iceland 1. deild Women|HK Kopavogur (w)|Keflavik (w)|大球|1x2|2026-08-28": {
-    "ev": 1.05,
-    "ts": 1787815561.9927092
-  },
-  "football|Iceland 2. deild|Hviti Riddarinn|Fjolnir|主胜|1x2|2026-08-28": {
-    "ev": 3.8,
-    "ts": 1787803221.375063
-  },
-  "football|Iceland 2. deild|Hviti Riddarinn|Fjolnir|大球|1x2|2026-08-28": {
-    "ev": 2.37,
-    "ts": 1787860726.3508632
-  },
   "football|Iceland 2. deild|Kari|Throttur Vogum|客胜|1x2|2026-08-29": {
     "ev": 3.31,
     "ts": 1787871494.0718799
@@ -3691,11 +2778,6 @@
   "football|Iceland 2. deild|Kormakur/Hvot|KFA|让球客胜|1x2|2026-08-29": {
     "ev": 4.36,
     "ts": 1787931669.771465
-  },
-  "football|Iceland 2. deild|白色骑士|弗约尼尔|主胜|1x2|2026-08-28": {
-    "ev": 8.23,
-    "bb": 3.94,
-    "ts": 1787860822.049407
   },
   "football|Ireland First Division|Athlone Town AFC|Bray Wanderers AFC|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 1.72,
@@ -3980,18 +3062,6 @@
     "ev": 8.32,
     "bb": 4.48,
     "ts": 1787903995.064894
-  },
-  "football|Israel Cup|Beitar Haifa Yaacov|Hapoel Bney Arara|主胜|1x2|2026-08-28": {
-    "ev": 1.36,
-    "ts": 1787890622.243546
-  },
-  "football|Israel Cup|Beitar Haifa Yaacov|Hapoel Bney Arara|客胜|1x2|2026-08-28": {
-    "ev": 2.63,
-    "ts": 1787890104.260513
-  },
-  "football|Israel Cup|Beitar Haifa Yaacov|Hapoel Bney Arara|让球客胜|1x2|2026-08-28": {
-    "ev": 1.25,
-    "ts": 1787903752.326653
   },
   "football|Israel Premier League|Beitar Jerusalem FC|Maccabi Netanya FC|上半场主胜|ht|2026-08-30": {
     "ev": 3.64,
@@ -4334,6 +3404,11 @@
     "ev": 5.81,
     "bb": 3.44,
     "ts": 1787935057.524759
+  },
+  "football|Italy Serie B|id:5388992|-|上半场客胜|ht|2026-08-30": {
+    "ev": 15.61,
+    "bb": 7.05,
+    "ts": 1787965914.70894
   },
   "football|Italy Serie B|id:5388999|-|上半场客胜|ht|2026-08-30": {
     "ev": 4.65,
@@ -4750,14 +3825,6 @@
     "bb": 6.6,
     "ts": 1787915108.897426
   },
-  "football|Lithuania 1 Lyga|DFK Dainava Alytus|Vilnius FK Zalgiris B|主胜|1x2|2026-08-28": {
-    "ev": 1.99,
-    "ts": 1787895098.733676
-  },
-  "football|Lithuania 1 Lyga|DFK Dainava Alytus|Vilnius FK Zalgiris B|让球主胜|1x2|2026-08-28": {
-    "ev": 1.06,
-    "ts": 1787905660.039176
-  },
   "football|Lithuania 1 Lyga|FK Transinvest B|FK Jonava|客胜|1x2|2026-08-29": {
     "ev": 8.45,
     "ts": 1787963342.619649
@@ -4766,54 +3833,6 @@
     "ev": 8.45,
     "bb": 1.94,
     "ts": 1787963719.644385
-  },
-  "football|Malaysia Super League|Sabah FA|Penang FA|主胜|1x2|2026-08-28": {
-    "ev": 2.81,
-    "ts": 1787890530.979199
-  },
-  "football|Malaysia Super League|Sabah FA|Penang FA|单双-双|oe|2026-08-28": {
-    "ev": 1.73,
-    "ts": 1787915245.771748
-  },
-  "football|Malaysia Super League|Sabah FA|Penang FA|双边进球-是|btts|2026-08-28": {
-    "ev": 1.53,
-    "ts": 1787914571.315232
-  },
-  "football|Malaysia Super League|Sabah FA|Penang FA|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 4.61,
-    "ts": 1787902584.281779
-  },
-  "football|Malaysia Super League|Sabah FA|Penang FA|和局|1x2|2026-08-28": {
-    "ev": 1.54,
-    "ts": 1787915609.2571478
-  },
-  "football|Malaysia Super League|Sabah FA|Penang FA|客胜|1x2|2026-08-28": {
-    "ev": 3.03,
-    "ts": 1787906877.301467
-  },
-  "football|Malaysia Super League|Sabah FA|Penang FA|让球客胜|1x2|2026-08-28": {
-    "ev": 2.39,
-    "ts": 1787902584.281732
-  },
-  "football|Malaysia Super League|Terengganu FC|Selangor FC|双边进球-是|btts|2026-08-28": {
-    "ev": 1.6,
-    "ts": 1787905323.9964669
-  },
-  "football|Malaysia Super League|Terengganu FC|Selangor FC|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 2.26,
-    "ts": 1787905738.657355
-  },
-  "football|Malaysia Super League|Terengganu FC|Selangor FC|大球|1x2|2026-08-28": {
-    "ev": 1.17,
-    "ts": 1787905323.996508
-  },
-  "football|Malaysia Super League|Terengganu FC|Selangor FC|小球|1x2|2026-08-28": {
-    "ev": 1.04,
-    "ts": 1787906390.824956
-  },
-  "football|Malaysia Super League|Terengganu FC|Selangor FC|让球主胜|1x2|2026-08-28": {
-    "ev": 2.53,
-    "ts": 1787905738.657262
   },
   "football|Malta Premier League|Hamrun Spartans FC|Floriana FC|主胜|1x2|2026-08-30": {
     "ev": 2.35,
@@ -4852,38 +3871,6 @@
     "bb": 2.16,
     "ts": 1787942102.779634
   },
-  "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|上半场主胜|ht|2026-08-28": {
-    "ev": 5.14,
-    "ts": 1787828190.236183
-  },
-  "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.85,
-    "ts": 1787872425.870029
-  },
-  "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|上半场客胜|ht|2026-08-28": {
-    "ev": 1.09,
-    "ts": 1787878028.8379421
-  },
-  "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|主胜|1x2|2026-08-28": {
-    "ev": 1.98,
-    "ts": 1787804146.3366468
-  },
-  "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|双边进球-是|btts|2026-08-28": {
-    "ev": 3.07,
-    "ts": 1787828772.155075
-  },
-  "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 2.24,
-    "ts": 1787828190.2363331
-  },
-  "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|大球|1x2|2026-08-28": {
-    "ev": 2.87,
-    "ts": 1787804146.336689
-  },
-  "football|Mexico Liga De Expansion MX|Alebrijes de Oaxaca FC|Tapatio|让球主胜|1x2|2026-08-28": {
-    "ev": 8.28,
-    "ts": 1787828190.236257
-  },
   "football|Mexico Liga De Expansion MX|CSD Dorados Sinaloa|Atletico Morelia|上半场主胜|ht|2026-08-29": {
     "ev": 2.73,
     "ts": 1787938912.8169339
@@ -4896,30 +3883,6 @@
     "ev": 1.6,
     "ts": 1787892880.302463
   },
-  "football|Mexico Liga De Expansion MX|Cancun FC|Club Atletico La Paz|上半场客胜|ht|2026-08-28": {
-    "ev": 1.18,
-    "ts": 1787856621.4574459
-  },
-  "football|Mexico Liga De Expansion MX|Cancun FC|Club Atletico La Paz|主胜|1x2|2026-08-28": {
-    "ev": 1.37,
-    "ts": 1787828190.2360268
-  },
-  "football|Mexico Liga De Expansion MX|Cancun FC|Club Atletico La Paz|双边进球-是|btts|2026-08-28": {
-    "ev": 2.03,
-    "ts": 1787856621.457529
-  },
-  "football|Mexico Liga De Expansion MX|Cancun FC|Club Atletico La Paz|小球|1x2|2026-08-28": {
-    "ev": 1.32,
-    "ts": 1787877793.927351
-  },
-  "football|Mexico Liga De Expansion MX|Cancun FC|Club Atletico La Paz|让球主胜|1x2|2026-08-28": {
-    "ev": 1.79,
-    "ts": 1787856316.648588
-  },
-  "football|Mexico Liga De Expansion MX|Cancun FC|Club Atletico La Paz|让球客胜|1x2|2026-08-28": {
-    "ev": 8.65,
-    "ts": 1787875421.317138
-  },
   "football|Mexico Liga De Expansion MX|Correcaminos UAT|Alacranes de Durango|双边进球-是|btts|2026-08-29": {
     "ev": 1.57,
     "ts": 1787964318.5940218
@@ -4931,16 +3894,6 @@
   "football|Mexico Liga De Expansion MX|Correcaminos UAT|Alacranes de Durango|让球客胜|1x2|2026-08-29": {
     "ev": 1.27,
     "ts": 1787964318.594082
-  },
-  "football|Mexico Liga De Expansion MX|奥哈卡|塔巴蒂奥|上半场主胜|ht|2026-08-28": {
-    "ev": 5.93,
-    "bb": 4.22,
-    "ts": 1787867642.927812
-  },
-  "football|Mexico Liga De Expansion MX|奥哈卡|塔巴蒂奥|主胜|1x2|2026-08-28": {
-    "ev": 8.99,
-    "bb": 2.33,
-    "ts": 1787828189.827708
   },
   "football|Mexico Liga MX|Atlante FC|Club Leon|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 16.75,
@@ -5010,6 +3963,10 @@
     "ev": 2.45,
     "ts": 1787887003.188142
   },
+  "football|Mexico Liga MX|Club Tijuana de Caliente|Pumas UNAM|双边进球-是|btts|2026-08-29": {
+    "ev": 1.19,
+    "ts": 1787967267.083403
+  },
   "football|Mexico Liga MX|Necaxa|Cruz Azul|上半场主胜|ht|2026-08-29": {
     "ev": 2.98,
     "ts": 1787879048.102082
@@ -5046,11 +4003,6 @@
     "ev": 4.37,
     "bb": 4.51,
     "ts": 1787962880.058812
-  },
-  "football|Mexico Liga MX|id:5317012|-|上半场客胜|ht|2026-08-29": {
-    "ev": 3.79,
-    "bb": 4.51,
-    "ts": 1787965134.536021
   },
   "football|Mexico Liga MX|亚特兰特|莱昂|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 16.75,
@@ -5298,10 +4250,6 @@
     "ev": 11.21,
     "ts": 1787927665.903548
   },
-  "football|North Macedonia 1. MFL|FK Sileks Kratovo|FK Shkendija|让球客胜|1x2|2026-08-28": {
-    "ev": 2.1,
-    "ts": 1787924605.0380301
-  },
   "football|Northern Ireland Premiership|Cliftonville FC|Dungannon Swifts FC|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 5.33,
     "ts": 1787926738.903158
@@ -5499,22 +4447,6 @@
     "bb": 3.67,
     "ts": 1787930397.15975
   },
-  "football|Poland III Liga|KSS Kotwica Kornik|Chemik Bydgoszcz|客胜|1x2|2026-08-28": {
-    "ev": 2.48,
-    "ts": 1787896603.597279
-  },
-  "football|Poland III Liga|KSS Kotwica Kornik|Chemik Bydgoszcz|让球主胜|1x2|2026-08-28": {
-    "ev": 2.36,
-    "ts": 1787930882.547912
-  },
-  "football|Poland III Liga|Zks Kluczevia Stargard|SKS Unia Swarzedz|主胜|1x2|2026-08-28": {
-    "ev": 1.74,
-    "ts": 1787923533.900969
-  },
-  "football|Poland III Liga|Zks Kluczevia Stargard|SKS Unia Swarzedz|让球客胜|1x2|2026-08-28": {
-    "ev": 1.06,
-    "ts": 1787928791.092754
-  },
   "football|Portugal Primeira Liga|Alverca Futebol|Santa Clara Azores|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 2.02,
     "ts": 1787941176.241163
@@ -5646,6 +4578,10 @@
     "ev": 3.75,
     "ts": 1787925472.5093372
   },
+  "football|Portugal Segunda Liga|ademica de Coimbra|Lusitania FC Lourosa|半/全场-主/和局|htft|2026-08-29": {
+    "ev": 19.65,
+    "ts": 1787966879.1239722
+  },
   "football|Portugal Segunda Liga|ademica de Coimbra|Lusitania FC Lourosa|半/全场-客/主|htft|2026-08-29": {
     "ev": 25.55,
     "ts": 1787923619.1404328
@@ -5693,30 +4629,6 @@
     "ev": 2.52,
     "ts": 1787963003.1563451
   },
-  "football|Qatar Stars League|Al Ahli Doha SC|Lusail City|上半场正确比分0-2|correct_score_ht|2026-08-28": {
-    "ev": 25.27,
-    "ts": 1787883483.008113
-  },
-  "football|Qatar Stars League|Al Ahli Doha SC|Lusail City|上半场正确比分1-2|correct_score_ht|2026-08-28": {
-    "ev": 1.23,
-    "ts": 1787883483.008151
-  },
-  "football|Qatar Stars League|Al Ahli Doha SC|Lusail City|半/全场-主/客|htft|2026-08-28": {
-    "ev": 5.04,
-    "ts": 1787907505.963688
-  },
-  "football|Qatar Stars League|Al Ahli Doha SC|Lusail City|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 84.45,
-    "ts": 1787881348.353559
-  },
-  "football|Qatar Stars League|Al Ahli Doha SC|Lusail City|小球|1x2|2026-08-28": {
-    "ev": 1.48,
-    "ts": 1787907196.0820348
-  },
-  "football|Qatar Stars League|Al Ahli Doha SC|Lusail City|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 6.81,
-    "ts": 1787885738.0678039
-  },
   "football|Qatar Stars League|Al Shahaniya|Al Sailiya SC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 24.11,
     "ts": 1787936457.08624
@@ -5752,14 +4664,6 @@
   "football|Qatar Stars League|Al Shahaniya|Al Sailiya SC|总进球区间7+|total_goals_range|2026-08-30": {
     "ev": 43.97,
     "ts": 1787936457.086004
-  },
-  "football|Qatar Stars League|Al Wakrah|Al Rayyan SC|单双-双|oe|2026-08-28": {
-    "ev": 2.17,
-    "ts": 1787761957.1612191
-  },
-  "football|Qatar Stars League|Al Wakrah|Al Rayyan SC|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 4.01,
-    "ts": 1787841047.731421
   },
   "football|Qatar Stars League|Qatar SC|Al Sadd SC|上半场双重机会-主/和局|ht_dc|2026-08-29": {
     "ev": 29.76,
@@ -5864,46 +4768,6 @@
     "ev": 3.36,
     "ts": 1787918672.7579598
   },
-  "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 2.37,
-    "ts": 1787888205.306072
-  },
-  "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|上半场正确比分0-2|correct_score_ht|2026-08-28": {
-    "ev": 18.87,
-    "ts": 1787883483.008234
-  },
-  "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|上半场正确比分2-0|correct_score_ht|2026-08-28": {
-    "ev": 7.54,
-    "ts": 1787883483.008197
-  },
-  "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|半/全场-主/和局|htft|2026-08-28": {
-    "ev": 4.25,
-    "ts": 1787923533.901085
-  },
-  "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|半/全场-主/客|htft|2026-08-28": {
-    "ev": 1.9,
-    "ts": 1787888491.8773959
-  },
-  "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|半/全场-客/主|htft|2026-08-28": {
-    "ev": 6.44,
-    "ts": 1787885738.0655968
-  },
-  "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|单双-双|oe|2026-08-28": {
-    "ev": 1.21,
-    "ts": 1787925323.1598358
-  },
-  "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|双边进球-是|btts|2026-08-28": {
-    "ev": 1.12,
-    "ts": 1787928482.1264489
-  },
-  "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|让球主胜|1x2|2026-08-28": {
-    "ev": 1.01,
-    "ts": 1787926616.261185
-  },
-  "football|Romania Liga 1|FC Voluntari|ASC Otelul Galati|让球客胜|1x2|2026-08-28": {
-    "ev": 1.68,
-    "ts": 1787897959.383065
-  },
   "football|Romania Liga 1|S Champions FC Arges|S Sepsi OSK Sfantu Gheorghe|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 3.0,
     "ts": 1787931669.772941
@@ -5991,6 +4855,11 @@
     "bb": 1.88,
     "ts": 1787926172.799723
   },
+  "football|Russia First League|id:5358245|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
+    "ev": 2.67,
+    "bb": 1.9,
+    "ts": 1787965914.708889
+  },
   "football|Russia First League|id:5490543|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 5.2,
     "bb": 1.99,
@@ -6025,42 +4894,6 @@
     "ev": 9.71,
     "ts": 1787927665.902572
   },
-  "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|上半场主胜|ht|2026-08-28": {
-    "ev": 1.71,
-    "ts": 1787896603.6095612
-  },
-  "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|上半场正确比分2-1|correct_score_ht|2026-08-28": {
-    "ev": 3.85,
-    "ts": 1787885001.2395499
-  },
-  "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|双边进球-是|btts|2026-08-28": {
-    "ev": 2.16,
-    "ts": 1787924836.119483
-  },
-  "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 3.81,
-    "ts": 1787924836.119618
-  },
-  "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|客胜|1x2|2026-08-28": {
-    "ev": 1.03,
-    "ts": 1787897959.385359
-  },
-  "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|小球|1x2|2026-08-28": {
-    "ev": 1.01,
-    "ts": 1787928791.096002
-  },
-  "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|角球小球|corner|2026-08-28": {
-    "ev": 1.25,
-    "ts": 1787928791.097023
-  },
-  "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|让球主胜|1x2|2026-08-28": {
-    "ev": 5.79,
-    "ts": 1787924836.119549
-  },
-  "football|Russia Premier League|FK Akron Tolyatti|CSKA Moscow|让球客胜|1x2|2026-08-28": {
-    "ev": 1.5,
-    "ts": 1787898271.397656
-  },
   "football|Russia Premier League|Lokomotiv Moscow|FC Dynamo Moscow|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 11.76,
     "ts": 1787936722.702987
@@ -6077,26 +4910,6 @@
     "ev": 7.08,
     "bb": 8.95,
     "ts": 1787963001.515518
-  },
-  "football|Saudi Arabia Division 1|AL Jabalain FC|Al Jeel|上半场主胜|ht|2026-08-28": {
-    "ev": 3.47,
-    "ts": 1787820912.232967
-  },
-  "football|Saudi Arabia Division 1|AL Jabalain FC|Al Jeel|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.33,
-    "ts": 1787820912.2330399
-  },
-  "football|Saudi Arabia Division 1|AL Jabalain FC|Al Jeel|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 1.89,
-    "ts": 1787847155.653845
-  },
-  "football|Saudi Arabia Division 1|AL Jabalain FC|Al Jeel|让球主胜|1x2|2026-08-28": {
-    "ev": 2.21,
-    "ts": 1787821225.9477062
-  },
-  "football|Saudi Arabia Division 1|AL Jabalain FC|Al Jeel|让球客胜|1x2|2026-08-28": {
-    "ev": 1.75,
-    "ts": 1787847155.653803
   },
   "football|Saudi Arabia Division 1|Damac FC|Al Orobah FC|上半场主胜|ht|2026-08-29": {
     "ev": 2.11,
@@ -6117,14 +4930,6 @@
   "football|Saudi Arabia Division 1|Damac FC|Al Orobah FC|让球客胜|1x2|2026-08-29": {
     "ev": 1.0,
     "ts": 1787938994.049891
-  },
-  "football|Saudi Arabia Division 1|Jeddah Club|AL Najma|上半场主胜|ht|2026-08-28": {
-    "ev": 6.74,
-    "ts": 1787847629.394885
-  },
-  "football|Saudi Arabia Division 1|Jeddah Club|AL Najma|大球|1x2|2026-08-28": {
-    "ev": 1.25,
-    "ts": 1787830338.375674
   },
   "football|Saudi Arabia Professional League|AL Fayha FC|Abha Club|上半场主胜|ht|2026-08-29": {
     "ev": 1.53,
@@ -6185,26 +4990,6 @@
   "football|Saudi Arabia Professional League|AL Fayha FC|Abha Club|让球客胜|1x2|2026-08-29": {
     "ev": 14.41,
     "ts": 1787926859.3908732
-  },
-  "football|Saudi Arabia Professional League|Al Riyadh|NEOM SC|上半场正确比分2-0|correct_score_ht|2026-08-28": {
-    "ev": 17.92,
-    "ts": 1787883483.0084019
-  },
-  "football|Saudi Arabia Professional League|Al Riyadh|NEOM SC|上半场正确比分2-1|correct_score_ht|2026-08-28": {
-    "ev": 1.35,
-    "ts": 1787904902.380505
-  },
-  "football|Saudi Arabia Professional League|Al Riyadh|NEOM SC|半/全场-主/客|htft|2026-08-28": {
-    "ev": 1.73,
-    "ts": 1787912783.733997
-  },
-  "football|Saudi Arabia Professional League|Al Riyadh|NEOM SC|半/全场-客/主|htft|2026-08-28": {
-    "ev": 2.73,
-    "ts": 1787918672.760604
-  },
-  "football|Saudi Arabia Professional League|Al Riyadh|NEOM SC|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 3.12,
-    "ts": 1787846052.825494
   },
   "football|Saudi Arabia Professional League|id:5348510|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 3.48,
@@ -6405,10 +5190,6 @@
     "ev": 31.67,
     "ts": 1787891089.634807
   },
-  "football|Slovenia 2nd Liga|ND Slovan|ND Ilirija 1911|大球|1x2|2026-08-28": {
-    "ev": 1.0,
-    "ts": 1787924027.6489248
-  },
   "football|Slovenia 2nd Liga|NK Tabor Sezana|NK Brezice 1919|大球|1x2|2026-08-29": {
     "ev": 2.66,
     "ts": 1787923767.1324842
@@ -6495,38 +5276,6 @@
     "bb": 4.53,
     "ts": 1787915108.897538
   },
-  "football|South Korea K-League 2|Ansan Greeners|Daegu FC|上半场客胜|ht|2026-08-28": {
-    "ev": 1.82,
-    "ts": 1787852936.5497742
-  },
-  "football|South Korea K-League 2|Ansan Greeners|Daegu FC|主胜|1x2|2026-08-28": {
-    "ev": 2.45,
-    "ts": 1787879048.1009521
-  },
-  "football|South Korea K-League 2|Ansan Greeners|Daegu FC|先进球neither|first_to_score|2026-08-28": {
-    "ev": 2.14,
-    "ts": 1787846370.8166442
-  },
-  "football|South Korea K-League 2|Ansan Greeners|Daegu FC|大球|1x2|2026-08-28": {
-    "ev": 1.91,
-    "ts": 1787891455.647973
-  },
-  "football|South Korea K-League 2|Ansan Greeners|Daegu FC|客胜|1x2|2026-08-28": {
-    "ev": 2.98,
-    "ts": 1787826886.8890948
-  },
-  "football|South Korea K-League 2|Ansan Greeners|Daegu FC|小球|1x2|2026-08-28": {
-    "ev": 1.46,
-    "ts": 1787912783.7320802
-  },
-  "football|South Korea K-League 2|Ansan Greeners|Daegu FC|让球主胜|1x2|2026-08-28": {
-    "ev": 2.91,
-    "ts": 1787879048.101056
-  },
-  "football|South Korea K-League 2|Ansan Greeners|Daegu FC|让球客胜|1x2|2026-08-28": {
-    "ev": 1.02,
-    "ts": 1787874573.5220978
-  },
   "football|South Korea K-League 2|Gimpo FC|Suwon Bluewings|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.46,
     "ts": 1787965513.504423
@@ -6578,34 +5327,6 @@
   "football|South Korea K-League 2|Hwaseong FC|Chungbuk Cheongju FC|上半场正确比分1-2|correct_score_ht|2026-08-29": {
     "ev": 5.39,
     "ts": 1787913237.822459
-  },
-  "football|South Korea K-League 2|Jeonnam Dragons|Cheonan City FC|上半场正确比分0-2|correct_score_ht|2026-08-28": {
-    "ev": 5.78,
-    "ts": 1787885001.239189
-  },
-  "football|South Korea K-League 2|Jeonnam Dragons|Cheonan City FC|上半场正确比分2-0|correct_score_ht|2026-08-28": {
-    "ev": 4.2,
-    "ts": 1787883483.0080252
-  },
-  "football|South Korea K-League 2|Jeonnam Dragons|Cheonan City FC|单双-双|oe|2026-08-28": {
-    "ev": 1.66,
-    "ts": 1787912783.732374
-  },
-  "football|South Korea K-League 2|Jeonnam Dragons|Cheonan City FC|双边进球-是|btts|2026-08-28": {
-    "ev": 2.0,
-    "ts": 1787912783.732307
-  },
-  "football|South Korea K-League 2|Jeonnam Dragons|Cheonan City FC|和局|1x2|2026-08-28": {
-    "ev": 1.44,
-    "ts": 1787912783.7322261
-  },
-  "football|South Korea K-League 2|Jeonnam Dragons|Cheonan City FC|大球|1x2|2026-08-28": {
-    "ev": 1.03,
-    "ts": 1787905102.96675
-  },
-  "football|South Korea K-League 2|Jeonnam Dragons|Cheonan City FC|让球主胜|1x2|2026-08-28": {
-    "ev": 9.28,
-    "ts": 1787828451.538971
   },
   "football|Spain LaLiga 2|Albacete Balompie|Real Oviedo|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 2.76,
@@ -6721,34 +5442,6 @@
     "bb": 4.87,
     "ts": 1787877489.719742
   },
-  "football|Spain LaLiga|Celta Vigo|Osasuna|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.17,
-    "ts": 1787771507.2935958
-  },
-  "football|Spain LaLiga|Celta Vigo|Osasuna|上半场客胜|ht|2026-08-28": {
-    "ev": 4.93,
-    "ts": 1787769403.866369
-  },
-  "football|Spain LaLiga|Celta Vigo|Osasuna|主胜|1x2|2026-08-28": {
-    "ev": 1.49,
-    "ts": 1787849434.480656
-  },
-  "football|Spain LaLiga|Celta Vigo|Osasuna|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 2.51,
-    "ts": 1787851250.115129
-  },
-  "football|Spain LaLiga|Celta Vigo|Osasuna|客胜|1x2|2026-08-28": {
-    "ev": 4.19,
-    "ts": 1787851250.115057
-  },
-  "football|Spain LaLiga|Celta Vigo|Osasuna|角球让球客胜|corner|2026-08-28": {
-    "ev": 2.23,
-    "ts": 1787825406.3676422
-  },
-  "football|Spain LaLiga|Celta Vigo|Osasuna|让球客胜|1x2|2026-08-28": {
-    "ev": 2.45,
-    "ts": 1787851409.188417
-  },
   "football|Spain LaLiga|Deportivo Alaves|Villarreal CF|上半场主胜|ht|2026-08-29": {
     "ev": 4.3,
     "ts": 1787880946.173864
@@ -6784,22 +5477,6 @@
   "football|Spain LaLiga|Deportivo Alaves|Villarreal CF|让球客胜|1x2|2026-08-29": {
     "ev": 1.0,
     "ts": 1787941758.140306
-  },
-  "football|Spain LaLiga|FC Barcelona|Athletic Bilbao|上半场客胜|ht|2026-08-28": {
-    "ev": 5.68,
-    "ts": 1787802602.048675
-  },
-  "football|Spain LaLiga|FC Barcelona|Athletic Bilbao|主胜|1x2|2026-08-28": {
-    "ev": 1.28,
-    "ts": 1787847629.394586
-  },
-  "football|Spain LaLiga|FC Barcelona|Athletic Bilbao|小球|1x2|2026-08-28": {
-    "ev": 1.32,
-    "ts": 1787837614.018048
-  },
-  "football|Spain LaLiga|FC Barcelona|Athletic Bilbao|让球客胜|1x2|2026-08-28": {
-    "ev": 1.01,
-    "ts": 1787797428.331808
   },
   "football|Spain LaLiga|Levante UD|Real Betis|上半场主胜|ht|2026-08-29": {
     "ev": 3.33,
@@ -6986,21 +5663,6 @@
     "bb": 4.46,
     "ts": 1787888204.523584
   },
-  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 2.98,
-    "bb": 1.91,
-    "ts": 1787812694.516361
-  },
-  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|上半场客胜|ht|2026-08-28": {
-    "ev": 24.92,
-    "bb": 6.85,
-    "ts": 1787851249.7189498
-  },
-  "football|Spain LaLiga|维戈塞尔塔|奥萨苏纳|客胜|1x2|2026-08-28": {
-    "ev": 4.19,
-    "bb": 4.79,
-    "ts": 1787851249.719009
-  },
   "football|Spain LaLiga|阿拉维斯|比利亚雷亚尔|上半场主胜|ht|2026-08-29": {
     "ev": 4.3,
     "bb": 4.12,
@@ -7042,9 +5704,22 @@
     "ev": 1.23,
     "ts": 1787925472.508464
   },
+  "football|Sweden Allsvenskan|IF Elfsborg|Degerfors IF|上半场客胜|ht|2026-08-29": {
+    "ev": 5.83,
+    "ts": 1787965916.3635762
+  },
+  "football|Sweden Allsvenskan|IF Elfsborg|Degerfors IF|主胜|1x2|2026-08-29": {
+    "ev": 1.22,
+    "ts": 1787966879.11743
+  },
   "football|Sweden Allsvenskan|IF Elfsborg|Degerfors IF|半/全场-主/客|htft|2026-08-29": {
     "ev": 6.02,
     "ts": 1787923619.13993
+  },
+  "football|Sweden Allsvenskan|id:4794634|-|上半场客胜|ht|2026-08-29": {
+    "ev": 5.83,
+    "bb": 7.6,
+    "ts": 1787965914.708983
   },
   "football|Sweden Allsvenskan|id:4794635|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 4.4,
@@ -7277,6 +5952,14 @@
     "ev": 1.04,
     "ts": 1787942388.630393
   },
+  "football|Taca de Portugal|Atletico Malveira|Mafra|客胜|1x2|2026-08-30": {
+    "ev": 4.49,
+    "ts": 1787965916.4865081
+  },
+  "football|Taca de Portugal|Atletico Malveira|Mafra|让球客胜|1x2|2026-08-30": {
+    "ev": 3.19,
+    "ts": 1787965916.4866078
+  },
   "football|Taca de Portugal|Beira Mar|Uniao de Lamas|主胜|1x2|2026-08-29": {
     "ev": 4.87,
     "ts": 1787926314.9646661
@@ -7284,6 +5967,18 @@
   "football|Taca de Portugal|Beira Mar|Uniao de Lamas|让球主胜|1x2|2026-08-29": {
     "ev": 1.88,
     "ts": 1787926314.964729
+  },
+  "football|Taca de Portugal|Fatima|Sport Benfica Castelo Branco|主胜|1x2|2026-08-30": {
+    "ev": 4.08,
+    "ts": 1787965916.48673
+  },
+  "football|Taca de Portugal|Fatima|Sport Benfica Castelo Branco|让球主胜|1x2|2026-08-30": {
+    "ev": 1.71,
+    "ts": 1787965916.486839
+  },
+  "football|Taca de Portugal|Varzim SC|Trofense|主胜|1x2|2026-08-30": {
+    "ev": 1.2,
+    "ts": 1787965916.486939
   },
   "football|Taca de Portugal|id:5348704|-|主胜|1x2|2026-08-29": {
     "ev": 6.85,
@@ -7559,30 +6254,6 @@
     "bb": 5.55,
     "ts": 1787927447.134131
   },
-  "football|UAE Division 1|Al Dhaid|Dubai City FC|大球|1x2|2026-08-28": {
-    "ev": 4.03,
-    "ts": 1787915609.259076
-  },
-  "football|UAE Division 1|Al Dhaid|Dubai City FC|小球|1x2|2026-08-28": {
-    "ev": 5.51,
-    "ts": 1787894469.967658
-  },
-  "football|UAE Division 1|Al Dhaid|Dubai City FC|让球主胜|1x2|2026-08-28": {
-    "ev": 1.24,
-    "ts": 1787897204.79868
-  },
-  "football|UAE Division 1|Al Dhaid|Dubai City FC|让球客胜|1x2|2026-08-28": {
-    "ev": 1.39,
-    "ts": 1787894469.9676
-  },
-  "football|UAE Division 1|Dibba Al Fujairah|Gulf United|客胜|1x2|2026-08-28": {
-    "ev": 1.5,
-    "ts": 1787912783.7331772
-  },
-  "football|UAE Division 1|Dibba Al Fujairah|Gulf United|让球客胜|1x2|2026-08-28": {
-    "ev": 1.13,
-    "ts": 1787912783.7332292
-  },
   "football|UAE Pro League|Al Ain FC|Al Nasr Dubai SC|上半场主胜|ht|2026-08-30": {
     "ev": 1.41,
     "ts": 1787935143.6204329
@@ -7655,895 +6326,6 @@
     "ev": 1.81,
     "ts": 1787963003.145509
   },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|上半场主胜|ht|2026-08-28": {
-    "ev": 1.11,
-    "ts": 1787924299.9670222
-  },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|上半场客胜|ht|2026-08-28": {
-    "ev": 2.25,
-    "ts": 1787915980.685647
-  },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|上半场正确比分0-2|correct_score_ht|2026-08-28": {
-    "ev": 10.69,
-    "ts": 1787883483.008069
-  },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|上半场正确比分1-2|correct_score_ht|2026-08-28": {
-    "ev": 1.93,
-    "ts": 1787915980.687396
-  },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|上半场正确比分2-0|correct_score_ht|2026-08-28": {
-    "ev": 1.86,
-    "ts": 1787903302.264069
-  },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|上半场正确比分others|correct_score_ht|2026-08-28": {
-    "ev": 4.01,
-    "ts": 1787891455.65362
-  },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|主胜|1x2|2026-08-28": {
-    "ev": 2.3,
-    "ts": 1787846370.8163898
-  },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|半/全场-主/客|htft|2026-08-28": {
-    "ev": 1.48,
-    "ts": 1787897204.798095
-  },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|半/全场-客/主|htft|2026-08-28": {
-    "ev": 1.05,
-    "ts": 1787902884.881021
-  },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 1.32,
-    "ts": 1787925081.517757
-  },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 7.9,
-    "ts": 1787838979.6460018
-  },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|角球小球|corner|2026-08-28": {
-    "ev": 1.99,
-    "ts": 1787913370.148803
-  },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|让球主胜|1x2|2026-08-28": {
-    "ev": 1.88,
-    "ts": 1787839275.8269608
-  },
-  "football|UAE Pro League|United FC|Al Ittihad Kalba|让球客胜|1x2|2026-08-28": {
-    "ev": 6.57,
-    "ts": 1787858204.867
-  },
-  "football|UAE Pro League|id:5304708|-|主胜|1x2|2026-08-28": {
-    "ev": 5.13,
-    "bb": 2.47,
-    "ts": 1787924835.554285
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|AS Monaco FC|KS Gornik Zabrze|双边进球-否|btts|2026-08-28": {
-    "ev": 1.76,
-    "ts": 1787839608.1411798
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|AS Monaco FC|KS Gornik Zabrze|双边进球-是|btts|2026-08-28": {
-    "ev": 4.16,
-    "ts": 1787848631.0474188
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|AS Monaco FC|KS Gornik Zabrze|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 2.95,
-    "ts": 1787818483.184314
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|AS Monaco FC|KS Gornik Zabrze|和局|1x2|2026-08-28": {
-    "ev": 1.49,
-    "ts": 1787847912.999156
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|AS Monaco FC|KS Gornik Zabrze|大球|1x2|2026-08-28": {
-    "ev": 4.64,
-    "ts": 1787848631.047477
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|AS Monaco FC|KS Gornik Zabrze|客胜|1x2|2026-08-28": {
-    "ev": 5.45,
-    "ts": 1787818483.184139
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|AS Monaco FC|KS Gornik Zabrze|小球|1x2|2026-08-28": {
-    "ev": 2.04,
-    "ts": 1787838521.989223
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|AS Monaco FC|KS Gornik Zabrze|让球客胜|1x2|2026-08-28": {
-    "ev": 2.39,
-    "ts": 1787818483.184205
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|上半场主胜|ht|2026-08-28": {
-    "ev": 5.38,
-    "ts": 1787767551.562529
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|主胜|1x2|2026-08-28": {
-    "ev": 1.42,
-    "ts": 1787851095.6054301
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|单双-单|oe|2026-08-28": {
-    "ev": 1.21,
-    "ts": 1787824490.1713011
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|双边进球-是|btts|2026-08-28": {
-    "ev": 2.6,
-    "ts": 1787781683.380146
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|大球|1x2|2026-08-28": {
-    "ev": 1.39,
-    "ts": 1787767551.562569
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|小球|1x2|2026-08-28": {
-    "ev": 1.79,
-    "ts": 1787851537.450568
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|让球主胜|1x2|2026-08-28": {
-    "ev": 1.04,
-    "ts": 1787850926.010415
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Ajax Amsterdam|FC Sion|让球客胜|1x2|2026-08-28": {
-    "ev": 2.46,
-    "ts": 1787851904.166462
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Brighton & Hove Albion FC|Tromso IL|上半场客胜|ht|2026-08-28": {
-    "ev": 5.19,
-    "ts": 1787824144.415589
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Brighton & Hove Albion FC|Tromso IL|双边进球-否|btts|2026-08-28": {
-    "ev": 1.45,
-    "ts": 1787832544.565206
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Brighton & Hove Albion FC|Tromso IL|大球|1x2|2026-08-28": {
-    "ev": 2.56,
-    "ts": 1787835069.921553
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Brighton & Hove Albion FC|Tromso IL|小球|1x2|2026-08-28": {
-    "ev": 1.53,
-    "ts": 1787833959.767943
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Brighton & Hove Albion FC|Tromso IL|让球主胜|1x2|2026-08-28": {
-    "ev": 3.11,
-    "ts": 1787833178.180949
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Brighton & Hove Albion FC|Tromso IL|让球客胜|1x2|2026-08-28": {
-    "ev": 1.0,
-    "ts": 1787835655.001436
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|上半场主胜|ht|2026-08-28": {
-    "ev": 1.63,
-    "ts": 1787764120.649885
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|上半场客胜|ht|2026-08-28": {
-    "ev": 6.85,
-    "ts": 1787846899.0229912
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|双边进球-是|btts|2026-08-28": {
-    "ev": 2.11,
-    "ts": 1787814295.230326
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|小球|1x2|2026-08-28": {
-    "ev": 1.39,
-    "ts": 1787831818.5823638
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|让球主胜|1x2|2026-08-28": {
-    "ev": 2.01,
-    "ts": 1787832991.604705
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FC Copenhagen|FC Inter Turku|让球客胜|1x2|2026-08-28": {
-    "ev": 1.96,
-    "ts": 1787814295.230405
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FC Hradec Kralove|Panathinaikos Athens|上半场主胜|ht|2026-08-28": {
-    "ev": 1.32,
-    "ts": 1787764120.650102
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FC Hradec Kralove|Panathinaikos Athens|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.38,
-    "ts": 1787792323.271183
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FC Hradec Kralove|Panathinaikos Athens|让球客胜|1x2|2026-08-28": {
-    "ev": 1.52,
-    "ts": 1787846753.516907
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FC St. Gallen 1879|FC Nordsjaelland|小球|1x2|2026-08-28": {
-    "ev": 1.85,
-    "ts": 1787850292.51718
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Austria Wien|Braga|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.3,
-    "ts": 1787808331.310296
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Austria Wien|Braga|双边进球-是|btts|2026-08-28": {
-    "ev": 1.2,
-    "ts": 1787825064.736185
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Austria Wien|Braga|小球|1x2|2026-08-28": {
-    "ev": 1.01,
-    "ts": 1787852422.6455739
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Borac Banja Luka|Vikingur Reykjavik|主胜|1x2|2026-08-28": {
-    "ev": 1.33,
-    "ts": 1787843458.8330119
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Borac Banja Luka|Vikingur Reykjavik|大球|1x2|2026-08-28": {
-    "ev": 1.33,
-    "ts": 1787782653.225651
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Borac Banja Luka|Vikingur Reykjavik|让球主胜|1x2|2026-08-28": {
-    "ev": 1.02,
-    "ts": 1787851409.189234
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|上半场主胜|ht|2026-08-28": {
-    "ev": 1.73,
-    "ts": 1787822816.54208
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.06,
-    "ts": 1787819941.1558049
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|单双-双|oe|2026-08-28": {
-    "ev": 1.1,
-    "ts": 1787799532.784346
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|双边进球-是|btts|2026-08-28": {
-    "ev": 3.01,
-    "ts": 1787820212.7947378
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|大球|1x2|2026-08-28": {
-    "ev": 1.32,
-    "ts": 1787844080.34603
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|角球小球|corner|2026-08-28": {
-    "ev": 1.21,
-    "ts": 1787835069.922231
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|让球主胜|1x2|2026-08-28": {
-    "ev": 1.77,
-    "ts": 1787809786.9133499
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Jablonec|Glasgow Rangers|让球客胜|1x2|2026-08-28": {
-    "ev": 1.64,
-    "ts": 1787833247.224093
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Partizan Belgrade|Getafe CF|上半场主胜|ht|2026-08-28": {
-    "ev": 6.29,
-    "ts": 1787810708.019856
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Partizan Belgrade|Getafe CF|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.24,
-    "ts": 1787770918.452352
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|FK Partizan Belgrade|Getafe CF|让球主胜|1x2|2026-08-28": {
-    "ev": 1.02,
-    "ts": 1787852422.6452181
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Freiburg|Motherwell FC|上半场主胜|ht|2026-08-28": {
-    "ev": 4.21,
-    "ts": 1787811504.6713831
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Freiburg|Motherwell FC|上半场客胜|ht|2026-08-28": {
-    "ev": 4.19,
-    "ts": 1787819659.985054
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Freiburg|Motherwell FC|小球|1x2|2026-08-28": {
-    "ev": 1.04,
-    "ts": 1787844592.5788229
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Freiburg|Motherwell FC|让球主胜|1x2|2026-08-28": {
-    "ev": 4.02,
-    "ts": 1787845813.8516421
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Freiburg|Motherwell FC|让球客胜|1x2|2026-08-28": {
-    "ev": 1.87,
-    "ts": 1787817958.9785879
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|HNK Rijeka|FC Midtjylland|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.59,
-    "ts": 1787769957.915342
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|HNK Rijeka|FC Midtjylland|双边进球-是|btts|2026-08-28": {
-    "ev": 2.58,
-    "ts": 1787820558.2091131
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|HNK Rijeka|FC Midtjylland|大球|1x2|2026-08-28": {
-    "ev": 1.37,
-    "ts": 1787820912.229702
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|HNK Rijeka|FC Midtjylland|小球|1x2|2026-08-28": {
-    "ev": 2.19,
-    "ts": 1787850163.405617
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|HNK Rijeka|FC Midtjylland|让球主胜|1x2|2026-08-28": {
-    "ev": 2.33,
-    "ts": 1787831978.2366421
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|HNK Rijeka|FC Midtjylland|让球客胜|1x2|2026-08-28": {
-    "ev": 1.94,
-    "ts": 1787848545.131634
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Hapoel Tel Aviv FC|Atalanta BC|上半场客胜|ht|2026-08-28": {
-    "ev": 1.22,
-    "ts": 1787843305.5624378
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Hapoel Tel Aviv FC|Atalanta BC|主胜|1x2|2026-08-28": {
-    "ev": 2.03,
-    "ts": 1787817958.978487
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Hapoel Tel Aviv FC|Atalanta BC|单双-双|oe|2026-08-28": {
-    "ev": 1.28,
-    "ts": 1787853329.2504058
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Hapoel Tel Aviv FC|Atalanta BC|让球主胜|1x2|2026-08-28": {
-    "ev": 2.01,
-    "ts": 1787815561.99088
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Hapoel Tel Aviv FC|Atalanta BC|让球客胜|1x2|2026-08-28": {
-    "ev": 1.18,
-    "ts": 1787852169.201823
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Hibernian FC|KAA Gent|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 2.18,
-    "ts": 1787814295.2298229
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Hibernian FC|KAA Gent|双边进球-是|btts|2026-08-28": {
-    "ev": 1.91,
-    "ts": 1787856919.018555
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Hibernian FC|KAA Gent|大球|1x2|2026-08-28": {
-    "ev": 1.36,
-    "ts": 1787855913.21369
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Hibernian FC|KAA Gent|让球主胜|1x2|2026-08-28": {
-    "ev": 1.02,
-    "ts": 1787853443.057081
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Inter Club de Escaldes|KF Drita|上半场主胜|ht|2026-08-28": {
-    "ev": 4.93,
-    "ts": 1787848299.377055
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Inter Club de Escaldes|KF Drita|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 2.08,
-    "ts": 1787810708.021614
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Inter Club de Escaldes|KF Drita|主胜|1x2|2026-08-28": {
-    "ev": 4.9,
-    "ts": 1787828190.2367418
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Inter Club de Escaldes|KF Drita|双边进球-是|btts|2026-08-28": {
-    "ev": 1.25,
-    "ts": 1787807046.254911
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Inter Club de Escaldes|KF Drita|让球主胜|1x2|2026-08-28": {
-    "ev": 3.48,
-    "ts": 1787828190.236821
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.98,
-    "ts": 1787814295.230243
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|上半场客胜|ht|2026-08-28": {
-    "ev": 4.47,
-    "ts": 1787775701.909222
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|主胜|1x2|2026-08-28": {
-    "ev": 1.86,
-    "ts": 1787857106.418476
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|双边进球-是|btts|2026-08-28": {
-    "ev": 1.3,
-    "ts": 1787820212.794923
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|大球|1x2|2026-08-28": {
-    "ev": 1.75,
-    "ts": 1787771219.462948
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|让球主胜|1x2|2026-08-28": {
-    "ev": 2.58,
-    "ts": 1787857223.97055
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Larne FC|Lincoln Red Imps FC|让球客胜|1x2|2026-08-28": {
-    "ev": 2.23,
-    "ts": 1787770918.452298
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Maccabi Tel Aviv FC|FC Lugano|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.12,
-    "ts": 1787803551.228572
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Maccabi Tel Aviv FC|FC Lugano|上半场客胜|ht|2026-08-28": {
-    "ev": 1.34,
-    "ts": 1787804146.335733
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Maccabi Tel Aviv FC|FC Lugano|主胜|1x2|2026-08-28": {
-    "ev": 1.84,
-    "ts": 1787830980.5764558
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Maccabi Tel Aviv FC|FC Lugano|小球|1x2|2026-08-28": {
-    "ev": 1.87,
-    "ts": 1787824926.338913
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Maccabi Tel Aviv FC|FC Lugano|让球主胜|1x2|2026-08-28": {
-    "ev": 1.0,
-    "ts": 1787825832.179472
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Maccabi Tel Aviv FC|FC Lugano|让球客胜|1x2|2026-08-28": {
-    "ev": 2.01,
-    "ts": 1787845486.314861
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Pafos FC|Dinamo City|上半场主胜|ht|2026-08-28": {
-    "ev": 1.36,
-    "ts": 1787763777.7601001
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Pafos FC|Dinamo City|双边进球-是|btts|2026-08-28": {
-    "ev": 1.2,
-    "ts": 1787813967.824121
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Pafos FC|Dinamo City|大球|1x2|2026-08-28": {
-    "ev": 1.54,
-    "ts": 1787822461.885866
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Pafos FC|Dinamo City|客胜|1x2|2026-08-28": {
-    "ev": 1.27,
-    "ts": 1787820212.794454
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Pafos FC|Dinamo City|小球|1x2|2026-08-28": {
-    "ev": 2.44,
-    "ts": 1787837911.602049
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Pafos FC|Dinamo City|让球客胜|1x2|2026-08-28": {
-    "ev": 1.69,
-    "ts": 1787843458.832962
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.21,
-    "ts": 1787801639.999705
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|上半场客胜|ht|2026-08-28": {
-    "ev": 2.04,
-    "ts": 1787801639.9996538
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|主胜|1x2|2026-08-28": {
-    "ev": 1.11,
-    "ts": 1787843981.622266
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|双边进球-是|btts|2026-08-28": {
-    "ev": 1.11,
-    "ts": 1787846753.517014
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 1.32,
-    "ts": 1787843981.622355
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|大球|1x2|2026-08-28": {
-    "ev": 1.73,
-    "ts": 1787803551.228381
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|客胜|1x2|2026-08-28": {
-    "ev": 3.04,
-    "ts": 1787841558.254015
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|小球|1x2|2026-08-28": {
-    "ev": 1.39,
-    "ts": 1787843305.562676
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|角球小球|corner|2026-08-28": {
-    "ev": 2.11,
-    "ts": 1787807662.7567291
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|让球主胜|1x2|2026-08-28": {
-    "ev": 3.96,
-    "ts": 1787843013.7814689
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Qarabag FK|FC Twente|让球客胜|1x2|2026-08-28": {
-    "ev": 1.82,
-    "ts": 1787815277.359562
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 4.48,
-    "ts": 1787807046.253939
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|上半场客胜|ht|2026-08-28": {
-    "ev": 1.1,
-    "ts": 1787820912.2301812
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|主胜|1x2|2026-08-28": {
-    "ev": 1.29,
-    "ts": 1787845486.31492
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|单双-双|oe|2026-08-28": {
-    "ev": 1.73,
-    "ts": 1787848788.793008
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|双边进球-是|btts|2026-08-28": {
-    "ev": 2.82,
-    "ts": 1787807046.253769
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|和局|1x2|2026-08-28": {
-    "ev": 1.33,
-    "ts": 1787849265.754168
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|大球|1x2|2026-08-28": {
-    "ev": 2.03,
-    "ts": 1787807046.253824
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|让球主胜|1x2|2026-08-28": {
-    "ev": 2.68,
-    "ts": 1787848299.37616
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|RKS Rakow Czestochowa|HNK Hajduk Split|让球客胜|1x2|2026-08-28": {
-    "ev": 2.41,
-    "ts": 1787833602.697338
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|上半场主胜|ht|2026-08-28": {
-    "ev": 3.29,
-    "ts": 1787763777.760244
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|双边进球-是|btts|2026-08-28": {
-    "ev": 1.07,
-    "ts": 1787816847.949038
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|大球|1x2|2026-08-28": {
-    "ev": 2.46,
-    "ts": 1787831533.670957
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|角球小球|corner|2026-08-28": {
-    "ev": 2.2,
-    "ts": 1787849778.929684
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|让球主胜|1x2|2026-08-28": {
-    "ev": 1.52,
-    "ts": 1787848997.030796
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|Riga FC|KI Klaksvik|让球客胜|1x2|2026-08-28": {
-    "ev": 2.98,
-    "ts": 1787848299.376354
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|SK Brann|PAOK Thessaloniki|上半场主胜|ht|2026-08-28": {
-    "ev": 1.12,
-    "ts": 1787803551.22885
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|SK Brann|PAOK Thessaloniki|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 2.19,
-    "ts": 1787803551.228894
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|SK Brann|PAOK Thessaloniki|小球|1x2|2026-08-28": {
-    "ev": 5.98,
-    "ts": 1787772733.655804
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|SK Brann|PAOK Thessaloniki|让球客胜|1x2|2026-08-28": {
-    "ev": 1.51,
-    "ts": 1787837097.418459
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|亚布洛内茨|格拉斯哥流浪者|上半场主胜|ht|2026-08-28": {
-    "ev": 4.95,
-    "bb": 3.92,
-    "ts": 1787823089.504419
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|卡拉巴克|特温特|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 4.57,
-    "bb": 1.72,
-    "ts": 1787803550.915298
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|卡拉巴克|特温特|上半场客胜|ht|2026-08-28": {
-    "ev": 3.65,
-    "bb": 2.92,
-    "ts": 1787803550.91538
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|拉恩|林肯红魔鬼|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 4.05,
-    "bb": 1.89,
-    "ts": 1787857105.912471
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|拉恩|林肯红魔鬼|上半场客胜|ht|2026-08-28": {
-    "ev": 4.47,
-    "bb": 4.64,
-    "ts": 1787775701.515438
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|贝尔格莱德游击|赫塔菲|上半场主胜|ht|2026-08-28": {
-    "ev": 6.29,
-    "bb": 4.79,
-    "ts": 1787810707.1304598
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|贝尔格莱德游击|赫塔菲|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 4.03,
-    "bb": 1.84,
-    "ts": 1787814294.748628
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|赫拉德茨克拉洛韦|帕纳辛纳科斯|上半场主胜|ht|2026-08-28": {
-    "ev": 3.03,
-    "bb": 4.55,
-    "ts": 1787808040.287773
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|赫拉德茨克拉洛韦|帕纳辛纳科斯|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 3.75,
-    "bb": 1.82,
-    "ts": 1787803550.915463
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|里加FC|克拉克斯维克|上半场主胜|ht|2026-08-28": {
-    "ev": 4.38,
-    "bb": 1.93,
-    "ts": 1787764120.197126
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|里耶卡|中日德兰|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 3.16,
-    "bb": 1.81,
-    "ts": 1787813656.2400808
-  },
-  "football|UEFA Europa Conference League-Qualification Playoff|阿贾克斯|锡永|上半场主胜|ht|2026-08-28": {
-    "ev": 5.38,
-    "bb": 1.83,
-    "ts": 1787767551.145806
-  },
-  "football|UEFA Europa League-Qualification Playoff|AGF Aarhus|SL Benfica|主胜|1x2|2026-08-28": {
-    "ev": 1.24,
-    "ts": 1787768155.7485151
-  },
-  "football|UEFA Europa League-Qualification Playoff|AGF Aarhus|SL Benfica|让球主胜|1x2|2026-08-28": {
-    "ev": 1.38,
-    "ts": 1787782283.845804
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Ararat Armenia|CS Universitatea Craiova 1948|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.13,
-    "ts": 1787816274.084648
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Ararat Armenia|CS Universitatea Craiova 1948|单双-双|oe|2026-08-28": {
-    "ev": 1.75,
-    "ts": 1787803551.229801
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Ararat Armenia|CS Universitatea Craiova 1948|双边进球-是|btts|2026-08-28": {
-    "ev": 2.39,
-    "ts": 1787806743.759659
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Ararat Armenia|CS Universitatea Craiova 1948|大球|1x2|2026-08-28": {
-    "ev": 1.78,
-    "ts": 1787837367.60099
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Ararat Armenia|CS Universitatea Craiova 1948|客胜|1x2|2026-08-28": {
-    "ev": 1.33,
-    "ts": 1787834807.93577
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Salzburg|Mjallby AIF|上半场主胜|ht|2026-08-28": {
-    "ev": 1.89,
-    "ts": 1787806743.758979
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Salzburg|Mjallby AIF|上半场客胜|ht|2026-08-28": {
-    "ev": 12.88,
-    "ts": 1787816847.949229
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Salzburg|Mjallby AIF|双边进球-否|btts|2026-08-28": {
-    "ev": 1.84,
-    "ts": 1787846584.941199
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Salzburg|Mjallby AIF|让球主胜|1x2|2026-08-28": {
-    "ev": 1.45,
-    "ts": 1787812073.040223
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Salzburg|Mjallby AIF|让球客胜|1x2|2026-08-28": {
-    "ev": 1.33,
-    "ts": 1787845486.314573
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Thun|KKS Lech Poznan|上半场主胜|ht|2026-08-28": {
-    "ev": 1.91,
-    "ts": 1787852541.1131961
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Thun|KKS Lech Poznan|双边进球-是|btts|2026-08-28": {
-    "ev": 1.58,
-    "ts": 1787829760.684824
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Thun|KKS Lech Poznan|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 4.61,
-    "ts": 1787849434.4798222
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Thun|KKS Lech Poznan|大球|1x2|2026-08-28": {
-    "ev": 2.35,
-    "ts": 1787829760.684872
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Thun|KKS Lech Poznan|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 3.73,
-    "ts": 1787829760.686062
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Thun|KKS Lech Poznan|让球主胜|1x2|2026-08-28": {
-    "ev": 14.48,
-    "ts": 1787849434.479744
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Viktoria Plzen|FK Crvena Zvezda Belgrade|主胜|1x2|2026-08-28": {
-    "ev": 1.43,
-    "ts": 1787764120.65018
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Viktoria Plzen|FK Crvena Zvezda Belgrade|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 1.75,
-    "ts": 1787804146.337474
-  },
-  "football|UEFA Europa League-Qualification Playoff|FC Viktoria Plzen|FK Crvena Zvezda Belgrade|让球主胜|1x2|2026-08-28": {
-    "ev": 1.44,
-    "ts": 1787812694.980312
-  },
-  "football|UEFA Europa League-Qualification Playoff|FK Kauno Zalgiris|Besiktas JK|上半场主胜|ht|2026-08-28": {
-    "ev": 1.33,
-    "ts": 1787823769.26016
-  },
-  "football|UEFA Europa League-Qualification Playoff|FK Kauno Zalgiris|Besiktas JK|上半场双重机会-主/和局|ht_dc|2026-08-28": {
-    "ev": 1.06,
-    "ts": 1787850036.20131
-  },
-  "football|UEFA Europa League-Qualification Playoff|FK Kauno Zalgiris|Besiktas JK|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.03,
-    "ts": 1787811842.290418
-  },
-  "football|UEFA Europa League-Qualification Playoff|FK Kauno Zalgiris|Besiktas JK|上半场客胜|ht|2026-08-28": {
-    "ev": 4.26,
-    "ts": 1787811842.290106
-  },
-  "football|UEFA Europa League-Qualification Playoff|FK Kauno Zalgiris|Besiktas JK|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 14.3,
-    "ts": 1787763777.7606778
-  },
-  "football|UEFA Europa League-Qualification Playoff|FK Kauno Zalgiris|Besiktas JK|角球小球|corner|2026-08-28": {
-    "ev": 1.55,
-    "ts": 1787848997.031868
-  },
-  "football|UEFA Europa League-Qualification Playoff|FK Kauno Zalgiris|Besiktas JK|让球客胜|1x2|2026-08-28": {
-    "ev": 3.24,
-    "ts": 1787811842.2901871
-  },
-  "football|UEFA Europa League-Qualification Playoff|Ferencvarosi TC Budapest|Trabzonspor|双边进球-是|btts|2026-08-28": {
-    "ev": 1.33,
-    "ts": 1787825064.735339
-  },
-  "football|UEFA Europa League-Qualification Playoff|Ferencvarosi TC Budapest|Trabzonspor|客胜|1x2|2026-08-28": {
-    "ev": 1.15,
-    "ts": 1787845894.811693
-  },
-  "football|UEFA Europa League-Qualification Playoff|Ferencvarosi TC Budapest|Trabzonspor|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 2.37,
-    "ts": 1787838013.359733
-  },
-  "football|UEFA Europa League-Qualification Playoff|Ferencvarosi TC Budapest|Trabzonspor|让球主胜|1x2|2026-08-28": {
-    "ev": 3.5,
-    "ts": 1787848872.533161
-  },
-  "football|UEFA Europa League-Qualification Playoff|Ferencvarosi TC Budapest|Trabzonspor|让球客胜|1x2|2026-08-28": {
-    "ev": 1.02,
-    "ts": 1787845813.8514292
-  },
-  "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|上半场主胜|ht|2026-08-28": {
-    "ev": 2.03,
-    "ts": 1787839998.657527
-  },
-  "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|先进球neither|first_to_score|2026-08-28": {
-    "ev": 2.42,
-    "ts": 1787812379.403195
-  },
-  "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|双边进球-否|btts|2026-08-28": {
-    "ev": 1.55,
-    "ts": 1787803551.2290702
-  },
-  "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 1.29,
-    "ts": 1787844080.345883
-  },
-  "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|客胜|1x2|2026-08-28": {
-    "ev": 1.35,
-    "ts": 1787832238.4887402
-  },
-  "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|小球|1x2|2026-08-28": {
-    "ev": 1.25,
-    "ts": 1787828006.194272
-  },
-  "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 1.59,
-    "ts": 1787830196.349973
-  },
-  "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|让球主胜|1x2|2026-08-28": {
-    "ev": 3.21,
-    "ts": 1787839998.657572
-  },
-  "football|UEFA Europa League-Qualification Playoff|Iberia 1999|Jagiellonia Bialystok|让球客胜|1x2|2026-08-28": {
-    "ev": 1.95,
-    "ts": 1787832238.488826
-  },
-  "football|UEFA Europa League-Qualification Playoff|Lillestrom SK|KF Egnatia Rrogozhine|双边进球-是|btts|2026-08-28": {
-    "ev": 1.04,
-    "ts": 1787831309.5125482
-  },
-  "football|UEFA Europa League-Qualification Playoff|Lillestrom SK|KF Egnatia Rrogozhine|大球|1x2|2026-08-28": {
-    "ev": 2.02,
-    "ts": 1787846899.023139
-  },
-  "football|UEFA Europa League-Qualification Playoff|Lillestrom SK|KF Egnatia Rrogozhine|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 4.11,
-    "ts": 1787804146.3375201
-  },
-  "football|UEFA Europa League-Qualification Playoff|Omonia Nicosia|St. Truidense VV|上半场主胜|ht|2026-08-28": {
-    "ev": 3.07,
-    "ts": 1787848631.048106
-  },
-  "football|UEFA Europa League-Qualification Playoff|Omonia Nicosia|St. Truidense VV|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.64,
-    "ts": 1787825996.0479481
-  },
-  "football|UEFA Europa League-Qualification Playoff|Omonia Nicosia|St. Truidense VV|上半场客胜|ht|2026-08-28": {
-    "ev": 3.01,
-    "ts": 1787846144.623601
-  },
-  "football|UEFA Europa League-Qualification Playoff|Omonia Nicosia|St. Truidense VV|主胜|1x2|2026-08-28": {
-    "ev": 1.31,
-    "ts": 1787808755.5115561
-  },
-  "football|UEFA Europa League-Qualification Playoff|Omonia Nicosia|St. Truidense VV|双边进球-是|btts|2026-08-28": {
-    "ev": 1.21,
-    "ts": 1787849265.7550552
-  },
-  "football|UEFA Europa League-Qualification Playoff|Omonia Nicosia|St. Truidense VV|让球主胜|1x2|2026-08-28": {
-    "ev": 1.52,
-    "ts": 1787847033.086723
-  },
-  "football|UEFA Europa League-Qualification Playoff|Omonia Nicosia|St. Truidense VV|让球客胜|1x2|2026-08-28": {
-    "ev": 3.38,
-    "ts": 1787781017.897918
-  },
-  "football|UEFA Europa League-Qualification Playoff|PFC CSKA Sofia|OFI Crete|上半场主胜|ht|2026-08-28": {
-    "ev": 2.04,
-    "ts": 1787767551.562878
-  },
-  "football|UEFA Europa League-Qualification Playoff|PFC CSKA Sofia|OFI Crete|主胜|1x2|2026-08-28": {
-    "ev": 1.75,
-    "ts": 1787851904.1662688
-  },
-  "football|UEFA Europa League-Qualification Playoff|PFC CSKA Sofia|OFI Crete|单双-双|oe|2026-08-28": {
-    "ev": 1.42,
-    "ts": 1787852660.847233
-  },
-  "football|UEFA Europa League-Qualification Playoff|PFC CSKA Sofia|OFI Crete|总进球区间7+|total_goals_range|2026-08-28": {
-    "ev": 6.16,
-    "ts": 1787767551.5630772
-  },
-  "football|UEFA Europa League-Qualification Playoff|PFC CSKA Sofia|OFI Crete|让球主胜|1x2|2026-08-28": {
-    "ev": 1.41,
-    "ts": 1787824490.170632
-  },
-  "football|UEFA Europa League-Qualification Playoff|RSC Anderlecht|FC Kairat Almaty|上半场主胜|ht|2026-08-28": {
-    "ev": 1.59,
-    "ts": 1787769403.866255
-  },
-  "football|UEFA Europa League-Qualification Playoff|RSC Anderlecht|FC Kairat Almaty|单双-双|oe|2026-08-28": {
-    "ev": 1.18,
-    "ts": 1787812694.98016
-  },
-  "football|UEFA Europa League-Qualification Playoff|RSC Anderlecht|FC Kairat Almaty|双边进球-是|btts|2026-08-28": {
-    "ev": 1.02,
-    "ts": 1787841047.730759
-  },
-  "football|UEFA Europa League-Qualification Playoff|RSC Anderlecht|FC Kairat Almaty|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 7.01,
-    "ts": 1787851250.114729
-  },
-  "football|UEFA Europa League-Qualification Playoff|RSC Anderlecht|FC Kairat Almaty|客胜|1x2|2026-08-28": {
-    "ev": 1.41,
-    "ts": 1787811154.8621938
-  },
-  "football|UEFA Europa League-Qualification Playoff|RSC Anderlecht|FC Kairat Almaty|让球主胜|1x2|2026-08-28": {
-    "ev": 2.45,
-    "ts": 1787853207.3743548
-  },
-  "football|UEFA Europa League-Qualification Playoff|RSC Anderlecht|FC Kairat Almaty|让球客胜|1x2|2026-08-28": {
-    "ev": 5.63,
-    "ts": 1787851250.114675
-  },
-  "football|UEFA Europa League-Qualification Playoff|奥胡斯|本菲卡|主胜|1x2|2026-08-28": {
-    "ev": 11.57,
-    "bb": 6.75,
-    "ts": 1787789618.871101
-  },
-  "football|UEFA Europa League-Qualification Playoff|考诺萨基列斯|贝西克塔斯|上半场客胜|ht|2026-08-28": {
-    "ev": 4.26,
-    "bb": 1.95,
-    "ts": 1787811841.853408
-  },
-  "football|UEFA Europa League-Qualification|安德莱赫特|阿拉木图凯拉特|上半场主胜|ht|2026-08-28": {
-    "ev": 5.66,
-    "bb": 2.08,
-    "ts": 1787596267.648889
-  },
-  "football|UEFA Europa League-Qualification|索菲亚中央陆军|OFI 克里特|上半场主胜|ht|2026-08-28": {
-    "ev": 4.23,
-    "bb": 1.99,
-    "ts": 1787594606.293751
-  },
   "football|USA MLS Next Pro|Colorado Rapids II|Ventura County FC|主胜|1x2|2026-08-29": {
     "ev": 1.34,
     "ts": 1787902884.8808682
@@ -8611,6 +6393,26 @@
   "football|USA Major League Soccer|Atlanta United FC|Charlotte FC|正确比分1-1|correct_score|2026-08-30": {
     "ev": 4.71,
     "ts": 1787963003.165521
+  },
+  "football|USA Major League Soccer|Colorado Rapids|Real Salt Lake|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 20.76,
+    "ts": 1787967491.9760928
+  },
+  "football|USA Major League Soccer|Colorado Rapids|Real Salt Lake|上半场正确比分1-2|correct_score_ht|2026-08-30": {
+    "ev": 1.38,
+    "ts": 1787967491.97615
+  },
+  "football|USA Major League Soccer|Colorado Rapids|Real Salt Lake|先进球neither|first_to_score|2026-08-30": {
+    "ev": 7.24,
+    "ts": 1787967491.976022
+  },
+  "football|USA Major League Soccer|Colorado Rapids|Real Salt Lake|总进球区间7+|total_goals_range|2026-08-30": {
+    "ev": 3.83,
+    "ts": 1787967491.975898
+  },
+  "football|USA Major League Soccer|Colorado Rapids|Real Salt Lake|正确比分0-2|correct_score|2026-08-30": {
+    "ev": 4.12,
+    "ts": 1787967822.790852
   },
   "football|USA Major League Soccer|DC United|Los Angeles FC|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 21.11,
@@ -8748,6 +6550,14 @@
     "ev": 7.26,
     "ts": 1787963003.1653602
   },
+  "football|USL Championship|New Mexico United|San Antonio FC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 12.79,
+    "ts": 1787967491.976216
+  },
+  "football|USL Championship|New Mexico United|San Antonio FC|上半场正确比分others|correct_score_ht|2026-08-30": {
+    "ev": 4.02,
+    "ts": 1787967491.976268
+  },
   "football|USL Championship|Oakland Roots SC|Orange County SC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 21.9,
     "ts": 1787963003.166512
@@ -8781,42 +6591,6 @@
     "bb": 3.28,
     "ts": 1787963001.5152
   },
-  "football|Ukraine Persha Liga|FC Lokomotiv Kiev|FSC Mariupol|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 5.08,
-    "ts": 1787905102.9669278
-  },
-  "football|Ukraine Persha Liga|FC Lokomotiv Kiev|FSC Mariupol|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 1.4,
-    "ts": 1787904520.3302379
-  },
-  "football|Ukraine Persha Liga|FC Lokomotiv Kiev|FSC Mariupol|大球|1x2|2026-08-28": {
-    "ev": 3.66,
-    "ts": 1787900770.4820511
-  },
-  "football|Ukraine Persha Liga|FC Lokomotiv Kiev|FSC Mariupol|小球|1x2|2026-08-28": {
-    "ev": 3.53,
-    "ts": 1787901002.180913
-  },
-  "football|Ukraine Persha Liga|FC Lokomotiv Kiev|FSC Mariupol|让球主胜|1x2|2026-08-28": {
-    "ev": 4.15,
-    "ts": 1787906267.550418
-  },
-  "football|Ukraine Persha Liga|Kolos Kovalivka II|Poltava|主胜|1x2|2026-08-28": {
-    "ev": 2.88,
-    "ts": 1787914081.449256
-  },
-  "football|Ukraine Persha Liga|Kolos Kovalivka II|Poltava|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 1.79,
-    "ts": 1787895700.388681
-  },
-  "football|Ukraine Persha Liga|Kolos Kovalivka II|Poltava|客胜|1x2|2026-08-28": {
-    "ev": 3.25,
-    "ts": 1787890041.678852
-  },
-  "football|Ukraine Persha Liga|Kolos Kovalivka II|Poltava|让球客胜|1x2|2026-08-28": {
-    "ev": 1.08,
-    "ts": 1787890041.678944
-  },
   "football|Ukraine Persha Liga|UCSA Tarasivka|FC Inhulets Petrove|主胜|1x2|2026-08-29": {
     "ev": 2.44,
     "ts": 1787940440.944221
@@ -8842,16 +6616,6 @@
     "bb": 3.57,
     "ts": 1787939591.500343
   },
-  "football|Ukraine Persha Liga|高华尤夫卡二队|SC波尔塔瓦|客胜|1x2|2026-08-28": {
-    "ev": 17.65,
-    "bb": 2.17,
-    "ts": 1787895699.673293
-  },
-  "football|Ukraine Persha Liga|高华尤夫卡二队|波尔塔瓦|客胜|1x2|2026-08-28": {
-    "ev": 12.33,
-    "bb": 2.17,
-    "ts": 1787896550.598038
-  },
   "football|Ukraine Premier League|FC Livyi Bereh Kyiv|Karpaty Lviv|上半场主胜|ht|2026-08-29": {
     "ev": 5.2,
     "ts": 1787920458.047182
@@ -8859,31 +6623,6 @@
   "football|Ukraine Premier League|FK Kudrivka|FC Epitsentr Kamianets Podilskyi|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.09,
     "ts": 1787939295.66699
-  },
-  "football|Ukraine Premier League|Kolos Kovalivka|FC Obolon Kiev|上半场双重机会-主/客|ht_dc|2026-08-28": {
-    "ev": 1.14,
-    "ts": 1787898919.914925
-  },
-  "football|Ukraine Premier League|Kolos Kovalivka|FC Obolon Kiev|上半场客胜|ht|2026-08-28": {
-    "ev": 2.59,
-    "ts": 1787834046.712044
-  },
-  "football|Ukraine Premier League|Kolos Kovalivka|FC Obolon Kiev|主胜|1x2|2026-08-28": {
-    "ev": 2.74,
-    "ts": 1787905208.341438
-  },
-  "football|Ukraine Premier League|Kolos Kovalivka|FC Obolon Kiev|小球|1x2|2026-08-28": {
-    "ev": 8.51,
-    "ts": 1787891870.31778
-  },
-  "football|Ukraine Premier League|Kolos Kovalivka|FC Obolon Kiev|让球主胜|1x2|2026-08-28": {
-    "ev": 2.41,
-    "ts": 1787905208.3414881
-  },
-  "football|Ukraine Premier League|高华尤夫卡|奥博隆|上半场客胜|ht|2026-08-28": {
-    "ev": 5.93,
-    "bb": 8.3,
-    "ts": 1787890530.455189
   },
   "football|Uruguay Primera Division|Boston River|Cerro|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.07,
@@ -8927,40 +6666,6 @@
     "bb": 1.89,
     "ts": 1787965512.805871
   },
-  "football|Uzbekistan Pro League|Gazalkent|Fardu Ferghana|主胜|1x2|2026-08-28": {
-    "ev": 3.03,
-    "ts": 1787907196.081725
-  },
-  "football|Uzbekistan Pro League|Gazalkent|Fardu Ferghana|双重机会-主/和局|dc|2026-08-28": {
-    "ev": 2.69,
-    "ts": 1787920829.749505
-  },
-  "football|Uzbekistan Pro League|Gazalkent|Fardu Ferghana|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 8.63,
-    "ts": 1787925586.2596521
-  },
-  "football|Uzbekistan Pro League|Gazalkent|Fardu Ferghana|客胜|1x2|2026-08-28": {
-    "ev": 5.58,
-    "ts": 1787923533.900906
-  },
-  "football|Uzbekistan Pro League|Gazalkent|Fardu Ferghana|小球|1x2|2026-08-28": {
-    "ev": 3.36,
-    "ts": 1787908259.186516
-  },
-  "football|Uzbekistan Pro League|Gazalkent|Fardu Ferghana|让球主胜|1x2|2026-08-28": {
-    "ev": 3.95,
-    "ts": 1787907196.081779
-  },
-  "football|Uzbekistan Pro League|id:5396774|-|双重机会-和局/客|dc|2026-08-28": {
-    "ev": 8.63,
-    "bb": 1.85,
-    "ts": 1787925585.637892
-  },
-  "football|Uzbekistan Pro League|id:5396774|-|客胜|1x2|2026-08-28": {
-    "ev": 9.25,
-    "bb": 3.17,
-    "ts": 1787925585.6378539
-  },
   "football|Wales Cymru Championship North|Newtown AFC|Llanuwchllyn|客胜|1x2|2026-08-29": {
     "ev": 11.4,
     "ts": 1787890041.684742
@@ -8984,43 +6689,9 @@
     "bb": 6.7,
     "ts": 1787890040.992121
   },
-  "tennis|ITF - M15 Champaign Men Singles|Matisse Farzam (USA)|Felix Corwin (USA)|主胜|1x2|2026-08-28": {
-    "ev": 2.24,
-    "ts": 1787846584.941639
-  },
-  "tennis|ITF - M15 Champaign Men Singles|Zachary Viiala (AUS)|Marko Mesarovic (USA)|客胜|1x2|2026-08-28": {
-    "ev": 4.67,
-    "ts": 1787811154.8634639
-  },
-  "tennis|ITF - M15 Champaign Men Singles|Zachary Viiala (AUS)|Marko Mesarovic (USA)|让盘客胜|1x2|2026-08-28": {
-    "ev": 4.99,
-    "ts": 1787814895.415358
-  },
-  "tennis|ITF - W35 Barueri Women Doubles|Jennifer Rosa Dourado (BRA) / Catarina Melleiro (BRA)|Maria Fernanda Navarro (MEX) / Camila Romero (ECU)|客胜|1x2|2026-08-28": {
-    "ev": 10.45,
-    "ts": 1787828190.23717
-  },
-  "volleyball|Asian Volleyball Championship Women|Indonesia (w)|Iran (w)|主胜|1x2|2026-08-28": {
-    "ev": 2.2,
-    "ts": 1787856316.649277
-  },
-  "volleyball|Asian Volleyball Championship Women|Indonesia (w)|Iran (w)|客胜|1x2|2026-08-28": {
-    "ev": 5.75,
-    "ts": 1787879714.342423
-  },
-  "football|Russia First League|id:5358245|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
-    "ev": 2.67,
-    "bb": 1.9,
-    "ts": 1787965914.708889
-  },
-  "football|Italy Serie B|id:5388992|-|上半场客胜|ht|2026-08-30": {
-    "ev": 15.61,
-    "bb": 7.05,
-    "ts": 1787965914.70894
-  },
-  "football|Sweden Allsvenskan|id:4794634|-|上半场客胜|ht|2026-08-29": {
-    "ev": 5.83,
-    "bb": 7.6,
-    "ts": 1787965914.708983
+  "football|Mexico Liga MX|id:5317012|-|上半场客胜|ht|2026-08-29": {
+    "ev": 8.17,
+    "bb": 4.7,
+    "ts": 1787968989.653924
   }
 }
