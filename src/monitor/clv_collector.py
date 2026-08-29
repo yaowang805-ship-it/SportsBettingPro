@@ -1016,6 +1016,8 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
                     "fair_price": opp.get("fair_price", 0), "ev_pct": ev,
                     "stake": 0, "tier": tier, "match_epoch": epoch,
                     "bb_price_source": src, "pin_league_id": pin_lid, "pin_match_id": pin_mid,
+                    # 2026-08-29: 补 bb_match_id, 供观察库纸面投注结算用 BB getMatchDetail 精确匹配比分
+                    "bb_match_id": m.get("bb_match_id", ""),
                     "source": "validate",
                     "pin_max_stake": pin_max_stake if pin_max_stake is not None else "",
                 })
@@ -1032,7 +1034,9 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
                   # V5.10: Pinnacle 主盘口注额上限(定价信心信号), 先采集不过滤
                   "pin_max_stake",
                   # V5.10: 让球/大小球的线值, 供采集器精确匹配 Pin 同线盘口
-                  "line"]
+                  "line",
+                  # 2026-08-29: BB比赛ID, 观察库纸面投注结算用
+                  "bb_match_id"]
     _migrate_csv_header(TRACKING_FILE, fieldnames)
     file_exists = TRACKING_FILE.exists()
     with open(TRACKING_FILE, "a", newline="", encoding="utf-8") as f:
