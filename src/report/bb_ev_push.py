@@ -1018,6 +1018,10 @@ def _calc_kelly_stakes(opps: list) -> list:
         from datetime import datetime as _dt
         _wd = _dt.now().weekday()  # 0=周一 ... 6=周日
         stake_pct *= 1.08 if _wd in (0, 1, 2, 6) else 0.92
+        # 2026-08-29 不确定性惩罚(职业团队 Uncertainty-adjusted Kelly):
+        # Pin 注额上限低=薄市场=定价信心低 → 降仓, 降低假 edge 时的 ruin 风险。
+        if o.get("_thin_market"):
+            stake_pct *= 0.7
         stake = int(bankroll * stake_pct)
         o["_raw_stake"] = stake
         # 2026-08-27 用户澄清: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库(record_bets)

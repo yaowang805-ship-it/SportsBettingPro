@@ -24,7 +24,9 @@ MIN_EV_PCT = 3.0                   # 最小 EV %（与 T1 门槛一致）
 MAX_BETS = 100                     # 每日最多投注数 / 推送机会数
 
 # ── Kelly 计算 ──
-KELLY_FRACTION = 0.50              # Kelly 分数（bb_virtual_bet 0.50 / 旧 bb_ev_push 0.75 → 统一为 0.50）
+# 2026-08-29 职业团队对标: 半凯利(0.5)偏激进, quarter-Kelly(0.25) Sharpe 最高但增长慢,
+# 取三分之一凯利(0.33)折中 —— 抗 Pin 薄锚盘口偏差回撤(半凯利回撤30%, 1/3凯利更稳)。
+KELLY_FRACTION = 0.33              # Kelly 分数（原 0.50 → 0.33, 更稳抗回撤）
 
 # ── 仓位限制 ──
 MAX_STAKE_PCT = 0.06               # 单注最大仓位比例
