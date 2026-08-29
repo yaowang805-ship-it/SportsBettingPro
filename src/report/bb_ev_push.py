@@ -946,6 +946,12 @@ def _calc_kelly_stakes(opps: list) -> list:
         match_score = o.get("_match_score", 0)
 
         stake_pct = get_kelly_stake_pct(sport, league, sub, odds, match_type, match_score)
+        if stake_pct < 0:
+            # 自有标定明确拦截(负值): 该(运动,盘口,赔率桶)真实胜率太低 → 负Kelly, 不许投。
+            # 2026-08-29 修复: 之前 0.0 被 V5.9 兜底用 _kelly_pct 覆盖, 导致 ht_dc 桶3
+            # (真实胜率38.7%) 假机会照样投注。负值必须短路, 不兜底。
+            o["_stake"] = 0; o["_raw_stake"] = 0
+            continue
         if stake_pct <= 0:
             # V5.9: 权重矩阵该赔率区间历史ROI<=0(或联赛无历史数据)时, 不再硬否决当前+EV机会。
             # 比价套利的核心信号是实时 devig EV — _kelly_pct 已按盘口Kelly+联赛权重算好(半Kelly)。

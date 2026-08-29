@@ -1705,7 +1705,10 @@ def _self_calibration_kelly(sport: str, sub_market: str, odds: float):
     wr = cell.get("win_rate", 0.0)
     kelly = (wr * odds - 1.0) / (odds - 1.0)
     if kelly <= 0:
-        return 0.0
+        # 负值 = 自有标定明确拦截(真实胜率太低, 该桶实盘确认负Kelly)。
+        # 必须与"V5矩阵无数据/负ROI返回0.0"区分开 —— 0.0 在 push 侧可被
+        # 实时EV兜底覆盖, 负值不行(否则标定拦截会被 V5.9 兜底短路, 2026-08-29 实测)。
+        return -1.0
     return min(kelly * 0.5, 0.06)  # 半凯利, 上限 6%
 
 
