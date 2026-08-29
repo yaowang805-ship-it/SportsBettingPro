@@ -970,6 +970,10 @@
     "ev": 1.15,
     "ts": 1787963003.1463182
   },
+  "football|Brazil Serie C|Anapolis FC GO|Santa Cruz FC PE|让球客胜|1x2|2026-08-30": {
+    "ev": 12.68,
+    "ts": 1787980055.903727
+  },
   "football|Brazil Serie C|Ferroviaria SP|Confianca SE|单双-单|oe|2026-08-30": {
     "ev": 2.28,
     "ts": 1787969186.447364
@@ -1393,6 +1397,14 @@
     "ev": 3.97,
     "ts": 1787929729.050066
   },
+  "football|Denmark 2nd Division Women|Ballerup Skovlunde Fodbold (w)|Fredensborg BI (w)|主胜|1x2|2026-08-29": {
+    "ev": 7.85,
+    "ts": 1787979944.617027
+  },
+  "football|Denmark 2nd Division Women|Ballerup Skovlunde Fodbold (w)|Fredensborg BI (w)|双重机会-主/和局|dc|2026-08-29": {
+    "ev": 3.0,
+    "ts": 1787979944.617127
+  },
   "football|Denmark 2nd Division Women|Ballerup Skovlunde Fodbold (w)|Fredensborg BI (w)|客胜|1x2|2026-08-29": {
     "ev": 4.26,
     "ts": 1787976806.5544991
@@ -1400,6 +1412,11 @@
   "football|Denmark 2nd Division Women|Ballerup Skovlunde Fodbold (w)|Fredensborg BI (w)|让球客胜|1x2|2026-08-29": {
     "ev": 1.73,
     "ts": 1787977111.538888
+  },
+  "football|Denmark 2nd Division Women|巴勒鲁普 (女)|费雷登斯伯格 (女)|主胜|1x2|2026-08-29": {
+    "ev": 7.85,
+    "bb": 2.21,
+    "ts": 1787979943.845622
   },
   "football|Denmark 2nd Division|BK Fremad Amager|Thisted FC|双重机会-和局/客|dc|2026-08-29": {
     "ev": 1.34,
@@ -1667,6 +1684,10 @@
   "football|England Championship League|Blackburn Rovers|Queens Park Rangers|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.27,
     "ts": 1787926173.2752562
+  },
+  "football|England Championship League|Blackburn Rovers|Queens Park Rangers|上半场客胜|ht|2026-08-29": {
+    "ev": 1.59,
+    "ts": 1787980055.894423
   },
   "football|England Championship League|Blackburn Rovers|Queens Park Rangers|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 14.18,
@@ -2076,6 +2097,10 @@
   "football|England League One|Stockport County FC|Wycombe Wanderers|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 27.27,
     "ts": 1787926738.902598
+  },
+  "football|England League One|Stockport County FC|Wycombe Wanderers|小球|1x2|2026-08-29": {
+    "ev": 2.15,
+    "ts": 1787980055.894876
   },
   "football|England League One|mbridge United|Huddersfield Town|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 2.1,
@@ -2492,6 +2517,10 @@
     "ev": 3.7,
     "ts": 1787917298.831151
   },
+  "football|England Premier League|Liverpool FC|Nottingham Forest|角球让球主胜|corner|2026-08-29": {
+    "ev": 1.94,
+    "ts": 1787980055.903832
+  },
   "football|England Premier League|Manchester United FC|Ipswich Town|双重机会-和局/客|dc|2026-08-30": {
     "ev": 2.34,
     "ts": 1787975485.2089689
@@ -2603,6 +2632,10 @@
   "football|Finland Ykkosliiga|Ekenas Idrottsforening|JIPPO|半/全场-客/主|htft|2026-08-29": {
     "ev": 3.28,
     "ts": 1787926738.8977761
+  },
+  "football|Finland Ykkosliiga|Ekenas Idrottsforening|JIPPO|小球|1x2|2026-08-29": {
+    "ev": 4.0,
+    "ts": 1787980055.902868
   },
   "football|Finland Ykkosliiga|Mikkelin Palloilijat|PK 35|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.49,
@@ -3340,6 +3373,14 @@
   "football|Germany 3rd Liga|SV Wehen Wiesbaden|Rot Weiss Essen|上半场正确比分others|correct_score_ht|2026-08-29": {
     "ev": 2.28,
     "ts": 1787918926.0148952
+  },
+  "football|Germany 3rd Liga|SV Wehen Wiesbaden|Rot Weiss Essen|客胜|1x2|2026-08-29": {
+    "ev": 1.53,
+    "ts": 1787980055.902275
+  },
+  "football|Germany 3rd Liga|SV Wehen Wiesbaden|Rot Weiss Essen|让球客胜|1x2|2026-08-29": {
+    "ev": 1.97,
+    "ts": 1787980055.9023218
   },
   "football|Germany 3rd Liga|TSG 1899 Hoffenheim II|Jahn Regensburg|上半场正确比分2-0|correct_score_ht|2026-08-29": {
     "ev": 1.29,
@@ -4542,6 +4583,10 @@
     "bb": 3.03,
     "ts": 1787890040.992046
   },
+  "football|Japan Football League|Maruyasu Okazaki|Verspah Oita|让球主胜|1x2|2026-08-29": {
+    "ev": 3.22,
+    "ts": 1787980261.12174
+  },
   "football|Japan J.League 2|FC Imabari|Montedio Yamagata|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 15.93,
     "ts": 1787912895.627671
@@ -4844,6 +4889,10 @@
     "ev": 11.72,
     "bb": 6.8,
     "ts": 1787969184.6223428
+  },
+  "football|Japan J.League 3|FC Ryukyu|Sagamihara|让球主胜|1x2|2026-08-29": {
+    "ev": 12.92,
+    "ts": 1787979944.615644
   },
   "football|Japan J.League 3|Fukushima United FC|Nara Club|主胜|1x2|2026-08-29": {
     "ev": 3.48,
@@ -5327,6 +5376,10 @@
     "ev": 1.13,
     "ts": 1787901091.622368
   },
+  "football|Netherlands Eredivisie|PEC Zwolle|NEC Nijmegen|上半场客胜|ht|2026-08-30": {
+    "ev": 1.24,
+    "ts": 1787980055.898666
+  },
   "football|Netherlands Eredivisie|PEC Zwolle|NEC Nijmegen|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 21.61,
     "ts": 1787944008.968321
@@ -5335,9 +5388,21 @@
     "ev": 10.58,
     "ts": 1787944008.968169
   },
+  "football|Netherlands Eredivisie|PEC Zwolle|NEC Nijmegen|客胜|1x2|2026-08-30": {
+    "ev": 4.87,
+    "ts": 1787980055.8986208
+  },
   "football|Netherlands Eredivisie|PEC Zwolle|NEC Nijmegen|正确比分0-4|correct_score|2026-08-30": {
     "ev": 4.29,
     "ts": 1787944008.9680278
+  },
+  "football|Netherlands Eredivisie|PEC Zwolle|NEC Nijmegen|正确比分1-4|correct_score|2026-08-30": {
+    "ev": 4.95,
+    "ts": 1787980055.9115121
+  },
+  "football|Netherlands Eredivisie|PEC Zwolle|NEC Nijmegen|让球客胜|1x2|2026-08-30": {
+    "ev": 4.58,
+    "ts": 1787980055.898711
   },
   "football|Netherlands Eredivisie|SBV Excelsior|Sparta Rotterdam|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 5.53,
@@ -6189,9 +6254,17 @@
     "ev": 4.25,
     "ts": 1787918594.810762
   },
+  "football|Russia Premier League|FC Fakel Voronezh|FK Zenit Saint Petersburg|双重机会-主/和局|dc|2026-08-29": {
+    "ev": 1.79,
+    "ts": 1787980055.896024
+  },
   "football|Russia Premier League|FC Fakel Voronezh|FK Zenit Saint Petersburg|客胜|1x2|2026-08-29": {
     "ev": 1.32,
     "ts": 1787918926.009015
+  },
+  "football|Russia Premier League|FC Fakel Voronezh|FK Zenit Saint Petersburg|让球主胜|1x2|2026-08-29": {
+    "ev": 3.3,
+    "ts": 1787980055.8959308
   },
   "football|Russia Premier League|FC Krasnodar|FK Rostov|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.39,
@@ -7246,6 +7319,10 @@
     "ev": 2.87,
     "ts": 1787976637.4375
   },
+  "football|Sweden Division 2|Enskede IK|Viggbyholms IK FF|让球主胜|1x2|2026-08-29": {
+    "ev": 1.05,
+    "ts": 1787979944.616101
+  },
   "football|Sweden Division 2|Onsala BK|Dalstorps IF|小球|1x2|2026-08-29": {
     "ev": 3.88,
     "ts": 1787978731.7670789
@@ -8251,6 +8328,10 @@
     "ev": 21.9,
     "ts": 1787963003.166512
   },
+  "football|USL Championship|Oakland Roots SC|Orange County SC|总进球区间7+|total_goals_range|2026-08-30": {
+    "ev": 1.57,
+    "ts": 1787980055.9169111
+  },
   "football|USL Championship|Pittsburgh Riverhounds|Tampa Bay Rowdies|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.42,
     "ts": 1787965513.517138
@@ -8431,9 +8512,29 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Denmark 2nd Division Women|巴勒鲁普 (女)|费雷登斯伯格 (女)|主胜|1x2|2026-08-29": {
-    "ev": 7.85,
-    "bb": 2.21,
-    "ts": 1787979943.845622
+  "football|Slovenia 2nd Liga|比斯特里察|德伦弗赫尼卡|客胜|1x2|2026-08-29": {
+    "ev": 8.71,
+    "bb": 3.19,
+    "ts": 1787980439.86216
+  },
+  "football|Brazil Serie A|瓦斯科达伽马|克鲁塞罗MG|上半场客胜|ht|2026-08-30": {
+    "ev": 4.89,
+    "bb": 5.0,
+    "ts": 1787980439.862255
+  },
+  "football|Brazil Serie A|米内罗竞技|维多利亚|上半场客胜|ht|2026-08-30": {
+    "ev": 5.72,
+    "bb": 6.3,
+    "ts": 1787980439.862331
+  },
+  "football|Spain LaLiga 2|莱加内斯|埃登斯|上半场客胜|ht|2026-08-30": {
+    "ev": 4.6,
+    "bb": 5.25,
+    "ts": 1787980439.862402
+  },
+  "football|Uruguay Primera Division|波士顿河|切洛|上半场客胜|ht|2026-08-30": {
+    "ev": 4.13,
+    "bb": 6.45,
+    "ts": 1787980439.862475
   }
 }
