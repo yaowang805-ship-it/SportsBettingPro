@@ -3131,13 +3131,25 @@
     "ev": 2.27,
     "ts": 1787979717.367321
   },
+  "football|Finland Ykkonen|Oulun Luistinseura|Tampere United|双边进球-是|btts|2026-08-29": {
+    "ev": 1.61,
+    "ts": 1787987789.198993
+  },
   "football|Finland Ykkonen|Oulun Luistinseura|Tampere United|双重机会-和局/客|dc|2026-08-29": {
     "ev": 1.12,
     "ts": 1787918276.416149
   },
+  "football|Finland Ykkonen|Oulun Luistinseura|Tampere United|大球|1x2|2026-08-29": {
+    "ev": 4.7,
+    "ts": 1787987789.199258
+  },
   "football|Finland Ykkonen|Oulun Luistinseura|Tampere United|客胜|1x2|2026-08-29": {
     "ev": 4.35,
     "ts": 1787918276.416061
+  },
+  "football|Finland Ykkonen|Oulun Luistinseura|Tampere United|让球主胜|1x2|2026-08-29": {
+    "ev": 3.51,
+    "ts": 1787987789.199133
   },
   "football|Finland Ykkonen|Oulun Luistinseura|Tampere United|让球客胜|1x2|2026-08-29": {
     "ev": 6.88,
@@ -3976,9 +3988,17 @@
     "ev": 3.97,
     "ts": 1787918926.009295
   },
+  "football|Germany 3rd Liga|SG Sonnenhof Grossaspach|FC Ingolstadt 04|客胜|1x2|2026-08-29": {
+    "ev": 2.13,
+    "ts": 1787987789.0954409
+  },
   "football|Germany 3rd Liga|SG Sonnenhof Grossaspach|FC Ingolstadt 04|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 4.33,
     "ts": 1787918594.8148532
+  },
+  "football|Germany 3rd Liga|SG Sonnenhof Grossaspach|FC Ingolstadt 04|让球客胜|1x2|2026-08-29": {
+    "ev": 2.5,
+    "ts": 1787987789.0955908
   },
   "football|Germany 3rd Liga|SV Wehen Wiesbaden|Rot Weiss Essen|上半场正确比分2-0|correct_score_ht|2026-08-29": {
     "ev": 3.54,
@@ -5342,6 +5362,14 @@
     "bb": 3.03,
     "ts": 1787890040.992046
   },
+  "football|Japan Football League|Briobecca Urayasu|Minebea Mitsumi FC|主胜|1x2|2026-08-29": {
+    "ev": 14.25,
+    "ts": 1787987789.0887418
+  },
+  "football|Japan Football League|Briobecca Urayasu|Minebea Mitsumi FC|双重机会-主/和局|dc|2026-08-29": {
+    "ev": 2.47,
+    "ts": 1787987789.0889611
+  },
   "football|Japan Football League|Criacao Shinjuku|Yokogawa Musashino FC|主胜|1x2|2026-08-30": {
     "ev": 12.91,
     "ts": 1787987584.6836421
@@ -5369,6 +5397,11 @@
   "football|Japan Football League|YSCC Yokohama|Tiamo Hirakata|客胜|1x2|2026-08-30": {
     "ev": 11.15,
     "ts": 1787987584.648701
+  },
+  "football|Japan Football League|浦安布里奥贝卡|本田制锁|主胜|1x2|2026-08-29": {
+    "ev": 14.25,
+    "bb": 2.08,
+    "ts": 1787987778.92565
   },
   "football|Japan J.League 2|FC Imabari|Montedio Yamagata|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 15.93,
@@ -10131,9 +10164,59 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Japan Football League|浦安布里奥贝卡|本田制锁|主胜|1x2|2026-08-29": {
-    "ev": 14.25,
-    "bb": 2.08,
-    "ts": 1787987778.92565
+  "football|Tunisia Ligue 1|蒙纳斯堤|斯塔图里|和局|1x2|2026-08-29": {
+    "ev": 10.32,
+    "bb": 2.58,
+    "ts": 1787987964.8813
+  },
+  "football|USL Championship|匹兹堡猎犬河队|坦帕湾暴徒|和局|1x2|2026-08-30": {
+    "ev": 9.45,
+    "bb": 3.17,
+    "ts": 1787987964.88147
+  },
+  "football|England Premier League|考文垂|赫尔城|上半场客胜|ht|2026-08-29": {
+    "ev": 5.47,
+    "bb": 5.65,
+    "ts": 1787987964.88162
+  },
+  "football|Brazil Serie A|圣保罗|红牛布拉干蒂诺|上半场客胜|ht|2026-08-30": {
+    "ev": 7.01,
+    "bb": 4.93,
+    "ts": 1787987964.900022
+  },
+  "football|Italy Serie A|萨索洛|都灵|上半场客胜|ht|2026-08-30": {
+    "ev": 5.39,
+    "bb": 4.46,
+    "ts": 1787987964.900307
+  },
+  "football|England Championship League|查尔顿|普雷斯顿|上半场客胜|ht|2026-08-29": {
+    "ev": 6.67,
+    "bb": 5.15,
+    "ts": 1787987964.900544
+  },
+  "football|Spain LaLiga|莱万特|皇家贝蒂斯|上半场主胜|ht|2026-08-29": {
+    "ev": 4.12,
+    "bb": 4.41,
+    "ts": 1787987964.9007401
+  },
+  "football|Italy Serie A|蒙扎|乌迪内斯|上半场主胜|ht|2026-08-30": {
+    "ev": 3.46,
+    "bb": 4.25,
+    "ts": 1787987964.900943
+  },
+  "football|Ecuador LigaPro Primera A|曼塔|瓜亚基尔巴塞罗那|上半场主胜|ht|2026-08-30": {
+    "ev": 4.89,
+    "bb": 5.6,
+    "ts": 1787987964.901164
+  },
+  "football|Peru Liga 1|卡哈马卡|秘鲁体育大学|上半场主胜|ht|2026-08-30": {
+    "ev": 3.17,
+    "bb": 4.88,
+    "ts": 1787987964.90137
+  },
+  "football|Italy Serie B|阿斯科利 1898|凯勒雷斯 1908|上半场客胜|ht|2026-08-30": {
+    "ev": 3.06,
+    "bb": 5.95,
+    "ts": 1787987964.901589
   }
 }
