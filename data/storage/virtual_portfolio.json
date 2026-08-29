@@ -1,5 +1,5 @@
 {
-  "balance": 6345.53,
+  "balance": 6173.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3703,6 +3703,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1787965200,
       "created_at": "2026-08-29T00:33:24.585181+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_FK_特兰西二队_乔纳瓦_客胜",
+      "sport": "football",
+      "league": "立陶宛乙级联赛",
+      "home_team": "FK 特兰西二队",
+      "away_team": "乔纳瓦",
+      "home_cn": "FK 特兰西二队",
+      "away_cn": "乔纳瓦",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.94,
+      "stake": 172,
+      "model_prob": 0.559,
+      "ev_pct": 8.45,
+      "pin_odds": 1.6993,
+      "fair_price": 1.7888,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788004800,
+      "created_at": "2026-08-29T00:35:19.630625+00:00",
       "track_only": false
     }
   ],
@@ -8165,8 +8188,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-29",
-    "used": 3079.0,
-    "bets": 46
+    "used": 3251.0,
+    "bets": 47
   },
   "updated": null
 }

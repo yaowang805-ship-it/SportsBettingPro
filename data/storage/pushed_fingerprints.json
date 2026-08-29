@@ -302,6 +302,11 @@
     "bb": 6.6,
     "ts": 1787927341.763476
   },
+  "football|Argentina Primera Nacional|id:5474564|-|上半场客胜|ht|2026-08-29": {
+    "ev": 9.74,
+    "bb": 6.85,
+    "ts": 1787963604.6024928
+  },
   "football|Austria 2. Liga|ASK Voitsberg|FC Liefering|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 2.3,
     "ts": 1787883483.0089111
@@ -4784,6 +4789,10 @@
     "ev": 8.65,
     "ts": 1787875421.317138
   },
+  "football|Mexico Liga De Expansion MX|Correcaminos UAT|Alacranes de Durango|让球主胜|1x2|2026-08-29": {
+    "ev": 1.17,
+    "ts": 1787963605.3192909
+  },
   "football|Mexico Liga De Expansion MX|奥哈卡|塔巴蒂奥|上半场主胜|ht|2026-08-28": {
     "ev": 5.93,
     "bb": 4.22,
@@ -8710,9 +8719,9 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Argentina Primera Nacional|id:5474564|-|上半场客胜|ht|2026-08-29": {
-    "ev": 9.74,
-    "bb": 6.85,
-    "ts": 1787963604.6024928
+  "football|Lithuania 1 Lyga|id:5276037|-|客胜|1x2|2026-08-29": {
+    "ev": 8.45,
+    "bb": 1.94,
+    "ts": 1787963719.644385
   }
 }
