@@ -2213,14 +2213,18 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
         base_min_ev = 3.0
     elif sub_market in ("btts", "oe", "correct_score", "winning_margin", "total_goals_range", "first_to_score"):
         base_min_ev = 4.0
-    elif sub_market in ("ht", "ht_dc", "ht_hc", "ht_ou", "ht_dnb", "f5"):
-        # V5.10(2026-08-22): ht 门槛 4% → 2%, 与数据驱动门槛矩阵一致。
-        # 矩阵每晚从 CLV 重算: ht 实测中位 CLV +5.6%/正率74%(唯一强正 edge 盘口),
-        # 2% 即正 edge。原 4% 是"推导盘"静态保守, 与数据驱动结论冲突, 把主流联赛
-        # ht 2-4% 机会(英超 2.8%/3.7%)全砍掉, 导致 2026-08-22 整天无推送。
-        base_min_ev = 2.0
+    elif sub_market == "ht_dc":
+        # 2026-08-29 薄锚降级: ht_dc「主/客」实际胜率42.7% vs 隐含53.4%(Pin半场盘口把平局
+        # 定低 -11pt), 2% 门槛把假机会整天刷屏(8-28 推191条)。职业标准: 无可靠Pin锚点的
+        # 盘口大幅提门槛(覆盖偏差), 等自有标定 n≥200 用真实胜率覆盖后再放开。
+        base_min_ev = 12.0
+    elif sub_market in ("ht", "ht_hc", "ht_ou", "ht_dnb", "f5"):
+        # ht 独赢是强正 edge(中位CLV +6~14%/正率74%), 但仍按职业分档 <3% 不下注。
+        base_min_ev = 3.0
     else:
-        base_min_ev = 2.0
+        # 2026-08-29 职业分档对齐: <3% 一律不下注(原2%太松, 放行大量临场漂移假机会)。
+        # 1x2/hc/ou 直接盘(Pin-sharp锚) 3% 起步, Kelly 再按 edge 定仓。
+        base_min_ev = 3.0
 
     if sport_lower == "football":
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)

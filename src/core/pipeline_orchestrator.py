@@ -132,6 +132,7 @@ class PipelineOrchestrator:
         self._last_incremental: Optional[float] = None
         self._last_inc_urgent: Optional[float] = None   # 临场<6h
         self._last_inc_near: Optional[float] = None      # 中程6-24h
+        self._last_inc_far: Optional[float] = None       # 早盘24-72h(2026-08-29 早盘聚焦加回)
         self._last_bb_settle: Optional[float] = None     # 高频BB结算(110min)
         self._full_scan_ok = False  # V5.4: 全量扫描成功+推送后才允许分层增量扫描
         self._last_scan_success: float = 0             # 最后一次成功完成的时间戳
@@ -1328,9 +1329,10 @@ class PipelineOrchestrator:
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
-            # V5.7: 两层定时器 (urgent 60s / near 300s)。扫描+推送一体。
-            # (解耦48h全量扫描触发Pin封禁, 已回退; 48h扫描太重要后续单独调)
-            for tw, interval, label in [("urgent", 60, "临场<6h"), ("near", 300, "中程6-24h")]:
+            # 2026-08-29 早盘聚焦(职业标准): 边缘活在"软书(BB)滞后于sharp(Pin)的窗口", 早盘最干净。
+            # 临场<6h 是 BB 价漂移/将修正的假机会重灾区(近3天临场亏-1582), 降频到 5min 不再 60s 猛扫。
+            # 早盘24-72h 加回(原 V5.7 移除), 30min 一次 —— 早盘赔率变动慢, 30min 足够抓到 BB 开盘滞后。
+            for tw, interval, label in [("far", 1800, "早盘24-72h"), ("near", 300, "中程6-24h"), ("urgent", 300, "临场<6h")]:
                 last_key = f"_last_inc_{tw}"
                 last_val = getattr(self, last_key, None)
                 if last_val is None:
