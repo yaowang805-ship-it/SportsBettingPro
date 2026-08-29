@@ -1712,6 +1712,23 @@ def _self_calibration_kelly(sport: str, sub_market: str, odds: float):
     return min(kelly * 0.5, 0.06)  # 半凯利, 上限 6%
 
 
+def get_self_cal_win_rate(sport: str, sub_market: str, odds: float):
+    """自有标定真实胜率(若有 n≥30 格子), 供 EV 层覆盖 Pin 假价。无格子返回 None。
+
+    2026-08-29 薄锚盘口(ht_dc等): Pin 半场/薄市场价低估平局, fair_price 假, EV 虚高。
+    用真实结算标定的胜率重算 EV = bb_odds × win_rate - 1, 让假机会在准入前就被拦住。
+    注: 标定按收盘赔率分桶, 此处用 bb_odds 近似(bb 追 Pin, 桶位基本一致)。
+    """
+    cal = _load_self_calibration()
+    if not cal.get("cells"):
+        return None
+    bin_i = _bin_index(odds, ODDS_BINS)
+    cell = cal["cells"].get(f"{sport}|{sub_market}|{bin_i}")
+    if not cell or cell.get("n", 0) < 30:
+        return None
+    return cell.get("win_rate", 0.0)
+
+
 _SELF_CAL_CACHE = None
 _SELF_CAL_TS = 0.0
 

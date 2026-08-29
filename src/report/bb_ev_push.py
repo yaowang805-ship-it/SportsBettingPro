@@ -1565,6 +1565,13 @@ def _collect_opportunities(match, market_key):
                           "total_goals_range_ht", "first_to_score_ht", "htft"):
             continue
 
+        # 自有标定喂 EV 层(2026-08-29): 薄锚盘口(ht_dc等)用真实结算胜率覆盖 Pin 假价重算 EV,
+        # 让假机会在准入门槛前就被拦住(不只靠 stake 层 -1.0 拦截)。
+        from config.weight_matrix_v5 import get_self_cal_win_rate
+        _sc_wr = get_self_cal_win_rate(match.get("sport", ""), sub_market, bb_odds)
+        if _sc_wr is not None:
+            ev = round((bb_odds * _sc_wr - 1.0) * 100.0, 2)
+
         # ── V2 动态 EV 门槛: 赔率越高 → 门槛越高 ──
         # V4 的 get_min_ev 基于 Pinnacle 107K场数据
         from config.weight_matrix_v5 import get_min_ev
