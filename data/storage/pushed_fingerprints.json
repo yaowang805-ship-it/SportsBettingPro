@@ -1244,6 +1244,10 @@
     "ev": 7.88,
     "ts": 1787981994.4149592
   },
+  "football|Bulgaria Second Professional League|FC Fratria Varna|CSKA Sofia II|主胜|1x2|2026-08-30": {
+    "ev": 11.29,
+    "ts": 1787986363.763412
+  },
   "football|Bulgaria Second Professional League|FC Fratria Varna|CSKA Sofia II|让球客胜|1x2|2026-08-30": {
     "ev": 4.73,
     "ts": 1787985826.829616
@@ -1255,6 +1259,15 @@
   "football|Bulgaria Second Professional League|FC Pirin Blagoevgrad|PFC Chernomorets Burgas|让球客胜|1x2|2026-08-30": {
     "ev": 2.63,
     "ts": 1787985178.356079
+  },
+  "football|Bulgaria Second Professional League|弗拉特里亚|CSKA 索菲亚二队|主胜|1x2|2026-08-30": {
+    "ev": 11.29,
+    "bb": 1.79,
+    "ts": 1787986362.706738
+  },
+  "football|Chile Primera B|Deportes Iquique|San Luis de Quillota|主胜|1x2|2026-08-30": {
+    "ev": 1.11,
+    "ts": 1787986363.7682319
   },
   "football|Chile Primera Division|Cobresal|Palestino|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 6.99,
@@ -5086,6 +5099,10 @@
     "ev": 1.2,
     "ts": 1787942646.871795
   },
+  "football|Italy Serie C|Cosenza Calcio|Potenza Calcio|上半场客胜|ht|2026-08-30": {
+    "ev": 3.0,
+    "ts": 1787986363.766256
+  },
   "football|Italy Serie C|Cosenza Calcio|Potenza Calcio|客胜|1x2|2026-08-30": {
     "ev": 2.21,
     "ts": 1787971686.698473
@@ -5405,6 +5422,10 @@
     "ev": 3.79,
     "ts": 1787982449.904573
   },
+  "football|Japan J.League 2|Omiya Ardija|Shonan Bellmare|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 3.29,
+    "ts": 1787986498.411732
+  },
   "football|Japan J.League 2|Omiya Ardija|Shonan Bellmare|和局|1x2|2026-08-29": {
     "ev": 7.88,
     "ts": 1787985291.818294
@@ -5412,6 +5433,10 @@
   "football|Japan J.League 2|Omiya Ardija|Shonan Bellmare|让球主胜|1x2|2026-08-29": {
     "ev": 7.49,
     "ts": 1787982449.904514
+  },
+  "football|Japan J.League 2|Omiya Ardija|Shonan Bellmare|让球客胜|1x2|2026-08-29": {
+    "ev": 4.96,
+    "ts": 1787986498.4116821
   },
   "football|Japan J.League 2|Tochigi City FC|Jubilo Iwata|上半场主胜|ht|2026-08-29": {
     "ev": 2.68,
@@ -5734,6 +5759,10 @@
   "football|Mexico Liga De Expansion MX|Correcaminos UAT|Alacranes de Durango|让球客胜|1x2|2026-08-29": {
     "ev": 1.27,
     "ts": 1787964318.594082
+  },
+  "football|Mexico Liga De Expansion MX|Cruz Azul Hidalgo|Tepatitlan FC|上半场客胜|ht|2026-08-30": {
+    "ev": 1.65,
+    "ts": 1787986363.769154
   },
   "football|Mexico Liga De Expansion MX|Cruz Azul Hidalgo|Tepatitlan FC|主胜|1x2|2026-08-30": {
     "ev": 1.07,
@@ -6222,6 +6251,14 @@
   "football|Netherlands Eredivisie|SBV Excelsior|Sparta Rotterdam|上半场正确比分2-0|correct_score_ht|2026-08-29": {
     "ev": 2.99,
     "ts": 1787927665.9093492
+  },
+  "football|Netherlands Eredivisie|SBV Excelsior|Sparta Rotterdam|双边进球-是|btts|2026-08-29": {
+    "ev": 1.23,
+    "ts": 1787986363.761651
+  },
+  "football|Netherlands Eredivisie|SBV Excelsior|Sparta Rotterdam|大球|1x2|2026-08-29": {
+    "ev": 3.49,
+    "ts": 1787986363.7617369
   },
   "football|Netherlands Eredivisie|SBV Excelsior|Sparta Rotterdam|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 1.09,
@@ -8313,6 +8350,10 @@
     "ev": 1.55,
     "ts": 1787939592.057312
   },
+  "football|Spain LaLiga|Real Sociedad|D Espanyol|半/全场-客/主|htft|2026-08-30": {
+    "ev": 3.33,
+    "ts": 1787986363.762149
+  },
   "football|Spain LaLiga|Real Sociedad|D Espanyol|正确比分3-0|correct_score|2026-08-30": {
     "ev": 2.02,
     "ts": 1787936989.34496
@@ -9265,6 +9306,10 @@
     "ev": 1.0,
     "ts": 1787985826.834059
   },
+  "football|UAE Pro League|Al Ain FC|Al Nasr Dubai SC|总进球区间7+|total_goals_range|2026-08-30": {
+    "ev": 4.14,
+    "ts": 1787986363.783104
+  },
   "football|UAE Pro League|Al Jazira (UAE)|Ajman Club|上半场正确比分1-2|correct_score_ht|2026-08-29": {
     "ev": 1.84,
     "ts": 1787926738.900942
@@ -9926,9 +9971,14 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Bulgaria Second Professional League|弗拉特里亚|CSKA 索菲亚二队|主胜|1x2|2026-08-30": {
-    "ev": 11.29,
-    "bb": 1.79,
-    "ts": 1787986362.706738
+  "football|Ecuador LigaPro Primera A|曼塔|瓜亚基尔巴塞罗那|客胜|1x2|2026-08-30": {
+    "ev": 8.94,
+    "bb": 2.12,
+    "ts": 1787986710.450913
+  },
+  "football|Belarus Premier League|明斯克迪纳摩|巴拉诺维治|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 14.02,
+    "bb": 4.16,
+    "ts": 1787986710.4510021
   }
 }

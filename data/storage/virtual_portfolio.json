@@ -1,5 +1,5 @@
 {
-  "balance": 4397.53,
+  "balance": 4336.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3818,6 +3818,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788022800,
       "created_at": "2026-08-29T06:52:42.691466+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_曼塔_瓜亚基尔巴塞罗那_客胜",
+      "sport": "football",
+      "league": "厄瓜多尔甲级联赛",
+      "home_team": "曼塔",
+      "away_team": "瓜亚基尔巴塞罗那",
+      "home_cn": "曼塔",
+      "away_cn": "瓜亚基尔巴塞罗那",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.12,
+      "stake": 54,
+      "model_prob": 0.5138,
+      "ev_pct": 8.94,
+      "pin_odds": 1.8929,
+      "fair_price": 1.9461,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788048000,
+      "created_at": "2026-08-29T06:58:30.431735+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_明斯克迪纳摩_巴拉诺维治_双重机会-和局/客",
+      "sport": "football",
+      "league": "白俄罗斯超级联赛",
+      "home_team": "明斯克迪纳摩",
+      "away_team": "巴拉诺维治",
+      "home_cn": "明斯克迪纳摩",
+      "away_cn": "巴拉诺维治",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 4.16,
+      "stake": 7,
+      "model_prob": 0.2741,
+      "ev_pct": 14.02,
+      "pin_odds": 3.48,
+      "fair_price": 3.6484,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788008400,
+      "created_at": "2026-08-29T06:58:30.431802+00:00",
       "track_only": false
     }
   ],
@@ -8370,8 +8416,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-29",
-    "used": 5445.0,
-    "bets": 90
+    "used": 5506.0,
+    "bets": 92
   },
   "updated": null
 }
