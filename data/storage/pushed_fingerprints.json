@@ -15,6 +15,10 @@
     "ev": 2.44,
     "ts": 1787941948.654467
   },
+  "baseball|MLB|Los Angeles Angels|Philadelphia Phillies|让分主胜|1x2|2026-08-29": {
+    "ev": 20.11,
+    "ts": 1787962880.78605
+  },
   "baseball|MLB|New York Mets|Houston Astros|客胜|1x2|2026-08-29": {
     "ev": 4.34,
     "ts": 1787903573.6358101
@@ -4385,11 +4389,6 @@
     "bb": 1.96,
     "ts": 1787909843.999684
   },
-  "football|Japan J.League 2|id:5164168|-|上半场客胜|ht|2026-08-29": {
-    "ev": 8.02,
-    "bb": 6.6,
-    "ts": 1787917020.410368
-  },
   "football|Japan J.League 2|id:5164239|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 3.34,
     "bb": 1.87,
@@ -4666,6 +4665,11 @@
   "football|Mexico Liga MX|Necaxa|Cruz Azul|正确比分1-3|correct_score|2026-08-29": {
     "ev": 6.82,
     "ts": 1787885001.247935
+  },
+  "football|Mexico Liga MX|id:5083824|-|上半场客胜|ht|2026-08-29": {
+    "ev": 4.37,
+    "bb": 4.51,
+    "ts": 1787962880.058812
   },
   "football|Mexico Liga MX|亚特兰特|莱昂|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 16.75,
@@ -8252,9 +8256,39 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Mexico Liga MX|id:5083824|-|上半场客胜|ht|2026-08-29": {
-    "ev": 4.37,
-    "bb": 4.51,
-    "ts": 1787962880.058812
+  "football|USL Championship|id:4259018|-|和局|1x2|2026-08-30": {
+    "ev": 12.16,
+    "bb": 3.28,
+    "ts": 1787963001.5152
+  },
+  "football|Brazil Serie A|id:5077489|-|上半场客胜|ht|2026-08-30": {
+    "ev": 10.25,
+    "bb": 5.25,
+    "ts": 1787963001.515296
+  },
+  "football|Japan J.League 2|id:5164168|-|上半场客胜|ht|2026-08-29": {
+    "ev": 14.18,
+    "bb": 6.95,
+    "ts": 1787963001.515361
+  },
+  "football|Brazil Serie A|id:5077491|-|上半场客胜|ht|2026-08-30": {
+    "ev": 8.0,
+    "bb": 5.0,
+    "ts": 1787963001.515414
+  },
+  "football|Italy Serie B|id:5388999|-|上半场客胜|ht|2026-08-30": {
+    "ev": 4.65,
+    "bb": 4.67,
+    "ts": 1787963001.515465
+  },
+  "football|Russia Premier League|id:5295929|-|上半场主胜|ht|2026-08-29": {
+    "ev": 7.08,
+    "bb": 8.95,
+    "ts": 1787963001.515518
+  },
+  "football|Brazil Serie A|id:5077488|-|上半场客胜|ht|2026-08-30": {
+    "ev": 3.21,
+    "bb": 6.15,
+    "ts": 1787963001.515567
   }
 }
