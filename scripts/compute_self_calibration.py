@@ -51,7 +51,10 @@ def main():
     if RESULTS.exists():
         with open(RESULTS, encoding="utf-8-sig") as fh:
             for r in csv.DictReader(fh):
-                if r.get("source") != "push":
+                # 2026-08-29: 观察库(validate)也补了结算, 收盘价要同时收 push+validate 两侧。
+                # close_pin_odds 是同一场的收盘价, 与 source 无关; push 优先(真实投注口径更准)。
+                src = r.get("source")
+                if src not in ("push", "validate"):
                     continue
                 try:
                     co = float(r["close_pin_odds"])
@@ -59,8 +62,10 @@ def main():
                     continue
                 if co <= 1.0:
                     continue
-                clv_map[_key(r.get("sport"), r.get("home_pin"), r.get("away_pin"),
-                            r.get("designation"), r.get("sub_market"), r.get("match_epoch"))] = co
+                k = _key(r.get("sport"), r.get("home_pin"), r.get("away_pin"),
+                         r.get("designation"), r.get("sub_market"), r.get("match_epoch"))
+                if k not in clv_map or src == "push":
+                    clv_map[k] = co
 
     # 2. 加载赛果 (tracked_bets), 聚合 (sport, sub_market, bin) → [wins, total]
     #    联赛维度暂时太稀疏(4维 0 格), 先做 3 维(运动×盘口×收盘赔率桶), 联赛层待样本积累再下沉
@@ -78,6 +83,27 @@ def main():
             cells[cell][1] += 1
             if b.get("result") == "won":
                 cells[cell][0] += 1
+
+    # 2b. 观察库纸面结算(paper_bets) — 2026-08-29 新增, 消除实盘选择偏差 + 扩样本。
+    #     validate 记录了所有 EV≥2% 机会(不只 BB>Pin 被选中的), 用它的结算结果标定
+    #     的真实胜率才无偏(实盘侧会因为"只投被高估的热门"而系统性偏乐观)。
+    PAPER = DATA / "paper_bets.json"
+    if PAPER.exists():
+        try:
+            pb = json.loads(PAPER.read_text())
+            for b in pb.get("bets", []):
+                if b.get("result") not in ("won", "lost"):
+                    continue
+                co = clv_map.get(_key(b.get("sport"), b.get("home_pin"), b.get("away_pin"),
+                                    b.get("designation"), b.get("sub_market"), b.get("match_epoch")))
+                if co is None:
+                    continue
+                cell = (b.get("sport"), b.get("sub_market"), bin_index(co, ODDS_BINS))
+                cells[cell][1] += 1
+                if b.get("result") == "won":
+                    cells[cell][0] += 1
+        except Exception:
+            pass
 
     # 3. 输出 (n>=30 的格子才标定, 不足回退 V5 外部数据)
     out_cells = {}

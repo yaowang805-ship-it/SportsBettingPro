@@ -679,6 +679,16 @@ class PipelineOrchestrator:
                 logger.info("高频BB结算: %d 笔", r["settled"])
         except Exception as e:
             logger.warning("高频BB结算失败: %s", e)
+        # 观察库纸面结算(2026-08-29): 给 validate 样本补 won/lost/void, 供自有标定扩面。
+        # 复用 BB getMatchDetail(轻量), 与 tracked_bets 结算互不影响(独立 paper_bets.json)。
+        try:
+            from src.monitor.paper_settle import settle_paper, _normalize_daily_budget
+            pr = settle_paper()
+            _normalize_daily_budget()
+            if pr.get("new_settled"):
+                logger.info("观察库纸面结算: +%d 笔 (累计 %d)", pr["new_settled"], pr["total_paper"])
+        except Exception as e:
+            logger.warning("观察库纸面结算失败: %s", e)
 
     def do_daily_report(self):
         """日报推送。"""
