@@ -1,5 +1,5 @@
 {
-  "balance": 4336.53,
+  "balance": 4232.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3864,6 +3864,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788008400,
       "created_at": "2026-08-29T06:58:30.431802+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_弗拉特里亚_CSKA索菲亚二队_主胜",
+      "sport": "football",
+      "league": "保加利亚乙级联赛",
+      "home_team": "弗拉特里亚",
+      "away_team": "CSKA索菲亚二队",
+      "home_cn": "弗拉特里亚",
+      "away_cn": "CSKA索菲亚二队",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.79,
+      "stake": 97,
+      "model_prob": 0.6217,
+      "ev_pct": 11.29,
+      "pin_odds": 1.5435,
+      "fair_price": 1.6084,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788022800,
+      "created_at": "2026-08-29T07:07:55.950688+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_恩特拉_切塞纳_上半场客胜",
+      "sport": "football",
+      "league": "意大利乙级联赛",
+      "home_team": "恩特拉",
+      "away_team": "切塞纳",
+      "home_cn": "恩特拉",
+      "away_cn": "切塞纳",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.73,
+      "stake": 7,
+      "model_prob": 0.2197,
+      "ev_pct": 3.91,
+      "pin_odds": 4.26,
+      "fair_price": 4.5519,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788022800,
+      "created_at": "2026-08-29T07:07:55.950812+00:00",
       "track_only": false
     }
   ],
@@ -8416,8 +8462,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-29",
-    "used": 5506.0,
-    "bets": 92
+    "used": 5610.0,
+    "bets": 94
   },
   "updated": null
 }
