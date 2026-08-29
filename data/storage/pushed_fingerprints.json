@@ -608,6 +608,10 @@
     "ev": 1.48,
     "ts": 1787993927.300292
   },
+  "football|Austria Bundesliga|Grazer AK|Wolfsberger AC|和局|1x2|2026-08-29": {
+    "ev": 4.11,
+    "ts": 1788015297.260343
+  },
   "football|Austria Bundesliga|Grazer AK|Wolfsberger AC|让球主胜|1x2|2026-08-29": {
     "ev": 1.33,
     "ts": 1787992808.444767
@@ -1401,9 +1405,17 @@
     "ev": 10.21,
     "ts": 1787992059.1044621
   },
+  "football|Brazil Serie C|Anapolis FC GO|Santa Cruz FC PE|主胜|1x2|2026-08-30": {
+    "ev": 4.33,
+    "ts": 1788015297.266109
+  },
   "football|Brazil Serie C|Anapolis FC GO|Santa Cruz FC PE|单双-双|oe|2026-08-30": {
     "ev": 3.57,
     "ts": 1787969186.454624
+  },
+  "football|Brazil Serie C|Anapolis FC GO|Santa Cruz FC PE|双重机会-主/和局|dc|2026-08-30": {
+    "ev": 5.62,
+    "ts": 1788015297.266185
   },
   "football|Brazil Serie C|Anapolis FC GO|Santa Cruz FC PE|和局|1x2|2026-08-30": {
     "ev": 1.15,
@@ -1630,6 +1642,10 @@
     "ev": 3.22,
     "ts": 1788014339.565096
   },
+  "football|Bulgaria Second Professional League|PFK Sportist Svoge|FC Marek Dupnitsa|客胜|1x2|2026-08-29": {
+    "ev": 8.64,
+    "ts": 1788014963.1923609
+  },
   "football|Bulgaria Second Professional League|弗拉特里亚|CSKA 索菲亚二队|主胜|1x2|2026-08-30": {
     "ev": 11.29,
     "bb": 1.79,
@@ -1639,6 +1655,11 @@
     "ev": 11.29,
     "bb": 1.79,
     "ts": 1787987276.0469508
+  },
+  "football|Bulgaria Second Professional League|斯普蒂特|马历克|客胜|1x2|2026-08-29": {
+    "ev": 8.64,
+    "bb": 3.48,
+    "ts": 1788014962.644545
   },
   "football|Chile Primera B|Deportes Iquique|San Luis de Quillota|主胜|1x2|2026-08-30": {
     "ev": 1.11,
@@ -5640,6 +5661,10 @@
     "ev": 7.18,
     "ts": 1787929729.056663
   },
+  "football|Hungary NB I|Budapest Honved FC|Zalaegerszeg TE|上半场正确比分2-0|correct_score_ht|2026-08-29": {
+    "ev": 4.6,
+    "ts": 1788014963.197071
+  },
   "football|Hungary NB I|Budapest Honved FC|Zalaegerszeg TE|上半场正确比分others|correct_score_ht|2026-08-29": {
     "ev": 7.12,
     "ts": 1787929729.056702
@@ -9125,6 +9150,18 @@
     "ev": 1.24,
     "ts": 1787975485.220185
   },
+  "football|Portugal Segunda Liga|U Torreense|FC Vizela|上半场主胜|ht|2026-08-30": {
+    "ev": 1.9,
+    "ts": 1788015297.264867
+  },
+  "football|Portugal Segunda Liga|U Torreense|FC Vizela|主胜|1x2|2026-08-30": {
+    "ev": 1.82,
+    "ts": 1788014963.195837
+  },
+  "football|Portugal Segunda Liga|U Torreense|FC Vizela|让球主胜|1x2|2026-08-30": {
+    "ev": 3.6,
+    "ts": 1788015297.264936
+  },
   "football|Portugal Segunda Liga|ademica de Coimbra|Lusitania FC Lourosa|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 3.75,
     "ts": 1787925472.5093372
@@ -12547,6 +12584,10 @@
     "ev": 2.71,
     "ts": 1787963720.621485
   },
+  "football|USA Major League Soccer|Houston Dynamo|San Jose Earthquakes|小球|1x2|2026-08-30": {
+    "ev": 2.47,
+    "ts": 1788015039.16668
+  },
   "football|USA Major League Soccer|Houston Dynamo|San Jose Earthquakes|总进球区间7+|total_goals_range|2026-08-30": {
     "ev": 1.23,
     "ts": 1787997962.0670238
@@ -13138,9 +13179,9 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Bulgaria Second Professional League|斯普蒂特|马历克|客胜|1x2|2026-08-29": {
-    "ev": 8.64,
-    "bb": 3.48,
-    "ts": 1788014962.644545
+  "football|Mexico Liga MX|阿特拉斯|克雷塔罗|和局|1x2|2026-08-30": {
+    "ev": 8.34,
+    "bb": 3.6,
+    "ts": 1788015338.88622
   }
 }
