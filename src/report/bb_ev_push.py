@@ -1022,6 +1022,16 @@ def _calc_kelly_stakes(opps: list) -> list:
         # Pin 注额上限低=薄市场=定价信心低 → 降仓, 降低假 edge 时的 ruin 风险。
         if o.get("_thin_market"):
             stake_pct *= 0.7
+        # 2026-08-29 赛季阶段加权(职业团队): 开盘线赛季早期变异性大最可套利, 赛季末盘子锐利难套。
+        # 足球赛季约 8月-次年5月: 8-10月早期 +5% 仓, 4-5月末季 -5% 仓, 其余中性。
+        _ep = o.get("_pin_epoch") or 0
+        if sport == "football" and _ep:
+            try:
+                from datetime import datetime as _dt2
+                _m = _dt2.fromtimestamp(_ep).month
+                stake_pct *= 1.05 if _m in (8, 9, 10) else (0.95 if _m in (4, 5) else 1.0)
+            except Exception:
+                pass
         stake = int(bankroll * stake_pct)
         o["_raw_stake"] = stake
         # 2026-08-27 用户澄清: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库(record_bets)
