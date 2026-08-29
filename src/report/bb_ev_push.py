@@ -3064,10 +3064,11 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
     fp_file = FINGERPRINT_FILE
     lock_file = DATA_DIR / ".push_dedup.lock"
 
-    # 文件锁
+    # 文件锁 — 阻塞式(2026-08-29 修复): 之前 LOCK_NB 拿不到锁就 return qualified(未过滤全推),
+    # 全量扫描 push 与增量 push 重叠时, 后一个进程读到旧指纹把同一批当"new"再推一遍。
+    # 改为阻塞等待, 且下面把指纹落盘移进锁内(filter+save 原子), 后一个进程等保存完再读。
     _lock_fd = open(lock_file, "w")
-    try: _fcntl.flock(_lock_fd.fileno(), _fcntl.LOCK_EX | _fcntl.LOCK_NB)
-    except BlockingIOError: _lock_fd.close(); return qualified
+    _fcntl.flock(_lock_fd.fileno(), _fcntl.LOCK_EX)
 
     # 读现有指纹 (V5: 合并两个去重文件)
     last_pushed = {}
@@ -3180,6 +3181,14 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
     if _quota_blocked:
         logger.info("盘口线配额: 拦截%d条 (同场同盘口最多%d条线)",
                     _quota_blocked, LINE_QUOTA_PER_MARKET)
+    # 指纹落盘移进锁内(2026-08-29): filter+save 原子, 后一个进程阻塞等锁时会读到已更新的指纹,
+    # 不再把同一批当"new"重复推。push_report 里 post-push 的 save 仍在(幂等覆盖), 此处提前落盘只为封住竞态窗口。
+    try:
+        _tmp = fp_file.with_suffix(".fptmp")
+        _tmp.write_text(_json.dumps(last_pushed, ensure_ascii=False))
+        _tmp.replace(fp_file)
+    except Exception:
+        pass
     _fcntl.flock(_lock_fd.fileno(), _fcntl.LOCK_UN)
     _lock_fd.close()
     return result
