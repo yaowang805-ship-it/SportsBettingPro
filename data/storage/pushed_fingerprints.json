@@ -1987,6 +1987,10 @@
     "ev": 4.5,
     "ts": 1787904346.118083
   },
+  "football|Ecuador LigaPro Primera A|Orense SC|CSD Macara|上半场精确进球others|exact_goals_ht|2026-08-31": {
+    "ev": 16.31,
+    "ts": 1787996317.1408372
+  },
   "football|Ecuador LigaPro Primera A|Tecnico Universitario|Cuenca|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 2.25,
     "ts": 1787879994.104714
@@ -6315,6 +6319,14 @@
     "ev": 2.38,
     "ts": 1787992560.451113
   },
+  "football|Japan J.League 3|Giravanz Kitakyushu|Matsumoto Yamaga FC|客胜|1x2|2026-08-30": {
+    "ev": 10.69,
+    "ts": 1787996005.106404
+  },
+  "football|Japan J.League 3|Giravanz Kitakyushu|Matsumoto Yamaga FC|让球客胜|1x2|2026-08-30": {
+    "ev": 8.75,
+    "ts": 1787996005.1064918
+  },
   "football|Japan J.League 3|Kamatamare Sanuki|Kagoshima United|主胜|1x2|2026-08-29": {
     "ev": 4.42,
     "ts": 1787992560.4513311
@@ -6330,6 +6342,11 @@
   "football|Japan J.League 3|Kamatamare Sanuki|Kagoshima United|让球主胜|1x2|2026-08-29": {
     "ev": 6.91,
     "ts": 1787992560.4513988
+  },
+  "football|Japan J.League 3|北九州向日葵|松本山雅|客胜|1x2|2026-08-30": {
+    "ev": 10.69,
+    "bb": 2.61,
+    "ts": 1787996003.944696
   },
   "football|Japan Regional League|Tokyo United|Tokyo 23 FC|主胜|1x2|2026-08-29": {
     "ev": 1.97,
@@ -7127,9 +7144,17 @@
     "ev": 8.71,
     "ts": 1787981781.43852
   },
+  "football|Norway Eliteserien|Viking FK|Aalesunds FK|上半场主胜|ht|2026-08-30": {
+    "ev": 1.25,
+    "ts": 1787996317.132582
+  },
   "football|Norway Eliteserien|Viking FK|Aalesunds FK|主胜|1x2|2026-08-30": {
     "ev": 2.15,
     "ts": 1787985526.510126
+  },
+  "football|Norway Eliteserien|Viking FK|Aalesunds FK|让球主胜|1x2|2026-08-30": {
+    "ev": 2.64,
+    "ts": 1787996317.132619
   },
   "football|Peru Liga 1|Alianza Lima|Deportivo Garcilaso|单双-双|oe|2026-08-30": {
     "ev": 2.7,
@@ -10620,6 +10645,10 @@
     "ev": 6.33,
     "ts": 1787963003.165875
   },
+  "football|USA National Women Soccer League|Denver Summit FC (w)|Chicago Red Stars (w)|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 9.85,
+    "ts": 1787996400.408192
+  },
   "football|USA National Women Soccer League|Gotham FC (w)|Portland Thorns FC (w)|主胜|1x2|2026-08-29": {
     "ev": 2.98,
     "ts": 1787897204.797944
@@ -10934,9 +10963,9 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Japan J.League 3|北九州向日葵|松本山雅|客胜|1x2|2026-08-30": {
-    "ev": 10.69,
-    "bb": 2.61,
-    "ts": 1787996003.944696
+  "football|Lithuania 1 Lyga|吉拉尔法|巴布伦加斯|主胜|1x2|2026-08-29": {
+    "ev": 20.77,
+    "bb": 5.45,
+    "ts": 1787996525.147309
   }
 }
