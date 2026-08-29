@@ -1,5 +1,5 @@
 {
-  "balance": 4345.53,
+  "balance": 4265.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -4532,6 +4532,29 @@
       "commence_time": 1788125400,
       "created_at": "2026-08-29T03:51:23.098007+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_蒙纳斯堤_斯塔图里_和局",
+      "sport": "football",
+      "league": "突尼斯甲级联赛",
+      "home_team": "蒙纳斯堤",
+      "away_team": "斯塔图里",
+      "home_cn": "蒙纳斯堤",
+      "away_cn": "斯塔图里",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.59,
+      "stake": 80,
+      "model_prob": 0.4276,
+      "ev_pct": 10.75,
+      "pin_odds": 2.2,
+      "fair_price": 2.3387,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788017400,
+      "created_at": "2026-08-29T04:10:36.888529+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -8993,8 +9016,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-29",
-    "used": 5079.0,
-    "bets": 82
+    "used": 5159.0,
+    "bets": 83
   },
   "updated": null
 }
