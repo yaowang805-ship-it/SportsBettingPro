@@ -1339,6 +1339,11 @@ class PipelineOrchestrator:
                     setattr(self, last_key, time.time())
                     last_val = time.time()
                 if (now - datetime.fromtimestamp(last_val)).total_seconds() >= _jitter(interval):
+                    # 早盘 far(重, 24-72h 联赛多) 不与 near/urgent 抢 Pin: 有增量在跑就跳过本轮, 下轮再试。
+                    # (共享跨进程限速 7.8req/s 已挡封禁, 这里再避免任务挤在一起, 用户 2026-08-29 要求)
+                    if tw == "far" and any(t.startswith("incremental_near") or t.startswith("incremental_urgent")
+                                          for t in self._active_tasks):
+                        continue
                     setattr(self, last_key, time.time())
                     self._run_task(f"incremental_{tw}", self.do_incremental, background=True, time_window=tw)
 
