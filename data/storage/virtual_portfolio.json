@@ -1,5 +1,5 @@
 {
-  "balance": 6058.53,
+  "balance": 5793.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3404,6 +3404,75 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788019200,
       "created_at": "2026-08-29T16:04:17.313472+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_伊尤斯堡_阿兰亚斯堡_上半场主胜",
+      "sport": "football",
+      "league": "土耳其超级联赛",
+      "home_team": "伊尤斯堡",
+      "away_team": "阿兰亚斯堡",
+      "home_cn": "伊尤斯堡",
+      "away_cn": "阿兰亚斯堡",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.45,
+      "stake": 33,
+      "model_prob": 0.2399,
+      "ev_pct": 6.76,
+      "pin_odds": 3.84,
+      "fair_price": 4.1683,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788105600,
+      "created_at": "2026-08-29T16:09:51.726955+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_利文哥特奴_斯拉维亚莫兹里_主胜",
+      "sport": "football",
+      "league": "白俄罗斯超级联赛",
+      "home_team": "利文哥特奴",
+      "away_team": "斯拉维亚莫兹里",
+      "home_cn": "利文哥特奴",
+      "away_cn": "斯拉维亚莫兹里",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.04,
+      "stake": 126,
+      "model_prob": 0.5283,
+      "ev_pct": 7.78,
+      "pin_odds": 1.8264,
+      "fair_price": 1.8927,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788021000,
+      "created_at": "2026-08-29T16:09:52.027572+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_萨法_穆格汗_和局",
+      "sport": "football",
+      "league": "阿塞拜疆超级联赛",
+      "home_team": "萨法",
+      "away_team": "穆格汗",
+      "home_cn": "萨法",
+      "away_cn": "穆格汗",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.03,
+      "stake": 106,
+      "model_prob": 0.3723,
+      "ev_pct": 12.8,
+      "pin_odds": 2.52,
+      "fair_price": 2.6861,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788020100,
+      "created_at": "2026-08-29T16:09:52.027646+00:00",
       "track_only": false
     }
   ],
@@ -8286,8 +8355,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 45.0,
-    "bets": 1
+    "used": 310.0,
+    "bets": 4
   },
   "updated": null
 }
