@@ -47,6 +47,10 @@
     "ev": 1.99,
     "ts": 1787977258.295275
   },
+  "basketball|Mexico LNBP Basketball League|Diablos Rojos del Mexico|Santos del Potosi|客胜|1x2|2026-08-30": {
+    "ev": 16.42,
+    "ts": 1787994272.532408
+  },
   "basketball|Mexico LNBP Basketball League|Freseros de Irapuato|Astros de Jalisco|主胜|1x2|2026-08-30": {
     "ev": 13.77,
     "ts": 1787982573.415055
@@ -293,6 +297,10 @@
     "ev": 9.74,
     "bb": 6.85,
     "ts": 1787963604.6024928
+  },
+  "football|Australia NPL Capital Territory|Tuggeranong Utd|Queanbeyan City SC|大球|1x2|2026-08-29": {
+    "ev": 2.07,
+    "ts": 1787994100.025795
   },
   "football|Austria 2. Liga|ASK Voitsberg|FC Liefering|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 2.3,
@@ -657,6 +665,10 @@
   "football|Belgium Challenger Pro League|Patro Eisden Maasmechelen|Club NXT|先进球neither|first_to_score|2026-08-30": {
     "ev": 1.03,
     "ts": 1787963003.162231
+  },
+  "football|Belgium Challenger Pro League|RFC Seraing|Lierse Kempenzonen|双边进球-是|btts|2026-08-31": {
+    "ev": 2.16,
+    "ts": 1787994529.004035
   },
   "football|Belgium Challenger Pro League|RFC de Liege|FCV Dender EH|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 1.01,
@@ -1779,6 +1791,10 @@
     "ev": 3.97,
     "ts": 1787929729.050066
   },
+  "football|Czech Republic MSFL|SK Unicov|TJ Unie Hlubina|主胜|1x2|2026-08-30": {
+    "ev": 3.33,
+    "ts": 1787994272.53228
+  },
   "football|Czech Republic MSFL|SK Unicov|TJ Unie Hlubina|让球主胜|1x2|2026-08-30": {
     "ev": 1.04,
     "ts": 1787993927.307035
@@ -2499,6 +2515,10 @@
     "bb": 5.15,
     "ts": 1787987964.900544
   },
+  "football|England League One|AFC Wimbledon|Wigan Athletic|上半场精确进球others|exact_goals_ht|2026-08-30": {
+    "ev": 5.45,
+    "ts": 1787994529.008936
+  },
   "football|England League One|Blackpool|Peterborough United|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 22.39,
     "ts": 1787927051.1004858
@@ -2759,6 +2779,10 @@
     "ev": 1.1,
     "ts": 1787985178.348819
   },
+  "football|England League Two|Grimsby Town|Fleetwood Town|主胜|1x2|2026-08-29": {
+    "ev": 1.03,
+    "ts": 1787994100.021572
+  },
   "football|England League Two|Grimsby Town|Fleetwood Town|先进球neither|first_to_score|2026-08-29": {
     "ev": 1.08,
     "ts": 1787926173.279706
@@ -2940,6 +2964,11 @@
   "football|England National League South|Truro City FC|Dagenham and Redbridge FC|双重机会-主/客|dc|2026-08-29": {
     "ev": 3.04,
     "ts": 1787976637.448311
+  },
+  "football|England National League South|特鲁罗城|达根汉姆|主胜|1x2|2026-08-29": {
+    "ev": 16.31,
+    "bb": 2.3,
+    "ts": 1787994098.04252
   },
   "football|England Northern Premier League|Alfreton Town FC|Warrington Rylands 1906 FC|主胜|1x2|2026-08-29": {
     "ev": 2.07,
@@ -4081,6 +4110,10 @@
     "ev": 18.26,
     "ts": 1787981781.435052
   },
+  "football|Germany 2. Bundesliga|FC St. Pauli|1 FC Kaiserslautern|上半场正确比分1-2|correct_score_ht|2026-08-30": {
+    "ev": 2.69,
+    "ts": 1787994529.006908
+  },
   "football|Germany 2. Bundesliga|Karlsruher SC|VfL Wolfsburg|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 1.45,
     "ts": 1787968171.491811
@@ -4255,6 +4288,14 @@
   "football|Germany Bundesliga Women|VfB Stuttgart (w)|Hamburger SV (w)|主胜|1x2|2026-08-29": {
     "ev": 5.32,
     "ts": 1787993033.533333
+  },
+  "football|Germany Bundesliga Women|VfB Stuttgart (w)|Hamburger SV (w)|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 5.14,
+    "ts": 1787994100.017838
+  },
+  "football|Germany Bundesliga Women|VfB Stuttgart (w)|Hamburger SV (w)|正确比分4-0|correct_score|2026-08-29": {
+    "ev": 1.94,
+    "ts": 1787994100.0322402
   },
   "football|Germany Bundesliga Women|斯图加特 (女)|汉堡 (女)|主胜|1x2|2026-08-29": {
     "ev": 5.32,
@@ -4558,6 +4599,10 @@
   "football|Hungary NB I|Puskas Akademia FC|Ferencvarosi TC Budapest|上半场正确比分2-0|correct_score_ht|2026-08-31": {
     "ev": 4.63,
     "ts": 1787981781.4413261
+  },
+  "football|Hungary NB I|Puskas Akademia FC|Ferencvarosi TC Budapest|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 1.26,
+    "ts": 1787994529.01599
   },
   "football|Hungary NB I|Ujpest FC|Vasas FC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 2.14,
@@ -6110,6 +6155,11 @@
     "bb": 6.8,
     "ts": 1787969184.6223428
   },
+  "football|Japan J.League 2|八户云罗里|秋田蓝闪电|和局|1x2|2026-08-29": {
+    "ev": 5.14,
+    "bb": 3.3,
+    "ts": 1787994098.042594
+  },
   "football|Japan J.League 2|磐城市|新泻天鹅|上半场客胜|ht|2026-08-29": {
     "ev": 8.7,
     "bb": 4.44,
@@ -6134,6 +6184,10 @@
   "football|Japan J.League 3|Fukushima United FC|Nara Club|客胜|1x2|2026-08-29": {
     "ev": 1.98,
     "ts": 1787993033.532875
+  },
+  "football|Japan J.League 3|Fukushima United FC|Nara Club|小球|1x2|2026-08-29": {
+    "ev": 5.24,
+    "ts": 1787994100.0173912
   },
   "football|Japan J.League 3|Fukushima United FC|Nara Club|让球主胜|1x2|2026-08-29": {
     "ev": 3.85,
@@ -6887,6 +6941,10 @@
     "ev": 13.77,
     "ts": 1787981781.4392881
   },
+  "football|Norway 1st Division|Kongsvinger IL Fotball|Lyn 1896 FK|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 1.12,
+    "ts": 1787994529.0129158
+  },
   "football|Norway 1st Division|Moss FK|Strommen IF|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 1.23,
     "ts": 1787975485.225235
@@ -7417,9 +7475,17 @@
     "ev": 1.5,
     "ts": 1787923619.140355
   },
+  "football|Portugal Segunda Liga|ademica de Coimbra|Lusitania FC Lourosa|双重机会-主/和局|dc|2026-08-29": {
+    "ev": 2.38,
+    "ts": 1787994100.026429
+  },
   "football|Portugal Segunda Liga|ademica de Coimbra|Lusitania FC Lourosa|和局|1x2|2026-08-29": {
     "ev": 13.13,
     "ts": 1787923619.1403131
+  },
+  "football|Portugal Segunda Liga|ademica de Coimbra|Lusitania FC Lourosa|让球主胜|1x2|2026-08-29": {
+    "ev": 4.07,
+    "ts": 1787994100.026321
   },
   "football|Portugal Segunda Liga|id:5331418|-|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 3.75,
@@ -8594,6 +8660,10 @@
     "ev": 3.83,
     "ts": 1787975485.213532
   },
+  "football|Spain LaLiga 2|D Mallorca|Ceuta|上半场主胜|ht|2026-08-31": {
+    "ev": 1.03,
+    "ts": 1787994528.996578
+  },
   "football|Spain LaLiga 2|D Mallorca|Ceuta|半/全场-和局/客|htft|2026-08-31": {
     "ev": 1.58,
     "ts": 1787981781.4262872
@@ -9373,6 +9443,10 @@
     "ev": 2.71,
     "ts": 1787993375.991709
   },
+  "football|Sweden Women Damallsvenskan|Hammarby IF DFF (w)|Vittsjo Gik (w)|让球主胜|1x2|2026-08-29": {
+    "ev": 2.73,
+    "ts": 1787994100.019388
+  },
   "football|Sweden Women Damallsvenskan|IK Uppsala (w)|Eskilstuna United DFF (w)|双重机会-主/和局|dc|2026-08-29": {
     "ev": 15.51,
     "ts": 1787894469.964293
@@ -9535,6 +9609,14 @@
     "ev": 1.45,
     "ts": 1787942981.6294131
   },
+  "football|Switzerland Super League|FC Sion|FC Lugano|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 5.39,
+    "ts": 1787994529.0074618
+  },
+  "football|Switzerland Super League|FC Sion|FC Lugano|单双-双|oe|2026-08-30": {
+    "ev": 1.8,
+    "ts": 1787994528.992657
+  },
   "football|Switzerland Super League|FC Sion|FC Lugano|和局|1x2|2026-08-30": {
     "ev": 6.24,
     "ts": 1787975485.208384
@@ -9683,6 +9765,10 @@
     "ev": 14.8,
     "ts": 1787942388.630441
   },
+  "football|Turkey 1. Lig|Esenler Erokspor|Igdir FK|主胜|1x2|2026-08-31": {
+    "ev": 1.32,
+    "ts": 1787994529.004256
+  },
   "football|Turkey 1. Lig|Esenler Erokspor|Igdir FK|半/全场-主/客|htft|2026-08-31": {
     "ev": 1.63,
     "ts": 1787981781.433275
@@ -9706,6 +9792,10 @@
   "football|Turkey 1. Lig|Istanbulspor AS|Fatih Karagumruk Istanbul|半/全场-主/客|htft|2026-08-30": {
     "ev": 1.18,
     "ts": 1787933216.27498
+  },
+  "football|Turkey 1. Lig|Istanbulspor AS|Fatih Karagumruk Istanbul|半/全场-客/主|htft|2026-08-30": {
+    "ev": 1.32,
+    "ts": 1787994685.2828648
   },
   "football|Turkey 1. Lig|Istanbulspor AS|Fatih Karagumruk Istanbul|总进球区间7+|total_goals_range|2026-08-30": {
     "ev": 6.57,
@@ -9968,6 +10058,10 @@
   "football|Turkey Super Lig|Konyaspor|Kocaelispor|让球客胜|1x2|2026-08-30": {
     "ev": 3.31,
     "ts": 1787982573.4125628
+  },
+  "football|Turkey Super Lig|Samsunspor|Fenerbahce|先进球neither|first_to_score|2026-08-31": {
+    "ev": 4.34,
+    "ts": 1787994529.0169961
   },
   "football|Turkey Super Lig|Samsunspor|Fenerbahce|总进球区间7+|total_goals_range|2026-08-31": {
     "ev": 17.5,
@@ -10681,14 +10775,19 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|England National League South|特鲁罗城|达根汉姆|主胜|1x2|2026-08-29": {
-    "ev": 16.31,
-    "bb": 2.3,
-    "ts": 1787994098.04252
+  "football|England National League South|特鲁罗城|达格纳姆和雷德布里奇|主胜|1x2|2026-08-29": {
+    "ev": 10.75,
+    "bb": 2.19,
+    "ts": 1787994686.438733
   },
-  "football|Japan J.League 2|八户云罗里|秋田蓝闪电|和局|1x2|2026-08-29": {
-    "ev": 5.14,
-    "bb": 3.3,
-    "ts": 1787994098.042594
+  "football|Portugal Segunda Liga|科英布拉大学|路西塔尼亚|和局|1x2|2026-08-29": {
+    "ev": 11.86,
+    "bb": 3.23,
+    "ts": 1787994686.438775
+  },
+  "football|Japan J.League 2|八户云罗里|秋田蓝闪电|上半场主胜|ht|2026-08-29": {
+    "ev": 3.69,
+    "bb": 4.13,
+    "ts": 1787994686.4388108
   }
 }
