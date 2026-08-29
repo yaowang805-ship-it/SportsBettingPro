@@ -1,5 +1,5 @@
 {
-  "balance": 6173.53,
+  "balance": 6037.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3726,6 +3726,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788004800,
       "created_at": "2026-08-29T00:35:19.630625+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_马达莱纳联_奎迪奥_主胜",
+      "sport": "football",
+      "league": "哥伦比亚乙级联赛",
+      "home_team": "马达莱纳联",
+      "away_team": "奎迪奥",
+      "home_cn": "马达莱纳联",
+      "away_cn": "奎迪奥",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.03,
+      "stake": 116,
+      "model_prob": 0.5234,
+      "ev_pct": 6.25,
+      "pin_odds": 1.8547,
+      "fair_price": 1.9105,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787965200,
+      "created_at": "2026-08-29T00:58:54.515342+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_蒂华纳_美洲狮_上半场客胜",
+      "sport": "football",
+      "league": "墨西哥超级联赛",
+      "home_team": "蒂华纳",
+      "away_team": "美洲狮",
+      "home_cn": "蒂华纳",
+      "away_cn": "美洲狮",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.51,
+      "stake": 20,
+      "model_prob": 0.2301,
+      "ev_pct": 3.79,
+      "pin_odds": 4.08,
+      "fair_price": 4.3452,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1787973000,
+      "created_at": "2026-08-29T00:58:54.515519+00:00",
       "track_only": false
     }
   ],
@@ -8188,8 +8234,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-29",
-    "used": 3251.0,
-    "bets": 47
+    "used": 3387.0,
+    "bets": 49
   },
   "updated": null
 }

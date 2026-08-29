@@ -225,6 +225,22 @@
     "ev": 2.18,
     "ts": 1787832696.88713
   },
+  "football|Argentina Liga Profesional|Atletico Tucuman|Belgrano|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 1.77,
+    "ts": 1787963720.620061
+  },
+  "football|Argentina Liga Profesional|Atletico Tucuman|Belgrano|上半场精确进球others|exact_goals_ht|2026-08-30": {
+    "ev": 11.81,
+    "ts": 1787963720.65418
+  },
+  "football|Argentina Liga Profesional|Atletico Tucuman|Belgrano|单双-双|oe|2026-08-30": {
+    "ev": 1.05,
+    "ts": 1787963720.619945
+  },
+  "football|Argentina Liga Profesional|Atletico Tucuman|Belgrano|和局|1x2|2026-08-30": {
+    "ev": 1.18,
+    "ts": 1787964094.4048178
+  },
   "football|Argentina Liga Profesional|Boca Juniors|Atletico Lanus|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 1.73,
     "ts": 1787963246.18307
@@ -265,6 +281,10 @@
     "ev": 6.89,
     "ts": 1787963003.1650271
   },
+  "football|Argentina Liga Profesional|Talleres de Cordoba|Central Cordoba SE|上半场精确进球others|exact_goals_ht|2026-08-30": {
+    "ev": 5.67,
+    "ts": 1787963720.654044
+  },
   "football|Argentina Liga Profesional|Union de Santa Fe|Sarmiento|主胜|1x2|2026-08-29": {
     "ev": 2.63,
     "ts": 1787868659.525126
@@ -296,11 +316,6 @@
   "football|Argentina Primera Nacional|Gimnasia Y Tiro de Salta|Chacarita Juniors|让球主胜|1x2|2026-08-29": {
     "ev": 2.01,
     "ts": 1787924489.5040598
-  },
-  "football|Argentina Primera Nacional|id:5342469|-|上半场客胜|ht|2026-08-29": {
-    "ev": 3.35,
-    "bb": 6.6,
-    "ts": 1787927341.763476
   },
   "football|Argentina Primera Nacional|id:5474564|-|上半场客胜|ht|2026-08-29": {
     "ev": 9.74,
@@ -1135,9 +1150,21 @@
     "ev": 2.44,
     "ts": 1787828772.15502
   },
+  "football|Colombia Primera B|Union Magdalena|Deportes Quindio|主胜|1x2|2026-08-29": {
+    "ev": 3.11,
+    "ts": 1787965018.002707
+  },
   "football|Colombia Primera B|Union Magdalena|Deportes Quindio|双重机会-和局/客|dc|2026-08-29": {
     "ev": 1.42,
     "ts": 1787963129.460033
+  },
+  "football|Colombia Primera B|Union Magdalena|Deportes Quindio|大球|1x2|2026-08-29": {
+    "ev": 7.21,
+    "ts": 1787965018.0028532
+  },
+  "football|Colombia Primera B|Union Magdalena|Deportes Quindio|让球主胜|1x2|2026-08-29": {
+    "ev": 2.04,
+    "ts": 1787965018.0027819
   },
   "football|Colombia Primera B|Union Magdalena|Deportes Quindio|让球客胜|1x2|2026-08-29": {
     "ev": 1.46,
@@ -3455,6 +3482,10 @@
     "ev": 6.89,
     "ts": 1787923913.3461602
   },
+  "football|Germany Bundesliga|Union Berlin|Eintracht Frankfurt|和局|1x2|2026-08-29": {
+    "ev": 2.37,
+    "ts": 1787964600.4347808
+  },
   "football|Germany Bundesliga|Union Berlin|Eintracht Frankfurt|总进球区间7+|total_goals_range|2026-08-29": {
     "ev": 3.66,
     "ts": 1787943356.867154
@@ -4636,6 +4667,11 @@
     "ev": 8.45,
     "ts": 1787963342.619649
   },
+  "football|Lithuania 1 Lyga|id:5276037|-|客胜|1x2|2026-08-29": {
+    "ev": 8.45,
+    "bb": 1.94,
+    "ts": 1787963719.644385
+  },
   "football|Malaysia Super League|Sabah FA|Penang FA|主胜|1x2|2026-08-28": {
     "ev": 2.81,
     "ts": 1787890530.979199
@@ -4789,9 +4825,17 @@
     "ev": 8.65,
     "ts": 1787875421.317138
   },
+  "football|Mexico Liga De Expansion MX|Correcaminos UAT|Alacranes de Durango|双边进球-是|btts|2026-08-29": {
+    "ev": 1.57,
+    "ts": 1787964318.5940218
+  },
   "football|Mexico Liga De Expansion MX|Correcaminos UAT|Alacranes de Durango|让球主胜|1x2|2026-08-29": {
     "ev": 1.17,
     "ts": 1787963605.3192909
+  },
+  "football|Mexico Liga De Expansion MX|Correcaminos UAT|Alacranes de Durango|让球客胜|1x2|2026-08-29": {
+    "ev": 1.27,
+    "ts": 1787964318.594082
   },
   "football|Mexico Liga De Expansion MX|奥哈卡|塔巴蒂奥|上半场主胜|ht|2026-08-28": {
     "ev": 5.93,
@@ -5186,6 +5230,18 @@
     "ev": 5.7,
     "bb": 8.85,
     "ts": 1787942473.499585
+  },
+  "football|Peru Liga 1|Alianza Lima|Deportivo Garcilaso|单双-双|oe|2026-08-30": {
+    "ev": 2.7,
+    "ts": 1787963720.620418
+  },
+  "football|Peru Liga 1|Alianza Lima|Deportivo Garcilaso|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 5.26,
+    "ts": 1787963720.620534
+  },
+  "football|Peru Liga 1|Alianza Lima|Deportivo Garcilaso|和局|1x2|2026-08-30": {
+    "ev": 6.12,
+    "ts": 1787963720.6203148
   },
   "football|Peru Liga 1|Comerciantes Unidos|FC Cajamarca|上半场主胜|ht|2026-08-29": {
     "ev": 1.01,
@@ -8408,9 +8464,53 @@
     "ev": 1.31,
     "ts": 1787963003.146395
   },
+  "football|USA Major League Soccer|Houston Dynamo|San Jose Earthquakes|上半场正确比分1-2|correct_score_ht|2026-08-30": {
+    "ev": 8.35,
+    "ts": 1787963720.6544352
+  },
+  "football|USA Major League Soccer|Houston Dynamo|San Jose Earthquakes|先进球neither|first_to_score|2026-08-30": {
+    "ev": 10.93,
+    "ts": 1787963720.654332
+  },
+  "football|USA Major League Soccer|Houston Dynamo|San Jose Earthquakes|单双-双|oe|2026-08-30": {
+    "ev": 1.83,
+    "ts": 1787963720.6215959
+  },
+  "football|USA Major League Soccer|Houston Dynamo|San Jose Earthquakes|和局|1x2|2026-08-30": {
+    "ev": 2.71,
+    "ts": 1787963720.621485
+  },
+  "football|USA Major League Soccer|Houston Dynamo|San Jose Earthquakes|正确比分2-2|correct_score|2026-08-30": {
+    "ev": 3.53,
+    "ts": 1787964094.419574
+  },
   "football|USA Major League Soccer|Inter Miami CF|Montreal|上半场正确比分1-2|correct_score_ht|2026-08-30": {
     "ev": 10.21,
     "ts": 1787963003.165729
+  },
+  "football|USA Major League Soccer|Minnesota United FC|Orlando City SC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 21.68,
+    "ts": 1787963720.654667
+  },
+  "football|USA Major League Soccer|Minnesota United FC|Orlando City SC|正确比分0-0|correct_score|2026-08-30": {
+    "ev": 2.37,
+    "ts": 1787963720.654541
+  },
+  "football|USA Major League Soccer|Minnesota United FC|Orlando City SC|正确比分0-2|correct_score|2026-08-30": {
+    "ev": 1.87,
+    "ts": 1787964094.4197178
+  },
+  "football|USA Major League Soccer|Nashville SC|FC Cincinnati|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 29.62,
+    "ts": 1787963720.654916
+  },
+  "football|USA Major League Soccer|Nashville SC|FC Cincinnati|上半场正确比分1-2|correct_score_ht|2026-08-30": {
+    "ev": 4.41,
+    "ts": 1787963720.65503
+  },
+  "football|USA Major League Soccer|Nashville SC|FC Cincinnati|先进球neither|first_to_score|2026-08-30": {
+    "ev": 8.02,
+    "ts": 1787963720.654795
   },
   "football|USA Major League Soccer|New York Red Bulls|Philadelphia Union|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 6.55,
@@ -8463,6 +8563,18 @@
   "football|USL Championship|Brooklyn FC|Sporting JAX|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 11.75,
     "ts": 1787963003.165447
+  },
+  "football|USL Championship|FC Tulsa|Rhode Island FC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 3.82,
+    "ts": 1787964094.419926
+  },
+  "football|USL Championship|FC Tulsa|Rhode Island FC|上半场正确比分2-0|correct_score_ht|2026-08-30": {
+    "ev": 8.02,
+    "ts": 1787963720.6551628
+  },
+  "football|USL Championship|FC Tulsa|Rhode Island FC|上半场正确比分others|correct_score_ht|2026-08-30": {
+    "ev": 4.5,
+    "ts": 1787963720.655274
   },
   "football|USL Championship|Hartford Athletic|Birmingham Legion FC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 8.28,
@@ -8719,9 +8831,19 @@
     "ev": 5.75,
     "ts": 1787879714.342423
   },
-  "football|Lithuania 1 Lyga|id:5276037|-|客胜|1x2|2026-08-29": {
-    "ev": 8.45,
-    "bb": 1.94,
-    "ts": 1787963719.644385
+  "football|Colombia Primera B|id:5356625|-|主胜|1x2|2026-08-29": {
+    "ev": 6.25,
+    "bb": 2.03,
+    "ts": 1787965134.535908
+  },
+  "football|Argentina Primera Nacional|id:5342469|-|上半场客胜|ht|2026-08-29": {
+    "ev": 9.99,
+    "bb": 7.0,
+    "ts": 1787965134.535972
+  },
+  "football|Mexico Liga MX|id:5317012|-|上半场客胜|ht|2026-08-29": {
+    "ev": 3.79,
+    "bb": 4.51,
+    "ts": 1787965134.536021
   }
 }
