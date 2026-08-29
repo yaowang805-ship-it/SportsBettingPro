@@ -492,6 +492,10 @@
     "ev": 11.49,
     "ts": 1787929729.056581
   },
+  "football|Austria Bundesliga|Grazer AK|Wolfsberger AC|半/全场-客/主|htft|2026-08-29": {
+    "ev": 1.48,
+    "ts": 1787993927.300292
+  },
   "football|Austria Bundesliga|Grazer AK|Wolfsberger AC|让球主胜|1x2|2026-08-29": {
     "ev": 1.33,
     "ts": 1787992808.444767
@@ -1330,6 +1334,10 @@
     "ev": 7.88,
     "ts": 1787981994.4149592
   },
+  "football|Bulgaria Second Professional League|FC Etar Veliko Tarnovo|PFK Beroe Stara Zagora|让球主胜|1x2|2026-08-29": {
+    "ev": 4.13,
+    "ts": 1787993927.3005068
+  },
   "football|Bulgaria Second Professional League|FC Fratria Varna|CSKA Sofia II|主胜|1x2|2026-08-30": {
     "ev": 11.29,
     "ts": 1787986363.763412
@@ -1689,6 +1697,14 @@
     "ev": 2.02,
     "ts": 1787992456.1204128
   },
+  "football|Czech Republic 1. Liga|FK Pardubice|SK Artis Brno|双重机会-和局/客|dc|2026-08-29": {
+    "ev": 1.09,
+    "ts": 1787993927.300426
+  },
+  "football|Czech Republic 1. Liga|FK Pardubice|SK Artis Brno|让球客胜|1x2|2026-08-29": {
+    "ev": 1.18,
+    "ts": 1787993927.300359
+  },
   "football|Czech Republic 1. Liga|FK Teplice|FK Jablonec|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 2.87,
     "ts": 1787981781.439116
@@ -1762,6 +1778,10 @@
   "football|Czech Republic MSFL|SFK Vrchovina|MFK Karvina II|让球客胜|1x2|2026-08-29": {
     "ev": 3.97,
     "ts": 1787929729.050066
+  },
+  "football|Czech Republic MSFL|SK Unicov|TJ Unie Hlubina|让球主胜|1x2|2026-08-30": {
+    "ev": 1.04,
+    "ts": 1787993927.307035
   },
   "football|Denmark 2nd Division Women|Ballerup Skovlunde Fodbold (w)|Fredensborg BI (w)|主胜|1x2|2026-08-29": {
     "ev": 7.85,
@@ -6155,6 +6175,18 @@
     "ev": 2.39,
     "ts": 1787992059.105387
   },
+  "football|Latvia Virsliga|FK Auda|SK Super Nova|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 8.38,
+    "ts": 1787993927.302016
+  },
+  "football|Latvia Virsliga|FK Auda|SK Super Nova|客胜|1x2|2026-08-30": {
+    "ev": 4.0,
+    "ts": 1787993927.301879
+  },
+  "football|Latvia Virsliga|FK Auda|SK Super Nova|让球客胜|1x2|2026-08-30": {
+    "ev": 4.5,
+    "ts": 1787993927.3019462
+  },
   "football|Latvia Virsliga|Grobinas SC|BFC Daugavpils|上半场双重机会-主/客|ht_dc|2026-08-29": {
     "ev": 2.2,
     "ts": 1787993033.5369768
@@ -6166,6 +6198,11 @@
   "football|Latvia Virsliga|Grobinas SC|BFC Daugavpils|客胜|1x2|2026-08-29": {
     "ev": 1.3,
     "ts": 1787992117.1596851
+  },
+  "football|Latvia Virsliga|奥达里加|超级星|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 8.38,
+    "bb": 2.82,
+    "ts": 1787993926.210239
   },
   "football|Lithuania 1 Lyga|FK Garliava|FK Babrungas Plunge|主胜|1x2|2026-08-29": {
     "ev": 9.85,
@@ -6660,6 +6697,10 @@
   "football|Netherlands Eredivisie|AZ Alkmaar|Go Ahead Eagles|正确比分2-2|correct_score|2026-08-30": {
     "ev": 3.33,
     "ts": 1787992059.116211
+  },
+  "football|Netherlands Eredivisie|AZ Alkmaar|Go Ahead Eagles|让球主胜|1x2|2026-08-30": {
+    "ev": 1.44,
+    "ts": 1787993927.303029
   },
   "football|Netherlands Eredivisie|Cambuur|FC Twente|上半场客胜|ht|2026-08-31": {
     "ev": 1.45,
@@ -10640,9 +10681,14 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Latvia Virsliga|奥达里加|超级星|双重机会-和局/客|dc|2026-08-30": {
-    "ev": 8.38,
-    "bb": 2.82,
-    "ts": 1787993926.210239
+  "football|England National League South|特鲁罗城|达根汉姆|主胜|1x2|2026-08-29": {
+    "ev": 16.31,
+    "bb": 2.3,
+    "ts": 1787994098.04252
+  },
+  "football|Japan J.League 2|八户云罗里|秋田蓝闪电|和局|1x2|2026-08-29": {
+    "ev": 5.14,
+    "bb": 3.3,
+    "ts": 1787994098.042594
   }
 }
