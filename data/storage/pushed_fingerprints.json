@@ -63,6 +63,10 @@
     "ev": 1.5,
     "ts": 1788023207.270418
   },
+  "baseball|MLB|New York Yankees|Boston Red Sox|客胜|1x2|2026-08-31": {
+    "ev": 13.13,
+    "ts": 1788046580.8172832
+  },
   "baseball|MLB|Oakland Athletics|Baltimore Orioles|主胜|1x2|2026-08-30": {
     "ev": 23.28,
     "ts": 1788033146.8421812
@@ -1631,6 +1635,10 @@
     "ev": 1.57,
     "ts": 1788027472.0447948
   },
+  "football|Brazil Serie B|America FC MG|AA Ponte Preta SP|上半场双重机会-主/客|ht_dc|2026-08-31": {
+    "ev": 2.69,
+    "ts": 1788045709.840231
+  },
   "football|Brazil Serie B|America FC MG|AA Ponte Preta SP|上半场客胜|ht|2026-08-31": {
     "ev": 16.27,
     "ts": 1788030401.918638
@@ -1782,6 +1790,10 @@
   "football|Brazil Serie B|Vila Nova FC GO|Ceara SC CE|上半场精确进球others|exact_goals_ht|2026-08-31": {
     "ev": 7.11,
     "ts": 1788030891.590709
+  },
+  "football|Brazil Serie B|Vila Nova FC GO|Ceara SC CE|半/全场-主/和局|htft|2026-08-31": {
+    "ev": 9.18,
+    "ts": 1788045709.8388329
   },
   "football|Brazil Serie B|id:5348730|-|上半场客胜|ht|2026-08-29": {
     "ev": 5.43,
@@ -2168,6 +2180,10 @@
     "ev": 1.11,
     "ts": 1787986363.7682319
   },
+  "football|Chile Primera B|Deportes Iquique|San Luis de Quillota|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 2.54,
+    "ts": 1788046430.821723
+  },
   "football|Chile Primera B|Union San Felipe|Santa Cruz|主胜|1x2|2026-08-30": {
     "ev": 2.76,
     "ts": 1788019792.730247
@@ -2275,6 +2291,10 @@
   "football|Colombia Primera A|Jaguares de Cordoba|America de Cali|让球客胜|1x2|2026-08-30": {
     "ev": 3.0,
     "ts": 1788035717.279535
+  },
+  "football|Colombia Primera A|Junior FC|Independiente Santa Fe|主胜|1x2|2026-08-30": {
+    "ev": 1.52,
+    "ts": 1788045187.978175
   },
   "football|Colombia Primera A|Junior FC|Independiente Santa Fe|双重机会-和局/客|dc|2026-08-30": {
     "ev": 2.13,
@@ -5282,6 +5302,10 @@
   "football|France Ligue 1|AS Monaco FC|Olympique Marseille|和局|1x2|2026-08-31": {
     "ev": 1.12,
     "ts": 1787998834.8728168
+  },
+  "football|France Ligue 1|AS Monaco FC|Olympique Marseille|总进球区间7+|total_goals_range|2026-08-31": {
+    "ev": 3.04,
+    "ts": 1788046878.77001
   },
   "football|France Ligue 1|AS Monaco FC|Olympique Marseille|让球主胜|1x2|2026-08-31": {
     "ev": 11.28,
@@ -9024,6 +9048,11 @@
     "ev": 1.97,
     "ts": 1787978990.704586
   },
+  "football|Japan Regional League|七滨SC|大山SC|主胜|1x2|2026-08-30": {
+    "ev": 30.73,
+    "bb": 5.7,
+    "ts": 1788045187.366828
+  },
   "football|Japan Regional League|江户全联|东邦钛|主胜|1x2|2026-08-30": {
     "ev": 11.36,
     "bb": 4.1,
@@ -10108,6 +10137,10 @@
     "ev": 1.06,
     "ts": 1787977721.767651
   },
+  "football|Nicaragua Primera Division|Diriangen FC|ART Municipal Jalapa|小球|1x2|2026-08-30": {
+    "ev": 2.82,
+    "ts": 1788045826.8100202
+  },
   "football|Northern Ireland Premiership|Cliftonville FC|Dungannon Swifts FC|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 5.33,
     "ts": 1787926738.903158
@@ -10208,6 +10241,10 @@
   "football|Norway 2nd Division|Kvik Halden FK|Notodden FK|让球客胜|1x2|2026-08-30": {
     "ev": 1.7,
     "ts": 1788021480.359575
+  },
+  "football|Norway 3rd Division|FK Fyllingsdalen|Austevoll|双重机会-主/和局|dc|2026-08-30": {
+    "ev": 3.52,
+    "ts": 1788046265.872212
   },
   "football|Norway 3rd Division|Heming|Valerenga IF 2|让球主胜|1x2|2026-08-30": {
     "ev": 4.65,
@@ -13392,6 +13429,14 @@
     "ev": 1.05,
     "ts": 1787979944.616101
   },
+  "football|Sweden Division 2|IFK Haninge|Lindo FF|主胜|1x2|2026-08-30": {
+    "ev": 4.34,
+    "ts": 1788045980.901645
+  },
+  "football|Sweden Division 2|IFK Haninge|Lindo FF|让球主胜|1x2|2026-08-30": {
+    "ev": 7.25,
+    "ts": 1788045980.901682
+  },
   "football|Sweden Division 2|Onsala BK|Dalstorps IF|小球|1x2|2026-08-29": {
     "ev": 3.88,
     "ts": 1787978731.7670789
@@ -14565,6 +14610,10 @@
     "ev": 15.72,
     "ts": 1788021144.453896
   },
+  "football|UAE Pro League|Hatta SC|Sharjah FC|半/全场-客/主|htft|2026-08-30": {
+    "ev": 20.36,
+    "ts": 1788045298.892355
+  },
   "football|UAE Pro League|Hatta SC|Sharjah FC|双重机会-和局/客|dc|2026-08-30": {
     "ev": 2.26,
     "ts": 1788021144.453974
@@ -14706,9 +14755,21 @@
     "ev": 1.22,
     "ts": 1787963003.165588
   },
+  "football|USA Major League Soccer|Atlanta United FC|Charlotte FC|正确比分1-0|correct_score|2026-08-30": {
+    "ev": 2.59,
+    "ts": 1788046733.887351
+  },
   "football|USA Major League Soccer|Atlanta United FC|Charlotte FC|正确比分1-1|correct_score|2026-08-30": {
     "ev": 4.71,
     "ts": 1787963003.165521
+  },
+  "football|USA Major League Soccer|Atlanta United FC|Charlotte FC|角球大球|corner|2026-08-30": {
+    "ev": 2.92,
+    "ts": 1788046430.824809
+  },
+  "football|USA Major League Soccer|Atlanta United FC|Charlotte FC|让球主胜|1x2|2026-08-30": {
+    "ev": 9.73,
+    "ts": 1788045540.858757
   },
   "football|USA Major League Soccer|Atlanta United FC|Charlotte FC|让球客胜|1x2|2026-08-30": {
     "ev": 2.99,
@@ -14857,6 +14918,10 @@
   "football|USA Major League Soccer|Inter Miami CF|Montreal|小球|1x2|2026-08-30": {
     "ev": 1.89,
     "ts": 1788038300.935812
+  },
+  "football|USA Major League Soccer|Inter Miami CF|Montreal|角球大球|corner|2026-08-30": {
+    "ev": 1.78,
+    "ts": 1788046430.824938
   },
   "football|USA Major League Soccer|Inter Miami CF|Montreal|让球客胜|1x2|2026-08-30": {
     "ev": 1.15,
@@ -15058,6 +15123,10 @@
     "ev": 3.24,
     "ts": 1787963003.1660779
   },
+  "football|USA Major League Soccer|Toronto FC|New York City FC|上半场正确比分others|correct_score_ht|2026-08-30": {
+    "ev": 7.52,
+    "ts": 1788046733.887659
+  },
   "football|USA Major League Soccer|Toronto FC|New York City FC|双边进球-是|btts|2026-08-30": {
     "ev": 1.17,
     "ts": 1787981994.422234
@@ -15085,6 +15154,10 @@
   "football|USA Major League Soccer|Toronto FC|New York City FC|正确比分1-1|correct_score|2026-08-30": {
     "ev": 6.33,
     "ts": 1787963003.165875
+  },
+  "football|USA Major League Soccer|Toronto FC|New York City FC|正确比分2-0|correct_score|2026-08-30": {
+    "ev": 3.01,
+    "ts": 1788046733.887452
   },
   "football|USA Major League Soccer|Toronto FC|New York City FC|让球主胜|1x2|2026-08-30": {
     "ev": 5.22,
@@ -15228,6 +15301,18 @@
     "ev": 1.23,
     "ts": 1788029947.794682
   },
+  "football|USL Championship|Louisville City FC|Detroit City FC|让球客胜|1x2|2026-08-30": {
+    "ev": 1.34,
+    "ts": 1788047031.458144
+  },
+  "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|上半场客胜|ht|2026-08-30": {
+    "ev": 1.18,
+    "ts": 1788045187.9762712
+  },
+  "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|上半场正确比分2-0|correct_score_ht|2026-08-30": {
+    "ev": 33.85,
+    "ts": 1788045826.813376
+  },
   "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|客胜|1x2|2026-08-30": {
     "ev": 2.45,
     "ts": 1788044852.479367
@@ -15235,6 +15320,10 @@
   "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|让球主胜|1x2|2026-08-30": {
     "ev": 1.94,
     "ts": 1788012313.839608
+  },
+  "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|让球客胜|1x2|2026-08-30": {
+    "ev": 2.4,
+    "ts": 1788045187.97634
   },
   "football|USL Championship|New Mexico United|San Antonio FC|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 12.79,
@@ -15391,6 +15480,10 @@
   "football|USL League One|Union Omaha SC|New York Cosmos|双重机会-和局/客|dc|2026-08-30": {
     "ev": 1.56,
     "ts": 1788005463.82005
+  },
+  "football|USL League One|Union Omaha SC|New York Cosmos|和局|1x2|2026-08-30": {
+    "ev": 4.38,
+    "ts": 1788046733.8861692
   },
   "football|USL League One|Westchester SC|Spokane Velocity FC|单双-双|oe|2026-08-30": {
     "ev": 2.05,
@@ -15659,9 +15752,9 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Japan Regional League|七滨SC|大山SC|主胜|1x2|2026-08-30": {
-    "ev": 30.73,
-    "bb": 5.7,
-    "ts": 1788045187.366828
+  "football|Norway 3rd Division|费林根达伦|奥斯特沃尔|主胜|1x2|2026-08-30": {
+    "ev": 22.88,
+    "bb": 3.87,
+    "ts": 1788047204.754595
   }
 }

@@ -1,5 +1,5 @@
 {
-  "balance": 4762.53,
+  "balance": 4672.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3841,6 +3841,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788066000,
       "created_at": "2026-08-29T23:13:07.355095+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_费林根达伦_奥斯特沃尔_主胜",
+      "sport": "football",
+      "league": "挪威丙级联赛",
+      "home_team": "费林根达伦",
+      "away_team": "奥斯特沃尔",
+      "home_cn": "费林根达伦",
+      "away_cn": "奥斯特沃尔",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.87,
+      "stake": 90,
+      "model_prob": 0.3175,
+      "ev_pct": 22.88,
+      "pin_odds": 2.77,
+      "fair_price": 3.1495,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788087600,
+      "created_at": "2026-08-29T23:46:44.740750+00:00",
       "track_only": false
     }
   ],
@@ -8723,8 +8746,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 1341.0,
-    "bets": 20
+    "used": 1431.0,
+    "bets": 21
   },
   "updated": null
 }
