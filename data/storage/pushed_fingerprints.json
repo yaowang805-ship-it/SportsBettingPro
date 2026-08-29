@@ -342,9 +342,21 @@
     "ev": 1.68,
     "ts": 1787924605.03919
   },
+  "football|Austria 2. Liga|FAC Wien|Wacker Innsbruck|上半场客胜|ht|2026-08-29": {
+    "ev": 3.0,
+    "ts": 1788002896.1161401
+  },
   "football|Austria 2. Liga|FAC Wien|Wacker Innsbruck|双边进球-是|btts|2026-08-29": {
     "ev": 1.16,
     "ts": 1787976637.448428
+  },
+  "football|Austria 2. Liga|FAC Wien|Wacker Innsbruck|客胜|1x2|2026-08-29": {
+    "ev": 2.41,
+    "ts": 1788002896.116061
+  },
+  "football|Austria 2. Liga|FAC Wien|Wacker Innsbruck|让球客胜|1x2|2026-08-29": {
+    "ev": 4.47,
+    "ts": 1788002896.116212
   },
   "football|Austria 2. Liga|FC Hertha Wels|FC Admira Wacker Modling|上半场正确比分0-2|correct_score_ht|2026-08-29": {
     "ev": 1.35,
@@ -714,9 +726,17 @@
     "ev": 11.33,
     "ts": 1787926173.2785149
   },
+  "football|Belgium Challenger Pro League|RSC Anderlecht II|K Beerschot VA|双重机会-主/和局|dc|2026-08-29": {
+    "ev": 2.37,
+    "ts": 1788002896.115478
+  },
   "football|Belgium Challenger Pro League|RSC Anderlecht II|K Beerschot VA|客胜|1x2|2026-08-29": {
     "ev": 6.62,
     "ts": 1787998047.249467
+  },
+  "football|Belgium Challenger Pro League|RSC Anderlecht II|K Beerschot VA|让球主胜|1x2|2026-08-29": {
+    "ev": 1.25,
+    "ts": 1788002896.115388
   },
   "football|Belgium Challenger Pro League|RSC Anderlecht II|K Beerschot VA|让球客胜|1x2|2026-08-29": {
     "ev": 8.52,
@@ -1433,6 +1453,10 @@
   "football|Bulgaria Second Professional League|FC Pirin Blagoevgrad|PFC Chernomorets Burgas|让球客胜|1x2|2026-08-30": {
     "ev": 2.63,
     "ts": 1787985178.356079
+  },
+  "football|Bulgaria Second Professional League|PFC Dobrudzha Dobrich|PFC Rilski Sportist Samokov|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 5.11,
+    "ts": 1788002896.1121972
   },
   "football|Bulgaria Second Professional League|PFC Dobrudzha Dobrich|PFC Rilski Sportist Samokov|让球客胜|1x2|2026-08-30": {
     "ev": 1.48,
@@ -2418,6 +2442,10 @@
     "ev": 8.67,
     "ts": 1787917021.5574799
   },
+  "football|England Championship League|Derby County|Swansea City|角球让球客胜|corner|2026-08-29": {
+    "ev": 1.78,
+    "ts": 1788002896.116543
+  },
   "football|England Championship League|Middlesbrough FC|West Bromwich Albion|上半场正确比分others|correct_score_ht|2026-08-29": {
     "ev": 7.0,
     "ts": 1787917021.557825
@@ -2740,6 +2768,10 @@
     "ev": 1.77,
     "ts": 1787975034.339245
   },
+  "football|England League One|Notts County|Burton Albion|主胜|1x2|2026-08-29": {
+    "ev": 3.46,
+    "ts": 1788002896.1075358
+  },
   "football|England League One|Notts County|Burton Albion|先进球neither|first_to_score|2026-08-29": {
     "ev": 4.89,
     "ts": 1787985178.357059
@@ -2751,6 +2783,10 @@
   "football|England League One|Notts County|Burton Albion|客胜|1x2|2026-08-29": {
     "ev": 1.6,
     "ts": 1787992117.159144
+  },
+  "football|England League One|Notts County|Burton Albion|让球主胜|1x2|2026-08-29": {
+    "ev": 2.0,
+    "ts": 1788002896.1076171
   },
   "football|England League One|Notts County|Burton Albion|让球客胜|1x2|2026-08-29": {
     "ev": 4.66,
@@ -3123,6 +3159,10 @@
     "ev": 9.2,
     "ts": 1787912895.622528
   },
+  "football|England National League North|Hereford FC|Chester FC|大球|1x2|2026-08-29": {
+    "ev": 2.6,
+    "ts": 1788002896.110357
+  },
   "football|England National League North|Oxford City|Buxton FC|大球|1x2|2026-08-29": {
     "ev": 2.49,
     "ts": 1787897204.79734
@@ -3381,6 +3421,10 @@
   "football|England Premier League|Liverpool FC|Nottingham Forest|正确比分2-2|correct_score|2026-08-29": {
     "ev": 3.7,
     "ts": 1787917298.831151
+  },
+  "football|England Premier League|Liverpool FC|Nottingham Forest|角球小球|corner|2026-08-29": {
+    "ev": 1.39,
+    "ts": 1788002896.116462
   },
   "football|England Premier League|Liverpool FC|Nottingham Forest|角球让球主胜|corner|2026-08-29": {
     "ev": 1.94,
@@ -6743,9 +6787,18 @@
     "ev": 2.39,
     "ts": 1787992059.105387
   },
+  "football|Kazakhstan Premier League|Ulytau FC|FC Zhetysu|主胜|1x2|2026-08-29": {
+    "ev": 8.83,
+    "ts": 1788002896.114312
+  },
   "football|Kazakhstan Premier League|Ulytau FC|FC Zhetysu|让球客胜|1x2|2026-08-29": {
     "ev": 3.02,
     "ts": 1788001940.834988
+  },
+  "football|Kazakhstan Premier League|乌利陶FC|捷迪苏|主胜|1x2|2026-08-29": {
+    "ev": 8.83,
+    "bb": 1.98,
+    "ts": 1788002895.353028
   },
   "football|Latvia Virsliga|FK Auda|SK Super Nova|双重机会-和局/客|dc|2026-08-30": {
     "ev": 8.38,
@@ -6797,6 +6850,11 @@
     "ev": 8.45,
     "ts": 1787963342.619649
   },
+  "football|Lithuania 1 Lyga|FK 特兰西二队|乔纳瓦|客胜|1x2|2026-08-29": {
+    "ev": 5.48,
+    "bb": 1.94,
+    "ts": 1788002895.3531048
+  },
   "football|Lithuania 1 Lyga|id:5276037|-|客胜|1x2|2026-08-29": {
     "ev": 8.45,
     "bb": 1.94,
@@ -6810,6 +6868,18 @@
   "football|Malta Premier League|Hamrun Spartans FC|Floriana FC|主胜|1x2|2026-08-30": {
     "ev": 2.35,
     "ts": 1787936457.07213
+  },
+  "football|Malta Premier League|Hamrun Spartans FC|Floriana FC|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 12.48,
+    "ts": 1788002896.1138592
+  },
+  "football|Malta Premier League|Hamrun Spartans FC|Floriana FC|客胜|1x2|2026-08-30": {
+    "ev": 17.9,
+    "ts": 1788002896.113716
+  },
+  "football|Malta Premier League|Hamrun Spartans FC|Floriana FC|小球|1x2|2026-08-30": {
+    "ev": 1.71,
+    "ts": 1788002896.113784
   },
   "football|Malta Premier League|Hamrun Spartans FC|Floriana FC|让球主胜|1x2|2026-08-30": {
     "ev": 4.6,
@@ -6843,6 +6913,11 @@
     "ev": 5.31,
     "bb": 2.16,
     "ts": 1787942102.779634
+  },
+  "football|Malta Premier League|阿姆伦斯巴达|佛罗里亚纳|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 12.48,
+    "bb": 2.21,
+    "ts": 1788002895.353177
   },
   "football|Mexico Liga De Expansion MX|CSD Dorados Sinaloa|Atletico Morelia|上半场主胜|ht|2026-08-29": {
     "ev": 2.73,
@@ -8538,6 +8613,11 @@
     "bb": 1.96,
     "ts": 1787881347.650441
   },
+  "football|Russia First League|图拉兵工厂|乌拉尔|上半场主胜|ht|2026-08-29": {
+    "ev": 4.15,
+    "bb": 4.76,
+    "ts": 1788002895.3532429
+  },
   "football|Russia Premier League|FC Fakel Voronezh|FK Zenit Saint Petersburg|上半场主胜|ht|2026-08-29": {
     "ev": 7.08,
     "ts": 1787963003.135102
@@ -9047,6 +9127,14 @@
   "football|Slovenia 2nd Liga|NK Bistrica|NK Dren Vrhnika|让球主胜|1x2|2026-08-29": {
     "ev": 6.77,
     "ts": 1787995548.747189
+  },
+  "football|Slovenia 2nd Liga|NK Jesenice|ND Beltinci|客胜|1x2|2026-08-29": {
+    "ev": 2.95,
+    "ts": 1788002896.112032
+  },
+  "football|Slovenia 2nd Liga|NK Jesenice|ND Beltinci|让球客胜|1x2|2026-08-29": {
+    "ev": 3.03,
+    "ts": 1788002896.112098
   },
   "football|Slovenia 2nd Liga|NK Rudar Velenje|NK Bilje|双重机会-和局/客|dc|2026-08-29": {
     "ev": 2.69,
@@ -10422,6 +10510,10 @@
     "ev": 1.49,
     "ts": 1787933216.274888
   },
+  "football|Switzerland Super League|Servette Geneva|FC Luzern|总进球区间7+|total_goals_range|2026-08-30": {
+    "ev": 1.21,
+    "ts": 1788002896.1231492
+  },
   "football|Switzerland Super League|Young Boys Bern|FC Basel 1893|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 15.9,
     "ts": 1787942388.641705
@@ -11624,24 +11716,9 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Kazakhstan Premier League|乌利陶FC|捷迪苏|主胜|1x2|2026-08-29": {
-    "ev": 8.83,
-    "bb": 1.98,
-    "ts": 1788002895.353028
-  },
-  "football|Lithuania 1 Lyga|FK 特兰西二队|乔纳瓦|客胜|1x2|2026-08-29": {
-    "ev": 5.48,
-    "bb": 1.94,
-    "ts": 1788002895.3531048
-  },
-  "football|Malta Premier League|阿姆伦斯巴达|佛罗里亚纳|双重机会-和局/客|dc|2026-08-30": {
-    "ev": 12.48,
-    "bb": 2.21,
-    "ts": 1788002895.353177
-  },
-  "football|Russia First League|图拉兵工厂|乌拉尔|上半场主胜|ht|2026-08-29": {
-    "ev": 4.15,
-    "bb": 4.76,
-    "ts": 1788002895.3532429
+  "football|Germany 3rd Liga|萨尔布吕肯|罗斯托克|和局|1x2|2026-08-30": {
+    "ev": 9.63,
+    "bb": 3.71,
+    "ts": 1788003269.808181
   }
 }
