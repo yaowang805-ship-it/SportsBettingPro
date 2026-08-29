@@ -178,6 +178,17 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
     # 3. 串行处理结果(归档 SQLite 写 + 指纹对比, 保持原逻辑与顺序)
     new_pin = {}
     pin_changed_leagues = set()
+    _mag_by_league = {}  # 2026-08-29: 每联赛最大赔率相对变动幅度(steam 信号)
+
+    def _max_odds_change(old_key, new_key):
+        """计算两次赔率指纹的最大相对变动幅度(忽略 spread/total 的点数, 只看赔率本身)。"""
+        if not old_key or not new_key or len(old_key) != len(new_key):
+            return float('inf')  # 结构变了(增删盘口), 算显著
+        changes = []
+        for a, b in zip(old_key, new_key):
+            if a and b and float(a) > 1.0 and float(b) > 1.0:
+                changes.append(abs(float(b) - float(a)) / float(a))
+        return max(changes) if changes else 0.0
 
     for bb_league, pids in league_pids:
         league_changed = False
@@ -233,6 +244,8 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
                     if old_key != odds_key:
                         league_changed = True
                         pin_changed_leagues.add(bb_league)
+                        _m = _max_odds_change(old_key, odds_key)
+                        _mag_by_league[bb_league] = max(_mag_by_league.get(bb_league, 0.0), _m)
 
     # 保存新快照
     try:

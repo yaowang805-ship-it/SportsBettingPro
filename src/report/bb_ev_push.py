@@ -1013,6 +1013,11 @@ def _calc_kelly_stakes(opps: list) -> list:
         # V5.9: 高赔率特殊盘方差折扣 — 正确比分/净胜球等高方差无历史盘, 赔率>8 再降仓 (防 ¥100 封顶顶格)
         if sub in ("correct_score", "winning_margin", "total_goals_range", "first_to_score") and odds > 8.0:
             stake_pct *= 0.3
+        # 2026-08-29 day-of-week 加权(职业团队): 周日晚~周三=sharp money 窗口(真钱, 高置信),
+        # 周四~周六=公众资金(噪音大)。sharp 窗口 +8% 仓, 公众窗口 -8% 仓。
+        from datetime import datetime as _dt
+        _wd = _dt.now().weekday()  # 0=周一 ... 6=周日
+        stake_pct *= 1.08 if _wd in (0, 1, 2, 6) else 0.92
         stake = int(bankroll * stake_pct)
         o["_raw_stake"] = stake
         # 2026-08-27 用户澄清: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库(record_bets)
