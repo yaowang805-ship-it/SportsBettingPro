@@ -1,5 +1,5 @@
 {
-  "balance": 4960.53,
+  "balance": 4917.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3749,6 +3749,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788049800,
       "created_at": "2026-08-29T20:04:09.735383+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_江户全联_东邦钛_主胜",
+      "sport": "football",
+      "league": "日本地区联赛",
+      "home_team": "江户全联",
+      "away_team": "东邦钛",
+      "home_cn": "江户全联",
+      "away_cn": "东邦钛",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.1,
+      "stake": 43,
+      "model_prob": 0.2716,
+      "ev_pct": 11.36,
+      "pin_odds": 3.16,
+      "fair_price": 3.6816,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788080400,
+      "created_at": "2026-08-29T21:35:34.241045+00:00",
       "track_only": false
     }
   ],
@@ -8631,8 +8654,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 1143.0,
-    "bets": 16
+    "used": 1186.0,
+    "bets": 17
   },
   "updated": null
 }
