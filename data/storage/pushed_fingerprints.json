@@ -255,9 +255,17 @@
     "ev": 5.67,
     "ts": 1787963720.654044
   },
+  "football|Argentina Liga Profesional|Talleres de Cordoba|Central Cordoba SE|主胜|1x2|2026-08-30": {
+    "ev": 2.95,
+    "ts": 1788019792.315946
+  },
   "football|Argentina Liga Profesional|Talleres de Cordoba|Central Cordoba SE|双重机会-和局/客|dc|2026-08-30": {
     "ev": 2.12,
     "ts": 1788013471.16574
+  },
+  "football|Argentina Liga Profesional|Talleres de Cordoba|Central Cordoba SE|让球主胜|1x2|2026-08-30": {
+    "ev": 2.87,
+    "ts": 1788019792.3160179
   },
   "football|Argentina Liga Profesional|Talleres de Cordoba|Central Cordoba SE|让球客胜|1x2|2026-08-30": {
     "ev": 1.49,
@@ -709,6 +717,11 @@
     "ev": 4.51,
     "ts": 1788019458.026774
   },
+  "football|Azerbaijan Premier League|萨法|穆格汗|和局|1x2|2026-08-30": {
+    "ev": 12.8,
+    "bb": 3.03,
+    "ts": 1788019792.039524
+  },
   "football|Bahrain Premier League|Aali Club|Manama Club|主胜|1x2|2026-08-30": {
     "ev": 6.57,
     "ts": 1788010925.703234
@@ -819,9 +832,22 @@
     "ev": 1.93,
     "ts": 1787933584.394797
   },
+  "football|Belarus Premier League|FC Neman Grodno|FC Slavia Mozyr|主胜|1x2|2026-08-30": {
+    "ev": 7.78,
+    "ts": 1788019792.725944
+  },
+  "football|Belarus Premier League|FC Neman Grodno|FC Slavia Mozyr|让球主胜|1x2|2026-08-30": {
+    "ev": 6.59,
+    "ts": 1788019792.726017
+  },
   "football|Belarus Premier League|FC Neman Grodno|FC Slavia Mozyr|让球客胜|1x2|2026-08-30": {
     "ev": 2.9,
     "ts": 1787976637.440773
+  },
+  "football|Belarus Premier League|利文哥特奴|斯拉维亚莫兹里|主胜|1x2|2026-08-30": {
+    "ev": 7.78,
+    "bb": 2.04,
+    "ts": 1788019792.0394518
   },
   "football|Belarus Premier League|明斯克迪纳摩|巴拉诺维治|双重机会-和局/客|dc|2026-08-29": {
     "ev": 14.02,
@@ -995,6 +1021,10 @@
   "football|Belgium Pro League|KRC Genk|S.K Beveren|让球客胜|1x2|2026-08-29": {
     "ev": 1.57,
     "ts": 1787940926.1007621
+  },
+  "football|Belgium Pro League|KV Kortrijk|Royal Charleroi SC|上半场主胜|ht|2026-08-30": {
+    "ev": 1.55,
+    "ts": 1788019792.724492
   },
   "football|Belgium Pro League|KV Kortrijk|Royal Charleroi SC|上半场客胜|ht|2026-08-30": {
     "ev": 2.93,
@@ -1570,6 +1600,10 @@
     "ev": 1.99,
     "ts": 1787998328.699923
   },
+  "football|Brazil Serie C|Paysandu SC PA|Maringa FC|小球|1x2|2026-08-30": {
+    "ev": 1.28,
+    "ts": 1788019792.7296798
+  },
   "football|Brazil Serie C|弗罗勒斯塔|伊图诺|主胜|1x2|2026-08-30": {
     "ev": 9.12,
     "bb": 2.03,
@@ -1715,9 +1749,17 @@
     "ev": 1.48,
     "ts": 1788002291.3425071
   },
+  "football|Bulgaria Second Professional League|PFC Ludogorets Razgrad II|FK Hebar Pazardzhik|客胜|1x2|2026-08-30": {
+    "ev": 1.21,
+    "ts": 1788020218.7445571
+  },
   "football|Bulgaria Second Professional League|PFC Ludogorets Razgrad II|FK Hebar Pazardzhik|让球主胜|1x2|2026-08-30": {
     "ev": 2.08,
     "ts": 1788018707.49519
+  },
+  "football|Bulgaria Second Professional League|PFC Ludogorets Razgrad II|FK Hebar Pazardzhik|让球客胜|1x2|2026-08-30": {
+    "ev": 2.75,
+    "ts": 1788020218.7446048
   },
   "football|Bulgaria Second Professional League|PFK Sportist Svoge|FC Marek Dupnitsa|主胜|1x2|2026-08-29": {
     "ev": 3.22,
@@ -1745,6 +1787,14 @@
   "football|Chile Primera B|Deportes Iquique|San Luis de Quillota|主胜|1x2|2026-08-30": {
     "ev": 1.11,
     "ts": 1787986363.7682319
+  },
+  "football|Chile Primera B|Union San Felipe|Santa Cruz|主胜|1x2|2026-08-30": {
+    "ev": 2.76,
+    "ts": 1788019792.730247
+  },
+  "football|Chile Primera B|Union San Felipe|Santa Cruz|双重机会-主/和局|dc|2026-08-30": {
+    "ev": 3.01,
+    "ts": 1788019792.7304032
   },
   "football|Chile Primera B|Union San Felipe|Santa Cruz|让球主胜|1x2|2026-08-30": {
     "ev": 4.58,
@@ -1872,6 +1922,10 @@
     "ev": 8.78,
     "ts": 1787981781.4411361
   },
+  "football|Costa Rica Primera Division|CS Cartagines|CS Herediano|半/全场-主/和局|htft|2026-08-31": {
+    "ev": 8.86,
+    "ts": 1788020221.004171
+  },
   "football|Costa Rica Primera Division|CS Cartagines|CS Herediano|半/全场-主/客|htft|2026-08-31": {
     "ev": 15.58,
     "ts": 1787981781.430261
@@ -1976,6 +2030,10 @@
   "football|Cyprus 1st Division|AEL Limassol|Anorthosis Famagusta|上半场正确比分1-2|correct_score_ht|2026-08-31": {
     "ev": 4.14,
     "ts": 1787981781.440095
+  },
+  "football|Cyprus 1st Division|AEL Limassol|Anorthosis Famagusta|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 1.84,
+    "ts": 1788019792.328177
   },
   "football|Cyprus 1st Division|AEL Limassol|Anorthosis Famagusta|先进球neither|first_to_score|2026-08-31": {
     "ev": 4.7,
@@ -3977,6 +4035,10 @@
     "ev": 26.23,
     "ts": 1787981781.4359958
   },
+  "football|England Premier League|Leeds United|Brentford FC|和局|1x2|2026-08-30": {
+    "ev": 1.98,
+    "ts": 1788019792.318322
+  },
   "football|England Premier League|Liverpool FC|Nottingham Forest|上半场客胜|ht|2026-08-29": {
     "ev": 1.02,
     "ts": 1787973458.562221
@@ -4212,6 +4274,14 @@
   "football|Finland Veikkausliiga|Tampereen Ilves|HJK Helsinki|上半场正确比分2-1|correct_score_ht|2026-09-01": {
     "ev": 2.71,
     "ts": 1787981781.444562
+  },
+  "football|Finland Veikkausliiga|Tampereen Ilves|HJK Helsinki|双边进球-是|btts|2026-09-01": {
+    "ev": 1.58,
+    "ts": 1788020221.00592
+  },
+  "football|Finland Veikkausliiga|Tampereen Ilves|HJK Helsinki|大球|1x2|2026-09-01": {
+    "ev": 2.74,
+    "ts": 1788020221.0059588
   },
   "football|Finland Veikkausliiga|Tampereen Ilves|HJK Helsinki|总进球区间7+|total_goals_range|2026-09-01": {
     "ev": 3.73,
@@ -5710,6 +5780,10 @@
     "ev": 4.86,
     "ts": 1787942388.630742
   },
+  "football|Greece Super League|Volos NFC|Iraklis 1908 FC|让球主胜|1x2|2026-08-30": {
+    "ev": 1.19,
+    "ts": 1788019792.725482
+  },
   "football|Greece Super League|id:5285342|-|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 3.32,
     "bb": 1.94,
@@ -6382,6 +6456,10 @@
   "football|Italy Serie A|Juventus|Parma Calcio|让球主胜|1x2|2026-08-30": {
     "ev": 1.0,
     "ts": 1787983930.898495
+  },
+  "football|Italy Serie A|Juventus|Parma Calcio|让球客胜|1x2|2026-08-30": {
+    "ev": 1.0,
+    "ts": 1788019792.7250218
   },
   "football|Italy Serie A|Lazio|Genoa CFC|上半场双重机会-主/客|ht_dc|2026-08-31": {
     "ev": 3.62,
@@ -7989,6 +8067,10 @@
     "ev": 12.48,
     "ts": 1788002896.1138592
   },
+  "football|Malta Premier League|Hamrun Spartans FC|Floriana FC|和局|1x2|2026-08-30": {
+    "ev": 4.33,
+    "ts": 1788020218.743419
+  },
   "football|Malta Premier League|Hamrun Spartans FC|Floriana FC|客胜|1x2|2026-08-30": {
     "ev": 17.9,
     "ts": 1788002896.113716
@@ -8115,6 +8197,10 @@
   "football|Mexico Liga MX Women|FC Juarez (w)|Cruz Azul (w)|正确比分3-2|correct_score|2026-08-30": {
     "ev": 2.77,
     "ts": 1787977795.313777
+  },
+  "football|Mexico Liga MX Women|FC Juarez (w)|Cruz Azul (w)|正确比分4-1|correct_score|2026-08-30": {
+    "ev": 7.84,
+    "ts": 1788019792.323987
   },
   "football|Mexico Liga MX Women|FC Juarez (w)|Cruz Azul (w)|让球主胜|1x2|2026-08-30": {
     "ev": 6.91,
@@ -8562,6 +8648,10 @@
   "football|Netherlands Eredivisie|AZ Alkmaar|Go Ahead Eagles|让球主胜|1x2|2026-08-30": {
     "ev": 1.44,
     "ts": 1787993927.303029
+  },
+  "football|Netherlands Eredivisie|AZ Alkmaar|Go Ahead Eagles|让球客胜|1x2|2026-08-30": {
+    "ev": 1.01,
+    "ts": 1788019792.726175
   },
   "football|Netherlands Eredivisie|Cambuur|FC Twente|上半场客胜|ht|2026-08-31": {
     "ev": 1.45,
@@ -10083,6 +10173,10 @@
     "ev": 1.49,
     "ts": 1788012994.7415822
   },
+  "football|Russia Premier League|Rodina Moscow|FC Baltika Kaliningrad|上半场主胜|ht|2026-08-30": {
+    "ev": 2.17,
+    "ts": 1788019792.31773
+  },
   "football|Russia Premier League|Rodina Moscow|FC Baltika Kaliningrad|半/全场-客/主|htft|2026-08-30": {
     "ev": 3.61,
     "ts": 1787981781.4209018
@@ -10982,6 +11076,14 @@
     "ev": 15.72,
     "ts": 1787936722.686527
   },
+  "football|Spain LaLiga 2|Burgos CF|Real Sociedad B|上半场正确比分others|correct_score_ht|2026-09-01": {
+    "ev": 278.8,
+    "ts": 1788020221.00979
+  },
+  "football|Spain LaLiga 2|Burgos CF|Real Sociedad B|上半场精确进球others|exact_goals_ht|2026-09-01": {
+    "ev": 20.82,
+    "ts": 1788020221.0098612
+  },
   "football|Spain LaLiga 2|CE Sabadell FC|Almeria|上半场主胜|ht|2026-08-29": {
     "ev": 1.19,
     "ts": 1787980440.8234198
@@ -11167,6 +11269,11 @@
     "ev": 4.51,
     "bb": 4.87,
     "ts": 1787877489.719742
+  },
+  "football|Spain LaLiga 2|莱加内斯|埃登斯|上半场客胜|ht|2026-08-30": {
+    "ev": 7.59,
+    "bb": 5.65,
+    "ts": 1788019792.039583
   },
   "football|Spain LaLiga 2|萨瓦德尔|阿尔梅里亚|上半场主胜|ht|2026-08-29": {
     "ev": 4.02,
@@ -11481,9 +11588,17 @@
     "ev": 1.11,
     "ts": 1787963003.1390898
   },
+  "football|Spain LaLiga|Sevilla FC|Atletico Madrid|客胜|1x2|2026-08-30": {
+    "ev": 3.36,
+    "ts": 1788020218.7435899
+  },
   "football|Spain LaLiga|Sevilla FC|Atletico Madrid|让球主胜|1x2|2026-08-30": {
     "ev": 1.09,
     "ts": 1787976637.442627
+  },
+  "football|Spain LaLiga|Sevilla FC|Atletico Madrid|让球客胜|1x2|2026-08-30": {
+    "ev": 2.45,
+    "ts": 1788020218.743667
   },
   "football|Spain LaLiga|id:5192166|-|上半场主胜|ht|2026-08-29": {
     "ev": 3.33,
@@ -12222,6 +12337,10 @@
     "ev": 1.11,
     "ts": 1787992456.128594
   },
+  "football|Taca de Portugal|FC Pacos Ferreira|Fafe|主胜|1x2|2026-08-30": {
+    "ev": 1.55,
+    "ts": 1788019792.729217
+  },
   "football|Taca de Portugal|Fatima|Sport Benfica Castelo Branco|主胜|1x2|2026-08-30": {
     "ev": 4.08,
     "ts": 1787965916.48673
@@ -12539,6 +12658,10 @@
     "ev": 2.89,
     "bb": 1.79,
     "ts": 1787897203.885932
+  },
+  "football|Turkey Super Lig|Eyupspor|Alanyaspor|上半场主胜|ht|2026-08-31": {
+    "ev": 6.76,
+    "ts": 1788019792.3199801
   },
   "football|Turkey Super Lig|Eyupspor|Alanyaspor|上半场双重机会-主/客|ht_dc|2026-08-31": {
     "ev": 1.83,
@@ -13143,6 +13266,10 @@
     "ev": 13.43,
     "ts": 1787963003.164352
   },
+  "football|USA Major League Soccer|Seattle Sounders|Chicago Fire|让球主胜|1x2|2026-08-30": {
+    "ev": 10.2,
+    "ts": 1788019792.7297568
+  },
   "football|USA Major League Soccer|Sporting Kansas City|Vancouver Whitecaps FC|上半场客胜|ht|2026-08-30": {
     "ev": 1.07,
     "ts": 1787978198.446879
@@ -13630,19 +13757,9 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Belarus Premier League|利文哥特奴|斯拉维亚莫兹里|主胜|1x2|2026-08-30": {
-    "ev": 7.78,
-    "bb": 2.04,
-    "ts": 1788019792.0394518
-  },
-  "football|Azerbaijan Premier League|萨法|穆格汗|和局|1x2|2026-08-30": {
-    "ev": 12.8,
-    "bb": 3.03,
-    "ts": 1788019792.039524
-  },
-  "football|Spain LaLiga 2|莱加内斯|埃登斯|上半场客胜|ht|2026-08-30": {
-    "ev": 7.59,
-    "bb": 5.65,
-    "ts": 1788019792.039583
+  "football|Turkey Super Lig|埃于普体育|阿拉尼亚体育|上半场主胜|ht|2026-08-31": {
+    "ev": 6.72,
+    "bb": 4.45,
+    "ts": 1788020330.648285
   }
 }
