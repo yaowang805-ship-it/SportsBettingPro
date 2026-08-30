@@ -1,5 +1,5 @@
 {
-  "balance": 872.53,
+  "balance": 0.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3428,6 +3428,52 @@
       "commence_time": 1788102000,
       "created_at": "2026-08-30T14:10:08.001883+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_阿特劳_阿斯塔纳_客胜",
+      "sport": "football",
+      "league": "哈萨克斯坦超级联赛",
+      "home_team": "阿特劳",
+      "away_team": "阿斯塔纳",
+      "home_cn": "阿特劳",
+      "away_cn": "阿斯塔纳",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.77,
+      "stake": 872.53,
+      "model_prob": 0.6527,
+      "ev_pct": 15.54,
+      "pin_odds": 1.4926,
+      "fair_price": 1.532,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788102000,
+      "created_at": "2026-08-30T14:16:43.541235+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_喀山红宝石_马哈奇卡拉_半/全场-主/和局",
+      "sport": "football",
+      "league": "俄罗斯超级联赛",
+      "home_team": "喀山红宝石",
+      "away_team": "马哈奇卡拉",
+      "home_cn": "喀山红宝石",
+      "away_cn": "马哈奇卡拉",
+      "market": "1x2",
+      "market_type": "半/全场-主/和局",
+      "sub_market": "htft",
+      "line": "",
+      "odds": 14.5,
+      "stake": 0,
+      "model_prob": 0.0742,
+      "ev_pct": 7.65,
+      "pin_odds": 12.13,
+      "fair_price": 13.4695,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788109200,
+      "created_at": "2026-08-30T14:16:43.541286+00:00",
+      "track_only": true
     }
   ],
   "settled": {
@@ -8999,8 +9045,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 9433.0,
-    "bets": 73
+    "used": 10305.53,
+    "bets": 75
   },
   "updated": null
 }
