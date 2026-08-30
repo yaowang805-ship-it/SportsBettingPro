@@ -405,21 +405,15 @@ class RiskManager:
             return 0.0   # 5+连败：停手
 
     def get_risk_multiplier(self) -> float:
-        """只返回冷却/回撤/连败的综合乘数(0=停手, 0~1=折扣), 不重复 Kelly。
+        """返回风控乘数(0=停手, 0~1=折扣), 不重复 Kelly。
 
-        2026-08-30 方案1: 原 get_max_stake 内部又独立算了一遍 Kelly(KELLY_FRACTION 0.33
-        × 连败 0.7), 把 _calc_kelly_stakes 已算好的梯度倍率 stake 压回几十元(双重 Kelly)。
-        这里只取风控保护信号(冷却/回撤/连败), 由调用方乘以已算好的 stake, 不抵消放大。
+        2026-08-30: 用户要求"只要有机会就推送, 不考虑预算", 取消连败/回撤停手 —
+        7连败曾触发 streak_mult=0 导致全天0推送。改为只保留冷却停手(真正的外部风险信号),
+        回撤/连败不再停手、也不降仓(返回1.0)。
         """
         if self._in_cool_off():
             return 0.0
-        dd_mult = self._get_drawdown_multiplier()
-        if dd_mult <= 0:
-            return 0.0
-        streak_mult = self._get_streak_multiplier()
-        if streak_mult <= 0:
-            return 0.0
-        return dd_mult * streak_mult
+        return 1.0
 
     def get_max_stake(self, edge_or_prob: float, odds: float, current_exposure_pct: float = 0.0,
                       input_is_prob: bool = False, sport: str = '', home_team: str = '',
