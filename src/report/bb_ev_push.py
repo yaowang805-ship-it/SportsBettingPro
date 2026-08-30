@@ -1451,10 +1451,18 @@ def _ml_dir_source(platform_sources, sub_market, designation):
     逐方向取来源, 取不到回退 None(调用方用整场 price_source)。
     """
     des = (designation or "").lower()
-    key = "ht_ml_dir" if str(sub_market).startswith("ht") else "ml_dir"
+    # 2026-08-30 修复: 只有 ht(上半场独赢)用 ht_ml_dir, 1x2/ml 用 ml_dir。
+    # htft/ht_dc/ht_hc/ht_ou/ht_dnb 等以"ht"开头的盘口方向结构与独赢不同(9结果/3腿DC/2way),
+    # 误套 ht_ml_dir 会错标来源(实测 htft home/draw BB价15.8被标成FB价)。返回 None 回退整场来源。
+    if sub_market == "ht":
+        key = "ht_ml_dir"
+    elif sub_market in ("1x2", "ml", ""):
+        key = "ml_dir"
+    else:
+        return "BB/FB"  # 特殊盘口(htft/ht_dc/ht_hc/ht_ou/ht_dnb/dc/dnb/btts/oe等)无逐方向来源, 标BB/FB不误导
     dirs = platform_sources.get(key)
     if not isinstance(dirs, list):
-        return None
+        return "BB/FB"
     if "和" in des or "draw" in des:
         idx = 1
     elif "客" in des or "away" in des:
