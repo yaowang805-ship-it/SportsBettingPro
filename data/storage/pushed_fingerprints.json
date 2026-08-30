@@ -594,6 +594,11 @@
     "ev": 3.53,
     "ts": 1788080079.776083
   },
+  "football|Austria Bundesliga|哈特堡格|里德|上半场主胜|ht|2026-08-30": {
+    "ev": 3.04,
+    "bb": 4.38,
+    "ts": 1788083194.877624
+  },
   "football|Azerbaijan Premier League|Safa|Imisli FK|单双-双|oe|2026-08-30": {
     "ev": 1.91,
     "ts": 1788019458.026807
@@ -975,6 +980,18 @@
   "football|Brazil Serie A|Paranaense PR|Fluminense FC RJ|上半场客胜|ht|2026-08-30": {
     "ev": 8.56,
     "ts": 1787975485.221149
+  },
+  "football|Brazil Serie A|Paranaense PR|Fluminense FC RJ|半/全场-主/和局|htft|2026-08-30": {
+    "ev": 3.97,
+    "ts": 1788083196.8156228
+  },
+  "football|Brazil Serie A|Paranaense PR|Fluminense FC RJ|单双-双|oe|2026-08-30": {
+    "ev": 1.18,
+    "ts": 1788083196.815562
+  },
+  "football|Brazil Serie A|Paranaense PR|Fluminense FC RJ|和局|1x2|2026-08-30": {
+    "ev": 1.12,
+    "ts": 1788083196.815468
   },
   "football|Brazil Serie A|Sao Paulo FC SP|Red Bull Bragantino SP|上半场主胜|ht|2026-08-30": {
     "ev": 3.03,
@@ -2040,6 +2057,10 @@
     "ev": 4.09,
     "ts": 1788071412.42344
   },
+  "football|Denmark 1st Division|Hillerod Fodbold|Hobro IK|角球大球|corner|2026-08-30": {
+    "ev": 1.97,
+    "ts": 1788083196.8160598
+  },
   "football|Denmark 1st Division|Hillerod Fodbold|Hobro IK|让球主胜|1x2|2026-08-30": {
     "ev": 7.24,
     "ts": 1788064053.54955
@@ -2935,6 +2956,10 @@
   "football|Germany Bundesliga|Freiburg|Werder Bremen|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 19.86,
     "ts": 1788082325.0278022
+  },
+  "football|Germany Bundesliga|Freiburg|Werder Bremen|和局|1x2|2026-08-30": {
+    "ev": 1.79,
+    "ts": 1788083196.8105888
   },
   "football|Germany Bundesliga|id:5002625|-|上半场客胜|ht|2026-08-30": {
     "ev": 4.32,
@@ -3997,6 +4022,10 @@
     "ev": 1.17,
     "ts": 1788065681.510684
   },
+  "football|Japan J.League 3|Kochi United SC|Roasso Kumamoto|和局|1x2|2026-08-30": {
+    "ev": 7.35,
+    "ts": 1788083196.805642
+  },
   "football|Japan J.League 3|Kochi United SC|Roasso Kumamoto|小球|1x2|2026-08-30": {
     "ev": 1.0,
     "ts": 1788018411.218264
@@ -4049,6 +4078,11 @@
     "ev": 10.69,
     "bb": 2.61,
     "ts": 1787996003.944696
+  },
+  "football|Japan J.League 3|高知联合|熊本深红|和局|1x2|2026-08-30": {
+    "ev": 7.35,
+    "bb": 3.1,
+    "ts": 1788083194.877515
   },
   "football|Japan Nadeshiko League 2 Women|Diosa Izumo FC (w)|Speranza Osaka Takatsuki (w)|大球|1x2|2026-08-30": {
     "ev": 1.39,
@@ -4568,6 +4602,10 @@
     "ev": 1.4,
     "ts": 1788082325.022702
   },
+  "football|Netherlands Eredivisie|FC Utrecht|PSV Eindhoven|双重机会-主/和局|dc|2026-08-30": {
+    "ev": 2.53,
+    "ts": 1788083196.806149
+  },
   "football|Netherlands Eredivisie|FC Utrecht|PSV Eindhoven|客胜|1x2|2026-08-30": {
     "ev": 1.84,
     "ts": 1787981781.420404
@@ -4575,6 +4613,10 @@
   "football|Netherlands Eredivisie|FC Utrecht|PSV Eindhoven|角球让球主胜|corner|2026-08-30": {
     "ev": 2.21,
     "ts": 1788078759.494404
+  },
+  "football|Netherlands Eredivisie|FC Utrecht|PSV Eindhoven|让球主胜|1x2|2026-08-30": {
+    "ev": 1.74,
+    "ts": 1788083196.80606
   },
   "football|Netherlands Eredivisie|Feyenoord|O Den Haag|上半场客胜|ht|2026-08-30": {
     "ev": 2.41,
@@ -4687,6 +4729,10 @@
   "football|Norway 1st Division|Hodd|Stabaek IF|双重机会-主/和局|dc|2026-08-30": {
     "ev": 1.12,
     "ts": 1788073939.303338
+  },
+  "football|Norway 1st Division|Hodd|Stabaek IF|让球主胜|1x2|2026-08-30": {
+    "ev": 1.0,
+    "ts": 1788083196.813076
   },
   "football|Norway 1st Division|Kongsvinger IL Fotball|Lyn 1896 FK|上半场主胜|ht|2026-08-30": {
     "ev": 1.95,
@@ -5142,6 +5188,10 @@
   "football|Poland Ekstraklasa|KS Gornik Zabrze|GKS Katowice|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 25.28,
     "ts": 1788082303.942965
+  },
+  "football|Poland Ekstraklasa|KS Gornik Zabrze|GKS Katowice|大球|1x2|2026-08-30": {
+    "ev": 2.47,
+    "ts": 1788083196.8088808
   },
   "football|Poland Ekstraklasa|RKS Rakow Czestochowa|Jagiellonia Bialystok|上半场客胜|ht|2026-08-30": {
     "ev": 1.82,
@@ -5801,6 +5851,10 @@
     "ev": 1.61,
     "ts": 1788005838.828917
   },
+  "football|South Korea K-League 1|Gangwon FC|Pohang Steelers FC|半/全场-主/和局|htft|2026-08-30": {
+    "ev": 1.48,
+    "ts": 1788083196.806314
+  },
   "football|South Korea K-League 1|Gangwon FC|Pohang Steelers FC|角球大球|corner|2026-08-30": {
     "ev": 1.39,
     "ts": 1788062471.9957728
@@ -5836,6 +5890,10 @@
   "football|South Korea K-League 1|Incheon United FC|Jeonbuk Hyundai Motors|上半场客胜|ht|2026-08-30": {
     "ev": 4.57,
     "ts": 1788081520.162539
+  },
+  "football|South Korea K-League 1|Incheon United FC|Jeonbuk Hyundai Motors|半/全场-主/和局|htft|2026-08-30": {
+    "ev": 2.08,
+    "ts": 1788083196.814285
   },
   "football|South Korea K-League 1|Incheon United FC|Jeonbuk Hyundai Motors|单双-双|oe|2026-08-30": {
     "ev": 1.27,
@@ -5902,6 +5960,10 @@
   "football|South Korea K-League 2|Suwon FC|Busan I Park|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 7.41,
     "ts": 1788082325.023364
+  },
+  "football|South Korea K-League 2|Suwon FC|Busan I Park|半/全场-客/主|htft|2026-08-30": {
+    "ev": 5.31,
+    "ts": 1788083196.814548
   },
   "football|South Korea K-League 2|Suwon FC|Busan I Park|双边进球-是|btts|2026-08-30": {
     "ev": 1.64,
@@ -5983,9 +6045,17 @@
     "ev": 1.25,
     "ts": 1788019240.023647
   },
+  "football|Spain LaLiga 2|FC Andorra|SD Eibar|双边进球-是|btts|2026-08-30": {
+    "ev": 8.26,
+    "ts": 1788083196.8125088
+  },
   "football|Spain LaLiga 2|FC Andorra|SD Eibar|和局|1x2|2026-08-30": {
     "ev": 1.56,
     "ts": 1788067042.610427
+  },
+  "football|Spain LaLiga 2|FC Andorra|SD Eibar|大球|1x2|2026-08-30": {
+    "ev": 8.82,
+    "ts": 1788083196.812614
   },
   "football|Spain LaLiga 2|FC Andorra|SD Eibar|小球|1x2|2026-08-30": {
     "ev": 1.26,
@@ -6300,6 +6370,10 @@
   "football|Sweden Allsvenskan|AIK|Hammarby IF|双重机会-主/和局|dc|2026-08-30": {
     "ev": 6.1,
     "ts": 1788064922.141563
+  },
+  "football|Sweden Allsvenskan|AIK|Hammarby IF|客胜|1x2|2026-08-30": {
+    "ev": 1.57,
+    "ts": 1788083196.807455
   },
   "football|Sweden Allsvenskan|AIK|Hammarby IF|让球主胜|1x2|2026-08-30": {
     "ev": 4.37,
@@ -6675,6 +6749,10 @@
   "football|Tunisia Ligue 1|Club S Hammam Lif|Bizertin|和局|1x2|2026-08-30": {
     "ev": 16.74,
     "ts": 1788070910.4786189
+  },
+  "football|Tunisia Ligue 1|Club S Hammam Lif|Bizertin|小球|1x2|2026-08-30": {
+    "ev": 1.64,
+    "ts": 1788083196.8159628
   },
   "football|Tunisia Ligue 1|Club S Hammam Lif|Bizertin|让球客胜|1x2|2026-08-30": {
     "ev": 1.74,
@@ -7536,6 +7614,10 @@
     "ev": 8.24,
     "ts": 1788008223.196411
   },
+  "football|Ukraine Premier League|FC LNZ Cherkasy|Veres Rivne|主胜|1x2|2026-08-30": {
+    "ev": 1.21,
+    "ts": 1788083196.805395
+  },
   "football|Ukraine Premier League|FC LNZ Cherkasy|Veres Rivne|双重机会-和局/客|dc|2026-08-30": {
     "ev": 5.27,
     "ts": 1788008517.037179
@@ -7547,6 +7629,10 @@
   "football|Ukraine Premier League|FC LNZ Cherkasy|Veres Rivne|小球|1x2|2026-08-30": {
     "ev": 5.49,
     "ts": 1788008223.196449
+  },
+  "football|Ukraine Premier League|FC LNZ Cherkasy|Veres Rivne|让球主胜|1x2|2026-08-30": {
+    "ev": 3.63,
+    "ts": 1788083196.805541
   },
   "football|Ukraine Premier League|FC LNZ Cherkasy|Veres Rivne|让球客胜|1x2|2026-08-30": {
     "ev": 7.23,
@@ -7687,14 +7773,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Japan J.League 3|高知联合|熊本深红|和局|1x2|2026-08-30": {
-    "ev": 7.35,
-    "bb": 3.1,
-    "ts": 1788083194.877515
-  },
-  "football|Austria Bundesliga|哈特堡格|里德|上半场主胜|ht|2026-08-30": {
-    "ev": 3.04,
-    "bb": 4.38,
-    "ts": 1788083194.877624
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-主/和局|htft|2026-08-31": {
+    "ev": 7.97,
+    "bb": 15.8,
+    "ts": 1788083554.224659
   }
 }
