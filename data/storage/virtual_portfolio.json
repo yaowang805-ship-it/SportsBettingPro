@@ -1,5 +1,5 @@
 {
-  "balance": 7631.53,
+  "balance": 7577.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3105,6 +3105,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788087600,
       "created_at": "2026-08-30T04:27:31.703335+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_维拉戈生驹_守山侍_客胜",
+      "sport": "football",
+      "league": "日本地区联赛",
+      "home_team": "维拉戈生驹",
+      "away_team": "守山侍",
+      "home_cn": "维拉戈生驹",
+      "away_cn": "守山侍",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.94,
+      "stake": 54,
+      "model_prob": 0.2351,
+      "ev_pct": 16.13,
+      "pin_odds": 3.4,
+      "fair_price": 4.254,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788080400,
+      "created_at": "2026-08-30T05:19:41.104860+00:00",
       "track_only": false
     }
   ],
@@ -8482,8 +8505,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 1846.0,
-    "bets": 34
+    "used": 1900.0,
+    "bets": 35
   },
   "updated": null
 }
