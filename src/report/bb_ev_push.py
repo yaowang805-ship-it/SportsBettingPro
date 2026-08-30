@@ -1025,6 +1025,15 @@ def _calc_kelly_stakes(opps: list) -> list:
             stake_pct *= 0.6 if tier == 3 else 0.4
         # V5.1: per-sport赔率策略 (10万+Pinnacle+723笔实盘)
         max_odds = tier_cfg.get("max_odds", 20.0)
+        # 2026-08-30: 特殊盘口(正确比分/半全场等)天然高赔率, tier max_odds(如T2=10)会误杀
+        # (correct_score_ht 175机会/htft 57机会, 赔率中位19.7/31, 全被max_odds=10拦死)。改用 get_odds_cap。
+        if sub in ("correct_score_ht", "htft", "exact_goals_ht", "correct_score",
+                   "winning_margin", "total_goals_range", "first_to_score",
+                   "corner", "booking_ml", "booking_hc", "booking_ou"):
+            from config.weight_matrix_v5 import get_odds_cap as _goc
+            _cap = _goc(sport, league, sub)
+            if _cap > 0:
+                max_odds = _cap
         odds_kelly_mult = 1.0  # 默认不改Kelly
         # V5.9: 赔率分层策略只对标定过的直接盘口(1X2/HC/OU)。特殊盘口(正确比分/半场/角球/DC/BTTS/OE等)
         # 有独立的 SPECIAL_MARKET_CAPS 上限和 EV 门槛, 再套 1X2 赔率分层的 min_ev(高赔5-10%)
