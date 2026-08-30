@@ -412,12 +412,14 @@ EDGE_DIRECTION_MULT = {
 # 观察模式盘口开推试点倍率(盘口级, 优先于方向级) — correct_score_ht 高方差, 低倍率试点
 PILOT_SUB_MARKET_MULT = {
     "correct_score_ht": 5.0,  # 正确比分高方差, 试点×5
+    "htft": 5.0,              # 半全场9结果高方差, 试点×5(解封后)
 }
 
 # 2026-08-30 方向级门槛覆盖(sub_market, designation) — 基于实盘已结算 ROI 标定。
 # 真 edge 方向降门槛多推, 假 edge 方向升门槛少推; 命中时覆盖盘口级门槛(替代 v3/mtx)。
 DIRECTION_MIN_EV = {
     ("1x2", "客胜"): 5.0,              # 67注 ROI +42.1% 真edge, 从8%降
+    ("1x2", "和局"): 6.0,              # 观察库CLV+3.0%/正率76%(n=200), 从8%降
     ("ht", "上半场主胜"): 2.0,          # 79注 ROI +20.1% 真edge, 从3%降
     ("dc", "双重机会-和局/客"): 8.0,     # 39注 ROI +30.4% 真edge, 从20%解封(被整盘负edge误封)
     ("ht", "上半场客胜"): 8.0,          # 169注 ROI -21.6% 假edge, 从3%升
@@ -1613,11 +1615,11 @@ def _collect_opportunities(match, market_key):
 
         # 2026-08-27/28 观察模式盘口: 刚修完错配/新接的半场特殊盘口, 只进观察库(validate/CLV采集),
         # 不推送钉钉, 等 CLV 数据攒够能统计 edge 再开推(用户要求)。
-        # 2026-08-30: correct_score_ht 移出观察模式开推试点(CLV+6.8%/n=136正edge, 门槛3%不封杀,
-        # 低倍率×5控制高方差)。htft 仍观察 — 9结果高方差 + 旧"EV虚高3228%"教训。
+        # 2026-08-30: correct_score_ht/htft 移出观察模式开推试点(观察库CLV+6.8%/+4.6%正edge,
+        # 结构已对齐, 低倍率控制高方差)。htft 旧"EV虚高3228%"教训已因 Pin 9结果对齐而消除。
         if sub_market in ("correct_score", "first_to_score",
                           "exact_goals_ht", "winning_margin_ht",
-                          "total_goals_range_ht", "first_to_score_ht", "htft"):
+                          "total_goals_range_ht", "first_to_score_ht"):
             continue
 
         # 自有标定喂 EV 层(2026-08-29): 薄锚盘口(ht_dc等)用真实结算胜率覆盖 Pin 假价重算 EV,

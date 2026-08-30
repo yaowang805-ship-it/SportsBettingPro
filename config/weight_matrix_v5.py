@@ -1330,7 +1330,7 @@ NBA_DATA_V5 = {
 # =====================================================================
 # HTFT: Pinnacle 无对应盘口 → 无法做公平价比较 → 封杀
 # DNB: BB 无此盘口(曾误读"第3粒进球") → 封杀
-BLOCKED_MARKETS = {"htft", "dnb", "correct_score"}
+BLOCKED_MARKETS = {"dnb", "correct_score"}  # 2026-08-30: htft 解封(结构已对齐9结果, 观察库CLV+4.6%正edge)
 
 # MMA/Boxing: 仅封杀高风险子类型 (时间匹配 + 球员冲突)
 # V4.2: name-matched + score≥0.95 的 MMA/Boxing 允许小额投注
@@ -2228,7 +2228,7 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
     #   推导 ht/ht_dc/ht_hc/ht_ou/ht_dnb/f5: 4% — Shin 已修 favorite-longshot 偏差, 不再需要 6% 压制。
     if sub_market in ("dc", "dnb"):
         base_min_ev = 3.0
-    elif sub_market in ("btts", "oe", "correct_score", "winning_margin", "total_goals_range", "first_to_score"):
+    elif sub_market in ("btts", "oe", "correct_score", "winning_margin", "total_goals_range", "first_to_score", "htft"):
         base_min_ev = 4.0
     elif sub_market == "ht_dc":
         # 2026-08-29 薄锚降级: ht_dc「主/客」实际胜率42.7% vs 隐含53.4%(Pin半场盘口把平局
