@@ -811,6 +811,10 @@
     "ev": 2.16,
     "ts": 1787994529.004035
   },
+  "football|Belgium Challenger Pro League|RFC Seraing|Lierse Kempenzonen|让球主胜|1x2|2026-08-31": {
+    "ev": 2.94,
+    "ts": 1788109530.71239
+  },
   "football|Belgium Challenger Pro League|RFC Seraing|Lierse Kempenzonen|让球客胜|1x2|2026-08-31": {
     "ev": 4.36,
     "ts": 1788080079.779379
@@ -1699,11 +1703,6 @@
     "bb": 23.0,
     "ts": 1788102621.204496
   },
-  "football|Bulgaria First Professional League|索非亚斯拉维亚|索菲亚列夫斯基|半/全场-主/客|htft|2026-09-03": {
-    "ev": 9.96,
-    "bb": 26.0,
-    "ts": 1788109275.64214
-  },
   "football|Bulgaria Second Professional League|FC Fratria Varna|CSKA Sofia II|主胜|1x2|2026-08-30": {
     "ev": 11.29,
     "ts": 1787986363.763412
@@ -2159,6 +2158,11 @@
     "ev": 10.19,
     "bb": 16.4,
     "ts": 1788107413.080331
+  },
+  "football|Cyprus 1st Division|奥莫尼亚|艾华迪堡|上半场正确比分0-1|correct_score_ht|2026-09-01": {
+    "ev": 20.42,
+    "bb": 18.2,
+    "ts": 1788109460.398603
   },
   "football|Cyprus 1st Division|艾里斯利马素尔|阿波罗利马索尔|上半场客胜|ht|2026-08-30": {
     "ev": 3.11,
@@ -4252,6 +4256,10 @@
     "ev": 1.34,
     "ts": 1788030053.6065578
   },
+  "football|Guatemala Liga Nacional|Deportivo San Pedro|Antigua GFC|单双-双|oe|2026-08-31": {
+    "ev": 1.32,
+    "ts": 1788109530.712302
+  },
   "football|Guatemala Liga Nacional|Deportivo San Pedro|Antigua GFC|和局|1x2|2026-08-31": {
     "ev": 4.53,
     "ts": 1787975485.21877
@@ -6092,6 +6100,10 @@
     "ev": 1.46,
     "ts": 1788098590.93189
   },
+  "football|Netherlands Eredivisie|Cambuur|FC Twente|让球客胜|1x2|2026-08-31": {
+    "ev": 1.01,
+    "ts": 1788109530.712466
+  },
   "football|Netherlands Eredivisie|FC Utrecht|PSV Eindhoven|上半场客胜|ht|2026-08-30": {
     "ev": 1.13,
     "ts": 1787981781.420456
@@ -7738,6 +7750,10 @@
     "ev": 4.66,
     "ts": 1788078432.964962
   },
+  "football|Slovakia 2. Liga|OFK Malzenice|MFK Bytca|双重机会-和局/客|dc|2026-08-31": {
+    "ev": 7.32,
+    "ts": 1788109460.802581
+  },
   "football|Slovakia 2. Liga|Slovan Bratislava B|Povazska Bystrica|双重机会-和局/客|dc|2026-08-30": {
     "ev": 1.53,
     "ts": 1788077277.901899
@@ -8598,6 +8614,11 @@
     "ev": 10.43,
     "bb": 30.0,
     "ts": 1788100057.7984378
+  },
+  "football|Sweden Allsvenskan|哥德堡盖斯|布洛马波卡纳|半/全场-主/客|htft|2026-09-01": {
+    "ev": 10.0,
+    "bb": 42.0,
+    "ts": 1788109460.398644
   },
   "football|Sweden Division 2|Angby IF|Korsnas IF FK|主胜|1x2|2026-08-30": {
     "ev": 3.29,
@@ -10185,14 +10206,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Cyprus 1st Division|奥莫尼亚|艾华迪堡|上半场正确比分0-1|correct_score_ht|2026-09-01": {
-    "ev": 20.42,
-    "bb": 18.2,
-    "ts": 1788109460.398603
-  },
-  "football|Sweden Allsvenskan|哥德堡盖斯|布洛马波卡纳|半/全场-主/客|htft|2026-09-01": {
-    "ev": 10.0,
-    "bb": 42.0,
-    "ts": 1788109460.398644
+  "football|Bulgaria First Professional League|索非亚斯拉维亚|索菲亚列夫斯基|半/全场-主/客|htft|2026-09-03": {
+    "ev": 14.19,
+    "bb": 27.0,
+    "ts": 1788109831.041116
   }
 }
