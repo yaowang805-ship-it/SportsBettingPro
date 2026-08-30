@@ -71,6 +71,8 @@ SCHEDULE = [
     # (09:08 才追赶, 2026-08-28 实锤)。09:00 机器已醒, 全量扫描更稳。full_scan 是重任务
     # (Pin 415联赛+BB/FB提取, 10-20min, 内部8线程), 其他任务错开到 full_scan 之后 30min+,
     # 且 full_scan 运行中增量扫描+定时任务都跳过(_tick 里 _full_scan_running 检查), 防并发抢 Pin 风控。
+    # 数据盘口日报 07:20: 各盘口门槛/CLV/ROI + 门槛变动, 推钉钉(只读本地数据不拉Pin, 轻量)
+    ("market_report",     "07:20", "do_market_report", {}),
     ("full_scan_morning",  "09:00", "do_full_scan",  {"bet": True}),
     ("self_repair",       "09:30", "do_self_repair", {}),       # 自检+自动修复: 锁文件/缓存/指纹/连通性
     ("time_calibration",  "09:35", "do_time_calibration", {}),  # 时间校准: BB/Pin/系统时钟对齐
@@ -690,6 +692,23 @@ class PipelineOrchestrator:
                 logger.info("观察库纸面结算: +%d 笔 (累计 %d)", pr["new_settled"], pr["total_paper"])
         except Exception as e:
             logger.warning("观察库纸面结算失败: %s", e)
+
+    def do_market_report(self):
+        """数据盘口日报: 各盘口门槛/CLV/真实ROI + 门槛变动, 推钉钉(只读本地数据不拉Pin)。"""
+        try:
+            import subprocess
+            script = SRC_DIR / "scripts" / "daily_market_report.py"
+            r = subprocess.run(
+                [sys.executable, str(script)],
+                capture_output=True, text=True, cwd=str(SRC_DIR), timeout=120,
+            )
+            if r.returncode != 0:
+                err = (r.stderr or r.stdout or "")[-400:]
+                logger.warning("盘口日报失败: %s", err)
+            else:
+                logger.info("盘口日报已推送")
+        except Exception as e:
+            logger.warning("盘口日报异常: %s", e)
 
     def do_daily_report(self):
         """日报推送。"""

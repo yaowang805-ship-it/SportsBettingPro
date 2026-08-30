@@ -597,11 +597,22 @@ def _get_match_teams(record):
 
 
 def _find_market_group(record, mty_code, period=1001):
-    """在比赛记录中找指定市场类型和时期的 group。"""
+    """在比赛记录中找指定市场类型和时期的 group。
+
+    2026-08-30: 过滤未开盘(ss=0)的盘口 — ss=0 是开盘前的占位价(开盘后价格会变,
+    实测 Phoenix Rising 主胜 ss=0 时 2.22 → 开盘后 1.96), 不能用于比价(会产生假EV)。
+    ss 字段缺失时默认 1(已开盘) 兼容旧数据。
+    """
     mg = record.get("mg", [])
     for g in mg:
         if g.get("mty") == mty_code and g.get("pe", g.get("period")) == period:
-            return g
+            mks = g.get("mks", g.get("markets", []))
+            open_mks = [m for m in mks if m.get("ss", 1) == 1]
+            if not open_mks:
+                return None  # 全部未开盘 → 该盘口不可用
+            _g = dict(g)
+            _g["mks"] = open_mks
+            return _g
     return None
 
 
