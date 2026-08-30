@@ -1679,8 +1679,7 @@ def _collect_opportunities(match, market_key):
             _dynamic_cap = max(EV_CAP, (bb_odds - 1) * 20)
         else:
             _dynamic_cap = max(50.0, (bb_odds - 1) * 40)
-        if ev > _dynamic_cap:
-            continue
+        # 2026-08-30 用户要求: EV上限拦截暂停, 只加提醒(_warn), 不再 continue 拦截
 
         # ── V4 赔率上限: 基于 Pinnacle 全量数据 ──
         from config.weight_matrix_v5 import get_odds_cap
@@ -1689,10 +1688,8 @@ def _collect_opportunities(match, market_key):
             continue
 
         # HTFT/半全场 EV 上限：此类市场 Pinnacle 盘口常与 BB 不是同一市场
-        # (如 Pinnacle "半全场" 含加时 vs BB 不含)，导致假 EV 极高
-        # 收紧上限 50%→30%，降低推送虚高机会的风险
-        if sub_market == "htft" and ev > 30:
-            continue
+        # (如 Pinnacle "半全场" 含加时 vs BB 不含)，导致假 EV 极高。
+        # 2026-08-30 用户要求: EV拦截暂停, 只加提醒(由 _dynamic_cap 层的 _warn 统一提醒), 不再单独拦截
 
         # V4.2: 溢价异常高检查改为 per-opportunity (不再用 match-level flag 误伤无辜)
         flags = match.get("flags", [])
@@ -1760,7 +1757,8 @@ def _collect_opportunities(match, market_key):
             "fair_price": fair,
             "_snapshot_bb_odds": _lookup_snapshot_odds(home_cn, away_cn, display_name),
             "ev_pct": ev,
-            "_warn": "⚠️ 溢价异常高，请核对" if ev > 20 else "",
+            "_warn": ("⚠️ 溢价异常高，请核对" if ev > 20
+                      else ("⚠️ EV过高" if ev > _dynamic_cap else "")),
             "start_time_bb": match.get("start_time_bb", ""),
             "bb_match_id": match.get("bb_match_id", ""),  # BB比赛ID, 结算按ID匹配
             "_pin_league_id": match.get("pin_league_id", ""),  # V5.9: 供CLV采集按ID直拉
