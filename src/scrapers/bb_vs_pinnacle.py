@@ -1543,7 +1543,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                 "_market": "dnb",
                             })
 
-        # --- 双边进球 (BTTS) FT：从 Pinnacle both_to_score 市场或 team_total 0.5 推导 ---
+        # --- 双边进球 (BTTS) FT：从 Pinnacle both_to_score 市场直接提取 ---
         bb_btts_yes, bb_btts_no = extract_bb_btts(bb)
         if bb_btts_yes and bb_btts_no:
             pin_btts = pin.get("btts", [])
