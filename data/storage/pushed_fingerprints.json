@@ -2276,6 +2276,10 @@
     "ev": 4.4,
     "ts": 1788092091.8961039
   },
+  "football|Costa Rica Primera Division|Deportivo Saprissa|Escorpiones Belen|半/全场-和局/客|htft|2026-08-31": {
+    "ev": 5.96,
+    "ts": 1788131038.4107661
+  },
   "football|Costa Rica Primera Division|Deportivo Saprissa|Escorpiones Belen|双重机会-和局/客|dc|2026-08-31": {
     "ev": 3.34,
     "ts": 1787981781.4301639
@@ -2301,6 +2305,11 @@
     "ev": 3.69,
     "bb": 14.0,
     "ts": 1788098289.826211
+  },
+  "football|Costa Rica Primera Division|萨普里萨|贝伦蝎子|半/全场-和局/客|htft|2026-08-31": {
+    "ev": 5.96,
+    "bb": 22.0,
+    "ts": 1788131037.629324
   },
   "football|Croatia HNL League|NK Istra 1961|GNK Dinamo Zagreb|上半场客胜|ht|2026-08-30": {
     "ev": 2.72,
@@ -2848,6 +2857,10 @@
   "football|Ecuador LigaPro Primera A|CSD Macara|Manta FC|上半场双重机会-主/客|ht_dc|2026-09-03": {
     "ev": 3.91,
     "ts": 1788129877.789611
+  },
+  "football|Ecuador LigaPro Primera A|CSD Macara|Manta FC|半/全场-主/和局|htft|2026-09-03": {
+    "ev": 3.52,
+    "ts": 1788131169.902988
   },
   "football|Ecuador LigaPro Primera A|Cuenca|Guayaquil City FC|上半场客胜|ht|2026-09-03": {
     "ev": 1.16,
@@ -3703,6 +3716,10 @@
     "ev": 4.04,
     "ts": 1788100652.091618
   },
+  "football|England League Two|Fleetwood Town|Oldham Athletic|半/全场-主/客|htft|2026-09-02": {
+    "ev": 2.4,
+    "ts": 1788131169.90219
+  },
   "football|England League Two|Fleetwood Town|Oldham Athletic|半/全场-客/主|htft|2026-09-02": {
     "ev": 10.09,
     "ts": 1788100652.08807
@@ -4100,6 +4117,10 @@
   "football|England Premier League|Aston Villa FC|Arsenal FC|上半场正确比分1-0|correct_score_ht|2026-09-01": {
     "ev": 2.94,
     "ts": 1788118632.954355
+  },
+  "football|England Premier League|Aston Villa FC|Arsenal FC|让球主胜|1x2|2026-09-01": {
+    "ev": 1.01,
+    "ts": 1788132489.5748968
   },
   "football|England Premier League|Chelsea FC|Brighton & Hove Albion FC|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.24,
@@ -6726,6 +6747,10 @@
   "football|Mexico Liga MX|Atlas FC|Queretaro FC|让球客胜|1x2|2026-08-30": {
     "ev": 1.38,
     "ts": 1788041382.125289
+  },
+  "football|Mexico Liga MX|Deportivo Toluca FC|FC Juarez|上半场主胜|ht|2026-08-31": {
+    "ev": 1.0,
+    "ts": 1788131663.905012
   },
   "football|Mexico Liga MX|Deportivo Toluca FC|FC Juarez|上半场客胜|ht|2026-08-31": {
     "ev": 10.44,
@@ -9654,6 +9679,10 @@
     "ev": 2.73,
     "ts": 1787975485.209641
   },
+  "football|Sweden Superettan|GIF Sundsvall|Norrby IF|让球客胜|1x2|2026-09-01": {
+    "ev": 1.03,
+    "ts": 1788132789.392662
+  },
   "football|Sweden Superettan|Sandvikens IF|Osters IF|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 5.91,
     "ts": 1788092597.928121
@@ -11287,9 +11316,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Costa Rica Primera Division|萨普里萨|贝伦蝎子|半/全场-和局/客|htft|2026-08-31": {
-    "ev": 5.96,
-    "bb": 22.0,
-    "ts": 1788131037.629324
+  "football|Peru Liga 1|西恩夏诺|库斯科|上半场客胜|ht|2026-08-31": {
+    "ev": 12.11,
+    "bb": 4.22,
+    "ts": 1788132872.490477
   }
 }
