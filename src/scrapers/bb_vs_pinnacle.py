@@ -1385,16 +1385,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             dc_pin_raw = dc_raw
                     break
 
-            # 路径B：Pinnacle 无 DC 市场 → 从 1X2 推导公平价（Shin 去抽水后合并概率）
-            if dc_fair is None:
-                h, d, a = pin_ml
-                if all(x and x > 0 for x in [h, d, a]):
-                    # V5.9: 比例法有 favorite-longshot 偏差(高估热门/低估冷门)致"主/客"EV 虚高,
-                    # 改用 Shin 法(与主 1X2 一致)
-                    p_h, p_d, p_a = devig_shin([h, d, a])
-                    dc_fair = [round(1/(p_h+p_d), 4), round(1/(p_d+p_a), 4), round(1/(p_h+p_a), 4)]
-                    # 推导无原始 Pinnacle 价格，dc_pin_raw 保持 None → 推送会显示"推导: 1X2"
-
+            # (2026-08-30 取消推导) Pin 无 DC 市场时不再从 1X2 推导, dc_fair 保持 None → 该场跳过 DC 盘口
             if dc_fair:
                 dc_pair_indices = [(0,1), (1,2), (0,2)]
                 for i in range(3):
@@ -1457,15 +1448,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             ht_dc_fair = _ht_dc_fair
                             ht_dc_pin_raw = dc_raw
                     break
-            # 路径B: 从 HT 1X2 推导
-            if ht_dc_fair is None:
-                pin_ht_ml_for_dc = get_pin_ml_sorted_from_source(pin.get("ht_moneyline", []), sport)
-                if len(pin_ht_ml_for_dc) == 3:
-                    hh, dd, aa = pin_ht_ml_for_dc
-                    if all(x and x > 0 for x in [hh, dd, aa]):
-                        # V5.9: 同 DC, 用 Shin 法修 favorite-longshot 偏差(主/客 EV 虚高)
-                        p_h, p_d, p_a = devig_shin([hh, dd, aa])
-                        ht_dc_fair = [round(1/(p_h+p_d), 4), round(1/(p_d+p_a), 4), round(1/(p_h+p_a), 4)]
+            # (2026-08-30 取消推导) Pin 无 HT DC 市场时不再从 HT 1X2 推导, ht_dc_fair 保持 None → 跳过
             if ht_dc_fair:
                 ht_dc_labels = ["上半场双重机会-主/和局", "上半场双重机会-和局/客", "上半场双重机会-主/客"]
                 ht_dc_pair_indices = [(0,1), (1,2), (0,2)]
@@ -1574,13 +1557,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         dnb_fair = shin_fair_odds([h_price, a_price])
                         dnb_pin_raw = [h_price, a_price]
                         break
-            if not dnb_fair:
-                # 路径B: 从 1X2 推导
-                h, d, a = pin_ml
-                if all(x and x > 0 for x in [h, d, a]):
-                    imp = 1/h + 1/d + 1/a
-                    p_h, p_d, p_a = (1/h)/imp, (1/d)/imp, (1/a)/imp
-                    dnb_fair = [round(1/(p_h/(1-p_d)), 4), round(1/(p_a/(1-p_d)), 4)]
+            # (2026-08-30 取消推导) Pin 无 DNB 市场时不再从 1X2 推导, dnb_fair 保持 None → 跳过
             if dnb_fair:
                 dnb_labels = ["平局退款-主", "平局退款-客"]
                 for i in range(2):
@@ -1632,14 +1609,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     no_fair = _btts_fairs[1]
                     _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, yes_fair, no_fair, pin_yes=yes_price, pin_no=no_price)
                     break
-            else:
-                # 路径B: 从 team_total 0.5 推导 BTTS
-                # P(两队均进球) = P(主队>0.5) × P(客队>0.5)
-                # 进球相关性<0.1, 推导误差~2-3%, 需BB溢价覆盖
-                yes_fair, no_fair = _derive_btts_from_team_total(pin.get("team_total", []))
-                if yes_fair and no_fair:
-                    _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, yes_fair, no_fair,
-                                            source="derived")
+            # (2026-08-30 取消推导) Pin 无 both_to_score 市场时不再从 team_total 0.5 推导 → 跳过
 
         # --- 单/双 (Odd/Even) FT：从 Pinnacle Total Goals Odd/Even 市场 ---
         bb_oe_odd, bb_oe_even = extract_bb_oe(bb)
