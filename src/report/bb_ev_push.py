@@ -384,16 +384,29 @@ def _get_kelly_for_market(sub_market: str) -> float:
 # 纯 Kelly 分配, 总额 ¥20,000/天, 按投注额比例压缩
 TOTAL_DAILY_BUDGET = 20000  # 日预算总额
 
-# 2026-08-30 差异化放大: 调整后(取消推导+ss过滤+门槛提高)推送量骤降(14场/693元),
-# 日投注额远达不到预算。全局 Kelly 倍率放大让日投注额达标(目标至少花 1 万),
-# 同时假 edge 方向(实盘 ROI 负)单独压制, 避免放大假 edge。
-GLOBAL_KELLY_MULT = 12.0  # 全局放大 12 倍
-NEG_EDGE_DIRECTION_DISCOUNT = 0.2  # 假 edge 方向压到 20%
-# 实盘 ROI 负的方向(sub_market, designation) — 来自 tracked_bets 已结算数据
-NEG_EDGE_DIRECTIONS = {
-    ("ht", "上半场客胜"),           # 169注 ROI -21.6%
-    ("ht_dc", "上半场双重机会-主/客"),  # 96注 ROI -20.3%
-    ("dc", "双重机会-主/和局"),      # 15注 ROI -20.3%
+# 2026-08-30 差异化放大: 方向级梯度倍率(基于实盘 ROI 分档)。
+# 调整后推送量骤降(14场/693元), 日投注额远达不到预算。按方向实盘 ROI 分档放大:
+# 强 edge(ROI>+20%) 高倍率, 中/弱 edge 递减, 假 edge(ROI<0) 压到 25%。
+STRONG_EDGE_MULT = 15.0    # 强 edge(ROI > +20%)
+MEDIUM_EDGE_MULT = 10.0    # 中 edge(+5% ~ +20%)
+WEAK_EDGE_MULT = 5.0       # 弱 edge(0 ~ +5%)
+NEG_EDGE_MULT = 2.0        # 假 edge(ROI < 0) 压到 25%
+DEFAULT_EDGE_MULT = MEDIUM_EDGE_MULT  # 未标定方向默认中档
+
+# 方向级倍率 (sub_market, designation) — 来自 tracked_bets 已结算 ROI
+EDGE_DIRECTION_MULT = {
+    # 强 edge (ROI > +20%)
+    ("1x2", "客胜"): STRONG_EDGE_MULT,            # 67注 +42.1%
+    ("dc", "双重机会-和局/客"): STRONG_EDGE_MULT,  # 39注 +30.4%
+    ("ht", "上半场主胜"): STRONG_EDGE_MULT,        # 79注 +20.1%
+    # 中 edge (+5% ~ +20%)
+    ("1x2", "主胜"): MEDIUM_EDGE_MULT,            # 95注 +7.2%
+    # 弱 edge (0 ~ +5%)
+    ("1x2", "和局"): WEAK_EDGE_MULT,              # 67注 +0.6%
+    # 假 edge (ROI < 0) — 压制
+    ("ht", "上半场客胜"): NEG_EDGE_MULT,          # 169注 -21.6%
+    ("ht_dc", "上半场双重机会-主/客"): NEG_EDGE_MULT,  # 96注 -20.3%
+    ("dc", "双重机会-主/和局"): NEG_EDGE_MULT,     # 15注 -20.3%
 }
 
 
@@ -1045,10 +1058,8 @@ def _calc_kelly_stakes(opps: list) -> list:
             except Exception:
                 pass
         stake = int(bankroll * stake_pct)
-        # 2026-08-30 差异化放大: 全局×12 让日投注额达标; 假 edge 方向(实盘ROI负)压到20%
-        stake = int(stake * GLOBAL_KELLY_MULT)
-        if (sub, o.get("designation", "")) in NEG_EDGE_DIRECTIONS:
-            stake = int(stake * NEG_EDGE_DIRECTION_DISCOUNT)
+        # 2026-08-30 差异化放大: 方向级梯度倍率(强15/中10/弱5/假2), 基于实盘ROI分档
+        stake = int(stake * EDGE_DIRECTION_MULT.get((sub, o.get("designation", "")), DEFAULT_EDGE_MULT))
         o["_raw_stake"] = stake
         # 2026-08-27 用户澄清: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库(record_bets)
         o["_stake"] = stake
