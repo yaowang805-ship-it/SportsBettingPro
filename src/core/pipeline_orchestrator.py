@@ -1467,7 +1467,7 @@ class PipelineOrchestrator:
         if "scan" in self._active_tasks or "scan_bg" in self._active_tasks:
             return
 
-        # V5.7: 远端24-72h层已移除, 最长的增量扫描间隔是near=5min, 允许2x容忍
+        # near 是最短间隔层(5min), 这里只看 near 停滞(2x容忍=10min); far/urgent 已 10min, 不单独盯
         _near_elapsed = now - self._last_inc_near if self._last_inc_near else 0
         _near_timeout = 300 * 2  # 10分钟
 
@@ -1568,6 +1568,7 @@ class PipelineOrchestrator:
         # V5.7: 分层扫描计时器也提前, 否则每次代码热更新重启后要等 15min 才扫(用户观察到长时间无推送)
         self._last_inc_urgent = now - 900 + 60
         self._last_inc_near = now - 1800 + 60
+        self._last_inc_far = now - 600 + 60   # 早盘10min间隔, 重启后~60s内首扫(互斥逻辑会让它避让near/urgent)
 
         # 启动时追赶今天已错过的定时任务
         if not self.dry_run:
