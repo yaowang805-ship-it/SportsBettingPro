@@ -1046,7 +1046,7 @@
       "success_rate": 0.0
     },
     "欧足联欧洲协会联赛-资格赛附加赛": {
-      "attempts": 11,
+      "attempts": 12,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1064,9 +1064,14 @@
       "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "亚美尼亚杯": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-30T07:58:03.610141+00:00",
+  "updated": "2026-08-30T09:41:53.209534+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
