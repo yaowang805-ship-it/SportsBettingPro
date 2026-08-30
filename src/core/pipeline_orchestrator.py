@@ -1370,7 +1370,7 @@ class PipelineOrchestrator:
             # 2026-08-29 早盘聚焦(职业标准): 边缘活在"软书(BB)滞后于sharp(Pin)的窗口", 早盘最干净。
             # 临场<6h 是 BB 价漂移/将修正的假机会重灾区(近3天临场亏-1582), 降频到 5min 不再 60s 猛扫。
             # 早盘24-72h 加回(原 V5.7 移除), 30min 一次 —— 早盘赔率变动慢, 30min 足够抓到 BB 开盘滞后。
-            for tw, interval, label in [("far", 1800, "早盘24-72h"), ("near", 300, "中程6-24h"), ("urgent", 300, "临场<6h")]:
+            for tw, interval, label in [("far", 1200, "早盘24-72h"), ("near", 300, "中程6-24h"), ("urgent", 300, "临场<6h")]:
                 last_key = f"_last_inc_{tw}"
                 last_val = getattr(self, last_key, None)
                 if last_val is None:
