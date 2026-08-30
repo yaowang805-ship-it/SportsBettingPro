@@ -927,6 +927,10 @@
     "ev": 11.03,
     "ts": 1788092597.929587
   },
+  "football|Belgium Pro League|KVC Westerlo|SV Zulte Waregem|大球|1x2|2026-08-31": {
+    "ev": 1.27,
+    "ts": 1788107809.684818
+  },
   "football|Belgium Pro League|Oud Heverlee Leuven|Standard Liege|上半场主胜|ht|2026-08-30": {
     "ev": 1.37,
     "ts": 1787982906.682545
@@ -2114,6 +2118,10 @@
     "ev": 2.47,
     "ts": 1788084197.025551
   },
+  "football|Cyprus 1st Division|Karmiotissa FC|Pafos FC|让球客胜|1x2|2026-08-31": {
+    "ev": 2.51,
+    "ts": 1788107809.684237
+  },
   "football|Cyprus 1st Division|Omonia Nicosia|Omonia Aradippou|上半场客胜|ht|2026-09-01": {
     "ev": 4.47,
     "ts": 1787975485.214646
@@ -2824,11 +2832,6 @@
     "ev": 4.46,
     "bb": 14.8,
     "ts": 1788103440.9032278
-  },
-  "football|England Championship League|斯托克城|诺维奇|上半场正确比分2-0|correct_score_ht|2026-09-02": {
-    "ev": 6.33,
-    "bb": 20.0,
-    "ts": 1788103440.90317
   },
   "football|England Championship League|斯托克城|诺维奇|上半场正确比分others|correct_score_ht|2026-09-02": {
     "ev": 30.71,
@@ -4404,6 +4407,10 @@
     "ev": 1.71,
     "ts": 1788022755.610898
   },
+  "football|Israel Premier League|Hapoel Haifa FC|Hapoel Tel Aviv FC|上半场正确比分2-1|correct_score_ht|2026-08-31": {
+    "ev": 1.55,
+    "ts": 1788107809.688399
+  },
   "football|Israel Premier League|Hapoel Haifa FC|Hapoel Tel Aviv FC|半/全场-客/主|htft|2026-08-31": {
     "ev": 5.86,
     "ts": 1788102622.354805
@@ -4693,6 +4700,10 @@
   "football|Italy Serie A|gliari Calcio|Inter Milan|双重机会-主/和局|dc|2026-08-31": {
     "ev": 1.74,
     "ts": 1788091232.210707
+  },
+  "football|Italy Serie A|gliari Calcio|Inter Milan|让球主胜|1x2|2026-08-31": {
+    "ev": 1.0,
+    "ts": 1788107809.687625
   },
   "football|Italy Serie A|gliari Calcio|Inter Milan|让球客胜|1x2|2026-08-31": {
     "ev": 1.38,
@@ -5006,6 +5017,11 @@
     "ev": 6.77,
     "bb": 3.28,
     "ts": 1788008701.091563
+  },
+  "football|Italy Serie B|阿雷佐|巴勒莫|上半场主胜|ht|2026-08-31": {
+    "ev": 5.43,
+    "bb": 4.99,
+    "ts": 1788107808.940518
   },
   "football|Italy Serie B|阿雷佐|巴勒莫|半/全场-主/和局|htft|2026-08-31": {
     "ev": 6.07,
@@ -7132,6 +7148,10 @@
     "ev": 7.34,
     "ts": 1788105778.700463
   },
+  "football|Portugal Segunda Liga|FC Porto B|FC Penafiel|让球主胜|1x2|2026-08-31": {
+    "ev": 1.46,
+    "ts": 1788107809.687208
+  },
   "football|Portugal Segunda Liga|FC Porto B|FC Penafiel|让球客胜|1x2|2026-08-31": {
     "ev": 13.74,
     "ts": 1788065818.9065201
@@ -7173,6 +7193,11 @@
     "ev": 10.71,
     "bb": 36.0,
     "ts": 1788100057.798972
+  },
+  "football|Portugal Segunda Liga|费尔格拉斯 1932|查维斯|半/全场-客/主|htft|2026-08-31": {
+    "ev": 16.39,
+    "bb": 28.0,
+    "ts": 1788107808.9405818
   },
   "football|Qatar Stars League|Al Shahaniya|Al Sailiya SC|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.59,
@@ -7355,6 +7380,11 @@
     "ev": 34.82,
     "ts": 1788098326.748512
   },
+  "football|Russia First League|下诺夫哥罗德|乌里扬诺夫斯克|半/全场-主/客|htft|2026-08-31": {
+    "ev": 22.98,
+    "bb": 58.0,
+    "ts": 1788107808.940634
+  },
   "football|Russia First League|叶尼塞|辛历克|上半场客胜|ht|2026-08-30": {
     "ev": 8.11,
     "bb": 5.4,
@@ -7388,6 +7418,10 @@
   "football|Russia Premier League|FK Rubin Kazan|FC Dynamo Makhachkala|半/全场-客/主|htft|2026-08-31": {
     "ev": 29.73,
     "ts": 1788092597.9191418
+  },
+  "football|Russia Premier League|FK Rubin Kazan|FC Dynamo Makhachkala|单双-双|oe|2026-08-31": {
+    "ev": 1.52,
+    "ts": 1788107809.682763
   },
   "football|Russia Premier League|FK Rubin Kazan|FC Dynamo Makhachkala|大球|1x2|2026-08-31": {
     "ev": 2.18,
@@ -9921,6 +9955,10 @@
     "ev": 1.68,
     "ts": 1788097502.687521
   },
+  "football|Uruguay Primera Division|Penarol Montevideo|Club Nacional de Football|和局|1x2|2026-08-31": {
+    "ev": 1.23,
+    "ts": 1788107809.686132
+  },
   "football|Uruguay Primera Division|Penarol Montevideo|Club Nacional de Football|让球主胜|1x2|2026-08-31": {
     "ev": 13.97,
     "ts": 1788105106.343155
@@ -10033,19 +10071,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Italy Serie B|阿雷佐|巴勒莫|上半场主胜|ht|2026-08-31": {
-    "ev": 5.43,
-    "bb": 4.99,
-    "ts": 1788107808.940518
+  "football|England Championship League|斯托克城|诺维奇|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 11.65,
+    "bb": 21.0,
+    "ts": 1788108089.534057
   },
-  "football|Portugal Segunda Liga|费尔格拉斯 1932|查维斯|半/全场-客/主|htft|2026-08-31": {
-    "ev": 16.39,
-    "bb": 28.0,
-    "ts": 1788107808.9405818
-  },
-  "football|Russia First League|下诺夫哥罗德|乌里扬诺夫斯克|半/全场-主/客|htft|2026-08-31": {
-    "ev": 22.98,
-    "bb": 58.0,
-    "ts": 1788107808.940634
+  "football|England League Two|斯文登|维尔港|半/全场-客/主|htft|2026-09-02": {
+    "ev": 4.65,
+    "bb": 27.0,
+    "ts": 1788108089.534155
   }
 }
