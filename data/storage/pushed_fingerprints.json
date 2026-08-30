@@ -387,6 +387,10 @@
     "ev": 4.89,
     "ts": 1787981781.444298
   },
+  "football|Argentina Liga Profesional|Talleres de Cordoba|Central Cordoba SE|上半场主胜|ht|2026-08-30": {
+    "ev": 3.33,
+    "ts": 1788048285.70701
+  },
   "football|Argentina Liga Profesional|Talleres de Cordoba|Central Cordoba SE|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.36,
     "ts": 1788047945.594203
@@ -414,6 +418,11 @@
   "football|Argentina Liga Profesional|Union de Santa Fe|Sarmiento|主胜|1x2|2026-08-29": {
     "ev": 2.63,
     "ts": 1787868659.525126
+  },
+  "football|Argentina Liga Profesional|塔勒瑞斯|科尔多瓦中央|上半场主胜|ht|2026-08-30": {
+    "ev": 3.33,
+    "bb": 2.58,
+    "ts": 1788048285.07283
   },
   "football|Argentina Primera B Metropolitana|Argentino de Merlo|Club Villa Dalmine|客胜|1x2|2026-08-31": {
     "ev": 4.24,
@@ -10457,6 +10466,11 @@
     "bb": 2.23,
     "ts": 1787939208.0139499
   },
+  "football|Peru Liga 1|利马联盟|加西拉索|和局|1x2|2026-08-30": {
+    "ev": 9.73,
+    "bb": 5.15,
+    "ts": 1788048285.072781
+  },
   "football|Peru Liga 1|卡哈马卡|秘鲁体育大学|上半场主胜|ht|2026-08-30": {
     "ev": 3.17,
     "bb": 4.88,
@@ -15361,6 +15375,10 @@
     "ev": 2.45,
     "ts": 1788044852.479367
   },
+  "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|角球大球|corner|2026-08-30": {
+    "ev": 1.13,
+    "ts": 1788048285.708854
+  },
   "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|让球主胜|1x2|2026-08-30": {
     "ev": 1.94,
     "ts": 1788012313.839608
@@ -15416,6 +15434,10 @@
   "football|USL Championship|Oakland Roots SC|Orange County SC|让球客胜|1x2|2026-08-30": {
     "ev": 1.05,
     "ts": 1788038300.93552
+  },
+  "football|USL Championship|Phoenix Rising FC|Indy Eleven|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 1.39,
+    "ts": 1788048285.7077692
   },
   "football|USL Championship|Phoenix Rising FC|Indy Eleven|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 17.54,
@@ -15504,6 +15526,11 @@
     "ev": 12.39,
     "bb": 4.24,
     "ts": 1788029328.761083
+  },
+  "football|USL Championship|蒙特雷湾|萨克拉门托|上半场主胜|ht|2026-08-30": {
+    "ev": 4.8,
+    "bb": 4.61,
+    "ts": 1788048285.0728698
   },
   "football|USL League One|Chattanooga Red Wolves SC|Boise|单双-双|oe|2026-08-30": {
     "ev": 2.7,
@@ -15800,19 +15827,14 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Peru Liga 1|利马联盟|加西拉索|和局|1x2|2026-08-30": {
-    "ev": 9.73,
-    "bb": 5.15,
-    "ts": 1788048285.072781
+  "football|Hungary NB I Women|佩奇 (女)|圣米歇尔 SE (女)|客胜|1x2|2026-08-30": {
+    "ev": 20.77,
+    "bb": 4.23,
+    "ts": 1788048409.9854531
   },
-  "football|Argentina Liga Profesional|塔勒瑞斯|科尔多瓦中央|上半场主胜|ht|2026-08-30": {
-    "ev": 3.33,
-    "bb": 2.58,
-    "ts": 1788048285.07283
-  },
-  "football|USL Championship|蒙特雷湾|萨克拉门托|上半场主胜|ht|2026-08-30": {
-    "ev": 4.8,
-    "bb": 4.61,
-    "ts": 1788048285.0728698
+  "football|Russia Premier League|莫斯科罗迪纳|巴蒂卡|上半场主胜|ht|2026-08-30": {
+    "ev": 3.43,
+    "bb": 4.9,
+    "ts": 1788048409.9855008
   }
 }

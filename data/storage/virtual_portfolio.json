@@ -1,5 +1,5 @@
 {
-  "balance": 4581.53,
+  "balance": 4531.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3933,6 +3933,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788055200,
       "created_at": "2026-08-30T00:04:45.057898+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_佩奇_(女)_圣米歇尔_SE_(女)_客胜",
+      "sport": "football",
+      "league": "匈牙利女子联赛",
+      "home_team": "佩奇 (女)",
+      "away_team": "圣米歇尔 SE (女)",
+      "home_cn": "佩奇 (女)",
+      "away_cn": "圣米歇尔 SE (女)",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.23,
+      "stake": 36,
+      "model_prob": 0.2855,
+      "ev_pct": 20.77,
+      "pin_odds": 2.94,
+      "fair_price": 3.5024,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788087600,
+      "created_at": "2026-08-30T00:06:49.973158+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_莫斯科罗迪纳_巴蒂卡_上半场主胜",
+      "sport": "football",
+      "league": "俄罗斯超级联赛",
+      "home_team": "莫斯科罗迪纳",
+      "away_team": "巴蒂卡",
+      "home_cn": "莫斯科罗迪纳",
+      "away_cn": "巴蒂卡",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.9,
+      "stake": 14,
+      "model_prob": 0.2111,
+      "ev_pct": 3.43,
+      "pin_odds": 4.37,
+      "fair_price": 4.7374,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788091200,
+      "created_at": "2026-08-30T00:06:49.973201+00:00",
       "track_only": false
     }
   ],
@@ -8815,8 +8861,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 1522.0,
-    "bets": 24
+    "used": 1572.0,
+    "bets": 26
   },
   "updated": null
 }
