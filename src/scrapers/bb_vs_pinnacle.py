@@ -1149,6 +1149,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             # HT 独赢
             pin_ht_ml = get_pin_ml_sorted_from_source(pin.get("ht_moneyline", []), sport)
             if pin_ht_ml and len(pin_ht_ml) >= 2:
+                # 2026-08-30: 存 Pin ht 3-way 供 Betfair 双锚交叉验证(检测平局偏差)
+                entry["_pin_ht_ml"] = pin_ht_ml
                 n_ht_ml = min(len(pin_ht_ml), len(ht_labels["ml"]))  # cap to available labels
                 bb_ht_ml = bb_ht["ml"]
                 if len(bb_ht_ml) >= n_ht_ml:
@@ -1896,6 +1898,14 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         "calibration_blocked_ou": cal_blocked_ou,
         "details": opportunities,
     }
+    # 2026-08-30: Betfair 双锚交叉验证 — 检测 Pin ht 平局偏差, 标记 flags + 降权 ht 机会。
+    # 只对有 _pin_ht_ml 且联赛可映射的主流联赛检查, 免费配额内(500次/天)批量查询。
+    try:
+        from src.scrapers.oddsapi_anchor import cross_validate_ht_entries
+        opportunities = cross_validate_ht_entries(opportunities)
+        output["details"] = opportunities
+    except Exception as _e:
+        print(f"  ⚠️ Betfair 双锚交叉验证跳过: {_e}")
     # ---- 映射汇总 ----
     _n_mapped = len(matched_leagues)
     _n_unmapped = len(unmatched_leagues)
