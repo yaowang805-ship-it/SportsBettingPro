@@ -216,6 +216,10 @@
     "ev": 1.37,
     "ts": 1788089948.433463
   },
+  "basketball|WNBA|Dallas Wings (w)|Connecticut Sun (w)|让分客胜|1x2|2026-08-31": {
+    "ev": 2.01,
+    "ts": 1788113363.08372
+  },
   "basketball|WNBA|New York Liberty (w)|Chicago Sky (w)|主胜|1x2|2026-08-30": {
     "ev": 1.96,
     "ts": 1787974755.918973
@@ -1492,6 +1496,10 @@
   "football|Brazil Serie B|Vila Nova FC GO|Ceara SC CE|半/全场-主/和局|htft|2026-08-31": {
     "ev": 5.76,
     "ts": 1788097655.052772
+  },
+  "football|Brazil Serie B|Vila Nova FC GO|Ceara SC CE|大球|1x2|2026-08-31": {
+    "ev": 1.02,
+    "ts": 1788113059.8839328
   },
   "football|Brazil Serie B|id:5357763|-|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 4.85,
@@ -3863,6 +3871,10 @@
   "football|France Ligue 1|AS Monaco FC|Olympique Marseille|让球主胜|1x2|2026-08-31": {
     "ev": 11.28,
     "ts": 1787975485.209419
+  },
+  "football|France Ligue 1|AS Monaco FC|Olympique Marseille|让球客胜|1x2|2026-08-31": {
+    "ev": 1.48,
+    "ts": 1788113059.883861
   },
   "football|France Ligue 1|FC Lorient|ES Troyes AC|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 3.38,
@@ -7978,6 +7990,10 @@
     "ev": 9.66,
     "ts": 1788112904.5061572
   },
+  "football|Slovenia PrvaLiga|NK Aluminij|NK Celje|上半场正确比分others|correct_score_ht|2026-09-03": {
+    "ev": 5.21,
+    "ts": 1788113505.53071
+  },
   "football|Slovenia PrvaLiga|NK Aluminij|NK Celje|大球|1x2|2026-09-03": {
     "ev": 1.41,
     "ts": 1788112904.4964638
@@ -8652,11 +8668,6 @@
     "ev": 10.92,
     "bb": 20.0,
     "ts": 1788100057.798697
-  },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分2-0|correct_score_ht|2026-08-31": {
-    "ev": 11.63,
-    "bb": 21.0,
-    "ts": 1788104381.215322
   },
   "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分others|correct_score_ht|2026-08-31": {
     "ev": 12.47,
@@ -10282,6 +10293,11 @@
     "bb": 1.89,
     "ts": 1787965512.805871
   },
+  "football|Uruguay Primera Division|塞罗拉尔戈|蒙特维多利物浦|上半场主胜|ht|2026-08-31": {
+    "ev": 7.21,
+    "bb": 5.2,
+    "ts": 1788113059.429408
+  },
   "football|Uruguay Primera Division|波士顿河|切洛|上半场客胜|ht|2026-08-30": {
     "ev": 4.13,
     "bb": 6.45,
@@ -10363,9 +10379,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Uruguay Primera Division|塞罗拉尔戈|蒙特维多利物浦|上半场主胜|ht|2026-08-31": {
-    "ev": 7.21,
-    "bb": 5.2,
-    "ts": 1788113059.429408
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 16.39,
+    "bb": 23.0,
+    "ts": 1788113659.414767
+  },
+  "football|Poland Ekstraklasa|维德祖罗兹|波兹南莱赫|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 3.25,
+    "bb": 13.2,
+    "ts": 1788113659.414815
   }
 }
