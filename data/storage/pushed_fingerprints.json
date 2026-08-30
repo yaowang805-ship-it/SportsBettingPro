@@ -147,6 +147,10 @@
     "ev": 11.7,
     "ts": 1787981994.4234529
   },
+  "basketball|Mexico LNBP Basketball League|Fuerza Regia|Abejas de Leon|让分客胜|1x2|2026-08-31": {
+    "ev": 1.2,
+    "ts": 1788110708.37965
+  },
   "basketball|Mexico LNBP Basketball League|Gambusinos de Fresnillo|Lobos Plateados|主胜|1x2|2026-08-30": {
     "ev": 11.48,
     "ts": 1788031536.6286888
@@ -605,6 +609,18 @@
   "football|Austria Bundesliga|FC Salzburg|FK Austria Wien|双重机会-和局/客|dc|2026-08-31": {
     "ev": 1.01,
     "ts": 1788072958.5312572
+  },
+  "football|Austria Bundesliga|FK Austria Wien|WSG Tirol|上半场正确比分1-2|correct_score_ht|2026-09-03": {
+    "ev": 7.76,
+    "ts": 1788111122.96624
+  },
+  "football|Austria Bundesliga|FK Austria Wien|WSG Tirol|半/全场-主/客|htft|2026-09-03": {
+    "ev": 2.3,
+    "ts": 1788111122.963082
+  },
+  "football|Austria Bundesliga|FK Austria Wien|WSG Tirol|让球客胜|1x2|2026-09-03": {
+    "ev": 1.58,
+    "ts": 1788111122.963139
   },
   "football|Austria Bundesliga|LASK|R Altach|上半场客胜|ht|2026-08-30": {
     "ev": 4.58,
@@ -3474,6 +3490,11 @@
     "bb": 11.8,
     "ts": 1788098832.038357
   },
+  "football|England National League|耶奥维尔|谭禾夫|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 9.84,
+    "bb": 19.5,
+    "ts": 1788110622.918887
+  },
   "football|England National League|耶奥维尔|谭禾夫|上半场正确比分others|correct_score_ht|2026-08-31": {
     "ev": 13.11,
     "bb": 13.3,
@@ -3483,6 +3504,10 @@
     "ev": 23.55,
     "bb": 26.0,
     "ts": 1788098832.0379698
+  },
+  "football|England Premier League|Aston Villa FC|Arsenal FC|上半场主胜|ht|2026-09-01": {
+    "ev": 1.93,
+    "ts": 1788111122.960885
   },
   "football|England Premier League|Chelsea FC|Brighton & Hove Albion FC|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.24,
@@ -5816,6 +5841,10 @@
     "ev": 2.6,
     "ts": 1788005995.505219
   },
+  "football|Mexico Liga De Expansion MX|Leones Negros UDEG|Piratas FC|上半场客胜|ht|2026-08-31": {
+    "ev": 6.6,
+    "ts": 1788110708.378408
+  },
   "football|Mexico Liga De Expansion MX|Leones Negros UDEG|Piratas FC|双边进球-是|btts|2026-08-31": {
     "ev": 3.73,
     "ts": 1787975485.217587
@@ -6847,6 +6876,10 @@
     "ev": 2.5,
     "ts": 1788047945.594659
   },
+  "football|Panama Liga Panamena de Futbol|Umecit|Veraguas United FC|让球客胜|1x2|2026-09-01": {
+    "ev": 11.31,
+    "ts": 1788111122.961486
+  },
   "football|Peru Liga 1|Alianza Lima|Deportivo Garcilaso|上半场客胜|ht|2026-08-30": {
     "ev": 5.92,
     "ts": 1788044533.223888
@@ -7725,6 +7758,10 @@
     "ev": 2.24,
     "ts": 1788028984.804242
   },
+  "football|Serbia Superliga|FK Partizan Belgrade|OFK Belgrade|让球客胜|1x2|2026-09-01": {
+    "ev": 1.63,
+    "ts": 1788110841.406401
+  },
   "football|Serbia Superliga|FK Radnicki Nis|FK Radnicki 1923 Kragujevac|让球主胜|1x2|2026-08-30": {
     "ev": 11.62,
     "ts": 1787976637.4485178
@@ -8375,6 +8412,10 @@
   "football|Spain LaLiga|Deportivo La Coruna|Valencia CF|让球客胜|1x2|2026-08-31": {
     "ev": 15.34,
     "ts": 1787983581.114309
+  },
+  "football|Spain LaLiga|FC Barcelona|Rayo Vallecano|上半场主胜|ht|2026-09-01": {
+    "ev": 1.75,
+    "ts": 1788111122.96102
   },
   "football|Spain LaLiga|FC Barcelona|Rayo Vallecano|上半场客胜|ht|2026-09-01": {
     "ev": 10.09,
@@ -9401,6 +9442,10 @@
     "ev": 1.99,
     "ts": 1788096869.741358
   },
+  "football|USA MLS Next Pro|New England Revolution II|Huntsville City FC|双重机会-和局/客|dc|2026-08-31": {
+    "ev": 2.15,
+    "ts": 1788110708.379404
+  },
   "football|USA MLS Next Pro|New England Revolution II|Huntsville City FC|小球|1x2|2026-08-31": {
     "ev": 1.75,
     "ts": 1788034554.288384
@@ -9412,6 +9457,10 @@
   "football|USA MLS Next Pro|Portland Timbers II|Austin FC II|大球|1x2|2026-08-31": {
     "ev": 5.21,
     "ts": 1788073939.303545
+  },
+  "football|USA MLS Next Pro|Portland Timbers II|Austin FC II|让球主胜|1x2|2026-08-31": {
+    "ev": 8.0,
+    "ts": 1788110708.3793569
   },
   "football|USA Major League Soccer|Atlanta United FC|Charlotte FC|双重机会-和局/客|dc|2026-08-30": {
     "ev": 1.17,
@@ -10218,9 +10267,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|England National League|耶奥维尔|谭禾夫|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 9.84,
-    "bb": 19.5,
-    "ts": 1788110622.918887
+  "football|Romania Liga 1|布格勒斯特迅速 1923|CS卡拉奥华大学 1948|半/全场-客/主|htft|2026-09-01": {
+    "ev": 7.92,
+    "bb": 29.0,
+    "ts": 1788111247.929088
   }
 }
