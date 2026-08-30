@@ -4228,6 +4228,11 @@
     "bb": 24.0,
     "ts": 1788103440.905538
   },
+  "football|Finland Veikkausliiga|玛丽港|查路|上半场正确比分0-2|correct_score_ht|2026-09-01": {
+    "ev": 22.08,
+    "bb": 22.0,
+    "ts": 1788123872.731023
+  },
   "football|Finland Ykkosliiga|SJK Akatemia|Klubi 04|单双-双|oe|2026-08-30": {
     "ev": 1.25,
     "ts": 1788019240.02399
@@ -11059,6 +11064,10 @@
     "ev": 3.81,
     "ts": 1787981781.432002
   },
+  "tennis|ATP Challenger - Como Open|Andrey Chepelev (RUS)|Fausto Tabacco (ITA)|主胜|1x2|2026-08-31": {
+    "ev": 6.65,
+    "ts": 1788124157.4844391
+  },
   "tennis|ATP Challenger - Como Open|Nicolas Parizzia (SUI)|Benjamin Hassan (LBN)|客胜|1x2|2026-08-30": {
     "ev": 2.24,
     "ts": 1788063294.4757602
@@ -11091,9 +11100,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Finland Veikkausliiga|玛丽港|查路|上半场正确比分0-2|correct_score_ht|2026-09-01": {
-    "ev": 22.08,
-    "bb": 22.0,
-    "ts": 1788123872.731023
+  "football|Egypt Premier League|佩特雷姆|埃及国家银行|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 71.73,
+    "bb": 30.0,
+    "ts": 1788124571.981418
   }
 }
