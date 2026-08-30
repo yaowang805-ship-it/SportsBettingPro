@@ -3074,6 +3074,14 @@
     "ev": 26.7,
     "ts": 1788100652.089943
   },
+  "football|England Championship League|West Ham United|Wolverhampton Wanderers FC|半/全场-主/客|htft|2026-09-02": {
+    "ev": 1.72,
+    "ts": 1788118222.6056361
+  },
+  "football|England Championship League|West Ham United|Wolverhampton Wanderers FC|总进球区间7+|total_goals_range|2026-09-02": {
+    "ev": 2.64,
+    "ts": 1788118222.60866
+  },
   "football|England Championship League|伯明翰|南安普敦|上半场正确比分0-2|correct_score_ht|2026-09-02": {
     "ev": 10.17,
     "bb": 19.2,
@@ -3188,11 +3196,6 @@
     "ev": 20.08,
     "bb": 18.4,
     "ts": 1788115889.651746
-  },
-  "football|England Championship League|西布罗姆维奇|查尔顿|半/全场-主/客|htft|2026-09-03": {
-    "ev": 11.04,
-    "bb": 40.0,
-    "ts": 1788115889.651786
   },
   "football|England Championship League|西汉姆联|狼队|上半场正确比分0-2|correct_score_ht|2026-09-02": {
     "ev": 23.85,
@@ -3814,6 +3817,10 @@
   "football|England Premier League|Aston Villa FC|Arsenal FC|上半场主胜|ht|2026-09-01": {
     "ev": 1.93,
     "ts": 1788111122.960885
+  },
+  "football|England Premier League|Aston Villa FC|Arsenal FC|上半场正确比分1-0|correct_score_ht|2026-09-01": {
+    "ev": 2.94,
+    "ts": 1788118632.954355
   },
   "football|England Premier League|Chelsea FC|Brighton & Hove Albion FC|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.24,
@@ -6452,6 +6459,11 @@
     "ev": 1.49,
     "ts": 1788000816.654379
   },
+  "football|Mexico Liga MX|托卢卡|华雷斯|上半场正确比分0-1|correct_score_ht|2026-08-31": {
+    "ev": 3.76,
+    "bb": 12.5,
+    "ts": 1788117879.567839
+  },
   "football|Mexico Liga MX|阿特拉斯|克雷塔罗|上半场客胜|ht|2026-08-30": {
     "ev": 3.23,
     "bb": 4.52,
@@ -7629,6 +7641,11 @@
     "ev": 5.51,
     "ts": 1788106745.796719
   },
+  "football|Portugal Primeira Liga|法马利康|吉维森特|上半场客胜|ht|2026-08-31": {
+    "ev": 11.01,
+    "bb": 6.45,
+    "ts": 1788117879.567791
+  },
   "football|Portugal Segunda Liga|AVS Futebol Sad|Feirense|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.38,
     "ts": 1787983581.111915
@@ -8171,6 +8188,10 @@
   "football|Scotland Premiership|Kilmarnock FC|ST Mirren FC|总进球区间7+|total_goals_range|2026-09-03": {
     "ev": 5.64,
     "ts": 1788115890.281662
+  },
+  "football|Scotland Premiership|Motherwell FC|Dundee United|总进球区间7+|total_goals_range|2026-09-03": {
+    "ev": 5.2,
+    "ts": 1788118222.613444
   },
   "football|Scotland Premiership|ST Mirren FC|Motherwell FC|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.97,
@@ -10843,14 +10864,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Portugal Primeira Liga|法马利康|吉维森特|上半场客胜|ht|2026-08-31": {
-    "ev": 11.01,
-    "bb": 6.45,
-    "ts": 1788117879.567791
+  "football|England League One|伯顿|AFC温布尔顿|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 27.56,
+    "bb": 29.0,
+    "ts": 1788118779.647037
   },
-  "football|Mexico Liga MX|托卢卡|华雷斯|上半场正确比分0-1|correct_score_ht|2026-08-31": {
-    "ev": 3.76,
-    "bb": 12.5,
-    "ts": 1788117879.567839
+  "football|England Championship League|西布罗姆维奇|查尔顿|半/全场-主/客|htft|2026-09-03": {
+    "ev": 16.59,
+    "bb": 42.0,
+    "ts": 1788118779.6470861
   }
 }
