@@ -807,6 +807,10 @@
     "ev": 1.76,
     "ts": 1788081957.940783
   },
+  "football|Belgium Challenger Pro League|RFC Seraing|Lierse Kempenzonen|主胜|1x2|2026-08-31": {
+    "ev": 1.85,
+    "ts": 1788110087.895278
+  },
   "football|Belgium Challenger Pro League|RFC Seraing|Lierse Kempenzonen|双边进球-是|btts|2026-08-31": {
     "ev": 2.16,
     "ts": 1787994529.004035
@@ -1035,6 +1039,11 @@
     "ev": 8.42,
     "bb": 2.23,
     "ts": 1788017517.991182
+  },
+  "football|Belgium Pro League|韦斯特洛|祖尔特瓦雷根|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 6.65,
+    "bb": 17.6,
+    "ts": 1788110087.3797219
   },
   "football|Bolivia Copa Pacena|Gualberto Villarroel San Jose|T Real Oruro|双重机会-和局/客|dc|2026-08-30": {
     "ev": 3.38,
@@ -3464,11 +3473,6 @@
     "ev": 8.79,
     "bb": 11.8,
     "ts": 1788098832.038357
-  },
-  "football|England National League|耶奥维尔|谭禾夫|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 7.34,
-    "bb": 19.0,
-    "ts": 1788098832.0385711
   },
   "football|England National League|耶奥维尔|谭禾夫|上半场正确比分others|correct_score_ht|2026-08-31": {
     "ev": 13.11,
@@ -7366,6 +7370,14 @@
     "ev": 2.46,
     "ts": 1788089948.4317791
   },
+  "football|Romania Liga 1|Rapid Bucuresti 1923|CS Universitatea Craiova 1948|上半场正确比分0-2|correct_score_ht|2026-09-01": {
+    "ev": 8.59,
+    "ts": 1788110476.299967
+  },
+  "football|Romania Liga 1|Rapid Bucuresti 1923|CS Universitatea Craiova 1948|上半场正确比分2-0|correct_score_ht|2026-09-01": {
+    "ev": 12.76,
+    "ts": 1788110476.299924
+  },
   "football|Romania Liga 1|Rapid Bucuresti 1923|CS Universitatea Craiova 1948|半/全场-客/主|htft|2026-09-01": {
     "ev": 30.28,
     "ts": 1788100652.051282
@@ -8527,6 +8539,11 @@
     "ev": 11.63,
     "bb": 21.0,
     "ts": 1788104381.215322
+  },
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 12.47,
+    "bb": 25.0,
+    "ts": 1788110087.37978
   },
   "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
     "ev": 12.79,
@@ -10201,14 +10218,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Belgium Pro League|韦斯特洛|祖尔特瓦雷根|上半场正确比分2-0|correct_score_ht|2026-08-31": {
-    "ev": 6.65,
-    "bb": 17.6,
-    "ts": 1788110087.3797219
-  },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分others|correct_score_ht|2026-08-31": {
-    "ev": 12.47,
-    "bb": 25.0,
-    "ts": 1788110087.37978
+  "football|England National League|耶奥维尔|谭禾夫|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 9.84,
+    "bb": 19.5,
+    "ts": 1788110622.918887
   }
 }
