@@ -1978,11 +1978,6 @@
     "ev": 3.86,
     "ts": 1788098833.402434
   },
-  "football|Costa Rica Primera Division|肯塔吉内斯|希雷迪亚诺|半/全场-客/主|htft|2026-08-31": {
-    "ev": 14.15,
-    "bb": 27.0,
-    "ts": 1788100057.747909
-  },
   "football|Costa Rica Primera Division|萨普里萨|贝伦蝎子|上半场正确比分0-1|correct_score_ht|2026-08-31": {
     "ev": 3.69,
     "bb": 14.0,
@@ -2833,6 +2828,11 @@
     "bb": 14.8,
     "ts": 1788103440.9032278
   },
+  "football|England Championship League|斯托克城|诺维奇|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 11.65,
+    "bb": 21.0,
+    "ts": 1788108089.534057
+  },
   "football|England Championship League|斯托克城|诺维奇|上半场正确比分others|correct_score_ht|2026-09-02": {
     "ev": 30.71,
     "bb": 16.4,
@@ -3085,6 +3085,10 @@
     "ev": 2.23,
     "ts": 1788100652.0879
   },
+  "football|England League Two|Crewe Alexandra|Walsall FC|半/全场-客/主|htft|2026-09-02": {
+    "ev": 2.88,
+    "ts": 1788108090.802512
+  },
   "football|England League Two|Fleetwood Town|Oldham Athletic|上半场正确比分0-2|correct_score_ht|2026-09-02": {
     "ev": 7.09,
     "ts": 1788100652.091583
@@ -3222,6 +3226,11 @@
     "ev": 7.21,
     "bb": 17.2,
     "ts": 1788103440.905254
+  },
+  "football|England League Two|斯文登|维尔港|半/全场-客/主|htft|2026-09-02": {
+    "ev": 4.65,
+    "bb": 27.0,
+    "ts": 1788108089.534155
   },
   "football|England League Two|特兰米尔|罗瑟汉姆|半/全场-主/客|htft|2026-09-02": {
     "ev": 9.82,
@@ -9546,15 +9555,18 @@
     "ev": 5.22,
     "ts": 1788044533.223336
   },
-  "football|USA Major League Soccer|哥伦布机员|新英格兰革命|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 15.57,
-    "bb": 22.0,
-    "ts": 1788098289.825968
-  },
   "football|USA Major League Soccer|多伦多FC|纽约城|和局|1x2|2026-08-30": {
     "ev": 10.45,
     "bb": 4.15,
     "ts": 1788044532.496573
+  },
+  "football|USA National Women Soccer League|Boston Legacy FC (w)|Angel City FC (w)|主胜|1x2|2026-09-01": {
+    "ev": 4.82,
+    "ts": 1788108090.80181
+  },
+  "football|USA National Women Soccer League|Boston Legacy FC (w)|Angel City FC (w)|让球主胜|1x2|2026-09-01": {
+    "ev": 3.72,
+    "ts": 1788108090.801905
   },
   "football|USA National Women Soccer League|Denver Summit FC (w)|Chicago Red Stars (w)|双重机会-和局/客|dc|2026-08-30": {
     "ev": 9.85,
@@ -10059,6 +10071,10 @@
     "ev": 1.24,
     "ts": 1788085474.379887
   },
+  "tennis|WTA - Grand Slam US Open|Iga Swiatek (POL)|Wang Xiyu (CHN)|让盘主胜|1x2|2026-09-01": {
+    "ev": 1.81,
+    "ts": 1788108090.804034
+  },
   "tennis|WTA - Grand Slam US Open|Thea Frodin (USA)|Elena Rybakina (KAZ)|让盘客胜|1x2|2026-09-01": {
     "ev": 2.47,
     "ts": 1788002630.851732
@@ -10071,14 +10087,29 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|England Championship League|斯托克城|诺维奇|上半场正确比分2-0|correct_score_ht|2026-09-02": {
-    "ev": 11.65,
-    "bb": 21.0,
-    "ts": 1788108089.534057
+  "football|USA Major League Soccer|哥伦布机员|新英格兰革命|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 20.67,
+    "bb": 23.0,
+    "ts": 1788108404.118856
   },
-  "football|England League Two|斯文登|维尔港|半/全场-客/主|htft|2026-09-02": {
-    "ev": 4.65,
-    "bb": 27.0,
-    "ts": 1788108089.534155
+  "football|Spain LaLiga|拉科鲁尼亚|瓦伦西亚|半/全场-客/主|htft|2026-08-31": {
+    "ev": 30.0,
+    "bb": 36.0,
+    "ts": 1788108404.118912
+  },
+  "football|Costa Rica Primera Division|肯塔吉内斯|希雷迪亚诺|半/全场-客/主|htft|2026-08-31": {
+    "ev": 16.86,
+    "bb": 26.0,
+    "ts": 1788108404.1189818
+  },
+  "football|Spain LaLiga 2|加的斯|巴拉多利德|半/全场-主/客|htft|2026-08-31": {
+    "ev": 19.99,
+    "bb": 36.0,
+    "ts": 1788108404.119031
+  },
+  "football|Spain LaLiga 2|科尔多瓦|格拉纳达|半/全场-客/主|htft|2026-08-31": {
+    "ev": 6.55,
+    "bb": 24.0,
+    "ts": 1788108404.119075
   }
 }
