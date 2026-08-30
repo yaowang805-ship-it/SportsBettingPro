@@ -29,6 +29,9 @@ _load_env_file(ENV_FILE)
 DINGTALK_WEBHOOK = os.getenv('DINGTALK_WEBHOOK')
 DINGTALK_KEYWORD = '投注推荐'  # 钉钉机器人关键词，所有消息必须包含
 DATABASE_URL = os.getenv('DATABASE_URL', '')  # 空=SQLite, postgresql://user:pass@host/db
+# OddsPapi 赔率聚合API(355 bookmaker, 含 Betfair Exchange/Pinnacle/Circa) — 双锚交叉验证用
+ODDSPAPI_KEY = os.getenv('ODDSPAPI_KEY', '')
+ODDSPAPI_BASE = 'https://api.oddspapi.io/v4'
 
 
 def _is_placeholder_webhook(url: str) -> bool:
