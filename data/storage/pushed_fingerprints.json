@@ -1799,6 +1799,10 @@
     "ev": 1.78,
     "ts": 1788092091.891063
   },
+  "football|Bulgaria First Professional League|PFC Slavia Sofia|PFC Levski Sofia|上半场双重机会-主/客|ht_dc|2026-09-03": {
+    "ev": 1.36,
+    "ts": 1788116494.2887108
+  },
   "football|Bulgaria First Professional League|PFC Slavia Sofia|PFC Levski Sofia|上半场客胜|ht|2026-09-03": {
     "ev": 1.64,
     "ts": 1788114108.8206668
@@ -2888,6 +2892,22 @@
     "ev": 2.77,
     "ts": 1788100652.087612
   },
+  "football|England Championship League|Burnley FC|Middlesbrough FC|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 8.1,
+    "ts": 1788116494.297995
+  },
+  "football|England Championship League|Burnley FC|Middlesbrough FC|上半场正确比分2-0|correct_score_ht|2026-09-03": {
+    "ev": 9.12,
+    "ts": 1788116494.2978828
+  },
+  "football|England Championship League|Burnley FC|Middlesbrough FC|上半场正确比分others|correct_score_ht|2026-09-03": {
+    "ev": 22.18,
+    "ts": 1788116494.29809
+  },
+  "football|England Championship League|Burnley FC|Middlesbrough FC|半/全场-主/客|htft|2026-09-03": {
+    "ev": 1.78,
+    "ts": 1788116494.287175
+  },
   "football|England Championship League|Lincoln City|Blackburn Rovers|上半场正确比分0-2|correct_score_ht|2026-09-02": {
     "ev": 13.62,
     "ts": 1788100652.090753
@@ -3267,6 +3287,10 @@
     "ev": 26.29,
     "ts": 1788100652.090942
   },
+  "football|England League One|Reading FC|Mansfield Town|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 5.69,
+    "ts": 1788116494.2982311
+  },
   "football|England League One|Wycombe Wanderers|Sheffield Wednesday|上半场正确比分others|correct_score_ht|2026-09-02": {
     "ev": 10.19,
     "ts": 1788100652.0912378
@@ -3324,6 +3348,11 @@
     "ev": 20.29,
     "bb": 25.0,
     "ts": 1788103440.9036238
+  },
+  "football|England League One|雷丁|曼斯菲特|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 5.69,
+    "bb": 21.0,
+    "ts": 1788116492.856547
   },
   "football|England League One|韦康比流浪者|谢周三|上半场正确比分others|correct_score_ht|2026-09-02": {
     "ev": 10.19,
@@ -8332,6 +8361,10 @@
     "ev": 21.51,
     "ts": 1788112904.506026
   },
+  "football|Slovenia PrvaLiga|NK Aluminij|NK Celje|让球主胜|1x2|2026-09-03": {
+    "ev": 1.25,
+    "ts": 1788116494.288876
+  },
   "football|Slovenia PrvaLiga|NK Bravo|NS Mura|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.08,
     "ts": 1788000428.4552078
@@ -10756,9 +10789,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|England League One|雷丁|曼斯菲特|上半场正确比分0-2|correct_score_ht|2026-09-03": {
-    "ev": 5.69,
-    "bb": 21.0,
-    "ts": 1788116492.856547
+  "football|Argentina Liga Profesional|阿根廷青年人|阿尔多斯维|上半场主胜|ht|2026-08-31": {
+    "ev": 2.14,
+    "bb": 1.99,
+    "ts": 1788116681.493411
   }
 }
