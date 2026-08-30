@@ -95,6 +95,8 @@ SCHEDULE = [
     ("clv_collect",        "18:00", "do_clv_collect", {}),
     ("clv_collect",        "20:00", "do_clv_collect", {}),
     ("settle_evening",     "20:30", "do_settle",      {}),
+    # 数据盘口周报：周日 21:05(错开 weekly_report) 运动×盘口全表(门槛/CLV/ROI)
+    ("market_weekly_report", "Sun 21:05", "do_market_weekly_report", {}),
     # 周报：周日 21:00
     ("weekly_report",      "Sun 21:00", "do_weekly_report", {}),
     # 月报：1日 10:00
@@ -709,6 +711,23 @@ class PipelineOrchestrator:
                 logger.info("盘口日报已推送")
         except Exception as e:
             logger.warning("盘口日报异常: %s", e)
+
+    def do_market_weekly_report(self):
+        """数据盘口周报: 运动×盘口全表(门槛/CLV/ROI), 推钉钉(只读本地数据不拉Pin)。"""
+        try:
+            import subprocess
+            script = SRC_DIR / "scripts" / "weekly_market_report.py"
+            r = subprocess.run(
+                [sys.executable, str(script)],
+                capture_output=True, text=True, cwd=str(SRC_DIR), timeout=120,
+            )
+            if r.returncode != 0:
+                err = (r.stderr or r.stdout or "")[-400:]
+                logger.warning("盘口周报失败: %s", err)
+            else:
+                logger.info("盘口周报已推送")
+        except Exception as e:
+            logger.warning("盘口周报异常: %s", e)
 
     def do_daily_report(self):
         """日报推送。"""
