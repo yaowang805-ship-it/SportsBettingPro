@@ -4197,6 +4197,11 @@
     "bb": 1.94,
     "ts": 1787944816.419533
   },
+  "football|Greece Super League|莱瓦贾科斯|帕纳辛纳科斯|半/全场-客/主|htft|2026-09-01": {
+    "ev": 12.25,
+    "bb": 47.0,
+    "ts": 1788107594.574104
+  },
   "football|Greece Super League|阿里斯|OFI 克里特|半/全场-主/客|htft|2026-08-31": {
     "ev": 5.53,
     "bb": 44.0,
@@ -7169,11 +7174,6 @@
     "bb": 36.0,
     "ts": 1788100057.798972
   },
-  "football|Portugal Segunda Liga|费尔格拉斯 1932|查维斯|半/全场-客/主|htft|2026-08-31": {
-    "ev": 12.23,
-    "bb": 27.0,
-    "ts": 1788107413.08063
-  },
   "football|Qatar Stars League|Al Shahaniya|Al Sailiya SC|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.59,
     "ts": 1787978731.776583
@@ -7354,11 +7354,6 @@
   "football|Russia First League|Spartak Kostroma|SK Rotor Volgograd|半/全场-客/主|htft|2026-09-01": {
     "ev": 34.82,
     "ts": 1788098326.748512
-  },
-  "football|Russia First League|下诺夫哥罗德|乌里扬诺夫斯克|半/全场-主/客|htft|2026-08-31": {
-    "ev": 23.72,
-    "bb": 57.0,
-    "ts": 1788102621.204373
   },
   "football|Russia First League|叶尼塞|辛历克|上半场客胜|ht|2026-08-30": {
     "ev": 8.11,
@@ -10038,9 +10033,19 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Greece Super League|莱瓦贾科斯|帕纳辛纳科斯|半/全场-客/主|htft|2026-09-01": {
-    "ev": 12.25,
-    "bb": 47.0,
-    "ts": 1788107594.574104
+  "football|Italy Serie B|阿雷佐|巴勒莫|上半场主胜|ht|2026-08-31": {
+    "ev": 5.43,
+    "bb": 4.99,
+    "ts": 1788107808.940518
+  },
+  "football|Portugal Segunda Liga|费尔格拉斯 1932|查维斯|半/全场-客/主|htft|2026-08-31": {
+    "ev": 16.39,
+    "bb": 28.0,
+    "ts": 1788107808.9405818
+  },
+  "football|Russia First League|下诺夫哥罗德|乌里扬诺夫斯克|半/全场-主/客|htft|2026-08-31": {
+    "ev": 22.98,
+    "bb": 58.0,
+    "ts": 1788107808.940634
   }
 }
