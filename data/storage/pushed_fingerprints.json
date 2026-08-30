@@ -2934,6 +2934,10 @@
     "ev": 1.78,
     "ts": 1788116494.287175
   },
+  "football|England Championship League|Burnley FC|Middlesbrough FC|半/全场-客/主|htft|2026-09-03": {
+    "ev": 3.13,
+    "ts": 1788118780.0669591
+  },
   "football|England Championship League|Lincoln City|Blackburn Rovers|上半场正确比分0-2|correct_score_ht|2026-09-02": {
     "ev": 13.62,
     "ts": 1788100652.090753
@@ -3197,6 +3201,11 @@
     "bb": 18.4,
     "ts": 1788115889.651746
   },
+  "football|England Championship League|西布罗姆维奇|查尔顿|半/全场-主/客|htft|2026-09-03": {
+    "ev": 16.59,
+    "bb": 42.0,
+    "ts": 1788118779.6470861
+  },
   "football|England Championship League|西汉姆联|狼队|上半场正确比分0-2|correct_score_ht|2026-09-02": {
     "ev": 23.85,
     "bb": 28.0,
@@ -3235,6 +3244,10 @@
   "football|England League One|Bradford City|mbridge United|上半场双重机会-主/客|ht_dc|2026-09-02": {
     "ev": 1.53,
     "ts": 1788047421.792191
+  },
+  "football|England League One|Burton Albion|AFC Wimbledon|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 27.56,
+    "ts": 1788118780.072086
   },
   "football|England League One|Doncaster Rovers|Notts County|上半场正确比分0-2|correct_score_ht|2026-09-02": {
     "ev": 26.82,
@@ -3327,6 +3340,11 @@
   "football|England League One|Wycombe Wanderers|Sheffield Wednesday|总进球区间7+|total_goals_range|2026-09-02": {
     "ev": 7.14,
     "ts": 1788100652.091121
+  },
+  "football|England League One|伯顿|AFC温布尔顿|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 27.56,
+    "bb": 29.0,
+    "ts": 1788118779.647037
   },
   "football|England League One|卢顿|斯托克港|上半场正确比分0-2|correct_score_ht|2026-09-03": {
     "ev": 6.52,
@@ -8149,6 +8167,10 @@
     "ev": 1.75,
     "ts": 1787936457.069997
   },
+  "football|Scotland Premiership|Celtic Glasgow|Aberdeen FC|上半场主胜|ht|2026-09-03": {
+    "ev": 2.42,
+    "ts": 1788118780.0678358
+  },
   "football|Scotland Premiership|Celtic Glasgow|Aberdeen FC|双重机会-和局/客|dc|2026-09-03": {
     "ev": 2.75,
     "ts": 1788115890.2783701
@@ -9085,11 +9107,6 @@
     "bb": 6.95,
     "ts": 1788111469.972447
   },
-  "football|Spain LaLiga|巴塞罗那|巴列卡诺|上半场正确比分0-1|correct_score_ht|2026-09-01": {
-    "ev": 11.15,
-    "bb": 18.5,
-    "ts": 1788112903.507475
-  },
   "football|Spain LaLiga|拉科鲁尼亚|瓦伦西亚|半/全场-客/主|htft|2026-08-31": {
     "ev": 30.0,
     "bb": 36.0,
@@ -9493,6 +9510,10 @@
   "football|Switzerland Super League|Grasshopper Club Zurich|FC St. Gallen 1879|上半场正确比分2-0|correct_score_ht|2026-09-03": {
     "ev": 28.2,
     "ts": 1788114692.276577
+  },
+  "football|Switzerland Super League|Grasshopper Club Zurich|FC St. Gallen 1879|上半场正确比分2-1|correct_score_ht|2026-09-03": {
+    "ev": 1.26,
+    "ts": 1788118780.07132
   },
   "football|Switzerland Super League|Servette Geneva|FC Luzern|主胜|1x2|2026-08-30": {
     "ev": 1.49,
@@ -10864,14 +10885,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|England League One|伯顿|AFC温布尔顿|上半场正确比分0-2|correct_score_ht|2026-09-03": {
-    "ev": 27.56,
-    "bb": 29.0,
-    "ts": 1788118779.647037
-  },
-  "football|England Championship League|西布罗姆维奇|查尔顿|半/全场-主/客|htft|2026-09-03": {
-    "ev": 16.59,
-    "bb": 42.0,
-    "ts": 1788118779.6470861
+  "football|Spain LaLiga|巴塞罗那|巴列卡诺|上半场正确比分0-1|correct_score_ht|2026-09-01": {
+    "ev": 14.73,
+    "bb": 19.1,
+    "ts": 1788118910.75943
   }
 }
