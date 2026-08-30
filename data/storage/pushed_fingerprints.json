@@ -107,6 +107,10 @@
     "ev": 2.54,
     "ts": 1788048410.582166
   },
+  "basketball|Mexico LNBP Basketball League|Dorados de Chihuahua|Mineros de Zacatecas|让分主胜|1x2|2026-08-31": {
+    "ev": 1.33,
+    "ts": 1788117324.605122
+  },
   "basketball|Mexico LNBP Basketball League|Freseros de Irapuato|Astros de Jalisco|上半场客胜|ht|2026-08-30": {
     "ev": 2.68,
     "ts": 1788053819.1152582
@@ -1442,6 +1446,11 @@
     "ev": 5.72,
     "bb": 6.3,
     "ts": 1787980439.862331
+  },
+  "football|Brazil Serie A|米拉索尔|帕尔梅拉斯|上半场主胜|ht|2026-08-31": {
+    "ev": 4.97,
+    "bb": 4.67,
+    "ts": 1788117323.7899342
   },
   "football|Brazil Serie B|America FC MG|AA Ponte Preta SP|上半场主胜|ht|2026-08-31": {
     "ev": 1.57,
@@ -7620,11 +7629,6 @@
     "ev": 5.51,
     "ts": 1788106745.796719
   },
-  "football|Portugal Primeira Liga|法马利康|吉维森特|上半场客胜|ht|2026-08-31": {
-    "ev": 9.77,
-    "bb": 5.55,
-    "ts": 1788062968.5230541
-  },
   "football|Portugal Segunda Liga|AVS Futebol Sad|Feirense|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.38,
     "ts": 1787983581.111915
@@ -10839,9 +10843,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Brazil Serie A|米拉索尔|帕尔梅拉斯|上半场主胜|ht|2026-08-31": {
-    "ev": 4.97,
-    "bb": 4.67,
-    "ts": 1788117323.7899342
+  "football|Portugal Primeira Liga|法马利康|吉维森特|上半场客胜|ht|2026-08-31": {
+    "ev": 11.01,
+    "bb": 6.45,
+    "ts": 1788117879.567791
+  },
+  "football|Mexico Liga MX|托卢卡|华雷斯|上半场正确比分0-1|correct_score_ht|2026-08-31": {
+    "ev": 3.76,
+    "bb": 12.5,
+    "ts": 1788117879.567839
   }
 }
