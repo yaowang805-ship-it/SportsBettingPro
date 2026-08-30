@@ -380,6 +380,10 @@
     "ev": 1.1,
     "ts": 1788042517.2531562
   },
+  "football|Argentina Liga Profesional|Independiente Avellaneda|Gimnasia Y Esgrima Mendoza|双重机会-和局/客|dc|2026-08-31": {
+    "ev": 2.17,
+    "ts": 1788126903.951604
+  },
   "football|Argentina Liga Profesional|Independiente Avellaneda|Gimnasia Y Esgrima Mendoza|大球|1x2|2026-08-31": {
     "ev": 1.44,
     "ts": 1788104263.224693
@@ -391,6 +395,10 @@
   "football|Argentina Liga Profesional|Independiente Avellaneda|Gimnasia Y Esgrima Mendoza|让球主胜|1x2|2026-08-31": {
     "ev": 1.52,
     "ts": 1788078876.771303
+  },
+  "football|Argentina Liga Profesional|Independiente Avellaneda|Gimnasia Y Esgrima Mendoza|让球客胜|1x2|2026-08-31": {
+    "ev": 1.7,
+    "ts": 1788126903.951524
   },
   "football|Argentina Liga Profesional|Independiente Rivadavia|Racing Club Avellaneda|和局|1x2|2026-08-31": {
     "ev": 1.01,
@@ -1196,6 +1204,26 @@
     "ev": 6.77,
     "ts": 1788107212.585192
   },
+  "football|Brazil Copa do Brasil|Atletico Mineiro MG|Cruzeiro EC MG|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 38.26,
+    "ts": 1788124960.319478
+  },
+  "football|Brazil Copa do Brasil|Atletico Mineiro MG|Cruzeiro EC MG|上半场正确比分1-2|correct_score_ht|2026-09-02": {
+    "ev": 8.23,
+    "ts": 1788124960.319519
+  },
+  "football|Brazil Copa do Brasil|Atletico Mineiro MG|Cruzeiro EC MG|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 26.36,
+    "ts": 1788124960.319391
+  },
+  "football|Brazil Copa do Brasil|Atletico Mineiro MG|Cruzeiro EC MG|上半场正确比分2-1|correct_score_ht|2026-09-02": {
+    "ev": 1.29,
+    "ts": 1788124960.319436
+  },
+  "football|Brazil Copa do Brasil|Atletico Mineiro MG|Cruzeiro EC MG|上半场正确比分others|correct_score_ht|2026-09-02": {
+    "ev": 8.03,
+    "ts": 1788124960.31956
+  },
   "football|Brazil Copa do Brasil|Atletico Mineiro MG|Cruzeiro EC MG|半/全场-客/主|htft|2026-09-02": {
     "ev": 40.23,
     "ts": 1788101193.533834
@@ -1605,6 +1633,10 @@
     "ev": 1.51,
     "ts": 1788122152.150949
   },
+  "football|Brazil Serie B|Fortaleza EC CE|Operario Ferroviario EC PR|上半场客胜|ht|2026-09-01": {
+    "ev": 4.97,
+    "ts": 1788125598.981559
+  },
   "football|Brazil Serie B|Londrina EC PR|EC Juventude RS|上半场双重机会-主/客|ht_dc|2026-09-02": {
     "ev": 1.98,
     "ts": 1788047421.792023
@@ -1998,9 +2030,17 @@
     "bb": 1.79,
     "ts": 1787987276.0469508
   },
+  "football|Canadian Premier League|Pacific FC|HFX Wanderers FC|客胜|1x2|2026-08-31": {
+    "ev": 1.66,
+    "ts": 1788126316.199632
+  },
   "football|Canadian Premier League|Pacific FC|HFX Wanderers FC|小球|1x2|2026-08-31": {
     "ev": 1.2,
     "ts": 1788122796.581553
+  },
+  "football|Canadian Premier League|Pacific FC|HFX Wanderers FC|让球主胜|1x2|2026-08-31": {
+    "ev": 2.35,
+    "ts": 1788125708.948834
   },
   "football|Canadian Premier League|valry FC|Vancouver FC|双重机会-和局/客|dc|2026-08-30": {
     "ev": 1.47,
@@ -2776,6 +2816,10 @@
     "ev": 1.93,
     "ts": 1788024320.279945
   },
+  "football|Ecuador LigaPro Primera A|Cuenca|Guayaquil City FC|上半场客胜|ht|2026-09-03": {
+    "ev": 1.16,
+    "ts": 1788125598.9832509
+  },
   "football|Ecuador LigaPro Primera A|Delfin SC|Tecnico Universitario|上半场双重机会-主/客|ht_dc|2026-09-02": {
     "ev": 2.18,
     "ts": 1788047421.792468
@@ -2914,6 +2958,10 @@
     "ev": 3.78,
     "ts": 1788122043.276156
   },
+  "football|Egypt Premier League|Asyut Petroleum|National Bank of Egypt SC|上半场主胜|ht|2026-08-31": {
+    "ev": 12.45,
+    "ts": 1788124839.2608829
+  },
   "football|Egypt Premier League|Asyut Petroleum|National Bank of Egypt SC|上半场双重机会-主/客|ht_dc|2026-08-31": {
     "ev": 8.32,
     "ts": 1788121759.314463
@@ -2966,6 +3014,11 @@
     "ev": 14.49,
     "ts": 1788100652.05114
   },
+  "football|Egypt Premier League|佩特雷姆|埃及国家银行|上半场主胜|ht|2026-08-31": {
+    "ev": 12.45,
+    "bb": 5.05,
+    "ts": 1788124838.578277
+  },
   "football|Egypt Premier League|佩特雷姆|埃及国家银行|上半场正确比分0-2|correct_score_ht|2026-08-31": {
     "ev": 24.07,
     "bb": 18.2,
@@ -2980,6 +3033,11 @@
     "ev": 71.73,
     "bb": 30.0,
     "ts": 1788124571.981418
+  },
+  "football|Egypt Premier League|扎马雷克|佩特捷德|半/全场-主/客|htft|2026-09-01": {
+    "ev": 17.36,
+    "bb": 49.0,
+    "ts": 1788124838.578325
   },
   "football|El Salvador Primera Division|Alianza FC San Salvador|Atletico Balboa|主胜|1x2|2026-08-30": {
     "ev": 4.4,
@@ -3140,6 +3198,10 @@
   "football|England Championship League|Sheffield United FC|Bolton Wanderers|上半场正确比分others|correct_score_ht|2026-09-02": {
     "ev": 17.59,
     "ts": 1788100652.090419
+  },
+  "football|England Championship League|Sheffield United FC|Bolton Wanderers|半/全场-主/客|htft|2026-09-02": {
+    "ev": 1.58,
+    "ts": 1788124960.316312
   },
   "football|England Championship League|Stoke City|Norwich City|上半场客胜|ht|2026-09-02": {
     "ev": 3.7,
@@ -3538,6 +3600,10 @@
   "football|England League Two|Bristol Rovers|Colchester United|上半场正确比分0-2|correct_score_ht|2026-09-02": {
     "ev": 25.26,
     "ts": 1788100652.091438
+  },
+  "football|England League Two|Bristol Rovers|Colchester United|半/全场-主/客|htft|2026-09-02": {
+    "ev": 4.0,
+    "ts": 1788126215.370996
   },
   "football|England League Two|Bristol Rovers|Colchester United|半/全场-客/主|htft|2026-09-02": {
     "ev": 3.57,
@@ -9284,11 +9350,6 @@
     "bb": 6.95,
     "ts": 1788111469.972447
   },
-  "football|Spain LaLiga|巴塞罗那|巴列卡诺|上半场正确比分0-1|correct_score_ht|2026-09-01": {
-    "ev": 14.73,
-    "bb": 19.1,
-    "ts": 1788118910.75943
-  },
   "football|Spain LaLiga|拉科鲁尼亚|瓦伦西亚|半/全场-客/主|htft|2026-08-31": {
     "ev": 30.0,
     "bb": 36.0,
@@ -11080,6 +11141,10 @@
     "ev": 1.09,
     "ts": 1788063294.475678
   },
+  "tennis|ATP Challenger - Plovdiv 3 Open|Amit Vales (ISR)|Ignacio Parisca (VEN)|客胜|1x2|2026-08-31": {
+    "ev": 1.5,
+    "ts": 1788125830.9350379
+  },
   "tennis|ATP Challenger - Plovdiv 3 Open|Federico Iannaccone (ITA)|heer Warik (IND)|主胜|1x2|2026-08-30": {
     "ev": 1.88,
     "ts": 1788063142.001958
@@ -11104,14 +11169,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Egypt Premier League|佩特雷姆|埃及国家银行|上半场主胜|ht|2026-08-31": {
-    "ev": 12.45,
-    "bb": 5.05,
-    "ts": 1788124838.578277
-  },
-  "football|Egypt Premier League|扎马雷克|佩特捷德|半/全场-主/客|htft|2026-09-01": {
-    "ev": 17.36,
-    "bb": 49.0,
-    "ts": 1788124838.578325
+  "football|Spain LaLiga|巴塞罗那|巴列卡诺|上半场正确比分0-1|correct_score_ht|2026-09-01": {
+    "ev": 10.1,
+    "bb": 18.4,
+    "ts": 1788127241.130906
   }
 }
