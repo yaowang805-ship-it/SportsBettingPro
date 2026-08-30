@@ -1764,6 +1764,14 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         opportunities.extend(corner_entries)
         total_all += total_corner
 
+    booking_entries = _sub_results.get("booking", [])
+    total_booking = 0
+    if booking_entries:
+        for be in booking_entries:
+            total_booking += len(be.get("opportunities", [])) + len(be.get("handicap", [])) + len(be.get("over_under", []))
+        opportunities.extend(booking_entries)
+        total_all += total_booking
+
     special_entries = _sub_results.get("special", [])
     total_special = 0
     if special_entries:
