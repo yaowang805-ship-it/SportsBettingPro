@@ -248,6 +248,10 @@
     "ev": 2.81,
     "ts": 1788087063.608017
   },
+  "football|Argentina Liga Profesional|Argentinos Juniors|Aldosivi|上半场主胜|ht|2026-08-31": {
+    "ev": 2.14,
+    "ts": 1788116682.30547
+  },
   "football|Argentina Liga Profesional|Atletico Tucuman|Belgrano|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.77,
     "ts": 1787963720.620061
@@ -412,6 +416,11 @@
     "ev": 3.33,
     "bb": 2.58,
     "ts": 1788048285.07283
+  },
+  "football|Argentina Liga Profesional|阿根廷青年人|阿尔多斯维|上半场主胜|ht|2026-08-31": {
+    "ev": 2.14,
+    "bb": 1.99,
+    "ts": 1788116681.493411
   },
   "football|Argentina Primera B Metropolitana|Argentino de Merlo|Club Villa Dalmine|客胜|1x2|2026-08-31": {
     "ev": 4.24,
@@ -2050,6 +2059,14 @@
   "football|Colombia Primera A|Junior FC|Independiente Santa Fe|让球客胜|1x2|2026-08-30": {
     "ev": 3.23,
     "ts": 1788032315.662504
+  },
+  "football|Colombia Primera A|Millonarios FC|Internacional de Bogota|双重机会-和局/客|dc|2026-08-31": {
+    "ev": 3.31,
+    "ts": 1788116682.308488
+  },
+  "football|Colombia Primera A|Millonarios FC|Internacional de Bogota|让球客胜|1x2|2026-08-31": {
+    "ev": 1.71,
+    "ts": 1788116682.3072882
   },
   "football|Colombia Primera A|Pasto|CS Deportivo Pereira|单双-双|oe|2026-09-01": {
     "ev": 3.32,
@@ -6377,6 +6394,10 @@
     "ev": 1.38,
     "ts": 1788041382.125289
   },
+  "football|Mexico Liga MX|Deportivo Toluca FC|FC Juarez|上半场正确比分0-1|correct_score_ht|2026-08-31": {
+    "ev": 2.56,
+    "ts": 1788116682.309033
+  },
   "football|Mexico Liga MX|Deportivo Toluca FC|FC Juarez|双重机会-和局/客|dc|2026-08-31": {
     "ev": 3.12,
     "ts": 1787975485.2188978
@@ -7289,6 +7310,18 @@
   "football|Peru Liga 1|Atletico Grau|FBC Melgar|和局|1x2|2026-09-01": {
     "ev": 4.56,
     "ts": 1787975485.218122
+  },
+  "football|Peru Liga 1|CS Cienciano|Cusco FC|主胜|1x2|2026-08-31": {
+    "ev": 3.3,
+    "ts": 1788116682.3056252
+  },
+  "football|Peru Liga 1|CS Cienciano|Cusco FC|双重机会-主/和局|dc|2026-08-31": {
+    "ev": 1.34,
+    "ts": 1788116682.3057652
+  },
+  "football|Peru Liga 1|CS Cienciano|Cusco FC|让球主胜|1x2|2026-08-31": {
+    "ev": 5.93,
+    "ts": 1788116682.3056939
   },
   "football|Peru Liga 1|Los Chankas CYC|Juan Pablo II|主胜|1x2|2026-08-30": {
     "ev": 1.1,
@@ -10789,9 +10822,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Argentina Liga Profesional|阿根廷青年人|阿尔多斯维|上半场主胜|ht|2026-08-31": {
-    "ev": 2.14,
-    "bb": 1.99,
-    "ts": 1788116681.493411
+  "football|England Premier League|阿斯顿维拉|阿森纳|上半场主胜|ht|2026-09-01": {
+    "ev": 3.18,
+    "bb": 7.65,
+    "ts": 1788116787.523572
   }
 }
