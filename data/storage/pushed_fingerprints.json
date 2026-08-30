@@ -1839,6 +1839,11 @@
     "ev": 2.35,
     "ts": 1787987279.4041321
   },
+  "football|Costa Rica Primera Division|萨普里萨|贝伦蝎子|上半场正确比分0-1|correct_score_ht|2026-08-31": {
+    "ev": 3.69,
+    "bb": 14.0,
+    "ts": 1788098289.826211
+  },
   "football|Croatia HNL League|NK Istra 1961|GNK Dinamo Zagreb|上半场客胜|ht|2026-08-30": {
     "ev": 2.72,
     "ts": 1787979717.378075
@@ -2364,6 +2369,16 @@
     "bb": 6.75,
     "ts": 1788064051.831028
   },
+  "football|Ecuador LigaPro Primera A|埃梅莱克|北莱昂斯|半/全场-客/主|htft|2026-08-31": {
+    "ev": 6.53,
+    "bb": 26.0,
+    "ts": 1788098289.826317
+  },
+  "football|Ecuador LigaPro Primera A|奥伦斯|马卡拉|半/全场-客/主|htft|2026-08-31": {
+    "ev": 21.19,
+    "bb": 29.0,
+    "ts": 1788098289.826095
+  },
   "football|Ecuador LigaPro Primera A|曼塔|瓜亚基尔巴塞罗那|上半场主胜|ht|2026-08-30": {
     "ev": 4.89,
     "bb": 5.6,
@@ -2385,6 +2400,10 @@
   "football|Egypt Premier League|Talaea El Gaish|Zed FC|上半场双重机会-主/客|ht_dc|2026-09-01": {
     "ev": 6.19,
     "ts": 1788022282.200364
+  },
+  "football|Egypt Premier League|Talaea El Gaish|Zed FC|半/全场-主/和局|htft|2026-09-01": {
+    "ev": 3.25,
+    "ts": 1788098326.7471821
   },
   "football|Egypt Premier League|Zamalek SC|Petrojet FC|上半场双重机会-主/客|ht_dc|2026-09-01": {
     "ev": 1.52,
@@ -2429,6 +2448,10 @@
   "football|England Championship League|Portsmouth FC|Derby County|上半场主胜|ht|2026-09-02": {
     "ev": 2.11,
     "ts": 1788054008.0774
+  },
+  "football|England Championship League|Portsmouth FC|Derby County|上半场双重机会-主/客|ht_dc|2026-09-02": {
+    "ev": 1.38,
+    "ts": 1788098326.748228
   },
   "football|England Championship League|Stoke City|Norwich City|上半场客胜|ht|2026-09-02": {
     "ev": 3.7,
@@ -2538,6 +2561,10 @@
     "ev": 1.54,
     "ts": 1788030891.5881898
   },
+  "football|England League Two|Tranmere Rovers|Rotherham United|上半场双重机会-主/客|ht_dc|2026-09-02": {
+    "ev": 1.19,
+    "ts": 1788098326.7482948
+  },
   "football|England National League South|Dagenham and Redbridge FC|Slough Town FC|上半场主胜|ht|2026-08-31": {
     "ev": 8.52,
     "ts": 1788065419.5733938
@@ -2549,6 +2576,14 @@
   "football|England National League South|Weston Super Mare FC|Chelmsford City|上半场主胜|ht|2026-08-31": {
     "ev": 2.4,
     "ts": 1788065419.5735219
+  },
+  "football|England National League|Boston United FC|Hornchurch FC|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 16.82,
+    "ts": 1788098326.749262
+  },
+  "football|England National League|Boston United FC|Hornchurch FC|半/全场-主/客|htft|2026-08-31": {
+    "ev": 3.14,
+    "ts": 1788098326.746884
   },
   "football|England Premier League|Chelsea FC|Brighton & Hove Albion FC|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.24,
@@ -4107,6 +4142,10 @@
   "football|Italy Serie C|Spezia Calcio|SSD Citta Di Campobasso|让球客胜|1x2|2026-08-30": {
     "ev": 5.47,
     "ts": 1788029947.793567
+  },
+  "football|Italy Serie C|Treviso FBC 1993|lcio Lecco 1912|上半场主胜|ht|2026-09-01": {
+    "ev": 2.53,
+    "ts": 1788098326.74767
   },
   "football|Italy Serie C|UC Albinoleffe|D Ospitaletto|上半场主胜|ht|2026-09-01": {
     "ev": 2.62,
@@ -5955,6 +5994,10 @@
     "ev": 2.7,
     "ts": 1787975485.2195358
   },
+  "football|Russia First League|Spartak Kostroma|SK Rotor Volgograd|半/全场-客/主|htft|2026-09-01": {
+    "ev": 34.82,
+    "ts": 1788098326.748512
+  },
   "football|Russia First League|叶尼塞|辛历克|上半场客胜|ht|2026-08-30": {
     "ev": 8.11,
     "bb": 5.4,
@@ -6680,6 +6723,10 @@
   "football|Spain LaLiga|Osasuna|Getafe CF|上半场客胜|ht|2026-09-01": {
     "ev": 10.47,
     "ts": 1787975485.213216
+  },
+  "football|Spain LaLiga|Osasuna|Getafe CF|半/全场-主/和局|htft|2026-09-01": {
+    "ev": 2.45,
+    "ts": 1788098326.7473788
   },
   "football|Spain LaLiga|Real Madrid|Malaga CF|上半场客胜|ht|2026-08-30": {
     "ev": 3.43,
@@ -7770,6 +7817,11 @@
     "ev": 5.22,
     "ts": 1788044533.223336
   },
+  "football|USA Major League Soccer|哥伦布机员|新英格兰革命|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 15.57,
+    "bb": 22.0,
+    "ts": 1788098289.825968
+  },
   "football|USA Major League Soccer|多伦多FC|纽约城|和局|1x2|2026-08-30": {
     "ev": 10.45,
     "bb": 4.15,
@@ -8257,24 +8309,44 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|USA Major League Soccer|哥伦布机员|新英格兰革命|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 15.57,
+  "football|England National League|哈洛贾特|格茨海德|上半场正确比分1-2|correct_score_ht|2026-08-31": {
+    "ev": 31.61,
+    "bb": 27.0,
+    "ts": 1788098547.338179
+  },
+  "football|England National League|萨顿联|威尔德斯通|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 18.8,
+    "bb": 25.0,
+    "ts": 1788098547.338331
+  },
+  "football|England National League|禾京|绍森德|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 15.74,
+    "bb": 14.7,
+    "ts": 1788098547.338578
+  },
+  "football|England National League|禾京|绍森德|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 11.23,
     "bb": 22.0,
-    "ts": 1788098289.825968
+    "ts": 1788098547.338681
   },
-  "football|Ecuador LigaPro Primera A|奥伦斯|马卡拉|半/全场-客/主|htft|2026-08-31": {
-    "ev": 21.19,
+  "football|England National League|卡利斯尔联|斯坎索普联|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 20.75,
     "bb": 29.0,
-    "ts": 1788098289.826095
+    "ts": 1788098547.338778
   },
-  "football|Costa Rica Primera Division|萨普里萨|贝伦蝎子|上半场正确比分0-1|correct_score_ht|2026-08-31": {
-    "ev": 3.69,
-    "bb": 14.0,
-    "ts": 1788098289.826211
+  "football|England National League|耶奥维尔|谭禾夫|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 8.86,
+    "bb": 12.8,
+    "ts": 1788098547.338864
   },
-  "football|Ecuador LigaPro Primera A|埃梅莱克|北莱昂斯|半/全场-客/主|htft|2026-08-31": {
-    "ev": 6.53,
-    "bb": 26.0,
-    "ts": 1788098289.826317
+  "football|England National League|耶奥维尔|谭禾夫|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 3.39,
+    "bb": 18.3,
+    "ts": 1788098547.3389409
+  },
+  "football|England National League|索利赫尔|菲尔德|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 5.1,
+    "bb": 11.4,
+    "ts": 1788098547.33902
   }
 }
