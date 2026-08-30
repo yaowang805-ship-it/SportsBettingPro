@@ -58,15 +58,40 @@ def _extract_three_way(market: dict, cfg: dict):
     return None
 
 
+def _fetch_participant_names(tournament_ids):
+    """拿 participantId → 队名映射(通过 /fixtures)。"""
+    name_map = {}
+    if isinstance(tournament_ids, (list, tuple)):
+        tournament_ids = ",".join(str(t) for t in tournament_ids)
+    try:
+        r = requests.get(
+            f"{ODDSPAPI_BASE}/fixtures",
+            params={"apiKey": ODDSPAPI_KEY, "sportId": 10, "tournamentId": tournament_ids},
+            timeout=30,
+        )
+        r.raise_for_status()
+        data = r.json()
+    except Exception:
+        return name_map
+    for fx in data:
+        p1, p2 = fx.get("participant1Id"), fx.get("participant2Id")
+        n1, n2 = fx.get("participant1Name"), fx.get("participant2Name")
+        if p1 and n1:
+            name_map[str(p1)] = n1
+        if p2 and n2:
+            name_map[str(p2)] = n2
+    return name_map
+
+
 def fetch_betfair_anchor(tournament_ids, participants_map=None):
-    """拿 Betfair Exchange 的 1X2 + ht 独赢赔率。
+    """拿 Betfair Exchange 的 1X2 + ht 独赢赔率(含队名)。
 
     Args:
         tournament_ids: list[str] 或逗号分隔字符串, 如 [17, 8, 23]
-        participants_map: 可选, {participantId: name} 用于队名映射(可后续补)
+        participants_map: 可选, 预置 {participantId: name}(避免重复调 /fixtures)
 
     Returns:
-        list of {fixtureId, tournamentId, startTime, participant1Id, participant2Id,
+        list of {fixtureId, tournamentId, startTime, home, away,
                  "1x2": {home,draw,away} 或 None, "ht": {home,draw,away} 或 None}
     """
     if not ODDSPAPI_KEY:
@@ -90,16 +115,20 @@ def fetch_betfair_anchor(tournament_ids, participants_map=None):
         print(f"  ❌ OddsPapi Betfair 拉取失败: {e}")
         return []
 
+    if participants_map is None:
+        participants_map = _fetch_participant_names(tournament_ids)
+
     out = []
     for fx in data:
         bf = fx.get("bookmakerOdds", {}).get("betfair-ex", {})
         markets = bf.get("markets", {})
+        p1, p2 = str(fx.get("participant1Id", "")), str(fx.get("participant2Id", ""))
         rec = {
             "fixtureId": fx.get("fixtureId"),
             "tournamentId": fx.get("tournamentId"),
             "startTime": fx.get("startTime"),
-            "participant1Id": fx.get("participant1Id"),
-            "participant2Id": fx.get("participant2Id"),
+            "home": participants_map.get(p1, ""),
+            "away": participants_map.get(p2, ""),
             "1x2": _extract_three_way(markets.get("101"), _ANCHOR_MARKETS["1x2"]),
             "ht": _extract_three_way(markets.get("10208"), _ANCHOR_MARKETS["ht"]),
         }
