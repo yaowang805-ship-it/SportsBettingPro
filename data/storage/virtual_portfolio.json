@@ -1,5 +1,5 @@
 {
-  "balance": 7454.53,
+  "balance": 7372.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3197,6 +3197,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788125400,
       "created_at": "2026-08-30T04:09:28.497956+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_孔萨格斯_赫尔格斯IF_客胜",
+      "sport": "football",
+      "league": "瑞典乙级联赛",
+      "home_team": "孔萨格斯",
+      "away_team": "赫尔格斯IF",
+      "home_cn": "孔萨格斯",
+      "away_cn": "赫尔格斯IF",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.96,
+      "stake": 69,
+      "model_prob": 0.2429,
+      "ev_pct": 20.49,
+      "pin_odds": 3.44,
+      "fair_price": 4.1166,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788087600,
+      "created_at": "2026-08-30T04:27:31.703335+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_埃梅莱克_北莱昂斯_上半场客胜",
+      "sport": "football",
+      "league": "厄瓜多尔甲级联赛",
+      "home_team": "埃梅莱克",
+      "away_team": "北莱昂斯",
+      "home_cn": "埃梅莱克",
+      "away_cn": "北莱昂斯",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 6.75,
+      "stake": 13,
+      "model_prob": 0.1569,
+      "ev_pct": 5.9,
+      "pin_odds": 5.47,
+      "fair_price": 6.3741,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788130800,
+      "created_at": "2026-08-30T04:27:31.718543+00:00",
       "track_only": false
     }
   ],
@@ -8529,8 +8575,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 1764.0,
-    "bets": 32
+    "used": 1846.0,
+    "bets": 34
   },
   "updated": null
 }
