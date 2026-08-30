@@ -1,5 +1,5 @@
 {
-  "balance": 6278.53,
+  "balance": 5887.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3013,6 +3013,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788115500,
       "created_at": "2026-08-30T09:25:55.261807+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_维戈塞尔塔_毕尔巴鄂竞技_上半场正确比分2-0",
+      "sport": "football",
+      "league": "西班牙甲级联赛",
+      "home_team": "维戈塞尔塔",
+      "away_team": "毕尔巴鄂竞技",
+      "home_cn": "维戈塞尔塔",
+      "away_cn": "毕尔巴鄂竞技",
+      "market": "1x2",
+      "market_type": "上半场正确比分2-0",
+      "sub_market": "correct_score_ht",
+      "line": "",
+      "odds": 20.0,
+      "stake": 215,
+      "model_prob": 0.0556,
+      "ev_pct": 11.21,
+      "pin_odds": 15.8,
+      "fair_price": 17.9833,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788118200,
+      "created_at": "2026-08-30T09:31:41.334343+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_拉齐奥_热那亚_上半场正确比分2-0",
+      "sport": "football",
+      "league": "意大利甲级联赛",
+      "home_team": "拉齐奥",
+      "away_team": "热那亚",
+      "home_cn": "拉齐奥",
+      "away_cn": "热那亚",
+      "market": "1x2",
+      "market_type": "上半场正确比分2-0",
+      "sub_market": "correct_score_ht",
+      "line": "",
+      "odds": 16.9,
+      "stake": 176,
+      "model_prob": 0.0645,
+      "ev_pct": 8.94,
+      "pin_odds": 13.68,
+      "fair_price": 15.5125,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788115500,
+      "created_at": "2026-08-30T09:31:41.334434+00:00",
       "track_only": false
     }
   ],
@@ -8510,8 +8556,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 3547.0,
-    "bets": 39
+    "used": 3938.0,
+    "bets": 41
   },
   "updated": null
 }
