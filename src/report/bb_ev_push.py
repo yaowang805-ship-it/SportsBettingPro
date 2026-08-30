@@ -1886,10 +1886,19 @@ def _collect_opportunities_from_file():
         # 兜底key含联赛, 避免同运动同时刻同盘口的不同比赛被误合并(周六22:00十场足球全推"主胜")
         key_time_only = (sport, league, start, designation)      # BB/FB队名完全不同时兜底
 
-        existing = (best_per_match.get(key_exact) or
-                    best_per_match.get(key_home_time) or
-                    best_per_match.get(key_away_time) or
-                    best_per_match.get(key_time_only))
+        # 2026-08-30: 比分类盘口(correct_score_ht/htft等)的 designation 是具体比分, 不同比赛相同比分是
+        # 正常的不同机会, 不能用 time_only(不含队名)兜底合并 — 否则周六22:00十场英超的"1-1"被误合并成1个。
+        _sm = o.get("_sub_market", o.get("_market", ""))
+        if _sm in ("correct_score_ht", "correct_score", "htft", "exact_goals_ht"):
+            _keys = (key_exact,)
+        else:
+            _keys = (key_exact, key_home_time, key_away_time, key_time_only)
+
+        existing = None
+        for _k in _keys:
+            existing = best_per_match.get(_k)
+            if existing is not None:
+                break
 
         if existing is None or o.get("bb_odds", 0) > existing.get("bb_odds", 0):
             # 替换旧条目时，清理指向旧对象的所有 key
@@ -1897,8 +1906,8 @@ def _collect_opportunities_from_file():
                 stale = [k for k, v in best_per_match.items() if v is existing]
                 for k in stale:
                     del best_per_match[k]
-            for k in (key_exact, key_home_time, key_away_time, key_time_only):
-                best_per_match[k] = o
+            for _k in _keys:
+                best_per_match[_k] = o
 
     unique_count = len({id(v) for v in best_per_match.values()})
     if unique_count < len(merged):
