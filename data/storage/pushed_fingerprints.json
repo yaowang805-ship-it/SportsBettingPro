@@ -993,6 +993,14 @@
     "ev": 4.42,
     "ts": 1787977795.255317
   },
+  "football|Brazil Copa do Brasil|Atletico Mineiro MG|Cruzeiro EC MG|半/全场-客/主|htft|2026-09-02": {
+    "ev": 40.23,
+    "ts": 1788101193.533834
+  },
+  "football|Brazil Copa do Brasil|Atletico Mineiro MG|Cruzeiro EC MG|单双-双|oe|2026-09-02": {
+    "ev": 2.06,
+    "ts": 1788101193.533791
+  },
   "football|Brazil Copa do Brasil|Atletico Mineiro MG|Cruzeiro EC MG|双边进球-是|btts|2026-09-02": {
     "ev": 5.4,
     "ts": 1788054008.078002
@@ -2888,6 +2896,11 @@
   "football|England League Two|crington Stanley|Grimsby Town|半/全场-客/主|htft|2026-09-02": {
     "ev": 4.09,
     "ts": 1788100652.0881898
+  },
+  "football|England League Two|切尔滕汉姆|约克城|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 20.02,
+    "bb": 26.0,
+    "ts": 1788101193.0196428
   },
   "football|England National League South|Dagenham and Redbridge FC|Slough Town FC|上半场主胜|ht|2026-08-31": {
     "ev": 8.52,
@@ -7492,9 +7505,17 @@
     "ev": 10.47,
     "ts": 1787975485.213216
   },
+  "football|Spain LaLiga|Osasuna|Getafe CF|上半场正确比分2-0|correct_score_ht|2026-09-01": {
+    "ev": 11.32,
+    "ts": 1788101193.534546
+  },
   "football|Spain LaLiga|Osasuna|Getafe CF|半/全场-主/和局|htft|2026-09-01": {
     "ev": 2.45,
     "ts": 1788098326.7473788
+  },
+  "football|Spain LaLiga|Osasuna|Getafe CF|半/全场-客/主|htft|2026-09-01": {
+    "ev": 35.43,
+    "ts": 1788101193.532688
   },
   "football|Spain LaLiga|Real Madrid|Malaga CF|上半场客胜|ht|2026-08-30": {
     "ev": 3.43,
@@ -7587,6 +7608,11 @@
     "ev": 9.99,
     "bb": 5.75,
     "ts": 1788001352.983698
+  },
+  "football|Spain LaLiga|奥萨苏纳|赫塔菲|上半场客胜|ht|2026-09-01": {
+    "ev": 11.29,
+    "bb": 6.35,
+    "ts": 1788101193.019573
   },
   "football|Spain LaLiga|巴塞罗那|巴列卡诺|上半场正确比分0-1|correct_score_ht|2026-09-01": {
     "ev": 9.26,
@@ -9179,14 +9205,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Spain LaLiga|奥萨苏纳|赫塔菲|上半场客胜|ht|2026-09-01": {
-    "ev": 11.29,
-    "bb": 6.35,
-    "ts": 1788101193.019573
+  "football|Spain LaLiga 2|FC安道尔|埃瓦尔|半/全场-主/客|htft|2026-08-30": {
+    "ev": 17.29,
+    "bb": 38.0,
+    "ts": 1788101419.753844
   },
-  "football|England League Two|切尔滕汉姆|约克城|上半场正确比分2-0|correct_score_ht|2026-09-02": {
-    "ev": 20.02,
-    "bb": 26.0,
-    "ts": 1788101193.0196428
+  "football|Spain LaLiga 2|FC安道尔|埃瓦尔|上半场客胜|ht|2026-08-30": {
+    "ev": 8.71,
+    "bb": 4.93,
+    "ts": 1788101419.753887
   }
 }
