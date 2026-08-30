@@ -1633,6 +1633,10 @@
     "ev": 1.51,
     "ts": 1788122152.150949
   },
+  "football|Brazil Serie B|Fortaleza EC CE|Operario Ferroviario EC PR|上半场双重机会-主/客|ht_dc|2026-09-01": {
+    "ev": 2.02,
+    "ts": 1788128648.570883
+  },
   "football|Brazil Serie B|Fortaleza EC CE|Operario Ferroviario EC PR|上半场客胜|ht|2026-09-01": {
     "ev": 4.97,
     "ts": 1788125598.981559
@@ -2986,9 +2990,17 @@
     "ev": 1.78,
     "ts": 1788121759.31441
   },
+  "football|Egypt Premier League|Ceramica Cleopatra|Modern Sport FC|上半场双重机会-主/客|ht_dc|2026-09-03": {
+    "ev": 7.26,
+    "ts": 1788128648.5712
+  },
   "football|Egypt Premier League|Ceramica Cleopatra|Modern Sport FC|半/全场-主/客|htft|2026-09-03": {
     "ev": 89.69,
     "ts": 1788112337.728708
+  },
+  "football|Egypt Premier League|Ceramica Cleopatra|Modern Sport FC|半/全场-客/主|htft|2026-09-03": {
+    "ev": 5.4,
+    "ts": 1788128648.571125
   },
   "football|Egypt Premier League|Ghazl El Mahallah|Enppi Club|上半场双重机会-主/客|ht_dc|2026-09-01": {
     "ev": 4.26,
@@ -3038,6 +3050,11 @@
     "ev": 17.36,
     "bb": 49.0,
     "ts": 1788124838.578325
+  },
+  "football|Egypt Premier League|瑟亚米卡|未来FC|半/全场-客/主|htft|2026-09-03": {
+    "ev": 5.4,
+    "bb": 19.6,
+    "ts": 1788128647.719915
   },
   "football|El Salvador Primera Division|Alianza FC San Salvador|Atletico Balboa|主胜|1x2|2026-08-30": {
     "ev": 4.4,
@@ -10557,6 +10574,10 @@
     "ev": 1.26,
     "ts": 1788044963.3054059
   },
+  "football|USA Major League Soccer|Saint Louis City SC|FC Dallas|让球主胜|1x2|2026-08-31": {
+    "ev": 1.44,
+    "ts": 1788128737.719606
+  },
   "football|USA Major League Soccer|San Diego FC|Los Angeles Galaxy|上半场主胜|ht|2026-08-30": {
     "ev": 1.13,
     "ts": 1788056210.867609
@@ -11212,9 +11233,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Egypt Premier League|瑟亚米卡|未来FC|半/全场-客/主|htft|2026-09-03": {
-    "ev": 5.4,
-    "bb": 19.6,
-    "ts": 1788128647.719915
+  "football|Mexico Liga MX|托卢卡|华雷斯|上半场客胜|ht|2026-08-31": {
+    "ev": 10.44,
+    "bb": 10.7,
+    "ts": 1788129251.266477
   }
 }
