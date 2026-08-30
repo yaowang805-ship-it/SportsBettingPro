@@ -1649,6 +1649,10 @@
     "ev": 4.97,
     "ts": 1788125598.981559
   },
+  "football|Brazil Serie B|Fortaleza EC CE|Operario Ferroviario EC PR|半/全场-主/和局|htft|2026-09-01": {
+    "ev": 4.63,
+    "ts": 1788129385.8079932
+  },
   "football|Brazil Serie B|Londrina EC PR|EC Juventude RS|上半场双重机会-主/客|ht_dc|2026-09-02": {
     "ev": 1.98,
     "ts": 1788047421.792023
@@ -1686,6 +1690,11 @@
     "ev": 4.51,
     "bb": 2.05,
     "ts": 1787965512.805941
+  },
+  "football|Brazil Serie B|福塔雷萨|欧帕尔利奥|半/全场-主/和局|htft|2026-09-01": {
+    "ev": 4.63,
+    "bb": 14.7,
+    "ts": 1788129384.843807
   },
   "football|Brazil Serie B|维拉诺瓦|塞阿拉|半/全场-主/和局|htft|2026-08-31": {
     "ev": 5.76,
@@ -2835,6 +2844,10 @@
   "football|Ecuador LigaPro Primera A|CSD Independiente del Valle|Universidad Catolica del Ecuador|让球主胜|1x2|2026-08-30": {
     "ev": 1.93,
     "ts": 1788024320.279945
+  },
+  "football|Ecuador LigaPro Primera A|CSD Macara|Manta FC|上半场双重机会-主/客|ht_dc|2026-09-03": {
+    "ev": 3.91,
+    "ts": 1788129877.789611
   },
   "football|Ecuador LigaPro Primera A|Cuenca|Guayaquil City FC|上半场客胜|ht|2026-09-03": {
     "ev": 1.16,
@@ -10375,9 +10388,17 @@
     "ev": 2.15,
     "ts": 1788110708.379404
   },
+  "football|USA MLS Next Pro|New England Revolution II|Huntsville City FC|和局|1x2|2026-08-31": {
+    "ev": 2.74,
+    "ts": 1788129982.728457
+  },
   "football|USA MLS Next Pro|New England Revolution II|Huntsville City FC|小球|1x2|2026-08-31": {
     "ev": 1.75,
     "ts": 1788034554.288384
+  },
+  "football|USA MLS Next Pro|New England Revolution II|Huntsville City FC|让球主胜|1x2|2026-08-31": {
+    "ev": 2.52,
+    "ts": 1788130548.605835
   },
   "football|USA MLS Next Pro|Portland Timbers II|Austin FC II|双边进球-是|btts|2026-08-31": {
     "ev": 1.27,
@@ -11226,6 +11247,10 @@
     "ev": 2.24,
     "ts": 1788063294.4757602
   },
+  "tennis|ATP Challenger - Como Open|Norbert Gombos (SVK)|Svyatoslav Gulin (RUS)|第1盘客胜|ht|2026-08-31": {
+    "ev": 2.18,
+    "ts": 1788129646.14774
+  },
   "tennis|ATP Challenger - Como Open|Olle Wallin (SWE)|Niccolo Catini (ITA)|主胜|1x2|2026-08-30": {
     "ev": 1.09,
     "ts": 1788063294.475678
@@ -11262,9 +11287,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Brazil Serie B|福塔雷萨|欧帕尔利奥|半/全场-主/和局|htft|2026-09-01": {
-    "ev": 4.63,
-    "bb": 14.7,
-    "ts": 1788129384.843807
+  "football|Costa Rica Primera Division|萨普里萨|贝伦蝎子|半/全场-和局/客|htft|2026-08-31": {
+    "ev": 5.96,
+    "bb": 22.0,
+    "ts": 1788131037.629324
   }
 }
