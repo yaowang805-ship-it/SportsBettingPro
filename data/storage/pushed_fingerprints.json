@@ -2509,6 +2509,11 @@
     "bb": 6.75,
     "ts": 1788064051.831028
   },
+  "football|Ecuador LigaPro Primera A|埃梅莱克|北莱昂斯|半/全场-客/主|htft|2026-08-31": {
+    "ev": 10.63,
+    "bb": 27.0,
+    "ts": 1788102738.681323
+  },
   "football|Ecuador LigaPro Primera A|奥伦斯|马卡拉|半/全场-客/主|htft|2026-08-31": {
     "ev": 21.19,
     "bb": 29.0,
@@ -5146,6 +5151,10 @@
     "ev": 4.5,
     "ts": 1787993927.3019462
   },
+  "football|Latvia Virsliga|FK Liepaja|Riga FC|上半场客胜|ht|2026-08-31": {
+    "ev": 4.41,
+    "ts": 1788102739.25584
+  },
   "football|Latvia Virsliga|Ogre United|FK Rigas Futbola Skola|大球|1x2|2026-08-30": {
     "ev": 2.02,
     "ts": 1788021144.4556239
@@ -5668,6 +5677,11 @@
   "football|Nicaragua Primera Division|San Marcos FC|Walter Ferretti|客胜|1x2|2026-08-31": {
     "ev": 8.21,
     "ts": 1788080947.519546
+  },
+  "football|Nicaragua Primera Division|圣马科斯|沃尔特费雷蒂|客胜|1x2|2026-08-31": {
+    "ev": 7.49,
+    "bb": 1.97,
+    "ts": 1788102738.6812391
   },
   "football|Norway 1st Division Women|Grei Kvinner Elite FK (w)|Klepp (w)|大球|1x2|2026-08-30": {
     "ev": 1.02,
@@ -9348,14 +9362,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Nicaragua Primera Division|圣马科斯|沃尔特费雷蒂|客胜|1x2|2026-08-31": {
-    "ev": 7.49,
-    "bb": 1.97,
-    "ts": 1788102738.6812391
-  },
-  "football|Ecuador LigaPro Primera A|埃梅莱克|北莱昂斯|半/全场-客/主|htft|2026-08-31": {
-    "ev": 10.63,
-    "bb": 27.0,
-    "ts": 1788102738.681323
+  "football|Poland Ekstraklasa|扎布热矿工|GKS卡托威斯|上半场正确比分1-2|correct_score_ht|2026-08-30": {
+    "ev": 3.69,
+    "bb": 29.0,
+    "ts": 1788103186.0238159
   }
 }
