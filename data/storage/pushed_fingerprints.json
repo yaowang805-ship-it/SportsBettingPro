@@ -139,6 +139,14 @@
     "ev": 1.91,
     "ts": 1788031257.1028512
   },
+  "basketball|Mexico LNBP Basketball League|Dorados de Chihuahua|Mineros de Zacatecas|主胜|1x2|2026-08-31": {
+    "ev": 1.16,
+    "ts": 1788048410.5821178
+  },
+  "basketball|Mexico LNBP Basketball League|Dorados de Chihuahua|Mineros de Zacatecas|小分|1x2|2026-08-31": {
+    "ev": 2.54,
+    "ts": 1788048410.582166
+  },
   "basketball|Mexico LNBP Basketball League|Freseros de Irapuato|Astros de Jalisco|主胜|1x2|2026-08-30": {
     "ev": 13.77,
     "ts": 1787982573.415055
@@ -242,6 +250,10 @@
   "football|Argentina Liga Profesional|Atletico Tucuman|Belgrano|上半场精确进球others|exact_goals_ht|2026-08-30": {
     "ev": 11.81,
     "ts": 1787963720.65418
+  },
+  "football|Argentina Liga Profesional|Atletico Tucuman|Belgrano|半/全场-主/和局|htft|2026-08-30": {
+    "ev": 21.1,
+    "ts": 1788049846.4725819
   },
   "football|Argentina Liga Profesional|Atletico Tucuman|Belgrano|单双-双|oe|2026-08-30": {
     "ev": 1.05,
@@ -402,6 +414,10 @@
   "football|Argentina Liga Profesional|Talleres de Cordoba|Central Cordoba SE|主胜|1x2|2026-08-30": {
     "ev": 2.95,
     "ts": 1788019792.315946
+  },
+  "football|Argentina Liga Profesional|Talleres de Cordoba|Central Cordoba SE|半/全场-主/和局|htft|2026-08-30": {
+    "ev": 10.64,
+    "ts": 1788049846.4723892
   },
   "football|Argentina Liga Profesional|Talleres de Cordoba|Central Cordoba SE|双重机会-和局/客|dc|2026-08-30": {
     "ev": 2.12,
@@ -3901,6 +3917,10 @@
     "ev": 5.01,
     "ts": 1787981781.43723
   },
+  "football|England League One|Mansfield Town|Luton Town|角球大球|corner|2026-08-30": {
+    "ev": 1.06,
+    "ts": 1788048410.582217
+  },
   "football|England League One|Mansfield Town|Luton Town|让球客胜|1x2|2026-08-30": {
     "ev": 8.53,
     "ts": 1788002630.834858
@@ -6812,9 +6832,22 @@
     "ev": 2.52,
     "ts": 1787971789.877599
   },
+  "football|Hong Kong Premier League|Tai Po FC|Eastern SC|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 1.6,
+    "ts": 1788048410.5763001
+  },
   "football|Hungary NB I Women|Pecsi MFC (w)|Szent Mihaly SE (w)|大球|1x2|2026-08-30": {
     "ev": 5.74,
     "ts": 1788048051.930433
+  },
+  "football|Hungary NB I Women|Pecsi MFC (w)|Szent Mihaly SE (w)|客胜|1x2|2026-08-30": {
+    "ev": 20.77,
+    "ts": 1788048410.5763462
+  },
+  "football|Hungary NB I Women|佩奇 (女)|圣米歇尔 SE (女)|客胜|1x2|2026-08-30": {
+    "ev": 20.77,
+    "bb": 4.23,
+    "ts": 1788048409.9854531
   },
   "football|Hungary NB III|Budaorsi SC|Budafoki MTE|客胜|1x2|2026-08-29": {
     "ev": 2.1,
@@ -9401,6 +9434,14 @@
     "ev": 3.73,
     "ts": 1787975485.217587
   },
+  "football|Mexico Liga De Expansion MX|Mineros de Zacatecas|Jaiba Brava|主胜|1x2|2026-08-30": {
+    "ev": 1.72,
+    "ts": 1788050113.332362
+  },
+  "football|Mexico Liga De Expansion MX|Mineros de Zacatecas|Jaiba Brava|让球主胜|1x2|2026-08-30": {
+    "ev": 3.9,
+    "ts": 1788050113.332421
+  },
   "football|Mexico Liga De Expansion MX|Tlaxcala FC|Venados FC|上半场主胜|ht|2026-08-30": {
     "ev": 1.35,
     "ts": 1788030300.857141
@@ -10207,9 +10248,17 @@
     "bb": 8.85,
     "ts": 1787942473.499585
   },
+  "football|Norway 1st Division|Bryne FK|FK Haugesund|上半场正确比分2-0|correct_score_ht|2026-08-30": {
+    "ev": 1.77,
+    "ts": 1788049663.289872
+  },
   "football|Norway 1st Division|Bryne FK|FK Haugesund|总进球区间7+|total_goals_range|2026-08-30": {
     "ev": 8.41,
     "ts": 1787981781.439451
+  },
+  "football|Norway 1st Division|Bryne FK|FK Haugesund|让球主胜|1x2|2026-08-30": {
+    "ev": 3.3,
+    "ts": 1788049663.285218
   },
   "football|Norway 1st Division|Egersunds IK|Asane Fotball|上半场正确比分1-2|correct_score_ht|2026-08-30": {
     "ev": 3.92,
@@ -10359,6 +10408,10 @@
   "football|Peru Liga 1|Alianza Lima|Deportivo Garcilaso|上半场客胜|ht|2026-08-30": {
     "ev": 5.92,
     "ts": 1788044533.223888
+  },
+  "football|Peru Liga 1|Alianza Lima|Deportivo Garcilaso|主胜|1x2|2026-08-30": {
+    "ev": 2.15,
+    "ts": 1788049846.4733398
   },
   "football|Peru Liga 1|Alianza Lima|Deportivo Garcilaso|单双-双|oe|2026-08-30": {
     "ev": 2.7,
@@ -11676,6 +11729,10 @@
     "ev": 2.17,
     "ts": 1788019792.31773
   },
+  "football|Russia Premier League|Rodina Moscow|FC Baltika Kaliningrad|上半场双重机会-主/客|ht_dc|2026-08-30": {
+    "ev": 1.41,
+    "ts": 1788048410.576726
+  },
   "football|Russia Premier League|Rodina Moscow|FC Baltika Kaliningrad|半/全场-客/主|htft|2026-08-30": {
     "ev": 3.61,
     "ts": 1787981781.4209018
@@ -11709,6 +11766,11 @@
     "ev": 5.6,
     "bb": 1.83,
     "ts": 1788003392.468294
+  },
+  "football|Russia Premier League|莫斯科罗迪纳|巴蒂卡|上半场主胜|ht|2026-08-30": {
+    "ev": 3.43,
+    "bb": 4.9,
+    "ts": 1788048409.9855008
   },
   "football|Saudi Arabia Division 1|Damac FC|Al Orobah FC|上半场主胜|ht|2026-08-29": {
     "ev": 2.11,
@@ -14993,6 +15055,10 @@
     "ev": 1.21,
     "ts": 1788017515.813374
   },
+  "football|USA Major League Soccer|Nashville SC|FC Cincinnati|上半场主胜|ht|2026-08-30": {
+    "ev": 1.47,
+    "ts": 1788049846.473145
+  },
   "football|USA Major League Soccer|Nashville SC|FC Cincinnati|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 29.62,
     "ts": 1787963720.654916
@@ -15012,6 +15078,14 @@
   "football|USA Major League Soccer|Nashville SC|FC Cincinnati|小球|1x2|2026-08-30": {
     "ev": 1.72,
     "ts": 1788017515.807989
+  },
+  "football|USA Major League Soccer|Nashville SC|FC Cincinnati|让球主胜|1x2|2026-08-30": {
+    "ev": 1.48,
+    "ts": 1788049846.473241
+  },
+  "football|USA Major League Soccer|Nashville SC|FC Cincinnati|让球客胜|1x2|2026-08-30": {
+    "ev": 1.95,
+    "ts": 1788049270.644992
   },
   "football|USA Major League Soccer|New York Red Bulls|Philadelphia Union|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 6.55,
@@ -15144,6 +15218,10 @@
   "football|USA Major League Soccer|Sporting Kansas City|Vancouver Whitecaps FC|上半场客胜|ht|2026-08-30": {
     "ev": 1.07,
     "ts": 1787978198.446879
+  },
+  "football|USA Major League Soccer|Sporting Kansas City|Vancouver Whitecaps FC|主胜|1x2|2026-08-30": {
+    "ev": 1.49,
+    "ts": 1788049551.795656
   },
   "football|USA Major League Soccer|Sporting Kansas City|Vancouver Whitecaps FC|双重机会-主/和局|dc|2026-08-30": {
     "ev": 1.5,
@@ -15370,6 +15448,10 @@
   "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 33.85,
     "ts": 1788045826.813376
+  },
+  "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|上半场正确比分2-1|correct_score_ht|2026-08-30": {
+    "ev": 2.63,
+    "ts": 1788048595.217084
   },
   "football|USL Championship|Monterey Bay FC|Sacramento Republic FC|客胜|1x2|2026-08-30": {
     "ev": 2.45,
@@ -15827,14 +15909,9 @@
     "ev": 4.6,
     "ts": 1787971686.701102
   },
-  "football|Hungary NB I Women|佩奇 (女)|圣米歇尔 SE (女)|客胜|1x2|2026-08-30": {
-    "ev": 20.77,
+  "football|Hungary NB I Women|佩奇 (女)|圣米歇尔SE (女)|客胜|1x2|2026-08-30": {
+    "ev": 20.61,
     "bb": 4.23,
-    "ts": 1788048409.9854531
-  },
-  "football|Russia Premier League|莫斯科罗迪纳|巴蒂卡|上半场主胜|ht|2026-08-30": {
-    "ev": 3.43,
-    "bb": 4.9,
-    "ts": 1788048409.9855008
+    "ts": 1788050252.772018
   }
 }
