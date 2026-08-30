@@ -1045,6 +1045,11 @@
     "ev": 9.43,
     "ts": 1788054008.0779588
   },
+  "football|Brazil Copa do Brasil|米内罗竞技|克鲁塞罗MG|和局|1x2|2026-09-02": {
+    "ev": 6.48,
+    "bb": 3.16,
+    "ts": 1788105487.485193
+  },
   "football|Brazil Serie A|Atletico Mineiro MG|EC Vitoria BA|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 2.46,
     "ts": 1787965513.51795
@@ -3142,6 +3147,11 @@
     "bb": 26.0,
     "ts": 1788101193.0196428
   },
+  "football|England League Two|北安普敦|克劳利|半/全场-主/客|htft|2026-09-02": {
+    "ev": 5.3,
+    "bb": 33.0,
+    "ts": 1788105487.485346
+  },
   "football|England League Two|北安普敦|克劳利镇|半/全场-主/客|htft|2026-09-02": {
     "ev": 5.3,
     "bb": 33.0,
@@ -5059,6 +5069,10 @@
     "ev": 1.9,
     "ts": 1788004699.496712
   },
+  "football|Italy Serie C|Renate|AS Cittadella|上半场主胜|ht|2026-09-01": {
+    "ev": 1.75,
+    "ts": 1788105488.06141
+  },
   "football|Italy Serie C|SS Monopoli 1966|lcio Catania|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.47,
     "ts": 1787992456.121505
@@ -5855,6 +5869,10 @@
   "football|Netherlands Eerste Divisie|Jong PSV Eindhoven|Jong Ajax Amsterdam|上半场主胜|ht|2026-09-01": {
     "ev": 1.45,
     "ts": 1787975485.2072709
+  },
+  "football|Netherlands Eerste Divisie|Jong PSV Eindhoven|Jong Ajax Amsterdam|上半场正确比分0-2|correct_score_ht|2026-09-01": {
+    "ev": 2.45,
+    "ts": 1788105488.064318
   },
   "football|Netherlands Eerste Divisie|VVV Venlo|FC Emmen|让球主胜|1x2|2026-08-30": {
     "ev": 1.27,
@@ -8838,6 +8856,16 @@
     "bb": 44.0,
     "ts": 1788103440.9056919
   },
+  "football|Turkey 1. Lig|波卢斯堡|克斯欧仁古库|上半场正确比分2-1|correct_score_ht|2026-09-02": {
+    "ev": 3.3,
+    "bb": 29.0,
+    "ts": 1788105487.4853
+  },
+  "football|Turkey 1. Lig|波卢斯堡|克斯欧仁古库|半/全场-客/主|htft|2026-09-02": {
+    "ev": 13.05,
+    "bb": 44.0,
+    "ts": 1788105487.4852521
+  },
   "football|Turkey 1. Lig|马尼萨FK|波德鲁姆士邦|半/全场-主/客|htft|2026-08-31": {
     "ev": 5.71,
     "bb": 28.0,
@@ -9810,24 +9838,19 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Brazil Copa do Brasil|米内罗竞技|克鲁塞罗MG|和局|1x2|2026-09-02": {
-    "ev": 6.48,
-    "bb": 3.16,
-    "ts": 1788105487.485193
+  "football|Portugal Segunda Liga|波尔图二队|佩纳菲尔|客胜|1x2|2026-08-31": {
+    "ev": 7.34,
+    "bb": 2.69,
+    "ts": 1788105778.053623
   },
-  "football|Turkey 1. Lig|波卢斯堡|克斯欧仁古库|半/全场-客/主|htft|2026-09-02": {
-    "ev": 13.05,
-    "bb": 44.0,
-    "ts": 1788105487.4852521
+  "football|Taca de Portugal|雷博德卢|巴根卡|客胜|1x2|2026-08-31": {
+    "ev": 11.48,
+    "bb": 1.8,
+    "ts": 1788105778.0537128
   },
-  "football|Turkey 1. Lig|波卢斯堡|克斯欧仁古库|上半场正确比分2-1|correct_score_ht|2026-09-02": {
-    "ev": 3.3,
-    "bb": 29.0,
-    "ts": 1788105487.4853
-  },
-  "football|England League Two|北安普敦|克劳利|半/全场-主/客|htft|2026-09-02": {
-    "ev": 5.3,
-    "bb": 33.0,
-    "ts": 1788105487.485346
+  "football|Russia Premier League|喀山红宝石|马哈奇卡拉|半/全场-客/主|htft|2026-08-31": {
+    "ev": 27.69,
+    "bb": 35.0,
+    "ts": 1788105778.053797
   }
 }
