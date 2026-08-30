@@ -59,27 +59,27 @@ def _extract_three_way(market: dict, cfg: dict):
 
 
 def _fetch_participant_names(tournament_ids):
-    """拿 participantId → 队名映射(通过 /fixtures)。"""
+    """拿 participantId → 队名映射(通过 /fixtures)。/fixtures 只支持单数 tournamentId, 逐个查。"""
     name_map = {}
-    if isinstance(tournament_ids, (list, tuple)):
-        tournament_ids = ",".join(str(t) for t in tournament_ids)
-    try:
-        r = requests.get(
-            f"{ODDSPAPI_BASE}/fixtures",
-            params={"apiKey": ODDSPAPI_KEY, "sportId": 10, "tournamentId": tournament_ids},
-            timeout=30,
-        )
-        r.raise_for_status()
-        data = r.json()
-    except Exception:
-        return name_map
-    for fx in data:
-        p1, p2 = fx.get("participant1Id"), fx.get("participant2Id")
-        n1, n2 = fx.get("participant1Name"), fx.get("participant2Name")
-        if p1 and n1:
-            name_map[str(p1)] = n1
-        if p2 and n2:
-            name_map[str(p2)] = n2
+    ids = tournament_ids.split(",") if isinstance(tournament_ids, str) else tournament_ids
+    for tid in ids:
+        try:
+            r = requests.get(
+                f"{ODDSPAPI_BASE}/fixtures",
+                params={"apiKey": ODDSPAPI_KEY, "sportId": 10, "tournamentId": str(tid).strip()},
+                timeout=30,
+            )
+            r.raise_for_status()
+            data = r.json()
+        except Exception:
+            continue
+        for fx in data:
+            p1, p2 = fx.get("participant1Id"), fx.get("participant2Id")
+            n1, n2 = fx.get("participant1Name"), fx.get("participant2Name")
+            if p1 and n1:
+                name_map[str(p1)] = n1
+            if p2 and n2:
+                name_map[str(p2)] = n2
     return name_map
 
 
