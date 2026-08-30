@@ -1,5 +1,5 @@
 {
-  "balance": 1594.53,
+  "balance": 1524.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3289,6 +3289,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788184800,
       "created_at": "2026-08-30T14:02:27.265949+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_格兰森林流浪_奥特林查姆_上半场正确比分1-2",
+      "sport": "football",
+      "league": "英格兰足球议会全国联赛",
+      "home_team": "格兰森林流浪",
+      "away_team": "奥特林查姆",
+      "home_cn": "格兰森林流浪",
+      "away_cn": "奥特林查姆",
+      "market": "1x2",
+      "market_type": "上半场正确比分1-2",
+      "sub_market": "correct_score_ht",
+      "line": "",
+      "odds": 27.0,
+      "stake": 40,
+      "model_prob": 0.0394,
+      "ev_pct": 6.49,
+      "pin_odds": 20.75,
+      "fair_price": 25.3535,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788184800,
+      "created_at": "2026-08-30T14:07:12.001979+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_波士顿联队_侯恩乔奇_半/全场-客/主",
+      "sport": "football",
+      "league": "英格兰足球议会全国联赛",
+      "home_team": "波士顿联队",
+      "away_team": "侯恩乔奇",
+      "home_cn": "波士顿联队",
+      "away_cn": "侯恩乔奇",
+      "market": "1x2",
+      "market_type": "半/全场-客/主",
+      "sub_market": "htft",
+      "line": "",
+      "odds": 24.0,
+      "stake": 30,
+      "model_prob": 0.0443,
+      "ev_pct": 6.25,
+      "pin_odds": 19.03,
+      "fair_price": 22.5889,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788184800,
+      "created_at": "2026-08-30T14:07:12.002132+00:00",
       "track_only": false
     }
   ],
@@ -8861,8 +8907,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 8711.0,
-    "bets": 67
+    "used": 8781.0,
+    "bets": 69
   },
   "updated": null
 }
