@@ -957,6 +957,14 @@
     "ev": 8.77,
     "ts": 1787975485.211329
   },
+  "football|Brazil Serie A|Corinthians SP|Santos FC SP|双边进球-是|btts|2026-08-31": {
+    "ev": 1.39,
+    "ts": 1788084690.385088
+  },
+  "football|Brazil Serie A|Corinthians SP|Santos FC SP|大球|1x2|2026-08-31": {
+    "ev": 2.5,
+    "ts": 1788084690.385195
+  },
   "football|Brazil Serie A|EC Bahia BA|Internacional RS|上半场双重机会-主/客|ht_dc|2026-08-31": {
     "ev": 1.3,
     "ts": 1787975485.2116401
@@ -1121,6 +1129,11 @@
     "ev": 9.2,
     "bb": 5.4,
     "ts": 1788047693.259691
+  },
+  "football|Brazil Serie A|科林蒂安|桑托斯SP|上半场客胜|ht|2026-08-31": {
+    "ev": 9.02,
+    "bb": 6.3,
+    "ts": 1788084688.909141
   },
   "football|Brazil Serie A|米内罗竞技|维多利亚|上半场客胜|ht|2026-08-30": {
     "ev": 5.72,
@@ -4923,6 +4936,10 @@
     "ev": 11.09,
     "ts": 1788082325.022895
   },
+  "football|Netherlands Eerste Divisie|FC Eindhoven|Heracles Almelo|大球|1x2|2026-08-30": {
+    "ev": 3.43,
+    "ts": 1788084804.5811589
+  },
   "football|Netherlands Eerste Divisie|Jong AZ Alkmaar|Jong FC Utrecht|上半场正确比分0-2|correct_score_ht|2026-09-01": {
     "ev": 6.16,
     "ts": 1788084057.880888
@@ -4930,6 +4947,10 @@
   "football|Netherlands Eerste Divisie|Jong PSV Eindhoven|Jong Ajax Amsterdam|上半场主胜|ht|2026-09-01": {
     "ev": 1.45,
     "ts": 1787975485.2072709
+  },
+  "football|Netherlands Eerste Divisie|VVV Venlo|FC Emmen|让球主胜|1x2|2026-08-30": {
+    "ev": 1.27,
+    "ts": 1788084804.581024
   },
   "football|Netherlands Eredivisie|AZ Alkmaar|Go Ahead Eagles|双重机会-和局/客|dc|2026-08-30": {
     "ev": 2.23,
@@ -6018,6 +6039,10 @@
     "ev": 1.41,
     "ts": 1788048410.576726
   },
+  "football|Russia Premier League|Rodina Moscow|FC Baltika Kaliningrad|半/全场-主/和局|htft|2026-08-30": {
+    "ev": 3.67,
+    "ts": 1788084804.585679
+  },
   "football|Russia Premier League|Rodina Moscow|FC Baltika Kaliningrad|半/全场-客/主|htft|2026-08-30": {
     "ev": 4.55,
     "ts": 1788082325.0149682
@@ -6278,6 +6303,10 @@
     "ev": 1.57,
     "ts": 1787975485.207805
   },
+  "football|South Korea K-League 1|Gwangju FC|FC Seoul|主胜|1x2|2026-08-30": {
+    "ev": 1.29,
+    "ts": 1788084804.58127
+  },
   "football|South Korea K-League 1|Gwangju FC|FC Seoul|双重机会-主/和局|dc|2026-08-30": {
     "ev": 3.06,
     "ts": 1788082325.0130718
@@ -6363,6 +6392,10 @@
   "football|South Korea K-League 2|Gimhae FC|Yongin|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.2,
     "ts": 1788057388.0395489
+  },
+  "football|South Korea K-League 2|Gimhae FC|Yongin|单双-双|oe|2026-08-30": {
+    "ev": 1.57,
+    "ts": 1788084804.5817401
   },
   "football|South Korea K-League 2|Gimhae FC|Yongin|让球主胜|1x2|2026-08-30": {
     "ev": 1.36,
@@ -8126,6 +8159,10 @@
     "ev": 1.93,
     "ts": 1788022755.613209
   },
+  "football|Uruguay Primera Division|Cerro Largo|Liverpool Montevideo|上半场主胜|ht|2026-08-31": {
+    "ev": 1.31,
+    "ts": 1788084994.9770062
+  },
   "football|Uruguay Primera Division|Cerro Largo|Liverpool Montevideo|上半场双重机会-主/客|ht_dc|2026-08-31": {
     "ev": 1.34,
     "ts": 1787975485.2183812
@@ -8241,9 +8278,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Brazil Serie A|科林蒂安|桑托斯SP|上半场客胜|ht|2026-08-31": {
-    "ev": 9.02,
-    "bb": 6.3,
-    "ts": 1788084688.909141
+  "football|Uruguay Primera Division|塞罗拉尔戈|蒙特维多利物浦|上半场主胜|ht|2026-08-31": {
+    "ev": 3.86,
+    "bb": 4.88,
+    "ts": 1788085350.564224
   }
 }

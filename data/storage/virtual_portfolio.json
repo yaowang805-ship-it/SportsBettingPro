@@ -1,5 +1,5 @@
 {
-  "balance": 3643.53,
+  "balance": 2938.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3128,6 +3128,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788116400,
       "created_at": "2026-08-30T10:11:28.844098+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_塞罗拉尔戈_蒙特维多利物浦_上半场主胜",
+      "sport": "football",
+      "league": "乌拉圭甲级联赛",
+      "home_team": "塞罗拉尔戈",
+      "away_team": "蒙特维多利物浦",
+      "home_cn": "塞罗拉尔戈",
+      "away_cn": "蒙特维多利物浦",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.88,
+      "stake": 705,
+      "model_prob": 0.2128,
+      "ev_pct": 3.86,
+      "pin_odds": 4.27,
+      "fair_price": 4.6985,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788127200,
+      "created_at": "2026-08-30T10:22:30.437118+00:00",
       "track_only": false
     }
   ],
@@ -8655,8 +8678,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 6458.0,
-    "bets": 52
+    "used": 7163.0,
+    "bets": 53
   },
   "updated": null
 }
