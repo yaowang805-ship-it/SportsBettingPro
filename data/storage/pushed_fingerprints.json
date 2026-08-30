@@ -244,6 +244,10 @@
     "ev": 2.94,
     "ts": 1788029755.7022872
   },
+  "basketball|WNBA|Portland Fire (w)|Golden State Valkyries (w)|上半场客胜|ht|2026-08-31": {
+    "ev": 1.25,
+    "ts": 1788120359.934539
+  },
   "basketball|WNBA|Portland Fire (w)|Golden State Valkyries (w)|小分|1x2|2026-08-31": {
     "ev": 3.49,
     "ts": 1788096532.6320288
@@ -383,6 +387,10 @@
   "football|Argentina Liga Profesional|Independiente Avellaneda|Gimnasia Y Esgrima Mendoza|让球主胜|1x2|2026-08-31": {
     "ev": 1.52,
     "ts": 1788078876.771303
+  },
+  "football|Argentina Liga Profesional|Independiente Rivadavia|Racing Club Avellaneda|和局|1x2|2026-08-31": {
+    "ev": 1.01,
+    "ts": 1788120945.4399538
   },
   "football|Argentina Liga Profesional|Independiente Rivadavia|Racing Club Avellaneda|小球|1x2|2026-08-31": {
     "ev": 2.5,
@@ -574,6 +582,10 @@
     "ev": 1.01,
     "ts": 1788030891.585561
   },
+  "football|Argentina Primera Nacional|Racing de Cordoba|Colon de Santa Fe|上半场主胜|ht|2026-08-31": {
+    "ev": 2.96,
+    "ts": 1788119731.229287
+  },
   "football|Argentina Primera Nacional|Racing de Cordoba|Colon de Santa Fe|让球客胜|1x2|2026-08-31": {
     "ev": 16.12,
     "ts": 1788038038.8413749
@@ -595,6 +607,11 @@
     "ev": 5.89,
     "bb": 3.71,
     "ts": 1788114333.129406
+  },
+  "football|Argentina Primera Nacional|科多巴竞赛会|科隆竞技|上半场主胜|ht|2026-08-31": {
+    "ev": 2.96,
+    "bb": 4.49,
+    "ts": 1788119730.177809
   },
   "football|Armenia Premier League|FC Noah|Ararat Yerevan FC|双重机会-和局/客|dc|2026-08-31": {
     "ev": 1.36,
@@ -788,6 +805,10 @@
   "football|Azerbaijan Premier League|Safa|Imisli FK|和局|1x2|2026-08-30": {
     "ev": 4.51,
     "ts": 1788019458.026774
+  },
+  "football|Azerbaijan Premier League|Sumgayit FK|Qarabag FK|大球|1x2|2026-09-01": {
+    "ev": 3.44,
+    "ts": 1788120830.591275
   },
   "football|Azerbaijan Premier League|Zira FK|FK Neftchi Baku|主胜|1x2|2026-08-31": {
     "ev": 4.15,
@@ -2025,6 +2046,10 @@
     "ev": 2.5,
     "ts": 1788052423.05476
   },
+  "football|Colombia Primera A|Deportivo Cali|Bucaramanga|大球|1x2|2026-08-31": {
+    "ev": 2.44,
+    "ts": 1788120359.934669
+  },
   "football|Colombia Primera A|Fortaleza CEIF|Once Caldas|双边进球-是|btts|2026-09-02": {
     "ev": 1.02,
     "ts": 1788052355.872129
@@ -2775,6 +2800,10 @@
     "ev": 1.5,
     "ts": 1787998834.8783731
   },
+  "football|Ecuador LigaPro Primera A|Orense SC|CSD Macara|上半场客胜|ht|2026-08-31": {
+    "ev": 4.98,
+    "ts": 1788120359.9339
+  },
   "football|Ecuador LigaPro Primera A|Orense SC|CSD Macara|半/全场-主/客|htft|2026-08-31": {
     "ev": 12.15,
     "ts": 1788114947.1250298
@@ -2782,6 +2811,10 @@
   "football|Ecuador LigaPro Primera A|Orense SC|CSD Macara|半/全场-客/主|htft|2026-08-31": {
     "ev": 17.01,
     "ts": 1788092091.893753
+  },
+  "football|Ecuador LigaPro Primera A|Orense SC|CSD Macara|让球客胜|1x2|2026-08-31": {
+    "ev": 4.0,
+    "ts": 1788120359.9339929
   },
   "football|Ecuador LigaPro Primera A|SD Aucas|Libertad Loja|上半场双重机会-主/客|ht_dc|2026-08-31": {
     "ev": 1.23,
@@ -3680,6 +3713,22 @@
   "football|England National League|Eastleigh FC|Aldershot Town FC|上半场正确比分others|correct_score_ht|2026-08-31": {
     "ev": 7.41,
     "ts": 1788098548.717449
+  },
+  "football|England National League|FC Halifax Town|Hartlepool United FC|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 1.83,
+    "ts": 1788121240.9428868
+  },
+  "football|England National League|FC Halifax Town|Hartlepool United FC|上半场正确比分others|correct_score_ht|2026-09-02": {
+    "ev": 26.08,
+    "ts": 1788121240.9429288
+  },
+  "football|England National League|FC Halifax Town|Hartlepool United FC|半/全场-客/主|htft|2026-09-02": {
+    "ev": 1.57,
+    "ts": 1788121240.940732
+  },
+  "football|England National League|FC Halifax Town|Hartlepool United FC|总进球区间7+|total_goals_range|2026-09-02": {
+    "ev": 53.88,
+    "ts": 1788121240.942843
   },
   "football|England National League|Forest Green Rovers|Altrincham FC|上半场正确比分1-2|correct_score_ht|2026-08-31": {
     "ev": 2.55,
@@ -4954,6 +5003,10 @@
   "football|Italy Serie A|Atalanta BC|Bologna FC|上半场客胜|ht|2026-09-01": {
     "ev": 1.23,
     "ts": 1788039858.3961449
+  },
+  "football|Italy Serie A|Atalanta BC|Bologna FC|上半场正确比分2-0|correct_score_ht|2026-09-01": {
+    "ev": 3.44,
+    "ts": 1788121466.904023
   },
   "football|Italy Serie A|Atalanta BC|Bologna FC|上半场正确比分others|correct_score_ht|2026-09-01": {
     "ev": 20.37,
@@ -9040,6 +9093,10 @@
     "ev": 35.43,
     "ts": 1788101193.532688
   },
+  "football|Spain LaLiga|Osasuna|Getafe CF|和局|1x2|2026-09-01": {
+    "ev": 1.16,
+    "ts": 1788119863.9617121
+  },
   "football|Spain LaLiga|Real Madrid|Malaga CF|上半场客胜|ht|2026-08-30": {
     "ev": 3.43,
     "ts": 1787981781.4251049
@@ -9225,6 +9282,10 @@
   "football|Sweden Allsvenskan|GAIS|IF Brommapojkarna|上半场双重机会-主/客|ht_dc|2026-09-01": {
     "ev": 1.23,
     "ts": 1788038185.468998
+  },
+  "football|Sweden Allsvenskan|GAIS|IF Brommapojkarna|主胜|1x2|2026-09-01": {
+    "ev": 1.56,
+    "ts": 1788120173.314705
   },
   "football|Sweden Allsvenskan|GAIS|IF Brommapojkarna|半/全场-主/客|htft|2026-09-01": {
     "ev": 4.76,
@@ -10409,6 +10470,10 @@
     "ev": 3.72,
     "ts": 1788108090.801905
   },
+  "football|USA National Women Soccer League|Boston Legacy FC (w)|Angel City FC (w)|让球客胜|1x2|2026-09-01": {
+    "ev": 5.03,
+    "ts": 1788119996.029291
+  },
   "football|USA National Women Soccer League|Denver Summit FC (w)|Chicago Red Stars (w)|双重机会-和局/客|dc|2026-08-30": {
     "ev": 9.85,
     "ts": 1787996400.408192
@@ -10928,9 +10993,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Argentina Primera Nacional|科多巴竞赛会|科隆竞技|上半场主胜|ht|2026-08-31": {
-    "ev": 2.96,
-    "bb": 4.49,
-    "ts": 1788119730.177809
+  "football|USA Major League Soccer|哥伦布机员|新英格兰革命|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 6.23,
+    "bb": 13.8,
+    "ts": 1788121583.3574028
   }
 }
