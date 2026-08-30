@@ -1,5 +1,5 @@
 {
-  "balance": 2938.53,
+  "balance": 2848.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3151,6 +3151,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788127200,
       "created_at": "2026-08-30T10:22:30.437118+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_阿伦达尔_里塞克罗斯特_双重机会-和局/客",
+      "sport": "football",
+      "league": "挪威乙级联赛",
+      "home_team": "阿伦达尔",
+      "away_team": "里塞克罗斯特",
+      "home_cn": "阿伦达尔",
+      "away_cn": "里塞克罗斯特",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 4.71,
+      "stake": 90,
+      "model_prob": 0.2538,
+      "ev_pct": 19.55,
+      "pin_odds": 3.75,
+      "fair_price": 3.9398,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788098400,
+      "created_at": "2026-08-30T10:52:27.127755+00:00",
       "track_only": false
     }
   ],
@@ -8678,8 +8701,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 7163.0,
-    "bets": 53
+    "used": 7253.0,
+    "bets": 54
   },
   "updated": null
 }
