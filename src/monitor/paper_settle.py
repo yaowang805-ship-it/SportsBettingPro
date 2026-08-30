@@ -32,6 +32,9 @@ DAILY_BUDGET = 20000.0  # 每日虚拟投注额(与实盘日预算一致)
 
 # 赛果窗口: 开赛后至少等这么久才结算(BB 赛果有时效窗口 ~24-48h, 太早可能还没出)
 SETTLE_AFTER_HOURS = 2.0
+# 增量过滤(2026-08-30): 开赛超过 48h 的样本 BB getMatchDetail 返回空壳(赛果时效窗口),
+# 永久跳过, 不再每次 do_settle 都重试老样本(此前 1002 条老样本每次都要调 BB, 拖 settle 到 15min)
+SETTLE_MAX_AGE_HOURS = 48.0
 
 
 def _key(sport, home_pin, away_pin, designation, sub_market, match_epoch):
@@ -95,6 +98,8 @@ def settle_paper(dry_run: bool = False) -> dict:
         epoch = int(r.get("match_epoch") or 0)
         if epoch > 0 and (now - epoch) < SETTLE_AFTER_HOURS * 3600:
             continue  # 还没到结算时间(开赛后 2h 才出最终比分)
+        if epoch > 0 and (now - epoch) > SETTLE_MAX_AGE_HOURS * 3600:
+            continue  # 增量过滤: 开赛超48h BB拿不到赛果(空壳), 永久跳过
         bid = r.get("bb_match_id", "").strip()
         sport = r.get("sport", "")
         sub_market = r.get("sub_market", "")
