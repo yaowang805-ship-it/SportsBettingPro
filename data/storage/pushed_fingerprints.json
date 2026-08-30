@@ -1971,6 +1971,14 @@
     "ev": 1.94,
     "ts": 1788033548.2260501
   },
+  "football|Colombia Primera A|Aguilas Doradas|Boyaca Chico FC|双重机会-和局/客|dc|2026-08-31": {
+    "ev": 6.71,
+    "ts": 1788114947.123789
+  },
+  "football|Colombia Primera A|Aguilas Doradas|Boyaca Chico FC|让球客胜|1x2|2026-08-31": {
+    "ev": 6.18,
+    "ts": 1788114947.123714
+  },
   "football|Colombia Primera A|Alianza FC|Atletico Nacional Medellin|客胜|1x2|2026-08-30": {
     "ev": 1.37,
     "ts": 1788052045.75963
@@ -2298,6 +2306,10 @@
   "football|Czech Republic 1. Liga|Bohemians Prague 1905|FK Jablonec|半/全场-主/客|htft|2026-09-03": {
     "ev": 5.2,
     "ts": 1788112904.498206
+  },
+  "football|Czech Republic 1. Liga|Bohemians Prague 1905|FK Jablonec|半/全场-客/主|htft|2026-09-03": {
+    "ev": 5.65,
+    "ts": 1788115241.085817
   },
   "football|Czech Republic 1. Liga|FC Banik Ostrava|SK Sigma Olomouc|主胜|1x2|2026-08-30": {
     "ev": 5.33,
@@ -2721,6 +2733,10 @@
     "ev": 1.5,
     "ts": 1787998834.8783731
   },
+  "football|Ecuador LigaPro Primera A|Orense SC|CSD Macara|半/全场-主/客|htft|2026-08-31": {
+    "ev": 12.15,
+    "ts": 1788114947.1250298
+  },
   "football|Ecuador LigaPro Primera A|Orense SC|CSD Macara|半/全场-客/主|htft|2026-08-31": {
     "ev": 17.01,
     "ts": 1788092091.893753
@@ -2758,6 +2774,11 @@
     "ev": 10.63,
     "bb": 27.0,
     "ts": 1788102738.681323
+  },
+  "football|Ecuador LigaPro Primera A|奥伦斯|马卡拉|半/全场-主/客|htft|2026-08-31": {
+    "ev": 12.15,
+    "bb": 36.0,
+    "ts": 1788114946.628747
   },
   "football|Ecuador LigaPro Primera A|奥伦斯|马卡拉|半/全场-客/主|htft|2026-08-31": {
     "ev": 21.19,
@@ -4782,6 +4803,10 @@
     "ev": 8.81,
     "ts": 1788092091.895484
   },
+  "football|Italy Serie A|Lazio|Genoa CFC|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 12.09,
+    "ts": 1788114947.1261592
+  },
   "football|Italy Serie A|Lazio|Genoa CFC|半/全场-主/和局|htft|2026-08-31": {
     "ev": 5.19,
     "ts": 1788105106.340469
@@ -4794,9 +4819,17 @@
     "ev": 2.18,
     "ts": 1787975485.215683
   },
+  "football|Italy Serie A|Lazio|Genoa CFC|小球|1x2|2026-08-31": {
+    "ev": 1.44,
+    "ts": 1788114947.122666
+  },
   "football|Italy Serie A|Lazio|Genoa CFC|让球主胜|1x2|2026-08-31": {
     "ev": 2.26,
     "ts": 1788063682.987039
+  },
+  "football|Italy Serie A|Lazio|Genoa CFC|让球客胜|1x2|2026-08-31": {
+    "ev": 1.94,
+    "ts": 1788114947.1225972
   },
   "football|Italy Serie A|Monza|inese Calcio|上半场主胜|ht|2026-08-30": {
     "ev": 2.58,
@@ -4986,6 +5019,11 @@
     "ev": 11.11,
     "bb": 18.6,
     "ts": 1788108970.266214
+  },
+  "football|Italy Serie A|拉齐奥|热那亚|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 12.09,
+    "bb": 30.0,
+    "ts": 1788114946.628629
   },
   "football|Italy Serie A|拉齐奥|热那亚|半/全场-主/和局|htft|2026-08-31": {
     "ev": 5.19,
@@ -7315,6 +7353,10 @@
     "ev": 1.61,
     "ts": 1788054303.0487082
   },
+  "football|Portugal Primeira Liga|FC Famalicao|Gil Vicente FC|小球|1x2|2026-08-31": {
+    "ev": 2.86,
+    "ts": 1788114947.124623
+  },
   "football|Portugal Primeira Liga|FC Famalicao|Gil Vicente FC|角球大球|corner|2026-08-31": {
     "ev": 2.6,
     "ts": 1788085672.303596
@@ -7933,6 +7975,10 @@
     "ev": 1.52,
     "ts": 1788012468.045989
   },
+  "football|Serbia Superliga|FK IMT Novi Beograd|FK Mladost Lucani|主胜|1x2|2026-08-31": {
+    "ev": 6.71,
+    "ts": 1788114947.123866
+  },
   "football|Serbia Superliga|FK IMT Novi Beograd|FK Mladost Lucani|双重机会-和局/客|dc|2026-08-31": {
     "ev": 7.29,
     "ts": 1788114333.685141
@@ -7944,6 +7990,10 @@
   "football|Serbia Superliga|FK IMT Novi Beograd|FK Mladost Lucani|客胜|1x2|2026-08-31": {
     "ev": 6.97,
     "ts": 1788114333.685004
+  },
+  "football|Serbia Superliga|FK IMT Novi Beograd|FK Mladost Lucani|让球主胜|1x2|2026-08-31": {
+    "ev": 5.09,
+    "ts": 1788114947.123939
   },
   "football|Serbia Superliga|FK IMT Novi Beograd|FK Mladost Lucani|让球客胜|1x2|2026-08-31": {
     "ev": 2.99,
@@ -8322,6 +8372,10 @@
   "football|Spain LaLiga 2|Burgos CF|Real Sociedad B|上半场正确比分others|correct_score_ht|2026-09-01": {
     "ev": 278.8,
     "ts": 1788100652.089333
+  },
+  "football|Spain LaLiga 2|Cordoba CF|Granada CF|上半场客胜|ht|2026-08-31": {
+    "ev": 1.66,
+    "ts": 1788114947.124427
   },
   "football|Spain LaLiga 2|Cordoba CF|Granada CF|半/全场-主/和局|htft|2026-08-31": {
     "ev": 11.22,
@@ -8785,6 +8839,11 @@
     "ev": 13.81,
     "bb": 15.3,
     "ts": 1788100057.747015
+  },
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 17.0,
+    "bb": 21.0,
+    "ts": 1788114946.628691
   },
   "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分2-0|correct_score_ht|2026-08-31": {
     "ev": 16.39,
@@ -10531,19 +10590,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Italy Serie A|拉齐奥|热那亚|上半场正确比分others|correct_score_ht|2026-08-31": {
-    "ev": 12.09,
-    "bb": 30.0,
-    "ts": 1788114946.628629
-  },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 17.0,
-    "bb": 21.0,
-    "ts": 1788114946.628691
-  },
-  "football|Ecuador LigaPro Primera A|奥伦斯|马卡拉|半/全场-主/客|htft|2026-08-31": {
-    "ev": 12.15,
-    "bb": 36.0,
-    "ts": 1788114946.628747
+  "football|Italy Serie C|古比奥 1910|雷真亚拿|上半场主胜|ht|2026-08-31": {
+    "ev": 4.32,
+    "bb": 4.84,
+    "ts": 1788115547.5009432
   }
 }
