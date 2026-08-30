@@ -10457,6 +10457,11 @@
     "bb": 23.0,
     "ts": 1788108404.118856
   },
+  "football|USA Major League Soccer|哥伦布机员|新英格兰革命|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 6.23,
+    "bb": 13.8,
+    "ts": 1788121583.3574028
+  },
   "football|USA Major League Soccer|多伦多FC|纽约城|和局|1x2|2026-08-30": {
     "ev": 10.45,
     "bb": 4.15,
@@ -10993,9 +10998,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|USA Major League Soccer|哥伦布机员|新英格兰革命|上半场正确比分2-0|correct_score_ht|2026-08-31": {
-    "ev": 6.23,
-    "bb": 13.8,
-    "ts": 1788121583.3574028
+  "football|Egypt Premier League|佩特雷姆|埃及国家银行|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 24.07,
+    "bb": 18.2,
+    "ts": 1788121758.831116
+  },
+  "football|Egypt Premier League|佩特雷姆|埃及国家银行|上半场正确比分1-2|correct_score_ht|2026-08-31": {
+    "ev": 5.84,
+    "bb": 26.0,
+    "ts": 1788121758.831161
   }
 }
