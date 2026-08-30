@@ -1311,6 +1311,10 @@
     "ev": 2.1,
     "ts": 1788000679.333882
   },
+  "football|Brazil Serie B|CR Brasil AL|Criciuma EC SC|半/全场-主/和局|htft|2026-08-31": {
+    "ev": 8.71,
+    "ts": 1788097655.053758
+  },
   "football|Brazil Serie B|CR Brasil AL|Criciuma EC SC|单双-双|oe|2026-08-31": {
     "ev": 2.41,
     "ts": 1787975485.22244
@@ -1335,6 +1339,10 @@
     "ev": 1.73,
     "ts": 1788029307.072484
   },
+  "football|Brazil Serie B|Vila Nova FC GO|Ceara SC CE|半/全场-主/和局|htft|2026-08-31": {
+    "ev": 5.76,
+    "ts": 1788097655.052772
+  },
   "football|Brazil Serie B|id:5357763|-|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 4.85,
     "bb": 2.04,
@@ -1344,6 +1352,11 @@
     "ev": 4.51,
     "bb": 2.05,
     "ts": 1787965512.805941
+  },
+  "football|Brazil Serie B|维拉诺瓦|塞阿拉|半/全场-主/和局|htft|2026-08-31": {
+    "ev": 5.76,
+    "bb": 14.9,
+    "ts": 1788097653.6043599
   },
   "football|Brazil Serie C|AO Itabaiana SE|Botafogo FC PB|主胜|1x2|2026-08-30": {
     "ev": 1.92,
@@ -8210,9 +8223,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Brazil Serie B|维拉诺瓦|塞阿拉|半/全场-主/和局|htft|2026-08-31": {
-    "ev": 5.76,
-    "bb": 14.9,
-    "ts": 1788097653.6043599
+  "football|Norway 2nd Division|阿伦达尔|裡塞克罗斯特|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 27.52,
+    "bb": 5.45,
+    "ts": 1788097997.369571
+  },
+  "football|Norway 2nd Division|阿伦达尔|裡塞克罗斯特|和局|1x2|2026-08-30": {
+    "ev": 19.54,
+    "bb": 7.95,
+    "ts": 1788097997.369639
   }
 }
