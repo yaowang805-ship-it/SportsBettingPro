@@ -1,5 +1,5 @@
 {
-  "balance": 2848.53,
+  "balance": 2725.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3174,6 +3174,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788098400,
       "created_at": "2026-08-30T10:52:27.127755+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_拉齐奥_热那亚_上半场正确比分2-0",
+      "sport": "football",
+      "league": "意大利甲级联赛",
+      "home_team": "拉齐奥",
+      "away_team": "热那亚",
+      "home_cn": "拉齐奥",
+      "away_cn": "热那亚",
+      "market": "1x2",
+      "market_type": "上半场正确比分2-0",
+      "sub_market": "correct_score_ht",
+      "line": "",
+      "odds": 17.5,
+      "stake": 123,
+      "model_prob": 0.0625,
+      "ev_pct": 9.34,
+      "pin_odds": 14.1,
+      "fair_price": 16.0055,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788115500,
+      "created_at": "2026-08-30T11:03:39.368425+00:00",
       "track_only": false
     }
   ],
@@ -8701,8 +8724,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 7253.0,
-    "bets": 54
+    "used": 7376.0,
+    "bets": 55
   },
   "updated": null
 }

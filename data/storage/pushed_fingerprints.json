@@ -2142,6 +2142,14 @@
     "ev": 14.97,
     "ts": 1788082325.023665
   },
+  "football|Denmark 1st Division|Hvidovre IF|FC Fredericia|客胜|1x2|2026-08-30": {
+    "ev": 2.95,
+    "ts": 1788087696.287424
+  },
+  "football|Denmark 1st Division|Hvidovre IF|FC Fredericia|让球客胜|1x2|2026-08-30": {
+    "ev": 1.03,
+    "ts": 1788087696.2874901
+  },
   "football|Denmark 1st Division|奥胡斯费马|维积利|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 7.48,
     "bb": 19.4,
@@ -3178,6 +3186,10 @@
     "ev": 3.14,
     "ts": 1788064406.816705
   },
+  "football|Germany 2. Bundesliga|SV Darmstadt 98|Hannover 96|角球小球|corner|2026-08-30": {
+    "ev": 1.71,
+    "ts": 1788087696.294506
+  },
   "football|Germany 2. Bundesliga|纽伦堡|比勒费尔德|上半场客胜|ht|2026-08-30": {
     "ev": 3.61,
     "bb": 3.78,
@@ -3228,6 +3240,10 @@
   "football|Germany 3rd Liga|1. FC Saarbrucken|Hansa Rostock|总进球区间7+|total_goals_range|2026-08-30": {
     "ev": 6.91,
     "ts": 1788035233.7775621
+  },
+  "football|Germany 3rd Liga|1. FC Saarbrucken|Hansa Rostock|让球客胜|1x2|2026-08-30": {
+    "ev": 2.8,
+    "ts": 1788087147.7635741
   },
   "football|Germany 3rd Liga|TSV Havelse|SV Waldhof Mannheim 07|客胜|1x2|2026-08-30": {
     "ev": 1.52,
@@ -3897,11 +3913,6 @@
     "ev": 10.32,
     "bb": 5.9,
     "ts": 1788062968.5229251
-  },
-  "football|Italy Serie A|拉齐奥|热那亚|上半场正确比分2-0|correct_score_ht|2026-08-31": {
-    "ev": 8.94,
-    "bb": 16.9,
-    "ts": 1788082301.386511
   },
   "football|Italy Serie A|萨索洛|都灵|上半场客胜|ht|2026-08-30": {
     "ev": 9.74,
@@ -5220,9 +5231,18 @@
     "ev": 1.17,
     "ts": 1788037742.3675468
   },
+  "football|Norway 1st Division|诺霍斯|桑德尼斯|上半场正确比分2-0|correct_score_ht|2026-08-30": {
+    "ev": 7.38,
+    "bb": 17.1,
+    "ts": 1788087147.141866
+  },
   "football|Norway 2nd Division|Arendal FK|Lysekloster|主胜|1x2|2026-08-30": {
     "ev": 2.36,
     "ts": 1788077765.8507662
+  },
+  "football|Norway 2nd Division|Arendal FK|Lysekloster|双边进球-是|btts|2026-08-30": {
+    "ev": 2.85,
+    "ts": 1788087147.763956
   },
   "football|Norway 2nd Division|Arendal FK|Lysekloster|双重机会-和局/客|dc|2026-08-30": {
     "ev": 1.28,
@@ -5239,6 +5259,10 @@
   "football|Norway 2nd Division|Bjarg|Mjondalen IF|主胜|1x2|2026-08-30": {
     "ev": 1.88,
     "ts": 1788082325.015142
+  },
+  "football|Norway 2nd Division|Bjarg|Mjondalen IF|大球|1x2|2026-08-30": {
+    "ev": 4.4,
+    "ts": 1788087147.764229
   },
   "football|Norway 2nd Division|Bjarg|Mjondalen IF|小球|1x2|2026-08-30": {
     "ev": 2.98,
@@ -5299,6 +5323,11 @@
   "football|Norway 2nd Division|Trygg/Lade|Skeid Fotball|让球客胜|1x2|2026-08-30": {
     "ev": 2.82,
     "ts": 1788085876.365817
+  },
+  "football|Norway 2nd Division|阿伦达尔|里塞克罗斯特|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 19.55,
+    "bb": 4.71,
+    "ts": 1788087147.141807
   },
   "football|Norway 3rd Division|FK Fyllingsdalen|Austevoll|主胜|1x2|2026-08-30": {
     "ev": 22.88,
@@ -5372,6 +5401,10 @@
   "football|Norway Eliteserien|Bodo/Glimt|Rosenborg BK|大球|1x2|2026-08-30": {
     "ev": 1.49,
     "ts": 1788079065.036036
+  },
+  "football|Norway Eliteserien|Bodo/Glimt|Rosenborg BK|小球|1x2|2026-08-30": {
+    "ev": 2.11,
+    "ts": 1788087147.7679622
   },
   "football|Norway Eliteserien|Bodo/Glimt|Rosenborg BK|让球主胜|1x2|2026-08-30": {
     "ev": 2.39,
@@ -6564,6 +6597,10 @@
     "ev": 10.43,
     "ts": 1788082303.93915
   },
+  "football|Spain LaLiga 2|Cordoba CF|Granada CF|半/全场-客/主|htft|2026-08-31": {
+    "ev": 6.02,
+    "ts": 1788087471.5595489
+  },
   "football|Spain LaLiga 2|Cordoba CF|Granada CF|单双-双|oe|2026-08-31": {
     "ev": 3.83,
     "ts": 1787975485.213532
@@ -7075,6 +7112,10 @@
   "football|Sweden Ettan Norra|Enkopings SK|FC Stockholm Internazionale|双重机会-主/和局|dc|2026-08-30": {
     "ev": 1.14,
     "ts": 1788086727.6709352
+  },
+  "football|Sweden Ettan Norra|Enkopings SK|FC Stockholm Internazionale|让球主胜|1x2|2026-08-30": {
+    "ev": 1.04,
+    "ts": 1788087147.762727
   },
   "football|Sweden Ettan Norra|FBK Karlstad|Pitea IF|主胜|1x2|2026-08-30": {
     "ev": 14.77,
@@ -8434,14 +8475,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Norway 2nd Division|阿伦达尔|里塞克罗斯特|双重机会-和局/客|dc|2026-08-30": {
-    "ev": 19.55,
-    "bb": 4.71,
-    "ts": 1788087147.141807
-  },
-  "football|Norway 1st Division|诺霍斯|桑德尼斯|上半场正确比分2-0|correct_score_ht|2026-08-30": {
-    "ev": 7.38,
-    "bb": 17.1,
-    "ts": 1788087147.141866
+  "football|Italy Serie A|拉齐奥|热那亚|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 9.34,
+    "bb": 17.5,
+    "ts": 1788087819.421407
   }
 }
