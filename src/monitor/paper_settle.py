@@ -35,6 +35,11 @@ SETTLE_AFTER_HOURS = 2.0
 # 增量过滤(2026-08-30): 开赛超过 48h 的样本 BB getMatchDetail 返回空壳(赛果时效窗口),
 # 永久跳过, 不再每次 do_settle 都重试老样本(此前 1002 条老样本每次都要调 BB, 拖 settle 到 15min)
 SETTLE_MAX_AGE_HOURS = 48.0
+# 退避重试(2026-08-30): BB 对低级别联赛赛果覆盖差(实测 5 条样本 4 条空壳), 空壳的样本
+# 24h 内不重试, 尝试 3 次后永久放弃 — 避免每次 do_settle 对上千条空壳样本重复调 BB。
+RETRY_BACKOFF_HOURS = 24.0
+MAX_ATTEMPTS = 3
+ATTEMPTS_FILE = DATA_DIR / ".paper_attempts.json"
 
 
 def _key(sport, home_pin, away_pin, designation, sub_market, match_epoch):
@@ -57,6 +62,22 @@ def save_paper_bets(bets: list):
     tmp = PAPER_FILE.with_suffix(".tmp")
     tmp.write_text(json.dumps(out, ensure_ascii=False, indent=2))
     tmp.replace(PAPER_FILE)
+
+
+def load_attempts() -> dict:
+    """加载 BB 空壳重试状态 {key: {last_attempt, attempts}}。"""
+    if ATTEMPTS_FILE.exists():
+        try:
+            return json.loads(ATTEMPTS_FILE.read_text())
+        except Exception:
+            pass
+    return {}
+
+
+def save_attempts(att: dict):
+    tmp = ATTEMPTS_FILE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(att))
+    tmp.replace(ATTEMPTS_FILE)
 
 
 def _read_validate_rows():
@@ -87,6 +108,7 @@ def settle_paper(dry_run: bool = False) -> dict:
 
     validate_rows = _read_validate_rows()
     settled_map = load_paper_bets()
+    attempts = load_attempts()
 
     now = time.time()
     new_settled = 0
@@ -95,6 +117,13 @@ def settle_paper(dry_run: bool = False) -> dict:
     for k, r in validate_rows.items():
         if k in settled_map:
             continue  # 已结算过
+        # 退避重试: BB 空壳样本 24h 内不重试, 尝试 3 次后永久放弃
+        _att = attempts.get(k, {})
+        if _att.get("attempts", 0) >= MAX_ATTEMPTS:
+            continue
+        _last = _att.get("last_attempt", 0)
+        if _last and (now - _last) < RETRY_BACKOFF_HOURS * 3600:
+            continue
         epoch = int(r.get("match_epoch") or 0)
         if epoch > 0 and (now - epoch) < SETTLE_AFTER_HOURS * 3600:
             continue  # 还没到结算时间(开赛后 2h 才出最终比分)
@@ -107,7 +136,10 @@ def settle_paper(dry_run: bool = False) -> dict:
         # BB getMatchDetail 拿最终比分
         detail = fetch_bb_match_result(bid, language_type="EN")
         if not detail or detail.get("home_score") is None or detail.get("away_score") is None:
-            continue  # BB 没返回比分(空壳/过老), 这次跳过, 下次再试
+            # BB 空壳 → 记录失败(退避重试), 避免每次 do_settle 重复调
+            _att = attempts.get(k, {})
+            attempts[k] = {"last_attempt": now, "attempts": _att.get("attempts", 0) + 1}
+            continue
         if detail.get("sport") and sport and detail["sport"] != sport:
             continue  # 跨运动 id 冲突, 不能拿别的运动比分结算
 
@@ -180,6 +212,10 @@ def settle_paper(dry_run: bool = False) -> dict:
         for r in settled_this_run:
             by_res[r["result"]] = by_res.get(r["result"], 0) + 1
         logger.info("本次纸面结算: %s", by_res)
+
+    # 持久化退避状态(BB 空壳样本的失败记录), 下次 do_settle 跳过这些样本不再重复调 BB
+    if not dry_run and attempts:
+        save_attempts(attempts)
     return {"new_settled": new_settled, "total_paper": len(settled_map)}
 
 
