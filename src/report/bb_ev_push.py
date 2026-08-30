@@ -1140,11 +1140,12 @@ def _calc_kelly_stakes(opps: list) -> list:
             else:
                 _cum += o["_stake"]
 
-    # 单运动总敞口上限 (用户指定: 足球主力40%, 篮球/网球各20%, 其他保守)
+    # 单运动总敞口上限 (2026-08-30 用户要求: 足球主力从40%提到100%, 不再额外限单运动敞口,
+    # 总额20000已够。之前40%=8000把足球226个机会累计10.8万全归零只剩1-3个, 导致0推送)
     _SPORT_TOTAL_CAPS = {
-        "football": 0.40, "basketball": 0.20, "tennis": 0.20,
-        "baseball": 0.10, "american_football": 0.10, "ice_hockey": 0.10,
-        "mma": 0.05, "boxing": 0.05,
+        "football": 1.00, "basketball": 0.50, "tennis": 0.50,
+        "baseball": 0.30, "american_football": 0.30, "ice_hockey": 0.30,
+        "mma": 0.10, "boxing": 0.10,
     }
     for key, group in sport_groups.items():
         sport_cap = _SPORT_TOTAL_CAPS.get(key, _PER_SPORT_CAP_PCT)
