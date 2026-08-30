@@ -1036,11 +1036,6 @@
     "bb": 2.23,
     "ts": 1788017517.991182
   },
-  "football|Belgium Pro League|韦斯特洛|祖尔特瓦雷根|上半场正确比分2-0|correct_score_ht|2026-08-31": {
-    "ev": 11.03,
-    "bb": 19.5,
-    "ts": 1788100057.747154
-  },
   "football|Bolivia Copa Pacena|Gualberto Villarroel San Jose|T Real Oruro|双重机会-和局/客|dc|2026-08-30": {
     "ev": 3.38,
     "ts": 1788016634.35433
@@ -2676,6 +2671,11 @@
   "football|Egypt Premier League|Zamalek SC|Petrojet FC|半/全场-主/客|htft|2026-09-01": {
     "ev": 14.49,
     "ts": 1788100652.05114
+  },
+  "football|Egypt Premier League|扎马雷克|佩特捷德|半/全场-主/客|htft|2026-09-01": {
+    "ev": 19.47,
+    "bb": 48.0,
+    "ts": 1788109990.4076521
   },
   "football|El Salvador Primera Division|Alianza FC San Salvador|Atletico Balboa|主胜|1x2|2026-08-30": {
     "ev": 4.4,
@@ -8528,11 +8528,6 @@
     "bb": 21.0,
     "ts": 1788104381.215322
   },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分others|correct_score_ht|2026-08-31": {
-    "ev": 11.22,
-    "bb": 24.0,
-    "ts": 1788100057.7985952
-  },
   "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
     "ev": 12.79,
     "bb": 33.0,
@@ -10206,9 +10201,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Egypt Premier League|扎马雷克|佩特捷德|半/全场-主/客|htft|2026-09-01": {
-    "ev": 19.47,
-    "bb": 48.0,
-    "ts": 1788109990.4076521
+  "football|Belgium Pro League|韦斯特洛|祖尔特瓦雷根|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 6.65,
+    "bb": 17.6,
+    "ts": 1788110087.3797219
+  },
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 12.47,
+    "bb": 25.0,
+    "ts": 1788110087.37978
   }
 }
