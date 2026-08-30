@@ -680,6 +680,10 @@
     "ev": 1.01,
     "ts": 1788114692.2634501
   },
+  "football|Austria Bundesliga|FK Austria Wien|WSG Tirol|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 21.42,
+    "ts": 1788119391.167635
+  },
   "football|Austria Bundesliga|FK Austria Wien|WSG Tirol|上半场正确比分1-2|correct_score_ht|2026-09-03": {
     "ev": 7.76,
     "ts": 1788111122.96624
@@ -2970,6 +2974,10 @@
     "ev": 23.96,
     "ts": 1788115890.2812748
   },
+  "football|England Championship League|Millwall FC|Wrexham AFC|半/全场-主/客|htft|2026-09-03": {
+    "ev": 8.21,
+    "ts": 1788119391.16375
+  },
   "football|England Championship League|Millwall FC|Wrexham AFC|半/全场-客/主|htft|2026-09-03": {
     "ev": 14.39,
     "ts": 1788115890.277648
@@ -3090,6 +3098,11 @@
     "ev": 2.64,
     "ts": 1788118222.60866
   },
+  "football|England Championship League|伯恩利|米德尔斯堡|半/全场-客/主|htft|2026-09-03": {
+    "ev": 5.97,
+    "bb": 28.0,
+    "ts": 1788119390.410337
+  },
   "football|England Championship League|伯明翰|南安普敦|上半场正确比分0-2|correct_score_ht|2026-09-02": {
     "ev": 10.17,
     "bb": 19.2,
@@ -3194,6 +3207,11 @@
     "ev": 4.0,
     "bb": 30.0,
     "ts": 1788103440.905118
+  },
+  "football|England Championship League|米尔沃尔|雷克斯汉姆|半/全场-主/客|htft|2026-09-03": {
+    "ev": 8.21,
+    "bb": 33.0,
+    "ts": 1788119390.410256
   },
   "football|England Championship League|米尔沃尔|雷克斯汉姆|半/全场-客/主|htft|2026-09-03": {
     "ev": 14.39,
@@ -7363,6 +7381,10 @@
     "ev": 2.65,
     "ts": 1788100799.1359959
   },
+  "football|Peru Liga 1|Atletico Grau|FBC Melgar|上半场客胜|ht|2026-09-01": {
+    "ev": 2.52,
+    "ts": 1788119391.16242
+  },
   "football|Peru Liga 1|Atletico Grau|FBC Melgar|和局|1x2|2026-09-01": {
     "ev": 4.56,
     "ts": 1787975485.218122
@@ -10906,14 +10928,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|England Championship League|米尔沃尔|雷克斯汉姆|半/全场-主/客|htft|2026-09-03": {
-    "ev": 8.21,
-    "bb": 33.0,
-    "ts": 1788119390.410256
-  },
-  "football|England Championship League|伯恩利|米德尔斯堡|半/全场-客/主|htft|2026-09-03": {
-    "ev": 5.97,
-    "bb": 28.0,
-    "ts": 1788119390.410337
+  "football|Argentina Primera Nacional|科多巴竞赛会|科隆竞技|上半场主胜|ht|2026-08-31": {
+    "ev": 2.96,
+    "bb": 4.49,
+    "ts": 1788119730.177809
   }
 }
