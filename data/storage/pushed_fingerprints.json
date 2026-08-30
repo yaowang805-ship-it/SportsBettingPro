@@ -1581,6 +1581,10 @@
     "ev": 1.29,
     "ts": 1787975485.222356
   },
+  "football|Brazil Serie B|CR Brasil AL|Criciuma EC SC|让球主胜|1x2|2026-08-31": {
+    "ev": 1.51,
+    "ts": 1788122152.150949
+  },
   "football|Brazil Serie B|Londrina EC PR|EC Juventude RS|上半场双重机会-主/客|ht_dc|2026-09-02": {
     "ev": 1.98,
     "ts": 1788047421.792023
@@ -2874,6 +2878,30 @@
     "ev": 2.52,
     "ts": 1787975485.219153
   },
+  "football|Egypt Premier League|Al Masry Club|Pyramids FC|让球主胜|1x2|2026-09-01": {
+    "ev": 3.78,
+    "ts": 1788122043.276156
+  },
+  "football|Egypt Premier League|Asyut Petroleum|National Bank of Egypt SC|上半场双重机会-主/客|ht_dc|2026-08-31": {
+    "ev": 8.32,
+    "ts": 1788121759.314463
+  },
+  "football|Egypt Premier League|Asyut Petroleum|National Bank of Egypt SC|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 24.07,
+    "ts": 1788121759.315728
+  },
+  "football|Egypt Premier League|Asyut Petroleum|National Bank of Egypt SC|上半场正确比分1-2|correct_score_ht|2026-08-31": {
+    "ev": 5.84,
+    "ts": 1788121759.31582
+  },
+  "football|Egypt Premier League|Asyut Petroleum|National Bank of Egypt SC|半/全场-客/主|htft|2026-08-31": {
+    "ev": 49.66,
+    "ts": 1788121759.314347
+  },
+  "football|Egypt Premier League|Asyut Petroleum|National Bank of Egypt SC|大球|1x2|2026-08-31": {
+    "ev": 1.78,
+    "ts": 1788121759.31441
+  },
   "football|Egypt Premier League|Ceramica Cleopatra|Modern Sport FC|半/全场-主/客|htft|2026-09-03": {
     "ev": 89.69,
     "ts": 1788112337.728708
@@ -2901,6 +2929,16 @@
   "football|Egypt Premier League|Zamalek SC|Petrojet FC|半/全场-主/客|htft|2026-09-01": {
     "ev": 14.49,
     "ts": 1788100652.05114
+  },
+  "football|Egypt Premier League|佩特雷姆|埃及国家银行|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 24.07,
+    "bb": 18.2,
+    "ts": 1788121758.831116
+  },
+  "football|Egypt Premier League|佩特雷姆|埃及国家银行|上半场正确比分1-2|correct_score_ht|2026-08-31": {
+    "ev": 5.84,
+    "bb": 26.0,
+    "ts": 1788121758.831161
   },
   "football|Egypt Premier League|扎马雷克|佩特捷德|半/全场-主/客|htft|2026-09-01": {
     "ev": 19.47,
@@ -3450,11 +3488,6 @@
     "ev": 20.29,
     "bb": 25.0,
     "ts": 1788103440.9036238
-  },
-  "football|England League One|雷丁|曼斯菲特|上半场正确比分0-2|correct_score_ht|2026-09-03": {
-    "ev": 5.69,
-    "bb": 21.0,
-    "ts": 1788116492.856547
   },
   "football|England League One|韦康比流浪者|谢周三|上半场正确比分others|correct_score_ht|2026-09-02": {
     "ev": 10.19,
@@ -10958,9 +10991,17 @@
     "ev": 1.03,
     "ts": 1788085354.8568552
   },
+  "football|Venezuela Primera Division|Deportivo Tachira|racas FC|让球主胜|1x2|2026-08-31": {
+    "ev": 4.91,
+    "ts": 1788122152.1503842
+  },
   "football|Venezuela Primera Division|Portuguesa FC|Metropolitanos FC|单双-双|oe|2026-08-31": {
     "ev": 1.02,
     "ts": 1788060910.948881
+  },
+  "football|Venezuela Primera Division|Portuguesa FC|Metropolitanos FC|让球主胜|1x2|2026-08-31": {
+    "ev": 8.76,
+    "ts": 1788122152.1503308
   },
   "football|Venezuela Primera Division|ademia Puerto Cabello|ademia Anzoategui FC|大球|1x2|2026-09-01": {
     "ev": 3.81,
@@ -10998,14 +11039,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Egypt Premier League|佩特雷姆|埃及国家银行|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 24.07,
-    "bb": 18.2,
-    "ts": 1788121758.831116
-  },
-  "football|Egypt Premier League|佩特雷姆|埃及国家银行|上半场正确比分1-2|correct_score_ht|2026-08-31": {
-    "ev": 5.84,
-    "bb": 26.0,
-    "ts": 1788121758.831161
+  "football|England League One|雷丁|曼斯菲特|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 20.79,
+    "bb": 24.0,
+    "ts": 1788122467.65886
   }
 }
