@@ -244,10 +244,16 @@ def cross_validate_ht_entries(entries):
                 cmp = pin_ht_anchor_compare(pin_ht, matched["ht"])
                 if not cmp or not cmp["flagged"]:
                     continue
-                dev = cmp["draw_dev_pp"]
-                e.setdefault("flags", []).append(f"Pin ht平局偏差{dev:+.0f}pp")
-                # 降权: ht 机会 ev 减半(偏差越大说明 Pin 定价越不可靠)
-                for opp in e.get("opportunities", []):
-                    if opp.get("_market") == "ht":
-                        opp["ev_pct"] = round(opp.get("ev_pct", 0) * 0.5, 2)
+                dev = abs(cmp["draw_dev_pp"])
+                # 按偏差梯度降权: ≥10pp 直接拦截, 6-10pp 压到30%, 3-6pp 压到50%
+                mult = 0.0 if dev >= 10 else (0.3 if dev >= 6 else 0.5)
+                e.setdefault("flags", []).append(
+                    f"Pin ht平局偏差{cmp['draw_dev_pp']:+.0f}pp(降权×{mult:.1f})")
+                # 降权所有依赖 ht 平局定价的盘口(平局定低会同时虚高 ht/hc/ou/dc/dnb 的主客腿)
+                _ht_markets = ("ht", "ht_hc", "ht_ou", "ht_dc", "ht_dnb")
+                for _field in ("opportunities", "handicap", "over_under",
+                               "double_chance", "draw_no_bet"):
+                    for opp in e.get(_field, []):
+                        if opp.get("_market") in _ht_markets:
+                            opp["ev_pct"] = round(opp.get("ev_pct", 0) * mult, 2)
     return entries
