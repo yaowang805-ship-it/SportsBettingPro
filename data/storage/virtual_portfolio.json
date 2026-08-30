@@ -1,5 +1,5 @@
 {
-  "balance": 7190.53,
+  "balance": 7123.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3174,6 +3174,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788087600,
       "created_at": "2026-08-30T00:37:32.754417+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_塔特兰_SK克鲁姆维尔_客胜",
+      "sport": "football",
+      "league": "捷克丁级联赛",
+      "home_team": "塔特兰",
+      "away_team": "SK克鲁姆维尔",
+      "home_cn": "塔特兰",
+      "away_cn": "SK克鲁姆维尔",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.91,
+      "stake": 46,
+      "model_prob": 0.2861,
+      "ev_pct": 11.87,
+      "pin_odds": 3.02,
+      "fair_price": 3.4952,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788098400,
+      "created_at": "2026-08-30T02:28:52.180408+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_叶尼塞_辛历克_上半场客胜",
+      "sport": "football",
+      "league": "俄罗斯甲级联赛",
+      "home_team": "叶尼塞",
+      "away_team": "辛历克",
+      "home_cn": "叶尼塞",
+      "away_cn": "辛历克",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 5.4,
+      "stake": 21,
+      "model_prob": 0.2002,
+      "ev_pct": 8.11,
+      "pin_odds": 4.5,
+      "fair_price": 4.9947,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788080400,
+      "created_at": "2026-08-30T02:28:52.180459+00:00",
       "track_only": false
     }
   ],
@@ -8461,8 +8507,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 1608.0,
-    "bets": 27
+    "used": 1675.0,
+    "bets": 29
   },
   "updated": null
 }
