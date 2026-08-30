@@ -846,7 +846,7 @@ class PipelineOrchestrator:
 
         # 清理文件去重中的过期记录
         try:
-            opps_file = SRC_DIR / "data" / "storage" / "pushed_opportunities.json"
+            opps_file = SRC_DIR / "data" / "storage" / "pushed_fingerprints.json"
             if opps_file.exists():
                 opps = _json.loads(opps_file.read_text())
                 clean = {}

@@ -87,8 +87,12 @@ class TestV4WeightMatrix:
 # ===================================================================
 class TestDedup:
     def test_fingerprint_persistence(self):
-        """指纹文件存在且为合法 JSON dict（允许为空 — 轮换后清空属正常）."""
-        fp = ROOT / "data" / "storage" / "pushed_opportunities.json"
+        """指纹文件存在且为合法 JSON dict（允许为空 — 轮换后清空属正常）.
+
+        2026-08-30: 文件名已从 pushed_opportunities.json 迁移到 pushed_fingerprints.json,
+        测试跟随主文件(旧文件是兼容遗留的空壳, 不应作为存在性检查对象)。
+        """
+        fp = ROOT / "data" / "storage" / "pushed_fingerprints.json"
         assert fp.exists(), "指纹文件不存在"
         data = json.loads(fp.read_text())
         assert isinstance(data, dict), "指纹文件格式错误"
