@@ -679,6 +679,10 @@
     "ev": 4.51,
     "ts": 1788019458.026774
   },
+  "football|Azerbaijan Premier League|Zira FK|FK Neftchi Baku|单双-双|oe|2026-08-31": {
+    "ev": 1.07,
+    "ts": 1788102333.559166
+  },
   "football|Azerbaijan Premier League|萨法|穆格汗|和局|1x2|2026-08-30": {
     "ev": 12.8,
     "bb": 3.03,
@@ -1581,9 +1585,17 @@
     "ev": 1.59,
     "ts": 1788060910.945143
   },
+  "football|Bulgaria First Professional League|Botev Plovdiv|PFC Levski Sofia|双重机会-主/和局|dc|2026-08-31": {
+    "ev": 5.63,
+    "ts": 1788102333.5589309
+  },
   "football|Bulgaria First Professional League|Botev Plovdiv|PFC Levski Sofia|客胜|1x2|2026-08-31": {
     "ev": 2.2,
     "ts": 1787975485.214925
+  },
+  "football|Bulgaria First Professional League|Botev Plovdiv|PFC Levski Sofia|让球主胜|1x2|2026-08-31": {
+    "ev": 5.81,
+    "ts": 1788102333.558885
   },
   "football|Bulgaria First Professional League|Dunav Ruse|Lokomotive Sofia|上半场正确比分2-0|correct_score_ht|2026-09-01": {
     "ev": 23.78,
@@ -6767,11 +6779,6 @@
     "ev": 34.82,
     "ts": 1788098326.748512
   },
-  "football|Russia First League|下诺夫哥罗德|乌里扬诺夫斯克|半/全场-主/客|htft|2026-08-31": {
-    "ev": 20.99,
-    "bb": 54.0,
-    "ts": 1788100057.798527
-  },
   "football|Russia First League|叶尼塞|辛历克|上半场客胜|ht|2026-08-30": {
     "ev": 8.11,
     "bb": 5.4,
@@ -7117,6 +7124,11 @@
     "bb": 3.82,
     "ts": 1788100798.324269
   },
+  "football|Slovakia Superliga|特尔纳瓦斯巴达克|斯利纳|半/全场-主/客|htft|2026-08-31": {
+    "ev": 4.73,
+    "bb": 36.0,
+    "ts": 1788102332.346192
+  },
   "football|Slovenia PrvaLiga|NK Bravo|NS Mura|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.08,
     "ts": 1788000428.4552078
@@ -7330,6 +7342,10 @@
   "football|Spain LaLiga 2|D Mallorca|Ceuta|客胜|1x2|2026-08-31": {
     "ev": 1.65,
     "ts": 1788079180.919446
+  },
+  "football|Spain LaLiga 2|D Mallorca|Ceuta|小球|1x2|2026-08-31": {
+    "ev": 1.01,
+    "ts": 1788102333.559372
   },
   "football|Spain LaLiga 2|FC Andorra|SD Eibar|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 2.0,
@@ -8419,11 +8435,6 @@
     "bb": 4.45,
     "ts": 1788019791.739007
   },
-  "football|Turkey Super Lig|埃于普体育|阿拉尼亚体育|上半场主胜|ht|2026-08-31": {
-    "ev": 6.72,
-    "bb": 4.45,
-    "ts": 1788020330.648285
-  },
   "football|UAE Pro League|Al Ain FC|Al Nasr Dubai SC|上半场主胜|ht|2026-08-30": {
     "ev": 1.41,
     "ts": 1787935143.6204329
@@ -9285,9 +9296,29 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Slovakia Superliga|特尔纳瓦斯巴达克|斯利纳|半/全场-主/客|htft|2026-08-31": {
-    "ev": 4.73,
-    "bb": 36.0,
-    "ts": 1788102332.346192
+  "football|Turkey Super Lig|埃于普体育|阿拉尼亚体育|上半场主胜|ht|2026-08-31": {
+    "ev": 7.54,
+    "bb": 4.77,
+    "ts": 1788102621.204257
+  },
+  "football|Russia First League|下诺夫哥罗德|乌里扬诺夫斯克|半/全场-主/客|htft|2026-08-31": {
+    "ev": 23.72,
+    "bb": 57.0,
+    "ts": 1788102621.204373
+  },
+  "football|Bulgaria First Professional League|索菲亚中央陆军|切诺摩尔|半/全场-客/主|htft|2026-08-31": {
+    "ev": 4.76,
+    "bb": 23.0,
+    "ts": 1788102621.204496
+  },
+  "football|Turkey 1. Lig|马尼萨FK|波德鲁姆士邦|半/全场-主/客|htft|2026-08-31": {
+    "ev": 5.71,
+    "bb": 28.0,
+    "ts": 1788102621.204598
+  },
+  "football|Israel Premier League|海法|特拉维夫夏普尔|半/全场-客/主|htft|2026-08-31": {
+    "ev": 5.86,
+    "bb": 35.0,
+    "ts": 1788102621.211838
   }
 }
