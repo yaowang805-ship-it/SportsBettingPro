@@ -684,9 +684,8 @@ def _extract_special_market_close(league_id, entry, special_cache):
         return None
 
     # 从 designation 剥离中文 label 前缀 (如 "正确比分1-1" → "1-1")
-    label = {"correct_score": "正确比分", "correct_score_ht": "上半场正确比分",
-             "winning_margin": "净胜球", "total_goals_range": "总进球区间",
-             "first_to_score": "先进球", "exact_goals_ht": "上半场精确进球"}.get(sub, "")
+    from config.market_labels import SUB_MARKET_CN
+    label = SUB_MARKET_CN.get(sub, "")
     name_part = designation[len(label):] if label and designation.startswith(label) else designation
 
     if sub == "correct_score":

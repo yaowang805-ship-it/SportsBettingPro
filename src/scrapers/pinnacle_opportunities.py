@@ -919,17 +919,18 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             except Exception:
                 continue
 
+    from config.market_labels import SUB_MARKET_CN
     SPECIAL_KEY_TO_MKT = {
         # correct_score 恢复 (V5.11): 旧删除理由是 "BB mty=1188 只有高比分(2-1/5-1/6-6)",
         # 但 BB 现已改用 mty=1099 = 全场全比分(0-0~4-4 共25条显式, 实测), 论据过时。
         # 公平价走 Dixon-Coles(独立模型, 不依赖 Pin 选项集), 队名匹配不上自动不出数。
-        "correct_score": ("correct_score", "正确比分"),
-        "winning_margin": ("winning_margin", "净胜球"),
-        "total_goals_range": ("total_goals_range", "总进球区间"),
-        "first_to_score": ("first_to_score", "先进球"),
+        "correct_score": ("correct_score", SUB_MARKET_CN["correct_score"]),
+        "winning_margin": ("winning_margin", SUB_MARKET_CN["winning_margin"]),
+        "total_goals_range": ("total_goals_range", SUB_MARKET_CN["total_goals_range"]),
+        "first_to_score": ("first_to_score", SUB_MARKET_CN["first_to_score"]),
         # V5.11: 半场正确比分(BB 1100) + 半场精确进球(BB 1103) — 兜底项聚合去抽水
-        "correct_score_ht": ("correct_score_ht", "上半场正确比分"),
-        "exact_goals_ht": ("exact_goals_ht", "上半场精确进球"),
+        "correct_score_ht": ("correct_score_ht", SUB_MARKET_CN["correct_score_ht"]),
+        "exact_goals_ht": ("exact_goals_ht", SUB_MARKET_CN["exact_goals_ht"]),
     }
 
     entries = []

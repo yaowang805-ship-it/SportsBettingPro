@@ -704,21 +704,7 @@ def _save_clv_suspensions(suspensions: set):
     set_push_meta("clv_suspensions", json.dumps(sorted(suspensions), ensure_ascii=False))
 
 
-# 中文市场名（用于推送显示）
-_MARKET_CN = {
-    "1x2": "独赢",
-    "hc": "让球",
-    "ou": "大小球",
-    "ht": "上半场",
-    "ht_hc": "上半场让球",
-    "ht_ou": "上半场大小球",
-    "btts": "双边进球",
-    "dc": "双重机会",
-    "dnb": "平局退款",
-    "oe": "单/双",
-    "htft": "半全场",
-    "corner": "角球",
-}
+# 中文市场名统一在 config.market_labels.SUB_MARKET_CN (2026-08-30 收口, 原 _MARKET_CN 死代码已删)
 
 
 def _min_ev_for_tier(tier: int, sport: str = "", league: str = "") -> float:
