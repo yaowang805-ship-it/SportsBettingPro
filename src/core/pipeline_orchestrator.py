@@ -1367,10 +1367,11 @@ class PipelineOrchestrator:
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
-            # 2026-08-29 早盘聚焦(职业标准): 边缘活在"软书(BB)滞后于sharp(Pin)的窗口", 早盘最干净。
-            # 临场<6h 是 BB 价漂移/将修正的假机会重灾区(近3天临场亏-1582), 降频到 5min 不再 60s 猛扫。
-            # 早盘24-72h 加回(原 V5.7 移除), 30min 一次 —— 早盘赔率变动慢, 30min 足够抓到 BB 开盘滞后。
-            for tw, interval, label in [("far", 1200, "早盘24-72h"), ("near", 300, "中程6-24h"), ("urgent", 300, "临场<6h")]:
+            # 2026-08-30 数据驱动(观察库 clv_results 改版后≥8-28): 早盘24-72h 中位CLV+2.96%/正率60.5% 强正edge,
+            # 临场<6h 中位CLV-1.49%/正率41.3% 负edge假机会(近3天临场亏-1582), 近场6-24h +0.93% 弱正。
+            # 故早盘升频 20→10min 多捞干净edge, 临场降频 5→10min 少碰假机会省Pin配额, near保持5min。
+            # 净Pin请求 -24% (早盘+73联赛/20min, 临场-248联赛/20min), 风控下降同时早盘发现能力翻倍。
+            for tw, interval, label in [("far", 600, "早盘24-72h"), ("near", 300, "中程6-24h"), ("urgent", 600, "临场<6h")]:
                 last_key = f"_last_inc_{tw}"
                 last_val = getattr(self, last_key, None)
                 if last_val is None:
