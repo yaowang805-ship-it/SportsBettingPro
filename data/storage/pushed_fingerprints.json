@@ -1946,6 +1946,10 @@
     "ev": 2.72,
     "ts": 1788038038.841186
   },
+  "football|Costa Rica Primera Division|CS Cartagines|CS Herediano|和局|1x2|2026-08-31": {
+    "ev": 1.5,
+    "ts": 1788108404.763123
+  },
   "football|Costa Rica Primera Division|CS Cartagines|CS Herediano|小球|1x2|2026-08-31": {
     "ev": 2.33,
     "ts": 1788062970.9339468
@@ -1977,6 +1981,11 @@
   "football|Costa Rica Primera Division|San Carlos FC|Puntarenas FC|半/全场-客/主|htft|2026-08-31": {
     "ev": 3.86,
     "ts": 1788098833.402434
+  },
+  "football|Costa Rica Primera Division|肯塔吉内斯|希雷迪亚诺|半/全场-客/主|htft|2026-08-31": {
+    "ev": 16.86,
+    "bb": 26.0,
+    "ts": 1788108404.1189818
   },
   "football|Costa Rica Primera Division|萨普里萨|贝伦蝎子|上半场正确比分0-1|correct_score_ht|2026-08-31": {
     "ev": 3.69,
@@ -2108,6 +2117,10 @@
   "football|Cyprus 1st Division|Karmiotissa FC|Pafos FC|上半场正确比分1-0|correct_score_ht|2026-08-31": {
     "ev": 19.01,
     "ts": 1788092597.929285
+  },
+  "football|Cyprus 1st Division|Karmiotissa FC|Pafos FC|主胜|1x2|2026-08-31": {
+    "ev": 2.49,
+    "ts": 1788108404.762859
   },
   "football|Cyprus 1st Division|Karmiotissa FC|Pafos FC|双重机会-主/和局|dc|2026-08-31": {
     "ev": 2.47,
@@ -4350,6 +4363,18 @@
     "ev": 14.95,
     "ts": 1788092597.929523
   },
+  "football|Hungary NB I|Puskas Akademia FC|Ferencvarosi TC Budapest|客胜|1x2|2026-08-31": {
+    "ev": 3.57,
+    "ts": 1788108404.763773
+  },
+  "football|Hungary NB I|Puskas Akademia FC|Ferencvarosi TC Budapest|总进球区间7+|total_goals_range|2026-08-31": {
+    "ev": 3.59,
+    "ts": 1788108404.7678342
+  },
+  "football|Hungary NB I|Puskas Akademia FC|Ferencvarosi TC Budapest|让球客胜|1x2|2026-08-31": {
+    "ev": 1.25,
+    "ts": 1788108404.7638998
+  },
   "football|Iceland 3. deild|KF Fjallabyggd|Augnablik FC|主胜|1x2|2026-08-30": {
     "ev": 5.57,
     "ts": 1788011844.255717
@@ -6527,6 +6552,10 @@
     "ev": 1.37,
     "ts": 1788071280.308948
   },
+  "football|Norway 3rd Division|Skedsmo|Tromso IL 2|让球主胜|1x2|2026-08-31": {
+    "ev": 4.15,
+    "ts": 1788108404.766925
+  },
   "football|Norway 3rd Division|Skedsmo|Tromso IL 2|让球客胜|1x2|2026-08-31": {
     "ev": 1.63,
     "ts": 1788085354.857274
@@ -7169,13 +7198,25 @@
     "ev": 17.87,
     "ts": 1788107414.191305
   },
+  "football|Portugal Segunda Liga|Sporting Lisbon B|Farense|单双-双|oe|2026-08-31": {
+    "ev": 1.78,
+    "ts": 1788108404.766464
+  },
   "football|Portugal Segunda Liga|Sporting Lisbon B|Farense|双边进球-是|btts|2026-08-31": {
     "ev": 1.24,
     "ts": 1787975485.220185
   },
+  "football|Portugal Segunda Liga|Sporting Lisbon B|Farense|和局|1x2|2026-08-31": {
+    "ev": 4.89,
+    "ts": 1788108404.766382
+  },
   "football|Portugal Segunda Liga|Sporting Lisbon B|Farense|客胜|1x2|2026-08-31": {
     "ev": 1.53,
     "ts": 1788105778.700188
+  },
+  "football|Portugal Segunda Liga|Sporting Lisbon B|Farense|让球主胜|1x2|2026-08-31": {
+    "ev": 2.61,
+    "ts": 1788108404.766648
   },
   "football|Portugal Segunda Liga|Sporting Lisbon B|Farense|让球客胜|1x2|2026-08-31": {
     "ev": 3.0,
@@ -7356,6 +7397,10 @@
   "football|Russia First League|FK Nizhny Novgorod|FC Volga Ulyanovsk|半/全场-主/客|htft|2026-08-31": {
     "ev": 15.09,
     "ts": 1788092597.920473
+  },
+  "football|Russia First League|FK Nizhny Novgorod|FC Volga Ulyanovsk|双边进球-是|btts|2026-08-31": {
+    "ev": 1.02,
+    "ts": 1788108404.763513
   },
   "football|Russia First League|PFK Sochi|FC Chelyabinsk|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.5,
@@ -8111,6 +8156,10 @@
     "ev": 18.46,
     "ts": 1788092597.9197462
   },
+  "football|Spain LaLiga 2|diz CF|Real Valladolid|半/全场-主/客|htft|2026-08-31": {
+    "ev": 19.99,
+    "ts": 1788108404.7620502
+  },
   "football|Spain LaLiga 2|diz CF|Real Valladolid|单双-双|oe|2026-08-31": {
     "ev": 1.18,
     "ts": 1788077900.730535
@@ -8134,10 +8183,20 @@
     "bb": 15.9,
     "ts": 1788100057.747851
   },
+  "football|Spain LaLiga 2|加的斯|巴拉多利德|半/全场-主/客|htft|2026-08-31": {
+    "ev": 19.99,
+    "bb": 36.0,
+    "ts": 1788108404.119031
+  },
   "football|Spain LaLiga 2|科尔多瓦|格拉纳达|半/全场-主/和局|htft|2026-08-31": {
     "ev": 10.49,
     "bb": 15.1,
     "ts": 1788100057.7989068
+  },
+  "football|Spain LaLiga 2|科尔多瓦|格拉纳达|半/全场-客/主|htft|2026-08-31": {
+    "ev": 6.55,
+    "bb": 24.0,
+    "ts": 1788108404.119075
   },
   "football|Spain LaLiga 2|莱加内斯|埃登斯|上半场客胜|ht|2026-08-30": {
     "ev": 7.59,
@@ -8388,6 +8447,11 @@
     "ev": 9.26,
     "bb": 17.2,
     "ts": 1788100650.770377
+  },
+  "football|Spain LaLiga|拉科鲁尼亚|瓦伦西亚|半/全场-客/主|htft|2026-08-31": {
+    "ev": 30.0,
+    "bb": 36.0,
+    "ts": 1788108404.118912
   },
   "football|Spain LaLiga|皇家社会|西班牙人|上半场客胜|ht|2026-08-30": {
     "ev": 5.3,
@@ -9555,6 +9619,11 @@
     "ev": 5.22,
     "ts": 1788044533.223336
   },
+  "football|USA Major League Soccer|哥伦布机员|新英格兰革命|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 20.67,
+    "bb": 23.0,
+    "ts": 1788108404.118856
+  },
   "football|USA Major League Soccer|多伦多FC|纽约城|和局|1x2|2026-08-30": {
     "ev": 10.45,
     "bb": 4.15,
@@ -10087,29 +10156,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|USA Major League Soccer|哥伦布机员|新英格兰革命|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 20.67,
-    "bb": 23.0,
-    "ts": 1788108404.118856
-  },
-  "football|Spain LaLiga|拉科鲁尼亚|瓦伦西亚|半/全场-客/主|htft|2026-08-31": {
-    "ev": 30.0,
-    "bb": 36.0,
-    "ts": 1788108404.118912
-  },
-  "football|Costa Rica Primera Division|肯塔吉内斯|希雷迪亚诺|半/全场-客/主|htft|2026-08-31": {
-    "ev": 16.86,
-    "bb": 26.0,
-    "ts": 1788108404.1189818
-  },
-  "football|Spain LaLiga 2|加的斯|巴拉多利德|半/全场-主/客|htft|2026-08-31": {
-    "ev": 19.99,
-    "bb": 36.0,
-    "ts": 1788108404.119031
-  },
-  "football|Spain LaLiga 2|科尔多瓦|格拉纳达|半/全场-客/主|htft|2026-08-31": {
-    "ev": 6.55,
-    "bb": 24.0,
-    "ts": 1788108404.119075
+  "football|Russia First League|科斯特罗马斯巴达|洛特伏尔加格勒|半/全场-客/主|htft|2026-09-01": {
+    "ev": 28.07,
+    "bb": 32.0,
+    "ts": 1788108514.362647
   }
 }
