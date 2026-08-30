@@ -846,6 +846,11 @@ def _save_scan_fingerprints(scan_result: dict):
                         norm_mk = "ou"
                     else:
                         norm_mk = raw_mk  # ht, btts, dc, dnb 等
+                    # 2026-08-30: 观察模式盘口不写扫描指纹 — 否则解封后被误判"已推送"
+                    # (correct_score_ht/htft 之前观察模式时写了418/175条指纹, 解封后全被 _filter_pushed 拦)
+                    if norm_mk in ("correct_score", "first_to_score", "exact_goals_ht",
+                                   "winning_margin_ht", "total_goals_range_ht", "first_to_score_ht"):
+                        continue
                     o = {
                         "sport": sport, "league": league,
                         "home_cn": home, "away_cn": away,
