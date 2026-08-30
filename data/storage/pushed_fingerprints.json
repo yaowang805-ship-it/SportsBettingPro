@@ -1585,6 +1585,10 @@
     "ev": 1.59,
     "ts": 1788060910.945143
   },
+  "football|Bulgaria First Professional League|Botev Plovdiv|PFC Levski Sofia|半/全场-主/客|htft|2026-08-31": {
+    "ev": 2.54,
+    "ts": 1788102622.351645
+  },
   "football|Bulgaria First Professional League|Botev Plovdiv|PFC Levski Sofia|双重机会-主/和局|dc|2026-08-31": {
     "ev": 5.63,
     "ts": 1788102333.5589309
@@ -1616,6 +1620,11 @@
   "football|Bulgaria First Professional League|PFC CSKA Sofia|PFC Cherno More Varna|半/全场-客/主|htft|2026-08-31": {
     "ev": 1.78,
     "ts": 1788092091.891063
+  },
+  "football|Bulgaria First Professional League|索菲亚中央陆军|切诺摩尔|半/全场-客/主|htft|2026-08-31": {
+    "ev": 4.76,
+    "bb": 23.0,
+    "ts": 1788102621.204496
   },
   "football|Bulgaria Second Professional League|FC Fratria Varna|CSKA Sofia II|主胜|1x2|2026-08-30": {
     "ev": 11.29,
@@ -2157,6 +2166,10 @@
     "ev": 1.05,
     "ts": 1788078876.758163
   },
+  "football|Czech Republic 1. Liga|Sparta Prague|Slavia Prague|双重机会-主/和局|dc|2026-08-31": {
+    "ev": 1.06,
+    "ts": 1788102622.355924
+  },
   "football|Czech Republic 1. Liga|Sparta Prague|Slavia Prague|让球主胜|1x2|2026-08-31": {
     "ev": 1.02,
     "ts": 1788072958.52413
@@ -2495,11 +2508,6 @@
     "ev": 5.9,
     "bb": 6.75,
     "ts": 1788064051.831028
-  },
-  "football|Ecuador LigaPro Primera A|埃梅莱克|北莱昂斯|半/全场-客/主|htft|2026-08-31": {
-    "ev": 6.53,
-    "bb": 26.0,
-    "ts": 1788098289.826317
   },
   "football|Ecuador LigaPro Primera A|奥伦斯|马卡拉|半/全场-客/主|htft|2026-08-31": {
     "ev": 21.19,
@@ -3659,6 +3667,10 @@
     "ev": 1.05,
     "ts": 1788037125.8913128
   },
+  "football|Germany Bundesliga Women|Werder Bremen (w)|RB Leipzig (w)|主胜|1x2|2026-08-31": {
+    "ev": 1.29,
+    "ts": 1788102622.3524852
+  },
   "football|Germany Bundesliga|Borussia Dortmund|Hamburger SV|主胜|1x2|2026-08-30": {
     "ev": 1.32,
     "ts": 1787980440.821213
@@ -3922,6 +3934,10 @@
     "ev": 3.86,
     "ts": 1788021144.454613
   },
+  "football|Hungary NB II|Soroksar SC|Aqvital FC Csakvar|客胜|1x2|2026-08-30": {
+    "ev": 2.08,
+    "ts": 1788102622.351247
+  },
   "football|Hungary NB II|Soroksar SC|Aqvital FC Csakvar|让球主胜|1x2|2026-08-30": {
     "ev": 4.18,
     "ts": 1788021144.454572
@@ -3929,6 +3945,10 @@
   "football|Hungary NB II|Szentlorinc SE|FC Ajka|让球主胜|1x2|2026-08-30": {
     "ev": 6.92,
     "ts": 1788099008.678259
+  },
+  "football|Hungary NB II|Szentlorinc SE|FC Ajka|让球客胜|1x2|2026-08-30": {
+    "ev": 1.67,
+    "ts": 1788102622.3513138
   },
   "football|Hungary NB I|Puskas Akademia FC|Ferencvarosi TC Budapest|上半场正确比分2-0|correct_score_ht|2026-08-31": {
     "ev": 14.95,
@@ -4000,6 +4020,10 @@
     "ev": 1.71,
     "ts": 1788022755.610898
   },
+  "football|Israel Premier League|Hapoel Haifa FC|Hapoel Tel Aviv FC|半/全场-客/主|htft|2026-08-31": {
+    "ev": 5.86,
+    "ts": 1788102622.354805
+  },
   "football|Israel Premier League|Hapoel Ironi Kiryat Shmona FC|Ironi Tiberias|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.1,
     "ts": 1788000428.4573581
@@ -4052,6 +4076,11 @@
     "ev": 3.39,
     "bb": 1.84,
     "ts": 1787941175.625184
+  },
+  "football|Israel Premier League|海法|特拉维夫夏普尔|半/全场-客/主|htft|2026-08-31": {
+    "ev": 5.86,
+    "bb": 35.0,
+    "ts": 1788102621.211838
   },
   "football|Italy Serie A|Atalanta BC|Bologna FC|上半场双重机会-主/客|ht_dc|2026-09-01": {
     "ev": 2.03,
@@ -6266,6 +6295,10 @@
     "ev": 1.2,
     "ts": 1788033850.346095
   },
+  "football|Peru Liga 1|Asociacion Deportiva Tarma|Sport Huancayo|上半场主胜|ht|2026-08-31": {
+    "ev": 1.47,
+    "ts": 1788102622.351965
+  },
   "football|Peru Liga 1|Asociacion Deportiva Tarma|Sport Huancayo|单双-双|oe|2026-08-31": {
     "ev": 1.19,
     "ts": 1788063682.986599
@@ -6778,6 +6811,11 @@
   "football|Russia First League|Spartak Kostroma|SK Rotor Volgograd|半/全场-客/主|htft|2026-09-01": {
     "ev": 34.82,
     "ts": 1788098326.748512
+  },
+  "football|Russia First League|下诺夫哥罗德|乌里扬诺夫斯克|半/全场-主/客|htft|2026-08-31": {
+    "ev": 23.72,
+    "bb": 57.0,
+    "ts": 1788102621.204373
   },
   "football|Russia First League|叶尼塞|辛历克|上半场客胜|ht|2026-08-30": {
     "ev": 8.11,
@@ -8320,6 +8358,10 @@
     "ev": 11.05,
     "ts": 1788092091.895253
   },
+  "football|Turkey 1. Lig|Manisa Futbol Kulubu|Bodrum Belediyesi Bodrumspor|半/全场-主/客|htft|2026-08-31": {
+    "ev": 5.71,
+    "ts": 1788102622.351574
+  },
   "football|Turkey 1. Lig|Manisa Futbol Kulubu|Bodrum Belediyesi Bodrumspor|半/全场-客/主|htft|2026-08-31": {
     "ev": 2.74,
     "ts": 1788092091.8913448
@@ -8349,6 +8391,11 @@
     "ev": 2.74,
     "bb": 1.87,
     "ts": 1787944816.419702
+  },
+  "football|Turkey 1. Lig|马尼萨FK|波德鲁姆士邦|半/全场-主/客|htft|2026-08-31": {
+    "ev": 5.71,
+    "bb": 28.0,
+    "ts": 1788102621.204598
   },
   "football|Turkey Super Lig|Eyupspor|Alanyaspor|上半场主胜|ht|2026-08-31": {
     "ev": 6.76,
@@ -8434,6 +8481,11 @@
     "ev": 6.76,
     "bb": 4.45,
     "ts": 1788019791.739007
+  },
+  "football|Turkey Super Lig|埃于普体育|阿拉尼亚体育|上半场主胜|ht|2026-08-31": {
+    "ev": 7.54,
+    "bb": 4.77,
+    "ts": 1788102621.204257
   },
   "football|UAE Pro League|Al Ain FC|Al Nasr Dubai SC|上半场主胜|ht|2026-08-30": {
     "ev": 1.41,
@@ -9296,29 +9348,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Turkey Super Lig|埃于普体育|阿拉尼亚体育|上半场主胜|ht|2026-08-31": {
-    "ev": 7.54,
-    "bb": 4.77,
-    "ts": 1788102621.204257
+  "football|Nicaragua Primera Division|圣马科斯|沃尔特费雷蒂|客胜|1x2|2026-08-31": {
+    "ev": 7.49,
+    "bb": 1.97,
+    "ts": 1788102738.6812391
   },
-  "football|Russia First League|下诺夫哥罗德|乌里扬诺夫斯克|半/全场-主/客|htft|2026-08-31": {
-    "ev": 23.72,
-    "bb": 57.0,
-    "ts": 1788102621.204373
-  },
-  "football|Bulgaria First Professional League|索菲亚中央陆军|切诺摩尔|半/全场-客/主|htft|2026-08-31": {
-    "ev": 4.76,
-    "bb": 23.0,
-    "ts": 1788102621.204496
-  },
-  "football|Turkey 1. Lig|马尼萨FK|波德鲁姆士邦|半/全场-主/客|htft|2026-08-31": {
-    "ev": 5.71,
-    "bb": 28.0,
-    "ts": 1788102621.204598
-  },
-  "football|Israel Premier League|海法|特拉维夫夏普尔|半/全场-客/主|htft|2026-08-31": {
-    "ev": 5.86,
-    "bb": 35.0,
-    "ts": 1788102621.211838
+  "football|Ecuador LigaPro Primera A|埃梅莱克|北莱昂斯|半/全场-客/主|htft|2026-08-31": {
+    "ev": 10.63,
+    "bb": 27.0,
+    "ts": 1788102738.681323
   }
 }
