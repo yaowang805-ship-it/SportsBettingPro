@@ -445,6 +445,10 @@
     "ev": 1.68,
     "ts": 1787975485.217869
   },
+  "football|Argentina Primera Nacional|All Boys|Chaco For Ever|客胜|1x2|2026-08-31": {
+    "ev": 1.47,
+    "ts": 1788113659.85663
+  },
   "football|Argentina Primera Nacional|All Boys|Chaco For Ever|让球客胜|1x2|2026-08-31": {
     "ev": 10.18,
     "ts": 1787981781.431394
@@ -504,6 +508,14 @@
   "football|Argentina Primera Nacional|Deportivo Moron|San Miguel|上半场客胜|ht|2026-08-31": {
     "ev": 4.49,
     "ts": 1787975485.2177432
+  },
+  "football|Argentina Primera Nacional|Deportivo Moron|San Miguel|主胜|1x2|2026-08-31": {
+    "ev": 3.72,
+    "ts": 1788113659.856467
+  },
+  "football|Argentina Primera Nacional|Deportivo Moron|San Miguel|让球主胜|1x2|2026-08-31": {
+    "ev": 1.99,
+    "ts": 1788113659.856548
   },
   "football|Argentina Primera Nacional|Estudiantes|Ferro Carril Oeste|上半场双重机会-主/客|ht_dc|2026-08-31": {
     "ev": 1.49,
@@ -1162,6 +1174,10 @@
     "ev": 1.57,
     "ts": 1788111370.045481
   },
+  "football|Brazil Serie A|CR Flamengo RJ|Botafogo FR RJ|小球|1x2|2026-08-31": {
+    "ev": 4.41,
+    "ts": 1788113659.857362
+  },
   "football|Brazil Serie A|CR Vasco da Gama RJ|Cruzeiro EC MG|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 3.16,
     "ts": 1787963342.6185029
@@ -1738,9 +1754,17 @@
     "ev": 1.35,
     "ts": 1788027714.313008
   },
+  "football|Bulgaria First Professional League|PFC CSKA Sofia|PFC Cherno More Varna|半/全场-主/和局|htft|2026-08-31": {
+    "ev": 1.36,
+    "ts": 1788113659.8557289
+  },
   "football|Bulgaria First Professional League|PFC CSKA Sofia|PFC Cherno More Varna|半/全场-客/主|htft|2026-08-31": {
     "ev": 1.78,
     "ts": 1788092091.891063
+  },
+  "football|Bulgaria First Professional League|PFC Slavia Sofia|PFC Levski Sofia|上半场客胜|ht|2026-09-03": {
+    "ev": 1.64,
+    "ts": 1788114108.8206668
   },
   "football|Bulgaria First Professional League|PFC Slavia Sofia|PFC Levski Sofia|上半场正确比分1-0|correct_score_ht|2026-09-03": {
     "ev": 2.76,
@@ -3553,6 +3577,10 @@
     "bb": 26.0,
     "ts": 1788098832.0379698
   },
+  "football|England Premier League 2|Brentford FC U21|Sunderland U21|上半场正确比分1-0|correct_score_ht|2026-08-31": {
+    "ev": 1.33,
+    "ts": 1788113949.8547862
+  },
   "football|England Premier League 2|Brentford FC U21|Sunderland U21|上半场正确比分2-0|correct_score_ht|2026-08-31": {
     "ev": 7.68,
     "ts": 1788111248.4156659
@@ -3863,6 +3891,10 @@
   "football|France Ligue 1|AS Monaco FC|Olympique Marseille|和局|1x2|2026-08-31": {
     "ev": 1.12,
     "ts": 1787998834.8728168
+  },
+  "football|France Ligue 1|AS Monaco FC|Olympique Marseille|总进球区间7+|total_goals_range|2026-08-31": {
+    "ev": 1.17,
+    "ts": 1788113659.859815
   },
   "football|France Ligue 1|AS Monaco FC|Olympique Marseille|角球让球主胜|corner|2026-08-31": {
     "ev": 1.11,
@@ -5311,6 +5343,10 @@
   "football|Italy Serie C|Lumezzane|AS Giana Erminio|让球主胜|1x2|2026-08-31": {
     "ev": 8.61,
     "ts": 1788027472.043201
+  },
+  "football|Italy Serie C|Lumezzane|AS Giana Erminio|让球客胜|1x2|2026-08-31": {
+    "ev": 1.28,
+    "ts": 1788113659.857669
   },
   "football|Italy Serie C|Novara Calcio|US Folgore Caratese|上半场主胜|ht|2026-09-01": {
     "ev": 4.82,
@@ -6984,6 +7020,10 @@
     "ev": 3.01,
     "ts": 1787975485.218244
   },
+  "football|Peru Liga 1|Asociacion Deportiva Tarma|Sport Huancayo|角球小球|corner|2026-08-31": {
+    "ev": 1.15,
+    "ts": 1788113659.8594189
+  },
   "football|Peru Liga 1|Asociacion Deportiva Tarma|Sport Huancayo|让球主胜|1x2|2026-08-31": {
     "ev": 5.11,
     "ts": 1788111929.3203762
@@ -7171,6 +7211,11 @@
     "ev": 3.69,
     "bb": 29.0,
     "ts": 1788103186.0238159
+  },
+  "football|Poland Ekstraklasa|维德祖罗兹|波兹南莱赫|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 3.25,
+    "bb": 13.2,
+    "ts": 1788113659.414815
   },
   "football|Poland Ekstraklasa|维德祖罗兹|波兹南莱赫|上半场正确比分2-0|correct_score_ht|2026-08-31": {
     "ev": 18.87,
@@ -8669,10 +8714,10 @@
     "bb": 20.0,
     "ts": 1788100057.798697
   },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分others|correct_score_ht|2026-08-31": {
-    "ev": 12.47,
-    "bb": 25.0,
-    "ts": 1788110087.37978
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 16.39,
+    "bb": 23.0,
+    "ts": 1788113659.414767
   },
   "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
     "ev": 20.16,
@@ -9271,6 +9316,10 @@
   "football|Turkey 1. Lig|Manisa Futbol Kulubu|Bodrum Belediyesi Bodrumspor|上半场双重机会-主/客|ht_dc|2026-08-31": {
     "ev": 1.03,
     "ts": 1788072193.129514
+  },
+  "football|Turkey 1. Lig|Manisa Futbol Kulubu|Bodrum Belediyesi Bodrumspor|上半场客胜|ht|2026-08-31": {
+    "ev": 2.46,
+    "ts": 1788113659.855913
   },
   "football|Turkey 1. Lig|Manisa Futbol Kulubu|Bodrum Belediyesi Bodrumspor|上半场正确比分0-2|correct_score_ht|2026-08-31": {
     "ev": 5.78,
@@ -10379,14 +10428,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分2-0|correct_score_ht|2026-08-31": {
-    "ev": 16.39,
-    "bb": 23.0,
-    "ts": 1788113659.414767
+  "football|Argentina Primera Nacional|卡塞罗斯学生队|费罗卡利|客胜|1x2|2026-08-31": {
+    "ev": 5.89,
+    "bb": 3.71,
+    "ts": 1788114333.129406
   },
-  "football|Poland Ekstraklasa|维德祖罗兹|波兹南莱赫|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 3.25,
-    "bb": 13.2,
-    "ts": 1788113659.414815
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 10.98,
+    "bb": 25.0,
+    "ts": 1788114333.1294742
   }
 }
