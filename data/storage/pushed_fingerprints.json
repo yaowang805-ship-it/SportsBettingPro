@@ -3782,6 +3782,10 @@
     "bb": 26.0,
     "ts": 1788098832.0379698
   },
+  "football|England Premier League 2|Brentford FC U21|Sunderland U21|上半场正确比分0-0|correct_score_ht|2026-08-31": {
+    "ev": 2.21,
+    "ts": 1788117113.7952251
+  },
   "football|England Premier League 2|Brentford FC U21|Sunderland U21|上半场正确比分1-0|correct_score_ht|2026-08-31": {
     "ev": 1.33,
     "ts": 1788113949.8547862
@@ -3946,6 +3950,11 @@
     "ev": 3.81,
     "bb": 3.9,
     "ts": 1787975483.378898
+  },
+  "football|England Premier League|阿斯顿维拉|阿森纳|上半场主胜|ht|2026-09-01": {
+    "ev": 3.18,
+    "bb": 7.65,
+    "ts": 1788116787.523572
   },
   "football|Estonia Meistriliiga Women|Harju JK Laagri (w)|Saku Sporting (w)|主胜|1x2|2026-08-30": {
     "ev": 7.34,
@@ -8378,6 +8387,10 @@
     "bb": 36.0,
     "ts": 1788102332.346192
   },
+  "football|Slovenia PrvaLiga|NK Aluminij|NK Celje|上半场客胜|ht|2026-09-03": {
+    "ev": 1.3,
+    "ts": 1788117002.706976
+  },
   "football|Slovenia PrvaLiga|NK Aluminij|NK Celje|上半场正确比分2-0|correct_score_ht|2026-09-03": {
     "ev": 9.66,
     "ts": 1788112904.5061572
@@ -9127,6 +9140,10 @@
   "football|Sweden Allsvenskan|Djurgardens IF|Mjallby AIF|主胜|1x2|2026-09-01": {
     "ev": 1.37,
     "ts": 1787975485.2080371
+  },
+  "football|Sweden Allsvenskan|Djurgardens IF|Mjallby AIF|半/全场-和局/客|htft|2026-09-01": {
+    "ev": 1.38,
+    "ts": 1788116788.27299
   },
   "football|Sweden Allsvenskan|GAIS|IF Brommapojkarna|上半场双重机会-主/客|ht_dc|2026-09-01": {
     "ev": 1.23,
@@ -10822,9 +10839,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|England Premier League|阿斯顿维拉|阿森纳|上半场主胜|ht|2026-09-01": {
-    "ev": 3.18,
-    "bb": 7.65,
-    "ts": 1788116787.523572
+  "football|Brazil Serie A|米拉索尔|帕尔梅拉斯|上半场主胜|ht|2026-08-31": {
+    "ev": 4.97,
+    "bb": 4.67,
+    "ts": 1788117323.7899342
   }
 }
