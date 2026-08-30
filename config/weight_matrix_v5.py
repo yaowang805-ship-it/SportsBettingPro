@@ -2247,6 +2247,12 @@ def get_min_ev(sport: str, league: str, sub_market: str, odds: float) -> float:
         stake = get_kelly_stake_pct(sport, league, sub_market, odds)
         if stake > 0:
             return base_min_ev
+        # 2026-08-30: 特殊盘口(正确比分/半全场/半场精确进球等)天然高赔率,
+        # 不套用主盘口的赔率分层(赔率>10→41-65%把 correct_score_ht EV中位11%/htft 8.8% 全拦)。
+        # SPECIAL_MARKET_CAPS 里没有 correct_score_ht/htft/exact_goals_ht(V5.11后加的半场特殊盘), 补上。
+        _spec_markets = set(SPECIAL_MARKET_CAPS) | {"correct_score_ht", "htft", "exact_goals_ht"}
+        if sub_market in _spec_markets:
+            return base_min_ev
         # V4.5: 赔率>10 → 按Wilson CI最差ROI逐bin放行
         if odds > 10.0:
             # Wilson最差ROI: bin26=-36% bin27=-40% bin28=-60% bin29=-57%
