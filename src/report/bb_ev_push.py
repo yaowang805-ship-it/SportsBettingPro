@@ -384,6 +384,18 @@ def _get_kelly_for_market(sub_market: str) -> float:
 # 纯 Kelly 分配, 总额 ¥20,000/天, 按投注额比例压缩
 TOTAL_DAILY_BUDGET = 20000  # 日预算总额
 
+# 2026-08-30 差异化放大: 调整后(取消推导+ss过滤+门槛提高)推送量骤降(14场/693元),
+# 日投注额远达不到预算。全局 Kelly 倍率放大让日投注额达标(目标至少花 1 万),
+# 同时假 edge 方向(实盘 ROI 负)单独压制, 避免放大假 edge。
+GLOBAL_KELLY_MULT = 12.0  # 全局放大 12 倍
+NEG_EDGE_DIRECTION_DISCOUNT = 0.2  # 假 edge 方向压到 20%
+# 实盘 ROI 负的方向(sub_market, designation) — 来自 tracked_bets 已结算数据
+NEG_EDGE_DIRECTIONS = {
+    ("ht", "上半场客胜"),           # 169注 ROI -21.6%
+    ("ht_dc", "上半场双重机会-主/客"),  # 96注 ROI -20.3%
+    ("dc", "双重机会-主/和局"),      # 15注 ROI -20.3%
+}
+
 
 def _load_budget_tracker():
     """加载当日预算跟踪器。日期不匹配时自动重置。"""
@@ -1033,6 +1045,10 @@ def _calc_kelly_stakes(opps: list) -> list:
             except Exception:
                 pass
         stake = int(bankroll * stake_pct)
+        # 2026-08-30 差异化放大: 全局×12 让日投注额达标; 假 edge 方向(实盘ROI负)压到20%
+        stake = int(stake * GLOBAL_KELLY_MULT)
+        if (sub, o.get("designation", "")) in NEG_EDGE_DIRECTIONS:
+            stake = int(stake * NEG_EDGE_DIRECTION_DISCOUNT)
         o["_raw_stake"] = stake
         # 2026-08-27 用户澄清: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库(record_bets)
         o["_stake"] = stake
