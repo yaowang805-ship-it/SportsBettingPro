@@ -76,6 +76,7 @@ from src.scrapers.pinnacle_opportunities import (
     add_htft_opportunities as _add_htft_opportunities,
     map_htft_designations as _map_htft_designations,
     fetch_corner_opportunities as _fetch_corner_opportunities,
+    fetch_booking_opportunities as _fetch_booking_opportunities,
     fetch_special_opportunities as _fetch_special_opportunities,
     HTFT_LABELS, HTFT_KEYS,
 )
@@ -1742,9 +1743,10 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     import concurrent.futures as _cf
     _sub_start = time.time()
     _sub_results = {}
-    with _cf.ThreadPoolExecutor(max_workers=2) as _sub_exec:
+    with _cf.ThreadPoolExecutor(max_workers=3) as _sub_exec:
         _sub_futs = {
             _sub_exec.submit(_fetch_corner_opportunities, bb_matches, all_pin_leagues, matched_leagues): "corner",
+            _sub_exec.submit(_fetch_booking_opportunities, bb_matches, all_pin_leagues, matched_leagues): "booking",
             _sub_exec.submit(_fetch_special_opportunities, bb_matches, all_pin_leagues, matched_leagues): "special",
         }
         for _fut in _cf.as_completed(_sub_futs):

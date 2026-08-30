@@ -473,6 +473,304 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
     return corner_entries
 
 
+
+def fetch_booking_opportunities(bb_matches, all_pin_leagues, matched_leagues):
+    """罚牌市场对比：从 Pinnacle 基础联赛提取罚牌数据并与 BB 罚牌赔率对比。
+
+    Pinnacle 罚牌是基础联赛里的子比赛 (league.name 以 " Bookings" 结尾,
+    units == "Bookings"), 不是独立联赛。所以映射 BB 联赛 → 基础联赛 id,
+    再用 get_league_booking_markets 从基础联赛 matchups 里提取罚牌市场。
+
+    Returns list of corner opportunity entries (empty list if none).
+    """
+    # 1. 找出哪些基础联赛名有 " Bookings" 子比赛
+    booking_base_names = set()
+    for info in all_pin_leagues.values():
+        name = info.get("name", "")
+        if name.endswith(" Bookings"):
+            booking_base_names.add(name[:-8])
+
+    if not booking_base_names:
+        return []
+
+    # 2. 映射 BB 联赛 → 基础 Pinnacle 联赛 id (该基础联赛需有罚牌子比赛)
+    from src.scrapers.pinnacle_league_map import lookup_pin_league
+    bb_league_to_base = {}
+    for bb_league in matched_leagues:
+        for pid in matched_leagues[bb_league]:
+            info = lookup_pin_league(all_pin_leagues, pid)
+            base_name = info.get("name", "")
+            if base_name in booking_base_names:
+                bb_league_to_base[bb_league] = pid
+                break
+
+    if not bb_league_to_base:
+        return []
+
+    # 3. 收集有罚牌数据的 BB 比赛
+    bb_booking_matches = []
+    for m in bb_matches:
+        if detect_sport(m) != "football":
+            continue
+        bb_league = m.get("league", "?")
+        if bb_league not in bb_league_to_base:
+            continue
+        odds_ft = m.get("odds_ft", {})
+        if not isinstance(odds_ft, dict):
+            continue
+        if not any([odds_ft.get("booking_ml"), odds_ft.get("booking_hc"), odds_ft.get("booking_ou")]):
+            continue
+        bb_booking_matches.append(m)
+
+    if not bb_booking_matches:
+        return []
+
+    # 4. 获取 Pinnacle 罚牌比赛（基础联赛去重）
+    base_leagues_to_fetch = sorted(set(bb_league_to_base.values()))
+    print(f"\n{'='*60}")
+    print(f"📐 罚牌对比 ({len(base_leagues_to_fetch)} 个基础联赛)")
+    print(f"{'='*60}")
+    for lid in base_leagues_to_fetch:
+        info = lookup_pin_league(all_pin_leagues, lid)
+        print(f"  • {info.get('name', lid)}")
+
+    pin_booking_matchups = []
+    import concurrent.futures
+
+    def _fetch_one_corner(lid):
+        time.sleep(random.uniform(0.1, 0.3))
+        matchups = get_league_booking_markets(lid)
+        return lid, matchups
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+        futures = {executor.submit(_fetch_one_corner, lid): lid
+                   for lid in base_leagues_to_fetch}
+        for fut in concurrent.futures.as_completed(futures):
+            lid, matchups = fut.result()
+            info = lookup_pin_league(all_pin_leagues, lid)
+            name = info.get("name", lid)
+            if matchups:
+                print(f"  [罚牌] {name}: {len(matchups)} 场")
+            else:
+                print(f"  [罚牌] {name}: ⚠️ 无罚牌数据")
+            pin_booking_matchups.extend(matchups)
+
+    if not pin_booking_matchups:
+        print("  ⚠️ 全部基础联赛无罚牌返回数据")
+        return []
+
+    # 5. 匹配 BB → Pinnacle 罚牌 + EV 计算
+    mlabels = MARKET_LABELS["football"]
+    booking_entries = []
+
+    for bb_m in bb_booking_matches:
+        bb_league = bb_m.get("league", "?")
+        bb_home = bb_m.get("home_team", bb_m.get("home", "")).strip()
+        bb_away = bb_m.get("away_team", bb_m.get("away", "")).strip()
+
+        # 找最佳匹配的 Pinnacle 罚牌比赛
+        best_pin = None
+        best_score = 0.0
+
+        for pin_m in pin_booking_matchups:
+            pin_home = pin_m.get("home", "").strip().lower()
+            pin_away = pin_m.get("away", "").strip().lower()
+            bb_home_en = TEAM_NAME_MAP.get(bb_home, bb_home).lower()
+            bb_away_en = TEAM_NAME_MAP.get(bb_away, bb_away).lower()
+
+            score_parts = []
+            if bb_home_en and pin_home:
+                if bb_home_en == pin_home:
+                    score_parts.append(1.0)
+                elif bb_home_en in pin_home or pin_home in bb_home_en:
+                    score_parts.append(0.9)
+                else:
+                    sm = _SM(None, bb_home_en, pin_home)
+                    score_parts.append(sm.ratio() * 0.7)
+
+            if bb_away_en and pin_away:
+                if bb_away_en == pin_away:
+                    score_parts.append(1.0)
+                elif bb_away_en in pin_away or pin_away in bb_away_en:
+                    score_parts.append(0.9)
+                else:
+                    sm = _SM(None, bb_away_en, pin_away)
+                    score_parts.append(sm.ratio() * 0.7)
+
+            avg = sum(score_parts) / len(score_parts) if score_parts else 0
+            if avg > best_score:
+                best_score = avg
+                best_pin = pin_m
+
+        if best_score < 0.70:
+            continue
+
+        odds_ft = bb_m.get("odds_ft", {})
+        booking_ml = odds_ft.get("booking_ml", [])
+        booking_hc = odds_ft.get("booking_hc")
+        booking_ou = odds_ft.get("booking_ou")
+
+        if not any([booking_ml, booking_hc, booking_ou]):
+            continue
+
+        # 开赛时间
+        bb_bt = bb_m.get("bt")
+        bb_start = ""
+        if bb_bt:
+            try:
+                bb_epoch = int(int(bb_bt) / 1000)
+                bb_dt = datetime.fromtimestamp(bb_epoch, tz=timezone.utc)
+                bb_bj = bb_dt.astimezone(timezone(timedelta(hours=8)))
+                bb_start = bb_bj.strftime("%m/%d %H:%M")
+            except (ValueError, TypeError, OSError):
+                pass
+
+        entry = {
+            "league": bb_league,
+            "bb_match_id": bb_m.get("id", ""),  # BB比赛ID, 结算按ID精确匹配(罚牌漏了, 2026-08-25 补)
+            "market_type": "罚牌",
+            "match_type": "name" if best_score >= 0.85 else "time",
+            "home_bb": bb_home,
+            "away_bb": bb_away,
+            # V5.5: 中文名(展示用) — 与主对比循环对齐, 否则钉钉推送回退英文队名
+            "home_bb_cn": bb_m.get("home_cn") or bb_home,
+            "away_bb_cn": bb_m.get("away_cn") or bb_away,
+            "league_cn": bb_m.get("league_cn") or bb_league,
+            "home_pin": best_pin.get("home", ""),
+            "away_pin": best_pin.get("away", ""),
+            "match_score": round(best_score, 3),
+            "sport": "football",
+            "flags": [],
+            "start_time_bb": bb_start,
+            "start_time_pin": best_pin.get("start_time", ""),
+            "start_time_pin_epoch": _pin_to_epoch(best_pin),
+            "platform_sources": bb_m.get("platform_sources", {}),
+            "bb_price_source": bb_m.get("platform", "BB"),
+            "opportunities": [],
+            "handicap": [],
+            "over_under": [],
+            "double_chance": [],
+            "draw_no_bet": [],
+        }
+
+        # --- 罚牌独赢 (Corner ML) ---
+        if booking_ml and len(booking_ml) >= 3:
+            pin_ml = get_pin_ml_sorted(best_pin, "football")
+            if len(pin_ml) >= 3:
+                total_implied = sum(1.0 / p for p in pin_ml if p and p > 0)
+                for i in range(3):
+                    bb_o = booking_ml[i]
+                    pin_o = pin_ml[i]
+                    if pin_o and pin_o > 0:
+                        fair = round(pin_o * total_implied, 4) if total_implied > 0 else round(pin_o, 2)
+                        ev = (bb_o - fair) / fair * 100 if fair > 0 else 0
+                        if ev > 1:
+                            entry["opportunities"].append({
+                                "designation": mlabels["ml"][i] + "(罚牌)",
+                                "bb_odds": bb_o,
+                                "pin_odds": pin_o,
+                                "fair_price": fair,
+                                "ev_pct": round(ev, 2),
+                                "_market": "booking",
+                            })
+
+        # --- 罚牌让球 (Corner HC) ---
+        if isinstance(booking_hc, dict):
+            bb_home_str = booking_hc.get("home_line_str", "")
+            bb_away_str = booking_hc.get("away_line_str", "")
+            bb_home_odds = booking_hc.get("home_odds")
+            bb_away_odds = booking_hc.get("away_odds")
+
+            bb_hl_val = parse_asian_line(bb_home_str) if bb_home_str else None
+            if bb_hl_val is None:
+                bb_hl_val = parse_asian_line(bb_away_str) if bb_away_str else None
+
+            if bb_hl_val is not None and bb_home_odds and bb_away_odds:
+                home_sp, away_sp, _ = get_pin_spread(best_pin, target_line=bb_hl_val)
+                # 校准: 罚牌让球线必须精确匹配
+                if home_sp and away_sp:
+                    pin_line = home_sp.get("points")
+                    if pin_line is not None and abs(bb_hl_val - pin_line) > 0.001:
+                        home_sp = away_sp = None  # 线不匹配, 拒绝
+                if home_sp and away_sp and get_decimal_price(home_sp) and get_decimal_price(away_sp):
+                    pin_odds_h = get_decimal_price(home_sp)
+                    pin_odds_a = get_decimal_price(away_sp)
+                    _fairs = shin_fair_odds([pin_odds_h, pin_odds_a])
+                    fair_h = _fairs[0]
+                    fair_a = _fairs[1]
+
+                    ev_h = (bb_home_odds - fair_h) / fair_h * 100 if fair_h > 0 else 0
+                    ev_a = (bb_away_odds - fair_a) / fair_a * 100 if fair_a > 0 else 0
+
+                    if ev_h > 1:
+                        entry["handicap"].append({
+                            "designation": "罚牌" + mlabels["hc_home"],
+                            "line": bb_home_str,
+                            "bb_odds": bb_home_odds,
+                            "pin_odds": pin_odds_h,
+                            "fair_price": fair_h,
+                            "ev_pct": round(ev_h, 2),
+                            "_market": "booking",
+                        })
+                    if ev_a > 1:
+                        entry["handicap"].append({
+                            "designation": "罚牌" + mlabels["hc_away"],
+                            "line": bb_away_str,
+                            "bb_odds": bb_away_odds,
+                            "pin_odds": pin_odds_a,
+                            "fair_price": fair_a,
+                            "ev_pct": round(ev_a, 2),
+                            "_market": "booking",
+                        })
+
+        # --- 罚牌大小 (Corner OU) ---
+        if isinstance(booking_ou, dict):
+            bb_line = booking_ou.get("line")
+            bb_over_odds = booking_ou.get("over_odds")
+            bb_under_odds = booking_ou.get("under_odds")
+
+            if bb_line is not None and bb_over_odds and bb_under_odds:
+                over_p, under_p = get_pin_total(best_pin, target_line=bb_line)
+                # 校准: 罚牌大小线必须精确匹配
+                if over_p and under_p:
+                    pin_line = over_p.get("points")
+                    if pin_line is not None and abs(bb_line - pin_line) > 0.01:
+                        over_p = under_p = None  # 线不匹配, 拒绝
+                if over_p and under_p and get_decimal_price(over_p) and get_decimal_price(under_p):
+                    _fairs = shin_fair_odds([get_decimal_price(over_p), get_decimal_price(under_p)])
+                    over_fair = _fairs[0]
+                    under_fair = _fairs[1]
+
+                    ev_over = (bb_over_odds - over_fair) / over_fair * 100 if over_fair > 0 else 0
+                    ev_under = (bb_under_odds - under_fair) / under_fair * 100 if under_fair > 0 else 0
+
+                    if ev_over > 1:
+                        entry["over_under"].append({
+                            "designation": "罚牌" + mlabels["over"],
+                            "line": booking_ou.get("line_str", str(bb_line)),
+                            "bb_odds": bb_over_odds,
+                            "pin_odds": get_decimal_price(over_p),
+                            "fair_price": over_fair,
+                            "ev_pct": round(ev_over, 2),
+                            "_market": "booking",
+                        })
+                    if ev_under > 1:
+                        entry["over_under"].append({
+                            "designation": "罚牌" + mlabels["under"],
+                            "line": booking_ou.get("line_str", str(bb_line)),
+                            "bb_odds": bb_under_odds,
+                            "pin_odds": get_decimal_price(under_p),
+                            "fair_price": under_fair,
+                            "ev_pct": round(ev_under, 2),
+                            "_market": "booking",
+                        })
+
+        if entry["opportunities"] or entry["handicap"] or entry["over_under"]:
+            booking_entries.append(entry)
+
+    return booking_entries
+
+
 def _norm_scoreline(name):
     """归一化比分线: '4-5' 或 'Arsenal 4, Coventry City 5' -> '4-5'"""
     import re as _re
