@@ -409,6 +409,11 @@ EDGE_DIRECTION_MULT = {
     ("dc", "双重机会-主/和局"): NEG_EDGE_MULT,     # 15注 -20.3%
 }
 
+# 观察模式盘口开推试点倍率(盘口级, 优先于方向级) — correct_score_ht 高方差, 低倍率试点
+PILOT_SUB_MARKET_MULT = {
+    "correct_score_ht": 5.0,  # 正确比分高方差, 试点×5
+}
+
 
 def _load_budget_tracker():
     """加载当日预算跟踪器。日期不匹配时自动重置。"""
@@ -1058,8 +1063,9 @@ def _calc_kelly_stakes(opps: list) -> list:
             except Exception:
                 pass
         stake = int(bankroll * stake_pct)
-        # 2026-08-30 差异化放大: 方向级梯度倍率(强15/中10/弱5/假2), 基于实盘ROI分档
-        stake = int(stake * EDGE_DIRECTION_MULT.get((sub, o.get("designation", "")), DEFAULT_EDGE_MULT))
+        # 2026-08-30 差异化放大: 方向级梯度倍率(强15/中10/弱5/假2), 观察模式试点盘口用盘口级倍率优先
+        _mult = PILOT_SUB_MARKET_MULT.get(sub, EDGE_DIRECTION_MULT.get((sub, o.get("designation", "")), DEFAULT_EDGE_MULT))
+        stake = int(stake * _mult)
         o["_raw_stake"] = stake
         # 2026-08-27 用户澄清: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库(record_bets)
         o["_stake"] = stake
@@ -1605,9 +1611,10 @@ def _collect_opportunities(match, market_key):
 
         # 2026-08-27/28 观察模式盘口: 刚修完错配/新接的半场特殊盘口, 只进观察库(validate/CLV采集),
         # 不推送钉钉, 等 CLV 数据攒够能统计 edge 再开推(用户要求)。
-        # V5.11: htft(半全场)恢复对比后也观察模式 — 9结果高方差, 且旧"EV虚高3228%"教训, 先看 CLV。
+        # 2026-08-30: correct_score_ht 移出观察模式开推试点(CLV+6.8%/n=136正edge, 门槛3%不封杀,
+        # 低倍率×5控制高方差)。htft 仍观察 — 9结果高方差 + 旧"EV虚高3228%"教训。
         if sub_market in ("correct_score", "first_to_score",
-                          "correct_score_ht", "exact_goals_ht", "winning_margin_ht",
+                          "exact_goals_ht", "winning_margin_ht",
                           "total_goals_range_ht", "first_to_score_ht", "htft"):
             continue
 
