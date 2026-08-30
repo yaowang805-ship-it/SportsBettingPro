@@ -1,30 +1,7 @@
 {
-  "balance": 7323.53,
+  "balance": 7423.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_库奥皮奥_沙姆洛克流浪_上半场双重机会-主/客",
-      "sport": "football",
-      "league": "欧足联欧洲协会联赛-资格赛附加赛",
-      "home_team": "库奥皮奥",
-      "away_team": "沙姆洛克流浪",
-      "home_cn": "库奥皮奥",
-      "away_cn": "沙姆洛克流浪",
-      "market": "1x2",
-      "market_type": "上半场双重机会-主/客",
-      "sub_market": "ht_dc",
-      "line": "",
-      "odds": 1.92,
-      "stake": 100,
-      "model_prob": 0.5433,
-      "ev_pct": 4.31,
-      "pin_odds": 0,
-      "fair_price": 1.8407,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1787842800,
-      "created_at": "2026-08-27T03:05:34.105564+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_普拉腾斯_科尔多瓦学院_上半场双重机会-主/客",
       "sport": "football",
@@ -8472,6 +8449,21 @@
       "home_cn": "CD奥林匹亚",
       "away_cn": "萨普里萨",
       "market_type": "和局"
+    },
+    {
+      "id": "bb_vs_pin_1x2_库奥皮奥_沙姆洛克流浪_上半场双重机会-主/客",
+      "match": "100¥ @ 1.92 (超时作废)",
+      "date": "2026-08-30T03:12:11.807888+00:00",
+      "stake": 100,
+      "odds": 1.92,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "欧足联欧洲协会联赛-资格赛附加赛",
+      "sport": "football",
+      "home_cn": "库奥皮奥",
+      "away_cn": "沙姆洛克流浪",
+      "market_type": "上半场双重机会-主/客"
     }
   ],
   "daily_budget": {
