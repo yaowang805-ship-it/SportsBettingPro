@@ -252,6 +252,10 @@
     "ev": 3.49,
     "ts": 1788096532.6320288
   },
+  "basketball|WNBA|Portland Fire (w)|Golden State Valkyries (w)|让分主胜|1x2|2026-08-31": {
+    "ev": 1.76,
+    "ts": 1788123365.092535
+  },
   "basketball|WNBA|Seattle Storm (w)|Los Angeles Sparks (w)|客胜|1x2|2026-08-31": {
     "ev": 2.81,
     "ts": 1788087063.608017
@@ -573,6 +577,10 @@
   "football|Argentina Primera Nacional|Godoy Cruz|San Telmo|上半场客胜|ht|2026-08-31": {
     "ev": 3.34,
     "ts": 1788122796.5812821
+  },
+  "football|Argentina Primera Nacional|Godoy Cruz|San Telmo|让球客胜|1x2|2026-08-31": {
+    "ev": 4.08,
+    "ts": 1788123365.092043
   },
   "football|Argentina Primera Nacional|Mitre Santiago Del Estero|Central Norte Salta|上半场客胜|ht|2026-08-31": {
     "ev": 8.35,
@@ -1317,6 +1325,10 @@
     "ev": 3.78,
     "ts": 1787975485.2104478
   },
+  "football|Brazil Serie A|Gremio FB Porto Alegrense RS|Chapecoense SC|小球|1x2|2026-08-31": {
+    "ev": 1.12,
+    "ts": 1788123365.0922801
+  },
   "football|Brazil Serie A|Mirassol FC SP|SE Palmeiras SP|上半场主胜|ht|2026-08-31": {
     "ev": 6.76,
     "ts": 1787975485.210882
@@ -1324,6 +1336,10 @@
   "football|Brazil Serie A|Mirassol FC SP|SE Palmeiras SP|上半场双重机会-主/客|ht_dc|2026-08-31": {
     "ev": 2.72,
     "ts": 1787975485.210996
+  },
+  "football|Brazil Serie A|Mirassol FC SP|SE Palmeiras SP|双边进球-是|btts|2026-08-31": {
+    "ev": 1.09,
+    "ts": 1788123365.0922391
   },
   "football|Brazil Serie A|Mirassol FC SP|SE Palmeiras SP|和局|1x2|2026-08-31": {
     "ev": 1.52,
@@ -3812,6 +3828,10 @@
     "ev": 4.09,
     "ts": 1788098548.716727
   },
+  "football|England National League|Kidderminster Harriers FC|Barrow AFC|让球主胜|1x2|2026-08-31": {
+    "ev": 9.05,
+    "ts": 1788123548.638506
+  },
   "football|England National League|Solihull Moors FC|AFC Fylde|上半场正确比分others|correct_score_ht|2026-08-31": {
     "ev": 5.1,
     "ts": 1788098548.7173262
@@ -4207,11 +4227,6 @@
     "ev": 18.96,
     "bb": 24.0,
     "ts": 1788103440.905538
-  },
-  "football|Finland Veikkausliiga|玛丽港|查路|上半场正确比分0-2|correct_score_ht|2026-09-01": {
-    "ev": 13.96,
-    "bb": 21.0,
-    "ts": 1788103440.905827
   },
   "football|Finland Ykkosliiga|SJK Akatemia|Klubi 04|单双-双|oe|2026-08-30": {
     "ev": 1.25,
@@ -4752,6 +4767,11 @@
     "bb": 1.94,
     "ts": 1787944816.419533
   },
+  "football|Greece Super League|莱瓦贾科斯|帕纳辛纳科斯|半/全场-客/主|htft|2026-09-01": {
+    "ev": 6.92,
+    "bb": 47.0,
+    "ts": 1788122967.595531
+  },
   "football|Greece Super League|阿里斯|OFI 克里特|半/全场-主/客|htft|2026-08-31": {
     "ev": 5.53,
     "bb": 44.0,
@@ -4772,6 +4792,10 @@
   "football|Guatemala Liga Nacional|Deportivo San Pedro|Antigua GFC|和局|1x2|2026-08-31": {
     "ev": 4.53,
     "ts": 1787975485.21877
+  },
+  "football|Guatemala Liga Nacional|Deportivo San Pedro|Antigua GFC|让球主胜|1x2|2026-08-31": {
+    "ev": 2.28,
+    "ts": 1788123365.0921202
   },
   "football|Hong Kong Premier League|Hong Kong Rangers|Eastern District|单双-双|oe|2026-08-30": {
     "ev": 1.75,
@@ -6182,6 +6206,14 @@
   "football|Kazakhstan Premier League|FC Irtysh Pavlodar|FC Aktobe|让球客胜|1x2|2026-08-30": {
     "ev": 4.89,
     "ts": 1788008223.196842
+  },
+  "football|Kazakhstan Premier League|FC Yelimay|FC Kairat Almaty|主胜|1x2|2026-08-31": {
+    "ev": 5.37,
+    "ts": 1788123252.168469
+  },
+  "football|Kazakhstan Premier League|FC Yelimay|FC Kairat Almaty|让球主胜|1x2|2026-08-31": {
+    "ev": 5.95,
+    "ts": 1788123252.16854
   },
   "football|Kazakhstan Premier League|FK Atyrau|FC Astana|客胜|1x2|2026-08-30": {
     "ev": 5.05,
@@ -10425,6 +10457,10 @@
     "ev": 1.52,
     "ts": 1788105284.009055
   },
+  "football|USA Major League Soccer|Saint Louis City SC|FC Dallas|和局|1x2|2026-08-31": {
+    "ev": 1.22,
+    "ts": 1788123365.092684
+  },
   "football|USA Major League Soccer|Saint Louis City SC|FC Dallas|小球|1x2|2026-08-31": {
     "ev": 1.26,
     "ts": 1788044963.3054059
@@ -11055,9 +11091,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Greece Super League|莱瓦贾科斯|帕纳辛纳科斯|半/全场-客/主|htft|2026-09-01": {
-    "ev": 6.92,
-    "bb": 47.0,
-    "ts": 1788122967.595531
+  "football|Finland Veikkausliiga|玛丽港|查路|上半场正确比分0-2|correct_score_ht|2026-09-01": {
+    "ev": 22.08,
+    "bb": 22.0,
+    "ts": 1788123872.731023
   }
 }
