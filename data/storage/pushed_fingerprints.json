@@ -187,6 +187,10 @@
     "ev": 1.63,
     "ts": 1788019240.024668
   },
+  "basketball|Mexico LNBP Basketball League|Soles de Mexicali|El Calor de Cancun|让分主胜|1x2|2026-08-31": {
+    "ev": 3.5,
+    "ts": 1788129251.7555149
+  },
   "basketball|Mexico LNBP Basketball League|Soles de Mexicali|El Calor de Cancun|让分客胜|1x2|2026-08-30": {
     "ev": 1.16,
     "ts": 1787986712.3238459
@@ -1296,6 +1300,10 @@
   "football|Brazil Serie A|CR Flamengo RJ|Botafogo FR RJ|让球客胜|1x2|2026-08-31": {
     "ev": 1.05,
     "ts": 1788114333.684393
+  },
+  "football|Brazil Serie A|CR Flamengo RJ|Mirassol FC SP|双重机会-和局/客|dc|2026-09-03": {
+    "ev": 1.59,
+    "ts": 1788129255.245147
   },
   "football|Brazil Serie A|CR Vasco da Gama RJ|Cruzeiro EC MG|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 3.16,
@@ -2803,6 +2811,14 @@
   "football|Ecuador LigaPro Primera A|CS Emelec|Club Leones Del Norte|半/全场-客/主|htft|2026-08-31": {
     "ev": 6.87,
     "ts": 1788092091.893641
+  },
+  "football|Ecuador LigaPro Primera A|CS Emelec|Club Leones Del Norte|双重机会-和局/客|dc|2026-08-31": {
+    "ev": 4.72,
+    "ts": 1788129251.754941
+  },
+  "football|Ecuador LigaPro Primera A|CS Emelec|Club Leones Del Norte|让球客胜|1x2|2026-08-31": {
+    "ev": 4.89,
+    "ts": 1788129251.754876
   },
   "football|Ecuador LigaPro Primera A|CSD Independiente del Valle|Universidad Catolica del Ecuador|主胜|1x2|2026-08-30": {
     "ev": 2.34,
@@ -6698,6 +6714,10 @@
     "ev": 1.38,
     "ts": 1788041382.125289
   },
+  "football|Mexico Liga MX|Deportivo Toluca FC|FC Juarez|上半场客胜|ht|2026-08-31": {
+    "ev": 10.44,
+    "ts": 1788129251.755188
+  },
   "football|Mexico Liga MX|Deportivo Toluca FC|FC Juarez|上半场正确比分0-1|correct_score_ht|2026-08-31": {
     "ev": 2.56,
     "ts": 1788116682.309033
@@ -6705,6 +6725,10 @@
   "football|Mexico Liga MX|Deportivo Toluca FC|FC Juarez|双重机会-和局/客|dc|2026-08-31": {
     "ev": 3.12,
     "ts": 1787975485.2188978
+  },
+  "football|Mexico Liga MX|Deportivo Toluca FC|FC Juarez|让球客胜|1x2|2026-08-31": {
+    "ev": 1.27,
+    "ts": 1788129251.755232
   },
   "football|Mexico Liga MX|Monterrey|Atletico San Luis|主胜|1x2|2026-08-31": {
     "ev": 2.37,
@@ -6741,6 +6765,11 @@
   "football|Mexico Liga MX|Pachuca|Guadalajara Chivas|让球客胜|1x2|2026-08-30": {
     "ev": 1.49,
     "ts": 1788000816.654379
+  },
+  "football|Mexico Liga MX|托卢卡|华雷斯|上半场客胜|ht|2026-08-31": {
+    "ev": 10.44,
+    "bb": 10.7,
+    "ts": 1788129251.266477
   },
   "football|Mexico Liga MX|托卢卡|华雷斯|上半场正确比分0-1|correct_score_ht|2026-08-31": {
     "ev": 3.76,
@@ -11233,9 +11262,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Mexico Liga MX|托卢卡|华雷斯|上半场客胜|ht|2026-08-31": {
-    "ev": 10.44,
-    "bb": 10.7,
-    "ts": 1788129251.266477
+  "football|Brazil Serie B|福塔雷萨|欧帕尔利奥|半/全场-主/和局|htft|2026-09-01": {
+    "ev": 4.63,
+    "bb": 14.7,
+    "ts": 1788129384.843807
   }
 }
