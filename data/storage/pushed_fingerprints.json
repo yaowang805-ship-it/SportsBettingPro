@@ -521,6 +521,14 @@
     "ev": 1.49,
     "ts": 1787975485.2218728
   },
+  "football|Argentina Primera Nacional|Estudiantes|Ferro Carril Oeste|上半场客胜|ht|2026-08-31": {
+    "ev": 1.55,
+    "ts": 1788114333.6870432
+  },
+  "football|Argentina Primera Nacional|Estudiantes|Ferro Carril Oeste|客胜|1x2|2026-08-31": {
+    "ev": 5.89,
+    "ts": 1788114333.686971
+  },
   "football|Argentina Primera Nacional|Ferrocarril Midland|Nueva Chicago|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.15,
     "ts": 1788004181.1898339
@@ -565,6 +573,11 @@
     "ev": 4.49,
     "bb": 8.1,
     "ts": 1787975483.379593
+  },
+  "football|Argentina Primera Nacional|卡塞罗斯学生队|费罗卡利|客胜|1x2|2026-08-31": {
+    "ev": 5.89,
+    "bb": 3.71,
+    "ts": 1788114333.129406
   },
   "football|Armenia Premier League|FC Noah|Ararat Yerevan FC|双重机会-和局/客|dc|2026-08-31": {
     "ev": 1.36,
@@ -1105,6 +1118,10 @@
     "ev": 3.32,
     "ts": 1788072958.529343
   },
+  "football|Bosnia and Herzegovina Premier Liga|FK Radnik Bijeljina|FK Borac Banja Luka|小球|1x2|2026-08-31": {
+    "ev": 2.12,
+    "ts": 1788114333.685225
+  },
   "football|Brazil Campeonato Brasileiro Women-Playoff|Gremio RS (w)|Sao Paulo FC SP (w)|让球客胜|1x2|2026-08-30": {
     "ev": 4.42,
     "ts": 1787977795.255317
@@ -1177,6 +1194,10 @@
   "football|Brazil Serie A|CR Flamengo RJ|Botafogo FR RJ|小球|1x2|2026-08-31": {
     "ev": 4.41,
     "ts": 1788113659.857362
+  },
+  "football|Brazil Serie A|CR Flamengo RJ|Botafogo FR RJ|让球客胜|1x2|2026-08-31": {
+    "ev": 1.05,
+    "ts": 1788114333.684393
   },
   "football|Brazil Serie A|CR Vasco da Gama RJ|Cruzeiro EC MG|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 3.16,
@@ -1901,6 +1922,10 @@
   "football|Chile Primera B|Deportes Iquique|San Luis de Quillota|双重机会-和局/客|dc|2026-08-30": {
     "ev": 2.54,
     "ts": 1788046430.821723
+  },
+  "football|Chile Primera B|Deportes Temuco|Puerto Montt|主胜|1x2|2026-08-31": {
+    "ev": 1.32,
+    "ts": 1788114333.685371
   },
   "football|Chile Primera B|Union San Felipe|Santa Cruz|主胜|1x2|2026-08-30": {
     "ev": 2.76,
@@ -3888,9 +3913,17 @@
     "ev": 1.19,
     "ts": 1787998834.872884
   },
+  "football|France Ligue 1|AS Monaco FC|Olympique Marseille|双边进球-是|btts|2026-08-31": {
+    "ev": 4.43,
+    "ts": 1788114333.683836
+  },
   "football|France Ligue 1|AS Monaco FC|Olympique Marseille|和局|1x2|2026-08-31": {
     "ev": 1.12,
     "ts": 1787998834.8728168
+  },
+  "football|France Ligue 1|AS Monaco FC|Olympique Marseille|大球|1x2|2026-08-31": {
+    "ev": 6.69,
+    "ts": 1788114333.683907
   },
   "football|France Ligue 1|AS Monaco FC|Olympique Marseille|总进球区间7+|total_goals_range|2026-08-31": {
     "ev": 1.17,
@@ -5000,6 +5033,14 @@
     "ev": 1.17,
     "ts": 1788038038.840705
   },
+  "football|Italy Serie B|Benevento Calcio|FC Sudtirol|和局|1x2|2026-08-31": {
+    "ev": 2.52,
+    "ts": 1788114333.684663
+  },
+  "football|Italy Serie B|Benevento Calcio|FC Sudtirol|小球|1x2|2026-08-31": {
+    "ev": 4.0,
+    "ts": 1788114333.684795
+  },
   "football|Italy Serie B|Benevento Calcio|FC Sudtirol|让球客胜|1x2|2026-08-31": {
     "ev": 1.74,
     "ts": 1788063294.4681962
@@ -5051,6 +5092,10 @@
   "football|Italy Serie B|Pisa|US Catanzaro 1929|小球|1x2|2026-08-31": {
     "ev": 1.08,
     "ts": 1788085354.854752
+  },
+  "football|Italy Serie B|Pisa|US Catanzaro 1929|让球客胜|1x2|2026-08-31": {
+    "ev": 1.5,
+    "ts": 1788114333.684934
   },
   "football|Italy Serie B|SS Arezzo|Palermo FC|上半场主胜|ht|2026-08-31": {
     "ev": 6.85,
@@ -5339,6 +5384,10 @@
   "football|Italy Serie C|Inter Milan II|ASD Team Altamura|上半场客胜|ht|2026-08-30": {
     "ev": 3.79,
     "ts": 1788005463.820967
+  },
+  "football|Italy Serie C|Lumezzane|AS Giana Erminio|上半场主胜|ht|2026-08-31": {
+    "ev": 1.22,
+    "ts": 1788114333.685298
   },
   "football|Italy Serie C|Lumezzane|AS Giana Erminio|让球主胜|1x2|2026-08-31": {
     "ev": 8.61,
@@ -7868,9 +7917,21 @@
     "ev": 1.52,
     "ts": 1788012468.045989
   },
+  "football|Serbia Superliga|FK IMT Novi Beograd|FK Mladost Lucani|双重机会-和局/客|dc|2026-08-31": {
+    "ev": 7.29,
+    "ts": 1788114333.685141
+  },
   "football|Serbia Superliga|FK IMT Novi Beograd|FK Mladost Lucani|大球|1x2|2026-08-31": {
     "ev": 1.47,
     "ts": 1788106745.799448
+  },
+  "football|Serbia Superliga|FK IMT Novi Beograd|FK Mladost Lucani|客胜|1x2|2026-08-31": {
+    "ev": 6.97,
+    "ts": 1788114333.685004
+  },
+  "football|Serbia Superliga|FK IMT Novi Beograd|FK Mladost Lucani|让球客胜|1x2|2026-08-31": {
+    "ev": 2.99,
+    "ts": 1788114333.6850681
   },
   "football|Serbia Superliga|FK Novi Pazar|FK Macva Sabac|主胜|1x2|2026-08-30": {
     "ev": 1.42,
@@ -8718,6 +8779,11 @@
     "ev": 16.39,
     "bb": 23.0,
     "ts": 1788113659.414767
+  },
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 10.98,
+    "bb": 25.0,
+    "ts": 1788114333.1294742
   },
   "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
     "ev": 20.16,
@@ -10428,14 +10494,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Argentina Primera Nacional|卡塞罗斯学生队|费罗卡利|客胜|1x2|2026-08-31": {
-    "ev": 5.89,
-    "bb": 3.71,
-    "ts": 1788114333.129406
+  "football|Switzerland Super League|草蜢|圣加仑 1879|上半场正确比分2-0|correct_score_ht|2026-09-03": {
+    "ev": 28.2,
+    "bb": 30.0,
+    "ts": 1788114691.387151
   },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分others|correct_score_ht|2026-08-31": {
-    "ev": 10.98,
-    "bb": 25.0,
-    "ts": 1788114333.1294742
+  "football|Switzerland Super League|图恩|洛桑体育队|和局|1x2|2026-09-03": {
+    "ev": 7.44,
+    "bb": 3.9,
+    "ts": 1788114691.3872268
   }
 }
