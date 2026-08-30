@@ -2926,6 +2926,10 @@
     "ev": 5.84,
     "ts": 1788121759.31582
   },
+  "football|Egypt Premier League|Asyut Petroleum|National Bank of Egypt SC|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 71.73,
+    "ts": 1788124572.878197
+  },
   "football|Egypt Premier League|Asyut Petroleum|National Bank of Egypt SC|半/全场-客/主|htft|2026-08-31": {
     "ev": 49.66,
     "ts": 1788121759.314347
@@ -2972,10 +2976,10 @@
     "bb": 26.0,
     "ts": 1788121758.831161
   },
-  "football|Egypt Premier League|扎马雷克|佩特捷德|半/全场-主/客|htft|2026-09-01": {
-    "ev": 19.47,
-    "bb": 48.0,
-    "ts": 1788109990.4076521
+  "football|Egypt Premier League|佩特雷姆|埃及国家银行|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 71.73,
+    "bb": 30.0,
+    "ts": 1788124571.981418
   },
   "football|El Salvador Primera Division|Alianza FC San Salvador|Atletico Balboa|主胜|1x2|2026-08-30": {
     "ev": 4.4,
@@ -11100,9 +11104,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Egypt Premier League|佩特雷姆|埃及国家银行|上半场正确比分others|correct_score_ht|2026-08-31": {
-    "ev": 71.73,
-    "bb": 30.0,
-    "ts": 1788124571.981418
+  "football|Egypt Premier League|佩特雷姆|埃及国家银行|上半场主胜|ht|2026-08-31": {
+    "ev": 12.45,
+    "bb": 5.05,
+    "ts": 1788124838.578277
+  },
+  "football|Egypt Premier League|扎马雷克|佩特捷德|半/全场-主/客|htft|2026-09-01": {
+    "ev": 17.36,
+    "bb": 49.0,
+    "ts": 1788124838.578325
   }
 }
