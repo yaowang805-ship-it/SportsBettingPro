@@ -3603,15 +3603,15 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
         from src.core.settleability import is_league_settleable, is_league_probationary
         blocked_leagues = set()
         for o in qualified:
-            league = o.get("league", "")
+            league = o.get("league_cn", "") or o.get("league", "")  # 结算门禁用中文联赛名(is_league_settleable 只认中文)
             sport = o.get("sport", "")
             if not is_league_settleable(league, sport) and not is_league_probationary(league, sport):
                 blocked_leagues.add(league)
 
         if blocked_leagues:
             bettable = [o for o in bettable
-                        if is_league_settleable(o.get("league", ""), o.get("sport", ""))
-                        or is_league_probationary(o.get("league", ""), o.get("sport", ""))]
+                        if is_league_settleable(o.get("league_cn", "") or o.get("league", ""), o.get("sport", ""))
+                        or is_league_probationary(o.get("league_cn", "") or o.get("league", ""), o.get("sport", ""))]
             logger.info("结算门禁: 跳过 %d 个不可结算联赛", len(blocked_leagues))
             for l in sorted(blocked_leagues):
                 logger.info("  🚫 %s", l)
