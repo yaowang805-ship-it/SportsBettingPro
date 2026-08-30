@@ -1573,6 +1573,14 @@
     "ev": 2.2,
     "ts": 1787975485.214925
   },
+  "football|Bulgaria First Professional League|Dunav Ruse|Lokomotive Sofia|上半场正确比分2-0|correct_score_ht|2026-09-01": {
+    "ev": 23.78,
+    "ts": 1788100652.0891368
+  },
+  "football|Bulgaria First Professional League|Dunav Ruse|Lokomotive Sofia|半/全场-客/主|htft|2026-09-01": {
+    "ev": 7.87,
+    "ts": 1788100652.088623
+  },
   "football|Bulgaria First Professional League|Dunav Ruse|Lokomotive Sofia|双边进球-是|btts|2026-09-01": {
     "ev": 1.34,
     "ts": 1787975485.221519
@@ -2000,6 +2008,10 @@
     "ev": 4.47,
     "ts": 1787975485.214646
   },
+  "football|Cyprus 1st Division|Omonia Nicosia|Omonia Aradippou|上半场正确比分0-1|correct_score_ht|2026-09-01": {
+    "ev": 16.45,
+    "ts": 1788100652.08938
+  },
   "football|Cyprus 1st Division|艾里斯利马素尔|阿波罗利马索尔|上半场客胜|ht|2026-08-30": {
     "ev": 3.11,
     "bb": 3.79,
@@ -2114,11 +2126,6 @@
     "ev": 12.27,
     "bb": 18.8,
     "ts": 1788100057.7477398
-  },
-  "football|Czech Republic 1. Liga|特普利斯|亚布洛内茨|半/全场-客/主|htft|2026-08-30": {
-    "ev": 6.03,
-    "bb": 25.0,
-    "ts": 1788099008.02054
   },
   "football|Czech Republic Divize|FK Bospor Bohumin|Pusta Polom|主胜|1x2|2026-08-30": {
     "ev": 3.76,
@@ -2459,9 +2466,22 @@
     "ev": 3.25,
     "ts": 1788098326.7471821
   },
+  "football|Egypt Premier League|Talaea El Gaish|Zed FC|半/全场-客/主|htft|2026-09-01": {
+    "ev": 42.23,
+    "ts": 1788100652.0512068
+  },
   "football|Egypt Premier League|Zamalek SC|Petrojet FC|上半场双重机会-主/客|ht_dc|2026-09-01": {
     "ev": 1.52,
     "ts": 1787975485.219027
+  },
+  "football|Egypt Premier League|Zamalek SC|Petrojet FC|半/全场-主/客|htft|2026-09-01": {
+    "ev": 14.49,
+    "ts": 1788100652.05114
+  },
+  "football|Egypt Premier League|扎马雷克|佩特捷德|半/全场-主/客|htft|2026-09-01": {
+    "ev": 14.49,
+    "bb": 46.0,
+    "ts": 1788100650.770444
   },
   "football|El Salvador Primera Division|Alianza FC San Salvador|Atletico Balboa|主胜|1x2|2026-08-30": {
     "ev": 4.4,
@@ -2499,6 +2519,38 @@
     "ev": 1.55,
     "ts": 1787963003.1407292
   },
+  "football|England Championship League|Birmingham City|Southampton FC|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 11.0,
+    "ts": 1788100652.0922701
+  },
+  "football|England Championship League|Birmingham City|Southampton FC|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 5.84,
+    "ts": 1788100652.092201
+  },
+  "football|England Championship League|Birmingham City|Southampton FC|上半场正确比分others|correct_score_ht|2026-09-02": {
+    "ev": 35.88,
+    "ts": 1788100652.0923362
+  },
+  "football|England Championship League|Birmingham City|Southampton FC|半/全场-主/客|htft|2026-09-02": {
+    "ev": 2.77,
+    "ts": 1788100652.087612
+  },
+  "football|England Championship League|Lincoln City|Blackburn Rovers|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 13.62,
+    "ts": 1788100652.090753
+  },
+  "football|England Championship League|Lincoln City|Blackburn Rovers|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 6.51,
+    "ts": 1788100652.090704
+  },
+  "football|England Championship League|Lincoln City|Blackburn Rovers|上半场正确比分others|correct_score_ht|2026-09-02": {
+    "ev": 24.71,
+    "ts": 1788100652.090793
+  },
+  "football|England Championship League|Lincoln City|Blackburn Rovers|半/全场-主/客|htft|2026-09-02": {
+    "ev": 4.0,
+    "ts": 1788100652.087502
+  },
   "football|England Championship League|Portsmouth FC|Derby County|上半场主胜|ht|2026-09-02": {
     "ev": 2.11,
     "ts": 1788054008.0774
@@ -2507,9 +2559,57 @@
     "ev": 1.38,
     "ts": 1788098326.748228
   },
+  "football|England Championship League|Portsmouth FC|Derby County|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 22.93,
+    "ts": 1788100652.090283
+  },
+  "football|England Championship League|Portsmouth FC|Derby County|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 7.69,
+    "ts": 1788100652.090218
+  },
+  "football|England Championship League|Portsmouth FC|Derby County|上半场正确比分others|correct_score_ht|2026-09-02": {
+    "ev": 29.85,
+    "ts": 1788100652.090347
+  },
+  "football|England Championship League|Portsmouth FC|Derby County|半/全场-客/主|htft|2026-09-02": {
+    "ev": 3.31,
+    "ts": 1788100652.052004
+  },
+  "football|England Championship League|Preston North End|Bristol City|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 12.83,
+    "ts": 1788100652.09008
+  },
+  "football|England Championship League|Preston North End|Bristol City|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 9.0,
+    "ts": 1788100652.090013
+  },
+  "football|England Championship League|Preston North End|Bristol City|上半场正确比分others|correct_score_ht|2026-09-02": {
+    "ev": 26.82,
+    "ts": 1788100652.090147
+  },
+  "football|England Championship League|Preston North End|Bristol City|半/全场-客/主|htft|2026-09-02": {
+    "ev": 5.97,
+    "ts": 1788100652.0518742
+  },
+  "football|England Championship League|Sheffield United FC|Bolton Wanderers|上半场正确比分others|correct_score_ht|2026-09-02": {
+    "ev": 17.59,
+    "ts": 1788100652.090419
+  },
   "football|England Championship League|Stoke City|Norwich City|上半场客胜|ht|2026-09-02": {
     "ev": 3.7,
     "ts": 1788054008.077185
+  },
+  "football|England Championship League|Stoke City|Norwich City|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 4.46,
+    "ts": 1788100652.0920599
+  },
+  "football|England Championship League|Stoke City|Norwich City|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 6.33,
+    "ts": 1788100652.091997
+  },
+  "football|England Championship League|Stoke City|Norwich City|上半场正确比分others|correct_score_ht|2026-09-02": {
+    "ev": 30.71,
+    "ts": 1788100652.092124
   },
   "football|England Championship League|Stoke City|Norwich City|双边进球-是|btts|2026-09-02": {
     "ev": 5.21,
@@ -2518,6 +2618,30 @@
   "football|England Championship League|Stoke City|Norwich City|大球|1x2|2026-09-02": {
     "ev": 4.48,
     "ts": 1788054008.077308
+  },
+  "football|England Championship League|Stoke City|Norwich City|总进球区间7+|total_goals_range|2026-09-02": {
+    "ev": 3.22,
+    "ts": 1788100652.0919302
+  },
+  "football|England Championship League|Swansea City|Watford FC|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 24.25,
+    "ts": 1788100652.09049
+  },
+  "football|England Championship League|Swansea City|Watford FC|上半场正确比分others|correct_score_ht|2026-09-02": {
+    "ev": 28.31,
+    "ts": 1788100652.0906188
+  },
+  "football|England Championship League|Swansea City|Watford FC|半/全场-客/主|htft|2026-09-02": {
+    "ev": 8.82,
+    "ts": 1788100652.051939
+  },
+  "football|England Championship League|West Ham United|Wolverhampton Wanderers FC|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 23.85,
+    "ts": 1788100652.0898728
+  },
+  "football|England Championship League|West Ham United|Wolverhampton Wanderers FC|上半场正确比分others|correct_score_ht|2026-09-02": {
+    "ev": 26.7,
+    "ts": 1788100652.089943
   },
   "football|England League One|AFC Wimbledon|Wigan Athletic|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.19,
@@ -2531,13 +2655,25 @@
     "ev": 1.53,
     "ts": 1788047421.792191
   },
+  "football|England League One|Doncaster Rovers|Notts County|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 26.82,
+    "ts": 1788100652.090833
+  },
   "football|England League One|Huddersfield Town|Oxford United|主胜|1x2|2026-09-02": {
     "ev": 3.83,
     "ts": 1788043619.104331
   },
+  "football|England League One|Huddersfield Town|Oxford United|总进球区间7+|total_goals_range|2026-09-02": {
+    "ev": 4.25,
+    "ts": 1788100652.0910568
+  },
   "football|England League One|Huddersfield Town|Oxford United|让球主胜|1x2|2026-09-02": {
     "ev": 1.02,
     "ts": 1788043619.1043699
+  },
+  "football|England League One|Leicester City FC|Plymouth Argyle|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 20.29,
+    "ts": 1788100652.090979
   },
   "football|England League One|Mansfield Town|Luton Town|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.52,
@@ -2579,6 +2715,34 @@
     "ev": 8.53,
     "ts": 1788002630.834858
   },
+  "football|England League One|Peterborough United|Stevenage FC|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 7.77,
+    "ts": 1788100652.0909069
+  },
+  "football|England League One|Peterborough United|Stevenage FC|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 3.07,
+    "ts": 1788100652.090873
+  },
+  "football|England League One|Peterborough United|Stevenage FC|上半场正确比分others|correct_score_ht|2026-09-02": {
+    "ev": 26.29,
+    "ts": 1788100652.090942
+  },
+  "football|England League One|Wycombe Wanderers|Sheffield Wednesday|上半场正确比分others|correct_score_ht|2026-09-02": {
+    "ev": 10.19,
+    "ts": 1788100652.0912378
+  },
+  "football|England League One|Wycombe Wanderers|Sheffield Wednesday|总进球区间7+|total_goals_range|2026-09-02": {
+    "ev": 7.14,
+    "ts": 1788100652.091121
+  },
+  "football|England League Two|Bristol Rovers|Colchester United|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 25.26,
+    "ts": 1788100652.091438
+  },
+  "football|England League Two|Bristol Rovers|Colchester United|半/全场-客/主|htft|2026-09-02": {
+    "ev": 3.57,
+    "ts": 1788100652.087968
+  },
   "football|England League Two|Bristol Rovers|Colchester United|让球客胜|1x2|2026-09-02": {
     "ev": 2.88,
     "ts": 1788065419.577387
@@ -2587,13 +2751,49 @@
     "ev": 1.68,
     "ts": 1788039858.397185
   },
+  "football|England League Two|Cheltenham Town|York City FC|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 15.4,
+    "ts": 1788100652.091511
+  },
   "football|England League Two|Cheltenham Town|York City FC|客胜|1x2|2026-09-02": {
     "ev": 2.79,
     "ts": 1788030891.588465
   },
+  "football|England League Two|Cheltenham Town|York City FC|总进球区间7+|total_goals_range|2026-09-02": {
+    "ev": 10.77,
+    "ts": 1788100652.091477
+  },
   "football|England League Two|Chesterfield FC|Gillingham FC|上半场主胜|ht|2026-09-02": {
     "ev": 1.15,
     "ts": 1788029307.074464
+  },
+  "football|England League Two|Crewe Alexandra|Walsall FC|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 7.39,
+    "ts": 1788100652.091389
+  },
+  "football|England League Two|Crewe Alexandra|Walsall FC|半/全场-主/客|htft|2026-09-02": {
+    "ev": 2.23,
+    "ts": 1788100652.0879
+  },
+  "football|England League Two|Fleetwood Town|Oldham Athletic|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 7.09,
+    "ts": 1788100652.091583
+  },
+  "football|England League Two|Fleetwood Town|Oldham Athletic|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 1.16,
+    "ts": 1788100652.0915499
+  },
+  "football|England League Two|Fleetwood Town|Oldham Athletic|上半场正确比分others|correct_score_ht|2026-09-02": {
+    "ev": 4.04,
+    "ts": 1788100652.091618
+  },
+  "football|England League Two|Fleetwood Town|Oldham Athletic|半/全场-客/主|htft|2026-09-02": {
+    "ev": 10.09,
+    "ts": 1788100652.08807
+  },
+  "football|England League Two|Northampton Town|Crawley Town|半/全场-主/客|htft|2026-09-02": {
+    "ev": 5.3,
+    "ts": 1788100652.088309
   },
   "football|England League Two|Rochdale AFC|Shrewsbury Town|上半场双重机会-主/客|ht_dc|2026-09-02": {
     "ev": 1.23,
@@ -2611,13 +2811,41 @@
     "ev": 1.74,
     "ts": 1788029307.074678
   },
+  "football|England League Two|Salford City|Newport County|半/全场-主/客|htft|2026-09-02": {
+    "ev": 4.3,
+    "ts": 1788100652.0877619
+  },
   "football|England League Two|Swindon Town|Port Vale|上半场双重机会-主/客|ht_dc|2026-09-02": {
     "ev": 1.54,
     "ts": 1788030891.5881898
   },
+  "football|England League Two|Swindon Town|Port Vale|上半场正确比分0-2|correct_score_ht|2026-09-02": {
+    "ev": 10.33,
+    "ts": 1788100652.091798
+  },
+  "football|England League Two|Swindon Town|Port Vale|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 7.21,
+    "ts": 1788100652.0917351
+  },
+  "football|England League Two|Swindon Town|Port Vale|半/全场-主/客|htft|2026-09-02": {
+    "ev": 3.46,
+    "ts": 1788100652.0878341
+  },
   "football|England League Two|Tranmere Rovers|Rotherham United|上半场双重机会-主/客|ht_dc|2026-09-02": {
     "ev": 1.19,
     "ts": 1788098326.7482948
+  },
+  "football|England League Two|Tranmere Rovers|Rotherham United|半/全场-主/客|htft|2026-09-02": {
+    "ev": 9.82,
+    "ts": 1788100652.0876942
+  },
+  "football|England League Two|crington Stanley|Grimsby Town|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 24.24,
+    "ts": 1788100652.091659
+  },
+  "football|England League Two|crington Stanley|Grimsby Town|半/全场-客/主|htft|2026-09-02": {
+    "ev": 4.09,
+    "ts": 1788100652.0881898
   },
   "football|England National League South|Dagenham and Redbridge FC|Slough Town FC|上半场主胜|ht|2026-08-31": {
     "ev": 8.52,
@@ -2958,9 +3186,29 @@
     "ev": 1.67,
     "ts": 1787975485.22297
   },
+  "football|Finland Veikkausliiga|IF Gnistan|TPS Turku|上半场正确比分0-2|correct_score_ht|2026-09-01": {
+    "ev": 15.78,
+    "ts": 1788100652.0889778
+  },
   "football|Finland Veikkausliiga|IF Gnistan|TPS Turku|主胜|1x2|2026-09-01": {
     "ev": 1.15,
     "ts": 1788027472.044263
+  },
+  "football|Finland Veikkausliiga|IFK Mariehamn|FF Jaro|上半场正确比分0-2|correct_score_ht|2026-09-01": {
+    "ev": 13.96,
+    "ts": 1788100652.089098
+  },
+  "football|Finland Veikkausliiga|IFK Mariehamn|FF Jaro|上半场正确比分2-0|correct_score_ht|2026-09-01": {
+    "ev": 3.57,
+    "ts": 1788100652.08906
+  },
+  "football|Finland Veikkausliiga|IFK Mariehamn|FF Jaro|总进球区间7+|total_goals_range|2026-09-01": {
+    "ev": 1.24,
+    "ts": 1788100652.089025
+  },
+  "football|Finland Veikkausliiga|Tampereen Ilves|HJK Helsinki|上半场正确比分2-0|correct_score_ht|2026-09-01": {
+    "ev": 18.96,
+    "ts": 1788100652.088914
   },
   "football|Finland Veikkausliiga|Tampereen Ilves|HJK Helsinki|双边进球-是|btts|2026-09-01": {
     "ev": 1.58,
@@ -3375,6 +3623,10 @@
     "ev": 1.41,
     "ts": 1788044313.968907
   },
+  "football|Greece Super League|APO Levadiakos FC|Panathinaikos Athens|半/全场-客/主|htft|2026-09-01": {
+    "ev": 7.47,
+    "ts": 1788100652.05057
+  },
   "football|Greece Super League|APO Levadiakos FC|Panathinaikos Athens|让球主胜|1x2|2026-09-01": {
     "ev": 1.5,
     "ts": 1788015700.315317
@@ -3684,6 +3936,10 @@
     "ev": 1.23,
     "ts": 1788039858.3961449
   },
+  "football|Italy Serie A|Atalanta BC|Bologna FC|上半场正确比分others|correct_score_ht|2026-09-01": {
+    "ev": 20.37,
+    "ts": 1788100652.089482
+  },
   "football|Italy Serie A|F Fiorentina|Frosinone Calcio|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.48,
     "ts": 1787977258.2922702
@@ -3867,6 +4123,10 @@
   "football|Italy Serie A|US Lecce|AS Roma|上半场双重机会-主/客|ht_dc|2026-09-01": {
     "ev": 2.1,
     "ts": 1787975485.216083
+  },
+  "football|Italy Serie A|US Lecce|AS Roma|上半场正确比分1-0|correct_score_ht|2026-09-01": {
+    "ev": 3.25,
+    "ts": 1788100652.089194
   },
   "football|Italy Serie A|gliari Calcio|Inter Milan|上半场主胜|ht|2026-08-31": {
     "ev": 1.52,
@@ -5079,6 +5339,10 @@
     "ev": 3.43,
     "ts": 1788084804.5811589
   },
+  "football|Netherlands Eerste Divisie|Jong AZ Alkmaar|Jong FC Utrecht|上半场正确比分0-2|correct_score_ht|2026-09-01": {
+    "ev": 12.1,
+    "ts": 1788100652.0894232
+  },
   "football|Netherlands Eerste Divisie|Jong PSV Eindhoven|Jong Ajax Amsterdam|上半场主胜|ht|2026-09-01": {
     "ev": 1.45,
     "ts": 1787975485.2072709
@@ -6073,6 +6337,14 @@
     "ev": 1.49,
     "ts": 1787981781.422299
   },
+  "football|Portugal Primeira Liga|SL Benfica|Estoril Praia|上半场正确比分0-1|correct_score_ht|2026-09-01": {
+    "ev": 26.64,
+    "ts": 1788100652.089532
+  },
+  "football|Portugal Primeira Liga|SL Benfica|Estoril Praia|上半场正确比分others|correct_score_ht|2026-09-01": {
+    "ev": 21.8,
+    "ts": 1788100652.089587
+  },
   "football|Portugal Primeira Liga|ademico de Viseu FC|FC Porto|主胜|1x2|2026-08-30": {
     "ev": 1.52,
     "ts": 1788014031.2367659
@@ -6272,6 +6544,10 @@
   "football|Romania Liga 1|Fotbal Club FCSB|FC UTA Arad|让球主胜|1x2|2026-08-31": {
     "ev": 2.46,
     "ts": 1788089948.4317791
+  },
+  "football|Romania Liga 1|Rapid Bucuresti 1923|CS Universitatea Craiova 1948|半/全场-客/主|htft|2026-09-01": {
+    "ev": 30.28,
+    "ts": 1788100652.051282
   },
   "football|Romania Liga 1|Rapid Bucuresti 1923|CS Universitatea Craiova 1948|双边进球-是|btts|2026-09-01": {
     "ev": 1.57,
@@ -6861,6 +7137,10 @@
     "ev": 15.72,
     "ts": 1787936722.686527
   },
+  "football|Spain LaLiga 2|Burgos CF|Real Sociedad B|上半场正确比分others|correct_score_ht|2026-09-01": {
+    "ev": 278.8,
+    "ts": 1788100652.089333
+  },
   "football|Spain LaLiga 2|Cordoba CF|Granada CF|半/全场-主/和局|htft|2026-08-31": {
     "ev": 11.22,
     "ts": 1788092445.891407
@@ -7121,6 +7401,10 @@
     "ev": 10.09,
     "ts": 1787975485.21218
   },
+  "football|Spain LaLiga|FC Barcelona|Rayo Vallecano|上半场正确比分0-1|correct_score_ht|2026-09-01": {
+    "ev": 9.26,
+    "ts": 1788100652.089657
+  },
   "football|Spain LaLiga|FC Barcelona|Rayo Vallecano|双重机会-和局/客|dc|2026-09-01": {
     "ev": 7.34,
     "ts": 1787975485.212342
@@ -7229,6 +7513,11 @@
     "bb": 5.75,
     "ts": 1788001352.983698
   },
+  "football|Spain LaLiga|巴塞罗那|巴列卡诺|上半场正确比分0-1|correct_score_ht|2026-09-01": {
+    "ev": 9.26,
+    "bb": 17.2,
+    "ts": 1788100650.770377
+  },
   "football|Spain LaLiga|皇家社会|西班牙人|上半场客胜|ht|2026-08-30": {
     "ev": 5.3,
     "bb": 5.3,
@@ -7258,11 +7547,6 @@
     "ev": 11.22,
     "bb": 24.0,
     "ts": 1788100057.7985952
-  },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
-    "ev": 5.95,
-    "bb": 31.0,
-    "ts": 1788100057.7987819
   },
   "football|Spain Primera Division Women|Athletic Bilbao (w)|FC Badalona (w)|主胜|1x2|2026-08-30": {
     "ev": 4.28,
@@ -7304,6 +7588,14 @@
     "ev": 1.23,
     "ts": 1788038185.468998
   },
+  "football|Sweden Allsvenskan|GAIS|IF Brommapojkarna|半/全场-主/客|htft|2026-09-01": {
+    "ev": 4.76,
+    "ts": 1788100652.050884
+  },
+  "football|Sweden Allsvenskan|GAIS|IF Brommapojkarna|总进球区间7+|total_goals_range|2026-09-01": {
+    "ev": 3.4,
+    "ts": 1788100652.089248
+  },
   "football|Sweden Allsvenskan|IFK Goteborg|Orgryte IS|上半场正确比分1-2|correct_score_ht|2026-08-30": {
     "ev": 8.51,
     "ts": 1788092597.927583
@@ -7323,6 +7615,10 @@
   "football|Sweden Allsvenskan|IFK Goteborg|Orgryte IS|让球主胜|1x2|2026-08-30": {
     "ev": 1.48,
     "ts": 1788065818.8922381
+  },
+  "football|Sweden Allsvenskan|IK Sirius|Malmo FF|上半场正确比分0-2|correct_score_ht|2026-09-01": {
+    "ev": 13.43,
+    "ts": 1788100652.089293
   },
   "football|Sweden Allsvenskan|哥德堡|奥尔格里特|上半场正确比分1-2|correct_score_ht|2026-08-30": {
     "ev": 10.43,
@@ -7583,6 +7879,10 @@
     "ev": 1.46,
     "ts": 1788097192.3439949
   },
+  "football|Switzerland Super League|FC Zurich|Young Boys Bern|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 19.59,
+    "ts": 1788100652.0898
+  },
   "football|Switzerland Super League|Servette Geneva|FC Luzern|主胜|1x2|2026-08-30": {
     "ev": 1.49,
     "ts": 1787933216.274888
@@ -7753,6 +8053,14 @@
   "football|Turkey 1. Lig|Batman Petrolspor|Sivasspor|和局|1x2|2026-08-30": {
     "ev": 1.03,
     "ts": 1788027509.2527602
+  },
+  "football|Turkey 1. Lig|Boluspor|Keciorengucu|上半场正确比分2-1|correct_score_ht|2026-09-02": {
+    "ev": 3.3,
+    "ts": 1788100652.08973
+  },
+  "football|Turkey 1. Lig|Boluspor|Keciorengucu|半/全场-客/主|htft|2026-09-02": {
+    "ev": 13.05,
+    "ts": 1788100652.051811
   },
   "football|Turkey 1. Lig|Esenler Erokspor|Igdir FK|上半场双重机会-主/客|ht_dc|2026-08-31": {
     "ev": 1.07,
@@ -8779,14 +9087,24 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Spain LaLiga|巴塞罗那|巴列卡诺|上半场正确比分0-1|correct_score_ht|2026-09-01": {
-    "ev": 9.26,
-    "bb": 17.2,
-    "ts": 1788100650.770377
+  "football|Slovakia Superliga|布拉迪斯拉发|米哈洛夫采|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 9.02,
+    "bb": 3.82,
+    "ts": 1788100798.324269
   },
-  "football|Egypt Premier League|扎马雷克|佩特捷德|半/全场-主/客|htft|2026-09-01": {
-    "ev": 14.49,
-    "bb": 46.0,
-    "ts": 1788100650.770444
+  "football|Czech Republic FNL|卡列度|济斯科夫|客胜|1x2|2026-08-30": {
+    "ev": 5.64,
+    "bb": 2.75,
+    "ts": 1788100798.324437
+  },
+  "football|Czech Republic 1. Liga|特普利斯|亚布洛内茨|半/全场-客/主|htft|2026-08-30": {
+    "ev": 17.71,
+    "bb": 27.0,
+    "ts": 1788100798.324529
+  },
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
+    "ev": 9.37,
+    "bb": 32.0,
+    "ts": 1788100798.3245928
   }
 }
