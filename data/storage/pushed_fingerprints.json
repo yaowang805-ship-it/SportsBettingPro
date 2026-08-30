@@ -2318,11 +2318,6 @@
     "ev": 1.66,
     "ts": 1787981781.421891
   },
-  "football|Czech Republic 1. Liga|布拉格斯巴达|布拉格斯拉维亚|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 12.11,
-    "bb": 16.9,
-    "ts": 1788107413.080541
-  },
   "football|Czech Republic 1. Liga|布拉格斯巴达|布拉格斯拉维亚|上半场正确比分2-0|correct_score_ht|2026-08-31": {
     "ev": 12.27,
     "bb": 18.8,
@@ -3504,6 +3499,14 @@
     "ev": 23.55,
     "bb": 26.0,
     "ts": 1788098832.0379698
+  },
+  "football|England Premier League 2|Brentford FC U21|Sunderland U21|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 7.68,
+    "ts": 1788111248.4156659
+  },
+  "football|England Premier League 2|Brentford FC U21|Sunderland U21|总进球区间0-1|total_goals_range|2026-08-31": {
+    "ev": 60.99,
+    "ts": 1788111248.415585
   },
   "football|England Premier League|Aston Villa FC|Arsenal FC|上半场主胜|ht|2026-09-01": {
     "ev": 1.93,
@@ -7419,6 +7422,11 @@
     "ev": 1.57,
     "ts": 1787975485.2099898
   },
+  "football|Romania Liga 1|布格勒斯特迅速 1923|CS卡拉奥华大学 1948|半/全场-客/主|htft|2026-09-01": {
+    "ev": 7.92,
+    "bb": 29.0,
+    "ts": 1788111247.929088
+  },
   "football|Romania Liga 2|ASU Politehnica Timisoara|Asa Targu Mures|主胜|1x2|2026-08-30": {
     "ev": 1.48,
     "ts": 1788004834.740961
@@ -10267,9 +10275,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Romania Liga 1|布格勒斯特迅速 1923|CS卡拉奥华大学 1948|半/全场-客/主|htft|2026-09-01": {
-    "ev": 7.92,
-    "bb": 29.0,
-    "ts": 1788111247.929088
+  "football|Czech Republic 1. Liga|布拉格斯巴达|布拉格斯拉维亚|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 8.35,
+    "bb": 16.0,
+    "ts": 1788111369.617593
   }
 }
