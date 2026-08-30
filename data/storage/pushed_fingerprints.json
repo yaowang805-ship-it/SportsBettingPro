@@ -344,6 +344,10 @@
     "ev": 1.1,
     "ts": 1788042517.2531562
   },
+  "football|Argentina Liga Profesional|Independiente Avellaneda|Gimnasia Y Esgrima Mendoza|大球|1x2|2026-08-31": {
+    "ev": 1.44,
+    "ts": 1788104263.224693
+  },
   "football|Argentina Liga Profesional|Independiente Avellaneda|Gimnasia Y Esgrima Mendoza|小球|1x2|2026-08-31": {
     "ev": 1.95,
     "ts": 1788065221.879647
@@ -894,6 +898,10 @@
   "football|Belgium Pro League|KV Kortrijk|Royal Charleroi SC|让球客胜|1x2|2026-08-30": {
     "ev": 6.21,
     "ts": 1788017847.714607
+  },
+  "football|Belgium Pro League|KVC Westerlo|SV Zulte Waregem|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 2.84,
+    "ts": 1788103799.070411
   },
   "football|Belgium Pro League|KVC Westerlo|SV Zulte Waregem|上半场正确比分2-0|correct_score_ht|2026-08-31": {
     "ev": 11.03,
@@ -3076,6 +3084,10 @@
     "ev": 3.46,
     "ts": 1788100652.0878341
   },
+  "football|England League Two|Swindon Town|Port Vale|半/全场-客/主|htft|2026-09-02": {
+    "ev": 4.65,
+    "ts": 1788104073.4975512
+  },
   "football|England League Two|Tranmere Rovers|Rotherham United|上半场双重机会-主/客|ht_dc|2026-09-02": {
     "ev": 1.19,
     "ts": 1788098326.7482948
@@ -3316,6 +3328,11 @@
     "bb": 26.0,
     "ts": 1788102243.7182348
   },
+  "football|England National League|波士顿联队|侯恩乔奇|半/全场-主/客|htft|2026-08-31": {
+    "ev": 6.63,
+    "bb": 33.0,
+    "ts": 1788103654.820678
+  },
   "football|England National League|波士顿联队|侯恩乔奇|半/全场-客/主|htft|2026-08-31": {
     "ev": 6.25,
     "bb": 24.0,
@@ -3325,6 +3342,11 @@
     "ev": 11.23,
     "bb": 22.0,
     "ts": 1788098547.338681
+  },
+  "football|England National League|禾京|绍森德|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 13.95,
+    "bb": 15.200000000000001,
+    "ts": 1788103654.820606
   },
   "football|England National League|索利赫尔|菲尔德|上半场正确比分others|correct_score_ht|2026-08-31": {
     "ev": 8.79,
@@ -3425,6 +3447,10 @@
   "football|England Premier League|Manchester United FC|Ipswich Town|小球|1x2|2026-08-30": {
     "ev": 2.43,
     "ts": 1788100799.13483
+  },
+  "football|England Premier League|Manchester United FC|Ipswich Town|让球客胜|1x2|2026-08-30": {
+    "ev": 2.47,
+    "ts": 1788103799.06498
   },
   "football|England Premier League|Sunderland AFC|Fulham FC|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 3.47,
@@ -3636,6 +3662,10 @@
   "football|France Ligue 1|AS Monaco FC|Olympique Marseille|和局|1x2|2026-08-31": {
     "ev": 1.12,
     "ts": 1787998834.8728168
+  },
+  "football|France Ligue 1|AS Monaco FC|Olympique Marseille|角球让球主胜|corner|2026-08-31": {
+    "ev": 1.11,
+    "ts": 1788103799.069342
   },
   "football|France Ligue 1|AS Monaco FC|Olympique Marseille|让球主胜|1x2|2026-08-31": {
     "ev": 11.28,
@@ -3952,6 +3982,10 @@
   "football|Germany Bundesliga|FC Augsburg|halke 04|和局|1x2|2026-08-30": {
     "ev": 1.46,
     "ts": 1788070910.472991
+  },
+  "football|Germany Bundesliga|FC Augsburg|halke 04|小球|1x2|2026-08-30": {
+    "ev": 1.5,
+    "ts": 1788103799.065185
   },
   "football|Germany Bundesliga|FC Augsburg|halke 04|让球主胜|1x2|2026-08-30": {
     "ev": 1.49,
@@ -5928,6 +5962,10 @@
   "football|Nicaragua Primera Division|San Marcos FC|Walter Ferretti|客胜|1x2|2026-08-31": {
     "ev": 8.21,
     "ts": 1788080947.519546
+  },
+  "football|Nicaragua Primera Division|San Marcos FC|Walter Ferretti|让球客胜|1x2|2026-08-31": {
+    "ev": 1.35,
+    "ts": 1788103655.391304
   },
   "football|Nicaragua Primera Division|圣马科斯|沃尔特费雷蒂|客胜|1x2|2026-08-31": {
     "ev": 7.49,
@@ -8063,20 +8101,10 @@
     "bb": 20.0,
     "ts": 1788100057.798697
   },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分2-0|correct_score_ht|2026-08-31": {
-    "ev": 12.98,
-    "bb": 21.0,
-    "ts": 1788100057.7985642
-  },
   "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分others|correct_score_ht|2026-08-31": {
     "ev": 11.22,
     "bb": 24.0,
     "ts": 1788100057.7985952
-  },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
-    "ev": 9.37,
-    "bb": 32.0,
-    "ts": 1788100798.3245928
   },
   "football|Spain Primera Division Women|Athletic Bilbao (w)|FC Badalona (w)|主胜|1x2|2026-08-30": {
     "ev": 4.28,
@@ -8523,6 +8551,10 @@
   "football|Taca de Portugal|Lusitano GC|Os Belenenses|小球|1x2|2026-08-31": {
     "ev": 2.29,
     "ts": 1788092597.9200058
+  },
+  "football|Taca de Portugal|Lusitano GC|Os Belenenses|让球主胜|1x2|2026-08-31": {
+    "ev": 1.47,
+    "ts": 1788103799.065366
   },
   "football|Taca de Portugal|Lusitano GC|Os Belenenses|让球客胜|1x2|2026-08-31": {
     "ev": 1.4,
@@ -9658,14 +9690,19 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|England National League|禾京|绍森德|上半场正确比分others|correct_score_ht|2026-08-31": {
-    "ev": 13.95,
-    "bb": 15.200000000000001,
-    "ts": 1788103654.820606
+  "football|Slovenia PrvaLiga|布里涅格罗苏普列|采列|上半场主胜|ht|2026-08-31": {
+    "ev": 14.9,
+    "bb": 4.45,
+    "ts": 1788104381.215272
   },
-  "football|England National League|波士顿联队|侯恩乔奇|半/全场-主/客|htft|2026-08-31": {
-    "ev": 6.63,
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 11.63,
+    "bb": 21.0,
+    "ts": 1788104381.215322
+  },
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
+    "ev": 12.79,
     "bb": 33.0,
-    "ts": 1788103654.820678
+    "ts": 1788104381.215361
   }
 }
