@@ -1759,6 +1759,10 @@
     "ev": 3.57,
     "ts": 1788067850.417252
   },
+  "football|Colombia Primera A|Independiente Medellin|Llaneros FC|让球客胜|1x2|2026-08-31": {
+    "ev": 1.34,
+    "ts": 1788100899.6557078
+  },
   "football|Colombia Primera A|Jaguares de Cordoba|America de Cali|单双-双|oe|2026-08-30": {
     "ev": 1.57,
     "ts": 1788038594.340812
@@ -2053,6 +2057,10 @@
     "ev": 2.46,
     "ts": 1788072958.524203
   },
+  "football|Czech Republic 1. Liga|FC Viktoria Plzen|1.FC Slovacko|半/全场-和局/客|htft|2026-08-30": {
+    "ev": 1.66,
+    "ts": 1788100799.1336708
+  },
   "football|Czech Republic 1. Liga|FC Viktoria Plzen|1.FC Slovacko|双边进球-是|btts|2026-08-30": {
     "ev": 1.06,
     "ts": 1788078876.758237
@@ -2069,6 +2077,10 @@
     "ev": 1.44,
     "ts": 1788072552.6757052
   },
+  "football|Czech Republic 1. Liga|FK Teplice|FK Jablonec|上半场主胜|ht|2026-08-30": {
+    "ev": 7.18,
+    "ts": 1788100799.1332202
+  },
   "football|Czech Republic 1. Liga|FK Teplice|FK Jablonec|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.7,
     "ts": 1788074568.606553
@@ -2081,6 +2093,10 @@
     "ev": 11.7,
     "ts": 1788092597.928256
   },
+  "football|Czech Republic 1. Liga|FK Teplice|FK Jablonec|主胜|1x2|2026-08-30": {
+    "ev": 6.23,
+    "ts": 1788100799.13313
+  },
   "football|Czech Republic 1. Liga|FK Teplice|FK Jablonec|半/全场-主/客|htft|2026-08-30": {
     "ev": 2.52,
     "ts": 1788092597.917883
@@ -2088,6 +2104,14 @@
   "football|Czech Republic 1. Liga|FK Teplice|FK Jablonec|半/全场-客/主|htft|2026-08-30": {
     "ev": 1.62,
     "ts": 1788092951.302675
+  },
+  "football|Czech Republic 1. Liga|FK Teplice|FK Jablonec|大球|1x2|2026-08-30": {
+    "ev": 1.51,
+    "ts": 1788100799.1334798
+  },
+  "football|Czech Republic 1. Liga|FK Teplice|FK Jablonec|让球主胜|1x2|2026-08-30": {
+    "ev": 6.64,
+    "ts": 1788100799.1333919
   },
   "football|Czech Republic 1. Liga|FK Teplice|FK Jablonec|让球客胜|1x2|2026-08-30": {
     "ev": 11.8,
@@ -2126,6 +2150,11 @@
     "ev": 12.27,
     "bb": 18.8,
     "ts": 1788100057.7477398
+  },
+  "football|Czech Republic 1. Liga|特普利斯|亚布洛内茨|半/全场-客/主|htft|2026-08-30": {
+    "ev": 17.71,
+    "bb": 27.0,
+    "ts": 1788100798.324529
   },
   "football|Czech Republic Divize|FK Bospor Bohumin|Pusta Polom|主胜|1x2|2026-08-30": {
     "ev": 3.76,
@@ -2180,6 +2209,19 @@
   "football|Czech Republic FNL|FK Fotbal Trinec|FC Banik Ostrava B|让球客胜|1x2|2026-08-30": {
     "ev": 6.5,
     "ts": 1788017518.465437
+  },
+  "football|Czech Republic FNL|SK Kladno|FK Viktoria Zizkov|客胜|1x2|2026-08-30": {
+    "ev": 5.64,
+    "ts": 1788100799.132936
+  },
+  "football|Czech Republic FNL|SK Kladno|FK Viktoria Zizkov|让球客胜|1x2|2026-08-30": {
+    "ev": 1.0,
+    "ts": 1788100799.133034
+  },
+  "football|Czech Republic FNL|卡列度|济斯科夫|客胜|1x2|2026-08-30": {
+    "ev": 5.64,
+    "bb": 2.75,
+    "ts": 1788100798.324437
   },
   "football|Czech Republic MSFL|MFK Havirov|FC Zbrojovka Brno B|客胜|1x2|2026-08-30": {
     "ev": 5.16,
@@ -3077,6 +3119,10 @@
     "ev": 1.44,
     "ts": 1788094310.337909
   },
+  "football|England Premier League|Manchester United FC|Ipswich Town|小球|1x2|2026-08-30": {
+    "ev": 2.43,
+    "ts": 1788100799.13483
+  },
   "football|England Premier League|Sunderland AFC|Fulham FC|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 3.47,
     "ts": 1787975485.2091908
@@ -3229,6 +3275,10 @@
   "football|Finland Ykkosliiga|SJK Akatemia|Klubi 04|大球|1x2|2026-08-30": {
     "ev": 6.93,
     "ts": 1788099008.676277
+  },
+  "football|Finland Ykkosliiga|SJK Akatemia|Klubi 04|客胜|1x2|2026-08-30": {
+    "ev": 5.04,
+    "ts": 1788100799.1323142
   },
   "football|Finland Ykkosliiga|SJK Akatemia|Klubi 04|小球|1x2|2026-08-30": {
     "ev": 2.42,
@@ -3841,6 +3891,10 @@
   "football|Ireland Premier Division|Derry City FC|Shamrock Rovers|大球|1x2|2026-08-30": {
     "ev": 3.98,
     "ts": 1788073939.302669
+  },
+  "football|Ireland Premier Division|Derry City FC|Shamrock Rovers|让球主胜|1x2|2026-08-30": {
+    "ev": 3.0,
+    "ts": 1788100799.132193
   },
   "football|Ireland Premier Division|德利城|沙姆洛克流浪|半/全场-客/主|htft|2026-08-30": {
     "ev": 10.0,
@@ -5571,9 +5625,17 @@
     "ev": 1.29,
     "ts": 1788100059.98953
   },
+  "football|Norway 1st Division|Kongsvinger IL Fotball|Lyn 1896 FK|让球主胜|1x2|2026-08-30": {
+    "ev": 1.27,
+    "ts": 1788100799.1345248
+  },
   "football|Norway 1st Division|Moss FK|Strommen IF|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 2.69,
     "ts": 1788092597.928658
+  },
+  "football|Norway 1st Division|Ranheim|Odds BK|上半场正确比分0-2|correct_score_ht|2026-08-30": {
+    "ev": 3.06,
+    "ts": 1788100799.1419299
   },
   "football|Norway 1st Division|Ranheim|Odds BK|让球主胜|1x2|2026-08-30": {
     "ev": 4.34,
@@ -6140,6 +6202,10 @@
   "football|Peru Liga 1|Asociacion Deportiva Tarma|Sport Huancayo|和局|1x2|2026-08-31": {
     "ev": 3.01,
     "ts": 1787975485.218244
+  },
+  "football|Peru Liga 1|Asociacion Deportiva Tarma|Sport Huancayo|让球客胜|1x2|2026-08-31": {
+    "ev": 2.65,
+    "ts": 1788100799.1359959
   },
   "football|Peru Liga 1|Atletico Grau|FBC Melgar|和局|1x2|2026-09-01": {
     "ev": 4.56,
@@ -6967,6 +7033,11 @@
     "ev": 1.53,
     "ts": 1788072552.6801631
   },
+  "football|Slovakia Superliga|布拉迪斯拉发|米哈洛夫采|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 9.02,
+    "bb": 3.82,
+    "ts": 1788100798.324269
+  },
   "football|Slovenia PrvaLiga|NK Bravo|NS Mura|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.08,
     "ts": 1788000428.4552078
@@ -7168,6 +7239,10 @@
   "football|Spain LaLiga 2|D Mallorca|Ceuta|双边进球-是|btts|2026-08-31": {
     "ev": 1.92,
     "ts": 1788067850.4135969
+  },
+  "football|Spain LaLiga 2|D Mallorca|Ceuta|双重机会-和局/客|dc|2026-08-31": {
+    "ev": 2.09,
+    "ts": 1788100799.13096
   },
   "football|Spain LaLiga 2|D Mallorca|Ceuta|大球|1x2|2026-08-31": {
     "ev": 3.99,
@@ -7548,6 +7623,11 @@
     "bb": 24.0,
     "ts": 1788100057.7985952
   },
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
+    "ev": 9.37,
+    "bb": 32.0,
+    "ts": 1788100798.3245928
+  },
   "football|Spain Primera Division Women|Athletic Bilbao (w)|FC Badalona (w)|主胜|1x2|2026-08-30": {
     "ev": 4.28,
     "ts": 1788021480.358777
@@ -7725,6 +7805,10 @@
   "football|Sweden Superettan|Sandvikens IF|Osters IF|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 5.91,
     "ts": 1788092597.928121
+  },
+  "football|Sweden Superettan|Sandvikens IF|Osters IF|主胜|1x2|2026-08-30": {
+    "ev": 2.16,
+    "ts": 1788100799.131829
   },
   "football|Sweden Superettan|Sandvikens IF|Osters IF|单双-双|oe|2026-08-30": {
     "ev": 1.35,
@@ -8121,6 +8205,10 @@
   "football|Turkey 1. Lig|Manisa Futbol Kulubu|Bodrum Belediyesi Bodrumspor|双边进球-是|btts|2026-08-31": {
     "ev": 1.26,
     "ts": 1788028802.849118
+  },
+  "football|Turkey 1. Lig|Manisa Futbol Kulubu|Bodrum Belediyesi Bodrumspor|让球客胜|1x2|2026-08-31": {
+    "ev": 9.07,
+    "ts": 1788100799.1353621
   },
   "football|Turkey 1. Lig|Mardin 1969 Spor|Van Spor FK|主胜|1x2|2026-08-30": {
     "ev": 1.02,
@@ -8915,6 +9003,10 @@
     "ev": 1.16,
     "ts": 1788070910.4778519
   },
+  "football|Ukraine Premier League|FC Zorya Luhansk|FC Kharkiv|双重机会-主/和局|dc|2026-08-30": {
+    "ev": 1.78,
+    "ts": 1788100799.139623
+  },
   "football|Ukraine Premier League|FC Zorya Luhansk|FC Kharkiv|让球主胜|1x2|2026-08-30": {
     "ev": 5.21,
     "ts": 1788099008.680761
@@ -9087,24 +9179,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Slovakia Superliga|布拉迪斯拉发|米哈洛夫采|双重机会-和局/客|dc|2026-08-30": {
-    "ev": 9.02,
-    "bb": 3.82,
-    "ts": 1788100798.324269
+  "football|Spain LaLiga|奥萨苏纳|赫塔菲|上半场客胜|ht|2026-09-01": {
+    "ev": 11.29,
+    "bb": 6.35,
+    "ts": 1788101193.019573
   },
-  "football|Czech Republic FNL|卡列度|济斯科夫|客胜|1x2|2026-08-30": {
-    "ev": 5.64,
-    "bb": 2.75,
-    "ts": 1788100798.324437
-  },
-  "football|Czech Republic 1. Liga|特普利斯|亚布洛内茨|半/全场-客/主|htft|2026-08-30": {
-    "ev": 17.71,
-    "bb": 27.0,
-    "ts": 1788100798.324529
-  },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
-    "ev": 9.37,
-    "bb": 32.0,
-    "ts": 1788100798.3245928
+  "football|England League Two|切尔滕汉姆|约克城|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 20.02,
+    "bb": 26.0,
+    "ts": 1788101193.0196428
   }
 }
