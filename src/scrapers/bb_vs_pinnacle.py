@@ -26,7 +26,7 @@ from src.scrapers.pinnacle_api import (
     API_BASE, SESSION, api_get, _rate_limit, _diagnose_pinnacle_error, us_to_decimal, get_decimal_price,
 )
 from src.scrapers.pinnacle_api import _rate_limit as _  # noqa: ensure rate_limit usable
-from src.scrapers.devig import shin_fair_odds, devig_favorite_divergence, devig_shin  # Shin 法去抽水, 替代比例法
+from src.scrapers.devig import shin_fair_odds, devig_favorite_divergence  # Shin 法去抽水, 替代比例法
 
 API_BASE = API_BASE  # re-export for backward compat
 SESSION = SESSION
@@ -85,38 +85,6 @@ _SPORT_IDS = SPORT_IDS
 _TWO_WAY_SPORTS = TWO_WAY_SPORTS
 _BB_SPORT_KEYWORDS = BB_SPORT_KEYWORDS
 _MARKET_LABELS = MARKET_LABELS
-
-
-def _derive_btts_from_team_total(team_total_entries):
-    """从 Pinnacle team_total 0.5 盘口推导 BTTS 公平价（去抽水）。"""
-    home_prob = away_prob = None
-    for tt in team_total_entries:
-        if tt.get("period", 0) != 0:
-            continue
-        side = tt.get("side", "")
-        prices = tt.get("prices", [])
-        over_dec = under_dec = None
-        for p in prices:
-            des = p.get("designation", "").lower()
-            dec = get_decimal_price(p) or 0
-            if p.get("points") == 0.5:
-                if des == "over" and dec > 1:
-                    over_dec = dec
-                elif des == "under" and dec > 1:
-                    under_dec = dec
-        if over_dec and under_dec:
-            _tt_fairs = shin_fair_odds([over_dec, under_dec])
-            prob_over = 1.0 / _tt_fairs[0] if _tt_fairs[0] > 0 else 0
-            if side == "home":
-                home_prob = prob_over
-            elif side == "away":
-                away_prob = prob_over
-    if not home_prob or not away_prob:
-        return None, None
-    btts_yes = home_prob * away_prob
-    if btts_yes <= 0.001:
-        return None, None
-    return round(1.0 / btts_yes, 4), round(1.0 / (1.0 - btts_yes), 4)
 
 
 def _devig_dc(dc_odds):
@@ -1652,7 +1620,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     _add_htft_opportunities(entry, bb_htft, _mapped)
                     break
 
-        # --- 上半场平局退款 (HT DNB)：从 Pinnacle HT 1X2 推导公平价 ---
+        # --- 上半场平局退款 (HT DNB)：直接用 Pinnacle Draw No Bet 1st Half 盘口 ---
         if len(bb_dnb) >= 4 and n_ml == 3:
             # 安全校验：HT DNB赔率必须小于HT独赢赔率
             bb_ht_ml = bb.get("odds_ht", {}).get("ml", [])
@@ -1662,26 +1630,46 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 if ht_h >= bb_ht_ml[0] * 0.99 or ht_a >= bb_ht_ml[-1] * 0.99:
                     bb_dnb = bb_dnb[:2]  # 保留FT DNB，清除HT DNB
             if len(bb_dnb) >= 4:  # HT DNB 有效时才继续
-                pin_ht_ml = get_pin_ml_sorted_from_source(pin.get("ht_moneyline", []), sport)
-                if len(pin_ht_ml) == 3:
-                    hh, dd, aa = pin_ht_ml
-                    if all(x and x > 0 for x in [hh, dd, aa]):
-                        imp = 1/hh + 1/dd + 1/aa
-                        p_h, p_d, p_a = (1/hh)/imp, (1/dd)/imp, (1/aa)/imp
-                        dnb_fair = [round(1/(p_h/(1-p_d)), 4), round(1/(p_a/(1-p_d)), 4)]
-                        dnb_labels = ["上半场平局退款-主", "上半场平局退款-客"]
-                        for i in range(2):
-                            bb_dnb_val = float(bb_dnb[2+i]) if isinstance(bb_dnb[2+i], str) else bb_dnb[2+i]
-                            if bb_dnb_val and dnb_fair[i] > 0:
-                                ev = (bb_dnb_val - dnb_fair[i]) / dnb_fair[i] * 100
-                                if 1 < ev <= 20:
-                                    entry["draw_no_bet"].append({
-                                        "designation": dnb_labels[i],
-                                        "bb_odds": bb_dnb_val,
-                                        "fair_price": round(dnb_fair[i], 4),
-                                        "ev_pct": round(ev, 2),
-                                        "_market": "ht_dnb",
-                                    })
+                # 路径A: Pinnacle 直接提供 HT DNB (Draw No Bet 1st Half, period=1)
+                ht_dnb_fair = None
+                ht_dnb_pin_raw = None
+                for dnb_entry in pin.get("draw_no_bet", []):
+                    if dnb_entry.get("period", 0) != 1:
+                        continue
+                    prices = dnb_entry.get("prices", [])
+                    if len(prices) >= 2:
+                        h_price = a_price = None
+                        for p in prices:
+                            des = p.get("designation", "").lower()
+                            val = get_decimal_price(p) or p.get("price_decimal", 0)
+                            if "home" in des or "主" in des:
+                                h_price = val
+                            elif "away" in des or "客" in des:
+                                a_price = val
+                        if not h_price or not a_price:
+                            if len(prices) >= 2:
+                                h_price = prices[0].get("price_decimal", 0)
+                                a_price = prices[1].get("price_decimal", 0)
+                        if h_price and a_price and h_price > 1 and a_price > 1:
+                            ht_dnb_fair = shin_fair_odds([h_price, a_price])
+                            ht_dnb_pin_raw = [h_price, a_price]
+                            break
+                if ht_dnb_fair:
+                    dnb_labels = ["上半场平局退款-主", "上半场平局退款-客"]
+                    for i in range(2):
+                        bb_dnb_val = float(bb_dnb[2+i]) if isinstance(bb_dnb[2+i], str) else bb_dnb[2+i]
+                        if bb_dnb_val and ht_dnb_fair[i] > 0:
+                            ev = (bb_dnb_val - ht_dnb_fair[i]) / ht_dnb_fair[i] * 100
+                            if 1 < ev <= 20:
+                                pin_raw = round(ht_dnb_pin_raw[i], 4) if ht_dnb_pin_raw else 0
+                                entry["draw_no_bet"].append({
+                                    "designation": dnb_labels[i],
+                                    "bb_odds": bb_dnb_val,
+                                    "pin_odds": pin_raw,
+                                    "fair_price": round(ht_dnb_fair[i], 4),
+                                    "ev_pct": round(ev, 2),
+                                    "_market": "ht_dnb",
+                                })
 
         # 同一市场只保留溢价最高的选项（FT + HT + DC + DNB + HT_DNB + BTTS + OE + HT/FT 各自保留）
         for mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"):
