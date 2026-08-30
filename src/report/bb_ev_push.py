@@ -1047,9 +1047,10 @@ def _calc_kelly_stakes(opps: list) -> list:
                 # V5.9: 不再二次 EV 门槛否决 — 收集阶段 get_min_ev + tier ev_floor 已过滤,
                 # 权重矩阵(历史ROI) + EV-Kelly兜底已按 edge 定仓。这里只保留 kelly_mult(降仓)+max_odds。
             except ImportError: pass
-        if odds > max_odds:
-            o["_stake"] = 0; o["_raw_stake"] = 0
-            continue
+        # 2026-08-30 用户要求: 赔率上限关闭, 不再因赔率过高拦截
+        # if odds > max_odds:
+        #     o["_stake"] = 0; o["_raw_stake"] = 0
+        #     continue
 
         # V5.1: per-sport赔率策略Kelly乘数
         stake_pct *= odds_kelly_mult
@@ -1699,10 +1700,11 @@ def _collect_opportunities(match, market_key):
         # 2026-08-30 用户要求: EV上限拦截暂停, 只加提醒(_warn), 不再 continue 拦截
 
         # ── V4 赔率上限: 基于 Pinnacle 全量数据 ──
-        from config.weight_matrix_v5 import get_odds_cap
-        _odds_cap = get_odds_cap(match.get("sport", ""), league_cn, sub_market)
-        if _odds_cap > 0 and bb_odds > _odds_cap:
-            continue
+        # 2026-08-30 用户要求: 赔率上限关闭, 不再拦截
+        # from config.weight_matrix_v5 import get_odds_cap
+        # _odds_cap = get_odds_cap(match.get("sport", ""), league_cn, sub_market)
+        # if _odds_cap > 0 and bb_odds > _odds_cap:
+        #     continue
 
         # HTFT/半全场 EV 上限：此类市场 Pinnacle 盘口常与 BB 不是同一市场
         # (如 Pinnacle "半全场" 含加时 vs BB 不含)，导致假 EV 极高。
