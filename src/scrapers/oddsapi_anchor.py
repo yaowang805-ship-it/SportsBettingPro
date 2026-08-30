@@ -137,6 +137,24 @@ def fetch_betfair_anchor(tournament_ids, participants_map=None):
     return out
 
 
+# Pin league_name 关键词 → OddsPapi tournamentId(只映射 Betfair 有 ht 覆盖的主流联赛)
+PIN_LEAGUE_TOURNAMENT_KW = [
+    ("Premier League", 17), ("Championship", 18), ("Serie A", 23),
+    ("La Liga", 8), ("Ligue 1", 34), ("Bundesliga", 35),
+    ("Champions League", 7), ("Eredivisie", 37), ("Primeira Liga", None),
+]
+
+
+def _league_to_tournament(league_name):
+    """Pin league_name → OddsPapi tournamentId(关键词匹配)。"""
+    if not league_name:
+        return None
+    for kw, tid in PIN_LEAGUE_TOURNAMENT_KW:
+        if kw.lower() in str(league_name).lower():
+            return tid
+    return None
+
+
 def pin_ht_anchor_compare(pin_ht_ml, betfair_ht):
     """对比 Pin 的 ht 独赢 vs Betfair 的 ht 独赢, 检测 Pin 平局偏差。
 
@@ -161,3 +179,75 @@ def pin_ht_anchor_compare(pin_ht_ml, betfair_ht):
         "draw_dev_pp": round(dev_pp, 1),
         "flagged": abs(dev_pp) >= 3.0,  # 平局隐含概率差 ≥3pp 视为 Pin 偏差
     }
+
+
+def _similar(a, b):
+    """宽松队名匹配(归一化后 精确 或 子串)。"""
+    import re as _re
+    def _n(s):
+        if not s:
+            return ""
+        s = str(s).lower()
+        s = _re.sub(r"\b(fc|afc|sc|cf)\b", "", s)
+        s = _re.sub(r"[&.\-]", " ", s)
+        return _re.sub(r"\s+", " ", s).strip()
+    a, b = _n(a), _n(b)
+    if not a or not b:
+        return False
+    return a == b or a in b or b in a
+
+
+def cross_validate_ht_entries(entries):
+    """对有 ht 机会的 entry 做 Betfair 双锚交叉验证, 偏差标记 flags + 降权 ht 机会。
+
+    在 bb_vs_pinnacle 对比完成后调用。只对有 _pin_ht_ml 且联赛可映射到 OddsPapi 的
+    entry 做检查(主流联赛), 避免浪费 500次/天配额。
+    """
+    if not ODDSPAPI_KEY or not entries:
+        return entries
+    from collections import defaultdict
+    by_tournament = defaultdict(list)
+    for e in entries:
+        pin_ht = e.get("_pin_ht_ml")
+        if not pin_ht or len(pin_ht) < 3:
+            continue
+        tid = _league_to_tournament(e.get("league", ""))
+        if tid is None:
+            continue
+        by_tournament[tid].append(e)
+    if not by_tournament:
+        return entries
+
+    # 批量查 Betfair(每批最多3个tournamentId, Betfair Exchange 限制)
+    tids = list(by_tournament.keys())
+    for i in range(0, len(tids), 3):
+        batch = tids[i:i + 3]
+        try:
+            bf = fetch_betfair_anchor(batch)
+        except Exception:
+            continue
+        bf_map = {(r["home"], r["away"]): r for r in bf if r.get("ht")}
+        for tid in batch:
+            for e in by_tournament[tid]:
+                pin_ht = e["_pin_ht_ml"]
+                home, away = e.get("home_pin", ""), e.get("away_pin", "")
+                matched = None
+                for (bh, ba), r in bf_map.items():
+                    if _similar(home, bh) and _similar(away, ba):
+                        matched = r
+                        break
+                    if _similar(home, ba) and _similar(away, bh):
+                        matched = {**r, "ht": {"home": r["ht"]["away"], "draw": r["ht"]["draw"], "away": r["ht"]["home"]}}
+                        break
+                if not matched:
+                    continue
+                cmp = pin_ht_anchor_compare(pin_ht, matched["ht"])
+                if not cmp or not cmp["flagged"]:
+                    continue
+                dev = cmp["draw_dev_pp"]
+                e.setdefault("flags", []).append(f"Pin ht平局偏差{dev:+.0f}pp")
+                # 降权: ht 机会 ev 减半(偏差越大说明 Pin 定价越不可靠)
+                for opp in e.get("opportunities", []):
+                    if opp.get("_market") == "ht":
+                        opp["ev_pct"] = round(opp.get("ev_pct", 0) * 0.5, 2)
+    return entries
