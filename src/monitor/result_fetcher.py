@@ -415,6 +415,48 @@ def determine_result(bet: dict, match_result: dict) -> tuple:
     if sub_market in ("ht_hc", "ht_ou", "ht_dc", "ht_dnb"):
         return "void", home_score, away_score, 0
 
+    # ── 上半场正确比分 (correct_score_ht) — 用真实半场比分判定 ──
+    if sub_market == "correct_score_ht":
+        ht_h = match_result.get("ht_home_score")
+        ht_a = match_result.get("ht_away_score")
+        if ht_h is None or ht_a is None:
+            return "void", home_score, away_score, 0  # 拿不到半场比分, 不用全场近似
+        real = f"{ht_h}-{ht_a}"
+        _label = "上半场正确比分"
+        target = designation[len(_label):] if designation.startswith(_label) else designation
+        if target == "others":
+            # BB mty=1100 显式 9 比分: 0-0/1-0/2-0/0-1/1-1/2-1/0-2/1-2/2-2, 其余归 others
+            _explicit = {"0-0", "1-0", "2-0", "0-1", "1-1", "2-1", "0-2", "1-2", "2-2"}
+            won = real not in _explicit
+        else:
+            won = (real == target)
+        return ("won" if won else "lost"), ht_h, ht_a, (1.0 if won else -1.0)
+
+    # ── 半全场 (htft) — 用半场结果 + 全场结果判定 9 种组合 ──
+    if sub_market == "htft":
+        ht_h = match_result.get("ht_home_score")
+        ht_a = match_result.get("ht_away_score")
+        if ht_h is None or ht_a is None:
+            return "void", home_score, away_score, 0  # 拿不到半场比分, 半全场无法判定
+        def _outcome(h, a):
+            return "home" if h > a else ("away" if a > h else "draw")
+        real_key = f"{_outcome(ht_h, ht_a)}/{_outcome(home_score, away_score)}"
+        _htft_labels = ["半/全场-主/主", "半/全场-主/和局", "半/全场-主/客",
+                        "半/全场-和局/主", "半/全场-和局/和局", "半/全场-和局/客",
+                        "半/全场-客/主", "半/全场-客/和局", "半/全场-客/客"]
+        _htft_keys = ["home/home", "home/draw", "home/away",
+                      "draw/home", "draw/draw", "draw/away",
+                      "away/home", "away/draw", "away/away"]
+        target = None
+        for _lbl, _key in zip(_htft_labels, _htft_keys):
+            if designation == _lbl:
+                target = _key
+                break
+        if target is None:
+            return "void", home_score, away_score, 0
+        won = (real_key == target)
+        return ("won" if won else "lost"), home_score, away_score, (1.0 if won else -1.0)
+
     # ── 默认: 无法判定 → void ──
     return "void", home_score, away_score, 0
 
