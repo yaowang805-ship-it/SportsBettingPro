@@ -1703,6 +1703,11 @@
     "bb": 23.0,
     "ts": 1788102621.204496
   },
+  "football|Bulgaria First Professional League|索非亚斯拉维亚|索菲亚列夫斯基|半/全场-主/客|htft|2026-09-03": {
+    "ev": 14.19,
+    "bb": 27.0,
+    "ts": 1788109831.041116
+  },
   "football|Bulgaria Second Professional League|FC Fratria Varna|CSKA Sofia II|主胜|1x2|2026-08-30": {
     "ev": 11.29,
     "ts": 1787986363.763412
@@ -2671,11 +2676,6 @@
   "football|Egypt Premier League|Zamalek SC|Petrojet FC|半/全场-主/客|htft|2026-09-01": {
     "ev": 14.49,
     "ts": 1788100652.05114
-  },
-  "football|Egypt Premier League|扎马雷克|佩特捷德|半/全场-主/客|htft|2026-09-01": {
-    "ev": 14.49,
-    "bb": 46.0,
-    "ts": 1788100650.770444
   },
   "football|El Salvador Primera Division|Alianza FC San Salvador|Atletico Balboa|主胜|1x2|2026-08-30": {
     "ev": 4.4,
@@ -10206,9 +10206,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Bulgaria First Professional League|索非亚斯拉维亚|索菲亚列夫斯基|半/全场-主/客|htft|2026-09-03": {
-    "ev": 14.19,
-    "bb": 27.0,
-    "ts": 1788109831.041116
+  "football|Egypt Premier League|扎马雷克|佩特捷德|半/全场-主/客|htft|2026-09-01": {
+    "ev": 19.47,
+    "bb": 48.0,
+    "ts": 1788109990.4076521
   }
 }
