@@ -414,6 +414,15 @@ PILOT_SUB_MARKET_MULT = {
     "correct_score_ht": 5.0,  # 正确比分高方差, 试点×5
 }
 
+# 2026-08-30 方向级门槛覆盖(sub_market, designation) — 基于实盘已结算 ROI 标定。
+# 真 edge 方向降门槛多推, 假 edge 方向升门槛少推; 命中时覆盖盘口级门槛(替代 v3/mtx)。
+DIRECTION_MIN_EV = {
+    ("1x2", "客胜"): 5.0,              # 67注 ROI +42.1% 真edge, 从8%降
+    ("ht", "上半场主胜"): 2.0,          # 79注 ROI +20.1% 真edge, 从3%降
+    ("dc", "双重机会-和局/客"): 8.0,     # 39注 ROI +30.4% 真edge, 从20%解封(被整盘负edge误封)
+    ("ht", "上半场客胜"): 8.0,          # 169注 ROI -21.6% 假edge, 从3%升
+}
+
 
 def _load_budget_tracker():
     """加载当日预算跟踪器。日期不匹配时自动重置。"""
@@ -1622,6 +1631,13 @@ def _collect_opportunities(match, market_key):
         # V4 的 get_min_ev 基于 Pinnacle 107K场数据
         from config.weight_matrix_v5 import get_min_ev
         v3_min_ev = get_min_ev(match.get("sport", ""), league_cn, sub_market, bb_odds)
+        # 2026-08-30 方向级门槛覆盖: 命中就用方向级值替代盘口级门槛, 并跳过数据驱动矩阵
+        _dir_ev = DIRECTION_MIN_EV.get((sub_market, opp.get("designation", "")))
+        if _dir_ev is not None:
+            v3_min_ev = _dir_ev
+            _dir_override = True
+        else:
+            _dir_override = False
         # V5: FB独有机会降门槛 — FB赔率比BB更接近Pin, edge天然低, 含金量更高
         if price_source == "FB" and not platform_sources:
             v3_min_ev = max(1.0, v3_min_ev * 0.6)  # 降到60%
@@ -1650,7 +1666,7 @@ def _collect_opportunities(match, market_key):
         _lead_min = (pin_epoch - time.time()) / 60 if pin_epoch else None
         _mtx_ev = _matrix_min_ev(sub_market, match.get("sport", ""),
                                   league=match.get("league", ""), lead_minutes=_lead_min)
-        if _mtx_ev is not None and ev < _mtx_ev:
+        if not _dir_override and _mtx_ev is not None and ev < _mtx_ev:
             continue
 
         # EV 上限过滤：高赔率天然高 EV，用动态上限防假阳性
