@@ -488,7 +488,9 @@ def fetch_booking_opportunities(bb_matches, all_pin_leagues, matched_leagues):
     for info in all_pin_leagues.values():
         name = info.get("name", "")
         if name.endswith(" Bookings"):
-            booking_base_names.add(name[:-8])
+            # " Bookings" 是 9 字符(空格+Bookings), 用 [:-9] 去掉整个后缀; 之前 [:-8]
+            # 只去掉 "Bookings"(8字符)留了尾随空格 → base_name 匹配不上 → bb_league_to_base 空
+            booking_base_names.add(name[:-9])
 
     if not booking_base_names:
         return []
