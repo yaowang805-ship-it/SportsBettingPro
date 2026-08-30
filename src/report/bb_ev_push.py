@@ -914,26 +914,19 @@ def _apply_risk_manager_safety(opps: list) -> list:
     # 不因"单日亏损/回撤/连败"停注 —— 之前的 daily_loss 熔断(单日亏¥2325>¥2000)
     # 把全部 _stake 清零, 导致整天无推送。只保留软上限(降低 stake), 不停止下注。
 
-    # 公开 API：只取 get_max_stake 软上限（内部含回撤/连亏/ML动态仓位/联合凯利/分散度）
+    # 2026-08-30 方案1: 只取冷却/回撤/连败乘数(不重复 Kelly), 乘以已算好的梯度倍率 stake。
+    # 原 get_max_stake 内部又独立算了一遍 Kelly, 把放大后的 stake 压回几十元(双重 Kelly), 已废弃。
     cumulative_exposure = 0.0
     for o in opps:
         stake = o.get("_stake", 0)
         if stake <= 0:
             continue
-        # 软上限：风险感知最大 stake（内部含回撤/连亏/ML动态仓位/联合凯利/分散度）
         try:
-            fair = o.get("fair_price", 0)
-            prob = 1.0 / fair if fair and fair > 0 else 0
-            max_stake = rm.get_max_stake(
-                edge_or_prob=prob, odds=o.get("bb_odds", 0),
-                input_is_prob=True,
-                sport=o.get("sport", ""), home_team=o.get("home_cn", ""),
-                away_team=o.get("away_cn", ""), market=o.get("designation", ""),
-                league=o.get("league", ""),
-                market_type=o.get("_sub_market", "") or o.get("_market", ""),
-            )
-            if max_stake > 0 and max_stake < stake:
-                o["_stake"] = int(max_stake)
+            risk_mult = rm.get_risk_multiplier()
+            if risk_mult <= 0:
+                o["_stake"] = 0  # 停手(冷却/回撤>20%/连败>5)
+            elif risk_mult < 1.0:
+                o["_stake"] = int(stake * risk_mult)  # 回撤/连败折扣
         except Exception:
             pass  # 字段缺失或计算失败 → 保留原 stake
         cumulative_exposure += o.get("_stake", 0)  # 用最终 stake 累计敞口
