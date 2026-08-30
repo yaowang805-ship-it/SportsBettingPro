@@ -1,5 +1,5 @@
 {
-  "balance": 4638.53,
+  "balance": 4581.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3887,6 +3887,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788049200,
       "created_at": "2026-08-29T23:54:53.244743+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_塔勒瑞斯_科尔多瓦中央_上半场主胜",
+      "sport": "football",
+      "league": "阿根廷职业联赛",
+      "home_team": "塔勒瑞斯",
+      "away_team": "科尔多瓦中央",
+      "home_cn": "塔勒瑞斯",
+      "away_cn": "科尔多瓦中央",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 2.58,
+      "stake": 35,
+      "model_prob": 0.4005,
+      "ev_pct": 3.33,
+      "pin_odds": 2.42,
+      "fair_price": 2.4969,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788049800,
+      "created_at": "2026-08-30T00:04:45.057858+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_蒙特雷湾_萨克拉门托_上半场主胜",
+      "sport": "football",
+      "league": "美国冠军联赛",
+      "home_team": "蒙特雷湾",
+      "away_team": "萨克拉门托",
+      "home_cn": "蒙特雷湾",
+      "away_cn": "萨克拉门托",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.61,
+      "stake": 22,
+      "model_prob": 0.2273,
+      "ev_pct": 4.8,
+      "pin_odds": 4.02,
+      "fair_price": 4.399,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788055200,
+      "created_at": "2026-08-30T00:04:45.057898+00:00",
       "track_only": false
     }
   ],
@@ -8769,8 +8815,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 1465.0,
-    "bets": 22
+    "used": 1522.0,
+    "bets": 24
   },
   "updated": null
 }
