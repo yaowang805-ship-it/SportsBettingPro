@@ -88,7 +88,7 @@ SPORTS = [
 # Pinnacle 覆盖的运动（只有这些运动有对比价值）
 PINNACLE_SPORTS = {"football", "basketball", "tennis", "baseball",
                     "american_football", "mma", "badminton",
-                    "ice_hockey", "volleyball"}
+                    "ice_hockey", "volleyball", "boxing"}  # 2026-08-30: 拳击加回(归档库有413条Pin数据, 旧审计误封)
 
 # Market type 映射 (按运动)
 MARKET_TYPES = {
