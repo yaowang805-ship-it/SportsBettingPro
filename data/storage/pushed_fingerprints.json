@@ -131,6 +131,10 @@
     "ev": 1.39,
     "ts": 1788014118.2683818
   },
+  "basketball|Mexico LNBP Basketball League|Freseros de Irapuato|Astros de Jalisco|让分客胜|1x2|2026-08-31": {
+    "ev": 2.37,
+    "ts": 1788102244.386487
+  },
   "basketball|Mexico LNBP Basketball League|Fuerza Regia|Abejas de Leon|主胜|1x2|2026-08-30": {
     "ev": 2.34,
     "ts": 1788040437.506345
@@ -3006,6 +3010,26 @@
     "ev": 2.0,
     "ts": 1788098548.715147
   },
+  "football|England National League|京达米士特|巴洛|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 5.61,
+    "bb": 16.6,
+    "ts": 1788102243.718192
+  },
+  "football|England National League|京达米士特|巴洛|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 20.27,
+    "bb": 16.8,
+    "ts": 1788102243.7181492
+  },
+  "football|England National League|伊斯特雷格|奥尔德肖特|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 3.76,
+    "bb": 17.6,
+    "ts": 1788102243.718348
+  },
+  "football|England National League|伊斯特雷格|奥尔德肖特|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 6.43,
+    "bb": 13.0,
+    "ts": 1788102243.718313
+  },
   "football|England National League|卡利斯尔联|斯坎索普联|上半场正确比分0-2|correct_score_ht|2026-08-31": {
     "ev": 24.91,
     "bb": 30.0,
@@ -3020,6 +3044,16 @@
     "ev": 6.49,
     "bb": 27.0,
     "ts": 1788098832.038662
+  },
+  "football|England National League|沃辛|博瑞汉姆|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 19.32,
+    "bb": 28.0,
+    "ts": 1788102243.718274
+  },
+  "football|England National League|波士顿联队|侯恩乔奇|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 19.48,
+    "bb": 26.0,
+    "ts": 1788102243.7182348
   },
   "football|England National League|波士顿联队|侯恩乔奇|半/全场-客/主|htft|2026-08-31": {
     "ev": 6.25,
@@ -9251,34 +9285,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|England National League|京达米士特|巴洛|上半场正确比分others|correct_score_ht|2026-08-31": {
-    "ev": 20.27,
-    "bb": 16.8,
-    "ts": 1788102243.7181492
-  },
-  "football|England National League|京达米士特|巴洛|上半场正确比分2-0|correct_score_ht|2026-08-31": {
-    "ev": 5.61,
-    "bb": 16.6,
-    "ts": 1788102243.718192
-  },
-  "football|England National League|波士顿联队|侯恩乔奇|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 19.48,
-    "bb": 26.0,
-    "ts": 1788102243.7182348
-  },
-  "football|England National League|沃辛|博瑞汉姆|上半场正确比分2-0|correct_score_ht|2026-08-31": {
-    "ev": 19.32,
-    "bb": 28.0,
-    "ts": 1788102243.718274
-  },
-  "football|England National League|伊斯特雷格|奥尔德肖特|上半场正确比分others|correct_score_ht|2026-08-31": {
-    "ev": 6.43,
-    "bb": 13.0,
-    "ts": 1788102243.718313
-  },
-  "football|England National League|伊斯特雷格|奥尔德肖特|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 3.76,
-    "bb": 17.6,
-    "ts": 1788102243.718348
+  "football|Slovakia Superliga|特尔纳瓦斯巴达克|斯利纳|半/全场-主/客|htft|2026-08-31": {
+    "ev": 4.73,
+    "bb": 36.0,
+    "ts": 1788102332.346192
   }
 }
