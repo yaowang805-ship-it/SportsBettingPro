@@ -200,6 +200,10 @@
     "ev": 2.99,
     "ts": 1788058614.3182862
   },
+  "basketball|WNBA|Dallas Wings (w)|Connecticut Sun (w)|大分|1x2|2026-08-31": {
+    "ev": 4.55,
+    "ts": 1788104969.290587
+  },
   "basketball|WNBA|Dallas Wings (w)|Connecticut Sun (w)|小分|1x2|2026-08-31": {
     "ev": 1.37,
     "ts": 1788089948.433463
@@ -4954,6 +4958,10 @@
     "ev": 2.37,
     "ts": 1787975485.215163
   },
+  "football|Italy Serie C|FC Arzignano Valchiampo|FC Pro Vercelli 1892|上半场客胜|ht|2026-08-31": {
+    "ev": 7.21,
+    "ts": 1788104381.682409
+  },
   "football|Italy Serie C|FC Arzignano Valchiampo|FC Pro Vercelli 1892|单双-双|oe|2026-08-31": {
     "ev": 3.13,
     "ts": 1788067416.5306802
@@ -5480,6 +5488,10 @@
   "football|Lithuania A Lyga|FK Panevezys|Vilnius FK Zalgiris|主胜|1x2|2026-08-31": {
     "ev": 1.17,
     "ts": 1788100059.98668
+  },
+  "football|Lithuania A Lyga|FK Panevezys|Vilnius FK Zalgiris|让球客胜|1x2|2026-08-31": {
+    "ev": 1.92,
+    "ts": 1788104381.685695
   },
   "football|Luxembourg National Division|FC Una Strassen|Atert Bissen|双边进球-是|btts|2026-08-31": {
     "ev": 2.29,
@@ -7491,6 +7503,10 @@
     "ev": 1.41,
     "ts": 1788025818.276434
   },
+  "football|Slovenia PrvaLiga|NK Brinje Grosuplje|NK Celje|上半场主胜|ht|2026-08-31": {
+    "ev": 14.9,
+    "ts": 1788104381.6823301
+  },
   "football|Slovenia PrvaLiga|NK Brinje Grosuplje|NK Celje|上半场正确比分2-0|correct_score_ht|2026-08-31": {
     "ev": 34.69,
     "ts": 1788103186.599643
@@ -7514,6 +7530,11 @@
   "football|Slovenia PrvaLiga|Nafta 1903 Lendava|NK Maribor|让球客胜|1x2|2026-08-31": {
     "ev": 1.1,
     "ts": 1787979281.81903
+  },
+  "football|Slovenia PrvaLiga|布里涅格罗苏普列|采列|上半场主胜|ht|2026-08-31": {
+    "ev": 14.9,
+    "bb": 4.45,
+    "ts": 1788104381.215272
   },
   "football|South Korea K-League 1|Gangwon FC|Pohang Steelers FC|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 4.54,
@@ -8101,10 +8122,20 @@
     "bb": 20.0,
     "ts": 1788100057.798697
   },
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 11.63,
+    "bb": 21.0,
+    "ts": 1788104381.215322
+  },
   "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分others|correct_score_ht|2026-08-31": {
     "ev": 11.22,
     "bb": 24.0,
     "ts": 1788100057.7985952
+  },
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
+    "ev": 12.79,
+    "bb": 33.0,
+    "ts": 1788104381.215361
   },
   "football|Spain Primera Division Women|Athletic Bilbao (w)|FC Badalona (w)|主胜|1x2|2026-08-30": {
     "ev": 4.28,
@@ -9106,6 +9137,10 @@
     "ev": 1.73,
     "ts": 1787994992.3941052
   },
+  "football|USA Major League Soccer|Saint Louis City SC|FC Dallas|上半场双重机会-主/客|ht_dc|2026-08-31": {
+    "ev": 1.62,
+    "ts": 1788104969.2906811
+  },
   "football|USA Major League Soccer|Saint Louis City SC|FC Dallas|上半场客胜|ht|2026-08-31": {
     "ev": 2.08,
     "ts": 1787975485.222836
@@ -9690,19 +9725,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Slovenia PrvaLiga|布里涅格罗苏普列|采列|上半场主胜|ht|2026-08-31": {
-    "ev": 14.9,
-    "bb": 4.45,
-    "ts": 1788104381.215272
-  },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分2-0|correct_score_ht|2026-08-31": {
-    "ev": 11.63,
-    "bb": 21.0,
-    "ts": 1788104381.215322
-  },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
-    "ev": 12.79,
-    "bb": 33.0,
-    "ts": 1788104381.215361
+  "football|Italy Serie A|拉齐奥|热那亚|半/全场-主/和局|htft|2026-08-31": {
+    "ev": 5.19,
+    "bb": 13.9,
+    "ts": 1788105105.945172
   }
 }
