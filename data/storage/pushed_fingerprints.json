@@ -1682,10 +1682,27 @@
     "ev": 1.78,
     "ts": 1788092091.891063
   },
+  "football|Bulgaria First Professional League|PFC Slavia Sofia|PFC Levski Sofia|上半场正确比分1-0|correct_score_ht|2026-09-03": {
+    "ev": 2.76,
+    "ts": 1788109276.371147
+  },
+  "football|Bulgaria First Professional League|PFC Slavia Sofia|PFC Levski Sofia|半/全场-主/客|htft|2026-09-03": {
+    "ev": 9.96,
+    "ts": 1788109276.362313
+  },
+  "football|Bulgaria First Professional League|PFC Slavia Sofia|PFC Levski Sofia|总进球区间7+|total_goals_range|2026-09-03": {
+    "ev": 8.16,
+    "ts": 1788109276.371084
+  },
   "football|Bulgaria First Professional League|索菲亚中央陆军|切诺摩尔|半/全场-客/主|htft|2026-08-31": {
     "ev": 4.76,
     "bb": 23.0,
     "ts": 1788102621.204496
+  },
+  "football|Bulgaria First Professional League|索非亚斯拉维亚|索菲亚列夫斯基|半/全场-主/客|htft|2026-09-03": {
+    "ev": 9.96,
+    "bb": 26.0,
+    "ts": 1788109275.64214
   },
   "football|Bulgaria Second Professional League|FC Fratria Varna|CSKA Sofia II|主胜|1x2|2026-08-30": {
     "ev": 11.29,
@@ -2142,11 +2159,6 @@
     "ev": 10.19,
     "bb": 16.4,
     "ts": 1788107413.080331
-  },
-  "football|Cyprus 1st Division|奥莫尼亚|艾华迪堡|上半场正确比分0-1|correct_score_ht|2026-09-01": {
-    "ev": 16.45,
-    "bb": 17.6,
-    "ts": 1788103440.903279
   },
   "football|Cyprus 1st Division|艾里斯利马素尔|阿波罗利马索尔|上半场客胜|ht|2026-08-30": {
     "ev": 3.11,
@@ -8587,11 +8599,6 @@
     "bb": 30.0,
     "ts": 1788100057.7984378
   },
-  "football|Sweden Allsvenskan|哥德堡盖斯|布洛马波卡纳|半/全场-主/客|htft|2026-09-01": {
-    "ev": 4.76,
-    "bb": 40.0,
-    "ts": 1788103440.9060779
-  },
   "football|Sweden Division 2|Angby IF|Korsnas IF FK|主胜|1x2|2026-08-30": {
     "ev": 3.29,
     "ts": 1788070552.359553
@@ -10178,9 +10185,14 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Bulgaria First Professional League|索非亚斯拉维亚|索菲亚列夫斯基|半/全场-主/客|htft|2026-09-03": {
-    "ev": 9.96,
-    "bb": 26.0,
-    "ts": 1788109275.64214
+  "football|Cyprus 1st Division|奥莫尼亚|艾华迪堡|上半场正确比分0-1|correct_score_ht|2026-09-01": {
+    "ev": 20.42,
+    "bb": 18.2,
+    "ts": 1788109460.398603
+  },
+  "football|Sweden Allsvenskan|哥德堡盖斯|布洛马波卡纳|半/全场-主/客|htft|2026-09-01": {
+    "ev": 10.0,
+    "bb": 42.0,
+    "ts": 1788109460.398644
   }
 }
