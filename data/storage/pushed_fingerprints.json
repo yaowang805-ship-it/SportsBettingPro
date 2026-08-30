@@ -1851,6 +1851,10 @@
     "ev": 2.35,
     "ts": 1787987279.4041321
   },
+  "football|Costa Rica Primera Division|San Carlos FC|Puntarenas FC|半/全场-客/主|htft|2026-08-31": {
+    "ev": 3.86,
+    "ts": 1788098833.402434
+  },
   "football|Costa Rica Primera Division|萨普里萨|贝伦蝎子|上半场正确比分0-1|correct_score_ht|2026-08-31": {
     "ev": 3.69,
     "bb": 14.0,
@@ -2597,6 +2601,14 @@
     "ev": 3.14,
     "ts": 1788098326.746884
   },
+  "football|England National League|Boston United FC|Hornchurch FC|半/全场-客/主|htft|2026-08-31": {
+    "ev": 6.25,
+    "ts": 1788098833.402147
+  },
+  "football|England National League|Eastleigh FC|Aldershot Town FC|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 4.64,
+    "ts": 1788098833.40372
+  },
   "football|England National League|Eastleigh FC|Aldershot Town FC|上半场正确比分others|correct_score_ht|2026-08-31": {
     "ev": 7.41,
     "ts": 1788098548.717449
@@ -2616,6 +2628,10 @@
   "football|England National League|Kidderminster Harriers FC|Barrow AFC|上半场正确比分0-2|correct_score_ht|2026-08-31": {
     "ev": 1.25,
     "ts": 1788098548.716855
+  },
+  "football|England National League|Kidderminster Harriers FC|Barrow AFC|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 3.04,
+    "ts": 1788098833.402975
   },
   "football|England National League|Kidderminster Harriers FC|Barrow AFC|上半场正确比分others|correct_score_ht|2026-08-31": {
     "ev": 21.71,
@@ -2665,10 +2681,55 @@
     "ev": 2.0,
     "ts": 1788098548.715147
   },
+  "football|England National League|卡利斯尔联|斯坎索普联|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 24.91,
+    "bb": 30.0,
+    "ts": 1788098832.038207
+  },
+  "football|England National League|哈洛贾特|格茨海德|上半场正确比分1-2|correct_score_ht|2026-08-31": {
+    "ev": 36.48,
+    "bb": 28.0,
+    "ts": 1788098832.036895
+  },
+  "football|England National League|格兰森林流浪|奥特林查姆|上半场正确比分1-2|correct_score_ht|2026-08-31": {
+    "ev": 6.49,
+    "bb": 27.0,
+    "ts": 1788098832.038662
+  },
+  "football|England National League|波士顿联队|侯恩乔奇|半/全场-客/主|htft|2026-08-31": {
+    "ev": 6.25,
+    "bb": 24.0,
+    "ts": 1788098832.038749
+  },
   "football|England National League|禾京|绍森德|上半场正确比分2-0|correct_score_ht|2026-08-31": {
     "ev": 11.23,
     "bb": 22.0,
     "ts": 1788098547.338681
+  },
+  "football|England National League|禾京|绍森德|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 19.67,
+    "bb": 15.200000000000001,
+    "ts": 1788098832.038111
+  },
+  "football|England National League|索利赫尔|菲尔德|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 8.79,
+    "bb": 11.8,
+    "ts": 1788098832.038357
+  },
+  "football|England National League|耶奥维尔|谭禾夫|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 7.34,
+    "bb": 19.0,
+    "ts": 1788098832.0385711
+  },
+  "football|England National League|耶奥维尔|谭禾夫|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 13.11,
+    "bb": 13.3,
+    "ts": 1788098832.0384781
+  },
+  "football|England National League|萨顿联|威尔德斯通|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 23.55,
+    "bb": 26.0,
+    "ts": 1788098832.0379698
   },
   "football|England Premier League|Chelsea FC|Brighton & Hove Albion FC|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.24,
@@ -8462,49 +8523,34 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|England National League|哈洛贾特|格茨海德|上半场正确比分1-2|correct_score_ht|2026-08-31": {
-    "ev": 36.48,
-    "bb": 28.0,
-    "ts": 1788098832.036895
+  "football|Norway 2nd Division|EIK通斯堡|索特拉|客胜|1x2|2026-08-30": {
+    "ev": 7.06,
+    "bb": 1.54,
+    "ts": 1788099008.019711
   },
-  "football|England National League|萨顿联|威尔德斯通|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 23.55,
-    "bb": 26.0,
-    "ts": 1788098832.0379698
+  "football|Poland Ekstraklasa|维德祖罗兹|波兹南莱赫|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 18.87,
+    "bb": 22.0,
+    "ts": 1788099008.019833
   },
-  "football|England National League|禾京|绍森德|上半场正确比分others|correct_score_ht|2026-08-31": {
-    "ev": 19.67,
-    "bb": 15.200000000000001,
-    "ts": 1788098832.038111
-  },
-  "football|England National League|卡利斯尔联|斯坎索普联|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 24.91,
-    "bb": 30.0,
-    "ts": 1788098832.038207
-  },
-  "football|England National League|索利赫尔|菲尔德|上半场正确比分others|correct_score_ht|2026-08-31": {
-    "ev": 8.79,
-    "bb": 11.8,
-    "ts": 1788098832.038357
-  },
-  "football|England National League|耶奥维尔|谭禾夫|上半场正确比分others|correct_score_ht|2026-08-31": {
-    "ev": 13.11,
-    "bb": 13.3,
-    "ts": 1788098832.0384781
-  },
-  "football|England National League|耶奥维尔|谭禾夫|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 7.34,
-    "bb": 19.0,
-    "ts": 1788098832.0385711
-  },
-  "football|England National League|格兰森林流浪|奥特林查姆|上半场正确比分1-2|correct_score_ht|2026-08-31": {
-    "ev": 6.49,
+  "football|Spain LaLiga|皇家马德里|马拉加|上半场客胜|ht|2026-08-30": {
+    "ev": 9.55,
     "bb": 27.0,
-    "ts": 1788098832.038662
+    "ts": 1788099008.019937
   },
-  "football|England National League|波士顿联队|侯恩乔奇|半/全场-客/主|htft|2026-08-31": {
-    "ev": 6.25,
-    "bb": 24.0,
-    "ts": 1788098832.038749
+  "football|Spain LaLiga|皇家马德里|马拉加|上半场正确比分1-1|correct_score_ht|2026-08-30": {
+    "ev": 8.88,
+    "bb": 15.0,
+    "ts": 1788099008.020032
+  },
+  "football|Russia First League|下诺夫哥罗德|乌里扬诺夫斯克|半/全场-主/客|htft|2026-08-31": {
+    "ev": 19.52,
+    "bb": 54.0,
+    "ts": 1788099008.0201359
+  },
+  "football|Czech Republic 1. Liga|特普利斯|亚布洛内茨|半/全场-客/主|htft|2026-08-30": {
+    "ev": 6.03,
+    "bb": 25.0,
+    "ts": 1788099008.02054
   }
 }
