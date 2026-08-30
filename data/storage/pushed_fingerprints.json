@@ -115,6 +115,10 @@
     "ev": 2.68,
     "ts": 1788053819.1152582
   },
+  "basketball|Mexico LNBP Basketball League|Freseros de Irapuato|Astros de Jalisco|上半场客胜|ht|2026-08-31": {
+    "ev": 1.08,
+    "ts": 1788134048.224287
+  },
   "basketball|Mexico LNBP Basketball League|Freseros de Irapuato|Astros de Jalisco|主胜|1x2|2026-08-30": {
     "ev": 13.77,
     "ts": 1787982573.415055
@@ -2284,6 +2288,10 @@
     "ev": 3.34,
     "ts": 1787981781.4301639
   },
+  "football|Costa Rica Primera Division|Deportivo Saprissa|Escorpiones Belen|让球客胜|1x2|2026-08-31": {
+    "ev": 1.48,
+    "ts": 1788133477.9673731
+  },
   "football|Costa Rica Primera Division|Perez Zeledon|Liga Deportiva Alajuelense|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.16,
     "ts": 1788010749.966493
@@ -2305,6 +2313,11 @@
     "ev": 3.69,
     "bb": 14.0,
     "ts": 1788098289.826211
+  },
+  "football|Costa Rica Primera Division|萨普里萨|贝伦蝎子|半/全场-和局/客|htft|2026-08-31": {
+    "ev": 15.34,
+    "bb": 24.0,
+    "ts": 1788133477.540608
   },
   "football|Croatia HNL League|NK Istra 1961|GNK Dinamo Zagreb|上半场客胜|ht|2026-08-30": {
     "ev": 2.72,
@@ -11360,9 +11373,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Costa Rica Primera Division|萨普里萨|贝伦蝎子|半/全场-和局/客|htft|2026-08-31": {
-    "ev": 15.34,
+  "football|Sweden Superettan|松兹瓦尔|诺尔比|半/全场-客/主|htft|2026-09-01": {
+    "ev": 13.06,
     "bb": 24.0,
-    "ts": 1788133477.540608
+    "ts": 1788134125.749774
   }
 }
