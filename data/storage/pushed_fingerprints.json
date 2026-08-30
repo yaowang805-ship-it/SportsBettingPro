@@ -691,6 +691,10 @@
     "ev": 4.51,
     "ts": 1788019458.026774
   },
+  "football|Azerbaijan Premier League|Zira FK|FK Neftchi Baku|主胜|1x2|2026-08-31": {
+    "ev": 4.15,
+    "ts": 1788105778.695963
+  },
   "football|Azerbaijan Premier League|Zira FK|FK Neftchi Baku|单双-双|oe|2026-08-31": {
     "ev": 1.07,
     "ts": 1788102333.559166
@@ -698,6 +702,10 @@
   "football|Azerbaijan Premier League|Zira FK|FK Neftchi Baku|让球主胜|1x2|2026-08-31": {
     "ev": 1.62,
     "ts": 1788105106.340343
+  },
+  "football|Azerbaijan Premier League|Zira FK|FK Neftchi Baku|让球客胜|1x2|2026-08-31": {
+    "ev": 4.01,
+    "ts": 1788105778.696048
   },
   "football|Azerbaijan Premier League|萨法|穆格汗|和局|1x2|2026-08-30": {
     "ev": 12.8,
@@ -990,6 +998,10 @@
   "football|Belgium Pro League|Union Saint Gilloise|RSC Anderlecht|主胜|1x2|2026-08-31": {
     "ev": 1.94,
     "ts": 1788105106.345491
+  },
+  "football|Belgium Pro League|Union Saint Gilloise|RSC Anderlecht|半/全场-主/和局|htft|2026-08-31": {
+    "ev": 3.12,
+    "ts": 1788105778.700012
   },
   "football|Belgium Pro League|Union Saint Gilloise|RSC Anderlecht|半/全场-主/客|htft|2026-08-31": {
     "ev": 1.03,
@@ -3567,6 +3579,10 @@
     "ev": 7.28,
     "ts": 1788029755.697035
   },
+  "football|Estonia Meistriliiga|JK Narva Trans|Tartu JK Tammeka|主胜|1x2|2026-08-31": {
+    "ev": 1.88,
+    "ts": 1788105778.6957839
+  },
   "football|Estonia Meistriliiga|JK Narva Trans|Tartu JK Tammeka|让球客胜|1x2|2026-08-31": {
     "ev": 8.03,
     "ts": 1788076021.421786
@@ -3984,6 +4000,14 @@
   "football|Germany Bundesliga Women|Werder Bremen (w)|RB Leipzig (w)|主胜|1x2|2026-08-31": {
     "ev": 1.29,
     "ts": 1788102622.3524852
+  },
+  "football|Germany Bundesliga Women|Werder Bremen (w)|RB Leipzig (w)|双重机会-和局/客|dc|2026-08-31": {
+    "ev": 5.67,
+    "ts": 1788106491.883229
+  },
+  "football|Germany Bundesliga Women|Werder Bremen (w)|RB Leipzig (w)|让球客胜|1x2|2026-08-31": {
+    "ev": 5.73,
+    "ts": 1788106491.883175
   },
   "football|Germany Bundesliga|Borussia Dortmund|Hamburger SV|主胜|1x2|2026-08-30": {
     "ev": 1.32,
@@ -4561,6 +4585,10 @@
     "ev": 1.82,
     "ts": 1788077420.093596
   },
+  "football|Italy Serie A|SSC Napoli|Como 1907|双重机会-和局/客|dc|2026-08-31": {
+    "ev": 2.88,
+    "ts": 1788106491.8830001
+  },
   "football|Italy Serie A|SSC Napoli|Como 1907|和局|1x2|2026-08-31": {
     "ev": 5.15,
     "ts": 1788005692.612803
@@ -5000,6 +5028,10 @@
   "football|Italy Serie C|Dolomiti Bellunesi|ASD Alcione Milano|上半场主胜|ht|2026-08-31": {
     "ev": 1.3,
     "ts": 1788105106.339936
+  },
+  "football|Italy Serie C|Dolomiti Bellunesi|ASD Alcione Milano|上半场客胜|ht|2026-08-31": {
+    "ev": 3.92,
+    "ts": 1788105778.69569
   },
   "football|Italy Serie C|Dolomiti Bellunesi|ASD Alcione Milano|单双-双|oe|2026-08-31": {
     "ev": 2.0,
@@ -7013,6 +7045,10 @@
     "ev": 1.05,
     "ts": 1788024149.203553
   },
+  "football|Portugal Segunda Liga|FC Porto B|FC Penafiel|客胜|1x2|2026-08-31": {
+    "ev": 7.34,
+    "ts": 1788105778.700463
+  },
   "football|Portugal Segunda Liga|FC Porto B|FC Penafiel|让球客胜|1x2|2026-08-31": {
     "ev": 13.74,
     "ts": 1788065818.9065201
@@ -7020,6 +7056,14 @@
   "football|Portugal Segunda Liga|Sporting Lisbon B|Farense|双边进球-是|btts|2026-08-31": {
     "ev": 1.24,
     "ts": 1787975485.220185
+  },
+  "football|Portugal Segunda Liga|Sporting Lisbon B|Farense|客胜|1x2|2026-08-31": {
+    "ev": 1.53,
+    "ts": 1788105778.700188
+  },
+  "football|Portugal Segunda Liga|Sporting Lisbon B|Farense|让球客胜|1x2|2026-08-31": {
+    "ev": 3.0,
+    "ts": 1788105778.700352
   },
   "football|Portugal Segunda Liga|U Torreense|FC Vizela|上半场主胜|ht|2026-08-30": {
     "ev": 1.9,
@@ -7032,6 +7076,11 @@
   "football|Portugal Segunda Liga|U Torreense|FC Vizela|让球主胜|1x2|2026-08-30": {
     "ev": 3.6,
     "ts": 1788015297.264936
+  },
+  "football|Portugal Segunda Liga|波尔图二队|佩纳菲尔|客胜|1x2|2026-08-31": {
+    "ev": 7.34,
+    "bb": 2.69,
+    "ts": 1788105778.053623
   },
   "football|Portugal Segunda Liga|费尔格拉斯 1932|查维斯|半/全场-主/客|htft|2026-08-31": {
     "ev": 10.71,
@@ -7352,6 +7401,11 @@
     "ev": 26.29,
     "bb": 42.0,
     "ts": 1788100057.747613
+  },
+  "football|Russia Premier League|喀山红宝石|马哈奇卡拉|半/全场-客/主|htft|2026-08-31": {
+    "ev": 27.69,
+    "bb": 35.0,
+    "ts": 1788105778.053797
   },
   "football|Russia Premier League|格罗兹尼特里克|苏维埃之翼|上半场客胜|ht|2026-08-30": {
     "ev": 3.02,
@@ -8618,6 +8672,10 @@
     "ev": 1.11,
     "ts": 1787992456.128594
   },
+  "football|Taca de Portugal|Covilha|Mortagua|主胜|1x2|2026-08-31": {
+    "ev": 1.61,
+    "ts": 1788105778.6996531
+  },
   "football|Taca de Portugal|Covilha|Mortagua|客胜|1x2|2026-08-31": {
     "ev": 5.98,
     "ts": 1788066318.089063
@@ -8645,6 +8703,10 @@
   "football|Taca de Portugal|Fatima|Sport Benfica Castelo Branco|让球主胜|1x2|2026-08-30": {
     "ev": 1.71,
     "ts": 1787965916.486839
+  },
+  "football|Taca de Portugal|Florgrade FC|Sao Joao de Ver|主胜|1x2|2026-08-31": {
+    "ev": 2.08,
+    "ts": 1788105778.694537
   },
   "football|Taca de Portugal|Florgrade FC|Sao Joao de Ver|客胜|1x2|2026-08-31": {
     "ev": 2.63,
@@ -8710,6 +8772,11 @@
     "ev": 8.24,
     "bb": 1.95,
     "ts": 1788028984.2924109
+  },
+  "football|Taca de Portugal|雷博德卢|巴根卡|客胜|1x2|2026-08-31": {
+    "ev": 11.48,
+    "bb": 1.8,
+    "ts": 1788105778.0537128
   },
   "football|Tunisia Ligue 1|CS哈曼利弗|比瑟汀|和局|1x2|2026-08-30": {
     "ev": 14.34,
@@ -8989,6 +9056,10 @@
     "ev": 1.16,
     "ts": 1788093975.091752
   },
+  "football|UAE Pro League|Al Wahda FC|FC Baniyas|半/全场-主/和局|htft|2026-08-31": {
+    "ev": 3.17,
+    "ts": 1788106491.88338
+  },
   "football|UAE Pro League|Al Wahda FC|FC Baniyas|双重机会-和局/客|dc|2026-08-31": {
     "ev": 1.81,
     "ts": 1788105106.3466449
@@ -9049,6 +9120,10 @@
   "football|USA MLS Next Pro|Columbus Crew II|Chicago Fire FC II|让球客胜|1x2|2026-08-31": {
     "ev": 6.55,
     "ts": 1788067850.418371
+  },
+  "football|USA MLS Next Pro|FC Cincinnati II|Philadelphia Union II|让球客胜|1x2|2026-08-31": {
+    "ev": 3.36,
+    "ts": 1788105778.695877
   },
   "football|USA MLS Next Pro|New England Revolution II|Huntsville City FC|主胜|1x2|2026-08-31": {
     "ev": 1.99,
@@ -9363,6 +9438,10 @@
   "football|USA National Women Soccer League|Orlando Pride (w)|Utah Royals FC (w)|主胜|1x2|2026-08-30": {
     "ev": 1.11,
     "ts": 1788043231.70908
+  },
+  "football|USA National Women Soccer League|Washington Spirit (w)|Bay FC (w)|双重机会-和局/客|dc|2026-08-31": {
+    "ev": 2.05,
+    "ts": 1788106491.883121
   },
   "football|USA National Women Soccer League|丹佛巅峰 (女)|芝加哥红星 (女)|双重机会-和局/客|dc|2026-08-30": {
     "ev": 9.85,
@@ -9838,19 +9917,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Portugal Segunda Liga|波尔图二队|佩纳菲尔|客胜|1x2|2026-08-31": {
-    "ev": 7.34,
-    "bb": 2.69,
-    "ts": 1788105778.053623
-  },
-  "football|Taca de Portugal|雷博德卢|巴根卡|客胜|1x2|2026-08-31": {
-    "ev": 11.48,
-    "bb": 1.8,
-    "ts": 1788105778.0537128
-  },
-  "football|Russia Premier League|喀山红宝石|马哈奇卡拉|半/全场-客/主|htft|2026-08-31": {
-    "ev": 27.69,
-    "bb": 35.0,
-    "ts": 1788105778.053797
+  "football|Italy Serie B|阿雷佐|巴勒莫|半/全场-主/和局|htft|2026-08-31": {
+    "ev": 6.07,
+    "bb": 15.0,
+    "ts": 1788106744.501312
   }
 }
