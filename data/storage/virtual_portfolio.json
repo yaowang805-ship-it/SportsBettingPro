@@ -1,5 +1,5 @@
 {
-  "balance": 2884.53,
+  "balance": 2359.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3036,6 +3036,75 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788125400,
       "created_at": "2026-08-30T13:47:33.556512+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_哥伦布机员_新英格兰革命_上半场正确比分0-2",
+      "sport": "football",
+      "league": "美国职业大联盟",
+      "home_team": "哥伦布机员",
+      "away_team": "新英格兰革命",
+      "home_cn": "哥伦布机员",
+      "away_cn": "新英格兰革命",
+      "market": "1x2",
+      "market_type": "上半场正确比分0-2",
+      "sub_market": "correct_score_ht",
+      "line": "",
+      "odds": 22.0,
+      "stake": 270,
+      "model_prob": 0.0525,
+      "ev_pct": 15.57,
+      "pin_odds": 17.16,
+      "fair_price": 19.0366,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788121800,
+      "created_at": "2026-08-30T13:58:09.787604+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_奥伦斯_马卡拉_半/全场-客/主",
+      "sport": "football",
+      "league": "厄瓜多尔甲级联赛",
+      "home_team": "奥伦斯",
+      "away_team": "马卡拉",
+      "home_cn": "奥伦斯",
+      "away_cn": "马卡拉",
+      "market": "1x2",
+      "market_type": "半/全场-客/主",
+      "sub_market": "htft",
+      "line": "",
+      "odds": 29.0,
+      "stake": 190,
+      "model_prob": 0.0418,
+      "ev_pct": 21.19,
+      "pin_odds": 20.71,
+      "fair_price": 23.9292,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788121800,
+      "created_at": "2026-08-30T13:58:09.787664+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_埃梅莱克_北莱昂斯_半/全场-客/主",
+      "sport": "football",
+      "league": "厄瓜多尔甲级联赛",
+      "home_team": "埃梅莱克",
+      "away_team": "北莱昂斯",
+      "home_cn": "埃梅莱克",
+      "away_cn": "北莱昂斯",
+      "market": "1x2",
+      "market_type": "半/全场-客/主",
+      "sub_market": "htft",
+      "line": "",
+      "odds": 26.0,
+      "stake": 65,
+      "model_prob": 0.041,
+      "ev_pct": 6.53,
+      "pin_odds": 21.15,
+      "fair_price": 24.4065,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788130800,
+      "created_at": "2026-08-30T13:58:09.787704+00:00",
       "track_only": false
     }
   ],
@@ -8608,8 +8677,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 7421.0,
-    "bets": 56
+    "used": 7946.0,
+    "bets": 59
   },
   "updated": null
 }

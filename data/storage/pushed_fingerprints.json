@@ -651,6 +651,10 @@
     "ev": 2.08,
     "ts": 1788096704.545451
   },
+  "football|Azerbaijan Premier League|FK Kapaz|Turan Tovuz|单双-双|oe|2026-08-30": {
+    "ev": 2.27,
+    "ts": 1788097998.0464058
+  },
   "football|Azerbaijan Premier League|Safa|Imisli FK|单双-双|oe|2026-08-30": {
     "ev": 1.91,
     "ts": 1788019458.026807
@@ -4900,6 +4904,10 @@
     "ev": 1.57,
     "ts": 1788064406.819673
   },
+  "football|Netherlands Eredivisie|Telstar|Ajax Amsterdam|让球客胜|1x2|2026-08-30": {
+    "ev": 2.0,
+    "ts": 1788097998.0491898
+  },
   "football|Netherlands Eredivisie|Willem II Tilburg|Heerenveen|上半场正确比分2-0|correct_score_ht|2026-08-30": {
     "ev": 17.13,
     "ts": 1788092597.9262989
@@ -5019,6 +5027,10 @@
   "football|Norway 2nd Division|Arendal FK|Lysekloster|双重机会-和局/客|dc|2026-08-30": {
     "ev": 1.28,
     "ts": 1788063294.459331
+  },
+  "football|Norway 2nd Division|Arendal FK|Lysekloster|和局|1x2|2026-08-30": {
+    "ev": 19.54,
+    "ts": 1788097998.046536
   },
   "football|Norway 2nd Division|Arendal FK|Lysekloster|让球主胜|1x2|2026-08-30": {
     "ev": 4.01,
@@ -5151,6 +5163,16 @@
   "football|Norway 2nd Division|Trygg/Lade|Skeid Fotball|让球客胜|1x2|2026-08-30": {
     "ev": 2.82,
     "ts": 1788085876.365817
+  },
+  "football|Norway 2nd Division|阿伦达尔|裡塞克罗斯特|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 27.52,
+    "bb": 5.45,
+    "ts": 1788097997.369571
+  },
+  "football|Norway 2nd Division|阿伦达尔|裡塞克罗斯特|和局|1x2|2026-08-30": {
+    "ev": 19.54,
+    "bb": 7.95,
+    "ts": 1788097997.369639
   },
   "football|Norway 2nd Division|阿伦达尔|里塞克罗斯特|双重机会-和局/客|dc|2026-08-30": {
     "ev": 19.55,
@@ -5293,6 +5315,10 @@
   "football|Norway Eliteserien|IK Start|KFUM Oslo|双边进球-是|btts|2026-08-30": {
     "ev": 2.44,
     "ts": 1788067042.606966
+  },
+  "football|Norway Eliteserien|IK Start|KFUM Oslo|双重机会-和局/客|dc|2026-08-30": {
+    "ev": 2.53,
+    "ts": 1788097998.050403
   },
   "football|Norway Eliteserien|IK Start|KFUM Oslo|大球|1x2|2026-08-30": {
     "ev": 3.63,
@@ -5731,6 +5757,10 @@
   "football|Portugal Segunda Liga|Amarante FC|SL Benfica B|让球客胜|1x2|2026-08-30": {
     "ev": 4.92,
     "ts": 1788081520.162175
+  },
+  "football|Portugal Segunda Liga|FC Felgueiras 1932|GD Chaves|上半场双重机会-主/客|ht_dc|2026-08-31": {
+    "ev": 1.26,
+    "ts": 1788097998.0537632
   },
   "football|Portugal Segunda Liga|FC Felgueiras 1932|GD Chaves|主胜|1x2|2026-08-31": {
     "ev": 1.22,
@@ -6884,6 +6914,10 @@
   "football|Sweden Ettan Sodra|Laholms FK|Ariana FC|客胜|1x2|2026-08-30": {
     "ev": 1.41,
     "ts": 1788064053.566772
+  },
+  "football|Sweden Ettan Sodra|Laholms FK|Ariana FC|让球主胜|1x2|2026-08-30": {
+    "ev": 1.78,
+    "ts": 1788097998.054987
   },
   "football|Sweden Ettan Sodra|Laholms FK|Ariana FC|让球客胜|1x2|2026-08-30": {
     "ev": 1.95,
@@ -8223,14 +8257,24 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Norway 2nd Division|阿伦达尔|裡塞克罗斯特|双重机会-和局/客|dc|2026-08-30": {
-    "ev": 27.52,
-    "bb": 5.45,
-    "ts": 1788097997.369571
+  "football|USA Major League Soccer|哥伦布机员|新英格兰革命|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 15.57,
+    "bb": 22.0,
+    "ts": 1788098289.825968
   },
-  "football|Norway 2nd Division|阿伦达尔|裡塞克罗斯特|和局|1x2|2026-08-30": {
-    "ev": 19.54,
-    "bb": 7.95,
-    "ts": 1788097997.369639
+  "football|Ecuador LigaPro Primera A|奥伦斯|马卡拉|半/全场-客/主|htft|2026-08-31": {
+    "ev": 21.19,
+    "bb": 29.0,
+    "ts": 1788098289.826095
+  },
+  "football|Costa Rica Primera Division|萨普里萨|贝伦蝎子|上半场正确比分0-1|correct_score_ht|2026-08-31": {
+    "ev": 3.69,
+    "bb": 14.0,
+    "ts": 1788098289.826211
+  },
+  "football|Ecuador LigaPro Primera A|埃梅莱克|北莱昂斯|半/全场-客/主|htft|2026-08-31": {
+    "ev": 6.53,
+    "bb": 26.0,
+    "ts": 1788098289.826317
   }
 }
