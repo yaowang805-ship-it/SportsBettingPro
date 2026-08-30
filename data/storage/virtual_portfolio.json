@@ -1,5 +1,5 @@
 {
-  "balance": 7462.53,
+  "balance": 6862.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3059,6 +3059,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788089400,
       "created_at": "2026-08-30T06:15:50.860631+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_光州FC_首尔FC_上半场主胜",
+      "sport": "football",
+      "league": "韩国K1联赛",
+      "home_team": "光州FC",
+      "away_team": "首尔FC",
+      "home_cn": "光州FC",
+      "away_cn": "首尔FC",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 7.85,
+      "stake": 600,
+      "model_prob": 0.1309,
+      "ev_pct": 2.72,
+      "pin_odds": 6.73,
+      "fair_price": 7.6418,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788085800,
+      "created_at": "2026-08-30T07:05:30.612589+00:00",
       "track_only": false
     }
   ],
@@ -8496,8 +8519,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 2159.0,
-    "bets": 36
+    "used": 2759.0,
+    "bets": 37
   },
   "updated": null
 }

@@ -924,11 +924,13 @@ def _save_results(results):
     logger.info("保存 %d 条 CLV 结果到 %s + clv_data表", len(results), RESULTS_FILE)
 
 
-def log_all_ev_opportunities(comparison_path=None, min_ev=2.0):
+def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
     """把对比文件里所有 EV>=min_ev 的机会(去重)追加进 clv_tracking.csv, 用于验证套利模型。
 
-    source='validate', stake=0 — 只用于统计 CLV 验证「EV>2% → 正CLV」是否成立, 不下注。
+    source='validate', stake=0 — 只用于统计 CLV 验证「EV>5% → 正CLV」是否成立, 不下注。
     与推送的机会(source='push')分开, 统计时按 source 分组即可分别验模型/验过滤。
+    2026-08-30: 阈值 2%→5% — 2-5% 档实测中位CLV为负(噪声: 2-3%档-0.8%/3-5%档-0.3%),
+    观察库混入4142条噪声污染CLV统计, 真正edge从8%才开始(+2.2%)。
     """
     from config.constants import get_league_tier
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
