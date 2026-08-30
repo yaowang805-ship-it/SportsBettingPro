@@ -570,6 +570,10 @@
     "ev": 1.47,
     "ts": 1788062471.991887
   },
+  "football|Argentina Primera Nacional|Godoy Cruz|San Telmo|上半场客胜|ht|2026-08-31": {
+    "ev": 3.34,
+    "ts": 1788122796.5812821
+  },
   "football|Argentina Primera Nacional|Mitre Santiago Del Estero|Central Norte Salta|上半场客胜|ht|2026-08-31": {
     "ev": 8.35,
     "ts": 1787985526.5147462
@@ -1601,9 +1605,17 @@
     "ev": 5.76,
     "ts": 1788097655.052772
   },
+  "football|Brazil Serie B|Vila Nova FC GO|Ceara SC CE|双重机会-和局/客|dc|2026-08-31": {
+    "ev": 2.46,
+    "ts": 1788122796.581123
+  },
   "football|Brazil Serie B|Vila Nova FC GO|Ceara SC CE|大球|1x2|2026-08-31": {
     "ev": 1.02,
     "ts": 1788113059.8839328
+  },
+  "football|Brazil Serie B|Vila Nova FC GO|Ceara SC CE|让球客胜|1x2|2026-08-31": {
+    "ev": 3.5,
+    "ts": 1788122796.5810728
   },
   "football|Brazil Serie B|id:5357763|-|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 4.85,
@@ -1969,6 +1981,10 @@
     "ev": 11.29,
     "bb": 1.79,
     "ts": 1787987276.0469508
+  },
+  "football|Canadian Premier League|Pacific FC|HFX Wanderers FC|小球|1x2|2026-08-31": {
+    "ev": 1.2,
+    "ts": 1788122796.581553
   },
   "football|Canadian Premier League|valry FC|Vancouver FC|双重机会-和局/客|dc|2026-08-30": {
     "ev": 1.47,
@@ -3489,6 +3505,11 @@
     "bb": 25.0,
     "ts": 1788103440.9036238
   },
+  "football|England League One|雷丁|曼斯菲特|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 20.79,
+    "bb": 24.0,
+    "ts": 1788122467.65886
+  },
   "football|England League One|韦康比流浪者|谢周三|上半场正确比分others|correct_score_ht|2026-09-02": {
     "ev": 10.19,
     "bb": 14.0,
@@ -4730,11 +4751,6 @@
     "ev": 3.32,
     "bb": 1.94,
     "ts": 1787944816.419533
-  },
-  "football|Greece Super League|莱瓦贾科斯|帕纳辛纳科斯|半/全场-客/主|htft|2026-09-01": {
-    "ev": 12.25,
-    "bb": 47.0,
-    "ts": 1788107594.574104
   },
   "football|Greece Super League|阿里斯|OFI 克里特|半/全场-主/客|htft|2026-08-31": {
     "ev": 5.53,
@@ -11039,9 +11055,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|England League One|雷丁|曼斯菲特|上半场正确比分0-2|correct_score_ht|2026-09-03": {
-    "ev": 20.79,
-    "bb": 24.0,
-    "ts": 1788122467.65886
+  "football|Greece Super League|莱瓦贾科斯|帕纳辛纳科斯|半/全场-客/主|htft|2026-09-01": {
+    "ev": 6.92,
+    "bb": 47.0,
+    "ts": 1788122967.595531
   }
 }
