@@ -1,5 +1,5 @@
 {
-  "balance": 3991.53,
+  "balance": 3643.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -3105,6 +3105,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788102000,
       "created_at": "2026-08-30T10:04:52.837511+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_科林蒂安_桑托斯SP_上半场客胜",
+      "sport": "football",
+      "league": "巴西甲级联赛",
+      "home_team": "科林蒂安",
+      "away_team": "桑托斯SP",
+      "home_cn": "科林蒂安",
+      "away_cn": "桑托斯SP",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 6.3,
+      "stake": 348,
+      "model_prob": 0.173,
+      "ev_pct": 9.02,
+      "pin_odds": 5.3,
+      "fair_price": 5.7787,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788116400,
+      "created_at": "2026-08-30T10:11:28.844098+00:00",
       "track_only": false
     }
   ],
@@ -8632,8 +8655,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-30",
-    "used": 6110.0,
-    "bets": 51
+    "used": 6458.0,
+    "bets": 52
   },
   "updated": null
 }
