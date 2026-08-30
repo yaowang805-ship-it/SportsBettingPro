@@ -1164,6 +1164,114 @@ def extract_match_odds(record, sport_key, platform="BB"):
         lines.sort(key=lambda l: abs(l.get("over_odds", 0) - l.get("under_odds", 0)))
         return {"primary": lines[0], "alternates": lines[1:]}
 
+
+    def _extract_booking_ml(period):
+        """Extract Booking 1X2 (罚牌独赢) from mty=1061."""
+        mty_code = mt.get("booking_ml")
+        if not mty_code:
+            return None
+        group = _find_market_group(record, mty_code, period)
+        if not group:
+            return None
+        markets = group.get("mks", group.get("markets", []))
+        if not markets:
+            return None
+        ops = _get_market_options(markets[0])
+        if len(ops) < 3:
+            return None
+        return [float(op.get("od", 0)) for op in ops[:3] if float(op.get("od", 0)) > 1]
+
+    def _extract_booking_hc(period):
+        """Extract Booking Handicap (罚牌让球) from mty=1060."""
+        mty_code = mt.get("booking_hc")
+        if not mty_code:
+            return None
+        group = _find_market_group(record, mty_code, period)
+        if not group:
+            return None
+        markets = group.get("mks", group.get("markets", []))
+        if not markets:
+            return None
+        lines = []
+        for mk in markets:
+            ops = _get_market_options(mk)
+            if len(ops) < 2:
+                continue
+            home_op, away_op = ops[0], ops[1]
+            home_odds = float(home_op.get("od", 0))
+            away_odds = float(away_op.get("od", 0))
+            if home_odds <= 0 or away_odds <= 0:
+                continue
+            lines.append({
+                "home_line_str": home_op.get("nm", ""),
+                "away_line_str": away_op.get("nm", ""),
+                "home_odds": home_odds,
+                "away_odds": away_odds,
+            })
+        if not lines:
+            return None
+        # 主线=最接近0的线(罚牌让球主线最平衡)。BB API 市场顺序不稳定, 直接 lines[0]
+        # 会把备用线(如 +1)当主线, 与 Pinnacle 主线错位 → 幻影 EV。改为按 |线| 排序。
+        from src.scrapers.bb_data import parse_asian_line as _pal
+        def _line_abs(l):
+            v = _pal(l.get("home_line_str") or l.get("away_line_str") or "")
+            return abs(v) if v is not None else 999.0
+        lines.sort(key=_line_abs)
+        return {"primary": lines[0], "alternates": lines[1:]}
+
+    def _extract_booking_ou(period):
+        """Extract Booking Over/Under (罚牌大小) from mty=1063."""
+        mty_code = mt.get("booking_ou")
+        if not mty_code:
+            return None
+        group = _find_market_group(record, mty_code, period)
+        if not group:
+            return None
+        markets = group.get("mks", group.get("markets", []))
+        if not markets:
+            return None
+        lines = []
+        for mk in markets:
+            ops = _get_market_options(mk)
+            if len(ops) < 2:
+                continue
+            over_op, under_op = ops[0], ops[1]
+            over_odds = float(over_op.get("od", 0))
+            under_odds = float(under_op.get("od", 0))
+            if over_odds <= 0 or under_odds <= 0:
+                continue
+            # Use li field for line value (e.g. "9", "9.5"), fallback to nm parsing
+            line_val = None
+            li_raw = mk.get("li") or over_op.get("li")
+            if li_raw is not None:
+                try:
+                    line_val = float(li_raw)
+                except (ValueError, TypeError):
+                    pass
+            line_str = over_op.get("nm", "")
+            if line_val is None and line_str:
+                # Try Chinese format "大 9" or English format "o 9"
+                for prefix in ("大 ", "o ", "O ", "ov "):
+                    if line_str.lower().startswith(prefix):
+                        try:
+                            line_val = float(line_str[len(prefix):])
+                        except ValueError:
+                            pass
+                        break
+            lines.append({
+                "line": line_val,
+                "line_str": line_str,
+                "over_odds": over_odds,
+                "under_odds": under_odds,
+            })
+        if not lines:
+            return None
+        # 主线 = 大小赔率最平衡(|over-under| 最小)的线。BB API 市场顺序不稳定, 直接 lines[0]
+        # 可能把备用线(如 8.5)当主线, 与 Pinnacle 主线(9.0)错位 → 线值错配杀光机会。
+        # 改为按 |over_odds-under_odds| 排序取最平衡的当主线(与 _extract_booking_hc 按 |线| 排序同理)。
+        lines.sort(key=lambda l: abs(l.get("over_odds", 0) - l.get("under_odds", 0)))
+        return {"primary": lines[0], "alternates": lines[1:]}
+
     def _extract_special_market(mty_code, period):
         """提取特殊盘口(正确比分/净胜球/总进球区间/先进球), 返回 [{name, odds}]。
 
@@ -1241,6 +1349,17 @@ def extract_match_odds(record, sport_key, platform="BB"):
         if ft_corner_ou:
             ft_dict["corner_ou"] = ft_corner_ou["primary"]
             ft_dict["alternate_corner_ou"] = ft_corner_ou["alternates"]
+        ft_booking_ml = _extract_booking_ml(ft_period)
+        if ft_booking_ml:
+            ft_dict["booking_ml"] = ft_booking_ml
+        ft_booking_hc = _extract_booking_hc(ft_period)
+        if ft_booking_hc:
+            ft_dict["booking_hc"] = ft_booking_hc["primary"]
+            ft_dict["alternate_booking_hc"] = ft_booking_hc["alternates"]
+        ft_booking_ou = _extract_booking_ou(ft_period)
+        if ft_booking_ou:
+            ft_dict["booking_ou"] = ft_booking_ou["primary"]
+            ft_dict["alternate_booking_ou"] = ft_booking_ou["alternates"]
         # V5.5: 特殊盘口 (正确比分/净胜球/总进球区间/先进球) — Pinnacle special 有对应
         for _key, _mty in [("correct_score", mt.get("correct_score")),
                            ("winning_margin", mt.get("winning_margin")),
