@@ -1084,17 +1084,10 @@ def _calc_kelly_stakes(opps: list) -> list:
         # 2026-08-27 用户澄清: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库(record_bets)
         o["_stake"] = stake
 
-    # 第二遍：总额超预算时, 按 stake 降序取 top 保留, 超出清零 (不摊薄, 集中在最优机会)
-    daily_budget = bankroll  # V4.5: 动态日预算
-    _active = sorted([o for o in opps if o["_stake"] >= 30], key=lambda o: -o["_stake"])
-    _cum = 0
-    for o in _active:
-        if _cum + o["_stake"] > daily_budget:
-            o["_stake"] = 0
-        else:
-            _cum += o["_stake"]
+    # 2026-08-30 用户要求: 只要有机会就推送, 不考虑预算/单场/单联赛/单运动上限。
+    # 关闭第二遍(总额)/第三遍(单场)/第四遍(单联赛单运动)的上限过滤, 只保留跨盘口相关性折扣(非预算限制)。
 
-    # 第三遍：跨盘口相关性折扣 + 单场上限
+    # 跨盘口相关性折扣 (同场多盘口联合 Kelly 调整)
     from collections import defaultdict
     match_groups = defaultdict(list)
     for o in opps:
@@ -1103,60 +1096,13 @@ def _calc_kelly_stakes(opps: list) -> list:
         key = (o.get("sport", ""), o.get("home_cn", "").strip(), o.get("away_cn", "").strip())
         match_groups[key].append(o)
 
-    per_match_max = bankroll * _PER_MATCH_CAP_PCT
     for key, group in match_groups.items():
-        # V4.4: 跨盘口相关性折扣 — 同场多盘口联合 Kelly 调整
         if len(group) >= 2:
             discount = _cross_market_correlation_discount(group)
             if discount < 1.0:
                 for o in group:
                     o["_stake"] = max(0, round(o["_stake"] * discount))
                     o["_corr_discount"] = round(discount, 3)
-
-        _active = sorted([o for o in group if o["_stake"] >= 30], key=lambda o: -o["_stake"])
-        _cum = 0
-        for o in _active:
-            if _cum + o["_stake"] > per_match_max:
-                o["_stake"] = 0
-            else:
-                _cum += o["_stake"]
-
-    # 第四遍：单联赛/单运动总敞口上限（防集中度风险）
-    league_groups = defaultdict(list)
-    sport_groups = defaultdict(list)
-    for o in opps:
-        if o["_stake"] < 30:
-            continue
-        league_groups[(o.get("sport", ""), o.get("league", ""))].append(o)
-        sport_groups[o.get("sport", "")].append(o)
-
-    per_league_max = bankroll * _PER_LEAGUE_CAP_PCT
-    for key, group in league_groups.items():
-        _active = sorted([o for o in group if o["_stake"] >= 30], key=lambda o: -o["_stake"])
-        _cum = 0
-        for o in _active:
-            if _cum + o["_stake"] > per_league_max:
-                o["_stake"] = 0
-            else:
-                _cum += o["_stake"]
-
-    # 单运动总敞口上限 (2026-08-30 用户要求: 足球主力从40%提到100%, 不再额外限单运动敞口,
-    # 总额20000已够。之前40%=8000把足球226个机会累计10.8万全归零只剩1-3个, 导致0推送)
-    _SPORT_TOTAL_CAPS = {
-        "football": 1.00, "basketball": 0.50, "tennis": 0.50,
-        "baseball": 0.30, "american_football": 0.30, "ice_hockey": 0.30,
-        "mma": 0.10, "boxing": 0.10,
-    }
-    for key, group in sport_groups.items():
-        sport_cap = _SPORT_TOTAL_CAPS.get(key, _PER_SPORT_CAP_PCT)
-        per_sport_max = bankroll * sport_cap
-        _active = sorted([o for o in group if o["_stake"] >= 30], key=lambda o: -o["_stake"])
-        _cum = 0
-        for o in _active:
-            if _cum + o["_stake"] > per_sport_max:
-                o["_stake"] = 0
-            else:
-                _cum += o["_stake"]
 
     # 第五遍：RiskManager 安全层（冷却停注 + 回撤/连败折扣）
     opps = _apply_risk_manager_safety(opps)
