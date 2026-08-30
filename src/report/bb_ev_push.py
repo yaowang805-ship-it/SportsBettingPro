@@ -3293,6 +3293,11 @@ def _filter_opposite_side(qualified: list) -> list:
     kept = []
     skipped = 0
     for o in qualified:
+        # 2026-08-30: 比分类盘口(正确比分/半全场)的不同比分是不同bet, 不是"对倒", 跳过双边拦截
+        _sm = o.get("_sub_market", o.get("_market", ""))
+        if _sm in ("correct_score_ht", "correct_score", "htft", "exact_goals_ht"):
+            kept.append(o)
+            continue
         parts = _make_fingerprint(o).split("|")
         if len(parts) < 6:
             kept.append(o)
