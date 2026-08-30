@@ -27,6 +27,10 @@
     "ev": 4.6,
     "ts": 1788031536.628778
   },
+  "baseball|MLB|Los Angeles Angels|Philadelphia Phillies|小分|1x2|2026-08-31": {
+    "ev": 8.95,
+    "ts": 1788111929.321749
+  },
   "baseball|MLB|Los Angeles Angels|Philadelphia Phillies|让分客胜|1x2|2026-08-30": {
     "ev": 3.33,
     "ts": 1788031536.628818
@@ -272,6 +276,10 @@
     "ev": 1.32,
     "ts": 1787981781.4307048
   },
+  "football|Argentina Liga Profesional|Banfield|River Plate|主胜|1x2|2026-08-31": {
+    "ev": 1.6,
+    "ts": 1788111929.3198562
+  },
   "football|Argentina Liga Profesional|Banfield|River Plate|双重机会-主/和局|dc|2026-08-31": {
     "ev": 2.52,
     "ts": 1788090560.353199
@@ -436,6 +444,10 @@
   "football|Argentina Primera Nacional|All Boys|Chaco For Ever|让球客胜|1x2|2026-08-31": {
     "ev": 10.18,
     "ts": 1787981781.431394
+  },
+  "football|Argentina Primera Nacional|Almirante Brown|Deportivo Madryn|上半场客胜|ht|2026-08-31": {
+    "ev": 1.79,
+    "ts": 1788111929.320235
   },
   "football|Argentina Primera Nacional|Atletico de Rafaela|Tristan Suarez|上半场主胜|ht|2026-08-30": {
     "ev": 2.83,
@@ -613,6 +625,10 @@
   "football|Austria Bundesliga|FK Austria Wien|WSG Tirol|上半场正确比分1-2|correct_score_ht|2026-09-03": {
     "ev": 7.76,
     "ts": 1788111122.96624
+  },
+  "football|Austria Bundesliga|FK Austria Wien|WSG Tirol|半/全场-主/和局|htft|2026-09-03": {
+    "ev": 1.37,
+    "ts": 1788111692.00978
   },
   "football|Austria Bundesliga|FK Austria Wien|WSG Tirol|半/全场-主/客|htft|2026-09-03": {
     "ev": 2.3,
@@ -1649,6 +1665,10 @@
     "bb": 2.03,
     "ts": 1788013659.525877
   },
+  "football|Brazil Serie D-Playoff|ABC FC RN|Uberlandia EC MG|主胜|1x2|2026-08-31": {
+    "ev": 5.13,
+    "ts": 1788111929.321177
+  },
   "football|Brazil Serie D-Playoff|ABC FC RN|Uberlandia EC MG|大球|1x2|2026-08-31": {
     "ev": 4.76,
     "ts": 1788077900.7341728
@@ -2680,6 +2700,10 @@
   "football|Egypt Premier League|Al Masry Club|Pyramids FC|上半场双重机会-主/客|ht_dc|2026-09-01": {
     "ev": 2.52,
     "ts": 1787975485.219153
+  },
+  "football|Egypt Premier League|Ceramica Cleopatra|Modern Sport FC|半/全场-主/客|htft|2026-09-03": {
+    "ev": 89.69,
+    "ts": 1788112337.728708
   },
   "football|Egypt Premier League|Ghazl El Mahallah|Enppi Club|上半场双重机会-主/客|ht_dc|2026-09-01": {
     "ev": 4.26,
@@ -6940,6 +6964,10 @@
     "ev": 3.01,
     "ts": 1787975485.218244
   },
+  "football|Peru Liga 1|Asociacion Deportiva Tarma|Sport Huancayo|让球主胜|1x2|2026-08-31": {
+    "ev": 5.11,
+    "ts": 1788111929.3203762
+  },
   "football|Peru Liga 1|Asociacion Deportiva Tarma|Sport Huancayo|让球客胜|1x2|2026-08-31": {
     "ev": 2.65,
     "ts": 1788100799.1359959
@@ -6983,6 +7011,10 @@
   "football|Peru Liga 1|Moquegua|Alianza Atletico|让球客胜|1x2|2026-08-31": {
     "ev": 10.57,
     "ts": 1788105106.346091
+  },
+  "football|Peru Liga 1|Sport Boys Association|Sporting Cristal|上半场主胜|ht|2026-08-31": {
+    "ev": 1.36,
+    "ts": 1788111929.32042
   },
   "football|Peru Liga 1|Sport Boys Association|Sporting Cristal|主胜|1x2|2026-08-31": {
     "ev": 2.31,
@@ -8566,6 +8598,11 @@
     "bb": 5.75,
     "ts": 1788001352.983698
   },
+  "football|Spain LaLiga|奥萨苏纳|赫塔菲|上半场客胜|ht|2026-09-01": {
+    "ev": 21.32,
+    "bb": 6.95,
+    "ts": 1788111469.972447
+  },
   "football|Spain LaLiga|巴塞罗那|巴列卡诺|上半场正确比分0-1|correct_score_ht|2026-09-01": {
     "ev": 9.26,
     "bb": 17.2,
@@ -8605,11 +8642,6 @@
     "ev": 12.47,
     "bb": 25.0,
     "ts": 1788110087.37978
-  },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
-    "ev": 12.79,
-    "bb": 33.0,
-    "ts": 1788104381.215361
   },
   "football|Spain Primera Division Women|Athletic Bilbao (w)|FC Badalona (w)|主胜|1x2|2026-08-30": {
     "ev": 4.28,
@@ -9331,6 +9363,18 @@
     "ev": 4.1,
     "ts": 1787978731.7716858
   },
+  "football|Turkey Super Lig|Istanbul Basaksehir|Kasimpasa|上半场客胜|ht|2026-08-31": {
+    "ev": 1.22,
+    "ts": 1788111929.320462
+  },
+  "football|Turkey Super Lig|Istanbul Basaksehir|Kasimpasa|双边进球-是|btts|2026-08-31": {
+    "ev": 2.11,
+    "ts": 1788111929.3205
+  },
+  "football|Turkey Super Lig|Istanbul Basaksehir|Kasimpasa|大球|1x2|2026-08-31": {
+    "ev": 2.23,
+    "ts": 1788111929.320537
+  },
   "football|Turkey Super Lig|Konyaspor|Kocaelispor|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.32,
     "ts": 1788000426.196413
@@ -9351,9 +9395,17 @@
     "ev": 1.41,
     "ts": 1788070910.475827
   },
+  "football|Turkey Super Lig|Samsunspor|Fenerbahce|客胜|1x2|2026-08-31": {
+    "ev": 1.51,
+    "ts": 1788111929.320575
+  },
   "football|Turkey Super Lig|Samsunspor|Fenerbahce|让球主胜|1x2|2026-08-31": {
     "ev": 1.48,
     "ts": 1788111370.044859
+  },
+  "football|Turkey Super Lig|Samsunspor|Fenerbahce|让球客胜|1x2|2026-08-31": {
+    "ev": 1.5,
+    "ts": 1788111929.32061
   },
   "football|Turkey Super Lig|伊尤斯堡|阿兰亚斯堡|上半场主胜|ht|2026-08-31": {
     "ev": 6.76,
@@ -10291,9 +10343,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Spain LaLiga|奥萨苏纳|赫塔菲|上半场客胜|ht|2026-09-01": {
-    "ev": 21.32,
-    "bb": 6.95,
-    "ts": 1788111469.972447
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|半/全场-客/主|htft|2026-08-31": {
+    "ev": 20.16,
+    "bb": 34.0,
+    "ts": 1788112530.696703
   }
 }
