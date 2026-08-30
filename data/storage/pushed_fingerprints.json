@@ -453,6 +453,10 @@
     "ev": 3.94,
     "ts": 1788029947.793887
   },
+  "football|Argentina Primera Nacional|Club Atletico Atlanta|San Martin de San Juan|上半场客胜|ht|2026-08-31": {
+    "ev": 1.73,
+    "ts": 1788067416.5426161
+  },
   "football|Argentina Primera Nacional|Colegiales|Maipu|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 1.02,
     "ts": 1788000428.4574
@@ -613,6 +617,10 @@
   "football|Austria Bundesliga|TSV Hartberg|SV Ried|半/全场-客/主|htft|2026-08-30": {
     "ev": 5.69,
     "ts": 1788024820.866932
+  },
+  "football|Austria Bundesliga|TSV Hartberg|SV Ried|双边进球-是|btts|2026-08-30": {
+    "ev": 1.11,
+    "ts": 1788067416.529923
   },
   "football|Azerbaijan Premier League|Safa|Imisli FK|单双-双|oe|2026-08-30": {
     "ev": 1.91,
@@ -4426,6 +4434,10 @@
     "ev": 2.37,
     "ts": 1787975485.215163
   },
+  "football|Italy Serie C|FC Arzignano Valchiampo|FC Pro Vercelli 1892|单双-双|oe|2026-08-31": {
+    "ev": 3.13,
+    "ts": 1788067416.5306802
+  },
   "football|Italy Serie C|Forli FC|Delfino Pescara 1936|上半场双重机会-主/客|ht_dc|2026-08-30": {
     "ev": 2.12,
     "ts": 1788004181.19133
@@ -4682,6 +4694,10 @@
   "football|Japan Regional League|Velago Ikoma|Moriyama Samurai|主胜|1x2|2026-08-30": {
     "ev": 2.38,
     "ts": 1788066169.053051
+  },
+  "football|Japan Regional League|Velago Ikoma|Moriyama Samurai|客胜|1x2|2026-08-30": {
+    "ev": 16.13,
+    "ts": 1788067183.267919
   },
   "football|Japan Regional League|七滨SC|大山SC|主胜|1x2|2026-08-30": {
     "ev": 37.76,
@@ -8830,8 +8846,8 @@
     "ts": 1788052355.874857
   },
   "football|Japan Regional League|维拉戈生驹|守山侍|客胜|1x2|2026-08-30": {
-    "ev": 16.13,
-    "bb": 4.94,
-    "ts": 1788067181.16464
+    "ev": 25.76,
+    "bb": 5.35,
+    "ts": 1788067524.9593668
   }
 }
