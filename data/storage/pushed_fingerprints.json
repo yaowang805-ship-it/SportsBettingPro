@@ -651,6 +651,18 @@
     "ev": 1.01,
     "ts": 1788072958.5312572
   },
+  "football|Austria Bundesliga|FC Salzburg|SK Rapid Wien|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 10.56,
+    "ts": 1788114692.276404
+  },
+  "football|Austria Bundesliga|FC Salzburg|SK Rapid Wien|主胜|1x2|2026-09-03": {
+    "ev": 2.73,
+    "ts": 1788114692.2633128
+  },
+  "football|Austria Bundesliga|FC Salzburg|SK Rapid Wien|让球主胜|1x2|2026-09-03": {
+    "ev": 1.01,
+    "ts": 1788114692.2634501
+  },
   "football|Austria Bundesliga|FK Austria Wien|WSG Tirol|上半场正确比分1-2|correct_score_ht|2026-09-03": {
     "ev": 7.76,
     "ts": 1788111122.96624
@@ -3613,6 +3625,10 @@
   "football|England Premier League 2|Brentford FC U21|Sunderland U21|总进球区间0-1|total_goals_range|2026-08-31": {
     "ev": 60.99,
     "ts": 1788111248.415585
+  },
+  "football|England Premier League 2|Brentford FC U21|Sunderland U21|总进球区间2-3|total_goals_range|2026-08-31": {
+    "ev": 3.76,
+    "ts": 1788114842.808266
   },
   "football|England Premier League|Aston Villa FC|Arsenal FC|上半场主胜|ht|2026-09-01": {
     "ev": 1.93,
@@ -8770,11 +8786,6 @@
     "bb": 15.3,
     "ts": 1788100057.747015
   },
-  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分0-2|correct_score_ht|2026-08-31": {
-    "ev": 10.92,
-    "bb": 20.0,
-    "ts": 1788100057.798697
-  },
   "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分2-0|correct_score_ht|2026-08-31": {
     "ev": 16.39,
     "bb": 23.0,
@@ -9110,6 +9121,18 @@
     "ev": 1.78,
     "ts": 1788057388.0399392
   },
+  "football|Switzerland Super League|FC Thun|FC Lausanne Sport|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 6.82,
+    "ts": 1788114692.276505
+  },
+  "football|Switzerland Super League|FC Thun|FC Lausanne Sport|单双-双|oe|2026-09-03": {
+    "ev": 1.78,
+    "ts": 1788114692.262133
+  },
+  "football|Switzerland Super League|FC Thun|FC Lausanne Sport|和局|1x2|2026-09-03": {
+    "ev": 7.44,
+    "ts": 1788114692.2620878
+  },
   "football|Switzerland Super League|FC Vaduz|Grasshopper Club Zurich|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 9.1,
     "ts": 1788092597.927732
@@ -9134,6 +9157,10 @@
     "ev": 19.59,
     "ts": 1788100652.0898
   },
+  "football|Switzerland Super League|Grasshopper Club Zurich|FC St. Gallen 1879|上半场正确比分2-0|correct_score_ht|2026-09-03": {
+    "ev": 28.2,
+    "ts": 1788114692.276577
+  },
   "football|Switzerland Super League|Servette Geneva|FC Luzern|主胜|1x2|2026-08-30": {
     "ev": 1.49,
     "ts": 1787933216.274888
@@ -9154,6 +9181,11 @@
     "ev": 1.37,
     "ts": 1787984508.593706
   },
+  "football|Switzerland Super League|图恩|洛桑体育队|和局|1x2|2026-09-03": {
+    "ev": 7.44,
+    "bb": 3.9,
+    "ts": 1788114691.3872268
+  },
   "football|Switzerland Super League|瓦杜兹|草蜢|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 10.82,
     "bb": 21.0,
@@ -9163,6 +9195,11 @@
     "ev": 19.59,
     "bb": 28.0,
     "ts": 1788103440.9043021
+  },
+  "football|Switzerland Super League|草蜢|圣加仑 1879|上半场正确比分2-0|correct_score_ht|2026-09-03": {
+    "ev": 28.2,
+    "bb": 30.0,
+    "ts": 1788114691.387151
   },
   "football|Taca de Portugal|Atletico Malveira|Mafra|客胜|1x2|2026-08-30": {
     "ev": 4.49,
@@ -10494,14 +10531,19 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Switzerland Super League|草蜢|圣加仑 1879|上半场正确比分2-0|correct_score_ht|2026-09-03": {
-    "ev": 28.2,
+  "football|Italy Serie A|拉齐奥|热那亚|上半场正确比分others|correct_score_ht|2026-08-31": {
+    "ev": 12.09,
     "bb": 30.0,
-    "ts": 1788114691.387151
+    "ts": 1788114946.628629
   },
-  "football|Switzerland Super League|图恩|洛桑体育队|和局|1x2|2026-09-03": {
-    "ev": 7.44,
-    "bb": 3.9,
-    "ts": 1788114691.3872268
+  "football|Spain LaLiga|维戈塞尔塔|毕尔巴鄂竞技|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 17.0,
+    "bb": 21.0,
+    "ts": 1788114946.628691
+  },
+  "football|Ecuador LigaPro Primera A|奥伦斯|马卡拉|半/全场-主/客|htft|2026-08-31": {
+    "ev": 12.15,
+    "bb": 36.0,
+    "ts": 1788114946.628747
   }
 }
