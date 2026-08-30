@@ -450,6 +450,101 @@ def get_league_corner_markets(league_id):
     return result
 
 
+def get_league_booking_markets(league_id):
+    """从基础足球联赛提取 Pinnacle 罚牌(罚牌独赢/罚牌让球/罚牌大小)市场。
+
+    与角球同理: Pinnacle 把罚牌作为基础联赛里的子比赛返回, 子比赛 units == "Bookings",
+    league.name 以 " Bookings" 结尾, participants 带 "(Bookings)" 后缀, parentId 指向主比赛。
+    (2026-08-30 接入: 之前审计误判"BB有Pin无(罚牌3盘)", 实为 Pin 有罚牌子比赛没提取)
+
+    Returns: 与 get_league_matchups_and_markets 相同结构,
+             其中 moneyline=罚牌独赢, spread=罚牌让球, total=罚牌大小。
+    """
+    matchups = api_get(f"/leagues/{league_id}/matchups")
+    if not matchups:
+        return []
+    markets = api_get(f"/leagues/{league_id}/markets/straight") or []
+
+    # 识别罚牌子比赛: units == "Bookings", 兜底 league.name 结尾 " Bookings"
+    booking_mus = {}
+    for m in matchups:
+        lg = m.get("league", {}) or {}
+        if m.get("units") == "Bookings" or lg.get("name", "").endswith(" Bookings"):
+            booking_mus[m["id"]] = m
+
+    if not booking_mus:
+        return []
+
+    mm = {}
+    for mk in markets:
+        mid = mk.get("matchupId")
+        if mid in booking_mus:
+            mm.setdefault(mid, []).append(mk)
+
+    result = []
+    for mid, mu in booking_mus.items():
+        parent_parts = ((mu.get("parent") or {}).get("participants") or [])
+        home = away = ""
+        for p in parent_parts:
+            if p.get("alignment") == "home":
+                home = p.get("name", "")
+            elif p.get("alignment") == "away":
+                away = p.get("name", "")
+        if not home or not away:
+            for p in mu.get("participants", []):
+                nm = (p.get("name", "") or "").replace("(Bookings)", "").replace(" (Bookings)", "").strip()
+                if p.get("alignment") == "home":
+                    home = nm
+                elif p.get("alignment") == "away":
+                    away = nm
+        if not home or not away:
+            continue
+
+        moneyline, spread, total = [], [], []
+        for mk in mm.get(mid, []):
+            if mk.get("status", "open") != "open":
+                continue
+            mtype = mk.get("type", "")
+            per = mk.get("period", 0)
+            prices = [{
+                "designation": p.get("designation", ""),
+                "price_decimal": us_to_decimal(p.get("price")),
+                "points": p.get("points"),
+            } for p in mk.get("prices", [])]
+            if not prices:
+                continue
+            entry = _market_entry(per, prices, mk)
+            if mtype == "moneyline":
+                entry["prices_sorted"] = sort_ml_prices(prices)
+                moneyline.append(entry)
+            elif mtype == "spread":
+                spread.append(entry)
+            elif mtype == "total":
+                total.append(entry)
+
+        result.append({
+            "matchup_id": mid,
+            "league_id": league_id,
+            "league_name": (mu.get("league") or {}).get("name", ""),
+            "league_group": (mu.get("league") or {}).get("group", ""),
+            "home": home,
+            "away": away,
+            "start_time": mu.get("startTime", ""),
+            "moneyline": moneyline,
+            "spread": spread,
+            "total": total,
+            "team_total": [],
+            "ht_moneyline": [],
+            "ht_spread": [],
+            "ht_total": [],
+            "btts": [],
+            "double_chance": [],
+            "draw_no_bet": [],
+        })
+
+    return result
+
+
 def get_league_special_markets(league_id):
     """提取 Pinnacle 特殊盘口(正确比分/净胜球/总进球区间/先进球)。
 

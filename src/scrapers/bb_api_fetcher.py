@@ -96,6 +96,8 @@ MARKET_TYPES = {
         "ml": 1005, "hc": 1000, "ou": 1007, "dnb": None, "dc": 1012, "btts": 1027,
         "oe": 1008, "htft": 1033,
         "corner_ml": 1009, "corner_ou": 1010, "corner_hc": 1011,
+        # 2026-08-30 罚牌盘(之前审计误判"BB有Pin无"漏接): 1061独赢/1060让盘/1063大小
+        "booking_ml": 1061, "booking_hc": 1060, "booking_ou": 1063,
         # V5.5: 特殊盘口 (Pinnacle special 字段有对应)
         # 2026-08-27 修正错配: 正确比分=1099(原1188错), 先进球=1089"1th Goal"(原1019错,
         # 1019实为"Last Team To Score"最后进球)
