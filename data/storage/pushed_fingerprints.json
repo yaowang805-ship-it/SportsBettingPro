@@ -3946,6 +3946,10 @@
     "ev": 7.98,
     "ts": 1788092091.89561
   },
+  "football|France Ligue 1|AS Monaco FC|Olympique Marseille|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 2.65,
+    "ts": 1788115548.014036
+  },
   "football|France Ligue 1|AS Monaco FC|Olympique Marseille|单双-双|oe|2026-08-31": {
     "ev": 1.19,
     "ts": 1787998834.872884
@@ -5311,6 +5315,10 @@
     "bb": 15.0,
     "ts": 1788106744.501312
   },
+  "football|Italy Serie C|AS Gubbio 1910|Reggiana|上半场主胜|ht|2026-08-31": {
+    "ev": 4.32,
+    "ts": 1788115548.01173
+  },
   "football|Italy Serie C|AS Gubbio 1910|Reggiana|上半场客胜|ht|2026-08-31": {
     "ev": 3.89,
     "ts": 1787981781.428716
@@ -5598,6 +5606,11 @@
   "football|Italy Serie C|lcio Foggia|US Salernitana|让球主胜|1x2|2026-08-30": {
     "ev": 4.43,
     "ts": 1788017847.7142231
+  },
+  "football|Italy Serie C|古比奥 1910|雷真亚拿|上半场主胜|ht|2026-08-31": {
+    "ev": 4.32,
+    "bb": 4.84,
+    "ts": 1788115547.5009432
   },
   "football|Italy Serie C|斯佩齐亚|坎波巴索|主胜|1x2|2026-08-30": {
     "ev": 11.19,
@@ -7353,6 +7366,14 @@
     "ev": 1.61,
     "ts": 1788054303.0487082
   },
+  "football|Portugal Primeira Liga|FC Famalicao|Gil Vicente FC|双重机会-和局/客|dc|2026-08-31": {
+    "ev": 6.84,
+    "ts": 1788115548.0124888
+  },
+  "football|Portugal Primeira Liga|FC Famalicao|Gil Vicente FC|和局|1x2|2026-08-31": {
+    "ev": 2.35,
+    "ts": 1788115548.012274
+  },
   "football|Portugal Primeira Liga|FC Famalicao|Gil Vicente FC|小球|1x2|2026-08-31": {
     "ev": 2.86,
     "ts": 1788114947.124623
@@ -7364,6 +7385,10 @@
   "football|Portugal Primeira Liga|FC Famalicao|Gil Vicente FC|让球主胜|1x2|2026-08-31": {
     "ev": 1.49,
     "ts": 1787981781.422299
+  },
+  "football|Portugal Primeira Liga|FC Famalicao|Gil Vicente FC|让球客胜|1x2|2026-08-31": {
+    "ev": 9.48,
+    "ts": 1788115548.012418
   },
   "football|Portugal Primeira Liga|SL Benfica|Estoril Praia|上半场正确比分0-1|correct_score_ht|2026-09-01": {
     "ev": 26.64,
@@ -8389,9 +8414,17 @@
     "ev": 3.83,
     "ts": 1787975485.213532
   },
+  "football|Spain LaLiga 2|Cordoba CF|Granada CF|双边进球-是|btts|2026-08-31": {
+    "ev": 1.89,
+    "ts": 1788115548.0120692
+  },
   "football|Spain LaLiga 2|Cordoba CF|Granada CF|和局|1x2|2026-08-31": {
     "ev": 2.81,
     "ts": 1788032179.861364
+  },
+  "football|Spain LaLiga 2|Cordoba CF|Granada CF|大球|1x2|2026-08-31": {
+    "ev": 1.68,
+    "ts": 1788115548.012203
   },
   "football|Spain LaLiga 2|D Mallorca|Ceuta|上半场主胜|ht|2026-08-31": {
     "ev": 1.03,
@@ -10590,9 +10623,49 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Italy Serie C|古比奥 1910|雷真亚拿|上半场主胜|ht|2026-08-31": {
-    "ev": 4.32,
-    "bb": 4.84,
-    "ts": 1788115547.5009432
+  "football|England Championship League|女王公园巡游者|卡迪夫城|上半场正确比分others|correct_score_ht|2026-09-03": {
+    "ev": 20.63,
+    "bb": 18.0,
+    "ts": 1788115889.6516962
+  },
+  "football|England Championship League|西布罗姆维奇|查尔顿|上半场正确比分others|correct_score_ht|2026-09-03": {
+    "ev": 20.08,
+    "bb": 18.4,
+    "ts": 1788115889.651746
+  },
+  "football|England Championship League|西布罗姆维奇|查尔顿|半/全场-主/客|htft|2026-09-03": {
+    "ev": 11.04,
+    "bb": 40.0,
+    "ts": 1788115889.651786
+  },
+  "football|England League One|巴恩斯利|布莱克浦|总进球区间7+|total_goals_range|2026-09-03": {
+    "ev": 43.25,
+    "bb": 25.0,
+    "ts": 1788115889.6518242
+  },
+  "football|England League One|巴恩斯利|布莱克浦|上半场正确比分others|correct_score_ht|2026-09-03": {
+    "ev": 6.4,
+    "bb": 13.3,
+    "ts": 1788115889.65186
+  },
+  "football|England League One|巴恩斯利|布莱克浦|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 4.06,
+    "bb": 18.7,
+    "ts": 1788115889.651893
+  },
+  "football|England Championship League|米尔沃尔|雷克斯汉姆|半/全场-客/主|htft|2026-09-03": {
+    "ev": 14.39,
+    "bb": 27.0,
+    "ts": 1788115889.65193
+  },
+  "football|England League One|卢顿|斯托克港|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 6.52,
+    "bb": 19.2,
+    "ts": 1788115889.6519659
+  },
+  "football|England League One|卢顿|斯托克港|上半场正确比分others|correct_score_ht|2026-09-03": {
+    "ev": 5.93,
+    "bb": 13.3,
+    "ts": 1788115889.651999
   }
 }
