@@ -408,6 +408,10 @@
     "ev": 1.7,
     "ts": 1788126903.951524
   },
+  "football|Argentina Liga Profesional|Independiente Rivadavia|Racing Club Avellaneda|主胜|1x2|2026-08-31": {
+    "ev": 1.13,
+    "ts": 1788134630.411964
+  },
   "football|Argentina Liga Profesional|Independiente Rivadavia|Racing Club Avellaneda|和局|1x2|2026-08-31": {
     "ev": 1.01,
     "ts": 1788120945.4399538
@@ -4917,11 +4921,6 @@
     "bb": 1.94,
     "ts": 1787944816.419533
   },
-  "football|Greece Super League|莱瓦贾科斯|帕纳辛纳科斯|半/全场-客/主|htft|2026-09-01": {
-    "ev": 6.92,
-    "bb": 47.0,
-    "ts": 1788127604.741635
-  },
   "football|Greece Super League|阿里斯|OFI 克里特|半/全场-主/客|htft|2026-08-31": {
     "ev": 5.53,
     "bb": 44.0,
@@ -8576,6 +8575,10 @@
     "ev": 4.77,
     "ts": 1788115890.2815092
   },
+  "football|Scotland Premiership|Falkirk FC|Glasgow Rangers|总进球区间7+|total_goals_range|2026-09-03": {
+    "ev": 4.8,
+    "ts": 1788134850.9558258
+  },
   "football|Scotland Premiership|Kilmarnock FC|ST Mirren FC|上半场正确比分0-2|correct_score_ht|2026-09-03": {
     "ev": 8.58,
     "ts": 1788115890.2817988
@@ -9795,6 +9798,11 @@
   "football|Sweden Superettan|Varbergs BoIS|IK Oddevold|让球客胜|1x2|2026-08-30": {
     "ev": 1.08,
     "ts": 1788066698.4053912
+  },
+  "football|Sweden Superettan|松兹瓦尔|诺尔比|半/全场-客/主|htft|2026-09-01": {
+    "ev": 13.06,
+    "bb": 24.0,
+    "ts": 1788134125.749774
   },
   "football|Sweden Superettan|桑德维根斯|奥斯达|上半场正确比分0-2|correct_score_ht|2026-08-30": {
     "ev": 9.49,
@@ -11373,9 +11381,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Sweden Superettan|松兹瓦尔|诺尔比|半/全场-客/主|htft|2026-09-01": {
-    "ev": 13.06,
-    "bb": 24.0,
-    "ts": 1788134125.749774
+  "football|Greece Super League|莱瓦贾科斯|帕纳辛纳科斯|半/全场-客/主|htft|2026-09-01": {
+    "ev": 6.92,
+    "bb": 47.0,
+    "ts": 1788135006.873417
   }
 }
