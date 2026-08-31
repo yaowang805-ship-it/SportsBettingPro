@@ -1386,6 +1386,31 @@ def _verify_bb_price_exists(home: str, away: str, designation: str,
     return True  # 比赛不在 BB 数据中，放行
 
 
+def _special_option_key(sub_market, designation):
+    """特殊盘口的 designation(中文) → _dir 的 key(选项名)。取不到返回 None。"""
+    if sub_market == "htft":
+        # "半/全场-主/和局" → "home/draw"
+        try:
+            from src.scrapers.pinnacle_opportunities import HTFT_LABELS, HTFT_KEYS
+        except Exception:
+            return None
+        for _lbl, _k in zip(HTFT_LABELS, HTFT_KEYS):
+            if designation == _lbl:
+                return _k
+        return None
+    if sub_market in ("correct_score_ht", "exact_goals_ht"):
+        # "上半场正确比分2-0" → "2-0"; "上半场精确进球0" → "0"
+        for _p in ("上半场正确比分", "上半场精确进球"):
+            if designation.startswith(_p):
+                return designation[len(_p):]
+        return designation
+    if sub_market == "btts":
+        return "yes_odds" if "是" in designation else ("no_odds" if "否" in designation else None)
+    if sub_market == "oe":
+        return "odd_odds" if "单" in designation else ("even_odds" if "双" in designation else None)
+    return None
+
+
 def _ml_dir_source(platform_sources, sub_market, designation):
     """返回该方向(主/和/客)真正的赔率来源平台(BB/FB)。
 
@@ -1402,7 +1427,13 @@ def _ml_dir_source(platform_sources, sub_market, designation):
     elif sub_market in ("1x2", "ml", ""):
         key = "ml_dir"
     else:
-        return "BB/FB"  # 特殊盘口(htft/ht_dc/ht_hc/ht_ou/ht_dnb/dc/dnb/btts/oe等)无逐方向来源, 标BB/FB不误导
+        # 2026-08-31 用户要求: 特殊盘口用 {sub_market}_dir 逐选项来源, 不再一律标"BB/FB"
+        _dir = platform_sources.get(sub_market + "_dir")
+        if isinstance(_dir, dict):
+            _opt = _special_option_key(sub_market, designation)
+            if _opt and _opt in _dir:
+                return _dir[_opt]
+        return "BB/FB"  # 取不到具体选项来源, 回退
     dirs = platform_sources.get(key)
     if not isinstance(dirs, list):
         return "BB/FB"
@@ -3147,6 +3178,7 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
         # 更新指纹(会在下面save)
         old = last_pushed.get(key)
         last_pushed[key] = {"bb": bb_now, "ev": ev_now, "fair": fair_now,
+                             "pin": o.get("pin_odds", 0),  # 记录Pin价, 供重推判断Pin是否同步涨
                              "ts": time.time(), "kickoff": kickoff}
 
         # 新key → 推送
@@ -3156,6 +3188,17 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
             continue
 
         # 旧key → 重复推送规则
+        # 2026-08-31 用户要求: 重推前先识别真机会 vs 假EV, 假的不推。
+        # 假EV两种: (1)临场<6h重推=BB漂移(临场CLV-1.49%假机会重灾区) (2)Pin也同步涨>2%=市场整体移动, 价差没真变大。
+        _is_live = (kickoff - now_epoch) < 6 * 3600
+        _old_pin = old.get("pin", 0)
+        _pin_now = o.get("pin_odds", 0)
+        _pin_sync_rose = _old_pin > 0 and _pin_now > _old_pin * 1.02
+        if _is_live or _pin_sync_rose:
+            skipped += 1
+            _audit_log("FAKE_EV_SKIP", key, o,
+                       f"临场={_is_live} pin同步涨={_pin_sync_rose}({_old_pin:.2f}→{_pin_now:.2f})")
+            continue
         # 用户要求 (2026-08-18): 必须同时满足 EV 提升 >2% 且 BB/FB 赔率提升 >0.1 才重推。
         # (旧"赔率上升>0.005 即重推"太灵敏, 导致同一盘口 5 分钟内刷屏 3 次)
         old_ev = old.get("ev", 0)

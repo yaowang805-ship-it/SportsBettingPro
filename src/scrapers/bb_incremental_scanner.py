@@ -876,6 +876,13 @@ def _run_push(label: str = ""):
     """运行推送。label通过环境变量传递(进程隔离,无并发问题)。"""
     import subprocess, os, shutil
     from datetime import datetime, timezone, timedelta
+    # 静默期(2026-08-31 用户要求): 22:30~06:40 不推钉钉, 但扫描+入库(clv_tracking)照常。
+    # 跳过 _run_push 即不调 bb_ev_push → 不写推送指纹, 静默期产生的机会次日仍可正常推送。
+    _now = datetime.now()
+    _min = _now.hour * 60 + _now.minute
+    if _min >= 22 * 60 + 30 or _min < 6 * 60 + 40:
+        print(f"  🌙 静默期(22:30-06:40), 跳过推送(扫描+入库照常, 不计指纹)")
+        return True
     # V4.5: 推送前清理 __pycache__，防止子进程加载旧 .pyc 导致去重失效
     for pyc in SRC_DIR.rglob("__pycache__"):
         try: shutil.rmtree(pyc)

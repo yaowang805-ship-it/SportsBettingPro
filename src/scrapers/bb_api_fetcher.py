@@ -1710,6 +1710,63 @@ def _merge_single_match(platform_matches):
                         if len(plat_sh_dc) >= len(base_sh_dc):
                             base_sh["dc"] = plat_sh_dc
 
+            # ── 特殊盘口跨平台合并 + 逐选项来源 (2026-08-31 用户要求: BB/FB 分开标注, 不再"BB/FB") ──
+            # 之前特殊盘口(htft/correct_score_ht等)不合并也不记来源 → 推送标"BB/FB"。分三类结构:
+            #   dict固定key(htft/btts/oe/corner_hc/corner_ou) / list[{name,odds}] / list[数字](corner_ml)
+            _SPEC_DICT = ("htft", "btts", "oe", "corner_hc", "corner_ou")
+            _SPEC_LISTDICT = ("winning_margin", "total_goals_range", "first_to_score",
+                              "correct_score_ht", "exact_goals_ht")
+            for _pn in ("odds_ft", "odds_ht"):
+                _bp = base.get(_pn, {})
+                _pp = m.get(_pn, {})
+                if not _pp:
+                    continue
+                for _sk in _SPEC_DICT:
+                    _bv = _bp.get(_sk); _pv = _pp.get(_sk)
+                    if not isinstance(_pv, dict):
+                        continue
+                    if not isinstance(_bv, dict):
+                        _bp[_sk] = _pv
+                        sources[_sk + "_dir"] = {_k: platform for _k in _pv}
+                        continue
+                    _d = sources.setdefault(_sk + "_dir", {_k: first_plat for _k in _bv})
+                    for _k, _v in _pv.items():
+                        if _k in _bv and _v > _bv[_k]:
+                            _bv[_k] = _v
+                            _d[_k] = platform
+                for _sk in _SPEC_LISTDICT:
+                    _bv = _bp.get(_sk); _pv = _pp.get(_sk)
+                    if not isinstance(_pv, list) or not _pv:
+                        continue
+                    if not isinstance(_bv, list) or not _bv:
+                        _bp[_sk] = _pv
+                        sources[_sk + "_dir"] = {_x.get("name"): platform for _x in _pv if isinstance(_x, dict)}
+                        continue
+                    _d = sources.setdefault(_sk + "_dir", {_x.get("name"): first_plat for _x in _bv if isinstance(_x, dict)})
+                    for _p in _pv:
+                        if not isinstance(_p, dict):
+                            continue
+                        _nm = _p.get("name")
+                        if not _nm:
+                            continue
+                        for _b in _bv:
+                            if isinstance(_b, dict) and _b.get("name") == _nm and _p.get("odds", 0) > _b.get("odds", 0):
+                                _b["odds"] = _p["odds"]
+                                _d[_nm] = platform
+                                break
+                # corner_ml 是 list[数字](3个独赢), 按索引取最高
+                _bv = _bp.get("corner_ml"); _pv = _pp.get("corner_ml")
+                if isinstance(_pv, list) and _pv:
+                    if not isinstance(_bv, list) or len(_bv) < len(_pv):
+                        _bp["corner_ml"] = _pv
+                        sources["corner_ml_dir"] = [platform] * len(_pv)
+                    else:
+                        _d = sources.setdefault("corner_ml_dir", [first_plat] * len(_bv))
+                        for _i in range(min(len(_bv), len(_pv))):
+                            if _pv[_i] > _bv[_i]:
+                                _bv[_i] = _pv[_i]
+                                _d[_i] = platform
+
     # ── FT/HC 备用让球盘（alternate_handicaps）跨平台合并 ──
     def _merge_alternates(base_alts, plat_alts, line_key, odds_keys):
         """合并备用盘口列表，同线取最高赔率。

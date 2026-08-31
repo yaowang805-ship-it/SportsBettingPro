@@ -59,9 +59,10 @@ for _lf in sorted(LOG_DIR.iterdir()):
 
 SCAN_START_MIN = 0                 # V5.10: 扫描全天(原06:40), 夜里也产出投注方案加快数据累计
 SCAN_END_MIN = 24 * 60             # V5.10: 扫描全天(原22:00)。推送时段已独立: _run_push 夜里加 --night(不推钉钉但照常投注)
-# 推送时段(仅钉钉通知): 06:40~22:00, 夜里 skip_dingtalk 但仍投注+记录(见 bb_incremental_scanner._run_push)
+# 推送静默期(2026-08-31 用户要求): 22:30~06:40 不推钉钉, 但扫描+入库照常、不计指纹。
+# 判断逻辑在 bb_incremental_scanner._run_push 内联实现(这两个常量已废弃, 仅留作语义说明)。
 PUSH_START_MIN = 6 * 60 + 40
-PUSH_END_MIN = 22 * 60
+PUSH_END_MIN = 22 * 60 + 30
 INCREMENTAL_INTERVAL = 120  # V5.5: 120秒(2分钟) — 准实时发现新机会 (BB自有账号高频轮询+Pin按需拉变动联赛)
 CHECK_INTERVAL = 30                # 调度循环检查间隔（秒）
 
