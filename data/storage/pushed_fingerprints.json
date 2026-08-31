@@ -408,6 +408,10 @@
     "ev": 1.7,
     "ts": 1788126903.951524
   },
+  "football|Argentina Liga Profesional|Independiente Rivadavia|Racing Club Avellaneda|上半场双重机会-主/客|ht_dc|2026-08-31": {
+    "ev": 1.16,
+    "ts": 1788135260.2386281
+  },
   "football|Argentina Liga Profesional|Independiente Rivadavia|Racing Club Avellaneda|主胜|1x2|2026-08-31": {
     "ev": 1.13,
     "ts": 1788134630.411964
@@ -423,6 +427,10 @@
   "football|Argentina Liga Profesional|Independiente Rivadavia|Racing Club Avellaneda|角球让球客胜|corner|2026-08-31": {
     "ev": 2.17,
     "ts": 1788074568.612694
+  },
+  "football|Argentina Liga Profesional|Independiente Rivadavia|Racing Club Avellaneda|让球主胜|1x2|2026-08-31": {
+    "ev": 1.5,
+    "ts": 1788135260.2385752
   },
   "football|Argentina Liga Profesional|Instituto AC Cordoba|San Lorenzo de Almagro|上半场双重机会-主/客|ht_dc|2026-09-01": {
     "ev": 3.3,
@@ -4921,6 +4929,11 @@
     "bb": 1.94,
     "ts": 1787944816.419533
   },
+  "football|Greece Super League|莱瓦贾科斯|帕纳辛纳科斯|半/全场-客/主|htft|2026-09-01": {
+    "ev": 6.92,
+    "bb": 47.0,
+    "ts": 1788135006.873417
+  },
   "football|Greece Super League|阿里斯|OFI 克里特|半/全场-主/客|htft|2026-08-31": {
     "ev": 5.53,
     "bb": 44.0,
@@ -6791,6 +6804,10 @@
     "ev": 1.27,
     "ts": 1788129251.755232
   },
+  "football|Mexico Liga MX|Monterrey|Atletico San Luis|上半场主胜|ht|2026-08-31": {
+    "ev": 2.79,
+    "ts": 1788135260.238715
+  },
   "football|Mexico Liga MX|Monterrey|Atletico San Luis|主胜|1x2|2026-08-31": {
     "ev": 2.37,
     "ts": 1788118911.515337
@@ -7714,9 +7731,21 @@
     "ev": 2.52,
     "ts": 1788119391.16242
   },
+  "football|Peru Liga 1|Atletico Grau|FBC Melgar|单双-双|oe|2026-09-01": {
+    "ev": 2.16,
+    "ts": 1788135007.379642
+  },
+  "football|Peru Liga 1|Atletico Grau|FBC Melgar|双边进球-是|btts|2026-09-01": {
+    "ev": 1.08,
+    "ts": 1788135007.37958
+  },
   "football|Peru Liga 1|Atletico Grau|FBC Melgar|和局|1x2|2026-09-01": {
     "ev": 4.56,
     "ts": 1787975485.218122
+  },
+  "football|Peru Liga 1|Atletico Grau|FBC Melgar|角球大球|corner|2026-09-01": {
+    "ev": 1.52,
+    "ts": 1788135007.3810089
   },
   "football|Peru Liga 1|CS Cienciano|Cusco FC|上半场客胜|ht|2026-08-31": {
     "ev": 12.11,
@@ -11381,9 +11410,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Greece Super League|莱瓦贾科斯|帕纳辛纳科斯|半/全场-客/主|htft|2026-09-01": {
-    "ev": 6.92,
-    "bb": 47.0,
-    "ts": 1788135006.873417
+  "football|Argentina Cup|萨斯菲尔德|博卡青年|上半场主胜|ht|2026-09-03": {
+    "ev": 8.47,
+    "bb": 5.3,
+    "ts": 1788135494.6172101
   }
 }
