@@ -1806,6 +1806,27 @@ def _merge_single_match(platform_matches):
         if merged_ou is not plat_alts:
             base_period["alternate_totals"] = merged_ou
 
+    # 单平台提供的特殊盘口补 dir (2026-08-31 修复): 只有 BB 或 FB 提供时 dir 为 None,
+    # 推送回退"BB/FB"。补成该平台(first_plat), 让推送标明确的 BB 或 FB。
+    _SPEC_DICT_KEYS = ("htft", "btts", "oe", "corner_hc", "corner_ou")
+    _SPEC_LISTDICT_KEYS = ("winning_margin", "total_goals_range", "first_to_score",
+                           "correct_score_ht", "exact_goals_ht")
+    for _pn in ("odds_ft", "odds_ht"):
+        _bp = base.get(_pn, {})
+        if not _bp:
+            continue
+        for _sk in _SPEC_DICT_KEYS:
+            _v = _bp.get(_sk)
+            if isinstance(_v, dict) and sources.get(_sk + "_dir") is None:
+                sources[_sk + "_dir"] = {_k: first_plat for _k in _v}
+        for _sk in _SPEC_LISTDICT_KEYS:
+            _v = _bp.get(_sk)
+            if isinstance(_v, list) and _v and sources.get(_sk + "_dir") is None:
+                sources[_sk + "_dir"] = {_x.get("name"): first_plat for _x in _v if isinstance(_x, dict)}
+        _cv = _bp.get("corner_ml")
+        if isinstance(_cv, list) and _cv and sources.get("corner_ml_dir") is None:
+            sources["corner_ml_dir"] = [first_plat] * len(_cv)
+
     base["platform"] = "ALL"
     base["platform_sources"] = sources
     return base
