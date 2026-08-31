@@ -268,6 +268,15 @@
     "ev": 2.81,
     "ts": 1788087063.608017
   },
+  "football|Argentina Cup|Velez Sarsfield|Boca Juniors|上半场主胜|ht|2026-09-03": {
+    "ev": 8.47,
+    "ts": 1788135495.299614
+  },
+  "football|Argentina Cup|萨斯菲尔德|博卡青年|上半场主胜|ht|2026-09-03": {
+    "ev": 8.47,
+    "bb": 5.3,
+    "ts": 1788135494.6172101
+  },
   "football|Argentina Liga Profesional|Argentinos Juniors|Aldosivi|上半场主胜|ht|2026-08-31": {
     "ev": 2.14,
     "ts": 1788116682.30547
@@ -3019,6 +3028,10 @@
   "football|Egypt Premier League|Al Masry Club|Pyramids FC|上半场双重机会-主/客|ht_dc|2026-09-01": {
     "ev": 2.52,
     "ts": 1787975485.219153
+  },
+  "football|Egypt Premier League|Al Masry Club|Pyramids FC|半/全场-客/主|htft|2026-09-01": {
+    "ev": 70.15,
+    "ts": 1788135617.196256
   },
   "football|Egypt Premier League|Al Masry Club|Pyramids FC|让球主胜|1x2|2026-09-01": {
     "ev": 3.78,
@@ -11410,9 +11423,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Argentina Cup|萨斯菲尔德|博卡青年|上半场主胜|ht|2026-09-03": {
-    "ev": 8.47,
-    "bb": 5.3,
-    "ts": 1788135494.6172101
+  "football|Brazil Copa do Brasil|桑托斯SP|帕尔梅拉斯|和局|1x2|2026-09-03": {
+    "ev": 7.21,
+    "bb": 3.35,
+    "ts": 1788136656.664216
   }
 }
