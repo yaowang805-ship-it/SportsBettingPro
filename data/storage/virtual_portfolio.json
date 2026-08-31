@@ -1,5 +1,5 @@
 {
-  "balance": 1982.0,
+  "balance": 1882.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2967,6 +2967,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788374700,
       "created_at": "2026-08-31T03:00:07.451144+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_阿尔达克尔贾利_弗拉察博特夫_半/全场-主/和局",
+      "sport": "football",
+      "league": "保加利亚甲级联赛",
+      "home_team": "阿尔达.克尔贾利",
+      "away_team": "弗拉察博特夫",
+      "home_cn": "阿尔达.克尔贾利",
+      "away_cn": "弗拉察博特夫",
+      "market": "1x2",
+      "market_type": "半/全场-主/和局",
+      "sub_market": "htft",
+      "line": "",
+      "odds": 17.6,
+      "stake": 100,
+      "model_prob": 0.0607,
+      "ev_pct": 6.86,
+      "pin_odds": 14.12,
+      "fair_price": 16.4696,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788200100,
+      "created_at": "2026-08-31T03:14:02.767418+00:00",
       "track_only": false
     }
   ],
@@ -8749,8 +8772,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-31",
-    "used": 187.0,
-    "bets": 1
+    "used": 287.0,
+    "bets": 2
   },
   "updated": null
 }
