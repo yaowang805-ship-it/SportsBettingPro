@@ -222,6 +222,10 @@
     "ev": 3.99,
     "ts": 1788107414.191809
   },
+  "football|Argentina Primera Division Women|Independiente (w)|Union de Santa Fe (w)|让球客胜|1x2|2026-08-31": {
+    "ev": 4.7,
+    "ts": 1788147299.9752588
+  },
   "football|Argentina Primera Nacional|All Boys|Chaco For Ever|主胜|1x2|2026-08-31": {
     "ev": 1.68,
     "ts": 1787975485.217869
@@ -513,6 +517,10 @@
   "football|Brazil Copa do Brasil|Atletico Mineiro MG|Cruzeiro EC MG|和局|1x2|2026-09-02": {
     "ev": 9.43,
     "ts": 1788054008.0779588
+  },
+  "football|Brazil Copa do Brasil|EC Vitoria BA|CR Vasco da Gama RJ|上半场双重机会-主/客|ht_dc|2026-09-03": {
+    "ev": 4.73,
+    "ts": 1788147167.3703911
   },
   "football|Brazil Copa do Brasil|EC Vitoria BA|CR Vasco da Gama RJ|半/全场-主/客|htft|2026-09-03": {
     "ev": 22.54,
@@ -1351,6 +1359,10 @@
     "ev": 71.73,
     "ts": 1788124572.878197
   },
+  "football|Egypt Premier League|Asyut Petroleum|National Bank of Egypt SC|半/全场-主/和局|htft|2026-08-31": {
+    "ev": 1.48,
+    "ts": 1788147964.583761
+  },
   "football|Egypt Premier League|Asyut Petroleum|National Bank of Egypt SC|半/全场-主/客|htft|2026-08-31": {
     "ev": 22.1,
     "ts": 1788142388.92928
@@ -1378,6 +1390,10 @@
   "football|Egypt Premier League|Ghazl El Mahallah|Enppi Club|上半场双重机会-主/客|ht_dc|2026-09-01": {
     "ev": 4.26,
     "ts": 1788022282.200408
+  },
+  "football|Egypt Premier League|Ghazl El Mahallah|Enppi Club|半/全场-主/和局|htft|2026-09-01": {
+    "ev": 8.19,
+    "ts": 1788147167.370067
   },
   "football|Egypt Premier League|Ghazl El Mahallah|Enppi Club|半/全场-客/主|htft|2026-09-01": {
     "ev": 83.11,
@@ -1427,15 +1443,15 @@
     "bb": 30.0,
     "ts": 1788124571.981418
   },
-  "football|Egypt Premier League|扎马雷克|佩特捷德|半/全场-主/客|htft|2026-09-01": {
-    "ev": 17.36,
-    "bb": 49.0,
-    "ts": 1788124838.578325
-  },
   "football|Egypt Premier League|瑟亚米卡|未来FC|半/全场-客/主|htft|2026-09-03": {
     "ev": 5.4,
     "bb": 19.6,
     "ts": 1788128647.719915
+  },
+  "football|Egypt Premier League|马哈拉|恩比|半/全场-主/和局|htft|2026-09-01": {
+    "ev": 8.19,
+    "bb": 12.6,
+    "ts": 1788147166.987923
   },
   "football|El Salvador Primera Division|FAS|Luis Angel Firpo|小球|1x2|2026-08-31": {
     "ev": 1.78,
@@ -4237,11 +4253,6 @@
     "bb": 6.95,
     "ts": 1788111469.972447
   },
-  "football|Spain LaLiga|巴塞罗那|巴列卡诺|上半场正确比分0-1|correct_score_ht|2026-09-01": {
-    "ev": 10.1,
-    "bb": 18.4,
-    "ts": 1788127241.130906
-  },
   "football|Spain LaLiga|拉科鲁尼亚|瓦伦西亚|半/全场-客/主|htft|2026-08-31": {
     "ev": 30.0,
     "bb": 36.0,
@@ -4897,9 +4908,19 @@
     "ev": 2.47,
     "ts": 1788052355.874857
   },
-  "football|Egypt Premier League|马哈拉|恩比|半/全场-主/和局|htft|2026-09-01": {
-    "ev": 8.19,
-    "bb": 12.6,
-    "ts": 1788147166.987923
+  "football|Spain LaLiga|巴塞罗那|巴列卡诺|上半场正确比分0-1|correct_score_ht|2026-09-01": {
+    "ev": 9.32,
+    "bb": 19.3,
+    "ts": 1788148305.379343
+  },
+  "football|Bulgaria First Professional League|阿尔达克尔贾利|弗拉察博特夫|半/全场-主/和局|htft|2026-09-01": {
+    "ev": 6.86,
+    "bb": 17.6,
+    "ts": 1788148305.379442
+  },
+  "football|Egypt Premier League|扎马雷克|佩特捷德|半/全场-主/客|htft|2026-09-01": {
+    "ev": 14.96,
+    "bb": 48.0,
+    "ts": 1788148305.379512
   }
 }

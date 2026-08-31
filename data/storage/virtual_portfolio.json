@@ -1,5 +1,5 @@
 {
-  "balance": 1882.0,
+  "balance": 1692.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2990,6 +2990,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788200100,
       "created_at": "2026-08-31T03:14:02.767418+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_巴塞罗那_巴列卡诺_上半场正确比分0-1",
+      "sport": "football",
+      "league": "西班牙甲级联赛",
+      "home_team": "巴塞罗那",
+      "away_team": "巴列卡诺",
+      "home_cn": "巴塞罗那",
+      "away_cn": "巴列卡诺",
+      "market": "1x2",
+      "market_type": "上半场正确比分0-1",
+      "sub_market": "correct_score_ht",
+      "line": "",
+      "odds": 19.3,
+      "stake": 190,
+      "model_prob": 0.0566,
+      "ev_pct": 9.32,
+      "pin_odds": 15.72,
+      "fair_price": 17.6538,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788204600,
+      "created_at": "2026-08-31T03:51:45.360209+00:00",
       "track_only": false
     }
   ],
@@ -8772,8 +8795,8 @@
   ],
   "daily_budget": {
     "date": "2026-08-31",
-    "used": 287.0,
-    "bets": 2
+    "used": 477.0,
+    "bets": 3
   },
   "updated": null
 }
