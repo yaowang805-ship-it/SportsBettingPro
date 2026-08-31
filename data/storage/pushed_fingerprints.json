@@ -1269,6 +1269,15 @@
     "ev": 9.43,
     "ts": 1788054008.0779588
   },
+  "football|Brazil Copa do Brasil|Santos FC SP|SE Palmeiras SP|和局|1x2|2026-09-03": {
+    "ev": 7.21,
+    "ts": 1788136657.4971142
+  },
+  "football|Brazil Copa do Brasil|桑托斯SP|帕尔梅拉斯|和局|1x2|2026-09-03": {
+    "ev": 7.21,
+    "bb": 3.35,
+    "ts": 1788136656.664216
+  },
   "football|Brazil Copa do Brasil|米内罗竞技|克鲁塞罗MG|和局|1x2|2026-09-02": {
     "ev": 6.48,
     "bb": 3.16,
@@ -2168,6 +2177,10 @@
     "ev": 2.5,
     "ts": 1788052423.05476
   },
+  "football|Colombia Primera A|Deportivo Cali|Bucaramanga|单双-双|oe|2026-08-31": {
+    "ev": 2.0,
+    "ts": 1788138324.369923
+  },
   "football|Colombia Primera A|Deportivo Cali|Bucaramanga|大球|1x2|2026-08-31": {
     "ev": 2.44,
     "ts": 1788120359.934669
@@ -2887,6 +2900,10 @@
     "ev": 3.91,
     "ts": 1788129877.789611
   },
+  "football|Ecuador LigaPro Primera A|CSD Macara|Manta FC|上半场客胜|ht|2026-09-03": {
+    "ev": 3.07,
+    "ts": 1788136657.4970381
+  },
   "football|Ecuador LigaPro Primera A|CSD Macara|Manta FC|半/全场-主/和局|htft|2026-09-03": {
     "ev": 3.52,
     "ts": 1788131169.902988
@@ -3032,6 +3049,10 @@
   "football|Egypt Premier League|Al Masry Club|Pyramids FC|半/全场-客/主|htft|2026-09-01": {
     "ev": 70.15,
     "ts": 1788135617.196256
+  },
+  "football|Egypt Premier League|Al Masry Club|Pyramids FC|单双-双|oe|2026-09-01": {
+    "ev": 1.75,
+    "ts": 1788138413.377493
   },
   "football|Egypt Premier League|Al Masry Club|Pyramids FC|让球主胜|1x2|2026-09-01": {
     "ev": 3.78,
@@ -4392,11 +4413,6 @@
   "football|Finland Veikkausliiga|Tampereen Ilves|HJK Helsinki|大球|1x2|2026-09-01": {
     "ev": 2.74,
     "ts": 1788020221.0059588
-  },
-  "football|Finland Veikkausliiga|埃尔维斯|赫尔辛基|上半场正确比分2-0|correct_score_ht|2026-09-01": {
-    "ev": 18.96,
-    "bb": 24.0,
-    "ts": 1788103440.905538
   },
   "football|Finland Veikkausliiga|玛丽港|查路|上半场正确比分0-2|correct_score_ht|2026-09-01": {
     "ev": 22.08,
@@ -7740,6 +7756,10 @@
     "ev": 2.65,
     "ts": 1788100799.1359959
   },
+  "football|Peru Liga 1|Atletico Grau|FBC Melgar|上半场主胜|ht|2026-09-01": {
+    "ev": 1.82,
+    "ts": 1788137997.5100958
+  },
   "football|Peru Liga 1|Atletico Grau|FBC Melgar|上半场客胜|ht|2026-09-01": {
     "ev": 2.52,
     "ts": 1788119391.16242
@@ -8616,6 +8636,10 @@
   "football|Scotland Premiership|FC Dundee|ST Johnstone FC|上半场正确比分2-0|correct_score_ht|2026-09-03": {
     "ev": 4.77,
     "ts": 1788115890.2815092
+  },
+  "football|Scotland Premiership|FC Dundee|ST Johnstone FC|总进球区间7+|total_goals_range|2026-09-03": {
+    "ev": 2.78,
+    "ts": 1788136657.502641
   },
   "football|Scotland Premiership|Falkirk FC|Glasgow Rangers|总进球区间7+|total_goals_range|2026-09-03": {
     "ev": 4.8,
@@ -11423,9 +11447,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Brazil Copa do Brasil|桑托斯SP|帕尔梅拉斯|和局|1x2|2026-09-03": {
-    "ev": 7.21,
-    "bb": 3.35,
-    "ts": 1788136656.664216
+  "football|Finland Veikkausliiga|埃尔维斯|赫尔辛基|上半场正确比分2-0|correct_score_ht|2026-09-01": {
+    "ev": 23.44,
+    "bb": 25.0,
+    "ts": 1788139315.592721
   }
 }
