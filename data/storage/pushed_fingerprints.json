@@ -514,6 +514,10 @@
     "ev": 9.43,
     "ts": 1788054008.0779588
   },
+  "football|Brazil Copa do Brasil|EC Vitoria BA|CR Vasco da Gama RJ|半/全场-主/客|htft|2026-09-03": {
+    "ev": 22.54,
+    "ts": 1788143383.578721
+  },
   "football|Brazil Copa do Brasil|Santos FC SP|SE Palmeiras SP|和局|1x2|2026-09-03": {
     "ev": 7.21,
     "ts": 1788136657.4971142
@@ -527,6 +531,11 @@
     "ev": 6.48,
     "bb": 3.16,
     "ts": 1788105487.485193
+  },
+  "football|Brazil Copa do Brasil|维多利亚|瓦斯科达伽马|半/全场-主/客|htft|2026-09-03": {
+    "ev": 22.54,
+    "bb": 37.0,
+    "ts": 1788143382.755776
   },
   "football|Brazil Serie A|CR Flamengo RJ|Botafogo FR RJ|上半场主胜|ht|2026-08-31": {
     "ev": 1.01,
@@ -1815,6 +1824,10 @@
   "football|England League One|Reading FC|Mansfield Town|上半场正确比分0-2|correct_score_ht|2026-09-03": {
     "ev": 5.69,
     "ts": 1788116494.2982311
+  },
+  "football|England League One|Wycombe Wanderers|Sheffield Wednesday|上半场正确比分2-0|correct_score_ht|2026-09-02": {
+    "ev": 1.01,
+    "ts": 1788143987.262105
   },
   "football|England League One|Wycombe Wanderers|Sheffield Wednesday|上半场正确比分others|correct_score_ht|2026-09-02": {
     "ev": 10.19,
@@ -3751,6 +3764,10 @@
     "ev": 2.42,
     "ts": 1788118780.0678358
   },
+  "football|Scotland Premiership|Celtic Glasgow|Aberdeen FC|上半场正确比分0-1|correct_score_ht|2026-09-03": {
+    "ev": 4.96,
+    "ts": 1788143987.2640262
+  },
   "football|Scotland Premiership|Celtic Glasgow|Aberdeen FC|双重机会-和局/客|dc|2026-09-03": {
     "ev": 2.75,
     "ts": 1788115890.2783701
@@ -4822,6 +4839,10 @@
     "ev": 1.5,
     "ts": 1788125830.9350379
   },
+  "tennis|ATP Challenger - Plovdiv 3 Open|Federico Iannaccone (ITA)|Peter Fajta (HUN)|让盘主胜|1x2|2026-08-31": {
+    "ev": 1.17,
+    "ts": 1788144241.943746
+  },
   "tennis|ATP Challenger - Porto Open|Niels Visker (NED)|Szymon Kielan (POL)|让盘主胜|1x2|2026-08-31": {
     "ev": 2.24,
     "ts": 1788128235.3157918
@@ -4838,9 +4859,9 @@
     "ev": 2.47,
     "ts": 1788052355.874857
   },
-  "football|Brazil Copa do Brasil|维多利亚|瓦斯科达伽马|半/全场-主/客|htft|2026-09-03": {
-    "ev": 22.54,
-    "bb": 37.0,
-    "ts": 1788143382.755776
+  "football|England Championship League|女王公园巡游者|卡迪夫城|上半场正确比分0-2|correct_score_ht|2026-09-03": {
+    "ev": 22.47,
+    "bb": 28.0,
+    "ts": 1788145207.473017
   }
 }

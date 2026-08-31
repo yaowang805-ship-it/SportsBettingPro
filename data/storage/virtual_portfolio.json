@@ -1,5 +1,5 @@
 {
-  "balance": 2169.0,
+  "balance": 1982.0,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2944,6 +2944,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788102000,
       "created_at": "2026-08-30T14:16:43.541235+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_女王公园巡游者_卡迪夫城_上半场正确比分0-2",
+      "sport": "football",
+      "league": "英格兰冠军联赛",
+      "home_team": "女王公园巡游者",
+      "away_team": "卡迪夫城",
+      "home_cn": "女王公园巡游者",
+      "away_cn": "卡迪夫城",
+      "market": "1x2",
+      "market_type": "上半场正确比分0-2",
+      "sub_market": "correct_score_ht",
+      "line": "",
+      "odds": 28.0,
+      "stake": 187,
+      "model_prob": 0.0437,
+      "ev_pct": 22.47,
+      "pin_odds": 18.78,
+      "fair_price": 22.8625,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788374700,
+      "created_at": "2026-08-31T03:00:07.451144+00:00",
       "track_only": false
     }
   ],
@@ -8725,9 +8748,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-08-30",
-    "used": 10305.53,
-    "bets": 75
+    "date": "2026-08-31",
+    "used": 187.0,
+    "bets": 1
   },
   "updated": null
 }
