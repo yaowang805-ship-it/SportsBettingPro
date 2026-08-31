@@ -4019,6 +4019,10 @@
     "ev": 9.05,
     "ts": 1788123548.638506
   },
+  "football|England National League|Solihull Moors FC|AFC Fylde|上半场正确比分0-2|correct_score_ht|2026-08-31": {
+    "ev": 1.08,
+    "ts": 1788140203.2837918
+  },
   "football|England National League|Solihull Moors FC|AFC Fylde|上半场正确比分others|correct_score_ht|2026-08-31": {
     "ev": 5.1,
     "ts": 1788098548.7173262
@@ -6842,13 +6846,29 @@
     "ev": 2.79,
     "ts": 1788135260.238715
   },
+  "football|Mexico Liga MX|Monterrey|Atletico San Luis|上半场正确比分2-0|correct_score_ht|2026-08-31": {
+    "ev": 14.88,
+    "ts": 1788140037.510766
+  },
   "football|Mexico Liga MX|Monterrey|Atletico San Luis|主胜|1x2|2026-08-31": {
     "ev": 2.37,
     "ts": 1788118911.515337
   },
+  "football|Mexico Liga MX|Monterrey|Atletico San Luis|双重机会-主/和局|dc|2026-08-31": {
+    "ev": 1.98,
+    "ts": 1788140037.5106728
+  },
   "football|Mexico Liga MX|Monterrey|Atletico San Luis|双重机会-和局/客|dc|2026-08-31": {
     "ev": 1.37,
     "ts": 1788062970.935283
+  },
+  "football|Mexico Liga MX|Monterrey|Atletico San Luis|大球|1x2|2026-08-31": {
+    "ev": 6.52,
+    "ts": 1788140037.510623
+  },
+  "football|Mexico Liga MX|Monterrey|Atletico San Luis|总进球区间7+|total_goals_range|2026-08-31": {
+    "ev": 10.42,
+    "ts": 1788140037.510723
   },
   "football|Mexico Liga MX|Monterrey|Atletico San Luis|让球主胜|1x2|2026-08-31": {
     "ev": 1.5,
@@ -6887,6 +6907,11 @@
     "ev": 3.76,
     "bb": 12.5,
     "ts": 1788117879.567839
+  },
+  "football|Mexico Liga MX|蒙特雷|圣路易斯|上半场主胜|ht|2026-08-31": {
+    "ev": 3.63,
+    "bb": 2.26,
+    "ts": 1788139485.7666922
   },
   "football|Mexico Liga MX|阿特拉斯|克雷塔罗|上半场客胜|ht|2026-08-30": {
     "ev": 3.23,
@@ -11452,9 +11477,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Mexico Liga MX|蒙特雷|圣路易斯|上半场主胜|ht|2026-08-31": {
-    "ev": 3.63,
-    "bb": 2.26,
-    "ts": 1788139485.7666922
+  "basketball|Mexico LNBP Basketball League|弗雷斯尼洛虾|罗伯斯普拉塔多斯|客胜|1x2|2026-08-31": {
+    "ev": 7.94,
+    "bb": 2.05,
+    "ts": 1788140733.949225
   }
 }
