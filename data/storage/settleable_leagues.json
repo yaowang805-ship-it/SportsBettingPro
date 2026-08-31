@@ -246,7 +246,7 @@
       "success_rate": 0.0
     },
     "罗马尼亚甲级联赛": {
-      "attempts": 10,
+      "attempts": 11,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -276,12 +276,12 @@
       "success_rate": 0.0
     },
     "巴西杯": {
-      "attempts": 8,
+      "attempts": 10,
       "successes": 0,
       "success_rate": 0.0
     },
     "玻利维亚甲级联赛": {
-      "attempts": 8,
+      "attempts": 9,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -411,7 +411,7 @@
       "success_rate": 0.0
     },
     "奥地利甲级联赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -471,7 +471,7 @@
       "success_rate": 0.0
     },
     "法国乙级联赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -711,7 +711,7 @@
       "success_rate": 0.0
     },
     "意大利乙级联赛": {
-      "attempts": 9,
+      "attempts": 11,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -841,7 +841,7 @@
       "success_rate": 0.0
     },
     "埃及超级联赛": {
-      "attempts": 20,
+      "attempts": 22,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -866,7 +866,7 @@
       "success_rate": 0.0
     },
     "西班牙乙级联赛": {
-      "attempts": 9,
+      "attempts": 10,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1046,7 +1046,7 @@
       "success_rate": 0.0
     },
     "欧足联欧洲协会联赛-资格赛附加赛": {
-      "attempts": 12,
+      "attempts": 13,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1069,9 +1069,19 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "冰岛乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "卡塔尔联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-08-30T12:29:42.127592+00:00",
+  "updated": "2026-08-31T02:04:11.414490+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
