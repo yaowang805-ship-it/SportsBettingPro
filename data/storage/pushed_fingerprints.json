@@ -4414,6 +4414,11 @@
     "ev": 2.74,
     "ts": 1788020221.0059588
   },
+  "football|Finland Veikkausliiga|埃尔维斯|赫尔辛基|上半场正确比分2-0|correct_score_ht|2026-09-01": {
+    "ev": 23.44,
+    "bb": 25.0,
+    "ts": 1788139315.592721
+  },
   "football|Finland Veikkausliiga|玛丽港|查路|上半场正确比分0-2|correct_score_ht|2026-09-01": {
     "ev": 22.08,
     "bb": 22.0,
@@ -11447,9 +11452,9 @@
     "ev": 2.97,
     "ts": 1788077277.901684
   },
-  "football|Finland Veikkausliiga|埃尔维斯|赫尔辛基|上半场正确比分2-0|correct_score_ht|2026-09-01": {
-    "ev": 23.44,
-    "bb": 25.0,
-    "ts": 1788139315.592721
+  "football|Mexico Liga MX|蒙特雷|圣路易斯|上半场主胜|ht|2026-08-31": {
+    "ev": 3.63,
+    "bb": 2.26,
+    "ts": 1788139485.7666922
   }
 }
