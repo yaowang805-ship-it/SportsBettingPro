@@ -3228,9 +3228,11 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
 
         # 更新指纹(会在下面save)
         old = last_pushed.get(key)
+        _prev_repush = old.get("repush_count", 0) if old else 0
         last_pushed[key] = {"bb": bb_now, "ev": ev_now, "fair": fair_now,
                              "pin": o.get("pin_odds", 0),  # 记录Pin价, 供重推判断Pin是否同步涨
-                             "ts": time.time(), "kickoff": kickoff}
+                             "ts": time.time(), "kickoff": kickoff,
+                             "repush_count": _prev_repush}
 
         # 新key → 推送
         if old is None:
@@ -3239,6 +3241,11 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
             continue
 
         # 旧key → 重复推送规则
+        # 2026-09-01 用户要求: 重推最多一次, 超过不再重推。
+        if _prev_repush >= 1:
+            skipped += 1
+            _audit_log("REPUSH_LIMIT", key, o, f"已重推{_prev_repush}次, 达上限1次")
+            continue
         # 2026-08-31 用户要求: 重推前先识别真机会 vs 假EV, 假的不推。
         # 假EV两种: (1)临场<6h重推=BB漂移(临场CLV-1.49%假机会重灾区) (2)Pin也同步涨>2%=市场整体移动, 价差没真变大。
         _is_live = (kickoff - now_epoch) < 6 * 3600

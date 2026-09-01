@@ -46,17 +46,32 @@ def _key(sport, home_pin, away_pin, designation, sub_market, match_epoch):
     return f"{sport}|{home_pin}|{away_pin}|{designation}|{sub_market}|{match_epoch}"
 
 
+def _normalize_team(name: str) -> str:
+    """归一化队名(去变音符号/小写/去 fc/cf 后缀), 供模糊匹配。"""
+    import re as _re
+    import unicodedata
+    if not isinstance(name, str):
+        return ""
+    name = "".join(c for c in unicodedata.normalize("NFKD", name) if not unicodedata.combining(c))
+    name = name.strip().lower()
+    name = _re.sub(r"\bfc\b", "", name)
+    name = _re.sub(r"\bcf\b", "", name)
+    return name.strip()
+
+
 def _match_score(score_map: dict, r: dict):
     """跨运动 id 冲突时, 用 getList type=6 的 score_map 按队名匹配比分(支持主客反转)。
 
     score_map key = (home, away) 队名(CMN中文+EN英文), value = [hs, as]。
     候选: BB中文名(home/away) + Pin英文名(home_pin/away_pin)。
+    匹配: 精确 → 归一化子串(双向, 长名≥4 防短名误匹配)。
     返回 (hs, as) 或 None。
     """
     cands = [
         ((r.get("home") or "").strip(), (r.get("away") or "").strip()),
         ((r.get("home_pin") or "").strip(), (r.get("away_pin") or "").strip()),
     ]
+    # 1. 精确匹配
     for ch, ca in cands:
         if not ch or not ca:
             continue
@@ -66,6 +81,21 @@ def _match_score(score_map: dict, r: dict):
         sc = score_map.get((ca, ch))
         if sc is not None:
             return sc[1], sc[0]  # 主客反转
+    # 2. 归一化子串匹配(去变音/大小写/fc后缀后双向子串, 长名≥4 防短名误匹配)
+    norm_cands = [(_normalize_team(ch), _normalize_team(ca)) for ch, ca in cands if ch and ca]
+    norm_map = {(_normalize_team(kh), _normalize_team(ka)): sc for (kh, ka), sc in score_map.items()}
+    for ch, ca in norm_cands:
+        if not ch or not ca:
+            continue
+        for (kh, ka), sc in norm_map.items():
+            if not kh or not ka:
+                continue
+            if (len(ch) >= 4 and len(ca) >= 4
+                    and (ch in kh or kh in ch) and (ca in ka or ka in ca)):
+                return sc[0], sc[1]
+            if (len(ch) >= 4 and len(ca) >= 4
+                    and (ch in ka or ka in ch) and (ca in kh or kh in ca)):
+                return sc[1], sc[0]  # 主客反转
     return None
 
 
