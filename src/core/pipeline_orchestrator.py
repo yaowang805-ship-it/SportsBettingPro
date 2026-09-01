@@ -1404,8 +1404,13 @@ class PipelineOrchestrator:
         self._check_code_changes()
 
     def _active_tasks_settle(self) -> bool:
-        """检查是否有结算任务正在运行（比 str(set) 更可靠）。"""
-        return any("settle" in t for t in self._active_tasks)
+        """检查是否有完整结算任务正在运行（排除高频BB结算自身, 避免自锁）。
+
+        do_settle_bb 的锁名是 "settle_bb_highfreq_bg", 也含 "settle" 子串 —— 若不加排除,
+        do_settle_bb 一进来 _active_tasks_settle() 就因匹配到自己的锁返回 True 而 return,
+        导致 settle_via_bb 和观察库 paper_settle 从未执行(2026-09-01 根因)。
+        """
+        return any("settle" in t and "settle_bb_highfreq" not in t for t in self._active_tasks)
 
     # ------------------------------------------------------------------
     # V4.4: 代码热更新 — 检测源文件变更后自动重启

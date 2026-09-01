@@ -736,6 +736,50 @@ def _load_threshold_matrix():
         return None
 
 
+# ── 盘口释放清单(2026-09-01) ──
+# 由 scripts/compute_market_release.py 每晚从 tracked_bets(实盘ROI)+clv_results(观察CLV) 重算。
+# 用真实 ROI 替代 CLV 作为投注准入 —— CLV 是假正(ht/ht_dc CLV正但实盘ROI负, 1x2/dc CLV负但ROI正)。
+_release_list = None
+_release_list_ts = 0.0
+
+
+def _load_release_list():
+    global _release_list, _release_list_ts
+    mf = DATA_DIR / "market_release.json"
+    if not mf.exists():
+        return None
+    try:
+        m = mf.stat().st_mtime
+        if _release_list is None or m != _release_list_ts:
+            _release_list = json.loads(mf.read_text())
+            _release_list_ts = m
+        return _release_list
+    except Exception:
+        return None
+
+
+def _is_market_released(sport: str, sub_market: str, league: str = "") -> bool:
+    """该运动×盘口(或运动×联赛×盘口)是否被释放(允许投注)。未释放 → 只观察不投注。
+
+    优先级: 联赛细化(league_released/league_blocked) > 主开关(market_released)+观察库兜底(observe_released)。
+    释放清单文件不存在时返回 True(回退旧 CLV 门槛行为, 不停注) —— 脚本+crontab 保证正常时清单始终存在。
+    """
+    rl = _load_release_list()
+    if not rl:
+        return True
+    # 1. 联赛细化: 该联赛三维格子 n≥30 时用联赛自己的 ROI 覆盖主开关
+    if league:
+        if [sport, league, sub_market] in rl.get("league_released", []):
+            return True
+        if [sport, league, sub_market] in rl.get("league_blocked", []):
+            return False
+    # 2. 观察库三维释放(运动×联赛×盘口)
+    if [sport, league, sub_market] in rl.get("observe_released", []):
+        return True
+    # 3. 主开关(运动×盘口)
+    return [sport, sub_market] in rl.get("market_released", [])
+
+
 def _matrix_min_ev(sub_market: str, sport: str, league: str = "", lead_minutes=None):
     """返回该盘口的矩阵门槛; 矩阵不存在返回 None(回退 tier 门槛)。
 
@@ -1604,6 +1648,11 @@ def _collect_opportunities(match, market_key):
                           "total_goals_range_ht", "first_to_score_ht"):
             continue
 
+        # 盘口释放清单(2026-09-01): 未释放的运动×盘口/联赛只观察不投注(用真实 ROI 替代 CLV 封杀)
+        _released = _is_market_released(match.get("sport", ""), sub_market, match.get("league", ""))
+        if not _released:
+            continue
+
         # 自有标定喂 EV 层(2026-08-29): 薄锚盘口(ht_dc等)用真实结算胜率覆盖 Pin 假价重算 EV,
         # 让假机会在准入门槛前就被拦住(不只靠 stake 层 -1.0 拦截)。
         from config.weight_matrix_v5 import get_self_cal_win_rate
@@ -1650,6 +1699,8 @@ def _collect_opportunities(match, market_key):
         _lead_min = (pin_epoch - time.time()) / 60 if pin_epoch else None
         _mtx_ev = _matrix_min_ev(sub_market, match.get("sport", ""),
                                   league=match.get("league", ""), lead_minutes=_lead_min)
+        if _released and _mtx_ev is not None:
+            _mtx_ev = min(_mtx_ev, 8.0)  # 释放盘口不被 CLV 20% 封杀(ROI 已判过赚钱, CLV 负是假负)
         if not _dir_override and _mtx_ev is not None and ev < _mtx_ev:
             continue
 

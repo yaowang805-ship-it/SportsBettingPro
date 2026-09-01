@@ -184,6 +184,7 @@ def settle_paper(dry_run: bool = False) -> dict:
             "away_pin": r.get("away_pin", ""),
             "designation": r.get("designation", ""),
             "sub_market": sub_market,
+            "league": r.get("league", ""),
             "bb_odds": bb_odds,
             "fair_price": float(r.get("fair_price") or 0),
             "ev_pct": float(r.get("ev_pct") or 0),
