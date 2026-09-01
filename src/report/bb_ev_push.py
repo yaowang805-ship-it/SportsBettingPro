@@ -3282,6 +3282,7 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
 
         if bb_rose and ev_rose:
             re_pushed += 1
+            last_pushed[key]["repush_count"] = _prev_repush + 1
             reason = f"赔率↑{bb_now - old_bb:+.2f}&EV↑{premium_delta:+.1f}%"
             o["_repush"] = True
             o["_repush_reason"] = reason
@@ -3290,6 +3291,7 @@ def _filter_pushed(qualified: list, time_window: str = "") -> list:
                        f"bb+{bb_now - old_bb:.2f}/EV+{premium_delta:.1f}%")
         elif bb_rose_pct and ev_rose_pct:
             re_pushed += 1
+            last_pushed[key]["repush_count"] = _prev_repush + 1
             _bb_pct = (bb_now / old_bb - 1) * 100
             _ev_pct = (ev_now / old_ev - 1) * 100
             o["_repush"] = True

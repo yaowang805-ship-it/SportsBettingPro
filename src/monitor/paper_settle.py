@@ -164,11 +164,12 @@ def settle_paper(dry_run: bool = False) -> dict:
     attempts = load_attempts()
 
     # getList type=6 比分(sportId 隔离) — 跨运动 id 冲突(足球id撞乒乓球)时的兜底
+    # id_map: BB match id → 比分, 按 sportId 隔离, 不会跨运动撞车(优先精确匹配)
     from src.monitor.bb_score_settle import fetch_bb_scores
     try:
-        _score_map, _ = fetch_bb_scores()
+        _score_map, _id_map = fetch_bb_scores()
     except Exception:
-        _score_map = {}
+        _score_map, _id_map = {}, {}
 
     now = time.time()
     new_settled = 0
@@ -201,12 +202,14 @@ def settle_paper(dry_run: bool = False) -> dict:
             attempts[k] = {"last_attempt": now, "attempts": _att.get("attempts", 0) + 1}
             continue
         if detail.get("sport") and sport and detail["sport"] != sport:
-            # 跨运动 id 冲突(足球 id 撞乒乓球) → getList type=6(sportId 隔离)队名匹配兜底
-            _sc = _match_score(_score_map, r)
+            # 跨运动 id 冲突(足球 id 撞乒乓球) → getList type=6(sportId 隔离) id 精确匹配优先
+            _sc = _id_map.get(str(bid))
+            if _sc is None:
+                _sc = _match_score(_score_map, r)  # 队名匹配兜底
             if _sc is None:
                 continue  # 兜底也拿不到, 跳过
             match_result = {"home_score": _sc[0], "away_score": _sc[1]}
-            # 注意: score_map 无半场比分, ht 系列盘口会 void(保守不误判)
+            # 注意: getList type=6 无半场比分, ht 系列盘口会 void(保守不误判)
         else:
             match_result = {
                 "home_score": detail["home_score"],
