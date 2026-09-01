@@ -46,6 +46,29 @@ def _key(sport, home_pin, away_pin, designation, sub_market, match_epoch):
     return f"{sport}|{home_pin}|{away_pin}|{designation}|{sub_market}|{match_epoch}"
 
 
+def _match_score(score_map: dict, r: dict):
+    """跨运动 id 冲突时, 用 getList type=6 的 score_map 按队名匹配比分(支持主客反转)。
+
+    score_map key = (home, away) 队名(CMN中文+EN英文), value = [hs, as]。
+    候选: BB中文名(home/away) + Pin英文名(home_pin/away_pin)。
+    返回 (hs, as) 或 None。
+    """
+    cands = [
+        ((r.get("home") or "").strip(), (r.get("away") or "").strip()),
+        ((r.get("home_pin") or "").strip(), (r.get("away_pin") or "").strip()),
+    ]
+    for ch, ca in cands:
+        if not ch or not ca:
+            continue
+        sc = score_map.get((ch, ca))
+        if sc is not None:
+            return sc[0], sc[1]
+        sc = score_map.get((ca, ch))
+        if sc is not None:
+            return sc[1], sc[0]  # 主客反转
+    return None
+
+
 def load_paper_bets() -> dict:
     """加载已有纸面结算结果(键 = key)。"""
     if PAPER_FILE.exists():
@@ -110,6 +133,13 @@ def settle_paper(dry_run: bool = False) -> dict:
     settled_map = load_paper_bets()
     attempts = load_attempts()
 
+    # getList type=6 比分(sportId 隔离) — 跨运动 id 冲突(足球id撞乒乓球)时的兜底
+    from src.monitor.bb_score_settle import fetch_bb_scores
+    try:
+        _score_map, _ = fetch_bb_scores()
+    except Exception:
+        _score_map = {}
+
     now = time.time()
     new_settled = 0
     settled_this_run = []
@@ -141,18 +171,23 @@ def settle_paper(dry_run: bool = False) -> dict:
             attempts[k] = {"last_attempt": now, "attempts": _att.get("attempts", 0) + 1}
             continue
         if detail.get("sport") and sport and detail["sport"] != sport:
-            continue  # 跨运动 id 冲突, 不能拿别的运动比分结算
-
-        match_result = {
-            "home_score": detail["home_score"],
-            "away_score": detail["away_score"],
-        }
-        if detail.get("ht_home_score") is not None:
-            match_result["ht_home_score"] = detail["ht_home_score"]
-            match_result["ht_away_score"] = detail["ht_away_score"]
-        if detail.get("games_home") is not None:
-            match_result["games_home"] = detail["games_home"]
-            match_result["games_away"] = detail["games_away"]
+            # 跨运动 id 冲突(足球 id 撞乒乓球) → getList type=6(sportId 隔离)队名匹配兜底
+            _sc = _match_score(_score_map, r)
+            if _sc is None:
+                continue  # 兜底也拿不到, 跳过
+            match_result = {"home_score": _sc[0], "away_score": _sc[1]}
+            # 注意: score_map 无半场比分, ht 系列盘口会 void(保守不误判)
+        else:
+            match_result = {
+                "home_score": detail["home_score"],
+                "away_score": detail["away_score"],
+            }
+            if detail.get("ht_home_score") is not None:
+                match_result["ht_home_score"] = detail["ht_home_score"]
+                match_result["ht_away_score"] = detail["ht_away_score"]
+            if detail.get("games_home") is not None:
+                match_result["games_home"] = detail["games_home"]
+                match_result["games_away"] = detail["games_away"]
 
         bet = {
             "sport": sport,
