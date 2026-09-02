@@ -407,13 +407,28 @@ class RiskManager:
     def get_risk_multiplier(self) -> float:
         """返回风控乘数(0=停手, 0~1=折扣), 不重复 Kelly。
 
-        2026-08-30: 用户要求"只要有机会就推送, 不考虑预算", 取消连败/回撤停手 —
-        7连败曾触发 streak_mult=0 导致全天0推送。改为只保留冷却停手(真正的外部风险信号),
-        回撤/连败不再停手、也不降仓(返回1.0)。
+        2026-09-02 恢复回撤降仓(职业团队对标: 最大回撤10-20%健康, 逼近50%是坏策略信号):
+        只降仓不彻底停手(保留"不停注铁律") — 回撤>40% 才降到 10%。
+        冷却(外部风险信号)仍停手。
         """
         if self._in_cool_off():
             return 0.0
-        return 1.0
+        dd = self.drawdown_pct()
+        if dd <= 0.10:
+            dd_mult = 1.0     # ≤10% 健康区, 不降
+        elif dd <= 0.20:
+            dd_mult = 0.7     # 10-20% 减30%
+        elif dd <= 0.30:
+            dd_mult = 0.4     # 20-30% 减60%
+        elif dd <= 0.40:
+            dd_mult = 0.2     # 30-40% 减80%
+        else:
+            dd_mult = 0.1     # >40% 减90%(坏策略信号, 但不为0)
+        # 连败降仓(不停手): 5+连败降到 30%, 而非 0
+        streak_mult = self._get_streak_multiplier()
+        if streak_mult <= 0:
+            streak_mult = 0.3
+        return min(dd_mult, streak_mult)
 
     def get_max_stake(self, edge_or_prob: float, odds: float, current_exposure_pct: float = 0.0,
                       input_is_prob: bool = False, sport: str = '', home_team: str = '',

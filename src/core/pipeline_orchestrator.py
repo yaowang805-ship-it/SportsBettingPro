@@ -1368,11 +1368,13 @@ class PipelineOrchestrator:
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
-            # 2026-08-30 数据驱动(观察库 clv_results 改版后≥8-28): 早盘24-72h 中位CLV+2.96%/正率60.5% 强正edge,
-            # 临场<6h 中位CLV-1.49%/正率41.3% 负edge假机会(近3天临场亏-1582), 近场6-24h +0.93% 弱正。
-            # 故早盘升频 20→10min 多捞干净edge, 临场降频 5→10min 少碰假机会省Pin配额, near保持5min。
-            # 净Pin请求 -24% (早盘+73联赛/20min, 临场-248联赛/20min), 风控下降同时早盘发现能力翻倍。
-            for tw, interval, label in [("far", 600, "早盘24-72h"), ("near", 300, "中程6-24h"), ("urgent", 600, "临场<6h")]:
+            # 2026-09-02 结合提取速度重定频次(职业团队对标: 捕获准确CLV要临场前重新拉价,
+            # 早盘是真edge来源)。关键约束: 一轮增量扫描拉Pin耗时 near≈8-9min(注释实测), far联赛多更久,
+            # 所以间隔<耗时会被互斥锁跳过(5min其实是虚设)。原则: 早盘(真edge)保持高频, 临场(假edge)降频省Pin。
+            #   far 24-72h: 10min(真edge +2.96%, 保持, 已接近一轮耗时下限)
+            #   near 6-24h: 9min(对齐一轮8-9min耗时, 消除5min虚设导致的无效触发)
+            #   urgent <6h: 20min(假edge -1.49%, 大幅降频省Pin给早盘)
+            for tw, interval, label in [("far", 600, "早盘24-72h"), ("near", 540, "中程6-24h"), ("urgent", 1200, "临场<6h")]:
                 last_key = f"_last_inc_{tw}"
                 last_val = getattr(self, last_key, None)
                 if last_val is None:
