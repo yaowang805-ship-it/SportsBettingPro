@@ -3,7 +3,7 @@
 数据量: football-data.co.uk 25联赛×13季, 306,072 笔 Pinnacle 收盘赔率
   V4.0: 111K (10联赛) → V4.2: 273K (22联赛) → V4.3: 306K (25联赛)
 Kelly 回测: 真正滚动窗口 (2012-2014→2025), 全部存活
-  (注: 实际 KELLY_FRACTION=0.33 来自 config.constants, 抗 Pin 薄锚盘口偏差回撤; 此 0.75 是历史回测值)
+  (注: 实际 KELLY_FRACTION=0.50 来自 config.constants; 此 0.75 是历史回测值)
 
 核心理念: 每个赔率区间 × 联赛 × 盘口的权重 = 该区间的 Kelly 最优解
   KELLY_FRACTION-Kelly仓位% = max(0, actual_wr × BB_odds - 1) / (BB_odds - 1) × KELLY_FRACTION
@@ -164,7 +164,7 @@ CLV_BOOST = 1.05
 #     0.50 Kelly: ✅ 存活
 #     0.75 Kelly: ✅ 存活, 收益/风险最优平衡 (回测值)
 #     1.00 Kelly: ✅ 存活, 但回撤 100%
-#   实际用 KELLY_FRACTION=0.33 (config.constants): 抗 Pin 薄锚盘口偏差回撤, 比 0.75 更保守。
+#   实际用 KELLY_FRACTION=0.50 (config.constants), 比 0.75 更保守。
 #   风险控制: 连输3天减半 + 5天停投 → 实际回撤远低于理论值
 # =====================================================================
 def _odds_weight(odds: float) -> float:

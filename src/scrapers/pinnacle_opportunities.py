@@ -340,6 +340,10 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             "league_cn": bb_m.get("league_cn") or bb_league,
             "home_pin": best_pin.get("home", ""),
             "away_pin": best_pin.get("away", ""),
+            # V5.12: 角球/罚牌 entry 漏存 pin_match_id/pin_league_id(与特殊盘口同源bug),
+            # 补上对齐主对比循环, 让 CLV 采集器按 league_id 直拉 + 归档回捞按 matchup_id 定位。
+            "pin_league_id": str(best_pin.get("league_id", "") or ""),
+            "pin_match_id": str(best_pin.get("matchup_id", "") or ""),
             "match_score": round(best_score, 3),
             "sport": "football",
             "flags": [],
@@ -640,6 +644,10 @@ def fetch_booking_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             "league_cn": bb_m.get("league_cn") or bb_league,
             "home_pin": best_pin.get("home", ""),
             "away_pin": best_pin.get("away", ""),
+            # V5.12: 角球/罚牌 entry 漏存 pin_match_id/pin_league_id(与特殊盘口同源bug),
+            # 补上对齐主对比循环, 让 CLV 采集器按 league_id 直拉 + 归档回捞按 matchup_id 定位。
+            "pin_league_id": str(best_pin.get("league_id", "") or ""),
+            "pin_match_id": str(best_pin.get("matchup_id", "") or ""),
             "match_score": round(best_score, 3),
             "sport": "football",
             "flags": [],
@@ -916,7 +924,8 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             try:
                 spec = get_league_special_markets(pid)
                 if spec:
-                    special_by_league[bb_league] = spec
+                    # 同时记下 Pinnacle 联赛 id, 供 CLV 采集器按 ID 直拉特殊盘口收盘价
+                    special_by_league[bb_league] = {"spec": spec, "league_id": pid}
                     break
             except Exception:
                 continue
@@ -938,15 +947,20 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
     entries = []
     for m in bb_special_matches:
         bb_league = m.get("league", "?")
-        spec_map = special_by_league.get(bb_league)
-        if not spec_map:
+        _spec_info = special_by_league.get(bb_league)
+        if not _spec_info:
             continue
+        spec_map = _spec_info.get("spec") or {}
+        _spec_league_id = _spec_info.get("league_id", "")
         bb_home = (m.get("home") or "").strip()
         bb_away = (m.get("away") or "").strip()
         # 找 Pinnacle 特殊盘口 — 按队名匹配父比赛(与角球一致), 不再用"第一个联赛"错配
         bb_home_en = TEAM_NAME_MAP.get(bb_home, bb_home).lower()
         bb_away_en = TEAM_NAME_MAP.get(bb_away, bb_away).lower()
         pin_specs = None
+        best_pid = ""
+        best_pin_home = ""
+        best_pin_away = ""
         best_score = 0.0
         for pid, info in spec_map.items():
             pin_home = (info.get("home") or "").strip().lower()
@@ -974,6 +988,9 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             if _sc > best_score:
                 best_score = _sc
                 pin_specs = info.get("markets")
+                best_pid = str(pid or "")  # parent_matchup_id = 归档库的 matchup_id
+                best_pin_home = (info.get("home") or "").strip()
+                best_pin_away = (info.get("away") or "").strip()
         if not pin_specs or best_score < 0.70:
             continue
 
@@ -1001,8 +1018,13 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
             "home_bb_cn": m.get("home_cn") or bb_home,
             "away_bb_cn": m.get("away_cn") or bb_away,
             "league_cn": m.get("league_cn") or bb_league,
-            "home_pin": bb_home,
-            "away_pin": bb_away,
+            "home_pin": best_pin_home or bb_home,
+            "away_pin": best_pin_away or bb_away,
+            # V5.12: 特殊盘口 entry 漏存 pin_match_id/pin_league_id → CLV采集器按ID直拉
+            # 特殊盘口收盘价时拿不到联赛id, 归档回捞也拿不到matchup_id, 特殊盘口CLV
+            # 采集率近乎0(实测最近48h correct_score_ht 70条全丢)。补上对齐主对比循环。
+            "pin_league_id": str(_spec_league_id or ""),
+            "pin_match_id": best_pid,
             "match_score": round(best_score, 3),
             "sport": "football",
             "flags": [],
