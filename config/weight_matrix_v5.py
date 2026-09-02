@@ -82,53 +82,69 @@ AH_DISCOUNT = 0.92
 _CLV_DATA_CACHE = {"mtime": None, "data": None}
 
 def _load_clv_data() -> dict:
-    """从 CLV 快照数据中加载各联赛的 CLV 表现。
-    返回 {league: avg_clv_pct}，用于动态调整 Kelly。
+    """从 clv_results.csv (source=validate) 加载各联赛的 CLV 中位。
+
+    返回 {league(中文): avg_clv_pct}，用于动态调整 Kelly。
     CLV > 0: BB 赔率向 Pinnacle 收敛 → 早盘优势可靠 → 加成
     CLV < 0: BB 赔率逆向移动 → 保守
-    (mtime 缓存: 最新快照变了才重读)
+    (mtime 缓存: 文件变了才重读)
+
+    2026-09-02 数据源迁移: 旧 odds_snapshots 稀疏(采集窗口漏96%) → 改用 clv_results.csv
+    (clv_collector 每5min写, validate 6855条)。n≥30 才采信(避免小样本噪声)。
     """
-    import json as _json
+    import csv
+    import statistics
     from pathlib import Path
     from collections import defaultdict
-    snap_dir = Path(__file__).resolve().parent.parent / "data" / "storage" / "odds_snapshots"
-    try:
-        files = sorted(snap_dir.glob("*.json"), key=lambda f: f.stat().st_mtime, reverse=True)
-    except Exception:
-        files = []
-    if not files:
+    from src.scrapers.bb_api_fetcher import _load_league_en_to_cn
+
+    clv_csv = Path(__file__).resolve().parent.parent / "data" / "storage" / "clv_results.csv"
+    if not clv_csv.exists():
         return {}
-    _newest_mtime = files[0].stat().st_mtime
-    if _CLV_DATA_CACHE["mtime"] == _newest_mtime and _CLV_DATA_CACHE["data"] is not None:
+    _mtime = clv_csv.stat().st_mtime
+    if _CLV_DATA_CACHE["mtime"] == _mtime and _CLV_DATA_CACHE["data"] is not None:
         return _CLV_DATA_CACHE["data"]
+
+    en_to_cn = _load_league_en_to_cn()
     clv_by_league = defaultdict(list)
     try:
-        for f in files[:5]:  # 最近5个快照
-            data = _json.loads(f.read_text())
-            if isinstance(data, dict):
-                for key, snap in data.items():
-                    if isinstance(snap, dict):
-                        clv = snap.get("clv_pct", snap.get("true_clv", None))
-                        lg = snap.get("league", "")
-                        if clv is not None and lg:
-                            clv_by_league[lg].append(clv)
+        with open(clv_csv, encoding="utf-8-sig") as f:
+            for r in csv.DictReader(f):
+                if (r.get("source") or "").strip() != "validate":
+                    continue
+                try:
+                    clv = float(r.get("true_clv_pct"))
+                except (TypeError, ValueError):
+                    continue
+                en_lg = (r.get("league") or "").strip()
+                if not en_lg:
+                    continue
+                lg = en_to_cn.get(en_lg, en_lg)  # 英文→中文(匹配 get_kelly_stake_pct 的中文 league 参数)
+                clv_by_league[lg].append(clv)
     except Exception:
         pass
-    # 每联赛取平均值
+    # 每联赛取中位, n≥30 才采信(小样本中位噪声大)
     result = {}
     for lg, vals in clv_by_league.items():
-        if len(vals) >= 3:
-            result[lg] = sum(vals) / len(vals)
-    _CLV_DATA_CACHE["mtime"] = _newest_mtime
+        if len(vals) >= 30:
+            result[lg] = statistics.median(vals)
+    _CLV_DATA_CACHE["mtime"] = _mtime
     _CLV_DATA_CACHE["data"] = result
     return result
 
 
 def _clv_multiplier(league: str) -> float:
-    """V5.2: CLV 动态调整暂时禁用 (CLV数据太稀疏, 采集窗口漏了96%, 不可靠)。
+    """CLV 动态调整 — 正CLV联赛加成, 负CLV联赛降权。
 
-    原逻辑: 正CLV联赛加成, 负CLV联赛降权。等CLV数据充足再启用。现在恒返回 1.0。
+    2026-09-02 重新启用: 数据源已迁移到 clv_results.csv(87联赛 n≥30 数据充足),
+    替代旧 odds_snapshots(采集窗口漏96%导致稀疏)。
     """
+    clv_data = _load_clv_data()
+    avg_clv = clv_data.get(league, 0)
+    if avg_clv > 3.0:   return 1.08   # 强正CLV: +8%
+    elif avg_clv > 1.0: return 1.04   # 正CLV: +4%
+    elif avg_clv < -3.0: return 0.88  # 强负CLV: -12%
+    elif avg_clv < -1.0: return 0.94  # 负CLV: -6%
     return 1.0
 
 
@@ -1573,35 +1589,70 @@ MIN_N_MINIMUM = 10    # 最低门槛 (CI ~52%)  — 边缘区间
 _SETTLEMENT_FEEDBACK_CACHE = {"mtime": None, "data": None}
 
 def _load_settlement_feedback() -> dict:
-    """从 settlement_log.csv 加载各联赛的实盘 ROI。
-    返回 {league: {"n": int, "roi": float, "avg_odds": float}}
-    (mtime 缓存: 文件变了才重读, 让实盘 ROI 反馈在长驻进程里生效)
+    """从 tracked_bets.json(实盘 settled) + paper_bets.json(观察库纸面) 合并算各联赛 ROI。
+    返回 {league(中文): {"n": int, "roi": float, "avg_odds": float}}
+    (mtime 缓存: 文件变了才重读, 让 ROI 反馈在长驻进程里生效)
+
+    2026-09-02 数据源迁移: 旧 settlement_log.csv 停更(17行, 8-29后无数据) →
+    改用每天更新的 tracked_bets(实盘) + paper_bets(观察库)。观察库纸面投注覆盖所有
+    EV≥5% 机会, 补实盘"只在 BB>Pin 时投"的选择偏差。
     """
-    import csv
+    import json as _json
     from pathlib import Path
     from collections import defaultdict
+    from src.scrapers.bb_api_fetcher import _load_league_en_to_cn
 
-    sp = Path(__file__).resolve().parent.parent / "data" / "storage" / "settlement_log.csv"
-    if not sp.exists():
+    root = Path(__file__).resolve().parent.parent / "data" / "storage"
+    tracked = root / "tracked_bets.json"
+    paper = root / "paper_bets.json"
+    if not tracked.exists() and not paper.exists():
         return {}
-    _mtime = sp.stat().st_mtime
+    _mtime = max((tracked.stat().st_mtime if tracked.exists() else 0),
+                 (paper.stat().st_mtime if paper.exists() else 0))
     if _SETTLEMENT_FEEDBACK_CACHE["mtime"] == _mtime and _SETTLEMENT_FEEDBACK_CACHE["data"] is not None:
         return _SETTLEMENT_FEEDBACK_CACHE["data"]
 
+    en_to_cn = _load_league_en_to_cn()
     by_lg = defaultdict(lambda: {"stake": 0.0, "profit": 0.0, "odds_sum": 0.0, "n": 0})
-    with open(sp) as f:
-        for r in csv.DictReader(f):
-            lg = r.get("league", "")
-            if not lg:
-                continue
-            stake = float(r.get("stake", 0))
-            profit = float(r.get("profit", 0))
-            odds = float(r.get("odds", 0))
-            by_lg[lg]["stake"] += stake
-            by_lg[lg]["profit"] += profit
-            if odds > 0:
-                by_lg[lg]["odds_sum"] += odds
-                by_lg[lg]["n"] += 1
+
+    def _add(lg, stake, profit, odds):
+        if not lg:
+            return
+        by_lg[lg]["stake"] += stake
+        by_lg[lg]["profit"] += profit
+        if odds > 0:
+            by_lg[lg]["odds_sum"] += odds
+            by_lg[lg]["n"] += 1
+
+    # 实盘 tracked_bets.json: status=settled, league 混中英文(bb_ev_push 存 league_cn 有时没转中文)
+    if tracked.exists():
+        try:
+            raw = _json.loads(tracked.read_text())
+            bets = raw.get("bets", []) if isinstance(raw, dict) else raw
+            for b in bets:
+                if b.get("status") != "settled":
+                    continue
+                lg = (b.get("league") or "").strip()
+                _add(en_to_cn.get(lg, lg),
+                     float(b.get("stake") or 0),
+                     float(b.get("profit") or 0),
+                     float(b.get("bb_odds") or 0))
+        except Exception:
+            pass
+
+    # 观察库 paper_bets.json: league 英文 → 中文
+    if paper.exists():
+        try:
+            raw = _json.loads(paper.read_text())
+            bets = raw.get("bets", []) if isinstance(raw, dict) else raw
+            for b in bets:
+                en_lg = (b.get("league") or "").strip()
+                _add(en_to_cn.get(en_lg, en_lg),
+                     float(b.get("stake") or 0),
+                     float(b.get("profit") or 0),
+                     float(b.get("bb_odds") or 0))
+        except Exception:
+            pass
 
     result = {}
     for lg, d in by_lg.items():
@@ -1617,12 +1668,27 @@ def _load_settlement_feedback() -> dict:
 
 
 def _settlement_multiplier(league: str) -> float:
-    """V5.2: 实盘结算反馈暂时禁用 (用户要求: 样本太少, 不接入矩阵)。
+    """根据实盘+观察库结算 ROI 调整仓位。收紧过拟合(2026-08-14 原始逻辑):
+    - 样本门槛 30(15 笔噪声太大, 单笔就摆动 ±7% ROI)
+    - 调整幅度 ±5/-15%(避免追涨杀跌)
+    - ROI > +15% → +5%; +5%~+15% → 基准; -10%~+5% → -8%; < -10% → -15%
 
-    原逻辑: 根据实盘结算 ROI 调整仓位 (n<30 返回1.0)。
-    但实盘样本太少(单笔摆动±7%), 等样本足够再启用。现在恒返回 1.0。
+    2026-09-02 重新启用(数据源已迁移到 tracked_bets+paper_bets)。
     """
-    return 1.0
+    fb = _load_settlement_feedback()
+    data = fb.get(league)
+    if data is None or data["n"] < 30:
+        return 1.0
+
+    roi = data["roi"]
+    if roi > 0.15:
+        return 1.05
+    elif roi > 0.05:
+        return 1.00
+    elif roi > -0.10:
+        return 0.92
+    else:
+        return 0.85
 
 
 def _pin_market_roi(data_dict) -> float:
