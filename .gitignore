@@ -77,6 +77,7 @@ data/storage/
 !data/storage/banned_leagues.json
 !data/storage/league_tiers.json
 !data/storage/team_aliases.json
+!data/storage/league_en_to_cn.json
 
 # Exception: 核心业务数据 — 不可再生，必须 git 保护
 !data/storage/settlement_log.csv
