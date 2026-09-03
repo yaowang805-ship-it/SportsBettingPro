@@ -261,6 +261,37 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
             _significant.add(_lg)
 
     print(f"  Pin侧: {league_count}个联赛, {len(new_pin)}场, 变动{len(pin_changed_leagues)}个, steam显著{len(_significant)}个")
+
+    # 2026-09-03: 把本轮实时拉的 Pin matchups 合并进 pin_matches_cache.json, 供本轮比价用。
+    # 之前 compare_bb_vs_pinnacle(use_pin_cache=True) 读的是上一轮预取缓存(陈旧 10-12min),
+    # 比价用"旧 Pin vs 新 BB"导致 EV 失真。这里复用 _detect_pin_changes 已拉的实时 Pin
+    # (不新增 API 请求), 按 matchup_id 覆盖旧缓存条目, 其他联赛保留旧缓存兜底。
+    # 纯本地原子写(tmp+replace), 与后台预取时序串行, 无风控/无延迟/无任务冲突。
+    try:
+        _fresh = {}
+        for (_lg, _pid), matchups in _fetched.items():
+            if not isinstance(matchups, list):
+                continue
+            for m in matchups:
+                if isinstance(m, dict) and m.get("matchup_id") is not None:
+                    _fresh[str(m["matchup_id"])] = m
+        if _fresh:
+            _cache_path = DATA_DIR / "pin_matches_cache.json"
+            _merged = []
+            if _cache_path.exists():
+                try:
+                    _old = json.loads(_cache_path.read_text())
+                    if isinstance(_old, list):
+                        _merged = [m for m in _old
+                                   if isinstance(m, dict) and str(m.get("matchup_id")) not in _fresh]
+                except Exception:
+                    pass
+            _merged.extend(_fresh.values())
+            _tmp = _cache_path.with_suffix(".tmp")
+            _tmp.write_text(json.dumps(_merged, ensure_ascii=False))
+            _tmp.replace(_cache_path)
+    except Exception:
+        pass
     return pin_changed_leagues, _significant
 
 
