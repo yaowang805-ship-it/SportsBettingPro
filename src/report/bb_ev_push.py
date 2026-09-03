@@ -417,13 +417,9 @@ PILOT_SUB_MARKET_MULT = {
 
 # 2026-08-30 方向级门槛覆盖(sub_market, designation) — 基于实盘已结算 ROI 标定。
 # 真 edge 方向降门槛多推, 假 edge 方向升门槛少推; 命中时覆盖盘口级门槛(替代 v3/mtx)。
-DIRECTION_MIN_EV = {
-    ("1x2", "客胜"): 5.0,              # 67注 ROI +42.1% 真edge, 从8%降
-    ("1x2", "和局"): 6.0,              # 观察库CLV+3.0%/正率76%(n=200), 从8%降
-    ("ht", "上半场主胜"): 2.0,          # 79注 ROI +20.1% 真edge, 从3%降
-    ("dc", "双重机会-和局/客"): 8.0,     # 39注 ROI +30.4% 真edge, 从20%解封(被整盘负edge误封)
-    ("ht", "上半场客胜"): 8.0,          # 169注 ROI -21.6% 假edge, 从3%升
-}
+# 方向级门槛已迁移到数据驱动(2026-09-03): 由 scripts/compute_market_release.py 每晚按
+# 方向真实 ROI 重算, 写入 market_release.json 的 direction_min_ev, 消费见 _direction_min_ev()。
+# (旧硬编码 DIRECTION_MIN_EV 的 ROI 数字已过时 — 如"1x2客胜+42.1%"现在实盘是 -9.4%。)
 
 
 def _load_budget_tracker():
@@ -811,6 +807,21 @@ def _is_direction_blocked(sport: str, sub_market: str, designation: str) -> bool
         return False
     dr = _release_direction(designation, sub_market)
     return [sport, sub_market, dr] in rl.get("direction_blocked", [])
+
+
+def _direction_min_ev(sport: str, sub_market: str, designation: str):
+    """方向级 EV 门槛(数据驱动, 由 compute_market_release 每晚按方向 ROI 重算)。
+
+    替代旧硬编码 DIRECTION_MIN_EV。清单无此字段/无该方向 → None(回退基础门槛 get_min_ev)。
+    """
+    rl = _load_release_list()
+    if not rl:
+        return None
+    dr = _release_direction(designation, sub_market)
+    for entry in rl.get("direction_min_ev", []):
+        if len(entry) >= 4 and entry[0] == sport and entry[1] == sub_market and entry[2] == dr:
+            return float(entry[3])
+    return None
 
 
 def _matrix_min_ev(sub_market: str, sport: str, league: str = "", lead_minutes=None):
@@ -1703,8 +1714,9 @@ def _collect_opportunities(match, market_key):
         # V4 的 get_min_ev 基于 Pinnacle 107K场数据
         from config.weight_matrix_v5 import get_min_ev
         v3_min_ev = get_min_ev(match.get("sport", ""), league_cn, sub_market, bb_odds)
-        # 2026-08-30 方向级门槛覆盖: 命中就用方向级值替代盘口级门槛, 并跳过数据驱动矩阵
-        _dir_ev = DIRECTION_MIN_EV.get((sub_market, opp.get("designation", "")))
+        # 2026-09-03 方向级门槛覆盖(数据驱动, 替代硬编码 DIRECTION_MIN_EV):
+        # 命中就用方向级值替代盘口级门槛, 并跳过数据驱动矩阵
+        _dir_ev = _direction_min_ev(match.get("sport", ""), sub_market, opp.get("designation", ""))
         if _dir_ev is not None:
             v3_min_ev = _dir_ev
             _dir_override = True

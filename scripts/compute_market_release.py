@@ -109,6 +109,28 @@ def _direction(desig, sub_market):
     return "其他"
 
 
+def _dir_threshold(roi, n):
+    """方向 ROI → EV 门槛(数据驱动, 替代 bb_ev_push 硬编码 DIRECTION_MIN_EV)。
+
+    下限 3.0 = 职业底线(历史教训: <3% 会放行大量临场漂移假机会)。
+    ROI 越正门槛越低(充分信任), 样本越少越保守。
+    """
+    if roi >= 30.0:
+        thr = 3.0
+    elif roi >= 15.0:
+        thr = 4.0
+    elif roi >= 5.0:
+        thr = 5.0
+    else:
+        thr = 6.0
+    # 样本置信度折扣: n<15 太不可信不设方向门槛(回退基础), n<30 加保守折扣
+    if n < 15:
+        return None
+    if n < 30:
+        thr += 1.0
+    return round(thr, 1)
+
+
 def _agg_bets(bets, key_fn):
     agg = defaultdict(lambda: {"n": 0, "stake": 0.0, "profit": 0.0})
     for b in bets:
@@ -259,6 +281,19 @@ def main():
             if d["roi"] > REAL_ROI_MIN:
                 direction_released.append([sport, sm, dr])
 
+    # 方向级 EV 门槛(数据驱动, 替代 bb_ev_push 硬编码 DIRECTION_MIN_EV):
+    # 只对"释放的方向"(整盘释放盘口的正方向 + 方向级释放)设门槛, ROI 越正门槛越低(下限3%职业底线)。
+    direction_min_ev = []
+    released_dir_set = {tuple(x) for x in direction_released}
+    for (sport, sm, dr), d in sorted(dir_roi.items()):
+        if d["roi"] <= 0:
+            continue
+        if (sport, sm) not in released_set and (sport, sm, dr) not in released_dir_set:
+            continue  # 既没整盘释放也没方向释放 → 不设门槛(不投)
+        thr = _dir_threshold(d["roi"], d["n"])
+        if thr is not None:
+            direction_min_ev.append([sport, sm, dr, thr])
+
     league_released = []
     league_blocked = []
     for (sport, lg, sm), d in sorted(league_roi.items()):
@@ -289,6 +324,7 @@ def main():
         "observe_released": observe_released,
         "direction_released": direction_released,
         "direction_blocked": direction_blocked,
+        "direction_min_ev": direction_min_ev,
     }
     tmp = OUT.with_suffix(".tmp")
     tmp.write_text(json.dumps(out, ensure_ascii=False, indent=2))
