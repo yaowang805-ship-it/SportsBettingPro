@@ -758,10 +758,11 @@ def _load_release_list():
         return None
 
 
-def _is_market_released(sport: str, sub_market: str, league: str = "") -> bool:
+def _is_market_released(sport: str, sub_market: str, league: str = "", designation: str = "") -> bool:
     """该运动×盘口(或运动×联赛×盘口)是否被释放(允许投注)。未释放 → 只观察不投注。
 
-    优先级: 联赛细化(league_released/league_blocked) > 主开关(market_released)+观察库兜底(observe_released)。
+    优先级: 联赛细化(league_released/league_blocked) > 观察库兜底(observe_released)
+          > 方向级释放(direction_released) > 主开关(market_released)。
     释放清单文件不存在时返回 True(回退旧 CLV 门槛行为, 不停注) —— 脚本+crontab 保证正常时清单始终存在。
     """
     rl = _load_release_list()
@@ -776,8 +777,40 @@ def _is_market_released(sport: str, sub_market: str, league: str = "") -> bool:
     # 2. 观察库三维释放(运动×联赛×盘口)
     if [sport, league, sub_market] in rl.get("observe_released", []):
         return True
-    # 3. 主开关(运动×盘口)
+    # 3. 方向级释放(2026-09-03): 整盘没过主开关, 但该方向实盘 ROI 强正(如 1x2 和局+37.4%)
+    dr = _release_direction(designation, sub_market)
+    if [sport, sub_market, dr] in rl.get("direction_released", []):
+        return True
+    # 4. 主开关(运动×盘口)
     return [sport, sub_market] in rl.get("market_released", [])
+
+
+def _release_direction(designation: str, sub_market: str) -> str:
+    """从 designation 提取方向(主/平/客/大/小), 与 compute_market_release._direction 同口径。"""
+    d = (designation or "")
+    if sub_market == "htft":
+        return "其他"
+    dl = d.lower()
+    if "大" in d or "over" in dl:
+        return "大"
+    if "小" in d or "under" in dl:
+        return "小"
+    if ("和" in d or "平" in d or "draw" in dl) and "客" not in d and "主" not in d:
+        return "平"
+    if "客" in d or "away" in dl:
+        return "客"
+    if "主" in d or "home" in dl:
+        return "主"
+    return "其他"
+
+
+def _is_direction_blocked(sport: str, sub_market: str, designation: str) -> bool:
+    """该方向是否被方向级封杀(释放盘口里负 ROI 方向, 2026-09-03)。清单无此字段→False。"""
+    rl = _load_release_list()
+    if not rl:
+        return False
+    dr = _release_direction(designation, sub_market)
+    return [sport, sub_market, dr] in rl.get("direction_blocked", [])
 
 
 def _matrix_min_ev(sub_market: str, sport: str, league: str = "", lead_minutes=None):
@@ -1649,8 +1682,14 @@ def _collect_opportunities(match, market_key):
             continue
 
         # 盘口释放清单(2026-09-01): 未释放的运动×盘口/联赛只观察不投注(用真实 ROI 替代 CLV 封杀)
-        _released = _is_market_released(match.get("sport", ""), sub_market, match.get("league", ""))
+        _released = _is_market_released(match.get("sport", ""), sub_market,
+                                        match.get("league", ""), opp.get("designation", ""))
         if not _released:
+            continue
+
+        # 方向级封杀(2026-09-03): 释放盘口里负 ROI 方向不投(1x2主/客、dc主)。
+        # 盘口级 ROI 掩盖方向级 edge(1x2整体+0.5%, 但和局+37.4% vs 主/客负)。
+        if _is_direction_blocked(match.get("sport", ""), sub_market, opp.get("designation", "")):
             continue
 
         # 自有标定喂 EV 层(2026-08-29): 薄锚盘口(ht_dc等)用真实结算胜率覆盖 Pin 假价重算 EV,

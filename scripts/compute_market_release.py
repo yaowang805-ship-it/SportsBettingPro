@@ -53,6 +53,16 @@ N_OBS_ROI_MIN = 5      # 观察库 ROI 采信最小样本量
 POS_RATE_MIN = 55.0    # 观察库正 CLV 率下限(%)
 MEDIAN_MIN = 0.0       # 观察库 CLV 中位下限(%)
 
+# 2026-09-03 双库交叉验证护栏 + 方向级封杀:
+# - 主开关只靠"实盘 ROI>4%"会被高赔率盘假 ROI 骗(htft 实盘+5.2%但胜率3%, 观察库-86.6%真相是巨亏)。
+#   加观察库 ROI 交叉验证: 观察库同盘口 ROI < OBS_CROSS_ROI_MIN 视为假正, 不释放。
+# - 盘口级 ROI 掩盖方向级 edge(1x2 整体+0.5%, 但和局+37.4%强正 vs 主/客-7.5%/-9.4%负)。
+#   加方向级封杀: 已释放盘口里, 实盘方向 ROI < DIR_ROI_MIN 且 n≥DIR_N_MIN 的方向封杀。
+OBS_CROSS_N_MIN = 10        # 观察库交叉验证采信最小样本
+OBS_CROSS_ROI_MIN = -20.0   # 观察库 ROI < -20% 视为假正(双库强分歧)
+DIR_N_MIN = 15              # 方向级 ROI 采信最小样本量
+DIR_ROI_MIN = -5.0          # 方向级封杀阈值(ROI < -5%)
+
 # 改版时间切分(复用 compute_ev_thresholds.py 口径): dc/btts 改版前由 1X2/team_total 推导,
 # 公平价被系统性污染(负 CLV 是推导偏差, 不是真负 edge)。观察库 CLV 只统计改版后样本。
 REVISION_CUTOFF_UTC = datetime.fromisoformat("2026-08-28T00:00:00+00:00").timestamp()
@@ -73,6 +83,30 @@ def _ts(v):
         return datetime.fromisoformat(str(v).replace("Z", "+00:00")).timestamp()
     except (ValueError, TypeError):
         return None
+
+
+def _direction(desig, sub_market):
+    """从 designation 提取方向(主/平/客/大/小/其他), 供方向级释放/封杀。
+
+    与 bb_ev_push._release_direction 保持同一归一化口径。
+    1x2: 主胜/平/客胜 → 主/平/客; dc: 双重机会-主/和→主, 双重机会-和局/客→客。
+    htft 半全场方向复杂, 由整盘护栏(观察库交叉验证)封杀, 这里归一化不拆分。
+    """
+    d = (desig or "")
+    if sub_market == "htft":
+        return "其他"
+    dl = d.lower()
+    if "大" in d or "over" in dl:
+        return "大"
+    if "小" in d or "under" in dl:
+        return "小"
+    if ("和" in d or "平" in d or "draw" in dl) and "客" not in d and "主" not in d:
+        return "平"
+    if "客" in d or "away" in dl:
+        return "客"
+    if "主" in d or "home" in dl:
+        return "主"
+    return "其他"
 
 
 def _agg_bets(bets, key_fn):
@@ -112,6 +146,24 @@ def load_real_roi():
         return (b.get("sport") or "?", lg, b.get("sub_market") or "?")
 
     return _agg_bets(bets, _market_key), _agg_bets(bets, _league_key)
+
+
+def load_real_direction_roi():
+    """实盘方向级 ROI: tracked_bets.json settled → {(sport,sub_market,direction): agg}。"""
+    if not TRACKED.exists():
+        return {}
+    try:
+        raw = json.loads(TRACKED.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+    bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
+            if b.get("status") == "settled"]
+
+    def _dir_key(b):
+        return (b.get("sport") or "?", b.get("sub_market") or "?",
+                _direction(b.get("designation"), b.get("sub_market")))
+
+    return _agg_bets(bets, _dir_key)
 
 
 def load_observe_clv():
@@ -158,15 +210,54 @@ def load_observe_roi():
         b.get("sub_market") or "?"))
 
 
+def load_observe_roi_market():
+    """观察库盘口级 ROI(聚合联赛, 供主开关双库交叉验证): paper_bets.json → {(sport,sub_market): agg}。"""
+    if not PAPER.exists():
+        return {}
+    try:
+        raw = json.loads(PAPER.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+    bets = raw.get("bets", []) if isinstance(raw, dict) else raw
+    return _agg_bets(bets, lambda b: (b.get("sport") or "?", b.get("sub_market") or "?"))
+
+
 def main():
     market_roi, league_roi = load_real_roi()
+    dir_roi = load_real_direction_roi()
+    obs_mkt_roi = load_observe_roi_market()
     obs_clv = load_observe_clv()
     obs_roi = load_observe_roi()
 
     market_released = []
     for (sport, sm), d in sorted(market_roi.items()):
         if d["n"] >= N_REAL_MIN and d["roi"] > REAL_ROI_MIN:
+            # 双库交叉验证护栏(2026-09-03): 观察库同盘口 ROI 强负 → 实盘 ROI 是假正
+            # (高赔率盘少数命中, 如 htft 实盘+5.2%但胜率3%/观察库-86.6%), 不释放。
+            o = obs_mkt_roi.get((sport, sm))
+            if o and o["n"] >= OBS_CROSS_N_MIN and o["roi"] < OBS_CROSS_ROI_MIN:
+                continue
             market_released.append([sport, sm])
+
+    # 方向级细分(2026-09-03): 盘口级 ROI 掩盖方向级 edge。
+    # - direction_released: 整盘没过主开关, 但某方向实盘 ROI 强正(如 1x2 和局+37.4% vs 整盘+0.5%)。
+    # - direction_blocked: 整盘已释放, 但某方向实盘 ROI 强负(如 dc 主-24.7%)。
+    released_set = {tuple(m) for m in market_released}
+    direction_released = []
+    direction_blocked = []
+    for (sport, sm, dr), d in sorted(dir_roi.items()):
+        if d["n"] < DIR_N_MIN:
+            continue
+        if (sport, sm) in released_set:
+            if d["roi"] < DIR_ROI_MIN:
+                direction_blocked.append([sport, sm, dr])
+        else:
+            # 观察库交叉验证: 整盘观察库 ROI 强负的方向也不释放(htft 观察库-86.6% 假正)
+            o = obs_mkt_roi.get((sport, sm))
+            if o and o["n"] >= OBS_CROSS_N_MIN and o["roi"] < OBS_CROSS_ROI_MIN:
+                continue
+            if d["roi"] > REAL_ROI_MIN:
+                direction_released.append([sport, sm, dr])
 
     league_released = []
     league_blocked = []
@@ -196,6 +287,8 @@ def main():
         "league_released": league_released,
         "league_blocked": league_blocked,
         "observe_released": observe_released,
+        "direction_released": direction_released,
+        "direction_blocked": direction_blocked,
     }
     tmp = OUT.with_suffix(".tmp")
     tmp.write_text(json.dumps(out, ensure_ascii=False, indent=2))
