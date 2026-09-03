@@ -92,6 +92,23 @@ def _parse_ts(s):
         return None
 
 
+def _normalize_team(name: str) -> str:
+    """归一化队名(去变音符号/小写/去fc/cf后缀), 供模糊匹配(与 paper_settle 同口径)。
+
+    Pinnacle 队名大小写/缩写差异(如 "Thun" vs "FC Thun" vs "Thun FC")导致精确
+    SQL 匹配不上, 归一化后子串匹配能覆盖这些差异。
+    """
+    import re as _re
+    import unicodedata
+    if not isinstance(name, str):
+        return ""
+    name = "".join(c for c in unicodedata.normalize("NFKD", name) if not unicodedata.combining(c))
+    name = name.strip().lower()
+    name = _re.sub(r"\bfc\b", "", name)
+    name = _re.sub(r"\bcf\b", "", name)
+    return name.strip()
+
+
 def _load_snapshots(conn, matchup_id):
     """读一场比赛的全部归档快照, 按 (period, fetched_at) 归组。
 
@@ -114,11 +131,34 @@ def _load_snapshots(conn, matchup_id):
     # 这是棒球 CLV 采集 0/18 全灭的根因。
     # 所以: 本 id 拿不到任何赛前快照时, 按队名 + 开赛时间归并同场的历史 id。
     if kickoff and not any(_parse_ts(r[4]) and _parse_ts(r[4]) <= kickoff for r in rows):
+        # 1. 精确匹配(快, 覆盖大部分): 同 home+away 的 sibling id
         sib = conn.execute(
             "SELECT DISTINCT matchup_id, match_start FROM odds_archive "
             "WHERE home = (SELECT home FROM odds_archive WHERE matchup_id=? LIMIT 1) "
             "  AND away = (SELECT away FROM odds_archive WHERE matchup_id=? LIMIT 1) "
             "  AND matchup_id != ?", (matchup_id, matchup_id, matchup_id)).fetchall()
+        # 2. 模糊匹配兜底(2026-09-03): 精确匹配不到时, 归一化队名后子串匹配。
+        #    Pinnacle 队名大小写/缩写差异(如 "Thun" vs "FC Thun")会让精确 SQL 匹配落空,
+        #    这是"归档库无此场"619条的一类根因。distinct matchup 仅 ~1.1万, 全表扫可接受。
+        if not sib:
+            cur = conn.execute(
+                "SELECT DISTINCT home, away FROM odds_archive WHERE matchup_id=?", (matchup_id,)
+            ).fetchall()
+            nh = _normalize_team(cur[0][0]) if cur else ""
+            na = _normalize_team(cur[0][1]) if cur else ""
+            if nh and na:
+                cand = conn.execute(
+                    "SELECT DISTINCT matchup_id, match_start, home, away FROM odds_archive "
+                    "WHERE matchup_id != ?", (matchup_id,)
+                ).fetchall()
+                for sid_, sms, sh, sa in cand:
+                    nsh, nsa = _normalize_team(sh), _normalize_team(sa)
+                    if not (nsh and nsa and len(nh) >= 4 and len(na) >= 4
+                            and len(nsh) >= 4 and len(nsa) >= 4):
+                        continue
+                    # 双向子串匹配(去 fc/cf 后缀后, "thun" vs "thun" / "fc thun")
+                    if (nh in nsh or nsh in nh) and (na in nsa or nsa in na):
+                        sib.append((sid_, sms))
         for sid_, sms in sib:
             sk = _parse_ts(sms)
             # 必须是同一场: 开赛时间对得上(容差同上游错配护栏)
