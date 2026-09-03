@@ -963,6 +963,8 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
            "double_chance": "dc", "draw_no_bet": "dnb", "btts": "btts"}
     rows = []
     skipped_started = 0
+    skipped_no_bid = 0
+    skipped_no_pin = 0
     seen = set(existing)
     for m in details:
         sport = m.get("sport", "")
@@ -985,6 +987,16 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
         pin_lid = m.get("pin_league_id", "")
         pin_mid = m.get("pin_match_id", "")
         pin_max_stake = m.get("pin_max_stake", "")
+        # V5.12: 观察库入库门槛 —— 保证进入观察库的样本都能拿到 CLV + 赛果。
+        # 缺 bb_match_id(结算无门) / pin_match_id(归档回捞无门) / pin_league_id(实时采集无门)
+        # 的样本一律不入库, 否则只会变成永远采不到的死数据污染 V5 矩阵统计。
+        # 特殊盘口/角球/罚牌 entry 缺 pin_match_id 已在 pinnacle_opportunities 修复(2026-09-03)。
+        if not str(m.get("bb_match_id", "") or "").strip():
+            skipped_no_bid += 1
+            continue
+        if not str(pin_mid or "").strip() or not str(pin_lid or "").strip():
+            skipped_no_pin += 1
+            continue
         try:
             tier = get_league_tier(league_cn)
         except Exception:
@@ -1025,6 +1037,9 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
 
     if skipped_started:
         logger.info("CLV验证入库: 跳过 %d 场已开赛比赛(滚球价, 不算赛前机会)", skipped_started)
+    if skipped_no_bid or skipped_no_pin:
+        logger.info("CLV验证入库门槛: 跳过 %d 场缺bb_match_id + %d 场缺pin_match_id/pin_league_id",
+                    skipped_no_bid, skipped_no_pin)
     if not rows:
         return 0
 
