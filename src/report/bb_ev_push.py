@@ -384,6 +384,11 @@ def _get_kelly_for_market(sub_market: str) -> float:
 # 纯 Kelly 分配, 总额 ¥20,000/天, 按投注额比例压缩
 TOTAL_DAILY_BUDGET = 20000  # 日预算总额
 
+# 2026-09-04 用户要求: 每天稳定投注 1 万, 按"预计推送场次 × edge系数"分配。
+# 不再用纯 Kelly(弱edge方向被压到几十元, 日总量远达不到预算)。BANKROLL 保持 2万不动。
+DAILY_STAKE_TARGET = 10000  # 每天投注目标(¥)
+HISTORICAL_AVG_PUSHES = 20  # 历史日均推送场次兜底(当天刚开始无已推场次时用它估算)
+
 # 2026-08-30 差异化放大: 方向级梯度倍率(基于实盘 ROI 分档)。
 # 调整后推送量骤降(14场/693元), 日投注额远达不到预算。按方向实盘 ROI 分档放大:
 # 强 edge(ROI>+20%) 高倍率, 中/弱 edge 递减, 假 edge(ROI<0) 压到 25%。
@@ -1016,6 +1021,37 @@ def _apply_risk_manager_safety(opps: list) -> list:
             pass  # 字段缺失或计算失败 → 保留原 stake
         cumulative_exposure += o.get("_stake", 0)  # 用最终 stake 累计敞口
     return opps
+
+
+def _get_today_pushed_count() -> int:
+    """读当天已推场次(预算跟踪器里的 push_count)。"""
+    try:
+        spent, _ = _load_budget_tracker()
+        if spent:
+            return int(spent.get("push_count", 0))
+    except Exception:
+        pass
+    return 0
+
+
+def _estimate_daily_total_pushes(pushed_today: int) -> int:
+    """估算当天预计推送总场次 = 已推场次 / 已过时间比例(兜底历史均值)。
+
+    推送时段 06:40~22:30。已推≥3场且时间进度>10% 时用外推, 否则用历史均值。
+    """
+    from datetime import datetime as _dt
+    now = _dt.now()
+    hm = now.hour * 60 + now.minute
+    push_start = 6 * 60 + 40    # 06:40
+    push_end = 22 * 60 + 30     # 22:30
+    if hm <= push_start:
+        return HISTORICAL_AVG_PUSHES  # 刚开始, 无已推场次, 用历史均值
+    if hm >= push_end:
+        return max(pushed_today, 1)   # 时段已过, 用实际
+    elapsed = (hm - push_start) / (push_end - push_start)
+    if pushed_today >= 3 and elapsed > 0.10:
+        return max(int(pushed_today / elapsed), pushed_today)
+    return HISTORICAL_AVG_PUSHES
 
 
 def _calc_kelly_stakes(opps: list) -> list:
