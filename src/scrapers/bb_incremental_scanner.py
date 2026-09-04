@@ -587,10 +587,7 @@ def run_incremental(time_window: str = "all"):
     )
 
     if new_result is None:
-        print("  ⚠️ 增量对比无结果 — 仍然指纹本次扫描的比赛(防止无限重复推送)")
         save_snapshot(bb_matches, _current_snap)
-        # 即使对比无结果, 也要指纹标记已处理过 (防止每次扫描都推同样的比赛)
-        _save_scan_fingerprints({"details": []})
         return
 
     print(f"\n✅ 已保存实时结果 → {window_file.name} ({len(new_result.get('details', []))} 条+EV)")
@@ -610,10 +607,8 @@ def run_incremental(time_window: str = "all"):
         print(f"\n📣 新+EV机会 → 运行推送 [{label}]...")
         push_ok = _run_push(label)
         _push_throttle_file.write_text(str(time.time()))
-        _save_scan_fingerprints(new_result)
     else:
         print("\n📭 无新+EV机会")
-        _save_scan_fingerprints(new_result)
 
     return new_result
 
@@ -715,7 +710,6 @@ def run_incremental_scan():
 
     save_snapshot(bb_matches, BB_SNAPSHOT_NEAR)
     _prefetch_pin_cache_async(bb_matches, all_pin_leagues)
-    _save_scan_fingerprints(new_result)
     return new_result
 
 
