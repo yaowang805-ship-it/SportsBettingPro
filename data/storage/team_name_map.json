@@ -45946,9 +45946,9 @@
     },
     "Newell´s Old Boys": {
       "sport": "football",
-      "n": 928,
+      "n": 1106,
       "first": "2026-08-16",
-      "last": "2026-08-31",
+      "last": "2026-09-04",
       "source": "auto"
     },
     "JKS 1909 Jarosław": {
@@ -45963,6 +45963,13 @@
       "n": 363,
       "first": "2026-08-22",
       "last": "2026-08-26",
+      "source": "auto"
+    },
+    "Podbeskidzie Bielsko Biała": {
+      "sport": "football",
+      "n": 190,
+      "first": "2026-08-31",
+      "last": "2026-09-02",
       "source": "auto"
     }
   },
@@ -53863,5 +53870,7 @@
   "达里娅·尤拉克·施赖伯 / 吴芳娴": "Jessica Bouzas Maneiro",
   "Newell´s Old Boys": "Newells Old Boys",
   "JKS 1909 Jarosław": "JKS 1909 Jaroslaw",
-  "Banks O´Dee FC": "Banks O´Dee"
+  "Banks O´Dee FC": "Banks O´Dee",
+  "Podbeskidzie Bielsko Biała": "Podbeskidzie Bielsko-Biala",
+  "Elise Mertens / Diana Shnaider": "Diana Shnaider"
 }
