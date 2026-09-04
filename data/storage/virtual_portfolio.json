@@ -1,5 +1,5 @@
 {
-  "balance": 2841.53,
+  "balance": 2770.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -276,6 +276,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788534300,
       "created_at": "2026-09-04T10:30:45.107549+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_梅尔加_AD塔尔玛_和局",
+      "sport": "football",
+      "league": "秘鲁甲级联赛",
+      "home_team": "梅尔加",
+      "away_team": "AD塔尔玛",
+      "home_cn": "梅尔加",
+      "away_cn": "AD塔尔玛",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.82,
+      "stake": 71,
+      "model_prob": 0.2198,
+      "ev_pct": 5.94,
+      "pin_odds": 3.99,
+      "fair_price": 4.5497,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788737400,
+      "created_at": "2026-09-04T13:47:12.776444+00:00",
       "track_only": false
     }
   ],
@@ -8083,8 +8106,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-04",
-    "used": 533.0,
-    "bets": 7
+    "used": 604.0,
+    "bets": 8
   },
   "updated": null
 }
