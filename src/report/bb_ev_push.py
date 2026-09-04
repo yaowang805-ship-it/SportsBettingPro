@@ -1186,10 +1186,13 @@ def _calc_kelly_stakes(opps: list) -> list:
                 stake_pct *= 1.05 if _m in (8, 9, 10) else (0.95 if _m in (4, 5) else 1.0)
             except Exception:
                 pass
-        stake = int(bankroll * stake_pct)
-        # 2026-08-30 差异化放大: 方向级梯度倍率(强15/中10/弱5/假2), 观察模式试点盘口用盘口级倍率优先
+        # 2026-09-04 每天投注目标锚定: 每场 = 日目标 × edge系数 / (预计场次 × 中档系数)。
+        # 取代"bankroll × Kelly%"(弱edge方向被压到几十元, 日总量远达不到预算)。
+        # edge系数沿用方向倍率(强15/中10/弱5/假2), 中档10归一化; 单注上限6%保护。
         _mult = PILOT_SUB_MARKET_MULT.get(sub, EDGE_DIRECTION_MULT.get((sub, o.get("designation", "")), DEFAULT_EDGE_MULT))
-        stake = int(stake * _mult)
+        _expected_pushes = _estimate_daily_total_pushes(_get_today_pushed_count())
+        stake = int(DAILY_STAKE_TARGET * _mult / (_expected_pushes * MEDIUM_EDGE_MULT))
+        stake = min(stake, int(TOTAL_DAILY_BUDGET * 0.06))  # 单注上限 ¥1200
         o["_raw_stake"] = stake
         # 2026-08-27 用户澄清: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库(record_bets)
         o["_stake"] = stake
@@ -1322,12 +1325,14 @@ def _cross_market_correlation_discount(group: list) -> float:
 
 
 def _correct_budget_tracker(opps: list):
-    """推送成功后重算预算消耗，排除因指纹去重被过滤的机会。"""
+    """推送成功后重算预算消耗，排除因指纹去重被过滤的机会。同时跟踪已推场次(供日目标分配)。"""
     spent, today = _load_budget_tracker()
     total = sum(o["_stake"] for o in opps if o["_stake"] >= 30)
-    # 保留当天之前推送的累积，加上本次实际
-    prev_total = sum(spent.values()) if spent else 0
-    _save_budget_tracker({"total": prev_total + total}, today)
+    n = sum(1 for o in opps if o["_stake"] >= 30)
+    # 保留当天之前推送的累积，加上本次实际（total 与 push_count 分开，勿 sum 混加）
+    prev_total = spent.get("total", 0) if spent else 0
+    prev_count = spent.get("push_count", 0) if spent else 0
+    _save_budget_tracker({"total": prev_total + total, "push_count": prev_count + n}, today)
 
 
 # 上一次 BB 赔率快照缓存 (用于蒸汽移动检测)
