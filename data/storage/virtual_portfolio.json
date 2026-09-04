@@ -1,5 +1,5 @@
 {
-  "balance": 2996.53,
+  "balance": 2961.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -230,6 +230,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788548700,
       "created_at": "2026-09-04T07:19:08.201095+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_蒙得维的亚城图尔克_塞罗拉尔戈_让球客胜(+1)",
+      "sport": "football",
+      "league": "乌拉圭甲级联赛",
+      "home_team": "蒙得维的亚城图尔克",
+      "away_team": "塞罗拉尔戈",
+      "home_cn": "蒙得维的亚城图尔克",
+      "away_cn": "塞罗拉尔戈",
+      "market": "handicap",
+      "market_type": "让球客胜(+1)",
+      "sub_market": "hc",
+      "line": "+1",
+      "odds": 1.97,
+      "stake": 35,
+      "model_prob": 0.5453,
+      "ev_pct": 7.42,
+      "pin_odds": 1.7692,
+      "fair_price": 1.8339,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788559200,
+      "created_at": "2026-09-04T09:09:30.269638+00:00",
       "track_only": false
     }
   ],
@@ -8037,8 +8060,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-04",
-    "used": 378.0,
-    "bets": 5
+    "used": 413.0,
+    "bets": 6
   },
   "updated": null
 }
