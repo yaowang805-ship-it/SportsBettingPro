@@ -841,13 +841,6 @@ def _save_scan_fingerprints(scan_result: dict):
     在推送前保存，确保即使推送被V4过滤掉，指纹仍然存在，
     下次扫描不会重复处理同一批比赛。
     """
-    # 静默期(22:30-06:40)不写指纹 —— 这段只扫描入库不推送, 写指纹会让机会次日白天
-    # 被 _filter_pushed 误判"已推过"而过滤, 推送量骤减(2026-09-04 实测静默期指纹占46%)。
-    # 与 _run_push 的静默期判断同口径。防重复扫描由快照变动检测兜底, 不依赖指纹。
-    from datetime import datetime as _dt
-    _min = _dt.now().hour * 60 + _dt.now().minute
-    if _min >= 22 * 60 + 30 or _min < 6 * 60 + 40:
-        return
     try:
         from config.database import load_fingerprints, save_fingerprints
         from src.report.bb_ev_push import _make_fingerprint
