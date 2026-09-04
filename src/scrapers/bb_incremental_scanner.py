@@ -829,72 +829,9 @@ def _run_fetcher():
         return False
 
 
-def _save_scan_fingerprints(scan_result: dict):
-    """保存本次扫描所有对比结果的指纹 (防增量重复推送)。
-
-    在推送前保存，确保即使推送被V4过滤掉，指纹仍然存在，
-    下次扫描不会重复处理同一批比赛。
-    """
-    try:
-        from config.database import load_fingerprints, save_fingerprints
-        from src.report.bb_ev_push import _make_fingerprint
-        import time as _time
-
-        existing = load_fingerprints()
-        new_count = 0
-        now_ts = _time.time()
-
-        for detail in scan_result.get("details", []):
-            # 🔒 只指纹72h内的比赛 (>72h的提前锁死→进入窗口后推不了)
-            pin_epoch = detail.get("start_time_pin_epoch")
-            if pin_epoch and pin_epoch > now_ts + 72 * 3600:
-                continue  # >72h, 不存指纹, 等进入窗口再说
-
-            sport = detail.get("sport", "")
-            league = detail.get("league", "")
-            home = detail.get("home_bb", "").strip()
-            away = detail.get("away_bb", "").strip()
-
-            for mk in ["opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"]:
-                for opp in detail.get(mk, []):
-                    ev = opp.get("ev_pct", 0)
-                    if ev < 1:  # Only fingerprint opportunities with some EV
-                        continue
-
-                    # 归一化 _sub_market: 与 push 侧 _make_fingerprint 一致
-                    raw_mk = opp.get("_market", "")
-                    if raw_mk in ("", "opportunities", "1x2"):
-                        norm_mk = "1x2"
-                    elif raw_mk in ("hc", "handicap"):
-                        norm_mk = "hc"
-                    elif raw_mk in ("ou", "over_under"):
-                        norm_mk = "ou"
-                    else:
-                        norm_mk = raw_mk  # ht, btts, dc, dnb 等
-                    # 2026-08-30: 观察模式盘口不写扫描指纹 — 否则解封后被误判"已推送"
-                    # (correct_score_ht/htft 之前观察模式时写了418/175条指纹, 解封后全被 _filter_pushed 拦)
-                    if norm_mk in ("correct_score", "first_to_score", "exact_goals_ht",
-                                   "winning_margin_ht", "total_goals_range_ht", "first_to_score_ht"):
-                        continue
-                    o = {
-                        "sport": sport, "league": league,
-                        "home_cn": home, "away_cn": away,
-                        "designation": opp.get("designation", ""),
-                        "_sub_market": norm_mk,
-                        "bb_odds": opp.get("bb_odds", 0),
-                        "ev_pct": ev,
-                        "_pin_epoch": detail.get("start_time_pin_epoch"),
-                    }
-                    fp = _make_fingerprint(o)
-                    if fp not in existing:
-                        existing[fp] = {"ev": ev, "ts": _time.time()}
-                        new_count += 1
-
-        if new_count > 0:
-            save_fingerprints(existing)
-            print(f"  🔒 扫描指纹: 新增 {new_count} 条")
-    except Exception as e:
-        print(f"  ⚠️ 指纹保存失败: {e}")
+# (2026-09-04 移除) _save_scan_fingerprints 曾在"推送前"写指纹防重复, 违反 V5.1 铁律
+# "指纹只在推送成功后写入", 导致静默期/推送失败的机会被锁死(静默期指纹曾占46%)。
+# 防重复现由快照变动检测 + 推送侧 _save_qualified_fingerprints/_filter_pushed 承担。
 
 
 def _run_push(label: str = ""):
