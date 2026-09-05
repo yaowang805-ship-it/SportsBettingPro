@@ -1539,15 +1539,20 @@ def _merge_single_match(platform_matches):
             base_line = base_hc.get("home_line") if base_hc.get("home_line") is not None else base_hc.get("away_line")
             plat_line = plat_hc.get("home_line") if plat_hc.get("home_line") is not None else plat_hc.get("away_line")
             if base_line is None or plat_line is None or abs(base_line - plat_line) <= 0.01:
+                # 初始化逐方向来源(主/客分开, 2026-09-05)
+                if sources["handicap_dir"] is None:
+                    sources["handicap_dir"] = {"home": first_plat, "away": first_plat}
                 _update_source("handicap", base_hc.get("home_odds", 0), plat_hc.get("home_odds", 0), platform)
                 _update_source("handicap", base_hc.get("away_odds", 0), plat_hc.get("away_odds", 0), platform)
                 if plat_hc.get("home_odds", 0) > base_hc.get("home_odds", 0):
                     base_hc["home_odds"] = plat_hc["home_odds"]
+                    sources["handicap_dir"]["home"] = platform
                     # 赔率换了平台, 线数值必须同步换, 否则 line 和 odds 来自不同让球线(错位)
                     base_hc["home_line"] = plat_hc.get("home_line", base_hc.get("home_line"))
                     base_hc["home_line_str"] = plat_hc.get("home_line_str", base_hc.get("home_line_str", ""))
                 if plat_hc.get("away_odds", 0) > base_hc.get("away_odds", 0):
                     base_hc["away_odds"] = plat_hc["away_odds"]
+                    sources["handicap_dir"]["away"] = platform
                     base_hc["away_line"] = plat_hc.get("away_line", base_hc.get("away_line"))
                     base_hc["away_line_str"] = plat_hc.get("away_line_str", base_hc.get("away_line_str", ""))
         elif not base_hc and plat_hc:

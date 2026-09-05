@@ -1603,6 +1603,15 @@ def _ml_dir_source(platform_sources, sub_market, designation):
         key = "ht_ml_dir"
     elif sub_market in ("1x2", "ml", ""):
         key = "ml_dir"
+    elif sub_market == "hc":
+        # 让球盘逐方向(home/away)来源(2026-09-05): 整场 handicap 单值会错标
+        # (实测 阿拉胡伦斯主胜是BB价2.04/客胜是FB价1.81, 整场标FB → 误显示"BB/FB价")
+        _dir = platform_sources.get("handicap_dir")
+        if isinstance(_dir, dict):
+            if "客" in des or "away" in des:
+                return _dir.get("away")
+            return _dir.get("home")
+        return "BB/FB"
     else:
         # 2026-08-31 用户要求: 特殊盘口用 {sub_market}_dir 逐选项来源, 不再一律标"BB/FB"
         _dir = platform_sources.get(sub_market + "_dir")
