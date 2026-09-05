@@ -1232,6 +1232,15 @@ def _calc_kelly_stakes(opps: list) -> list:
         _expected_pushes = _estimate_daily_total_pushes(_get_today_pushed_count())
         stake = int(DAILY_STAKE_TARGET * _mult / (_expected_pushes * MEDIUM_EDGE_MULT))
         stake = min(stake, int(TOTAL_DAILY_BUDGET * 0.06))  # 单注上限 ¥1200
+        # Pin 低注额上限 = 定价信心低(尺子不准, 低上限场次高EV多是测量误差)。CLV 验证:
+        # 最低25%($125)中位CLV -3.10%/42%, 次低25%($200) -2.35%/42% 明显负 → 降权(减分项)。
+        _pin_ms = o.get("pin_max_stake") or o.get("_pin_max_stake")
+        if _pin_ms:
+            try:
+                if float(_pin_ms) < 200:
+                    stake = int(stake * 0.7)
+            except (ValueError, TypeError):
+                pass
         o["_raw_stake"] = stake
         # 2026-08-27 用户澄清: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库(record_bets)
         o["_stake"] = stake
