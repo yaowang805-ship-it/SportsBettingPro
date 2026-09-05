@@ -1011,6 +1011,36 @@ def _run_monte_carlo(win_rate: float, avg_odds: float, n_sims: int = 10000, n_be
     }
 
 
+def _get_real_drawdown_multiplier() -> float:
+    """真实投注回撤降仓乘数(2026-09-05 用户要求: 真实亏损自动缩量)。
+
+    从 tracked_bets.json 的已结算 profit 算真实回撤, 与职业团队对标:
+      回撤 ≥5% 减10%, ≥10% 减30%, ≥20% 减60%(不停注, 只缩量)。
+    初始资金 = BANKROLL(20000)。Fail-open: 读取异常返回 1.0(不降仓)。
+    """
+    try:
+        tracked = DATA_DIR / "tracked_bets.json"
+        if not tracked.exists():
+            return 1.0
+        data = json.loads(tracked.read_text())
+        bets = data.get("bets", []) if isinstance(data, dict) else data
+        total_profit = sum(
+            float(b.get("profit") or 0) for b in bets
+            if b.get("status") == "settled")
+        from config.constants import BANKROLL
+        initial = float(BANKROLL)
+        drawdown = max(0.0, -total_profit / initial)
+        if drawdown >= 0.20:
+            return 0.4   # 回撤20%+: 减60%
+        if drawdown >= 0.10:
+            return 0.7   # 回撤10%+: 减30%
+        if drawdown >= 0.05:
+            return 0.9   # 回撤5%+: 减10%
+        return 1.0
+    except Exception:
+        return 1.0
+
+
 def _apply_risk_manager_safety(opps: list) -> list:
     """V5.2: RiskManager 安全层 — 冷却停注 + 回撤/连败折扣。
 
@@ -1046,6 +1076,8 @@ def _apply_risk_manager_safety(opps: list) -> list:
             continue
         try:
             risk_mult = rm.get_risk_multiplier()
+            # 真实投注回撤降仓(2026-09-05): 取虚拟RiskManager和真实结算回撤的较严者
+            risk_mult = min(risk_mult, _get_real_drawdown_multiplier())
             if risk_mult <= 0:
                 o["_stake"] = 0  # 停手(冷却/回撤>20%/连败>5)
             elif risk_mult < 1.0:
