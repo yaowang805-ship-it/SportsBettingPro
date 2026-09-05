@@ -1014,19 +1014,31 @@ def _run_monte_carlo(win_rate: float, avg_odds: float, n_sims: int = 10000, n_be
 def _get_real_drawdown_multiplier() -> float:
     """真实投注回撤降仓乘数(2026-09-05 用户要求: 真实亏损自动缩量)。
 
-    从 tracked_bets.json 的已结算 profit 算真实回撤, 与职业团队对标:
-      回撤 ≥5% 减10%, ≥10% 减30%, ≥20% 减60%(不停注, 只缩量)。
+    只统计 09-05 之后(新策略: 三维释放+聚焦正edge)的已结算 profit, 忽略历史
+    "铺开毒瘤盘口"的旧亏损。回撤 ≥5% 减10%, ≥10% 减30%, ≥20% 减60%(不停注, 只缩量)。
     初始资金 = BANKROLL(20000)。Fail-open: 读取异常返回 1.0(不降仓)。
     """
     try:
         tracked = DATA_DIR / "tracked_bets.json"
         if not tracked.exists():
             return 1.0
+        from datetime import datetime as _dt
+        new_start_ts = _dt(2026, 9, 5).timestamp()  # 新策略起始(09-05 00:00)
         data = json.loads(tracked.read_text())
         bets = data.get("bets", []) if isinstance(data, dict) else data
-        total_profit = sum(
-            float(b.get("profit") or 0) for b in bets
-            if b.get("status") == "settled")
+        total_profit = 0.0
+        for b in bets:
+            if b.get("status") != "settled":
+                continue
+            # 只统计新策略之后的投注(按 push_time)
+            pt = b.get("push_time")
+            if isinstance(pt, str):
+                try:
+                    if _dt.fromisoformat(pt.replace("Z", "+00:00")).timestamp() < new_start_ts:
+                        continue
+                except Exception:
+                    pass
+            total_profit += float(b.get("profit") or 0)
         from config.constants import BANKROLL
         initial = float(BANKROLL)
         drawdown = max(0.0, -total_profit / initial)
