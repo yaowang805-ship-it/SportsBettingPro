@@ -39,17 +39,26 @@ def _get_all_matches(token, domain):
           "AppleWebKit/537.36 Chrome/152.0.0.0 Safari/537.36")
     all_recs = []
     for sport_id in (1, 3, 5, 7, 6):  # 足球/篮球/网球/棒球/美足
-        try:
-            r = s.post(f"{domain}/v1/match/getList",
-                       json={"sportId": sport_id, "type": 2, "current": 1, "pageSize": 100,
-                             "isPC": True, "languageType": "CMN"},
-                       headers={"Content-Type": "application/json", "user-token": token,
-                                "User-Agent": UA}, timeout=15, verify=False)
-            d = r.json()
-            if d.get("code") == 0:
-                all_recs.extend(d["data"]["records"])
-        except Exception:
-            continue
+        page = 1
+        while page <= 40:  # 分页拉全量(每页50场, 足球1876场=38页)
+            try:
+                r = s.post(f"{domain}/v1/match/getList",
+                           json={"sportId": sport_id, "type": 2, "current": page, "pageSize": 50,
+                                 "isPC": True, "languageType": "CMN"},
+                           headers={"Content-Type": "application/json", "user-token": token,
+                                    "User-Agent": UA}, timeout=15, verify=False)
+                d = r.json()
+                if d.get("code") != 0:
+                    break
+                data = d.get("data") or {}
+                recs = data.get("records") or []
+                all_recs.extend(recs)
+                page_total = data.get("pageTotal") or 1
+                if page >= page_total or not recs:
+                    break
+                page += 1
+            except Exception:
+                break
     return all_recs
 
 
