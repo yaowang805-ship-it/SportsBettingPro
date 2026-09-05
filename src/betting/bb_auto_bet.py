@@ -33,6 +33,49 @@ _UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
 MAX_MATCH_STAKE = 300.0
 # 单盘口(含重推)最大投注额
 MAX_MARKET_STAKE = 300.0
+# 投注额记录文件(按比赛+盘口维度累计, 跨扫描共享)
+STAKE_RECORD_FILE = ROOT / "data" / "storage" / "bet_stake_record.json"
+
+
+def _load_stake_record():
+    """读投注额记录 {match_id: {market_id: 累计注额}}。"""
+    if STAKE_RECORD_FILE.exists():
+        try:
+            return json.loads(STAKE_RECORD_FILE.read_text())
+        except Exception:
+            return {}
+    return {}
+
+
+def _save_stake_record(rec):
+    STAKE_RECORD_FILE.write_text(json.dumps(rec, ensure_ascii=False))
+
+
+def check_stake_limit(match_id, market_id, stake):
+    """检查注额上限。返回 (是否超限, 原因)。
+
+    单场比赛累计 ≤ 300; 单盘口(含重推)累计 ≤ 300。跨盘口可各 300。
+    """
+    rec = _load_stake_record()
+    match_key = str(match_id)
+    market_key = str(market_id)
+    match_total = sum(rec.get(match_key, {}).values())
+    market_total = rec.get(match_key, {}).get(market_key, 0.0)
+    if match_total + stake > MAX_MATCH_STAKE:
+        return False, f"单场超限(已投{match_total:.0f}+{stake:.0f}>{MAX_MATCH_STAKE:.0f})"
+    if market_total + stake > MAX_MARKET_STAKE:
+        return False, f"单盘口超限(已投{market_total:.0f}+{stake:.0f}>{MAX_MARKET_STAKE:.0f})"
+    return True, ""
+
+
+def record_stake(match_id, market_id, stake):
+    """下单成功后记录投注额。"""
+    rec = _load_stake_record()
+    match_key = str(match_id)
+    market_key = str(market_id)
+    rec.setdefault(match_key, {})
+    rec[match_key][market_key] = rec[match_key].get(market_key, 0.0) + stake
+    _save_stake_record(rec)
 
 
 def _read_localstorage():
@@ -64,7 +107,12 @@ def read_token():
 
 
 def read_domain():
-    """读 API 域名(动态, 每次登录可能变)。"""
+    """读 API 域名(动态, 每次登录可能变)。顺序: .bb_domain 文件 > applescript > 默认。"""
+    dom_file = ROOT / "data" / "storage" / ".bb_domain"
+    if dom_file.exists():
+        dom = dom_file.read_text().strip()
+        if dom:
+            return dom.rstrip("/")
     ls = _read_localstorage()
     return ls.get("st-domain", "").rstrip("/") or DEFAULT_DOMAIN
 
@@ -76,15 +124,25 @@ def _session():
     return s
 
 
-def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domain=None):
+def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domain=None,
+                     match_id=None, check_limit=True):
     """单关下单。返回 (code, order_id, message)。
 
-    code=0 成功; code=5 参数错; code=14010 token过期; code=3015 盘口关闭。
+    code=0 成功; code=5 参数错; code=14010 token过期; code=3015 盘口关闭;
+    code=-3 注额超限(单场/单盘口 300); code=-1 无 token; code=-2 异常。
+
+    match_id: 比赛 id, 用于注额上限(单场 300)。check_limit=False 跳过上限检查。
     """
     token = token or read_token()
     domain = domain or read_domain()
     if not token:
         return -1, None, "无法读取 user-token(Chrome 未登录 BB 或活动标签不对)"
+
+    # 注额上限检查(单场 300 + 单盘口 300, 含重推)
+    if check_limit and match_id is not None:
+        ok, reason = check_stake_limit(match_id, market_id, stake)
+        if not ok:
+            return -3, None, reason
 
     body = {
         "languageType": "CMN",
@@ -119,6 +177,9 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
             data = d.get("data") or []
             if isinstance(data, list) and data:
                 order_id = data[0].get("id")
+        # 下单成功后记录投注额(供上限检查)
+        if code == 0 and match_id is not None:
+            record_stake(match_id, market_id, stake)
         return code, order_id, msg
     except Exception as e:
         return -2, None, f"下单异常: {type(e).__name__} {e}"

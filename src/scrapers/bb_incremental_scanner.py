@@ -224,6 +224,26 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
                 if not mu_id:
                     continue
 
+                # 时间窗口过滤(2026-09-05 用户要求): Pin 的 matchups 是全量拉的(联赛级接口),
+                # 这里按窗口只对比时间窗口内的比赛, 减少指纹对比量、加快扫描。
+                # 归档(上方 archive_matchups)仍全量, 不受影响。
+                if time_window in ("urgent", "near", "far"):
+                    _st = mu.get("startTime") or mu.get("start_time")
+                    if _st:
+                        try:
+                            from datetime import datetime as _dt
+                            _ts = (_dt.fromisoformat(str(_st).replace("Z", "+00:00")).timestamp()
+                                   if isinstance(_st, str) else float(_st))
+                            _lead = _ts - time.time()
+                            if time_window == "urgent" and not (0 <= _lead < 6 * 3600):
+                                continue
+                            if time_window == "near" and not (6 * 3600 <= _lead < 24 * 3600):
+                                continue
+                            if time_window == "far" and not (24 * 3600 <= _lead < 72 * 3600):
+                                continue
+                        except Exception:
+                            pass
+
                 # 提取赔率指纹: ML + Spread + Total (三者任一变动都触发)
                 odds_fp = []
                 for mkt_type in ['moneyline', 'spread', 'total']:
