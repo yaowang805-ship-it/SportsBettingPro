@@ -3800,24 +3800,21 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
         scan_type = "incremental" if incremental else "full"
         recommendation_tracker.log_recommendations(qualified, scan_type=scan_type)
 
-        # 投注前过滤：结算门禁（能投/不能投，不是权重）
-        # 权重来自 Pinnacle 130,310场历史数据，不来自结算验证
+        # 投注(2026-09-05 用户要求: 不管能不能结算都自动投注, 取消结算门禁过滤)
         bettable = qualified
-        from src.core.settleability import is_league_settleable, is_league_probationary
-        blocked_leagues = set()
-        for o in qualified:
-            league = o.get("league_cn", "") or o.get("league", "")  # 结算门禁用中文联赛名(is_league_settleable 只认中文)
-            sport = o.get("sport", "")
-            if not is_league_settleable(league, sport) and not is_league_probationary(league, sport):
-                blocked_leagues.add(league)
-
-        if blocked_leagues:
-            bettable = [o for o in bettable
-                        if is_league_settleable(o.get("league_cn", "") or o.get("league", ""), o.get("sport", ""))
-                        or is_league_probationary(o.get("league_cn", "") or o.get("league", ""), o.get("sport", ""))]
-            logger.info("结算门禁: 跳过 %d 个不可结算联赛", len(blocked_leagues))
-            for l in sorted(blocked_leagues):
-                logger.info("  🚫 %s", l)
+        # 仅记录不可结算联赛(供参考, 不拦截)
+        try:
+            from src.core.settleability import is_league_settleable, is_league_probationary
+            _unsettleable = sorted({
+                (o.get("league_cn", "") or o.get("league", ""))
+                for o in qualified
+                if not is_league_settleable(o.get("league_cn", "") or o.get("league", ""), o.get("sport", ""))
+                and not is_league_probationary(o.get("league_cn", "") or o.get("league", ""), o.get("sport", ""))
+            })
+            if _unsettleable:
+                logger.info("(参考)不可结算联赛(仍投注): %s", ", ".join(_unsettleable))
+        except Exception:
+            pass
 
         # 投注后保存指纹
         if place_bets and bettable:
