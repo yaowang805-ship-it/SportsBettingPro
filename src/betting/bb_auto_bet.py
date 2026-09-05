@@ -124,14 +124,57 @@ def _session():
     return s
 
 
+def fetch_current_odds(market_id, match_id, option_type, token=None, domain=None):
+    """下注前拉最新赔率(batchBetMatchMarketOfJumpLine)。返回 (最新赔率, smin, smax) 或 None。
+
+    用于下注前验价: 扫描赔率和下单赔率可能不同, 用最新赔率下单并校验漂移。
+    """
+    token = token or read_token()
+    domain = domain or read_domain()
+    if not token:
+        return None
+    body = {
+        "languageType": "CMN",
+        "isSelectSeries": False,
+        "currencyId": 1,
+        "betMatchMarketList": [{
+            "marketId": market_id,
+            "matchId": match_id,
+            "type": option_type,
+            "oddsType": 1,
+        }],
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": token,
+        "User-Agent": _UA,
+        "Origin": "https://pc.x14ff.com",
+        "Referer": "https://pc.x14ff.com/",
+    }
+    try:
+        r = _session().post(f"{domain}/v1/order/batchBetMatchMarketOfJumpLine",
+                            json=body, headers=headers, timeout=15, verify=False)
+        d = r.json()
+        if d.get("code") == 0 and d.get("data", {}).get("bms"):
+            b = d["data"]["bms"][0]
+            cur_odds = b.get("op", {}).get("od")
+            smin = b.get("smin")
+            smax = b.get("smax")
+            return cur_odds, smin, smax
+    except Exception:
+        pass
+    return None
+
+
 def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domain=None,
-                     match_id=None, check_limit=True):
+                     match_id=None, check_limit=True, verify_price=True, max_drop_pct=5.0):
     """单关下单。返回 (code, order_id, message)。
 
     code=0 成功; code=5 参数错; code=14010 token过期; code=3015 盘口关闭;
-    code=-3 注额超限(单场/单盘口 300); code=-1 无 token; code=-2 异常。
+    code=-3 注额超限; code=-4 赔率漂移超阈值(验价拦截); code=-1 无 token; code=-2 异常。
 
-    match_id: 比赛 id, 用于注额上限(单场 300)。check_limit=False 跳过上限检查。
+    match_id: 比赛 id, 用于注额上限 + 验价。verify_price=False 跳过验价。
+    max_drop_pct: 最新赔率比扫描赔率跌超过此百分比 → 放弃下单(默认5%)。
     """
     token = token or read_token()
     domain = domain or read_domain()
@@ -144,6 +187,18 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
         if not ok:
             return -3, None, reason
 
+    # 下注前验价(2026-09-05): 拉最新赔率, 跌超阈值则放弃(临时高价假机会)
+    final_odds = odds
+    if verify_price and match_id is not None:
+        cur = fetch_current_odds(market_id, match_id, option_type, token, domain)
+        if cur:
+            cur_odds = cur[0]
+            if cur_odds and float(odds) > 0:
+                drop = (float(odds) - float(cur_odds)) / float(odds) * 100
+                if drop > max_drop_pct:
+                    return -4, None, f"赔率漂移{drop:.1f}%(扫描{odds}→现{cur_odds}), 放弃"
+                final_odds = cur_odds  # 用最新赔率下单
+
     body = {
         "languageType": "CMN",
         "singleBetList": [{
@@ -151,7 +206,7 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
             "oddsChange": 1,
             "betOptionList": [{
                 "marketId": market_id,
-                "odds": odds,
+                "odds": final_odds,
                 "optionType": option_type,
                 "oddsFormat": 1,
             }],
