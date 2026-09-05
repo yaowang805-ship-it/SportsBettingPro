@@ -1,5 +1,5 @@
 {
-  "balance": 20426.53,
+  "balance": 20376.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -230,6 +230,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788863400,
       "created_at": "2026-09-05T12:19:37.922285+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_霍芬海姆_多特蒙德_和局",
+      "sport": "football",
+      "league": "德国甲级联赛",
+      "home_team": "霍芬海姆",
+      "away_team": "多特蒙德",
+      "home_cn": "霍芬海姆",
+      "away_cn": "多特蒙德",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.21,
+      "stake": 50,
+      "model_prob": 0.2495,
+      "ev_pct": 5.02,
+      "pin_odds": 3.85,
+      "fair_price": 4.0088,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788615000,
+      "created_at": "2026-09-05T12:52:37.325415+00:00",
       "track_only": false
     }
   ],
@@ -8099,8 +8122,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-05",
-    "used": 503.0,
-    "bets": 7
+    "used": 553.0,
+    "bets": 8
   },
   "updated": null
 }
