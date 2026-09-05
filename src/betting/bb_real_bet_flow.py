@@ -167,12 +167,13 @@ def auto_bet_flow(opportunities, token=None, domain=None):
             failed.append({"home": home, "away": away, "reason": f"code={code} {msg}"})
 
     # 下单成功后发钉钉(只发已投注金额+明细, 不发推荐)
+    # 标题含"机会"关键词 → 不受标题节流(否则同标题30分钟只发一次, 多注被吞)
     if sent_dingtalk:
         try:
             from config.settings import send_dingtalk
             total = sum(o.get("stake", 0) for o in success)
             body = f"**已投注 {len(sent_dingtalk)} 注 / ¥{total:.0f}**\n\n" + "\n".join(sent_dingtalk)
-            send_dingtalk("🟦 BB 自动投注", body)
+            send_dingtalk(f"🟦 已投注机会 {len(sent_dingtalk)} 注", body)
         except Exception as e:
             pass
 
