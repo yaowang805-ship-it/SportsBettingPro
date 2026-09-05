@@ -165,6 +165,9 @@ def auto_bet_flow(opportunities, token=None, domain=None):
             _append_bet_history(rec)
         else:
             failed.append({"home": home, "away": away, "reason": f"code={code} {msg}"})
+            # token 过期(14010) → 标记, 循环结束后发一次钉钉提醒(带30分钟节流)
+            if code == 14010:
+                _token_expired_alert()
 
     # 下单成功后发钉钉(只发已投注金额+明细, 不发推荐)
     # 标题含"机会"关键词 → 不受标题节流(否则同标题30分钟只发一次, 多注被吞)
@@ -178,6 +181,27 @@ def auto_bet_flow(opportunities, token=None, domain=None):
             pass
 
     return {"success": success, "failed": failed}
+
+
+_token_alert_file = DATA_DIR / ".token_expired_alert.ts"
+
+
+def _token_expired_alert():
+    """token 过期(14010)时发钉钉提醒, 30分钟节流(避免每次扫描都刷屏)。"""
+    try:
+        # 30分钟节流
+        if _token_alert_file.exists():
+            try:
+                last = float(_token_alert_file.read_text().strip())
+                if time.time() - last < 30 * 60:
+                    return
+            except Exception:
+                pass
+        _token_alert_file.write_text(str(time.time()))
+        from config.settings import send_dingtalk
+        send_dingtalk("⚠️ BB token 已过期", "下单失败(账号登出), 请重新登录 BB 后告诉我, 我更新 token")
+    except Exception:
+        pass
 
 
 def _append_bet_history(rec):
