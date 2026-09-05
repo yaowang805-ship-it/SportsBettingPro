@@ -1184,9 +1184,14 @@
       "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "斯洛文尼亚杯": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-09-05T01:49:19.573765+00:00",
+  "updated": "2026-09-05T04:34:22.425458+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
