@@ -407,11 +407,19 @@ EDGE_DIRECTION_MULT = {
     # 中 edge (+5% ~ +20%)
     ("1x2", "主胜"): MEDIUM_EDGE_MULT,            # 95注 +7.2%
     # 弱 edge (0 ~ +5%)
-    ("1x2", "和局"): WEAK_EDGE_MULT,              # 67注 +0.6%
+    ("1x2", "和局"): WEAK_EDGE_MULT,              # 整盘+0.6%(被近场-47.5%拖累, 分时间窗后临场+24%/早盘+17.1%)
     # 假 edge (ROI < 0) — 压制
     ("ht", "上半场客胜"): NEG_EDGE_MULT,          # 169注 -21.6%
     ("ht_dc", "上半场双重机会-主/客"): NEG_EDGE_MULT,  # 96注 -20.3%
     ("dc", "双重机会-主/和局"): NEG_EDGE_MULT,     # 15注 -20.3%
+}
+
+# 时间窗级倍率(2026-09-05): 方向整体弱edge但分时间窗后某窗中强正。命中时覆盖方向级倍率。
+# 1x2和局整盘+0.6%被近场-47.5%拖累, 但临场+24%(31注)/早盘+17.1%(34注)是中强edge。
+# 近场已被时间窗级封杀(direction_window_blocked), 不设倍率。
+EDGE_DIRECTION_WINDOW_MULT = {
+    ("1x2", "和局", "临场"): STRONG_EDGE_MULT,    # 31注 +24.0%
+    ("1x2", "和局", "早盘"): MEDIUM_EDGE_MULT,    # 34注 +17.1%
 }
 
 # 观察模式盘口开推试点倍率(盘口级, 优先于方向级) — correct_score_ht 高方差, 低倍率试点
@@ -1215,6 +1223,12 @@ def _calc_kelly_stakes(opps: list) -> list:
         # 取代"bankroll × Kelly%"(弱edge方向被压到几十元, 日总量远达不到预算)。
         # edge系数沿用方向倍率(强15/中10/弱5/假2), 中档10归一化; 单注上限6%保护。
         _mult = PILOT_SUB_MARKET_MULT.get(sub, EDGE_DIRECTION_MULT.get((sub, o.get("designation", "")), DEFAULT_EDGE_MULT))
+        # 时间窗级倍率(2026-09-05): 命中时覆盖方向级倍率(如 1x2和局 临场+24%/早盘+17.1% 中强edge)
+        _w = _time_window(o.get("_pin_epoch"))
+        if _w:
+            _wmult = EDGE_DIRECTION_WINDOW_MULT.get((sub, o.get("designation", ""), _w))
+            if _wmult:
+                _mult = _wmult
         _expected_pushes = _estimate_daily_total_pushes(_get_today_pushed_count())
         stake = int(DAILY_STAKE_TARGET * _mult / (_expected_pushes * MEDIUM_EDGE_MULT))
         stake = min(stake, int(TOTAL_DAILY_BUDGET * 0.06))  # 单注上限 ¥1200
