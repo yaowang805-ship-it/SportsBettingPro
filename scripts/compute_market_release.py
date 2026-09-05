@@ -109,6 +109,22 @@ def _direction(desig, sub_market):
     return "其他"
 
 
+def _window(match_epoch, push_ts):
+    """时间窗分档: 临场<6h / 近场6-24h / 早盘24-72h / None(已开赛或超72h)。"""
+    if not match_epoch or not push_ts:
+        return None
+    lead = match_epoch - push_ts
+    if lead < 0:
+        return None
+    if lead < 6 * 3600:
+        return "临场"
+    if lead < 24 * 3600:
+        return "近场"
+    if lead < 72 * 3600:
+        return "早盘"
+    return None
+
+
 def _dir_threshold(roi, n):
     """方向 ROI → EV 门槛(数据驱动, 替代 bb_ev_push 硬编码 DIRECTION_MIN_EV)。
 
@@ -188,6 +204,27 @@ def load_real_direction_roi():
     return _agg_bets(bets, _dir_key)
 
 
+def load_real_direction_window_roi():
+    """实盘方向×时间窗 ROI: tracked_bets.json settled → {(sport,sub_market,direction,window): agg}。"""
+    if not TRACKED.exists():
+        return {}
+    try:
+        raw = json.loads(TRACKED.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+    bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
+            if b.get("status") == "settled"]
+
+    def _key(b):
+        w = _window(_f(b.get("match_epoch")), _ts(b.get("push_time")))
+        if w is None:
+            return None
+        return (b.get("sport") or "?", b.get("sub_market") or "?",
+                _direction(b.get("designation"), b.get("sub_market")), w)
+
+    return _agg_bets(bets, _key)
+
+
 def load_observe_clv():
     """观察库 CLV 中位/正率: clv_results.csv source=validate → {(sport,league,sub_market): {n,median,pos_rate}}。"""
     by = defaultdict(list)
@@ -247,6 +284,7 @@ def load_observe_roi_market():
 def main():
     market_roi, league_roi = load_real_roi()
     dir_roi = load_real_direction_roi()
+    dir_window_roi = load_real_direction_window_roi()
     obs_mkt_roi = load_observe_roi_market()
     obs_clv = load_observe_clv()
     obs_roi = load_observe_roi()
@@ -294,6 +332,18 @@ def main():
         if thr is not None:
             direction_min_ev.append([sport, sm, dr, thr])
 
+    # 时间窗级封杀(2026-09-05): 方向级 ROI 仍掩盖时间窗分化 —— 1x2平 近场-47.5% / hc客 临场-11.9%
+    # 都是负的, 但被"平整体+17.1%"平均掉。已释放方向里, 某时间窗实盘 ROI 强负的封杀该时间窗。
+    direction_window_blocked = []
+    for (sport, sm, dr, w), d in sorted(dir_window_roi.items()):
+        if d["n"] < DIR_N_MIN:
+            continue
+        # 只有"该方向是释放的"(整盘释放 或 方向级释放)才需要时间窗级封杀
+        if (sport, sm) not in released_set and (sport, sm, dr) not in released_dir_set:
+            continue
+        if d["roi"] < DIR_ROI_MIN:
+            direction_window_blocked.append([sport, sm, dr, w])
+
     league_released = []
     league_blocked = []
     for (sport, lg, sm), d in sorted(league_roi.items()):
@@ -325,6 +375,7 @@ def main():
         "direction_released": direction_released,
         "direction_blocked": direction_blocked,
         "direction_min_ev": direction_min_ev,
+        "direction_window_blocked": direction_window_blocked,
     }
     tmp = OUT.with_suffix(".tmp")
     tmp.write_text(json.dumps(out, ensure_ascii=False, indent=2))

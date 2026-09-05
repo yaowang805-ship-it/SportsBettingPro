@@ -1,5 +1,5 @@
 {
-  "balance": 2720.53,
+  "balance": 19324.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -210,29 +210,6 @@
       "track_only": false
     },
     {
-      "id": "bb_vs_pin_1x2_巴黎圣日耳曼_摩纳哥_双重机会-和局/客",
-      "sport": "football",
-      "league": "法国甲级联赛",
-      "home_team": "巴黎圣日耳曼",
-      "away_team": "摩纳哥",
-      "home_cn": "巴黎圣日耳曼",
-      "away_cn": "摩纳哥",
-      "market": "1x2",
-      "market_type": "双重机会-和局/客",
-      "sub_market": "dc",
-      "line": "",
-      "odds": 3.64,
-      "stake": 75,
-      "model_prob": 0.2854,
-      "ev_pct": 3.87,
-      "pin_odds": 3.41,
-      "fair_price": 3.5043,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1788548700,
-      "created_at": "2026-09-04T07:19:08.201095+00:00",
-      "track_only": false
-    },
-    {
       "id": "bb_vs_pin_handicap_蒙得维的亚城图尔克_塞罗拉尔戈_让球客胜(+1)",
       "sport": "football",
       "league": "乌拉圭甲级联赛",
@@ -341,7 +318,8 @@
     "bb_vs_pin_1x2_维戈塞尔塔_奥萨苏纳_客胜": "won",
     "bb_vs_pin_1x2_桑坦德竞技_埃尔切_和局": "lost",
     "bb_vs_pin_1x2_水晶宫_曼彻斯特城_和局": "lost",
-    "bb_vs_pin_1x2_里尔_巴黎圣日耳曼_和局": "won"
+    "bb_vs_pin_1x2_里尔_巴黎圣日耳曼_和局": "won",
+    "bb_vs_pin_1x2_巴黎圣日耳曼_摩纳哥_双重机会-和局/客": "won"
   },
   "history": [
     {
@@ -8125,6 +8103,22 @@
       "home_cn": "苏黎世",
       "away_cn": "年轻人",
       "market_type": "上半场正确比分2-0"
+    },
+    {
+      "id": "bb_vs_pin_1x2_巴黎圣日耳曼_摩纳哥_双重机会-和局/客",
+      "match": "75¥ @ 3.64",
+      "date": "2026-09-05T01:49:19.527254+00:00",
+      "stake": 75,
+      "odds": 3.64,
+      "profit": 198.0,
+      "result": "won",
+      "status": "won",
+      "source": "bb_vs_pinnacle",
+      "home_cn": "巴黎圣日耳曼",
+      "away_cn": "摩纳哥",
+      "market_type": "1x2",
+      "league": "法国甲级联赛",
+      "sport": "football"
     }
   ],
   "daily_budget": {

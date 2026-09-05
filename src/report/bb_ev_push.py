@@ -805,13 +805,38 @@ def _release_direction(designation: str, sub_market: str) -> str:
     return "其他"
 
 
-def _is_direction_blocked(sport: str, sub_market: str, designation: str) -> bool:
+def _time_window(match_epoch):
+    """时间窗分档(与 compute_market_release._window 同口径): 临场<6h/近场6-24h/早盘24-72h。"""
+    if not match_epoch:
+        return None
+    try:
+        lead = float(match_epoch) - time.time()
+    except (TypeError, ValueError):
+        return None
+    if lead < 0:
+        return None
+    if lead < 6 * 3600:
+        return "临场"
+    if lead < 24 * 3600:
+        return "近场"
+    if lead < 72 * 3600:
+        return "早盘"
+    return None
+
+
+def _is_direction_blocked(sport: str, sub_market: str, designation: str, match_epoch=None) -> bool:
     """该方向是否被方向级封杀(释放盘口里负 ROI 方向, 2026-09-03)。清单无此字段→False。"""
     rl = _load_release_list()
     if not rl:
         return False
     dr = _release_direction(designation, sub_market)
-    return [sport, sub_market, dr] in rl.get("direction_blocked", [])
+    if [sport, sub_market, dr] in rl.get("direction_blocked", []):
+        return True
+    # 时间窗级封杀(2026-09-05): 方向整体正、但某时间窗负 ROI(如 1x2平 近场-47.5%)
+    w = _time_window(match_epoch)
+    if w and [sport, sub_market, dr, w] in rl.get("direction_window_blocked", []):
+        return True
+    return False
 
 
 def _direction_min_ev(sport: str, sub_market: str, designation: str):
@@ -1741,7 +1766,9 @@ def _collect_opportunities(match, market_key):
 
         # 方向级封杀(2026-09-03): 释放盘口里负 ROI 方向不投(1x2主/客、dc主)。
         # 盘口级 ROI 掩盖方向级 edge(1x2整体+0.5%, 但和局+37.4% vs 主/客负)。
-        if _is_direction_blocked(match.get("sport", ""), sub_market, opp.get("designation", "")):
+        # 时间窗级封杀(2026-09-05): 方向整体正但某时间窗负(如 1x2平近场-47.5%)。
+        if _is_direction_blocked(match.get("sport", ""), sub_market, opp.get("designation", ""),
+                                 match.get("start_time_pin_epoch")):
             continue
 
         # 自有标定喂 EV 层(2026-08-29): 薄锚盘口(ht_dc等)用真实结算胜率覆盖 Pin 假价重算 EV,

@@ -1006,8 +1006,8 @@
       "success_rate": 0.0
     },
     "法国甲级联赛": {
-      "attempts": 1,
-      "successes": 1,
+      "attempts": 2,
+      "successes": 2,
       "success_rate": 1.0
     },
     "ATP - 大满贯美国网球公开赛": {
@@ -1186,7 +1186,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-09-04T05:28:59.315431+00:00",
+  "updated": "2026-09-05T01:49:19.573765+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
