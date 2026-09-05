@@ -1,30 +1,7 @@
 {
-  "balance": 20350.53,
+  "balance": 20609.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_黑牛_泰泰钦加莱_客胜",
-      "sport": "football",
-      "league": "莫桑比克冠军联赛",
-      "home_team": "黑牛",
-      "away_team": "泰泰钦加莱",
-      "home_cn": "黑牛",
-      "away_cn": "泰泰钦加莱",
-      "market": "1x2",
-      "market_type": "客胜",
-      "sub_market": "1x2",
-      "line": "",
-      "odds": 9.35,
-      "stake": 259.0,
-      "model_prob": 0.1429,
-      "ev_pct": 33.61,
-      "pin_odds": 4.68,
-      "fair_price": 6.998,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1788366600,
-      "created_at": "2026-09-02T09:27:05.831874+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_皇家社会_(女)_切尔西_(女)_双重机会-主/和局",
       "sport": "football",
@@ -8033,6 +8010,21 @@
       "sport": "football",
       "home_cn": "霍多宁",
       "away_cn": "奥洛穆茨二队",
+      "market_type": "客胜"
+    },
+    {
+      "id": "bb_vs_pin_1x2_黑牛_泰泰钦加莱_客胜",
+      "match": "259¥ @ 9.35 (超时作废)",
+      "date": "2026-09-05T09:39:45.199392+00:00",
+      "stake": 259.0,
+      "odds": 9.35,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "莫桑比克冠军联赛",
+      "sport": "football",
+      "home_cn": "黑牛",
+      "away_cn": "泰泰钦加莱",
       "market_type": "客胜"
     }
   ],
