@@ -1,5 +1,5 @@
 {
-  "balance": 20494.53,
+  "balance": 20459.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -184,6 +184,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788615000,
       "created_at": "2026-09-05T10:27:05.991633+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_若基诺鱼雷_高美尔_让球客胜(0)",
+      "sport": "football",
+      "league": "白俄罗斯超级联赛",
+      "home_team": "若基诺鱼雷",
+      "away_team": "高美尔",
+      "home_cn": "若基诺鱼雷",
+      "away_cn": "高美尔",
+      "market": "handicap",
+      "market_type": "让球客胜(0)",
+      "sub_market": "hc",
+      "line": "0",
+      "odds": 2.0,
+      "stake": 35,
+      "model_prob": 0.5474,
+      "ev_pct": 9.48,
+      "pin_odds": 1.7576,
+      "fair_price": 1.8269,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788611400,
+      "created_at": "2026-09-05T12:09:24.650180+00:00",
       "track_only": false
     }
   ],
@@ -8053,8 +8076,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-05",
-    "used": 435.0,
-    "bets": 5
+    "used": 470.0,
+    "bets": 6
   },
   "updated": null
 }
