@@ -155,24 +155,49 @@ def auto_bet_flow(opportunities, token=None, domain=None):
         time.sleep(_random.uniform(20, 90))
 
         if code == 0:
-            success.append({
+            rec = {
                 "home": home, "away": away, "sub_market": sub, "designation": desig,
                 "odds": odds, "stake": stake, "order_id": order_id,
-            })
+                "ts": time.time(),
+            }
+            success.append(rec)
             sent_dingtalk.append(f"✅ {home} vs {away} | {desig} @{odds} | 注额¥{stake:.0f} | 订单{order_id}")
+            _append_bet_history(rec)
         else:
             failed.append({"home": home, "away": away, "reason": f"code={code} {msg}"})
 
-    # 下单成功后发钉钉
+    # 下单成功后发钉钉(只发已投注金额+明细, 不发推荐)
     if sent_dingtalk:
         try:
             from config.settings import send_dingtalk
-            body = "**已投注比赛**\n\n" + "\n".join(sent_dingtalk)
-            send_dingtalk(f"🟦 BB 自动投注 {len(sent_dingtalk)} 注", body)
+            total = sum(o.get("stake", 0) for o in success)
+            body = f"**已投注 {len(sent_dingtalk)} 注 / ¥{total:.0f}**\n\n" + "\n".join(sent_dingtalk)
+            send_dingtalk("🟦 BB 自动投注", body)
         except Exception as e:
             pass
 
     return {"success": success, "failed": failed}
+
+
+def _append_bet_history(rec):
+    """把已投注明细追加到 bet_history.json(供每日 9 点日报)。"""
+    try:
+        hist_file = DATA_DIR / "bet_history.json"
+        data = {}
+        if hist_file.exists():
+            try:
+                data = json.loads(hist_file.read_text())
+            except Exception:
+                data = {}
+        bets = data.get("bets", [])
+        bets.append(rec)
+        # 只保留最近 7 天
+        cutoff = time.time() - 7 * 86400
+        bets = [b for b in bets if b.get("ts", 0) > cutoff]
+        data["bets"] = bets
+        hist_file.write_text(json.dumps(data, ensure_ascii=False, indent=2))
+    except Exception:
+        pass
 
 
 if __name__ == "__main__":

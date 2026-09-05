@@ -75,6 +75,7 @@ SCHEDULE = [
     # 数据盘口日报 07:20: 各盘口门槛/CLV/ROI + 门槛变动, 推钉钉(只读本地数据不拉Pin, 轻量)
     ("market_report",     "07:20", "do_market_report", {}),
     ("full_scan_morning",  "09:00", "do_full_scan",  {"bet": True}),
+    ("bet_report",        "09:00", "do_bet_report",  {}),       # 每日已投注明细日报(2026-09-05 用户要求)
     ("self_repair",       "09:30", "do_self_repair", {}),       # 自检+自动修复: 锁文件/缓存/指纹/连通性
     ("time_calibration",  "09:35", "do_time_calibration", {}),  # 时间校准: BB/Pin/系统时钟对齐
     ("health_check",       "09:40", "do_health_check", {}),
@@ -739,6 +740,14 @@ class PipelineOrchestrator:
             dr()
         finally:
             sys.argv = old_argv
+
+    def do_bet_report(self):
+        """每日已投注明细日报(2026-09-05 用户要求: 每天9点发已投注比赛明细)。"""
+        try:
+            from scripts.daily_bet_report import main as br
+            br()
+        except Exception as e:
+            logger.warning("已投注明细日报失败: %s", e)
 
     def do_data_sync_summary(self):
         """V5.1: 每日9点数据积累量摘要 — 各数据源条数统计推钉钉。"""
