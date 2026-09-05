@@ -3539,6 +3539,11 @@
     "bb": 4.33,
     "ts": 1788586285.25142
   },
+  "football|Norway 1st Division|海于格松|松达尔|双重机会-和局/客|dc|2026-09-05": {
+    "ev": 3.75,
+    "bb": 3.86,
+    "ts": 1788616450.449217
+  },
   "football|Norway Eliteserien|Aalesunds FK|IK Start|上半场正确比分0-2|correct_score_ht|2026-09-05": {
     "ev": 7.18,
     "ts": 1788282057.818305
@@ -4286,6 +4291,11 @@
   "football|Scotland Championship|Queens Park FC|Greenock Morton FC|让球主胜|1x2|2026-09-05": {
     "ev": 9.88,
     "ts": 1788488352.564384
+  },
+  "football|Scotland Championship|女王公园|摩顿|和局|1x2|2026-09-05": {
+    "ev": 7.47,
+    "bb": 3.46,
+    "ts": 1788616450.449389
   },
   "football|Scotland Championship|女王公园|摩顿|让球主胜(-0/0.5)|hc|-0/0.5|2026-09-05": {
     "ev": 9.88,
@@ -5708,14 +5718,14 @@
     "bb": 1.97,
     "ts": 1788512970.2798562
   },
-  "football|Norway 1st Division|海于格松|松达尔|双重机会-和局/客|dc|2026-09-05": {
-    "ev": 3.75,
-    "bb": 3.86,
-    "ts": 1788616450.449217
+  "football|Algeria Ligue 1|克莱夫|贝鲁扎达|和局|1x2|2026-09-06": {
+    "ev": 5.99,
+    "bb": 2.8,
+    "ts": 1788617157.2785
   },
-  "football|Scotland Championship|女王公园|摩顿|和局|1x2|2026-09-05": {
-    "ev": 7.47,
-    "bb": 3.46,
-    "ts": 1788616450.449389
+  "football|Scotland Championship|帕尔蒂克|艾尔联|和局|1x2|2026-09-05": {
+    "ev": 6.77,
+    "bb": 4.73,
+    "ts": 1788617157.278547
   }
 }
