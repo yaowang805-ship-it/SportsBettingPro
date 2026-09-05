@@ -140,6 +140,11 @@ def auto_bet_flow(opportunities, token=None, domain=None):
         # 下单(含注额上限检查)
         code, order_id, msg = place_single_bet(
             market_id, odds, option_type, stake, token=token, domain=domain, match_id=match_id)
+
+        # 防风控(2026-09-05): 每注之间随机间隔 20~90 秒, 模拟真人看盘思考, 避免秒下多注被风控识别
+        import random as _random
+        time.sleep(_random.uniform(20, 90))
+
         if code == 0:
             success.append({
                 "home": home, "away": away, "sub_market": sub, "designation": desig,

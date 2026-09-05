@@ -1368,13 +1368,14 @@ class PipelineOrchestrator:
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
-            # 2026-09-02 结合提取速度重定频次(职业团队对标: 捕获准确CLV要临场前重新拉价,
-            # 早盘是真edge来源)。关键约束: 一轮增量扫描拉Pin耗时 near≈8-9min(注释实测), far联赛多更久,
-            # 所以间隔<耗时会被互斥锁跳过(5min其实是虚设)。原则: 早盘(真edge)保持高频, 临场(假edge)降频省Pin。
-            #   far 24-72h: 10min(真edge +2.96%, 保持, 已接近一轮耗时下限)
-            #   near 6-24h: 9min(对齐一轮8-9min耗时, 消除5min虚设导致的无效触发)
-            #   urgent <6h: 20min(假edge -1.49%, 大幅降频省Pin给早盘)
-            for tw, interval, label in [("far", 600, "早盘24-72h"), ("near", 540, "中程6-24h"), ("urgent", 1200, "临场<6h")]:
+            # 2026-09-05 提高频次(用户要求: 临场赔率变动快, 20min 错过机会)。
+            # 三维释放已发现 dc客临场+73.4%/1x2平临场+24% 是真edge, 值得高频。
+            # 提速到16线程后一轮~1.2min, 5min间隔可行(间隔>耗时, 不被互斥锁跳过)。
+            # Pin 瞬时速率仍 12req/s 限速内, 只增请求总量不增瞬时, 风控风险低。
+            #   far 24-72h: 10min(早盘真edge +2.96%)
+            #   near 6-24h: 6min
+            #   urgent <6h: 5min(临场真edge格子, 提高频次)
+            for tw, interval, label in [("far", 600, "早盘24-72h"), ("near", 360, "中程6-24h"), ("urgent", 300, "临场<6h")]:
                 last_key = f"_last_inc_{tw}"
                 last_val = getattr(self, last_key, None)
                 if last_val is None:
