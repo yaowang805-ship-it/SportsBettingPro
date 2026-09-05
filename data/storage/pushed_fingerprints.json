@@ -736,6 +736,11 @@
     "bb": 3.34,
     "ts": 1788443288.578645
   },
+  "football|Costa Rica Primera Division|阿拉胡伦斯|萨普里萨|让球主胜(-0/0.5)|hc|-0/0.5|2026-09-06": {
+    "ev": 6.13,
+    "bb": 2.04,
+    "ts": 1788596423.17103
+  },
   "football|Croatia HNL League|GNK Dinamo Zagreb|HNK Gorica|上半场正确比分0-1|correct_score_ht|2026-09-05": {
     "ev": 10.56,
     "ts": 1788391297.761643
@@ -5648,9 +5653,9 @@
     "bb": 1.97,
     "ts": 1788512970.2798562
   },
-  "football|Costa Rica Primera Division|阿拉胡伦斯|萨普里萨|让球主胜(-0/0.5)|hc|-0/0.5|2026-09-06": {
-    "ev": 6.13,
-    "bb": 2.04,
-    "ts": 1788596423.17103
+  "football|Japan Football League|FC本田|三重威蒂恩|让球客胜(+0/0.5)|hc|+0/0.5|2026-09-05": {
+    "ev": 8.94,
+    "bb": 2.03,
+    "ts": 1788596665.987249
   }
 }

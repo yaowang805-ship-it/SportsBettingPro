@@ -1,5 +1,5 @@
 {
-  "balance": 20470.53,
+  "balance": 20350.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -161,6 +161,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788534300,
       "created_at": "2026-09-04T10:30:45.107549+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_FC本田_三重威蒂恩_让球客胜(+0/05)",
+      "sport": "football",
+      "league": "日本足球联赛",
+      "home_team": "FC本田",
+      "away_team": "三重威蒂恩",
+      "home_cn": "FC本田",
+      "away_cn": "三重威蒂恩",
+      "market": "handicap",
+      "market_type": "让球客胜(+0/0.5)",
+      "sub_market": "hc",
+      "line": "+0/0.5",
+      "odds": 2.03,
+      "stake": 120,
+      "model_prob": 0.5367,
+      "ev_pct": 8.94,
+      "pin_odds": 1.7519,
+      "fair_price": 1.8634,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788598800,
+      "created_at": "2026-09-05T08:24:25.943897+00:00",
       "track_only": false
     }
   ],
@@ -8015,8 +8038,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-05",
-    "used": 200.0,
-    "bets": 3
+    "used": 320.0,
+    "bets": 4
   },
   "updated": null
 }
