@@ -1502,6 +1502,8 @@ def _merge_single_match(platform_matches):
     # 导致"客胜其实是 BB 更高、却被标成 FB价"的错标(2026-08-23 用户反馈)。
     sources["ml_dir"] = None
     sources["ht_ml_dir"] = None
+    # 让球盘逐方向(home/away)来源(2026-09-05): 整场 handicap 单值会错标(如主胜是BB价/客胜是FB价却整场标FB)
+    sources["handicap_dir"] = None
 
     def _update_source(market_key, base_val, plat_val, platform):
         """当 base_val < plat_val 时才更新 source 为指定平台，否则不变。"""
