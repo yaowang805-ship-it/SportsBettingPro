@@ -166,7 +166,9 @@ def _detect_pin_changes(bb_matches, all_pin_leagues, active_leagues, time_window
             return (bb_league, pid, None)
 
     _fetched = {}   # (bb_league, pid) -> matchups
-    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as _exec:
+    # 2026-09-05 提速: 8→16 线程。Pin 响应慢(~5s/请求)是瓶颈, 提高并行度缩短扫描(~2min→~1.2min)。
+    # 仍低于 Pin 限速 12 req/s(封禁线 16 req/s), 不增风控。
+    with concurrent.futures.ThreadPoolExecutor(max_workers=16) as _exec:
         _futs = [_exec.submit(_fetch_one, lg, pid) for lg, pids in league_pids for pid in pids]
         for _f in concurrent.futures.as_completed(_futs):
             try:
