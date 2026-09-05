@@ -3951,7 +3951,7 @@ def main():
                     skip_dedup=skip_dedup,
                     skip_freshness=skip_freshness,
                     label=label_flag,
-                    skip_dingtalk=_night)
+                    skip_dingtalk=True)  # 2026-09-05 用户要求: 不推投注推荐, 只推已投注明细(auto_bet_flow里发)
     return body
 
 
