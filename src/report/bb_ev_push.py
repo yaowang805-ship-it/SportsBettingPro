@@ -3825,6 +3825,16 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
             PUSH_STAGING_FILE.write_text(json.dumps(bettable, ensure_ascii=False, indent=2))
             logger.info("推送机会已暂存到 %s，开始投注...", PUSH_STAGING_FILE)
             place_bets_from_push(bettable)
+            # 真实下单(2026-09-05 用户要求全自动): 扫到 +EV → 自动下单 → 钉钉发已投注
+            try:
+                from src.betting.bb_real_bet_flow import auto_bet_flow
+                _res = auto_bet_flow(bettable)
+                logger.info("自动下单: 成功 %d 注, 失败 %d 注",
+                            len(_res.get("success", [])), len(_res.get("failed", [])))
+                for _f in _res.get("failed", [])[:5]:
+                    logger.info("  下单失败: %s", _f)
+            except Exception as _e:
+                logger.warning("自动下单异常: %s", _e)
         elif place_bets:
             logger.info("无可投注机会（全部被结算可行性过滤）")
         # 指纹永存 — 无论模式, 推送成功即记录
