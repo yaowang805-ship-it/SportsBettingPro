@@ -1,5 +1,5 @@
 {
-  "balance": 2770.53,
+  "balance": 2720.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -299,6 +299,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788737400,
       "created_at": "2026-09-04T13:47:12.776444+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_伯希纳博布鲁伊斯克_利文哥特奴_让球客胜(-1)",
+      "sport": "football",
+      "league": "白俄罗斯超级联赛",
+      "home_team": "伯希纳博布鲁伊斯克",
+      "away_team": "利文哥特奴",
+      "home_cn": "伯希纳博布鲁伊斯克",
+      "away_cn": "利文哥特奴",
+      "market": "handicap",
+      "market_type": "让球客胜(-1)",
+      "sub_market": "hc",
+      "line": "-1",
+      "odds": 2.13,
+      "stake": 50,
+      "model_prob": 0.5407,
+      "ev_pct": 15.16,
+      "pin_odds": 1.7634,
+      "fair_price": 1.8496,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788696000,
+      "created_at": "2026-09-05T00:49:28.178061+00:00",
       "track_only": false
     }
   ],
@@ -8105,9 +8128,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-09-04",
-    "used": 604.0,
-    "bets": 8
+    "date": "2026-09-05",
+    "used": 50.0,
+    "bets": 1
   },
   "updated": null
 }
