@@ -28,6 +28,23 @@ from src.betting.bb_auto_bet import (
 from config.settings import DATA_DIR
 
 
+def _win_label(epoch):
+    """时间窗标签(推送用): 滚球(已开赛/无epoch)/临场<6h/近场6-24h/远场24-72h。"""
+    if not epoch:
+        return "滚球"
+    try:
+        lead = float(epoch) - time.time()
+    except (TypeError, ValueError):
+        return "滚球"
+    if lead < 0:
+        return "滚球"
+    if lead < 6 * 3600:
+        return "临场"
+    if lead < 24 * 3600:
+        return "近场"
+    return "远场"
+
+
 def _get_all_matches(token, domain):
     """getList 拉全量比赛, 返回 list[record]。"""
     import requests
@@ -161,7 +178,7 @@ def auto_bet_flow(opportunities, token=None, domain=None):
                 "ts": time.time(),
             }
             success.append(rec)
-            sent_dingtalk.append(f"✅ {home} vs {away} | {desig} @{odds} | 注额¥{stake:.0f} | 订单{order_id}")
+            sent_dingtalk.append(f"✅【{_win_label(opp.get('_pin_epoch'))}】{home} vs {away} | {desig} @{odds} | 注额¥{stake:.0f} | 订单{order_id}")
             _append_bet_history(rec)
         else:
             failed.append({"home": home, "away": away, "reason": f"code={code} {msg}"})

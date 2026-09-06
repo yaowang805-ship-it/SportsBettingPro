@@ -1285,6 +1285,8 @@ def _calc_kelly_stakes(opps: list) -> list:
                     stake = int(stake * 0.7)
             except (ValueError, TypeError):
                 pass
+        # 四舍五入到整十: 避免 ¥67/¥82 有零有整被风控识别为机器下单(2026-09-06)
+        stake = int(round(stake / 10.0) * 10)
         o["_raw_stake"] = stake
         # 2026-08-27 用户澄清: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库(record_bets)
         o["_stake"] = stake
