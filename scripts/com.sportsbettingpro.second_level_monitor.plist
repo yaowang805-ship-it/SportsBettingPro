@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.sportsbettingpro.second_level_monitor</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/wangyao/SportsBettingPro/.venv312/bin/python</string>
+        <string>-u</string>
+        <string>-m</string>
+        <string>src.scrapers.second_level_monitor</string>
+        <string>--threshold</string>
+        <string>3</string>
+        <string>--auto-bet</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/wangyao/SportsBettingPro</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/wangyao/SportsBettingPro/data/logs/second_level_monitor.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/wangyao/SportsBettingPro/data/logs/second_level_monitor.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+</dict>
+</plist>

@@ -1,5 +1,5 @@
 {
-  "balance": 21251.53,
+  "balance": 21214.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -207,6 +207,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788696000,
       "created_at": "2026-09-06T00:20:07.965585+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_弗罗勒斯塔_马林加_客胜",
+      "sport": "football",
+      "league": "巴西丙级联赛",
+      "home_team": "弗罗勒斯塔",
+      "away_team": "马林加",
+      "home_cn": "弗罗勒斯塔",
+      "away_cn": "马林加",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.73,
+      "stake": 37,
+      "model_prob": 0.3812,
+      "ev_pct": 4.06,
+      "pin_odds": 2.44,
+      "fair_price": 2.6234,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788721200,
+      "created_at": "2026-09-06T05:44:21.607996+00:00",
       "track_only": false
     }
   ],
@@ -8123,8 +8146,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-06",
-    "used": 74.0,
-    "bets": 2
+    "used": 111.0,
+    "bets": 3
   },
   "updated": null
 }
