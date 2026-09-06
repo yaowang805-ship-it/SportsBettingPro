@@ -279,27 +279,31 @@ class SecondLevelMonitor:
             desig = b.get("designation", ""); line = b.get("line")
             stake = float(b.get("stake", 0)); odds = float(b.get("bb_odds", 0))
             home, away = sc[0], sc[1]
-            # 判输赢
+            # 判输赢(含走盘: 总分==盘口线 或 让球后打平 = 退款 profit 0)
             if desig in ("主胜",):
-                won = home > away
+                diff = home - away
             elif desig in ("客胜",):
-                won = away > home
+                diff = away - home
             elif desig in ("和局",):
-                won = home == away
+                diff = 0.0 if home == away else (1.0 if home > away else -1.0)
             elif line is None:
                 continue  # hc/ou 缺 line, 跳(旧记录)
             elif desig in ("让球主胜",):
-                won = (home + line) > away
+                diff = (home + line) - away
             elif desig in ("让球客胜",):
-                won = (away + line) > home
+                diff = (away + line) - home
             elif desig in ("大球",):
-                won = (home + away) > line
+                diff = (home + away) - line
             elif desig in ("小球",):
-                won = (home + away) < line
+                diff = line - (home + away)
             else:
                 continue
-            profit = stake * (odds - 1) if won else -stake
-            b["settled"] = True; b["result"] = "won" if won else "lost"; b["profit"] = round(profit, 1)
+            if abs(diff) < 0.0001:
+                result = "push"; profit = 0.0
+            else:
+                result = "won" if diff > 0 else "lost"
+                profit = stake * (odds - 1) if result == "won" else -stake
+            b["settled"] = True; b["result"] = result; b["profit"] = round(profit, 1)
             changed = True
         if changed:
             LIVE_PAPER_FILE.write_text(json.dumps(bets, ensure_ascii=False, indent=1))
