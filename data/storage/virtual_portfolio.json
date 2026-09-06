@@ -1,5 +1,5 @@
 {
-  "balance": 20743.53,
+  "balance": 20663.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -414,6 +414,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788708600,
       "created_at": "2026-09-06T10:36:31.943770+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_包尔科维切_卡丽娜古宾_客胜",
+      "sport": "football",
+      "league": "波兰丙级联赛",
+      "home_team": "包尔科维切",
+      "away_team": "卡丽娜古宾",
+      "home_cn": "包尔科维切",
+      "away_cn": "卡丽娜古宾",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.59,
+      "stake": 80,
+      "model_prob": 0.2411,
+      "ev_pct": 10.67,
+      "pin_odds": 3.47,
+      "fair_price": 4.1474,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788703200,
+      "created_at": "2026-09-06T10:59:29.725581+00:00",
       "track_only": false
     }
   ],
@@ -8330,8 +8353,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-06",
-    "used": 582.0,
-    "bets": 11
+    "used": 662.0,
+    "bets": 12
   },
   "updated": null
 }
