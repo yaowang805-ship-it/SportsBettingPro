@@ -2123,6 +2123,11 @@
     "ev": 2.96,
     "ts": 1788375737.811785
   },
+  "football|Thailand League Cup|福特拉联|班卡普|客胜|1x2|2026-09-06": {
+    "ev": 10.56,
+    "bb": 13.3,
+    "ts": 1788676727.874454
+  },
   "football|Turkey 1. Lig|Antalyaspor AS|Sivasspor|上半场正确比分0-2|correct_score_ht|2026-09-07": {
     "ev": 20.11,
     "ts": 1788478811.900673
@@ -2495,6 +2500,11 @@
     "bb": 2.02,
     "ts": 1788601198.600864
   },
+  "football|Ukraine Premier League|基辅迪纳摩|LNZ莱贝德恩|让球主胜(-0/0.5)|hc|-0/0.5|2026-09-06": {
+    "ev": 7.73,
+    "bb": 2.03,
+    "ts": 1788676727.874539
+  },
   "football|Uruguay Primera Division|Cerro|Racing Club Montevideo|上半场双重机会-主/客|ht_dc|2026-09-06": {
     "ev": 4.31,
     "ts": 1788441457.256277
@@ -2515,14 +2525,9 @@
     "ev": 1.05,
     "ts": 1788477372.833226
   },
-  "football|Thailand League Cup|福特拉联|班卡普|客胜|1x2|2026-09-06": {
-    "ev": 10.56,
-    "bb": 13.3,
-    "ts": 1788676727.874454
-  },
-  "football|Ukraine Premier League|基辅迪纳摩|LNZ莱贝德恩|让球主胜(-0/0.5)|hc|-0/0.5|2026-09-06": {
-    "ev": 7.73,
-    "bb": 2.03,
-    "ts": 1788676727.874539
+  "football|Slovenia 3. SNL|维代姆|多布罗夫斯|客胜|1x2|2026-09-06": {
+    "ev": 6.88,
+    "bb": 9.65,
+    "ts": 1788677301.893596
   }
 }
