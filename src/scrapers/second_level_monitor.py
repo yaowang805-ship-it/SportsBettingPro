@@ -156,6 +156,19 @@ def _match_2way_line(line, d2way):
     return None
 
 
+def _is_settleable(desig, line):
+    """盘口能否被 _settle_paper_bets 判输赢。
+
+    1x2(主/和/客) 不需要 line; hc/ou(让球/大小) 必须带 line(缺 line 进库也无法结算)。
+    其它盘口(如 dc 的"主/和")当前结算逻辑不支持, 一律判为不可结算。
+    """
+    if desig in ("主胜", "客胜", "和局"):
+        return True
+    if desig in ("让球主胜", "让球客胜", "大球", "小球"):
+        return line is not None
+    return False
+
+
 class SecondLevelMonitor:
     def __init__(self, threshold=3.0, on_signal=None, auto_bet=False, stake=None):
         self.threshold = threshold
@@ -221,7 +234,15 @@ class SecondLevelMonitor:
             pass
 
     def _append_live_paper_bet(self, sig):
-        """滚球虚拟投注进观察库(live_paper_bets.json), 待结算积累数据。"""
+        """滚球虚拟投注进观察库(live_paper_bets.json), 待结算积累数据。
+
+        结算护栏: 只收 _settle_paper_bets 能判输赢的盘口, 缺 line 的 hc/ou 或未支持
+        盘口一律不进库 —— 进库却结算不了会污染 ROI 统计(历史 88 条 line=None 已剔)。
+        """
+        desig = sig.get("desig", "")
+        if not _is_settleable(desig, sig.get("line")):
+            print(f"[slm] 跳过无法结算的虚拟投注({desig!r} line={sig.get('line')!r}), 不进观察库", flush=True)
+            return
         try:
             data = []
             if LIVE_PAPER_FILE.exists():
