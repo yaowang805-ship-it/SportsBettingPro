@@ -744,8 +744,12 @@ class PipelineOrchestrator:
     def do_bet_report(self):
         """每日已投注明细日报(2026-09-05 用户要求: 每天9点发已投注比赛明细)。"""
         try:
-            from scripts.daily_bet_report import main as br
-            br()
+            import importlib.util
+            _spec = importlib.util.spec_from_file_location(
+                "daily_bet_report", str(SRC_DIR / "scripts" / "daily_bet_report.py"))
+            _br_mod = importlib.util.module_from_spec(_spec)
+            _spec.loader.exec_module(_br_mod)
+            _br_mod.main()
         except Exception as e:
             logger.warning("已投注明细日报失败: %s", e)
 
