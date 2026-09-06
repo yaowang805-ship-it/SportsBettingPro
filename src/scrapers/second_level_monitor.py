@@ -230,8 +230,9 @@ class SecondLevelMonitor:
                 "ts": time.time(), "match_id": sig["match_id"],
                 "market_id": sig.get("market_id"), "option_type": sig.get("option_type"),
                 "home": sig["match"].get("home", ""), "away": sig["match"].get("away", ""),
-                "designation": sig["desig"], "bb_odds": sig["bb_odds"],
-                "fair": sig["fair"], "ev": sig["ev"], "stake": sig["_stake"],
+                "designation": sig["desig"], "sub": sig.get("sub"), "line": sig.get("line"),
+                "bb_odds": sig["bb_odds"], "fair": sig["fair"], "ev": sig["ev"],
+                "stake": sig["_stake"], "settled": False, "result": None, "profit": None,
             })
             LIVE_PAPER_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1))
         except Exception as e:
