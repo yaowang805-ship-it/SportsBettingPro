@@ -251,13 +251,19 @@ class SecondLevelMonitor:
             data = []
             if LIVE_PAPER_FILE.exists():
                 data = json.loads(LIVE_PAPER_FILE.read_text())
+            # 指纹去重: 同一 (match_id, market_id, option_type, sub) 只记一次, 避免每 2s 轮询重复入库
+            key = (sig["match_id"], sig.get("market_id"), sig.get("option_type"), sig.get("sub"))
+            for b in data:
+                if (b.get("match_id"), b.get("market_id"), b.get("option_type"), b.get("sub")) == key:
+                    return
             data.append({
                 "ts": time.time(), "match_id": sig["match_id"],
                 "market_id": sig.get("market_id"), "option_type": sig.get("option_type"),
+                "sport": sig.get("sport", ""),
                 "home": sig["match"].get("home", ""), "away": sig["match"].get("away", ""),
                 "designation": sig["desig"], "sub": sig.get("sub"), "line": sig.get("line"),
                 "bb_odds": sig["bb_odds"], "fair": sig["fair"], "ev": sig["ev"],
-                "stake": sig["_stake"], "settled": False, "result": None, "profit": None,
+                "stake": sig.get("_stake", 0), "settled": False, "result": None, "profit": None,
             })
             LIVE_PAPER_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1))
         except Exception as e:
@@ -340,6 +346,19 @@ class SecondLevelMonitor:
             won_n = sum(1 for b in settled if b.get("result") == "won")
             roi = pnl / stk * 100 if stk else 0
             print(f"[slm] 虚拟投注结算: {len(settled)}/{len(bets)} 条, 盈亏 {pnl:+.1f}, ROI {roi:+.1f}% (胜{won_n})", flush=True)
+            # 按运动×盘口分账(2026-09-06): 只打印有样本的格子, 供判断哪个运动哪个盘口盈利
+            from collections import defaultdict
+            grid = defaultdict(lambda: [0.0, 0.0, 0])
+            for b in settled:
+                _sp = b.get("sport")
+                sp = BB_SPORT_CN.get(_sp) if isinstance(_sp, int) else (f"sp{_sp}" if _sp else "未标运动")
+                k = (sp, b.get("sub", "?"))
+                grid[k][0] += b.get("profit", 0) or 0
+                grid[k][1] += b.get("stake", 0) or 0
+                grid[k][2] += 1
+            for (sp, sub), (pnl2, stk2, n2) in sorted(grid.items(), key=lambda x: -x[1][2]):
+                if stk2 > 0:
+                    print(f"    {sp}/{sub}: n={n2} 盈亏{pnl2:+.0f} ROI{pnl2/stk2*100:+.1f}%", flush=True)
 
     def _handle_live_g04(self, match_id, data):
         """滚球 G04: 用 Pin live 公平价(moneyline/spread/total)算 EV。1x2/让球/大小球。"""
@@ -426,22 +445,25 @@ class SecondLevelMonitor:
                 self._try_live_auto_bet(sig)
 
     def _try_live_auto_bet(self, sig):
-        """滚球秒级下单: 预算 ¥1000 封顶, 超额转虚拟投注进观察库。"""
-        self._load_live_spent()
+        """滚球机会处理: 一律先进观察库(去重), 实盘下单由 LIVE_REAL_BET_ENABLED 控制。"""
         stake = self._stake_for(sig)
+        sig["_stake"] = stake
+        # 所有 +EV 机会都进观察库(去重), 供按运动×盘口分账统计
+        self._append_live_paper_bet(sig)
+        if not LIVE_REAL_BET_ENABLED:
+            return
         if stake < MIN_STAKE:
             return
+        self._load_live_spent()
         tag = f"{sig['match']['home']} vs {sig['match']['away']} {sig['desig']}"
         # 延迟修正: 下注前重拉 Pin 滚球价, 重验 EV(缓存 30s 可能过期, 防止临时高价假机会)
         fresh_ev = self._reverify_live_ev(sig)
         if fresh_ev is not None and fresh_ev < self.threshold:
             print(f"  ⏸️ Pin 滚球价已漂移(重验 EV {fresh_ev:+.2f}% < {self.threshold}%), 放弃 {tag}", flush=True)
             return
-        sig["_stake"] = stake
-        # 预算封顶 → 虚拟投注(不进真下单)
+        # 预算封顶 → 不再真下单(已进观察库)
         if self._live_spent + stake > LIVE_BUDGET:
-            self._append_live_paper_bet(sig)
-            print(f"  📝 滚球预算已满(已投¥{self._live_spent:.0f}/{LIVE_BUDGET}), 转虚拟投注 {tag}", flush=True)
+            print(f"  📝 滚球预算已满(已投¥{self._live_spent:.0f}/{LIVE_BUDGET}), 已记观察库 {tag}", flush=True)
             return
         market_id = sig.get("market_id")
         if market_id is None:

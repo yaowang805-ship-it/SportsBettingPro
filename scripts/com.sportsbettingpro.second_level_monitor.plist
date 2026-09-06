@@ -13,7 +13,7 @@
         <string>-m</string>
         <string>src.scrapers.second_level_monitor</string>
         <string>--threshold</string>
-        <string>3</string>
+        <string>0.5</string>
         <string>--auto-bet</string>
     </array>
 
