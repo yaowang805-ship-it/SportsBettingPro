@@ -1275,7 +1275,7 @@ def _calc_kelly_stakes(opps: list) -> list:
                 _mult = _wmult
         _expected_pushes = _estimate_daily_total_pushes(_get_today_pushed_count())
         stake = int(DAILY_STAKE_TARGET * _mult / (_expected_pushes * MEDIUM_EDGE_MULT))
-        stake = min(stake, int(TOTAL_DAILY_BUDGET * 0.06))  # 单注上限 ¥1200
+        stake = min(stake, 400)  # 单注上限 ¥400(2026-09-06 用户要求: 实盘单注≤400)
         # Pin 低注额上限 = 定价信心低(尺子不准, 低上限场次高EV多是测量误差)。CLV 验证:
         # 最低25%($125)中位CLV -3.10%/42%, 次低25%($200) -2.35%/42% 明显负 → 降权(减分项)。
         _pin_ms = o.get("pin_max_stake") or o.get("_pin_max_stake")
@@ -3268,7 +3268,7 @@ def _apply_match_exposure_cap(qualified: list) -> list:
     cooldown_file = DATA_DIR / "push_cooldown.json"
     now = time.time()
     from config.constants import get_dynamic_bankroll
-    match_cap = get_dynamic_bankroll() * 0.06  # 单场累计≤6%日预算 (原 *1.0 是 bug, 100% 敞口)
+    match_cap = 400  # 单场累计≤¥400(2026-09-06 用户要求: 实盘单场含重推≤400)
 
     # 文件锁: 防止并发推送进程 read-modify-write 丢更新 (单场6%上限被绕过)
     import fcntl as _fcntl

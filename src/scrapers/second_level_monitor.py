@@ -34,7 +34,7 @@ COMPARISON_FILE = ROOT / "data" / "storage" / "bb_vs_pinnacle_comparison.json"
 # 让弱 edge 落在 ¥300 上限以下, 强 edge 顶格, 真正按 edge 分档。
 BANKROLL = 5000        # 有效资金(日目标口径, 不是 2 万全仓)
 KELLY_FRACTION = 0.5   # 半凯利
-MAX_STAKE = 300        # 单盘口上限(与 bb_auto_bet MAX_MARKET_STAKE 一致)
+MAX_STAKE = 400        # 单盘口上限(与 bb_auto_bet MAX_MARKET_STAKE 一致, 2026-09-06 用户要求 400)
 MIN_STAKE = 30         # stake<30 拦截铁律
 
 # 滚球验证模式(2026-09-06 用户要求): 滚球秒级自动下单预算 ¥1000, 投满后停真下单,
