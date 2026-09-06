@@ -1,5 +1,5 @@
 {
-  "balance": 19663.53,
+  "balance": 19333.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -575,6 +575,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788732000,
       "created_at": "2026-09-06T13:00:05.395923+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_吉安纳_多洛米蒂贝卢诺_让球主胜(0)",
+      "sport": "football",
+      "league": "意大利丙级联赛",
+      "home_team": "吉安纳",
+      "away_team": "多洛米蒂贝卢诺",
+      "home_cn": "吉安纳",
+      "away_cn": "多洛米蒂贝卢诺",
+      "market": "handicap",
+      "market_type": "让球主胜(0)",
+      "sub_market": "hc",
+      "line": "0",
+      "odds": 1.92,
+      "stake": 330,
+      "model_prob": 0.5474,
+      "ev_pct": 5.11,
+      "pin_odds": 1.7692,
+      "fair_price": 1.8267,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788699600,
+      "created_at": "2026-09-06T13:02:38.359508+00:00",
       "track_only": false
     }
   ],
@@ -8491,8 +8514,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-06",
-    "used": 1662.0,
-    "bets": 18
+    "used": 1992.0,
+    "bets": 19
   },
   "updated": null
 }
