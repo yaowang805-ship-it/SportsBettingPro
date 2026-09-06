@@ -238,6 +238,78 @@ class SecondLevelMonitor:
         except Exception as e:
             print(f"[slm] 虚拟投注写入失败: {str(e)[:80]}", flush=True)
 
+    def _settle_paper_bets(self):
+        """结算虚拟投注(观察库): 查赛果(type=6)判输赢, 写回 result/profit, 打印 ROI。"""
+        from src.betting.bb_auto_bet import read_token, read_domain, _session
+        if not LIVE_PAPER_FILE.exists():
+            return
+        try:
+            bets = json.loads(LIVE_PAPER_FILE.read_text())
+        except Exception:
+            return
+        tok = read_token(); dom = read_domain()
+        if not tok:
+            return
+        # 拉赛果(type=6)拿最终比分
+        s = _session()
+        score_map = {}
+        for sport in (1, 3, 5, 7, 6):
+            try:
+                r = s.post(f"{dom}/v1/match/getList",
+                           json={"sportId": sport, "type": 6, "current": 1, "pageSize": 50,
+                                 "isPC": True, "languageType": "EN"},
+                           headers={"Content-Type": "application/json", "user-token": tok,
+                                    "User-Agent": _UA}, timeout=15, verify=False)
+                d = r.json()
+                for m in (d.get("data") or {}).get("records") or []:
+                    for g in m.get("nsg") or []:
+                        if g.get("pe") == 1000 and g.get("tyg") == 5:
+                            score_map[int(m.get("id"))] = g.get("sc")
+                            break
+            except Exception:
+                pass
+        changed = False
+        for b in bets:
+            if b.get("settled"):
+                continue
+            mid = b.get("match_id")
+            sc = score_map.get(int(mid)) if mid else None
+            if sc is None:
+                continue  # 还没赛果
+            desig = b.get("designation", ""); line = b.get("line")
+            stake = float(b.get("stake", 0)); odds = float(b.get("bb_odds", 0))
+            home, away = sc[0], sc[1]
+            # 判输赢
+            if desig in ("主胜",):
+                won = home > away
+            elif desig in ("客胜",):
+                won = away > home
+            elif desig in ("和局",):
+                won = home == away
+            elif line is None:
+                continue  # hc/ou 缺 line, 跳(旧记录)
+            elif desig in ("让球主胜",):
+                won = (home + line) > away
+            elif desig in ("让球客胜",):
+                won = (away + line) > home
+            elif desig in ("大球",):
+                won = (home + away) > line
+            elif desig in ("小球",):
+                won = (home + away) < line
+            else:
+                continue
+            profit = stake * (odds - 1) if won else -stake
+            b["settled"] = True; b["result"] = "won" if won else "lost"; b["profit"] = round(profit, 1)
+            changed = True
+        if changed:
+            LIVE_PAPER_FILE.write_text(json.dumps(bets, ensure_ascii=False, indent=1))
+            settled = [b for b in bets if b.get("settled")]
+            pnl = sum(b.get("profit", 0) for b in settled)
+            stk = sum(b.get("stake", 0) for b in settled)
+            won_n = sum(1 for b in settled if b.get("result") == "won")
+            roi = pnl / stk * 100 if stk else 0
+            print(f"[slm] 虚拟投注结算: {len(settled)}/{len(bets)} 条, 盈亏 {pnl:+.1f}, ROI {roi:+.1f}% (胜{won_n})", flush=True)
+
     def _handle_live_g04(self, match_id, data):
         """滚球 G04: 用 Pin live 公平价(moneyline/spread/total)算 EV。1x2/让球/大小球。"""
         lv = self.live_cache.get(match_id)
@@ -684,6 +756,7 @@ class SecondLevelMonitor:
                 poll_count += 1
                 if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
                     self._check_settled()
+                    self._settle_paper_bets()
             except Exception as e:
                 print(f"[slm] 轮询异常: {type(e).__name__} {str(e)[:80]}", flush=True)
             await asyncio.sleep(refresh_every)
