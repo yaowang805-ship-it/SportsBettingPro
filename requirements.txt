@@ -12,6 +12,7 @@ joblib
 
 # ── HTTP & API ──
 requests
+curl_cffi
 
 # ── 数据库 ──
 SQLAlchemy

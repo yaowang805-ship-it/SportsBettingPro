@@ -852,15 +852,15 @@ def check_pinnacle_connectivity(verbose=True):
         else:
             _log(f"❌ /sports = {r.status_code}", is_error=True)
             ok = False
-    except requests.exceptions.SSLError as e:
+    except _CffiSSLError as e:
         _log(f"❌ SSL 握手失败: {e}", is_error=True)
         _log("   可能原因: 代理/VPN 拦截了 Pinnacle 证书", is_error=True)
         ok = False
-    except requests.exceptions.ConnectionError as e:
+    except _CffiConnectionError as e:
         _log(f"❌ 连接失败: {e}", is_error=True)
         _log("   可能原因: Cloudflare 拦截 / VPN 路由问题", is_error=True)
         ok = False
-    except requests.exceptions.Timeout:
+    except _CffiTimeout:
         _log("❌ 连接超时 — 网络/VPN 问题", is_error=True)
         ok = False
 
