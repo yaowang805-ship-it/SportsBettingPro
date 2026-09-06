@@ -448,7 +448,7 @@ class SecondLevelMonitor:
             from src.betting.bb_auto_bet import fetch_balance as _fetch_balance
             _bal = _fetch_balance() or "未知"
             self._notify_bet(
-                f"🟦 滚球下单成功 {tag}",
+                f"🟦【滚球】下单成功 {tag}",
                 f"注额¥{stake} @{sig['bb_odds']:.2f} | EV{sig['ev']:+.2f}% | 订单{order_id}\n"
                 f"账户余额 ¥{_bal} | 今日滚球累计 ¥{self._live_spent:.0f}/{LIVE_BUDGET}")
         else:
