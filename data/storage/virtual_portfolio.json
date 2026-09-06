@@ -1,5 +1,5 @@
 {
-  "balance": 20593.53,
+  "balance": 20403.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -460,6 +460,75 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788712200,
       "created_at": "2026-09-06T11:07:42.136069+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_SV埃伯奥_哈尔布特恩_客胜",
+      "sport": "football",
+      "league": "奥地利丁级联赛",
+      "home_team": "SV埃伯奥",
+      "away_team": "哈尔布特恩",
+      "home_cn": "SV埃伯奥",
+      "away_cn": "哈尔布特恩",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.8,
+      "stake": 70,
+      "model_prob": 0.3728,
+      "ev_pct": 4.37,
+      "pin_odds": 2.41,
+      "fair_price": 2.6827,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788705000,
+      "created_at": "2026-09-06T11:34:27.329413+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_伊米耶_比绍普奥克兰_客胜",
+      "sport": "football",
+      "league": "英格兰足总杯-资格赛",
+      "home_team": "伊米耶",
+      "away_team": "比绍普奥克兰",
+      "home_cn": "伊米耶",
+      "away_cn": "比绍普奥克兰",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 6.1,
+      "stake": 60,
+      "model_prob": 0.1992,
+      "ev_pct": 21.49,
+      "pin_odds": 4.09,
+      "fair_price": 5.0211,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788696000,
+      "created_at": "2026-09-06T11:44:23.819756+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_切尔滕汉姆_(女)_伍斯特城_(女)_客胜",
+      "sport": "football",
+      "league": "英格兰足总女子全国联赛杯",
+      "home_team": "切尔滕汉姆 (女)",
+      "away_team": "伍斯特城 (女)",
+      "home_cn": "切尔滕汉姆 (女)",
+      "away_cn": "伍斯特城 (女)",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 6.45,
+      "stake": 60,
+      "model_prob": 0.1982,
+      "ev_pct": 27.84,
+      "pin_odds": 4.1,
+      "fair_price": 5.0455,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788699600,
+      "created_at": "2026-09-06T11:44:23.819811+00:00",
       "track_only": false
     }
   ],
@@ -8376,8 +8445,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-06",
-    "used": 732.0,
-    "bets": 13
+    "used": 922.0,
+    "bets": 16
   },
   "updated": null
 }
