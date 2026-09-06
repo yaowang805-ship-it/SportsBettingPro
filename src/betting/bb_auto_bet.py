@@ -152,6 +152,24 @@ def auto_renew_token():
         return False, f"续期失败: {type(e).__name__} {str(e)[:60]}"
 
 
+def fetch_balance():
+    """读账户余额(下单接口 Authorization 鉴权, 比 user-token 严格)。返回余额字符串或 None。"""
+    tok = read_token(); dom = read_domain()
+    if not tok:
+        return None
+    try:
+        r = _session().post(f"{dom}/v1/user/base",
+                            json={"languageType": "CMN"},
+                            headers={"Content-Type": "application/json", "Authorization": tok,
+                                     "User-Agent": _UA}, timeout=15, verify=False)
+        d = r.json()
+        if d.get("code") == 0:
+            return str((d.get("data") or {}).get("bl", ""))
+    except Exception:
+        pass
+    return None
+
+
 def _session():
     s = requests.Session()
     s.trust_env = False
