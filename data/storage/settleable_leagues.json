@@ -1204,9 +1204,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "匈牙利甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-09-06T04:57:38.682901+00:00",
+  "updated": "2026-09-06T13:38:58.078493+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
