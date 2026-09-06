@@ -63,7 +63,7 @@ def fetch_live_matchups(sport_ids=LIVE_SPORT_IDS, use_cache=True):
     live = []
     for sid in sport_ids:
         try:
-            r = SESSION.get(f"{API_BASE}/sports/{sid}/matchups", timeout=60)
+            r = SESSION.get(f"{API_BASE}/sports/{sid}/matchups", timeout=(20, 60))
             ms = r.json()
             n = len([m for m in ms if m.get("isLive")])
             live.extend(m for m in ms if m.get("isLive"))
