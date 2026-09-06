@@ -150,6 +150,16 @@ def auto_bet_flow(opportunities, token=None, domain=None):
         desig = opp.get("designation", "")
         stake = float(opp.get("_stake") or opp.get("stake") or 10)
 
+        # 2026-09-06 用户要求: 早盘实盘只投"未开赛", 已开赛(lead<0)的场跳过(与暂停滚球秒级对齐)
+        _ep = opp.get("_pin_epoch")
+        if _ep:
+            try:
+                if float(_ep) < time.time():
+                    failed.append({"home": home, "away": away, "reason": "已开赛(滚球窗口), 早盘跳过"})
+                    continue
+            except (TypeError, ValueError):
+                pass
+
         # 匹配比赛
         match = _find_match(records, home, away)
         if not match:
