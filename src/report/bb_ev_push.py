@@ -1314,6 +1314,12 @@ def _calc_kelly_stakes(opps: list) -> list:
     # 第五遍：RiskManager 安全层（冷却停注 + 回撤/连败折扣）
     opps = _apply_risk_manager_safety(opps)
 
+    # 最终四舍五入到整十：相关性折扣(×0.93)/回撤降仓(×0.7)会把上面已取整的 stake
+    # 重新拆碎(如 60→56/42), 推送时出现有零有整的数字。这里收尾再取整一次。
+    for o in opps:
+        if o.get("_stake", 0) > 0:
+            o["_stake"] = int(round(o["_stake"] / 10.0) * 10)
+
     return opps
 
 
