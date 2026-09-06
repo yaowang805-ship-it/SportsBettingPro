@@ -67,25 +67,15 @@ class HealthReport:
 
 def check_connectivity(report):
     """检查各API连通性。"""
-    import requests
-
-    # Pinnacle API
+    # Pinnacle API — 走 pinnacle_api 统一传输(curl_cffi 消 TLS 指纹), 不再用裸 requests
     try:
-        session = requests.Session()
-        session.trust_env = False
-        session.proxies = {"http": "", "https": ""}
-        session.headers.update({
-            "Accept": "application/json",
-            "User-Agent": "Mozilla/5.0",
-            "X-API-Key": "CmX2KcMrXuFmNg6YFbmTxE0y9CIrOi0R",
-        })
-        resp = session.get("https://guest.api.arcadia.pinnacle.com/0.1/sports", timeout=10)
-        if resp.status_code == 200:
-            sports = resp.json()
+        from src.scrapers.pinnacle_api import api_get
+        sports = api_get("/sports", bypass_pause=True, retry=False)
+        if sports is not None:
             report.add_ok(f"Pinnacle API: {len(sports)} sports")
             report.stats["pinnacle_sports"] = len(sports)
         else:
-            report.add_issue(f"Pinnacle API: HTTP {resp.status_code}")
+            report.add_issue("Pinnacle API: 不可达 (api_get 返回空)")
     except Exception as e:
         report.add_issue(f"Pinnacle API: {e}")
 
