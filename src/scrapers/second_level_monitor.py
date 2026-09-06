@@ -300,30 +300,32 @@ class SecondLevelMonitor:
             desig = b.get("designation", ""); line = b.get("line")
             stake = float(b.get("stake", 0)); odds = float(b.get("bb_odds", 0))
             home, away = sc[0], sc[1]
-            # 判输赢(含走盘: 总分==盘口线 或 让球后打平 = 退款 profit 0)
-            if desig in ("主胜",):
-                diff = home - away
-            elif desig in ("客胜",):
-                diff = away - home
-            elif desig in ("和局",):
-                diff = 0.0 if home == away else (1.0 if home > away else -1.0)
-            elif line is None:
-                continue  # hc/ou 缺 line, 跳(旧记录)
-            elif desig in ("让球主胜",):
-                diff = (home + line) - away
-            elif desig in ("让球客胜",):
-                diff = (away + line) - home
-            elif desig in ("大球",):
-                diff = (home + away) - line
-            elif desig in ("小球",):
-                diff = line - (home + away)
+            # 判输赢。1x2(主/和/客)是三向盘、没有走盘: 打平对主胜/客胜是输、对和局是赢。
+            # 走盘(push 退款)只存在 hc/ou: 让球后打平 / 总分恰等于盘口线。
+            if desig == "主胜":
+                result = "won" if home > away else "lost"
+            elif desig == "客胜":
+                result = "won" if away > home else "lost"
+            elif desig == "和局":
+                result = "won" if home == away else "lost"
+            elif desig in ("让球主胜", "让球客胜", "大球", "小球"):
+                if line is None:
+                    continue  # hc/ou 缺 line, 跳(旧记录)
+                if desig == "让球主胜":
+                    diff = (home + line) - away
+                elif desig == "让球客胜":
+                    diff = (away + line) - home
+                elif desig == "大球":
+                    diff = (home + away) - line
+                else:  # 小球
+                    diff = line - (home + away)
+                if abs(diff) < 0.0001:
+                    result = "push"
+                else:
+                    result = "won" if diff > 0 else "lost"
             else:
                 continue
-            if abs(diff) < 0.0001:
-                result = "push"; profit = 0.0
-            else:
-                result = "won" if diff > 0 else "lost"
-                profit = stake * (odds - 1) if result == "won" else -stake
+            profit = 0.0 if result == "push" else (stake * (odds - 1) if result == "won" else -stake)
             b["settled"] = True; b["result"] = result; b["profit"] = round(profit, 1)
             changed = True
         if changed:
