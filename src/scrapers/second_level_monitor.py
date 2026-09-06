@@ -482,7 +482,9 @@ class SecondLevelMonitor:
         if odds <= 1 or edge <= 0:
             return 0
         stake = BANKROLL * KELLY_FRACTION * edge / (odds - 1)
-        return int(min(max(stake, MIN_STAKE), MAX_STAKE))
+        stake = int(min(max(stake, MIN_STAKE), MAX_STAKE))
+        # 四舍五入到 10: 避免 ¥91/¥82 有零有整被风控识别为机器下单
+        return int(round(stake / 10.0) * 10)
 
     def _try_auto_bet(self, sig):
         """秒级信号 → 自动下单。复用 place_single_bet(注额上限 + 下注前验价 + 记录)。"""
