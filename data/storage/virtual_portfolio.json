@@ -1,5 +1,5 @@
 {
-  "balance": 20403.53,
+  "balance": 20023.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -529,6 +529,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788699600,
       "created_at": "2026-09-06T11:44:23.819811+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_奥斯皮塔莱托_阿尔齐尼亚诺_让球客胜(+0/05)",
+      "sport": "football",
+      "league": "意大利丙级联赛",
+      "home_team": "奥斯皮塔莱托",
+      "away_team": "阿尔齐尼亚诺",
+      "home_cn": "奥斯皮塔莱托",
+      "away_cn": "阿尔齐尼亚诺",
+      "market": "handicap",
+      "market_type": "让球客胜(+0/0.5)",
+      "sub_market": "hc",
+      "line": "+0/0.5",
+      "odds": 2.01,
+      "stake": 380,
+      "model_prob": 0.5225,
+      "ev_pct": 5.03,
+      "pin_odds": 1.8333,
+      "fair_price": 1.9138,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788721200,
+      "created_at": "2026-09-06T12:20:34.427640+00:00",
       "track_only": false
     }
   ],
@@ -8445,8 +8468,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-06",
-    "used": 922.0,
-    "bets": 16
+    "used": 1302.0,
+    "bets": 17
   },
   "updated": null
 }
