@@ -1,5 +1,5 @@
 {
-  "balance": 21214.53,
+  "balance": 21152.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -230,6 +230,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788721200,
       "created_at": "2026-09-06T05:44:21.607996+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_福特拉联_班卡普_客胜",
+      "sport": "football",
+      "league": "泰国联赛杯",
+      "home_team": "福特拉联",
+      "away_team": "班卡普",
+      "home_cn": "福特拉联",
+      "away_cn": "班卡普",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 13.3,
+      "stake": 37,
+      "model_prob": 0.0831,
+      "ev_pct": 10.56,
+      "pin_odds": 7.35,
+      "fair_price": 12.0296,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788683400,
+      "created_at": "2026-09-06T06:36:12.226794+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_基辅迪纳摩_LNZ莱贝德恩_让球主胜(-0/05)",
+      "sport": "football",
+      "league": "乌克兰超级联赛",
+      "home_team": "基辅迪纳摩",
+      "away_team": "LNZ莱贝德恩",
+      "home_cn": "基辅迪纳摩",
+      "away_cn": "LNZ莱贝德恩",
+      "market": "handicap",
+      "market_type": "让球主胜(-0/0.5)",
+      "sub_market": "hc",
+      "line": "-0/0.5",
+      "odds": 2.03,
+      "stake": 25,
+      "model_prob": 0.5307,
+      "ev_pct": 7.73,
+      "pin_odds": 1.8065,
+      "fair_price": 1.8844,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788688800,
+      "created_at": "2026-09-06T06:36:12.226859+00:00",
       "track_only": false
     }
   ],
@@ -8146,8 +8192,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-06",
-    "used": 111.0,
-    "bets": 3
+    "used": 173.0,
+    "bets": 5
   },
   "updated": null
 }
