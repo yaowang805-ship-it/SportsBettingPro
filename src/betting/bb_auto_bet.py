@@ -29,10 +29,10 @@ DEFAULT_DOMAIN = "https://api.x-vip8.com"
 _UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36")
 
-# 单场比赛最大投注额(2026-09-05 用户要求)
-MAX_MATCH_STAKE = 300.0
-# 单盘口(含重推)最大投注额
-MAX_MARKET_STAKE = 300.0
+# 单场比赛最大投注额(2026-09-06 用户要求: 400)
+MAX_MATCH_STAKE = 400.0
+# 单盘口(含重推)最大投注额(2026-09-06 用户要求: 含重推加一起 ≤ 400)
+MAX_MARKET_STAKE = 400.0
 # 投注额记录文件(按比赛+盘口维度累计, 跨扫描共享)
 STAKE_RECORD_FILE = ROOT / "data" / "storage" / "bet_stake_record.json"
 
