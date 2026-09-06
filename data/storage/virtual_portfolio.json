@@ -1,5 +1,5 @@
 {
-  "balance": 20023.53,
+  "balance": 19663.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -552,6 +552,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788721200,
       "created_at": "2026-09-06T12:20:34.427640+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_普塔雷纳斯_肯塔吉内斯_让球主胜(0)",
+      "sport": "football",
+      "league": "哥斯达黎加甲级联赛",
+      "home_team": "普塔雷纳斯",
+      "away_team": "肯塔吉内斯",
+      "home_cn": "普塔雷纳斯",
+      "away_cn": "肯塔吉内斯",
+      "market": "handicap",
+      "market_type": "让球主胜(0)",
+      "sub_market": "hc",
+      "line": "0",
+      "odds": 2.0,
+      "stake": 360,
+      "model_prob": 0.5308,
+      "ev_pct": 6.17,
+      "pin_odds": 1.8197,
+      "fair_price": 1.8838,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788732000,
+      "created_at": "2026-09-06T13:00:05.395923+00:00",
       "track_only": false
     }
   ],
@@ -8468,8 +8491,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-06",
-    "used": 1302.0,
-    "bets": 17
+    "used": 1662.0,
+    "bets": 18
   },
   "updated": null
 }
