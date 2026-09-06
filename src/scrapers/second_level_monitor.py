@@ -825,10 +825,12 @@ def main():
     ap.add_argument("--stake", type=float, default=0.0, help="固定注额(默认0=EV-Kelly半凯利自动定仓)")
     args = ap.parse_args()
     if args.auto_bet:
-        if args.stake > 0:
+        if not LIVE_REAL_BET_ENABLED:
+            print(f"⚠️ 滚球实盘下单已暂停(LIVE_REAL_BET_ENABLED=False), 所有+EV只进观察库")
+        elif args.stake > 0:
             print(f"⚠️ 自动下单已开启, 固定单注 ¥{args.stake:.0f}")
         else:
-            print("⚠️ 自动下单已开启, 注额=EV-Kelly半凯利(封顶¥300)")
+            print(f"⚠️ 自动下单已开启, 注额=EV-Kelly半凯利(封顶¥{MAX_STAKE:.0f})")
     mon = SecondLevelMonitor(threshold=args.threshold, auto_bet=args.auto_bet,
                              stake=(args.stake if args.stake > 0 else None))
     try:
