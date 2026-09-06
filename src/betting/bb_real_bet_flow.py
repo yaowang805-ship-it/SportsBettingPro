@@ -17,6 +17,7 @@ import json
 import sys
 import time
 from pathlib import Path
+from datetime import datetime, timezone, timedelta
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
@@ -178,7 +179,8 @@ def auto_bet_flow(opportunities, token=None, domain=None):
                 "ts": time.time(),
             }
             success.append(rec)
-            sent_dingtalk.append(f"✅【{_win_label(opp.get('_pin_epoch'))}】{home} vs {away} | {desig} @{odds} | 注额¥{stake:.0f} | 订单{order_id}")
+            _bj = datetime.now(timezone(timedelta(hours=8))).strftime("%H:%M")
+            sent_dingtalk.append(f"✅【{_win_label(opp.get('_pin_epoch'))}】{home} vs {away} | {desig} @{odds} | 注额¥{stake:.0f} | 投注 {_bj} | 订单{order_id}")
             _append_bet_history(rec)
         else:
             failed.append({"home": home, "away": away, "reason": f"code={code} {msg}"})
