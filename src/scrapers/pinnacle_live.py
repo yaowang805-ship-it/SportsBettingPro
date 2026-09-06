@@ -367,6 +367,7 @@ def fetch_live_opportunities(threshold=3.0):
             if ev >= threshold and ev <= 12.0:
                 opps.append({
                     "bb_match_id": bmid, "home": pv["home"], "away": pv["away"],
+                    "sport": b["sport"],  # BB 运动 id(1足球/3篮球/5网球/7棒球/6美足), 供按运动×盘口分账
                     "sub": sub, "direction": d, "bb_odds": bb_odds, "fair": fair_p, "ev": ev,
                     "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
                     "pin_matchup_id": pin_mid, "league_id": pv.get("league_id"),

@@ -44,6 +44,10 @@ LIVE_BUDGET_FILE = ROOT / "data" / "storage" / "live_bet_budget.json"
 LIVE_PAPER_FILE = ROOT / "data" / "storage" / "live_paper_bets.json"
 LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 已推送过结算的 order_id
 
+# 2026-09-06 用户要求: 暂停滚球实盘下单, 所有 +EV 机会全部进观察库(去重), 按运动×盘口分账统计。
+LIVE_REAL_BET_ENABLED = False  # False=只观察不下真单(滚球验证模式, 待 edge 结论)
+BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球"}
+
 # G04 market(盘口名) → 缓存子盘口 key
 _MARKET_KEYWORDS = [
     ("double_chance", ("双重", "双胜彩")),
@@ -746,7 +750,8 @@ class SecondLevelMonitor:
             "option_type": opp["option_type"], "sub": sub_map.get(opp["sub"], opp["sub"]),
             "desig": desig_map.get(opp["sub"], {}).get(opp["direction"], opp["direction"]),
             "bb_odds": opp["bb_odds"], "fair": opp["fair"], "ev": opp["ev"], "line": opp["line"],
-            "match": {"home": opp["home"], "away": opp["away"], "sport": "", "league_cn": "滚球"},
+            "sport": opp.get("sport", ""),
+            "match": {"home": opp["home"], "away": opp["away"], "sport": opp.get("sport", ""), "league_cn": "滚球"},
             "pin_matchup_id": opp["pin_matchup_id"], "league_id": opp["league_id"],
             "max_stake": opp["max_stake"],
         }

@@ -1,5 +1,5 @@
 {
-  "balance": 20663.53,
+  "balance": 20593.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -437,6 +437,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788703200,
       "created_at": "2026-09-06T10:59:29.725581+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_纽伦堡_(女)_斯图加特_(女)_客胜",
+      "sport": "football",
+      "league": "德国女子甲级联赛",
+      "home_team": "纽伦堡 (女)",
+      "away_team": "斯图加特 (女)",
+      "home_cn": "纽伦堡 (女)",
+      "away_cn": "斯图加特 (女)",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.83,
+      "stake": 70,
+      "model_prob": 0.5793,
+      "ev_pct": 6.02,
+      "pin_odds": 1.6667,
+      "fair_price": 1.7261,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788712200,
+      "created_at": "2026-09-06T11:07:42.136069+00:00",
       "track_only": false
     }
   ],
@@ -8353,8 +8376,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-06",
-    "used": 662.0,
-    "bets": 12
+    "used": 732.0,
+    "bets": 13
   },
   "updated": null
 }
