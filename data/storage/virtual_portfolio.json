@@ -1,5 +1,5 @@
 {
-  "balance": 21115.53,
+  "balance": 21031.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -299,6 +299,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788683400,
       "created_at": "2026-09-06T06:46:43.332410+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_萨扎瓦河畔_斯霍滕堡_客胜",
+      "sport": "football",
+      "league": "捷克丁级联赛",
+      "home_team": "萨扎瓦河畔",
+      "away_team": "斯霍滕堡",
+      "home_cn": "萨扎瓦河畔",
+      "away_cn": "斯霍滕堡",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.78,
+      "stake": 84,
+      "model_prob": 0.2946,
+      "ev_pct": 11.35,
+      "pin_odds": 2.85,
+      "fair_price": 3.3946,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788703200,
+      "created_at": "2026-09-06T06:57:36.510708+00:00",
       "track_only": false
     }
   ],
@@ -8215,8 +8238,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-06",
-    "used": 210.0,
-    "bets": 6
+    "used": 294.0,
+    "bets": 7
   },
   "updated": null
 }
