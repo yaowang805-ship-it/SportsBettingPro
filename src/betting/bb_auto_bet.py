@@ -117,6 +117,41 @@ def read_domain():
     return ls.get("st-domain", "").rstrip("/") or DEFAULT_DOMAIN
 
 
+def auto_renew_token():
+    """自动续期(2026-09-06): playwright 读浏览器 st-auth → 测下单接口 → 更新 .bb_token/.bb_domain。
+
+    返回 (bool, msg)。token 有效期约 11h, 下单返回 14010 时调用。需要独立 Chrome(9222)开着。
+    """
+    tok_file = ROOT / "data" / "storage" / ".bb_token"
+    dom_file = ROOT / "data" / "storage" / ".bb_domain"
+    try:
+        from playwright.sync_api import sync_playwright
+        with sync_playwright() as p:
+            browser = p.chromium.connect_over_cdp("http://127.0.0.1:9222")
+            pg = browser.contexts[0].pages[0]
+            ls = pg.evaluate("() => { const o={}; for(let i=0;i<localStorage.length;i++)"
+                             "{const k=localStorage.key(i); o[k]=localStorage.getItem(k);} return o; }")
+            browser.close()
+        new_tok = ls.get("st-auth", "") or ls.get("user-token", "")
+        new_dom = ls.get("st-domain", "").rstrip("/") or ""
+        if not new_tok or len(new_tok) < 30:
+            return False, "浏览器 localStorage 无有效 st-auth"
+        # 测下单接口(Authorization 严格, code=0 才有效)
+        dom = new_dom or read_domain()
+        r = _session().post(f"{dom}/v1/order/new/bet/list",
+                            json={"languageType": "CMN", "isSettled": False, "current": 1, "size": 1},
+                            headers={"Content-Type": "application/json", "Authorization": new_tok,
+                                     "User-Agent": _UA}, timeout=15, verify=False)
+        if r.json().get("code") != 0:
+            return False, "浏览器 st-auth 也失效(code!=0)"
+        tok_file.write_text(new_tok)
+        if new_dom:
+            dom_file.write_text(new_dom)
+        return True, f"已续期 {new_tok[:20]}..."
+    except Exception as e:
+        return False, f"续期失败: {type(e).__name__} {str(e)[:60]}"
+
+
 def _session():
     s = requests.Session()
     s.trust_env = False
