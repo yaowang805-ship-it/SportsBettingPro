@@ -1,5 +1,5 @@
 {
-  "balance": 19390.53,
+  "balance": 19010.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -575,6 +575,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788699600,
       "created_at": "2026-09-06T13:02:38.359508+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_特温特_特尔斯达_双重机会-和局/客",
+      "sport": "football",
+      "league": "荷兰甲级联赛",
+      "home_team": "特温特",
+      "away_team": "特尔斯达",
+      "home_cn": "特温特",
+      "away_cn": "特尔斯达",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 4.38,
+      "stake": 380,
+      "model_prob": 0.2453,
+      "ev_pct": 7.43,
+      "pin_odds": 3.94,
+      "fair_price": 4.0771,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788972300,
+      "created_at": "2026-09-06T22:51:45.644935+00:00",
       "track_only": false
     }
   ],
@@ -8505,9 +8528,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-09-06",
-    "used": 1992.0,
-    "bets": 19
+    "date": "2026-09-07",
+    "used": 380.0,
+    "bets": 1
   },
   "updated": null
 }
