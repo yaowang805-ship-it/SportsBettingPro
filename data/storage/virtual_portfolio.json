@@ -1,5 +1,5 @@
 {
-  "balance": 20901.53,
+  "balance": 20864.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -230,6 +230,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788654600,
       "created_at": "2026-09-05T22:44:54.958078+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_万隆_PSM马卡萨_双重机会-和局/客",
+      "sport": "football",
+      "league": "印尼超级联赛",
+      "home_team": "万隆",
+      "away_team": "PSM马卡萨",
+      "home_cn": "万隆",
+      "away_cn": "PSM马卡萨",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 3.45,
+      "stake": 37,
+      "model_prob": 0.3041,
+      "ev_pct": 4.93,
+      "pin_odds": 3.17,
+      "fair_price": 3.288,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788696000,
+      "created_at": "2026-09-06T00:20:07.965585+00:00",
       "track_only": false
     }
   ],
@@ -8131,8 +8154,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-06",
-    "used": 37.0,
-    "bets": 1
+    "used": 74.0,
+    "bets": 2
   },
   "updated": null
 }

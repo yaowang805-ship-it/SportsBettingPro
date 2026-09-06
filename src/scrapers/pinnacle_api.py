@@ -13,7 +13,6 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 
 # ── DNS 解析: V4.5 走系统自然DNS (不再硬编码IP, 换节点即换IP) ──
 
-import requests
 from config.settings import DATA_DIR
 
 logger = logging.getLogger(__name__)
@@ -52,24 +51,26 @@ if not _PATCHED:
 
 # ── Session setup ──────────────────────────────────────────────────────
 
-# V5.1: DNS 绕过 Shadowrocket VPN劫持 → 直连 Pinnacle Cloudflare IP
-import urllib3.util.connection as _urllib3_conn
-_PIN_REAL = ('104.18.42.200', 443)
+# TSL指纹 (2026-09-06): requests/urllib3 的 JA3 握手指纹是裸 Python, 即使 UA 伪装成
+# Chrome, Cloudflare 仍能凭 TLS 指纹判 bot 封 IP。换 curl_cffi impersonate=chrome150,
+# 让密码套件顺序/扩展/GREASE/ALPN(h2) 与 UA "Chrome/150" 完全对齐, 从根上消除指纹暴露。
+from curl_cffi import requests as _cffi_requests, CurlOpt
+from curl_cffi.requests.exceptions import (
+    SSLError as _CffiSSLError,
+    ConnectionError as _CffiConnectionError,
+    Timeout as _CffiTimeout,
+    ChunkedEncodingError as _CffiChunkedEncodingError,
+)
+
+# V5.1: DNS 绕过 Shadowrocket VPN劫持 → 直连 Pinnacle Cloudflare IP。
+# curl_cffi 走 libcurl(不经过 urllib3), 原 urllib3 monkey-patch 失效, 改用 CURLOPT_RESOLVE。
+_PIN_REAL = '104.18.42.200'
 _PIN_HOST = 'guest.api.arcadia.pinnacle.com'
 
-_orig_create_connection = getattr(_urllib3_conn, '_orig_create_connection', _urllib3_conn.create_connection)
-if not getattr(_urllib3_conn, '_pin_patched', False):
-    def _patched_create_connection(address, *args, **kwargs):
-        if address[0] == _PIN_HOST:
-            address = (_PIN_REAL[0], _PIN_REAL[1])
-        return _orig_create_connection(address, *args, **kwargs)
-    _urllib3_conn.create_connection = _patched_create_connection
-    _urllib3_conn._orig_create_connection = _orig_create_connection
-    _urllib3_conn._pin_patched = True
-
-SESSION = requests.Session()
+SESSION = _cffi_requests.Session(impersonate="chrome150")
 SESSION.trust_env = False
 SESSION.proxies = {"http": "", "https": ""}
+SESSION.curl.setopt(CurlOpt.RESOLVE, [f"{_PIN_HOST}:443:{_PIN_REAL}"])
 SESSION.headers.update({
     "Accept": "application/json, text/plain, */*",
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -694,7 +695,7 @@ def api_get(path, retry=True, bypass_pause=False):
             _record_pin_failure()  # V5.9: 失败计数 → 连续失败熔断防风控
             return None
 
-        except requests.exceptions.SSLError as e:
+        except _CffiSSLError as e:
             _ssl_fail_count += 1
             logger.warning("SSL error (attempt %d/%d): %s", attempt + 1, _max, e)
             if attempt < _max - 1:
@@ -714,11 +715,11 @@ def api_get(path, retry=True, bypass_pause=False):
             _record_pin_failure()
             return None
 
-        except requests.exceptions.ConnectionError as e:
+        except _CffiConnectionError as e:
             logger.error("Connection failed: %s", e)
             return None
 
-        except requests.exceptions.Timeout:
+        except _CffiTimeout:
             if attempt < _max - 1:
                 slept = _backoff_sleep(attempt)
                 total_wait += slept
@@ -731,7 +732,7 @@ def api_get(path, retry=True, bypass_pause=False):
             logger.error("Pinnacle API timeout after %d retries", _max)
             return None
 
-        except requests.exceptions.ChunkedEncodingError as e:
+        except _CffiChunkedEncodingError as e:
             logger.warning("ChunkedEncodingError (Python 3.14 bug), retrying... %s", e)
             if attempt < _max - 1:
                 slept = _backoff_sleep(attempt)
