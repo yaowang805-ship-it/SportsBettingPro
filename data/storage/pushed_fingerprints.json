@@ -2441,11 +2441,6 @@
     "bb": 30.0,
     "ts": 1788741801.189464
   },
-  "football|USA Major League Soccer|多伦多FC|纳什维尔|上半场正确比分2-0|correct_score_ht|2026-09-10": {
-    "ev": 8.59,
-    "bb": 20.0,
-    "ts": 1788737899.3682282
-  },
   "football|USA Major League Soccer|奥斯汀|圣何塞地震|和局|1x2|2026-09-06": {
     "ev": 5.86,
     "bb": 4.05,
@@ -2480,6 +2475,11 @@
     "ev": 23.71,
     "bb": 29.0,
     "ts": 1788738507.8776371
+  },
+  "football|USA Major League Soccer|费城联合|辛辛那提|上半场正确比分1-2|correct_score_ht|2026-09-10": {
+    "ev": 5.99,
+    "bb": 23.0,
+    "ts": 1788743790.831899
   },
   "football|USL Championship|Detroit City FC|Hartford Athletic|上半场正确比分1-2|correct_score_ht|2026-09-06": {
     "ev": 1.26,
@@ -2635,9 +2635,9 @@
     "ev": 1.05,
     "ts": 1788477372.833226
   },
-  "football|USA Major League Soccer|费城联合|辛辛那提|上半场正确比分1-2|correct_score_ht|2026-09-10": {
-    "ev": 5.99,
-    "bb": 23.0,
-    "ts": 1788743790.831899
+  "football|USA Major League Soccer|多伦多FC|纳什维尔|上半场正确比分2-0|correct_score_ht|2026-09-10": {
+    "ev": 14.02,
+    "bb": 21.0,
+    "ts": 1788745377.509954
   }
 }
