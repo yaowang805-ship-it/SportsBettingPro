@@ -2451,6 +2451,11 @@
     "bb": 18.3,
     "ts": 1788737899.368279
   },
+  "football|USA Major League Soccer|费城联合|辛辛那提|上半场正确比分0-2|correct_score_ht|2026-09-10": {
+    "ev": 23.71,
+    "bb": 29.0,
+    "ts": 1788738507.8776371
+  },
   "football|USL Championship|Detroit City FC|Hartford Athletic|上半场正确比分1-2|correct_score_ht|2026-09-06": {
     "ev": 1.26,
     "ts": 1788473623.7436879
@@ -2605,9 +2610,9 @@
     "ev": 1.05,
     "ts": 1788477372.833226
   },
-  "football|USA Major League Soccer|费城联合|辛辛那提|上半场正确比分0-2|correct_score_ht|2026-09-10": {
-    "ev": 23.71,
-    "bb": 29.0,
-    "ts": 1788738507.8776371
+  "football|USA Major League Soccer|纽约城|新英格兰革命|上半场正确比分0-2|correct_score_ht|2026-09-10": {
+    "ev": 18.3,
+    "bb": 22.0,
+    "ts": 1788739615.36363
   }
 }
