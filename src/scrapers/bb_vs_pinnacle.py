@@ -720,6 +720,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         bb_period = bb.get("period", "")
         bb_time = bb.get("time", "")
         bb_bt = bb.get("bt")
+        bb_epoch = None  # 2026-09-08: 供开赛时间一致性校验
         if bb_bt:
             try:
                 bb_epoch = int(int(bb_bt) / 1000)
@@ -733,6 +734,12 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         pin_start_raw = pin.get("start_time", "")
         # Convert Pinnacle UTC to epoch for display
         pin_epoch = _pin_to_epoch(pin)
+
+        # 2026-09-08 彻底解决 BB↔Pin 场次错配: 开赛时间差 > 60 分钟 = 配错比赛(队名相似但不同场),
+        # 直接跳过不进库。归档回捞实测 8 条错配(开赛差 -2895min~+120min), 这种 EV 全是假的。
+        if bb_epoch and pin_epoch and abs(bb_epoch - pin_epoch) > 60 * 60:
+            time_skip_count += 1
+            continue
 
         entry = {
             "league": m["league"],

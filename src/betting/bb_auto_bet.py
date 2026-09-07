@@ -78,6 +78,39 @@ def record_stake(match_id, market_id, stake):
     _save_stake_record(rec)
 
 
+# ── 全局投注冷却(跨进程共享) ──
+# 早盘(auto_bet_flow) + 滚球(second_level_monitor)是两个独立进程, 各自有随机间隔但互不知晓,
+# 可能"同一时间"各下一单, 像机器投注被风控识别。用共享时间戳文件强制全局随机间隔。
+GLOBAL_BET_TS_FILE = ROOT / "data" / "storage" / "last_bet_ts.txt"
+
+
+def global_bet_cooldown(min_s=15.0, max_s=45.0):
+    """返回还需等待的秒数(全局随机间隔 min~max)。跨进程读共享时间戳:
+    上次任意流程下单距今 < 随机间隔 → 返回还需等待秒数; 否则 0(可下单)。
+    下单成功后必须调 record_global_bet()。
+    """
+    import random as _r
+    last = 0.0
+    try:
+        if GLOBAL_BET_TS_FILE.exists():
+            last = float(GLOBAL_BET_TS_FILE.read_text().strip() or 0)
+    except Exception:
+        pass
+    if not last:
+        return 0.0
+    wait = _r.uniform(min_s, max_s)
+    return max(0.0, wait - (time.time() - last))
+
+
+def record_global_bet():
+    """下单成功后记录共享时间戳(全局冷却起点)。"""
+    try:
+        GLOBAL_BET_TS_FILE.parent.mkdir(parents=True, exist_ok=True)
+        GLOBAL_BET_TS_FILE.write_text(str(time.time()))
+    except Exception:
+        pass
+
+
 def _read_localstorage():
     """用 applescript 读 Chrome 活动标签的 localStorage(含 user-token/st-domain)。"""
     script = ROOT / "scripts" / "get_h5_token.applescript"
@@ -117,33 +150,69 @@ def read_domain():
     return ls.get("st-domain", "").rstrip("/") or DEFAULT_DOMAIN
 
 
+def _refresh_bb_page():
+    """苹果脚本: 激活 Chrome 并刷新活动标签(BB 页), 重新加载自动登录拿新 st-auth。"""
+    script = ('tell application "Google Chrome"\n'
+              '    activate\n'
+              '    reload active tab of front window\n'
+              'end tell\n')
+    try:
+        subprocess.check_output(["osascript", "-e", script], text=True, timeout=30)
+        return True
+    except Exception:
+        return False
+
+
 def auto_renew_token():
-    """自动续期: 苹果脚本读 Chrome 活动标签 localStorage 的 st-auth → 测下单接口 → 更新 .bb_token。
+    """自动续期: 苹果脚本读 Chrome 活动标签 st-auth → 测下单接口 → 更新 .bb_token。
 
     用 osascript(读活动标签)而非 playwright CDP(9222): 后者在 asyncio 异步上下文里会报
     "Playwright Sync API inside async context"(秒级监控的 run() 是 asyncio), 且依赖 9222 端口常开。
     苹果脚本两条都不依赖, 只要 Chrome 活动标签是 BB 页即可。
+
+    2026-09-08 用户要求: 一旦 token 过期, 自动刷新 BB 页面重新登录拿新 token(Chrome 已最小化、
+    登录态持久, 刷新自动登录不需要验证码)。
     """
     tok_file = ROOT / "data" / "storage" / ".bb_token"
     dom_file = ROOT / "data" / "storage" / ".bb_domain"
+
+    def _test_save(new_tok, new_dom):
+        if not new_tok or len(new_tok) < 30:
+            return False
+        dom = new_dom or read_domain()
+        try:
+            r = _session().post(f"{dom}/v1/order/new/bet/list",
+                                json={"languageType": "CMN", "isSettled": False, "current": 1, "size": 1},
+                                headers={"Content-Type": "application/json", "Authorization": new_tok,
+                                         "User-Agent": _UA}, timeout=15, verify=False)
+        except Exception:
+            return False
+        if r.json().get("code") != 0:
+            return False
+        try:
+            tok_file.write_text(new_tok)
+            if new_dom:
+                dom_file.write_text(new_dom)
+        except Exception:
+            pass
+        return True
+
     try:
-        ls = _read_localstorage()  # osascript 读 Chrome 活动标签 localStorage
+        # 1. 先读当前 st-auth(不刷新)
+        ls = _read_localstorage()
         new_tok = ls.get("st-auth", "") or ls.get("user-token", "")
         new_dom = (ls.get("st-domain", "") or "").rstrip("/")
-        if not new_tok or len(new_tok) < 30:
-            return False, "Chrome 活动标签无有效 st-auth"
-        # 测下单接口(Authorization 严格, code=0 才有效)
-        dom = new_dom or read_domain()
-        r = _session().post(f"{dom}/v1/order/new/bet/list",
-                            json={"languageType": "CMN", "isSettled": False, "current": 1, "size": 1},
-                            headers={"Content-Type": "application/json", "Authorization": new_tok,
-                                     "User-Agent": _UA}, timeout=15, verify=False)
-        if r.json().get("code") != 0:
-            return False, "活动标签 st-auth 也失效(code!=0)"
-        tok_file.write_text(new_tok)
-        if new_dom:
-            dom_file.write_text(new_dom)
-        return True, f"已续期 {new_tok[:20]}..."
+        if _test_save(new_tok, new_dom):
+            return True, f"已续期 {new_tok[:20]}..."
+        # 2. 失效 → 刷新 BB 页面重新登录(2026-09-08)
+        _refresh_bb_page()
+        time.sleep(8)  # 等重载 + 自动登录
+        ls = _read_localstorage()
+        new_tok = ls.get("st-auth", "") or ls.get("user-token", "")
+        new_dom = (ls.get("st-domain", "") or "").rstrip("/")
+        if _test_save(new_tok, new_dom):
+            return True, f"已刷新续期 {new_tok[:20]}..."
+        return False, "刷新后 st-auth 仍失效"
     except Exception as e:
         return False, f"续期失败: {type(e).__name__} {str(e)[:60]}"
 

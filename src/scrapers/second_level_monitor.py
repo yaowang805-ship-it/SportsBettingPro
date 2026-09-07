@@ -37,16 +37,16 @@ KELLY_FRACTION = 0.5   # 半凯利
 MAX_STAKE = 400        # 单盘口上限(与 bb_auto_bet MAX_MARKET_STAKE 一致, 2026-09-06 用户要求 400)
 MIN_STAKE = 30         # stake<30 拦截铁律
 
-# 滚球实盘验证(2026-09-07 用户要求): 今天给 ¥500 实盘额度, 只投小球(under), 分散投注。
-LIVE_BUDGET = 500
+# 滚球实盘验证(2026-09-07 用户要求): 只投小球(under), 分散投注。滚动预算(结算后额度释放)。
+LIVE_BUDGET = 1000  # 2026-09-08 用户要求: 500 → 1000
 LIVE_BUDGET_FILE = ROOT / "data" / "storage" / "live_bet_budget.json"
 LIVE_PAPER_FILE = ROOT / "data" / "storage" / "live_paper_bets.json"
 LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 已推送过结算的 order_id
 
 # 2026-09-07 用户要求: 滚球实盘只投小球(under), 用 EV-Kelly 最优定仓(非固定额),
-# 单注上限 ¥250(半额预算)兼顾分散。其它盘口(大球/1x2/让球)仍只进观察库, 不下真单。
+# 单注上限 ¥250(1/4预算)兼顾分散。其它盘口(大球/1x2/让球)仍只进观察库, 不下真单。
 LIVE_REAL_BET_ENABLED = True
-LIVE_UNDER_MAX_STAKE = 250  # 小球单注上限(EV-Kelly 定仓, 上限半额预算)
+LIVE_UNDER_MAX_STAKE = 250  # 小球单注上限(EV-Kelly 定仓, 上限1/4预算)
 BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球"}
 
 # G04 market(盘口名) → 缓存子盘口 key
@@ -553,6 +553,10 @@ class SecondLevelMonitor:
         # 非阻塞限频: 距上次下单 < 随机间隔(10-15s)则跳过, 下一轮 2s 后重新评估(用新鲜赔率)
         if time.time() - self._last_bet_time < self._bet_delay:
             return
+        # 全局冷却(2026-09-08): 跨进程共享时间戳, 避免早盘+滚球"同一时间"下单像机器投注
+        from src.betting.bb_auto_bet import global_bet_cooldown
+        if global_bet_cooldown(15, 45) > 0:
+            return
         print(f"  🎯 滚球下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake}", flush=True)
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
@@ -562,6 +566,9 @@ class SecondLevelMonitor:
         # 更新限频时间戳 + 抽下一单随机间隔(10-15s, 防风控"投注过于频繁")
         self._last_bet_time = time.time()
         self._bet_delay = random.uniform(10, 15)
+        # 记录全局下单时间戳(早盘+滚球共享冷却起点)
+        from src.betting.bb_auto_bet import record_global_bet
+        record_global_bet()
         if code == 14010:
             self._invalidate_token_cache()
         if code == 0:

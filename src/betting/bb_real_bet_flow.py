@@ -181,9 +181,18 @@ def auto_bet_flow(opportunities, token=None, domain=None):
             continue
         market_id, odds, option_type = mk
 
+        # 全局冷却(2026-09-08): 跨进程共享时间戳, 与滚球流程错开, 避免"同一时间"下单
+        from src.betting.bb_auto_bet import global_bet_cooldown, record_global_bet
+        _wait = global_bet_cooldown(20, 90)
+        if _wait > 0:
+            time.sleep(_wait)
+
         # 下单(含注额上限检查)
         code, order_id, msg = place_single_bet(
             market_id, odds, option_type, stake, token=token, domain=domain, match_id=match_id)
+
+        # 记录全局下单时间戳
+        record_global_bet()
 
         # 防风控(2026-09-05): 每注之间随机间隔 20~90 秒, 模拟真人看盘思考, 避免秒下多注被风控识别
         import random as _random

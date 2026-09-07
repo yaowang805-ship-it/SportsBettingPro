@@ -82,7 +82,7 @@ SESSION.headers.update({
 })
 
 MAX_RETRIES = 5
-LOW_PRIORITY_MAX_RETRIES = 2       # V5.10: 后台任务(CLV采集等)快速失败, 见 api_get 注释
+LOW_PRIORITY_MAX_RETRIES = 3       # V5.10: 后台任务(CLV采集等)快速失败; 2026-09-08 提1次防SSL瞬时抖动静默失效
 RETRY_DELAY = 2.0
 MAX_BACKOFF = 8.0                  # 指数退避封顶
 MAX_TOTAL_WAIT = 30.0              # 累积等待超过此值放弃
