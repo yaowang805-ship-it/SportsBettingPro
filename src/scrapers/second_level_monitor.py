@@ -43,10 +43,10 @@ LIVE_BUDGET_FILE = ROOT / "data" / "storage" / "live_bet_budget.json"
 LIVE_PAPER_FILE = ROOT / "data" / "storage" / "live_paper_bets.json"
 LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 已推送过结算的 order_id
 
-# 2026-09-07 用户要求: 滚球实盘只投小球(under), 分散(单注封顶 ¥100, 避免几注花光 ¥500)。
-# 其它盘口(大球/1x2/让球)仍只进观察库, 不下真单。
+# 2026-09-07 用户要求: 滚球实盘只投小球(under), 用 EV-Kelly 最优定仓(非固定额),
+# 单注上限 ¥250(半额预算)兼顾分散。其它盘口(大球/1x2/让球)仍只进观察库, 不下真单。
 LIVE_REAL_BET_ENABLED = True
-LIVE_UNDER_STAKE_CAP = 100  # 小球单注封顶, 分散投注
+LIVE_UNDER_MAX_STAKE = 250  # 小球单注上限(EV-Kelly 定仓, 上限半额预算)
 BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球"}
 
 # G04 market(盘口名) → 缓存子盘口 key
@@ -184,7 +184,9 @@ class SecondLevelMonitor:
         self._cache_mtime = 0.0
         self.live_cache = {}  # bb_match_id -> {pin_matchup_id, home, away, moneyline}
         self._live_cache_ts = 0.0
-        self._live_spent = 0.0  # 当日滚球已投注额(读自 LIVE_BUDGET_FILE)
+        self._live_spent = 0.0  # 当日滚球累计已投注额(读自 LIVE_BUDGET_FILE)
+        self._live_outstanding = 0.0  # 当日滚球未结算投注额(滚动预算: 结算后释放额度)
+        self._live_bets = {}   # 未结算订单 order_id -> 注额(结算时扣减 outstanding)
         self._bet_notify_until = 0.0  # 钉钉下单通知节流(30min 内最多一条)
         self._token_remind_until = 0.0  # token 失效钉钉提醒节流(30min)
         self._token_ok_until = 0.0     # token 有效缓存到期时间戳(10min 缓存, 省每单 1s 探测)
@@ -219,23 +221,30 @@ class SecondLevelMonitor:
             return False
 
     def _load_live_spent(self):
-        """读当日滚球已投注额。日期不匹配自动重置。"""
+        """读当日滚球已投注额/未结算额。日期不匹配自动重置。"""
         today = time.strftime("%Y-%m-%d")
         try:
             if LIVE_BUDGET_FILE.exists():
                 d = json.loads(LIVE_BUDGET_FILE.read_text())
                 if d.get("date") == today:
                     self._live_spent = float(d.get("spent", 0))
+                    self._live_outstanding = float(d.get("outstanding", 0))
+                    self._live_bets = d.get("bets", {})
                     return
         except Exception:
             pass
         self._live_spent = 0.0
+        self._live_outstanding = 0.0
+        self._live_bets = {}
 
     def _save_live_spent(self):
         today = time.strftime("%Y-%m-%d")
         try:
             LIVE_BUDGET_FILE.parent.mkdir(parents=True, exist_ok=True)
-            LIVE_BUDGET_FILE.write_text(json.dumps({"date": today, "spent": self._live_spent}))
+            LIVE_BUDGET_FILE.write_text(json.dumps({
+                "date": today, "spent": self._live_spent,
+                "outstanding": self._live_outstanding, "bets": self._live_bets,
+            }, ensure_ascii=False))
         except Exception:
             pass
 
@@ -511,8 +520,8 @@ class SecondLevelMonitor:
         # 2026-09-07 用户要求: 滚球实盘只投小球(under), 其它盘口只观察
         if sig.get("desig") != "小球":
             return
-        # 分散投注: 小球单注封顶 ¥100, 避免几注就花光 ¥500
-        stake = min(stake, LIVE_UNDER_STAKE_CAP)
+        # EV-Kelly 最优定仓(2026-09-07): _stake_for 已按 edge/(odds-1) 算好, 这里只上限半额预算
+        stake = min(stake, LIVE_UNDER_MAX_STAKE)
         sig["_stake"] = stake
         if stake < MIN_STAKE:
             return
@@ -523,9 +532,9 @@ class SecondLevelMonitor:
         if fresh_ev is not None and fresh_ev < self.threshold:
             print(f"  ⏸️ Pin 滚球价已漂移(重验 EV {fresh_ev:+.2f}% < {self.threshold}%), 放弃 {tag}", flush=True)
             return
-        # 预算封顶 → 不再真下单(已进观察库)
-        if self._live_spent + stake > LIVE_BUDGET:
-            print(f"  📝 滚球预算已满(已投¥{self._live_spent:.0f}/{LIVE_BUDGET}), 已记观察库 {tag}", flush=True)
+        # 预算封顶(滚动预算): 按"未结算额"封顶, 结算后释放额度 → 结算的钱可继续投滚球
+        if self._live_outstanding + stake > LIVE_BUDGET:
+            print(f"  📝 滚球预算已满(未结算¥{self._live_outstanding:.0f}/{LIVE_BUDGET}), 已记观察库 {tag}", flush=True)
             return
         market_id = sig.get("market_id")
         if market_id is None:
@@ -557,13 +566,16 @@ class SecondLevelMonitor:
             self._invalidate_token_cache()
         if code == 0:
             self._live_spent += stake
+            self._live_outstanding += stake
+            if order_id:
+                self._live_bets[str(order_id)] = stake
             self._save_live_spent()
             print(f"  ✅ 滚球下单成功 {tag} | 注额¥{stake} | 累计¥{self._live_spent:.0f}/{LIVE_BUDGET}", flush=True)
             # 每笔成功下单都推钉钉(不限频) + 显示账户总余额
             from src.betting.bb_auto_bet import fetch_balance as _fetch_balance
             _bal = _fetch_balance() or "未知"
             self._notify_bet(
-                f"🟦【滚球】下单成功 {tag}",
+                f"🟦 滚球已投注机会 {tag}",
                 f"注额¥{stake} @{sig['bb_odds']:.2f} | EV{sig['ev']:+.2f}% | 订单{order_id}\n"
                 f"账户余额 ¥{_bal} | 今日滚球累计 ¥{self._live_spent:.0f}/{LIVE_BUDGET}")
             # Reversion check(2026-09-07): 记下注时 BB 价, 30s 后复验是否尖峰回落(假 EV)
@@ -750,6 +762,17 @@ class SecondLevelMonitor:
         except Exception:
             return
         records = (d.get("data") or {}).get("records") or []
+        # 滚动预算: 已结算的滚球订单从"未结算额"里释放, 结算的钱可继续投滚球
+        if self._live_bets:
+            _released = False
+            for o in records:
+                oid = str(o.get("id", ""))
+                if oid and oid in self._live_bets:
+                    self._live_outstanding = max(0.0, self._live_outstanding - float(self._live_bets.pop(oid, 0)))
+                    _released = True
+            if _released:
+                self._save_live_spent()
+                print(f"[slm] 结算释放额度: 未结算降至 ¥{self._live_outstanding:.0f}/{LIVE_BUDGET}", flush=True)
         new_notified = set(notified)
         from config.settings import send_dingtalk
         for o in records:
@@ -865,7 +888,7 @@ class SecondLevelMonitor:
         """轮询 getList type=1 滚球赔率(HTTP, 不依赖浏览器), 每 refresh_every 秒一次。"""
         self._load_live_spent()
         print(f"[slm] 滚球秒级监控(HTTP轮询, 每 {refresh_every}s), 阈值 {self.threshold}%, "
-              f"预算已投 ¥{self._live_spent:.0f}/{LIVE_BUDGET}")
+              f"累计已投 ¥{self._live_spent:.0f} | 未结算 ¥{self._live_outstanding:.0f}/{LIVE_BUDGET}")
         deadline = time.time() + seconds if seconds else None
         poll_count = 0
         while deadline is None or time.time() < deadline:
