@@ -2446,6 +2446,11 @@
     "bb": 4.05,
     "ts": 1788648390.501413
   },
+  "football|USA Major League Soccer|纽约城|新英格兰革命|上半场正确比分0-2|correct_score_ht|2026-09-10": {
+    "ev": 18.3,
+    "bb": 22.0,
+    "ts": 1788739615.36363
+  },
   "football|USA Major League Soccer|蒙特利尔|夏洛特FC|上半场正确比分0-2|correct_score_ht|2026-09-10": {
     "ev": 6.16,
     "bb": 18.3,
@@ -2610,9 +2615,24 @@
     "ev": 1.05,
     "ts": 1788477372.833226
   },
-  "football|USA Major League Soccer|纽约城|新英格兰革命|上半场正确比分0-2|correct_score_ht|2026-09-10": {
-    "ev": 18.3,
-    "bb": 22.0,
-    "ts": 1788739615.36363
+  "football|USA Major League Soccer|明尼苏达联|达拉斯|上半场正确比分0-2|correct_score_ht|2026-09-10": {
+    "ev": 19.75,
+    "bb": 25.0,
+    "ts": 1788741801.189413
+  },
+  "football|USA Major League Soccer|休斯敦迪纳摩|皇家盐湖城|上半场正确比分1-2|correct_score_ht|2026-09-10": {
+    "ev": 9.16,
+    "bb": 30.0,
+    "ts": 1788741801.189464
+  },
+  "football|USA Major League Soccer|奥斯汀|科罗拉多急流|上半场正确比分0-2|correct_score_ht|2026-09-10": {
+    "ev": 14.27,
+    "bb": 18.7,
+    "ts": 1788741801.1895092
+  },
+  "football|USA Major League Soccer|奥斯汀|科罗拉多急流|上半场正确比分2-0|correct_score_ht|2026-09-10": {
+    "ev": 6.14,
+    "bb": 16.2,
+    "ts": 1788741801.1895459
   }
 }
