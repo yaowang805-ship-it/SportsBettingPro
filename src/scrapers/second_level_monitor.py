@@ -191,6 +191,7 @@ class SecondLevelMonitor:
         self._attempted = {}           # 滚球指纹去重: match_id -> {market_id -> 尝试时间戳}
         self._last_bet_time = 0.0      # 上次下单时间(非阻塞限频用)
         self._bet_delay = 0.0          # 下一单需等待的随机间隔(10-15s, 每次下单后重抽)
+        self._reversion_track = {}     # Reversion check: (match_id, market_id, option_type) -> {bb_odds, ts}
 
     def refresh_cache(self):
         """comparison 文件变了就重载公平价缓存。返回是否刷新。"""
@@ -361,6 +362,60 @@ class SecondLevelMonitor:
                 if stk2 > 0:
                     print(f"    {sp}/{sub}: n={n2} 盈亏{pnl2:+.0f} ROI{pnl2/stk2*100:+.1f}%", flush=True)
 
+    def _check_reversion(self):
+        """Reversion check(2026-09-07): 下注 30s 后复验 BB 价, 回落≥10% 标记为尖峰假 EV。
+
+        尖峰假 EV = BB 临时高价(下单后几秒就回落), 不是真 edge。标记后结算统计时剔除。
+        """
+        if not self._reversion_track:
+            return
+        now = time.time()
+        ready = {k: v for k, v in self._reversion_track.items() if now - v["ts"] >= 30}
+        if not ready:
+            return
+        try:
+            from src.scrapers.pinnacle_live import fetch_bb_live_matches
+            bb = fetch_bb_live_matches()
+        except Exception:
+            return
+        for (mid, mkt, opt), v in ready.items():
+            del self._reversion_track[(mid, mkt, opt)]
+            try:
+                m = bb.get(int(mid))
+                if not m:
+                    continue
+                for mk in m.get("markets", []):
+                    if str(mk.get("market_id")) == mkt and str(mk.get("option_type")) == opt:
+                        cur = mk.get("odds", 0)
+                        if cur > 0 and v["bb_odds"] > 0:
+                            drop_pct = (v["bb_odds"] - cur) / v["bb_odds"] * 100
+                            if drop_pct >= 10:
+                                self._mark_spike(int(mid), mkt, opt, drop_pct)
+                        break
+            except Exception:
+                pass
+
+    def _mark_spike(self, match_id, market_id, option_type, drop_pct):
+        """把 live_paper_bets 对应记录标记 spike(尖峰假 EV), 供统计剔除。"""
+        try:
+            if not LIVE_PAPER_FILE.exists():
+                return
+            bets = json.loads(LIVE_PAPER_FILE.read_text())
+            changed = False
+            for b in bets:
+                if (b.get("match_id") == match_id
+                        and str(b.get("market_id")) == str(market_id)
+                        and str(b.get("option_type")) == str(option_type)):
+                    if not b.get("spike"):
+                        b["spike"] = round(drop_pct, 1)
+                        changed = True
+                    break
+            if changed:
+                LIVE_PAPER_FILE.write_text(json.dumps(bets, ensure_ascii=False, indent=1))
+                print(f"[slm] Reversion check: 尖峰假 EV 标记 {drop_pct:.0f}% 回落 (match={match_id})", flush=True)
+        except Exception:
+            pass
+
     def _handle_live_g04(self, match_id, data):
         """滚球 G04: 用 Pin live 公平价(moneyline/spread/total)算 EV。1x2/让球/大小球。"""
         lv = self.live_cache.get(match_id)
@@ -511,6 +566,10 @@ class SecondLevelMonitor:
                 f"🟦【滚球】下单成功 {tag}",
                 f"注额¥{stake} @{sig['bb_odds']:.2f} | EV{sig['ev']:+.2f}% | 订单{order_id}\n"
                 f"账户余额 ¥{_bal} | 今日滚球累计 ¥{self._live_spent:.0f}/{LIVE_BUDGET}")
+            # Reversion check(2026-09-07): 记下注时 BB 价, 30s 后复验是否尖峰回落(假 EV)
+            self._reversion_track[(str(sig["match_id"]), str(market_id), str(sig.get("option_type")))] = {
+                "bb_odds": sig["bb_odds"], "ts": time.time(),
+            }
         else:
             # 下单失败(如 token 过期 14010) → 也记虚拟投注, 保证验证数据积累不中断
             self._append_live_paper_bet(sig)
@@ -818,6 +877,7 @@ class SecondLevelMonitor:
                 if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
                     self._check_settled()
                     self._settle_paper_bets()
+                    self._check_reversion()  # 下注后 30s 复验 BB 价, 尖峰假 EV 标记
             except Exception as e:
                 print(f"[slm] 轮询异常: {type(e).__name__} {str(e)[:80]}", flush=True)
             await asyncio.sleep(refresh_every)

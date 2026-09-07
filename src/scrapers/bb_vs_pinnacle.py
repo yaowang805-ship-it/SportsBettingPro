@@ -750,6 +750,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             # V5.9: 存 Pinnacle 联赛/比赛 ID, 供 CLV 采集器按 ID 直拉(免反查联赛名映射)
             "pin_league_id": str(pin.get("league_id", "") or ""),
             "pin_match_id": str(pin.get("matchup_id", "") or ""),
+            # 2026-09-07: 存 Pin 全场 1X2 原始 3-way, 供 Betfair 双锚交叉验证(检测 Pin 主/平/客偏差)
+            "_pin_ml": pin_ml,
             # V5.10: Pinnacle 主盘口注额上限 = 它对自己定价的信心。上限低 = 它没把握,
             # 我们拿它的去抽水价当"公平价"标尺就不可靠, 算出的 EV 更可能是噪声。
             # 实测 NBA 中位 $750 vs 乌拉圭女足 $50(15倍), 与 CLV 分档吻合(低上限的

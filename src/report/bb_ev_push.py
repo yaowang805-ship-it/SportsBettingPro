@@ -767,11 +767,12 @@ def _load_release_list():
         return None
 
 
-def _is_market_released(sport: str, sub_market: str, league: str = "", designation: str = "") -> bool:
+def _is_market_released(sport: str, sub_market: str, league: str = "", designation: str = "", match_epoch=None) -> bool:
     """该运动×盘口(或运动×联赛×盘口)是否被释放(允许投注)。未释放 → 只观察不投注。
 
     优先级: 联赛细化(league_released/league_blocked) > 观察库兜底(observe_released)
-          > 方向级释放(direction_released) > 主开关(market_released)。
+          > 方向级释放(direction_released) > 时间窗级释放(direction_window_released)
+          > 主开关(market_released)。
     释放清单文件不存在时返回 True(回退旧 CLV 门槛行为, 不停注) —— 脚本+crontab 保证正常时清单始终存在。
     """
     rl = _load_release_list()
@@ -789,6 +790,10 @@ def _is_market_released(sport: str, sub_market: str, league: str = "", designati
     # 3. 方向级释放(2026-09-03): 整盘没过主开关, 但该方向实盘 ROI 强正(如 1x2 和局+37.4%)
     dr = _release_direction(designation, sub_market)
     if [sport, sub_market, dr] in rl.get("direction_released", []):
+        return True
+    # 3.5 时间窗级释放(2026-09-07): 方向整体没释放, 但某时间窗实盘强正(如 近场ht+53%/远场hc+53%)
+    w = _time_window(match_epoch)
+    if w and [sport, sub_market, dr, w] in rl.get("direction_window_released", []):
         return True
     # 4. 主开关(运动×盘口)
     return [sport, sub_market] in rl.get("market_released", [])
@@ -1273,23 +1278,36 @@ def _calc_kelly_stakes(opps: list) -> list:
             _wmult = EDGE_DIRECTION_WINDOW_MULT.get((sub, o.get("designation", ""), _w))
             if _wmult:
                 _mult = _wmult
-        _expected_pushes = _estimate_daily_total_pushes(_get_today_pushed_count())
-        stake = int(DAILY_STAKE_TARGET * _mult / (_expected_pushes * MEDIUM_EDGE_MULT))
-        stake = min(stake, 400)  # 单注上限 ¥400(2026-09-06 用户要求: 实盘单注≤400)
-        # Pin 低注额上限 = 定价信心低(尺子不准, 低上限场次高EV多是测量误差)。CLV 验证:
-        # 最低25%($125)中位CLV -3.10%/42%, 次低25%($200) -2.35%/42% 明显负 → 降权(减分项)。
+        # 混合定仓(2026-09-07): 分数 Kelly 权重 = (实际EV/100) ÷ (odds-1) × 方向ROI可靠性档
+        # (强15/中10/弱5/假2, 归一化 ÷10)。循环结束后统一按比例归一化到日目标, 封顶 ¥400。
+        # 替换旧"离散档 × 日目标÷场次"公式(它不区分同档内的真实 EV, 也缺 Kelly 赔率项)。
+        _edge = max(o.get("ev_pct", 0) or 0, 0) / 100.0
+        _odds = o.get("bb_odds", 0) or 0
+        _w = 0.0
+        if _odds > 1.0 and _edge > 0:
+            _w = (_mult / MEDIUM_EDGE_MULT) * _edge / (_odds - 1.0)
+        # Pin 低注额上限 = 定价信心低(尺子不准, 低上限场次高EV多是测量误差)→ 降权
         _pin_ms = o.get("pin_max_stake") or o.get("_pin_max_stake")
         if _pin_ms:
             try:
                 if float(_pin_ms) < 200:
-                    stake = int(stake * 0.7)
+                    _w *= 0.7
             except (ValueError, TypeError):
                 pass
-        # 四舍五入到整十: 避免 ¥67/¥82 有零有整被风控识别为机器下单(2026-09-06)
-        stake = int(round(stake / 10.0) * 10)
-        o["_raw_stake"] = stake
-        # 2026-08-27 用户澄清: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库(record_bets)
-        o["_stake"] = stake
+        o["_kelly_weight"] = _w
+
+    # 混合定仓归一化(2026-09-07): 把 Kelly 权重按比例归一化到日目标(5000), 封顶 ¥400, 取整到 10。
+    _total_w = sum(o.get("_kelly_weight", 0) for o in opps if o.get("_kelly_weight", 0) > 0)
+    for o in opps:
+        _w = o.get("_kelly_weight", 0)
+        if _total_w > 0 and _w > 0:
+            _stake = min(int(DAILY_STAKE_TARGET * _w / _total_w), 400)
+            _stake = int(round(_stake / 10.0) * 10)
+        else:
+            _stake = 0
+        o["_raw_stake"] = _stake
+        # 2026-08-27: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库
+        o["_stake"] = _stake
 
     # 2026-08-30 用户要求: 只要有机会就推送, 不考虑预算/单场/单联赛/单运动上限。
     # 关闭第二遍(总额)/第三遍(单场)/第四遍(单联赛单运动)的上限过滤, 只保留跨盘口相关性折扣(非预算限制)。
@@ -1833,18 +1851,18 @@ def _collect_opportunities(match, market_key):
             }
             sub_market = _MK_TO_SUB.get(market_key, "1x2")
 
-        # 2026-08-27/28 观察模式盘口: 刚修完错配/新接的半场特殊盘口, 只进观察库(validate/CLV采集),
-        # 不推送钉钉, 等 CLV 数据攒够能统计 edge 再开推(用户要求)。
-        # 2026-08-30: correct_score_ht/htft 移出观察模式开推试点(观察库CLV+6.8%/+4.6%正edge,
-        # 结构已对齐, 低倍率控制高方差)。htft 旧"EV虚高3228%"教训已因 Pin 9结果对齐而消除。
-        if sub_market in ("correct_score", "first_to_score",
-                          "exact_goals_ht", "winning_margin_ht",
+        # 2026-08-27/28 观察模式盘口: 只进观察库(validate/CLV采集), 不推送不实盘投注。
+        # 2026-09-07 回退: correct_score_ht/htft 2026-08-30 曾"移出观察模式开推试点"(当时看观察库CLV
+        # +6.8%/+4.6% 正 edge), 但 CLV 是假正 —— 实际实盘/观察 ROI 是 -50.8%/-84.8% 全负。收回试点, 重新只观察。
+        if sub_market in ("correct_score", "correct_score_ht", "htft",
+                          "first_to_score", "exact_goals_ht", "winning_margin_ht",
                           "total_goals_range_ht", "first_to_score_ht"):
             continue
 
         # 盘口释放清单(2026-09-01): 未释放的运动×盘口/联赛只观察不投注(用真实 ROI 替代 CLV 封杀)
         _released = _is_market_released(match.get("sport", ""), sub_market,
-                                        match.get("league", ""), opp.get("designation", ""))
+                                        match.get("league", ""), opp.get("designation", ""),
+                                        match.get("start_time_pin_epoch"))
         if not _released:
             continue
 
@@ -1986,6 +2004,8 @@ def _collect_opportunities(match, market_key):
             "league_cn": match.get("league_cn") or league,
             "home_cn": home_cn,
             "away_cn": away_cn,
+            "home_bb": match.get("home_bb", ""),   # BB 英文名(实盘下单英文直配, 2026-09-07)
+            "away_bb": match.get("away_bb", ""),
             "home_team": match.get("home_pin", home_cn),
             "away_team": match.get("away_pin", away_cn),
             "designation": display_name,

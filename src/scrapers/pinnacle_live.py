@@ -24,14 +24,31 @@ _UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
 # 有滚球的主要运动(足球/篮球/棒球/冰球/网球/电竞)
 LIVE_SPORT_IDS = (29, 4, 3, 19, 33, 12)
 
-# BB 盘口类型 mty → 子盘口 key(只做主盘口, 特殊盘口不接)
-_MTY_TO_SUB = {
-    1000: "hc", 1011: "hc",   # 让球
-    1005: "1x2",               # 独赢
-    1007: "ou",               # 大小
-    1012: "dc",               # 双重机会
+# BB 盘口 (mty, pe) → 子盘口 key。mty=盘口类型码, pe=period(1001全场/1002半场)。
+# 必须 (mty, pe) 双键: 上半场1x2(1005,1002) 与 全场1x2(1005,1001) 是不同盘口。
+# 修正: 1011 是"角球让球"不是"让球", 旧映射错当 hc。
+_MTY_PE_TO_SUB = {
+    (1005, 1001): "1x2",          # 独赢(全场)
+    (1000, 1001): "hc",           # 让球(全场)
+    (1007, 1001): "ou",           # 大小(全场)
+    (1012, 1001): "dc",           # 双机会(全场)
+    (1005, 1002): "ht",           # 上半场独赢
+    (1000, 1002): "ht_hc",        # 上半场让球
+    (1007, 1002): "ht_ou",        # 上半场大小
+    (1012, 1002): "ht_dc",        # 上半场双机会
+    (1033, 1001): "htft",         # 半全场
+    (1027, 1001): "btts",         # 双边进球
+    (1008, 1001): "oe",           # 单双
+    (1099, 1001): "correct_score",  # 正确比分(全场)
+    (1100, 1002): "correct_score_ht",  # 上半场正确比分
+    (1103, 1002): "exact_goals_ht",  # 上半场精确进球
+    (1101, 1001): "total_goals",  # 总进球区间
+    (1018, 1001): "winning_margin",  # 净胜球
+    (1009, 1001): "corner_1x2",   # 角球独赢
+    (1010, 1001): "corner_ou",    # 角球大小
+    (1011, 1001): "corner_hc",    # 角球让球
 }
-# option type(ty) → 方向
+# option type(ty) → 方向(主盘口 1x2/hc/ou/dc/ht 共用; 特殊盘口 ty 不同, 不在此表)
 _TY_TO_DIR = {1: "主", 2: "客", 3: "和", 4: "大", 5: "小"}
 
 # 结果缓存(避免每次扫描拉 4MB)
@@ -192,13 +209,12 @@ def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6)):
                 ts = m.get("ts") or []
                 if len(ts) < 2:
                     continue
-                # 提取赔率(只取主盘口 hc/1x2/ou/dc, 在售 ss=1, 且只取全场 pe=1001)
-                # BB 滚球有 pe=1001(全场) vs pe=1011(半场), 半场赔率不同会错配方向 → 只取全场
+                # 提取赔率(全量盘口, 在售 ss=1)。用 (mty, pe) 双键区分全场/半场。
+                # 只有 _TY_TO_DIR 覆盖方向(1-5)的主盘口才参与 EV 匹配; 特殊盘口(htft/正确比分等)
+                # 也提取进 markets, 供观察库积累样本, 但 fetch_live_opportunities 里不参与 EV。
                 markets = []
                 for mg in m.get("mg") or []:
-                    if mg.get("pe") != 1001:
-                        continue
-                    sub = _MTY_TO_SUB.get(mg.get("mty"))
+                    sub = _MTY_PE_TO_SUB.get((mg.get("mty"), mg.get("pe")))
                     if not sub:
                         continue
                     for mk in (mg.get("mks") or []):

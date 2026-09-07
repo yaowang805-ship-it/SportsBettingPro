@@ -155,29 +155,45 @@ def _league_to_tournament(league_name):
     return None
 
 
-def pin_ht_anchor_compare(pin_ht_ml, betfair_ht):
-    """对比 Pin 的 ht 独赢 vs Betfair 的 ht 独赢, 检测 Pin 平局偏差。
+def pin_3way_anchor_compare(pin_ml, betfair_3way):
+    """对比 Pin 3-way(独赢/半场) vs Betfair 3-way, 检测 Pin 各腿偏差。
 
-    Returns:
-        dict: {draw_dev_pp: 平局隐含概率差(pp), pin_draw_imp, bf_draw_imp, flagged: bool}
+    检测主/平/客三腿的隐含概率偏差, 返回偏差最大的腿。≥3pp 视为 Pin 偏差(假 EV 源)。
     """
-    if not pin_ht_ml or not betfair_ht:
+    if not pin_ml or not betfair_3way:
         return None
     def imp(odds):
         return 1.0 / odds if odds and odds > 1 else 0.0
-    # Pin ht 独赢: [home, draw, away] (3 个)
-    if len(pin_ht_ml) < 3:
+    if len(pin_ml) < 3:
         return None
-    pin_h, pin_d, pin_a = pin_ht_ml[0], pin_ht_ml[1], pin_ht_ml[2]
-    bf_h, bf_d, bf_a = betfair_ht["home"], betfair_ht["draw"], betfair_ht["away"]
-    pin_draw_imp = imp(pin_d) / (imp(pin_h) + imp(pin_d) + imp(pin_a))
-    bf_draw_imp = imp(bf_d) / (imp(bf_h) + imp(bf_d) + imp(bf_a))
-    dev_pp = (pin_draw_imp - bf_draw_imp) * 100
+    pin_h, pin_d, pin_a = float(pin_ml[0]), float(pin_ml[1]), float(pin_ml[2])
+    bf_h, bf_d, bf_a = betfair_3way["home"], betfair_3way["draw"], betfair_3way["away"]
+    pin_sum = imp(pin_h) + imp(pin_d) + imp(pin_a)
+    bf_sum = imp(bf_h) + imp(bf_d) + imp(bf_a)
+    if pin_sum <= 0 or bf_sum <= 0:
+        return None
+    devs = {
+        "home": (imp(pin_h) / pin_sum - imp(bf_h) / bf_sum) * 100,
+        "draw": (imp(pin_d) / pin_sum - imp(bf_d) / bf_sum) * 100,
+        "away": (imp(pin_a) / pin_sum - imp(bf_a) / bf_sum) * 100,
+    }
+    max_label = max(devs, key=lambda k: abs(devs[k]))
     return {
-        "pin_draw_imp": round(pin_draw_imp * 100, 1),
-        "bf_draw_imp": round(bf_draw_imp * 100, 1),
-        "draw_dev_pp": round(dev_pp, 1),
-        "flagged": abs(dev_pp) >= 3.0,  # 平局隐含概率差 ≥3pp 视为 Pin 偏差
+        "deviations": {k: round(v, 1) for k, v in devs.items()},
+        "max_label": max_label,
+        "max_dev_pp": round(devs[max_label], 1),
+        "flagged": abs(devs[max_label]) >= 3.0,
+    }
+
+
+def pin_ht_anchor_compare(pin_ht_ml, betfair_ht):
+    """兼容旧名: 只返回平局偏差(等价 pin_3way_anchor_compare 的 draw 腿)。"""
+    r = pin_3way_anchor_compare(pin_ht_ml, betfair_ht)
+    if not r:
+        return None
+    return {
+        "draw_dev_pp": r["deviations"]["draw"],
+        "flagged": abs(r["deviations"]["draw"]) >= 3.0,
     }
 
 
@@ -197,19 +213,41 @@ def _similar(a, b):
     return a == b or a in b or b in a
 
 
-def cross_validate_ht_entries(entries):
-    """对有 ht 机会的 entry 做 Betfair 双锚交叉验证, 偏差标记 flags + 降权 ht 机会。
+def _swap_3way(bf_3way):
+    """主客互换(匹配到反向队名时用)。"""
+    if not bf_3way:
+        return None
+    return {"home": bf_3way["away"], "draw": bf_3way["draw"], "away": bf_3way["home"]}
 
-    在 bb_vs_pinnacle 对比完成后调用。只对有 _pin_ht_ml 且联赛可映射到 OddsPapi 的
-    entry 做检查(主流联赛), 避免浪费 500次/天配额。
+
+def _dev_mult(dev_pp):
+    """按偏差梯度降权: ≥10pp 拦截, 6-10pp 压到30%, 3-6pp 压到50%。"""
+    return 0.0 if dev_pp >= 10 else (0.3 if dev_pp >= 6 else 0.5)
+
+
+def _downweight_markets(e, markets, mult):
+    """把指定盘口(_market 属于 markets)的 EV 乘以 mult。"""
+    for _field in ("opportunities", "handicap", "over_under",
+                   "double_chance", "draw_no_bet"):
+        for opp in e.get(_field, []):
+            if opp.get("_market") in markets:
+                opp["ev_pct"] = round(opp.get("ev_pct", 0) * mult, 2)
+
+
+def cross_validate_entries(entries):
+    """Betfair 双锚交叉验证(全盘口): 对比 Pin vs Betfair Exchange 的 1X2(全场) + ht(半场)。
+
+    检测 Pin 各腿(主/平/客)系统性偏差, 偏差≥3pp 就标记 flags + 降权受影响的盘口 EV。
+    只对联赛可映射到 OddsPapi 的主流联赛检查(免费配额 250次/天限制)。
     """
     if not ODDSPAPI_KEY or not entries:
         return entries
     from collections import defaultdict
     by_tournament = defaultdict(list)
     for e in entries:
-        pin_ht = e.get("_pin_ht_ml")
-        if not pin_ht or len(pin_ht) < 3:
+        has_1x2 = e.get("_pin_ml") and len(e.get("_pin_ml", [])) >= 3
+        has_ht = e.get("_pin_ht_ml") and len(e.get("_pin_ht_ml", [])) >= 3
+        if not (has_1x2 or has_ht):
             continue
         tid = _league_to_tournament(e.get("league", ""))
         if tid is None:
@@ -226,10 +264,9 @@ def cross_validate_ht_entries(entries):
             bf = fetch_betfair_anchor(batch)
         except Exception:
             continue
-        bf_map = {(r["home"], r["away"]): r for r in bf if r.get("ht")}
+        bf_map = {(r["home"], r["away"]): r for r in bf}
         for tid in batch:
             for e in by_tournament[tid]:
-                pin_ht = e["_pin_ht_ml"]
                 home, away = e.get("home_pin", ""), e.get("away_pin", "")
                 matched = None
                 for (bh, ba), r in bf_map.items():
@@ -237,23 +274,28 @@ def cross_validate_ht_entries(entries):
                         matched = r
                         break
                     if _similar(home, ba) and _similar(away, bh):
-                        matched = {**r, "ht": {"home": r["ht"]["away"], "draw": r["ht"]["draw"], "away": r["ht"]["home"]}}
+                        matched = {"1x2": _swap_3way(r.get("1x2")), "ht": _swap_3way(r.get("ht"))}
                         break
                 if not matched:
                     continue
-                cmp = pin_ht_anchor_compare(pin_ht, matched["ht"])
-                if not cmp or not cmp["flagged"]:
-                    continue
-                dev = abs(cmp["draw_dev_pp"])
-                # 按偏差梯度降权: ≥10pp 直接拦截, 6-10pp 压到30%, 3-6pp 压到50%
-                mult = 0.0 if dev >= 10 else (0.3 if dev >= 6 else 0.5)
-                e.setdefault("flags", []).append(
-                    f"Pin ht平局偏差{cmp['draw_dev_pp']:+.0f}pp(降权×{mult:.1f})")
-                # 降权所有依赖 ht 平局定价的盘口(平局定低会同时虚高 ht/hc/ou/dc/dnb 的主客腿)
-                _ht_markets = ("ht", "ht_hc", "ht_ou", "ht_dc", "ht_dnb")
-                for _field in ("opportunities", "handicap", "over_under",
-                               "double_chance", "draw_no_bet"):
-                    for opp in e.get(_field, []):
-                        if opp.get("_market") in _ht_markets:
-                            opp["ev_pct"] = round(opp.get("ev_pct", 0) * mult, 2)
+                # 1. 全场 1X2 双锚
+                if e.get("_pin_ml") and matched.get("1x2"):
+                    cmp = pin_3way_anchor_compare(e["_pin_ml"], matched["1x2"])
+                    if cmp and cmp["flagged"]:
+                        mult = _dev_mult(abs(cmp["max_dev_pp"]))
+                        e.setdefault("flags", []).append(
+                            f"Pin 1x2{cmp['max_label']}偏差{cmp['max_dev_pp']:+.0f}pp(降权×{mult:.1f})")
+                        _downweight_markets(e, ("1x2", "hc", "ou", "dc", "dnb"), mult)
+                # 2. 半场 ht 双锚
+                if e.get("_pin_ht_ml") and matched.get("ht"):
+                    cmp = pin_3way_anchor_compare(e["_pin_ht_ml"], matched["ht"])
+                    if cmp and cmp["flagged"]:
+                        mult = _dev_mult(abs(cmp["max_dev_pp"]))
+                        e.setdefault("flags", []).append(
+                            f"Pin ht{cmp['max_label']}偏差{cmp['max_dev_pp']:+.0f}pp(降权×{mult:.1f})")
+                        _downweight_markets(e, ("ht", "ht_hc", "ht_ou", "ht_dc", "ht_dnb"), mult)
     return entries
+
+
+# 兼容旧调用名
+cross_validate_ht_entries = cross_validate_entries

@@ -344,6 +344,22 @@ def main():
         if d["roi"] < DIR_ROI_MIN:
             direction_window_blocked.append([sport, sm, dr, w])
 
+    # 时间窗级释放(2026-09-07): 方向整体没释放, 但某时间窗实盘 ROI 强正(如 近场ht+53% / 远场hc+53%),
+    # 单独释放该时间窗 —— "时间窗×盘口"才是真 edge 的精确颗粒度(整盘/方向级 ROI 会把时间窗分化平均掉)。
+    direction_window_released = []
+    for (sport, sm, dr, w), d in sorted(dir_window_roi.items()):
+        if d["n"] < DIR_N_MIN:
+            continue
+        # 只有"该方向既没整盘释放也没方向级释放"时, 才需要时间窗级释放(已释放的无需重复)
+        if (sport, sm) in released_set or (sport, sm, dr) in released_dir_set:
+            continue
+        # 观察库交叉验证护栏(防高赔少数命中的假正)
+        o = obs_mkt_roi.get((sport, sm))
+        if o and o["n"] >= OBS_CROSS_N_MIN and o["roi"] < OBS_CROSS_ROI_MIN:
+            continue
+        if d["roi"] > REAL_ROI_MIN:
+            direction_window_released.append([sport, sm, dr, w])
+
     league_released = []
     league_blocked = []
     for (sport, lg, sm), d in sorted(league_roi.items()):
@@ -376,6 +392,7 @@ def main():
         "direction_blocked": direction_blocked,
         "direction_min_ev": direction_min_ev,
         "direction_window_blocked": direction_window_blocked,
+        "direction_window_released": direction_window_released,
     }
     tmp = OUT.with_suffix(".tmp")
     tmp.write_text(json.dumps(out, ensure_ascii=False, indent=2))

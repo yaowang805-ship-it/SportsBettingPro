@@ -118,24 +118,20 @@ def read_domain():
 
 
 def auto_renew_token():
-    """自动续期(2026-09-06): playwright 读浏览器 st-auth → 测下单接口 → 更新 .bb_token/.bb_domain。
+    """自动续期: 苹果脚本读 Chrome 活动标签 localStorage 的 st-auth → 测下单接口 → 更新 .bb_token。
 
-    返回 (bool, msg)。token 有效期约 11h, 下单返回 14010 时调用。需要独立 Chrome(9222)开着。
+    用 osascript(读活动标签)而非 playwright CDP(9222): 后者在 asyncio 异步上下文里会报
+    "Playwright Sync API inside async context"(秒级监控的 run() 是 asyncio), 且依赖 9222 端口常开。
+    苹果脚本两条都不依赖, 只要 Chrome 活动标签是 BB 页即可。
     """
     tok_file = ROOT / "data" / "storage" / ".bb_token"
     dom_file = ROOT / "data" / "storage" / ".bb_domain"
     try:
-        from playwright.sync_api import sync_playwright
-        with sync_playwright() as p:
-            browser = p.chromium.connect_over_cdp("http://127.0.0.1:9222")
-            pg = browser.contexts[0].pages[0]
-            ls = pg.evaluate("() => { const o={}; for(let i=0;i<localStorage.length;i++)"
-                             "{const k=localStorage.key(i); o[k]=localStorage.getItem(k);} return o; }")
-            browser.close()
+        ls = _read_localstorage()  # osascript 读 Chrome 活动标签 localStorage
         new_tok = ls.get("st-auth", "") or ls.get("user-token", "")
-        new_dom = ls.get("st-domain", "").rstrip("/") or ""
+        new_dom = (ls.get("st-domain", "") or "").rstrip("/")
         if not new_tok or len(new_tok) < 30:
-            return False, "浏览器 localStorage 无有效 st-auth"
+            return False, "Chrome 活动标签无有效 st-auth"
         # 测下单接口(Authorization 严格, code=0 才有效)
         dom = new_dom or read_domain()
         r = _session().post(f"{dom}/v1/order/new/bet/list",
@@ -143,7 +139,7 @@ def auto_renew_token():
                             headers={"Content-Type": "application/json", "Authorization": new_tok,
                                      "User-Agent": _UA}, timeout=15, verify=False)
         if r.json().get("code") != 0:
-            return False, "浏览器 st-auth 也失效(code!=0)"
+            return False, "活动标签 st-auth 也失效(code!=0)"
         tok_file.write_text(new_tok)
         if new_dom:
             dom_file.write_text(new_dom)
@@ -301,14 +297,28 @@ def find_market_from_match(match, sub_market="1x2", direction=None):
     direction: "主"/"客"/"和"/"大"/"小" 或 optionType 数字
     返回 (market_id, odds, option_type) 或 None
     """
-    # 盘口名 → 匹配关键词
-    name_map = {
-        "1x2": ("独赢", "1x2", "胜平负", "输赢"),
-        "hc": ("让球", "让分", "handicap"),
-        "ou": ("大小", "大/小", "进球数"),
-        "dc": ("双重机会", "double chance"),
+    # 盘口 → (mty, pe) 码。mty=盘口类型码(语言无关), pe=period(1001全场/1002半场)。
+    # 必须同时匹配 mty+pe, 否则"上半场1x2"(1005+1002)会被误当成"全场1x2"(1005+1001)。
+    market_codes = {
+        "1x2": [(1005, 1001)],
+        "hc": [(1000, 1001)],
+        "ou": [(1007, 1001)],
+        "dc": [(1012, 1001)],
+        "ht": [(1005, 1002)],            # 上半场独赢
+        "ht_hc": [(1000, 1002)],         # 上半场让球
+        "ht_ou": [(1007, 1002)],         # 上半场大小
+        "ht_dc": [(1012, 1002)],         # 上半场双机会
+        "htft": [(1033, 1001)],          # 半全场
+        "correct_score": [(1099, 1001), (1188, 1001)],   # 正确比分(全场)
+        "correct_score_ht": [(1100, 1002), (1188, 1002)],  # 上半场正确比分
+        "exact_goals_ht": [(1103, 1002)],  # 上半场精确进球
+        "btts": [(1027, 1001)],          # 双边进球
+        "corner": [(1009, 1001), (1010, 1001), (1011, 1001)],  # 角球(独赢/大小/让球)
+        "oe": [(1008, 1001)],            # 单双
+        "winning_margin": [(1018, 1001)],  # 净胜球
+        "total_goals": [(1101, 1001)],   # 总进球区间
     }
-    keywords = name_map.get(sub_market, (sub_market,))
+    target_codes = market_codes.get(sub_market)
     # 方向 → optionType
     dir_map = {
         "主": 1, "客": 2, "和": 3, "大": 4, "小": 5,
@@ -317,9 +327,14 @@ def find_market_from_match(match, sub_market="1x2", direction=None):
     target_ty = dir_map.get(direction) if direction else None
 
     for mg in match.get("mg", []):
-        nm = (mg.get("nm") or "").lower()
-        if not any(k.lower() in nm for k in keywords):
-            continue
+        if target_codes is not None:
+            if (mg.get("mty"), mg.get("pe")) not in target_codes:
+                continue
+        else:
+            # 未支持的盘口: 退回名称匹配(兜底)
+            nm = (mg.get("nm") or "").lower()
+            if sub_market.lower() not in nm:
+                continue
         for mk in mg.get("mks", []):
             if mk.get("ss") != 1 or not mk.get("op"):
                 continue

@@ -28,6 +28,10 @@ from src.betting.bb_auto_bet import (
 )
 from config.settings import DATA_DIR
 
+# 运动英文名 → 中文名(推送展示用)
+SPORT_CN = {"football": "足球", "basketball": "篮球", "tennis": "网球",
+            "baseball": "棒球", "american_football": "美式足球", "ice_hockey": "冰球"}
+
 
 def _win_label(epoch):
     """时间窗标签(推送用): 滚球(已开赛/无epoch)/临场<6h/近场6-24h/远场24-72h。"""
@@ -47,7 +51,7 @@ def _win_label(epoch):
 
 
 def _get_all_matches(token, domain):
-    """getList 拉全量比赛, 返回 list[record]。"""
+    """getList 拉全量比赛(英文名), 返回 list[record]。用 EN 与对比引擎 home_bb 英文直配。"""
     import requests
     import urllib3
     urllib3.disable_warnings()
@@ -62,7 +66,7 @@ def _get_all_matches(token, domain):
             try:
                 r = s.post(f"{domain}/v1/match/getList",
                            json={"sportId": sport_id, "type": 2, "current": page, "pageSize": 50,
-                                 "isPC": True, "languageType": "CMN"},
+                                 "isPC": True, "languageType": "EN"},
                            headers={"Content-Type": "application/json", "user-token": token,
                                     "User-Agent": UA}, timeout=15, verify=False)
                 d = r.json()
@@ -144,8 +148,11 @@ def auto_bet_flow(opportunities, token=None, domain=None):
     sent_dingtalk = []
 
     for opp in opportunities:
-        home = opp.get("home_cn") or opp.get("home", "")
-        away = opp.get("away_cn") or opp.get("away", "")
+        # 匹配用英文(home_bb), 展示用中文(home_cn) —— 英文直配 getList, 中文只给钉钉看
+        match_home = opp.get("home_bb") or opp.get("home_cn") or opp.get("home", "")
+        match_away = opp.get("away_bb") or opp.get("away_cn") or opp.get("away", "")
+        disp_home = opp.get("home_cn") or opp.get("home_bb") or opp.get("home", "")
+        disp_away = opp.get("away_cn") or opp.get("away_bb") or opp.get("away", "")
         sub = opp.get("sub_market") or opp.get("_sub_market") or "1x2"
         desig = opp.get("designation", "")
         stake = float(opp.get("_stake") or opp.get("stake") or 10)
@@ -155,22 +162,22 @@ def auto_bet_flow(opportunities, token=None, domain=None):
         if _ep:
             try:
                 if float(_ep) < time.time():
-                    failed.append({"home": home, "away": away, "reason": "已开赛(滚球窗口), 早盘跳过"})
+                    failed.append({"home": disp_home, "away": disp_away, "reason": "已开赛(滚球窗口), 早盘跳过"})
                     continue
             except (TypeError, ValueError):
                 pass
 
-        # 匹配比赛
-        match = _find_match(records, home, away)
+        # 匹配比赛(英文名)
+        match = _find_match(records, match_home, match_away)
         if not match:
-            failed.append({"home": home, "away": away, "reason": "getList 未匹配到比赛"})
+            failed.append({"home": disp_home, "away": disp_away, "reason": "getList 未匹配到比赛"})
             continue
         match_id = match.get("id")
 
         # 找 marketId
         mk = find_market_from_match(match, _sub_market_to_key(sub), _designation_to_dir(sub, desig))
         if not mk:
-            failed.append({"home": home, "away": away, "reason": f"未找到盘口 {sub}/{desig}"})
+            failed.append({"home": disp_home, "away": disp_away, "reason": f"未找到盘口 {sub}/{desig}"})
             continue
         market_id, odds, option_type = mk
 
@@ -184,13 +191,23 @@ def auto_bet_flow(opportunities, token=None, domain=None):
 
         if code == 0:
             rec = {
-                "home": home, "away": away, "sub_market": sub, "designation": desig,
+                "home": disp_home, "away": disp_away, "sub_market": sub, "designation": desig,
                 "odds": odds, "stake": stake, "order_id": order_id,
                 "ts": time.time(),
             }
             success.append(rec)
             _bj = datetime.now(timezone(timedelta(hours=8))).strftime("%H:%M")
-            sent_dingtalk.append(f"✅【{_win_label(opp.get('_pin_epoch'))}】{home} vs {away} | {desig} @{odds} | 注额¥{stake:.0f} | 投注 {_bj} | 订单{order_id}")
+            # 开赛时间 + 运动类型(2026-09-07 用户要求)
+            _sport_cn = SPORT_CN.get(opp.get("sport", ""), opp.get("sport", ""))
+            _kickoff = ""
+            if _ep:
+                try:
+                    _kickoff = datetime.fromtimestamp(float(_ep), timezone(timedelta(hours=8))).strftime("%m-%d %H:%M")
+                except (TypeError, ValueError, OSError):
+                    pass
+            sent_dingtalk.append(
+                f"✅【{_win_label(opp.get('_pin_epoch'))}】{disp_home} vs {disp_away} | {desig} @{odds} "
+                f"| 注额¥{stake:.0f} | 投注 {_bj} | 开赛 {_kickoff} | {_sport_cn} | 订单{order_id}")
             _append_bet_history(rec)
         else:
             failed.append({"home": home, "away": away, "reason": f"code={code} {msg}"})
