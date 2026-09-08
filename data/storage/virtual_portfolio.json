@@ -1,5 +1,5 @@
 {
-  "balance": 15041.53,
+  "balance": 14921.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -736,6 +736,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788893100,
       "created_at": "2026-09-08T13:42:59.662810+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_拉卡_沙莫林1914_客胜",
+      "sport": "football",
+      "league": "斯洛伐克杯",
+      "home_team": "拉卡",
+      "away_team": "沙莫林1914",
+      "home_cn": "拉卡",
+      "away_cn": "沙莫林1914",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.39,
+      "stake": 120,
+      "model_prob": 0.7738,
+      "ev_pct": 7.56,
+      "pin_odds": 1.266,
+      "fair_price": 1.2923,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788877800,
+      "created_at": "2026-09-08T13:48:29.403209+00:00",
       "track_only": false
     }
   ],
@@ -8727,8 +8750,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-08",
-    "used": 470.0,
-    "bets": 5
+    "used": 590.0,
+    "bets": 6
   },
   "updated": null
 }

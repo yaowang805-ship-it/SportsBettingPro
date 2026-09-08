@@ -488,7 +488,7 @@ class SecondLevelMonitor:
                 continue
             sig = {"match_id": match_id, "sub": sub, "desig": desig[d],
                    "bb_odds": bb, "fair": fair_p, "ev": ev, "line": line_val,
-                   "match": {"home": lv["home"], "away": lv["away"], "sport": "", "league_cn": "滚球"},
+                   "match": {"home": lv["home"], "away": lv["away"], "sport": lv.get("sport", ""), "league_cn": "滚球"},
                    "pin_matchup_id": lv.get("pin_matchup_id"),
                    "league_id": lv.get("league_id"),
                    "max_stake": lv.get("max_stake", 0)}
@@ -581,10 +581,11 @@ class SecondLevelMonitor:
             # 每笔成功下单都推钉钉(不限频) + 显示账户总余额
             from src.betting.bb_auto_bet import fetch_balance as _fetch_balance
             _bal = _fetch_balance() or "未知"
+            _sport_cn = BB_SPORT_CN.get(sig["match"].get("sport"), "") or ""
             self._notify_bet(
-                f"🟦 滚球已投注机会 {tag}",
-                f"注额¥{stake} @{sig['bb_odds']:.2f} | EV{sig['ev']:+.2f}% | 订单{order_id}\n"
-                f"账户余额 ¥{_bal} | 今日滚球累计 ¥{self._live_spent:.0f}/{LIVE_BUDGET}")
+                f"🟦 滚球已投注 | {_sport_cn} {sig['match']['home']} vs {sig['match']['away']} {sig['desig']}",
+                f"{_sport_cn} | 滚球 | {sig['desig']} | BB {sig['bb_odds']:.2f} vs 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}%\n"
+                f"注额 ¥{stake} | 账户余额 ¥{_bal} | 今日滚球累计 ¥{self._live_spent:.0f}/{LIVE_BUDGET}")
             # Reversion check(2026-09-07): 记下注时 BB 价, 30s 后复验是否尖峰回落(假 EV)
             self._reversion_track[(str(sig["match_id"]), str(market_id), str(sig.get("option_type")))] = {
                 "bb_odds": sig["bb_odds"], "ts": time.time(),
