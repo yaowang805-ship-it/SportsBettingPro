@@ -71,6 +71,10 @@ SESSION = _cffi_requests.Session(impersonate="chrome150")
 SESSION.trust_env = False
 SESSION.proxies = {"http": "", "https": ""}
 SESSION.curl.setopt(CurlOpt.RESOLVE, [f"{_PIN_HOST}:443:{_PIN_REAL}"])
+# connect 阶段最多 15s 快速失败(封禁/断连立刻暴露), read 超时由各请求 timeout 参数控制。
+# curl_cffi 0.16.3 的 timeout 元组 (connect, read) 不生效(实测报 8s), 故 connect 用此全局项,
+# read 用 float 总超时(见 fetch_live_matchups 足球 45s)。
+SESSION.curl.setopt(CurlOpt.CONNECTTIMEOUT_MS, 15000)
 SESSION.headers.update({
     "Accept": "application/json, text/plain, */*",
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "

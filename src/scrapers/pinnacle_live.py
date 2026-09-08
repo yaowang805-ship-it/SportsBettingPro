@@ -69,24 +69,45 @@ def fetch_live_matchups(sport_ids=LIVE_SPORT_IDS, use_cache=True):
     from src.scrapers.pinnacle_api import SESSION, API_BASE, _load_cookie
     _load_cookie()
 
-    if use_cache and _CACHE_FILE.exists():
+    # 上一轮缓存(足球超时兜底用): 读出来供回退, 不因本轮某运动失败丢光其滚球机会
+    prev_live = []
+    if _CACHE_FILE.exists():
         try:
             data = json.loads(_CACHE_FILE.read_text())
-            if time.time() - data.get("ts", 0) < _CACHE_TTL:
-                return data.get("live", [])
+            prev_live = data.get("live", [])
+            if use_cache and time.time() - data.get("ts", 0) < _CACHE_TTL:
+                return prev_live
         except Exception:
             pass
 
+    # 足球(sportId=29)matchups ~30MB, 慢网络实测 26s; 其它运动 <1MB 秒回。
+    # curl_cffi 0.16.3 的 timeout 元组(connect,read)不生效(实测报 8s), 用 float 总超时;
+    # connect 15s 快速失败已全局设(pinnacle_api SESSION.CONNECTTIMEOUT_MS)。
+    FOOTBALL_SID = 29
+    T_FOOTBALL = 45.0
+    T_OTHER = 20.0
+
     live = []
     for sid in sport_ids:
+        _timeout = T_FOOTBALL if sid == FOOTBALL_SID else T_OTHER
         try:
-            r = SESSION.get(f"{API_BASE}/sports/{sid}/matchups", timeout=(20, 60))
+            r = SESSION.get(f"{API_BASE}/sports/{sid}/matchups", timeout=_timeout)
             ms = r.json()
-            n = len([m for m in ms if m.get("isLive")])
-            live.extend(m for m in ms if m.get("isLive"))
+            n = 0
+            for m in ms:
+                if m.get("isLive"):
+                    m["_sport_id"] = sid  # 附加运动标识, 供超时回退按运动过滤
+                    live.append(m)
+                    n += 1
             print(f"[pin_live] sport {sid}: {n} 场 live (总 {len(ms)} matchups)")
         except Exception as e:
             print(f"[pin_live] sport {sid} 失败: {type(e).__name__} {str(e)[:60]}")
+            # 足球超时 → 回退上一轮足球 live(≤30s 旧), 避免丢光足球滚球机会/阻塞整轮
+            if sid == FOOTBALL_SID:
+                _fb = [m for m in prev_live if m.get("_sport_id") == FOOTBALL_SID]
+                if _fb:
+                    live.extend(_fb)
+                    print(f"[pin_live] sport {sid} 超时, 回退上一轮缓存 {len(_fb)} 场")
 
     try:
         _CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
