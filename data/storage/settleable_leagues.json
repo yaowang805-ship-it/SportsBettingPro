@@ -1214,9 +1214,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "阿联酋甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-09-06T23:25:11.557837+00:00",
+  "updated": "2026-09-07T12:25:07.107579+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
