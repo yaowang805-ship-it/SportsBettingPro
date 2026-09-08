@@ -640,15 +640,8 @@ class PipelineOrchestrator:
             logger.warning("CLV采集失败: %s", e)
 
     def do_settle(self):
-        """自动结算 (原有 + 追踪投注结算 + BB比分结算)。"""
-        from src.monitor.auto_settle import main as settle_main
-        old_argv = sys.argv
-        sys.argv = ["auto_settle"]
-        try:
-            settle_main()
-        finally:
-            sys.argv = old_argv
-        # BB 比分结算 — 用 BB 自己的赛果结算(解决 ESPN 覆盖不到的联赛)
+        """自动结算 (BB比分结算优先 + ESPN兜底 + 追踪投注结算)。"""
+        # BB 比分结算优先 — getMatchDetail 无窗口限制, 能覆盖绝大多数投注(2026-09-09 主结算)
         try:
             from src.monitor.bb_score_settle import settle_via_bb
             r = settle_via_bb()
@@ -656,6 +649,14 @@ class PipelineOrchestrator:
                 logger.info("BB比分结算: %d 笔", r["settled"])
         except Exception as e:
             logger.warning("BB比分结算失败: %s", e)
+        # ESPN 兜底 — 只在 BB 结算失败的老账上补充(2026-09-09 降级为兜底, 失败静默不刷屏)
+        from src.monitor.auto_settle import main as settle_main
+        old_argv = sys.argv
+        sys.argv = ["auto_settle"]
+        try:
+            settle_main()
+        finally:
+            sys.argv = old_argv
 
         # 追踪投注结算: 所有推送过的投注 → 赛果匹配 → 盈亏计算
         try:

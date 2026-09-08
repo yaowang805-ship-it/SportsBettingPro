@@ -178,7 +178,9 @@ def _fetch_json(url: str, timeout: int = 15) -> Optional[dict]:
                 continue  # HTTPS blocked, try HTTP
             logger.warning("⚠️ ESPN API 返回 %s: %s", resp.status_code, try_url.split("?")[0])
         except Exception as e:
-            logger.warning("⚠️ ESPN API 请求失败 %s: %s", try_url.split("?")[0], e)
+            # 2026-09-09 降级: ESPN 只是 BB 结算失败后的兜底, 代理挂时(ProxyError)每个请求刷屏
+            # 毫无价值。降到 debug, 静默失败(主结算靠 BB getMatchDetail, 不受影响)。
+            logger.debug("ESPN API 请求失败 %s: %s", try_url.split("?")[0], e)
 
     # curl 降级（绕过 LibreSSL / proxy 兼容性问题 + ESPN WAF）
     CURL_UA = (
