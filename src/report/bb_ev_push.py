@@ -2475,7 +2475,9 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
         match_idx += 1
         bj_time = opps[0].get("start_time_bb", "") or _format_bj_time(opps[0].get("_pin_epoch"))
         time_suffix = f"  ({bj_time})" if bj_time else ""
-        lines.append(f"  ##### #{match_idx} {home} 对 {away}{time_suffix}")
+        _win = _time_window(opps[0].get("_pin_epoch"))
+        _win_label = f"  [{_win}]" if _win else ""
+        lines.append(f"  ##### #{match_idx} {home} 对 {away}{_win_label}{time_suffix}")
 
         # V4.4: 跨盘口相关性折扣提示
         if len(opps) >= 2:
@@ -2580,6 +2582,28 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
              f"Kelly OU={KELLY_BY_MARKET.get('ou',.5):.2f} "
              f"1X2={KELLY_BY_MARKET.get('1x2',.5):.2f} | "
              f"结算: {len(_get_settleable_summary())}联赛已验证")
+    # 11要素铁律(2026-09-08): 账户余额 + 今日累计投注(早盘 + 滚球)
+    try:
+        from src.betting.bb_auto_bet import fetch_balance as _fb
+        _bal = _fb()
+    except Exception:
+        _bal = None
+    try:
+        _spent, _ = _load_budget_tracker()
+        _today_early = float((_spent or {}).get("total", 0) or 0)
+    except Exception:
+        _today_early = 0.0
+    try:
+        _lb_path = DATA_DIR / "live_bet_budget.json"
+        _today_live = 0.0
+        if _lb_path.exists():
+            _lb = json.loads(_lb_path.read_text())
+            if _lb.get("date") == time.strftime("%Y-%m-%d"):
+                _today_live = float(_lb.get("spent", 0) or 0)
+    except Exception:
+        _today_live = 0.0
+    body += (f"\n💰 账户余额 ¥{_bal}" if _bal else "\n💰 账户余额 未知") + \
+            f" | 今日累计投注 ¥{_today_early + _today_live:,.0f}"
     return body
 
 def _get_settleable_summary() -> set:
