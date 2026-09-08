@@ -215,7 +215,9 @@ def _check_pinnacle():
 
     for attempt in range(3):  # 最多 3 次尝试
         try:
-            resp = SESSION.get(test_url, timeout=15)
+            # 足球 matchups 端点返回 ~30MB(1万+场比赛全盘口), 慢网络下实测 26s+
+            # 才下完; 15s 超时会误判"不可用"取消扫描(2026-09-08 早盘停一天根因)。
+            resp = SESSION.get(test_url, timeout=45)
             if resp.status_code == 200:
                 print(f"  ✅ Pinnacle API 连通正常")
                 return True
