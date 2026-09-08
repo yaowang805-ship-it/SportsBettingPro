@@ -1151,7 +1151,7 @@
       "success_rate": 0.0
     },
     "日本足球联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1221,7 +1221,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-09-07T12:25:07.107579+00:00",
+  "updated": "2026-09-08T13:40:18.486083+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
