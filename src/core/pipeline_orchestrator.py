@@ -640,8 +640,13 @@ class PipelineOrchestrator:
             logger.warning("CLV采集失败: %s", e)
 
     def do_settle(self):
-        """自动结算 (BB比分结算优先 + ESPN兜底 + 追踪投注结算)。"""
-        # BB 比分结算优先 — getMatchDetail 无窗口限制, 能覆盖绝大多数投注(2026-09-09 主结算)
+        """自动结算 (BB比分结算 + 超时作废 + 策略自进化 + 追踪投注结算)。
+
+        2026-09-09: 彻底移除 ESPN 多源结算(用户要求"留着没用")—— 结算只靠 BB getMatchDetail。
+        原 auto_settle.settle_main 里的 ESPN/直播吧/football-data 赛果结算不再调用;
+        但保留其尾部两个独立功能: 超时作废(老账兜底) + 策略自进化(不依赖 ESPN)。
+        """
+        # BB 比分结算 — getMatchDetail 无窗口限制, 覆盖绝大多数投注
         try:
             from src.monitor.bb_score_settle import settle_via_bb
             r = settle_via_bb()
@@ -649,14 +654,28 @@ class PipelineOrchestrator:
                 logger.info("BB比分结算: %d 笔", r["settled"])
         except Exception as e:
             logger.warning("BB比分结算失败: %s", e)
-        # ESPN 兜底 — 只在 BB 结算失败的老账上补充(2026-09-09 降级为兜底, 失败静默不刷屏)
-        from src.monitor.auto_settle import main as settle_main
-        old_argv = sys.argv
-        sys.argv = ["auto_settle"]
+
+        # 超时作废(老账兜底) + 策略自进化(从 auto_settle 拆出, 不跑 ESPN 多源结算)
         try:
-            settle_main()
-        finally:
-            sys.argv = old_argv
+            from src.monitor.auto_settle import _auto_void_timeout
+            _c = _auto_void_timeout(max_days=5)
+            if _c:
+                logger.info("超时自动作废(5天): %s 笔", _c)
+            _c2 = _auto_void_timeout(max_days=3, skip_settleable=True)
+            if _c2:
+                logger.info("超时自动作废(3天/非覆盖): %s 笔", _c2)
+            if _c or _c2:
+                try:
+                    from src.risk.self_learn import analyze, apply_adjustments
+                    _report = analyze()
+                    if _report.get("status") == "ok" and _report.get("recommendations"):
+                        _n = apply_adjustments(_report)
+                        if _n:
+                            logger.info("策略自进化: 已调整 %d 个联赛层级", _n)
+                except Exception as e:
+                    logger.warning("策略自进化异常: %s", e)
+        except Exception as e:
+            logger.warning("超时作废失败: %s", e)
 
         # 追踪投注结算: 所有推送过的投注 → 赛果匹配 → 盈亏计算
         try:
