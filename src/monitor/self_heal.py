@@ -141,8 +141,15 @@ def _mark_cache_repair():
 def _repopulate_pin_cache():
     """主动修复: 重拉 Pin 缓存(打破"空缓存→对比无结果→提前return→预取被跳过→缓存
     继续空"的死循环)。用 subprocess 跑 --pin-cache(全量拉 415 联赛存缓存), nice 10 不抢增量扫描。
+
+    防重复: 已有 --pin-cache 在跑则跳过 —— 否则 Pin 挂时每 30min 冷却后就 Popen 一个
+    卡死进程, 累积 6+ 个孤儿进程耗尽 fd(2026-09-09 熔断+看门狗互杀+投注全停的根因)。
     """
     try:
+        r = subprocess.run(["pgrep", "-f", r"bb_vs_pinnacle.*--pin-cache"],
+                           capture_output=True, text=True, timeout=5)
+        if r.returncode == 0 and r.stdout.strip():
+            return False  # 已有进程在跑, 不重复启动
         subprocess.Popen(
             [sys.executable, "-m", "src.scrapers.bb_vs_pinnacle", "--pin-cache"],
             cwd=str(ROOT),
@@ -152,6 +159,46 @@ def _repopulate_pin_cache():
         return True
     except Exception:
         return False
+
+
+def _parse_etime(etime):
+    """解析 ps etime: 'MM:SS' / 'HH:MM:SS' / 'D-HH:MM:SS' → 秒。失败返回 None。"""
+    try:
+        parts = etime.split("-")
+        days = int(parts[0]) if len(parts) == 2 else 0
+        hms = parts[-1].split(":")
+        if len(hms) == 2:
+            h, m, s = 0, int(hms[0]), int(hms[1])
+        else:
+            h, m, s = int(hms[0]), int(hms[1]), int(hms[2])
+        return days * 86400 + h * 3600 + m * 60 + s
+    except (ValueError, IndexError):
+        return None
+
+
+def _kill_stale_pin_cache(max_age_min=15):
+    """清理卡死超时的 --pin-cache 孤儿进程(防 Pin 挂时累积 fd 耗尽)。
+
+    正常 --pin-cache 拉全量联赛 1-2min 完成; 超过 15min 说明 Pin 请求卡死(重试循环不退出),
+    直接 kill, 让下一轮 self_heal 重新评估缓存健康。
+    """
+    try:
+        r = subprocess.run(["pgrep", "-f", r"bb_vs_pinnacle.*--pin-cache"],
+                           capture_output=True, text=True, timeout=5)
+        if r.returncode != 0 or not r.stdout.strip():
+            return
+        for pid_s in r.stdout.split():
+            pid = pid_s.strip()
+            if not pid.isdigit():
+                continue
+            et = subprocess.run(["ps", "-o", "etime=", "-p", pid],
+                                capture_output=True, text=True, timeout=5)
+            secs = _parse_etime((et.stdout or "").strip())
+            if secs is not None and secs > max_age_min * 60:
+                subprocess.run(["kill", pid], capture_output=True, timeout=5)
+                print(f"[self_heal] 清理卡死 --pin-cache PID {pid} (运行 {secs/60:.0f}min)", flush=True)
+    except Exception:
+        pass
 
 
 def check_pin():
@@ -277,6 +324,8 @@ def main():
     # 4b) Pin 缓存健康: 缓存空了(0场)会致增量扫描读空缓存→对比无结果→不推, 且
     # 扫描心跳正常(跑完了但没产出) —— 传统"看心跳/进程"看门狗测不出的静默失效。
     # 主动修复: 空缓存/陈旧且 Pin 可达 → 重拉缓存(30min 冷却)。
+    # 先清理卡死超时的 --pin-cache 孤儿进程(防累积 fd 耗尽, 2026-09-09 根因)
+    _kill_stale_pin_cache()
     if PIN_CACHE.exists():
         _cache_age = _file_age(PIN_CACHE)
         try:
