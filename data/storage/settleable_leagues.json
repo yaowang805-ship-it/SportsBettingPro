@@ -446,7 +446,7 @@
       "success_rate": 0.0
     },
     "挪威丙级联赛": {
-      "attempts": 12,
+      "attempts": 13,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -491,7 +491,7 @@
       "success_rate": 0.0
     },
     "乌克兰超级联赛": {
-      "attempts": 5,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1121,7 +1121,7 @@
       "success_rate": 0.0
     },
     "以色列超级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1141,7 +1141,7 @@
       "success_rate": 0.0
     },
     "捷克丁级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1229,9 +1229,24 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "泰国联赛杯": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "斯洛文尼亚丙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "匈牙利丙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-09-09T06:00:31.723053+00:00",
+  "updated": "2026-09-09T09:00:58.166084+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
