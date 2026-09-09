@@ -55,9 +55,9 @@ _TITLE_COOLDOWN_SEC = 30 * 60   # 30 分钟
 
 
 def _is_betting_push(title: str) -> bool:
-    """投注推荐(标题含 +EV/投注推荐/机会)不受每日次数限制。"""
+    """投注推荐(标题含 +EV/投注推荐/机会/已投注)不受每日次数限制。"""
     t = title or ""
-    return "+EV" in t or "投注推荐" in t or "机会" in t
+    return "+EV" in t or "投注推荐" in t or "机会" in t or "已投注" in t
 
 
 def _non_betting_quota_ok() -> bool:
