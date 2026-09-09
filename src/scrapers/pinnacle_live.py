@@ -259,6 +259,7 @@ def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6)):
                     "away_en": ts[1].get("na", ""),
                     "sport": sid,
                     "markets": markets,
+                    "mc": (m.get("mc") or {}).get("s", 0),  # 比赛进行秒数(纯比赛时间, 判剩余用)
                 }
         except Exception:
             continue
@@ -438,6 +439,8 @@ def match_live_bb_pin():
                 "league_name": pv.get("league_name", ""),  # 联赛名(通知展示用)
                 "max_stake": pv.get("max_stake", 0),
                 "sport": b["sport"],
+                "mc": b.get("mc", 0),  # 比赛进行秒数(纯比赛时间)
+            }
             }
     return result
 
