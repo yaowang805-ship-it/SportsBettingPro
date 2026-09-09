@@ -510,10 +510,15 @@ class SecondLevelMonitor:
                 self._try_live_auto_bet(sig)
 
     def _try_live_auto_bet(self, sig):
-        """滚球机会处理: 一律先进观察库(去重), 实盘下单由 LIVE_REAL_BET_ENABLED 控制。"""
+        """滚球机会处理: 观察库入库前验价(漂移假EV不入库), 实盘下单由 LIVE_REAL_BET_ENABLED 控制。"""
+        # 2026-09-09 用户要求: 滚球价秒级漂移, 扫描瞬间EV是假的 → 入库前重新验价,
+        # 漂移/盘口关闭的不入库(假样本没分析意义)。验价结果同时供实盘小球下单复用。
+        fresh_ev = self._reverify_live_ev(sig)
+        if fresh_ev is None or fresh_ev < self.threshold:
+            return
+        sig["ev"] = fresh_ev  # 入库/下单都用验价后的真实 EV
         stake = self._stake_for(sig)
         sig["_stake"] = stake
-        # 所有 +EV 机会都进观察库(去重), 供按运动×盘口分账统计
         self._append_live_paper_bet(sig)
         if not LIVE_REAL_BET_ENABLED:
             return
@@ -527,11 +532,6 @@ class SecondLevelMonitor:
             return
         self._load_live_spent()
         tag = f"{sig['match']['home']} vs {sig['match']['away']} {sig['desig']}"
-        # 延迟修正: 下注前重拉 Pin 滚球价, 重验 EV(缓存 30s 可能过期, 防止临时高价假机会)
-        fresh_ev = self._reverify_live_ev(sig)
-        if fresh_ev is not None and fresh_ev < self.threshold:
-            print(f"  ⏸️ Pin 滚球价已漂移(重验 EV {fresh_ev:+.2f}% < {self.threshold}%), 放弃 {tag}", flush=True)
-            return
         # 预算封顶(滚动预算): 按"未结算额"封顶, 结算后释放额度 → 结算的钱可继续投滚球
         if self._live_outstanding + stake > LIVE_BUDGET:
             print(f"  📝 滚球预算已满(未结算¥{self._live_outstanding:.0f}/{LIVE_BUDGET}), 已记观察库 {tag}", flush=True)
