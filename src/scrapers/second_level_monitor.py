@@ -517,10 +517,8 @@ class SecondLevelMonitor:
         self._append_live_paper_bet(sig)
         if not LIVE_REAL_BET_ENABLED:
             return
-        # 2026-09-07 用户要求: 滚球实盘只投小球(under), 其它盘口只观察
-        if sig.get("desig") != "小球":
-            return
-        # EV-Kelly 最优定仓(2026-09-07): _stake_for 已按 edge/(odds-1) 算好, 这里只上限半额预算
+        # 2026-09-09 用户要求: 覆盖所有运动+所有盘口(取消"只投小球"限制)
+        # EV-Kelly 最优定仓: _stake_for 已按 edge/(odds-1) 算好, 这里只上限半额预算
         stake = min(stake, LIVE_UNDER_MAX_STAKE)
         sig["_stake"] = stake
         if stake < MIN_STAKE:
