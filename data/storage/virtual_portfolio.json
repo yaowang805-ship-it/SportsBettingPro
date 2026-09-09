@@ -1,5 +1,5 @@
 {
-  "balance": 14602.53,
+  "balance": 14492.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -529,6 +529,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1789178400,
       "created_at": "2026-09-09T11:58:50.437286+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_荷兹利亚夏普尔_AS耶路撒冷_客胜",
+      "sport": "football",
+      "league": "以色列乙级联赛",
+      "home_team": "荷兹利亚夏普尔",
+      "away_team": "AS耶路撒冷",
+      "home_cn": "荷兹利亚夏普尔",
+      "away_cn": "AS耶路撒冷",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 6.55,
+      "stake": 110,
+      "model_prob": 0.1643,
+      "ev_pct": 7.6,
+      "pin_odds": 4.57,
+      "fair_price": 6.0871,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788974100,
+      "created_at": "2026-09-09T12:14:16.553144+00:00",
       "track_only": false
     }
   ],
@@ -8790,8 +8813,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-09",
-    "used": 1300.0,
-    "bets": 11
+    "used": 1410.0,
+    "bets": 12
   },
   "updated": null
 }
