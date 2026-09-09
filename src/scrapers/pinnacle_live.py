@@ -441,7 +441,6 @@ def match_live_bb_pin():
                 "sport": b["sport"],
                 "mc": b.get("mc", 0),  # 比赛进行秒数(纯比赛时间)
             }
-            }
     return result
 
 
