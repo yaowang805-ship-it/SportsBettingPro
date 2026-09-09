@@ -37,15 +37,16 @@ KELLY_FRACTION = 0.5   # 半凯利
 MAX_STAKE = 400        # 单盘口上限(与 bb_auto_bet MAX_MARKET_STAKE 一致, 2026-09-06 用户要求 400)
 MIN_STAKE = 30         # stake<30 拦截铁律
 
-# 滚球实盘(2026-09-09 用户要求: 覆盖所有运动+所有盘口, 取消"只投小球"限制)。滚动预算(结算后释放额度)。
+# 滚球实盘验证(2026-09-07 用户要求): 只投小球(under), 分散投注。滚动预算(结算后额度释放)。
 LIVE_BUDGET = 1000  # 2026-09-08 用户要求: 500 → 1000
 LIVE_BUDGET_FILE = ROOT / "data" / "storage" / "live_bet_budget.json"
 LIVE_PAPER_FILE = ROOT / "data" / "storage" / "live_paper_bets.json"
 LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 已推送过结算的 order_id
 
-# EV-Kelly 最优定仓, 单注上限 ¥250(1/4预算)兼顾分散; 所有盘口(大球/小球/1x2/让球)都可下真单。
+# 2026-09-07 用户要求: 滚球实盘只投小球(under), 用 EV-Kelly 最优定仓(非固定额),
+# 单注上限 ¥250(1/4预算)兼顾分散。其它盘口(大球/1x2/让球)仍只进观察库, 不下真单。
 LIVE_REAL_BET_ENABLED = True
-LIVE_UNDER_MAX_STAKE = 250  # 单注上限(EV-Kelly 定仓, 上限1/4预算)
+LIVE_UNDER_MAX_STAKE = 250  # 小球单注上限(EV-Kelly 定仓, 上限1/4预算)
 BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球"}
 
 # G04 market(盘口名) → 缓存子盘口 key
@@ -516,7 +517,9 @@ class SecondLevelMonitor:
         self._append_live_paper_bet(sig)
         if not LIVE_REAL_BET_ENABLED:
             return
-        # 2026-09-09 用户要求: 覆盖所有运动+所有盘口(取消"只投小球"限制)
+        # 2026-09-07 用户要求: 滚球实盘只投小球(under), 其它盘口只观察
+        if sig.get("desig") != "小球":
+            return
         # EV-Kelly 最优定仓: _stake_for 已按 edge/(odds-1) 算好, 这里只上限半额预算
         stake = min(stake, LIVE_UNDER_MAX_STAKE)
         sig["_stake"] = stake
