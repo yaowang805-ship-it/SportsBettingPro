@@ -1,5 +1,5 @@
 {
-  "balance": 14454.53,
+  "balance": 14334.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -782,6 +782,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788971400,
       "created_at": "2026-09-09T04:48:45.463119+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_贝高斯_(女)_比茨克_(女)_客胜",
+      "sport": "football",
+      "league": "西班牙皇后杯",
+      "home_team": "贝高斯 (女)",
+      "away_team": "比茨克 (女)",
+      "home_cn": "贝高斯 (女)",
+      "away_cn": "比茨克 (女)",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.69,
+      "stake": 120,
+      "model_prob": 0.2953,
+      "ev_pct": 8.97,
+      "pin_odds": 2.95,
+      "fair_price": 3.3863,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788973200,
+      "created_at": "2026-09-09T05:18:59.567797+00:00",
       "track_only": false
     }
   ],
@@ -8833,8 +8856,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-09",
-    "used": 600.0,
-    "bets": 5
+    "used": 720.0,
+    "bets": 6
   },
   "updated": null
 }
