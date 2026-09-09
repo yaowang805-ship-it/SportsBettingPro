@@ -1295,14 +1295,22 @@ def _calc_kelly_stakes(opps: list) -> list:
             except (ValueError, TypeError):
                 pass
         o["_kelly_weight"] = _w
+        o["_edge_mult"] = _mult
 
-    # 混合定仓归一化(2026-09-07): 把 Kelly 权重按比例归一化到日目标(5000), 封顶 ¥400, 取整到 10。
-    _total_w = sum(o.get("_kelly_weight", 0) for o in opps if o.get("_kelly_weight", 0) > 0)
+    # 投注额分层(2026-09-09 用户要求): 按 edge 档(强/中/弱/假)固定金额, 不再归一化趋同(之前都 120 一刀切)。
+    # 金额 = 记忆方案(强750/中500/弱250/假100, 日目标1万)按日目标5000减半 → 强380/中250/弱130/假50。
     for o in opps:
         _w = o.get("_kelly_weight", 0)
-        if _total_w > 0 and _w > 0:
-            _stake = min(int(DAILY_STAKE_TARGET * _w / _total_w), 400)
-            _stake = int(round(_stake / 10.0) * 10)
+        if _w > 0:
+            _mult = o.get("_edge_mult", MEDIUM_EDGE_MULT)
+            if _mult >= 15.0:
+                _stake = 380      # 强 edge(ROI>+20%)
+            elif _mult >= 10.0:
+                _stake = 250      # 中 edge(+5%~+20%)
+            elif _mult >= 5.0:
+                _stake = 130      # 弱 edge(0~+5%)
+            else:
+                _stake = 50       # 假 edge(ROI<0)
         else:
             _stake = 0
         o["_raw_stake"] = _stake
