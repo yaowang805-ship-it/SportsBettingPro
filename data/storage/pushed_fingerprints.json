@@ -9,11 +9,6 @@
     "bb": 6.25,
     "ts": 1788930480.7166579
   },
-  "football|Egypt Premier League|未来FC|瓦迪格拉|上半场主胜|ht|2026-09-09": {
-    "ev": 25.11,
-    "bb": 5.8,
-    "ts": 1788922383.769758
-  },
   "football|England Championship League|德比郡|西布罗姆维奇|上半场主胜|ht|2026-09-10": {
     "ev": 3.0,
     "bb": 4.41,
@@ -63,6 +58,11 @@
     "ev": 4.73,
     "bb": 4.63,
     "ts": 1788776088.9422872
+  },
+  "football|UEFA Champions League|曼彻斯特联|萨巴赫|双重机会-和局/客|dc|2026-09-11": {
+    "ev": 6.59,
+    "bb": 6.9,
+    "ts": 1788935495.764647
   },
   "football|USA Major League Soccer|休斯敦迪纳摩|皇家盐湖城|上半场正确比分1-2|correct_score_ht|2026-09-10": {
     "ev": 9.16,
@@ -119,9 +119,14 @@
     "bb": 23.0,
     "ts": 1788743790.831899
   },
-  "football|UEFA Champions League|曼彻斯特联|萨巴赫|双重机会-和局/客|dc|2026-09-11": {
-    "ev": 6.59,
-    "bb": 6.9,
-    "ts": 1788935495.764647
+  "football|Egypt Premier League|未来FC|瓦迪格拉|上半场主胜|ht|2026-09-09": {
+    "ev": 14.59,
+    "bb": 6.1,
+    "ts": 1788938014.1661062
+  },
+  "football|England Championship League|查尔顿|女王公园巡游者|上半场主胜|ht|2026-09-10": {
+    "ev": 3.61,
+    "bb": 4.37,
+    "ts": 1788938014.166219
   }
 }
