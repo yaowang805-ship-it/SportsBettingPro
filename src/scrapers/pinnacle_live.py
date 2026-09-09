@@ -198,6 +198,7 @@ def fetch_live_fair_prices(sport_ids=LIVE_SPORT_IDS):
             "spread": spreads,    # {line: [home_dec, away_dec]}
             "total": totals,      # {line: [over_dec, under_dec]}
             "league_id": m.get("league", {}).get("id"),
+            "league_name": m.get("league", {}).get("name", ""),  # 联赛名(通知展示用)
             "max_stake": _max_stake,
         }
     _FAIR_CACHE["ts"] = time.time()
@@ -434,6 +435,7 @@ def match_live_bb_pin():
                 "spread": pv.get("spread", {}),
                 "total": pv.get("total", {}),
                 "league_id": pv.get("league_id"),
+                "league_name": pv.get("league_name", ""),  # 联赛名(通知展示用)
                 "max_stake": pv.get("max_stake", 0),
                 "sport": b["sport"],
             }
