@@ -2750,8 +2750,11 @@ def _make_fingerprint(o: dict) -> str:
     # 改用归一化队名(剥俱乐部前缀 SC/CD/CA... + 简繁体统一)当稳定标识, 队名抖动已由 _norm_team 吸收。
     # 注意: 保持 key 为 8 段(sport|league|home|away|designation|sub|line|date),
     # 下游 _opposite_direction 双边拦截按 parts[2..5] 索引, 段数不能变。
-    _home_part = _norm_team(o.get('home_cn', ''))
-    _away_part = _norm_team(o.get('away_cn', ''))
+    # 2026-09-09: 指纹队名改用 BB 英文名(home_bb/away_bb), 稳定不受中文译名变化影响。
+    # 根因: Perak 队被 BB/FB 翻译成"霹雳"和"帕拉克"两个中文名, 指纹 key 因 away 不同而失效,
+    # 同一场独赢客胜推了 2 次(吉隆坡市 vs 霹雳 ¥120×2)。英文名 Perak 恒为 Perak。
+    _home_part = _norm_team(o.get('home_bb', '') or o.get('home_cn', ''))
+    _away_part = _norm_team(o.get('away_bb', '') or o.get('away_cn', ''))
     return f"{_norm(o.get('sport',''))}|{_norm(o.get('league',''))}|{_home_part}|{_away_part}|{_norm(o.get('designation',''))}|{sub}{line_str}|{match_date}"
 
 
