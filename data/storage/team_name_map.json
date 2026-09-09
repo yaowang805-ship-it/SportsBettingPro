@@ -45946,7 +45946,7 @@
     },
     "Newell´s Old Boys": {
       "sport": "football",
-      "n": 1517,
+      "n": 1521,
       "first": "2026-08-16",
       "last": "2026-09-09",
       "source": "auto"
@@ -45970,6 +45970,13 @@
       "n": 190,
       "first": "2026-08-31",
       "last": "2026-09-02",
+      "source": "auto"
+    },
+    "FC Baník Prievidza": {
+      "sport": "football",
+      "n": 2,
+      "first": "2026-09-09",
+      "last": "2026-09-09",
       "source": "auto"
     }
   },
@@ -53872,5 +53879,6 @@
   "JKS 1909 Jarosław": "JKS 1909 Jaroslaw",
   "Banks O´Dee FC": "Banks O´Dee",
   "Podbeskidzie Bielsko Biała": "Podbeskidzie Bielsko-Biala",
-  "Elise Mertens / Diana Shnaider": "Diana Shnaider"
+  "Elise Mertens / Diana Shnaider": "Diana Shnaider",
+  "FC Baník Prievidza": "Banik Prievidza"
 }

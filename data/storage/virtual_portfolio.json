@@ -1,5 +1,5 @@
 {
-  "balance": 14694.53,
+  "balance": 14574.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -736,6 +736,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788973200,
       "created_at": "2026-09-09T02:07:18.055238+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_未来FC_瓦迪格拉_上半场主胜",
+      "sport": "football",
+      "league": "埃及超级联赛",
+      "home_team": "未来FC",
+      "away_team": "瓦迪格拉",
+      "home_cn": "未来FC",
+      "away_cn": "瓦迪格拉",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.92,
+      "stake": 120,
+      "model_prob": 0.2157,
+      "ev_pct": 6.13,
+      "pin_odds": 4.22,
+      "fair_price": 4.636,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788962400,
+      "created_at": "2026-09-09T02:14:19.600710+00:00",
       "track_only": false
     }
   ],
@@ -8787,8 +8810,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-09",
-    "used": 360.0,
-    "bets": 3
+    "used": 480.0,
+    "bets": 4
   },
   "updated": null
 }
