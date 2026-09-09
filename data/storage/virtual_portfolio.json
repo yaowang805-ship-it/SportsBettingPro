@@ -1,5 +1,5 @@
 {
-  "balance": 14582.53,
+  "balance": 14312.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -552,6 +552,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788964200,
       "created_at": "2026-09-09T14:08:12.408585+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_温哥华白帽_洛杉矶银河_双重机会-和局/客",
+      "sport": "football",
+      "league": "美国职业大联盟",
+      "home_team": "温哥华白帽",
+      "away_team": "洛杉矶银河",
+      "home_cn": "温哥华白帽",
+      "away_cn": "洛杉矶银河",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 3.69,
+      "stake": 270,
+      "model_prob": 0.2821,
+      "ev_pct": 4.11,
+      "pin_odds": 3.45,
+      "fair_price": 3.5443,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1789007400,
+      "created_at": "2026-09-09T22:42:27.019745+00:00",
       "track_only": false
     }
   ],
@@ -8857,9 +8880,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-09-09",
-    "used": 2390.0,
-    "bets": 16
+    "date": "2026-09-10",
+    "used": 270.0,
+    "bets": 1
   },
   "updated": null
 }
