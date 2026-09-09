@@ -222,7 +222,7 @@ def auto_bet_flow(opportunities, token=None, domain=None):
             # 2026-09-09: 补联赛/公平价/溢价, 删订单号(用户要求完整投注信息)
             sent_dingtalk.append(
                 f"✅【{_win_label(opp.get('_pin_epoch'))}】{disp_home} vs {disp_away} | {desig}\n"
-                f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_ev_str} | 注额 ¥{stake:.0f} | 开赛 {_kickoff}")
+                f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_ev_str} | 注额 ¥{stake:.0f} | 投注 {_bj} | 开赛 {_kickoff}")
             _append_bet_history(rec)
         else:
             failed.append({"home": home, "away": away, "reason": f"code={code} {msg}"})

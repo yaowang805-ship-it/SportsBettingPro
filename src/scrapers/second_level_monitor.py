@@ -488,7 +488,7 @@ class SecondLevelMonitor:
                 continue
             sig = {"match_id": match_id, "sub": sub, "desig": desig[d],
                    "bb_odds": bb, "fair": fair_p, "ev": ev, "line": line_val,
-                   "match": {"home": lv["home"], "away": lv["away"], "sport": lv.get("sport", ""), "league_cn": lv.get("league_name", "滚球"), "mc": lv.get("mc", 0)},
+                   "match": {"home": lv.get("home_cn", "") or lv["home"], "away": lv.get("away_cn", "") or lv["away"], "sport": lv.get("sport", ""), "league_cn": lv.get("league_cn", "") or lv.get("league_name", "滚球"), "mc": lv.get("mc", 0)},
                    "pin_matchup_id": lv.get("pin_matchup_id"),
                    "league_id": lv.get("league_id"),
                    "max_stake": lv.get("max_stake", 0)}
@@ -585,9 +585,10 @@ class SecondLevelMonitor:
             _league = sig["match"].get("league_cn", "滚球") or "滚球"
             _mc = int(sig["match"].get("mc", 0) or 0)
             _clock = f"进行中 {_mc // 60} 分钟" if _mc > 0 else "进行中"
+            _bj = datetime.now().strftime("%H:%M")
             self._notify_bet(
                 "🟦 滚球已投注",
-                f"{_sport_cn} | {_league} | {_clock}\n"
+                f"{_sport_cn} | {_league} | {_clock} | 投注 {_bj}\n"
                 f"{sig['match']['home']} vs {sig['match']['away']} | {sig['desig']}\n"
                 f"BB {sig['bb_odds']:.2f} vs 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}%\n"
                 f"注额 ¥{stake} | 账户余额 ¥{_bal} | 今日累计 ¥{self._live_spent:.0f}/{LIVE_BUDGET}")

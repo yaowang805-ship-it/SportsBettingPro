@@ -207,62 +207,69 @@ def fetch_live_fair_prices(sport_ids=LIVE_SPORT_IDS):
 
 
 def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6)):
-    """BB 滚球比赛(getList type=1, languageType=EN → 英文队名直配 Pin)。
+    """BB 滚球比赛。EN 拉英文队名(直配 Pin) + 提取盘口; CMN 拉中文队名/联赛名(展示用)。
 
-    返回 {matchId: {"home_en": str, "away_en": str, "sport": int}}。
+    返回 {matchId: {home_en, away_en, home_cn, away_cn, league_cn, sport, markets, mc}}。
     """
     from src.betting.bb_auto_bet import read_token, read_domain, _session
     token = read_token(); domain = read_domain()
     if not token:
         return {}
     s = _session()
-    result = {}
-    for sid in sport_ids:
+
+    def _fetch(sid, lang):
         try:
             r = s.post(f"{domain}/v1/match/getList",
                        json={"sportId": sid, "type": 1, "current": 1, "pageSize": 50,
-                             "isPC": True, "languageType": "EN"},
+                             "isPC": True, "languageType": lang},
                        headers={"Content-Type": "application/json", "user-token": token,
                                 "User-Agent": _UA}, timeout=15, verify=False)
             d = r.json()
             if d.get("code") != 0:
-                continue
-            for m in (d.get("data") or {}).get("records") or []:
-                ts = m.get("ts") or []
-                if len(ts) < 2:
-                    continue
-                # 提取赔率(全量盘口, 在售 ss=1)。用 (mty, pe) 双键区分全场/半场。
-                # 只有 _TY_TO_DIR 覆盖方向(1-5)的主盘口才参与 EV 匹配; 特殊盘口(htft/正确比分等)
-                # 也提取进 markets, 供观察库积累样本, 但 fetch_live_opportunities 里不参与 EV。
-                markets = []
-                for mg in m.get("mg") or []:
-                    sub = _MTY_PE_TO_SUB.get((mg.get("mty"), mg.get("pe")))
-                    if not sub:
-                        continue
-                    for mk in (mg.get("mks") or []):
-                        if mk.get("ss") != 1:
-                            continue
-                        for op in (mk.get("op") or []):
-                            od = op.get("od", 0)
-                            if od <= 0:
-                                continue
-                            markets.append({
-                                "sub": sub,
-                                "market_id": mk.get("id"),
-                                "option_type": op.get("ty"),
-                                "odds": od,
-                                "line": _parse_line(op.get("li")),
-                                "direction": _TY_TO_DIR.get(op.get("ty")),
-                            })
-                result[int(m.get("id"))] = {
-                    "home_en": ts[0].get("na", ""),
-                    "away_en": ts[1].get("na", ""),
-                    "sport": sid,
-                    "markets": markets,
-                    "mc": (m.get("mc") or {}).get("s", 0),  # 比赛进行秒数(纯比赛时间, 判剩余用)
-                }
+                return []
+            return (d.get("data") or {}).get("records") or []
         except Exception:
-            continue
+            return []
+
+    result = {}
+    for sid in sport_ids:
+        # 1. EN: 英文队名 + 盘口提取(英文直配 Pin 用)
+        for m in _fetch(sid, "EN"):
+            ts = m.get("ts") or []
+            if len(ts) < 2:
+                continue
+            markets = []
+            for mg in m.get("mg") or []:
+                sub = _MTY_PE_TO_SUB.get((mg.get("mty"), mg.get("pe")))
+                if not sub:
+                    continue
+                for mk in (mg.get("mks") or []):
+                    if mk.get("ss") != 1:
+                        continue
+                    for op in (mk.get("op") or []):
+                        od = op.get("od", 0)
+                        if od <= 0:
+                            continue
+                        markets.append({
+                            "sub": sub, "market_id": mk.get("id"),
+                            "option_type": op.get("ty"), "odds": od,
+                            "line": _parse_line(op.get("li")),
+                            "direction": _TY_TO_DIR.get(op.get("ty")),
+                        })
+            result[int(m.get("id"))] = {
+                "home_en": ts[0].get("na", ""), "away_en": ts[1].get("na", ""),
+                "home_cn": "", "away_cn": "", "league_cn": "",
+                "sport": sid, "markets": markets,
+                "mc": (m.get("mc") or {}).get("s", 0),
+            }
+        # 2. CMN: 补中文队名 + 中文联赛名(通知展示用)
+        for m in _fetch(sid, "CMN"):
+            ts = m.get("ts") or []
+            mid = int(m.get("id"))
+            if mid in result and len(ts) >= 2:
+                result[mid]["home_cn"] = ts[0].get("na", "")
+                result[mid]["away_cn"] = ts[1].get("na", "")
+                result[mid]["league_cn"] = (m.get("lg") or {}).get("na", "")
     return result
 
 
@@ -432,11 +439,14 @@ def match_live_bb_pin():
             result[bmid] = {
                 "pin_matchup_id": pin_mid,
                 "home": pv["home"], "away": pv["away"],
+                "home_cn": b.get("home_cn", "") or pv["home"],  # BB 中文队名(展示), 兜底 Pin 英文
+                "away_cn": b.get("away_cn", "") or pv["away"],
                 "moneyline": pv["moneyline"],  # [主, 和, 客] 十进制
                 "spread": pv.get("spread", {}),
                 "total": pv.get("total", {}),
                 "league_id": pv.get("league_id"),
                 "league_name": pv.get("league_name", ""),  # 联赛名(通知展示用)
+                "league_cn": b.get("league_cn", "") or pv.get("league_name", ""),  # BB 中文联赛名
                 "max_stake": pv.get("max_stake", 0),
                 "sport": b["sport"],
                 "mc": b.get("mc", 0),  # 比赛进行秒数(纯比赛时间)
