@@ -584,11 +584,13 @@ class SecondLevelMonitor:
             _sport_cn = BB_SPORT_CN.get(sig["match"].get("sport"), "") or ""
             _league = sig["match"].get("league_cn", "滚球") or "滚球"
             _mc = int(sig["match"].get("mc", 0) or 0)
-            _clock = f"进行中{_mc // 60}'" if _mc > 0 else ""
+            _clock = f"进行中 {_mc // 60} 分钟" if _mc > 0 else "进行中"
             self._notify_bet(
-                f"🟦 滚球已投注 | {_sport_cn} {_league} {sig['match']['home']} vs {sig['match']['away']} {sig['desig']}",
-                f"{_sport_cn} | 滚球 | {_league} | {sig['desig']} {_clock} | BB {sig['bb_odds']:.2f} vs 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}%\n"
-                f"注额 ¥{stake} | 账户余额 ¥{_bal} | 今日滚球累计 ¥{self._live_spent:.0f}/{LIVE_BUDGET}")
+                "🟦 滚球已投注",
+                f"{_sport_cn} | {_league} | {_clock}\n"
+                f"{sig['match']['home']} vs {sig['match']['away']} | {sig['desig']}\n"
+                f"BB {sig['bb_odds']:.2f} vs 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}%\n"
+                f"注额 ¥{stake} | 账户余额 ¥{_bal} | 今日累计 ¥{self._live_spent:.0f}/{LIVE_BUDGET}")
             # Reversion check(2026-09-07): 记下注时 BB 价, 30s 后复验是否尖峰回落(假 EV)
             self._reversion_track[(str(sig["match_id"]), str(market_id), str(sig.get("option_type")))] = {
                 "bb_odds": sig["bb_odds"], "ts": time.time(),
