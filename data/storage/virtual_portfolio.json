@@ -1,5 +1,5 @@
 {
-  "balance": 14897.53,
+  "balance": 14777.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -713,6 +713,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788956100,
       "created_at": "2026-09-09T00:23:41.285269+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_吉隆坡市_帕拉克_客胜",
+      "sport": "football",
+      "league": "马来西亚足总杯",
+      "home_team": "吉隆坡市",
+      "away_team": "帕拉克",
+      "home_cn": "吉隆坡市",
+      "away_cn": "帕拉克",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 6.3,
+      "stake": 120,
+      "model_prob": 0.1908,
+      "ev_pct": 20.21,
+      "pin_odds": 4.14,
+      "fair_price": 5.2408,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1788956100,
+      "created_at": "2026-09-09T01:36:40.302205+00:00",
       "track_only": false
     }
   ],
@@ -8749,8 +8772,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-09",
-    "used": 120.0,
-    "bets": 1
+    "used": 240.0,
+    "bets": 2
   },
   "updated": null
 }
