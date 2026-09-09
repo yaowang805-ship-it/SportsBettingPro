@@ -1224,9 +1224,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "巴西丙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-09-09T01:45:39.799330+00:00",
+  "updated": "2026-09-09T06:00:31.723053+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
