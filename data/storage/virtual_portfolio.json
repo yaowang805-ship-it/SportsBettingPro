@@ -1,30 +1,7 @@
 {
-  "balance": 14312.53,
+  "balance": 14692.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_特温特_特尔斯达_双重机会-和局/客",
-      "sport": "football",
-      "league": "荷兰甲级联赛",
-      "home_team": "特温特",
-      "away_team": "特尔斯达",
-      "home_cn": "特温特",
-      "away_cn": "特尔斯达",
-      "market": "1x2",
-      "market_type": "双重机会-和局/客",
-      "sub_market": "dc",
-      "line": "",
-      "odds": 4.38,
-      "stake": 380,
-      "model_prob": 0.2453,
-      "ev_pct": 7.43,
-      "pin_odds": 3.94,
-      "fair_price": 4.0771,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1788972300,
-      "created_at": "2026-09-06T22:51:45.644935+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_卡塔尼亚_科森察_上半场客胜",
       "sport": "football",
@@ -509,29 +486,6 @@
       "track_only": false
     },
     {
-      "id": "bb_vs_pin_1x2_阿拉木图凯拉特_热尼斯_客胜",
-      "sport": "football",
-      "league": "哈萨克斯坦超级联赛",
-      "home_team": "阿拉木图凯拉特",
-      "away_team": "热尼斯",
-      "home_cn": "阿拉木图凯拉特",
-      "away_cn": "热尼斯",
-      "market": "1x2",
-      "market_type": "客胜",
-      "sub_market": "1x2",
-      "line": "",
-      "odds": 10.5,
-      "stake": 380,
-      "model_prob": 0.1011,
-      "ev_pct": 6.16,
-      "pin_odds": 7.15,
-      "fair_price": 9.8909,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1788962400,
-      "created_at": "2026-09-09T13:58:48.100929+00:00",
-      "track_only": false
-    },
-    {
       "id": "bb_vs_pin_1x2_塞格斯达_奥斯杰克_客胜",
       "sport": "football",
       "league": "克罗地亚杯",
@@ -552,29 +506,6 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1788964200,
       "created_at": "2026-09-09T14:08:12.408585+00:00",
-      "track_only": false
-    },
-    {
-      "id": "bb_vs_pin_1x2_温哥华白帽_洛杉矶银河_双重机会-和局/客",
-      "sport": "football",
-      "league": "美国职业大联盟",
-      "home_team": "温哥华白帽",
-      "away_team": "洛杉矶银河",
-      "home_cn": "温哥华白帽",
-      "away_cn": "洛杉矶银河",
-      "market": "1x2",
-      "market_type": "双重机会-和局/客",
-      "sub_market": "dc",
-      "line": "",
-      "odds": 3.69,
-      "stake": 270,
-      "model_prob": 0.2821,
-      "ev_pct": 4.11,
-      "pin_odds": 3.45,
-      "fair_price": 3.5443,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1789007400,
-      "created_at": "2026-09-09T22:42:27.019745+00:00",
       "track_only": false
     }
   ],
@@ -8877,6 +8808,21 @@
       "home_cn": "吉安纳",
       "away_cn": "多洛米蒂贝卢诺",
       "market_type": "让球主胜(0)"
+    },
+    {
+      "id": "bb_vs_pin_1x2_特温特_特尔斯达_双重机会-和局/客",
+      "match": "380¥ @ 4.38 (超时作废)",
+      "date": "2026-09-09T23:11:10.821155+00:00",
+      "stake": 380,
+      "odds": 4.38,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "荷兰甲级联赛",
+      "sport": "football",
+      "home_cn": "特温特",
+      "away_cn": "特尔斯达",
+      "market_type": "双重机会-和局/客"
     }
   ],
   "daily_budget": {
