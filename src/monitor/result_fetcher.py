@@ -321,6 +321,17 @@ def determine_result(bet: dict, match_result: dict) -> tuple:
         # 解析让球线
         line_str = designation
         line = _parse_handicap_line(line_str)
+        # 线值缺失防护(2026-09-10): 观察库 hc 的 designation 可能无线值("让球客胜"),
+        # bet.line 也可能 None → _parse_handicap_line 返回 0 会把让球盘当"平手盘"(方向赢即 won),
+        # 导致观察库 hc 纸面虚高 +22%(实盘真实 -34%)。线值缺失一律 void, 绝不误判。
+        _bet_line = bet.get("line")
+        if line == 0 and _bet_line not in (None, "", 0):
+            try:
+                line = float(_bet_line)  # 用显式 line 字段
+            except (ValueError, TypeError):
+                line = 0
+        if line == 0 and not re.search(r'[-+]?\d', str(line_str)) and _bet_line in (None, "", 0):
+            return "void", home_score, away_score, 0  # 无线值, 不结算
         # 确定投注方向
         if "主" in line_str:
             adjusted_diff = goal_diff + line  # 主队受让
