@@ -1096,7 +1096,7 @@
       "success_rate": 0.0
     },
     "塞浦路斯甲级联赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1274,9 +1274,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "欧洲冠军联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-09-10T06:00:59.393796+00:00",
+  "updated": "2026-09-10T12:30:25.248155+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

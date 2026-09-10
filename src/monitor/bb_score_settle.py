@@ -49,6 +49,10 @@ def fetch_bb_scores():
                 else:
                     records = data.get("records", [])
                 for rec in records:
+                    # 只取已完赛(ms=0/3/6/7); 未完赛/进行中(ms=4)比分不完整, 会误判
+                    # (2026-09-10 bug: type=6 含未完赛比赛, 0-0 默认比分被当终局, 小球全判win)
+                    if rec.get("ms") not in (0, 3, 6, 7):
+                        continue
                     teams = rec.get("ts", [])
                     if len(teams) < 2:
                         continue
