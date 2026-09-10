@@ -304,6 +304,10 @@ class SecondLevelMonitor:
                                     "User-Agent": _UA}, timeout=15, verify=False)
                 d = r.json()
                 for m in (d.get("data") or {}).get("records") or []:
+                    # 只结算已完赛(ms=0/3/6/7); 进行中/未开赛(ms=4)比分不完整, 会误判
+                    # (2026-09-10 bug: 未完赛比分当终局, 小球22笔全判win, 实际达伽马2-1该输)
+                    if m.get("ms") not in (0, 3, 6, 7):
+                        continue
                     for g in m.get("nsg") or []:
                         if g.get("pe") == 1000 and g.get("tyg") == 5:
                             score_map[int(m.get("id"))] = g.get("sc")
