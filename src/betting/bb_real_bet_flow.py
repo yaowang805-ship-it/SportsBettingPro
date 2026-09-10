@@ -136,10 +136,9 @@ def _designation_to_dir(sub_market, designation):
     return None
 
 
-# 2026-09-11 用户要求: 早盘重新开启, 但只投半场盘口(CLV正的候选真edge), 全场盘口(hc/ou/dc/1x2)继续停。
-# 依据: 早盘 CLV 分化——半场盘口(ht/ht_dc/htft/correct_score_ht)CLV中位全正(+3%~+8%),
-# 全场盘口(hc/ou/dc)CLV全负(-0.5%~-1.9%)。半场盘口小注试探, CLV+ROI双验证攒30笔。
-EARLY_BET_ENABLED = True
+# 2026-09-11 用户要求: 早盘暂停实盘投注, 只进观察库(paper_bets 纸面), 滚球继续投注。
+# 早盘实盘暂停(EARLY_BET_ENABLED=False), 观察库照常由 bb_ev_push 推送时入库(不依赖本函数)。
+EARLY_BET_ENABLED = False
 EARLY_BETTABLE_MARKETS = {"ht", "ht_dc", "htft", "correct_score_ht", "first_to_score"}
 
 
