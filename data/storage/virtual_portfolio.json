@@ -1,5 +1,5 @@
 {
-  "balance": 13502.53,
+  "balance": 13372.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -598,6 +598,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1789171200,
       "created_at": "2026-09-10T12:47:57.402543+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_切尔西_赫尔城_双重机会-和局/客",
+      "sport": "football",
+      "league": "英格兰超级联赛",
+      "home_team": "切尔西",
+      "away_team": "赫尔城",
+      "home_cn": "切尔西",
+      "away_cn": "赫尔城",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 4.75,
+      "stake": 130,
+      "model_prob": 0.2248,
+      "ev_pct": 6.77,
+      "pin_odds": 4.33,
+      "fair_price": 4.4487,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1789221600,
+      "created_at": "2026-09-10T13:25:19.492054+00:00",
       "track_only": false
     }
   ],
@@ -8994,8 +9017,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-10",
-    "used": 2760.0,
-    "bets": 12
+    "used": 2890.0,
+    "bets": 13
   },
   "updated": null
 }
