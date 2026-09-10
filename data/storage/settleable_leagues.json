@@ -956,7 +956,7 @@
       "success_rate": 0.0
     },
     "意大利丙级联赛": {
-      "attempts": 12,
+      "attempts": 13,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1264,9 +1264,19 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "缅甸全国联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "斯洛伐克足球丙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-09-09T23:11:10.821642+00:00",
+  "updated": "2026-09-10T06:00:59.393796+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
