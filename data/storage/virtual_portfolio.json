@@ -1,5 +1,5 @@
 {
-  "balance": 13442.53,
+  "balance": 13392.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -621,6 +621,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1789239600,
       "created_at": "2026-09-10T14:29:57.709404+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_莫克_西马尔_主胜",
+      "sport": "football",
+      "league": "阿塞拜疆甲级联赛",
+      "home_team": "莫克",
+      "away_team": "西马尔",
+      "home_cn": "莫克",
+      "away_cn": "西马尔",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.92,
+      "stake": 50,
+      "model_prob": 0.5639,
+      "ev_pct": 8.26,
+      "pin_odds": 1.6623,
+      "fair_price": 1.7735,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1789129800,
+      "created_at": "2026-09-10T22:59:49.778212+00:00",
       "track_only": false
     }
   ],
@@ -9046,9 +9069,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-09-10",
-    "used": 3280.0,
-    "bets": 16
+    "date": "2026-09-11",
+    "used": 50.0,
+    "bets": 1
   },
   "updated": null
 }
