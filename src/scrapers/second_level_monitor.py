@@ -455,11 +455,17 @@ class SecondLevelMonitor:
             line_val = None
             if sub == "opportunities":
                 ml = lv.get("moneyline") or []
-                if len(ml) != 3 or not any(ml):
+                if len(ml) == 3:
+                    idx = {"主": 0, "和": 1, "客": 2}
+                    desig = {"主": "主胜", "和": "和局", "客": "客胜"}
+                    raw = ml
+                elif len(ml) == 2:
+                    # 2-way(网球/篮球等无和局): 主/客
+                    idx = {"主": 0, "客": 1}
+                    desig = {"主": "主胜", "客": "客胜"}
+                    raw = ml
+                else:
                     continue
-                idx = {"主": 0, "和": 1, "客": 2}
-                desig = {"主": "主胜", "和": "和局", "客": "客胜"}
-                raw = ml
             elif sub == "handicap":
                 line_val = _extract_line(it.get("name", ""))
                 raw = _match_2way_line(line_val, lv.get("spread"))
@@ -526,11 +532,23 @@ class SecondLevelMonitor:
         self._append_live_paper_bet(sig)
         if not LIVE_REAL_BET_ENABLED:
             return
-        # 2026-09-07 用户要求: 滚球实盘只投小球(under), 其它盘口只观察
-        if sig.get("desig") != "小球":
+        # 2026-09-10 用户要求: 滚球实盘从"只投足球小球"扩展到 网球独赢+篮球大小分/让分
+        # (职业团队也投这两个运动)。足球小球(真edge+11%)保持原注额; 网球/篮球小注试探,
+        # 攒30笔用 CLV+ROI 双验证, 通过了再放量。
+        _sport = sig["match"].get("sport")
+        _sub = sig.get("sub")
+        _desig = sig.get("desig")
+        _bettable = (
+            (_sport == 1 and _sub == "over_under" and _desig == "小球")
+            or (_sport == 5 and _sub == "opportunities")      # 网球独赢(主/客)
+            or (_sport == 3 and _sub == "over_under")         # 篮球大小分
+            or (_sport == 3 and _sub == "handicap")           # 篮球让分
+        )
+        if not _bettable:
             return
-        # EV-Kelly 最优定仓: _stake_for 已按 edge/(odds-1) 算好, 这里只上限半额预算
-        stake = min(stake, LIVE_UNDER_MAX_STAKE)
+        # EV-Kelly 最优定仓: 足球小球上限 400, 网球/篮球试探期上限 100(小注)
+        _cap = 400 if (_sport == 1 and _desig == "小球") else 100
+        stake = min(stake, _cap)
         sig["_stake"] = stake
         if stake < MIN_STAKE:
             return
