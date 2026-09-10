@@ -136,8 +136,15 @@ def _designation_to_dir(sub_market, designation):
     return None
 
 
+# 2026-09-10 用户要求: 暂停早盘投注。早盘 CLV 全负(假edge), 观察库纸面盈利是结算bug假象,
+# 实盘早盘 hc-34%/dc-39%/1x2-19% 全亏。找到根因/解决办法前暂停, 聚焦滚球。
+EARLY_BET_ENABLED = False
+
+
 def auto_bet_flow(opportunities, token=None, domain=None):
     """全自动下单。返回 {成功: [...], 失败: [...]}。"""
+    if not EARLY_BET_ENABLED:
+        return {"success": [], "failed": [], "error": "早盘投注已暂停(2026-09-10)"}
     token = token or read_token()
     domain = domain or read_domain()
     if not token:
