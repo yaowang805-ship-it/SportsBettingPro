@@ -136,9 +136,11 @@ def _designation_to_dir(sub_market, designation):
     return None
 
 
-# 2026-09-10 用户要求: 暂停早盘投注。早盘 CLV 全负(假edge), 观察库纸面盈利是结算bug假象,
-# 实盘早盘 hc-34%/dc-39%/1x2-19% 全亏。找到根因/解决办法前暂停, 聚焦滚球。
-EARLY_BET_ENABLED = False
+# 2026-09-11 用户要求: 早盘重新开启, 但只投半场盘口(CLV正的候选真edge), 全场盘口(hc/ou/dc/1x2)继续停。
+# 依据: 早盘 CLV 分化——半场盘口(ht/ht_dc/htft/correct_score_ht)CLV中位全正(+3%~+8%),
+# 全场盘口(hc/ou/dc)CLV全负(-0.5%~-1.9%)。半场盘口小注试探, CLV+ROI双验证攒30笔。
+EARLY_BET_ENABLED = True
+EARLY_BETTABLE_MARKETS = {"ht", "ht_dc", "htft", "correct_score_ht", "first_to_score"}
 
 
 def auto_bet_flow(opportunities, token=None, domain=None):
@@ -163,6 +165,12 @@ def auto_bet_flow(opportunities, token=None, domain=None):
         sub = opp.get("sub_market") or opp.get("_sub_market") or "1x2"
         desig = opp.get("designation", "")
         stake = float(opp.get("_stake") or opp.get("stake") or 10)
+
+        # 2026-09-11: 早盘只投半场盘口白名单, 全场盘口(hc/ou/dc/1x2)继续停(假edge)
+        if sub not in EARLY_BETTABLE_MARKETS:
+            failed.append({"home": disp_home, "away": disp_away,
+                           "reason": f"早盘暂不投 {sub} 盘口(仅半场盘口试探)"})
+            continue
 
         # 2026-09-06 用户要求: 早盘实盘只投"未开赛", 已开赛(lead<0)的场跳过(与暂停滚球秒级对齐)
         _ep = opp.get("_pin_epoch")
