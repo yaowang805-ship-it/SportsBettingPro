@@ -14,20 +14,10 @@
     "bb": 4.19,
     "ts": 1788939359.627031
   },
-  "football|Croatian Cup|NK Segesta|NK Osijek|客胜|1x2|2026-09-09": {
-    "ev": 8.12,
-    "bb": 1.73,
-    "ts": 1788962989.060025
-  },
   "football|Egypt Premier League|恩比|ZED足球俱乐部|上半场主胜|ht|2026-09-10": {
     "ev": 30.47,
     "bb": 6.25,
     "ts": 1788930480.7166579
-  },
-  "football|Egypt Premier League|未来FC|瓦迪格拉|上半场主胜|ht|2026-09-09": {
-    "ev": 14.59,
-    "bb": 6.1,
-    "ts": 1788938014.1661062
   },
   "football|England Championship League|德比郡|西布罗姆维奇|上半场主胜|ht|2026-09-10": {
     "ev": 3.0,
@@ -39,11 +29,6 @@
     "bb": 4.37,
     "ts": 1788938014.166219
   },
-  "football|England League Cup|伯恩茅斯|林肯城|双重机会-和局/客|dc|2026-09-09": {
-    "ev": 6.42,
-    "bb": 4.38,
-    "ts": 1788875070.92203
-  },
   "football|Estonia Meistriliiga|潭美卡|派德|客胜|1x2|2026-09-10": {
     "ev": 10.31,
     "bb": 2.01,
@@ -53,21 +38,6 @@
     "ev": 7.6,
     "bb": 6.55,
     "ts": 1788956169.565742
-  },
-  "football|Kazakhstan Premier League|FC Kairat Almaty|FK Zhenys|客胜|1x2|2026-09-09": {
-    "ev": 6.16,
-    "bb": 10.5,
-    "ts": 1788962439.908797
-  },
-  "football|Malaysia FA Cup|吉隆坡市|帕拉克|客胜|1x2|2026-09-09": {
-    "ev": 20.21,
-    "bb": 6.3,
-    "ts": 1788917857.91709
-  },
-  "football|Malaysia FA Cup|吉隆坡市|霹雳|客胜|1x2|2026-09-09": {
-    "ev": 50.73,
-    "bb": 7.15,
-    "ts": 1788913461.80016
   },
   "football|Netherlands Eredivisie|特温特|特尔斯达|双重机会-和局/客|dc|2026-09-10": {
     "ev": 7.43,
@@ -98,6 +68,11 @@
     "ev": 6.59,
     "bb": 6.9,
     "ts": 1788935495.764647
+  },
+  "football|USA Major League Soccer|San Diego FC|San Jose Earthquakes|双重机会-和局/客|dc|2026-09-10": {
+    "ev": 4.18,
+    "bb": 2.25,
+    "ts": 1789004583.3441448
   },
   "football|USA Major League Soccer|Vancouver Whitecaps FC|Los Angeles Galaxy|双重机会-和局/客|dc|2026-09-10": {
     "ev": 4.11,
@@ -164,14 +139,9 @@
     "bb": 1.99,
     "ts": 1788955191.9584599
   },
-  "football|Uzbekistan Super League|FK Agmk Olmaliq|FC Pakhtakor Tashkent|客胜|1x2|2026-09-09": {
-    "ev": 9.65,
-    "bb": 2.13,
-    "ts": 1788958893.6875389
-  },
-  "football|USA Major League Soccer|San Diego FC|San Jose Earthquakes|双重机会-和局/客|dc|2026-09-10": {
-    "ev": 4.18,
-    "bb": 2.25,
-    "ts": 1789004583.3441448
+  "football|Egypt Second Division A|Al Nasr Cairo|Dayrout SC|客胜|1x2|2026-09-10": {
+    "ev": 9.83,
+    "bb": 5.95,
+    "ts": 1789008776.906098
   }
 }
