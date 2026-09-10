@@ -355,6 +355,16 @@ def determine_result(bet: dict, match_result: dict) -> tuple:
     if sub_market == "ou":
         line_str = designation
         line = _parse_ou_line(line_str)
+        # 线值缺失防护(2026-09-10): 观察库 ou 的 designation 可能无线值("小球"), line 字段 None
+        # → _parse_ou_line 返回 0, 大球全判 won/小球全判 lost, 纸面严重失真。缺失一律 void。
+        _bet_line = bet.get("line")
+        if line == 0 and _bet_line not in (None, "", 0):
+            try:
+                line = float(_bet_line)
+            except (ValueError, TypeError):
+                line = 0
+        if line == 0 and not re.search(r'[-+]?\d', str(line_str)) and _bet_line in (None, "", 0):
+            return "void", home_score, away_score, 0  # 无线值, 不结算
         if "大" in line_str:
             diff = total_goals - line
         elif "小" in line_str:
