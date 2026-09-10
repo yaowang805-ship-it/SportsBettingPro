@@ -1,5 +1,5 @@
 {
-  "balance": 13512.53,
+  "balance": 13242.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -598,6 +598,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1789092000,
       "created_at": "2026-09-10T11:24:09.748235+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_第比利斯迪纳摩_梅夏特堤基布利_客胜",
+      "sport": "football",
+      "league": "格鲁吉亚甲级联赛",
+      "home_team": "第比利斯迪纳摩",
+      "away_team": "梅夏特堤基布利",
+      "home_cn": "第比利斯迪纳摩",
+      "away_cn": "梅夏特堤基布利",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 10.1,
+      "stake": 270,
+      "model_prob": 0.1073,
+      "ev_pct": 8.35,
+      "pin_odds": 5.74,
+      "fair_price": 9.322,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1789052400,
+      "created_at": "2026-09-10T11:56:13.278368+00:00",
       "track_only": false
     }
   ],
@@ -8964,8 +8987,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-10",
-    "used": 1950.0,
-    "bets": 9
+    "used": 2220.0,
+    "bets": 10
   },
   "updated": null
 }
