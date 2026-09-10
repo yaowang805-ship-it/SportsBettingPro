@@ -295,7 +295,11 @@ class SecondLevelMonitor:
         # 拉赛果(type=6)拿最终比分
         s = _session()
         score_map = {}
+        # BB运动id → 全场比分 pe 码(足球1000/篮球3001/网球5000盘分/棒球7001/美足6001)
+        # (2026-09-11 修复: 之前硬编码 pe==1000 只取足球, 网球/篮球比分取不到 → 入库无法结算)
+        _pe_by_sport = {1: 1000, 3: 3001, 5: 5000, 7: 7001, 6: 6001}
         for sport in (1, 3, 5, 7, 6):
+            _pe_full = _pe_by_sport.get(sport, 1000)
             try:
                 r = s.post(f"{dom}/v1/match/getList",
                            json={"sportId": sport, "type": 6, "current": 1, "pageSize": 50,
@@ -309,7 +313,7 @@ class SecondLevelMonitor:
                     if m.get("ms") not in (0, 3, 6, 7):
                         continue
                     for g in m.get("nsg") or []:
-                        if g.get("pe") == 1000 and g.get("tyg") == 5:
+                        if g.get("pe") == _pe_full and g.get("tyg") == 5:
                             score_map[int(m.get("id"))] = g.get("sc")
                             break
             except Exception:
