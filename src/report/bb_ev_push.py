@@ -1162,6 +1162,27 @@ def _calc_kelly_stakes(opps: list) -> list:
 
     bankroll = _get_bankroll()
 
+    # CLV 硬门槛(2026-09-11 职业团队做法): 负 CLV = 假 edge 不投。
+    # true_clv_pct = (BB下注价 - Pin收盘公平价)/Pin收盘公平价, 是 no-vig CLV(锐利盘基准)。
+    # 职业数据: 正 CLV +7.7% ROI vs 负 CLV -8.38%; 负 CLV 的一律砍掉。
+    _clv_med = {}
+    try:
+        import csv as _csv, statistics as _st
+        from collections import defaultdict as _dd
+        _cf = DATA_DIR / "clv_results.csv"
+        if _cf.exists():
+            _clv_by = _dd(list)
+            with open(_cf, encoding="utf-8-sig") as _fh:
+                for _r in _csv.DictReader(_fh):
+                    try:
+                        _c = float(_r.get("true_clv_pct") or 0)
+                    except (ValueError, TypeError):
+                        continue
+                    _clv_by[(_r.get("sport") or "?", _r.get("sub_market") or "?")].append(_c)
+            _clv_med = {_k: _st.median(_v) for _k, _v in _clv_by.items() if _v}
+    except Exception:
+        _clv_med = {}
+
     for o in opps:
         odds = o.get("bb_odds", 0)
         ev = o.get("ev_pct", 0)
@@ -1170,6 +1191,12 @@ def _calc_kelly_stakes(opps: list) -> list:
         sub = o.get("_sub_market", o.get("_market", ""))
         match_type = o.get("_match_type", "")
         match_score = o.get("_match_score", 0)
+
+        # CLV 硬门槛: 该(运动×盘口)历史 CLV 中位 < 0 → 假 edge, 不投
+        _clv = _clv_med.get((sport, sub))
+        if _clv is not None and _clv < 0:
+            o["_stake"] = 0; o["_raw_stake"] = 0
+            continue
 
         stake_pct = get_kelly_stake_pct(sport, league, sub, odds, match_type, match_score)
         if stake_pct < 0:
