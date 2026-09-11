@@ -1,4 +1,9 @@
 {
+  "football|Albania Superliga|KF Skenderbeu Korce|KF Tirana|客胜|1x2|2026-09-12": {
+    "ev": 5.79,
+    "bb": 2.51,
+    "ts": 1789124477.574683
+  },
   "football|Algeria Ligue 1|USM Alger|JS El Biar|主胜|1x2|2026-09-11": {
     "ev": 11.03,
     "bb": 1.65,
@@ -104,9 +109,9 @@
     "bb": 3.29,
     "ts": 1789044612.0892422
   },
-  "football|Albania Superliga|KF Skenderbeu Korce|KF Tirana|客胜|1x2|2026-09-12": {
-    "ev": 5.79,
-    "bb": 2.51,
-    "ts": 1789124477.574683
+  "football|Sweden Ettan Sodra|Kristianstad FC|Jonkopings Sodra IF|客胜|1x2|2026-09-13": {
+    "ev": 13.12,
+    "bb": 2.63,
+    "ts": 1789125423.818822
   }
 }

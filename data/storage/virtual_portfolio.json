@@ -1,5 +1,5 @@
 {
-  "balance": 12992.53,
+  "balance": 12912.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -759,6 +759,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1789144200,
       "created_at": "2026-09-11T11:01:17.458313+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_克里斯堤斯塔_延雪平南区_客胜",
+      "sport": "football",
+      "league": "瑞典南部甲级联赛",
+      "home_team": "克里斯堤斯塔",
+      "away_team": "延雪平南区",
+      "home_cn": "克里斯堤斯塔",
+      "away_cn": "延雪平南区",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.63,
+      "stake": 80,
+      "model_prob": 0.4301,
+      "ev_pct": 13.12,
+      "pin_odds": 2.15,
+      "fair_price": 2.3249,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1789308000,
+      "created_at": "2026-09-11T11:17:03.792022+00:00",
       "track_only": false
     }
   ],
@@ -9200,8 +9223,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-11",
-    "used": 500.0,
-    "bets": 7
+    "used": 580.0,
+    "bets": 8
   },
   "updated": null
 }
