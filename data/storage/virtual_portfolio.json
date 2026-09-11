@@ -1,5 +1,5 @@
 {
-  "balance": 12832.53,
+  "balance": 12752.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -805,6 +805,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1789326000,
       "created_at": "2026-09-11T11:47:59.253203+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_特雷维索_1993_韦尔切利_1892_上半场主胜",
+      "sport": "football",
+      "league": "意大利丙级联赛",
+      "home_team": "特雷维索 1993",
+      "away_team": "韦尔切利 1892",
+      "home_cn": "特雷维索 1993",
+      "away_cn": "韦尔切利 1892",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 3.14,
+      "stake": 80,
+      "model_prob": 0.3356,
+      "ev_pct": 5.39,
+      "pin_odds": 2.73,
+      "fair_price": 2.9793,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1789304400,
+      "created_at": "2026-09-11T12:03:04.889643+00:00",
       "track_only": false
     }
   ],
@@ -9246,8 +9269,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-11",
-    "used": 660.0,
-    "bets": 9
+    "used": 740.0,
+    "bets": 10
   },
   "updated": null
 }
