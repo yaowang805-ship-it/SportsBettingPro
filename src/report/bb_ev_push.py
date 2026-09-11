@@ -2062,6 +2062,8 @@ def _collect_opportunities(match, market_key):
             "bb_match_id": match.get("bb_match_id", ""),  # BB比赛ID, 结算按ID匹配
             "_pin_league_id": match.get("pin_league_id", ""),  # V5.9: 供CLV采集按ID直拉
             "_pin_match_id": match.get("pin_match_id", ""),
+            # steam move 标记(2026-09-11): Pin 线刚变动的比赛, BB 可能未跟上(滞后窗口真 edge)
+            "_steam_move": bool(match.get("_steam_move", False)),
             "_market_type": market_key,  # "opportunities"|"handicap"|"over_under"|...
             "_sub_market": sub_market,  # "1x2"|"ht"|"btts"|"dc"|"oe"|"htft"|...
             "line": line,               # 盘口线 (让球/大小), 供二次验价+虚拟投注
@@ -2587,6 +2589,7 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
                 + (f" 🔄重推({repush})" if repush else "")
                 + (f" 📌本场该盘口上次推的线: {prev_line}" if prev_line else "")
                 + (f" {warn}" if warn else "")
+                + (" ⚡steam" if o.get("_steam_move") else "")
             )
 
     # 数据时间（用文件 mtime，即实际提取时间）
