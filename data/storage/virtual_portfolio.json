@@ -1,5 +1,5 @@
 {
-  "balance": 12912.53,
+  "balance": 12832.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -782,6 +782,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1789308000,
       "created_at": "2026-09-11T11:17:03.792022+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_约克联FC_温哥华FC_客胜",
+      "sport": "football",
+      "league": "加拿大超级联赛",
+      "home_team": "约克联FC",
+      "away_team": "温哥华FC",
+      "home_cn": "约克联FC",
+      "away_cn": "温哥华FC",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.17,
+      "stake": 80,
+      "model_prob": 0.4935,
+      "ev_pct": 7.09,
+      "pin_odds": 1.9259,
+      "fair_price": 2.0263,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1789326000,
+      "created_at": "2026-09-11T11:47:59.253203+00:00",
       "track_only": false
     }
   ],
@@ -9223,8 +9246,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-11",
-    "used": 580.0,
-    "bets": 8
+    "used": 660.0,
+    "bets": 9
   },
   "updated": null
 }
