@@ -271,7 +271,7 @@
       "success_rate": 0.0
     },
     "英格兰联赛杯": {
-      "attempts": 14,
+      "attempts": 15,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -671,7 +671,7 @@
       "success_rate": 0.0
     },
     "斯洛伐克杯": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1276,12 +1276,12 @@
       "success_rate": 0.0
     },
     "欧洲冠军联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     }
   },
-  "updated": "2026-09-11T01:45:36.611160+00:00",
+  "updated": "2026-09-11T14:20:54.093963+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

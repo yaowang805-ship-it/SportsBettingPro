@@ -320,6 +320,9 @@ def _derive_dnb_fair(ml_odds):
     return 1.0 / (p_home / denom)
 
 
+_STEAM_MOVES_CACHE = {}  # steam move 比赛集合(matchup_id→1), _detect_steam_moves 更新, entry 构建标记优先比价
+
+
 def _detect_steam_moves(all_pin_matches):
     """对比 Pin 价格快照, 检测 steam move(Pin 线突然变动 = sharp money 流入)。
 
@@ -371,6 +374,8 @@ def _detect_steam_moves(all_pin_matches):
             steam_file.write_text(_json.dumps(steam))
         except Exception:
             pass
+    global _STEAM_MOVES_CACHE
+    _STEAM_MOVES_CACHE = steam
     return steam
 
 
@@ -820,6 +825,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             # V5.9: 存 Pinnacle 联赛/比赛 ID, 供 CLV 采集器按 ID 直拉(免反查联赛名映射)
             "pin_league_id": str(pin.get("league_id", "") or ""),
             "pin_match_id": str(pin.get("matchup_id", "") or ""),
+            # steam move 标记(2026-09-11): Pin 线刚变动的比赛, BB 可能未跟上(滞后窗口, 推送端优先)
+            "_steam_move": (str(pin.get("matchup_id", "")) in _STEAM_MOVES_CACHE),
             # 2026-09-07: 存 Pin 全场 1X2 原始 3-way, 供 Betfair 双锚交叉验证(检测 Pin 主/平/客偏差)
             "_pin_ml": pin_ml,
             # V5.10: Pinnacle 主盘口注额上限 = 它对自己定价的信心。上限低 = 它没把握,
