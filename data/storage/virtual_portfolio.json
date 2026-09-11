@@ -1,5 +1,5 @@
 {
-  "balance": 13392.53,
+  "balance": 13312.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -644,6 +644,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1789255800,
       "created_at": "2026-09-11T06:28:42.782202+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_索菲亚_1948_多瑙_双重机会-和局/客",
+      "sport": "football",
+      "league": "保加利亚甲级联赛",
+      "home_team": "索菲亚 1948",
+      "away_team": "多瑙",
+      "home_cn": "索菲亚 1948",
+      "away_cn": "多瑙",
+      "market": "1x2",
+      "market_type": "双重机会-和局/客",
+      "sub_market": "dc",
+      "line": "",
+      "odds": 3.29,
+      "stake": 80,
+      "model_prob": 0.3245,
+      "ev_pct": 6.77,
+      "pin_odds": 2.95,
+      "fair_price": 3.0814,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1789228800,
+      "created_at": "2026-09-11T07:14:08.198288+00:00",
       "track_only": false
     }
   ],
@@ -9085,8 +9108,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-11",
-    "used": 100.0,
-    "bets": 2
+    "used": 180.0,
+    "bets": 3
   },
   "updated": null
 }
