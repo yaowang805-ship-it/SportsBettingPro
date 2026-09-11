@@ -583,6 +583,13 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     error_msg = f"获取联赛失败 [{league_name}] (ID={_pid}, sport={sport}): {e}"
                     print(f"  ❌ {error_msg}")
                     _fetch_errors.append(error_msg)
+        # steam move 检测(2026-09-11): Pin 线变动 = sharp money 流入, BB 未跟上的滞后窗口
+        try:
+            _steam = _detect_steam_moves(all_pin_matches)
+            if _steam:
+                print(f"  ⚡ steam move 检测: {len(_steam)} 场 Pin 线变动(优先比价)")
+        except Exception:
+            pass
         if _save_cache:
             # Pin先→BB后 流程: 只拉 Pin 并缓存, 对比由后续 do_full_scan 的 BB 重拉后完成
             try:
