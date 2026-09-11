@@ -320,6 +320,60 @@ def _derive_dnb_fair(ml_odds):
     return 1.0 / (p_home / denom)
 
 
+def _detect_steam_moves(all_pin_matches):
+    """对比 Pin 价格快照, 检测 steam move(Pin 线突然变动 = sharp money 流入)。
+
+    职业团队"chasing steam": 锐利盘(Pin)线一动, 软盘(BB)还没跟上, 抢滞后窗口可套利。
+    这里检测 Pin 的 1x2 moneyline 三腿价格变动(任一腿 > 3%), 变动的比赛存到
+    pin_steam_moves.json 供 bb_ev_push 标记(steam move 比赛优先比价)。
+
+    返回 {matchup_id: 1} 本次检测到的 steam move 比赛。
+    """
+    import json as _json
+    snap_file = DATA_DIR / "pin_price_snapshot.json"
+    steam_file = DATA_DIR / "pin_steam_moves.json"
+    prev = {}
+    if snap_file.exists():
+        try:
+            prev = _json.loads(snap_file.read_text())
+        except Exception:
+            prev = {}
+    curr = {}
+    steam = {}
+    for mu in all_pin_matches:
+        mid = mu.get("matchup_id")
+        ml = mu.get("moneyline") or []
+        if not mid or not ml:
+            continue
+        # 取 1x2 三腿价格(prices_sorted = [home, draw, away] 十进制)
+        legs = []
+        for entry in ml:
+            for p in (entry.get("prices_sorted") or entry.get("prices") or []):
+                v = float(p.get("price_decimal", 0) or 0)
+                if v > 1.0:
+                    legs.append(v)
+        legs = legs[:3]
+        if len(legs) < 2:
+            continue
+        curr[str(mid)] = legs
+        old = prev.get(str(mid))
+        if old and len(old) == len(legs):
+            for o, n in zip(old, legs):
+                if o > 0 and abs(n - o) / o > 0.03:  # 任一腿变动 > 3%
+                    steam[str(mid)] = 1
+                    break
+    try:
+        snap_file.write_text(_json.dumps(curr))
+    except Exception:
+        pass
+    if steam:
+        try:
+            steam_file.write_text(_json.dumps(steam))
+        except Exception:
+            pass
+    return steam
+
+
 def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, save_path=None,
                            use_pin_cache=False, save_pin_cache=False):
     """核心对比逻辑：联赛映射 -> Pinnacle抓取 -> 匹配 -> EV计算 -> 输出。
