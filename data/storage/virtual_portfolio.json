@@ -1,5 +1,5 @@
 {
-  "balance": 13072.53,
+  "balance": 12992.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -736,6 +736,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1789153200,
       "created_at": "2026-09-11T10:35:48.404010+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_科尔察_KF地拉那_客胜",
+      "sport": "football",
+      "league": "阿尔巴尼亚超级联赛",
+      "home_team": "科尔察",
+      "away_team": "KF地拉那",
+      "home_cn": "科尔察",
+      "away_cn": "KF地拉那",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.51,
+      "stake": 80,
+      "model_prob": 0.4215,
+      "ev_pct": 5.79,
+      "pin_odds": 2.18,
+      "fair_price": 2.3726,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1789144200,
+      "created_at": "2026-09-11T11:01:17.458313+00:00",
       "track_only": false
     }
   ],
@@ -9177,8 +9200,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-11",
-    "used": 420.0,
-    "bets": 6
+    "used": 500.0,
+    "bets": 7
   },
   "updated": null
 }
