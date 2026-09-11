@@ -1198,6 +1198,13 @@ def _calc_kelly_stakes(opps: list) -> list:
             o["_stake"] = 0; o["_raw_stake"] = 0
             continue
 
+        # 高赔率冷门过滤(2026-09-11 longshot bias): 主盘口(1x2/hc/ou)赔率>3.0 冷门,
+        # BB/Pin 都系统性高估其概率(实测 3-4倍赢率0%/4-6倍12%), 真实赢率远低于隐含。
+        # 特殊盘口(正确比分/半全场等)天然高赔率(>10), 不受此限。
+        if sub in ("1x2", "hc", "ou") and odds > 3.0:
+            o["_stake"] = 0; o["_raw_stake"] = 0
+            continue
+
         stake_pct = get_kelly_stake_pct(sport, league, sub, odds, match_type, match_score)
         if stake_pct < 0:
             # 自有标定明确拦截(负值): 该(运动,盘口,赔率桶)真实胜率太低 → 负Kelly, 不许投。
