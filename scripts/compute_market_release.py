@@ -53,6 +53,24 @@ N_OBS_ROI_MIN = 5      # 观察库 ROI 采信最小样本量
 POS_RATE_MIN = 55.0    # 观察库正 CLV 率下限(%)
 MEDIAN_MIN = 0.0       # 观察库 CLV 中位下限(%)
 
+# ── 2026-09-12 观察库释放改造(用户要求): 样本>100 且 赢率>隐含 才释放 ──
+# 判据从「CLV中位>0 + 正率>55% + 纸面ROI>0」改为「赢率 > 隐含」(CURRENT_STATUS 核心判据),
+# 样本门槛从 n≥30 提到 n>100。滚球+早盘观察库合并统计, 滚球 league 归 "滚球"。
+OBS_N_MIN = 100            # 观察库释放采信最小结算样本数(>100)
+OBS_WINRATE_EDGE_MIN = 0.0 # 赢率>隐含(差>0pp 即释放)
+LIVE_PAPER = DATA / "live_paper_bets.json"
+OBS_STATE = DATA / "observe_release_state.json"  # 释放状态(首次释放时间 + cap)
+
+# 滚球观察库口径映射: BB 运动 id → 英文运动名; 滚球 sub → sub_market
+BB_SPORT_MAP = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "american_football"}
+BB_SUB_MAP = {"over_under": "ou", "handicap": "hc", "opportunities": "1x2"}
+LIVE_LEAGUE = "滚球"
+
+# 投注额分阶段上限(用户要求): 新释放 150, 实盘满一周 ROI>4% 提 300
+OBS_CAP_NEW = 150
+OBS_CAP_MATURE = 300
+OBS_MATURE_DAYS = 7        # 实盘投一周(7天)后评估提额
+
 # 2026-09-03 双库交叉验证护栏 + 方向级封杀:
 # - 主开关只靠"实盘 ROI>4%"会被高赔率盘假 ROI 骗(htft 实盘+5.2%但胜率3%, 观察库-86.6%真相是巨亏)。
 #   加观察库 ROI 交叉验证: 观察库同盘口 ROI < OBS_CROSS_ROI_MIN 视为假正, 不释放。
@@ -281,13 +299,129 @@ def load_observe_roi_market():
     return _agg_bets(bets, lambda b: (b.get("sport") or "?", b.get("sub_market") or "?"))
 
 
+def _read_paper_bets():
+    """读早盘观察库(paper_bets.json)记录。"""
+    if not PAPER.exists():
+        return []
+    try:
+        raw = json.loads(PAPER.read_text())
+    except (json.JSONDecodeError, OSError):
+        return []
+    return raw.get("bets", []) if isinstance(raw, dict) else raw
+
+
+def _read_live_paper_bets():
+    """读滚球观察库(live_paper_bets.json)记录。"""
+    if not LIVE_PAPER.exists():
+        return []
+    try:
+        raw = json.loads(LIVE_PAPER.read_text())
+    except (json.JSONDecodeError, OSError):
+        return []
+    return raw.get("bets", []) if isinstance(raw, dict) else raw
+
+
+def load_observe_winrate():
+    """观察库赢率 vs 隐含(合并滚球+早盘纸面结算): {(sport,league,sub_market): {n,winrate,implied}}。
+
+    判据(2026-09-12 用户要求): 赢率 = won/(won+lost) 去 void/push; 隐含 = 1/平均赔率。
+    滚球 league 归 "滚球"; sport 数字→英文; sub(over_under/handicap/opportunities)→sub_market。
+    """
+    by = defaultdict(lambda: {"won": 0, "lost": 0, "odds_sum": 0.0})
+
+    def _feed(k, result, odds):
+        if result not in ("won", "lost") or not odds or odds <= 1.0:
+            return
+        d = by[k]
+        if result == "won":
+            d["won"] += 1
+        else:
+            d["lost"] += 1
+        d["odds_sum"] += odds
+
+    for b in _read_paper_bets():
+        _feed((b.get("sport") or "?", (b.get("league") or "").strip() or "?",
+               b.get("sub_market") or "?"), b.get("result"), _f(b.get("bb_odds")))
+
+    for b in _read_live_paper_bets():
+        sport = BB_SPORT_MAP.get(b.get("sport"))
+        sm = BB_SUB_MAP.get(b.get("sub"))
+        if not sport or not sm:
+            continue
+        _feed((sport, LIVE_LEAGUE, sm), b.get("result"), _f(b.get("bb_odds")))
+
+    out = {}
+    for k, d in by.items():
+        n = d["won"] + d["lost"]
+        if n == 0:
+            continue
+        avg_odds = d["odds_sum"] / n
+        out[k] = {
+            "n": n,
+            "winrate": d["won"] / n * 100.0,
+            "implied": 1.0 / avg_odds * 100.0,
+        }
+    return out
+
+
+def load_live_real_roi():
+    """滚球实盘 ROI: BB 官方已结算订单(isSettled=true, uwl) 滚球部分(mt>bt), 按(运动,盘口)聚合。
+
+    mgn 映射: "大/小"→ou, "让球"→hc, "独赢"→1x2; sid 用 BB_SPORT_MAP。
+    调 BB API 可能失败(token 过期/网络), 失败返回空(提额判定保守回退 cap=150)。
+    """
+    try:
+        import sys
+        sys.path.insert(0, str(ROOT))
+        from scripts.daily_review import _fetch_settled_orders
+        orders = _fetch_settled_orders() or []
+    except Exception:
+        return {}
+    _mgn_map = {"大/小": "ou", "让球": "hc", "独赢": "1x2"}
+    agg = defaultdict(lambda: {"n": 0, "stake": 0.0, "profit": 0.0})
+    for o in orders:
+        op = (o.get("ops") or [{}])[0]
+        if o.get("mt", 0) <= op.get("bt", 0):  # 只要滚球(下单晚于开赛)
+            continue
+        sport = BB_SPORT_MAP.get(op.get("sid"))
+        sm = _mgn_map.get(op.get("mgn"))
+        if not sport or not sm:
+            continue
+        try:
+            stake = float(o.get("sat", 0))
+            profit = float(o.get("uwl", 0))
+        except (TypeError, ValueError):
+            continue
+        d = agg[(sport, sm)]
+        d["n"] += 1
+        d["stake"] += stake
+        d["profit"] += profit
+    return {k: {"n": d["n"], "roi": (d["profit"] / d["stake"] * 100.0) if d["stake"] > 0 else 0.0}
+            for k, d in agg.items()}
+
+
+def _load_obs_state():
+    """读释放状态(首次释放时间 + cap)。文件不存在返回空。"""
+    if not OBS_STATE.exists():
+        return {}
+    try:
+        return json.loads(OBS_STATE.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+
+
+def _save_obs_state(state):
+    tmp = OBS_STATE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(state, ensure_ascii=False, indent=2))
+    tmp.replace(OBS_STATE)
+
+
 def main():
     market_roi, league_roi = load_real_roi()
     dir_roi = load_real_direction_roi()
     dir_window_roi = load_real_direction_window_roi()
     obs_mkt_roi = load_observe_roi_market()
-    obs_clv = load_observe_clv()
-    obs_roi = load_observe_roi()
+    obs_winrate = load_observe_winrate()
 
     market_released = []
     for (sport, sm), d in sorted(market_roi.items()):
@@ -369,18 +503,46 @@ def main():
             else:
                 league_blocked.append([sport, lg, sm])
 
+    # 观察库释放(2026-09-12 用户要求): 结算样本 n>100 且 赢率>隐含 → 释放。
+    # 判据从 CLV 三条件改为「赢率 vs 隐含」(CURRENT_STATUS 核心判据), 滚球+早盘合并。
     observe_released = []
-    for k, clv in sorted(obs_clv.items()):
-        sport, lg, sm = k
-        if clv["n"] < N_OBS_CLV_MIN:
+    for (sport, lg, sm), d in sorted(obs_winrate.items()):
+        if d["n"] < OBS_N_MIN:
             continue
-        if not (clv["median"] > MEDIAN_MIN and clv["pos_rate"] > POS_RATE_MIN):
-            continue
-        roi = obs_roi.get(k)
-        if not roi or roi["n"] < N_OBS_ROI_MIN:
-            continue
-        if roi["roi"] > OBS_ROI_MIN:
+        if d["winrate"] > d["implied"] + OBS_WINRATE_EDGE_MIN:
             observe_released.append([sport, lg, sm])
+
+    # 释放状态维护 + 投注额 cap 分阶段(用户要求): 新释放 150 → 实盘满 7 天 ROI>4% → 300。
+    # 状态持久化到 observe_release_state.json, 跨运行保留 first_released_at(重新释放才重置)。
+    obs_state = _load_obs_state()
+    now_ts = datetime.now().timestamp()
+    live_real_roi = load_live_real_roi()
+    observe_release_caps = {}
+    new_state = {}
+    for (sport, lg, sm) in observe_released:
+        key = f"{sport}|{lg}|{sm}"
+        prev = obs_state.get(key)
+        first = (prev or {}).get("first_released_at")
+        cap = (prev or {}).get("cap", OBS_CAP_NEW)
+        if not first:
+            first = datetime.now().isoformat()
+            cap = OBS_CAP_NEW
+        else:
+            try:
+                first_ts = datetime.fromisoformat(str(first)).timestamp()
+            except (ValueError, TypeError):
+                first_ts = now_ts
+            if now_ts - first_ts >= OBS_MATURE_DAYS * 86400:
+                # 满一周: 看实盘 ROI(早盘用 tracked_bets 两维, 滚球用 BB 官方订单两维)
+                if lg == LIVE_LEAGUE:
+                    r = live_real_roi.get((sport, sm))
+                else:
+                    r = market_roi.get((sport, sm))
+                if r and r.get("n", 0) > 0 and r.get("roi", 0) > REAL_ROI_MIN:
+                    cap = OBS_CAP_MATURE
+        new_state[key] = {"first_released_at": first, "cap": cap}
+        observe_release_caps[key] = cap
+    _save_obs_state(new_state)
 
     out = {
         "generated_at": datetime.now().isoformat(),
@@ -388,6 +550,7 @@ def main():
         "league_released": league_released,
         "league_blocked": league_blocked,
         "observe_released": observe_released,
+        "observe_release_caps": observe_release_caps,
         "direction_released": direction_released,
         "direction_blocked": direction_blocked,
         "direction_min_ev": direction_min_ev,

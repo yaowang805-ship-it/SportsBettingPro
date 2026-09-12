@@ -46,8 +46,14 @@ LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 
 # 滚球实盘只投小球(under), EV-Kelly 最优定仓, 单注上限 ¥400(预算1/5)兼顾分散。
 # 其它盘口(大球/1x2/让球)仍只进观察库, 不下真单。
 LIVE_REAL_BET_ENABLED = True
-LIVE_UNDER_MAX_STAKE = 400  # 单注上限(2026-09-09 250→400, EV-Kelly 定仓, 预算1/5)
+LIVE_UNDER_MAX_STAKE = 500  # 单注上限(2026-09-12 400→500: 小球67笔赢率68%vs隐含57%+11pp真溢价, 稳健放量)
 BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球"}
+
+# 滚球 → 观察库统一口径(2026-09-12 观察库释放改造): sport 数字→英文; sub→sub_market。
+# 用于查 observe_release_caps(运动×"滚球"×盘口), 与 compute_market_release.py 同口径。
+BB_SPORT_EN = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "american_football"}
+BB_SUB_TO_SM = {"over_under": "ou", "handicap": "hc", "opportunities": "1x2"}
+MARKET_RELEASE_FILE = ROOT / "data" / "storage" / "market_release.json"
 
 # G04 market(盘口名) → 缓存子盘口 key
 _MARKET_KEYWORDS = [

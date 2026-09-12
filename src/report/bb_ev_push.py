@@ -1351,6 +1351,21 @@ def _calc_kelly_stakes(opps: list) -> list:
         # 2026-08-27: stake<30 不推送(展示层拦), 但 _stake 保留真实值 → 计入实盘库
         o["_stake"] = _stake
 
+    # 观察库释放盘口投注额 cap(2026-09-12 用户要求): 新释放 150, 实盘满7天ROI>4% 300。
+    # 只对 observe_released 的格子(运动×联赛×盘口, 英文 league)生效; 主开关/方向释放的老盘口维持分层。
+    _obs_caps = (_load_release_list() or {}).get("observe_release_caps", {}) or {}
+    if _obs_caps:
+        for o in opps:
+            if o.get("_stake", 0) <= 0:
+                continue
+            _sp = o.get("sport", "")
+            _lg = o.get("league", "") or ""
+            _sm = o.get("_sub_market", o.get("_market", ""))
+            _cap = _obs_caps.get(f"{_sp}|{_lg}|{_sm}")
+            if _cap:
+                o["_stake"] = min(o["_stake"], _cap)
+                o["_obs_cap"] = _cap
+
     # 2026-08-30 用户要求: 只要有机会就推送, 不考虑预算/单场/单联赛/单运动上限。
     # 关闭第二遍(总额)/第三遍(单场)/第四遍(单联赛单运动)的上限过滤, 只保留跨盘口相关性折扣(非预算限制)。
 
