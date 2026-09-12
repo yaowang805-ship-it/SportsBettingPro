@@ -1893,12 +1893,14 @@ def _collect_opportunities(match, market_key):
             }
             sub_market = _MK_TO_SUB.get(market_key, "1x2")
 
-        # 2026-08-27/28 观察模式盘口: 只进观察库(validate/CLV采集), 不推送不实盘投注。
-        # 2026-09-07 回退: correct_score_ht/htft 2026-08-30 曾"移出观察模式开推试点"(当时看观察库CLV
-        # +6.8%/+4.6% 正 edge), 但 CLV 是假正 —— 实际实盘/观察 ROI 是 -50.8%/-84.8% 全负。收回试点, 重新只观察。
-        if sub_market in ("correct_score", "correct_score_ht", "htft",
-                          "first_to_score", "exact_goals_ht", "winning_margin_ht",
-                          "total_goals_range_ht", "first_to_score_ht"):
+        # 可结算盘口白名单(2026-09-12): determine_result 能判输赢的盘口才进观察库/推送。
+        # 其余盘口(corner/oe/correct_score/total_goals_range/first_to_score/exact_goals_ht/
+        # winning_margin/booking 等)结算时 return void(profit=0), 进库也统计不到, 白入库。
+        # 用户要求: 所有进观察库的比赛都要能结算、统计真实可靠。
+        _SETTLEABLE_MARKETS = {"1x2", "hc", "ou", "dc", "btts", "dnb",
+                               "ht", "ht_hc", "ht_ou", "ht_dc", "ht_dnb",
+                               "correct_score_ht", "htft"}
+        if sub_market not in _SETTLEABLE_MARKETS:
             continue
 
         # 盘口释放清单(2026-09-01): 未释放的运动×盘口/联赛只观察不投注(用真实 ROI 替代 CLV 封杀)
