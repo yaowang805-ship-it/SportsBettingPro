@@ -2581,7 +2581,7 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
                 continue
             seen_lines.add(line_key)
             pinny = round(o.get("pin_odds", 0), 2) if o.get("pin_odds", 0) > 0 else 0
-            fair = o.get("fair_price") or round(o["pin_odds"], 2)
+            fair = round(o.get("fair_price", 0), 2) if o.get("fair_price") else round(o.get("pin_odds", 0), 2)
             bb_odds = o["bb_odds"]
             ev_pct = o["ev_pct"]
             stake = o["_stake"]
@@ -2633,6 +2633,8 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
                 + (f" {warn}" if warn else "")
                 + (" ⚡steam" if o.get("_steam_move") else "")
             )
+            # 2026-09-12 用户要求: 每笔投注间隔展示, 不能都堆在一起(否则字段连续重复看不清)
+            lines.append("")
 
     # 数据时间（用文件 mtime，即实际提取时间）
     data_time_parts = []
