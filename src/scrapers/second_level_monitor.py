@@ -719,7 +719,14 @@ class SecondLevelMonitor:
             self._live_spent += stake
             self._live_outstanding += stake
             if order_id:
-                self._live_bets[str(order_id)] = stake
+                # 记录投注时的 fair/ev/bb_odds 等(2026-09-12: 结算汇总时按 order_id 关联补全明细要素)
+                self._live_bets[str(order_id)] = {
+                    "stake": stake,
+                    "fair": sig.get("fair", 0), "ev": sig.get("ev", 0),
+                    "bb_odds": sig.get("bb_odds", 0), "desig": sig.get("desig", ""),
+                    "sub": sig.get("sub", ""), "home": sig["match"].get("home", ""),
+                    "away": sig["match"].get("away", ""), "sport": sig["match"].get("sport", ""),
+                }
             self._save_live_spent()
             # 更新释放盘口的当日累计投注额(2026-09-12 用户要求: 当日累计≤1000)
             if _sp_en and _sm:

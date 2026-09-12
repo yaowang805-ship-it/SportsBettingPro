@@ -1289,9 +1289,14 @@
       "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "以色列乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-09-12T12:00:50.130427+00:00",
+  "updated": "2026-09-12T12:30:53.890743+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

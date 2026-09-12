@@ -1,30 +1,7 @@
 {
-  "balance": 13082.53,
+  "balance": 13192.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_荷兹利亚夏普尔_AS耶路撒冷_客胜",
-      "sport": "football",
-      "league": "以色列乙级联赛",
-      "home_team": "荷兹利亚夏普尔",
-      "away_team": "AS耶路撒冷",
-      "home_cn": "荷兹利亚夏普尔",
-      "away_cn": "AS耶路撒冷",
-      "market": "1x2",
-      "market_type": "客胜",
-      "sub_market": "1x2",
-      "line": "",
-      "odds": 6.55,
-      "stake": 110,
-      "model_prob": 0.1643,
-      "ev_pct": 7.6,
-      "pin_odds": 4.57,
-      "fair_price": 6.0871,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1788974100,
-      "created_at": "2026-09-09T12:14:16.553144+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_扎加塔拉_巴库竞技_客胜",
       "sport": "football",
@@ -9338,6 +9315,21 @@
       "home_cn": "科罗拉多跃泉",
       "away_cn": "圣安东尼奥",
       "market_type": "双重机会-和局/客"
+    },
+    {
+      "id": "bb_vs_pin_1x2_荷兹利亚夏普尔_AS耶路撒冷_客胜",
+      "match": "110¥ @ 6.55 (超时作废)",
+      "date": "2026-09-12T12:30:53.889505+00:00",
+      "stake": 110,
+      "odds": 6.55,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "以色列乙级联赛",
+      "sport": "football",
+      "home_cn": "荷兹利亚夏普尔",
+      "away_cn": "AS耶路撒冷",
+      "market_type": "客胜"
     }
   ],
   "daily_budget": {
