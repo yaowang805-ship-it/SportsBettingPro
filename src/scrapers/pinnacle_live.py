@@ -90,8 +90,10 @@ def fetch_live_matchups(sport_ids=LIVE_SPORT_IDS, use_cache=True):
     live = []
     for sid in sport_ids:
         _timeout = T_FOOTBALL if sid == FOOTBALL_SID else T_OTHER
+        _t0 = time.time()
         try:
             r = SESSION.get(f"{API_BASE}/sports/{sid}/matchups", timeout=_timeout)
+            _dt = time.time() - _t0
             ms = r.json()
             n = 0
             for m in ms:
@@ -99,7 +101,12 @@ def fetch_live_matchups(sport_ids=LIVE_SPORT_IDS, use_cache=True):
                     m["_sport_id"] = sid  # 附加运动标识, 供超时回退按运动过滤
                     live.append(m)
                     n += 1
-            print(f"[pin_live] sport {sid}: {n} 场 live (总 {len(ms)} matchups)")
+            print(f"[pin_live] sport {sid}: {n} 场 live (总 {len(ms)} matchups, {_dt:.0f}s)")
+            # edge IP 静默退化探针: 足球 60MB 快 edge(172.64.145.56)实测 ~9.5s,
+            # 慢网络 <30s; 超 30s 说明 edge 又退化了(请求 200 但慢, 轻端点测不出)。
+            if sid == FOOTBALL_SID and _dt > 30:
+                print(f"[pin_live] ⚠️ 足球 matchups 下载 {_dt:.0f}s 超阈值(30s), edge IP 可能又退化 — 见 pin-edge-ip-degraded-silent-fix-20260913")
+
         except Exception as e:
             print(f"[pin_live] sport {sid} 失败: {type(e).__name__} {str(e)[:60]}")
             # 足球超时 → 回退上一轮足球 live(≤30s 旧), 避免丢光足球滚球机会/阻塞整轮
