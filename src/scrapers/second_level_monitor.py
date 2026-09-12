@@ -590,10 +590,24 @@ class SecondLevelMonitor:
         # EV-Kelly 最优定仓: 足球小球上限 500(2026-09-12 提额), 网球/篮球试探期上限 100(小注)
         _cap = LIVE_UNDER_MAX_STAKE if (_sport == 1 and _desig == "小球") else 100
         # 观察库释放盘口 cap(2026-09-12): 命中 observe_release_caps 则用 150/300, 覆盖默认 cap
+        # 粒度「运动×盘口×方向×live」, 方向归一化(大/小/平/客/主)与 compute_market_release._direction 同口径
         _sp_en = BB_SPORT_EN.get(_sport)
         _sm = BB_SUB_TO_SM.get(_sub)
         if _sp_en and _sm:
-            _ocap = _load_obs_caps().get(f"{_sp_en}|滚球|{_sm}")
+            _des = sig.get("desig") or ""
+            if "大" in _des:
+                _dr = "大"
+            elif "小" in _des:
+                _dr = "小"
+            elif ("和" in _des or "平" in _des) and "客" not in _des and "主" not in _des:
+                _dr = "平"
+            elif "客" in _des:
+                _dr = "客"
+            elif "主" in _des:
+                _dr = "主"
+            else:
+                _dr = "其他"
+            _ocap = _load_obs_caps().get(f"{_sp_en}|{_sm}|{_dr}|live")
             if _ocap:
                 _cap = _ocap
         stake = min(stake, _cap)
@@ -656,11 +670,13 @@ class SecondLevelMonitor:
             _mc = int(sig["match"].get("mc", 0) or 0)
             _clock = f"进行中 {_mc // 60} 分钟" if _mc > 0 else "进行中"
             _bj = datetime.now().strftime("%H:%M")
+            _sub_cn = {"over_under": "大小球", "handicap": "让球", "opportunities": "独赢"}.get(sig.get("sub"), "")
+            _desig = f"{_sub_cn}-{sig.get('desig', '')}" if _sub_cn else sig.get("desig", "")
             self._notify_bet(
                 "🟦 滚球已投注",
-                f"{_sport_cn} | {_league} | {_clock} | 投注 {_bj}\n"
-                f"{sig['match']['home']} vs {sig['match']['away']} | {sig['desig']}\n"
-                f"BB {sig['bb_odds']:.2f} vs 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}%\n"
+                f"{_sport_cn} | {_league} | 滚球{_clock} | 投注 {_bj}\n"
+                f"{sig['match']['home']} vs {sig['match']['away']} | {_desig}\n"
+                f"BB {sig['bb_odds']:.2f} vs 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
                 f"注额 ¥{stake} | 账户余额 ¥{_bal} | 今日累计 ¥{self._live_spent:.0f}/{LIVE_BUDGET}")
             # Reversion check(2026-09-07): 记下注时 BB 价, 30s 后复验是否尖峰回落(假 EV)
             self._reversion_track[(str(sig["match_id"]), str(market_id), str(sig.get("option_type")))] = {
