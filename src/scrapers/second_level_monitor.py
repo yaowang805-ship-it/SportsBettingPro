@@ -718,6 +718,9 @@ class SecondLevelMonitor:
             if order_id:
                 self._live_bets[str(order_id)] = stake
             self._save_live_spent()
+            # 更新释放盘口的当日累计投注额(2026-09-12 用户要求: 当日累计≤1000)
+            if _sp_en and _sm:
+                _update_daily_stake(f"{_sp_en}|{_sm}|{_dr}|live", stake)
             print(f"  ✅ 滚球下单成功 {tag} | 注额¥{stake} | 累计¥{self._live_spent:.0f}/{LIVE_BUDGET}", flush=True)
             # 每笔成功下单都推钉钉(不限频) + 显示账户总余额
             from src.betting.bb_auto_bet import fetch_balance as _fetch_balance
