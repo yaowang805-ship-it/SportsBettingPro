@@ -928,7 +928,10 @@ class SecondLevelMonitor:
             sp_cn = BB_SPORT_CN.get(sid, "") or ""
             _desig = f"{mgn}-{on}" if mgn else on
             sign = "+" if won else ""
-            lines.append(f"{sp_cn} {mn} | {_desig} @{od} | 注额¥{sat} | {sign}{pnl:.0f}")
+            fair = p.get("fair", 0); ev = p.get("ev", 0)
+            _fair_str = f" | 公平价 {fair:.2f}" if fair else ""
+            _ev_str = f" | 溢价 {ev:+.1f}%" if ev else ""
+            lines.append(f"{sp_cn} {mn} | {_desig} @{od}{_fair_str}{_ev_str} | 注额¥{sat} | {sign}{pnl:.0f}")
         body = f"📊 滚球结算汇总({len(pending)}笔, 总盈亏{total_pnl:+.0f})\n\n" + "\n".join(lines)
         try:
             ok = bool(send_dingtalk("📊 滚球结算汇总", body))
@@ -962,12 +965,16 @@ class SecondLevelMonitor:
             return
         records = (d.get("data") or {}).get("records") or []
         # 滚动预算: 已结算的滚球订单从"未结算额"里释放, 结算的钱可继续投滚球
+        settled_info = {}  # oid -> 投注时 info(供结算明细关联 fair/ev)
         if self._live_bets:
             _released = False
             for o in records:
                 oid = str(o.get("id", ""))
                 if oid and oid in self._live_bets:
-                    self._live_outstanding = max(0.0, self._live_outstanding - float(self._live_bets.pop(oid, 0)))
+                    _v = self._live_bets.pop(oid, 0)
+                    settled_info[oid] = _v  # 保留投注时 info
+                    _stake = _v.get("stake", 0) if isinstance(_v, dict) else _v
+                    self._live_outstanding = max(0.0, self._live_outstanding - float(_stake))
                     _released = True
             if _released:
                 self._save_live_spent()
@@ -996,9 +1003,14 @@ class SecondLevelMonitor:
             won = pnl > 0
             od = op.get("od", 0)  # 赔率
             sid = op.get("sid", 0)  # 运动 id
+            # 关联投注时的 fair/ev(从 settled_info, 按 order_id)
+            _bi = settled_info.get(str(oid), {})
+            _fair = _bi.get("fair", 0) if isinstance(_bi, dict) else 0
+            _ev = _bi.get("ev", 0) if isinstance(_bi, dict) else 0
             pending.append({
                 "mn": mn, "mgn": mgn, "on": on, "od": od,
                 "sat": stake, "uwl": pnl, "sid": sid, "won": won,
+                "fair": _fair, "ev": _ev,
             })
             new_notified.add(oid)
             print(f"[slm] 结算收集: {'✅赢' if won else '❌输'} {mn} {mgn}-{on} | {pnl:+.0f}", flush=True)
