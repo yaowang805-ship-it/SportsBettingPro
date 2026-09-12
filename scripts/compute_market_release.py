@@ -47,7 +47,7 @@ PAPER = DATA / "paper_bets.json"
 OUT = DATA / "market_release.json"
 
 REAL_ROI_MIN = 4.0     # 实盘 ROI 释放阈值(%)
-N_REAL_MIN = 100       # 实盘赢率采信最小样本量(2026-09-12 30→100: 赢率vs隐含差在n=30时1σ≈9pp不可信, 提到100)
+N_REAL_MIN = 50        # 实盘赢率采信最小样本量(2026-09-12 30→100→50: 实盘真金白银质量高, 50够; 观察库才要100)
 OBS_ROI_MIN = 0.0      # 观察库 ROI 释放阈值(%)
 N_OBS_CLV_MIN = 30     # 观察库 CLV 采信最小样本量
 N_OBS_ROI_MIN = 5      # 观察库 ROI 采信最小样本量
@@ -93,7 +93,7 @@ OBS_MATURE_DAYS = 7        # 实盘投一周(7天)后评估提额
 #   加方向级封杀: 已释放盘口里, 实盘方向 ROI < DIR_ROI_MIN 且 n≥DIR_N_MIN 的方向封杀。
 OBS_CROSS_N_MIN = 10        # 观察库交叉验证采信最小样本
 OBS_CROSS_ROI_MIN = -20.0   # 观察库 ROI < -20% 视为假正(双库强分歧)
-DIR_N_MIN = 50              # 方向级赢率采信最小样本量(2026-09-12 15→50: 方向样本更少更噪, 提到50)
+DIR_N_MIN = 30              # 方向级赢率采信最小样本量(2026-09-12 15→50→30: 实盘方向样本, 30够)
 DIR_ROI_MIN = -5.0          # 方向级封杀阈值(ROI < -5%)
 
 # 改版时间切分(复用 compute_ev_thresholds.py 口径): dc/btts 改版前由 1X2/team_total 推导,
@@ -172,10 +172,10 @@ def _dir_threshold(edge, n):
         thr = 5.0
     else:
         thr = 6.0
-    # 样本置信度折扣: n<50 太不可信不设方向门槛(回退基础), n<100 加保守折扣
-    if n < 50:
+    # 样本置信度折扣: n<30 太不可信不设方向门槛(回退基础), n<50 加保守折扣
+    if n < 30:
         return None
-    if n < 100:
+    if n < 50:
         thr += 1.0
     return round(thr, 1)
 
