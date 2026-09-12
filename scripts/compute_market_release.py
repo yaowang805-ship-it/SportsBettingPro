@@ -58,6 +58,7 @@ MEDIAN_MIN = 0.0       # 观察库 CLV 中位下限(%)
 # 样本门槛从 n≥30 提到 n>100。滚球+早盘观察库合并统计, 滚球 league 归 "滚球"。
 OBS_N_MIN = 100            # 观察库释放采信最小结算样本数(>100)
 OBS_WINRATE_EDGE_MIN = 0.0 # 赢率>隐含(差>0pp 即释放)
+REAL_WINRATE_EDGE_MIN = 3.0  # 实盘主开关/方向释放赢率vs隐含差值阈值(差>3pp 去噪声)
 LIVE_PAPER = DATA / "live_paper_bets.json"
 OBS_STATE = DATA / "observe_release_state.json"  # 释放状态(首次释放时间 + cap)
 
@@ -256,6 +257,66 @@ def load_real_direction_window_roi():
     return _agg_bets(bets, _key)
 
 
+def _winrate_agg(bets, key_fn):
+    """按 key 聚合实盘赢率 vs 隐含: 赢率=won/(won+lost) 去 void/push; 隐含=1/平均赔率。"""
+    by = defaultdict(lambda: {"won": 0, "lost": 0, "odds_sum": 0.0})
+    for b in bets:
+        r = b.get("result")
+        if r not in ("won", "lost"):
+            continue
+        o = _f(b.get("bb_odds")) or 0
+        if o <= 1.0:
+            continue
+        k = key_fn(b)
+        if k is None:
+            continue
+        if r == "won":
+            by[k]["won"] += 1
+        else:
+            by[k]["lost"] += 1
+        by[k]["odds_sum"] += o
+    out = {}
+    for k, d in by.items():
+        n = d["won"] + d["lost"]
+        if n == 0:
+            continue
+        avg_odds = d["odds_sum"] / n
+        out[k] = {
+            "n": n,
+            "winrate": d["won"] / n * 100.0,
+            "implied": 1.0 / avg_odds * 100.0,
+        }
+    return out
+
+
+def load_real_winrate_market():
+    """实盘赢率 vs 隐含(两维): tracked_bets.json settled → {(sport,sub_market): {n,winrate,implied}}。"""
+    if not TRACKED.exists():
+        return {}
+    try:
+        raw = json.loads(TRACKED.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+    bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
+            if b.get("status") == "settled"]
+    return _winrate_agg(bets, lambda b: (b.get("sport") or "?", b.get("sub_market") or "?"))
+
+
+def load_real_winrate_direction():
+    """实盘赢率 vs 隐含(方向级): tracked_bets.json settled → {(sport,sub_market,direction): {n,winrate,implied}}。"""
+    if not TRACKED.exists():
+        return {}
+    try:
+        raw = json.loads(TRACKED.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+    bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
+            if b.get("status") == "settled"]
+    return _winrate_agg(bets, lambda b: (
+        b.get("sport") or "?", b.get("sub_market") or "?",
+        _direction(b.get("designation"), b.get("sub_market"))))
+
+
 def load_observe_clv():
     """观察库 CLV 中位/正率: clv_results.csv source=validate → {(sport,league,sub_market): {n,median,pos_rate}}。"""
     by = defaultdict(list)
@@ -438,35 +499,39 @@ def main():
     dir_window_roi = load_real_direction_window_roi()
     obs_mkt_roi = load_observe_roi_market()
     obs_winrate = load_observe_winrate()
+    market_winrate = load_real_winrate_market()
+    dir_winrate = load_real_winrate_direction()
 
+    # 主开关(2026-09-12 改赢率vs隐含): ROI 被注额加权+赔率结构扭曲(早盘三层根因), 判据统一为
+    # 赢率>隐含(真溢价)。market_roi 保留给「满7天提额」的实盘 ROI 判定(见下)。
     market_released = []
-    for (sport, sm), d in sorted(market_roi.items()):
-        if d["n"] >= N_REAL_MIN and d["roi"] > REAL_ROI_MIN:
-            # 双库交叉验证护栏(2026-09-03): 观察库同盘口 ROI 强负 → 实盘 ROI 是假正
+    for (sport, sm), d in sorted(market_winrate.items()):
+        if d["n"] >= N_REAL_MIN and d["winrate"] > d["implied"] + REAL_WINRATE_EDGE_MIN:
+            # 双库交叉验证护栏(2026-09-03): 观察库同盘口 ROI 强负 → 实盘赢率是假正
             # (高赔率盘少数命中, 如 htft 实盘+5.2%但胜率3%/观察库-86.6%), 不释放。
             o = obs_mkt_roi.get((sport, sm))
             if o and o["n"] >= OBS_CROSS_N_MIN and o["roi"] < OBS_CROSS_ROI_MIN:
                 continue
             market_released.append([sport, sm])
 
-    # 方向级细分(2026-09-03): 盘口级 ROI 掩盖方向级 edge。
-    # - direction_released: 整盘没过主开关, 但某方向实盘 ROI 强正(如 1x2 和局+37.4% vs 整盘+0.5%)。
-    # - direction_blocked: 整盘已释放, 但某方向实盘 ROI 强负(如 dc 主-24.7%)。
+    # 方向级细分(2026-09-12 改赢率vs隐含): 盘口级赢率掩盖方向级 edge。
+    # - direction_released: 整盘没过主开关, 但某方向赢率>隐含(如 1x2 客/平 真溢价)。
+    # - direction_blocked: 整盘已释放, 但某方向赢率<隐含(假溢价方向)。
     released_set = {tuple(m) for m in market_released}
     direction_released = []
     direction_blocked = []
-    for (sport, sm, dr), d in sorted(dir_roi.items()):
+    for (sport, sm, dr), d in sorted(dir_winrate.items()):
         if d["n"] < DIR_N_MIN:
             continue
         if (sport, sm) in released_set:
-            if d["roi"] < DIR_ROI_MIN:
+            if d["winrate"] < d["implied"] - REAL_WINRATE_EDGE_MIN:
                 direction_blocked.append([sport, sm, dr])
         else:
             # 观察库交叉验证: 整盘观察库 ROI 强负的方向也不释放(htft 观察库-86.6% 假正)
             o = obs_mkt_roi.get((sport, sm))
             if o and o["n"] >= OBS_CROSS_N_MIN and o["roi"] < OBS_CROSS_ROI_MIN:
                 continue
-            if d["roi"] > REAL_ROI_MIN:
+            if d["winrate"] > d["implied"] + REAL_WINRATE_EDGE_MIN:
                 direction_released.append([sport, sm, dr])
 
     # 方向级 EV 门槛(数据驱动, 替代 bb_ev_push 硬编码 DIRECTION_MIN_EV):
