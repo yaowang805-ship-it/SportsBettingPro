@@ -97,6 +97,7 @@ SCHEDULE = [
     ("clv_collect",        "18:00", "do_clv_collect", {}),
     ("clv_collect",        "20:00", "do_clv_collect", {}),
     ("settle_evening",     "20:30", "do_settle",      {}),
+    ("daily_review",       "23:30", "do_daily_review", {}),  # 实盘复盘(每天结算后分析+复盘, 2026-09-12 用户要求)
     # 数据盘口周报：周日 21:05(错开 weekly_report) 运动×盘口全表(门槛/CLV/ROI)
     ("market_weekly_report", "Sun 21:05", "do_market_weekly_report", {}),
     # 周报：周日 21:00
@@ -772,6 +773,19 @@ class PipelineOrchestrator:
             _br_mod.main()
         except Exception as e:
             logger.warning("已投注明细日报失败: %s", e)
+
+    def do_daily_review(self):
+        """实盘复盘(2026-09-12 用户要求): 每天23:30复盘当天实盘投注。
+        数据源 BB 官方已结算订单, 核心判据"赢率 vs 隐含"筛真/假溢价。"""
+        try:
+            import subprocess
+            r = subprocess.run(
+                [sys.executable, "scripts/daily_review.py", "--days", "1", "--push"],
+                cwd=str(SRC_DIR), capture_output=True, text=True, timeout=180)
+            if r.returncode != 0:
+                logger.warning("实盘复盘失败: %s", (r.stderr or "")[-200:])
+        except Exception as e:
+            logger.warning("实盘复盘异常: %s", e)
 
     def do_data_sync_summary(self):
         """V5.1: 每日9点数据积累量摘要 — 各数据源条数统计推钉钉。"""
