@@ -75,6 +75,26 @@ SESSION.curl.setopt(CurlOpt.RESOLVE, [f"{_PIN_HOST}:443:{_PIN_REAL}"])
 # curl_cffi 0.16.3 的 timeout 元组 (connect, read) 不生效(实测报 8s), 故 connect 用此全局项,
 # read 用 float 总超时(见 fetch_live_matchups 足球 45s)。
 SESSION.curl.setopt(CurlOpt.CONNECTTIMEOUT_MS, 15000)
+
+# curl_cffi 0.16.3 bug(2026-09-12 排查): 每次 request 内部会 curl_easy_reset 清掉会话级 setopt,
+# 导致上面 RESOLVE(硬编码IP直连) 和 CONNECTTIMEOUT_MS 失效 → 重新走 Shadowrocket DNS劫持(198.18.0.14)慢转发,
+# 足球 live 30MB 数据 4.5s 超时(回退缓存, 滚球无法比价)。
+# 猴子补丁 set_curl_options(每次 request 设置 options 的入口), 在它设置完后重新 setopt RESOLVE + CONNECTTIMEOUT_MS。
+from curl_cffi.requests import utils as _cffi_utils
+_orig_set_curl_options = _cffi_utils.set_curl_options
+
+
+def _patched_set_curl_options(c, *args, **kwargs):
+    ret = _orig_set_curl_options(c, *args, **kwargs)
+    try:
+        c.setopt(CurlOpt.RESOLVE, [f"{_PIN_HOST}:443:{_PIN_REAL}"])
+        c.setopt(CurlOpt.CONNECTTIMEOUT_MS, 15000)
+    except Exception:
+        pass
+    return ret
+
+
+_cffi_utils.set_curl_options = _patched_set_curl_options
 SESSION.headers.update({
     "Accept": "application/json, text/plain, */*",
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
