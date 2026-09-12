@@ -992,6 +992,12 @@ class SecondLevelMonitor:
               f"累计已投 ¥{self._live_spent:.0f} | 未结算 ¥{self._live_outstanding:.0f}/{LIVE_BUDGET}")
         deadline = time.time() + seconds if seconds else None
         poll_count = 0
+        # 启动时立即结算一次观察库(2026-09-12): poll_count%15 触发被 pin_live 超时拖慢(每轮
+        # 20-30s, 到15需5-7min), 观察库 1180 条久久结算不到。启动先结一批, 之后仍靠 poll_count%15 补结。
+        try:
+            self._settle_paper_bets()
+        except Exception as e:
+            print(f"[slm] 启动结算异常: {type(e).__name__} {str(e)[:80]}", flush=True)
         while deadline is None or time.time() < deadline:
             try:
                 n = self._poll_live()
