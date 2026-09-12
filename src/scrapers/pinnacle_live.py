@@ -412,7 +412,8 @@ def fetch_live_opportunities(threshold=3.0):
             # EV 上限 12%(防临时高价假机会/数据错配): BB 滚球价远高于 Pin 多是假 edge
             if ev >= threshold and ev <= 12.0:
                 opps.append({
-                    "bb_match_id": bmid, "home": pv["home"], "away": pv["away"],
+                    "bb_match_id": bmid,
+                    "home": b.get("home_cn") or pv["home"], "away": b.get("away_cn") or pv["away"],  # 中文队名优先(2026-09-12 推送要中文)
                     "sport": b["sport"],  # BB 运动 id(1足球/3篮球/5网球/7棒球/6美足), 供按运动×盘口分账
                     "sub": sub, "direction": d, "bb_odds": bb_odds, "fair": fair_p, "ev": ev,
                     "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
