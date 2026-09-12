@@ -379,6 +379,9 @@ class SecondLevelMonitor:
             profit = 0.0 if result == "push" else (stake * (odds - 1) if result == "won" else -stake)
             b["settled"] = True; b["result"] = result; b["profit"] = round(profit, 1)
             changed = True
+        if attempted > 0:
+            _settled_n = sum(1 for b in bets if b.get("settled"))
+            print(f"[slm] 观察库结算扫描: 尝试 {attempted} 场, 已结算 {_settled_n}/{len(bets)} 条", flush=True)
         if changed:
             LIVE_PAPER_FILE.write_text(json.dumps(bets, ensure_ascii=False, indent=1))
             settled = [b for b in bets if b.get("settled")]
