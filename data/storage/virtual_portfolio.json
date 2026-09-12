@@ -1,30 +1,7 @@
 {
-  "balance": 12992.53,
+  "balance": 13112.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_未来FC_瓦迪格拉_上半场主胜",
-      "sport": "football",
-      "league": "埃及超级联赛",
-      "home_team": "未来FC",
-      "away_team": "瓦迪格拉",
-      "home_cn": "未来FC",
-      "away_cn": "瓦迪格拉",
-      "market": "1x2",
-      "market_type": "上半场主胜",
-      "sub_market": "ht",
-      "line": "",
-      "odds": 4.92,
-      "stake": 120,
-      "model_prob": 0.2157,
-      "ev_pct": 6.13,
-      "pin_odds": 4.22,
-      "fair_price": 4.636,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1788962400,
-      "created_at": "2026-09-09T02:14:19.600710+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_巴利阿里_(女)_比利亚雷亚尔_(女)_主胜",
       "sport": "football",
@@ -9331,6 +9308,21 @@
       "sport": "football",
       "home_cn": "恩比",
       "away_cn": "ZED足球俱乐部",
+      "market_type": "上半场主胜"
+    },
+    {
+      "id": "bb_vs_pin_1x2_未来FC_瓦迪格拉_上半场主胜",
+      "match": "120¥ @ 4.92 (超时作废)",
+      "date": "2026-09-12T02:27:10.978510+00:00",
+      "stake": 120,
+      "odds": 4.92,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "埃及超级联赛",
+      "sport": "football",
+      "home_cn": "未来FC",
+      "away_cn": "瓦迪格拉",
       "market_type": "上半场主胜"
     }
   ],
