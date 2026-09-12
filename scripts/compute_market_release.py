@@ -66,6 +66,13 @@ BB_SPORT_MAP = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "
 BB_SUB_MAP = {"over_under": "ou", "handicap": "hc", "opportunities": "1x2"}
 LIVE_LEAGUE = "滚球"
 
+# 运动中文名(2026-09-12 用户要求: 释放盘口必须标注具体运动)。释放清单 sport 字段是英文,
+# 展示/推送时用此表转中文, 避免 ht/ou/hc 等盘口在足球/篮球/网球间混淆。
+SPORT_CN = {
+    "football": "⚽足球", "basketball": "🏀篮球", "tennis": "🎾网球",
+    "baseball": "⚾棒球", "american_football": "🏈美足", "ice_hockey": "🏒冰球",
+}
+
 # 投注额分阶段上限(用户要求): 新释放 150, 实盘满一周 ROI>4% 提 300
 OBS_CAP_NEW = 150
 OBS_CAP_MATURE = 300
@@ -556,6 +563,7 @@ def main():
         "direction_min_ev": direction_min_ev,
         "direction_window_blocked": direction_window_blocked,
         "direction_window_released": direction_window_released,
+        "sport_cn": SPORT_CN,
     }
     tmp = OUT.with_suffix(".tmp")
     tmp.write_text(json.dumps(out, ensure_ascii=False, indent=2))

@@ -330,24 +330,31 @@ class SecondLevelMonitor:
         _pe_by_sport = {1: 1000, 3: 3001, 5: 5000, 7: 7001, 6: 6001}
         for sport in (1, 3, 5, 7, 6):
             _pe_full = _pe_by_sport.get(sport, 1000)
-            try:
-                r = s.post(f"{dom}/v1/match/getList",
-                           json={"sportId": sport, "type": 6, "current": 1, "pageSize": 50,
-                                 "isPC": True, "languageType": "EN"},
-                           headers={"Content-Type": "application/json", "user-token": tok,
-                                    "User-Agent": _UA}, timeout=15, verify=False)
-                d = r.json()
-                for m in (d.get("data") or {}).get("records") or []:
-                    # 只结算已完赛(ms=0/3/6/7); 进行中/未开赛(ms=4)比分不完整, 会误判
-                    # (2026-09-10 bug: 未完赛比分当终局, 小球22笔全判win, 实际达伽马2-1该输)
-                    if m.get("ms") not in (0, 3, 6, 7):
-                        continue
-                    for g in m.get("nsg") or []:
-                        if g.get("pe") == _pe_full and g.get("tyg") == 5:
-                            score_map[int(m.get("id"))] = g.get("sc")
-                            break
-            except Exception:
-                pass
+            # 分页拉全量完赛(2026-09-12 修结算窗口bug): 之前 pageSize=50 只查一页,
+            # 27小时累积的观察库样本大部分完赛后已超出第一页50条窗口 → 永远结算不到。
+            # 现在分页拉(每页100, 最多10页=1000条完赛), 覆盖 ~1天 的完赛窗口。
+            for _page in range(1, 11):
+                try:
+                    r = s.post(f"{dom}/v1/match/getList",
+                               json={"sportId": sport, "type": 6, "current": _page, "pageSize": 100,
+                                     "isPC": True, "languageType": "EN"},
+                               headers={"Content-Type": "application/json", "user-token": tok,
+                                        "User-Agent": _UA}, timeout=15, verify=False)
+                    d = r.json()
+                    recs = (d.get("data") or {}).get("records") or []
+                    if not recs:
+                        break
+                    for m in recs:
+                        # 只结算已完赛(ms=0/3/6/7); 进行中/未开赛(ms=4)比分不完整, 会误判
+                        # (2026-09-10 bug: 未完赛比分当终局, 小球22笔全判win, 实际达伽马2-1该输)
+                        if m.get("ms") not in (0, 3, 6, 7):
+                            continue
+                        for g in m.get("nsg") or []:
+                            if g.get("pe") == _pe_full and g.get("tyg") == 5:
+                                score_map[int(m.get("id"))] = g.get("sc")
+                                break
+                except Exception:
+                    break
         changed = False
         for b in bets:
             if b.get("settled"):
