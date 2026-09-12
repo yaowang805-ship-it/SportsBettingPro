@@ -562,11 +562,8 @@ def main():
     market_released = []
     for (sport, sm), d in sorted(market_winrate.items()):
         if d["n"] >= N_REAL_MIN and d["winrate"] > d["implied"] + _winrate_threshold(d["n"]):
-            # 双库交叉验证护栏(2026-09-03): 观察库同盘口 ROI 强负 → 实盘赢率是假正
-            # (高赔率盘少数命中, 如 htft 实盘+5.2%但胜率3%/观察库-86.6%), 不释放。
-            o = obs_mkt_roi.get((sport, sm))
-            if o and o["n"] >= OBS_CROSS_N_MIN and o["roi"] < OBS_CROSS_ROI_MIN:
-                continue
+            # (2026-09-12 删除观察库ROI交叉验证护栏: 护栏是实盘ROI判据时代的产物,
+            #  观察库ROI负是假溢价体现非实盘赢率假正信号, 会误拦真溢价如football 1x2 +5.6pp)
             market_released.append([sport, sm])
 
     # 方向级细分(2026-09-12 改赢率vs隐含): 盘口级赢率掩盖方向级 edge。
@@ -582,10 +579,6 @@ def main():
             if d["winrate"] < d["implied"] - _winrate_threshold(d["n"]):
                 direction_blocked.append([sport, sm, dr])
         else:
-            # 观察库交叉验证: 整盘观察库 ROI 强负的方向也不释放(htft 观察库-86.6% 假正)
-            o = obs_mkt_roi.get((sport, sm))
-            if o and o["n"] >= OBS_CROSS_N_MIN and o["roi"] < OBS_CROSS_ROI_MIN:
-                continue
             if d["winrate"] > d["implied"] + _winrate_threshold(d["n"]):
                 direction_released.append([sport, sm, dr])
 
@@ -622,10 +615,6 @@ def main():
             continue
         # 只有"该方向既没整盘释放也没方向级释放"时, 才需要时间窗级释放(已释放的无需重复)
         if (sport, sm) in released_set or (sport, sm, dr) in released_dir_set:
-            continue
-        # 观察库交叉验证护栏(防高赔少数命中的假正)
-        o = obs_mkt_roi.get((sport, sm))
-        if o and o["n"] >= OBS_CROSS_N_MIN and o["roi"] < OBS_CROSS_ROI_MIN:
             continue
         if d["winrate"] > d["implied"] + _winrate_threshold(d["n"]):
             direction_window_released.append([sport, sm, dr, w])
