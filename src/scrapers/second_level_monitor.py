@@ -993,20 +993,25 @@ class SecondLevelMonitor:
         deadline = time.time() + seconds if seconds else None
         poll_count = 0
         # 启动时立即结算一次观察库(2026-09-12): poll_count%15 触发被 pin_live 超时拖慢(每轮
-        # 20-30s, 到15需5-7min), 观察库 1180 条久久结算不到。启动先结一批, 之后仍靠 poll_count%15 补结。
+        # 20-30s, 到15需5-7min), 观察库 1180 条久久结算不到。启动先结一批, 之后每 60s 独立补结。
         try:
             self._settle_paper_bets()
         except Exception as e:
             print(f"[slm] 启动结算异常: {type(e).__name__} {str(e)[:80]}", flush=True)
+        last_settle = time.time()
         while deadline is None or time.time() < deadline:
             try:
                 n = self._poll_live()
                 if n:
                     print(f"[slm] 本轮发现 {n} 个滚球机会")
                 poll_count += 1
+                # 观察库结算: 每 60s 结一批(独立时间戳, 不依赖 poll_count — pin_live 超时拖慢轮询,
+                # 依赖 poll_count%15 会把 1130 条拖到 2-3h 才结完)
+                if time.time() - last_settle >= 60:
+                    last_settle = time.time()
+                    self._settle_paper_bets()
                 if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
                     self._check_settled()
-                    self._settle_paper_bets()
                     self._check_reversion()  # 下注后 30s 复验 BB 价, 尖峰假 EV 标记
             except Exception as e:
                 print(f"[slm] 轮询异常: {type(e).__name__} {str(e)[:80]}", flush=True)
