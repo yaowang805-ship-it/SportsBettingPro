@@ -570,7 +570,6 @@ class SecondLevelMonitor:
         sig["ev"] = fresh_ev  # 入库/下单都用验价后的真实 EV
         stake = self._stake_for(sig)
         sig["_stake"] = stake
-        self._append_live_paper_bet(sig)
         if not LIVE_REAL_BET_ENABLED:
             return
         # 2026-09-10 用户要求: 滚球实盘从"只投足球小球"扩展到 网球独赢+篮球大小分/让分
@@ -587,6 +586,9 @@ class SecondLevelMonitor:
         )
         if not _bettable:
             return
+        # 2026-09-12 观察库采样只记实盘方向: 之前所有 +EV 信号都进观察库(大球509条假溢价 vs 小球20条),
+        # 导致观察库数据分布和真溢价方向相反。现在只记 _bettable 的实盘方向(足球小球/网球独赢/篮球大小让分)。
+        self._append_live_paper_bet(sig)
         # EV-Kelly 最优定仓: 足球小球上限 500(2026-09-12 提额), 网球/篮球试探期上限 100(小注)
         _cap = LIVE_UNDER_MAX_STAKE if (_sport == 1 and _desig == "小球") else 100
         # 观察库释放盘口 cap(2026-09-12): 命中 observe_release_caps 则用 150/300, 覆盖默认 cap

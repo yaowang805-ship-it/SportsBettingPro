@@ -158,24 +158,24 @@ def _window(match_epoch, push_ts):
     return None
 
 
-def _dir_threshold(roi, n):
-    """方向 ROI → EV 门槛(数据驱动, 替代 bb_ev_push 硬编码 DIRECTION_MIN_EV)。
+def _dir_threshold(edge, n):
+    """方向赢率vs隐含差值 → EV 门槛(2026-09-12 改赢率: 数据驱动, 替代 ROI 版)。
 
     下限 3.0 = 职业底线(历史教训: <3% 会放行大量临场漂移假机会)。
-    ROI 越正门槛越低(充分信任), 样本越少越保守。
+    赢率差越大门槛越低(充分信任), 样本越少越保守。
     """
-    if roi >= 30.0:
+    if edge >= 20.0:
         thr = 3.0
-    elif roi >= 15.0:
+    elif edge >= 10.0:
         thr = 4.0
-    elif roi >= 5.0:
+    elif edge >= 5.0:
         thr = 5.0
     else:
         thr = 6.0
-    # 样本置信度折扣: n<15 太不可信不设方向门槛(回退基础), n<30 加保守折扣
-    if n < 15:
+    # 样本置信度折扣: n<50 太不可信不设方向门槛(回退基础), n<100 加保守折扣
+    if n < 50:
         return None
-    if n < 30:
+    if n < 100:
         thr += 1.0
     return round(thr, 1)
 
@@ -326,6 +326,43 @@ def load_real_winrate_direction():
     return _winrate_agg(bets, lambda b: (
         b.get("sport") or "?", b.get("sub_market") or "?",
         _direction(b.get("designation"), b.get("sub_market"))))
+
+
+def load_real_winrate_league():
+    """实盘赢率 vs 隐含(联赛三维): tracked_bets settled → {(sport,league,sub_market): {n,winrate,implied}}。"""
+    if not TRACKED.exists():
+        return {}
+    try:
+        raw = json.loads(TRACKED.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+    bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
+            if b.get("status") == "settled"]
+    return _winrate_agg(bets, lambda b: (
+        b.get("sport") or "?",
+        (b.get("league") or "").strip() or "?",
+        b.get("sub_market") or "?"))
+
+
+def load_real_winrate_direction_window():
+    """实盘赢率 vs 隐含(方向×时间窗): tracked_bets settled → {(sport,sub_market,direction,window): {n,winrate,implied}}。"""
+    if not TRACKED.exists():
+        return {}
+    try:
+        raw = json.loads(TRACKED.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+    bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
+            if b.get("status") == "settled"]
+
+    def _key(b):
+        w = _window(_f(b.get("match_epoch")), _ts(b.get("push_time")))
+        if w is None:
+            return None
+        return (b.get("sport") or "?", b.get("sub_market") or "?",
+                _direction(b.get("designation"), b.get("sub_market")), w)
+
+    return _winrate_agg(bets, _key)
 
 
 def load_observe_clv():
@@ -512,6 +549,8 @@ def main():
     obs_winrate = load_observe_winrate()
     market_winrate = load_real_winrate_market()
     dir_winrate = load_real_winrate_direction()
+    league_winrate = load_real_winrate_league()
+    dir_window_winrate = load_real_winrate_direction_window()
 
     # 主开关(2026-09-12 改赢率vs隐含): ROI 被注额加权+赔率结构扭曲(早盘三层根因), 判据统一为
     # 赢率>隐含(真溢价)。market_roi 保留给「满7天提额」的实盘 ROI 判定(见下)。
@@ -545,35 +584,35 @@ def main():
             if d["winrate"] > d["implied"] + _winrate_threshold(d["n"]):
                 direction_released.append([sport, sm, dr])
 
-    # 方向级 EV 门槛(数据驱动, 替代 bb_ev_push 硬编码 DIRECTION_MIN_EV):
-    # 只对"释放的方向"(整盘释放盘口的正方向 + 方向级释放)设门槛, ROI 越正门槛越低(下限3%职业底线)。
+    # 方向级 EV 门槛(2026-09-12 改赢率: 数据驱动, 替代 ROI 版)。
+    # 只对"释放的方向"(整盘释放盘口的正方向 + 方向级释放)设门槛, 赢率差越大门槛越低(下限3%职业底线)。
     direction_min_ev = []
     released_dir_set = {tuple(x) for x in direction_released}
-    for (sport, sm, dr), d in sorted(dir_roi.items()):
-        if d["roi"] <= 0:
+    for (sport, sm, dr), d in sorted(dir_winrate.items()):
+        edge = d["winrate"] - d["implied"]
+        if edge <= 0:
             continue
         if (sport, sm) not in released_set and (sport, sm, dr) not in released_dir_set:
             continue  # 既没整盘释放也没方向释放 → 不设门槛(不投)
-        thr = _dir_threshold(d["roi"], d["n"])
+        thr = _dir_threshold(edge, d["n"])
         if thr is not None:
             direction_min_ev.append([sport, sm, dr, thr])
 
-    # 时间窗级封杀(2026-09-05): 方向级 ROI 仍掩盖时间窗分化 —— 1x2平 近场-47.5% / hc客 临场-11.9%
-    # 都是负的, 但被"平整体+17.1%"平均掉。已释放方向里, 某时间窗实盘 ROI 强负的封杀该时间窗。
+    # 时间窗级封杀(2026-09-12 改赢率): 方向级赢率仍掩盖时间窗分化。
+    # 已释放方向里, 某时间窗赢率<隐含 强负的封杀该时间窗。
     direction_window_blocked = []
-    for (sport, sm, dr, w), d in sorted(dir_window_roi.items()):
+    for (sport, sm, dr, w), d in sorted(dir_window_winrate.items()):
         if d["n"] < DIR_N_MIN:
             continue
         # 只有"该方向是释放的"(整盘释放 或 方向级释放)才需要时间窗级封杀
         if (sport, sm) not in released_set and (sport, sm, dr) not in released_dir_set:
             continue
-        if d["roi"] < DIR_ROI_MIN:
+        if d["winrate"] < d["implied"] - _winrate_threshold(d["n"]):
             direction_window_blocked.append([sport, sm, dr, w])
 
-    # 时间窗级释放(2026-09-07): 方向整体没释放, 但某时间窗实盘 ROI 强正(如 近场ht+53% / 远场hc+53%),
-    # 单独释放该时间窗 —— "时间窗×盘口"才是真 edge 的精确颗粒度(整盘/方向级 ROI 会把时间窗分化平均掉)。
+    # 时间窗级释放(2026-09-12 改赢率): 方向整体没释放, 但某时间窗赢率>隐含 强正。
     direction_window_released = []
-    for (sport, sm, dr, w), d in sorted(dir_window_roi.items()):
+    for (sport, sm, dr, w), d in sorted(dir_window_winrate.items()):
         if d["n"] < DIR_N_MIN:
             continue
         # 只有"该方向既没整盘释放也没方向级释放"时, 才需要时间窗级释放(已释放的无需重复)
@@ -583,14 +622,15 @@ def main():
         o = obs_mkt_roi.get((sport, sm))
         if o and o["n"] >= OBS_CROSS_N_MIN and o["roi"] < OBS_CROSS_ROI_MIN:
             continue
-        if d["roi"] > REAL_ROI_MIN:
+        if d["winrate"] > d["implied"] + _winrate_threshold(d["n"]):
             direction_window_released.append([sport, sm, dr, w])
 
+    # 联赛细化(2026-09-12 改赢率): 用联赛自己的赢率vs隐含覆盖主开关。
     league_released = []
     league_blocked = []
-    for (sport, lg, sm), d in sorted(league_roi.items()):
+    for (sport, lg, sm), d in sorted(league_winrate.items()):
         if d["n"] >= N_REAL_MIN:
-            if d["roi"] > REAL_ROI_MIN:
+            if d["winrate"] > d["implied"] + _winrate_threshold(d["n"]):
                 league_released.append([sport, lg, sm])
             else:
                 league_blocked.append([sport, lg, sm])
