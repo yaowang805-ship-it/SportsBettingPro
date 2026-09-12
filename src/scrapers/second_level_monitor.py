@@ -323,6 +323,7 @@ class SecondLevelMonitor:
         tok = read_token()
         if not tok:
             return
+        print(f"[slm] 观察库结算开始: {len(bets)} 条, tok={'有' if tok else '无'}", flush=True)
         # 按 match_id 定向查比分(2026-09-12 修结算bug): getList type=6 的 pageSize 被 BB 限制为
         # 50 条(分页拉全量完赛不生效), 覆盖不了 32h 累积的观察库样本 → 永远结算不到。
         # 改用 getMatchDetail 逐场定向查(无窗口限制, 已结束比赛仍可查), 与 bb_score_settle 同源。
