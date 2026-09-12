@@ -831,7 +831,9 @@ class SecondLevelMonitor:
         self._bet_notify_until = time.time() + 30 * 60
         try:
             from config.settings import send_dingtalk
-            send_dingtalk(title, body)
+            ok = bool(send_dingtalk(title, body))
+            if not ok:
+                print(f"[slm] 秒级下单推送失败: {title}", flush=True)
         except Exception as e:
             print(f"[slm] 钉钉通知异常: {e}")
 
@@ -839,7 +841,9 @@ class SecondLevelMonitor:
         """每笔成功下单都推钉钉(不限频 —— 下单限频已把间隔拉到 10-15s, 不会刷屏)。"""
         try:
             from config.settings import send_dingtalk
-            send_dingtalk(title, body)
+            ok = bool(send_dingtalk(title, body))
+            if not ok:
+                print(f"[slm] 滚球投注推送失败: {title}", flush=True)
         except Exception as e:
             print(f"[slm] 钉钉通知异常: {e}")
 
