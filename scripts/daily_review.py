@@ -122,16 +122,20 @@ def _review(orders, days):
             lines.append(f"  {key}: {bn}笔 赢率{bwr:.0f}% 隐含{bimp:.0f}% 差{diff:+.0f}pp {flag}")
         lines.append("")
 
-    # 3. 赔率区间(longshot 检查)
+    # 3. 赔率区间(longshot 检查) — 分滚球/早盘(2026-09-12): 早盘高赔率冷门是毒瘤(>3.0 赢率4%/隐含26%差-22pp),
+    # 全局混合会掩盖滚球/早盘的赔率结构差异(盘口级聚合掩盖赔率区间分化的根因)。
     bins = [(1.0, 2.0, "1.0-2.0"), (2.0, 3.0, "2.0-3.0"), (3.0, 5.0, "3.0-5.0"), (5.0, 99, ">5")]
-    lines.append("【赔率区间】")
-    for lo, hi, lab in bins:
-        sub = [i for i in live + early if lo <= i[2] < hi]
-        if not sub:
+    for label, grp in [("滚球", live), ("早盘", early)]:
+        if not grp:
             continue
-        n, s, p, w, l, wr, imp = _winrate(sub)
-        diff = wr - imp
-        lines.append(f"  {lab}: {n}笔 赢率{wr:.0f}% 隐含{imp:.0f}% 差{diff:+.0f}pp")
+        lines.append(f"【{label}·赔率区间】")
+        for lo, hi, lab in bins:
+            sub = [i for i in grp if lo <= i[2] < hi]
+            if not sub:
+                continue
+            n, s, p, w, l, wr, imp = _winrate(sub)
+            diff = wr - imp
+            lines.append(f"  {lab}: {n}笔 赢率{wr:.0f}% 隐含{imp:.0f}% 差{diff:+.0f}pp")
 
     return "\n".join(lines)
 

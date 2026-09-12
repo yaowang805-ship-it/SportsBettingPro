@@ -33,6 +33,7 @@
 """
 import csv
 import json
+import math
 import statistics
 from collections import defaultdict
 from datetime import datetime
@@ -46,7 +47,7 @@ PAPER = DATA / "paper_bets.json"
 OUT = DATA / "market_release.json"
 
 REAL_ROI_MIN = 4.0     # 实盘 ROI 释放阈值(%)
-N_REAL_MIN = 30        # 实盘 ROI 采信最小样本量
+N_REAL_MIN = 100       # 实盘赢率采信最小样本量(2026-09-12 30→100: 赢率vs隐含差在n=30时1σ≈9pp不可信, 提到100)
 OBS_ROI_MIN = 0.0      # 观察库 ROI 释放阈值(%)
 N_OBS_CLV_MIN = 30     # 观察库 CLV 采信最小样本量
 N_OBS_ROI_MIN = 5      # 观察库 ROI 采信最小样本量
@@ -92,7 +93,7 @@ OBS_MATURE_DAYS = 7        # 实盘投一周(7天)后评估提额
 #   加方向级封杀: 已释放盘口里, 实盘方向 ROI < DIR_ROI_MIN 且 n≥DIR_N_MIN 的方向封杀。
 OBS_CROSS_N_MIN = 10        # 观察库交叉验证采信最小样本
 OBS_CROSS_ROI_MIN = -20.0   # 观察库 ROI < -20% 视为假正(双库强分歧)
-DIR_N_MIN = 15              # 方向级 ROI 采信最小样本量
+DIR_N_MIN = 50              # 方向级赢率采信最小样本量(2026-09-12 15→50: 方向样本更少更噪, 提到50)
 DIR_ROI_MIN = -5.0          # 方向级封杀阈值(ROI < -5%)
 
 # 改版时间切分(复用 compute_ev_thresholds.py 口径): dc/btts 改版前由 1X2/team_total 推导,
@@ -255,6 +256,16 @@ def load_real_direction_window_roi():
                 _direction(b.get("designation"), b.get("sub_market")), w)
 
     return _agg_bets(bets, _key)
+
+
+def _winrate_threshold(n):
+    """赢率vs隐含差值阈值(2026-09-12 按统计显著): 样本越少要求差越大。
+
+    标准误 SE≈0.5/sqrt(n)(p≈0.5 二项分布), 差要 ≥1 SE 才不算纯噪声。
+    n=100→5pp, n=50→7pp, 下限 REAL_WINRATE_EDGE_MIN=3pp。
+    """
+    se = 50.0 / math.sqrt(n) if n > 0 else 100.0
+    return max(REAL_WINRATE_EDGE_MIN, se)
 
 
 def _winrate_agg(bets, key_fn):
@@ -506,7 +517,7 @@ def main():
     # 赢率>隐含(真溢价)。market_roi 保留给「满7天提额」的实盘 ROI 判定(见下)。
     market_released = []
     for (sport, sm), d in sorted(market_winrate.items()):
-        if d["n"] >= N_REAL_MIN and d["winrate"] > d["implied"] + REAL_WINRATE_EDGE_MIN:
+        if d["n"] >= N_REAL_MIN and d["winrate"] > d["implied"] + _winrate_threshold(d["n"]):
             # 双库交叉验证护栏(2026-09-03): 观察库同盘口 ROI 强负 → 实盘赢率是假正
             # (高赔率盘少数命中, 如 htft 实盘+5.2%但胜率3%/观察库-86.6%), 不释放。
             o = obs_mkt_roi.get((sport, sm))
@@ -524,14 +535,14 @@ def main():
         if d["n"] < DIR_N_MIN:
             continue
         if (sport, sm) in released_set:
-            if d["winrate"] < d["implied"] - REAL_WINRATE_EDGE_MIN:
+            if d["winrate"] < d["implied"] - _winrate_threshold(d["n"]):
                 direction_blocked.append([sport, sm, dr])
         else:
             # 观察库交叉验证: 整盘观察库 ROI 强负的方向也不释放(htft 观察库-86.6% 假正)
             o = obs_mkt_roi.get((sport, sm))
             if o and o["n"] >= OBS_CROSS_N_MIN and o["roi"] < OBS_CROSS_ROI_MIN:
                 continue
-            if d["winrate"] > d["implied"] + REAL_WINRATE_EDGE_MIN:
+            if d["winrate"] > d["implied"] + _winrate_threshold(d["n"]):
                 direction_released.append([sport, sm, dr])
 
     # 方向级 EV 门槛(数据驱动, 替代 bb_ev_push 硬编码 DIRECTION_MIN_EV):

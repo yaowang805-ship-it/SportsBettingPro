@@ -1163,7 +1163,7 @@ def _calc_kelly_stakes(opps: list) -> list:
     """
     from config.constants import MAX_STAKE_PCT as _MAX_STAKE_PCT, PER_MATCH_CAP_PCT as _PER_MATCH_CAP_PCT, get_dynamic_bankroll as _get_bankroll
     from config.constants import PER_LEAGUE_CAP_PCT as _PER_LEAGUE_CAP_PCT, PER_SPORT_CAP_PCT as _PER_SPORT_CAP_PCT
-    from config.weight_matrix_v5 import get_kelly_stake_pct
+    from config.weight_matrix_v5 import get_kelly_stake_pct, get_self_cal_win_rate
 
     bankroll = _get_bankroll()
 
@@ -1329,6 +1329,20 @@ def _calc_kelly_stakes(opps: list) -> list:
             _wmult = EDGE_DIRECTION_WINDOW_MULT.get((sub, o.get("designation", ""), _w))
             if _wmult:
                 _mult = _wmult
+        # 2026-09-12 定仓统一赢率vs隐含: 自有标定真实赢率可用时, 用「赢率-隐含」差值重算方向档,
+        # 替代「历史ROI档」(ROI被注额/赔率扭曲, 见 early-market-negative-roi-rootcause)。
+        # 赢率<隐含 = 假溢价方向 → 压到假档(2)。定仓和释放判据(赢率>隐含)用同一把尺子。
+        _sc_wr = get_self_cal_win_rate(sport, sub, odds)
+        if _sc_wr is not None and odds > 1.0:
+            _wr_edge = _sc_wr - 1.0 / odds  # 赢率 vs 隐含(概率差)
+            if _wr_edge > 0.10:
+                _mult = 15.0    # 强 edge
+            elif _wr_edge > 0.05:
+                _mult = 10.0    # 中 edge
+            elif _wr_edge > 0.0:
+                _mult = 5.0     # 弱 edge
+            else:
+                _mult = 2.0     # 假(赢率<隐含)
         # 混合定仓(2026-09-07): 分数 Kelly 权重 = (实际EV/100) ÷ (odds-1) × 方向ROI可靠性档
         # (强15/中10/弱5/假2, 归一化 ÷10)。循环结束后统一按比例归一化到日目标, 封顶 ¥400。
         # 替换旧"离散档 × 日目标÷场次"公式(它不区分同档内的真实 EV, 也缺 Kelly 赔率项)。
