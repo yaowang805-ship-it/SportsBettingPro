@@ -162,7 +162,13 @@ def auto_bet_flow(opportunities, token=None, domain=None):
         disp_away = opp.get("away_cn") or opp.get("away_bb") or opp.get("away", "")
         sub = opp.get("sub_market") or opp.get("_sub_market") or "1x2"
         desig = opp.get("designation", "")
-        stake = float(opp.get("_stake") or opp.get("stake") or 10)
+        stake = float(opp.get("_stake") or opp.get("stake") or 0)
+        # 铁律(2026-08-27 stake-min-and-24h-push-rules): stake<30 一律不投。
+        # 之前 `or 10` fallback 把 stake=0 的机会投成 10 元碎单, 违反铁律。
+        if stake < 30:
+            failed.append({"home": disp_home, "away": disp_away,
+                           "reason": f"stake<30 不投(¥{stake:.0f})"})
+            continue
 
         # 2026-09-06 用户要求: 早盘实盘只投"未开赛", 已开赛(lead<0)的场跳过(与暂停滚球秒级对齐)
         _ep = opp.get("_pin_epoch")
