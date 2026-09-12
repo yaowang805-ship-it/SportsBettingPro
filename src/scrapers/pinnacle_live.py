@@ -91,7 +91,10 @@ def fetch_live_matchups(sport_ids=LIVE_SPORT_IDS, use_cache=True):
     for sid in sport_ids:
         _timeout = T_FOOTBALL if sid == FOOTBALL_SID else T_OTHER
         try:
-            r = SESSION.get(f"{API_BASE}/sports/{sid}/matchups", timeout=_timeout)
+            # 足球 30MB 大数据用 Connection: close(2026-09-12 排查): 长运行进程里连接池复用
+            # 过期/半关闭连接导致 4.5s 超时(独立测 45s 能拉完), 强制每次新建连接避免复用。
+            _headers = {"Connection": "close"} if sid == FOOTBALL_SID else None
+            r = SESSION.get(f"{API_BASE}/sports/{sid}/matchups", timeout=_timeout, headers=_headers)
             ms = r.json()
             n = 0
             for m in ms:
