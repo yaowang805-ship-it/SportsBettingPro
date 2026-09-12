@@ -410,15 +410,24 @@ def _extract_market_odds(pin_matchup, sub_market, designation, sport="football",
     des = (designation or "").lower()
 
     def _devig(odds, selected_idx):
-        """proportional devig: 公平价 = odds[i] * sum(1/odds)。selected_idx 可为 int 或 list(组合)。"""
+        """Shin devig(2026-09-12 与主比价统一): 公平概率用 devig_shin, 组合项概率相加。
+
+        proportional(比例法)会系统性高估热门概率/低估冷门概率(favorite-longshot bias),
+        导致高赔端 CLV 虚高 → 假 +EV。Shin 法(知情资金 z 参数)修正该偏差, 与
+        bb_vs_pinnacle 主比价的 shin_fair_odds 一致。
+        selected_idx 可为 int(单选项) 或 list/tuple(组合, 如 dc 主/和)。
+        返回 (fair, total): fair=公平赔率, total=隐含概率和(去抽水前)。
+        """
+        from src.scrapers.devig import devig_shin
         total = sum(1.0 / p for p in odds if p and p > 0)
         if total <= 0:
             return None, None
+        probs = devig_shin(odds)  # 对齐 odds 顺序, 无效位置=0, 和≈1
         if isinstance(selected_idx, (list, tuple)):
-            prob = sum(1.0 / odds[i] for i in selected_idx if 0 <= i < len(odds))
-            fair = 1.0 / (prob / total) if prob > 0 else None
+            prob = sum(probs[i] for i in selected_idx if 0 <= i < len(probs))
         else:
-            fair = odds[selected_idx] * total
+            prob = probs[selected_idx] if 0 <= selected_idx < len(probs) else 0.0
+        fair = 1.0 / prob if prob > 0 else None
         return fair, total
 
     def _parse_line(designation):

@@ -39,6 +39,11 @@ BUDGET_TRACKER_FILE = DATA_DIR / "budget_tracker.json"
 BANNED_LEAGUES_FILE = DATA_DIR / "banned_leagues.json"
 LEAGUE_TIERS_FILE = DATA_DIR / "league_tiers.json"
 
+# Pin 定价信心硬门槛(2026-09-12): Pin max_stake 低于此值(美元)的场次不投。
+# max_stake 反映 Pin 对定价的信心(T1 $750 vs T3 $50), 低 = Pin 定价粗 = 比价尺子不准,
+# 抓的 +EV 多是 Pin 冷门临时偏离(假溢价源头)。职业团队直接不碰低 max_stake 联赛。
+PIN_MAX_STAKE_MIN = 200.0
+
 
 def _load_banned_leagues():
     if BANNED_LEAGUES_FILE.exists():
@@ -1198,6 +1203,18 @@ def _calc_kelly_stakes(opps: list) -> list:
             o["_stake"] = 0; o["_raw_stake"] = 0
             continue
 
+        # Pin 定价信心硬门槛(2026-09-12): max_stake 低 = Pin 定价粗(尺子不准)。
+        # 低级别联赛 Pin 冷门定价也粗会临时偏离, 比价抓的 +EV 多是 Pin 偏离瞬间(假溢价),
+        # 职业团队直接不碰 max_stake 低的联赛。硬过滤替代之前的降权×0.7。
+        _pin_ms = o.get("pin_max_stake") or o.get("_pin_max_stake")
+        if _pin_ms:
+            try:
+                if float(_pin_ms) < PIN_MAX_STAKE_MIN:
+                    o["_stake"] = 0; o["_raw_stake"] = 0
+                    continue
+            except (ValueError, TypeError):
+                pass
+
         # 高赔率冷门过滤(2026-09-11 longshot bias): 主盘口(1x2/hc/ou)赔率>3.0 冷门,
         # BB/Pin 都系统性高估其概率(实测 3-4倍赢率0%/4-6倍12%), 真实赢率远低于隐含。
         # 特殊盘口(正确比分/半全场等)天然高赔率(>10), 不受此限。
@@ -1320,14 +1337,7 @@ def _calc_kelly_stakes(opps: list) -> list:
         _w = 0.0
         if _odds > 1.0 and _edge > 0:
             _w = (_mult / MEDIUM_EDGE_MULT) * _edge / (_odds - 1.0)
-        # Pin 低注额上限 = 定价信心低(尺子不准, 低上限场次高EV多是测量误差)→ 降权
-        _pin_ms = o.get("pin_max_stake") or o.get("_pin_max_stake")
-        if _pin_ms:
-            try:
-                if float(_pin_ms) < 200:
-                    _w *= 0.7
-            except (ValueError, TypeError):
-                pass
+        # (max_stake 降权已升级为硬门槛, 见 _calc_kelly_stakes 开头 PIN_MAX_STAKE_MIN 过滤)
         o["_kelly_weight"] = _w
         o["_edge_mult"] = _mult
 
