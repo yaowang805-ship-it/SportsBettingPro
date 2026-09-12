@@ -84,17 +84,14 @@ def fetch_live_matchups(sport_ids=LIVE_SPORT_IDS, use_cache=True):
     # curl_cffi 0.16.3 的 timeout 元组(connect,read)不生效(实测报 8s), 用 float 总超时;
     # connect 15s 快速失败已全局设(pinnacle_api SESSION.CONNECTTIMEOUT_MS)。
     FOOTBALL_SID = 29
-    T_FOOTBALL = 45.0
+    T_FOOTBALL = 90.0  # 足球 30MB 数据实测拉取 ~45s, 45s 超时卡边界(网络波动即超时回退缓存), 提到 90s
     T_OTHER = 20.0
 
     live = []
     for sid in sport_ids:
         _timeout = T_FOOTBALL if sid == FOOTBALL_SID else T_OTHER
         try:
-            # 足球 30MB 大数据用 Connection: close(2026-09-12 排查): 长运行进程里连接池复用
-            # 过期/半关闭连接导致 4.5s 超时(独立测 45s 能拉完), 强制每次新建连接避免复用。
-            _headers = {"Connection": "close"} if sid == FOOTBALL_SID else None
-            r = SESSION.get(f"{API_BASE}/sports/{sid}/matchups", timeout=_timeout, headers=_headers)
+            r = SESSION.get(f"{API_BASE}/sports/{sid}/matchups", timeout=_timeout)
             ms = r.json()
             n = 0
             for m in ms:
