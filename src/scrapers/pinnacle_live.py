@@ -84,7 +84,7 @@ def fetch_live_matchups(sport_ids=LIVE_SPORT_IDS, use_cache=True):
     # curl_cffi 0.16.3 的 timeout 元组(connect,read)不生效(实测报 8s), 用 float 总超时;
     # connect 15s 快速失败已全局设(pinnacle_api SESSION.CONNECTTIMEOUT_MS)。
     FOOTBALL_SID = 29
-    T_FOOTBALL = 90.0  # 足球 30MB 数据实测拉取 ~45s, 45s 超时卡边界(网络波动即超时回退缓存), 提到 90s
+    T_FOOTBALL = 45.0  # 足球 60MB: 快 edge(172.64.145.56)实测 9.5s, 45s 留 4.7x 余量; 慢网络波动也能扛
     T_OTHER = 20.0
 
     live = []

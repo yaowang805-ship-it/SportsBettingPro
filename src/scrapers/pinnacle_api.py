@@ -64,7 +64,11 @@ from curl_cffi.requests.exceptions import (
 
 # V5.1: DNS 绕过 Shadowrocket VPN劫持 → 直连 Pinnacle Cloudflare IP。
 # curl_cffi 走 libcurl(不经过 urllib3), 原 urllib3 monkey-patch 失效, 改用 CURLOPT_RESOLVE。
-_PIN_REAL = '104.18.42.200'
+# 2026-09-13: 104.18.42.200 已退化(Cloudflare 换 edge, 掉到 0.8MB/s, 足球60MB要52-75s),
+#   换同批另一个 edge 172.64.145.56(实测 6.4MB/s, 9.5s)。单 IP 直连比走 Shadowrocket fake-ip
+#   动态解析稳(后者实测 24s 但有 90s 超时波动), 也比双 IP 列表稳(curl 会轮询到慢 IP)。
+#   注: 会话级 setopt 跨请求有效(实测死 IP 3 连全拒), 无需猴子补丁重设。
+_PIN_REAL = '172.64.145.56'
 _PIN_HOST = 'guest.api.arcadia.pinnacle.com'
 
 SESSION = _cffi_requests.Session(impersonate="chrome150")
@@ -73,28 +77,9 @@ SESSION.proxies = {"http": "", "https": ""}
 SESSION.curl.setopt(CurlOpt.RESOLVE, [f"{_PIN_HOST}:443:{_PIN_REAL}"])
 # connect 阶段最多 15s 快速失败(封禁/断连立刻暴露), read 超时由各请求 timeout 参数控制。
 # curl_cffi 0.16.3 的 timeout 元组 (connect, read) 不生效(实测报 8s), 故 connect 用此全局项,
-# read 用 float 总超时(见 fetch_live_matchups 足球 45s)。
+# read 用 float 总超时(见 fetch_live_matchups 足球)。
 SESSION.curl.setopt(CurlOpt.CONNECTTIMEOUT_MS, 15000)
 
-# curl_cffi 0.16.3 bug(2026-09-12 排查): 每次 request 内部会 curl_easy_reset 清掉会话级 setopt,
-# 导致上面 RESOLVE(硬编码IP直连) 和 CONNECTTIMEOUT_MS 失效 → 重新走 Shadowrocket DNS劫持(198.18.0.14)慢转发,
-# 足球 live 30MB 数据 4.5s 超时(回退缓存, 滚球无法比价)。
-# 猴子补丁 set_curl_options(每次 request 设置 options 的入口), 在它设置完后重新 setopt RESOLVE + CONNECTTIMEOUT_MS。
-from curl_cffi.requests import utils as _cffi_utils
-_orig_set_curl_options = _cffi_utils.set_curl_options
-
-
-def _patched_set_curl_options(c, *args, **kwargs):
-    ret = _orig_set_curl_options(c, *args, **kwargs)
-    try:
-        c.setopt(CurlOpt.RESOLVE, [f"{_PIN_HOST}:443:{_PIN_REAL}"])
-        c.setopt(CurlOpt.CONNECTTIMEOUT_MS, 15000)
-    except Exception:
-        pass
-    return ret
-
-
-_cffi_utils.set_curl_options = _patched_set_curl_options
 SESSION.headers.update({
     "Accept": "application/json, text/plain, */*",
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
