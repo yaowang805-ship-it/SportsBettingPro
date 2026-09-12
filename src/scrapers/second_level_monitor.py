@@ -47,7 +47,7 @@ LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 
 # 滚球实盘只投小球(under), EV-Kelly 最优定仓, 单注上限 ¥400(预算1/5)兼顾分散。
 # 其它盘口(大球/1x2/让球)仍只进观察库, 不下真单。
 LIVE_REAL_BET_ENABLED = True
-LIVE_UNDER_MAX_STAKE = 500  # 单注上限(2026-09-12 400→500: 小球67笔赢率68%vs隐含57%+11pp真溢价, 稳健放量)
+LIVE_UNDER_MAX_STAKE = 600  # 单注上限(2026-09-12 500→600: 小球73笔赢率70%vs隐含57%+14pp持续稳定, 再放量20%)
 BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球"}
 
 # 滚球 → 观察库统一口径(2026-09-12 观察库释放改造): sport 数字→英文; sub→sub_market。
@@ -580,43 +580,42 @@ class SecondLevelMonitor:
         self._append_live_paper_bet(sig)
         if not LIVE_REAL_BET_ENABLED:
             return
-        # 2026-09-10 用户要求: 滚球实盘从"只投足球小球"扩展到 网球独赢+篮球大小分/让分
-        # (职业团队也投这两个运动)。足球小球(真edge+11%)保持原注额; 网球/篮球小注试探,
-        # 攒30笔用 CLV+ROI 双验证, 通过了再放量。
+        # 2026-09-12 优化: 不再硬编码"只投小球/网球/篮球", 改为「观察库释放优先, 已验证方向其次」。
+        # 观察库释放的盘口(让球主胜/客胜等赢率>隐含+n>100)也实盘投(cap 150/300 试探)。
         _sport = sig["match"].get("sport")
         _sub = sig.get("sub")
         _desig = sig.get("desig")
-        _bettable = (
-            (_sport == 1 and _sub == "over_under" and _desig == "小球")
-            or (_sport == 5 and _sub == "opportunities")      # 网球独赢(主/客)
-            or (_sport == 3 and _sub == "over_under")         # 篮球大小分
-            or (_sport == 3 and _sub == "handicap")           # 篮球让分
-        )
-        if not _bettable:
-            return
-        # EV-Kelly 最优定仓: 足球小球上限 500(2026-09-12 提额), 网球/篮球试探期上限 100(小注)
-        _cap = LIVE_UNDER_MAX_STAKE if (_sport == 1 and _desig == "小球") else 100
-        # 观察库释放盘口 cap(2026-09-12): 命中 observe_release_caps 则用 150/300, 覆盖默认 cap
-        # 粒度「运动×盘口×方向×live」, 方向归一化(大/小/平/客/主)与 compute_market_release._direction 同口径
+        # 方向归一化(大/小/平/客/主), 与 compute_market_release._direction 同口径
+        if "大" in _desig:
+            _dr = "大"
+        elif "小" in _desig:
+            _dr = "小"
+        elif ("和" in _desig or "平" in _desig) and "客" not in _desig and "主" not in _desig:
+            _dr = "平"
+        elif "客" in _desig:
+            _dr = "客"
+        elif "主" in _desig:
+            _dr = "主"
+        else:
+            _dr = "其他"
         _sp_en = BB_SPORT_EN.get(_sport)
         _sm = BB_SUB_TO_SM.get(_sub)
+        _cap = None
+        # 1. 观察库释放盘口 → 投(cap 150/300)
         if _sp_en and _sm:
-            _des = sig.get("desig") or ""
-            if "大" in _des:
-                _dr = "大"
-            elif "小" in _des:
-                _dr = "小"
-            elif ("和" in _des or "平" in _des) and "客" not in _des and "主" not in _des:
-                _dr = "平"
-            elif "客" in _des:
-                _dr = "客"
-            elif "主" in _des:
-                _dr = "主"
-            else:
-                _dr = "其他"
-            _ocap = _load_obs_caps().get(f"{_sp_en}|{_sm}|{_dr}|live")
-            if _ocap:
-                _cap = _ocap
+            _cap = _load_obs_caps().get(f"{_sp_en}|{_sm}|{_dr}|live")
+        # 2. 已验证方向(足球小球/网球独赢/篮球大小让分) → 投(cap 600/100)
+        if _cap is None:
+            _bettable = (
+                (_sport == 1 and _sub == "over_under" and _desig == "小球")
+                or (_sport == 5 and _sub == "opportunities")      # 网球独赢(主/客)
+                or (_sport == 3 and _sub == "over_under")         # 篮球大小分
+                or (_sport == 3 and _sub == "handicap")           # 篮球让分
+            )
+            if _bettable:
+                _cap = LIVE_UNDER_MAX_STAKE if (_sport == 1 and _desig == "小球") else 100
+        if _cap is None:
+            return
         stake = min(stake, _cap)
         sig["_stake"] = stake
         if stake < MIN_STAKE:
