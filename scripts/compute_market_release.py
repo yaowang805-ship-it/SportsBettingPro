@@ -60,6 +60,9 @@ MEDIAN_MIN = 0.0       # 观察库 CLV 中位下限(%)
 OBS_N_MIN = 100            # 观察库释放采信最小结算样本数(>100)
 OBS_WINRATE_EDGE_MIN = 0.0 # 赢率>隐含(差>0pp 即释放)
 REAL_WINRATE_EDGE_MIN = 3.0  # 实盘主开关/方向释放赢率vs隐含差值阈值(差>3pp 去噪声)
+# 实盘数据切分点(2026-09-12 用户要求): 实盘释放只用「重收后」的干净数据, 不用之前被结算bug
+# (ms=7漏判/league_cn对不上)污染的旧数据。切分点=观察库重收日 9-10。
+REAL_DATA_CUTOFF_TS = datetime.fromisoformat("2026-09-10T00:00:00+00:00").timestamp()
 LIVE_PAPER = DATA / "live_paper_bets.json"
 OBS_STATE = DATA / "observe_release_state.json"  # 释放状态(首次释放时间 + cap)
 
@@ -279,6 +282,10 @@ def _winrate_agg(bets, key_fn):
     for b in bets:
         r = b.get("result")
         if r not in ("won", "lost"):
+            continue
+        # 时间切分(2026-09-12): 只用重收后的干净实盘数据, 切掉之前被结算bug污染的旧样本
+        _pt = _ts(b.get("push_time"))
+        if _pt is not None and _pt < REAL_DATA_CUTOFF_TS:
             continue
         o = _f(b.get("fair_price")) or _f(b.get("bb_odds")) or 0
         if o <= 1.0:
