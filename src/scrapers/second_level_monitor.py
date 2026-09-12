@@ -328,6 +328,8 @@ class SecondLevelMonitor:
         from src.scrapers.bb_api_fetcher import fetch_bb_match_result
         changed = False
         now = time.time()
+        attempted = 0
+        MAX_PER_BATCH = 50  # 每批最多查 50 场(1178条逐场 getMatchDetail 太慢, 分批避免阻塞主循环 30s 轮询)
         for b in bets:
             if b.get("settled"):
                 continue
@@ -336,6 +338,9 @@ class SecondLevelMonitor:
             # 只结算「已捕捉超过 2h」(足球应已完赛) 的样本, 避免还没完赛的无效请求
             if not mid or not ts or now - ts < 2 * 3600:
                 continue
+            if attempted >= MAX_PER_BATCH:
+                break
+            attempted += 1
             detail = fetch_bb_match_result(mid, language_type="EN")
             if not detail or not detail.get("completed"):
                 continue
