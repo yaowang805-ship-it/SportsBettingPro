@@ -99,6 +99,45 @@ def _load_obs_caps():
         return {}
 
 
+_release_state_cache = None
+_release_state_mtime = 0.0
+
+
+def _load_release_state():
+    """读 observe_release_state.json(释放盘口状态: daily_stake/daily_stake_date/limit_removed), 带 mtime 缓存。"""
+    global _release_state_cache, _release_state_mtime
+    if not OBS_STATE_FILE.exists():
+        return {}
+    try:
+        m = OBS_STATE_FILE.stat().st_mtime
+        if _release_state_cache is None or m != _release_state_mtime:
+            _release_state_cache = json.loads(OBS_STATE_FILE.read_text()) or {}
+            _release_state_mtime = m
+        return _release_state_cache
+    except Exception:
+        return {}
+
+
+def _update_daily_stake(key, stake):
+    """下单成功后更新释放盘口的当日累计投注额(2026-09-12)。"""
+    try:
+        state = _load_release_state()
+        rs = state.get(key)
+        if not rs:
+            return
+        today = datetime.now().strftime("%Y-%m-%d")
+        if rs.get("daily_stake_date", "") != today:
+            rs["daily_stake"] = 0
+            rs["daily_stake_date"] = today
+        rs["daily_stake"] = rs.get("daily_stake", 0) + stake
+        state[key] = rs
+        tmp = OBS_STATE_FILE.with_suffix(".tmp")
+        tmp.write_text(json.dumps(state, ensure_ascii=False, indent=2))
+        tmp.replace(OBS_STATE_FILE)
+    except Exception:
+        pass
+
+
 def load_fair_cache(path=None):
     """读 comparison 输出 → {bb_match_id: {meta, markets}}。
 
@@ -619,6 +658,16 @@ class SecondLevelMonitor:
         if _cap is None:
             return
         stake = min(stake, _cap)
+        # 当日累计投注额上限(2026-09-12 用户要求): 观察库释放且未解除限制的盘口, 当日累计≤1000
+        if _sp_en and _sm:
+            _rs = _load_release_state().get(f"{_sp_en}|{_sm}|{_dr}|live", {})
+            if not _rs.get("limit_removed", False):
+                _today = datetime.now().strftime("%Y-%m-%d")
+                _daily_stake = _rs.get("daily_stake", 0) if _rs.get("daily_stake_date", "") == _today else 0
+                if _daily_stake + stake > DAILY_STAKE_LIMIT:
+                    print(f"  📝 当日累计超限({_daily_stake:.0f}+{stake:.0f}>{DAILY_STAKE_LIMIT}), 跳过 "
+                          f"{sig['match']['home']} vs {sig['match']['away']} {sig['desig']}", flush=True)
+                    return
         sig["_stake"] = stake
         if stake < MIN_STAKE:
             return
