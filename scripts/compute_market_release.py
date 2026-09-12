@@ -80,6 +80,8 @@ SCOPE_LIVE = "live"     # 滚球观察库(live_paper_bets)
 OBS_CAP_NEW = 150
 OBS_CAP_MATURE = 300
 OBS_MATURE_DAYS = 7        # 实盘投一周(7天)后评估提额
+# 新释放盘口当日累计投注额上限(2026-09-12 用户要求): 当天总投注额≤1000, 次日实盘ROI>4% 解除
+DAILY_STAKE_LIMIT = 1000
 
 DIR_N_MIN = 30              # 方向级赢率采信最小样本量(2026-09-12 15→50→30: 实盘方向样本, 30够)
 
@@ -431,6 +433,29 @@ def _save_obs_state(state):
     tmp.replace(OBS_STATE)
 
 
+def _notify_release(newly_released, obs_winrate):
+    """新释放盘口推钉钉通知(2026-09-12 用户要求)。"""
+    try:
+        from config.settings import send_dingtalk
+    except Exception:
+        return
+    lines = []
+    for (sport, sm, dr, scope) in newly_released:
+        d = obs_winrate.get((sport, sm, dr, scope)) or {}
+        winrate = d.get("winrate", 0)
+        implied = d.get("implied", 0)
+        sp_cn = SPORT_CN.get(sport, sport)
+        scope_cn = "滚球" if scope == SCOPE_LIVE else "早盘"
+        lines.append(
+            f"{sp_cn} {sm}-{dr}({scope_cn}): 赢率{winrate:.1f}% vs 隐含{implied:.1f}% "
+            f"(+{winrate-implied:.1f}pp) | 单注≤{OBS_CAP_NEW} | 当日累计≤{DAILY_STAKE_LIMIT}")
+    body = "🆕 新释放盘口\n\n" + "\n".join(lines)
+    try:
+        send_dingtalk("🆕 新释放盘口", body)
+    except Exception:
+        pass
+
+
 def main():
     market_roi = load_real_roi()
     obs_winrate = load_observe_winrate()
@@ -520,21 +545,27 @@ def main():
         if d["winrate"] > d["implied"] + OBS_WINRATE_EDGE_MIN:
             observe_released.append([sport, sm, dr, scope])
 
-    # 释放状态维护 + 投注额 cap 分阶段(用户要求): 新释放 150 → 实盘满 7 天 ROI>4% → 300。
-    # 状态持久化到 observe_release_state.json, 跨运行保留 first_released_at(重新释放才重置)。
+    # 释放状态维护 + 投注额 cap 分阶段 + 当日累计上限 + 释放通知(2026-09-12 用户要求)。
+    # 状态持久化到 observe_release_state.json: first_released_at/cap/daily_stake/limit_removed。
     obs_state = _load_obs_state()
     now_ts = datetime.now().timestamp()
+    today = datetime.now().strftime("%Y-%m-%d")
     live_real_roi = load_live_real_roi()
     observe_release_caps = {}
     new_state = {}
+    newly_released = []  # 新释放的盘口(推钉钉通知)
     for (sport, sm, dr, scope) in observe_released:
         key = f"{sport}|{sm}|{dr}|{scope}"
         prev = obs_state.get(key)
         first = (prev or {}).get("first_released_at")
         cap = (prev or {}).get("cap", OBS_CAP_NEW)
+        daily_stake = (prev or {}).get("daily_stake", 0)
+        daily_date = (prev or {}).get("daily_stake_date", "")
+        limit_removed = (prev or {}).get("limit_removed", False)
         if not first:
             first = datetime.now().isoformat()
             cap = OBS_CAP_NEW
+            newly_released.append([sport, sm, dr, scope])
         else:
             try:
                 first_ts = datetime.fromisoformat(str(first)).timestamp()
@@ -545,9 +576,23 @@ def main():
                 r = (live_real_roi if scope == SCOPE_LIVE else market_roi).get((sport, sm))
                 if r and r.get("n", 0) > 0 and r.get("roi", 0) > REAL_ROI_MIN:
                     cap = OBS_CAP_MATURE
-        new_state[key] = {"first_released_at": first, "cap": cap}
+            # 次日解除 1000 限制(2026-09-12 用户要求): 实盘 ROI>4% → 解除当日累计上限
+            if not limit_removed:
+                r = (live_real_roi if scope == SCOPE_LIVE else market_roi).get((sport, sm))
+                if r and r.get("n", 0) > 0 and r.get("roi", 0) > REAL_ROI_MIN:
+                    limit_removed = True
+        # 当日累计跨天重置
+        if daily_date != today:
+            daily_stake = 0
+            daily_date = today
+        new_state[key] = {"first_released_at": first, "cap": cap,
+                          "daily_stake": daily_stake, "daily_stake_date": daily_date,
+                          "limit_removed": limit_removed}
         observe_release_caps[key] = cap
     _save_obs_state(new_state)
+    # 释放通知: 新释放盘口推钉钉
+    if newly_released:
+        _notify_release(newly_released, obs_winrate)
 
     out = {
         "generated_at": datetime.now().isoformat(),

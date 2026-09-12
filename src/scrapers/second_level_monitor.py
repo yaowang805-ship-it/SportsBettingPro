@@ -55,6 +55,8 @@ BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足
 BB_SPORT_EN = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "american_football"}
 BB_SUB_TO_SM = {"over_under": "ou", "handicap": "hc", "opportunities": "1x2"}
 MARKET_RELEASE_FILE = ROOT / "data" / "storage" / "market_release.json"
+OBS_STATE_FILE = ROOT / "data" / "storage" / "observe_release_state.json"
+DAILY_STAKE_LIMIT = 1000  # 新释放盘口当日累计投注额上限(2026-09-12 用户要求), 次日实盘ROI>4%解除
 
 # G04 market(盘口名) → 缓存子盘口 key
 _MARKET_KEYWORDS = [
