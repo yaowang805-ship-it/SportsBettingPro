@@ -946,6 +946,7 @@ class SecondLevelMonitor:
             ops = o.get("ops") or []
             op = ops[0] if ops else {}
             mn = op.get("mn", "?"); on = op.get("on", "?")
+            mgn = op.get("mgn", "")  # 盘口名(大/小/让球/独赢), 2026-09-12 用户要求结算推送加盘口信息
             stake = o.get("sat", 0); pnl_raw = o.get("uwl", "0")
             try:
                 pnl = float(pnl_raw)
@@ -954,7 +955,8 @@ class SecondLevelMonitor:
             won = pnl > 0
             bal = fetch_balance() or "未知"
             title = f"{'✅ 赢了' if won else '❌ 输了'} {mn}"
-            body = f"{on}\n注额 ¥{stake} | 盈亏 {('+' if won else '')}{pnl}\n账户余额 ¥{bal}"
+            _desig = f"{mgn}-{on}" if mgn else on
+            body = f"{_desig}\n注额 ¥{stake} | 盈亏 {('+' if won else '')}{pnl}\n账户余额 ¥{bal}"
             # 2026-09-12: send_dingtalk 返回 bool(限流/失败时 False), 之前不检查返回值
             # 导致推送失败时仍 new_notified.add(oid) → 误标已通知 → 永不补推。现在失败不标记。
             try:
