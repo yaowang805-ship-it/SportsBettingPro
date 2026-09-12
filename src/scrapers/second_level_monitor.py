@@ -380,6 +380,14 @@ class SecondLevelMonitor:
             profit = 0.0 if result == "push" else (stake * (odds - 1) if result == "won" else -stake)
             b["settled"] = True; b["result"] = result; b["profit"] = round(profit, 1)
             changed = True
+        # 清理错过结算窗口的样本(2026-09-12 用户要求): 超过 BB 赛果时效窗口(48h)仍未结算的,
+        # getMatchDetail 返回空壳永远结算不了 → 删除, 避免污染 ROI 统计。
+        _before = len(bets)
+        _cutoff = now - 48 * 3600
+        bets = [b for b in bets if b.get("settled") or not b.get("ts", 0) or b.get("ts") >= _cutoff]
+        if len(bets) < _before:
+            print(f"[slm] 清理错过结算窗口样本: 删除 {_before - len(bets)} 条(>48h未结算)", flush=True)
+            changed = True
         if attempted > 0:
             _settled_n = sum(1 for b in bets if b.get("settled"))
             print(f"[slm] 观察库结算扫描: 尝试 {attempted} 场, 已结算 {_settled_n}/{len(bets)} 条", flush=True)
