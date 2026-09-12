@@ -269,13 +269,18 @@ def _winrate_threshold(n):
 
 
 def _winrate_agg(bets, key_fn):
-    """按 key 聚合实盘赢率 vs 隐含: 赢率=won/(won+lost) 去 void/push; 隐含=1/平均赔率。"""
+    """按 key 聚合实盘赢率 vs 隐含: 赢率=won/(won+lost) 去 void/push; 隐含=1/平均Pin公平价。
+
+    2026-09-12 修正隐含基准: 之前用 bb_odds(软书价)算隐含, 判的是「BB价是否+EV」;
+    但「真溢价」的定义是「真实赢率 > Pin公平价隐含」(Pin是sharp基准, Pin低估才是市场错误定价)。
+    用 BB 赔率算隐含会高估 edge 1~4pp, 把「BB自己定价粗」误判成真溢价(假溢价源头)。改用 fair_price。
+    """
     by = defaultdict(lambda: {"won": 0, "lost": 0, "odds_sum": 0.0})
     for b in bets:
         r = b.get("result")
         if r not in ("won", "lost"):
             continue
-        o = _f(b.get("bb_odds")) or 0
+        o = _f(b.get("fair_price")) or _f(b.get("bb_odds")) or 0
         if o <= 1.0:
             continue
         k = key_fn(b)
@@ -465,7 +470,7 @@ def load_observe_winrate():
     for b in _read_paper_bets():
         sm = b.get("sub_market") or "?"
         _feed((b.get("sport") or "?", sm, _direction(b.get("designation"), sm), SCOPE_EARLY),
-              b.get("result"), _f(b.get("bb_odds")))
+              b.get("result"), _f(b.get("fair_price")) or _f(b.get("bb_odds")))
 
     for b in _read_live_paper_bets():
         sport = BB_SPORT_MAP.get(b.get("sport"))
@@ -473,7 +478,7 @@ def load_observe_winrate():
         if not sport or not sm:
             continue
         _feed((sport, sm, _direction(b.get("designation"), sm), SCOPE_LIVE),
-              b.get("result"), _f(b.get("bb_odds")))
+              b.get("result"), _f(b.get("fair")) or _f(b.get("bb_odds")))
 
     out = {}
     for k, d in by.items():

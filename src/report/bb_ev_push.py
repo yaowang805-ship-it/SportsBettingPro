@@ -1333,8 +1333,9 @@ def _calc_kelly_stakes(opps: list) -> list:
         # 替代「历史ROI档」(ROI被注额/赔率扭曲, 见 early-market-negative-roi-rootcause)。
         # 赢率<隐含 = 假溢价方向 → 压到假档(2)。定仓和释放判据(赢率>隐含)用同一把尺子。
         _sc_wr = get_self_cal_win_rate(sport, sub, odds)
-        if _sc_wr is not None and odds > 1.0:
-            _wr_edge = _sc_wr - 1.0 / odds  # 赢率 vs 隐含(概率差)
+        _fair = o.get("fair_price") or odds  # 隐含基准用 Pin 公平价(2026-09-12 修正)
+        if _sc_wr is not None and _fair > 1.0:
+            _wr_edge = _sc_wr - 1.0 / _fair  # 赢率 vs Pin公平价隐含(概率差)
             if _wr_edge > 0.10:
                 _mult = 15.0    # 强 edge
             elif _wr_edge > 0.05:
