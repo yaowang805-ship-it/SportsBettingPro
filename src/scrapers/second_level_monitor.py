@@ -267,6 +267,7 @@ class SecondLevelMonitor:
         self._attempted = {}           # 滚球指纹去重: match_id -> {market_id -> 尝试时间戳}
         self._last_bet_time = 0.0      # 上次下单时间(非阻塞限频用)
         self._bet_delay = 0.0          # 下一单需等待的随机间隔(10-15s, 每次下单后重抽)
+        self._last_settle_push = 0.0   # 上次结算汇总推送时间(每小时推一次, 2026-09-12)
         self._reversion_track = {}     # Reversion check: (match_id, market_id, option_type) -> {bb_odds, ts}
 
     def refresh_cache(self):
@@ -905,6 +906,31 @@ class SecondLevelMonitor:
         except Exception as e:
             print(f"[slm] 钉钉通知异常: {e}")
 
+    def _push_settle_summary(self, pending):
+        """每小时汇总推结算明细(2026-09-12 用户要求, 不一场推一场)。"""
+        try:
+            from config.settings import send_dingtalk
+        except Exception:
+            return
+        total_pnl = sum((p.get("uwl", 0) or 0) for p in pending)
+        lines = []
+        for p in pending:
+            mn = p.get("mn", "?"); mgn = p.get("mgn", ""); on = p.get("on", "?")
+            od = p.get("od", 0); sat = p.get("sat", 0); pnl = p.get("uwl", 0); won = p.get("won", False)
+            sid = p.get("sid", 0)
+            sp_cn = BB_SPORT_CN.get(sid, "") or ""
+            _desig = f"{mgn}-{on}" if mgn else on
+            sign = "+" if won else ""
+            lines.append(f"{sp_cn} {mn} | {_desig} @{od} | 注额¥{sat} | {sign}{pnl:.0f}")
+        body = f"📊 滚球结算汇总({len(pending)}笔, 总盈亏{total_pnl:+.0f})\n\n" + "\n".join(lines)
+        try:
+            ok = bool(send_dingtalk("📊 滚球结算汇总", body))
+            if ok:
+                PENDING_SETTLE_FILE.write_text(json.dumps([], ensure_ascii=False))
+                print(f"[slm] 结算汇总推送成功: {len(pending)}笔, 总盈亏{total_pnl:+.0f}", flush=True)
+        except Exception as e:
+            print(f"[slm] 结算汇总推送异常: {e}", flush=True)
+
     def _check_settled(self):
         """查 BB 已结算订单, 对新的(未通知的)推钉钉(含盈亏 + 账户余额)。"""
         from src.betting.bb_auto_bet import read_token, read_domain, _session, fetch_balance
@@ -940,7 +966,13 @@ class SecondLevelMonitor:
                 self._save_live_spent()
                 print(f"[slm] 结算释放额度: 未结算降至 ¥{self._live_outstanding:.0f}/{LIVE_BUDGET}", flush=True)
         new_notified = set(notified)
-        from config.settings import send_dingtalk
+        # 收集结算明细到缓存(不立即推, 每小时汇总推一次, 2026-09-12 用户要求)
+        pending = []
+        if PENDING_SETTLE_FILE.exists():
+            try:
+                pending = json.loads(PENDING_SETTLE_FILE.read_text())
+            except Exception:
+                pending = []
         for o in records:
             oid = o.get("id")
             if not oid or oid in notified:
@@ -948,32 +980,35 @@ class SecondLevelMonitor:
             ops = o.get("ops") or []
             op = ops[0] if ops else {}
             mn = op.get("mn", "?"); on = op.get("on", "?")
-            mgn = op.get("mgn", "")  # 盘口名(大/小/让球/独赢), 2026-09-12 用户要求结算推送加盘口信息
+            mgn = op.get("mgn", "")  # 盘口名(大/小/让球/独赢)
             stake = o.get("sat", 0); pnl_raw = o.get("uwl", "0")
             try:
                 pnl = float(pnl_raw)
             except (TypeError, ValueError):
                 pnl = 0.0
             won = pnl > 0
-            bal = fetch_balance() or "未知"
-            title = f"{'✅ 赢了' if won else '❌ 输了'} {mn}"
-            _desig = f"{mgn}-{on}" if mgn else on
-            body = f"{_desig}\n注额 ¥{stake} | 盈亏 {('+' if won else '')}{pnl}\n账户余额 ¥{bal}"
-            # 2026-09-12: send_dingtalk 返回 bool(限流/失败时 False), 之前不检查返回值
-            # 导致推送失败时仍 new_notified.add(oid) → 误标已通知 → 永不补推。现在失败不标记。
+            od = op.get("od", 0)  # 赔率
+            sid = op.get("sid", 0)  # 运动 id
+            pending.append({
+                "mn": mn, "mgn": mgn, "on": on, "od": od,
+                "sat": stake, "uwl": pnl, "sid": sid, "won": won,
+            })
+            new_notified.add(oid)
+            print(f"[slm] 结算收集: {'✅赢' if won else '❌输'} {mn} {mgn}-{on} | {pnl:+.0f}", flush=True)
+        if pending:
             try:
-                ok = bool(send_dingtalk(title, body))
-            except Exception as e:
-                ok = False
-                print(f"[slm] 结算推送异常: {e}")
-            if ok:
-                new_notified.add(oid)
-            print(f"[slm] 结算推送: {title} | {pnl} | {'成功' if ok else '失败(下次重试)'}", flush=True)
+                PENDING_SETTLE_FILE.write_text(json.dumps(pending, ensure_ascii=False, indent=1))
+            except Exception:
+                pass
         if new_notified != notified:
             try:
                 LIVE_SETTLED_FILE.write_text(json.dumps(list(new_notified)))
             except Exception:
                 pass
+        # 每小时汇总推一次结算明细
+        if pending and time.time() - self._last_settle_push >= SETTLE_PUSH_INTERVAL:
+            self._push_settle_summary(pending)
+            self._last_settle_push = time.time()
 
     def _token_ok(self):
         """下单前探 token 有效性(10min 缓存)。失效自动续期(读浏览器), 续不到发钉钉提醒。"""
