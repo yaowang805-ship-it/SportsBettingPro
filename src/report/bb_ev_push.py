@@ -217,120 +217,6 @@ MARKET_QUALITY_TENNIS = {
     "ou":   0.70,  # 大小分: 谨慎
 }
 
-# 网球赔率上限 — 按赛事级别, 基于Pinnacle 5,013场真实ROI
-# 上限=该级别该赔率范围仍有正期望的最高赔率
-TENNIS_ODDS_LIMITS = {
-    # 赛事级别关键字 → 最大BB赔率
-    "Grand Slam": 5.0,        # >5.0 ROI=-34.4%, >10.0 ROI惨不忍睹
-    "Masters": 5.0,           # 3.0-5.0 ROI=+9.4% → 可以投到5.0
-    "ATP 500": 4.0,           # 3.0-5.0 ROI=-5.5% → 略微放宽
-    "ATP 250": 5.0,           # 3.0-5.0虽差但5.0-10.0 ROI=+17.1%(有value)
-    "WTA": 5.0,               # WTA暂用ATP250同参数
-    "Challenger": 3.0,        # 挑战赛: 匹配质量差, 保守
-    "ITF": 2.5,               # ITF低级别: 匹配质量最差, 只投低赔
-    "W15": 2.5, "M15": 2.5,  # ITF Futures: 极度保守
-    "W25": 2.5, "M25": 2.5,
-}
-
-def _get_tennis_odds_limit(league: str) -> float:
-    """根据联赛名返回网球赔率上限。"""
-    for keyword, limit in TENNIS_ODDS_LIMITS.items():
-        if keyword.lower() in league.lower():
-            return limit
-    return 3.0  # 默认保守
-
-# --- 全运动赔率上限 (基于 Pinnacle 历史数据) ---
-_ODDS_LIMITS_CACHE = None
-
-def _load_odds_limits():
-    global _ODDS_LIMITS_CACHE
-    if _ODDS_LIMITS_CACHE is None:
-        import json
-        limits_file = DATA_DIR / ".." / ".." / "odds" / "odds_limits.json"
-        # Try multiple paths
-        from pathlib import Path
-        for p in [DATA_DIR.parent / "odds" / "odds_limits.json",
-                  Path("data/odds/odds_limits.json")]:
-            if p.exists():
-                try:
-                    _ODDS_LIMITS_CACHE = json.loads(p.read_text())
-                    break
-                except (json.JSONDecodeError, OSError):
-                    pass
-        if _ODDS_LIMITS_CACHE is None:
-            # 文件不存在时用内置默认值 (基于Pinnacle历史数据)
-            _ODDS_LIMITS_CACHE = {
-                "football": {
-                    "德甲": {"1x2_limit": 20.0, "ou_limit": 20.0}, "德乙": {"1x2_limit": 20.0, "ou_limit": 20.0},
-                    "英超": {"1x2_limit": 8.0, "ou_limit": 9.6}, "英冠": {"1x2_limit": 10.0, "ou_limit": 12.0},
-                    "西甲": {"1x2_limit": 8.0, "ou_limit": 9.6}, "意甲": {"1x2_limit": 6.0, "ou_limit": 7.2},
-                    "法甲": {"1x2_limit": 8.0, "ou_limit": 9.6}, "葡超": {"1x2_limit": 5.0, "ou_limit": 6.0},
-                    "荷甲": {"1x2_limit": 8.0, "ou_limit": 9.6}, "土超": {"1x2_limit": 5.0, "ou_limit": 6.0},
-                    "希超": {"1x2_limit": 5.0, "ou_limit": 6.0},
-                },
-                "tennis": {
-                    "Masters": 10.0, "Grand Slam": 5.0, "ATP 500": 10.0, "ATP 250": 5.0,
-                    "WTA": 5.0, "Challenger": 3.0, "ITF": 2.5, "W15": 2.5, "M15": 2.5,
-                },
-                "basketball": {"NBA": {"hc": 10.0, "1x2": 8.0, "ou": 8.0}},
-                "baseball": {"MLB": {"1x2": 5.0, "ou": 5.0, "hc": 5.0}},
-                "default": {"1x2": 5.0, "ou": 5.0, "hc": 5.0},
-            }
-    return _ODDS_LIMITS_CACHE
-
-def _get_odds_limit(sport: str, league: str, market: str) -> float:
-    """根据 Pinnacle 历史数据返回该运动/联赛/市场的赔率上限。
-
-    Returns:
-        最大允许的 BB 赔率, 超过此值跳过。
-        返回 0 表示无限制。
-    """
-    limits = _load_odds_limits()
-    if not limits:
-        return 0  # No limits loaded → no restriction
-
-    # 1. Sport-specific lookup
-    sport_data = limits.get(sport, {})
-    if not sport_data:
-        return limits.get("default", {}).get(market, 5.0)
-
-    # 2. League-specific lookup
-    if isinstance(sport_data, dict):
-        # Check for by-league data (football, tennis)
-        for league_key, league_limits in sport_data.items():
-            if league_key.lower() in (league or "").lower():
-                if isinstance(league_limits, dict):
-                    return league_limits.get(f"{market}_limit", league_limits.get(market, 0))
-        # Check for by-tournament data (tennis)
-        if "by_tournament" in sport_data:
-            for key, limit in sport_data.get("by_tournament", {}).items():
-                if key.lower() in (league or "").lower():
-                    return limit
-
-    # 3. Default for sport
-    default_limit = sport_data.get(market, sport_data.get(f"{market}_limit", 0))
-    if default_limit:
-        return default_limit
-
-    return limits.get("default", {}).get(market, 5.0)
-
-# 网球赛事级别准确度 (Pinnacle 5,013场数据)
-# vig越低→Pinnacle越准→比价越可靠
-PINNACLE_TENNIS_ACCURACY = {
-    "Masters": 1.50,    # vig=1.80%, Pinnacle最准→比价最可靠
-    "Grand Slam": 0.70, # vig=5.69%, 公众投注量大→线被推偏
-    "ATP 500": 0.75,    # vig=5.34%
-    "ATP 250": 1.06,    # vig=3.78%
-    "WTA": 1.00,        # 默认
-}
-
-def _get_tennis_accuracy(league: str) -> float:
-    """根据联赛名返回网球准确度加成。"""
-    for keyword, bonus in PINNACLE_TENNIS_ACCURACY.items():
-        if keyword.lower() in league.lower():
-            return bonus
-    return 1.0
-
 # --- 棒球市场权重 (公开研究) ---
 MARKET_QUALITY_BASEBALL = {
     "ou":   1.10,  # 总得分 > 独赢 (公开研究确认超额收益)
@@ -392,7 +278,6 @@ TOTAL_DAILY_BUDGET = 20000  # 日预算总额
 # 2026-09-04 用户要求: 每天稳定投注 1 万, 按"预计推送场次 × edge系数"分配。
 # 不再用纯 Kelly(弱edge方向被压到几十元, 日总量远达不到预算)。BANKROLL 保持 2万不动。
 DAILY_STAKE_TARGET = 5000  # 每天投注目标(¥, 2026-09-05 用户从1万降到5000)
-HISTORICAL_AVG_PUSHES = 20  # 历史日均推送场次兜底(当天刚开始无已推场次时用它估算)
 
 # 2026-08-30 差异化放大: 方向级梯度倍率(基于实盘 ROI 分档)。
 # 调整后推送量骤降(14场/693元), 日投注额远达不到预算。按方向实盘 ROI 分档放大:
@@ -1108,37 +993,6 @@ def _apply_risk_manager_safety(opps: list) -> list:
             pass  # 字段缺失或计算失败 → 保留原 stake
         cumulative_exposure += o.get("_stake", 0)  # 用最终 stake 累计敞口
     return opps
-
-
-def _get_today_pushed_count() -> int:
-    """读当天已推场次(预算跟踪器里的 push_count)。"""
-    try:
-        spent, _ = _load_budget_tracker()
-        if spent:
-            return int(spent.get("push_count", 0))
-    except Exception:
-        pass
-    return 0
-
-
-def _estimate_daily_total_pushes(pushed_today: int) -> int:
-    """估算当天预计推送总场次 = 已推场次 / 已过时间比例(兜底历史均值)。
-
-    推送时段 06:40~22:30。已推≥3场且时间进度>10% 时用外推, 否则用历史均值。
-    """
-    from datetime import datetime as _dt
-    now = _dt.now()
-    hm = now.hour * 60 + now.minute
-    push_start = 6 * 60 + 40    # 06:40
-    push_end = 22 * 60 + 30     # 22:30
-    if hm <= push_start:
-        return HISTORICAL_AVG_PUSHES  # 刚开始, 无已推场次, 用历史均值
-    if hm >= push_end:
-        return max(pushed_today, 1)   # 时段已过, 用实际
-    elapsed = (hm - push_start) / (push_end - push_start)
-    if pushed_today >= 3 and elapsed > 0.10:
-        return max(int(pushed_today / elapsed), pushed_today)
-    return HISTORICAL_AVG_PUSHES
 
 
 def _calc_kelly_stakes(opps: list) -> list:
@@ -4070,7 +3924,8 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
             pass
 
 
-# ── 格式验证（供 pre-commit 回归测试使用） ──
+
+# ── 格式验证（供 pre-commit 回归测试使用, tests/test_push_format.py 引用） ──
 
 _FORMAT_MARKERS = {
     "header": "**+EV 投注推荐:",

@@ -31,10 +31,8 @@
 
 用法: .venv312/bin/python scripts/compute_market_release.py
 """
-import csv
 import json
 import math
-import statistics
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
@@ -42,17 +40,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "storage"
 TRACKED = DATA / "tracked_bets.json"
-RESULTS = DATA / "clv_results.csv"
 PAPER = DATA / "paper_bets.json"
 OUT = DATA / "market_release.json"
 
 REAL_ROI_MIN = 4.0     # 实盘 ROI 释放阈值(%)
 N_REAL_MIN = 50        # 实盘赢率采信最小样本量(2026-09-12 30→100→50: 实盘真金白银质量高, 50够; 观察库才要100)
-OBS_ROI_MIN = 0.0      # 观察库 ROI 释放阈值(%)
-N_OBS_CLV_MIN = 30     # 观察库 CLV 采信最小样本量
-N_OBS_ROI_MIN = 5      # 观察库 ROI 采信最小样本量
-POS_RATE_MIN = 55.0    # 观察库正 CLV 率下限(%)
-MEDIAN_MIN = 0.0       # 观察库 CLV 中位下限(%)
 
 # ── 2026-09-12 观察库释放改造(用户要求): 样本>100 且 赢率>隐含 才释放 ──
 # 判据从「CLV中位>0 + 正率>55% + 纸面ROI>0」改为「赢率 > 隐含」(CURRENT_STATUS 核心判据),
@@ -89,20 +81,7 @@ OBS_CAP_NEW = 150
 OBS_CAP_MATURE = 300
 OBS_MATURE_DAYS = 7        # 实盘投一周(7天)后评估提额
 
-# 2026-09-03 双库交叉验证护栏 + 方向级封杀:
-# - 主开关只靠"实盘 ROI>4%"会被高赔率盘假 ROI 骗(htft 实盘+5.2%但胜率3%, 观察库-86.6%真相是巨亏)。
-#   加观察库 ROI 交叉验证: 观察库同盘口 ROI < OBS_CROSS_ROI_MIN 视为假正, 不释放。
-# - 盘口级 ROI 掩盖方向级 edge(1x2 整体+0.5%, 但和局+37.4%强正 vs 主/客-7.5%/-9.4%负)。
-#   加方向级封杀: 已释放盘口里, 实盘方向 ROI < DIR_ROI_MIN 且 n≥DIR_N_MIN 的方向封杀。
-OBS_CROSS_N_MIN = 10        # 观察库交叉验证采信最小样本
-OBS_CROSS_ROI_MIN = -20.0   # 观察库 ROI < -20% 视为假正(双库强分歧)
 DIR_N_MIN = 30              # 方向级赢率采信最小样本量(2026-09-12 15→50→30: 实盘方向样本, 30够)
-DIR_ROI_MIN = -5.0          # 方向级封杀阈值(ROI < -5%)
-
-# 改版时间切分(复用 compute_ev_thresholds.py 口径): dc/btts 改版前由 1X2/team_total 推导,
-# 公平价被系统性污染(负 CLV 是推导偏差, 不是真负 edge)。观察库 CLV 只统计改版后样本。
-REVISION_CUTOFF_UTC = datetime.fromisoformat("2026-08-28T00:00:00+00:00").timestamp()
-REVISION_MARKETS = {"btts", "dc"}
 
 
 def _f(v):
@@ -200,30 +179,11 @@ def _agg_bets(bets, key_fn):
 
 
 def load_real_roi():
-    """实盘 ROI: tracked_bets.json settled 记录 → (market_roi, league_roi)。"""
-    if not TRACKED.exists():
-        return {}, {}
-    try:
-        raw = json.loads(TRACKED.read_text())
-    except (json.JSONDecodeError, OSError):
-        return {}, {}
-    bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled"]
+    """实盘 ROI: tracked_bets.json settled 记录 → {(sport,sub_market): agg}。
 
-    def _market_key(b):
-        return (b.get("sport") or "?", b.get("sub_market") or "?")
-
-    def _league_key(b):
-        lg = (b.get("league") or "").strip()
-        if not lg:
-            return None
-        return (b.get("sport") or "?", lg, b.get("sub_market") or "?")
-
-    return _agg_bets(bets, _market_key), _agg_bets(bets, _league_key)
-
-
-def load_real_direction_roi():
-    """实盘方向级 ROI: tracked_bets.json settled → {(sport,sub_market,direction): agg}。"""
+    仅用于「满7天提额」的实盘 ROI 判定。league/方向/时间窗 ROI 已随判据统一
+    「赢率 vs 隐含」废弃(2026-09-12)。
+    """
     if not TRACKED.exists():
         return {}
     try:
@@ -232,33 +192,7 @@ def load_real_direction_roi():
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
             if b.get("status") == "settled"]
-
-    def _dir_key(b):
-        return (b.get("sport") or "?", b.get("sub_market") or "?",
-                _direction(b.get("designation"), b.get("sub_market")))
-
-    return _agg_bets(bets, _dir_key)
-
-
-def load_real_direction_window_roi():
-    """实盘方向×时间窗 ROI: tracked_bets.json settled → {(sport,sub_market,direction,window): agg}。"""
-    if not TRACKED.exists():
-        return {}
-    try:
-        raw = json.loads(TRACKED.read_text())
-    except (json.JSONDecodeError, OSError):
-        return {}
-    bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled"]
-
-    def _key(b):
-        w = _window(_f(b.get("match_epoch")), _ts(b.get("push_time")))
-        if w is None:
-            return None
-        return (b.get("sport") or "?", b.get("sub_market") or "?",
-                _direction(b.get("designation"), b.get("sub_market")), w)
-
-    return _agg_bets(bets, _key)
+    return _agg_bets(bets, lambda b: (b.get("sport") or "?", b.get("sub_market") or "?"))
 
 
 def _winrate_threshold(n):
@@ -375,62 +309,6 @@ def load_real_winrate_direction_window():
                 _direction(b.get("designation"), b.get("sub_market")), w)
 
     return _winrate_agg(bets, _key)
-
-
-def load_observe_clv():
-    """观察库 CLV 中位/正率: clv_results.csv source=validate → {(sport,league,sub_market): {n,median,pos_rate}}。"""
-    by = defaultdict(list)
-    if not RESULTS.exists():
-        return {}
-    with open(RESULTS, encoding="utf-8-sig") as fh:
-        for r in csv.DictReader(fh):
-            if (r.get("source") or "").strip() != "validate":
-                continue
-            sm = r.get("sub_market") or "?"
-            clv = _f(r.get("true_clv_pct"))
-            if clv is None:
-                continue
-            pt = _ts(r.get("push_time"))
-            if sm in REVISION_MARKETS and (pt is None or pt < REVISION_CUTOFF_UTC):
-                continue
-            by[(r.get("sport") or "?", r.get("league") or "?", sm)].append(clv)
-    out = {}
-    for k, vals in by.items():
-        if not vals:
-            continue
-        out[k] = {
-            "n": len(vals),
-            "median": statistics.median(vals),
-            "pos_rate": sum(1 for v in vals if v > 0) / len(vals) * 100.0,
-        }
-    return out
-
-
-def load_observe_roi():
-    """观察库纸面结算 ROI: paper_bets.json → {(sport,league,sub_market): roi聚合}。"""
-    if not PAPER.exists():
-        return {}
-    try:
-        raw = json.loads(PAPER.read_text())
-    except (json.JSONDecodeError, OSError):
-        return {}
-    bets = raw.get("bets", []) if isinstance(raw, dict) else raw
-    return _agg_bets(bets, lambda b: (
-        b.get("sport") or "?",
-        (b.get("league") or "").strip() or "?",
-        b.get("sub_market") or "?"))
-
-
-def load_observe_roi_market():
-    """观察库盘口级 ROI(聚合联赛, 供主开关双库交叉验证): paper_bets.json → {(sport,sub_market): agg}。"""
-    if not PAPER.exists():
-        return {}
-    try:
-        raw = json.loads(PAPER.read_text())
-    except (json.JSONDecodeError, OSError):
-        return {}
-    bets = raw.get("bets", []) if isinstance(raw, dict) else raw
-    return _agg_bets(bets, lambda b: (b.get("sport") or "?", b.get("sub_market") or "?"))
 
 
 def _read_paper_bets():
@@ -554,10 +432,7 @@ def _save_obs_state(state):
 
 
 def main():
-    market_roi, league_roi = load_real_roi()
-    dir_roi = load_real_direction_roi()
-    dir_window_roi = load_real_direction_window_roi()
-    obs_mkt_roi = load_observe_roi_market()
+    market_roi = load_real_roi()
     obs_winrate = load_observe_winrate()
     market_winrate = load_real_winrate_market()
     dir_winrate = load_real_winrate_direction()
