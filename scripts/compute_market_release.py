@@ -342,9 +342,9 @@ def load_observe_winrate():
     粒度「运动×盘口×方向×来源」: 早盘聚合所有联赛(scope=early), 滚球(scope=live);
     方向用 _direction 归一化(主/客/平/大/小), 让 ou 大/小、hc 主/客分开。
     """
-    by = defaultdict(lambda: {"won": 0, "lost": 0, "odds_sum": 0.0})
+    by = defaultdict(lambda: {"won": 0, "lost": 0, "odds_sum": 0.0, "stake": 0.0, "profit": 0.0})
 
-    def _feed(k, result, odds):
+    def _feed(k, result, odds, stake, profit):
         if result not in ("won", "lost") or not odds or odds <= 1.0:
             return
         d = by[k]
@@ -353,11 +353,14 @@ def load_observe_winrate():
         else:
             d["lost"] += 1
         d["odds_sum"] += odds
+        d["stake"] += stake
+        d["profit"] += profit
 
     for b in _read_paper_bets():
         sm = b.get("sub_market") or "?"
         _feed((b.get("sport") or "?", sm, _direction(b.get("designation"), sm), SCOPE_EARLY),
-              b.get("result"), _f(b.get("fair_price")) or _f(b.get("bb_odds")))
+              b.get("result"), _f(b.get("fair_price")) or _f(b.get("bb_odds")),
+              _f(b.get("stake")) or 0, _f(b.get("profit")) or 0)
 
     for b in _read_live_paper_bets():
         sport = BB_SPORT_MAP.get(b.get("sport"))
@@ -365,7 +368,8 @@ def load_observe_winrate():
         if not sport or not sm:
             continue
         _feed((sport, sm, _direction(b.get("designation"), sm), SCOPE_LIVE),
-              b.get("result"), _f(b.get("fair")) or _f(b.get("bb_odds")))
+              b.get("result"), _f(b.get("fair")) or _f(b.get("bb_odds")),
+              _f(b.get("stake")) or 0, _f(b.get("profit")) or 0)
 
     out = {}
     for k, d in by.items():
@@ -377,6 +381,7 @@ def load_observe_winrate():
             "n": n,
             "winrate": d["won"] / n * 100.0,
             "implied": 1.0 / avg_odds * 100.0,
+            "roi": d["profit"] / d["stake"] * 100.0 if d["stake"] > 0 else 0.0,
         }
     return out
 
@@ -542,7 +547,8 @@ def main():
     for (sport, sm, dr, scope), d in sorted(obs_winrate.items()):
         if d["n"] < OBS_N_MIN:
             continue
-        if d["winrate"] > d["implied"] + OBS_WINRATE_EDGE_MIN:
+        # 释放条件(2026-09-12 用户要求): 赢率>隐含 且 ROI>0。ROI>0 防「高赔率少数命中赢率虚高但ROI负」的假正(如独赢主胜+12pp但ROI-3%)。
+        if d["winrate"] > d["implied"] + OBS_WINRATE_EDGE_MIN and d["roi"] > 0:
             observe_released.append([sport, sm, dr, scope])
 
     # 释放状态维护 + 投注额 cap 分阶段 + 当日累计上限 + 释放通知(2026-09-12 用户要求)。
