@@ -344,7 +344,15 @@ class SecondLevelMonitor:
                 break
             attempted += 1
             detail = fetch_bb_match_result(mid, language_type="EN")
-            if not detail or not detail.get("completed"):
+            if detail is None:
+                # match_id 找不到比赛(用户纠正: BB 对所有比赛都能拿赛果, 拿不到就是 match_id 找错了)。
+                # 连续 3 次返回 None 视为「找错」→ 标记删除, 避免永远结算不了污染统计。
+                b["_not_found"] = b.get("_not_found", 0) + 1
+                if b["_not_found"] >= 3:
+                    b["_unresolvable"] = True
+                    changed = True
+                continue
+            if not detail.get("completed"):
                 continue
             if detail.get("home_score") is None or detail.get("away_score") is None:
                 continue
@@ -380,13 +388,11 @@ class SecondLevelMonitor:
             profit = 0.0 if result == "push" else (stake * (odds - 1) if result == "won" else -stake)
             b["settled"] = True; b["result"] = result; b["profit"] = round(profit, 1)
             changed = True
-        # 清理错过结算窗口的样本(2026-09-12 用户要求): 超过 BB 赛果时效窗口(48h)仍未结算的,
-        # getMatchDetail 返回空壳永远结算不了 → 删除, 避免污染 ROI 统计。
+        # 删除「match_id 找不到比赛」的样本(连续 3 次 getMatchDetail 返回 None)
         _before = len(bets)
-        _cutoff = now - 48 * 3600
-        bets = [b for b in bets if b.get("settled") or not b.get("ts", 0) or b.get("ts") >= _cutoff]
+        bets = [b for b in bets if not b.get("_unresolvable")]
         if len(bets) < _before:
-            print(f"[slm] 清理错过结算窗口样本: 删除 {_before - len(bets)} 条(>48h未结算)", flush=True)
+            print(f"[slm] 删除 match_id 无效样本: {_before - len(bets)} 条", flush=True)
             changed = True
         if attempted > 0:
             _settled_n = sum(1 for b in bets if b.get("settled"))
