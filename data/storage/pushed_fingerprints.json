@@ -34,6 +34,41 @@
     "bb": 4.77,
     "ts": 1789111599.403997
   },
+  "football|England League One|AFC Wimbledon|Doncaster Rovers|上半场正确比分0-2|correct_score_ht|2026-09-12": {
+    "ev": 7.63,
+    "bb": 17.7,
+    "ts": 1789175142.488534
+  },
+  "football|England League One|AFC Wimbledon|Doncaster Rovers|上半场正确比分2-0|correct_score_ht|2026-09-12": {
+    "ev": 14.08,
+    "bb": 18.8,
+    "ts": 1789175142.488352
+  },
+  "football|England League One|Leyton Orient|Wycombe Wanderers|上半场正确比分2-0|correct_score_ht|2026-09-12": {
+    "ev": 6.11,
+    "bb": 15.8,
+    "ts": 1789175142.48814
+  },
+  "football|England League One|Mansfield Town|Huddersfield Town|上半场正确比分2-0|correct_score_ht|2026-09-12": {
+    "ev": 17.73,
+    "bb": 24.0,
+    "ts": 1789175142.488287
+  },
+  "football|England League One|Plymouth Argyle|Barnsley|上半场正确比分0-2|correct_score_ht|2026-09-12": {
+    "ev": 20.37,
+    "bb": 28.0,
+    "ts": 1789175142.488215
+  },
+  "football|England League One|mbridge United|Reading FC|上半场正确比分0-2|correct_score_ht|2026-09-12": {
+    "ev": 10.99,
+    "bb": 18.6,
+    "ts": 1789175142.4886851
+  },
+  "football|England League One|mbridge United|Reading FC|上半场正确比分2-0|correct_score_ht|2026-09-12": {
+    "ev": 11.23,
+    "bb": 17.9,
+    "ts": 1789175142.48862
+  },
   "football|England Premier League|Chelsea FC|Hull City|双重机会-和局/客|dc|2026-09-12": {
     "ev": 6.77,
     "bb": 4.75,
@@ -94,6 +129,26 @@
     "bb": 3.7,
     "ts": 1789117355.6022441
   },
+  "football|Poland Ekstraklasa|WKS Slask Wroclaw|Korona Kielce|上半场正确比分0-2|correct_score_ht|2026-09-12": {
+    "ev": 8.31,
+    "bb": 16.5,
+    "ts": 1789175142.48875
+  },
+  "football|Poland Ekstraklasa|WKS Slask Wroclaw|Korona Kielce|上半场正确比分2-0|correct_score_ht|2026-09-12": {
+    "ev": 5.99,
+    "bb": 17.8,
+    "ts": 1789175142.488874
+  },
+  "football|Poland Ekstraklasa|Zaglebie Lubin|GKS Katowice|上半场正确比分0-2|correct_score_ht|2026-09-13": {
+    "ev": 10.84,
+    "bb": 17.3,
+    "ts": 1789175142.488929
+  },
+  "football|Poland Ekstraklasa|Zaglebie Lubin|GKS Katowice|上半场正确比分2-0|correct_score_ht|2026-09-13": {
+    "ev": 10.76,
+    "bb": 17.3,
+    "ts": 1789175142.4889889
+  },
   "football|South Korea K-League 1|Daejeon Hana Citizen FC|Pohang Steelers FC|双重机会-和局/客|dc|2026-09-12": {
     "ev": 7.49,
     "bb": 2.01,
@@ -114,10 +169,30 @@
     "bb": 6.9,
     "ts": 1788935495.764647
   },
+  "football|USA Major League Soccer|FC Cincinnati|Charlotte FC|上半场正确比分0-2|correct_score_ht|2026-09-13": {
+    "ev": 6.12,
+    "bb": 18.7,
+    "ts": 1789175142.4875672
+  },
   "football|USA Major League Soccer|FC Cincinnati|Charlotte FC|客胜|1x2|2026-09-13": {
     "ev": 6.4,
     "bb": 3.61,
     "ts": 1789108122.803306
+  },
+  "football|USA Major League Soccer|FC Dallas|Portland Timbers|上半场正确比分0-2|correct_score_ht|2026-09-13": {
+    "ev": 6.97,
+    "bb": 23.0,
+    "ts": 1789175142.4878452
+  },
+  "football|USA Major League Soccer|Inter Miami CF|Nashville SC|上半场正确比分0-2|correct_score_ht|2026-09-13": {
+    "ev": 8.0,
+    "bb": 20.0,
+    "ts": 1789175142.487477
+  },
+  "football|USA Major League Soccer|Orlando City SC|Toronto FC|上半场正确比分0-2|correct_score_ht|2026-09-13": {
+    "ev": 9.72,
+    "bb": 22.0,
+    "ts": 1789175142.4872582
   },
   "football|USL Championship|科罗拉多跃泉|圣安东尼奥|双重机会-和局/客|dc|2026-09-12": {
     "ev": 6.95,
@@ -130,83 +205,8 @@
     "ts": 1789044612.0892422
   },
   "football|USA Major League Soccer|Columbus Crew|New York Red Bulls|上半场正确比分0-2|correct_score_ht|2026-09-13": {
-    "ev": 12.96,
-    "bb": 25.0,
-    "ts": 1789175142.487149
-  },
-  "football|USA Major League Soccer|Orlando City SC|Toronto FC|上半场正确比分0-2|correct_score_ht|2026-09-13": {
-    "ev": 9.72,
-    "bb": 22.0,
-    "ts": 1789175142.4872582
-  },
-  "football|USA Major League Soccer|Inter Miami CF|Nashville SC|上半场正确比分0-2|correct_score_ht|2026-09-13": {
-    "ev": 8.0,
-    "bb": 20.0,
-    "ts": 1789175142.487477
-  },
-  "football|USA Major League Soccer|FC Cincinnati|Charlotte FC|上半场正确比分0-2|correct_score_ht|2026-09-13": {
-    "ev": 6.12,
-    "bb": 18.7,
-    "ts": 1789175142.4875672
-  },
-  "football|USA Major League Soccer|FC Dallas|Portland Timbers|上半场正确比分0-2|correct_score_ht|2026-09-13": {
-    "ev": 6.97,
-    "bb": 23.0,
-    "ts": 1789175142.4878452
-  },
-  "football|England League One|Leyton Orient|Wycombe Wanderers|上半场正确比分2-0|correct_score_ht|2026-09-12": {
-    "ev": 6.11,
-    "bb": 15.8,
-    "ts": 1789175142.48814
-  },
-  "football|England League One|Plymouth Argyle|Barnsley|上半场正确比分0-2|correct_score_ht|2026-09-12": {
-    "ev": 20.37,
-    "bb": 28.0,
-    "ts": 1789175142.488215
-  },
-  "football|England League One|Mansfield Town|Huddersfield Town|上半场正确比分2-0|correct_score_ht|2026-09-12": {
-    "ev": 17.73,
-    "bb": 24.0,
-    "ts": 1789175142.488287
-  },
-  "football|England League One|AFC Wimbledon|Doncaster Rovers|上半场正确比分2-0|correct_score_ht|2026-09-12": {
-    "ev": 14.08,
-    "bb": 18.8,
-    "ts": 1789175142.488352
-  },
-  "football|England League One|AFC Wimbledon|Doncaster Rovers|上半场正确比分0-2|correct_score_ht|2026-09-12": {
-    "ev": 7.63,
-    "bb": 17.7,
-    "ts": 1789175142.488534
-  },
-  "football|England League One|mbridge United|Reading FC|上半场正确比分2-0|correct_score_ht|2026-09-12": {
-    "ev": 11.23,
-    "bb": 17.9,
-    "ts": 1789175142.48862
-  },
-  "football|England League One|mbridge United|Reading FC|上半场正确比分0-2|correct_score_ht|2026-09-12": {
-    "ev": 10.99,
-    "bb": 18.6,
-    "ts": 1789175142.4886851
-  },
-  "football|Poland Ekstraklasa|WKS Slask Wroclaw|Korona Kielce|上半场正确比分0-2|correct_score_ht|2026-09-12": {
-    "ev": 8.31,
-    "bb": 16.5,
-    "ts": 1789175142.48875
-  },
-  "football|Poland Ekstraklasa|WKS Slask Wroclaw|Korona Kielce|上半场正确比分2-0|correct_score_ht|2026-09-12": {
-    "ev": 5.99,
-    "bb": 17.8,
-    "ts": 1789175142.488874
-  },
-  "football|Poland Ekstraklasa|Zaglebie Lubin|GKS Katowice|上半场正确比分0-2|correct_score_ht|2026-09-13": {
-    "ev": 10.84,
-    "bb": 17.3,
-    "ts": 1789175142.488929
-  },
-  "football|Poland Ekstraklasa|Zaglebie Lubin|GKS Katowice|上半场正确比分2-0|correct_score_ht|2026-09-13": {
-    "ev": 10.76,
-    "bb": 17.3,
-    "ts": 1789175142.4889889
+    "ev": 17.48,
+    "bb": 26.0,
+    "ts": 1789175751.374656
   }
 }
