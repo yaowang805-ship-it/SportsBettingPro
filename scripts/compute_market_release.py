@@ -73,6 +73,12 @@ SPORT_CN = {
     "baseball": "⚾棒球", "american_football": "🏈美足", "ice_hockey": "🏒冰球",
 }
 
+# 观察库释放粒度(2026-09-12 用户要求): 从「运动×联赛×盘口」改为「运动×盘口×方向」+
+# 来源(早盘/滚球分开, 因滚球小球真溢价 vs 早盘小球假溢价方向相反不能混)。
+# 早盘聚合所有联赛(样本易凑100), 方向归一化(ou大/小、hc主/客分开)。
+SCOPE_EARLY = "early"   # 早盘观察库(paper_bets, 聚合所有联赛)
+SCOPE_LIVE = "live"     # 滚球观察库(live_paper_bets)
+
 # 投注额分阶段上限(用户要求): 新释放 150, 实盘满一周 ROI>4% 提 300
 OBS_CAP_NEW = 150
 OBS_CAP_MATURE = 300
@@ -329,10 +335,11 @@ def _read_live_paper_bets():
 
 
 def load_observe_winrate():
-    """观察库赢率 vs 隐含(合并滚球+早盘纸面结算): {(sport,league,sub_market): {n,winrate,implied}}。
+    """观察库赢率 vs 隐含(合并滚球+早盘纸面结算): {(sport,sub_market,direction,scope): {n,winrate,implied}}。
 
-    判据(2026-09-12 用户要求): 赢率 = won/(won+lost) 去 void/push; 隐含 = 1/平均赔率。
-    滚球 league 归 "滚球"; sport 数字→英文; sub(over_under/handicap/opportunities)→sub_market。
+    判据(2026-09-12): 赢率 = won/(won+lost) 去 void/push; 隐含 = 1/平均赔率。
+    粒度「运动×盘口×方向×来源」: 早盘聚合所有联赛(scope=early), 滚球(scope=live);
+    方向用 _direction 归一化(主/客/平/大/小), 让 ou 大/小、hc 主/客分开。
     """
     by = defaultdict(lambda: {"won": 0, "lost": 0, "odds_sum": 0.0})
 
@@ -347,15 +354,17 @@ def load_observe_winrate():
         d["odds_sum"] += odds
 
     for b in _read_paper_bets():
-        _feed((b.get("sport") or "?", (b.get("league") or "").strip() or "?",
-               b.get("sub_market") or "?"), b.get("result"), _f(b.get("bb_odds")))
+        sm = b.get("sub_market") or "?"
+        _feed((b.get("sport") or "?", sm, _direction(b.get("designation"), sm), SCOPE_EARLY),
+              b.get("result"), _f(b.get("bb_odds")))
 
     for b in _read_live_paper_bets():
         sport = BB_SPORT_MAP.get(b.get("sport"))
         sm = BB_SUB_MAP.get(b.get("sub"))
         if not sport or not sm:
             continue
-        _feed((sport, LIVE_LEAGUE, sm), b.get("result"), _f(b.get("bb_odds")))
+        _feed((sport, sm, _direction(b.get("designation"), sm), SCOPE_LIVE),
+              b.get("result"), _f(b.get("bb_odds")))
 
     out = {}
     for k, d in by.items():
@@ -511,13 +520,13 @@ def main():
                 league_blocked.append([sport, lg, sm])
 
     # 观察库释放(2026-09-12 用户要求): 结算样本 n>100 且 赢率>隐含 → 释放。
-    # 判据从 CLV 三条件改为「赢率 vs 隐含」(CURRENT_STATUS 核心判据), 滚球+早盘合并。
+    # 粒度「运动×盘口×方向×来源」(聚合联赛+分方向), 早盘/滚球分开(edge 方向相反不能混)。
     observe_released = []
-    for (sport, lg, sm), d in sorted(obs_winrate.items()):
+    for (sport, sm, dr, scope), d in sorted(obs_winrate.items()):
         if d["n"] < OBS_N_MIN:
             continue
         if d["winrate"] > d["implied"] + OBS_WINRATE_EDGE_MIN:
-            observe_released.append([sport, lg, sm])
+            observe_released.append([sport, sm, dr, scope])
 
     # 释放状态维护 + 投注额 cap 分阶段(用户要求): 新释放 150 → 实盘满 7 天 ROI>4% → 300。
     # 状态持久化到 observe_release_state.json, 跨运行保留 first_released_at(重新释放才重置)。
@@ -526,8 +535,8 @@ def main():
     live_real_roi = load_live_real_roi()
     observe_release_caps = {}
     new_state = {}
-    for (sport, lg, sm) in observe_released:
-        key = f"{sport}|{lg}|{sm}"
+    for (sport, sm, dr, scope) in observe_released:
+        key = f"{sport}|{sm}|{dr}|{scope}"
         prev = obs_state.get(key)
         first = (prev or {}).get("first_released_at")
         cap = (prev or {}).get("cap", OBS_CAP_NEW)
@@ -540,11 +549,8 @@ def main():
             except (ValueError, TypeError):
                 first_ts = now_ts
             if now_ts - first_ts >= OBS_MATURE_DAYS * 86400:
-                # 满一周: 看实盘 ROI(早盘用 tracked_bets 两维, 滚球用 BB 官方订单两维)
-                if lg == LIVE_LEAGUE:
-                    r = live_real_roi.get((sport, sm))
-                else:
-                    r = market_roi.get((sport, sm))
+                # 满一周: 看实盘 ROI(滚球用 BB 官方订单两维, 早盘用 tracked_bets 两维)
+                r = (live_real_roi if scope == SCOPE_LIVE else market_roi).get((sport, sm))
                 if r and r.get("n", 0) > 0 and r.get("roi", 0) > REAL_ROI_MIN:
                     cap = OBS_CAP_MATURE
         new_state[key] = {"first_released_at": first, "cap": cap}

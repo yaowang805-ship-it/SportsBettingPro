@@ -778,17 +778,17 @@ def _is_market_released(sport: str, sub_market: str, league: str = "", designati
     rl = _load_release_list()
     if not rl:
         return True
+    dr = _release_direction(designation, sub_market)
     # 1. 联赛细化: 该联赛三维格子 n≥30 时用联赛自己的 ROI 覆盖主开关
     if league:
         if [sport, league, sub_market] in rl.get("league_released", []):
             return True
         if [sport, league, sub_market] in rl.get("league_blocked", []):
             return False
-    # 2. 观察库三维释放(运动×联赛×盘口)
-    if [sport, league, sub_market] in rl.get("observe_released", []):
+    # 2. 观察库释放(运动×盘口×方向, 早盘 scope=early): 样本>100 且赢率>隐含才释放
+    if [sport, sub_market, dr, "early"] in rl.get("observe_released", []):
         return True
     # 3. 方向级释放(2026-09-03): 整盘没过主开关, 但该方向实盘 ROI 强正(如 1x2 和局+37.4%)
-    dr = _release_direction(designation, sub_market)
     if [sport, sub_market, dr] in rl.get("direction_released", []):
         return True
     # 3.5 时间窗级释放(2026-09-07): 方向整体没释放, 但某时间窗实盘强正(如 近场ht+53%/远场hc+53%)
@@ -1359,9 +1359,9 @@ def _calc_kelly_stakes(opps: list) -> list:
             if o.get("_stake", 0) <= 0:
                 continue
             _sp = o.get("sport", "")
-            _lg = o.get("league", "") or ""
             _sm = o.get("_sub_market", o.get("_market", ""))
-            _cap = _obs_caps.get(f"{_sp}|{_lg}|{_sm}")
+            _dr = _release_direction(o.get("designation", ""), _sm)
+            _cap = _obs_caps.get(f"{_sp}|{_sm}|{_dr}|early")
             if _cap:
                 o["_stake"] = min(o["_stake"], _cap)
                 o["_obs_cap"] = _cap
