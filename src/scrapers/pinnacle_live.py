@@ -414,6 +414,7 @@ def fetch_live_opportunities(threshold=3.0):
                 opps.append({
                     "bb_match_id": bmid,
                     "home": b.get("home_cn") or pv["home"], "away": b.get("away_cn") or pv["away"],  # 中文队名优先(2026-09-12 推送要中文)
+                    "league_cn": b.get("league_cn", "") or pv.get("league_name", ""),  # 中文联赛名(2026-09-12 推送加联赛)
                     "sport": b["sport"],  # BB 运动 id(1足球/3篮球/5网球/7棒球/6美足), 供按运动×盘口分账
                     "sub": sub, "direction": d, "bb_odds": bb_odds, "fair": fair_p, "ev": ev,
                     "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],

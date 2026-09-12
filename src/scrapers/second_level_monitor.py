@@ -1032,7 +1032,8 @@ class SecondLevelMonitor:
             "desig": desig_map.get(opp["sub"], {}).get(opp["direction"], opp["direction"]),
             "bb_odds": opp["bb_odds"], "fair": opp["fair"], "ev": opp["ev"], "line": opp["line"],
             "sport": opp.get("sport", ""),
-            "match": {"home": opp["home"], "away": opp["away"], "sport": opp.get("sport", ""), "league_cn": "滚球"},
+            "match": {"home": opp["home"], "away": opp["away"], "sport": opp.get("sport", ""),
+                      "league_cn": opp.get("league_cn", "滚球") or "滚球"},
             "pin_matchup_id": opp["pin_matchup_id"], "league_id": opp["league_id"],
             "max_stake": opp["max_stake"],
         }
