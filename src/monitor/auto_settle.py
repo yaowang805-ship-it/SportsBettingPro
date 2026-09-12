@@ -43,16 +43,6 @@ def _save_unresolved(unresolved: list):
     _UNRESOLVED_FILE.write_text(json.dumps(unresolved, ensure_ascii=False, indent=2, default=str))
 
 
-def _load_unresolved() -> list:
-    """加载未结算投注列表。"""
-    if _UNRESOLVED_FILE.exists():
-        try:
-            return json.loads(_UNRESOLVED_FILE.read_text())
-        except (json.JSONDecodeError, OSError):
-            pass
-    return []
-
-
 # 联赛名 → (sport key for odds API, display name)
 # 同时支持 BB API 全称中文名（如"英格兰超级联赛"）和简称（如"英超"）
 LEAGUE_SPORT_MAP = {
