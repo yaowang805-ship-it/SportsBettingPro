@@ -72,6 +72,30 @@ _DIR_DESIGNATION = {
 }
 
 
+_obs_caps_cache = None
+_obs_caps_mtime = 0.0
+
+
+def _load_obs_caps():
+    """读 observe_release_caps(运动×联赛×盘口 → 150/300), 带 mtime 缓存。
+
+    观察库释放盘口的投注额 cap(2026-09-12 用户要求): 新释放 150, 实盘满7天ROI>4% 300。
+    文件由 compute_market_release.py 生成, 滚球格子 league 归 "滚球"。
+    """
+    global _obs_caps_cache, _obs_caps_mtime
+    if not MARKET_RELEASE_FILE.exists():
+        return {}
+    try:
+        m = MARKET_RELEASE_FILE.stat().st_mtime
+        if _obs_caps_cache is None or m != _obs_caps_mtime:
+            _obs_caps_cache = (json.loads(MARKET_RELEASE_FILE.read_text()) or {}).get(
+                "observe_release_caps", {}) or {}
+            _obs_caps_mtime = m
+        return _obs_caps_cache
+    except Exception:
+        return {}
+
+
 def load_fair_cache(path=None):
     """读 comparison 输出 → {bb_match_id: {meta, markets}}。
 
@@ -556,8 +580,15 @@ class SecondLevelMonitor:
         )
         if not _bettable:
             return
-        # EV-Kelly 最优定仓: 足球小球上限 400, 网球/篮球试探期上限 100(小注)
-        _cap = 400 if (_sport == 1 and _desig == "小球") else 100
+        # EV-Kelly 最优定仓: 足球小球上限 500(2026-09-12 提额), 网球/篮球试探期上限 100(小注)
+        _cap = LIVE_UNDER_MAX_STAKE if (_sport == 1 and _desig == "小球") else 100
+        # 观察库释放盘口 cap(2026-09-12): 命中 observe_release_caps 则用 150/300, 覆盖默认 cap
+        _sp_en = BB_SPORT_EN.get(_sport)
+        _sm = BB_SUB_TO_SM.get(_sub)
+        if _sp_en and _sm:
+            _ocap = _load_obs_caps().get(f"{_sp_en}|滚球|{_sm}")
+            if _ocap:
+                _cap = _ocap
         stake = min(stake, _cap)
         sig["_stake"] = stake
         if stake < MIN_STAKE:
@@ -837,12 +868,16 @@ class SecondLevelMonitor:
             bal = fetch_balance() or "未知"
             title = f"{'✅ 赢了' if won else '❌ 输了'} {mn}"
             body = f"{on}\n注额 ¥{stake} | 盈亏 {('+' if won else '')}{pnl}\n账户余额 ¥{bal}"
+            # 2026-09-12: send_dingtalk 返回 bool(限流/失败时 False), 之前不检查返回值
+            # 导致推送失败时仍 new_notified.add(oid) → 误标已通知 → 永不补推。现在失败不标记。
             try:
-                send_dingtalk(title, body)
-                new_notified.add(oid)
-                print(f"[slm] 结算推送: {title} | {pnl}", flush=True)
+                ok = bool(send_dingtalk(title, body))
             except Exception as e:
+                ok = False
                 print(f"[slm] 结算推送异常: {e}")
+            if ok:
+                new_notified.add(oid)
+            print(f"[slm] 结算推送: {title} | {pnl} | {'成功' if ok else '失败(下次重试)'}", flush=True)
         if new_notified != notified:
             try:
                 LIVE_SETTLED_FILE.write_text(json.dumps(list(new_notified)))

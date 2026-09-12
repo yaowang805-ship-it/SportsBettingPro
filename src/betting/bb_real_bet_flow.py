@@ -136,16 +136,15 @@ def _designation_to_dir(sub_market, designation):
     return None
 
 
-# 2026-09-11 用户要求: 早盘暂停实盘投注, 只进观察库(paper_bets 纸面), 滚球继续投注。
-# 早盘实盘暂停(EARLY_BET_ENABLED=False), 观察库照常由 bb_ev_push 推送时入库(不依赖本函数)。
-EARLY_BET_ENABLED = False
-EARLY_BETTABLE_MARKETS = {"ht", "ht_dc", "htft", "correct_score_ht", "first_to_score"}
+# 2026-09-12 用户要求: 早盘恢复实盘, 按释放清单控制(观察库样本>100且赢率>隐含才释放)。
+# bb_ev_push 推送前已过 _is_market_released 过滤, 这里只下单、不再硬编码盘口白名单。
+EARLY_BET_ENABLED = True
 
 
 def auto_bet_flow(opportunities, token=None, domain=None):
     """全自动下单。返回 {成功: [...], 失败: [...]}。"""
     if not EARLY_BET_ENABLED:
-        return {"success": [], "failed": [], "error": "早盘投注已暂停(2026-09-10)"}
+        return {"success": [], "failed": [], "error": "早盘投注已暂停"}
     token = token or read_token()
     domain = domain or read_domain()
     if not token:
@@ -164,12 +163,6 @@ def auto_bet_flow(opportunities, token=None, domain=None):
         sub = opp.get("sub_market") or opp.get("_sub_market") or "1x2"
         desig = opp.get("designation", "")
         stake = float(opp.get("_stake") or opp.get("stake") or 10)
-
-        # 2026-09-11: 早盘只投半场盘口白名单, 全场盘口(hc/ou/dc/1x2)继续停(假edge)
-        if sub not in EARLY_BETTABLE_MARKETS:
-            failed.append({"home": disp_home, "away": disp_away,
-                           "reason": f"早盘暂不投 {sub} 盘口(仅半场盘口试探)"})
-            continue
 
         # 2026-09-06 用户要求: 早盘实盘只投"未开赛", 已开赛(lead<0)的场跳过(与暂停滚球秒级对齐)
         _ep = opp.get("_pin_epoch")

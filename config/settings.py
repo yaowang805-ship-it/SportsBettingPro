@@ -55,9 +55,15 @@ _TITLE_COOLDOWN_SEC = 30 * 60   # 30 分钟
 
 
 def _is_betting_push(title: str) -> bool:
-    """投注推荐(标题含 +EV/投注推荐/机会/已投注)不受每日次数限制。"""
+    """投注推荐(标题含 +EV/投注推荐/机会/已投注/赢了/输了)不受每日次数限制。
+
+    2026-09-12: 加「赢了/输了」—— 滚球结算推送标题是「✅ 赢了 队名/❌ 输了 队名」,
+    之前被当「非投注消息」吃每日 6 条限额, 第 7 笔起静默丢失且误标已通知(永不补推)。
+    结算推送本质是投注结果, 应像投注推荐一样不受限。
+    """
     t = title or ""
-    return "+EV" in t or "投注推荐" in t or "机会" in t or "已投注" in t
+    return ("+EV" in t or "投注推荐" in t or "机会" in t or "已投注" in t
+            or "赢了" in t or "输了" in t)
 
 
 def _non_betting_quota_ok() -> bool:
