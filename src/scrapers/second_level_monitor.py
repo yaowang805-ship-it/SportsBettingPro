@@ -311,58 +311,37 @@ class SecondLevelMonitor:
             print(f"[slm] 虚拟投注写入失败: {str(e)[:80]}", flush=True)
 
     def _settle_paper_bets(self):
-        """结算虚拟投注(观察库): 查赛果(type=6)判输赢, 写回 result/profit, 打印 ROI。"""
-        from src.betting.bb_auto_bet import read_token, read_domain, _session
+        """结算虚拟投注(观察库): 按 match_id 定向查 getMatchDetail 判输赢, 写回 result/profit。"""
+        from src.betting.bb_auto_bet import read_token
         if not LIVE_PAPER_FILE.exists():
             return
         try:
             bets = json.loads(LIVE_PAPER_FILE.read_text())
         except Exception:
             return
-        tok = read_token(); dom = read_domain()
+        tok = read_token()
         if not tok:
             return
-        # 拉赛果(type=6)拿最终比分
-        s = _session()
-        score_map = {}
-        # BB运动id → 全场比分 pe 码(足球1000/篮球3001/网球5000盘分/棒球7001/美足6001)
-        # (2026-09-11 修复: 之前硬编码 pe==1000 只取足球, 网球/篮球比分取不到 → 入库无法结算)
-        _pe_by_sport = {1: 1000, 3: 3001, 5: 5000, 7: 7001, 6: 6001}
-        for sport in (1, 3, 5, 7, 6):
-            _pe_full = _pe_by_sport.get(sport, 1000)
-            # 分页拉全量完赛(2026-09-12 修结算窗口bug): 之前 pageSize=50 只查一页,
-            # 27小时累积的观察库样本大部分完赛后已超出第一页50条窗口 → 永远结算不到。
-            # 现在分页拉(每页100, 最多10页=1000条完赛), 覆盖 ~1天 的完赛窗口。
-            for _page in range(1, 11):
-                try:
-                    r = s.post(f"{dom}/v1/match/getList",
-                               json={"sportId": sport, "type": 6, "current": _page, "pageSize": 100,
-                                     "isPC": True, "languageType": "EN"},
-                               headers={"Content-Type": "application/json", "user-token": tok,
-                                        "User-Agent": _UA}, timeout=15, verify=False)
-                    d = r.json()
-                    recs = (d.get("data") or {}).get("records") or []
-                    if not recs:
-                        break
-                    for m in recs:
-                        # 只结算已完赛(ms=0/3/6/7); 进行中/未开赛(ms=4)比分不完整, 会误判
-                        # (2026-09-10 bug: 未完赛比分当终局, 小球22笔全判win, 实际达伽马2-1该输)
-                        if m.get("ms") not in (0, 3, 6, 7):
-                            continue
-                        for g in m.get("nsg") or []:
-                            if g.get("pe") == _pe_full and g.get("tyg") == 5:
-                                score_map[int(m.get("id"))] = g.get("sc")
-                                break
-                except Exception:
-                    break
+        # 按 match_id 定向查比分(2026-09-12 修结算bug): getList type=6 的 pageSize 被 BB 限制为
+        # 50 条(分页拉全量完赛不生效), 覆盖不了 32h 累积的观察库样本 → 永远结算不到。
+        # 改用 getMatchDetail 逐场定向查(无窗口限制, 已结束比赛仍可查), 与 bb_score_settle 同源。
+        from src.scrapers.bb_api_fetcher import fetch_bb_match_result
         changed = False
+        now = time.time()
         for b in bets:
             if b.get("settled"):
                 continue
             mid = b.get("match_id")
-            sc = score_map.get(int(mid)) if mid else None
-            if sc is None:
-                continue  # 还没赛果
+            ts = b.get("ts", 0)
+            # 只结算「已捕捉超过 2h」(足球应已完赛) 的样本, 避免还没完赛的无效请求
+            if not mid or not ts or now - ts < 2 * 3600:
+                continue
+            detail = fetch_bb_match_result(mid, language_type="EN")
+            if not detail or not detail.get("completed"):
+                continue
+            if detail.get("home_score") is None or detail.get("away_score") is None:
+                continue
+            sc = [detail["home_score"], detail["away_score"]]
             desig = b.get("designation", ""); line = b.get("line")
             stake = float(b.get("stake", 0)); odds = float(b.get("bb_odds", 0))
             home, away = sc[0], sc[1]
