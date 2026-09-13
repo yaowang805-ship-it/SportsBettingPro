@@ -755,11 +755,12 @@ class SecondLevelMonitor:
             _bj = datetime.now().strftime("%H:%M")
             _sub_cn = {"over_under": "大小球", "handicap": "让球", "opportunities": "独赢"}.get(sig.get("sub"), "")
             _desig = f"{_sub_cn}-{sig.get('desig', '')}" if _sub_cn else sig.get("desig", "")
+            _platform = "BB体育" if sig.get("platform", "BB") == "BB" else "FB体育"
             self._notify_bet(
                 "🟦 滚球已投注",
                 f"{_sport_cn} | {_league} | 滚球{_clock} | 投注 {_bj}\n"
                 f"{sig['match']['home']} vs {sig['match']['away']} | {_desig}\n"
-                f"BB {sig['bb_odds']:.2f} vs 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
+                f"{_platform} {sig['bb_odds']:.2f} vs 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
                 f"注额 ¥{stake} | 账户余额 ¥{_bal} | 今日累计 ¥{self._live_spent:.0f}/{LIVE_BUDGET}")
             # Reversion check(2026-09-07): 记下注时 BB 价, 30s 后复验是否尖峰回落(假 EV)
             self._reversion_track[(str(sig["match_id"]), str(market_id), str(sig.get("option_type")))] = {
@@ -1106,6 +1107,7 @@ class SecondLevelMonitor:
             "pin_matchup_id": opp["pin_matchup_id"], "league_id": opp["league_id"],
             "max_stake": opp["max_stake"],
             "bsc": opp.get("sc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用, 2026-09-13)
+            "platform": opp.get("platform", "BB"),  # BB/FB(推送时标注平台)
         }
 
     def _poll_live(self):

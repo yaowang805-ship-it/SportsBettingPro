@@ -473,6 +473,7 @@ def fetch_live_opportunities(threshold=3.0, platform="BB", use_file_cache=False)
                     "pin_matchup_id": pin_mid, "league_id": pv.get("league_id"),
                     "max_stake": pv.get("max_stake", 0),
                     "sc": b.get("sc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用, 2026-09-13)
+                    "platform": platform,  # BB/FB(推送时标注在哪平台投注, 2026-09-13)
                 })
     return opps
 
