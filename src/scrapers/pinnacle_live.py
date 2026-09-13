@@ -158,25 +158,29 @@ def fetch_live_odds(live_matchups):
     return odds
 
 
-def fetch_live_fair_prices(sport_ids=LIVE_SPORT_IDS):
+def fetch_live_fair_prices(sport_ids=LIVE_SPORT_IDS, use_file_cache=False):
     """滚球公平价: live matchups + odds → 按队名索引的 {home/away → 赔率}。
 
     返回 {matchupId: {"home": name, "away": name, "status", "moneyline": [dec, dec, dec]}}
     (moneyline 三列: 主/和/客, 用 Pinnacle 美式价转十进制)。供秒级监控匹配 BB matchId。
     15s 缓存: 秒级监控每 2s 轮询, 若每次都拉 Pin markets 会超风控(26 联赛×2s≈13req/s)。
+
+    use_file_cache=True 时(仅 FB 观察库收集进程用): 复用 BB 进程刚写入的公平价文件,
+    不重复拉 Pin markets。BB 秒级监控永远 use_file_cache=False(要新鲜公平价)。
     """
     if time.time() - _FAIR_CACHE["ts"] < _FAIR_TTL:
         return _FAIR_CACHE["data"]
-    # 文件缓存(跨进程): FB 观察库进程直接复用 BB 进程刚拉的结果, 不重复拉 Pin markets
-    try:
-        if _FAIR_FILE.exists():
-            fd = json.loads(_FAIR_FILE.read_text())
-            if time.time() - fd.get("ts", 0) < _FAIR_FILE_TTL:
-                _FAIR_CACHE["ts"] = fd["ts"]
-                _FAIR_CACHE["data"] = fd["data"]
-                return fd["data"]
-    except Exception:
-        pass
+    # 文件缓存(跨进程, 仅 FB 收集进程读): 复用 BB 进程刚拉的结果, 避免重复拉 Pin markets
+    if use_file_cache:
+        try:
+            if _FAIR_FILE.exists():
+                fd = json.loads(_FAIR_FILE.read_text())
+                if time.time() - fd.get("ts", 0) < _FAIR_FILE_TTL:
+                    _FAIR_CACHE["ts"] = fd["ts"]
+                    _FAIR_CACHE["data"] = fd["data"]
+                    return fd["data"]
+        except Exception:
+            pass
     live = fetch_live_matchups(sport_ids)
     odds = fetch_live_odds(live)
     result = {}
@@ -398,15 +402,16 @@ def _match_2way_line(line, d2way):
     return None
 
 
-def fetch_live_opportunities(threshold=3.0, platform="BB"):
+def fetch_live_opportunities(threshold=3.0, platform="BB", use_file_cache=False):
     """轮询 getList type=1 + 匹配 Pin live 公平价 → 返回 +EV 滚球机会列表。
 
-    platform="BB"|"FB"。返回 [{bb_match_id, home, away, sub, direction, bb_odds, fair, ev, market_id,
+    platform="BB"|"FB"。use_file_cache=True 时复用 BB 进程已写入的公平价文件(仅 FB 收集进程用)。
+    返回 [{bb_match_id, home, away, sub, direction, bb_odds, fair, ev, market_id,
            option_type, line, pin_matchup_id, league_id, max_stake}]。
     """
     from src.scrapers.devig import shin_fair_odds
     bb = fetch_bb_live_matches(platform=platform)
-    pin = fetch_live_fair_prices()
+    pin = fetch_live_fair_prices(use_file_cache=use_file_cache)
     # 过滤角球/罚牌子比赛, 只留主比赛
     pin_list = [(mid, v) for mid, v in pin.items()
                 if not _is_sub_market(v["home"]) and not _is_sub_market(v["away"])]

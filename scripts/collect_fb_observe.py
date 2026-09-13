@@ -107,8 +107,9 @@ def collect_once(threshold=3.0, stake=100):
     """拉一轮 FB +EV 机会, 入库(去重) + 结算。返回 (新增数, 结算数)。"""
     from src.scrapers.pinnacle_live import fetch_live_opportunities, fetch_bb_live_matches
 
-    # 1. FB +EV 机会 + FB live 比分(bsc)
-    opps = fetch_live_opportunities(threshold=threshold, platform="FB")
+    # 1. FB +EV 机会 + FB live 比分(bsc)。use_file_cache=True: 复用 BB 进程已写入的
+    #    Pin 公平价文件, 不重复拉 Pin markets(避免 FB 每 60s 加 Pin 负载/带宽争抢)。
+    opps = fetch_live_opportunities(threshold=threshold, platform="FB", use_file_cache=True)
     fb_matches = fetch_bb_live_matches(platform="FB")
 
     data = _load()
