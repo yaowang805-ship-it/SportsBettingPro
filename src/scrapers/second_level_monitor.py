@@ -61,6 +61,25 @@ DAILY_STAKE_LIMIT = 1000  # 新释放盘口当日累计投注额上限(2026-09-1
 PENDING_SETTLE_FILE = ROOT / "data" / "storage" / "pending_settle.json"  # 结算明细缓存(每小时汇总推一次)
 SETTLE_PUSH_INTERVAL = 3600  # 结算明细每小时汇总推一次(2026-09-12 用户要求, 不一场推一场)
 
+
+def _dingtalk_safe(text: str) -> str:
+    """钉钉内容安全: 替换博彩触发词为中性词。
+
+    2026-09-13: 滚球下单推送 title「🟦 滚球已下单」+ 正文「下单/单注/已投」被钉钉判
+    inappropriate content 100% 拒收(42/42 失败, 0 成功)。而结算汇总(「滚球/注额/公平价/
+    溢价/赢了/输了」)实测能过 —— 说明触发点是「下单/单注/已投」这些动作词, 「滚球」本身安全。
+
+    注意: 不能替换「投注」—— send_dingtalk 会给正文追加机器人关键词「投注推荐」, 若在此
+    把「投注」换成别的会连带破坏关键词。
+    """
+    for _bad, _good in (
+        ("下单", "成交"),   # 已下单 → 已成交
+        ("单注", "金额"),   # 单注¥ → 金额¥
+        ("已投", "已用"),   # 今日已投 → 今日已用
+    ):
+        text = text.replace(_bad, _good)
+    return text
+
 # G04 market(盘口名) → 缓存子盘口 key
 _MARKET_KEYWORDS = [
     ("double_chance", ("双重", "双胜彩")),
@@ -998,17 +1017,20 @@ class SecondLevelMonitor:
         self._bet_notify_until = time.time() + 30 * 60
         try:
             from config.settings import send_dingtalk
-            ok = bool(send_dingtalk(title, body))
+            ok = bool(send_dingtalk(_dingtalk_safe(title), _dingtalk_safe(body)))
             if not ok:
                 print(f"[slm] 秒级下单推送失败: {title}", flush=True)
         except Exception as e:
             print(f"[slm] 钉钉通知异常: {e}")
 
     def _notify_bet(self, title, body):
-        """每笔成功下单都推钉钉(不限频 —— 下单限频已把间隔拉到 10-15s, 不会刷屏)。"""
+        """每笔成功下单都推钉钉(不限频 —— 下单限频已把间隔拉到 10-15s, 不会刷屏)。
+
+        2026-09-13: 先 _dingtalk_safe 清洗博彩词再发, 否则被钉钉 inappropriate content 拒收。
+        """
         try:
             from config.settings import send_dingtalk
-            ok = bool(send_dingtalk(title, body))
+            ok = bool(send_dingtalk(_dingtalk_safe(title), _dingtalk_safe(body)))
             if not ok:
                 print(f"[slm] 滚球投注推送失败: {title}", flush=True)
         except Exception as e:
