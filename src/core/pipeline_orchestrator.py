@@ -1082,7 +1082,7 @@ class PipelineOrchestrator:
         """自动 git 提交 + push。"""
         import subprocess
         result = subprocess.run(
-            ["git", "add", "-u"],
+            ["git", "add", "-A"],  # 2026-09-14: -u→-A, 新建未追踪文件也会被自动提交(之前漏掉新脚本)
             cwd=SRC_DIR,
             capture_output=True,
         )

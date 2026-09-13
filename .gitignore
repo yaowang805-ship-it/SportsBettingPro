@@ -108,6 +108,7 @@ data/storage/odds/io_event_cache/
 data/storage/odds/live_*.json
 data/storage/odds_snapshots/
 data/storage/*_cache.json
+data/storage/*.bak
 
 # Logs
 logs/
