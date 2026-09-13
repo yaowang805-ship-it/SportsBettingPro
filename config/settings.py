@@ -55,15 +55,20 @@ _TITLE_COOLDOWN_SEC = 30 * 60   # 30 分钟
 
 
 def _is_betting_push(title: str) -> bool:
-    """投注推荐(标题含 +EV/投注推荐/机会/已投注/赢了/输了)不受每日次数限制。
+    """投注推荐(标题含 +EV/投注推荐/机会/已投注/赢了/输了/滚球/已下单/已成交)不受每日次数限制。
 
     2026-09-12: 加「赢了/输了」—— 滚球结算推送标题是「✅ 赢了 队名/❌ 输了 队名」,
     之前被当「非投注消息」吃每日 6 条限额, 第 7 笔起静默丢失且误标已通知(永不补推)。
     结算推送本质是投注结果, 应像投注推荐一样不受限。
+
+    2026-09-13: 加「滚球/已下单/已成交」—— 滚球下单推送 title「🟦 滚球已下单(清洗后已成交)」
+    之前被当非投注消息, 吃 30min 标题冷却 + 每日 6 条限额双重拦截。下单通知是核心业务通知,
+    应像投注推荐一样不受限。
     """
     t = title or ""
     return ("+EV" in t or "投注推荐" in t or "机会" in t or "已投注" in t
-            or "赢了" in t or "输了" in t)
+            or "赢了" in t or "输了" in t or "滚球" in t
+            or "已下单" in t or "已成交" in t)
 
 
 def _non_betting_quota_ok() -> bool:
@@ -127,7 +132,9 @@ def send_dingtalk(title: str, body: str, timeout: int = 10, urgent: bool = False
     if not DINGTALK_WEBHOOK:
         return False
     # 非投注消息(告警/日报)按标题节流: 同标题短时间只发一次(防自愈看门狗刷屏)
-    if not _is_betting_push(title) and not _title_cooldown_ok(title):
+    # 2026-09-13: urgent 故障告警/核心报告也绕过标题冷却 —— 结算报告 urgent=True 重试时
+    # 被 30min 冷却吞掉(同标题当天内只发第一次), 后几次静默失败。
+    if not _is_betting_push(title) and not urgent and not _title_cooldown_ok(title):
         return False
     # 非投注推荐信息每日限流(urgent 故障告警除外)
     if not urgent and not _is_betting_push(title) and not _non_betting_quota_ok():

@@ -3912,6 +3912,15 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
 
         logger.info("BB vs Pinnacle +EV report pushed (%d opportunities)", body.count('#####'))
 
+        # 2026-09-13: 推送成功后清除失败标志 —— 之前只写不删, 一次失败后标志永久残留,
+        # 健康报告每天报「钉钉推送失败(旧, NNNh前)」假告警。
+        _pf = DATA_DIR / "push_failure_flag.json"
+        if _pf.exists():
+            try:
+                _pf.unlink()
+            except Exception:
+                pass
+
         # 自动同步: 清除 pyc + Git 提交
         _auto_sync()
     else:
