@@ -1114,6 +1114,7 @@ class SecondLevelMonitor:
                       "league_cn": opp.get("league_cn", "滚球") or "滚球"},
             "pin_matchup_id": opp["pin_matchup_id"], "league_id": opp["league_id"],
             "max_stake": opp["max_stake"],
+            "bsc": opp.get("sc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用, 2026-09-13)
         }
 
     def _poll_live(self):
