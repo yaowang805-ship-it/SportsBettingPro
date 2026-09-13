@@ -57,6 +57,62 @@ def _stats(clvs):
     }
 
 
+_SPORT_CN = {"football": "足球", "basketball": "篮球", "tennis": "网球",
+             "baseball": "棒球", "american_football": "美足", "ice_hockey": "冰球"}
+
+
+def _direction(desig):
+    """designation('让分主胜(+3.5)'/'大球'/'主胜') → 方向(主/客/和/大/小)。"""
+    d = desig or ''
+    if '大' in d:
+        return '大'
+    if '小' in d:
+        return '小'
+    if '和' in d or '平' in d:
+        return '和'
+    if '主' in d:
+        return '主'
+    if '客' in d:
+        return '客'
+    return '其他'
+
+
+def _forward_clv_by_market(min_n=20):
+    """实时 CLV 按 (运动, 盘口, 方向) 分组统计(过程指标)。
+
+    正 CLV = 真优势(赢率 vs 隐含 判据应该也正); 负 CLV = 假溢价。
+    与释放判据的「赢率 vs 隐含」交叉验证, 两者一致才采信。
+    返回 [(sport_cn, sub, dr, n, mean, positive_pct)]。
+    """
+    from collections import defaultdict
+    f = DATA_DIR / "clv_results.csv"
+    if not f.exists():
+        return []
+    agg = defaultdict(list)
+    seen = set()
+    for r in csv.reader(open(f)):
+        if len(r) <= 19:
+            continue
+        k = (r[2], r[9])  # (match_key, designation) 去重(同一场同盘口多次采集取一次)
+        if k in seen:
+            continue
+        seen.add(k)
+        try:
+            clv = float(r[19])
+        except (ValueError, TypeError):
+            continue
+        agg[(r[3], r[10], _direction(r[9]))].append(clv)
+    out = []
+    for (sport, sub, dr), clvs in sorted(agg.items(), key=lambda t: -len(t[1])):
+        n = len(clvs)
+        if n < min_n:  # 样本太少是噪声, 不展示
+            continue
+        mean = statistics.mean(clvs)
+        pos = sum(1 for c in clvs if c > 0) / n * 100
+        out.append((_SPORT_CN.get(sport, sport), sub, dr, n, mean, pos))
+    return out
+
+
 def main(push: bool = True):
     fwd = _load_forward_clv()
     arc = _load_archive_clv()
@@ -76,6 +132,17 @@ def main(push: bool = True):
         else:
             lines.append(f"| {name} | 0 | — | — | — |")
     lines.append("")
+
+    # 盘口×方向 CLV 明细(过程指标, 2026-09-13): 正=真优势 / 负=假溢价,
+    # 与释放判据「赢率 vs 隐含」交叉验证(两者一致才采信)。
+    by_market = _forward_clv_by_market()
+    if by_market:
+        lines.append("**盘口×方向 CLV 明细**（正=真优势 / 负=假溢价，与赢率vs隐含交叉验证）")
+        lines.append("| 运动·盘口·方向 | n | 均值CLV | 正率 |")
+        lines.append("|---|---|---|---|")
+        for sport_cn, sub, dr, n, mean, pos in by_market:
+            lines.append(f"| {sport_cn}·{sub}·{dr} | {n} | {mean:+.1f}% | {pos:.0f}% |")
+        lines.append("")
 
     # V5.10: 先报采集覆盖率再报结论 —— 样本残缺时结论没有意义。
     # 这里以前只报"采到多少条", 没有分母, 丢失率一度 57% 却全程无感。
