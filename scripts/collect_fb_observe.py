@@ -64,6 +64,42 @@ def _save(data):
     FB_PAPER_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1))
 
 
+# CLV 追踪(2026-09-14): 与 BB 滚球(second_level_monitor._check_clv)同口径。
+# 下注 60s 后复验 Pin 公平价(复用 BB 写入的文件缓存, 零新增 Pin 请求), 算 CLV 写回 clv 字段。
+_clv_track = {}  # (match_id, market_id, option_type) -> {bb_odds, ts}
+
+
+def _do_clv(data, opps):
+    """对 60s+ 旧的 _clv_track 记录, 用当前 opps 的 fair 算 CLV, 写回 data。
+
+    CLV = (bb_odds - fair@T+60) / fair@T+60 * 100。正 = 抢到比市场后来定价更优的价格(真 edge);
+    负 = 逆向选择。fair 来自 opps(use_file_cache, 复用 BB 公平价文件, 零 Pin 请求)。
+    """
+    global _clv_track
+    now = time.time()
+    ready = {k: v for k, v in _clv_track.items() if now - v["ts"] >= 60}
+    if not ready:
+        return 0
+    cur_fair = {(o["bb_match_id"], o.get("market_id"), o.get("option_type")): o.get("fair")
+                for o in opps if o.get("fair") and o.get("fair") > 1}
+    written = 0
+    for (mid, mkt, opt), v in ready.items():
+        del _clv_track[(mid, mkt, opt)]
+        f1 = cur_fair.get((mid, mkt, opt))
+        if not f1:
+            continue
+        clv = (v["bb_odds"] - f1) / f1 * 100
+        for b in data:
+            if (str(b.get("match_id")) == str(mid)
+                    and str(b.get("market_id")) == str(mkt)
+                    and str(b.get("option_type")) == str(opt)):
+                if "clv" not in b:
+                    b["clv"] = round(clv, 2)
+                    written += 1
+                break
+    return written
+
+
 def _settle_bet(b):
     """判定单笔输赢(与 second_level_monitor._settle_paper_bets 同口径)。返回 result 或 None。"""
     from src.scrapers.bb_api_fetcher import fetch_bb_match_result
@@ -116,6 +152,9 @@ def collect_once(threshold=3.0, stake=100):
     existing = {(b.get("match_id"), b.get("market_id"), b.get("option_type"), b.get("sub"))
                 for b in data}
 
+    # CLV: 先处理 60s+ 旧记录(用当前 opps 的 fair 算), 再录新单
+    clv_written = _do_clv(data, opps)
+
     added = 0
     for o in opps:
         sub = o["sub"]
@@ -137,6 +176,9 @@ def collect_once(threshold=3.0, stake=100):
             "stake": stake, "settled": False, "result": None, "profit": None,
         })
         existing.add(key)
+        _clv_track[(str(mid), str(o.get("market_id")), str(o.get("option_type")))] = {
+            "bb_odds": o["bb_odds"], "ts": time.time(),
+        }
         added += 1
 
     # 2. 结算(已捕捉超 2h 的未结算样本)
@@ -156,7 +198,7 @@ def collect_once(threshold=3.0, stake=100):
         b["profit"] = round(profit, 1)
         settled_n += 1
 
-    if added or settled_n:
+    if added or settled_n or clv_written:
         _save(data)
     return added, settled_n
 
