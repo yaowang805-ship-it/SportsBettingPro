@@ -45,7 +45,6 @@ OUT = DATA / "market_release.json"
 
 REAL_ROI_MIN = 4.0     # 实盘 ROI 释放阈值(%)
 N_REAL_MIN = 50        # 实盘赢率采信最小样本量(2026-09-12 30→100→50: 实盘真金白银质量高, 50够; 观察库才要100)
-REAL_ROI_N_MIN = 30    # 实盘 ROI 采信最小样本量(2026-09-13 0→30: 满周提额/解除1000上限只看实盘ROI, n>0太薄如1x2 n=18 ROI+44.4%可能是噪声)
 
 # ── 2026-09-12 观察库释放改造(用户要求): 样本>100 且 赢率>隐含 才释放 ──
 # 判据从「CLV中位>0 + 正率>55% + 纸面ROI>0」改为「赢率 > 隐含」(CURRENT_STATUS 核心判据),
@@ -582,12 +581,13 @@ def main():
             if now_ts - first_ts >= OBS_MATURE_DAYS * 86400:
                 # 满一周: 看实盘 ROI(滚球用 BB 官方订单两维, 早盘用 tracked_bets 两维)
                 r = (live_real_roi if scope == SCOPE_LIVE else market_roi).get((sport, sm))
-                if r and r.get("n", 0) >= REAL_ROI_N_MIN and r.get("roi", 0) > REAL_ROI_MIN:
+                if r and r.get("n", 0) > 0 and r.get("roi", 0) > REAL_ROI_MIN:
                     cap = OBS_CAP_MATURE
             # 次日解除 1000 限制(2026-09-12 用户要求): 实盘 ROI>4% → 解除当日累计上限
+            # 不用加实盘样本门槛: 观察库释放已用 n>100 测过真溢价, 释放即已验证, 实盘 ROI>4% 就解除。
             if not limit_removed:
                 r = (live_real_roi if scope == SCOPE_LIVE else market_roi).get((sport, sm))
-                if r and r.get("n", 0) >= REAL_ROI_N_MIN and r.get("roi", 0) > REAL_ROI_MIN:
+                if r and r.get("n", 0) > 0 and r.get("roi", 0) > REAL_ROI_MIN:
                     limit_removed = True
         # 当日累计跨天重置
         if daily_date != today:
