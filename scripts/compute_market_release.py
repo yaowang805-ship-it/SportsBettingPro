@@ -90,12 +90,19 @@ DAILY_STAKE_LIMIT = 1000
 # 赔率区间用 "*" 表示"所有区间"(已验证方向不分区间的历史口径)。
 MANUAL_OBSERVE_RELEASE = {
     "football|ou|小|*|live": 600,       # 足球小球(+11pp 实盘验证, 主真 edge, LIVE_UNDER_MAX_STAKE)
+    "football|1x2|主|*|live": 150,      # 足球独赢主胜(实盘 ROI +40.7%, 2026-09-13 区间细分后 grandfathered)
     "tennis|1x2|主|*|live": 100,        # 网球独赢(试探, 攒30笔)
     "tennis|1x2|客|*|live": 100,
     "basketball|ou|大|*|live": 100,     # 篮球大小分(试探)
     "basketball|ou|小|*|live": 100,
     "basketball|hc|主|*|live": 100,     # 篮球让分(试探)
     "basketball|hc|客|*|live": 100,
+}
+
+# 手动拦截的赔率区间(用户明确要求, 2026-09-13): 已验证方向里表现巨差的区间硬编码拦截,
+# 优先于 MANUAL_OBSERVE_RELEASE 的 "*" 区间。数据驱动拦截(observe_blocked)照常追加。
+MANUAL_OBSERVE_BLOCK = {
+    "football|1x2|主|>5.0|live",  # 独赢主胜冷门: 实盘 ROI -65.8%(巨亏), 赢率5.9%≈隐含, 无edge
 }
 
 DIR_N_MIN = 30              # 方向级赢率采信最小样本量(2026-09-12 15→50→30: 实盘方向样本, 30够)
@@ -598,6 +605,13 @@ def main():
         _entry = [_p[0], _p[1], _p[2], _p[3], _p[4]]
         if _entry not in observe_released:
             observe_released.append(_entry)
+
+    # 手动拦截的赔率区间(用户明确要求, 2026-09-13): 已验证方向里表现巨差的区间, 优先于"*"释放。
+    for _mkey in MANUAL_OBSERVE_BLOCK:
+        _p = _mkey.split("|")
+        _entry = [_p[0], _p[1], _p[2], _p[3], _p[4]]
+        if _entry not in observe_blocked:
+            observe_blocked.append(_entry)
 
     # 释放状态维护 + 投注额 cap 分阶段 + 当日累计上限 + 释放通知(2026-09-12 用户要求)。
     # 状态持久化到 observe_release_state.json: first_released_at/cap/daily_stake/limit_removed。
