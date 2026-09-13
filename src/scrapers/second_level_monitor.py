@@ -371,7 +371,7 @@ class SecondLevelMonitor:
         self._last_bet_time = 0.0      # 上次下单时间(非阻塞限频用)
         self._bet_delay = 0.0          # 下一单需等待的随机间隔(10-15s, 每次下单后重抽)
         self._last_settle_push = 0.0   # 上次结算汇总推送时间(每小时推一次, 2026-09-12)
-        self._reversion_track = {}     # Reversion check: (match_id, market_id, option_type) -> {bb_odds, ts}
+        self._reversion_track = {}     # CLV 追踪: (match_id, market_id, option_type) -> {sig, ts}
 
     def refresh_cache(self):
         """comparison 文件变了就重载公平价缓存。返回是否刷新。"""
@@ -571,57 +571,51 @@ class SecondLevelMonitor:
                 if stk2 > 0:
                     print(f"    {sp}/{sub}: n={n2} 盈亏{pnl2:+.0f} ROI{pnl2/stk2*100:+.1f}%", flush=True)
 
-    def _check_reversion(self):
-        """Reversion check(2026-09-07): 下注 30s 后复验 BB 价, 回落≥10% 标记为尖峰假 EV。
+    def _check_clv(self):
+        """CLV 追踪(2026-09-14): 下注 60s 后复验 Pin 公平价, 算 CLV 写回观察库。
 
-        尖峰假 EV = BB 临时高价(下单后几秒就回落), 不是真 edge。标记后结算统计时剔除。
+        CLV = 当前 EV = (bb_odds - fair@T+60) / fair@T+60。正 CLV = 我们抢到比市场后来
+        定价更优的价格(真 edge); 负 CLV = 逆向选择。写回 live_paper_bets 的 clv 字段,
+        供结算按 CLV 正负分桶。
+
+        替代旧 reversion(尖峰假EV)标记: 旧逻辑把「BB 价 30s 后回落」误判成假 EV 并剔除,
+        实测那些才是赢家(正 CLV +32.5% ROI) —— 标记反了。且 ≥10% 阈值只抓到 25 笔。
+        这里改用 Pin 公平价(不是 BB 噪声价)算连续 CLV, 不再设阈值、不再剔除。
         """
         if not self._reversion_track:
             return
         now = time.time()
-        ready = {k: v for k, v in self._reversion_track.items() if now - v["ts"] >= 30}
+        ready = {k: v for k, v in self._reversion_track.items() if now - v["ts"] >= 60}
         if not ready:
             return
-        try:
-            from src.scrapers.pinnacle_live import fetch_bb_live_matches
-            bb = fetch_bb_live_matches()
-        except Exception:
-            return
-        for (mid, mkt, opt), v in ready.items():
-            del self._reversion_track[(mid, mkt, opt)]
+        for key, v in ready.items():
+            del self._reversion_track[key]
             try:
-                m = bb.get(int(mid))
-                if not m:
+                clv = self._reverify_live_ev(v["sig"])
+                if clv is None:
                     continue
-                for mk in m.get("markets", []):
-                    if str(mk.get("market_id")) == mkt and str(mk.get("option_type")) == opt:
-                        cur = mk.get("odds", 0)
-                        if cur > 0 and v["bb_odds"] > 0:
-                            drop_pct = (v["bb_odds"] - cur) / v["bb_odds"] * 100
-                            if drop_pct >= 10:
-                                self._mark_spike(int(mid), mkt, opt, drop_pct)
-                        break
+                self._write_clv(key, clv)
             except Exception:
                 pass
 
-    def _mark_spike(self, match_id, market_id, option_type, drop_pct):
-        """把 live_paper_bets 对应记录标记 spike(尖峰假 EV), 供统计剔除。"""
+    def _write_clv(self, key, clv):
+        """把 clv 写回 live_paper_bets 对应记录。"""
         try:
             if not LIVE_PAPER_FILE.exists():
                 return
             bets = json.loads(LIVE_PAPER_FILE.read_text())
+            mid, mkt, opt = key
             changed = False
             for b in bets:
-                if (b.get("match_id") == match_id
-                        and str(b.get("market_id")) == str(market_id)
-                        and str(b.get("option_type")) == str(option_type)):
-                    if not b.get("spike"):
-                        b["spike"] = round(drop_pct, 1)
+                if (str(b.get("match_id")) == mid
+                        and str(b.get("market_id")) == mkt
+                        and str(b.get("option_type")) == opt):
+                    if "clv" not in b:
+                        b["clv"] = round(clv, 2)
                         changed = True
                     break
             if changed:
                 LIVE_PAPER_FILE.write_text(json.dumps(bets, ensure_ascii=False, indent=1))
-                print(f"[slm] Reversion check: 尖峰假 EV 标记 {drop_pct:.0f}% 回落 (match={match_id})", flush=True)
         except Exception:
             pass
 
@@ -863,9 +857,15 @@ class SecondLevelMonitor:
                 f"{sig['match']['home']} vs {sig['match']['away']} | {_desig}\n"
                 f"{_platform} {sig['bb_odds']:.2f} vs 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
                 f"单注 ¥{stake} | 余额 ¥{_bal} | 今日已投 ¥{self._live_spent:.0f} | 未结 ¥{self._live_outstanding:.0f}/{LIVE_BUDGET}")
-            # Reversion check(2026-09-07): 记下注时 BB 价, 30s 后复验是否尖峰回落(假 EV)
+            # CLV 追踪(2026-09-14): 记下注时 sig, 60s 后复验 Pin 公平价算 CLV(见 _check_clv)
             self._reversion_track[(str(sig["match_id"]), str(market_id), str(sig.get("option_type")))] = {
-                "bb_odds": sig["bb_odds"], "ts": time.time(),
+                "sig": {
+                    "pin_matchup_id": sig.get("pin_matchup_id"),
+                    "league_id": sig.get("league_id"),
+                    "sub": sig.get("sub"), "desig": sig.get("desig"),
+                    "bb_odds": sig.get("bb_odds"), "line": sig.get("line"),
+                },
+                "ts": time.time(),
             }
         else:
             # 下单失败(如 token 过期 14010) → 也记虚拟投注, 保证验证数据积累不中断
@@ -1266,7 +1266,7 @@ class SecondLevelMonitor:
                     self._settle_paper_bets()
                 if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
                     self._check_settled()
-                    self._check_reversion()  # 下注后 30s 复验 BB 价, 尖峰假 EV 标记
+                    self._check_clv()  # 下注后 60s 复验 Pin 公平价, 算 CLV
             except Exception as e:
                 print(f"[slm] 轮询异常: {type(e).__name__} {str(e)[:80]}", flush=True)
             await asyncio.sleep(refresh_every)

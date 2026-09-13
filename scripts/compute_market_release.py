@@ -90,7 +90,9 @@ DAILY_STAKE_LIMIT = 1000
 # 赔率区间用 "*" 表示"所有区间"(已验证方向不分区间的历史口径)。
 MANUAL_OBSERVE_RELEASE = {
     "football|ou|小|*|live": 600,       # 足球小球(+11pp 实盘验证, 主真 edge, LIVE_UNDER_MAX_STAKE)
-    "football|1x2|主|*|live": 150,      # 足球独赢主胜(实盘 ROI +40.7%, 2026-09-13 区间细分后 grandfathered)
+    # 2026-09-14 暂停: 足球独赢主胜实盘累计 ROI -11.8%(126笔, 胜率27%<隐含), 之前 +40.7% 是隐含口径
+    # 虚高撑的假 edge(见 implied-mean-method-fix)。移除 manual release, 交还数据驱动判断(赢率<隐含不会释放)。
+    # "football|1x2|主|*|live": 150,
     "tennis|1x2|主|*|live": 100,        # 网球独赢(试探, 攒30笔)
     "tennis|1x2|客|*|live": 100,
     "basketball|ou|大|*|live": 100,     # 篮球大小分(试探)
