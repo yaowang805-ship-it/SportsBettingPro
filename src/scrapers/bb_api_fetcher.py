@@ -365,15 +365,16 @@ MATCH_STATUS_LABELS = {
 }
 
 
-def fetch_bb_match_result(match_id, language_type="EN"):
+def fetch_bb_match_result(match_id, language_type="EN", platform="BB"):
     """用 /v1/match/getMatchDetail 拿单场比赛比分 (棒球/美足等 ESPN 覆盖不到的联赛)。
 
     端点: POST {api_base}/v1/match/getMatchDetail, body {"matchId": id, "languageType": "EN"}
     比分路径: data.nsg[] 中 pe=全场period + tyg=5 的条目 → sc=[主队, 客队]
 
     Args:
-        match_id: BB 比赛 id (getList 记录的 `id` 字段, 如 4856615)
+        match_id: BB/FB 比赛 id (getList 记录的 `id` 字段, 如 4856615)。FB 的比赛要用 FB 域名。
         language_type: "EN"(英文队名) 或 "CMN"(中文队名)
+        platform: "BB"|"FB"(FB 用 api.5c4r3.com, match_id 与 BB 独立)
 
     Returns:
         {
@@ -387,7 +388,7 @@ def fetch_bb_match_result(match_id, language_type="EN"):
     """
     resp = api_post("/v1/match/getMatchDetail",
                     {"matchId": match_id, "languageType": language_type},
-                    platform="BB")
+                    platform=platform)
     if not resp or not resp.get("success"):
         return None
     data = resp.get("data") or {}

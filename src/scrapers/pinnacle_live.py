@@ -215,13 +215,17 @@ def fetch_live_fair_prices(sport_ids=LIVE_SPORT_IDS):
     return result
 
 
-def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6)):
-    """BB 滚球比赛。EN 拉英文队名(直配 Pin) + 提取盘口; CMN 拉中文队名/联赛名(展示用)。
+def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6), platform="BB"):
+    """BB/FB 滚球比赛。EN 拉英文队名(直配 Pin) + 提取盘口; CMN 拉中文队名/联赛名(展示用)。
 
-    返回 {matchId: {home_en, away_en, home_cn, away_cn, league_cn, sport, markets, mc}}。
+    platform="BB" 用 BB 域名, "FB" 用 FB 域名(api.5c4r3.com)。两者同一账户 user-token,
+    但 match_id 各自独立(FB 的比赛要用 FB 域名 getMatchDetail 结算)。
+    返回 {matchId: {home_en, away_en, home_cn, away_cn, league_cn, sport, markets, mc, sc}}。
     """
-    from src.betting.bb_auto_bet import read_token, read_domain, _session
-    token = read_token(); domain = read_domain()
+    from src.betting.bb_auto_bet import read_token, _session
+    from src.scrapers.bb_api_fetcher import PLATFORMS
+    token = read_token()
+    domain = PLATFORMS.get(platform, PLATFORMS["BB"])["api_base"]
     if not token:
         return {}
     s = _session()
@@ -376,14 +380,14 @@ def _match_2way_line(line, d2way):
     return None
 
 
-def fetch_live_opportunities(threshold=3.0):
+def fetch_live_opportunities(threshold=3.0, platform="BB"):
     """轮询 getList type=1 + 匹配 Pin live 公平价 → 返回 +EV 滚球机会列表。
 
-    返回 [{bb_match_id, home, away, sub, direction, bb_odds, fair, ev, market_id,
+    platform="BB"|"FB"。返回 [{bb_match_id, home, away, sub, direction, bb_odds, fair, ev, market_id,
            option_type, line, pin_matchup_id, league_id, max_stake}]。
     """
     from src.scrapers.devig import shin_fair_odds
-    bb = fetch_bb_live_matches()
+    bb = fetch_bb_live_matches(platform=platform)
     pin = fetch_live_fair_prices()
     # 过滤角球/罚牌子比赛, 只留主比赛
     pin_list = [(mid, v) for mid, v in pin.items()
@@ -449,9 +453,9 @@ def fetch_live_opportunities(threshold=3.0):
     return opps
 
 
-def match_live_bb_pin():
-    """匹配 BB 滚球 ↔ Pin 滚球(英文队名), 返回 {bb_match_id: {pin_matchup_id, home, away, moneyline}}。"""
-    bb = fetch_bb_live_matches()
+def match_live_bb_pin(platform="BB"):
+    """匹配 BB/FB 滚球 ↔ Pin 滚球(英文队名), 返回 {bb_match_id: {pin_matchup_id, home, away, moneyline}}。"""
+    bb = fetch_bb_live_matches(platform=platform)
     pin = fetch_live_fair_prices()
     # Pin 按 (norm_home, norm_away) 索引(精确匹配 O(1))
     pin_by_name = {}
