@@ -243,7 +243,11 @@ def _is_settleable(desig, line):
     """
     if desig in ("主胜", "客胜", "和局"):
         return True
-    if desig in ("让球主胜", "让球客胜", "大球", "小球"):
+    if desig in ("让球主胜", "让球客胜"):
+        # 让球0(line=0)BB会 void(st=2 退款, 实测 26 笔里 1 笔=3.8%), getMatchDetail 拿不到
+        # void 状态 → 无法可靠判输赢, 不进库(与 quarter-ball 同策略: 结算不了的样本不采)。
+        return line is not None and abs(line) > 0.0001
+    if desig in ("大球", "小球"):
         return line is not None
     return False
 
