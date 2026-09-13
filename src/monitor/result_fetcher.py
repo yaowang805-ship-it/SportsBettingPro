@@ -260,6 +260,10 @@ def determine_result(bet: dict, match_result: dict) -> tuple:
     # 网球: hc(让盘)/ou(大小)的线是局数(如"让盘+1.5局""大分22.5局"), 用总局数判定;
     # 独赢(1x2)用盘数(home_score 本身就是盘分)。BB getMatchDetail 会额外给 games_home/games_away。
     # (2026-08-26 之前 BB 拿不到网球比分, 网球 hc/ou 要么 ESPN 要么超时作废)
+    # ⚠️ 2026-09-13 审计: 网球有两个让球盘——让盘(Set Handicap, mty=5004, 应按盘数) vs
+    #   让局(Game Handicap, mty=5002, 应按局数)。此处把 hc/ou 都按局数结算, 若 BB 的"让盘"
+    #   实为盘数让球, 则让盘被误按局数结算。且滚球路径 _settle_paper_bets 用 home_score(=盘数),
+    #   与本处相反。需 BB 网球实盘订单交叉验证后才能定论(当前无网球实盘, 见 [[cross-sport-half-markets-20260828]])。
     if bet.get("sport") == "tennis" and sub_market in ("hc", "ou"):
         _gh = match_result.get("games_home")
         _ga = match_result.get("games_away")
