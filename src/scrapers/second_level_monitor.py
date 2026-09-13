@@ -1195,23 +1195,37 @@ class SecondLevelMonitor:
         except Exception as e:
             print(f"[slm] 启动结算异常: {type(e).__name__} {str(e)[:80]}", flush=True)
         last_settle = time.time()
-        while deadline is None or time.time() < deadline:
-            try:
-                n = self._poll_live()
-                if n:
-                    print(f"[slm] 本轮发现 {n} 个滚球机会")
-                poll_count += 1
-                # 观察库结算: 每 60s 结一批(独立时间戳, 不依赖 poll_count — pin_live 超时拖慢轮询,
-                # 依赖 poll_count%15 会把 1130 条拖到 2-3h 才结完)
-                if time.time() - last_settle >= 60:
-                    last_settle = time.time()
-                    self._settle_paper_bets()
-                if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
-                    self._check_settled()
-                    self._check_reversion()  # 下注后 30s 复验 BB 价, 尖峰假 EV 标记
-            except Exception as e:
-                print(f"[slm] 轮询异常: {type(e).__name__} {str(e)[:80]}", flush=True)
-            await asyncio.sleep(refresh_every)
+        # WS 推送(G04)后台任务(2026-09-13): 有 Chrome 9222 开着 BB 页时, WS 即时推赔率变化,
+        # 触发 on_g04 → 秒级 EV 计算(不再等 2s HTTP 轮询)。Chrome 没起则 tap 内部 5s 超时后
+        # 自动退出, 回退纯 HTTP 轮询(兜底)。
+        _ws_task = None
+        try:
+            _ws_task = asyncio.create_task(tap_browser_g04(self.on_g04))
+            print("[slm] WS 推送已挂后台(需 Chrome 9222 开着 BB 页; 否则回退 HTTP 轮询)", flush=True)
+        except Exception as e:
+            print(f"[slm] WS 推送启动失败, 回退纯 HTTP 轮询: {type(e).__name__} {e}", flush=True)
+        try:
+            while deadline is None or time.time() < deadline:
+                try:
+                    self.refresh_live_cache()  # 每30s刷新 live_cache(供 on_g04 路径比价)
+                    n = self._poll_live()
+                    if n:
+                        print(f"[slm] 本轮发现 {n} 个滚球机会")
+                    poll_count += 1
+                    # 观察库结算: 每 60s 结一批(独立时间戳, 不依赖 poll_count — pin_live 超时拖慢轮询,
+                    # 依赖 poll_count%15 会把 1130 条拖到 2-3h 才结完)
+                    if time.time() - last_settle >= 60:
+                        last_settle = time.time()
+                        self._settle_paper_bets()
+                    if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
+                        self._check_settled()
+                        self._check_reversion()  # 下注后 30s 复验 BB 价, 尖峰假 EV 标记
+                except Exception as e:
+                    print(f"[slm] 轮询异常: {type(e).__name__} {str(e)[:80]}", flush=True)
+                await asyncio.sleep(refresh_every)
+        finally:
+            if _ws_task:
+                _ws_task.cancel()
 
 
 def main():
