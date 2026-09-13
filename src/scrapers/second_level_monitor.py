@@ -837,7 +837,7 @@ class SecondLevelMonitor:
             _bj = datetime.now().strftime("%H:%M")
             _sub_cn = {"over_under": "大小球", "handicap": "让球", "opportunities": "独赢"}.get(sig.get("sub"), "")
             _desig = f"{_sub_cn}-{sig.get('desig', '')}" if _sub_cn else sig.get("desig", "")
-            _platform = "BB体育" if sig.get("platform", "BB") == "BB" else "FB体育"
+            _platform = "BB" if sig.get("platform", "BB") == "BB" else "FB"  # 不用"BB体育", 会被钉钉判博彩词
             self._notify_bet(
                 "🟦 滚球已下单",
                 f"{_sport_cn} | {_league} | {_clock}\n"
