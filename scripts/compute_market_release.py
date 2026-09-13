@@ -84,6 +84,19 @@ OBS_MATURE_DAYS = 7        # 实盘投一周(7天)后评估提额
 # 新释放盘口当日累计投注额上限(2026-09-12 用户要求): 当天总投注额≤1000, 次日实盘ROI>4% 解除
 DAILY_STAKE_LIMIT = 1000
 
+# 已验证方向(硬编码真edge, 2026-09-13 统一进观察库释放机制): grandfathered 进 observe_released,
+# 固定 cap(不走 150→300 分阶段), 无当日累计上限(limit_removed 恒 True)。之前散落在
+# second_level_monitor._try_live_auto_bet 的硬编码 _bettable, 统一到这里单一事实来源。
+MANUAL_OBSERVE_RELEASE = {
+    "football|ou|小|live": 600,       # 足球小球(+11pp 实盘验证, 主真 edge, LIVE_UNDER_MAX_STAKE)
+    "tennis|1x2|主|live": 100,        # 网球独赢(试探, 攒30笔)
+    "tennis|1x2|客|live": 100,
+    "basketball|ou|大|live": 100,     # 篮球大小分(试探)
+    "basketball|ou|小|live": 100,
+    "basketball|hc|主|live": 100,     # 篮球让分(试探)
+    "basketball|hc|客|live": 100,
+}
+
 DIR_N_MIN = 30              # 方向级赢率采信最小样本量(2026-09-12 15→50→30: 实盘方向样本, 30够)
 
 
@@ -553,6 +566,13 @@ def main():
         if d["winrate"] > d["implied"] + OBS_WINRATE_EDGE_MIN and d["roi"] > 0:
             observe_released.append([sport, sm, dr, scope])
 
+    # 已验证方向(硬编码真edge)统一进释放机制(2026-09-13): grandfathered, 不走 n>200 判据。
+    for _mkey in MANUAL_OBSERVE_RELEASE:
+        _p = _mkey.split("|")
+        _entry = [_p[0], _p[1], _p[2], _p[3]]
+        if _entry not in observe_released:
+            observe_released.append(_entry)
+
     # 释放状态维护 + 投注额 cap 分阶段 + 当日累计上限 + 释放通知(2026-09-12 用户要求)。
     # 状态持久化到 observe_release_state.json: first_released_at/cap/daily_stake/limit_removed。
     obs_state = _load_obs_state()
@@ -564,17 +584,19 @@ def main():
     newly_released = []  # 新释放的盘口(推钉钉通知)
     for (sport, sm, dr, scope) in observe_released:
         key = f"{sport}|{sm}|{dr}|{scope}"
+        _manual = MANUAL_OBSERVE_RELEASE.get(key)  # 已验证方向(固定cap+无日限额, 不走分阶段)
         prev = obs_state.get(key)
         first = (prev or {}).get("first_released_at")
-        cap = (prev or {}).get("cap", OBS_CAP_NEW)
+        cap = _manual if _manual else (prev or {}).get("cap", OBS_CAP_NEW)
         daily_stake = (prev or {}).get("daily_stake", 0)
         daily_date = (prev or {}).get("daily_stake_date", "")
-        limit_removed = (prev or {}).get("limit_removed", False)
+        limit_removed = True if _manual else (prev or {}).get("limit_removed", False)
         if not first:
             first = datetime.now().isoformat()
-            cap = OBS_CAP_NEW
-            newly_released.append([sport, sm, dr, scope])
-        else:
+            if not _manual:
+                cap = OBS_CAP_NEW
+                newly_released.append([sport, sm, dr, scope])
+        elif not _manual:
             try:
                 first_ts = datetime.fromisoformat(str(first)).timestamp()
             except (ValueError, TypeError):

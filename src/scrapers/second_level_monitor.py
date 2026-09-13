@@ -667,19 +667,10 @@ class SecondLevelMonitor:
         _sp_en = BB_SPORT_EN.get(_sport)
         _sm = BB_SUB_TO_SM.get(_sub)
         _cap = None
-        # 1. 观察库释放盘口 → 投(cap 150/300)
+        # 观察库释放盘口(含已验证方向, 2026-09-13 统一进 compute_market_release.MANUAL_OBSERVE_RELEASE) → 投
+        # cap 从 observe_release_caps 读(新释放150/满周300, 已验证方向固定600/100)。
         if _sp_en and _sm:
             _cap = _load_obs_caps().get(f"{_sp_en}|{_sm}|{_dr}|live")
-        # 2. 已验证方向(足球小球/网球独赢/篮球大小让分) → 投(cap 600/100)
-        if _cap is None:
-            _bettable = (
-                (_sport == 1 and _sub == "over_under" and _desig == "小球")
-                or (_sport == 5 and _sub == "opportunities")      # 网球独赢(主/客)
-                or (_sport == 3 and _sub == "over_under")         # 篮球大小分
-                or (_sport == 3 and _sub == "handicap")           # 篮球让分
-            )
-            if _bettable:
-                _cap = LIVE_UNDER_MAX_STAKE if (_sport == 1 and _desig == "小球") else 100
         if _cap is None:
             return
         stake = min(stake, _cap)
