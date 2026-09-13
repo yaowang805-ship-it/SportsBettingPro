@@ -843,7 +843,7 @@ class SecondLevelMonitor:
                 f"{_sport_cn} | {_league} | 滚球{_clock} | 下单 {_bj}\n"
                 f"{sig['match']['home']} vs {sig['match']['away']} | {_desig}\n"
                 f"{_platform} {sig['bb_odds']:.2f} vs 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
-                f"单注 ¥{stake} | 余额 ¥{_bal} | 今日 ¥{self._live_spent:.0f}/{LIVE_BUDGET}")
+                f"单注 ¥{stake} | 余额 ¥{_bal} | 今日已投 ¥{self._live_spent:.0f} | 未结 ¥{self._live_outstanding:.0f}/{LIVE_BUDGET}")
             # Reversion check(2026-09-07): 记下注时 BB 价, 30s 后复验是否尖峰回落(假 EV)
             self._reversion_track[(str(sig["match_id"]), str(market_id), str(sig.get("option_type")))] = {
                 "bb_odds": sig["bb_odds"], "ts": time.time(),
