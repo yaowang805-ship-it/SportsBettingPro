@@ -60,6 +60,10 @@ _CACHE_TTL = 30  # 30 秒内复用(滚球赔率变动快, 不能缓存太久)
 # 滚球公平价缓存(15s): 避免秒级监控每 2s 轮询时反复拉 Pin markets 触发风控
 _FAIR_CACHE = {"ts": 0.0, "data": {}}
 _FAIR_TTL = 15
+# 公平价文件缓存(跨进程共享, 45s): BB 进程每 30s 刷一次, FB 观察库进程直接复用,
+# 避免 FB 每 60s 重复拉 Pin markets(60MB足球+几十联赛 markets) 引起 Pin 额外负载/带宽争抢。
+_FAIR_FILE = ROOT / "data" / "storage" / "pin_live_fair_prices.json"
+_FAIR_FILE_TTL = 45
 
 
 def fetch_live_matchups(sport_ids=LIVE_SPORT_IDS, use_cache=True):
@@ -163,6 +167,16 @@ def fetch_live_fair_prices(sport_ids=LIVE_SPORT_IDS):
     """
     if time.time() - _FAIR_CACHE["ts"] < _FAIR_TTL:
         return _FAIR_CACHE["data"]
+    # 文件缓存(跨进程): FB 观察库进程直接复用 BB 进程刚拉的结果, 不重复拉 Pin markets
+    try:
+        if _FAIR_FILE.exists():
+            fd = json.loads(_FAIR_FILE.read_text())
+            if time.time() - fd.get("ts", 0) < _FAIR_FILE_TTL:
+                _FAIR_CACHE["ts"] = fd["ts"]
+                _FAIR_CACHE["data"] = fd["data"]
+                return fd["data"]
+    except Exception:
+        pass
     live = fetch_live_matchups(sport_ids)
     odds = fetch_live_odds(live)
     result = {}
@@ -212,6 +226,10 @@ def fetch_live_fair_prices(sport_ids=LIVE_SPORT_IDS):
         }
     _FAIR_CACHE["ts"] = time.time()
     _FAIR_CACHE["data"] = result
+    try:
+        _FAIR_FILE.write_text(json.dumps({"ts": time.time(), "data": result}, ensure_ascii=False))
+    except Exception:
+        pass
     return result
 
 
