@@ -208,13 +208,16 @@ def _winrate_threshold(n):
 
 
 def _winrate_agg(bets, key_fn):
-    """按 key 聚合实盘赢率 vs 隐含: 赢率=won/(won+lost) 去 void/push; 隐含=1/平均Pin公平价。
+    """按 key 聚合实盘赢率 vs 隐含: 赢率=won/(won+lost) 去 void/push; 隐含=平均(1/Pin公平价)。
 
     2026-09-12 修正隐含基准: 之前用 bb_odds(软书价)算隐含, 判的是「BB价是否+EV」;
     但「真溢价」的定义是「真实赢率 > Pin公平价隐含」(Pin是sharp基准, Pin低估才是市场错误定价)。
     用 BB 赔率算隐含会高估 edge 1~4pp, 把「BB自己定价粗」误判成真溢价(假溢价源头)。改用 fair_price。
+    2026-09-13 修口径: 隐含必须是 mean(1/fair), 不是 1/mean(fair)。1/x 是凸函数,
+    1/mean(fair) < mean(1/fair), 旧口径系统性低估隐含、高估 edge(赔率方差越大虚高越多,
+    1x2 独赢冷门多实测虚高 +13.5pp), 会误放行「BB定价粗」假溢价。
     """
-    by = defaultdict(lambda: {"won": 0, "lost": 0, "odds_sum": 0.0})
+    by = defaultdict(lambda: {"won": 0, "lost": 0, "inv_sum": 0.0})
     for b in bets:
         r = b.get("result")
         if r not in ("won", "lost"):
@@ -233,17 +236,16 @@ def _winrate_agg(bets, key_fn):
             by[k]["won"] += 1
         else:
             by[k]["lost"] += 1
-        by[k]["odds_sum"] += o
+        by[k]["inv_sum"] += 1.0 / o
     out = {}
     for k, d in by.items():
         n = d["won"] + d["lost"]
         if n == 0:
             continue
-        avg_odds = d["odds_sum"] / n
         out[k] = {
             "n": n,
             "winrate": d["won"] / n * 100.0,
-            "implied": 1.0 / avg_odds * 100.0,
+            "implied": d["inv_sum"] / n * 100.0,
         }
     return out
 
@@ -338,11 +340,11 @@ def _read_live_paper_bets():
 def load_observe_winrate():
     """观察库赢率 vs 隐含(合并滚球+早盘纸面结算): {(sport,sub_market,direction,scope): {n,winrate,implied}}。
 
-    判据(2026-09-12): 赢率 = won/(won+lost) 去 void/push; 隐含 = 1/平均赔率。
+    判据(2026-09-12): 赢率 = won/(won+lost) 去 void/push; 隐含 = 平均(1/赔率)。
     粒度「运动×盘口×方向×来源」: 早盘聚合所有联赛(scope=early), 滚球(scope=live);
     方向用 _direction 归一化(主/客/平/大/小), 让 ou 大/小、hc 主/客分开。
     """
-    by = defaultdict(lambda: {"won": 0, "lost": 0, "odds_sum": 0.0, "stake": 0.0, "profit": 0.0})
+    by = defaultdict(lambda: {"won": 0, "lost": 0, "inv_sum": 0.0, "stake": 0.0, "profit": 0.0})
 
     def _feed(k, result, odds, stake, profit):
         if result not in ("won", "lost") or not odds or odds <= 1.0:
@@ -352,7 +354,7 @@ def load_observe_winrate():
             d["won"] += 1
         else:
             d["lost"] += 1
-        d["odds_sum"] += odds
+        d["inv_sum"] += 1.0 / odds
         d["stake"] += stake
         d["profit"] += profit
 
@@ -376,11 +378,10 @@ def load_observe_winrate():
         n = d["won"] + d["lost"]
         if n == 0:
             continue
-        avg_odds = d["odds_sum"] / n
         out[k] = {
             "n": n,
             "winrate": d["won"] / n * 100.0,
-            "implied": 1.0 / avg_odds * 100.0,
+            "implied": d["inv_sum"] / n * 100.0,
             "roi": d["profit"] / d["stake"] * 100.0 if d["stake"] > 0 else 0.0,
         }
     return out
