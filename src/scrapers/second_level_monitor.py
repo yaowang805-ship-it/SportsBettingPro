@@ -248,6 +248,17 @@ def _is_settleable(desig, line):
     return False
 
 
+def _bet_score(b):
+    """下注瞬间比分 [主,客] → (hb, ab)。无(旧记录/新盘口未带)则回退 (0,0)=全场比分。"""
+    v = b.get("bsc")
+    if isinstance(v, list) and len(v) >= 2:
+        try:
+            return int(v[0]), int(v[1])
+        except (ValueError, TypeError):
+            pass
+    return 0, 0
+
+
 class SecondLevelMonitor:
     def __init__(self, threshold=3.0, on_signal=None, auto_bet=False, stake=None):
         self.threshold = threshold
@@ -348,6 +359,7 @@ class SecondLevelMonitor:
                 "sport": sig.get("sport", ""),
                 "home": sig["match"].get("home", ""), "away": sig["match"].get("away", ""),
                 "designation": sig["desig"], "sub": sig.get("sub"), "line": sig.get("line"),
+                "bsc": sig.get("bsc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用)
                 "bb_odds": sig["bb_odds"], "fair": sig["fair"], "ev": sig["ev"],
                 "stake": sig.get("_stake", 0), "settled": False, "result": None, "profit": None,
             })
@@ -416,9 +428,13 @@ class SecondLevelMonitor:
                 if line is None:
                     continue  # hc/ou 缺 line, 跳(旧记录)
                 if desig == "让球主胜":
-                    diff = (home + line) - away
+                    # 让球按「当前比分让球」(2026-09-13 修根因): BB 滚球让球线相对下注瞬间比分,
+                    # 之前拿全场终局比分结算, 把「输/退款」误判「赢」→ 让球主胜赢率虚高到 57%(实盘40%)。
+                    hb, ab = _bet_score(b)
+                    diff = ((home - hb) + line) - (away - ab)
                 elif desig == "让球客胜":
-                    diff = (away + line) - home
+                    hb, ab = _bet_score(b)
+                    diff = ((away - ab) + line) - (home - hb)
                 elif desig == "大球":
                     diff = (home + away) - line
                 else:  # 小球
@@ -589,7 +605,9 @@ class SecondLevelMonitor:
                    "match": {"home": lv.get("home_cn", "") or lv["home"], "away": lv.get("away_cn", "") or lv["away"], "sport": lv.get("sport", ""), "league_cn": lv.get("league_cn", "") or lv.get("league_name", "滚球"), "mc": lv.get("mc", 0)},
                    "pin_matchup_id": lv.get("pin_matchup_id"),
                    "league_id": lv.get("league_id"),
-                   "max_stake": lv.get("max_stake", 0)}
+                   "max_stake": lv.get("max_stake", 0),
+                   "bsc": lv.get("sc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用, 2026-09-13)
+            }
             oid = str(it.get("oid") or data.get("id") or "")
             parts = oid.split("-")
             if len(parts) >= 2 and parts[0].isdigit() and parts[-1].isdigit():

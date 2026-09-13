@@ -263,11 +263,27 @@ def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6)):
                             "line": _parse_line(op.get("li")),
                             "direction": _TY_TO_DIR.get(op.get("ty")),
                         })
+            # 当前比分(下注瞬间比分): 滚球让球按「当前比分让球」结算要用(2026-09-13 修根因)。
+            # nsg 里 pe=全场码(SCORE_PE_BY_SID) + tyg=5 是比分, sc=[主,客]。
+            sc = None
+            try:
+                from src.scrapers.bb_api_fetcher import SCORE_PE_BY_SID
+                pe_full = SCORE_PE_BY_SID.get(sid)
+                if pe_full:
+                    for sg in (m.get("nsg") or []):
+                        if sg.get("pe") == pe_full and sg.get("tyg") == 5:
+                            scv = sg.get("sc") or []
+                            if len(scv) >= 2:
+                                sc = [int(scv[0]), int(scv[1])]
+                            break
+            except Exception:
+                sc = None
             result[int(m.get("id"))] = {
                 "home_en": ts[0].get("na", ""), "away_en": ts[1].get("na", ""),
                 "home_cn": "", "away_cn": "", "league_cn": "",
                 "sport": sid, "markets": markets,
                 "mc": (m.get("mc") or {}).get("s", 0),
+                "sc": sc,  # [主,客] 当前比分(让球按当前比分结算用)
             }
         # 2. CMN: 补中文队名 + 中文联赛名(通知展示用)
         for m in _fetch(sid, "CMN"):
@@ -459,6 +475,7 @@ def match_live_bb_pin():
                 "max_stake": pv.get("max_stake", 0),
                 "sport": b["sport"],
                 "mc": b.get("mc", 0),  # 比赛进行秒数(纯比赛时间)
+                "sc": b.get("sc"),  # [主,客] 当前比分(下注瞬间, 让球按当前比分结算用)
             }
     return result
 
