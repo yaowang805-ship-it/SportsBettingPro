@@ -1419,10 +1419,12 @@ class PipelineOrchestrator:
             # 三维释放已发现 dc客临场+73.4%/1x2平临场+24% 是真edge, 值得高频。
             # 提速到16线程后一轮~1.2min, 5min间隔可行(间隔>耗时, 不被互斥锁跳过)。
             # Pin 瞬时速率仍 12req/s 限速内, 只增请求总量不增瞬时, 风控风险低。
-            #   far 24-72h: 10min(早盘真edge +2.96%)
+            # 2026-09-14 早盘降频(降 Pin 风控): far 24-72h 10min→15min(最早盘变化慢, 降频无感);
+            # near/urgent 是临场真 edge 窗口, 保持不动。
+            #   far 24-72h: 15min(早盘真edge +2.96%)
             #   near 6-24h: 6min
             #   urgent <6h: 5min(临场真edge格子, 提高频次)
-            for tw, interval, label in [("far", 600, "早盘24-72h"), ("near", 360, "中程6-24h"), ("urgent", 300, "临场<6h")]:
+            for tw, interval, label in [("far", 900, "早盘24-72h"), ("near", 360, "中程6-24h"), ("urgent", 300, "临场<6h")]:
                 last_key = f"_last_inc_{tw}"
                 last_val = getattr(self, last_key, None)
                 if last_val is None:
