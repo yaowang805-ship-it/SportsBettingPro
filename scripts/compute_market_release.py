@@ -87,14 +87,15 @@ DAILY_STAKE_LIMIT = 1000
 # 已验证方向(硬编码真edge, 2026-09-13 统一进观察库释放机制): grandfathered 进 observe_released,
 # 固定 cap(不走 150→300 分阶段), 无当日累计上限(limit_removed 恒 True)。之前散落在
 # second_level_monitor._try_live_auto_bet 的硬编码 _bettable, 统一到这里单一事实来源。
+# 赔率区间用 "*" 表示"所有区间"(已验证方向不分区间的历史口径)。
 MANUAL_OBSERVE_RELEASE = {
-    "football|ou|小|live": 600,       # 足球小球(+11pp 实盘验证, 主真 edge, LIVE_UNDER_MAX_STAKE)
-    "tennis|1x2|主|live": 100,        # 网球独赢(试探, 攒30笔)
-    "tennis|1x2|客|live": 100,
-    "basketball|ou|大|live": 100,     # 篮球大小分(试探)
-    "basketball|ou|小|live": 100,
-    "basketball|hc|主|live": 100,     # 篮球让分(试探)
-    "basketball|hc|客|live": 100,
+    "football|ou|小|*|live": 600,       # 足球小球(+11pp 实盘验证, 主真 edge, LIVE_UNDER_MAX_STAKE)
+    "tennis|1x2|主|*|live": 100,        # 网球独赢(试探, 攒30笔)
+    "tennis|1x2|客|*|live": 100,
+    "basketball|ou|大|*|live": 100,     # 篮球大小分(试探)
+    "basketball|ou|小|*|live": 100,
+    "basketball|hc|主|*|live": 100,     # 篮球让分(试探)
+    "basketball|hc|客|*|live": 100,
 }
 
 DIR_N_MIN = 30              # 方向级赢率采信最小样本量(2026-09-12 15→50→30: 实盘方向样本, 30够)
@@ -138,6 +139,23 @@ def _direction(desig, sub_market):
     if "主" in d or "home" in dl:
         return "主"
     return "其他"
+
+
+def _odds_interval(odds):
+    """BB 赔率 → 赔率区间标签(1.0-2.0/2.0-3.0/3.0-5.0/>5.0)。
+
+    2026-09-13 用户要求: 释放/拦截粒度加赔率区间维度。favorite-longshot bias
+    (冷门被高估) 使同一盘口不同赔率区间 edge 分化巨大, 必须分区间判断。
+    """
+    if odds is None or odds <= 1.0:
+        return "?"
+    if odds < 2.0:
+        return "1.0-2.0"
+    if odds < 3.0:
+        return "2.0-3.0"
+    if odds < 5.0:
+        return "3.0-5.0"
+    return ">5.0"
 
 
 def _window(match_epoch, push_ts):
@@ -352,11 +370,11 @@ def _read_live_paper_bets():
 
 
 def load_observe_winrate():
-    """观察库赢率 vs 隐含(合并滚球+早盘纸面结算): {(sport,sub_market,direction,scope): {n,winrate,implied}}。
+    """观察库赢率 vs 隐含(合并滚球+早盘纸面结算): {(sport,sub_market,direction,odds_interval,scope): {n,winrate,implied,roi}}。
 
     判据(2026-09-12): 赢率 = won/(won+lost) 去 void/push; 隐含 = 平均(1/赔率)。
-    粒度「运动×盘口×方向×来源」: 早盘聚合所有联赛(scope=early), 滚球(scope=live);
-    方向用 _direction 归一化(主/客/平/大/小), 让 ou 大/小、hc 主/客分开。
+    粒度「运动×盘口×方向×赔率区间×来源」: 早盘聚合所有联赛(scope=early), 滚球(scope=live);
+    方向用 _direction 归一化; 赔率区间用 _odds_interval(BB赔率分4档)。
     """
     by = defaultdict(lambda: {"won": 0, "lost": 0, "inv_sum": 0.0, "stake": 0.0, "profit": 0.0})
 
@@ -374,7 +392,8 @@ def load_observe_winrate():
 
     for b in _read_paper_bets():
         sm = b.get("sub_market") or "?"
-        _feed((b.get("sport") or "?", sm, _direction(b.get("designation"), sm), SCOPE_EARLY),
+        _iv = _odds_interval(_f(b.get("bb_odds")))
+        _feed((b.get("sport") or "?", sm, _direction(b.get("designation"), sm), _iv, SCOPE_EARLY),
               b.get("result"), _f(b.get("fair_price")) or _f(b.get("bb_odds")),
               _f(b.get("stake")) or 0, _f(b.get("profit")) or 0)
 
@@ -383,7 +402,8 @@ def load_observe_winrate():
         sm = BB_SUB_MAP.get(b.get("sub"))
         if not sport or not sm:
             continue
-        _feed((sport, sm, _direction(b.get("designation"), sm), SCOPE_LIVE),
+        _iv = _odds_interval(_f(b.get("bb_odds")))
+        _feed((sport, sm, _direction(b.get("designation"), sm), _iv, SCOPE_LIVE),
               b.get("result"), _f(b.get("fair")) or _f(b.get("bb_odds")),
               _f(b.get("stake")) or 0, _f(b.get("profit")) or 0)
 
@@ -557,19 +577,25 @@ def main():
                 league_blocked.append([sport, lg, sm])
 
     # 观察库释放(2026-09-12 用户要求): 结算样本 n>100 且 赢率>隐含 → 释放。
-    # 粒度「运动×盘口×方向×来源」(聚合联赛+分方向), 早盘/滚球分开(edge 方向相反不能混)。
+    # 粒度「运动×盘口×方向×赔率区间×来源」(2026-09-13 加赔率区间): 早盘聚合所有联赛(scope=early),
+    # 滚球(scope=live); 方向用 _direction 归一化, 赔率区间用 _odds_interval 分4档。
+    # 每个赔率区间独立判据: n>200 + 赢率>隐含 + ROI>0 → 释放; 否则 → 拦截(表现差不投)。
     observe_released = []
-    for (sport, sm, dr, scope), d in sorted(obs_winrate.items()):
+    observe_blocked = []
+    for (sport, sm, dr, interval, scope), d in sorted(obs_winrate.items()):
         if d["n"] < OBS_N_MIN:
             continue
-        # 释放条件(2026-09-12 用户要求): 赢率>隐含 且 ROI>0。ROI>0 防「高赔率少数命中赢率虚高但ROI负」的假正(如独赢主胜+12pp但ROI-3%)。
+        # 释放条件: 赢率>隐含 且 ROI>0。ROI>0 防「高赔率少数命中赢率虚高但ROI负」的假正。
         if d["winrate"] > d["implied"] + OBS_WINRATE_EDGE_MIN and d["roi"] > 0:
-            observe_released.append([sport, sm, dr, scope])
+            observe_released.append([sport, sm, dr, interval, scope])
+        else:
+            # n>200 但不满足释放条件 → 拦截(表现差的赔率区间不投)。
+            observe_blocked.append([sport, sm, dr, interval, scope])
 
     # 已验证方向(硬编码真edge)统一进释放机制(2026-09-13): grandfathered, 不走 n>200 判据。
     for _mkey in MANUAL_OBSERVE_RELEASE:
         _p = _mkey.split("|")
-        _entry = [_p[0], _p[1], _p[2], _p[3]]
+        _entry = [_p[0], _p[1], _p[2], _p[3], _p[4]]
         if _entry not in observe_released:
             observe_released.append(_entry)
 
@@ -582,8 +608,8 @@ def main():
     observe_release_caps = {}
     new_state = {}
     newly_released = []  # 新释放的盘口(推钉钉通知)
-    for (sport, sm, dr, scope) in observe_released:
-        key = f"{sport}|{sm}|{dr}|{scope}"
+    for (sport, sm, dr, interval, scope) in observe_released:
+        key = f"{sport}|{sm}|{dr}|{interval}|{scope}"
         _manual = MANUAL_OBSERVE_RELEASE.get(key)  # 已验证方向(固定cap+无日限额, 不走分阶段)
         prev = obs_state.get(key)
         first = (prev or {}).get("first_released_at")
@@ -595,7 +621,7 @@ def main():
             first = datetime.now().isoformat()
             if not _manual:
                 cap = OBS_CAP_NEW
-                newly_released.append([sport, sm, dr, scope])
+                newly_released.append([sport, sm, dr, interval, scope])
         elif not _manual:
             try:
                 first_ts = datetime.fromisoformat(str(first)).timestamp()
@@ -631,6 +657,7 @@ def main():
         "league_released": league_released,
         "league_blocked": league_blocked,
         "observe_released": observe_released,
+        "observe_blocked": observe_blocked,
         "observe_release_caps": observe_release_caps,
         "direction_released": direction_released,
         "direction_blocked": direction_blocked,

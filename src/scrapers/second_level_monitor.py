@@ -101,6 +101,47 @@ def _load_obs_caps():
         return {}
 
 
+_obs_blocked_cache = None
+_obs_blocked_mtime = 0.0
+
+
+def _load_obs_blocked():
+    """读 observe_blocked(运动×盘口×方向×赔率区间×来源 的拦截清单), 带 mtime 缓存。
+
+    2026-09-13 用户要求: n>200 但表现差(edge<0或ROI<0)的赔率区间不投。
+    返回 set of "sport|sm|dr|interval|scope"。
+    """
+    global _obs_blocked_cache, _obs_blocked_mtime
+    if not MARKET_RELEASE_FILE.exists():
+        return set()
+    try:
+        m = MARKET_RELEASE_FILE.stat().st_mtime
+        if _obs_blocked_cache is None or m != _obs_blocked_mtime:
+            _raw = (json.loads(MARKET_RELEASE_FILE.read_text()) or {}).get("observe_blocked", []) or []
+            _obs_blocked_cache = {"|".join(map(str, x)) for x in _raw}
+            _obs_blocked_mtime = m
+        return _obs_blocked_cache
+    except Exception:
+        return set()
+
+
+def _odds_interval(odds):
+    """BB 赔率 → 赔率区间(与 compute_market_release._odds_interval 同口径)。"""
+    try:
+        o = float(odds)
+    except (TypeError, ValueError):
+        return "?"
+    if o <= 1.0:
+        return "?"
+    if o < 2.0:
+        return "1.0-2.0"
+    if o < 3.0:
+        return "2.0-3.0"
+    if o < 5.0:
+        return "3.0-5.0"
+    return ">5.0"
+
+
 _release_state_cache = None
 _release_state_mtime = 0.0
 
