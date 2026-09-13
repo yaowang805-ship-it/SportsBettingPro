@@ -708,16 +708,29 @@ class SecondLevelMonitor:
         _sp_en = BB_SPORT_EN.get(_sport)
         _sm = BB_SUB_TO_SM.get(_sub)
         _cap = None
+        _cap_key = None
         # 观察库释放盘口(含已验证方向, 2026-09-13 统一进 compute_market_release.MANUAL_OBSERVE_RELEASE) → 投
-        # cap 从 observe_release_caps 读(新释放150/满周300, 已验证方向固定600/100)。
+        # 2026-09-13 加赔率区间: 先查拦截(该区间 n>200 表现差则不投), 再查释放(已验证方向"*" 或 该区间)。
         if _sp_en and _sm:
-            _cap = _load_obs_caps().get(f"{_sp_en}|{_sm}|{_dr}|live")
+            _base = f"{_sp_en}|{_sm}|{_dr}"
+            _iv = _odds_interval(sig.get("bb_odds"))
+            if f"{_base}|{_iv}|live" in _load_obs_blocked():
+                print(f"  🚫 赔率区间{_iv}已拦截(n>200表现差), 跳过 "
+                      f"{sig['match']['home']} vs {sig['match']['away']} {sig['desig']}", flush=True)
+                return
+            _caps = _load_obs_caps()
+            _cap = _caps.get(f"{_base}|*|live")  # 已验证方向(所有区间)
+            if _cap is not None:
+                _cap_key = f"{_base}|*|live"
+            else:
+                _cap = _caps.get(f"{_base}|{_iv}|live")  # 该赔率区间单独释放
+                _cap_key = f"{_base}|{_iv}|live"
         if _cap is None:
             return
         stake = min(stake, _cap)
         # 当日累计投注额上限(2026-09-12 用户要求): 观察库释放且未解除限制的盘口, 当日累计≤1000
-        if _sp_en and _sm:
-            _rs = _load_release_state().get(f"{_sp_en}|{_sm}|{_dr}|live", {})
+        if _cap_key:
+            _rs = _load_release_state().get(_cap_key, {})
             if not _rs.get("limit_removed", False):
                 _today = datetime.now().strftime("%Y-%m-%d")
                 _daily_stake = _rs.get("daily_stake", 0) if _rs.get("daily_stake_date", "") == _today else 0
@@ -784,7 +797,7 @@ class SecondLevelMonitor:
             self._save_live_spent()
             # 更新释放盘口的当日累计投注额(2026-09-12 用户要求: 当日累计≤1000)
             if _sp_en and _sm:
-                _update_daily_stake(f"{_sp_en}|{_sm}|{_dr}|live", stake)
+                _update_daily_stake(_cap_key, stake)
             print(f"  ✅ 滚球下单成功 {tag} | 注额¥{stake} | 累计¥{self._live_spent:.0f}/{LIVE_BUDGET}", flush=True)
             # 每笔成功下单都推钉钉(不限频) + 显示账户总余额
             from src.betting.bb_auto_bet import fetch_balance as _fetch_balance
