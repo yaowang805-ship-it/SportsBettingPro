@@ -21,8 +21,10 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 _UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36")
 
-# 有滚球的主要运动(足球/篮球/棒球/冰球/网球/电竞)
-LIVE_SPORT_IDS = (29, 4, 3, 19, 33, 12)
+# 有滚球的主要运动(足球/篮球/棒球/冰球/网球/美式足球)。
+# 2026-09-13 修: 旧值 12 是 CS2 电竞(非真运动, 也不在 SPORT_IDS 映射里), 误当运动拉进来;
+# 美式足球正确 id 是 15(实测 Pin 有 NCAA 美足 live 10 场), 之前漏拉 → BB 美足 live 无法比价。
+LIVE_SPORT_IDS = (29, 4, 3, 19, 33, 15)
 
 # BB 盘口 (mty, pe) → 子盘口 key。mty=盘口类型码, pe=period(1001全场/1002半场)。
 # 必须 (mty, pe) 双键: 上半场1x2(1005,1002) 与 全场1x2(1005,1001) 是不同盘口。
