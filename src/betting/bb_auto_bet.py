@@ -286,14 +286,16 @@ def fetch_current_odds(market_id, match_id, option_type, token=None, domain=None
 
 
 def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domain=None,
-                     match_id=None, check_limit=True, verify_price=True, max_drop_pct=5.0):
+                     match_id=None, check_limit=True, verify_price=True, max_rise_pct=5.0):
     """单关下单。返回 (code, order_id, message)。
 
     code=0 成功; code=5 参数错; code=14010 token过期; code=3015 盘口关闭;
-    code=-3 注额超限; code=-4 赔率漂移超阈值(验价拦截); code=-1 无 token; code=-2 异常。
+    code=-3 注额超限; code=-4 赔率逆向漂移超阈值(验价拦截, 逆向选择); code=-1 无 token; code=-2 异常。
 
     match_id: 比赛 id, 用于注额上限 + 验价。verify_price=False 跳过验价。
-    max_drop_pct: 最新赔率比扫描赔率跌超过此百分比 → 放弃下单(默认5%)。
+    max_rise_pct: 最新赔率比扫描赔率【升高】超过此百分比 → 放弃下单(默认5%)。
+        2026-09-14 方向修正: 原逻辑是"跌超阈值放弃", 但方向反了——BB价回落(往Pin靠)=正CLV
+        该投(实证 spike 回落赢 +32.5% ROI), BB价升高(背离Pin)=逆向选择该放弃。见 live-clv-tracking-20260914。
     """
     token = token or read_token()
     domain = domain or read_domain()
@@ -306,16 +308,17 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
         if not ok:
             return -3, None, reason
 
-    # 下注前验价(2026-09-05): 拉最新赔率, 跌超阈值则放弃(临时高价假机会)
+    # 下注前验价(2026-09-14 方向修正): 拉最新赔率, 升高超阈值则放弃(逆向选择)。
+    # 原"跌超阈值放弃"方向反了: 回落=正CLV该投, 升高=逆向选择该放弃。
     final_odds = odds
     if verify_price and match_id is not None:
         cur = fetch_current_odds(market_id, match_id, option_type, token, domain)
         if cur:
             cur_odds = cur[0]
             if cur_odds and float(odds) > 0:
-                drop = (float(odds) - float(cur_odds)) / float(odds) * 100
-                if drop > max_drop_pct:
-                    return -4, None, f"赔率漂移{drop:.1f}%(扫描{odds}→现{cur_odds}), 放弃"
+                rise = (float(cur_odds) - float(odds)) / float(odds) * 100
+                if rise > max_rise_pct:
+                    return -4, None, f"赔率逆向漂移{rise:.1f}%(扫描{odds}→现{cur_odds}), 放弃"
                 final_odds = cur_odds  # 用最新赔率下单
 
     body = {
