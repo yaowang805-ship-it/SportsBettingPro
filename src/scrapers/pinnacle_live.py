@@ -453,32 +453,52 @@ def match_live_bb_pin():
     """匹配 BB 滚球 ↔ Pin 滚球(英文队名), 返回 {bb_match_id: {pin_matchup_id, home, away, moneyline}}。"""
     bb = fetch_bb_live_matches()
     pin = fetch_live_fair_prices()
-    # Pin 按 (norm_home, norm_away) 索引
+    # Pin 按 (norm_home, norm_away) 索引(精确匹配 O(1))
     pin_by_name = {}
+    pin_list = []
     for mid, v in pin.items():
         pin_by_name[(_norm(v["home"]), _norm(v["away"]))] = (mid, v)
+        pin_list.append((mid, v))
+
+    def _build(bmid, b, pin_mid, pv):
+        return {
+            "pin_matchup_id": pin_mid,
+            "home": pv["home"], "away": pv["away"],
+            "home_cn": b.get("home_cn", "") or pv["home"],  # BB 中文队名(展示), 兜底 Pin 英文
+            "away_cn": b.get("away_cn", "") or pv["away"],
+            "moneyline": pv["moneyline"],  # [主, 和, 客] 十进制
+            "spread": pv.get("spread", {}),
+            "total": pv.get("total", {}),
+            "league_id": pv.get("league_id"),
+            "league_name": pv.get("league_name", ""),  # 联赛名(通知展示用)
+            "league_cn": b.get("league_cn", "") or pv.get("league_name", ""),  # BB 中文联赛名
+            "max_stake": pv.get("max_stake", 0),
+            "sport": b["sport"],
+            "mc": b.get("mc", 0),  # 比赛进行秒数(纯比赛时间)
+            "sc": b.get("sc"),  # [主,客] 当前比分(下注瞬间, 让球按当前比分结算用)
+        }
+
     result = {}
     for bmid, b in bb.items():
         key = (_norm(b["home_en"]), _norm(b["away_en"]))
         hit = pin_by_name.get(key)
         if hit:
-            pin_mid, pv = hit
-            result[bmid] = {
-                "pin_matchup_id": pin_mid,
-                "home": pv["home"], "away": pv["away"],
-                "home_cn": b.get("home_cn", "") or pv["home"],  # BB 中文队名(展示), 兜底 Pin 英文
-                "away_cn": b.get("away_cn", "") or pv["away"],
-                "moneyline": pv["moneyline"],  # [主, 和, 客] 十进制
-                "spread": pv.get("spread", {}),
-                "total": pv.get("total", {}),
-                "league_id": pv.get("league_id"),
-                "league_name": pv.get("league_name", ""),  # 联赛名(通知展示用)
-                "league_cn": b.get("league_cn", "") or pv.get("league_name", ""),  # BB 中文联赛名
-                "max_stake": pv.get("max_stake", 0),
-                "sport": b["sport"],
-                "mc": b.get("mc", 0),  # 比赛进行秒数(纯比赛时间)
-                "sc": b.get("sc"),  # [主,客] 当前比分(下注瞬间, 让球按当前比分结算用)
-            }
+            result[bmid] = _build(bmid, b, *hit)
+            continue
+        # 精确匹配失败 → 模糊兜底(美足全名"Nebraska Cornhuskers" vs Pin短名"Nebraska"、
+        # 网球个人名"Sun Qian" vs "Qian Sun" 顺序反转)。用 _match_score(子串/rapidfuzz/token反转)。
+        h1, a1 = b["home_en"], b["away_en"]
+        best = None
+        best_sc = 0.0
+        for mid, pv in pin_list:
+            sc = _match_score(h1, a1, pv["home"], pv["away"])
+            if sc > best_sc:
+                best_sc = sc
+                best = (mid, pv)
+            if sc >= 1.0:
+                break
+        if best and best_sc >= 0.5:
+            result[bmid] = _build(bmid, b, *best)
     return result
 
 
