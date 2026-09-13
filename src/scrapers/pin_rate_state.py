@@ -101,7 +101,12 @@ def reserve(min_interval, burst_limit, burst_window, priority="high"):
                 burst_start, burst_count = next_slot, 0
 
             slot = max(next_slot, now)
-            if priority == "low":
+            if priority == "live":
+                # 滚球秒级最高优先级: 立即取号不排队(主扫描/CLV 让路), 但仍写 next_slot
+                # (new_next = slot + min_interval) 让后续请求排队, 保证总速率不因滚球放行失控。
+                # 滚球自己低频(30s 缓存), 立即取号不会超突发上限。
+                slot = now
+            elif priority == "low":
                 # 后台任务额外自我限速, 只吃扫描剩下的带宽
                 slot = max(slot, low_next_slot)
 

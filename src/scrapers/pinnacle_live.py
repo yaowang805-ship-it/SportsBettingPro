@@ -66,6 +66,30 @@ _FAIR_FILE = ROOT / "data" / "storage" / "pin_live_fair_prices.json"
 _FAIR_FILE_TTL = 45
 
 
+def _live_reserve():
+    """滚球秒级 Pin 请求走跨进程共享限速, 最高优先级(主扫描/CLV 让路)。
+
+    2026-09-14: 之前滚球直接 SESSION.get() 不经过 pin_rate_state, 和主扫描从同一个节点
+    出口 IP 抢 Pin —— 是 Cloudflare 反复封 IP 的缺口之一。这里接入共享发号, priority=live
+    立即取号(几乎不等待), 但会写 next_slot 让主扫描/CLV 排队让路。
+    fail-open: 任何异常都放行, 绝不阻塞滚球秒级链路。
+    """
+    try:
+        from src.scrapers import pin_rate_state
+        from src.scrapers.pinnacle_api import (
+            _current_min_interval, _REQUEST_BURST_LIMIT, _REQUEST_BURST_WINDOW)
+        allowed, wait, reason = pin_rate_state.reserve(
+            _current_min_interval(), _REQUEST_BURST_LIMIT, _REQUEST_BURST_WINDOW,
+            priority="live")
+        if allowed is False:
+            # 熔断/封禁冷却中: 不取号, 让请求自然失败(调用方已有回退缓存逻辑)
+            return
+        if wait > 0:
+            time.sleep(wait)
+    except Exception:
+        pass  # 共享层不可用则 fail-open, 退回无协调(和之前行为一致)
+
+
 def fetch_live_matchups(sport_ids=LIVE_SPORT_IDS, use_cache=True):
     """拉 /sports/{id}/matchups, 过滤 isLive=True 的比赛。
 
@@ -98,6 +122,7 @@ def fetch_live_matchups(sport_ids=LIVE_SPORT_IDS, use_cache=True):
         _timeout = T_FOOTBALL if sid == FOOTBALL_SID else T_OTHER
         _t0 = time.time()
         try:
+            _live_reserve()
             r = SESSION.get(f"{API_BASE}/sports/{sid}/matchups", timeout=_timeout)
             _dt = time.time() - _t0
             ms = r.json()
@@ -148,6 +173,7 @@ def fetch_live_odds(live_matchups):
     odds = {}
     for lid, mids in live_leagues.items():
         try:
+            _live_reserve()
             r = SESSION.get(f"{API_BASE}/leagues/{lid}/markets/straight", timeout=30)
             mks = r.json()
             for k in mks:
@@ -540,6 +566,7 @@ def reverify_live_markets(pin_matchup_id, league_id):
     from src.scrapers.pinnacle_api import SESSION, API_BASE, _load_cookie
     _load_cookie()
     try:
+        _live_reserve()
         r = SESSION.get(f"{API_BASE}/leagues/{league_id}/markets/straight", timeout=30)
         mks = r.json()
         result = {"moneyline": None, "spread": {}, "total": {}}
