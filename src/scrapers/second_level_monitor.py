@@ -41,6 +41,7 @@ MIN_STAKE = 30         # stake<30 拦截铁律
 # 滚球实盘(2026-09-07 起只投小球under, 2026-09-09 放大预算: 小球累计40笔ROI+14.2%稳定正)。滚动预算(结算后释放额度)。
 LIVE_BUDGET = 3000  # 2026-09-10 用户要求: 2000 → 3000(滚球大小球+15%是唯一真edge, 集中投入)
 LIVE_BUDGET_FILE = ROOT / "data" / "storage" / "live_bet_budget.json"
+DRAWDOWN_STOP_PNL = 1000  # 回撤熔断(2026-09-13): 最近7天滚球实盘累计亏超¥1000(=20%BANKROLL) → 半仓
 LIVE_PAPER_FILE = ROOT / "data" / "storage" / "live_paper_bets.json"
 LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 已推送过结算的 order_id
 
@@ -140,6 +141,33 @@ def _odds_interval(odds):
     if o < 5.0:
         return "3.0-5.0"
     return ">5.0"
+
+
+_recent_pnl_cache = {"ts": 0.0, "pnl": 0.0}
+
+
+def _recent_pnl(days=7):
+    """最近 days 天滚球实盘盈亏(BB 官方结算订单 uwl 求和)。带 5min 缓存, 供回撤熔断用。"""
+    global _recent_pnl_cache
+    if time.time() - _recent_pnl_cache["ts"] < 300:
+        return _recent_pnl_cache["pnl"]
+    try:
+        from scripts.daily_review import _fetch_settled_orders
+        orders = _fetch_settled_orders() or []
+        import datetime as _dt
+        cutoff = (_dt.datetime.now() - _dt.timedelta(days=days)).timestamp() * 1000
+        pnl = 0.0
+        for o in orders:
+            if (o.get("mt") or 0) < cutoff:
+                continue
+            try:
+                pnl += float(o.get("uwl", 0))
+            except (TypeError, ValueError):
+                pass
+        _recent_pnl_cache = {"ts": time.time(), "pnl": pnl}
+    except Exception:
+        pnl = _recent_pnl_cache["pnl"]
+    return pnl
 
 
 _release_state_cache = None
@@ -916,6 +944,7 @@ class SecondLevelMonitor:
         """EV-Kelly 半凯利: stake = BANKROLL × 0.5 × (ev/100) / (odds-1), 封顶 ¥300。
 
         --stake 显式给固定注额(>0)时用固定值; 否则按 EV-Kelly(秒级默认)。
+        回撤熔断(2026-09-13): 最近7天滚球实盘累计亏超 DRAWDOWN_STOP_PNL → 半仓。
         """
         if self.stake and self.stake > 0:
             return self.stake
@@ -925,6 +954,10 @@ class SecondLevelMonitor:
             return 0
         stake = BANKROLL * KELLY_FRACTION * edge / (odds - 1)
         stake = int(min(max(stake, MIN_STAKE), MAX_STAKE))
+        # 回撤熔断: 最近7天累计亏超阈值 → 半仓(职业铁律: survival 优先)
+        _pnl = _recent_pnl()
+        if _pnl < -DRAWDOWN_STOP_PNL:
+            stake = int(stake * 0.5)
         # 四舍五入到 10: 避免 ¥91/¥82 有零有整被风控识别为机器下单
         return int(round(stake / 10.0) * 10)
 
