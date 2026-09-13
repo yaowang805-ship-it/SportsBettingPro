@@ -956,7 +956,7 @@ class SecondLevelMonitor:
             lines.append(f"{sp_cn} {mn} | {_desig} @{od}{_fair_str}{_ev_str} | 注额¥{sat} | {sign}{pnl:.0f}")
         body = f"📊 滚球结算汇总({len(pending)}笔, 总盈亏{total_pnl:+.0f})\n\n" + "\n".join(lines)
         try:
-            ok = bool(send_dingtalk("📊 滚球结算汇总", body))
+            ok = bool(send_dingtalk("📊 滚球结算汇总(赢了/输了)", body))
             if ok:
                 PENDING_SETTLE_FILE.write_text(json.dumps([], ensure_ascii=False))
                 print(f"[slm] 结算汇总推送成功: {len(pending)}笔, 总盈亏{total_pnl:+.0f}", flush=True)
