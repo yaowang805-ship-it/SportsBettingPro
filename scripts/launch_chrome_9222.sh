@@ -26,11 +26,11 @@ if [ ! -x "$CHROME" ]; then
   exit 1
 fi
 
-# 3. 启动独立 Chrome(后台, 独立配置目录)
+# 3. 启动独立 Chrome(用 open -na 走 launchd, 进程持久不被 shell 回收; 独立配置目录)
 echo "🚀 启动独立 Chrome (port $PORT)..."
-nohup "$CHROME" \
+open -na "Google Chrome" --args \
   --remote-debugging-port="$PORT" \
-  --user-data-dir="$USER_DATA_DIR" >/dev/null 2>&1 &
+  --user-data-dir="$USER_DATA_DIR"
 
 # 4. 等端口就绪(最多 10s)
 for _ in $(seq 1 20); do
