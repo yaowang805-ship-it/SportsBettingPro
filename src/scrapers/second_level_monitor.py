@@ -688,6 +688,7 @@ class SecondLevelMonitor:
                 continue
             sig = {"match_id": match_id, "sub": sub, "desig": desig[d],
                    "bb_odds": bb, "fair": fair_p, "ev": ev, "line": line_val,
+                   "pin_raw": raw[i],  # Pin 原始价(去抽水前), 供推送展示(2026-09-14)
                    "match": {"home": lv.get("home_cn", "") or lv["home"], "away": lv.get("away_cn", "") or lv["away"], "sport": lv.get("sport", ""), "league_cn": lv.get("league_cn", "") or lv.get("league_name", "滚球"), "mc": lv.get("mc", 0)},
                    "pin_matchup_id": lv.get("pin_matchup_id"),
                    "league_id": lv.get("league_id"),
