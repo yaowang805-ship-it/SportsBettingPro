@@ -850,13 +850,20 @@ class SecondLevelMonitor:
             _clock = f"进行中 {_mc // 60} 分钟" if _mc > 0 else "进行中"
             _bj = datetime.now().strftime("%H:%M")
             _sub_cn = {"over_under": "大小球", "handicap": "让球", "opportunities": "独赢"}.get(sig.get("sub"), "")
-            _desig = f"{_sub_cn}-{sig.get('desig', '')}" if _sub_cn else sig.get("desig", "")
+            # 盘口线: 大小球/让球带线(小1球/让球主胜@-0.5), 独赢无线(2026-09-14 用户要求)
+            _desig = sig.get('desig', '')
+            _line = sig.get('line')
+            if _line is not None and sig.get('sub') == 'over_under':
+                _desig = f"{_desig[0]}{_line:g}球"  # 小球→小1球, 大球→大2.5球
+            elif _line is not None and sig.get('sub') == 'handicap':
+                _desig = f"{_desig}@{_line:g}"  # 让球主胜@-0.5
+            _desig = f"{_sub_cn}-{_desig}" if _sub_cn else _desig
             _platform = "BB" if sig.get("platform", "BB") == "BB" else "FB"  # 不用"BB体育", 会被钉钉判博彩词
             self._notify_bet(
                 "🟦 滚球已下单",
                 f"{_sport_cn} | {_league} | 滚球{_clock} | 下单 {_bj}\n"
                 f"{sig['match']['home']} vs {sig['match']['away']} | {_desig}\n"
-                f"{_platform} {sig['bb_odds']:.2f} vs 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
+                f"{_platform} {sig['bb_odds']:.2f} vs 原始 {sig.get('pin_raw', 0):.2f} | 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
                 f"单注 ¥{stake} | 余额 ¥{_bal} | 今日已投 ¥{self._live_spent:.0f} | 未结 ¥{self._live_outstanding:.0f}/{LIVE_BUDGET}")
             # CLV 追踪(2026-09-14): 记下注时 sig, 60s 后复验 Pin 公平价算 CLV(见 _check_clv)
             self._reversion_track[(str(sig["match_id"]), str(market_id), str(sig.get("option_type")))] = {
