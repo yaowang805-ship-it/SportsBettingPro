@@ -1,1 +1,12 @@
-{"football|Copa Sudamericana|CR Vasco da Gama RJ|Independiente Santa Fe|上半场客胜|ht|2026-09-16": {"bb": 9.35, "ev": 4.78, "fair": 8.9232, "pin": 7.38, "ts": 1789456237.478673, "kickoff": 1789509600, "repush_count": 0}, "football|Spain LaLiga|Deportivo Alaves|Valencia CF|上半场客胜|ht|2026-09-16": {"bb": 6.2, "ev": 6.32, "fair": 5.8314, "pin": 5.33, "ts": 1789456237.4777741, "kickoff": 1789495200, "repush_count": 0}, "football|Spain LaLiga|Real Betis|Getafe CF|上半场客胜|ht|2026-09-18": {"bb": 7.2, "ev": 9.94, "fair": 6.5492, "pin": 5.91, "ts": 1789456028.311381, "kickoff": 1789664400, "repush_count": 0}, "football|Copa Libertadores|Corinthians SP|Estudiantes de La Plata|上半场客胜|ht|2026-09-17": {"bb": 7.3, "ev": 7.2, "fair": 6.8099, "pin": 5.76, "ts": 1789456028.311778, "kickoff": 1789605000, "repush_count": 0}, "football|Copa Sudamericana|Sao Paulo FC SP|Boca Juniors|上半场客胜|ht|2026-09-16": {"bb": 5.2, "ev": 10.36, "fair": 4.7117, "pin": 4.32, "ts": 1789456237.4792929, "kickoff": 1789518600, "repush_count": 0}, "football|Argentina Cup|Independiente Rivadavia|Atletico Tucuman|上半场主胜|ht|2026-09-17": {"bb": 3.01, "ev": 3.38, "fair": 2.9115, "pin": 2.61, "ts": 1789456028.312017, "kickoff": 1789596000, "repush_count": 0}}
+{
+  "football|Copa Sudamericana|CR Vasco da Gama RJ|Independiente Santa Fe|上半场客胜|ht|2026-09-16": {
+    "ev": 4.78,
+    "bb": 9.35,
+    "ts": 1789455589.729661
+  },
+  "football|Egypt Premier League|Wadi Degla SC|Al Mokawloon Al Arab|上半场客胜|ht|2026-09-15": {
+    "ev": 6.15,
+    "bb": 6.3,
+    "ts": 1789456693.268308
+  }
+}
