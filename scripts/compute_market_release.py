@@ -82,8 +82,8 @@ SCOPE_LIVE = "live"     # 滚球观察库(live_paper_bets)
 OBS_CAP_NEW = 150
 OBS_CAP_MATURE = 300
 OBS_MATURE_DAYS = 7        # 实盘投一周(7天)后评估提额
-# 新释放盘口当日累计投注额上限(2026-09-12 用户要求): 当天总投注额≤1000, 次日实盘ROI>4% 解除
-DAILY_STAKE_LIMIT = 1000
+# 新释放盘口当日累计投注额上限(2026-09-12 用户要求): 当天总投注额≤2000(2026-09-15 1000→2000), 次日实盘ROI>4% 解除
+DAILY_STAKE_LIMIT = 2000
 
 # 已验证方向(硬编码真edge, 2026-09-13 统一进观察库释放机制): grandfathered 进 observe_released,
 # 固定 cap(不走 150→300 分阶段), 无当日累计上限(limit_removed 恒 True)。之前散落在
@@ -107,6 +107,15 @@ MANUAL_OBSERVE_RELEASE = {
 MANUAL_OBSERVE_BLOCK = {
     "football|1x2|主|>5.0|live",  # 独赢主胜冷门: 实盘 ROI -65.8%(巨亏), 赢率5.9%≈隐含, 无edge
     "football|ou|小|1.0-2.0|live",  # 2026-09-15: 小球低赔1.0-2.0 累计 edge -12.3pp(164笔), 09-13起持续负且在恶化(edge -13.8→-19.7pp), 占小球大部分投注量稳定漏血
+}
+
+# 手动释放 + 当日累计上限(2026-09-15 用户要求): dc 早盘 1.0-3.0 试探, 单注≤150, 当日累计≤2000 不重复使用。
+# 与 MANUAL_OBSERVE_RELEASE 的区别: 这里 limit_removed=False(受当日累计上限约束), 释放的是"有希望的格子"试探。
+MANUAL_OBSERVE_RELEASE_LIMITED = {
+    "football|dc|主|1.0-2.0|early": 150,
+    "football|dc|客|1.0-2.0|early": 150,
+    "football|dc|主|2.0-3.0|early": 150,
+    "football|dc|客|2.0-3.0|early": 150,
 }
 
 DIR_N_MIN = 30              # 方向级赢率采信最小样本量(2026-09-12 15→50→30: 实盘方向样本, 30够)
@@ -610,6 +619,13 @@ def main():
         if _entry not in observe_released:
             observe_released.append(_entry)
 
+    # 手动释放 + 当日累计上限(2026-09-15 用户要求): dc 早盘 1.0-3.0 试探, 走日限额。
+    for _mkey in MANUAL_OBSERVE_RELEASE_LIMITED:
+        _p = _mkey.split("|")
+        _entry = [_p[0], _p[1], _p[2], _p[3], _p[4]]
+        if _entry not in observe_released:
+            observe_released.append(_entry)
+
     # 手动拦截的赔率区间(用户明确要求, 2026-09-13): 已验证方向里表现巨差的区间, 优先于"*"释放。
     for _mkey in MANUAL_OBSERVE_BLOCK:
         _p = _mkey.split("|")
@@ -629,18 +645,19 @@ def main():
     for (sport, sm, dr, interval, scope) in observe_released:
         key = f"{sport}|{sm}|{dr}|{interval}|{scope}"
         _manual = MANUAL_OBSERVE_RELEASE.get(key)  # 已验证方向(固定cap+无日限额, 不走分阶段)
+        _manual_limited = MANUAL_OBSERVE_RELEASE_LIMITED.get(key)  # 手动释放+有日限额(固定cap, 不走150→300提额)
         prev = obs_state.get(key)
         first = (prev or {}).get("first_released_at")
-        cap = _manual if _manual else (prev or {}).get("cap", OBS_CAP_NEW)
+        cap = _manual if _manual else (_manual_limited if _manual_limited else (prev or {}).get("cap", OBS_CAP_NEW))
         daily_stake = (prev or {}).get("daily_stake", 0)
         daily_date = (prev or {}).get("daily_stake_date", "")
         limit_removed = True if _manual else (prev or {}).get("limit_removed", False)
         if not first:
             first = datetime.now().isoformat()
-            if not _manual:
+            if not _manual and not _manual_limited:
                 cap = OBS_CAP_NEW
                 newly_released.append([sport, sm, dr, interval, scope])
-        elif not _manual:
+        elif not _manual and not _manual_limited:
             try:
                 first_ts = datetime.fromisoformat(str(first)).timestamp()
             except (ValueError, TypeError):

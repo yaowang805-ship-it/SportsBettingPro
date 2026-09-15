@@ -45,7 +45,7 @@ def _is_settleable(desig, line):
 FB_RELEASE_CAPS = {
     "football|1x2|客|1.0-2.0|live": 100,
 }
-FB_BET_ENABLED = True   # FB 实盘下单总开关
+FB_BET_ENABLED = False   # FB 实盘下单总开关(2026-09-15 关闭: 中心钱包与BB互斥+token不稳定, 先只观察)
 
 
 def _odds_interval(o):

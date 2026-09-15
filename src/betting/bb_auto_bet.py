@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 DEFAULT_DOMAIN = "https://api.x-vip8.com"
-FB_DOMAIN = "https://api.5c4r3.com"  # FB体育独立域名(与 BB 同账户但独立 token/session)
+FB_DOMAIN = "https://api.c7z4.com"  # FB体育真实域名(2026-09-15 从 5c4r3 改 c7z4: 5c4r3 是FB空钱包, c7z4 走中心钱包共享BB余额)
 _UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36")
 
@@ -153,6 +153,51 @@ def read_domain(platform="BB"):
             return dom.rstrip("/")
     ls = _read_localstorage()
     return ls.get("st-domain", "").rstrip("/") or DEFAULT_DOMAIN
+
+
+_token_refresh_until = 0.0  # token 刷新冷却(避免频繁扫 LevelDB + 打 API)
+
+
+def refresh_token(platform="BB"):
+    """token 失效(14010)时自动重抓: 扫 Chrome LevelDB 里所有 tt_ token, 找该平台有效的写入文件。
+
+    2026-09-15: BB/FB 的 token 都不稳定(几分钟到几小时就「账号已登出」), 下单前/后失效了要能
+    自动从 Chrome 缓存里挖一个新鲜的有效 token, 否则投注一直被打断。60s 冷却防刷。
+    返回新 token 或 None(没找到)。
+    """
+    global _token_refresh_until
+    now = time.time()
+    if now < _token_refresh_until:
+        return None
+    _token_refresh_until = now + 60
+    dom = "api.infv1.com" if platform == "BB" else "api.c7z4.com"
+    tok_file = ROOT / "data" / "storage" / (".bb_token" if platform == "BB" else ".fb_token")
+    import re, glob, os
+    db = os.path.expanduser('~/Library/Application Support/Google/Chrome/Default/Local Storage/leveldb')
+    tokens = set()
+    for f in sorted(glob.glob(db + '/*.ldb') + glob.glob(db + '/*.log')):
+        try:
+            data = open(f, 'rb').read()
+        except Exception:
+            continue
+        for m in re.finditer(rb'tt_[A-Za-z0-9_.]{40,90}', data):
+            tokens.add(m.group(0).decode())
+    urllib3.disable_warnings()
+    for tok in sorted(tokens):
+        try:
+            r = requests.post(f'https://{dom}/v1/order/new/bet/list',
+                json={'languageType': 'CMN', 'isSettled': True, 'current': 1, 'size': 1},
+                headers={'Content-Type': 'application/json', 'Authorization': tok, 'User-Agent': _UA},
+                timeout=8, verify=False)
+            if r.json().get('code') == 0:
+                try:
+                    tok_file.write_text(tok)
+                except Exception:
+                    pass
+                return tok
+        except Exception:
+            pass
+    return None
 
 
 def _refresh_bb_page():
@@ -348,24 +393,33 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
         "Origin": "https://pc.7y99z.com" if platform == "FB" else "https://pc.x14ff.com",
         "Referer": "https://pc.7y99z.com/" if platform == "FB" else "https://pc.x14ff.com/",
     }
-    try:
-        r = _session().post(f"{domain}/v1/order/bet/singlePass",
-                            json=body, headers=headers, timeout=15, verify=False)
-        d = r.json()
-        code = d.get("code", -1)
-        msg = d.get("message") or ""
-        order_id = None
-        if code == 0 and d.get("data"):
-            # data[0].id = 订单号
-            data = d.get("data") or []
-            if isinstance(data, list) and data:
-                order_id = data[0].get("id")
-        # 下单成功后记录投注额(供上限检查)
-        if code == 0 and match_id is not None:
-            record_stake(match_id, market_id, stake)
-        return code, order_id, msg
-    except Exception as e:
-        return -2, None, f"下单异常: {type(e).__name__} {e}"
+    for attempt in range(2):
+        try:
+            r = _session().post(f"{domain}/v1/order/bet/singlePass",
+                                json=body, headers=headers, timeout=15, verify=False)
+            d = r.json()
+            code = d.get("code", -1)
+            msg = d.get("message") or ""
+            if code == 14010 and attempt == 0:
+                # token 失效 → 自动从 Chrome 缓存重抓一个有效的, 重试一次(2026-09-15)
+                _new_tok = refresh_token(platform)
+                if _new_tok:
+                    token = _new_tok
+                    headers["Authorization"] = _new_tok
+                    continue
+            order_id = None
+            if code == 0 and d.get("data"):
+                # data[0].id = 订单号
+                data = d.get("data") or []
+                if isinstance(data, list) and data:
+                    order_id = data[0].get("id")
+            # 下单成功后记录投注额(供上限检查)
+            if code == 0 and match_id is not None:
+                record_stake(match_id, market_id, stake)
+            return code, order_id, msg
+        except Exception as e:
+            return -2, None, f"下单异常: {type(e).__name__} {e}"
+    return -1, None, "下单失败(重试后仍失败)"
 
 
 def find_market_from_match(match, sub_market="1x2", direction=None):

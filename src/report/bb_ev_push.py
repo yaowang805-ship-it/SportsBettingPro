@@ -657,7 +657,7 @@ def _load_release_list():
         return None
 
 
-def _is_market_released(sport: str, sub_market: str, league: str = "", designation: str = "", match_epoch=None) -> bool:
+def _is_market_released(sport: str, sub_market: str, league: str = "", designation: str = "", match_epoch=None, odds=None) -> bool:
     """该运动×盘口(或运动×联赛×盘口)是否被释放(允许投注)。未释放 → 只观察不投注。
 
     优先级: 联赛细化(league_released/league_blocked) > 观察库兜底(observe_released)
@@ -669,14 +669,20 @@ def _is_market_released(sport: str, sub_market: str, league: str = "", designati
     if not rl:
         return True
     dr = _release_direction(designation, sub_market)
+    _iv = _odds_interval(odds)
     # 1. 联赛细化: 该联赛三维格子 n≥30 时用联赛自己的 ROI 覆盖主开关
     if league:
         if [sport, league, sub_market] in rl.get("league_released", []):
             return True
         if [sport, league, sub_market] in rl.get("league_blocked", []):
             return False
-    # 2. 观察库释放(运动×盘口×方向, 早盘 scope=early): 样本>100 且赢率>隐含才释放
-    if [sport, sub_market, dr, "early"] in rl.get("observe_released", []):
+    # 2. 观察库释放/拦截(运动×盘口×方向×赔率区间, 早盘 scope=early)。
+    #    2026-09-15 加赔率区间维度(之前漏了, 5要素清单配 4要素查询永远匹配不上)。
+    if [sport, sub_market, dr, _iv, "early"] in rl.get("observe_blocked", []):
+        return False
+    if [sport, sub_market, dr, _iv, "early"] in rl.get("observe_released", []):
+        return True
+    if [sport, sub_market, dr, "*", "early"] in rl.get("observe_released", []):
         return True
     # 3. 方向级释放(2026-09-03): 整盘没过主开关, 但该方向实盘 ROI 强正(如 1x2 和局+37.4%)
     if [sport, sub_market, dr] in rl.get("direction_released", []):
@@ -706,6 +712,19 @@ def _release_direction(designation: str, sub_market: str) -> str:
     if "主" in d or "home" in dl:
         return "主"
     return "其他"
+
+
+def _odds_interval(odds):
+    """BB 赔率 → 赔率区间标签(与 compute_market_release._odds_interval 同口径)。"""
+    if odds is None or odds <= 1.0:
+        return "?"
+    if odds < 2.0:
+        return "1.0-2.0"
+    if odds < 3.0:
+        return "2.0-3.0"
+    if odds < 5.0:
+        return "3.0-5.0"
+    return ">5.0"
 
 
 def _time_window(match_epoch):
@@ -1240,10 +1259,36 @@ def _calc_kelly_stakes(opps: list) -> list:
             _sp = o.get("sport", "")
             _sm = o.get("_sub_market", o.get("_market", ""))
             _dr = _release_direction(o.get("designation", ""), _sm)
-            _cap = _obs_caps.get(f"{_sp}|{_sm}|{_dr}|early")
+            _iv = _odds_interval(o.get("bb_odds", 0) or 0)
+            # 2026-09-15 加赔率区间维度(之前漏了)
+            _cap = _obs_caps.get(f"{_sp}|{_sm}|{_dr}|{_iv}|early") or _obs_caps.get(f"{_sp}|{_sm}|{_dr}|*|early")
             if _cap:
                 o["_stake"] = min(o["_stake"], _cap)
                 o["_obs_cap"] = _cap
+
+    # 当日累计上限(2026-09-15 用户要求): dc 早盘释放 当日累计≤2000, 不重复使用(硬上限)。
+    # 用单文件 dc_daily_stake.json 记当日已投额(投注后由 push_report 更新), 超出剩余额度截断/归零。
+    _dc_state_file = DATA_DIR / "dc_daily_stake.json"
+    _dc_daily = 0.0
+    try:
+        _dc_s = json.loads(_dc_state_file.read_text())
+        if _dc_s.get("date") == time.strftime("%Y-%m-%d"):
+            _dc_daily = float(_dc_s.get("stake", 0) or 0)
+    except Exception:
+        pass
+    _dc_limit = 2000.0
+    for o in opps:
+        if o.get("_stake", 0) <= 0:
+            continue
+        if o.get("_sub_market", o.get("_market", "")) != "dc":
+            continue
+        _remain = _dc_limit - _dc_daily
+        if _remain <= 0:
+            o["_stake"] = 0
+            continue
+        if o["_stake"] > _remain:
+            o["_stake"] = int(_remain // 10 * 10)  # 取整十
+        _dc_daily += o["_stake"]
 
     # 2026-08-30 用户要求: 只要有机会就推送, 不考虑预算/单场/单联赛/单运动上限。
     # 关闭第二遍(总额)/第三遍(单场)/第四遍(单联赛单运动)的上限过滤, 只保留跨盘口相关性折扣(非预算限制)。
@@ -1800,7 +1845,7 @@ def _collect_opportunities(match, market_key):
         # 盘口释放清单(2026-09-01): 未释放的运动×盘口/联赛只观察不投注(用真实 ROI 替代 CLV 封杀)
         _released = _is_market_released(match.get("sport", ""), sub_market,
                                         match.get("league", ""), opp.get("designation", ""),
-                                        match.get("start_time_pin_epoch"))
+                                        match.get("start_time_pin_epoch"), bb_odds)
         if not _released:
             continue
 
@@ -3874,6 +3919,24 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
                     logger.info("  下单失败: %s", _f)
             except Exception as _e:
                 logger.warning("自动下单异常: %s", _e)
+            # 更新 dc 当日累计(2026-09-15): 投注后累加, 不重复使用(硬上限 2000)。
+            try:
+                _dc_staked = sum(o.get("_stake", 0) or 0 for o in bettable
+                                 if o.get("_sub_market", o.get("_market", "")) == "dc"
+                                 and o.get("sport", "") == "football")
+                if _dc_staked > 0:
+                    _dc_sf = DATA_DIR / "dc_daily_stake.json"
+                    _dc_s = {}
+                    try:
+                        _dc_s = json.loads(_dc_sf.read_text())
+                    except Exception:
+                        pass
+                    _today = time.strftime("%Y-%m-%d")
+                    _prev = float(_dc_s.get("stake", 0) or 0) if _dc_s.get("date") == _today else 0.0
+                    _dc_sf.write_text(json.dumps({"date": _today, "stake": _prev + _dc_staked},
+                                                 ensure_ascii=False))
+            except Exception:
+                pass
         elif place_bets:
             logger.info("无可投注机会（全部被结算可行性过滤）")
         # 指纹永存 — 无论模式, 推送成功即记录

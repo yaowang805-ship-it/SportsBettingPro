@@ -59,7 +59,7 @@ PLATFORMS = {
         "label_short": "BB",
     },
     "FB": {
-        "api_base": "https://api.5c4r3.com",
+        "api_base": "https://api.c7z4.com",  # 2026-09-15 5c4r3→c7z4: c7z4 走中心钱包(共享BB余额), 5c4r3 是FB空钱包
         "auth_header": "user-token",
         "label": "FB体育",
         "label_short": "FB",
