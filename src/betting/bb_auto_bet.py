@@ -201,15 +201,25 @@ def refresh_token(platform="BB"):
 
 
 def _refresh_bb_page():
-    """苹果脚本: 激活 Chrome 并刷新活动标签(BB 页), 重新加载自动登录拿新 st-auth。"""
+    """苹果脚本: 清 st-auth/user-token + reload 当前活动标签(BB 页), 触发自动登录生成新 token。
+
+    2026-09-15 修: 之前只 reload(且 active tab 是 about:blank 不是 BB 页), 且单纯 reload
+    不重生成 st-auth(复用旧的)。改为: 清掉 st-auth/user-token/h5-token → reload 触发自动登录。
+    不硬编码导航 URL(BB 域名动态变), 直接操作当前活动标签(用户已开着 BB 页)。
+    """
     script = ('tell application "Google Chrome"\n'
               '    activate\n'
+              '    execute active tab of front window javascript '
+              '"localStorage.removeItem(\\"st-auth\\"); localStorage.removeItem(\\"user-token\\"); '
+              'localStorage.removeItem(\\"h5-token\\")"\n'
               '    reload active tab of front window\n'
+              '    delay 10\n'
               'end tell\n')
     try:
-        subprocess.check_output(["osascript", "-e", script], text=True, timeout=30)
+        subprocess.check_output(["osascript", "-e", script], text=True, timeout=60)
         return True
-    except Exception:
+    except Exception as e:
+        print(f"[auto_renew] 清 st-auth + reload 失败: {str(e)[:80]}", flush=True)
         return False
 
 
