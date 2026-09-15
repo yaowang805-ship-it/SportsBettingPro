@@ -1,17 +1,1 @@
-{
-  "football|Copa Sudamericana|CR Vasco da Gama RJ|Independiente Santa Fe|上半场客胜|ht|2026-09-16": {
-    "ev": 4.78,
-    "bb": 9.35,
-    "ts": 1789455589.729661
-  },
-  "football|Egypt Premier League|Wadi Degla SC|Al Mokawloon Al Arab|上半场客胜|ht|2026-09-15": {
-    "ev": 6.15,
-    "bb": 6.3,
-    "ts": 1789456693.268308
-  },
-  "football|AFC Champions League Elite|Ratchaburi Mitr Phol FC|Shanghai Port FC|上半场主胜|ht|2026-09-15": {
-    "ev": 3.34,
-    "bb": 3.72,
-    "ts": 1789460558.902865
-  }
-}
+{"football|Copa Sudamericana|CR Vasco da Gama RJ|Independiente Santa Fe|上半场客胜|ht|2026-09-16": {"ev": 4.78, "bb": 9.35, "ts": 1789455589.729661}, "football|Egypt Premier League|Wadi Degla SC|Al Mokawloon Al Arab|上半场客胜|ht|2026-09-15": {"ev": 6.15, "bb": 6.3, "ts": 1789456693.268308}, "football|AFC Champions League Elite|Ratchaburi Mitr Phol FC|Shanghai Port FC|上半场主胜|ht|2026-09-15": {"bb": 3.72, "ev": 3.34, "fair": 3.5996, "pin": 3.36, "ts": 1789461068.7560499, "kickoff": 1789466400, "repush_count": 0}, "football|Argentina Cup|Independiente Rivadavia|Atletico Tucuman|上半场主胜|ht|2026-09-17": {"bb": 3.01, "ev": 3.38, "fair": 2.9115, "pin": 2.61, "ts": 1789460644.8859782, "kickoff": 1789596000, "repush_count": 0}}

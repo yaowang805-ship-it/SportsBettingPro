@@ -346,7 +346,7 @@ def fetch_current_odds(market_id, match_id, option_type, token=None, domain=None
 
 def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domain=None,
                      match_id=None, check_limit=True, verify_price=True, max_rise_pct=5.0,
-                     platform="BB"):
+                     platform="BB", fair_price=None, min_ev_pct=None):
     """单关下单。返回 (code, order_id, message)。
 
     code=0 成功; code=5 参数错; code=14010 token过期; code=3015 盘口关闭;
@@ -356,6 +356,9 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
     max_rise_pct: 最新赔率比扫描赔率【升高】超过此百分比 → 放弃下单(默认5%)。
         2026-09-14 方向修正: 原逻辑是"跌超阈值放弃", 但方向反了——BB价回落(往Pin靠)=正CLV
         该投(实证 spike 回落赢 +32.5% ROI), BB价升高(背离Pin)=逆向选择该放弃。见 live-clv-tracking-20260914。
+    fair_price/min_ev_pct(2026-09-15 补缺口): 传入 Pin 公平价 + EV 阈值。BB 价【回落】时(往Pin靠),
+        用回落后的 final_odds 重算 edge=(final_odds-fair)/fair, 跌破 min_ev_pct 就放弃(否则会拿
+        stale 价定的注额下到低 edge 上); 同时注额按新 edge 重算(Kelly stake∝edge/(odds-1))。
     platform: "BB"|"FB"(2026-09-15)。FB 用 api.5c4r3.com + .fb_token, 与 BB 独立 session 不冲突。
     """
     token = token or read_token(platform)
@@ -380,6 +383,17 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
                 rise = (float(cur_odds) - float(odds)) / float(odds) * 100
                 if rise > max_rise_pct:
                     return -4, None, f"赔率逆向漂移{rise:.1f}%(扫描{odds}→现{cur_odds}), 放弃"
+                # 2026-09-15 补缺口: BB 价回落(往 Pin 靠)时, 重算 edge + 注额。之前 stake 是按
+                # stale 价定的, 下到回落后的低 edge 上会偏大; 且没重验回落后的 edge 是否还够阈值。
+                if (fair_price is not None and min_ev_pct is not None
+                        and float(cur_odds) < float(odds) and float(fair_price) > 1):
+                    edge_final = (float(cur_odds) - float(fair_price)) / float(fair_price) * 100
+                    if edge_final < min_ev_pct:
+                        return -4, None, f"BB回落至{cur_odds}, edge降至{edge_final:.1f}%<{min_ev_pct}%, 放弃"
+                    edge_orig = (float(odds) - float(fair_price)) / float(fair_price) * 100
+                    if edge_orig > 0 and float(cur_odds) > 1:
+                        stake = stake * (edge_final / edge_orig) * (float(odds) - 1) / (float(cur_odds) - 1)
+                        stake = int(round(stake / 10.0) * 10)
                 final_odds = cur_odds  # 用最新赔率下单
 
     body = {

@@ -819,9 +819,12 @@ class SecondLevelMonitor:
         if global_bet_cooldown(15, 45) > 0:
             return
         print(f"  🎯 滚球下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake}", flush=True)
+        # 验价后的 Pin 公平价(供 place_single_bet 在 BB 回落时重算 edge+注额): ev=(bb-fair)/fair → fair=bb/(1+ev/100)
+        _fresh_fair = sig["bb_odds"] / (1.0 + sig["ev"] / 100.0) if sig["ev"] > -100 else None
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
-            match_id=sig["match_id"], check_limit=True, verify_price=True)
+            match_id=sig["match_id"], check_limit=True, verify_price=True,
+            fair_price=_fresh_fair, min_ev_pct=self.threshold)
         # 记录尝试(成败都记), 5min 内不再重复尝试同一盘口
         self._attempted.setdefault(str(sig["match_id"]), {})[str(market_id)] = time.time()
         # 更新限频时间戳 + 抽下一单随机间隔(10-15s, 防风控"投注过于频繁")
