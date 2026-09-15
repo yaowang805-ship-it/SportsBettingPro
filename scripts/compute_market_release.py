@@ -120,7 +120,8 @@ MANUAL_OBSERVE_RELEASE = {
 # 优先于 MANUAL_OBSERVE_RELEASE 的 "*" 区间。数据驱动拦截(observe_blocked)照常追加。
 MANUAL_OBSERVE_BLOCK = {
     "football|1x2|主|>5.0|live",  # 独赢主胜冷门: 实盘 ROI -65.8%(巨亏), 赢率5.9%≈隐含, 无edge
-    "football|ou|小|1.0-2.0|live",  # 2026-09-15: 小球低赔1.0-2.0 累计 edge -12.3pp(164笔), 09-13起持续负且在恶化(edge -13.8→-19.7pp), 占小球大部分投注量稳定漏血
+    # 2026-09-15 用户决定移除: 小球低赔1.0-2.0 原本拦截(累计 edge -12.3pp/164笔, 且在恶化)。
+    # 用户要求全量打开小球不限制投注区间, 已撤此拦截(小球全区间开放, cap 600)。
 }
 
 # 手动释放 + 当日累计上限(2026-09-15 用户要求): 释放的是"有希望的格子"试探, 单注≤150, 当日累计≤2000。
@@ -688,7 +689,15 @@ def main():
     # 滚球(scope=live): 2026-09-15 用户定, 和早盘一样用 CLV(LEV)判释放, 不用赢率vs隐含(带bias且向后看)。
     # LEV = 下注后复验 Pin 价算的 CLV, 正=真edge, 负=逆向选择。clv 字段今天才修好采集率(60s→3s),
     # 样本极薄, 短期 n<200 不会释放, 等积累(释放清单暂时由 MANUAL_OBSERVE_RELEASE 的滚球方向撑)。
+    # MANUAL_OBSERVE_RELEASE 的「已验证方向」是用户显式开放的(如小球全区间), 数据驱动的 LEV 拦截
+    # 对它们不适用(LEV 薄样本 n<200 会误拦已验证方向, 与用户「全量打开」冲突)。
+    _manual_dirs = set()
+    for _mkey in MANUAL_OBSERVE_RELEASE:
+        _p = _mkey.split("|")
+        _manual_dirs.add((_p[0], _p[1], _p[2]))  # (sport, sub_market, direction)
     for (sport, sm, dr, interval), (med, n) in sorted(live_clv.items()):
+        if (sport, sm, dr) in _manual_dirs:
+            continue  # 已验证方向, 数据驱动不拦(用户显式开放, 全区间)
         if med > OBS_CLV_MIN and n >= OBS_N_MIN:
             observe_released.append([sport, sm, dr, interval, "live"])
         else:
