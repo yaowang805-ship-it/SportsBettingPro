@@ -312,15 +312,22 @@ def _extract_line(item_name):
         return None
 
 
-def _match_2way_line(line, d2way):
-    """匹配 2-way 盘口线(spread/total)。主/客方向线符号相反, 试 line 和 -line。"""
+def _match_2way_line(line, d2way, nearest=False):
+    """匹配 2-way 盘口线(spread/total)。主/客方向线符号相反, 试 line 和 -line。
+
+    nearest=True(只给下注后 CLV 路径): 滚球线随比分漂移(让球 -0.5→-1.5 进球后), 精确匹配常
+    失败, 就近取 |points±line| 最小的盘口线作收盘代理(符号仍对, 幅度近似)。下单前验价必须
+    nearest=False(精确匹配, 线漂了就该 None 跳过, 不能拿错线的价下单)。
+    """
     if d2way is None:
         return None
     if line in d2way:
         return d2way[line]
     if line is not None and -line in d2way:
         return d2way[-line]
-    return None
+    if not nearest or line is None or not d2way:
+        return None
+    return min(d2way.items(), key=lambda kv: min(abs(kv[0] - line), abs(kv[0] + line)))[1]
 
 
 def _is_settleable(desig, line):

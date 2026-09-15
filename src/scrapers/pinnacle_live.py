@@ -578,9 +578,13 @@ def reverify_live_markets(pin_matchup_id, league_id, allow_closed=False):
             if k.get("matchupId") != pin_matchup_id or k.get("status") not in _ok_status:
                 continue
             t = k.get("type"); prices = k.get("prices", [])
-            if t == "moneyline" and len(prices) >= 3:
+            if t == "moneyline" and len(prices) >= 2:
                 pbd = {p.get("designation"): p.get("price") for p in prices}
-                result["moneyline"] = _us_to_decimal([pbd.get(d) for d in ("home", "draw", "away")])
+                if len(prices) >= 3:
+                    result["moneyline"] = _us_to_decimal([pbd.get(d) for d in ("home", "draw", "away")])
+                else:
+                    # 2-way(网球/篮球等无和局): 只 home/away, 供 opportunities 二路 devig
+                    result["moneyline"] = _us_to_decimal([pbd.get(d) for d in ("home", "away")])
             elif t == "spread" and len(prices) >= 2:
                 result["spread"][prices[0].get("points")] = _us_to_decimal([p.get("price") for p in prices])
             elif t == "total" and len(prices) >= 2:
