@@ -438,11 +438,15 @@ class SecondLevelMonitor:
 
         结算护栏: 只收 _settle_paper_bets 能判输赢的盘口, 缺 line 的 hc/ou 或未支持
         盘口一律不进库 —— 进库却结算不了会污染 ROI 统计(历史 88 条 line=None 已剔)。
+
+        返回 True=新增入库(首次见该机会); False=跳过(不可结算/重复/写失败)。
+        供调用方在「首次入库」时触发 LEV 追踪(下注后3s复验Pin), 让所有+EV机会都有 LEV,
+        不再只对实盘下单的注采(否则新方向攒不到 LEV = 释放死循环)。
         """
         desig = sig.get("desig", "")
         if not _is_settleable(desig, sig.get("line")):
             print(f"[slm] 跳过无法结算的虚拟投注({desig!r} line={sig.get('line')!r}), 不进观察库", flush=True)
-            return
+            return False
         try:
             data = []
             if LIVE_PAPER_FILE.exists():
@@ -451,7 +455,7 @@ class SecondLevelMonitor:
             key = (sig["match_id"], sig.get("market_id"), sig.get("option_type"), sig.get("sub"))
             for b in data:
                 if (b.get("match_id"), b.get("market_id"), b.get("option_type"), b.get("sub")) == key:
-                    return
+                    return False
             data.append({
                 "ts": time.time(), "match_id": sig["match_id"],
                 "market_id": sig.get("market_id"), "option_type": sig.get("option_type"),
@@ -463,8 +467,10 @@ class SecondLevelMonitor:
                 "stake": sig.get("_stake", 0), "settled": False, "result": None, "profit": None,
             })
             LIVE_PAPER_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1))
+            return True
         except Exception as e:
             print(f"[slm] 虚拟投注写入失败: {str(e)[:80]}", flush=True)
+            return False
 
     def _settle_paper_bets(self):
         """结算虚拟投注(观察库): 按 match_id 定向查 getMatchDetail 判输赢, 写回 result/profit。"""
@@ -739,7 +745,20 @@ class SecondLevelMonitor:
         # 之前误改"只记实盘方向"会堵死新盘口释放通道(非实盘方向永远没数据凑不到n>100)。
         # 观察库释放靠「赢率>隐含」判据区分真假溢价(大球赢率<隐含不释放, 小球赢率>隐含释放),
         # 不需要在采样层就过滤。有效=验价通过(fresh_ev≥threshold)+可结算(白名单), 已由上游保证。
-        self._append_live_paper_bet(sig)
+        _added = self._append_live_paper_bet(sig)
+        # LEV 追踪(2026-09-15 改): 首次入库即触发, 下注后 3s 复验 Pin 公平价算 CLV 写回 clv 字段。
+        # 之前只对「实盘下单成功」的注采(在 _notify_bet 后), 导致新方向没下单就永远攒不到 LEV =
+        # 释放死循环。现在所有进观察库的 +EV 机会(虚拟投注)都采 LEV, 让释放判据能数据驱动所有方向。
+        if _added and sig.get("pin_matchup_id") and sig.get("league_id"):
+            self._reversion_track[(str(sig["match_id"]), str(sig.get("market_id")), str(sig.get("option_type")))] = {
+                "sig": {
+                    "pin_matchup_id": sig.get("pin_matchup_id"),
+                    "league_id": sig.get("league_id"),
+                    "sub": sig.get("sub"), "desig": sig.get("desig"),
+                    "bb_odds": sig.get("bb_odds"), "line": sig.get("line"),
+                },
+                "ts": time.time(),
+            }
         if not LIVE_REAL_BET_ENABLED:
             return
         # 2026-09-12 优化: 不再硬编码"只投小球/网球/篮球", 改为「观察库释放优先, 已验证方向其次」。
@@ -881,16 +900,6 @@ class SecondLevelMonitor:
                 f"{sig['match']['home']} vs {sig['match']['away']} | {_desig}\n"
                 f"{_platform} {sig['bb_odds']:.2f} vs 原始 {sig.get('pin_raw', 0):.2f} | 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
                 f"单注 ¥{stake} | 余额 ¥{_bal} | 今日已投 ¥{self._live_spent:.0f} | 未结 ¥{self._live_outstanding:.0f}/{LIVE_BUDGET}")
-            # CLV 追踪(2026-09-14): 记下注时 sig, 60s 后复验 Pin 公平价算 CLV(见 _check_clv)
-            self._reversion_track[(str(sig["match_id"]), str(market_id), str(sig.get("option_type")))] = {
-                "sig": {
-                    "pin_matchup_id": sig.get("pin_matchup_id"),
-                    "league_id": sig.get("league_id"),
-                    "sub": sig.get("sub"), "desig": sig.get("desig"),
-                    "bb_odds": sig.get("bb_odds"), "line": sig.get("line"),
-                },
-                "ts": time.time(),
-            }
         else:
             # 下单失败(如 token 过期 14010) → 也记虚拟投注, 保证验证数据积累不中断
             self._append_live_paper_bet(sig)
