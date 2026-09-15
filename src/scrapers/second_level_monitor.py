@@ -592,6 +592,8 @@ class SecondLevelMonitor:
         2026-09-15 修复采集率 4%→ 根因=60s 后 Pin 滚球盘口大多已 close(进球/暂停)导致
         reverify 返回空。改 60s→20s(盘口 open 概率高) + allow_closed=True(closed 最后一笔
         价=真收盘线)。注意: 只对 CLV 路径放开 closed, 下单前验价仍拒绝 closed(stale 价)。
+        另: nearest=True 让让球/大小球线漂移时就近匹配(代理收盘价); 独赢二路(网球/篮球无和局)
+        devig 已在 _reverify_live_ev 支持 —— 这三样都只对 CLV 路径, 下单前验价全保持严格。
         """
         if not self._reversion_track:
             return
@@ -602,7 +604,7 @@ class SecondLevelMonitor:
         for key, v in ready.items():
             del self._reversion_track[key]
             try:
-                clv = self._reverify_live_ev(v["sig"], allow_closed=True)
+                clv = self._reverify_live_ev(v["sig"], allow_closed=True, nearest=True)
                 if clv is None:
                     continue
                 self._write_clv(key, clv)
@@ -942,11 +944,11 @@ class SecondLevelMonitor:
             elif ev >= self.threshold - 2.0:
                 print(f"  接近 {ev:+.2f}% | {tag} | BB {bb:.2f} vs {fair:.2f}", flush=True)
 
-    def _reverify_live_ev(self, sig, allow_closed=False):
+    def _reverify_live_ev(self, sig, allow_closed=False, nearest=False):
         """下注前重拉 Pin 滚球价, 重算该方向 EV(1x2/让球/大小球)。返回新 EV(或 None=盘口已关)。
 
-        allow_closed 只给「下注后 CLV」路径(_check_clv)开; 下单前验价(_try_live_auto_bet)保持
-        False, 避免用 closed 盘口 stale 价误下单。
+        allow_closed/nearest 只给「下注后 CLV」路径(_check_clv)开; 下单前验价(_try_live_auto_bet)
+        保持 False, 避免用 closed 盘口 stale 价 / 就近匹配错线 误下单。
         """
         from src.scrapers.pinnacle_live import reverify_live_markets
         from src.scrapers.devig import shin_fair_odds
@@ -959,15 +961,22 @@ class SecondLevelMonitor:
         sub = sig.get("sub")
         if sub == "opportunities":
             ml = fresh.get("moneyline")
-            if not ml or len(ml) != 3:
+            if not ml:
                 return None
-            raw = ml
-            idx = {"主胜": 0, "和局": 1, "客胜": 2}
+            if len(ml) == 3:
+                raw = ml
+                idx = {"主胜": 0, "和局": 1, "客胜": 2}
+            elif len(ml) == 2:
+                # 2-way(网球/篮球等无和局): 主胜/客胜
+                raw = ml
+                idx = {"主胜": 0, "客胜": 1}
+            else:
+                return None
         elif sub == "handicap":
-            raw = _match_2way_line(sig.get("line"), fresh.get("spread"))
+            raw = _match_2way_line(sig.get("line"), fresh.get("spread"), nearest=nearest)
             idx = {"让球主胜": 0, "让球客胜": 1}
         elif sub == "over_under":
-            raw = _match_2way_line(sig.get("line"), fresh.get("total"))
+            raw = _match_2way_line(sig.get("line"), fresh.get("total"), nearest=nearest)
             idx = {"大球": 0, "小球": 1}
         else:
             return None
