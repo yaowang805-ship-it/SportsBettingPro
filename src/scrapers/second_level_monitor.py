@@ -728,6 +728,11 @@ class SecondLevelMonitor:
         if fresh_ev is None or fresh_ev < self.threshold:
             return
         sig["ev"] = fresh_ev  # 入库/下单都用验价后的真实 EV
+        # 同步回写 fair 为验价后的公平价: ev=(bb-fair)/fair → fair=bb/(1+ev/100)。
+        # 否则入库的 fair 是信号时的缓存价(滚球里 stale 15~45s), 和 fresh ev 自相矛盾,
+        # 会污染观察库「赢率 vs 隐含」判据(隐含=1/fair 用了 stale fair)。
+        if fresh_ev > -100:
+            sig["fair"] = sig["bb_odds"] / (1.0 + fresh_ev / 100.0)
         stake = self._stake_for(sig)
         sig["_stake"] = stake
         # 2026-09-12 纠正: 观察库必须采集所有运动及盘口的有效+EV信号(不只实盘方向)。
