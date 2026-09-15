@@ -482,6 +482,35 @@ def load_clv_median():
     return {k: (_st.median(v), len(v)) for k, v in by.items() if v}
 
 
+def load_live_clv():
+    """滚球 LEV(live_paper_bets 的 clv 字段, 下注后复验 Pin 公平价算的 CLV)按(运动×盘口×方向×赔率区间)聚合。
+
+    2026-09-15 用户定: 滚球和早盘一样用 CLV(LEV)判释放, 不用「赢率vs隐含」(带 favorite-longshot bias
+    且向后看高方差)。LEV = 下注后复验 Pin 价, 正=抢到比市场后来定价更优的价格(真edge), 负=逆向选择。
+    与 load_clv_median 区别: 早盘用 clv_results.csv(收盘线CLV), 滚球用 live_paper_bets 的 clv 字段(LEV)。
+    注: clv 字段今天(9-15)才修好采集率(60s→3s), 样本极薄, 短期 n<200 不会释放, 等积累。
+
+    Returns: {(sport, sub_market, direction, odds_interval): (median_clv, n)}
+    """
+    import statistics as _st
+    by = defaultdict(list)
+    for b in _read_live_paper_bets():
+        clv = b.get("clv")
+        if clv is None:
+            continue
+        try:
+            clv = float(clv)
+        except (ValueError, TypeError):
+            continue
+        sport = BB_SPORT_MAP.get(b.get("sport"))
+        sm = BB_SUB_MAP.get(b.get("sub"))
+        if not sport or not sm:
+            continue
+        _iv = _odds_interval(_f(b.get("bb_odds")))
+        by[(sport, sm, _direction(b.get("designation"), sm), _iv)].append(clv)
+    return {k: (_st.median(v), len(v)) for k, v in by.items() if v}
+
+
 def load_live_real_roi():
     """滚球实盘 ROI: BB 官方已结算订单(isSettled=true, uwl) 滚球部分(mt>bt), 按(运动,盘口)聚合。
 
@@ -561,6 +590,7 @@ def main():
     league_winrate = load_real_winrate_league()
     dir_window_winrate = load_real_winrate_direction_window()
     clv_med = load_clv_median()  # 早盘收盘线 CLV 中位(释放闸门, 2026-09-15)
+    live_clv = load_live_clv()   # 滚球 LEV(下注后复验Pin价的CLV, 释放闸门, 2026-09-15)
 
     # 主开关(2026-09-12 改赢率vs隐含): ROI 被注额加权+赔率结构扭曲(早盘三层根因), 判据统一为
     # 赢率>隐含(真溢价)。market_roi 保留给「满7天提额」的实盘 ROI 判定(见下)。
@@ -655,16 +685,14 @@ def main():
             observe_released.append([sport, sm, dr, interval, "early"])
         else:
             observe_blocked.append([sport, sm, dr, interval, "early"])
-    # 滚球(scope=live): 无收盘线 CLV, 保持「赢率>隐含 + ROI>0」判据(滚球独立观察库)。
-    for (sport, sm, dr, interval, scope), d in sorted(obs_winrate.items()):
-        if scope != "live":
-            continue
-        if d["n"] < OBS_N_MIN:
-            continue
-        if d["winrate"] > d["implied"] + OBS_WINRATE_EDGE_MIN and d["roi"] > 0:
-            observe_released.append([sport, sm, dr, interval, scope])
+    # 滚球(scope=live): 2026-09-15 用户定, 和早盘一样用 CLV(LEV)判释放, 不用赢率vs隐含(带bias且向后看)。
+    # LEV = 下注后复验 Pin 价算的 CLV, 正=真edge, 负=逆向选择。clv 字段今天才修好采集率(60s→3s),
+    # 样本极薄, 短期 n<200 不会释放, 等积累(释放清单暂时由 MANUAL_OBSERVE_RELEASE 的滚球方向撑)。
+    for (sport, sm, dr, interval), (med, n) in sorted(live_clv.items()):
+        if med > OBS_CLV_MIN and n >= OBS_N_MIN:
+            observe_released.append([sport, sm, dr, interval, "live"])
         else:
-            observe_blocked.append([sport, sm, dr, interval, scope])
+            observe_blocked.append([sport, sm, dr, interval, "live"])
 
     # 已验证方向(硬编码真edge)统一进释放机制(2026-09-13): grandfathered, 不走 n>200 判据。
     for _mkey in MANUAL_OBSERVE_RELEASE:
