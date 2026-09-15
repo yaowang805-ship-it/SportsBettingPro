@@ -223,6 +223,7 @@ def auto_bet_flow(opportunities, token=None, domain=None):
             _sport_cn = SPORT_CN.get(opp.get("sport", ""), opp.get("sport", ""))
             _league = opp.get("league_cn") or opp.get("league", "") or ""
             _fair = opp.get("fair_price") or opp.get("_fair_price") or 0
+            _pin_raw = opp.get("pin_odds") or 0
             _ev = opp.get("ev_pct") or 0
             _kickoff = ""
             if _ep:
@@ -231,11 +232,12 @@ def auto_bet_flow(opportunities, token=None, domain=None):
                 except (TypeError, ValueError, OSError):
                     pass
             _fair_str = f" | 公平价 {float(_fair):.2f}" if _fair else ""
+            _pin_raw_str = f" | 原始 {float(_pin_raw):.2f}" if _pin_raw else ""
             _ev_str = f" | 溢价 {float(_ev):+.1f}%" if _ev else ""
-            # 2026-09-09: 补联赛/公平价/溢价, 删订单号(用户要求完整投注信息)
+            # 2026-09-09: 补联赛/公平价/溢价, 删订单号(用户要求完整投注信息); 2026-09-15 补 Pin 原始价
             sent_dingtalk.append(
                 f"✅【{_win_label(opp.get('_pin_epoch'))}】{disp_home} vs {disp_away} | {desig}\n"
-                f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_ev_str} | 注额 ¥{stake:.0f} | 投注 {_bj} | 开赛 {_kickoff}")
+                f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_pin_raw_str}{_ev_str} | 注额 ¥{stake:.0f} | 投注 {_bj} | 开赛 {_kickoff}")
             _append_bet_history(rec)
         else:
             failed.append({"home": home, "away": away, "reason": f"code={code} {msg}"})
