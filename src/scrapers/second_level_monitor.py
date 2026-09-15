@@ -572,26 +572,30 @@ class SecondLevelMonitor:
                     print(f"    {sp}/{sub}: n={n2} 盈亏{pnl2:+.0f} ROI{pnl2/stk2*100:+.1f}%", flush=True)
 
     def _check_clv(self):
-        """CLV 追踪(2026-09-14): 下注 60s 后复验 Pin 公平价, 算 CLV 写回观察库。
+        """CLV 追踪(2026-09-14): 下注 20s 后复验 Pin 公平价, 算 CLV 写回观察库。
 
-        CLV = 当前 EV = (bb_odds - fair@T+60) / fair@T+60。正 CLV = 我们抢到比市场后来
+        CLV = (bb_odds - fair@T+20) / fair@T+20。正 CLV = 我们抢到比市场后来
         定价更优的价格(真 edge); 负 CLV = 逆向选择。写回 live_paper_bets 的 clv 字段,
         供结算按 CLV 正负分桶。
 
         替代旧 reversion(尖峰假EV)标记: 旧逻辑把「BB 价 30s 后回落」误判成假 EV 并剔除,
         实测那些才是赢家(正 CLV +32.5% ROI) —— 标记反了。且 ≥10% 阈值只抓到 25 笔。
         这里改用 Pin 公平价(不是 BB 噪声价)算连续 CLV, 不再设阈值、不再剔除。
+
+        2026-09-15 修复采集率 4%→ 根因=60s 后 Pin 滚球盘口大多已 close(进球/暂停)导致
+        reverify 返回空。改 60s→20s(盘口 open 概率高) + allow_closed=True(closed 最后一笔
+        价=真收盘线)。注意: 只对 CLV 路径放开 closed, 下单前验价仍拒绝 closed(stale 价)。
         """
         if not self._reversion_track:
             return
         now = time.time()
-        ready = {k: v for k, v in self._reversion_track.items() if now - v["ts"] >= 60}
+        ready = {k: v for k, v in self._reversion_track.items() if now - v["ts"] >= 20}
         if not ready:
             return
         for key, v in ready.items():
             del self._reversion_track[key]
             try:
-                clv = self._reverify_live_ev(v["sig"])
+                clv = self._reverify_live_ev(v["sig"], allow_closed=True)
                 if clv is None:
                     continue
                 self._write_clv(key, clv)
@@ -931,14 +935,18 @@ class SecondLevelMonitor:
             elif ev >= self.threshold - 2.0:
                 print(f"  接近 {ev:+.2f}% | {tag} | BB {bb:.2f} vs {fair:.2f}", flush=True)
 
-    def _reverify_live_ev(self, sig):
-        """下注前重拉 Pin 滚球价, 重算该方向 EV(1x2/让球/大小球)。返回新 EV(或 None=盘口已关)。"""
+    def _reverify_live_ev(self, sig, allow_closed=False):
+        """下注前重拉 Pin 滚球价, 重算该方向 EV(1x2/让球/大小球)。返回新 EV(或 None=盘口已关)。
+
+        allow_closed 只给「下注后 CLV」路径(_check_clv)开; 下单前验价(_try_live_auto_bet)保持
+        False, 避免用 closed 盘口 stale 价误下单。
+        """
         from src.scrapers.pinnacle_live import reverify_live_markets
         from src.scrapers.devig import shin_fair_odds
         pin_mid = sig.get("pin_matchup_id"); lid = sig.get("league_id")
         if not pin_mid or not lid:
             return None
-        fresh = reverify_live_markets(pin_mid, lid)
+        fresh = reverify_live_markets(pin_mid, lid, allow_closed=allow_closed)
         if not fresh:
             return None
         sub = sig.get("sub")

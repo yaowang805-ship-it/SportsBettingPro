@@ -557,11 +557,14 @@ def match_live_bb_pin(platform="BB"):
     return result
 
 
-def reverify_live_markets(pin_matchup_id, league_id):
+def reverify_live_markets(pin_matchup_id, league_id, allow_closed=False):
     """下注前重拉指定联赛 markets, 返回该滚球 match 最新 {moneyline, spread, total}。
 
     用于滚球延迟修正: 缓存(30s)可能过期, 下单前重验 Pin 滚球价是否已漂移。返回 None=失败。
     moneyline: [home, draw, away] 十进制(无则 None); spread/total: {line: [dec1, dec2]}。
+
+    allow_closed: 只给「下注后 CLV」路径开(closed 的最后一笔价 = 真收盘线); 下单前验价必须
+    False(绝不能拿 closed 的 stale 价下单)。closed 盘口若无有效 prices 则 len 检查自然过滤, 无副作用。
     """
     from src.scrapers.pinnacle_api import SESSION, API_BASE, _load_cookie
     _load_cookie()
@@ -570,8 +573,9 @@ def reverify_live_markets(pin_matchup_id, league_id):
         r = SESSION.get(f"{API_BASE}/leagues/{league_id}/markets/straight", timeout=30)
         mks = r.json()
         result = {"moneyline": None, "spread": {}, "total": {}}
+        _ok_status = ("open", "closed") if allow_closed else ("open",)
         for k in mks:
-            if k.get("matchupId") != pin_matchup_id or k.get("status") != "open":
+            if k.get("matchupId") != pin_matchup_id or k.get("status") not in _ok_status:
                 continue
             t = k.get("type"); prices = k.get("prices", [])
             if t == "moneyline" and len(prices) >= 3:
