@@ -59,6 +59,13 @@ OBS_N_MIN = 200            # 观察库释放采信最小结算样本数(>200, �
 OBS_WINRATE_EDGE_MIN = 3.0 # 赢率>隐含(差>3pp 才释放)。2026-09-15 0→3pp: 观察库整体负edge(逆向选择),
                             # 差0pp会把打平的噪声格子释放; 对齐实盘 REAL_WINRATE_EDGE_MIN=3pp 去噪声
 REAL_WINRATE_EDGE_MIN = 3.0  # 实盘主开关/方向释放赢率vs隐含差值阈值(差>3pp 去噪声)
+
+# 放弃的特殊盘口(2026-09-15 用户决定): 这些盘口 margin 15%+ (vs 主盘口 3-8%), 收盘线不 sharp,
+# 且 clv_collector 里 close_fair 用的是 proportional devig(非 Shin), CLV 虚高无意义。
+# 套利团队放弃: 正确比分/半全场/先进球/精确进球/净胜球/总进球区间 + 角球(前缀 corner)。
+SPECIAL_MARKETS = {'correct_score', 'correct_score_ht', 'htft', 'first_to_score',
+                   'exact_goals_ht', 'winning_margin', 'total_goals_range'}
+SPECIAL_MARKET_PREFIX = ('corner',)
 # 实盘数据切分点(2026-09-12 用户要求): 实盘释放只用「重收后」的干净数据, 不用之前被结算bug
 # (ms=7漏判/league_cn对不上)污染的旧数据。切分点=观察库重收日 9-10。
 REAL_DATA_CUTOFF_TS = datetime.fromisoformat("2026-09-10T00:00:00+00:00").timestamp()
@@ -114,14 +121,10 @@ MANUAL_OBSERVE_BLOCK = {
     "football|ou|小|1.0-2.0|live",  # 2026-09-15: 小球低赔1.0-2.0 累计 edge -12.3pp(164笔), 09-13起持续负且在恶化(edge -13.8→-19.7pp), 占小球大部分投注量稳定漏血
 }
 
-# 手动释放 + 当日累计上限(2026-09-15 用户要求): dc 早盘 1.0-3.0 试探, 单注≤150, 当日累计≤2000 不重复使用。
-# 与 MANUAL_OBSERVE_RELEASE 的区别: 这里 limit_removed=False(受当日累计上限约束), 释放的是"有希望的格子"试探。
-MANUAL_OBSERVE_RELEASE_LIMITED = {
-    "football|dc|主|1.0-2.0|early": 150,
-    "football|dc|客|1.0-2.0|early": 150,
-    "football|dc|主|2.0-3.0|early": 150,
-    "football|dc|客|2.0-3.0|early": 150,
-}
+# 手动释放 + 当日累计上限(2026-09-15 用户要求): 释放的是"有希望的格子"试探, 单注≤150, 当日累计≤2000。
+# 2026-09-15 清空: 原 dc 早盘 1.0-3.0 是旧判据(赢率vs隐含)放的, 但 dc 在 CLV 口径下中位为负
+# (-0.52%), 与「CLV唯一标准」矛盾, 撤掉交还数据驱动(负 CLV 不会释放)。
+MANUAL_OBSERVE_RELEASE_LIMITED = {}
 
 DIR_N_MIN = 30              # 方向级赢率采信最小样本量(2026-09-12 15→50→30: 实盘方向样本, 30够)
 
@@ -447,16 +450,17 @@ def load_observe_winrate():
 
 
 def load_clv_median():
-    """早盘收盘线 CLV 中位(运动×盘口×方向×赔率区间): clv_results.csv 的 true_clv_pct。
+    """早盘收盘线 CLV 中位+n(运动×盘口×方向×赔率区间): clv_results.csv 的 true_clv_pct。
 
-    2026-09-15 用户纠正: CLV(打不打得过 Pin 收盘价)是职业团队唯一最看重的 edge 指标,
-    释放判据必须「只看正 CLV」——负 CLV = 逆向选择(软书滞后, 线朝你反向走), 即使
-    「赢率 vs Pin下注时价隐含」为正也是 Pin 自身 favorite-longshot bias 造的假象。
-    故加 CLV 闸门: 早盘格子中位 CLV < 0 一律不释放。
+    2026-09-15 用户最终决定: CLV(打不打得过 Pin 收盘价)是职业团队唯一最看重的 edge 指标,
+    释放判据改为「只看正 CLV + n>200」, 替换掉「赢率 vs Pin下注时价隐含 + ROI」——
+    那个隐含带 favorite-longshot bias, 差值被偏差污染, 会把「热门假edge」当真。
 
     true_clv_pct = (BB下注价 - Pin收盘公平价) / Pin收盘公平价, 隐含基准就是「收盘价」
-    (不是 Pin 下注时价), 所以这个闸门同时落地「隐含用收盘价」这条铁律(正 CLV = 下注价打过收盘价)。
-    滚球(scope=live)无收盘线 CLV, 此闸门只对 scope=early 生效。
+    (不是 Pin 下注时价), 所以这套判据同时落地「隐含用收盘价」这条铁律(正 CLV = 下注价打过收盘价)。
+    滚球(scope=live)无收盘线 CLV, 此判据只对 scope=early 生效。
+
+    Returns: {(sport, sub_market, direction, odds_interval): (median_clv, n)}
     """
     import csv as _csv, statistics as _st
     f = DATA / "clv_results.csv"
@@ -473,7 +477,7 @@ def load_clv_median():
             key = (r.get("sport") or "?", r.get("sub_market") or "?",
                    _direction(r.get("designation"), r.get("sub_market")), _odds_interval(odds))
             by[key].append(clv)
-    return {k: _st.median(v) for k, v in by.items() if v}
+    return {k: (_st.median(v), len(v)) for k, v in by.items() if v}
 
 
 def load_live_real_roi():
@@ -535,15 +539,11 @@ def _notify_release(newly_released, obs_winrate):
     except Exception:
         return
     lines = []
-    for (sport, sm, dr, scope) in newly_released:
-        d = obs_winrate.get((sport, sm, dr, scope)) or {}
-        winrate = d.get("winrate", 0)
-        implied = d.get("implied", 0)
+    for (sport, sm, dr, interval, scope) in newly_released:
         sp_cn = SPORT_CN.get(sport, sport)
         scope_cn = "滚球" if scope == SCOPE_LIVE else "早盘"
         lines.append(
-            f"{sp_cn} {sm}-{dr}({scope_cn}): 赢率{winrate:.1f}% vs 隐含{implied:.1f}% "
-            f"(+{winrate-implied:.1f}pp) | 单注≤{OBS_CAP_NEW} | 当日累计≤{DAILY_STAKE_LIMIT}")
+            f"{sp_cn} {sm}-{dr}({interval},{scope_cn}) | 单注≤{OBS_CAP_NEW} | 当日累计≤{DAILY_STAKE_LIMIT}")
     body = "🆕 新释放盘口\n\n" + "\n".join(lines)
     try:
         send_dingtalk("🆕 新释放盘口", body)
@@ -638,22 +638,24 @@ def main():
     # 每个赔率区间独立判据: n>200 + 赢率>隐含 + ROI>0 → 释放; 否则 → 拦截(表现差不投)。
     observe_released = []
     observe_blocked = []
+    # 早盘(scope=early): CLV>0 + n>200 是唯一标准(2026-09-15 用户最终决定), 替换掉赢率vs隐含+ROI。
+    # 特殊盘口(margin 15%+, 收盘线不 sharp, CLV 无意义)直接放弃, 不进清单。
+    for (sport, sm, dr, interval), (med, n) in sorted(clv_med.items()):
+        if sm in SPECIAL_MARKETS or sm.startswith(SPECIAL_MARKET_PREFIX):
+            continue
+        if med > 0 and n >= OBS_N_MIN:
+            observe_released.append([sport, sm, dr, interval, "early"])
+        else:
+            observe_blocked.append([sport, sm, dr, interval, "early"])
+    # 滚球(scope=live): 无收盘线 CLV, 保持「赢率>隐含 + ROI>0」判据(滚球独立观察库)。
     for (sport, sm, dr, interval, scope), d in sorted(obs_winrate.items()):
+        if scope != "live":
+            continue
         if d["n"] < OBS_N_MIN:
             continue
-        # CLV 闸门(2026-09-15 用户纠正): 早盘格子中位 CLV < 0 = 逆向选择, 一律不释放。
-        # 「赢率 vs Pin下注时价隐含」的隐含带 favorite-longshot bias, 不可拿来推翻负 CLV。
-        # 滚球(scope=live)无收盘线 CLV, 此闸门不适用(滚球逆向选择另有观察库 CLV 追踪筛)。
-        if scope == "early":
-            _clv = clv_med.get((sport, sm, dr, interval))
-            if _clv is not None and _clv < 0:
-                observe_blocked.append([sport, sm, dr, interval, scope])
-                continue
-        # 释放条件: 赢率>隐含 且 ROI>0。ROI>0 防「高赔率少数命中赢率虚高但ROI负」的假正。
         if d["winrate"] > d["implied"] + OBS_WINRATE_EDGE_MIN and d["roi"] > 0:
             observe_released.append([sport, sm, dr, interval, scope])
         else:
-            # n>200 但不满足释放条件 → 拦截(表现差的赔率区间不投)。
             observe_blocked.append([sport, sm, dr, interval, scope])
 
     # 已验证方向(硬编码真edge)统一进释放机制(2026-09-13): grandfathered, 不走 n>200 判据。
