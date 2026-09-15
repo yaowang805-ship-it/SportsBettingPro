@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
-"""盘口释放清单计算 — 用真实 ROI 替代 CLV 作为投注准入。
+"""盘口释放清单计算 — 真实结算赢率 vs 隐含 + 早盘收盘线 CLV 闸门。
 
-核心思想(2026-09-01 用户确认):
-    比价套利的"哪些盘口能投"不能只看 CLV —— 实测 CLV 是假正: 观察库 CLV 中位为正的
-    盘口(ht/ht_dc/correct_score_ht/htft)实盘 ROI 全是负的, 而实盘 ROI 为正的(1x2/dc/btts)
-    观察库 CLV 中位全是负的。故用真实结算 ROI 作为释放(投注)的最终标准。
+核心思想:
+    比价套利的"哪些盘口能投"看两层: 真实结算赢率是否 > 隐含, 且早盘格子收盘线 CLV 必须为正。
+
+    2026-09-15 用户纠正(重要): 早盘「收盘线 CLV」是职业团队唯一最看重的 edge 指标, 不能
+    用「赢率 vs Pin下注时价隐含」去推翻它 —— 那个隐含是 Pin 下注时价, 自带 favorite-longshot
+    bias(冷门虚高/热门虚低), 差值会被偏差污染。负 CLV = 逆向选择(线朝你反向走), 即使
+    「赢率>下注时隐含」为正也可能是 Pin 自身偏差造的假象。故加 CLV 闸门: 早盘格子中位
+    true_clv_pct < 0 一律不释放(见 live-clv-capture-rate-fix-20260915)。
+    注: 旧头「CLV 假正」结论只针对滚球「稍后价 CLV」(软书滞后), 不适用早盘「收盘线 CLV」。
 
 释放规则(混合粒度, 三通道):
     1. 主开关(运动×盘口):      实盘 ROI > 4% 且 n≥30 → 释放。
@@ -441,6 +446,36 @@ def load_observe_winrate():
     return out
 
 
+def load_clv_median():
+    """早盘收盘线 CLV 中位(运动×盘口×方向×赔率区间): clv_results.csv 的 true_clv_pct。
+
+    2026-09-15 用户纠正: CLV(打不打得过 Pin 收盘价)是职业团队唯一最看重的 edge 指标,
+    释放判据必须「只看正 CLV」——负 CLV = 逆向选择(软书滞后, 线朝你反向走), 即使
+    「赢率 vs Pin下注时价隐含」为正也是 Pin 自身 favorite-longshot bias 造的假象。
+    故加 CLV 闸门: 早盘格子中位 CLV < 0 一律不释放。
+
+    true_clv_pct = (BB下注价 - Pin收盘公平价) / Pin收盘公平价, 隐含基准就是「收盘价」
+    (不是 Pin 下注时价), 所以这个闸门同时落地「隐含用收盘价」这条铁律(正 CLV = 下注价打过收盘价)。
+    滚球(scope=live)无收盘线 CLV, 此闸门只对 scope=early 生效。
+    """
+    import csv as _csv, statistics as _st
+    f = DATA / "clv_results.csv"
+    if not f.exists():
+        return {}
+    by = defaultdict(list)
+    with open(f, encoding="utf-8-sig") as fh:
+        for r in _csv.DictReader(fh):
+            try:
+                clv = float(r.get("true_clv_pct") or 0)
+                odds = float(r.get("bb_odds") or 0)
+            except (ValueError, TypeError):
+                continue
+            key = (r.get("sport") or "?", r.get("sub_market") or "?",
+                   _direction(r.get("designation"), r.get("sub_market")), _odds_interval(odds))
+            by[key].append(clv)
+    return {k: _st.median(v) for k, v in by.items() if v}
+
+
 def load_live_real_roi():
     """滚球实盘 ROI: BB 官方已结算订单(isSettled=true, uwl) 滚球部分(mt>bt), 按(运动,盘口)聚合。
 
@@ -523,6 +558,7 @@ def main():
     dir_winrate = load_real_winrate_direction()
     league_winrate = load_real_winrate_league()
     dir_window_winrate = load_real_winrate_direction_window()
+    clv_med = load_clv_median()  # 早盘收盘线 CLV 中位(释放闸门, 2026-09-15)
 
     # 主开关(2026-09-12 改赢率vs隐含): ROI 被注额加权+赔率结构扭曲(早盘三层根因), 判据统一为
     # 赢率>隐含(真溢价)。market_roi 保留给「满7天提额」的实盘 ROI 判定(见下)。
@@ -605,6 +641,14 @@ def main():
     for (sport, sm, dr, interval, scope), d in sorted(obs_winrate.items()):
         if d["n"] < OBS_N_MIN:
             continue
+        # CLV 闸门(2026-09-15 用户纠正): 早盘格子中位 CLV < 0 = 逆向选择, 一律不释放。
+        # 「赢率 vs Pin下注时价隐含」的隐含带 favorite-longshot bias, 不可拿来推翻负 CLV。
+        # 滚球(scope=live)无收盘线 CLV, 此闸门不适用(滚球逆向选择另有观察库 CLV 追踪筛)。
+        if scope == "early":
+            _clv = clv_med.get((sport, sm, dr, interval))
+            if _clv is not None and _clv < 0:
+                observe_blocked.append([sport, sm, dr, interval, scope])
+                continue
         # 释放条件: 赢率>隐含 且 ROI>0。ROI>0 防「高赔率少数命中赢率虚高但ROI负」的假正。
         if d["winrate"] > d["implied"] + OBS_WINRATE_EDGE_MIN and d["roi"] > 0:
             observe_released.append([sport, sm, dr, interval, scope])
