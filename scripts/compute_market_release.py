@@ -640,10 +640,16 @@ def main():
     # 每个赔率区间独立判据: n>200 + 赢率>隐含 + ROI>0 → 释放; 否则 → 拦截(表现差不投)。
     observe_released = []
     observe_blocked = []
-    # 早盘(scope=early): CLV>0 + n>200 是唯一标准(2026-09-15 用户最终决定), 替换掉赢率vs隐含+ROI。
+    # 早盘(scope=early): CLV>2% + n>200 是唯一标准(2026-09-15 用户最终决定), 替换掉赢率vs隐含+ROI。
     # 特殊盘口(margin 15%+, 收盘线不 sharp, CLV 无意义)直接放弃, 不进清单。
     for (sport, sm, dr, interval), (med, n) in sorted(clv_med.items()):
         if sm in SPECIAL_MARKETS or sm.startswith(SPECIAL_MARKET_PREFIX):
+            continue
+        # 足球冷门封顶(2026-09-15): favorite-longshot bias 使足球冷门系统性高估, 真实赢率全负
+        # (CLV 正是 devig 残差, 非真 edge)。足球 >5.0 不用 CLV 释放。冰球/棒球有 reverse bias,
+        # 不套用此封顶(等那俩运动攒够样本单独判)。
+        if sport == "football" and interval == ">5.0":
+            observe_blocked.append([sport, sm, dr, interval, "early"])
             continue
         if med > OBS_CLV_MIN and n >= OBS_N_MIN:
             observe_released.append([sport, sm, dr, interval, "early"])
