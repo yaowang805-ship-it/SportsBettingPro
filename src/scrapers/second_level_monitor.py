@@ -1255,6 +1255,7 @@ class SecondLevelMonitor:
             "option_type": opp["option_type"], "sub": sub_map.get(opp["sub"], opp["sub"]),
             "desig": desig_map.get(opp["sub"], {}).get(opp["direction"], opp["direction"]),
             "bb_odds": opp["bb_odds"], "fair": opp["fair"], "ev": opp["ev"], "line": opp["line"],
+            "pin_raw": opp.get("pin_raw", 0),  # Pin 原始价(去抽水前), 供推送展示
             "sport": opp.get("sport", ""),
             "match": {"home": opp["home"], "away": opp["away"], "sport": opp.get("sport", ""),
                       "league_cn": opp.get("league_cn", "滚球") or "滚球"},
