@@ -56,6 +56,8 @@ N_REAL_MIN = 50        # 实盘赢率采信最小样本量(2026-09-12 30→100�
 # 样本门槛从 n≥30 提到 n>100。滚球+早盘观察库合并统计, 滚球 league 归 "滚球"。
 # 2026-09-13: n>100 → n>200, 对齐职业 CLV 有效标准(CLV 从 n≥200 才统计有效, <100 是噪声)。
 OBS_N_MIN = 200            # 观察库释放采信最小结算样本数(>200, 对齐职业CLV标准)
+OBS_CLV_MIN = 2.0          # 早盘释放中位CLV阈值(>2%): 职业sharp选手平均+2~5% no-vig CLV,
+                            # >0太松(+0.5%以下是devig/匹配噪声), >2 既严格又留容错(2026-09-15 用户定)
 OBS_WINRATE_EDGE_MIN = 3.0 # 赢率>隐含(差>3pp 才释放)。2026-09-15 0→3pp: 观察库整体负edge(逆向选择),
                             # 差0pp会把打平的噪声格子释放; 对齐实盘 REAL_WINRATE_EDGE_MIN=3pp 去噪声
 REAL_WINRATE_EDGE_MIN = 3.0  # 实盘主开关/方向释放赢率vs隐含差值阈值(差>3pp 去噪声)
@@ -643,7 +645,7 @@ def main():
     for (sport, sm, dr, interval), (med, n) in sorted(clv_med.items()):
         if sm in SPECIAL_MARKETS or sm.startswith(SPECIAL_MARKET_PREFIX):
             continue
-        if med > 0 and n >= OBS_N_MIN:
+        if med > OBS_CLV_MIN and n >= OBS_N_MIN:
             observe_released.append([sport, sm, dr, interval, "early"])
         else:
             observe_blocked.append([sport, sm, dr, interval, "early"])
