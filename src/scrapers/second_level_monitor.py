@@ -1029,7 +1029,8 @@ class SecondLevelMonitor:
         print(f"  🎯 秒级下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake} (EV-Kelly)", flush=True)
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
-            match_id=match_id, check_limit=True, verify_price=True)
+            match_id=match_id, check_limit=True, verify_price=True,
+            fair_price=sig.get("fair"), min_ev_pct=self.threshold)
         if code == 14010:
             self._invalidate_token_cache()
         if code == 0:
