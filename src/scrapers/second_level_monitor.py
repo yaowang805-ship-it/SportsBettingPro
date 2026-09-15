@@ -579,26 +579,21 @@ class SecondLevelMonitor:
                     print(f"    {sp}/{sub}: n={n2} 盈亏{pnl2:+.0f} ROI{pnl2/stk2*100:+.1f}%", flush=True)
 
     def _check_clv(self):
-        """CLV 追踪(2026-09-14): 下注 20s 后复验 Pin 公平价, 算 CLV 写回观察库。
+        """CLV 追踪(2026-09-15 改 LEV 口径): 下注 3s 后复验 Pin 公平价, 算 CLV 写回观察库。
 
-        CLV = (bb_odds - fair@T+20) / fair@T+20。正 CLV = 我们抢到比市场后来
+        CLV = (bb_odds - fair@T+3) / fair@T+3。正 CLV = 我们抢到比市场后来
         定价更优的价格(真 edge); 负 CLV = 逆向选择。写回 live_paper_bets 的 clv 字段,
         供结算按 CLV 正负分桶。
 
-        替代旧 reversion(尖峰假EV)标记: 旧逻辑把「BB 价 30s 后回落」误判成假 EV 并剔除,
-        实测那些才是赢家(正 CLV +32.5% ROI) —— 标记反了。且 ≥10% 阈值只抓到 25 笔。
-        这里改用 Pin 公平价(不是 BB 噪声价)算连续 CLV, 不再设阈值、不再剔除。
-
-        2026-09-15 修复采集率 4%→ 根因=60s 后 Pin 滚球盘口大多已 close(进球/暂停)导致
-        reverify 返回空。改 60s→20s(盘口 open 概率高) + allow_closed=True(closed 最后一笔
-        价=真收盘线)。注意: 只对 CLV 路径放开 closed, 下单前验价仍拒绝 closed(stale 价)。
-        另: nearest=True 让让球/大小球线漂移时就近匹配(代理收盘价); 独赢二路(网球/篮球无和局)
-        devig 已在 _reverify_live_ev 支持 —— 这三样都只对 CLV 路径, 下单前验价全保持严格。
+        2026-09-15 用户定: 职业团队的 Live Execution Value(LEV)=下注后~3s 复验中间价,
+        持续跑赢它才说明 edge 还活着。窗口 20s→3s(逆向选择几秒内就发生, 20s 太晚错过)。
+        每次轮询(2s)都查 _check_clv, 有 ready 才发 Pin 请求(请求率=下注率, 不额外加压)。
+        另: allow_closed=True + nearest=True 只对 CLV 路径; 下单前验价保持严格。
         """
         if not self._reversion_track:
             return
         now = time.time()
-        ready = {k: v for k, v in self._reversion_track.items() if now - v["ts"] >= 20}
+        ready = {k: v for k, v in self._reversion_track.items() if now - v["ts"] >= 3}
         if not ready:
             return
         for key, v in ready.items():
@@ -1298,7 +1293,7 @@ class SecondLevelMonitor:
                     self._settle_paper_bets()
                 if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
                     self._check_settled()
-                    self._check_clv()  # 下注后 60s 复验 Pin 公平价, 算 CLV
+                self._check_clv()  # 每次轮询(2s)查 CLV(3s窗口); 有 ready 才发 Pin 请求, 请求率=下注率
             except Exception as e:
                 print(f"[slm] 轮询异常: {type(e).__name__} {str(e)[:80]}", flush=True)
             await asyncio.sleep(refresh_every)
