@@ -43,6 +43,8 @@ PIN_CACHE = DATA_DIR / "pin_matches_cache.json"
 PIN_CACHE_STALE = 10 * 60      # Pin 缓存空/陈旧阈值(秒): 空且>此值, 或陈旧>1h, 且 Pin 可达 → 主动重拉
 PIN_CACHE_REPAIR_COOLDOWN_FILE = DATA_DIR / "pin_cache_repair_cooldown.json"
 PIN_CACHE_REPAIR_COOLDOWN = 30 * 60  # 缓存修复冷却(秒): 30min 只修一次, 避免每 5min 重拉
+SELF_HEAL_PUSH_COOLDOWN_FILE = DATA_DIR / "self_heal_push_cooldown.json"
+SELF_HEAL_PUSH_COOLDOWN = 30 * 60  # 修复报告推送冷却(秒): 30min 只推一次, 长故障期防刷屏(2026-09-15)
 
 
 def _daemon_pid():
@@ -353,6 +355,22 @@ def main():
 
     # 报告
     if fixes:
+        # 推送冷却(2026-09-15): urgent=True 绕过标题冷却, 长故障期间每 10min 推一次刷屏。
+        # 加独立冷却: 30min 内同类报告只推一次(用户反馈"看门狗总是钉钉推送")。
+        _now = time.time()
+        _last_push = 0.0
+        try:
+            if SELF_HEAL_PUSH_COOLDOWN_FILE.exists():
+                _last_push = float(json.loads(SELF_HEAL_PUSH_COOLDOWN_FILE.read_text()).get("ts", 0) or 0)
+        except Exception:
+            pass
+        if _now - _last_push < SELF_HEAL_PUSH_COOLDOWN:
+            print(f"修复报告冷却中(距上次 {(_now - _last_push) / 60:.0f}min), 跳过推送:")
+            for s in statuses:
+                print(" ", s)
+            for f in fixes:
+                print("  ✅", f)
+            return
         # 统一走 config.settings 入口: 自动注入机器人关键词(缺了会被服务端以 errcode
         # 310000 静默拒收 —— 2026-08-21 查出自愈报告因此从未送达过一次, 看门狗等于哑的),
         # 且 urgent=True 跳过非投注每日配额(自愈报告是故障告警, 不该被例行日报挤掉)。
@@ -367,6 +385,12 @@ def main():
         except Exception as e:
             print(f"  ⚠️ 自愈报告发送异常: {e}")
             _sent = False
+        # 记录推送时间戳(无论成败), 30min 内不再推
+        try:
+            SELF_HEAL_PUSH_COOLDOWN_FILE.parent.mkdir(parents=True, exist_ok=True)
+            SELF_HEAL_PUSH_COOLDOWN_FILE.write_text(json.dumps({"ts": time.time()}))
+        except Exception:
+            pass
         if _sent:
             print("已发送修复报告:")
         else:

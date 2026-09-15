@@ -27,6 +27,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 DEFAULT_DOMAIN = "https://api.x-vip8.com"
+FB_DOMAIN = "https://api.5c4r3.com"  # FB体育独立域名(与 BB 同账户但独立 token/session)
 _UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36")
 
@@ -124,24 +125,27 @@ def _read_localstorage():
         return {}
 
 
-def read_token():
+def read_token(platform="BB"):
     """实时读 user-token(下单接口鉴权用, 有效期短, 必须下单瞬间读)。
 
-    顺序: .bb_token 文件(用户手动配置最新 token) > applescript(Chrome 活动标签是 BB 页)。
+    platform="BB": 读 .bb_token; platform="FB": 读 .fb_token(独立 token, 避免和 BB 互相覆盖)。
+    顺序: token 文件(用户手动配置最新 token) > applescript(Chrome 活动标签)。
     """
-    # 1. .bb_token 文件(持久化, 用户登录后手动更新)
-    tok_file = ROOT / "data" / "storage" / ".bb_token"
+    # 1. token 文件(持久化, 分平台)
+    tok_file = ROOT / "data" / "storage" / (".bb_token" if platform == "BB" else ".fb_token")
     if tok_file.exists():
         tok = tok_file.read_text().strip()
         if tok and len(tok) > 30:
             return tok
-    # 2. applescript 读活动标签(依赖 Chrome 活动标签是 BB 页)
+    # 2. applescript 读活动标签(依赖 Chrome 活动标签是对应平台页)
     ls = _read_localstorage()
     return ls.get("user-token", "") or ls.get("st-auth", "")
 
 
-def read_domain():
-    """读 API 域名(动态, 每次登录可能变)。顺序: .bb_domain 文件 > applescript > 默认。"""
+def read_domain(platform="BB"):
+    """读 API 域名。platform="FB" 用固定 FB 域名; BB 动态读 .bb_domain/Chrome/默认。"""
+    if platform == "FB":
+        return FB_DOMAIN
     dom_file = ROOT / "data" / "storage" / ".bb_domain"
     if dom_file.exists():
         dom = dom_file.read_text().strip()
@@ -286,7 +290,8 @@ def fetch_current_odds(market_id, match_id, option_type, token=None, domain=None
 
 
 def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domain=None,
-                     match_id=None, check_limit=True, verify_price=True, max_rise_pct=5.0):
+                     match_id=None, check_limit=True, verify_price=True, max_rise_pct=5.0,
+                     platform="BB"):
     """单关下单。返回 (code, order_id, message)。
 
     code=0 成功; code=5 参数错; code=14010 token过期; code=3015 盘口关闭;
@@ -296,9 +301,10 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
     max_rise_pct: 最新赔率比扫描赔率【升高】超过此百分比 → 放弃下单(默认5%)。
         2026-09-14 方向修正: 原逻辑是"跌超阈值放弃", 但方向反了——BB价回落(往Pin靠)=正CLV
         该投(实证 spike 回落赢 +32.5% ROI), BB价升高(背离Pin)=逆向选择该放弃。见 live-clv-tracking-20260914。
+    platform: "BB"|"FB"(2026-09-15)。FB 用 api.5c4r3.com + .fb_token, 与 BB 独立 session 不冲突。
     """
-    token = token or read_token()
-    domain = domain or read_domain()
+    token = token or read_token(platform)
+    domain = domain or read_domain(platform)
     if not token:
         return -1, None, "无法读取 user-token(Chrome 未登录 BB 或活动标签不对)"
 
@@ -339,8 +345,8 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
         "Content-Type": "application/json",
         "Authorization": token,
         "User-Agent": _UA,
-        "Origin": "https://pc.x14ff.com",
-        "Referer": "https://pc.x14ff.com/",
+        "Origin": "https://pc.7y99z.com" if platform == "FB" else "https://pc.x14ff.com",
+        "Referer": "https://pc.7y99z.com/" if platform == "FB" else "https://pc.x14ff.com/",
     }
     try:
         r = _session().post(f"{domain}/v1/order/bet/singlePass",

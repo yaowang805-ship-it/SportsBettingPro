@@ -4,7 +4,7 @@
 
 与 BB 观察库(live_paper_bets.json)完全独立:
   - FB 的 match_id 与 BB 各自独立(FB 比赛用 FB 域名 api.5c4r3.com 的 getMatchDetail 结算)。
-  - 只收集数据、不释放盘口、不下真单。
+  - 观察库只收集数据; 实盘下单走 FB_RELEASE_CAPS(2026-09-15 加, 默认只释放独赢客胜1.0-2.0)。
   - 结算口径与 BB 观察库完全一致(含让球按当前比分 since-bet 结算、让球0排除)。
 
 用法:
@@ -37,6 +37,36 @@ def _is_settleable(desig, line):
     if desig in ("大球", "小球"):
         return line is not None
     return False
+
+
+# ── FB 实盘释放(2026-09-15) ──
+# FB 手动释放盘口: 独赢客胜低赔 1.0-2.0(观察库 +13.6pp, 连续3天正 edge, 见 live-clv-tracking)。
+# 格式 "sport|sm|direction|interval|scope" → cap(试探 100)。与 BB observe_release_caps 同口径。
+FB_RELEASE_CAPS = {
+    "football|1x2|客|1.0-2.0|live": 100,
+}
+FB_BET_ENABLED = True   # FB 实盘下单总开关
+
+
+def _odds_interval(o):
+    if o <= 1.0:
+        return "?"
+    if o < 2.0:
+        return "1.0-2.0"
+    if o < 3.0:
+        return "2.0-3.0"
+    if o < 5.0:
+        return "3.0-5.0"
+    return ">5.0"
+
+
+def _fb_release_cap(o):
+    """返回 FB 释放的 cap(未释放返回 None)。"""
+    sub = o.get("sub")            # "1x2"/"ou"/"hc"
+    dr = o.get("direction")       # "主"/"客"/"和"/"大"/"小"
+    itv = _odds_interval(o.get("bb_odds", 0) or 0)
+    key = f"football|{sub}|{dr}|{itv}|live"
+    return FB_RELEASE_CAPS.get(key)
 
 
 def _bet_score(b):
@@ -180,6 +210,36 @@ def collect_once(threshold=3.0, stake=100):
             "bb_odds": o["bb_odds"], "ts": time.time(),
         }
         added += 1
+
+    # 1b. FB 实盘下单(释放盘口才投, 2026-09-15)
+    bet_n = 0
+    if FB_BET_ENABLED:
+        try:
+            from src.betting.bb_auto_bet import place_single_bet, _load_stake_record
+        except Exception:
+            place_single_bet = None
+        if place_single_bet:
+            rec = _load_stake_record()
+            for o in opps:
+                cap = _fb_release_cap(o)
+                if cap is None:
+                    continue
+                mid = o.get("bb_match_id"); mkt = o.get("market_id"); opt = o.get("option_type")
+                if not mid or not mkt or not opt:
+                    continue
+                # 去重: 该盘口已下过注(record_stake 记 (match_id, market_id), FB match_id 独立于 BB)
+                if rec.get(str(mid), {}).get(str(mkt), 0.0) > 0:
+                    continue
+                stake_v = min(stake, cap)
+                tag = f"{o.get('home','')} vs {o.get('away','')} {_DESIG.get((o['sub'],o['direction']),'')}"
+                code, order_id, msg = place_single_bet(
+                    mkt, o["bb_odds"], opt, stake=stake_v,
+                    match_id=mid, check_limit=True, verify_price=True, platform="FB")
+                if code == 0:
+                    bet_n += 1
+                    print(f"  ✅ FB 下单成功 {tag} | 注额¥{stake_v} | 订单{order_id}", flush=True)
+                else:
+                    print(f"  ❌ FB 下单失败({code} {msg}) {tag}", flush=True)
 
     # 2. 结算(已捕捉超 2h 的未结算样本)
     settled_n = 0
