@@ -1,4 +1,9 @@
 {
+  "football|Copa Libertadores|LDU Quito|SE Palmeiras SP|和局|1x2|2026-09-17": {
+    "ev": 7.2,
+    "bb": 3.14,
+    "ts": 1789541301.434169
+  },
   "football|Copa Sudamericana|CR Vasco da Gama RJ|Independiente Santa Fe|上半场客胜|ht|2026-09-16": {
     "ev": 4.78,
     "bb": 9.35,
@@ -19,9 +24,9 @@
     "bb": 4.07,
     "ts": 1789541301.4340742
   },
-  "football|Copa Libertadores|LDU Quito|SE Palmeiras SP|和局|1x2|2026-09-17": {
-    "ev": 7.2,
-    "bb": 3.14,
-    "ts": 1789541301.434169
+  "football|Russia Premier League|Rodina Moscow|FK Rubin Kazan|上半场主胜|ht|2026-09-16": {
+    "ev": 8.84,
+    "bb": 4.47,
+    "ts": 1789543074.293576
   }
 }
