@@ -728,9 +728,13 @@ class SecondLevelMonitor:
 
     def _try_live_auto_bet(self, sig):
         """滚球机会处理: 观察库入库前验价(漂移假EV不入库), 实盘下单由 LIVE_REAL_BET_ENABLED 控制。"""
+        _t0 = time.time(); _t = _t0  # 计时埋点(2026-09-17)
         # 2026-09-09 用户要求: 滚球价秒级漂移, 扫描瞬间EV是假的 → 入库前重新验价,
         # 漂移/盘口关闭的不入库(假样本没分析意义)。验价结果同时供实盘小球下单复用。
+        # 提速(2026-09-17): 并行预拉 BB 当前赔率, 与 Pin 验价(1-2s)重叠, 省 1-2s。
+        _bb_prefetch = self._prefetch_bb_odds(sig)
         fresh_ev = self._reverify_live_ev(sig)
+        _t_pin = time.time() - _t; _t = time.time()
         if fresh_ev is None or fresh_ev < self.threshold:
             return
         sig["ev"] = fresh_ev  # 入库/下单都用验价后的真实 EV
