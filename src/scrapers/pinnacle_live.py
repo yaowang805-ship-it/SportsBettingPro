@@ -439,7 +439,9 @@ def fetch_live_opportunities(threshold=3.0, platform="BB", use_file_cache=False)
     """
     from src.scrapers.devig import shin_fair_odds
     bb = fetch_bb_live_matches(platform=platform)
+    _bb_ts = time.time()  # BB 拉取时间(本次 getList 完成时刻)
     pin = fetch_live_fair_prices(use_file_cache=use_file_cache)
+    _pin_ts = _FAIR_CACHE.get("ts", time.time())  # Pin 拉取时间(公平价缓存的实际抓取时刻, 15-45s前)
     # 过滤角球/罚牌子比赛, 只留主比赛
     pin_list = [(mid, v) for mid, v in pin.items()
                 if not _is_sub_market(v["home"]) and not _is_sub_market(v["away"])]
@@ -501,6 +503,7 @@ def fetch_live_opportunities(threshold=3.0, platform="BB", use_file_cache=False)
                     "pin_matchup_id": pin_mid, "league_id": pv.get("league_id"),
                     "max_stake": pv.get("max_stake", 0),
                     "sc": b.get("sc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用, 2026-09-13)
+                    "bb_ts": _bb_ts, "pin_ts": _pin_ts,  # BB/Pin 数据拉取时间(供推送展示数据新鲜度)
                     "platform": platform,  # BB/FB(推送时标注在哪平台投注, 2026-09-13)
                 })
     return opps
