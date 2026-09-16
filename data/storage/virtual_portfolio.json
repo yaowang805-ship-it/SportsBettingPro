@@ -1,5 +1,5 @@
 {
-  "balance": 16722.53,
+  "balance": 16662.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -207,6 +207,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1789667100,
       "created_at": "2026-09-16T22:43:02.238322+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_底特律城_匹兹堡猎犬河队_上半场主胜",
+      "sport": "football",
+      "league": "美国冠军联赛",
+      "home_team": "底特律城",
+      "away_team": "匹兹堡猎犬河队",
+      "home_cn": "底特律城",
+      "away_cn": "匹兹堡猎犬河队",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 3.37,
+      "stake": 60,
+      "model_prob": 0.3066,
+      "ev_pct": 3.32,
+      "pin_odds": 3.01,
+      "fair_price": 3.2616,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1789858800,
+      "created_at": "2026-09-16T23:19:27.467267+00:00",
       "track_only": false
     }
   ],
@@ -9293,8 +9316,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-17",
-    "used": 60.0,
-    "bets": 1
+    "used": 120.0,
+    "bets": 2
   },
   "updated": null
 }
