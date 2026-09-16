@@ -346,7 +346,7 @@ def fetch_current_odds(market_id, match_id, option_type, token=None, domain=None
 
 def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domain=None,
                      match_id=None, check_limit=True, verify_price=True, max_rise_pct=5.0,
-                     platform="BB", fair_price=None, min_ev_pct=None):
+                     platform="BB", fair_price=None, min_ev_pct=None, prefetched_odds=None):
     """单关下单。返回 (code, order_id, message)。
 
     code=0 成功; code=5 参数错; code=14010 token过期; code=3015 盘口关闭;
@@ -376,25 +376,27 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
     # 原"跌超阈值放弃"方向反了: 回落=正CLV该投, 升高=逆向选择该放弃。
     final_odds = odds
     if verify_price and match_id is not None:
-        cur = fetch_current_odds(market_id, match_id, option_type, token, domain)
-        if cur:
-            cur_odds = cur[0]
-            if cur_odds and float(odds) > 0:
-                rise = (float(cur_odds) - float(odds)) / float(odds) * 100
-                if rise > max_rise_pct:
-                    return -4, None, f"赔率逆向漂移{rise:.1f}%(扫描{odds}→现{cur_odds}), 放弃"
-                # 2026-09-15 补缺口: BB 价回落(往 Pin 靠)时, 重算 edge + 注额。之前 stake 是按
-                # stale 价定的, 下到回落后的低 edge 上会偏大; 且没重验回落后的 edge 是否还够阈值。
-                if (fair_price is not None and min_ev_pct is not None
-                        and float(cur_odds) < float(odds) and float(fair_price) > 1):
-                    edge_final = (float(cur_odds) - float(fair_price)) / float(fair_price) * 100
-                    if edge_final < min_ev_pct:
-                        return -4, None, f"BB回落至{cur_odds}, edge降至{edge_final:.1f}%<{min_ev_pct}%, 放弃"
-                    edge_orig = (float(odds) - float(fair_price)) / float(fair_price) * 100
-                    if edge_orig > 0 and float(cur_odds) > 1:
-                        stake = stake * (edge_final / edge_orig) * (float(odds) - 1) / (float(cur_odds) - 1)
-                        stake = int(round(stake / 10.0) * 10)
-                final_odds = cur_odds  # 用最新赔率下单
+        if prefetched_odds is not None:
+            cur_odds = prefetched_odds  # 已预拉的 BB 当前赔率(与 Pin 验价并行, 省 1-2s)
+        else:
+            cur = fetch_current_odds(market_id, match_id, option_type, token, domain)
+            cur_odds = cur[0] if cur else None
+        if cur_odds and float(odds) > 0:
+            rise = (float(cur_odds) - float(odds)) / float(odds) * 100
+            if rise > max_rise_pct:
+                return -4, None, f"赔率逆向漂移{rise:.1f}%(扫描{odds}→现{cur_odds}), 放弃"
+            # 2026-09-15 补缺口: BB 价回落(往 Pin 靠)时, 重算 edge + 注额。之前 stake 是按
+            # stale 价定的, 下到回落后的低 edge 上会偏大; 且没重验回落后的 edge 是否还够阈值。
+            if (fair_price is not None and min_ev_pct is not None
+                    and float(cur_odds) < float(odds) and float(fair_price) > 1):
+                edge_final = (float(cur_odds) - float(fair_price)) / float(fair_price) * 100
+                if edge_final < min_ev_pct:
+                    return -4, None, f"BB回落至{cur_odds}, edge降至{edge_final:.1f}%<{min_ev_pct}%, 放弃"
+                edge_orig = (float(odds) - float(fair_price)) / float(fair_price) * 100
+                if edge_orig > 0 and float(cur_odds) > 1:
+                    stake = stake * (edge_final / edge_orig) * (float(odds) - 1) / (float(cur_odds) - 1)
+                    stake = int(round(stake / 10.0) * 10)
+            final_odds = cur_odds  # 用最新赔率下单
 
     body = {
         "languageType": "CMN",
