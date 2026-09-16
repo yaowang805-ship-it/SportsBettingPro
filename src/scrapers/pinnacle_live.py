@@ -219,7 +219,9 @@ def fetch_live_fair_prices(sport_ids=LIVE_SPORT_IDS, use_file_cache=False):
         home = next((p.get("name", "") for p in parts if p.get("alignment") == "home"), "")
         away = next((p.get("name", "") for p in parts if p.get("alignment") == "away"), "")
         mks = odds.get(mid, [])
-        ml = next((k for k in mks if k.get("type") == "moneyline" and k.get("status") == "open"), None)
+        # 只取全场(period=0): 滚球路径只比全场盘口(1x2/hc/ou), 半场(period=1)混进来会错配线
+        # (2026-09-16 修: 之前不按 period 过滤, moneyline 可能取到半场, spread/total 全场半场混一 dict)
+        ml = next((k for k in mks if k.get("type") == "moneyline" and k.get("status") == "open" and k.get("period") == 0), None)
         # 按 designation 排序成 [home, draw, away], 供 1x2 devig
         price_by_desig = {}
         for p in (ml.get("prices", []) if ml else []):
@@ -234,7 +236,7 @@ def fetch_live_fair_prices(sport_ids=LIVE_SPORT_IDS, use_file_cache=False):
         # spread(让球) + total(大小球) 2-way 盘口: {line(points): [dec1, dec2]}
         spreads = {}; totals = {}
         for k in mks:
-            if k.get("status") != "open":
+            if k.get("status") != "open" or k.get("period") != 0:  # 只取全场, 防半场线混入
                 continue
             t = k.get("type"); prices = k.get("prices", [])
             if len(prices) < 2:
@@ -575,7 +577,9 @@ def reverify_live_markets(pin_matchup_id, league_id, allow_closed=False):
         result = {"moneyline": None, "spread": {}, "total": {}}
         _ok_status = ("open", "closed") if allow_closed else ("open",)
         for k in mks:
-            if k.get("matchupId") != pin_matchup_id or k.get("status") not in _ok_status:
+            # 只取全场(period=0): 验价/CLV 复验都只针对全场盘口, 半场线混入会错配
+            if (k.get("matchupId") != pin_matchup_id or k.get("status") not in _ok_status
+                    or k.get("period") != 0):
                 continue
             t = k.get("type"); prices = k.get("prices", [])
             if t == "moneyline" and len(prices) >= 2:
