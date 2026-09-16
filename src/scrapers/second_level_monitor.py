@@ -894,11 +894,16 @@ class SecondLevelMonitor:
                 _desig = f"{_desig}@{_line:g}"  # 让球主胜@-0.5
             _desig = f"{_sub_cn}-{_desig}" if _sub_cn else _desig
             _platform = "BB" if sig.get("platform", "BB") == "BB" else "FB"  # 不用"BB体育", 会被钉钉判博彩词
+            # BB/Pin 数据拉取时间(展示数据新鲜度): BB 2s轮询≈实时, Pin 15-45s缓存
+            _bb_ts = sig.get("bb_ts"); _pin_ts = sig.get("pin_ts")
+            _bb_t = datetime.fromtimestamp(float(_bb_ts)).strftime("%H:%M:%S") if _bb_ts else "--"
+            _pin_t = datetime.fromtimestamp(float(_pin_ts)).strftime("%H:%M:%S") if _pin_ts else "--"
             self._notify_bet(
                 "🟦 滚球已下单",
                 f"{_sport_cn} | {_league} | 滚球{_clock} | 下单 {_bj}\n"
                 f"{sig['match']['home']} vs {sig['match']['away']} | {_desig}\n"
                 f"{_platform} {sig['bb_odds']:.2f} vs 原始 {sig.get('pin_raw', 0):.2f} | 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
+                f"拉取 BB {_bb_t} | Pin {_pin_t}\n"
                 f"单注 ¥{stake} | 余额 ¥{_bal} | 今日已投 ¥{self._live_spent:.0f} | 未结 ¥{self._live_outstanding:.0f}/{LIVE_BUDGET}")
         else:
             # 下单失败(如 token 过期 14010) → 也记虚拟投注, 保证验证数据积累不中断
@@ -1262,6 +1267,7 @@ class SecondLevelMonitor:
             "pin_matchup_id": opp["pin_matchup_id"], "league_id": opp["league_id"],
             "max_stake": opp["max_stake"],
             "bsc": opp.get("sc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用, 2026-09-13)
+            "bb_ts": opp.get("bb_ts"), "pin_ts": opp.get("pin_ts"),  # BB/Pin 数据拉取时间(推送展示)
             "platform": opp.get("platform", "BB"),  # BB/FB(推送时标注平台)
         }
 
