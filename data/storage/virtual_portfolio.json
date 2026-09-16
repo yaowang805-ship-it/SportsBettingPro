@@ -1,5 +1,5 @@
 {
-  "balance": 16782.53,
+  "balance": 16722.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -184,6 +184,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1789576200,
       "created_at": "2026-09-16T11:15:14.606090+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_马哈奇卡拉_莫斯科中央陆军_上半场主胜",
+      "sport": "football",
+      "league": "俄罗斯超级联赛",
+      "home_team": "马哈奇卡拉",
+      "away_team": "莫斯科中央陆军",
+      "home_cn": "马哈奇卡拉",
+      "away_cn": "莫斯科中央陆军",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.5,
+      "stake": 60,
+      "model_prob": 0.2312,
+      "ev_pct": 4.06,
+      "pin_odds": 4.03,
+      "fair_price": 4.3246,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1789667100,
+      "created_at": "2026-09-16T22:43:02.238322+00:00",
       "track_only": false
     }
   ],
@@ -9269,9 +9292,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-09-16",
-    "used": 130.0,
-    "bets": 4
+    "date": "2026-09-17",
+    "used": 60.0,
+    "bets": 1
   },
   "updated": null
 }
