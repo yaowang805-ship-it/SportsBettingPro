@@ -891,6 +891,7 @@ class SecondLevelMonitor:
             match_id=sig["match_id"], check_limit=True, verify_price=True,
             fair_price=_fresh_fair, min_ev_pct=self.threshold, prefetched_odds=_pref_odds)
         _t_order = time.time() - _t0  # 下单完成总耗时
+        print(f"[slm] 下单耗时: Pin验价 {_t_pin:.2f}s | 后续(入库+检查+验BB+下单) {_t_order-_t_pin:.2f}s | 总 {_t_order:.2f}s", flush=True)
         # 记录尝试(成败都记), 5min 内不再重复尝试同一盘口
         self._attempted.setdefault(str(sig["match_id"]), {})[str(market_id)] = time.time()
         # 更新限频时间戳 + 抽下一单随机间隔(10-15s, 防风控"投注过于频繁")
@@ -946,7 +947,7 @@ class SecondLevelMonitor:
                 f"{sig['match']['home']} vs {sig['match']['away']} | {_desig}\n"
                 f"{_platform} {sig['bb_odds']:.2f} vs 原始 {sig.get('pin_raw', 0):.2f} | 公平价 {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
                 f"拉取 BB {_bb_t} | Pin {_pin_t}\n"
-                f"单注 ¥{stake} | 余额 ¥{_bal} | 今日已投 ¥{self._live_spent:.0f} | 未结 ¥{self._live_outstanding:.0f}/{LIVE_BUDGET}")
+                f"单注 ¥{stake} | 余额 ¥{_bal} | 今日已投 ¥{self._live_spent:.0f} | 未结 ¥{self._live_outstanding:.0f}/{LIVE_BUDGET} | 耗时 {_t_order:.1f}s")
         else:
             # 下单失败(如 token 过期 14010) → 也记虚拟投注, 保证验证数据积累不中断
             self._append_live_paper_bet(sig)
