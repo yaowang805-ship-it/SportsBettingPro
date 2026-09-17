@@ -4,16 +4,6 @@
     "bb": 3.14,
     "ts": 1789541301.434169
   },
-  "football|Copa Sudamericana|CR Vasco da Gama RJ|Independiente Santa Fe|上半场客胜|ht|2026-09-16": {
-    "ev": 4.78,
-    "bb": 9.35,
-    "ts": 1789455589.729661
-  },
-  "football|Italy Serie C|AZ Picerno|lcio Catania|上半场主胜|ht|2026-09-16": {
-    "ev": 5.85,
-    "bb": 4.58,
-    "ts": 1789479315.11418
-  },
   "football|Italy Serie C|US Latina Calcio 1932|Guidonia Montecelio 1937|上半场主胜|ht|2026-09-17": {
     "ev": 6.73,
     "bb": 3.48,
@@ -23,11 +13,6 @@
     "ev": 4.06,
     "bb": 4.5,
     "ts": 1789598642.002445
-  },
-  "football|Russia Premier League|Rodina Moscow|FK Rubin Kazan|上半场主胜|ht|2026-09-16": {
-    "ev": 8.84,
-    "bb": 4.47,
-    "ts": 1789543074.293576
   },
   "football|Spain LaLiga|Levante UD|Athletic Bilbao|上半场主胜|ht|2026-09-17": {
     "ev": 3.27,
@@ -43,5 +28,10 @@
     "ev": 3.32,
     "bb": 3.37,
     "ts": 1789600820.7178261
+  },
+  "football|Russia Premier League|FK Rostov|FC Dynamo Moscow|上半场主胜|ht|2026-09-17": {
+    "ev": 4.38,
+    "bb": 4.29,
+    "ts": 1789620228.95567
   }
 }

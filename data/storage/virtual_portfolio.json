@@ -1,5 +1,5 @@
 {
-  "balance": 16662.53,
+  "balance": 16602.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -230,6 +230,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1789858800,
       "created_at": "2026-09-16T23:19:27.467267+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_罗斯托夫_莫斯科迪纳摩_上半场主胜",
+      "sport": "football",
+      "league": "俄罗斯超级联赛",
+      "home_team": "罗斯托夫",
+      "away_team": "莫斯科迪纳摩",
+      "home_cn": "罗斯托夫",
+      "away_cn": "莫斯科迪纳摩",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.29,
+      "stake": 60,
+      "model_prob": 0.2433,
+      "ev_pct": 4.38,
+      "pin_odds": 3.87,
+      "fair_price": 4.1101,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1789659000,
+      "created_at": "2026-09-17T04:42:57.571529+00:00",
       "track_only": false
     }
   ],
@@ -9316,8 +9339,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-17",
-    "used": 120.0,
-    "bets": 2
+    "used": 180.0,
+    "bets": 3
   },
   "updated": null
 }
