@@ -104,7 +104,7 @@ DAILY_STAKE_LIMIT = 2000
 # second_level_monitor._try_live_auto_bet 的硬编码 _bettable, 统一到这里单一事实来源。
 # 赔率区间用 "*" 表示"所有区间"(已验证方向不分区间的历史口径)。
 MANUAL_OBSERVE_RELEASE = {
-    "football|ou|小|*|live": 600,       # 足球小球(+11pp 实盘验证, 主真 edge, LIVE_UNDER_MAX_STAKE)
+    "football|ou|小|*|live": 200,       # 足球小球(2026-09-17 600→200: 真溢价问题未解决, 观察库edge -3.2pp, 先降风险)
     # 2026-09-14 暂停: 足球独赢主胜实盘累计 ROI -11.8%(126笔, 胜率27%<隐含), 之前 +40.7% 是隐含口径
     # 虚高撑的假 edge(见 implied-mean-method-fix)。移除 manual release, 交还数据驱动判断(赢率<隐含不会释放)。
     # "football|1x2|主|*|live": 150,
