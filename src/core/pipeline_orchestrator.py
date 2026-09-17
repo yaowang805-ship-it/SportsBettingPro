@@ -74,7 +74,7 @@ SCHEDULE = [
     # 且 full_scan 运行中增量扫描+定时任务都跳过(_tick 里 _full_scan_running 检查), 防并发抢 Pin 风控。
     # 数据盘口日报 07:20: 各盘口门槛/CLV/ROI + 门槛变动, 推钉钉(只读本地数据不拉Pin, 轻量)
     ("market_report",     "07:20", "do_market_report", {}),
-    ("full_scan_morning",  "09:00", "do_full_scan",  {"bet": True}),
+    # ("full_scan_morning",  "09:00", "do_full_scan",  {"bet": True}),  # 2026-09-17 暂停: 排查Pin滚球实时性期间暂停全量扫描
     ("bet_report",        "09:00", "do_bet_report",  {}),       # 每日已投注明细日报(2026-09-05 用户要求)
     ("self_repair",       "09:30", "do_self_repair", {}),       # 自检+自动修复: 锁文件/缓存/指纹/连通性
     ("time_calibration",  "09:35", "do_time_calibration", {}),  # 时间校准: BB/Pin/系统时钟对齐
