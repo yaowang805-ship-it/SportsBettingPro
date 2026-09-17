@@ -1,5 +1,5 @@
 {
-  "balance": 16542.53,
+  "balance": 16482.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -276,6 +276,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1789812000,
       "created_at": "2026-09-17T09:15:14.469287+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_马拉加_比利亚雷亚尔_上半场主胜",
+      "sport": "football",
+      "league": "西班牙甲级联赛",
+      "home_team": "马拉加",
+      "away_team": "比利亚雷亚尔",
+      "home_cn": "马拉加",
+      "away_cn": "比利亚雷亚尔",
+      "market": "1x2",
+      "market_type": "上半场主胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 4.44,
+      "stake": 60,
+      "model_prob": 0.2335,
+      "ev_pct": 3.66,
+      "pin_odds": 4.06,
+      "fair_price": 4.2831,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1789673400,
+      "created_at": "2026-09-17T10:06:47.254480+00:00",
       "track_only": false
     }
   ],
@@ -9362,8 +9385,8 @@
   ],
   "daily_budget": {
     "date": "2026-09-17",
-    "used": 240.0,
-    "bets": 4
+    "used": 300.0,
+    "bets": 5
   },
   "updated": null
 }
