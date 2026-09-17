@@ -1,1 +1,67 @@
-{"football|Copa Libertadores|LDU Quito|SE Palmeiras SP|和局|1x2|2026-09-17": {"ev": 7.2, "bb": 3.14, "ts": 1789541301.434169}, "football|Italy Serie C|US Latina Calcio 1932|Guidonia Montecelio 1937|上半场主胜|ht|2026-09-17": {"ev": 6.73, "bb": 3.48, "ts": 1789557403.82159}, "football|Japan J.League 2|Ventforet Kofu|Tokushima Vortis|上半场主胜|ht|2026-09-19": {"bb": 4.89, "ev": 6.68, "fair": 4.5838, "pin": 4.06, "ts": 1789658496.418059, "kickoff": 1789812000, "repush_count": 0}, "football|Russia Premier League|FC Dynamo Makhachkala|CSKA Moscow|上半场主胜|ht|2026-09-18": {"bb": 4.36, "ev": 5.77, "fair": 4.1221, "pin": 3.89, "ts": 1789658496.4177868, "kickoff": 1789667100, "repush_count": 0}, "football|Russia Premier League|FK Rostov|FC Dynamo Moscow|上半场主胜|ht|2026-09-17": {"bb": 4.7, "ev": 8.26, "fair": 4.3416, "pin": 4.08, "ts": 1789655190.486367, "kickoff": 1789659000, "repush_count": 0}, "football|Spain LaLiga|Levante UD|Athletic Bilbao|上半场主胜|ht|2026-09-17": {"ev": 3.27, "bb": 4.23, "ts": 1789541301.434002}, "football|Spain LaLiga|Malaga CF|Villarreal CF|上半场主胜|ht|2026-09-18": {"bb": 4.47, "ev": 5.37, "fair": 4.2423, "pin": 4.03, "ts": 1789658496.417396, "kickoff": 1789673400, "repush_count": 0}, "football|Sweden Allsvenskan|AIK|Mjallby AIF|上半场客胜|ht|2026-09-17": {"ev": 3.93, "bb": 4.07, "ts": 1789541301.4340742}, "football|USL Championship|Detroit City FC|Pittsburgh Riverhounds|上半场主胜|ht|2026-09-20": {"ev": 3.32, "bb": 3.37, "ts": 1789600820.7178261}, "football|Algeria Ligue 1|CR Temouchent|JS Kabylie|上半场主胜|ht|2026-09-18": {"bb": 4.67, "ev": 5.28, "fair": 4.4356, "pin": 3.84, "ts": 1789650638.728556, "kickoff": 1789671600, "repush_count": 0}, "football|South Korea K-League 1|Gangwon FC|Jeju SK|上半场客胜|ht|2026-09-20": {"bb": 4.89, "ev": 3.16, "fair": 4.7401, "pin": 4.29, "ts": 1789658496.4183838, "kickoff": 1789889400, "repush_count": 0}, "football|CONCACAF Central American Cup|Liga Deportiva Alajuelense|Marathon|和局|1x2|2026-09-18": {"bb": 3.38, "ev": 9.8, "fair": 3.0783, "pin": 2.77, "ts": 1789658496.418635, "kickoff": 1789691400, "repush_count": 0}, "football|Germany Bundesliga|VFB Stuttgart|Borussia Dortmund|和局|1x2|2026-09-20": {"bb": 4.22, "ev": 8.51, "fair": 3.8892, "pin": 3.71, "ts": 1789658496.418876, "kickoff": 1789835400, "repush_count": 0}, "football|Algeria Ligue 1|ASO Chlef|MC Oran|上半场主胜|ht|2026-09-19": {"bb": 3.08, "ev": 3.52, "fair": 2.9752, "pin": 2.71, "ts": 1789658496.419107, "kickoff": 1789761600, "repush_count": 0}, "football|Turkey 1. Lig|Muglaspor|Igdir FK|和局|1x2|2026-09-19": {"bb": 3.27, "ev": 9.09, "fair": 2.9975, "pin": 2.81, "ts": 1789658496.419335, "kickoff": 1789750800, "repush_count": 0}, "football|Mexico Liga MX|Atlas FC|Pumas UNAM|和局|1x2|2026-09-20": {"bb": 3.57, "ev": 10.65, "fair": 3.2265, "pin": 3.06, "ts": 1789658496.419563, "kickoff": 1789858800, "repush_count": 0}, "football|Algeria Ligue 1|CR Temouchent|JS Kabylie|上半场客胜|ht|2026-09-18": {"bb": 3.19, "ev": 3.65, "fair": 3.0776, "pin": 2.81, "ts": 1789654531.587588, "kickoff": 1789671600, "repush_count": 0}}
+{
+  "football|Algeria Ligue 1|CR Temouchent|JS Kabylie|上半场主胜|ht|2026-09-18": {
+    "ev": 5.28,
+    "bb": 4.67,
+    "ts": 1789650626.7696068
+  },
+  "football|Copa Libertadores|LDU Quito|SE Palmeiras SP|和局|1x2|2026-09-17": {
+    "ev": 7.2,
+    "bb": 3.14,
+    "ts": 1789541301.434169
+  },
+  "football|Italy Serie C|US Latina Calcio 1932|Guidonia Montecelio 1937|上半场主胜|ht|2026-09-17": {
+    "ev": 6.73,
+    "bb": 3.48,
+    "ts": 1789557403.82159
+  },
+  "football|Japan J.League 2|Ventforet Kofu|Tokushima Vortis|上半场主胜|ht|2026-09-19": {
+    "ev": 6.68,
+    "bb": 4.89,
+    "ts": 1789636607.248872
+  },
+  "football|Russia Premier League|FC Dynamo Makhachkala|CSKA Moscow|上半场主胜|ht|2026-09-18": {
+    "ev": 4.06,
+    "bb": 4.5,
+    "ts": 1789598642.002445
+  },
+  "football|Russia Premier League|FK Rostov|FC Dynamo Moscow|上半场主胜|ht|2026-09-17": {
+    "ev": 4.38,
+    "bb": 4.29,
+    "ts": 1789620228.95567
+  },
+  "football|Spain LaLiga|Levante UD|Athletic Bilbao|上半场主胜|ht|2026-09-17": {
+    "ev": 3.27,
+    "bb": 4.23,
+    "ts": 1789541301.434002
+  },
+  "football|Spain LaLiga|Malaga CF|Villarreal CF|上半场主胜|ht|2026-09-18": {
+    "ev": 3.66,
+    "bb": 4.44,
+    "ts": 1789639669.125962
+  },
+  "football|Sweden Allsvenskan|AIK|Mjallby AIF|上半场客胜|ht|2026-09-17": {
+    "ev": 3.93,
+    "bb": 4.07,
+    "ts": 1789541301.4340742
+  },
+  "football|USL Championship|Detroit City FC|Pittsburgh Riverhounds|上半场主胜|ht|2026-09-20": {
+    "ev": 3.32,
+    "bb": 3.37,
+    "ts": 1789600820.7178261
+  },
+  "football|Algeria Ligue 1|USM Khenchela|ES Ben Aknoun|上半场主胜|ht|2026-09-18": {
+    "ev": 3.56,
+    "bb": 3.09,
+    "ts": 1789685246.955271
+  },
+  "football|Italy Serie B|Juve Stabia|Cesena FC|上半场客胜|ht|2026-09-19": {
+    "ev": 3.11,
+    "bb": 4.26,
+    "ts": 1789685246.9553201
+  },
+  "football|Thailand League 1|Ayutthaya United FC|Uthai Thani FC|和局|1x2|2026-09-18": {
+    "ev": 18.27,
+    "bb": 3.25,
+    "ts": 1789685246.955364
+  }
+}
