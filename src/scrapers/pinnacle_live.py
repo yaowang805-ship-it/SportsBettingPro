@@ -59,7 +59,7 @@ _CACHE_TTL = 30  # 30 秒内复用(滚球赔率变动快, 不能缓存太久)
 
 # 滚球公平价缓存(15s): 避免秒级监控每 2s 轮询时反复拉 Pin markets 触发风控
 _FAIR_CACHE = {"ts": 0.0, "data": {}}
-_FAIR_TTL = 5  # 2026-09-17: 15→5s, 配合 since 游标增量轮询(25联赛串行~3.5s), Pin 公平价 ~5s 新鲜(原15分钟CDN缓存)
+_FAIR_TTL = 15  # Pin markets 本身被 CDN 缓存 15 分钟(见 fetch_live_odds 诊断), 拉到也是旧价, 15s 复用省请求不损新鲜度
 # 公平价文件缓存(跨进程共享, 45s): BB 进程每 30s 刷一次, FB 观察库进程直接复用,
 # 避免 FB 每 60s 重复拉 Pin markets(60MB足球+几十联赛 markets) 引起 Pin 额外负载/带宽争抢。
 _FAIR_FILE = ROOT / "data" / "storage" / "pin_live_fair_prices.json"
@@ -155,29 +155,16 @@ def fetch_live_matchups(sport_ids=LIVE_SPORT_IDS, use_cache=True):
     return live
 
 
-def _market_key(m):
-    """market 的唯一键: 优先用 key 字段, 否则用 (matchupId, type, period, points)。"""
-    k = m.get("key")
-    if k is not None:
-        return k
-    pts = (m.get("prices") or [{}])[0].get("points") if m.get("prices") else None
-    return f"{m.get('matchupId')}|{m.get('type')}|{m.get('period')}|{pts}"
-
-
-# 每联赛赔率快照(增量轮询用): {league_id: {"version": 最大version, "by_key": {key: market}, "updated_at": ts}}
-_ODDS_SNAPSHOT = {}
-
-
 def fetch_live_odds(live_matchups):
-    """给 live matchups 拉 straight markets 赔率(since 游标增量轮询)。
+    """给 live matchups 拉 straight markets 赔率。
 
-    2026-09-17 修: 原 /markets/straight 无参数被 CDN 缓存 15 分钟(cf-cache=HIT, max-age=905),
-    导致 Pin 公平价 15 分钟陈旧。改为 since 游标增量: 首次全量存快照+version, 之后每次
-    拉 ?since={version} 拿增量覆盖(204=无变化, 200=变化的盘口)。
-    2026-09-17 再修: since 游标单用还不够 —— ?since={version} 返回 204 后 Cloudflare 把这个
-    204 也缓存 15 分钟(cf-cache=HIT), 版本游标不前进就一直打到缓存旧 204, 真实赔率变了也
-    看不见(「赔率几分钟才变一次」)。加 &_={time.time()} cache-buster 让 URL 每次唯一,
-    强制 CDN MISS 打到源站拿真 204/200 → Pin 赔率真正 ~5s 新鲜。
+    2026-09-17 诊断(结论): /markets/straight **无参数** 被 CDN 缓存 15 分钟
+    (cf-cache=HIT, cache-control: public,max-age=904, must-revalidate, 由 Pin 源站主动设置),
+    且**带任何 query 参数(since/period/type/sportId/... 全试过)都返回 204 空 body**。
+    since 游标增量轮询实测不生效 —— 响应里没有 `last` 字段(只有 per-market `version`,
+    且 `since={version}` 及任意值都 204), 是 ps3838 付费 API 才有的机制, guest API 没有。
+    → Pin 滚球公平价固有 ~15 分钟陈旧, 是 guest API 限流的数据源限制, 非代码 bug。
+    已回退全量拉取(每次全量, 靠 CDN max-age 到期后 must-revalidate 每 ~15min 自刷新)。
 
     返回 {matchupId: [market, ...]}, market 含 type/period/status/prices(designation+price)。
     """
@@ -195,32 +182,11 @@ def fetch_live_odds(live_matchups):
     for lid, mids in live_leagues.items():
         try:
             _live_reserve()
-            snap = _ODDS_SNAPSHOT.get(lid)
-            if snap is None:
-                # 首次: 全量拉取, 建快照。&_= cache-buster 强制 CDN MISS(全量无参数会被缓存15分钟)
-                r = SESSION.get(f"{API_BASE}/leagues/{lid}/markets/straight?_={time.time()}", timeout=30)
-                mks = r.json()
-                by_key = {_market_key(k): k for k in mks}
-                max_v = max((k.get("version", 0) for k in mks), default=0)
-                snap = {"version": max_v, "by_key": by_key, "updated_at": time.time()}
-                _ODDS_SNAPSHOT[lid] = snap
-            else:
-                # 增量: since 游标(204=无变化, 200=变化盘口)。&_= cache-buster 强制每次 CDN MISS,
-                # 否则 204 会被 CDN 缓存 15 分钟, 版本游标卡住时真实赔率变了也看不见(2026-09-17 根因)
-                r = SESSION.get(f"{API_BASE}/leagues/{lid}/markets/straight?since={snap['version']}&_={time.time()}", timeout=30)
-                if r.status_code == 200 and r.text.strip():
-                    delta = r.json()
-                    for k in delta:
-                        snap["by_key"][_market_key(k)] = k
-                    if delta:
-                        snap["version"] = max(k.get("version", 0) for k in delta)
-                        snap["updated_at"] = time.time()
-                # 204 或空: 无变化, 快照仍是最新
-            # 从快照返回该联赛的市场
-            for mid in mids:
-                markets = [k for k in snap["by_key"].values() if str(k.get("matchupId")) == str(mid)]
-                if markets:
-                    odds.setdefault(mid, []).extend(markets)
+            r = SESSION.get(f"{API_BASE}/leagues/{lid}/markets/straight", timeout=30)
+            mks = r.json()
+            for k in mks:
+                if k.get("matchupId") in mids:
+                    odds.setdefault(k["matchupId"], []).append(k)
         except Exception as e:
             print(f"[pin_live] 联赛 {lid} markets 失败: {str(e)[:60]}")
     return odds
@@ -617,13 +583,8 @@ def reverify_live_markets(pin_matchup_id, league_id, allow_closed=False):
     _load_cookie()
     try:
         _live_reserve()
-        # 2026-09-17: 优先复用增量轮询快照(2s新鲜, 绕过CDN 15分钟缓存); 快照没有该联赛才全量拉取
-        snap = _ODDS_SNAPSHOT.get(league_id)
-        if snap is not None:
-            mks = [k for k in snap["by_key"].values() if str(k.get("matchupId")) == str(pin_matchup_id)]
-        else:
-            r = SESSION.get(f"{API_BASE}/leagues/{league_id}/markets/straight?_={time.time()}", timeout=30)
-            mks = [k for k in r.json() if str(k.get("matchupId")) == str(pin_matchup_id)]
+        r = SESSION.get(f"{API_BASE}/leagues/{league_id}/markets/straight", timeout=30)
+        mks = [k for k in r.json() if str(k.get("matchupId")) == str(pin_matchup_id)]
         result = {"moneyline": None, "spread": {}, "total": {}}
         _ok_status = ("open", "closed") if allow_closed else ("open",)
         for k in mks:
