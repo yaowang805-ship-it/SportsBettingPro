@@ -173,7 +173,11 @@ def fetch_live_odds(live_matchups):
 
     2026-09-17 修: 原 /markets/straight 无参数被 CDN 缓存 15 分钟(cf-cache=HIT, max-age=905),
     导致 Pin 公平价 15 分钟陈旧。改为 since 游标增量: 首次全量存快照+version, 之后每次
-    拉 ?since={version} 拿增量覆盖(204=无变化, 200=变化的盘口), 绕过 CDN 缓存 → Pin 2s 新鲜。
+    拉 ?since={version} 拿增量覆盖(204=无变化, 200=变化的盘口)。
+    2026-09-17 再修: since 游标单用还不够 —— ?since={version} 返回 204 后 Cloudflare 把这个
+    204 也缓存 15 分钟(cf-cache=HIT), 版本游标不前进就一直打到缓存旧 204, 真实赔率变了也
+    看不见(「赔率几分钟才变一次」)。加 &_={time.time()} cache-buster 让 URL 每次唯一,
+    强制 CDN MISS 打到源站拿真 204/200 → Pin 赔率真正 ~5s 新鲜。
 
     返回 {matchupId: [market, ...]}, market 含 type/period/status/prices(designation+price)。
     """
@@ -193,16 +197,17 @@ def fetch_live_odds(live_matchups):
             _live_reserve()
             snap = _ODDS_SNAPSHOT.get(lid)
             if snap is None:
-                # 首次: 全量拉取, 建快照
-                r = SESSION.get(f"{API_BASE}/leagues/{lid}/markets/straight", timeout=30)
+                # 首次: 全量拉取, 建快照。&_= cache-buster 强制 CDN MISS(全量无参数会被缓存15分钟)
+                r = SESSION.get(f"{API_BASE}/leagues/{lid}/markets/straight?_={time.time()}", timeout=30)
                 mks = r.json()
                 by_key = {_market_key(k): k for k in mks}
                 max_v = max((k.get("version", 0) for k in mks), default=0)
                 snap = {"version": max_v, "by_key": by_key, "updated_at": time.time()}
                 _ODDS_SNAPSHOT[lid] = snap
             else:
-                # 增量: since 游标(绕过 CDN 缓存; 204=无变化, 200=变化盘口)
-                r = SESSION.get(f"{API_BASE}/leagues/{lid}/markets/straight?since={snap['version']}", timeout=30)
+                # 增量: since 游标(204=无变化, 200=变化盘口)。&_= cache-buster 强制每次 CDN MISS,
+                # 否则 204 会被 CDN 缓存 15 分钟, 版本游标卡住时真实赔率变了也看不见(2026-09-17 根因)
+                r = SESSION.get(f"{API_BASE}/leagues/{lid}/markets/straight?since={snap['version']}&_={time.time()}", timeout=30)
                 if r.status_code == 200 and r.text.strip():
                     delta = r.json()
                     for k in delta:
@@ -617,7 +622,7 @@ def reverify_live_markets(pin_matchup_id, league_id, allow_closed=False):
         if snap is not None:
             mks = [k for k in snap["by_key"].values() if str(k.get("matchupId")) == str(pin_matchup_id)]
         else:
-            r = SESSION.get(f"{API_BASE}/leagues/{league_id}/markets/straight", timeout=30)
+            r = SESSION.get(f"{API_BASE}/leagues/{league_id}/markets/straight?_={time.time()}", timeout=30)
             mks = [k for k in r.json() if str(k.get("matchupId")) == str(pin_matchup_id)]
         result = {"moneyline": None, "spread": {}, "total": {}}
         _ok_status = ("open", "closed") if allow_closed else ("open",)
