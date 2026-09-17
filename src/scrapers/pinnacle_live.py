@@ -612,14 +612,18 @@ def reverify_live_markets(pin_matchup_id, league_id, allow_closed=False):
     _load_cookie()
     try:
         _live_reserve()
-        r = SESSION.get(f"{API_BASE}/leagues/{league_id}/markets/straight", timeout=30)
-        mks = r.json()
+        # 2026-09-17: 优先复用增量轮询快照(2s新鲜, 绕过CDN 15分钟缓存); 快照没有该联赛才全量拉取
+        snap = _ODDS_SNAPSHOT.get(league_id)
+        if snap is not None:
+            mks = [k for k in snap["by_key"].values() if str(k.get("matchupId")) == str(pin_matchup_id)]
+        else:
+            r = SESSION.get(f"{API_BASE}/leagues/{league_id}/markets/straight", timeout=30)
+            mks = [k for k in r.json() if str(k.get("matchupId")) == str(pin_matchup_id)]
         result = {"moneyline": None, "spread": {}, "total": {}}
         _ok_status = ("open", "closed") if allow_closed else ("open",)
         for k in mks:
             # 只取全场(period=0): 验价/CLV 复验都只针对全场盘口, 半场线混入会错配
-            if (k.get("matchupId") != pin_matchup_id or k.get("status") not in _ok_status
-                    or k.get("period") != 0):
+            if (k.get("status") not in _ok_status or k.get("period") != 0):
                 continue
             t = k.get("type"); prices = k.get("prices", [])
             if t == "moneyline" and len(prices) >= 2:
