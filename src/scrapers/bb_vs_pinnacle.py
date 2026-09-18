@@ -1249,10 +1249,6 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         bb_dc = bb.get("odds_dc", [])
         dc_labels = ["双重机会-主/和局", "双重机会-和局/客", "双重机会-主/客"]
         dc_desig_map = {"1X": 0, "2X": 1, "12": 2}
-        # dc_fair[i] = fair price for comparison, dc_pin_raw[i] = Pinnacle raw price (for display)
-        dc_fair = None
-        dc_pin_raw = None
-
         if len(bb_dc) >= 3 and n_ml == 3:
             # 安全校验：BB DC 赔率是否与主1X2相同（侧边栏点击失败时会出现）
             dc_first3 = [round(float(x), 2) for x in bb_dc[:3]]
@@ -1261,40 +1257,15 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 bb_dc = []
 
         if len(bb_dc) >= 3 and n_ml == 3:
-            # 路径A：Pinnacle 有 double_chance 市场 → 用 Pinnacle 零售价做基准
-            pin_dc = pin.get("double_chance", [])
-            for dc_market in pin_dc:
-                if dc_market.get("period", 0) != 0:
-                    continue
-                prices = dc_market.get("prices", [])
-                if len(prices) >= 3:
-                    dc_raw = [None, None, None]
-                    for i, p in enumerate(prices):
-                        des = p.get("designation", "")
-                        val = get_decimal_price(p) or 0
-                        idx = dc_desig_map.get(des)
-                        if idx is None and i < 3:
-                            # pnames 已打标签(pinnacle_markets.py)，此处 fallback 仅用于旧缓存数据
-                            idx_map = {0: "1X", 1: "2X", 2: "12"}
-                            idx = dc_desig_map.get(idx_map.get(i, ""))
-                        if idx is not None and val > 0:
-                            dc_raw[idx] = val
-                    if all(x and x > 0 for x in dc_raw):
-                        # 2026-08-28 启用路径A: Pin 有 double_chance 真实盘口, 用 _devig_dc
-                        # (比例法归一化到和=2) 去抽水。之前禁用是因为 Shin 强推Σ=1 虚高40-90%,
-                        # 而"从1X2推导"又有 HT平局高估偏差。现在和=2 的比例法两者都避开了。
-                        _dc_fair = _devig_dc(dc_raw)
-                        if _dc_fair:
-                            dc_fair = _dc_fair
-                            dc_pin_raw = dc_raw
-                    break
-
-            # (2026-08-30 取消推导) Pin 无 DC 市场时不再从 1X2 推导, dc_fair 保持 None → 该场跳过 DC 盘口
-            if dc_fair:
-                dc_pair_indices = [(0,1), (1,2), (0,2)]
+            # 2026-09-18: 公平价改用 Betfair Double Chance(替代 Pin _devig_dc)。
+            # Betfair 键是 1X/12/X2(交易所只给 back, 无 lay), BB 顺序是 [1X(主/和), 2X(和/客)=X2, 12(主/客)]。
+            _oa_dc = _oa_fair(entry, sport, "dc")
+            if _oa_dc:
+                _bb_dc_keys = ["1X", "X2", "12"]
+                dc_pair_indices = [(0, 1), (1, 2), (0, 2)]
                 for i in range(3):
                     bb_dc_val = float(bb_dc[i]) if isinstance(bb_dc[i], str) else bb_dc[i]
-                    fp = dc_fair[i]
+                    fp = _oa_dc.get(_bb_dc_keys[i])
                     if not (bb_dc_val and fp and fp > 0):
                         continue
                     # 安全校验：DC赔率必须低于两个组成赛果的1X2赔率
@@ -1303,11 +1274,10 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         continue
                     ev = (bb_dc_val - fp) / fp * 100
                     if ev > 1:
-                        pin_raw_val = round(dc_pin_raw[i], 4) if dc_pin_raw else 0
                         entry["double_chance"].append({
                             "designation": dc_labels[i],
                             "bb_odds": bb_dc_val,
-                            "pin_odds": pin_raw_val,
+                            "pin_odds": 0,  # 新数据源无 Pin 赔率
                             "fair_price": round(fp, 4),
                             "ev_pct": round(ev, 2),
                             "_market": "dc",
