@@ -1,12 +1,13 @@
-"""odds-api.io 实时赔率接入 — 交易所 sharp 公平价(替代 Pin 的 15 分钟陈旧)。
+"""odds-api.io 实时赔率接入 — 替代 Pin 的公平价源(2026-09-18)。
 
 平台: https://api.odds-api.io/v3 (与 oddspapi.io 是两家公司, 别混)。
-已选书商: Betfair Exchange + Orbit Exchange(两家交易所, 无 margin = sharp 公平价)。
-关键: 交易所赔率带 back/lay, 公平价取中间价, 不用 devig(交易所本身无抽水)。
+锚点书商: Sbobet(亚洲盘+置信度) + Betfair Exchange(公平价)。
+公平价 = Betfair 中间价(加 back-lay 价差流动性门槛); SBO devig 只做置信度确认, 不进定价。
+用户只在 BB 投注, Betfair 只当参考尺子, 不扣 Betfair 佣金。
 
 盘口映射(BB 子盘口 → odds-api.io 市场名):
   1x2(全场独赢) → ML
-  ht(上半场独赢) → ML HT          ← 早盘 ht 主胜 的核心
+  ht(上半场独赢) → ML HT          ← 早盘 ht 主胜 的核心(Betfair有, Sbobet无)
   hc(让球)       → Spread
   ou(大小)       → Totals
   ht_ou(上半大小) → Totals HT
@@ -14,6 +15,7 @@
   btts(双边进球) → Both Teams To Score
 """
 import json
+import time
 from pathlib import Path
 
 import requests
@@ -218,6 +220,70 @@ def sbo_fair_price(event_id, sub_market):
 def match_bb_to_oa(sport_id):
     """BB 运动 id → odds-api.io slug。"""
     return _SPORT_ID_TO_SLUG.get(sport_id)
+
+
+# ── BB 匹配 + 公平价提供(替代 Pin 的入口) ──
+
+_events_cache = {}  # {sport_slug: (ts, events)}
+
+
+def _norm_team(name):
+    import re
+    return re.sub(r'[^a-z0-9]', '', (name or '').lower())
+
+
+def _match_score(h1, a1, h2, a2):
+    """队名模糊匹配得分(0-100)。精确=100, 主客互换=99, rapidfuzz 双向取大。"""
+    from rapidfuzz import fuzz
+    nh1, na1, nh2, na2 = _norm_team(h1), _norm_team(a1), _norm_team(h2), _norm_team(a2)
+    if nh1 == nh2 and na1 == na2:
+        return 100.0
+    if nh1 == na2 and na1 == nh2:
+        return 99.0
+    s1 = fuzz.ratio(nh1, nh2) + fuzz.ratio(na1, na2)
+    s2 = fuzz.ratio(nh1, na2) + fuzz.ratio(na1, nh2)
+    return max(s1, s2) / 2.0
+
+
+def _get_events_cached(sport):
+    """事件列表缓存 60s, 避免每次匹配都拉全量。"""
+    now = time.time()
+    if sport in _events_cache and now - _events_cache[sport][0] < 60:
+        return _events_cache[sport][1]
+    evs = get_events(sport) or []
+    _events_cache[sport] = (now, evs)
+    return evs
+
+
+def match_event(home, away, sport_id, min_score=85.0):
+    """BB 比赛(home/away/sport_id) → odds-api.io 事件 id。模糊匹配, 返回 id 或 None。"""
+    slug = _SPORT_ID_TO_SLUG.get(sport_id)
+    if not slug:
+        return None
+    evs = _get_events_cached(slug)
+    best_id, best_score = None, 0.0
+    for e in evs:
+        sc = _match_score(home, away, e.get('home', ''), e.get('away', ''))
+        if sc > best_score:
+            best_score, best_id = sc, e.get('id')
+    return best_id if best_score >= min_score else None
+
+
+def fair_price_bb(home, away, sport_id, sub_market):
+    """BB 比赛的公平价提供(替代 Pin): 匹配 → Betfair中间价(定价) + SBO devig(置信度)。
+
+    返回 {'fair': {...}, 'confidence': {...}, 'event_id': ...} 或 None。
+    fair = Betfair 中间价(加流动性门槛), 拿不到就 None(宁可少抓);
+    confidence = SBO devig(比例去水, 只做同向确认, 不进定价)。
+    """
+    eid = match_event(home, away, sport_id)
+    if not eid:
+        return None
+    fair = fair_price(eid, sub_market)
+    if not fair:
+        return None
+    conf = sbo_fair_price(eid, sub_market)
+    return {'fair': fair, 'confidence': conf, 'event_id': eid}
 
 
 if __name__ == "__main__":
