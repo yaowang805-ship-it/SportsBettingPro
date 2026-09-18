@@ -33,6 +33,12 @@ DATABASE_URL = os.getenv('DATABASE_URL', '')  # 空=SQLite, postgresql://user:pa
 ODDSPAPI_KEY = os.getenv('ODDSPAPI_KEY', '')
 ODDSPAPI_BASE = 'https://api.oddspapi.io/v4'
 
+# odds-api.io — WebSocket 实时赔率(265+书商, 与 oddspapi.io 是两家公司)。域名 api.odds-api.io
+# 选书商: Betfair Exchange + Orbit Exchange(交易所=sharp公平价)。key 在 .env 的 ODDS_API_IO_KEY。
+ODDS_API_IO_KEY = os.getenv('ODDS_API_IO_KEY', '')
+ODDS_API_IO_BASE = 'https://api.odds-api.io/v3'
+ODDS_API_IO_BOOKMAKERS = ('Betfair Exchange', 'Orbit Exchange')  # 已选的 2 家交易所(sharp公平价)
+
 
 def _is_placeholder_webhook(url: str) -> bool:
     lower = (url or '').lower()
