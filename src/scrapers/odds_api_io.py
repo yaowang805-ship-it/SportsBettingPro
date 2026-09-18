@@ -24,15 +24,24 @@ from config.settings import ODDS_API_IO_KEY, ODDS_API_IO_BASE, ODDS_API_IO_BOOKM
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 
-# BB 子盘口 → odds-api.io 市场名
-_SUB_TO_MARKET = {
+# BB 子盘口 → Betfair Exchange 市场名(公平价主锚)
+_SUB_TO_BETFAIR = {
     "1x2": "ML",
-    "ht": "ML HT",
+    "ht": "ML HT",          # 半场独赢(Betfair有)
     "hc": "Spread",
     "ou": "Totals",
     "ht_ou": "Totals HT",
     "dc": "Double Chance",
     "btts": "Both Teams To Score",
+}
+
+# BB 子盘口 → Sbobet 市场名(置信度, Sbobet 无半场独赢/双机会/双边进球)
+_SUB_TO_SBOBET = {
+    "1x2": "ML",
+    "hc": "Spread",
+    "ou": "Totals",
+    "ht_ou": "Totals HT",
+    "ht_hc": "Spread HT",   # 半场让球(Sbobet有, Betfair无对应)
 }
 
 # BB 运动 id → odds-api.io 运动 slug
