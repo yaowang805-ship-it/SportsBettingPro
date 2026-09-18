@@ -869,8 +869,8 @@ class SecondLevelMonitor:
         if global_bet_cooldown(15, 45) > 0:
             return
         print(f"  🎯 滚球下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake}", flush=True)
-        # 验价后的 Pin 公平价(供 place_single_bet 在 BB 回落时重算 edge+注额): ev=(bb-fair)/fair → fair=bb/(1+ev/100)
-        _fresh_fair = sig["bb_odds"] / (1.0 + sig["ev"] / 100.0) if sig["ev"] > -100 else None
+        # Betfair 公平价(实时, 供 place_single_bet 在 BB 回落时重算 edge+注额)
+        _fresh_fair = sig.get("fair")
         # 取并行预拉的 BB 当前赔率(线程已完成则跳过 place_single_bet 内的二次拉取)
         _pref_odds = None
         if _bb_prefetch and _bb_prefetch.get("done") and _bb_prefetch.get("odds"):
@@ -880,7 +880,7 @@ class SecondLevelMonitor:
             match_id=sig["match_id"], check_limit=True, verify_price=True,
             fair_price=_fresh_fair, min_ev_pct=self.threshold, prefetched_odds=_pref_odds)
         _t_order = time.time() - _t0  # 下单完成总耗时
-        print(f"[slm] 下单耗时: Pin验价 {_t_pin:.2f}s | 后续(入库+检查+验BB+下单) {_t_order-_t_pin:.2f}s | 总 {_t_order:.2f}s", flush=True)
+        print(f"[slm] 下单耗时: 总 {_t_order:.2f}s", flush=True)
         # 记录尝试(成败都记), 5min 内不再重复尝试同一盘口
         self._attempted.setdefault(str(sig["match_id"]), {})[str(market_id)] = time.time()
         # 更新限频时间戳 + 抽下一单随机间隔(10-15s, 防风控"投注过于频繁")
