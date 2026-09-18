@@ -47,7 +47,7 @@ LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 
 
 # 滚球实盘只投小球(under), EV-Kelly 最优定仓, 单注上限 ¥400(预算1/5)兼顾分散。
 # 其它盘口(大球/1x2/让球)仍只进观察库, 不下真单。
-LIVE_REAL_BET_ENABLED = True
+LIVE_REAL_BET_ENABLED = False  # 2026-09-18 暂停滚球实盘(真溢价未解决+edge破位); 观察库纸单照收, 早盘不受影响
 LIVE_UNDER_MAX_STAKE = 200  # 单注上限(2026-09-17 600→200: 真溢价问题未解决, 观察库edge -3.2pp, 先降风险; 实际生效cap=min(MAX_STAKE=400, release_cap))
 BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球"}
 
