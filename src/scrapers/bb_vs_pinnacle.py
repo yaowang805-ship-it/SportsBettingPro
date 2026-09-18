@@ -1157,85 +1157,39 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                     "_market": "ht",
                                 })
 
-            # HT 让球
-            bb_ht_hc = bb_ht.get("handicap")
-            if bb_ht_hc:
-                bb_hl = bb_ht_hc.get("home_line") if bb_ht_hc.get("home_line") is not None else bb_ht_hc.get("away_line")
-                home_sp, away_sp, sp_is_alt = get_pin_spread(pin, target_line=bb_hl, source=pin.get("ht_spread", []))
-                if home_sp and away_sp and get_decimal_price(home_sp) and get_decimal_price(away_sp):
-                    pin_home_odds = get_decimal_price(home_sp)
-                    pin_away_odds = get_decimal_price(away_sp)
-                    # 校准：HT 让球线必须精确一致
-                    pin_hc_line = home_sp.get("points")
-                    bb_hc_line_val = bb_ht_hc.get("home_line")
-                    cal_ok, _ = _calibrate_market_line(sport, "hc", bb_hc_line_val, pin_hc_line, None, is_ht=True)
-                    if sp_is_alt:
-                        ht_spreads = pin.get("ht_spread", [])
-                        if ht_spreads:
-                            mp = ht_spreads[0].get("prices", [])
-                            mp_line = next((p.get("points", "?") for p in mp if p.get("designation") == "home"), "?")
-                            mp_odds = next((get_decimal_price(p) or "?" for p in mp if p.get("designation") == "home"), "?")
-                            entry["flags"].append(f"备用盘口: Pin主线={mp_line}@{mp_odds}")
-                    if cal_ok:
-                        _hc_fairs = shin_fair_odds([pin_home_odds, pin_away_odds])
-                        home_fair = _hc_fairs[0]
-                        away_fair = _hc_fairs[1]
-                        ev_h = (bb_ht_hc["home_odds"] - home_fair) / home_fair * 100 if home_fair > 0 else 0
-                        ev_a = (bb_ht_hc["away_odds"] - away_fair) / away_fair * 100 if away_fair > 0 else 0
-                        if ev_h > 1:
-                            entry["handicap"].append({
-                                "designation": ht_labels["hc_home"],
-                                "line": bb_ht_hc.get("home_line_str", ""),
-                                "bb_odds": bb_ht_hc["home_odds"],
-                                "pin_odds": pin_home_odds,
-                                "fair_price": home_fair,
-                                "ev_pct": round(ev_h, 2),
-                                "_market": "ht_hc",
-                            })
-                        if ev_a > 1:
-                            entry["handicap"].append({
-                                "designation": ht_labels["hc_away"],
-                                "line": bb_ht_hc.get("away_line_str", ""),
-                                "bb_odds": bb_ht_hc["away_odds"],
-                                "pin_odds": pin_away_odds,
-                                "fair_price": away_fair,
-                                "ev_pct": round(ev_a, 2),
-                                "_market": "ht_hc",
-                            })
+            # HT 让球 (2026-09-18): Betfair 无 Spread HT 市场(仅 Sbobet 有, 但 Sbobet 是置信度
+            # 不进定价), 无 Betfair 公平价 → 按「无覆盖=无机会」跳过, 不再用 Pin 生成 ht_hc 假溢价。
 
-            # HT 大小
+            # HT 大小 (2026-09-18): 用 Betfair Totals HT 中间价替代 Pin
             bb_ht_ou = bb_ht.get("total")
             if bb_ht_ou:
                 bb_line = bb_ht_ou.get("line")
-                over_p, under_p = get_pin_total(pin, target_line=bb_line, source=pin.get("ht_total", []))
-                if over_p and under_p:
-                    pin_ou_line = over_p.get("points")
-                    cal_ok, _ = _calibrate_market_line(sport, "ou", bb_ht_ou["line"], pin_ou_line, None, is_ht=True)
-                    if cal_ok:
-                        _ou_fairs = shin_fair_odds([get_decimal_price(over_p), get_decimal_price(under_p)])
-                        over_fair = _ou_fairs[0]
-                        under_fair = _ou_fairs[1]
-                        if get_decimal_price(over_p) and get_decimal_price(over_p) > 0:
-                            ev_o = (bb_ht_ou["over_odds"] - over_fair) / over_fair * 100
+                if bb_line is not None:
+                    _oa_htou = _oa_fair(entry, sport, "ht_ou", target_line=bb_line)
+                    if _oa_htou and _oa_htou.get("over") and _oa_htou.get("under"):
+                        _bf_line = _oa_htou.get("line")
+                        if _bf_line is not None and abs(float(bb_line) - float(_bf_line)) <= 0.25:
+                            over_fair = _oa_htou["over"]
+                            under_fair = _oa_htou["under"]
+                            ev_o = (bb_ht_ou["over_odds"] - over_fair) / over_fair * 100 if over_fair > 0 else 0
+                            ev_u = (bb_ht_ou["under_odds"] - under_fair) / under_fair * 100 if under_fair > 0 else 0
                             if ev_o > 1:
                                 entry["over_under"].append({
                                     "designation": ht_labels["over"],
-                                    "line": str(bb_ht_ou["line"]),
+                                    "line": str(bb_line),
                                     "bb_odds": bb_ht_ou["over_odds"],
-                                    "pin_odds": get_decimal_price(over_p),
-                                    "fair_price": over_fair,
+                                    "pin_odds": 0,
+                                    "fair_price": round(over_fair, 4),
                                     "ev_pct": round(ev_o, 2),
                                     "_market": "ht_ou",
                                 })
-                        if get_decimal_price(under_p) and get_decimal_price(under_p) > 0:
-                            ev_u = (bb_ht_ou["under_odds"] - under_fair) / under_fair * 100
                             if ev_u > 1:
                                 entry["over_under"].append({
                                     "designation": ht_labels["under"],
-                                    "line": str(bb_ht_ou["line"]),
+                                    "line": str(bb_line),
                                     "bb_odds": bb_ht_ou["under_odds"],
-                                    "pin_odds": get_decimal_price(under_p),
-                                    "fair_price": under_fair,
+                                    "pin_odds": 0,
+                                    "fair_price": round(under_fair, 4),
                                     "ev_pct": round(ev_u, 2),
                                     "_market": "ht_ou",
                                 })
