@@ -1405,85 +1405,33 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             if bb_dnb_h >= bb_ml[0] * 0.99 or bb_dnb_a >= bb_ml[-1] * 0.99:
                 bb_dnb = []
         if len(bb_dnb) >= 2 and n_ml == 3:
-            dnb_fair = None
-            dnb_pin_raw = None
-            # 路径A: Pinnacle 直接提供 DNB 市场
-            pin_dnb = pin.get("draw_no_bet", [])
-            for dnb_entry in pin_dnb:
-                if dnb_entry.get("period", 0) != 0:
-                    continue
-                prices = dnb_entry.get("prices", [])
-                if len(prices) >= 2:
-                    h_price = a_price = None
-                    for p in prices:
-                        des = p.get("designation", "").lower()
-                        val = get_decimal_price(p) or p.get("price_decimal", 0)
-                        if "home" in des or "主" in des:
-                            h_price = val
-                        elif "away" in des or "客" in des:
-                            a_price = val
-                    # 通过 participantId 映射
-                    if not h_price or not a_price:
-                        if len(prices) >= 2:
-                            h_price = prices[0].get("price_decimal", 0)
-                            a_price = prices[1].get("price_decimal", 0)
-                    if h_price and a_price and h_price > 1 and a_price > 1:
-                        dnb_fair = shin_fair_odds([h_price, a_price])
-                        dnb_pin_raw = [h_price, a_price]
-                        break
-            # (2026-08-30 取消推导) Pin 无 DNB 市场时不再从 1X2 推导, dnb_fair 保持 None → 跳过
-            if dnb_fair:
+            # 2026-09-18: 公平价改用 Betfair Draw No Bet(替代 Pin draw_no_bet+shin)。
+            _oa_dnb = _oa_fair(entry, sport, "dnb")
+            if _oa_dnb and _oa_dnb.get("home") and _oa_dnb.get("away"):
                 dnb_labels = ["平局退款-主", "平局退款-客"]
+                dnb_fair = [_oa_dnb["home"], _oa_dnb["away"]]
                 for i in range(2):
                     bb_dnb_val = float(bb_dnb[i]) if isinstance(bb_dnb[i], str) else bb_dnb[i]
                     if bb_dnb_val and dnb_fair[i] > 0:
                         ev = (bb_dnb_val - dnb_fair[i]) / dnb_fair[i] * 100
                         if 1 < ev <= 20:
-                            pin_raw = round(dnb_pin_raw[i], 4) if dnb_pin_raw else 0
                             entry["draw_no_bet"].append({
                                 "designation": dnb_labels[i],
                                 "bb_odds": bb_dnb_val,
-                                "pin_odds": pin_raw,
+                                "pin_odds": 0,  # 新数据源无 Pin 赔率
                                 "fair_price": round(dnb_fair[i], 4),
                                 "ev_pct": round(ev, 2),
                                 "_market": "dnb",
                             })
 
-        # --- 双边进球 (BTTS) FT：从 Pinnacle both_to_score 市场直接提取 ---
+        # --- 双边进球 (BTTS) FT ---
         bb_btts_yes, bb_btts_no = extract_bb_btts(bb)
         if bb_btts_yes and bb_btts_no:
-            pin_btts = pin.get("btts", [])
-            if pin_btts:
-                # 路径A：Pinnacle 直接提供 both_to_score 市场
-                for btts_entry in pin_btts:
-                    if btts_entry.get("period", 0) != 0:
-                        continue
-                    prices = btts_entry.get("prices", [])
-                    yes_price = no_price = None
-                    for p in prices:
-                        des = p.get("designation", "").lower()
-                        val = get_decimal_price(p) or 0
-                        if val <= 0:
-                            continue
-                        if des in ("yes", "both", "是"):
-                            yes_price = val
-                        elif des in ("no", "否"):
-                            no_price = val
-                    # BTTS子比赛: 通过participantId已映射到正确Yes/No标签
-                    if not yes_price or not no_price:
-                        if len(prices) >= 2:
-                            yes_price = prices[0].get("price_decimal", 0)
-                            no_price = prices[1].get("price_decimal", 0)
-                    if not yes_price or not no_price:
-                        continue
-                    if not yes_price or not no_price:
-                        continue
-                    _btts_fairs = shin_fair_odds([yes_price, no_price])
-                    yes_fair = _btts_fairs[0]
-                    no_fair = _btts_fairs[1]
-                    _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, yes_fair, no_fair, pin_yes=yes_price, pin_no=no_price)
-                    break
-            # (2026-08-30 取消推导) Pin 无 both_to_score 市场时不再从 team_total 0.5 推导 → 跳过
+            # 2026-09-18: 公平价改用 Betfair Both Teams To Score(替代 Pin btts+shin)。
+            _oa_btts = _oa_fair(entry, sport, "btts")
+            if _oa_btts and _oa_btts.get("yes") and _oa_btts.get("no"):
+                _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no,
+                                        _oa_btts["yes"], _oa_btts["no"])
 
         # --- 单/双 (Odd/Even) FT：从 Pinnacle Total Goals Odd/Even 市场 ---
         bb_oe_odd, bb_oe_even = extract_bb_oe(bb)
