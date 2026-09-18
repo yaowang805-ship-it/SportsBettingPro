@@ -77,8 +77,7 @@ def mid_price(back, lay, max_spread_pct=None):
     交易所 back=买入价(结果发生), lay=卖出价(结果不发生)。
     无 margin 公平概率 p = (1/back + 1/lay)/2, 公平价 = 1/p。
     流动性门槛(2026-09-18): back-lay 价差过大 → None(无真实共识, 跳过)。
-    阈值按赔率分档: 高赔腿(>3.0)天然 bid-ask 更宽, 固定 5% 会系统性丢 draw/under/客 腿,
-    故 ≤3.0 用 5%, >3.0 放宽到 10%。
+    阈值按赔率分档(实测健康腿价差 1.6%~6.5%): ≤2.0 用 5%, 2.0~5.0 用 10%, >5.0 用 15%。
     返回十进制公平价。None 或 <=1 或价差过大返回 None。
     """
     try:
@@ -89,7 +88,14 @@ def mid_price(back, lay, max_spread_pct=None):
         return None
     spread = (l - b) / b * 100.0
     if max_spread_pct is None:
-        max_spread_pct = 5.0 if b <= 3.0 else 10.0
+        # 分档: 高赔腿天然 bid-ask 更宽。实测健康腿价差 1.6%~6.5%(draw/under/客 恒偏宽),
+        # 退化市场(如 Spread hdp=-4 home12.50/lay146.01)价差 >100%。10% 是安全分界。
+        if b <= 2.0:
+            max_spread_pct = 5.0
+        elif b <= 5.0:
+            max_spread_pct = 10.0
+        else:
+            max_spread_pct = 15.0
     if spread > max_spread_pct:
         return None
     p = (1.0 / b + 1.0 / l) / 2.0
