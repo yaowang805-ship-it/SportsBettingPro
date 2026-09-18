@@ -231,8 +231,13 @@ def auto_bet_flow(opportunities, token=None, domain=None):
                     _kickoff = datetime.fromtimestamp(float(_ep), timezone(timedelta(hours=8))).strftime("%m-%d %H:%M")
                 except (TypeError, ValueError, OSError):
                     pass
-            _fair_str = f" | 公平价 {float(_fair):.2f}" if _fair else ""
-            _pin_raw_str = f" | 原始 {float(_pin_raw):.2f}" if _pin_raw else ""
+            # 2026-09-18: 公平价已切 Betfair(pin_odds=0 是新源), 旧 Pin 源(pin_odds>0)已禁用, 标注来源
+            if _pin_raw:
+                _fair_str = f" | 公平价 {float(_fair):.2f}" if _fair else ""
+                _pin_raw_str = f" | 原始 {float(_pin_raw):.2f}"
+            else:
+                _fair_str = f" | Betfair {float(_fair):.2f}" if _fair else ""
+                _pin_raw_str = ""
             _ev_str = f" | 溢价 {float(_ev):+.1f}%" if _ev else ""
             # 2026-09-09: 补联赛/公平价/溢价, 删订单号(用户要求完整投注信息); 2026-09-15 补 Pin 原始价
             sent_dingtalk.append(
