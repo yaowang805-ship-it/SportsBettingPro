@@ -1315,9 +1315,9 @@ class SecondLevelMonitor:
         }
 
     def _poll_live(self):
-        """轮询 getList type=1 滚球赔率 + 匹配 Pin live → 打信号/自动下单。返回机会数。"""
-        from src.scrapers.pinnacle_live import fetch_live_opportunities
-        opps = fetch_live_opportunities(self.threshold)
+        """轮询 getList type=1 滚球赔率 + 匹配 Sbobet/Betfair 公平价 → 打信号/自动下单。返回机会数。"""
+        from src.scrapers.pinnacle_live import fetch_live_opportunities_oa
+        opps = fetch_live_opportunities_oa(self.threshold)
         for opp in opps:
             sig = self._opp_to_sig(opp)
             print(f"⚡滚球+EV {sig['ev']:+.2f}% | {sig['match']['home']} vs {sig['match']['away']} "

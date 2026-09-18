@@ -517,6 +517,64 @@ def fetch_live_opportunities(threshold=3.0, platform="BB", use_file_cache=False)
     return opps
 
 
+def fetch_live_opportunities_oa(threshold=3.0):
+    """滚球机会: BB live + Sbobet/Betfair 公平价(替代 Pin, 2026-09-18)。
+
+    公平价来源从 Pin(15分钟旧) 换成 odds-api.io 的 Betfair 中间价(实时, 加流动性门槛)
+    + Sbobet 置信度。返回 opp 结构对齐 fetch_live_opportunities, 供 _opp_to_sig 直接复用。
+    只处理主流盘口 1x2/hc/ou(带线匹配), 特殊盘口不走实盘。
+    """
+    from src.scrapers.odds_api_io import fair_price_bb
+    bb = fetch_bb_live_matches(platform="BB")
+    _bb_ts = time.time()
+    opps = []
+    for bmid, b in bb.items():
+        for mk in b["markets"]:
+            sub = mk["sub"]; d = mk["direction"]
+            if not d or sub not in ("1x2", "hc", "ou"):
+                continue
+            bb_odds = mk["odds"]
+            res = fair_price_bb(b["home_en"], b["away_en"], b["sport"], sub)
+            if not res or not res["fair"]:
+                continue
+            fair = res["fair"]
+            # 方向 → 公平价 key
+            if sub == "1x2":
+                idx = {"主": "home", "和": "draw", "客": "away"}
+            elif sub == "hc":
+                idx = {"主": "home", "客": "away"}
+            else:  # ou
+                idx = {"大": "over", "小": "under"}
+            k = idx.get(d)
+            fair_p = fair.get(k)
+            if not fair_p or fair_p <= 1:
+                continue
+            # hc/ou 线匹配: BB 线须 ≈ Betfair 线(否则比的是不同线的价, 假EV)
+            if sub in ("hc", "ou") and mk.get("line") is not None and fair.get("line") is not None:
+                if abs(float(mk["line"]) - float(fair["line"])) > 0.25:
+                    continue
+            ev = (bb_odds - fair_p) / fair_p * 100.0
+            if ev < threshold or ev > 12.0:
+                continue
+            opps.append({
+                "bb_match_id": bmid,
+                "home": b.get("home_cn") or b["home_en"],
+                "away": b.get("away_cn") or b["away_en"],
+                "league_cn": b.get("league_cn", ""),
+                "sport": b["sport"],
+                "sub": sub, "direction": d,
+                "bb_odds": bb_odds, "fair": fair_p, "ev": round(ev, 2), "pin_raw": 0,
+                "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
+                "pin_matchup_id": res.get("event_id"),
+                "league_id": None,
+                "max_stake": 0,
+                "sc": b.get("sc"),
+                "bb_ts": _bb_ts, "pin_ts": _bb_ts,
+                "platform": "BB",
+            })
+    return opps
+
+
 def match_live_bb_pin(platform="BB"):
     """匹配 BB/FB 滚球 ↔ Pin 滚球(英文队名), 返回 {bb_match_id: {pin_matchup_id, home, away, moneyline}}。"""
     bb = fetch_bb_live_matches(platform=platform)
