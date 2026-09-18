@@ -1283,118 +1283,10 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             "_market": "dc",
                         })
 
-        # --- 上半场双重机会 (HT DC) ---
-        bb_ht_dc = bb.get("odds_ht", {}).get("dc", [])
-        if len(bb_ht_dc) >= 3 and n_ml == 3:
-            # 安全校验：HT DC 赔率是否与 HT 独赢相同
-            bb_ht_ml_check = bb.get("odds_ht", {}).get("ml", [])
-            if len(bb_ht_ml_check) >= 3:
-                dc_first3 = [round(float(x), 2) for x in bb_ht_dc[:3]]
-                ht_ml_first3 = [round(x, 2) for x in bb_ht_ml_check[:3]]
-                if dc_first3 == ht_ml_first3:
-                    bb_ht_dc = []
-        if len(bb_ht_dc) >= 3 and n_ml == 3:
-            ht_dc_fair = None
-            ht_dc_pin_raw = None
-            # 路径A: Pinnacle 有 HT DC 子比赛
-            pin_dc = pin.get("double_chance", [])
-            for dc_market in pin_dc:
-                if dc_market.get("period", 0) != 1:
-                    continue  # HT DC = period 1
-                prices = dc_market.get("prices", [])
-                if len(prices) >= 3:
-                    dc_desig_map = {"1X": 0, "2X": 1, "12": 2}
-                    dc_raw = [None, None, None]
-                    for p in prices:
-                        des = p.get("designation", "")
-                        val = get_decimal_price(p) or 0
-                        idx = dc_desig_map.get(des)
-                        if idx is None and len(prices) == 3:
-                            idx_map = {0: "1X", 1: "2X", 2: "12"}
-                            idx = dc_desig_map.get(idx_map.get(prices.index(p), ""))
-                        if idx is not None and val > 0:
-                            dc_raw[idx] = val
-                    if all(x and x > 0 for x in dc_raw):
-                        # 2026-08-28 启用路径A: Pin 有 Double Chance 1st Half 真实盘口,
-                        # 用 _devig_dc(和=2比例法) 去抽水, 替代 HT 1X2 推导(那个有 21pp 偏差)。
-                        _ht_dc_fair = _devig_dc(dc_raw)
-                        if _ht_dc_fair:
-                            ht_dc_fair = _ht_dc_fair
-                            ht_dc_pin_raw = dc_raw
-                    break
-            # (2026-08-30 取消推导) Pin 无 HT DC 市场时不再从 HT 1X2 推导, ht_dc_fair 保持 None → 跳过
-            if ht_dc_fair:
-                ht_dc_labels = ["上半场双重机会-主/和局", "上半场双重机会-和局/客", "上半场双重机会-主/客"]
-                ht_dc_pair_indices = [(0,1), (1,2), (0,2)]
-                for i in range(3):
-                    bb_val = float(bb_ht_dc[i]) if isinstance(bb_ht_dc[i], str) else bb_ht_dc[i]
-                    fp = ht_dc_fair[i]
-                    if not (bb_val and fp and fp > 0):
-                        continue
-                    idx1, idx2 = ht_dc_pair_indices[i]
-                    if len(bb_ht_ml_check) >= 3 and bb_val >= min(bb_ht_ml_check[idx1], bb_ht_ml_check[idx2]):
-                        continue
-                    ev = (bb_val - fp) / fp * 100
-                    if ev > 1:
-                        pin_raw_val = round(ht_dc_pin_raw[i], 4) if ht_dc_pin_raw else 0
-                        entry["double_chance"].append({
-                            "designation": ht_dc_labels[i],
-                            "bb_odds": bb_val,
-                            "pin_odds": pin_raw_val,
-                            "fair_price": round(fp, 4),
-                            "ev_pct": round(ev, 2),
-                            "_market": "ht_dc",
-                        })
+        # 2026-09-18: HT DC 已禁用 —— Betfair 无 Double Chance HT 市场(仅 Sbobet 有, 但不进定价),
+        # 按「无覆盖=无机会」不再用 Pin 生成 ht_dc 假溢价。
 
-        # --- HT 双边进球 (HT BTTS) ---
-        bb_ht_btts_yes, bb_ht_btts_no = extract_bb_btts_ht(bb)
-        if bb_ht_btts_yes and bb_ht_btts_no:
-            pin_btts = pin.get("btts", [])
-            if pin_btts:
-                yes_price = no_price = None
-                for btts_entry in pin_btts:
-                    if btts_entry.get("period", 0) != 1:  # HT period
-                        continue
-                    prices = btts_entry.get("prices", [])
-                    for p in prices:
-                        if p.get("designation") == "yes":
-                            yes_price = get_decimal_price(p)
-                        elif p.get("designation") == "no":
-                            no_price = get_decimal_price(p)
-                    if yes_price and no_price:
-                        _btts_fairs = shin_fair_odds([yes_price, no_price])
-                        yes_fair = _btts_fairs[0]
-                        no_fair = _btts_fairs[1]
-                        _add_btts_opportunities(entry, bb_ht_btts_yes, bb_ht_btts_no,
-                                                yes_fair, no_fair,
-                                                pin_yes=yes_price, pin_no=no_price,
-                                                prefix="上半场")
-                        break
-
-        # --- HT 单/双 (HT OE) ---
-        bb_ht_oe_odd, bb_ht_oe_even = extract_bb_oe_ht(bb)
-        if bb_ht_oe_odd and bb_ht_oe_even:
-            pin_oe = pin.get("oe", [])  # V5 fix: was "odd_even" (key mismatch)
-            if pin_oe:
-                odd_price = even_price = None
-                for oe_entry in pin_oe:
-                    if oe_entry.get("period", 0) != 1:  # HT period
-                        continue
-                    prices = oe_entry.get("prices", [])
-                    for p in prices:
-                        if p.get("designation") == "odd":
-                            odd_price = get_decimal_price(p)
-                        elif p.get("designation") == "even":
-                            even_price = get_decimal_price(p)
-                    if odd_price and even_price:
-                        _oe_fairs = shin_fair_odds([odd_price, even_price])
-                        odd_fair = _oe_fairs[0]
-                        even_fair = _oe_fairs[1]
-                        _add_oe_opportunities(entry, bb_ht_oe_odd, bb_ht_oe_even,
-                                              odd_fair, even_fair,
-                                              pin_odd=odd_price, pin_even=even_price,
-                                              prefix="上半场")
-                        break
+        # 2026-09-18: HT BTTS / HT OE 已禁用 —— Betfair 无 BTTS HT / OE HT 市场, 不再用 Pin 生成假溢价。
 
         # --- 平局退款 (Draw No Bet) FT ---
         bb_dnb = bb.get("odds_dnb", [])
@@ -1433,46 +1325,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no,
                                         _oa_btts["yes"], _oa_btts["no"])
 
-        # --- 单/双 (Odd/Even) FT：从 Pinnacle Total Goals Odd/Even 市场 ---
-        bb_oe_odd, bb_oe_even = extract_bb_oe(bb)
-        if bb_oe_odd and bb_oe_even:
-            pin_oe = pin.get("oe", [])
-            if pin_oe:
-                for oe_entry in pin_oe:
-                    if oe_entry.get("period", 0) != 0:
-                        continue
-                    prices = oe_entry.get("prices", [])
-                    if len(prices) < 2:
-                        continue
-                    # 用 designation 匹配 Odd/Even (不再靠位置 [0]=Odd [1]=Even)
-                    odd_price = even_price = 0
-                    for p in prices:
-                        des = p.get("designation", "").lower()
-                        val = p.get("price_decimal", 0) or get_decimal_price(p) or 0
-                        if des == "odd" and val > 0: odd_price = val
-                        elif des == "even" and val > 0: even_price = val
-                    if odd_price <= 0 or even_price <= 0:
-                        continue
-                    _oe_fairs = shin_fair_odds([odd_price, even_price])
-                    odd_fair = _oe_fairs[0]
-                    even_fair = _oe_fairs[1]
-                    _add_oe_opportunities(entry, bb_oe_odd, bb_oe_even, odd_fair, even_fair, pin_odd=odd_price, pin_even=even_price)
-                    break
-
-        # --- 半全场 (HT/FT) ---
-        # V5.11 恢复: 旧禁用理由是 "BB 9结果 vs Pin 3结果错配"(EV虚高3228%), 实测 Pin
-        # "Half-Time/Full-Time" 现为 9 结果(半场×全场 3×3), 与 BB 9 结果结构对齐。
-        bb_htft = extract_bb_htft(bb)
-        if bb_htft:
-            pin_htft = pin.get("htft", [])
-            for _he in pin_htft:
-                if _he.get("period", 0) != 0:
-                    continue
-                _prices = _he.get("prices", [])
-                if len(_prices) >= 9:
-                    _mapped = _map_htft_designations(_prices, pin.get("home", ""), pin.get("away", ""))
-                    _add_htft_opportunities(entry, bb_htft, _mapped)
-                    break
+        # 2026-09-18: 单双(oe) / 半全场(htft) 已禁用 —— Betfair 无 OE 市场; htft 是「放弃」特殊盘口
+        # (margin 15%+ 收盘线不 sharp), 不再用 Pin 生成假溢价。
 
         # --- 上半场平局退款 (HT DNB)：直接用 Pinnacle Draw No Bet 1st Half 盘口 ---
         if len(bb_dnb) >= 4 and n_ml == 3:
