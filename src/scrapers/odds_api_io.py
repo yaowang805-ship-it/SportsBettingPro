@@ -122,17 +122,24 @@ def get_events(sport="football", status=None):
     return _get("/events", params) or []
 
 
+_odds_cache = {}  # {event_id: (ts, bookmakers_dict)}
+
+
 def get_odds(event_id, bookmakers=None):
     """单场赔率(含所有市场)。→ {bookmaker_name: [markets]}。
 
     market 结构: {"name": "ML", "updatedAt": "...", "odds": [{home/draw/away/layHome/...}]}。
+    带 8s 缓存(早盘批量对比时避免每场重复拉 Pin 级 REST)。
     """
     bks = bookmakers or ODDS_API_IO_BOOKMAKERS
+    now = time.time()
+    if event_id in _odds_cache and now - _odds_cache[event_id][0] < 8:
+        return _odds_cache[event_id][1]
     params = {"eventId": event_id, "bookmakers": ",".join(bks)}
     d = _get("/odds", params)
-    if not d:
-        return {}
-    return d.get("bookmakers", {}) or {}
+    result = (d or {}).get("bookmakers", {}) or {}
+    _odds_cache[event_id] = (now, result)
+    return result
 
 
 def fair_price(event_id, sub_market, bookmakers=None):
