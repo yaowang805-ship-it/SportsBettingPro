@@ -88,6 +88,26 @@ _BB_SPORT_KEYWORDS = BB_SPORT_KEYWORDS
 _MARKET_LABELS = MARKET_LABELS
 
 
+# ── 新数据源(odds-api.io Betfair+Sbobet)替代 Pin 公平价(2026-09-18) ──
+# BB 运动 key(下划线) → odds-api.io 内部运动 id(经 _SPORT_ID_TO_SLUG 桥接)。
+# 注意 sport 在 bb_vs_pinnacle 里是下划线("american_football"), 别写成连字符。
+_BB_SPORT_TO_OA_ID = {"football": 1, "basketball": 3, "tennis": 5, "baseball": 7, "american_football": 6}
+
+
+def _oa_fair(entry, sport, sub, target_line=None):
+    """从 odds-api.io 取 BB 比赛的 Betfair 公平价(替代 Pin devig)。返回 fair dict 或 None。
+
+    sub ∈ {1x2, hc, ou, ht, ht_ou, dc, dnb, btts}; ht_hc/correct_score/oe/corner/booking 无 Betfair 源。
+    target_line: hc/ou/ht_ou 的 BB 让球/大小线(用于在 odds 数组里选对应线)。
+    """
+    from src.scrapers.odds_api_io import fair_price_bb
+    sid = _BB_SPORT_TO_OA_ID.get(sport, 0)
+    if not sid:
+        return None
+    res = fair_price_bb(entry["home_bb"], entry["away_bb"], sid, sub, target_line=target_line)
+    return res["fair"] if res and res.get("fair") else None
+
+
 def _devig_dc(dc_odds):
     """DC(双重机会)去抽水 — 三条**非互斥**腿, 公平概率和=2(不是1)。
 
@@ -927,33 +947,24 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         if _ml_swapped:
             entry["flags"].append("已校准: BB主客反转(Pin主=BB客, Pin客=BB主)")
 
-        fair_ml = shin_fair_odds(pin_ml)  # Shin 去抽水公平价(整组一次算, 修正 favorite-longshot 偏差)
-
-        # V5.5 热门 devig 交叉验证: Shin vs 比例法在热门端分歧>3% → 标记(推送端提门槛)
-        # 实证(2931场Pin收盘): 热门端 Shin 公平赔率系统性比比例法低~2%(中位),
-        # 分歧>3%的占22.6% — 此时 Shin 可能高估热门 EV, 用 flag 让推送端保守。
-        _fav_div = devig_favorite_divergence(pin_ml)
-        if _fav_div < -3.0:
-            entry["flags"].append(f"热门devig分歧{abs(_fav_div):.1f}%")
-        for i in range(n_ml):
-            bb_o = bb_ml[i]
-            # 反转时交换 Pinnacle 赔率: 2-way → 交换 0↔1, 3-way → 交换 0↔2
-            if _ml_swapped:
-                _pin_i = (n_ml - 1 - i) if i in (0, n_ml - 1) else i
-            else:
-                _pin_i = i
-            pin_o = pin_ml[_pin_i]
-            if pin_o and pin_o > 0:
-                fair_price = fair_ml[_pin_i]
-                ev = (bb_o - fair_price) / fair_price * 100 if fair_price > 0 else 0
-                if ev > 1:
-                    entry["opportunities"].append({
-                        "designation": mlabels["ml"][i],
-                        "bb_odds": bb_o,
-                        "pin_odds": pin_o,
-                        "fair_price": fair_price,
-                        "ev_pct": round(ev, 2),
-                    })
+        # 2026-09-18: 公平价改用 odds-api.io Betfair Exchange 中间价(替代 Pin devig)。
+        # 主客反转由 odds-api.io 的 match_event_orient 内部处理(swapped 时 home/away 交换)。
+        _oa_ml = _oa_fair(entry, sport, "1x2")
+        if _oa_ml:
+            _ml_keys = ["home", "draw", "away"] if n_ml == 3 else ["home", "away"]
+            for i in range(n_ml):
+                bb_o = bb_ml[i]
+                fair_price = _oa_ml.get(_ml_keys[i])
+                if bb_o and fair_price and fair_price > 1:
+                    ev = (bb_o - fair_price) / fair_price * 100
+                    if ev > 1:
+                        entry["opportunities"].append({
+                            "designation": mlabels["ml"][i],
+                            "bb_odds": bb_o,
+                            "pin_odds": 0,  # 新数据源无 Pin 赔率, 用 0 占位
+                            "fair_price": round(fair_price, 4),
+                            "ev_pct": round(ev, 2),
+                        })
 
         # 网球双打 vs 单打不匹配时跳过让球和大小盘
         _is_doubles_mismatch = (
