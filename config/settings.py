@@ -37,7 +37,7 @@ ODDSPAPI_BASE = 'https://api.oddspapi.io/v4'
 # 选书商: Betfair Exchange + Orbit Exchange(交易所=sharp公平价)。key 在 .env 的 ODDS_API_IO_KEY。
 ODDS_API_IO_KEY = os.getenv('ODDS_API_IO_KEY', '')
 ODDS_API_IO_BASE = 'https://api.odds-api.io/v3'
-ODDS_API_IO_BOOKMAKERS = ('Betfair Exchange', 'Orbit Exchange')  # 已选的 2 家交易所(sharp公平价)
+ODDS_API_IO_BOOKMAKERS = ('Sbobet', 'Betfair Exchange')  # 2026-09-18 定稿锚点: Sbobet(上游+亚盘) + Betfair Exchange(欧洲盘+交叉验证)
 
 
 def _is_placeholder_webhook(url: str) -> bool:

@@ -97,7 +97,7 @@ OBS_CAP_NEW = 150
 OBS_CAP_MATURE = 300
 OBS_MATURE_DAYS = 7        # 实盘投一周(7天)后评估提额
 # 新释放盘口当日累计投注额上限(2026-09-12 用户要求): 当天总投注额≤2000(2026-09-15 1000→2000), 次日实盘ROI>4% 解除
-DAILY_STAKE_LIMIT = 2000
+DAILY_STAKE_LIMIT = 1000  # 2026-09-18 新数据源风控: 早盘每天投注≤1000, 原2000
 
 # 已验证方向(硬编码真edge, 2026-09-13 统一进观察库释放机制): grandfathered 进 observe_released,
 # 固定 cap(不走 150→300 分阶段), 无当日累计上限(limit_removed 恒 True)。之前散落在

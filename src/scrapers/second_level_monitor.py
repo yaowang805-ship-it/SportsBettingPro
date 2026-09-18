@@ -35,11 +35,11 @@ COMPARISON_FILE = ROOT / "data" / "storage" / "bb_vs_pinnacle_comparison.json"
 # 让弱 edge 落在 ¥300 上限以下, 强 edge 顶格, 真正按 edge 分档。
 BANKROLL = 5000        # 有效资金(日目标口径, 不是 2 万全仓)
 KELLY_FRACTION = 0.5   # 半凯利
-MAX_STAKE = 400        # 单盘口上限(与 bb_auto_bet MAX_MARKET_STAKE 一致, 2026-09-06 用户要求 400)
+MAX_STAKE = 150        # 单盘口上限(2026-09-18 新数据源风控: 滚球单注≤150, 原400)
 MIN_STAKE = 30         # stake<30 拦截铁律
 
 # 滚球实盘(2026-09-07 起只投小球under, 2026-09-09 放大预算: 小球累计40笔ROI+14.2%稳定正)。滚动预算(结算后释放额度)。
-LIVE_BUDGET = 3000  # 2026-09-10 用户要求: 2000 → 3000(滚球大小球+15%是唯一真edge, 集中投入)
+LIVE_BUDGET = 800   # 2026-09-18 新数据源风控: 滚球每天投注≤800, 原3000
 LIVE_BUDGET_FILE = ROOT / "data" / "storage" / "live_bet_budget.json"
 DRAWDOWN_STOP_PNL = 1000  # 回撤熔断(2026-09-13): 最近7天滚球实盘累计亏超¥1000(=20%BANKROLL) → 半仓
 LIVE_PAPER_FILE = ROOT / "data" / "storage" / "live_paper_bets.json"
@@ -48,7 +48,7 @@ LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 
 # 滚球实盘只投小球(under), EV-Kelly 最优定仓, 单注上限 ¥400(预算1/5)兼顾分散。
 # 其它盘口(大球/1x2/让球)仍只进观察库, 不下真单。
 LIVE_REAL_BET_ENABLED = False  # 2026-09-18 暂停滚球实盘(真溢价未解决+edge破位); 观察库纸单照收, 早盘不受影响
-LIVE_UNDER_MAX_STAKE = 200  # 单注上限(2026-09-17 600→200: 真溢价问题未解决, 观察库edge -3.2pp, 先降风险; 实际生效cap=min(MAX_STAKE=400, release_cap))
+LIVE_UNDER_MAX_STAKE = 150  # 单注上限(2026-09-18 滚球单注≤150; 实际生效cap=min(MAX_STAKE=150, release_cap))
 BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球"}
 
 # 滚球 → 观察库统一口径(2026-09-12 观察库释放改造): sport 数字→英文; sub→sub_market。
