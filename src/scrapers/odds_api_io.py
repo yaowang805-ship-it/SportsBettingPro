@@ -330,6 +330,21 @@ def _match_score(h1, a1, h2, a2):
     return max(s1, s2) / 2.0
 
 
+def _match_score_orient(h1, a1, h2, a2):
+    """队名匹配 → (得分, swapped)。swapped=True 表示 BB 主客与 odds-api.io 相反。"""
+    from rapidfuzz import fuzz
+    nh1, na1, nh2, na2 = _norm_team(h1), _norm_team(a1), _norm_team(h2), _norm_team(a2)
+    if nh1 == nh2 and na1 == na2:
+        return 100.0, False
+    if nh1 == na2 and na1 == nh2:
+        return 99.0, True
+    s1 = fuzz.ratio(nh1, nh2) + fuzz.ratio(na1, na2)
+    s2 = fuzz.ratio(nh1, na2) + fuzz.ratio(na1, nh2)
+    if s2 > s1:
+        return s2 / 2.0, True
+    return s1 / 2.0, False
+
+
 def _get_events_cached(sport):
     """事件列表缓存 60s, 避免每次匹配都拉全量。"""
     now = time.time()
@@ -342,16 +357,39 @@ def _get_events_cached(sport):
 
 def match_event(home, away, sport_id, min_score=85.0):
     """BB 比赛(home/away/sport_id) → odds-api.io 事件 id。模糊匹配, 返回 id 或 None。"""
+    eid, _ = match_event_orient(home, away, sport_id, min_score)
+    return eid
+
+
+def match_event_orient(home, away, sport_id, min_score=85.0):
+    """BB 比赛 → (event_id, swapped)。swapped=True 表示 BB 主客与 odds-api.io 相反。"""
     slug = _SPORT_ID_TO_SLUG.get(sport_id)
     if not slug:
-        return None
+        return None, False
     evs = _get_events_cached(slug)
-    best_id, best_score = None, 0.0
+    best_id, best_score, best_swapped = None, 0.0, False
     for e in evs:
-        sc = _match_score(home, away, e.get('home', ''), e.get('away', ''))
+        sc, sw = _match_score_orient(home, away, e.get('home', ''), e.get('away', ''))
         if sc > best_score:
-            best_score, best_id = sc, e.get('id')
-    return best_id if best_score >= min_score else None
+            best_score, best_id, best_swapped = sc, e.get('id'), sw
+    return (best_id, best_swapped) if best_score >= min_score else (None, False)
+
+
+def _swap_fair(fair, sub_market):
+    """主客互换: home/away 交换, draw 不动; hc/ht_hc 的 line 取反; dc 的 1X/X2 交换。"""
+    if not isinstance(fair, dict):
+        return fair
+    out = dict(fair)
+    if "home" in out or "away" in out:
+        out["home"], out["away"] = out.get("away"), out.get("home")
+    if "1X" in out and "X2" in out:
+        out["1X"], out["X2"] = out["X2"], out["1X"]
+    if "line" in out and sub_market in ("hc", "ht_hc"):
+        try:
+            out["line"] = -float(out["line"])
+        except (TypeError, ValueError):
+            pass
+    return out
 
 
 def fair_price_bb(home, away, sport_id, sub_market, target_line=None):
@@ -361,14 +399,23 @@ def fair_price_bb(home, away, sport_id, sub_market, target_line=None):
     fair = Betfair 中间价(加流动性门槛), 拿不到就 None(宁可少抓);
     confidence = SBO devig(比例去水, 只做同向确认, 不进定价)。
     target_line: hc/ou/ht_ou 的 BB 让球/大小线, 用于选对应线。
+    主客互换(swapped)时 home/away 交换、hc 线取反, 保证返回的是 BB 主客视角的公平价。
     """
-    eid = match_event(home, away, sport_id)
+    eid, swapped = match_event_orient(home, away, sport_id)
     if not eid:
         return None
-    fair = fair_price(eid, sub_market, target_line=target_line)
+    # 主客互换时, BB 让球线对应 odds-api.io 的相反方向(线取反)
+    tl = target_line
+    if swapped and target_line is not None and sub_market in ("hc", "ht_hc"):
+        tl = -target_line
+    fair = fair_price(eid, sub_market, target_line=tl)
     if not fair:
         return None
-    conf = sbo_fair_price(eid, sub_market, target_line=target_line)
+    if swapped:
+        fair = _swap_fair(fair, sub_market)
+    conf = sbo_fair_price(eid, sub_market, target_line=tl)
+    if swapped and conf:
+        conf = _swap_fair(conf, sub_market)
     return {'fair': fair, 'confidence': conf, 'event_id': eid}
 
 
