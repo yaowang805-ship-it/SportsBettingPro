@@ -250,7 +250,7 @@ def fair_price(event_id, sub_market, bookmakers=None, target_line=None):
     return None
 
 
-def sbo_fair_price(event_id, sub_market):
+def sbo_fair_price(event_id, sub_market, target_line=None):
     """SBO 的 devig 公平价(比例去水), 用于置信度确认(不进入定价, 见 fair-price-betfair-confidence-sbo-20260918)。
 
     比例去水: 各选项隐含概率 1/odds, 按占比缩放到 100%, 公平价 = total × odds。
@@ -268,7 +268,10 @@ def sbo_fair_price(event_id, sub_market):
     m = next((x for x in (sbo or []) if x.get("name") == market_name), None)
     if not m:
         return None
-    o = (m.get("odds") or [{}])[0]
+    _line_subs = ("hc", "ou", "ht_ou", "ht_hc")
+    o = _select_line(m, target_line if sub_market in _line_subs else None)
+    if not o:
+        return None
 
     # 提取各方向赔率
     if sub_market in ("1x2", "ht"):
@@ -276,7 +279,7 @@ def sbo_fair_price(event_id, sub_market):
                 "away": float(o.get("away", 0) or 0)}
     elif sub_market in ("ou", "ht_ou"):
         vals = {"over": float(o.get("over", 0) or 0), "under": float(o.get("under", 0) or 0)}
-    elif sub_market == "hc":
+    elif sub_market in ("hc", "ht_hc"):
         vals = {"home": float(o.get("home", 0) or 0), "away": float(o.get("away", 0) or 0)}
     else:
         return None
@@ -286,7 +289,7 @@ def sbo_fair_price(event_id, sub_market):
     if total <= 0:
         return None
     fair = {k: round(total * v, 4) if v > 1.0 else None for k, v in vals.items()}
-    if sub_market in ("ou", "ht_ou", "hc") and o.get("hdp") is not None:
+    if sub_market in ("ou", "ht_ou", "hc", "ht_hc") and o.get("hdp") is not None:
         fair["line"] = o.get("hdp")
     return fair
 
@@ -343,20 +346,21 @@ def match_event(home, away, sport_id, min_score=85.0):
     return best_id if best_score >= min_score else None
 
 
-def fair_price_bb(home, away, sport_id, sub_market):
+def fair_price_bb(home, away, sport_id, sub_market, target_line=None):
     """BB 比赛的公平价提供(替代 Pin): 匹配 → Betfair中间价(定价) + SBO devig(置信度)。
 
     返回 {'fair': {...}, 'confidence': {...}, 'event_id': ...} 或 None。
     fair = Betfair 中间价(加流动性门槛), 拿不到就 None(宁可少抓);
     confidence = SBO devig(比例去水, 只做同向确认, 不进定价)。
+    target_line: hc/ou/ht_ou 的 BB 让球/大小线, 用于选对应线。
     """
     eid = match_event(home, away, sport_id)
     if not eid:
         return None
-    fair = fair_price(eid, sub_market)
+    fair = fair_price(eid, sub_market, target_line=target_line)
     if not fair:
         return None
-    conf = sbo_fair_price(eid, sub_market)
+    conf = sbo_fair_price(eid, sub_market, target_line=target_line)
     return {'fair': fair, 'confidence': conf, 'event_id': eid}
 
 
