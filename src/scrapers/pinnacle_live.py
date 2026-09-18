@@ -534,7 +534,7 @@ def fetch_live_opportunities_oa(threshold=3.0):
             if not d or sub not in ("1x2", "hc", "ou"):
                 continue
             bb_odds = mk["odds"]
-            res = fair_price_bb(b["home_en"], b["away_en"], b["sport"], sub)
+            res = fair_price_bb(b["home_en"], b["away_en"], b["sport"], sub, status="live")
             if not res or not res["fair"]:
                 continue
             fair = res["fair"]

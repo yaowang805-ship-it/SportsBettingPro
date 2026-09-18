@@ -309,8 +309,8 @@ def match_bb_to_oa(sport_id):
 
 # ── BB 匹配 + 公平价提供(替代 Pin 的入口) ──
 
-_events_cache = {}  # {sport_slug: (ts, events)}
-_match_cache = {}   # {(norm_home, norm_away, sport_id): (ts, event_id, swapped)}
+_events_cache = {}  # {(sport_slug, status): (ts, events)}
+_match_cache = {}   # {(norm_home, norm_away, sport_id, status): (ts, event_id, swapped)}
 
 
 def _norm_team(name):
@@ -346,29 +346,31 @@ def _match_score_orient(h1, a1, h2, a2):
     return s1 / 2.0, False
 
 
-def _get_events_cached(sport):
-    """事件列表缓存 60s, 避免每次匹配都拉全量。"""
+def _get_events_cached(sport, status=None):
+    """事件列表缓存 60s, 避免每次匹配都拉全量。status=None 全量, 'live' 只拉滚球。"""
+    key = (sport, status)
     now = time.time()
-    if sport in _events_cache and now - _events_cache[sport][0] < 60:
-        return _events_cache[sport][1]
-    evs = get_events(sport) or []
-    _events_cache[sport] = (now, evs)
+    if key in _events_cache and now - _events_cache[key][0] < 60:
+        return _events_cache[key][1]
+    evs = get_events(sport, status) or []
+    _events_cache[key] = (now, evs)
     return evs
 
 
-def match_event(home, away, sport_id, min_score=85.0):
+def match_event(home, away, sport_id, min_score=85.0, status=None):
     """BB 比赛(home/away/sport_id) → odds-api.io 事件 id。模糊匹配, 返回 id 或 None。"""
-    eid, _ = match_event_orient(home, away, sport_id, min_score)
+    eid, _ = match_event_orient(home, away, sport_id, min_score, status=status)
     return eid
 
 
-def match_event_orient(home, away, sport_id, min_score=85.0):
+def match_event_orient(home, away, sport_id, min_score=85.0, status=None):
     """BB 比赛 → (event_id, swapped)。swapped=True 表示 BB 主客与 odds-api.io 相反。
 
-    结果缓存 60s(与 _get_events_cached 同步), 避免同一场比赛的 1x2/hc/ou/ht 等多个盘口
-    各自重复做一遍 O(5000) 的模糊匹配。
+    status=None 全量(早盘, 匹配 pending/live 全部); status='live' 只匹配滚球(滚球流程,
+    只 2 场, 免掉 O(5000) 模糊匹配)。
+    结果缓存 60s(与 _get_events_cached 同步), 避免同一场比赛的多个盘口重复做模糊匹配。
     """
-    key = (_norm_team(home), _norm_team(away), sport_id)
+    key = (_norm_team(home), _norm_team(away), sport_id, status)
     now = time.time()
     cached = _match_cache.get(key)
     if cached and now - cached[0] < 60:
@@ -377,7 +379,7 @@ def match_event_orient(home, away, sport_id, min_score=85.0):
     slug = _SPORT_ID_TO_SLUG.get(sport_id)
     if not slug:
         return None, False
-    evs = _get_events_cached(slug)
+    evs = _get_events_cached(slug, status)
     best_id, best_score, best_swapped = None, 0.0, False
     for e in evs:
         sc, sw = _match_score_orient(home, away, e.get('home', ''), e.get('away', ''))
@@ -404,16 +406,17 @@ def _swap_fair(fair, sub_market):
     return out
 
 
-def fair_price_bb(home, away, sport_id, sub_market, target_line=None):
+def fair_price_bb(home, away, sport_id, sub_market, target_line=None, status=None):
     """BB 比赛的公平价提供(替代 Pin): 匹配 → Betfair中间价(定价) + SBO devig(置信度)。
 
     返回 {'fair': {...}, 'confidence': {...}, 'event_id': ...} 或 None。
     fair = Betfair 中间价(加流动性门槛), 拿不到就 None(宁可少抓);
     confidence = SBO devig(比例去水, 只做同向确认, 不进定价)。
     target_line: hc/ou/ht_ou 的 BB 让球/大小线, 用于选对应线。
+    status: None=全量(早盘), 'live'=只滚球(滚球流程, 匹配快)。
     主客互换(swapped)时 home/away 交换、hc 线取反, 保证返回的是 BB 主客视角的公平价。
     """
-    eid, swapped = match_event_orient(home, away, sport_id)
+    eid, swapped = match_event_orient(home, away, sport_id, status=status)
     if not eid:
         return None
     # 主客互换时, BB 让球线对应 odds-api.io 的相反方向(线取反)
