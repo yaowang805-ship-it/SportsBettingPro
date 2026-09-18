@@ -47,7 +47,7 @@ LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 
 
 # 滚球实盘只投小球(under), EV-Kelly 最优定仓, 单注上限 ¥400(预算1/5)兼顾分散。
 # 其它盘口(大球/1x2/让球)仍只进观察库, 不下真单。
-LIVE_REAL_BET_ENABLED = False  # 2026-09-18 暂停滚球实盘(真溢价未解决+edge破位); 观察库纸单照收, 早盘不受影响
+LIVE_REAL_BET_ENABLED = True  # 2026-09-18 重新开启滚球实盘(新数据源 Sbobet+Betfair 替代 Pin)
 LIVE_UNDER_MAX_STAKE = 150  # 单注上限(2026-09-18 滚球单注≤150; 实际生效cap=min(MAX_STAKE=150, release_cap))
 BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球"}
 
@@ -605,7 +605,7 @@ class SecondLevelMonitor:
         for key, v in ready.items():
             del self._reversion_track[key]
             try:
-                clv = self._reverify_live_ev(v["sig"], allow_closed=True, nearest=True)
+                clv = self._reverify_live_ev_oa(v["sig"])
                 if clv is None:
                     continue
                 self._write_clv(key, clv)
@@ -766,7 +766,7 @@ class SecondLevelMonitor:
         # 漂移/盘口关闭的不入库(假样本没分析意义)。验价结果同时供实盘小球下单复用。
         # 提速(2026-09-17): 并行预拉 BB 当前赔率, 与 Pin 验价(1-2s)重叠, 省 1-2s。
         _bb_prefetch = self._prefetch_bb_odds(sig)
-        fresh_ev = self._reverify_live_ev(sig)
+        fresh_ev = self._reverify_live_ev_oa(sig)
         _t_pin = time.time() - _t; _t = time.time()
         if fresh_ev is None or fresh_ev < self.threshold:
             return
@@ -1050,6 +1050,37 @@ class SecondLevelMonitor:
         if i is None or not fair or len(fair) <= i or fair[i] <= 0:
             return None
         return (sig["bb_odds"] - fair[i]) / fair[i] * 100.0
+
+    def _reverify_live_ev_oa(self, sig):
+        """下注前重验公平价(odds-api.io Betfair 中间价), 替代 Pin 的 reverify_live_markets。
+
+        用 sig 里的 odds-api.io 事件 id(pin_matchup_id) 重拉 Betfair 公平价, 重算 EV。
+        """
+        from src.scrapers.odds_api_io import fair_price
+        eid = sig.get("pin_matchup_id")
+        if not eid:
+            return None
+        sub_map = {"opportunities": "1x2", "handicap": "hc", "over_under": "ou"}
+        sub = sub_map.get(sig.get("sub"))
+        if not sub:
+            return None
+        fair = fair_price(eid, sub)
+        if not fair:
+            return None
+        desig = sig.get("desig", "")
+        if sub == "1x2":
+            idx = {"主胜": "home", "和局": "draw", "客胜": "away"}
+        elif sub == "hc":
+            idx = {"让球主胜": "home", "让球客胜": "away"}
+        elif sub == "ou":
+            idx = {"大球": "over", "小球": "under"}
+        else:
+            return None
+        k = idx.get(desig)
+        fair_p = fair.get(k)
+        if not fair_p or fair_p <= 1:
+            return None
+        return (sig["bb_odds"] - fair_p) / fair_p * 100.0
 
     def _stake_for(self, sig):
         """EV-Kelly 半凯利: stake = BANKROLL × 0.5 × (ev/100) / (odds-1), 封顶 ¥300。
