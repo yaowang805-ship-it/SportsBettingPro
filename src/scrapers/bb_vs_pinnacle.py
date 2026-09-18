@@ -991,122 +991,31 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             bb_hl = hc_dict.get("home_line") if hc_dict.get("home_line") is not None else hc_dict.get("away_line")
             if bb_hl is None:
                 continue
-            home_sp, away_sp, sp_is_alt = get_pin_spread(pin, target_line=bb_hl)
-            if not (home_sp and away_sp and get_decimal_price(home_sp) and get_decimal_price(away_sp)):
+            # 2026-09-18: 公平价改用 Betfair Spread(替代 Pin get_pin_spread+devig)。
+            # 主客反转/线取反由 odds-api.io 的 match_event_orient 内部处理。
+            _oa_hc = _oa_fair(entry, sport, "hc", target_line=bb_hl)
+            if not _oa_hc or not _oa_hc.get("home") or not _oa_hc.get("away"):
                 continue
-
-            pin_home_odds = get_decimal_price(home_sp)
-            pin_away_odds = get_decimal_price(away_sp)
-            bb_home_odds = hc_dict["home_odds"]
-            bb_away_odds = hc_dict["away_odds"]
-
-            new_flags = []
-            if sp_is_alt:
-                main_spreads = pin.get("spread", [])
-                if main_spreads:
-                    mp = main_spreads[0].get("prices", [])
-                    mp_line = next((p.get("points","?") for p in mp if p.get("designation")=="home"), "?")
-                    mp_odds = next((get_decimal_price(p) or "?" for p in mp if p.get("designation")=="home"), "?")
-                    new_flags.append(f"备用盘口: Pin主线={mp_line}@{mp_odds}")
-
-            # 校准：检查让球线是否对得上
-            pin_hc_line = home_sp.get("points")
-            bb_hc_line_val = hc_dict.get("home_line") if hc_dict.get("home_line") is not None else hc_dict.get("away_line")
-            cal_ok, cal_msg = _calibrate_market_line(sport, "hc", bb_hc_line_val, pin_hc_line, None)
-            if cal_ok:
-                # 二次校验：同时检查 home 和 away 两条线的一致性
-                bb_hl_inner = hc_dict.get("home_line")
-                bb_al = hc_dict.get("away_line")
-                pin_hl_inner = home_sp.get("points")
-                pin_al = away_sp.get("points")
-                home_ok = (bb_hl_inner is not None and pin_hl_inner is not None
-                           and abs(bb_hl_inner - pin_hl_inner) <= 0.01)
-                away_ok = (bb_al is not None and pin_al is not None
-                           and abs(bb_al - pin_al) <= 0.01)
-                if (bb_hl_inner is not None or bb_al is not None) and not (home_ok or away_ok):
-                    cal_ok = False
-                    cal_msg = f"让球线错配: BB=[{bb_hl_inner},{bb_al}] vs Pin=[{pin_hl_inner},{pin_al}]"
-            if not cal_ok:
-                if cal_msg not in entry["flags"]:
-                    entry["flags"].append(cal_msg)
+            # 线匹配校验: BB 让球线须 ≈ Betfair 线(否则比的是不同线的价, 假EV)
+            _bf_line = _oa_hc.get("line")
+            if _bf_line is None or abs(float(bb_hl) - float(_bf_line)) > 0.25:
                 if hc_tag == "main":
                     cal_blocked_hc += 1
                 continue
-
-            # 线校验通过 → 计算EV
-            for f in new_flags:
-                if f not in entry["flags"]:
-                    entry["flags"].append(f)
-
-            # 通过盘口线（points）对齐：BB 的哪条线匹配 Pinnacle 的主/客
-            pin_hl = home_sp.get("points")
-            pin_al = away_sp.get("points")
-            swapped = False
-            if bb_hl is not None and bb_al is not None and pin_hl is not None and pin_al is not None:
-                bb_hl = hc_dict.get("home_line")
-                bb_al = hc_dict.get("away_line")
-                home_diff = abs(bb_hl - pin_hl) if bb_hl is not None else 999
-                away_diff = abs(bb_al - pin_al) if bb_al is not None else 999
-                cross_home = abs(bb_al - pin_hl) if bb_al is not None else 999
-                cross_away = abs(bb_hl - pin_al) if bb_hl is not None else 999
-                if cross_home + cross_away < home_diff + away_diff - 0.01:
-                    swapped = True
-
-            if swapped:
-                bb_hc_odds_for_pin_home = bb_away_odds
-                bb_hc_odds_for_pin_away = bb_home_odds
-                hc_home_desig = hc_dict.get("away_line_str", "")
-                hc_away_desig = hc_dict.get("home_line_str", "")
-            else:
-                bb_hc_odds_for_pin_home = bb_home_odds
-                bb_hc_odds_for_pin_away = bb_away_odds
-                hc_home_desig = hc_dict.get("home_line_str", "")
-                hc_away_desig = hc_dict.get("away_line_str", "")
-
-            # 去抽水公平价
-            _hc_fairs = shin_fair_odds([pin_home_odds, pin_away_odds])
-            pin_home_fair = _hc_fairs[0]
-            pin_away_fair = _hc_fairs[1]
-
-            # V5.10 护栏: 让球两腿必须互补(隐含概率和≈1.0~1.35)。
-            # 网球等运动的让球 home/away 腿可能同向(实测 away -1.5 与 away +1.5,
-            # 隐含和 1.679), shin_fair_odds 会被迫把同向腿当互补腿, 造出假公平价
-            # → 假 +EV。隐含和超出 [1.0, 1.4] 直接丢弃, 绝不用可疑盘口算 EV。
-            _hc_implied = (1.0 / pin_home_odds + 1.0 / pin_away_odds) if pin_home_odds > 0 and pin_away_odds > 0 else 0
-            if _hc_implied > 1.4:
-                entry["flags"].append(f"让球腿非同向互补(隐含和{_hc_implied:.2f}), 丢弃")
-                continue
-
-            # V5.7: 「0」让球线一致性校验 — 让球0≈平局退款(DNB), 与独赢推导的DNB分歧>3% → 让球线不自洽
-            # (小联赛流动性差/挂单污染会让让球0偏离DNB, 产出假+EV)
-            # V5.10 修复: 这个关系只对**线=0**成立。原先 abs(line)<=0.5 把 ±0.5/±0.25
-            # 也纳入校验, 而 -0.5 线主胜本来就比 0 线主胜贵 40%+, 分歧大是必然的, 不是
-            # 不自洽 —— 实测误杀了 Kamaz(-0.5) 和 Veles(+0.75) 两条真实机会。收紧到 0 线。
-            if pin_hc_line is not None and abs(pin_hc_line) < 0.01:
-                _dnb_fair = _derive_dnb_fair(get_pin_ml_sorted(pin, sport))
-                if _dnb_fair and pin_home_fair > 0:
-                    _div = abs(pin_home_fair - _dnb_fair) / _dnb_fair
-                    if _div > 0.03:
-                        _flag = f"让球线不自洽: 让球0公平价{pin_home_fair:.2f} vs DNB{_dnb_fair:.2f}(差{_div*100:.0f}%)"
-                        if _flag not in entry["flags"]:
-                            entry["flags"].append(_flag)
-                        continue
-
-            ev_h = (bb_hc_odds_for_pin_home - pin_home_fair) / pin_home_fair * 100 if pin_home_fair > 0 else 0
-            ev_a = (bb_hc_odds_for_pin_away - pin_away_fair) / pin_away_fair * 100 if pin_away_fair > 0 else 0
-
-            if hc_tag == "alt":
-                line_info = f"[备{bb_hl}]" if bb_hl is not None else "[备]"
-            else:
-                line_info = ""
-
+            home_fair = _oa_hc["home"]
+            away_fair = _oa_hc["away"]
+            bb_home_odds = hc_dict["home_odds"]
+            bb_away_odds = hc_dict["away_odds"]
+            ev_h = (bb_home_odds - home_fair) / home_fair * 100 if home_fair > 0 else 0
+            ev_a = (bb_away_odds - away_fair) / away_fair * 100 if away_fair > 0 else 0
+            line_info = f"[备{bb_hl}]" if hc_tag == "alt" else ""
             if ev_h > 1:
                 opp = {
                     "designation": mlabels["hc_home"],
-                    "line": hc_home_desig,
-                    "bb_odds": bb_hc_odds_for_pin_home,
-                    "pin_odds": pin_home_odds,
-                    "fair_price": pin_home_fair,
+                    "line": hc_dict.get("home_line_str", ""),
+                    "bb_odds": bb_home_odds,
+                    "pin_odds": 0,  # 新数据源无 Pin 赔率
+                    "fair_price": round(home_fair, 4),
                     "ev_pct": round(ev_h, 2),
                 }
                 if line_info:
@@ -1115,10 +1024,10 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             if ev_a > 1:
                 opp = {
                     "designation": mlabels["hc_away"],
-                    "line": hc_away_desig,
-                    "bb_odds": bb_hc_odds_for_pin_away,
-                    "pin_odds": pin_away_odds,
-                    "fair_price": pin_away_fair,
+                    "line": hc_dict.get("away_line_str", ""),
+                    "bb_odds": bb_away_odds,
+                    "pin_odds": 0,
+                    "fair_price": round(away_fair, 4),
                     "ev_pct": round(ev_a, 2),
                 }
                 if line_info:
