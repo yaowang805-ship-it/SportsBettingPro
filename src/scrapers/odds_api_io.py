@@ -143,7 +143,9 @@ def _select_line(market, target_line=None):
             if d < best_diff:
                 best, best_diff = o, d
         return best
-    # 主线: 两侧赔率最平衡(home/away 或 over/under)
+    # 无 target_line: 单条直接返回(ML/HT/DC/DNB/BTTS 都只有一条); 多条取最平衡(Spread/Totals)
+    if len(arr) == 1:
+        return arr[0]
     best, best_imb = None, 1e9
     for o in arr:
         a = o.get("home") if o.get("home") is not None else o.get("over")
