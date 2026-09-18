@@ -1087,53 +1087,41 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     ou_candidates.append(("alt", alt))
 
         for ou_tag, bb_ou in ou_candidates:
-            # 网球：BB 大小线 > 10 表示局数大小，用 games_total
             bb_line = bb_ou.get("line")
-            if sport == "tennis" and bb_line is not None and bb_line > 10:
-                gt = pin.get("games_total")
-                over_p, under_p = get_pin_total({"total": gt}, target_line=bb_line) if gt else (None, None)
-            else:
-                # 找线值最接近的 Pinnacle 大小盘（可能有多个大小线）
-                over_p, under_p = get_pin_total(pin, target_line=bb_line)
-            if not over_p or not under_p:
+            if bb_line is None:
                 continue
-
-            _ou_fairs = shin_fair_odds([get_decimal_price(over_p), get_decimal_price(under_p)])
-            over_fair = _ou_fairs[0]
-            under_fair = _ou_fairs[1]
-
-            # 校准：检查大小盘线是否对得上
-            pin_ou_line = over_p.get("points")
-            cal_ok, cal_msg = _calibrate_market_line(sport, "ou", bb_ou["line"], pin_ou_line, None)
-            if not cal_ok:
-                if cal_msg not in entry["flags"]:
-                    entry["flags"].append(cal_msg)
+            # 2026-09-18: 公平价改用 Betfair Totals(替代 Pin get_pin_total+devig)。
+            _oa_ou = _oa_fair(entry, sport, "ou", target_line=bb_line)
+            if not _oa_ou or not _oa_ou.get("over") or not _oa_ou.get("under"):
+                continue
+            # 线匹配校验: BB 大小线须 ≈ Betfair 线(否则比的是不同线的价, 假EV)
+            _bf_line = _oa_ou.get("line")
+            if _bf_line is None or abs(float(bb_line) - float(_bf_line)) > 0.25:
                 if ou_tag == "main":
                     cal_blocked_ou += 1
                 continue
-
-            if get_decimal_price(over_p) and get_decimal_price(over_p) > 0:
-                ev_o = (bb_ou["over_odds"] - over_fair) / over_fair * 100
-                if ev_o > 1:
-                    entry["over_under"].append({
-                        "designation": mlabels["over"],
-                        "line": str(bb_ou["line"]),
-                        "bb_odds": bb_ou["over_odds"],
-                        "pin_odds": get_decimal_price(over_p),
-                        "fair_price": over_fair,
-                        "ev_pct": round(ev_o, 2),
-                    })
-            if get_decimal_price(under_p) and get_decimal_price(under_p) > 0:
-                ev_u = (bb_ou["under_odds"] - under_fair) / under_fair * 100
-                if ev_u > 1:
-                    entry["over_under"].append({
-                        "designation": mlabels["under"],
-                        "line": str(bb_ou["line"]),
-                        "bb_odds": bb_ou["under_odds"],
-                        "pin_odds": get_decimal_price(under_p),
-                        "fair_price": under_fair,
-                        "ev_pct": round(ev_u, 2),
-                    })
+            over_fair = _oa_ou["over"]
+            under_fair = _oa_ou["under"]
+            ev_o = (bb_ou["over_odds"] - over_fair) / over_fair * 100 if over_fair > 0 else 0
+            ev_u = (bb_ou["under_odds"] - under_fair) / under_fair * 100 if under_fair > 0 else 0
+            if ev_o > 1:
+                entry["over_under"].append({
+                    "designation": mlabels["over"],
+                    "line": str(bb_line),
+                    "bb_odds": bb_ou["over_odds"],
+                    "pin_odds": 0,  # 新数据源无 Pin 赔率
+                    "fair_price": round(over_fair, 4),
+                    "ev_pct": round(ev_o, 2),
+                })
+            if ev_u > 1:
+                entry["over_under"].append({
+                    "designation": mlabels["under"],
+                    "line": str(bb_line),
+                    "bb_odds": bb_ou["under_odds"],
+                    "pin_odds": 0,
+                    "fair_price": round(under_fair, 4),
+                    "ev_pct": round(ev_u, 2),
+                })
 
         # --- 上半场 (HT) 对比：从 DOM odds_ht 读，与 Pinnacle period=1 对比 ---
         bb_ht = bb.get("odds_ht", {})
@@ -1147,22 +1135,16 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 "over": f"{_ht_period}大球", "under": f"{_ht_period}小球",
             }
             # HT 独赢 (2026-09-18 全面替代 Pin): 用 Betfair ML HT 中间价当公平价
-            # 原 Pin 半场 devig(shin_fair_odds) 换成 odds-api.io 的 Betfair ML HT 中间价(实时)
             bb_ht_ml = bb_ht["ml"]
             if bb_ht_ml:
-                from src.scrapers.odds_api_io import fair_price_bb as _fair_price_bb
-                _slug_to_id = {"football": 1, "basketball": 3, "tennis": 5,
-                               "baseball": 7, "american-football": 6}
-                _oa_ht = _fair_price_bb(entry["home_bb"], entry["away_bb"],
-                                        _slug_to_id.get(sport, 0), "ht")
-                if _oa_ht and _oa_ht.get("fair"):
-                    _oa_fair = _oa_ht["fair"]  # {'home':.., 'draw':.., 'away':..} 或 2-way
+                _oa_ht = _oa_fair(entry, sport, "ht")
+                if _oa_ht:
                     _keys = ["home", "draw", "away"] if sport == "football" else ["home", "away"]
                     for i, label in enumerate(ht_labels["ml"]):
                         if i >= len(bb_ht_ml) or i >= len(_keys):
                             break
                         bb_o = bb_ht_ml[i]
-                        fair_price = _oa_fair.get(_keys[i])
+                        fair_price = _oa_ht.get(_keys[i])
                         if bb_o and fair_price and fair_price > 1:
                             ev = (bb_o - fair_price) / fair_price * 100
                             if ev > 1:
