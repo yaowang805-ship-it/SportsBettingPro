@@ -262,6 +262,26 @@ def load_real_roi():
     return _agg_bets(bets, lambda b: (b.get("sport") or "?", b.get("sub_market") or "?"))
 
 
+def load_real_roi_direction():
+    """实盘 ROI(方向级): tracked_bets.json settled → {(sport,sub_market,direction): {n,roi}}。
+
+    2026-09-18 补: 「满7天提额」原来用 (sport,sub_market) 两级 ROI, 会把同盘口下
+    方向相反的方向混在一起(如 ht 主胜 +31.7% 被 ht 客胜 -38.9% 拉低), 导致真赚的
+    方向永远提不了额。改按 (sport,sub_market,direction) 三级, 让提额看方向级 ROI。
+    """
+    if not TRACKED.exists():
+        return {}
+    try:
+        raw = json.loads(TRACKED.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+    bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
+            if b.get("status") == "settled"]
+    return _agg_bets(bets, lambda b: (
+        b.get("sport") or "?", b.get("sub_market") or "?",
+        _direction(b.get("designation"), b.get("sub_market"))))
+
+
 def _winrate_threshold(n):
     """赢率vs隐含差值阈值(2026-09-12 按统计显著): 样本越少要求差越大。
 
@@ -587,6 +607,7 @@ def _notify_release(newly_released, obs_winrate):
 
 def main():
     market_roi = load_real_roi()
+    market_roi_dir = load_real_roi_direction()  # 方向级 ROI(满7天提额用, 2026-09-18 修混方向bug)
     obs_winrate = load_observe_winrate()
     market_winrate = load_real_winrate_market()
     dir_winrate = load_real_winrate_direction()
@@ -757,13 +778,15 @@ def main():
                 first_ts = now_ts
             if now_ts - first_ts >= OBS_MATURE_DAYS * 86400:
                 # 满一周: 看实盘 ROI(滚球用 BB 官方订单两维, 早盘用 tracked_bets 两维)
-                r = (live_real_roi if scope == SCOPE_LIVE else market_roi).get((sport, sm))
+                r = (live_real_roi.get((sport, sm)) if scope == SCOPE_LIVE
+                     else market_roi_dir.get((sport, sm, dr)))
                 if r and r.get("n", 0) > 0 and r.get("roi", 0) > REAL_ROI_MIN:
                     cap = OBS_CAP_MATURE
             # 次日解除 1000 限制(2026-09-12 用户要求): 实盘 ROI>4% → 解除当日累计上限
             # 不用加实盘样本门槛: 观察库释放已用 n>100 测过真溢价, 释放即已验证, 实盘 ROI>4% 就解除。
             if not limit_removed:
-                r = (live_real_roi if scope == SCOPE_LIVE else market_roi).get((sport, sm))
+                r = (live_real_roi.get((sport, sm)) if scope == SCOPE_LIVE
+                     else market_roi_dir.get((sport, sm, dr)))
                 if r and r.get("n", 0) > 0 and r.get("roi", 0) > REAL_ROI_MIN:
                     limit_removed = True
         # 当日累计跨天重置
