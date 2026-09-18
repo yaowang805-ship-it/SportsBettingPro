@@ -762,20 +762,10 @@ class SecondLevelMonitor:
     def _try_live_auto_bet(self, sig):
         """滚球机会处理: 观察库入库前验价(漂移假EV不入库), 实盘下单由 LIVE_REAL_BET_ENABLED 控制。"""
         _t0 = time.time(); _t = _t0  # 计时埋点(2026-09-17)
-        # 2026-09-09 用户要求: 滚球价秒级漂移, 扫描瞬间EV是假的 → 入库前重新验价,
-        # 漂移/盘口关闭的不入库(假样本没分析意义)。验价结果同时供实盘小球下单复用。
-        # 提速(2026-09-17): 并行预拉 BB 当前赔率, 与 Pin 验价(1-2s)重叠, 省 1-2s。
+        # 2026-09-18 用户决定: 实时赔率下不再验价。sig["ev"]/sig["fair"] 直接来自
+        # fetch_live_opportunities_oa 的 Betfair 中间价(实时), 之前 reverify 是为防
+        # 15 分钟 Pin 陈旧, 现在没这个坑了。保留并行预拉 BB(供 place_single_bet 的 BB 漂移校验)。
         _bb_prefetch = self._prefetch_bb_odds(sig)
-        fresh_ev = self._reverify_live_ev_oa(sig)
-        _t_pin = time.time() - _t; _t = time.time()
-        if fresh_ev is None or fresh_ev < self.threshold:
-            return
-        sig["ev"] = fresh_ev  # 入库/下单都用验价后的真实 EV
-        # 同步回写 fair 为验价后的公平价: ev=(bb-fair)/fair → fair=bb/(1+ev/100)。
-        # 否则入库的 fair 是信号时的缓存价(滚球里 stale 15~45s), 和 fresh ev 自相矛盾,
-        # 会污染观察库「赢率 vs 隐含」判据(隐含=1/fair 用了 stale fair)。
-        if fresh_ev > -100:
-            sig["fair"] = sig["bb_odds"] / (1.0 + fresh_ev / 100.0)
         stake = self._stake_for(sig)
         sig["_stake"] = stake
         # 2026-09-12 纠正: 观察库必须采集所有运动及盘口的有效+EV信号(不只实盘方向)。
@@ -786,11 +776,10 @@ class SecondLevelMonitor:
         # LEV 追踪(2026-09-15 改): 首次入库即触发, 下注后 3s 复验 Pin 公平价算 CLV 写回 clv 字段。
         # 之前只对「实盘下单成功」的注采(在 _notify_bet 后), 导致新方向没下单就永远攒不到 LEV =
         # 释放死循环。现在所有进观察库的 +EV 机会(虚拟投注)都采 LEV, 让释放判据能数据驱动所有方向。
-        if _added and sig.get("pin_matchup_id") and sig.get("league_id"):
+        if _added and sig.get("pin_matchup_id"):
             self._reversion_track[(str(sig["match_id"]), str(sig.get("market_id")), str(sig.get("option_type")))] = {
                 "sig": {
                     "pin_matchup_id": sig.get("pin_matchup_id"),
-                    "league_id": sig.get("league_id"),
                     "sub": sig.get("sub"), "desig": sig.get("desig"),
                     "bb_odds": sig.get("bb_odds"), "line": sig.get("line"),
                 },
