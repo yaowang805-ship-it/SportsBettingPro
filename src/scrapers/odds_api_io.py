@@ -310,6 +310,7 @@ def match_bb_to_oa(sport_id):
 # ── BB 匹配 + 公平价提供(替代 Pin 的入口) ──
 
 _events_cache = {}  # {sport_slug: (ts, events)}
+_match_cache = {}   # {(norm_home, norm_away, sport_id): (ts, event_id, swapped)}
 
 
 def _norm_team(name):
@@ -362,7 +363,17 @@ def match_event(home, away, sport_id, min_score=85.0):
 
 
 def match_event_orient(home, away, sport_id, min_score=85.0):
-    """BB 比赛 → (event_id, swapped)。swapped=True 表示 BB 主客与 odds-api.io 相反。"""
+    """BB 比赛 → (event_id, swapped)。swapped=True 表示 BB 主客与 odds-api.io 相反。
+
+    结果缓存 60s(与 _get_events_cached 同步), 避免同一场比赛的 1x2/hc/ou/ht 等多个盘口
+    各自重复做一遍 O(5000) 的模糊匹配。
+    """
+    key = (_norm_team(home), _norm_team(away), sport_id)
+    now = time.time()
+    cached = _match_cache.get(key)
+    if cached and now - cached[0] < 60:
+        _, eid, sw = cached
+        return (eid, sw) if eid else (None, False)
     slug = _SPORT_ID_TO_SLUG.get(sport_id)
     if not slug:
         return None, False
@@ -372,6 +383,7 @@ def match_event_orient(home, away, sport_id, min_score=85.0):
         sc, sw = _match_score_orient(home, away, e.get('home', ''), e.get('away', ''))
         if sc > best_score:
             best_score, best_id, best_swapped = sc, e.get('id'), sw
+    _match_cache[key] = (now, best_id if best_score >= min_score else None, best_swapped)
     return (best_id, best_swapped) if best_score >= min_score else (None, False)
 
 
