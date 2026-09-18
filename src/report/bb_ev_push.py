@@ -2524,8 +2524,7 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
             # 同场同盘口的第 2 条线: 标注上一条推的是哪条, 便于对照(用户规则)
             prev_line = o.get("_prev_line")
             lines.append(
-                f"    [{oc}] {confidence} 公平价: {fair}"
-                + (f" | Pinnacle: {pinny}" if o.get("pin_odds", 0) > 0 else " | 推导: 1X2")
+                f"    [{oc}] {confidence} Betfair公平价: {fair}"
                 + f" | {source_label}: {bb_odds} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}{stake_note}"
                 + (f" 🔄重推({repush})" if repush else "")
                 + (f" 📌本场该盘口上次推的线: {prev_line}" if prev_line else "")
