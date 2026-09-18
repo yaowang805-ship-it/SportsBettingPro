@@ -318,6 +318,25 @@ def _norm_team(name):
     return re.sub(r'[^a-z0-9]', '', (name or '').lower())
 
 
+# 女足/青年队/预备队联赛关键词: 队名相似(如 Liverpool FC vs Liverpool LFC 女足)会误配,
+# 造出假 +EV。这些 odds-api.io 有、BB 早盘没有, 不是套利目标, 匹配时直接跳过。
+_SKIP_LEAGUE_KW = ("women", "ladies", "feminin", "femenin", "feminine", "reserve",
+                   "academy", "u19", "u20", "u21")
+
+
+def _is_skip_event(e):
+    """女足/青年队/预备队赛事 → True(匹配时跳过, 防队名相似误配)。"""
+    lg = ((e.get("league") or {}).get("name") or "").lower()
+    if any(k in lg for k in _SKIP_LEAGUE_KW):
+        return True
+    # 队名后缀 WFC/LFC/(w) = 女足俱乐部(如 Manchester City WFC / Liverpool LFC)
+    for side in ("home", "away"):
+        n = (e.get(side) or "").strip().lower()
+        if n.endswith(" wfc") or n.endswith(" lfc") or n.endswith(" (w)"):
+            return True
+    return False
+
+
 def _match_score(h1, a1, h2, a2):
     """队名模糊匹配得分(0-100)。精确=100, 主客互换=99, rapidfuzz 双向取大。"""
     from rapidfuzz import fuzz
@@ -382,6 +401,8 @@ def match_event_orient(home, away, sport_id, min_score=85.0, status=None):
     evs = _get_events_cached(slug, status)
     best_id, best_score, best_swapped = None, 0.0, False
     for e in evs:
+        if _is_skip_event(e):
+            continue
         sc, sw = _match_score_orient(home, away, e.get('home', ''), e.get('away', ''))
         if sc > best_score:
             best_score, best_id, best_swapped = sc, e.get('id'), sw
