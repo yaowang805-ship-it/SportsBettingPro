@@ -102,13 +102,11 @@ def _fair_three_way(odds_dict):
         "draw": mid_price(odds_dict.get("draw"), odds_dict.get("layDraw")),
         "away": mid_price(odds_dict.get("away"), odds_dict.get("layAway")),
     }
-    if any(v is None for v in mids.values()):
+    # 交易所中间价本身就是公平价(无 margin), 不归一化(归一化在单 leg 时退化)。
+    # 价差过大的 leg 返回 None(该方向不可信)。
+    if not any(v is not None for v in mids.values()):
         return None
-    # 归一化: 三路概率和应为 1
-    total = sum(1.0 / v for v in mids.values())
-    if total <= 0:
-        return None
-    return {k: round(1.0 / ((1.0 / v) / total), 4) for k, v in mids.items()}
+    return mids
 
 
 def get_sports():
