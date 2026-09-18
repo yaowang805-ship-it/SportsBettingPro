@@ -2555,11 +2555,11 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
     # V4.5: 联赛级累计 P&L
     pnl_line = _get_league_pnl_summary(qualified)
     body += ("\n\n---\n"
-             "💡 T1=Pinnacle最可靠 T2=主流联赛 T3=低级别 | "
-             "公平价 = Pinnacle去抽水赔率 | "
+             "💡 T1=最可靠 T2=主流联赛 T3=低级别 | "
+             "公平价 = Betfair交易所中间价 | "
              "溢价 = (售价 - 公平价) / 公平价 | "
              "来源: BB=BB价 FB=FB价 BB/FB=两平台相同 | "
-             "⚠️ 赔率与盘口线实时变动，下注前请以 BB/Pinnacle 当前盘口为准（让球线尤其易移动）")
+             "⚠️ 赔率与盘口线实时变动，下注前请以 BB 当前盘口为准（让球线尤其易移动）")
     if pnl_line:
         body += f"\n📊 {pnl_line}"
     # 策略参数快照 (Pinnacle 61,404场 + NBA 57,504场真实数据)
