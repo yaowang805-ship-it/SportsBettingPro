@@ -39,7 +39,7 @@ MAX_STAKE = 150        # 单盘口上限(2026-09-18 新数据源风控: 滚球�
 MIN_STAKE = 30         # stake<30 拦截铁律
 
 # 滚球实盘(2026-09-07 起只投小球under, 2026-09-09 放大预算: 小球累计40笔ROI+14.2%稳定正)。滚动预算(结算后释放额度)。
-LIVE_BUDGET = 800   # 2026-09-18 新数据源风控: 滚球每天投注≤800, 原3000
+LIVE_BUDGET = 8000  # 2026-09-18 新数据源风控: 滚球每天投注≤8000(用户纠正800→8000), 原3000
 LIVE_BUDGET_FILE = ROOT / "data" / "storage" / "live_bet_budget.json"
 DRAWDOWN_STOP_PNL = 1000  # 回撤熔断(2026-09-13): 最近7天滚球实盘累计亏超¥1000(=20%BANKROLL) → 半仓
 LIVE_PAPER_FILE = ROOT / "data" / "storage" / "live_paper_bets.json"
