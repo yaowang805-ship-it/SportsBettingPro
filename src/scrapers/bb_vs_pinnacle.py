@@ -1308,48 +1308,14 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     total_1x2_only = total_opps_1x2 - total_btts - total_oe - total_htft
     total_all = total_opps_1x2 + total_hc + total_ou + total_dc + total_dnb
 
-    # 角球 + 特殊盘口对比 — V5.5: 并行(串行时各~75s, 并行省一半)
-    import concurrent.futures as _cf
-    _sub_start = time.time()
-    _sub_results = {}
-    with _cf.ThreadPoolExecutor(max_workers=3) as _sub_exec:
-        _sub_futs = {
-            _sub_exec.submit(_fetch_corner_opportunities, bb_matches, all_pin_leagues, matched_leagues): "corner",
-            _sub_exec.submit(_fetch_booking_opportunities, bb_matches, all_pin_leagues, matched_leagues): "booking",
-            _sub_exec.submit(_fetch_special_opportunities, bb_matches, all_pin_leagues, matched_leagues): "special",
-        }
-        for _fut in _cf.as_completed(_sub_futs):
-            _k = _sub_futs[_fut]
-            try:
-                _sub_results[_k] = _fut.result() or []
-            except Exception as _e:
-                _sub_results[_k] = []
-
-    corner_entries = _sub_results.get("corner", [])
+    # 2026-09-18: 角球/罚牌/特殊盘口 已禁用 —— Betfair 无 corner/booking/correct_score 等特殊盘口覆盖,
+    # 且这些是「放弃」特殊盘口(margin 15%+ 收盘线不 sharp), 不再用 Pin 生成假溢价。
+    corner_entries = []
+    booking_entries = []
+    special_entries = []
     total_corner = 0
-    if corner_entries:
-        for ce in corner_entries:
-            total_corner += len(ce.get("opportunities", [])) + len(ce.get("handicap", [])) + len(ce.get("over_under", []))
-        opportunities.extend(corner_entries)
-        total_all += total_corner
-
-    booking_entries = _sub_results.get("booking", [])
     total_booking = 0
-    if booking_entries:
-        for be in booking_entries:
-            total_booking += len(be.get("opportunities", [])) + len(be.get("handicap", [])) + len(be.get("over_under", []))
-        opportunities.extend(booking_entries)
-        total_all += total_booking
-
-    special_entries = _sub_results.get("special", [])
     total_special = 0
-    if special_entries:
-        for se in special_entries:
-            total_special += len(se.get("opportunities", []))
-        opportunities.extend(special_entries)
-        total_all += total_special
-    if total_special:
-        print(f"  🎯 特殊盘口: +{total_special} 个机会")
 
     print(f"\n{'='*60}")
     if _fetch_errors:
