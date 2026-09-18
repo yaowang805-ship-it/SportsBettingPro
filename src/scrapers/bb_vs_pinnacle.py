@@ -1034,45 +1034,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     opp.setdefault("tags", []).append(line_info)
                 entry["handicap"].append(opp)
 
-        # V5.11: 网球让局(Game Handicap) — 独立盘口, 与让盘(Set Handicap)分开, 用 Pin games_spread 对比
-        if sport == "tennis":
-            bb_games_hc = bb.get("odds_ft", {}).get("games_handicap")
-            if isinstance(bb_games_hc, dict) and bb_games_hc.get("home_odds") and bb_games_hc.get("away_odds"):
-                bb_gl = bb_games_hc.get("home_line") if bb_games_hc.get("home_line") is not None else bb_games_hc.get("away_line")
-                if bb_gl is not None:
-                    home_sp, away_sp, _ = get_pin_spread(pin, target_line=bb_gl, source=pin.get("games_spread", []))
-                    if home_sp and away_sp and get_decimal_price(home_sp) and get_decimal_price(away_sp):
-                        pin_home_odds = get_decimal_price(home_sp)
-                        pin_away_odds = get_decimal_price(away_sp)
-                        pin_gl = home_sp.get("points")
-                        bb_gl_val = bb_games_hc.get("home_line") if bb_games_hc.get("home_line") is not None else bb_games_hc.get("away_line")
-                        cal_ok, _ = _calibrate_market_line(sport, "hc", bb_gl_val, pin_gl, None)
-                        if cal_ok:
-                            _fairs = shin_fair_odds([pin_home_odds, pin_away_odds])
-                            home_fair = _fairs[0]
-                            away_fair = _fairs[1]
-                            ev_h = (bb_games_hc["home_odds"] - home_fair) / home_fair * 100 if home_fair > 0 else 0
-                            ev_a = (bb_games_hc["away_odds"] - away_fair) / away_fair * 100 if away_fair > 0 else 0
-                            if ev_h > 1:
-                                entry["handicap"].append({
-                                    "designation": "让局主胜",
-                                    "line": bb_games_hc.get("home_line_str", ""),
-                                    "bb_odds": bb_games_hc["home_odds"],
-                                    "pin_odds": pin_home_odds,
-                                    "fair_price": home_fair,
-                                    "ev_pct": round(ev_h, 2),
-                                    "_market": "hc_games",
-                                })
-                            if ev_a > 1:
-                                entry["handicap"].append({
-                                    "designation": "让局客胜",
-                                    "line": bb_games_hc.get("away_line_str", ""),
-                                    "bb_odds": bb_games_hc["away_odds"],
-                                    "pin_odds": pin_away_odds,
-                                    "fair_price": away_fair,
-                                    "ev_pct": round(ev_a, 2),
-                                    "_market": "hc_games",
-                                })
+        # 2026-09-18: 网球让局(hc_games) 已禁用 —— Betfair 网球 Spread 无法区分让盘/让局, 不再用 Pin 生成假溢价。
 
         # --- 大小 (Over/Under) 带去抽水 ---
         ou_candidates = []
@@ -1194,56 +1156,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                     "_market": "ht_ou",
                                 })
 
-        # --- 棒球 F5 (First 5 Innings) 对比：BB odds_f5 vs Pinnacle period=3 ---
-        if sport == "baseball":
-            bb_f5 = bb.get("odds_f5", {})
-            if bb_f5:
-                f5_labels = {"over": "F5大球", "under": "F5小球"}
-                bb_f5_ou = bb_f5.get("total")
-                if bb_f5_ou:
-                    bb_line = bb_f5_ou.get("line")
-                    # Pinnacle period 3 = F5 innings
-                    total_source = pin.get("total", [])
-                    f5_totals = [t for t in total_source if t.get("period") == 3]
-                    over_p = under_p = None
-                    best_diff = float("inf")
-                    for t in f5_totals:
-                        prices = t.get("prices", [])
-                        for p in prices:
-                            pts = p.get("points")
-                            if pts is not None and abs(pts - (bb_line or 0)) < best_diff:
-                                if p.get("designation") == "over":
-                                    over_p = p
-                                elif p.get("designation") == "under":
-                                    under_p = p
-                        if over_p and under_p:
-                            best_diff = abs((over_p.get("points") or 0) - (bb_line or 0))
-                    if over_p and under_p and get_decimal_price(over_p) and get_decimal_price(under_p):
-                        _ou_fairs = shin_fair_odds([get_decimal_price(over_p), get_decimal_price(under_p)])
-                        over_fair = _ou_fairs[0]
-                        under_fair = _ou_fairs[1]
-                        ev_o = (bb_f5_ou["over_odds"] - over_fair) / over_fair * 100 if over_fair > 0 else 0
-                        ev_u = (bb_f5_ou["under_odds"] - under_fair) / under_fair * 100 if under_fair > 0 else 0
-                        if ev_o > 1:
-                            entry["over_under"].append({
-                                "designation": f5_labels["over"],
-                                "line": str(bb_f5_ou.get("line", "")),
-                                "bb_odds": bb_f5_ou["over_odds"],
-                                "pin_odds": get_decimal_price(over_p),
-                                "fair_price": over_fair,
-                                "ev_pct": round(ev_o, 2),
-                                "_market": "f5",
-                            })
-                        if ev_u > 1:
-                            entry["over_under"].append({
-                                "designation": f5_labels["under"],
-                                "line": str(bb_f5_ou.get("line", "")),
-                                "bb_odds": bb_f5_ou["under_odds"],
-                                "pin_odds": get_decimal_price(under_p),
-                                "fair_price": under_fair,
-                                "ev_pct": round(ev_u, 2),
-                                "_market": "f5",
-                            })
+        # 2026-09-18: 棒球 F5(前5局大小) 已禁用 —— Betfair 棒球覆盖 0%, 不再用 Pin 生成假溢价。
 
         # --- 双重机会 (Double Chance) FT ---
         bb_dc = bb.get("odds_dc", [])
@@ -1328,56 +1241,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
         # 2026-09-18: 单双(oe) / 半全场(htft) 已禁用 —— Betfair 无 OE 市场; htft 是「放弃」特殊盘口
         # (margin 15%+ 收盘线不 sharp), 不再用 Pin 生成假溢价。
 
-        # --- 上半场平局退款 (HT DNB)：直接用 Pinnacle Draw No Bet 1st Half 盘口 ---
-        if len(bb_dnb) >= 4 and n_ml == 3:
-            # 安全校验：HT DNB赔率必须小于HT独赢赔率
-            bb_ht_ml = bb.get("odds_ht", {}).get("ml", [])
-            if len(bb_ht_ml) >= 2:
-                ht_h = float(bb_dnb[2]) if isinstance(bb_dnb[2], str) else bb_dnb[2]
-                ht_a = float(bb_dnb[3]) if isinstance(bb_dnb[3], str) else bb_dnb[3]
-                if ht_h >= bb_ht_ml[0] * 0.99 or ht_a >= bb_ht_ml[-1] * 0.99:
-                    bb_dnb = bb_dnb[:2]  # 保留FT DNB，清除HT DNB
-            if len(bb_dnb) >= 4:  # HT DNB 有效时才继续
-                # 路径A: Pinnacle 直接提供 HT DNB (Draw No Bet 1st Half, period=1)
-                ht_dnb_fair = None
-                ht_dnb_pin_raw = None
-                for dnb_entry in pin.get("draw_no_bet", []):
-                    if dnb_entry.get("period", 0) != 1:
-                        continue
-                    prices = dnb_entry.get("prices", [])
-                    if len(prices) >= 2:
-                        h_price = a_price = None
-                        for p in prices:
-                            des = p.get("designation", "").lower()
-                            val = get_decimal_price(p) or p.get("price_decimal", 0)
-                            if "home" in des or "主" in des:
-                                h_price = val
-                            elif "away" in des or "客" in des:
-                                a_price = val
-                        if not h_price or not a_price:
-                            if len(prices) >= 2:
-                                h_price = prices[0].get("price_decimal", 0)
-                                a_price = prices[1].get("price_decimal", 0)
-                        if h_price and a_price and h_price > 1 and a_price > 1:
-                            ht_dnb_fair = shin_fair_odds([h_price, a_price])
-                            ht_dnb_pin_raw = [h_price, a_price]
-                            break
-                if ht_dnb_fair:
-                    dnb_labels = ["上半场平局退款-主", "上半场平局退款-客"]
-                    for i in range(2):
-                        bb_dnb_val = float(bb_dnb[2+i]) if isinstance(bb_dnb[2+i], str) else bb_dnb[2+i]
-                        if bb_dnb_val and ht_dnb_fair[i] > 0:
-                            ev = (bb_dnb_val - ht_dnb_fair[i]) / ht_dnb_fair[i] * 100
-                            if 1 < ev <= 20:
-                                pin_raw = round(ht_dnb_pin_raw[i], 4) if ht_dnb_pin_raw else 0
-                                entry["draw_no_bet"].append({
-                                    "designation": dnb_labels[i],
-                                    "bb_odds": bb_dnb_val,
-                                    "pin_odds": pin_raw,
-                                    "fair_price": round(ht_dnb_fair[i], 4),
-                                    "ev_pct": round(ev, 2),
-                                    "_market": "ht_dnb",
-                                })
+        # 2026-09-18: HT DNB(上半场平局退款) 已禁用 —— Betfair 无 Draw No Bet HT 市场, 不再用 Pin 生成假溢价。
 
         # 同一市场只保留溢价最高的选项（FT + HT + DC + DNB + HT_DNB + BTTS + OE + HT/FT 各自保留）
         for mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"):
