@@ -726,46 +726,12 @@ class SecondLevelMonitor:
             if self.auto_bet:
                 self._try_live_auto_bet(sig)
 
-    def _prefetch_bb_odds(self, sig):
-        """并行预拉 BB 当前赔率(与 Pin 验价重叠, 省 1-2s)。返回 holder(dict) 或 None。
-
-        后台线程调 fetch_current_odds, 主线程继续做 Pin 验价。下单前读 holder["done"]/["odds"];
-        失败/无 token 则返回 None, 回退到 place_single_bet 的 verify_price。
-        """
-        _mid = sig.get("market_id"); _oid = sig.get("option_type"); _match_id = sig.get("match_id")
-        if not _mid or _oid is None or not _match_id:
-            return None
-        try:
-            from src.betting.bb_auto_bet import read_token, read_domain, fetch_current_odds
-            _platform = sig.get("platform", "BB")
-            _token = read_token(_platform)
-            _domain = read_domain(_platform)
-            if not _token:
-                return None
-            holder = {"done": False, "odds": None}
-
-            def _run():
-                try:
-                    cur = fetch_current_odds(_mid, _match_id, _oid, _token, _domain)
-                    holder["odds"] = cur[0] if cur else None
-                except Exception:
-                    holder["odds"] = None
-                finally:
-                    holder["done"] = True
-
-            import threading
-            threading.Thread(target=_run, daemon=True).start()
-            return holder
-        except Exception:
-            return None
-
     def _try_live_auto_bet(self, sig):
         """滚球机会处理: 观察库入库前验价(漂移假EV不入库), 实盘下单由 LIVE_REAL_BET_ENABLED 控制。"""
         _t0 = time.time(); _t = _t0  # 计时埋点(2026-09-17)
-        # 2026-09-18 用户决定: 实时赔率下不再验价。sig["ev"]/sig["fair"] 直接来自
-        # fetch_live_opportunities_oa 的 Betfair 中间价(实时), 之前 reverify 是为防
-        # 15 分钟 Pin 陈旧, 现在没这个坑了。保留并行预拉 BB(供 place_single_bet 的 BB 漂移校验)。
-        _bb_prefetch = self._prefetch_bb_odds(sig)
+        # 2026-09-18 用户决定: 实时赔率下不再验价、不再并发预拉。sig["ev"]/sig["fair"] 直接来自
+        # fetch_live_opportunities_oa 的 Betfair 中间价(实时), BB 赔率也是秒级拉的, 下单前不再
+        # 重复 fetch_current_odds 验价(lead-lag 抢窗口, 直接下单)。
         stake = self._stake_for(sig)
         sig["_stake"] = stake
         # 2026-09-12 纠正: 观察库必须采集所有运动及盘口的有效+EV信号(不只实盘方向)。
@@ -869,16 +835,11 @@ class SecondLevelMonitor:
         if global_bet_cooldown(15, 45) > 0:
             return
         print(f"  🎯 滚球下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake}", flush=True)
-        # Betfair 公平价(实时, 供 place_single_bet 在 BB 回落时重算 edge+注额)
-        _fresh_fair = sig.get("fair")
-        # 取并行预拉的 BB 当前赔率(线程已完成则跳过 place_single_bet 内的二次拉取)
-        _pref_odds = None
-        if _bb_prefetch and _bb_prefetch.get("done") and _bb_prefetch.get("odds"):
-            _pref_odds = _bb_prefetch.get("odds")
+        # 2026-09-18: 不再验价(verify_price=False)+不再并发预拉——BB 赔率秒级拉取, 下单前
+        # 重复 fetch_current_odds 是冗余 HTTP(lead-lag 抢窗口, 直接下单, 省 1-5s)。
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
-            match_id=sig["match_id"], check_limit=True, verify_price=True,
-            fair_price=_fresh_fair, min_ev_pct=self.threshold, prefetched_odds=_pref_odds)
+            match_id=sig["match_id"], check_limit=True, verify_price=False)
         _t_order = time.time() - _t0  # 下单完成总耗时
         print(f"[slm] 下单耗时: 总 {_t_order:.2f}s", flush=True)
         # 记录尝试(成败都记), 5min 内不再重复尝试同一盘口
