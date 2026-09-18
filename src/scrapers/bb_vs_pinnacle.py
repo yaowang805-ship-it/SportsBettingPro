@@ -1226,33 +1226,31 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 "hc_home": f"{_ht_period}让球主胜", "hc_away": f"{_ht_period}让球客胜",
                 "over": f"{_ht_period}大球", "under": f"{_ht_period}小球",
             }
-            # HT 独赢
-            pin_ht_ml = get_pin_ml_sorted_from_source(pin.get("ht_moneyline", []), sport)
-            if pin_ht_ml and len(pin_ht_ml) >= 2:
-                # 2026-08-30: 存 Pin ht 3-way 供 Betfair 双锚交叉验证(检测平局偏差)
-                entry["_pin_ht_ml"] = pin_ht_ml
-                n_ht_ml = min(len(pin_ht_ml), len(ht_labels["ml"]))  # cap to available labels
-                bb_ht_ml = bb_ht["ml"]
-                if len(bb_ht_ml) >= n_ht_ml:
-                    fair_ht_ml = shin_fair_odds(pin_ht_ml)
-                    for i in range(n_ht_ml):
+            # HT 独赢 (2026-09-18 全面替代 Pin): 用 Betfair ML HT 中间价当公平价
+            # 原 Pin 半场 devig(shin_fair_odds) 换成 odds-api.io 的 Betfair ML HT 中间价(实时)
+            bb_ht_ml = bb_ht["ml"]
+            if bb_ht_ml:
+                from src.scrapers.odds_api_io import fair_price_bb as _fair_price_bb
+                _slug_to_id = {"football": 1, "basketball": 3, "tennis": 5,
+                               "baseball": 7, "american-football": 6}
+                _oa_ht = _fair_price_bb(entry["home_bb"], entry["away_bb"],
+                                        _slug_to_id.get(sport, 0), "ht")
+                if _oa_ht and _oa_ht.get("fair"):
+                    _oa_fair = _oa_ht["fair"]  # {'home':.., 'draw':.., 'away':..} 或 2-way
+                    _keys = ["home", "draw", "away"] if sport == "football" else ["home", "away"]
+                    for i, label in enumerate(ht_labels["ml"]):
+                        if i >= len(bb_ht_ml) or i >= len(_keys):
+                            break
                         bb_o = bb_ht_ml[i]
-                        # V5.10: HT 独赢需复用全场独赢的 _ml_swapped —— 主客反转时
-                        # 交换 Pinnacle 腿(与全场一致), 否则把 BB 主价对到 Pin 客价
-                        if _ml_swapped:
-                            _pin_i = (n_ht_ml - 1 - i) if i in (0, n_ht_ml - 1) else i
-                        else:
-                            _pin_i = i
-                        pin_o = pin_ht_ml[_pin_i]
-                        if pin_o and pin_o > 0:
-                            fair_price = fair_ht_ml[_pin_i]
-                            ev = (bb_o - fair_price) / fair_price * 100 if fair_price > 0 else 0
+                        fair_price = _oa_fair.get(_keys[i])
+                        if bb_o and fair_price and fair_price > 1:
+                            ev = (bb_o - fair_price) / fair_price * 100
                             if ev > 1:
                                 entry["opportunities"].append({
-                                    "designation": ht_labels["ml"][i],
+                                    "designation": label,
                                     "bb_odds": bb_o,
-                                    "pin_odds": pin_o,
-                                    "fair_price": fair_price,
+                                    "pin_odds": 0,  # 新数据源无 Pin 赔率, 用 0 占位
+                                    "fair_price": round(fair_price, 4),
                                     "ev_pct": round(ev, 2),
                                     "_market": "ht",
                                 })
