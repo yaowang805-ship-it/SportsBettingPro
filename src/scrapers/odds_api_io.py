@@ -32,6 +32,7 @@ _SUB_TO_BETFAIR = {
     "ou": "Totals",
     "ht_ou": "Totals HT",
     "dc": "Double Chance",
+    "dnb": "Draw No Bet",
     "btts": "Both Teams To Score",
 }
 
@@ -70,12 +71,14 @@ def _get(path, params=None, timeout=15):
     return None
 
 
-def mid_price(back, lay, max_spread_pct=5.0):
+def mid_price(back, lay, max_spread_pct=None):
     """交易所中间价: 概率空间 (1/back + 1/lay)/2 的倒数。back/lay 是十进制赔率。
 
     交易所 back=买入价(结果发生), lay=卖出价(结果不发生)。
     无 margin 公平概率 p = (1/back + 1/lay)/2, 公平价 = 1/p。
-    流动性门槛(2026-09-18): back-lay 价差 > max_spread_pct → None(无真实共识, 跳过)。
+    流动性门槛(2026-09-18): back-lay 价差过大 → None(无真实共识, 跳过)。
+    阈值按赔率分档: 高赔腿(>3.0)天然 bid-ask 更宽, 固定 5% 会系统性丢 draw/under/客 腿,
+    故 ≤3.0 用 5%, >3.0 放宽到 10%。
     返回十进制公平价。None 或 <=1 或价差过大返回 None。
     """
     try:
@@ -85,6 +88,8 @@ def mid_price(back, lay, max_spread_pct=5.0):
     if b <= 1 or l <= 1:
         return None
     spread = (l - b) / b * 100.0
+    if max_spread_pct is None:
+        max_spread_pct = 5.0 if b <= 3.0 else 10.0
     if spread > max_spread_pct:
         return None
     p = (1.0 / b + 1.0 / l) / 2.0
@@ -107,6 +112,46 @@ def _fair_three_way(odds_dict):
     if not any(v is not None for v in mids.values()):
         return None
     return mids
+
+
+def _select_line(market, target_line=None):
+    """从市场 odds 数组里选一条线(主线, 或匹配 target_line 的那条)。
+
+    主线 = 两侧赔率最平衡(最接近 2.0)的一条(home/away 或 over/under 差最小)。
+    target_line 传入时 = |hdp - target_line| 最小的一条(供 BB 让球/大小线对齐)。
+    返回 odds dict 或 None。target_line 命中失败时仍返回最接近的一条, 由调用侧校验线。
+    """
+    arr = market.get("odds") or []
+    if not arr:
+        return None
+    if target_line is not None:
+        best, best_diff = None, 1e9
+        for o in arr:
+            hdp = o.get("hdp")
+            if hdp is None:
+                continue
+            try:
+                d = abs(float(hdp) - float(target_line))
+            except (TypeError, ValueError):
+                continue
+            if d < best_diff:
+                best, best_diff = o, d
+        return best
+    # 主线: 两侧赔率最平衡(home/away 或 over/under)
+    best, best_imb = None, 1e9
+    for o in arr:
+        a = o.get("home") if o.get("home") is not None else o.get("over")
+        b = o.get("away") if o.get("away") is not None else o.get("under")
+        if not a or not b:
+            continue
+        try:
+            a, b = float(a), float(b)
+        except (TypeError, ValueError):
+            continue
+        imb = abs(a - b)
+        if imb < best_imb:
+            best, best_imb = o, imb
+    return best
 
 
 def get_sports():
@@ -142,10 +187,15 @@ def get_odds(event_id, bookmakers=None):
     return result
 
 
-def fair_price(event_id, sub_market, bookmakers=None):
-    """提取某场比赛某盘口的交易所公平价(两家书商平均)。
+def fair_price(event_id, sub_market, bookmakers=None, target_line=None):
+    """提取某场比赛某盘口的 Betfair Exchange 公平价(交易所中间价)。
 
-    sub_market: '1x2'/'ht' 返回 {home,draw,away}; 'ou' 返回 {over,under}+线; 'hc' 返回 {home,away}+线。
+    公平价只认 Betfair Exchange(唯一能叫公平价的东西: P2P 无庄家抽水), Sbobet 是置信度
+    不进定价(见 sbo_fair_price)。
+    sub_market:
+      '1x2'/'ht' → {home,draw,away}; 'dc' → {1X,12,X2}; 'dnb' → {home,away};
+      'hc' → {home,away}+line; 'ou'/'ht_ou' → {over,under}+line; 'btts' → {yes,no}。
+    target_line: hc/ou/ht_ou 传 BB 的让球/大小线, 用于在 odds 数组里选对应线(主线默认)。
     返回 dict(含各方向公平价 + line) 或 None。
     """
     market_name = _SUB_TO_BETFAIR.get(sub_market)
@@ -154,40 +204,50 @@ def fair_price(event_id, sub_market, bookmakers=None):
     odds = get_odds(event_id, bookmakers)
     if not odds:
         return None
-    # 两家书商都取, 平均公平价
-    results = []
-    for bk_name, markets in odds.items():
-        m = next((x for x in (markets or []) if x.get("name") == market_name), None)
-        if not m:
-            continue
-        o = (m.get("odds") or [{}])[0]
-        if sub_market in ("1x2", "ht"):
-            fair = _fair_three_way(o)
-            if fair:
-                results.append(fair)
-        elif sub_market in ("ou", "ht_ou"):
-            # over/under: 有 hdp(线) + over/under + layOver/layUnder
-            line = o.get("hdp")
-            over = mid_price(o.get("over"), o.get("layOver"))
-            under = mid_price(o.get("under"), o.get("layUnder"))
-            if line is not None and over and under:
-                results.append({"over": over, "under": under, "line": line})
-        elif sub_market == "hc":
-            line = o.get("hdp")
-            home = mid_price(o.get("home"), o.get("layHome"))
-            away = mid_price(o.get("away"), o.get("layAway"))
-            if line is not None and home and away:
-                results.append({"home": home, "away": away, "line": line})
-    if not results:
+    bf_markets = odds.get("Betfair Exchange")
+    if not bf_markets:
         return None
-    # 两家书商平均(有 line 的用最后一个的 line, 因为线可能不同)
-    out = {}
-    for k in results[0]:
-        vals = [r.get(k) for r in results if r.get(k) is not None]
-        if not vals:
-            continue
-        out[k] = round(sum(vals) / len(vals), 4) if isinstance(vals[0], (int, float)) else vals[0]
-    return out
+    m = next((x for x in bf_markets if x.get("name") == market_name), None)
+    if not m:
+        return None
+    # 带线的盘口(hc/ou/ht_ou)按 target_line 选线, 其余取主线(唯一一条)
+    _line_subs = ("hc", "ou", "ht_ou")
+    o = _select_line(m, target_line if sub_market in _line_subs else None)
+    if not o:
+        return None
+    if sub_market in ("1x2", "ht"):
+        return _fair_three_way(o)
+    if sub_market == "dc":
+        # Double Chance: 1X/12/X2, 交易所只给 back 无 lay → back 直接当公平价
+        fair = {k: float(v) for k, v in o.items() if k in ("1X", "12", "X2") and v}
+        return fair or None
+    if sub_market == "dnb":
+        # Draw No Bet: home/away, 无 lay → back 直接当公平价
+        h, a = o.get("home"), o.get("away")
+        if not h or not a:
+            return None
+        return {"home": float(h), "away": float(a)}
+    if sub_market == "btts":
+        yes = mid_price(o.get("yes"), o.get("layYes"))
+        no = mid_price(o.get("no"), o.get("layNo"))
+        if not yes or not no:
+            return None
+        return {"yes": yes, "no": no}
+    if sub_market in ("ou", "ht_ou"):
+        line = o.get("hdp")
+        over = mid_price(o.get("over"), o.get("layOver"))
+        under = mid_price(o.get("under"), o.get("layUnder"))
+        if line is None or not over or not under:
+            return None
+        return {"over": over, "under": under, "line": line}
+    if sub_market == "hc":
+        line = o.get("hdp")
+        home = mid_price(o.get("home"), o.get("layHome"))
+        away = mid_price(o.get("away"), o.get("layAway"))
+        if line is None or not home or not away:
+            return None
+        return {"home": home, "away": away, "line": line}
+    return None
 
 
 def sbo_fair_price(event_id, sub_market):
