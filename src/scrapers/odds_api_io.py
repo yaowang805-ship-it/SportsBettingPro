@@ -143,7 +143,7 @@ def fair_price(event_id, sub_market, bookmakers=None):
     sub_market: '1x2'/'ht' 返回 {home,draw,away}; 'ou' 返回 {over,under}+线; 'hc' 返回 {home,away}+线。
     返回 dict(含各方向公平价 + line) 或 None。
     """
-    market_name = _SUB_TO_MARKET.get(sub_market)
+    market_name = _SUB_TO_BETFAIR.get(sub_market)
     if not market_name:
         return None
     odds = get_odds(event_id, bookmakers)
@@ -191,7 +191,7 @@ def sbo_fair_price(event_id, sub_market):
     比例去水: 各选项隐含概率 1/odds, 按占比缩放到 100%, 公平价 = total × odds。
     返回 dict(各方向公平价 + line) 或 None。
     """
-    market_name = _SUB_TO_MARKET.get(sub_market)
+    market_name = _SUB_TO_SBOBET.get(sub_market)
     if not market_name:
         return None
     odds = get_odds(event_id)
