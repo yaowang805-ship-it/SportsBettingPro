@@ -59,18 +59,22 @@ def _get(path, params=None, timeout=15):
     return None
 
 
-def mid_price(back, lay):
+def mid_price(back, lay, max_spread_pct=5.0):
     """交易所中间价: 概率空间 (1/back + 1/lay)/2 的倒数。back/lay 是十进制赔率。
 
     交易所 back=买入价(结果发生), lay=卖出价(结果不发生)。
-    无 margin 公平概率 p ≈ (1/back + (1 - 1/lay)) / 2, 但用 (1/back+1/lay)/2 更稳(对称)。
-    返回十进制公平价。None 或 <=1 返回 None。
+    无 margin 公平概率 p = (1/back + 1/lay)/2, 公平价 = 1/p。
+    流动性门槛(2026-09-18): back-lay 价差 > max_spread_pct → None(无真实共识, 跳过)。
+    返回十进制公平价。None 或 <=1 或价差过大返回 None。
     """
     try:
         b, l = float(back), float(lay)
     except (TypeError, ValueError):
         return None
     if b <= 1 or l <= 1:
+        return None
+    spread = (l - b) / b * 100.0
+    if spread > max_spread_pct:
         return None
     p = (1.0 / b + 1.0 / l) / 2.0
     return round(1.0 / p, 4) if p > 0 else None
@@ -168,6 +172,47 @@ def fair_price(event_id, sub_market, bookmakers=None):
             continue
         out[k] = round(sum(vals) / len(vals), 4) if isinstance(vals[0], (int, float)) else vals[0]
     return out
+
+
+def sbo_fair_price(event_id, sub_market):
+    """SBO 的 devig 公平价(比例去水), 用于置信度确认(不进入定价, 见 fair-price-betfair-confidence-sbo-20260918)。
+
+    比例去水: 各选项隐含概率 1/odds, 按占比缩放到 100%, 公平价 = total × odds。
+    返回 dict(各方向公平价 + line) 或 None。
+    """
+    market_name = _SUB_TO_MARKET.get(sub_market)
+    if not market_name:
+        return None
+    odds = get_odds(event_id)
+    if not odds:
+        return None
+    sbo = odds.get("Sbobet")
+    if not sbo:
+        return None
+    m = next((x for x in (sbo or []) if x.get("name") == market_name), None)
+    if not m:
+        return None
+    o = (m.get("odds") or [{}])[0]
+
+    # 提取各方向赔率
+    if sub_market in ("1x2", "ht"):
+        vals = {"home": float(o.get("home", 0) or 0), "draw": float(o.get("draw", 0) or 0),
+                "away": float(o.get("away", 0) or 0)}
+    elif sub_market in ("ou", "ht_ou"):
+        vals = {"over": float(o.get("over", 0) or 0), "under": float(o.get("under", 0) or 0)}
+    elif sub_market == "hc":
+        vals = {"home": float(o.get("home", 0) or 0), "away": float(o.get("away", 0) or 0)}
+    else:
+        return None
+
+    # 比例去水
+    total = sum(1.0 / v for v in vals.values() if v > 1.0)
+    if total <= 0:
+        return None
+    fair = {k: round(total * v, 4) if v > 1.0 else None for k, v in vals.items()}
+    if sub_market in ("ou", "ht_ou", "hc") and o.get("hdp") is not None:
+        fair["line"] = o.get("hdp")
+    return fair
 
 
 def match_bb_to_oa(sport_id):
