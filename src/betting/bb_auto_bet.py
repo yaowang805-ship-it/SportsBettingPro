@@ -350,6 +350,7 @@ def fetch_balance():
 
 BALANCE_MIN = 1000.0  # 余额低于此值暂停投注(2026-09-19 用户要求), 结算后余额恢复再投
 _balance_cache = {"ts": 0.0, "value": None}
+_reject_stats = {}  # 下单失败 code 统计(oddsChange=0 被拒率实测, 2026-09-19)
 
 
 def check_balance_ok(min_balance=BALANCE_MIN):
@@ -480,7 +481,7 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
         "languageType": "CMN",
         "singleBetList": [{
             "unitStake": stake,
-            "oddsChange": 1,
+            "oddsChange": 0,  # 2026-09-19 实测: 0=不接受赔率变动(下单瞬间价格变了就拒), 替代时间验价
             "betOptionList": [{
                 "marketId": market_id,
                 "odds": final_odds,
@@ -532,6 +533,10 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
             # 下单成功后记录投注额(供上限检查)
             if code == 0 and match_id is not None:
                 record_stake(match_id, market_id, stake)
+            if code != 0:
+                # 2026-09-19 统计下单失败 code(oddsChange=0 被拒率实测)
+                _reject_stats[code] = _reject_stats.get(code, 0) + 1
+                print(f"[bb] 下单失败 code={code} msg={str(msg)[:60]} | 累计{_reject_stats}", flush=True)
             return code, order_id, msg
         except Exception as e:
             return -2, None, f"下单异常: {type(e).__name__} {e}"
