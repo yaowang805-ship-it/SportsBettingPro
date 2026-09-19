@@ -273,7 +273,28 @@ def fetch_live_fair_prices(sport_ids=LIVE_SPORT_IDS, use_file_cache=False):
     return result
 
 
-_CMN_CACHE = {"ts": 0.0, "data": {}}  # 滚球中文名缓存(30s TTL, 仅钉钉展示, 2026-09-19)
+_CN_NAME_CACHE = {"ts": 0.0, "data": {}}  # 早盘中文名缓存(60s TTL, 滚球不拉CMN, 从早盘数据免费拿)
+
+
+def _load_cn_names():
+    """从早盘 bb_odds_extracted.json 读 id→(home_cn,away_cn,league_cn) 映射(60s 缓存)。
+
+    滚球不再单独拉 CMN(中文只做钉钉展示, 不参与比价), 中文名从早盘已抓的中文名免费补。
+    """
+    global _CN_NAME_CACHE
+    if time.time() - _CN_NAME_CACHE["ts"] < 60:
+        return _CN_NAME_CACHE["data"]
+    try:
+        from src.scrapers.bb_incremental_scanner import BB_EXTRACTED
+        d = json.loads(BB_EXTRACTED.read_text())
+        m = {}
+        for x in d.get("matches", []):
+            if x.get("home_cn") or x.get("away_cn"):
+                m[x.get("id")] = (x.get("home_cn", ""), x.get("away_cn", ""), x.get("league_cn", ""))
+        _CN_NAME_CACHE = {"ts": time.time(), "data": m}
+    except Exception:
+        pass
+    return _CN_NAME_CACHE["data"]
 
 
 def fetch_bb_live_matches(sport_ids=(1, 3), platform="BB"):
@@ -356,29 +377,11 @@ def fetch_bb_live_matches(sport_ids=(1, 3), platform="BB"):
                 "mc": (m.get("mc") or {}).get("s", 0),
                 "sc": sc,  # [主,客] 当前比分(让球按当前比分结算用)
             }
-    # 2. CMN: 中文队名/联赛名(仅钉钉展示, 30s 缓存降频, 不参与比价)
-    global _CMN_CACHE
-    if time.time() - _CMN_CACHE["ts"] > 30:
-        try:
-            with ThreadPoolExecutor(max_workers=len(sport_ids)) as _ex:
-                _cmn_records = list(_ex.map(lambda _sid: (_sid, _fetch(_sid, "CMN")), sport_ids))
-            _cmn_map = {}
-            for _sid, _cmn_list in _cmn_records:
-                for _m in _cmn_list:
-                    _ts = _m.get("ts") or []
-                    _mid = int(_m.get("id"))
-                    if len(_ts) >= 2:
-                        _cmn_map[(_sid, _mid)] = (_ts[0].get("na", ""), _ts[1].get("na", ""), (_m.get("lg") or {}).get("na", ""))
-            _CMN_CACHE = {"ts": time.time(), "data": _cmn_map}
-        except Exception:
-            pass
+    # 2. 中文名: 不拉 CMN, 从早盘 bb_odds_extracted.json 的中文名免费补(仅钉钉展示, 匹配不上留空)
+    _cn = _load_cn_names()
     for _mid, _info in result.items():
-        _sid = _info["sport"]
-        if (_sid, _mid) in _CMN_CACHE["data"]:
-            _hc, _ac, _lc = _CMN_CACHE["data"][(_sid, _mid)]
-            _info["home_cn"] = _hc
-            _info["away_cn"] = _ac
-            _info["league_cn"] = _lc
+        if _mid in _cn:
+            _info["home_cn"], _info["away_cn"], _info["league_cn"] = _cn[_mid]
     return result
 
 
