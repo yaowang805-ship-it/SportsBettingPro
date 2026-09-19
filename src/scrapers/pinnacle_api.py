@@ -512,6 +512,9 @@ def _notify_ip_ban():
     30min 内只发一次封禁告警; 解禁后由 _maybe_notify_recovered 发恢复通知。
     不再自动换节点(URL scheme/写文件对 macOS Shadowrocket 都不生效, 需手动换)。
     """
+    from config.settings import PIN_POLLING_PAUSED
+    if PIN_POLLING_PAUSED:
+        return  # 2026-09-19: Pin 已停用(切 Betfair), 不再发 Pin 封禁告警
     _throttle_file = DATA_DIR / ".ip_ban_notify.txt"
     now = time.time()
     if _throttle_file.exists():
