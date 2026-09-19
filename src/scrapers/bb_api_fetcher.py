@@ -519,27 +519,37 @@ def fetch_sport(sport_id, platform="BB", page_size=100):
     _types = (2, 4) if sport_id == 5 else (2,)
 
     def _fetch_pages(lang):
+        from concurrent.futures import ThreadPoolExecutor
         recs = []
         seen = set()
         for typ in _types:
-            page = 1
-            while True:
-                params = {
-                    "sportId": sport_id,
-                    "type": typ,
-                    "current": page,
-                    "pageSize": page_size,
-                    "isPC": True,
-                    "languageType": lang,
-                }
-                resp = api_post("/v1/match/getList", params, platform=platform)
-                if not resp or not resp.get("success"):
-                    logger.warning("API 返回空 (type=%d, page=%d, lang=%s)", typ, page, lang)
-                    break
-                data = resp.get("data", {})
-                records = data.get("records", [])
-                total = data.get("total", 0)
-                pages = data.get("pageTotal", 1)
+            # 先拉第1页拿 pageTotal
+            p1 = {"sportId": sport_id, "type": typ, "current": 1, "pageSize": page_size, "isPC": True, "languageType": lang}
+            resp1 = api_post("/v1/match/getList", p1, platform=platform)
+            if not resp1 or not resp1.get("success"):
+                logger.warning("API 返回空 (type=%d, lang=%s)", typ, lang)
+                continue
+            d1 = resp1.get("data", {})
+            pages = d1.get("pageTotal", 1)
+            total = d1.get("total", 0)
+
+            def _fetch_page(p):
+                if p == 1:
+                    return d1.get("records", [])
+                prm = {"sportId": sport_id, "type": typ, "current": p, "pageSize": page_size, "isPC": True, "languageType": lang}
+                r = api_post("/v1/match/getList", prm, platform=platform)
+                if not r or not r.get("success"):
+                    return []
+                return r.get("data", {}).get("records", [])
+
+            # 2026-09-19 并发分页拉取(40s→4s): 第1页已拉, 并发拉 2..pages
+            if pages <= 1:
+                page_records = [d1.get("records", [])]
+            else:
+                with ThreadPoolExecutor(max_workers=min(pages, 20)) as ex:
+                    page_records = list(ex.map(_fetch_page, range(1, pages + 1)))
+
+            for records in page_records:
                 for rec in records:
                     mid = rec.get("id")
                     if mid and mid in seen:
@@ -547,10 +557,7 @@ def fetch_sport(sport_id, platform="BB", page_size=100):
                     if mid:
                         seen.add(mid)
                     recs.append(rec)
-                print(f"    type={typ} 第{page}/{pages} 页: {len(records)} 条 (累计 {len(recs)}/{total}, {lang})")
-                if page >= pages:
-                    break
-                page += 1
+            print(f"    type={typ} 并发拉 {pages} 页: {len(recs)} 条 (累计 {len(recs)}/{total}, {lang})")
         return recs
 
     cache = _load_cn_cache()
