@@ -382,7 +382,8 @@ def _is_settleable(desig, line):
     """盘口能否被 _settle_paper_bets 判输赢。
 
     1x2(主/和/客) 不需要 line; hc/ou(让球/大小) 必须带 line(缺 line 进库也无法结算)。
-    其它盘口(如 dc 的"主/和")当前结算逻辑不支持, 一律判为不可结算。
+    dc(双机会)/btts(双边进球) 全场比分即可判(2026-09-19 新增)。
+    其它盘口(htft/正确比分等特殊盘)当前结算逻辑不支持, 一律判为不可结算。
     """
     if desig in ("主胜", "客胜", "和局"):
         return True
@@ -392,6 +393,10 @@ def _is_settleable(desig, line):
         return line is not None and abs(line) > 0.0001
     if desig in ("大球", "小球"):
         return line is not None
+    if desig in ("主/和", "客/和", "主/客"):  # 双机会 dc
+        return True
+    if desig in ("双方进球", "非双方进球"):  # 双边进球 btts
+        return True
     return False
 
 
@@ -600,6 +605,18 @@ class SecondLevelMonitor:
                 result = "won" if away > home else "lost"
             elif desig == "和局":
                 result = "won" if home == away else "lost"
+            elif desig in ("主/和", "客/和", "主/客"):  # 双机会 dc(2026-09-19 新增)
+                if desig == "主/和":      # 1X 主胜或平
+                    result = "won" if home >= away else "lost"
+                elif desig == "客/和":    # X2 客胜或平
+                    result = "won" if away >= home else "lost"
+                else:                    # 12 非平局
+                    result = "won" if home != away else "lost"
+            elif desig in ("双方进球", "非双方进球"):  # 双边进球 btts(2026-09-19 新增)
+                if desig == "双方进球":
+                    result = "won" if home > 0 and away > 0 else "lost"
+                else:                    # 非双方进球(至少一方0球)
+                    result = "won" if home == 0 or away == 0 else "lost"
             elif desig in ("让球主胜", "让球客胜", "大球", "小球"):
                 if line is None:
                     continue  # hc/ou 缺 line, 跳(旧记录)
