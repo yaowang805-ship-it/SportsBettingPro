@@ -251,9 +251,10 @@ def get_odds(event_id, bookmakers=None):
                 return result
     except Exception:
         pass
-    # 2) REST 兜底(8s 缓存)
+    # 2) REST 兜底(60s 缓存, 2026-09-20 8s→60s)。WS 没覆盖的低流动性事件 odds 变动慢,
+    # 60s 缓存既保证≤1.5s 公平价匹配(WS 未覆盖时每 60s 才拉一次 REST), 又省 5000/小时限额。
     now = time.time()
-    if event_id in _odds_cache and now - _odds_cache[event_id][0] < 8:
+    if event_id in _odds_cache and now - _odds_cache[event_id][0] < 60:
         return _odds_cache[event_id][1]
     params = {"eventId": event_id, "bookmakers": ",".join(bks)}
     d = _get("/odds", params)
