@@ -531,6 +531,7 @@ class SecondLevelMonitor:
                 "bb_odds": sig["bb_odds"], "fair": sig["fair"], "ev": sig["ev"],
                 "stake": sig.get("_stake", 0), "settled": False, "result": None, "profit": None,
                 "anchor": "betfair",  # 2026-09-19 锚点口径标记: 9-18后 Betfair 公平价
+                "sbo_direction": sig.get("sbo_direction", "same"),  # same/diff/none(供统计同向/不同向赛果)
             })
             LIVE_PAPER_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1))
             return True
@@ -844,6 +845,9 @@ class SecondLevelMonitor:
                 },
                 "ts": time.time(),
             }
+        # 2026-09-19 SBO 不同向: 只进观察库(已入库), 不下单(供统计验证同向/不同向赛果)
+        if sig.get("sbo_direction") == "diff":
+            return
         if not LIVE_REAL_BET_ENABLED:
             return
         # 2026-09-12 优化: 不再硬编码"只投小球/网球/篮球", 改为「观察库释放优先, 已验证方向其次」。
@@ -1456,6 +1460,7 @@ class SecondLevelMonitor:
             "bb_ts": opp.get("bb_ts"), "pin_ts": opp.get("pin_ts"),  # BB/Pin 数据拉取时间(推送展示)
             "platform": opp.get("platform", "BB"),  # BB/FB(推送时标注平台)
             "sbo_confirm": opp.get("sbo_confirm", True),  # SBO 同向确认(False=无覆盖, 降投注额)
+            "sbo_direction": opp.get("sbo_direction", "same"),  # same/diff/none(供统计验证)
         }
 
     def _poll_live(self):
