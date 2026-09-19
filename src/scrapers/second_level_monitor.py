@@ -417,7 +417,9 @@ def _bet_score(b):
 
 # 观察库内存缓存(2026-09-20): _append_live_paper_bet 之前每次 json.loads 4.7MB + 遍历10882条去重,
 # 是「下单耗时4s」里的大头(BB下单本身才~1s)。用 mtime 缓存读 + set 去重, 读从 ~1s 降到 ~0ms。
-_paper_bets_cache = {"mtime": 0.0, "data": None, "keys": None}
+# 写也一样: json.dumps 4.7MB 每次全量重写 ~0.5-1s, 攒批 flush(每10次新增写一次盘)再省一笔。
+_paper_bets_cache = {"mtime": 0.0, "data": None, "keys": None, "dirty": False, "pending": 0}
+_PAPER_BETS_FLUSH_EVERY = 10  # 每 10 次新增 flush 一次盘(观察库是纸单, 丢几笔不致命)
 
 
 def _load_paper_bets():
@@ -436,8 +438,22 @@ def _load_paper_bets():
         except Exception:
             data = []
     keys = {(b.get("match_id"), b.get("market_id"), b.get("option_type"), b.get("sub")) for b in data}
-    _paper_bets_cache = {"mtime": m, "data": data, "keys": keys}
+    _paper_bets_cache = {"mtime": m, "data": data, "keys": keys, "dirty": False, "pending": 0}
     return data, keys
+
+
+def _flush_paper_bets():
+    """把内存中的观察库写回磁盘(攒批 flush)。只在 dirty 时写。"""
+    global _paper_bets_cache
+    if not _paper_bets_cache.get("dirty") or _paper_bets_cache["data"] is None:
+        return
+    try:
+        LIVE_PAPER_FILE.write_text(json.dumps(_paper_bets_cache["data"], ensure_ascii=False, indent=1))
+        _paper_bets_cache["dirty"] = False
+        _paper_bets_cache["pending"] = 0
+        _paper_bets_cache["mtime"] = LIVE_PAPER_FILE.stat().st_mtime  # 更新 mtime 防下次误 reload
+    except OSError:
+        pass
 
 
 class SecondLevelMonitor:
@@ -560,7 +576,10 @@ class SecondLevelMonitor:
                 "sbo_direction": sig.get("sbo_direction", "same"),  # same/diff/none(供统计同向/不同向赛果)
             })
             keys.add(key)
-            LIVE_PAPER_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1))
+            _paper_bets_cache["dirty"] = True
+            _paper_bets_cache["pending"] += 1
+            if _paper_bets_cache["pending"] >= _PAPER_BETS_FLUSH_EVERY:
+                _flush_paper_bets()  # 攒批写(2026-09-20): 每10次新增才写一次4.7MB盘
             return True
         except Exception as e:
             print(f"[slm] 虚拟投注写入失败: {str(e)[:80]}", flush=True)
@@ -569,14 +588,14 @@ class SecondLevelMonitor:
     def _update_live_paper_stake(self, sig, stake):
         """更新观察库该注的 stake(实盘 cap 后同步, 保证分配逻辑一致, 2026-09-19)。"""
         try:
-            if not LIVE_PAPER_FILE.exists():
-                return
-            data = json.loads(LIVE_PAPER_FILE.read_text())
+            data, keys = _load_paper_bets()  # 2026-09-20 用内存缓存, 不读 4.7MB 盘
             key = (sig.get("match_id"), sig.get("market_id"), sig.get("option_type"), sig.get("sub"))
+            if key not in keys:
+                return
             for b in data:
                 if (b.get("match_id"), b.get("market_id"), b.get("option_type"), b.get("sub")) == key:
                     b["stake"] = stake
-                    LIVE_PAPER_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1))
+                    _paper_bets_cache["dirty"] = True
                     return
         except Exception:
             pass
@@ -584,10 +603,11 @@ class SecondLevelMonitor:
     def _settle_paper_bets(self):
         """结算虚拟投注(观察库): 按 match_id 定向查 getMatchDetail 判输赢, 写回 result/profit。"""
         from src.betting.bb_auto_bet import read_token
+        _flush_paper_bets()  # 2026-09-20 先落盘(把攒批的未写 appends 写回), 结算读最新
         if not LIVE_PAPER_FILE.exists():
             return
         try:
-            bets = json.loads(LIVE_PAPER_FILE.read_text())
+            bets, _ = _load_paper_bets()
         except Exception:
             return
         tok = read_token()
@@ -684,7 +704,8 @@ class SecondLevelMonitor:
             _settled_n = sum(1 for b in bets if b.get("settled"))
             print(f"[slm] 观察库结算扫描: 尝试 {attempted} 场, 已结算 {_settled_n}/{len(bets)} 条", flush=True)
         if changed:
-            LIVE_PAPER_FILE.write_text(json.dumps(bets, ensure_ascii=False, indent=1))
+            _paper_bets_cache["dirty"] = True
+            _flush_paper_bets()  # 2026-09-20 结算变更立即落盘(结算结果要持久化)
             settled = [b for b in bets if b.get("settled")]
             pnl = sum(b.get("profit", 0) for b in settled)
             stk = sum(b.get("stake", 0) for b in settled)
@@ -745,21 +766,16 @@ class SecondLevelMonitor:
     def _write_clv(self, key, clv):
         """把 clv 写回 live_paper_bets 对应记录。"""
         try:
-            if not LIVE_PAPER_FILE.exists():
-                return
-            bets = json.loads(LIVE_PAPER_FILE.read_text())
+            bets, _ = _load_paper_bets()  # 2026-09-20 用内存缓存, 不读 4.7MB 盘
             mid, mkt, opt = key
-            changed = False
             for b in bets:
                 if (str(b.get("match_id")) == mid
                         and str(b.get("market_id")) == mkt
                         and str(b.get("option_type")) == opt):
                     if "clv" not in b:
                         b["clv"] = round(clv, 2)
-                        changed = True
+                        _paper_bets_cache["dirty"] = True
                     break
-            if changed:
-                LIVE_PAPER_FILE.write_text(json.dumps(bets, ensure_ascii=False, indent=1))
         except Exception:
             pass
 
