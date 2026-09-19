@@ -1705,6 +1705,34 @@ def compare_bb_vs_oa(bb_matches, save_path=None):
             sport_opp_counts[sport] = sport_opp_counts.get(sport, 0) + 1
             entries.append(entry)
 
+    # 2026-09-19 早盘 persistence: 只保留连续 2 轮扫描都 +EV 的机会(过滤单次扫描的赔率错误)
+    # 冷启动(无历史)第一轮全保留, 之后每轮只保留「上一轮也 +EV」的。
+    _ev_hist_file = DATA_DIR / "early_ev_history.json"
+    _prev_ev = set()
+    try:
+        if _ev_hist_file.exists():
+            _prev_ev = set(json.loads(_ev_hist_file.read_text()))
+    except Exception:
+        pass
+    _cur_ev = set()
+
+    def _opp_key(e, group, o):
+        return f"{e.get('home_bb', '')}|{e.get('away_bb', '')}|{group}|{o.get('designation', '')}"
+
+    _grps = ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet")
+    if _prev_ev:
+        for e in entries:
+            for g in _grps:
+                e[g] = [o for o in e.get(g, []) if _opp_key(e, g, o) in _prev_ev]
+    for e in entries:
+        for g in _grps:
+            for o in e.get(g, []):
+                _cur_ev.add(_opp_key(e, g, o))
+    try:
+        _ev_hist_file.write_text(json.dumps(list(_cur_ev), ensure_ascii=False))
+    except OSError:
+        pass
+
     # 汇总
     total_opps_1x2 = sum(1 for e in entries for o in e["opportunities"] if o.get("_market", "") != "ht")
     total_hc = sum(len(e["handicap"]) for e in entries)

@@ -436,7 +436,6 @@ class SecondLevelMonitor:
         self._token_remind_until = 0.0  # token 失效钉钉提醒节流(30min)
         self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
         self._early_ws_ts = 0.0  # 早盘 WS 触发节流时间戳(2026-09-19)
-        self._prev_keys = set()  # 上一轮 +EV 机会的 key(persistence 历史确认, 不延迟)
         self._lev_fail_stats = {}  # LEV 复验失败原因计数(量化 close/价差/deleted 各占多少)
         self._lev_fail_log_ts = 0.0  # 失败统计落盘节流(300s 一次)
         self._token_ok_until = 0.0     # token 有效缓存到期时间戳(10min 缓存, 省每单 1s 探测)
@@ -1458,13 +1457,8 @@ class SecondLevelMonitor:
         """轮询 getList type=1 滚球赔率 + 匹配 Sbobet/Betfair 公平价 → 打信号/自动下单。返回机会数。"""
         from src.scrapers.pinnacle_live import fetch_live_opportunities_oa
         opps = fetch_live_opportunities_oa(self.threshold)
-        cur_keys = set()
         for opp in opps:
             sig = self._opp_to_sig(opp)
-            # 2026-09-19 persistence(不延迟): 上一轮也 +EV = 持续, 标记 _persist; 首次出现半额
-            _k = (sig["match_id"], sig["market_id"], sig["option_type"])
-            cur_keys.add(_k)
-            sig["_persist"] = _k in self._prev_keys
             print(f"⚡滚球+EV {sig['ev']:+.2f}% | {sig['match']['home']} vs {sig['match']['away']} "
                   f"{sig['desig']} | BB {sig['bb_odds']:.2f} vs 公平 {sig['fair']:.2f}", flush=True)
             if self.on_signal:
@@ -1474,7 +1468,6 @@ class SecondLevelMonitor:
                     print(f"[slm] on_signal 异常: {e}")
             if self.auto_bet:
                 self._try_live_auto_bet(sig)
-        self._prev_keys = cur_keys
         return len(opps)
 
     def _consume_early_ws_changes(self, changes):
