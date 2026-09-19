@@ -494,6 +494,54 @@ def load_live_real_winrate():
     return out
 
 
+def load_observe_brier():
+    """观察库 Betfair 公平价校准检验(Brier, 2026-09-19): {(sport,sm,direction,interval,scope): {n,brier,brier_base,calib_err}}。
+
+    brier = mean((p-y)^2), p=1/fair(Betfair 隐含概率), y=1赢/0输。
+    brier_base = mean(p(1-p)) = 若完全校准的期望 Brier(不可约误差)。
+    calib_err = brier - brier_base: >0 表示该格子公平价系统性 miscalibrated(高估/低估真实概率)。
+    只展示不设闸门, 供检测「Betfair 锚在哪些格子有 bias」(如已发现的 [2.0-2.3] 冷门方向高估)。
+    """
+    by = defaultdict(lambda: {"n": 0, "brier": 0.0, "base": 0.0})
+
+    def _feed(k, result, fair):
+        if result not in ("won", "lost") or not fair or fair <= 1.0:
+            return
+        p = 1.0 / fair
+        y = 1.0 if result == "won" else 0.0
+        d = by[k]
+        d["n"] += 1
+        d["brier"] += (p - y) ** 2
+        d["base"] += p * (1.0 - p)
+
+    for b in _read_paper_bets():
+        sm = b.get("sub_market") or "?"
+        _feed((b.get("sport") or "?", sm, _direction(b.get("designation"), sm),
+               _odds_interval(_f(b.get("bb_odds"))), SCOPE_EARLY),
+              b.get("result"), _f(b.get("fair_price")) or _f(b.get("bb_odds")))
+
+    for b in _read_live_paper_bets():
+        sport = BB_SPORT_MAP.get(b.get("sport"))
+        sm = BB_SUB_MAP.get(b.get("sub"))
+        if not sport or not sm:
+            continue
+        _feed((sport, sm, _direction(b.get("designation"), sm),
+               _odds_interval(_f(b.get("bb_odds"))), SCOPE_LIVE),
+              b.get("result"), _f(b.get("fair")) or _f(b.get("bb_odds")))
+
+    out = {}
+    for k, d in by.items():
+        if d["n"] == 0:
+            continue
+        out[k] = {
+            "n": d["n"],
+            "brier": round(d["brier"] / d["n"], 4),
+            "brier_base": round(d["base"] / d["n"], 4),
+            "calib_err": round((d["brier"] - d["base"]) / d["n"], 4),
+        }
+    return out
+
+
 def _read_paper_bets():
     """读早盘观察库(paper_bets.json)记录(只 Betfair 口径, 2026-09-19 锚点分区)。"""
     if not PAPER.exists():
@@ -867,6 +915,22 @@ def main():
     if observe_real_paper_gap:
         print(f"[gap] 实盘-纸单赢率差(负=纸单高估/时序劣化): {observe_real_paper_gap}", flush=True)
 
+    # Brier 校准检验(只展示, 2026-09-19): calib_err>0 = 该格子 Betfair 公平价系统性 miscalibrated
+    calib = load_observe_brier()
+    observe_calibration = []
+    for (sport, sm, dr, interval, scope), c in calib.items():
+        if c["n"] < OBS_N_MIN:  # 样本够才展示(与释放判据同门槛)
+            continue
+        observe_calibration.append({
+            "cell": f"{sport}|{sm}|{dr}|{interval}|{scope}",
+            "n": c["n"], "brier": c["brier"], "brier_base": c["brier_base"],
+            "calib_err": c["calib_err"],
+        })
+    observe_calibration.sort(key=lambda x: -x["calib_err"])
+    if observe_calibration:
+        _worst = observe_calibration[:5]
+        print(f"[calib] Betfair公平价校准误差(>0=miscalibrated): {_worst}", flush=True)
+
     out = {
         "generated_at": datetime.now().isoformat(),
         "market_released": market_released,
@@ -881,6 +945,7 @@ def main():
         "direction_window_blocked": direction_window_blocked,
         "direction_window_released": direction_window_released,
         "observe_real_paper_gap": observe_real_paper_gap,  # 实盘-纸单赢率差(只展示, 2026-09-19)
+        "observe_calibration": observe_calibration,  # Brier 校准检验(只展示, 2026-09-19)
         "sport_cn": SPORT_CN,
     }
     tmp = OUT.with_suffix(".tmp")
