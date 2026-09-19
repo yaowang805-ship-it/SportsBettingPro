@@ -437,6 +437,7 @@ class SecondLevelMonitor:
         self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
         self._early_ws_ts = 0.0  # 早盘 WS 触发节流时间戳(2026-09-19)
         self._opp_seen = {}  # (match_id, market_id, option_type) -> 首次+EV时间戳(persistence 持续性)
+        self._lev_fail_stats = {}  # LEV 复验失败原因计数(量化 close/价差/deleted 各占多少)
         self._token_ok_until = 0.0     # token 有效缓存到期时间戳(10min 缓存, 省每单 1s 探测)
         self._attempted = {}           # 滚球指纹去重: match_id -> {market_id -> 尝试时间戳}
         self._last_bet_time = 0.0      # 上次下单时间(非阻塞限频用)
@@ -929,6 +930,14 @@ class SecondLevelMonitor:
         from src.betting.bb_auto_bet import global_bet_cooldown
         if global_bet_cooldown(15, 45) > 0:
             return
+        # 2026-09-19 persistence 持续性: 同一机会需 5s 内连续 2 轮 +EV 才下单(过滤一闪而过噪音)
+        _pkey = (sig["match_id"], market_id, sig.get("option_type"))
+        _pnow = time.time()
+        _pprev = self._opp_seen.get(_pkey)
+        if _pprev is None or _pnow - _pprev > 5:
+            self._opp_seen[_pkey] = _pnow  # 首次出现, 等下一轮确认
+            return
+        self._opp_seen.pop(_pkey, None)  # 5s 内二次出现 → 下单
         print(f"  🎯 滚球下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake}", flush=True)
         # 2026-09-19 时间条件验价(职业团队做法): 从 BB 赔率拉取(bb_ts)到此刻超过 REVERIFY_THRESHOLD 秒
         # 就重拉 BB 当前赔率验价——赔率可能已朝不利方向变动(逆向选择), 抢窗口期内(≤阈值)直接下单省 1-5s。
