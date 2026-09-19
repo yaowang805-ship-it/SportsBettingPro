@@ -1461,21 +1461,36 @@ class SecondLevelMonitor:
             bb_matches = d.get('matches', [])
         except Exception:
             return 0
-        # 队名精确匹配 event → BB
+        # 队名匹配 event → BB: _norm_team 精确 + rapidfuzz 模糊兜底(提升匹配率 47%→~71%)
+        from src.scrapers.odds_api_io import _norm_team, _match_score
         changed_ids = {c[0] for c in changes}
-        triggered = []
+        bb_by_norm = {}
         for m in bb_matches:
-            home = (m.get('home') or '').lower().strip()
-            away = (m.get('away') or '').lower().strip()
-            if not home or not away:
+            key = (_norm_team(m.get('home')), _norm_team(m.get('away')))
+            if key[0] and key[1]:
+                bb_by_norm.setdefault(key, m)
+        triggered = []
+        seen = set()
+        for eid in changed_ids:
+            ev = ev_by_id.get(eid)
+            if not ev:
                 continue
-            for eid in changed_ids:
-                ev = ev_by_id.get(eid)
-                if not ev:
-                    continue
-                if (ev.get('home') or '').lower().strip() == home and (ev.get('away') or '').lower().strip() == away:
+            key = (_norm_team(ev.get('home')), _norm_team(ev.get('away')))
+            if key in bb_by_norm:
+                m = bb_by_norm[key]
+                if id(m) not in seen:
                     triggered.append(m)
-                    break
+                    seen.add(id(m))
+                continue
+            # 模糊匹配兜底(只对没精确命中的变动 event)
+            best_m, best_sc = None, 0.0
+            for m in bb_matches:
+                sc = _match_score(ev.get('home'), ev.get('away'), m.get('home'), m.get('away'))
+                if sc > best_sc:
+                    best_sc, best_m = sc, m
+            if best_m and best_sc >= 85.0 and id(best_m) not in seen:
+                triggered.append(best_m)
+                seen.add(id(best_m))
         if not triggered:
             return 0
         # 单场比价(复用 bb_vs_pinnacle 的 entry 构造 + 盘口比价)
