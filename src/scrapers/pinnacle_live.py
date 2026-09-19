@@ -589,10 +589,9 @@ def fetch_live_opportunities_oa(threshold=3.0):
             ev = (bb_odds - fair_p) / fair_p * 100.0
             # 2026-09-19 SBO 同向确认: BB 和 SBO 都偏离 Betfair 同向才采信(过滤 Betfair 单边噪音假高溢价)
             _conf = res.get("confidence")
-            if _conf:
-                _conf_p = _conf.get(k)
-                if _conf_p and _conf_p <= fair_p:  # SBO 不同向(SBO 认为该方向不比 Betfair 更可能) → 跳过
-                    continue
+            _conf_p = _conf.get(k) if _conf else None
+            if _conf_p and _conf_p <= fair_p:  # SBO 不同向(SBO 认为该方向不比 Betfair 更可能) → 跳过
+                continue
             if ev < threshold or ev > 12.0:
                 continue
             opps.append({
@@ -602,6 +601,7 @@ def fetch_live_opportunities_oa(threshold=3.0):
                 "league_cn": b.get("league_cn", ""),
                 "sport": b["sport"],
                 "sub": sub, "direction": d,
+                "sbo_confirm": bool(_conf_p),  # SBO 同向确认=True, 无覆盖=False(降投注额用)
                 "bb_odds": bb_odds, "fair": fair_p, "ev": round(ev, 2), "pin_raw": 0,
                 "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
                 "pin_matchup_id": res.get("event_id"),
