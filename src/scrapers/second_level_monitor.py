@@ -1537,17 +1537,30 @@ class SecondLevelMonitor:
             return 0
         # 单场比价(复用 bb_vs_pinnacle 的 entry 构造 + 盘口比价)
         from src.scrapers.bb_vs_pinnacle import _build_oa_entry, _oa_add_markets
+        # 释放过滤(2026-09-19): 早盘 WS 触发绕过 bb_ev_push 的释放过滤, 这里补上——未释放的
+        # 运动×盘口/方向不投, 否则瞬发路径会绕过释放清单下未验证的注(与主扫描口径对齐)。
+        from src.report.bb_ev_push import _is_market_released, _is_direction_blocked
+        _GROUP_TO_SUB = {'opportunities': '1x2', 'handicap': 'hc', 'over_under': 'ou',
+                         'double_chance': 'dc', 'draw_no_bet': 'dnb'}
         opps = []
         for m in triggered:
             sport = m.get('sport', 'football')
             entry = _build_oa_entry(m, sport)
             _oa_add_markets(entry, m, sport)
+            _league = entry.get('league', '')
+            _epoch = entry.get('start_time_pin_epoch', 0)
             for group in ('opportunities', 'handicap', 'over_under', 'double_chance', 'draw_no_bet'):
                 for o in entry.get(group, []):
+                    sub_market = o.get('_market') or _GROUP_TO_SUB.get(group, group)
+                    if not _is_market_released(sport, sub_market, _league,
+                                               o.get('designation', ''), _epoch, o.get('bb_odds')):
+                        continue
+                    if _is_direction_blocked(sport, sub_market, o.get('designation', ''), _epoch):
+                        continue
                     o['home_bb'] = entry.get('home_bb', '')
                     o['away_bb'] = entry.get('away_bb', '')
                     o['sport'] = sport
-                    o['_pin_epoch'] = entry.get('start_time_pin_epoch', 0)
+                    o['_pin_epoch'] = _epoch
                     opps.append(o)
         if not opps:
             return 0
