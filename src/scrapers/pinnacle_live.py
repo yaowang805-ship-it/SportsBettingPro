@@ -568,6 +568,7 @@ def fetch_live_opportunities_oa(threshold=3.0):
     """
     from src.scrapers.odds_api_io import fair_price_bb
     from concurrent.futures import ThreadPoolExecutor
+    _t0 = time.time()
     bb = fetch_bb_live_matches(platform="BB")
     _bb_ts = time.time()
 
@@ -645,6 +646,9 @@ def fetch_live_opportunities_oa(threshold=3.0):
         with ThreadPoolExecutor(max_workers=min(len(tasks), 8)) as ex:
             for out in ex.map(_process, tasks):
                 opps.extend(out)
+    _t_done = time.time()
+    if tasks:
+        print(f"[oa] 耗时: BB拉取{_bb_ts-_t0:.1f}s + 公平价匹配{_t_done-_bb_ts:.1f}s = 总{_t_done-_t0:.1f}s ({len(tasks)}任务)", flush=True)
     return opps
 
 
