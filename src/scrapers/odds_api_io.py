@@ -384,6 +384,7 @@ def match_bb_to_oa(sport_id):
 
 _events_cache = {}  # {(sport_slug, status): (ts, events)}
 _match_cache = {}   # {(norm_home, norm_away, sport_id, status): (ts, event_id, swapped)}
+_events_index_cache = {}  # {(sport_slug, status): (ts, (events, exact_idx))}, exact_idx={(norm_h,norm_a):(eid,swapped)}
 
 
 def _norm_team(name):
@@ -449,6 +450,28 @@ def _get_events_cached(sport, status=None):
     return evs
 
 
+def _get_events_indexed(slug, status=None):
+    """事件列表 + 精确匹配索引(缓存 60s)。精确索引 {(norm_home,norm_away): (event_id, swapped)}
+    让 match_event_orient 对大多数比赛 O(1) 命中, 只对没精确命中的做 rapidfuzz 模糊兜底。
+    2026-09-20 优化: 之前每场都 O(486) 模糊匹配, 公平价匹配 12-15s; 精确索引后 ~1s。"""
+    key = (slug, status)
+    now = time.time()
+    if key in _events_index_cache and now - _events_index_cache[key][0] < 60:
+        return _events_index_cache[key][1]
+    evs = get_events(slug, status) or []
+    idx = {}
+    for e in evs:
+        if _is_skip_event(e):
+            continue
+        nh, na = _norm_team(e.get('home', '')), _norm_team(e.get('away', ''))
+        if not nh or not na:
+            continue
+        idx[(nh, na)] = (e.get('id'), False)
+        idx[(na, nh)] = (e.get('id'), True)  # 主客互换也索引
+    _events_index_cache[key] = (now, (evs, idx))
+    return evs, idx
+
+
 def match_event(home, away, sport_id, min_score=85.0, status=None):
     """BB 比赛(home/away/sport_id) → odds-api.io 事件 id。模糊匹配, 返回 id 或 None。"""
     eid, _ = match_event_orient(home, away, sport_id, min_score, status=status)
@@ -471,7 +494,14 @@ def match_event_orient(home, away, sport_id, min_score=85.0, status=None):
     slug = _SPORT_ID_TO_SLUG.get(sport_id)
     if not slug:
         return None, False
-    evs = _get_events_cached(slug, status)
+    evs, idx = _get_events_indexed(slug, status)
+    # 精确匹配 O(1)(2026-09-20): 大多数比赛直接命中, 免掉 O(486) 模糊匹配
+    exact = idx.get((_norm_team(home), _norm_team(away)))
+    if exact:
+        eid, sw = exact
+        _match_cache[key] = (now, eid, sw)
+        return eid, sw
+    # 模糊兜底(只对没精确命中的比赛)
     best_id, best_score, best_swapped = None, 0.0, False
     for e in evs:
         if _is_skip_event(e):
@@ -479,8 +509,9 @@ def match_event_orient(home, away, sport_id, min_score=85.0, status=None):
         sc, sw = _match_score_orient(home, away, e.get('home', ''), e.get('away', ''))
         if sc > best_score:
             best_score, best_id, best_swapped = sc, e.get('id'), sw
-    _match_cache[key] = (now, best_id if best_score >= min_score else None, best_swapped)
-    return (best_id, best_swapped) if best_score >= min_score else (None, False)
+    eid = best_id if best_score >= min_score else None
+    _match_cache[key] = (now, eid, best_swapped)
+    return (eid, best_swapped) if eid else (None, False)
 
 
 def _swap_fair(fair, sub_market):
