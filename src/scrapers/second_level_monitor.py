@@ -436,7 +436,7 @@ class SecondLevelMonitor:
         self._token_remind_until = 0.0  # token 失效钉钉提醒节流(30min)
         self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
         self._early_ws_ts = 0.0  # 早盘 WS 触发节流时间戳(2026-09-19)
-        self._opp_seen = {}  # (match_id, market_id, option_type) -> 首次+EV时间戳(persistence 持续性)
+        self._prev_keys = set()  # 上一轮 +EV 机会的 key(persistence 历史确认, 不延迟)
         self._lev_fail_stats = {}  # LEV 复验失败原因计数(量化 close/价差/deleted 各占多少)
         self._lev_fail_log_ts = 0.0  # 失败统计落盘节流(300s 一次)
         self._token_ok_until = 0.0     # token 有效缓存到期时间戳(10min 缓存, 省每单 1s 探测)
@@ -827,6 +827,9 @@ class SecondLevelMonitor:
         # 2026-09-19 SBO 无覆盖降投注额: 只有 Betfair 单源(无 SBO 同向)的 edge 可靠性降一档, 半额
         if not sig.get("sbo_confirm"):
             stake = int(stake * 0.5)
+        # 2026-09-19 persistence(不延迟): 首次出现(无上一轮历史确认)半额, 持续出现全额定仓
+        if not sig.get("_persist"):
+            stake = int(stake * 0.5)
         sig["_stake"] = stake
         # 2026-09-12 纠正: 观察库必须采集所有运动及盘口的有效+EV信号(不只实盘方向)。
         # 之前误改"只记实盘方向"会堵死新盘口释放通道(非实盘方向永远没数据凑不到n>100)。
@@ -935,14 +938,6 @@ class SecondLevelMonitor:
         from src.betting.bb_auto_bet import global_bet_cooldown
         if global_bet_cooldown(15, 45) > 0:
             return
-        # 2026-09-19 persistence 持续性: 同一机会需 5s 内连续 2 轮 +EV 才下单(过滤一闪而过噪音)
-        _pkey = (sig["match_id"], market_id, sig.get("option_type"))
-        _pnow = time.time()
-        _pprev = self._opp_seen.get(_pkey)
-        if _pprev is None or _pnow - _pprev > 5:
-            self._opp_seen[_pkey] = _pnow  # 首次出现, 等下一轮确认
-            return
-        self._opp_seen.pop(_pkey, None)  # 5s 内二次出现 → 下单
         print(f"  🎯 滚球下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake}", flush=True)
         # 2026-09-19 时间条件验价(职业团队做法): 从 BB 赔率拉取(bb_ts)到此刻超过 REVERIFY_THRESHOLD 秒
         # 就重拉 BB 当前赔率验价——赔率可能已朝不利方向变动(逆向选择), 抢窗口期内(≤阈值)直接下单省 1-5s。
@@ -1466,8 +1461,13 @@ class SecondLevelMonitor:
         """轮询 getList type=1 滚球赔率 + 匹配 Sbobet/Betfair 公平价 → 打信号/自动下单。返回机会数。"""
         from src.scrapers.pinnacle_live import fetch_live_opportunities_oa
         opps = fetch_live_opportunities_oa(self.threshold)
+        cur_keys = set()
         for opp in opps:
             sig = self._opp_to_sig(opp)
+            # 2026-09-19 persistence(不延迟): 上一轮也 +EV = 持续, 标记 _persist; 首次出现半额
+            _k = (sig["match_id"], sig["market_id"], sig["option_type"])
+            cur_keys.add(_k)
+            sig["_persist"] = _k in self._prev_keys
             print(f"⚡滚球+EV {sig['ev']:+.2f}% | {sig['match']['home']} vs {sig['match']['away']} "
                   f"{sig['desig']} | BB {sig['bb_odds']:.2f} vs 公平 {sig['fair']:.2f}", flush=True)
             if self.on_signal:
@@ -1477,6 +1477,7 @@ class SecondLevelMonitor:
                     print(f"[slm] on_signal 异常: {e}")
             if self.auto_bet:
                 self._try_live_auto_bet(sig)
+        self._prev_keys = cur_keys
         return len(opps)
 
     def _consume_early_ws_changes(self, changes):
