@@ -1111,7 +1111,8 @@ class SecondLevelMonitor:
         sub = sub_map.get(sig.get("sub"))
         if not sub:
             return None
-        fair = fair_price(eid, sub)
+        # 2026-09-19 修复: hc/ou 复验必须传下注线(target_line), 否则选主线——下注线还在但主线 close 时复验失败
+        fair = fair_price(eid, sub, target_line=sig.get("line"))
         if not fair:
             return None
         desig = sig.get("desig", "")
