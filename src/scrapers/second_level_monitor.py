@@ -415,6 +415,31 @@ def _bet_score(b):
     return 0, 0
 
 
+# 观察库内存缓存(2026-09-20): _append_live_paper_bet 之前每次 json.loads 4.7MB + 遍历10882条去重,
+# 是「下单耗时4s」里的大头(BB下单本身才~1s)。用 mtime 缓存读 + set 去重, 读从 ~1s 降到 ~0ms。
+_paper_bets_cache = {"mtime": 0.0, "data": None, "keys": None}
+
+
+def _load_paper_bets():
+    """读观察库(带 mtime 缓存 + set 去重索引)。返回 (data, keys)。"""
+    global _paper_bets_cache
+    try:
+        m = LIVE_PAPER_FILE.stat().st_mtime if LIVE_PAPER_FILE.exists() else 0.0
+    except OSError:
+        m = 0.0
+    if _paper_bets_cache["data"] is not None and m == _paper_bets_cache["mtime"]:
+        return _paper_bets_cache["data"], _paper_bets_cache["keys"]
+    data = []
+    if LIVE_PAPER_FILE.exists():
+        try:
+            data = json.loads(LIVE_PAPER_FILE.read_text())
+        except Exception:
+            data = []
+    keys = {(b.get("match_id"), b.get("market_id"), b.get("option_type"), b.get("sub")) for b in data}
+    _paper_bets_cache = {"mtime": m, "data": data, "keys": keys}
+    return data, keys
+
+
 class SecondLevelMonitor:
     def __init__(self, threshold=3.0, on_signal=None, auto_bet=False, stake=None):
         self.threshold = threshold
@@ -515,14 +540,11 @@ class SecondLevelMonitor:
             print(f"[slm] 跳过无法结算的虚拟投注({desig!r} line={sig.get('line')!r}), 不进观察库", flush=True)
             return False
         try:
-            data = []
-            if LIVE_PAPER_FILE.exists():
-                data = json.loads(LIVE_PAPER_FILE.read_text())
+            data, keys = _load_paper_bets()  # 2026-09-20 mtime 缓存读 + set 去重(4.7MB JSON 不再每次 parse)
             # 指纹去重: 同一 (match_id, market_id, option_type, sub) 只记一次, 避免每 2s 轮询重复入库
             key = (sig["match_id"], sig.get("market_id"), sig.get("option_type"), sig.get("sub"))
-            for b in data:
-                if (b.get("match_id"), b.get("market_id"), b.get("option_type"), b.get("sub")) == key:
-                    return False
+            if key in keys:
+                return False
             data.append({
                 "ts": time.time(), "match_id": sig["match_id"],
                 "market_id": sig.get("market_id"), "option_type": sig.get("option_type"),
@@ -537,6 +559,7 @@ class SecondLevelMonitor:
                 "anchor": "betfair",  # 2026-09-19 锚点口径标记: 9-18后 Betfair 公平价
                 "sbo_direction": sig.get("sbo_direction", "same"),  # same/diff/none(供统计同向/不同向赛果)
             })
+            keys.add(key)
             LIVE_PAPER_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1))
             return True
         except Exception as e:
