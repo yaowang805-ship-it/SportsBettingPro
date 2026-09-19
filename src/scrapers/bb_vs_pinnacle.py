@@ -109,6 +109,9 @@ def _oa_fair(entry, sport, sub, target_line=None):
         # 存 odds-api.io 事件 id, 供 CLV 采集器读收盘价(替代 pin_match_id)
         if res.get("event_id"):
             entry.setdefault("oa_event_id", res["event_id"])
+        # 存 SBO 置信度(按 sub), 供 _oa_add_markets 做同向确认(2026-09-19)
+        if res.get("confidence"):
+            entry.setdefault("_oa_conf", {})[sub] = res["confidence"]
         return res["fair"]
     return None
 
@@ -1526,6 +1529,11 @@ def _oa_add_markets(entry, bb, sport):
                 fair = oa_ml.get(keys[i])
                 if bb_o and fair and fair > 1:
                     ev = (bb_o - fair) / fair * 100
+                    # 2026-09-19 SBO 同向确认: BB 和 SBO 都偏离 Betfair 同向才采信(过滤 Betfair 单边噪音假高溢价)
+                    _conf = (entry.get("_oa_conf") or {}).get("1x2", {})
+                    _conf_p = _conf.get(keys[i])
+                    if _conf_p and _conf_p <= fair:
+                        continue  # SBO 不同向 → 跳过
                     if ev > 1:
                         entry["opportunities"].append({
                             "designation": mlabels["ml"][i], "bb_odds": bb_o,
@@ -1544,13 +1552,15 @@ def _oa_add_markets(entry, bb, sport):
                     ev_h = (bb_hc["home_odds"] - oa_hc["home"]) / oa_hc["home"] * 100
                     ev_a = (bb_hc["away_odds"] - oa_hc["away"]) / oa_hc["away"] * 100
                     # EV>20% = BB 让球盘与独赢盘数据自相矛盾(线错配), 丢弃(对齐 bb_ev_push 的 EV cap)
-                    if 1 < ev_h <= 20:
+                    # 2026-09-19 SBO 同向确认: BB 和 SBO 都偏离 Betfair 同向才采信
+                    _conf = (entry.get("_oa_conf") or {}).get("hc", {})
+                    if 1 < ev_h <= 20 and (not _conf.get("home") or _conf["home"] > oa_hc["home"]):
                         entry["handicap"].append({
                             "designation": mlabels["hc_home"], "line": bb_hc.get("home_line_str", ""),
                             "bb_odds": bb_hc["home_odds"], "pin_odds": 0,
                             "fair_price": round(oa_hc["home"], 4), "ev_pct": round(ev_h, 2),
                         })
-                    if 1 < ev_a <= 20:
+                    if 1 < ev_a <= 20 and (not _conf.get("away") or _conf["away"] > oa_hc["away"]):
                         entry["handicap"].append({
                             "designation": mlabels["hc_away"], "line": bb_hc.get("away_line_str", ""),
                             "bb_odds": bb_hc["away_odds"], "pin_odds": 0,
