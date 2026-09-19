@@ -64,6 +64,7 @@ REAL_WINRATE_EDGE_MIN = 3.0  # 实盘主开关/方向释放赢率vs隐含差值�
 LIQUIDITY_MAX_SPREAD = 6.0   # Betfair 流动性门槛(2026-09-19): 格子中位 back-lay 价差 ≥6% 判薄盘,
                              # 公平价/CLV 不可信(低流动性联赛 Betfair 高估冷门方向 → 假溢价), 不采信不释放。
                              # 6% 是初值(基于「让球真edge价差<3% vs 大小球假edge价差6~15%」反推), 待攒 spread 数据后标定
+REAL_GAP_N_MIN = 20          # 实盘-纸单 gap 指标的最小实盘样本数(只展示, <20 的 gap 是噪声, 2026-09-19)
 
 # 放弃的特殊盘口(2026-09-15 用户决定): 这些盘口 margin 15%+ (vs 主盘口 3-8%), 收盘线不 sharp,
 # 且 clv_collector 里 close_fair 用的是 proportional devig(非 Shin), CLV 虚高无意义。
@@ -414,6 +415,83 @@ def load_real_winrate_direction_window():
                 _direction(b.get("designation"), b.get("sub_market")), w)
 
     return _winrate_agg(bets, _key)
+
+
+def load_real_winrate_cell():
+    """实盘赢率(方向×赔率区间): tracked_bets settled → {(sport,sub_market,direction,interval): {n,winrate,implied}}。
+
+    2026-09-19 供「实盘-纸单 gap」指标用: 纸单是快单口径系统性乐观(不含慢单劣化),
+    实盘才含时序衰减/逆向选择成本, 两者差 = 时序劣化重灾区。只展示不设闸门(等实盘 n 攒够再当判据)。
+    """
+    if not TRACKED.exists():
+        return {}
+    try:
+        raw = json.loads(TRACKED.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+    bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
+            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
+    return _winrate_agg(bets, lambda b: (
+        b.get("sport") or "?", b.get("sub_market") or "?",
+        _direction(b.get("designation"), b.get("sub_market")),
+        _odds_interval(_f(b.get("bb_odds")))))
+
+
+def load_live_real_winrate():
+    """滚球实盘赢率: live_settled_log.json → {(sport,sub_market,direction,interval): {n,winrate}}。
+
+    live_settled_log 结构是 mgn/on/mn(非 sub_market/designation), 需映射:
+    mgn 大/小→ou、让球→hc、独赢→1x2; on 大/小/主/客/和直接取, 让球的 on 是队名(用 mn 判主客)。
+    赔率区间用 _odds_interval(od) 重算(旧日志的 interval 是4档, 与5档口径不一致)。
+    """
+    p = DATA / "live_settled_log.json"
+    if not p.exists():
+        return {}
+    try:
+        rows = json.loads(p.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}
+    _MGN_TO_SM = {"大/小": "ou", "让球": "hc", "独赢": "1x2"}
+    by = defaultdict(lambda: {"won": 0, "lost": 0})
+    for x in rows:
+        mgn = x.get("mgn", "")
+        on = (x.get("on") or "").strip()
+        sm = _MGN_TO_SM.get(mgn)
+        sport = BB_SPORT_MAP.get(x.get("sid", 0))
+        if not sm or not sport:
+            continue
+        if on in ("大", "小", "主", "客", "和", "平"):
+            dr = "平" if on == "和" else on
+        elif mgn == "让球":
+            dr = None
+            mn = x.get("mn", "")
+            for sep in (" vs ", " VS "):
+                if sep in mn:
+                    h, a = mn.split(sep, 1)
+                    if on == h.strip():
+                        dr = "主"
+                    elif on == a.strip():
+                        dr = "客"
+                    break
+            if dr is None:
+                continue
+        else:
+            continue
+        iv = _odds_interval(_f(x.get("od")))
+        if iv == "?":
+            continue
+        k = (sport, sm, dr, iv)
+        if x.get("won"):
+            by[k]["won"] += 1
+        else:
+            by[k]["lost"] += 1
+    out = {}
+    for k, d in by.items():
+        n = d["won"] + d["lost"]
+        if n == 0:
+            continue
+        out[k] = {"n": n, "winrate": d["won"] / n * 100.0}
+    return out
 
 
 def _read_paper_bets():
@@ -771,6 +849,24 @@ def main():
     if newly_released:
         _notify_release(newly_released, obs_winrate)
 
+    # 实盘-纸单 gap(只展示, 2026-09-19): 纸单快单口径乐观, gap<0=时序劣化重灾区。等实盘 n 攒够再当判据。
+    real_cell = load_real_winrate_cell()   # 早盘实盘(tracked_bets)
+    live_cell = load_live_real_winrate()   # 滚球实盘(live_settled_log)
+    observe_real_paper_gap = []
+    for (sport, sm, dr, interval, scope), pw in obs_winrate.items():
+        rw = (live_cell if scope == SCOPE_LIVE else real_cell).get((sport, sm, dr, interval))
+        if not rw or rw.get("n", 0) < REAL_GAP_N_MIN:
+            continue
+        observe_real_paper_gap.append({
+            "cell": f"{sport}|{sm}|{dr}|{interval}|{scope}",
+            "real_n": rw["n"], "real_winrate": round(rw["winrate"], 1),
+            "paper_winrate": round(pw["winrate"], 1),
+            "gap_pp": round(rw["winrate"] - pw["winrate"], 1),
+        })
+    observe_real_paper_gap.sort(key=lambda x: x["gap_pp"])
+    if observe_real_paper_gap:
+        print(f"[gap] 实盘-纸单赢率差(负=纸单高估/时序劣化): {observe_real_paper_gap}", flush=True)
+
     out = {
         "generated_at": datetime.now().isoformat(),
         "market_released": market_released,
@@ -784,6 +880,7 @@ def main():
         "direction_min_ev": direction_min_ev,
         "direction_window_blocked": direction_window_blocked,
         "direction_window_released": direction_window_released,
+        "observe_real_paper_gap": observe_real_paper_gap,  # 实盘-纸单赢率差(只展示, 2026-09-19)
         "sport_cn": SPORT_CN,
     }
     tmp = OUT.with_suffix(".tmp")
