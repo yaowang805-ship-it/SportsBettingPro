@@ -109,6 +109,8 @@ MANUAL_OBSERVE_RELEASE = {
     # 大球 1.0-2.0 的"正盈亏"是注额加权假象(edge 实为 -2.3pp/-2.7pp), 放 BLOCK 拦截。
     "football|ou|小|2.0-3.0|live": 300,
     "football|ou|小|1.0-1.5|live": 300,   # 2026-09-19 用户提额至 300
+    "football|hc|主|*|live": 150,   # 2026-09-19 用户打开让球主胜, 每单封顶150
+    "football|hc|客|*|live": 150,   # 2026-09-19 用户打开让球客胜, 每单封顶150
 }
 
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
@@ -125,9 +127,8 @@ MANUAL_OBSERVE_BLOCK = {
     "football|ou|大|2.0-3.0|live",    # 大球 2.0-3.0 edge -3.8pp
     "football|ou|大|3.0-5.0|live",    # 大球 3.0-5.0 edge -13.4pp(17%胜率)
     "football|ou|小|1.5-2.0|live",    # 小球 1.5-2.0 edge -7.6pp(负格子)
-    "football|hc|主|1.5-2.0|live",    # 让球主胜 1.5-2.0 edge -2.7pp
-    "football|hc|客|2.0-3.0|live",    # 让球客胜 2.0-3.0 edge -6.7pp
-    "football|hc|主|3.0-5.0|live",    # 让球主胜 3.0-5.0 edge -18.5pp
+    # 2026-09-19 撤销让球3格拦截: 旧pin口径edge负(-2.7/-6.7/-18.5pp)是锚点切换前的假象,
+    # betfair口径下让球主胜2.0-3.0赢率49%/客胜2.0-3.0赢率55%为正, 用户已打开让球方向(cap150)
     # 早盘(保留旧拦截)
     "football|ht|客|3.0-5.0|early",
     "football|1x2|平|3.0-5.0|early",

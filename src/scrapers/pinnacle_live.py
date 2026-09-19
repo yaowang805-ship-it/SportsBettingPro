@@ -587,6 +587,12 @@ def fetch_live_opportunities_oa(threshold=3.0):
                 if abs(float(mk["line"]) - float(fair["line"])) > 0.25:
                     continue
             ev = (bb_odds - fair_p) / fair_p * 100.0
+            # 2026-09-19 SBO 同向确认: BB 和 SBO 都偏离 Betfair 同向才采信(过滤 Betfair 单边噪音假高溢价)
+            _conf = res.get("confidence")
+            if _conf:
+                _conf_p = _conf.get(k)
+                if _conf_p and _conf_p <= fair_p:  # SBO 不同向(SBO 认为该方向不比 Betfair 更可能) → 跳过
+                    continue
             if ev < threshold or ev > 12.0:
                 continue
             opps.append({
