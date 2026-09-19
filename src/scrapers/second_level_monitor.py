@@ -35,6 +35,7 @@ COMPARISON_FILE = ROOT / "data" / "storage" / "bb_vs_pinnacle_comparison.json"
 # 让弱 edge 落在 ¥300 上限以下, 强 edge 顶格, 真正按 edge 分档。
 KELLY_FRACTION = 0.5   # 半凯利
 MAX_STAKE = 300        # 单盘口上限(2026-09-19 用户提额: 滚球单注≤300, 原150)
+HIGH_EV_FULL_STAKE = 0.08  # 高溢价满仓阈值(2026-09-19 用户要求): edge≥8% 直接顶到 MAX_STAKE, 不按 Kelly
 
 # 2026-09-19 滚球本金 = 账户余额的固定比例(30%), 随余额动态调整(不再写死 5000)
 BANKROLL_PCT = 0.30
@@ -64,6 +65,7 @@ REVERIFY_THRESHOLD = 3.0  # 2026-09-19 验价阈值(秒): lead-lag 窗口 2-3s(�
 LIVE_BUDGET = float('inf')  # 2026-09-18 用户取消每日投注额上限: 滚球不再设总限额(由单场/单盘口300 + 账户余额兜底)
 LIVE_BUDGET_FILE = ROOT / "data" / "storage" / "live_bet_budget.json"
 DRAWDOWN_STOP_PNL = 1000  # 回撤熔断(2026-09-13): 最近7天滚球实盘累计亏超¥1000(=20%BANKROLL) → 半仓
+DRAWDOWN_RESET_FILE = ROOT / "data" / "storage" / "drawdown_reset_ts.txt"  # 熔断归零时间戳(2026-09-19 用户要求归零重算)
 LIVE_PAPER_FILE = ROOT / "data" / "storage" / "live_paper_bets.json"
 LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 已推送过结算的 order_id
 
@@ -208,8 +210,22 @@ def _odds_interval(odds):
 _recent_pnl_cache = {"ts": 0.0, "pnl": 0.0}
 
 
+def _load_drawdown_reset():
+    """读熔断归零时间戳(epoch 秒)。无则 None。"""
+    try:
+        if DRAWDOWN_RESET_FILE.exists():
+            return float(DRAWDOWN_RESET_FILE.read_text().strip() or 0) or None
+    except (OSError, ValueError):
+        pass
+    return None
+
+
 def _recent_pnl(days=7):
-    """最近 days 天滚球实盘盈亏(BB 官方结算订单 uwl 求和)。带 5min 缓存, 供回撤熔断用。"""
+    """最近 days 天滚球实盘盈亏(BB 官方结算订单 uwl 求和)。带 5min 缓存, 供回撤熔断用。
+
+    2026-09-19 归零重算: 若设置了归零时间戳, 只算归零之后的盈亏(历史亏损清零),
+    让「已释放盘口」的注额不被历史亏损(未释放盘口/错误口径造成的)拖累砍半。
+    """
     global _recent_pnl_cache
     if time.time() - _recent_pnl_cache["ts"] < 300:
         return _recent_pnl_cache["pnl"]
@@ -218,6 +234,9 @@ def _recent_pnl(days=7):
         orders = _fetch_settled_orders() or []
         import datetime as _dt
         cutoff = (_dt.datetime.now() - _dt.timedelta(days=days)).timestamp() * 1000
+        _reset = _load_drawdown_reset()
+        if _reset:
+            cutoff = max(cutoff, _reset * 1000)
         pnl = 0.0
         for o in orders:
             if (o.get("mt") or 0) < cutoff:
@@ -1117,6 +1136,10 @@ class SecondLevelMonitor:
         if odds <= 1 or edge <= 0:
             return 0
         stake = _bankroll() * KELLY_FRACTION * edge / (odds - 1)
+        # 2026-09-19 用户要求「高溢价满仓」: edge≥8% 直接顶到 MAX_STAKE, 不按 Kelly 定仓。
+        # (用户观点: 这么高的溢价按 Kelly 只给几十块太少, 应满仓吃满 edge)
+        if edge >= HIGH_EV_FULL_STAKE:
+            stake = MAX_STAKE
         # 2026-09-19: 去掉 max(stake, MIN_STAKE) 兜底。之前把 Kelly<30 的冷门单硬抬到 30 投出
         # = 超 Kelly 数倍下冷门(方差击穿来源), 与「stake<30 不投」铁律语义相反。现在 <30 原样
         # 返回, 由调用方 _try_live_auto_bet/_try_auto_bet 的 `if stake < MIN_STAKE: return` 拦截。
