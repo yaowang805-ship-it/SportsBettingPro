@@ -1728,6 +1728,8 @@ def compare_bb_vs_oa(bb_matches, save_path=None):
         for g in _grps:
             for o in e.get(g, []):
                 _cur_ev.add(_opp_key(e, g, o))
+    # 过滤空 entry(persistence 过滤后所有盘口都被过滤掉的)
+    entries = [e for e in entries if any(e.get(g) for g in _grps)]
     try:
         _ev_hist_file.write_text(json.dumps(list(_cur_ev), ensure_ascii=False))
     except OSError:
