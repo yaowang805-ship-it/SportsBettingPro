@@ -827,9 +827,6 @@ class SecondLevelMonitor:
         # 2026-09-19 SBO 无覆盖降投注额: 只有 Betfair 单源(无 SBO 同向)的 edge 可靠性降一档, 半额
         if not sig.get("sbo_confirm"):
             stake = int(stake * 0.5)
-        # 2026-09-19 persistence(不延迟): 首次出现(无上一轮历史确认)半额, 持续出现全额定仓
-        if not sig.get("_persist"):
-            stake = int(stake * 0.5)
         sig["_stake"] = stake
         # 2026-09-12 纠正: 观察库必须采集所有运动及盘口的有效+EV信号(不只实盘方向)。
         # 之前误改"只记实盘方向"会堵死新盘口释放通道(非实盘方向永远没数据凑不到n>100)。
