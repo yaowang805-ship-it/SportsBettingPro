@@ -59,6 +59,9 @@ def _bankroll():
     return v
 MIN_STAKE = 30         # stake<30 拦截铁律
 REVERIFY_THRESHOLD = 3.0  # 2026-09-19 验价阈值(秒): lead-lag 窗口 2-3s(赔率秒级变动), 超过 3s 就重拉验价(逆向选择)
+SNAPSHOT_MAX_AGE = 15.0  # 2026-09-20 让球「只投快照单」阈值(秒): BB拉取到此刻>15s 判 stale 跳过。
+                         # 3s 太紧——管线实际 12s(BB拉取1.9s+公平价匹配+dc/btts), 每单都超3s被全拦;
+                         # 提到15s 让管线内的单能投, 只跳过真正 stale 的(>15s)
 
 # 滚球实盘(2026-09-07 起只投小球under, 2026-09-09 放大预算: 小球累计40笔ROI+14.2%稳定正)。滚动预算(结算后释放额度)。
 LIVE_BUDGET = float('inf')  # 2026-09-18 用户取消每日投注额上限: 滚球不再设总限额(由单场/单盘口300 + 账户余额兜底)
@@ -965,9 +968,9 @@ class SecondLevelMonitor:
         # 就重拉 BB 当前赔率验价——赔率可能已朝不利方向变动(逆向选择), 抢窗口期内(≤阈值)直接下单省 1-5s。
         _detect_ts = sig.get("bb_ts") or _t0
         _need_verify = (time.time() - _detect_ts) > REVERIFY_THRESHOLD
-        # 2026-09-19 用户规定: 让球只投「快照单」(BB拉取到此刻≤阈值), 慢单(>3s)跳过。
-        # 之前实证慢单在薄盘是逆向选择受害者(小球慢单33% vs 快单42%), 让球真edge只吃快单不吃慢单。
-        if _sub == "handicap" and _need_verify:
+        # 2026-09-20 用户规定: 让球只投「快照单」(BB拉取到此刻≤SNAPSHOT_MAX_AGE), stale(>15s)跳过。
+        # 之前3s太紧——管线实际12s, 每单都超3s被全拦(2026-09-20 实盘0单根因)。提到15s让管线内单能投。
+        if _sub == "handicap" and (time.time() - _detect_ts) > SNAPSHOT_MAX_AGE:
             print(f"  ⏭️ 让球慢单跳过(只投快照单, 已{time.time()-_detect_ts:.0f}s) {tag}", flush=True)
             return
         code, order_id, msg = place_single_bet(
