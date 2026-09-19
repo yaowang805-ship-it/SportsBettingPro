@@ -436,6 +436,7 @@ class SecondLevelMonitor:
         self._token_remind_until = 0.0  # token 失效钉钉提醒节流(30min)
         self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
         self._early_ws_ts = 0.0  # 早盘 WS 触发节流时间戳(2026-09-19)
+        self._opp_seen = {}  # (match_id, market_id, option_type) -> 首次+EV时间戳(persistence 持续性)
         self._token_ok_until = 0.0     # token 有效缓存到期时间戳(10min 缓存, 省每单 1s 探测)
         self._attempted = {}           # 滚球指纹去重: match_id -> {market_id -> 尝试时间戳}
         self._last_bet_time = 0.0      # 上次下单时间(非阻塞限频用)
@@ -817,6 +818,9 @@ class SecondLevelMonitor:
         # fetch_live_opportunities_oa 的 Betfair 中间价(实时), BB 赔率也是秒级拉的, 下单前不再
         # 重复 fetch_current_odds 验价(lead-lag 抢窗口, 直接下单)。
         stake = self._stake_for(sig)
+        # 2026-09-19 SBO 无覆盖降投注额: 只有 Betfair 单源(无 SBO 同向)的 edge 可靠性降一档, 半额
+        if not sig.get("sbo_confirm"):
+            stake = int(stake * 0.5)
         sig["_stake"] = stake
         # 2026-09-12 纠正: 观察库必须采集所有运动及盘口的有效+EV信号(不只实盘方向)。
         # 之前误改"只记实盘方向"会堵死新盘口释放通道(非实盘方向永远没数据凑不到n>100)。
@@ -1425,6 +1429,7 @@ class SecondLevelMonitor:
             "bsc": opp.get("sc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用, 2026-09-13)
             "bb_ts": opp.get("bb_ts"), "pin_ts": opp.get("pin_ts"),  # BB/Pin 数据拉取时间(推送展示)
             "platform": opp.get("platform", "BB"),  # BB/FB(推送时标注平台)
+            "sbo_confirm": opp.get("sbo_confirm", True),  # SBO 同向确认(False=无覆盖, 降投注额)
         }
 
     def _poll_live(self):
