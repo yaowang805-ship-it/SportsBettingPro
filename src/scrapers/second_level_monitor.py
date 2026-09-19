@@ -934,6 +934,11 @@ class SecondLevelMonitor:
         from src.betting.bb_auto_bet import global_bet_cooldown
         if global_bet_cooldown(15, 45) > 0:
             return
+        # 余额熔断(2026-09-19): 余额<1000 暂停投注, 结算后余额恢复再投
+        from src.betting.bb_auto_bet import check_balance_ok
+        if not check_balance_ok():
+            print(f"  💰 余额<1000 暂停投注 {tag}", flush=True)
+            return
         print(f"  🎯 滚球下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake}", flush=True)
         # 2026-09-19 时间条件验价(职业团队做法): 从 BB 赔率拉取(bb_ts)到此刻超过 REVERIFY_THRESHOLD 秒
         # 就重拉 BB 当前赔率验价——赔率可能已朝不利方向变动(逆向选择), 抢窗口期内(≤阈值)直接下单省 1-5s。

@@ -207,6 +207,12 @@ def auto_bet_flow(opportunities, token=None, domain=None):
         if _wait > 0:
             time.sleep(_wait)
 
+        # 余额熔断(2026-09-19): 余额<1000 暂停投注, 结算后余额恢复再投
+        from src.betting.bb_auto_bet import check_balance_ok
+        if not check_balance_ok():
+            failed.append({"home": disp_home, "away": disp_away, "reason": "余额<1000 暂停投注"})
+            continue
+
         # 下单(含注额上限检查)
         code, order_id, msg = place_single_bet(
             market_id, odds, option_type, stake, token=token, domain=domain, match_id=match_id)
