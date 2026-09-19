@@ -955,6 +955,11 @@ class SecondLevelMonitor:
         # 就重拉 BB 当前赔率验价——赔率可能已朝不利方向变动(逆向选择), 抢窗口期内(≤阈值)直接下单省 1-5s。
         _detect_ts = sig.get("bb_ts") or _t0
         _need_verify = (time.time() - _detect_ts) > REVERIFY_THRESHOLD
+        # 2026-09-19 用户规定: 让球只投「快照单」(BB拉取到此刻≤阈值), 慢单(>3s)跳过。
+        # 之前实证慢单在薄盘是逆向选择受害者(小球慢单33% vs 快单42%), 让球真edge只吃快单不吃慢单。
+        if _sub == "handicap" and _need_verify:
+            print(f"  ⏭️ 让球慢单跳过(只投快照单, 已{time.time()-_detect_ts:.0f}s) {tag}", flush=True)
+            return
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
             match_id=sig["match_id"], check_limit=True, verify_price=_need_verify,
