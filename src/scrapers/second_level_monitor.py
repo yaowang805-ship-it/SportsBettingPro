@@ -686,6 +686,11 @@ class SecondLevelMonitor:
             try:
                 clv = self._reverify_live_ev_oa(v["sig"])
                 if clv is None:
+                    # 2026-09-19 复验失败(盘口close/价差过大)重试一次, 3s后再试; 失败2次才弃(提升 LEV 采集率)
+                    if v.get("attempts", 0) < 1:
+                        v["attempts"] = v.get("attempts", 0) + 1
+                        v["ts"] = time.time()
+                        self._reversion_track[key] = v
                     continue
                 self._write_clv(key, clv)
             except Exception:
