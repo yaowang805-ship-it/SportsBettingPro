@@ -287,7 +287,7 @@ class OddsWSClient:
                 if self._last_seq is not None:
                     params["lastSeq"] = self._last_seq
                 url = f"{WS_URL}?{urlencode(params)}"
-                with connect(url, open_timeout=15, close_timeout=5) as ws:
+                with connect(url, open_timeout=15, close_timeout=5, ping_interval=30, ping_timeout=60) as ws:
                     backoff = 1.0  # 连上后重置退避
                     for raw in ws:
                         if self._stop:

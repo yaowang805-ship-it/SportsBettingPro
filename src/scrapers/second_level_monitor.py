@@ -84,6 +84,7 @@ OBS_STATE_FILE = ROOT / "data" / "storage" / "observe_release_state.json"
 DAILY_STAKE_LIMIT = 1000  # 新释放盘口当日累计投注额上限(2026-09-12 用户要求), 次日实盘ROI>4%解除
 PENDING_SETTLE_FILE = ROOT / "data" / "storage" / "pending_settle.json"  # 结算明细缓存(每小时汇总推一次)
 SETTLE_PUSH_INTERVAL = 3600  # 结算明细每小时汇总推一次(2026-09-12 用户要求, 不一场推一场)
+SETTLE_PUSH_TS_FILE = ROOT / "data" / "storage" / "settle_push_ts.txt"  # 上次结算推送时间戳(落盘, 重启不归零, 防重复推送)
 # 实盘结算流水(2026-09-19): 持久化已结算注, 带赔率区间, 供按格子拆盈亏(不再靠观察库倒推)
 SETTLED_LOG_FILE = ROOT / "data" / "storage" / "live_settled_log.json"
 
@@ -434,7 +435,13 @@ class SecondLevelMonitor:
         self._attempted = {}           # 滚球指纹去重: match_id -> {market_id -> 尝试时间戳}
         self._last_bet_time = 0.0      # 上次下单时间(非阻塞限频用)
         self._bet_delay = 0.0          # 下一单需等待的随机间隔(10-15s, 每次下单后重抽)
-        self._last_settle_push = 0.0   # 上次结算汇总推送时间(每小时推一次, 2026-09-12)
+        # 上次结算汇总推送时间(每小时推一次, 2026-09-12)。落盘读取, 重启不归零 → 防「每次重启都立即重推结算」。
+        self._last_settle_push = 0.0
+        try:
+            if SETTLE_PUSH_TS_FILE.exists():
+                self._last_settle_push = float(SETTLE_PUSH_TS_FILE.read_text().strip() or 0)
+        except (OSError, ValueError):
+            pass
         self._reversion_track = {}     # CLV 追踪: (match_id, market_id, option_type) -> {sig, ts}
 
     def refresh_cache(self):
@@ -1406,6 +1413,10 @@ class SecondLevelMonitor:
         if pending and time.time() - self._last_settle_push >= SETTLE_PUSH_INTERVAL:
             self._push_settle_summary(pending)
             self._last_settle_push = time.time()
+            try:
+                SETTLE_PUSH_TS_FILE.write_text(str(self._last_settle_push))  # 落盘, 重启不归零
+            except OSError:
+                pass
 
     def _token_ok(self):
         """下单前探 token 有效性(10min 缓存)。失效自动续期(读浏览器), 续不到发钉钉提醒。"""
