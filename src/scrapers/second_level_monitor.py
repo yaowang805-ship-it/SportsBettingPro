@@ -1438,24 +1438,6 @@ class SecondLevelMonitor:
                 self._try_live_auto_bet(sig)
         return len(opps)
 
-    def _ws_changed(self):
-        """WS 变动队列是否有 sharp 赔率变动(触发立即 poll)。节流: 3s 内只触发一次。
-
-        2026-09-19: sharp(SBO/Betfair) 一变动就立即拉 BB 比价, 抢 lead-lag 窗口,
-        不等 2s 轮询。变动队列由 odds_ws._on_message 填充(同进程)。
-        """
-        try:
-            from src.scrapers.odds_ws import get_recent_changes
-            changes = get_recent_changes()
-            if not changes:
-                return False
-            if time.time() - self._ws_trigger_ts < 3.0:
-                return False  # 3s 节流(WS 秒级变动风暴)
-            self._ws_trigger_ts = time.time()
-            return True
-        except Exception:
-            return False
-
     def _consume_early_ws_changes(self, changes):
         """早盘 WS 触发: prematch sharp 变动 → 匹配 BB → 单场比价 → 下单(实时验价)。
 
