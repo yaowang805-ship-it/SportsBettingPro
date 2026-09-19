@@ -61,6 +61,9 @@ OBS_CLV_MIN = 2.0          # 早盘释放中位CLV阈值(>2%): 职业sharp选手
 OBS_WINRATE_EDGE_MIN = 3.0 # 赢率>隐含(差>3pp 才释放)。2026-09-15 0→3pp: 观察库整体负edge(逆向选择),
                             # 差0pp会把打平的噪声格子释放; 对齐实盘 REAL_WINRATE_EDGE_MIN=3pp 去噪声
 REAL_WINRATE_EDGE_MIN = 3.0  # 实盘主开关/方向释放赢率vs隐含差值阈值(差>3pp 去噪声)
+LIQUIDITY_MAX_SPREAD = 6.0   # Betfair 流动性门槛(2026-09-19): 格子中位 back-lay 价差 ≥6% 判薄盘,
+                             # 公平价/CLV 不可信(低流动性联赛 Betfair 高估冷门方向 → 假溢价), 不采信不释放。
+                             # 6% 是初值(基于「让球真edge价差<3% vs 大小球假edge价差6~15%」反推), 待攒 spread 数据后标定
 
 # 放弃的特殊盘口(2026-09-15 用户决定): 这些盘口 margin 15%+ (vs 主盘口 3-8%), 收盘线不 sharp,
 # 且 clv_collector 里 close_fair 用的是 proportional devig(非 Shin), CLV 虚高无意义。
@@ -443,9 +446,9 @@ def load_observe_winrate():
     粒度「运动×盘口×方向×赔率区间×来源」: 早盘聚合所有联赛(scope=early), 滚球(scope=live);
     方向用 _direction 归一化; 赔率区间用 _odds_interval(BB赔率分4档)。
     """
-    by = defaultdict(lambda: {"won": 0, "lost": 0, "inv_sum": 0.0, "stake": 0.0, "profit": 0.0})
+    by = defaultdict(lambda: {"won": 0, "lost": 0, "inv_sum": 0.0, "stake": 0.0, "profit": 0.0, "spreads": []})
 
-    def _feed(k, result, odds, stake, profit):
+    def _feed(k, result, odds, stake, profit, spread=None):
         if result not in ("won", "lost") or not odds or odds <= 1.0:
             return
         d = by[k]
@@ -456,13 +459,15 @@ def load_observe_winrate():
         d["inv_sum"] += 1.0 / odds
         d["stake"] += stake
         d["profit"] += profit
+        if spread is not None:
+            d["spreads"].append(float(spread))
 
     for b in _read_paper_bets():
         sm = b.get("sub_market") or "?"
         _iv = _odds_interval(_f(b.get("bb_odds")))
         _feed((b.get("sport") or "?", sm, _direction(b.get("designation"), sm), _iv, SCOPE_EARLY),
               b.get("result"), _f(b.get("fair_price")) or _f(b.get("bb_odds")),
-              _f(b.get("stake")) or 0, _f(b.get("profit")) or 0)
+              _f(b.get("stake")) or 0, _f(b.get("profit")) or 0, b.get("spread"))
 
     for b in _read_live_paper_bets():
         sport = BB_SPORT_MAP.get(b.get("sport"))
@@ -472,18 +477,20 @@ def load_observe_winrate():
         _iv = _odds_interval(_f(b.get("bb_odds")))
         _feed((sport, sm, _direction(b.get("designation"), sm), _iv, SCOPE_LIVE),
               b.get("result"), _f(b.get("fair")) or _f(b.get("bb_odds")),
-              _f(b.get("stake")) or 0, _f(b.get("profit")) or 0)
+              _f(b.get("stake")) or 0, _f(b.get("profit")) or 0, b.get("spread"))
 
     out = {}
     for k, d in by.items():
         n = d["won"] + d["lost"]
         if n == 0:
             continue
+        _spreads = sorted(d["spreads"])
         out[k] = {
             "n": n,
             "winrate": d["won"] / n * 100.0,
             "implied": d["inv_sum"] / n * 100.0,
             "roi": d["profit"] / d["stake"] * 100.0 if d["stake"] > 0 else 0.0,
+            "median_spread": _spreads[len(_spreads) // 2] if _spreads else None,
         }
     return out
 
@@ -654,7 +661,12 @@ def main():
         if sport == "football" and interval == ">5.0":
             observe_blocked.append([sport, sm, dr, interval, "early"])
             continue
-        _roi = obs_winrate.get((sport, sm, dr, interval, "early"), {}).get("roi", 0.0)
+        _cell = obs_winrate.get((sport, sm, dr, interval, "early"), {})
+        _roi = _cell.get("roi", 0.0)
+        _mspread = _cell.get("median_spread")
+        if _mspread is not None and _mspread >= LIQUIDITY_MAX_SPREAD:
+            observe_blocked.append([sport, sm, dr, interval, "early"])  # 2026-09-19 薄盘拦(公平价/CLV不可信)
+            continue
         if med > OBS_CLV_MIN and n >= OBS_N_MIN and _roi > 0:
             observe_released.append([sport, sm, dr, interval, "early"])
         else:
@@ -671,7 +683,12 @@ def main():
     for (sport, sm, dr, interval), (med, n) in sorted(live_clv.items()):
         if (sport, sm, dr) in _manual_dirs:
             continue  # 已验证方向, 数据驱动不拦(用户显式开放, 全区间)
-        _roi = obs_winrate.get((sport, sm, dr, interval, "live"), {}).get("roi", 0.0)
+        _cell = obs_winrate.get((sport, sm, dr, interval, "live"), {})
+        _roi = _cell.get("roi", 0.0)
+        _mspread = _cell.get("median_spread")
+        if _mspread is not None and _mspread >= LIQUIDITY_MAX_SPREAD:
+            observe_blocked.append([sport, sm, dr, interval, "live"])  # 2026-09-19 薄盘拦(公平价/CLV不可信)
+            continue
         if med > OBS_CLV_MIN and n >= OBS_N_MIN and _roi > 0:
             observe_released.append([sport, sm, dr, interval, "live"])
         else:
