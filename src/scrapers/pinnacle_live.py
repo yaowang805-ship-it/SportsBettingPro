@@ -567,82 +567,84 @@ def fetch_live_opportunities_oa(threshold=3.0):
     只处理主流盘口 1x2/hc/ou(带线匹配), 特殊盘口不走实盘。
     """
     from src.scrapers.odds_api_io import fair_price_bb
+    from concurrent.futures import ThreadPoolExecutor
     bb = fetch_bb_live_matches(platform="BB")
     _bb_ts = time.time()
-    opps = []
+
+    # 收集任务(比赛×盘口)
+    tasks = []
     for bmid, b in bb.items():
         for mk in b["markets"]:
             sub = mk["sub"]; d = mk["direction"]
             if not d or sub not in ("1x2", "hc", "ou", "dc", "btts"):
                 continue
-            bb_odds = mk["odds"]
-            res = fair_price_bb(b["home_en"], b["away_en"], b["sport"], sub, status="live")
-            if not res or not res["fair"]:
-                continue
-            fair = res["fair"]
-            # 方向 → 公平价 key
-            if sub == "1x2":
-                idx = {"主": "home", "和": "draw", "客": "away"}
-            elif sub == "hc":
-                idx = {"主": "home", "客": "away"}
-            elif sub == "dc":
-                idx = {"主/和": "1X", "客/和": "X2", "主/客": "12"}
-            elif sub == "btts":
-                idx = {"双方进球": "yes", "非双方进球": "no"}
-            else:  # ou
-                idx = {"大": "over", "小": "under"}
-            k = idx.get(d)
-            fair_p = fair.get(k)
-            if not fair_p or fair_p <= 1:
-                continue
-            # hc/ou 线匹配: BB 线须 ≈ Betfair 线(否则比的是不同线的价, 假EV)
-            if sub in ("hc", "ou") and mk.get("line") is not None and fair.get("line") is not None:
-                if abs(float(mk["line"]) - float(fair["line"])) > 0.25:
-                    continue
-            ev = (bb_odds - fair_p) / fair_p * 100.0
-            # 2026-09-19 SBO 同向确认: 同向采信; 不同向进观察库(标注 diff, 不下单, 供统计验证同向/不同向赛果)
-            _conf = res.get("confidence")
-            _conf_p = _conf.get(k) if _conf else None
-            _sbo_dir = 'none' if _conf_p is None else ('same' if _conf_p > fair_p else 'diff')
-            if _sbo_dir == 'diff':
-                opps.append({
-                    "bb_match_id": bmid,
-                    "home": b.get("home_cn") or b["home_en"],
-                    "away": b.get("away_cn") or b["away_en"],
-                    "league_cn": b.get("league_cn", ""),
-                    "sport": b["sport"],
-                    "sub": sub, "direction": d,
-                    "sbo_confirm": False, "sbo_direction": "diff",
-                    "bb_odds": bb_odds, "fair": fair_p, "ev": round(ev, 2), "pin_raw": 0,
-                    "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
-                    "pin_matchup_id": res.get("event_id"),
-                    "spread": res.get("spread"),  # 2026-09-19 流动性门槛: back-lay 价差
-                    "league_id": None,
-                    "max_stake": 0,
-                    "sc": b.get("sc"),
-                    "bb_ts": _bb_ts, "pin_ts": _bb_ts,
-                    "platform": "BB",
-                })
-                continue
-            if ev < threshold or ev > 12.0:
-                continue
-            opps.append({
-                "bb_match_id": bmid,
-                "home": b.get("home_cn") or b["home_en"],
-                "away": b.get("away_cn") or b["away_en"],
-                "league_cn": b.get("league_cn", ""),
-                "sport": b["sport"],
-                "sub": sub, "direction": d,
-                "sbo_confirm": _sbo_dir == 'same', "sbo_direction": _sbo_dir,
-                "bb_odds": bb_odds, "fair": fair_p, "ev": round(ev, 2), "pin_raw": 0,
-                "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
-                "pin_matchup_id": res.get("event_id"),
-                "league_id": None,
-                "max_stake": 0,
-                "sc": b.get("sc"),
-                "bb_ts": _bb_ts, "pin_ts": _bb_ts,
-                "platform": "BB",
-            })
+            tasks.append((bmid, b, mk))
+
+    def _process(task):
+        """单个 (比赛,盘口) → 机会列表。并发执行(2026-09-20), 公平价匹配 11s→2-3s。"""
+        bmid, b, mk = task
+        sub = mk["sub"]; d = mk["direction"]
+        bb_odds = mk["odds"]
+        res = fair_price_bb(b["home_en"], b["away_en"], b["sport"], sub, status="live")
+        if not res or not res["fair"]:
+            return []
+        fair = res["fair"]
+        if sub == "1x2":
+            idx = {"主": "home", "和": "draw", "客": "away"}
+        elif sub == "hc":
+            idx = {"主": "home", "客": "away"}
+        elif sub == "dc":
+            idx = {"主/和": "1X", "客/和": "X2", "主/客": "12"}
+        elif sub == "btts":
+            idx = {"双方进球": "yes", "非双方进球": "no"}
+        else:  # ou
+            idx = {"大": "over", "小": "under"}
+        k = idx.get(d)
+        fair_p = fair.get(k)
+        if not fair_p or fair_p <= 1:
+            return []
+        # hc/ou 线匹配: BB 线须 ≈ Betfair 线(否则比的是不同线的价, 假EV)
+        if sub in ("hc", "ou") and mk.get("line") is not None and fair.get("line") is not None:
+            if abs(float(mk["line"]) - float(fair["line"])) > 0.25:
+                return []
+        ev = (bb_odds - fair_p) / fair_p * 100.0
+        _conf = res.get("confidence")
+        _conf_p = _conf.get(k) if _conf else None
+        _sbo_dir = 'none' if _conf_p is None else ('same' if _conf_p > fair_p else 'diff')
+        base = {
+            "bb_match_id": bmid,
+            "home": b.get("home_cn") or b["home_en"],
+            "away": b.get("away_cn") or b["away_en"],
+            "league_cn": b.get("league_cn", ""),
+            "sport": b["sport"],
+            "sub": sub, "direction": d,
+            "bb_odds": bb_odds, "fair": fair_p, "ev": round(ev, 2), "pin_raw": 0,
+            "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
+            "pin_matchup_id": res.get("event_id"),
+            "spread": res.get("spread"),  # 2026-09-19 流动性门槛: back-lay 价差
+            "league_id": None,
+            "max_stake": 0,
+            "sc": b.get("sc"),
+            "bb_ts": _bb_ts, "pin_ts": _bb_ts,
+            "platform": "BB",
+        }
+        if _sbo_dir == 'diff':
+            base["sbo_confirm"] = False
+            base["sbo_direction"] = "diff"
+            return [base]
+        if ev < threshold or ev > 12.0:
+            return []
+        base["sbo_confirm"] = (_sbo_dir == 'same')
+        base["sbo_direction"] = _sbo_dir
+        return [base]
+
+    opps = []
+    if tasks:
+        # 并发公平价匹配(2026-09-20): 之前串行 ~11s, 现并发 ~2-3s。线程安全: get_odds 读 WS 缓存有 _lock,
+        # _events_cache/_odds_cache 是模块级 dict, 并发写是良性竞态(同值覆盖)。
+        with ThreadPoolExecutor(max_workers=min(len(tasks), 8)) as ex:
+            for out in ex.map(_process, tasks):
+                opps.extend(out)
     return opps
 
 
