@@ -526,6 +526,7 @@ class SecondLevelMonitor:
                 "bsc": sig.get("bsc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用)
                 "bb_odds": sig["bb_odds"], "fair": sig["fair"], "ev": sig["ev"],
                 "stake": sig.get("_stake", 0), "settled": False, "result": None, "profit": None,
+                "anchor": "betfair",  # 2026-09-19 锚点口径标记: 9-18后 Betfair 公平价
             })
             LIVE_PAPER_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1))
             return True

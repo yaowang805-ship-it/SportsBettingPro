@@ -1,122 +1,69 @@
-# SportsBettingPro — 指挥官作战手册
+# SportsBettingPro — 指挥官作战手册（2026-09-19 更新）
 
-## 当前策略（2026-07-31 V4 更新）
+## 当前策略
 
-**核心方向：BB体育 vs Pinnacle +EV（比价套利）**
-- BB体育（早盘赔率）vs Pinnacle（公平价参考）→ +EV 机会
-- 发现机会 → 钉钉推送 → 真实投注（用户执行）
-- **目标：月利润 ¥50,000**
-
-**不做什么：**
-- ❌ 不做 ML 预测模型
-- ❌ 不碰中国足球联赛
-- ❌ the-odds-api 不用于比价（有 quota），已从流水线移除
-- ❌ 不重复已经完成的工作（先查记忆）
-- ❌ 乒乓/羽/排/拳击 零Pinnacle数据运动封杀 (V5.1)
-- ❌ ITF/Challenger/W系列网球封杀 (V5)
-
-**铁律（用户 2026-08-16 明确要求，永远执行）：**
-- 🔴 **遇到问题永远先解决根因，绝不逃避/移除/封杀了事。** 盘口出问题先查 API 原始结构确认根因，结构不对等就做正确转换对齐，结构一样就修提取/匹配，实在无法对齐才降级且必须在代码注释写清原因。
-- 🔴 **Token 效率铁律（2026-08-25 用户明确要求）：深度思考最耗 token，按价值分流——例行查询/简单问题不深想，只有真 bug 才深想一次到位；少重复读文件、精准 grep 定位、合并命令、回复只给结论+关键数字。**
+**核心：BB体育（软书/猎物） vs Betfair Exchange（公平价）+ Sbobet（置信度）比价套利**
+- 公平价 = Betfair Exchange 中间价（odds-api.io，P2P 无抽水）；Sbobet = 置信度开关（不进定价，只确认方向）
+- 两种盈利方式：① **lead-lag 时间差**（SBO/Betfair 先动 → BB 滞后跟随 → 抢窗口）② **定价偏差散户迎合**（BB 系统性迎合散户）
+- 用户只在 BB 体育投注，Betfair 只当尺子（不扣佣金）
 
 ## 数据源
 
 | 用途 | 数据源 | 方式 | 状态 |
 |---|---|---|---|
-| 投注平台赔率 | BB体育 (api.infv1.com) | 直接 HTTP API | ✅ 仅BB |
-| 公平价参考 | Pinnacle (guest.api.arcadia.pinnacle.com) | HTTP API | ✅ |
-| 赛果/结算 | ESPN + football-data.org + 直播吧 | 多源聚合 | ✅ |
-| **权重标定** | **football-data.co.uk Pinnacle 收盘** | **111K场/20联赛/13季** | ✅ |
+| 猎物赔率 | BB体育 + FB体育（同账户） | HTTP API（getList/下单） | ✅ |
+| 公平价 | Betfair Exchange（odds-api.io） | WS 实时推送 + REST 兜底 | ✅ |
+| 置信度 | Sbobet（odds-api.io） | WS 实时推送 | ✅ |
+| Pin | guest API | 已暂停（15min CDN 陈旧，只留 CLV 差异） | ⏸️ |
 
-## 系统架构
+## 架构
 
 ```
-BB体育 API (api.infv1.com, user-token) ──→ bb_api_fetcher.py ──→ bb_odds_extracted.json
-                                   └── type=2 (72小时), requests 直连
-                                              ↓
-Pinnacle API ─────────────────────→ bb_vs_pinnacle.py ──→ bb_vs_pinnacle_comparison.json
-                                   ├── period=0 → FT 对比
-                                   └── period=1 → HT 对比
-                                              ↓
-                              bb_ev_push.py → 钉钉推送
-                                   ├── ≥2% EV, 按开赛时间排序
-                                   ├── DNS 绕过直连（真实IP+SNI）
-                                   └── --no-bet = 只推送不投注
+odds-api.io WS（Sbobet+Betfair, live+prematch）──→ odds_ws.py 缓存（落盘 odds_ws_cache.json）
+                                                        ↓ get_odds 优先读 WS 缓存(0ms)
+  ┌─ 滚球：second_level_monitor.py（getList type=1 每 2s → 匹配 Betfair 公平价 → 下单）
+  └─ 早盘：bb_vs_pinnacle.py（bb_odds_extracted.json 快照 → Betfair 公平价 → 机会入库）
+                                ↓
+                   bb_auto_bet.py place_single_bet（下单 + 验价 + 二次验价）
 ```
 
-### 操作流程
-
-```bash
-# 全量提取 → 对比 → 推送（第一次扫描含投注）
-python3 -m src.scrapers.bb_api_fetcher --all-sports
-python3 -m src.scrapers.bb_vs_pinnacle
-python3 -m src.report.bb_ev_push
-
-# 后续扫描只推送（当日预算已用）
-python3 -m src.report.bb_ev_push --no-bet
-```
-
-## 当前参数
+## 关键参数（2026-09-19）
 
 | 参数 | 值 | 说明 |
 |---|---|---|
-| 日预算 | ¥20,000 | 稳定不变 |
-| Kelly 分数 | 0.50 | 稳妥半凯利 |
-| 单注上限 | 6% (¥1200) | |
-| 每日最多 | 100 笔 | 质量优先 |
-| EV 上限 | 12% (动态) | max(12, (odds-1)×20) |
+| bankroll 基准 | **¥10000**（读 `data/storage/bankroll_base.txt`） | 固定基准，不随余额缩水（余额×30% 是顺周期陷阱） |
+| Kelly 分数 | 0.50 | 半凯利（单一事实来源 config.constants） |
+| 滚球单注上限 | ¥300（MAX_STAKE） | 高溢价可顶格 |
+| 早盘 cap | 观察库释放 150/300 | observe_release_caps |
+| stake<30 不投 | 铁律 | 冷门单 Kelly<30 直接跳过（不兜底抬到 30） |
+| 回撤熔断 | 7天亏超¥1000→半仓 | 已加归零时间戳（drawdown_reset_ts.txt） |
 
-### V4 权重矩阵 (`config/weight_matrix_v4.py`) — 全量 Pinnacle 历史数据驱动
+## 铁律（永远执行）
 
-**核心公式**: `半凯利仓位% = max(0, 实际胜率×BB赔率-1) / (BB赔率-1) × 0.5`
-**数据源**: **完全外部数据，零笔结算数据参与**
-
-| 运动 | 数据源 | 数据量 | 赔率区间数 |
-|---|---|---|---|
-| ⚽ 足球 1X2 | football-data.co.uk Pinnacle 收盘 | **111,225 场** (20联赛×13季) | 30 细桶 |
-| ⚽ 足球 OU | football-data.co.uk Pinnacle 收盘 | **46,727 场** | 30 细桶 |
-| 🎾 网球 | Pinnacle 收盘赔率 | **5,013 场** (5赛事级) | 16 细桶 |
-| 🏀 NBA | 模型回测 | **57,504 场** (15季) | 14 细桶 |
-| ⚾ MLB | SBR + OddsPortal + Vegas | **70,905 场** (16 桶) | 16 细桶 |
-| 🏈 NFL | SBR 收盘赔率 | **5,904 场** (2011-2021) | 27 细桶 |
-| 🏒 NHL | Kaggle ESPN 收盘 | **6,817 场** (2004-2025) | 10 细桶 |
-| 🥊 拳击 | Betfair | **663 场** | 保守 |
-| 🥋 UFC | BookMaker 收盘 | **521 场** | 保守 |
-| 🏀 非NBA篮球 | Betfair | **24,000 场** | fallback |
-
-### 投注公式
-
-```
-投注额 = 日预算 × V4_Kelly% × Kelly倍率 × 蒸汽 × 连亏
-```
-
-其中 V4_Kelly% **已经是最优解**（Pinnacle 历史数据 + BB 溢价校准），Kelly 倍率/蒸汽/连亏仅做边际调整。
-
-### 封杀规则
-
-| 规则 | 原因 |
-|---|---|
-| DC (双重机会) | Pinnacle 无对应盘口，0% 历史胜率 |
-| HTFT (半全场) | BB/Pin 定义不一致 |
-| MMA/拳击 | V4.2+ 条件允许: name匹配+高分+低赔率 → 小额（不再封杀） |
-| 赔率 >20.0 | 111K Pinnacle 数据确认全部负期望 |
+- 🔴 **遇到问题先解决根因，绝不逃避/移除/封杀**（结构不对等做转换对齐，实在无法才降级并写清原因）
+- 🔴 **永不建模型**：只用 BB vs Betfair/SBO 比价套利，CLV 只作验证工具
+- 🔴 **换节点由用户手动**：self_heal 只告警不自动换节点
+- 🔴 **stake<30 不投**，<30 的冷门单跳过
+- 🔴 **同场同盘口只下一注**（互斥锁 check_sub_market_bet）
+- 🔴 **Token 效率**：按价值分流，简单问题直接答，改动只改必要处
 
 ## 关键文件
 
-- `config/weight_matrix_v4.py` — **V4 权重矩阵（全量外部数据驱动）**
-- `data/pinnacle_historical/` — 381 个 Pinnacle 历史 CSV (Git LFS 管理大文件)
-- `src/scrapers/bb_api_fetcher.py` — BB API 直连提取
-- `src/scrapers/bb_vs_pinnacle.py` — 对比引擎（去抽水公平价, FT+HT）
-- `src/report/bb_ev_push.py` — 钉钉推送 + V4 投注
-- `src/betting/bb_virtual_bet.py` — 虚拟投注
-- `src/monitor/auto_settle.py` — ESPN 自动结算
-- `config/dingtalk.py` — 钉钉直连
+- `src/scrapers/odds_api_io.py` — Betfair/SBO 公平价提取（含两路归一化 `_fair_two_way`）
+- `src/scrapers/odds_ws.py` — WS 实时推送缓存
+- `src/scrapers/bb_vs_pinnacle.py` — 早盘比价
+- `src/scrapers/second_level_monitor.py` — 滚球监控 + 下单（含熔断/bankroll/互斥）
+- `src/scrapers/pinnacle_live.py` — 滚球数据拉取（fetch_bb_live_matches 等）
+- `src/betting/bb_auto_bet.py` — 下单（place_single_bet + 二次验价 + 互斥锁）
+- `data/storage/bankroll_base.txt` — 本金基准（手动改）
+- `data/storage/bet_sub_record.json` — 同场同盘口互斥记录
 
-## 关键决策
+## 最近关键改动（2026-09-19）
 
-1. **BB API 直连** — `api.infv1.com` (BB体育真实API, user-token头)
-2. **type=2** — 返回未来72小时比赛
-3. **钉钉直连** — 硬编码真实IP `161.117.107.66` + SNI
-4. **置信度标记** — ✓ = 队名匹配(≥0.95), ◷ = 时间匹配
-5. **止损机制** — 连输3天预算减半，5天停投
-6. **权重矩阵** — 全量 Pinnacle 外部数据驱动，逐联赛逐赔率区间独立
+1. 公平价两路归一化（修 hc/ou 隐含和>1 致对立下注根因）
+2. 同场同盘口互斥锁（防让球主↔客、大小 over↔under 同时下）
+3. 下单失败二次验价（重拉实时价，edge 还在则重试）
+4. bankroll 改固定基准 ¥10000（修「余额×30%」顺周期陷阱）
+5. 熔断归零重算（drawdown_reset_ts.txt）
+
+详见记忆 [[fair-price-mutex-reverify-20260919]]、[[bankroll-fixed-base-20260919]]、[[pin-vs-betfair-accuracy-20260919]]

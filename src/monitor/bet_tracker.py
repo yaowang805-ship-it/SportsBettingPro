@@ -134,6 +134,7 @@ def record_bets(opportunities: list, push_label: str = ""):
             "settle_source": None,
             "settle_attempts": 0,
             "last_settle_attempt": None,
+            "anchor": "betfair",  # 2026-09-19 锚点口径标记: 9-18后 Betfair 公平价
         }
         data["bets"].append(bet)
         new_count += 1

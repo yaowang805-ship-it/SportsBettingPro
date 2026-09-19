@@ -266,6 +266,7 @@ def settle_paper(dry_run: bool = False) -> dict:
             "settled_at": datetime.now(timezone.utc).isoformat(),
             "is_paper": True,
             "source": "validate",
+            "anchor": "betfair",  # 2026-09-19 锚点口径标记: 9-18后 Betfair 公平价
         }
         settled_map[k] = rec
         settled_this_run.append(rec)

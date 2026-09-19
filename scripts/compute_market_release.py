@@ -413,25 +413,27 @@ def load_real_winrate_direction_window():
 
 
 def _read_paper_bets():
-    """读早盘观察库(paper_bets.json)记录。"""
+    """读早盘观察库(paper_bets.json)记录(只 Betfair 口径, 2026-09-19 锚点分区)。"""
     if not PAPER.exists():
         return []
     try:
         raw = json.loads(PAPER.read_text())
     except (json.JSONDecodeError, OSError):
         return []
-    return raw.get("bets", []) if isinstance(raw, dict) else raw
+    bets = raw.get("bets", []) if isinstance(raw, dict) else raw
+    return [b for b in bets if b.get("anchor") == "betfair"]
 
 
 def _read_live_paper_bets():
-    """读滚球观察库(live_paper_bets.json)记录。"""
+    """读滚球观察库(live_paper_bets.json)记录(只 Betfair 口径, 2026-09-19 锚点分区)。"""
     if not LIVE_PAPER.exists():
         return []
     try:
         raw = json.loads(LIVE_PAPER.read_text())
     except (json.JSONDecodeError, OSError):
         return []
-    return raw.get("bets", []) if isinstance(raw, dict) else raw
+    bets = raw.get("bets", []) if isinstance(raw, dict) else raw
+    return [b for b in bets if b.get("anchor") == "betfair"]
 
 
 def load_observe_winrate():
