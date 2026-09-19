@@ -273,7 +273,10 @@ def fetch_live_fair_prices(sport_ids=LIVE_SPORT_IDS, use_file_cache=False):
     return result
 
 
-def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6), platform="BB"):
+_CMN_CACHE = {"ts": 0.0, "data": {}}  # 滚球中文名缓存(30s TTL, 仅钉钉展示, 2026-09-19)
+
+
+def fetch_bb_live_matches(sport_ids=(1, 3), platform="BB"):
     """BB/FB 滚球比赛。EN 拉英文队名(直配 Pin) + 提取盘口; CMN 拉中文队名/联赛名(展示用)。
 
     platform="BB" 用 BB 域名, "FB" 用 FB 域名(api.5c4r3.com)。两者同一账户 user-token,
@@ -303,9 +306,13 @@ def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6), platform="BB"):
             return []
 
     result = {}
-    for sid in sport_ids:
+    # 2026-09-19 优化: EN 并发拉取(足篮), 耗时从 9s 串行降到 ~1s
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=len(sport_ids)) as _ex:
+        _en_records = list(_ex.map(lambda _sid: (_sid, _fetch(_sid, "EN")), sport_ids))
+    for sid, _en_list in _en_records:
         # 1. EN: 英文队名 + 盘口提取(英文直配 Pin 用)
-        for m in _fetch(sid, "EN"):
+        for m in _en_list:
             ts = m.get("ts") or []
             if len(ts) < 2:
                 continue
@@ -349,14 +356,29 @@ def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6), platform="BB"):
                 "mc": (m.get("mc") or {}).get("s", 0),
                 "sc": sc,  # [主,客] 当前比分(让球按当前比分结算用)
             }
-        # 2. CMN: 补中文队名 + 中文联赛名(通知展示用)
-        for m in _fetch(sid, "CMN"):
-            ts = m.get("ts") or []
-            mid = int(m.get("id"))
-            if mid in result and len(ts) >= 2:
-                result[mid]["home_cn"] = ts[0].get("na", "")
-                result[mid]["away_cn"] = ts[1].get("na", "")
-                result[mid]["league_cn"] = (m.get("lg") or {}).get("na", "")
+    # 2. CMN: 中文队名/联赛名(仅钉钉展示, 30s 缓存降频, 不参与比价)
+    global _CMN_CACHE
+    if time.time() - _CMN_CACHE["ts"] > 30:
+        try:
+            with ThreadPoolExecutor(max_workers=len(sport_ids)) as _ex:
+                _cmn_records = list(_ex.map(lambda _sid: (_sid, _fetch(_sid, "CMN")), sport_ids))
+            _cmn_map = {}
+            for _sid, _cmn_list in _cmn_records:
+                for _m in _cmn_list:
+                    _ts = _m.get("ts") or []
+                    _mid = int(_m.get("id"))
+                    if len(_ts) >= 2:
+                        _cmn_map[(_sid, _mid)] = (_ts[0].get("na", ""), _ts[1].get("na", ""), (_m.get("lg") or {}).get("na", ""))
+            _CMN_CACHE = {"ts": time.time(), "data": _cmn_map}
+        except Exception:
+            pass
+    for _mid, _info in result.items():
+        _sid = _info["sport"]
+        if (_sid, _mid) in _CMN_CACHE["data"]:
+            _hc, _ac, _lc = _CMN_CACHE["data"][(_sid, _mid)]
+            _info["home_cn"] = _hc
+            _info["away_cn"] = _ac
+            _info["league_cn"] = _lc
     return result
 
 

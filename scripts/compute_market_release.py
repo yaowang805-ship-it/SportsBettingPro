@@ -270,7 +270,7 @@ def load_real_roi():
     except (json.JSONDecodeError, OSError):
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled"]
+            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
     return _agg_bets(bets, lambda b: (b.get("sport") or "?", b.get("sub_market") or "?"))
 
 
@@ -288,7 +288,7 @@ def load_real_roi_direction():
     except (json.JSONDecodeError, OSError):
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled"]
+            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
     return _agg_bets(bets, lambda b: (
         b.get("sport") or "?", b.get("sub_market") or "?",
         _direction(b.get("designation"), b.get("sub_market"))))
@@ -356,7 +356,7 @@ def load_real_winrate_market():
     except (json.JSONDecodeError, OSError):
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled"]
+            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
     return _winrate_agg(bets, lambda b: (b.get("sport") or "?", b.get("sub_market") or "?"))
 
 
@@ -369,7 +369,7 @@ def load_real_winrate_direction():
     except (json.JSONDecodeError, OSError):
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled"]
+            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
     return _winrate_agg(bets, lambda b: (
         b.get("sport") or "?", b.get("sub_market") or "?",
         _direction(b.get("designation"), b.get("sub_market"))))
@@ -384,7 +384,7 @@ def load_real_winrate_league():
     except (json.JSONDecodeError, OSError):
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled"]
+            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
     return _winrate_agg(bets, lambda b: (
         b.get("sport") or "?",
         (b.get("league") or "").strip() or "?",
@@ -400,7 +400,7 @@ def load_real_winrate_direction_window():
     except (json.JSONDecodeError, OSError):
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled"]
+            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
 
     def _key(b):
         w = _window(_f(b.get("match_epoch")), _ts(b.get("push_time")))
@@ -623,84 +623,19 @@ def main():
     market_roi = load_real_roi()
     market_roi_dir = load_real_roi_direction()  # 方向级 ROI(满7天提额用, 2026-09-18 修混方向bug)
     obs_winrate = load_observe_winrate()
-    market_winrate = load_real_winrate_market()
-    dir_winrate = load_real_winrate_direction()
-    league_winrate = load_real_winrate_league()
-    dir_window_winrate = load_real_winrate_direction_window()
     clv_med = load_clv_median()  # 早盘收盘线 CLV 中位(释放闸门, 2026-09-15)
     live_clv = load_live_clv()   # 滚球 LEV(下注后复验Pin价的CLV, 释放闸门, 2026-09-15)
 
-    # 主开关(2026-09-12 改赢率vs隐含): ROI 被注额加权+赔率结构扭曲(早盘三层根因), 判据统一为
-    # 赢率>隐含(真溢价)。market_roi 保留给「满7天提额」的实盘 ROI 判定(见下)。
+    # 2026-09-19 用户要求: 释放盘口不用实盘投注数据(不释放就没实盘=死循环), 只用观察库。
+    # 实盘释放通道(主开关/方向/时间窗/联赛)废弃, 全设空; 实盘 ROI 仅保留「满7天提额」。
     market_released = []
-    for (sport, sm), d in sorted(market_winrate.items()):
-        if d["n"] >= N_REAL_MIN and d["winrate"] > d["implied"] + _winrate_threshold(d["n"]):
-            # (2026-09-12 删除观察库ROI交叉验证护栏: 护栏是实盘ROI判据时代的产物,
-            #  观察库ROI负是假溢价体现非实盘赢率假正信号, 会误拦真溢价如football 1x2 +5.6pp)
-            market_released.append([sport, sm])
-
-    # 方向级细分(2026-09-12 改赢率vs隐含): 盘口级赢率掩盖方向级 edge。
-    # - direction_released: 整盘没过主开关, 但某方向赢率>隐含(如 1x2 客/平 真溢价)。
-    # - direction_blocked: 整盘已释放, 但某方向赢率<隐含(假溢价方向)。
-    released_set = {tuple(m) for m in market_released}
     direction_released = []
     direction_blocked = []
-    for (sport, sm, dr), d in sorted(dir_winrate.items()):
-        if d["n"] < DIR_N_MIN:
-            continue
-        if (sport, sm) in released_set:
-            if d["winrate"] < d["implied"] - _winrate_threshold(d["n"]):
-                direction_blocked.append([sport, sm, dr])
-        else:
-            if d["winrate"] > d["implied"] + _winrate_threshold(d["n"]):
-                direction_released.append([sport, sm, dr])
-
-    # 方向级 EV 门槛(2026-09-12 改赢率: 数据驱动, 替代 ROI 版)。
-    # 只对"释放的方向"(整盘释放盘口的正方向 + 方向级释放)设门槛, 赢率差越大门槛越低(下限3%职业底线)。
     direction_min_ev = []
-    released_dir_set = {tuple(x) for x in direction_released}
-    for (sport, sm, dr), d in sorted(dir_winrate.items()):
-        edge = d["winrate"] - d["implied"]
-        if edge <= 0:
-            continue
-        if (sport, sm) not in released_set and (sport, sm, dr) not in released_dir_set:
-            continue  # 既没整盘释放也没方向释放 → 不设门槛(不投)
-        thr = _dir_threshold(edge, d["n"])
-        if thr is not None:
-            direction_min_ev.append([sport, sm, dr, thr])
-
-    # 时间窗级封杀(2026-09-12 改赢率): 方向级赢率仍掩盖时间窗分化。
-    # 已释放方向里, 某时间窗赢率<隐含 强负的封杀该时间窗。
     direction_window_blocked = []
-    for (sport, sm, dr, w), d in sorted(dir_window_winrate.items()):
-        if d["n"] < DIR_N_MIN:
-            continue
-        # 只有"该方向是释放的"(整盘释放 或 方向级释放)才需要时间窗级封杀
-        if (sport, sm) not in released_set and (sport, sm, dr) not in released_dir_set:
-            continue
-        if d["winrate"] < d["implied"] - _winrate_threshold(d["n"]):
-            direction_window_blocked.append([sport, sm, dr, w])
-
-    # 时间窗级释放(2026-09-12 改赢率): 方向整体没释放, 但某时间窗赢率>隐含 强正。
     direction_window_released = []
-    for (sport, sm, dr, w), d in sorted(dir_window_winrate.items()):
-        if d["n"] < DIR_N_MIN:
-            continue
-        # 只有"该方向既没整盘释放也没方向级释放"时, 才需要时间窗级释放(已释放的无需重复)
-        if (sport, sm) in released_set or (sport, sm, dr) in released_dir_set:
-            continue
-        if d["winrate"] > d["implied"] + _winrate_threshold(d["n"]):
-            direction_window_released.append([sport, sm, dr, w])
-
-    # 联赛细化(2026-09-12 改赢率): 用联赛自己的赢率vs隐含覆盖主开关。
     league_released = []
     league_blocked = []
-    for (sport, lg, sm), d in sorted(league_winrate.items()):
-        if d["n"] >= N_REAL_MIN:
-            if d["winrate"] > d["implied"] + _winrate_threshold(d["n"]):
-                league_released.append([sport, lg, sm])
-            else:
-                league_blocked.append([sport, lg, sm])
 
     # 观察库释放(2026-09-12 用户要求): 结算样本 n>100 且 赢率>隐含 → 释放。
     # 粒度「运动×盘口×方向×赔率区间×来源」(2026-09-13 加赔率区间): 早盘聚合所有联赛(scope=early),
@@ -719,10 +654,8 @@ def main():
         if sport == "football" and interval == ">5.0":
             observe_blocked.append([sport, sm, dr, interval, "early"])
             continue
-        _wr = obs_winrate.get((sport, sm, dr, interval, "early"), {})
-        _edge = _wr.get("winrate", 0.0) - _wr.get("implied", 0.0)
-        _roi = _wr.get("roi", 0.0)
-        if med > OBS_CLV_MIN and n >= OBS_N_MIN and _edge > 0 and _roi > 0:
+        _roi = obs_winrate.get((sport, sm, dr, interval, "early"), {}).get("roi", 0.0)
+        if med > OBS_CLV_MIN and n >= OBS_N_MIN and _roi > 0:
             observe_released.append([sport, sm, dr, interval, "early"])
         else:
             observe_blocked.append([sport, sm, dr, interval, "early"])
@@ -738,10 +671,8 @@ def main():
     for (sport, sm, dr, interval), (med, n) in sorted(live_clv.items()):
         if (sport, sm, dr) in _manual_dirs:
             continue  # 已验证方向, 数据驱动不拦(用户显式开放, 全区间)
-        _wr = obs_winrate.get((sport, sm, dr, interval, "live"), {})
-        _edge = _wr.get("winrate", 0.0) - _wr.get("implied", 0.0)
-        _roi = _wr.get("roi", 0.0)
-        if med > OBS_CLV_MIN and n >= OBS_N_MIN and _edge > 0 and _roi > 0:
+        _roi = obs_winrate.get((sport, sm, dr, interval, "live"), {}).get("roi", 0.0)
+        if med > OBS_CLV_MIN and n >= OBS_N_MIN and _roi > 0:
             observe_released.append([sport, sm, dr, interval, "live"])
         else:
             observe_blocked.append([sport, sm, dr, interval, "live"])
