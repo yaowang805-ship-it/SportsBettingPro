@@ -587,10 +587,28 @@ def fetch_live_opportunities_oa(threshold=3.0):
                 if abs(float(mk["line"]) - float(fair["line"])) > 0.25:
                     continue
             ev = (bb_odds - fair_p) / fair_p * 100.0
-            # 2026-09-19 SBO 同向确认: BB 和 SBO 都偏离 Betfair 同向才采信(过滤 Betfair 单边噪音假高溢价)
+            # 2026-09-19 SBO 同向确认: 同向采信; 不同向进观察库(标注 diff, 不下单, 供统计验证同向/不同向赛果)
             _conf = res.get("confidence")
             _conf_p = _conf.get(k) if _conf else None
-            if _conf_p and _conf_p <= fair_p:  # SBO 不同向(SBO 认为该方向不比 Betfair 更可能) → 跳过
+            _sbo_dir = 'none' if _conf_p is None else ('same' if _conf_p > fair_p else 'diff')
+            if _sbo_dir == 'diff':
+                opps.append({
+                    "bb_match_id": bmid,
+                    "home": b.get("home_cn") or b["home_en"],
+                    "away": b.get("away_cn") or b["away_en"],
+                    "league_cn": b.get("league_cn", ""),
+                    "sport": b["sport"],
+                    "sub": sub, "direction": d,
+                    "sbo_confirm": False, "sbo_direction": "diff",
+                    "bb_odds": bb_odds, "fair": fair_p, "ev": round(ev, 2), "pin_raw": 0,
+                    "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
+                    "pin_matchup_id": res.get("event_id"),
+                    "league_id": None,
+                    "max_stake": 0,
+                    "sc": b.get("sc"),
+                    "bb_ts": _bb_ts, "pin_ts": _bb_ts,
+                    "platform": "BB",
+                })
                 continue
             if ev < threshold or ev > 12.0:
                 continue
@@ -601,7 +619,7 @@ def fetch_live_opportunities_oa(threshold=3.0):
                 "league_cn": b.get("league_cn", ""),
                 "sport": b["sport"],
                 "sub": sub, "direction": d,
-                "sbo_confirm": bool(_conf_p),  # SBO 同向确认=True, 无覆盖=False(降投注额用)
+                "sbo_confirm": _sbo_dir == 'same', "sbo_direction": _sbo_dir,
                 "bb_odds": bb_odds, "fair": fair_p, "ev": round(ev, 2), "pin_raw": 0,
                 "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
                 "pin_matchup_id": res.get("event_id"),
