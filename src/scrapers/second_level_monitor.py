@@ -1625,9 +1625,11 @@ class SecondLevelMonitor:
             from src.scrapers.odds_ws import OddsWSClient
             self._odds_ws = OddsWSClient(
                 sport="football,basketball,tennis,american-football",
-                markets=("ML", "Spread", "Totals"))  # status=None: live+prematch 一起推(早盘临盘也用实时)
+                markets=("ML", "Spread", "Totals", "Double Chance", "Both Teams To Score"))
+            # 2026-09-20 加 Double Chance/BTTS: dc/btts 之前不在 WS 缓存, 全走 REST 兜底(公平价匹配10-17s
+            # + 费5000/小时限额), 加进 WS 订阅后走缓存 0ms。
             self._odds_ws.start()
-            print("[slm] 已启动 odds-api.io WebSocket 实时赔率订阅(足球/篮球/网球/美足 live+prematch, ML/Spread/Totals)", flush=True)
+            print("[slm] 已启动 odds-api.io WebSocket 实时赔率订阅(足球/篮球/网球/美足 live+prematch, ML/Spread/Totals/DC/BTTS)", flush=True)
         except Exception as e:
             self._odds_ws = None
             print(f"[slm] WebSocket 订阅启动失败(回退 REST 轮询): {type(e).__name__} {str(e)[:80]}", flush=True)
