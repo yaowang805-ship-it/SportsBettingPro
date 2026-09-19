@@ -31,6 +31,7 @@ _closing_cache = {}
 _closing_ts = {}
 _lock = threading.Lock()
 _change_queue = []  # 变动事件队列 [(event_id, bookie, ts)], 供 WS 触发实时比价消费者轮询(2026-09-19)
+_change_event = threading.Event()  # 变动事件唤醒信号(WS 变动时 set, 消费者 wait 省 sleep 延迟)
 
 
 def get_recent_changes():
@@ -38,7 +39,14 @@ def get_recent_changes():
     with _lock:
         out = list(_change_queue)
         _change_queue.clear()
+        _change_event.clear()
         return out
+
+
+def wait_change(timeout=0.5):
+    """等待变动事件(最多 timeout 秒), 有变动立即返回(省 sleep 轮询延迟)。"""
+    _change_event.wait(timeout)
+    return bool(_change_queue)
 
 
 def _merge_markets(old_markets, new_markets):
@@ -73,6 +81,7 @@ def _on_message(obj):
             _ws_odds_ts[eid] = time.time()
             if t == "updated":  # 2026-09-19: 赔率变动入队, 供 WS 触发实时比价
                 _change_queue.append((eid, bookie, time.time()))
+                _change_event.set()
     elif t == "deleted":
         eid = obj.get("id")
         if eid is None:

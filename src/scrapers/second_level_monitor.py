@@ -1614,7 +1614,12 @@ class SecondLevelMonitor:
                     self._consume_early_ws_changes(_changes)
                 except Exception as e:
                     print(f"[slm] 早盘WS触发异常: {type(e).__name__} {str(e)[:80]}", flush=True)
-            await asyncio.sleep(0.5)
+            # 2026-09-19 事件驱动: WS 变动立即唤醒(省 sleep 0.5s 轮询延迟), 否则等 0.5s
+            try:
+                from src.scrapers.odds_ws import wait_change
+                await asyncio.to_thread(wait_change, 0.5)
+            except Exception:
+                await asyncio.sleep(0.5)
 
 
 def main():
