@@ -227,12 +227,13 @@ def get_events(sport="football", status=None):
 _odds_cache = {}  # {event_id: (ts, bookmakers_dict)}
 
 
-def get_odds(event_id, bookmakers=None):
+def get_odds(event_id, bookmakers=None, use_rest=True):
     """单场赔率(含所有市场)。→ {bookmaker_name: [markets]}。
 
     market 结构: {"name": "ML", "updatedAt": "...", "odds": [{home/draw/away/layHome/...}]}。
     优先读 WebSocket 实时缓存(滚球 live, 见 odds_ws.snapshot), 否则 REST 兜底(早盘 prematch)。
-    REST 结果带 8s 缓存(早盘批量对比时避免每场重复拉)。
+    use_rest=False 时跳过 REST 兜底(滚球 live 只走 WS 缓存, 保证公平价匹配≤1.5s, 2026-09-20)。
+    REST 结果带 60s 缓存(早盘批量对比时避免每场重复拉)。
     """
     bks = bookmakers or ODDS_API_IO_BOOKMAKERS
     # 1) WebSocket 实时缓存优先(同进程: 滚球 live/prematch 实时推送价)
@@ -251,6 +252,8 @@ def get_odds(event_id, bookmakers=None):
                 return result
     except Exception:
         pass
+    if not use_rest:
+        return {}  # 2026-09-20 滚球 live 跳过 REST 兜底(只 WS 缓存), 保证公平价匹配≤1.5s
     # 2) REST 兜底(60s 缓存, 2026-09-20 8s→60s)。WS 没覆盖的低流动性事件 odds 变动慢,
     # 60s 缓存既保证≤1.5s 公平价匹配(WS 未覆盖时每 60s 才拉一次 REST), 又省 5000/小时限额。
     now = time.time()
