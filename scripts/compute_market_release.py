@@ -80,7 +80,8 @@ OBS_STATE = DATA / "observe_release_state.json"  # 释放状态(首次释放时�
 
 # 滚球观察库口径映射: BB 运动 id → 英文运动名; 滚球 sub → sub_market
 BB_SPORT_MAP = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "american_football"}
-BB_SUB_MAP = {"over_under": "ou", "handicap": "hc", "opportunities": "1x2"}
+BB_SUB_MAP = {"over_under": "ou", "handicap": "hc", "opportunities": "1x2",
+              "double_chance": "dc", "btts": "btts"}  # 2026-09-19 滚球新增 dc/btts 观察库收集
 LIVE_LEAGUE = "滚球"
 
 # 运动中文名(2026-09-12 用户要求: 释放盘口必须标注具体运动)。释放清单 sport 字段是英文,
