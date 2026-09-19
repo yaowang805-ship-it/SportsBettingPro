@@ -35,7 +35,6 @@ COMPARISON_FILE = ROOT / "data" / "storage" / "bb_vs_pinnacle_comparison.json"
 # 让弱 edge 落在 ¥300 上限以下, 强 edge 顶格, 真正按 edge 分档。
 KELLY_FRACTION = 0.5   # 半凯利
 MAX_STAKE = 300        # 单盘口上限(2026-09-19 用户提额: 滚球单注≤300, 原150)
-HIGH_EV_FULL_STAKE = 0.08  # 高溢价满仓阈值(2026-09-19 用户要求): edge≥8% 直接顶到 MAX_STAKE, 不按 Kelly
 
 # 2026-09-19 滚球本金 = 账户余额的固定比例(30%), 随余额动态调整(不再写死 5000)
 BANKROLL_PCT = 0.30
@@ -1136,10 +1135,6 @@ class SecondLevelMonitor:
         if odds <= 1 or edge <= 0:
             return 0
         stake = _bankroll() * KELLY_FRACTION * edge / (odds - 1)
-        # 2026-09-19 用户要求「高溢价满仓」: edge≥8% 直接顶到 MAX_STAKE, 不按 Kelly 定仓。
-        # (用户观点: 这么高的溢价按 Kelly 只给几十块太少, 应满仓吃满 edge)
-        if edge >= HIGH_EV_FULL_STAKE:
-            stake = MAX_STAKE
         # 2026-09-19: 去掉 max(stake, MIN_STAKE) 兜底。之前把 Kelly<30 的冷门单硬抬到 30 投出
         # = 超 Kelly 数倍下冷门(方差击穿来源), 与「stake<30 不投」铁律语义相反。现在 <30 原样
         # 返回, 由调用方 _try_live_auto_bet/_try_auto_bet 的 `if stake < MIN_STAKE: return` 拦截。
