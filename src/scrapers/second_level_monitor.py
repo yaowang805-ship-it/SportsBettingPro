@@ -190,21 +190,7 @@ def _load_obs_blocked():
         return set()
 
 
-def _odds_interval(odds):
-    """BB 赔率 → 赔率区间(与 compute_market_release._odds_interval 同口径)。"""
-    try:
-        o = float(odds)
-    except (TypeError, ValueError):
-        return "?"
-    if o <= 1.0:
-        return "?"
-    if o < 2.0:
-        return "1.0-2.0"
-    if o < 3.0:
-        return "2.0-3.0"
-    if o < 5.0:
-        return "3.0-5.0"
-    return ">5.0"
+# (已删除重复的 4 档 _odds_interval——它覆盖了上面的 5 档版本, 导致 1.0-1.5/1.5-2.0 拦截失效)
 
 
 _recent_pnl_cache = {"ts": 0.0, "pnl": 0.0}
