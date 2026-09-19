@@ -348,6 +348,31 @@ def fetch_balance():
     return None
 
 
+BALANCE_MIN = 1000.0  # 余额低于此值暂停投注(2026-09-19 用户要求), 结算后余额恢复再投
+_balance_cache = {"ts": 0.0, "value": None}
+
+
+def check_balance_ok(min_balance=BALANCE_MIN):
+    """BB 账户余额是否 >= min_balance(60s 缓存, 避免每次下单都拉余额 HTTP)。
+
+    余额 < min_balance → 暂停投注; 读不到余额 → 放行(不误拦)。
+    """
+    global _balance_cache
+    now = time.time()
+    if now - _balance_cache["ts"] < 60 and _balance_cache["value"] is not None:
+        return _balance_cache["value"] >= min_balance
+    ok = True
+    try:
+        bal = fetch_balance()
+        if bal:
+            v = float(str(bal).replace(",", "").replace("¥", "").strip())
+            _balance_cache = {"ts": now, "value": v}
+            ok = v >= min_balance
+    except (TypeError, ValueError, OSError):
+        pass
+    return ok
+
+
 def _session():
     s = requests.Session()
     s.trust_env = False
