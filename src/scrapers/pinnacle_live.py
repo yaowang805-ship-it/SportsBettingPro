@@ -53,6 +53,15 @@ _MTY_PE_TO_SUB = {
 # option type(ty) → 方向(主盘口 1x2/hc/ou/dc/ht 共用; 特殊盘口 ty 不同, 不在此表)
 _TY_TO_DIR = {1: "主", 2: "客", 3: "和", 4: "大", 5: "小"}
 
+# 特殊盘口 option-type → 方向/腿(2026-09-19): 主流盘口 ty 1-5 走上面, 这些盘口 ty 码不同。
+# dc/btts 有 Betfair 公平价可收; oe/总进球/净胜球 BB 有但 Betfair 无(无公平价, 不在此表——收不进观察库)。
+_SUB_TY_TO_DIR = {
+    "dc": {50: "主/和", 51: "主/客", 52: "客/和"},
+    "btts": {8: "是", 9: "否"},
+    "htft": {41: "主/主", 35: "主/和", 36: "主/客", 38: "和/主", 43: "和/和",
+             39: "和/客", 42: "客/主", 37: "客/和", 40: "客/客"},
+}
+
 # 结果缓存(避免每次扫描拉 4MB)
 _CACHE_FILE = ROOT / "data" / "storage" / "pin_live_matchups.json"
 _CACHE_TTL = 30  # 30 秒内复用(滚球赔率变动快, 不能缓存太久)
@@ -353,7 +362,7 @@ def fetch_bb_live_matches(sport_ids=(1, 3), platform="BB"):
                             "sub": sub, "market_id": mk.get("id"),
                             "option_type": op.get("ty"), "odds": od,
                             "line": _parse_line(op.get("li")),
-                            "direction": _TY_TO_DIR.get(op.get("ty")),
+                            "direction": _TY_TO_DIR.get(op.get("ty")) or _SUB_TY_TO_DIR.get(sub, {}).get(op.get("ty")),
                         })
             # 当前比分(下注瞬间比分): 滚球让球按「当前比分让球」结算要用(2026-09-13 修根因)。
             # nsg 里 pe=全场码(SCORE_PE_BY_SID) + tyg=5 是比分, sc=[主,客]。
@@ -564,7 +573,7 @@ def fetch_live_opportunities_oa(threshold=3.0):
     for bmid, b in bb.items():
         for mk in b["markets"]:
             sub = mk["sub"]; d = mk["direction"]
-            if not d or sub not in ("1x2", "hc", "ou"):
+            if not d or sub not in ("1x2", "hc", "ou", "dc", "btts"):
                 continue
             bb_odds = mk["odds"]
             res = fair_price_bb(b["home_en"], b["away_en"], b["sport"], sub, status="live")
@@ -576,6 +585,10 @@ def fetch_live_opportunities_oa(threshold=3.0):
                 idx = {"主": "home", "和": "draw", "客": "away"}
             elif sub == "hc":
                 idx = {"主": "home", "客": "away"}
+            elif sub == "dc":
+                idx = {"主/和": "1X", "客/和": "X2", "主/客": "12"}
+            elif sub == "btts":
+                idx = {"是": "yes", "否": "no"}
             else:  # ou
                 idx = {"大": "over", "小": "under"}
             k = idx.get(d)
