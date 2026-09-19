@@ -1577,13 +1577,15 @@ def _oa_add_markets(entry, bb, sport):
                 ev_o = (bb_ou["over_odds"] - oa_ou["over"]) / oa_ou["over"] * 100
                 ev_u = (bb_ou["under_odds"] - oa_ou["under"]) / oa_ou["under"] * 100
                 # EV>20% = 大小球线与 Betfair 线错配, 丢弃
-                if 1 < ev_o <= 20:
+                # 2026-09-19 SBO 同向确认: BB 和 SBO 都偏离 Betfair 同向才采信
+                _conf = (entry.get("_oa_conf") or {}).get("ou", {})
+                if 1 < ev_o <= 20 and (not _conf.get("over") or _conf["over"] > oa_ou["over"]):
                     entry["over_under"].append({
                         "designation": mlabels["over"], "line": str(bb_ou["line"]),
                         "bb_odds": bb_ou["over_odds"], "pin_odds": 0,
                         "fair_price": round(oa_ou["over"], 4), "ev_pct": round(ev_o, 2),
                     })
-                if 1 < ev_u <= 20:
+                if 1 < ev_u <= 20 and (not _conf.get("under") or _conf["under"] > oa_ou["under"]):
                     entry["over_under"].append({
                         "designation": mlabels["under"], "line": str(bb_ou["line"]),
                         "bb_odds": bb_ou["under_odds"], "pin_odds": 0,
