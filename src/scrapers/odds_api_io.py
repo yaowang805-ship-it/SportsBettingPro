@@ -266,7 +266,7 @@ def get_odds(event_id, bookmakers=None, use_rest=True):
     return result
 
 
-def fair_price(event_id, sub_market, bookmakers=None, target_line=None):
+def fair_price(event_id, sub_market, bookmakers=None, target_line=None, use_rest=True):
     """提取某场比赛某盘口的 Betfair Exchange 公平价(交易所中间价)。
 
     公平价只认 Betfair Exchange(唯一能叫公平价的东西: P2P 无庄家抽水), Sbobet 是置信度
@@ -280,7 +280,7 @@ def fair_price(event_id, sub_market, bookmakers=None, target_line=None):
     market_name = _SUB_TO_BETFAIR.get(sub_market)
     if not market_name:
         return None
-    odds = get_odds(event_id, bookmakers)
+    odds = get_odds(event_id, bookmakers, use_rest=use_rest)
     if not odds:
         return None
     bf_markets = odds.get("Betfair Exchange")
@@ -335,7 +335,7 @@ def fair_price(event_id, sub_market, bookmakers=None, target_line=None):
     return None
 
 
-def sbo_fair_price(event_id, sub_market, target_line=None):
+def sbo_fair_price(event_id, sub_market, target_line=None, use_rest=True):
     """SBO 的 devig 公平价(比例去水), 用于置信度确认(不进入定价, 见 fair-price-betfair-confidence-sbo-20260918)。
 
     比例去水: 各选项隐含概率 1/odds, 按占比缩放到 100%, 公平价 = total × odds。
@@ -344,7 +344,7 @@ def sbo_fair_price(event_id, sub_market, target_line=None):
     market_name = _SUB_TO_SBOBET.get(sub_market)
     if not market_name:
         return None
-    odds = get_odds(event_id)
+    odds = get_odds(event_id, use_rest=use_rest)
     if not odds:
         return None
     sbo = odds.get("Sbobet")
@@ -552,12 +552,14 @@ def fair_price_bb(home, away, sport_id, sub_market, target_line=None, status=Non
     tl = target_line
     if swapped and target_line is not None and sub_market in ("hc", "ht_hc"):
         tl = -target_line
-    fair = fair_price(eid, sub_market, target_line=tl)
+    # 2026-09-20: 滚球 live 跳过 REST 兜底(只 WS 缓存), 保证公平价匹配≤1.5s
+    use_rest = (status != 'live')
+    fair = fair_price(eid, sub_market, target_line=tl, use_rest=use_rest)
     if not fair:
         return None
     if swapped:
         fair = _swap_fair(fair, sub_market)
-    conf = sbo_fair_price(eid, sub_market, target_line=tl)
+    conf = sbo_fair_price(eid, sub_market, target_line=tl, use_rest=use_rest)
     if swapped and conf:
         conf = _swap_fair(conf, sub_market)
     return {'fair': fair, 'confidence': conf, 'event_id': eid,
