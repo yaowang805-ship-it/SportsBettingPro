@@ -34,11 +34,33 @@ _change_queue = []  # 变动事件队列 [(event_id, bookie, ts)], 供 WS 触发
 _change_event = threading.Event()  # 变动事件唤醒信号(WS 变动时 set, 消费者 wait 省 sleep 延迟)
 
 
-def get_recent_changes():
-    """取并清空变动事件队列(WS 触发实时比价消费者用)。返回 [(event_id, bookie, ts)]。"""
+PERSIST_MIN_AGE = 2.0  # persistence(持续2快照): 变动需稳定该秒数才发射(过滤一闪而过的瞬时变动, 2026-09-19)
+
+
+def get_persisted_changes(min_age=PERSIST_MIN_AGE):
+    """取并清空「已稳定 ≥ min_age 秒」的变动(过滤瞬时抖动)。返回 [(event_id, bookie, ts)]。
+
+    persistence(2026-09-19): 某 (event_id, bookie) 的最近一次变动距现在 ≥ min_age 秒
+    (期间没被更新的变动覆盖), 才认为该变动「持续了2个快照周期」是真实价格移动, 不是
+    一闪而过的瞬时变动。瞬时变动(变了立刻变回去)会被后续变动覆盖、持久化时钟重置,
+    达不到 min_age 就不发射 → 消费者读到的是稳定价, 不会在假溢价瞬间下单。
+    未稳定的变动保留在队列里, 等下次轮询(0.5s)再判, 不丢失。
+    """
     with _lock:
-        out = list(_change_queue)
-        _change_queue.clear()
+        now = time.time()
+        latest = {}  # (eid, bookie) -> 最近一次变动 ts(多条目只留最新, 覆盖=重置持久化时钟)
+        for eid, bookie, ts in _change_queue:
+            key = (eid, bookie)
+            if key not in latest or ts > latest[key]:
+                latest[key] = ts
+        out = []
+        kept = []
+        for (eid, bookie), ts in latest.items():
+            if now - ts >= min_age:
+                out.append((eid, bookie, ts))
+            else:
+                kept.append((eid, bookie, ts))
+        _change_queue[:] = kept
         _change_event.clear()
         return out
 

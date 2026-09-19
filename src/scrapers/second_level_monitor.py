@@ -1593,8 +1593,8 @@ class SecondLevelMonitor:
             now = time.time()
             # 2026-09-19 WS 触发: sharp 变动 → 立即 poll(滚球) + 单场比价(早盘)
             try:
-                from src.scrapers.odds_ws import get_recent_changes
-                _changes = get_recent_changes()
+                from src.scrapers.odds_ws import get_persisted_changes
+                _changes = get_persisted_changes()  # persistence: 只取已稳定≥2s的变动(过滤瞬时抖动)
             except Exception:
                 _changes = []
             _ws_changed = bool(_changes)
