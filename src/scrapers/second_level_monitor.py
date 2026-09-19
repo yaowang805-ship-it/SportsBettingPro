@@ -36,27 +36,27 @@ COMPARISON_FILE = ROOT / "data" / "storage" / "bb_vs_pinnacle_comparison.json"
 KELLY_FRACTION = 0.5   # 半凯利
 MAX_STAKE = 300        # 单盘口上限(2026-09-19 用户提额: 滚球单注≤300, 原150)
 
-# 2026-09-19 滚球本金 = 账户余额的固定比例(30%), 随余额动态调整(不再写死 5000)
-BANKROLL_PCT = 0.30
-_bankroll_cache = {"ts": 0.0, "value": 5000.0}  # 本金缓存(60s TTL), 兜底 5000
+# 2026-09-19 用户选B: 滚球本金 = 固定本金基准(初始¥20000), 不随当前余额逐笔缩水。
+# 之前「余额×30%」是顺周期陷阱(余额降→bankroll降→注额缩到30/60), 改用固定基准
+# 恢复 8 月 bankroll 2万时代(注额能到~400)。基准值存 bankroll_base.txt, 用户可手动改。
+BANKROLL_BASE_FILE = ROOT / "data" / "storage" / "bankroll_base.txt"
+_bankroll_cache = {"ts": 0.0, "value": 20000.0}  # 本金缓存(60s TTL), 兜底 20000
 
 
 def _bankroll():
-    """滚球本金 = 账户余额 × BANKROLL_PCT(30%), 60s 缓存(避免每注都拉余额 HTTP)。"""
+    """滚球本金 = 固定本金基准(读 bankroll_base.txt, 缺省¥20000), 60s 缓存。"""
     now = time.time()
     if now - _bankroll_cache["ts"] < 60:
         return _bankroll_cache["value"]
+    v = 20000.0
     try:
-        from src.betting.bb_auto_bet import fetch_balance
-        _bal = fetch_balance()
-        if _bal:
-            v = float(str(_bal).replace(",", "").replace("¥", "").strip())
-            if v > 0:
-                _bankroll_cache["value"] = v * BANKROLL_PCT
-                _bankroll_cache["ts"] = now
-    except (TypeError, ValueError, OSError):
-        pass
-    return _bankroll_cache["value"]
+        if BANKROLL_BASE_FILE.exists():
+            v = float(BANKROLL_BASE_FILE.read_text().strip() or 0) or 20000.0
+    except (OSError, ValueError):
+        v = 20000.0
+    _bankroll_cache["ts"] = now
+    _bankroll_cache["value"] = v
+    return v
 MIN_STAKE = 30         # stake<30 拦截铁律
 REVERIFY_THRESHOLD = 3.0  # 2026-09-19 验价阈值(秒): lead-lag 窗口 2-3s(赔率秒级变动), 超过 3s 就重拉验价(逆向选择)
 
