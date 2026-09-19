@@ -1230,9 +1230,14 @@ class SecondLevelMonitor:
         body = f"📊 滚球结算汇总({len(pending)}笔, 总盈亏{total_pnl:+.0f})\n\n" + "\n".join(lines)
         try:
             ok = bool(send_dingtalk("📊 滚球结算汇总(赢了/输了)", body))
+            # 2026-09-19: 无论成败都清空 pending, 避免推送失败时 pending 累积、重试时把
+            # 「旧+新」一起推导致重复。结算明细已持久化在 live_settled_log.json, notified
+            # (已通知oid)也已落盘不会重复收集, 清空不丢数据、不重复推。
+            PENDING_SETTLE_FILE.write_text(json.dumps([], ensure_ascii=False))
             if ok:
-                PENDING_SETTLE_FILE.write_text(json.dumps([], ensure_ascii=False))
                 print(f"[slm] 结算汇总推送成功: {len(pending)}笔, 总盈亏{total_pnl:+.0f}", flush=True)
+            else:
+                print(f"[slm] 结算汇总推送失败(已清空pending防重复): {len(pending)}笔", flush=True)
         except Exception as e:
             print(f"[slm] 结算汇总推送异常: {e}", flush=True)
 
