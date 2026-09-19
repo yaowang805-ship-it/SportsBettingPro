@@ -1456,19 +1456,15 @@ class SecondLevelMonitor:
         except Exception:
             return False
 
-    def _consume_early_ws_changes(self):
+    def _consume_early_ws_changes(self, changes):
         """早盘 WS 触发: prematch sharp 变动 → 匹配 BB → 单场比价 → 下单(实时验价)。
 
         2026-09-19: 早盘扫描 15min 抓不住 5.5min lead-lag 窗口, sharp 一变就立即单场比价下单。
         队名精确匹配(lower), 匹配率~50%(后缀差异), 后续可换模糊匹配。
+        changes: [(event_id, bookie, ts)] 变动事件(主循环已取)。
         """
-        from src.scrapers.odds_ws import get_recent_changes
-        changes = get_recent_changes()
         if not changes:
             return 0
-        if time.time() - self._early_ws_ts < 3:
-            return 0  # 3s 节流
-        self._early_ws_ts = time.time()
         # event_id → 队名(pending 早盘)
         try:
             from src.scrapers.odds_api_io import get_events
@@ -1556,13 +1552,21 @@ class SecondLevelMonitor:
         last_poll = 0.0
         while deadline is None or time.time() < deadline:
             now = time.time()
-            # 2026-09-19 WS 触发: sharp 变动 → 立即 poll(不等 2s); 否则 2s 轮询兜底
-            if self._ws_changed() or now - last_poll >= refresh_every:
+            # 2026-09-19 WS 触发: sharp 变动 → 立即 poll(滚球) + 单场比价(早盘)
+            try:
+                from src.scrapers.odds_ws import get_recent_changes
+                _changes = get_recent_changes()
+            except Exception:
+                _changes = []
+            _ws_changed = bool(_changes)
+            if (_ws_changed and now - self._ws_trigger_ts >= 3.0) or now - last_poll >= refresh_every:
                 try:
                     n = self._poll_live()
                     if n:
                         print(f"[slm] 本轮发现 {n} 个滚球机会")
                     last_poll = now
+                    if _ws_changed:
+                        self._ws_trigger_ts = now
                     poll_count += 1
                     # 观察库结算: 每 60s 结一批(独立时间戳, 不依赖 poll_count — pin_live 超时拖慢轮询,
                     # 依赖 poll_count%15 会把 1130 条拖到 2-3h 才结完)
@@ -1574,6 +1578,13 @@ class SecondLevelMonitor:
                     self._check_clv()  # 每次轮询(2s)查 CLV(3s窗口); 有 ready 才发 Pin 请求, 请求率=下注率
                 except Exception as e:
                     print(f"[slm] 轮询异常: {type(e).__name__} {str(e)[:80]}", flush=True)
+            # 早盘 WS 触发(独立节流)
+            if _ws_changed and now - self._early_ws_ts >= 3.0:
+                self._early_ws_ts = now
+                try:
+                    self._consume_early_ws_changes(_changes)
+                except Exception as e:
+                    print(f"[slm] 早盘WS触发异常: {type(e).__name__} {str(e)[:80]}", flush=True)
             await asyncio.sleep(0.5)
 
 
