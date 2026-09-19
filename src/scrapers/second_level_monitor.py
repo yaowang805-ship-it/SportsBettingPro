@@ -530,6 +530,7 @@ class SecondLevelMonitor:
                 "designation": sig["desig"], "sub": sig.get("sub"), "line": sig.get("line"),
                 "bsc": sig.get("bsc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用)
                 "bb_odds": sig["bb_odds"], "fair": sig["fair"], "ev": sig["ev"],
+                "spread": sig.get("spread"),  # 2026-09-19 流动性门槛: back-lay 价差
                 "stake": sig.get("_stake", 0), "settled": False, "result": None, "profit": None,
                 "anchor": "betfair",  # 2026-09-19 锚点口径标记: 9-18后 Betfair 公平价
                 "sbo_direction": sig.get("sbo_direction", "same"),  # same/diff/none(供统计同向/不同向赛果)
@@ -1460,6 +1461,7 @@ class SecondLevelMonitor:
             "match": {"home": opp["home"], "away": opp["away"], "sport": opp.get("sport", ""),
                       "league_cn": opp.get("league_cn", "滚球") or "滚球"},
             "pin_matchup_id": opp["pin_matchup_id"], "league_id": opp["league_id"],
+            "spread": opp.get("spread"),  # 2026-09-19 流动性门槛: back-lay 价差
             "max_stake": opp["max_stake"],
             "bsc": opp.get("sc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用, 2026-09-13)
             "bb_ts": opp.get("bb_ts"), "pin_ts": opp.get("pin_ts"),  # BB/Pin 数据拉取时间(推送展示)

@@ -603,6 +603,7 @@ def fetch_live_opportunities_oa(threshold=3.0):
                     "bb_odds": bb_odds, "fair": fair_p, "ev": round(ev, 2), "pin_raw": 0,
                     "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
                     "pin_matchup_id": res.get("event_id"),
+                    "spread": res.get("spread"),  # 2026-09-19 流动性门槛: back-lay 价差
                     "league_id": None,
                     "max_stake": 0,
                     "sc": b.get("sc"),

@@ -102,6 +102,33 @@ def mid_price(back, lay, max_spread_pct=None):
     return round(1.0 / p, 4) if p > 0 else None
 
 
+def spread_pct(back, lay):
+    """back-lay 价差%(流动性指标, 2026-09-19)。越大=盘越薄=公平价越不可信。"""
+    try:
+        b, l = float(back), float(lay)
+    except (TypeError, ValueError):
+        return None
+    if b <= 1 or l <= 1:
+        return None
+    return (l - b) / b * 100.0
+
+
+def _line_spread(o, sub_market):
+    """选中线的各腿 back-lay 价差最大值(流动性门槛用)。dc/dnb 只有 back 无 lay → None。"""
+    if sub_market in ("1x2", "ht"):
+        legs = [("home", "layHome"), ("draw", "layDraw"), ("away", "layAway")]
+    elif sub_market in ("ou", "ht_ou"):
+        legs = [("over", "layOver"), ("under", "layUnder")]
+    elif sub_market == "btts":
+        legs = [("yes", "layYes"), ("no", "layNo")]
+    elif sub_market == "hc":
+        legs = [("home", "layHome"), ("away", "layAway")]
+    else:
+        return None  # dc/dnb 等 back-only 盘, 无 lay 价差
+    spreads = [s for s in (spread_pct(o.get(bk), o.get(lk)) for bk, lk in legs) if s is not None]
+    return max(spreads) if spreads else None
+
+
 def _fair_three_way(odds_dict):
     """从交易所三路 odds 字典算公平价(中间价+归一化)。
 
@@ -263,38 +290,44 @@ def fair_price(event_id, sub_market, bookmakers=None, target_line=None):
     o = _select_line(m, target_line if sub_market in _line_subs else None)
     if not o:
         return None
+    _spread = _line_spread(o, sub_market)  # 2026-09-19 流动性指标(back-lay 价差)
     if sub_market in ("1x2", "ht"):
-        return _fair_three_way(o)
+        fair = _fair_three_way(o)
+        if fair is not None:
+            fair["spread"] = _spread
+        return fair
     if sub_market == "dc":
         # Double Chance: 1X/12/X2, 交易所只给 back 无 lay → back 直接当公平价
         fair = {k: float(v) for k, v in o.items() if k in ("1X", "12", "X2") and v}
+        if fair:
+            fair["spread"] = _spread
         return fair or None
     if sub_market == "dnb":
         # Draw No Bet: home/away, 无 lay → back 直接当公平价
         h, a = o.get("home"), o.get("away")
         if not h or not a:
             return None
-        return {"home": float(h), "away": float(a)}
+        return {"home": float(h), "away": float(a), "spread": _spread}
     if sub_market == "btts":
         pair = _fair_two_way(o.get("yes"), o.get("layYes"), o.get("no"), o.get("layNo"))
         if pair is None:
             return None
         yes, no = pair
-        return {"yes": yes, "no": no}
+        return {"yes": yes, "no": no, "spread": _spread}
     if sub_market in ("ou", "ht_ou"):
         line = o.get("hdp")
         pair = _fair_two_way(o.get("over"), o.get("layOver"), o.get("under"), o.get("layUnder"))
         if line is None or pair is None:
             return None
         over, under = pair
-        return {"over": over, "under": under, "line": line}
+        return {"over": over, "under": under, "line": line, "spread": _spread}
     if sub_market == "hc":
         line = o.get("hdp")
         pair = _fair_two_way(o.get("home"), o.get("layHome"), o.get("away"), o.get("layAway"))
         if line is None or pair is None:
             return None
         home, away = pair
-        return {"home": home, "away": away, "line": line}
+        return {"home": home, "away": away, "line": line, "spread": _spread}
     return None
 
 
@@ -492,7 +525,8 @@ def fair_price_bb(home, away, sport_id, sub_market, target_line=None, status=Non
     conf = sbo_fair_price(eid, sub_market, target_line=tl)
     if swapped and conf:
         conf = _swap_fair(conf, sub_market)
-    return {'fair': fair, 'confidence': conf, 'event_id': eid}
+    return {'fair': fair, 'confidence': conf, 'event_id': eid,
+            'spread': fair.get('spread')}  # 2026-09-19 流动性门槛指标(back-lay 价差)
 
 
 if __name__ == "__main__":
