@@ -71,6 +71,7 @@ LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 
 # 滚球实盘只投小球(under), EV-Kelly 最优定仓, 单注上限 ¥400(预算1/5)兼顾分散。
 # 其它盘口(大球/1x2/让球)仍只进观察库, 不下真单。
 LIVE_REAL_BET_ENABLED = True  # 2026-09-18 重新开启滚球实盘(新数据源 Sbobet+Betfair 替代 Pin)
+LIVE_UNDER_BET_ENABLED = False  # 2026-09-19 用户暂停小球盘投注(实盘小球-31%失效; 观察库仍收纸单攒数据, 只不下真单)
 LIVE_UNDER_MAX_STAKE = 150  # 单注上限(2026-09-18 滚球单注≤150; 实际生效cap=min(MAX_STAKE=150, release_cap))
 BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球"}
 
@@ -868,6 +869,10 @@ class SecondLevelMonitor:
             _dr = "主"
         else:
             _dr = "其他"
+        # 2026-09-19 用户暂停小球盘投注: 实盘小球-31%失效, 观察库已收纸单继续攒数据, 只不下真单
+        if not LIVE_UNDER_BET_ENABLED and _sub == "over_under" and _dr == "小":
+            print(f"  ⏸️ 小球盘已暂停投注(仅记观察库) {sig['match']['home']} vs {sig['match']['away']}", flush=True)
+            return
         _sp_en = BB_SPORT_EN.get(_sport)
         _sm = BB_SUB_TO_SM.get(_sub)
         _cap = None
