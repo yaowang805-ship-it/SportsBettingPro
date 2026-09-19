@@ -42,6 +42,7 @@ PIN_LEAGUE_STRUCTURE = DATA_DIR / "pinnacle_league_structure.json"
 from scrapers.bb_api_fetcher import main as fetch_bb
 from scrapers.bb_vs_pinnacle import (
     compare_bb_vs_pinnacle,
+    compare_bb_vs_oa,
     _load_league_structure,
     refresh_league_structure,
     detect_sport,
@@ -458,48 +459,26 @@ def _prefetch_pin_cache_async(bb_matches, all_pin_leagues):
 
 
 def run_incremental(time_window: str = "all"):
-    """增量扫描入口。time_window: near=24h内, far=24-72h, all=全部"""
+    """增量扫描入口(Betfair 直接匹配, 2026-09-18 替代 Pin)。time_window: near/far/all"""
     import sys
     sys.stdout.reconfigure(line_buffering=True)
-
-    from datetime import datetime, timezone, timedelta
-    # V5.10(2026-08-21): 去掉 06:40~22:00 硬编码时段检查 —— 8-20 改 orchestrator 为 24h
-    # 扫描时漏改这里, 导致 22:00 后 scanner 直接 return, 夜里零扫描零投注。
-    # 时段由 orchestrator 调度控制(SCAN_START/END=24h), scanner 内部不再拦。
 
     labels = {"urgent": "<6h临场", "near": "6-24h近场", "far": "24-72h早盘", "all": "增量扫描"}
     label = labels.get(time_window, "增量扫描")
 
     # 设置当前扫描的快照/对比文件（urgent/near/far 独立，互不污染）
     if time_window == "urgent":
-        _current_snap = BB_SNAPSHOT_URGENT  # V5.9: 临场独立快照(与near分离, 互不阻塞)
+        _current_snap = BB_SNAPSHOT_URGENT
     elif time_window == "near":
         _current_snap = BB_SNAPSHOT_NEAR
     else:
         _current_snap = BB_SNAPSHOT_FAR
 
     print("=" * 60)
-    print(f"BB体育 增量扫描 [{label}]")
+    print(f"BB体育 增量扫描 [{label}] (Betfair 直接匹配)")
     print("=" * 60)
 
-    # 0. 预加载快照 + 联赛结构 (供 Pin 检测与 BB 拉取并行)
-    snapshot = {"timestamp": "", "matches": {}}
-    if _current_snap.exists():
-        try: snapshot = json.loads(_current_snap.read_text())
-        except: pass
-    all_pin_leagues = refresh_league_structure()
-    prev_active_leagues = set()
-    for _m in snapshot.get("matches", {}).values():
-        if isinstance(_m, dict) and _m.get("league"):
-            prev_active_leagues.add(_m["league"])
-
-    # 1. Pin 先拉取并检测变动 (铁律: Pin时间≤BB时间, 公平价不能比零售价新鲜)
-    #    V5.7: 串行 Pin先BB后 (之前并行导致 Pin 反而晚于 BB, 违反铁律)
-    print("\n📡 Pin 先拉取并检测变动...")
-    pin_changed_leagues, pin_significant = _detect_pin_changes(
-        None, all_pin_leagues, prev_active_leagues, time_window)
-
-    # 2. BB 拉取 (Pin之后, 保证 BB 是最新鲜的零售价)
+    # BB 拉取 (无 Pin, 直接拉 BB 后 Betfair 匹配)
     print("\n📡 获取BB数据...")
     bb_matches = _fetch_bb_data(time_window)
     if not bb_matches:
@@ -530,108 +509,26 @@ def run_incremental(time_window: str = "all"):
     # 3. FB 已通过 --with-fb 合并进 BB(取最高赔率), 不再单独跑 FB 独立对比
     #    (用户 2026-08-23 要求: BB/FB 同时提取取最高赔率, 不要"BB不覆盖才用FB")
 
-    # 4. 双向变动检测: BB快照 + Pin快照, 任一方变动都触发对比
-    if not all_pin_leagues:
-        all_pin_leagues = _load_league_structure()
-        if not all_pin_leagues:
-            print("  ❌ 无 Pinnacle 联赛结构数据")
-            save_snapshot(bb_matches, _current_snap)
-            return
-
-    # 4b. BB侧: 本地快照对比 (毫秒) — 辅助确认
-    changed_ids, new_ids, bb_changed_leagues = detect_changes(bb_matches, snapshot)
-
-    # 4c. Pin变优先: Pin变了 → 必须对比; BB新比赛 → 补充对比
-    all_changed = pin_changed_leagues | bb_changed_leagues
-    total_changed = len(pin_changed_leagues) + len(bb_changed_leagues)
-    if pin_changed_leagues:
-        print(f"  🔔 Pin变动: {len(pin_changed_leagues)}个联赛 → 立即对比")
-    if pin_significant:
-        # V5: 聪明钱信号防抖 — 5分钟内最多触发一次
-        _smart_money_file = DATA_DIR / ".last_smart_money_push"
-        _last_smart = float(_smart_money_file.read_text().strip()) if _smart_money_file.exists() else 0
-        if time.time() - _last_smart > 300:
-            print(f"  🚨 聪明钱信号: {len(pin_significant)}个联赛Pin大幅变动 → 立即推送!")
-            _smart_money_file.write_text(str(time.time()))
-            _push_throttle_file = DATA_DIR / ".last_push_time"
-            _push_throttle_file.write_text("0")  # 清除节流
-        else:
-            print(f"  🔔 Pin变动: {len(pin_significant)}个联赛 (上次聪明钱推送{time.time()-_last_smart:.0f}s前, 冷却中)")
-    if not pin_changed_leagues and bb_changed_leagues:
-        print(f"  📝 BB变动: {len(bb_changed_leagues)}个联赛 (Pin未动)")
-
-    if total_changed == 0:
-        # 即无变动，也要检查是否需要强制刷新：
-        # 1. Pin 数据 >2h 未刷新 → 强制对比
-        # 2. BB 数据比 Pin 新 >5min → BB 已更新但 Pin 未跟上 → 强制对比
-        window_file = (COMPARISON_FILE_URGENT if time_window == "urgent"
-                   else (COMPARISON_FILE_NEAR if time_window == "near" else COMPARISON_FILE_FAR))
-        force_refresh = False
-        try:
-            if not window_file.exists():
-                force_refresh = True
-            else:
-                pin_age_min = (time.time() - window_file.stat().st_mtime) / 60
-                # 检查 BB 数据是否比 Pin 新
-                bb_file = DATA_DIR / "bb_odds_extracted.json"
-                bb_fresher = False
-                if bb_file.exists():
-                    bb_mtime = bb_file.stat().st_mtime
-                    pin_mtime = window_file.stat().st_mtime
-                    bb_fresher = (bb_mtime - pin_mtime) > 300  # BB 比 Pin 新 >5min
-                if pin_age_min > 120:
-                    print(f"\n⏰ Pin数据 {pin_age_min:.0f}min 未刷新，强制全量对比")
-                    force_refresh = True
-                elif bb_fresher:
-                    print(f"\n⚠️ BB数据比Pin新 {((bb_mtime-pin_mtime)/60):.0f}min，强制全量对比（BB已更新Pin未跟上）")
-                    force_refresh = True
-                else:
-                    print(f"\n✅ BB+Pin均无变动，跳过对比 (Pin数据 {pin_age_min:.0f}min前)")
-        except OSError:
-            pass
-        if not force_refresh:
-            save_snapshot(bb_matches, _current_snap)
-            return
-        # 强制刷新: 全量拉取对比
-        total_changed = 1  # force comparison below
-
-    print(f"\n📊 双向变动: BB {len(bb_changed_leagues)}个联赛, Pin {len(pin_changed_leagues)}个联赛 → 合并 {len(all_changed)}个")
-    print(f"\n🔄 实时全量对比 (拉取最新BB+Pin, ~2min)...")
+    # 对比 (Betfair 直接匹配, 无 Pin 变动检测)
     window_file = (COMPARISON_FILE_URGENT if time_window == "urgent"
                    else (COMPARISON_FILE_NEAR if time_window == "near" else COMPARISON_FILE_FAR))
-    # V5.7: 用上一次扫描后台预取的 Pin 缓存 (Pin时间早于BB, 铁律), 参数传 use_pin_cache 不碰全局 sys.argv
-    new_result = compare_bb_vs_pinnacle(
-        bb_matches,
-        all_pin_leagues,
-        selected_leagues=None,
-        save_path=window_file,
-        use_pin_cache=True,
-    )
+    new_result = compare_bb_vs_oa(bb_matches, save_path=window_file)
 
     if new_result is None:
         save_snapshot(bb_matches, _current_snap)
         return
 
     print(f"\n✅ 已保存实时结果 → {window_file.name} ({len(new_result.get('details', []))} 条+EV)")
-
-    # 8. 保存新快照 (near/far 各自独立)
     save_snapshot(bb_matches, _current_snap)
 
-    # 8.5 后台预取 Pin 缓存 (供下一次扫描用, Pin时间早于下次BB, 不阻塞本次)
-    _prefetch_pin_cache_async(bb_matches, all_pin_leagues)
-
-    # 9. 推送新机会 (V5: 扫到就推, 扫描频次本身就是节流)
-    push_ok = True
+    # 推送新机会
     _push_throttle_file = DATA_DIR / ".last_push_time"
-
     if new_result.get("details"):
-        # 聪明钱信号已清除节流; 直接推
         print(f"\n📣 新+EV机会 → 运行推送 [{label}]...")
-        push_ok = _run_push(label)
+        _run_push(label)
         _push_throttle_file.write_text(str(time.time()))
     else:
         print("\n📭 无新+EV机会")
-
     return new_result
 
 
@@ -640,36 +537,15 @@ COMPARISON_FILE_48H = DATA_DIR / "bb_vs_pinnacle_comparison.json"
 
 
 def run_incremental_scan():
-    """扫描(解耦): 拉全量48h BB+Pin, 比价, 写主对比文件。不推送。
-
-    推送由 run_incremental_push 按时间窗口分频(临场60s/近场300s), 避免远场幻影EV高频推。
-    """
+    """扫描(解耦, Betfair 直接匹配): 拉全量48h BB, Betfair 比价, 写主对比文件。不推送。"""
     import sys
     sys.stdout.reconfigure(line_buffering=True)
-    # V5.10(2026-08-21): 去掉 06:40~22:00 硬编码时段检查(同 run_incremental), 夜里 24h 扫描。
 
     print("=" * 60)
-    print("BB体育 增量扫描 [48h全量]")
+    print("BB体育 增量扫描 [48h全量] (Betfair 直接匹配)")
     print("=" * 60)
 
-    snapshot = {"timestamp": "", "matches": {}}
-    if BB_SNAPSHOT_NEAR.exists():
-        try:
-            snapshot = json.loads(BB_SNAPSHOT_NEAR.read_text())
-        except Exception:
-            pass
-    all_pin_leagues = refresh_league_structure()
-    prev_active_leagues = set()
-    for _m in snapshot.get("matches", {}).values():
-        if isinstance(_m, dict) and _m.get("league"):
-            prev_active_leagues.add(_m["league"])
-
-    # 1. Pin 先拉取 (铁律: Pin≤BB)
-    print("\n📡 Pin 先拉取并检测变动...")
-    pin_changed_leagues, pin_significant = _detect_pin_changes(
-        None, all_pin_leagues, prev_active_leagues, "all")
-
-    # 2. BB 拉取
+    # BB 拉取
     print("\n📡 获取BB数据...")
     bb_matches = _fetch_bb_data("all")
     if not bb_matches:
@@ -683,55 +559,15 @@ def run_incremental_scan():
     bb_matches = [m for m in bb_matches if int(m.get("bt", 0)) - now_ms <= h48_ms]
     print(f"  [48h]: {len(bb_matches)} 场")
 
-    # 3. FB 已通过 --with-fb 合并进 BB(取最高赔率), 不再单独跑 FB 独立对比
-
-    if not all_pin_leagues:
-        all_pin_leagues = _load_league_structure()
-        if not all_pin_leagues:
-            print("  ❌ 无 Pinnacle 联赛结构数据")
-            save_snapshot(bb_matches, BB_SNAPSHOT_NEAR)
-            return
-
-    # 4. 双向变动检测
-    changed_ids, new_ids, bb_changed_leagues = detect_changes(bb_matches, snapshot)
-    total_changed = len(pin_changed_leagues) + len(bb_changed_leagues)
-
-    # 无变动检查强制刷新
-    if total_changed == 0:
-        force_refresh = False
-        try:
-            if not COMPARISON_FILE_48H.exists():
-                force_refresh = True
-            else:
-                pin_age_min = (time.time() - COMPARISON_FILE_48H.stat().st_mtime) / 60
-                if pin_age_min > 120:
-                    print(f"\n⏰ Pin数据 {pin_age_min:.0f}min 未刷新，强制全量对比")
-                    force_refresh = True
-                else:
-                    print(f"\n✅ BB+Pin均无变动，跳过对比")
-        except OSError:
-            pass
-        if not force_refresh:
-            save_snapshot(bb_matches, BB_SNAPSHOT_NEAR)
-            return
-
-    # 5. 全量对比 48h → 主对比文件
+    # 全量对比 48h → 主对比文件 (Betfair 直接匹配, 无 Pin)
     print(f"\n🔄 实时全量对比 (48h)...")
-    new_result = compare_bb_vs_pinnacle(
-        bb_matches,
-        all_pin_leagues,
-        selected_leagues=None,
-        save_path=COMPARISON_FILE_48H,
-        use_pin_cache=True,
-    )
+    new_result = compare_bb_vs_oa(bb_matches, save_path=COMPARISON_FILE_48H)
     if new_result is None:
         save_snapshot(bb_matches, BB_SNAPSHOT_NEAR)
         return
 
     print(f"\n✅ 已保存实时结果 → {COMPARISON_FILE_48H.name} ({len(new_result.get('details', []))} 条)")
-
     save_snapshot(bb_matches, BB_SNAPSHOT_NEAR)
-    _prefetch_pin_cache_async(bb_matches, all_pin_leagues)
     return new_result
 
 
@@ -775,7 +611,7 @@ def run_full():
     bb_after = _fetch_bb_data("all")
     if bb_after:
         bb_after = [m for m in bb_after if not m.get("bt") or int(m["bt"]) > _now_ts]
-        new_result = compare_bb_vs_pinnacle(bb_after, _load_league_structure())
+        new_result = compare_bb_vs_oa(bb_after, save_path=COMPARISON_FILE_48H)
         if new_result:
             save_snapshot(bb_after)
             _run_push("全量扫描")

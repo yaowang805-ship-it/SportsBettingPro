@@ -80,6 +80,59 @@ def record_stake(match_id, market_id, stake):
     _save_stake_record(rec)
 
 
+# ── 同场同盘口互斥锁(2026-09-19) ──
+# 根因: 早盘 auto_bet_flow 无任何去重; 滚球 market_id 去重粒度太粗(让球 home/away 同线=同一
+# market_id 但不同线=不同 market_id, 拦不住不同线的对立方向)。导致「同一盘线正负都下注」
+# (让球主↔客、大小 over↔under) + 「同方向多线」重复下注 → 白交双边抽水/过度暴露。
+# 规则: 同一 match_id + 同一标准化盘口(sub) 只下一注, 覆盖对立方向 + 同方向多线两种情况。
+SUB_RECORD_FILE = ROOT / "data" / "storage" / "bet_sub_record.json"
+
+# 观察库命名 → BB 命名(统一 canonical sub, 早盘/滚球口径一致)
+_SUB_CANON = {
+    "opportunities": "1x2", "handicap": "hc", "over_under": "ou",
+    "double_chance": "dc",
+}
+
+
+def _canonical_sub(sub):
+    return _SUB_CANON.get(sub, sub)
+
+
+def _load_sub_record():
+    """读同场同盘口投注记录 {match_id: [sub, ...]}。"""
+    try:
+        if SUB_RECORD_FILE.exists():
+            return json.loads(SUB_RECORD_FILE.read_text())
+    except Exception:
+        pass
+    return {}
+
+
+def check_sub_market_bet(match_id, sub_market):
+    """同一 match + 同一标准化盘口是否已下过注。True=已投(跳过), False=可投。"""
+    if match_id is None:
+        return False
+    rec = _load_sub_record()
+    sub = _canonical_sub(sub_market)
+    return sub in rec.get(str(match_id), [])
+
+
+def record_sub_market_bet(match_id, sub_market):
+    """下单成功后记录该场该盘口已投(互斥锁落盘)。"""
+    if match_id is None:
+        return
+    rec = _load_sub_record()
+    key = str(match_id)
+    sub = _canonical_sub(sub_market)
+    rec.setdefault(key, [])
+    if sub not in rec[key]:
+        rec[key].append(sub)
+    try:
+        SUB_RECORD_FILE.write_text(json.dumps(rec, ensure_ascii=False))
+    except OSError:
+        pass
+
+
 # ── 全局投注冷却(跨进程共享) ──
 # 早盘(auto_bet_flow) + 滚球(second_level_monitor)是两个独立进程, 各自有随机间隔但互不知晓,
 # 可能"同一时间"各下一单, 像机器投注被风控识别。用共享时间戳文件强制全局随机间隔。
@@ -419,7 +472,7 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
         "Origin": "https://pc.7y99z.com" if platform == "FB" else "https://pc.x14ff.com",
         "Referer": "https://pc.7y99z.com/" if platform == "FB" else "https://pc.x14ff.com/",
     }
-    for attempt in range(2):
+    for attempt in range(3):
         try:
             r = _session().post(f"{domain}/v1/order/bet/singlePass",
                                 json=body, headers=headers, timeout=15, verify=False)
@@ -433,6 +486,18 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
                     token = _new_tok
                     headers["Authorization"] = _new_tok
                     continue
+            # 二次验价(2026-09-19 用户要求): 下单失败(盘口关闭3015/赔率变等可重试错误,
+            # 排除注额超限-3/参数错5) → 重拉实时价, edge 还在则用实时价重试一次, 否则放弃。
+            if attempt == 0 and code not in (0, 14010, -3, 5) and fair_price and min_ev_pct is not None:
+                _cur = fetch_current_odds(market_id, match_id, option_type, token, domain)
+                _new_odds = _cur[0] if _cur else None
+                if _new_odds and float(fair_price) > 1:
+                    _edge = (float(_new_odds) - float(fair_price)) / float(fair_price) * 100
+                    if _edge >= min_ev_pct:
+                        # edge 仍在, 用实时价重试下单(二次验价后的成交价)
+                        body["singleBetList"][0]["betOptionList"][0]["odds"] = _new_odds
+                        final_odds = _new_odds
+                        continue
             order_id = None
             if code == 0 and d.get("data"):
                 # data[0].id = 订单号

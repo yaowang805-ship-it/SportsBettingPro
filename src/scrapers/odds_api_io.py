@@ -120,6 +120,28 @@ def _fair_three_way(odds_dict):
     return mids
 
 
+def _fair_two_way(b1, l1, b2, l2, max_imb=0.05):
+    """两路盘(让球 home/away、大小 over/under、btts yes/no)中间价 + 归一化。
+
+    两路盘是「两个独立挂单簿」, 中间价隐含概率和天然可能 ≠1(低流动性时两边各自偏离)。
+    不归一化会让 home/away 或 over/under 两路公平价都偏低 → 隐含和>1 → BB 两个对立方向
+    同时 +EV → 对立下注(白交双边抽水)。修复: 算两路中间价后归一化到隐含和=1;
+    隐含和偏离 1 超 max_imb(默认5%)判定数据脏(流动性不足)返回 None。
+    返回 (fair1, fair2) 或 None。
+    """
+    f1 = mid_price(b1, l1)
+    f2 = mid_price(b2, l2)
+    if not f1 or not f2:
+        return None
+    p1, p2 = 1.0 / f1, 1.0 / f2
+    s = p1 + p2
+    if s <= 0 or abs(s - 1.0) > max_imb:
+        return None
+    p1 /= s
+    p2 /= s
+    return round(1.0 / p1, 4), round(1.0 / p2, 4)
+
+
 def _select_line(market, target_line=None):
     """从市场 odds 数组里选一条线(主线, 或匹配 target_line 的那条)。
 
@@ -182,9 +204,27 @@ def get_odds(event_id, bookmakers=None):
     """单场赔率(含所有市场)。→ {bookmaker_name: [markets]}。
 
     market 结构: {"name": "ML", "updatedAt": "...", "odds": [{home/draw/away/layHome/...}]}。
-    带 8s 缓存(早盘批量对比时避免每场重复拉 Pin 级 REST)。
+    优先读 WebSocket 实时缓存(滚球 live, 见 odds_ws.snapshot), 否则 REST 兜底(早盘 prematch)。
+    REST 结果带 8s 缓存(早盘批量对比时避免每场重复拉)。
     """
     bks = bookmakers or ODDS_API_IO_BOOKMAKERS
+    # 1) WebSocket 实时缓存优先(同进程: 滚球 live/prematch 实时推送价)
+    try:
+        from src.scrapers import odds_ws
+        ws_snap = odds_ws.snapshot(event_id)
+        if ws_snap:
+            result = {k: v for k, v in ws_snap.items() if k in bks}
+            if result:
+                return result
+        # 1.5) 落盘文件缓存(跨进程: 早盘 bb_vs_pinnacle 读滚球进程落盘的 WS 缓存)
+        file_snap = odds_ws.load_file_cache()
+        if file_snap and event_id in file_snap:
+            result = {k: v for k, v in file_snap[event_id].items() if k in bks}
+            if result:
+                return result
+    except Exception:
+        pass
+    # 2) REST 兜底(8s 缓存)
     now = time.time()
     if event_id in _odds_cache and now - _odds_cache[event_id][0] < 8:
         return _odds_cache[event_id][1]
@@ -236,24 +276,24 @@ def fair_price(event_id, sub_market, bookmakers=None, target_line=None):
             return None
         return {"home": float(h), "away": float(a)}
     if sub_market == "btts":
-        yes = mid_price(o.get("yes"), o.get("layYes"))
-        no = mid_price(o.get("no"), o.get("layNo"))
-        if not yes or not no:
+        pair = _fair_two_way(o.get("yes"), o.get("layYes"), o.get("no"), o.get("layNo"))
+        if pair is None:
             return None
+        yes, no = pair
         return {"yes": yes, "no": no}
     if sub_market in ("ou", "ht_ou"):
         line = o.get("hdp")
-        over = mid_price(o.get("over"), o.get("layOver"))
-        under = mid_price(o.get("under"), o.get("layUnder"))
-        if line is None or not over or not under:
+        pair = _fair_two_way(o.get("over"), o.get("layOver"), o.get("under"), o.get("layUnder"))
+        if line is None or pair is None:
             return None
+        over, under = pair
         return {"over": over, "under": under, "line": line}
     if sub_market == "hc":
         line = o.get("hdp")
-        home = mid_price(o.get("home"), o.get("layHome"))
-        away = mid_price(o.get("away"), o.get("layAway"))
-        if line is None or not home or not away:
+        pair = _fair_two_way(o.get("home"), o.get("layHome"), o.get("away"), o.get("layAway"))
+        if line is None or pair is None:
             return None
+        home, away = pair
         return {"home": home, "away": away, "line": line}
     return None
 

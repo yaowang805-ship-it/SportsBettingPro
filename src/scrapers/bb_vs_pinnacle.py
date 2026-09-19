@@ -105,7 +105,12 @@ def _oa_fair(entry, sport, sub, target_line=None):
     if not sid:
         return None
     res = fair_price_bb(entry["home_bb"], entry["away_bb"], sid, sub, target_line=target_line)
-    return res["fair"] if res and res.get("fair") else None
+    if res and res.get("fair"):
+        # 存 odds-api.io 事件 id, 供 CLV 采集器读收盘价(替代 pin_match_id)
+        if res.get("event_id"):
+            entry.setdefault("oa_event_id", res["event_id"])
+        return res["fair"]
+    return None
 
 
 def _devig_dc(dc_odds):
@@ -1483,6 +1488,256 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
     return output
 
 
+# ── 早盘 Betfair 直接匹配(2026-09-18 替代 Pin 匹配) ──
+
+def _build_oa_entry(m, sport):
+    """BB 比赛 → 早盘 entry(纯 BB 字段 + Betfair 直接匹配, 无 Pin)。"""
+    bt = m.get("bt")
+    epoch = float(bt) / 1000.0 if bt else 0.0
+    return {
+        "home_bb": m.get("home", ""), "away_bb": m.get("away", ""),
+        "home_bb_cn": m.get("home_cn") or m.get("home", ""),
+        "away_bb_cn": m.get("away_cn") or m.get("away", ""),
+        "league": m.get("league", ""), "league_cn": m.get("league_cn", ""),
+        "sport": sport,
+        "start_time_bb": str(bt or ""), "start_time_pin_epoch": epoch,
+        "match_type": "name", "match_score": 0.95,  # 队名直接匹配(高置信)
+        "bb_price_source": m.get("platform", "BB"),
+        "platform_sources": m.get("platform_sources", {}),
+        "flags": [],
+        "opportunities": [], "handicap": [], "over_under": [],
+        "double_chance": [], "draw_no_bet": [],
+    }
+
+
+def _oa_add_markets(entry, bb, sport):
+    """给 entry 加各盘口的 Betfair 公平价机会(替代 Pin 比价)。只产 ev>1 的机会。"""
+    mlabels = MARKET_LABELS.get(sport, MARKET_LABELS["football"])
+    n_ml = 3 if sport not in TWO_WAY_SPORTS else 2
+
+    # --- 1x2 (全场独赢) ---
+    bb_ml, valid = extract_bb_1x2(bb, sport)
+    if valid:
+        oa_ml = _oa_fair(entry, sport, "1x2")
+        if oa_ml:
+            keys = ["home", "draw", "away"] if n_ml == 3 else ["home", "away"]
+            for i in range(n_ml):
+                bb_o = bb_ml[i]
+                fair = oa_ml.get(keys[i])
+                if bb_o and fair and fair > 1:
+                    ev = (bb_o - fair) / fair * 100
+                    if ev > 1:
+                        entry["opportunities"].append({
+                            "designation": mlabels["ml"][i], "bb_odds": bb_o,
+                            "pin_odds": 0, "fair_price": round(fair, 4), "ev_pct": round(ev, 2),
+                        })
+
+    # --- hc (让球) ---
+    bb_hc = extract_bb_handicap(bb, sport)
+    if bb_hc:
+        bb_hl = bb_hc.get("home_line") if bb_hc.get("home_line") is not None else bb_hc.get("away_line")
+        if bb_hl is not None:
+            oa_hc = _oa_fair(entry, sport, "hc", target_line=bb_hl)
+            if oa_hc and oa_hc.get("home") and oa_hc.get("away"):
+                bf_line = oa_hc.get("line")
+                if bf_line is not None and abs(float(bb_hl) - float(bf_line)) <= 0.25:
+                    ev_h = (bb_hc["home_odds"] - oa_hc["home"]) / oa_hc["home"] * 100
+                    ev_a = (bb_hc["away_odds"] - oa_hc["away"]) / oa_hc["away"] * 100
+                    # EV>20% = BB 让球盘与独赢盘数据自相矛盾(线错配), 丢弃(对齐 bb_ev_push 的 EV cap)
+                    if 1 < ev_h <= 20:
+                        entry["handicap"].append({
+                            "designation": mlabels["hc_home"], "line": bb_hc.get("home_line_str", ""),
+                            "bb_odds": bb_hc["home_odds"], "pin_odds": 0,
+                            "fair_price": round(oa_hc["home"], 4), "ev_pct": round(ev_h, 2),
+                        })
+                    if 1 < ev_a <= 20:
+                        entry["handicap"].append({
+                            "designation": mlabels["hc_away"], "line": bb_hc.get("away_line_str", ""),
+                            "bb_odds": bb_hc["away_odds"], "pin_odds": 0,
+                            "fair_price": round(oa_hc["away"], 4), "ev_pct": round(ev_a, 2),
+                        })
+
+    # --- ou (大小球) ---
+    bb_ou = extract_bb_ou(bb, sport)
+    if bb_ou and bb_ou.get("line") is not None:
+        oa_ou = _oa_fair(entry, sport, "ou", target_line=bb_ou["line"])
+        if oa_ou and oa_ou.get("over") and oa_ou.get("under"):
+            bf_line = oa_ou.get("line")
+            if bf_line is not None and abs(float(bb_ou["line"]) - float(bf_line)) <= 0.25:
+                ev_o = (bb_ou["over_odds"] - oa_ou["over"]) / oa_ou["over"] * 100
+                ev_u = (bb_ou["under_odds"] - oa_ou["under"]) / oa_ou["under"] * 100
+                # EV>20% = 大小球线与 Betfair 线错配, 丢弃
+                if 1 < ev_o <= 20:
+                    entry["over_under"].append({
+                        "designation": mlabels["over"], "line": str(bb_ou["line"]),
+                        "bb_odds": bb_ou["over_odds"], "pin_odds": 0,
+                        "fair_price": round(oa_ou["over"], 4), "ev_pct": round(ev_o, 2),
+                    })
+                if 1 < ev_u <= 20:
+                    entry["over_under"].append({
+                        "designation": mlabels["under"], "line": str(bb_ou["line"]),
+                        "bb_odds": bb_ou["under_odds"], "pin_odds": 0,
+                        "fair_price": round(oa_ou["under"], 4), "ev_pct": round(ev_u, 2),
+                    })
+
+    # --- ht (上半场独赢) ---
+    bb_ht = bb.get("odds_ht", {})
+    ht_ml = bb_ht.get("ml")
+    if ht_ml:
+        oa_ht = _oa_fair(entry, sport, "ht")
+        if oa_ht:
+            keys = ["home", "draw", "away"] if sport == "football" else ["home", "away"]
+            ht_labels = ([f"上半场主胜", f"上半场和局", f"上半场客胜"] if sport == "football"
+                         else [f"上半场主胜", f"上半场客胜"])
+            for i in range(min(len(ht_ml), len(keys))):
+                bb_o = ht_ml[i]
+                fair = oa_ht.get(keys[i])
+                if bb_o and fair and fair > 1:
+                    ev = (bb_o - fair) / fair * 100
+                    if ev > 1:
+                        entry["opportunities"].append({
+                            "designation": ht_labels[i], "bb_odds": bb_o,
+                            "pin_odds": 0, "fair_price": round(fair, 4), "ev_pct": round(ev, 2),
+                            "_market": "ht",
+                        })
+
+    # --- ht_ou (上半场大小) ---
+    ht_ou = bb_ht.get("total")
+    if ht_ou and ht_ou.get("line") is not None:
+        oa_htou = _oa_fair(entry, sport, "ht_ou", target_line=ht_ou["line"])
+        if oa_htou and oa_htou.get("over") and oa_htou.get("under"):
+            bf_line = oa_htou.get("line")
+            if bf_line is not None and abs(float(ht_ou["line"]) - float(bf_line)) <= 0.25:
+                ev_o = (ht_ou["over_odds"] - oa_htou["over"]) / oa_htou["over"] * 100
+                ev_u = (ht_ou["under_odds"] - oa_htou["under"]) / oa_htou["under"] * 100
+                if 1 < ev_o <= 20:
+                    entry["over_under"].append({
+                        "designation": "上半场大球", "line": str(ht_ou["line"]),
+                        "bb_odds": ht_ou["over_odds"], "pin_odds": 0,
+                        "fair_price": round(oa_htou["over"], 4), "ev_pct": round(ev_o, 2), "_market": "ht_ou",
+                    })
+                if 1 < ev_u <= 20:
+                    entry["over_under"].append({
+                        "designation": "上半场小球", "line": str(ht_ou["line"]),
+                        "bb_odds": ht_ou["under_odds"], "pin_odds": 0,
+                        "fair_price": round(oa_htou["under"], 4), "ev_pct": round(ev_u, 2), "_market": "ht_ou",
+                    })
+
+    # --- dc (双重机会) ---
+    bb_dc = bb.get("odds_dc", [])
+    if len(bb_dc) >= 3 and n_ml == 3:
+        oa_dc = _oa_fair(entry, sport, "dc")
+        if oa_dc:
+            dc_labels = ["双重机会-主/和局", "双重机会-和局/客", "双重机会-主/客"]
+            dc_keys = ["1X", "X2", "12"]  # BB 顺序 [1X(主/和), 2X(和/客)=Betfair X2, 12(主/客)]
+            for i in range(3):
+                bb_val = float(bb_dc[i]) if isinstance(bb_dc[i], str) else bb_dc[i]
+                fair = oa_dc.get(dc_keys[i])
+                if bb_val and fair and fair > 0:
+                    ev = (bb_val - fair) / fair * 100
+                    if ev > 1:
+                        entry["double_chance"].append({
+                            "designation": dc_labels[i], "bb_odds": bb_val,
+                            "pin_odds": 0, "fair_price": round(fair, 4), "ev_pct": round(ev, 2), "_market": "dc",
+                        })
+
+    # --- dnb (平局退款) ---
+    bb_dnb = bb.get("odds_dnb", [])
+    if len(bb_dnb) >= 2 and n_ml == 3:
+        oa_dnb = _oa_fair(entry, sport, "dnb")
+        if oa_dnb and oa_dnb.get("home") and oa_dnb.get("away"):
+            dnb_labels = ["平局退款-主", "平局退款-客"]
+            dnb_fair = [oa_dnb["home"], oa_dnb["away"]]
+            for i in range(2):
+                bb_val = float(bb_dnb[i]) if isinstance(bb_dnb[i], str) else bb_dnb[i]
+                if bb_val and dnb_fair[i] > 0:
+                    ev = (bb_val - dnb_fair[i]) / dnb_fair[i] * 100
+                    if 1 < ev <= 20:
+                        entry["draw_no_bet"].append({
+                            "designation": dnb_labels[i], "bb_odds": bb_val,
+                            "pin_odds": 0, "fair_price": round(dnb_fair[i], 4), "ev_pct": round(ev, 2), "_market": "dnb",
+                        })
+
+    # --- btts (双边进球) ---
+    bb_btts_yes, bb_btts_no = extract_bb_btts(bb)
+    if bb_btts_yes and bb_btts_no:
+        oa_btts = _oa_fair(entry, sport, "btts")
+        if oa_btts and oa_btts.get("yes") and oa_btts.get("no"):
+            _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, oa_btts["yes"], oa_btts["no"])
+
+
+def compare_bb_vs_oa(bb_matches, save_path=None):
+    """早盘 BB vs odds-api.io(Betfair) 直接匹配(2026-09-18 替代 Pin 匹配)。
+
+    遍历所有 BB 比赛, match_event_orient 直接匹配 odds-api.io 事件, Betfair 中间价当公平价
+    算 EV。不拉 Pin(联赛结构/匹配引擎全跳过)。输出结构对齐 compare_bb_vs_pinnacle。
+    """
+    from datetime import datetime, timezone
+    if save_path is None:
+        save_path = DATA_DIR / "bb_vs_pinnacle_comparison.json"
+
+    entries = []
+    sport_counts = {}
+    sport_opp_counts = {}
+    for m in bb_matches:
+        sport = m.get("sport", "football")
+        home, away = m.get("home", ""), m.get("away", "")
+        if not home or not away:
+            continue
+        entry = _build_oa_entry(m, sport)
+        _oa_add_markets(entry, m, sport)
+        has_opp = bool(entry["opportunities"] or entry["handicap"] or entry["over_under"]
+                       or entry["double_chance"] or entry["draw_no_bet"])
+        sport_counts[sport] = sport_counts.get(sport, 0) + 1
+        if has_opp:
+            sport_opp_counts[sport] = sport_opp_counts.get(sport, 0) + 1
+            entries.append(entry)
+
+    # 汇总
+    total_opps_1x2 = sum(1 for e in entries for o in e["opportunities"] if o.get("_market", "") != "ht")
+    total_hc = sum(len(e["handicap"]) for e in entries)
+    total_ou = sum(1 for e in entries for o in e["over_under"] if o.get("_market", "") != "ht_ou")
+    total_dc = sum(len(e["double_chance"]) for e in entries)
+    total_dnb = sum(len(e["draw_no_bet"]) for e in entries)
+    total_btts = sum(1 for e in entries for o in e["opportunities"] if o.get("_market", "") == "btts")
+    total_all = sum(1 for e in entries for o in (e["opportunities"] + e["handicap"] + e["over_under"]
+                                                  + e["double_chance"] + e["draw_no_bet"]))
+
+    output = {
+        "version": "2.0",
+        "code_version": COMPARISON_CODE_VERSION + 10,  # 强制全量重建(Betfair 直接匹配新引擎)
+        "parameters": {"min_ev_pct": 1, "ev_cap_pct": 20},
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "bb_matches_total": len(bb_matches),
+        "pinnacle_leagues_found": 0,  # 无 Pin
+        "matched_matches": len(entries),
+        "time_match_skipped": 0,
+        "matches_with_ev": len(entries),
+        "per_sport_matched": {k: v for k, v in sorted(sport_counts.items())},
+        "per_sport_opportunities": {k: v for k, v in sorted(sport_opp_counts.items())},
+        "fetch_errors": [],
+        "opportunities_1x2": total_opps_1x2,
+        "opportunities_handicap": total_hc,
+        "opportunities_over_under": total_ou,
+        "opportunities_double_chance": total_dc,
+        "opportunities_draw_no_bet": total_dnb,
+        "opportunities_btts": total_btts,
+        "opportunities_corner": 0,
+        "opportunities_total": total_all,
+        "calibration_blocked_hc": 0,
+        "calibration_blocked_ou": 0,
+        "details": entries,
+    }
+    try:
+        _tmp = save_path.with_suffix(".tmp")
+        _tmp.write_text(json.dumps(output, ensure_ascii=False))
+        _tmp.replace(save_path)
+    except OSError as e:
+        print(f"  ⚠️ 写对比文件失败: {e}")
+    print(f"匹配(Betfair直接): {len(entries)} 场有 +EV | 总计 {total_all} 机会 | 独赢 {total_opps_1x2} | 让球 {total_hc} | 大小 {total_ou}")
+    return output
+
+
 def main():
     """全量对比入口。"""
     print("=" * 60)
@@ -1545,23 +1800,8 @@ def main():
                 valid_1x2 += 1
     print(f"  有独赢赔率: {valid_1x2} 场足球 + {valid_2way} 场其他 = {valid_1x2 + valid_2way}")
 
-    if not _check_pinnacle():
-        msg = "Pinnacle API 不可用 — 取消扫描（不使用缓存，确保赔率真实）"
-        print(f"\n⚠️ {msg}。解决办法：")
-        print("  1. 检查网络连接")
-        print("  2. 切换代理节点后重试")
-        raise RuntimeError(msg)
-
-    force_refresh = "--refresh-leagues" in sys.argv
-    if force_refresh:
-        print("  🔄 收到 --refresh-leagues 标志，强制刷新联赛结构...")
-    all_pin_leagues = refresh_league_structure(force_refresh=force_refresh)
-    if not all_pin_leagues:
-        print("  ⚠️  Pinnacle 联赛结构为空，跳过扫描")
-        return
-    print(f"  📂 Pinnacle 联赛结构: {len(all_pin_leagues)} 个联赛")
-
-    compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, save_path=output_path)
+    # 2026-09-18: 早盘改用 Betfair 直接匹配(compare_bb_vs_oa), 不再拉 Pin(联赛结构/匹配引擎全跳过)。
+    compare_bb_vs_oa(bb_matches, save_path=output_path)
 
 
 if __name__ == "__main__":

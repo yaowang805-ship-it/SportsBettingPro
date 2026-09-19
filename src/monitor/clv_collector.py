@@ -1075,13 +1075,100 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
 
 
 def collect():
-    """主入口：采集所有 pending 比赛的收盘赔率并计算 CLV。"""
+    """主入口：采集所有 pending 比赛的收盘赔率并计算 CLV(Betfair 收盘价, 2026-09-19 替代 Pin)。"""
     from src.storage.file_lock import task_lock
     with task_lock("clv_collector") as acquired:
         if not acquired:
             logger.info("CLV 采集已在运行，跳过本次（防 crontab/pipeline 重叠）")
             return 0
-        return _collect_inner()
+        return collect_betfair_clv()
+
+
+def collect_betfair_clv():
+    """Betfair 收盘价 CLV 采集(2026-09-19 替代 Pin 收盘价)。
+
+    从 compare_bb_vs_oa 的对比文件读 entry(含 oa_event_id), 从 odds_ws 收盘价快照读
+    Betfair 收盘价, 算 true_clv_pct = (bb_odds - closing_fair) / closing_fair, 写 clv_results.csv。
+    """
+    from src.scrapers.odds_ws import load_closing_cache, closing_fair_price
+    closing = load_closing_cache()
+    if not closing:
+        logger.info("Betfair 收盘价快照为空, 跳过 CLV 采集")
+        return 0
+
+    # 读对比文件(compare_bb_vs_oa 输出), 展开 entry → 每条 opportunity 一条
+    import csv
+    from datetime import datetime, timezone
+    from config.settings import DATA_DIR
+    comp_files = ["bb_vs_pinnacle_comparison.json", "bb_vs_pinnacle_comparison_near.json",
+                  "bb_vs_pinnacle_comparison_far.json", "bb_vs_pinnacle_comparison_urgent.json"]
+    rows = []
+    seen = set()
+    for fn in comp_files:
+        f = DATA_DIR / fn
+        if not f.exists():
+            continue
+        try:
+            d = json.loads(f.read_text())
+        except (json.JSONDecodeError, OSError):
+            continue
+        for e in d.get("details", []):
+            eid = e.get("oa_event_id")
+            if not eid or eid not in closing:
+                continue
+            # 1x2 (opportunities, 非 ht) + hc(handicap) + ou(over_under)
+            for o in e.get("opportunities", []):
+                if o.get("_market") == "ht":
+                    continue
+                rows.append((eid, e, "1x2", o.get("designation"), o.get("bb_odds")))
+            for o in e.get("handicap", []):
+                rows.append((eid, e, "hc", o.get("designation"), o.get("bb_odds")))
+            for o in e.get("over_under", []):
+                sub = "ht_ou" if o.get("_market") == "ht_ou" else "ou"
+                rows.append((eid, e, sub, o.get("designation"), o.get("bb_odds")))
+
+    if not rows:
+        logger.info("无可算 CLV 的记录, 跳过")
+        return 0
+
+    # 写 clv_results.csv (追加, 复用原表头)
+    out_file = DATA_DIR / "clv_results.csv"
+    header = ["collect_time", "push_time", "match_key", "sport", "league", "home", "away",
+              "designation", "sub_market", "bb_odds", "close_fair_price", "true_clv_pct",
+              "match_epoch", "source", "close_source"]
+    exists = out_file.exists()
+    n = 0
+    with open(out_file, "a", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        if not exists:
+            w.writerow(header)
+        now = datetime.now(timezone.utc).isoformat()
+        for eid, e, sub, desig, bb_odds in rows:
+            fair = closing_fair_price(eid, sub)
+            if not fair:
+                continue
+            # 方向 → 公平价
+            if sub == "1x2":
+                k = {"主胜": "home", "和局": "draw", "客胜": "away"}.get(desig, "home")
+            elif sub in ("hc",):
+                k = {"让球主胜": "home", "让球客胜": "away"}.get(desig, "home")
+            else:  # ou / ht_ou
+                k = "over" if "大" in desig else "under"
+            fp = fair.get(k)
+            if not fp or fp <= 1:
+                continue
+            clv = (bb_odds - fp) / fp * 100
+            key = (eid, sub, desig)
+            if key in seen:
+                continue
+            seen.add(key)
+            w.writerow([now, "", f"{e.get('home_bb','')}|{e.get('away_bb','')}", e.get("sport", ""),
+                        e.get("league_cn", e.get("league", "")), e.get("home_bb", ""), e.get("away_bb", ""),
+                        desig, sub, bb_odds, round(fp, 4), round(clv, 2),
+                        e.get("start_time_pin_epoch", 0), "validate", "betfair"])
+            n += 1
+    logger.info("Betfair 收盘 CLV 采集: %d 条写入 clv_results.csv", n)
+    return n
 
 
 def _collect_inner():

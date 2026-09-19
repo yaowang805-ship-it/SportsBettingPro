@@ -177,6 +177,10 @@ FOOTBALL_DATA_API_KEY = os.getenv("FOOTBALL_API_KEY", "")
 PRE_BET_ODDS_VALIDATION = os.getenv('PRE_BET_ODDS_VALIDATION', 'true').lower() == 'true'
 MAX_ODDS_SLIPPAGE = float(os.getenv('MAX_ODDS_SLIPPAGE', '0.05'))
 
+# 2026-09-18 暂停 Pin 轮询: 已迁 Betfair(Sbobet+Betfair 公平价 + WS 实时推送), Pin 只留作 CLV 差异,
+# 早盘对比/CLV收盘采集/自愈看门狗/Pin封禁通知 全部暂停。要恢复设 PIN_POLLING_PAUSED=false。
+PIN_POLLING_PAUSED = os.getenv('PIN_POLLING_PAUSED', 'true').lower() == 'true'
+
 
 # ===== 文件安全写入工具 =====
 import shutil

@@ -715,11 +715,13 @@ def _release_direction(designation: str, sub_market: str) -> str:
 
 
 def _odds_interval(odds):
-    """BB 赔率 → 赔率区间标签(与 compute_market_release._odds_interval 同口径)。"""
+    """BB 赔率 → 赔率区间标签(与 compute_market_release._odds_interval 同口径, 2026-09-19 4档改5档)。"""
     if odds is None or odds <= 1.0:
         return "?"
+    if odds < 1.5:
+        return "1.0-1.5"
     if odds < 2.0:
-        return "1.0-2.0"
+        return "1.5-2.0"
     if odds < 3.0:
         return "2.0-3.0"
     if odds < 5.0:
@@ -2539,7 +2541,7 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
     if bb_time:
         data_time_parts.append(f"BB数据 {bb_time}")
     if pin_time:
-        pin_label = f"Pin数据 {pin_time}{pin_stale_warning}"
+        pin_label = f"Betfair数据 {pin_time}{pin_stale_warning}"
         data_time_parts.append(pin_label)
     data_time_str = " | ".join(data_time_parts) if data_time_parts else f"数据 {now_str}"
 
@@ -4001,8 +4003,7 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
 _FORMAT_MARKERS = {
     "header": "**+EV 投注推荐:",
     "match_prefix": "##### ",
-    "fair_price": "公平价:",
-    "pinnacle": "Pinnacle:",
+    "fair_price": "Betfair公平价:",
     "retail": "价:",  # BB价 / FB价 / BB/FB价
     "edge": "溢价:",
     "stake": "投注:",

@@ -104,26 +104,34 @@ DAILY_STAKE_LIMIT = 1000  # 2026-09-18 新数据源风控: 早盘每天投注≤
 # second_level_monitor._try_live_auto_bet 的硬编码 _bettable, 统一到这里单一事实来源。
 # 赔率区间用 "*" 表示"所有区间"(已验证方向不分区间的历史口径)。
 MANUAL_OBSERVE_RELEASE = {
-    "football|ou|小|*|live": 200,       # 足球小球(2026-09-17 600→200: 真溢价问题未解决, 观察库edge -3.2pp, 先降风险)
-    # 2026-09-14 暂停: 足球独赢主胜实盘累计 ROI -11.8%(126笔, 胜率27%<隐含), 之前 +40.7% 是隐含口径
-    # 虚高撑的假 edge(见 implied-mean-method-fix)。移除 manual release, 交还数据驱动判断(赢率<隐含不会释放)。
-    # "football|1x2|主|*|live": 150,
-    "tennis|1x2|主|*|live": 100,        # 网球独赢(试探, 攒30笔)
-    "tennis|1x2|客|*|live": 100,
-    "basketball|ou|大|*|live": 100,     # 篮球大小分(试探)
-    "basketball|ou|小|*|live": 100,
-    "basketball|hc|主|*|live": 100,     # 篮球让分(试探)
-    "basketball|hc|客|*|live": 100,
+    # 2026-09-19 数据驱动释放(方向×赔率区间, 用「赢率 vs Betfair隐含」edge 判据, 不再看正盈亏):
+    # 只有小球 2.0-3.0(edge +4.8pp, 190笔, 真edge) 和小球 1.0-1.5(edge +3.5pp, 29笔样本少) 是正edge。
+    # 大球 1.0-2.0 的"正盈亏"是注额加权假象(edge 实为 -2.3pp/-2.7pp), 放 BLOCK 拦截。
+    "football|ou|小|2.0-3.0|live": 300,
+    "football|ou|小|1.0-1.5|live": 300,   # 2026-09-19 用户提额至 300
 }
 
-# 手动拦截的赔率区间(用户明确要求, 2026-09-13): 已验证方向里表现巨差的区间硬编码拦截,
-# 优先于 MANUAL_OBSERVE_RELEASE 的 "*" 区间。数据驱动拦截(observe_blocked)照常追加。
+# 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
+# 优先于 MANUAL_OBSERVE_RELEASE 的区间。数据驱动拦截(observe_blocked)照常追加。
 MANUAL_OBSERVE_BLOCK = {
-    "football|1x2|主|>5.0|live",  # 独赢主胜冷门: 实盘 ROI -65.8%(巨亏), 赢率5.9%≈隐含, 无edge
-    # 2026-09-18 用户决定撤 3 个早盘方向(实盘真亏, 只留 ht主胜): ht客胜/1x2和局/ht_dc客
-    "football|ht|客|3.0-5.0|early",      # 实盘 88笔8月-32.6%+9月5笔-90.2%, 真亏
-    "football|1x2|平|3.0-5.0|early",     # 实盘 9月25笔-79.9%恶化, 撤
-    "football|ht_dc|客|1.0-2.0|early",   # 实盘 112笔8月-6.3%, 撤
+    "football|1x2|主|>5.0|live",      # 主胜冷门 实盘 ROI -65.8%
+    "football|1x2|主|3.0-5.0|live",   # 主胜 3.0-5.0 edge -3.3pp
+    "football|1x2|客|3.0-5.0|live",   # 客胜 3.0-5.0 edge -3.3pp
+    "football|1x2|客|>5.0|live",      # 客胜 >5.0 edge -2.2pp(8%胜率)
+    "football|1x2|平|3.0-5.0|live",   # 和局 3.0-5.0 edge -5.5pp(头号巨亏)
+    "football|1x2|平|>5.0|live",      # 和局 >5.0 edge -2.2pp
+    "football|ou|大|1.0-1.5|live",    # 大球 1.0-1.5 edge -2.3pp(72%<74%隐含, 假edge)
+    "football|ou|大|1.5-2.0|live",    # 大球 1.5-2.0 edge -2.7pp(59%<61%隐含, 假edge)
+    "football|ou|大|2.0-3.0|live",    # 大球 2.0-3.0 edge -3.8pp
+    "football|ou|大|3.0-5.0|live",    # 大球 3.0-5.0 edge -13.4pp(17%胜率)
+    "football|ou|小|1.5-2.0|live",    # 小球 1.5-2.0 edge -7.6pp(负格子)
+    "football|hc|主|1.5-2.0|live",    # 让球主胜 1.5-2.0 edge -2.7pp
+    "football|hc|客|2.0-3.0|live",    # 让球客胜 2.0-3.0 edge -6.7pp
+    "football|hc|主|3.0-5.0|live",    # 让球主胜 3.0-5.0 edge -18.5pp
+    # 早盘(保留旧拦截)
+    "football|ht|客|3.0-5.0|early",
+    "football|1x2|平|3.0-5.0|early",
+    "football|ht_dc|客|1.0-2.0|early",
 }
 
 # 手动释放 + 当日累计上限(2026-09-15 用户要求): 释放的是"有希望的格子"试探, 单注≤150, 当日累计≤2000。
@@ -175,15 +183,19 @@ def _direction(desig, sub_market):
 
 
 def _odds_interval(odds):
-    """BB 赔率 → 赔率区间标签(1.0-2.0/2.0-3.0/3.0-5.0/>5.0)。
+    """BB 赔率 → 赔率区间标签(1.0-1.5/1.5-2.0/2.0-3.0/3.0-5.0/>5.0)。
 
     2026-09-13 用户要求: 释放/拦截粒度加赔率区间维度。favorite-longshot bias
     (冷门被高估) 使同一盘口不同赔率区间 edge 分化巨大, 必须分区间判断。
+    2026-09-19 4档改5档: 1.0-2.0 拆成 1.0-1.5/1.5-2.0(实测小球 1.0-1.5 是正edge +3.5pp,
+    而 1.5-2.0 是负edge -7.6pp, 合并会掩盖分化)。
     """
     if odds is None or odds <= 1.0:
         return "?"
+    if odds < 1.5:
+        return "1.0-1.5"
     if odds < 2.0:
-        return "1.0-2.0"
+        return "1.5-2.0"
     if odds < 3.0:
         return "2.0-3.0"
     if odds < 5.0:
@@ -705,7 +717,10 @@ def main():
         if sport == "football" and interval == ">5.0":
             observe_blocked.append([sport, sm, dr, interval, "early"])
             continue
-        if med > OBS_CLV_MIN and n >= OBS_N_MIN:
+        _wr = obs_winrate.get((sport, sm, dr, interval, "early"), {})
+        _edge = _wr.get("winrate", 0.0) - _wr.get("implied", 0.0)
+        _roi = _wr.get("roi", 0.0)
+        if med > OBS_CLV_MIN and n >= OBS_N_MIN and _edge > 0 and _roi > 0:
             observe_released.append([sport, sm, dr, interval, "early"])
         else:
             observe_blocked.append([sport, sm, dr, interval, "early"])
@@ -721,7 +736,10 @@ def main():
     for (sport, sm, dr, interval), (med, n) in sorted(live_clv.items()):
         if (sport, sm, dr) in _manual_dirs:
             continue  # 已验证方向, 数据驱动不拦(用户显式开放, 全区间)
-        if med > OBS_CLV_MIN and n >= OBS_N_MIN:
+        _wr = obs_winrate.get((sport, sm, dr, interval, "live"), {})
+        _edge = _wr.get("winrate", 0.0) - _wr.get("implied", 0.0)
+        _roi = _wr.get("roi", 0.0)
+        if med > OBS_CLV_MIN and n >= OBS_N_MIN and _edge > 0 and _roi > 0:
             observe_released.append([sport, sm, dr, interval, "live"])
         else:
             observe_blocked.append([sport, sm, dr, interval, "live"])

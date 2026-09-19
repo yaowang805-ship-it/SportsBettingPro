@@ -366,12 +366,20 @@ def _norm(name):
 
 
 def _parse_line(li):
-    """BB 盘口线字符串('-0.5'/'+0/0.5') → float。quarter-ball(含 /)返回 None(跳过)。"""
+    """BB 盘口线字符串('-0.5'/'+0/0.5'/'2/2.5') → float。
+
+    quarter-ball(含 /)取平均(2/2.5→2.25), 与早盘 parse_asian_line 同口径。
+    之前返回 None 会丢线: 推送只显示"大球"不带"大几球", 且线匹配被跳过(假EV)。
+    """
     if li is None:
         return None
     s = str(li)
     if "/" in s:
-        return None
+        try:
+            parts = s.split("/")
+            return (float(parts[0]) + float(parts[1])) / 2.0
+        except (ValueError, IndexError):
+            return None
     try:
         return float(s)
     except ValueError:

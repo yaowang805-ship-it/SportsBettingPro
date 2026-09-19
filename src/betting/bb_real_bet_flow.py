@@ -194,6 +194,13 @@ def auto_bet_flow(opportunities, token=None, domain=None):
             continue
         market_id, odds, option_type = mk
 
+        # 同场同盘口互斥锁(2026-09-19): 同一 match 同一盘口只下一注(防对立方向/多线重复下注)
+        from src.betting.bb_auto_bet import check_sub_market_bet
+        if check_sub_market_bet(match_id, sub):
+            failed.append({"home": disp_home, "away": disp_away,
+                           "reason": f"同场同盘口已投({sub}), 跳过对立/重复"})
+            continue
+
         # 全局冷却(2026-09-08): 跨进程共享时间戳, 与滚球流程错开, 避免"同一时间"下单
         from src.betting.bb_auto_bet import global_bet_cooldown, record_global_bet
         _wait = global_bet_cooldown(20, 90)
@@ -218,6 +225,8 @@ def auto_bet_flow(opportunities, token=None, domain=None):
                 "ts": time.time(),
             }
             success.append(rec)
+            from src.betting.bb_auto_bet import record_sub_market_bet
+            record_sub_market_bet(match_id, sub)
             _bj = datetime.now(timezone(timedelta(hours=8))).strftime("%H:%M")
             # 开赛时间 + 运动类型(2026-09-07 用户要求)
             _sport_cn = SPORT_CN.get(opp.get("sport", ""), opp.get("sport", ""))

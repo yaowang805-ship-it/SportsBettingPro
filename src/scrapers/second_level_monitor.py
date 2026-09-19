@@ -33,13 +33,35 @@ COMPARISON_FILE = ROOT / "data" / "storage" / "bb_vs_pinnacle_comparison.json"
 
 # EV-Kelly 半凯利仓位(秒级自动下单注额)。有效资金 = ¥5000(日目标, 2026-09-06 用户选 C),
 # 让弱 edge 落在 ¥300 上限以下, 强 edge 顶格, 真正按 edge 分档。
-BANKROLL = 5000        # 有效资金(日目标口径, 不是 2 万全仓)
 KELLY_FRACTION = 0.5   # 半凯利
-MAX_STAKE = 150        # 单盘口上限(2026-09-18 新数据源风控: 滚球单注≤150, 原400)
+MAX_STAKE = 300        # 单盘口上限(2026-09-19 用户提额: 滚球单注≤300, 原150)
+
+# 2026-09-19 滚球本金 = 账户余额的固定比例(30%), 随余额动态调整(不再写死 5000)
+BANKROLL_PCT = 0.30
+_bankroll_cache = {"ts": 0.0, "value": 5000.0}  # 本金缓存(60s TTL), 兜底 5000
+
+
+def _bankroll():
+    """滚球本金 = 账户余额 × BANKROLL_PCT(30%), 60s 缓存(避免每注都拉余额 HTTP)。"""
+    now = time.time()
+    if now - _bankroll_cache["ts"] < 60:
+        return _bankroll_cache["value"]
+    try:
+        from src.betting.bb_auto_bet import fetch_balance
+        _bal = fetch_balance()
+        if _bal:
+            v = float(str(_bal).replace(",", "").replace("¥", "").strip())
+            if v > 0:
+                _bankroll_cache["value"] = v * BANKROLL_PCT
+                _bankroll_cache["ts"] = now
+    except (TypeError, ValueError, OSError):
+        pass
+    return _bankroll_cache["value"]
 MIN_STAKE = 30         # stake<30 拦截铁律
+REVERIFY_THRESHOLD = 3.0  # 2026-09-19 验价阈值(秒): lead-lag 窗口 2-3s(赔率秒级变动), 超过 3s 就重拉验价(逆向选择)
 
 # 滚球实盘(2026-09-07 起只投小球under, 2026-09-09 放大预算: 小球累计40笔ROI+14.2%稳定正)。滚动预算(结算后释放额度)。
-LIVE_BUDGET = 8000  # 2026-09-18 新数据源风控: 滚球每天投注≤8000(用户纠正800→8000), 原3000
+LIVE_BUDGET = float('inf')  # 2026-09-18 用户取消每日投注额上限: 滚球不再设总限额(由单场/单盘口300 + 账户余额兜底)
 LIVE_BUDGET_FILE = ROOT / "data" / "storage" / "live_bet_budget.json"
 DRAWDOWN_STOP_PNL = 1000  # 回撤熔断(2026-09-13): 最近7天滚球实盘累计亏超¥1000(=20%BANKROLL) → 半仓
 LIVE_PAPER_FILE = ROOT / "data" / "storage" / "live_paper_bets.json"
@@ -60,6 +82,27 @@ OBS_STATE_FILE = ROOT / "data" / "storage" / "observe_release_state.json"
 DAILY_STAKE_LIMIT = 1000  # 新释放盘口当日累计投注额上限(2026-09-12 用户要求), 次日实盘ROI>4%解除
 PENDING_SETTLE_FILE = ROOT / "data" / "storage" / "pending_settle.json"  # 结算明细缓存(每小时汇总推一次)
 SETTLE_PUSH_INTERVAL = 3600  # 结算明细每小时汇总推一次(2026-09-12 用户要求, 不一场推一场)
+# 实盘结算流水(2026-09-19): 持久化已结算注, 带赔率区间, 供按格子拆盈亏(不再靠观察库倒推)
+SETTLED_LOG_FILE = ROOT / "data" / "storage" / "live_settled_log.json"
+
+
+def _odds_interval(odds):
+    """BB 赔率 → 赔率区间(1.0-1.5/1.5-2.0/2.0-3.0/3.0-5.0/>5.0, 与 compute_market_release 同口径)。"""
+    try:
+        o = float(odds)
+    except (TypeError, ValueError):
+        return "?"
+    if o <= 1.0:
+        return "?"
+    if o < 1.5:
+        return "1.0-1.5"
+    if o < 2.0:
+        return "1.5-2.0"
+    if o < 3.0:
+        return "2.0-3.0"
+    if o < 5.0:
+        return "3.0-5.0"
+    return ">5.0"
 
 
 def _dingtalk_safe(text: str) -> str:
@@ -472,6 +515,21 @@ class SecondLevelMonitor:
             print(f"[slm] 虚拟投注写入失败: {str(e)[:80]}", flush=True)
             return False
 
+    def _update_live_paper_stake(self, sig, stake):
+        """更新观察库该注的 stake(实盘 cap 后同步, 保证分配逻辑一致, 2026-09-19)。"""
+        try:
+            if not LIVE_PAPER_FILE.exists():
+                return
+            data = json.loads(LIVE_PAPER_FILE.read_text())
+            key = (sig.get("match_id"), sig.get("market_id"), sig.get("option_type"), sig.get("sub"))
+            for b in data:
+                if (b.get("match_id"), b.get("market_id"), b.get("option_type"), b.get("sub")) == key:
+                    b["stake"] = stake
+                    LIVE_PAPER_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1))
+                    return
+        except Exception:
+            pass
+
     def _settle_paper_bets(self):
         """结算虚拟投注(观察库): 按 match_id 定向查 getMatchDetail 判输赢, 写回 result/profit。"""
         from src.betting.bb_auto_bet import read_token
@@ -585,7 +643,7 @@ class SecondLevelMonitor:
                     print(f"    {sp}/{sub}: n={n2} 盈亏{pnl2:+.0f} ROI{pnl2/stk2*100:+.1f}%", flush=True)
 
     def _check_clv(self):
-        """CLV 追踪(2026-09-15 改 LEV 口径): 下注 3s 后复验 Pin 公平价, 算 CLV 写回观察库。
+        """CLV 追踪(2026-09-15 改 LEV 口径): 下注 3s 后复验 Betfair 公平价(odds-api.io), 算 CLV 写回观察库。
 
         CLV = (bb_odds - fair@T+3) / fair@T+3。正 CLV = 我们抢到比市场后来
         定价更优的价格(真 edge); 负 CLV = 逆向选择。写回 live_paper_bets 的 clv 字段,
@@ -794,6 +852,9 @@ class SecondLevelMonitor:
         if _cap is None:
             return
         stake = min(stake, _cap)
+        # 2026-09-19 分配逻辑一致: 观察库 stake 同步成实盘 cap 后的值(否则观察库 ROI 用未 cap 的 Kelly, 与实盘不一致)
+        if _added:
+            self._update_live_paper_stake(sig, stake)
         # 当日累计投注额上限(2026-09-12 用户要求): 观察库释放且未解除限制的盘口, 当日累计≤1000
         if _cap_key:
             _rs = _load_release_state().get(_cap_key, {})
@@ -816,7 +877,11 @@ class SecondLevelMonitor:
         market_id = sig.get("market_id")
         if market_id is None:
             return
-        from src.betting.bb_auto_bet import _load_stake_record, place_single_bet
+        from src.betting.bb_auto_bet import _load_stake_record, place_single_bet, check_sub_market_bet
+        # 同场同盘口互斥锁(2026-09-19): 同一 match 同一盘口只下一注(防对立方向/多线重复下注)
+        if check_sub_market_bet(sig["match_id"], sig.get("sub")):
+            print(f"  ⏭️ 同场同盘口已投, 跳过 {tag}", flush=True)
+            return
         rec = _load_stake_record()
         if rec.get(str(sig["match_id"]), {}).get(str(market_id), 0.0) > 0:
             print(f"  ⏭️ 已下过注, 跳过 {tag}", flush=True)
@@ -835,11 +900,14 @@ class SecondLevelMonitor:
         if global_bet_cooldown(15, 45) > 0:
             return
         print(f"  🎯 滚球下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake}", flush=True)
-        # 2026-09-18: 不再验价(verify_price=False)+不再并发预拉——BB 赔率秒级拉取, 下单前
-        # 重复 fetch_current_odds 是冗余 HTTP(lead-lag 抢窗口, 直接下单, 省 1-5s)。
+        # 2026-09-19 时间条件验价(职业团队做法): 从 BB 赔率拉取(bb_ts)到此刻超过 REVERIFY_THRESHOLD 秒
+        # 就重拉 BB 当前赔率验价——赔率可能已朝不利方向变动(逆向选择), 抢窗口期内(≤阈值)直接下单省 1-5s。
+        _detect_ts = sig.get("bb_ts") or _t0
+        _need_verify = (time.time() - _detect_ts) > REVERIFY_THRESHOLD
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
-            match_id=sig["match_id"], check_limit=True, verify_price=False)
+            match_id=sig["match_id"], check_limit=True, verify_price=_need_verify,
+            fair_price=sig.get("fair"), min_ev_pct=self.threshold)
         _t_order = time.time() - _t0  # 下单完成总耗时
         print(f"[slm] 下单耗时: 总 {_t_order:.2f}s", flush=True)
         # 记录尝试(成败都记), 5min 内不再重复尝试同一盘口
@@ -853,6 +921,8 @@ class SecondLevelMonitor:
         if code == 14010:
             self._invalidate_token_cache()
         if code == 0:
+            from src.betting.bb_auto_bet import record_sub_market_bet
+            record_sub_market_bet(sig["match_id"], sig.get("sub"))
             self._live_spent += stake
             self._live_outstanding += stake
             if order_id:
@@ -863,6 +933,7 @@ class SecondLevelMonitor:
                     "bb_odds": sig.get("bb_odds", 0), "desig": sig.get("desig", ""),
                     "sub": sig.get("sub", ""), "home": sig["match"].get("home", ""),
                     "away": sig["match"].get("away", ""), "sport": sig["match"].get("sport", ""),
+                    "verify": bool(_need_verify),  # 是否触发验价(2026-09-19)
                 }
             self._save_live_spent()
             # 更新释放盘口的当日累计投注额(2026-09-12 用户要求: 当日累计≤1000)
@@ -897,7 +968,7 @@ class SecondLevelMonitor:
                 f"{sig['match']['home']} vs {sig['match']['away']} | {_desig}\n"
                 f"{_platform} {sig['bb_odds']:.2f} | Betfair {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
                 f"拉取 BB {_bb_t} | Betfair {_bf_t}\n"
-                f"单注 ¥{stake} | 余额 ¥{_bal} | 今日已投 ¥{self._live_spent:.0f} | 未结 ¥{self._live_outstanding:.0f}/{LIVE_BUDGET} | 耗时 {_t_order:.1f}s")
+                f"单注 ¥{stake} | 余额 ¥{_bal} | 今日已投 ¥{self._live_spent:.0f} | 未结 ¥{self._live_outstanding:.0f} | 耗时 {_t_order:.1f}s")
         else:
             # 下单失败(如 token 过期 14010) → 也记虚拟投注, 保证验证数据积累不中断
             self._append_live_paper_bet(sig)
@@ -1033,10 +1104,11 @@ class SecondLevelMonitor:
         return (sig["bb_odds"] - fair_p) / fair_p * 100.0
 
     def _stake_for(self, sig):
-        """EV-Kelly 半凯利: stake = BANKROLL × 0.5 × (ev/100) / (odds-1), 封顶 ¥300。
+        """EV-Kelly 半凯利: stake = _bankroll() × 0.5 × (ev/100) / (odds-1), 封顶 ¥300。
 
-        --stake 显式给固定注额(>0)时用固定值; 否则按 EV-Kelly(秒级默认)。
+        本金 = 账户余额 × 30%(动态, 60s 缓存); --stake 显式给固定注额(>0)时用固定值。
         回撤熔断(2026-09-13): 最近7天滚球实盘累计亏超 DRAWDOWN_STOP_PNL → 半仓。
+        2026-09-19 暂停其他风控(注额抖动/冷门压额), 只保留投注间隔随机时长 + 回撤熔断。
         """
         if self.stake and self.stake > 0:
             return self.stake
@@ -1044,8 +1116,11 @@ class SecondLevelMonitor:
         odds = sig["bb_odds"]
         if odds <= 1 or edge <= 0:
             return 0
-        stake = BANKROLL * KELLY_FRACTION * edge / (odds - 1)
-        stake = int(min(max(stake, MIN_STAKE), MAX_STAKE))
+        stake = _bankroll() * KELLY_FRACTION * edge / (odds - 1)
+        # 2026-09-19: 去掉 max(stake, MIN_STAKE) 兜底。之前把 Kelly<30 的冷门单硬抬到 30 投出
+        # = 超 Kelly 数倍下冷门(方差击穿来源), 与「stake<30 不投」铁律语义相反。现在 <30 原样
+        # 返回, 由调用方 _try_live_auto_bet/_try_auto_bet 的 `if stake < MIN_STAKE: return` 拦截。
+        stake = int(min(stake, MAX_STAKE))
         # 回撤熔断: 最近7天累计亏超阈值 → 半仓(职业铁律: survival 优先)
         _pnl = _recent_pnl()
         if _pnl < -DRAWDOWN_STOP_PNL:
@@ -1055,13 +1130,17 @@ class SecondLevelMonitor:
 
     def _try_auto_bet(self, sig):
         """秒级信号 → 自动下单。复用 place_single_bet(注额上限 + 下注前验价 + 记录)。"""
-        from src.betting.bb_auto_bet import _load_stake_record, place_single_bet
+        from src.betting.bb_auto_bet import _load_stake_record, place_single_bet, check_sub_market_bet
         match_id = sig["match_id"]; market_id = sig["market_id"]
         m = sig["match"]
         tag = f"{m['home_cn']} vs {m['away_cn']} {sig['desig']}"
         stake = self._stake_for(sig)
         if stake < MIN_STAKE:
             return  # EV-Kelly 算出来 < 30, 拦截(铁律)
+        # 同场同盘口互斥锁(2026-09-19): 同一 match 同一盘口只下一注(防对立方向/多线重复下注)
+        if check_sub_market_bet(match_id, sig.get("sub")):
+            print(f"  ⏭️ 同场同盘口已投, 跳过 {tag}", flush=True)
+            return
         # 去重: 该盘口已下过注(主扫描或本监控)则跳过, 防重复下注
         rec = _load_stake_record()
         if rec.get(str(match_id), {}).get(str(market_id), 0.0) > 0:
@@ -1076,6 +1155,8 @@ class SecondLevelMonitor:
         if code == 14010:
             self._invalidate_token_cache()
         if code == 0:
+            from src.betting.bb_auto_bet import record_sub_market_bet
+            record_sub_market_bet(match_id, sig.get("sub"))
             print(f"  ✅ 下单成功 {tag} | 订单{order_id}", flush=True)
             self._notify_dingtalk(
                 f"🟦 秒级自动下单 {tag}",
@@ -1203,13 +1284,33 @@ class SecondLevelMonitor:
             _bi = settled_info.get(str(oid), {})
             _fair = _bi.get("fair", 0) if isinstance(_bi, dict) else 0
             _ev = _bi.get("ev", 0) if isinstance(_bi, dict) else 0
+            _iv = _odds_interval(od)
             pending.append({
                 "mn": mn, "mgn": mgn, "on": on, "od": od,
                 "sat": stake, "uwl": pnl, "sid": sid, "won": won,
-                "fair": _fair, "ev": _ev,
+                "fair": _fair, "ev": _ev, "interval": _iv,
             })
             new_notified.add(oid)
             print(f"[slm] 结算收集: {'✅赢' if won else '❌输'} {mn} {mgn}-{on} | {pnl:+.0f}", flush=True)
+            # 追加到实盘结算流水(带赔率区间, 供按格子拆盈亏, 2026-09-19)
+            try:
+                _log = []
+                if SETTLED_LOG_FILE.exists():
+                    try:
+                        _log = json.loads(SETTLED_LOG_FILE.read_text())
+                    except Exception:
+                        _log = []
+                _log.append({
+                    "ts": time.time(), "oid": str(oid), "mn": mn, "mgn": mgn,
+                    "on": on, "od": od, "interval": _iv, "sat": stake,
+                    "uwl": pnl, "won": won, "sid": sid,
+                    "verify": bool(_bi.get("verify", False)),  # 是否触发验价(2026-09-19)
+                })
+                _cutoff = time.time() - 30 * 86400  # 只保留最近 30 天
+                _log = [x for x in _log if x.get("ts", 0) > _cutoff]
+                SETTLED_LOG_FILE.write_text(json.dumps(_log, ensure_ascii=False))
+            except Exception:
+                pass
         if pending:
             try:
                 PENDING_SETTLE_FILE.write_text(json.dumps(pending, ensure_ascii=False, indent=1))
@@ -1325,9 +1426,19 @@ class SecondLevelMonitor:
         except Exception as e:
             print(f"[slm] 启动结算异常: {type(e).__name__} {str(e)[:80]}", flush=True)
         last_settle = time.time()
-        # 2026-09-13 决定: 纯 HTTP 轮询(每 2s), 不接 WS 推送。理由: 套利非 HFT, 2s 赔率延迟
-        # 对抓机会影响小, 且下单前有验价(重拉 Pin 价)已挡 ghost line; WS 依赖 Chrome 9222
-        # 常开+BB页登录, 依赖脆, 性价比低。故撤掉 tap_browser_g04 + refresh_live_cache。
+        # 2026-09-18: 启动 odds-api.io WebSocket 订阅(live 主流盘口实时推送), get_odds 优先读
+        # WS 实时缓存, 替代 2s REST 轮询 Betfair 价。注: 这里的 WS 是 odds-api.io 的赔率推送,
+        # 不是 2026-09-13 撤掉的 BB WS(Chrome 9222)——那个依赖浏览器, 这个纯 HTTP 连 odds-api.io。
+        try:
+            from src.scrapers.odds_ws import OddsWSClient
+            self._odds_ws = OddsWSClient(
+                sport="football,basketball,tennis,american-football",
+                markets=("ML", "Spread", "Totals"))  # status=None: live+prematch 一起推(早盘临盘也用实时)
+            self._odds_ws.start()
+            print("[slm] 已启动 odds-api.io WebSocket 实时赔率订阅(足球/篮球/网球/美足 live+prematch, ML/Spread/Totals)", flush=True)
+        except Exception as e:
+            self._odds_ws = None
+            print(f"[slm] WebSocket 订阅启动失败(回退 REST 轮询): {type(e).__name__} {str(e)[:80]}", flush=True)
         while deadline is None or time.time() < deadline:
             try:
                 n = self._poll_live()
