@@ -434,6 +434,7 @@ class SecondLevelMonitor:
         self._live_bets = {}   # 未结算订单 order_id -> 注额(结算时扣减 outstanding)
         self._bet_notify_until = 0.0  # 钉钉下单通知节流(30min 内最多一条)
         self._token_remind_until = 0.0  # token 失效钉钉提醒节流(30min)
+        self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
         self._token_ok_until = 0.0     # token 有效缓存到期时间戳(10min 缓存, 省每单 1s 探测)
         self._attempted = {}           # 滚球指纹去重: match_id -> {market_id -> 尝试时间戳}
         self._last_bet_time = 0.0      # 上次下单时间(非阻塞限频用)
@@ -1436,6 +1437,24 @@ class SecondLevelMonitor:
                 self._try_live_auto_bet(sig)
         return len(opps)
 
+    def _ws_changed(self):
+        """WS 变动队列是否有 sharp 赔率变动(触发立即 poll)。节流: 3s 内只触发一次。
+
+        2026-09-19: sharp(SBO/Betfair) 一变动就立即拉 BB 比价, 抢 lead-lag 窗口,
+        不等 2s 轮询。变动队列由 odds_ws._on_message 填充(同进程)。
+        """
+        try:
+            from src.scrapers.odds_ws import get_recent_changes
+            changes = get_recent_changes()
+            if not changes:
+                return False
+            if time.time() - self._ws_trigger_ts < 3.0:
+                return False  # 3s 节流(WS 秒级变动风暴)
+            self._ws_trigger_ts = time.time()
+            return True
+        except Exception:
+            return False
+
     async def run(self, seconds=0, refresh_every=2):
         """轮询 getList type=1 滚球赔率(HTTP, 不依赖浏览器), 每 refresh_every 秒一次。"""
         self._load_live_spent()
@@ -1463,23 +1482,28 @@ class SecondLevelMonitor:
         except Exception as e:
             self._odds_ws = None
             print(f"[slm] WebSocket 订阅启动失败(回退 REST 轮询): {type(e).__name__} {str(e)[:80]}", flush=True)
+        last_poll = 0.0
         while deadline is None or time.time() < deadline:
-            try:
-                n = self._poll_live()
-                if n:
-                    print(f"[slm] 本轮发现 {n} 个滚球机会")
-                poll_count += 1
-                # 观察库结算: 每 60s 结一批(独立时间戳, 不依赖 poll_count — pin_live 超时拖慢轮询,
-                # 依赖 poll_count%15 会把 1130 条拖到 2-3h 才结完)
-                if time.time() - last_settle >= 60:
-                    last_settle = time.time()
-                    self._settle_paper_bets()
-                if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
-                    self._check_settled()
-                self._check_clv()  # 每次轮询(2s)查 CLV(3s窗口); 有 ready 才发 Pin 请求, 请求率=下注率
-            except Exception as e:
-                print(f"[slm] 轮询异常: {type(e).__name__} {str(e)[:80]}", flush=True)
-            await asyncio.sleep(refresh_every)
+            now = time.time()
+            # 2026-09-19 WS 触发: sharp 变动 → 立即 poll(不等 2s); 否则 2s 轮询兜底
+            if self._ws_changed() or now - last_poll >= refresh_every:
+                try:
+                    n = self._poll_live()
+                    if n:
+                        print(f"[slm] 本轮发现 {n} 个滚球机会")
+                    last_poll = now
+                    poll_count += 1
+                    # 观察库结算: 每 60s 结一批(独立时间戳, 不依赖 poll_count — pin_live 超时拖慢轮询,
+                    # 依赖 poll_count%15 会把 1130 条拖到 2-3h 才结完)
+                    if time.time() - last_settle >= 60:
+                        last_settle = time.time()
+                        self._settle_paper_bets()
+                    if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
+                        self._check_settled()
+                    self._check_clv()  # 每次轮询(2s)查 CLV(3s窗口); 有 ready 才发 Pin 请求, 请求率=下注率
+                except Exception as e:
+                    print(f"[slm] 轮询异常: {type(e).__name__} {str(e)[:80]}", flush=True)
+            await asyncio.sleep(0.5)
 
 
 def main():
