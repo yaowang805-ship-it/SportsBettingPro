@@ -435,6 +435,7 @@ class SecondLevelMonitor:
         self._bet_notify_until = 0.0  # 钉钉下单通知节流(30min 内最多一条)
         self._token_remind_until = 0.0  # token 失效钉钉提醒节流(30min)
         self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
+        self._early_ws_ts = 0.0  # 早盘 WS 触发节流时间戳(2026-09-19)
         self._token_ok_until = 0.0     # token 有效缓存到期时间戳(10min 缓存, 省每单 1s 探测)
         self._attempted = {}           # 滚球指纹去重: match_id -> {market_id -> 尝试时间戳}
         self._last_bet_time = 0.0      # 上次下单时间(非阻塞限频用)
@@ -1454,6 +1455,76 @@ class SecondLevelMonitor:
             return True
         except Exception:
             return False
+
+    def _consume_early_ws_changes(self):
+        """早盘 WS 触发: prematch sharp 变动 → 匹配 BB → 单场比价 → 下单(实时验价)。
+
+        2026-09-19: 早盘扫描 15min 抓不住 5.5min lead-lag 窗口, sharp 一变就立即单场比价下单。
+        队名精确匹配(lower), 匹配率~50%(后缀差异), 后续可换模糊匹配。
+        """
+        from src.scrapers.odds_ws import get_recent_changes
+        changes = get_recent_changes()
+        if not changes:
+            return 0
+        if time.time() - self._early_ws_ts < 3:
+            return 0  # 3s 节流
+        self._early_ws_ts = time.time()
+        # event_id → 队名(pending 早盘)
+        try:
+            from src.scrapers.odds_api_io import get_events
+            evs = get_events(sport='football')
+            ev_by_id = {e['id']: e for e in evs if e.get('status') == 'pending'}
+        except Exception:
+            return 0
+        # BB 早盘快照
+        from src.scrapers.bb_incremental_scanner import BB_EXTRACTED
+        try:
+            d = json.loads(BB_EXTRACTED.read_text())
+            bb_matches = d.get('matches', [])
+        except Exception:
+            return 0
+        # 队名精确匹配 event → BB
+        changed_ids = {c[0] for c in changes}
+        triggered = []
+        for m in bb_matches:
+            home = (m.get('home') or '').lower().strip()
+            away = (m.get('away') or '').lower().strip()
+            if not home or not away:
+                continue
+            for eid in changed_ids:
+                ev = ev_by_id.get(eid)
+                if not ev:
+                    continue
+                if (ev.get('home') or '').lower().strip() == home and (ev.get('away') or '').lower().strip() == away:
+                    triggered.append(m)
+                    break
+        if not triggered:
+            return 0
+        # 单场比价(复用 bb_vs_pinnacle 的 entry 构造 + 盘口比价)
+        from src.scrapers.bb_vs_pinnacle import _build_oa_entry, _oa_add_markets
+        opps = []
+        for m in triggered:
+            sport = m.get('sport', 'football')
+            entry = _build_oa_entry(m, sport)
+            _oa_add_markets(entry, m, sport)
+            for group in ('opportunities', 'handicap', 'over_under', 'double_chance', 'draw_no_bet'):
+                for o in entry.get(group, []):
+                    o['home_bb'] = entry.get('home_bb', '')
+                    o['away_bb'] = entry.get('away_bb', '')
+                    o['sport'] = sport
+                    o['_pin_epoch'] = entry.get('start_time_pin_epoch', 0)
+                    opps.append(o)
+        if not opps:
+            return 0
+        try:
+            from src.betting.bb_real_bet_flow import auto_bet_flow
+            res = auto_bet_flow(opps)
+            n = len(res.get('success', [])) if isinstance(res, dict) else 0
+            if n:
+                print(f'[slm] 早盘WS触发下单 {n} 注', flush=True)
+        except Exception as e:
+            print(f'[slm] 早盘WS触发下单异常: {type(e).__name__} {e}', flush=True)
+        return len(triggered)
 
     async def run(self, seconds=0, refresh_every=2):
         """轮询 getList type=1 滚球赔率(HTTP, 不依赖浏览器), 每 refresh_every 秒一次。"""
