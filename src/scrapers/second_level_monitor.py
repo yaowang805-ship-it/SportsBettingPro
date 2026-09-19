@@ -531,6 +531,7 @@ class SecondLevelMonitor:
                 "bsc": sig.get("bsc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用)
                 "bb_odds": sig["bb_odds"], "fair": sig["fair"], "ev": sig["ev"],
                 "spread": sig.get("spread"),  # 2026-09-19 流动性门槛: back-lay 价差
+                "bb_ts": sig.get("bb_ts"),  # BB 赔率拉取时间(供算 delay=ts-bb_ts, 快/慢单口径)
                 "stake": sig.get("_stake", 0), "settled": False, "result": None, "profit": None,
                 "anchor": "betfair",  # 2026-09-19 锚点口径标记: 9-18后 Betfair 公平价
                 "sbo_direction": sig.get("sbo_direction", "same"),  # same/diff/none(供统计同向/不同向赛果)
