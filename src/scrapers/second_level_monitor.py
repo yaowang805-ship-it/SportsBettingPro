@@ -438,6 +438,7 @@ class SecondLevelMonitor:
         self._early_ws_ts = 0.0  # 早盘 WS 触发节流时间戳(2026-09-19)
         self._opp_seen = {}  # (match_id, market_id, option_type) -> 首次+EV时间戳(persistence 持续性)
         self._lev_fail_stats = {}  # LEV 复验失败原因计数(量化 close/价差/deleted 各占多少)
+        self._lev_fail_log_ts = 0.0  # 失败统计落盘节流(300s 一次)
         self._token_ok_until = 0.0     # token 有效缓存到期时间戳(10min 缓存, 省每单 1s 探测)
         self._attempted = {}           # 滚球指纹去重: match_id -> {market_id -> 尝试时间戳}
         self._last_bet_time = 0.0      # 上次下单时间(非阻塞限频用)
@@ -677,6 +678,10 @@ class SecondLevelMonitor:
         每次轮询(2s)都查 _check_clv, 有 ready 才发 Pin 请求(请求率=下注率, 不额外加压)。
         另: allow_closed=True + nearest=True 只对 CLV 路径; 下单前验价保持严格。
         """
+        # 2026-09-19 定期输出 LEV 复验失败统计(300s 一次, 量化 close/价差/deleted 各占多少)
+        if self._lev_fail_stats and time.time() - self._lev_fail_log_ts >= 300:
+            self._lev_fail_log_ts = time.time()
+            print(f"[slm] LEV复验失败统计: {self._lev_fail_stats}", flush=True)
         if not self._reversion_track:
             return
         now = time.time()
@@ -1115,18 +1120,32 @@ class SecondLevelMonitor:
         """下注前重验公平价(odds-api.io Betfair 中间价), 替代 Pin 的 reverify_live_markets。
 
         用 sig 里的 odds-api.io 事件 id(pin_matchup_id) 重拉 Betfair 公平价, 重算 EV。
+        2026-09-19 加失败原因统计(_lev_fail_stats), 量化 close/价差/deleted 各占多少。
         """
-        from src.scrapers.odds_api_io import fair_price
+        from src.scrapers.odds_api_io import fair_price, get_odds, _SUB_TO_BETFAIR
         eid = sig.get("pin_matchup_id")
         if not eid:
+            self._lev_fail_stats["no_event_id"] = self._lev_fail_stats.get("no_event_id", 0) + 1
             return None
         sub_map = {"opportunities": "1x2", "handicap": "hc", "over_under": "ou"}
         sub = sub_map.get(sig.get("sub"))
         if not sub:
+            self._lev_fail_stats["unsupported_sub"] = self._lev_fail_stats.get("unsupported_sub", 0) + 1
             return None
         # 2026-09-19 修复: hc/ou 复验必须传下注线(target_line), 否则选主线——下注线还在但主线 close 时复验失败
         fair = fair_price(eid, sub, target_line=sig.get("line"))
         if not fair:
+            # 细分诊断: get_odds 空(事件删除) vs 盘口 close vs 价差/线
+            _odds = get_odds(eid)
+            if not _odds:
+                _reason = "get_odds_empty"
+            elif not _odds.get("Betfair Exchange"):
+                _reason = "no_betfair"
+            else:
+                _mn = _SUB_TO_BETFAIR.get(sub)
+                _m = next((x for x in _odds.get("Betfair Exchange", []) if x.get("name") == _mn), None)
+                _reason = "spread_or_line" if _m else "market_closed"
+            self._lev_fail_stats[_reason] = self._lev_fail_stats.get(_reason, 0) + 1
             return None
         desig = sig.get("desig", "")
         if sub == "1x2":
@@ -1136,10 +1155,12 @@ class SecondLevelMonitor:
         elif sub == "ou":
             idx = {"大球": "over", "小球": "under"}
         else:
+            self._lev_fail_stats["unsupported_sub"] = self._lev_fail_stats.get("unsupported_sub", 0) + 1
             return None
         k = idx.get(desig)
         fair_p = fair.get(k)
         if not fair_p or fair_p <= 1:
+            self._lev_fail_stats["no_direction"] = self._lev_fail_stats.get("no_direction", 0) + 1
             return None
         return (sig["bb_odds"] - fair_p) / fair_p * 100.0
 
