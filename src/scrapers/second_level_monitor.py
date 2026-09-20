@@ -1305,14 +1305,22 @@ class SecondLevelMonitor:
         """每笔成功下单都推钉钉(不限频 —— 下单限频已把间隔拉到 10-15s, 不会刷屏)。
 
         2026-09-13: 先 _dingtalk_safe 清洗博彩词再发, 否则被钉钉 inappropriate content 拒收。
+        2026-09-20: 改后台线程推送, 钉钉 HTTP ~0.5-1s 不占下单时间。
         """
+        import threading
+
+        def _send():
+            try:
+                from config.settings import send_dingtalk
+                ok = bool(send_dingtalk(_dingtalk_safe(title), _dingtalk_safe(body)))
+                if not ok:
+                    print(f"[slm] 滚球投注推送失败: {title}", flush=True)
+            except Exception as e:
+                print(f"[slm] 钉钉通知异常: {e}")
         try:
-            from config.settings import send_dingtalk
-            ok = bool(send_dingtalk(_dingtalk_safe(title), _dingtalk_safe(body)))
-            if not ok:
-                print(f"[slm] 滚球投注推送失败: {title}", flush=True)
-        except Exception as e:
-            print(f"[slm] 钉钉通知异常: {e}")
+            threading.Thread(target=_send, daemon=True).start()
+        except Exception:
+            pass
 
     def _push_settle_summary(self, pending):
         """每小时汇总推结算明细(2026-09-12 用户要求, 不一场推一场)。"""
