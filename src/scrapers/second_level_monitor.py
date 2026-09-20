@@ -905,6 +905,10 @@ class SecondLevelMonitor:
             }
         # 2026-09-20 SBO 不同向(diff): 不再跳过, 改为半额投注(上面 sbo_confirm=False 已 stake×0.5)。
         # 同向(same)=全注额; 不覆盖(none)/不同向(diff)=半额(置信度降一档)。观察库仍标注 sbo_direction 供统计。
+        # 2026-09-20 稳定性计数: 连续 STABLE_MIN_POLLS 个 poll 都 +EV 才下, 挡一闪而过假溢价
+        _stable = _stable_candidates.get((sig["match_id"], sig.get("market_id"), sig.get("option_type")), 0)
+        if _stable < STABLE_MIN_POLLS:
+            return
         if not LIVE_REAL_BET_ENABLED:
             return
         # 2026-09-12 优化: 不再硬编码"只投小球/网球/篮球", 改为「观察库释放优先, 已验证方向其次」。
