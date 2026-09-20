@@ -1,30 +1,7 @@
 {
-  "balance": 16492.53,
+  "balance": 16552.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_甲府风林_德岛漩涡_上半场主胜",
-      "sport": "football",
-      "league": "日本乙级联赛",
-      "home_team": "甲府风林",
-      "away_team": "德岛漩涡",
-      "home_cn": "甲府风林",
-      "away_cn": "德岛漩涡",
-      "market": "1x2",
-      "market_type": "上半场主胜",
-      "sub_market": "ht",
-      "line": "",
-      "odds": 4.89,
-      "stake": 60,
-      "model_prob": 0.2182,
-      "ev_pct": 6.68,
-      "pin_odds": 4.06,
-      "fair_price": 4.5838,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1789812000,
-      "created_at": "2026-09-17T09:15:14.469287+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_谭茅芩特_卡比利亚_上半场主胜",
       "sport": "football",
@@ -9294,6 +9271,21 @@
       "sport": "football",
       "home_cn": "底特律城",
       "away_cn": "匹兹堡猎犬河队",
+      "market_type": "上半场主胜"
+    },
+    {
+      "id": "bb_vs_pin_1x2_甲府风林_德岛漩涡_上半场主胜",
+      "match": "60¥ @ 4.89 (超时作废)",
+      "date": "2026-09-20T11:59:40.728445+00:00",
+      "stake": 60,
+      "odds": 4.89,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "日本乙级联赛",
+      "sport": "football",
+      "home_cn": "甲府风林",
+      "away_cn": "德岛漩涡",
       "market_type": "上半场主胜"
     }
   ],
