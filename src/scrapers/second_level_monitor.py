@@ -1015,8 +1015,9 @@ class SecondLevelMonitor:
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
             match_id=sig["match_id"], check_limit=True, verify_price=_need_verify,
             fair_price=sig.get("fair"), min_ev_pct=self.threshold)
-        _t_order = time.time() - _t0  # 下单完成总耗时
-        print(f"[slm] 下单耗时: 总 {_t_order:.2f}s", flush=True)
+        _t_order = time.time() - _t0  # 下单函数内部耗时(调试用)
+        _total_time = time.time() - (sig.get("poll_ts") or _t0)  # 2026-09-20 总耗时(WS触发→下单完成), 推送用
+        print(f"[slm] 下单耗时: 内部 {_t_order:.2f}s / 总 {_total_time:.2f}s", flush=True)
         # 记录尝试(成败都记), 5min 内不再重复尝试同一盘口
         self._attempted.setdefault(str(sig["match_id"]), {})[str(market_id)] = time.time()
         # 更新限频时间戳 + 抽下一单随机间隔(10-15s, 防风控"投注过于频繁")
@@ -1075,7 +1076,7 @@ class SecondLevelMonitor:
                 f"{sig['match']['home']} vs {sig['match']['away']} | {_desig}\n"
                 f"{_platform} {sig['bb_odds']:.2f} | Betfair {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
                 f"拉取 BB {_bb_t} | Betfair {_bf_t}\n"
-                f"单注 ¥{stake} | 余额 ¥{_bal} | 今日已投 ¥{self._live_spent:.0f} | 未结 ¥{self._live_outstanding:.0f} | 耗时 {_t_order:.1f}s")
+                f"单注 ¥{stake} | 余额 ¥{_bal} | 今日已投 ¥{self._live_spent:.0f} | 未结 ¥{self._live_outstanding:.0f} | 总耗时 {_total_time:.1f}s")
         else:
             # 下单失败(如 token 过期 14010) → 也记虚拟投注, 保证验证数据积累不中断
             self._append_live_paper_bet(sig)
