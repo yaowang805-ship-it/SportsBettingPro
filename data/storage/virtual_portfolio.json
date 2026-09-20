@@ -1,30 +1,7 @@
 {
-  "balance": 16432.53,
+  "balance": 16492.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_底特律城_匹兹堡猎犬河队_上半场主胜",
-      "sport": "football",
-      "league": "美国冠军联赛",
-      "home_team": "底特律城",
-      "away_team": "匹兹堡猎犬河队",
-      "home_cn": "底特律城",
-      "away_cn": "匹兹堡猎犬河队",
-      "market": "1x2",
-      "market_type": "上半场主胜",
-      "sub_market": "ht",
-      "line": "",
-      "odds": 3.37,
-      "stake": 60,
-      "model_prob": 0.3066,
-      "ev_pct": 3.32,
-      "pin_odds": 3.01,
-      "fair_price": 3.2616,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1789858800,
-      "created_at": "2026-09-16T23:19:27.467267+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_甲府风林_德岛漩涡_上半场主胜",
       "sport": "football",
@@ -9302,6 +9279,21 @@
       "sport": "football",
       "home_cn": "拉蒂纳 1932",
       "away_cn": "圭多尼亚蒙特切利奥1937",
+      "market_type": "上半场主胜"
+    },
+    {
+      "id": "bb_vs_pin_1x2_底特律城_匹兹堡猎犬河队_上半场主胜",
+      "match": "60¥ @ 3.37 (超时作废)",
+      "date": "2026-09-20T01:45:29.780915+00:00",
+      "stake": 60,
+      "odds": 3.37,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "美国冠军联赛",
+      "sport": "football",
+      "home_cn": "底特律城",
+      "away_cn": "匹兹堡猎犬河队",
       "market_type": "上半场主胜"
     }
   ],

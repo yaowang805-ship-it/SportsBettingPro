@@ -1536,6 +1536,9 @@ class SecondLevelMonitor:
         """轮询 getList type=1 滚球赔率 + 匹配 Sbobet/Betfair 公平价 → 打信号/自动下单。返回机会数。"""
         from src.scrapers.pinnacle_live import fetch_live_opportunities_oa
         opps = fetch_live_opportunities_oa(self.threshold)
+        # 2026-09-20 按 EV 降序排序: 暴增时冷却只能下少数几单, 优先下高 EV 的(之前按 BB 返回任意顺序,
+        # 可能下到低 EV 跳过高 EV)。diff(只观察)排最后, 不占冷却名额。
+        opps.sort(key=lambda o: (o.get("sbo_direction") == "diff", -(o.get("ev", 0) or 0)))
         for opp in opps:
             sig = self._opp_to_sig(opp)
             print(f"⚡滚球+EV {sig['ev']:+.2f}% | {sig['match']['home']} vs {sig['match']['away']} "

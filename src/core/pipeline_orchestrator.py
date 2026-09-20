@@ -437,6 +437,8 @@ class PipelineOrchestrator:
 
     def _send_alert(self, task_name: str, error: str):
         """发送 DingTalk 告警（带冷却：同一任务每 30 分钟最多一次）。"""
+        # 2026-09-20 用户要求暂停流水线告警功能(锚点已换 Betfair, 旧的流水线告警不再适用)
+        return
         now = time.time()
         last = self._alert_cooldown.get(task_name, 0)
         if now - last < 1800:
