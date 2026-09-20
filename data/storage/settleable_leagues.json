@@ -711,7 +711,7 @@
       "success_rate": 0.0
     },
     "意大利乙级联赛": {
-      "attempts": 19,
+      "attempts": 20,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1061,7 +1061,7 @@
       "success_rate": 0.0
     },
     "阿尔及利亚甲级联赛": {
-      "attempts": 5,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1336,7 +1336,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-09-20T14:03:57.137015+00:00",
+  "updated": "2026-09-20T23:02:52.381240+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

@@ -1689,6 +1689,13 @@ class SecondLevelMonitor:
         except Exception as e:
             self._odds_ws = None
             print(f"[slm] WebSocket 订阅启动失败(回退 REST 轮询): {type(e).__name__} {str(e)[:80]}", flush=True)
+        # 2026-09-21 后台预取 BB 滚球列表: 把 1.6s getList 从下单链路移出(与 persistence 并行), 下单读缓存 0ms
+        try:
+            from src.scrapers.pinnacle_live import start_bb_prefetch
+            start_bb_prefetch(interval=2.0)
+            print("[slm] 已启动 BB 滚球后台预取(每 2s 拉一次, 下单读缓存)", flush=True)
+        except Exception as e:
+            print(f"[slm] BB 后台预取启动失败: {type(e).__name__} {str(e)[:80]}", flush=True)
         last_poll = 0.0
         while deadline is None or time.time() < deadline:
             now = time.time()
