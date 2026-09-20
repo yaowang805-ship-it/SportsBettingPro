@@ -1018,13 +1018,15 @@ class SecondLevelMonitor:
         if _sub == "handicap" and (time.time() - _detect_ts) > SNAPSHOT_MAX_AGE:
             print(f"  ⏭️ 让球慢单跳过(只投快照单, 已{time.time()-_detect_ts:.0f}s) {tag}", flush=True)
             return
+        _t_place = time.time()
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
             match_id=sig["match_id"], check_limit=True, verify_price=_need_verify,
             fair_price=sig.get("fair"), min_ev_pct=self.threshold)
         _t_order = time.time() - _t0  # 下单函数内部耗时(调试用)
+        _t_http = time.time() - _t_place  # place_single_bet HTTP 耗时
         _total_time = time.time() - (sig.get("poll_ts") or _t0)  # 2026-09-20 总耗时(WS触发→下单完成), 推送用
-        print(f"[slm] 下单耗时: 内部 {_t_order:.2f}s / 总 {_total_time:.2f}s", flush=True)
+        print(f"[slm] 下单耗时: 内部 {_t_order:.2f}s (检查 {_t_place-_t0:.2f}s + HTTP {_t_http:.2f}s) / 总 {_total_time:.2f}s", flush=True)
         # 记录尝试(成败都记), 5min 内不再重复尝试同一盘口
         self._attempted.setdefault(str(sig["match_id"]), {})[str(market_id)] = time.time()
         # 更新限频时间戳 + 抽下一单随机间隔(10-15s, 防风控"投注过于频繁")
