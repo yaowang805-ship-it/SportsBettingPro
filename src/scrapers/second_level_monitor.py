@@ -1534,6 +1534,7 @@ class SecondLevelMonitor:
             "max_stake": opp["max_stake"],
             "bsc": opp.get("sc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用, 2026-09-13)
             "bb_ts": opp.get("bb_ts"), "pin_ts": opp.get("pin_ts"),  # BB/Pin 数据拉取时间(推送展示)
+            "poll_ts": opp.get("poll_ts"),  # 2026-09-20 poll 开始时间(WS触发), 供推送「总耗时」
             "platform": opp.get("platform", "BB"),  # BB/FB(推送时标注平台)
             "sbo_confirm": opp.get("sbo_confirm", True),  # SBO 同向确认(False=无覆盖, 降投注额)
             "sbo_direction": opp.get("sbo_direction", "same"),  # same/diff/none(供统计验证)

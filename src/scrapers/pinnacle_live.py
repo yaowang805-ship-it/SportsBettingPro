@@ -638,6 +638,7 @@ def fetch_live_opportunities_oa(threshold=3.0):
             "max_stake": 0,
             "sc": b.get("sc"),
             "bb_ts": _bb_ts, "pin_ts": _bb_ts,
+            "poll_ts": _t0,  # 2026-09-20 poll 开始时间(WS触发), 供推送「总耗时」
             "platform": "BB",
         }
         if _sbo_dir == 'diff':
