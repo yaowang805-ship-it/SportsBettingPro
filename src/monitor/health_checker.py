@@ -459,9 +459,8 @@ def run_health_check(push: bool = False, quiet: bool = False) -> HealthReport:
         ("数据新鲜度", check_data_freshness),
         ("流水线", check_pipeline),
         ("结算", check_settlement),
-        ("映射", check_mappings),
+        # 2026-09-21 移除「映射」和「V4矩阵」: 这两项是 Pin 联赛映射/Pin V4矩阵, Pin 已暂停(15min CDN陈旧), 无意义
         ("盘口健康", check_market_health),
-        ("V4矩阵", check_v4_matrix),
         ("CLV", check_clv),
         ("数据库", check_database),
         ("Git", check_git),
