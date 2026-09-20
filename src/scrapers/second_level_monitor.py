@@ -900,9 +900,8 @@ class SecondLevelMonitor:
                 },
                 "ts": time.time(),
             }
-        # 2026-09-19 SBO 不同向: 只进观察库(已入库), 不下单(供统计验证同向/不同向赛果)
-        if sig.get("sbo_direction") == "diff":
-            return
+        # 2026-09-20 SBO 不同向(diff): 不再跳过, 改为半额投注(上面 sbo_confirm=False 已 stake×0.5)。
+        # 同向(same)=全注额; 不覆盖(none)/不同向(diff)=半额(置信度降一档)。观察库仍标注 sbo_direction 供统计。
         if not LIVE_REAL_BET_ENABLED:
             return
         # 2026-09-12 优化: 不再硬编码"只投小球/网球/篮球", 改为「观察库释放优先, 已验证方向其次」。
