@@ -644,7 +644,8 @@ def fetch_live_opportunities_oa(threshold=3.0):
             base["sbo_confirm"] = False
             base["sbo_direction"] = "diff"
             return [base]
-        if ev < threshold or ev > 12.0:
+        if ev < threshold or ev > 20.0:
+            # 2026-09-20 上限 12%→20%(与早盘对齐): 让球真edge能到+7.6pp, 12%会误伤; 20%仍挡+50%线错配假EV
             return []
         base["sbo_confirm"] = (_sbo_dir == 'same')
         base["sbo_direction"] = _sbo_dir
