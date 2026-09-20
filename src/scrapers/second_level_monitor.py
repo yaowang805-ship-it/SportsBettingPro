@@ -1019,9 +1019,11 @@ class SecondLevelMonitor:
             print(f"  ⏭️ 让球慢单跳过(只投快照单, 已{time.time()-_detect_ts:.0f}s) {tag}", flush=True)
             return
         _t_place = time.time()
+        # 2026-09-20 去掉 verify_price: 快照单(≤6s)已保证赔率新鲜, oddsChange=0 下单瞬间变了就拒,
+        # 再 fetch_current_odds 验价是冗余的第二个 HTTP(~1-2s), 是「下单耗时变长」的元凶之一。
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
-            match_id=sig["match_id"], check_limit=True, verify_price=_need_verify,
+            match_id=sig["match_id"], check_limit=True, verify_price=False,
             fair_price=sig.get("fair"), min_ev_pct=self.threshold)
         _t_order = time.time() - _t0  # 下单函数内部耗时(调试用)
         _t_http = time.time() - _t_place  # place_single_bet HTTP 耗时
