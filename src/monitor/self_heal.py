@@ -220,6 +220,42 @@ def check_pin():
     return False, "返回空"
 
 
+def check_no_bets():
+    """自检(2026-09-20): 有滚球比赛但长时间没实盘投注 → 可能是 bug(释放清单空/余额熔断/监控崩), 诊断+提醒。
+
+    阈值: 有 live 比赛但 >30min 没投注 → 告警。这是传统「看进程/心跳」看门狗测不出的静默失效
+    (监控活着、扫描在跑、但就是不下单), 用户要求主动发现。
+    """
+    try:
+        from src.scrapers.pinnacle_live import fetch_bb_live_matches
+        live = fetch_bb_live_matches(sport_ids=(1, 3), platform="BB")
+    except Exception as e:
+        return True, f"BB getList 拉取失败({str(e)[:40]})"
+    n_live = len(live)
+    if n_live == 0:
+        return True, "无滚球比赛(正常)"
+    # 最近实盘投注时间(last_bet_ts.txt, 由 record_global_bet 落盘)
+    _last_bet_file = DATA_DIR / "last_bet_ts.txt"
+    last_bet = 0.0
+    if _last_bet_file.exists():
+        try:
+            last_bet = float(_last_bet_file.read_text().strip() or 0)
+        except (OSError, ValueError):
+            pass
+    idle_min = (time.time() - last_bet) / 60 if last_bet > 0 else float('inf')
+    if idle_min < 30:
+        return True, f"{n_live}场滚球, 最近投注{idle_min:.0f}min前(正常)"
+    # 诊断原因
+    reasons = []
+    try:
+        rl = json.loads((DATA_DIR / "market_release.json").read_text())
+        released = [x for x in rl.get("observe_released", []) if len(x) >= 5 and x[-1] == "live"]
+        if not released:
+            reasons.append("滚球释放清单为空(无已释放盘口)")
+    except Exception:
+        pass
+    detail = "; ".join(reasons) if reasons else "原因待查(可能只是无+EV机会)"
+    return False, f"⚠️ {n_live}场滚球但{idle_min:.0f}min没投注: {detail}"
 def recover_pin():
     """触发代理池自动换节点。返回 (ok, detail, switched)。
 
@@ -346,6 +382,12 @@ def main():
             statuses.append(f"Pin 缓存: ✅ {_cache_count}场 {(_cache_age or 0)/60:.0f}min 前更新")
     else:
         statuses.append("Pin 缓存: ⚠️ 文件不存在")
+
+    # 4c) 有滚球比赛但没实盘投注(2026-09-20 自检: 监控活着但不下单的静默失效)
+    _nb_ok, _nb_detail = check_no_bets()
+    statuses.append(f"滚球投注: {'✅' if _nb_ok else '❌'} {_nb_detail}")
+    if not _nb_ok:
+        fixes.append(f"滚球投注异常: {_nb_detail}")
 
     # 5) 陈旧锁文件
     if _clear_stale_lock():
