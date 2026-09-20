@@ -67,17 +67,17 @@ class HealthReport:
 
 def check_connectivity(report):
     """检查各API连通性。"""
-    # Pinnacle API — 走 pinnacle_api 统一传输(curl_cffi 消 TLS 指纹), 不再用裸 requests
+    # odds-api.io(新锚点: Betfair公平价 + Sbobet置信度)。2026-09-20 Pin已暂停(15min CDN陈旧), 连通检查改新锚点。
     try:
-        from src.scrapers.pinnacle_api import api_get
-        sports = api_get("/sports", bypass_pause=True, retry=False)
-        if sports is not None:
-            report.add_ok(f"Pinnacle API: {len(sports)} sports")
-            report.stats["pinnacle_sports"] = len(sports)
+        from src.scrapers.odds_api_io import get_sports
+        sports = get_sports()
+        if sports:
+            report.add_ok(f"odds-api.io: {len(sports)} sports")
+            report.stats["odds_api_sports"] = len(sports)
         else:
-            report.add_issue("Pinnacle API: 不可达 (api_get 返回空)")
+            report.add_issue("odds-api.io: 不可达 (get_sports 返回空)")
     except Exception as e:
-        report.add_issue(f"Pinnacle API: {e}")
+        report.add_issue(f"odds-api.io: {e}")
 
     # DingTalk — 只测连通性, 不真发消息 (原 send_dingtalk 每次巡检真发一条骚扰)
     try:
@@ -90,22 +90,7 @@ def check_connectivity(report):
             report.add_warning("钉钉: 连接失败")
     except Exception as e:
         report.add_issue(f"钉钉: {e}")
-
-    # Cookie 有效性 — 真实 API 探测 (非仅文件时间)
-    cookie_file = DATA_DIR / "pinnacle_cf_clearance.txt"
-    if not cookie_file.exists():
-        report.add_issue("Pinnacle Cookie: 文件不存在")
-    else:
-        try:
-            from src.scrapers.pinnacle_api import SESSION, API_BASE
-            resp = SESSION.get(f"{API_BASE}/sports", timeout=8)
-            if resp.status_code == 200:
-                n_sports = len(resp.json()) if isinstance(resp.json(), list) else 0
-                report.add_ok(f"Pinnacle Cookie: 有效 ({n_sports}运动)")
-            else:
-                report.add_issue(f"Pinnacle Cookie: 失效 (HTTP {resp.status_code})")
-        except Exception as e:
-            report.add_issue(f"Pinnacle Cookie: 探测失败 ({str(e)[:40]})")
+    # (Pinnacle Cookie 检查已删: Pin 暂停, 2026-09-20)
 
 
 def check_data_freshness(report):
