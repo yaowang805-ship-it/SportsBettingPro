@@ -902,10 +902,7 @@ class SecondLevelMonitor:
             }
         # 2026-09-20 SBO 不同向(diff): 不再跳过, 改为半额投注(上面 sbo_confirm=False 已 stake×0.5)。
         # 同向(same)=全注额; 不覆盖(none)/不同向(diff)=半额(置信度降一档)。观察库仍标注 sbo_direction 供统计。
-        # 2026-09-20 稳定性计数: 连续 STABLE_MIN_POLLS 个 poll 都 +EV 才下, 挡一闪而过假溢价
-        _stable = _stable_candidates.get((sig["match_id"], sig.get("market_id"), sig.get("option_type")), 0)
-        if _stable < STABLE_MIN_POLLS:
-            return
+        # (稳定性计数已撤 2026-09-20: 与 persistence 2s 重复且加 4s 延迟; 防闪动靠 persistence + oddsChange=0)
         if not LIVE_REAL_BET_ENABLED:
             return
         # 2026-09-12 优化: 不再硬编码"只投小球/网球/篮球", 改为「观察库释放优先, 已验证方向其次」。
@@ -1556,15 +1553,6 @@ class SecondLevelMonitor:
         # 2026-09-20 按 EV 降序排序: 暴增时冷却只能下少数几单, 优先下高 EV 的(之前按 BB 返回任意顺序,
         # 可能下到低 EV 跳过高 EV)。diff(只观察)排最后, 不占冷却名额。
         opps.sort(key=lambda o: (o.get("sbo_direction") == "diff", -(o.get("ev", 0) or 0)))
-        # 2026-09-20 稳定性计数: 连续 +EV 的 poll 次数(挡一闪而过假溢价)。本轮出现的 +1, 消失的移除。
-        _cur_keys = set()
-        for opp in opps:
-            _key = (opp.get("bb_match_id"), opp.get("market_id"), opp.get("option_type"))
-            _cur_keys.add(_key)
-            _stable_candidates[_key] = _stable_candidates.get(_key, 0) + 1
-        for _k in list(_stable_candidates.keys()):
-            if _k not in _cur_keys:
-                del _stable_candidates[_k]
         for opp in opps:
             sig = self._opp_to_sig(opp)
             print(f"⚡滚球+EV {sig['ev']:+.2f}% | {sig['match']['home']} vs {sig['match']['away']} "
