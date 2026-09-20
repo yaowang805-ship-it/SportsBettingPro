@@ -62,6 +62,27 @@ REVERIFY_THRESHOLD = 3.0  # 2026-09-19 验价阈值(秒): lead-lag 窗口 2-3s(�
 SNAPSHOT_MAX_AGE = 6.0  # 2026-09-20 让球「只投快照单」阈值(秒): BB拉取到此刻>6s 判 stale 跳过。
                         # 之前15s是管线12s时的临时值; 现在管线~1.7s(公平价匹配0.1s), 收紧回6s
                         # 更能吃到 lead-lag 窗口(8.5s), 挡掉真正 stale 的(>6s)
+BET_HEALTH_FILE = ROOT / "data" / "storage" / "bet_health.json"  # 下单健康(成功/被拒计数), 供 gubbing 限注监控
+
+
+def _record_bet_result(code):
+    """记录下单成败(2026-09-21 gubbing 限注监控): 被拒率飙升是软书限注的前兆。"""
+    try:
+        d = {"success": 0, "rejected": 0, "total": 0, "last_ts": 0.0}
+        if BET_HEALTH_FILE.exists():
+            try:
+                d = json.loads(BET_HEALTH_FILE.read_text())
+            except Exception:
+                pass
+        d["total"] = d.get("total", 0) + 1
+        if code == 0:
+            d["success"] = d.get("success", 0) + 1
+        else:
+            d["rejected"] = d.get("rejected", 0) + 1
+        d["last_ts"] = time.time()
+        BET_HEALTH_FILE.write_text(json.dumps(d))
+    except Exception:
+        pass
 
 # 滚球实盘(2026-09-07 起只投小球under, 2026-09-09 放大预算: 小球累计40笔ROI+14.2%稳定正)。滚动预算(结算后释放额度)。
 LIVE_BUDGET = float('inf')  # 2026-09-18 用户取消每日投注额上限: 滚球不再设总限额(由单场/单盘口300 + 账户余额兜底)
