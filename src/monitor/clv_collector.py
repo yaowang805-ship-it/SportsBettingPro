@@ -372,6 +372,111 @@ def _fetch_close_odds(entries):
     return results
 
 
+def _dir_of(designation):
+    """从 designation 提取方向(主/客/和/大/小)。dc/dnb/btts 等特殊盘 closing 不支持, 返回 None。"""
+    d = (designation or "").lower()
+    if "大" in d:
+        return "大"
+    if "小" in d:
+        return "小"
+    if "和" in d or "平" in d:
+        return "和"
+    if "客" in d:
+        return "客"
+    if "主" in d:
+        return "主"
+    return None
+
+
+def _close_direction_fair(close, sub_market, designation, swapped=False):
+    """从 Betfair 收盘公平价 dict 提取指定方向的公平价(与 fair_price 同口径)。"""
+    if sub_market in ("1x2", "ht"):
+        idx = {"主": "home", "和": "draw", "客": "away"}
+    elif sub_market in ("hc", "ht_hc"):
+        idx = {"主": "home", "客": "away"}
+    elif sub_market in ("ou", "ht_ou"):
+        idx = {"大": "over", "小": "under"}
+    else:
+        return None
+    dr = _dir_of(designation)
+    if dr is None:
+        return None
+    key = idx.get(dr)
+    if swapped and key in ("home", "away"):
+        key = "away" if key == "home" else "home"
+    return close.get(key)
+
+
+def _fetch_close_odds_betfair(entries):
+    """为 pending entries 拉取 Betfair 收盘价作为收盘价, 算真实 CLV(2026-09-21 替代 Pin 版)。
+
+    Pin 已暂停(15min CDN 陈旧), 收盘价改用 odds_ws 的 closing 快照(WS status 通道在
+    开赛那一刻存的 Betfair 赔率)。只处理赛前 [CLV_WINDOW_BEFORE_MIN, CLV_WINDOW_BEFORE_MAX]
+    分钟窗口内的记录。
+    """
+    from src.scrapers.odds_api_io import match_event_orient, _SPORT_ID_TO_SLUG
+    from src.scrapers.odds_ws import closing_fair_price as _betfair_close
+
+    _SLUG_TO_ID = {v: k for k, v in _SPORT_ID_TO_SLUG.items()}
+    now_epoch = time.time()
+    results = []
+
+    for e in entries:
+        match_epoch = int(e.get("match_epoch") or 0)
+        if not match_epoch:
+            continue
+        minutes_to_match = (match_epoch - now_epoch) / 60
+        if minutes_to_match < CLV_WINDOW_BEFORE_MIN or minutes_to_match > CLV_WINDOW_BEFORE_MAX:
+            continue
+
+        sport_id = _SLUG_TO_ID.get(e.get("sport", "football"), 1)
+        sub_market = _infer_sub_market(e.get("sub_market", ""), e.get("designation", ""))
+        designation = e.get("designation", "").lower()
+
+        eid, swapped = match_event_orient(e.get("home", ""), e.get("away", ""), sport_id, status=None)
+        if not eid:
+            continue
+        close = _betfair_close(eid, sub_market)
+        if not close:
+            continue
+        fair_p = _close_direction_fair(close, sub_market, designation, swapped)
+        if fair_p is None or fair_p <= 1:
+            continue
+
+        bb_odds = float(e.get("bb_odds", 0))
+        push_ev = float(e.get("ev_pct", 0))
+        true_clv = round((bb_odds - fair_p) / fair_p * 100, 2)
+        clv_delta = round(true_clv - push_ev, 2)
+
+        _row = {
+            "collect_time": datetime.now(timezone.utc).isoformat(),
+            "push_time": e.get("timestamp", ""),
+            "match_key": f"{e.get('home','').lower().strip()}|{e.get('away','').lower().strip()}",
+            "sport": e.get("sport", ""),
+            "league": e.get("league", ""),
+            "home": e.get("home", ""),
+            "away": e.get("away", ""),
+            "designation": designation,
+            "sub_market": sub_market,
+            "tier": e.get("tier", ""),
+            "bb_price_source": e.get("bb_price_source", ""),
+            "source": e.get("source", "push"),
+            "bb_odds": bb_odds,
+            "push_fair_price": float(e.get("fair_price", 0)),
+            "push_ev_pct": push_ev,
+            "close_fair_price": fair_p,
+            "true_clv_pct": true_clv,
+            "clv_delta": clv_delta,
+            "match_epoch": e.get("match_epoch", ""),
+            "minutes_before_match": round(minutes_to_match, 1),
+            "close_source": "betfair",
+            "close_lag_min": round(minutes_to_match, 1),
+        }
+        results.append(_row)
+
+    return results
+
+
 def _parse_line_str(s):
     """解析 tracking 里存的线值字符串: "0" / "2.25" / "+0.5/1" / "-1.5/2" → float。"""
     s = (s or "").strip()
@@ -1195,7 +1300,7 @@ def _collect_inner():
         logger.info("无 pending 记录，跳过")
         return 0
 
-    results = _fetch_close_odds(entries)
+    results = _fetch_close_odds_betfair(entries)  # 2026-09-21 收盘价从 Pin 换 Betfair
     logger.info("采集到 %d 条收盘赔率", len(results))
 
     # 静默失效监控 — 只在"确实有比赛落在采集窗口内"时才算有活可干,
