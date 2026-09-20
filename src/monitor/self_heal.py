@@ -204,18 +204,16 @@ def _kill_stale_pin_cache(max_age_min=15):
 
 
 def check_pin():
-    # V5.10 修复(2026-08-21 用户"总是收到"自愈报告): 根因是 api_get 被"全局限速
-    # pause"拦住返回 None(SSL 风暴触发的保护), 而不是 Pin 真断连。检查必须
-    # bypass_pause=True 真实请求(同 pin_proxy_pool 的自检), 否则 pause 期间每 10 分钟
-    # 误报一次"断连→无需切换"的自相矛盾报告。
+    # 2026-09-20 锚点已换 odds-api.io(Betfair公平价+Sbobet置信度), Pin 已暂停(15min CDN陈旧)。
+    # 此检查从「Pin 连通」改为「odds-api.io 连通」(新锚点健康)。
     import time as _t
     for i in range(3):
         try:
-            from src.scrapers.pinnacle_api import api_get
-            data = api_get("/sports", bypass_pause=True)
+            from src.scrapers.odds_api_io import get_sports
+            data = get_sports()
             if data:
                 return True, f"连通({len(data)}运动)"
-        except Exception as e:
+        except Exception:
             pass
         if i < 2:
             _t.sleep(3)
