@@ -336,10 +336,18 @@ def fetch_bb_live_matches(sport_ids=(1, 3), platform="BB"):
             return []
 
     result = {}
-    # 2026-09-19 优化: EN 并发拉取(足篮), 耗时从 9s 串行降到 ~1s
+    # 2026-09-20: EN+CMN 并发拉取(足篮), 中文名从 CMN 直接拿(不再只靠早盘快照, 早盘漏的低级别比赛也有中文队名)
     from concurrent.futures import ThreadPoolExecutor
-    with ThreadPoolExecutor(max_workers=len(sport_ids)) as _ex:
+    with ThreadPoolExecutor(max_workers=len(sport_ids) * 2) as _ex:
         _en_records = list(_ex.map(lambda _sid: (_sid, _fetch(_sid, "EN")), sport_ids))
+        _cn_records = list(_ex.map(lambda _sid: (_sid, _fetch(_sid, "CMN")), sport_ids))
+    # CMN 中文名映射: match_id -> (home_cn, away_cn)
+    cn_names = {}
+    for _sid, _cn_list in _cn_records:
+        for m in _cn_list:
+            ts = m.get("ts") or []
+            if len(ts) >= 2:
+                cn_names[int(m.get("id"))] = (ts[0].get("na", ""), ts[1].get("na", ""))
     for sid, _en_list in _en_records:
         # 1. EN: 英文队名 + 盘口提取(英文直配 Pin 用)
         for m in _en_list:
@@ -386,10 +394,13 @@ def fetch_bb_live_matches(sport_ids=(1, 3), platform="BB"):
                 "mc": (m.get("mc") or {}).get("s", 0),
                 "sc": sc,  # [主,客] 当前比分(让球按当前比分结算用)
             }
-    # 2. 中文名: 不拉 CMN, 从早盘 bb_odds_extracted.json 的中文名免费补(仅钉钉展示, 匹配不上留空)
+    # 2. 中文名: 优先 CMN(刚拉的全量中文队名), 兜底早盘快照(league_cn 仍从早盘拿)
     _cn = _load_cn_names()
     for _mid, _info in result.items():
-        if _mid in _cn:
+        if _mid in cn_names:
+            _info["home_cn"], _info["away_cn"] = cn_names[_mid]
+            _info["league_cn"] = _cn.get(_mid, ("", "", ""))[2]  # 联赛中文名早盘快照兜底
+        elif _mid in _cn:
             _info["home_cn"], _info["away_cn"], _info["league_cn"] = _cn[_mid]
     return result
 
