@@ -597,7 +597,10 @@ def fetch_live_opportunities_oa(threshold=3.0):
         bmid, b, mk = task
         sub = mk["sub"]; d = mk["direction"]
         bb_odds = mk["odds"]
-        res = fair_price_bb(b["home_en"], b["away_en"], b["sport"], sub, status="live")
+        # 2026-09-20 修线错配: hc/ou 必须传 BB 的具体线(target_line), 否则公平价永远选 main line,
+        # 三个不同让球线(3.17/2.14/1.48)都拿同一个 main line 公平价去比 → 虚高 +37% 假溢价。
+        _target_line = mk.get("line") if sub in ("hc", "ou") else None
+        res = fair_price_bb(b["home_en"], b["away_en"], b["sport"], sub, target_line=_target_line, status="live")
         if not res or not res["fair"]:
             return []
         fair = res["fair"]
