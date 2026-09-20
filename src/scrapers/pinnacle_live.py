@@ -561,6 +561,48 @@ def fetch_live_opportunities(threshold=3.0, platform="BB", use_file_cache=False)
     return opps
 
 
+# BB 滚球列表后台预取缓存(2026-09-21): 把 1.6s 的 getList 从下单链路移出, 后台每 ~2s 拉一次,
+# 下单时直接读缓存(0ms)。这样 WS触发→下单 的 critical path 去掉 BB 拉取, 从 ~6s 压到 ~4.5s。
+import threading as _threading
+_bb_cache = {}
+_bb_cache_ts = 0.0
+_bb_cache_lock = _threading.Lock()
+_bb_prefetch_stop = False
+
+
+def _bb_prefetch_loop(interval=2.0):
+    """后台预取 BB 滚球列表。失败(如 token 过期)静默跳过, 缓存保持旧值, 下次再试。"""
+    global _bb_cache, _bb_cache_ts, _bb_prefetch_stop
+    while not _bb_prefetch_stop:
+        try:
+            _bb = fetch_bb_live_matches(platform="BB")
+            if _bb:
+                with _bb_cache_lock:
+                    _bb_cache = _bb
+                    _bb_cache_ts = time.time()
+        except Exception:
+            pass
+        time.sleep(interval)
+
+
+def start_bb_prefetch(interval=2.0):
+    """启动后台 BB 预取线程。返回 Thread。"""
+    t = _threading.Thread(target=_bb_prefetch_loop, args=(interval,), daemon=True, name="bb-prefetch")
+    t.start()
+    return t
+
+
+def get_bb_cached(max_age=5.0):
+    """读预取的 BB 缓存(返回 (bb_data, ts))。缓存过期/为空则同步拉一次兜底。"""
+    global _bb_cache, _bb_cache_ts
+    with _bb_cache_lock:
+        if _bb_cache and time.time() - _bb_cache_ts < max_age:
+            return _bb_cache, _bb_cache_ts
+    _bb = fetch_bb_live_matches(platform="BB")
+    _ts = time.time()
+    return _bb, _ts
+
+
 def fetch_live_opportunities_oa(threshold=3.0):
     """滚球机会: BB live + Sbobet/Betfair 公平价(替代 Pin, 2026-09-18)。
 
@@ -571,8 +613,8 @@ def fetch_live_opportunities_oa(threshold=3.0):
     from src.scrapers.odds_api_io import fair_price_bb
     from concurrent.futures import ThreadPoolExecutor
     _t0 = time.time()
-    bb = fetch_bb_live_matches(platform="BB")
-    _bb_ts = time.time()
+    # 2026-09-21 读后台预取的 BB 缓存(0ms), 不再同步 getList(1.6s)。_bb_ts 用缓存时间戳(供快照单新鲜度判断)
+    bb, _bb_ts = get_bb_cached()
 
     # 收集任务(比赛×盘口)
     tasks = []
