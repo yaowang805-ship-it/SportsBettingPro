@@ -62,6 +62,9 @@ REVERIFY_THRESHOLD = 3.0  # 2026-09-19 验价阈值(秒): lead-lag 窗口 2-3s(�
 SNAPSHOT_MAX_AGE = 6.0  # 2026-09-20 让球「只投快照单」阈值(秒): BB拉取到此刻>6s 判 stale 跳过。
                         # 之前15s是管线12s时的临时值; 现在管线~1.7s(公平价匹配0.1s), 收紧回6s
                         # 更能吃到 lead-lag 窗口(8.5s), 挡掉真正 stale 的(>6s)
+STABLE_MIN_POLLS = 3  # 2026-09-20 稳定性计数: 候选连续 N 个 poll(≈2s×N) 都 +EV 才下单, 挡一闪而过假溢价。
+                      # 三层防假溢价: ①get_persisted_changes(WS触发2s持久) ②稳定性计数(此处) ③verify_price(下单时验价)
+_stable_candidates = {}  # {(match_id, market_id, option_type): 连续+EV的poll次数}
 
 # 滚球实盘(2026-09-07 起只投小球under, 2026-09-09 放大预算: 小球累计40笔ROI+14.2%稳定正)。滚动预算(结算后释放额度)。
 LIVE_BUDGET = float('inf')  # 2026-09-18 用户取消每日投注额上限: 滚球不再设总限额(由单场/单盘口300 + 账户余额兜底)
@@ -1548,6 +1551,15 @@ class SecondLevelMonitor:
         # 2026-09-20 按 EV 降序排序: 暴增时冷却只能下少数几单, 优先下高 EV 的(之前按 BB 返回任意顺序,
         # 可能下到低 EV 跳过高 EV)。diff(只观察)排最后, 不占冷却名额。
         opps.sort(key=lambda o: (o.get("sbo_direction") == "diff", -(o.get("ev", 0) or 0)))
+        # 2026-09-20 稳定性计数: 连续 +EV 的 poll 次数(挡一闪而过假溢价)。本轮出现的 +1, 消失的移除。
+        _cur_keys = set()
+        for opp in opps:
+            _key = (opp.get("bb_match_id"), opp.get("market_id"), opp.get("option_type"))
+            _cur_keys.add(_key)
+            _stable_candidates[_key] = _stable_candidates.get(_key, 0) + 1
+        for _k in list(_stable_candidates.keys()):
+            if _k not in _cur_keys:
+                del _stable_candidates[_k]
         for opp in opps:
             sig = self._opp_to_sig(opp)
             print(f"⚡滚球+EV {sig['ev']:+.2f}% | {sig['match']['home']} vs {sig['match']['away']} "
