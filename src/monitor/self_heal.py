@@ -256,6 +256,30 @@ def check_no_bets():
         pass
     detail = "; ".join(reasons) if reasons else "原因待查(可能只是无+EV机会)"
     return False, f"⚠️ {n_live}场滚球但{idle_min:.0f}min没投注: {detail}"
+
+
+def check_gubbing():
+    """gubbing 限注监控(2026-09-21): 下单被拒率飙升是软书限注的前兆(CLV 转正就封, 甚至盈利前就封)。
+
+    读 bet_health.json 的 success/rejected 计数, 近 24h 被拒率 >30% 且 total>=20 → 告警。
+    """
+    f = DATA_DIR / "bet_health.json"
+    if not f.exists():
+        return True, "无投注健康数据(未下过单, 正常)"
+    try:
+        d = json.loads(f.read_text())
+    except Exception:
+        return True, "投注健康数据读取失败"
+    total = d.get("total", 0)
+    rejected = d.get("rejected", 0)
+    if total < 20:
+        return True, f"投注样本不足({total}笔, 需>=20才判)"
+    rate = rejected / total * 100
+    if rate < 30:
+        return True, f"下单被拒率 {rate:.0f}% ({rejected}/{total}, 正常)"
+    return False, f"⚠️ 下单被拒率 {rate:.0f}% ({rejected}/{total}) 偏高, 疑似被限注(gubbing)"
+
+
 def recover_pin():
     """触发代理池自动换节点。返回 (ok, detail, switched)。
 
@@ -388,6 +412,12 @@ def main():
     statuses.append(f"滚球投注: {'✅' if _nb_ok else '❌'} {_nb_detail}")
     if not _nb_ok:
         fixes.append(f"滚球投注异常: {_nb_detail}")
+
+    # 4d) gubbing 限注监控(2026-09-21: 下单被拒率飙升是软书限注前兆)
+    _gb_ok, _gb_detail = check_gubbing()
+    statuses.append(f"限注监控: {'✅' if _gb_ok else '❌'} {_gb_detail}")
+    if not _gb_ok:
+        fixes.append(f"gubbing 疑似: {_gb_detail}")
 
     # 5) 陈旧锁文件
     if _clear_stale_lock():

@@ -1052,6 +1052,7 @@ class SecondLevelMonitor:
         # 记录全局下单时间戳(早盘+滚球共享冷却起点)
         from src.betting.bb_auto_bet import record_global_bet
         record_global_bet()
+        _record_bet_result(code)  # 2026-09-21 gubbing 限注监控: 记下单成败
         if code == 14010:
             self._invalidate_token_cache()
         if code == 0:
