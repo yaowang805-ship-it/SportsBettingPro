@@ -326,7 +326,7 @@
       "success_rate": 0.0
     },
     "德国乙级联赛": {
-      "attempts": 7,
+      "attempts": 8,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -726,7 +726,7 @@
       "success_rate": 0.0
     },
     "日本乙级联赛": {
-      "attempts": 14,
+      "attempts": 15,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1336,7 +1336,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-09-20T23:02:52.381240+00:00",
+  "updated": "2026-09-21T09:00:15.903959+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

@@ -1,13 +1,13 @@
-"""BB投注赔率 vs Pin收盘价 验证 + 实盘ROI归因。
+"""BB投注赔率 vs Betfair收盘价 验证 + 实盘ROI归因。
 
 回答两个核心问题:
 1. 实盘是否盈利? — 对已结算注按 市场/联赛/tier/EV/赔率 分桶看真实 ROI (ground truth)。
-2. BB赔率是否长期跑赢 Pin 收盘价? — CLV (正CLV率 + 均值), 这是套利模型有效的金标准。
+2. BB赔率是否长期跑赢 Betfair 收盘价? — CLV (正CLV率 + 均值), 这是套利模型有效的金标准。
 
 数据源:
-- tracked_bets.json: 已结算注 (bb_odds, pin_odds, fair_price, ev_pct, result, profit, stake)
-- clv_results.csv: 实盘 Pin 收盘 CLV (clv_collector 产出, 样本随采集增长)
-- clv_backfill.json: OddsPortal 收盘 CLV (clv_backfill 产出, 代理 Pin 收盘)
+- tracked_bets.json: 已结算注 (bb_odds, close_odds, fair_price, ev_pct, result, profit, stake)
+- clv_results.csv: 实盘 Betfair 收盘 CLV (clv_collector 产出, 样本随采集增长)
+- clv_backfill.json: (已废弃 — Pin 暂停, OddsPortal 代理收盘不再用)
 
 用法: python3 -m src.monitor.bb_closing_validation [--detail]
 """
@@ -173,13 +173,13 @@ def _pearson(x, y):
     return num / (dx * dy)
 
 
-# ── 3. BB vs Pin收盘价 (CLV) ──
+# ── 3. BB vs Betfair收盘价 (CLV) ──
 
 def analyze_clv():
-    """合并实盘 Pin 收盘 CLV + OddsPortal 代理 CLV。"""
+    """合并实盘 Betfair 收盘 CLV + OddsPortal 代理 CLV。"""
     clvs = []
 
-    # 实盘 Pin 收盘 (clv_collector)
+    # 实盘 Betfair 收盘 (clv_collector)
     if CLV_RESULTS.exists():
         try:
             for r in csv.DictReader(open(CLV_RESULTS)):
@@ -187,7 +187,7 @@ def analyze_clv():
                     clv = float(r.get("true_clv_pct", 0) or 0)
                 except (ValueError, TypeError):
                     clv = 0.0
-                clvs.append({"src": "pin_close", "clv": clv,
+                clvs.append({"src": "betfair_close", "clv": clv,
                              "price_source": r.get("bb_price_source", ""),
                              "bb": float(r.get("bb_odds", 0) or 0),
                              "close": float(r.get("close_fair_price", 0) or 0)})
@@ -205,24 +205,24 @@ def analyze_clv():
 
     if not clvs:
         return {"status": "insufficient", "n": 0,
-                "message": "无收盘价样本 — 需 clv_collector 累积实盘 Pin 收盘价"}
+                "message": "无收盘价样本 — 需 clv_collector 累积实盘 Betfair 收盘价"}
 
     vals = [c["clv"] for c in clvs]
     pos = sum(1 for v in vals if v > 0)
-    # 实盘 Pin 收盘 CLV 的显著性 (t 检验: 均值是否显著 > 0)
-    pin_vals = [c["clv"] for c in clvs if c["src"] == "pin_close"]
+    # 实盘 Betfair 收盘 CLV 的显著性 (t 检验: 均值是否显著 > 0)
+    pin_vals = [c["clv"] for c in clvs if c["src"] == "betfair_close"]
     pin_p = _ttest_pvalue(pin_vals) if len(pin_vals) >= 2 else None
-    # 按 BB/FB 来源拆分 (仅 pin_close 有 bb_price_source)
-    pin_srcs = [c.get("price_source", "") for c in clvs if c["src"] == "pin_close" and c.get("price_source")]
+    # 按 BB/FB 来源拆分 (仅 betfair_close 有 bb_price_source)
+    pin_srcs = [c.get("price_source", "") for c in clvs if c["src"] == "betfair_close" and c.get("price_source")]
     return {
         "status": "ok", "n": len(clvs),
         "mean_clv": round(statistics.mean(vals), 3),
         "median_clv": round(statistics.median(vals), 3),
         "positive_pct": round(pos / len(vals) * 100, 1),
-        "pin_close_n": len(pin_vals),
-        "pin_close_mean": round(statistics.mean(pin_vals), 3) if pin_vals else None,
-        "pin_close_p_value": round(pin_p, 4) if pin_p is not None else None,
-        "pin_close_significant": (pin_p < 0.05) if pin_p is not None else None,
+        "betfair_close_n": len(pin_vals),
+        "betfair_close_mean": round(statistics.mean(pin_vals), 3) if pin_vals else None,
+        "betfair_close_p_value": round(pin_p, 4) if pin_p is not None else None,
+        "betfair_close_significant": (pin_p < 0.05) if pin_p is not None else None,
         "by_src": {s: {"n": sum(1 for c in clvs if c["src"] == s),
                        "mean_clv": round(statistics.mean([c["clv"] for c in clvs if c["src"] == s]), 3)}
                    for s in set(c["src"] for c in clvs)},
@@ -283,7 +283,7 @@ def _print(report):
             print(f"    {k:<8} n={v['n']:<4} ROI {v['roi_pct']:+.2f}%")
 
     print("\n" + "=" * 70)
-    print("BB vs Pin收盘价 (CLV)")
+    print("BB vs Betfair收盘价 (CLV)")
     print("=" * 70)
     if clv.get("status") != "ok":
         print(f"  ⚠️ {clv.get('message','无数据')}")
@@ -303,15 +303,15 @@ def send_daily_report() -> dict:
     if clv.get("status") != "ok":
         lines.append(f"⚠️ 无收盘价样本: {clv.get('message', '')}")
     else:
-        lines.append("**BB 投注赔率 vs Pin 收盘价 (CLV)**")
-        lines.append(f"- 实盘Pin样本: **{clv.get('pin_close_n', 0)}** 笔")
-        pm = clv.get("pin_close_mean")
+        lines.append("**BB 投注赔率 vs Betfair 收盘价 (CLV)**")
+        lines.append(f"- 实盘Betfair样本: **{clv.get('betfair_close_n', 0)}** 笔")
+        pm = clv.get("betfair_close_mean")
         if pm is not None:
             lines.append(f"- 均值 CLV: **{pm:+.2f}%**  | 中位 {clv.get('median_clv', 0):+.2f}%  | 正CLV率 {clv.get('positive_pct', 0)}%")
         # 显著性
-        pv = clv.get("pin_close_p_value")
+        pv = clv.get("betfair_close_p_value")
         if pv is not None:
-            sig = clv.get("pin_close_significant")
+            sig = clv.get("betfair_close_significant")
             verdict = "✅ 统计显著 (均值>0, p<0.05)" if sig else "⏳ 样本不足/尚未显著 (继续累积)"
             lines.append(f"- 显著性: p={pv} → {verdict}")
         else:
