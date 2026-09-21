@@ -429,6 +429,10 @@ def _is_settleable(desig, line):
         return True
     if desig in ("双方进球", "非双方进球"):  # 双边进球 btts
         return True
+    if desig in ("上半场主胜", "上半场客胜", "上半场和局"):  # 上半场独赢 ht(半场比分结算, 无需线)
+        return True
+    if desig in ("上半场大球", "上半场小球"):  # 上半场大小 ht_ou(需线)
+        return line is not None
     return False
 
 
@@ -698,6 +702,29 @@ class SecondLevelMonitor:
                     result = "won" if home > 0 and away > 0 else "lost"
                 else:                    # 非双方进球(至少一方0球)
                     result = "won" if home == 0 or away == 0 else "lost"
+            elif desig in ("上半场主胜", "上半场客胜", "上半场和局", "上半场大球", "上半场小球"):
+                # 半场盘口(ht/ht_ou, 2026-09-21 补收): 用 getMatchDetail 的半场比分结算。
+                # 半场比分带 HT+2H==FT 自校验, 拿不到(异常)就跳过不结, 绝不拿全场比分错结半场。
+                ht_h = detail.get("ht_home_score"); ht_a = detail.get("ht_away_score")
+                if ht_h is None or ht_a is None:
+                    continue
+                if desig == "上半场主胜":
+                    result = "won" if ht_h > ht_a else "lost"
+                elif desig == "上半场客胜":
+                    result = "won" if ht_a > ht_h else "lost"
+                elif desig == "上半场和局":
+                    result = "won" if ht_h == ht_a else "lost"
+                else:  # 上半场大球/上半场小球
+                    if line is None:
+                        continue
+                    if desig == "上半场大球":
+                        diff = (ht_h + ht_a) - line
+                    else:
+                        diff = line - (ht_h + ht_a)
+                    if abs(diff) < 0.0001:
+                        result = "push"
+                    else:
+                        result = "won" if diff > 0 else "lost"
             elif desig in ("让球主胜", "让球客胜", "大球", "小球"):
                 if line is None:
                     continue  # hc/ou 缺 line, 跳(旧记录)
@@ -1554,6 +1581,8 @@ class SecondLevelMonitor:
             "hc": {"主": "让球主胜", "客": "让球客胜"},
             "ou": {"大": "大球", "小": "小球"},
             "dc": {"主": "主/和", "客": "客/和", "和": "主/客"},
+            "ht": {"主": "上半场主胜", "和": "上半场和局", "客": "上半场客胜"},
+            "ht_ou": {"大": "上半场大球", "小": "上半场小球"},
         }
         return {
             "match_id": opp["bb_match_id"], "market_id": opp["market_id"],

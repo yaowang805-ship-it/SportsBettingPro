@@ -29,7 +29,7 @@ FB_FILE = ROOT / "data" / "storage" / "fb_live_paper_bets.json"
 SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球", 2: "冰球",
             13: "排球", 15: "乒乓球", 18: "MMA", 19: "拳击", 47: "羽毛球"}
 SUB_CN = {"over_under": "大小球", "handicap": "让球", "opportunities": "独赢",
-          "ou": "大小球", "hc": "让球", "1x2": "独赢"}
+          "ou": "大小球", "hc": "让球", "1x2": "独赢", "ht": "上半场独赢", "ht_ou": "上半场大小"}
 
 
 def _odds_interval(odds):
