@@ -26,8 +26,8 @@ ROOT = Path(__file__).resolve().parent.parent
 BB_FILE = ROOT / "data" / "storage" / "live_paper_bets.json"
 FB_FILE = ROOT / "data" / "storage" / "fb_live_paper_bets.json"
 
-SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球", 4: "冰球",
-            15: "排球", 12: "羽毛球", 8: "拳击", 9: "MMA", 2: "板球", 16: "乒乓球"}
+SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球", 2: "冰球",
+            13: "排球", 15: "乒乓球", 18: "MMA", 19: "拳击", 47: "羽毛球"}
 SUB_CN = {"over_under": "大小球", "handicap": "让球", "opportunities": "独赢",
           "ou": "大小球", "hc": "让球", "1x2": "独赢"}
 
