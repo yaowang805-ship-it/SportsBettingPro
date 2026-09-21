@@ -428,7 +428,9 @@ def _is_settleable(desig, line):
     if desig in ("让球主胜", "让球客胜"):
         # 让球0(line=0)BB会 void(st=2 退款, 实测 26 笔里 1 笔=3.8%), getMatchDetail 拿不到
         # void 状态 → 无法可靠判输赢, 不进库(与 quarter-ball 同策略: 结算不了的样本不采)。
-        return line is not None and abs(line) > 0.0001
+        # 2026-09-22 补: quarter-ball(|line|=0.25/0.75)线错配+半赢半走盘结算不了 → 只采 0.5 整数倍线。
+        return (line is not None and abs(line) > 0.0001
+                and abs(line * 2 - round(line * 2)) < 1e-6)
     if desig in ("大球", "小球"):
         return line is not None
     if desig in ("主/和", "客/和", "主/客"):  # 双机会 dc
