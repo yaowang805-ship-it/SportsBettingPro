@@ -621,7 +621,7 @@ def fetch_live_opportunities_oa(threshold=3.0):
     for bmid, b in bb.items():
         for mk in b["markets"]:
             sub = mk["sub"]; d = mk["direction"]
-            if not d or sub not in ("1x2", "hc", "ou", "dc", "btts"):
+            if not d or sub not in ("1x2", "hc", "ou", "dc", "btts", "ht", "ht_ou"):
                 continue
             tasks.append((bmid, b, mk))
 
