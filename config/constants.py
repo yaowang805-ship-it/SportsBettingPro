@@ -48,16 +48,21 @@ _SPORT_SORT_TUPLE = tuple(sorted(SPORT_ORDER.keys(), key=lambda k: SPORT_ORDER[k
 def get_league_tier(league: str) -> int:
     """返回联赛所属 Tier (1-4)，不认识的联赛默认 Tier 3。
 
-    双向匹配: kw in league (短名匹配长名) 或 league in kw (长名匹配短名)
-    自动分级: 根据联赛名中的级别关键词推断
+    匹配: 精确匹配优先, 其次 kw in league(关键词是联赛名的子串)。
+    自动分级: 根据联赛名中的级别关键词推断。
+    2026-09-21 修: ① 空串直接返回 T3(原 `league in kw` 里 `"" in kw` 恒真致空串误判 T1);
+    ② 去掉 `league in kw` 反向匹配(短名匹配多个长关键词会歧义, 如 'Premier League' 误匹配
+    'Belarus Premier League'→T3, 而应是 T1)。反向场景交给下方关键词启发式兜底。
     """
+    if not league:
+        return 3
     tiers_file = DATA_DIR / "league_tiers.json"
     if tiers_file.exists():
         tiers = json.loads(tiers_file.read_text())
         if league in tiers:
             return tiers[league]
         for kw, tier in tiers.items():
-            if kw in league or league in kw:
+            if kw in league:
                 return tier
 
     # 自动分级: 根据联赛名推断
