@@ -65,10 +65,13 @@ SNAPSHOT_MAX_AGE = 6.0  # 2026-09-20 让球「只投快照单」阈值(秒): BB�
 BET_HEALTH_FILE = ROOT / "data" / "storage" / "bet_health.json"  # 下单健康(成功/被拒计数), 供 gubbing 限注监控
 
 
-def _record_bet_result(code):
-    """记录下单成败(2026-09-21 gubbing 限注监控): 被拒率飙升是软书限注的前兆。"""
+def _record_bet_result(code, latency=0.0):
+    """记录下单成败 + 成交延迟(2026-09-21 gubbing 限注监控): 被拒率飙升/成交延迟拉长是软书限注前兆。
+
+    赔率滑点不单独记 —— oddsChange=0 保证成交价=信号价(变了就拒), 滑点体现在「被拒(code!=0)」里。
+    """
     try:
-        d = {"success": 0, "rejected": 0, "total": 0, "last_ts": 0.0}
+        d = {"success": 0, "rejected": 0, "total": 0, "last_ts": 0.0, "latency_sum": 0.0, "latency_n": 0}
         if BET_HEALTH_FILE.exists():
             try:
                 d = json.loads(BET_HEALTH_FILE.read_text())
@@ -79,6 +82,9 @@ def _record_bet_result(code):
             d["success"] = d.get("success", 0) + 1
         else:
             d["rejected"] = d.get("rejected", 0) + 1
+        if latency > 0:
+            d["latency_sum"] = d.get("latency_sum", 0.0) + latency
+            d["latency_n"] = d.get("latency_n", 0) + 1
         d["last_ts"] = time.time()
         BET_HEALTH_FILE.write_text(json.dumps(d))
     except Exception:
@@ -1052,7 +1058,7 @@ class SecondLevelMonitor:
         # 记录全局下单时间戳(早盘+滚球共享冷却起点)
         from src.betting.bb_auto_bet import record_global_bet
         record_global_bet()
-        _record_bet_result(code)  # 2026-09-21 gubbing 限注监控: 记下单成败
+        _record_bet_result(code, latency=_t_http)  # 2026-09-21 gubbing 限注监控: 记下单成败 + 成交延迟
         if code == 14010:
             self._invalidate_token_cache()
         if code == 0:
