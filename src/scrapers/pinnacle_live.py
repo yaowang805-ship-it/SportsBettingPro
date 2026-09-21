@@ -306,8 +306,13 @@ def _load_cn_names():
     return _CN_NAME_CACHE["data"]
 
 
-def fetch_bb_live_matches(sport_ids=(1, 3, 5), platform="BB"):
+def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6, 2, 13, 15, 18, 19, 47), platform="BB"):
     """BB/FB 滚球比赛。EN 拉英文队名(直配 Pin) + 提取盘口; CMN 拉中文队名/联赛名(展示用)。
+
+    2026-09-21: sport_ids 扩到 BB 全 11 运动(足/篮/网/棒/美足/冰球/排/乒乓/MMA/拳击/羽毛球),
+    与 Betfair 34 运动的交集全覆盖(见 odds_api_io._SPORT_ID_TO_SLUG)。6 个新运动(冰球/排/乒乓/
+    MMA/拳击/羽毛球)的比分 period 码是推断的(见 SCORE_PE_BY_SID), 观察库纸单结算拿不到比分就
+    跳过不污染 ROI; 接实盘前必须实测确认比分码。
 
     platform="BB" 用 BB 域名, "FB" 用 FB 域名(api.5c4r3.com)。两者同一账户 user-token,
     但 match_id 各自独立(FB 的比赛要用 FB 域名 getMatchDetail 结算)。

@@ -45,13 +45,19 @@ _SUB_TO_SBOBET = {
     "ht_hc": "Spread HT",   # 半场让球(Sbobet有, Betfair无对应)
 }
 
-# BB 运动 id → odds-api.io 运动 slug
+# BB 运动 id → odds-api.io 运动 slug（BB 全 11 运动 vs Betfair 34 运动交集，2026-09-21 扩全）
 _SPORT_ID_TO_SLUG = {
     1: "football",       # 足球
     3: "basketball",     # 篮球
     5: "tennis",         # 网球
     7: "baseball",       # 棒球
     6: "american-football",  # 美式足球
+    2: "ice-hockey",     # 冰球
+    13: "volleyball",    # 排球
+    15: "table-tennis",  # 乒乓球 (BB 叫 pingpong, Betfair 叫 table-tennis)
+    18: "mixed-martial-arts",  # MMA
+    19: "boxing",        # 拳击
+    47: "badminton",     # 羽毛球
 }
 
 
