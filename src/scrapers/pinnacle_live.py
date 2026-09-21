@@ -632,27 +632,29 @@ def fetch_live_opportunities_oa(threshold=3.0):
         bb_odds = mk["odds"]
         # 2026-09-20 修线错配: hc/ou 必须传 BB 的具体线(target_line), 否则公平价永远选 main line,
         # 三个不同让球线(3.17/2.14/1.48)都拿同一个 main line 公平价去比 → 虚高 +37% 假溢价。
-        _target_line = mk.get("line") if sub in ("hc", "ou") else None
+        _target_line = mk.get("line") if sub in ("hc", "ou", "ht_ou") else None
         res = fair_price_bb(b["home_en"], b["away_en"], b["sport"], sub, target_line=_target_line, status="live")
         if not res or not res["fair"]:
             return []
         fair = res["fair"]
         if sub == "1x2":
             idx = {"主": "home", "和": "draw", "客": "away"}
+        elif sub == "ht":
+            idx = {"主": "home", "和": "draw", "客": "away"}  # 上半场独赢(同 1x2 三向)
         elif sub == "hc":
             idx = {"主": "home", "客": "away"}
         elif sub == "dc":
             idx = {"主/和": "1X", "客/和": "X2", "主/客": "12"}
         elif sub == "btts":
             idx = {"双方进球": "yes", "非双方进球": "no"}
-        else:  # ou
+        else:  # ou / ht_ou
             idx = {"大": "over", "小": "under"}
         k = idx.get(d)
         fair_p = fair.get(k)
         if not fair_p or fair_p <= 1:
             return []
         # hc/ou 线匹配: BB 线须 ≈ Betfair 线(否则比的是不同线的价, 假EV)
-        if sub in ("hc", "ou") and mk.get("line") is not None and fair.get("line") is not None:
+        if sub in ("hc", "ou", "ht_ou") and mk.get("line") is not None and fair.get("line") is not None:
             if abs(float(mk["line"]) - float(fair["line"])) > 0.25:
                 return []
         ev = (bb_odds - fair_p) / fair_p * 100.0
