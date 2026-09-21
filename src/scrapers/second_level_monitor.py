@@ -1299,7 +1299,7 @@ class SecondLevelMonitor:
         """EV-Kelly 半凯利: stake = _bankroll() × 0.5 × (ev/100) / (odds-1), 封顶 ¥300。
 
         本金 = 固定本金基准(bankroll_base.txt); --stake 显式给固定注额(>0)时用固定值。
-        防风控(2026-09-21 恢复): 注额抖动×0.8~1.2 + 冷门压额(T1/T2=150/T3=100/T4=80)。
+        防风控(2026-09-21 恢复): 冷门压额(T1/T2=300/T3=200/T4=160) + 压额后注额抖动×0.8~1.0。
         回撤熔断(2026-09-13): 最近7天滚球实盘累计亏超 DRAWDOWN_STOP_PNL → 半仓。
         """
         if self.stake and self.stake > 0:
@@ -1313,17 +1313,18 @@ class SecondLevelMonitor:
         # = 超 Kelly 数倍下冷门(方差击穿来源), 与「stake<30 不投」铁律语义相反。现在 <30 原样
         # 返回, 由调用方 _try_live_auto_bet/_try_auto_bet 的 `if stake < MIN_STAKE: return` 拦截。
         stake = int(min(stake, MAX_STAKE))
-        # 注额抖动 ×0.8~1.2(防风控 2026-09-21 恢复): 让每注金额不完全一致, 避免固定档位被风控识别为机器
-        stake = int(stake * random.uniform(0.8, 1.2))
         # 冷门压额(防风控 2026-09-21 恢复): 按联赛 tier 分档硬上限, 低级联赛单注压小。
-        # 未知联赛按 T3=100 保守压。联赛名走 _load_cn_names 兜底「滚球」→ get_league_tier 无匹配→T3。
+        # 未知联赛按 T3=200 保守压。联赛名走 _load_cn_names 兜底「滚球」→ get_league_tier 无匹配→T3。
         try:
             from config.constants import get_league_tier
             _league = (sig.get("match") or {}).get("league_cn", "") or ""
             _tier = get_league_tier(_league) if _league else 3
         except Exception:
             _tier = 3
-        stake = min(stake, _TIER_STAKE_CAP.get(_tier, 100))
+        stake = min(stake, _TIER_STAKE_CAP.get(_tier, 200))
+        # 注额抖动 ×0.8~1.0(防风控 2026-09-21): 在 tier cap 之下随机抖动, 让每注金额非恒定。
+        # (先压额后抖动——否则高 edge 单被 tier cap 钉死成固定值, 抖动对最常见的让球单完全失效)
+        stake = int(stake * random.uniform(0.8, 1.0))
         # 回撤熔断: 最近7天累计亏超阈值 → 半仓(职业铁律: survival 优先)
         _pnl = _recent_pnl()
         if _pnl < -DRAWDOWN_STOP_PNL:
