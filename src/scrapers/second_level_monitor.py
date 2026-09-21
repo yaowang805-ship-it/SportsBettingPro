@@ -36,12 +36,6 @@ COMPARISON_FILE = ROOT / "data" / "storage" / "bb_vs_pinnacle_comparison.json"
 KELLY_FRACTION = 0.5   # 半凯利
 MAX_STAKE = 300        # 单盘口上限(2026-09-19 用户提额: 滚球单注≤300, 原150)
 
-# 冷门压额(防风控/gubbing): 按联赛 tier 分档单注上限。低级联赛单注压小, 防"冷门+大额"组合
-# (gubbing 最快触发点)。未知联赛按 T3=200 保守压。
-# 2026-09-21 恢复(09-19 曾暂停): 用户要求把注额抖动+冷门压额加回来, 牺牲部分 EV 换账户寿命。
-# 等比随 MAX_STAKE 150→300 上调(用户选B): 原 T1/T2=150/T3=100/T4=80 → ×2 = 300/200/160。
-_TIER_STAKE_CAP = {1: 300, 2: 300, 3: 200, 4: 160}
-
 # 2026-09-19 用户选B: 滚球本金 = 固定本金基准(初始¥20000), 不随当前余额逐笔缩水。
 # 之前「余额×30%」是顺周期陷阱(余额降→bankroll降→注额缩到30/60), 改用固定基准
 # 恢复 8 月 bankroll 2万时代(注额能到~400)。基准值存 bankroll_base.txt, 用户可手动改。
@@ -1301,7 +1295,8 @@ class SecondLevelMonitor:
         """EV-Kelly 半凯利: stake = _bankroll() × 0.5 × (ev/100) / (odds-1), 封顶 ¥300。
 
         本金 = 固定本金基准(bankroll_base.txt); --stake 显式给固定注额(>0)时用固定值。
-        防风控(2026-09-21 恢复): 冷门压额(T1/T2=300/T3=200/T4=160) + 压额后注额抖动×0.8~1.0。
+        防风控(2026-09-22): 只保留注额抖动×0.8~1.0。冷门压额(tier cap)已取消——冷门低级别联赛
+        可能有大溢价(低效市场错价更大), 不该按联赛压额。
         回撤熔断(2026-09-13): 最近7天滚球实盘累计亏超 DRAWDOWN_STOP_PNL → 半仓。
         """
         if self.stake and self.stake > 0:
@@ -1315,17 +1310,8 @@ class SecondLevelMonitor:
         # = 超 Kelly 数倍下冷门(方差击穿来源), 与「stake<30 不投」铁律语义相反。现在 <30 原样
         # 返回, 由调用方 _try_live_auto_bet/_try_auto_bet 的 `if stake < MIN_STAKE: return` 拦截。
         stake = int(min(stake, MAX_STAKE))
-        # 冷门压额(防风控 2026-09-21 恢复): 按联赛 tier 分档硬上限, 低级联赛单注压小。
-        # 未知联赛按 T3=200 保守压。联赛名走 _load_cn_names 兜底「滚球」→ get_league_tier 无匹配→T3。
-        try:
-            from config.constants import get_league_tier
-            _league = (sig.get("match") or {}).get("league_cn", "") or ""
-            _tier = get_league_tier(_league) if _league else 3
-        except Exception:
-            _tier = 3
-        stake = min(stake, _TIER_STAKE_CAP.get(_tier, 200))
-        # 注额抖动 ×0.8~1.0(防风控 2026-09-21): 在 tier cap 之下随机抖动, 让每注金额非恒定。
-        # (先压额后抖动——否则高 edge 单被 tier cap 钉死成固定值, 抖动对最常见的让球单完全失效)
+        # 注额抖动 ×0.8~1.0(防风控): 让每注金额非恒定, 避免固定档位被风控识别为机器。
+        # 2026-09-22: 冷门压额(tier cap)已取消——冷门低级别联赛可能有大溢价, 不该压额。
         stake = int(stake * random.uniform(0.8, 1.0))
         # 回撤熔断: 最近7天累计亏超阈值 → 半仓(职业铁律: survival 优先)
         _pnl = _recent_pnl()
