@@ -685,9 +685,10 @@ def fetch_live_opportunities_oa(threshold=3.0):
             "platform": "BB",
         }
         if _sbo_dir == 'diff':
-            # 2026-09-20 diff 从「跳过」改「半额投注」后, 也必须过滤 EV 上限——
-            # 否则线错配/数据错的高 EV diff(如 +37%) 会绕过 20% 上限混进实盘(本次 bug 根因)。
-            if ev > 20.0:
+            # 2026-09-20 diff 从「跳过」改「半额投注」后, 也必须过滤 EV 上下限——
+            # 之前只拦高 EV(>20% 线错配假EV), 漏了负 EV: 负 EV diff(如 -14%) 也进观察库污染统计
+            # (2026-09-21 修: 补 ev < threshold 下限, 与 same 同口径)。
+            if ev < threshold or ev > 20.0:
                 return []
             base["sbo_confirm"] = False
             base["sbo_direction"] = "diff"
