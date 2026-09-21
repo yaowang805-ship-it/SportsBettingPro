@@ -306,7 +306,7 @@ def _load_cn_names():
     return _CN_NAME_CACHE["data"]
 
 
-def fetch_bb_live_matches(sport_ids=(1, 3), platform="BB"):
+def fetch_bb_live_matches(sport_ids=(1, 3, 5), platform="BB"):
     """BB/FB 滚球比赛。EN 拉英文队名(直配 Pin) + 提取盘口; CMN 拉中文队名/联赛名(展示用)。
 
     platform="BB" 用 BB 域名, "FB" 用 FB 域名(api.5c4r3.com)。两者同一账户 user-token,
