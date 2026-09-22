@@ -307,7 +307,28 @@ def fair_price(event_id, sub_market, bookmakers=None, target_line=None, use_rest
             fair["spread"] = _spread
         return fair
     if sub_market == "dc":
-        # Double Chance: 1X/12/X2, 交易所只给 back 无 lay → back 直接当公平价
+        # 2026-09-22 修 dc 公平价 back 价偏差: 交易所双机会盘只有 back 无 lay, back 价偏低 → EV 虚高
+        # (实测 dc +14% 假溢价根因)。改用 1x2(ML) 三向中间价合成双机会:
+        #   P(1X)=P(home)+P(draw), P(12)=P(home)+P(away), P(X2)=P(draw)+P(away)。
+        # 无 ML 或合成失败则退回 back 价兜底(旧行为)。
+        ml = next((x for x in bf_markets if x.get("name") == "ML"), None)
+        if ml:
+            mo = _select_line(ml, None)
+            if mo:
+                three = _fair_three_way(mo)
+                if three and all(three.get(k) for k in ("home", "draw", "away")):
+                    ph = 1.0 / three["home"]; pd = 1.0 / three["draw"]; pa = 1.0 / three["away"]
+                    _s = ph + pd + pa
+                    if _s > 0:
+                        ph, pd, pa = ph / _s, pd / _s, pa / _s  # 归一化(1x2 中间价隐含和可能略≠1)
+                        fair = {
+                            "1X": round(1.0 / (ph + pd), 4),
+                            "12": round(1.0 / (ph + pa), 4),
+                            "X2": round(1.0 / (pd + pa), 4),
+                        }
+                        fair["spread"] = _spread
+                        return fair
+        # 兜底: 合成失败 → back 价(旧行为)
         fair = {k: float(v) for k, v in o.items() if k in ("1X", "12", "X2") and v}
         if fair:
             fair["spread"] = _spread
