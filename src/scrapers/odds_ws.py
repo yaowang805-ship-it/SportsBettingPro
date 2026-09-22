@@ -34,7 +34,9 @@ _change_queue = []  # 变动事件队列 [(event_id, bookie, ts)], 供 WS 触发
 _change_event = threading.Event()  # 变动事件唤醒信号(WS 变动时 set, 消费者 wait 省 sleep 延迟)
 
 
-PERSIST_MIN_AGE = 2.0  # persistence(持续2快照): 变动需稳定该秒数才发射(过滤一闪而过的瞬时变动, 2026-09-19)
+PERSIST_MIN_AGE = 0.5  # persistence(持续~1快照): 变动需稳定该秒数才发射(过滤瞬时变动)。
+# 2026-09-22 2.0→0.5: 滚球 lead-lag 是秒级(比赛事件驱动), 2s 稳定期太久会错过 BB 跟随前的窗口;
+# 降到 0.5s 只过滤"一闪而过"的瞬时抖动, 真 sharp 移动(稳定>0.5s)立即发射。SBO同向确认兜底防假信号。
 
 
 def get_persisted_changes(min_age=PERSIST_MIN_AGE):
