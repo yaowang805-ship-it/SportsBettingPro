@@ -635,10 +635,11 @@ def fetch_live_opportunities_oa(threshold=3.0):
         bmid, b, mk = task
         sub = mk["sub"]; d = mk["direction"]
         bb_odds = mk["odds"]
-        # 2026-09-22 修 0.25 quarter-ball 假溢价根因: |line| 是 0.25/0.75 这类四分盘, BB 与 Betfair
-        # 的合成口径不一致(半注挂0/半注挂0.5), 线匹配算出假公平价(实测让球 EV>20% 桶 87% 是 0.25 线,
-        # 观察库让球 +13.8pp 假 edge 主因)。且结算层也无法可靠判半赢半走盘 → 与 line=0 void 同策略不采集。
-        if sub == "hc" and mk.get("line") is not None:
+        # 2026-09-22 修 quarter-ball 假溢价根因: |line| 是 0.25/0.75 这类四分盘(hc/ou/ht_ou 都有,
+        # 实测让球55%/大小球58%是四分盘), BB 与 Betfair 的合成口径不一致(半注挂0/半注挂0.5),
+        # 线匹配算出假公平价(实测让球 EV>20% 桶 87% 是 0.25 线, 观察库让球 +13.8pp 假 edge 主因)。
+        # 且结算层也无法可靠判半赢半走盘 → 与 line=0 void 同策略不采集。只采 0.5 整数倍线。
+        if sub in ("hc", "ou", "ht_ou") and mk.get("line") is not None:
             _l = float(mk["line"])
             if abs(_l * 2 - round(_l * 2)) > 1e-6:
                 return []
@@ -665,9 +666,11 @@ def fetch_live_opportunities_oa(threshold=3.0):
         fair_p = fair.get(k)
         if not fair_p or fair_p <= 1:
             return []
-        # hc/ou 线匹配: BB 线须 ≈ Betfair 线(否则比的是不同线的价, 假EV)
+        # hc/ou 线匹配: BB 线必须 = Betfair 线(否则比的是不同线的价, 假EV)。
+        # 2026-09-22 收紧 0.25→0.01: 之前 0.25 容差允许 BB线0.5 匹配 Betfair线0.25(差0.25不被拦),
+        # 是假溢价的又一处漏。线是 0.5 整数倍, 正确匹配差=0, 任何差>0.01 都是错配。
         if sub in ("hc", "ou", "ht_ou") and mk.get("line") is not None and fair.get("line") is not None:
-            if abs(float(mk["line"]) - float(fair["line"])) > 0.25:
+            if abs(float(mk["line"]) - float(fair["line"])) > 0.01:
                 return []
         ev = (bb_odds - fair_p) / fair_p * 100.0
         _conf = res.get("confidence")

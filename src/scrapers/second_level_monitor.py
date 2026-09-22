@@ -426,15 +426,18 @@ def _is_settleable(desig, line):
         return (line is not None and abs(line) > 0.0001
                 and abs(line * 2 - round(line * 2)) < 1e-6)
     if desig in ("大球", "小球"):
-        return line is not None
+        # 2026-09-22: quarter-ball(2.25/2.75)半赢半走盘结算不了(与让球同策略), 只采 0.5 整数倍线。
+        return (line is not None
+                and abs(line * 2 - round(line * 2)) < 1e-6)
     if desig in ("主/和", "客/和", "主/客"):  # 双机会 dc
         return True
     if desig in ("双方进球", "非双方进球"):  # 双边进球 btts
         return True
     if desig in ("上半场主胜", "上半场客胜", "上半场和局"):  # 上半场独赢 ht(半场比分结算, 无需线)
         return True
-    if desig in ("上半场大球", "上半场小球"):  # 上半场大小 ht_ou(需线)
-        return line is not None
+    if desig in ("上半场大球", "上半场小球"):  # 上半场大小 ht_ou(需线, quarter-ball 同让球拦)
+        return (line is not None
+                and abs(line * 2 - round(line * 2)) < 1e-6)
     return False
 
 
