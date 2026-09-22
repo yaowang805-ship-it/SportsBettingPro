@@ -396,6 +396,11 @@ _events_cache = {}  # {(sport_slug, status): (ts, events)}
 _match_cache = {}   # {(norm_home, norm_away, sport_id, status): (ts, event_id, swapped)}
 _events_index_cache = {}  # {(sport_slug, status): (ts, (events, exact_idx))}, exact_idx={(norm_h,norm_a):(eid,swapped)}
 
+# 2026-09-22 事件列表缓存 TTL 60s→300s: 根因是每 60s 缓存过期后 get_events 同步 REST(1-3s),
+# 11 个运动缓存过期撞一起就并发 REST 把某轮公平价匹配拖到 7-10s(挤占让球快照单≤6s)。
+# live 事件集几分钟才变一次, 5min 缓存足够, 且 REST 请求量 660/h→130/h 省 5000/h 限额。
+_EVENTS_TTL = 300
+
 
 def _norm_team(name):
     import re
@@ -453,7 +458,7 @@ def _get_events_cached(sport, status=None):
     """事件列表缓存 60s, 避免每次匹配都拉全量。status=None 全量, 'live' 只拉滚球。"""
     key = (sport, status)
     now = time.time()
-    if key in _events_cache and now - _events_cache[key][0] < 60:
+    if key in _events_cache and now - _events_cache[key][0] < _EVENTS_TTL:
         return _events_cache[key][1]
     evs = get_events(sport, status) or []
     _events_cache[key] = (now, evs)
@@ -466,7 +471,7 @@ def _get_events_indexed(slug, status=None):
     2026-09-20 优化: 之前每场都 O(486) 模糊匹配, 公平价匹配 12-15s; 精确索引后 ~1s。"""
     key = (slug, status)
     now = time.time()
-    if key in _events_index_cache and now - _events_index_cache[key][0] < 60:
+    if key in _events_index_cache and now - _events_index_cache[key][0] < _EVENTS_TTL:
         return _events_index_cache[key][1]
     evs = get_events(slug, status) or []
     idx = {}
@@ -498,7 +503,7 @@ def match_event_orient(home, away, sport_id, min_score=85.0, status=None):
     key = (_norm_team(home), _norm_team(away), sport_id, status)
     now = time.time()
     cached = _match_cache.get(key)
-    if cached and now - cached[0] < 60:
+    if cached and now - cached[0] < _EVENTS_TTL:
         _, eid, sw = cached
         return (eid, sw) if eid else (None, False)
     slug = _SPORT_ID_TO_SLUG.get(sport_id)
