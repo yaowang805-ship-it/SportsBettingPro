@@ -465,15 +465,8 @@ def _get_events_cached(sport, status=None):
     return evs
 
 
-def _get_events_indexed(slug, status=None):
-    """事件列表 + 精确匹配索引(缓存 60s)。精确索引 {(norm_home,norm_away): (event_id, swapped)}
-    让 match_event_orient 对大多数比赛 O(1) 命中, 只对没精确命中的做 rapidfuzz 模糊兜底。
-    2026-09-20 优化: 之前每场都 O(486) 模糊匹配, 公平价匹配 12-15s; 精确索引后 ~1s。"""
-    key = (slug, status)
-    now = time.time()
-    if key in _events_index_cache and now - _events_index_cache[key][0] < _EVENTS_TTL:
-        return _events_index_cache[key][1]
-    evs = get_events(slug, status) or []
+def _build_events_index(evs):
+    """事件列表 → 精确匹配索引 {(norm_home,norm_away): (event_id, swapped)}。"""
     idx = {}
     for e in evs:
         if _is_skip_event(e):
@@ -483,8 +476,49 @@ def _get_events_indexed(slug, status=None):
             continue
         idx[(nh, na)] = (e.get('id'), False)
         idx[(na, nh)] = (e.get('id'), True)  # 主客互换也索引
+    return idx
+
+
+def _get_events_indexed(slug, status=None):
+    """事件列表 + 精确匹配索引(缓存 300s)。精确索引 {(norm_home,norm_away): (event_id, swapped)}
+    让 match_event_orient 对大多数比赛 O(1) 命中, 只对没精确命中的做 rapidfuzz 模糊兜底。
+    2026-09-20 优化: 之前每场都 O(486) 模糊匹配, 公平价匹配 12-15s; 精确索引后 ~1s。
+    2026-09-22: 缓存 TTL 60s→300s + 后台预取(_refresh_events_index), 缓存几乎总是热的。"""
+    key = (slug, status)
+    now = time.time()
+    if key in _events_index_cache and now - _events_index_cache[key][0] < _EVENTS_TTL:
+        return _events_index_cache[key][1]
+    evs = get_events(slug, status) or []
+    idx = _build_events_index(evs)
     _events_index_cache[key] = (now, (evs, idx))
     return evs, idx
+
+
+def _refresh_events_index(slug, status=None):
+    """强制刷新事件索引(后台预取用), 绕过 300s 缓存, 让匹配线程永远读到热缓存。"""
+    evs = get_events(slug, status) or []
+    idx = _build_events_index(evs)
+    _events_index_cache[(slug, status)] = (time.time(), (evs, idx))
+    return evs, idx
+
+
+def start_events_prefetch(interval=60.0):
+    """后台预取事件列表(2026-09-22): 每个 interval 秒强制刷新所有运动的 live 事件索引,
+    让 get_events 的 REST 调用永远不在公平价匹配关键路径上(消除每 5min 一次的 8.4s 尖峰)。"""
+    import threading
+
+    def _loop():
+        while True:
+            try:
+                for slug in dict.fromkeys(_SPORT_ID_TO_SLUG.values()):  # 去重 slug
+                    _refresh_events_index(slug, 'live')
+            except Exception:
+                pass
+            time.sleep(interval)
+
+    t = threading.Thread(target=_loop, daemon=True, name="events-prefetch")
+    t.start()
+    return t
 
 
 def match_event(home, away, sport_id, min_score=85.0, status=None):

@@ -1767,6 +1767,13 @@ class SecondLevelMonitor:
             print("[slm] 已启动 BB 滚球后台预取(每 2s 拉一次, 下单读缓存)", flush=True)
         except Exception as e:
             print(f"[slm] BB 后台预取启动失败: {type(e).__name__} {str(e)[:80]}", flush=True)
+        # 2026-09-22 后台预取事件列表: 让 get_events 的 REST 永远不在公平价匹配关键路径上(消除每5min 8.4s尖峰)
+        try:
+            from src.scrapers.odds_api_io import start_events_prefetch
+            start_events_prefetch(interval=60.0)
+            print("[slm] 已启动事件列表后台预取(每 60s 刷新 live 事件索引, 匹配读热缓存)", flush=True)
+        except Exception as e:
+            print(f"[slm] 事件列表预取启动失败: {type(e).__name__} {str(e)[:80]}", flush=True)
         last_poll = 0.0
         while deadline is None or time.time() < deadline:
             now = time.time()
