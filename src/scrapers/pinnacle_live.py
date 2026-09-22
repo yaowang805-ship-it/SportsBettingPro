@@ -622,6 +622,51 @@ def get_bb_cached(max_age=5.0):
     return _bb, _ts
 
 
+# ── WS 触发现拉 BB(2026-09-22): 与 persistence 稳定期并行 ──
+# 原始 WS 变动一出现就后台现拉 BB(只足球), 让 BB 价取自"sharp 动那一刻"而非"稳定确认后 2s",
+# 且 persistence 确认稳定时 BB 已拉好 → 总耗时 = max(persistence 2s, BB拉取 1.6s) ≈ 2s。
+_bb_fresh = {}
+_bb_fresh_ts = 0.0
+_bb_fresh_busy = False
+_bb_fresh_lock = _threading.Lock()
+
+
+def trigger_fresh_bb_fetch(sport_ids=(1,)):
+    """WS 原始变动触发: 后台现拉 BB(只足球, 非足球交给预取慢周期)。幂等(拉取中则跳过)。"""
+    global _bb_fresh_busy
+    if _bb_fresh_busy:
+        return
+    _bb_fresh_busy = True
+
+    def _do():
+        global _bb_fresh, _bb_fresh_ts, _bb_fresh_busy
+        try:
+            _bb = fetch_bb_live_matches(sport_ids=sport_ids, platform="BB")
+            with _bb_fresh_lock:
+                _bb_fresh = _bb
+                _bb_fresh_ts = time.time()
+        except Exception:
+            pass
+        finally:
+            _bb_fresh_busy = False
+
+    _threading.Thread(target=_do, daemon=True, name="bb-fresh").start()
+
+
+def get_bb_fresh_or_cached(max_age=5.0):
+    """WS 触发路径优先读"现拉"的足球 BB; 非足球从预取缓存补(非足球慢周期, 缓存够)。"""
+    global _bb_fresh, _bb_fresh_ts
+    with _bb_fresh_lock:
+        _f = _bb_fresh if (_bb_fresh and time.time() - _bb_fresh_ts < max_age) else None
+        _fts = _bb_fresh_ts
+    if _f is not None:
+        _cached, _ = get_bb_cached(max_age=max_age)
+        _merged = dict(_cached)
+        _merged.update(_f)  # 新鲜足球覆盖, 非足球保留缓存
+        return _merged, _fts
+    return get_bb_cached(max_age=max_age)
+
+
 _nonfb_poll_counter = 0  # 非足球降频计数器(2026-09-22): 非足球不需要 lead-lag 秒级, 每 15 轮匹配一次
 NONFB_EVERY = 15  # 非足球公平价匹配频率: 每 15 轮(≈30s)才匹配一次非足球, 省公平价匹配任务数
 
@@ -639,8 +684,9 @@ def fetch_live_opportunities_oa(threshold=3.0):
     _nonfb_poll_counter += 1
     _do_nonfb = (_nonfb_poll_counter % NONFB_EVERY == 0)
     _t0 = time.time()
-    # 2026-09-21 读后台预取的 BB 缓存(0ms), 不再同步 getList(1.6s)。_bb_ts 用缓存时间戳(供快照单新鲜度判断)
-    bb, _bb_ts = get_bb_cached()
+    # 2026-09-22 读"现拉优先"的 BB: WS 触发路径用 trigger_fresh_bb_fetch 现拉的足球价(persistence并行),
+    # 非足球从预取缓存补。_bb_ts 用现拉时间戳(供快照单新鲜度判断)。
+    bb, _bb_ts = get_bb_fresh_or_cached()
 
     # 收集任务(比赛×盘口)。非足球降频(2026-09-22): 非足球只每 15 轮匹配一次, 省公平价匹配任务,
     # 防 9.5s 尖峰挤占足球让球快照单(≤6s)新鲜度。非足球只收纸单攒数据, 不需要秒级。

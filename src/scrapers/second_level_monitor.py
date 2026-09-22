@@ -1813,7 +1813,12 @@ class SecondLevelMonitor:
             # 2026-09-19 事件驱动: WS 变动立即唤醒(省 sleep 0.5s 轮询延迟), 否则等 0.5s
             try:
                 from src.scrapers.odds_ws import wait_change
-                await asyncio.to_thread(wait_change, 0.5)
+                _raw_changed = await asyncio.to_thread(wait_change, 0.5)
+                if _raw_changed:
+                    # 2026-09-22: 原始变动一出现就后台现拉 BB(只足球), 与 persistence 2s 稳定期并行。
+                    # 这样 BB 价取自"sharp 动那一刻", 且稳定确认时 BB 已拉好。
+                    from src.scrapers.pinnacle_live import trigger_fresh_bb_fetch
+                    trigger_fresh_bb_fetch()
             except Exception:
                 await asyncio.sleep(0.5)
 
