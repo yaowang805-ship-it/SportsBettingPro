@@ -821,14 +821,14 @@ class PipelineOrchestrator:
                 c.close()
             lines.append(f"📈 CLV追踪: {clv_n} 条")
 
-            # 3. Pin 历史赔率
+            # 3. 历史赔率归档(Pin 历史数据, 只读计数, 非活跃依赖)
             arch_n = 0
             arch_db = DATA / "pinnacle_odds_archive.db"
             if arch_db.exists():
                 c = sqlite3.connect(str(arch_db))
                 arch_n = c.execute("SELECT COUNT(*) FROM odds_archive").fetchone()[0]
                 c.close()
-            lines.append(f"🗄️ Pin历史赔率: {arch_n} 条")
+            lines.append(f"🗄️ 历史赔率归档: {arch_n} 条")
 
             # 4. 实盘历史
             bh = DATA / "bet_history.csv"
@@ -1272,20 +1272,8 @@ class PipelineOrchestrator:
             logger.warning(f"  BB API 连接失败: {e}")
             issues.append(f"BB API 连接失败: {str(e)[:50]}")
 
-        # 3. Pinnacle API 延迟（用 /sports 轻量端点; 原 /leagues/29 已 404 废弃, 2026-08-24 修）
-        try:
-            from src.scrapers.pinnacle_api import api_get as pin_get
-            t0 = _time.time()
-            resp = pin_get('/sports')  # 轻量端点 (api_get 已自动加 /0.1 前缀)
-            pin_time = _time.time()
-            pin_latency = pin_time - t0
-            logger.info(f"  Pinnacle API 延迟: {pin_latency:.1f}s")
-            if not resp:
-                issues.append("Pinnacle API 返回空")
-            if pin_latency > 10:
-                issues.append(f"Pinnacle API 延迟 {pin_latency:.0f}s (>10s)")
-        except Exception as e:
-            logger.warning(f"  Pinnacle 连接失败: {e}")
+        # 3. (2026-09-22 移除 Pinnacle 连通性检查——Pin 已暂停, 不再作为锚点, 免得日报误报"返回空")
+        #    时间校准只保留: 系统时钟 vs WorldTimeAPI + BB API 连通性。
 
         # 4. 汇总 & 告警
         if issues:
