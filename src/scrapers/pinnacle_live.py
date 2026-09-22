@@ -622,6 +622,10 @@ def get_bb_cached(max_age=5.0):
     return _bb, _ts
 
 
+_nonfb_poll_counter = 0  # 非足球降频计数器(2026-09-22): 非足球不需要 lead-lag 秒级, 每 15 轮匹配一次
+NONFB_EVERY = 15  # 非足球公平价匹配频率: 每 15 轮(≈30s)才匹配一次非足球, 省公平价匹配任务数
+
+
 def fetch_live_opportunities_oa(threshold=3.0):
     """滚球机会: BB live + Sbobet/Betfair 公平价(替代 Pin, 2026-09-18)。
 
@@ -631,13 +635,19 @@ def fetch_live_opportunities_oa(threshold=3.0):
     """
     from src.scrapers.odds_api_io import fair_price_bb
     from concurrent.futures import ThreadPoolExecutor
+    global _nonfb_poll_counter
+    _nonfb_poll_counter += 1
+    _do_nonfb = (_nonfb_poll_counter % NONFB_EVERY == 0)
     _t0 = time.time()
     # 2026-09-21 读后台预取的 BB 缓存(0ms), 不再同步 getList(1.6s)。_bb_ts 用缓存时间戳(供快照单新鲜度判断)
     bb, _bb_ts = get_bb_cached()
 
-    # 收集任务(比赛×盘口)
+    # 收集任务(比赛×盘口)。非足球降频(2026-09-22): 非足球只每 15 轮匹配一次, 省公平价匹配任务,
+    # 防 9.5s 尖峰挤占足球让球快照单(≤6s)新鲜度。非足球只收纸单攒数据, 不需要秒级。
     tasks = []
     for bmid, b in bb.items():
+        if b.get("sport") != 1 and not _do_nonfb:
+            continue
         for mk in b["markets"]:
             sub = mk["sub"]; d = mk["direction"]
             if not d or sub not in ("1x2", "hc", "ou", "dc", "btts", "ht", "ht_ou"):
@@ -728,7 +738,7 @@ def fetch_live_opportunities_oa(threshold=3.0):
     if tasks:
         # 并发公平价匹配(2026-09-20): 之前串行 ~11s, 现并发 ~2-3s。线程安全: get_odds 读 WS 缓存有 _lock,
         # _events_cache/_odds_cache 是模块级 dict, 并发写是良性竞态(同值覆盖)。
-        with ThreadPoolExecutor(max_workers=min(len(tasks), 8)) as ex:
+        with ThreadPoolExecutor(max_workers=min(len(tasks), 16)) as ex:
             for out in ex.map(_process, tasks):
                 opps.extend(out)
     _t_done = time.time()
