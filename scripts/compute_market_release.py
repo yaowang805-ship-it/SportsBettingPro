@@ -47,6 +47,7 @@ DATA = ROOT / "data" / "storage"
 TRACKED = DATA / "tracked_bets.json"
 PAPER = DATA / "paper_bets.json"
 OUT = DATA / "market_release.json"
+PENDING = DATA / "pending_release_approval.json"  # 待确认的释放/封锁变更(2026-09-22 用户要求确认后执行)
 
 REAL_ROI_MIN = 4.0     # 实盘 ROI 释放阈值(%)
 N_REAL_MIN = 50        # 实盘赢率采信最小样本量(2026-09-12 30→100→50: 实盘真金白银质量高, 50够; 观察库才要100)
@@ -754,6 +755,31 @@ def _notify_release(newly_released, obs_winrate):
         pass
 
 
+def _notify_pending_release(new_releases, new_blocks):
+    """释放/封锁变更推钉钉待确认(2026-09-22 用户要求: 确认后才执行)。"""
+    try:
+        from config.settings import send_dingtalk
+    except Exception:
+        return
+    lines = []
+    for (sport, sm, dr, interval, scope) in new_releases:
+        sp_cn = SPORT_CN.get(sport, sport)
+        scope_cn = "滚球" if scope == SCOPE_LIVE else "早盘"
+        lines.append(f"🟢 拟释放: {sp_cn} {sm}-{dr}({interval},{scope_cn})")
+    for (sport, sm, dr, interval, scope) in new_blocks:
+        sp_cn = SPORT_CN.get(sport, sport)
+        scope_cn = "滚球" if scope == SCOPE_LIVE else "早盘"
+        lines.append(f"🔴 拟封锁(已释放): {sp_cn} {sm}-{dr}({interval},{scope_cn})")
+    if not lines:
+        return
+    body = ("⚠️ 释放/封锁变更待确认\n\n" + "\n".join(lines)
+            + "\n\n回复『确认』后执行(compute_market_release.py --confirm)")
+    try:
+        send_dingtalk("⚠️ 释放变更待确认", body)
+    except Exception:
+        pass
+
+
 def main():
     market_roi = load_real_roi()
     market_roi_dir = load_real_roi_direction()  # 方向级 ROI(满7天提额用, 2026-09-18 修混方向bug)
@@ -842,6 +868,32 @@ def main():
         _entry = [_p[0], _p[1], _p[2], _p[3], _p[4]]
         if _entry not in observe_blocked:
             observe_blocked.append(_entry)
+
+    # 2026-09-22 用户要求: 释放盘口/封锁已释放盘口, 必须先推钉钉待确认, 确认后才执行。
+    # 无 --confirm 时, 若检测到释放/封锁变更, 推钉钉+写 pending 文件, 不写 market_release.json(保持旧清单)。
+    if not CONFIRM:
+        _old_released = set()
+        _old_blocked = set()
+        if OUT.exists():
+            try:
+                _old = json.loads(OUT.read_text())
+                _old_released = {tuple(x) for x in _old.get("observe_released", [])}
+                _old_blocked = {tuple(x) for x in _old.get("observe_blocked", [])}
+            except Exception:
+                pass
+        _new_releases = [list(x) for x in observe_released if tuple(x) not in _old_released]
+        _new_blocks = [list(x) for x in observe_blocked
+                       if tuple(x) not in _old_blocked and tuple(x) in _old_released]
+        if _new_releases or _new_blocks:
+            try:
+                PENDING.write_text(json.dumps(
+                    {"released": _new_releases, "block_released": _new_blocks,
+                     "ts": datetime.now().isoformat()}, ensure_ascii=False, indent=2))
+            except Exception:
+                pass
+            _notify_pending_release(_new_releases, _new_blocks)
+            print(f"[release] 检测到释放/封锁变更, 已推钉钉待确认(释放{len(_new_releases)} 封锁{len(_new_blocks)}), 本次不写清单")
+            return
 
     # 释放状态维护 + 投注额 cap 分阶段 + 当日累计上限 + 释放通知(2026-09-12 用户要求)。
     # 状态持久化到 observe_release_state.json: first_released_at/cap/daily_stake/limit_removed。
@@ -956,5 +1008,13 @@ def main():
     return out
 
 
+CONFIRM = False  # --confirm 时跳过"待确认"门(2026-09-22 用户确认后执行)
+
+
 if __name__ == "__main__":
+    import argparse
+    ap = argparse.ArgumentParser(description="盘口释放清单计算")
+    ap.add_argument("--confirm", action="store_true", help="确认待执行的释放/封锁变更(用户确认后运行)")
+    _args = ap.parse_args()
+    CONFIRM = _args.confirm
     main()
