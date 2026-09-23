@@ -38,6 +38,8 @@ ODDSPAPI_BASE = 'https://api.oddspapi.io/v4'
 ODDS_API_IO_KEY = os.getenv('ODDS_API_IO_KEY', '')
 ODDS_API_IO_BASE = 'https://api.odds-api.io/v3'
 ODDS_API_IO_BOOKMAKERS = ('Sbobet', 'Betfair Exchange')  # 2026-09-18 定稿锚点: Sbobet(上游+亚盘) + Betfair Exchange(欧洲盘+交叉验证)
+PINNAPI_KEY = os.getenv('PINNAPI_KEY', '')  # Pinnacle 赔率(pinnapi.com, 实时sharp基准, 2026-09-23)
+PINNAPI_BASE = 'https://pinnapi.com'
 
 
 def _is_placeholder_webhook(url: str) -> bool:
