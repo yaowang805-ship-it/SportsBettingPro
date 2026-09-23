@@ -76,8 +76,7 @@ def wait_change(timeout=0.5):
     下次 wait 才等新变动。既让原始变动立即被感知(触发 BB 现拉与 persistence 同步), 又不空转——
     事件清掉后 wait 0.5s 才返回, 不会 CPU 100%。
     """
-    if not _change_queue:
-        _change_event.wait(timeout)
+    _change_event.wait(timeout)
     _change_event.clear()
     return bool(_change_queue)
 
