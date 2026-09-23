@@ -997,6 +997,11 @@ class PipelineOrchestrator:
 
     def do_name_mapping(self):
         """V4.5: 每日拼音自动名映射 — Pinnacle API拉选手名单→拼音匹配BB中文名."""
+        # 2026-09-23: Pin guest API 已彻底停用(切三锚 pinnapi), 队名映射数据源停用
+        from config.settings import PIN_POLLING_PAUSED
+        if PIN_POLLING_PAUSED:
+            logger.info("[name_mapping] Pin 已停用, 跳过队名映射")
+            return
         import json as _json, re, logging
         _log = logging.getLogger(__name__)
         try:
@@ -1185,13 +1190,17 @@ class PipelineOrchestrator:
         except Exception as e:
             issues_found.append(f"指纹DB异常: {e}")
 
-        # 4) API 连通性检查
-        try:
-            from src.scrapers.pinnacle_api import check_pinnacle_connectivity
-            if not check_pinnacle_connectivity(verbose=False):
-                issues_found.append("Pinnacle API 不可达")
-        except Exception as e:
-            issues_found.append(f"Pinnacle 连通性检查失败: {e}")
+        # 4) API 连通性检查 (2026-09-23: Pin guest API 停用, 跳过 Pinnacle 连通检查)
+        from config.settings import PIN_POLLING_PAUSED
+        if PIN_POLLING_PAUSED:
+            logger.info("[self_repair] Pin 已停用, 跳过 Pinnacle 连通检查")
+        else:
+            try:
+                from src.scrapers.pinnacle_api import check_pinnacle_connectivity
+                if not check_pinnacle_connectivity(verbose=False):
+                    issues_found.append("Pinnacle API 不可达")
+            except Exception as e:
+                issues_found.append(f"Pinnacle 连通性检查失败: {e}")
 
         try:
             from src.scrapers.bb_api_fetcher import _ensure_token
