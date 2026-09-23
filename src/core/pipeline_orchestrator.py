@@ -1405,7 +1405,10 @@ class PipelineOrchestrator:
         # 2) V5 分层增量扫描 — 临场60s/中程300s (Pinnacle变动驱动)
         # V5.4: 全量扫描成功+推送后才放行(降频防风控, 用户要求)
         # 全量扫描运行中跳过增量(上方已算 _full_scan_running), 防并发抢 Pin
-        if self._full_scan_ok and self._is_in_scan_window(now) and not _full_scan_running:
+        # 2026-09-23 修: full_scan 已暂停(Pin 暂停, 见 SCHEDULE 注释), 增量扫描已改 Betfair 直接匹配
+        # (不依赖 Pin/full_scan 的联赛结构)。原 _full_scan_ok 门会让 full_scan 暂停 → _full_scan_ok
+        # 永远 False → 增量扫描永远不跑 → 早盘对比文件 6 天不更新。去掉此门。
+        if self._is_in_scan_window(now) and not _full_scan_running:
             import random as _random
             _jitter = lambda base: base * (0.85 + _random.random() * 0.3)
 
