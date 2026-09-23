@@ -41,6 +41,10 @@ ODDS_API_IO_BOOKMAKERS = ('Sbobet', 'Betfair Exchange')  # 2026-09-18 定稿锚�
 PINNAPI_KEY = os.getenv('PINNAPI_KEY', '')  # Pinnacle 赔率(pinnapi.com, 实时sharp基准, 2026-09-23)
 PINNAPI_BASE = 'https://pinnapi.com'
 
+# BB体育登录账号(2026-09-24: token过期时自动重新登录用, 从Chrome密码管理器提取)
+BB_ACCOUNT = os.getenv('BB_ACCOUNT', '')
+BB_PASSWORD = os.getenv('BB_PASSWORD', '')
+
 
 def _is_placeholder_webhook(url: str) -> bool:
     lower = (url or '').lower()
