@@ -68,7 +68,14 @@ def get_persisted_changes(min_age=PERSIST_MIN_AGE):
 
 
 def wait_change(timeout=0.5):
-    """等待变动事件(最多 timeout 秒), 有变动立即返回(省 sleep 轮询延迟)。"""
+    """等待变动事件(最多 timeout 秒), 有变动立即返回(省 sleep 轮询延迟)。
+
+    2026-09-23 修: 之前 get_persisted_changes 每次都 _change_event.clear(), 导致原始变动一出现
+    就被清标志, wait_change 只能等满 timeout(0.5s)才靠队列非空返回 → BB 现拉延迟 0.5s(等于稳定期后)。
+    现在先查队列: 有原始变动(可能未稳定)立即返回, 让 trigger_fresh_bb_fetch 与 persistence 同步启动。
+    """
+    if _change_queue:
+        return True  # 已有原始变动, 立即返回(不等稳定期)
     _change_event.wait(timeout)
     return bool(_change_queue)
 
