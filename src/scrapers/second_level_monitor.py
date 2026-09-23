@@ -509,6 +509,7 @@ class SecondLevelMonitor:
         self._bet_notify_until = 0.0  # 钉钉下单通知节流(30min 内最多一条)
         self._token_remind_until = 0.0  # token 失效钉钉提醒节流(30min)
         self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
+        self._raw_ws_ts = 0.0  # 原始WS变动检测时刻(2026-09-23): 供推送「端到端耗时(WS触发→下单完成)」
         self._early_ws_ts = 0.0  # 早盘 WS 触发节流时间戳(2026-09-19)
         self._lev_fail_stats = {}  # LEV 复验失败原因计数(量化 close/价差/deleted 各占多少)
         self._lev_fail_log_ts = 0.0  # 失败统计落盘节流(300s 一次)
@@ -1612,7 +1613,8 @@ class SecondLevelMonitor:
     def _poll_live(self):
         """轮询 getList type=1 滚球赔率 + 匹配 Sbobet/Betfair 公平价 → 打信号/自动下单。返回机会数。"""
         from src.scrapers.pinnacle_live import fetch_live_opportunities_oa
-        opps = fetch_live_opportunities_oa(self.threshold)
+        # 2026-09-23: 传原始WS触发时刻, 供推送「端到端耗时(WS触发→下单完成)」
+        opps = fetch_live_opportunities_oa(self.threshold, poll_ts=self._raw_ws_ts or None)
         # 2026-09-20 按 EV 降序排序: 暴增时冷却只能下少数几单, 优先下高 EV 的(之前按 BB 返回任意顺序,
         # 可能下到低 EV 跳过高 EV)。diff(只观察)排最后, 不占冷却名额。
         opps.sort(key=lambda o: (o.get("sbo_direction") == "diff", -(o.get("ev", 0) or 0)))
@@ -1815,8 +1817,9 @@ class SecondLevelMonitor:
                 from src.scrapers.odds_ws import wait_change
                 _raw_changed = await asyncio.to_thread(wait_change, 0.5)
                 if _raw_changed:
-                    # 2026-09-22: 原始变动一出现就后台现拉 BB(只足球), 与 persistence 2s 稳定期并行。
+                    # 2026-09-22: 原始变动一出现就后台现拉 BB(只足球), 与 persistence 稳定期并行。
                     # 这样 BB 价取自"sharp 动那一刻", 且稳定确认时 BB 已拉好。
+                    self._raw_ws_ts = time.time()  # 记录原始WS触发时刻(2026-09-23 端到端耗时起点)
                     from src.scrapers.pinnacle_live import trigger_fresh_bb_fetch
                     trigger_fresh_bb_fetch()
             except Exception:
