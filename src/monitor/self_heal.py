@@ -398,27 +398,32 @@ def main():
     # 扫描心跳正常(跑完了但没产出) —— 传统"看心跳/进程"看门狗测不出的静默失效。
     # 主动修复: 空缓存/陈旧且 Pin 可达 → 重拉缓存(30min 冷却)。
     # 先清理卡死超时的 --pin-cache 孤儿进程(防累积 fd 耗尽, 2026-09-09 根因)
-    _kill_stale_pin_cache()
-    if PIN_CACHE.exists():
-        _cache_age = _file_age(PIN_CACHE)
-        try:
-            _cache_count = len(json.loads(PIN_CACHE.read_text()))
-        except Exception:
-            _cache_count = 0
-        _cache_stale_h = _cache_age is not None and _cache_age > 3600
-        if pin_ok and (_cache_count == 0 or _cache_stale_h):
-            _why = "空(0场)" if _cache_count == 0 else f"{_cache_count}场陈旧"
-            statuses.append(f"Pin 缓存: ⚠️ {_why} {(_cache_age or 0)/60:.0f}min 未更新")
-            if _cache_repair_allowed():
-                if _repopulate_pin_cache():
-                    fixes.append("Pin 缓存空/陈旧 → 已触发重拉缓存")
-                    _mark_cache_repair()
-        elif _cache_count == 0:
-            statuses.append("Pin 缓存: ⚠️ 空(0场), 但 Pin 不可达, 待恢复后重拉")
-        else:
-            statuses.append(f"Pin 缓存: ✅ {_cache_count}场 {(_cache_age or 0)/60:.0f}min 前更新")
+    # 2026-09-23: Pin guest API 已彻底停用(切三锚 pinnapi, 每天100次实时), 缓存检查+重拉也停用
+    from config.settings import PIN_POLLING_PAUSED
+    if PIN_POLLING_PAUSED:
+        statuses.append("Pin 缓存: ⏸️ 已停用(切三锚 pinnapi)")
     else:
-        statuses.append("Pin 缓存: ⚠️ 文件不存在")
+        _kill_stale_pin_cache()
+        if PIN_CACHE.exists():
+            _cache_age = _file_age(PIN_CACHE)
+            try:
+                _cache_count = len(json.loads(PIN_CACHE.read_text()))
+            except Exception:
+                _cache_count = 0
+            _cache_stale_h = _cache_age is not None and _cache_age > 3600
+            if pin_ok and (_cache_count == 0 or _cache_stale_h):
+                _why = "空(0场)" if _cache_count == 0 else f"{_cache_count}场陈旧"
+                statuses.append(f"Pin 缓存: ⚠️ {_why} {(_cache_age or 0)/60:.0f}min 未更新")
+                if _cache_repair_allowed():
+                    if _repopulate_pin_cache():
+                        fixes.append("Pin 缓存空/陈旧 → 已触发重拉缓存")
+                        _mark_cache_repair()
+            elif _cache_count == 0:
+                statuses.append("Pin 缓存: ⚠️ 空(0场), 但 Pin 不可达, 待恢复后重拉")
+            else:
+                statuses.append(f"Pin 缓存: ✅ {_cache_count}场 {(_cache_age or 0)/60:.0f}min 前更新")
+        else:
+            statuses.append("Pin 缓存: ⚠️ 文件不存在")
 
     # 4c) 有滚球比赛但没实盘投注(2026-09-20 自检: 监控活着但不下单的静默失效)
     _nb_ok, _nb_detail = check_no_bets()
