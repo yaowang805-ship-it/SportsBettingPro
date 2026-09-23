@@ -128,7 +128,7 @@ MANUAL_OBSERVE_BLOCK = {
     "football|1x2|平|3.0-5.0|live",   # 和局 3.0-5.0 edge -5.5pp(头号巨亏)
     "football|1x2|平|>5.0|live",      # 和局 >5.0 edge -2.2pp
     "football|ou|大|1.0-1.5|live",    # 大球 1.0-1.5 edge -2.3pp(72%<74%隐含, 假edge)
-    "football|ou|大|1.5-2.0|live",    # 大球 1.5-2.0 edge -2.7pp(59%<61%隐含, 假edge)
+    # 2026-09-23 用户要求释放: 大球1.5-2.0 数据驱动判据满足(LEV+3.38%+n742+ROI+0.7%), 从手动拦截移除(原"edge-2.7pp假edge"是旧赢率口径, 已被LEV口径取代)
     "football|ou|大|2.0-3.0|live",    # 大球 2.0-3.0 edge -3.8pp
     "football|ou|大|3.0-5.0|live",    # 大球 3.0-5.0 edge -13.4pp(17%胜率)
     "football|ou|小|1.5-2.0|live",    # 小球 1.5-2.0 edge -7.6pp(负格子)
