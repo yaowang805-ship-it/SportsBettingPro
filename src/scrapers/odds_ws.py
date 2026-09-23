@@ -63,20 +63,22 @@ def get_persisted_changes(min_age=PERSIST_MIN_AGE):
             else:
                 kept.append((eid, bookie, ts))
         _change_queue[:] = kept
-        _change_event.clear()
+        # 2026-09-23 修: 不在这里 _change_event.clear()(否则原始变动一出现就被清标志, wait_change
+        # 只能等满 timeout 才靠队列非空返回 → BB 现拉延迟 0.5s)。改成 wait_change 检测后自己清,
+        # 这样: 原始变动到达 → 事件已 set → wait_change 立即返回(触发 BB 现拉), 之后事件清掉再等 0.5s。
         return out
 
 
 def wait_change(timeout=0.5):
     """等待变动事件(最多 timeout 秒), 有变动立即返回(省 sleep 轮询延迟)。
 
-    2026-09-23 修: 之前 get_persisted_changes 每次都 _change_event.clear(), 导致原始变动一出现
-    就被清标志, wait_change 只能等满 timeout(0.5s)才靠队列非空返回 → BB 现拉延迟 0.5s(等于稳定期后)。
-    现在先查队列: 有原始变动(可能未稳定)立即返回, 让 trigger_fresh_bb_fetch 与 persistence 同步启动。
+    2026-09-23 修(两处): ① get_persisted_changes 不再清事件(见上); ② 这里检测到变动后自己清事件,
+    下次 wait 才等新变动。既让原始变动立即被感知(触发 BB 现拉与 persistence 同步), 又不空转——
+    事件清掉后 wait 0.5s 才返回, 不会 CPU 100%。
     """
-    if _change_queue:
-        return True  # 已有原始变动, 立即返回(不等稳定期)
-    _change_event.wait(timeout)
+    if not _change_queue:
+        _change_event.wait(timeout)
+    _change_event.clear()
     return bool(_change_queue)
 
 
