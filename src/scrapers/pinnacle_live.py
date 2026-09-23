@@ -653,9 +653,18 @@ def trigger_fresh_bb_fetch(sport_ids=(1,)):
     _threading.Thread(target=_do, daemon=True, name="bb-fresh").start()
 
 
-def get_bb_fresh_or_cached(max_age=5.0):
-    """WS 触发路径优先读"现拉"的足球 BB; 非足球从预取缓存补(非足球慢周期, 缓存够)。"""
+def get_bb_fresh_or_cached(max_age=5.0, wait_for_fresh=True):
+    """WS 触发路径优先读"现拉"的足球 BB; 非足球从预取缓存补(非足球慢周期, 缓存够)。
+
+    wait_for_fresh(2026-09-23): 若现拉 BB 还在进行中(getList 1.6s > persistence 0.5s), 等它完成
+    (最多 3s)再返回——否则 poll 在 persistence 0.5s 时触发, 现拉 BB 还没好, 只能退回陈旧缓存,
+    "同步拉 BB"白做。等现拉后 BB 价才是"sharp 动那一刻"的价。
+    """
     global _bb_fresh, _bb_fresh_ts
+    if wait_for_fresh:
+        _deadline = time.time() + 3.0
+        while _bb_fresh_busy and time.time() < _deadline:
+            time.sleep(0.05)
     with _bb_fresh_lock:
         _f = _bb_fresh if (_bb_fresh and time.time() - _bb_fresh_ts < max_age) else None
         _fts = _bb_fresh_ts
