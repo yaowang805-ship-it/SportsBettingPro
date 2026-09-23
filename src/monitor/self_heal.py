@@ -247,17 +247,28 @@ def check_no_bets():
     idle_min = (time.time() - last_bet) / 60 if last_bet > 0 else float('inf')
     if idle_min < 30:
         return True, f"{n_live}场滚球, 最近投注{idle_min:.0f}min前(正常)"
-    # 诊断原因
+    # 诊断: 区分「真 bug(该投没投)」vs「正常(数据驱动拦截假溢价不投)」。
+    # 2026-09-23 修误报: 之前只看「释放清单空」, 释放清单非空时也照告警「原因待查」, 把
+    # 「假溢价被赔率区间拦截、释放盘口无+EV机会」的正常情况误判成静默失效, 反复刷屏。
     reasons = []
+    # 1) 释放清单是否为空(空 = 无已释放盘口, 永远投不了 = 真 bug)
+    released = []
     try:
         rl = json.loads((DATA_DIR / "market_release.json").read_text())
         released = [x for x in rl.get("observe_released", []) if len(x) >= 5 and x[-1] == "live"]
-        if not released:
-            reasons.append("滚球释放清单为空(无已释放盘口)")
     except Exception:
         pass
-    detail = "; ".join(reasons) if reasons else "原因待查(可能只是无+EV机会)"
-    return False, f"⚠️ {n_live}场滚球但{idle_min:.0f}min没投注: {detail}"
+    if not released:
+        reasons.append("滚球释放清单为空(无已释放盘口)")
+    # 2) 监控是否在正常比价: second_level_monitor.log 每 2s 轮询 + 每 60s 结算, 持续写;
+    #    >5min 未更新 = 进程假死/崩溃 = 静默失效 = 真 bug
+    _mon_age = _file_age(LOGS_DIR / "second_level_monitor.log")
+    if _mon_age is None or _mon_age > 5 * 60:
+        reasons.append(f"监控日志{(0 if _mon_age is None else _mon_age)/60:.0f}min未更新(疑似静默失效)")
+    if reasons:
+        return False, f"⚠️ {n_live}场滚球但{idle_min:.0f}min没投注: {'; '.join(reasons)}"
+    # 释放清单非空 + 监控在比价 = 只是当前无释放盘口的+EV机会(假溢价被数据驱动拦截), 正常
+    return True, f"{n_live}场滚球, {idle_min:.0f}min没投(释放盘口无+EV机会, 正常)"
 
 
 def check_gubbing():
