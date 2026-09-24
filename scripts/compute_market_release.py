@@ -114,13 +114,13 @@ MANUAL_OBSERVE_RELEASE = {
     # 漂出来的假溢价(今日实盘小球[2.0-2.3) 45注-31%ROI坐实)。撤销后交还数据驱动判据
     # (CLV>2%+n>200+赢率>隐含3pp), 待深挖补「Betfair流动性门槛」后再由判据自动决定是否释放。
     # 大球 1.0-2.0 的"正盈亏"是注额加权假象(edge 实为 -2.3pp/-2.7pp), 放 BLOCK 拦截。
-    "football|hc|主|*|live": 300,   # 2026-09-21 用户提额: 每单封顶 150→300
-    "football|hc|客|*|live": 300,   # 2026-09-21 用户提额: 每单封顶 150→300
-    # 2026-09-24 用户要求直接释放: 篮球独赢/棒球独赢 观察库 CLV+ROI 双正(篮主+54.9%/篮客+83.3%/棒客+51.4%),
-    # 样本少(25/11/18)但 edge 方向明确, 先 cap 150 试探攒实盘样本。棒球主胜 ROI-37.9% 负不释放。
+    # 2026-09-24 撤让球主/客: 观察库数据负(主-3.1%/客-5.3%)+CLV逆向(客-17%~-31%), 交还数据驱动判据。
+    # 2026-09-24 用户要求直接释放: 篮球独赢/棒球独赢 CLV+ROI 双正(篮主+54.9%/篮客+83.3%/棒客+51.4%),
+    # 样本少(25/11/18)但 edge 方向明确, cap 150 试探。棒球主胜 ROI-37.9% 负不释放。
     "basketball|1x2|主|*|live": 150,
     "basketball|1x2|客|*|live": 150,
     "baseball|1x2|客|*|live": 150,
+    "football|ou|大|1.0-1.5|live": 150,  # 2026-09-24 大球1.0-1.5 观察库+1.8%正, 从BLOCK移到RELEASE
 }
 
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
@@ -132,7 +132,7 @@ MANUAL_OBSERVE_BLOCK = {
     "football|1x2|客|>5.0|live",      # 客胜 >5.0 edge -2.2pp(8%胜率)
     "football|1x2|平|3.0-5.0|live",   # 和局 3.0-5.0 edge -5.5pp(头号巨亏)
     "football|1x2|平|>5.0|live",      # 和局 >5.0 edge -2.2pp
-    "football|ou|大|1.0-1.5|live",    # 大球 1.0-1.5 edge -2.3pp(72%<74%隐含, 假edge)
+    # 2026-09-24 大球1.0-1.5 观察库+1.8%正, 移到 RELEASE(原"edge-2.3pp假edge"是旧赢率口径, 已被LEV口径取代)
     # 2026-09-23 用户要求释放: 大球1.5-2.0 数据驱动判据满足(LEV+3.38%+n742+ROI+0.7%), 从手动拦截移除(原"edge-2.7pp假edge"是旧赢率口径, 已被LEV口径取代)
     "football|ou|大|2.0-3.0|live",    # 大球 2.0-3.0 edge -3.8pp
     "football|ou|大|3.0-5.0|live",    # 大球 3.0-5.0 edge -13.4pp(17%胜率)
@@ -838,7 +838,9 @@ def main():
     _manual_dirs = set()
     for _mkey in MANUAL_OBSERVE_RELEASE:
         _p = _mkey.split("|")
-        _manual_dirs.add((_p[0], _p[1], _p[2]))  # (sport, sub_market, direction)
+        # 2026-09-24 修bug: 只有全区间(*)才方向级跳过; 具体区间(如1.0-1.5)不该让同方向其他区间被跳过
+        if _p[3] == "*":
+            _manual_dirs.add((_p[0], _p[1], _p[2]))  # (sport, sub_market, direction)
     for (sport, sm, dr, interval), (med, n) in sorted(live_clv.items()):
         if (sport, sm, dr) in _manual_dirs:
             continue  # 已验证方向, 数据驱动不拦(用户显式开放, 全区间)
