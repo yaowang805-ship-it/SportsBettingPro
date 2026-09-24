@@ -1765,17 +1765,16 @@ class SecondLevelMonitor:
             _ws_mkts = ("ML", "Spread", "Totals", "Double Chance", "Both Teams To Score")
             # 2026-09-20 加 Double Chance/BTTS: dc/btts 之前不在 WS 缓存, 全走 REST 兜底(公平价匹配10-17s
             # + 费5000/小时限额), 加进 WS 订阅后走缓存 0ms。
-            # 2026-09-24 精简: 从 11 运动减到 6 个(足/篮/网/棒/排/乒乓), 去掉 5 个几乎无滚球场次的
-            #   (美足/冰球/MMA/拳击/羽毛球)。6 个运动单连接(<10)够用, 拆 4+2 两条。
+            # 2026-09-24 恢复全量: 收集应全量运动, 恢复 11 运动订阅(拆 6+5 两条, 单连接≤10)。
             self._odds_ws = OddsWSClient(
-                sport="football,basketball,tennis,baseball",
+                sport="football,basketball,tennis,american-football,baseball,ice-hockey",
                 markets=_ws_mkts)
             self._odds_ws.start()
             self._odds_ws2 = OddsWSClient(
-                sport="volleyball,table-tennis",
+                sport="volleyball,table-tennis,mixed-martial-arts,boxing,badminton",
                 markets=_ws_mkts)
             self._odds_ws2.start()
-            print("[slm] 已启动 odds-api.io WebSocket 实时赔率订阅(6运动 live+prematch, ML/Spread/Totals/DC/BTTS, 拆4+2两条连接)", flush=True)
+            print("[slm] 已启动 odds-api.io WebSocket 实时赔率订阅(11运动 live+prematch, ML/Spread/Totals/DC/BTTS, 拆6+5两条连接)", flush=True)
         except Exception as e:
             self._odds_ws = None
             print(f"[slm] WebSocket 订阅启动失败(回退 REST 轮询): {type(e).__name__} {str(e)[:80]}", flush=True)

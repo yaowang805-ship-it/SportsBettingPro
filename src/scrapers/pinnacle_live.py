@@ -320,12 +320,11 @@ def _load_cn_names():
     return _CN_NAME_CACHE["data"]
 
 
-def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 13, 15), platform="BB"):
+def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6, 2, 13, 15, 18, 19, 47), platform="BB"):
     """BB/FB 滚球比赛。EN 拉英文队名(直配 Pin) + 提取盘口; CMN 拉中文队名/联赛名(展示用)。
 
-    2026-09-24 精简: 从 11 运动减到 6 个(足/篮/网/棒/排/乒乓), 去掉 5 个当前几乎无滚球场次的
-    (美足6/冰球2/MMA18/拳击19/羽毛球47)——它们 getList 白请求空结果、纯耗请求量、观察库也
-    没样本。剩下的 6 个是实际有滚球场次 + 有观察库样本的运动。
+    2026-09-24 恢复全量: 收集(观察库)应全量运动——只要 BB+Betfair 都覆盖就收, 不分当前有无场次。
+    假死根因已修(连接池50+硬超时), 不必因请求量精简。11 运动: 足/篮/网/棒/美足/冰球/排/乒乓/MMA/拳击/羽毛球。
 
     platform="BB" 用 BB 域名, "FB" 用 FB 域名(api.5c4r3.com)。两者同一账户 user-token,
     但 match_id 各自独立(FB 的比赛要用 FB 域名 getMatchDetail 结算)。
