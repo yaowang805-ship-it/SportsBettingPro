@@ -679,13 +679,14 @@ _nonfb_poll_counter = 0  # 非足球降频计数器(2026-09-22): 非足球不需
 NONFB_EVERY = 15  # 非足球公平价匹配频率: 每 15 轮(≈30s)才匹配一次非足球, 省公平价匹配任务数
 
 
-def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None):
+def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
     """滚球机会: BB live + Sbobet/Betfair 公平价(替代 Pin, 2026-09-18)。
 
     公平价来源从 Pin(15分钟旧) 换成 odds-api.io 的 Betfair 中间价(实时, 加流动性门槛)
     + Sbobet 置信度。返回 opp 结构对齐 fetch_live_opportunities, 供 _opp_to_sig 直接复用。
     只处理主流盘口 1x2/hc/ou(带线匹配), 特殊盘口不走实盘。
     poll_ts(2026-09-23): 原始WS触发时刻, 供推送「端到端耗时(WS触发→下单完成)」; 缺省用本轮 poll 开始时间。
+    platform(2026-09-24): "BB"(默认, 用BB缓存) | "FB"(FB观察库, 现拉FB比赛, 公平价同Betfair)。
     """
     from src.scrapers.odds_api_io import fair_price_bb
     from concurrent.futures import ThreadPoolExecutor
@@ -696,7 +697,12 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None):
     _poll_ts = poll_ts if poll_ts else _t0
     # 2026-09-22 读"现拉优先"的 BB: WS 触发路径用 trigger_fresh_bb_fetch 现拉的足球价(persistence并行),
     # 非足球从预取缓存补。_bb_ts 用现拉时间戳(供快照单新鲜度判断)。
-    bb, _bb_ts = get_bb_fresh_or_cached()
+    # 2026-09-24 FB 观察库: 现拉 FB 比赛(不用 BB 缓存), 公平价同样走 Betfair 中间价。
+    if platform == "FB":
+        bb, _bb_ts = fetch_bb_live_matches(platform="FB")
+        _bb_ts = time.time()
+    else:
+        bb, _bb_ts = get_bb_fresh_or_cached()
 
     # 收集任务(比赛×盘口)。非足球降频(2026-09-22): 非足球只每 15 轮匹配一次, 省公平价匹配任务,
     # 防 9.5s 尖峰挤占足球让球快照单(≤6s)新鲜度。非足球只收纸单攒数据, 不需要秒级。

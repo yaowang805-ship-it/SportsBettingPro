@@ -171,11 +171,11 @@ def _settle_bet(b):
 
 def collect_once(threshold=3.0, stake=100):
     """拉一轮 FB +EV 机会, 入库(去重) + 结算。返回 (新增数, 结算数)。"""
-    from src.scrapers.pinnacle_live import fetch_live_opportunities, fetch_bb_live_matches
+    from src.scrapers.pinnacle_live import fetch_live_opportunities_oa, fetch_bb_live_matches
 
-    # 1. FB +EV 机会 + FB live 比分(bsc)。use_file_cache=True: 复用 BB 进程已写入的
-    #    Pin 公平价文件, 不重复拉 Pin markets(避免 FB 每 60s 加 Pin 负载/带宽争抢)。
-    opps = fetch_live_opportunities(threshold=threshold, platform="FB", use_file_cache=True)
+    # 1. FB +EV 机会 + FB live 比分(bsc)。2026-09-24: 旧 Pin 15min缓存已停用,
+    #    改用 Betfair 公平价(fetch_live_opportunities_oa, 与 BB 主流程同锚, 不再拉旧Pin)。
+    opps = fetch_live_opportunities_oa(threshold=threshold, platform="FB")
     fb_matches = fetch_bb_live_matches(platform="FB")
 
     data = _load()
