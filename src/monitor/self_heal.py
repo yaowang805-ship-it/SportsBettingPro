@@ -239,7 +239,7 @@ def _count_recent_ev():
 def check_no_bets():
     """自检(2026-09-20): 有滚球比赛但长时间没实盘投注 → 诊断原因。
 
-    2026-09-24 用户要求: 超过 1 小时(60min)没实盘投注就推送原因(比赛少/有多少EV但不符合规则),
+    2026-09-24 用户要求: 超过 2 小时(120min)没实盘投注就推送原因(比赛少/有多少EV但不符合规则),
     不再静默。这是用户关心的核心业务指标, 与「看门狗其他小问题静默」不冲突。
     """
     try:
@@ -259,9 +259,9 @@ def check_no_bets():
         except (OSError, ValueError):
             pass
     idle_min = (time.time() - last_bet) / 60 if last_bet > 0 else float('inf')
-    if idle_min < 60:
+    if idle_min < 120:
         return True, f"{n_live}场滚球, 最近投注{idle_min:.0f}min前(正常)"
-    # 超过 60min → 诊断原因 + 推送
+    # 超过 120min(2小时) → 诊断原因 + 推送
     reasons = []
     # 1) 释放清单
     released = []
@@ -452,7 +452,7 @@ def main():
     if not _nb_ok:
         _msg = f"滚球投注异常: {_nb_detail}"
         fixes.append(_msg)
-        # 2026-09-24 用户要求: 超过1小时没投注都要推送原因(比赛少/有EV但被拦), 与看门狗其他小问题静默不冲突
+        # 2026-09-24 用户要求: 超过2小时没投注都要推送原因(比赛少/有EV但被拦), 与看门狗其他小问题静默不冲突
         critical.append(_msg)
 
     # 4d) gubbing 限注监控(2026-09-21: 下单被拒率飙升是软书限注前兆)
