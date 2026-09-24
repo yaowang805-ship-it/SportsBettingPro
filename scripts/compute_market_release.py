@@ -120,7 +120,6 @@ MANUAL_OBSERVE_RELEASE = {
     "basketball|1x2|主|*|live": 150,
     "basketball|1x2|客|*|live": 150,
     "baseball|1x2|客|*|live": 150,
-    "football|ou|大|1.0-1.5|live": 150,  # 2026-09-24 大球1.0-1.5 观察库+1.8%正, 从BLOCK移到RELEASE
 }
 
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
@@ -132,7 +131,7 @@ MANUAL_OBSERVE_BLOCK = {
     "football|1x2|客|>5.0|live",      # 客胜 >5.0 edge -2.2pp(8%胜率)
     "football|1x2|平|3.0-5.0|live",   # 和局 3.0-5.0 edge -5.5pp(头号巨亏)
     "football|1x2|平|>5.0|live",      # 和局 >5.0 edge -2.2pp
-    # 2026-09-24 大球1.0-1.5 观察库+1.8%正, 移到 RELEASE(原"edge-2.3pp假edge"是旧赢率口径, 已被LEV口径取代)
+    "football|ou|大|1.0-1.5|live",    # 大球1.0-1.5 Betfair口径ROI-21.1%负(混合口径+1.8%是旧Pin污染), 拦截
     # 2026-09-23 用户要求释放: 大球1.5-2.0 数据驱动判据满足(LEV+3.38%+n742+ROI+0.7%), 从手动拦截移除(原"edge-2.7pp假edge"是旧赢率口径, 已被LEV口径取代)
     "football|ou|大|2.0-3.0|live",    # 大球 2.0-3.0 edge -3.8pp
     "football|ou|大|3.0-5.0|live",    # 大球 3.0-5.0 edge -13.4pp(17%胜率)
