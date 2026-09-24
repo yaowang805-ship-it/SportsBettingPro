@@ -61,9 +61,15 @@ _SPORT_ID_TO_SLUG = {
 }
 
 
+_ODDS_BACKOFF_UNTIL = 0.0  # 2026-09-24 限流退避: 429 后退避到此时刻, 期间不拉(防触发更多限流)
+
+
 def _get(path, params=None, timeout=15):
     """REST GET, 带 apiKey。失败返回 None。"""
+    global _ODDS_BACKOFF_UNTIL
     if not ODDS_API_IO_KEY:
+        return None
+    if time.time() < _ODDS_BACKOFF_UNTIL:  # 退避期内, 不拉(省额度/防触发更多限流)
         return None
     p = {"apiKey": ODDS_API_IO_KEY}
     if params:
@@ -72,6 +78,8 @@ def _get(path, params=None, timeout=15):
         r = _ODDS_SESSION.get(f"{ODDS_API_IO_BASE}{path}", params=p, timeout=timeout)
         if r.status_code == 200:
             return r.json()
+        if r.status_code == 429:  # 限流(5000/小时超了): 退避 60s, 别一直拉
+            _ODDS_BACKOFF_UNTIL = time.time() + 60
     except Exception:
         pass
     return None
