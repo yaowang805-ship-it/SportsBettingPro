@@ -36,6 +36,8 @@ COMPARISON_FILE = ROOT / "data" / "storage" / "bb_vs_pinnacle_comparison.json"
 KELLY_FRACTION = 0.5   # 半凯利
 MAX_STAKE = 300        # 单盘口上限(2026-09-19 用户提额: 滚球单注≤300, 原150)
 
+_POLL_EXECUTOR = None  # 2026-09-24 防假死: 比价拉取线程池(lazy初始化, max_workers=2), 90s超时
+
 # 2026-09-19 用户选B: 滚球本金 = 固定本金基准(初始¥20000), 不随当前余额逐笔缩水。
 # 之前「余额×30%」是顺周期陷阱(余额降→bankroll降→注额缩到30/60), 改用固定基准
 # 恢复 8 月 bankroll 2万时代(注额能到~400)。基准值存 bankroll_base.txt, 用户可手动改。
@@ -1613,8 +1615,24 @@ class SecondLevelMonitor:
     def _poll_live(self):
         """轮询 getList type=1 滚球赔率 + 匹配 Sbobet/Betfair 公平价 → 打信号/自动下单。返回机会数。"""
         from src.scrapers.pinnacle_live import fetch_live_opportunities_oa
+        from concurrent.futures import TimeoutError as _FutureTimeout
+        global _POLL_EXECUTOR
+        if _POLL_EXECUTOR is None:
+            from concurrent.futures import ThreadPoolExecutor as _TPE
+            _POLL_EXECUTOR = _TPE(max_workers=2)
         # 2026-09-23: 传原始WS触发时刻, 供推送「端到端耗时(WS触发→下单完成)」
-        opps = fetch_live_opportunities_oa(self.threshold, poll_ts=self._raw_ws_ts or None)
+        # 2026-09-24 防假死: 比价拉取放线程池+90s超时, 卡住(readline读响应)时主循环不阻塞。
+        # 下单(_try_live_auto_bet)仍在主线程, 不受超时影响, 不影响新机会产生(正常2s内返回)。
+        opps = []
+        try:
+            _fut = _POLL_EXECUTOR.submit(
+                fetch_live_opportunities_oa, self.threshold, poll_ts=self._raw_ws_ts or None)
+            opps = _fut.result(timeout=90)
+        except _FutureTimeout:
+            print("[slm] ⚠️ 比价拉取超时(>90s), 本轮跳过(防假死)", flush=True)
+            return 0
+        except Exception:
+            opps = []
         # 2026-09-20 按 EV 降序排序: 暴增时冷却只能下少数几单, 优先下高 EV 的(之前按 BB 返回任意顺序,
         # 可能下到低 EV 跳过高 EV)。diff(只观察)排最后, 不占冷却名额。
         opps.sort(key=lambda o: (o.get("sbo_direction") == "diff", -(o.get("ev", 0) or 0)))
