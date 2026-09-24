@@ -1818,12 +1818,24 @@ class SecondLevelMonitor:
                     if time.time() - last_settle >= 60:
                         last_settle = time.time()
                         _t_settle0 = time.time()
-                        self._settle_paper_bets()
+                        # 2026-09-24 防假死: 结算放线程池+60s超时, 卡住(readline读响应)时主循环不阻塞
+                        try:
+                            await asyncio.wait_for(asyncio.to_thread(self._settle_paper_bets), timeout=60)
+                        except asyncio.TimeoutError:
+                            print("[slm] ⚠️ 结算超时(>60s)强制跳过(防假死)", flush=True)
+                        except Exception:
+                            pass
                         if time.time() - _t_settle0 > 60:
                             print(f"[slm] ⚠️ 结算耗时 {time.time()-_t_settle0:.0f}s(>60s)", flush=True)
                     if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
                         self._check_settled()
-                    self._check_clv()  # 每次轮询(2s)查 CLV(3s窗口); 有 ready 才发 Pin 请求, 请求率=下注率
+                    # 每次轮询(2s)查 CLV(3s窗口)。2026-09-24 防假死加30s超时
+                    try:
+                        await asyncio.wait_for(asyncio.to_thread(self._check_clv), timeout=30)
+                    except asyncio.TimeoutError:
+                        print("[slm] ⚠️ CLV复验超时(>30s)强制跳过(防假死)", flush=True)
+                    except Exception:
+                        pass
                     # 2026-09-24 每轮耗时监控: 定位假死根因(哪一步慢/卡), poll/settle 分阶段打点
                     _t_round = time.time() - _t_round0
                     if _t_round > 60:
@@ -1833,8 +1845,11 @@ class SecondLevelMonitor:
             # 早盘 WS 触发(独立节流)
             if _ws_changed and now - self._early_ws_ts >= 3.0:
                 self._early_ws_ts = now
+                # 2026-09-24 防假死加30s超时
                 try:
-                    self._consume_early_ws_changes(_changes)
+                    await asyncio.wait_for(asyncio.to_thread(self._consume_early_ws_changes, _changes), timeout=30)
+                except asyncio.TimeoutError:
+                    print("[slm] ⚠️ 早盘WS触发超时(>30s)强制跳过(防假死)", flush=True)
                 except Exception as e:
                     print(f"[slm] 早盘WS触发异常: {type(e).__name__} {str(e)[:80]}", flush=True)
             # 2026-09-19 事件驱动: WS 变动立即唤醒(省 sleep 0.5s 轮询延迟), 否则等 0.5s
