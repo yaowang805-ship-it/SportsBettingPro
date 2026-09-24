@@ -461,16 +461,15 @@ def main():
     if _clear_stale_lock():
         fixes.append("清除陈旧锁文件 .pipeline_daemon.lock")
 
-    # 报告: 2026-09-24 只有重大故障(critical=整个投注系统停摆)才推钉钉;
-    # 小问题(增量扫描停滞/Pin断连/gubbing疑似/锁文件等)只写日志不打扰用户。
+    # 报告: 2026-09-24 用户要求彻底暂停自愈看门狗推送。只写日志, 不推钉钉。
+    # (实盘投注/一小时结算清单 由 second_level_monitor 独立推送, 不经此看门狗)
     if fixes:
-        if not critical:
-            print("自愈检查(仅有小问题, 不推送):")
-            for s in statuses:
-                print(" ", s)
-            for f in fixes:
-                print("  [非重大]", f)
-            return
+        print("自愈检查(已彻底暂停推送, 仅记录日志):")
+        for s in statuses:
+            print(" ", s)
+        for f in fixes:
+            print("  [修复]", f)
+        return  # 彻底暂停推送: 直接返回, 不推钉钉
         # 推送冷却(2026-09-15): urgent=True 绕过标题冷却, 长故障期间每 10min 推一次刷屏。
         # 加独立冷却: 30min 内同类报告只推一次(用户反馈"看门狗总是钉钉推送")。
         _now = time.time()
