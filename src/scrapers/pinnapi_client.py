@@ -31,8 +31,9 @@ BB_TO_PIN = {
 }
 PIN_TO_BB = {v: k for k, v in BB_TO_PIN.items()}
 
-# 免费档缓存: 15min TTL, 省 100/天额度(早盘赔率小时级变, 15min 够; 滚球实时另说)
-_PIN_TTL = 900
+# 2026-09-24 去掉 15min 缓存: 用户要求 Pinnacle 数据实时(旧数据没用), 下月切实时WS。
+# 免费 100/天额度下每次拉最新的(无缓存), 超限由 429 退避兜底(见 odds_api_io)。
+_PIN_TTL = 0
 _pin_cache = {}  # {(sport_id, event_type): (ts, data)}
 
 

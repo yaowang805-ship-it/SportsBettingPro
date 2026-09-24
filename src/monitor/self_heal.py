@@ -327,7 +327,7 @@ def recover_pin():
 
 def main():
     fixes = []
-    critical = []  # 2026-09-24 重大故障(整个投注系统停摆)才推钉钉; 小问题只写日志不打扰用户
+    critical = []  # 2026-09-24 只推「2小时没投注原因」(check_no_bets); 其他自愈检查(守护/扫描/Pin/gubbing/锁)一律不推
     statuses = []
 
     # 1) 守护进程 + 心跳
@@ -336,19 +336,15 @@ def main():
     if pid is None:
         statuses.append(f"守护进程: ❌ 未运行")
         if _kickstart_daemon():
-            _msg = "守护进程未运行 → 已 kickstart 重启"
-            fixes.append(_msg); critical.append(_msg)
+            fixes.append("守护进程未运行 → 已 kickstart 重启")
         else:
-            _msg = "守护进程未运行 → kickstart 失败"
-            fixes.append(_msg); critical.append(_msg)
+            fixes.append("守护进程未运行 → kickstart 失败")
     elif hb_age is not None and hb_age > CHECK_INTERVAL:
         statuses.append(f"守护进程: ⚠️ 心跳 {hb_age/60:.0f}min 未更新(卡死)")
         if _kickstart_daemon():
-            _msg = f"守护进程卡死(心跳 {hb_age/60:.0f}min) → 已 kickstart 重启"
-            fixes.append(_msg); critical.append(_msg)
+            fixes.append(f"守护进程卡死(心跳 {hb_age/60:.0f}min) → 已 kickstart 重启")
         else:
-            _msg = "守护进程卡死 → kickstart 失败"
-            fixes.append(_msg); critical.append(_msg)
+            fixes.append("守护进程卡死 → kickstart 失败")
     else:
         statuses.append(f"守护进程: ✅ PID {pid} 心跳 {hb_age/60:.1f}min" if hb_age is not None else f"守护进程: ✅ PID {pid}(心跳文件未生成)")
 
