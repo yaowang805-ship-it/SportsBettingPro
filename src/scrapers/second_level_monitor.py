@@ -1831,6 +1831,11 @@ class SecondLevelMonitor:
                     self._raw_ws_ts = time.time()  # 记录原始WS触发时刻(2026-09-23 端到端耗时起点)
                     from src.scrapers.pinnacle_live import trigger_fresh_bb_fetch
                     trigger_fresh_bb_fetch()
+                    # 2026-09-24 空转保护: WS 变动频繁时 wait_change 立即返回, 主循环快速空转烧 CPU(实测93%)。
+                    # 补 sleep 0.5s 等变动稳定(与 PERSIST_MIN_AGE=0.5 对齐) —— poll 本就依赖 0.5s 稳定期,
+                    # 所以 sleep 对 poll 时机零延迟, 只消除「未稳定期间的快速空转」。有持续变动时下一轮
+                    # wait_change 会被新事件立即唤醒, 不漏任何变动。
+                    await asyncio.sleep(0.5)
             except Exception:
                 await asyncio.sleep(0.5)
 
