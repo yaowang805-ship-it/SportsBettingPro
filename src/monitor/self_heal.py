@@ -450,8 +450,16 @@ def main():
     if _clear_stale_lock():
         fixes.append("清除陈旧锁文件 .pipeline_daemon.lock")
 
-    # 报告
+    # 报告: 2026-09-24 只有重大故障(critical=整个投注系统停摆)才推钉钉;
+    # 小问题(增量扫描停滞/Pin断连/gubbing疑似/锁文件等)只写日志不打扰用户。
     if fixes:
+        if not critical:
+            print("自愈检查(仅有小问题, 不推送):")
+            for s in statuses:
+                print(" ", s)
+            for f in fixes:
+                print("  [非重大]", f)
+            return
         # 推送冷却(2026-09-15): urgent=True 绕过标题冷却, 长故障期间每 10min 推一次刷屏。
         # 加独立冷却: 30min 内同类报告只推一次(用户反馈"看门狗总是钉钉推送")。
         _now = time.time()
@@ -465,7 +473,7 @@ def main():
             print(f"修复报告冷却中(距上次 {(_now - _last_push) / 60:.0f}min), 跳过推送:")
             for s in statuses:
                 print(" ", s)
-            for f in fixes:
+            for f in critical:
                 print("  ✅", f)
             return
         # 统一走 config.settings 入口: 自动注入机器人关键词(缺了会被服务端以 errcode
@@ -474,7 +482,7 @@ def main():
         from config.settings import send_dingtalk
         body = "## 🔧 自愈看门狗修复报告\n\n"
         body += "**检查结果**:\n" + "\n".join(f"- {s}" for s in statuses) + "\n\n"
-        body += "**自动修复**:\n" + "\n".join(f"- {f}" for f in fixes)
+        body += "**自动修复**:\n" + "\n".join(f"- {f}" for f in critical)
         # 必须校验返回值: 原先无论成败都打印"已发送", 于是关键词被拒收(errcode 310000)
         # 数月无人察觉 —— 告警自身的失败也必须可见, 否则看门狗哑了都不知道。
         try:
