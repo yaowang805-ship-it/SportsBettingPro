@@ -220,13 +220,27 @@ def check_pin():
     return False, "返回空"
 
 
-def check_no_bets():
-    """自检(2026-09-20): 有滚球比赛但长时间没实盘投注 → 诊断是「真 bug」还是「正常无机会」。
+def _count_recent_ev():
+    """从 second_level_monitor.log 尾部统计最近的 +EV 机会数和被拦截数(供 check_no_bets 诊断原因)。"""
+    try:
+        log = LOGS_DIR / "second_level_monitor.log"
+        with open(log, 'rb') as f:
+            f.seek(0, 2)
+            size = f.tell()
+            f.seek(max(0, size - 200 * 1024))  # 读最后 ~200KB(约最近几分钟)
+            tail = f.read().decode('utf-8', errors='replace')
+        ev_n = tail.count("⚡滚球+EV")
+        blocked_n = tail.count("🚫")
+        return ev_n, blocked_n
+    except Exception:
+        return 0, 0
 
-    阈值: 有 live 比赛但 >30min 没投注 → 深入诊断(不直接告警)。这是传统「看进程/心跳」看门狗
-    测不出的静默失效(监控活着、扫描在跑、但就是不下单), 用户要求主动发现。
-    2026-09-23 修误报: 只在「释放清单空」或「监控日志>5min未更新(静默失效)」时告警;
-    释放清单非空 + 监控在比价 = 只是当前无释放盘口的+EV机会(假溢价被数据驱动拦截), 正常不告警。
+
+def check_no_bets():
+    """自检(2026-09-20): 有滚球比赛但长时间没实盘投注 → 诊断原因。
+
+    2026-09-24 用户要求: 超过 1 小时(60min)没实盘投注就推送原因(比赛少/有多少EV但不符合规则),
+    不再静默。这是用户关心的核心业务指标, 与「看门狗其他小问题静默」不冲突。
     """
     try:
         from src.scrapers.pinnacle_live import fetch_bb_live_matches
@@ -245,13 +259,11 @@ def check_no_bets():
         except (OSError, ValueError):
             pass
     idle_min = (time.time() - last_bet) / 60 if last_bet > 0 else float('inf')
-    if idle_min < 30:
+    if idle_min < 60:
         return True, f"{n_live}场滚球, 最近投注{idle_min:.0f}min前(正常)"
-    # 诊断: 区分「真 bug(该投没投)」vs「正常(数据驱动拦截假溢价不投)」。
-    # 2026-09-23 修误报: 之前只看「释放清单空」, 释放清单非空时也照告警「原因待查」, 把
-    # 「假溢价被赔率区间拦截、释放盘口无+EV机会」的正常情况误判成静默失效, 反复刷屏。
+    # 超过 60min → 诊断原因 + 推送
     reasons = []
-    # 1) 释放清单是否为空(空 = 无已释放盘口, 永远投不了 = 真 bug)
+    # 1) 释放清单
     released = []
     try:
         rl = json.loads((DATA_DIR / "market_release.json").read_text())
@@ -259,16 +271,20 @@ def check_no_bets():
     except Exception:
         pass
     if not released:
-        reasons.append("滚球释放清单为空(无已释放盘口)")
-    # 2) 监控是否在正常比价: second_level_monitor.log 每 2s 轮询 + 每 60s 结算, 持续写;
-    #    >5min 未更新 = 进程假死/崩溃 = 静默失效 = 真 bug
+        reasons.append("释放清单为空(无已释放盘口)")
+    else:
+        reasons.append("已释放盘口无符合+EV的机会")
+    # 2) 监控是否在正常比价(>5min 未更新 = 假死)
     _mon_age = _file_age(LOGS_DIR / "second_level_monitor.log")
     if _mon_age is None or _mon_age > 5 * 60:
-        reasons.append(f"监控日志{(0 if _mon_age is None else _mon_age)/60:.0f}min未更新(疑似静默失效)")
-    if reasons:
-        return False, f"⚠️ {n_live}场滚球但{idle_min:.0f}min没投注: {'; '.join(reasons)}"
-    # 释放清单非空 + 监控在比价 = 只是当前无释放盘口的+EV机会(假溢价被数据驱动拦截), 正常
-    return True, f"{n_live}场滚球, {idle_min:.0f}min没投(释放盘口无+EV机会, 正常)"
+        reasons.append(f"监控日志{(0 if _mon_age is None else _mon_age)/60:.0f}min未更新(疑似假死)")
+    # 3) +EV 机会统计(比赛少/有EV但被拦)
+    _ev_n, _blocked_n = _count_recent_ev()
+    if _ev_n > 0:
+        reasons.append(f"最近有{_ev_n}个+EV机会但{_blocked_n}个被拦(赔率区间/盘口规则不符)")
+    else:
+        reasons.append("最近无+EV机会(比赛少或无溢价)")
+    return False, f"⚠️ {n_live}场滚球但{idle_min:.0f}min没投注: {'; '.join(reasons)}"
 
 
 def check_gubbing():
@@ -436,9 +452,8 @@ def main():
     if not _nb_ok:
         _msg = f"滚球投注异常: {_nb_detail}"
         fixes.append(_msg)
-        # 监控假死 = 滚球投注停摆(重大, 推钉钉); 释放清单空 = 配置问题(小, 只写日志)
-        if "静默失效" in _nb_detail:
-            critical.append(_msg)
+        # 2026-09-24 用户要求: 超过1小时没投注都要推送原因(比赛少/有EV但被拦), 与看门狗其他小问题静默不冲突
+        critical.append(_msg)
 
     # 4d) gubbing 限注监控(2026-09-21: 下单被拒率飙升是软书限注前兆)
     _gb_ok, _gb_detail = check_gubbing()
