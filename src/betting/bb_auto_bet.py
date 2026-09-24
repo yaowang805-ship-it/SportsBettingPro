@@ -382,6 +382,10 @@ def _session():
     s = requests.Session()
     s.trust_env = False
     s.proxies = {"http": "", "https": ""}
+    # 2026-09-24 增大连接池(同 bb_api_fetcher): 避免并发请求时连接反复重建+TLS握手阻塞
+    from requests.adapters import HTTPAdapter as _HTTPAdapter
+    s.mount("https://", _HTTPAdapter(pool_connections=50, pool_maxsize=50))
+    s.mount("http://", _HTTPAdapter(pool_connections=50, pool_maxsize=50))
     return s
 
 

@@ -69,6 +69,12 @@ PLATFORMS = {
 # HTTP session（复用连接，避免 Python 3.14 urllib IncompleteRead bug）
 _SESSION = requests.Session()
 _SESSION.trust_env = False  # 避免自动读取系统代理
+# 2026-09-24 增大连接池: 默认 pool_maxsize=10 不够(滚球 11 并发 getList + 结算 + 下单),
+# 连接反复丢弃重建("Connection pool is full")→大量 TLS 握手阻塞(sample 678次采样)→线程耗尽主循环假死。
+# 提到 50 避免重建, 消除周期性假死根因。
+from requests.adapters import HTTPAdapter as _HTTPAdapter
+_SESSION.mount("https://", _HTTPAdapter(pool_connections=50, pool_maxsize=50))
+_SESSION.mount("http://", _HTTPAdapter(pool_connections=50, pool_maxsize=50))
 
 # 运动配置
 SPORTS = [

@@ -69,12 +69,19 @@ def _get(path, params=None, timeout=15):
     if params:
         p.update(params)
     try:
-        r = requests.get(f"{ODDS_API_IO_BASE}{path}", params=p, timeout=timeout)
+        r = _ODDS_SESSION.get(f"{ODDS_API_IO_BASE}{path}", params=p, timeout=timeout)
         if r.status_code == 200:
             return r.json()
     except Exception:
         pass
     return None
+
+
+# 2026-09-24 复用连接(避免每次 requests.get 新建连接+TLS握手阻塞, sample 抓到的假死根因之一)
+from requests.adapters import HTTPAdapter as _HTTPAdapter
+_ODDS_SESSION = requests.Session()
+_ODDS_SESSION.mount("https://", _HTTPAdapter(pool_connections=50, pool_maxsize=50))
+_ODDS_SESSION.mount("http://", _HTTPAdapter(pool_connections=50, pool_maxsize=50))
 
 
 def mid_price(back, lay, max_spread_pct=None):
