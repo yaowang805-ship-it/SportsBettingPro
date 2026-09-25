@@ -120,6 +120,9 @@ MANUAL_OBSERVE_RELEASE = {
     "basketball|1x2|主|*|live": 150,
     "basketball|1x2|客|*|live": 150,
     "baseball|1x2|客|*|live": 150,
+    # 2026-09-25 早盘真edge(CLV+ROI双正, Betfair口径): 半场独赢主胜CLV+2.73%(n731)/半场双胜彩主客CLV+3.55%(n625,正率92%)
+    "football|ht|主|*|early": 150,
+    "football|ht_dc|客|*|early": 150,
 }
 
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
