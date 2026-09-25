@@ -320,6 +320,64 @@ def _load_cn_names():
     return _CN_NAME_CACHE["data"]
 
 
+# 2026-09-25 后台 CMN 中文名缓存: 滚球实时中文名(推送全中文), 后台线程每 60s 拉, 不占下单链路
+_LIVE_CN_CACHE = {"ts": 0.0, "data": {}}
+_LIVE_CN_LOCK = _threading.Lock()
+
+
+def _fetch_live_cn(sport_ids=(1, 3, 5, 7, 13, 15), platform="BB"):
+    """后台拉滚球 CMN 中文名(不占下单链路), 更新 _LIVE_CN_CACHE {match_id: (home_cn, away_cn, league_cn)}。"""
+    global _LIVE_CN_CACHE
+    try:
+        from src.betting.bb_auto_bet import read_token, _session
+        from src.scrapers.bb_api_fetcher import PLATFORMS
+        token = read_token()
+        domain = PLATFORMS.get(platform, PLATFORMS["BB"])["api_base"]
+        if not token:
+            return
+        s = _session()
+
+        def _fetch(sid):
+            try:
+                r = s.post(f"{domain}/v1/match/getList",
+                           json={"sportId": sid, "type": 1, "current": 1, "pageSize": 50,
+                                 "isPC": True, "languageType": "CMN"},
+                           headers={"Content-Type": "application/json", "user-token": token,
+                                    "User-Agent": _UA}, timeout=15, verify=False)
+                d = r.json()
+                if d.get("code") != 0:
+                    return []
+                return (d.get("data") or {}).get("records") or []
+            except Exception:
+                return []
+
+        from concurrent.futures import ThreadPoolExecutor
+        m = {}
+        with ThreadPoolExecutor(max_workers=len(sport_ids)) as ex:
+            for rec_list in ex.map(_fetch, sport_ids):
+                for rec in rec_list:
+                    ts = rec.get("ts") or []
+                    if len(ts) < 2:
+                        continue
+                    m[int(rec.get("id"))] = (ts[0].get("na", ""), ts[1].get("na", ""), "")
+        with _LIVE_CN_LOCK:
+            _LIVE_CN_CACHE = {"ts": time.time(), "data": m}
+    except Exception:
+        pass
+
+
+def start_cn_prefetch(interval=60.0, sport_ids=(1, 3, 5, 7, 13, 15), platform="BB"):
+    """启动后台 CMN 中文名预取线程(推送全中文, 2026-09-25)。"""
+    def _loop():
+        while True:
+            try:
+                _fetch_live_cn(sport_ids, platform)
+            except Exception:
+                pass
+            time.sleep(interval)
+    _threading.Thread(target=_loop, daemon=True, name="cn-prefetch").start()
+
+
 def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 13, 15), platform="BB"):
     """BB/FB 滚球比赛。EN 拉英文队名(直配 Pin) + 提取盘口; CMN 拉中文队名/联赛名(展示用)。
 
