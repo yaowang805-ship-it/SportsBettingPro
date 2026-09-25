@@ -463,10 +463,14 @@ def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 13, 15), platform="BB"):
                 "mc": (m.get("mc") or {}).get("s", 0),
                 "sc": sc,  # [主,客] 当前比分(让球按当前比分结算用)
             }
-    # 2. 中文名: 从早盘 bb_odds_extracted.json 的中文名免费补(仅钉钉展示, 匹配不上留空)
+    # 2. 中文名: 优先后台 CMN 缓存(滚球实时中文名), 兜底早盘快照, 都无则留英文
     _cn = _load_cn_names()
+    with _LIVE_CN_LOCK:
+        _cn_live = _LIVE_CN_CACHE["data"]
     for _mid, _info in result.items():
-        if _mid in _cn:
+        if _mid in _cn_live and _cn_live[_mid][0]:
+            _info["home_cn"], _info["away_cn"], _info["league_cn"] = _cn_live[_mid]
+        elif _mid in _cn:
             _info["home_cn"], _info["away_cn"], _info["league_cn"] = _cn[_mid]
     return result
 

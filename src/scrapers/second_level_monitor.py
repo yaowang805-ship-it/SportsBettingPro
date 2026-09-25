@@ -1792,6 +1792,13 @@ class SecondLevelMonitor:
             print("[slm] 已启动事件列表后台预取(每 60s 刷新 live 事件索引, 匹配读热缓存)", flush=True)
         except Exception as e:
             print(f"[slm] 事件列表预取启动失败: {type(e).__name__} {str(e)[:80]}", flush=True)
+        # 2026-09-25 后台预取 CMN 中文名: 推送全中文, 后台线程每 60s 拉 CMN, 不占下单链路
+        try:
+            from src.scrapers.pinnacle_live import start_cn_prefetch
+            start_cn_prefetch(interval=60.0)
+            print("[slm] 已启动 CMN 中文名后台预取(每 60s 拉一次, 推送全中文)", flush=True)
+        except Exception as e:
+            print(f"[slm] CMN 中文名预取启动失败: {type(e).__name__} {str(e)[:80]}", flush=True)
         last_poll = 0.0
         while deadline is None or time.time() < deadline:
             now = time.time()
