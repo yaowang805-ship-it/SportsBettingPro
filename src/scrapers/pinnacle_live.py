@@ -321,8 +321,9 @@ def _load_cn_names():
 
 
 # 2026-09-25 后台 CMN 中文名缓存: 滚球实时中文名(推送全中文), 后台线程每 60s 拉, 不占下单链路
+import threading
 _LIVE_CN_CACHE = {"ts": 0.0, "data": {}}
-_LIVE_CN_LOCK = _threading.Lock()
+_LIVE_CN_LOCK = threading.Lock()
 
 
 def _fetch_live_cn(sport_ids=(1, 3, 5, 7, 13, 15), platform="BB"):
