@@ -2154,6 +2154,16 @@ def _read_comparison_file(path):
     details = data.get("details", [])
     qualified = []
     for match in details:
+        # 2026-09-26 用户定: 早盘投注限定开赛前 15min-2h(散户迎合窗口, 太早赔率不稳/太晚edge消失)
+        _mep = match.get("start_time_pin_epoch") or match.get("_pin_epoch") or 0
+        if not _mep:
+            continue
+        try:
+            _lead = float(_mep) - time.time()
+        except (TypeError, ValueError):
+            continue
+        if _lead < 15 * 60 or _lead > 2 * 3600:
+            continue
         # 低匹配度过滤：非足球运动提高门槛（拳击/MMA 映射错误率高）
         match_score = match.get("match_score", 1.0)
         match_type = match.get("match_type", "")
