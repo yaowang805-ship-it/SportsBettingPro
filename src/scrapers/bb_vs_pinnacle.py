@@ -95,25 +95,25 @@ _BB_SPORT_TO_OA_ID = {"football": 1, "basketball": 3, "tennis": 5, "baseball": 7
 
 
 def _oa_fair(entry, sport, sub, target_line=None):
-    """三锚共识公平价(Pinnacle + Betfair + SBO, 2026-09-23) 替代 Betfair 单锚。
+    """Betfair 单锚 + SBO 置信度(2026-09-26 用户定: 早盘不用 Pinnacle, 只用 Betfair/SBO)。
 
-    之前单锚 Betfair 有 favorite-longshot bias(长腿和/客价系统性高估 6~12%, 实测实锤),
-    把长腿方向的 edge 污染成假溢价。三锚共识用 Pinnacle(黄金 sharp 基准, 0.5 权重)拉平长腿 bias。
+    之前三锚共识(Pinnacle 0.5+Betfair 0.3+SBO 0.2)依赖 pinnapi 免费100次/天, 额度用完(429)
+    就退化 Betfair 单锚。用户定: 早盘干脆不用 Pinnacle, 直接 Betfair 中间价(定价)+SBO devig(置信度)。
     sub ∈ {1x2, hc, ou, ht, ht_ou, dc, dnb, btts}; ht_hc/correct_score/oe/corner/booking 无源。
-    target_line: hc/ou/ht_ou 的 BB 让球/大小线(用于在 Pinnacle/Betfair 里选对应线)。
+    target_line: hc/ou/ht_ou 的 BB 让球/大小线(用于在 Betfair 里选对应线)。
     """
-    from src.scrapers.pinnapi_client import consensus_fair_price
+    from src.scrapers.odds_api_io import fair_price_bb
     sid = _BB_SPORT_TO_OA_ID.get(sport, 0)
     if not sid:
         return None
-    res = consensus_fair_price(entry["home_bb"], entry["away_bb"], sid, sub, target_line=target_line)
+    res = fair_price_bb(entry["home_bb"], entry["away_bb"], sid, sub, target_line=target_line)
     if res and res.get("fair"):
         # 存 odds-api.io 事件 id, 供 CLV 采集器读收盘价(替代 pin_match_id)
         if res.get("event_id"):
             entry.setdefault("oa_event_id", res["event_id"])
         # 存 SBO 置信度(按 sub), 供 _oa_add_markets 做同向确认(2026-09-19)
-        if res.get("sbo"):
-            entry.setdefault("_oa_conf", {})[sub] = res["sbo"]
+        if res.get("confidence"):
+            entry.setdefault("_oa_conf", {})[sub] = res["confidence"]
         return res["fair"]
     return None
 
