@@ -1212,7 +1212,9 @@ class PipelineOrchestrator:
 
         try:
             from config.settings import send_dingtalk as _sd
-            if not _sd("系统自检", "SportsBettingPro 自检消息"):
+            # 2026-09-26 urgent=True: 跳过每日配额/30min重复节流, 只测钉钉真实可用性,
+            # 避免「配额用完/重复」返回False被误判成「钉钉不可用」(与实际能收到自检消息矛盾)
+            if not _sd("系统自检", "SportsBettingPro 自检消息", urgent=True):
                 issues_found.append("钉钉推送不可用")
         except: pass
 
