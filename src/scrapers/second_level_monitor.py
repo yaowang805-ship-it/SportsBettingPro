@@ -1866,11 +1866,9 @@ class SecondLevelMonitor:
             # 早盘 WS 触发(独立节流)
             if _ws_changed and now - self._early_ws_ts >= 3.0:
                 self._early_ws_ts = now
-                # 2026-09-24 防假死加30s超时
+                # 2026-09-26 独立线程池+30s超时(根治: 卡住不占默认池)
                 try:
-                    await asyncio.wait_for(asyncio.to_thread(self._consume_early_ws_changes, _changes), timeout=30)
-                except asyncio.TimeoutError:
-                    print("[slm] ⚠️ 早盘WS触发超时(>30s)强制跳过(防假死)", flush=True)
+                    await _run_task(self._consume_early_ws_changes, _changes, timeout=30, tag="早盘WS触发")
                 except Exception as e:
                     print(f"[slm] 早盘WS触发异常: {type(e).__name__} {str(e)[:80]}", flush=True)
             # 2026-09-19 事件驱动: WS 变动立即唤醒(省 sleep 0.5s 轮询延迟), 否则等 0.5s
