@@ -37,6 +37,30 @@ KELLY_FRACTION = 0.5   # 半凯利
 MAX_STAKE = 300        # 单盘口上限(2026-09-19 用户提额: 滚球单注≤300, 原150)
 
 _POLL_EXECUTOR = None  # 2026-09-24 防假死: 比价拉取线程池(lazy初始化, max_workers=2), 90s超时
+_TASK_EXECUTOR = None  # 2026-09-26 防假死: 结算/CLV/早盘WS 用独立线程池(max_workers=16), 卡住的readline不占满asyncio默认池(根治假死)
+
+
+async def _run_task(fn, *args, timeout=30, tag="任务"):
+    """在独立线程池(_TASK_EXECUTOR)执行 fn, 超时跳过(防假死)。
+
+    2026-09-26 根治假死: 之前用 asyncio.to_thread(默认池), 卡住的 readline 调用累积占满
+    默认池(max_workers=32), 导致主循环后续 to_thread(wait_change) 也排队 → 日志停更假死。
+    改用独立大容量池(max_workers=16), 卡住的线程只占独立池, 不影响主循环的 wait_change。
+    """
+    global _TASK_EXECUTOR
+    if _TASK_EXECUTOR is None:
+        from concurrent.futures import ThreadPoolExecutor as _TPE
+        _TASK_EXECUTOR = _TPE(max_workers=16)
+    try:
+        _loop = asyncio.get_running_loop()
+        await asyncio.wait_for(
+            _loop.run_in_executor(_TASK_EXECUTOR, fn, *args),
+            timeout=timeout
+        )
+    except asyncio.TimeoutError:
+        print(f"[slm] ⚠️ {tag}超时(>{timeout}s)强制跳过(防假死)", flush=True)
+    except Exception:
+        pass
 
 # 2026-09-19 用户选B: 滚球本金 = 固定本金基准(初始¥20000), 不随当前余额逐笔缩水。
 # 之前「余额×30%」是顺周期陷阱(余额降→bankroll降→注额缩到30/60), 改用固定基准
@@ -1825,24 +1849,14 @@ class SecondLevelMonitor:
                     if time.time() - last_settle >= 60:
                         last_settle = time.time()
                         _t_settle0 = time.time()
-                        # 2026-09-24 防假死: 结算放线程池+60s超时, 卡住(readline读响应)时主循环不阻塞
-                        try:
-                            await asyncio.wait_for(asyncio.to_thread(self._settle_paper_bets), timeout=60)
-                        except asyncio.TimeoutError:
-                            print("[slm] ⚠️ 结算超时(>60s)强制跳过(防假死)", flush=True)
-                        except Exception:
-                            pass
+                        # 2026-09-26 防假死: 结算放独立线程池+60s超时(根治: 卡住不占默认池)
+                        await _run_task(self._settle_paper_bets, timeout=60, tag="结算")
                         if time.time() - _t_settle0 > 60:
                             print(f"[slm] ⚠️ 结算耗时 {time.time()-_t_settle0:.0f}s(>60s)", flush=True)
                     if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
                         self._check_settled()
-                    # 每次轮询(2s)查 CLV(3s窗口)。2026-09-24 防假死加30s超时
-                    try:
-                        await asyncio.wait_for(asyncio.to_thread(self._check_clv), timeout=30)
-                    except asyncio.TimeoutError:
-                        print("[slm] ⚠️ CLV复验超时(>30s)强制跳过(防假死)", flush=True)
-                    except Exception:
-                        pass
+                    # 每次轮询(2s)查 CLV(3s窗口)。2026-09-26 独立线程池+30s超时
+                    await _run_task(self._check_clv, timeout=30, tag="CLV复验")
                     # 2026-09-24 每轮耗时监控: 定位假死根因(哪一步慢/卡), poll/settle 分阶段打点
                     _t_round = time.time() - _t_round0
                     if _t_round > 60:
