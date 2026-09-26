@@ -43,16 +43,22 @@ LEAGUE_KEYWORDS_FILE = DATA_DIR / "league_keywords.json"
 
 def _load_league_structure(force_refresh: bool = False):
     """Load Pinnacle league structure from cache file; return empty dict if
-    the cache is older than CACHE_TTL_DAYS or *force_refresh* is True."""
+    the cache is older than CACHE_TTL_DAYS or *force_refresh* is True.
+
+    2026-09-26: Pin guest API 已彻底停用, 缓存注定过期。过期也返回缓存(旧结构仍可用于
+    联赛映射, 公平价已切三锚 consensus_fair_price 不依赖联赛结构新鲜度), 不再返回空导致
+    早盘推送(bb_ev_push)因「联赛结构为空」整条失败。
+    """
     if force_refresh:
         return {}
     if PINNACLE_LEAGUE_FILE.exists():
-        age_seconds = time.time() - PINNACLE_LEAGUE_FILE.stat().st_mtime
-        age_days = age_seconds / 86400
+        age_days = (time.time() - PINNACLE_LEAGUE_FILE.stat().st_mtime) / 86400
         if age_days > CACHE_TTL_DAYS:
-            print(f"  ⏳ 联赛结构缓存已过期（{age_days:.1f} 天 > {CACHE_TTL_DAYS} 天），重新拉取...")
+            print(f"  ⚠️ 联赛结构缓存已过期（{age_days:.1f} 天），Pin已停用, 用旧缓存兜底")
+        try:
+            return json.loads(PINNACLE_LEAGUE_FILE.read_text())
+        except Exception:
             return {}
-        return json.loads(PINNACLE_LEAGUE_FILE.read_text())
     return {}
 
 
