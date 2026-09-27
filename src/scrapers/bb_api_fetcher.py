@@ -1995,7 +1995,7 @@ def fetch_all_sports(with_fb=False):
         }
         # V5.10 原子写: 直接 write_text 会在并发读时被读到半截文件(JSON解析失败,
         # 实测让 near 扫描 FAILED 89 分钟)。先写 tmp 再 rename, 读端永远读不到半截。
-        _tmp = plat_path.with_suffix(".json.tmp")
+        _tmp = plat_path.with_suffix(f".json.tmp.{os.getpid()}")
         _tmp.write_text(json.dumps(plat_output, ensure_ascii=False, default=str))
         _tmp.replace(plat_path)
         print(f"  {PLATFORMS[plat_key]['label']} 原始数据已保存: {plat_path.name} ({len(plat_matches)} 场)")
@@ -2082,7 +2082,7 @@ def save_results(matches, single_platform=None):
     # V5.10 原子写: 主文件 bb_odds_extracted.json 与分平台文件一致, 都走 tmp+rename。
     # 直接 write 会在增量扫描并发读时被读到半截(JSONDecodeError), 实测让 urgent
     # 扫描间歇 FAILED(2026-08-21 13:55/14:00/15:05 三次)。rename 原子, 读端永读不到半截。
-    _tmp = out_path.with_suffix(".json.tmp")
+    _tmp = out_path.with_suffix(f".json.tmp.{os.getpid()}")
     _tmp.write_text(json.dumps(output, ensure_ascii=False, indent=2))
     _tmp.replace(out_path)
     print(f"\n已保存到 {out_path}")

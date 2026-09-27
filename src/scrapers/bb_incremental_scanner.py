@@ -639,8 +639,10 @@ def _safe_load_bb(retries=3, delay=2.0):
 def _fetch_bb_data(time_window: str = "all"):
     """从BB提取文件中读取数据。near扫描阈值5分钟，far扫描15分钟。"""
     if not BB_EXTRACTED.exists():
-        print("  ❌ 无BB数据，先运行 bb_api_fetcher")
-        return None
+        print("  ⚠️ 无BB数据，尝试重新抓取...")
+        if not _run_fetcher():
+            print("  ❌ 无BB数据且重新抓取失败，先手动运行 bb_api_fetcher")
+            return None
     raw = _safe_load_bb()
     if raw is None:
         # 2026-09-27 修复: 文件损坏时也尝试重新抓取(而非直接放弃)。
