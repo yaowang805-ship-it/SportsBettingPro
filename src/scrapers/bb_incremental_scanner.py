@@ -643,8 +643,15 @@ def _fetch_bb_data(time_window: str = "all"):
         return None
     raw = _safe_load_bb()
     if raw is None:
-        print("  ❌ BB数据损坏(读不到完整JSON), 跳过本轮")
-        return None
+        # 2026-09-27 修复: 文件损坏时也尝试重新抓取(而非直接放弃)。
+        # 之前损坏 → _safe_load_bb 返回 None → 直接 return, 永远不触发 _run_fetcher,
+        # 导致 bb_odds_extracted.json 一旦损坏(并发写竞争)就永久停摆、早盘链路全断。
+        print("  ⚠️ BB数据损坏(读不到完整JSON), 尝试重新抓取...")
+        if _run_fetcher():
+            raw = _safe_load_bb()
+        if raw is None:
+            print("  ❌ BB数据损坏且重新抓取失败, 跳过本轮")
+            return None
     matches = raw.get("matches", [])
     # BB 数据新鲜度按时间窗分 TTL(2026-08-26): urgent 每 60s 全量抓 BB+FB 一次, near/far
     # 完全复用同一份文件即可。之前 `age_m > 0` 永远为真, 导致 near 每次扫描都重跑一遍

@@ -1179,6 +1179,105 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
     return len(rows)
 
 
+def log_oa_opportunities(details, min_ev=5.0):
+    """Betfair 直接匹配的机会入库 tracking(2026-09-27 修复 tracking 冻结)。
+
+    早盘 9-18 切换 Betfair 直接匹配(compare_bb_vs_oa)后, 新流程不再调 log_all_ev_opportunities
+    (它要求 pin_match_id/pin_league_id, Betfair entry 没有 → 全部跳过) → clv_tracking.csv 自
+    9-18 冻结, 连带 _collect_inner 无 pending 记录可采、CLV 自 9-19 冻结。此函数是 Betfair 版入库:
+    home/away 存 BB 英文名(home_bb/away_bb, 供 _fetch_close_odds_betfair 的 match_event_orient
+    反查 odds-api.io 事件 id), Pin 字段置空。口径与 log_all_ev_opportunities 一致: source=validate,
+    min_ev=5%(去 2-5% 噪声档)。
+    """
+    from datetime import datetime, timezone
+    from config.constants import get_league_tier
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    existing = set()
+    if TRACKING_FILE.exists():
+        try:
+            with open(TRACKING_FILE, encoding="utf-8-sig") as f:
+                for r in csv.DictReader(f):
+                    existing.add((r.get("home", ""), r.get("away", ""),
+                                  r.get("sub_market", ""), r.get("designation", ""),
+                                  r.get("match_epoch", "")))
+        except Exception:
+            pass
+
+    _MK = {"opportunities": "1x2", "handicap": "hc", "over_under": "ou",
+           "double_chance": "dc", "draw_no_bet": "dnb"}
+    rows = []
+    skipped_started = 0
+    skipped_no_bid = 0
+    seen = set(existing)
+    for m in details:
+        sport = m.get("sport", "")
+        home = m.get("home_bb", "") or m.get("home_bb_cn", "")
+        away = m.get("away_bb", "") or m.get("away_bb_cn", "")
+        league = m.get("league", "")
+        league_cn = m.get("league_cn", "") or league
+        epoch = m.get("start_time_pin_epoch", 0) or 0
+        bb_match_id = str(m.get("bb_match_id", "") or "").strip()
+        if not bb_match_id:
+            skipped_no_bid += 1
+            continue
+        if epoch and epoch <= time.time():
+            skipped_started += 1
+            continue
+        try:
+            tier = get_league_tier(league_cn)
+        except Exception:
+            tier = 3
+        for mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"):
+            for opp in m.get(mk, []) or []:
+                ev = opp.get("ev_pct", 0) or 0
+                if ev < min_ev:
+                    continue
+                sub = opp.get("_market", "") or _MK.get(mk, "1x2")
+                if sub == "main":
+                    sub = _MK.get(mk, "1x2")
+                desig = opp.get("designation", "")
+                key = (home, away, sub, desig, str(epoch))
+                if key in seen:
+                    continue
+                seen.add(key)
+                rows.append({
+                    "timestamp": now, "sport": sport, "league": league,
+                    "home": home, "away": away, "home_pin": "", "away_pin": "",
+                    "designation": desig, "sub_market": sub,
+                    "line": opp.get("line", ""),
+                    "bb_odds": opp.get("bb_odds", 0), "pin_odds": 0,
+                    "fair_price": opp.get("fair_price", 0), "ev_pct": ev,
+                    "stake": 0, "tier": tier, "match_epoch": epoch,
+                    "bb_price_source": m.get("bb_price_source", "BB"),
+                    "pin_league_id": "", "pin_match_id": "",
+                    "source": "validate", "pin_max_stake": "",
+                    "bb_match_id": bb_match_id,
+                })
+
+    if skipped_started:
+        logger.info("CLV Betfair入库: 跳过 %d 场已开赛(滚球价, 不算赛前机会)", skipped_started)
+    if skipped_no_bid:
+        logger.info("CLV Betfair入库门槛: 跳过 %d 场缺 bb_match_id", skipped_no_bid)
+    if not rows:
+        return 0
+
+    fieldnames = ["timestamp", "sport", "league", "home", "away", "home_pin", "away_pin",
+                  "designation", "sub_market", "bb_odds", "pin_odds", "fair_price", "ev_pct",
+                  "stake", "tier", "match_epoch", "bb_price_source", "pin_league_id", "pin_match_id",
+                  "source", "pin_max_stake", "line", "bb_match_id"]
+    _migrate_csv_header(TRACKING_FILE, fieldnames)
+    file_exists = TRACKING_FILE.exists()
+    with open(TRACKING_FILE, "a", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=fieldnames)
+        if not file_exists:
+            w.writeheader()
+        for r in rows:
+            w.writerow(r)
+    logger.info("CLV Betfair入库: +%d 条 EV>=%.0f%% 机会 (source=validate)", len(rows), min_ev)
+    return len(rows)
+
+
 def collect():
     """主入口：采集所有 pending 比赛的收盘赔率并计算 CLV(Betfair 收盘价, 2026-09-19 替代 Pin)。
 
