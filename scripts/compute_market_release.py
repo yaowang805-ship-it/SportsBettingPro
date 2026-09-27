@@ -873,8 +873,13 @@ def main():
         if _p[3] == "*":
             _manual_dirs.add((_p[0], _p[1], _p[2]))  # (sport, sub_market, direction)
     for (sport, sm, dr, interval), (med, n) in sorted(live_clv.items()):
+        # 2026-09-28 修bug: MANUAL_OBSERVE_RELEASE 的「具体区间」格子(如 football|hc|主|1.5-2.0)也被
+        # 数据驱动 LEV 判据加到 observe_blocked, 导致 released+blocked 同时出现 → 释放被拦截, 一场都投不出。
+        # 之前 _manual_dirs 只跳全区间(*), 漏了具体区间。这里补: MANUAL 释放的完整 key(含区间)也跳过。
+        if f"{sport}|{sm}|{dr}|{interval}|live" in MANUAL_OBSERVE_RELEASE:
+            continue
         if (sport, sm, dr) in _manual_dirs:
-            continue  # 已验证方向, 数据驱动不拦(用户显式开放, 全区间)
+            continue  # 已验证方向(全区间*), 数据驱动不拦(用户显式开放)
         # 2026-09-27 手动拦截优先: 被 MANUAL_OBSERVE_BLOCK 拦的格子, 数据驱动不释放
         # (避免 released+blocked 同时出现的脏数据, 如大球1.5-2.0 LEV正但实盘劣化-33.4%被手动撤)
         if f"{sport}|{sm}|{dr}|{interval}|live" in MANUAL_OBSERVE_BLOCK:
