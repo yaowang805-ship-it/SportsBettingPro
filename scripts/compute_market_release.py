@@ -80,7 +80,9 @@ LIVE_PAPER = DATA / "live_paper_bets.json"
 OBS_STATE = DATA / "observe_release_state.json"  # 释放状态(首次释放时间 + cap)
 
 # 滚球观察库口径映射: BB 运动 id → 英文运动名; 滚球 sub → sub_market
-BB_SPORT_MAP = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "american_football"}
+BB_SPORT_MAP = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "american_football",
+                 2: "ice_hockey", 13: "volleyball", 15: "pingpong", 18: "mma", 19: "boxing",
+                 47: "badminton"}  # 2026-09-27 补排球/乒乓/冰球/MMA/拳击/羽毛球(之前只5运动, 排球乒乓样本被统计层过滤)
 BB_SUB_MAP = {"over_under": "ou", "handicap": "hc", "opportunities": "1x2",
               "double_chance": "dc", "btts": "btts"}  # 2026-09-19 滚球新增 dc/btts 观察库收集
 LIVE_LEAGUE = "滚球"
@@ -90,6 +92,8 @@ LIVE_LEAGUE = "滚球"
 SPORT_CN = {
     "football": "⚽足球", "basketball": "🏀篮球", "tennis": "🎾网球",
     "baseball": "⚾棒球", "american_football": "🏈美足", "ice_hockey": "🏒冰球",
+    "volleyball": "🏐排球", "pingpong": "🏓乒乓球", "mma": "🥊MMA",
+    "boxing": "👊拳击", "badminton": "🏸羽毛球",
 }
 
 # 观察库释放粒度(2026-09-12 用户要求): 从「运动×联赛×盘口」改为「运动×盘口×方向」+
@@ -121,11 +125,15 @@ MANUAL_OBSERVE_RELEASE = {
     "basketball|1x2|主|*|live": 300,
     "basketball|1x2|客|*|live": 300,
     "baseball|1x2|客|*|live": 300,
-    # 2026-09-25 早盘真edge(CLV+ROI双正, Betfair口径): 半场独赢主胜CLV+2.73%(n731)/半场双胜彩主客CLV+3.55%(n625,正率92%)
-    "football|ht|主|*|early": 150,
-    "football|ht_dc|客|*|early": 150,
+    # 2026-09-27 撤 ht 主/ht_dc 客早盘释放: 原"CLV+2.73%/+3.55% 正率92%"是 Pin 口径(Pin 已暂停),
+    # 注释误标"Betfair口径"。用户定「只用 Betfair 锚点统计 CLV」→ 两格子 CLV 依据作废, 交还数据驱动
+    # 判据, 等 Betfair 收盘线 CLV(close_source=betfair)重新积累到 n>200 再自动释放。
     # 2026-09-27 足球独赢主胜1.5-2.0(ROI+10.5%+CLV+0.4%双正, 全场第4个双正格子), cap150试探
     "football|1x2|主|1.5-2.0|live": 150,
+    # 2026-09-27 足球让球主胜1.5-2.0: Betfair口径 edge+3.2pp/ROI+8.8% 双正 + 该区间真LEV+10.61pp
+    # (价格朝你走), 三信号一致且 n=226 够。2.0-3.0 是毒区(真LEV-3.43pp, 已在 MANUAL_OBSERVE_BLOCK 拦),
+    # 只放 1.5-2.0。cap150试探
+    "football|hc|主|1.5-2.0|live": 150,
 }
 
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
@@ -654,13 +662,13 @@ def load_clv_median():
     by = defaultdict(list)
     with open(f, encoding="utf-8-sig") as fh:
         for r in _csv.DictReader(fh):
-            # 口径过滤(2026-09-27): 观察库释放的 CLV 必须口径一致——
-            # 1) close_source 只留 live(Pin 实时收盘线=真收盘价), 排除 archive(归档回捞的赛前
-            #    最后快照, 非真收盘线, 全局中位 -3.05% 与 live +2.00% 系统性偏低) 和空(老数据)。
+            # 口径过滤(2026-09-27 用户定): Pin 已暂停, 锚点只用 Betfair——
+            # 1) close_source 只留 betfair(Betfair 收盘价=唯一锚点), 排除 live/archive(Pin 收盘价
+            #    口径, 已废弃) 和空(老数据)。
             # 2) source 只留 validate(观察库口径=所有 EV>=2% 机会), 排除 push(实盘下注口径,
             #    经过投注路径过滤后 CLV 系统性偏高, 混入会虚高释放判据的 CLV)。
             #    观察库释放判据「观察库 CLV + 观察库 ROI」本就是 validate + paper_bets 口径。
-            if r.get("close_source") != "live":
+            if r.get("close_source") != "betfair":
                 continue
             if r.get("source") != "validate":
                 continue
@@ -676,12 +684,17 @@ def load_clv_median():
 
 
 def load_live_clv():
-    """滚球 LEV(live_paper_bets 的 clv 字段, 下注后复验 Pin 公平价算的 CLV)按(运动×盘口×方向×赔率区间)聚合。
+    """滚球真 LEV(价格变化方向)按(运动×盘口×方向×赔率区间)聚合。
 
-    2026-09-15 用户定: 滚球和早盘一样用 CLV(LEV)判释放, 不用「赢率vs隐含」(带 favorite-longshot bias
-    且向后看高方差)。LEV = 下注后复验 Pin 价, 正=抢到比市场后来定价更优的价格(真edge), 负=逆向选择。
-    与 load_clv_median 区别: 早盘用 clv_results.csv(收盘线CLV), 滚球用 live_paper_bets 的 clv 字段(LEV)。
-    注: clv 字段今天(9-15)才修好采集率(60s→3s), 样本极薄, 短期 n<200 不会释放, 等积累。
+    2026-09-27 改口径: 原 clv 字段是「下注后3s复验 Betfair 价的 edge」= (bb_odds-fair@T+3)/fair@T+3,
+    但实测 54% 的样本下注后3s价格根本没变(clv==ev), 复验价=下注价 → clv 字段混入大量「静态 edge」
+    (BB 给高赔的度量), 不是「下注后市场往你走」的逆向选择信号, 导致 LEV 中位被静态 edge 主导、区分度低。
+
+    真 LEV 应测「价格变化方向」= clv - ev = (fair@T - fair@T+3)/fair@T(一阶), 正=Betfair 价跌
+    (结果变更可能, 市场朝你走=真edge), 负=Betfair 价涨(逆向选择)。故:
+    1) 过滤 clv≈ev(价格3s没变, 静态样本) 和 clv=None(复验失败);
+    2) 只统计 clv!=ev 样本的 clv-ev(价格变化)。
+    注意: 价格变化量级远小于「复验时edge」(通常<1pp), 判据阈值 OBS_CLV_MIN=2% 对它偏严, 需另定。
 
     Returns: {(sport, sub_market, direction, odds_interval): (median_clv, n)}
     """
@@ -689,18 +702,23 @@ def load_live_clv():
     by = defaultdict(list)
     for b in _read_live_paper_bets():
         clv = b.get("clv")
-        if clv is None:
+        ev = b.get("ev")
+        if clv is None or ev is None:
             continue
         try:
             clv = float(clv)
+            ev = float(ev)
         except (ValueError, TypeError):
+            continue
+        # 过滤静态样本(价格3s没变: clv==ev, 因为 clv/ev 都 round 到 2 位, 精确相等即价格没动)
+        if abs(clv - ev) < 0.01:
             continue
         sport = BB_SPORT_MAP.get(b.get("sport"))
         sm = BB_SUB_MAP.get(b.get("sub"))
         if not sport or not sm:
             continue
         _iv = _odds_interval(_f(b.get("bb_odds")))
-        by[(sport, sm, _direction(b.get("designation"), sm), _iv)].append(clv)
+        by[(sport, sm, _direction(b.get("designation"), sm), _iv)].append(clv - ev)
     return {k: (_st.median(v), len(v)) for k, v in by.items() if v}
 
 

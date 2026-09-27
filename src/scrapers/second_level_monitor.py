@@ -135,7 +135,9 @@ BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足
 
 # 滚球 → 观察库统一口径(2026-09-12 观察库释放改造): sport 数字→英文; sub→sub_market。
 # 用于查 observe_release_caps(运动×"滚球"×盘口), 与 compute_market_release.py 同口径。
-BB_SPORT_EN = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "american_football"}
+BB_SPORT_EN = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "american_football",
+               2: "ice_hockey", 13: "volleyball", 15: "pingpong", 18: "mma", 19: "boxing",
+               47: "badminton"}  # 2026-09-27 补排球/乒乓/冰球等(之前只5运动, 排球乒乓样本丢失运动标签)
 BB_SUB_TO_SM = {"over_under": "ou", "handicap": "hc", "opportunities": "1x2"}
 MARKET_RELEASE_FILE = ROOT / "data" / "storage" / "market_release.json"
 OBS_STATE_FILE = ROOT / "data" / "storage" / "observe_release_state.json"
