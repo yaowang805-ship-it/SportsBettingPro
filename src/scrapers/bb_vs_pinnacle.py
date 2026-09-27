@@ -1550,11 +1550,16 @@ def _oa_add_markets(entry, bb, sport):
     bb_hc = extract_bb_handicap(bb, sport)
     if bb_hc:
         bb_hl = bb_hc.get("home_line") if bb_hc.get("home_line") is not None else bb_hc.get("away_line")
+        # 2026-09-27 quarter-ball 过滤(对齐滚球): 0.25/0.75 四分盘 BB/Betfair 合成口径不一致(半注挂0/半注挂0.5)
+        # → 线匹配算出假公平价(滚球实测让球55%/大小58%是四分盘, 假 edge 主因)。只采 0.5 整数倍线。
+        if bb_hl is not None and abs(float(bb_hl) * 2 - round(float(bb_hl) * 2)) > 1e-6:
+            bb_hl = None
         if bb_hl is not None:
             oa_hc = _oa_fair(entry, sport, "hc", target_line=bb_hl)
             if oa_hc and oa_hc.get("home") and oa_hc.get("away"):
                 bf_line = oa_hc.get("line")
-                if bf_line is not None and abs(float(bb_hl) - float(bf_line)) <= 0.25:
+                # 2026-09-27 线容差 0.25→0.01(对齐滚球): 0.25 容差会放行 BB线0.5 配 Betfair线0.25 的错配假EV
+                if bf_line is not None and abs(float(bb_hl) - float(bf_line)) <= 0.01:
                     ev_h = (bb_hc["home_odds"] - oa_hc["home"]) / oa_hc["home"] * 100
                     ev_a = (bb_hc["away_odds"] - oa_hc["away"]) / oa_hc["away"] * 100
                     # EV>20% = BB 让球盘与独赢盘数据自相矛盾(线错配), 丢弃(对齐 bb_ev_push 的 EV cap)
