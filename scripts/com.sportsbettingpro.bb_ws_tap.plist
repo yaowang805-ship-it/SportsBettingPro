@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.sportsbettingpro.bb_ws_tap</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/wangyao/SportsBettingPro/.venv312/bin/python</string>
+        <string>-u</string>
+        <string>-m</string>
+        <string>src.scrapers.bb_ws_push</string>
+        <string>--tap</string>
+        <string>--listen</string>
+        <string>0</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/wangyao/SportsBettingPro</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/wangyao/SportsBettingPro/data/logs/bb_ws_tap.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/wangyao/SportsBettingPro/data/logs/bb_ws_tap.log</string>
+</dict>
+</plist>
