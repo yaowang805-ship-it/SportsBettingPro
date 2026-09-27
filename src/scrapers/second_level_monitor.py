@@ -1160,7 +1160,7 @@ def _settle_real_bet(order_id, pnl, won):
             self._live_outstanding += stake
             if order_id:
                 # 记录投注时的 fair/ev/bb_odds 等(2026-09-12: 结算汇总时按 order_id 关联补全明细要素)
-                self._live_bets[str(order_id)] = {
+                _binfo = {
                     "stake": stake,
                     "fair": sig.get("fair", 0), "ev": sig.get("ev", 0),
                     "bb_odds": sig.get("bb_odds", 0), "desig": sig.get("desig", ""),
@@ -1168,6 +1168,8 @@ def _settle_real_bet(order_id, pnl, won):
                     "away": sig["match"].get("away", ""), "sport": sig["match"].get("sport", ""),
                     "verify": bool(_need_verify),  # 是否触发验价(2026-09-19)
                 }
+                self._live_bets[str(order_id)] = _binfo
+                _append_real_bet(str(order_id), _binfo)  # 2026-09-27 实盘库: 持久化下单信息
             self._save_live_spent()
             # 更新释放盘口的当日累计投注额(2026-09-12 用户要求: 当日累计≤1000)
             if _sp_en and _sm:
@@ -1545,6 +1547,7 @@ def _settle_real_bet(order_id, pnl, won):
             except (TypeError, ValueError):
                 pnl = 0.0
             won = pnl > 0
+            _settle_real_bet(str(oid), pnl, won)  # 2026-09-27 实盘库: 回填结算结果
             od = op.get("od", 0)  # 赔率
             sid = op.get("sid", 0)  # 运动 id
             # 关联投注时的 fair/ev(从 settled_info, 按 order_id)
