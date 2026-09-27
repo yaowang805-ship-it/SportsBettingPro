@@ -1180,13 +1180,21 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
 
 
 def collect():
-    """主入口：采集所有 pending 比赛的收盘赔率并计算 CLV(Betfair 收盘价, 2026-09-19 替代 Pin)。"""
+    """主入口：采集所有 pending 比赛的收盘赔率并计算 CLV(Betfair 收盘价, 2026-09-19 替代 Pin)。
+
+    2026-09-27 修复: 之前走 collect_betfair_clv()(读对比文件的 oa_event_id), 但对比文件
+    (Betfair 直接匹配的 entry) 根本没有 oa_event_id 字段, 且对比文件是「未开赛」比赛而
+    closing 缓存是「已开赛」比赛, 两者时间窗不相交 → 永远 0 匹配 → CLV 采集自 9-19 起
+    冻结。改回 _collect_inner(): 读持久化 clv_tracking.csv(已开赛 pending 记录) +
+    _fetch_close_odds_betfair(用 match_event_orient 按队名反查 odds-api.io 事件 id 再查
+    closing 快照), 这条路径才是能采到收盘价的正确链路。
+    """
     from src.storage.file_lock import task_lock
     with task_lock("clv_collector") as acquired:
         if not acquired:
             logger.info("CLV 采集已在运行，跳过本次（防 crontab/pipeline 重叠）")
             return 0
-        return collect_betfair_clv()
+        return _collect_inner()
 
 
 def collect_betfair_clv():

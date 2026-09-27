@@ -654,6 +654,16 @@ def load_clv_median():
     by = defaultdict(list)
     with open(f, encoding="utf-8-sig") as fh:
         for r in _csv.DictReader(fh):
+            # 口径过滤(2026-09-27): 观察库释放的 CLV 必须口径一致——
+            # 1) close_source 只留 live(Pin 实时收盘线=真收盘价), 排除 archive(归档回捞的赛前
+            #    最后快照, 非真收盘线, 全局中位 -3.05% 与 live +2.00% 系统性偏低) 和空(老数据)。
+            # 2) source 只留 validate(观察库口径=所有 EV>=2% 机会), 排除 push(实盘下注口径,
+            #    经过投注路径过滤后 CLV 系统性偏高, 混入会虚高释放判据的 CLV)。
+            #    观察库释放判据「观察库 CLV + 观察库 ROI」本就是 validate + paper_bets 口径。
+            if r.get("close_source") != "live":
+                continue
+            if r.get("source") != "validate":
+                continue
             try:
                 clv = float(r.get("true_clv_pct") or 0)
                 odds = float(r.get("bb_odds") or 0)

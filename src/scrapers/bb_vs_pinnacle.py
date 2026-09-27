@@ -1508,6 +1508,7 @@ def _build_oa_entry(m, sport):
         "start_time_bb": str(bt or ""), "start_time_pin_epoch": epoch,
         "match_type": "name", "match_score": 0.95,  # 队名直接匹配(高置信)
         "bb_price_source": m.get("platform", "BB"),
+        "bb_match_id": m.get("id", ""),  # 2026-09-27 补: BB 比赛ID, 观察库结算/CLV 采集去重用
         "platform_sources": m.get("platform_sources", {}),
         "flags": [],
         "opportunities": [], "handicap": [], "over_under": [],
