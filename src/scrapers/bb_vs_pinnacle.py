@@ -1582,11 +1582,17 @@ def _oa_add_markets(entry, bb, sport):
 
     # --- ou (大小球) ---
     bb_ou = extract_bb_ou(bb, sport)
+    # 2026-09-27 quarter-ball 过滤(对齐滚球): 大小球 0.25/0.75 四分盘同样假公平价, 只采 0.5 整数倍线。
+    if bb_ou and bb_ou.get("line") is not None:
+        _ou_l = float(bb_ou["line"])
+        if abs(_ou_l * 2 - round(_ou_l * 2)) > 1e-6:
+            bb_ou = None
     if bb_ou and bb_ou.get("line") is not None:
         oa_ou = _oa_fair(entry, sport, "ou", target_line=bb_ou["line"])
         if oa_ou and oa_ou.get("over") and oa_ou.get("under"):
             bf_line = oa_ou.get("line")
-            if bf_line is not None and abs(float(bb_ou["line"]) - float(bf_line)) <= 0.25:
+            # 2026-09-27 线容差 0.25→0.01(对齐滚球): 0.25 容差会放行 BB线 配 Betfair线 差0.25 的错配假EV
+            if bf_line is not None and abs(float(bb_ou["line"]) - float(bf_line)) <= 0.01:
                 ev_o = (bb_ou["over_odds"] - oa_ou["over"]) / oa_ou["over"] * 100
                 ev_u = (bb_ou["under_odds"] - oa_ou["under"]) / oa_ou["under"] * 100
                 # EV>20% = 大小球线与 Betfair 线错配, 丢弃
