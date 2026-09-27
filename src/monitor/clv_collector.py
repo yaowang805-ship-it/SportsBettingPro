@@ -112,7 +112,7 @@ def _load_pending_entries(return_expired=False):
             if not ev_is_plausible(r.get("ev_pct"), r.get("bb_odds")):
                 continue    # 系统自己不认的 EV 量级, 不进 CLV 样本
             prev = existing.get(key) or existing.get(key_pin)
-            ep = int(r.get("match_epoch") or 0)
+            ep = int(float(r.get("match_epoch") or 0))
             if prev is not None:
                 # V5.10: 已采过的, 若比赛还没开赛就允许再采一次去覆盖 —— 窗口放宽到 45
                 # 分钟后, 第一次采到的可能离开赛还远(实测 P90 偏差 2.51%), 越靠近开赛
@@ -178,7 +178,7 @@ def _fetch_close_odds(entries):
     # 按联赛分组，减少 API 调用
     by_league = defaultdict(list)
     for e in entries:
-        match_epoch = int(e.get("match_epoch") or 0)
+        match_epoch = int(float(e.get("match_epoch") or 0))
         if not match_epoch:
             continue
 
@@ -249,7 +249,7 @@ def _fetch_close_odds(entries):
                 bb_away = e.get("away", "").lower().strip()
                 pin_home_name = e.get("home_pin", "").lower().strip()  # Pinnacle 英文名
                 pin_away_name = e.get("away_pin", "").lower().strip()
-                match_epoch = int(e.get("match_epoch") or 0)
+                match_epoch = int(float(e.get("match_epoch") or 0))
                 # sub_market 统一推断口径 (ht→ht_hc/ht_ou), 与去重 key 一致
                 sub_market = _infer_sub_market(e.get("sub_market", ""), e.get("designation", ""))
                 designation = e.get("designation", "").lower()
@@ -344,9 +344,9 @@ def _fetch_close_odds(entries):
                     "true_clv_pct": true_clv,
                     "clv_delta": clv_delta,  # + = 有利, - = 不利
                     "match_epoch": e.get("match_epoch", ""),
-                    "minutes_before_match": round((int(e.get("match_epoch") or 0) - time.time()) / 60, 1),
+                    "minutes_before_match": round((int(float(e.get("match_epoch") or 0)) - time.time()) / 60, 1),
                     "close_source": "live",
-                    "close_lag_min": round((int(e.get("match_epoch") or 0) - time.time()) / 60, 1),
+                    "close_lag_min": round((int(float(e.get("match_epoch") or 0)) - time.time()) / 60, 1),
                 }
                 results.append(_row)
                 _seen_results[_rkey] = (best_score, _row)
@@ -358,7 +358,7 @@ def _fetch_close_odds(entries):
     dying, _now = [], time.time()
     for entries_ in by_league.values():
         for e in entries_:
-            ep = int(e.get("match_epoch") or 0)
+            ep = int(float(e.get("match_epoch") or 0))
             if not ep or (ep - _now) / 60 > 6:
                 continue  # 还有下一轮 cron(5min) 兜底, 不算丢
             sm = _infer_sub_market(e.get("sub_market", ""), e.get("designation", ""))
@@ -422,7 +422,7 @@ def _fetch_close_odds_betfair(entries):
     results = []
 
     for e in entries:
-        match_epoch = int(e.get("match_epoch") or 0)
+        match_epoch = int(float(e.get("match_epoch") or 0))
         if not match_epoch:
             continue
         minutes_to_match = (match_epoch - now_epoch) / 60
@@ -913,7 +913,7 @@ def _record_misses(entries, reason):
             if not exists:
                 w.writeheader()
             for e in entries:
-                ep = int(e.get("match_epoch") or 0)
+                ep = int(float(e.get("match_epoch") or 0))
                 w.writerow({
                     "logged_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
                     "reason": reason, "sport": e.get("sport", ""),
@@ -1216,7 +1216,7 @@ def log_oa_opportunities(details, min_ev=5.0):
         away = m.get("away_bb", "") or m.get("away_bb_cn", "")
         league = m.get("league", "")
         league_cn = m.get("league_cn", "") or league
-        epoch = m.get("start_time_pin_epoch", 0) or 0
+        epoch = int(m.get("start_time_pin_epoch", 0) or 0)  # 转 int, 老 Pin 版 tracking 口径一致(避免 float 字符串)
         bb_match_id = str(m.get("bb_match_id", "") or "").strip()
         if not bb_match_id:
             skipped_no_bid += 1
@@ -1390,8 +1390,8 @@ def _collect_inner():
     total = len(entries)
 
     # V5: 统计epoch质量
-    valid_epoch = sum(1 for e in entries if int(e.get("match_epoch", 0) or 0) > 100000)
-    no_epoch = sum(1 for e in entries if not e.get("match_epoch") or int(e.get("match_epoch", 0) or 0) == 0)
+    valid_epoch = sum(1 for e in entries if int(float(e.get("match_epoch", 0) or 0)) > 100000)
+    no_epoch = sum(1 for e in entries if not e.get("match_epoch") or int(float(e.get("match_epoch", 0) or 0)) == 0)
     bad_epoch = total - valid_epoch - no_epoch
     logger.info("pending: %d条 (有效epoch:%d, 无epoch:%d, 异常:%d)", total, valid_epoch, no_epoch, bad_epoch)
 
@@ -1415,8 +1415,8 @@ def _collect_inner():
     _now = time.time()
     _in_window = sum(
         1 for e in entries
-        if (int(e.get("match_epoch") or 0)
-            and CLV_WINDOW_BEFORE_MIN <= (int(e["match_epoch"]) - _now) / 60 <= CLV_WINDOW_BEFORE_MAX))
+        if (int(float(e.get("match_epoch") or 0))
+            and CLV_WINDOW_BEFORE_MIN <= (int(float(e["match_epoch"])) - _now) / 60 <= CLV_WINDOW_BEFORE_MAX))
     if _in_window:
         try:
             from src.monitor.silent_failure_watch import record_run
