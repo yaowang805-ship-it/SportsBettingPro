@@ -119,6 +119,7 @@ def _record_bet_result(code, latency=0.0):
 # 滚球实盘(2026-09-07 起只投小球under, 2026-09-09 放大预算: 小球累计40笔ROI+14.2%稳定正)。滚动预算(结算后释放额度)。
 LIVE_BUDGET = float('inf')  # 2026-09-18 用户取消每日投注额上限: 滚球不再设总限额(由单场/单盘口300 + 账户余额兜底)
 LIVE_BUDGET_FILE = ROOT / "data" / "storage" / "live_bet_budget.json"
+REAL_BETS_FILE = ROOT / "data" / "storage" / "real_bets.json"  # 实盘库(2026-09-27): 每笔实盘注单的下单信息+结算结果
 DRAWDOWN_STOP_PNL = 1000  # 回撤熔断(2026-09-13): 最近7天滚球实盘累计亏超¥1000(=20%BANKROLL) → 半仓
 DRAWDOWN_RESET_FILE = ROOT / "data" / "storage" / "drawdown_reset_ts.txt"  # 熔断归零时间戳(2026-09-19 用户要求归零重算)
 LIVE_PAPER_FILE = ROOT / "data" / "storage" / "live_paper_bets.json"
@@ -604,6 +605,41 @@ class SecondLevelMonitor:
             }, ensure_ascii=False))
         except Exception:
             pass
+
+
+def _append_real_bet(order_id, info):
+    """下单成功: 写入实盘库(real_bets.json), 记录下单时 odds/fair/ev/stake/比赛等。"""
+    try:
+        d = {}
+        if REAL_BETS_FILE.exists():
+            try:
+                d = json.loads(REAL_BETS_FILE.read_text())
+            except Exception:
+                d = {}
+        d.setdefault("bets", {})[str(order_id)] = {
+            "ts": time.time(), **info,
+            "result": None, "profit": None, "settled_ts": None,
+        }
+        REAL_BETS_FILE.parent.mkdir(parents=True, exist_ok=True)
+        REAL_BETS_FILE.write_text(json.dumps(d, ensure_ascii=False))
+    except Exception:
+        pass
+
+
+def _settle_real_bet(order_id, pnl, won):
+    """结算: 回填实盘库的 result/profit。"""
+    try:
+        if not REAL_BETS_FILE.exists():
+            return
+        d = json.loads(REAL_BETS_FILE.read_text())
+        b = d.get("bets", {}).get(str(order_id))
+        if b:
+            b["profit"] = pnl
+            b["result"] = "won" if won else "lost"
+            b["settled_ts"] = time.time()
+            REAL_BETS_FILE.write_text(json.dumps(d, ensure_ascii=False))
+    except Exception:
+        pass
 
     def _append_live_paper_bet(self, sig):
         """滚球虚拟投注进观察库(live_paper_bets.json), 待结算积累数据。
