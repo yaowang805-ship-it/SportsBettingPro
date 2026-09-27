@@ -606,41 +606,6 @@ class SecondLevelMonitor:
         except Exception:
             pass
 
-
-def _append_real_bet(order_id, info):
-    """下单成功: 写入实盘库(real_bets.json), 记录下单时 odds/fair/ev/stake/比赛等。"""
-    try:
-        d = {}
-        if REAL_BETS_FILE.exists():
-            try:
-                d = json.loads(REAL_BETS_FILE.read_text())
-            except Exception:
-                d = {}
-        d.setdefault("bets", {})[str(order_id)] = {
-            "ts": time.time(), **info,
-            "result": None, "profit": None, "settled_ts": None,
-        }
-        REAL_BETS_FILE.parent.mkdir(parents=True, exist_ok=True)
-        REAL_BETS_FILE.write_text(json.dumps(d, ensure_ascii=False))
-    except Exception:
-        pass
-
-
-def _settle_real_bet(order_id, pnl, won):
-    """结算: 回填实盘库的 result/profit。"""
-    try:
-        if not REAL_BETS_FILE.exists():
-            return
-        d = json.loads(REAL_BETS_FILE.read_text())
-        b = d.get("bets", {}).get(str(order_id))
-        if b:
-            b["profit"] = pnl
-            b["result"] = "won" if won else "lost"
-            b["settled_ts"] = time.time()
-            REAL_BETS_FILE.write_text(json.dumps(d, ensure_ascii=False))
-    except Exception:
-        pass
-
     def _append_live_paper_bet(self, sig):
         """滚球虚拟投注进观察库(live_paper_bets.json), 待结算积累数据。
 
@@ -1927,6 +1892,41 @@ def _settle_real_bet(order_id, pnl, won):
                     await asyncio.sleep(0.5)
             except Exception:
                 await asyncio.sleep(0.5)
+
+
+def _append_real_bet(order_id, info):
+    """下单成功: 写入实盘库(real_bets.json), 记录下单时 odds/fair/ev/stake/比赛等。"""
+    try:
+        d = {}
+        if REAL_BETS_FILE.exists():
+            try:
+                d = json.loads(REAL_BETS_FILE.read_text())
+            except Exception:
+                d = {}
+        d.setdefault("bets", {})[str(order_id)] = {
+            "ts": time.time(), **info,
+            "result": None, "profit": None, "settled_ts": None,
+        }
+        REAL_BETS_FILE.parent.mkdir(parents=True, exist_ok=True)
+        REAL_BETS_FILE.write_text(json.dumps(d, ensure_ascii=False))
+    except Exception:
+        pass
+
+
+def _settle_real_bet(order_id, pnl, won):
+    """结算: 回填实盘库的 result/profit。"""
+    try:
+        if not REAL_BETS_FILE.exists():
+            return
+        d = json.loads(REAL_BETS_FILE.read_text())
+        b = d.get("bets", {}).get(str(order_id))
+        if b:
+            b["profit"] = pnl
+            b["result"] = "won" if won else "lost"
+            b["settled_ts"] = time.time()
+            REAL_BETS_FILE.write_text(json.dumps(d, ensure_ascii=False))
+    except Exception:
+        pass
 
 
 def main():
