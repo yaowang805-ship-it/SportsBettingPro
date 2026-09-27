@@ -522,7 +522,9 @@ def _get_events_indexed(slug, status=None):
     2026-09-22: 缓存 TTL 60s→300s + 后台预取(_refresh_events_index), 缓存几乎总是热的。"""
     key = (slug, status)
     now = time.time()
-    if key in _events_index_cache and now - _events_index_cache[key][0] < _EVENTS_TTL:
+    # 2026-09-27: 缓存过期也用旧缓存(后台预取 _refresh_events_index 会刷新), 不走 REST(慢15.7s),
+    # 避免 odds-api.io 慢时公平价匹配卡在 get_events 上。旧事件索引(几分钟前)对滚球匹配影响极小。
+    if key in _events_index_cache:
         return _events_index_cache[key][1]
     evs = get_events(slug, status) or []
     idx = _build_events_index(evs)
