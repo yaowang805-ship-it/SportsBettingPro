@@ -849,6 +849,11 @@ def main():
     for (sport, sm, dr, interval), (med, n) in sorted(live_clv.items()):
         if (sport, sm, dr) in _manual_dirs:
             continue  # 已验证方向, 数据驱动不拦(用户显式开放, 全区间)
+        # 2026-09-27 手动拦截优先: 被 MANUAL_OBSERVE_BLOCK 拦的格子, 数据驱动不释放
+        # (避免 released+blocked 同时出现的脏数据, 如大球1.5-2.0 LEV正但实盘劣化-33.4%被手动撤)
+        if f"{sport}|{sm}|{dr}|{interval}|live" in MANUAL_OBSERVE_BLOCK:
+            observe_blocked.append([sport, sm, dr, interval, "live"])
+            continue
         _cell = obs_winrate.get((sport, sm, dr, interval, "live"), {})
         _roi = _cell.get("roi", 0.0)
         _mspread = _cell.get("median_spread")
