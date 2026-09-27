@@ -123,6 +123,13 @@ def _on_message(obj):
         except (TypeError, ValueError):
             return
         with _lock:
+            # 2026-09-28 修: deleted(场次移除/结算)时先把当前赔率存成「收盘价」快照, 再删。
+            # 之前只在 status 分支快照, 但 odds-api.io 的 status 消息几乎只有 settled(结算),
+            # 且 deleted 先删 eid → status 分支 `if eid in _ws_odds_cache` 恒不成立, closing 快照
+            # 几乎从不生成 → Betfair 收盘线 CLV 恒 0。改成 deleted 时先快照再删。
+            if eid in _ws_odds_cache:
+                _closing_cache[eid] = {k: list(v) for k, v in _ws_odds_cache[eid].items()}
+                _closing_ts[eid] = time.time()
             _ws_odds_cache.pop(eid, None)
             _ws_odds_ts.pop(eid, None)
     elif t == "status":
