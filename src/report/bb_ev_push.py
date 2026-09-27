@@ -3655,17 +3655,18 @@ def _filter_opposite_side(qualified: list) -> list:
 
 
 def _refresh_live_odds():
-    """推送前强制实时拉取 BB/FB + Pinnacle 赔率并重新比价。
+    """推送前强制实时拉取 BB/FB + Betfair 赔率并重新比价。
 
     🔴 铁律：钉钉推送的任何比赛必须使用实时赔率，绝不使用缓存过时数据。
     实时拉取失败 → 不推送比赛，改为发送失败告警到钉钉。
+    2026-09-27: 比价从 Pin(compare_bb_vs_pinnacle) 切 Betfair 直接匹配(compare_bb_vs_oa), Pin 已暂停。
 
     Returns:
         (live_ok, errors): live_ok=True 表示主对比(BB)实时比价全链路成功。
         errors 是警告列表，记录非致命失败（如 FB 失败但 BB 成功）。
     """
     from src.scrapers.bb_api_fetcher import fetch_all_sports, save_results
-    from src.scrapers.bb_vs_pinnacle import compare_bb_vs_pinnacle
+    from src.scrapers.bb_vs_pinnacle import compare_bb_vs_oa
     from src.scrapers.bb_data import load_bb_odds
 
     logger.info("🔄 推送前实时拉取赔率...")
@@ -3700,19 +3701,7 @@ def _refresh_live_odds():
         logger.error("  ❌ BB 赔率不可用，无法推送")
         return False, errors
 
-    # 2. 加载 Pinnacle 联赛结构
-    from src.scrapers.pinnacle_league_map import _load_league_structure
-    try:
-        all_pin_leagues = _load_league_structure()
-    except Exception as e:
-        errors.append(f"Pinnacle 联赛结构加载失败: {str(e)[:100]}")
-        return False, errors
-
-    if not all_pin_leagues:
-        errors.append("Pinnacle 联赛结构为空")
-        return False, errors
-
-    # 3. BB 主数据 → 实时比价
+    # 2. BB 主数据 → 实时比价(Betfair 直接匹配, 2026-09-27 替代 Pin)
     t1 = time.time()
     try:
         bb_matches = load_bb_odds()
@@ -3724,33 +3713,25 @@ def _refresh_live_odds():
         errors.append("BB 赔率数据为空")
         return False, errors
 
-    pin_ok = False
-    # 🔴 铁律(Pin先BB后): 推送前不能先拉BB后拉Pin —— 公平价(Pin)必须先于零售价(BB),
-    #    否则 BB 比 Pin 旧, 比价会用陈旧零售价对新鲜公平价(假edge)。
-    #    全量扫描 Step2 已预取 Pin 缓存, 这里优先用 6h 内的缓存(Pin 早于本次 BB);
-    #    缓存过期才回退到实时拉 Pin(顺序不完美但功能兜底)。
-    pin_cache_path = DATA_DIR / "pin_matches_cache.json"
-    _use_pin_cache = (pin_cache_path.exists()
-                      and (time.time() - pin_cache_path.stat().st_mtime) < 6 * 3600)
+    oa_ok = False
     try:
-        result = compare_bb_vs_pinnacle(
-            bb_matches, all_pin_leagues,
+        result = compare_bb_vs_oa(
+            bb_matches,
             save_path=COMPARISON_FILE,
-            use_pin_cache=_use_pin_cache,
         )
         if result is not None:
-            logger.info("  ✅ BB主对比完成 (%.0fs), %d 场匹配, %d 个+EV",
+            logger.info("  ✅ BB主对比完成(Betfair直接匹配) (%.0fs), %d 场匹配, %d 个+EV",
                         time.time() - t1,
                         result.get("matched_matches", 0),
                         result.get("opportunities_total", 0))
-            pin_ok = True
+            oa_ok = True
         else:
-            errors.append("BB vs Pinnacle 比价返回空结果")
+            errors.append("BB vs Betfair 比价返回空结果")
     except Exception as e:
-        errors.append(f"Pinnacle 实时比价失败: {str(e)[:100]}")
+        errors.append(f"Betfair 实时比价失败: {str(e)[:100]}")
 
-    if not pin_ok:
-        logger.error("  ❌ Pinnacle 实时比价失败，无法推送")
+    if not oa_ok:
+        logger.error("  ❌ Betfair 实时比价失败，无法推送")
         return False, errors
 
     # 4. FB 独立对比 — V5.5 已移除(冗余): BB/FB 已合并取高值, 再单独比 FB 只是重拉 Pin(+40s)
