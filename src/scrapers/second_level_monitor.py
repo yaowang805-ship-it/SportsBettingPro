@@ -1093,10 +1093,11 @@ class SecondLevelMonitor:
         # 就重拉 BB 当前赔率验价——赔率可能已朝不利方向变动(逆向选择), 抢窗口期内(≤阈值)直接下单省 1-5s。
         _detect_ts = sig.get("bb_ts") or _t0
         _need_verify = (time.time() - _detect_ts) > REVERIFY_THRESHOLD
-        # 2026-09-20 用户规定: 让球只投「快照单」(BB拉取到此刻≤SNAPSHOT_MAX_AGE), stale(>15s)跳过。
-        # 之前3s太紧——管线实际12s, 每单都超3s被全拦(2026-09-20 实盘0单根因)。提到15s让管线内单能投。
-        if _sub == "handicap" and (time.time() - _detect_ts) > SNAPSHOT_MAX_AGE:
-            print(f"  ⏭️ 让球慢单跳过(只投快照单, 已{time.time()-_detect_ts:.0f}s) {tag}", flush=True)
+        # 2026-09-28 推广: 快照单从只让球推广到全盘口(1x2/ou/hc)。BB 预取快照(≤2s)比价,
+        # 下单 verify_price=False + oddsChange=0(下单瞬间赔率变了就拒), 所以「投注端赔率=快照」就下单,
+        # 不必重拉 BB 验价。快照年龄 >SNAPSHOT_MAX_AGE 判 stale 跳过(防用过期快照算错 edge)。
+        if (time.time() - _detect_ts) > SNAPSHOT_MAX_AGE:
+            print(f"  ⏭️ 快照单跳过(快照已{time.time()-_detect_ts:.0f}s>{SNAPSHOT_MAX_AGE}s, 不投stale) {tag}", flush=True)
             return
         _t_place = time.time()
         # 2026-09-20 去掉 verify_price: 快照单(≤6s)已保证赔率新鲜, oddsChange=0 下单瞬间变了就拒,
