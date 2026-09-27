@@ -91,7 +91,9 @@ _MARKET_LABELS = MARKET_LABELS
 # ── 新数据源(odds-api.io Betfair+Sbobet)替代 Pin 公平价(2026-09-18) ──
 # BB 运动 key(下划线) → odds-api.io 内部运动 id(经 _SPORT_ID_TO_SLUG 桥接)。
 # 注意 sport 在 bb_vs_pinnacle 里是下划线("american_football"), 别写成连字符。
-_BB_SPORT_TO_OA_ID = {"football": 1, "basketball": 3, "tennis": 5, "baseball": 7, "american_football": 6}
+_BB_SPORT_TO_OA_ID = {"football": 1, "basketball": 3, "tennis": 5, "baseball": 7, "american_football": 6,
+                       "ice_hockey": 2, "volleyball": 13, "pingpong": 15, "mma": 18, "boxing": 19,
+                       "badminton": 47}  # 2026-09-27 补冰球/排球/乒乓/MMA/拳击/羽毛球(之前只5运动, 早盘这6运动收集了但没比价)
 
 
 def _oa_fair(entry, sport, sub, target_line=None):
