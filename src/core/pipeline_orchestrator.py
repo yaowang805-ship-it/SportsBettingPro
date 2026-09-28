@@ -76,11 +76,8 @@ SCHEDULE = [
     ("market_report",     "07:20", "do_market_report", {}),
     # ("full_scan_morning",  "09:00", "do_full_scan",  {"bet": True}),  # 2026-09-17 暂停: 排查Pin滚球实时性期间暂停全量扫描
     ("bet_report",        "09:00", "do_bet_report",  {}),       # 每日已投注明细日报(2026-09-05 用户要求)
-    ("self_repair",       "09:30", "do_self_repair", {}),       # 自检+自动修复: 锁文件/缓存/指纹/连通性
     ("time_calibration",  "09:35", "do_time_calibration", {}),  # 时间校准: BB/Pin/系统时钟对齐
-    ("health_check",       "09:40", "do_health_check", {}),
     ("settle_morning",     "09:45", "do_settle",      {}),
-    ("daily_report",       "09:50", "do_daily_report",{}),
     ("data_sync_summary",  "09:50", "do_data_sync_summary",{}),  # V5.1: 数据积累量日报
     ("memory_update",      "09:55", "do_memory_update", {}),
     ("daily_cleanup",      "10:00", "do_cleanup",      {}),  # 指纹+临时文件清理
@@ -89,7 +86,6 @@ SCHEDULE = [
     ("name_mapping",       "10:15", "do_name_mapping", {}), # V4.5: 拼音自动名映射
     # 周报：周日 21:00
     ("evolve_weekly",      "Mon 06:07", "do_evolve_weekly", {}),  # V4 每周进化(结算反馈+溢价重算)
-    ("health_check_noon",  "13:55", "do_health_check", {}),  # 午后巡检
     ("settle_noon",        "14:00", "do_settle",      {}),  # 午后结算
     ("settle_afternoon",   "17:00", "do_settle",      {}),  # 傍晚结算
     ("clv_collect",        "12:00", "do_clv_collect", {}),  # CLV收盘采集
@@ -757,16 +753,6 @@ class PipelineOrchestrator:
                 logger.info("盘口周报已推送")
         except Exception as e:
             logger.warning("盘口周报异常: %s", e)
-
-    def do_daily_report(self):
-        """日报推送。"""
-        from src.report.daily_settlement import main as dr
-        old_argv = sys.argv
-        sys.argv = ["daily_settlement"]
-        try:
-            dr()
-        finally:
-            sys.argv = old_argv
 
     def do_bet_report(self):
         """每日已投注明细日报(2026-09-05 用户要求: 每天9点发已投注比赛明细)。"""
