@@ -612,7 +612,7 @@ def _swap_fair(fair, sub_market):
         out["home"], out["away"] = out.get("away"), out.get("home")
     if "1X" in out and "X2" in out:
         out["1X"], out["X2"] = out["X2"], out["1X"]
-    if "line" in out and sub_market in ("hc", "ht_hc"):
+    if "line" in out and sub_market in ("hc", "hc_games", "ht_hc"):
         try:
             out["line"] = -float(out["line"])
         except (TypeError, ValueError):
@@ -635,7 +635,7 @@ def fair_price_bb(home, away, sport_id, sub_market, target_line=None, status=Non
         return None
     # 主客互换时, BB 让球线对应 odds-api.io 的相反方向(线取反)
     tl = target_line
-    if swapped and target_line is not None and sub_market in ("hc", "ht_hc"):
+    if swapped and target_line is not None and sub_market in ("hc", "hc_games", "ht_hc"):
         tl = -target_line
     # 2026-09-20: 滚球 live 跳过 REST 兜底(只 WS 缓存), 保证公平价匹配≤1.5s
     use_rest = (status != 'live')

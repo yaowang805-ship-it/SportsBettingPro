@@ -799,13 +799,13 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         # 实测让球55%/大小球58%是四分盘), BB 与 Betfair 的合成口径不一致(半注挂0/半注挂0.5),
         # 线匹配算出假公平价(实测让球 EV>20% 桶 87% 是 0.25 线, 观察库让球 +13.8pp 假 edge 主因)。
         # 且结算层也无法可靠判半赢半走盘 → 与 line=0 void 同策略不采集。只采 0.5 整数倍线。
-        if sub in ("hc", "ou", "ht_ou") and mk.get("line") is not None:
+        if sub in ("hc", "hc_games", "ou", "ht_ou") and mk.get("line") is not None:
             _l = float(mk["line"])
             if abs(_l * 2 - round(_l * 2)) > 1e-6:
                 return []
         # 2026-09-20 修线错配: hc/ou 必须传 BB 的具体线(target_line), 否则公平价永远选 main line,
         # 三个不同让球线(3.17/2.14/1.48)都拿同一个 main line 公平价去比 → 虚高 +37% 假溢价。
-        _target_line = mk.get("line") if sub in ("hc", "ou", "ht_ou") else None
+        _target_line = mk.get("line") if sub in ("hc", "hc_games", "ou", "ht_ou") else None
         res = fair_price_bb(b["home_en"], b["away_en"], b["sport"], sub, target_line=_target_line, status="live")
         if not res or not res["fair"]:
             return []
@@ -814,7 +814,7 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
             idx = {"主": "home", "和": "draw", "客": "away"}
         elif sub == "ht":
             idx = {"主": "home", "和": "draw", "客": "away"}  # 上半场独赢(同 1x2 三向)
-        elif sub == "hc":
+        elif sub in ("hc", "hc_games"):
             idx = {"主": "home", "客": "away"}
         elif sub == "dc":
             idx = {"主/和": "1X", "客/和": "X2", "主/客": "12"}
@@ -829,7 +829,7 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         # hc/ou 线匹配: BB 线必须 = Betfair 线(否则比的是不同线的价, 假EV)。
         # 2026-09-22 收紧 0.25→0.01: 之前 0.25 容差允许 BB线0.5 匹配 Betfair线0.25(差0.25不被拦),
         # 是假溢价的又一处漏。线是 0.5 整数倍, 正确匹配差=0, 任何差>0.01 都是错配。
-        if sub in ("hc", "ou", "ht_ou") and mk.get("line") is not None and fair.get("line") is not None:
+        if sub in ("hc", "hc_games", "ou", "ht_ou") and mk.get("line") is not None and fair.get("line") is not None:
             if abs(float(mk["line"]) - float(fair["line"])) > 0.01:
                 return []
         ev = (bb_odds - fair_p) / fair_p * 100.0
