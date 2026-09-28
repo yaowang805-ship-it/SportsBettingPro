@@ -1122,105 +1122,6 @@ class PipelineOrchestrator:
         except Exception as e:
             logger.warning("git push 异常: %s", e)
 
-    def do_self_repair(self):
-        """V4.5: 自检+自动修复 — 在每天任务开始前修复常见问题。
-
-        检查项: 锁文件/缓存/指纹DB/API连通性/磁盘空间
-        修复项: 清理僵尸锁/过期缓存/损坏指纹/磁盘告警
-        """
-        import shutil, json as _json
-        from config.settings import send_dingtalk
-
-        logger.info("🔧 自检+自动修复开始...")
-        issues_found = []
-        issues_fixed = []
-
-        # 1) 清理僵尸锁文件 (进程已死但锁还在)
-        lock_path = SRC_DIR / "data" / "storage" / ".pipeline_daemon.lock"
-        if lock_path.exists():
-            try:
-                lock_pid = int(lock_path.read_text().strip())
-                try: os.kill(lock_pid, 0)  # 检查进程是否存在
-                except OSError:  # 进程不存在 → 僵尸锁
-                    lock_path.unlink()
-                    issues_fixed.append("僵尸锁文件已清理")
-            except: pass
-
-        # 2) 清理 __pycache__ (防止 .pyc 导致跑旧代码)
-        pyc_count = 0
-        for pyc in SRC_DIR.rglob("__pycache__"):
-            try:
-                shutil.rmtree(pyc)
-                pyc_count += 1
-            except: pass
-        if pyc_count > 0:
-            issues_fixed.append(f"清理{pyc_count}个__pycache__目录")
-
-        # 3) 指纹DB完整性检查
-        try:
-            from config.database import load_fingerprints, save_fingerprints
-            fps = load_fingerprints()
-            # 检查是否有异常空指纹或过期指纹 (>30天)
-            bad_fps = 0
-            import time as _t
-            for fp, val in list(fps.items()):
-                if isinstance(val, dict):
-                    ts = val.get("ts", 0)
-                    if ts > 0 and _t.time() - ts > 30 * 86400:
-                        del fps[fp]; bad_fps += 1
-                elif not fp or len(fp) < 10:
-                    del fps[fp]; bad_fps += 1
-            if bad_fps > 0:
-                save_fingerprints(fps)
-                issues_fixed.append(f"清理{bad_fps}条损坏/过期指纹")
-        except Exception as e:
-            issues_found.append(f"指纹DB异常: {e}")
-
-        # 4) API 连通性检查 (2026-09-23: Pin guest API 停用, 跳过 Pinnacle 连通检查)
-        from config.settings import PIN_POLLING_PAUSED
-        if PIN_POLLING_PAUSED:
-            logger.info("[self_repair] Pin 已停用, 跳过 Pinnacle 连通检查")
-        else:
-            try:
-                from src.scrapers.pinnacle_api import check_pinnacle_connectivity
-                if not check_pinnacle_connectivity(verbose=False):
-                    issues_found.append("Pinnacle API 不可达")
-            except Exception as e:
-                issues_found.append(f"Pinnacle 连通性检查失败: {e}")
-
-        try:
-            from src.scrapers.bb_api_fetcher import _ensure_token
-            token = _ensure_token()
-            if not token:
-                issues_found.append("BB API Token 缺失")
-        except Exception as e:
-            issues_found.append(f"BB Token 检查失败: {e}")
-
-        try:
-            from config.settings import send_dingtalk as _sd
-            # 2026-09-26 urgent=True: 跳过每日配额/30min重复节流, 只测钉钉真实可用性,
-            # 避免「配额用完/重复」返回False被误判成「钉钉不可用」(与实际能收到自检消息矛盾)
-            if not _sd("系统自检", "SportsBettingPro 自检消息", urgent=True):
-                issues_found.append("钉钉推送不可用")
-        except: pass
-
-        # 5) 磁盘空间检查
-        try:
-            usage = shutil.disk_usage(SRC_DIR)
-            free_gb = usage.free / (1024**3)
-            if free_gb < 1:
-                issues_found.append(f"磁盘空间不足: {free_gb:.1f}GB")
-            else:
-                logger.info(f"  磁盘: {free_gb:.1f}GB 可用")
-        except: pass
-
-        # 汇总 & 上报
-        logger.info(f"🔧 自检: {len(issues_fixed)}个修复, {len(issues_found)}个问题")
-        if issues_found:
-            _sd("系统自检异常", "🔧 自检发现问题:\n" + "\n".join(f"  ❌ {i}" for i in issues_found))
-        if issues_fixed:
-            logger.info("  已修复: " + "; ".join(issues_fixed))
-
     def do_time_calibration(self):
         """时间校准: 检查 BB API / Pinnacle / 系统时钟三方时间偏差。
 
@@ -1279,39 +1180,6 @@ class PipelineOrchestrator:
             send_dingtalk("时间校准异常", msg)
         else:
             logger.info("🕐 时间校准: 全部正常 ✅")
-
-    def do_health_check(self):
-        """V5: 全系统健康自检 — 有问题推钉钉。"""
-        try:
-            from src.monitor.health_checker import run_health_check
-            report = run_health_check(push=False, quiet=True)
-            logger.info("健康度: %s/100", report.score)
-            for i in report.issues:
-                logger.warning("  ❌ %s", i)
-            for w in report.warnings:
-                logger.warning("  ⚠️ %s", w)
-
-            # 有问题或警告时推钉钉
-            if report.issues or report.warnings:
-                lines = [f"🩺 健康度: {report.score}/100"]
-                if report.issues:
-                    lines.append(f"\n🔴 问题 ({len(report.issues)}):")
-                    for i in report.issues[:10]:
-                        lines.append(f"  ❌ {i}")
-                if report.warnings:
-                    lines.append(f"\n🟡 警告 ({len(report.warnings)}):")
-                    for w in report.warnings[:10]:
-                        lines.append(f"  ⚠️ {w}")
-                body = "\n".join(lines)
-                # 健康分低于 60 视为故障告警走 urgent, 否则算例行报告受配额约束
-                _urgent = getattr(report, "score", 100) < 60
-                if send_dingtalk(f"系统健康报告 {report.score}/100", body,
-                                 timeout=10, urgent=_urgent):
-                    logger.info("健康报告已推送")
-                else:
-                    logger.warning("健康报告未送达(配额用尽或钉钉失败), score=%s", report.score)
-        except Exception as e:
-            logger.error("健康检查异常: %s", e)
 
     # ------------------------------------------------------------------
     # 启动追赶 — 重启后补执行当天已错过的定时任务
@@ -1378,7 +1246,7 @@ class PipelineOrchestrator:
 
         # 1) 定时任务 (settle/report → 后台线程)
         _BACKGROUND_TASKS = {"settle", "report", "git_commit", "memory_update", "evolve", "incremental",
-                             "self_repair", "time_calibration", "health_check", "clv_collect",
+                             "time_calibration", "clv_collect",
                              "cleanup", "download_data", "name_mapping"}
         for name, time_str, method_name, kwargs in SCHEDULE:
             weekday, dom, hour, minute = _parse_schedule_time(time_str)
@@ -1584,11 +1452,9 @@ class PipelineOrchestrator:
         task_map = {
             "scan": self.do_full_scan,
             "settle": self.do_settle,
-            "daily_report": self.do_daily_report,
             "weekly_report": self.do_weekly_report,
             "monthly_report": self.do_monthly_report,
             "incremental": self.do_incremental,
-            "health_check": self.do_health_check,
             "evolve_daily": self.do_evolve_daily,
             "evolve_weekly": self.do_evolve_weekly,
         }
