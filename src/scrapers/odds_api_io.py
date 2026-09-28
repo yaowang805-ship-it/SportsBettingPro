@@ -29,6 +29,7 @@ _SUB_TO_BETFAIR = {
     "1x2": "ML",
     "ht": "ML HT",          # 半场独赢(Betfair有)
     "hc": "Spread",
+    "hc_games": "Spread",   # 网球让局(Game Handicap, 按局数, 2026-09-28 补)
     "ou": "Totals",
     "ht_ou": "Totals HT",
     "dc": "Double Chance",
@@ -40,6 +41,7 @@ _SUB_TO_BETFAIR = {
 _SUB_TO_SBOBET = {
     "1x2": "ML",
     "hc": "Spread",
+    "hc_games": "Spread",   # 网球让局(按局数, 2026-09-28 补)
     "ou": "Totals",
     "ht_ou": "Totals HT",
     "ht_hc": "Spread HT",   # 半场让球(Sbobet有, Betfair无对应)
@@ -142,7 +144,7 @@ def _line_spread(o, sub_market):
         legs = [("over", "layOver"), ("under", "layUnder")]
     elif sub_market == "btts":
         legs = [("yes", "layYes"), ("no", "layNo")]
-    elif sub_market == "hc":
+    elif sub_market in ("hc", "hc_games"):
         legs = [("home", "layHome"), ("away", "layAway")]
     else:
         return None  # dc/dnb 等 back-only 盘, 无 lay 价差
@@ -311,7 +313,7 @@ def fair_price(event_id, sub_market, bookmakers=None, target_line=None, use_rest
     if not m:
         return None
     # 带线的盘口(hc/ou/ht_ou)按 target_line 选线, 其余取主线(唯一一条)
-    _line_subs = ("hc", "ou", "ht_ou")
+    _line_subs = ("hc", "hc_games", "ou", "ht_ou")
     o = _select_line(m, target_line if sub_market in _line_subs else None)
     if not o:
         return None
@@ -367,7 +369,7 @@ def fair_price(event_id, sub_market, bookmakers=None, target_line=None, use_rest
             return None
         over, under = pair
         return {"over": over, "under": under, "line": line, "spread": _spread}
-    if sub_market == "hc":
+    if sub_market in ("hc", "hc_games"):
         line = o.get("hdp")
         pair = _fair_two_way(o.get("home"), o.get("layHome"), o.get("away"), o.get("layAway"))
         if line is None or pair is None:
@@ -395,7 +397,7 @@ def sbo_fair_price(event_id, sub_market, target_line=None, use_rest=True):
     m = next((x for x in (sbo or []) if x.get("name") == market_name), None)
     if not m:
         return None
-    _line_subs = ("hc", "ou", "ht_ou", "ht_hc")
+    _line_subs = ("hc", "hc_games", "ou", "ht_ou", "ht_hc")
     o = _select_line(m, target_line if sub_market in _line_subs else None)
     if not o:
         return None
@@ -406,7 +408,7 @@ def sbo_fair_price(event_id, sub_market, target_line=None, use_rest=True):
                 "away": float(o.get("away", 0) or 0)}
     elif sub_market in ("ou", "ht_ou"):
         vals = {"over": float(o.get("over", 0) or 0), "under": float(o.get("under", 0) or 0)}
-    elif sub_market in ("hc", "ht_hc"):
+    elif sub_market in ("hc", "hc_games", "ht_hc"):
         vals = {"home": float(o.get("home", 0) or 0), "away": float(o.get("away", 0) or 0)}
     else:
         return None
@@ -416,7 +418,7 @@ def sbo_fair_price(event_id, sub_market, target_line=None, use_rest=True):
     if total <= 0:
         return None
     fair = {k: round(total * v, 4) if v > 1.0 else None for k, v in vals.items()}
-    if sub_market in ("ou", "ht_ou", "hc", "ht_hc") and o.get("hdp") is not None:
+    if sub_market in ("ou", "ht_ou", "hc", "hc_games", "ht_hc") and o.get("hdp") is not None:
         fair["line"] = o.get("hdp")
     return fair
 
