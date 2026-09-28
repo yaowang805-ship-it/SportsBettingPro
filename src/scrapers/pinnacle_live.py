@@ -769,7 +769,7 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         bb, _bb_ts = fetch_bb_live_matches(platform="FB")
         _bb_ts = time.time()
     else:
-        bb, _bb_ts = get_bb_fresh_or_cached()
+        bb, _bb_ts = get_bb_fresh_or_cached(wait_for_fresh=False)  # 2026-09-28 去掉现拉, 直接读预取缓存
 
     # 收集任务(比赛×盘口)。非足球降频(2026-09-22): 非足球只每 15 轮匹配一次, 省公平价匹配任务,
     # 防 9.5s 尖峰挤占足球让球快照单(≤6s)新鲜度。非足球只收纸单攒数据, 不需要秒级。

@@ -1883,11 +1883,9 @@ class SecondLevelMonitor:
                 from src.scrapers.odds_ws import wait_change
                 _raw_changed = await asyncio.to_thread(wait_change, 0.5)
                 if _raw_changed:
-                    # 2026-09-22: 原始变动一出现就后台现拉 BB(只足球), 与 persistence 稳定期并行。
-                    # 这样 BB 价取自"sharp 动那一刻", 且稳定确认时 BB 已拉好。
                     self._raw_ws_ts = time.time()  # 记录原始WS触发时刻(2026-09-23 端到端耗时起点)
-                    from src.scrapers.pinnacle_live import trigger_fresh_bb_fetch
-                    trigger_fresh_bb_fetch()
+                    # 2026-09-28 去掉现拉 BB: 实测 2s 预取缓存 stale 率仅 14.6%(见 measure_bb_stale.py),
+                    # 现拉 BB 的 1.1s 是端到端瓶颈。去掉后直接用预取缓存比价, oddsChange=0 下单时变了就拒兜底。
                     # 2026-09-24 空转保护: WS 变动频繁时 wait_change 立即返回, 主循环快速空转烧 CPU(实测93%)。
                     # 补 sleep 0.5s 等变动稳定(与 PERSIST_MIN_AGE=0.5 对齐) —— poll 本就依赖 0.5s 稳定期,
                     # 所以 sleep 对 poll 时机零延迟, 只消除「未稳定期间的快速空转」。有持续变动时下一轮
