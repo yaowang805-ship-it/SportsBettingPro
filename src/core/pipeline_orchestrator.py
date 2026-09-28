@@ -1537,7 +1537,7 @@ def main():
     import argparse
     parser = argparse.ArgumentParser(description="Pipeline Orchestrator")
     parser.add_argument("--dry-run", action="store_true", help="不实际执行任务")
-    parser.add_argument("--task", help="执行单个任务后退出 (scan|settle|incremental|daily_report|weekly_report|monthly_report|health_check)")
+    parser.add_argument("--task", help="执行单个任务后退出 (scan|settle|incremental|weekly_report|monthly_report)")
     args = parser.parse_args()
 
     orch = PipelineOrchestrator(dry_run=args.dry_run)
