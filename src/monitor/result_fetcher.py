@@ -257,18 +257,18 @@ def determine_result(bet: dict, match_result: dict) -> tuple:
     sub_market = bet.get("sub_market", "1x2")
     designation = bet.get("designation", "")
 
-    # 网球: hc(让盘)/ou(大小)的线是局数(如"让盘+1.5局""大分22.5局"), 用总局数判定;
-    # 独赢(1x2)用盘数(home_score 本身就是盘分)。BB getMatchDetail 会额外给 games_home/games_away。
-    # (2026-08-26 之前 BB 拿不到网球比分, 网球 hc/ou 要么 ESPN 要么超时作废)
-    # ⚠️ 2026-09-13 审计: 网球有两个让球盘——让盘(Set Handicap, mty=5004, 应按盘数) vs
-    #   让局(Game Handicap, mty=5002, 应按局数)。此处把 hc/ou 都按局数结算, 若 BB 的"让盘"
-    #   实为盘数让球, 则让盘被误按局数结算。且滚球路径 _settle_paper_bets 用 home_score(=盘数),
-    #   与本处相反。需 BB 网球实盘订单交叉验证后才能定论(当前无网球实盘, 见 [[cross-sport-half-markets-20260828]])。
-    if bet.get("sport") == "tennis" and sub_market in ("hc", "ou"):
+    # 网球: 让局(Game Handicap, mty=5002)/总局数(Total Games, mty=5003)的线是局数, 用总局数判定;
+    # 独赢(1x2)/让盘(Set Handicap, mty=5004)的线是盘数, 用盘数(home_score 本身就是盘分)。
+    # BB getMatchDetail 会额外给 games_home/games_away(局数)。
+    # (2026-09-28 修: 之前把 hc 也按局数, 但 BB 让盘(5004)是按盘数让球, 被误按局数结算。
+    #  现在 让盘=hc(盘数)、让局=hc_games(局数)、总局数=ou(局数) 各归各)。
+    if bet.get("sport") == "tennis" and sub_market in ("hc_games", "ou"):
         _gh = match_result.get("games_home")
         _ga = match_result.get("games_away")
         if _gh is not None and _ga is not None:
             home_score, away_score = _gh, _ga
+        if sub_market == "hc_games":
+            sub_market = "hc"  # 让局与让盘共用让球判定逻辑, 归一化后走下面 hc 分支
 
     # V5.10: 半场盘口改用真实半场比分判定。
     # 以前这里对 ht/ht_hc/ht_ou/ht_dc 一律 return "void"(注释写"ESPN 不提供半场比分"),
