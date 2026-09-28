@@ -1467,17 +1467,32 @@ class SecondLevelMonitor:
                 notified = set(json.loads(LIVE_SETTLED_FILE.read_text()))
             except Exception:
                 pass
+        # 2026-09-28 修 size:20 漏抓 bug: 之前只拉最新 20 条已结算, 超出窗口的旧单永久漏掉
+        # (实测 261/1105=24% 捕获率, 独赢 0%)。改分页拉全量: size=100, current 翻页直到拉满 total。
+        records = []
         try:
-            r = _session().post(f"{dom}/v1/order/new/bet/list",
-                                json={"languageType": "CMN", "isSettled": True, "current": 1, "size": 20},
-                                headers={"Content-Type": "application/json", "Authorization": tok,
-                                         "User-Agent": _UA}, timeout=15, verify=False)
-            d = r.json()
-            if d.get("code") != 0:
-                return
+            _page = 1
+            while _page <= 20:  # 最多 20 页(2000条), 防异常死循环
+                r = _session().post(f"{dom}/v1/order/new/bet/list",
+                                    json={"languageType": "CMN", "isSettled": True, "current": _page, "size": 100},
+                                    headers={"Content-Type": "application/json", "Authorization": tok,
+                                             "User-Agent": _UA}, timeout=15, verify=False)
+                d = r.json()
+                if d.get("code") != 0:
+                    break
+                _data = d.get("data") or {}
+                _recs = _data.get("records") or []
+                if not _recs:
+                    break
+                records.extend(_recs)
+                _total = _data.get("total", 0)
+                if _total > 0 and len(records) >= _total:
+                    break
+                _page += 1
         except Exception:
+            pass
+        if not records:
             return
-        records = (d.get("data") or {}).get("records") or []
         # 滚动预算: 已结算的滚球订单从"未结算额"里释放, 结算的钱可继续投滚球
         settled_info = {}  # oid -> 投注时 info(供结算明细关联 fair/ev)
         if self._live_bets:
