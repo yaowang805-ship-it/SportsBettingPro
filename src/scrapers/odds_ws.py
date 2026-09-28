@@ -34,7 +34,9 @@ _change_queue = []  # 变动事件队列 [(event_id, bookie, ts)], 供 WS 触发
 _change_event = threading.Event()  # 变动事件唤醒信号(WS 变动时 set, 消费者 wait 省 sleep 延迟)
 
 
-PERSIST_MIN_AGE = 1.5  # persistence(持续~1快照): 变动需稳定该秒数才发射(过滤瞬时变动)。
+PERSIST_MIN_AGE = 0.5  # persistence(持续~1快照): 变动需稳定该秒数才发射(过滤瞬时变动)。
+# 2026-09-28 1.5→0.5: 实测瞬时抖动(<0.5s连续变动)只占2.8%, 0.5~1.5s只有0.2%真实移动(见 measure_price_jitter.py)。
+# 0.5s正好卡在"滤抖动不误伤"的位置, 端到端省1s。
 # 2026-09-27 0.5→1.5: 用户要求过滤更彻底。稳定期与 BB 拉取(~1.8s)并行, 端到端由 BB 拉取决定,
 # 提到 1.5s 不增加端到端耗时, 但能过滤更长时间的瞬时抖动。SBO同向确认兜底防假信号。
 
