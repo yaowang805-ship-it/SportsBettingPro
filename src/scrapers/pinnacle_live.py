@@ -331,7 +331,7 @@ _LIVE_CN_CACHE = {"ts": 0.0, "data": {}}
 _LIVE_CN_LOCK = threading.Lock()
 
 
-def _fetch_live_cn(sport_ids=(1, 3, 5, 7, 13, 15), platform="BB"):
+def _fetch_live_cn(sport_ids=(1, 3, 5, 7, 13, 2), platform="BB"):
     """后台拉滚球 CMN 中文名(不占下单链路), 更新 _LIVE_CN_CACHE {match_id: (home_cn, away_cn, league_cn)}。"""
     global _LIVE_CN_CACHE
     try:
@@ -372,7 +372,7 @@ def _fetch_live_cn(sport_ids=(1, 3, 5, 7, 13, 15), platform="BB"):
         pass
 
 
-def start_cn_prefetch(interval=60.0, sport_ids=(1, 3, 5, 7, 13, 15), platform="BB"):
+def start_cn_prefetch(interval=60.0, sport_ids=(1, 3, 5, 7, 13, 2), platform="BB"):
     """启动后台 CMN 中文名预取线程(推送全中文, 2026-09-25)。"""
     def _loop():
         while True:
@@ -384,11 +384,12 @@ def start_cn_prefetch(interval=60.0, sport_ids=(1, 3, 5, 7, 13, 15), platform="B
     _threading.Thread(target=_loop, daemon=True, name="cn-prefetch").start()
 
 
-def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 13, 15), platform="BB"):
+def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 13, 2), platform="BB"):
     """BB/FB 滚球比赛。EN 拉英文队名(直配 Pin) + 提取盘口; CMN 拉中文队名/联赛名(展示用)。
 
-    2026-09-24: 滚球高频(2s轮询)只收 6 个有场次的主运动(足1/篮3/网5/棒7/排13/乒乓15)减CPU/连接池负担;
-    早盘低频(--all-sports)才是全量收集。滚球其余运动(美足/冰球/MMA/拳击/羽毛球)几乎无 live 场次, 收也白收。
+    2026-09-28: 滚球高频(2s轮询)只收 6 个有场次的主运动(足1/篮3/网5/棒7/排13/冰球2)减CPU/连接池负担;
+    乒乓15已移除(7天观察库0条+EV机会, 只有局级盘无全场盘可比价), 换冰球2(主流+全套盘口)。
+    早盘低频(--all-sports)才是全量收集。滚球其余运动(美足/MMA/拳击/羽毛球)几乎无 live 场次, 收也白收。
 
     platform="BB" 用 BB 域名, "FB" 用 FB 域名(api.5c4r3.com)。两者同一账户 user-token,
     但 match_id 各自独立(FB 的比赛要用 FB 域名 getMatchDetail 结算)。

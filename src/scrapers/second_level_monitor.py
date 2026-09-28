@@ -1802,7 +1802,7 @@ class SecondLevelMonitor:
                 markets=_ws_mkts)
             self._odds_ws.start()
             self._odds_ws2 = OddsWSClient(
-                sport="volleyball,table-tennis",
+                sport="volleyball,ice-hockey",
                 markets=_ws_mkts)
             self._odds_ws2.start()
             print("[slm] 已启动 odds-api.io WebSocket 实时赔率订阅(6运动 live+prematch, ML/Spread/Totals/DC/BTTS, 拆4+2两条连接)", flush=True)
