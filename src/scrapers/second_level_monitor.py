@@ -1517,6 +1517,7 @@ class SecondLevelMonitor:
                 pending = json.loads(PENDING_SETTLE_FILE.read_text())
             except Exception:
                 pending = []
+        new_settled_records = []  # 2026-09-28 批量追加结算流水(修每条全量读改写+非原子丢数据)
         for o in records:
             oid = o.get("id")
             if not oid or oid in notified:
@@ -1546,7 +1547,16 @@ class SecondLevelMonitor:
             })
             new_notified.add(oid)
             print(f"[slm] 结算收集: {'✅赢' if won else '❌输'} {mn} {mgn}-{on} | {pnl:+.0f}", flush=True)
-            # 追加到实盘结算流水(带赔率区间, 供按格子拆盈亏, 2026-09-19)
+            # 收集到 new_settled_records(循环外批量+原子写, 2026-09-28)
+            new_settled_records.append({
+                "ts": time.time(), "oid": str(oid), "mn": mn, "mgn": mgn,
+                "on": on, "od": od, "interval": _iv, "sat": stake,
+                "uwl": pnl, "won": won, "sid": sid,
+                "verify": bool(_bi.get("verify", False)),  # 是否触发验价(2026-09-19)
+            })
+        # 批量+原子写结算流水(2026-09-28 修丢数据): 之前每条订单都全量 read-modify-write,
+        # 非原子(进程崩 mid-write 截断) + O(n²)。改为循环外一次: 读全量→追加全部新单→剪30天→原子写(tmp+replace)。
+        if new_settled_records:
             try:
                 _log = []
                 if SETTLED_LOG_FILE.exists():
@@ -1554,15 +1564,12 @@ class SecondLevelMonitor:
                         _log = json.loads(SETTLED_LOG_FILE.read_text())
                     except Exception:
                         _log = []
-                _log.append({
-                    "ts": time.time(), "oid": str(oid), "mn": mn, "mgn": mgn,
-                    "on": on, "od": od, "interval": _iv, "sat": stake,
-                    "uwl": pnl, "won": won, "sid": sid,
-                    "verify": bool(_bi.get("verify", False)),  # 是否触发验价(2026-09-19)
-                })
+                _log.extend(new_settled_records)
                 _cutoff = time.time() - 30 * 86400  # 只保留最近 30 天
                 _log = [x for x in _log if x.get("ts", 0) > _cutoff]
-                SETTLED_LOG_FILE.write_text(json.dumps(_log, ensure_ascii=False))
+                _tmp = SETTLED_LOG_FILE.with_suffix(".tmp")
+                _tmp.write_text(json.dumps(_log, ensure_ascii=False))
+                _tmp.replace(SETTLED_LOG_FILE)  # 原子替换(rename)
             except Exception:
                 pass
         if pending:
