@@ -138,7 +138,7 @@ BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足
 BB_SPORT_EN = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "american_football",
                2: "ice_hockey", 13: "volleyball", 15: "pingpong", 18: "mma", 19: "boxing",
                47: "badminton"}  # 2026-09-27 补排球/乒乓/冰球等(之前只5运动, 排球乒乓样本丢失运动标签)
-BB_SUB_TO_SM = {"over_under": "ou", "handicap": "hc", "opportunities": "1x2"}
+BB_SUB_TO_SM = {"over_under": "ou", "handicap": "hc", "handicap_games": "hc_games", "opportunities": "1x2"}
 MARKET_RELEASE_FILE = ROOT / "data" / "storage" / "market_release.json"
 OBS_STATE_FILE = ROOT / "data" / "storage" / "observe_release_state.json"
 DAILY_STAKE_LIMIT = 1000  # 新释放盘口当日累计投注额上限(2026-09-12 用户要求), 次日实盘ROI>4%解除
@@ -1637,10 +1637,12 @@ class SecondLevelMonitor:
 
     def _opp_to_sig(self, opp):
         """fetch_live_opportunities 的 opp dict → 下单 sig dict(对齐 _try_live_auto_bet)。"""
-        sub_map = {"1x2": "opportunities", "hc": "handicap", "ou": "over_under", "dc": "double_chance"}
+        sub_map = {"1x2": "opportunities", "hc": "handicap", "hc_games": "handicap_games",
+                   "ou": "over_under", "dc": "double_chance"}
         desig_map = {
             "1x2": {"主": "主胜", "和": "和局", "客": "客胜"},
             "hc": {"主": "让球主胜", "客": "让球客胜"},
+            "hc_games": {"主": "让局主胜", "客": "让局客胜"},  # 网球让局(按局数, 2026-09-28)
             "ou": {"大": "大球", "小": "小球"},
             "dc": {"主": "主/和", "客": "客/和", "和": "主/客"},
             "ht": {"主": "上半场主胜", "和": "上半场和局", "客": "上半场客胜"},
