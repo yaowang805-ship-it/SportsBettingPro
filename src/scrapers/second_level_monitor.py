@@ -1088,7 +1088,8 @@ class SecondLevelMonitor:
         if global_bet_cooldown(15, 45) > 0:
             return
         # (2026-09-22 取消余额<1000 熔断——用户指令: 符合门槛就投, 不因余额低停注)
-        print(f"  🎯 滚球下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake}", flush=True)
+        print(f"  🎯 滚球下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake} "
+              f"[sub={sig.get('sub')} market_id={market_id} option_type={sig.get('option_type')}]", flush=True)
         # 2026-09-19 时间条件验价(职业团队做法): 从 BB 赔率拉取(bb_ts)到此刻超过 REVERIFY_THRESHOLD 秒
         # 就重拉 BB 当前赔率验价——赔率可能已朝不利方向变动(逆向选择), 抢窗口期内(≤阈值)直接下单省 1-5s。
         _detect_ts = sig.get("bb_ts") or _t0
