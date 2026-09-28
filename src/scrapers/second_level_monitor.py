@@ -1133,6 +1133,7 @@ class SecondLevelMonitor:
         _record_bet_result(code, latency=_t_http)  # 2026-09-21 gubbing 限注监控: 记下单成败 + 成交延迟
         if code == 14010:
             self._invalidate_token_cache()
+        self._probe_token_async()  # 2026-09-28 token 探针移到投注后(后台, 不占下单关键路径)
         if code == 0:
             from src.betting.bb_auto_bet import record_sub_market_bet
             record_sub_market_bet(sig["match_id"], sig.get("sub"))
@@ -1382,14 +1383,13 @@ class SecondLevelMonitor:
         if rec.get(str(match_id), {}).get(str(market_id), 0.0) > 0:
             print(f"  ⏭️ 已下过注, 跳过 {tag}", flush=True)
             return
-        if not self._token_ok():
-            return
         print(f"  🎯 秒级下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake} (EV-Kelly)", flush=True)
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
             match_id=match_id, check_limit=True, verify_price=False)
         if code == 14010:
             self._invalidate_token_cache()
+        self._probe_token_async()  # 2026-09-28 token 探针移到投注后(后台)
         if code == 0:
             from src.betting.bb_auto_bet import record_sub_market_bet
             record_sub_market_bet(match_id, sig.get("sub"))
@@ -1601,6 +1601,15 @@ class SecondLevelMonitor:
                 SETTLE_PUSH_TS_FILE.write_text(str(self._last_settle_push))  # 落盘, 重启不归零
             except OSError:
                 pass
+
+    def _probe_token_async(self):
+        """后台线程验 token + 自动续期(2026-09-28 移出下单关键路径, 探针不阻塞投注)。
+
+        下单直接用 read_token 读的 token; 若失效下单会 14010 → _invalidate_token_cache 兜底。
+        本方法在投注后异步跑, 验 token + 失效时续期, 供下一单用, 不占这单的端到端耗时。
+        """
+        import threading as _threading
+        _threading.Thread(target=self._token_ok, daemon=True, name="token-probe").start()
 
     def _token_ok(self):
         """下单前探 token 有效性(10min 缓存)。失效自动续期(读浏览器), 续不到发钉钉提醒。"""
