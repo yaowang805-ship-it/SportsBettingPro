@@ -1091,8 +1091,6 @@ class SecondLevelMonitor:
         _d = self._attempted.get(str(sig["match_id"]), {})
         if time.time() - _d.get(str(market_id), 0) < 300:
             return
-        if not self._token_ok():
-            return
         # 非阻塞限频: 距上次下单 < 随机间隔(10-15s)则跳过, 下一轮 2s 后重新评估(用新鲜赔率)
         if time.time() - self._last_bet_time < self._bet_delay:
             return
