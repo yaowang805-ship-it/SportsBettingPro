@@ -717,6 +717,11 @@ class SecondLevelMonitor:
             desig = b.get("designation", ""); line = b.get("line")
             stake = float(b.get("stake", 0)); odds = float(b.get("bb_odds", 0))
             home, away = sc[0], sc[1]
+            # 网球: 让局(hc_games)/总局数(ou)的线是局数, 用总局数判定(独赢/让盘用盘数)。
+            if b.get("sport") == 5 and desig in ("让局主胜", "让局客胜", "大球", "小球"):
+                _gh = detail.get("games_home"); _ga = detail.get("games_away")
+                if _gh is not None and _ga is not None:
+                    home, away = _gh, _ga
             # 判输赢。1x2(主/和/客)是三向盘、没有走盘: 打平对主胜/客胜是输、对和局是赢。
             # 走盘(push 退款)只存在 hc/ou: 让球后打平 / 总分恰等于盘口线。
             if desig == "主胜":
@@ -760,6 +765,14 @@ class SecondLevelMonitor:
                         result = "push"
                     else:
                         result = "won" if diff > 0 else "lost"
+            elif desig in ("让局主胜", "让局客胜"):  # 网球让局(全场让局, 按局数)
+                if line is None:
+                    continue
+                diff = ((home - away) + line) if desig == "让局主胜" else ((away - home) + line)
+                if abs(diff) < 0.0001:
+                    result = "push"
+                else:
+                    result = "won" if diff > 0 else "lost"
             elif desig in ("让球主胜", "让球客胜", "大球", "小球"):
                 if line is None:
                     continue  # hc/ou 缺 line, 跳(旧记录)
