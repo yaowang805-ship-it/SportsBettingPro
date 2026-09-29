@@ -410,12 +410,11 @@ def _close_direction_fair(close, sub_market, designation, swapped=False):
 def _fetch_close_odds_betfair(entries):
     """为 pending entries 拉取 Betfair 收盘价作为收盘价, 算真实 CLV(2026-09-21 替代 Pin 版)。
 
-    Pin 已暂停(15min CDN 陈旧), 收盘价改用 odds_ws 的 closing 快照(WS status 通道在
-    开赛那一刻存的 Betfair 赔率)。只处理赛前 [CLV_WINDOW_BEFORE_MIN, CLV_WINDOW_BEFORE_MAX]
-    分钟窗口内的记录。
+    2026-09-29 改(方案1 REST补拍): odds_ws 的 closing 快照是「结束前价」(deleted 时存)且
+    status 通道几乎不发 live → closing 快照几乎为空。改成在赛前窗口内直接用 fair_price(读 WS
+    实时缓存, REST 兜底)拉当时的 Betfair 价当收盘价(赛前 1~45 分钟, 接近开赛收盘价)。
     """
-    from src.scrapers.odds_api_io import match_event_orient, _SPORT_ID_TO_SLUG
-    from src.scrapers.odds_ws import closing_fair_price as _betfair_close
+    from src.scrapers.odds_api_io import match_event_orient, _SPORT_ID_TO_SLUG, fair_price
 
     _SLUG_TO_ID = {v: k for k, v in _SPORT_ID_TO_SLUG.items()}
     now_epoch = time.time()
@@ -426,9 +425,9 @@ def _fetch_close_odds_betfair(entries):
         if not match_epoch:
             continue
         minutes_to_match = (match_epoch - now_epoch) / 60
-        # 2026-09-29 修: Betfair closing 快照在开赛(status→live)或结算(deleted)时才捕获,
-        # 所以要在开赛后(minutes_to_match<=0)采集, 不是赛前(赛前快照还没生成→恒采0)。
-        if minutes_to_match > 0 or minutes_to_match < -240:
+        # 2026-09-29 修(方案1 REST补拍): 不依赖 WS closing 快照(那是「结束前价」且几乎为空),
+        # 在赛前窗口内直接拉当时 Betfair 实时价当收盘价(接近开赛收盘价)。
+        if minutes_to_match < CLV_WINDOW_BEFORE_MIN or minutes_to_match > CLV_WINDOW_BEFORE_MAX:
             continue
 
         sport_id = _SLUG_TO_ID.get(e.get("sport", "football"), 1)
@@ -438,7 +437,7 @@ def _fetch_close_odds_betfair(entries):
         eid, swapped = match_event_orient(e.get("home", ""), e.get("away", ""), sport_id, status=None)
         if not eid:
             continue
-        close = _betfair_close(eid, sub_market)
+        close = fair_price(eid, sub_market)
         if not close:
             continue
         fair_p = _close_direction_fair(close, sub_market, designation, swapped)
