@@ -72,7 +72,7 @@ def _load_missed():
     missed, seen = [], set()
     with open(TRACKING_FILE, encoding="utf-8-sig") as f:
         for r in csv.DictReader(f):
-            ep = int(r.get("match_epoch") or 0)
+            ep = int(float(r.get("match_epoch") or 0))
             if not ep or (ep - now) / 60 >= STARTED_MARGIN_MIN:
                 continue  # 没开赛的交给实时采集器, 别抢
             k = _key(r)
