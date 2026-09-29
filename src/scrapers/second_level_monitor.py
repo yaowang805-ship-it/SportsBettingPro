@@ -138,7 +138,8 @@ BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足
 BB_SPORT_EN = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "american_football",
                2: "ice_hockey", 13: "volleyball", 15: "pingpong", 18: "mma", 19: "boxing",
                47: "badminton"}  # 2026-09-27 补排球/乒乓/冰球等(之前只5运动, 排球乒乓样本丢失运动标签)
-BB_SUB_TO_SM = {"over_under": "ou", "handicap": "hc", "handicap_games": "hc_games", "opportunities": "1x2"}
+BB_SUB_TO_SM = {"over_under": "ou", "handicap": "hc", "handicap_games": "hc_games", "opportunities": "1x2",
+                "double_chance": "dc", "btts": "btts"}  # 2026-09-29 加双机会/双边进球(能结算, 用完整desig作方向)
 MARKET_RELEASE_FILE = ROOT / "data" / "storage" / "market_release.json"
 OBS_STATE_FILE = ROOT / "data" / "storage" / "observe_release_state.json"
 DAILY_STAKE_LIMIT = 1000  # 新释放盘口当日累计投注额上限(2026-09-12 用户要求), 次日实盘ROI>4%解除
