@@ -378,15 +378,24 @@ def check_balance_ok(min_balance=BALANCE_MIN):
     return ok
 
 
+_session_singleton = None  # 2026-09-30 单例 session: 复用 keep-alive 连接, 省每次 TLS 握手 ~0.7s
+
+
 def _session():
-    s = requests.Session()
-    s.trust_env = False
-    s.proxies = {"http": "", "https": ""}
-    # 2026-09-24 增大连接池(同 bb_api_fetcher): 避免并发请求时连接反复重建+TLS握手阻塞
-    from requests.adapters import HTTPAdapter as _HTTPAdapter
-    s.mount("https://", _HTTPAdapter(pool_connections=50, pool_maxsize=50))
-    s.mount("http://", _HTTPAdapter(pool_connections=50, pool_maxsize=50))
-    return s
+    global _session_singleton
+    if _session_singleton is None:
+        s = requests.Session()
+        s.trust_env = False
+        s.proxies = {"http": "", "https": ""}
+        # 2026-09-24 增大连接池(同 bb_api_fetcher): 避免并发请求时连接反复重建+TLS握手阻塞。
+        # 2026-09-30 改单例: 之前每次新建 session 连接池空转(无历史连接可复用), 每次 BB 请求
+        # (下单/验价/预取) 都重做 TLS 握手 ~0.7s, 下单 HTTP ~1.2s。单例后第2次起复用连接,
+        # 实测 ~0.65s。urllib3 连接池按 host 键控, BB/FB 不同域名自动分池不冲突。
+        from requests.adapters import HTTPAdapter as _HTTPAdapter
+        s.mount("https://", _HTTPAdapter(pool_connections=50, pool_maxsize=50))
+        s.mount("http://", _HTTPAdapter(pool_connections=50, pool_maxsize=50))
+        _session_singleton = s
+    return _session_singleton
 
 
 def fetch_current_odds(market_id, match_id, option_type, token=None, domain=None):
