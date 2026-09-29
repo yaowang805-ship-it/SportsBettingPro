@@ -1013,8 +1013,11 @@ class SecondLevelMonitor:
         _sport = sig["match"].get("sport")
         _sub = sig.get("sub")
         _desig = sig.get("desig")
-        # 方向归一化(大/小/平/客/主), 与 compute_market_release._direction 同口径
-        if "大" in _desig:
+        # 方向归一化(大/小/平/客/主), 与 compute_market_release._direction 同口径。
+        # 双机会(dc)/双边进球(btts) 用完整 desig 作方向(主/和、主/客、双方进球等), 否则"主/客"和"客/和"撞车。
+        if _sub in ("double_chance", "btts"):
+            _dr = _desig
+        elif "大" in _desig:
             _dr = "大"
         elif "小" in _desig:
             _dr = "小"
