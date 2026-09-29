@@ -1,7 +1,31 @@
 {
-  "balance": 16802.53,
+  "balance": 16772.53,
   "initial_bankroll": 20000.0,
-  "pending_bets": [],
+  "pending_bets": [
+    {
+      "id": "bb_vs_pin_1x2_科摩罗_纳米比亚_上半场客胜",
+      "sport": "football",
+      "league": "非洲国家杯2027资格赛",
+      "home_team": "科摩罗",
+      "away_team": "纳米比亚",
+      "home_cn": "科摩罗",
+      "away_cn": "纳米比亚",
+      "market": "1x2",
+      "market_type": "上半场客胜",
+      "sub_market": "ht",
+      "line": "",
+      "odds": 6.8,
+      "stake": 30,
+      "model_prob": 0.1684,
+      "ev_pct": 14.49,
+      "pin_odds": 0,
+      "fair_price": 5.9395,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1790683200.0,
+      "created_at": "2026-09-29T07:05:27.536257+00:00",
+      "track_only": false
+    }
+  ],
   "settled": {
     "bb_vs_pin_handicap_托利马_约森独立队_让球客胜(0)": "won",
     "bb_vs_pin_1x2_累西腓航海_塞阿拉_和局": "lost",
@@ -9249,9 +9273,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-09-18",
-    "used": 270.0,
-    "bets": 6
+    "date": "2026-09-29",
+    "used": 30.0,
+    "bets": 1
   },
   "updated": null
 }
