@@ -440,9 +440,25 @@ _events_index_cache = {}  # {(sport_slug, status): (ts, (events, exact_idx))}, e
 _EVENTS_TTL = 300
 
 
+# 常见国家队别名 → 规范名(2026-09-29 补, 早盘队名匹配漏 Czech Republic/Czechia 这类别名)
+_COUNTRY_ALIAS = {
+    "czechrepublic": "czechia", "korearepublic": "southkorea", "republicofkorea": "southkorea",
+    "koreadpr": "northkorea", "dprkorea": "northkorea", "chinapr": "china",
+    "unitedstates": "usa", "unitedstatesofamerica": "usa", "greatbritain": "england",
+    "cotedivoire": "ivorycoast", "capeverde": "caboverde",
+}
+
+
 def _norm_team(name):
     import re
-    return re.sub(r'[^a-z0-9]', '', (name or '').lower())
+    n = re.sub(r'[^a-z0-9]', '', (name or '').lower())
+    # 俱乐部后缀归一(与 pinnacle_live._norm_team 同口径, 2026-09-29 补): FC/SC/CF 等去后缀
+    for suf in ("footballclub", "club", "cfc", "afc", "fc", "sc", "cf", "cd", "ac"):
+        if n.endswith(suf) and len(n) > len(suf) + 3:
+            n = n[:-len(suf)]
+            break
+    n = n.replace("saint", "st")
+    return _COUNTRY_ALIAS.get(n, n)
 
 
 # 女足/青年队/预备队联赛关键词: 队名相似(如 Liverpool FC vs Liverpool LFC 女足)会误配,
