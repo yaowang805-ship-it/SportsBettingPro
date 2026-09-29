@@ -1692,8 +1692,13 @@ class SecondLevelMonitor:
             "sbo_direction": opp.get("sbo_direction", "same"),  # same/diff/none(供统计验证)
         }
 
-    def _poll_live(self):
-        """轮询 getList type=1 滚球赔率 + 匹配 Sbobet/Betfair 公平价 → 打信号/自动下单。返回机会数。"""
+    def _poll_live(self, poll_ts=None):
+        """轮询 getList type=1 滚球赔率 + 匹配 Sbobet/Betfair 公平价 → 打信号/自动下单。返回机会数。
+
+        poll_ts(2026-09-30 口径修正): 本轮 poll 的真实触发时刻。WS 触发=原始 WS 变动时刻(_raw_ws_ts),
+        轮询周期触发=本轮开始时刻。之前硬编码 _raw_ws_ts, 轮询触发的单会把陈旧的 WS 时刻混进
+        「总耗时」(poll_ts→下单完成), 轮询间隔(2s)被算进端到端耗时虚高。
+        """
         from src.scrapers.pinnacle_live import fetch_live_opportunities_oa
         from concurrent.futures import TimeoutError as _FutureTimeout
         global _POLL_EXECUTOR
@@ -1706,7 +1711,8 @@ class SecondLevelMonitor:
         opps = []
         try:
             _fut = _POLL_EXECUTOR.submit(
-                fetch_live_opportunities_oa, self.threshold, poll_ts=self._raw_ws_ts or None)
+                fetch_live_opportunities_oa, self.threshold,
+                poll_ts=poll_ts or self._raw_ws_ts or None)
             opps = _fut.result(timeout=90)
         except _FutureTimeout:
             print("[slm] ⚠️ 比价拉取超时(>90s), 本轮跳过(防假死)", flush=True)
@@ -1895,7 +1901,10 @@ class SecondLevelMonitor:
             if _ws_changed or now - last_poll >= refresh_every:
                 try:
                     _t_round0 = time.time()
-                    n = self._poll_live()
+                    # 2026-09-30 口径修正: poll_ts 传「本单真实触发时刻」。WS 触发用 _raw_ws_ts(真实WS变动),
+                    # 轮询周期触发用本轮开始 _t_round0。之前 _poll_live 内部硬编码 _raw_ws_ts, 轮询触发的单
+                    # 会用陈旧的 WS 时刻 → 「总耗时」混入轮询间隔(2s)虚高。
+                    n = self._poll_live(poll_ts=(self._raw_ws_ts if _ws_changed else _t_round0))
                     _t_poll = time.time() - _t_round0
                     if n:
                         print(f"[slm] 本轮发现 {n} 个滚球机会")
