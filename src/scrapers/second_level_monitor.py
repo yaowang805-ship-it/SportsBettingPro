@@ -1886,7 +1886,9 @@ class SecondLevelMonitor:
             except Exception:
                 _changes = []
             _ws_changed = bool(_changes)
-            if (_ws_changed and now - self._ws_trigger_ts >= 3.0) or now - last_poll >= refresh_every:
+            # 2026-09-29 去掉 3.0s 节流 + persistence: sharp 动立即触发 poll(WS 变动即比价下单),
+            # 不再等 3s 节流/0.5s 稳定。oddsChange=0 兜底(变了就拒), 防假溢价靠 SBO 同向 + 快照年龄。
+            if _ws_changed or now - last_poll >= refresh_every:
                 try:
                     _t_round0 = time.time()
                     n = self._poll_live()
@@ -1894,8 +1896,6 @@ class SecondLevelMonitor:
                     if n:
                         print(f"[slm] 本轮发现 {n} 个滚球机会")
                     last_poll = now
-                    if _ws_changed:
-                        self._ws_trigger_ts = now
                     poll_count += 1
                     # 观察库结算: 每 60s 结一批(独立时间戳, 不依赖 poll_count — pin_live 超时拖慢轮询,
                     # 依赖 poll_count%15 会把 1130 条拖到 2-3h 才结完)
