@@ -1916,9 +1916,8 @@ class SecondLevelMonitor:
                         print(f"[slm] ⚠️ 本轮总耗时 {_t_round:.0f}s(>60s): poll {_t_poll:.0f}s", flush=True)
                 except Exception as e:
                     print(f"[slm] 轮询异常: {type(e).__name__} {str(e)[:80]}", flush=True)
-            # 早盘 WS 触发(独立节流)
-            if _ws_changed and now - self._early_ws_ts >= 3.0:
-                self._early_ws_ts = now
+            # 早盘 WS 触发(2026-09-29 去掉 3.0s 节流, 与滚球统一: sharp 动立即单场比价)
+            if _ws_changed:
                 # 2026-09-26 独立线程池+30s超时(根治: 卡住不占默认池)
                 try:
                     await _run_task(self._consume_early_ws_changes, _changes, timeout=30, tag="早盘WS触发")
