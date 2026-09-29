@@ -426,7 +426,9 @@ def _fetch_close_odds_betfair(entries):
         if not match_epoch:
             continue
         minutes_to_match = (match_epoch - now_epoch) / 60
-        if minutes_to_match < CLV_WINDOW_BEFORE_MIN or minutes_to_match > CLV_WINDOW_BEFORE_MAX:
+        # 2026-09-29 修: Betfair closing 快照在开赛(status→live)或结算(deleted)时才捕获,
+        # 所以要在开赛后(minutes_to_match<=0)采集, 不是赛前(赛前快照还没生成→恒采0)。
+        if minutes_to_match > 0 or minutes_to_match < -240:
             continue
 
         sport_id = _SLUG_TO_ID.get(e.get("sport", "football"), 1)
