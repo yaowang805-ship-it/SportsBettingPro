@@ -539,6 +539,9 @@ def _notify_ip_ban():
 
 def _maybe_notify_recovered():
     """解禁后发一条恢复通知(封禁告警发出过才发, 只发一次)。"""
+    from config.settings import PIN_POLLING_PAUSED
+    if PIN_POLLING_PAUSED:
+        return  # 2026-09-29: Pin 已停用(切 Betfair), 不再发 Pin 恢复通知(与 _notify_ip_ban 对齐)
     _throttle_file = DATA_DIR / ".ip_ban_notify.txt"
     _recovered_file = DATA_DIR / ".ip_ban_recovered.txt"
     if not _throttle_file.exists():

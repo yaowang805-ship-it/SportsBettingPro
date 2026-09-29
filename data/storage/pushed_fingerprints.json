@@ -1,12 +1,1 @@
-{
-  "football|Africa Cup of Nations 2027 Qualification|Comoros|Namibia|上半场客胜|ht|2026-09-29": {
-    "ev": 14.49,
-    "bb": 6.8,
-    "ts": 1790665604.0650299
-  },
-  "football|UEFA Nations League C|Bulgaria|Estonia|上半场客胜|ht|2026-09-30": {
-    "ev": 9.77,
-    "bb": 6.9,
-    "ts": 1790666009.075407
-  }
-}
+{"football|Africa Cup of Nations 2027 Qualification|Comoros|Namibia|上半场客胜|ht|2026-09-29": {"ev": 14.49, "bb": 6.8, "ts": 1790665604.0650299}, "football|UEFA Nations League C|Bulgaria|Estonia|上半场客胜|ht|2026-09-30": {"bb": 6.9, "ev": 9.77, "fair": 6.2857, "pin": 0, "ts": 1790666016.0666728, "kickoff": 1790707500.0, "repush_count": 0}}
