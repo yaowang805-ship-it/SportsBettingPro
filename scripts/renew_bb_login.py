@@ -86,7 +86,13 @@ def main():
         # 1. 读当前 st-auth
         ls = _read_ls(pg)
         st = ls.get("st-auth", "")
-        dom = (ls.get("st-domain", "") or "https://api.infv1.com").rstrip("/")
+        # 2026-09-30: BB 切域名 invf1→nsvip9, 兜底从硬编码改为读上次 .bb_domain
+        _last_dom = ""
+        try:
+            _last_dom = DOMAIN_FILE.read_text().strip().rstrip("/")
+        except Exception:
+            pass
+        dom = (ls.get("st-domain", "") or _last_dom or "https://api.infv1.com").rstrip("/")
 
         # 2. 测试 token；失效则清 + reload 触发自动登录
         if st and _test_token(st, dom):

@@ -16,11 +16,22 @@ COOLDOWN_FILE = DATA_DIR / "token_push_cooldown.json"
 COOLDOWN = 30 * 60  # 30min 冷却
 
 
+def _bb_domain():
+    """动态读 .bb_domain(2026-09-30: BB 切域名 invf1→nsvip9, 硬编码会静默失效)。"""
+    try:
+        dom = (DATA_DIR / ".bb_domain").read_text().strip().rstrip("/")
+        if dom.startswith("http"):
+            return dom
+    except Exception:
+        pass
+    return "https://api.infv1.com"
+
+
 def token_valid(tok):
     import requests, urllib3
     urllib3.disable_warnings()
     try:
-        r = requests.post('https://api.infv1.com/v1/order/new/bet/list',
+        r = requests.post(f'{_bb_domain()}/v1/order/new/bet/list',
                           json={'languageType': 'CMN', 'isSettled': False, 'current': 1, 'size': 1},
                           headers={'Content-Type': 'application/json', 'Authorization': tok,
                                    'User-Agent': 'Mozilla/5.0'},
