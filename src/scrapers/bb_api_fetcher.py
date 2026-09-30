@@ -47,13 +47,25 @@ def _is_banned_league(league):
     return any(b in league for b in _load_banned_leagues())
 
 # API 端点（BB体育）
-API_BASE = "https://api.infv1.com"
+# 2026-09-30: BB 切域名 invf1→nsvip9, 硬编码会静默失效。改为动态读 .bb_domain
+# (renew_bb_login 从 Chrome st-domain 写入), 兜底 api.infv1.com。
+def _read_bb_domain():
+    try:
+        dom = (DATA_DIR / ".bb_domain").read_text().strip().rstrip("/")
+        if dom.startswith("http"):
+            return dom
+    except Exception:
+        pass
+    return "https://api.infv1.com"
+
+
+API_BASE = _read_bb_domain()
 
 # 多平台配置（BB体育 + FB体育）
 # 注意: BB体育真正API是 api.infv1.com（user-token），不是 api.447a9.com（h5-token）
 PLATFORMS = {
     "BB": {
-        "api_base": "https://api.infv1.com",
+        "api_base": API_BASE,
         "auth_header": "user-token",
         "label": "BB体育",
         "label_short": "BB",

@@ -223,7 +223,7 @@ def refresh_token(platform="BB"):
     if now < _token_refresh_until:
         return None
     _token_refresh_until = now + 60
-    dom = "api.infv1.com" if platform == "BB" else "api.c7z4.com"
+    dom = read_domain("BB").replace("https://", "").rstrip("/") if platform == "BB" else "api.c7z4.com"
     tok_file = ROOT / "data" / "storage" / (".bb_token" if platform == "BB" else ".fb_token")
     import re, glob, os
     db = os.path.expanduser('~/Library/Application Support/Google/Chrome/Default/Local Storage/leveldb')

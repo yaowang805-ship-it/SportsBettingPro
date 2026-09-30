@@ -153,6 +153,8 @@ MANUAL_OBSERVE_BLOCK = {
     # 让球客胜2.0-3.0仍正(+6.6pp)不拦。旧"撤销让球3格拦截"是锚点切换前pin口径, 现已用betfair口径重判。
     # 早盘(保留旧拦截)
     "football|ht|客|3.0-5.0|early",
+    # 2026-09-30 封锁 ht 客 >5.0: 实盘 -20.7% ROI(8笔6负1胜胜率14%, 高赔率彩票型), 用户要求封锁
+    "football|ht|客|>5.0|early",
     "football|1x2|平|3.0-5.0|early",
     "football|ht_dc|客|1.0-2.0|early",
 }
