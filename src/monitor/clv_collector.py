@@ -373,7 +373,7 @@ def _fetch_close_odds(entries):
 
 
 def _dir_of(designation):
-    """从 designation 提取方向(主/客/和/大/小)。dc/dnb/btts 等特殊盘 closing 不支持, 返回 None。"""
+    """从 designation 提取方向(主/客/和/大/小)。dc/btts 的组合方向由 _close_direction_fair 单独解析。"""
     d = (designation or "").lower()
     if "大" in d:
         return "大"
@@ -390,15 +390,35 @@ def _dir_of(designation):
 
 def _close_direction_fair(close, sub_market, designation, swapped=False):
     """从 Betfair 收盘公平价 dict 提取指定方向的公平价(与 fair_price 同口径)。"""
+    d = (designation or "").lower()
+    if sub_market == "dc":
+        # 双机会 designation: '双重机会-主/和局'(1X) / '主/客'(12) / '和局/客'(X2)
+        if "主" in d and "和" in d:
+            key = "1X"
+        elif "主" in d and "客" in d:
+            key = "12"
+        elif "和" in d and "客" in d:
+            key = "X2"
+        else:
+            return None
+        if swapped and key in ("1X", "X2"):
+            key = "X2" if key == "1X" else "1X"
+        return close.get(key)
+    if sub_market == "btts":
+        # 双边进球 designation: '双边进球-是'(yes) / '否'(no), 无主客之分
+        key = "no" if "否" in d else ("yes" if "是" in d else None)
+        if key is None:
+            return None
+        return close.get(key)
     if sub_market in ("1x2", "ht"):
         idx = {"主": "home", "和": "draw", "客": "away"}
-    elif sub_market in ("hc", "ht_hc"):
+    elif sub_market in ("hc", "ht_hc", "dnb"):
         idx = {"主": "home", "客": "away"}
     elif sub_market in ("ou", "ht_ou"):
         idx = {"大": "over", "小": "under"}
     else:
         return None
-    dr = _dir_of(designation)
+    dr = _dir_of(d)
     if dr is None:
         return None
     key = idx.get(dr)
