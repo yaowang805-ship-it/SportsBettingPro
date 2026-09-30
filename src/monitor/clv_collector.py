@@ -410,9 +410,21 @@ def _close_direction_fair(close, sub_market, designation, swapped=False):
         if key is None:
             return None
         return close.get(key)
+    if sub_market == "dnb":
+        # 平局退款 designation: '平局退款-主'(home) / '客'(away)。注意 "平" 会被 _dir_of
+        # 误判成"和", 必须单独解析。
+        if "主" in d:
+            key = "home"
+        elif "客" in d:
+            key = "away"
+        else:
+            return None
+        if swapped:
+            key = "away" if key == "home" else "home"
+        return close.get(key)
     if sub_market in ("1x2", "ht"):
         idx = {"主": "home", "和": "draw", "客": "away"}
-    elif sub_market in ("hc", "ht_hc", "dnb"):
+    elif sub_market in ("hc", "ht_hc"):
         idx = {"主": "home", "客": "away"}
     elif sub_market in ("ou", "ht_ou"):
         idx = {"大": "over", "小": "under"}
