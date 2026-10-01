@@ -41,6 +41,42 @@ def token_valid(tok):
         return False
 
 
+def _renew_on_demand():
+    """按需续期(2026-10-01 替代 bb_renew 每6h定时): 启动 Chrome 9222 → renew_bb_login → 关 9222 省CPU。
+
+    BB token 实测极长寿(3.5天+), 失效真因是域名切换, 无需定时续期。
+    平时关浏览器省 CPU, token 失效时再临时开 9222 续期, 续完即关。返回 True=续期成功。
+    """
+    import subprocess
+    print("🚀 检测到 token 失效, 启动按需续期...")
+    # 1. 启动 Chrome 9222(会等端口就绪, 幂等)
+    try:
+        subprocess.run(["bash", str(ROOT / "scripts" / "launch_chrome_9222.sh")],
+                       capture_output=True, text=True, timeout=90)
+    except Exception as e:
+        print(f"启动 9222 异常: {e}")
+    # 2. 跑 renew_bb_login(CDP 连 9222 读 st-auth, 失效则清+reload 触发自动登录)
+    try:
+        r = subprocess.run([sys.executable, str(ROOT / "scripts" / "renew_bb_login.py")],
+                           capture_output=True, text=True, timeout=180)
+        print("renew 输出:", (r.stdout or "").strip()[-300:])
+    except Exception as e:
+        print(f"renew 异常: {e}")
+    # 3. 关 9222(省 CPU)
+    try:
+        subprocess.run(["pkill", "-f", "remote-debugging-port=9222"], capture_output=True, timeout=10)
+    except Exception:
+        pass
+    # 4. 验证续期结果
+    try:
+        new_tok = TOK_FILE.read_text().strip()
+        if new_tok and len(new_tok) > 30 and token_valid(new_tok):
+            return True
+    except Exception:
+        pass
+    return False
+
+
 def main():
     if not TOK_FILE.exists():
         return
@@ -48,9 +84,9 @@ def main():
     if not tok or len(tok) < 30:
         return
     if token_valid(tok):
-        return  # 有效, 不推
+        return  # 有效, 不续
 
-    # 30min 冷却
+    # 失效 → 30min 冷却
     now = time.time()
     try:
         last = float(json.loads(COOLDOWN_FILE.read_text()).get("ts", 0) or 0)
@@ -60,12 +96,20 @@ def main():
         print(f"冷却中(距上次 {(now - last) / 60:.0f}min), 跳过")
         return
 
+    # 2026-10-01: 按需续期(替代 bb_renew 每6h定时)——token 失效时自动开 9222 续期再关
+    ok = _renew_on_demand()
+
     from config.settings import send_dingtalk
-    body = "⚠️ BB token 失效\n\n滚球/早盘自动下单已暂停。请打开 Chrome 的 BB 页面(vv899.bbty0vip7.com)让它自动登录, 系统才能续期。"
+    if ok:
+        title = "✅ BB token 已自动续期"
+        body = "token 失效后已自动打开浏览器续期成功，下单恢复。"
+    else:
+        title = "⚠️ BB token 需手动登录"
+        body = "token 失效且自动续期失败。请打开 Chrome 的 BB 页面(vv899.bbty0vip7.com)手动登录。"
     try:
-        send_dingtalk("⚠️ BB token 失效", body)
+        send_dingtalk(title, body)
         COOLDOWN_FILE.write_text(json.dumps({"ts": now}))
-        print("已推送 token 失效提醒")
+        print("已推送:", title)
     except Exception as e:
         print(f"推送失败: {e}")
 

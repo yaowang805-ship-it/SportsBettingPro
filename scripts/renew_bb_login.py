@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """BB 登录态续期 + token 写盘（CDP 连 Chrome 9222，替代旧 AppleScript 默认 Chrome 路径）。
 
-背景: BB 的 st-auth 约 11h 过期，过期后下单 API 和 push WS 订阅都失效。旧 auto_renew_token
+背景: BB 的 st-auth 失效真因是「域名切换」(invf1→x-vip8→nsvip9, 短期多次), 不是 11h 过期
+(token 实测能撑 3.5 天+, 见记忆 token-renew-triple-domain-switch-20260930)。旧 auto_renew_token
 用 AppleScript 操作「默认 Chrome 前台窗口」，但 tap 读 G04 挂的是独立 Chrome 9222(.chrome-bb)，
-两个浏览器登录态不同步 —— 之前 BB WS 死就是 9222 登录态过期没人续。
+两个浏览器登录态不同步 —— 之前 BB WS 死就是 9222 登录态失效没人续。
 
 本脚本统一走 CDP 连 Chrome 9222:
 1. 找/开 BB 页(vv899.bbty0vip7.com)
