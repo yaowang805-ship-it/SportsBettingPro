@@ -1334,9 +1334,24 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "非洲国家杯2027资格赛": {
+      "attempts": 4,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "欧洲国家联赛 C组": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "欧洲国家联赛 B组": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-09-21T09:00:15.903959+00:00",
+  "updated": "2026-10-02T09:00:18.505806+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
