@@ -27,12 +27,11 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 # BB 子盘口 → Betfair Exchange 市场名(公平价主锚)
 _SUB_TO_BETFAIR = {
     "1x2": "ML",
-    # 2026-10-03 移除 ht/ht_ou: 实测 odds-api.io 的 Betfair market 名里根本没有 "ML HT"/"Totals HT"
-    # (只有 ML/Spread/Double Chance/Totals/BTTS), 上半场盘口无 Betfair 公平价 → fair_price 永远 None,
-    # 导致 ht/ht_ou 的 CLV 收盘价永远采不到(占"拿不到CLV"的46%)。上半场盘口只能放弃(同 ht_hc)。
+    "ht": "ML HT",          # 半场独赢(2026-10-03 实测 Betfair 无此盘口, fair_price 返回 None; 但保留映射不放弃盘口)
     "hc": "Spread",
     "hc_games": "Spread",   # 网球让局(Game Handicap, 按局数, 2026-09-28 补)
     "ou": "Totals",
+    "ht_ou": "Totals HT",   # 半场大小球(实测 Betfair 无此盘口, fair_price 返回 None; 保留映射不放弃盘口)
     "dc": "Double Chance",
     "dnb": "Draw No Bet",
     "btts": "Both Teams To Score",
@@ -44,7 +43,7 @@ _SUB_TO_SBOBET = {
     "hc": "Spread",
     "hc_games": "Spread",   # 网球让局(按局数, 2026-09-28 补)
     "ou": "Totals",
-    # 2026-10-03 移除 ht_ou: 实测 SBO market 名也只有 Totals/ML/Spread, 无 Totals HT
+    "ht_ou": "Totals HT",
     "ht_hc": "Spread HT",   # 半场让球(Sbobet有, Betfair无对应)
 }
 
