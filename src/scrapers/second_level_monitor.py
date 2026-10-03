@@ -150,23 +150,10 @@ SETTLE_PUSH_TS_FILE = ROOT / "data" / "storage" / "settle_push_ts.txt"  # 上次
 SETTLED_LOG_FILE = ROOT / "data" / "storage" / "live_settled_log.json"
 
 
-def _odds_interval(odds):
-    """BB 赔率 → 赔率区间(1.0-1.5/1.5-2.0/2.0-3.0/3.0-5.0/>5.0, 与 compute_market_release 同口径)。"""
-    try:
-        o = float(odds)
-    except (TypeError, ValueError):
-        return "?"
-    if o <= 1.0:
-        return "?"
-    if o < 1.5:
-        return "1.0-1.5"
-    if o < 2.0:
-        return "1.5-2.0"
-    if o < 3.0:
-        return "2.0-3.0"
-    if o < 5.0:
-        return "3.0-5.0"
-    return ">5.0"
+def _odds_interval(odds, sport=None):
+    """BB 赔率 → 按运动定制的赔率区间(见 src.scrapers.odds_interval.odds_interval)。"""
+    from src.scrapers.odds_interval import odds_interval
+    return odds_interval(odds, sport)
 
 
 def _dingtalk_safe(text: str) -> str:

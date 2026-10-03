@@ -714,19 +714,10 @@ def _release_direction(designation: str, sub_market: str) -> str:
     return "其他"
 
 
-def _odds_interval(odds):
-    """BB 赔率 → 赔率区间标签(与 compute_market_release._odds_interval 同口径, 2026-09-19 4档改5档)。"""
-    if odds is None or odds <= 1.0:
-        return "?"
-    if odds < 1.5:
-        return "1.0-1.5"
-    if odds < 2.0:
-        return "1.5-2.0"
-    if odds < 3.0:
-        return "2.0-3.0"
-    if odds < 5.0:
-        return "3.0-5.0"
-    return ">5.0"
+def _odds_interval(odds, sport=None):
+    """BB 赔率 → 按运动定制的赔率区间(见 src.scrapers.odds_interval.odds_interval)。"""
+    from src.scrapers.odds_interval import odds_interval
+    return odds_interval(odds, sport)
 
 
 def _time_window(match_epoch):
