@@ -1109,66 +1109,59 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 "over": f"{_ht_period}大球", "under": f"{_ht_period}小球",
             }
             # HT 独赢 (2026-09-18 全面替代 Pin): 用 Betfair ML HT 中间价当公平价
-            # 2026-10-03: 实测 Betfair 无 ML HT 盘口(_SUB_TO_BETFAIR 已移除 ht), _oa_fair 返回 None,
-            # ht 独赢不再生成机会(同 ht_hc 无 Betfair 公平价)。下面 if _oa_ht 恒跳过, 保留结构待数据源恢复。
+            # 2026-10-03 用户要求: 不放弃任何盘口, 无条件收集数据(看 ROI)。Betfair 无 ML HT 盘口时
+            # 公平价=0/ev=0, 仍记录 BB 赔率入库(结算后 ROI 可见, 只是 CLV/edge 无 Betfair 锚点)。
             bb_ht_ml = bb_ht["ml"]
             if bb_ht_ml:
                 _oa_ht = _oa_fair(entry, sport, "ht")
-                if _oa_ht:
-                    _keys = ["home", "draw", "away"] if sport == "football" else ["home", "away"]
-                    for i, label in enumerate(ht_labels["ml"]):
-                        if i >= len(bb_ht_ml) or i >= len(_keys):
-                            break
-                        bb_o = bb_ht_ml[i]
-                        fair_price = _oa_ht.get(_keys[i])
-                        if bb_o and fair_price and fair_price > 1:
-                            ev = (bb_o - fair_price) / fair_price * 100
-                            if ev > 1:
-                                entry["opportunities"].append({
-                                    "designation": label,
-                                    "bb_odds": bb_o,
-                                    "pin_odds": 0,  # 新数据源无 Pin 赔率, 用 0 占位
-                                    "fair_price": round(fair_price, 4),
-                                    "ev_pct": round(ev, 2),
-                                    "_market": "ht",
-                                })
+                _keys = ["home", "draw", "away"] if sport == "football" else ["home", "away"]
+                for i, label in enumerate(ht_labels["ml"]):
+                    if i >= len(bb_ht_ml) or i >= len(_keys):
+                        break
+                    bb_o = bb_ht_ml[i]
+                    fair_price = (_oa_ht or {}).get(_keys[i]) if _oa_ht else None
+                    ev = (bb_o - fair_price) / fair_price * 100 if fair_price and fair_price > 1 else 0
+                    entry["opportunities"].append({
+                        "designation": label,
+                        "bb_odds": bb_o,
+                        "pin_odds": 0,  # 新数据源无 Pin 赔率, 用 0 占位
+                        "fair_price": round(fair_price, 4) if fair_price and fair_price > 1 else 0,
+                        "ev_pct": round(ev, 2),
+                        "_market": "ht",
+                    })
 
             # HT 让球 (2026-09-18): Betfair 无 Spread HT 市场(仅 Sbobet 有, 但 Sbobet 是置信度
             # 不进定价), 无 Betfair 公平价 → 按「无覆盖=无机会」跳过, 不再用 Pin 生成 ht_hc 假溢价。
 
             # HT 大小 (2026-09-18): 用 Betfair Totals HT 中间价替代 Pin
+            # 2026-10-03 用户要求: 无条件收集(Betfair 无 Totals HT 时公平价=0, 仍记录 BB 赔率看 ROI)
             bb_ht_ou = bb_ht.get("total")
             if bb_ht_ou:
                 bb_line = bb_ht_ou.get("line")
                 if bb_line is not None:
                     _oa_htou = _oa_fair(entry, sport, "ht_ou", target_line=bb_line)
-                    if _oa_htou and _oa_htou.get("over") and _oa_htou.get("under"):
-                        _bf_line = _oa_htou.get("line")
-                        if _bf_line is not None and abs(float(bb_line) - float(_bf_line)) <= 0.25:
-                            over_fair = _oa_htou["over"]
-                            under_fair = _oa_htou["under"]
-                            ev_o = (bb_ht_ou["over_odds"] - over_fair) / over_fair * 100 if over_fair > 0 else 0
-                            ev_u = (bb_ht_ou["under_odds"] - under_fair) / under_fair * 100 if under_fair > 0 else 0
-                            if ev_o > 1:
-                                entry["over_under"].append({
-                                    "designation": ht_labels["over"],
-                                    "line": str(bb_line),
-                                    "bb_odds": bb_ht_ou["over_odds"],
-                                    "pin_odds": 0,
-                                    "fair_price": round(over_fair, 4),
-                                    "ev_pct": round(ev_o, 2),
-                                    "_market": "ht_ou",
-                                })
-                            if ev_u > 1:
-                                entry["over_under"].append({
-                                    "designation": ht_labels["under"],
-                                    "line": str(bb_line),
-                                    "bb_odds": bb_ht_ou["under_odds"],
-                                    "pin_odds": 0,
-                                    "fair_price": round(under_fair, 4),
-                                    "ev_pct": round(ev_u, 2),
-                                    "_market": "ht_ou",
-                                })
+                    over_fair = (_oa_htou or {}).get("over") if _oa_htou else None
+                    under_fair = (_oa_htou or {}).get("under") if _oa_htou else None
+                    ev_o = (bb_ht_ou["over_odds"] - over_fair) / over_fair * 100 if over_fair and over_fair > 1 else 0
+                    ev_u = (bb_ht_ou["under_odds"] - under_fair) / under_fair * 100 if under_fair and under_fair > 1 else 0
+                    entry["over_under"].append({
+                        "designation": ht_labels["over"],
+                        "line": str(bb_line),
+                        "bb_odds": bb_ht_ou["over_odds"],
+                        "pin_odds": 0,
+                        "fair_price": round(over_fair, 4) if over_fair and over_fair > 1 else 0,
+                        "ev_pct": round(ev_o, 2),
+                        "_market": "ht_ou",
+                    })
+                    entry["over_under"].append({
+                        "designation": ht_labels["under"],
+                        "line": str(bb_line),
+                        "bb_odds": bb_ht_ou["under_odds"],
+                        "pin_odds": 0,
+                        "fair_price": round(under_fair, 4) if under_fair and under_fair > 1 else 0,
+                        "ev_pct": round(ev_u, 2),
+                        "_market": "ht_ou",
+                    })
 
         # 2026-09-18: 棒球 F5(前5局大小) 已禁用 —— Betfair 棒球覆盖 0%, 不再用 Pin 生成假溢价。
 
