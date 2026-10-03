@@ -1109,6 +1109,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 "over": f"{_ht_period}大球", "under": f"{_ht_period}小球",
             }
             # HT 独赢 (2026-09-18 全面替代 Pin): 用 Betfair ML HT 中间价当公平价
+            # 2026-10-03: 实测 Betfair 无 ML HT 盘口(_SUB_TO_BETFAIR 已移除 ht), _oa_fair 返回 None,
+            # ht 独赢不再生成机会(同 ht_hc 无 Betfair 公平价)。下面 if _oa_ht 恒跳过, 保留结构待数据源恢复。
             bb_ht_ml = bb_ht["ml"]
             if bb_ht_ml:
                 _oa_ht = _oa_fair(entry, sport, "ht")
