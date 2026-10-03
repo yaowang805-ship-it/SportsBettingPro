@@ -34,14 +34,22 @@ SUB_CN = {"over_under": "大小球", "handicap": "让球", "handicap_games": "�
           "ou": "大小球", "hc": "让球", "hc_games": "让局", "1x2": "独赢", "ht": "上半场独赢", "ht_ou": "上半场大小"}
 
 
-def _odds_interval(odds, sport=None):
-    """BB 赔率 → 按运动定制的赔率区间(见 src.scrapers.odds_interval)。"""
+def _odds_interval(fair_or_odds, sport=None):
+    """公平价(优先)或BB赔率 → 概率桶(内部算隐含概率=1/price)。见 src.scrapers.odds_interval.prob_bucket。"""
     import sys as _sys
     _root = str(ROOT)
     if _root not in _sys.path:
         _sys.path.insert(0, _root)
-    from src.scrapers.odds_interval import odds_interval
-    return odds_interval(odds, sport)
+    from src.scrapers.odds_interval import prob_bucket
+    if fair_or_odds is None:
+        return "?"
+    try:
+        p = float(fair_or_odds)
+    except (TypeError, ValueError):
+        return "?"
+    if p <= 1.0:
+        return "?"
+    return prob_bucket(1.0 / p, sport)
 
 
 def _direction(designation):
