@@ -93,7 +93,7 @@ def _norm(b, fb):
         "market": sub,
         "dir": _direction(b.get("designation", "")),
         "desig": b.get("designation", ""),
-        "interval": _odds_interval(b.get("bb_odds"), SPORT_EN.get(sport)),
+        "interval": _odds_interval(b.get("fair") or b.get("bb_odds"), SPORT_EN.get(sport)),
         "odds": b.get("bb_odds") or 0,
         "stake": b.get("stake") or 0,
         "profit": b.get("profit") or 0,

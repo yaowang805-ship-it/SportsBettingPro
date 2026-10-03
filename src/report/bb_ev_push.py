@@ -1260,7 +1260,7 @@ def _calc_kelly_stakes(opps: list) -> list:
             _sp = o.get("sport", "")
             _sm = o.get("_sub_market", o.get("_market", ""))
             _dr = _release_direction(o.get("designation", ""), _sm)
-            _iv = _odds_interval(o.get("bb_odds", 0) or 0, _sp)
+            _iv = _odds_interval(o.get("fair_price") or o.get("bb_odds", 0) or 0, _sp)
             # 2026-09-15 加赔率区间维度(之前漏了)
             _cap = _obs_caps.get(f"{_sp}|{_sm}|{_dr}|{_iv}|early") or _obs_caps.get(f"{_sp}|{_sm}|{_dr}|*|early")
             if _cap:

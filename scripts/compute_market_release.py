@@ -498,7 +498,7 @@ def load_real_winrate_cell():
     return _winrate_agg(bets, lambda b: (
         b.get("sport") or "?", b.get("sub_market") or "?",
         _direction(b.get("designation"), b.get("sub_market")),
-        _odds_interval(_f(b.get("bb_odds")), b.get("sport"))))
+        _odds_interval(_f(b.get("fair_price")) or _f(b.get("bb_odds")), b.get("sport"))))
 
 
 def load_live_real_winrate():
@@ -581,7 +581,7 @@ def load_observe_brier():
     for b in _read_paper_bets():
         sm = b.get("sub_market") or "?"
         _feed((b.get("sport") or "?", sm, _direction(b.get("designation"), sm),
-               _odds_interval(_f(b.get("bb_odds")), b.get("sport")), SCOPE_EARLY),
+               _odds_interval(_f(b.get("fair_price")) or _f(b.get("bb_odds")), b.get("sport")), SCOPE_EARLY),
               b.get("result"), _f(b.get("fair_price")) or _f(b.get("bb_odds")))
 
     for b in _read_live_paper_bets():
@@ -590,7 +590,7 @@ def load_observe_brier():
         if not sport or not sm:
             continue
         _feed((sport, sm, _direction(b.get("designation"), sm),
-               _odds_interval(_f(b.get("bb_odds")), sport), SCOPE_LIVE),
+               _odds_interval(_f(b.get("fair")) or _f(b.get("bb_odds")), sport), SCOPE_LIVE),
               b.get("result"), _f(b.get("fair")) or _f(b.get("bb_odds")))
 
     out = {}
@@ -655,7 +655,7 @@ def load_observe_winrate():
 
     for b in _read_paper_bets():
         sm = b.get("sub_market") or "?"
-        _iv = _odds_interval(_f(b.get("bb_odds")), b.get("sport"))
+        _iv = _odds_interval(_f(b.get("fair_price")) or _f(b.get("bb_odds")), b.get("sport"))
         _feed((b.get("sport") or "?", sm, _direction(b.get("designation"), sm), _iv, SCOPE_EARLY),
               b.get("result"), _f(b.get("fair_price")) or _f(b.get("bb_odds")),
               _f(b.get("stake")) or 0, _f(b.get("profit")) or 0, b.get("spread"))
@@ -665,7 +665,7 @@ def load_observe_winrate():
         sm = BB_SUB_MAP.get(b.get("sub"))
         if not sport or not sm:
             continue
-        _iv = _odds_interval(_f(b.get("bb_odds")), sport)
+        _iv = _odds_interval(_f(b.get("fair")) or _f(b.get("bb_odds")), sport)
         _feed((sport, sm, _direction(b.get("designation"), sm), _iv, SCOPE_LIVE),
               b.get("result"), _f(b.get("fair")) or _f(b.get("bb_odds")),
               _f(b.get("stake")) or 0, _f(b.get("profit")) or 0, b.get("spread"))
@@ -722,7 +722,7 @@ def load_clv_median():
             except (ValueError, TypeError):
                 continue
             key = (r.get("sport") or "?", r.get("sub_market") or "?",
-                   _direction(r.get("designation"), r.get("sub_market")), _odds_interval(odds, r.get("sport")))
+                   _direction(r.get("designation"), r.get("sub_market")), _odds_interval(_f(r.get("push_fair_price")) or odds, r.get("sport")))
             by[key].append(clv)
     return {k: (_st.median(v), len(v)) for k, v in by.items() if v}
 
@@ -761,7 +761,7 @@ def load_live_clv():
         sm = BB_SUB_MAP.get(b.get("sub"))
         if not sport or not sm:
             continue
-        _iv = _odds_interval(_f(b.get("bb_odds")), sport)
+        _iv = _odds_interval(_f(b.get("fair")) or _f(b.get("bb_odds")), sport)
         by[(sport, sm, _direction(b.get("designation"), sm), _iv)].append(clv - ev)
     return {k: (_st.median(v), len(v)) for k, v in by.items() if v}
 

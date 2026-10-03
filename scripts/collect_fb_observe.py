@@ -66,7 +66,7 @@ def _fb_release_cap(o):
     """返回 FB 释放的 cap(未释放返回 None)。"""
     sub = o.get("sub")            # "1x2"/"ou"/"hc"
     dr = o.get("direction")       # "主"/"客"/"和"/"大"/"小"
-    itv = _odds_interval(o.get("bb_odds", 0) or 0, "football")
+    itv = _odds_interval(o.get("fair") or o.get("bb_odds", 0) or 0, "football")
     key = f"football|{sub}|{dr}|{itv}|live"
     return FB_RELEASE_CAPS.get(key)
 
