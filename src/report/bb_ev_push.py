@@ -1846,7 +1846,7 @@ def _collect_opportunities(match, market_key):
         # 盘口释放清单(2026-09-01): 未释放的运动×盘口/联赛只观察不投注(用真实 ROI 替代 CLV 封杀)
         _released = _is_market_released(match.get("sport", ""), sub_market,
                                         match.get("league", ""), opp.get("designation", ""),
-                                        match.get("start_time_pin_epoch"), bb_odds)
+                                        match.get("start_time_pin_epoch"), opp.get("fair_price") or bb_odds)
         if not _released:
             continue
 

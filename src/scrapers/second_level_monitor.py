@@ -1803,7 +1803,7 @@ class SecondLevelMonitor:
                 for o in entry.get(group, []):
                     sub_market = o.get('_market') or _GROUP_TO_SUB.get(group, group)
                     if not _is_market_released(sport, sub_market, _league,
-                                               o.get('designation', ''), _epoch, o.get('bb_odds')):
+                                               o.get('designation', ''), _epoch, o.get('fair_price') or o.get('bb_odds')):
                         continue
                     if _is_direction_blocked(sport, sub_market, o.get('designation', ''), _epoch):
                         continue
