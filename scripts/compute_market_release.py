@@ -131,51 +131,50 @@ MANUAL_OBSERVE_RELEASE = {
     # 2026-09-27 足球让球主胜1.5-2.0: Betfair口径 edge+3.2pp/ROI+8.8% 双正 + 该区间真LEV+10.61pp
     # (价格朝你走), 三信号一致且 n=226 够。2.0-3.0 是毒区(真LEV-3.43pp, 已在 MANUAL_OBSERVE_BLOCK 拦),
     # 只放 1.5-2.0。cap230
-    # 2026-10-03 分档迁移: 1.5-2.0 → 1.5-1.7 + 1.7-2.0
-    "football|hc|主|1.5-1.7|live": 230,
-    "football|hc|主|1.7-2.0|live": 230,
+    # 2026-10-03 概率桶迁移: 赔率1.5-2.0(概率50-66.7%) → 50-60% + 60-70%
+    "football|hc|主|50-60%|live": 230,
+    "football|hc|主|60-70%|live": 230,
 }
 
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
 # 优先于 MANUAL_OBSERVE_RELEASE 的区间。数据驱动拦截(observe_blocked)照常追加。
 MANUAL_OBSERVE_BLOCK = {
-    # 2026-10-03 分档迁移: 旧 5 档标签按足球新分档(保留1.5/2.0/3.0/5.0边界)拆成子区间
-    "football|1x2|主|5.0-7.0|live",      # 主胜冷门 实盘 ROI -65.8%
-    "football|1x2|主|>7.0|live",
-    "football|1x2|主|3.0-4.5|live",   # 主胜 3.0-5.0 edge -3.3pp
-    "football|1x2|主|4.5-5.0|live",
-    "football|1x2|客|3.0-4.5|live",   # 客胜 3.0-5.0 edge -3.3pp
-    "football|1x2|客|4.5-5.0|live",
-    "football|1x2|客|5.0-7.0|live",      # 客胜 >5.0 edge -2.2pp(8%胜率)
-    "football|1x2|客|>7.0|live",
-    "football|1x2|平|3.0-4.5|live",   # 和局 3.0-5.0 edge -5.5pp(头号巨亏)
-    "football|1x2|平|4.5-5.0|live",
-    "football|1x2|平|5.0-7.0|live",      # 和局 >5.0 edge -2.2pp
-    "football|1x2|平|>7.0|live",
-    "football|ou|大|1.0-1.5|live",    # 大球1.0-1.5 Betfair口径ROI-21.1%负(混合口径+1.8%是旧Pin污染), 拦截
-    "football|ou|大|1.5-1.7|live",    # 2026-09-27 大球1.5-2.0放回观察库(实盘-33.4%劣化, CLV-0.6%负, 用户要求撤)
-    "football|ou|大|1.7-2.0|live",
-    "football|ou|大|2.0-2.4|live",    # 大球 2.0-3.0 edge -3.8pp
-    "football|ou|大|2.4-3.0|live",
-    "football|ou|大|3.0-4.5|live",    # 大球 3.0-5.0 edge -13.4pp(17%胜率)
-    "football|ou|大|4.5-5.0|live",
-    "football|ou|小|1.5-1.7|live",    # 小球 1.5-2.0 edge -7.6pp(负格子)
-    "football|ou|小|1.7-2.0|live",
-    "football|hc|主|2.0-2.4|live",    # 让球主胜 2.0-3.0 edge -1.2pp(溢价负, 含[2.0-2.3]毒区-5.1pp), 用户要求拦
-    "football|hc|主|2.4-3.0|live",
+    # 2026-10-03 概率桶迁移: 赔率区间→概率桶(按运动定制)。冷门(低概率)拦截, 大球全概率拦截。
+    "football|1x2|主|<10%|live",      # 主胜冷门 实盘 ROI -65.8%
+    "football|1x2|主|10-20%|live",
+    "football|1x2|主|20-30%|live",   # 主胜 3.0-5.0 edge -3.3pp
+    "football|1x2|主|30-40%|live",
+    "football|1x2|客|<10%|live",      # 客胜冷门
+    "football|1x2|客|10-20%|live",
+    "football|1x2|客|20-30%|live",   # 客胜 3.0-5.0 edge -3.3pp
+    "football|1x2|客|30-40%|live",
+    "football|1x2|平|<10%|live",      # 和局冷门
+    "football|1x2|平|10-20%|live",
+    "football|1x2|平|20-30%|live",   # 和局 3.0-5.0 edge -5.5pp(头号巨亏)
+    "football|1x2|平|30-40%|live",
+    "football|ou|大|20-30%|live",    # 大球全概率拦截(1.0-5.0 → 概率20-100%)
+    "football|ou|大|30-40%|live",
+    "football|ou|大|40-50%|live",
+    "football|ou|大|50-60%|live",
+    "football|ou|大|60-70%|live",
+    "football|ou|大|>70%|live",
+    "football|ou|小|50-60%|live",    # 小球 1.5-2.0 edge -7.6pp(负格子)
+    "football|ou|小|60-70%|live",
+    "football|hc|主|30-40%|live",    # 让球主胜 2.0-3.0 edge -1.2pp(溢价负), 用户要求拦
+    "football|hc|主|40-50%|live",
     # 2026-09-19 让球主胜2.0-3.0 溢价负(edge-1.2pp/49%<50%隐含), 用户按「溢价或ROI任一为负」拦截;
     # 让球客胜2.0-3.0仍正(+6.6pp)不拦。旧"撤销让球3格拦截"是锚点切换前pin口径, 现已用betfair口径重判。
     # 早盘(保留旧拦截)
-    "football|ht|客|3.0-4.5|early",
-    "football|ht|客|4.5-5.0|early",
-    # 2026-09-30 封锁 ht 客 >5.0: 实盘 -20.7% ROI(8笔6负1胜胜率14%, 高赔率彩票型), 用户要求封锁
-    "football|ht|客|5.0-7.0|early",
-    "football|ht|客|>7.0|early",
-    "football|1x2|平|3.0-4.5|early",
-    "football|1x2|平|4.5-5.0|early",
-    "football|ht_dc|客|1.0-1.5|early",
-    "football|ht_dc|客|1.5-1.7|early",
-    "football|ht_dc|客|1.7-2.0|early",
+    "football|ht|客|<10%|early",
+    "football|ht|客|10-20%|early",
+    # 2026-09-30 封锁 ht 客 冷门: 实盘 -20.7% ROI(8笔6负1胜胜率14%, 高赔率彩票型), 用户要求封锁
+    "football|ht|客|20-30%|early",
+    "football|ht|客|30-40%|early",
+    "football|1x2|平|20-30%|early",
+    "football|1x2|平|30-40%|early",
+    "football|ht_dc|客|50-60%|early",
+    "football|ht_dc|客|60-70%|early",
+    "football|ht_dc|客|>70%|early",
 }
 
 # 手动释放 + 当日累计上限(2026-09-15 用户要求): 释放的是"有希望的格子"试探, 单注≤150, 当日累计≤2000。
@@ -186,24 +185,26 @@ MANUAL_OBSERVE_BLOCK = {
 # 棒球 1.0-2.0 = 1.0-1.5(n5)+1.5-2.0(n3); 篮球 1.0-3.0 = 1.0-1.5(n6)+2.0-3.0(n2)。样本够后转数据驱动。
 MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 2026-10-01 用户要求: 单注限额全部提升到 230(原 150/200)
-    # 2026-10-03 分档迁移: 棒球1.0-1.5/1.5-2.0→1.0-1.7/1.7-1.8/1.8-1.9/1.9-2.1; 篮球2.0-3.0→2.0-2.5/>2.5
-    "baseball|1x2|主|1.0-1.7|live": 230,
-    "baseball|1x2|主|1.7-1.8|live": 230,
-    "baseball|1x2|主|1.8-1.9|live": 230,
-    "baseball|1x2|主|1.9-2.1|live": 230,
-    "basketball|1x2|主|1.0-1.5|live": 230,
-    "basketball|1x2|主|2.0-2.5|live": 230,
-    "basketball|1x2|主|>2.5|live": 230,
+    # 2026-10-03 概率桶迁移(赔率区间→概率桶, 按运动定制):
+    # 棒球独赢主全概率(5桶); 篮球独赢主热门+冷门(4桶, 中间55-65%不释放); 足球独赢客30-70%(4桶); btts 50-70%(2桶)
+    "baseball|1x2|主|<55%|live": 230,
+    "baseball|1x2|主|55-58%|live": 230,
+    "baseball|1x2|主|58-61%|live": 230,
+    "baseball|1x2|主|61-64%|live": 230,
+    "baseball|1x2|主|>64%|live": 230,
+    "basketball|1x2|主|<45%|live": 230,
+    "basketball|1x2|主|45-55%|live": 230,
+    "basketball|1x2|主|65-75%|live": 230,
+    "basketball|1x2|主|>75%|live": 230,
     # 2026-09-29 用户要求释放(edge+ROI 双正的苗头格子, 试探攒实盘; n=45~72 仍远低于 n>200):
     # 足球独赢客 2.0-3.0(n45 +5.1pp/+38%)、双边进球双方进球 1.5-2.0(n62 +3.5pp/+2.3%)。
     # 2026-10-03 用户要求补释放: 足球独赢客 1.5-2.0(观察库 +17.5pp/ROI+36.2%, n=37, edge 比 2.0-3.0 还高)
-    # 2026-10-03 分档迁移: 足球 1.5-2.0→1.5-1.7/1.7-2.0; 2.0-3.0→2.0-2.4/2.4-3.0
-    "football|1x2|客|1.5-1.7|live": 230,
-    "football|1x2|客|1.7-2.0|live": 230,
-    "football|1x2|客|2.0-2.4|live": 230,
-    "football|1x2|客|2.4-3.0|live": 230,
-    "football|btts|双方进球|1.5-1.7|live": 230,
-    "football|btts|双方进球|1.7-2.0|live": 230,
+    "football|1x2|客|30-40%|live": 230,
+    "football|1x2|客|40-50%|live": 230,
+    "football|1x2|客|50-60%|live": 230,
+    "football|1x2|客|60-70%|live": 230,
+    "football|btts|双方进球|50-60%|live": 230,
+    "football|btts|双方进球|60-70%|live": 230,
     # 2026-09-30 撤回: 双机会主/客 2.0-3.0 实盘首日 -15.9% ROI(19笔胜率33%, 观察库 edge+3.5pp 苗头被打脸),
     # 早盘上半场独赢客 >5.0 实盘 -20.7% ROI(8笔6负1胜胜率14%, 高赔率彩票型), 用户要求放回观察库交还数据驱动判据。
 }
