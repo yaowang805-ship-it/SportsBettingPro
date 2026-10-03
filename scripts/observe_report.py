@@ -28,21 +28,20 @@ FB_FILE = ROOT / "data" / "storage" / "fb_live_paper_bets.json"
 
 SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球", 2: "冰球",
             13: "排球", 15: "乒乓球", 18: "MMA", 19: "拳击", 47: "羽毛球"}
+SPORT_EN = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "american_football",
+            2: "ice_hockey", 13: "volleyball", 15: "table-tennis", 18: "mma", 19: "boxing", 47: "badminton"}
 SUB_CN = {"over_under": "大小球", "handicap": "让球", "handicap_games": "让局", "opportunities": "独赢",
           "ou": "大小球", "hc": "让球", "hc_games": "让局", "1x2": "独赢", "ht": "上半场独赢", "ht_ou": "上半场大小"}
 
 
-def _odds_interval(odds):
-    """BB 赔率 → 区间标签(与 compute_market_release._odds_interval 同口径)。"""
-    if odds is None or odds <= 1.0:
-        return "?"
-    if odds < 2.0:
-        return "1.0-2.0"
-    if odds < 3.0:
-        return "2.0-3.0"
-    if odds < 5.0:
-        return "3.0-5.0"
-    return ">5.0"
+def _odds_interval(odds, sport=None):
+    """BB 赔率 → 按运动定制的赔率区间(见 src.scrapers.odds_interval)。"""
+    import sys as _sys
+    _root = str(ROOT)
+    if _root not in _sys.path:
+        _sys.path.insert(0, _root)
+    from src.scrapers.odds_interval import odds_interval
+    return odds_interval(odds, sport)
 
 
 def _direction(designation):
@@ -86,7 +85,7 @@ def _norm(b, fb):
         "market": sub,
         "dir": _direction(b.get("designation", "")),
         "desig": b.get("designation", ""),
-        "interval": _odds_interval(b.get("bb_odds")),
+        "interval": _odds_interval(b.get("bb_odds"), SPORT_EN.get(sport)),
         "odds": b.get("bb_odds") or 0,
         "stake": b.get("stake") or 0,
         "profit": b.get("profit") or 0,

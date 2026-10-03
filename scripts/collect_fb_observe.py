@@ -48,23 +48,17 @@ FB_RELEASE_CAPS = {
 FB_BET_ENABLED = False   # FB 实盘下单总开关(2026-09-15 关闭: 中心钱包与BB互斥+token不稳定, 先只观察)
 
 
-def _odds_interval(o):
-    if o <= 1.0:
-        return "?"
-    if o < 2.0:
-        return "1.0-2.0"
-    if o < 3.0:
-        return "2.0-3.0"
-    if o < 5.0:
-        return "3.0-5.0"
-    return ">5.0"
+def _odds_interval(o, sport=None):
+    """BB 赔率 → 按运动定制的赔率区间(见 src.scrapers.odds_interval)。"""
+    from src.scrapers.odds_interval import odds_interval
+    return odds_interval(o, sport)
 
 
 def _fb_release_cap(o):
     """返回 FB 释放的 cap(未释放返回 None)。"""
     sub = o.get("sub")            # "1x2"/"ou"/"hc"
     dr = o.get("direction")       # "主"/"客"/"和"/"大"/"小"
-    itv = _odds_interval(o.get("bb_odds", 0) or 0)
+    itv = _odds_interval(o.get("bb_odds", 0) or 0, "football")
     key = f"football|{sub}|{dr}|{itv}|live"
     return FB_RELEASE_CAPS.get(key)
 

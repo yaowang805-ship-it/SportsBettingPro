@@ -669,7 +669,7 @@ def _is_market_released(sport: str, sub_market: str, league: str = "", designati
     if not rl:
         return True
     dr = _release_direction(designation, sub_market)
-    _iv = _odds_interval(odds)
+    _iv = _odds_interval(odds, sport)
     # 1. 联赛细化: 该联赛三维格子 n≥30 时用联赛自己的 ROI 覆盖主开关
     if league:
         if [sport, league, sub_market] in rl.get("league_released", []):
@@ -1252,7 +1252,7 @@ def _calc_kelly_stakes(opps: list) -> list:
             _sp = o.get("sport", "")
             _sm = o.get("_sub_market", o.get("_market", ""))
             _dr = _release_direction(o.get("designation", ""), _sm)
-            _iv = _odds_interval(o.get("bb_odds", 0) or 0)
+            _iv = _odds_interval(o.get("bb_odds", 0) or 0, _sp)
             # 2026-09-15 加赔率区间维度(之前漏了)
             _cap = _obs_caps.get(f"{_sp}|{_sm}|{_dr}|{_iv}|early") or _obs_caps.get(f"{_sp}|{_sm}|{_dr}|*|early")
             if _cap:

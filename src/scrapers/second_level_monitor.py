@@ -1029,7 +1029,7 @@ class SecondLevelMonitor:
         # 2026-09-13 加赔率区间: 先查拦截(该区间 n>200 表现差则不投), 再查释放(已验证方向"*" 或 该区间)。
         if _sp_en and _sm:
             _base = f"{_sp_en}|{_sm}|{_dr}"
-            _iv = _odds_interval(sig.get("bb_odds"))
+            _iv = _odds_interval(sig.get("bb_odds"), _sp_en)
             if f"{_base}|{_iv}|live" in _load_obs_blocked():
                 print(f"  🚫 赔率区间{_iv}已拦截(n>200表现差), 跳过 "
                       f"{sig['match']['home']} vs {sig['match']['away']} {sig['desig']}", flush=True)
@@ -1541,7 +1541,7 @@ class SecondLevelMonitor:
             _bi = settled_info.get(str(oid), {})
             _fair = _bi.get("fair", 0) if isinstance(_bi, dict) else 0
             _ev = _bi.get("ev", 0) if isinstance(_bi, dict) else 0
-            _iv = _odds_interval(od)
+            _iv = _odds_interval(od, BB_SPORT_EN.get(sid))
             pending.append({
                 "mn": mn, "mgn": mgn, "on": on, "od": od,
                 "sat": stake, "uwl": pnl, "sid": sid, "won": won,
