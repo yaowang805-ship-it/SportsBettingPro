@@ -1336,7 +1336,7 @@
       "success_rate": 0.0
     },
     "非洲国家杯2027资格赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1349,9 +1349,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "阿拉伯海湾杯 (在沙特阿拉伯)": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-10-02T09:00:18.505806+00:00",
+  "updated": "2026-10-03T01:45:10.055572+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
