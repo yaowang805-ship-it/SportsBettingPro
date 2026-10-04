@@ -235,13 +235,22 @@ def _ts(v):
 
 
 def _direction(desig, sub_market):
-    """从 designation 提取方向(主/平/客/大/小/其他), 供方向级释放/封杀。
+    """从 designation 提取方向(主/平/客/大/小/1X/12/X2/其他), 供方向级释放/封杀。
 
     与 bb_ev_push._release_direction 保持同一归一化口径。
-    1x2: 主胜/平/客胜 → 主/平/客; dc: 双重机会-主/和→主, 双重机会-和局/客→客。
+    1x2: 主胜/平/客胜 → 主/平/客; dc 三向(2026-10-04): 主/和局→1X, 主/客→12, 和局/客→X2。
     htft 半全场方向复杂, 由整盘护栏(观察库交叉验证)封杀, 这里归一化不拆分。
     """
     d = (desig or "")
+    if sub_market == "dc":
+        # dc 三向归一化(2026-10-04): 之前把 12/X2 混成「客」, 掩盖各自负 edge
+        if "主" in d and "和" in d:
+            return "1X"
+        if "主" in d and "客" in d:
+            return "12"
+        if "和" in d and "客" in d:
+            return "X2"
+        return "其他"
     if sub_market == "htft":
         return "其他"
     dl = d.lower()

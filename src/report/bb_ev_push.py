@@ -696,8 +696,17 @@ def _is_market_released(sport: str, sub_market: str, league: str = "", designati
 
 
 def _release_direction(designation: str, sub_market: str) -> str:
-    """从 designation 提取方向(主/平/客/大/小), 与 compute_market_release._direction 同口径。"""
+    """从 designation 提取方向(主/平/客/大/小/1X/12/X2), 与 compute_market_release._direction 同口径。"""
     d = (designation or "")
+    if sub_market == "dc":
+        # dc 三向归一化(2026-10-04): 之前把 12/X2 混成「客」, 掩盖各自负 edge
+        if "主" in d and "和" in d:
+            return "1X"
+        if "主" in d and "客" in d:
+            return "12"
+        if "和" in d and "客" in d:
+            return "X2"
+        return "其他"
     if sub_market == "htft":
         return "其他"
     dl = d.lower()
