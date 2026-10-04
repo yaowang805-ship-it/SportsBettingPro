@@ -132,7 +132,8 @@ MANUAL_OBSERVE_RELEASE = {
     # (价格朝你走), 三信号一致且 n=226 够。2.0-3.0 是毒区(真LEV-3.43pp, 已在 MANUAL_OBSERVE_BLOCK 拦),
     # 只放 1.5-2.0。cap230
     # 2026-10-03 概率桶迁移: 赔率1.5-2.0(概率50-66.7%) → 50-60% + 60-70%
-    "football|hc|主|50-60%|live": 230,
+    "football|hc|主|50-55%|live": 230,
+    "football|hc|主|55-60%|live": 230,
     "football|hc|主|60-70%|live": 230,
 }
 
@@ -155,10 +156,12 @@ MANUAL_OBSERVE_BLOCK = {
     "football|ou|大|20-30%|live",    # 大球全概率拦截(1.0-5.0 → 概率20-100%)
     "football|ou|大|30-40%|live",
     "football|ou|大|40-50%|live",
-    "football|ou|大|50-60%|live",
+    "football|ou|大|50-55%|live",
+    "football|ou|大|55-60%|live",
     "football|ou|大|60-70%|live",
     "football|ou|大|>70%|live",
-    "football|ou|小|50-60%|live",    # 小球 1.5-2.0 edge -7.6pp(负格子)
+    "football|ou|小|50-55%|live",    # 小球 1.5-2.0 edge -7.6pp(负格子)
+    "football|ou|小|55-60%|live",
     "football|ou|小|60-70%|live",
     "football|hc|主|30-40%|live",    # 让球主胜 2.0-3.0 edge -1.2pp(溢价负), 用户要求拦
     "football|hc|主|40-50%|live",
@@ -172,7 +175,8 @@ MANUAL_OBSERVE_BLOCK = {
     "football|ht|客|30-40%|early",
     "football|1x2|平|20-30%|early",
     "football|1x2|平|30-40%|early",
-    "football|ht_dc|客|50-60%|early",
+    "football|ht_dc|客|50-55%|early",
+    "football|ht_dc|客|55-60%|early",
     "football|ht_dc|客|60-70%|early",
     "football|ht_dc|客|>70%|early",
 }
@@ -201,9 +205,11 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 2026-10-03 用户要求补释放: 足球独赢客 1.5-2.0(观察库 +17.5pp/ROI+36.2%, n=37, edge 比 2.0-3.0 还高)
     "football|1x2|客|30-40%|live": 230,
     "football|1x2|客|40-50%|live": 230,
-    "football|1x2|客|50-60%|live": 230,
+    "football|1x2|客|50-55%|live": 230,
+    "football|1x2|客|55-60%|live": 230,
     "football|1x2|客|60-70%|live": 230,
-    "football|btts|双方进球|50-60%|live": 230,
+    "football|btts|双方进球|50-55%|live": 230,
+    "football|btts|双方进球|55-60%|live": 230,
     "football|btts|双方进球|60-70%|live": 230,
     # 2026-09-30 撤回: 双机会主/客 2.0-3.0 实盘首日 -15.9% ROI(19笔胜率33%, 观察库 edge+3.5pp 苗头被打脸),
     # 早盘上半场独赢客 >5.0 实盘 -20.7% ROI(8笔6负1胜胜率14%, 高赔率彩票型), 用户要求放回观察库交还数据驱动判据。
