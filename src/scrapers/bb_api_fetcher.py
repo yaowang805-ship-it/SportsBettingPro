@@ -56,10 +56,47 @@ def _read_bb_domain():
             return dom
     except Exception:
         pass
-    return "https://api.infv1.com"
+    return BB_DOMAIN_CANDIDATES[0]
+
+
+# 2026-10-05: BB「线路切换」多镜像域轮换(invf1→x-vip8→nsvip9→...), 旧的会死(SSL 握手失败)。
+# 候选列表 + failover: 当前 .bb_domain 优先 + 已知镜像兜底。
+BB_DOMAIN_CANDIDATES = [
+    "https://api.x-vip8.com",
+    "https://api.nsvip9.com",
+    "https://api.invf1.com",
+]
 
 
 API_BASE = _read_bb_domain()
+
+
+def bb_domain_candidates():
+    """候选 BB API 域名列表: 当前 .bb_domain 优先 + 已知镜像兜底, 去重保序。
+
+    供 api_post / pinnacle_live 拉取时 failover: 连接错误(SSL/DNS/连接拒绝)或 403(域名被限)
+    时换下一个镜像, 不再死磕一个死域。
+    """
+    cands = []
+    try:
+        dom = (DATA_DIR / ".bb_domain").read_text().strip().rstrip("/")
+        if dom.startswith("http"):
+            cands.append(dom)
+    except Exception:
+        pass
+    for d in BB_DOMAIN_CANDIDATES:
+        d = d.rstrip("/")
+        if d not in cands:
+            cands.append(d)
+    return cands
+
+
+def persist_bb_domain(dom):
+    """把验证活着的域名写回 .bb_domain(动态读方 bb_auto_bet.read_domain 会跟着用)。"""
+    try:
+        (DATA_DIR / ".bb_domain").write_text(dom.rstrip("/"))
+    except Exception:
+        pass
 
 # 多平台配置（BB体育 + FB体育）
 # 注意: BB体育真正API是 api.infv1.com（user-token），不是 api.447a9.com（h5-token）
@@ -286,55 +323,71 @@ def api_post(endpoint, params, platform="BB"):
 
     使用 requests 库避免 Python 3.14 urllib IncompleteRead 截断问题。
     V4.5: 增加指数退避重试 (3次, 1s/2s/4s)。
+    2026-10-05: BB 域名 failover(线路切换多镜像): 连接错误/超时/403 换下一个镜像域, 不再死磕死域。
     返回解析后的 JSON dict，或 None。
     """
     import time as _time
     platform_config = PLATFORMS.get(platform, PLATFORMS["BB"])
+    # BB 走候选域名列表 failover; FB 单域名
+    domains = bb_domain_candidates() if platform == "BB" else [platform_config["api_base"]]
 
-    for attempt in range(3):
+    for dom in domains:
         token = _ensure_token()
         if not token:
             logger.error("无 %s API token，请先登录 pc.x14ff.com", platform_config["label"])
             return None
 
-        url = f"{platform_config['api_base']}{endpoint}"
+        url = f"{dom}{endpoint}"
         headers = {
             "Content-Type": "application/json",
             platform_config["auth_header"]: token,
             "User-Agent": _USER_AGENT,
         }
 
-        try:
-            resp = _SESSION.post(url, json=params, headers=headers, timeout=30)
+        for attempt in range(3):
+            try:
+                resp = _SESSION.post(url, json=params, headers=headers, timeout=30)
+            except requests.exceptions.Timeout:
+                if attempt < 2:
+                    _time.sleep(2 ** attempt)
+                    continue
+                break  # 超时耗尽 → 换下一个域
+            except requests.exceptions.RequestException as e:
+                if attempt < 2:
+                    _time.sleep(2 ** attempt)
+                    continue
+                logger.warning("API 请求失败(3次) %s @%s: %s", endpoint, dom, e)
+                break  # 连接错误(SSL/DNS/连接拒绝) → 换下一个域
+            except json.JSONDecodeError as e:
+                logger.warning("API 响应异常 %s @%s: %s", endpoint, dom, e)
+                return None
             if resp.status_code == 401:
                 logger.warning("API 401 认证失败，token 可能已过期，重新获取...")
                 _ensure_token._cache = _TOKEN_SENTINEL
-                continue  # retry with new token
+                token = _ensure_token()
+                if token:
+                    headers[platform_config["auth_header"]] = token
+                    continue  # 同域重试新 token
+                return None
             if resp.status_code in (429, 503, 502):
                 wait = 2 ** attempt
                 logger.warning("API HTTP %s: %s, %ds后重试(%d/3)", resp.status_code, endpoint, wait, attempt+1)
                 _time.sleep(wait)
                 continue
+            if resp.status_code == 403:
+                # 403 = 域名被限/封(线路切换旧域) → 换下一个镜像域
+                logger.warning("API 403 域名被限 @%s, 换下一个域", dom)
+                break
             if resp.status_code != 200:
-                logger.warning("API HTTP %s: %s", resp.status_code, endpoint)
+                logger.warning("API HTTP %s: %s @%s", resp.status_code, endpoint, dom)
                 return None
+            # 成功 → 持久化活域名(动态读方 bb_auto_bet.read_domain 会跟着用)
+            if platform == "BB":
+                persist_bb_domain(dom)
             return resp.json()
-        except requests.exceptions.Timeout:
-            if attempt < 2:
-                logger.warning("API 超时: %s, %ds后重试(%d/3)", endpoint, 2**attempt, attempt+1)
-                _time.sleep(2 ** attempt)
-                continue
-            logger.warning("API 超时(3次): %s", endpoint)
-            return None
-        except requests.exceptions.RequestException as e:
-            if attempt < 2:
-                _time.sleep(2 ** attempt)
-                continue
-            logger.warning("API 请求失败(3次) %s: %s", endpoint, e)
-            return None
-        except json.JSONDecodeError as e:
-            logger.warning("API 响应异常 %s: %s", endpoint, e)
-            return None
+        # 该域 retry 耗尽(连接错误/超时/403) → 换下一个域
+        logger.warning("API %s @%s 失败, 尝试下一个域名", endpoint, dom)
+    return None
 
 
 # ─── 比分获取 (getMatchDetail) ────────────────────────────────
