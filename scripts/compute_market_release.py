@@ -66,6 +66,7 @@ LIQUIDITY_MAX_SPREAD = 6.0   # Betfair 流动性门槛(2026-09-19): 格子中位
                              # 公平价/CLV 不可信(低流动性联赛 Betfair 高估冷门方向 → 假溢价), 不采信不释放。
                              # 6% 是初值(基于「让球真edge价差<3% vs 大小球假edge价差6~15%」反推), 待攒 spread 数据后标定
 REAL_GAP_N_MIN = 20          # 实盘-纸单 gap 指标的最小实盘样本数(只展示, <20 的 gap 是噪声, 2026-09-19)
+REAL_ROI_GATE_N_MIN = 5      # 实盘ROI交叉验证最小样本(2026-10-05): 有≥5笔实盘且ROI<0 就拦(CLV假正)
 
 # 放弃的特殊盘口(2026-09-15 用户决定): 这些盘口 margin 15%+ (vs 主盘口 3-8%), 收盘线不 sharp,
 # 且 clv_collector 里 close_fair 用的是 proportional devig(非 Shin), CLV 虚高无意义。
@@ -77,6 +78,7 @@ SPECIAL_MARKET_PREFIX = ('corner',)
 # (ms=7漏判/league_cn对不上)污染的旧数据。切分点=观察库重收日 9-10。
 REAL_DATA_CUTOFF_TS = datetime.fromisoformat("2026-09-10T00:00:00+00:00").timestamp()
 LIVE_PAPER = DATA / "live_paper_bets.json"
+LIVE_REAL = DATA / "real_bets.json"  # 滚球实盘(second_level_monitor 写), 实盘ROI交叉验证用(2026-10-05)
 OBS_STATE = DATA / "observe_release_state.json"  # 释放状态(首次释放时间 + cap)
 
 # 滚球观察库口径映射: BB 运动 id → 英文运动名; 滚球 sub → sub_market
@@ -211,6 +213,13 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     "football|btts|双方进球|50-55%|live": 230,
     "football|btts|双方进球|55-60%|live": 230,
     "football|btts|双方进球|60-70%|live": 230,
+    # 2026-10-05 用户要求试探释放「棒球大小」双正桶(LEV>0 且 ROI>0): 大<55%(+3.6%)/大55-58%(+6.3%)/
+    # 大61-64%(+11.0%)/小>64%(+12.4%)。注意棒球大小其余6格 LEV 全正但 ROI 负(如小55-58% LEV+7.35% 却 ROI-36.9%),
+    # 是 LEV 假正(逆向选择), 不放。这几格 n=12~27 远低于 n>200, 走日限额攒实盘验证真伪。
+    "baseball|ou|大|<55%|live": 230,
+    "baseball|ou|大|55-58%|live": 230,
+    "baseball|ou|大|61-64%|live": 230,
+    "baseball|ou|小|>64%|live": 230,
     # 2026-09-30 撤回: 双机会主/客 2.0-3.0 实盘首日 -15.9% ROI(19笔胜率33%, 观察库 edge+3.5pp 苗头被打脸),
     # 早盘上半场独赢客 >5.0 实盘 -20.7% ROI(8笔6负1胜胜率14%, 高赔率彩票型), 用户要求放回观察库交还数据驱动判据。
 }
@@ -818,6 +827,65 @@ def load_live_real_roi():
             for k, d in agg.items()}
 
 
+def load_real_roi_cell():
+    """实盘 ROI 交叉验证(2026-10-05): 按释放格粒度(运动×盘口×方向×概率桶×来源)聚合实盘 ROI。
+
+    观察库释放判据里的 _roi 是「纸面投注」(虚拟)ROI, CLV 正 + 纸面 ROI 正仍可能是假正——
+    真金白银的实盘 ROI(tracked_bets 早盘 / real_bets 滚球)才是最终验证。有实盘样本且 ROI<0
+    的格子, 即便 CLV 正也拦(早盘收盘线 CLV 假正: 线朝你走但实盘亏, 见 bb-domain-failover 记忆)。
+
+    返回 {(sport,sub_market,direction,interval,scope): {n, roi}}。key 口径与 load_observe_winrate
+    完全一致(同一 _direction/_odds_interval), 供 main() 释放循环直接 get 交叉验证。
+    """
+    out = {}
+
+    def _agg(bets, scope):
+        for b in bets:
+            if scope == SCOPE_EARLY:
+                sp = b.get("sport") or "?"
+                sm = b.get("sub_market") or "?"
+                fair = _f(b.get("fair_price")) or _f(b.get("bb_odds"))
+                dr = _direction(b.get("designation"), sm)
+            else:
+                sp = BB_SPORT_MAP.get(b.get("sport"))
+                sm = BB_SUB_MAP.get(b.get("sub"))
+                if not sp or not sm:
+                    continue
+                fair = _f(b.get("fair")) or _f(b.get("bb_odds"))
+                dr = _direction(b.get("desig") or b.get("designation"), sm)
+            iv = _odds_interval(fair, sp)
+            if iv == "?":
+                continue
+            d = out.setdefault((sp, sm, dr, iv, scope), {"n": 0, "stake": 0.0, "profit": 0.0})
+            d["n"] += 1
+            d["stake"] += _f(b.get("stake")) or 0.0
+            d["profit"] += _f(b.get("profit")) or 0.0
+
+    # 早盘实盘
+    if TRACKED.exists():
+        try:
+            raw = json.loads(TRACKED.read_text())
+            bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
+                    if isinstance(b, dict) and b.get("status") == "settled"
+                    and b.get("anchor") == "betfair"]
+            _agg(bets, SCOPE_EARLY)
+        except (json.JSONDecodeError, OSError):
+            pass
+    # 滚球实盘
+    if LIVE_REAL.exists():
+        try:
+            raw = json.loads(LIVE_REAL.read_text())
+            d = raw.get("bets", raw) if isinstance(raw, dict) else {}
+            vals = list(d.values()) if isinstance(d, dict) else d
+            bets = [b for b in vals if isinstance(b, dict) and b.get("result") in ("won", "lost")]
+            _agg(bets, SCOPE_LIVE)
+        except (json.JSONDecodeError, OSError):
+            pass
+
+    return {k: {"n": d["n"], "roi": (d["profit"] / d["stake"] * 100.0) if d["stake"] > 0 else 0.0}
+            for k, d in out.items()}
+
+
 def _load_obs_state():
     """读释放状态(首次释放时间 + cap)。文件不存在返回空。"""
     if not OBS_STATE.exists():
@@ -884,6 +952,7 @@ def main():
     obs_winrate = load_observe_winrate()
     clv_med = load_clv_median()  # 早盘收盘线 CLV 中位(释放闸门, 2026-09-15)
     live_clv = load_live_clv()   # 滚球 LEV(下注后复验Pin价的CLV, 释放闸门, 2026-09-15)
+    real_roi_cell = load_real_roi_cell()  # 实盘 ROI 交叉验证(2026-10-05): CLV假正拦截
 
     # 2026-09-19 用户要求: 释放盘口不用实盘投注数据(不释放就没实盘=死循环), 只用观察库。
     # 实盘释放通道(主开关/方向/时间窗/联赛)废弃, 全设空; 实盘 ROI 仅保留「满7天提额」。
@@ -919,6 +988,11 @@ def main():
         if _mspread is not None and _mspread >= LIQUIDITY_MAX_SPREAD:
             observe_blocked.append([sport, sm, dr, interval, "early"])  # 2026-09-19 薄盘拦(公平价/CLV不可信)
             continue
+        # 实盘 ROI 交叉验证(2026-10-05): 有实盘样本且 ROI<0 → 拦(CLV假正: 线朝你走但真金白银亏)
+        _real = real_roi_cell.get((sport, sm, dr, interval, "early"), {})
+        if _real.get("n", 0) >= REAL_ROI_GATE_N_MIN and _real.get("roi", 0) < 0:
+            observe_blocked.append([sport, sm, dr, interval, "early"])
+            continue
         if med > OBS_CLV_MIN and n >= OBS_N_MIN and _roi > 0:
             observe_released.append([sport, sm, dr, interval, "early"])
         else:
@@ -953,6 +1027,11 @@ def main():
         _mspread = _cell.get("median_spread")
         if _mspread is not None and _mspread >= LIQUIDITY_MAX_SPREAD:
             observe_blocked.append([sport, sm, dr, interval, "live"])  # 2026-09-19 薄盘拦(公平价/CLV不可信)
+            continue
+        # 实盘 ROI 交叉验证(2026-10-05): 有实盘样本且 ROI<0 → 拦(LEV 假正同早盘)
+        _real = real_roi_cell.get((sport, sm, dr, interval, "live"), {})
+        if _real.get("n", 0) >= REAL_ROI_GATE_N_MIN and _real.get("roi", 0) < 0:
+            observe_blocked.append([sport, sm, dr, interval, "live"])
             continue
         if med > OBS_CLV_MIN and n >= OBS_N_MIN and _roi > 0:
             observe_released.append([sport, sm, dr, interval, "live"])
