@@ -408,26 +408,32 @@ def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 13, 2), platform="BB"):
     返回 {matchId: {home_en, away_en, home_cn, away_cn, league_cn, sport, markets, mc, sc}}。
     """
     from src.betting.bb_auto_bet import read_token, _session
-    from src.scrapers.bb_api_fetcher import PLATFORMS
+    from src.scrapers.bb_api_fetcher import PLATFORMS, bb_domain_candidates, persist_bb_domain
     token = read_token()
-    domain = PLATFORMS.get(platform, PLATFORMS["BB"])["api_base"]
     if not token:
         return {}
     s = _session()
+    domains = bb_domain_candidates() if platform == "BB" else [PLATFORMS.get(platform, PLATFORMS["BB"])["api_base"]]
 
     def _fetch(sid, lang):
-        try:
-            r = s.post(f"{domain}/v1/match/getList",
-                       json={"sportId": sid, "type": 1, "current": 1, "pageSize": 50,
-                             "isPC": True, "languageType": lang},
-                       headers={"Content-Type": "application/json", "user-token": token,
-                                "User-Agent": _UA}, timeout=15, verify=False)
+        for dom in domains:
+            try:
+                r = s.post(f"{dom}/v1/match/getList",
+                           json={"sportId": sid, "type": 1, "current": 1, "pageSize": 50,
+                                 "isPC": True, "languageType": lang},
+                           headers={"Content-Type": "application/json", "user-token": token,
+                                    "User-Agent": _UA}, timeout=15, verify=False)
+            except Exception:
+                continue
+            if r.status_code == 403:
+                continue
             d = r.json()
             if d.get("code") != 0:
                 return []
+            if platform == "BB":
+                persist_bb_domain(dom)
             return (d.get("data") or {}).get("records") or []
-        except Exception:
-            return []
+        return []
 
     result = {}
     # 2026-09-19 优化: EN 并发拉取(足篮), 耗时从 9s 串行降到 ~1s。

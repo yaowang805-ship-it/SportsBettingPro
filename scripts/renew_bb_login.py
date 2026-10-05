@@ -52,6 +52,32 @@ def _test_token(tok, dom):
         return False
 
 
+# 2026-10-05: BB「线路切换」多镜像域轮换(invf1→x-vip8→nsvip9→...), st-domain 可能指向已死的旧域。
+# 候选列表 + 测多域, 写 code=0 的那个(不再盲信 st-domain)。
+BB_DOMAIN_CANDIDATES = [
+    "https://api.x-vip8.com",
+    "https://api.nsvip9.com",
+    "https://api.invf1.com",
+]
+
+
+def _find_working_domain(tok, prefer=None):
+    """测 token 在哪个域有效, 返回第一个 code==0 的域名(优先 prefer/st-domain), 否则 None。"""
+    cands = []
+    if prefer:
+        p = prefer.rstrip("/")
+        if p.startswith("http"):
+            cands.append(p)
+    for d in BB_DOMAIN_CANDIDATES:
+        d = d.rstrip("/")
+        if d not in cands:
+            cands.append(d)
+    for dom in cands:
+        if _test_token(tok, dom):
+            return dom
+    return None
+
+
 def _read_ls(pg):
     return pg.evaluate("() => { const r={}; for(let i=0;i<localStorage.length;i++){"
                        "const k=localStorage.key(i); r[k]=localStorage.getItem(k);} return r; }")
@@ -87,17 +113,17 @@ def main():
         # 1. 读当前 st-auth
         ls = _read_ls(pg)
         st = ls.get("st-auth", "")
-        # 2026-09-30: BB 切域名 invf1→nsvip9, 兜底从硬编码改为读上次 .bb_domain
         _last_dom = ""
         try:
             _last_dom = DOMAIN_FILE.read_text().strip().rstrip("/")
         except Exception:
             pass
-        dom = (ls.get("st-domain", "") or _last_dom or "https://api.infv1.com").rstrip("/")
+        prefer_dom = (ls.get("st-domain", "") or _last_dom or BB_DOMAIN_CANDIDATES[0]).rstrip("/")
 
-        # 2. 测试 token；失效则清 + reload 触发自动登录
-        if st and _test_token(st, dom):
-            _log(f"token 有效，直接写盘: {st[:25]}...")
+        # 2. 测 token 在候选域里哪个有效(优先 st-domain)；失效则清 + reload 触发自动登录
+        dom = _find_working_domain(st, prefer_dom) if st else None
+        if dom:
+            _log(f"token 有效，直接写盘: {st[:25]}... domain={dom}")
         else:
             _log(f"token 失效或为空({st[:15] if st else '无'})，清 st-auth + reload 触发自动登录")
             try:
@@ -111,11 +137,12 @@ def main():
                 time.sleep(3)
                 ls2 = _read_ls(pg)
                 st2 = ls2.get("st-auth", "")
-                if st2 and _test_token(st2, (ls2.get("st-domain", "") or dom).rstrip("/")):
+                wd = _find_working_domain(st2, (ls2.get("st-domain", "") or prefer_dom)) if st2 else None
+                if wd:
                     st = st2
-                    dom = (ls2.get("st-domain", "") or dom).rstrip("/")
+                    dom = wd
                     break
-            if not st or not _test_token(st, dom):
+            if not dom:
                 _log("⚠️ 自动登录未成功(可能需手动登录)，保留旧 token 不覆盖")
                 browser.close()
                 return 1
