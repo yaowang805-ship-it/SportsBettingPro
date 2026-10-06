@@ -3,6 +3,7 @@
 
 token 失效时独立推钉钉(标题「⚠️ BB token 失效」), 不依赖滚球监控是否假死。
 launchd 每 30min 跑一次, 30min 冷却(失效期间最多每30min推一次, 避免刷屏)。
+2026-10-06: token_valid 加重试(3次×2s), 且连续3次失败(约60min)才判失效, 防 VPN 网络抖动误判。
 """
 import sys, json, time
 from pathlib import Path
@@ -14,6 +15,8 @@ DATA_DIR = ROOT / "data" / "storage"
 TOK_FILE = DATA_DIR / ".bb_token"
 COOLDOWN_FILE = DATA_DIR / "token_push_cooldown.json"
 COOLDOWN = 30 * 60  # 30min 冷却
+STREAK_FILE = DATA_DIR / "token_failure_streak.json"
+STREAK_THRESHOLD = 3  # 连续3次(约60min)都失败才判失效(2026-10-06 防网络抖动误判)
 
 
 def _bb_domain():
@@ -27,18 +30,36 @@ def _bb_domain():
     return "https://api.infv1.com"
 
 
-def token_valid(tok):
-    import requests, urllib3
+def token_valid(tok, retries=3, retry_delay=2):
+    """测 token 是否有效, 带重试(2026-10-06: 网络抖动只重试不判失效)。"""
+    import requests, urllib3, time as _time
     urllib3.disable_warnings()
+    for attempt in range(retries):
+        try:
+            r = requests.post(f'{_bb_domain()}/v1/order/new/bet/list',
+                              json={'languageType': 'CMN', 'isSettled': False, 'current': 1, 'size': 1},
+                              headers={'Content-Type': 'application/json', 'Authorization': tok,
+                                       'User-Agent': 'Mozilla/5.0'},
+                              timeout=10, verify=False)
+            return r.json().get('code') == 0
+        except Exception:
+            if attempt < retries - 1:
+                _time.sleep(retry_delay)
+    return False
+
+
+def _load_streak():
     try:
-        r = requests.post(f'{_bb_domain()}/v1/order/new/bet/list',
-                          json={'languageType': 'CMN', 'isSettled': False, 'current': 1, 'size': 1},
-                          headers={'Content-Type': 'application/json', 'Authorization': tok,
-                                   'User-Agent': 'Mozilla/5.0'},
-                          timeout=10, verify=False)
-        return r.json().get('code') == 0
+        return int(json.loads(STREAK_FILE.read_text()).get("streak", 0) or 0)
     except Exception:
-        return False
+        return 0
+
+
+def _save_streak(n):
+    try:
+        STREAK_FILE.write_text(json.dumps({"streak": n}))
+    except Exception:
+        pass
 
 
 def _renew_on_demand():
@@ -84,9 +105,17 @@ def main():
     if not tok or len(tok) < 30:
         return
     if token_valid(tok):
-        return  # 有效, 不续
+        _save_streak(0)  # 有效 → 清连续失败计数
+        return
 
-    # 失效 → 30min 冷却
+    # 无效(重试后仍失败) → 累计连续失败次数, 达阈值才判失效(2026-10-06 防网络抖动误判)
+    streak = _load_streak() + 1
+    _save_streak(streak)
+    if streak < STREAK_THRESHOLD:
+        print(f"token 检测失败(第 {streak}/{STREAK_THRESHOLD} 次, 可能是网络抖动), 暂不续期")
+        return
+
+    # 连续 N 次失败 → 判失效, 走 30min 冷却
     now = time.time()
     try:
         last = float(json.loads(COOLDOWN_FILE.read_text()).get("ts", 0) or 0)
@@ -98,6 +127,7 @@ def main():
 
     # 2026-10-01: 按需续期(替代 bb_renew 每6h定时)——token 失效时自动开 9222 续期再关
     ok = _renew_on_demand()
+    _save_streak(0)  # 续期后清计数(无论成败, 冷却会防刷)
 
     from config.settings import send_dingtalk
     if ok:

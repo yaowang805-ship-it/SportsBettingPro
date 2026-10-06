@@ -330,10 +330,8 @@ def determine_result(bet: dict, match_result: dict) -> tuple:
         # 导致观察库 hc 纸面虚高 +22%(实盘真实 -34%)。线值缺失一律 void, 绝不误判。
         _bet_line = bet.get("line")
         if line == 0 and _bet_line not in (None, "", 0):
-            try:
-                line = float(_bet_line)  # 用显式 line 字段
-            except (ValueError, TypeError):
-                line = 0
+            # 2026-10-06 修: 用 _parse_handicap_line 而非 float, 否则 "-0/0.5" 四分之一让球线解析失败→全 void
+            line = _parse_handicap_line(str(_bet_line))
         if line == 0 and not re.search(r'[-+]?\d', str(line_str)) and _bet_line in (None, "", 0):
             return "void", home_score, away_score, 0  # 无线值, 不结算
         # 确定投注方向

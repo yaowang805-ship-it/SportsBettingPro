@@ -227,6 +227,7 @@ def settle_paper(dry_run: bool = False) -> dict:
             "sub_market": sub_market,
             "designation": r.get("designation", ""),
             "bb_odds": float(r.get("bb_odds") or 0),
+            "line": r.get("line", ""),  # 2026-10-06 补线值: 让球/大小缺 line 会全 void, 纸面ROI=0
         }
         try:
             result, hs, as_, mult = determine_result(bet, match_result)
