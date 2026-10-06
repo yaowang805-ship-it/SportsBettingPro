@@ -361,10 +361,8 @@ def determine_result(bet: dict, match_result: dict) -> tuple:
         # → _parse_ou_line 返回 0, 大球全判 won/小球全判 lost, 纸面严重失真。缺失一律 void。
         _bet_line = bet.get("line")
         if line == 0 and _bet_line not in (None, "", 0):
-            try:
-                line = float(_bet_line)
-            except (ValueError, TypeError):
-                line = 0
+            # 2026-10-06 修: 用 _parse_ou_line 而非 float, 保持与 ou 盘线解析口径一致
+            line = _parse_ou_line(str(_bet_line))
         if line == 0 and not re.search(r'[-+]?\d', str(line_str)) and _bet_line in (None, "", 0):
             return "void", home_score, away_score, 0  # 无线值, 不结算
         if "大" in line_str:
