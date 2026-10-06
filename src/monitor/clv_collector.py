@@ -504,6 +504,8 @@ def _fetch_close_odds_betfair(entries):
             "minutes_before_match": round(minutes_to_match, 1),
             "close_source": "betfair",
             "close_lag_min": round(minutes_to_match, 1),
+            "bb_match_id": e.get("bb_match_id", ""),
+            "line": e.get("line", ""),
         }
         results.append(_row)
 
@@ -1006,6 +1008,8 @@ def _save_results(results):
         # V5.10: 收盘价来源 — live=窗口内实时拉Pin(最准); archive=归档库赛前最后快照回捞;
         #        archive_open=归档库只有首见价(让球/大小球受 UNIQUE 约束去重, 非真收盘价)。
         "close_source", "close_lag_min",
+        # 2026-10-06: BB比赛ID + 线值, 供 paper_settle 直接从 clv_results.csv 结算(覆盖全运动)
+        "bb_match_id", "line",
     ]
 
     _migrate_results_header(fieldnames)

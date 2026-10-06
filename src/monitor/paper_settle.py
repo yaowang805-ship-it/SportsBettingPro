@@ -27,6 +27,7 @@ from config.logging_config import get_logger
 logger = get_logger(__name__)
 
 TRACKING_FILE = DATA_DIR / "clv_tracking.csv"
+RESULTS_FILE = DATA_DIR / "clv_results.csv"
 PAPER_FILE = DATA_DIR / "paper_bets.json"
 DAILY_BUDGET = 20000.0  # 每日虚拟投注额(与实盘日预算一致)
 
@@ -134,24 +135,45 @@ def save_attempts(att: dict):
 
 
 def _read_validate_rows():
-    """读 clv_tracking.csv 里 source=validate 的记录, 去重(按 key)。"""
+    """读观察库 source=validate 记录, 去重(按 key)。
+
+    两个源(2026-10-06): clv_tracking.csv(实时跟踪, 有 bb_match_id/line) +
+    clv_results.csv(CLV 结果, 覆盖全运动含网球/排球/拳击, 弥补 tracking 被轮转后老记录
+    丢失导致结算不到)。clv_results.csv 字段映射: push_fair_price→fair_price。
+    """
     rows = {}
-    if not TRACKING_FILE.exists():
-        return rows
-    with open(TRACKING_FILE, encoding="utf-8-sig") as f:
-        for r in csv.DictReader(f):
-            if r.get("source") != "validate":
-                continue
-            bid = r.get("bb_match_id", "").strip()
-            if not bid:
-                continue  # 没有 bb_match_id 无法精确结算, 跳过(老数据)
-            epoch = int(r.get("match_epoch") or 0)
-            if not epoch:
-                continue
-            k = _key(r.get("sport"), r.get("home_pin"), r.get("away_pin"),
-                     r.get("designation"), r.get("sub_market"), epoch)
-            # 同 key 保留最新一条(bb_odds/fair_price 更接近结算时刻)
-            rows[k] = r
+
+    def _feed(r):
+        if r.get("source") != "validate":
+            return
+        bid = (r.get("bb_match_id") or "").strip()
+        if not bid:
+            return  # 没有 bb_match_id 无法精确结算, 跳过
+        epoch = int(r.get("match_epoch") or 0)
+        if not epoch:
+            return
+        k = _key(r.get("sport"), r.get("home_pin"), r.get("away_pin"),
+                 r.get("designation"), r.get("sub_market"), epoch)
+        if k not in rows:
+            rows[k] = r  # 同 key 保留先出现的(tracking 优先, 口径更全)
+
+    if TRACKING_FILE.exists():
+        with open(TRACKING_FILE, encoding="utf-8-sig") as f:
+            for r in csv.DictReader(f):
+                _feed(r)
+
+    if RESULTS_FILE.exists():
+        with open(RESULTS_FILE, encoding="utf-8-sig") as f:
+            for r in csv.DictReader(f):
+                if r.get("source") != "validate":
+                    continue
+                if not (r.get("bb_match_id") or "").strip():
+                    continue  # 老 clv_results.csv 没有 bb_match_id, 跳过(无法结算)
+                mapped = dict(r)
+                mapped["fair_price"] = r.get("push_fair_price", "")
+                mapped["ev_pct"] = r.get("push_ev_pct", "")
+                _feed(mapped)
+
     return rows
 
 
