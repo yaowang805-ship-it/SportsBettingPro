@@ -315,7 +315,16 @@ def auto_renew_token():
         return True
 
     try:
-        # 1. 先读当前 st-auth(不刷新)
+        # 0. 先测磁盘 token(若还有效, 不碰浏览器) —— 2026-10-06 修:
+        #    之前直接读 Chrome localStorage, Chrome 关着就误判失效 → AppleScript 开浏览器跳 vv899。
+        #    磁盘 token 有效就说明下单 14010 是瞬时抖动(单会话顶一下/网络), 不用续。
+        try:
+            disk_tok = tok_file.read_text().strip()
+            if disk_tok and len(disk_tok) > 30 and _test_save(disk_tok, None):
+                return True, f"磁盘 token 仍有效 {disk_tok[:20]}..."
+        except Exception:
+            pass
+        # 1. 再读当前 st-auth(不刷新)
         ls = _read_localstorage()
         new_tok = ls.get("st-auth", "") or ls.get("user-token", "")
         new_dom = (ls.get("st-domain", "") or "").rstrip("/")
