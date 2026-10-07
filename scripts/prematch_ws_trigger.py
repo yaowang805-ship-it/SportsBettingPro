@@ -3,7 +3,7 @@
 
 架构: 独立进程(与滚球 second_level_monitor 分离), 单独 WS 订阅 status=prematch。
   - WS 事件只有 event_id → 用精确索引反查 BB 快照建 {event_id: BB match}。
-  - 触发后: 限流 → 反查 BB → _build_oa_entry + _oa_add_markets(比价) → log_oa_opportunities(入库 EV>=2%)。
+  - 触发后: 反查 BB → _build_oa_entry + _oa_add_markets(比价) → log_oa_opportunities(入库 EV>=2%)。
   - 常驻: WS 断线重连 + 周期刷新 BB 快照(管线增量扫描更新) + 有界去重。
 
 用法:
@@ -30,30 +30,9 @@ BB_SNAPSHOT = ROOT / "data" / "storage" / "bb_odds_extracted.json"
 BB_RELOAD_INTERVAL = 600.0  # BB 快照刷新间隔(秒), 对齐管线增量扫描
 
 
-class RateLimiter:
-    """令牌桶限流(BB 拉取次数)。默认 20 次/min, 防 BB 过载。"""
-
-    def __init__(self, rate_per_min=20.0):
-        self.rate = rate_per_min / 60.0
-        self.tokens = 1.0
-        self.last = time.time()
-        self._lock = threading.Lock()
-
-    def try_acquire(self):
-        with self._lock:
-            now = time.time()
-            self.tokens = min(self.rate * 5, self.tokens + (now - self.last) * self.rate)
-            self.last = now
-            if self.tokens >= 1.0:
-                self.tokens -= 1.0
-                return True
-            return False
-
-
 class PrematchTrigger:
-    def __init__(self, sport="football", bb_fetch_limit=20.0):
+    def __init__(self, sport="football"):
         self.sport = sport
-        self.bb_limiter = RateLimiter(bb_fetch_limit)
         self.cnt = Counter()
         self._uniq = deque(maxlen=50000)   # 有界去重(最近 5 万 event_id)
         self._uniq_set = set()
@@ -170,8 +149,6 @@ class PrematchTrigger:
         self._uniq_set.add(eid)
         if len(self._uniq) == self._uniq.maxlen:
             self._uniq_set = set(self._uniq)
-        if not self.bb_limiter.try_acquire():
-            return
         self.bb_fetched += 1
         entry = self._compare(eid)
         if entry:
@@ -240,7 +217,7 @@ class PrematchTrigger:
         print(f"  事件分布: {dict(self.cnt)}")
         print(f"  updated 原始: {upd} 条 = {upd/dur*60:.0f} 条/min")
         print(f"  去重后唯一比赛: {uniq} 场 = {uniq/dur*60:.0f} 场/min")
-        print(f"  限流后 BB 拉取: {self.bb_fetched} 次 = {self.bb_fetched/dur*60:.0f} 次/min")
+        print(f"  比价次数: {self.bb_fetched} 次 = {self.bb_fetched/dur*60:.0f} 次/min")
         print(f"  入库观察库: {self.entries_logged} 条机会")
         print("=" * 62)
 
@@ -250,9 +227,9 @@ def main():
     ap = argparse.ArgumentParser(description="早盘 WS 触发(单场比价+入库观察库, 常驻)")
     ap.add_argument("--sport", default="football", help="运动 slug, 逗号分隔可多个")
     ap.add_argument("--duration", type=int, default=0, help=">0 只跑 N 秒(测试), 0=常驻")
-    ap.add_argument("--bb-limit", type=float, default=20.0, help="BB 拉取限流(次/min)")
+    ap.add_argument("--bb-limit", type=float, default=20.0, help="已废弃(2026-10-07 取消限流, 参数保留兼容 launchd)")
     a = ap.parse_args()
-    trig = PrematchTrigger(sport=a.sport, bb_fetch_limit=a.bb_limit)
+    trig = PrematchTrigger(sport=a.sport)
     if a.duration > 0:
         asyncio.run(trig.run(duration=a.duration))
     else:

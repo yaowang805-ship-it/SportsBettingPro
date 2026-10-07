@@ -1804,15 +1804,8 @@ def compare_bb_vs_oa(bb_matches, save_path=None):
     except OSError as e:
         print(f"  ⚠️ 写对比文件失败: {e}")
     print(f"匹配(Betfair直接): {len(entries)} 场有 +EV | 总计 {total_all} 机会 | 独赢 {total_opps_1x2} | 让球 {total_hc} | 大小 {total_ou}")
-    # 2026-09-27 修复 tracking 冻结: 机会入库 clv_tracking.csv(Betfair 版)。
-    # 之前 Betfair 直接匹配不写 tracking, 导致 clv_collector 无 pending 来源、CLV 自 9-19 冻结。
-    try:
-        from src.monitor.clv_collector import log_oa_opportunities
-        _added = log_oa_opportunities(output.get("details", []))
-        if _added:
-            print(f"  📊 CLV Betfair入库: +{_added} 条 EV>=5% 机会")
-    except Exception as _e:
-        print(f"  ⚠️ CLV Betfair入库失败: {_e}")
+    # 2026-10-07 入库移交给 prematch_ws_trigger(WS 实时触发, EV>=2%)。这里不再调 log_oa_opportunities,
+    # 避免与 WS 触发重复写 clv_tracking.csv。本函数保留「扫描比价 + 写 comparison + 推送」职责。
     return output
 
 
