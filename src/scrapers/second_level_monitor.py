@@ -1968,7 +1968,11 @@ def _append_real_bet(order_id, info):
 
 
 def _settle_real_bet(order_id, pnl, won):
-    """结算: 回填实盘库的 result/profit。"""
+    """结算: 回填实盘库的 result/profit。
+
+    2026-10-07 修标注 bug: 之前 result = "won" if won else "lost", 而 won=pnl>0,
+    走盘退款(pnl=0)被误标成 "lost"。改按 pnl 三态: >0 赢 / <0 输 / =0 走盘退款(push)。
+    """
     try:
         if not REAL_BETS_FILE.exists():
             return
@@ -1976,7 +1980,12 @@ def _settle_real_bet(order_id, pnl, won):
         b = d.get("bets", {}).get(str(order_id))
         if b:
             b["profit"] = pnl
-            b["result"] = "won" if won else "lost"
+            if pnl > 0:
+                b["result"] = "won"
+            elif pnl < 0:
+                b["result"] = "lost"
+            else:
+                b["result"] = "push"  # 走盘退款(pnl=0, BB官方uwl=0)
             b["settled_ts"] = time.time()
             REAL_BETS_FILE.write_text(json.dumps(d, ensure_ascii=False))
     except Exception:
