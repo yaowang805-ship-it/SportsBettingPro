@@ -1216,7 +1216,7 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
     return len(rows)
 
 
-def log_oa_opportunities(details, min_ev=5.0):
+def log_oa_opportunities(details, min_ev=2.0):
     """Betfair 直接匹配的机会入库 tracking(2026-09-27 修复 tracking 冻结)。
 
     早盘 9-18 切换 Betfair 直接匹配(compare_bb_vs_oa)后, 新流程不再调 log_all_ev_opportunities
@@ -1224,7 +1224,7 @@ def log_oa_opportunities(details, min_ev=5.0):
     9-18 冻结, 连带 _collect_inner 无 pending 记录可采、CLV 自 9-19 冻结。此函数是 Betfair 版入库:
     home/away 存 BB 英文名(home_bb/away_bb, 供 _fetch_close_odds_betfair 的 match_event_orient
     反查 odds-api.io 事件 id), Pin 字段置空。口径与 log_all_ev_opportunities 一致: source=validate,
-    min_ev=5%(去 2-5% 噪声档)。
+    min_ev=2%(2026-10-07 从 5% 降到 2% 加快样本积累, 代价是混入 2-5% 噪声档)。
     """
     from datetime import datetime, timezone
     from config.constants import get_league_tier
