@@ -644,7 +644,7 @@ def fair_price_bb(home, away, sport_id, sub_market, target_line=None, status=Non
     confidence = SBO devig(比例去水, 只做同向确认, 不进定价)。
     target_line: hc/ou/ht_ou 的 BB 让球/大小线, 用于选对应线。
     status: None=全量(早盘), 'live'=只滚球(滚球流程, 匹配快)。
-    use_rest: None=按 status 自动(live→False, 早盘→True); 显式 False=只读 WS 缓存不 REST(早盘 WS 触发用)。
+    use_rest: None=按 status 自动(live→False, 早盘→True); 显式 False=只读 WS 缓存不 REST(滚球 live 用)。
     主客互换(swapped)时 home/away 交换、hc 线取反, 保证返回的是 BB 主客视角的公平价。
     """
     eid, swapped = match_event_orient(home, away, sport_id, status=status)
@@ -655,7 +655,7 @@ def fair_price_bb(home, away, sport_id, sub_market, target_line=None, status=Non
     if swapped and target_line is not None and sub_market in ("hc", "hc_games", "ht_hc"):
         tl = -target_line
     # 2026-09-20: 滚球 live 跳过 REST 兜底(只 WS 缓存), 保证公平价匹配≤1.5s
-    # 2026-10-07: 早盘 WS 触发也传 use_rest=False(WS 已实时推, 不 REST 重拉)
+    # 2026-10-07: 早盘 WS 触发改传 use_rest=None(对齐实盘投注, REST 兜底 WS miss 的冷门, 60s 缓存)
     if use_rest is None:
         use_rest = (status != 'live')
     fair = fair_price(eid, sub_market, target_line=tl, use_rest=use_rest)

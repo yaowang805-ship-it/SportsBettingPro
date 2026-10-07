@@ -98,7 +98,7 @@ class PrematchTrigger:
         try:
             from src.scrapers.bb_vs_pinnacle import _build_oa_entry, _oa_add_markets
             entry = _build_oa_entry(m, sport)
-            _oa_add_markets(entry, m, sport, use_rest=False)
+            _oa_add_markets(entry, m, sport)
             _grps = ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet")
             if any(entry.get(g) for g in _grps):
                 return entry
