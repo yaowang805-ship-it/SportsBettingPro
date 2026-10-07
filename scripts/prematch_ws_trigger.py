@@ -15,7 +15,7 @@ import json
 import sys
 import time
 import threading
-from collections import Counter, deque
+from collections import Counter
 from pathlib import Path
 from urllib.parse import urlencode
 
@@ -28,14 +28,14 @@ WS_URL = "wss://api.odds-api.io/v3/ws"
 MARKETS = "ML,Spread,Totals,Double Chance,Both Teams To Score"
 BB_SNAPSHOT = ROOT / "data" / "storage" / "bb_odds_extracted.json"
 BB_RELOAD_INTERVAL = 600.0  # BB 快照刷新间隔(秒), 对齐管线增量扫描
+COOLDOWN = 300.0  # 同一 event_id 冷却窗口(秒): 冷却内不重复比价, 过后赔率再变动重新比(2026-10-07 取代永久去重)
 
 
 class PrematchTrigger:
     def __init__(self, sport="football"):
         self.sport = sport
         self.cnt = Counter()
-        self._uniq = deque(maxlen=50000)   # 有界去重(最近 5 万 event_id)
-        self._uniq_set = set()
+        self._last_compared = {}   # {event_id: 上次比价时间戳}(冷却窗口去重, 取代永久去重)
         self.bb_fetched = 0
         self.entries_logged = 0
         self.start = time.time()
@@ -142,13 +142,14 @@ class PrematchTrigger:
         if t != "updated":
             return
         eid = str(obj.get("event_id") or obj.get("id") or "")
-        if not eid or eid in self._uniq_set:
+        if not eid:
             return
-        # 有界去重: 新 event_id 入队 + 入 set, 队满时同步清 set
-        self._uniq.append(eid)
-        self._uniq_set.add(eid)
-        if len(self._uniq) == self._uniq.maxlen:
-            self._uniq_set = set(self._uniq)
+        # 冷却窗口去重(2026-10-07 取代永久去重): 同一 event_id 冷却(COOLDOWN)内不重复比价,
+        # 冷却过后赔率再变动(updated)就重新比价, 捕获后来才出现的 edge(永久去重会漏掉)。
+        now = time.time()
+        if now - self._last_compared.get(eid, 0) < COOLDOWN:
+            return
+        self._last_compared[eid] = now
         self.bb_fetched += 1
         entry = self._compare(eid)
         if entry:
