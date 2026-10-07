@@ -1,25 +1,21 @@
 #!/usr/bin/env python3
-"""早盘 WS 触发（2026-10-07 搭）—— 复用 odds_ws 的 WS 触发骨架，先跑观察库不投实盘。
+"""早盘 WS 触发(2026-10-07)—— Betfair 早盘赔率一变就触发单场比价 + 入库观察库, 常驻运行。
 
-目的: 把早盘从「管线 5-10 分钟轮询」升级到「分钟级 steam-chasing」。Betfair 早盘赔率
-一变(WS 推 updated)就触发, 拉 BB 该场当前价比价, EV>=2% 入库观察库。
+架构: 独立进程(与滚球 second_level_monitor 分离), 单独 WS 订阅 status=prematch。
+  - WS 事件只有 event_id → 用精确索引反查 BB 快照建 {event_id: BB match}。
+  - 触发后: 限流 → 反查 BB → _build_oa_entry + _oa_add_markets(比价) → log_oa_opportunities(入库 EV>=2%)。
+  - 常驻: WS 断线重连 + 周期刷新 BB 快照(管线增量扫描更新) + 有界去重。
 
-⚠️ 架构要点(与滚球差异):
-  - 滚球: WS 触发 → 直接下单(不验价, 抢 2-3s 窗口)。
-  - 早盘: WS 触发 → 先验价(分钟窗口验得起) → 入库(不投实盘)。
-  - BB 拉取要限流(早盘变动频次 ~40-100/min, 全拉会 2-3 倍 BB 负载)。
-
-当前版本: 只做「计数 + 去重 + 限流」的骨架, 实际 BB 拉取+比价+入库是 TODO(下一步接
-compare_bb_vs_oa 的单场版 + log_oa_opportunities)。
-
-用法: .venv312/bin/python scripts/prematch_ws_trigger.py [--sport football] [--duration 60]
+用法:
+  手动测: .venv312/bin/python scripts/prematch_ws_trigger.py --sport football --duration 60
+  常驻:   .venv312/bin/python scripts/prematch_ws_trigger.py --sport football  (launchd KeepAlive 托管)
 """
 import asyncio
 import json
 import sys
 import time
 import threading
-from collections import Counter
+from collections import Counter, deque
 from pathlib import Path
 from urllib.parse import urlencode
 
@@ -30,14 +26,16 @@ from config.settings import ODDS_API_IO_KEY
 
 WS_URL = "wss://api.odds-api.io/v3/ws"
 MARKETS = "ML,Spread,Totals,Double Chance,Both Teams To Score"
+BB_SNAPSHOT = ROOT / "data" / "storage" / "bb_odds_extracted.json"
+BB_RELOAD_INTERVAL = 600.0  # BB 快照刷新间隔(秒), 对齐管线增量扫描
 
 
 class RateLimiter:
     """令牌桶限流(BB 拉取次数)。默认 20 次/min, 防 BB 过载。"""
 
     def __init__(self, rate_per_min=20.0):
-        self.rate = rate_per_min / 60.0  # 转每秒
-        self.tokens = rate_per_min / 60.0
+        self.rate = rate_per_min / 60.0
+        self.tokens = 1.0
         self.last = time.time()
         self._lock = threading.Lock()
 
@@ -57,37 +55,74 @@ class PrematchTrigger:
         self.sport = sport
         self.bb_limiter = RateLimiter(bb_fetch_limit)
         self.cnt = Counter()
-        self.uniq_events = set()          # 去重(event_id)
-        self.bb_fetched = 0               # 实际触发 BB 拉取的次数
+        self._uniq = deque(maxlen=50000)   # 有界去重(最近 5 万 event_id)
+        self._uniq_set = set()
+        self.bb_fetched = 0
+        self.entries_logged = 0
         self.start = time.time()
+        self._bb_by_event = {}
+        self._bb_mtime = 0.0
+        self._bb_reload_ts = 0.0
+        self._reload_bb_lookup(force=True)
 
-    def _url(self):
-        params = {"apiKey": ODDS_API_IO_KEY, "sport": self.sport,
-                  "markets": MARKETS, "channels": "odds", "status": "prematch"}
-        return WS_URL + "?" + urlencode(params)
-
-    async def run(self, duration=60):
-        url = self._url()
-        print(f"[prematch_ws] 连 {self.sport} 早盘 WS, 跑 {duration}s ...")
+    def _load_bb_lookup(self):
+        """加载 BB 早盘快照, 建 {event_id: BB match} 反查表(精确索引 O(1))。"""
         try:
-            async with websockets.connect(url, max_size=2**26, open_timeout=15) as ws:
-                end = time.time() + duration
-                while time.time() < end:
-                    try:
-                        raw = await asyncio.wait_for(ws.recv(), timeout=5)
-                    except asyncio.TimeoutError:
-                        continue
-                    for line in raw.strip().split("\n"):
-                        if not line:
-                            continue
-                        try:
-                            obj = json.loads(line)
-                        except json.JSONDecodeError:
-                            continue
-                        self._on_message(obj)
+            from src.scrapers.bb_data import load_bb_odds
+            from src.scrapers.odds_api_io import _get_events_indexed, _norm_team
+            matches = load_bb_odds()
         except Exception as e:
-            print(f"[prematch_ws] 连接异常: {type(e).__name__} {str(e)[:100]}")
-        self.report()
+            print(f"[prematch_ws] BB 快照加载失败: {type(e).__name__} {str(e)[:80]}", flush=True)
+            return {}
+        by_sport = {}
+        for m in matches:
+            by_sport.setdefault(m.get("sport", "football"), []).append(m)
+        lookup = {}
+        for slug, ms in by_sport.items():
+            try:
+                _, idx = _get_events_indexed(slug, None)
+            except Exception:
+                continue
+            for m in ms:
+                hit = idx.get((_norm_team(m.get("home", "")), _norm_team(m.get("away", ""))))
+                if hit:
+                    eid, _ = hit
+                    lookup[str(eid)] = m
+        return lookup
+
+    def _reload_bb_lookup(self, force=False):
+        """周期刷新 BB 快照反查表(快照 mtime 变了才重载)。"""
+        now = time.time()
+        if not force and now - self._bb_reload_ts < BB_RELOAD_INTERVAL:
+            return
+        try:
+            mt = BB_SNAPSHOT.stat().st_mtime
+        except OSError:
+            return
+        if force or mt != self._bb_mtime:
+            self._bb_reload_ts = now
+            lookup = self._load_bb_lookup()
+            self._bb_by_event = lookup
+            self._bb_mtime = mt
+            print(f"[prematch_ws] BB 快照刷新: 反查命中 {len(lookup)} 场", flush=True)
+
+    def _process_trigger(self, event_id):
+        """单个触发: 反查 BB match → 单场比价 → 入库观察库。"""
+        m = self._bb_by_event.get(str(event_id))
+        if not m:
+            return
+        sport = m.get("sport", "football")
+        try:
+            from src.scrapers.bb_vs_pinnacle import _build_oa_entry, _oa_add_markets
+            from src.monitor.clv_collector import log_oa_opportunities
+            entry = _build_oa_entry(m, sport)
+            _oa_add_markets(entry, m, sport)
+            _grps = ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet")
+            if any(entry.get(g) for g in _grps):
+                n = log_oa_opportunities([entry]) or 0
+                self.entries_logged += n
+        except Exception as e:
+            print(f"[prematch_ws] 比价异常 {event_id}: {type(e).__name__} {str(e)[:80]}", flush=True)
 
     def _on_message(self, obj):
         t = obj.get("type", "?")
@@ -95,43 +130,96 @@ class PrematchTrigger:
         if t != "updated":
             return
         eid = str(obj.get("event_id") or obj.get("id") or "")
-        # 去重: 同一场在短窗口内只触发一次(避免 BB 重复拉取)
-        if eid in self.uniq_events:
+        if not eid or eid in self._uniq_set:
             return
-        self.uniq_events.add(eid)
-        # 限流: 只有拿到额度才真正去拉 BB(TODO: 接单场比价+入库)
-        if self.bb_limiter.try_acquire():
-            self.bb_fetched += 1
-            # TODO(下一步): 这里接 compare_bb_vs_oa 单场版 + log_oa_opportunities
-            #   sig = compare_single_match(eid)  # 拉 BB 该场当前价 + Betfair 公平价比价
-            #   if sig and sig.ev >= 2.0: log_oa_opportunities([sig])
+        # 有界去重: 新 event_id 入队 + 入 set, 队满时同步清 set
+        self._uniq.append(eid)
+        self._uniq_set.add(eid)
+        if len(self._uniq) == self._uniq.maxlen:
+            self._uniq_set = set(self._uniq)
+        if not self.bb_limiter.try_acquire():
+            return
+        self.bb_fetched += 1
+        self._process_trigger(eid)
+
+    def _url(self):
+        params = {"apiKey": ODDS_API_IO_KEY, "sport": self.sport,
+                  "markets": MARKETS, "channels": "odds", "status": "prematch"}
+        return WS_URL + "?" + urlencode(params)
+
+    async def run(self, duration=60):
+        """一次性跑 duration 秒(测试用)。"""
+        print(f"[prematch_ws] 连 {self.sport} 早盘 WS, 跑 {duration}s ...", flush=True)
+        end = time.time() + duration
+        try:
+            async with websockets.connect(self._url(), max_size=2**26, open_timeout=15) as ws:
+                while time.time() < end:
+                    try:
+                        raw = await asyncio.wait_for(ws.recv(), timeout=5)
+                    except asyncio.TimeoutError:
+                        continue
+                    self._drain(raw)
+        except Exception as e:
+            print(f"[prematch_ws] 连接异常: {type(e).__name__} {str(e)[:100]}", flush=True)
+        self.report()
+
+    async def run_forever(self):
+        """常驻: WS 断线重连 + 周期刷新 BB 快照。"""
+        print(f"[prematch_ws] 早盘 WS 触发常驻启动(sport={self.sport})", flush=True)
+        while True:
+            try:
+                async with websockets.connect(self._url(), max_size=2**26, open_timeout=15) as ws:
+                    print("[prematch_ws] WS 已连接", flush=True)
+                    while True:
+                        try:
+                            raw = await asyncio.wait_for(ws.recv(), timeout=30)
+                        except asyncio.TimeoutError:
+                            self._reload_bb_lookup()
+                            continue
+                        self._drain(raw)
+            except Exception as e:
+                print(f"[prematch_ws] 连接断开: {type(e).__name__} {str(e)[:80]}, 5s 后重连", flush=True)
+                await asyncio.sleep(5)
+
+    def _drain(self, raw):
+        for line in raw.strip().split("\n"):
+            if not line:
+                continue
+            try:
+                obj = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            self._on_message(obj)
 
     def report(self):
         dur = time.time() - self.start
         if dur <= 0:
             return
         upd = self.cnt.get("updated", 0)
-        uniq = len(self.uniq_events)
+        uniq = len(self._uniq_set)
         print()
-        print("=" * 60)
-        print(f"早盘 WS 触发频次实测 ({self.sport}, {dur:.0f}s)")
+        print("=" * 62)
+        print(f"早盘 WS 触发实测 ({self.sport}, {dur:.0f}s)")
         print(f"  事件分布: {dict(self.cnt)}")
-        print(f"  updated(赔率变动) 原始: {upd} 条 = {upd/dur*60:.0f} 条/min")
+        print(f"  updated 原始: {upd} 条 = {upd/dur*60:.0f} 条/min")
         print(f"  去重后唯一比赛: {uniq} 场 = {uniq/dur*60:.0f} 场/min")
-        print(f"  实际触发 BB 拉取(限流后): {self.bb_fetched} 次 = {self.bb_fetched/dur*60:.0f} 次/min")
-        print("=" * 60)
+        print(f"  限流后 BB 拉取: {self.bb_fetched} 次 = {self.bb_fetched/dur*60:.0f} 次/min")
+        print(f"  入库观察库: {self.entries_logged} 条机会")
+        print("=" * 62)
 
 
 def main():
-    sport = "football"
-    duration = 60
-    for a in sys.argv[1:]:
-        if a.startswith("--sport"):
-            sport = a.split("=", 1)[1]
-        elif a.startswith("--duration"):
-            duration = int(a.split("=", 1)[1])
-    trig = PrematchTrigger(sport=sport, bb_fetch_limit=20.0)
-    asyncio.run(trig.run(duration=duration))
+    import argparse
+    ap = argparse.ArgumentParser(description="早盘 WS 触发(单场比价+入库观察库, 常驻)")
+    ap.add_argument("--sport", default="football", help="运动 slug, 逗号分隔可多个")
+    ap.add_argument("--duration", type=int, default=0, help=">0 只跑 N 秒(测试), 0=常驻")
+    ap.add_argument("--bb-limit", type=float, default=20.0, help="BB 拉取限流(次/min)")
+    a = ap.parse_args()
+    trig = PrematchTrigger(sport=a.sport, bb_fetch_limit=a.bb_limit)
+    if a.duration > 0:
+        asyncio.run(trig.run(duration=a.duration))
+    else:
+        asyncio.run(trig.run_forever())
 
 
 if __name__ == "__main__":
