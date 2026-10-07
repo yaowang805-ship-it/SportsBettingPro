@@ -63,6 +63,10 @@ class PrematchTrigger:
         self._bb_by_event = {}
         self._bb_mtime = 0.0
         self._bb_reload_ts = 0.0
+        # 输出层(入库/未来实盘分叉点): 待写队列(异步批量写文件, 不阻塞触发-比价)
+        self._pending = []
+        self._pending_lock = threading.Lock()
+        self._stop = False
         self._reload_bb_lookup(force=True)
 
     def _load_bb_lookup(self):
@@ -106,23 +110,52 @@ class PrematchTrigger:
             self._bb_mtime = mt
             print(f"[prematch_ws] BB 快照刷新: 反查命中 {len(lookup)} 场", flush=True)
 
-    def _process_trigger(self, event_id):
-        """单个触发: 反查 BB match → 单场比价 → 入库观察库。"""
+    def _compare(self, event_id):
+        """触发-比价(统一流程, 入库和未来实盘共用): 反查 BB → 比价 → 返回 entry 或 None。"""
         m = self._bb_by_event.get(str(event_id))
         if not m:
-            return
+            return None
         sport = m.get("sport", "football")
         try:
             from src.scrapers.bb_vs_pinnacle import _build_oa_entry, _oa_add_markets
-            from src.monitor.clv_collector import log_oa_opportunities
             entry = _build_oa_entry(m, sport)
-            _oa_add_markets(entry, m, sport)
+            _oa_add_markets(entry, m, sport, use_rest=False)
             _grps = ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet")
             if any(entry.get(g) for g in _grps):
-                n = log_oa_opportunities([entry]) or 0
-                self.entries_logged += n
+                return entry
         except Exception as e:
             print(f"[prematch_ws] 比价异常 {event_id}: {type(e).__name__} {str(e)[:80]}", flush=True)
+        return None
+
+    def _enqueue(self, entry):
+        """输出层(入库): 加入待写队列, 后台异步批量写文件(不阻塞触发-比价)。
+
+        未来实盘: 这里换成 _place_bet(entry)(下单), 触发-比价那段 _compare 完全不变,
+        保证入库和实盘流程一致, 只是最后一步输出不同。
+        """
+        with self._pending_lock:
+            self._pending.append(entry)
+
+    def _flush_loop(self):
+        """后台: 批量写观察库(异步, 每 60s 写一次)。
+
+        60s 而非 5s: 入库是给 clv_collector 在赛前 1-45min 采 CLV 用, 早盘机会是 1-72h 后的比赛,
+        晚写 1 分钟零影响; 且队列绝大多数时间空, 60s 醒一次几乎不耗电(省 CPU/发热)。
+        代价: 崩溃最多丢 60s 内未写的 pending 机会。
+        """
+        while not self._stop:
+            time.sleep(60)
+            with self._pending_lock:
+                if not self._pending:
+                    continue
+                batch = self._pending
+                self._pending = []
+            try:
+                from src.monitor.clv_collector import log_oa_opportunities
+                n = log_oa_opportunities(batch) or 0
+                self.entries_logged += n
+            except Exception as e:
+                print(f"[prematch_ws] 批量入库失败: {type(e).__name__} {str(e)[:80]}", flush=True)
 
     def _on_message(self, obj):
         t = obj.get("type", "?")
@@ -140,7 +173,9 @@ class PrematchTrigger:
         if not self.bb_limiter.try_acquire():
             return
         self.bb_fetched += 1
-        self._process_trigger(eid)
+        entry = self._compare(eid)
+        if entry:
+            self._enqueue(entry)
 
     def _url(self):
         params = {"apiKey": ODDS_API_IO_KEY, "sport": self.sport,
@@ -166,6 +201,8 @@ class PrematchTrigger:
     async def run_forever(self):
         """常驻: WS 断线重连 + 周期刷新 BB 快照。"""
         print(f"[prematch_ws] 早盘 WS 触发常驻启动(sport={self.sport})", flush=True)
+        # 后台写文件线程(异步, 不阻塞触发-比价)
+        threading.Thread(target=self._flush_loop, daemon=True, name="prematch-flush").start()
         while True:
             try:
                 async with websockets.connect(self._url(), max_size=2**26, open_timeout=15) as ws:

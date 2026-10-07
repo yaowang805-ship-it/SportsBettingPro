@@ -1885,7 +1885,7 @@ class SecondLevelMonitor:
             # 2026-09-19 WS 触发: sharp 变动 → 立即 poll(滚球) + 单场比价(早盘)
             try:
                 from src.scrapers.odds_ws import get_persisted_changes
-                _changes = get_persisted_changes()  # persistence: 只取已稳定≥2s的变动(过滤瞬时抖动)
+                _changes = get_persisted_changes()  # persistence 稳定期已取消(PERSIST_MIN_AGE=0.0, 2026-09-29): 变动立即发射
             except Exception:
                 _changes = []
             _ws_changed = bool(_changes)
@@ -1938,9 +1938,9 @@ class SecondLevelMonitor:
                     # 2026-09-28 去掉现拉 BB: 实测 2s 预取缓存 stale 率仅 14.6%(见 measure_bb_stale.py),
                     # 现拉 BB 的 1.1s 是端到端瓶颈。去掉后直接用预取缓存比价, oddsChange=0 下单时变了就拒兜底。
                     # 2026-09-24 空转保护: WS 变动频繁时 wait_change 立即返回, 主循环快速空转烧 CPU(实测93%)。
-                    # 补 sleep 0.5s 等变动稳定(与 PERSIST_MIN_AGE=0.5 对齐) —— poll 本就依赖 0.5s 稳定期,
-                    # 所以 sleep 对 poll 时机零延迟, 只消除「未稳定期间的快速空转」。有持续变动时下一轮
-                    # wait_change 会被新事件立即唤醒, 不漏任何变动。
+                    # 空转保护(非稳定期): WS 变动频繁时 wait_change 立即返回, 主循环快速空转烧 CPU(实测93%)。
+                    # 这里 sleep 0.5s 只消除「未稳定期间的快速空转」, 与稳定期无关(PERSIST_MIN_AGE 已取消=0.0)。
+                    # 有持续变动时下一轮 wait_change 会被新事件立即唤醒, 不漏任何变动。
                     await asyncio.sleep(0.5)
             except Exception:
                 await asyncio.sleep(0.5)
