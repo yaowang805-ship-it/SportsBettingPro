@@ -1847,15 +1847,13 @@ class SecondLevelMonitor:
             # 2026-09-20 加 Double Chance/BTTS: dc/btts 之前不在 WS 缓存, 全走 REST 兜底(公平价匹配10-17s
             # + 费5000/小时限额), 加进 WS 订阅后走缓存 0ms。
             # 2026-09-24 滚球高频只订 6 主运动(拆4+2); 早盘全量走 --all-sports, 不经此 WS。
+            # 2026-10-07 合并 2→1: 6 运动 < WS 单连接 ≤10 运动限制, 且实测 live 事件量 ~615/min=10/s,
+            # 单连接轻松扛(拆2条是当年 11 运动的历史遗留)。合并后腾出 1 条 apiKey 连接配额给早盘 WS 触发。
             self._odds_ws = OddsWSClient(
-                sport="football,basketball,tennis,baseball",
+                sport="football,basketball,tennis,baseball,volleyball,ice-hockey",
                 markets=_ws_mkts)
             self._odds_ws.start()
-            self._odds_ws2 = OddsWSClient(
-                sport="volleyball,ice-hockey",
-                markets=_ws_mkts)
-            self._odds_ws2.start()
-            print("[slm] 已启动 odds-api.io WebSocket 实时赔率订阅(6运动 live+prematch, ML/Spread/Totals/DC/BTTS, 拆4+2两条连接)", flush=True)
+            print("[slm] 已启动 odds-api.io WebSocket 实时赔率订阅(6运动 live+prematch, ML/Spread/Totals/DC/BTTS, 单连接)", flush=True)
         except Exception as e:
             self._odds_ws = None
             print(f"[slm] WebSocket 订阅启动失败(回退 REST 轮询): {type(e).__name__} {str(e)[:80]}", flush=True)
