@@ -1149,6 +1149,10 @@ def _calc_kelly_stakes(opps: list) -> list:
         # V5.8: 低级别联赛(T3/T4)单注降权 — 薄盘幻影EV高, 实测全亏(23笔-100%), 额外打折
         if tier >= 3:
             stake_pct *= 0.6 if tier == 3 else 0.4
+        # 执行质量系数(2026-10-08): 按方向拒单率/延迟打折(0.6~1.0), 样本不足=1.0
+        from src.scrapers.execution_quality import factor as _eq_factor
+        _desig = o.get("designation", o.get("desig", ""))
+        stake_pct *= _eq_factor(f"{sport}|{sub}|{_desig}")
         # V5.1: per-sport赔率策略 (10万+Pinnacle+723笔实盘)
         max_odds = tier_cfg.get("max_odds", 20.0)
         # 2026-08-30: 特殊盘口(正确比分/半全场等)天然高赔率, tier max_odds(如T2=10)会误杀
