@@ -91,10 +91,11 @@ SNAPSHOT_MAX_AGE = 6.0  # 2026-09-20 让球「只投快照单」阈值(秒): BB�
 BET_HEALTH_FILE = ROOT / "data" / "storage" / "bet_health.json"  # 下单健康(成功/被拒计数), 供 gubbing 限注监控
 
 
-def _record_bet_result(code, latency=0.0):
+def _record_bet_result(code, latency=0.0, direction_key=None):
     """记录下单成败 + 成交延迟(2026-09-21 gubbing 限注监控): 被拒率飙升/成交延迟拉长是软书限注前兆。
 
     赔率滑点不单独记 —— oddsChange=0 保证成交价=信号价(变了就拒), 滑点体现在「被拒(code!=0)」里。
+    2026-10-08 加 direction_key: 同时按方向记录, 供执行质量系数(拒单率→注码打折)。
     """
     try:
         d = {"success": 0, "rejected": 0, "total": 0, "last_ts": 0.0, "latency_sum": 0.0, "latency_n": 0}
@@ -113,6 +114,10 @@ def _record_bet_result(code, latency=0.0):
             d["latency_n"] = d.get("latency_n", 0) + 1
         d["last_ts"] = time.time()
         BET_HEALTH_FILE.write_text(json.dumps(d))
+        # 按方向记录(执行质量系数: 拒单率/延迟 → 注码打折)
+        if direction_key:
+            from src.scrapers.execution_quality import record as _eq_record
+            _eq_record(direction_key, code, latency)
     except Exception:
         pass
 
@@ -1129,7 +1134,8 @@ class SecondLevelMonitor:
         # 记录全局下单时间戳(早盘+滚球共享冷却起点)
         from src.betting.bb_auto_bet import record_global_bet
         record_global_bet()
-        _record_bet_result(code, latency=_t_http)  # 2026-09-21 gubbing 限注监控: 记下单成败 + 成交延迟
+        _eq_key = f"{sig.get('sport')}|{sig.get('sub')}|{sig.get('desig')}"
+        _record_bet_result(code, latency=_t_http, direction_key=_eq_key)  # 2026-09-21 gubbing 限注监控
         if code == 14010:
             self._invalidate_token_cache()
         self._probe_token_async()  # 2026-09-28 token 探针移到投注后(后台, 不占下单关键路径)
@@ -1350,6 +1356,9 @@ class SecondLevelMonitor:
         if odds <= 1 or edge <= 0:
             return 0
         stake = _bankroll() * KELLY_FRACTION * edge / (odds - 1)
+        # 执行质量系数(2026-10-08): 按方向拒单率/延迟打折(0.6~1.0), 样本不足=1.0
+        from src.scrapers.execution_quality import factor as _eq_factor
+        stake = stake * _eq_factor(f"{sig.get('sport')}|{sig.get('sub')}|{sig.get('desig')}")
         # 2026-09-19: 去掉 max(stake, MIN_STAKE) 兜底。之前把 Kelly<30 的冷门单硬抬到 30 投出
         # = 超 Kelly 数倍下冷门(方差击穿来源), 与「stake<30 不投」铁律语义相反。现在 <30 原样
         # 返回, 由调用方 _try_live_auto_bet/_try_auto_bet 的 `if stake < MIN_STAKE: return` 拦截。

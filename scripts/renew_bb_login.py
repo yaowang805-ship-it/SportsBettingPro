@@ -36,7 +36,10 @@ def _log(msg):
 
 
 def _test_token(tok, dom):
-    """测下单接口，code==0 表示 token 有效。"""
+    """测下单接口。三态: True=有效(code==0), False=真失效(code!=0), None=网络异常(连不上)。
+
+    2026-10-08 区分网络异常 vs 真失效: 网络抖动(SSLError/DNS/超时)返回 None, 不清 st-auth 不 reload。
+    """
     import urllib3
     import requests
     urllib3.disable_warnings()
@@ -48,8 +51,8 @@ def _test_token(tok, dom):
                           timeout=15, verify=False)
         return r.json().get("code") == 0
     except Exception as e:
-        _log(f"测试 token 异常: {e}")
-        return False
+        _log(f"测试 token 网络异常: {e}")
+        return None
 
 
 # 2026-10-05: BB「线路切换」多镜像域轮换(invf1→x-vip8→nsvip9→...), st-domain 可能指向已死的旧域。
@@ -62,7 +65,11 @@ BB_DOMAIN_CANDIDATES = [
 
 
 def _find_working_domain(tok, prefer=None):
-    """测 token 在哪个域有效, 返回第一个 code==0 的域名(优先 prefer/st-domain), 否则 None。"""
+    """测 token 在哪个域有效。返回 (domain, reachable):
+    domain 非 None = 有效域名(code==0);
+    domain None 且 reachable=True = 至少一个域连上但 code!=0(真失效);
+    domain None 且 reachable=False = 所有域都网络异常(连不上, 不判失效)。
+    """
     cands = []
     if prefer:
         p = prefer.rstrip("/")
@@ -72,10 +79,14 @@ def _find_working_domain(tok, prefer=None):
         d = d.rstrip("/")
         if d not in cands:
             cands.append(d)
+    reachable = False
     for dom in cands:
-        if _test_token(tok, dom):
-            return dom
-    return None
+        res = _test_token(tok, dom)
+        if res is True:
+            return dom, True
+        if res is False:
+            reachable = True
+    return None, reachable
 
 
 def _read_ls(pg):
@@ -121,9 +132,13 @@ def main():
         prefer_dom = (ls.get("st-domain", "") or _last_dom or BB_DOMAIN_CANDIDATES[0]).rstrip("/")
 
         # 2. 测 token 在候选域里哪个有效(优先 st-domain)；失效则清 + reload 触发自动登录
-        dom = _find_working_domain(st, prefer_dom) if st else None
+        dom, _reachable = _find_working_domain(st, prefer_dom) if st else (None, False)
         if dom:
             _log(f"token 有效，直接写盘: {st[:25]}... domain={dom}")
+        elif not _reachable:
+            _log("所有域网络异常(连不上), 不判失效不 reload(可能是网络抖动), 保留旧 token")
+            browser.close()
+            return 0
         else:
             _log(f"token 失效或为空({st[:15] if st else '无'})，清 st-auth + reload 触发自动登录")
             try:
@@ -137,7 +152,7 @@ def main():
                 time.sleep(3)
                 ls2 = _read_ls(pg)
                 st2 = ls2.get("st-auth", "")
-                wd = _find_working_domain(st2, (ls2.get("st-domain", "") or prefer_dom)) if st2 else None
+                wd, _reachable2 = _find_working_domain(st2, (ls2.get("st-domain", "") or prefer_dom)) if st2 else (None, False)
                 if wd:
                     st = st2
                     dom = wd

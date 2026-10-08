@@ -31,7 +31,11 @@ def _bb_domain():
 
 
 def token_valid(tok, retries=3, retry_delay=2):
-    """测 token 是否有效, 带重试(2026-10-06: 网络抖动只重试不判失效)。"""
+    """测 token 是否有效, 带重试。三态: True=有效, False=真失效(code!=0), None=网络异常(连不上)。
+
+    2026-10-08 区分网络异常 vs 真失效: 之前把 SSLError/DNS/超时 都归为「失效」, 导致 VPN 切节点
+    网络抖动时误判 token 失效、误开浏览器续期。现在网络异常返回 None, 不触发续期。
+    """
     import requests, urllib3, time as _time
     urllib3.disable_warnings()
     for attempt in range(retries):
@@ -45,7 +49,7 @@ def token_valid(tok, retries=3, retry_delay=2):
         except Exception:
             if attempt < retries - 1:
                 _time.sleep(retry_delay)
-    return False
+    return None
 
 
 def _load_streak():
@@ -83,9 +87,10 @@ def _renew_on_demand():
         print("renew 输出:", (r.stdout or "").strip()[-300:])
     except Exception as e:
         print(f"renew 异常: {e}")
-    # 3. 关 9222(省 CPU)
+    # 3. 关 9222(省 CPU) —— 双保险: 杀 9222 主进程 + 杀 .chrome-bb 独立配置的所有 Chrome 进程
     try:
         subprocess.run(["pkill", "-f", "remote-debugging-port=9222"], capture_output=True, timeout=10)
+        subprocess.run(["pkill", "-f", ".chrome-bb"], capture_output=True, timeout=10)
     except Exception:
         pass
     # 4. 验证续期结果
@@ -104,11 +109,16 @@ def main():
     tok = TOK_FILE.read_text().strip()
     if not tok or len(tok) < 30:
         return
-    if token_valid(tok):
+    _res = token_valid(tok)
+    if _res is True:
         _save_streak(0)  # 有效 → 清连续失败计数
         return
+    if _res is None:
+        # 网络异常(连不上域名): 无法判断 token 是否失效, 不判失效不续期(防网络抖动误开浏览器)
+        print("token 检测网络异常(连不上域名, 非 token 失效), 跳过续期")
+        return
 
-    # 无效(重试后仍失败) → 累计连续失败次数, 达阈值才判失效(2026-10-06 防网络抖动误判)
+    # 真失效(code!=0) → 累计连续失败次数, 达阈值才判失效(2026-10-06 防网络抖动误判)
     streak = _load_streak() + 1
     _save_streak(streak)
     if streak < STREAK_THRESHOLD:
