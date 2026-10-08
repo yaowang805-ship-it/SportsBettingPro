@@ -184,6 +184,8 @@ MANUAL_OBSERVE_BLOCK = {
     "football|ht_dc|客|55-60%|early",
     "football|ht_dc|客|60-70%|early",
     "football|ht_dc|客|>70%|early",
+    # 2026-10-08 撤棒球独赢主胜<55%冷门: 观察库已结算 ROI -24.2%(n=14), 冷门被高估(与篮球/棒球冷门规律一致)
+    "baseball|1x2|主|<55%|live",
 }
 
 # 手动释放 + 当日累计上限(2026-09-15 用户要求): 释放的是"有希望的格子"试探, 单注≤150, 当日累计≤2000。
@@ -196,13 +198,13 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 2026-10-08 用户要求: 单注限额全部提升到 270(原 230)
     # 2026-10-03 概率桶迁移(赔率区间→概率桶, 按运动定制):
     # 棒球独赢主全概率(5桶); 篮球独赢主热门+冷门(4桶, 中间55-65%不释放); 足球独赢客30-70%(4桶); btts 50-70%(2桶)
-    "baseball|1x2|主|<55%|live": 270,
     "baseball|1x2|主|55-58%|live": 270,
     "baseball|1x2|主|58-61%|live": 270,
     "baseball|1x2|主|61-64%|live": 270,
     "baseball|1x2|主|>64%|live": 270,
     "basketball|1x2|主|<45%|live": 270,
     "basketball|1x2|主|45-55%|live": 270,
+    "basketball|1x2|主|55-65%|live": 270,
     "basketball|1x2|主|65-75%|live": 270,
     "basketball|1x2|主|>75%|live": 270,
     # 2026-09-29 用户要求释放(edge+ROI 双正的苗头格子, 试探攒实盘; n=45~72 仍远低于 n>200):

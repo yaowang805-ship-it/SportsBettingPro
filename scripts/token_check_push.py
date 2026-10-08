@@ -135,17 +135,12 @@ def main():
         print(f"冷却中(距上次 {(now - last) / 60:.0f}min), 跳过")
         return
 
-    # 2026-10-01: 按需续期(替代 bb_renew 每6h定时)——token 失效时自动开 9222 续期再关
-    ok = _renew_on_demand()
-    _save_streak(0)  # 续期后清计数(无论成败, 冷却会防刷)
-
+    # 2026-10-08 用户要求: token 失效只推钉钉提醒, 不再自动开浏览器续期(避免浏览器被打开+发热)。
+    # token 极长寿(3.5天+), 失效真因是域名切换, 手动续期一次即可。
+    _save_streak(0)
     from config.settings import send_dingtalk
-    if ok:
-        title = "✅ BB token 已自动续期"
-        body = "token 失效后已自动打开浏览器续期成功，下单恢复。"
-    else:
-        title = "⚠️ BB token 需手动登录"
-        body = "token 失效且自动续期失败。请打开 Chrome 的 BB 页面(vv899.bbty0vip7.com)手动登录。"
+    title = "⚠️ BB token 失效"
+    body = "token 失效, 请手动登录 BB 续期(系统不再自动开浏览器)。"
     try:
         send_dingtalk(title, body)
         COOLDOWN_FILE.write_text(json.dumps({"ts": now}))
