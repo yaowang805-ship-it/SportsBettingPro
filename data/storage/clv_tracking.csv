@@ -1,0 +1,1144 @@
+timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odds,pin_odds,fair_price,ev_pct,stake,tier,match_epoch,bb_price_source,pin_league_id,pin_match_id,source,pin_max_stake,line,bb_match_id
+2026-09-27T11:26:32Z,football,Italy Serie C,Calcio Foggia,Sorrento Calcio 1945,,,让球主胜,hc,2.06,0,1.8852,9.27,0,4,1790533800,BB,,,validate,,-0/0.5,5637088
+2026-09-27T11:26:32Z,football,UEFA Nations League B,Israel,Ireland,,,和局,1x2,3.55,0,3.3748,5.19,0,3,1790534700,ALL,,,validate,,,4863211
+2026-09-27T11:26:32Z,football,Guatemala Liga Nacional,CSD Coban Imperial,Aurora FC,,,双重机会-和局/客,dc,2.51,0,2.28,10.09,0,3,1790535600,ALL,,,validate,,,5636375
+2026-09-27T11:28:56Z,football,Slovakia 2. Liga,MSK Zilina B,FK Humenne,,,双重机会-和局/客,dc,1.79,0,1.66,7.83,0,3,1790607600,ALL,,,validate,,,5488433
+2026-09-27T11:32:38Z,football,Bolivia Copa Pacena,Club Bolivar,Blooming Santa Cruz,,,双重机会-和局/客,dc,4.73,0,4.4,7.5,0,3,1790543700,BB,,,validate,,,5607271
+2026-09-27T11:34:34Z,football,UEFA Nations League A,Spain,Croatia,,,客胜,1x2,17.4,0,15.9844,8.86,0,3,1790707500,ALL,,,validate,,,4863293
+2026-09-27T11:38:54Z,football,Belgium Cup,KFC Merelbeke,KAS Eupen,,,小球,ou,1.97,0,1.8281,7.76,0,3,1790517600,ALL,,,validate,,3.25,5637277
+2026-09-27T11:38:54Z,football,Italy Serie C,AC Renate,Treviso FBC 1993,,,小球,ou,1.97,0,1.8441,6.83,0,4,1790523000,ALL,,,validate,,2.25,5637082
+2026-09-27T11:38:54Z,football,Bulgaria Second Professional League,FC Fratria Varna,PFC Spartak Pleven,,,小球,ou,1.93,0,1.7945,7.55,0,3,1790524800,ALL,,,validate,,3.0,5195294
+2026-09-27T11:44:29Z,football,Norway 2nd Division,FK Eik Toensberg 871,Bjarg,,,双重机会-主/和局,dc,3.88,0,3.35,15.82,0,3,1790512200,ALL,,,validate,,,4849641
+2026-09-27T12:10:02Z,football,Croatia First Football League,NK Segesta,NK Karlovac 1919,,,大球,ou,1.99,0,1.8638,6.77,0,2,1790512200,ALL,,,validate,,2.75,5273388
+2026-09-27T12:19:36Z,football,Sweden Ettan Norra,Assyriska FF,Pitea IF,,,双重机会-和局/客,dc,2.16,0,1.99,8.54,0,2,1790517600,BB,,,validate,,,4811959
+2026-09-27T12:47:13Z,football,England National League,Gateshead FC,Altrincham FC,,,客胜,1x2,1.9,0,1.8049,5.27,0,3,1790707500,ALL,,,validate,,,5321259
+2026-09-27T12:51:11Z,football,Bulgaria Second Professional League,PFK Beroe Stara Zagora,Yantra Gabrovo,,,双重机会-和局/客,dc,1.85,0,1.72,7.56,0,3,1790515800,ALL,,,validate,,,5195302
+2026-09-27T13:05:59Z,football,Africa Cup of Nations 2027 Qualification,Central African Republic,Burkina Faso,,,双重机会-主/和局,dc,3.56,0,3.25,9.54,0,3,1790611200,ALL,,,validate,,,5538819
+2026-09-27T13:09:05Z,football,Ghana Premier League,Medeama SC,Basake Holy Stars,,,双重机会-和局/客,dc,2.66,0,1.99,33.67,0,2,1790521200,ALL,,,validate,,,5636361
+2026-09-27T13:14:02Z,football,Sweden Ettan Norra,Assyriska FF,Pitea IF,,,双重机会-主/和局,dc,1.2,0,1.01,18.81,0,2,1790517600,BB,,,validate,,,4811959
+2026-09-27T13:14:02Z,football,Sweden Ettan Norra,Assyriska FF,Pitea IF,,,双重机会-主/客,dc,1.2,0,1.01,18.81,0,2,1790517600,BB,,,validate,,,4811959
+2026-09-27T13:44:14Z,american_football,NFL,Dallas Cowboys,Baltimore Ravens,,,主胜,1x2,2.5,0,1.6099,55.29,0,1,1790540700,BB,,,validate,,,5221271
+2026-09-27T14:01:25Z,football,CONCACAF Nations League A,Suriname,Martinique,,,双重机会-和局/客,dc,2.49,0,2.32,7.33,0,3,1790632800,BB,,,validate,,,5654466
+2026-09-27T14:40:56Z,football,Greece Super League 2,Panserraikos FC,Olympiacos Piraeus B,,,双重机会-主/客,dc,1.1,0,1.01,8.91,0,2,1790522100,ALL,,,validate,,,5572593
+2026-09-27T14:40:56Z,football,Bulgaria Second Professional League,FC Fratria Varna,PFC Spartak Pleven,,,双重机会-和局/客,dc,3.44,0,3.2,7.5,0,3,1790524800,ALL,,,validate,,,5195294
+2026-09-27T15:17:09Z,american_football,NFL,Miami Dolphins,Kansas City Chiefs,,,让分主胜,hc,1.88,0,1.7676,6.36,0,1,1790528400,BB,,,validate,,+10.5,5220640
+2026-09-27T15:39:39Z,football,Qatar Stars Cup,Al Sailiya SC,Al Rayyan SC,,,双重机会-主/客,dc,1.2,0,1.13,6.19,0,3,1790615700,BB,,,validate,,,5641622
+2026-09-27T15:43:28Z,football,Turkey 2nd Lig,Sakaryaspor,Belediye Kutahyaspor,,,双重机会-和局/客,dc,2.26,0,2.14,5.61,0,3,1790524800,ALL,,,validate,,,5577888
+2026-09-27T15:43:28Z,football,El Salvador Liga Nacional Women,CD Platense Municipal Zacatecoluca (w),Fuerte San Francisco (w),,,双重机会-主/和局,dc,2.87,0,1.3,120.77,0,4,1790528400,BB,,,validate,,,5670717
+2026-09-27T16:17:38Z,football,Costa Rica Liga de Ascenso,AD Cofutpa,PFA Santa Cruz,,,双重机会-主/和局,dc,1.4,0,1.3,7.69,0,3,1790542800,BB,,,validate,,,5667330
+2026-09-27T16:17:38Z,football,Costa Rica Liga de Ascenso,AD Cofutpa,PFA Santa Cruz,,,双重机会-主/客,dc,1.25,0,1.17,6.84,0,3,1790542800,BB,,,validate,,,5667330
+2026-09-27T16:28:21Z,football,El Salvador Liga Nacional Women,CD Platense Municipal Zacatecoluca (w),Fuerte San Francisco (w),,,和局,1x2,5.05,0,3.6438,38.59,0,4,1790528400,BB,,,validate,,,5670717
+2026-09-27T16:43:53Z,football,Costa Rica Liga de Ascenso,Quepos Cambute FC,AD Municipal Grecia,,,双重机会-和局/客,dc,2.17,0,1.99,9.05,0,3,1790532000,ALL,,,validate,,,5667318
+2026-09-27T18:52:53Z,football,El Salvador Primera Division,Alianza FC San Salvador,CD Inca,,,双重机会-和局/客,dc,2.7,0,2.54,6.3,0,2,1790542800,ALL,,,validate,,,5310709
+2026-09-27T19:27:00Z,football,Uruguay Segunda Division,Paysandu FC,Tacuarembo FC,,,双重机会-主/客,dc,1.28,0,1.2,6.67,0,3,1790632800,BB,,,validate,,,5646231
+2026-09-27T19:58:38Z,football,Qatar Stars Cup,Al Shahaniya,AL Duhail SC,,,双重机会-主/和局,dc,1.65,0,1.56,5.77,0,3,1790615700,BB,,,validate,,,5641621
+2026-09-27T20:10:20Z,football,Qatar Stars Cup,Al Shahaniya,AL Duhail SC,,,双重机会-主/客,dc,1.24,0,1.13,9.73,0,3,1790615700,BB,,,validate,,,5641621
+2026-09-27T22:18:21Z,football,Qatar Stars Cup,Al Kharaitiyat SC,Al Wakrah,,,双重机会-主/和局,dc,2.05,0,1.83,12.02,0,3,1790607600,BB,,,validate,,,5641615
+2026-09-27T22:24:22Z,football,Qatar Stars Cup,Al Kharaitiyat SC,Al Wakrah,,,双重机会-主/客,dc,1.22,0,1.12,8.93,0,3,1790607600,BB,,,validate,,,5641615
+2026-09-27T22:49:43Z,ice_hockey,NHL,Carolina Hurricanes,Florida Panthers,,,让球主胜,hc,2.25,0,1.912,17.68,0,1,1790715600,BB,,,validate,,-0.5,5274979
+2026-09-27T22:49:43Z,ice_hockey,NHL,Toronto Maple Leafs,Montreal Canadiens,,,让球主胜,hc,2.35,0,1.9633,19.7,0,1,1790722800,BB,,,validate,,-0.5,5274994
+2026-09-27T22:53:21Z,football,Jamaica Premier League,Waterhouse FC,Treasure Beach FC,,,小球,ou,1.97,0,1.8631,5.74,0,2,1790557200,ALL,,,validate,,2.5,5591716
+2026-09-27T22:53:21Z,football,Jamaica Premier League,Waterhouse FC,Treasure Beach FC,,,双重机会-和局/客,dc,1.82,0,1.59,14.47,0,2,1790557200,ALL,,,validate,,,5591716
+2026-09-27T23:24:54Z,football,Africa Cup of Nations 2027 Qualification,Mozambique,Sudan,,,双重机会-和局/客,dc,1.85,0,1.76,5.11,0,3,1790686800,ALL,,,validate,,,5579212
+2026-09-27T23:34:29Z,football,Africa Cup of Nations 2027 Qualification,Liberia,Mali,,,双重机会-主/和局,dc,2.67,0,2.5,6.8,0,3,1790708400,BB,,,validate,,,5591988
+2026-09-27T23:43:32Z,football,Africa Cup of Nations 2027 Qualification,Guinea Bissau,Nigeria,,,双重机会-主/和局,dc,2.81,0,2.28,23.25,0,3,1790697600,ALL,,,validate,,,5579189
+2026-09-28T00:03:25Z,football,Africa Cup of Nations 2027 Qualification,Zambia,Togo,,,双重机会-主/客,dc,1.37,0,1.29,6.2,0,3,1790697600,ALL,,,validate,,,5579175
+2026-09-28T01:00:55Z,football,Africa Cup of Nations 2027 Qualification,Uganda,Libya,,,双重机会-主/客,dc,1.36,0,1.29,5.43,0,3,1790697600,ALL,,,validate,,,5579179
+2026-09-28T02:54:55Z,football,Qatar Stars Cup,Al Sailiya SC,Al Rayyan SC,,,双重机会-主/和局,dc,1.96,0,1.78,10.11,0,3,1790615700,BB,,,validate,,,5641622
+2026-09-28T03:47:16Z,football,Africa Cup of Nations 2027 Qualification,Ethiopia,Senegal,,,双重机会-主/和局,dc,2.07,0,1.92,7.81,0,3,1790686800,ALL,,,validate,,,5563487
+2026-09-28T04:42:56Z,football,Argentina Primera C Metropolitana,Centro Espanol,Defensores de Cambaceres,,,双重机会-和局/客,dc,2.1,0,1.79,17.32,0,3,1790618400,ALL,,,validate,,,5175712
+2026-09-28T04:42:56Z,football,Argentina Primera C Metropolitana,Centro Espanol,Defensores de Cambaceres,,,双重机会-主/客,dc,1.27,0,1.1,15.45,0,3,1790618400,ALL,,,validate,,,5175712
+2026-09-28T07:31:02Z,football,UEFA Nations League A,Turkey,Italy,,,和局,1x2,3.9,0,3.6248,7.59,0,3,1790621100,ALL,,,validate,,,4863265
+2026-09-28T07:39:29Z,football,Ukraine Persha Liga,FC Polissya Zhytomyr II,Kolos Kovalivka II,,,双重机会-和局/客,dc,1.85,0,1.72,7.56,0,2,1790589600,BB,,,validate,,,5632416
+2026-09-28T08:02:44Z,football,UEFA Nations League B,Georgia,Ukraine,,,和局,1x2,3.5,0,3.3248,5.27,0,3,1790611200,ALL,,,validate,,,4863178
+2026-09-28T09:26:27Z,football,England National League South,Slough Town FC,Ebbsfleet United FC,,,双重机会-和局/客,dc,1.09,0,1.03,5.83,0,3,1790707500,ALL,,,validate,,,5584142
+2026-09-28T09:30:34Z,football,Slovakia 2. Liga,MSK Zilina B,FK Humenne,,,让球主胜,hc,1.86,0,1.7589,5.75,0,3,1790607600,ALL,,,validate,,-0.5,5488433
+2026-09-28T11:29:41Z,football,Serbia Prva Liga,FK Bor 1919,FK Metalac Gornji Milanovac,,,让球主胜,hc,1.89,0,1.7302,9.24,0,2,1790611200,ALL,,,validate,,+0.5,5644187
+2026-09-28T11:29:41Z,football,Serbia Prva Liga,FK Bor 1919,FK Metalac Gornji Milanovac,,,双重机会-主/和局,dc,1.86,0,1.69,10.06,0,2,1790611200,ALL,,,validate,,,5644187
+2026-09-28T11:34:46Z,football,Serbia Prva Liga,FK Bor 1919,FK Metalac Gornji Milanovac,,,主胜,1x2,3.6,0,3.3203,8.42,0,2,1790611200,ALL,,,validate,,,5644187
+2026-09-28T11:43:09Z,ice_hockey,NHL,Boston Bruins,New York Rangers,,,让球主胜,hc,2.35,0,2.0026,17.35,0,1,1790726400,BB,,,validate,,-0.5,5275004
+2026-09-28T11:54:25Z,football,Qatar Stars Cup,Al Kharaitiyat SC,Al Wakrah,,,主胜,1x2,2.95,0,2.7587,6.93,0,3,1790607600,BB,,,validate,,,5641615
+2026-09-28T12:53:58Z,football,Qatar Stars Cup,AL Markhiya,Al Ahli Doha SC,,,双重机会-主/和局,dc,1.68,0,1.6,5.0,0,3,1790702100,BB,,,validate,,,5646752
+2026-09-28T12:53:58Z,football,Qatar Stars Cup,AL Markhiya,Al Ahli Doha SC,,,双重机会-主/客,dc,1.24,0,1.09,13.76,0,3,1790702100,BB,,,validate,,,5646752
+2026-09-28T14:04:14Z,football,Qatar Stars Cup,Al Kharaitiyat SC,Al Wakrah,,,客胜,1x2,2.43,0,2.2993,5.68,0,3,1790607600,BB,,,validate,,,5641615
+2026-09-28T14:12:13Z,football,Japan J. League Cup,Tochigi City FC,Sanfrecce Hiroshima,,,双重机会-主/和局,dc,3.91,0,3.6,8.61,0,3,1790676000,BB,,,validate,,,5616528
+2026-09-28T14:38:37Z,football,Arabian Gulf Cup (In Saudi Arabia),Oman,Kuwait,,,双重机会-和局/客,dc,2.56,0,2.16,18.52,0,3,1790703000,BB,,,validate,,,5646756
+2026-09-28T15:09:52Z,football,Norway 3rd Division,Raelingen,Lyn 1896 FK II,,,主胜,1x2,1.52,0,1.3445,13.05,0,4,1790611200,ALL,,,validate,,,5243419
+2026-09-28T15:09:52Z,football,Norway 3rd Division,Raelingen,Lyn 1896 FK II,,,双重机会-和局/客,dc,3.83,0,3.5,9.43,0,4,1790611200,ALL,,,validate,,,5243419
+2026-09-28T15:25:56Z,football,Africa Cup of Nations 2027 Qualification,Central African Republic,Burkina Faso,,,让球主胜,hc,2.0,0,1.8978,5.39,0,3,1790611200,ALL,,,validate,,+1.5,5538819
+2026-09-28T15:42:34Z,football,UEFA Nations League B,Georgia,Ukraine,,,小球,ou,1.99,0,1.8318,8.64,0,3,1790611200,ALL,,,validate,,2.5,4966275
+2026-09-28T15:59:41Z,football,Qatar Stars Cup,Al Sailiya SC,Al Rayyan SC,,,客胜,1x2,2.01,0,1.8549,8.36,0,3,1790615700,BB,,,validate,,,5641622
+2026-09-28T16:40:30Z,football,Africa Cup of Nations 2027 Qualification,Tunisia,Botswana,,,双重机会-和局/客,dc,4.99,0,4.5,10.89,0,3,1790622000,ALL,,,validate,,,5641629
+2026-09-28T17:12:16Z,football,Argentina Primera C Metropolitana,Justo Jose de Urquiza,CDM Leandro N. Alem,,,双重机会-主/和局,dc,1.2,0,1.01,18.81,0,3,1790618400,ALL,,,validate,,,5175719
+2026-09-28T18:28:56Z,football,Africa Cup of Nations 2027 Qualification,Tunisia,Botswana,,,双重机会-主/客,dc,1.1,0,1.01,8.91,0,3,1790622000,ALL,,,validate,,,5641629
+2026-09-28T22:57:35Z,football,Japan J. League Cup,FC Osaka,Avispa Fukuoka,,,双重机会-主/和局,dc,2.7,0,2.56,5.47,0,3,1790676000,BB,,,validate,,,5616446
+2026-09-29T02:21:02Z,football,Bolivia Copa Pacena,Club Aurora,San Antonio Bulo Bulo,,,双重机会-和局/客,dc,1.68,0,1.56,7.69,0,3,1790726400,BB,,,validate,,,5651483
+2026-09-29T04:05:48Z,football,Colombia Primera A,Internacional de Bogota,CD Once Caldas,,,和局,1x2,3.25,0,3.0645,6.05,0,2,1790902800,ALL,,,validate,,,5660501
+2026-09-29T05:40:18Z,football,Slovakia Cup,FK Inter Bratislava,FK Zeleziarne Podbrezova,,,大球,ou,1.95,0,1.8465,5.61,0,3,1790688600,ALL,,,validate,,3.0,5646727
+2026-09-29T06:04:14Z,football,Serbia Prva Liga,FK Vozdovac Belgrade,FK Napredak Krusevac,,,客胜,1x2,2.84,0,2.6598,6.77,0,2,1790697600,ALL,,,validate,,,5587233
+2026-09-29T06:09:45Z,football,Bolivia Copa Pacena,Real Potosi,Academia de Balompie Boliviano,,,双重机会-主/客,dc,1.1,0,1.01,8.91,0,3,1790719200,BB,,,validate,,,5646804
+2026-09-29T06:37:25Z,basketball,Australia NBL,New Zealand Breakers,Cairns Taipans,,,客胜,1x2,2.4,0,2.2478,6.77,0,3,1790753400,ALL,,,validate,,,5074393
+2026-09-29T07:56:40Z,football,Japan J. League Cup,Roasso Kumamoto,Kawasaki Frontale,,,双重机会-主/和局,dc,4.89,0,4.6,6.3,0,3,1790676000,BB,,,validate,,,5616522
+2026-09-29T08:04:46Z,football,Serbia Prva Liga,FK Vozdovac Belgrade,FK Napredak Krusevac,,,双重机会-和局/客,dc,1.51,0,1.43,5.59,0,2,1790697600,ALL,,,validate,,,5646218
+2026-09-29T08:13:26Z,football,Japan J. League Cup,Giravanz Kitakyushu,Nagoya Grampus,,,双重机会-主/和局,dc,3.9,0,3.3,18.18,0,3,1790676000,BB,,,validate,,,5646715
+2026-09-29T08:19:19Z,football,Japan J. League Cup,FC Osaka,Avispa Fukuoka,,,主胜,1x2,7.3,0,6.887,6.0,0,3,1790676000,BB,,,validate,,,5616446
+2026-09-29T08:40:49Z,football,Africa Cup of Nations 2027 Qualification,Benin,Mauritania,,,和局,1x2,2.9,0,2.7594,5.1,0,3,1790708400,ALL,,,validate,,,5538813
+2026-09-29T08:51:07Z,football,India Mizoram Premier League,Aizawl FC,Chanmari FC,,,双重机会-和局/客,dc,2.18,0,1.94,12.37,0,2,1790688600,ALL,,,validate,,,5620092
+2026-09-29T09:37:04Z,football,Japan J. League Cup,FC Osaka,Avispa Fukuoka,,,双边进球-否,btts,1.97,0,1.8684,5.44,0,3,1790676000,BB,,,validate,,,5616446
+2026-09-29T10:02:04Z,football,Africa Cup of Nations 2027 Qualification,South Sudan,Egypt,,,双重机会-主/客,dc,1.11,0,1.01,9.9,0,3,1790686800,ALL,,,validate,,,5579221
+2026-09-29T11:46:21Z,football,Africa Cup of Nations 2027 Qualification,South Sudan,Egypt,,,双重机会-主/和局,dc,4.74,0,4.5,5.33,0,3,1790686800,ALL,,,validate,,,5579221
+2026-09-29T12:23:56Z,football,Bolivia Copa Pacena,Oriente Petrolero,The Strongest,,,主胜,1x2,2.34,0,2.2171,5.54,0,3,1790814600,BB,,,validate,,,5656343
+2026-09-29T13:11:31Z,football,El Salvador Primera Division,Alianza FC San Salvador,CD Platense Municipal Zacatecoluca,,,双重机会-和局/客,dc,1.89,0,1.75,8.0,0,2,1790816400,ALL,,,validate,,,5310700
+2026-09-29T13:11:31Z,football,El Salvador Primera Division,Alianza FC San Salvador,CD Platense Municipal Zacatecoluca,,,双重机会-主/客,dc,1.25,0,1.08,15.74,0,2,1790816400,ALL,,,validate,,,5310700
+2026-09-29T14:45:26Z,football,El Salvador Primera Division,Alianza FC San Salvador,CD Platense Municipal Zacatecoluca,,,双重机会-主/和局,dc,1.21,0,1.15,5.22,0,2,1790816400,ALL,,,validate,,,5310700
+2026-09-29T15:44:44Z,football,Egypt Second Division A,El Sekka El Hadid,El Entag El Harby,,,双重机会-主/客,dc,1.32,0,1.24,6.45,0,3,1790857800,BB,,,validate,,,5287802
+2026-09-29T15:44:44Z,football,Egypt Second Division A,La Viena FC,Al Nasr Cairo,,,双重机会-主/客,dc,1.35,0,1.26,7.14,0,3,1790857800,BB,,,validate,,,5287806
+2026-09-29T16:13:28Z,football,Egypt Second Division A,Pharco FC,Tersana SC,,,双重机会-主/客,dc,1.37,0,1.25,9.6,0,3,1790857800,ALL,,,validate,,,5287809
+2026-09-29T16:25:15Z,football,Qatar Stars Cup,AL Markhiya,Al Ahli Doha SC,,,客胜,1x2,1.83,0,1.7399,5.18,0,3,1790702100,BB,,,validate,,,5646752
+2026-09-29T16:25:15Z,football,Qatar Stars Cup,AL Markhiya,Al Ahli Doha SC,,,让球客胜,hc,1.83,0,1.7388,5.24,0,3,1790702100,BB,,,validate,,-0.5,5646752
+2026-09-29T19:50:53Z,football,Chile Cup,Deportes Concepcion,O Higgins,,,双重机会-主/客,dc,1.28,0,1.17,9.4,0,3,1790809200,BB,,,validate,,,5675140
+2026-09-29T21:35:40Z,football,Montenegro 2nd League,FK Rudar Pljevlja,FK Berane,,,双重机会-和局/客,dc,1.74,0,1.6,8.75,0,3,1790773200,BB,,,validate,,,5133587
+2026-09-29T21:35:40Z,football,Norway NM Cup,Follo,Sarpsborg 08,,,双重机会-主/和局,dc,6.5,0,2.92,122.6,0,3,1790776800,ALL,,,validate,,,5651495
+2026-09-29T21:35:40Z,football,Israel Liga Alef,AS Nordia Jerusalem,Hapoel Hadera,,,双重机会-主/和局,dc,2.28,0,1.98,15.15,0,3,1790787000,BB,,,validate,,,5409946
+2026-09-29T22:19:11Z,football,El Salvador Primera Division,CD Fuerte San Francisco Morazan,CD Luis Angel Firpo,,,双重机会-主/和局,dc,2.36,0,2.24,5.36,0,2,1790890200,ALL,,,validate,,,5310712
+2026-09-29T22:19:11Z,football,El Salvador Primera Division,CD Fuerte San Francisco Morazan,CD Luis Angel Firpo,,,双重机会-主/客,dc,1.22,0,1.14,7.02,0,2,1790890200,ALL,,,validate,,,5310712
+2026-09-30T00:30:31Z,football,El Salvador Primera Division,CD Inca,Municipal Limeno,,,双重机会-主/和局,dc,1.96,0,1.78,10.11,0,2,1790899200,ALL,,,validate,,,5310716
+2026-09-30T00:30:31Z,football,El Salvador Primera Division,CD Inca,Municipal Limeno,,,双重机会-主/客,dc,1.24,0,1.18,5.08,0,2,1790899200,ALL,,,validate,,,5310716
+2026-09-30T03:00:39Z,football,Paraguay Cup,Cerro Porteno,Rubio Nu,,,双重机会-和局/客,dc,1.86,0,1.61,15.53,0,3,1790807400,ALL,,,validate,,,5599088
+2026-09-30T10:16:39Z,basketball,FIBA Europe Cup-Qualification,CS Dinamo Bucuresti,KB Peja,,,大分,ou,1.89,0,1.7306,9.21,0,2,1790784000,BB,,,validate,,167.5,5664423
+2026-09-30T10:22:38Z,football,Israel Liga Alef,Hapoel Bnei Musmus,Maccabi Kiryat Ata Bialik,,,双重机会-主/和局,dc,2.06,0,1.9,8.42,0,3,1790778600,ALL,,,validate,,,5599109
+2026-09-30T10:34:23Z,football,Bolivia Copa Pacena,CD Real Tomayapo,CA Nacional Potosi,,,双重机会-和局/客,dc,1.68,0,1.51,11.26,0,3,1790807400,BB,,,validate,,,5651590
+2026-09-30T10:38:46Z,football,Qatar Stars Cup,Al Gharafa SC,Al Mesaimeer,,,双重机会-主/客,dc,1.21,0,1.15,5.22,0,3,1790866800,BB,,,validate,,,5656360
+2026-09-30T10:38:46Z,football,Qatar Stars Cup,Qatar SC,Al Bidda SC,,,双重机会-和局/客,dc,2.37,0,2.1,12.86,0,3,1790874900,BB,,,validate,,,5656389
+2026-09-30T10:53:36Z,football,Switzerland Promotion League,FC Kreuzlingen,SC Bruhl St Gallen,,,让球主胜,hc,1.85,0,1.7266,7.15,0,3,1790791200,ALL,,,validate,,+0.5,5599017
+2026-09-30T10:58:53Z,football,UEFA Nations League D,Azerbaijan,Liechtenstein,,,客胜,1x2,34.0,0,25.9615,30.96,0,3,1790870400,ALL,,,validate,,,4863408
+2026-09-30T12:33:13Z,football,Israel Liga Alef,Hapoel Bnei Musmus,Maccabi Kiryat Ata Bialik,,,双边进球-是,btts,1.78,0,1.6781,6.07,0,3,1790778600,ALL,,,validate,,,5409769
+2026-09-30T12:38:10Z,football,Sweden Division 2,Umea FC Akademi,IFK Umea,,,双重机会-主/客,dc,1.08,0,1.02,5.88,0,3,1790787600,ALL,,,validate,,,5651531
+2026-09-30T12:40:24Z,football,Israel Leumit League,Bnei Yehuda Tel Aviv FC,Maccabi Kiryat Gat FC,,,双重机会-和局/客,dc,3.4,0,3.1,9.68,0,2,1790870400,ALL,,,validate,,,5655694
+2026-09-30T12:40:24Z,football,Israel Leumit League,Maccabi Kabilio Jaffa,Hapoel Acre FC,,,双重机会-和局/客,dc,1.95,0,1.84,5.98,0,2,1790870400,ALL,,,validate,,,5655700
+2026-09-30T12:40:24Z,football,Israel Leumit League,Maccabi Kabilio Jaffa,Hapoel Acre FC,,,双重机会-主/客,dc,1.21,0,1.13,7.08,0,2,1790870400,ALL,,,validate,,,5655700
+2026-09-30T12:44:30Z,ice_hockey,NHL,Colorado Avalanche,Los Angeles Kings,,,让球主胜,hc,1.85,0,1.5535,19.09,0,1,1790820000,BB,,,validate,,-0.5,5275045
+2026-09-30T13:06:15Z,football,Egypt Second Division A,El Daklyeh,Maleyat Kafr El Zayat,,,双重机会-主/客,dc,1.35,0,1.25,8.0,0,3,1790944200,BB,,,validate,,,5285162
+2026-09-30T13:06:15Z,football,Egypt Second Division A,Tanta FC,Haras El Hodood,,,双重机会-主/客,dc,1.35,0,1.27,6.3,0,3,1790944200,BB,,,validate,,,5287804
+2026-09-30T13:15:56Z,football,Israel Leumit League,Bnei Yehuda Tel Aviv FC,Maccabi Kiryat Gat FC,,,双重机会-主/客,dc,1.11,0,1.01,9.9,0,2,1790870400,ALL,,,validate,,,5655694
+2026-09-30T13:15:56Z,football,Israel Leumit League,Maccabi Bnei Reina,Hapoel Kfar Shalem FC,,,双重机会-和局/客,dc,1.69,0,1.59,6.29,0,2,1790870400,ALL,,,validate,,,5655698
+2026-09-30T13:33:54Z,football,UAE League Cup,United FC,Hatta SC,,,双重机会-和局/客,dc,1.97,0,1.8,9.44,0,3,1790860500,BB,,,validate,,,5521502
+2026-09-30T13:50:43Z,football,Israel Liga Alef,Hapoel Bnei Musmus,Maccabi Kiryat Ata Bialik,,,主胜,1x2,4.47,0,3.9711,12.56,0,3,1790778600,ALL,,,validate,,,5599109
+2026-09-30T13:50:43Z,football,Sweden Division 2,Umea FC Akademi,IFK Umea,,,双重机会-和局/客,dc,5.8,0,5.3,9.43,0,3,1790787600,BB,,,validate,,,5651531
+2026-09-30T13:59:27Z,football,Norway NM Cup,Baerum SK,Lillestrom SK,,,双重机会-主/和局,dc,6.0,0,4.5,33.33,0,3,1790870400,ALL,,,validate,,,5656376
+2026-09-30T14:16:26Z,football,Israel Liga Alef,Hapoel Bnei Musmus,Maccabi Kiryat Ata Bialik,,,大球,ou,1.78,0,1.6475,8.04,0,3,1790778600,ALL,,,validate,,2.5,5599109
+2026-09-30T14:28:33Z,football,Chile Primera B,Union San Felipe,San Luis de Quillota,,,客胜,1x2,2.19,0,2.0696,5.82,0,3,1790802000,ALL,,,validate,,,5654355
+2026-09-30T14:54:42Z,football,Israel Leumit League,FC Ashdod,Maccabi Herzliya,,,双重机会-主/客,dc,1.17,0,1.11,5.41,0,2,1790870400,ALL,,,validate,,,5609043
+2026-09-30T15:03:41Z,football,Africa Cup of Nations 2027 Qualification,Eritrea,South Africa,,,双重机会-主/和局,dc,4.59,0,4.3,6.74,0,3,1790784000,ALL,,,validate,,,5598965
+2026-09-30T15:45:35Z,football,CONCACAF Nations League A,Nicaragua,Costa Rica,,,双重机会-主/和局,dc,2.42,0,2.3,5.22,0,3,1790906400,BB,,,validate,,,5664997
+2026-09-30T16:06:39Z,football,Israel Leumit League,FC Ashdod,Maccabi Herzliya,,,双重机会-和局/客,dc,2.5,0,2.32,7.76,0,2,1790870400,ALL,,,validate,,,5655697
+2026-09-30T16:06:39Z,football,Norway NM Cup,Madla,Viking FK,,,双重机会-主/和局,dc,5.7,0,4.5,26.67,0,3,1790870400,ALL,,,validate,,,5656377
+2026-09-30T17:04:44Z,football,Guatemala Primera Division,Deportivo Iztapa,Juventud Copalera,,,主胜,1x2,1.79,0,1.6042,11.58,0,2,1790802000,ALL,,,validate,,,5661397
+2026-09-30T17:19:56Z,football,Denmark 2nd Division,Naestved BK,Nykobing FC,,,双重机会-主/客,dc,1.25,0,1.15,8.7,0,3,1790960400,ALL,,,validate,,,5203407
+2026-09-30T17:30:58Z,football,Panama Liga Nacional de Ascenso,Potros del Este,Champions FC Academy,,,双重机会-和局/客,dc,2.66,0,2.44,9.02,0,3,1790809200,BB,,,validate,,,5318432
+2026-09-30T17:37:00Z,football,Paraguay Cup,Cerro Porteno,Rubio Nu,,,主胜,1x2,2.08,0,1.9544,6.43,0,3,1790807400,ALL,,,validate,,,5651592
+2026-09-30T17:48:50Z,football,Denmark 2nd Division,VSK Aarhus,Brabrand IF,,,双重机会-和局/客,dc,2.14,0,1.9,12.63,0,3,1790960400,ALL,,,validate,,,5203403
+2026-09-30T17:48:50Z,football,Denmark 2nd Division,VSK Aarhus,Brabrand IF,,,双重机会-主/客,dc,1.21,0,1.09,11.01,0,3,1790960400,ALL,,,validate,,,5203403
+2026-09-30T17:48:50Z,football,Denmark 2nd Division,BK Fremad Amager,B93 Copenhagen,,,双重机会-主/客,dc,1.24,0,1.12,10.71,0,3,1790960400,ALL,,,validate,,,5203404
+2026-09-30T17:48:50Z,football,Denmark 2nd Division,Naestved BK,Nykobing FC,,,双重机会-主/和局,dc,1.59,0,1.51,5.3,0,3,1790960400,ALL,,,validate,,,5203407
+2026-09-30T17:48:50Z,football,Denmark 2nd Division,Naestved BK,Nykobing FC,,,双重机会-和局/客,dc,1.4,0,1.33,5.26,0,3,1790960400,ALL,,,validate,,,5203407
+2026-09-30T18:20:34Z,football,Sweden Ettan Sodra,Kristianstad FC,Ariana FC,,,双重机会-主/客,dc,1.2,0,1.1,9.09,0,2,1790960400,BB,,,validate,,,4833339
+2026-09-30T21:24:48Z,basketball,WNBA-Playoffs,Washington Mystics (w),Atlanta Dream (w),,,让分客胜,hc,1.97,0,1.8762,5.0,0,1,1790809200,ALL,,,validate,,-2.5,5666317
+2026-09-30T21:32:33Z,football,Denmark 2nd Division,BK Fremad Amager,B93 Copenhagen,,,双重机会-和局/客,dc,1.44,0,1.36,5.88,0,3,1790960400,ALL,,,validate,,,5203404
+2026-09-30T21:47:02Z,football,Guatemala Primera Division,Deportivo Gomerano,Chichicasteco FC,,,双重机会-和局/客,dc,2.44,0,2.16,12.96,0,2,1790816400,BB,,,validate,,,5682485
+2026-09-30T23:54:14Z,football,Sweden Ettan Sodra,Lunds BK,Laholms FK,,,双重机会-主/客,dc,1.14,0,1.06,7.55,0,2,1790960400,ALL,,,validate,,,5625092
+2026-10-01T00:33:22Z,football,Egypt Second Division A,Tanta FC,Haras El Hodood,,,双重机会-和局/客,dc,1.25,0,1.11,12.61,0,3,1790944200,ALL,,,validate,,,5287804
+2026-10-01T00:43:11Z,basketball,WNBA-Playoffs,Dallas Wings (w),Golden State Valkyries (w),,,主胜,1x2,2.81,0,2.6598,5.65,0,1,1790816400,ALL,,,validate,,,5666319
+2026-10-01T02:40:35Z,american_football,NCAA American Football,San Diego State Aztecs,Texas State Bobcats,,,让分客胜,hc,1.82,0,1.7219,5.7,0,2,1791081000,BB,,,validate,,-4.5,5671042
+2026-10-01T04:13:55Z,football,Jordan 1st Division,Al Yarmouk,Amman FC,,,双重机会-主/和局,dc,1.69,0,1.6,5.62,0,2,1790870400,ALL,,,validate,,,5656372
+2026-10-01T04:31:42Z,football,Israel Liga Alef,Hapoel Umm AL Fahm,Hapoel Ironi Karmiel,,,双重机会-主/和局,dc,1.61,0,1.49,8.05,0,3,1790872200,ALL,,,validate,,,5599106
+2026-10-01T04:38:25Z,basketball,Austria Basketball Superliga,Oberwart Gunners,BC Vienna,,,主胜,1x2,1.31,0,1.1797,11.05,0,2,1790874000,ALL,,,validate,,,5359434
+2026-10-01T04:55:27Z,football,CONCACAF Nations League C,US Virgin Islands,French Saint Martin,,,主胜,1x2,10.0,0,9.4905,5.37,0,3,1790884800,ALL,,,validate,,,5665001
+2026-10-01T05:05:55Z,football,Kirin Cup (In Japan),Japan,Ecuador,,,客胜,1x2,6.3,0,5.9933,5.12,0,3,1790849400,BB,,,validate,,,5673635
+2026-10-01T06:27:29Z,football,UEFA Nations League A,Germany,Serbia,,,和局,1x2,8.0,0,7.4987,6.69,0,3,1790880300,ALL,,,validate,,,5491281
+2026-10-01T06:40:00Z,football,Austria Landesliga,SKN St. Polten II,SC Zwettl,,,双重机会-主/和局,dc,1.89,0,1.72,9.88,0,4,1790875800,ALL,,,validate,,,5672397
+2026-10-01T07:10:49Z,ice_hockey,NHL,Columbus Blue Jackets,Buffalo Sabres,,,让球主胜,hc,2.4,0,2.0202,18.8,0,1,1790895600,BB,,,validate,,-0.5,5275066
+2026-10-01T07:45:32Z,football,UAE League Cup,United FC,Hatta SC,,,客胜,1x2,3.57,0,3.3934,5.2,0,3,1790860500,ALL,,,validate,,,5521502
+2026-10-01T07:45:32Z,football,UAE League Cup,United FC,Hatta SC,,,让球客胜,hc,1.96,0,1.7961,9.13,0,3,1790860500,ALL,,,validate,,+0.5,5521502
+2026-10-01T08:38:16Z,football,South Korea K-League 3,Ulsan Citizen FC,Siheung Citizen FC,,,双重机会-和局/客,dc,1.19,0,1.04,14.42,0,4,1791014400,BB,,,validate,,,4493968
+2026-10-01T08:38:16Z,football,South Korea K-League 3,Ulsan Citizen FC,Siheung Citizen FC,,,双重机会-主/客,dc,1.23,0,1.1,11.82,0,4,1791014400,BB,,,validate,,,4493968
+2026-10-01T09:10:05Z,football,Ghana Premier League,Asante Kotoko,Karela United FC,,,双重机会-和局/客,dc,2.12,0,1.74,21.84,0,2,1790870400,ALL,,,validate,,,5664270
+2026-10-01T09:10:05Z,football,Austria Landesliga,SKN St. Polten II,SC Zwettl,,,双重机会-和局/客,dc,1.22,0,1.14,7.02,0,4,1790875800,ALL,,,validate,,,5672397
+2026-10-01T09:18:36Z,football,Mexico Liga De Expansion MX,Club Atletico La Paz,Venados FC,,,双重机会-和局/客,dc,2.32,0,2.04,13.73,0,2,1790996400,ALL,,,validate,,,5300127
+2026-10-01T09:24:41Z,baseball,Korea Republic KBO League,Kia Tigers,KT Wiz,,,让分主胜,hc,1.66,0,1.5689,5.81,0,1,1790847000,BB,,,validate,,+1.5,5543376
+2026-10-01T09:39:13Z,football,South Korea K-League 3,Changwon City FC,Yangpyeong FC,,,双重机会-主/和局,dc,1.27,0,1.2,5.83,0,4,1791003600,ALL,,,validate,,,4493975
+2026-10-01T09:39:13Z,football,South Korea K-League 3,Changwon City FC,Yangpyeong FC,,,双重机会-主/客,dc,1.29,0,1.16,11.21,0,4,1791003600,ALL,,,validate,,,4493975
+2026-10-01T09:54:26Z,football,Norway NM Cup,Baerum SK,Lillestrom SK,,,主胜,1x2,27.0,0,24.4082,10.62,0,3,1790870400,ALL,,,validate,,,5656376
+2026-10-01T10:35:39Z,football,Argentina Liga Profesional,Independiente Rivadavia,Gimnasia Y Esgrima La Plata,,,小球,ou,1.86,0,1.7622,5.55,0,3,1790987400,ALL,,,validate,,2.5,5605939
+2026-10-01T11:04:50Z,basketball,Austria Basketball Superliga,Flyers Wels,BK Dukes Klosterneuburg,,,客胜,1x2,2.61,0,2.4374,7.08,0,2,1790960400,ALL,,,validate,,,5668586
+2026-10-01T12:04:52Z,football,Morocco Botola Pro,FUS Rabat,US Amal Tiznit,,,双重机会-主/客,dc,1.29,0,1.16,11.21,0,2,1790956800,ALL,,,validate,,,5664988
+2026-10-01T12:22:29Z,football,Costa Rica Liga de Ascenso,AD Cariari Pococi,AD Municipal Santa Ana,,,双重机会-和局/客,dc,1.69,0,1.52,11.18,0,3,1790902800,ALL,,,validate,,,5681474
+2026-10-01T12:22:29Z,ice_hockey,NHL,Vancouver Canucks,Edmonton Oilers,,,让球客胜,hc,1.74,0,1.5044,15.66,0,1,1790906400,BB,,,validate,,-0.5,5275041
+2026-10-01T13:21:21Z,football,Norway NM Cup,Madla,Viking FK,,,和局,1x2,18.4,0,17.4857,5.23,0,3,1790870400,ALL,,,validate,,,5606500
+2026-10-01T13:39:20Z,football,Sweden Ettan Norra,FBK Karlstad,AFC Eskilstuna,,,双重机会-主/客,dc,1.23,0,1.14,7.89,0,2,1791032400,ALL,,,validate,,,4832924
+2026-10-01T13:39:20Z,football,Slovakia 2. Liga,MFK Bytca,MSK Zilina B,,,双重机会-主/客,dc,1.2,0,1.11,8.11,0,3,1791032400,ALL,,,validate,,,5488470
+2026-10-01T13:39:20Z,football,Slovakia 2. Liga,FK Inter Bratislava,Vion Zlate Moravce,,,双重机会-和局/客,dc,1.65,0,1.56,5.77,0,3,1791032400,ALL,,,validate,,,5488472
+2026-10-01T13:39:20Z,football,Slovakia 2. Liga,FK Inter Bratislava,Vion Zlate Moravce,,,双重机会-主/客,dc,1.23,0,1.15,6.96,0,3,1791032400,ALL,,,validate,,,5488472
+2026-10-01T14:14:00Z,football,UAE League Cup,Al Ain FC,Ajman Club,,,双重机会-和局/客,dc,3.31,0,2.96,11.82,0,3,1790946900,ALL,,,validate,,,5613168
+2026-10-01T14:14:00Z,football,UAE League Cup,Al Wasl FC,Al Ittihad Kalba,,,双重机会-和局/客,dc,3.23,0,2.94,9.86,0,3,1790946900,ALL,,,validate,,,5613169
+2026-10-01T14:33:33Z,football,Qatar Stars Cup,Al Gharafa SC,Al Mesaimeer,,,让球主胜,hc,1.99,0,1.8788,5.92,0,3,1790866800,BB,,,validate,,-1,5656360
+2026-10-01T14:33:33Z,football,Qatar Stars Cup,Al Gharafa SC,Al Mesaimeer,,,大球,ou,1.86,0,1.7465,6.5,0,3,1790866800,BB,,,validate,,3.0,5656360
+2026-10-01T15:09:26Z,football,UAE League Cup,Khor Fakkan Club,Al Jazira (UAE),,,双重机会-和局/客,dc,1.14,0,1.07,6.54,0,3,1790955900,ALL,,,validate,,,5521509
+2026-10-01T15:09:26Z,football,UAE League Cup,Khor Fakkan Club,Al Jazira (UAE),,,双重机会-主/客,dc,1.2,0,1.1,9.09,0,3,1790955900,ALL,,,validate,,,5521509
+2026-10-01T15:09:26Z,football,Morocco Botola Pro,FUS Rabat,US Amal Tiznit,,,双重机会-主/和局,dc,1.13,0,1.05,7.62,0,2,1790956800,ALL,,,validate,,,5664988
+2026-10-01T15:09:26Z,football,Morocco Botola Pro,FUS Rabat,US Amal Tiznit,,,双重机会-和局/客,dc,2.1,0,2.0,5.0,0,2,1790956800,ALL,,,validate,,,5664988
+2026-10-01T15:09:26Z,football,Scotland League One,Ross County FC,Alloa Athletic FC,,,双重机会-和局/客,dc,3.7,0,3.4,8.82,0,2,1791036000,ALL,,,validate,,,5127742
+2026-10-01T15:09:26Z,football,Scotland League Two,Annan Athletic FC,Stirling Albion FC,,,双重机会-主/客,dc,1.21,0,1.13,7.08,0,3,1791036000,ALL,,,validate,,,5635442
+2026-10-01T15:09:26Z,football,Scotland League Two,Spartans FC,Kelty Hearts FC,,,双重机会-主/客,dc,1.18,0,1.11,6.31,0,3,1791036000,ALL,,,validate,,,5635444
+2026-10-01T15:48:37Z,football,UAE League Cup,Khor Fakkan Club,Al Jazira (UAE),,,双重机会-主/和局,dc,2.37,0,2.22,6.76,0,3,1790955900,ALL,,,validate,,,5613199
+2026-10-01T16:11:29Z,football,Ukraine Persha Liga,SC Poltava,FC Chernigiv,,,双重机会-和局/客,dc,1.76,0,1.58,11.39,0,2,1790938800,ALL,,,validate,,,5661128
+2026-10-01T16:38:22Z,football,Sweden Ettan Norra,FBK Karlstad,AFC Eskilstuna,,,双重机会-和局/客,dc,1.46,0,1.39,5.04,0,2,1791032400,ALL,,,validate,,,4832924
+2026-10-01T16:38:22Z,football,Sweden Ettan Sodra,Skovde AIK,Utsiktens BK,,,双重机会-和局/客,dc,2.48,0,2.36,5.08,0,2,1791036000,ALL,,,validate,,,4833347
+2026-10-01T17:27:53Z,football,Norway 1st Division,Ranheim,Egersunds IK,,,小球,ou,1.87,0,1.6792,11.36,0,2,1790960400,ALL,,,validate,,4.0,4253911
+2026-10-01T17:38:24Z,football,UEFA Nations League A,Greece,Netherlands,,,和局,1x2,3.84,0,3.6248,5.94,0,3,1790880300,ALL,,,validate,,,5499844
+2026-10-01T17:43:54Z,football,UEFA Nations League B,Israel,Kosovo,,,和局,1x2,3.67,0,3.3748,8.75,0,3,1790880300,ALL,,,validate,,,4863168
+2026-10-01T18:28:10Z,football,Chile Primera B,Deportes Magallanes,Curico Unido,,,双重机会-和局/客,dc,2.1,0,1.83,14.75,0,3,1791041400,ALL,,,validate,,,5621513
+2026-10-01T18:28:10Z,football,Morocco Botola Pro,Difaa Hassani El Jadidi,Wydad AC,,,双重机会-主/客,dc,1.33,0,1.24,7.26,0,2,1791050400,ALL,,,validate,,,5658987
+2026-10-01T18:28:10Z,football,Chile Primera B,Deportes Recoleta,Santiago Wanderers,,,双重机会-主/客,dc,1.29,0,1.22,5.74,0,3,1791050400,ALL,,,validate,,,5621757
+2026-10-01T18:28:10Z,football,Chile Primera B,Deportes Temuco,CD Cobreloa Calama,,,双重机会-主/客,dc,1.29,0,1.14,13.16,0,3,1791059400,ALL,,,validate,,,5621862
+2026-10-01T18:44:29Z,football,CONCACAF Nations League C,US Virgin Islands,French Saint Martin,,,双重机会-主/和局,dc,4.56,0,4.2866,6.38,0,3,1790884800,ALL,,,validate,,,5665001
+2026-10-01T18:57:25Z,football,Sweden Ettan Norra,Vasalunds IF,FC Arlanda,,,和局,1x2,3.67,0,3.4748,5.62,0,2,1791111600,ALL,,,validate,,,4832928
+2026-10-01T19:28:23Z,football,Sweden Ettan Sodra,Aatvidabergs FF,FC Trollhattan,,,双重机会-主/客,dc,1.21,0,1.11,9.01,0,2,1791036000,ALL,,,validate,,,4833345
+2026-10-01T19:28:23Z,football,Italy Serie C,FC Pro Vercelli 1892,AC Carpi,,,双重机会-主/客,dc,1.29,0,1.21,6.61,0,4,1791052200,ALL,,,validate,,,5667790
+2026-10-01T20:56:42Z,football,Brazil Serie C,Floresta EC CE,Botafogo FC PB,,,双重机会-主/客,dc,1.34,0,1.18,13.56,0,4,1791057600,BB,,,validate,,,5665898
+2026-10-01T20:56:42Z,football,Brazil Serie C,Santa Cruz FC PE,Maringa FC,,,双重机会-主/客,dc,1.32,0,1.23,7.32,0,4,1791057600,BB,,,validate,,,5665899
+2026-10-01T21:03:15Z,ice_hockey,NHL,Utah Mammoth,Chicago Blackhawks,,,让球主胜,hc,1.74,0,1.5009,15.93,0,1,1790904600,BB,,,validate,,-0.5,5275053
+2026-10-01T21:26:49Z,football,Poland III Liga,Zaglebie Lubin II,KS Gornik Polkowice,,,双重机会-和局/客,dc,1.94,0,1.75,10.86,0,4,1790935200,BB,,,validate,,,5661118
+2026-10-01T21:26:49Z,football,Indonesia Championship League,Persiraja Banda Aceh,Sumsel United,,,双重机会-和局/客,dc,2.02,0,1.78,13.48,0,3,1790947800,BB,,,validate,,,5661285
+2026-10-01T21:26:49Z,football,Algeria Ligue 2,MO Constantine,CR Beni Thour,,,双重机会-和局/客,dc,2.35,0,2.04,15.2,0,3,1790949600,ALL,,,validate,,,5676652
+2026-10-01T21:26:49Z,football,Algeria Ligue 2,NRB Teleghma,NC Magra,,,双重机会-和局/客,dc,1.56,0,1.46,6.85,0,3,1790949600,ALL,,,validate,,,5676676
+2026-10-01T21:26:49Z,football,Algeria Ligue 2,USM Annaba,Paradou AC,,,双重机会-和局/客,dc,1.46,0,1.39,5.04,0,3,1790949600,ALL,,,validate,,,5676677
+2026-10-01T21:26:49Z,football,Sweden Division 2,Staffanstorp United,Solvesborgs GIF,,,双重机会-和局/客,dc,1.44,0,1.36,5.88,0,3,1790960400,BB,,,validate,,,4787692
+2026-10-01T21:26:49Z,football,Sweden Division 2,Lilla Torg,Nosaby IF,,,双重机会-主/和局,dc,1.45,0,1.36,6.62,0,3,1790960400,BB,,,validate,,,4787693
+2026-10-01T21:26:49Z,football,Sweden Division 2,Torslanda IK,Kongahalla,,,双重机会-和局/客,dc,1.76,0,1.6,10.0,0,3,1790960400,ALL,,,validate,,,4787695
+2026-10-01T21:26:49Z,football,Sweden Division 2,Smedby AIS,Nykopings BIS,,,双重机会-主/和局,dc,1.61,0,1.5,7.33,0,3,1790960400,ALL,,,validate,,,4787696
+2026-10-01T21:26:49Z,football,Sweden Division 2,Hestrafors IF,Onsala BK,,,双重机会-和局/客,dc,1.73,0,1.52,13.82,0,3,1790960400,ALL,,,validate,,,4787699
+2026-10-01T21:26:49Z,football,Sweden Division 2,Qviding FIF,Landvetter IS,,,双重机会-主/和局,dc,1.94,0,1.6,21.25,0,3,1790962200,ALL,,,validate,,,5661255
+2026-10-01T21:26:49Z,football,Austria Regionalliga East,SV Oberwart,SV Horn,,,双重机会-和局/客,dc,2.07,0,1.83,13.11,0,4,1790962200,ALL,,,validate,,,5404253
+2026-10-01T21:26:49Z,football,Morocco Botola Pro,Wydad Temara,Union Touarga,,,和局,1x2,2.77,0,2.6254,5.51,0,2,1790964000,ALL,,,validate,,,5686397
+2026-10-01T21:26:49Z,football,Sweden Division 2,FOC Farsta,Fittja IF,,,双重机会-和局/客,dc,2.86,0,2.36,21.19,0,3,1790964000,ALL,,,validate,,,4787700
+2026-10-01T21:36:58Z,football,Canadian Premier League,Inter Toronto FC,Cavalry FC,,,双重机会-和局/客,dc,1.11,0,1.01,9.9,0,3,1791043200,ALL,,,validate,,,5500189
+2026-10-01T21:36:58Z,football,Canadian Premier League,Forge FC Hamilton,HFX Wanderers FC,,,双重机会-和局/客,dc,2.62,0,2.48,5.65,0,3,1791057600,ALL,,,validate,,,5664852
+2026-10-01T22:33:00Z,football,Scottish Cup,Cumnock Juniors FC,Auchinleck Talbot,,,双重机会-主/和局,dc,1.69,0,1.49,13.42,0,3,1790965800,BB,,,validate,,,5687013
+2026-10-01T22:34:51Z,football,Uruguay Segunda Division,Tacuarembo FC,CA Atenas de San Carlos,,,双重机会-主/客,dc,1.28,0,1.2,6.67,0,3,1791064800,BB,,,validate,,,5668914
+2026-10-01T23:38:14Z,football,Morocco Botola Pro,Wydad Temara,Union Touarga,,,双重机会-主/客,dc,1.4,0,1.27,10.24,0,2,1790964000,ALL,,,validate,,,5686397
+2026-10-01T23:44:36Z,football,Italy Serie C,FC Pro Vercelli 1892,AC Carpi,,,双重机会-和局/客,dc,1.62,0,1.46,10.96,0,4,1791052200,ALL,,,validate,,,5621799
+2026-10-01T23:44:36Z,football,Canadian Premier League,Forge FC Hamilton,HFX Wanderers FC,,,双重机会-主/客,dc,1.17,0,1.11,5.41,0,3,1791057600,ALL,,,validate,,,5621853
+2026-10-01T23:44:36Z,football,El Salvador Primera Division,AD Isidro Metapan,Atletico Balboa,,,双重机会-和局/客,dc,2.47,0,2.3,7.39,0,2,1791068400,ALL,,,validate,,,5621905
+2026-10-01T23:44:36Z,football,Brazil Serie C,Paysandu SC PA,Ferroviaria SP,,,双重机会-主/客,dc,1.27,0,1.2,5.83,0,4,1791066600,BB,,,validate,,,5665911
+2026-10-02T00:06:17Z,football,South Korea K-League 3,Ulsan Citizen FC,Siheung Citizen FC,,,双重机会-主/和局,dc,2.12,0,1.96,8.16,0,4,1791014400,ALL,,,validate,,,4493968
+2026-10-02T01:44:55Z,football,El Salvador Primera Division,Alianza FC San Salvador,CD Luis Angel Firpo,,,双重机会-主/客,dc,1.3,0,1.17,11.11,0,2,1791075600,ALL,,,validate,,,5628496
+2026-10-02T01:54:58Z,football,Panama Liga Panamena de Futbol,CD Plaza Amador,CD Universitario Penonome,,,双重机会-和局/客,dc,2.46,0,2.28,7.89,0,2,1791077400,ALL,,,validate,,,5235508
+2026-10-02T01:54:58Z,football,Panama Liga Panamena de Futbol,CD Plaza Amador,CD Universitario Penonome,,,双重机会-主/客,dc,1.19,0,1.11,7.21,0,2,1791077400,ALL,,,validate,,,5235508
+2026-10-02T03:41:14Z,football,Netherlands Eerste Divisie,Vitesse Arnhem,NAC Breda,,,双重机会-主/客,dc,1.22,0,1.13,7.96,0,3,1791037800,ALL,,,validate,,,5621387
+2026-10-02T04:00:17Z,football,South Korea K-League 3,Pocheon Citizen FC,Chuncheon FC,,,双重机会-和局/客,dc,2.38,0,2.26,5.31,0,4,1791003600,ALL,,,validate,,,4493984
+2026-10-02T04:10:15Z,football,Sweden Ettan Norra,IFK Stocksund,FC Jarfalla,,,双重机会-和局/客,dc,1.7,0,1.6,6.25,0,2,1791036000,ALL,,,validate,,,4832927
+2026-10-02T04:25:53Z,football,Bolivia Copa Pacena,San Antonio Bulo Bulo,Academia de Balompie Boliviano,,,双重机会-主/客,dc,1.13,0,1.01,11.88,0,3,1790967600,BB,,,validate,,,5661305
+2026-10-02T04:44:33Z,football,Denmark 2nd Division,Naestved BK,Nykobing FC,,,大球,ou,1.86,0,1.7429,6.72,0,3,1790960400,ALL,,,validate,,2.5,5613268
+2026-10-02T05:28:13Z,football,Austria Regionalliga East,Favoritner AC,FC Marchfeld Donauauen,,,双重机会-主/和局,dc,2.67,0,2.54,5.12,0,4,1790961000,ALL,,,validate,,,5404251
+2026-10-02T06:28:00Z,football,Egypt Second Division A,Tanta FC,Haras El Hodood,,,客胜,1x2,2.63,0,2.4974,5.31,0,3,1790944200,ALL,,,validate,,,5612401
+2026-10-02T06:41:50Z,football,Brazil Serie C-Playoff,Santa Cruz FC PE,Maringa FC,,,双重机会-和局/客,dc,1.51,0,1.42,6.34,0,4,1791057600,ALL,,,validate,,,5665899
+2026-10-02T06:46:07Z,football,Panama Liga Panamena de Futbol,San Francisco FC,Umecit,,,双重机会-和局/客,dc,1.63,0,1.54,5.84,0,2,1790991000,ALL,,,validate,,,5235503
+2026-10-02T07:41:59Z,football,Sweden Ettan Norra,Enkopings SK,Gefle IF,,,双重机会-主/客,dc,1.25,0,1.19,5.04,0,2,1791025200,ALL,,,validate,,,4832921
+2026-10-02T07:41:59Z,football,Canadian Premier League,Inter Toronto FC,Cavalry FC,,,双重机会-主/客,dc,1.17,0,1.11,5.41,0,3,1791043200,ALL,,,validate,,,5500189
+2026-10-02T07:41:59Z,football,Chile Primera B,Deportes Temuco,CD Cobreloa Calama,,,双重机会-和局/客,dc,1.61,0,1.51,6.62,0,3,1791059400,ALL,,,validate,,,5665901
+2026-10-02T08:28:53Z,football,Malaysia A1 Semi Pro League,Bunga Raya FC,Kelantan City FC,,,双重机会-主/和局,dc,2.63,0,2.48,6.05,0,3,1790930700,ALL,,,validate,,,5661113
+2026-10-02T08:33:20Z,football,Romania Liga 3,AFC Odorheiu Secuiesc,ACS KSE Targu Secuiesc,,,客胜,1x2,3.8,0,3.0306,25.39,0,4,1790942400,ALL,,,validate,,,5661135
+2026-10-02T08:54:39Z,football,Sweden Ettan Norra,IFK Stocksund,FC Jarfalla,,,双重机会-主/客,dc,1.19,0,1.09,9.17,0,2,1791036000,ALL,,,validate,,,4832927
+2026-10-02T08:59:19Z,football,Indonesia Championship League,Persiraja Banda Aceh,Sumsel United,,,客胜,1x2,13.8,0,12.9808,6.31,0,3,1790947800,BB,,,validate,,,5661285
+2026-10-02T09:36:07Z,football,Canadian Premier League,Inter Toronto FC,Cavalry FC,,,双重机会-主/和局,dc,2.31,0,2.2,5.0,0,3,1791043200,ALL,,,validate,,,5500189
+2026-10-02T09:36:07Z,football,Scotland League One,Hamilton Academical FC,Peterhead FC,,,双重机会-和局/客,dc,3.23,0,3.05,5.9,0,2,1791045000,ALL,,,validate,,,5127723
+2026-10-02T10:08:56Z,football,Chile Primera B,CD Santa Cruz,San Marcos de Arica,,,双重机会-和局/客,dc,1.54,0,1.46,5.48,0,3,1791068400,ALL,,,validate,,,5665913
+2026-10-02T10:08:56Z,football,Chile Primera B,CD Santa Cruz,San Marcos de Arica,,,双重机会-主/客,dc,1.34,0,1.12,19.64,0,3,1791068400,ALL,,,validate,,,5665913
+2026-10-02T10:13:03Z,football,Ukraine Premier League,Veres Rivne,FK Kudrivka,,,双重机会-主/和局,dc,1.26,0,1.06,18.87,0,2,1791021600,ALL,,,validate,,,5652200
+2026-10-02T10:13:03Z,basketball,France Pro B Basketball League,ALM Evreux Basket,Fos Provence Basket,,,让分客胜,hc,1.84,0,1.7332,6.16,0,3,1790964000,BB,,,validate,,+9.5,5659784
+2026-10-02T11:13:57Z,football,Czech Republic MSFL,SK Sigma Olomouc B,MFK Vitkovice,,,双重机会-和局/客,dc,2.08,0,1.98,5.05,0,4,1791015300,ALL,,,validate,,,5620576
+2026-10-02T11:18:40Z,football,Scotland League Two,Stranraer FC,Edinburgh City FC,,,双重机会-和局/客,dc,1.79,0,1.7,5.29,0,3,1791036000,ALL,,,validate,,,5575109
+2026-10-02T11:18:40Z,football,Brazil Serie C-Playoff,AA Internacional Limeira SP,Brusque FC SC,,,双重机会-主/客,dc,1.29,0,1.21,6.61,0,4,1791066600,ALL,,,validate,,,5621894
+2026-10-02T11:43:31Z,football,Algeria Ligue 2,CA Batna,MSP Batna,,,让球客胜,hc,1.92,0,1.7921,7.14,0,3,1790949600,ALL,,,validate,,+0.5,5676664
+2026-10-02T11:43:31Z,football,Algeria Ligue 2,CA Batna,MSP Batna,,,双重机会-和局/客,dc,1.93,0,1.76,9.66,0,3,1790949600,ALL,,,validate,,,5676664
+2026-10-02T12:10:19Z,football,Denmark 2nd Division,Skive IK,HIK Hellerup,,,双重机会-和局/客,dc,1.99,0,1.78,11.8,0,3,1791028800,ALL,,,validate,,,5203414
+2026-10-02T12:10:19Z,football,Denmark 2nd Division,Skive IK,HIK Hellerup,,,双重机会-主/客,dc,1.23,0,1.13,8.85,0,3,1791028800,ALL,,,validate,,,5203414
+2026-10-02T12:50:37Z,football,Italy Serie C,FC Giugliano 1928,Barletta Calcio,,,双重机会-主/客,dc,1.29,0,1.22,5.74,0,4,1791041400,ALL,,,validate,,,5665513
+2026-10-02T12:50:37Z,basketball,British Basketball Super League,Surrey 89ers,Sheffield Sharks,,,客胜,1x2,1.76,0,1.649,6.73,0,2,1791046800,ALL,,,validate,,,5664863
+2026-10-02T13:09:12Z,football,Scotland League Two,Spartans FC,Kelty Hearts FC,,,双重机会-主/和局,dc,1.18,0,1.11,6.31,0,3,1791036000,ALL,,,validate,,,5575106
+2026-10-02T13:09:12Z,football,Belgium First Amateur Division,Kvv Thes Sport Tessenderlo,KVV Zelzate,,,双重机会-和局/客,dc,2.03,0,1.87,8.56,0,2,1791050400,ALL,,,validate,,,5626338
+2026-10-02T13:09:12Z,football,Belgium First Amateur Division,Kvv Thes Sport Tessenderlo,KVV Zelzate,,,双重机会-主/客,dc,1.2,0,1.11,8.11,0,2,1791050400,ALL,,,validate,,,5626338
+2026-10-02T13:09:12Z,football,Italy Serie C,US Pianese,Ravenna FC 1913,,,双重机会-主/和局,dc,1.97,0,1.84,7.07,0,4,1791117000,ALL,,,validate,,,5628832
+2026-10-02T13:09:12Z,football,Italy Serie C,US Pianese,Ravenna FC 1913,,,双重机会-主/客,dc,1.26,0,1.16,8.62,0,4,1791117000,ALL,,,validate,,,5628832
+2026-10-02T13:30:27Z,football,Denmark 2nd Division,VSK Aarhus,Brabrand IF,,,主胜,1x2,2.01,0,1.8698,7.5,0,3,1790960400,ALL,,,validate,,,5203403
+2026-10-02T14:27:01Z,basketball,Greece A1 Basketball League,Promitheas Patras BC,Peristeri Athens,,,让分客胜,hc,1.83,0,1.7221,6.27,0,2,1791036000,BB,,,validate,,+1.5,5619465
+2026-10-02T14:36:09Z,football,Belgium First Amateur Division,Hoogstraten VV,KVC Houtvenne,,,双重机会-主/客,dc,1.21,0,1.14,6.14,0,2,1791050400,ALL,,,validate,,,5668172
+2026-10-02T14:36:09Z,football,Brazil Serie C-Playoff,AA Internacional Limeira SP,Brusque FC SC,,,双重机会-主/和局,dc,1.17,0,1.01,15.84,0,4,1791066600,ALL,,,validate,,,5665910
+2026-10-02T14:46:04Z,football,Japan J. League Cup,Kashiwa Reysol,Gamba Osaka,,,双重机会-和局/客,dc,2.25,0,2.12,6.13,0,3,1791021600,BB,,,validate,,,5665269
+2026-10-02T15:10:59Z,ice_hockey,NHL,Winnipeg Jets,Boston Bruins,,,让球主胜,hc,2.23,0,1.9029,17.19,0,1,1790985600,BB,,,validate,,-0.5,5645761
+2026-10-02T16:22:03Z,football,Italy Serie C,AC Reggiana,Spezia Calcio,,,双重机会-主/客,dc,1.3,0,1.21,7.44,0,4,1791127800,ALL,,,validate,,,5669272
+2026-10-02T17:15:06Z,basketball,Poland Basketball League,Astoria Bydgoszcz,Basket Zielona Gora,,,客胜,1x2,1.72,0,1.5642,9.96,0,3,1791041400,ALL,,,validate,,,5642970
+2026-10-02T17:24:28Z,football,Uruguay Segunda Division,Atletico Fenix Montevideo,Uruguay Montevideo FC,,,双重机会-主/客,dc,1.24,0,1.17,5.98,0,3,1791129600,ALL,,,validate,,,5669280
+2026-10-02T17:37:06Z,basketball,Poland Basketball League,Trefl Sopot,Dziki Warszawa,,,让分客胜,hc,1.88,0,1.761,6.76,0,3,1790964900,ALL,,,validate,,-1.5,5659783
+2026-10-02T18:08:24Z,basketball,British Basketball Super League,Bristol Flyers,Manchester Basketball,,,让分客胜,hc,1.92,0,1.783,7.68,0,2,1790965800,ALL,,,validate,,+1.5,5660495
+2026-10-02T18:13:26Z,football,Bolivia Copa Pacena,Real Potosi,Club Aurora,,,主胜,1x2,1.79,0,1.6891,5.97,0,3,1790985600,BB,,,validate,,,5664985
+2026-10-02T18:13:26Z,football,Bolivia Copa Pacena,Real Potosi,Club Aurora,,,让球主胜,hc,1.79,0,1.6794,6.59,0,3,1790985600,BB,,,validate,,-0.5,5664985
+2026-10-02T18:17:49Z,football,Poland II Liga,Zawisza Bydgoszcz,Olimpia Grudziadz,,,双重机会-主/客,dc,1.24,0,1.17,5.98,0,3,1791135000,ALL,,,validate,,,5168125
+2026-10-02T18:21:52Z,football,Argentina Primera B Metropolitana,CA Villa San Carlos,Arsenal de Sarandi,,,双重机会-主/和局,dc,1.86,0,1.6,16.25,0,3,1791050400,ALL,,,validate,,,5621842
+2026-10-02T19:19:27Z,football,Italy Serie C,US Salernitana,SSC Bari,,,双重机会-主/和局,dc,1.32,0,1.25,5.6,0,4,1791138600,ALL,,,validate,,,5669305
+2026-10-02T19:19:27Z,football,UEFA Nations League B,Northern Ireland,Georgia,,,和局,1x2,3.4,0,3.2202,5.58,0,3,1791225900,ALL,,,validate,,,4863180
+2026-10-02T19:19:27Z,ice_hockey,NHL,Toronto Maple Leafs,Ottawa Senators,,,让球主胜,hc,2.23,0,1.8786,18.71,0,1,1791068400,BB,,,validate,,-0.5,5645736
+2026-10-02T19:23:06Z,football,Norway 2nd Division,Grorud IL,Lorenskog IF,,,双重机会-和局/客,dc,3.17,0,2.88,10.07,0,3,1791028800,ALL,,,validate,,,4865010
+2026-10-02T19:23:06Z,football,Norway 2nd Division,Kvik Halden FK,Bjarg,,,双重机会-主/和局,dc,1.91,0,1.73,10.4,0,3,1791032400,ALL,,,validate,,,4865006
+2026-10-02T19:23:06Z,football,Chile Segunda Division,Real San Joaquin,CD Lota Schwager,,,双重机会-主/客,dc,1.25,0,1.19,5.04,0,4,1791050400,BB,,,validate,,,5664889
+2026-10-02T19:23:06Z,football,Argentina Primera B Metropolitana,CSD Liniers,Excursionistas,,,双重机会-主/客,dc,1.31,0,1.23,6.5,0,3,1791050400,ALL,,,validate,,,4317044
+2026-10-02T19:23:06Z,american_football,NCAA American Football,Buffalo Bulls,Western Michigan Broncos,,,让分主胜,hc,1.89,0,1.7534,7.79,0,2,1791046800,BB,,,validate,,+14.5,5671195
+2026-10-02T20:15:43Z,ice_hockey,NHL,Buffalo Sabres,Chicago Blackhawks,,,让球主胜,hc,1.74,0,1.4706,18.32,0,1,1791068400,BB,,,validate,,-0.5,5645423
+2026-10-02T20:18:34Z,football,Norway 2nd Division,Pors Grenland,FK Vidar,,,双重机会-和局/客,dc,2.8,0,2.62,6.87,0,3,1791028800,ALL,,,validate,,,4865009
+2026-10-02T20:36:58Z,ice_hockey,NHL,Detroit Red Wings,New York Rangers,,,让球主胜,hc,2.2,0,1.8342,19.94,0,1,1790980200,BB,,,validate,,-0.5,5274995
+2026-10-02T20:48:26Z,ice_hockey,NHL,Dallas Stars,St. Louis Blues,,,让球主胜,hc,1.85,0,1.5922,16.19,0,1,1790989200,BB,,,validate,,-0.5,5274976
+2026-10-02T21:19:00Z,american_football,NCAA American Football,Delaware Fightin Blue Hens,Liberty Flames,,,大分,ou,1.92,0,1.8259,5.15,0,2,1790982000,BB,,,validate,,50.5,5670913
+2026-10-02T21:21:31Z,football,El Salvador Primera Division,CD Platense Municipal Zacatecoluca,Municipal Limeno,,,双重机会-主/客,dc,1.3,0,1.2,8.33,0,2,1791147600,ALL,,,validate,,,5310714
+2026-10-02T21:24:44Z,football,Algeria Ligue 2,NA Hussein Dey,RC Kouba,,,双重机会-主/和局,dc,1.58,0,1.5,5.33,0,3,1791036000,ALL,,,validate,,,5676638
+2026-10-02T21:24:44Z,football,Sweden Division 2,IFK Lidingo FK,Bollstanas,,,双重机会-主/和局,dc,1.5,0,1.42,5.63,0,3,1791044100,ALL,,,validate,,,4787718
+2026-10-02T21:31:11Z,football,Sweden Ettan Norra,FC Stockholm Internazionale,Assyriska FF,,,双重机会-和局/客,dc,3.17,0,2.66,19.17,0,2,1791025200,ALL,,,validate,,,4832922
+2026-10-02T21:31:11Z,football,Sweden Division 2,Enskede IK,Falu FK,,,双重机会-和局/客,dc,1.78,0,1.64,8.54,0,3,1791025200,ALL,,,validate,,,4787708
+2026-10-02T21:31:11Z,football,Indonesia Championship League,Persis Solo,Kendal Tornado,,,双重机会-和局/客,dc,2.01,0,1.79,12.29,0,2,1791028800,BB,,,validate,,,5665438
+2026-10-02T21:31:11Z,football,Paraguay Segunda Division,CA Tembetary,Tacuary Asuncion,,,双重机会-和局/客,dc,1.59,0,1.5,6.0,0,3,1791032400,ALL,,,validate,,,5664902
+2026-10-02T21:33:17Z,football,Sweden Ettan Norra,Umea FC,Hammarby Talang FF,,,双重机会-主/客,dc,1.19,0,1.1,8.18,0,2,1791126000,ALL,,,validate,,,4832932
+2026-10-02T21:33:17Z,football,Italy Serie C,Potenza Calcio,AZ Picerno,,,双重机会-和局/客,dc,2.37,0,2.16,9.72,0,4,1791138600,ALL,,,validate,,,5669313
+2026-10-02T21:37:28Z,football,Bolivia Copa Pacena,Real Potosi,Club Aurora,,,双重机会-主/和局,dc,1.36,0,1.2944,5.07,0,3,1790985600,BB,,,validate,,,5664985
+2026-10-02T21:47:55Z,football,Denmark 2nd Division,Skive IK,HIK Hellerup,,,让球客胜,hc,1.91,0,1.7752,7.59,0,3,1791028800,ALL,,,validate,,+0.5,5203414
+2026-10-02T22:15:46Z,football,UEFA Nations League B,Romania,Sweden,,,客胜,1x2,1.93,0,1.8047,6.94,0,3,1791225900,ALL,,,validate,,,4863235
+2026-10-02T22:15:46Z,football,UEFA Nations League B,Romania,Sweden,,,让球客胜,hc,1.93,0,1.7962,7.45,0,3,1791225900,ALL,,,validate,,-0.5,4863235
+2026-10-02T22:18:47Z,football,Sweden Division 2,Taby FK,Viggbyholms IK FF,,,双重机会-和局/客,dc,2.52,0,2.16,16.67,0,3,1791025200,ALL,,,validate,,,4787709
+2026-10-02T22:18:47Z,football,Indonesia Championship League,PSMS Medan,Persikad Depok,,,双重机会-和局/客,dc,2.72,0,2.3,18.26,0,2,1791028800,BB,,,validate,,,5665537
+2026-10-02T22:18:47Z,football,Norway 2nd Division,Ullensaker/Kisa,Kjelsas,,,双重机会-主/和局,dc,4.13,0,3.6,14.72,0,3,1791028800,BB,,,validate,,,4865007
+2026-10-02T22:18:47Z,football,Austria Regionalliga East,SC Wiener Viktoria,SV Donau,,,双重机会-和局/客,dc,2.1,0,1.83,14.75,0,4,1791039600,ALL,,,validate,,,5404257
+2026-10-02T22:43:25Z,football,France Ligue 3,FC Versailles 78,Valenciennes FC,,,双重机会-和局/客,dc,1.9,0,1.74,9.2,0,4,1791053100,ALL,,,validate,,,5199734
+2026-10-02T22:43:25Z,football,France Ligue 3,AS Cannes,Quevilly Rouen Metropole,,,双重机会-和局/客,dc,2.08,0,1.96,6.12,0,4,1791053100,ALL,,,validate,,,5214793
+2026-10-02T22:48:09Z,football,France Ligue 3,US Concarneau,Paris 13 Atletico,,,双重机会-和局/客,dc,1.98,0,1.87,5.88,0,4,1791053100,ALL,,,validate,,,5199725
+2026-10-02T23:14:25Z,football,Sweden Division 2,BK Forward,IK Sleipner,,,双重机会-和局/客,dc,1.55,0,1.44,7.64,0,3,1791025200,ALL,,,validate,,,4787706
+2026-10-02T23:14:25Z,football,Estonia Cup,FC Tallinn,Harju JK Laagri,,,双重机会-主/和局,dc,4.66,0,2.72,71.32,0,3,1791030600,ALL,,,validate,,,5678358
+2026-10-02T23:14:25Z,football,Serbia Prva Liga,FK Teleoptik,FK Bor 1919,,,双重机会-和局/客,dc,1.86,0,1.7,9.41,0,2,1791032400,BB,,,validate,,,5665485
+2026-10-02T23:28:45Z,ice_hockey,NHL,Columbus Blue Jackets,Utah Mammoth,,,让球客胜,hc,2.38,0,1.9974,19.15,0,1,1791068400,BB,,,validate,,-0.5,5645746
+2026-10-02T23:46:20Z,football,Japan J.League 2,Fujieda MYFC,Shonan Bellmare,,,和局,1x2,3.37,0,3.1992,5.34,0,3,1791003600,ALL,,,validate,,,5620526
+2026-10-03T00:23:27Z,football,Italy Serie C,US Salernitana,SSC Bari,,,双重机会-主/客,dc,1.31,0,1.2,9.17,0,4,1791138600,ALL,,,validate,,,5669305
+2026-10-03T02:27:57Z,football,Algeria Ligue 2,JS Djijel,JS Azazga,,,客胜,1x2,4.88,0,4.5913,6.29,0,3,1791036000,ALL,,,validate,,,5686027
+2026-10-03T03:30:14Z,football,UEFA Nations League B,Switzerland,Slovenia,,,双重机会-和局/客,dc,4.21,0,3.9852,5.64,0,3,1791053100,ALL,,,validate,,,4863205
+2026-10-03T04:28:54Z,football,Estonia Cup,FC Tallinn,Harju JK Laagri,,,主胜,1x2,13.5,0,12.7451,5.92,0,3,1791030600,ALL,,,validate,,,5678358
+2026-10-03T04:28:54Z,football,Sweden Division 2,IFK Lidingo FK,Bollstanas,,,双重机会-和局/客,dc,1.44,0,1.37,5.11,0,3,1791044100,ALL,,,validate,,,4787718
+2026-10-03T04:28:54Z,football,Belgium First Amateur Division,RAEC Mons,FC Flenu,,,双重机会-和局/客,dc,4.73,0,4.3,10.0,0,2,1791050400,BB,,,validate,,,5664922
+2026-10-03T04:32:12Z,football,Slovakia 2. Liga,FC Petrzalka,OFK Malzenice,,,双重机会-主/客,dc,1.11,0,1.02,8.82,0,3,1791102600,ALL,,,validate,,,5488475
+2026-10-03T05:21:28Z,football,Scotland League One,Queen of The South FC,Cove Rangers FC,,,让球客胜,hc,1.78,0,1.6757,6.22,0,2,1791036000,ALL,,,validate,,0,5127736
+2026-10-03T05:39:03Z,football,Chile Primera B,Deportes Recoleta,Santiago Wanderers,,,让球主胜,hc,1.95,0,1.7869,9.13,0,3,1791050400,ALL,,,validate,,0,5665869
+2026-10-03T06:24:14Z,football,Sweden Division 2,Taby FK,Viggbyholms IK FF,,,客胜,1x2,3.99,0,3.7941,5.16,0,3,1791025200,ALL,,,validate,,,4787709
+2026-10-03T06:47:31Z,football,CONCACAF Nations League A,Trinidad and Tobago,Curacao,,,双重机会-主/和局,dc,3.23,0,3.0,7.67,0,3,1791151200,BB,,,validate,,,5672474
+2026-10-03T06:47:57Z,football,Bolivia Copa Pacena,CA Nacional Potosi,CDT Real Oruro,,,双重机会-和局/客,dc,3.63,0,3.3,10.0,0,3,1791062100,BB,,,validate,,,5665906
+2026-10-03T07:15:11Z,basketball,Australia NBL,Brisbane Bullets,Tasmania Jackjumpers,,,客胜,1x2,2.26,0,2.13,6.1,0,3,1791012600,ALL,,,validate,,,5074471
+2026-10-03T07:22:08Z,football,Arabian Gulf Cup (In Saudi Arabia),United Arab Emirates,Oman,,,让球主胜,hc,2.03,0,1.9188,5.8,0,3,1791052200,BB,,,validate,,-1,5687062
+2026-10-03T07:22:08Z,football,Bolivia Copa Pacena,The Strongest,Universitario de Vinto,,,双重机会-和局/客,dc,2.94,0,2.78,5.76,0,3,1791070200,BB,,,validate,,,5665915
+2026-10-03T07:22:08Z,american_football,NCAA American Football,UAB Blazers,Samford Bulldogs,,,大分,ou,1.98,0,1.878,5.43,0,2,1791055800,BB,,,validate,,52.5,5680717
+2026-10-03T08:19:11Z,football,Indonesia Championship League,Persiku Kudus,PSGC Ciamis,,,让球主胜,hc,1.95,0,1.7961,8.57,0,3,1791016200,BB,,,validate,,+0.5,5693164
+2026-10-03T08:19:11Z,football,Indonesia Championship League,Persiku Kudus,PSGC Ciamis,,,双重机会-主/和局,dc,1.89,0,1.7871,5.76,0,3,1791016200,BB,,,validate,,,5693164
+2026-10-03T08:28:49Z,baseball,Japan Professional Baseball,Yomiuri Giants,Yokohama Dena Baystars,,,大分,ou,1.84,0,1.6681,10.31,0,1,1791018000,BB,,,validate,,5.5,5405202
+2026-10-03T08:40:12Z,basketball,Greece A1 Basketball League,AS Karditsas,BC Aris Thessaloniki,,,让分客胜,hc,1.91,0,1.7732,7.71,0,2,1791037800,BB,,,validate,,-8.5,5619464
+2026-10-03T08:49:22Z,football,Czech Republic CFL,Bohemians Praha 1905 B,FC Pisek,,,双重机会-主/客,dc,1.22,0,1.1,10.91,0,4,1791101700,ALL,,,validate,,,5628568
+2026-10-03T08:49:22Z,football,Czech Republic CFL,FC Hradec Kralove B,FK Mlada Boleslav B,,,双重机会-主/客,dc,1.23,0,1.12,9.82,0,4,1791101700,ALL,,,validate,,,5628569
+2026-10-03T09:29:45Z,basketball,Australia NBL,Melbourne United,Cairns Taipans,,,让分客胜,hc,1.91,0,1.8118,5.42,0,3,1791019800,ALL,,,validate,,+12.5,5074454
+2026-10-03T10:35:49Z,football,Scotland League Two,Stranraer FC,Edinburgh City FC,,,小球,ou,1.97,0,1.8464,6.69,0,3,1791036000,ALL,,,validate,,3.0,5635447
+2026-10-03T10:35:49Z,basketball,Greece A1 Basketball League,Promitheas Patras BC,Peristeri Athens,,,让分主胜,hc,1.91,0,1.8023,5.98,0,2,1791036000,BB,,,validate,,-3.5,5619465
+2026-10-03T10:39:11Z,football,Guatemala Liga Nacional,CD Guastatoya,Aurora FC,,,双重机会-和局/客,dc,2.8,0,2.6,7.69,0,3,1791154800,ALL,,,validate,,,5671654
+2026-10-03T10:44:46Z,football,Czech Republic CFL,FC Viktoria Plzen B,FK Dukla Praha B,,,双重机会-和局/客,dc,2.37,0,2.2,7.73,0,4,1791102600,ALL,,,validate,,,5628576
+2026-10-03T10:44:46Z,football,Indonesia Championship League,Barito Putera,Persela Lamongan,,,双重机会-主/和局,dc,1.22,0,1.16,5.17,0,3,1791102600,BB,,,validate,,,5669315
+2026-10-03T10:44:46Z,football,Indonesia Championship League,Barito Putera,Persela Lamongan,,,双重机会-主/客,dc,1.2,0,1.09,10.09,0,3,1791102600,BB,,,validate,,,5669315
+2026-10-03T12:19:36Z,ice_hockey,NHL,Edmonton Oilers,Seattle Kraken,,,让球主胜,hc,1.79,0,1.5224,17.58,0,1,1791068400,BB,,,validate,,-0.5,5645750
+2026-10-03T12:43:55Z,football,Czech Republic CFL,FK Pribram B,SK Aritma Prague,,,让球客胜,hc,1.94,0,1.7943,8.12,0,4,1791032400,ALL,,,validate,,+0.5,5665547
+2026-10-03T12:43:55Z,football,Czech Republic CFL,FK Pribram B,SK Aritma Prague,,,双重机会-和局/客,dc,1.91,0,1.7974,6.26,0,4,1791032400,ALL,,,validate,,,5665547
+2026-10-03T12:43:55Z,football,Finland Kakkonen,Musan Salama,Grankulla IFK,,,双重机会-主/和局,dc,1.5,0,1.42,5.63,0,4,1791036000,BB,,,validate,,,5665731
+2026-10-03T12:54:41Z,football,England EFL Trophy,Colchester United,Luton Town,,,让球主胜,hc,1.99,0,1.7512,13.64,0,3,1791036000,ALL,,,validate,,+1,5609165
+2026-10-03T12:54:41Z,football,England EFL Trophy,Colchester United,Luton Town,,,双重机会-主/和局,dc,2.48,0,2.2646,9.51,0,3,1791036000,ALL,,,validate,,,5609165
+2026-10-03T12:54:41Z,football,Sweden Ettan Norra,IFK Stocksund,FC Jarfalla,,,大球,ou,1.86,0,1.6568,12.26,0,2,1791036000,ALL,,,validate,,3.5,4832927
+2026-10-03T12:54:41Z,basketball,Romania Basketball National League,BCMU Arges Pitesti,CSU Sibiu,,,小分,ou,1.84,0,1.729,6.42,0,3,1791039600,ALL,,,validate,,177.5,5688603
+2026-10-03T12:57:38Z,football,Guatemala Liga Nacional,CD Guastatoya,Aurora FC,,,双重机会-主/客,dc,1.15,0,1.09,5.5,0,3,1791154800,ALL,,,validate,,,5629323
+2026-10-03T13:20:19Z,football,Scotland Championship,Livingston FC,Ayr United FC,,,上半场小球,ht_ou,1.78,0,1.6143,10.26,0,2,1791036000,ALL,,,validate,,1.25,5667743
+2026-10-03T13:20:19Z,football,Scotland Championship,Partick Thistle FC,Arbroath FC,,,上半场小球,ht_ou,1.75,0,1.5872,10.26,0,2,1791036000,ALL,,,validate,,1.25,5667746
+2026-10-03T13:20:19Z,football,Scotland League One,East Fife FC,East Kilbride,,,上半场小球,ht_ou,1.71,0,1.5914,7.45,0,2,1791036000,ALL,,,validate,,1.25,5127741
+2026-10-03T13:20:19Z,football,Scotland League One,Ross County FC,Alloa Athletic FC,,,上半场小球,ht_ou,1.99,0,1.8081,10.06,0,2,1791036000,ALL,,,validate,,1.25,5127742
+2026-10-03T13:20:19Z,football,Scotland League Two,Elgin City FC,Clyde FC,,,上半场小球,ht_ou,1.8,0,1.6428,9.57,0,3,1791036000,ALL,,,validate,,1.25,5635436
+2026-10-03T13:20:19Z,football,Scotland League Two,Annan Athletic FC,Stirling Albion FC,,,上半场小球,ht_ou,1.8,0,1.6776,7.3,0,3,1791036000,ALL,,,validate,,1.25,5635442
+2026-10-03T13:20:19Z,football,Scotland League Two,Spartans FC,Kelty Hearts FC,,,上半场小球,ht_ou,1.88,0,1.7301,8.66,0,3,1791036000,ALL,,,validate,,1.25,5635444
+2026-10-03T13:25:43Z,football,Brazil Serie B,Avai FC SC,Ceara SC CE,,,上半场大球,ht_ou,1.84,0,1.6077,14.45,0,3,1791036000,ALL,,,validate,,0.75,5648628
+2026-10-03T13:32:05Z,football,Argentina Primera Nacional,Deportivo Moron,CA All Boys,,,上半场客胜,ht,7.2,0,6.4862,11.0,0,2,1791050400,ALL,,,validate,,,5671412
+2026-10-03T13:32:05Z,football,Argentina Primera Nacional,Deportivo Moron,CA All Boys,,,上半场大球,ht_ou,2.07,0,1.7753,16.6,0,2,1791050400,ALL,,,validate,,0.75,5671412
+2026-10-03T13:32:05Z,football,Argentina Primera Nacional,CA San Miguel,Mitre Santiago Del Estero,,,上半场大球,ht_ou,1.99,0,1.6977,17.22,0,2,1791050400,ALL,,,validate,,0.75,5671778
+2026-10-03T13:32:05Z,football,Argentina Primera Nacional,Colon de Santa Fe,CA Estudiantes,,,上半场大球,ht_ou,1.97,0,1.728,14.0,0,2,1791050400,ALL,,,validate,,0.75,5671785
+2026-10-03T13:32:05Z,football,Argentina Primera Nacional,Tristan Suarez,Quilmes AC,,,上半场大球,ht_ou,2.07,0,1.7427,18.78,0,2,1791050400,ALL,,,validate,,0.75,5671787
+2026-10-03T13:32:05Z,football,Argentina Primera Nacional,CA Temperley,Gimnasia Jujuy,,,上半场大球,ht_ou,1.8,0,1.5652,15.0,0,2,1791050400,ALL,,,validate,,0.75,5671789
+2026-10-03T13:37:17Z,football,England League One,Leyton Orient,Plymouth Argyle,,,上半场小球,ht_ou,1.84,0,1.6362,12.46,0,2,1791036000,ALL,,,validate,,1.25,5664906
+2026-10-03T13:37:17Z,football,England League Two,Rochdale AFC,Swindon Town,,,上半场小球,ht_ou,1.76,0,1.6143,9.03,0,2,1791036000,ALL,,,validate,,1.25,5667929
+2026-10-03T13:37:17Z,football,England League Two,Salford City,Fleetwood Town,,,上半场小球,ht_ou,1.79,0,1.6251,10.15,0,2,1791036000,ALL,,,validate,,1.25,5668113
+2026-10-03T13:37:17Z,football,England EFL Trophy,Colchester United,Luton Town,,,上半场主胜,ht,5.2,0,4.8918,6.3,0,3,1791036000,ALL,,,validate,,,5609165
+2026-10-03T13:37:17Z,football,England EFL Trophy,Colchester United,Luton Town,,,上半场小球,ht_ou,1.95,0,1.7458,11.7,0,3,1791036000,ALL,,,validate,,1.25,5609165
+2026-10-03T13:37:17Z,football,Scotland League One,Queen of The South FC,Cove Rangers FC,,,让球主胜,hc,2.04,0,1.9074,6.95,0,2,1791036000,ALL,,,validate,,0,5127736
+2026-10-03T13:37:17Z,football,Spain LaLiga 2,UD Almeria,Burgos CF,,,上半场客胜,ht,7.25,0,6.5939,9.95,0,3,1791036900,ALL,,,validate,,,5192981
+2026-10-03T13:37:17Z,football,Netherlands Eerste Divisie,Vitesse Arnhem,NAC Breda,,,上半场小球,ht_ou,2.06,0,1.8177,13.33,0,3,1791037800,ALL,,,validate,,1.25,5084764
+2026-10-03T13:37:17Z,football,Netherlands Eerste Divisie,TOP Oss,MVV Maastricht,,,上半场小球,ht_ou,1.78,0,1.6057,10.86,0,3,1791037800,ALL,,,validate,,1.25,5084773
+2026-10-03T13:37:17Z,football,Slovakia 2. Liga,1. FC Tatran Presov,OFK Banik Lehota Pod Vtacnikom,,,上半场小球,ht_ou,1.7,0,1.5852,7.24,0,3,1791043200,ALL,,,validate,,1.25,5488473
+2026-10-03T13:41:42Z,football,Brazil Serie B,AC Goianiense GO,America FC MG,,,上半场小球,ht_ou,1.79,0,1.6166,10.73,0,3,1791054000,ALL,,,validate,,1.25,5648672
+2026-10-03T13:41:42Z,football,Colombia Primera A,Aguilas Doradas,Jaguares de Cordoba,,,上半场客胜,ht,7.3,0,6.7765,7.73,0,2,1791054000,ALL,,,validate,,,5648559
+2026-10-03T13:46:42Z,football,Algeria Ligue 2,GC Mascara,USM Blida,,,双重机会-和局/客,dc,1.56,0,1.46,6.85,0,3,1791036000,ALL,,,validate,,,5676636
+2026-10-03T13:50:24Z,football,CONCACAF Nations League C,Bahamas,US Virgin Islands,,,双重机会-主/和局,dc,2.77,0,2.6,6.54,0,3,1791144000,ALL,,,validate,,,5672472
+2026-10-03T14:22:42Z,football,Poland II Liga,Gornik Leczna,MKS Chojniczanka Chojnice,,,双重机会-主/客,dc,1.21,0,1.12,8.04,0,3,1791126000,ALL,,,validate,,,5163868
+2026-10-03T14:22:42Z,football,CONCACAF Nations League B,Guyana,Dominica,,,双重机会-和局/客,dc,5.4,0,4.3,25.58,0,3,1791140400,ALL,,,validate,,,5640748
+2026-10-03T14:27:24Z,football,Japan Football League,Maruyasu Okazaki,Reinmeer Aomori,,,双重机会-主/客,dc,1.33,0,1.17,13.68,0,3,1791086400,ALL,,,validate,,,5518959
+2026-10-03T14:27:24Z,football,Japan Football League,J Lease FC,Tiamo Hirakata,,,双重机会-主/客,dc,1.28,0,1.13,13.27,0,3,1791086400,ALL,,,validate,,,5518961
+2026-10-03T14:27:24Z,football,Japan Football League,Okinawa SV,Briobecca Urayasu,,,双重机会-和局/客,dc,1.97,0,1.83,7.65,0,3,1791086400,ALL,,,validate,,,5518962
+2026-10-03T14:27:24Z,football,Czech Republic MSFL,FC Zbrojovka Brno B,FK Blansko,,,双重机会-和局/客,dc,3.8,0,3.15,20.63,0,4,1791101700,ALL,,,validate,,,5669154
+2026-10-03T14:27:24Z,football,Czech Republic MSFL,SK Unicov,SK Polanka Nad Odrou,,,双重机会-和局/客,dc,2.88,0,2.58,11.63,0,4,1791101700,ALL,,,validate,,,5669155
+2026-10-03T14:27:24Z,football,Czech Republic MSFL,SK Unicov,SK Polanka Nad Odrou,,,双重机会-主/客,dc,1.14,0,1.06,7.55,0,4,1791101700,ALL,,,validate,,,5669155
+2026-10-03T14:27:24Z,football,Japan Football League,YSCC Yokohama,Criacao Shinjuku,,,双重机会-主/客,dc,1.3,0,1.16,12.07,0,3,1791104400,ALL,,,validate,,,5518963
+2026-10-03T14:27:24Z,football,Poland II Liga,MKS Znicz Pruszkow,ZKS Stal Stalowa Wola,,,双重机会-主/客,dc,1.21,0,1.11,9.01,0,3,1791111600,ALL,,,validate,,,5163876
+2026-10-03T14:27:24Z,ice_hockey,NHL,Pittsburgh Penguins,Montreal Canadiens,,,让球客胜,hc,2.2,0,1.8389,19.64,0,1,1791068400,BB,,,validate,,-0.5,5645753
+2026-10-03T14:33:52Z,football,Chile Primera B,CD Santa Cruz,San Marcos de Arica,,,上半场客胜,ht,3.74,0,3.5437,5.54,0,3,1791068400,ALL,,,validate,,,5621912
+2026-10-03T14:33:52Z,football,Chile Primera B,CD Santa Cruz,San Marcos de Arica,,,上半场大球,ht_ou,1.73,0,1.537,12.56,0,3,1791068400,ALL,,,validate,,0.75,5621912
+2026-10-03T14:39:03Z,football,Argentina Liga Profesional,Atletico Tucuman,Barracas Central,,,上半场大球,ht_ou,1.98,0,1.7046,16.16,0,3,1791057600,ALL,,,validate,,0.75,5540289
+2026-10-03T14:48:14Z,football,Canadian Premier League,Inter Toronto FC,Cavalry FC,,,上半场小球,ht_ou,1.93,0,1.7752,8.72,0,3,1791043200,ALL,,,validate,,1.25,5500189
+2026-10-03T14:48:14Z,football,Netherlands Eerste Divisie,FC Eindhoven,De Graafschap,,,上半场小球,ht_ou,2.09,0,1.8282,14.32,0,3,1791050400,ALL,,,validate,,1.5,5084724
+2026-10-03T14:48:14Z,football,Netherlands Eerste Divisie,RKC Waalwijk,FC Emmen,,,上半场小球,ht_ou,2.04,0,1.7943,13.69,0,3,1791050400,ALL,,,validate,,1.25,5084735
+2026-10-03T14:48:14Z,football,Morocco Botola Pro,Difaa Hassani El Jadidi,Wydad AC,,,上半场大球,ht_ou,1.75,0,1.569,11.54,0,2,1791050400,ALL,,,validate,,0.75,5684669
+2026-10-03T14:48:14Z,football,Belgium First Amateur Division,Hoogstraten VV,KVC Houtvenne,,,上半场小球,ht_ou,2.02,0,1.8636,8.39,0,2,1791050400,ALL,,,validate,,1.25,5668172
+2026-10-03T14:52:10Z,football,Italy Serie C,FC Arzignano Valchiampo,US Pergolettese 1932,,,上半场客胜,ht,5.7,0,5.1923,9.78,0,4,1791041400,ALL,,,validate,,,5621503
+2026-10-03T14:52:10Z,football,Italy Serie C,FC Arzignano Valchiampo,US Pergolettese 1932,,,上半场大球,ht_ou,1.84,0,1.5612,17.86,0,4,1791041400,ALL,,,validate,,0.75,5621503
+2026-10-03T14:52:10Z,football,Italy Serie C,FC Giugliano 1928,Barletta Calcio,,,让球客胜,hc,1.94,0,1.8319,5.9,0,4,1791041400,ALL,,,validate,,0,5621506
+2026-10-03T14:52:10Z,football,UEFA Nations League A,Croatia,England,,,上半场小球,ht_ou,1.89,0,1.6614,13.76,0,3,1791043200,ALL,,,validate,,1.25,5546509
+2026-10-03T14:52:10Z,football,UEFA Nations League C,Belarus,San Marino,,,上半场客胜,ht,51.0,0,47.9167,6.43,0,3,1791043200,ALL,,,validate,,,5647916
+2026-10-03T14:52:10Z,football,UEFA Nations League C,Belarus,San Marino,,,上半场小球,ht_ou,2.02,0,1.7752,13.79,0,3,1791043200,ALL,,,validate,,1.25,5647916
+2026-10-03T14:52:10Z,football,UEFA Nations League C,Estonia,Luxembourg,,,上半场大球,ht_ou,1.86,0,1.6472,12.92,0,3,1791043200,ALL,,,validate,,0.75,5653843
+2026-10-03T14:52:10Z,football,Belgium First Amateur Division,KFC Dessel Sport,KRC Harelbeke,,,上半场小球,ht_ou,2.05,0,1.855,10.51,0,2,1791048600,ALL,,,validate,,1.25,5626339
+2026-10-03T14:52:10Z,football,Argentina Liga Profesional,Defensa y Justicia,CA San Lorenzo de Almagro,,,上半场大球,ht_ou,1.83,0,1.6057,13.97,0,1,1791049500,ALL,,,validate,,0.75,5540286
+2026-10-03T15:00:35Z,football,Chile Primera B,San Luis de Quillota,Union Espanola,,,双重机会-和局/客,dc,1.96,0,1.86,5.38,0,3,1791145800,ALL,,,validate,,,5669542
+2026-10-03T15:05:55Z,football,Czech Republic CFL,FK Admira Prague,Tj Jiskra Domazlice,,,双重机会-主/客,dc,1.17,0,1.1,6.36,0,4,1791101700,ALL,,,validate,,,5669151
+2026-10-03T15:05:55Z,basketball,Spain ACB Basketball,Basket Zaragoza,Valencia Basket,,,主胜,1x2,2.94,0,2.7748,5.95,0,2,1791126000,ALL,,,validate,,,5671422
+2026-10-03T15:12:02Z,football,Brazil Serie B,Botafogo FC SP,Vila Nova FC GO,,,上半场大球,ht_ou,1.82,0,1.6077,13.21,0,3,1791063000,ALL,,,validate,,0.75,5648666
+2026-10-03T15:12:02Z,football,Uruguay Segunda Division,Tacuarembo FC,CA Atenas de San Carlos,,,上半场大球,ht_ou,1.73,0,1.5576,11.07,0,3,1791064800,ALL,,,validate,,0.75,5668914
+2026-10-03T15:12:02Z,football,Japan Football League,Okinawa SV,Briobecca Urayasu,,,双重机会-主/客,dc,1.26,0,1.2,5.0,0,3,1791086400,ALL,,,validate,,,5518962
+2026-10-03T15:55:08Z,football,UEFA Nations League A,Spain,Czech Republic,,,上半场客胜,ht,27.0,0,23.4043,15.36,0,3,1791053100,ALL,,,validate,,,4863294
+2026-10-03T15:55:08Z,football,UEFA Nations League A,Spain,Czech Republic,,,上半场大球,ht_ou,1.92,0,1.7248,11.32,0,3,1791053100,ALL,,,validate,,1.75,4863294
+2026-10-03T15:55:08Z,football,UEFA Nations League B,North Macedonia,Scotland,,,上半场主胜,ht,9.45,0,7.7949,21.23,0,3,1791053100,ALL,,,validate,,,4863199
+2026-10-03T15:55:08Z,football,UEFA Nations League B,North Macedonia,Scotland,,,上半场大球,ht_ou,1.77,0,1.5651,13.09,0,3,1791053100,ALL,,,validate,,0.75,4863199
+2026-10-03T15:55:08Z,football,UEFA Nations League B,Switzerland,Slovenia,,,上半场客胜,ht,13.4,0,10.9773,22.07,0,3,1791053100,ALL,,,validate,,,4863205
+2026-10-03T15:55:08Z,football,France Ligue 3,US Concarneau,Paris 13 Atletico,,,上半场客胜,ht,5.45,0,5.1456,5.92,0,4,1791053100,ALL,,,validate,,,5199725
+2026-10-03T15:55:08Z,football,France Ligue 3,US Concarneau,Paris 13 Atletico,,,上半场大球,ht_ou,1.76,0,1.5535,13.29,0,4,1791053100,ALL,,,validate,,0.75,5199725
+2026-10-03T15:55:08Z,football,France Ligue 3,FC Fleury 91,SM Caen,,,上半场小球,ht_ou,1.81,0,1.6452,10.02,0,4,1791053100,ALL,,,validate,,1.25,5199747
+2026-10-03T16:02:01Z,football,Paraguay Primera Division,CD Recoleta,Libertad Asuncion,,,上半场小球,ht_ou,1.71,0,1.6057,6.5,0,3,1791065700,ALL,,,validate,,1.25,5675884
+2026-10-03T16:02:01Z,football,Brazil Serie C-Playoff,AA Internacional Limeira SP,Brusque FC SC,,,上半场大球,ht_ou,1.75,0,1.5669,11.69,0,4,1791066600,ALL,,,validate,,0.75,5665910
+2026-10-03T16:19:35Z,football,Norway 2nd Division,Lysekloster,FK Jerv,,,双重机会-主/和局,dc,3.65,0,3.15,15.87,0,3,1791126000,BB,,,validate,,,4865019
+2026-10-03T16:28:03Z,football,Argentina Liga Profesional,CA Huracan,CA Aldosivi,,,上半场大球,ht_ou,1.83,0,1.6187,13.05,0,3,1791135900,ALL,,,validate,,0.75,5377717
+2026-10-03T16:31:53Z,football,Belgium First Amateur Division,KFC Mandel United,Belisia Bilzen SV,,,上半场小球,ht_ou,1.78,0,1.6252,9.52,0,2,1791050400,ALL,,,validate,,1.25,5668171
+2026-10-03T16:31:53Z,football,Canadian Premier League,Forge FC Hamilton,HFX Wanderers FC,,,上半场小球,ht_ou,1.75,0,1.6184,8.13,0,3,1791057600,ALL,,,validate,,1.25,5664852
+2026-10-03T16:31:53Z,football,Brazil Serie C-Playoff,Floresta EC CE,Botafogo FC PB,,,上半场大球,ht_ou,1.94,0,1.6757,15.77,0,4,1791057600,ALL,,,validate,,0.75,5665898
+2026-10-03T16:31:53Z,football,Brazil Serie C-Playoff,Santa Cruz FC PE,Maringa FC,,,上半场大球,ht_ou,1.86,0,1.6252,14.45,0,4,1791057600,ALL,,,validate,,0.75,5665899
+2026-10-03T16:36:25Z,football,Colombia Primera A,CD Tolima,Boyaca Chico FC,,,上半场小球,ht_ou,1.71,0,1.5477,10.49,0,2,1791061500,ALL,,,validate,,1.25,5648616
+2026-10-03T17:18:43Z,football,Morocco Botola Pro,Raja Casablanca Athletic,Renaissance Zemamra,,,上半场客胜,ht,6.5,0,6.0852,6.82,0,2,1791057600,ALL,,,validate,,,5684665
+2026-10-03T17:25:44Z,football,Ukraine Persha Liga,Kolos Kovalivka II,FC Oleksandriya,,,双重机会-主/客,dc,1.2,0,1.09,10.09,0,2,1791106200,BB,,,validate,,,5669176
+2026-10-03T17:40:08Z,football,Argentina Liga Profesional,Argentinos Juniors,CA Tigre,,,上半场大球,ht_ou,1.84,0,1.5832,16.22,0,3,1791152100,ALL,,,validate,,0.75,5377714
+2026-10-03T17:40:08Z,football,Argentina Liga Profesional,Estudiantes Rio Cuarto,Racing Club Avellaneda,,,上半场大球,ht_ou,1.92,0,1.6752,14.61,0,3,1791160200,ALL,,,validate,,0.75,5377724
+2026-10-03T17:44:10Z,football,Indonesia Championship League,Semen Padang,PSPS Pekanbaru,,,双重机会-和局/客,dc,1.81,0,1.72,5.23,0,3,1791115200,BB,,,validate,,,5684644
+2026-10-03T17:44:10Z,football,Czech Republic CFL,SK Sokol Brozany,SK Zapy,,,双重机会-主/客,dc,1.17,0,1.08,8.33,0,4,1791122400,ALL,,,validate,,,5669471
+2026-10-03T17:44:10Z,ice_hockey,NHL,San Jose Sharks,Los Angeles Kings,,,让球主胜,hc,2.38,0,1.9899,19.6,0,1,1791079200,BB,,,validate,,-0.5,5645756
+2026-10-03T17:56:31Z,football,Netherlands Eerste Divisie,FC Eindhoven,De Graafschap,,,让球主胜,hc,1.89,0,1.7807,6.14,0,3,1791050400,ALL,,,validate,,+0.5,5084724
+2026-10-03T17:56:31Z,football,Argentina Primera B Metropolitana,CA Defensores Unidos,Argentino de Quilmes,,,双重机会-和局/客,dc,1.63,0,1.55,5.16,0,3,1791050400,ALL,,,validate,,,4317071
+2026-10-03T18:00:41Z,football,Argentina Liga Profesional,Deportivo Riestra,CA Central Cordoba SE,,,客胜,1x2,5.85,0,5.3383,9.59,0,1,1791229500,ALL,,,validate,,,5377726
+2026-10-03T18:03:08Z,football,Ukraine Persha Liga,Kolos Kovalivka II,FC Oleksandriya,,,双重机会-主/和局,dc,2.35,0,2.08,12.98,0,2,1791106200,BB,,,validate,,,5669176
+2026-10-03T18:21:51Z,football,UEFA Nations League D,Malta,Andorra,,,上半场客胜,ht,8.4,0,7.7795,7.98,0,3,1791129600,ALL,,,validate,,,5672954
+2026-10-03T18:21:51Z,ice_hockey,NHL,Vancouver Canucks,Calgary Flames,,,让球主胜,hc,2.35,0,1.9609,19.84,0,1,1791079200,BB,,,validate,,-0.5,5645740
+2026-10-03T18:57:42Z,football,Bolivia Copa Pacena,The Strongest,Universitario de Vinto,,,上半场小球,ht_ou,1.98,0,1.8552,6.73,0,3,1791070200,BB,,,validate,,1.25,5665915
+2026-10-03T19:02:06Z,football,Panama Liga Panamena de Futbol,Herrera FC,Alianza FC Panama,,,双重机会-和局/客,dc,1.11,0,1.01,9.9,0,2,1791147600,ALL,,,validate,,,5235519
+2026-10-03T19:05:00Z,football,Colombia Primera B,Real Cartagena FC,Boca Juniors de Cali,,,上半场小球,ht_ou,1.74,0,1.5691,10.89,0,3,1791076800,ALL,,,validate,,1.25,5693139
+2026-10-03T19:05:00Z,football,Czech Republic CFL,Bohemians Praha 1905 B,FC Pisek,,,双重机会-主/和局,dc,1.47,0,1.39,5.76,0,4,1791101700,ALL,,,validate,,,5669152
+2026-10-03T19:12:46Z,ice_hockey,NHL,Tampa Bay Lightning,Washington Capitals,,,让球主胜,hc,1.85,0,1.5432,19.88,0,1,1791068400,BB,,,validate,,-0.5,5645734
+2026-10-03T19:28:41Z,football,Guatemala Primera Division,CSD Amatitlan,Deportivo Coatepeque,,,双重机会-主/客,dc,1.27,0,1.19,6.72,0,2,1791133200,ALL,,,validate,,,5684657
+2026-10-03T20:05:56Z,football,Spain LaLiga 2,Sporting Gijon,Celta Fortuna,,,上半场小球,ht_ou,1.78,0,1.5753,12.99,0,3,1791123300,ALL,,,validate,,1.25,5633041
+2026-10-03T20:24:04Z,football,Argentina Liga Profesional,Deportivo Riestra,CA Central Cordoba SE,,,上半场大球,ht_ou,1.86,0,1.623,14.6,0,1,1791229500,ALL,,,validate,,0.75,5377726
+2026-10-03T20:24:04Z,football,Argentina Liga Profesional,Deportivo Riestra,CA Central Cordoba SE,,,双重机会-和局/客,dc,2.15,0,2.0219,6.34,0,1,1791229500,ALL,,,validate,,,5377726
+2026-10-03T20:45:52Z,football,Uruguay Primera Division,Deportivo Maldonado,Central Espanol FC,,,上半场客胜,ht,5.95,0,5.5929,6.38,0,3,1791061200,ALL,,,validate,,,5668891
+2026-10-03T21:03:52Z,football,UEFA Nations League A,England,Czech Republic,,,大球,ou,1.87,0,1.6789,11.38,0,3,1791312300,ALL,,,validate,,3.0,4863300
+2026-10-03T21:24:31Z,football,CONCACAF Nations League C,Aruba,Anguilla,,,双重机会-和局/客,dc,8.0,0,7.6,5.26,0,3,1791154800,ALL,,,validate,,,5664876
+2026-10-03T21:24:31Z,football,UEFA Nations League A,England,Czech Republic,,,让球主胜,hc,1.96,0,1.7018,15.17,0,3,1791312300,ALL,,,validate,,-2,5631274
+2026-10-03T21:30:50Z,football,Indonesia Championship League,Barito Putera,Persela Lamongan,,,让球客胜,hc,1.96,0,1.8549,5.67,0,3,1791102600,BB,,,validate,,+0.5,5669315
+2026-10-03T21:34:48Z,football,Jamaica Premier League,Molynes United FC,Racing United FC,,,双重机会-主/和局,dc,1.58,0,1.5,5.33,0,2,1791151200,ALL,,,validate,,,5668900
+2026-10-03T21:37:17Z,football,Serbia Prva Liga,OFK Vrsac,FK Metalac Gornji Milanovac,,,双重机会-和局/客,dc,1.71,0,1.6,6.87,0,2,1791115200,ALL,,,validate,,,5642594
+2026-10-03T21:37:17Z,football,Georgia Erovnuli Liga,Iberia 1999,FC Dinamo Tbilisi,,,双重机会-和局/客,dc,1.53,0,1.42,7.75,0,2,1791126000,ALL,,,validate,,,5629125
+2026-10-03T21:37:17Z,football,Serbia Prva Liga,FK Jedinstvo UB,GFK Dubocica,,,双重机会-和局/客,dc,1.61,0,1.5,7.33,0,2,1791129600,ALL,,,validate,,,5642613
+2026-10-03T21:37:17Z,football,Slovenia 2nd Liga,NK Triglav Kranj,NK Jesenice,,,双重机会-和局/客,dc,2.08,0,1.93,7.77,0,3,1791129600,ALL,,,validate,,,5629161
+2026-10-03T21:42:49Z,football,Georgia Erovnuli Liga,Iberia 1999,FC Dinamo Tbilisi,,,双重机会-主/和局,dc,1.37,0,1.3,5.38,0,2,1791126000,ALL,,,validate,,,5629125
+2026-10-03T22:21:52Z,american_football,NCAA American Football,Rice Owls,UT San Antonio Roadrunners,,,大分,ou,1.92,0,1.8281,5.03,0,2,1791068400,BB,,,validate,,55.5,5670230
+2026-10-03T22:29:42Z,football,Spain LaLiga 2,UD Las Palmas,Real Valladolid,,,上半场客胜,ht,4.62,0,4.2907,7.67,0,3,1791131400,ALL,,,validate,,,5192983
+2026-10-03T22:58:09Z,football,Bolivia Copa Pacena,The Strongest,Universitario de Vinto,,,客胜,1x2,7.35,0,6.8986,6.54,0,3,1791070200,BB,,,validate,,,5665915
+2026-10-03T23:12:27Z,football,Bolivia Copa Pacena,The Strongest,Universitario de Vinto,,,上半场客胜,ht,6.6,0,6.0298,9.46,0,3,1791070200,BB,,,validate,,,5665915
+2026-10-03T23:12:27Z,football,South Korea K-League 3,Dangjin Citizen FC,Gyeongju KHNP,,,上半场小球,ht_ou,1.76,0,1.5953,10.32,0,4,1791090000,ALL,,,validate,,1.25,4493965
+2026-10-03T23:12:27Z,american_football,NCAA American Football,USC Trojans,Washington Huskies,,,让分客胜,hc,1.94,0,1.8222,6.46,0,2,1791070200,BB,,,validate,,+8.5,5668068
+2026-10-03T23:14:08Z,football,UEFA Nations League A,Croatia,Spain,,,大球,ou,1.89,0,1.7736,6.56,0,3,1791312300,ALL,,,validate,,3.0,4863295
+2026-10-03T23:19:07Z,football,Chile Primera B,CD Antofagasta,CSD Rangers,,,双重机会-和局/客,dc,2.22,0,2.04,8.82,0,3,1791127800,ALL,,,validate,,,5669520
+2026-10-03T23:19:07Z,football,Bolivia Copa Pacena,Guabira Montero,Oriente Petrolero,,,客胜,1x2,3.55,0,3.3748,5.19,0,3,1791148500,BB,,,validate,,,5669544
+2026-10-04T01:01:49Z,football,Mongolia Premier League,Central Stallions,Khovd Western,,,双边进球-否,btts,1.89,0,1.7146,10.23,0,2,1791090000,BB,,,validate,,,5668916
+2026-10-04T01:16:14Z,football,Italy Serie C,Guidonia Montecelio 1937,ASD Pineto Calcio,,,上半场大球,ht_ou,1.71,0,1.5409,10.97,0,4,1791117000,ALL,,,validate,,0.75,5669276
+2026-10-04T01:16:14Z,football,UEFA Nations League D,Azerbaijan,Lithuania,,,上半场大球,ht_ou,1.83,0,1.6344,11.97,0,3,1791118800,ALL,,,validate,,0.75,4863409
+2026-10-04T01:18:29Z,football,Philippines Football League,Manila Digger FC,Dynamic Herb Cebu,,,双重机会-和局/客,dc,5.05,0,4.5,12.22,0,3,1791097200,ALL,,,validate,,,5669259
+2026-10-04T01:37:40Z,football,FIFA ASEAN Cup Division 1 2026 (In Indonesia),Malaysia,Vietnam,,,双重机会-主/客,dc,1.28,0,1.14,12.28,0,2,1791190800,BB,,,validate,,,5693398
+2026-10-04T01:37:40Z,football,UEFA Nations League B,Scotland,Slovenia,,,主胜,1x2,1.98,0,1.8499,7.03,0,3,1791312300,BB,,,validate,,,4863200
+2026-10-04T01:37:40Z,football,UEFA Nations League B,Scotland,Slovenia,,,让球主胜,hc,1.98,0,1.8487,7.1,0,3,1791312300,BB,,,validate,,-0.5,4863200
+2026-10-04T01:57:54Z,football,FIFA ASEAN Cup Division 1 2026 (In Indonesia),Malaysia,Vietnam,,,双重机会-和局/客,dc,1.59,0,1.38,15.22,0,2,1791190800,BB,,,validate,,,5693398
+2026-10-04T02:28:08Z,football,UEFA Nations League A,England,Czech Republic,,,客胜,1x2,25.0,0,23.4043,6.82,0,3,1791312300,ALL,,,validate,,,5631274
+2026-10-04T02:32:34Z,football,Spain LaLiga 2,Sporting Gijon,Celta Fortuna,,,上半场客胜,ht,6.7,0,6.375,5.1,0,3,1791123300,ALL,,,validate,,,5192976
+2026-10-04T02:32:34Z,ice_hockey,NHL,Detroit Red Wings,Winnipeg Jets,,,让球主胜,hc,2.38,0,1.9901,19.59,0,1,1791133200,BB,,,validate,,-0.5,5645752
+2026-10-04T02:37:15Z,football,FIFA ASEAN Cup Division 1 2026 (In Indonesia),Malaysia,Vietnam,,,双重机会-主/和局,dc,1.37,0,1.3,5.38,0,2,1791190800,BB,,,validate,,,5693398
+2026-10-04T02:40:51Z,basketball,Japan B.League Premier,Altiri Chiba,Kawasaki Brave Thunders,,,小分,ou,1.88,0,1.7831,5.43,0,3,1791090300,BB,,,validate,,164.5,5298149
+2026-10-04T04:02:07Z,football,Norway 1st Division,Bryne FK,Lyn 1896 FK,,,上半场小球,ht_ou,1.98,0,1.7378,13.94,0,2,1791117000,ALL,,,validate,,1.25,4253891
+2026-10-04T04:23:13Z,football,Hong Kong Division 1,Citizen AA,Yuen Long FC,,,上半场小球,ht_ou,1.93,0,1.7171,12.4,0,2,1791099000,ALL,,,validate,,1.25,5514168
+2026-10-04T04:23:13Z,football,Hong Kong Division 1,South China FC,Tung Sing,,,上半场小球,ht_ou,1.91,0,1.7113,11.61,0,2,1791099000,ALL,,,validate,,1.25,5514180
+2026-10-04T04:23:13Z,football,Czech Republic MSFL,SK Unicov,SK Polanka Nad Odrou,,,上半场小球,ht_ou,1.85,0,1.6547,11.8,0,4,1791101700,ALL,,,validate,,1.25,5669155
+2026-10-04T04:39:30Z,football,Japan J.League 3,Kagoshima United,Fukushima United FC,,,上半场小球,ht_ou,2.01,0,1.7565,14.43,0,4,1791104400,ALL,,,validate,,1.25,5628582
+2026-10-04T04:44:02Z,football,Uruguay Primera Division,Racing Club Montevideo,CA Penarol Montevideo,,,上半场大球,ht_ou,1.78,0,1.6016,11.14,0,3,1791153000,ALL,,,validate,,0.75,5669557
+2026-10-04T04:44:02Z,football,CONCACAF Nations League C,Aruba,Anguilla,,,上半场大球,ht_ou,1.84,0,1.6902,8.86,0,3,1791154800,ALL,,,validate,,1.75,5672423
+2026-10-04T05:00:55Z,basketball,Japan B.League Premier,Levanga Hokkaido,Sendai 89Ers,,,大分,ou,1.87,0,1.7481,6.97,0,2,1791090300,BB,,,validate,,171.5,5298151
+2026-10-04T05:00:55Z,basketball,Japan B.League Premier,Shiga Lake Stars,Ryukyu Golden Kings Okinawa,,,小分,ou,1.87,0,1.7752,5.34,0,2,1791090300,BB,,,validate,,171.5,5298164
+2026-10-04T05:10:46Z,football,Poland II Liga,Gornik Leczna,MKS Chojniczanka Chojnice,,,上半场小球,ht_ou,1.84,0,1.6434,11.96,0,3,1791126000,ALL,,,validate,,1.25,5163868
+2026-10-04T05:10:46Z,football,Sweden Ettan Norra,Umea FC,Hammarby Talang FF,,,上半场小球,ht_ou,1.79,0,1.6389,9.22,0,2,1791126000,ALL,,,validate,,1.25,4832932
+2026-10-04T05:10:46Z,football,Italy Serie C,Potenza Calcio,AZ Picerno,,,上半场客胜,ht,6.8,0,5.8291,16.66,0,4,1791138600,ALL,,,validate,,,5669313
+2026-10-04T05:10:46Z,football,Argentina Primera Nacional,San Telmo,Almirante Brown,,,上半场大球,ht_ou,2.01,0,1.7406,15.48,0,2,1791138600,ALL,,,validate,,0.75,5671777
+2026-10-04T05:10:46Z,football,Argentina Primera Nacional,CA Chacarita Juniors,CA Patronato Parana,,,上半场客胜,ht,5.8,0,5.3833,7.74,0,2,1791138600,ALL,,,validate,,,5671780
+2026-10-04T05:10:46Z,football,Argentina Primera Nacional,CA Chacarita Juniors,CA Patronato Parana,,,上半场大球,ht_ou,1.9,0,1.6473,15.34,0,2,1791138600,ALL,,,validate,,0.75,5671780
+2026-10-04T05:10:46Z,football,UEFA Nations League A,Greece,Germany,,,上半场小球,ht_ou,1.87,0,1.6407,13.98,0,3,1791139500,ALL,,,validate,,1.25,4863277
+2026-10-04T05:10:46Z,football,UEFA Nations League A,Portugal,Norway,,,上半场小球,ht_ou,2.09,0,1.8296,14.23,0,3,1791139500,ALL,,,validate,,1.25,4863313
+2026-10-04T05:10:46Z,football,Colombia Primera A,AD Pasto,Fortaleza CEIF,,,上半场大球,ht_ou,1.72,0,1.5316,12.3,0,2,1791140400,ALL,,,validate,,0.75,5648567
+2026-10-04T05:10:46Z,football,Uruguay Primera Division,CA Cerro,Montevideo Wanderers,,,上半场大球,ht_ou,1.71,0,1.5536,10.07,0,3,1791140400,ALL,,,validate,,0.75,5670414
+2026-10-04T05:16:40Z,football,Greece Super League 2,Asteras Tripolis B,Anagennisi Karditsas 1904,,,上半场大球,ht_ou,1.81,0,1.5955,13.44,0,2,1791115200,ALL,,,validate,,0.75,5608729
+2026-10-04T05:16:40Z,football,UEFA Nations League B,Kosovo,Austria,,,上半场主胜,ht,4.55,0,4.1446,9.78,0,3,1791129600,ALL,,,validate,,,4863170
+2026-10-04T05:16:40Z,football,UEFA Nations League D,Malta,Andorra,,,上半场大球,ht_ou,1.77,0,1.6101,9.93,0,3,1791129600,ALL,,,validate,,0.75,5672954
+2026-10-04T05:24:18Z,football,Netherlands Eerste Divisie,VVV Venlo,Roda JC Kerkrade,,,上半场小球,ht_ou,1.99,0,1.7385,14.47,0,3,1791117000,ALL,,,validate,,1.25,5084767
+2026-10-04T05:24:18Z,football,UEFA Nations League D,Azerbaijan,Lithuania,,,上半场客胜,ht,5.05,0,4.5451,11.11,0,3,1791118800,ALL,,,validate,,,4863409
+2026-10-04T05:24:18Z,football,Uruguay Primera Division,Danubio FC,Cerro Largo,,,上半场客胜,ht,5.3,0,4.8454,9.38,0,3,1791118800,ALL,,,validate,,,5669553
+2026-10-04T05:24:18Z,football,Uruguay Primera Division,Danubio FC,Cerro Largo,,,上半场大球,ht_ou,1.73,0,1.5479,11.76,0,3,1791118800,ALL,,,validate,,0.75,5669553
+2026-10-04T05:24:18Z,football,Spain LaLiga 2,CD Castellon,AD Ceuta,,,上半场客胜,ht,11.3,0,9.5833,17.91,0,3,1791131400,ALL,,,validate,,,5192978
+2026-10-04T05:27:28Z,basketball,Japan B.League Premier,Hiroshima Dragonflies,Kobe Storks,,,让分客胜,hc,1.9,0,1.7458,8.83,0,2,1791093600,BB,,,validate,,+13.5,5298158
+2026-10-04T05:42:05Z,football,Poland II Liga,Zawisza Bydgoszcz,Olimpia Grudziadz,,,上半场小球,ht_ou,1.77,0,1.5915,11.22,0,3,1791135000,ALL,,,validate,,1.25,5168125
+2026-10-04T05:42:05Z,football,Argentina Primera Nacional,Agropecuario Argentino,Ferrocarril Midland,,,上半场大球,ht_ou,1.81,0,1.6162,11.99,0,2,1791136800,ALL,,,validate,,0.75,5671775
+2026-10-04T05:42:05Z,football,Argentina Primera Nacional,CD Godoy Cruz,Club Atletico Los Andes,,,上半场大球,ht_ou,1.95,0,1.7096,14.06,0,2,1791147600,ALL,,,validate,,0.75,5671782
+2026-10-04T05:42:05Z,football,Argentina Primera Nacional,San Martin de Tucuman,Gimnasia Y Tiro de Salta,,,上半场客胜,ht,7.25,0,6.5758,10.25,0,2,1791149400,ALL,,,validate,,,5671788
+2026-10-04T05:42:05Z,football,Argentina Primera Nacional,San Martin de Tucuman,Gimnasia Y Tiro de Salta,,,上半场大球,ht_ou,1.98,0,1.6949,16.82,0,2,1791149400,ALL,,,validate,,0.75,5671788
+2026-10-04T05:42:05Z,football,CONCACAF Nations League A,Trinidad and Tobago,Curacao,,,上半场小球,ht_ou,1.82,0,1.6662,9.23,0,3,1791151200,ALL,,,validate,,1.25,5672474
+2026-10-04T05:48:15Z,football,Czech Republic CFL,SK Benatky Nad Jizerou,MFK Chrudim,,,上半场小球,ht_ou,1.84,0,1.6594,10.88,0,4,1791122400,ALL,,,validate,,1.25,5669470
+2026-10-04T05:48:15Z,football,Czech Republic CFL,SK Sokol Brozany,SK Zapy,,,上半场小球,ht_ou,1.88,0,1.7203,9.28,0,4,1791122400,ALL,,,validate,,1.25,5669471
+2026-10-04T06:00:36Z,basketball,Croatia Basketball Premier League,KK Samobor,KK Alkar Sinj,,,客胜,1x2,2.67,0,2.2957,16.3,0,2,1791129600,ALL,,,validate,,,5668597
+2026-10-04T06:08:32Z,football,Slovakia 2. Liga,FC Petrzalka,OFK Malzenice,,,上半场小球,ht_ou,1.85,0,1.6902,9.45,0,3,1791102600,ALL,,,validate,,1.25,5488475
+2026-10-04T06:08:32Z,football,Poland II Liga,MKS Znicz Pruszkow,ZKS Stal Stalowa Wola,,,上半场小球,ht_ou,1.86,0,1.6997,9.43,0,3,1791111600,ALL,,,validate,,1.25,5163876
+2026-10-04T06:08:32Z,football,Sweden Ettan Norra,Vasalunds IF,FC Arlanda,,,上半场小球,ht_ou,1.81,0,1.6544,9.41,0,2,1791111600,ALL,,,validate,,1.25,4832928
+2026-10-04T06:08:32Z,football,Sweden Ettan Sodra,BK Olympic,Trelleborgs FF,,,上半场小球,ht_ou,1.91,0,1.7375,9.93,0,2,1791111600,BB,,,validate,,1.25,4833348
+2026-10-04T06:49:00Z,football,CONCACAF Nations League A,Costa Rica,Haiti,,,上半场小球,ht_ou,1.71,0,1.5752,8.56,0,3,1791158400,ALL,,,validate,,1.25,5665411
+2026-10-04T07:06:17Z,football,Argentina Primera Nacional,CA Chaco For Ever,Defensores de Belgrano,,,上半场大球,ht_ou,1.99,0,1.7229,15.5,0,2,1791144000,ALL,,,validate,,0.75,5671776
+2026-10-04T07:06:17Z,football,Argentina Primera Nacional,San Martin de San Juan,Club Almagro,,,上半场大球,ht_ou,1.81,0,1.6144,12.12,0,2,1791144000,ALL,,,validate,,0.75,5671790
+2026-10-04T07:06:17Z,football,Argentina Primera Nacional,CA Guemes,CA Colegiales,,,上半场大球,ht_ou,1.91,0,1.6728,14.18,0,2,1791144000,ALL,,,validate,,0.75,5674407
+2026-10-04T07:06:17Z,football,Colombia Primera B,Tigres FC,Internacional de Palmira,,,上半场大球,ht_ou,1.85,0,1.6018,15.5,0,3,1791147600,ALL,,,validate,,0.75,5683789
+2026-10-04T07:06:17Z,football,Bolivia Copa Pacena,Guabira Montero,Oriente Petrolero,,,上半场小球,ht_ou,1.91,0,1.6618,14.94,0,3,1791148500,BB,,,validate,,1.25,5669544
+2026-10-04T07:24:45Z,football,Czech Republic CFL,FK Caslav,Velke Hamry,,,上半场小球,ht_ou,1.93,0,1.7536,10.06,0,4,1791122400,ALL,,,validate,,1.25,5669472
+2026-10-05T02:31:43Z,football,England EFL Trophy,Cambridge United,Northampton Town,,,双重机会-主/客,dc,1.23,0,1.16,6.03,0,3,1791309600,ALL,,,validate,,,5642912
+2026-10-05T02:31:43Z,football,England EFL Trophy,AFC Wimbledon,Barnet FC,,,双重机会-主/客,dc,1.25,0,1.14,9.65,0,3,1791309600,ALL,,,validate,,,5642922
+2026-10-05T02:31:43Z,football,England National League South,Braintree Town FC,Walton & Hersham FC,,,双重机会-和局/客,dc,1.99,0,1.89,5.29,0,3,1791312300,ALL,,,validate,,,5199483
+2026-10-05T02:31:43Z,football,England National League South,Braintree Town FC,Walton & Hersham FC,,,双重机会-主/客,dc,1.19,0,1.12,6.25,0,3,1791312300,ALL,,,validate,,,5199483
+2026-10-05T02:31:43Z,football,England National League South,Farnham Town,Truro City FC,,,双重机会-主/客,dc,1.22,0,1.12,8.93,0,3,1791312300,ALL,,,validate,,,5199509
+2026-10-05T02:31:43Z,football,England National League South,Ebbsfleet United FC,Folkestone Invicta,,,双重机会-主/和局,dc,1.22,0,1.15,6.09,0,3,1791312300,ALL,,,validate,,,5584143
+2026-10-05T02:31:43Z,football,England National League South,Ebbsfleet United FC,Folkestone Invicta,,,双重机会-主/客,dc,1.22,0,1.14,7.02,0,3,1791312300,ALL,,,validate,,,5584143
+2026-10-05T02:31:43Z,football,Africa Cup of Nations 2027 Qualification,Angola,Malawi,,,双重机会-主/客,dc,1.21,0,1.12,8.04,0,3,1791313200,ALL,,,validate,,,5642964
+2026-10-05T02:31:43Z,football,Chile Cup,Colo Colo,Puerto Montt,,,双重机会-和局/客,dc,3.99,0,3.45,15.65,0,3,1791329400,ALL,,,validate,,,5642992
+2026-10-05T02:31:43Z,football,Chile Cup,Colo Colo,Puerto Montt,,,双重机会-主/客,dc,1.1,0,1.03,6.8,0,3,1791329400,ALL,,,validate,,,5642992
+2026-10-05T02:37:37Z,football,Paraguay Primera Division Reserve,Cerro Porteno (Res),CS 2 de Mayo (Res),,,双重机会-和局/客,dc,3.57,0,2.54,40.55,0,3,1791198000,ALL,,,validate,,,5687704
+2026-10-05T02:37:37Z,football,Serbia Prva Liga,FK TSC Backa Topola,RFK Graficar Beograd,,,双重机会-和局/客,dc,4.03,0,3.65,10.41,0,2,1791216000,ALL,,,validate,,,5642622
+2026-10-05T02:37:37Z,football,Greece Super League 2,APS Zakynthos,Apollon Kalamarias,,,主胜,1x2,1.99,0,1.8243,9.08,0,2,1791198000,BB,,,validate,,,5608724
+2026-10-05T02:37:37Z,football,Greece Super League 2,APS Zakynthos,Apollon Kalamarias,,,让球主胜,hc,1.99,0,1.8241,9.09,0,2,1791198000,BB,,,validate,,-0.5,5608724
+2026-10-05T02:37:37Z,football,Ukraine Persha Liga,FSC Mariupol,PFC Nyva Ternopil,,,双重机会-和局/客,dc,2.05,0,1.94,5.67,0,2,1791203400,BB,,,validate,,,5665361
+2026-10-05T02:37:37Z,ice_hockey,NHL,Tampa Bay Lightning,Philadelphia Flyers,,,让球主胜,hc,1.84,0,1.5498,18.72,0,1,1791241200,BB,,,validate,,-0.5,5645763
+2026-10-05T02:43:48Z,football,Paraguay Primera Division Reserve,Cerro Porteno (Res),CS 2 de Mayo (Res),,,和局,1x2,5.65,0,4.0174,40.64,0,3,1791198000,ALL,,,validate,,,5639041
+2026-10-05T02:43:48Z,football,Paraguay Primera Division Reserve,Cerro Porteno (Res),CS 2 de Mayo (Res),,,客胜,1x2,9.2,0,7.4667,23.21,0,3,1791198000,ALL,,,validate,,,5639041
+2026-10-05T02:44:41Z,football,UEFA Nations League B,Romania,Sweden,,,上半场小球,ht_ou,1.83,0,1.6293,12.32,0,3,1791225900,ALL,,,validate,,1.25,4863235
+2026-10-05T02:44:41Z,football,Argentina Primera Nacional,Nueva Chicago,CD Maipu,,,上半场大球,ht_ou,2.01,0,1.748,14.99,0,2,1791230400,ALL,,,validate,,0.75,5671784
+2026-10-05T04:01:57Z,football,England EFL Trophy,Newport County,Plymouth Argyle,,,双重机会-主/和局,dc,2.29,0,2.18,5.05,0,3,1791309600,ALL,,,validate,,,5642910
+2026-10-05T04:01:57Z,football,England EFL Trophy,Huddersfield Town,Rochdale AFC,,,双重机会-和局/客,dc,3.38,0,3.05,10.82,0,3,1791309600,ALL,,,validate,,,5642914
+2026-10-05T04:11:29Z,football,England EFL Trophy,Cambridge United,Northampton Town,,,双重机会-和局/客,dc,2.04,0,1.94,5.15,0,3,1791309600,ALL,,,validate,,,5609139
+2026-10-05T04:38:40Z,football,Greece Super League 2,APS Zakynthos,Apollon Kalamarias,,,小球,ou,1.86,0,1.6899,10.07,0,2,1791198000,BB,,,validate,,2.5,5608724
+2026-10-05T04:45:30Z,football,Paraguay Primera Division Reserve,Cerro Porteno (Res),CS 2 de Mayo (Res),,,上半场和局,ht,2.58,0,2.4185,6.68,0,3,1791198000,ALL,,,validate,,,5687704
+2026-10-05T04:45:30Z,football,Greece Super League 2,PAOK Thessaloniki B,Hellas Syrou,,,上半场大球,ht_ou,1.7,0,1.5171,12.06,0,2,1791200700,ALL,,,validate,,0.75,5621482
+2026-10-05T04:45:30Z,football,UEFA Nations League C,Cyprus,Latvia,,,上半场客胜,ht,7.45,0,6.6866,11.42,0,3,1791216000,ALL,,,validate,,,5673754
+2026-10-05T04:45:30Z,football,Colombia Primera B,Orsomarso SC,Deportes Quindio,,,上半场大球,ht_ou,1.87,0,1.6296,14.75,0,3,1791246600,ALL,,,validate,,0.75,5642782
+2026-10-05T04:45:30Z,football,CONCACAF Nations League A,Honduras,Jamaica,,,上半场大球,ht_ou,1.68,0,1.5296,9.83,0,3,1791252000,ALL,,,validate,,0.75,5680940
+2026-10-05T04:52:02Z,football,England National League South,Farnham Town,Truro City FC,,,双重机会-主/和局,dc,1.93,0,1.83,5.46,0,3,1791312300,ALL,,,validate,,,5199509
+2026-10-05T06:59:50Z,football,England EFL Trophy,Newport County,Plymouth Argyle,,,双重机会-主/客,dc,1.2,0,1.12,7.14,0,3,1791309600,ALL,,,validate,,,5609144
+2026-10-05T07:39:35Z,football,Slovenia 2nd Liga,NK Bilje,NK Dekani,,,双重机会-主/和局,dc,1.88,0,1.78,5.62,0,3,1791295200,ALL,,,validate,,,5669344
+2026-10-05T07:47:06Z,football,Norway 1st Division,Moss FK,Kongsvinger IL Fotball,,,上半场大球,ht_ou,2.02,0,1.8059,11.86,0,2,1791219600,ALL,,,validate,,1.75,4253901
+2026-10-05T07:47:06Z,football,Argentina Primera B Metropolitana,CD UAI Urquiza,Ituzaingo,,,上半场客胜,ht,9.45,0,7.488,26.2,0,3,1791223200,ALL,,,validate,,,4316946
+2026-10-05T07:47:06Z,football,Argentina Primera B Metropolitana,CD UAI Urquiza,Ituzaingo,,,上半场大球,ht_ou,1.81,0,1.5955,13.44,0,3,1791223200,ALL,,,validate,,0.75,4316946
+2026-10-05T07:54:26Z,football,Serbia Prva Liga,FK TSC Backa Topola,RFK Graficar Beograd,,,上半场客胜,ht,10.7,0,9.4737,12.94,0,2,1791216000,ALL,,,validate,,,5642622
+2026-10-05T07:54:26Z,football,Serbia Prva Liga,FK TSC Backa Topola,RFK Graficar Beograd,,,上半场小球,ht_ou,1.8,0,1.6682,7.9,0,2,1791216000,ALL,,,validate,,1.25,5642622
+2026-10-05T08:17:05Z,football,Spain LaLiga 2,Cordoba CF,Tenerife CD,,,上半场客胜,ht,5.2,0,4.8454,7.32,0,3,1791225000,ALL,,,validate,,,5192973
+2026-10-05T08:17:05Z,football,UEFA Nations League A,France,Belgium,,,上半场小球,ht_ou,1.98,0,1.7588,12.58,0,3,1791225900,ALL,,,validate,,1.25,4863257
+2026-10-05T08:17:05Z,football,UEFA Nations League A,Italy,Turkey,,,上半场客胜,ht,7.9,0,7.3946,6.83,0,3,1791225900,ALL,,,validate,,,4863266
+2026-10-05T08:17:05Z,football,UEFA Nations League A,Italy,Turkey,,,上半场小球,ht_ou,1.94,0,1.6968,14.33,0,3,1791225900,ALL,,,validate,,1.25,4863266
+2026-10-05T08:17:05Z,football,UEFA Nations League B,Northern Ireland,Georgia,,,上半场客胜,ht,4.68,0,4.3448,7.71,0,3,1791225900,ALL,,,validate,,,4863180
+2026-10-05T08:17:05Z,football,UEFA Nations League B,Northern Ireland,Georgia,,,上半场大球,ht_ou,1.96,0,1.6615,17.97,0,3,1791225900,ALL,,,validate,,0.75,4863180
+2026-10-05T08:17:05Z,football,UEFA Nations League B,Ukraine,Hungary,,,上半场大球,ht_ou,1.77,0,1.5535,13.94,0,3,1791225900,ALL,,,validate,,0.75,4863189
+2026-10-05T08:17:05Z,football,CONCACAF Nations League B,Guadeloupe,Saint Lucia,,,上半场小球,ht_ou,1.74,0,1.6365,6.32,0,3,1791226800,ALL,,,validate,,1.25,5645540
+2026-10-05T08:17:05Z,football,Paraguay Primera Division,Sportivo Trinidense,Sportivo Luqueno,,,上半场客胜,ht,5.5,0,5.1923,5.93,0,3,1791230400,ALL,,,validate,,,5675518
+2026-10-05T08:17:05Z,football,Argentina Primera Nacional,Nueva Chicago,CD Maipu,,,上半场客胜,ht,4.78,0,4.5451,5.17,0,2,1791230400,ALL,,,validate,,,5671784
+2026-10-05T08:17:05Z,football,Argentina Liga Profesional,Velez Sarsfield,CA Platense,,,上半场大球,ht_ou,1.98,0,1.6879,17.31,0,3,1791237600,ALL,,,validate,,0.75,5377731
+2026-10-05T08:44:01Z,football,Paraguay Primera Division Reserve,Cerro Porteno (Res),CS 2 de Mayo (Res),,,双边进球-否,btts,2.09,0,1.885,10.88,0,3,1791198000,ALL,,,validate,,,5639041
+2026-10-05T09:19:56Z,football,Norway 3rd Division,Odds BK 2,Viking FK 2,,,双重机会-和局/客,dc,3.42,0,3.25,5.23,0,4,1791198000,ALL,,,validate,,,5671892
+2026-10-05T09:58:38Z,football,USA Major League Soccer,Chicago Fire,Vancouver Whitecaps FC,,,上半场小球,ht_ou,2.05,0,1.8282,12.13,0,1,1791333000,ALL,,,validate,,1.25,5281314
+2026-10-05T10:44:31Z,football,Norway 3rd Division,Odds BK 2,Viking FK 2,,,客胜,1x2,8.3,0,7.3784,12.49,0,4,1791198000,ALL,,,validate,,,5671892
+2026-10-05T10:44:31Z,football,Ukraine Persha Liga,FSC Mariupol,PFC Nyva Ternopil,,,上半场客胜,ht,5.8,0,4.992,16.19,0,2,1791203400,BB,,,validate,,,5665361
+2026-10-05T10:44:31Z,football,Ukraine Persha Liga,FSC Mariupol,PFC Nyva Ternopil,,,上半场大球,ht_ou,1.69,0,1.5518,8.91,0,2,1791203400,BB,,,validate,,0.75,5665361
+2026-10-05T11:06:09Z,football,England EFL Trophy,Shrewsbury Town,Stockport County FC,,,双重机会-主/和局,dc,2.2,0,2.06,6.8,0,3,1791309600,ALL,,,validate,,,5609154
+2026-10-05T11:06:09Z,football,England EFL Trophy,Exeter City,Oxford United,,,双重机会-主/和局,dc,1.85,0,1.75,5.71,0,3,1791309600,ALL,,,validate,,,5609155
+2026-10-05T11:06:09Z,football,Arabian Gulf Cup (In Saudi Arabia),Saudi Arabia,United Arab Emirates,,,上半场大球,ht_ou,1.77,0,1.5913,11.23,0,3,1791309600,BB,,,validate,,0.75,5701670
+2026-10-05T11:23:20Z,basketball,Germany Basketball Bundesliga,Rasta Vechta,Basketball Lowen Braunschweig,,,让分客胜,hc,1.91,0,1.7922,6.57,0,2,1791223200,ALL,,,validate,,+4.5,5671930
+2026-10-05T11:23:20Z,basketball,Germany Basketball Bundesliga,Rasta Vechta,Basketball Lowen Braunschweig,,,小分,ou,1.91,0,1.814,5.29,0,2,1791223200,ALL,,,validate,,175.5,5671930
+2026-10-05T11:29:58Z,football,UEFA Nations League C,Montenegro,Armenia,,,上半场小球,ht_ou,1.75,0,1.5891,10.13,0,3,1791225900,ALL,,,validate,,1.25,4863350
+2026-10-05T12:02:24Z,football,Argentina Primera B Metropolitana,Deportivo Merlo,CA Brown de Adrogue,,,上半场大球,ht_ou,1.99,0,1.7301,15.02,0,3,1791237600,ALL,,,validate,,0.75,5642104
+2026-10-05T12:02:24Z,football,Jamaica Premier League,Chapelton Maroons FC,Waterhouse FC,,,上半场主胜,ht,4.79,0,4.4911,6.66,0,2,1791237900,ALL,,,validate,,,5683169
+2026-10-05T12:02:24Z,football,Jamaica Premier League,Chapelton Maroons FC,Waterhouse FC,,,上半场大球,ht_ou,1.66,0,1.5208,9.15,0,2,1791237900,ALL,,,validate,,0.75,5683169
+2026-10-05T12:02:24Z,football,Paraguay Primera Division,Cerro Porteno,CS 2 de Mayo,,,上半场客胜,ht,7.6,0,7.0986,7.06,0,3,1791238500,ALL,,,validate,,,5635884
+2026-10-05T12:33:31Z,football,England National League South,Ebbsfleet United FC,Folkestone Invicta,,,双重机会-和局/客,dc,1.91,0,1.81,5.52,0,3,1791312300,ALL,,,validate,,,5627633
+2026-10-05T13:03:18Z,football,Vietnam Cup,Lam Dong,Song Lam Nghe An,,,双重机会-主/和局,dc,2.29,0,1.96,16.84,0,3,1791275400,BB,,,validate,,,5681336
+2026-10-05T13:09:19Z,football,England Professional Development League,Bristol City U21,Charlton Athletic U21,,,和局,1x2,4.15,0,3.4493,20.31,0,3,1791288000,ALL,,,validate,,,5577963
+2026-10-05T13:11:21Z,football,CONCACAF Nations League B,French Guiana,Belize,,,双重机会-主/和局,dc,1.23,0,1.16,6.03,0,3,1791338400,BB,,,validate,,,5684329
+2026-10-05T13:32:13Z,football,England EFL Trophy,Exeter City,Oxford United,,,双重机会-主/客,dc,1.24,0,1.16,6.9,0,3,1791309600,ALL,,,validate,,,5609155
+2026-10-05T13:50:47Z,football,CONCACAF Nations League B,Saint Vincent and the Grenadines,Sint Maarten,,,双重机会-和局/客,dc,3.01,0,2.74,9.85,0,3,1791320400,BB,,,validate,,,5684328
+2026-10-05T14:51:24Z,football,Norway NM Cup,Raufoss IL,IK Start,,,双重机会-主/和局,dc,2.3,0,2.14,7.48,0,3,1791298800,ALL,,,validate,,,5665818
+2026-10-05T14:51:24Z,football,Norway NM Cup,Raufoss IL,IK Start,,,双重机会-主/客,dc,1.21,0,1.11,9.01,0,3,1791298800,ALL,,,validate,,,5665818
+2026-10-05T15:25:09Z,football,Paraguay Primera Division Reserve,Sportivo Trinidense (Res),Sportivo Luqueno (Res),,,主胜,1x2,2.25,0,1.8895,19.08,0,3,1791284400,BB,,,validate,,,5639045
+2026-10-05T15:25:09Z,football,Paraguay Primera Division Reserve,Sportivo Trinidense (Res),Sportivo Luqueno (Res),,,双边进球-否,btts,2.42,0,2.0564,17.68,0,3,1791284400,BB,,,validate,,,5639045
+2026-10-05T15:25:09Z,football,Paraguay Primera Division Reserve,Sportivo Trinidense (Res),Sportivo Luqueno (Res),,,双重机会-主/和局,dc,1.43,0,1.2592,13.56,0,3,1791284400,BB,,,validate,,,5639045
+2026-10-05T15:25:09Z,ice_hockey,NHL,Dallas Stars,San Jose Sharks,,,让球主胜,hc,1.85,0,1.5441,19.81,0,1,1791244800,BB,,,validate,,-0.5,5645738
+2026-10-05T15:37:24Z,football,Sweden Division 2,Herrestads AIF,Grebbestads IF,,,上半场小球,ht_ou,1.98,0,1.7966,10.21,0,3,1791219600,ALL,,,validate,,1.25,4787697
+2026-10-05T15:43:31Z,football,CONCACAF Nations League A,Honduras,Jamaica,,,上半场客胜,ht,5.25,0,4.6915,11.9,0,3,1791252000,ALL,,,validate,,,5676536
+2026-10-05T15:43:31Z,football,Paraguay Primera Division Reserve,Sportivo Trinidense (Res),Sportivo Luqueno (Res),,,上半场主胜,ht,2.95,0,2.589,13.94,0,3,1791284400,BB,,,validate,,,5639045
+2026-10-05T16:40:40Z,football,Colombia Primera A,Independiente Medellin,Independiente Santa Fe,,,上半场客胜,ht,5.0,0,4.6452,7.64,0,2,1791244800,ALL,,,validate,,,5648561
+2026-10-05T16:42:27Z,football,England EFL Trophy,Sheffield Wednesday,Sunderland U21,,,双重机会-主/客,dc,1.13,0,1.06,6.6,0,3,1791309600,ALL,,,validate,,,5609148
+2026-10-05T16:42:27Z,football,England EFL Trophy,Peterborough United,Ipswich Town U21,,,双重机会-和局/客,dc,5.3,0,3.7,43.24,0,3,1791309600,ALL,,,validate,,,5609149
+2026-10-05T16:42:27Z,football,England EFL Trophy,Doncaster Rovers,Liverpool FC U21,,,双重机会-和局/客,dc,2.63,0,2.48,6.05,0,3,1791309600,ALL,,,validate,,,5697112
+2026-10-05T16:52:43Z,football,CONCACAF Nations League C,Antigua and Barbuda,Aruba,,,双重机会-和局/客,dc,1.8,0,1.63,10.43,0,3,1791327600,ALL,,,validate,,,5681341
+2026-10-05T17:14:54Z,football,CONCACAF Nations League B,French Guiana,Belize,,,双重机会-和局/客,dc,2.05,0,1.64,25.0,0,3,1791338400,BB,,,validate,,,5684329
+2026-10-05T17:49:12Z,football,Vietnam Cup,Lam Dong,Song Lam Nghe An,,,双重机会-主/客,dc,1.21,0,1.08,12.04,0,3,1791275400,BB,,,validate,,,5681336
+2026-10-05T18:03:59Z,ice_hockey,NHL,Boston Bruins,Ottawa Senators,,,让球客胜,hc,2.31,0,1.9279,19.82,0,1,1791243000,BB,,,validate,,-0.5,5645424
+2026-10-05T18:20:55Z,football,Peru Segunda Division,Union Minas,Union Comercio,,,双重机会-主/和局,dc,1.23,0,1.16,6.03,0,3,1791310500,BB,,,validate,,,5676227
+2026-10-05T18:27:00Z,football,Peru Segunda Division,Union Minas,Union Comercio,,,主胜,1x2,1.97,0,1.8439,6.84,0,3,1791310500,BB,,,validate,,,5676227
+2026-10-05T18:29:26Z,football,Paraguay Segunda Division,12 de Junio de Villa Hayes,Sol de America,,,上半场大球,ht_ou,1.79,0,1.593,12.37,0,3,1791230400,ALL,,,validate,,0.75,5671640
+2026-10-05T18:34:17Z,football,UEFA Nations League B,Ukraine,Hungary,,,和局,1x2,3.39,0,3.1748,6.78,0,3,1791225900,ALL,,,validate,,,4863189
+2026-10-05T18:39:20Z,football,UEFA Nations League B,Romania,Sweden,,,双重机会-主/和局,dc,2.05,0,1.9485,5.21,0,3,1791225900,ALL,,,validate,,,4863235
+2026-10-05T18:51:47Z,football,England FA Cup-Qualification,Scarborough Athletic,Macclesfield Town,,,双重机会-主/和局,dc,1.55,0,1.3,19.23,0,3,1791312300,BB,,,validate,,,5704630
+2026-10-05T18:51:47Z,football,England FA Cup-Qualification,Scarborough Athletic,Macclesfield Town,,,双重机会-主/客,dc,1.28,0,1.09,17.43,0,3,1791312300,BB,,,validate,,,5704630
+2026-10-05T19:18:37Z,football,England FA Cup-Qualification,Atherton Collieries AFC,Trafford FC,,,双重机会-和局/客,dc,1.83,0,1.71,7.02,0,3,1791312300,ALL,,,validate,,,5701866
+2026-10-05T19:18:37Z,football,England FA Cup-Qualification,Spalding United,Bury Town FC,,,双重机会-和局/客,dc,2.12,0,1.86,13.98,0,3,1791312300,ALL,,,validate,,,5701874
+2026-10-05T19:18:37Z,football,England FA Cup-Qualification,Spalding United,Bury Town FC,,,双重机会-主/客,dc,1.23,0,1.16,6.03,0,3,1791312300,ALL,,,validate,,,5701874
+2026-10-05T19:18:37Z,football,England FA Cup-Qualification,Halesowen Town FC,Stafford Rangers,,,双重机会-和局/客,dc,2.13,0,2.02,5.45,0,3,1791313200,ALL,,,validate,,,5702396
+2026-10-05T19:30:57Z,football,UEFA Nations League A,Croatia,Spain,,,上半场小球,ht_ou,2.08,0,1.8428,12.87,0,3,1791312300,ALL,,,validate,,1.25,5631275
+2026-10-05T19:30:57Z,football,England FA Cup-Qualification,Halesowen Town FC,Stafford Rangers,,,双重机会-和局/客,dc,2.13,0,2.02,5.45,0,3,1791312300,ALL,,,validate,,,5680596
+2026-10-05T19:43:12Z,football,England FA Cup-Qualification,Wingate & Finchley FC,Bedford Town Football Club,,,双重机会-主/和局,dc,1.62,0,1.41,14.89,0,3,1791312300,ALL,,,validate,,,5704636
+2026-10-05T19:49:22Z,football,England EFL Trophy,Sheffield Wednesday,Sunderland U21,,,双重机会-和局/客,dc,3.02,0,2.84,6.34,0,3,1791309600,ALL,,,validate,,,5609148
+2026-10-05T20:29:22Z,football,Paraguay Primera Division Reserve,Sportivo Trinidense (Res),Sportivo Luqueno (Res),,,上半场小球,ht_ou,1.89,0,1.7409,8.56,0,3,1791284400,ALL,,,validate,,1.25,5639045
+2026-10-05T20:34:41Z,football,Ecuador Cup,Delfin SC,CSD Independiente del Valle,,,双重机会-主/客,dc,1.21,0,1.15,5.22,0,3,1791403200,ALL,,,validate,,,5669764
+2026-10-05T20:53:04Z,football,England FA Cup-Qualification,Halesowen Town FC,Stafford Rangers,,,双重机会-主/客,dc,1.21,0,1.15,5.22,0,3,1791312300,ALL,,,validate,,,5702396
+2026-10-05T21:21:53Z,football,CONCACAF Nations League B,Grenada,Bonaire,,,上半场小球,ht_ou,1.84,0,1.6339,12.61,0,3,1791244800,ALL,,,validate,,1.25,5655914
+2026-10-05T21:23:12Z,football,UEFA Nations League A,England,Czech Republic,,,让球客胜,hc,2.01,0,1.9074,5.38,0,3,1791312300,ALL,,,validate,,+2.5,4863300
+2026-10-05T21:29:59Z,football,Paraguay Primera Division Reserve,Sportivo Trinidense (Res),Sportivo Luqueno (Res),,,和局,1x2,3.74,0,1.8998,96.86,0,3,1791284400,ALL,,,validate,,,5685063
+2026-10-05T21:29:59Z,football,Paraguay Primera Division Reserve,Sportivo Trinidense (Res),Sportivo Luqueno (Res),,,让球主胜,hc,1.81,0,1.6319,10.91,0,3,1791284400,ALL,,,validate,,0,5685063
+2026-10-05T21:29:59Z,football,Paraguay Primera Division Reserve,Sportivo Trinidense (Res),Sportivo Luqueno (Res),,,双重机会-和局/客,dc,1.5,0,1.4114,6.28,0,3,1791284400,ALL,,,validate,,,5685063
+2026-10-05T21:33:13Z,football,Paraguay Segunda Division,Deportivo Santani,Guairena FC,,,双重机会-和局/客,dc,3.07,0,2.42,26.86,0,3,1791325800,ALL,,,validate,,,5642982
+2026-10-05T21:54:55Z,football,Kenya Premier League-Playoff,Kariobangi Sharks,Mombasa United,,,双重机会-和局/客,dc,1.74,0,1.6,8.75,0,2,1791288000,BB,,,validate,,,5706758
+2026-10-05T21:54:55Z,football,Sweden Cup,FC Trollhattan,Mjallby AIF,,,双重机会-主/和局,dc,3.0,0,2.66,12.78,0,3,1791298800,BB,,,validate,,,5706778
+2026-10-05T22:00:49Z,football,England FA Cup-Qualification,Halesowen Town FC,Stafford Rangers,,,双重机会-主/和局,dc,1.2,0,1.14,5.26,0,3,1791312300,ALL,,,validate,,,5702396
+2026-10-05T22:00:49Z,football,England FA Cup-Qualification,Wingate & Finchley FC,Bedford Town Football Club,,,双重机会-主/客,dc,1.26,0,1.17,7.69,0,3,1791312300,ALL,,,validate,,,5704636
+2026-10-05T22:40:08Z,football,CONCACAF Nations League B,Bermuda,Barbados,,,主胜,1x2,5.15,0,4.5495,13.2,0,3,1791244800,ALL,,,validate,,,5680842
+2026-10-05T22:50:50Z,football,CONCACAF Nations League B,Grenada,Bonaire,,,上半场客胜,ht,5.85,0,5.3926,8.48,0,3,1791244800,ALL,,,validate,,,5655914
+2026-10-05T23:08:49Z,football,Chile Cup,Coquimbo Unido,CD Cobreloa Calama,,,双重机会-主/客,dc,1.25,0,1.1,13.64,0,3,1791410400,ALL,,,validate,,,5554261
+2026-10-05T23:08:49Z,football,Chile Cup,CD Antofagasta,Universidad de Chile,,,双重机会-主/和局,dc,2.05,0,1.9,7.89,0,3,1791410400,ALL,,,validate,,,5677362
+2026-10-05T23:14:04Z,basketball,Basketball Champions League,Igokea Aleksandrovac,Bilbao Basket,,,主胜,1x2,1.95,0,1.7846,9.27,0,2,1791309600,ALL,,,validate,,,5548813
+2026-10-05T23:26:44Z,football,Jamaica Premier League,Arnett Gardens FC,Portmore United,,,上半场小球,ht_ou,1.7,0,1.5809,7.53,0,2,1791248400,ALL,,,validate,,1.25,5542626
+2026-10-05T23:39:34Z,football,Uruguay Cup,Plaza Colonia,CA Juventud de Las Piedras,,,双重机会-主/和局,dc,1.69,0,1.52,11.18,0,3,1791414000,BB,,,validate,,,5693447
+2026-10-06T00:19:34Z,football,Canadian Premier League,Forge FC Hamilton,Pacific FC,,,双重机会-和局/客,dc,3.97,0,3.55,11.83,0,3,1791414000,ALL,,,validate,,,5689825
+2026-10-06T00:19:34Z,football,Canadian Premier League,Forge FC Hamilton,Pacific FC,,,双重机会-主/客,dc,1.09,0,1.01,7.92,0,3,1791414000,ALL,,,validate,,,5689825
+2026-10-06T00:26:40Z,ice_hockey,NHL,Buffalo Sabres,Minnesota Wild,,,让球主胜,hc,2.38,0,2.0277,17.37,0,1,1791327600,BB,,,validate,,-0.5,5645739
+2026-10-06T00:50:35Z,football,Algeria Ligue 1,CR Belouizdad,USM Khenchela,,,双重机会-和局/客,dc,3.42,0,3.25,5.23,0,2,1791399600,ALL,,,validate,,,5649767
+2026-10-06T02:05:10Z,football,Colombia Primera A,Atletico Nacional Medellin,CD Tolima,,,双重机会-主/客,dc,1.23,0,1.17,5.13,0,2,1791500700,ALL,,,validate,,,5672017
+2026-10-06T02:40:17Z,football,UEFA Nations League C,Kazakhstan,Faroe Islands,,,上半场大球,ht_ou,1.77,0,1.6038,10.36,0,3,1791295200,ALL,,,validate,,0.75,4863368
+2026-10-06T03:40:24Z,football,Peru Segunda Division,Union Minas,Union Comercio,,,双重机会-和局/客,dc,2.31,0,2.12,8.96,0,3,1791310500,BB,,,validate,,,5676227
+2026-10-06T04:08:11Z,football,England EFL Trophy,Milton Keynes Dons,Brentford FC U21,,,上半场小球,ht_ou,1.88,0,1.7048,10.28,0,3,1791309600,ALL,,,validate,,1.25,5609153
+2026-10-06T04:08:11Z,football,England EFL Trophy,Exeter City,Oxford United,,,上半场小球,ht_ou,1.79,0,1.6252,10.14,0,3,1791309600,ALL,,,validate,,1.25,5609155
+2026-10-06T04:08:11Z,football,England EFL Trophy,Stevenage FC,Leicester City FC,,,上半场小球,ht_ou,1.7,0,1.6101,5.58,0,3,1791309600,ALL,,,validate,,1.25,5609156
+2026-10-06T04:08:11Z,football,England EFL Trophy,Grimsby Town,Burton Albion,,,上半场小球,ht_ou,1.85,0,1.6757,10.4,0,3,1791309600,ALL,,,validate,,1.25,5609158
+2026-10-06T04:08:11Z,football,England EFL Trophy,Accrington Stanley,Salford City,,,上半场小球,ht_ou,1.86,0,1.6899,10.07,0,3,1791309600,ALL,,,validate,,1.25,5609159
+2026-10-06T04:08:11Z,football,England EFL Trophy,Wycombe Wanderers,Bristol Rovers,,,上半场小球,ht_ou,1.92,0,1.7406,10.31,0,3,1791309600,ALL,,,validate,,1.25,5609163
+2026-10-06T04:30:15Z,football,England EFL Trophy,Cambridge United,Northampton Town,,,上半场小球,ht_ou,1.74,0,1.5996,8.78,0,3,1791309600,BB,,,validate,,1.25,5609139
+2026-10-06T04:30:15Z,football,England EFL Trophy,Huddersfield Town,Rochdale AFC,,,上半场小球,ht_ou,2.03,0,1.8574,9.29,0,3,1791309600,BB,,,validate,,1.25,5609140
+2026-10-06T04:30:15Z,football,England EFL Trophy,Blackpool,Crewe Alexandra,,,上半场小球,ht_ou,1.92,0,1.7301,10.98,0,3,1791309600,BB,,,validate,,1.25,5609141
+2026-10-06T04:30:15Z,football,England EFL Trophy,Fleetwood Town,Barnsley,,,上半场小球,ht_ou,1.88,0,1.6949,10.92,0,3,1791309600,BB,,,validate,,1.25,5609142
+2026-10-06T04:30:15Z,football,CONCACAF Nations League B,Saint Vincent and the Grenadines,Sint Maarten,,,上半场小球,ht_ou,1.9,0,1.7251,10.14,0,3,1791320400,BB,,,validate,,1.25,5684328
+2026-10-06T04:35:46Z,football,Norway NM Cup,Raufoss IL,IK Start,,,上半场小球,ht_ou,1.86,0,1.6757,11.0,0,3,1791298800,ALL,,,validate,,1.25,5621618
+2026-10-06T04:35:46Z,football,UEFA Nations League A,England,Czech Republic,,,上半场客胜,ht,24.0,0,15.9375,50.59,0,3,1791312300,ALL,,,validate,,,5631274
+2026-10-06T04:35:46Z,football,UEFA Nations League B,Scotland,Slovenia,,,上半场客胜,ht,6.85,0,6.0984,12.32,0,3,1791312300,ALL,,,validate,,,5662409
+2026-10-06T04:35:46Z,football,UEFA Nations League B,Scotland,Slovenia,,,上半场大球,ht_ou,1.75,0,1.5405,13.6,0,3,1791312300,ALL,,,validate,,0.75,5662409
+2026-10-06T04:35:46Z,football,UEFA Nations League B,Switzerland,North Macedonia,,,上半场客胜,ht,37.0,0,23.9583,54.43,0,3,1791312300,ALL,,,validate,,,5662418
+2026-10-06T04:35:46Z,football,UEFA Nations League C,Luxembourg,Bulgaria,,,上半场客胜,ht,5.4,0,4.7453,13.8,0,3,1791312300,ALL,,,validate,,,5642946
+2026-10-06T04:35:46Z,football,UEFA Nations League C,Luxembourg,Bulgaria,,,上半场大球,ht_ou,1.81,0,1.5972,13.32,0,3,1791312300,ALL,,,validate,,0.75,5642946
+2026-10-06T05:42:27Z,football,Bolivia Copa Pacena,Real Potosi,San Antonio Bulo Bulo,,,双重机会-和局/客,dc,3.0,0,2.62,14.5,0,3,1791324000,BB,,,validate,,,5676243
+2026-10-06T06:18:07Z,football,Chile Cup,Coquimbo Unido,CD Cobreloa Calama,,,双重机会-主/和局,dc,1.14,0,1.08,5.56,0,3,1791410400,ALL,,,validate,,,5629552
+2026-10-06T06:38:56Z,football,Africa Cup of Nations 2027 Qualification,Angola,Malawi,,,上半场大球,ht_ou,1.76,0,1.581,11.32,0,3,1791313200,ALL,,,validate,,0.75,5642964
+2026-10-06T06:45:15Z,football,Paraguay Segunda Division,Deportivo Santani,Guairena FC,,,上半场客胜,ht,8.5,0,6.4862,31.05,0,3,1791325800,ALL,,,validate,,,5642982
+2026-10-06T06:45:15Z,football,Chile Cup,Colo Colo,Puerto Montt,,,上半场小球,ht_ou,1.83,0,1.6428,11.4,0,3,1791329400,ALL,,,validate,,1.25,5642992
+2026-10-06T06:45:15Z,football,Arabian Gulf Cup (In Saudi Arabia),Saudi Arabia,United Arab Emirates,,,上半场客胜,ht,4.48,0,4.2447,5.54,0,3,1791309600,BB,,,validate,,,5701670
+2026-10-06T06:50:47Z,football,Sweden Cup,FC Trollhattan,Mjallby AIF,,,上半场小球,ht_ou,1.98,0,1.772,11.74,0,3,1791298800,ALL,,,validate,,1.25,5692467
+2026-10-06T07:10:09Z,football,UEFA Nations League A,Croatia,Spain,,,上半场主胜,ht,9.2,0,8.4894,8.37,0,3,1791312300,ALL,,,validate,,,4863295
+2026-10-06T07:33:42Z,basketball,Finland Korisliiga Basketball League,UU Korihait Uusikaupunki,Helsinki Seagulls,,,让分客胜,hc,1.85,0,1.7229,7.38,0,3,1791300600,ALL,,,validate,,-3.5,5675704
+2026-10-06T07:52:30Z,football,Africa Cup of Nations 2027 Qualification,Angola,Malawi,,,上半场客胜,ht,14.6,0,11.2444,29.84,0,3,1791313200,ALL,,,validate,,,5642964
+2026-10-06T08:02:01Z,football,Brazil Serie A,SC Internacional RS,SC Corinthians SP,,,上半场客胜,ht,4.62,0,4.3909,5.22,0,2,1791412200,ALL,,,validate,,,5536043
+2026-10-06T08:04:46Z,football,UEFA Nations League C,Albania,San Marino,,,双边进球-是,btts,6.0,0,5.4313,10.47,0,3,1791312300,ALL,,,validate,,,4863335
+2026-10-06T08:13:56Z,football,England Professional Development League,Bristol City U21,Charlton Athletic U21,,,客胜,1x2,3.62,0,3.347,8.16,0,3,1791288000,ALL,,,validate,,,5577963
+2026-10-06T08:35:30Z,football,UEFA Nations League C,Albania,San Marino,,,上半场大球,ht_ou,1.9,0,1.7427,9.03,0,3,1791312300,ALL,,,validate,,1.75,4863335
+2026-10-06T09:13:52Z,football,England EFL Trophy,Newport County,Plymouth Argyle,,,上半场小球,ht_ou,1.93,0,1.7355,11.21,0,3,1791309600,ALL,,,validate,,1.25,5609144
+2026-10-06T09:13:52Z,football,England EFL Trophy,Peterborough United,Ipswich Town U21,,,上半场客胜,ht,11.3,0,10.3654,9.02,0,3,1791309600,ALL,,,validate,,,5609149
+2026-10-06T09:13:52Z,football,England EFL Trophy,Peterborough United,Ipswich Town U21,,,上半场大球,ht_ou,1.88,0,1.725,8.99,0,3,1791309600,ALL,,,validate,,1.5,5609149
+2026-10-06T09:13:52Z,football,England EFL Trophy,Rotherham United,Bradford City,,,上半场小球,ht_ou,1.72,0,1.5849,8.52,0,3,1791309600,ALL,,,validate,,1.25,5609160
+2026-10-06T09:13:52Z,football,England EFL Trophy,Port Vale,Mansfield Town,,,上半场小球,ht_ou,1.86,0,1.6757,11.0,0,3,1791309600,ALL,,,validate,,1.25,5609162
+2026-10-06T09:13:52Z,football,England EFL Trophy,Crawley Town,Bromley FC,,,上半场小球,ht_ou,1.96,0,1.7753,10.4,0,3,1791312300,ALL,,,validate,,1.25,5609166
+2026-10-06T09:13:52Z,football,England National League South,Farnham Town,Truro City FC,,,上半场小球,ht_ou,1.89,0,1.7048,10.86,0,3,1791312300,ALL,,,validate,,1.25,5322132
+2026-10-06T09:13:52Z,football,England National League South,Ebbsfleet United FC,Folkestone Invicta,,,上半场小球,ht_ou,1.82,0,1.6498,10.32,0,3,1791312300,ALL,,,validate,,1.25,5627633
+2026-10-06T09:13:52Z,football,Chile Cup,Colo Colo,Puerto Montt,,,上半场客胜,ht,17.2,0,12.2041,40.94,0,3,1791329400,ALL,,,validate,,,5670836
+2026-10-06T09:37:47Z,football,England EFL Trophy,AFC Wimbledon,Barnet FC,,,上半场小球,ht_ou,1.97,0,1.7149,14.88,0,3,1791309600,ALL,,,validate,,1.25,5609147
+2026-10-06T09:37:47Z,football,England EFL Trophy,Sheffield Wednesday,Sunderland U21,,,上半场大球,ht_ou,2.01,0,1.8612,7.99,0,3,1791309600,ALL,,,validate,,1.5,5609148
+2026-10-06T09:37:47Z,football,Bolivia Copa Pacena,CDT Real Oruro,CD Real Tomayapo,,,客胜,1x2,6.85,0,5.4385,25.95,0,3,1791313200,BB,,,validate,,,5676237
+2026-10-06T10:26:28Z,football,England EFL Trophy,Shrewsbury Town,Stockport County FC,,,上半场小球,ht_ou,1.99,0,1.7355,14.66,0,3,1791309600,ALL,,,validate,,1.25,5645241
+2026-10-06T10:26:28Z,football,UEFA Nations League C,Belarus,Finland,,,上半场主胜,ht,6.05,0,5.4982,10.04,0,3,1791312300,ALL,,,validate,,,5642950
+2026-10-06T10:26:28Z,football,UEFA Nations League C,Belarus,Finland,,,上半场大球,ht_ou,1.86,0,1.6165,15.06,0,3,1791312300,ALL,,,validate,,0.75,5642950
+2026-10-06T10:43:04Z,football,Slovenia 2nd Liga,NK Bilje,NK Dekani,,,客胜,1x2,2.33,0,2.1971,6.05,0,3,1791295200,ALL,,,validate,,,5628974
+2026-10-06T10:46:51Z,football,Egypt League Cup,Zamalek SC,Zed FC,,,客胜,1x2,2.04,0,1.7246,18.29,0,3,1791392400,ALL,,,validate,,,5680883
+2026-10-06T10:46:51Z,football,Egypt League Cup,Zamalek SC,Zed FC,,,让球客胜,hc,2.04,0,1.725,18.26,0,3,1791392400,ALL,,,validate,,-0.5,5680883
+2026-10-06T11:07:09Z,football,Bolivia Copa Pacena,CDT Real Oruro,CD Real Tomayapo,,,主胜,1x2,1.71,0,1.6242,5.28,0,3,1791313200,BB,,,validate,,,5676237
+2026-10-06T11:36:59Z,football,England FA Cup-Qualification,Atherton Collieries AFC,Trafford FC,,,双重机会-主/和局,dc,1.38,0,1.31,5.34,0,3,1791312300,ALL,,,validate,,,5701866
+2026-10-06T11:36:59Z,basketball,France Basketball Cup,Poitiers Basket 86,Orleans Loiret Basket,,,客胜,1x2,1.84,0,1.7291,6.41,0,3,1791309600,ALL,,,validate,,,5676213
+2026-10-06T11:36:59Z,basketball,France Basketball Cup,Poitiers Basket 86,Orleans Loiret Basket,,,让分客胜,hc,1.97,0,1.82,8.24,0,3,1791309600,ALL,,,validate,,-1.5,5676213
+2026-10-06T11:42:31Z,football,Bolivia Copa Pacena,CDT Real Oruro,CD Real Tomayapo,,,上半场客胜,ht,6.9,0,5.4275,27.13,0,3,1791313200,BB,,,validate,,,5676237
+2026-10-06T11:47:18Z,football,Egypt League Cup,Zamalek SC,Zed FC,,,双重机会-和局/客,dc,1.22,0,1.12,8.93,0,3,1791392400,ALL,,,validate,,,5680883
+2026-10-06T11:47:18Z,football,Egypt League Cup,Ceramica Cleopatra,Al Masry Club,,,双重机会-和局/客,dc,1.59,0,1.49,6.71,0,3,1791392400,ALL,,,validate,,,5680884
+2026-10-06T11:47:18Z,football,Algeria Ligue 1,CR Belouizdad,USM Khenchela,,,双重机会-主/客,dc,1.19,0,1.01,17.82,0,2,1791399600,ALL,,,validate,,,5649767
+2026-10-06T11:47:18Z,football,Chile Cup,Coquimbo Unido,CD Cobreloa Calama,,,双重机会-和局/客,dc,2.24,0,2.08,7.69,0,3,1791410400,ALL,,,validate,,,5554261
+2026-10-06T12:24:54Z,football,Paraguay Primera Division,Club Olimpia,Nacional Asuncion,,,上半场客胜,ht,5.1,0,4.5913,11.08,0,3,1791324900,ALL,,,validate,,,5680564
+2026-10-06T12:24:54Z,football,CONCACAF Nations League B,French Guiana,Belize,,,上半场大球,ht_ou,1.7,0,1.5244,11.52,0,3,1791338400,ALL,,,validate,,0.75,5684329
+2026-10-06T12:24:54Z,football,Japan Emperor Cup,Sanfrecce Hiroshima,Iwaki FC,,,双重机会-主/客,dc,1.13,0,1.01,11.88,0,3,1791365400,ALL,,,validate,,,5513061
+2026-10-06T12:38:12Z,football,Egypt League Cup,Ceramica Cleopatra,Al Masry Club,,,双重机会-主/客,dc,1.36,0,1.16,17.24,0,3,1791392400,ALL,,,validate,,,5696445
+2026-10-06T12:38:12Z,football,Uzbekistan Super League,FK Neftchi Fargona,Xorazm FK Urganch,,,双重机会-和局/客,dc,4.18,0,3.35,24.78,0,2,1791381600,BB,,,validate,,,5680334
+2026-10-06T13:23:02Z,football,Japan Emperor Cup,Urawa Red Diamonds,Omiya Ardija,,,双重机会-主/和局,dc,1.25,0,1.16,7.76,0,3,1791363600,ALL,,,validate,,,5650687
+2026-10-06T13:23:02Z,football,Japan Emperor Cup,Sanfrecce Hiroshima,Iwaki FC,,,双重机会-和局/客,dc,3.74,0,3.55,5.35,0,3,1791365400,ALL,,,validate,,,5650689
+2026-10-06T13:40:39Z,football,Japan Emperor Cup,Urawa Red Diamonds,Omiya Ardija,,,双重机会-主/客,dc,1.24,0,1.14,8.77,0,3,1791363600,ALL,,,validate,,,5513051
+2026-10-06T13:40:39Z,football,Turkey Cup-Qualification,Gaziemir Gog Sy,Fethiyespor,,,双重机会-主/和局,dc,2.21,0,1.93,14.51,0,3,1791374400,BB,,,validate,,,5680802
+2026-10-06T14:01:09Z,football,Egypt League Cup,Ceramica Cleopatra,Al Masry Club,,,客胜,1x2,3.08,0,2.8199,9.22,0,3,1791392400,ALL,,,validate,,,5696445
+2026-10-06T14:05:05Z,football,Egypt League Cup,Asyut Petroleum,AL Ahly SC,,,客胜,1x2,3.68,0,3.2431,13.47,0,3,1791381600,ALL,,,validate,,,5680847
+2026-10-06T14:11:20Z,football,Turkey Cup-Qualification,Pazarspor,Erbaaspor,,,双重机会-主/和局,dc,2.25,0,1.6,40.62,0,3,1791370800,ALL,,,validate,,,5680772
+2026-10-06T14:11:20Z,football,Turkey Cup-Qualification,Pazarspor,Erbaaspor,,,双重机会-主/客,dc,1.21,0,1.06,14.15,0,3,1791370800,ALL,,,validate,,,5680772
+2026-10-06T14:11:20Z,football,Turkey Cup-Qualification,Silivrispor,Kartal Bulvarspor,,,双重机会-主/和局,dc,1.67,0,1.38,21.01,0,3,1791372600,ALL,,,validate,,,5680788
+2026-10-06T14:11:20Z,football,Turkey Cup-Qualification,Silivrispor,Kartal Bulvarspor,,,双重机会-主/客,dc,1.29,0,1.2,7.5,0,3,1791372600,ALL,,,validate,,,5680788
+2026-10-06T14:11:20Z,football,Turkey Cup-Qualification,Karabuk Idmanyurdu Spor,Beykoz Anadolu,,,双重机会-主/和局,dc,1.63,0,1.51,7.95,0,3,1791374400,BB,,,validate,,,5680801
+2026-10-06T14:11:20Z,football,Turkey Cup-Qualification,Karabuk Idmanyurdu Spor,Beykoz Anadolu,,,双重机会-主/客,dc,1.27,0,1.18,7.63,0,3,1791374400,BB,,,validate,,,5680801
+2026-10-06T14:19:47Z,football,Bolivia Copa Pacena,CDT Real Oruro,CD Real Tomayapo,,,小球,ou,1.88,0,1.7357,8.31,0,3,1791313200,BB,,,validate,,3.5,5676237
+2026-10-06T14:30:14Z,football,Ecuador LigaPro Primera B-Playoff,Vinotinto FC Ecuador,Club Deportivo Cuenca Juniors,,,双重机会-和局/客,dc,2.35,0,2.16,8.8,0,3,1791405000,ALL,,,validate,,,5650245
+2026-10-06T14:30:14Z,football,Ecuador LigaPro Primera B-Playoff,Vinotinto FC Ecuador,Club Deportivo Cuenca Juniors,,,双重机会-主/客,dc,1.27,0,1.18,7.63,0,3,1791405000,ALL,,,validate,,,5650245
+2026-10-06T15:02:15Z,football,Egypt League Cup,Ceramica Cleopatra,Al Masry Club,,,让球客胜,hc,1.92,0,1.7881,7.38,0,3,1791392400,ALL,,,validate,,0,5680884
+2026-10-06T15:16:33Z,football,Turkey Cup-Qualification,Gaziemir Gog Sy,Fethiyespor,,,双重机会-和局/客,dc,1.14,0,1.07,6.54,0,3,1791374400,BB,,,validate,,,5680802
+2026-10-06T15:39:39Z,football,Venezuela Cup,Deportivo Miranda,Atletico Avila FC,,,双重机会-和局/客,dc,2.56,0,2.3,11.3,0,3,1791399600,BB,,,validate,,,5680923
+2026-10-06T15:39:39Z,football,Venezuela Cup,Deportivo Miranda,Atletico Avila FC,,,双重机会-主/客,dc,1.18,0,1.07,10.28,0,3,1791399600,BB,,,validate,,,5680923
+2026-10-06T15:39:39Z,football,Venezuela Cup,Zamora FC,Atletico Barinas,,,双重机会-和局/客,dc,3.41,0,2.6,31.15,0,3,1791401400,BB,,,validate,,,5680925
+2026-10-06T15:39:39Z,football,Venezuela Cup,Zamora FC,Atletico Barinas,,,双重机会-主/客,dc,1.08,0,1.01,6.93,0,3,1791401400,BB,,,validate,,,5680925
+2026-10-06T15:41:28Z,football,Japan Emperor Cup,Fagiano Okayama,JEF United Ichihara Chiba,,,双重机会-和局/客,dc,2.17,0,2.0,8.5,0,3,1791367200,ALL,,,validate,,,5513057
+2026-10-06T15:51:16Z,football,Bolivia Copa Pacena,CDT Real Oruro,CD Real Tomayapo,,,双重机会-和局/客,dc,2.54,0,2.4,5.83,0,3,1791313200,BB,,,validate,,,5676237
+2026-10-06T16:01:24Z,football,Bolivia Copa Pacena,CDT Real Oruro,CD Real Tomayapo,,,双边进球-否,btts,2.53,0,2.3883,5.93,0,3,1791313200,BB,,,validate,,,5676237
+2026-10-06T16:07:00Z,football,Paraguay Primera Division,Sportivo Ameliano,Rubio Nu,,,上半场客胜,ht,4.57,0,4.2907,6.51,0,3,1791316800,ALL,,,validate,,,5642966
+2026-10-06T16:09:09Z,football,Venezuela Cup,Mineros de Guayana,Monagas SC,,,双重机会-主/和局,dc,1.89,0,1.79,5.59,0,3,1791401400,BB,,,validate,,,5680929
+2026-10-06T16:09:09Z,football,Venezuela Cup,Caracas FC,Yaracuyanos FC,,,双重机会-和局/客,dc,2.89,0,2.38,21.43,0,3,1791410400,BB,,,validate,,,5680927
+2026-10-06T16:09:09Z,football,Venezuela Cup,Caracas FC,Yaracuyanos FC,,,双重机会-主/客,dc,1.1,0,1.01,8.91,0,3,1791410400,BB,,,validate,,,5680927
+2026-10-06T16:13:52Z,football,Paraguay Primera Division,Club Olimpia,Nacional Asuncion,,,上半场大球,ht_ou,1.7,0,1.5536,9.42,0,3,1791324900,ALL,,,validate,,0.75,5642976
+2026-10-06T16:20:31Z,football,Japan Emperor Cup,Cerezo Osaka,Kagoshima United,,,双重机会-主/客,dc,1.21,0,1.01,19.8,0,3,1791365400,ALL,,,validate,,,5513063
+2026-10-06T16:28:42Z,football,Venezuela Cup,Zamora FC,Atletico Barinas,,,双重机会-主/和局,dc,1.07,0,1.01,5.94,0,3,1791401400,BB,,,validate,,,5680925
+2026-10-06T16:38:44Z,football,Germany 2. Bundesliga,FC Heidenheim 1846,1 FC Kaiserslautern,,,和局,1x2,4.02,0,3.8235,5.14,0,1,1791563400,ALL,,,validate,,,5203028
+2026-10-06T16:52:15Z,football,Egypt League Cup,Asyut Petroleum,AL Ahly SC,,,双重机会-主/客,dc,1.36,0,1.29,5.43,0,3,1791381600,ALL,,,validate,,,5696448
+2026-10-06T17:03:53Z,football,Egypt League Cup,Asyut Petroleum,AL Ahly SC,,,双重机会-和局/客,dc,1.42,0,1.33,6.77,0,3,1791381600,ALL,,,validate,,,5680847
+2026-10-06T17:09:14Z,football,Uruguay Cup,CS Cerrito,Montevideo Wanderers,,,双重机会-和局/客,dc,1.94,0,1.63,19.02,0,3,1791397800,BB,,,validate,,,5693433
+2026-10-06T17:09:14Z,football,Uruguay Cup,CS Cerrito,Montevideo Wanderers,,,双重机会-主/客,dc,1.24,0,1.16,6.9,0,3,1791397800,BB,,,validate,,,5693433
+2026-10-06T17:31:26Z,football,Algeria Ligue 1,JS Saoura,Olympique Akbou,,,双重机会-和局/客,dc,1.93,0,1.81,6.63,0,2,1791478800,ALL,,,validate,,,5649768
+2026-10-06T17:43:44Z,football,England EFL Trophy,Sheffield Wednesday,Sunderland U21,,,客胜,1x2,6.8,0,6.2984,7.96,0,3,1791309600,ALL,,,validate,,,5642900
+2026-10-06T18:00:32Z,football,Venezuela Cup,Urena SC,Trujillanos FC,,,双重机会-主/客,dc,1.27,0,1.18,7.63,0,3,1791403200,BB,,,validate,,,5680933
+2026-10-06T18:03:44Z,football,Peru Segunda Division,Union Minas,Union Comercio,,,客胜,1x2,6.05,0,5.646,7.16,0,3,1791310500,BB,,,validate,,,5676227
+2026-10-06T18:03:44Z,football,UEFA Nations League A,England,Czech Republic,,,上半场大球,ht_ou,2.07,0,1.8851,9.81,0,3,1791312300,ALL,,,validate,,1.75,4863300
+2026-10-06T18:08:37Z,ice_hockey,NHL,Buffalo Sabres,Minnesota Wild,,,让球客胜,hc,2.35,0,1.968,19.41,0,1,1791327600,BB,,,validate,,-0.5,5645739
+2026-10-06T18:21:21Z,football,Venezuela Cup,Mineros de Guayana,Monagas SC,,,双重机会-主/客,dc,1.25,0,1.15,8.7,0,3,1791401400,BB,,,validate,,,5680929
+2026-10-06T18:25:38Z,football,Turkey Cup-Qualification,Gaziemir Gog Sy,Fethiyespor,,,双重机会-主/客,dc,1.2,0,1.01,18.81,0,3,1791374400,BB,,,validate,,,5680802
+2026-10-06T18:37:55Z,football,Switzerland 1. Liga Classic,FC Kosova Zurich,FC Dietikon,,,双重机会-主/客,dc,1.21,0,1.1,10.0,0,4,1791396000,ALL,,,validate,,,5271269
+2026-10-06T19:49:47Z,football,Algeria Ligue 1,MC Oran,ES Setif,,,双重机会-和局/客,dc,1.95,0,1.74,12.07,0,2,1791486000,ALL,,,validate,,,5649763
+2026-10-06T20:24:43Z,football,Bolivia Copa Pacena,Real Potosi,San Antonio Bulo Bulo,,,上半场客胜,ht,8.1,0,2.2063,267.13,0,3,1791324000,BB,,,validate,,,5676243
+2026-10-06T21:17:34Z,football,Peru Liga 1,Atletico Grau,Los Chankas CYC,,,双重机会-和局/客,dc,2.21,0,2.04,8.33,0,2,1791491400,ALL,,,validate,,,5684931
+2026-10-06T21:35:27Z,ice_hockey,NHL,New York Rangers,New York Islanders,,,让球主胜,hc,2.02,0,1.685,19.88,0,1,1791329400,BB,,,validate,,-0.5,5645742
+2026-10-06T22:03:02Z,football,Japan Emperor Cup,Avispa Fukuoka,Yokohama FC,,,上半场大球,ht_ou,1.83,0,1.5832,15.59,0,3,1791365400,ALL,,,validate,,0.75,5513056
+2026-10-06T22:03:02Z,football,Japan Emperor Cup,Kawasaki Frontale,Tegevajaro Miyazaki,,,双重机会-和局/客,dc,2.08,0,1.92,8.33,0,3,1791367200,ALL,,,validate,,,5513058
+2026-10-06T22:03:02Z,football,Japan Emperor Cup,Gainare Tottori,Tokyo Verdy,,,上半场小球,ht_ou,1.74,0,1.5734,10.59,0,3,1791367200,ALL,,,validate,,1.25,5513064
+2026-10-06T22:22:46Z,football,Turkey Cup-Qualification,Bursa Yildirim Spor,Amasyaspor FK,,,双重机会-和局/客,dc,2.75,0,2.28,20.61,0,3,1791372600,ALL,,,validate,,,5680790
+2026-10-06T23:17:59Z,basketball,Eurocup,BC Aris Thessaloniki,CB San Pablo Burgos,,,大分,ou,1.84,0,1.7481,5.26,0,3,1791392400,ALL,,,validate,,166.5,5650162
+2026-10-06T23:23:35Z,football,Colombia Primera B,Boca Juniors de Cali,Union Magdalena,,,上半场大球,ht_ou,1.73,0,1.5429,12.13,0,3,1791410400,ALL,,,validate,,0.75,5708191
+2026-10-06T23:51:22Z,football,Brazil Serie B,Ceara SC CE,Criciuma EC SC,,,上半场大球,ht_ou,1.76,0,1.5711,12.02,0,3,1791498600,ALL,,,validate,,0.75,5682460
+2026-10-07T00:07:26Z,football,CONCACAF Nations League B,French Guiana,Belize,,,上半场客胜,ht,5.0,0,4.5913,8.9,0,3,1791338400,ALL,,,validate,,,5684329
+2026-10-07T00:37:47Z,football,USA Major League Soccer,Chicago Fire,Vancouver Whitecaps FC,,,上半场小球,ht_ou,2.08,0,1.8611,11.76,0,1,1791333600,ALL,,,validate,,1.25,5281314
+2026-10-07T00:42:58Z,football,Japan Emperor Cup,Kawasaki Frontale,Tegevajaro Miyazaki,,,主胜,1x2,1.81,0,1.7691,2.31,0,3,1791367200,ALL,,,validate,,,5513058
+2026-10-07T00:42:58Z,football,Venezuela Cup,Caracas FC,Yaracuyanos FC,,,双重机会-主/和局,dc,1.05,0,1.01,3.96,0,3,1791410400,ALL,,,validate,,,5680927
+2026-10-07T00:42:58Z,football,Venezuela Cup,Dynamo Puerto FC,Bolivar SC,,,双重机会-主/客,dc,1.29,0,1.26,2.38,0,3,1791410400,ALL,,,validate,,,5680930
+2026-10-07T00:48:43Z,football,Switzerland 1. Liga Classic,FC Freienbach,USV Eschen Mauren,,,双重机会-主/和局,dc,1.27,0,1.2,5.83,0,4,1791395100,ALL,,,validate,,,5271598
+2026-10-07T00:48:43Z,football,Switzerland 1. Liga Classic,FC Freienbach,USV Eschen Mauren,,,双重机会-和局/客,dc,1.74,0,1.56,11.54,0,4,1791395100,ALL,,,validate,,,5271598
+2026-10-07T00:48:43Z,football,Switzerland 1. Liga Classic,FC Freienbach,USV Eschen Mauren,,,双重机会-主/客,dc,1.21,0,1.14,6.14,0,4,1791395100,ALL,,,validate,,,5271598
+2026-10-07T00:53:06Z,football,Algeria Ligue 1,MB Rouisset,USM Alger,,,双重机会-和局/客,dc,1.34,0,1.31,2.29,0,2,1791478800,ALL,,,validate,,,5649765
+2026-10-07T01:06:27Z,football,CONCACAF Nations League B,French Guiana,Belize,,,上半场主胜,ht,3.33,0,3.1468,5.82,0,3,1791338400,ALL,,,validate,,,5684329
+2026-10-07T01:11:39Z,football,Turkey Cup-Qualification,Bursa Yildirim Spor,Amasyaspor FK,,,和局,1x2,3.82,0,3.7168,2.78,0,3,1791372600,ALL,,,validate,,,5680777
+2026-10-07T01:11:39Z,football,Brazil Serie A,Cruzeiro EC MG,Sao Paulo FC SP,,,上半场客胜,ht,5.55,0,5.2381,5.95,0,2,1791419400,ALL,,,validate,,,5536054
+2026-10-07T01:16:54Z,football,Uganda Premier League,Ntugasaze FC,Mbarara City FC,,,双重机会-主/和局,dc,1.94,0,1.52,27.63,0,2,1791378000,BB,,,validate,,,5680948
+2026-10-07T01:16:54Z,football,Brazil Serie A,Botafogo FR RJ,CR Vasco da Gama RJ,,,和局,1x2,3.7,0,3.6248,2.07,0,2,1791415800,ALL,,,validate,,,5610640
+2026-10-07T01:25:16Z,football,Spain LaLiga,FC Barcelona,Getafe CF,,,客胜,1x2,43.0,0,28.9655,48.45,0,1,1791649800,ALL,,,validate,,,5192306
+2026-10-07T02:08:16Z,football,England Premier League,Coventry City,Newcastle United FC,,,和局,1x2,3.95,0,3.7748,4.64,0,1,1791831600,ALL,,,validate,,,5130826
+2026-10-07T02:17:06Z,football,Germany Bundesliga,FSV Mainz,Bayer Leverkusen,,,和局,1x2,4.2,0,4.0236,4.38,0,1,1791639000,ALL,,,validate,,,5201489
+2026-10-07T02:19:06Z,football,France Ligue 1,OGC Nice,Strasbourg Alsace,,,和局,1x2,3.75,0,3.6735,2.08,0,1,1791723600,ALL,,,validate,,,5604902
+2026-10-07T02:35:30Z,football,Italy Serie A,Como 1907,AS Roma,,,和局,1x2,3.85,0,3.6748,4.77,0,1,1791714600,ALL,,,validate,,,5551119
+2026-10-07T02:45:48Z,basketball,Japan B.League Premier,Osaka Evessa,Yokohama B Corsairs,,,大分,ou,1.85,0,1.7665,4.73,0,3,1791367500,BB,,,validate,,158.5,5298080
+2026-10-07T02:51:41Z,football,Turkey Cup-Qualification,Bursa Yildirim Spor,Amasyaspor FK,,,客胜,1x2,5.95,0,5.7724,3.08,0,3,1791372600,ALL,,,validate,,,5680790
+2026-10-07T03:03:44Z,basketball,Japan B.League Premier,Shimane Susanoo Magic,Levanga Hokkaido,,,小分,ou,1.83,0,1.7483,4.67,0,3,1791367500,BB,,,validate,,175.5,5298079
+2026-10-07T03:04:44Z,football,Spain LaLiga,Racing Santander,Valencia CF,,,和局,1x2,3.89,0,3.7493,3.75,0,1,1791745200,ALL,,,validate,,,5192305
+2026-10-07T03:13:08Z,football,Japan Emperor Cup,Kawasaki Frontale,Tegevajaro Miyazaki,,,双重机会-主/和局,dc,1.23,0,1.2,2.5,0,3,1791367200,ALL,,,validate,,,5513058
+2026-10-07T03:41:12Z,football,Egypt Second Division A,Al Nasr Cairo,Proxy SC,,,双重机会-和局/客,dc,1.94,0,1.81,7.18,0,3,1791462600,BB,,,validate,,,5287813
+2026-10-07T04:00:14Z,football,Bolivia Copa Pacena,Guabira Montero,The Strongest,,,双重机会-和局/客,dc,2.53,0,2.1,20.48,0,3,1791419400,BB,,,validate,,,5680922
+2026-10-07T04:00:14Z,football,Bolivia Copa Pacena,Guabira Montero,The Strongest,,,双重机会-主/客,dc,1.16,0,1.02,13.73,0,3,1791419400,BB,,,validate,,,5680922
+2026-10-07T04:28:18Z,football,Mexico Liga MX,Queretaro FC,Atlante FC,,,和局,1x2,3.71,0,3.5938,3.23,0,3,1791673200,ALL,,,validate,,,5083865
+2026-10-07T05:09:00Z,football,Germany Bundesliga,Union Berlin,SV 07 Elversberg,,,和局,1x2,4.05,0,3.9248,3.19,0,1,1791639000,ALL,,,validate,,,5201496
+2026-10-07T05:09:00Z,football,Colombia Primera B,Itagui Leones FC,Barranquilla FC,,,主胜,1x2,1.89,0,1.7798,6.19,0,3,1791406800,ALL,,,validate,,,5708047
+2026-10-07T05:09:00Z,football,Guatemala Primera Division,Deportivo Iztapa,CSD Amatitlan,,,双重机会-主/客,dc,1.12,0,1.02,9.8,0,2,1791406800,ALL,,,validate,,,5710896
+2026-10-07T05:12:00Z,football,Egypt League Cup,Al Mokawloon Al Arab,El Gouna FC,,,双重机会-和局/客,dc,1.96,0,1.81,8.29,0,3,1791468000,BB,,,validate,,,5685675
+2026-10-07T05:14:00Z,football,Qatar Stars League,Al Shamal,AL Duhail SC,,,双重机会-主/和局,dc,1.76,0,1.56,12.82,0,3,1791470700,ALL,,,validate,,,5698254
+2026-10-07T05:14:00Z,football,Qatar Stars League,Al Shamal,AL Duhail SC,,,双重机会-和局/客,dc,1.31,0,1.25,4.8,0,3,1791470700,ALL,,,validate,,,5698254
+2026-10-07T05:14:00Z,football,Qatar Stars League,Al Shamal,AL Duhail SC,,,双重机会-主/客,dc,1.25,0,1.19,5.04,0,3,1791470700,ALL,,,validate,,,5698254
+2026-10-07T05:17:00Z,football,France Ligue 1,Paris Saint Germain,Le Mans FC,,,客胜,1x2,36.0,0,31.875,12.94,0,1,1791657900,ALL,,,validate,,,5604899
+2026-10-07T05:18:00Z,basketball,Japan B.League Premier,Toyama Grouses,Kyoto Hannaryz,,,客胜,1x2,1.7,0,1.6595,2.44,0,2,1791367500,BB,,,validate,,,5298082
+2026-10-07T05:18:00Z,basketball,Japan B.League Premier,Toyama Grouses,Kyoto Hannaryz,,,让分客胜,hc,1.94,0,1.8428,5.27,0,2,1791367500,BB,,,validate,,-2.5,5298082
+2026-10-07T05:21:00Z,football,Germany Bundesliga,FC Augsburg,Bayern Munich,,,主胜,1x2,13.2,0,12.7059,3.89,0,1,1791639000,ALL,,,validate,,,5201493
+2026-10-07T05:25:01Z,football,Algeria Ligue 1,CR Belouizdad,USM Khenchela,,,客胜,1x2,9.7,0,8.2699,17.29,0,2,1791399600,ALL,,,validate,,,5649767
+2026-10-07T05:28:01Z,football,Egypt Second Division A,Haras El Hodood,El Sekka El Hadid,,,双重机会-主/客,dc,1.32,0,1.26,4.76,0,3,1791462600,ALL,,,validate,,,5287817
+2026-10-07T05:47:04Z,basketball,Eurocup,Niners Chemnitz,BC Neptunas Klaipeda,,,小分,ou,1.86,0,1.7945,3.65,0,3,1791392400,ALL,,,validate,,172.5,5251381
+2026-10-07T06:01:06Z,football,Morocco Botola Pro,Union Touarga,RS Berkane,,,双重机会-主/和局,dc,1.58,0,1.52,3.95,0,2,1791475200,ALL,,,validate,,,5711267
+2026-10-07T06:01:06Z,football,Morocco Botola Pro,Union Touarga,RS Berkane,,,双重机会-主/客,dc,1.35,0,1.27,6.3,0,2,1791475200,ALL,,,validate,,,5711267
+2026-10-07T06:18:08Z,football,Qatar Stars League,Al Wakrah,Al Gharafa SC,,,双重机会-主/和局,dc,1.45,0,1.32,9.85,0,3,1791478800,ALL,,,validate,,,5698602
+2026-10-07T06:28:09Z,football,Morocco Botola Pro,AS Far Rabat,Wydad Temara,,,双重机会-和局/客,dc,2.94,0,2.64,11.36,0,2,1791482400,ALL,,,validate,,,5711270
+2026-10-07T06:40:11Z,baseball,Korea Republic KBO League,SSG Landers,NC Dinos,,,主胜,1x2,1.73,0,1.695,2.06,0,1,1791365400,BB,,,validate,,,5563568
+2026-10-07T06:41:11Z,football,Peru Segunda Division-Playoff,CD Estudiantil CNI,CD Universidad Cesar Vallejo,,,双重机会-和局/客,dc,1.45,0,1.4,3.57,0,3,1791404100,BB,,,validate,,,5680934
+2026-10-07T06:41:11Z,football,Guatemala Primera Division,Deportivo Coatepeque,FC Santa Lucia Cotzumalguapa,,,双重机会-和局/客,dc,2.15,0,1.98,8.59,0,2,1791399600,ALL,,,validate,,,5710899
+2026-10-07T06:41:11Z,basketball,Australia NBL,Adelaide 36Ers,Melbourne United,,,让分客胜,hc,1.97,0,1.7921,9.93,0,3,1791361800,ALL,,,validate,,-3.5,5074450
+2026-10-07T06:44:12Z,basketball,Japan B.League Premier,Toyama Grouses,Kyoto Hannaryz,,,大分,ou,1.84,0,1.772,3.84,0,2,1791367500,BB,,,validate,,168.5,5298082
+2026-10-07T06:48:12Z,football,Qatar Stars League,Al Wakrah,Al Gharafa SC,,,双重机会-主/客,dc,1.24,0,1.12,10.71,0,3,1791478800,ALL,,,validate,,,5698602
+2026-10-07T06:52:13Z,basketball,Australia NBL,Adelaide 36Ers,Melbourne United,,,客胜,1x2,1.61,0,1.575,2.22,0,3,1791361800,ALL,,,validate,,,5074450
+2026-10-07T07:02:14Z,football,Finland Veikkausliiga-Playoff,IF Gnistan,FC Inter Turku,,,客胜,1x2,2.01,0,1.9199,4.69,0,4,1791388800,ALL,,,validate,,,5548695
+2026-10-07T07:02:14Z,basketball,Japan B.League Premier,Ibaraki Robots,Hiroshima Dragonflies,,,让分主胜,hc,1.95,0,1.8614,4.76,0,2,1791367500,BB,,,validate,,+5.5,5298094
+2026-10-07T07:07:15Z,football,Finland Veikkausliiga-Playoff,IF Gnistan,FC Inter Turku,,,让球客胜,hc,2.01,0,1.9117,5.14,0,4,1791388800,ALL,,,validate,,-0.5,5548695
+2026-10-07T07:14:16Z,football,Morocco Botola Pro,Maghreb AS de Fes,Raja Casablanca Athletic,,,双重机会-主/和局,dc,1.34,0,1.31,2.29,0,2,1791489600,ALL,,,validate,,,5711288
+2026-10-07T07:22:17Z,football,Finland Veikkausliiga-Playoff,IF Gnistan,FC Inter Turku,,,双重机会-和局/客,dc,1.31,0,1.2693,3.21,0,4,1791388800,ALL,,,validate,,,5548695
+2026-10-07T07:25:17Z,basketball,Japan B.League Premier,Ibaraki Robots,Hiroshima Dragonflies,,,大分,ou,1.95,0,1.8614,4.76,0,2,1791367500,BB,,,validate,,164.5,5298094
+2026-10-07T07:35:19Z,baseball,Korea Republic KBO League,Kiwoom Heroes,Hanwha Eagles,,,大分,ou,1.78,0,1.7426,2.15,0,1,1791365400,BB,,,validate,,8.5,5563564
+2026-10-07T07:43:20Z,football,Japan Emperor Cup,Cerezo Osaka,Kagoshima United,,,主胜,1x2,1.46,0,1.4099,3.55,0,3,1791365400,ALL,,,validate,,,5513063
+2026-10-07T07:44:20Z,baseball,Korea Republic KBO League,LG Twins,Doosan Bears,,,小分,ou,1.89,0,1.8002,4.99,0,1,1791365400,BB,,,validate,,8.5,5563565
+2026-10-07T07:58:22Z,football,Morocco Botola Pro,Maghreb AS de Fes,Raja Casablanca Athletic,,,双重机会-和局/客,dc,1.44,0,1.36,5.88,0,2,1791489600,ALL,,,validate,,,5711288
+2026-10-07T08:06:23Z,baseball,Korea Republic KBO League,SSG Landers,NC Dinos,,,让分主胜,hc,2.33,0,2.1933,6.23,0,1,1791365400,BB,,,validate,,-1.5,5563568
+2026-10-07T08:08:23Z,football,Guatemala Primera Division,Deportivo Gomerano,Quiche FC,,,大球,ou,1.97,0,1.9099,3.15,0,2,1791396000,ALL,,,validate,,2.5,5710906
+2026-10-07T08:11:24Z,football,Switzerland 1. Liga Classic,FC Freienbach,USV Eschen Mauren,,,主胜,1x2,1.97,0,1.8995,3.71,0,4,1791395100,ALL,,,validate,,,5271598
+2026-10-07T08:11:24Z,football,Switzerland 1. Liga Classic,FC Freienbach,USV Eschen Mauren,,,让球主胜,hc,1.97,0,1.9026,3.54,0,4,1791395100,ALL,,,validate,,-0.5,5271598
+2026-10-07T08:18:24Z,football,Guatemala Primera Division,Deportivo Coatepeque,FC Santa Lucia Cotzumalguapa,,,主胜,1x2,1.66,0,1.6142,2.84,0,2,1791399600,ALL,,,validate,,,5710899
+2026-10-07T08:24:25Z,football,Japan Emperor Cup,Sanfrecce Hiroshima,Iwaki FC,,,主胜,1x2,1.24,0,1.215,2.06,0,3,1791365400,ALL,,,validate,,,5513061
+2026-10-07T08:32:26Z,football,Uzbekistan Super League,FK Neftchi Fargona,Xorazm FK Urganch,,,大球,ou,1.97,0,1.9163,2.8,0,2,1791381600,ALL,,,validate,,3.5,5680334
+2026-10-07T08:33:26Z,football,Japan Emperor Cup,Kawasaki Frontale,Tegevajaro Miyazaki,,,双重机会-主/客,dc,1.22,0,1.18,3.39,0,3,1791367200,ALL,,,validate,,,5513058
+2026-10-07T08:39:27Z,football,Japan Emperor Cup,FC Tokyo,Shonan Bellmare,,,主胜,1x2,1.5,0,1.455,3.09,0,3,1791367200,ALL,,,validate,,,5513050
+2026-10-07T08:39:27Z,football,Japan Emperor Cup,FC Tokyo,Shonan Bellmare,,,让球主胜,hc,1.83,0,1.7322,5.65,0,3,1791367200,ALL,,,validate,,-1,5513050
+2026-10-07T08:43:27Z,football,Algeria Ligue 1,CS Constantine,US Biskra,,,双重机会-和局/客,dc,2.18,0,2.1364,2.04,0,2,1791392400,ALL,,,validate,,,5649769
+2026-10-07T08:50:29Z,football,Japan Emperor Cup,Shimizu S Pulse,V Varen Nagasaki,,,小球,ou,1.8,0,1.748,2.97,0,3,1791367200,ALL,,,validate,,2.5,5513055
+2026-10-07T08:59:30Z,basketball,Eurocup,Niners Chemnitz,BC Neptunas Klaipeda,,,让分客胜,hc,1.92,0,1.881,2.07,0,3,1791392400,ALL,,,validate,,+4.5,5251381
+2026-10-07T09:11:32Z,basketball,Japan B.League Premier,Sendai 89Ers,Altiri Chiba,,,大分,ou,1.89,0,1.7147,10.22,0,2,1791367500,BB,,,validate,,165.5,5298081
+2026-10-07T09:12:32Z,football,Guatemala Primera Division,Deportivo Iztapa,CSD Amatitlan,,,双重机会-和局/客,dc,3.19,0,3.05,4.59,0,2,1791406800,ALL,,,validate,,,5710896
+2026-10-07T09:18:33Z,football,Egypt League Cup,Al Ittihad Alexandria,Wadi Degla SC,,,双重机会-和局/客,dc,1.53,0,1.48,3.38,0,3,1791468000,BB,,,validate,,,5685674
+2026-10-07T09:18:33Z,football,Egypt League Cup,Al Ittihad Alexandria,Wadi Degla SC,,,双重机会-主/客,dc,1.3,0,1.23,5.69,0,3,1791468000,BB,,,validate,,,5685674
+2026-10-07T09:18:33Z,football,Guatemala Primera Division,AFF Guatemala,Nueva Santa Rosa CDF,,,双重机会-主/和局,dc,1.31,0,1.28,2.34,0,2,1791406800,ALL,,,validate,,,5710894
+2026-10-07T09:21:33Z,football,Chile Cup,Coquimbo Unido,CD Cobreloa Calama,,,让球主胜,hc,2.0,0,1.9051,4.98,0,3,1791410400,ALL,,,validate,,-1,5554261
+2026-10-07T09:27:34Z,football,Switzerland 1. Liga Classic,FC Kosova Zurich,FC Dietikon,,,客胜,1x2,2.94,0,2.6482,11.02,0,4,1791396000,ALL,,,validate,,,5271269
+2026-10-07T09:27:34Z,football,Switzerland 1. Liga Classic,FC Kosova Zurich,FC Dietikon,,,双重机会-和局/客,dc,1.68,0,1.57,7.01,0,4,1791396000,ALL,,,validate,,,5271269
+2026-10-07T09:30:35Z,basketball,Eurocup,BC Roma SPQR,BC Lietkabelis Panevezys,,,小分,ou,1.89,0,1.82,3.85,0,3,1791396000,ALL,,,validate,,171.5,5526035
+2026-10-07T09:41:36Z,basketball,Mexico LNBP Basketball League,Freseros de Irapuato,Dorados de Chihuahua,,,大分,ou,1.84,0,1.785,3.08,0,3,1791424800,ALL,,,validate,,173.5,5197462
+2026-10-07T09:42:36Z,football,Japan Emperor Cup,FC Tokyo,Shonan Bellmare,,,双重机会-和局/客,dc,2.65,0,2.571,3.07,0,3,1791367200,ALL,,,validate,,,5513050
+2026-10-07T09:49:37Z,football,Venezuela Cup,Urena SC,Trujillanos FC,,,大球,ou,1.92,0,1.8245,5.23,0,3,1791403200,ALL,,,validate,,2.5,5680933
+2026-10-07T09:53:38Z,football,Chile Cup,Coquimbo Unido,CD Cobreloa Calama,,,主胜,1x2,1.56,0,1.5249,2.3,0,3,1791410400,ALL,,,validate,,,5554261
+2026-10-07T09:57:38Z,football,Japan Emperor Cup,Kawasaki Frontale,Tegevajaro Miyazaki,,,让球主胜,hc,2.03,0,1.8505,9.7,0,3,1791367200,ALL,,,validate,,-1,5513058
+2026-10-07T09:59:39Z,basketball,Eurocup,Balkan Botevgrad,Bahcesehir Koleji,,,让分客胜,hc,1.9,0,1.8489,2.76,0,3,1791388800,ALL,,,validate,,-16.5,5280346
+2026-10-07T10:00:39Z,basketball,Japan B.League Premier,Shimane Susanoo Magic,Levanga Hokkaido,,,客胜,1x2,1.66,0,1.5597,6.43,0,2,1791367500,BB,,,validate,,,5298079
+2026-10-07T10:00:39Z,basketball,Japan B.League Premier,Shimane Susanoo Magic,Levanga Hokkaido,,,让分客胜,hc,1.89,0,1.7511,7.93,0,2,1791367500,BB,,,validate,,-2.5,5298079
+2026-10-07T10:04:39Z,football,Turkey Cup-Qualification,Pazarspor,Erbaaspor,,,客胜,1x2,2.08,0,1.6898,23.09,0,3,1791370800,ALL,,,validate,,,5680772
+2026-10-07T10:04:39Z,football,Turkey Cup-Qualification,Pazarspor,Erbaaspor,,,双重机会-和局/客,dc,1.33,0,1.25,6.4,0,3,1791370800,ALL,,,validate,,,5680772
+2026-10-07T10:43:44Z,football,Brazil Serie A,EC Vitoria BA,Chapecoense SC,,,主胜,1x2,1.65,0,1.615,2.17,0,2,1791414000,ALL,,,validate,,,5610635
+2026-10-07T11:13:49Z,football,Italy Serie A,SSC Napoli,Frosinone Calcio,,,和局,1x2,5.1,0,4.9495,3.04,0,1,1791657900,ALL,,,validate,,,5620675
+2026-10-07T11:18:50Z,football,Spain LaLiga,Rayo Vallecano,Athletic Bilbao,,,让球主胜,hc,2.06,0,2.0101,2.48,0,1,1791633600,ALL,,,validate,,0,5192307
+2026-10-07T11:21:50Z,football,Guatemala Primera Division,AFF Guatemala,Nueva Santa Rosa CDF,,,主胜,1x2,2.25,0,2.1663,3.86,0,2,1791406800,ALL,,,validate,,,5710894
+2026-10-07T11:30:51Z,football,Guatemala Liga Nacional,Antigua GFC,CSD Municipal,,,双重机会-主/和局,dc,1.32,0,1.25,5.6,0,3,1791507600,ALL,,,validate,,,5601954
+2026-10-07T11:30:51Z,football,Guatemala Liga Nacional,Antigua GFC,CSD Municipal,,,双重机会-主/客,dc,1.25,0,1.14,9.65,0,3,1791507600,ALL,,,validate,,,5601954
+2026-10-07T11:31:52Z,football,Guatemala Primera Division,Deportivo Gomerano,Quiche FC,,,双重机会-主/客,dc,1.17,0,1.13,3.54,0,2,1791396000,ALL,,,validate,,,5710906
+2026-10-07T11:33:52Z,football,Costa Rica Primera Division,Inter San Carlos,Perez Zeledon,,,双重机会-和局/客,dc,2.1,0,2.02,3.96,0,2,1791666000,ALL,,,validate,,,5690786
+2026-10-07T11:36:52Z,football,Egypt League Cup,Zamalek SC,Zed FC,,,双重机会-主/和局,dc,3.15,0,3.0535,3.16,0,3,1791392400,ALL,,,validate,,,5680883
+2026-10-07T11:39:53Z,football,Japan J.League 2,Yokohama FC,Oita Trinita,,,主胜,1x2,1.73,0,1.6895,2.4,0,3,1791608400,ALL,,,validate,,,5164199
+2026-10-07T11:47:54Z,football,Switzerland 1. Liga Classic,FC Freienbach,USV Eschen Mauren,,,大球,ou,1.92,0,1.7866,7.47,0,4,1791395100,ALL,,,validate,,3.0,5271598
+2026-10-07T11:56:55Z,football,Egypt Second Division A,Al Nasr Cairo,Proxy SC,,,双重机会-主/客,dc,1.31,0,1.27,3.15,0,3,1791462600,ALL,,,validate,,,5287813
+2026-10-07T11:59:56Z,football,Uzbekistan Super League,FK Neftchi Fargona,Xorazm FK Urganch,,,让球主胜,hc,1.98,0,1.9255,2.83,0,2,1791381600,ALL,,,validate,,-2,5680334
+2026-10-07T12:02:56Z,football,Brazil Serie A,Red Bull Bragantino SP,Mirassol FC SP,,,主胜,1x2,1.82,0,1.775,2.54,0,2,1791412200,ALL,,,validate,,,5610649
+2026-10-07T12:12:57Z,football,Brazil Serie A,Cruzeiro EC MG,Sao Paulo FC SP,,,主胜,1x2,1.94,0,1.8799,3.2,0,2,1791419400,ALL,,,validate,,,5610654
+2026-10-07T12:12:57Z,football,Brazil Serie A,Cruzeiro EC MG,Sao Paulo FC SP,,,让球主胜,hc,1.94,0,1.8806,3.16,0,2,1791419400,ALL,,,validate,,-0.5,5610654
+2026-10-07T12:26:59Z,football,Brazil Serie B,CR Brasil AL,AC Goianiense GO,,,双边进球-是,btts,1.87,0,1.8082,3.42,0,3,1791415800,ALL,,,validate,,,5682489
+2026-10-07T12:26:59Z,football,Brazil Serie B,CR Brasil AL,AC Goianiense GO,,,大球,ou,1.98,0,1.824,8.55,0,3,1791415800,ALL,,,validate,,2.5,5682489
+2026-10-07T12:29:00Z,football,Bolivia Copa Pacena,Guabira Montero,The Strongest,,,双重机会-主/和局,dc,1.11,0,1.01,9.9,0,3,1791419400,BB,,,validate,,,5680922
+2026-10-07T12:49:02Z,football,Chile Cup,CD Antofagasta,Universidad de Chile,,,客胜,1x2,1.86,0,1.7799,4.5,0,3,1791410400,ALL,,,validate,,,5677362
+2026-10-07T12:55:03Z,football,Chile Cup,CD Antofagasta,Universidad de Chile,,,让球客胜,hc,1.86,0,1.6789,10.79,0,3,1791410400,ALL,,,validate,,-0.5,5677362
+2026-10-07T12:55:03Z,football,Chile Cup,CD Antofagasta,Universidad de Chile,,,大球,ou,1.92,0,1.7921,7.14,0,3,1791410400,ALL,,,validate,,2.5,5677362
+2026-10-07T13:00:04Z,basketball,Basketball Champions League,Antwerp Giants,Falco KC Szombathely,,,让分客胜,hc,1.87,0,1.7755,5.32,0,2,1791396000,ALL,,,validate,,+4.5,5262803
+2026-10-07T13:00:04Z,football,Brazil Serie A,SC Internacional RS,SC Corinthians SP,,,和局,1x2,3.33,0,3.2248,3.26,0,2,1791412200,ALL,,,validate,,,5610634
+2026-10-07T13:05:05Z,football,Algeria Ligue 1,CS Constantine,US Biskra,,,小球,ou,1.88,0,1.7185,9.4,0,2,1791392400,ALL,,,validate,,2.0,5649769
+2026-10-07T13:06:05Z,football,Chile Cup,CD Antofagasta,Universidad de Chile,,,双重机会-和局/客,dc,1.21,0,1.1751,2.97,0,3,1791410400,ALL,,,validate,,,5677362
+2026-10-07T13:14:06Z,football,Brazil Serie B,Operario Ferroviario EC PR,Botafogo FC SP,,,双边进球-是,btts,2.11,0,2.0379,3.54,0,3,1791412200,ALL,,,validate,,,5682442
+2026-10-07T13:22:07Z,football,Mexico Liga De Expansion MX,Alebrijes de Oaxaca FC,CF Correcaminos UAT,,,主胜,1x2,3.15,0,3.0753,2.43,0,2,1791507600,ALL,,,validate,,,5300167
+2026-10-07T13:46:10Z,football,Egypt League Cup,Ceramica Cleopatra,Al Masry Club,,,和局,1x2,3.0,0,2.9395,2.06,0,3,1791392400,ALL,,,validate,,,5680884
+2026-10-07T14:14:14Z,football,Turkey 1. Lig,Sivasspor,Pendikspor,,,双重机会-主/和局,dc,1.39,0,1.36,2.21,0,2,1791554400,ALL,,,validate,,,5367104
+2026-10-07T14:14:14Z,football,Turkey 1. Lig,Sivasspor,Pendikspor,,,双重机会-和局/客,dc,1.52,0,1.45,4.83,0,2,1791554400,ALL,,,validate,,,5367104
+2026-10-07T14:40:17Z,football,Guatemala Primera Division,Deportivo Iztapa,CSD Amatitlan,,,大球,ou,1.87,0,1.6884,10.76,0,2,1791406800,ALL,,,validate,,2.5,5710896
+2026-10-07T14:41:18Z,football,Morocco Botola Pro,AS Far Rabat,Wydad Temara,,,双重机会-主/和局,dc,1.05,0,1.01,3.96,0,2,1791482400,ALL,,,validate,,,5711270
+2026-10-07T14:44:18Z,football,Venezuela Cup,Urena SC,Trujillanos FC,,,主胜,1x2,2.83,0,2.4651,14.8,0,3,1791403200,ALL,,,validate,,,5680933
+2026-10-07T14:44:18Z,football,Venezuela Cup,Urena SC,Trujillanos FC,,,双重机会-主/和局,dc,1.55,0,1.5,3.33,0,3,1791403200,ALL,,,validate,,,5680933
+2026-10-07T14:57:20Z,football,Chile Cup,CD Antofagasta,Universidad de Chile,,,双重机会-主/客,dc,1.27,0,1.24,2.42,0,3,1791410400,ALL,,,validate,,,5677362
+2026-10-07T15:00:20Z,football,Mexico Liga De Expansion MX,Alebrijes de Oaxaca FC,CF Correcaminos UAT,,,双重机会-和局/客,dc,1.37,0,1.34,2.24,0,2,1791507600,ALL,,,validate,,,5300167
+2026-10-07T15:06:21Z,football,Brazil Serie A,SC Internacional RS,SC Corinthians SP,,,双边进球-否,btts,1.83,0,1.7885,2.32,0,2,1791412200,ALL,,,validate,,,5610634
+2026-10-07T15:17:23Z,football,Uruguay Cup,CS Cerrito,Montevideo Wanderers,,,让球客胜,hc,1.84,0,1.8,2.22,0,3,1791397800,ALL,,,validate,,+0.5,5693433
+2026-10-07T15:28:24Z,football,Algeria Ligue 1,MC Oran,ES Setif,,,让球客胜,hc,1.97,0,1.8939,4.02,0,2,1791486000,ALL,,,validate,,+0.5,5649763
+2026-10-07T15:40:26Z,basketball,Australia NBL,Cairns Taipans,Brisbane Bullets,,,让分主胜,hc,1.94,0,1.881,3.14,0,3,1791448200,ALL,,,validate,,-1.5,5074453
+2026-10-07T15:41:26Z,football,Nicaragua Primera Division,UNAN Managua,Real Esteli FC,,,双重机会-主/和局,dc,2.4,0,2.1,14.29,0,2,1791417600,ALL,,,validate,,,5685642
+2026-10-07T15:50:28Z,football,Czech Republic FNL,SK Slavia Prague B,FC Vlasim,,,双重机会-和局/客,dc,1.64,0,1.48,10.81,0,3,1791558000,ALL,,,validate,,,5156445
+2026-10-07T15:50:28Z,football,Czech Republic FNL,SK Slavia Prague B,FC Vlasim,,,双重机会-主/客,dc,1.22,0,1.15,6.09,0,3,1791558000,ALL,,,validate,,,5156445
+2026-10-07T15:55:28Z,football,Egypt League Cup,Ceramica Cleopatra,Al Masry Club,,,小球,ou,2.0,0,1.6696,19.79,0,3,1791392400,ALL,,,validate,,2.0,5680884
+2026-10-07T16:03:30Z,basketball,Euroleague,Maccabi Tel Aviv,Olimpia Milano,,,主胜,1x2,1.75,0,1.6695,4.82,0,2,1791475200,ALL,,,validate,,,5355257
+2026-10-07T16:08:30Z,football,Egypt Second Division A,Al Nasr Cairo,Proxy SC,,,主胜,1x2,1.92,0,1.7091,12.34,0,3,1791462600,ALL,,,validate,,,5287813
+2026-10-07T16:08:30Z,football,Egypt Second Division A,Al Nasr Cairo,Proxy SC,,,让球主胜,hc,1.92,0,1.71,12.28,0,3,1791462600,ALL,,,validate,,-0.5,5287813
+2026-10-07T16:12:31Z,football,Ecuador LigaPro Primera B-Playoff,Vinotinto FC Ecuador,Club Deportivo Cuenca Juniors,,,让球主胜,hc,1.87,0,1.8118,3.21,0,3,1791405000,ALL,,,validate,,-1,5694526
+2026-10-07T16:18:31Z,football,Egypt Second Division A,Al Nasr Cairo,Proxy SC,,,双重机会-主/和局,dc,1.17,0,1.14,2.63,0,3,1791462600,ALL,,,validate,,,5287813
+2026-10-07T16:20:32Z,football,Egypt League Cup,Zamalek SC,Zed FC,,,双边进球-否,btts,1.74,0,1.6568,5.02,0,3,1791392400,ALL,,,validate,,,5680883
+2026-10-07T16:27:33Z,basketball,Turkey Basketball Super League,Tofas SK Bursa,Esenler Erokspor,,,客胜,1x2,2.09,0,2.0244,3.24,0,2,1791644400,ALL,,,validate,,,5674879
+2026-10-07T16:36:34Z,football,Croatia HNL League,HNK Gorica,NK Rudes Zagreb,,,双重机会-主/客,dc,1.22,0,1.15,6.09,0,3,1791561600,ALL,,,validate,,,5054430
+2026-10-07T16:37:34Z,football,Spain LaLiga,FC Barcelona,Getafe CF,,,让球客胜,hc,1.85,0,1.8118,2.11,0,1,1791649800,ALL,,,validate,,+3,5192306
+2026-10-07T16:37:34Z,football,Chile Cup,CD Antofagasta,Universidad de Chile,,,双边进球-否,btts,1.92,0,1.7302,10.97,0,3,1791410400,ALL,,,validate,,,5677362
+2026-10-07T16:39:35Z,football,Czech Republic FNL,FC Vysocina Jihlava,1.SK Prostejov,,,双重机会-和局/客,dc,2.07,0,2.02,2.48,0,3,1791561600,ALL,,,validate,,,5156415
+2026-10-07T16:39:35Z,football,Czech Republic FNL,FC Vysocina Jihlava,1.SK Prostejov,,,双重机会-主/客,dc,1.23,0,1.09,12.84,0,3,1791561600,ALL,,,validate,,,5156415
+2026-10-07T16:42:35Z,football,Czech Republic FNL,FK Usti nad Labem,SFC Opava,,,双重机会-和局/客,dc,1.84,0,1.73,6.36,0,3,1791561600,ALL,,,validate,,,5156473
+2026-10-07T16:42:35Z,football,Czech Republic FNL,FK Usti nad Labem,SFC Opava,,,双重机会-主/客,dc,1.23,0,1.2,2.5,0,3,1791561600,ALL,,,validate,,,5156473
+2026-10-07T16:46:36Z,football,Poland II Liga,MKS Chojniczanka Chojnice,Podhale Nowy Targ,,,双重机会-主/和局,dc,1.43,0,1.34,6.72,0,3,1791561600,ALL,,,validate,,,5163864
+2026-10-07T16:46:36Z,football,Poland II Liga,MKS Chojniczanka Chojnice,Podhale Nowy Targ,,,双重机会-主/客,dc,1.24,0,1.15,7.83,0,3,1791561600,ALL,,,validate,,,5163864
+2026-10-07T16:46:36Z,basketball,Euroleague,Paris Basketball,ASVEL Lyon Villeurbanne,,,让分客胜,hc,1.91,0,1.8697,2.16,0,2,1791398700,ALL,,,validate,,+5.5,5355383
+2026-10-07T16:48:36Z,football,Finland Ykkosliiga,JAPS,JIPPO,,,双重机会-主/客,dc,1.28,0,1.16,10.34,0,3,1791561600,ALL,,,validate,,,5693571
+2026-10-07T16:50:36Z,football,Cyprus 1st Division,Karmiotissa FC,AC Omonia Nicosia,,,双重机会-主/和局,dc,5.55,0,4.4,26.14,0,2,1791561600,ALL,,,validate,,,5645901
+2026-10-07T16:50:36Z,football,Cyprus 1st Division,Karmiotissa FC,AC Omonia Nicosia,,,双重机会-主/客,dc,1.06,0,1.03,2.91,0,2,1791561600,ALL,,,validate,,,5645901
+2026-10-07T16:52:36Z,football,Czech Republic FNL,FC Silon Taborsko,MFK Karvina,,,双重机会-和局/客,dc,1.32,0,1.28,3.13,0,3,1791561600,ALL,,,validate,,,5224410
+2026-10-07T16:52:36Z,football,Czech Republic FNL,FC Silon Taborsko,MFK Karvina,,,双重机会-主/客,dc,1.28,0,1.18,8.47,0,3,1791561600,ALL,,,validate,,,5224410
+2026-10-07T16:56:37Z,basketball,Eurocup,Niners Chemnitz,BC Neptunas Klaipeda,,,客胜,1x2,2.6,0,2.5198,3.18,0,3,1791392400,ALL,,,validate,,,5251381
+2026-10-07T16:57:37Z,football,Bolivia Copa Pacena,Guabira Montero,The Strongest,,,大球,ou,1.85,0,1.7533,5.52,0,3,1791419400,BB,,,validate,,3.0,5680922
+2026-10-07T17:07:39Z,basketball,Euroleague,Maccabi Tel Aviv,Olimpia Milano,,,让分主胜,hc,1.87,0,1.772,5.53,0,2,1791475200,ALL,,,validate,,-1.5,5355257
+2026-10-07T17:19:40Z,football,Egypt League Cup,Ghazl El Mahallah,Abo Qair Semads,,,双重机会-和局/客,dc,1.85,0,1.61,14.91,0,3,1791478800,BB,,,validate,,,5685699
+2026-10-07T17:26:41Z,football,Romania Liga 1,ACS Sepsi OSK Sfantu Gheorghe,FC Dinamo Bucuresti 1948,,,客胜,1x2,1.89,0,1.8449,2.44,0,2,1791568800,ALL,,,validate,,,5629131
+2026-10-07T17:51:45Z,football,Qatar Stars League,Al Sadd SC,Al Arabi Doha SC,,,双重机会-和局/客,dc,2.68,0,2.36,13.56,0,3,1791565200,ALL,,,validate,,,5693746
+2026-10-07T17:55:46Z,football,Venezuela Cup,Deportivo Miranda,Atletico Avila FC,,,双边进球-是,btts,1.97,0,1.8511,6.42,0,3,1791399600,ALL,,,validate,,,5680923
+2026-10-07T17:56:46Z,football,Peru Segunda Division-Playoff,CD Estudiantil CNI,CD Universidad Cesar Vallejo,,,主胜,1x2,2.37,0,2.3172,2.28,0,3,1791404100,BB,,,validate,,,5680934
+2026-10-07T17:56:46Z,football,Uruguay Cup,CS Cerrito,Montevideo Wanderers,,,客胜,1x2,3.62,0,3.4993,3.45,0,3,1791397800,ALL,,,validate,,,5693433
+2026-10-07T18:04:46Z,football,Venezuela Cup,Caracas FC,Yaracuyanos FC,,,主胜,1x2,1.38,0,1.3397,3.01,0,3,1791410400,ALL,,,validate,,,5680927
+2026-10-07T18:11:47Z,football,Guatemala Primera Division,CSD Chiquimulilla,Champs Academy Guatemala,,,双重机会-主/客,dc,1.12,0,1.02,9.8,0,2,1791421200,BB,,,validate,,,5710900
+2026-10-07T18:16:48Z,football,Italy Serie B,Virtus Entella,Juve Stabia,,,和局,1x2,3.51,0,3.2932,6.58,0,3,1791637200,ALL,,,validate,,,5643903
+2026-10-07T18:18:48Z,football,Qatar Stars League,Al Wakrah,Al Gharafa SC,,,让球主胜,hc,1.81,0,1.7498,3.44,0,3,1791478800,ALL,,,validate,,0,5698602
+2026-10-07T18:23:49Z,football,Netherlands Eerste Divisie,Jong Ajax Amsterdam,VVV Venlo,,,双重机会-和局/客,dc,1.42,0,1.36,4.41,0,3,1791568800,ALL,,,validate,,,5084744
+2026-10-07T18:24:49Z,football,Peru Segunda Division-Playoff,CD Estudiantil CNI,CD Universidad Cesar Vallejo,,,大球,ou,1.75,0,1.4907,17.39,0,3,1791404100,BB,,,validate,,2.0,5680934
+2026-10-07T18:28:49Z,football,Brazil Serie A,SC Internacional RS,SC Corinthians SP,,,双重机会-和局/客,dc,1.66,0,1.6237,2.24,0,2,1791412200,ALL,,,validate,,,5610634
+2026-10-07T18:33:50Z,football,Czech Republic FNL,SK Slavia Prague B,FC Vlasim,,,双重机会-主/和局,dc,1.36,0,1.33,2.26,0,3,1791558000,ALL,,,validate,,,5156445
+2026-10-07T18:34:50Z,football,Peru Segunda Division-Playoff,CD Estudiantil CNI,CD Universidad Cesar Vallejo,,,让球主胜,hc,1.74,0,1.6888,3.03,0,3,1791404100,BB,,,validate,,0,5680934
+2026-10-07T18:35:50Z,football,Sweden Ettan Norra,Sollentuna FK,IFK Stocksund,,,双重机会-主/和局,dc,1.21,0,1.06,14.15,0,2,1791565200,ALL,,,validate,,,4832933
+2026-10-07T18:35:50Z,football,Sweden Ettan Norra,Sollentuna FK,IFK Stocksund,,,双重机会-主/客,dc,1.18,0,1.06,11.32,0,2,1791565200,ALL,,,validate,,,4832933
+2026-10-07T18:39:51Z,football,Switzerland Challenge League,Etoile Carouge FC,Yverdon Sport FC,,,双重机会-主/和局,dc,1.65,0,1.6,3.12,0,3,1791569700,ALL,,,validate,,,5609058
+2026-10-07T18:43:51Z,football,Switzerland Challenge League,FC Stade Nyonnais,FC Aarau,,,双重机会-主/客,dc,1.18,0,1.15,2.61,0,3,1791569700,ALL,,,validate,,,5609054
+2026-10-07T18:49:53Z,football,Egypt League Cup,Ghazl El Mahallah,Abo Qair Semads,,,客胜,1x2,3.82,0,3.297,15.86,0,3,1791478800,BB,,,validate,,,5685699
+2026-10-07T19:15:56Z,football,Venezuela Cup,Mineros de Guayana,Monagas SC,,,双边进球-是,btts,1.86,0,1.8105,2.73,0,3,1791401400,ALL,,,validate,,,5680929
+2026-10-07T19:20:57Z,football,Netherlands Eerste Divisie,Heracles Almelo,RKC Waalwijk,,,双重机会-主/客,dc,1.17,0,1.14,2.63,0,3,1791568800,ALL,,,validate,,,5084739
+2026-10-07T19:26:58Z,football,Ireland First Division,Cobh Ramblers,Kerry FC,,,双重机会-和局/客,dc,1.61,0,1.54,4.55,0,2,1791571500,ALL,,,validate,,,5689522
+2026-10-07T19:26:58Z,football,Ireland First Division,Cobh Ramblers,Kerry FC,,,双重机会-主/客,dc,1.27,0,1.21,4.96,0,2,1791571500,ALL,,,validate,,,5689522
+2026-10-07T19:34:59Z,football,Poland I Liga,Podbeskidzie Bielsko Biała,Pogon Siedlce,,,双重机会-和局/客,dc,1.91,0,1.87,2.14,0,2,1791570600,ALL,,,validate,,,5642775
+2026-10-07T19:34:59Z,football,Poland I Liga,Podbeskidzie Bielsko Biała,Pogon Siedlce,,,双重机会-主/客,dc,1.27,0,1.17,8.55,0,2,1791570600,ALL,,,validate,,,5642775
+2026-10-07T19:38:00Z,football,Ireland First Division,Cork City FC,Finn Harps FC,,,双重机会-和局/客,dc,6.05,0,5.5,10.0,0,2,1791571500,ALL,,,validate,,,5689513
+2026-10-07T19:51:01Z,football,Peru Segunda Division-Playoff,CD Estudiantil CNI,CD Universidad Cesar Vallejo,,,双边进球-是,btts,2.0,0,1.7273,15.79,0,3,1791404100,BB,,,validate,,,5680934
+2026-10-07T19:52:01Z,football,Brazil Serie B,Operario Ferroviario EC PR,Botafogo FC SP,,,让球客胜,hc,2.02,0,1.9004,6.29,0,3,1791412200,ALL,,,validate,,+0.5,5682442
+2026-10-07T19:54:02Z,football,Italy Serie B,SS Arezzo,US Cremonese,,,和局,1x2,3.36,0,3.1732,5.89,0,3,1791653400,ALL,,,validate,,,5643904
+2026-10-07T19:56:02Z,football,Bolivia Copa Pacena,Guabira Montero,The Strongest,,,让球主胜,hc,1.82,0,1.6636,9.4,0,3,1791419400,BB,,,validate,,-1,5680922
+2026-10-07T20:25:05Z,football,England League Two,Rotherham United,Gillingham FC,,,客胜,1x2,4.16,0,4.0494,2.73,0,2,1791640800,ALL,,,validate,,,5698192
+2026-10-07T20:25:05Z,football,Ecuador LigaPro Primera B-Playoff,Vinotinto FC Ecuador,Club Deportivo Cuenca Juniors,,,主胜,1x2,1.43,0,1.385,3.25,0,3,1791405000,ALL,,,validate,,,5694526
+2026-10-07T20:47:09Z,football,Morocco Botola Pro,Moghreb Athletic de Tetouan,FUS Rabat,,,双重机会-和局/客,dc,1.33,0,1.29,3.1,0,2,1791576000,ALL,,,validate,,,5711290
+2026-10-07T20:58:10Z,football,Guatemala Primera Division,AFF Guatemala,Nueva Santa Rosa CDF,,,客胜,1x2,2.87,0,2.7594,4.01,0,2,1791406800,ALL,,,validate,,,5710894
+2026-10-07T20:59:10Z,football,Venezuela Cup,Barquisimeto SC,Aragua FC,,,双边进球-是,btts,1.82,0,1.7378,4.73,0,3,1791412200,ALL,,,validate,,,5680928
+2026-10-07T21:10:12Z,football,Turkey 1. Lig,Sivasspor,Pendikspor,,,双重机会-主/客,dc,1.3,0,1.22,6.56,0,2,1791554400,ALL,,,validate,,,5367104
+2026-10-07T21:12:12Z,football,Bolivia Copa Pacena,Guabira Montero,The Strongest,,,主胜,1x2,1.45,0,1.3299,9.03,0,3,1791419400,BB,,,validate,,,5680922
+2026-10-07T21:13:12Z,football,Ireland First Division,Cobh Ramblers,Kerry FC,,,双重机会-主/和局,dc,1.36,0,1.32,3.03,0,2,1791571500,ALL,,,validate,,,5689522
+2026-10-07T21:20:13Z,basketball,Australia NBL,Cairns Taipans,Brisbane Bullets,,,大分,ou,1.89,0,1.8125,4.28,0,3,1791448200,ALL,,,validate,,184.5,5074453
+2026-10-07T21:23:14Z,football,Brazil Serie B,Operario Ferroviario EC PR,Botafogo FC SP,,,双重机会-和局/客,dc,1.92,0,1.8746,2.42,0,3,1791412200,ALL,,,validate,,,5682442
+2026-10-07T21:42:16Z,football,Colombia Primera B,Boca Juniors de Cali,Union Magdalena,,,双重机会-主/和局,dc,1.66,0,1.5925,4.24,0,3,1791410400,ALL,,,validate,,,5708191
+2026-10-07T22:00:18Z,basketball,Mexico LNBP Basketball League,Freseros de Irapuato,Dorados de Chihuahua,,,客胜,1x2,1.68,0,1.5042,11.69,0,3,1791424800,ALL,,,validate,,,5197462
+2026-10-07T22:51:25Z,basketball,Mexico LNBP Basketball League,Correcaminos UAT Victoria,Abejas de Leon,,,客胜,1x2,1.35,0,1.3193,2.33,0,3,1791422100,ALL,,,validate,,,5197446
+2026-10-07T23:07:27Z,football,Uzbekistan Pro League,FC Kattaqorgon,PFK Metallurg Bekabad,,,双重机会-和局/客,dc,1.39,0,1.35,2.96,0,2,1791457200,BB,,,validate,,,5711179
+2026-10-07T23:32:30Z,basketball,Mexico LNBP Basketball League,Soles de Mexicali,Fuerza Regia,,,让分客胜,hc,1.86,0,1.6575,12.22,0,3,1791424800,BB,,,validate,,+6.5,5197467
+2026-10-08T00:03:34Z,football,Switzerland Challenge League,FC Stade Nyonnais,FC Aarau,,,双重机会-和局/客,dc,1.12,0,1.07,4.67,0,3,1791569700,ALL,,,validate,,,5609054
+2026-10-08T00:08:34Z,football,Uruguay Primera Division,Deportivo Maldonado,Liverpool Montevideo,,,双重机会-主/和局,dc,1.38,0,1.35,2.22,0,3,1791586800,ALL,,,validate,,,5694793
+2026-10-08T00:08:34Z,football,Uruguay Primera Division,Deportivo Maldonado,Liverpool Montevideo,,,双重机会-和局/客,dc,1.52,0,1.48,2.7,0,3,1791586800,ALL,,,validate,,,5694793
+2026-10-08T00:09:35Z,football,Bhutan Premier League,Thimphu City FC,Paro FC,,,双重机会-和局/客,dc,1.31,0,1.26,3.97,0,2,1791460800,ALL,,,validate,,,5685136
+2026-10-08T00:09:35Z,football,Switzerland Challenge League,FC Stade Nyonnais,FC Aarau,,,双重机会-主/和局,dc,2.71,0,2.62,3.44,0,3,1791569700,ALL,,,validate,,,5609054
+2026-10-08T00:12:35Z,football,Chile Primera Division,Universidad de Chile,Nublense,,,双重机会-和局/客,dc,2.58,0,2.4,7.5,0,2,1791838800,ALL,,,validate,,,5641884
+2026-10-08T00:18:36Z,football,Lebanon Premier League,Shabab AL Sahel,AL Tadamon Sour,,,双重机会-主/和局,dc,1.21,0,1.15,5.22,0,2,1791460800,ALL,,,validate,,,5685654
+2026-10-08T00:30:37Z,football,Uruguay Primera Division,Deportivo Maldonado,Liverpool Montevideo,,,双重机会-主/客,dc,1.31,0,1.28,2.34,0,3,1791586800,ALL,,,validate,,,5694793
+2026-10-08T00:30:37Z,football,Montenegro 1. CFL,FK Arsenal Tivat,FK Decic Tuzi,,,客胜,1x2,1.89,0,1.8343,3.04,0,2,1791460800,ALL,,,validate,,,5137266
+2026-10-08T00:30:37Z,football,Montenegro 1. CFL,FK Arsenal Tivat,FK Decic Tuzi,,,让球客胜,hc,1.89,0,1.8362,2.93,0,2,1791460800,ALL,,,validate,,-0.5,5137266
+2026-10-08T01:12:43Z,football,Mexico Liga De Expansion MX,Alebrijes de Oaxaca FC,CF Correcaminos UAT,,,客胜,1x2,2.12,0,2.0783,2.01,0,2,1791507600,ALL,,,validate,,,5300167
+2026-10-08T01:19:44Z,football,Brazil Serie A,SE Palmeiras SP,EC Bahia BA,,,让球客胜,hc,1.96,0,1.9141,2.4,0,2,1791505800,ALL,,,validate,,+1,5610721
+2026-10-08T02:05:50Z,football,Algeria Ligue 2,RC Kouba,USM EL Harrach,,,双重机会-和局/客,dc,1.51,0,1.48,2.03,0,3,1791468000,BB,,,validate,,,5713468
+2026-10-08T02:12:50Z,football,Brazil Serie A,SE Palmeiras SP,EC Bahia BA,,,双重机会-和局/客,dc,2.54,0,2.4858,2.18,0,2,1791505800,ALL,,,validate,,,5610721
+2026-10-08T03:32:03Z,football,Morocco Botola Pro,AS Far Rabat,Wydad Temara,,,和局,1x2,4.35,0,4.2447,2.48,0,2,1791482400,ALL,,,validate,,,5711270
+2026-10-08T04:03:05Z,football,Egypt League Cup,Ghazl El Mahallah,Abo Qair Semads,,,让球客胜,hc,1.92,0,1.6329,17.58,0,3,1791478800,BB,,,validate,,+0.5,5685699
+2026-10-08T04:06:05Z,football,Morocco Botola Pro,Maghreb AS de Fes,Raja Casablanca Athletic,,,和局,1x2,2.79,0,2.6963,3.48,0,2,1791489600,ALL,,,validate,,,5711288
+2026-10-08T04:06:05Z,football,Israel Liga Alef,Hapoel Marmorek FC,Maccabi Ironi Ashdod FC,,,双重机会-主/和局,dc,1.47,0,1.42,3.52,0,3,1791475200,BB,,,validate,,,5409901
+2026-10-08T04:11:06Z,football,Israel Liga Alef,Hapoel Marmorek FC,Maccabi Ironi Ashdod FC,,,主胜,1x2,2.66,0,2.3849,11.54,0,3,1791475200,BB,,,validate,,,5409901
+2026-10-08T04:22:07Z,football,Israel Liga Alef,Hapoel Marmorek FC,Maccabi Ironi Ashdod FC,,,让球主胜,hc,2.01,0,1.7185,16.96,0,3,1791475200,BB,,,validate,,0,5409901
+2026-10-08T04:35:09Z,football,England Championship League,West Ham United,Queens Park Rangers,,,让球主胜,hc,1.9,0,1.8612,2.08,0,2,1791572400,ALL,,,validate,,-1,5635341
+2026-10-08T04:41:10Z,football,Portugal Primeira Liga,Maritimo Madeira,FC Porto,,,让球主胜,hc,1.9,0,1.855,2.43,0,1,1791651600,ALL,,,validate,,+1.5,5647837
+2026-10-08T04:47:11Z,football,Portugal Primeira Liga,SC Braga,Sporting CP,,,大球,ou,2.02,0,1.9778,2.13,0,1,1791573300,ALL,,,validate,,2.5,5647829
+2026-10-08T05:05:14Z,football,Denmark Superliga,FC Nordsjaelland,Odense Boldklub,,,让球主胜,hc,1.83,0,1.7903,2.22,0,2,1791565200,ALL,,,validate,,-1,5054896
+2026-10-08T05:11:14Z,football,Brazil Serie A,CA Paranaense PR,Atletico Mineiro MG,,,和局,1x2,3.51,0,3.4248,2.49,0,2,1791500400,ALL,,,validate,,,5610724
+2026-10-08T05:15:15Z,football,Kuwait Division 1,Sporty FC,Khaitan SC,,,双重机会-主/和局,dc,4.23,0,3.85,9.87,0,2,1791471000,ALL,,,validate,,,5712990
+2026-10-08T05:17:15Z,basketball,Japan B.League Premier,Alvark Tokyo,Saga Ballooners,,,让分客胜,hc,1.87,0,1.7199,8.73,0,3,1791453900,BB,,,validate,,+10.5,5298093
+2026-10-08T05:18:15Z,football,Poland II Liga,MKS Chojniczanka Chojnice,Podhale Nowy Targ,,,双重机会-和局/客,dc,1.53,0,1.47,4.08,0,3,1791561600,ALL,,,validate,,,5163864
+2026-10-08T05:25:16Z,basketball,Japan B.League Premier,Kobe Storks,Chiba Jets Funabashi,,,让分客胜,hc,1.88,0,1.8285,2.82,0,3,1791453900,BB,,,validate,,-5.5,5298083
+2026-10-08T05:33:17Z,football,Japan J.League,Avispa Fukuoka,Fagiano Okayama,,,和局,1x2,3.26,0,3.193,2.1,0,2,1791612000,ALL,,,validate,,,5153554
+2026-10-08T05:47:19Z,football,Netherlands Eerste Divisie,Almere City FC,FC Eindhoven,,,双重机会-和局/客,dc,3.1,0,3.0,3.33,0,3,1791568800,ALL,,,validate,,,5084723
+2026-10-08T05:47:19Z,football,Sweden Division 2,Vanersborgs FK,IFK Kumla,,,双重机会-主/和局,dc,1.4,0,1.34,4.48,0,3,1791480600,ALL,,,validate,,,5685703
+2026-10-08T05:53:20Z,football,Peru Liga 1,Deportivo Garcilaso,Sport Huancayo,,,双重机会-和局/客,dc,1.76,0,1.7,3.53,0,2,1791594000,ALL,,,validate,,,5673065
+2026-10-08T05:53:20Z,football,Peru Liga 1,Deportivo Garcilaso,Sport Huancayo,,,双重机会-主/客,dc,1.28,0,1.25,2.4,0,2,1791594000,ALL,,,validate,,,5673065
+2026-10-08T06:00:21Z,football,South Korea K-League 2,Jeonnam Dragons,Yongin,,,双重机会-主/和局,dc,1.48,0,1.44,2.78,0,2,1791608400,BB,,,validate,,,5694284
+2026-10-08T06:01:21Z,football,Netherlands Eerste Divisie,Jong Ajax Amsterdam,VVV Venlo,,,双重机会-主/和局,dc,1.68,0,1.63,3.07,0,3,1791568800,ALL,,,validate,,,5084744
+2026-10-08T06:02:21Z,football,Finland Veikkausliiga-Playoff,Kuopion Palloseura,AC Oulu,,,让球客胜,hc,1.96,0,1.9117,2.53,0,4,1791475200,ALL,,,validate,,+1,5548698
+2026-10-08T06:15:23Z,football,Israel Leumit League,Ironi Modiin,Hapoel Afula FC,,,双重机会-和局/客,dc,1.39,0,1.35,2.96,0,2,1791550800,ALL,,,validate,,,5689535
+2026-10-08T06:15:23Z,football,Israel Leumit League,Ironi Modiin,Hapoel Afula FC,,,双重机会-主/客,dc,1.28,0,1.21,5.79,0,2,1791550800,ALL,,,validate,,,5689535
+2026-10-08T06:15:23Z,basketball,Japan B.League Premier,Kobe Storks,Chiba Jets Funabashi,,,客胜,1x2,1.42,0,1.3645,4.07,0,3,1791453900,BB,,,validate,,,5298083
+2026-10-08T06:15:23Z,basketball,Japan B.League Premier,Kobe Storks,Chiba Jets Funabashi,,,大分,ou,1.82,0,1.7699,2.83,0,3,1791453900,BB,,,validate,,168.5,5298083
+2026-10-08T06:23:24Z,basketball,Euroleague,Valencia Basket,Hapoel Tel Aviv,,,大分,ou,1.84,0,1.8025,2.08,0,2,1791484200,ALL,,,validate,,179.5,5355497
+2026-10-08T06:24:24Z,football,Japan J.League 2,Tokushima Vortis,FC Imabari,,,双重机会-主/和局,dc,1.3,0,1.26,3.17,0,3,1791608400,ALL,,,validate,,,5164187
+2026-10-08T06:24:24Z,football,Japan J.League 2,Tokushima Vortis,FC Imabari,,,双重机会-和局/客,dc,1.74,0,1.67,4.19,0,3,1791608400,ALL,,,validate,,,5164187
+2026-10-08T06:28:25Z,basketball,Japan B.League Premier,Ryukyu Golden Kings Okinawa,Gunma Crane Thunders,,,客胜,1x2,1.81,0,1.7743,2.01,0,3,1791455700,BB,,,validate,,,5298087
+2026-10-08T06:38:26Z,football,Mexico Liga De Expansion MX,Alebrijes de Oaxaca FC,CF Correcaminos UAT,,,让球客胜,hc,2.01,0,1.9234,4.5,0,2,1791507600,ALL,,,validate,,-0.5,5300167
+2026-10-08T06:40:26Z,basketball,Japan B.League Premier,Akita Northern Happinets,Kawasaki Brave Thunders,,,让分客胜,hc,1.88,0,1.82,3.3,0,3,1791455400,BB,,,validate,,-4.5,5298091
+2026-10-08T06:44:27Z,basketball,Japan B.League Premier,Alvark Tokyo,Saga Ballooners,,,客胜,1x2,4.53,0,4.1976,7.92,0,3,1791453900,BB,,,validate,,,5298093
+2026-10-08T06:54:28Z,basketball,Japan B.League Premier,Ryukyu Golden Kings Okinawa,Gunma Crane Thunders,,,让分客胜,hc,1.94,0,1.8082,7.29,0,3,1791455700,BB,,,validate,,-1.5,5298087
+2026-10-08T07:13:31Z,football,Egypt League Cup,Al Ittihad Alexandria,Wadi Degla SC,,,让球主胜,hc,1.81,0,1.7697,2.28,0,3,1791468000,ALL,,,validate,,0,5685674
+2026-10-08T07:13:31Z,football,India Shillong Premier League,Sawmer SC,Mylliem SC,,,双重机会-主/和局,dc,1.54,0,1.5,2.67,0,2,1791451800,ALL,,,validate,,,5718307
+2026-10-08T07:16:31Z,football,Sweden Superettan,Norrby IF,Osters IF,,,主胜,1x2,2.16,0,2.0992,2.9,0,2,1791644400,ALL,,,validate,,,5648451
+2026-10-08T07:21:32Z,football,Spain Primera Division RFEF,UD Ourense,Barakaldo CF,,,双重机会-和局/客,dc,1.35,0,1.2,12.5,0,1,1791650700,ALL,,,validate,,,5711770
+2026-10-08T07:27:33Z,football,Spain Primera Division RFEF,UD Ourense,Barakaldo CF,,,双重机会-主/客,dc,1.28,0,1.05,21.9,0,1,1791650700,ALL,,,validate,,,5711770
+2026-10-08T07:48:36Z,basketball,Japan B.League Premier,Akita Northern Happinets,Kawasaki Brave Thunders,,,大分,ou,1.89,0,1.783,6.0,0,3,1791455400,BB,,,validate,,158.5,5298091
+2026-10-08T07:55:37Z,football,Algeria Ligue 1,MC Alger,CR Temouchent,,,双重机会-和局/客,dc,4.08,0,3.95,3.29,0,2,1791572400,ALL,,,validate,,,5649770
+2026-10-08T07:58:37Z,football,Guatemala Liga Nacional,Antigua GFC,CSD Municipal,,,双重机会-和局/客,dc,1.53,0,1.5,2.0,0,3,1791507600,ALL,,,validate,,,5601954
+2026-10-08T08:04:38Z,football,Peru Liga 1,Deportivo Garcilaso,Sport Huancayo,,,让球客胜,hc,1.81,0,1.5933,13.6,0,2,1791594000,ALL,,,validate,,+0.5,5673065
+2026-10-08T08:04:38Z,football,Peru Liga 1,Atletico Grau,Los Chankas CYC,,,大球,ou,1.9,0,1.8487,2.77,0,2,1791491400,ALL,,,validate,,2.5,5684931
+2026-10-08T08:11:39Z,football,Finland Veikkausliiga-Playoff,Kuopion Palloseura,AC Oulu,,,让球主胜,hc,1.97,0,1.9029,3.53,0,4,1791475200,ALL,,,validate,,-1,5548698
+2026-10-08T08:21:41Z,football,Finland Veikkausliiga-Playoff,Kuopion Palloseura,AC Oulu,,,主胜,1x2,1.56,0,1.515,2.97,0,4,1791475200,ALL,,,validate,,,5548698
+2026-10-08T08:24:41Z,football,South Korea K-League 2,Cheonan City FC,Gyeongnam FC,,,双重机会-主/和局,dc,1.4,0,1.37,2.19,0,2,1791617400,ALL,,,validate,,,5694352
+2026-10-08T08:24:41Z,basketball,Euroleague,Bayern Munich,Virtus Bologna,,,大分,ou,1.87,0,1.8081,3.42,0,2,1791482400,ALL,,,validate,,170.5,5355401
+2026-10-08T08:25:41Z,baseball,Japan Professional Baseball,Hanshin Tigers,Tokyo Yakult Swallows,,,主胜,1x2,1.51,0,1.4748,2.39,0,1,1791450000,BB,,,validate,,,5693158
+2026-10-08T08:28:41Z,football,Egypt League Cup,Al Mokawloon Al Arab,El Gouna FC,,,让球客胜,hc,2.01,0,1.7807,12.88,0,3,1791468000,ALL,,,validate,,+0.5,5685675
+2026-10-08T08:28:41Z,football,Chile Primera Division,Universidad de Chile,Nublense,,,双重机会-和局/客,dc,2.58,0,2.4,7.5,0,2,1791835200,ALL,,,validate,,,5641884
+2026-10-08T08:30:42Z,baseball,Japan Professional Baseball,Hanshin Tigers,Tokyo Yakult Swallows,,,让分主胜,hc,2.2,0,2.1187,3.84,0,1,1791450000,BB,,,validate,,-1.5,5693158
+2026-10-08T08:32:42Z,football,Romania Liga 1,FC CFR 1907 Cluj,FC Universitatea Cluj,,,大球,ou,1.84,0,1.8011,2.16,0,2,1791480600,ALL,,,validate,,2.5,5660908
+2026-10-08T08:38:43Z,basketball,Japan B.League Premier,Ryukyu Golden Kings Okinawa,Gunma Crane Thunders,,,大分,ou,1.85,0,1.7922,3.23,0,3,1791455700,BB,,,validate,,158.5,5298087
+2026-10-08T08:42:43Z,football,Egypt Second Division A,Haras El Hodood,El Sekka El Hadid,,,主胜,1x2,1.71,0,1.6646,2.73,0,3,1791462600,ALL,,,validate,,,5287817
+2026-10-08T08:44:43Z,football,Ukraine Premier League,Veres Rivne,FC Shakhtar Donetsk,,,双重机会-主/和局,dc,3.76,0,3.55,5.92,0,2,1791549000,ALL,,,validate,,,5652224
+2026-10-08T08:44:43Z,football,Ukraine Premier League,Veres Rivne,FC Shakhtar Donetsk,,,双重机会-主/客,dc,1.14,0,1.01,12.87,0,2,1791549000,ALL,,,validate,,,5652224
+2026-10-08T08:46:44Z,football,India Shillong Premier League,Sawmer SC,Mylliem SC,,,双重机会-和局/客,dc,1.45,0,1.35,7.41,0,2,1791451800,ALL,,,validate,,,5718307
+2026-10-08T08:49:44Z,football,Morocco Botola Pro,Moghreb Athletic de Tetouan,FUS Rabat,,,双重机会-主/客,dc,1.38,0,1.27,8.66,0,2,1791576000,ALL,,,validate,,,5711290
+2026-10-08T08:53:45Z,basketball,Argentina National Basketball League,Independiente de Oliva,Ferro Carril Oeste,,,大分,ou,1.85,0,1.7027,8.65,0,3,1791505800,ALL,,,validate,,158.5,5716229
+2026-10-08T09:16:48Z,football,Spain Primera Division RFEF,UD Ourense,Barakaldo CF,,,让球客胜,hc,1.71,0,1.4709,16.26,0,1,1791650700,ALL,,,validate,,0,5711770
+2026-10-08T09:21:48Z,football,Romania Liga 1,FC CFR 1907 Cluj,FC Universitatea Cluj,,,双边进球-是,btts,1.67,0,1.6362,2.07,0,2,1791480600,ALL,,,validate,,,5660908
+2026-10-08T09:42:51Z,football,Japan J.League,Kashima Antlers,Gamba Osaka,,,让球主胜,hc,1.87,0,1.8323,2.06,0,2,1791540000,ALL,,,validate,,-0.5,5153566
+2026-10-08T09:46:52Z,football,Sweden Division 2,Vanersborgs FK,IFK Kumla,,,双重机会-和局/客,dc,1.51,0,1.48,2.03,0,3,1791480600,ALL,,,validate,,,5685703
+2026-10-08T09:55:53Z,football,Finland Veikkausliiga-Playoff,Kuopion Palloseura,AC Oulu,,,小球,ou,2.04,0,1.9537,4.42,0,4,1791475200,ALL,,,validate,,2.5,5548698
+2026-10-08T09:57:53Z,football,Morocco Botola Pro,Moghreb Athletic de Tetouan,FUS Rabat,,,双重机会-主/和局,dc,1.55,0,1.5,3.33,0,2,1791576000,ALL,,,validate,,,5711290
+2026-10-08T10:07:54Z,football,Japan J.League,Avispa Fukuoka,Fagiano Okayama,,,双重机会-主/和局,dc,1.58,0,1.54,2.6,0,2,1791612000,ALL,,,validate,,,5153554
+2026-10-08T10:10:55Z,football,Netherlands Eerste Divisie,FC Volendam,Vitesse Arnhem,,,双重机会-主/客,dc,1.22,0,1.17,4.27,0,3,1791568800,ALL,,,validate,,,5084795
+2026-10-08T10:10:55Z,football,Ireland First Division,Athlone Town AFC,Treaty United,,,双重机会-和局/客,dc,2.88,0,2.78,3.6,0,2,1791571500,ALL,,,validate,,,5689512
+2026-10-08T10:10:55Z,football,Netherlands Eerste Divisie,TOP Oss,Helmond Sport,,,双重机会-主/和局,dc,1.36,0,1.29,5.43,0,3,1791568800,ALL,,,validate,,,5084771
+2026-10-08T10:10:55Z,football,Netherlands Eerste Divisie,TOP Oss,Helmond Sport,,,双重机会-和局/客,dc,1.7,0,1.59,6.92,0,3,1791568800,ALL,,,validate,,,5084771
+2026-10-08T10:10:55Z,football,Algeria Ligue 1,MC Alger,CR Temouchent,,,双重机会-主/客,dc,1.14,0,1.01,12.87,0,2,1791572400,ALL,,,validate,,,5649770
+2026-10-08T10:18:56Z,football,Egypt Second Division A,El Entag El Harby,La Viena FC,,,双重机会-主/客,dc,1.34,0,1.26,6.35,0,3,1791549000,ALL,,,validate,,,5285165
+2026-10-08T10:18:56Z,football,Egypt League Cup,Al Ittihad Alexandria,Wadi Degla SC,,,让球客胜,hc,2.07,0,1.9188,7.88,0,3,1791468000,ALL,,,validate,,0,5685674
+2026-10-08T10:19:56Z,football,Tanzania Premier League,Namungo FC,TRA United,,,双重机会-和局/客,dc,1.28,0,1.23,4.07,0,2,1791473400,ALL,,,validate,,,5685684
+2026-10-08T10:36:58Z,football,Israel Liga Alef,MS Tira,Ironi Nesher,,,双重机会-主/和局,dc,2.24,0,2.14,4.67,0,3,1791478800,ALL,,,validate,,,5409744
+2026-10-08T10:36:58Z,football,Israel Liga Alef,MS Tira,Ironi Nesher,,,双重机会-和局/客,dc,1.13,0,1.05,7.62,0,3,1791478800,ALL,,,validate,,,5409744
+2026-10-08T10:36:58Z,football,Israel Liga Alef,MS Tira,Ironi Nesher,,,双重机会-主/客,dc,1.21,0,1.14,6.14,0,3,1791478800,ALL,,,validate,,,5409744
+2026-10-08T10:49:00Z,football,Ukraine Premier League,Veres Rivne,FC Shakhtar Donetsk,,,客胜,1x2,1.31,0,1.2693,3.21,0,2,1791549000,ALL,,,validate,,,5652224
+2026-10-08T10:49:00Z,football,Ukraine Premier League,Veres Rivne,FC Shakhtar Donetsk,,,双边进球-否,btts,1.76,0,1.6229,8.45,0,2,1791549000,ALL,,,validate,,,5652224
+2026-10-08T11:16:04Z,football,Portugal Segunda Liga,CD Tondela,SCU Torreense,,,双重机会-主/客,dc,1.32,0,1.24,6.45,0,2,1791626400,ALL,,,validate,,,5697316
+2026-10-08T11:18:04Z,football,Netherlands Eerste Divisie,De Graafschap,Jong FC Utrecht,,,双重机会-主/客,dc,1.16,0,1.13,2.65,0,3,1791568800,ALL,,,validate,,,5084720
+2026-10-08T11:23:05Z,football,Mexico Liga De Expansion MX,CD Tapatio,Club Atletico La Paz,,,双重机会-主/和局,dc,1.53,0,1.5,2.0,0,2,1791586800,ALL,,,validate,,,5300168
+2026-10-08T11:23:05Z,football,Sweden Ettan Norra,Sollentuna FK,IFK Stocksund,,,客胜,1x2,4.28,0,4.1176,3.94,0,2,1791565200,ALL,,,validate,,,4832933
+2026-10-08T11:27:06Z,football,Japan J.League 2,Jubilo Iwata,Hokkaido Consadole Sapporo,,,双重机会-主/客,dc,1.25,0,1.2,4.17,0,3,1791622800,ALL,,,validate,,,5164253
+2026-10-08T11:27:06Z,football,Ireland Premier Division,Shamrock Rovers,Drogheda United FC,,,让球客胜,hc,1.84,0,1.7887,2.87,0,2,1791486000,ALL,,,validate,,+1.5,5644155
+2026-10-08T11:32:06Z,basketball,Euroleague,Maccabi Tel Aviv,Olimpia Milano,,,大分,ou,1.88,0,1.8364,2.37,0,2,1791475200,ALL,,,validate,,172.5,5355257
+2026-10-08T11:34:06Z,football,South Korea K-League 3,Daejeon Korail FC,Dangjin Citizen FC,,,双重机会-和局/客,dc,1.96,0,1.92,2.08,0,4,1791626400,ALL,,,validate,,,4494017
+2026-10-08T11:34:06Z,football,Sweden Ettan Sodra,Eskilsminne IF,BK Olympic,,,双重机会-主/客,dc,1.21,0,1.17,3.42,0,2,1791630000,ALL,,,validate,,,4833350
+2026-10-08T11:36:06Z,football,South Korea K-League 1,Gimcheon Sangmu FC,FC Anyang,,,双重机会-和局/客,dc,1.9,0,1.84,3.26,0,2,1791617400,ALL,,,validate,,,5695559
+2026-10-08T11:36:06Z,football,Ukraine Premier League,FC Chernomorets Odessa,FC Kharkiv,,,双重机会-和局/客,dc,1.08,0,1.01,6.93,0,2,1791626400,BB,,,validate,,,5652218
+2026-10-08T11:36:06Z,football,Ukraine Premier League,FC Chernomorets Odessa,FC Kharkiv,,,双重机会-主/客,dc,1.2,0,1.14,5.26,0,2,1791626400,BB,,,validate,,,5652218
+2026-10-08T11:38:06Z,football,Sweden Ettan Sodra,Trelleborgs FF,Kristianstad FC,,,双重机会-和局/客,dc,2.99,0,2.88,3.82,0,2,1791630000,ALL,,,validate,,,4833352
+2026-10-08T11:38:06Z,football,Sweden Ettan Sodra,Trelleborgs FF,Kristianstad FC,,,双重机会-主/客,dc,1.13,0,1.1,2.73,0,2,1791630000,ALL,,,validate,,,4833352
+2026-10-08T11:41:06Z,football,Ireland First Division,Athlone Town AFC,Treaty United,,,双重机会-主/和局,dc,1.07,0,1.01,5.94,0,2,1791571500,ALL,,,validate,,,5689512
+2026-10-08T11:46:07Z,football,Denmark 1st Division,Hillerod Fodbold,FC Fredericia,,,双重机会-和局/客,dc,1.13,0,1.08,4.63,0,2,1791630000,ALL,,,validate,,,5697357
+2026-10-08T11:46:07Z,football,Denmark 1st Division,Hillerod Fodbold,FC Fredericia,,,双重机会-主/客,dc,1.19,0,1.11,7.21,0,2,1791630000,ALL,,,validate,,,5697357
+2026-10-08T11:47:07Z,football,Qatar Stars League,Al Sadd SC,Al Arabi Doha SC,,,双重机会-主/客,dc,1.16,0,1.13,2.65,0,3,1791565200,ALL,,,validate,,,5693746
+2026-10-08T11:51:08Z,football,Bhutan Premier League,Thimphu City FC,Paro FC,,,双重机会-主/和局,dc,2.52,0,2.32,8.62,0,2,1791460800,ALL,,,validate,,,5685136
+2026-10-08T11:56:08Z,football,Bhutan Premier League,Thimphu City FC,Paro FC,,,主胜,1x2,4.65,0,4.4494,4.51,0,2,1791460800,ALL,,,validate,,,5685136
+2026-10-08T12:08:10Z,football,England National League,Altrincham FC,Aldershot Town FC,,,双重机会-主/和局,dc,1.28,0,1.25,2.4,0,3,1791631800,ALL,,,validate,,,5321278
+2026-10-08T12:08:10Z,football,England National League,Altrincham FC,Aldershot Town FC,,,双重机会-主/客,dc,1.23,0,1.19,3.36,0,3,1791631800,ALL,,,validate,,,5321278
+2026-10-08T12:09:10Z,football,Egypt Second Division A,Haras El Hodood,El Sekka El Hadid,,,双重机会-和局/客,dc,2.04,0,1.9919,2.41,0,3,1791462600,ALL,,,validate,,,5287817
+2026-10-08T12:12:10Z,football,South Korea K-League 3,Daejeon Korail FC,Dangjin Citizen FC,,,双重机会-主/客,dc,1.24,0,1.2,3.33,0,4,1791626400,ALL,,,validate,,,4494017
+2026-10-08T12:18:11Z,football,Morocco Botola Pro,Maghreb AS de Fes,Raja Casablanca Athletic,,,让球主胜,hc,1.88,0,1.7497,7.45,0,2,1791489600,ALL,,,validate,,0,5711288
+2026-10-08T12:19:11Z,football,Algeria Ligue 2,RC Kouba,USM EL Harrach,,,主胜,1x2,2.03,0,1.8743,8.31,0,3,1791468000,ALL,,,validate,,,5713468
+2026-10-08T12:19:11Z,football,Algeria Ligue 2,RC Kouba,USM EL Harrach,,,让球主胜,hc,2.03,0,1.8744,8.3,0,3,1791468000,ALL,,,validate,,-0.5,5713468
+2026-10-08T12:22:12Z,football,Romania Liga 1,FC CFR 1907 Cluj,FC Universitatea Cluj,,,双重机会-和局/客,dc,1.59,0,1.5573,2.1,0,2,1791480600,ALL,,,validate,,,5660908
+2026-10-08T12:24:12Z,football,Algeria Ligue 2,RC Kouba,USM EL Harrach,,,上半场主胜,ht,3.03,0,2.8149,7.64,0,3,1791468000,ALL,,,validate,,,5713468
+2026-10-08T12:25:12Z,football,England Premier League,Arsenal FC,Leeds United,,,上半场客胜,ht,9.45,0,8.5953,9.94,0,1,1791631800,ALL,,,validate,,,5130839
+2026-10-08T12:26:12Z,football,Morocco Botola Pro,Union Touarga,RS Berkane,,,上半场客胜,ht,3.21,0,3.0968,3.66,0,2,1791475200,ALL,,,validate,,,5711267
+2026-10-08T12:26:12Z,football,Morocco Botola Pro,Union Touarga,RS Berkane,,,上半场大球,ht_ou,1.76,0,1.5573,13.02,0,2,1791475200,ALL,,,validate,,0.75,5711267
+2026-10-08T12:26:12Z,football,Egypt League Cup,Modern Sport FC,National Bank of Egypt SC,,,上半场主胜,ht,4.63,0,4.4449,4.16,0,3,1791478800,ALL,,,validate,,,5685698
+2026-10-08T12:26:12Z,football,Egypt League Cup,Modern Sport FC,National Bank of Egypt SC,,,上半场大球,ht_ou,1.81,0,1.5935,13.59,0,3,1791478800,ALL,,,validate,,0.75,5685698
+2026-10-08T12:27:12Z,football,Algeria Ligue 1,MC Oran,ES Setif,,,上半场客胜,ht,5.85,0,5.4927,6.5,0,2,1791486000,ALL,,,validate,,,5649763
+2026-10-08T12:27:12Z,football,Algeria Ligue 1,MC Oran,ES Setif,,,上半场大球,ht_ou,1.93,0,1.6776,15.05,0,2,1791486000,ALL,,,validate,,0.75,5649763
+2026-10-08T12:27:12Z,football,Finland Veikkausliiga-Playoff,Kuopion Palloseura,AC Oulu,,,客胜,1x2,7.05,0,6.8986,2.19,0,4,1791475200,ALL,,,validate,,,5548698
+2026-10-08T12:27:12Z,football,Mexico Liga De Expansion MX,Alebrijes de Oaxaca FC,CF Correcaminos UAT,,,上半场小球,ht_ou,1.95,0,1.7534,11.21,0,2,1791507600,ALL,,,validate,,1.25,5300167
+2026-10-08T12:28:12Z,football,Germany 2. Bundesliga,VfL 1899 Osnabruck,Dynamo Dresden,,,上半场小球,ht_ou,1.93,0,1.7171,12.4,0,1,1791630000,ALL,,,validate,,1.25,5203047
+2026-10-08T12:28:12Z,football,Japan J.League,Kashiwa Reysol,Vissel Kobe,,,上半场客胜,ht,4.33,0,4.1446,4.47,0,2,1791540000,ALL,,,validate,,,5153523
+2026-10-08T12:28:12Z,football,Egypt League Cup,Al Mokawloon Al Arab,El Gouna FC,,,上半场客胜,ht,5.85,0,5.0455,15.94,0,3,1791468000,ALL,,,validate,,,5685675
+2026-10-08T12:28:12Z,football,Egypt League Cup,Al Mokawloon Al Arab,El Gouna FC,,,上半场大球,ht_ou,2.01,0,1.7149,17.21,0,3,1791468000,ALL,,,validate,,0.75,5685675
+2026-10-08T12:28:12Z,football,Germany Bundesliga,SC Freiburg,Schalke 04,,,和局,1x2,4.3,0,4.1976,2.44,0,1,1791732600,ALL,,,validate,,,5201490

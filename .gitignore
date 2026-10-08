@@ -86,6 +86,16 @@ data/storage/
 !data/storage/pushed_fingerprints.json
 !data/storage/pinnacle_league_structure.json
 
+# Exception: 观察库/实盘/CLV/释放清单（2026-10-08）— 不可再生的核心资产，必须 git 保护
+!data/storage/real_bets.json
+!data/storage/live_paper_bets.json
+!data/storage/fb_live_paper_bets.json
+!data/storage/clv_tracking.csv
+!data/storage/clv_results.csv
+!data/storage/market_release.json
+!data/storage/observe_release_state.json
+!data/storage/execution_quality.json
+
 # Exception: V4 进化数据
 !data/storage/evolve/
 !data/storage/evolve/*.json
