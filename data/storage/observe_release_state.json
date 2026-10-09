@@ -23,15 +23,15 @@
   "baseball|1x2|主|>64%|live": {
     "first_released_at": "2026-10-03T22:46:56.933638",
     "cap": 270,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-08",
+    "daily_stake": 240,
+    "daily_stake_date": "2026-10-09",
     "limit_removed": false
   },
   "basketball|1x2|主|<45%|live": {
     "first_released_at": "2026-10-03T22:46:56.933642",
     "cap": 270,
-    "daily_stake": 165,
-    "daily_stake_date": "2026-10-08",
+    "daily_stake": 75,
+    "daily_stake_date": "2026-10-09",
     "limit_removed": false
   },
   "basketball|1x2|主|45-55%|live": {
@@ -51,15 +51,15 @@
   "basketball|1x2|主|65-75%|live": {
     "first_released_at": "2026-10-03T22:46:56.933648",
     "cap": 270,
-    "daily_stake": 385,
-    "daily_stake_date": "2026-10-08",
+    "daily_stake": 220,
+    "daily_stake_date": "2026-10-09",
     "limit_removed": false
   },
   "basketball|1x2|主|>75%|live": {
     "first_released_at": "2026-10-03T22:46:56.933651",
     "cap": 270,
-    "daily_stake": 945,
-    "daily_stake_date": "2026-10-08",
+    "daily_stake": 770,
+    "daily_stake_date": "2026-10-09",
     "limit_removed": false
   },
   "football|1x2|客|30-40%|live": {
@@ -72,22 +72,22 @@
   "football|1x2|客|40-50%|live": {
     "first_released_at": "2026-10-03T22:46:56.933659",
     "cap": 270,
-    "daily_stake": 130,
-    "daily_stake_date": "2026-10-08",
+    "daily_stake": 90,
+    "daily_stake_date": "2026-10-09",
     "limit_removed": false
   },
   "football|1x2|客|50-55%|live": {
     "first_released_at": "2026-10-04T08:56:05.137361",
     "cap": 270,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-08",
+    "daily_stake": 230,
+    "daily_stake_date": "2026-10-09",
     "limit_removed": false
   },
   "football|1x2|客|55-60%|live": {
     "first_released_at": "2026-10-04T08:56:05.137367",
     "cap": 270,
-    "daily_stake": 80,
-    "daily_stake_date": "2026-10-08",
+    "daily_stake": 140,
+    "daily_stake_date": "2026-10-09",
     "limit_removed": false
   },
   "football|1x2|客|60-70%|live": {
@@ -100,8 +100,8 @@
   "football|btts|双方进球|50-55%|live": {
     "first_released_at": "2026-10-04T08:56:05.137374",
     "cap": 270,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-08",
+    "daily_stake": 125,
+    "daily_stake_date": "2026-10-09",
     "limit_removed": false
   },
   "football|btts|双方进球|55-60%|live": {

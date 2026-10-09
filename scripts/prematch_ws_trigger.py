@@ -177,14 +177,16 @@ class PrematchTrigger:
         self.report()
 
     async def run_forever(self):
-        """常驻: WS 断线重连 + 周期刷新 BB 快照。"""
+        """常驻: WS 断线重连(指数退避, 防网络抖动时每5s疯狂重连烧CPU) + 周期刷新 BB 快照。"""
         print(f"[prematch_ws] 早盘 WS 触发常驻启动(sport={self.sport})", flush=True)
         # 后台写文件线程(异步, 不阻塞触发-比价)
         threading.Thread(target=self._flush_loop, daemon=True, name="prematch-flush").start()
+        backoff = 1  # 重连退避(秒), 连接成功即重置
         while True:
             try:
                 async with websockets.connect(self._url(), max_size=2**26, open_timeout=15) as ws:
                     print("[prematch_ws] WS 已连接", flush=True)
+                    backoff = 1  # 连接成功, 重置退避
                     while True:
                         try:
                             raw = await asyncio.wait_for(ws.recv(), timeout=30)
@@ -193,8 +195,9 @@ class PrematchTrigger:
                             continue
                         self._drain(raw)
             except Exception as e:
-                print(f"[prematch_ws] 连接断开: {type(e).__name__} {str(e)[:80]}, 5s 后重连", flush=True)
-                await asyncio.sleep(5)
+                print(f"[prematch_ws] 连接断开: {type(e).__name__} {str(e)[:80]}, {backoff}s 后重连", flush=True)
+                await asyncio.sleep(backoff)
+                backoff = min(backoff * 2, 60)  # 指数退避 1→2→4→...→60s, 连接成功后重置
 
     def _drain(self, raw):
         for line in raw.strip().split("\n"):

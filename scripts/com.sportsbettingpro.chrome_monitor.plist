@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.sportsbettingpro.chrome_monitor</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/wangyao/SportsBettingPro/.venv312/bin/python</string>
+        <string>/Users/wangyao/SportsBettingPro/scripts/monitor_chrome_launch.py</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/Users/wangyao/SportsBettingPro/data/logs/chrome_launch_watch.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/wangyao/SportsBettingPro/data/logs/chrome_launch_watch.log</string>
+</dict>
+</plist>

@@ -1635,14 +1635,9 @@ class SecondLevelMonitor:
             if r.json().get("code") == 0:
                 self._token_ok_until = time.time() + 600  # 10min 缓存
                 return True
-            # token 失效 → 自动续期(读浏览器 fresh st-auth)
-            ok, msg = auto_renew_token()
-            if ok:
-                self._token_ok_until = time.time() + 600
-                print(f"[slm] token 已自动续期: {msg}", flush=True)
-                return True
+            # 2026-10-09 token 失效 → 只发钉钉提醒, 不自动续期(自动续期用 AppleScript 会启动 Chrome, 用户要求禁用)
             self._token_remind()
-            print(f"[slm] token 续期失败: {msg}", flush=True)
+            print(f"[slm] token 失效(code!=0), 已发钉钉提醒(不再自动续期开浏览器)", flush=True)
             return False
         except Exception:
             return False
