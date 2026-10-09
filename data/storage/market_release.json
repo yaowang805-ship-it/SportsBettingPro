@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-08T23:40:05.120415",
+  "generated_at": "2026-10-09T23:40:03.645809",
   "market_released": [],
   "league_released": [],
   "league_blocked": [],
@@ -220,7 +220,21 @@
       "basketball",
       "1x2",
       "主",
+      "45-55%",
+      "early"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "主",
       "55-65%",
+      "early"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "主",
+      "65-75%",
       "early"
     ],
     [
@@ -436,6 +450,13 @@
     [
       "football",
       "1x2",
+      "客",
+      ">70%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
       "平",
       "10-20%",
       "early"
@@ -641,6 +662,13 @@
       "hc",
       "客",
       "55-60%",
+      "early"
+    ],
+    [
+      "football",
+      "hc",
+      "客",
+      "60-70%",
       "early"
     ],
     [
@@ -872,6 +900,13 @@
       "1x2",
       "客",
       "45-55%",
+      "live"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "客",
+      "55-65%",
       "live"
     ],
     [
@@ -1220,6 +1255,27 @@
     [
       "ice_hockey",
       "1x2",
+      "主",
+      "65-75%",
+      "live"
+    ],
+    [
+      "ice_hockey",
+      "1x2",
+      "主",
+      "<45%",
+      "live"
+    ],
+    [
+      "ice_hockey",
+      "1x2",
+      "主",
+      ">75%",
+      "live"
+    ],
+    [
+      "ice_hockey",
+      "1x2",
       "客",
       "45-55%",
       "live"
@@ -1254,10 +1310,10 @@
     ],
     [
       "football",
-      "1x2",
+      "ht_dc",
       "客",
-      "30-40%",
-      "live"
+      ">70%",
+      "early"
     ],
     [
       "football",
@@ -1265,6 +1321,13 @@
       "客",
       "60-70%",
       "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "30-40%",
+      "live"
     ],
     [
       "football",
@@ -1277,21 +1340,14 @@
       "football",
       "ht_dc",
       "客",
-      "55-60%",
-      "early"
-    ],
-    [
-      "football",
-      "ht_dc",
-      "客",
-      ">70%",
-      "early"
-    ],
-    [
-      "football",
-      "ht_dc",
-      "客",
       "50-55%",
+      "early"
+    ],
+    [
+      "football",
+      "ht_dc",
+      "客",
+      "55-60%",
       "early"
     ]
   ],
@@ -1330,8 +1386,8 @@
       "cell": "football|hc|主|60-70%|live",
       "real_n": 45,
       "real_winrate": 35.6,
-      "paper_winrate": 62.5,
-      "gap_pp": -26.9
+      "paper_winrate": 61.1,
+      "gap_pp": -25.6
     },
     {
       "cell": "football|ou|大|60-70%|live",
@@ -1344,36 +1400,36 @@
       "cell": "football|ou|小|40-50%|live",
       "real_n": 52,
       "real_winrate": 34.6,
-      "paper_winrate": 45.0,
-      "gap_pp": -10.4
+      "paper_winrate": 46.2,
+      "gap_pp": -11.5
     },
     {
       "cell": "football|hc|主|50-55%|live",
       "real_n": 39,
       "real_winrate": 41.0,
-      "paper_winrate": 49.3,
-      "gap_pp": -8.2
+      "paper_winrate": 50.0,
+      "gap_pp": -9.0
     },
     {
       "cell": "football|hc|主|55-60%|live",
       "real_n": 37,
       "real_winrate": 37.8,
-      "paper_winrate": 45.9,
-      "gap_pp": -8.1
+      "paper_winrate": 46.2,
+      "gap_pp": -8.3
     },
     {
       "cell": "football|ou|大|55-60%|live",
       "real_n": 30,
       "real_winrate": 66.7,
-      "paper_winrate": 59.7,
-      "gap_pp": 7.0
+      "paper_winrate": 60.5,
+      "gap_pp": 6.2
     },
     {
       "cell": "football|ou|大|50-55%|live",
       "real_n": 36,
       "real_winrate": 61.1,
-      "paper_winrate": 49.6,
-      "gap_pp": 11.5
+      "paper_winrate": 49.4,
+      "gap_pp": 11.7
     },
     {
       "cell": "football|hc|客|40-50%|live",
@@ -1386,59 +1442,59 @@
   "observe_calibration": [
     {
       "cell": "football|dc|1X|>70%|live",
-      "n": 202,
-      "brier": 0.1826,
-      "brier_base": 0.0945,
-      "calib_err": 0.0881
+      "n": 211,
+      "brier": 0.1812,
+      "brier_base": 0.0951,
+      "calib_err": 0.0862
     },
     {
       "cell": "football|dc|12|>70%|live",
-      "n": 343,
-      "brier": 0.1668,
-      "brier_base": 0.136,
-      "calib_err": 0.0307
+      "n": 357,
+      "brier": 0.1689,
+      "brier_base": 0.135,
+      "calib_err": 0.0339
     },
     {
       "cell": "football|ou|大|60-70%|live",
-      "n": 487,
-      "brier": 0.2458,
-      "brier_base": 0.2295,
-      "calib_err": 0.0163
+      "n": 499,
+      "brier": 0.246,
+      "brier_base": 0.2296,
+      "calib_err": 0.0164
     },
     {
       "cell": "football|ou|大|50-55%|live",
-      "n": 502,
-      "brier": 0.251,
+      "n": 510,
+      "brier": 0.2511,
       "brier_base": 0.2491,
       "calib_err": 0.002
     },
     {
       "cell": "football|ou|大|40-50%|live",
-      "n": 474,
-      "brier": 0.2457,
+      "n": 491,
+      "brier": 0.2463,
       "brier_base": 0.2479,
-      "calib_err": -0.0022
+      "calib_err": -0.0015
     },
     {
       "cell": "football|ou|大|55-60%|live",
-      "n": 372,
-      "brier": 0.2413,
+      "n": 392,
+      "brier": 0.2401,
       "brier_base": 0.2444,
-      "calib_err": -0.003
-    },
-    {
-      "cell": "football|1x2|客|<10%|live",
-      "n": 242,
-      "brier": 0.047,
-      "brier_base": 0.0527,
-      "calib_err": -0.0057
+      "calib_err": -0.0043
     },
     {
       "cell": "football|1x2|平|10-20%|live",
-      "n": 310,
-      "brier": 0.116,
-      "brier_base": 0.125,
-      "calib_err": -0.009
+      "n": 326,
+      "brier": 0.118,
+      "brier_base": 0.1252,
+      "calib_err": -0.0072
+    },
+    {
+      "cell": "football|1x2|客|<10%|live",
+      "n": 254,
+      "brier": 0.0449,
+      "brier_base": 0.0527,
+      "calib_err": -0.0077
     },
     {
       "cell": "football|correct_score_ht|其他|<10%|early",
