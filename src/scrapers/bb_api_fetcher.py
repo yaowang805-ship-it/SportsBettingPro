@@ -257,22 +257,7 @@ def _get_h5_token_from_chrome():
             logger.info("从 .bb_token 文件读取 API token")
             return tok
 
-    # 通过 AppleScript 从正在运行的 Chrome 获取
-    import subprocess, tempfile
-    ascript = os.path.join(os.path.dirname(__file__), "..", "..", "scripts", "get_h5_token.applescript")
-    if not os.path.isfile(ascript):
-        ascript = "/tmp/get_h5_token.applescript"
-    try:
-        out = subprocess.check_output(["osascript", ascript], text=True, timeout=15)
-        ls = json.loads(out.strip())
-        # bb60.com 存的是 h5-token，pc.x14ff.com 存的是 user-token（值相同）
-        h5 = ls.get("h5-token", "") or ls.get("user-token", "")
-        if h5:
-            logger.info("从 Chrome localStorage 获取到 API token")
-            return h5
-        logger.warning("Chrome localStorage 中未找到 h5-token 或 user-token")
-    except Exception as e:
-        logger.warning("从 Chrome 获取 token 失败: %s", e)
+    # 2026-10-09: 去掉 AppleScript 读 Chrome(会启动浏览器), 直接走 LevelDB 备选
 
     # 备选：从 LevelDB 搜索
     leveldb_dir = os.path.expanduser(

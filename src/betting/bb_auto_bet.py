@@ -190,9 +190,8 @@ def read_token(platform="BB"):
         tok = tok_file.read_text().strip()
         if tok and len(tok) > 30:
             return tok
-    # 2. applescript 读活动标签(依赖 Chrome 活动标签是对应平台页)
-    ls = _read_localstorage()
-    return ls.get("user-token", "") or ls.get("st-auth", "")
+    # 2026-10-09: 去掉 AppleScript 读 Chrome 兜底(会启动浏览器), 文件缺失返回空让下单失败
+    return ""
 
 
 def read_domain(platform="BB"):
@@ -204,8 +203,8 @@ def read_domain(platform="BB"):
         dom = dom_file.read_text().strip()
         if dom:
             return dom.rstrip("/")
-    ls = _read_localstorage()
-    return ls.get("st-domain", "").rstrip("/") or DEFAULT_DOMAIN
+    # 2026-10-09: 去掉 AppleScript 读 Chrome 兜底, 文件缺失返回默认域名
+    return DEFAULT_DOMAIN
 
 
 _token_refresh_until = 0.0  # token 刷新冷却(避免频繁扫 LevelDB + 打 API)
