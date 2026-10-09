@@ -69,41 +69,6 @@
     ],
     [
       "football",
-      "1x2",
-      "客",
-      "30-40%",
-      "live"
-    ],
-    [
-      "football",
-      "1x2",
-      "客",
-      "40-50%",
-      "live"
-    ],
-    [
-      "football",
-      "1x2",
-      "客",
-      "50-55%",
-      "live"
-    ],
-    [
-      "football",
-      "1x2",
-      "客",
-      "55-60%",
-      "live"
-    ],
-    [
-      "football",
-      "1x2",
-      "客",
-      "60-70%",
-      "live"
-    ],
-    [
-      "football",
       "btts",
       "双方进球",
       "50-55%",
@@ -1349,6 +1314,34 @@
       "客",
       "55-60%",
       "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "40-50%",
+      "live"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "50-55%",
+      "live"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "55-60%",
+      "live"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "60-70%",
+      "live"
     ]
   ],
   "observe_release_caps": {
@@ -1361,11 +1354,6 @@
     "basketball|1x2|主|55-65%|live": 270,
     "basketball|1x2|主|65-75%|live": 270,
     "basketball|1x2|主|>75%|live": 270,
-    "football|1x2|客|30-40%|live": 270,
-    "football|1x2|客|40-50%|live": 270,
-    "football|1x2|客|50-55%|live": 270,
-    "football|1x2|客|55-60%|live": 270,
-    "football|1x2|客|60-70%|live": 270,
     "football|btts|双方进球|50-55%|live": 270,
     "football|btts|双方进球|55-60%|live": 270,
     "football|btts|双方进球|60-70%|live": 270,

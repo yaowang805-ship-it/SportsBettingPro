@@ -1304,7 +1304,9 @@ class SecondLevelMonitor:
         if not eid:
             self._lev_fail_stats["no_event_id"] = self._lev_fail_stats.get("no_event_id", 0) + 1
             return None
-        sub_map = {"opportunities": "1x2", "handicap": "hc", "over_under": "ou"}
+        # 2026-10-10 补 btts/dc: 之前只支持 1x2/hc/ou, btts/dc 走 unsupported_sub → clv 永远 None → LEV 盲区。
+        sub_map = {"opportunities": "1x2", "handicap": "hc", "over_under": "ou",
+                   "btts": "btts", "double_chance": "dc"}
         sub = sub_map.get(sig.get("sub"))
         if not sub:
             self._lev_fail_stats["unsupported_sub"] = self._lev_fail_stats.get("unsupported_sub", 0) + 1
@@ -1331,6 +1333,12 @@ class SecondLevelMonitor:
             idx = {"让球主胜": "home", "让球客胜": "away"}
         elif sub == "ou":
             idx = {"大球": "over", "小球": "under"}
+        elif sub == "btts":
+            # fair_price('btts') → {yes, no}
+            idx = {"双方进球": "yes", "非双方进球": "no"}
+        elif sub == "dc":
+            # fair_price('dc') → {1X, 12, X2}（1x2 三向中间价合成）
+            idx = {"主/和": "1X", "客/和": "X2", "主/客": "12"}
         else:
             self._lev_fail_stats["unsupported_sub"] = self._lev_fail_stats.get("unsupported_sub", 0) + 1
             return None

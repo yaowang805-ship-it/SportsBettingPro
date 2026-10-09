@@ -44,8 +44,8 @@
   "basketball|1x2|主|55-65%|live": {
     "first_released_at": "2026-10-08T13:50:26.427581",
     "cap": 270,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-09",
+    "daily_stake": 190,
+    "daily_stake_date": "2026-10-10",
     "limit_removed": false
   },
   "basketball|1x2|主|65-75%|live": {
@@ -58,43 +58,8 @@
   "basketball|1x2|主|>75%|live": {
     "first_released_at": "2026-10-03T22:46:56.933651",
     "cap": 270,
-    "daily_stake": 770,
-    "daily_stake_date": "2026-10-09",
-    "limit_removed": false
-  },
-  "football|1x2|客|30-40%|live": {
-    "first_released_at": "2026-10-03T22:46:56.933655",
-    "cap": 270,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-09",
-    "limit_removed": false
-  },
-  "football|1x2|客|40-50%|live": {
-    "first_released_at": "2026-10-03T22:46:56.933659",
-    "cap": 270,
-    "daily_stake": 90,
-    "daily_stake_date": "2026-10-09",
-    "limit_removed": false
-  },
-  "football|1x2|客|50-55%|live": {
-    "first_released_at": "2026-10-04T08:56:05.137361",
-    "cap": 270,
-    "daily_stake": 230,
-    "daily_stake_date": "2026-10-09",
-    "limit_removed": false
-  },
-  "football|1x2|客|55-60%|live": {
-    "first_released_at": "2026-10-04T08:56:05.137367",
-    "cap": 270,
-    "daily_stake": 140,
-    "daily_stake_date": "2026-10-09",
-    "limit_removed": false
-  },
-  "football|1x2|客|60-70%|live": {
-    "first_released_at": "2026-10-03T22:46:56.933665",
-    "cap": 270,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-09",
+    "daily_stake": 270,
+    "daily_stake_date": "2026-10-10",
     "limit_removed": false
   },
   "football|btts|双方进球|50-55%|live": {
@@ -114,8 +79,8 @@
   "football|btts|双方进球|60-70%|live": {
     "first_released_at": "2026-10-03T22:46:56.933672",
     "cap": 270,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-09",
+    "daily_stake": 95,
+    "daily_stake_date": "2026-10-10",
     "limit_removed": false
   },
   "baseball|ou|大|<55%|live": {

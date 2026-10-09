@@ -59,6 +59,9 @@ N_REAL_MIN = 50        # 实盘赢率采信最小样本量(2026-09-12 30→100�
 OBS_N_MIN = 200            # 观察库释放采信最小结算样本数(>200, 对齐职业CLV标准)
 OBS_CLV_MIN = 2.0          # 早盘释放中位CLV阈值(>2%): 职业sharp选手平均+2~5% no-vig CLV,
                             # >0太松(+0.5%以下是devig/匹配噪声), >2 既严格又留容错(2026-09-15 用户定)
+OBS_LEV_MIN = 0.4          # 滚球释放 LEV 阈值(价格变化方向 clv-ev, 通常<1pp): 2026-10-10 用户定,
+                            # 与早盘收盘线 CLV(2%) 分档。LEV 量级<1pp, 用 2% 对它偏严(load_live_clv 注释已标),
+                            # 改 0.3~0.5% 区间取 0.4%。注: 滚球 n 仍受 OBS_N_MIN=200 约束, 样本不够不释放。
 OBS_WINRATE_EDGE_MIN = 3.0 # 赢率>隐含(差>3pp 才释放)。2026-09-15 0→3pp: 观察库整体负edge(逆向选择),
                             # 差0pp会把打平的噪声格子释放; 对齐实盘 REAL_WINRATE_EDGE_MIN=3pp 去噪声
 REAL_WINRATE_EDGE_MIN = 3.0  # 实盘主开关/方向释放赢率vs隐含差值阈值(差>3pp 去噪声)
@@ -150,7 +153,11 @@ MANUAL_OBSERVE_BLOCK = {
     "football|1x2|客|<10%|live",      # 客胜冷门
     "football|1x2|客|10-20%|live",
     "football|1x2|客|20-30%|live",   # 客胜 3.0-5.0 edge -3.3pp
-    "football|1x2|客|30-40%|live",
+    "football|1x2|客|30-40%|live",   # 2026-10-10 撤: 实盘逆向选择(客胜全量14笔 -29.5% ROI)
+    "football|1x2|客|40-50%|live",
+    "football|1x2|客|50-55%|live",
+    "football|1x2|客|55-60%|live",
+    "football|1x2|客|60-70%|live",
     "football|1x2|平|<10%|live",      # 和局冷门
     "football|1x2|平|10-20%|live",
     "football|1x2|平|20-30%|live",   # 和局 3.0-5.0 edge -5.5pp(头号巨亏)
@@ -207,14 +214,8 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     "basketball|1x2|主|55-65%|live": 270,
     "basketball|1x2|主|65-75%|live": 270,
     "basketball|1x2|主|>75%|live": 270,
-    # 2026-09-29 用户要求释放(edge+ROI 双正的苗头格子, 试探攒实盘; n=45~72 仍远低于 n>200):
-    # 足球独赢客 2.0-3.0(n45 +5.1pp/+38%)、双边进球双方进球 1.5-2.0(n62 +3.5pp/+2.3%)。
-    # 2026-10-03 用户要求补释放: 足球独赢客 1.5-2.0(观察库 +17.5pp/ROI+36.2%, n=37, edge 比 2.0-3.0 还高)
-    "football|1x2|客|30-40%|live": 270,
-    "football|1x2|客|40-50%|live": 270,
-    "football|1x2|客|50-55%|live": 270,
-    "football|1x2|客|55-60%|live": 270,
-    "football|1x2|客|60-70%|live": 270,
+    # 2026-10-10 撤回足球独赢客 30-70% 全区间: 实盘逆向选择铁证(全量14笔 -29.5% ROI, 赢率29% vs 隐含52% -23pp;
+    # 近2天7笔 -60% 出血-483元)。观察库 edge 是纸面假正(BB滞后Betfair sharp move), 交还数据驱动判据。
     "football|btts|双方进球|50-55%|live": 270,
     "football|btts|双方进球|55-60%|live": 270,
     "football|btts|双方进球|60-70%|live": 270,
@@ -1042,7 +1043,7 @@ def main():
         if _real.get("n", 0) >= REAL_ROI_GATE_N_MIN and _real.get("roi", 0) < 0:
             observe_blocked.append([sport, sm, dr, interval, "live"])
             continue
-        if med > OBS_CLV_MIN and n >= OBS_N_MIN and _roi > 0:
+        if med > OBS_LEV_MIN and n >= OBS_N_MIN and _roi > 0:
             observe_released.append([sport, sm, dr, interval, "live"])
         else:
             observe_blocked.append([sport, sm, dr, interval, "live"])
