@@ -150,6 +150,20 @@
       "小",
       ">64%",
       "live"
+    ],
+    [
+      "football",
+      "1x2",
+      "主",
+      "50-55%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "30-40%",
+      "early"
     ]
   ],
   "observe_blocked": [
@@ -1302,7 +1316,9 @@
     "baseball|ou|大|<55%|live": 270,
     "baseball|ou|大|55-58%|live": 270,
     "baseball|ou|大|61-64%|live": 270,
-    "baseball|ou|小|>64%|live": 270
+    "baseball|ou|小|>64%|live": 270,
+    "football|1x2|主|50-55%|early": 270,
+    "football|1x2|客|30-40%|early": 270
   },
   "direction_released": [],
   "direction_blocked": [],

@@ -145,5 +145,19 @@
     "daily_stake": 0,
     "daily_stake_date": "2026-10-08",
     "limit_removed": false
+  },
+  "football|1x2|主|50-55%|early": {
+    "first_released_at": "2026-10-09T13:13:26.945662",
+    "cap": 270,
+    "daily_stake": 0,
+    "daily_stake_date": "",
+    "limit_removed": false
+  },
+  "football|1x2|客|30-40%|early": {
+    "first_released_at": "2026-10-09T13:13:26.945930",
+    "cap": 270,
+    "daily_stake": 0,
+    "daily_stake_date": "",
+    "limit_removed": false
   }
 }

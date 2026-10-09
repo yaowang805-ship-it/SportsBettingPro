@@ -1280,29 +1280,27 @@ def _calc_kelly_stakes(opps: list) -> list:
                 o["_stake"] = min(o["_stake"], _cap)
                 o["_obs_cap"] = _cap
 
-    # 当日累计上限(2026-09-15 用户要求): dc 早盘释放 当日累计≤2000, 不重复使用(硬上限)。
-    # 用单文件 dc_daily_stake.json 记当日已投额(投注后由 push_report 更新), 超出剩余额度截断/归零。
-    _dc_state_file = DATA_DIR / "dc_daily_stake.json"
-    _dc_daily = 0.0
+    # 当日累计上限(2026-10-09 用户要求): 早盘全部盘口 当日累计≤1500(硬上限)。
+    # 用单文件 early_daily_stake.json 记当日已投额(投注后累加), 超出剩余额度截断/归零。
+    _daily_state_file = DATA_DIR / "early_daily_stake.json"
+    _daily_staked = 0.0
     try:
-        _dc_s = json.loads(_dc_state_file.read_text())
-        if _dc_s.get("date") == time.strftime("%Y-%m-%d"):
-            _dc_daily = float(_dc_s.get("stake", 0) or 0)
+        _daily_s = json.loads(_daily_state_file.read_text())
+        if _daily_s.get("date") == time.strftime("%Y-%m-%d"):
+            _daily_staked = float(_daily_s.get("stake", 0) or 0)
     except Exception:
         pass
-    _dc_limit = 2000.0
+    _daily_limit = 1500.0
     for o in opps:
         if o.get("_stake", 0) <= 0:
             continue
-        if o.get("_sub_market", o.get("_market", "")) != "dc":
-            continue
-        _remain = _dc_limit - _dc_daily
+        _remain = _daily_limit - _daily_staked
         if _remain <= 0:
             o["_stake"] = 0
             continue
         if o["_stake"] > _remain:
             o["_stake"] = int(_remain // 10 * 10)  # 取整十
-        _dc_daily += o["_stake"]
+        _daily_staked += o["_stake"]
 
     # 2026-08-30 用户要求: 只要有机会就推送, 不考虑预算/单场/单联赛/单运动上限。
     # 关闭第二遍(总额)/第三遍(单场)/第四遍(单联赛单运动)的上限过滤, 只保留跨盘口相关性折扣(非预算限制)。
@@ -3923,22 +3921,20 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
                     logger.info("  下单失败: %s", _f)
             except Exception as _e:
                 logger.warning("自动下单异常: %s", _e)
-            # 更新 dc 当日累计(2026-09-15): 投注后累加, 不重复使用(硬上限 2000)。
+            # 更新早盘当日累计(2026-10-09): 投注后累加全部盘口, 硬上限 1500。
             try:
-                _dc_staked = sum(o.get("_stake", 0) or 0 for o in bettable
-                                 if o.get("_sub_market", o.get("_market", "")) == "dc"
-                                 and o.get("sport", "") == "football")
-                if _dc_staked > 0:
-                    _dc_sf = DATA_DIR / "dc_daily_stake.json"
-                    _dc_s = {}
+                _staked = sum(o.get("_stake", 0) or 0 for o in bettable)
+                if _staked > 0:
+                    _daily_sf = DATA_DIR / "early_daily_stake.json"
+                    _daily_s = {}
                     try:
-                        _dc_s = json.loads(_dc_sf.read_text())
+                        _daily_s = json.loads(_daily_sf.read_text())
                     except Exception:
                         pass
                     _today = time.strftime("%Y-%m-%d")
-                    _prev = float(_dc_s.get("stake", 0) or 0) if _dc_s.get("date") == _today else 0.0
-                    _dc_sf.write_text(json.dumps({"date": _today, "stake": _prev + _dc_staked},
-                                                 ensure_ascii=False))
+                    _prev = float(_daily_s.get("stake", 0) or 0) if _daily_s.get("date") == _today else 0.0
+                    _daily_sf.write_text(json.dumps({"date": _today, "stake": _prev + _staked},
+                                                     ensure_ascii=False))
             except Exception:
                 pass
         elif place_bets:
