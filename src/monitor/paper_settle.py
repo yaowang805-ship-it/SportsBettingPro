@@ -29,7 +29,21 @@ logger = get_logger(__name__)
 TRACKING_FILE = DATA_DIR / "clv_tracking.csv"
 RESULTS_FILE = DATA_DIR / "clv_results.csv"
 PAPER_FILE = DATA_DIR / "paper_bets.json"
-DAILY_BUDGET = 20000.0  # 每日虚拟投注额(与实盘日预算一致)
+DAILY_BUDGET = 20000.0  # 每日虚拟投注额 —— 已弃用(2026-10-10 注额口径修复, 不再做日归一化)
+KELLY_FRACTION = 0.5   # 与 second_level_monitor 一致(半凯利)
+MAX_STAKE = 300.0      # 与 second_level_monitor 一致(单盘口上限)
+BANKROLL_BASE_FILE = DATA_DIR / "bankroll_base.txt"
+
+
+def _bankroll():
+    """本金基准(读 bankroll_base.txt, 缺省¥20000), 与 second_level_monitor._bankroll 同源。"""
+    v = 20000.0
+    try:
+        if BANKROLL_BASE_FILE.exists():
+            v = float(BANKROLL_BASE_FILE.read_text().strip() or 0) or 20000.0
+    except (OSError, ValueError):
+        v = 20000.0
+    return v
 
 # 赛果窗口: 开赛后至少等这么久才结算(BB 赛果有时效窗口 ~24-48h, 太早可能还没出)
 SETTLE_AFTER_HOURS = 2.0
@@ -313,47 +327,25 @@ def settle_paper(dry_run: bool = False) -> dict:
 
 
 def _virtual_stake(fair_price: float, bb_odds: float, tier) -> float:
-    """虚拟注额 — 半凯利, 与实盘同源。fair_price 隐含胜率 × BB 赔率算 edge。
+    """虚拟注额 — 与实盘同口径(2026-10-10 修)。
 
-    观察库样本量远大于实盘(8-28: validate 1364 vs push 191), 单注虚拟注额天然偏小,
-    这里只按半凯利给"相对权重", 真实 ¥20K/日归一化在 settle 后统一做(避免过早摊薄)。
+    原用「半凯利 × ¥1000 基数 + tier降权 + 日归一化 ¥20K」, 纸面注额被放大到 ¥18608 且无 cap,
+    与实盘(半凯利 × bankroll ¥8000, cap ¥300)不可比 → 纸面 ROI 失真(低量日单注被拉爆)。
+    改成与 second_level_monitor._stake_for 同核心公式: bankroll × 半凯利 × edge/(odds-1), cap ¥300。
+    (不套 eq_factor/注额抖动/回撤熔断——那些是实盘风控, 纸面只需 edge 口径一致。)
     """
     if not fair_price or fair_price <= 1.0 or not bb_odds or bb_odds <= 1.0:
         return 0.0
     p = 1.0 / fair_price
-    kelly = max(0.0, (p * bb_odds - 1.0) / (bb_odds - 1.0))
-    tier_mult = 1.0 if tier in ("1", "2", 1, 2) else 0.7  # T3/T4 降权
-    return round(kelly * 0.5 * tier_mult * 1000.0, 2)  # 千元基数的半凯利虚拟注额
+    edge = max(0.0, p * bb_odds - 1.0)
+    stake = _bankroll() * KELLY_FRACTION * edge / (bb_odds - 1.0)
+    return round(min(stake, MAX_STAKE), 2)
 
 
 def _normalize_daily_budget(dry_run: bool = False):
-    """把每天的纸面注额归一化到 ¥20K(让纸面 ROI 与实盘可比)。
-
-    按 _virtual_stake 的相对权重, 每天等比例缩放到总额 ¥20K。
-    """
-    bets = load_paper_bets()
-    if not bets:
-        return 0
-    by_day = {}
-    for b in bets.values():
-        sa = (b.get("settled_at") or "")[:10]
-        by_day.setdefault(sa, []).append(b)
-    changed = 0
-    for day, day_bets in by_day.items():
-        total_w = sum(b["stake"] for b in day_bets)
-        if total_w <= 0:
-            continue
-        scale = DAILY_BUDGET / total_w
-        for b in day_bets:
-            old = b["stake"]
-            b["stake"] = round(old * scale, 2)
-            # profit 同比例缩放(虚拟, 保持 ROI 不变)
-            b["profit"] = round(b["profit"] * scale, 2)
-            if abs(b["stake"] - old) > 0.01:
-                changed += 1
-    if changed and not dry_run:
-        save_paper_bets(list(bets.values()))
-    return changed
+    """已弃用(2026-10-10): 日归一化 ¥20K 会把低量日单注放大到 ¥18608, 与实盘 cap ¥300 不可比,
+    导致纸面 ROI 失真。注额口径已改由 _virtual_stake 与实盘同源, 这里不再缩放。"""
+    return 0
 
 
 if __name__ == "__main__":
