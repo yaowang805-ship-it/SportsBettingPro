@@ -524,7 +524,7 @@ def _flush_paper_bets():
 
 
 class SecondLevelMonitor:
-    def __init__(self, threshold=3.0, on_signal=None, auto_bet=False, stake=None):
+    def __init__(self, threshold=4.0, on_signal=None, auto_bet=False, stake=None):
         self.threshold = threshold
         self.on_signal = on_signal
         self.auto_bet = auto_bet
@@ -2004,7 +2004,7 @@ def _settle_real_bet(order_id, pnl, won):
 
 def main():
     ap = argparse.ArgumentParser(description="BB 秒级比价监控")
-    ap.add_argument("--threshold", type=float, default=3.0, help="EV 信号阈值%(默认3)")
+    ap.add_argument("--threshold", type=float, default=4.0, help="EV 信号阈值%(默认4)")
     ap.add_argument("--listen", type=int, default=0, help="监听秒数(0=常驻)")
     ap.add_argument("--refresh", type=int, default=2, help="滚球轮询间隔秒(默认2)")
     ap.add_argument("--auto-bet", action="store_true", help="秒级+EV 自动下单(默认关)")
