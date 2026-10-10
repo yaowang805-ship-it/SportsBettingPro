@@ -239,12 +239,24 @@ def get_sports():
     return _get("/sports") or []
 
 
+_events_cache = {}  # {sport|status: (ts, events_list)}
+
+
 def get_events(sport="football", status=None):
-    """事件列表。status=None 全部, 'live' 滚球。→ [{id, home, away, date, sport, league, status}]。"""
+    """事件列表。status=None 全部, 'live' 滚球。→ [{id, home, away, date, sport, league, status}]。
+
+    带 30s TTL 缓存(2026-10-11): 早盘 WS 触发每次变动都调, 无缓存反复打 REST 拖垮触发(>30s超时)。
+    """
+    cache_key = f"{sport}|{status}"
+    now = time.time()
+    if cache_key in _events_cache and now - _events_cache[cache_key][0] < 30:
+        return _events_cache[cache_key][1]
     params = {"sport": sport}
     if status:
         params["status"] = status
-    return _get("/events", params) or []
+    result = _get("/events", params) or []
+    _events_cache[cache_key] = (now, result)
+    return result
 
 
 _odds_cache = {}  # {event_id: (ts, bookmakers_dict)}

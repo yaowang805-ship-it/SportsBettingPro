@@ -1808,7 +1808,7 @@ class SecondLevelMonitor:
         for m in triggered:
             sport = m.get('sport', 'football')
             entry = _build_oa_entry(m, sport)
-            _oa_add_markets(entry, m, sport)
+            _oa_add_markets(entry, m, sport, use_rest=False)
             _league = entry.get('league', '')
             _epoch = entry.get('start_time_pin_epoch', 0)
             for group in ('opportunities', 'handicap', 'over_under', 'double_chance', 'draw_no_bet'):
