@@ -211,10 +211,11 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 近2天7笔 -60% 出血-483元)。观察库 edge 是纸面假正(BB滞后Betfair sharp move), 交还数据驱动判据。
     # 2026-10-10 撤回足球btts 50-70%: 无LEV背书(clv字段从未采集, LEV判据盲区)+纸面ROI假正(近2天7笔-52.7%), 交还数据驱动。
     # 2026-10-10 撤回棒球大小(4桶): 滚球释放一律改走数据驱动 LEV 判据。
-    # 2026-10-09 用户要求试探释放早盘双正桶(纸面ROI+CLV双正): 足球独赢主胜50-55%(ROI+95%/CLV+8.7%)、
-    # 足球独赢客胜30-40%(ROI+49%/CLV+6.7%)。早盘=信息驱动, CLV是权威, 试探攒实盘验证。
-    "football|1x2|主|50-55%|early": 270,
-    "football|1x2|客|30-40%|early": 270,
+    # 2026-10-10 早盘释放按「CLV>0 且 干净ROI>0」重定(注额口径已修): 足球独赢主 40-55% 是真溢价格子
+    # (主40-50% CLV+4.72%/赢率54.5%vs41% +13.6pp, 主50-55% CLV+5.40%/赢率58.3%vs50% +8.3pp)。
+    # 撤独赢客30-40%(CLV -0.66% 负, 赢率正只是方差); btts暂不释放(正ROI靠n=3~4小桶全中堆的方差)。
+    "football|1x2|主|40-50%|early": 200,
+    "football|1x2|主|50-55%|early": 200,
     # 2026-09-30 撤回: 双机会主/客 2.0-3.0 实盘首日 -15.9% ROI(19笔胜率33%, 观察库 edge+3.5pp 苗头被打脸),
     # 早盘上半场独赢客 >5.0 实盘 -20.7% ROI(8笔6负1胜胜率14%, 高赔率彩票型), 用户要求放回观察库交还数据驱动判据。
 }
@@ -970,6 +971,11 @@ def main():
     # 特殊盘口(margin 15%+, 收盘线不 sharp, CLV 无意义)直接放弃, 不进清单。
     for (sport, sm, dr, interval), (med, n) in sorted(clv_med.items()):
         if sm in SPECIAL_MARKETS or sm.startswith(SPECIAL_MARKET_PREFIX):
+            continue
+        # 2026-10-10 修: 手动释放格(试探)skip 数据驱动拦截。否则 released+blocked 同时出现,
+        # _is_market_released 先查 observe_blocked → 释放被拦(早盘一场投不出)。与滚球循环同逻辑。
+        if (f"{sport}|{sm}|{dr}|{interval}|early" in MANUAL_OBSERVE_RELEASE
+                or f"{sport}|{sm}|{dr}|{interval}|early" in MANUAL_OBSERVE_RELEASE_LIMITED):
             continue
         # 足球冷门封顶(2026-09-15): favorite-longshot bias 使足球冷门系统性高估, 真实赢率全负
         # (CLV 正是 devig 残差, 非真 edge)。足球 >5.0 不用 CLV 释放。冰球/棒球有 reverse bias,
