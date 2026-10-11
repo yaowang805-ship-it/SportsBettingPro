@@ -360,7 +360,7 @@ def fetch_balance():
     return None
 
 
-BALANCE_MIN = 1000.0  # 余额低于此值暂停投注(2026-09-19 用户要求), 结算后余额恢复再投
+BALANCE_MIN = 0.0  # 余额熔断已取消(2026-10-11 用户要求), 0 表示永不拦截(余额>=0 恒真)
 _balance_cache = {"ts": 0.0, "value": None}
 _reject_stats = {}  # 下单失败 code 统计(oddsChange=0 被拒率实测, 2026-09-19)
 

@@ -139,6 +139,7 @@ class PrematchIngestor:
             eh, ea = _norm(m.get("home", "")), _norm(m.get("away", ""))
             if eh and ea:
                 bb_idx[(eh, ea)] = m
+                bb_idx[(ea, eh)] = m  # 主客互换也命中(对齐 _match_bb 口径)
         if not bb_idx:
             return
         for entry in self.cache.all_events():
@@ -195,15 +196,21 @@ def main():
     ws.start()
     sse.start()
     threading.Thread(target=_poll_rest_cache, args=(cache, rest), daemon=True, name="pin-rest").start()
-    print("[pin] Pin WS + SSE + REST轮询 常驻已启动", flush=True)
+    ingestor = PrematchIngestor(cache)
+    print("[pin] Pin WS + SSE + REST轮询 + 早盘入库 常驻已启动", flush=True)
 
-    # 每 10s 落盘缓存(供早盘/滚球进程读实时公平价)
+    # 每 10s: 落盘缓存(供早盘/滚球进程读实时公平价) + 扫缓存入库(早盘观察库)
     while True:
         time.sleep(10)
         try:
             cache.persist()
         except Exception as e:
             print(f"[pin] 缓存落盘失败: {type(e).__name__}", flush=True)
+        try:
+            ingestor.sweep()
+            ingestor.flush()
+        except Exception as e:
+            print(f"[pin-prematch] 扫描异常: {type(e).__name__} {str(e)[:80]}", flush=True)
 
 
 if __name__ == "__main__":

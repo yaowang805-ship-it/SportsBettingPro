@@ -213,11 +213,7 @@ def auto_bet_flow(opportunities, token=None, domain=None):
         if _wait > 0:
             time.sleep(_wait)
 
-        # 余额熔断(2026-09-19): 余额<1000 暂停投注, 结算后余额恢复再投
-        from src.betting.bb_auto_bet import check_balance_ok
-        if not check_balance_ok():
-            failed.append({"home": disp_home, "away": disp_away, "reason": "余额<1000 暂停投注"})
-            continue
+        # 余额熔断已取消(2026-10-11 用户要求): 不再用余额<1000 拦投注, 符合释放门槛就投
 
         # 下单(含注额上限检查)
         _t0 = time.time()
