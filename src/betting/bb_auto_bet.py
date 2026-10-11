@@ -364,9 +364,8 @@ BALANCE_MIN = 0.0  # 余额熔断已取消(2026-10-11 用户要求), 0 表示永
 _balance_cache = {"ts": 0.0, "value": None}
 _reject_stats = {}  # 下单失败 code 统计(oddsChange=0 被拒率实测, 2026-09-19)
 _last_bet_audit = {}  # 最近一注审计(2026-10-11): 触发/重拉/成交的价+EV+reason, 供 slippage 指标
-# adj_factor = 1 - push_rate - void_rate(2026-10-11 首跑实测: push 14.2% + void 7.1% = 21.3%)
-# raw_ev × adj_factor = settled_adj_ev(实际能提现的)。滚动窗口更新, 别当常量。
-ADJ_FACTOR = 1.0 - 0.142 - 0.071
+# 注: 不存全局 adj_factor 预乘值(那是把条件概率当常数)。存分量 is_line_zero/sport/sub/line,
+# settled_adj_ev 在查询时按 (sport, is_line_zero) 分组率计算, 口径永远自洽(过滤开关怎么改都不污染)。
 
 
 def _append_bet_audit():
@@ -377,7 +376,6 @@ def _append_bet_audit():
         _f = _Path(__file__).resolve().parent.parent.parent / "data" / "storage" / "bet_audit.jsonl"
         _rec = dict(_last_bet_audit)
         _rec["ts"] = time.time()
-        _rec["adj_factor"] = ADJ_FACTOR  # 2026-10-11 raw_ev→settled_adj_ev 折算系数(风控口径)
         with open(_f, "a", encoding="utf-8") as _fh:
             _fh.write(_json.dumps(_rec, ensure_ascii=False) + "\n")
     except Exception:
@@ -472,7 +470,7 @@ def fetch_current_odds(market_id, match_id, option_type, token=None, domain=None
 def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domain=None,
                      match_id=None, check_limit=True, verify_price=True,
                      platform="BB", fair_price=None, min_ev_pct=None, prefetched_odds=None,
-                     decision_version=None):
+                     decision_version=None, bet_meta=None):
     """单关下单。返回 (code, order_id, message)。
 
     code=0 成功; code=5 参数错; code=14010 token过期; code=3015 盘口关闭;
@@ -505,6 +503,8 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
     _od = float(odds) if odds else 0.0
     _audit = {"trigger_odds": _od, "reverify_odds": None, "final_odds": _od, "reason": None,
               "decision_version": decision_version}
+    if bet_meta:
+        _audit.update(bet_meta)  # is_line_zero/sport/sub/line 等分量(2026-10-11, 供分组率算 settled_adj_ev)
     _audit["trigger_ev"] = round((_od - _fp) / _fp * 100, 3) if _fp > 1 and _od > 1 else None
     final_odds = odds
     if verify_price and match_id is not None:

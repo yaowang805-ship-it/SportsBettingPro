@@ -1256,11 +1256,13 @@ class SecondLevelMonitor:
                 return
         _t_place = time.time()
         _dv = _decision_version(self.threshold)  # 配置快照 hash(复盘用)
+        _bet_meta = {"is_line_zero": _is_line_zero, "sport": sig.get("sport", ""),
+                     "sub": sig.get("sub", ""), "line": sig.get("line")}
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
             match_id=sig["match_id"], check_limit=True, verify_price=True,
             fair_price=sig.get("fair"), min_ev_pct=self.threshold,
-            prefetched_odds=_fresh_odds, decision_version=_dv)
+            prefetched_odds=_fresh_odds, decision_version=_dv, bet_meta=_bet_meta)
         _t_order = time.time() - _t0  # 下单函数内部耗时(调试用)
         _t_http = time.time() - _t_place  # place_single_bet HTTP 耗时
         _total_time = time.time() - (sig.get("poll_ts") or _t0)  # 2026-09-20 总耗时(WS触发→下单完成), 推送用
