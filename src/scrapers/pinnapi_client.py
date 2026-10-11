@@ -149,22 +149,42 @@ def _pin_cache_find_event(home, away):
     return None
 
 
+_event_index_cache = {}  # (sport_id, event_type) -> {(norm_home,norm_away): event}
+
+
+def _get_event_index(sport_id, event_type):
+    """建队名 → event 索引(一次建好, O(1) 查), 避免 find_pinnacle_event 每次线性扫 2000 场。"""
+    key = (sport_id, event_type)
+    if key in _event_index_cache:
+        return _event_index_cache[key]
+    data = fetch_pinnacle_markets(sport_id, event_type)
+    idx = {}
+    if data:
+        for e in data.get('events', []):
+            eh, ea = _norm(e.get('home', '')), _norm(e.get('away', ''))
+            if eh and ea:
+                idx[(eh, ea)] = e
+                idx[(ea, eh)] = e  # 主客互换也命中
+    _event_index_cache[key] = idx
+    return idx
+
+
 def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, event_type='prematch'):
     """从 Pinnacle 赔率算去水公平价(多锚共识的无偏基准)。
 
     sub_market: '1x2'→{home,draw,away}; 'hc'→{home,away}+line; 'ou'→{over,under}+line;
                 'dc'→由 1x2 合成 {1X,12,X2}。
     返回 dict(含 line) 或 None。target_line: hc/ou 的 BB 线(在 Pinnacle 线里找最接近的)。
-    优先读 WS 实时缓存(快), 否则 REST 兜底。
+    优先读 WS 实时缓存(快), 否则 REST 兜底(带队名索引, O(1) 查)。
     """
     pin_sid = BB_TO_PIN.get(sport_id)
     if not pin_sid:
         return None
-    # 1) WS 实时缓存优先(秒级), 2) REST 兜底(15min 缓存)
+    # 1) WS 实时缓存优先(秒级), 2) REST 兜底(15min 缓存 + 队名索引)
     e = _pin_cache_find_event(home, away)
     if not e:
-        data = fetch_pinnacle_markets(pin_sid, event_type)
-        e = find_pinnacle_event(data, home, away)
+        idx = _get_event_index(pin_sid, event_type)
+        e = idx.get((_norm(home), _norm(away)))
     if not e:
         return None
     periods = e.get('periods') or {}
