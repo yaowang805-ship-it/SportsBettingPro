@@ -1408,44 +1408,9 @@ def extract_match_odds(record, sport_key, platform="BB"):
         ft_btts = _extract_btts(ft_period)
         if ft_btts:
             ft_dict["btts"] = ft_btts
-        ft_oe = _extract_oe(ft_period)
-        if ft_oe:
-            ft_dict["oe"] = ft_oe
-        ft_htft = _extract_htft(ft_period)
-        if ft_htft:
-            ft_dict["htft"] = ft_htft
-
-        # 角球市场
-        ft_corner_ml = _extract_corner_ml(ft_period)
-        if ft_corner_ml:
-            ft_dict["corner_ml"] = ft_corner_ml
-        ft_corner_hc = _extract_corner_hc(ft_period)
-        if ft_corner_hc:
-            ft_dict["corner_hc"] = ft_corner_hc["primary"]
-            ft_dict["alternate_corner_hc"] = ft_corner_hc["alternates"]
-        ft_corner_ou = _extract_corner_ou(ft_period)
-        if ft_corner_ou:
-            ft_dict["corner_ou"] = ft_corner_ou["primary"]
-            ft_dict["alternate_corner_ou"] = ft_corner_ou["alternates"]
-        ft_booking_ml = _extract_booking_ml(ft_period)
-        if ft_booking_ml:
-            ft_dict["booking_ml"] = ft_booking_ml
-        ft_booking_hc = _extract_booking_hc(ft_period)
-        if ft_booking_hc:
-            ft_dict["booking_hc"] = ft_booking_hc["primary"]
-            ft_dict["alternate_booking_hc"] = ft_booking_hc["alternates"]
-        ft_booking_ou = _extract_booking_ou(ft_period)
-        if ft_booking_ou:
-            ft_dict["booking_ou"] = ft_booking_ou["primary"]
-            ft_dict["alternate_booking_ou"] = ft_booking_ou["alternates"]
-        # V5.5: 特殊盘口 (正确比分/净胜球/总进球区间/先进球) — Pinnacle special 有对应
-        for _key, _mty in [("correct_score", mt.get("correct_score")),
-                           ("winning_margin", mt.get("winning_margin")),
-                           ("total_goals_range", mt.get("total_goals_range")),
-                           ("first_to_score", mt.get("first_to_score"))]:
-            _spec = _extract_special_market(_mty, ft_period)
-            if _spec:
-                ft_dict[_key] = _spec
+        # 2026-10-11 盘口层过滤: 只提 5 类主盘口(ml/hc/ou/dc/btts) + dnb, 不提取特殊盘口
+        # (oe单双/htft半全场/角球/罚牌/正确比分/净胜球等)。观察库只收主盘口(拿不到 Betfair 公平价
+        # CLV 的特殊盘口, 映射保留但不进库), 提了也白费——省结构化时间 + 减少比价噪音。
 
     # V5: 美式足球 OU/HC 数据交换 — FB API mty=6002/6003 数据错位
     # 让分线>20(如37.5)显然是大小球 → 交换 OU 和 HC
@@ -1479,30 +1444,6 @@ def extract_match_odds(record, sport_key, platform="BB"):
             ht_btts = _extract_btts(ht_period)
             if ht_btts:
                 ht_dict["btts"] = ht_btts
-            ht_oe = _extract_oe(ht_period)
-            if ht_oe:
-                ht_dict["oe"] = ht_oe
-
-            # 角球 HT
-            ht_corner_ml = _extract_corner_ml(ht_period)
-            if ht_corner_ml:
-                ht_dict["corner_ml"] = ht_corner_ml
-            ht_corner_hc = _extract_corner_hc(ht_period)
-            if ht_corner_hc:
-                ht_dict["corner_hc"] = ht_corner_hc["primary"]
-                ht_dict["alternate_corner_hc"] = ht_corner_hc["alternates"]
-            ht_corner_ou = _extract_corner_ou(ht_period)
-            if ht_corner_ou:
-                ht_dict["corner_ou"] = ht_corner_ou["primary"]
-                ht_dict["alternate_corner_ou"] = ht_corner_ou["alternates"]
-
-            # V5.11: 半场特殊盘口(正确比分上半场/精确进球上半场) — 对应 Pinnacle
-            # "Correct Score 1st Half" / "Exact Total Goals 1st Half"
-            for _key, _mty in [("correct_score_ht", mt.get("correct_score_ht")),
-                               ("exact_goals_ht", mt.get("exact_goals_ht"))]:
-                _spec = _extract_special_market(_mty, ht_period)
-                if _spec:
-                    ht_dict[_key] = _spec
 
     # V5: 美式足球 OU/HC 交换
     _fix_af_ou_hc(ht_dict, sport_key)
@@ -1528,9 +1469,6 @@ def extract_match_odds(record, sport_key, platform="BB"):
             sh_dc = _extract_dc(sh_period)
             if sh_dc:
                 sh_dict["dc"] = sh_dc
-            sh_oe = _extract_oe(sh_period)
-            if sh_oe:
-                sh_dict["oe"] = sh_oe
 
         # V5: 美式足球 OU/HC 交换
         _fix_af_ou_hc(sh_dict, sport_key)

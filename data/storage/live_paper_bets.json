@@ -254194,9 +254194,9 @@
   "spread": null,
   "bb_ts": 1791671129.713713,
   "stake": 150,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -150.0,
   "anchor": "betfair",
   "sbo_direction": "none",
   "clv": -0.85
