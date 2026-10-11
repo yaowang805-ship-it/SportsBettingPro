@@ -2112,6 +2112,8 @@ class SecondLevelMonitor:
                         self._check_settled()
                     if poll_count % 15 == 0 and self._skip_stats:  # 2026-10-11 跳过分桶摘要(观察过度拦截)
                         print(f"[slm] 跳过分桶: {dict(self._skip_stats)}", flush=True)
+                    if poll_count % 15 == 0 and self._last_pin_frame_last:  # 段1: Pin产生→我收到 上游延迟(含钟偏, 看相对变化)
+                        print(f"[slm] 本地-Pin帧ts {self._last_pin_live_tick - self._last_pin_frame_last:.2f}s (含钟偏~1.6s, 越负=上游越慢)", flush=True)
                     # 每次轮询(2s)查 CLV(3s窗口)。2026-09-26 独立线程池+30s超时
                     await _run_task(self._check_clv, timeout=30, tag="CLV复验")
                     # 2026-09-24 每轮耗时监控: 定位假死根因(哪一步慢/卡), poll/settle 分阶段打点
