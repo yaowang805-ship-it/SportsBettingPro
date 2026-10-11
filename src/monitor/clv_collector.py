@@ -1376,7 +1376,7 @@ def log_oa_opportunities(details, min_ev=2.0):
 
     fieldnames = ["timestamp", "sport", "league", "home", "away", "home_pin", "away_pin",
                   "designation", "sub_market", "bb_odds", "pin_odds", "fair_price", "ev_pct",
-                  "stake", "tier", "match_epoch", "bb_price_source", "pin_league_id", "pin_match_id",
+                  "stake", "tier", "match_epoch", "bb_price_source", "fair_source", "pin_league_id", "pin_match_id",
                   "source", "pin_max_stake", "line", "bb_match_id"]
     _migrate_csv_header(TRACKING_FILE, fieldnames)
     file_exists = TRACKING_FILE.exists()
