@@ -612,6 +612,7 @@ class SecondLevelMonitor:
         self._pin_trigger_offset = 0  # Pin drop 触发文件已消费行数(2026-10-11)
         self._pin_live_wake = False  # 滚球 drop 唤醒标志(2026-10-11): live drop 触发立即滚球比较
         self._trigger_source = "init"  # 触发源标签(ws/pin/poll), 供审计组内对照(2026-10-11)
+        self._trigger_source_stats = {}  # 触发源分布计数(2026-10-11): pin/betfair_ws/poll 各多少次
         self._last_pin_live_tick = 0.0  # 上次读到的 Pin WS live 帧时间戳(2026-10-11)
         self._last_pin_frame_last = 0.0  # Pin 帧自带 last(供「Pin产生→我收到」段1上游延迟)
         self._pin_clock_samples = []  # 本地-Pin帧ts 样本(判定时钟偏移稳定 vs 积压漂移)
@@ -2236,8 +2237,11 @@ class SecondLevelMonitor:
             # 2026-09-29 去掉 3.0s 节流 + persistence: sharp 动立即触发 poll(WS 变动即比价下单),
             # 不再等 3s 节流/0.5s 稳定。oddsChange=0 兜底(变了就拒), 防假溢价靠 SBO 同向 + 快照年龄。
             if _ws_changed or self._pin_live_wake or now - last_poll >= refresh_every:
-                # 触发源标签(2026-10-11): betfair_ws/pin(WS tick或SSE drop)/poll, 供审计组内对照
-                self._trigger_source = "betfair_ws" if _ws_changed else ("pin" if self._pin_live_wake else "poll")
+                # 触发源标签(2026-10-11): pin(Pin live tick优先) / betfair_ws / poll, 供审计组内对照
+                # Pin live 优先；若 Pin live 未唤醒则退回 Betfair WS，再退回 2s 轮询。
+                # 三态兜底完整保留，本行只改优先级，不改可达性(最坏退回 betfair_ws，行为与改前一致)。
+                self._trigger_source = "pin" if self._pin_live_wake else ("betfair_ws" if _ws_changed else "poll")
+                self._trigger_source_stats[self._trigger_source] = self._trigger_source_stats.get(self._trigger_source, 0) + 1
                 self._pin_live_wake = False  # 2026-10-11: Pin 滚球 drop 唤醒后立即比较一次
                 try:
                     _t_round0 = time.time()
@@ -2261,6 +2265,9 @@ class SecondLevelMonitor:
                             print(f"[slm] ⚠️ 结算耗时 {time.time()-_t_settle0:.0f}s(>60s)", flush=True)
                     if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
                         self._check_settled()
+                    if poll_count % 15 == 0 and self._trigger_source_stats:  # 触发源分布(2026-10-11): 验证 pin 优先是否生效
+                        _ts = self._trigger_source_stats
+                        print(f"[slm] 触发源分布: pin={_ts.get('pin',0)} betfair_ws={_ts.get('betfair_ws',0)} poll={_ts.get('poll',0)}", flush=True)
                     if poll_count % 15 == 0 and self._skip_stats:  # 2026-10-11 跳过分桶摘要(观察过度拦截)
                         print(f"[slm] 跳过分桶: {dict(self._skip_stats)}", flush=True)
                     try:  # 2026-10-11 共享 stats 摘要(滚球+早盘 line_zero seen/filtered)

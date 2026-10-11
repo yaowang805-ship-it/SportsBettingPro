@@ -98,7 +98,8 @@ BB_SPORT_MAP = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "
                  2: "ice_hockey", 13: "volleyball", 15: "pingpong", 18: "mma", 19: "boxing",
                  47: "badminton"}  # 2026-09-27 补排球/乒乓/冰球/MMA/拳击/羽毛球(之前只5运动, 排球乒乓样本被统计层过滤)
 BB_SUB_MAP = {"over_under": "ou", "handicap": "hc", "opportunities": "1x2",
-              "double_chance": "dc", "btts": "btts"}  # 2026-09-19 滚球新增 dc/btts 观察库收集
+              "double_chance": "dc", "btts": "btts",
+              "ht": "ht", "ht_ou": "ht_ou"}  # 2026-09-19 滚球新增 dc/btts; 2026-10-11 补 ht/ht_ou(半场盘归类失败106条)
 LIVE_LEAGUE = "滚球"
 
 # 运动中文名(2026-09-12 用户要求: 释放盘口必须标注具体运动)。释放清单 sport 字段是英文,
@@ -223,8 +224,8 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 2026-10-10 早盘释放按「CLV>0 且 干净ROI>0」重定(注额口径已修): 足球独赢主 40-55% 是真溢价格子
     # (主40-50% CLV+4.72%/赢率54.5%vs41% +13.6pp, 主50-55% CLV+5.40%/赢率58.3%vs50% +8.3pp)。
     # 撤独赢客30-40%(CLV -0.66% 负, 赢率正只是方差); btts暂不释放(正ROI靠n=3~4小桶全中堆的方差)。
-    "football|1x2|主|40-50%|early": 200,
-    "football|1x2|主|50-55%|early": 200,
+    # 2026-10-11 撤回足球独赢主 40-55%: 切 Pin 后这两个格 Pin 口径 CLV 变负(40-50% -4.68%/50-55% -2.41%),
+    # 10-10 按「CLV>0」放的依据是 Betfair 口径, 换 Pin 后符号翻转=锚点偏差。交还数据驱动判据(负 CLV 不会释放)。
     # 2026-09-30 撤回: 双机会主/客 2.0-3.0 实盘首日 -15.9% ROI(19笔胜率33%, 观察库 edge+3.5pp 苗头被打脸),
     # 早盘上半场独赢客 >5.0 实盘 -20.7% ROI(8笔6负1胜胜率14%, 高赔率彩票型), 用户要求放回观察库交还数据驱动判据。
 }

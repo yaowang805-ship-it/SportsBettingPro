@@ -23,11 +23,13 @@ BB_SPORT_MAP = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "
                 2: "ice_hockey", 13: "volleyball", 15: "pingpong", 18: "mma", 19: "boxing",
                 47: "badminton"}
 BB_SUB_MAP = {"over_under": "ou", "handicap": "hc", "opportunities": "1x2",
-              "double_chance": "dc", "btts": "btts"}
+              "double_chance": "dc", "btts": "btts",
+              "ht": "ht", "ht_ou": "ht_ou"}  # 2026-10-11 补 ht/ht_ou(与 compute_market_release 对齐)
 SPORT_CN = {"football": "足球", "basketball": "篮球", "tennis": "网球", "baseball": "棒球",
             "ice_hockey": "冰球", "american_football": "美足", "volleyball": "排球",
             "pingpong": "乒乓", "mma": "MMA", "boxing": "拳击", "badminton": "羽毛球"}
-SUB_CN = {"1x2": "独赢", "hc": "让球", "ou": "大小", "dc": "双机会", "btts": "双边进球"}
+SUB_CN = {"1x2": "独赢", "hc": "让球", "ou": "大小", "dc": "双机会", "btts": "双边进球",
+          "ht": "上半场独赢", "ht_ou": "上半场大小"}
 
 
 def _direction(desig, sm):
