@@ -58,22 +58,24 @@ def _fetch_settled_orders():
     return records
 
 
-def _classify(stake, pnl, odds):
-    """BB uwl(净盈亏) → status。
+def _classify(stake, pnl, odds, rj=0, rjs=""):
+    """BB 订单 → (status, void_reason)。
 
-    void: pnl==0(本金退回, 进球回溯取消/盘口作废)
-    partial: 部分结算(赢了但不足全额, 或输了但没全输)——P&L 偏差主要来源
-    won/lost: 全额
+    rj(拒因)!=0 → 真 void(回溯取消/停售/拒单), 返回 rjs 作 void_reason。
+    rj==0 且 uwl==0 → push(走盘, 合法平局本金退回), 不是 void。
+    partial: 部分结算(赢了不足全额, 或输了没全输)——P&L 偏差主要来源。
     """
+    if rj:
+        return "void", rjs
     if pnl == 0:
-        return "void"
+        return "push", ""
     if odds and odds > 1 and stake > 0:
         full_win = stake * (odds - 1)
         if pnl > 0 and abs(pnl - full_win) / full_win > 0.02:
-            return "partial"   # 赢但不足全额
+            return "partial", ""
         if pnl < 0 and abs(pnl + stake) / stake > 0.02:
-            return "partial"   # 输但没全输
-    return "won" if pnl > 0 else "lost"
+            return "partial", ""
+    return ("won" if pnl > 0 else "lost"), ""
 
 
 def main():
@@ -109,14 +111,14 @@ def main():
         except (TypeError, ValueError):
             pnl = 0.0
         od = op.get("od", 0) or 0
-        status = _classify(float(stake), pnl, float(od))
-        # settled_amount = 返还金额: 赢=stake+pnl, void=stake, 输=0
+        status, void_reason = _classify(float(stake), pnl, float(od), o.get("rj", 0), o.get("rjs", ""))
+        # settled_amount = 返还金额: 赢=stake+pnl, void/push=stake, 输=0
         returned = max(0.0, float(stake) + pnl)
         recs.append({
             "oid": oid, "status": status, "stake": stake, "pnl": pnl,
             "odds": od, "returned": round(returned, 2),
             "mn": op.get("mn", ""), "on": op.get("on", ""), "mgn": op.get("mgn", ""),
-            "void_reason": "", "matched_at": now,
+            "void_reason": void_reason, "matched_at": now,
         })
 
     # 本地未结算且查不到的 → pending(未结束) 或 unmatched(>24h 仍无, 疑映射错)
@@ -141,14 +143,18 @@ def main():
         print(f"[recon] 写盘失败: {e}", flush=True)
         return
 
-    # 汇总 void 率(只看已结算的)
-    settled = [r for r in recs if r["status"] in ("won", "lost", "void", "partial")]
+    # 汇总 void 率(只看已结算的): 区分真 void(rj!=0) vs push(走盘)
+    settled = [r for r in recs if r["status"] in ("won", "lost", "void", "partial", "push")]
     c = Counter(r["status"] for r in settled)
     total = len(settled)
     void_rate = c.get("void", 0) / total * 100 if total else 0
+    push_rate = c.get("push", 0) / total * 100 if total else 0
     partial_rate = c.get("partial", 0) / total * 100 if total else 0
     unmatched_n = sum(1 for r in recs if r["status"] == "unmatched")
-    print(f"[recon] 已结算 {total} 笔: {dict(c)} | void率 {void_rate:.1f}% | partial率 {partial_rate:.1f}% | unmatched {unmatched_n} 笔", flush=True)
+    void_reasons = Counter(r["void_reason"] for r in settled if r["status"] == "void" and r["void_reason"])
+    print(f"[recon] 已结算 {total} 笔: {dict(c)} | void率 {void_rate:.1f}% | push率 {push_rate:.1f}% | partial率 {partial_rate:.1f}% | unmatched {unmatched_n} 笔", flush=True)
+    if void_reasons:
+        print(f"[recon] void 拒因分布: {dict(void_reasons)}", flush=True)
     if void_rate > 5:
         print(f"[recon] ⚠️ void率 {void_rate:.1f}% > 5%: 滚球 EV/slippage 分析需打折, 优先级重排", flush=True)
 

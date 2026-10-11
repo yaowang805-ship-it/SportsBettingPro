@@ -1239,6 +1239,15 @@ class SecondLevelMonitor:
         # 2026-10-11 _attempted 前置: 过了所有 gate 就标记「已尝试」, 在发请求前写。防重复请求 +
         # 将来 worker pool 并发重入双倍下单(必须先写再发请求)。stake_record 仍只在成交后写(防重复敞口)。
         self._attempted.setdefault(str(sig["match_id"]), {})[str(market_id)] = time.time()
+        # 整数线命中计数(2026-10-11): 量让球/大小球整数线(0/±1/2.0/3.0)命中率, 决定是否硬过滤。
+        # 整数线可走盘(push), push 让 EV 记录虚高(资金被退回=期望收益抹掉), 且不进 slippage。
+        if sig.get("line") is not None:
+            try:
+                _lv = float(sig["line"])
+                if abs(_lv - round(_lv)) < 1e-6:
+                    self._count_skip("integer_line_bet")
+            except (TypeError, ValueError):
+                pass
         _t_place = time.time()
         _dv = _decision_version(self.threshold)  # 配置快照 hash(复盘用)
         code, order_id, msg = place_single_bet(
