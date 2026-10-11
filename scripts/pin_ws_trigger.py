@@ -87,6 +87,28 @@ def _on_drop(stream, drop):
         print(f"[pin-drop] {stream} {home} vs {away}: {fp} → {tp} [{outcome}] (BB未匹配)", flush=True)
 
 
+def _poll_rest_cache(cache, rest):
+    """REST since 轮询: 维护标准化 Pin 赔率缓存(WS 只有元数据没赔率, 赔率在 REST)。
+
+    每 5s 拉 live+prematch 全量(10 次 REST/轮, ≤10 req/s), 存 {event_id: {event: 标准化事件}}。
+    供 pinnacle_fair_price 读(pin_odds_cache.json 落盘)。
+    """
+    while True:
+        try:
+            for sid in (1, 2, 3, 4, 6):
+                for et in ("live", "prematch"):
+                    data = rest.get_odds(sid, et)
+                    if not data:
+                        continue
+                    for ev in data.get("events", []):
+                        eid = str(ev.get("event_id"))
+                        if eid:
+                            cache.update_event(eid, ev)
+        except Exception as e:
+            print(f"[pin] REST 轮询异常: {type(e).__name__} {str(e)[:80]}", flush=True)
+        time.sleep(5)
+
+
 def main():
     cache = PinOddsCache()
     rest = PinRestClient()
@@ -95,7 +117,8 @@ def main():
 
     ws.start()
     sse.start()
-    print("[pin] Pin WS + SSE 常驻已启动", flush=True)
+    threading.Thread(target=_poll_rest_cache, args=(cache, rest), daemon=True, name="pin-rest").start()
+    print("[pin] Pin WS + SSE + REST轮询 常驻已启动", flush=True)
 
     # 每 10s 落盘缓存(供早盘/滚球进程读实时公平价)
     while True:

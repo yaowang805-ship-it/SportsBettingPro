@@ -123,30 +123,36 @@ def find_pinnacle_event(data, home, away):
     return best
 
 
-def _pin_cache_find_event(home, away):
-    """从 pin_odds_cache.json(WS 实时缓存)按队名找事件。返回 event dict 或 None。
+_pin_cache_idx = {"_ts": 0.0, "_idx": {}}
 
-    只认有 periods 的全量 snapshot 事件(增量帧没有 periods); 缓存 >60s 视为失效(回退 REST)。
+
+def _pin_cache_find_event(home, away):
+    """从 pin_odds_cache.json(实时缓存)按队名找事件。返回 event dict 或 None。
+
+    只认有 periods 的全量事件; 缓存 >60s 视为失效。用 ts 作索引缓存键, 避免每次线性扫上万个事件。
     """
     try:
-        f = DATA_DIR / "pin_odds_cache.json" if "DATA_DIR" in globals() else \
-            Path(__file__).resolve().parent.parent.parent / "data" / "storage" / "pin_odds_cache.json"
+        f = Path(__file__).resolve().parent.parent.parent / "data" / "storage" / "pin_odds_cache.json"
         if not f.exists():
             return None
         d = json.loads(f.read_text())
-        if time.time() - d.get("ts", 0) > 60:
+        ts = d.get("ts", 0)
+        if time.time() - ts > 60:
             return None
-        nh, na = _norm(home), _norm(away)
-        for entry in d.get("cache", {}).values():
-            ev = entry.get("event") or {}
-            if not ev.get("periods"):
-                continue
-            eh, ea = _norm(ev.get("home", "")), _norm(ev.get("away", ""))
-            if eh == nh and ea == na:
-                return ev
+        if _pin_cache_idx.get("_ts") != ts:
+            idx = {}
+            for entry in d.get("cache", {}).values():
+                ev = entry.get("event") or {}
+                if not ev.get("periods"):
+                    continue
+                eh, ea = _norm(ev.get("home", "")), _norm(ev.get("away", ""))
+                if eh and ea:
+                    idx[(eh, ea)] = ev
+            _pin_cache_idx["_ts"] = ts
+            _pin_cache_idx["_idx"] = idx
+        return _pin_cache_idx["_idx"].get((_norm(home), _norm(away)))
     except Exception:
         return None
-    return None
 
 
 _event_index_cache = {}  # (sport_id, event_type) -> {(norm_home,norm_away): event}
