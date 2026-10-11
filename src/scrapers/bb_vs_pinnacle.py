@@ -1672,6 +1672,32 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
                         "fair_price": round(oa_htou["under"], 4), "ev_pct": round(ev_u, 2), "_market": "ht_ou",
                     })
 
+    # --- ht_hc (上半场让球) ---
+    bb_ht_hc = bb_ht.get("handicap")
+    if bb_ht_hc:
+        ht_hl = bb_ht_hc.get("home_line") if bb_ht_hc.get("home_line") is not None else bb_ht_hc.get("away_line")
+        if ht_hl is not None and abs(float(ht_hl) * 2 - round(float(ht_hl) * 2)) > 1e-6:
+            ht_hl = None  # quarter-ball 过滤(对齐滚球)
+        if ht_hl is not None:
+            oa_hthc = _oa_fair(entry, sport, "ht_hc", target_line=ht_hl, use_rest=use_rest, status=status)
+            if oa_hthc and oa_hthc.get("home") and oa_hthc.get("away"):
+                bf_line = oa_hthc.get("line")
+                if bf_line is not None and abs(float(ht_hl) - float(bf_line)) <= 0.01:
+                    ev_h = (bb_ht_hc["home_odds"] - oa_hthc["home"]) / oa_hthc["home"] * 100
+                    ev_a = (bb_ht_hc["away_odds"] - oa_hthc["away"]) / oa_hthc["away"] * 100
+                    if 1 < ev_h <= 20:
+                        entry["handicap"].append({
+                            "designation": "上半场让球主胜", "line": bb_ht_hc.get("home_line_str", ""),
+                            "bb_odds": bb_ht_hc["home_odds"], "pin_odds": 0,
+                            "fair_price": round(oa_hthc["home"], 4), "ev_pct": round(ev_h, 2), "_market": "ht_hc",
+                        })
+                    if 1 < ev_a <= 20:
+                        entry["handicap"].append({
+                            "designation": "上半场让球客胜", "line": bb_ht_hc.get("away_line_str", ""),
+                            "bb_odds": bb_ht_hc["away_odds"], "pin_odds": 0,
+                            "fair_price": round(oa_hthc["away"], 4), "ev_pct": round(ev_a, 2), "_market": "ht_hc",
+                        })
+
     # --- dc (双重机会) ---
     bb_dc = bb.get("odds_dc", [])
     if len(bb_dc) >= 3 and n_ml == 3:

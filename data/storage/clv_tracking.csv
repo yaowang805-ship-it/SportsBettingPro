@@ -792,3 +792,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T07:39:30Z,mma,UFC Fight Night,Tanner Boser,Jhonata Diniz,,,主胜,1x2,2.93,0,1.4486,102.26,0,1,1792270800,BB,pinnacle,,,validate,,,5429252
 2026-10-11T07:39:30Z,mma,UFC Fight Night,Javad Mahjoub,Joel Faglier,,,客胜,1x2,1.99,0,1.8696,6.44,0,1,1792274400,BB,pinnacle,,,validate,,,5735100
 2026-10-11T07:39:30Z,boxing,Boxing International Matchups,Sebastian Fundora,Ermal Hadribeaj,,,客胜,1x2,6.2,0,1.1083,459.42,0,3,1792292400,BB,pinnacle,,,validate,,,5547632
+2026-10-11T07:41:06Z,basketball,British Basketball Super League,Sheffield Sharks,Leicester Riders,,,上半场主胜,ht,1.43,0,1.3849,3.26,0,2,1791730800,ALL,pinnacle,,,validate,,,5700075
+2026-10-11T07:41:38Z,football,UAE Division 1,Forte Virtus,Fujairah FC,,,主胜,1x2,2.49,0,2.2781,9.3,0,2,1791728100,BB,pinnacle,,,validate,,,5730965
+2026-10-11T07:41:38Z,football,UAE Division 1,Forte Virtus,Fujairah FC,,,双重机会-主/和局,dc,1.51,0,1.4648,3.09,0,2,1791728100,BB,pinnacle,,,validate,,,5730965
+2026-10-11T07:41:38Z,football,Singapore Division 1,Singapore Khalsa Association FC,Tengah FC,,,双重机会-和局/客,dc,1.97,0,1.9195,2.63,0,3,1791718200,BB,pinnacle,,,validate,,,5733179
