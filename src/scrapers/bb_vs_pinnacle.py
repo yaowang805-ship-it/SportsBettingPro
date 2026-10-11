@@ -1716,29 +1716,9 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
                             "pin_odds": 0, "fair_price": round(fair, 4), "ev_pct": round(ev, 2), "_market": "dc",
                         })
 
-    # --- dnb (平局退款) ---
-    bb_dnb = bb.get("odds_dnb", [])
-    if len(bb_dnb) >= 2 and n_ml == 3:
-        oa_dnb = _oa_fair(entry, sport, "dnb", use_rest=use_rest, status=status)
-        if oa_dnb and oa_dnb.get("home") and oa_dnb.get("away"):
-            dnb_labels = ["平局退款-主", "平局退款-客"]
-            dnb_fair = [oa_dnb["home"], oa_dnb["away"]]
-            for i in range(2):
-                bb_val = float(bb_dnb[i]) if isinstance(bb_dnb[i], str) else bb_dnb[i]
-                if bb_val and dnb_fair[i] > 0:
-                    ev = (bb_val - dnb_fair[i]) / dnb_fair[i] * 100
-                    if 1 < ev <= 20:
-                        entry["draw_no_bet"].append({
-                            "designation": dnb_labels[i], "bb_odds": bb_val,
-                            "pin_odds": 0, "fair_price": round(dnb_fair[i], 4), "ev_pct": round(ev, 2), "_market": "dnb",
-                        })
-
-    # --- btts (双边进球) ---
-    bb_btts_yes, bb_btts_no = extract_bb_btts(bb)
-    if bb_btts_yes and bb_btts_no:
-        oa_btts = _oa_fair(entry, sport, "btts", use_rest=use_rest, status=status)
-        if oa_btts and oa_btts.get("yes") and oa_btts.get("no"):
-            _add_btts_opportunities(entry, bb_btts_yes, bb_btts_no, oa_btts["yes"], oa_btts["no"])
+    # --- dnb/btts (Betfair 兜底盘) 已移除(2026-10-11) ---
+    # 用户要求: 只要 Pin∩BB 盘口, Betfair 兜底的不要。Pin 只提供独赢/让球/大小球(全场+半场),
+    # dnb(平局退款)/btts(双方进球) 依赖 Betfair 兜底 → 移除, 不进观察库/实盘。
 
 
 def compare_bb_vs_oa(bb_matches, save_path=None):
