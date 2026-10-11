@@ -796,3 +796,13 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T07:41:38Z,football,UAE Division 1,Forte Virtus,Fujairah FC,,,主胜,1x2,2.49,0,2.2781,9.3,0,2,1791728100,BB,pinnacle,,,validate,,,5730965
 2026-10-11T07:41:38Z,football,UAE Division 1,Forte Virtus,Fujairah FC,,,双重机会-主/和局,dc,1.51,0,1.4648,3.09,0,2,1791728100,BB,pinnacle,,,validate,,,5730965
 2026-10-11T07:41:38Z,football,Singapore Division 1,Singapore Khalsa Association FC,Tengah FC,,,双重机会-和局/客,dc,1.97,0,1.9195,2.63,0,3,1791718200,BB,pinnacle,,,validate,,,5733179
+2026-10-11T07:42:14Z,football,England EFL Trophy,Notts County,Nottingham Forest U21,,,上半场让球主胜,ht_hc,2.04,0,1.7107,19.25,0,3,1791914400,ALL,pinnacle,,,validate,,-0.5,5731079
+2026-10-11T07:42:14Z,football,Spain Tercera Division,Boiro,Viveiro CF,,,上半场让球主胜,ht_hc,1.92,0,1.6178,18.68,0,4,1791732600,ALL,pinnacle,,,validate,,-0.5,5731176
+2026-10-11T07:42:14Z,football,Mongolia Premier League,Central Stallions,Deren,,,大球,ou,1.84,0,1.7857,3.04,0,2,1791705600,BB,pinnacle,,,validate,,4.5,5730940
+2026-10-11T07:42:14Z,basketball,Turkey Basketball Super League,Turk Telekom,Besiktas JK,,,上半场让球客胜,ht_hc,1.94,0,1.8443,5.19,0,2,1791730800,BB,pinnacle,,,validate,,-1.5,5711995
+2026-10-11T07:42:14Z,basketball,Lithuania LKL Basketball,BC Siauliai,BC Juventus Utena,,,上半场让球主胜,ht_hc,1.88,0,1.7471,7.61,0,2,1791735000,ALL,pinnacle,,,validate,,-1.5,5726328
+2026-10-11T07:42:14Z,basketball,Israel Basketball Super League,Bnei Herzliya,Maccabi Ironi Ramat Gan,,,上半场让球主胜,ht_hc,1.91,0,1.7043,12.07,0,2,1791825000,ALL,pinnacle,,,validate,,-3.5,5521004
+2026-10-11T07:42:14Z,basketball,Turkey Basketball Super League,Trabzonspor,Bordo Sportif RS,,,上半场让球主胜,ht_hc,1.85,0,1.739,6.38,0,2,1791712800,ALL,pinnacle,,,validate,,-1.5,5711993
+2026-10-11T07:42:14Z,basketball,Mexico LNBP Basketball League,Abejas de Leon,Santos del Potosi,,,上半场让球主胜,ht_hc,1.87,0,1.7831,4.87,0,3,1791763200,ALL,pinnacle,,,validate,,-1.5,5721739
+2026-10-11T07:42:14Z,basketball,Mexico LNBP Basketball League,Dorados de Chihuahua,Gambusinos de Fresnillo,,,上半场让球主胜,ht_hc,1.87,0,1.7275,8.25,0,3,1791756000,ALL,pinnacle,,,validate,,-1.5,5721732
+2026-10-11T07:42:14Z,basketball,Turkey TBL Basketball,Gaziantep Basketbol,Buyukcekmece Basketbol,,,上半场让球主胜,ht_hc,1.92,0,1.756,9.34,0,3,1791720000,ALL,pinnacle,,,validate,,-2.5,5730920
