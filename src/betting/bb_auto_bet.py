@@ -377,6 +377,7 @@ def _append_bet_audit():
         _f = _Path(__file__).resolve().parent.parent.parent / "data" / "storage" / "bet_audit.jsonl"
         _rec = dict(_last_bet_audit)
         _rec["ts"] = time.time()
+        _rec["adj_factor"] = ADJ_FACTOR  # 2026-10-11 raw_ev→settled_adj_ev 折算系数(风控口径)
         with open(_f, "a", encoding="utf-8") as _fh:
             _fh.write(_json.dumps(_rec, ensure_ascii=False) + "\n")
     except Exception:
