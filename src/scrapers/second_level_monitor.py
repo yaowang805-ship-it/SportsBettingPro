@@ -557,6 +557,7 @@ class SecondLevelMonitor:
         self._pin_live_wake = False  # 滚球 drop 唤醒标志(2026-10-11): live drop 触发立即滚球比较
         self._last_pin_live_tick = 0.0  # 上次读到的 Pin WS live 帧时间戳(2026-10-11)
         self._last_pin_frame_last = 0.0  # Pin 帧自带 last(供「Pin产生→我收到」段1上游延迟)
+        self._pin_clock_samples = []  # 本地-Pin帧ts 样本(判定时钟偏移稳定 vs 积压漂移)
         self._skip_stats = {}  # 滚球跳过分桶(2026-10-11): 观察是否有过滤条件把机会全滤掉(过度拦截零成交)
         self._market_cooldown = {}  # 层1: {(match_id, market_id): 上次成交ts} per-market 冷却
         self._event_exposure = {}   # 层2: {match_id: 持仓数} per-event 敞口
@@ -2118,6 +2119,9 @@ class SecondLevelMonitor:
                 self._last_pin_live_tick = _ptick
                 self._last_pin_frame_last = _pin_last
                 self._pin_live_wake = True
+                if _pin_last:  # 收集时钟差样本(判定偏移稳定 vs 积压漂移)
+                    self._pin_clock_samples.append(_ptick - _pin_last)
+                    self._pin_clock_samples = self._pin_clock_samples[-300:]
             # 2026-09-29 去掉 3.0s 节流 + persistence: sharp 动立即触发 poll(WS 变动即比价下单),
             # 不再等 3s 节流/0.5s 稳定。oddsChange=0 兜底(变了就拒), 防假溢价靠 SBO 同向 + 快照年龄。
             if _ws_changed or self._pin_live_wake or now - last_poll >= refresh_every:
@@ -2146,8 +2150,11 @@ class SecondLevelMonitor:
                         self._check_settled()
                     if poll_count % 15 == 0 and self._skip_stats:  # 2026-10-11 跳过分桶摘要(观察过度拦截)
                         print(f"[slm] 跳过分桶: {dict(self._skip_stats)}", flush=True)
-                    if poll_count % 15 == 0 and self._last_pin_frame_last:  # 段1: Pin产生→我收到 上游延迟(含钟偏, 看相对变化)
-                        print(f"[slm] 本地-Pin帧ts {self._last_pin_live_tick - self._last_pin_frame_last:.2f}s (含钟偏~1.6s, 越负=上游越慢)", flush=True)
+                    if poll_count % 15 == 0 and self._pin_clock_samples:  # 段1: Pin产生→我收到 时钟差(稳定=偏移, 漂移=积压)
+                        _s = sorted(self._pin_clock_samples)
+                        _med = _s[len(_s) // 2]
+                        _span = _s[-1] - _s[0]
+                        print(f"[slm] Pin时钟差 中位{_med:.2f}s 跨度{_span:.2f}s (稳定≈纯偏移可归一化; 持续变负/跨度放大=积压告警)", flush=True)
                     # 每次轮询(2s)查 CLV(3s窗口)。2026-09-26 独立线程池+30s超时
                     await _run_task(self._check_clv, timeout=30, tag="CLV复验")
                     # 2026-09-24 每轮耗时监控: 定位假死根因(哪一步慢/卡), poll/settle 分阶段打点
