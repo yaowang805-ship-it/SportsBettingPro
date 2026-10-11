@@ -2162,3 +2162,21 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T04:05:11Z,football,Spain Segunda Division RFEF,Atletico Sanluqueno,Recreativo Huelva,,,客胜,1x2,2.01,0,1.8934,6.16,0,3,1791734400,ALL,,,validate,,,5700008
 2026-10-11T04:05:11Z,basketball,Japan B.League Premier,Ibaraki Robots,Nagoya Diamond Dolphins,,,主胜,1x2,3.33,0,3.2521,2.4,0,3,1791698700,BB,,,validate,,,5298102
 2026-10-11T04:05:11Z,basketball,Austria Basketball Superliga,Swans Gmunden,Flyers Wels,,,上半场主胜,ht,1.3,0,1.2744,2.01,0,2,1791732600,ALL,,,validate,,,5701523
+2026-10-11T04:10:24Z,football,Germany 2. Bundesliga,Hertha BSC,Greuther Furth,,,主胜,1x2,1.58,0,1.5421,2.46,0,1,1791718200,ALL,,,validate,,,5203050
+2026-10-11T04:10:24Z,football,Peru Liga 1,UTC de Cajamarca,Sporting Cristal,,,上半场客胜,ht,2.52,0,2.3752,6.1,0,2,1791741600,ALL,,,validate,,,5673091
+2026-10-11T04:10:24Z,football,USL Championship,Rhode Island FC,Loudoun United FC,,,上半场主胜,ht,2.04,0,1.6144,26.36,0,2,1792020600,BB,,,validate,,,5717948
+2026-10-11T04:10:24Z,football,Singapore Division 1,Police SA,Bishan Barx FC,,,客胜,1x2,7.25,0,7.0447,2.91,0,2,1791709200,BB,,,validate,,,5733196
+2026-10-11T04:10:24Z,football,Singapore Division 1,Police SA,Bishan Barx FC,,,上半场主胜,ht,1.72,0,1.4708,16.94,0,2,1791709200,BB,,,validate,,,5733196
+2026-10-11T04:10:24Z,football,Singapore Division 1,Police SA,Bishan Barx FC,,,双重机会-和局/客,dc,3.23,0,3.124,3.39,0,2,1791709200,BB,,,validate,,,5733196
+2026-10-11T04:10:24Z,basketball,Japan B.League Premier,Altiri Chiba,Toyama Grouses,,,客胜,1x2,2.17,0,2.0951,3.58,0,3,1791695100,BB,,,validate,,,5298105
+2026-10-11T04:10:24Z,football,Venezuela Primera Division,Monagas SC,Estudiantes de Merida,,,主胜,1x2,2.07,0,1.7942,15.37,0,2,1791756000,ALL,,,validate,,,5372946
+2026-10-11T04:10:24Z,football,Venezuela Primera Division,Monagas SC,Estudiantes de Merida,,,客胜,1x2,3.0,0,2.2592,32.79,0,2,1791756000,ALL,,,validate,,,5372946
+2026-10-11T04:15:05Z,football,Colombia Primera A,America de Cali,Independiente Medellin,,,上半场客胜,ht,5.05,0,4.903,3.0,0,2,1791767700,ALL,,,validate,,,5687990
+2026-10-11T04:15:37Z,baseball,Korea Republic KBO League,Kia Tigers,Lotte Giants,,,客胜,1x2,3.96,0,3.811,3.91,0,1,1791694800,BB,,,validate,,,5688007
+2026-10-11T04:20:18Z,football,Russia Premier League,CSKA Moscow,Rodina Moscow,,,上半场主胜,ht,1.91,0,1.8696,2.16,0,2,1791725400,ALL,,,validate,,,5607313
+2026-10-11T04:20:18Z,football,Turkey Super Lig,Konyaspor,Istanbul Basaksehir,,,主胜,1x2,2.67,0,2.6001,2.69,0,2,1791714600,ALL,,,validate,,,5446254
+2026-10-11T04:20:18Z,football,Belgium Pro League,KVC Westerlo,Royal Antwerp FC,,,客胜,1x2,3.02,0,2.9223,3.34,0,2,1791736200,ALL,,,validate,,,5129959
+2026-10-11T04:20:18Z,football,Turkey Super Lig,Fenerbahce,Alanyaspor,,,和局,1x2,5.15,0,2.8522,80.56,0,2,1792252800,ALL,,,validate,,,5446223
+2026-10-11T04:20:18Z,football,Turkey Super Lig,Fenerbahce,Alanyaspor,,,双重机会-和局/客,dc,3.32,0,2.1418,55.01,0,2,1792252800,ALL,,,validate,,,5446223
+2026-10-11T04:20:18Z,football,Saudi Arabia Professional League,NEOM SC,Al Ettifaq FC,,,和局,1x2,3.69,0,2.5394,45.31,0,3,1792251600,BB,,,validate,,,5411516
+2026-10-11T04:20:18Z,football,Saudi Arabia Professional League,NEOM SC,Al Ettifaq FC,,,双重机会-和局/客,dc,1.89,0,1.6034,17.87,0,3,1792251600,BB,,,validate,,,5411516

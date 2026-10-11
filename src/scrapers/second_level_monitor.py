@@ -981,6 +981,26 @@ class SecondLevelMonitor:
             if self.auto_bet:
                 self._try_live_auto_bet(sig)
 
+    def _score_changed(self, sig):
+        """下单前比分状态校验(2026-10-11): 进球/比分变了 → 快照作废(死球, 不吃坏价)。
+
+        读预取缓存当前比分 vs 快照比分(_score/bsc)。进球后 BB 盘口往往滞后, 快照没超龄也已作废。
+        读不到当前状态时放行(不误拦), 交由 oddsChange=0 兜底。
+        """
+        try:
+            from src.scrapers.pinnacle_live import get_bb_fresh_or_cached
+            bb, _ = get_bb_fresh_or_cached(wait_for_fresh=False)
+            m = bb.get(sig.get("match_id"))
+            if m is None:
+                return False
+            cur_sc = m.get("sc")
+            snap_sc = sig.get("bsc")
+            if cur_sc is not None and snap_sc is not None and cur_sc != snap_sc:
+                return True
+        except Exception:
+            pass
+        return False
+
     def _try_live_auto_bet(self, sig):
         """滚球机会处理: 观察库入库前验价(漂移假EV不入库), 实盘下单由 LIVE_REAL_BET_ENABLED 控制。"""
         _t0 = time.time(); _t = _t0  # 计时埋点(2026-09-17)
@@ -1109,8 +1129,9 @@ class SecondLevelMonitor:
         if time.time() - self._last_bet_time < self._bet_delay:
             return
         # 全局冷却(2026-09-08): 跨进程共享时间戳, 避免早盘+滚球"同一时间"下单像机器投注
+        # 2026-10-11 滚球冷却 15-45s→3-8s(进球窗口20-40s, 45s=自废; 早盘仍 20-90s)
         from src.betting.bb_auto_bet import global_bet_cooldown
-        if global_bet_cooldown(15, 45) > 0:
+        if global_bet_cooldown(3, 8) > 0:
             return
         # (2026-09-22 取消余额<1000 熔断——用户指令: 符合门槛就投, 不因余额低停注)
         print(f"  🎯 滚球下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake} "
@@ -1125,12 +1146,16 @@ class SecondLevelMonitor:
         if (time.time() - _detect_ts) > SNAPSHOT_MAX_AGE:
             print(f"  ⏭️ 快照单跳过(快照已{time.time()-_detect_ts:.0f}s>{SNAPSHOT_MAX_AGE}s, 不投stale) {tag}", flush=True)
             return
+        # 2026-10-11 比分状态校验: 进球/比分变了 → 快照作废(死球), 跳过。补 SNAPSHOT_MAX_AGE 只看年龄的缺口。
+        if self._score_changed(sig):
+            print(f"  ⚽ 比分已变(进球/状态), 快照作废跳过 {tag}", flush=True)
+            return
         _t_place = time.time()
         # 2026-09-20 去掉 verify_price: 快照单(≤6s)已保证赔率新鲜, oddsChange=0 下单瞬间变了就拒,
         # 再 fetch_current_odds 验价是冗余的第二个 HTTP(~1-2s), 是「下单耗时变长」的元凶之一。
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
-            match_id=sig["match_id"], check_limit=True, verify_price=False,
+            match_id=sig["match_id"], check_limit=True, verify_price=True,
             fair_price=sig.get("fair"), min_ev_pct=self.threshold)
         _t_order = time.time() - _t0  # 下单函数内部耗时(调试用)
         _t_http = time.time() - _t_place  # place_single_bet HTTP 耗时
@@ -1138,9 +1163,9 @@ class SecondLevelMonitor:
         print(f"[slm] 下单耗时: 内部 {_t_order:.2f}s (检查 {_t_place-_t0:.2f}s + HTTP {_t_http:.2f}s) / 总 {_total_time:.2f}s", flush=True)
         # 记录尝试(成败都记), 5min 内不再重复尝试同一盘口
         self._attempted.setdefault(str(sig["match_id"]), {})[str(market_id)] = time.time()
-        # 更新限频时间戳 + 抽下一单随机间隔(10-15s, 防风控"投注过于频繁")
+        # 更新限频时间戳 + 抽下一单随机间隔(3-8s, 2026-10-11 从 10-15s 缩短; 防风控靠注码抖动)
         self._last_bet_time = time.time()
-        self._bet_delay = random.uniform(10, 15)
+        self._bet_delay = random.uniform(3, 8)
         # 记录全局下单时间戳(早盘+滚球共享冷却起点)
         from src.betting.bb_auto_bet import record_global_bet
         record_global_bet()
