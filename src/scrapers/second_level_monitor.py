@@ -1250,8 +1250,10 @@ class SecondLevelMonitor:
             except (TypeError, ValueError):
                 _is_line_zero = False
         if _is_line_zero:
-            self._count_skip("line_zero_live")
+            from src.scrapers.stats import count as _sc
+            _sc("line_zero_seen_live")
             if LIVE_FILTER_LINE_ZERO:
+                _sc("line_zero_filtered_live")
                 print(f"  ⏭️ gate=line_zero 让球0(平局退款)已过滤, 跳过 {tag}", flush=True)
                 return
         _t_place = time.time()
@@ -2197,6 +2199,11 @@ class SecondLevelMonitor:
                         self._check_settled()
                     if poll_count % 15 == 0 and self._skip_stats:  # 2026-10-11 跳过分桶摘要(观察过度拦截)
                         print(f"[slm] 跳过分桶: {dict(self._skip_stats)}", flush=True)
+                    try:  # 2026-10-11 共享 stats 摘要(滚球+早盘 line_zero seen/filtered)
+                        from src.scrapers.stats import maybe_summary as _ms
+                        _ms(30.0)
+                    except Exception:
+                        pass
                     if poll_count % 15 == 0 and self._pin_clock_samples:  # 段1: Pin产生→我收到 时钟差(稳定=偏移, 漂移=积压)
                         _s = sorted(self._pin_clock_samples)
                         _med = _s[len(_s) // 2]
