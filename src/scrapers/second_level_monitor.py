@@ -18,6 +18,7 @@ import sys
 import time
 import random
 import argparse
+import os
 from datetime import datetime
 from pathlib import Path
 
@@ -90,6 +91,15 @@ SNAPSHOT_MAX_AGE = 6.0  # 2026-09-20 让球「只投快照单」阈值(秒): BB�
                         # 更能吃到 lead-lag 窗口(8.5s), 挡掉真正 stale 的(>6s)
 SCORE_CHECK_MAX_AGE = 2.0  # 2026-10-11 比分校验的可信缓存年龄上限(秒): 预取缓存>2s 视为不可信→跳过(宁缺毋滥)
                            # 预取 getList~2.2s+0.5s 周期, 缓存年龄 0~2.7s; 2s 门挡住 ~26% 最陈旧时段的死球漏拦
+
+# ── 滚球冷却三层(2026-10-11): per-market 防连打 + per-event 敞口 + 全局频次帽。读配置可回退。──
+# 之前「互斥锁(per-market) + 全局冷却(3-8s)」口径冲突: per-market 允许并发, 全局却要求串行。
+# 三层拆分: 同一口子防连打(per-market), 单场敞口上限(per-event), 账号风控帽(全局滑动窗口)。
+LIVE_COOLDOWN_PER_MARKET = os.getenv("LIVE_COOLDOWN_PER_MARKET", "true").lower() in ("1", "true", "yes")
+LIVE_MARKET_COOLDOWN = (3, 8)   # 层1: per-(event,market) 冷却(秒) 随机区间, 同一口子防连打
+LIVE_EVENT_MAX_EXPOSURE = 3     # 层2: per-event 单场最多持仓数(防对冲吃手续费)
+LIVE_GLOBAL_RATE_MIN = 4        # 层3: 全局频次帽 每分钟≤4 笔(滑动窗口, 纯账号风控)
+LIVE_GLOBAL_RATE_HOUR = 20      # 层3: 全局频次帽 每小时≤20 笔
 BET_HEALTH_FILE = ROOT / "data" / "storage" / "bet_health.json"  # 下单健康(成功/被拒计数), 供 gubbing 限注监控
 
 
@@ -548,6 +558,9 @@ class SecondLevelMonitor:
         self._last_pin_live_tick = 0.0  # 上次读到的 Pin WS live 帧时间戳(2026-10-11)
         self._last_pin_frame_last = 0.0  # Pin 帧自带 last(供「Pin产生→我收到」段1上游延迟)
         self._skip_stats = {}  # 滚球跳过分桶(2026-10-11): 观察是否有过滤条件把机会全滤掉(过度拦截零成交)
+        self._market_cooldown = {}  # 层1: {(match_id, market_id): 上次成交ts} per-market 冷却
+        self._event_exposure = {}   # 层2: {match_id: 持仓数} per-event 敞口
+        self._global_bet_ts = []    # 层3: 全局成交时间戳列表(滑动窗口频次帽)
         self._raw_ws_ts = 0.0  # 原始WS变动检测时刻(2026-09-23): 供推送「端到端耗时(WS触发→下单完成)」
         self._early_ws_ts = 0.0  # 早盘 WS 触发节流时间戳(2026-09-19)
         self._lev_fail_stats = {}  # LEV 复验失败原因计数(量化 close/价差/deleted 各占多少)
@@ -1136,15 +1149,32 @@ class SecondLevelMonitor:
         _d = self._attempted.get(str(sig["match_id"]), {})
         if time.time() - _d.get(str(market_id), 0) < 300:
             return
-        # 非阻塞限频: 距上次下单 < 随机间隔(10-15s)则跳过, 下一轮 2s 后重新评估(用新鲜赔率)
-        if time.time() - self._last_bet_time < self._bet_delay:
-            return
-        # 全局冷却(2026-09-08): 跨进程共享时间戳, 避免早盘+滚球"同一时间"下单像机器投注
-        # 2026-10-11 滚球冷却 15-45s→3-8s(进球窗口20-40s, 45s=自废; 早盘仍 20-90s)
-        from src.betting.bb_auto_bet import global_bet_cooldown
-        if global_bet_cooldown(3, 8) > 0:
-            self._count_skip("cooldown")
-            return
+        # 冷却三层(2026-10-11): per-market 防连打 + per-event 敞口 + 全局频次帽。全部只记成功(成交)。
+        if LIVE_COOLDOWN_PER_MARKET:
+            # 层1: per-(event,market) 冷却, 同一口子防连打(3-8s 随机)
+            _mk_key = (str(sig["match_id"]), str(market_id))
+            if time.time() - self._market_cooldown.get(_mk_key, 0.0) < random.uniform(*LIVE_MARKET_COOLDOWN):
+                self._count_skip("cooldown_market")
+                print(f"  ⏭️ gate=market_cooldown 同口子冷却中, 跳过 {tag}", flush=True)
+                return
+            # 层2: per-event 敞口上限, 单场最多 K 个持仓(防对冲吃手续费)
+            if self._event_exposure.get(sig["match_id"], 0) >= LIVE_EVENT_MAX_EXPOSURE:
+                self._count_skip("event_exposure")
+                print(f"  ⏭️ gate=event_exposure 单场敞口≥{LIVE_EVENT_MAX_EXPOSURE}, 跳过 {tag}", flush=True)
+                return
+            # 层3: 全局频次帽, 每分钟≤N(滑动窗口, 纯账号风控)
+            _now = time.time()
+            self._global_bet_ts = [t for t in self._global_bet_ts if _now - t < 3600]
+            if len([t for t in self._global_bet_ts if _now - t < 60]) >= LIVE_GLOBAL_RATE_MIN:
+                self._count_skip("global_rate_limit")
+                print(f"  ⏭️ gate=global_rate_limit 每分钟{LIVE_GLOBAL_RATE_MIN}笔已达, 跳过 {tag}", flush=True)
+                return
+        else:
+            # 回退路径: 旧全局冷却(开关 LIVE_COOLDOWN_PER_MARKET=false 时用)
+            from src.betting.bb_auto_bet import global_bet_cooldown
+            if global_bet_cooldown(3, 8) > 0:
+                self._count_skip("cooldown")
+                return
         # (2026-09-22 取消余额<1000 熔断——用户指令: 符合门槛就投, 不因余额低停注)
         print(f"  🎯 滚球下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake} "
               f"[sub={sig.get('sub')} market_id={market_id} option_type={sig.get('option_type')}]", flush=True)
