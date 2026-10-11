@@ -123,18 +123,48 @@ def find_pinnacle_event(data, home, away):
     return best
 
 
+def _pin_cache_find_event(home, away):
+    """从 pin_odds_cache.json(WS 实时缓存)按队名找事件。返回 event dict 或 None。
+
+    只认有 periods 的全量 snapshot 事件(增量帧没有 periods); 缓存 >60s 视为失效(回退 REST)。
+    """
+    try:
+        f = DATA_DIR / "pin_odds_cache.json" if "DATA_DIR" in globals() else \
+            Path(__file__).resolve().parent.parent.parent / "data" / "storage" / "pin_odds_cache.json"
+        if not f.exists():
+            return None
+        d = json.loads(f.read_text())
+        if time.time() - d.get("ts", 0) > 60:
+            return None
+        nh, na = _norm(home), _norm(away)
+        for entry in d.get("cache", {}).values():
+            ev = entry.get("event") or {}
+            if not ev.get("periods"):
+                continue
+            eh, ea = _norm(ev.get("home", "")), _norm(ev.get("away", ""))
+            if eh == nh and ea == na:
+                return ev
+    except Exception:
+        return None
+    return None
+
+
 def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, event_type='prematch'):
     """从 Pinnacle 赔率算去水公平价(多锚共识的无偏基准)。
 
     sub_market: '1x2'→{home,draw,away}; 'hc'→{home,away}+line; 'ou'→{over,under}+line;
                 'dc'→由 1x2 合成 {1X,12,X2}。
     返回 dict(含 line) 或 None。target_line: hc/ou 的 BB 线(在 Pinnacle 线里找最接近的)。
+    优先读 WS 实时缓存(快), 否则 REST 兜底。
     """
     pin_sid = BB_TO_PIN.get(sport_id)
     if not pin_sid:
         return None
-    data = fetch_pinnacle_markets(pin_sid, event_type)
-    e = find_pinnacle_event(data, home, away)
+    # 1) WS 实时缓存优先(秒级), 2) REST 兜底(15min 缓存)
+    e = _pin_cache_find_event(home, away)
+    if not e:
+        data = fetch_pinnacle_markets(pin_sid, event_type)
+        e = find_pinnacle_event(data, home, away)
     if not e:
         return None
     periods = e.get('periods') or {}
