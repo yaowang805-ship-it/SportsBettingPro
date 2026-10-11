@@ -914,3 +914,38 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T10:46:07Z,basketball,Portugal Basketball League,SC Braga,Portimonense SC,,,客胜,1x2,3.14,0,3.0395,3.31,0,2,1791727200,ALL,pinnacle,,,validate,,,5725910
 2026-10-11T10:51:26Z,football,Netherlands Eredivisie,NEC Nijmegen,Fortuna Sittard,,,客胜,1x2,6.2,0,5.7881,7.12,0,1,1792346400,ALL,pinnacle,,,validate,,,5084171
 2026-10-11T10:51:26Z,basketball,Italy Basketball Serie B,Siaz Basket,UCC Assigeco Piacenza,,,主胜,1x2,2.15,0,2.0623,4.25,0,3,1791730800,BB,pinnacle,,,validate,,,5732009
+2026-10-11T10:56:48Z,football,Algeria Ligue 1,USM Khenchela,CS Constantine,,,和局,1x2,2.88,0,2.1414,34.49,0,2,1791813600,ALL,pinnacle,,,validate,,,5734268
+2026-10-11T10:56:48Z,football,Algeria Ligue 1,USM Khenchela,CS Constantine,,,双重机会-主/和局,dc,1.38,0,1.3491,2.29,0,2,1791813600,ALL,pinnacle,,,validate,,,5734268
+2026-10-11T10:56:48Z,football,Algeria Ligue 1,USM Khenchela,CS Constantine,,,双重机会-和局/客,dc,1.45,0,1.3779,5.23,0,2,1791813600,ALL,pinnacle,,,validate,,,5734268
+2026-10-11T11:01:08Z,football,El Salvador Primera Division,Atletico Balboa,CD FAS,,,客胜,1x2,1.6,0,1.4316,11.76,0,2,1791752400,ALL,pinnacle,,,validate,,,5310718
+2026-10-11T11:01:08Z,football,El Salvador Primera Division,Atletico Balboa,CD FAS,,,上半场客胜,ht,2.16,0,1.4316,50.88,0,2,1791752400,ALL,pinnacle,,,validate,,,5310718
+2026-10-11T11:06:40Z,football,Norway 3rd Division,Fauske Sprint,Harstad,,,双重机会-主/和局,dc,2.48,0,2.3463,5.7,0,4,1791723600,BB,pinnacle,,,validate,,,4888285
+2026-10-11T11:12:06Z,football,Uruguay Segunda Division,La Luz FC,Plaza Colonia,,,主胜,1x2,2.72,0,2.0885,30.24,0,3,1791745200,ALL,pinnacle,,,validate,,,5702948
+2026-10-11T11:12:06Z,football,Uruguay Segunda Division,La Luz FC,Plaza Colonia,,,客胜,1x2,2.61,0,1.9187,36.03,0,3,1791745200,ALL,pinnacle,,,validate,,,5702948
+2026-10-11T11:13:15Z,football,England Championship League,Norwich City,Southampton FC,,,和局,1x2,3.85,0,2.6951,42.85,0,2,1792003500,ALL,pinnacle,,,validate,,,5714054
+2026-10-11T11:13:15Z,football,England Championship League,Norwich City,Southampton FC,,,双重机会-主/和局,dc,1.45,0,1.4062,3.11,0,2,1792003500,ALL,pinnacle,,,validate,,,5714054
+2026-10-11T11:13:15Z,football,England Championship League,Norwich City,Southampton FC,,,双重机会-和局/客,dc,1.61,0,1.5154,6.24,0,2,1792003500,ALL,pinnacle,,,validate,,,5714054
+2026-10-11T11:13:49Z,football,Scotland Premiership,Kilmarnock FC,Motherwell FC,,,和局,1x2,3.51,0,2.6531,32.3,0,2,1792245600,ALL,pinnacle,,,validate,,,5635377
+2026-10-11T11:13:49Z,football,Scotland Premiership,Kilmarnock FC,Motherwell FC,,,双重机会-主/和局,dc,1.63,0,1.5824,3.01,0,2,1792245600,ALL,pinnacle,,,validate,,,5635377
+2026-10-11T11:13:49Z,football,Scotland Premiership,Kilmarnock FC,Motherwell FC,,,双重机会-和局/客,dc,1.37,0,1.3423,2.06,0,2,1792245600,ALL,pinnacle,,,validate,,,5635377
+2026-10-11T11:13:49Z,football,England Championship League,Portsmouth FC,Sheffield United FC,,,上半场主胜,ht,3.27,0,2.4578,33.05,0,2,1792003500,ALL,pinnacle,,,validate,,,5714063
+2026-10-11T11:13:49Z,football,England Championship League,Portsmouth FC,Sheffield United FC,,,上半场客胜,ht,3.68,0,3.2205,14.27,0,2,1792003500,ALL,pinnacle,,,validate,,,5714063
+2026-10-11T11:17:11Z,football,Norway 3rd Division,Fauske Sprint,Harstad,,,主胜,1x2,4.2,0,3.8363,9.48,0,4,1791723600,BB,pinnacle,,,validate,,,4888285
+2026-10-11T11:17:11Z,football,Bolivia Division Profesional,Real Potosi,The Strongest,,,客胜,1x2,3.01,0,2.7496,9.47,0,2,1791745200,ALL,pinnacle,,,validate,,,5708076
+2026-10-11T11:17:11Z,football,Bolivia Division Profesional,Real Potosi,The Strongest,,,双重机会-和局/客,dc,1.69,0,1.6142,4.7,0,2,1791745200,ALL,pinnacle,,,validate,,,5708076
+2026-10-11T11:17:46Z,football,Turkey Super Lig,Kasimpasa,Samsunspor,,,和局,1x2,3.36,0,2.335,43.9,0,2,1792319400,BB,pinnacle,,,validate,,,5446228
+2026-10-11T11:17:46Z,football,Turkey Super Lig,Kasimpasa,Samsunspor,,,双重机会-主/和局,dc,1.52,0,1.4379,5.71,0,2,1792319400,BB,pinnacle,,,validate,,,5446228
+2026-10-11T11:17:46Z,football,Turkey Super Lig,Kasimpasa,Samsunspor,,,双重机会-和局/客,dc,1.4,0,1.3646,2.59,0,2,1792319400,BB,pinnacle,,,validate,,,5446228
+2026-10-11T11:23:10Z,football,Turkey Super Lig,Kasimpasa,Samsunspor,,,上半场主胜,ht,3.64,0,3.5662,2.07,0,2,1792319400,BB,pinnacle,,,validate,,,5446228
+2026-10-11T11:26:53Z,football,Czech Republic Divize,Svitavy,Vysoke Myto,,,主胜,1x2,6.65,0,6.407,3.79,0,4,1791727200,BB,pinnacle,,,validate,,,5700332
+2026-10-11T11:26:53Z,football,Singapore Division 1,Singapore Khalsa Association FC,Tengah FC,,,上半场客胜,ht,3.79,0,3.7055,2.28,0,3,1791718200,BB,pinnacle,,,validate,,,5733179
+2026-10-11T11:28:31Z,football,England Championship League,Norwich City,Southampton FC,,,主胜,1x2,2.31,0,1.5011,53.89,0,2,1792003500,ALL,pinnacle,,,validate,,,5714054
+2026-10-11T11:28:31Z,football,England Championship League,Norwich City,Southampton FC,,,上半场主胜,ht,2.82,0,1.5011,87.86,0,2,1792003500,ALL,pinnacle,,,validate,,,5714054
+2026-10-11T11:28:31Z,football,England Championship League,Norwich City,Southampton FC,,,上半场客胜,ht,3.29,0,2.9955,9.83,0,2,1792003500,ALL,pinnacle,,,validate,,,5714054
+2026-10-11T11:29:04Z,football,England Championship League,Portsmouth FC,Sheffield United FC,,,主胜,1x2,2.36,0,1.8077,30.55,0,2,1792003500,ALL,pinnacle,,,validate,,,5714063
+2026-10-11T11:29:04Z,football,England Championship League,Portsmouth FC,Sheffield United FC,,,客胜,1x2,2.71,0,2.2381,21.08,0,2,1792003500,ALL,pinnacle,,,validate,,,5714063
+2026-10-11T11:32:20Z,football,Poland III Liga,Olimpia Zambrow,Lechia Tomaszow Mazowiecki,,,上半场客胜,ht,3.55,0,3.429,3.53,0,4,1791723600,ALL,pinnacle,,,validate,,,5700184
+2026-10-11T11:37:21Z,football,Egypt Premier League,Zamalek SC,AL Ahly SC,,,客胜,1x2,2.11,0,2.0301,3.94,0,2,1791738000,ALL,pinnacle,,,validate,,,5681331
+2026-10-11T11:37:21Z,football,Peru Liga 1,Cusco FC,Alianza Lima,,,和局,1x2,3.13,0,2.3043,35.83,0,2,1791761400,ALL,pinnacle,,,validate,,,5638638
+2026-10-11T11:37:21Z,football,Peru Liga 1,Cusco FC,Alianza Lima,,,双重机会-和局/客,dc,1.59,0,1.4715,8.05,0,2,1791761400,ALL,pinnacle,,,validate,,,5638638
+2026-10-11T11:37:21Z,basketball,Colombia Professional Basketball League,Sabios de Manizales,Caribbean Storm Islands,,,客胜,1x2,5.05,0,4.8539,4.04,0,3,1791759600,ALL,pinnacle,,,validate,,,5735351

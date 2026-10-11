@@ -613,6 +613,7 @@ class SecondLevelMonitor:
         self._pin_live_wake = False  # 滚球 drop 唤醒标志(2026-10-11): live drop 触发立即滚球比较
         self._trigger_source = "init"  # 触发源标签(ws/pin/poll), 供审计组内对照(2026-10-11)
         self._trigger_source_stats = {}  # 触发源分布计数(2026-10-11): pin/betfair_ws/poll 各多少次
+        self._drop_anchor_track = {}  # match_id -> [pending记录], 等 live drop 算 clv_sign(2026-10-11 简化版事件锚点)
         self._last_pin_live_tick = 0.0  # 上次读到的 Pin WS live 帧时间戳(2026-10-11)
         self._last_pin_frame_last = 0.0  # Pin 帧自带 last(供「Pin产生→我收到」段1上游延迟)
         self._pin_clock_samples = []  # 本地-Pin帧ts 样本(判定时钟偏移稳定 vs 积压漂移)
