@@ -307,13 +307,13 @@ def _combine_anchors(anchors):
     return out or None
 
 
-def consensus_fair_price(home, away, sport_id, sub_market, target_line=None, status=None, use_rest=None):
+def consensus_fair_price(home, away, sport_id, sub_market, target_line=None, status=None, use_rest=None, skip_betfair=False):
     """三锚共识公平价: Pinnacle(去水) + Betfair(交易所中间价) + SBO(去水)。
 
     返回 {'fair': 共识公平价, 'pinnacle': Pinnacle公平价, 'betfair': Betfair公平价,
           'sbo': SBO公平价, 'event_id', 'spread'} 或 None。
     Pinnacle 是黄金 sharp 基准(0.24%效率), 等权参与共识专门拉平 Betfair 单锚的长腿 bias。
-    2026-10-11 加 use_rest 透传(早盘 WS 触发传 False 只读 WS 缓存, 不 REST 兜底)。
+    2026-10-11 加 use_rest 透传 + skip_betfair(下单关键路径跳过 Betfair 交叉验证, 省 0.5-0.9s)。
     """
     from src.scrapers.odds_api_io import fair_price_bb, sbo_fair_price, match_event_orient
 
@@ -322,10 +322,13 @@ def consensus_fair_price(home, away, sport_id, sub_market, target_line=None, sta
     pinnacle = pinnacle_fair_price(home, away, sport_id, sub_market, target_line=target_line,
                                    event_type=_et)
 
-    # 2. Betfair + SBO(交叉验证, 可选——19 号 Betfair 停订后此步可无, 纯 Pin 跑)
-    bf = fair_price_bb(home, away, sport_id, sub_market, target_line=target_line, status=status, use_rest=use_rest)
-    betfair = bf.get('fair') if bf else None
-    sbo = bf.get('confidence') if bf else None
+    # 2. Betfair + SBO(交叉验证, 可选/可跳过——19 号 Betfair 停订后纯 Pin 跑; 下单路径 skip_betfair=True)
+    bf = None
+    betfair = sbo = None
+    if not skip_betfair:
+        bf = fair_price_bb(home, away, sport_id, sub_market, target_line=target_line, status=status, use_rest=use_rest)
+        betfair = bf.get('fair') if bf else None
+        sbo = bf.get('confidence') if bf else None
 
     # 3. Pin 主锚: 公平价直接用 Pin 去水; 无 Pin 覆盖的盘口(btts/dnb)回退 Betfair 兜底
     fair = pinnacle or betfair
