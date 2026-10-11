@@ -108,6 +108,29 @@ MAPPING_VERSION = "1"           # 市场映射表/队名归一化版本(2026-10-
 LIVE_FILTER_LINE_ZERO = os.getenv("LIVE_FILTER_LINE_ZERO", "false").lower() in ("1", "true", "yes")  # 让球0(平局退款盘)过滤开关, 默认关
 
 
+_pin_cache_last = {"mtime": 0.0, "data": None}
+
+
+def _pin_event_last(pin_matchup_id):
+    """读 Pin 缓存, 返回该事件的 last(秒, Pin 时钟)。带 mtime 缓存(避免每注读 4MB 文件)。
+
+    last 是 Pin 事件最后一次更新时刻, 用作「参与同一轮 EV 计算的 Pin 报价」的时间戳代理。
+    跨机时钟有 ~1.6s 偏移(见 _pin_clock_samples), 所以 lag_sec 是含钟偏的原始值, 看相对变化/分组, 别当绝对滞后。
+    """
+    global _pin_cache_last
+    try:
+        f = ROOT / "data" / "storage" / "pin_odds_cache.json"
+        mt = f.stat().st_mtime
+        if _pin_cache_last["mtime"] != mt or _pin_cache_last["data"] is None:
+            _pin_cache_last["data"] = json.loads(f.read_text())
+            _pin_cache_last["mtime"] = mt
+        cache = _pin_cache_last["data"].get("cache", {})
+        ev = cache.get(str(pin_matchup_id), {}).get("event", {})
+        return ev.get("last")
+    except Exception:
+        return None
+
+
 def _decision_version(threshold):
     """配置快照 hash(2026-10-11): 关键阈值/开关指纹, 每注打 version 供复盘确认当时跑的是哪版阈值。
 
@@ -574,6 +597,7 @@ class SecondLevelMonitor:
         self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
         self._pin_trigger_offset = 0  # Pin drop 触发文件已消费行数(2026-10-11)
         self._pin_live_wake = False  # 滚球 drop 唤醒标志(2026-10-11): live drop 触发立即滚球比较
+        self._trigger_source = "init"  # 触发源标签(ws/pin/poll), 供审计组内对照(2026-10-11)
         self._last_pin_live_tick = 0.0  # 上次读到的 Pin WS live 帧时间戳(2026-10-11)
         self._last_pin_frame_last = 0.0  # Pin 帧自带 last(供「Pin产生→我收到」段1上游延迟)
         self._pin_clock_samples = []  # 本地-Pin帧ts 样本(判定时钟偏移稳定 vs 积压漂移)
@@ -1259,8 +1283,23 @@ class SecondLevelMonitor:
                 return
         _t_place = time.time()
         _dv = _decision_version(self.threshold)  # 配置快照 hash(复盘用)
+        # BB-vs-Pin 滞后(2026-10-11): bb_ts - Pin事件last。含~1.6s钟偏, 看相对变化/分组, 别当绝对滞后。
+        _pin_last = _pin_event_last(sig.get("pin_matchup_id")) if sig.get("pin_matchup_id") else None
+        _bb_ts = sig.get("bb_ts")
+        _lag_sec = None
+        if _pin_last and _bb_ts:
+            try:
+                _lag_sec = round(float(_bb_ts) - float(_pin_last), 2)  # 正 = BB 落后
+            except (TypeError, ValueError):
+                _lag_sec = None
+        if _lag_sec is None:
+            from src.scrapers.stats import count as _sc
+            _sc("lag_uncomparable")  # 无 Pin 帧/无法匹配 → lag 不可靠
         _bet_meta = {"is_line_zero": _is_line_zero, "sport": sig.get("sport", ""),
-                     "sub": sig.get("sub", ""), "line": sig.get("line")}
+                     "sub": sig.get("sub", ""), "line": sig.get("line"),
+                     "league": sig["match"].get("league_cn", ""),
+                     "trigger_source": self._trigger_source,
+                     "bb_ts": sig.get("bb_ts"), "lag_sec": _lag_sec}
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
             match_id=sig["match_id"], check_limit=True, verify_price=True,
@@ -1310,6 +1349,10 @@ class SecondLevelMonitor:
                     "away": sig["match"].get("away", ""), "sport": sig["match"].get("sport", ""),
                     "verify": bool(_need_verify),  # 是否触发验价(2026-09-19)
                     "decision_version": _dv,  # 2026-10-11 配置快照 hash(复盘)
+                    "league": sig["match"].get("league_cn", ""),  # 2026-10-11 联赛白名单切分
+                    "trigger_source": self._trigger_source,  # 2026-10-11 组内对照(兜底轮询成本)
+                    "bb_ts": sig.get("bb_ts"),  # 2026-10-11 BB 快照时间(滞后度量)
+                    "bb_snapshot_age": round(time.time() - (sig.get("bb_ts") or _t0), 2),  # 决策时 BB 快照年龄
                 }
                 self._live_bets[str(order_id)] = _binfo
                 _append_real_bet(str(order_id), _binfo)  # 2026-09-27 实盘库: 持久化下单信息
@@ -2175,6 +2218,8 @@ class SecondLevelMonitor:
             # 2026-09-29 去掉 3.0s 节流 + persistence: sharp 动立即触发 poll(WS 变动即比价下单),
             # 不再等 3s 节流/0.5s 稳定。oddsChange=0 兜底(变了就拒), 防假溢价靠 SBO 同向 + 快照年龄。
             if _ws_changed or self._pin_live_wake or now - last_poll >= refresh_every:
+                # 触发源标签(2026-10-11): betfair_ws/pin(WS tick或SSE drop)/poll, 供审计组内对照
+                self._trigger_source = "betfair_ws" if _ws_changed else ("pin" if self._pin_live_wake else "poll")
                 self._pin_live_wake = False  # 2026-10-11: Pin 滚球 drop 唤醒后立即比较一次
                 try:
                     _t_round0 = time.time()
