@@ -2210,3 +2210,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T05:01:04Z,football,Kenya Premier League,Ulinzi Stars FC,Tusker Football Club,,,上半场主胜,ht,6.65,0,4.8326,37.61,0,2,1791716400,ALL,,,validate,,,5720698
 2026-10-11T05:01:04Z,football,Kenya Premier League,Ulinzi Stars FC,Tusker Football Club,,,上半场客胜,ht,2.65,0,2.0812,27.33,0,2,1791716400,ALL,,,validate,,,5720698
 2026-10-11T05:02:08Z,basketball,Japan B.League One,Iwate Big Bulls,Koshigaya Alphas,,,主胜,1x2,3.62,0,3.4524,4.85,0,3,1791695100,BB,,,validate,,,5325669
+2026-10-11T05:06:19Z,football,Kenya Premier League,Ulinzi Stars FC,Tusker Football Club,,,主胜,1x2,4.39,0,4.0871,7.41,0,2,1791716400,ALL,,,validate,,,5720698
+2026-10-11T05:06:19Z,football,Kenya Premier League,Ulinzi Stars FC,Tusker Football Club,,,双重机会-主/和局,dc,1.8,0,1.7095,5.29,0,2,1791716400,ALL,,,validate,,,5720698
+2026-10-11T05:07:22Z,football,Egypt Premier League,Pyramids FC,Ceramica Cleopatra,,,和局,1x2,4.06,0,2.526,60.73,0,2,1791824400,ALL,,,validate,,,5704757
+2026-10-11T05:07:22Z,football,Egypt Premier League,Pyramids FC,Ceramica Cleopatra,,,双重机会-和局/客,dc,2.42,0,1.8235,32.71,0,2,1791824400,ALL,,,validate,,,5704757

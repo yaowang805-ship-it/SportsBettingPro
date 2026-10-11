@@ -103,13 +103,19 @@ LIVE_MARKET_COOLDOWN = (3, 8)   # 层1: per-(event,market) 冷却(秒) 随机区
 LIVE_EVENT_MAX_EXPOSURE = 3     # 层2: per-event 单场最多持仓数(防对冲吃手续费)
 LIVE_GLOBAL_RATE_MIN = 4        # 层3: 全局频次帽 每分钟≤4 笔(滑动窗口, 纯账号风控)
 LIVE_GLOBAL_RATE_HOUR = 20      # 层3: 全局频次帽 每小时≤20 笔
+MAPPING_VERSION = "1"           # 市场映射表/队名归一化版本(2026-10-11): 改了映射逻辑要手动 bump, 进 decision_version
 
 
 def _decision_version(threshold):
-    """配置快照 hash(2026-10-11): 关键阈值/开关指纹, 每注打 version 供复盘确认当时跑的是哪版阈值。"""
+    """配置快照 hash(2026-10-11): 关键阈值/开关指纹, 每注打 version 供复盘确认当时跑的是哪版阈值。
+
+    含 MAPPING_VERSION(市场映射表+队名归一化版本): 映射错是最大的单点故障(静默亏钱且 slippage 正常),
+    改了 find_market_from_match 的 market_codes / MARKET_LABELS / BB_SUB_TO_SM / odds_api_io._norm_team
+    必须 bump MAPPING_VERSION, 否则出事查不出是映射改了。
+    """
     _vals = [threshold, LIVE_COOLDOWN_PER_MARKET, LIVE_MARKET_COOLDOWN, LIVE_EVENT_MAX_EXPOSURE,
              LIVE_GLOBAL_RATE_MIN, LIVE_GLOBAL_RATE_HOUR, SNAPSHOT_MAX_AGE, SCORE_CHECK_MAX_AGE,
-             REVERIFY_THRESHOLD]
+             REVERIFY_THRESHOLD, MAPPING_VERSION]
     return hashlib.md5(",".join(str(v) for v in _vals).encode()).hexdigest()[:8]
 BET_HEALTH_FILE = ROOT / "data" / "storage" / "bet_health.json"  # 下单健康(成功/被拒计数), 供 gubbing 限注监控
 
@@ -1220,6 +1226,9 @@ class SecondLevelMonitor:
             self._count_skip("reverify_failed")
             print(f"  ⏭️ 重拉拿不到新鲜价(封盘/关闭), 放弃 {tag}", flush=True)
             return
+        # 2026-10-11 _attempted 前置: 过了所有 gate 就标记「已尝试」, 在发请求前写。防重复请求 +
+        # 将来 worker pool 并发重入双倍下单(必须先写再发请求)。stake_record 仍只在成交后写(防重复敞口)。
+        self._attempted.setdefault(str(sig["match_id"]), {})[str(market_id)] = time.time()
         _t_place = time.time()
         _dv = _decision_version(self.threshold)  # 配置快照 hash(复盘用)
         code, order_id, msg = place_single_bet(
@@ -1241,8 +1250,6 @@ class SecondLevelMonitor:
                 print(f"[slm] slippage {_tev - _fev:+.2f}pp (触发EV {_tev:+.2f}%→成交EV {_fev:+.2f}%, reason={_aud.get('reason')})", flush=True)
         except Exception:
             pass
-        # 记录尝试(成败都记), 5min 内不再重复尝试同一盘口
-        self._attempted.setdefault(str(sig["match_id"]), {})[str(market_id)] = time.time()
         _eq_key = f"{sig.get('sport')}|{sig.get('sub')}|{sig.get('desig')}"
         _record_bet_result(code, latency=_t_http, direction_key=_eq_key)  # 2026-09-21 gubbing 限注监控
         if code == 14010:
