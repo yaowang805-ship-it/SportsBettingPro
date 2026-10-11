@@ -465,7 +465,8 @@ def fetch_current_odds(market_id, match_id, option_type, token=None, domain=None
 
 def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domain=None,
                      match_id=None, check_limit=True, verify_price=True,
-                     platform="BB", fair_price=None, min_ev_pct=None, prefetched_odds=None):
+                     platform="BB", fair_price=None, min_ev_pct=None, prefetched_odds=None,
+                     decision_version=None):
     """单关下单。返回 (code, order_id, message)。
 
     code=0 成功; code=5 参数错; code=14010 token过期; code=3015 盘口关闭;
@@ -496,7 +497,8 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
     # 审计: 记触发/重拉/成交的价+EV, 供 slippage = trigger_ev - final_ev 指标。
     _fp = float(fair_price) if fair_price else 0.0
     _od = float(odds) if odds else 0.0
-    _audit = {"trigger_odds": _od, "reverify_odds": None, "final_odds": _od, "reason": None}
+    _audit = {"trigger_odds": _od, "reverify_odds": None, "final_odds": _od, "reason": None,
+              "decision_version": decision_version}
     _audit["trigger_ev"] = round((_od - _fp) / _fp * 100, 3) if _fp > 1 and _od > 1 else None
     final_odds = odds
     if verify_price and match_id is not None:
