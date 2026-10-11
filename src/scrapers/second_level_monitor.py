@@ -541,6 +541,7 @@ class SecondLevelMonitor:
         self._token_remind_until = 0.0  # token 失效钉钉提醒节流(30min)
         self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
         self._pin_trigger_offset = 0  # Pin drop 触发文件已消费行数(2026-10-11)
+        self._pin_live_wake = False  # 滚球 drop 唤醒标志(2026-10-11): live drop 触发立即滚球比较
         self._raw_ws_ts = 0.0  # 原始WS变动检测时刻(2026-09-23): 供推送「端到端耗时(WS触发→下单完成)」
         self._early_ws_ts = 0.0  # 早盘 WS 触发节流时间戳(2026-09-19)
         self._lev_fail_stats = {}  # LEV 复验失败原因计数(量化 close/价差/deleted 各占多少)
@@ -1897,15 +1898,18 @@ class SecondLevelMonitor:
                 trig = json.loads(line)
             except (json.JSONDecodeError, ValueError):
                 continue
+            # 2026-10-11 修 gap: 滚球(live) drop 只作「唤醒滚球轮询」信号, 交给 _poll_live 用 BB 实时赔率比较;
+            # 早盘(prematch) drop 才走这里的早盘快照比较。避免 live drop 用早盘快照价下单(错)。
+            if trig.get('stream') == 'live':
+                self._pin_live_wake = True  # 唤醒滚球轮询立即比较
+                continue
             mid = str(trig.get('bb_match_id') or '')
             m = bb_by_id.get(mid)
             if not m:
                 continue
             sport = m.get('sport') or trig.get('sport') or 'football'
             entry = _build_oa_entry(m, sport)
-            # 2026-10-11 修: live drop 用 live 公平价, prematch drop 用 prematch 公平价
-            _status = 'live' if trig.get('stream') == 'live' else 'prematch'
-            _oa_add_markets(entry, m, sport, use_rest=False, status=_status)
+            _oa_add_markets(entry, m, sport, use_rest=False, status='prematch')
             _league = entry.get('league', '')
             _epoch = entry.get('start_time_pin_epoch', 0)
             for group in ('opportunities', 'handicap', 'over_under', 'double_chance', 'draw_no_bet'):
@@ -2001,7 +2005,8 @@ class SecondLevelMonitor:
             _ws_changed = bool(_changes)
             # 2026-09-29 去掉 3.0s 节流 + persistence: sharp 动立即触发 poll(WS 变动即比价下单),
             # 不再等 3s 节流/0.5s 稳定。oddsChange=0 兜底(变了就拒), 防假溢价靠 SBO 同向 + 快照年龄。
-            if _ws_changed or now - last_poll >= refresh_every:
+            if _ws_changed or self._pin_live_wake or now - last_poll >= refresh_every:
+                self._pin_live_wake = False  # 2026-10-11: Pin 滚球 drop 唤醒后立即比较一次
                 try:
                     _t_round0 = time.time()
                     # 2026-09-30 口径修正: poll_ts 传「本单真实触发时刻」。WS 触发用 _raw_ws_ts(真实WS变动),
