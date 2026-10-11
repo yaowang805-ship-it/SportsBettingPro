@@ -39,6 +39,7 @@
 import json
 import math
 import os
+import time
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
@@ -57,12 +58,19 @@ N_REAL_MIN = 50        # 实盘赢率采信最小样本量(2026-09-12 30→100�
 # 判据从「CLV中位>0 + 正率>55% + 纸面ROI>0」改为「赢率 > 隐含」(CURRENT_STATUS 核心判据),
 # 样本门槛从 n≥30 提到 n>100。滚球+早盘观察库合并统计, 滚球 league 归 "滚球"。
 # 2026-09-13: n>100 → n>200, 对齐职业 CLV 有效标准(CLV 从 n≥200 才统计有效, <100 是噪声)。
-OBS_N_MIN = 200            # 观察库释放采信最小结算样本数(>200, 对齐职业CLV标准)
-OBS_CLV_MIN = 2.0          # 早盘释放中位CLV阈值(>2%): 职业sharp选手平均+2~5% no-vig CLV,
+OBS_N_MIN = 200            # 早盘观察库释放采信最小结算样本数(>200, 对齐职业CLV标准)。单位=笔
+OBS_N_MIN_LIVE = 20        # 滚球释放样本门槛(2026-10-11 从 200 降到 20): live grid 数量几百上千, 单 grid 攒 200 笔
+                           # 几个月都达不到 → 10-03 事故结构根因(n≥200 让滚球数据驱动路径形同虚设, 只能靠手动释放绕闸门)。
+                           # 单位=笔。
+# 滚球观察库 14 天时间窗(2026-10-11): 保险, 非调参。防未来换锚点/换公平价源时旧样本混进新 grid 的 n。
+# 纯过滤, 不动阈值不动判据。env 开关默认开(回退用), 与 ENFORCE_REAL_ROI_GATE_ON_MANUAL 同待遇。
+LIVE_CLV_WINDOW_ENABLED = os.getenv("LIVE_CLV_WINDOW_ENABLED", "true").lower() in ("1", "true", "yes")
+LIVE_CLV_WINDOW_DAYS = 14.0  # 窗口天数
+OBS_CLV_MIN = 2.0          # 早盘释放中位CLV阈值(>2% no-vig CLV): 职业sharp选手平均+2~5%, 单位=%edge(收盘线CLV)
                             # >0太松(+0.5%以下是devig/匹配噪声), >2 既严格又留容错(2026-09-15 用户定)
-OBS_LEV_MIN = 0.4          # 滚球释放 LEV 阈值(价格变化方向 clv-ev, 通常<1pp): 2026-10-10 用户定,
-                            # 与早盘收盘线 CLV(2%) 分档。LEV 量级<1pp, 用 2% 对它偏严(load_live_clv 注释已标),
-                            # 改 0.3~0.5% 区间取 0.4%。注: 滚球 n 仍受 OBS_N_MIN=200 约束, 样本不够不释放。
+OBS_LEV_MIN = 0.4          # [审计字段, 非释放闸门] 滚球 LEV(价格变化方向 clv-ev)阈值, 单位=%edge(3s复验)
+                            # 2026-10-11 降级: LEV 是 3s 复验, 信噪比接近 0(实测中位 -0.36pp), 只落审计/诊断, 不再当释放判据。
+                            # 释放判据改为 n≥OBS_N_MIN_LIVE + obsROI>0 + REAL_ROI_GATE(见 live 释放循环)。
 OBS_WINRATE_EDGE_MIN = 3.0 # 赢率>隐含(差>3pp 才释放)。2026-09-15 0→3pp: 观察库整体负edge(逆向选择),
                             # 差0pp会把打平的噪声格子释放; 对齐实盘 REAL_WINRATE_EDGE_MIN=3pp 去噪声
 REAL_WINRATE_EDGE_MIN = 3.0  # 实盘主开关/方向释放赢率vs隐含差值阈值(差>3pp 去噪声)
@@ -747,7 +755,33 @@ def load_clv_median():
     return {k: (_st.median(v), len(v)) for k, v in by.items() if v}
 
 
-def load_live_clv():
+def _obs_included(b, cutoff):
+    """观察是否纳入统计(时间口径, 2026-10-11 统一 total/windowed 两路, 杜绝口径 drift)。
+
+    cutoff=None(累计口径): 只判 ts 存在性——缺 ts / ts 不可解析的记录无法参与任何时间判据, 一律排除。
+    cutoff 有值(窗口口径): 额外判 ts >= cutoff(窗口内)。
+    两路共用同一谓词, 未来任何口径变更不可能再漂移(同 10-03 教训: 两份逻辑必然长歪)。
+    """
+    _ts = b.get("ts")
+    if _ts is None:
+        return False
+    try:
+        t = float(_ts)
+    except (TypeError, ValueError):
+        return False
+    return cutoff is None or t >= cutoff
+
+
+def _count_missing_ts():
+    """数据质量探针(2026-10-11): 观察库里无法纳入统计的记录数(=缺 ts / ts 不可解析)。
+
+    >0 = 写入链路丢了时间戳, 是事故(不是窗口效应), 须查写入侧。复用 _obs_included(b, None)
+    保证与统计口径零漂移。
+    """
+    return sum(1 for b in _read_live_paper_bets() if not _obs_included(b, None))
+
+
+def load_live_clv(window_days=None):
     """滚球真 LEV(价格变化方向)按(运动×盘口×方向×赔率区间)聚合。
 
     2026-09-27 改口径: 原 clv 字段是「下注后3s复验 Betfair 价的 edge」= (bb_odds-fair@T+3)/fair@T+3,
@@ -760,11 +794,18 @@ def load_live_clv():
     2) 只统计 clv!=ev 样本的 clv-ev(价格变化)。
     注意: 价格变化量级远小于「复验时edge」(通常<1pp), 判据阈值 OBS_CLV_MIN=2% 对它偏严, 需另定。
 
+    window_days(2026-10-11): 若非 None, 只统计 ts >= now - window_days 的观察(时间窗, 纯过滤),
+    防未来换锚点/换公平价源时旧样本混进新 grid 的 n。None = 累计口径。缺 ts 的记录无论哪种口径都排除
+    (统一走 _obs_included, 缺 ts 由 _count_missing_ts 独立计数告警)。
+
     Returns: {(sport, sub_market, direction, odds_interval): (median_clv, n)}
     """
     import statistics as _st
+    _cutoff = (time.time() - window_days * 86400) if window_days else None
     by = defaultdict(list)
     for b in _read_live_paper_bets():
+        if not _obs_included(b, _cutoff):
+            continue
         clv = b.get("clv")
         ev = b.get("ev")
         if clv is None or ev is None:
@@ -971,7 +1012,19 @@ def main():
     market_roi_dir = load_real_roi_direction()  # 方向级 ROI(满7天提额用, 2026-09-18 修混方向bug)
     obs_winrate = load_observe_winrate()
     clv_med = load_clv_median()  # 早盘收盘线 CLV 中位(释放闸门, 2026-09-15)
-    live_clv = load_live_clv()   # 滚球 LEV(下注后复验Pin价的CLV, 释放闸门, 2026-09-15)
+    live_clv = load_live_clv(window_days=(LIVE_CLV_WINDOW_DAYS if LIVE_CLV_WINDOW_ENABLED else None))  # 14天窗口过滤(2026-10-11)
+    # 自洽检查(2026-10-11): 按 grid 逐格比对 n_total vs n_window(不是集合差——窗口会造成 n 变少但格不消失)。
+    # 今天静默(全部相等); 哪天响, 说明窗口开始咬人, 且能立刻看到是哪个格、掉了多少笔(排查「grid 突然不释放」的唯一线索)。
+    if LIVE_CLV_WINDOW_ENABLED:
+        _live_clv_total = load_live_clv(window_days=None)
+        for _k, (_med_t, _n_t) in _live_clv_total.items():
+            _n_w = live_clv.get(_k, (0, 0))[1]
+            if _n_t != _n_w:
+                print(f"[release] ⚠️ 14天窗口已生效: {_k} n_total={_n_t} n_window={_n_w}", flush=True)
+    # 数据质量探针(2026-10-11): 缺 ts 记录独立计数告警(与窗口哨兵分离, 单一职责)。
+    _n_no_ts = _count_missing_ts()
+    if _n_no_ts:
+        print(f"[release] ⚠️ {_n_no_ts} 条观察记录缺 ts，已排除(数据质量事故, 查写入链路)", flush=True)
     real_roi_cell = load_real_roi_cell()  # 实盘 ROI 交叉验证(2026-10-05): CLV假正拦截
 
     # 2026-09-19 用户要求: 释放盘口不用实盘投注数据(不释放就没实盘=死循环), 只用观察库。
@@ -1058,7 +1111,9 @@ def main():
         if _real.get("n", 0) >= REAL_ROI_GATE_N_MIN and _real.get("roi", 0) < 0:
             observe_blocked.append([sport, sm, dr, interval, "live"])
             continue
-        if med > OBS_LEV_MIN and n >= OBS_N_MIN and _roi > 0:
+        # 2026-10-11 滚球释放判据: n≥OBS_N_MIN_LIVE(20) + obsROI>0。LEV 降级为审计(信噪比≈0), 不再当闸门。
+        # REAL_ROI_GATE 已在上面拦(实盘 n≥5 且 ROI<0 → 撤回)。med(LEV) 仍落审计, 供诊断。
+        if n >= OBS_N_MIN_LIVE and _roi > 0:
             observe_released.append([sport, sm, dr, interval, "live"])
         else:
             observe_blocked.append([sport, sm, dr, interval, "live"])
@@ -1101,6 +1156,13 @@ def main():
         _entry = [_p[0], _p[1], _p[2], _p[3], _p[4]]
         if _entry not in observe_blocked:
             observe_blocked.append(_entry)
+
+    # 监控(2026-10-11): released live grid 数量随时间的曲线。只画图不设阈值不告警。
+    # LEV 降级后滚球释放是「单向阀」(进靠 n≥20 纸面, 出靠实盘 n≥5 且 ROI<0 熔断), released 数量单调增长,
+    # 需观察趋势; 等涨到两位数再决定要不要加背压(定期重验 / 最大释放格数)。今天别加, 加了是凭信仰设计。
+    _n_live_released = sum(1 for e in observe_released if len(e) >= 5 and e[4] == "live")
+    _n_early_released = sum(1 for e in observe_released if len(e) >= 5 and e[4] == "early")
+    print(f"[release] 释放格数量: live={_n_live_released} early={_n_early_released} (监控, 不设阈值)", flush=True)
 
     # 2026-09-22 用户要求: 释放盘口/封锁已释放盘口, 必须先推钉钉待确认, 确认后才执行。
     # 无 --confirm 时, 若检测到释放/封锁变更, 推钉钉+写 pending 文件, 不写 market_release.json(保持旧清单)。
