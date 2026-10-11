@@ -990,7 +990,8 @@ class SecondLevelMonitor:
         try:
             from src.scrapers.pinnacle_live import get_bb_fresh_or_cached
             bb, _ = get_bb_fresh_or_cached(wait_for_fresh=False)
-            m = bb.get(sig.get("match_id"))
+            _mid = sig.get("match_id")
+            m = bb.get(_mid) or bb.get(str(_mid))  # 键类型可能 int/str, 都试
             if m is None:
                 return False
             cur_sc = m.get("sc")
