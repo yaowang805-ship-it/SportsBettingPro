@@ -1222,10 +1222,20 @@ class SecondLevelMonitor:
         from src.betting.bb_auto_bet import fetch_current_odds
         _fresh = fetch_current_odds(market_id, match_id, option_type)
         _fresh_odds = _fresh[0] if _fresh else None
+        _fresh_line = _fresh[3] if (_fresh and len(_fresh) > 3) else None
         if _fresh_odds is None:
             self._count_skip("reverify_failed")
             print(f"  ⏭️ 重拉拿不到新鲜价(封盘/关闭), 放弃 {tag}", flush=True)
             return
+        # 2026-10-11 线变更校验: oddsChange=0 只查价格不查盘口线。让球/大小球线在重拉到提交间变了 → 放弃(旧EV打错线)。
+        if sig.get("line") is not None and _fresh_line is not None:
+            try:
+                if abs(float(_fresh_line) - float(sig.get("line"))) > 0.01:
+                    self._count_skip("line_changed")
+                    print(f"  ⚠️ 盘口线已变({sig.get('line')}→{_fresh_line}), 放弃 {tag}", flush=True)
+                    return
+            except (TypeError, ValueError):
+                pass
         # 2026-10-11 _attempted 前置: 过了所有 gate 就标记「已尝试」, 在发请求前写。防重复请求 +
         # 将来 worker pool 并发重入双倍下单(必须先写再发请求)。stake_record 仍只在成交后写(防重复敞口)。
         self._attempted.setdefault(str(sig["match_id"]), {})[str(market_id)] = time.time()

@@ -341,6 +341,7 @@ def consensus_fair_price(home, away, sport_id, sub_market, target_line=None, sta
                 fair['line'] = src['line']
                 break
     return {'fair': fair, 'pinnacle': pinnacle, 'betfair': betfair, 'sbo': sbo,
+            'fair_source': 'pinnacle' if pinnacle else ('betfair' if betfair else None),
             'event_id': (bf or {}).get('event_id'), 'spread': (bf or {}).get('spread')}
 
 

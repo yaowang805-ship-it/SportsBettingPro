@@ -122,6 +122,8 @@ def _oa_fair(entry, sport, sub, target_line=None, use_rest=None, status=None):
         _sbo = res.get("sbo") or res.get("confidence")
         if _sbo:
             entry.setdefault("_oa_conf", {})[sub] = _sbo
+        # 2026-10-11 记公平价来源(pinnacle/betfair), 供 CLV 口径分组(19号 Betfair 停订后前后不可跨组聚合)
+        entry.setdefault("_fair_source", {})[sub] = res.get("fair_source")
         return res["fair"]
     return None
 

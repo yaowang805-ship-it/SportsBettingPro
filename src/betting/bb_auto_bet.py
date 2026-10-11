@@ -454,10 +454,12 @@ def fetch_current_odds(market_id, match_id, option_type, token=None, domain=None
         d = r.json()
         if d.get("code") == 0 and d.get("data", {}).get("bms"):
             b = d["data"]["bms"][0]
-            cur_odds = b.get("op", {}).get("od")
+            _op = b.get("op", {}) or {}
+            cur_odds = _op.get("od")
+            cur_line = _op.get("li")  # 盘口线(让球/大小阈值), 2026-10-11 线变更校验用(响应带才返回)
             smin = b.get("smin")
             smax = b.get("smax")
-            return cur_odds, smin, smax
+            return cur_odds, smin, smax, cur_line
     except Exception:
         pass
     return None

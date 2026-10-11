@@ -1361,6 +1361,7 @@ def log_oa_opportunities(details, min_ev=2.0):
                     "fair_price": opp.get("fair_price", 0), "ev_pct": ev,
                     "stake": 0, "tier": tier, "match_epoch": epoch,
                     "bb_price_source": m.get("bb_price_source", "BB"),
+                    "fair_source": m.get("_fair_source", {}).get(sub, ""),  # pinnacle/betfair, 2026-10-11 CLV口径分组
                     "pin_league_id": "", "pin_match_id": "",
                     "source": "validate", "pin_max_stake": "",
                     "bb_match_id": bb_match_id,
