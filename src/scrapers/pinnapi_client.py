@@ -124,18 +124,23 @@ def find_pinnacle_event(data, home, away):
 
 
 _pin_cache_idx = {"_ts": 0.0, "_idx": {}}
+_pin_cache_file = {"mtime": 0.0, "data": None}
 
 
 def _pin_cache_find_event(home, away):
     """从 pin_odds_cache.json(实时缓存)按队名找事件。返回 event dict 或 None。
 
-    只认有 periods 的全量事件; 缓存 >60s 视为失效。用 ts 作索引缓存键, 避免每次线性扫上万个事件。
+    只认有 periods 的全量事件; 缓存 >60s 视为失效。文件 mtime 缓存 + 队名索引, 二次调用 ~0ms。
     """
     try:
         f = Path(__file__).resolve().parent.parent.parent / "data" / "storage" / "pin_odds_cache.json"
         if not f.exists():
             return None
-        d = json.loads(f.read_text())
+        mtime = f.stat().st_mtime
+        if _pin_cache_file["mtime"] != mtime or _pin_cache_file["data"] is None:
+            _pin_cache_file["data"] = json.loads(f.read_text())
+            _pin_cache_file["mtime"] = mtime
+        d = _pin_cache_file["data"]
         ts = d.get("ts", 0)
         if time.time() - ts > 60:
             return None
