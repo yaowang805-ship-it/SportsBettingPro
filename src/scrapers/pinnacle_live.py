@@ -818,7 +818,9 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         # 2026-09-20 修线错配: hc/ou 必须传 BB 的具体线(target_line), 否则公平价永远选 main line,
         # 三个不同让球线(3.17/2.14/1.48)都拿同一个 main line 公平价去比 → 虚高 +37% 假溢价。
         _target_line = mk.get("line") if sub in ("hc", "hc_games", "ou", "ht_ou") else None
-        res = fair_price_bb(b["home_en"], b["away_en"], b["sport"], sub, target_line=_target_line, status="live")
+        # 2026-10-11 Pin 主锚: 滚球公平价切三锚共识(Pin 去水优先, Betfair 只交叉验证/兜底)
+        from src.scrapers.pinnapi_client import consensus_fair_price
+        res = consensus_fair_price(b["home_en"], b["away_en"], b["sport"], sub, target_line=_target_line, status="live")
         if not res or not res["fair"]:
             return []
         fair = res["fair"]
@@ -845,7 +847,7 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
             if abs(float(mk["line"]) - float(fair["line"])) > 0.01:
                 return []
         ev = (bb_odds - fair_p) / fair_p * 100.0
-        _conf = res.get("confidence")
+        _conf = res.get("sbo") or res.get("confidence")
         _conf_p = _conf.get(k) if _conf else None
         _sbo_dir = 'none' if _conf_p is None else ('same' if _conf_p > fair_p else 'diff')
         base = {
