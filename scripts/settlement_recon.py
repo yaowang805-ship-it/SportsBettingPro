@@ -23,6 +23,7 @@ from src.betting.bb_auto_bet import read_token, read_domain, _session, _UA  # no
 REAL_BETS = ROOT / "data" / "storage" / "real_bets.json"
 RECON_OUT = ROOT / "data" / "storage"
 UNMATCHED_AGE = 24 * 3600  # 未结算且 >24h 查不到 → unmatched(赛事早该结束)
+SPORT_CN = {1: "足球", 2: "冰球", 3: "篮球", 5: "网球", 6: "美足", 7: "棒球", 8: "排球"}  # BB sport id → 中文
 
 
 def _fetch_settled_orders():
@@ -111,6 +112,8 @@ def main():
         except (TypeError, ValueError):
             pnl = 0.0
         od = op.get("od", 0) or 0
+        sid = op.get("sid", 0)
+        sport = SPORT_CN.get(sid, str(sid))
         status, void_reason = _classify(float(stake), pnl, float(od), o.get("rj", 0), o.get("rjs", ""))
         # settled_amount = 返还金额: 赢=stake+pnl, void/push=stake, 输=0
         returned = max(0.0, float(stake) + pnl)
@@ -118,7 +121,7 @@ def main():
             "oid": oid, "status": status, "stake": stake, "pnl": pnl,
             "odds": od, "returned": round(returned, 2),
             "mn": op.get("mn", ""), "on": op.get("on", ""), "mgn": op.get("mgn", ""),
-            "void_reason": void_reason, "matched_at": now,
+            "sport": sport, "void_reason": void_reason, "matched_at": now,
         })
 
     # 本地未结算且查不到的 → pending(未结束) 或 unmatched(>24h 仍无, 疑映射错)
@@ -155,6 +158,10 @@ def main():
     print(f"[recon] 已结算 {total} 笔: {dict(c)} | void率 {void_rate:.1f}% | push率 {push_rate:.1f}% | partial率 {partial_rate:.1f}% | unmatched {unmatched_n} 笔", flush=True)
     if void_reasons:
         print(f"[recon] void 拒因分布: {dict(void_reasons)}", flush=True)
+    # sport × rj 分组(2026-10-11): void/拒单是分运动的, 全局阈值掩盖结构。篮球 6/8 void 信号太强。
+    sport_void = Counter((r["sport"], r["void_reason"]) for r in settled if r["status"] == "void")
+    if sport_void:
+        print(f"[recon] void 按运动×拒因: {dict(sport_void)}", flush=True)
     if void_rate > 5:
         print(f"[recon] ⚠️ void率 {void_rate:.1f}% > 5%: 滚球 EV/slippage 分析需打折, 优先级重排", flush=True)
 

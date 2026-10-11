@@ -219,6 +219,15 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
 
         # 余额熔断已取消(2026-10-11 用户要求): 不再用余额<1000 拦投注, 符合释放门槛就投
 
+        # 让球0 seen 计数(2026-10-11 早盘, 不滤只计数供"早盘整数线效率"对照)
+        if sub in ("hc", "handicap") and opp.get("line") is not None:
+            try:
+                if abs(float(opp.get("line"))) < 1e-6:
+                    from src.scrapers.stats import count as _sc
+                    _sc("line_zero_seen_pre")
+            except (TypeError, ValueError):
+                pass
+
         # 下单(含注额上限检查)
         _t0 = time.time()
         code, order_id, msg = place_single_bet(
