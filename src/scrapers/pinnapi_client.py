@@ -38,9 +38,9 @@ _pin_cache = {}  # {(sport_id, event_type): (ts, data)}
 
 
 def _norm(name):
-    """队名归一化(与 odds_api_io._norm_team 同口径): 小写+去非字母数字。"""
-    import re
-    return re.sub(r'[^a-z0-9]', '', (name or '').lower())
+    """队名归一化: 与 odds_api_io._norm_team 完全同口径(去 FC/SC/CF 后缀 + saint→st + 国家别名)。"""
+    from src.scrapers.odds_api_io import _norm_team
+    return _norm_team(name)
 
 
 def fetch_pinnacle_markets(sport_id, event_type='prematch', since=None, force=False):
