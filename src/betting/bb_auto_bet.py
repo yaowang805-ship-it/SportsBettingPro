@@ -382,6 +382,24 @@ def _append_bet_audit():
         pass
 
 
+def _append_acceptance(rec):
+    """下单请求层 acceptance 埋点(2026-10-11): 独立文件 bet_acceptance.jsonl, 不污染观察库/不碰 n。
+
+    记请求层(非结果层): ts/platform/market_id/stake/requested_price/result_code/returned_price/elapsed_ms。
+    result_code: 成交/拒单/压额/超时/异常。这是反制领先指标(acceptance_rate/repriced/void) +
+    执行延迟真实测量(elapsed_ms)的唯一数据源——区分「主流信号过不了闸门」是 CLV 假溢价 /
+    执行太慢 / 已被反制 三个完全相反的处置方向。
+    """
+    try:
+        import json as _json
+        from pathlib import Path as _Path
+        _f = _Path(__file__).resolve().parent.parent.parent / "data" / "storage" / "bet_acceptance.jsonl"
+        with open(_f, "a", encoding="utf-8") as _fh:
+            _fh.write(_json.dumps(rec, ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+
+
 def check_balance_ok(min_balance=BALANCE_MIN):
     """BB 账户余额是否 >= min_balance(60s 缓存, 避免每次下单都拉余额 HTTP)。
 
@@ -555,9 +573,11 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
         "Referer": "https://pc.7y99z.com/" if platform == "FB" else "https://pc.x14ff.com/",
     }
     for attempt in range(3):
+        _t0 = time.time()  # 请求发出时刻(acceptance 埋点)
         try:
             r = _session().post(f"{domain}/v1/order/bet/singlePass",
                                 json=body, headers=headers, timeout=15, verify=False)
+            _elapsed_ms = round((time.time() - _t0) * 1000, 1)
             d = r.json()
             code = d.get("code", -1)
             msg = d.get("message") or ""
@@ -604,10 +624,24 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
                 _last_bet_audit["reason"] = {14010: "token_expired", 3015: "market_closed",
                                              5: "param_error"}.get(code, f"rejected_{code}")
             _append_bet_audit()
+            _append_acceptance({
+                "ts": _t0, "platform": platform, "market_id": market_id,
+                "stake": stake, "requested_price": final_odds,
+                "result_code": "成交" if code == 0 else ("压额" if code == -3 else "拒单"),
+                "code": code, "returned_price": final_odds if code == 0 else None,
+                "elapsed_ms": _elapsed_ms,
+            })
             return code, order_id, msg
         except Exception as e:
             _last_bet_audit["reason"] = "exception"
             _append_bet_audit()
+            _append_acceptance({
+                "ts": _t0, "platform": platform, "market_id": market_id,
+                "stake": stake, "requested_price": final_odds,
+                "result_code": "超时" if ("timeout" in str(e).lower() or "timed out" in str(e).lower()) else "异常",
+                "code": None, "returned_price": None,
+                "elapsed_ms": round((time.time() - _t0) * 1000, 1),
+            })
             return -2, None, f"下单异常: {type(e).__name__} {e}"
     _last_bet_audit["reason"] = "retry_exhausted"
     _append_bet_audit()

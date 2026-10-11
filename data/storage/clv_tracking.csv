@@ -966,3 +966,33 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T11:44:46Z,basketball,Chile LNB,CD Valdivia,CD Espanol Osorno,,,上半场主胜,ht,1.22,0,1.1815,3.26,0,4,1791761400,ALL,pinnacle,,,validate,,,5697480
 2026-10-11T11:50:09Z,football,Indonesia Super League,Persib Bandung,Dewa United,,,主胜,1x2,1.91,0,1.7729,7.73,0,2,1791720000,ALL,pinnacle,,,validate,,,5680835
 2026-10-11T11:54:57Z,football,Norway 2nd Division,Traeff,Sandviken,,,主胜,1x2,2.13,0,1.4568,46.21,0,3,1791721800,ALL,pinnacle,,,validate,,,4865033
+2026-10-11T12:05:08Z,football,Turkey 2nd Lig,Inegolspor,Fethiyespor,,,双重机会-和局/客,dc,1.66,0,1.6094,3.14,0,3,1791721800,ALL,pinnacle,,,validate,,,5707654
+2026-10-11T12:05:08Z,football,Indian Super League,Churchill Brothers SC,Mumbai City FC,,,和局,1x2,3.71,0,2.4584,50.91,0,2,1791727200,ALL,pinnacle,,,validate,,,5724898
+2026-10-11T12:05:08Z,football,Indian Super League,Churchill Brothers SC,Mumbai City FC,,,双重机会-主/和局,dc,2.17,0,1.6482,31.66,0,2,1791727200,ALL,pinnacle,,,validate,,,5724898
+2026-10-11T12:30:46Z,football,France Ligue 1,Le Mans FC,Toulouse FC,,,和局,1x2,3.69,0,3.6113,2.18,0,1,1792176300,ALL,pinnacle,,,validate,,,5640466
+2026-10-11T12:35:51Z,football,Poland III Liga,Olimpia Zambrow,Lechia Tomaszow Mazowiecki,,,双重机会-和局/客,dc,1.76,0,1.6659,5.65,0,4,1791723600,ALL,pinnacle,,,validate,,,5700184
+2026-10-11T12:42:21Z,football,Austria Bundesliga,Wolfsberger AC,WSG Tirol,,,和局,1x2,3.71,0,2.652,39.89,0,2,1792326600,ALL,pinnacle,,,validate,,,5165763
+2026-10-11T12:42:21Z,football,Austria Bundesliga,Wolfsberger AC,WSG Tirol,,,双重机会-主/和局,dc,1.45,0,1.3894,4.36,0,2,1792326600,ALL,pinnacle,,,validate,,,5165763
+2026-10-11T12:42:21Z,football,Austria Bundesliga,Wolfsberger AC,WSG Tirol,,,双重机会-和局/客,dc,1.58,0,1.5213,3.86,0,2,1792326600,ALL,pinnacle,,,validate,,,5165763
+2026-10-11T12:42:53Z,football,Netherlands Eredivisie,PEC Zwolle,Go Ahead Eagles,,,客胜,1x2,2.25,0,1.974,13.98,0,1,1792318500,ALL,pinnacle,,,validate,,,5084169
+2026-10-11T12:42:53Z,football,Netherlands Eredivisie,PEC Zwolle,Go Ahead Eagles,,,上半场客胜,ht,2.66,0,1.974,34.75,0,1,1792318500,ALL,pinnacle,,,validate,,,5084169
+2026-10-11T12:42:53Z,football,Netherlands Eredivisie,PEC Zwolle,Go Ahead Eagles,,,双重机会-和局/客,dc,1.45,0,1.3518,7.26,0,1,1792318500,ALL,pinnacle,,,validate,,,5084169
+2026-10-11T12:46:03Z,football,USA Major League Soccer,San Diego FC,Houston Dynamo,,,和局,1x2,3.95,0,2.6085,51.43,0,1,1792031400,ALL,pinnacle,,,validate,,,4231092
+2026-10-11T12:46:03Z,football,USA Major League Soccer,San Diego FC,Houston Dynamo,,,双重机会-和局/客,dc,1.77,0,1.5626,13.27,0,1,1792031400,ALL,pinnacle,,,validate,,,4231092
+2026-10-11T12:48:10Z,football,Netherlands Eredivisie,PEC Zwolle,Go Ahead Eagles,,,和局,1x2,4.22,0,2.7615,52.82,0,1,1792318500,ALL,pinnacle,,,validate,,,5084169
+2026-10-11T12:48:10Z,football,Netherlands Eredivisie,PEC Zwolle,Go Ahead Eagles,,,双重机会-主/和局,dc,1.64,0,1.5928,2.96,0,1,1792318500,ALL,pinnacle,,,validate,,,5084169
+2026-10-11T12:51:19Z,football,Norway 3rd Division,Fauske Sprint,Harstad,,,上半场主胜,ht,3.07,0,2.8938,6.09,0,4,1791723600,BB,pinnacle,,,validate,,,4888285
+2026-10-11T13:00:58Z,basketball,Norway BLNO Basketball League,Ammerud Basket,Tromso Storm,,,客胜,1x2,8.55,0,7.5213,13.68,0,3,1791730800,BB,pinnacle,,,validate,,,5304999
+2026-10-11T13:01:32Z,ice_hockey,AHL,Hartford Wolf Pack,Laval Rocket,,,上半场主胜,ht,2.6,0,1.8867,37.81,0,3,1791745200,BB,pinnacle,,,validate,,,5644774
+2026-10-11T13:01:32Z,ice_hockey,AHL,Hartford Wolf Pack,Laval Rocket,,,上半场客胜,ht,2.88,0,2.1278,35.35,0,3,1791745200,BB,pinnacle,,,validate,,,5644774
+2026-10-11T13:06:21Z,basketball,Turkey TBL Basketball,Darussafaka,Harem Spor Kulubu,,,主胜,1x2,4.94,0,4.3101,14.61,0,3,1791725400,ALL,pinnacle,,,validate,,,5725834
+2026-10-11T13:06:21Z,ice_hockey,AHL,Lehigh Valley Phantoms,Cleveland Monsters,,,上半场主胜,ht,2.55,0,2.2101,15.38,0,3,1791738300,BB,pinnacle,,,validate,,,5644775
+2026-10-11T13:06:21Z,ice_hockey,AHL,Lehigh Valley Phantoms,Cleveland Monsters,,,上半场客胜,ht,3.07,0,2.7636,11.09,0,3,1791738300,BB,pinnacle,,,validate,,,5644775
+2026-10-11T13:06:21Z,ice_hockey,AHL,Belleville Senators,Utica Comets,,,上半场主胜,ht,2.47,0,1.7131,44.18,0,3,1791752400,BB,pinnacle,,,validate,,,5644782
+2026-10-11T13:06:21Z,ice_hockey,AHL,Belleville Senators,Utica Comets,,,上半场客胜,ht,3.24,0,2.4024,34.87,0,3,1791752400,BB,pinnacle,,,validate,,,5644782
+2026-10-11T13:12:16Z,football,Scotland Premiership,Aberdeen FC,ST Mirren FC,,,和局,1x2,3.64,0,2.5092,45.07,0,2,1792245600,ALL,pinnacle,,,validate,,,5635375
+2026-10-11T13:12:16Z,football,Scotland Premiership,Aberdeen FC,ST Mirren FC,,,双重机会-和局/客,dc,1.93,0,1.6534,16.73,0,2,1792245600,ALL,pinnacle,,,validate,,,5635375
+2026-10-11T13:12:16Z,football,Scotland Premiership,ST Johnstone FC,Dundee United,,,上半场主胜,ht,2.89,0,2.3879,21.03,0,2,1792245600,ALL,pinnacle,,,validate,,,5635380
+2026-10-11T13:12:16Z,football,Scotland Premiership,ST Johnstone FC,Dundee United,,,上半场客胜,ht,3.32,0,3.2051,3.58,0,2,1792245600,ALL,pinnacle,,,validate,,,5635380
+2026-10-11T13:12:49Z,football,Saudi Arabia Division 1,Al Adalah FC,Al Anwar Club,,,和局,1x2,3.3,0,2.5345,30.2,0,2,1791816900,BB,pinnacle,,,validate,,,5340840
+2026-10-11T13:12:49Z,football,Saudi Arabia Division 1,Al Adalah FC,Al Anwar Club,,,双重机会-主/和局,dc,1.63,0,1.5484,5.27,0,2,1791816900,BB,pinnacle,,,validate,,,5340840
