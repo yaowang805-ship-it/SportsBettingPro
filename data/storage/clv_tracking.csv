@@ -851,3 +851,16 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T08:43:27Z,football,England Premier League,Leeds United,Manchester United FC,,,主胜,1x2,2.43,0,1.856,30.93,0,1,1792328400,ALL,pinnacle,,,validate,,,5130822
 2026-10-11T08:43:27Z,football,England Premier League,Leeds United,Manchester United FC,,,客胜,1x2,2.69,0,2.1682,24.07,0,1,1792328400,ALL,pinnacle,,,validate,,,5130822
 2026-10-11T08:43:27Z,football,England Championship League,Burnley FC,Charlton Athletic,,,客胜,1x2,5.1,0,2.0437,149.55,0,2,1791917100,ALL,pinnacle,,,validate,,,5724153
+2026-10-11T08:48:15Z,ice_hockey,Vysshaya Hokkeinaya Liga,Sokol Krasnoyarsk,Toros Neftekamsk,,,上半场主胜,ht,3.08,0,2.8538,7.93,0,3,1791892800,BB,pinnacle,,,validate,,,5594642
+2026-10-11T08:48:15Z,ice_hockey,Vysshaya Hokkeinaya Liga,Sokol Krasnoyarsk,Toros Neftekamsk,,,上半场客胜,ht,2.8,0,2.5582,9.45,0,3,1791892800,BB,pinnacle,,,validate,,,5594642
+2026-10-11T08:48:15Z,ice_hockey,Vysshaya Hokkeinaya Liga,Metallurg Novokuznetsk,Izhstal Izhevsk,,,上半场主胜,ht,2.06,0,1.8487,11.43,0,3,1791892800,BB,pinnacle,,,validate,,,5709411
+2026-10-11T08:48:15Z,ice_hockey,Vysshaya Hokkeinaya Liga,Metallurg Novokuznetsk,Izhstal Izhevsk,,,上半场客胜,ht,4.77,0,3.6881,29.33,0,3,1791892800,BB,pinnacle,,,validate,,,5709411
+2026-10-11T08:48:46Z,football,Japan J.League 2,Tochigi City FC,Yokohama FC,,,和局,1x2,3.96,0,2.6453,49.7,0,3,1792213200,ALL,pinnacle,,,validate,,,5164382
+2026-10-11T08:48:46Z,football,Japan J.League 2,Tochigi City FC,Yokohama FC,,,双重机会-主/和局,dc,1.66,0,1.5706,5.69,0,3,1792213200,ALL,pinnacle,,,validate,,,5164382
+2026-10-11T08:48:46Z,football,Japan J.League 2,Tochigi City FC,Yokohama FC,,,双重机会-和局/客,dc,1.4,0,1.3489,3.79,0,3,1792213200,ALL,pinnacle,,,validate,,,5164382
+2026-10-11T08:48:46Z,football,Costa Rica Liga de Ascenso,Quepos Cambute FC,AD Sarchi,,,上半场主胜,ht,1.79,0,1.6765,6.77,0,3,1791745200,BB,pinnacle,,,validate,,,5731616
+2026-10-11T08:48:46Z,football,Costa Rica Liga de Ascenso,Quepos Cambute FC,AD Sarchi,,,上半场客胜,ht,8.3,0,5.6454,47.02,0,3,1791745200,BB,pinnacle,,,validate,,,5731616
+2026-10-11T08:48:46Z,football,Costa Rica Liga de Ascenso,Quepos Cambute FC,AD Sarchi,,,上半场让球主胜,ht_hc,1.79,0,1.6141,10.9,0,3,1791745200,BB,pinnacle,,,validate,,-0.5,5731616
+2026-10-11T08:48:46Z,football,Costa Rica Liga de Ascenso,PFA Santa Cruz,ADR Jicaral,,,上半场主胜,ht,5.8,0,5.3051,9.33,0,3,1791745200,BB,pinnacle,,,validate,,,5731568
+2026-10-11T08:48:46Z,football,Costa Rica Liga de Ascenso,PFA Santa Cruz,ADR Jicaral,,,上半场客胜,ht,2.21,0,1.7556,25.88,0,3,1791745200,BB,pinnacle,,,validate,,,5731568
+2026-10-11T08:58:41Z,football,Bahrain Premier League,东里法,阿里,东里法,阿里,主胜,1x2,2.68,0,2.278,17.65,120,2,1791734400.0,FB,,,,push,,,
