@@ -274,14 +274,23 @@ class PinWSClient:
             if mid and markets:
                 self.cache.update_markets(mid, markets)
             return
-        if t in ("live", "prematch_matchups"):
-            # 每帧更新: data 是 Pinnacle payload(元数据)
-            data = d.get("data") or []
-            if isinstance(data, dict):
-                data = [data]
-            for ev in data:
+        if t == "live":
+            # 滚球帧: rec = 单场(元数据 participants + 赔率 markets, 美国盘)
+            rec = d.get("rec")
+            if isinstance(rec, dict):
+                mid = str(rec.get("id") or "")
+                if mid and mid != "None":
+                    self.cache.update_event(mid, rec)
+                    markets = self._parse_markets(rec.get("markets") or [])
+                    if markets:
+                        self.cache.update_markets(mid, markets)
+                    self.on_tick(mid, rec)
+            return
+        if t == "prematch_matchups":
+            # 早盘元数据: data 是 matchups 列表
+            for ev in (d.get("data") or []):
                 if isinstance(ev, dict):
-                    eid = str(ev.get("event_id") or ev.get("id") or "")
+                    eid = str(ev.get("id") or "")
                     if eid and eid != "None":
                         self.cache.update_event(eid, ev)
                         self.on_tick(eid, ev)
