@@ -134,6 +134,11 @@ class PinOddsCache:
         with self._lock:
             return self._cache.get(event_id)
 
+    def all_events(self):
+        """返回缓存全部 entry 的浅拷贝(早盘入库扫描用, 2026-10-11)。"""
+        with self._lock:
+            return list(self._cache.values())
+
     def snapshot(self):
         with self._lock:
             return json.dumps({"ts": time.time(), "cache": self._cache}, ensure_ascii=False)

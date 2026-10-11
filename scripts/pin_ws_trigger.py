@@ -113,6 +113,79 @@ def _poll_rest_cache(cache, rest):
         time.sleep(5)
 
 
+# ── 早盘入库(2026-10-11): Pin 驱动观察库入库 ──
+# 早盘 Betfair WS 触发(prematch_ws_trigger.py)目前 reconnect 循环 + BB 反查 0 命中(已坏),
+# 且 19 号 Betfair 停订。改由 Pin 实时缓存驱动: 每 10s 扫缓存, 对 prematch 事件(赔率变了且
+# 冷却期过)反查 BB → _build_oa_entry/_oa_add_markets → log_oa_opportunities 入库观察库。
+# 替代 prematch_ws_trigger.py 的 Betfair WS 触发职责。
+PREMATCH_COOLDOWN = 300.0     # 同一事件冷却(秒): 冷却内不重比, 过后赔率再变才重比
+PREMATCH_FLUSH_INTERVAL = 30.0  # 入库批量写间隔(秒)
+
+
+class PrematchIngestor:
+    def __init__(self, cache):
+        self.cache = cache
+        self._last = {}        # (norm_home, norm_away) -> 上次比价 ts
+        self._pending = []     # 待入库 entry 队列
+        self._lock = threading.Lock()
+        self._last_flush = 0.0
+
+    def sweep(self):
+        """扫 Pin 缓存, 反查 BB, 比价, 入 pending(不阻塞主循环)。"""
+        from src.scrapers.bb_vs_pinnacle import _build_oa_entry, _oa_add_markets
+        now = time.time()
+        bb_idx = {}
+        for m in _load_bb_matches():
+            eh, ea = _norm(m.get("home", "")), _norm(m.get("away", ""))
+            if eh and ea:
+                bb_idx[(eh, ea)] = m
+        if not bb_idx:
+            return
+        for entry in self.cache.all_events():
+            ev = entry.get("event") or {}
+            if ev.get("event_type") != "prematch":
+                continue
+            home, away = ev.get("home", ""), ev.get("away", "")
+            if not home or not away:
+                continue
+            key = (_norm(home), _norm(away))
+            if now - self._last.get(key, 0.0) < PREMATCH_COOLDOWN:
+                continue
+            self._last[key] = now
+            m = bb_idx.get(key)
+            if not m:
+                continue
+            sport = m.get("sport", "football")
+            try:
+                e = _build_oa_entry(m, sport)
+                _oa_add_markets(e, m, sport, use_rest=False, status="prematch")
+            except Exception:
+                continue
+            if any(e.get(g) for g in ("opportunities", "handicap", "over_under",
+                                      "double_chance", "draw_no_bet")):
+                with self._lock:
+                    self._pending.append(e)
+
+    def flush(self):
+        """批量写观察库(每 PREMATCH_FLUSH_INTERVAL 写一次, 降低 CSV 读写开销)。"""
+        if time.time() - self._last_flush < PREMATCH_FLUSH_INTERVAL:
+            return
+        with self._lock:
+            if not self._pending:
+                self._last_flush = time.time()
+                return
+            batch = self._pending
+            self._pending = []
+        self._last_flush = time.time()
+        try:
+            from src.monitor.clv_collector import log_oa_opportunities
+            n = log_oa_opportunities(batch) or 0
+            if n:
+                print(f"[pin-prematch] 入库 {n} 条机会", flush=True)
+        except Exception as e:
+            print(f"[pin-prematch] 入库失败: {type(e).__name__} {str(e)[:80]}", flush=True)
+
+
 def main():
     cache = PinOddsCache()
     rest = PinRestClient()
