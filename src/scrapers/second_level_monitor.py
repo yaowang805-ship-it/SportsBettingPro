@@ -546,6 +546,7 @@ class SecondLevelMonitor:
         self._pin_trigger_offset = 0  # Pin drop 触发文件已消费行数(2026-10-11)
         self._pin_live_wake = False  # 滚球 drop 唤醒标志(2026-10-11): live drop 触发立即滚球比较
         self._last_pin_live_tick = 0.0  # 上次读到的 Pin WS live 帧时间戳(2026-10-11)
+        self._skip_stats = {}  # 滚球跳过分桶(2026-10-11): 观察是否有过滤条件把机会全滤掉(过度拦截零成交)
         self._raw_ws_ts = 0.0  # 原始WS变动检测时刻(2026-09-23): 供推送「端到端耗时(WS触发→下单完成)」
         self._early_ws_ts = 0.0  # 早盘 WS 触发节流时间戳(2026-09-19)
         self._lev_fail_stats = {}  # LEV 复验失败原因计数(量化 close/价差/deleted 各占多少)
@@ -983,15 +984,20 @@ class SecondLevelMonitor:
             if self.auto_bet:
                 self._try_live_auto_bet(sig)
 
+    def _count_skip(self, key):
+        self._skip_stats[key] = self._skip_stats.get(key, 0) + 1
+
     def _score_changed(self, sig):
         """下单前比分状态校验(2026-10-11): 进球/比分变了 → 快照作废(死球, 不吃坏价)。
 
         读预取缓存当前比分 vs 快照比分(_score/bsc)。进球后 BB 盘口往往滞后, 快照没超龄也已作废。
         读不到当前状态时放行(不误拦), 交由 oddsChange=0 兜底。
+        2026-10-11 修漏洞: 预取缓存 ~2.7s 陈旧, 缓存没刷新会漏拦进球 → 缓存 age>SCORE_CHECK_MAX_AGE
+        视为「不可信」→ 返回 True(跳过), 宁缺毋滥。
         """
         try:
             from src.scrapers.pinnacle_live import get_bb_fresh_or_cached
-            bb, _ = get_bb_fresh_or_cached(wait_for_fresh=False)
+            bb, _bb_ts = get_bb_fresh_or_cached(wait_for_fresh=False)
             _mid = sig.get("match_id")
             m = bb.get(_mid) or bb.get(str(_mid))  # 键类型可能 int/str, 都试
             if m is None:
@@ -999,6 +1005,9 @@ class SecondLevelMonitor:
             cur_sc = m.get("sc")
             snap_sc = sig.get("bsc")
             if cur_sc is not None and snap_sc is not None and cur_sc != snap_sc:
+                return True
+            # 缓存太旧 → 比分「没变」的结论不可信(进球可能已发生但缓存没刷新)
+            if _bb_ts and time.time() - _bb_ts > SCORE_CHECK_MAX_AGE:
                 return True
         except Exception:
             pass
@@ -1135,6 +1144,7 @@ class SecondLevelMonitor:
         # 2026-10-11 滚球冷却 15-45s→3-8s(进球窗口20-40s, 45s=自废; 早盘仍 20-90s)
         from src.betting.bb_auto_bet import global_bet_cooldown
         if global_bet_cooldown(3, 8) > 0:
+            self._count_skip("cooldown")
             return
         # (2026-09-22 取消余额<1000 熔断——用户指令: 符合门槛就投, 不因余额低停注)
         print(f"  🎯 滚球下单 {tag} @{sig['bb_odds']:.2f} 注额¥{stake} "
@@ -1147,10 +1157,12 @@ class SecondLevelMonitor:
         # 下单 verify_price=False + oddsChange=0(下单瞬间赔率变了就拒), 所以「投注端赔率=快照」就下单,
         # 不必重拉 BB 验价。快照年龄 >SNAPSHOT_MAX_AGE 判 stale 跳过(防用过期快照算错 edge)。
         if (time.time() - _detect_ts) > SNAPSHOT_MAX_AGE:
+            self._count_skip("stale_snapshot")
             print(f"  ⏭️ 快照单跳过(快照已{time.time()-_detect_ts:.0f}s>{SNAPSHOT_MAX_AGE}s, 不投stale) {tag}", flush=True)
             return
         # 2026-10-11 比分状态校验: 进球/比分变了 → 快照作废(死球), 跳过。补 SNAPSHOT_MAX_AGE 只看年龄的缺口。
         if self._score_changed(sig):
+            self._count_skip("score_changed")
             print(f"  ⚽ 比分已变(进球/状态), 快照作废跳过 {tag}", flush=True)
             return
         _t_place = time.time()
@@ -1164,20 +1176,22 @@ class SecondLevelMonitor:
         _t_http = time.time() - _t_place  # place_single_bet HTTP 耗时
         _total_time = time.time() - (sig.get("poll_ts") or _t0)  # 2026-09-20 总耗时(WS触发→下单完成), 推送用
         print(f"[slm] 下单耗时: 内部 {_t_order:.2f}s (检查 {_t_place-_t0:.2f}s + HTTP {_t_http:.2f}s) / 总 {_total_time:.2f}s", flush=True)
+        if code == -4:
+            self._count_skip("drift_or_negative_ev")  # 验价拦截: 逆向漂移>5% 或 EV 转负
         # 记录尝试(成败都记), 5min 内不再重复尝试同一盘口
         self._attempted.setdefault(str(sig["match_id"]), {})[str(market_id)] = time.time()
-        # 更新限频时间戳 + 抽下一单随机间隔(3-8s, 2026-10-11 从 10-15s 缩短; 防风控靠注码抖动)
-        self._last_bet_time = time.time()
-        self._bet_delay = random.uniform(3, 8)
-        # 记录全局下单时间戳(早盘+滚球共享冷却起点)
-        from src.betting.bb_auto_bet import record_global_bet
-        record_global_bet()
         _eq_key = f"{sig.get('sport')}|{sig.get('sub')}|{sig.get('desig')}"
         _record_bet_result(code, latency=_t_http, direction_key=_eq_key)  # 2026-09-21 gubbing 限注监控
         if code == 14010:
             self._invalidate_token_cache()
         self._probe_token_async()  # 2026-09-28 token 探针移到投注后(后台, 不占下单关键路径)
         if code == 0:
+            # 2026-10-11 冷却/计数只在成交成功后生效: 拒单/void 不再烧冷却窗口。之前 record_global_bet
+            # 无条件打点 → 拒单也占全局冷却 + 连带节流早盘(共享冷却起点)。
+            self._last_bet_time = time.time()
+            self._bet_delay = random.uniform(3, 8)
+            from src.betting.bb_auto_bet import record_global_bet
+            record_global_bet()
             from src.betting.bb_auto_bet import record_sub_market_bet
             record_sub_market_bet(sig["match_id"], sig.get("sub"))
             self._live_spent += stake
@@ -2072,6 +2086,8 @@ class SecondLevelMonitor:
                             print(f"[slm] ⚠️ 结算耗时 {time.time()-_t_settle0:.0f}s(>60s)", flush=True)
                     if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
                         self._check_settled()
+                    if poll_count % 15 == 0 and self._skip_stats:  # 2026-10-11 跳过分桶摘要(观察过度拦截)
+                        print(f"[slm] 跳过分桶: {dict(self._skip_stats)}", flush=True)
                     # 每次轮询(2s)查 CLV(3s窗口)。2026-09-26 独立线程池+30s超时
                     await _run_task(self._check_clv, timeout=30, tag="CLV复验")
                     # 2026-09-24 每轮耗时监控: 定位假死根因(哪一步慢/卡), poll/settle 分阶段打点
