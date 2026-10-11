@@ -5,6 +5,16 @@
 结构不变量测试捕获「代码形状」而非「业务数值」——阈值怎么调都不误报, 所以不会被关掉。
 
 第 1 层: AST 结构不变量(防「又有人加了个 continue 跳过闸门」)。
+
+── 释放机制两层结构(2026-10-11 拆分, 防止 continue 钻空子) ──
+A 层 = 格子级释放资格(慢变量, 按 grid 评估, compute_market_release.py):
+  早盘: CLV>2.0 + n≥200 + obsROI>0 + REAL_ROI_GATE
+  滚球: n≥20(OBS_N_MIN_LIVE) + obsROI>0 + REAL_ROI_GATE  (LEV 降级为审计, 不当闸门)
+B 层 = 单笔放行门(快变量, 逐注评估, second_level_monitor._try_live_auto_bet, 全部路径必经、不得 continue):
+  EV>min_ev(滚球4%/早盘2%) / 比分门(_score_changed) / 线位移+让球0(LIVE_FILTER_LINE_ZERO+line_changed)
+  / 三层冷却(market_cooldown/event_exposure/global_rate_limit) / 互斥(check_sub_market_bet)
+  / 预算(LIVE_BUDGET) / lag 上限(lag_sec) / 联赛白名单(league 字段)
+  关键不变量: B 层不得出现任何 continue 跳过闸门——本测试第 1 层 AST 断言守护的就是这条。
 """
 import ast
 from pathlib import Path
