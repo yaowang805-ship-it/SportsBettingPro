@@ -1270,7 +1270,7 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
 
     fieldnames = ["timestamp", "sport", "league", "home", "away", "home_pin", "away_pin",
                   "designation", "sub_market", "bb_odds", "pin_odds", "fair_price", "ev_pct",
-                  "stake", "tier", "match_epoch", "bb_price_source", "pin_league_id", "pin_match_id",
+                  "stake", "tier", "match_epoch", "bb_price_source", "fair_source", "pin_league_id", "pin_match_id",
                   "source",
                   # V5.10: Pinnacle 主盘口注额上限(定价信心信号), 先采集不过滤
                   "pin_max_stake",
