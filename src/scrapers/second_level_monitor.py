@@ -1313,7 +1313,8 @@ class SecondLevelMonitor:
                      "sub": sig.get("sub", ""), "line": sig.get("line"),
                      "league": sig["match"].get("league_cn", ""),
                      "trigger_source": self._trigger_source,
-                     "bb_ts": sig.get("bb_ts"), "lag_sec": _lag_sec}
+                     "bb_ts": sig.get("bb_ts"), "lag_sec": _lag_sec,
+                     "poll_ts": sig.get("poll_ts")}  # 触发时刻(供 latency-ROI 曲线, 2026-10-11)
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
             match_id=sig["match_id"], check_limit=True, verify_price=True,
@@ -1368,6 +1369,8 @@ class SecondLevelMonitor:
                     "bb_ts": sig.get("bb_ts"),  # 2026-10-11 BB 快照时间(滞后度量)
                     "bb_snapshot_age": round(time.time() - (sig.get("bb_ts") or _t0), 2),  # 决策时 BB 快照年龄
                     "lag_sec": _lag_sec,  # 2026-10-11 BB-vs-Pin 滞后(含钟偏, 看相对/分组)
+                    "poll_ts": sig.get("poll_ts"),  # 触发时刻(供 latency-ROI 曲线)
+                    "latency": round(_total_time, 2),  # 端到端耗时(触发→下单完成)
                 }
                 self._live_bets[str(order_id)] = _binfo
                 _append_real_bet(str(order_id), _binfo)  # 2026-09-27 实盘库: 持久化下单信息
