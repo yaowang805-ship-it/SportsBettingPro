@@ -147,6 +147,7 @@ BB_SUB_TO_SM = {"over_under": "ou", "handicap": "hc", "handicap_games": "hc_game
                 "double_chance": "dc", "btts": "btts"}  # 2026-09-29 加双机会/双边进球(能结算, 用完整desig作方向)
 MARKET_RELEASE_FILE = ROOT / "data" / "storage" / "market_release.json"
 OBS_STATE_FILE = ROOT / "data" / "storage" / "observe_release_state.json"
+PIN_TRIGGER_FILE = ROOT / "data" / "storage" / "pin_trigger.jsonl"  # Pin drop 触发信号(scripts/pin_ws_trigger.py 写)
 DAILY_STAKE_LIMIT = 1000  # 新释放盘口当日累计投注额上限(2026-09-12 用户要求), 次日实盘ROI>4%解除
 PENDING_SETTLE_FILE = ROOT / "data" / "storage" / "pending_settle.json"  # 结算明细缓存(每小时汇总推一次)
 SETTLE_PUSH_INTERVAL = 3600  # 结算明细每小时汇总推一次(2026-09-12 用户要求, 不一场推一场)
@@ -539,6 +540,7 @@ class SecondLevelMonitor:
         self._bet_notify_until = 0.0  # 钉钉下单通知节流(30min 内最多一条)
         self._token_remind_until = 0.0  # token 失效钉钉提醒节流(30min)
         self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
+        self._pin_trigger_offset = 0  # Pin drop 触发文件已消费行数(2026-10-11)
         self._raw_ws_ts = 0.0  # 原始WS变动检测时刻(2026-09-23): 供推送「端到端耗时(WS触发→下单完成)」
         self._early_ws_ts = 0.0  # 早盘 WS 触发节流时间戳(2026-09-19)
         self._lev_fail_stats = {}  # LEV 复验失败原因计数(量化 close/价差/deleted 各占多少)
@@ -1836,6 +1838,75 @@ class SecondLevelMonitor:
             print(f'[slm] 早盘WS触发下单异常: {type(e).__name__} {e}', flush=True)
         return len(triggered)
 
+    def _consume_pin_triggers(self):
+        """Pin drop 触发 → BB 比价下单(lead-lag 闭环, 2026-10-11)。
+
+        读 pin_trigger.jsonl 新行(bb_match_id/home/away/outcome/from_price/to_price),
+        按 bb_match_id 反查 BB 快照 → 复用早盘比价(_build_oa_entry+_oa_add_markets) → 释放过滤 → 下单。
+        """
+        if not PIN_TRIGGER_FILE.exists():
+            return 0
+        try:
+            lines = PIN_TRIGGER_FILE.read_text().splitlines()
+        except OSError:
+            return 0
+        last = self._pin_trigger_offset
+        if last >= len(lines):
+            return 0
+        new_lines = lines[last:]
+        self._pin_trigger_offset = len(lines)
+        # BB 快照(id → match)
+        from src.scrapers.bb_incremental_scanner import BB_EXTRACTED
+        try:
+            d = json.loads(BB_EXTRACTED.read_text())
+            bb_by_id = {str(m.get('id')): m for m in d.get('matches', []) if m.get('id')}
+        except Exception:
+            return 0
+        from src.scrapers.bb_vs_pinnacle import _build_oa_entry, _oa_add_markets
+        from src.report.bb_ev_push import _is_market_released, _is_direction_blocked
+        _GROUP_TO_SUB = {'opportunities': '1x2', 'handicap': 'hc', 'over_under': 'ou',
+                         'double_chance': 'dc', 'draw_no_bet': 'dnb'}
+        opps = []
+        for line in new_lines:
+            try:
+                trig = json.loads(line)
+            except (json.JSONDecodeError, ValueError):
+                continue
+            mid = str(trig.get('bb_match_id') or '')
+            m = bb_by_id.get(mid)
+            if not m:
+                continue
+            sport = m.get('sport') or trig.get('sport') or 'football'
+            entry = _build_oa_entry(m, sport)
+            _oa_add_markets(entry, m, sport, use_rest=False)
+            _league = entry.get('league', '')
+            _epoch = entry.get('start_time_pin_epoch', 0)
+            for group in ('opportunities', 'handicap', 'over_under', 'double_chance', 'draw_no_bet'):
+                for o in entry.get(group, []):
+                    sub_market = o.get('_market') or _GROUP_TO_SUB.get(group, group)
+                    if not _is_market_released(sport, sub_market, _league,
+                                               o.get('designation', ''), _epoch,
+                                               o.get('fair_price') or o.get('bb_odds')):
+                        continue
+                    if _is_direction_blocked(sport, sub_market, o.get('designation', ''), _epoch):
+                        continue
+                    o['home_bb'] = entry.get('home_bb', '')
+                    o['away_bb'] = entry.get('away_bb', '')
+                    o['sport'] = sport
+                    o['_pin_epoch'] = _epoch
+                    opps.append(o)
+        if not opps:
+            return len(new_lines)
+        try:
+            from src.betting.bb_real_bet_flow import auto_bet_flow
+            res = auto_bet_flow(opps)
+            n = len(res.get('success', [])) if isinstance(res, dict) else 0
+            if n:
+                print(f'[slm] Pin drop 触发下单 {n} 注', flush=True)
+        except Exception as e:
+            print(f'[slm] Pin drop 触发下单异常: {type(e).__name__} {e}', flush=True)
+        return len(new_lines)
+
     async def run(self, seconds=0, refresh_every=2):
         """轮询 getList type=1 滚球赔率(HTTP, 不依赖浏览器), 每 refresh_every 秒一次。"""
         self._load_live_spent()
@@ -1941,6 +2012,11 @@ class SecondLevelMonitor:
                     await _run_task(self._consume_early_ws_changes, _changes, timeout=30, tag="早盘WS触发")
                 except Exception as e:
                     print(f"[slm] 早盘WS触发异常: {type(e).__name__} {str(e)[:80]}", flush=True)
+            # Pin drop 触发(2026-10-11): 读 pin_trigger.jsonl 新行 → 比价下单(lead-lag 闭环)
+            try:
+                await _run_task(self._consume_pin_triggers, timeout=20, tag="Pin drop触发")
+            except Exception as e:
+                print(f"[slm] Pin drop触发异常: {type(e).__name__} {str(e)[:80]}", flush=True)
             # 2026-09-19 事件驱动: WS 变动立即唤醒(省 sleep 0.5s 轮询延迟), 否则等 0.5s
             try:
                 from src.scrapers.odds_ws import wait_change
