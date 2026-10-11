@@ -1021,3 +1021,31 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T14:06:59Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Chiba Jets Funabashi,,,主胜,1x2,2.77,0,2.5333,9.34,0,3,1791785100,BB,pinnacle,,,validate,,,5298108
 2026-10-11T14:06:59Z,basketball,Japan B.League Premier,Shiga Lake Stars,Shinshu Brave Warriors,,,主胜,1x2,2.17,0,2.0831,4.17,0,3,1791781500,BB,pinnacle,,,validate,,,5298112
 2026-10-11T14:37:51Z,football,England Premier League,Nottingham Forest,Arsenal FC,,,主胜,1x2,5.5,0,2.0172,172.66,0,1,1792337400,ALL,pinnacle,,,validate,,,5130846
+2026-10-11T14:43:28Z,football,England Premier League,Fulham FC,Hull City,,,客胜,1x2,4.77,0,2.1968,117.13,0,1,1792245600,ALL,pinnacle,,,validate,,,5130838
+2026-10-11T14:48:19Z,football,France Ligue 1,Le Mans FC,Toulouse FC,,,主胜,1x2,2.95,0,2.2102,33.47,0,1,1792176300,ALL,pinnacle,,,validate,,,5640466
+2026-10-11T14:48:19Z,football,France Ligue 1,Le Mans FC,Toulouse FC,,,客胜,1x2,2.25,0,1.8263,23.2,0,1,1792176300,ALL,pinnacle,,,validate,,,5640466
+2026-10-11T14:48:19Z,basketball,Bulgaria NBL,Academic Plovdiv,BC Beroe SZ,,,客胜,1x2,2.35,0,2.1923,7.19,0,3,1791730800,ALL,pinnacle,,,validate,,,5700382
+2026-10-11T14:48:19Z,ice_hockey,Vysshaya Hokkeinaya Liga,Zauralye Kurgan,Dizel Penza,,,上半场客胜,ht,3.11,0,2.1265,46.25,0,3,1791898200,BB,pinnacle,,,validate,,,5709427
+2026-10-11T14:53:08Z,football,USA MLS Next Pro-Playoff,New York Red Bulls II,Huntsville City FC,,,主胜,1x2,1.58,0,1.3946,13.29,0,1,1791752400,ALL,pinnacle,,,validate,,,5681417
+2026-10-11T14:53:08Z,football,USA MLS Next Pro-Playoff,New York Red Bulls II,Huntsville City FC,,,客胜,1x2,4.2,0,3.5344,18.83,0,1,1791752400,ALL,pinnacle,,,validate,,,5681417
+2026-10-11T14:53:08Z,football,USA MLS Next Pro-Playoff,New York Red Bulls II,Huntsville City FC,,,上半场客胜,ht,4.26,0,3.5344,20.53,0,1,1791752400,ALL,pinnacle,,,validate,,,5681417
+2026-10-11T14:53:08Z,basketball,Kosovo Basketball Superliga,Golden Eagle Ylli,KB Peja,,,主胜,1x2,1.97,0,1.9307,2.04,0,2,1791730800,ALL,pinnacle,,,validate,,,5683286
+2026-10-11T14:57:57Z,football,Spain Tercera Division,CD Eldense II,Vall de Uxo,,,和局,1x2,2.93,0,2.8468,2.92,0,4,1791730800,ALL,pinnacle,,,validate,,,5730241
+2026-10-11T15:08:24Z,football,Costa Rica Liga de Ascenso,PFA Santa Cruz,ADR Jicaral,,,主胜,1x2,5.75,0,4.7027,22.27,0,3,1791745200,BB,pinnacle,,,validate,,,5731568
+2026-10-11T15:08:24Z,football,Costa Rica Liga de Ascenso,PFA Santa Cruz,ADR Jicaral,,,双重机会-主/和局,dc,2.48,0,2.1691,14.33,0,3,1791745200,BB,pinnacle,,,validate,,,5731568
+2026-10-11T15:10:05Z,ice_hockey,Vysshaya Hokkeinaya Liga,Rubin Tyumen,HC Tambov,,,上半场主胜,ht,2.66,0,2.0519,29.64,0,3,1791900000,BB,pinnacle,,,validate,,,5709431
+2026-10-11T15:10:05Z,ice_hockey,Vysshaya Hokkeinaya Liga,Rubin Tyumen,HC Tambov,,,上半场客胜,ht,3.31,0,3.2116,3.06,0,3,1791900000,BB,pinnacle,,,validate,,,5709431
+2026-10-11T15:10:05Z,ice_hockey,Vysshaya Hokkeinaya Liga,HC Yugra,Buran Voronezh,,,上半场主胜,ht,2.57,0,1.974,30.19,0,3,1791900000,BB,pinnacle,,,validate,,,5709432
+2026-10-11T15:10:05Z,ice_hockey,Vysshaya Hokkeinaya Liga,HC Yugra,Buran Voronezh,,,上半场客胜,ht,3.76,0,3.4802,8.04,0,3,1791900000,BB,pinnacle,,,validate,,,5709432
+2026-10-11T15:12:47Z,football,Poland I Liga,Pogon Siedlce,Puszcza Niepolomice,,,和局,1x2,3.31,0,2.2923,44.4,0,2,1792081800,ALL,pinnacle,,,validate,,,5717780
+2026-10-11T15:12:47Z,football,Poland I Liga,Pogon Siedlce,Puszcza Niepolomice,,,双重机会-主/和局,dc,1.5,0,1.4119,6.24,0,2,1792081800,ALL,pinnacle,,,validate,,,5717780
+2026-10-11T15:29:05Z,basketball,Portugal Basketball Campeonato Nacional 2 Division,NCR Valongo,SC Mirandela,,,客胜,1x2,9.0,0,8.7778,2.53,0,3,1791739800,BB,pinnacle,,,validate,,,5735446
+2026-10-11T15:31:18Z,ice_hockey,Champions Hockey League,KooKoo,Adler Mannheim,,,上半场主胜,ht,2.6,0,2.5163,3.33,0,3,1791905400,BB,pinnacle,,,validate,,,5307200
+2026-10-11T15:31:18Z,ice_hockey,Champions Hockey League,KooKoo,Adler Mannheim,,,上半场客胜,ht,2.74,0,2.6448,3.6,0,3,1791905400,BB,pinnacle,,,validate,,,5307200
+2026-10-11T15:33:32Z,basketball,Italy Basketball Serie B,Orlandina Basket,Sangiorgese Basket,,,客胜,1x2,4.07,0,3.8218,6.49,0,3,1791734400,ALL,pinnacle,,,validate,,,5690925
+2026-10-11T15:43:22Z,football,Poland I Liga,Pogon Siedlce,Puszcza Niepolomice,,,双重机会-和局/客,dc,1.47,0,1.4246,3.19,0,2,1792081800,ALL,pinnacle,,,validate,,,5717780
+2026-10-11T15:48:50Z,football,UEFA Europa League,Union Saint Gilloise,Real Sociedad,,,主胜,1x2,2.35,0,1.8774,25.17,0,3,1792082700,ALL,pinnacle,,,validate,,,5528006
+2026-10-11T15:48:50Z,football,UEFA Europa League,Union Saint Gilloise,Real Sociedad,,,客胜,1x2,2.76,0,2.1397,28.99,0,3,1792082700,ALL,pinnacle,,,validate,,,5528006
+2026-10-11T15:54:16Z,football,Egypt Premier League,Pyramids FC,Ceramica Cleopatra,,,主胜,1x2,1.56,0,1.2775,22.11,0,2,1791824400,ALL,pinnacle,,,validate,,,5704757
+2026-10-11T15:54:16Z,football,Egypt Premier League,Pyramids FC,Ceramica Cleopatra,,,客胜,1x2,5.9,0,4.603,28.18,0,2,1791824400,ALL,pinnacle,,,validate,,,5704757
+2026-10-11T15:54:16Z,football,Egypt Premier League,Pyramids FC,Ceramica Cleopatra,,,上半场客胜,ht,6.0,0,4.603,30.35,0,2,1791824400,ALL,pinnacle,,,validate,,,5704757
