@@ -27,6 +27,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 from src.scrapers.bb_ws_push import tap_browser_g04
+import config.settings  # noqa: E402,F401 触发 .env→os.environ 加载, 让下方 os.getenv(开关) 读到 .env 值(2026-10-11)
 
 _UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36")
