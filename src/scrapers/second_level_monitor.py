@@ -990,10 +990,8 @@ class SecondLevelMonitor:
     def _score_changed(self, sig):
         """下单前比分状态校验(2026-10-11): 进球/比分变了 → 快照作废(死球, 不吃坏价)。
 
-        读预取缓存当前比分 vs 快照比分(_score/bsc)。进球后 BB 盘口往往滞后, 快照没超龄也已作废。
-        读不到当前状态时放行(不误拦), 交由 oddsChange=0 兜底。
-        2026-10-11 修漏洞: 预取缓存 ~2.7s 陈旧, 缓存没刷新会漏拦进球 → 缓存 age>SCORE_CHECK_MAX_AGE
-        视为「不可信」→ 返回 True(跳过), 宁缺毋滥。
+        返回 "changed"(确实变了) / "untrusted"(缓存太旧不敢信) / None(可信且没变)。
+        拆两桶: changed=防线生效, untrusted=防线自杀(该缩短缓存周期或换 Pin 低延迟比分源)。
         """
         try:
             from src.scrapers.pinnacle_live import get_bb_fresh_or_cached
@@ -1001,17 +999,17 @@ class SecondLevelMonitor:
             _mid = sig.get("match_id")
             m = bb.get(_mid) or bb.get(str(_mid))  # 键类型可能 int/str, 都试
             if m is None:
-                return False
+                return None
             cur_sc = m.get("sc")
             snap_sc = sig.get("bsc")
             if cur_sc is not None and snap_sc is not None and cur_sc != snap_sc:
-                return True
+                return "changed"
             # 缓存太旧 → 比分「没变」的结论不可信(进球可能已发生但缓存没刷新)
             if _bb_ts and time.time() - _bb_ts > SCORE_CHECK_MAX_AGE:
-                return True
+                return "untrusted"
         except Exception:
             pass
-        return False
+        return None
 
     def _try_live_auto_bet(self, sig):
         """滚球机会处理: 观察库入库前验价(漂移假EV不入库), 实盘下单由 LIVE_REAL_BET_ENABLED 控制。"""
@@ -1161,9 +1159,14 @@ class SecondLevelMonitor:
             print(f"  ⏭️ 快照单跳过(快照已{time.time()-_detect_ts:.0f}s>{SNAPSHOT_MAX_AGE}s, 不投stale) {tag}", flush=True)
             return
         # 2026-10-11 比分状态校验: 进球/比分变了 → 快照作废(死球), 跳过。补 SNAPSHOT_MAX_AGE 只看年龄的缺口。
-        if self._score_changed(sig):
+        _sc = self._score_changed(sig)
+        if _sc == "changed":
             self._count_skip("score_changed")
             print(f"  ⚽ 比分已变(进球/状态), 快照作废跳过 {tag}", flush=True)
+            return
+        if _sc == "untrusted":
+            self._count_skip("score_untrusted")
+            print(f"  ⚠️ 比分缓存超龄(不可信), 跳过 {tag}", flush=True)
             return
         _t_place = time.time()
         # 2026-09-20 去掉 verify_price: 快照单(≤6s)已保证赔率新鲜, oddsChange=0 下单瞬间变了就拒,
