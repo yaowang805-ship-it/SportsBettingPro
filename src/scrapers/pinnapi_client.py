@@ -241,18 +241,18 @@ def _combine_anchors(anchors):
     return out or None
 
 
-def consensus_fair_price(home, away, sport_id, sub_market, target_line=None, status=None):
+def consensus_fair_price(home, away, sport_id, sub_market, target_line=None, status=None, use_rest=None):
     """三锚共识公平价: Pinnacle(去水) + Betfair(交易所中间价) + SBO(去水)。
 
     返回 {'fair': 共识公平价, 'pinnacle': Pinnacle公平价, 'betfair': Betfair公平价,
           'sbo': SBO公平价, 'event_id', 'spread'} 或 None。
     Pinnacle 是黄金 sharp 基准(0.24%效率), 等权参与共识专门拉平 Betfair 单锚的长腿 bias。
-    下月切 Pinnacle WS 单锚时, 只需把这里改成「只返回 pinnacle」即可。
+    2026-10-11 加 use_rest 透传(早盘 WS 触发传 False 只读 WS 缓存, 不 REST 兜底)。
     """
     from src.scrapers.odds_api_io import fair_price_bb, sbo_fair_price, match_event_orient
 
     # 1. Betfair + SBO(现有锚)
-    bf = fair_price_bb(home, away, sport_id, sub_market, target_line=target_line, status=status)
+    bf = fair_price_bb(home, away, sport_id, sub_market, target_line=target_line, status=status, use_rest=use_rest)
     if not bf:
         return None
     betfair = bf.get('fair')

@@ -97,26 +97,29 @@ _BB_SPORT_TO_OA_ID = {"football": 1, "basketball": 3, "tennis": 5, "baseball": 7
 
 
 def _oa_fair(entry, sport, sub, target_line=None, use_rest=None):
-    """Betfair 单锚 + SBO 置信度(2026-09-26 用户定: 早盘不用 Pinnacle, 只用 Betfair/SBO)。
+    """三锚共识公平价(2026-10-11 切回): Pinnacle 0.5 + Betfair 0.3 + SBO 0.2。
 
-    之前三锚共识(Pinnacle 0.5+Betfair 0.3+SBO 0.2)依赖 pinnapi 免费100次/天, 额度用完(429)
-    就退化 Betfair 单锚。用户定: 早盘干脆不用 Pinnacle, 直接 Betfair 中间价(定价)+SBO devig(置信度)。
+    2026-09-26 曾退化为 Betfair 单锚(pinnapi 免费 100次/天, 额度用完就 429 退化)。现在用户已买
+    实时 key, 切回三锚共识(Pin 黄金 sharp 基准 0.24%效率, 拉平 Betfair 单锚的长腿 bias)。
     sub ∈ {1x2, hc, ou, ht, ht_ou, dc, dnb, btts}; ht_hc/correct_score/oe/corner/booking 无源。
-    target_line: hc/ou/ht_ou 的 BB 让球/大小线(用于在 Betfair 里选对应线)。
-    use_rest: 透传给 fair_price_bb(早盘 WS 触发传 False 只读 WS 缓存)。
+    target_line: hc/ou/ht_ou 的 BB 让球/大小线(用于选对应线)。
+    use_rest: 透传给 consensus_fair_price → fair_price_bb(早盘 WS 触发传 False 只读 WS 缓存)。
     """
-    from src.scrapers.odds_api_io import fair_price_bb
+    from src.scrapers.pinnapi_client import consensus_fair_price
     sid = _BB_SPORT_TO_OA_ID.get(sport, 0)
     if not sid:
         return None
-    res = fair_price_bb(entry["home_bb"], entry["away_bb"], sid, sub, target_line=target_line, use_rest=use_rest)
+    res = consensus_fair_price(entry["home_bb"], entry["away_bb"], sid, sub,
+                               target_line=target_line, use_rest=use_rest)
     if res and res.get("fair"):
         # 存 odds-api.io 事件 id, 供 CLV 采集器读收盘价(替代 pin_match_id)
         if res.get("event_id"):
             entry.setdefault("oa_event_id", res["event_id"])
-        # 存 SBO 置信度(按 sub), 供 _oa_add_markets 做同向确认(2026-09-19)
-        if res.get("confidence"):
-            entry.setdefault("_oa_conf", {})[sub] = res["confidence"]
+        # 存 SBO 置信度(按 sub), 供 _oa_add_markets 做同向确认(2026-09-19)。
+        # consensus 返回 'sbo'(= fair_price_bb 的 'confidence'), 字段名不同。
+        _sbo = res.get("sbo") or res.get("confidence")
+        if _sbo:
+            entry.setdefault("_oa_conf", {})[sub] = _sbo
         return res["fair"]
     return None
 
