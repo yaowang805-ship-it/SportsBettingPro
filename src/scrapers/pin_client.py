@@ -108,8 +108,8 @@ class PinOddsCache:
             e = self._cache.setdefault(matchup_id, {"event": {}, "markets": {}})
             e["markets"] = markets
             ev = e["event"]
-            periods = ev.setdefault("periods", {})
-            p0 = periods.setdefault("num_0", {})
+            # 覆盖 periods(元数据的 periods 是 list 无赔率, 这里换成 dict)
+            p0 = {}
             ml = markets.get("ml") or {}
             spreads = markets.get("spreads") or {}
             totals = markets.get("totals") or {}
@@ -119,6 +119,7 @@ class PinOddsCache:
                 p0["spreads"] = spreads
             if totals:
                 p0["totals"] = totals
+            ev["periods"] = {"num_0": p0}
 
     def update_tick(self, event_id, market, odds, ts):
         with self._lock:
