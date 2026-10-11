@@ -110,12 +110,11 @@ def _oa_fair(entry, sport, sub, target_line=None, use_rest=None, status=None):
     sid = _BB_SPORT_TO_OA_ID.get(sport, 0)
     if not sid:
         return None
-    # 2026-10-11: btts/dnb Pin 不覆盖(只提供独赢/让球/大小球), 开 Betfair 兜底(19号前可用);
-    # 1x2/hc/ou/ht/ht_ou/dc 走 Pin 定价(skip_betfair=True, 省 0.5-0.9s)。
-    _skip_bf = sub not in ("btts", "dnb")
+    # 2026-10-11: 只要 Pin∩BB 盘口, 全走 Pin 定价(skip_betfair=True)。btts/dnb 是 Betfair 兜底盘,
+    # 用户要求不要(不进观察库/实盘), 已在 _oa_add_markets 里移除。
     res = consensus_fair_price(entry["home_bb"], entry["away_bb"], sid, sub,
                                target_line=target_line, use_rest=use_rest, status=status,
-                               skip_betfair=_skip_bf)
+                               skip_betfair=True)
     if res and res.get("fair"):
         # 存 odds-api.io 事件 id, 供 CLV 采集器读收盘价(替代 pin_match_id)
         if res.get("event_id"):

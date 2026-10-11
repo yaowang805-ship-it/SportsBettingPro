@@ -784,3 +784,11 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T07:32:08Z,football,Spain LaLiga,Elche CF,Celta Vigo,,,双重机会-主/和局,dc,1.57,0,1.4265,10.06,0,1,1791720000,ALL,pinnacle,,,validate,,,5192296
 2026-10-11T07:32:08Z,football,Spain LaLiga,Elche CF,Celta Vigo,,,双重机会-和局/客,dc,1.42,0,1.3794,2.94,0,1,1791720000,ALL,pinnacle,,,validate,,,5192296
 2026-10-11T07:32:08Z,football,Singapore Division 1,Singapore Khalsa Association FC,Tengah FC,,,和局,1x2,4.18,0,4.0432,3.38,0,3,1791718200,BB,pinnacle,,,validate,,,5733179
+2026-10-11T07:39:30Z,american_football,NFL,Tennessee Titans,Houston Texans,,,上半场客胜,ht,1.36,0,1.3105,3.78,0,1,1791738000,BB,pinnacle,,,validate,,,5296752
+2026-10-11T07:39:30Z,american_football,NFL,Miami Dolphins,Cincinnati Bengals,,,上半场客胜,ht,1.38,0,1.3357,3.32,0,1,1791738000,BB,pinnacle,,,validate,,,5296754
+2026-10-11T07:39:30Z,mma,UFC 333,Petr Yan,Merab Dvalishvili,,,客胜,1x2,2.43,0,1.6029,51.6,0,1,1792867200,BB,pinnacle,,,validate,,,5493729
+2026-10-11T07:39:30Z,mma,UFC Fight Night,Joaquin Buckley,Mike Malott,,,主胜,1x2,2.1,0,1.7543,19.71,0,1,1792291200,BB,pinnacle,,,validate,,,5410772
+2026-10-11T07:39:30Z,mma,UFC Fight Night,Marc Andre Barriault,Kyle Daukaus,,,主胜,1x2,2.78,0,1.5079,84.36,0,1,1792281600,BB,pinnacle,,,validate,,,5429255
+2026-10-11T07:39:30Z,mma,UFC Fight Night,Tanner Boser,Jhonata Diniz,,,主胜,1x2,2.93,0,1.4486,102.26,0,1,1792270800,BB,pinnacle,,,validate,,,5429252
+2026-10-11T07:39:30Z,mma,UFC Fight Night,Javad Mahjoub,Joel Faglier,,,客胜,1x2,1.99,0,1.8696,6.44,0,1,1792274400,BB,pinnacle,,,validate,,,5735100
+2026-10-11T07:39:30Z,boxing,Boxing International Matchups,Sebastian Fundora,Ermal Hadribeaj,,,客胜,1x2,6.2,0,1.1083,459.42,0,3,1792292400,BB,pinnacle,,,validate,,,5547632
