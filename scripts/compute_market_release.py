@@ -38,6 +38,7 @@
 """
 import json
 import math
+import os
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
@@ -940,6 +941,31 @@ def _notify_pending_release(new_releases, new_blocks):
         pass
 
 
+def _real_roi_gate_blocks(real_roi_cell, sport, sm, dr, interval, scope):
+    """REAL_ROI_GATE(2026-10-11 单一出口): 有实盘样本 n≥5 且 ROI<0 → 拦(CLV假正/逆向选择)。
+
+    三态语义: n≥5&ROI<0 拦 / n≥5&ROI≥0 放 / n<5(无数据) 放(手动格靠熔断兜底)。
+    所有释放路径(数据驱动+手动)都必须过这道门——10-03 事故 = 手动格 continue 绕过此门,
+    放出了逆向选择格(足球独赢客 30-70%) 连亏 7 天。返回 (blocked, n, roi)。
+    """
+    _real = real_roi_cell.get((sport, sm, dr, interval, scope), {})
+    _n = _real.get("n", 0)
+    _roi = _real.get("roi", 0.0)
+    return (_n >= REAL_ROI_GATE_N_MIN and _roi < 0), _n, _roi
+
+
+# 回退开关(2026-10-11): 手动格是否强制过 REAL_ROI_GATE。默认 true(根治); false 回退旧行为(跳过)。
+# 留着不是因为它可能错, 而是闸门行为变更属于不可逆影响成交集的操作, 逃生口是纪律。
+ENFORCE_REAL_ROI_GATE_ON_MANUAL = os.getenv("ENFORCE_REAL_ROI_GATE_ON_MANUAL", "true").lower() in ("1", "true", "yes")
+
+
+def _manual_gate_blocks(real_roi_cell, sport, sm, dr, interval, scope):
+    """手动格的 REAL_ROI_GATE(带 ENFORCE 开关)。"""
+    if not ENFORCE_REAL_ROI_GATE_ON_MANUAL:
+        return False, 0, 0.0
+    return _real_roi_gate_blocks(real_roi_cell, sport, sm, dr, interval, scope)
+
+
 def main():
     market_roi = load_real_roi()
     market_roi_dir = load_real_roi_direction()  # 方向级 ROI(满7天提额用, 2026-09-18 修混方向bug)
@@ -1038,16 +1064,34 @@ def main():
             observe_blocked.append([sport, sm, dr, interval, "live"])
 
     # 已验证方向(硬编码真edge)统一进释放机制(2026-09-13): grandfathered, 不走 n>200 判据。
+    # 2026-10-11 修 10-03 漏洞: 手动格也过 REAL_ROI_GATE(实盘ROI交叉验证)。之前 continue 直接跳过此门,
+    # 放出逆向选择格(足球独赢客 30-70%)连亏 7 天。三态: n≥5&ROI<0 拦(撤回) / n≥5&ROI≥0 放 / n<5 放但挂熔断。
     for _mkey in MANUAL_OBSERVE_RELEASE:
         _p = _mkey.split("|")
-        _entry = [_p[0], _p[1], _p[2], _p[3], _p[4]]
+        _sport, _sm, _dr, _interval, _scope = _p[0], _p[1], _p[2], _p[3], _p[4]
+        _blk, _n, _roi = _manual_gate_blocks(real_roi_cell, _sport, _sm, _dr, _interval, _scope)
+        if _blk:
+            observe_blocked.append([_sport, _sm, _dr, _interval, _scope])  # 撤回
+            print(f"  ⚠️ 手动格被 REAL_ROI_GATE 撤回: {_mkey} (n={_n} ROI={_roi:+.1f}%)", flush=True)
+            continue
+        if _n < REAL_ROI_GATE_N_MIN:  # 无数据手动格: 放行但挂熔断(骨架)
+            print(f"  🔶 手动格无数据放行(挂熔断): {_mkey} (n={_n})", flush=True)
+        _entry = [_sport, _sm, _dr, _interval, _scope]
         if _entry not in observe_released:
             observe_released.append(_entry)
 
     # 手动释放 + 当日累计上限(2026-09-15 用户要求): dc 早盘 1.0-3.0 试探, 走日限额。
     for _mkey in MANUAL_OBSERVE_RELEASE_LIMITED:
         _p = _mkey.split("|")
-        _entry = [_p[0], _p[1], _p[2], _p[3], _p[4]]
+        _sport, _sm, _dr, _interval, _scope = _p[0], _p[1], _p[2], _p[3], _p[4]
+        _blk, _n, _roi = _manual_gate_blocks(real_roi_cell, _sport, _sm, _dr, _interval, _scope)
+        if _blk:
+            observe_blocked.append([_sport, _sm, _dr, _interval, _scope])
+            print(f"  ⚠️ 手动格被 REAL_ROI_GATE 撤回: {_mkey} (n={_n} ROI={_roi:+.1f}%)", flush=True)
+            continue
+        if _n < REAL_ROI_GATE_N_MIN:
+            print(f"  🔶 手动格无数据放行(挂熔断): {_mkey} (n={_n})", flush=True)
+        _entry = [_sport, _sm, _dr, _interval, _scope]
         if _entry not in observe_released:
             observe_released.append(_entry)
 
