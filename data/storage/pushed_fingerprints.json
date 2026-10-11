@@ -1,1 +1,87 @@
-{"football|Campeonato de Portugal|Mortagua|Sport Benfica Castelo Branco|主胜|1x2|2026-10-11": {"ev": 15.29, "bb": 2.48, "ts": 1791685133.6132429}, "football|Japan J.League 2|Shonan Bellmare|Albirex Niigata|主胜|1x2|2026-10-11": {"bb": 2.26, "ev": 13.96, "fair": 1.9831, "pin": 0, "ts": 1791688149.984098, "kickoff": 1791709200.0, "repush_count": 0}, "football|Indonesia Super League|PSS Sleman|PSM Makassar|主胜|1x2|2026-10-11": {"bb": 2.25, "ev": 23.63, "fair": 1.8199, "pin": 0, "ts": 1791687942.0384262, "kickoff": 1791707400.0, "repush_count": 0}, "football|Hong Kong Premier League|Hong Kong Rangers|Lee Man FC|主胜|1x2|2026-10-11": {"bb": 9.7, "ev": 424.44, "fair": 1.8496, "pin": 0, "ts": 1791687942.0388942, "kickoff": 1791705600.0, "repush_count": 0}, "football|Japan J.League|Tokyo Verdy|Sanfrecce Hiroshima|主胜|1x2|2026-10-11": {"bb": 7.2, "ev": 272.86, "fair": 1.931, "pin": 0, "ts": 1791687942.03911, "kickoff": 1791698400.0, "repush_count": 0}}
+{
+  "football|Campeonato de Portugal|Mortagua|Sport Benfica Castelo Branco|主胜|1x2|2026-10-11": {
+    "ev": 15.29,
+    "bb": 2.48,
+    "ts": 1791685133.6132429
+  },
+  "football|Japan J.League 2|Shonan Bellmare|Albirex Niigata|主胜|1x2|2026-10-11": {
+    "ev": 13.96,
+    "bb": 2.26,
+    "ts": 1791687935.42123
+  },
+  "football|Spain LaLiga|Elche CF|Celta Vigo|主胜|1x2|2026-10-11": {
+    "ev": 61.08,
+    "bb": 2.94,
+    "ts": 1791688599.221966
+  },
+  "football|Spain Primera Division RFEF|Antequera CF|FC Cartagena|主胜|1x2|2026-10-11": {
+    "ev": 27.21,
+    "bb": 2.39,
+    "ts": 1791688599.2220328
+  },
+  "football|Colombia Primera A|Boyaca Chico FC|Cucuta Deportivo FC|主胜|1x2|2026-10-12": {
+    "ev": 13.55,
+    "bb": 2.31,
+    "ts": 1791688599.22209
+  },
+  "football|Scotland Premiership|Aberdeen FC|ST Johnstone FC|主胜|1x2|2026-10-11": {
+    "ev": 20.42,
+    "bb": 2.19,
+    "ts": 1791688599.222143
+  },
+  "football|Thailand League 1|Sisaket United FC|Chonburi FC|主胜|1x2|2026-10-11": {
+    "ev": 47.17,
+    "bb": 2.86,
+    "ts": 1791688599.222195
+  },
+  "football|Spain LaLiga 2|diz CF|Sporting Gijon|主胜|1x2|2026-10-12": {
+    "ev": 26.54,
+    "bb": 2.44,
+    "ts": 1791688599.222243
+  },
+  "football|England Premier League|Hull City|Everton FC|主胜|1x2|2026-10-11": {
+    "ev": 85.55,
+    "bb": 3.45,
+    "ts": 1791688599.222293
+  },
+  "football|Azerbaijan Premier League|Safa|Turan Tovuz|主胜|1x2|2026-10-11": {
+    "ev": 215.3,
+    "bb": 6.8,
+    "ts": 1791688599.2223418
+  },
+  "football|Cyprus 1st Division|Anorthosis Famagusta|Pafos FC|主胜|1x2|2026-10-11": {
+    "ev": 209.91,
+    "bb": 6.25,
+    "ts": 1791688599.222393
+  },
+  "football|Egypt Premier League|El Qanah|Al Masry Club|主胜|1x2|2026-10-11": {
+    "ev": 101.75,
+    "bb": 4.88,
+    "ts": 1791688599.222442
+  },
+  "football|Egypt Premier League|Zamalek SC|AL Ahly SC|主胜|1x2|2026-10-12": {
+    "ev": 110.97,
+    "bb": 3.97,
+    "ts": 1791688599.2224908
+  },
+  "football|Indian Super League|Inter Kashi FC|Kerala Blasters FC|主胜|1x2|2026-10-11": {
+    "ev": 322.46,
+    "bb": 9.2,
+    "ts": 1791688599.222544
+  },
+  "football|Singapore Premier League|Tanjong Pagar United FC|Tampines Rovers FC|主胜|1x2|2026-10-11": {
+    "ev": 400.27,
+    "bb": 9.4,
+    "ts": 1791688599.222599
+  },
+  "football|Tunisia Ligue 1|ES Metlaoui|Stade Tunisien|主胜|1x2|2026-10-11": {
+    "ev": 44.9,
+    "bb": 3.47,
+    "ts": 1791688599.2226481
+  },
+  "football|Colombia Primera B|Barranquilla FC|Deportes Quindio|主胜|1x2|2026-10-12": {
+    "ev": 51.24,
+    "bb": 3.05,
+    "ts": 1791688599.222697
+  }
+}
