@@ -1,7 +1,31 @@
 {
-  "balance": 16802.53,
+  "balance": 16682.53,
   "initial_bankroll": 20000.0,
-  "pending_bets": [],
+  "pending_bets": [
+    {
+      "id": "bb_vs_pin_1x2_莫尔塔古_卡斯蒂洛布兰克_主胜",
+      "sport": "football",
+      "league": "葡萄牙全国冠军锦标赛",
+      "home_team": "莫尔塔古",
+      "away_team": "卡斯蒂洛布兰克",
+      "home_cn": "莫尔塔古",
+      "away_cn": "卡斯蒂洛布兰克",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.48,
+      "stake": 120,
+      "model_prob": 0.4649,
+      "ev_pct": 15.29,
+      "pin_odds": 0,
+      "fair_price": 2.1511,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1791727200.0,
+      "created_at": "2026-10-11T02:17:35.196286+00:00",
+      "track_only": false
+    }
+  ],
   "settled": {
     "bb_vs_pin_handicap_托利马_约森独立队_让球客胜(0)": "won",
     "bb_vs_pin_1x2_累西腓航海_塞阿拉_和局": "lost",
@@ -9369,9 +9393,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-09-29",
-    "used": 240.0,
-    "bets": 8
+    "date": "2026-10-11",
+    "used": 120.0,
+    "bets": 1
   },
   "updated": null
 }
