@@ -88,6 +88,8 @@ REVERIFY_THRESHOLD = 3.0  # 2026-09-19 验价阈值(秒): lead-lag 窗口 2-3s(�
 SNAPSHOT_MAX_AGE = 6.0  # 2026-09-20 让球「只投快照单」阈值(秒): BB拉取到此刻>6s 判 stale 跳过。
                         # 之前15s是管线12s时的临时值; 现在管线~1.7s(公平价匹配0.1s), 收紧回6s
                         # 更能吃到 lead-lag 窗口(8.5s), 挡掉真正 stale 的(>6s)
+SCORE_CHECK_MAX_AGE = 2.0  # 2026-10-11 比分校验的可信缓存年龄上限(秒): 预取缓存>2s 视为不可信→跳过(宁缺毋滥)
+                           # 预取 getList~2.2s+0.5s 周期, 缓存年龄 0~2.7s; 2s 门挡住 ~26% 最陈旧时段的死球漏拦
 BET_HEALTH_FILE = ROOT / "data" / "storage" / "bet_health.json"  # 下单健康(成功/被拒计数), 供 gubbing 限注监控
 
 

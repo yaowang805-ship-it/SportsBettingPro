@@ -2185,3 +2185,11 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T04:27:37Z,football,Japan J.League 2,Fujieda MYFC,Montedio Yamagata,,,和局,1x2,3.47,0,2.3514,47.57,0,3,1792213200,BB,,,validate,,,5164282
 2026-10-11T04:27:37Z,football,Japan J.League 2,Fujieda MYFC,Montedio Yamagata,,,双重机会-主/和局,dc,1.44,0,1.385,3.97,0,3,1792213200,BB,,,validate,,,5164282
 2026-10-11T04:27:37Z,football,Japan J.League 2,Fujieda MYFC,Montedio Yamagata,,,双重机会-和局/客,dc,1.51,0,1.422,6.19,0,3,1792213200,BB,,,validate,,,5164282
+2026-10-11T04:28:08Z,football,UAE Division 1,Forte Virtus,Fujairah FC,,,上半场主胜,ht,3.53,0,3.1938,10.53,0,2,1791728100,BB,,,validate,,,5730965
+2026-10-11T04:28:08Z,football,UAE Division 1,Forte Virtus,Fujairah FC,,,上半场客胜,ht,2.94,0,2.4534,19.83,0,2,1791728100,BB,,,validate,,,5730965
+2026-10-11T04:30:14Z,football,USA Major League Soccer,Colorado Rapids,Minnesota United FC,,,主胜,1x2,2.11,0,1.7096,23.42,0,1,1792027800,ALL,,,validate,,,4231101
+2026-10-11T04:30:14Z,football,USA Major League Soccer,Colorado Rapids,Minnesota United FC,,,客胜,1x2,3.09,0,2.4092,28.26,0,1,1792027800,ALL,,,validate,,,4231101
+2026-10-11T04:30:14Z,football,Czech Republic Divize,Svitavy,Vysoke Myto,,,上半场客胜,ht,1.99,0,1.549,28.47,0,4,1791727200,ALL,,,validate,,,5700332
+2026-10-11T04:30:14Z,basketball,Chile LNB,CD Valdivia,CD Espanol Osorno,,,客胜,1x2,5.2,0,4.467,16.41,0,4,1791761400,ALL,,,validate,,,5697480
+2026-10-11T04:30:14Z,basketball,Bosnia and Herzegovina Basketball Championship,KK Borac Banja Luka,HKK Zrinjski Mostar,,,客胜,1x2,4.07,0,3.8593,5.46,0,3,1791822600,ALL,,,validate,,,5731933
+2026-10-11T04:30:14Z,basketball,Japan B.League One,Fukushima Firebonds,Gifu Swoops,,,客胜,1x2,3.25,0,3.0683,5.92,0,3,1791693300,BB,,,validate,,,5325662
