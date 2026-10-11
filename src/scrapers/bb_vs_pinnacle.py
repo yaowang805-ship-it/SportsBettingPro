@@ -1544,6 +1544,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
     """
     mlabels = MARKET_LABELS.get(sport, MARKET_LABELS["football"])
     n_ml = 3 if sport not in TWO_WAY_SPORTS else 2
+    entry.setdefault("decision_ts", time.time())  # 2026-10-11 ev_raw 双轨: 决策时刻(与 pin_raw_at_decision 同时间戳)
 
     # --- 1x2 (全场独赢) ---
     bb_ml, valid = extract_bb_1x2(bb, sport)
