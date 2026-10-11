@@ -986,6 +986,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             "pin_odds": 0,  # 新数据源无 Pin 赔率, 用 0 占位
                             "fair_price": round(fair_price, 4),
                             "ev_pct": round(ev, 2),
+                            # 2026-10-11 ev_raw 双轨: 决策时点 Pin 原始赔率(与 bb_odds 同时间戳, 供 ev_raw 向前攒)
+                            "pin_raw_at_decision": (_oa_ml.get("_raw") or {}).get(_ml_keys[i]),
                         })
 
         # 网球双打 vs 单打不匹配时跳过让球和大小盘
@@ -1039,6 +1041,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     "pin_odds": 0,  # 新数据源无 Pin 赔率
                     "fair_price": round(home_fair, 4),
                     "ev_pct": round(ev_h, 2),
+                    "pin_raw_at_decision": (_oa_hc.get("_raw") or {}).get("home"),
                 }
                 if line_info:
                     opp.setdefault("tags", []).append(line_info)
@@ -1051,6 +1054,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     "pin_odds": 0,
                     "fair_price": round(away_fair, 4),
                     "ev_pct": round(ev_a, 2),
+                    "pin_raw_at_decision": (_oa_hc.get("_raw") or {}).get("away"),
                 }
                 if line_info:
                     opp.setdefault("tags", []).append(line_info)
@@ -1096,6 +1100,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     "pin_odds": 0,  # 新数据源无 Pin 赔率
                     "fair_price": round(over_fair, 4),
                     "ev_pct": round(ev_o, 2),
+                    "pin_raw_at_decision": (_oa_ou.get("_raw") or {}).get("over"),
                 })
             if ev_u > 1:
                 entry["over_under"].append({
@@ -1105,6 +1110,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     "pin_odds": 0,
                     "fair_price": round(under_fair, 4),
                     "ev_pct": round(ev_u, 2),
+                    "pin_raw_at_decision": (_oa_ou.get("_raw") or {}).get("under"),
                 })
 
         # --- 上半场 (HT) 对比：从 DOM odds_ht 读，与 Pinnacle period=1 对比 ---
