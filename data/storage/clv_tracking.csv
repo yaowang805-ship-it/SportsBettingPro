@@ -1050,3 +1050,30 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T15:54:16Z,football,Egypt Premier League,Pyramids FC,Ceramica Cleopatra,,,客胜,1x2,5.9,0,4.603,28.18,0,2,1791824400,ALL,pinnacle,,,validate,,,5704757
 2026-10-11T15:54:16Z,football,Egypt Premier League,Pyramids FC,Ceramica Cleopatra,,,上半场客胜,ht,6.0,0,4.603,30.35,0,2,1791824400,ALL,pinnacle,,,validate,,,5704757
 2026-10-11T16:00:47Z,ice_hockey,Champions Hockey League,HK Nitra,Rogle BK,,,上半场客胜,ht,1.92,0,1.6292,17.85,0,3,1791907200,BB,pinnacle,,,validate,,,5307272
+2026-10-11T16:04:38Z,basketball,Lithuania LKL Basketball,BC Siauliai,BC Juventus Utena,,,上半场客胜,ht,2.0,0,1.9262,3.83,0,2,1791735000,ALL,pinnacle,,,validate,,,5726328
+2026-10-11T16:07:54Z,football,Norway 1st Division,Hodd,Ranheim,,,上半场客胜,ht,2.36,0,2.068,14.12,0,2,1791997200,ALL,pinnacle,,,validate,,,4253914
+2026-10-11T16:09:40Z,football,Chile Primera B,Puerto Montt,San Luis de Quillota,,,主胜,1x2,2.93,0,2.3538,24.48,0,3,1791819000,ALL,pinnacle,,,validate,,,5704699
+2026-10-11T16:09:40Z,football,Chile Primera B,Puerto Montt,San Luis de Quillota,,,客胜,1x2,2.24,0,1.7386,28.84,0,3,1791819000,ALL,pinnacle,,,validate,,,5704699
+2026-10-11T16:12:29Z,football,Turkey 1. Lig,Muglaspor,Bursaspor,,,和局,1x2,3.39,0,2.4439,38.71,0,2,1792083600,ALL,pinnacle,,,validate,,,5366681
+2026-10-11T16:12:29Z,football,Turkey 1. Lig,Muglaspor,Bursaspor,,,双重机会-主/和局,dc,1.82,0,1.6823,8.19,0,2,1792083600,ALL,pinnacle,,,validate,,,5366681
+2026-10-11T16:13:02Z,football,Norway 1st Division,Hodd,Ranheim,,,和局,1x2,4.1,0,2.9448,39.23,0,2,1791997200,ALL,pinnacle,,,validate,,,4253914
+2026-10-11T16:13:02Z,football,Norway 1st Division,Hodd,Ranheim,,,双重机会-主/和局,dc,1.82,0,1.6588,9.72,0,2,1791997200,ALL,pinnacle,,,validate,,,4253914
+2026-10-11T16:13:34Z,football,Poland I Liga,Pogon Siedlce,Puszcza Niepolomice,,,上半场主胜,ht,3.27,0,2.6957,21.3,0,2,1792081800,ALL,pinnacle,,,validate,,,5717780
+2026-10-11T16:13:34Z,football,Poland I Liga,Pogon Siedlce,Puszcza Niepolomice,,,上半场客胜,ht,3.38,0,2.9088,16.2,0,2,1792081800,ALL,pinnacle,,,validate,,,5717780
+2026-10-11T16:14:45Z,football,AFC Champions League Elite,AL Quwa AL Jawiya,Al Ain FC,,,和局,1x2,4.11,0,2.6434,55.48,0,3,1791828900,ALL,pinnacle,,,validate,,,5470758
+2026-10-11T16:14:45Z,football,AFC Champions League Elite,AL Quwa AL Jawiya,Al Ain FC,,,双重机会-主/和局,dc,2.53,0,1.8543,36.44,0,3,1791828900,ALL,pinnacle,,,validate,,,5470758
+2026-10-11T16:14:45Z,football,Chile Primera B,Deportes Iquique,Union Espanola,,,主胜,1x2,1.86,0,1.7691,5.14,0,3,1791837000,ALL,pinnacle,,,validate,,,5704728
+2026-10-11T16:14:45Z,football,Chile Primera B,Deportes Iquique,Union Espanola,,,客胜,1x2,3.54,0,2.3002,53.9,0,3,1791837000,ALL,pinnacle,,,validate,,,5704728
+2026-10-11T16:19:34Z,football,Spain LaLiga,Villarreal CF,Elche CF,,,和局,1x2,4.97,0,2.9212,70.14,0,1,1792246500,ALL,pinnacle,,,validate,,,5192320
+2026-10-11T16:19:34Z,football,Spain LaLiga,Villarreal CF,Elche CF,,,双重机会-和局/客,dc,2.75,0,1.9966,37.73,0,1,1792246500,ALL,pinnacle,,,validate,,,5192320
+2026-10-11T16:19:34Z,football,Peru Liga 1,Cusco FC,Alianza Lima,,,主胜,1x2,2.29,0,1.9355,18.32,0,2,1791761400,ALL,pinnacle,,,validate,,,5673072
+2026-10-11T16:19:34Z,football,Peru Liga 1,Cusco FC,Alianza Lima,,,客胜,1x2,3.06,0,2.069,47.9,0,2,1791761400,ALL,pinnacle,,,validate,,,5673072
+2026-10-11T16:24:59Z,football,Mexico Liga Primera Premier,Montaneses FC,Tapachula Soconusco FC,,,双重机会-和局/客,dc,1.99,0,1.8862,5.5,0,3,1791741600,BB,pinnacle,,,validate,,,5602599
+2026-10-11T16:29:50Z,football,Poland I Liga,Odra Opole,Miedz Legnica,,,主胜,1x2,2.46,0,1.8774,31.03,0,2,1791742500,ALL,pinnacle,,,validate,,,5642854
+2026-10-11T16:29:50Z,football,Poland I Liga,Odra Opole,Miedz Legnica,,,客胜,1x2,2.66,0,2.1397,24.32,0,2,1791742500,ALL,pinnacle,,,validate,,,5642854
+2026-10-11T16:34:43Z,football,Spain LaLiga,Malaga CF,Real Sociedad,,,和局,1x2,3.69,0,2.47,49.39,0,1,1792341000,ALL,pinnacle,,,validate,,,5192322
+2026-10-11T16:34:43Z,football,Spain LaLiga,Malaga CF,Real Sociedad,,,双重机会-主/和局,dc,1.69,0,1.5256,10.78,0,1,1792341000,ALL,pinnacle,,,validate,,,5192322
+2026-10-11T16:34:43Z,football,Spain LaLiga,Malaga CF,Real Sociedad,,,双重机会-和局/客,dc,1.37,0,1.3345,2.66,0,1,1792341000,ALL,pinnacle,,,validate,,,5192322
+2026-10-11T16:44:38Z,football,UEFA Europa League,Celta Vigo,Juventus,,,主胜,1x2,3.1,0,2.6511,16.93,0,3,1792090800,ALL,pinnacle,,,validate,,,5528047
+2026-10-11T16:44:38Z,football,UEFA Europa League,Celta Vigo,Juventus,,,客胜,1x2,2.11,0,1.6057,31.41,0,3,1792090800,ALL,pinnacle,,,validate,,,5528047
+2026-10-11T17:00:48Z,ice_hockey,Champions Hockey League,Frolunda HC,Bordeaux GHC,,,上半场主胜,ht,1.41,0,1.1958,17.91,0,3,1791910800,BB,pinnacle,,,validate,,,5307648

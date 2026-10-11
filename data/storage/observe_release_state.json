@@ -1,1 +1,23 @@
-{}
+{
+  "football|1x2|平|10-20%|early": {
+    "first_released_at": "2026-10-12T01:03:58.878345",
+    "cap": 100,
+    "daily_stake": 0,
+    "daily_stake_date": "2026-10-12",
+    "limit_removed": false
+  },
+  "football|1x2|平|20-30%|early": {
+    "first_released_at": "2026-10-12T01:03:58.878372",
+    "cap": 100,
+    "daily_stake": 0,
+    "daily_stake_date": "2026-10-12",
+    "limit_removed": false
+  },
+  "football|1x2|平|40-50%|early": {
+    "first_released_at": "2026-10-12T01:03:58.878381",
+    "cap": 100,
+    "daily_stake": 0,
+    "daily_stake_date": "2026-10-12",
+    "limit_removed": false
+  }
+}

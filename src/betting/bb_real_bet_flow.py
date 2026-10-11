@@ -176,16 +176,14 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
             continue
 
         # 2026-09-06 用户要求: 早盘实盘只投"未开赛", 已开赛(lead<0)的场跳过(与暂停滚球秒级对齐)
-        # 2026-09-29 用户要求: 早盘投注窗口 = 开赛前 2h-24h(职业团队做法, 避开临场<2h逆向选择和>24h市场不成熟)
+        # 2026-10-12 用户要求: 去掉 2h-24h 窗口限制——早盘赔率紧无 EV 机会, 临场<45min 才松,
+        # 但临场<2h 被旧规则挡掉导致「早盘没机会下注」。改为「未开赛(lead>=0)即可投」。
         _ep = opp.get("_pin_epoch")
         if _ep:
             try:
                 _lead = float(_ep) - time.time()
-                if _lead < 2 * 3600:
-                    failed.append({"home": disp_home, "away": disp_away, "reason": "临场<2h, 早盘跳过(窗口2h-24h)"})
-                    continue
-                if _lead > 24 * 3600:
-                    failed.append({"home": disp_home, "away": disp_away, "reason": "距开赛>24h, 早盘跳过(窗口2h-24h)"})
+                if _lead < 0:
+                    failed.append({"home": disp_home, "away": disp_away, "reason": "已开赛, 早盘跳过"})
                     continue
             except (TypeError, ValueError):
                 pass
