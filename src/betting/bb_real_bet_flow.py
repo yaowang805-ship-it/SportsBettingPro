@@ -153,6 +153,7 @@ def auto_bet_flow(opportunities, token=None, domain=None):
     records = _get_all_matches(token, domain)
     success, failed = [], []
     sent_dingtalk = []
+    total_latency = 0.0  # 投注总耗时(实际下单 HTTP 时间累加, 2026-10-11 用户要求推送到钉钉)
 
     for opp in opportunities:
         # 匹配用英文(home_bb), 展示用中文(home_cn) —— 英文直配 getList, 中文只给钉钉看
@@ -241,6 +242,7 @@ def auto_bet_flow(opportunities, token=None, domain=None):
                 "ts": time.time(),
             }
             success.append(rec)
+            total_latency += _latency
             from src.betting.bb_auto_bet import record_sub_market_bet
             record_sub_market_bet(match_id, sub)
             _bj = datetime.now(timezone(timedelta(hours=8))).strftime("%H:%M")
@@ -248,7 +250,6 @@ def auto_bet_flow(opportunities, token=None, domain=None):
             _sport_cn = SPORT_CN.get(opp.get("sport", ""), opp.get("sport", ""))
             _league = opp.get("league_cn") or opp.get("league", "") or ""
             _fair = opp.get("fair_price") or opp.get("_fair_price") or 0
-            _pin_raw = opp.get("pin_odds") or 0
             _ev = opp.get("ev_pct") or 0
             _kickoff = ""
             if _ep:
@@ -256,18 +257,12 @@ def auto_bet_flow(opportunities, token=None, domain=None):
                     _kickoff = datetime.fromtimestamp(float(_ep), timezone(timedelta(hours=8))).strftime("%m-%d %H:%M")
                 except (TypeError, ValueError, OSError):
                     pass
-            # 2026-09-18: 公平价已切 Betfair(pin_odds=0 是新源), 旧 Pin 源(pin_odds>0)已禁用, 标注来源
-            if _pin_raw:
-                _fair_str = f" | 公平价 {float(_fair):.2f}" if _fair else ""
-                _pin_raw_str = f" | 原始 {float(_pin_raw):.2f}"
-            else:
-                _fair_str = f" | Betfair {float(_fair):.2f}" if _fair else ""
-                _pin_raw_str = ""
+            # 2026-10-11: 公平价已切 Pin 主锚(_oa_fair→consensus_fair_price skip_betfair=True), 旧 Betfair/pin_odds 分支废弃
+            _fair_str = f" | Pin公平价 {float(_fair):.2f}" if _fair else ""
             _ev_str = f" | 溢价 {float(_ev):+.1f}%" if _ev else ""
-            # 2026-09-09: 补联赛/公平价/溢价, 删订单号(用户要求完整投注信息); 2026-09-15 补 Pin 原始价
             sent_dingtalk.append(
                 f"✅【{_win_label(opp.get('_pin_epoch'))}】{disp_home} vs {disp_away} | {desig}\n"
-                f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_pin_raw_str}{_ev_str} | 注额 ¥{stake:.0f} | 投注 {_bj} | 开赛 {_kickoff}")
+                f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_ev_str} | 注额 ¥{stake:.0f} | 投注 {_bj} | 开赛 {_kickoff}")
             _append_bet_history(rec)
         else:
             failed.append({"home": home, "away": away, "reason": f"code={code} {msg}"})
@@ -282,6 +277,19 @@ def auto_bet_flow(opportunities, token=None, domain=None):
             from config.settings import send_dingtalk
             total = sum(o.get("stake", 0) for o in success)
             body = f"**已投注 {len(sent_dingtalk)} 注 / ¥{total:.0f}**\n\n" + "\n".join(sent_dingtalk)
+            # 余额 + 投注总耗时(2026-10-11 用户要求: 投注信息补余额显示和总耗时)
+            _extra = []
+            try:
+                from src.betting.bb_auto_bet import fetch_balance
+                _bal = fetch_balance()
+                if _bal:
+                    _extra.append(f"余额 ¥{_bal}")
+            except Exception:
+                pass
+            if total_latency > 0:
+                _extra.append(f"投注总耗时 {total_latency:.2f}s")
+            if _extra:
+                body += "\n\n" + " | ".join(_extra)
             send_dingtalk(f"🟦 已投注机会 {len(sent_dingtalk)} 注", body)
         except Exception as e:
             pass

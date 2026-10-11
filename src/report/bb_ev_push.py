@@ -2546,7 +2546,7 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
             # 同场同盘口的第 2 条线: 标注上一条推的是哪条, 便于对照(用户规则)
             prev_line = o.get("_prev_line")
             lines.append(
-                f"    [{oc}] {confidence} Betfair公平价: {fair}"
+                f"    [{oc}] {confidence} Pin公平价: {fair}"
                 + f" | {source_label}: {bb_odds} | 溢价: +{ev_pct}% | 投注: ¥{stake:,}{stake_note}"
                 + (f" 🔄重推({repush})" if repush else "")
                 + (f" 📌本场该盘口上次推的线: {prev_line}" if prev_line else "")
@@ -2577,7 +2577,7 @@ def _format_body(qualified: list, warnings: Optional[list] = None,
     pnl_line = _get_league_pnl_summary(qualified)
     body += ("\n\n---\n"
              "💡 T1=最可靠 T2=主流联赛 T3=低级别 | "
-             "公平价 = Betfair交易所中间价 | "
+             "公平价 = Pin去水主锚 | "
              "溢价 = (售价 - 公平价) / 公平价 | "
              "来源: BB=BB价 FB=FB价 BB/FB=两平台相同 | "
              "⚠️ 赔率与盘口线实时变动，下注前请以 BB 当前盘口为准（让球线尤其易移动）")
@@ -4002,7 +4002,7 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
 _FORMAT_MARKERS = {
     "header": "**+EV 投注推荐:",
     "match_prefix": "##### ",
-    "fair_price": "Betfair公平价:",
+    "fair_price": "Pin公平价:",
     "retail": "价:",  # BB价 / FB价 / BB/FB价
     "edge": "溢价:",
     "stake": "投注:",
