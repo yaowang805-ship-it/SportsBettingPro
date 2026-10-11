@@ -257591,5 +257591,32 @@
   "profit": null,
   "anchor": "betfair",
   "sbo_direction": "none"
+ },
+ {
+  "ts": 1791686652.491186,
+  "match_id": 5645921,
+  "market_id": 131920075,
+  "option_type": 4,
+  "sport": 2,
+  "home": "卡尔加里火焰",
+  "away": "安那翰鸭",
+  "designation": "大球",
+  "sub": "over_under",
+  "line": 6.5,
+  "bsc": [
+   1,
+   1
+  ],
+  "bb_odds": 1.84,
+  "fair": 1.6349,
+  "ev": 12.55,
+  "spread": null,
+  "bb_ts": 1791686650.980811,
+  "stake": 145,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "betfair",
+  "sbo_direction": "none"
  }
 ]

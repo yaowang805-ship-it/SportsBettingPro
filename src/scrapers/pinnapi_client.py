@@ -206,7 +206,12 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         ml = full.get('money_line')
         if not ml:
             return None
-        fair = _devig_three_way(ml.get('home'), ml.get('draw'), ml.get('away'))
+        # 2026-10-11 修: 杯赛 2-way 独赢(draw=None)用两路去水, 3-way 用三路去水
+        if ml.get('draw'):
+            fair = _devig_three_way(ml.get('home'), ml.get('draw'), ml.get('away'))
+        else:
+            pair = _devig_two_way(ml.get('home'), ml.get('away'))
+            fair = {'home': pair[0], 'away': pair[1]} if pair else None
         return fair
     if sub_market in ('hc', 'ht_hc'):
         spreads = full.get('spreads') or {}
