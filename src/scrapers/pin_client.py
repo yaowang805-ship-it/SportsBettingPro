@@ -218,7 +218,7 @@ class PinWSClient:
         self.cache = cache
         self.rest = rest
         self.on_tick = on_tick or (lambda event_id, event: None)
-        self.on_live = on_live or (lambda matchup_id, rec: None)
+        self.on_live = on_live or (lambda matchup_id, rec, frame_ts=None: None)
         self._stop = False
 
     def start(self):
@@ -297,7 +297,7 @@ class PinWSClient:
                     if markets:
                         self.cache.update_markets(mid, markets)
                     self.on_tick(mid, rec)
-                    self.on_live(mid, rec)  # 2026-10-11: 滚球触发信号(切 Pin WS live 帧)
+                    self.on_live(mid, rec, d.get("ts"))  # 2026-10-11: 滚球触发信号 + Pin帧顶层ts(供段1上游延迟)
             return
         if t == "prematch_matchups":
             # 早盘元数据: data 是 matchups 列表
