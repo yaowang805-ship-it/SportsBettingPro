@@ -998,11 +998,16 @@ class SecondLevelMonitor:
         # 之前只对「实盘下单成功」的注采(在 _notify_bet 后), 导致新方向没下单就永远攒不到 LEV =
         # 释放死循环。现在所有进观察库的 +EV 机会(虚拟投注)都采 LEV, 让释放判据能数据驱动所有方向。
         if _added and sig.get("pin_matchup_id"):
+            _m = sig.get("match") or {}
             self._reversion_track[(str(sig["match_id"]), str(sig.get("market_id")), str(sig.get("option_type")))] = {
                 "sig": {
                     "pin_matchup_id": sig.get("pin_matchup_id"),
                     "sub": sig.get("sub"), "desig": sig.get("desig"),
                     "bb_odds": sig.get("bb_odds"), "line": sig.get("line"),
+                    # 2026-10-11 Pin 主锚 LEV: 存队名+运动, 供 _reverify_live_ev_oa 用 Pin 复验
+                    "home": _m.get("home") or _m.get("home_cn", ""),
+                    "away": _m.get("away") or _m.get("away_cn", ""),
+                    "sport": sig.get("sport"),
                 },
                 "ts": time.time(),
             }

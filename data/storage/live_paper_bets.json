@@ -254669,9 +254669,9 @@
   "spread": 2.970297029702973,
   "bb_ts": 1791673716.967217,
   "stake": 135,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 171.4,
   "anchor": "betfair",
   "sbo_direction": "diff",
   "clv": 15.83
@@ -254753,9 +254753,9 @@
   "spread": 9.90099009900991,
   "bb_ts": 1791673810.2884521,
   "stake": 135,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -135.0,
   "anchor": "betfair",
   "sbo_direction": "diff"
  },
@@ -256683,5 +256683,33 @@
   "profit": null,
   "anchor": "betfair",
   "sbo_direction": "none"
+ },
+ {
+  "ts": 1791683031.474784,
+  "match_id": 5703647,
+  "market_id": 131372330,
+  "option_type": 50,
+  "sport": 1,
+  "home": "多拉多斯",
+  "away": "蓝十字伊达尔戈",
+  "designation": "主/和",
+  "sub": "double_chance",
+  "line": null,
+  "bsc": [
+   0,
+   2
+  ],
+  "bb_odds": 4.27,
+  "fair": 4.1,
+  "ev": 4.15,
+  "spread": null,
+  "bb_ts": 1791683030.369716,
+  "stake": 20,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "betfair",
+  "sbo_direction": "none",
+  "clv": -1.89
  }
 ]
