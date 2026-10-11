@@ -219,6 +219,8 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         else:
             pair = _devig_two_way(ml.get('home'), ml.get('away'))
             fair = {'home': pair[0], 'away': pair[1]} if pair else None
+        if fair is not None:
+            fair['_raw'] = {k: ml.get(k) for k in ('home', 'draw', 'away') if ml.get(k)}
         return fair
     if sub_market in ('hc', 'ht_hc'):
         spreads = full.get('spreads') or {}
@@ -241,7 +243,8 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         pair = _devig_two_way(o.get('home'), o.get('away'))
         if pair is None:
             return None
-        return {'home': pair[0], 'away': pair[1], 'line': o.get('hdp')}
+        return {'home': pair[0], 'away': pair[1], 'line': o.get('hdp'),
+                '_raw': {'home': o.get('home'), 'away': o.get('away')}}
     if sub_market in ('ou', 'ht_ou'):
         totals = full.get('totals') or {}
         if not totals:
@@ -252,7 +255,8 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         pair = _devig_two_way(o.get('over'), o.get('under'))
         if pair is None:
             return None
-        return {'over': pair[0], 'under': pair[1], 'line': o.get('points')}
+        return {'over': pair[0], 'under': pair[1], 'line': o.get('points'),
+                '_raw': {'over': o.get('over'), 'under': o.get('under')}}
     if sub_market == 'dc':
         ml = full.get('money_line')
         if not ml:
