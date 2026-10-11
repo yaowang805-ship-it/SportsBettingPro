@@ -364,6 +364,9 @@ BALANCE_MIN = 0.0  # 余额熔断已取消(2026-10-11 用户要求), 0 表示永
 _balance_cache = {"ts": 0.0, "value": None}
 _reject_stats = {}  # 下单失败 code 统计(oddsChange=0 被拒率实测, 2026-09-19)
 _last_bet_audit = {}  # 最近一注审计(2026-10-11): 触发/重拉/成交的价+EV+reason, 供 slippage 指标
+# adj_factor = 1 - push_rate - void_rate(2026-10-11 首跑实测: push 14.2% + void 7.1% = 21.3%)
+# raw_ev × adj_factor = settled_adj_ev(实际能提现的)。滚动窗口更新, 别当常量。
+ADJ_FACTOR = 1.0 - 0.142 - 0.071
 
 
 def _append_bet_audit():

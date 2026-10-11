@@ -104,6 +104,7 @@ LIVE_EVENT_MAX_EXPOSURE = 3     # 层2: per-event 单场最多持仓数(防对�
 LIVE_GLOBAL_RATE_MIN = 4        # 层3: 全局频次帽 每分钟≤4 笔(滑动窗口, 纯账号风控)
 LIVE_GLOBAL_RATE_HOUR = 20      # 层3: 全局频次帽 每小时≤20 笔
 MAPPING_VERSION = "1"           # 市场映射表/队名归一化版本(2026-10-11): 改了映射逻辑要手动 bump, 进 decision_version
+LIVE_FILTER_LINE_ZERO = os.getenv("LIVE_FILTER_LINE_ZERO", "false").lower() in ("1", "true", "yes")  # 让球0(平局退款盘)过滤开关, 默认关
 
 
 def _decision_version(threshold):
@@ -115,7 +116,7 @@ def _decision_version(threshold):
     """
     _vals = [threshold, LIVE_COOLDOWN_PER_MARKET, LIVE_MARKET_COOLDOWN, LIVE_EVENT_MAX_EXPOSURE,
              LIVE_GLOBAL_RATE_MIN, LIVE_GLOBAL_RATE_HOUR, SNAPSHOT_MAX_AGE, SCORE_CHECK_MAX_AGE,
-             REVERIFY_THRESHOLD, MAPPING_VERSION]
+             REVERIFY_THRESHOLD, LIVE_FILTER_LINE_ZERO, MAPPING_VERSION]
     return hashlib.md5(",".join(str(v) for v in _vals).encode()).hexdigest()[:8]
 BET_HEALTH_FILE = ROOT / "data" / "storage" / "bet_health.json"  # 下单健康(成功/被拒计数), 供 gubbing 限注监控
 
@@ -1239,15 +1240,20 @@ class SecondLevelMonitor:
         # 2026-10-11 _attempted 前置: 过了所有 gate 就标记「已尝试」, 在发请求前写。防重复请求 +
         # 将来 worker pool 并发重入双倍下单(必须先写再发请求)。stake_record 仍只在成交后写(防重复敞口)。
         self._attempted.setdefault(str(sig["match_id"]), {})[str(market_id)] = time.time()
-        # 整数线命中计数(2026-10-11): 量让球/大小球整数线(0/±1/2.0/3.0)命中率, 决定是否硬过滤。
-        # 整数线可走盘(push), push 让 EV 记录虚高(资金被退回=期望收益抹掉), 且不进 slippage。
-        if sig.get("line") is not None:
+        # 让球0(平局退款盘)计数/过滤(2026-10-11): sub==handicap 且 line==0。盘型结构决定平局必走盘
+        # (三outcome事件付两outcome价, 平局概率成本摊进主客水位), EV 记录虚高且不进 slippage。
+        # 计数器开关关闭时也照常计数(先量); 开关打开才过滤。早盘保留(定价效率高), 只滚球可滤。
+        _is_line_zero = False
+        if sig.get("sub") == "handicap" and sig.get("line") is not None:
             try:
-                _lv = float(sig["line"])
-                if abs(_lv - round(_lv)) < 1e-6:
-                    self._count_skip("integer_line_bet")
+                _is_line_zero = abs(float(sig["line"])) < 1e-6
             except (TypeError, ValueError):
-                pass
+                _is_line_zero = False
+        if _is_line_zero:
+            self._count_skip("line_zero_live")
+            if LIVE_FILTER_LINE_ZERO:
+                print(f"  ⏭️ gate=line_zero 让球0(平局退款)已过滤, 跳过 {tag}", flush=True)
+                return
         _t_place = time.time()
         _dv = _decision_version(self.threshold)  # 配置快照 hash(复盘用)
         code, order_id, msg = place_single_bet(
