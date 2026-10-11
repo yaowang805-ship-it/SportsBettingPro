@@ -1353,6 +1353,7 @@ class SecondLevelMonitor:
                     "trigger_source": self._trigger_source,  # 2026-10-11 组内对照(兜底轮询成本)
                     "bb_ts": sig.get("bb_ts"),  # 2026-10-11 BB 快照时间(滞后度量)
                     "bb_snapshot_age": round(time.time() - (sig.get("bb_ts") or _t0), 2),  # 决策时 BB 快照年龄
+                    "lag_sec": _lag_sec,  # 2026-10-11 BB-vs-Pin 滞后(含钟偏, 看相对/分组)
                 }
                 self._live_bets[str(order_id)] = _binfo
                 _append_real_bet(str(order_id), _binfo)  # 2026-09-27 实盘库: 持久化下单信息
