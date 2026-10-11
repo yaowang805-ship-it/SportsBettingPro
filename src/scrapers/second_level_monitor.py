@@ -2170,9 +2170,15 @@ class SecondLevelMonitor:
     def _match_drop_anchor(self, trig):
         """live drop 作事件锚点(2026-10-11 简化版): 匹配观察库 pending, 用 drop 方向算 clv_sign。
 
-        drop 只覆盖 1x2(Home/Away/Draw) + 大小(Over/Under), hc 让球盘无 outcome 不覆盖。
+        只覆盖 1x2(Home/Away/Draw)。ou 盘 drop 无 line(跨线匹配风险) 不覆盖, hc 无 outcome 不覆盖。
         clv_sign: 下注方向 == drop 骤降方向 → +1(事件朝有利); 反面 → -1(朝不利); 否则不匹配跳过。
         写回 live_paper_bets 的 clv_sign/clv_anchor/clv_elapsed_s 字段。
+
+        两个选择性偏差(解读命中率时必须记住):
+        1) drop 只触发 ≥5% 骤降 → 样本是「大波动场次」的条件样本。命中率只能回答
+           P(clv_sign=+1 | 有drop), 不能外推到全部注单。永远不和早盘 CLV(全覆盖) 比较, 量纲不同。
+        2) 无 drop = clv_sign 保持 None, 不是 0。0:0 沉闷局从不进命中率分母, 只会让 n 长慢。
+           n 小是设计使然, 不是失败信号, 绝不能因此降门槛或扩匹配范围。
         """
         mid = str(trig.get('bb_match_id') or '')
         pending = self._drop_anchor_track.get(mid)
