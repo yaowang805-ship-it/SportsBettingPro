@@ -91,6 +91,7 @@ class PinOddsCache:
         """存整场 Pin 记录(元数据), 从 participants 提取 home/away 归一化。"""
         with self._lock:
             e = self._cache.setdefault(event_id, {"event": {}, "markets": {}})
+            old = e.get("event") or {}
             # participants → home/away(归一化, 供 _pin_cache_find_event 按队名查)
             for p in (event.get("participants") or []):
                 name = p.get("name")
@@ -99,6 +100,9 @@ class PinOddsCache:
                     event["home"] = name
                 elif name and align == "away":
                     event["away"] = name
+            # 2026-10-11 不覆盖 update_markets 已设置的 periods(WS 实时赔率优先于 REST 5s 陈旧)
+            if old.get("periods") and isinstance(old.get("periods"), dict):
+                event["periods"] = old["periods"]
             e["event"] = event
             e["ts"] = time.time()
 
