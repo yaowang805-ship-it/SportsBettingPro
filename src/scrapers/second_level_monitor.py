@@ -725,12 +725,14 @@ class SecondLevelMonitor:
                 "anchor": "pin",  # 2026-09-19 锚点口径标记: 10-11后 Pin 公平价
                 "sbo_direction": sig.get("sbo_direction", "same"),  # same/diff/none(供统计同向/不同向赛果)
                 "clv_sign": None,  # drop 锚点方向(+1朝有利/-1朝不利), 2026-10-11 简化版事件锚点
-                "clv_anchor": None,  # drop/timeout/missing
+                "clv_anchor": None if sig.get("sub") == "opportunities" else "no_outcome",  # 1x2等drop, 其余no_outcome(drop不覆盖)
                 "clv_elapsed_s": None,  # 下注到 drop 的秒数
             })
             keys.add(key)
-            # drop 锚点(2026-10-11 简化版): 只对 1x2/ou 盘(drop 有 outcome), 下注入库后等 live drop 算 clv_sign
-            if sig.get("sub") in ("opportunities", "over_under"):
+            # drop 锚点(2026-10-11 简化版): 只对 1x2 盘(无盘口线, 无跨线匹配风险)。
+            # ou 盘 drop 无 line(同一场 2.5/3.0 两条线无法对齐, 跨线匹配把噪声当信号) → 暂不做;
+            # hc 盘 drop 无 outcome → 不覆盖。等 A(帧间隔检测) 或 drop 补 line 再扩。
+            if sig.get("sub") == "opportunities":
                 self._drop_anchor_track.setdefault(str(sig["match_id"]), []).append({
                     "market_id": sig.get("market_id"), "option_type": sig.get("option_type"),
                     "sub": sig.get("sub"), "designation": sig["desig"],

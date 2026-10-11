@@ -949,3 +949,19 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T11:37:21Z,football,Peru Liga 1,Cusco FC,Alianza Lima,,,和局,1x2,3.13,0,2.3043,35.83,0,2,1791761400,ALL,pinnacle,,,validate,,,5638638
 2026-10-11T11:37:21Z,football,Peru Liga 1,Cusco FC,Alianza Lima,,,双重机会-和局/客,dc,1.59,0,1.4715,8.05,0,2,1791761400,ALL,pinnacle,,,validate,,,5638638
 2026-10-11T11:37:21Z,basketball,Colombia Professional Basketball League,Sabios de Manizales,Caribbean Storm Islands,,,客胜,1x2,5.05,0,4.8539,4.04,0,3,1791759600,ALL,pinnacle,,,validate,,,5735351
+2026-10-11T11:39:29Z,football,Denmark Danmarksserien,Fuglebakken KFUM,Vorup FB,,,上半场主胜,ht,4.03,0,3.9046,3.21,0,4,1791720000,ALL,pinnacle,,,validate,,,5700111
+2026-10-11T11:39:29Z,football,Spain Tercera Division,Boiro,Viveiro CF,,,小球,ou,1.94,0,1.9002,2.09,0,4,1791732600,ALL,pinnacle,,,validate,,2.5,5731176
+2026-10-11T11:39:29Z,football,Japan J.League,Machida Zelvia,Avispa Fukuoka,,,客胜,1x2,4.78,0,4.6126,3.63,0,2,1792306800,ALL,pinnacle,,,validate,,,5153567
+2026-10-11T11:39:29Z,football,Japan J.League,Machida Zelvia,Avispa Fukuoka,,,上半场主胜,ht,2.38,0,1.9307,23.27,0,2,1792306800,ALL,pinnacle,,,validate,,,5153567
+2026-10-11T11:39:29Z,football,Nigeria Premier Football League,Barau FC,Enugu Rangers International FC,,,大球,ou,1.81,0,1.714,5.6,0,2,1791730800,BB,pinnacle,,,validate,,2.0,5452767
+2026-10-11T11:39:29Z,football,Japan J.League 2,Oita Trinita,Albirex Niigata,,,上半场主胜,ht,3.88,0,2.9282,32.5,0,3,1792213200,ALL,pinnacle,,,validate,,,5164157
+2026-10-11T11:39:29Z,football,Japan J.League 2,Oita Trinita,Albirex Niigata,,,上半场客胜,ht,3.73,0,2.7898,33.7,0,3,1792213200,ALL,pinnacle,,,validate,,,5164157
+2026-10-11T11:39:29Z,football,Japan J.League 2,Kataller Toyama,Shonan Bellmare,,,上半场主胜,ht,2.51,0,2.1031,19.35,0,3,1792227600,ALL,pinnacle,,,validate,,,5164407
+2026-10-11T11:39:29Z,football,Japan J.League 2,Kataller Toyama,Shonan Bellmare,,,上半场客胜,ht,4.37,0,3.7347,17.01,0,3,1792227600,ALL,pinnacle,,,validate,,,5164407
+2026-10-11T11:39:29Z,football,Turkey Super Lig,Kasimpasa,Samsunspor,,,上半场客胜,ht,3.22,0,2.6933,19.56,0,2,1792319400,BB,pinnacle,,,validate,,,5446228
+2026-10-11T11:39:29Z,football,El Salvador Primera Division,Atletico Balboa,CD FAS,,,让球客胜,hc,2.0,0,1.8069,10.69,0,2,1791752400,ALL,pinnacle,,,validate,,-1,5310718
+2026-10-11T11:39:29Z,football,Scotland Premiership,Kilmarnock FC,Motherwell FC,,,上半场主胜,ht,3.44,0,3.3029,4.15,0,2,1792245600,ALL,pinnacle,,,validate,,,5635377
+2026-10-11T11:39:29Z,football,Scotland Premiership,Kilmarnock FC,Motherwell FC,,,上半场客胜,ht,2.68,0,2.2621,18.47,0,2,1792245600,ALL,pinnacle,,,validate,,,5635377
+2026-10-11T11:44:46Z,basketball,Lithuania LKL Basketball,Taurage,Gargzdai SC,,,上半场让球主胜,ht_hc,1.94,0,1.8703,3.73,0,2,1791726600,ALL,pinnacle,,,validate,,-1.5,5729979
+2026-10-11T11:44:46Z,basketball,Chile LNB,CD Valdivia,CD Espanol Osorno,,,上半场主胜,ht,1.22,0,1.1815,3.26,0,4,1791761400,ALL,pinnacle,,,validate,,,5697480
+2026-10-11T11:50:09Z,football,Indonesia Super League,Persib Bandung,Dewa United,,,主胜,1x2,1.91,0,1.7729,7.73,0,2,1791720000,ALL,pinnacle,,,validate,,,5680835

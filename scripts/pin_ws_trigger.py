@@ -20,6 +20,7 @@ from src.scrapers.pin_client import PinOddsCache, PinRestClient, PinWSClient, Pi
 DROP_FILE = ROOT / "data" / "storage" / "pin_drops.jsonl"
 TRIGGER_FILE = ROOT / "data" / "storage" / "pin_trigger.jsonl"
 LIVE_TICK_FILE = ROOT / "data" / "storage" / "pin_live_tick.ts"  # 滚球 WS live 帧触发信号时间戳
+FRAME_GAP_FILE = ROOT / "data" / "storage" / "pin_frame_gaps.jsonl"  # 帧间隔埋点(2026-10-11 攒帧间隔分布, 定 suspension 阈值)
 BB_SNAPSHOT = ROOT / "data" / "storage" / "bb_odds_extracted.json"
 
 _bb_cache = {"ts": 0.0, "matches": []}
@@ -71,6 +72,21 @@ def _append_rotating(path, line):
 
 
 _live_tick_state = {"last": 0.0}
+_frame_ts = {}  # matchup_id -> 上一帧本地时刻(算帧间隔用)
+_frame_gaps = []  # 攒帧间隔样本, 满 500 flush 一次
+
+
+def _flush_frame_gaps():
+    """帧间隔样本落盘(纯 append, 供离线算 p95/p99 定 suspension 阈值)。"""
+    global _frame_gaps
+    if not _frame_gaps:
+        return
+    try:
+        with open(FRAME_GAP_FILE, "a", encoding="utf-8") as f:
+            f.write("\n".join(f"{g:.3f}" for g in _frame_gaps) + "\n")
+        _frame_gaps = []
+    except OSError:
+        pass
 
 
 def _on_live(matchup_id, rec, frame_ts=None):
@@ -78,8 +94,19 @@ def _on_live(matchup_id, rec, frame_ts=None):
 
     替代 odds-api.io(Betfair) WS 的 get_persisted_changes 触发(19 号 Betfair 停订后靠它)。
     2026-10-11 写 "{本地收到时刻},{Pin帧ts(秒)}" 两段: 拆「Pin产生→我收到」vs「我收到→下单完成」。
+    埋点: 每个 matchup 的帧间隔 gap 攒到 FRAME_GAP_FILE, 供离线算 suspension 阈值(为精确版 A 铺路)。
     """
     now = time.time()
+    # 帧间隔埋点(节流前, 尽量全量): 同 matchup 相邻帧的本地时间差
+    _last = _frame_ts.get(matchup_id)
+    if _last is not None:
+        _gap = now - _last
+        if 0.01 < _gap < 600:  # 过滤同帧重复 + 异常长间隔
+            _frame_gaps.append(_gap)
+            if len(_frame_gaps) >= 500:
+                _flush_frame_gaps()
+    _frame_ts[matchup_id] = now
+    # 原有节流 + 写触发时间戳
     if now - _live_tick_state["last"] < 0.5:
         return
     _live_tick_state["last"] = now
