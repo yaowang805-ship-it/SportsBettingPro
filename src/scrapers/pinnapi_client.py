@@ -188,7 +188,10 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
                 'dc'→由 1x2 合成 {1X,12,X2}。
     返回 dict(含 line) 或 None。target_line: hc/ou 的 BB 线(在 Pinnacle 线里找最接近的)。
     优先读 WS 实时缓存(快), 否则 REST 兜底(带队名索引, O(1) 查)。
+    去水: 2026-10-12 统一 Shin(devig_shin/shin_fair_odds), 与 clv_collector 收盘侧一致——
+    之前用比例去水(_devig_three_way)导致下注侧/收盘侧 devig 口径不一致, EV_close 脏。
     """
+    from src.scrapers.devig import shin_fair_odds, devig_shin
     pin_sid = BB_TO_PIN.get(sport_id)
     if not pin_sid:
         return None
@@ -215,10 +218,11 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
             return None
         # 2026-10-11 修: 杯赛 2-way 独赢(draw=None)用两路去水, 3-way 用三路去水
         if ml.get('draw'):
-            fair = _devig_three_way(ml.get('home'), ml.get('draw'), ml.get('away'))
+            _fairs = shin_fair_odds([ml.get('home'), ml.get('draw'), ml.get('away')])
+            fair = {'home': _fairs[0], 'draw': _fairs[1], 'away': _fairs[2]} if (_fairs[0] > 1 and _fairs[1] > 1 and _fairs[2] > 1) else None
         else:
-            pair = _devig_two_way(ml.get('home'), ml.get('away'))
-            fair = {'home': pair[0], 'away': pair[1]} if pair else None
+            _fairs = shin_fair_odds([ml.get('home'), ml.get('away')])
+            fair = {'home': _fairs[0], 'away': _fairs[1]} if (_fairs[0] > 1 and _fairs[1] > 1) else None
         if fair is not None:
             fair['_raw'] = {k: ml.get(k) for k in ('home', 'draw', 'away') if ml.get(k)}
         return fair
@@ -240,10 +244,10 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
                     return None
             except (TypeError, ValueError):
                 pass
-        pair = _devig_two_way(o.get('home'), o.get('away'))
-        if pair is None:
+        _fairs = shin_fair_odds([o.get('home'), o.get('away')])
+        if _fairs[0] <= 1 or _fairs[1] <= 1:
             return None
-        return {'home': pair[0], 'away': pair[1], 'line': o.get('hdp'),
+        return {'home': _fairs[0], 'away': _fairs[1], 'line': o.get('hdp'),
                 '_raw': {'home': o.get('home'), 'away': o.get('away')}}
     if sub_market in ('ou', 'ht_ou'):
         totals = full.get('totals') or {}
@@ -252,21 +256,19 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         o = _select_line(totals, target_line)
         if not o:
             return None
-        pair = _devig_two_way(o.get('over'), o.get('under'))
-        if pair is None:
+        _fairs = shin_fair_odds([o.get('over'), o.get('under')])
+        if _fairs[0] <= 1 or _fairs[1] <= 1:
             return None
-        return {'over': pair[0], 'under': pair[1], 'line': o.get('points'),
+        return {'over': _fairs[0], 'under': _fairs[1], 'line': o.get('points'),
                 '_raw': {'over': o.get('over'), 'under': o.get('under')}}
     if sub_market == 'dc':
         ml = full.get('money_line')
         if not ml:
             return None
-        three = _devig_three_way(ml.get('home'), ml.get('draw'), ml.get('away'))
-        if not three:
+        _probs = devig_shin([ml.get('home'), ml.get('draw'), ml.get('away')])
+        if not _probs or any(p <= 0 for p in _probs):
             return None
-        ph = 1.0 / three['home']; pd = 1.0 / three['draw']; pa = 1.0 / three['away']
-        s = ph + pd + pa
-        ph, pd, pa = ph / s, pd / s, pa / s
+        ph, pd, pa = _probs
         return {'1X': round(1.0 / (ph + pd), 4),
                 '12': round(1.0 / (ph + pa), 4),
                 'X2': round(1.0 / (pd + pa), 4)}
