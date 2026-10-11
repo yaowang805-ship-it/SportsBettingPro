@@ -312,24 +312,20 @@ def consensus_fair_price(home, away, sport_id, sub_market, target_line=None, sta
     """
     from src.scrapers.odds_api_io import fair_price_bb, sbo_fair_price, match_event_orient
 
-    # 1. Betfair + SBO(现有锚)
-    bf = fair_price_bb(home, away, sport_id, sub_market, target_line=target_line, status=status, use_rest=use_rest)
-    if not bf:
-        return None
-    betfair = bf.get('fair')
-    sbo = bf.get('confidence')
-
-    # 2. Pinnacle(新锚)
+    # 1. Pinnacle(主锚) 优先
     _et = 'live' if status == 'live' else 'prematch'
     pinnacle = pinnacle_fair_price(home, away, sport_id, sub_market, target_line=target_line,
                                    event_type=_et)
 
-    # 3. 共识(等权平均隐含概率)
-    #    权重: Pinnacle 0.5(黄金基准), Betfair 0.3, SBO 0.2
-    fair = _combine_anchors([(pinnacle, 0.5), (betfair, 0.3), (sbo, 0.2)])
+    # 2. Betfair + SBO(交叉验证, 可选——19 号 Betfair 停订后此步可无, 纯 Pin 跑)
+    bf = fair_price_bb(home, away, sport_id, sub_market, target_line=target_line, status=status, use_rest=use_rest)
+    betfair = bf.get('fair') if bf else None
+    sbo = bf.get('confidence') if bf else None
+
+    # 3. Pin 主锚: 公平价直接用 Pin 去水; 无 Pin 覆盖的盘口(btts/dnb)回退 Betfair 兜底
+    fair = pinnacle or betfair
     if not fair:
-        # 至少 Betfair 有(单锚兜底)
-        fair = betfair
+        return None
     # line 从 Betfair/Pinnacle 取(线对齐用)
     if 'line' not in fair:
         for src in (pinnacle, betfair):
@@ -337,7 +333,7 @@ def consensus_fair_price(home, away, sport_id, sub_market, target_line=None, sta
                 fair['line'] = src['line']
                 break
     return {'fair': fair, 'pinnacle': pinnacle, 'betfair': betfair, 'sbo': sbo,
-            'event_id': bf.get('event_id'), 'spread': bf.get('spread')}
+            'event_id': (bf or {}).get('event_id'), 'spread': (bf or {}).get('spread')}
 
 
 if __name__ == '__main__':

@@ -255059,9 +255059,9 @@
   "spread": 6.521739130434789,
   "bb_ts": 1791674859.646694,
   "stake": 140,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 92.4,
   "anchor": "betfair",
   "sbo_direction": "diff",
   "clv": 7.47
@@ -256628,5 +256628,60 @@
   "anchor": "betfair",
   "sbo_direction": "none",
   "clv": 18.01
+ },
+ {
+  "ts": 1791682732.265611,
+  "match_id": 5595741,
+  "market_id": 125120329,
+  "option_type": 1,
+  "sport": 3,
+  "home": "金州勇士",
+  "away": "萨克拉门托国王",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   52,
+   54
+  ],
+  "bb_odds": 1.68,
+  "fair": 1.6042,
+  "ev": 4.73,
+  "spread": 7.031250000000005,
+  "bb_ts": 1791682730.862303,
+  "stake": 140,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "betfair",
+  "sbo_direction": "none",
+  "clv": 4.73
+ },
+ {
+  "ts": 1791682894.302913,
+  "match_id": 4231060,
+  "market_id": 127481156,
+  "option_type": 50,
+  "sport": 1,
+  "home": "堪萨斯城竞技",
+  "away": "波特兰伐木者",
+  "designation": "主/和",
+  "sub": "double_chance",
+  "line": null,
+  "bsc": [
+   1,
+   2
+  ],
+  "bb_odds": 2.81,
+  "fair": 2.6,
+  "ev": 8.08,
+  "spread": null,
+  "bb_ts": 1791682893.563565,
+  "stake": 80,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "betfair",
+  "sbo_direction": "none"
  }
 ]
