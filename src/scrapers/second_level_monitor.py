@@ -724,8 +724,18 @@ class SecondLevelMonitor:
                 "stake": sig.get("_stake", 0), "settled": False, "result": None, "profit": None,
                 "anchor": "pin",  # 2026-09-19 锚点口径标记: 10-11后 Pin 公平价
                 "sbo_direction": sig.get("sbo_direction", "same"),  # same/diff/none(供统计同向/不同向赛果)
+                "clv_sign": None,  # drop 锚点方向(+1朝有利/-1朝不利), 2026-10-11 简化版事件锚点
+                "clv_anchor": None,  # drop/timeout/missing
+                "clv_elapsed_s": None,  # 下注到 drop 的秒数
             })
             keys.add(key)
+            # drop 锚点(2026-10-11 简化版): 只对 1x2/ou 盘(drop 有 outcome), 下注入库后等 live drop 算 clv_sign
+            if sig.get("sub") in ("opportunities", "over_under"):
+                self._drop_anchor_track.setdefault(str(sig["match_id"]), []).append({
+                    "market_id": sig.get("market_id"), "option_type": sig.get("option_type"),
+                    "sub": sig.get("sub"), "designation": sig["desig"],
+                    "bb_odds": sig["bb_odds"], "ts": time.time(),
+                })
             _paper_bets_cache["dirty"] = True
             _paper_bets_cache["pending"] += 1
             if _paper_bets_cache["pending"] >= _PAPER_BETS_FLUSH_EVERY:
@@ -2115,6 +2125,7 @@ class SecondLevelMonitor:
             # 早盘(prematch) drop 才走这里的早盘快照比较。避免 live drop 用早盘快照价下单(错)。
             if trig.get('stream') == 'live':
                 self._pin_live_wake = True  # 唤醒滚球轮询立即比较
+                self._match_drop_anchor(trig)  # 2026-10-11: live drop 作事件锚点, 匹配观察库算 clv_sign
                 continue
             mid = str(trig.get('bb_match_id') or '')
             m = bb_by_id.get(mid)
@@ -2153,6 +2164,60 @@ class SecondLevelMonitor:
         except Exception as e:
             print(f'[slm] Pin drop 触发下单异常: {type(e).__name__} {e}', flush=True)
         return len(new_lines)
+
+    def _match_drop_anchor(self, trig):
+        """live drop 作事件锚点(2026-10-11 简化版): 匹配观察库 pending, 用 drop 方向算 clv_sign。
+
+        drop 只覆盖 1x2(Home/Away/Draw) + 大小(Over/Under), hc 让球盘无 outcome 不覆盖。
+        clv_sign: 下注方向 == drop 骤降方向 → +1(事件朝有利); 反面 → -1(朝不利); 否则不匹配跳过。
+        写回 live_paper_bets 的 clv_sign/clv_anchor/clv_elapsed_s 字段。
+        """
+        mid = str(trig.get('bb_match_id') or '')
+        pending = self._drop_anchor_track.get(mid)
+        if not pending:
+            return
+        outcome = trig.get('outcome', '')
+        _map = {"Home": ("opportunities", "主胜"), "Away": ("opportunities", "客胜"),
+                "Draw": ("opportunities", "和局"), "Over": ("over_under", "大球"),
+                "Under": ("over_under", "小球")}
+        _opp = {("opportunities", "主胜"): ("opportunities", "客胜"),
+                ("opportunities", "客胜"): ("opportunities", "主胜"),
+                ("over_under", "大球"): ("over_under", "小球"),
+                ("over_under", "小球"): ("over_under", "大球")}
+        drop_dir = _map.get(outcome)
+        if not drop_dir:
+            return
+        remain = []
+        for rec in pending:
+            bet_dir = (rec["sub"], rec["designation"])
+            if bet_dir == drop_dir:
+                clv_sign = 1
+            elif bet_dir == _opp.get(drop_dir):
+                clv_sign = -1
+            else:
+                remain.append(rec)  # 别的盘口, 留着等下一个 drop
+                continue
+            self._write_clv_sign(mid, rec["market_id"], rec["option_type"], rec["sub"],
+                                 clv_sign, "drop", time.time() - rec["ts"])
+        if remain:
+            self._drop_anchor_track[mid] = remain
+        else:
+            self._drop_anchor_track.pop(mid, None)
+
+    def _write_clv_sign(self, match_id, market_id, option_type, sub, clv_sign, anchor, elapsed):
+        """把 clv_sign 写回 live_paper_bets 对应记录(2026-10-11)。"""
+        try:
+            data, keys = _load_paper_bets()
+            for b in data:
+                if (str(b.get("match_id")) == str(match_id) and str(b.get("market_id")) == str(market_id)
+                        and str(b.get("option_type")) == str(option_type) and b.get("sub") == sub):
+                    b["clv_sign"] = clv_sign
+                    b["clv_anchor"] = anchor
+                    b["clv_elapsed_s"] = round(elapsed, 2)
+                    _paper_bets_cache["dirty"] = True
+                    break
+        except Exception:
+            pass
 
     async def run(self, seconds=0, refresh_every=2):
         """轮询 getList type=1 滚球赔率(HTTP, 不依赖浏览器), 每 refresh_every 秒一次。"""
