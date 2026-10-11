@@ -1853,8 +1853,9 @@ class SecondLevelMonitor:
         last = self._pin_trigger_offset
         if last >= len(lines):
             return 0
-        new_lines = lines[last:]
-        self._pin_trigger_offset = len(lines)
+        # 批处理: 每次最多 10 条(公平价要扫 Pin REST, 全量 373 条会超 20s), 其余下轮再消费
+        new_lines = lines[last:last + 10]
+        self._pin_trigger_offset = last + len(new_lines)
         # BB 快照(id → match)
         from src.scrapers.bb_incremental_scanner import BB_EXTRACTED
         try:
