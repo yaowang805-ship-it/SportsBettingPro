@@ -1236,12 +1236,16 @@ class SecondLevelMonitor:
             self._invalidate_token_cache()
         self._probe_token_async()  # 2026-09-28 token 探针移到投注后(后台, 不占下单关键路径)
         if code == 0:
-            # 2026-10-11 冷却/计数只在成交成功后生效: 拒单/void 不再烧冷却窗口。之前 record_global_bet
-            # 无条件打点 → 拒单也占全局冷却 + 连带节流早盘(共享冷却起点)。
-            self._last_bet_time = time.time()
-            self._bet_delay = random.uniform(3, 8)
-            from src.betting.bb_auto_bet import record_global_bet
-            record_global_bet()
+            # 2026-10-11 冷却三层只在成交成功后记(拒单/void 不烧窗口)。
+            if LIVE_COOLDOWN_PER_MARKET:
+                self._market_cooldown[(str(sig["match_id"]), str(market_id))] = time.time()
+                self._event_exposure[sig["match_id"]] = self._event_exposure.get(sig["match_id"], 0) + 1
+                self._global_bet_ts.append(time.time())
+            else:
+                self._last_bet_time = time.time()
+                self._bet_delay = random.uniform(3, 8)
+                from src.betting.bb_auto_bet import record_global_bet
+                record_global_bet()
             from src.betting.bb_auto_bet import record_sub_market_bet
             record_sub_market_bet(sig["match_id"], sig.get("sub"))
             self._live_spent += stake

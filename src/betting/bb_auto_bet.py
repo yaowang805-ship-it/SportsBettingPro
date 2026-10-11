@@ -366,6 +366,20 @@ _reject_stats = {}  # 下单失败 code 统计(oddsChange=0 被拒率实测, 202
 _last_bet_audit = {}  # 最近一注审计(2026-10-11): 触发/重拉/成交的价+EV+reason, 供 slippage 指标
 
 
+def _append_bet_audit():
+    """把 _last_bet_audit 追加到 bet_audit.jsonl(2026-10-11): 每注一条, 防将来 worker pool 并发覆盖单条 dict。"""
+    try:
+        import json as _json
+        from pathlib import Path as _Path
+        _f = _Path(__file__).resolve().parent.parent.parent / "data" / "storage" / "bet_audit.jsonl"
+        _rec = dict(_last_bet_audit)
+        _rec["ts"] = time.time()
+        with open(_f, "a", encoding="utf-8") as _fh:
+            _fh.write(_json.dumps(_rec, ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+
+
 def check_balance_ok(min_balance=BALANCE_MIN):
     """BB 账户余额是否 >= min_balance(60s 缓存, 避免每次下单都拉余额 HTTP)。
 
@@ -500,6 +514,7 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
                 _audit["reason"] = "ev_below_entry"
                 _audit["final_ev"] = _audit["reverify_ev"]
                 _last_bet_audit.update(_audit)
+                _append_bet_audit()
                 return -4, None, f"重拉后 EV {_audit['reverify_ev']:.1f}%<{min_ev_pct}%, 放弃(触发{odds}→现{cur_odds})"
             # 用新价重算注额(Kelly stake∝edge/(odds-1)), 新价 edge 变了按比例缩放
             if _fp > 1 and _cod > 1 and _audit["trigger_ev"] and _audit["reverify_ev"] and _audit["trigger_ev"] > 0:
@@ -580,11 +595,14 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
             else:
                 _last_bet_audit["reason"] = {14010: "token_expired", 3015: "market_closed",
                                              5: "param_error"}.get(code, f"rejected_{code}")
+            _append_bet_audit()
             return code, order_id, msg
         except Exception as e:
             _last_bet_audit["reason"] = "exception"
+            _append_bet_audit()
             return -2, None, f"下单异常: {type(e).__name__} {e}"
     _last_bet_audit["reason"] = "retry_exhausted"
+    _append_bet_audit()
     return -1, None, "下单失败(重试后仍失败)"
 
 
