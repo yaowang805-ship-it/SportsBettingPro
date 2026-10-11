@@ -1,5 +1,5 @@
 {
-  "balance": 16682.53,
+  "balance": 16562.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -23,6 +23,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1791727200.0,
       "created_at": "2026-10-11T02:17:35.196286+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_斯乐门_PSM马卡萨_主胜",
+      "sport": "football",
+      "league": "印尼超级联赛",
+      "home_team": "斯乐门",
+      "away_team": "PSM马卡萨",
+      "home_cn": "斯乐门",
+      "away_cn": "PSM马卡萨",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.23,
+      "stake": 120,
+      "model_prob": 0.5495,
+      "ev_pct": 22.53,
+      "pin_odds": 0,
+      "fair_price": 1.8199,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1791707400.0,
+      "created_at": "2026-10-11T02:51:21.194205+00:00",
       "track_only": false
     }
   ],
@@ -9394,8 +9417,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-11",
-    "used": 120.0,
-    "bets": 1
+    "used": 240.0,
+    "bets": 2
   },
   "updated": null
 }

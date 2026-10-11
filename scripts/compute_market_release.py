@@ -360,7 +360,7 @@ def load_real_roi():
     except (json.JSONDecodeError, OSError):
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
+            if b.get("status") == "settled" and b.get("anchor") == "pin"]
     return _agg_bets(bets, lambda b: (b.get("sport") or "?", b.get("sub_market") or "?"))
 
 
@@ -378,7 +378,7 @@ def load_real_roi_direction():
     except (json.JSONDecodeError, OSError):
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
+            if b.get("status") == "settled" and b.get("anchor") == "pin"]
     return _agg_bets(bets, lambda b: (
         b.get("sport") or "?", b.get("sub_market") or "?",
         _direction(b.get("designation"), b.get("sub_market"))))
@@ -446,7 +446,7 @@ def load_real_winrate_market():
     except (json.JSONDecodeError, OSError):
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
+            if b.get("status") == "settled" and b.get("anchor") == "pin"]
     return _winrate_agg(bets, lambda b: (b.get("sport") or "?", b.get("sub_market") or "?"))
 
 
@@ -459,7 +459,7 @@ def load_real_winrate_direction():
     except (json.JSONDecodeError, OSError):
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
+            if b.get("status") == "settled" and b.get("anchor") == "pin"]
     return _winrate_agg(bets, lambda b: (
         b.get("sport") or "?", b.get("sub_market") or "?",
         _direction(b.get("designation"), b.get("sub_market"))))
@@ -474,7 +474,7 @@ def load_real_winrate_league():
     except (json.JSONDecodeError, OSError):
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
+            if b.get("status") == "settled" and b.get("anchor") == "pin"]
     return _winrate_agg(bets, lambda b: (
         b.get("sport") or "?",
         (b.get("league") or "").strip() or "?",
@@ -490,7 +490,7 @@ def load_real_winrate_direction_window():
     except (json.JSONDecodeError, OSError):
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
+            if b.get("status") == "settled" and b.get("anchor") == "pin"]
 
     def _key(b):
         w = _window(_f(b.get("match_epoch")), _ts(b.get("push_time")))
@@ -515,7 +515,7 @@ def load_real_winrate_cell():
     except (json.JSONDecodeError, OSError):
         return {}
     bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
-            if b.get("status") == "settled" and b.get("anchor") == "betfair"]
+            if b.get("status") == "settled" and b.get("anchor") == "pin"]
     return _winrate_agg(bets, lambda b: (
         b.get("sport") or "?", b.get("sub_market") or "?",
         _direction(b.get("designation"), b.get("sub_market")),
@@ -636,7 +636,7 @@ def _read_paper_bets():
     except (json.JSONDecodeError, OSError):
         return []
     bets = raw.get("bets", []) if isinstance(raw, dict) else raw
-    return [b for b in bets if b.get("anchor") == "betfair"]
+    return [b for b in bets if b.get("anchor") == "pin"]
 
 
 def _read_live_paper_bets():
@@ -648,7 +648,7 @@ def _read_live_paper_bets():
     except (json.JSONDecodeError, OSError):
         return []
     bets = raw.get("bets", []) if isinstance(raw, dict) else raw
-    return [b for b in bets if b.get("anchor") == "betfair"]
+    return [b for b in bets if b.get("anchor") == "pin"]
 
 
 def load_observe_winrate():
@@ -861,7 +861,7 @@ def load_real_roi_cell():
             raw = json.loads(TRACKED.read_text())
             bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
                     if isinstance(b, dict) and b.get("status") == "settled"
-                    and b.get("anchor") == "betfair"]
+                    and b.get("anchor") == "pin"]
             _agg(bets, SCOPE_EARLY)
         except (json.JSONDecodeError, OSError):
             pass

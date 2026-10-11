@@ -93,7 +93,7 @@ def main():
     manual_release, manual_limited, manual_block = _load_manual_sets()
 
     bets = json.loads((DATA / "live_paper_bets.json").read_text())
-    settled = [b for b in bets if b.get("settled") and b.get("anchor") == "betfair"]
+    settled = [b for b in bets if b.get("settled") and b.get("anchor") == "pin"]
     grid = defaultdict(list)
     for b in settled:
         sp = BB_SPORT_MAP.get(b.get("sport"))
