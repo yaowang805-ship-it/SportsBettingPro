@@ -820,7 +820,8 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         _target_line = mk.get("line") if sub in ("hc", "hc_games", "ou", "ht_ou") else None
         # 2026-10-11 Pin 主锚: 滚球公平价切三锚共识(Pin 去水优先, Betfair 只交叉验证/兜底)
         from src.scrapers.pinnapi_client import consensus_fair_price
-        res = consensus_fair_price(b["home_en"], b["away_en"], b["sport"], sub, target_line=_target_line, status="live")
+        res = consensus_fair_price(b["home_en"], b["away_en"], b["sport"], sub, target_line=_target_line, status="live",
+                                   skip_betfair=True)  # 2026-10-11 滚球下单路径跳过 Betfair 交叉验证, Pin 定价
         if not res or not res["fair"]:
             return []
         fair = res["fair"]
