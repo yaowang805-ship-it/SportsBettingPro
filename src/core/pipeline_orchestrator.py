@@ -773,6 +773,8 @@ class PipelineOrchestrator:
         解决「BB 没挂 vs 抽取失败」歧义: global total 正常 + 某联赛为 0 → 真没挂; global 暴跌 → 管线故障, 当天作废。
         断更自检(读文件时检查, 成本零): max(date) 距今天 > 2 天 = 普查任务挂了, 报警。
         此文件是「覆盖率 / 首报日期」的唯一干净分母(替代 clv_results 事件驱动的代理)。
+        注意: 算「覆盖率」要固定同一小时取快照(本任务挂 23:30 do_daily_review 固定时刻), 否则某联赛某天
+        没记录可能是「还没排到它开赛」而非「没挂」(单点快照日内漂移 ~5%, 已实测 1547 vs 1626 场)。
         """
         import json as _json
         from collections import Counter
