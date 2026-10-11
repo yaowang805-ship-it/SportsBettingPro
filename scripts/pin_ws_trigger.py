@@ -19,6 +19,7 @@ from src.scrapers.pin_client import PinOddsCache, PinRestClient, PinWSClient, Pi
 
 DROP_FILE = ROOT / "data" / "storage" / "pin_drops.jsonl"
 TRIGGER_FILE = ROOT / "data" / "storage" / "pin_trigger.jsonl"
+LIVE_TICK_FILE = ROOT / "data" / "storage" / "pin_live_tick.ts"  # 滚球 WS live 帧触发信号时间戳
 BB_SNAPSHOT = ROOT / "data" / "storage" / "bb_odds_extracted.json"
 
 _bb_cache = {"ts": 0.0, "matches": []}
@@ -65,6 +66,24 @@ def _append_rotating(path, line):
         if path.stat().st_size > 1_500_000:  # >1.5MB 截断
             lines = path.read_text().splitlines()
             path.write_text("\n".join(lines[-100:]) + "\n")
+    except OSError:
+        pass
+
+
+_live_tick_state = {"last": 0.0}
+
+
+def _on_live(matchup_id, rec):
+    """Pin WS live 帧 → 写滚球触发信号时间戳(节流 0.5s), 供 second_level_monitor 读。
+
+    替代 odds-api.io(Betfair) WS 的 get_persisted_changes 触发(19 号 Betfair 停订后靠它)。
+    """
+    now = time.time()
+    if now - _live_tick_state["last"] < 0.5:
+        return
+    _live_tick_state["last"] = now
+    try:
+        LIVE_TICK_FILE.write_text(str(now))
     except OSError:
         pass
 
@@ -190,7 +209,7 @@ class PrematchIngestor:
 def main():
     cache = PinOddsCache()
     rest = PinRestClient()
-    ws = PinWSClient(cache, rest)
+    ws = PinWSClient(cache, rest, on_live=_on_live)
     sse = PinSSEClient(on_event=_on_drop)
 
     ws.start()

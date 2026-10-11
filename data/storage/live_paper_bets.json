@@ -977,5 +977,32 @@
   "profit": null,
   "anchor": "pin",
   "sbo_direction": "none"
+ },
+ {
+  "ts": 1791689890.483524,
+  "match_id": 5595745,
+  "market_id": 132402444,
+  "option_type": 5,
+  "sport": 3,
+  "home": "菲尼克斯太阳",
+  "away": "圣安东尼奥马刺",
+  "designation": "小球",
+  "sub": "over_under",
+  "line": 225.5,
+  "bsc": [
+   54,
+   47
+  ],
+  "bb_odds": 2.01,
+  "fair": 1.902,
+  "ev": 5.68,
+  "spread": null,
+  "bb_ts": 1791689889.489744,
+  "stake": 110,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none"
  }
 ]

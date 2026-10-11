@@ -214,10 +214,11 @@ class PinWSClient:
     断线: 重连 → REST get_snapshot 重建缓存 → 继续吃 tick。
     """
 
-    def __init__(self, cache: PinOddsCache, rest: PinRestClient, on_tick=None):
+    def __init__(self, cache: PinOddsCache, rest: PinRestClient, on_tick=None, on_live=None):
         self.cache = cache
         self.rest = rest
         self.on_tick = on_tick or (lambda event_id, event: None)
+        self.on_live = on_live or (lambda matchup_id, rec: None)
         self._stop = False
 
     def start(self):
@@ -247,7 +248,9 @@ class PinWSClient:
     async def _connect_and_consume(self):
         import websockets
         url = f"{PINNAPI_BASE.replace('https', 'wss')}/ws/feed?key={PINNAPI_KEY}"
-        async with websockets.connect(url, open_timeout=15) as ws:
+        # 2026-10-11 修: snapshot 全量帧 >1MB, 默认 max_size=2**20 会 1009「message too big」断开
+        # → WS 反复重连 + prematch_markets 永远收不到。改 2**26(64MB, 对齐 prematch_ws_trigger)。
+        async with websockets.connect(url, open_timeout=15, max_size=2**26) as ws:
             # 5s 内发 subscribe
             sub = {"type": "subscribe", "streams": ["live", "prematch"],
                    "sport_ids": PIN_SUBSCRIBE_SPORTS}
@@ -294,6 +297,7 @@ class PinWSClient:
                     if markets:
                         self.cache.update_markets(mid, markets)
                     self.on_tick(mid, rec)
+                    self.on_live(mid, rec)  # 2026-10-11: 滚球触发信号(切 Pin WS live 帧)
             return
         if t == "prematch_matchups":
             # 早盘元数据: data 是 matchups 列表
