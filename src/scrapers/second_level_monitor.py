@@ -1903,7 +1903,9 @@ class SecondLevelMonitor:
                 continue
             sport = m.get('sport') or trig.get('sport') or 'football'
             entry = _build_oa_entry(m, sport)
-            _oa_add_markets(entry, m, sport, use_rest=False)
+            # 2026-10-11 修: live drop 用 live 公平价, prematch drop 用 prematch 公平价
+            _status = 'live' if trig.get('stream') == 'live' else 'prematch'
+            _oa_add_markets(entry, m, sport, use_rest=False, status=_status)
             _league = entry.get('league', '')
             _epoch = entry.get('start_time_pin_epoch', 0)
             for group in ('opportunities', 'handicap', 'over_under', 'double_chance', 'draw_no_bet'):
@@ -2040,7 +2042,7 @@ class SecondLevelMonitor:
             # 2026-09-19 事件驱动: WS 变动立即唤醒(省 sleep 0.5s 轮询延迟), 否则等 0.5s
             try:
                 from src.scrapers.odds_ws import wait_change
-                _raw_changed = await asyncio.to_thread(wait_change, 0.5)
+                _raw_changed = await asyncio.to_thread(wait_change, 0.15)  # 2026-10-11 0.5→0.15: Pin drop 轮询更及时(省 0.35s)
                 if _raw_changed:
                     self._raw_ws_ts = time.time()  # 记录原始WS触发时刻(2026-09-23 端到端耗时起点)
                     # 2026-09-28 去掉现拉 BB: 实测 2s 预取缓存 stale 率仅 14.6%(见 measure_bb_stale.py),
