@@ -766,9 +766,46 @@ class PipelineOrchestrator:
         except Exception as e:
             logger.warning("已投注明细日报失败: %s", e)
 
+    def _snapshot_league_coverage(self):
+        """每日报价普查(2026-10-11): 快照 bb_odds_extracted 的联赛分布 → league_coverage.jsonl。
+
+        每行 {"date","league","market_count"} + 每日一行 __GLOBAL__ 汇总(total_leagues/total_markets/extract_ts)。
+        解决「BB 没挂 vs 抽取失败」歧义: global total 正常 + 某联赛为 0 → 真没挂; global 暴跌 → 管线故障, 当天作废。
+        断更自检(读文件时检查, 成本零): max(date) 距今天 > 2 天 = 普查任务挂了, 报警。
+        此文件是「覆盖率 / 首报日期」的唯一干净分母(替代 clv_results 事件驱动的代理)。
+        """
+        import json as _json
+        from collections import Counter
+        from datetime import date as _date
+        _bb = SRC_DIR / "data" / "storage" / "bb_odds_extracted.json"
+        if not _bb.exists():
+            return
+        try:
+            _d = _json.loads(_bb.read_text())
+            _matches = _d.get("matches", []) if isinstance(_d, dict) else _d
+        except Exception:
+            return
+        _cnt = Counter(m.get("league") for m in _matches if isinstance(m, dict) and m.get("league"))
+        _today = _date.today().isoformat()
+        _lines = [_json.dumps({"date": _today, "league": lg, "market_count": n}, ensure_ascii=False)
+                  for lg, n in sorted(_cnt.items())]
+        _lines.append(_json.dumps({"date": _today, "league": "__GLOBAL__",
+                                   "total_leagues": len(_cnt), "total_markets": len(_matches),
+                                   "extract_ts": time.time()}, ensure_ascii=False))
+        try:
+            with open(SRC_DIR / "data" / "storage" / "league_coverage.jsonl", "a", encoding="utf-8") as _fh:
+                _fh.write("\n".join(_lines) + "\n")
+        except OSError:
+            pass
+
     def do_daily_review(self):
         """实盘复盘(2026-09-12 用户要求): 每天23:30复盘当天实盘投注。
         数据源 BB 官方已结算订单, 核心判据"赢率 vs 隐含"筛真/假溢价。"""
+        # 每日报价普查(2026-10-11): 快照联赛覆盖, 供「覆盖率/首报日期」干净分母(先于复盘执行)
+        try:
+            self._snapshot_league_coverage()
+        except Exception as e:
+            logger.warning("报价普查异常: %s", e)
         try:
             import subprocess
             r = subprocess.run(

@@ -996,3 +996,16 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T13:12:16Z,football,Scotland Premiership,ST Johnstone FC,Dundee United,,,上半场客胜,ht,3.32,0,3.2051,3.58,0,2,1792245600,ALL,pinnacle,,,validate,,,5635380
 2026-10-11T13:12:49Z,football,Saudi Arabia Division 1,Al Adalah FC,Al Anwar Club,,,和局,1x2,3.3,0,2.5345,30.2,0,2,1791816900,BB,pinnacle,,,validate,,,5340840
 2026-10-11T13:12:49Z,football,Saudi Arabia Division 1,Al Adalah FC,Al Anwar Club,,,双重机会-主/和局,dc,1.63,0,1.5484,5.27,0,2,1791816900,BB,pinnacle,,,validate,,,5340840
+2026-10-11T13:17:08Z,football,Scotland Premiership,ST Johnstone FC,Dundee United,,,和局,1x2,3.47,0,2.4505,41.6,0,2,1792245600,ALL,pinnacle,,,validate,,,5635380
+2026-10-11T13:17:08Z,football,Scotland Premiership,ST Johnstone FC,Dundee United,,,双重机会-和局/客,dc,1.58,0,1.4737,7.21,0,2,1792245600,ALL,pinnacle,,,validate,,,5635380
+2026-10-11T13:17:40Z,football,Saudi Arabia Division 1,Al Adalah FC,Al Anwar Club,,,主胜,1x2,2.98,0,2.053,45.15,0,2,1791816900,BB,pinnacle,,,validate,,,5340840
+2026-10-11T13:17:40Z,football,Saudi Arabia Division 1,Al Adalah FC,Al Anwar Club,,,客胜,1x2,2.14,0,1.9497,9.76,0,2,1791816900,BB,pinnacle,,,validate,,,5340840
+2026-10-11T13:17:40Z,football,Saudi Arabia Division 1,Al Adalah FC,Al Anwar Club,,,上半场主胜,ht,3.72,0,2.053,81.2,0,2,1791816900,BB,pinnacle,,,validate,,,5340840
+2026-10-11T13:17:40Z,football,Saudi Arabia Division 1,Al Adalah FC,Al Anwar Club,,,上半场客胜,ht,2.85,0,1.9497,46.18,0,2,1791816900,BB,pinnacle,,,validate,,,5340840
+2026-10-11T13:26:43Z,football,Mexico Liga MX,Pumas UNAM,Cruz Azul,,,双重机会-主/客,dc,1.29,0,1.2594,2.43,0,3,1791767700,ALL,pinnacle,,,validate,,,5083873
+2026-10-11T13:27:16Z,football,Scotland Premiership,ST Johnstone FC,Dundee United,,,双重机会-主/和局,dc,1.4,0,1.3708,2.13,0,2,1792245600,ALL,pinnacle,,,validate,,,5635380
+2026-10-11T13:32:05Z,football,Faroe Islands Premier League,HB Torshavn,KI Klaksvik,,,主胜,1x2,2.8,0,2.5679,9.04,0,2,1791727200,ALL,pinnacle,,,validate,,,5700321
+2026-10-11T13:32:05Z,football,Faroe Islands Premier League,HB Torshavn,KI Klaksvik,,,客胜,1x2,2.18,0,1.6378,33.11,0,2,1791727200,ALL,pinnacle,,,validate,,,5700321
+2026-10-11T13:32:05Z,basketball,VTB United League,CSKA Moscow,Lokomotiv Kuban,,,客胜,1x2,3.66,0,3.3824,8.21,0,3,1791727200,ALL,pinnacle,,,validate,,,5470550
+2026-10-11T13:36:52Z,basketball,Portugal Basketball League,SC Braga,Portimonense SC,,,主胜,1x2,1.34,0,1.2806,4.64,0,2,1791727200,ALL,pinnacle,,,validate,,,5725910
+2026-10-11T13:42:19Z,basketball,Mexico LNBP Basketball League,Lobos Plateados,Freseros de Irapuato,,,上半场主胜,ht,1.28,0,1.2341,3.72,0,3,1791759600,ALL,pinnacle,,,validate,,,5721733
