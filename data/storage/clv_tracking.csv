@@ -806,3 +806,48 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T07:42:14Z,basketball,Mexico LNBP Basketball League,Abejas de Leon,Santos del Potosi,,,上半场让球主胜,ht_hc,1.87,0,1.7831,4.87,0,3,1791763200,ALL,pinnacle,,,validate,,-1.5,5721739
 2026-10-11T07:42:14Z,basketball,Mexico LNBP Basketball League,Dorados de Chihuahua,Gambusinos de Fresnillo,,,上半场让球主胜,ht_hc,1.87,0,1.7275,8.25,0,3,1791756000,ALL,pinnacle,,,validate,,-1.5,5721732
 2026-10-11T07:42:14Z,basketball,Turkey TBL Basketball,Gaziantep Basketbol,Buyukcekmece Basketbol,,,上半场让球主胜,ht_hc,1.92,0,1.756,9.34,0,3,1791720000,ALL,pinnacle,,,validate,,-2.5,5730920
+2026-10-11T07:48:01Z,basketball,Lithuania LKL Basketball,BC Siauliai,BC Juventus Utena,,,客胜,1x2,2.19,0,2.1286,2.88,0,2,1791735000,ALL,pinnacle,,,validate,,,5726328
+2026-10-11T07:52:46Z,football,Spain LaLiga,Getafe CF,Rayo Vallecano,,,和局,1x2,3.13,0,2.1242,47.35,0,1,1792436400,ALL,pinnacle,,,validate,,,5192323
+2026-10-11T07:52:46Z,football,Spain LaLiga,Getafe CF,Rayo Vallecano,,,双重机会-主/和局,dc,1.5,0,1.3764,8.98,0,1,1792436400,ALL,pinnacle,,,validate,,,5192323
+2026-10-11T07:52:46Z,football,Spain LaLiga,Getafe CF,Rayo Vallecano,,,双重机会-和局/客,dc,1.42,0,1.3436,5.69,0,1,1792436400,ALL,pinnacle,,,validate,,,5192323
+2026-10-11T07:57:28Z,football,Taiwan Football Premier League,AC Taipei,Taichung Rock,,,客胜,1x2,5.35,0,5.1981,2.92,0,2,1791705600,ALL,pinnacle,,,validate,,,5699917
+2026-10-11T07:57:28Z,football,Taiwan Football Premier League,AC Taipei,Taichung Rock,,,双重机会-和局/客,dc,2.49,0,2.3896,4.2,0,2,1791705600,ALL,pinnacle,,,validate,,,5699917
+2026-10-11T08:02:44Z,football,Indonesia Championship League,Persis Solo,Dejan FC,,,双重机会-和局/客,dc,1.98,0,1.889,4.82,0,2,1791707400,BB,pinnacle,,,validate,,,5727834
+2026-10-11T08:02:44Z,football,Algeria Ligue 1,USM Khenchela,CS Constantine,,,上半场主胜,ht,3.7,0,2.8141,31.48,0,2,1791813600,ALL,pinnacle,,,validate,,,5734268
+2026-10-11T08:02:44Z,football,Algeria Ligue 1,USM Khenchela,CS Constantine,,,上半场客胜,ht,3.94,0,2.9111,35.34,0,2,1791813600,ALL,pinnacle,,,validate,,,5734268
+2026-10-11T08:08:01Z,football,Turkey Super Lig,Konyaspor,Istanbul Basaksehir,,,客胜,1x2,2.73,0,1.587,72.02,0,2,1791714600,ALL,pinnacle,,,validate,,,5446254
+2026-10-11T08:08:01Z,football,Turkey Super Lig,Konyaspor,Istanbul Basaksehir,,,双重机会-和局/客,dc,1.6,0,1.1334,41.17,0,2,1791714600,ALL,pinnacle,,,validate,,,5446254
+2026-10-11T08:08:01Z,football,Japan J.League,Cerezo Osaka,Kawasaki Frontale,,,和局,1x2,3.9,0,3.7535,3.9,0,2,1792216800,BB,pinnacle,,,validate,,,5153562
+2026-10-11T08:08:01Z,football,Japan J.League,Cerezo Osaka,Kawasaki Frontale,,,上半场主胜,ht,3.42,0,2.9794,14.79,0,2,1792216800,BB,pinnacle,,,validate,,,5153562
+2026-10-11T08:08:01Z,football,Japan J.League,Cerezo Osaka,Kawasaki Frontale,,,上半场客胜,ht,2.98,0,2.5129,18.59,0,2,1792216800,BB,pinnacle,,,validate,,,5153562
+2026-10-11T08:08:01Z,football,Japan J.League,Kashiwa Reysol,Nagoya Grampus,,,上半场主胜,ht,2.08,0,1.6963,22.62,0,2,1792231200,BB,pinnacle,,,validate,,,5153527
+2026-10-11T08:08:01Z,football,Japan J.League,Kashiwa Reysol,Nagoya Grampus,,,上半场客胜,ht,5.85,0,5.2016,12.47,0,2,1792231200,BB,pinnacle,,,validate,,,5153527
+2026-10-11T08:12:44Z,football,Kuwait Premier League,Al Sahel,Al Fahaheel FC,,,客胜,1x2,1.97,0,1.9313,2.0,0,2,1791729900,ALL,pinnacle,,,validate,,,5719077
+2026-10-11T08:12:44Z,basketball,Austria Basketball Superliga,UBSC Graz,BK Dukes Klosterneuburg,,,客胜,1x2,3.68,0,3.52,4.55,0,2,1791727200,ALL,pinnacle,,,validate,,,5701522
+2026-10-11T08:12:44Z,basketball,Mexico LNBP Basketball League,Dorados de Chihuahua,Gambusinos de Fresnillo,,,上半场主胜,ht,1.65,0,1.5636,5.53,0,3,1791756000,ALL,pinnacle,,,validate,,,5721732
+2026-10-11T08:13:16Z,football,Japan J.League,Machida Zelvia,Avispa Fukuoka,,,和局,1x2,3.64,0,2.3646,53.94,0,2,1792306800,BB,pinnacle,,,validate,,,5153567
+2026-10-11T08:13:16Z,football,Japan J.League,Machida Zelvia,Avispa Fukuoka,,,上半场客胜,ht,6.35,0,5.9812,6.17,0,2,1792306800,BB,pinnacle,,,validate,,,5153567
+2026-10-11T08:13:16Z,football,Japan J.League,Machida Zelvia,Avispa Fukuoka,,,双重机会-和局/客,dc,2.06,0,1.6947,21.56,0,2,1792306800,BB,pinnacle,,,validate,,,5153567
+2026-10-11T08:18:02Z,football,USA MLS Next Pro,New York Red Bulls II,Huntsville City FC,,,上半场让球主胜,ht_hc,2.0,0,1.6997,17.67,0,1,1791752400,ALL,pinnacle,,,validate,,-0.5,5681417
+2026-10-11T08:18:02Z,football,Japan J.League,Cerezo Osaka,Kawasaki Frontale,,,双重机会-主/和局,dc,1.59,0,1.4961,6.28,0,2,1792216800,BB,pinnacle,,,validate,,,5153562
+2026-10-11T08:18:02Z,football,Japan J.League,Cerezo Osaka,Kawasaki Frontale,,,双重机会-和局/客,dc,1.47,0,1.4156,3.84,0,2,1792216800,BB,pinnacle,,,validate,,,5153562
+2026-10-11T08:18:02Z,football,Japan J.League,Kashiwa Reysol,Nagoya Grampus,,,和局,1x2,4.45,0,2.7173,63.77,0,2,1792231200,BB,pinnacle,,,validate,,,5153527
+2026-10-11T08:18:02Z,football,Japan J.League,Kashiwa Reysol,Nagoya Grampus,,,双重机会-和局/客,dc,2.4,0,1.8266,31.39,0,2,1792231200,BB,pinnacle,,,validate,,,5153527
+2026-10-11T08:18:02Z,basketball,Chile LNB,CSD Colo Colo,CD Las Animas,,,客胜,1x2,2.17,0,2.1122,2.74,0,4,1791757800,ALL,pinnacle,,,validate,,,5735049
+2026-10-11T08:23:23Z,football,AFC Champions League Elite,Al Gharafa SC,Esteghlal,,,主胜,1x2,2.41,0,1.9243,25.24,0,3,1791828900,ALL,pinnacle,,,validate,,,5331674
+2026-10-11T08:23:23Z,football,AFC Champions League Elite,Al Gharafa SC,Esteghlal,,,客胜,1x2,2.52,0,2.0819,21.04,0,3,1791828900,ALL,pinnacle,,,validate,,,5331674
+2026-10-11T08:23:23Z,football,Vietnam League 1,Ha Noi FC,Bac Ninh FC,,,主胜,1x2,1.5,0,1.2687,18.23,0,2,1791720900,ALL,pinnacle,,,validate,,,5586616
+2026-10-11T08:23:23Z,football,Vietnam League 1,Ha Noi FC,Bac Ninh FC,,,客胜,1x2,5.7,0,4.7221,20.71,0,2,1791720900,ALL,pinnacle,,,validate,,,5586616
+2026-10-11T08:23:23Z,football,Vietnam League 1,Ha Noi FC,Bac Ninh FC,,,上半场客胜,ht,5.65,0,4.7221,19.65,0,2,1791720900,ALL,pinnacle,,,validate,,,5586616
+2026-10-11T08:28:08Z,football,Turkey Super Lig,Konyaspor,Istanbul Basaksehir,,,双重机会-主/客,dc,1.31,0,1.2606,3.92,0,2,1791714600,ALL,pinnacle,,,validate,,,5446254
+2026-10-11T08:28:08Z,football,Bahrain Premier League,East Riffa,Aali Club,,,主胜,1x2,2.68,0,2.278,17.65,0,2,1791734400,ALL,pinnacle,,,validate,,,5673723
+2026-10-11T08:33:24Z,football,Turkey 1. Lig,Umraniyespor,Boluspor,,,主胜,1x2,1.39,0,1.2287,13.13,0,2,1791986400,ALL,pinnacle,,,validate,,,5366677
+2026-10-11T08:33:24Z,football,Turkey 1. Lig,Umraniyespor,Boluspor,,,客胜,1x2,7.65,0,5.3734,42.37,0,2,1791986400,ALL,pinnacle,,,validate,,,5366677
+2026-10-11T08:33:24Z,football,Turkey 1. Lig,Umraniyespor,Boluspor,,,上半场客胜,ht,7.5,0,5.3734,39.58,0,2,1791986400,ALL,pinnacle,,,validate,,,5366677
+2026-10-11T08:38:41Z,football,Turkey 1. Lig,Bandirmaspor,Sivasspor,,,主胜,1x2,2.05,0,1.8069,13.45,0,2,1791891000,ALL,pinnacle,,,validate,,,5695190
+2026-10-11T08:38:41Z,football,Turkey 1. Lig,Bandirmaspor,Sivasspor,,,客胜,1x2,3.25,0,2.2394,45.13,0,2,1791891000,ALL,pinnacle,,,validate,,,5695190
+2026-10-11T08:38:41Z,football,Sierra Leone Premier League,East End Lions,Ports Authority,,,上半场主胜,ht,2.89,0,2.0644,39.99,0,2,1791736200,ALL,pinnacle,,,validate,,,5729900
+2026-10-11T08:38:41Z,football,Sierra Leone Premier League,East End Lions,Ports Authority,,,上半场客胜,ht,6.0,0,4.752,26.26,0,2,1791736200,ALL,pinnacle,,,validate,,,5729900
+2026-10-11T08:43:27Z,football,England Premier League,Leeds United,Manchester United FC,,,主胜,1x2,2.43,0,1.856,30.93,0,1,1792328400,ALL,pinnacle,,,validate,,,5130822
+2026-10-11T08:43:27Z,football,England Premier League,Leeds United,Manchester United FC,,,客胜,1x2,2.69,0,2.1682,24.07,0,1,1792328400,ALL,pinnacle,,,validate,,,5130822
+2026-10-11T08:43:27Z,football,England Championship League,Burnley FC,Charlton Athletic,,,客胜,1x2,5.1,0,2.0437,149.55,0,2,1791917100,ALL,pinnacle,,,validate,,,5724153

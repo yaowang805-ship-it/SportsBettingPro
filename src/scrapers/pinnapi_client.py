@@ -200,6 +200,12 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
     if not e:
         return None
     periods = e.get('periods') or {}
+    # 2026-10-11 修崩溃: Pin 元数据的 periods 是 list(比赛时段元数据, 无赔率), 只有
+    # pin_client.update_markets 归一化后才是 dict({"num_0": {money_line/spreads/totals}})。
+    # 收到元数据但还没收到 prematch_markets 流的场次 periods 仍是 list → 无公平价可算,
+    # 返回 None 让上层 consensus 用 Betfair/SBO 兜底, 而不是 .get() 崩在 list 上。
+    if not isinstance(periods, dict):
+        return None
     full = periods.get('num_0') or (list(periods.values())[0] if periods else None)
     if not full:
         return None
