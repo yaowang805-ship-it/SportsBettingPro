@@ -988,6 +988,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             "ev_pct": round(ev, 2),
                             # 2026-10-11 ev_raw 双轨: 决策时点 Pin 原始赔率(与 bb_odds 同时间戳, 供 ev_raw 向前攒)
                             "pin_raw_at_decision": (_oa_ml.get("_raw") or {}).get(_ml_keys[i]),
+                            "water_pct": round((fair_price - (_oa_ml.get("_raw") or {}).get(_ml_keys[i])) / (_oa_ml.get("_raw") or {}).get(_ml_keys[i]) * 100, 3) if (_oa_ml.get("_raw") or {}).get(_ml_keys[i]) else None,
                         })
 
         # 网球双打 vs 单打不匹配时跳过让球和大小盘
@@ -1042,6 +1043,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     "fair_price": round(home_fair, 4),
                     "ev_pct": round(ev_h, 2),
                     "pin_raw_at_decision": (_oa_hc.get("_raw") or {}).get("home"),
+                    "water_pct": round((home_fair - (_oa_hc.get("_raw") or {}).get("home")) / (_oa_hc.get("_raw") or {}).get("home") * 100, 3) if (_oa_hc.get("_raw") or {}).get("home") else None,
                 }
                 if line_info:
                     opp.setdefault("tags", []).append(line_info)
@@ -1055,6 +1057,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     "fair_price": round(away_fair, 4),
                     "ev_pct": round(ev_a, 2),
                     "pin_raw_at_decision": (_oa_hc.get("_raw") or {}).get("away"),
+                    "water_pct": round((away_fair - (_oa_hc.get("_raw") or {}).get("away")) / (_oa_hc.get("_raw") or {}).get("away") * 100, 3) if (_oa_hc.get("_raw") or {}).get("away") else None,
                 }
                 if line_info:
                     opp.setdefault("tags", []).append(line_info)
@@ -1101,6 +1104,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     "fair_price": round(over_fair, 4),
                     "ev_pct": round(ev_o, 2),
                     "pin_raw_at_decision": (_oa_ou.get("_raw") or {}).get("over"),
+                    "water_pct": round((over_fair - (_oa_ou.get("_raw") or {}).get("over")) / (_oa_ou.get("_raw") or {}).get("over") * 100, 3) if (_oa_ou.get("_raw") or {}).get("over") else None,
                 })
             if ev_u > 1:
                 entry["over_under"].append({
@@ -1111,6 +1115,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     "fair_price": round(under_fair, 4),
                     "ev_pct": round(ev_u, 2),
                     "pin_raw_at_decision": (_oa_ou.get("_raw") or {}).get("under"),
+                    "water_pct": round((under_fair - (_oa_ou.get("_raw") or {}).get("under")) / (_oa_ou.get("_raw") or {}).get("under") * 100, 3) if (_oa_ou.get("_raw") or {}).get("under") else None,
                 })
 
         # --- 上半场 (HT) 对比：从 DOM odds_ht 读，与 Pinnacle period=1 对比 ---
