@@ -255677,5 +255677,33 @@
   "anchor": "betfair",
   "sbo_direction": "diff",
   "clv": 2.08
+ },
+ {
+  "ts": 1791678177.972146,
+  "match_id": 5669135,
+  "market_id": 130770711,
+  "option_type": 52,
+  "sport": 1,
+  "home": "圣保罗",
+  "away": "维多利亚",
+  "designation": "客/和",
+  "sub": "double_chance",
+  "line": null,
+  "bsc": [
+   1,
+   0
+  ],
+  "bb_odds": 4.98,
+  "fair": 4.7,
+  "ev": 5.96,
+  "spread": null,
+  "bb_ts": 1791678177.391901,
+  "stake": 25,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "betfair",
+  "sbo_direction": "none",
+  "clv": 5.96
  }
 ]

@@ -1982,12 +1982,12 @@ def _fetch_one_platform(platform_key: str):
 
     _sport_records = {}
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as _exec:
-        _futs = {_exec.submit(_fetch_records, sid, sc): sc for sid, sk, sc in SPORTS}
+        _futs = {_exec.submit(_fetch_records, sid, sc): sc for sid, sk, sc in FETCH_SPORTS}
         for _fut in concurrent.futures.as_completed(_futs):
             _sc, _recs = _fut.result()
             _sport_records[_sc] = _recs
 
-    for sport_id, sport_key, sport_cn in SPORTS:
+    for sport_id, sport_key, sport_cn in FETCH_SPORTS:
         records = _sport_records.get(sport_cn, [])
         if not records:
             print(f"--- {sport_cn} (sportId={sport_id}): ⚠️ 无数据")
