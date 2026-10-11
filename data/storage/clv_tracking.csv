@@ -2150,3 +2150,15 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T03:50:02Z,football,USA Major League Soccer,Los Angeles FC,Austin FC,,,和局,1x2,5.0,0,2.817,77.49,0,1,1792031400,ALL,,,validate,,,4231099
 2026-10-11T03:50:02Z,basketball,Japan B.League Premier,Ibaraki Robots,Nagoya Diamond Dolphins,,,上半场客胜,ht,1.42,0,1.3915,2.05,0,2,1791698700,BB,,,validate,,,5298102
 2026-10-11T03:50:02Z,basketball,Australia NBL,Sydney Kings,Adelaide 36Ers,,,客胜,1x2,3.97,0,3.4443,15.26,0,3,1791691200,ALL,,,validate,,,5074423
+2026-10-11T03:55:16Z,football,USL Championship,Hartford Athletic,Charleston Battery,,,上半场主胜,ht,3.34,0,2.868,16.46,0,2,1792018800,BB,,,validate,,,4259069
+2026-10-11T03:55:16Z,football,USL Championship,Hartford Athletic,Charleston Battery,,,上半场客胜,ht,2.91,0,2.4415,19.19,0,2,1792018800,BB,,,validate,,,4259069
+2026-10-11T03:55:16Z,football,Japan Football League,Tiamo Hirakata,Yokogawa Musashino FC,,,客胜,1x2,3.45,0,3.3641,2.55,0,3,1791691200,ALL,,,validate,,,5518970
+2026-10-11T03:55:16Z,football,Japan Football League,Tiamo Hirakata,Yokogawa Musashino FC,,,双重机会-和局/客,dc,1.8,0,1.7602,2.26,0,3,1791691200,ALL,,,validate,,,5518970
+2026-10-11T03:55:16Z,football,Norway 3rd Division,Fauske Sprint,Harstad,,,和局,1x2,5.2,0,5.0717,2.53,0,4,1791723600,BB,,,validate,,,4888285
+2026-10-11T03:55:16Z,football,Norway 3rd Division,Fauske Sprint,Harstad,,,上半场客胜,ht,1.93,0,1.6464,17.23,0,4,1791723600,BB,,,validate,,,4888285
+2026-10-11T03:55:16Z,basketball,Mexico LNBP Basketball League,Abejas de Leon,Santos del Potosi,,,客胜,1x2,2.17,0,2.0627,5.2,0,3,1791763200,ALL,,,validate,,,5721739
+2026-10-11T03:59:57Z,basketball,Japan B.League Premier,Utsunomiya Brex,Akita Northern Happinets,,,客胜,1x2,8.2,0,6.4455,27.22,0,2,1791698700,BB,,,validate,,,5298100
+2026-10-11T04:05:11Z,football,Spain Segunda Division RFEF,Atletico Sanluqueno,Recreativo Huelva,,,主胜,1x2,3.44,0,2.1194,62.31,0,3,1791734400,ALL,,,validate,,,5700008
+2026-10-11T04:05:11Z,football,Spain Segunda Division RFEF,Atletico Sanluqueno,Recreativo Huelva,,,客胜,1x2,2.01,0,1.8934,6.16,0,3,1791734400,ALL,,,validate,,,5700008
+2026-10-11T04:05:11Z,basketball,Japan B.League Premier,Ibaraki Robots,Nagoya Diamond Dolphins,,,主胜,1x2,3.33,0,3.2521,2.4,0,3,1791698700,BB,,,validate,,,5298102
+2026-10-11T04:05:11Z,basketball,Austria Basketball Superliga,Swans Gmunden,Flyers Wels,,,上半场主胜,ht,1.3,0,1.2744,2.01,0,2,1791732600,ALL,,,validate,,,5701523

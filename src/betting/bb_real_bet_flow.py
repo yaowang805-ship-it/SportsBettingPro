@@ -141,8 +141,12 @@ def _designation_to_dir(sub_market, designation):
 EARLY_BET_ENABLED = True
 
 
-def auto_bet_flow(opportunities, token=None, domain=None):
-    """全自动下单。返回 {成功: [...], 失败: [...]}。"""
+def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
+    """全自动下单。返回 {成功: [...], 失败: [...]}。
+
+    trigger_ts(2026-10-11): Pin drop 触发时刻(供端到端「总耗时」=触发→下单完成, 对齐滚球口径)。
+    None(pipeline 扫描路径无触发时刻)则兜底用下单 HTTP 累加。
+    """
     if not EARLY_BET_ENABLED:
         return {"success": [], "failed": [], "error": "早盘投注已暂停"}
     token = token or read_token()
@@ -282,8 +286,11 @@ def auto_bet_flow(opportunities, token=None, domain=None):
                     _extra.append(f"余额 ¥{_bal}")
             except Exception:
                 pass
-            if total_latency > 0:
-                _extra.append(f"投注总耗时 {total_latency:.2f}s")
+            # 总耗时(2026-10-11 对齐滚球口径): Pin drop 路径用端到端(触发→下单完成),
+            # pipeline 路径(无触发时刻)兜底用下单 HTTP 累加。
+            _total_time = (time.time() - trigger_ts) if trigger_ts else total_latency
+            if _total_time > 0:
+                _extra.append(f"总耗时 {_total_time:.1f}s")
             if _extra:
                 body += "\n\n" + " | ".join(_extra)
             send_dingtalk(f"🟦 已投注机会 {len(sent_dingtalk)} 注", body)

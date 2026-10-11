@@ -1895,6 +1895,7 @@ class SecondLevelMonitor:
         _GROUP_TO_SUB = {'opportunities': '1x2', 'handicap': 'hc', 'over_under': 'ou',
                          'double_chance': 'dc', 'draw_no_bet': 'dnb'}
         opps = []
+        min_trig_ts = None  # 本批最早 prematch drop 触发时刻(供端到端总耗时)
         for line in new_lines:
             try:
                 trig = json.loads(line)
@@ -1909,6 +1910,9 @@ class SecondLevelMonitor:
             m = bb_by_id.get(mid)
             if not m:
                 continue
+            _ts = trig.get('ts')
+            if _ts and (min_trig_ts is None or _ts < min_trig_ts):
+                min_trig_ts = _ts
             sport = m.get('sport') or trig.get('sport') or 'football'
             entry = _build_oa_entry(m, sport)
             _oa_add_markets(entry, m, sport, use_rest=False, status='prematch')
@@ -1932,7 +1936,7 @@ class SecondLevelMonitor:
             return len(new_lines)
         try:
             from src.betting.bb_real_bet_flow import auto_bet_flow
-            res = auto_bet_flow(opps)
+            res = auto_bet_flow(opps, trigger_ts=min_trig_ts)
             n = len(res.get('success', [])) if isinstance(res, dict) else 0
             if n:
                 print(f'[slm] Pin drop 触发下单 {n} 注', flush=True)
