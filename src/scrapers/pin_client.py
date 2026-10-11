@@ -34,8 +34,8 @@ except Exception:
     PINNAPI_BASE = "https://pinnapi.com"
 
 # Pin sport_id(与 pinnapi 文档一致): 1=Soccer 2=Tennis 3=Basketball 4=Hockey 5=Football 6=Baseball
-# 只订阅 BB∩Betfair 有 CLV 的运动(足球/网球/篮球/冰球/棒球)
-PIN_SUBSCRIBE_SPORTS = [1, 2, 3, 4, 6]
+# 8=MMA 9=Boxing 10=Other(排球/羽毛球)。订阅 Pin∩BB 全部(10 运动), 2026-10-11 从 5 扩到 9 个 Pin id。
+PIN_SUBSCRIBE_SPORTS = [1, 2, 3, 4, 5, 6, 8, 9, 10]
 
 
 def _am_to_dec(price):

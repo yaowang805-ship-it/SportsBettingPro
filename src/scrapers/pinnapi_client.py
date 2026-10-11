@@ -28,6 +28,7 @@ BB_TO_PIN = {
     18: 8,   # MMA → mma
     19: 9,   # 拳击 → boxing
     13: 10,  # 排球 → other
+    47: 10,  # 羽毛球 → other(Pin 无羽毛球专属 id, 归 other)
 }
 PIN_TO_BB = {v: k for k, v in BB_TO_PIN.items()}
 
