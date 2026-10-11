@@ -1318,10 +1318,46 @@ class SecondLevelMonitor:
         if not sub:
             self._lev_fail_stats["unsupported_sub"] = self._lev_fail_stats.get("unsupported_sub", 0) + 1
             return None
-        # 2026-09-19 修复: hc/ou 复验必须传下注线(target_line), 否则选主线——下注线还在但主线 close 时复验失败
+        desig = sig.get("desig", "")
+        if sub == "1x2":
+            idx = {"主胜": "home", "和局": "draw", "客胜": "away"}
+        elif sub == "hc":
+            idx = {"让球主胜": "home", "让球客胜": "away"}
+        elif sub == "ou":
+            idx = {"大球": "over", "小球": "under"}
+        elif sub == "btts":
+            idx = {"双方进球": "yes", "非双方进球": "no"}
+        elif sub == "dc":
+            idx = {"主/和": "1X", "客/和": "X2", "主/客": "12"}
+        else:
+            self._lev_fail_stats["unsupported_sub"] = self._lev_fail_stats.get("unsupported_sub", 0) + 1
+            return None
+        k = idx.get(desig)
+        # 1) Pin 主锚(2026-10-11): 1x2/hc/ou 优先用 Pin 实时赔率复验, Betfair 只兜底(btts/dc Pin 无覆盖)
+        if sub in ("1x2", "hc", "ou"):
+            _home = sig.get("home", "")
+            _away = sig.get("away", "")
+            _sport = sig.get("sport")
+            if _home and _away and _sport:
+                try:
+                    from src.scrapers.pinnapi_client import pinnacle_fair_price
+                    _pfair = pinnacle_fair_price(_home, _away, _sport, sub,
+                                                 target_line=sig.get("line"), event_type='live')
+                    if _pfair:
+                        _fp = _pfair.get(k)
+                        if _fp and _fp > 1:
+                            return (sig["bb_odds"] - _fp) / _fp * 100.0
+                except Exception:
+                    pass
+            self._lev_fail_stats["no_pin"] = self._lev_fail_stats.get("no_pin", 0) + 1
+        # 2) Betfair 兜底(btts/dc, 或 Pin 复验失败)
+        from src.scrapers.odds_api_io import fair_price, get_odds, _SUB_TO_BETFAIR
+        eid = sig.get("pin_matchup_id")
+        if not eid:
+            self._lev_fail_stats["no_event_id"] = self._lev_fail_stats.get("no_event_id", 0) + 1
+            return None
         fair = fair_price(eid, sub, target_line=sig.get("line"))
         if not fair:
-            # 细分诊断: get_odds 空(事件删除) vs 盘口 close vs 价差/线
             _odds = get_odds(eid)
             if not _odds:
                 _reason = "get_odds_empty"
@@ -1333,23 +1369,6 @@ class SecondLevelMonitor:
                 _reason = "spread_or_line" if _m else "market_closed"
             self._lev_fail_stats[_reason] = self._lev_fail_stats.get(_reason, 0) + 1
             return None
-        desig = sig.get("desig", "")
-        if sub == "1x2":
-            idx = {"主胜": "home", "和局": "draw", "客胜": "away"}
-        elif sub == "hc":
-            idx = {"让球主胜": "home", "让球客胜": "away"}
-        elif sub == "ou":
-            idx = {"大球": "over", "小球": "under"}
-        elif sub == "btts":
-            # fair_price('btts') → {yes, no}
-            idx = {"双方进球": "yes", "非双方进球": "no"}
-        elif sub == "dc":
-            # fair_price('dc') → {1X, 12, X2}（1x2 三向中间价合成）
-            idx = {"主/和": "1X", "客/和": "X2", "主/客": "12"}
-        else:
-            self._lev_fail_stats["unsupported_sub"] = self._lev_fail_stats.get("unsupported_sub", 0) + 1
-            return None
-        k = idx.get(desig)
         fair_p = fair.get(k)
         if not fair_p or fair_p <= 1:
             self._lev_fail_stats["no_direction"] = self._lev_fail_stats.get("no_direction", 0) + 1
