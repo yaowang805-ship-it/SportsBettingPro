@@ -38,6 +38,19 @@ except Exception:
 PIN_SUBSCRIBE_SPORTS = [1, 2, 3, 4, 6]
 
 
+def _am_to_dec(price):
+    """美国盘 → 十进制。负(-133)=1+100/133≈1.752; 正(+123)=1+123/100=2.23。"""
+    try:
+        p = float(price)
+    except (TypeError, ValueError):
+        return None
+    if p < 0:
+        return round(1.0 + 100.0 / abs(p), 4)
+    if p > 0:
+        return round(1.0 + p / 100.0, 4)
+    return None
+
+
 class PinRateLimiter:
     """令牌桶限速器 — Pin REST 10 req/s。"""
 
@@ -75,11 +88,37 @@ class PinOddsCache:
         self._lock = threading.Lock()
 
     def update_event(self, event_id, event):
-        """存整场 Pin 记录(periods/money_line/spreads/totals)。"""
+        """存整场 Pin 记录(元数据), 从 participants 提取 home/away 归一化。"""
         with self._lock:
             e = self._cache.setdefault(event_id, {"event": {}, "markets": {}})
+            # participants → home/away(归一化, 供 _pin_cache_find_event 按队名查)
+            for p in (event.get("participants") or []):
+                name = p.get("name")
+                align = p.get("alignment")
+                if name and align == "home":
+                    event["home"] = name
+                elif name and align == "away":
+                    event["away"] = name
             e["event"] = event
             e["ts"] = time.time()
+
+    def update_markets(self, matchup_id, markets):
+        """prematch_markets 赔率 → 归一化成 periods(供 pinnacle_fair_price 读)。"""
+        with self._lock:
+            e = self._cache.setdefault(matchup_id, {"event": {}, "markets": {}})
+            e["markets"] = markets
+            ev = e["event"]
+            periods = ev.setdefault("periods", {})
+            p0 = periods.setdefault("num_0", {})
+            ml = markets.get("ml") or {}
+            spreads = markets.get("spreads") or {}
+            totals = markets.get("totals") or {}
+            if ml:
+                p0["money_line"] = ml
+            if spreads:
+                p0["spreads"] = spreads
+            if totals:
+                p0["totals"] = totals
 
     def update_tick(self, event_id, market, odds, ts):
         with self._lock:
@@ -220,25 +259,63 @@ class PinWSClient:
         if t in ("ping", "pong"):
             return
         if t == "snapshot":
-            # 全量快照: 存 events
+            # 全量快照: 存 events(元数据)
             for ev in d.get("events", []):
-                eid = str(ev.get("event_id"))
-                if eid:
+                eid = str(ev.get("event_id") or ev.get("id") or "")
+                if eid and eid != "None":
                     self.cache.update_event(eid, ev)
                     self.on_tick(eid, ev)
             return
+        if t == "prematch_markets":
+            # 赔率帧: matchup_id + data(moneyline/spread/total, 美国盘) → 归一化存缓存
+            mid = str(d.get("matchup_id") or "")
+            markets = self._parse_markets(d.get("data") or [])
+            if mid and markets:
+                self.cache.update_markets(mid, markets)
+            return
         if t in ("live", "prematch_matchups"):
-            # 每帧更新: data 是 Pinnacle payload(可能含多场)
-            sport_id = d.get("sport_id")
+            # 每帧更新: data 是 Pinnacle payload(元数据)
             data = d.get("data") or []
             if isinstance(data, dict):
                 data = [data]
             for ev in data:
                 if isinstance(ev, dict):
                     eid = str(ev.get("event_id") or ev.get("id") or "")
-                    if eid:
+                    if eid and eid != "None":
                         self.cache.update_event(eid, ev)
                         self.on_tick(eid, ev)
+
+    @staticmethod
+    def _parse_markets(data):
+        """prematch_markets 的 data → {matchup_id: {'ml': {home,draw,away}, 'spreads': {line:...}, 'totals': {...}}}。
+
+        美国盘 → 十进制: 负(-133) = 1+100/133; 正(+123) = 1+123/100。
+        """
+        out = {"ml": {}, "spreads": {}, "totals": {}}
+        for m in data or []:
+            mtype = m.get("type")
+            prices = m.get("prices") or []
+            if mtype == "moneyline":
+                for p in prices:
+                    dg = p.get("designation")
+                    out["ml"][dg] = _am_to_dec(p.get("price"))
+            elif mtype == "spread":
+                line = None
+                for p in prices:
+                    if p.get("points") is not None:
+                        line = p["points"]
+                if line is not None:
+                    out["spreads"][str(line)] = {
+                        p.get("designation"): _am_to_dec(p.get("price")) for p in prices}
+            elif mtype == "total":
+                line = None
+                for p in prices:
+                    if p.get("points") is not None:
+                        line = p["points"]
+                if line is not None:
+                    out["totals"][str(line)] = {
+                        p.get("designation"): _am_to_dec(p.get("price")) for p in prices}
+        return out
 
 
 class PinSSEClient:

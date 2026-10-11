@@ -57,14 +57,22 @@ def _match_bb(home, away):
     return None
 
 
+def _append_rotating(path, line):
+    """追加一行, 超过 2000 行截断到最近 100 行(防日志无界增长)。"""
+    try:
+        with open(path, "a", encoding="utf-8") as f:
+            f.write(line + "\n")
+        if path.stat().st_size > 1_500_000:  # >1.5MB 截断
+            lines = path.read_text().splitlines()
+            path.write_text("\n".join(lines[-100:]) + "\n")
+    except OSError:
+        pass
+
+
 def _on_drop(stream, drop):
     """SSE drop 回调: 落盘 + 映射 BB 比赛 + 写触发信号。"""
     rec = {"ts": time.time(), "stream": stream, **drop}
-    try:
-        with open(DROP_FILE, "a", encoding="utf-8") as f:
-            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
-    except OSError:
-        pass
+    _append_rotating(DROP_FILE, json.dumps(rec, ensure_ascii=False))
     home = drop.get("home", "?")
     away = drop.get("away", "?")
     fp = drop.get("from_price")
@@ -77,11 +85,7 @@ def _on_drop(stream, drop):
                 "from_price": fp, "to_price": tp,
                 "bb_match_id": m.get("id"), "bb_home": m.get("home"),
                 "bb_away": m.get("away"), "sport": m.get("sport")}
-        try:
-            with open(TRIGGER_FILE, "a", encoding="utf-8") as f:
-                f.write(json.dumps(trig, ensure_ascii=False) + "\n")
-        except OSError:
-            pass
+        _append_rotating(TRIGGER_FILE, json.dumps(trig, ensure_ascii=False))
         print(f"[pin-drop] {stream} {home} vs {away}: {fp} → {tp} [{outcome}] → 命中BB #{m.get('id')}", flush=True)
     else:
         print(f"[pin-drop] {stream} {home} vs {away}: {fp} → {tp} [{outcome}] (BB未匹配)", flush=True)
