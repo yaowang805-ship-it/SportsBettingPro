@@ -221,6 +221,16 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         o = _select_line(spreads, target_line)
         if not o:
             return None
+        # 2026-10-11 让球0(平局退款盘)是三路事件(主/平/客, 平=走盘), 却被两路去水把平局概率强压主客
+        # → 公平价/EV/注码结构性偏差(与报价质量无关)。拒绝定价, 交由 LIVE_FILTER_LINE_ZERO 上游过滤。
+        if target_line is not None:
+            try:
+                if abs(float(target_line)) < 1e-6:
+                    from src.scrapers.stats import count as _sc
+                    _sc("devig_path_mismatch")
+                    return None
+            except (TypeError, ValueError):
+                pass
         pair = _devig_two_way(o.get('home'), o.get('away'))
         if pair is None:
             return None
