@@ -2147,3 +2147,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-11T03:43:03Z,basketball,Japan B.League One,Kagawa Five Arrows,Kagoshima Rebnise,,,上半场主胜,ht,1.53,0,1.3835,10.59,0,3,1791695100,BB,,,validate,,,5325664
 2026-10-11T03:43:03Z,basketball,Japan B.League One,Kagawa Five Arrows,Kagoshima Rebnise,,,让分主胜,hc,1.92,0,1.6271,18.0,0,3,1791695100,BB,,,validate,,-4.5,5325664
 2026-10-11T03:44:49Z,football,England EFL Trophy,Notts County,Nottingham Forest U21,,,上半场主胜,ht,2.04,0,1.7497,16.59,0,3,1791914400,ALL,,,validate,,,5731079
+2026-10-11T03:50:02Z,football,USA Major League Soccer,Los Angeles FC,Austin FC,,,和局,1x2,5.0,0,2.817,77.49,0,1,1792031400,ALL,,,validate,,,4231099
+2026-10-11T03:50:02Z,basketball,Japan B.League Premier,Ibaraki Robots,Nagoya Diamond Dolphins,,,上半场客胜,ht,1.42,0,1.3915,2.05,0,2,1791698700,BB,,,validate,,,5298102
+2026-10-11T03:50:02Z,basketball,Australia NBL,Sydney Kings,Adelaide 36Ers,,,客胜,1x2,3.97,0,3.4443,15.26,0,3,1791691200,ALL,,,validate,,,5074423

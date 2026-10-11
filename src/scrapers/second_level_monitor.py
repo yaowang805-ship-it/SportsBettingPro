@@ -1197,8 +1197,8 @@ class SecondLevelMonitor:
                 "🟦 滚球已下单",
                 f"{_sport_cn} | {_league} | 滚球{_clock} | 下单 {_bj}\n"
                 f"{sig['match']['home']} vs {sig['match']['away']} | {_desig}\n"
-                f"{_platform} {sig['bb_odds']:.2f} | Betfair {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
-                f"拉取 BB {_bb_t} | Betfair {_bf_t}\n"
+                f"{_platform} {sig['bb_odds']:.2f} | Pin {sig['fair']:.2f} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
+                f"拉取 BB {_bb_t} | Pin {_bf_t}\n"
                 f"单注 ¥{stake} | 余额 ¥{_bal} | 今日已投 ¥{self._live_spent:.0f} | 未结 ¥{self._live_outstanding:.0f} | 总耗时 {_total_time:.1f}s")
         else:
             # 下单失败(如 token 过期 14010) → 也记虚拟投注, 保证验证数据积累不中断
