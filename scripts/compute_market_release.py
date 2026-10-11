@@ -727,13 +727,11 @@ def load_clv_median():
     by = defaultdict(list)
     with open(f, encoding="utf-8-sig") as fh:
         for r in _csv.DictReader(fh):
-            # 口径过滤(2026-09-27 用户定): Pin 已暂停, 锚点只用 Betfair——
-            # 1) close_source 只留 betfair(Betfair 收盘价=唯一锚点), 排除 live/archive(Pin 收盘价
-            #    口径, 已废弃) 和空(老数据)。
-            # 2) source 只留 validate(观察库口径=所有 EV>=2% 机会), 排除 push(实盘下注口径,
-            #    经过投注路径过滤后 CLV 系统性偏高, 混入会虚高释放判据的 CLV)。
-            #    观察库释放判据「观察库 CLV + 观察库 ROI」本就是 validate + paper_bets 口径。
-            if r.get("close_source") != "betfair":
+            # 口径过滤(2026-10-11 改): Pin 已恢复(付费实时 key), 锚点切回 Pin 收盘价——
+            # 1) close_source 只留 live(Pin 收盘价=唯一锚点), 排除 betfair(Betfair 收盘价, 长腿
+            #    bias 6-12% 致 CLV 假负, 见 pin-paid-subscription-plan 记忆) 和 archive(旧归档)。
+            # 2) source 只留 validate(观察库口径), 排除 push(实盘下注口径 CLV 系统性偏高)。
+            if r.get("close_source") != "live":
                 continue
             if r.get("source") != "validate":
                 continue
