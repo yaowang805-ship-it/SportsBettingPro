@@ -512,6 +512,80 @@ def _fetch_close_odds_betfair(entries):
     return results
 
 
+def _fetch_close_odds_pinnapi(entries):
+    """为 pending entries 拉取 Pinnacle(pinnapi.com) 收盘价, 算真实 CLV(2026-10-11 替代 Betfair 版)。
+
+    用 pinnacle_fair_price(读 Pin WS 实时缓存 + REST 兜底)拉赛前 Pin 去水公平价当收盘价。
+    close_source 写 "live"(Pin 口径), 供 load_clv_median(close_source=live) 读。
+    """
+    from src.scrapers.pinnapi_client import pinnacle_fair_price
+    from src.scrapers.bb_vs_pinnacle import _BB_SPORT_TO_OA_ID
+
+    now_epoch = time.time()
+    results = []
+
+    for e in entries:
+        match_epoch = int(float(e.get("match_epoch") or 0))
+        if not match_epoch:
+            continue
+        minutes_to_match = (match_epoch - now_epoch) / 60
+        if minutes_to_match < CLV_WINDOW_BEFORE_MIN or minutes_to_match > CLV_WINDOW_BEFORE_MAX:
+            continue
+
+        sport_id = _BB_SPORT_TO_OA_ID.get(e.get("sport", "football"), 0)
+        if not sport_id:
+            continue
+        sub_market = _infer_sub_market(e.get("sub_market", ""), e.get("designation", ""))
+        designation = e.get("designation", "").lower()
+        # Pin 不覆盖 btts/dnb(拿不到 CLV), 跳过
+        if sub_market in ("btts", "dnb"):
+            continue
+
+        home_pin = e.get("home_pin") or e.get("home", "")
+        away_pin = e.get("away_pin") or e.get("away", "")
+        close = pinnacle_fair_price(home_pin, away_pin, sport_id, sub_market, event_type='prematch')
+        if not close:
+            continue
+        fair_p = _close_direction_fair(close, sub_market, designation)
+        if fair_p is None or fair_p <= 1:
+            continue
+
+        bb_odds = float(e.get("bb_odds", 0))
+        push_ev = float(e.get("ev_pct", 0))
+        true_clv = round((bb_odds - fair_p) / fair_p * 100, 2)
+        clv_delta = round(true_clv - push_ev, 2)
+
+        _row = {
+            "collect_time": datetime.now(timezone.utc).isoformat(),
+            "push_time": e.get("timestamp", ""),
+            "match_key": f"{e.get('home','').lower().strip()}|{e.get('away','').lower().strip()}",
+            "sport": e.get("sport", ""),
+            "league": e.get("league", ""),
+            "home": e.get("home", ""),
+            "away": e.get("away", ""),
+            "designation": designation,
+            "sub_market": sub_market,
+            "tier": e.get("tier", ""),
+            "bb_price_source": e.get("bb_price_source", ""),
+            "source": e.get("source", "push"),
+            "bb_odds": bb_odds,
+            "push_fair_price": float(e.get("fair_price", 0)),
+            "push_ev_pct": push_ev,
+            "close_fair_price": fair_p,
+            "true_clv_pct": true_clv,
+            "clv_delta": clv_delta,
+            "match_epoch": e.get("match_epoch", ""),
+            "minutes_before_match": round(minutes_to_match, 1),
+            "close_source": "live",  # Pin 口径(load_clv_median 读这个)
+            "close_lag_min": round(minutes_to_match, 1),
+            "bb_match_id": e.get("bb_match_id", ""),
+            "line": e.get("line", ""),
+        }
+        results.append(_row)
+
+    return results
+
+
 def _parse_line_str(s):
     """解析 tracking 里存的线值字符串: "0" / "2.25" / "+0.5/1" / "-1.5/2" → float。"""
     s = (s or "").strip()
@@ -1444,7 +1518,7 @@ def _collect_inner():
         logger.info("无 pending 记录，跳过")
         return 0
 
-    results = _fetch_close_odds_betfair(entries)  # 2026-09-21 收盘价从 Pin 换 Betfair
+    results = _fetch_close_odds_pinnapi(entries)  # 2026-10-11 收盘价切回 Pin(pinnapi.com), close_source=live
     logger.info("采集到 %d 条收盘赔率", len(results))
 
     # 静默失效监控 — 只在"确实有比赛落在采集窗口内"时才算有活可干,
