@@ -3137,5 +3137,32 @@
   "profit": null,
   "anchor": "pin",
   "sbo_direction": "none"
+ },
+ {
+  "ts": 1791693584.0387259,
+  "match_id": 5074423,
+  "market_id": 132535089,
+  "option_type": 2,
+  "sport": 3,
+  "home": "悉尼国王",
+  "away": "阿德莱德36人",
+  "designation": "让球客胜",
+  "sub": "handicap",
+  "line": 4.5,
+  "bsc": [
+   29,
+   35
+  ],
+  "bb_odds": 1.85,
+  "fair": 1.7216,
+  "ev": 7.46,
+  "spread": null,
+  "bb_ts": 1791693583.899522,
+  "stake": 120,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none"
  }
 ]
