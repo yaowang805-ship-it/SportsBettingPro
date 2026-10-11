@@ -344,36 +344,41 @@ class PinSSEClient:
         self._stop = False
 
     def start(self):
-        t = threading.Thread(target=self._run, daemon=True, name="pin-sse")
-        t.start()
-        return t
+        # 2026-10-11 修: 之前 live/prematch 塞在同一循环里, live 流 iter_lines 无限阻塞 → prematch 流
+        # 从不连接(pin_trigger.jsonl 里 prematch 恒 0 条)。改成每流独立线程, 两流并行常驻。
+        threads = []
+        for stream, path in (("live", "/odds-drop"), ("prematch", "/odds-drop-prematch")):
+            t = threading.Thread(target=self._run_stream, args=(stream, path),
+                                 daemon=True, name=f"pin-sse-{stream}")
+            t.start()
+            threads.append(t)
+        return threads
 
-    def _run(self):
+    def _run_stream(self, stream, path):
         import requests
         while not self._stop:
-            for stream, path in (("live", "/odds-drop"), ("prematch", "/odds-drop-prematch")):
-                try:
-                    r = requests.get(f"{PINNAPI_BASE}{path}?key={PINNAPI_KEY}",
-                                     stream=True, timeout=(15, 60))
-                    for line in r.iter_lines(decode_unicode=True):
-                        if self._stop:
-                            return
-                        if not line or not line.startswith("data:"):
-                            continue
-                        payload = line[5:].strip()
-                        if not payload or payload.startswith('{"type"'):
-                            continue
-                        try:
-                            drops = json.loads(payload)
-                        except (json.JSONDecodeError, ValueError):
-                            continue
-                        for drop in drops:
-                            self.on_event(stream, drop)
-                except Exception as e:
-                    print(f"[pin-sse] {stream} 异常: {type(e).__name__} {str(e)[:80]}", flush=True)
-                if self._stop:
-                    return
-                time.sleep(2.0)
+            try:
+                r = requests.get(f"{PINNAPI_BASE}{path}?key={PINNAPI_KEY}",
+                                 stream=True, timeout=(15, 60))
+                for line in r.iter_lines(decode_unicode=True):
+                    if self._stop:
+                        return
+                    if not line or not line.startswith("data:"):
+                        continue
+                    payload = line[5:].strip()
+                    if not payload or payload.startswith('{"type"'):
+                        continue
+                    try:
+                        drops = json.loads(payload)
+                    except (json.JSONDecodeError, ValueError):
+                        continue
+                    for drop in drops:
+                        self.on_event(stream, drop)
+            except Exception as e:
+                print(f"[pin-sse] {stream} 异常: {type(e).__name__} {str(e)[:80]}", flush=True)
+            if self._stop:
+                return
+            time.sleep(2.0)
 
 
 # 便捷入口: 组装三通道
