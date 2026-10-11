@@ -148,6 +148,7 @@ BB_SUB_TO_SM = {"over_under": "ou", "handicap": "hc", "handicap_games": "hc_game
 MARKET_RELEASE_FILE = ROOT / "data" / "storage" / "market_release.json"
 OBS_STATE_FILE = ROOT / "data" / "storage" / "observe_release_state.json"
 PIN_TRIGGER_FILE = ROOT / "data" / "storage" / "pin_trigger.jsonl"  # Pin drop 触发信号(scripts/pin_ws_trigger.py 写)
+PIN_LIVE_TICK_FILE = ROOT / "data" / "storage" / "pin_live_tick.ts"  # Pin WS live 帧触发信号时间戳(2026-10-11)
 DAILY_STAKE_LIMIT = 1000  # 新释放盘口当日累计投注额上限(2026-09-12 用户要求), 次日实盘ROI>4%解除
 PENDING_SETTLE_FILE = ROOT / "data" / "storage" / "pending_settle.json"  # 结算明细缓存(每小时汇总推一次)
 SETTLE_PUSH_INTERVAL = 3600  # 结算明细每小时汇总推一次(2026-09-12 用户要求, 不一场推一场)
@@ -542,6 +543,7 @@ class SecondLevelMonitor:
         self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
         self._pin_trigger_offset = 0  # Pin drop 触发文件已消费行数(2026-10-11)
         self._pin_live_wake = False  # 滚球 drop 唤醒标志(2026-10-11): live drop 触发立即滚球比较
+        self._last_pin_live_tick = 0.0  # 上次读到的 Pin WS live 帧时间戳(2026-10-11)
         self._raw_ws_ts = 0.0  # 原始WS变动检测时刻(2026-09-23): 供推送「端到端耗时(WS触发→下单完成)」
         self._early_ws_ts = 0.0  # 早盘 WS 触发节流时间戳(2026-09-19)
         self._lev_fail_stats = {}  # LEV 复验失败原因计数(量化 close/价差/deleted 各占多少)
@@ -2003,6 +2005,15 @@ class SecondLevelMonitor:
             except Exception:
                 _changes = []
             _ws_changed = bool(_changes)
+            # 2026-10-11 切 Pin WS live 帧触发: pin_ws_trigger 每 0.5s 写 pin_live_tick.ts,
+            # 读到新时间戳就立即 poll(替代 Betfair WS 触发, 19 号 Betfair 停订后靠它)。
+            try:
+                _ptick = float(PIN_LIVE_TICK_FILE.read_text().strip())
+            except Exception:
+                _ptick = 0.0
+            if _ptick > self._last_pin_live_tick:
+                self._last_pin_live_tick = _ptick
+                self._pin_live_wake = True
             # 2026-09-29 去掉 3.0s 节流 + persistence: sharp 动立即触发 poll(WS 变动即比价下单),
             # 不再等 3s 节流/0.5s 稳定。oddsChange=0 兜底(变了就拒), 防假溢价靠 SBO 同向 + 快照年龄。
             if _ws_changed or self._pin_live_wake or now - last_poll >= refresh_every:
