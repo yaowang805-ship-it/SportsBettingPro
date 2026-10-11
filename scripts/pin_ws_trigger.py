@@ -77,13 +77,15 @@ def _on_live(matchup_id, rec):
     """Pin WS live 帧 → 写滚球触发信号时间戳(节流 0.5s), 供 second_level_monitor 读。
 
     替代 odds-api.io(Betfair) WS 的 get_persisted_changes 触发(19 号 Betfair 停订后靠它)。
+    2026-10-11 写 "{本地收到时刻},{Pin帧last}" 两段: 拆「Pin产生→我收到」vs「我收到→下单完成」。
     """
     now = time.time()
     if now - _live_tick_state["last"] < 0.5:
         return
     _live_tick_state["last"] = now
     try:
-        LIVE_TICK_FILE.write_text(str(now))
+        _pin_last = rec.get("last") if isinstance(rec, dict) else ""
+        LIVE_TICK_FILE.write_text(f"{now},{_pin_last}")
     except OSError:
         pass
 

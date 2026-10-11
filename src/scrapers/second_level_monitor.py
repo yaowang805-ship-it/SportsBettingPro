@@ -546,6 +546,7 @@ class SecondLevelMonitor:
         self._pin_trigger_offset = 0  # Pin drop 触发文件已消费行数(2026-10-11)
         self._pin_live_wake = False  # 滚球 drop 唤醒标志(2026-10-11): live drop 触发立即滚球比较
         self._last_pin_live_tick = 0.0  # 上次读到的 Pin WS live 帧时间戳(2026-10-11)
+        self._last_pin_frame_last = 0.0  # Pin 帧自带 last(供「Pin产生→我收到」段1上游延迟)
         self._skip_stats = {}  # 滚球跳过分桶(2026-10-11): 观察是否有过滤条件把机会全滤掉(过度拦截零成交)
         self._raw_ws_ts = 0.0  # 原始WS变动检测时刻(2026-09-23): 供推送「端到端耗时(WS触发→下单完成)」
         self._early_ws_ts = 0.0  # 早盘 WS 触发节流时间戳(2026-09-19)
@@ -1168,19 +1169,35 @@ class SecondLevelMonitor:
             self._count_skip("score_untrusted")
             print(f"  ⚠️ 比分缓存超龄(不可信), 跳过 {tag}", flush=True)
             return
+        # 2026-10-11 重拉前置: 只有过了廉价过滤(冷却/年龄/比分)才拉最新赔率, 不「每注都收 0.7-1s 税」;
+        # 非阻塞前置——拿不到新鲜价(封盘/关闭)直接放弃, 不降级用旧价。
+        from src.betting.bb_auto_bet import fetch_current_odds
+        _fresh = fetch_current_odds(market_id, match_id, option_type)
+        _fresh_odds = _fresh[0] if _fresh else None
+        if _fresh_odds is None:
+            self._count_skip("reverify_failed")
+            print(f"  ⏭️ 重拉拿不到新鲜价(封盘/关闭), 放弃 {tag}", flush=True)
+            return
         _t_place = time.time()
-        # 2026-09-20 去掉 verify_price: 快照单(≤6s)已保证赔率新鲜, oddsChange=0 下单瞬间变了就拒,
-        # 再 fetch_current_odds 验价是冗余的第二个 HTTP(~1-2s), 是「下单耗时变长」的元凶之一。
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
             match_id=sig["match_id"], check_limit=True, verify_price=True,
-            fair_price=sig.get("fair"), min_ev_pct=self.threshold)
+            fair_price=sig.get("fair"), min_ev_pct=self.threshold,
+            prefetched_odds=_fresh_odds)
         _t_order = time.time() - _t0  # 下单函数内部耗时(调试用)
         _t_http = time.time() - _t_place  # place_single_bet HTTP 耗时
         _total_time = time.time() - (sig.get("poll_ts") or _t0)  # 2026-09-20 总耗时(WS触发→下单完成), 推送用
         print(f"[slm] 下单耗时: 内部 {_t_order:.2f}s (检查 {_t_place-_t0:.2f}s + HTTP {_t_http:.2f}s) / 总 {_total_time:.2f}s", flush=True)
         if code == -4:
-            self._count_skip("drift_or_negative_ev")  # 验价拦截: 逆向漂移>5% 或 EV 转负
+            self._count_skip("drift_or_negative_ev")  # 验价拦截: EV 跌破入场门槛
+        # 2026-10-11 slippage 审计: EV_trigger - EV_final(正=恶化, 负=吃更好价); 看分布不看均值。
+        try:
+            from src.betting.bb_auto_bet import _last_bet_audit as _aud
+            _tev, _fev = _aud.get("trigger_ev"), _aud.get("final_ev")
+            if _tev is not None and _fev is not None:
+                print(f"[slm] slippage {_tev - _fev:+.2f}pp (触发EV {_tev:+.2f}%→成交EV {_fev:+.2f}%, reason={_aud.get('reason')})", flush=True)
+        except Exception:
+            pass
         # 记录尝试(成败都记), 5min 内不再重复尝试同一盘口
         self._attempted.setdefault(str(sig["match_id"]), {})[str(market_id)] = time.time()
         _eq_key = f"{sig.get('sport')}|{sig.get('sub')}|{sig.get('desig')}"
@@ -2054,14 +2071,18 @@ class SecondLevelMonitor:
             except Exception:
                 _changes = []
             _ws_changed = bool(_changes)
-            # 2026-10-11 切 Pin WS live 帧触发: pin_ws_trigger 每 0.5s 写 pin_live_tick.ts,
+            # 2026-10-11 切 Pin WS live 帧触发: pin_ws_trigger 每 0.5s 写 pin_live_tick.ts(格式"{本地收到},{Pin帧last}"),
             # 读到新时间戳就立即 poll(替代 Betfair WS 触发, 19 号 Betfair 停订后靠它)。
             try:
-                _ptick = float(PIN_LIVE_TICK_FILE.read_text().strip())
+                _parts = PIN_LIVE_TICK_FILE.read_text().strip().split(",")
+                _ptick = float(_parts[0]) if _parts and _parts[0] else 0.0
+                _pin_last = float(_parts[1]) if len(_parts) > 1 and _parts[1] else 0.0
             except Exception:
                 _ptick = 0.0
+                _pin_last = 0.0
             if _ptick > self._last_pin_live_tick:
                 self._last_pin_live_tick = _ptick
+                self._last_pin_frame_last = _pin_last
                 self._pin_live_wake = True
             # 2026-09-29 去掉 3.0s 节流 + persistence: sharp 动立即触发 poll(WS 变动即比价下单),
             # 不再等 3s 节流/0.5s 稳定。oddsChange=0 兜底(变了就拒), 防假溢价靠 SBO 同向 + 快照年龄。
