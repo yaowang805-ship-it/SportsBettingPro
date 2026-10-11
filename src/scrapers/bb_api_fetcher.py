@@ -145,6 +145,10 @@ PINNACLE_SPORTS = {"football", "basketball", "tennis", "baseball",
                     "american_football", "mma", "badminton",
                     "ice_hockey", "volleyball", "boxing"}  # 2026-08-30: 拳击加回(归档库有413条Pin数据, 旧审计误封)
 
+# 2026-10-11 拉取阶段过滤: 只拉 Pinnacle 覆盖的运动(乒乓等 Pin 不覆盖, 拉回来也拿不到 CLV 白费 + 费风控)。
+# SPORTS 是完整 11 运动, FETCH_SPORTS 是 Pin 覆盖子集, _fetch_one_platform 只拉这个子集。
+FETCH_SPORTS = [(sid, sk, sc) for sid, sk, sc in SPORTS if sk in PINNACLE_SPORTS]
+
 # Market type 映射 (按运动)
 MARKET_TYPES = {
     1: {  # 足球
