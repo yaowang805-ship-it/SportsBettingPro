@@ -614,7 +614,7 @@ def _extract_market_odds(pin_matchup, sub_market, designation, sport="football",
 
     Returns: (close_pin_odds, close_fair_price, total_implied) 或 None。
     - close_pin_odds: 代表性收盘赔率 (直盘=选项原始收盘价; 推导盘=组合公平价)
-    - close_fair_price: 去抽水后的公平价 (proportional devig)
+    - close_fair_price: 去抽水后的公平价 (Shin devig, 2026-10-12 与下注侧 pinnacle_fair_price 统一)
     - total_implied: 隐含概率和 (去抽水前)
     """
     from src.scrapers.pinnacle_api import get_decimal_price
