@@ -1190,6 +1190,7 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
     skipped_started = 0
     skipped_no_bid = 0
     skipped_no_pin = 0
+    skipped_no_settle = 0
     seen = set(existing)
     for m in details:
         sport = m.get("sport", "")
@@ -1222,6 +1223,16 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
         if not str(pin_mid or "").strip() or not str(pin_lid or "").strip():
             skipped_no_pin += 1
             continue
+        # 2026-10-12: 联赛可结算过滤 —— BB 拿不到比分的低级别联赛(如 Italy Basketball Serie B/
+        # Hong Kong Division 1)进观察库后永远结算不出赛果/ROI, 变成死数据。用 settleability
+        # 白名单只收可结算联赛, 保证「进观察库的数据都能拿到 CLV + 赛果 + ROI」。
+        try:
+            from src.core.settleability import is_league_settleable
+            if not is_league_settleable(league_cn, sport):
+                skipped_no_settle += 1
+                continue
+        except ImportError:
+            pass
         try:
             tier = get_league_tier(league_cn)
         except Exception:
@@ -1262,9 +1273,9 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
 
     if skipped_started:
         logger.info("CLV验证入库: 跳过 %d 场已开赛比赛(滚球价, 不算赛前机会)", skipped_started)
-    if skipped_no_bid or skipped_no_pin:
-        logger.info("CLV验证入库门槛: 跳过 %d 场缺bb_match_id + %d 场缺pin_match_id/pin_league_id",
-                    skipped_no_bid, skipped_no_pin)
+    if skipped_no_bid or skipped_no_pin or skipped_no_settle:
+        logger.info("CLV验证入库门槛: 跳过 %d 场缺bb_match_id + %d 场缺pin_match_id/pin_league_id + %d 场不可结算联赛",
+                    skipped_no_bid, skipped_no_pin, skipped_no_settle)
     if not rows:
         return 0
 
