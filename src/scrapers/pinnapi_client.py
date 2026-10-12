@@ -203,10 +203,21 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
     if not pin_sid:
         return None
     # 1) WS 实时缓存优先(秒级), 2) REST 兜底(15min 缓存 + 队名索引)
+    # 2026-10-13: 2-way 运动(篮球/MMA/网球)BB 与 Pin 数据源主客标记可能相反(实测 13 场),
+    # 正序查不到时反序再查, 标记 swapped → 后续把 fair 的 home/away 交换, 对齐 BB 主客方向。
+    swapped = False
     e = _pin_cache_find_event(home, away)
+    if not e:
+        e = _pin_cache_find_event(away, home)
+        if e:
+            swapped = True
     if not e:
         idx = _get_event_index(pin_sid, event_type)
         e = idx.get((_norm(home), _norm(away)))
+        if not e:
+            e = idx.get((_norm(away), _norm(home)))
+            if e:
+                swapped = True
     if not e:
         return None
     periods = e.get('periods') or {}
@@ -235,6 +246,10 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
             fair = {'home': _fairs[0], 'away': _fairs[1]} if (_fairs[0] > 1 and _fairs[1] > 1) else None
         if fair is not None:
             fair['_raw'] = {k: ml.get(k) for k in ('home', 'draw', 'away') if ml.get(k)}
+            if swapped:
+                fair['home'], fair['away'] = fair['away'], fair['home']
+                if 'home' in fair['_raw'] and 'away' in fair['_raw']:
+                    fair['_raw']['home'], fair['_raw']['away'] = fair['_raw']['away'], fair['_raw']['home']
         return fair
     if sub_market == 'hc':
         # ht_hc(上半场让球) 同理: 半场 spreads 未解析, 全场 spreads 冒充半场 → 不定价(2026-10-12)
@@ -258,6 +273,9 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         _fairs = shin_fair_odds([o.get('home'), o.get('away')])
         if _fairs[0] <= 1 or _fairs[1] <= 1:
             return None
+        if swapped:
+            return {'home': _fairs[1], 'away': _fairs[0], 'line': o.get('hdp'),
+                    '_raw': {'home': o.get('away'), 'away': o.get('home')}}
         return {'home': _fairs[0], 'away': _fairs[1], 'line': o.get('hdp'),
                 '_raw': {'home': o.get('home'), 'away': o.get('away')}}
     if sub_market == 'ou':
