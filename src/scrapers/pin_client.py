@@ -277,11 +277,18 @@ class PinWSClient:
         if t in ("ping", "pong"):
             return
         if t == "snapshot":
-            # 全量快照: 存 events(元数据)
+            # 全量快照: 存 events(元数据) + 解析 markets(全量赔率)。
+            # 2026-10-12 修: 旧代码只 update_event(元数据), 不解析 ev["markets"] 里的赔率,
+            # 导致 snapshot 全量赔率丢失, 之后只有 prematch_markets(增量, 只推"变化"的比赛)
+            # 和 REST 兜底在更新 → 大部分比赛赔率冻结陈旧(实测 67% 差 30%)。live 帧一直
+            # 解析 markets, snapshot 漏了。这里补上, 与 live 帧对齐。
             for ev in d.get("events", []):
                 eid = str(ev.get("event_id") or ev.get("id") or "")
                 if eid and eid != "None":
                     self.cache.update_event(eid, ev)
+                    markets = self._parse_markets(ev.get("markets") or [])
+                    if markets:
+                        self.cache.update_markets(eid, markets)
                     self.on_tick(eid, ev)
             return
         if t == "prematch_markets":

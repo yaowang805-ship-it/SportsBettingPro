@@ -1553,3 +1553,17 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-12T15:02:30Z,football,Peru Segunda Division,Pirata FC,Union Minas,,,双重机会-和局/客,dc,1.76,0,1.6512,6.59,0,3,1791820800,BB,pinnacle,,,validate,,,5704708
 2026-10-12T15:12:02Z,football,Thailand League 2,Muang Thong United,Phrae United,,,上半场主胜,ht,2.25,0,1.784,26.12,0,3,1791889200,BB,pinnacle,,,validate,,,5317722
 2026-10-12T15:12:02Z,football,Thailand League 2,Muang Thong United,Phrae United,,,上半场客胜,ht,6.2,0,5.274,17.56,0,3,1791889200,BB,pinnacle,,,validate,,,5317722
+2026-10-12T15:16:16Z,football,Austria 2. Liga,Wacker Innsbruck,Austria Salzburg,,,和局,1x2,3.77,0,2.5498,47.85,0,3,1792175400,BB,pinnacle,,,validate,,,5740529
+2026-10-12T15:16:16Z,football,Austria 2. Liga,Wacker Innsbruck,Austria Salzburg,,,双重机会-和局/客,dc,1.59,0,1.487,6.93,0,3,1792175400,BB,pinnacle,,,validate,,,5740529
+2026-10-12T15:16:48Z,football,UEFA Champions League,Atletico Madrid,Manchester United FC,,,让球客胜,hc,1.97,0,1.7784,10.77,0,2,1791918000,ALL,pinnacle,,,validate,,+0.5,5525911
+2026-10-12T15:16:48Z,football,UEFA Champions League,Atletico Madrid,Manchester United FC,,,大球,ou,1.81,0,1.7012,6.4,0,2,1791918000,ALL,pinnacle,,,validate,,3.0,5525911
+2026-10-12T15:16:48Z,football,Netherlands Eerste Divisie,VVV Venlo,Jong AZ Alkmaar,,,上半场主胜,ht,2.47,0,2.2709,8.77,0,3,1792173600,ALL,pinnacle,,,validate,,,5084976
+2026-10-12T15:16:48Z,football,Netherlands Eerste Divisie,VVV Venlo,Jong AZ Alkmaar,,,上半场客胜,ht,3.22,0,3.0811,4.51,0,3,1792173600,ALL,pinnacle,,,validate,,,5084976
+2026-10-12T15:16:48Z,football,England Premier League,Coventry City,Newcastle United FC,,,和局,1x2,3.92,0,3.7989,3.19,0,1,1791831600,ALL,pinnacle,,,validate,,,5130826
+2026-10-12T15:16:48Z,american_football,Canadian Football League,Montreal Alouettes,Saskatchewan Roughriders,,,上半场让球主胜,ht_hc,1.99,0,1.8303,8.73,0,3,1791824400,BB,pinnacle,,,validate,,-3.5,5571865
+2026-10-12T15:16:48Z,mma,UFC Fight Night,Joaquin Buckley,Mike Malott,,,主胜,1x2,2.03,0,1.8453,10.01,0,1,1792287600,BB,pinnacle,,,validate,,,5410772
+2026-10-12T15:16:48Z,mma,UFC Fight Night,Tanner Boser,Jhonata Diniz,,,主胜,1x2,2.88,0,1.489,93.42,0,1,1792278000,BB,pinnacle,,,validate,,,5429252
+2026-10-12T15:18:24Z,basketball,Mexico LNBP Basketball League,Abejas de Leon,Santos del Potosi,,,上半场让球主胜,ht_hc,1.86,0,1.7577,5.82,0,3,1791856800,ALL,pinnacle,,,validate,,-2.5,5721731
+2026-10-12T15:18:24Z,basketball,Euroleague,Fenerbahce,BC Zalgiris Kaunas,,,上半场让球主胜,ht_hc,1.83,0,1.644,11.31,0,2,1791913500,BB,pinnacle,,,validate,,-2.5,5355389
+2026-10-12T15:18:56Z,basketball,Israel Basketball Super League,Maccabi Ashdod,Ironi Ness Ziona,,,上半场客胜,ht,1.53,0,1.4546,5.18,0,2,1791825300,ALL,pinnacle,,,validate,,,5521000
+2026-10-12T15:18:56Z,basketball,VTB United League,MBA Moscow,Parma Perm,,,上半场让球客胜,ht_hc,1.81,0,1.6914,7.01,0,3,1791907200,ALL,pinnacle,,,validate,,-2.5,5470542
