@@ -212,7 +212,10 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
     full = periods.get('num_0') or (list(periods.values())[0] if periods else None)
     if not full:
         return None
-    if sub_market in ('1x2', 'ht'):
+    if sub_market == '1x2':
+        # ht(上半场) 不再走这里: 2026-10-12 发现 ht 用的是全场 money_line 冒充半场
+        # (pin_client._parse_markets 只解析全场 moneyline/spread/total, 半场赔率未解析),
+        # 导致 ht 公平价=全场独赢价, CLV 虚高(实测 ht +17% 是假象)。半场数据接好前 ht 不定价。
         ml = full.get('money_line')
         if not ml:
             return None
@@ -226,7 +229,8 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         if fair is not None:
             fair['_raw'] = {k: ml.get(k) for k in ('home', 'draw', 'away') if ml.get(k)}
         return fair
-    if sub_market in ('hc', 'ht_hc'):
+    if sub_market == 'hc':
+        # ht_hc(上半场让球) 同理: 半场 spreads 未解析, 全场 spreads 冒充半场 → 不定价(2026-10-12)
         spreads = full.get('spreads') or {}
         if not spreads:
             return None
@@ -249,7 +253,8 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
             return None
         return {'home': _fairs[0], 'away': _fairs[1], 'line': o.get('hdp'),
                 '_raw': {'home': o.get('home'), 'away': o.get('away')}}
-    if sub_market in ('ou', 'ht_ou'):
+    if sub_market == 'ou':
+        # ht_ou(上半场大小) 同理: 半场 totals 未解析, 全场 totals 冒充半场 → 不定价(2026-10-12)
         totals = full.get('totals') or {}
         if not totals:
             return None
