@@ -299,6 +299,8 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         if not _probs or any(p <= 0 for p in _probs):
             return None
         ph, pd, pa = _probs
+        if swapped:
+            ph, pa = pa, ph  # 主客反了: 1X(主/和)↔X2(和/客)
         return {'1X': round(1.0 / (ph + pd), 4),
                 '12': round(1.0 / (ph + pa), 4),
                 'X2': round(1.0 / (pd + pa), 4)}
