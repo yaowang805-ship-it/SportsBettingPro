@@ -1596,14 +1596,14 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
                     if 1 < ev_h <= 20 and (not _conf.get("home") or _conf["home"] > oa_hc["home"]):
                         entry["handicap"].append({
                             "designation": mlabels["hc_home"], "line": bb_hc.get("home_line_str", ""),
-                            "bb_odds": bb_hc["home_odds"], "pin_odds": 0,
+                            "bb_odds": bb_hc["home_odds"], "pin_odds": (oa_hc.get("_raw") or {}).get("home"),
                             "fair_price": round(oa_hc["home"], 4), "ev_pct": round(ev_h, 2),
                             "spread": oa_hc.get("spread"),
                         })
                     if 1 < ev_a <= 20 and (not _conf.get("away") or _conf["away"] > oa_hc["away"]):
                         entry["handicap"].append({
                             "designation": mlabels["hc_away"], "line": bb_hc.get("away_line_str", ""),
-                            "bb_odds": bb_hc["away_odds"], "pin_odds": 0,
+                            "bb_odds": bb_hc["away_odds"], "pin_odds": (oa_hc.get("_raw") or {}).get("away"),
                             "fair_price": round(oa_hc["away"], 4), "ev_pct": round(ev_a, 2),
                             "spread": oa_hc.get("spread"),
                         })
@@ -1629,14 +1629,14 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
                 if 1 < ev_o <= 20 and (not _conf.get("over") or _conf["over"] > oa_ou["over"]):
                     entry["over_under"].append({
                         "designation": mlabels["over"], "line": str(bb_ou["line"]),
-                        "bb_odds": bb_ou["over_odds"], "pin_odds": 0,
+                        "bb_odds": bb_ou["over_odds"], "pin_odds": (oa_ou.get("_raw") or {}).get("over"),
                         "fair_price": round(oa_ou["over"], 4), "ev_pct": round(ev_o, 2),
                         "spread": oa_ou.get("spread"),
                     })
                 if 1 < ev_u <= 20 and (not _conf.get("under") or _conf["under"] > oa_ou["under"]):
                     entry["over_under"].append({
                         "designation": mlabels["under"], "line": str(bb_ou["line"]),
-                        "bb_odds": bb_ou["under_odds"], "pin_odds": 0,
+                        "bb_odds": bb_ou["under_odds"], "pin_odds": (oa_ou.get("_raw") or {}).get("under"),
                         "fair_price": round(oa_ou["under"], 4), "ev_pct": round(ev_u, 2),
                         "spread": oa_ou.get("spread"),
                     })
@@ -1658,7 +1658,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
                     if ev > 1:
                         entry["opportunities"].append({
                             "designation": ht_labels[i], "bb_odds": bb_o,
-                            "pin_odds": 0, "fair_price": round(fair, 4), "ev_pct": round(ev, 2),
+                            "pin_odds": (oa_ht.get("_raw") or {}).get(keys[i]), "fair_price": round(fair, 4), "ev_pct": round(ev, 2),
                             "_market": "ht", "spread": oa_ht.get("spread"),
                         })
 
@@ -1674,13 +1674,13 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
                 if 1 < ev_o <= 20:
                     entry["over_under"].append({
                         "designation": "上半场大球", "line": str(ht_ou["line"]),
-                        "bb_odds": ht_ou["over_odds"], "pin_odds": 0,
+                        "bb_odds": ht_ou["over_odds"], "pin_odds": (oa_htou.get("_raw") or {}).get("over"),
                         "fair_price": round(oa_htou["over"], 4), "ev_pct": round(ev_o, 2), "_market": "ht_ou",
                     })
                 if 1 < ev_u <= 20:
                     entry["over_under"].append({
                         "designation": "上半场小球", "line": str(ht_ou["line"]),
-                        "bb_odds": ht_ou["under_odds"], "pin_odds": 0,
+                        "bb_odds": ht_ou["under_odds"], "pin_odds": (oa_htou.get("_raw") or {}).get("under"),
                         "fair_price": round(oa_htou["under"], 4), "ev_pct": round(ev_u, 2), "_market": "ht_ou",
                     })
 
@@ -1700,13 +1700,13 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
                     if 1 < ev_h <= 20:
                         entry["handicap"].append({
                             "designation": "上半场让球主胜", "line": bb_ht_hc.get("home_line_str", ""),
-                            "bb_odds": bb_ht_hc["home_odds"], "pin_odds": 0,
+                            "bb_odds": bb_ht_hc["home_odds"], "pin_odds": (oa_hthc.get("_raw") or {}).get("home"),
                             "fair_price": round(oa_hthc["home"], 4), "ev_pct": round(ev_h, 2), "_market": "ht_hc",
                         })
                     if 1 < ev_a <= 20:
                         entry["handicap"].append({
                             "designation": "上半场让球客胜", "line": bb_ht_hc.get("away_line_str", ""),
-                            "bb_odds": bb_ht_hc["away_odds"], "pin_odds": 0,
+                            "bb_odds": bb_ht_hc["away_odds"], "pin_odds": (oa_hthc.get("_raw") or {}).get("away"),
                             "fair_price": round(oa_hthc["away"], 4), "ev_pct": round(ev_a, 2), "_market": "ht_hc",
                         })
 
