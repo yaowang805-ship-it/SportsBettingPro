@@ -153,7 +153,14 @@ def _pin_cache_find_event(home, away):
                     continue
                 eh, ea = _norm(ev.get("home", "")), _norm(ev.get("away", ""))
                 if eh and ea:
-                    idx[(eh, ea)] = ev
+                    # 2026-10-13 修: 同一队名有多个 event(全场 parent + 2-way 变体/角球 child),
+                    # child 主客可能反转(Orlando Pirates 全场 parent home=1.19, 2-way child 却
+                    # home=3.32), 按队名索引互相覆盖会命中反转 child → 比价方向错配出假高 ev。
+                    # parent(parent_id 空)优先, child 只在不冲突时兜底。
+                    parent_ref = ev.get("parent_id") or ev.get("parentId")
+                    is_parent = not parent_ref
+                    if idx.get((eh, ea)) is None or is_parent:
+                        idx[(eh, ea)] = ev
             _pin_cache_idx["_ts"] = ts
             _pin_cache_idx["_idx"] = idx
         return _pin_cache_idx["_idx"].get((_norm(home), _norm(away)))
