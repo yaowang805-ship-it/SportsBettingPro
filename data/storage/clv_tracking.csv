@@ -1567,3 +1567,39 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-12T15:18:24Z,basketball,Euroleague,Fenerbahce,BC Zalgiris Kaunas,,,上半场让球主胜,ht_hc,1.83,0,1.644,11.31,0,2,1791913500,BB,pinnacle,,,validate,,-2.5,5355389
 2026-10-12T15:18:56Z,basketball,Israel Basketball Super League,Maccabi Ashdod,Ironi Ness Ziona,,,上半场客胜,ht,1.53,0,1.4546,5.18,0,2,1791825300,ALL,pinnacle,,,validate,,,5521000
 2026-10-12T15:18:56Z,basketball,VTB United League,MBA Moscow,Parma Perm,,,上半场让球客胜,ht_hc,1.81,0,1.6914,7.01,0,3,1791907200,ALL,pinnacle,,,validate,,-2.5,5470542
+2026-10-12T15:20:00Z,football,Germany 2. Bundesliga,Greuther Furth,Eintracht Braunschweig,,,上半场主胜,ht,2.66,0,2.2869,16.31,0,1,1792234800,ALL,pinnacle,,,validate,,,5203027
+2026-10-12T15:20:00Z,football,Germany 2. Bundesliga,Greuther Furth,Eintracht Braunschweig,,,上半场客胜,ht,3.75,0,3.1996,17.2,0,1,1792234800,ALL,pinnacle,,,validate,,,5203027
+2026-10-12T15:20:00Z,football,Germany 2. Bundesliga,Holstein Kiel,Hertha BSC,,,上半场主胜,ht,3.23,0,2.9604,9.11,0,1,1792168200,ALL,pinnacle,,,validate,,,5202927
+2026-10-12T15:20:00Z,football,Germany 2. Bundesliga,Holstein Kiel,Hertha BSC,,,上半场客胜,ht,2.75,0,2.3515,16.95,0,1,1792168200,ALL,pinnacle,,,validate,,,5202927
+2026-10-12T15:20:32Z,basketball,Euroleague,Olimpia Milano,Real Madrid,,,上半场让球客胜,ht_hc,1.94,0,1.7876,8.53,0,2,1791916200,ALL,pinnacle,,,validate,,-2.5,5355187
+2026-10-12T15:20:32Z,basketball,Euroleague,Baskonia Vitoria Gasteiz,BC Dubai,,,上半场客胜,ht,1.51,0,1.4679,2.87,0,2,1791916200,ALL,pinnacle,,,validate,,,5355392
+2026-10-12T15:20:32Z,football,Peru Liga 1,Alianza Lima,Atletico Grau,,,上半场主胜,ht,1.86,0,1.4344,29.67,0,2,1792287000,ALL,pinnacle,,,validate,,,5732772
+2026-10-12T15:20:32Z,football,Mexico Liga MX,Atlante FC,Pumas UNAM,,,上半场主胜,ht,2.95,0,2.4381,21.0,0,3,1792206000,ALL,pinnacle,,,validate,,,5083876
+2026-10-12T15:20:32Z,football,Mexico Liga MX,Atlante FC,Pumas UNAM,,,上半场客胜,ht,3.68,0,3.1527,16.73,0,3,1792206000,ALL,pinnacle,,,validate,,,5083876
+2026-10-12T15:20:32Z,football,Mexico Liga MX,Cruz Azul,FC Juarez,,,上半场主胜,ht,1.81,0,1.3926,29.97,0,3,1792292400,ALL,pinnacle,,,validate,,,5083879
+2026-10-12T15:21:04Z,football,Peru Liga 1,Sport Huancayo,Cusco FC,,,上半场主胜,ht,2.38,0,1.9828,20.03,0,2,1792173600,ALL,pinnacle,,,validate,,,5722311
+2026-10-12T15:21:04Z,football,Peru Liga 1,Sport Huancayo,Cusco FC,,,上半场客胜,ht,4.48,0,4.2339,5.81,0,2,1792173600,ALL,pinnacle,,,validate,,,5722311
+2026-10-12T15:21:35Z,football,Argentina Liga Profesional,Deportivo Riestra,Union de Santa Fe,,,上半场客胜,ht,4.32,0,3.8276,12.86,0,1,1792455300,ALL,pinnacle,,,validate,,,5404699
+2026-10-12T15:21:35Z,football,Austria 2. Liga,Wacker Innsbruck,Austria Salzburg,,,上半场主胜,ht,2.91,0,2.473,17.67,0,3,1792175400,BB,pinnacle,,,validate,,,5740529
+2026-10-12T15:21:35Z,football,Austria 2. Liga,Wacker Innsbruck,Austria Salzburg,,,上半场客胜,ht,3.38,0,2.9847,13.24,0,3,1792175400,BB,pinnacle,,,validate,,,5740529
+2026-10-12T15:22:07Z,football,Saudi Arabia Professional League,AL Qadisiyah,Abha Club,,,上半场主胜,ht,1.44,0,1.2095,19.06,0,3,1792156500,ALL,pinnacle,,,validate,,,5411515
+2026-10-12T15:22:07Z,football,Mexico Liga MX,Necaxa,Atlas FC,,,上半场主胜,ht,3.13,0,2.6673,17.35,0,3,1792198800,ALL,pinnacle,,,validate,,,5083872
+2026-10-12T15:22:07Z,football,Mexico Liga MX,Necaxa,Atlas FC,,,上半场客胜,ht,3.3,0,2.8143,17.26,0,3,1792198800,ALL,pinnacle,,,validate,,,5083872
+2026-10-12T15:22:07Z,football,Saudi Arabia Professional League,AL Hazem FC,AL Fateh SC,,,和局,1x2,3.63,0,2.5266,43.67,0,3,1792077300,ALL,pinnacle,,,validate,,,5411510
+2026-10-12T15:22:07Z,football,Saudi Arabia Professional League,AL Hazem FC,AL Fateh SC,,,双重机会-主/和局,dc,1.56,0,1.4656,6.44,0,3,1792077300,ALL,pinnacle,,,validate,,,5411510
+2026-10-12T15:22:07Z,football,Saudi Arabia Professional League,AL Hazem FC,AL Fateh SC,,,双重机会-和局/客,dc,1.44,0,1.4016,2.74,0,3,1792077300,ALL,pinnacle,,,validate,,,5411510
+2026-10-12T15:22:56Z,basketball,Sweden Basketball League,Sodertalje BBK,Hogsbo Basket,,,主胜,1x2,1.31,0,1.2607,3.91,0,3,1791911040,ALL,pinnacle,,,validate,,,5737152
+2026-10-12T15:22:56Z,basketball,European North Basketball League,Mitteldeutscher BC,Bristol Flyers,,,主胜,1x2,1.16,0,1.1058,4.9,0,3,1791910800,ALL,pinnacle,,,validate,,,5588647
+2026-10-12T15:22:56Z,basketball,Sweden Basketball League,Sloga Uppsala,Norrkoping Dolphins,,,客胜,1x2,1.08,0,1.0435,3.5,0,3,1791911040,ALL,pinnacle,,,validate,,,5737151
+2026-10-12T15:22:56Z,basketball,Bosnia and Herzegovina Basketball Championship,KK Borac Banja Luka,HKK Zrinjski Mostar,,,主胜,1x2,1.45,0,1.3567,6.88,0,3,1791822600,ALL,pinnacle,,,validate,,,5731933
+2026-10-12T15:22:56Z,basketball,Mexico LNBP Basketball League,Dorados de Chihuahua,Gambusinos de Fresnillo,,,主胜,1x2,1.27,0,1.2101,4.95,0,3,1791856800,ALL,pinnacle,,,validate,,,5721736
+2026-10-12T15:22:56Z,basketball,Mexico LNBP Basketball League,Lobos Plateados,Freseros de Irapuato,,,主胜,1x2,1.15,0,1.0906,5.45,0,3,1791856800,ALL,pinnacle,,,validate,,,5721738
+2026-10-12T15:22:56Z,basketball,Bahrain Basketball Premier League,Al Najma,Al Ittihad Bahrain,,,主胜,1x2,1.1,0,1.0437,5.39,0,2,1791824400,ALL,pinnacle,,,validate,,,5697951
+2026-10-12T15:22:56Z,basketball,Japan B.League One,Bambitious Nara,Niigata Albirex BB,,,客胜,1x2,1.48,0,1.404,5.41,0,3,1791972300,BB,pinnacle,,,validate,,,5325611
+2026-10-12T15:28:09Z,football,Israel Cup,Hapoel Ironi Karmiel,Maccabi Ironi Kfar Yona,,,大球,ou,1.74,0,1.6168,7.62,0,3,1791819000,BB,pinnacle,,,validate,,3.0,5737122
+2026-10-12T15:28:09Z,basketball,Mexico LNBP Basketball League,Lobos Plateados,Freseros de Irapuato,,,小分,ou,1.84,0,1.793,2.62,0,3,1791856800,ALL,pinnacle,,,validate,,169.5,5721738
+2026-10-12T15:38:03Z,football,Netherlands Eerste Divisie,Helmond Sport,NAC Breda,,,让球客胜,hc,1.84,0,1.786,3.02,0,3,1792173600,ALL,pinnacle,,,validate,,-1,5084714
+2026-10-12T15:48:28Z,football,Israel Cup,Hapoel Nof Hagalil FC,Hapoel Bnei Musmus,,,主胜,1x2,1.67,0,1.6318,2.34,0,3,1791824400,ALL,pinnacle,,,validate,,,5737127
+2026-10-12T15:48:28Z,football,Israel Cup,Hapoel Nof Hagalil FC,Hapoel Bnei Musmus,,,大球,ou,1.87,0,1.8188,2.82,0,3,1791824400,ALL,pinnacle,,,validate,,2.5,5737127
+2026-10-12T15:53:10Z,football,Germany 2. Bundesliga,Holstein Kiel,Hertha BSC,,,主胜,1x2,2.73,0,1.424,91.71,0,1,1792168200,ALL,pinnacle,,,validate,,,5202927
+2026-10-12T15:53:10Z,football,Israel Cup,Hapoel Herzliya,Hapoel Azor FC,,,小球,ou,1.95,0,1.887,3.34,0,3,1791820800,ALL,pinnacle,,,validate,,2.5,5737125
