@@ -100,9 +100,14 @@ class PinOddsCache:
                     event["home"] = name
                 elif name and align == "away":
                     event["away"] = name
-            # 2026-10-11 不覆盖 update_markets 已设置的 periods(WS 实时赔率优先于 REST 5s 陈旧)
-            if old.get("periods") and isinstance(old.get("periods"), dict):
-                event["periods"] = old["periods"]
+            # 2026-10-12 修: REST /kit/v1/markets 返回的 event 自带实时 periods(赔率),
+            # 旧逻辑无条件用 old periods 覆盖 → 每次 REST 轮询拉到的新赔率全被丢, 缓存赔率
+            # 冻结在首次写入值(实测 67% 比赛缓存陈旧达 30%), 比价用冻结 Pin 价找不到真溢价。
+            # 改为: event 自带 periods 就用新的(REST 实时); 纯元数据帧(WS snapshot/matchups
+            # 无赔率)才保留 old periods 兜底。update_markets(WS 推赔率)直接覆盖, 不受影响。
+            if not (event.get("periods") and isinstance(event["periods"], dict)):
+                if old.get("periods") and isinstance(old.get("periods"), dict):
+                    event["periods"] = old["periods"]
             e["event"] = event
             e["ts"] = time.time()
 
