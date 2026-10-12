@@ -104962,5 +104962,35 @@
   "clv_sign": null,
   "clv_anchor": "no_outcome",
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1791816258.076571,
+  "match_id": 5719562,
+  "market_id": 132931321,
+  "option_type": 1,
+  "sport": 3,
+  "home": "阿尔雷恩",
+  "away": "席贝",
+  "designation": "让球主胜",
+  "sub": "handicap",
+  "line": -9.5,
+  "bsc": [
+   66,
+   61
+  ],
+  "bb_odds": 1.91,
+  "fair": 1.8018,
+  "ev": 6.01,
+  "spread": null,
+  "bb_ts": 1791816257.332417,
+  "stake": 130,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": "no_outcome",
+  "clv_elapsed_s": null
  }
 ]

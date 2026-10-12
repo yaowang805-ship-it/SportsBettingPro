@@ -1100,7 +1100,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     "designation": mlabels["over"],
                     "line": str(bb_line),
                     "bb_odds": bb_ou["over_odds"],
-                    "pin_odds": 0,  # 新数据源无 Pin 赔率
+                    "pin_odds": (_oa_ou.get("_raw") or {}).get("over"),  # Pin 原始赔率
                     "fair_price": round(over_fair, 4),
                     "ev_pct": round(ev_o, 2),
                     "pin_raw_at_decision": (_oa_ou.get("_raw") or {}).get("over"),
@@ -1111,7 +1111,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     "designation": mlabels["under"],
                     "line": str(bb_line),
                     "bb_odds": bb_ou["under_odds"],
-                    "pin_odds": 0,
+                    "pin_odds": (_oa_ou.get("_raw") or {}).get("under"),  # Pin 原始赔率
                     "fair_price": round(under_fair, 4),
                     "ev_pct": round(ev_u, 2),
                     "pin_raw_at_decision": (_oa_ou.get("_raw") or {}).get("under"),
@@ -1147,7 +1147,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                 entry["opportunities"].append({
                                     "designation": label,
                                     "bb_odds": bb_o,
-                                    "pin_odds": 0,  # 新数据源无 Pin 赔率, 用 0 占位
+                                    "pin_odds": (_oa_ht.get("_raw") or {}).get(_keys[i]),  # Pin 原始赔率
                                     "fair_price": round(fair_price, 4),
                                     "ev_pct": round(ev, 2),
                                     "_market": "ht",
@@ -1175,7 +1175,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                     "designation": ht_labels["over"],
                                     "line": str(bb_line),
                                     "bb_odds": bb_ht_ou["over_odds"],
-                                    "pin_odds": 0,
+                                    "pin_odds": (_oa_htou.get("_raw") or {}).get("over"),  # Pin 原始赔率
                                     "fair_price": round(over_fair, 4),
                                     "ev_pct": round(ev_o, 2),
                                     "_market": "ht_ou",
@@ -1185,7 +1185,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                     "designation": ht_labels["under"],
                                     "line": str(bb_line),
                                     "bb_odds": bb_ht_ou["under_odds"],
-                                    "pin_odds": 0,
+                                    "pin_odds": (_oa_htou.get("_raw") or {}).get("under"),  # Pin 原始赔率
                                     "fair_price": round(under_fair, 4),
                                     "ev_pct": round(ev_u, 2),
                                     "_market": "ht_ou",
@@ -1570,7 +1570,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
                     if ev > 1:
                         entry["opportunities"].append({
                             "designation": mlabels["ml"][i], "bb_odds": bb_o,
-                            "pin_odds": 0, "fair_price": round(fair, 4), "ev_pct": round(ev, 2),
+                            "pin_odds": (oa_ml.get("_raw") or {}).get(keys[i]), "fair_price": round(fair, 4), "ev_pct": round(ev, 2),
                             "spread": oa_ml.get("spread"),  # 2026-09-19 流动性门槛
                         })
 
