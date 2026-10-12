@@ -983,7 +983,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         entry["opportunities"].append({
                             "designation": mlabels["ml"][i],
                             "bb_odds": bb_o,
-                            "pin_odds": 0,  # 新数据源无 Pin 赔率, 用 0 占位
+                            "pin_odds": (_oa_ml.get("_raw") or {}).get(_ml_keys[i]),  # Pin 原始赔率(2026-10-12 切 Pin 后从 _raw 填, 替代 0 占位)
                             "fair_price": round(fair_price, 4),
                             "ev_pct": round(ev, 2),
                             # 2026-10-11 ev_raw 双轨: 决策时点 Pin 原始赔率(与 bb_odds 同时间戳, 供 ev_raw 向前攒)
@@ -1039,7 +1039,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     "designation": mlabels["hc_home"],
                     "line": hc_dict.get("home_line_str", ""),
                     "bb_odds": bb_home_odds,
-                    "pin_odds": 0,  # 新数据源无 Pin 赔率
+                    "pin_odds": (_oa_hc.get("_raw") or {}).get("home"),  # Pin 原始赔率
                     "fair_price": round(home_fair, 4),
                     "ev_pct": round(ev_h, 2),
                     "pin_raw_at_decision": (_oa_hc.get("_raw") or {}).get("home"),
@@ -1053,7 +1053,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     "designation": mlabels["hc_away"],
                     "line": hc_dict.get("away_line_str", ""),
                     "bb_odds": bb_away_odds,
-                    "pin_odds": 0,
+                    "pin_odds": (_oa_hc.get("_raw") or {}).get("away"),  # Pin 原始赔率
                     "fair_price": round(away_fair, 4),
                     "ev_pct": round(ev_a, 2),
                     "pin_raw_at_decision": (_oa_hc.get("_raw") or {}).get("away"),
