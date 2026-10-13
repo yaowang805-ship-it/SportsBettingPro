@@ -133764,5 +133764,35 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1791898688.5043242,
+  "match_id": 5443049,
+  "market_id": 132908071,
+  "option_type": 4,
+  "sport": 1,
+  "home": "开普敦城",
+  "away": "蜜蜂",
+  "designation": "大球",
+  "sub": "over_under",
+  "line": 2.0,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.87,
+  "fair": 1.7931,
+  "ev": 4.29,
+  "spread": null,
+  "bb_ts": 1791898687.216383,
+  "stake": 95,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": "no_outcome",
+  "clv_elapsed_s": null
  }
 ]
