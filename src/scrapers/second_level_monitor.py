@@ -1049,6 +1049,9 @@ class SecondLevelMonitor:
             sig = {"match_id": match_id, "sub": sub, "desig": desig[d],
                    "bb_odds": bb, "fair": fair_p, "ev": ev, "line": line_val,
                    "pin_raw": raw[i],  # Pin 原始价(去抽水前), 供推送展示(2026-09-14)
+                   # 2026-10-13 补英文队名+sport 顶层字段: _reverify_live_ev_oa 复验 Pin 公平价要英文队名
+                   # (Pin 缓存 participants 是英文), 之前只在 match 里存中文优先名, 复验取顶层取空 → LEV 全 None。
+                   "home_en": lv.get("home", ""), "away_en": lv.get("away", ""), "sport_id": lv.get("sport", ""),
                    "match": {"home": lv.get("home_cn", "") or lv["home"], "away": lv.get("away_cn", "") or lv["away"], "sport": lv.get("sport", ""), "league_cn": lv.get("league_cn", "") or lv.get("league_name", "滚球"), "mc": lv.get("mc", 0)},
                    "pin_matchup_id": lv.get("pin_matchup_id"),
                    "league_id": lv.get("league_id"),
