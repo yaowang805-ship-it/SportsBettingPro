@@ -131358,14 +131358,18 @@
   "spread": null,
   "bb_ts": 1791890554.248807,
   "stake": 100,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -100.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   120,
+   115
+  ]
  },
  {
   "ts": 1791890623.624154,
@@ -131388,14 +131392,18 @@
   "spread": null,
   "bb_ts": 1791890623.087699,
   "stake": 135,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 128.2,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   120,
+   115
+  ]
  },
  {
   "ts": 1791890651.5529,
@@ -131418,14 +131426,18 @@
   "spread": null,
   "bb_ts": 1791890650.432967,
   "stake": 130,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -130.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   120,
+   115
+  ]
  },
  {
   "ts": 1791890801.545318,
@@ -131448,14 +131460,18 @@
   "spread": null,
   "bb_ts": 1791890800.7859251,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -80.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   120,
+   115
+  ]
  },
  {
   "ts": 1791890886.232633,
@@ -133627,6 +133643,126 @@
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1791898632.6440718,
+  "match_id": 5709427,
+  "market_id": 131333016,
+  "option_type": 2,
+  "sport": 2,
+  "home": "库尔干扎乌拉雷",
+  "away": "迪泽尔奔撒",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 2,
+  "fair": 1.6743,
+  "ev": 19.45,
+  "spread": null,
+  "bb_ts": 1791898631.82044,
+  "stake": 130,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1791898632.644646,
+  "match_id": 5709427,
+  "market_id": 131333016,
+  "option_type": 1,
+  "sport": 2,
+  "home": "库尔干扎乌拉雷",
+  "away": "迪泽尔奔撒",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 2.93,
+  "fair": 2.4831,
+  "ev": 18.0,
+  "spread": null,
+  "bb_ts": 1791898631.82044,
+  "stake": 145,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1791898632.64689,
+  "match_id": 5709425,
+  "market_id": 132995124,
+  "option_type": 2,
+  "sport": 2,
+  "home": "车里雅宾斯克白熊",
+  "away": "阿尔梅季耶夫斯基人造卫星",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 5.3,
+  "fair": 4.6923,
+  "ev": 12.95,
+  "spread": null,
+  "bb_ts": 1791898631.82044,
+  "stake": 50,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1791898632.647254,
+  "match_id": 5709425,
+  "market_id": 132995124,
+  "option_type": 1,
+  "sport": 2,
+  "home": "车里雅宾斯克白熊",
+  "away": "阿尔梅季耶夫斯基人造卫星",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.36,
+  "fair": 1.2708,
+  "ev": 7.02,
+  "spread": null,
+  "bb_ts": 1791898631.82044,
+  "stake": 130,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
   "clv_elapsed_s": null
  }
 ]

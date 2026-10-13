@@ -106,6 +106,7 @@ LIVE_GLOBAL_RATE_MIN = 4        # 层3: 全局频次帽 每分钟≤4 笔(滑动
 LIVE_GLOBAL_RATE_HOUR = 20      # 层3: 全局频次帽 每小时≤20 笔
 MAPPING_VERSION = "1"           # 市场映射表/队名归一化版本(2026-10-11): 改了映射逻辑要手动 bump, 进 decision_version
 RELEASE_VERSION = "2"           # 释放机制版本(2026-10-11): compute_market_release.py 的释放判据改了要手动 bump(如 REAL_ROI_GATE 单出口重构), 进 decision_version 标记 post-fix cohort
+SETTLE_VERSION = "3"            # 让球结算口径版本(2026-10-13): 篮球=赛前让分(全场净胜), 足球/冰球=滚球让分(下注后净胜); 改了让球结算分支要手动 bump, 进 decision_version 区分修复前后 cohort
 LIVE_FILTER_LINE_ZERO = os.getenv("LIVE_FILTER_LINE_ZERO", "false").lower() in ("1", "true", "yes")  # 让球0(平局退款盘)过滤开关, 默认关
 
 
@@ -144,7 +145,7 @@ def _decision_version(threshold):
     """
     _vals = [threshold, LIVE_COOLDOWN_PER_MARKET, LIVE_MARKET_COOLDOWN, LIVE_EVENT_MAX_EXPOSURE,
              LIVE_GLOBAL_RATE_MIN, LIVE_GLOBAL_RATE_HOUR, SNAPSHOT_MAX_AGE, SCORE_CHECK_MAX_AGE,
-             REVERIFY_THRESHOLD, LIVE_FILTER_LINE_ZERO, MAPPING_VERSION, RELEASE_VERSION]
+             REVERIFY_THRESHOLD, LIVE_FILTER_LINE_ZERO, MAPPING_VERSION, RELEASE_VERSION, SETTLE_VERSION]
     # 释放清单 generated_at(mtime 缓存, 不每注读 20KB 文件)
     try:
         _mt = MARKET_RELEASE_FILE.stat().st_mtime
