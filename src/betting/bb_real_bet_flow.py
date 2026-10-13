@@ -32,6 +32,34 @@ from config.settings import DATA_DIR
 SPORT_CN = {"football": "足球", "basketball": "篮球", "tennis": "网球",
             "baseball": "棒球", "american_football": "美式足球", "ice_hockey": "冰球"}
 
+# 2026-10-14 早盘探针日限额: 笔数上限为主(25), 金额兜底(600, 25×30=750 被压到 600≈20注)
+EARLY_DAILY_MAX_BETS = 25
+EARLY_DAILY_MAX_STAKE = 600.0
+DAILY_EXPOSURE_FILE = DATA_DIR / "daily_exposure.json"
+
+
+def _load_daily_exposure():
+    """读当日已投笔数/金额(跨调用持久化, 按北京日期重置)。"""
+    today = datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d")
+    try:
+        if DAILY_EXPOSURE_FILE.exists():
+            d = json.loads(DAILY_EXPOSURE_FILE.read_text())
+            if d.get("date") == today:
+                return d.get("bets", 0), d.get("stake", 0.0)
+    except (json.JSONDecodeError, OSError):
+        pass
+    return 0, 0.0
+
+
+def _add_daily_exposure(bets_delta, stake_delta):
+    today = datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d")
+    bets, stake = _load_daily_exposure()
+    bets += bets_delta; stake += stake_delta
+    try:
+        DAILY_EXPOSURE_FILE.write_text(json.dumps({"date": today, "bets": bets, "stake": round(stake, 2)}))
+    except OSError:
+        pass
+
 
 def _win_label(epoch):
     """时间窗标签(推送用): 滚球(已开赛/无epoch)/临场<6h/近场6-24h/远场24-72h。"""
@@ -158,6 +186,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
     success, failed = [], []
     sent_dingtalk = []
     total_latency = 0.0  # 投注总耗时(实际下单 HTTP 时间累加, 2026-10-11 用户要求推送到钉钉)
+    _daily_bets, _daily_stake = _load_daily_exposure()  # 2026-10-14 早盘探针日限额
 
     for opp in opportunities:
         # 匹配用英文(home_bb), 展示用中文(home_cn) —— 英文直配 getList, 中文只给钉钉看
@@ -227,6 +256,10 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
                 pass
 
         # 下单(含注额上限检查)
+        # 2026-10-14 早盘探针日限额: 笔数 25 或金额 600 达上限即停(笔数为主, 金额兜底)
+        if _daily_bets >= EARLY_DAILY_MAX_BETS or _daily_stake >= EARLY_DAILY_MAX_STAKE:
+            print(f"  ⏭️ 早盘日限额已达(笔{_daily_bets}/{EARLY_DAILY_MAX_BETS} 额{_daily_stake:.0f}/{EARLY_DAILY_MAX_STAKE:.0f}), 停止")
+            break
         # 2026-10-14 早盘探针: cap 30 元(flat) + 补验价(fair_price + min_ev_pct, 早盘之前缺 EV 门槛,
         # 只会 oddsChange=0 价格变了就拒, EV 跌破不主动放弃 → 系统性负偏)
         stake = min(stake, 30.0)
@@ -253,6 +286,8 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
                 "ts": time.time(),
             }
             success.append(rec)
+            _daily_bets += 1; _daily_stake += stake
+            _add_daily_exposure(1, stake)  # 2026-10-14 早盘探针日暴露累加
             total_latency += _latency
             from src.betting.bb_auto_bet import record_sub_market_bet
             record_sub_market_bet(match_id, sub)
