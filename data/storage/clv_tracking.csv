@@ -1866,3 +1866,22 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-13T13:56:46Z,football,AFC Champions League Two,Kuching City FC,Kitchee SC,,,让球主胜,hc,2.0,0,1.9304,3.61,0,2,1792066500,BB,pinnacle,,,validate,,-0.5,5737132
 2026-10-13T14:04:57Z,football,USL Championship,San Antonio FC,New Mexico United,,,让球客胜,hc,1.97,0,1.9271,2.23,0,2,1792283400,ALL,pinnacle,,,validate,,+0.5,4259104
 2026-10-13T14:07:39Z,football,AFC Champions League Two,Gangwon FC,Phnom Penh Crown,,,小球,ou,1.85,0,1.6192,14.25,0,2,1792058400,BB,pinnacle,,,validate,,3.0,5481262
+2026-10-13T14:19:39Z,basketball,Euroleague,Hapoel Tel Aviv,Besiktas JK,,,让分客胜,hc,1.87,0,1.82,2.75,0,2,1791993600,ALL,pinnacle,,,validate,,+7.5,5355332
+2026-10-13T14:24:31Z,football,AGCFF Gulf Club Champions League,Qatar SC,Al Zawraa SC,,,让球客胜,hc,1.95,0,1.7944,8.67,0,2,1791902700,ALL,pinnacle,,,validate,,+0.5,5735579
+2026-10-13T14:29:55Z,football,England EFL Trophy,Notts County,Nottingham Forest U21,,,让球主胜,hc,1.96,0,1.8532,5.76,0,3,1791914400,ALL,pinnacle,,,validate,,-0.5,5695386
+2026-10-13T14:29:55Z,football,England EFL Trophy,Notts County,Nottingham Forest U21,,,双重机会-主/客,dc,1.23,0,1.2049,2.08,0,3,1791914400,ALL,pinnacle,,,validate,,,5695386
+2026-10-13T14:31:01Z,football,Venezuela Cup,Trujillanos FC,Rayo Zuliano,,,主胜,1x2,2.21,0,1.8985,16.41,0,3,1792008000,BB,pinnacle,,,validate,,,5715225
+2026-10-13T14:31:01Z,football,Venezuela Cup,Trujillanos FC,Rayo Zuliano,,,双重机会-主/和局,dc,1.34,0,1.2861,4.19,0,3,1792008000,BB,pinnacle,,,validate,,,5715225
+2026-10-13T14:33:40Z,basketball,Australia NBL,Sydney Kings,New Zealand Breakers,,,让分客胜,hc,1.96,0,1.7398,12.66,0,3,1791966600,ALL,pinnacle,,,validate,,+10.5,5074411
+2026-10-13T14:33:40Z,basketball,Australia NBL,Sydney Kings,New Zealand Breakers,,,大分,ou,1.9,0,1.7731,7.16,0,3,1791966600,ALL,pinnacle,,,validate,,183.5,5074411
+2026-10-13T14:42:17Z,basketball,VTB United League,Lokomotiv Kuban,Avtodor Saratov,,,主胜,1x2,1.07,0,1.0301,3.87,0,3,1791997200,ALL,pinnacle,,,validate,,,5470589
+2026-10-13T14:42:17Z,basketball,VTB United League,Lokomotiv Kuban,Avtodor Saratov,,,小分,ou,1.87,0,1.8178,2.87,0,3,1791997200,ALL,pinnacle,,,validate,,163.5,5470589
+2026-10-13T14:47:07Z,basketball,VTB United League,Lokomotiv Kuban,Avtodor Saratov,,,让分主胜,hc,1.9,0,1.685,12.76,0,3,1791997200,ALL,pinnacle,,,validate,,-17.5,5470589
+2026-10-13T14:49:48Z,football,Saudi Arabia Division 1,Al Saqer FC,AL Jabalain FC,,,让球主胜,hc,1.86,0,1.8197,2.21,0,2,1791904500,BB,pinnacle,,,validate,,+0.5,5340849
+2026-10-13T14:49:48Z,football,Scotland Challenge Cup,Cove Rangers FC,Formartine United,,,小球,ou,2.0,0,1.8947,5.56,0,3,1791917100,ALL,pinnacle,,,validate,,3.0,5709500
+2026-10-13T14:50:53Z,football,USL Championship,San Antonio FC,New Mexico United,,,主胜,1x2,1.92,0,1.8699,2.68,0,2,1792283400,ALL,pinnacle,,,validate,,,4259104
+2026-10-13T14:50:53Z,basketball,Qatar Basketball League,Al Ahli Qatar,Al Gharafa,,,让分客胜,hc,1.86,0,1.6708,11.32,0,3,1791903600,ALL,pinnacle,,,validate,,+6.5,5688051
+2026-10-13T14:55:10Z,football,England Championship League,Portsmouth FC,Sheffield United FC,,,和局,1x2,3.3,0,2.3473,40.59,0,2,1792003500,ALL,pinnacle,,,validate,,,5702938
+2026-10-13T14:55:10Z,football,England Championship League,Portsmouth FC,Sheffield United FC,,,双重机会-主/和局,dc,1.35,0,1.3061,3.36,0,2,1792003500,ALL,pinnacle,,,validate,,,5702938
+2026-10-13T14:55:10Z,football,England Championship League,Portsmouth FC,Sheffield United FC,,,双重机会-和局/客,dc,1.64,0,1.5143,8.3,0,2,1792003500,ALL,pinnacle,,,validate,,,5702938
+2026-10-13T14:56:15Z,basketball,Qatar Basketball League,Al Wakrah,Al Shamal,,,让分主胜,hc,1.87,0,1.6587,12.74,0,3,1791910800,ALL,pinnacle,,,validate,,+10.5,5688100

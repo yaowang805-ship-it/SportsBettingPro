@@ -1263,6 +1263,7 @@ class SecondLevelMonitor:
         if self._live_outstanding + stake > LIVE_BUDGET:
             print(f"  📝 滚球预算已满(未结算¥{self._live_outstanding:.0f}/{LIVE_BUDGET}), 已记观察库 {tag}", flush=True)
             return
+        match_id = sig.get("match_id")  # 2026-10-13 修: 之前 fetch_current_odds(market_id, match_id, ...) 用裸 match_id 但没定义 → NameError 卡死下单
         market_id = sig.get("market_id")
         if market_id is None:
             return
