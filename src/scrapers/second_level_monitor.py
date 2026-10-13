@@ -88,7 +88,7 @@ def _bankroll():
     return v
 MIN_STAKE = 30         # stake<30 拦截铁律
 REVERIFY_THRESHOLD = 3.0  # 2026-09-19 验价阈值(秒): lead-lag 窗口 2-3s(赔率秒级变动), 超过 3s 就重拉验价(逆向选择)
-SNAPSHOT_MAX_AGE = 6.0  # 2026-09-20 让球「只投快照单」阈值(秒): BB拉取到此刻>6s 判 stale 跳过。
+SNAPSHOT_MAX_AGE = 2.0  # 快照年龄阈值(秒): 2026-10-13 从 6s 收紧到 2s(τ 中位~7s, 端到端~1.7s, 2s 保新鲜度; 后续按 τ 分位数再调)
                         # 之前15s是管线12s时的临时值; 现在管线~1.7s(公平价匹配0.1s), 收紧回6s
                         # 更能吃到 lead-lag 窗口(8.5s), 挡掉真正 stale 的(>6s)
 SCORE_CHECK_MAX_AGE = 3.0  # 2026-10-11 比分校验的可信缓存年龄上限(秒): 预取缓存>3s 视为不可信→跳过
