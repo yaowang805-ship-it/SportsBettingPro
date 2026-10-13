@@ -1885,3 +1885,21 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-13T14:55:10Z,football,England Championship League,Portsmouth FC,Sheffield United FC,,,双重机会-主/和局,dc,1.35,0,1.3061,3.36,0,2,1792003500,ALL,pinnacle,,,validate,,,5702938
 2026-10-13T14:55:10Z,football,England Championship League,Portsmouth FC,Sheffield United FC,,,双重机会-和局/客,dc,1.64,0,1.5143,8.3,0,2,1792003500,ALL,pinnacle,,,validate,,,5702938
 2026-10-13T14:56:15Z,basketball,Qatar Basketball League,Al Wakrah,Al Shamal,,,让分主胜,hc,1.87,0,1.6587,12.74,0,3,1791910800,ALL,pinnacle,,,validate,,+10.5,5688100
+2026-10-13T15:06:28Z,football,Venezuela Cup,Trujillanos FC,Rayo Zuliano,,,让球主胜,hc,1.86,0,1.5832,17.48,0,3,1792008000,ALL,pinnacle,,,validate,,-0.5,5715225
+2026-10-13T15:10:13Z,basketball,FIBA Europe Cup,BC Oostende,Basquet Girona,,,客胜,1x2,1.49,0,1.4548,2.42,0,2,1791916200,ALL,pinnacle,,,validate,,,5431056
+2026-10-13T15:15:02Z,football,Peru Liga 1,Sporting Cristal,Comerciantes Unidos,,,主胜,1x2,1.31,0,1.248,4.97,0,2,1792339200,ALL,pinnacle,,,validate,,,5732784
+2026-10-13T15:15:02Z,football,England National League Cup,Scunthorpe United,Derby County U21,,,让球客胜,hc,2.0,0,1.8206,9.85,0,3,1791914400,ALL,pinnacle,,,validate,,+1,5466062
+2026-10-13T15:15:02Z,basketball,Chile LNB,CD Espanol de Talca,CD Las Animas,,,客胜,1x2,1.23,0,1.1974,2.72,0,4,1791932400,ALL,pinnacle,,,validate,,,5697479
+2026-10-13T15:18:47Z,basketball,Croatia Basketball Premier League,KK Skrljevo,KK Cibona,,,让分主胜,hc,1.87,0,1.6883,10.76,0,2,1791999000,BB,pinnacle,,,validate,,+9.5,5745077
+2026-10-13T15:20:23Z,football,UEFA Champions League,Atletico Madrid,Manchester United FC,,,和局,1x2,3.96,0,2.4194,63.68,0,2,1791918000,ALL,pinnacle,,,validate,,,5525911
+2026-10-13T15:20:23Z,football,Algeria Ligue 1,USM Alger,JS Saoura,,,和局,1x2,3.58,0,2.2365,60.07,0,2,1791918900,ALL,pinnacle,,,validate,,,5391287
+2026-10-13T15:20:23Z,football,Algeria Ligue 1,USM Alger,JS Saoura,,,双重机会-和局/客,dc,2.56,0,1.8165,40.93,0,2,1791918900,ALL,pinnacle,,,validate,,,5391287
+2026-10-13T15:28:59Z,basketball,Croatia Basketball Premier League,KK Skrljevo,KK Cibona,,,客胜,1x2,1.5,0,1.2857,16.67,0,2,1791999000,BB,pinnacle,,,validate,,,5745077
+2026-10-13T15:30:35Z,football,Algeria Ligue 1,ASO Chlef,MC Alger,,,和局,1x2,2.94,0,2.0456,43.72,0,2,1791909900,ALL,pinnacle,,,validate,,,5741713
+2026-10-13T15:30:35Z,football,Algeria Ligue 1,ASO Chlef,MC Alger,,,双重机会-主/和局,dc,1.92,0,1.5669,22.53,0,2,1791909900,ALL,pinnacle,,,validate,,,5741713
+2026-10-13T15:35:26Z,basketball,VTB United League,MBA Moscow,Parma Perm,,,客胜,1x2,1.4,0,1.3319,5.11,0,3,1791907200,ALL,pinnacle,,,validate,,,5470542
+2026-10-13T15:35:26Z,basketball,Eurocup,BC Lietkabelis Panevezys,PAOK BC,,,客胜,1x2,1.23,0,1.1891,3.44,0,3,1791907200,ALL,pinnacle,,,validate,,,5280350
+2026-10-13T15:35:26Z,basketball,Eurocup,BC Lietkabelis Panevezys,PAOK BC,,,让分客胜,hc,1.93,0,1.8887,2.19,0,3,1791907200,ALL,pinnacle,,,validate,,-9.5,5280350
+2026-10-13T15:39:12Z,basketball,Croatia Basketball Premier League,KK Skrljevo,KK Cibona,,,大分,ou,1.87,0,1.774,5.41,0,2,1791999000,BB,pinnacle,,,validate,,163.5,5745077
+2026-10-13T15:56:58Z,football,Venezuela Cup,Monagas SC,Dynamo Puerto FC,,,让球客胜,hc,1.89,0,1.7478,8.14,0,3,1792008000,ALL,pinnacle,,,validate,,+2.5,5715228
+2026-10-13T15:56:58Z,football,Venezuela Cup,Monagas SC,Dynamo Puerto FC,,,小球,ou,1.91,0,1.8547,2.98,0,3,1792008000,ALL,pinnacle,,,validate,,3.5,5715228
