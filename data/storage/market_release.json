@@ -52,6 +52,34 @@
       "客",
       "*",
       "live"
+    ],
+    [
+      "football",
+      "hc",
+      "主",
+      "*",
+      "early"
+    ],
+    [
+      "football",
+      "hc",
+      "客",
+      "*",
+      "early"
+    ],
+    [
+      "basketball",
+      "hc",
+      "主",
+      "*",
+      "early"
+    ],
+    [
+      "basketball",
+      "hc",
+      "客",
+      "*",
+      "early"
     ]
   ],
   "observe_blocked": [
@@ -1582,7 +1610,11 @@
     "football|hc|主|*|live": 30,
     "football|hc|客|*|live": 30,
     "basketball|hc|主|*|live": 30,
-    "basketball|hc|客|*|live": 30
+    "basketball|hc|客|*|live": 30,
+    "football|hc|主|*|early": 30,
+    "football|hc|客|*|early": 30,
+    "basketball|hc|主|*|early": 30,
+    "basketball|hc|客|*|early": 30
   },
   "direction_released": [],
   "direction_blocked": [],

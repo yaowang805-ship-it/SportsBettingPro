@@ -227,9 +227,13 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
                 pass
 
         # 下单(含注额上限检查)
+        # 2026-10-14 早盘探针: cap 30 元(flat) + 补验价(fair_price + min_ev_pct, 早盘之前缺 EV 门槛,
+        # 只会 oddsChange=0 价格变了就拒, EV 跌破不主动放弃 → 系统性负偏)
+        stake = min(stake, 30.0)
         _t0 = time.time()
         code, order_id, msg = place_single_bet(
-            market_id, odds, option_type, stake, token=token, domain=domain, match_id=match_id)
+            market_id, odds, option_type, stake, token=token, domain=domain, match_id=match_id,
+            fair_price=opp.get("fair_price") or opp.get("fair"), min_ev_pct=4.0)
         _latency = time.time() - _t0
         # 执行质量记录(2026-10-08): 按方向记拒单/延迟, 供早盘定仓的执行质量系数打折
         from src.scrapers.execution_quality import record as _eq_record

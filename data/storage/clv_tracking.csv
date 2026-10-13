@@ -1903,3 +1903,101 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-13T15:39:12Z,basketball,Croatia Basketball Premier League,KK Skrljevo,KK Cibona,,,大分,ou,1.87,0,1.774,5.41,0,2,1791999000,BB,pinnacle,,,validate,,163.5,5745077
 2026-10-13T15:56:58Z,football,Venezuela Cup,Monagas SC,Dynamo Puerto FC,,,让球客胜,hc,1.89,0,1.7478,8.14,0,3,1792008000,ALL,pinnacle,,,validate,,+2.5,5715228
 2026-10-13T15:56:58Z,football,Venezuela Cup,Monagas SC,Dynamo Puerto FC,,,小球,ou,1.91,0,1.8547,2.98,0,3,1792008000,ALL,pinnacle,,,validate,,3.5,5715228
+2026-10-13T16:05:36Z,football,USL Championship,Tampa Bay Rowdies,Detroit City FC,,,和局,1x2,3.28,0,3.1975,2.58,0,2,1792279800,ALL,pinnacle,,,validate,,,4259097
+2026-10-13T16:15:54Z,football,UEFA Champions League,Sabah FK,Slavia Prague,,,和局,1x2,3.91,0,2.5643,52.48,0,2,1791909900,ALL,pinnacle,,,validate,,,5507217
+2026-10-13T16:15:54Z,football,UEFA Champions League,Sabah FK,Slavia Prague,,,双重机会-主/和局,dc,1.94,0,1.6307,18.97,0,2,1791909900,ALL,pinnacle,,,validate,,,5507217
+2026-10-13T16:20:46Z,football,Egypt Premier League,Petrojet FC,Wadi Degla SC,,,双重机会-主/和局,dc,1.51,0,1.3926,8.43,0,2,1791910800,ALL,pinnacle,,,validate,,,5709530
+2026-10-13T16:20:46Z,football,Egypt Premier League,Petrojet FC,Wadi Degla SC,,,双重机会-和局/客,dc,1.39,0,1.3197,5.33,0,2,1791910800,ALL,pinnacle,,,validate,,,5709530
+2026-10-13T16:40:51Z,football,England Northern Premier League Division One,Bedworth United,Carlton Town,,,客胜,1x2,2.52,0,2.4604,2.42,0,2,1791917100,ALL,pinnacle,,,validate,,,5745023
+2026-10-13T16:40:51Z,basketball,Chile LNB,CD Espanol Osorno,CD Universidad de Concepcion,,,客胜,1x2,1.29,0,1.2532,2.94,0,4,1792024200,ALL,pinnacle,,,validate,,,5749116
+2026-10-13T16:40:51Z,basketball,Germany Pro B Basketball Bundesliga,Dresden Titans,BBC Coburg,,,客胜,1x2,1.65,0,1.6172,2.03,0,3,1791999000,ALL,pinnacle,,,validate,,,5651409
+2026-10-13T16:44:07Z,basketball,Finland Basketball Division 1A,Aanekosken Huima,Lappeenrannan NMKY,,,主胜,1x2,1.41,0,1.3683,3.05,0,3,1792078200,BB,pinnacle,,,validate,,,5718271
+2026-10-13T16:51:07Z,football,Egypt Premier League,Petrojet FC,Wadi Degla SC,,,大球,ou,1.89,0,1.8376,2.85,0,2,1791910800,ALL,pinnacle,,,validate,,2.0,5709530
+2026-10-13T16:51:07Z,football,South Africa Premier Soccer League,Richards Bay FC,Mamelodi Sundowns,,,让球客胜,hc,1.95,0,1.9044,2.39,0,2,1791912600,ALL,pinnacle,,,validate,,-1.5,5311219
+2026-10-13T16:55:58Z,football,USA Major League Soccer,Toronto FC,Orlando City SC,,,双重机会-主/和局,dc,1.44,0,1.3803,4.33,0,1,1792020600,ALL,pinnacle,,,validate,,,5684077
+2026-10-13T16:55:58Z,football,USA Major League Soccer,Toronto FC,Orlando City SC,,,双重机会-和局/客,dc,1.67,0,1.5808,5.64,0,1,1792020600,ALL,pinnacle,,,validate,,,5684077
+2026-10-13T17:01:21Z,football,England EFL Trophy,Cheltenham Town,Tottenham Hotspur U21,,,大球,ou,2.0,0,1.9536,2.38,0,3,1791914400,ALL,pinnacle,,,validate,,4.0,5731044
+2026-10-13T17:11:07Z,football,South Africa Premier Soccer League,Kaizer Chiefs,Stellenbosch FC,,,让球客胜,hc,1.76,0,1.653,6.47,0,2,1791912600,ALL,pinnacle,,,validate,,+1,5713812
+2026-10-13T17:11:07Z,football,South Africa Premier Soccer League,Kaizer Chiefs,Stellenbosch FC,,,双重机会-和局/客,dc,2.37,0,2.2994,3.07,0,2,1791912600,ALL,pinnacle,,,validate,,,5713812
+2026-10-13T17:11:07Z,football,Uruguay Primera Division Amateur,Deportivo Colonia,Sud America,,,小球,ou,1.8,0,1.7101,5.26,0,4,1791930600,BB,pinnacle,,,validate,,2.5,5741709
+2026-10-13T17:11:07Z,basketball,Germany Pro B Basketball Bundesliga,Dresden Titans,BBC Coburg,,,让分客胜,hc,1.87,0,1.7809,5.0,0,3,1791999000,ALL,pinnacle,,,validate,,-2.5,5746422
+2026-10-13T17:11:40Z,football,England EFL Trophy,Oldham Athletic,Leeds United U21,,,让球客胜,hc,1.93,0,1.8607,3.72,0,3,1791914400,ALL,pinnacle,,,validate,,+1,5731048
+2026-10-13T17:16:36Z,football,Japan J. League Cup,Mito Hollyhock,FC Tokyo,,,让球主胜,hc,2.02,0,1.9448,3.87,0,3,1791972000,BB,pinnacle,,,validate,,+0.5,5713876
+2026-10-13T17:31:49Z,football,England National League Cup,Truro City FC,Birmingham City U21,,,让球主胜,hc,1.94,0,1.7764,9.21,0,3,1791914400,ALL,pinnacle,,,validate,,-1,5466073
+2026-10-13T17:31:49Z,football,England National League Cup,Scunthorpe United,Derby County U21,,,主胜,1x2,1.74,0,1.6414,6.01,0,3,1791914400,ALL,pinnacle,,,validate,,,5466062
+2026-10-13T17:31:49Z,football,England EFL Trophy,Oldham Athletic,Leeds United U21,,,主胜,1x2,1.75,0,1.6699,4.8,0,3,1791914400,ALL,pinnacle,,,validate,,,5731048
+2026-10-13T17:36:42Z,football,England Championship League,Cardiff City,Watford FC,,,让球客胜,hc,1.88,0,1.8097,3.88,0,2,1791917100,ALL,pinnacle,,,validate,,+1,5695419
+2026-10-13T17:41:36Z,football,England Championship League,Burnley FC,Charlton Athletic,,,让球客胜,hc,1.83,0,1.7931,2.06,0,2,1791917100,ALL,pinnacle,,,validate,,+1,5724153
+2026-10-13T17:47:36Z,football,Scotland Challenge Cup,Cove Rangers FC,Formartine United,,,让球主胜,hc,1.98,0,1.9233,2.95,0,3,1791917100,ALL,pinnacle,,,validate,,-1,5709500
+2026-10-13T17:56:49Z,football,UEFA Champions League,Atletico Madrid,Manchester United FC,,,小球,ou,1.84,0,1.7525,4.99,0,2,1791918000,ALL,pinnacle,,,validate,,3.0,5525911
+2026-10-13T17:56:49Z,basketball,Japan B.League One,Tryhoop Okayama,Kagawa Five Arrows,,,让分客胜,hc,1.88,0,1.8154,3.56,0,3,1791972300,BB,pinnacle,,,validate,,+5.5,5325677
+2026-10-13T17:57:55Z,football,England Northern Premier League Division One,Stalybridge Celtic,Stafford Rangers,,,小球,ou,1.91,0,1.8561,2.9,0,2,1791917100,ALL,pinnacle,,,validate,,3.0,5740937
+2026-10-13T18:06:03Z,basketball,Denmark Basketligaen,Team FOG Naestved,Svendborg Rabbits,,,主胜,1x2,1.14,0,1.1084,2.85,0,2,1792083600,BB,pinnacle,,,validate,,,5748476
+2026-10-13T18:07:11Z,football,USA Major League Soccer,Chicago Fire,Philadelphia Union,,,双重机会-主/和局,dc,1.52,0,1.4429,5.34,0,1,1792024200,ALL,pinnacle,,,validate,,,4231090
+2026-10-13T18:07:11Z,football,USA Major League Soccer,Chicago Fire,Philadelphia Union,,,双重机会-和局/客,dc,1.57,0,1.4796,6.11,0,1,1792024200,ALL,pinnacle,,,validate,,,4231090
+2026-10-13T18:07:11Z,football,England Northern Premier League,Hyde United FC,Quorn FC,,,双重机会-主/和局,dc,1.45,0,1.3874,4.51,0,2,1791917100,ALL,pinnacle,,,validate,,,5321859
+2026-10-13T18:12:42Z,football,England National League Cup,Braintree Town FC,West Ham United U21,,,让球主胜,hc,1.96,0,1.9138,2.41,0,3,1791916200,ALL,pinnacle,,,validate,,+0.5,5466075
+2026-10-13T18:13:17Z,football,Scotland Challenge Cup,Berwick Rangers,Queen of The South FC,,,客胜,1x2,1.35,0,1.2954,4.21,0,3,1791917100,ALL,pinnacle,,,validate,,,5709497
+2026-10-13T18:13:17Z,football,Scotland Challenge Cup,Berwick Rangers,Queen of The South FC,,,让球客胜,hc,1.95,0,1.8035,8.12,0,3,1791917100,ALL,pinnacle,,,validate,,-1.5,5709497
+2026-10-13T18:13:17Z,football,Scotland Challenge Cup,Berwick Rangers,Queen of The South FC,,,大球,ou,1.89,0,1.755,7.69,0,3,1791917100,ALL,pinnacle,,,validate,,3.5,5709497
+2026-10-13T18:17:38Z,football,Scotland Challenge Cup,East Kilbride,Kelty Hearts FC,,,主胜,1x2,1.41,0,1.3395,5.26,0,3,1791917100,ALL,pinnacle,,,validate,,,5709503
+2026-10-13T18:22:34Z,football,Scotland Challenge Cup,Clydebank FC,Dumbarton FC,,,主胜,1x2,1.79,0,1.7207,4.03,0,3,1791917100,ALL,pinnacle,,,validate,,,5741711
+2026-10-13T18:22:34Z,football,England Isthmian League Division One,Buckhurst Hill,Newmarket Town FC,,,客胜,1x2,2.21,0,2.1324,3.64,0,3,1791917100,ALL,pinnacle,,,validate,,,5598167
+2026-10-13T18:23:08Z,football,England Isthmian League Premier Division,Three Bridges,Lewes FC,,,客胜,1x2,2.2,0,2.0509,7.27,0,2,1791917100,ALL,pinnacle,,,validate,,,5322454
+2026-10-13T18:23:40Z,boxing,Boxing International Matchups,Bakhodir Jalolov,Solomon Dacres,,,主胜,1x2,1.24,0,1.2118,2.33,0,3,1792258200,BB,pinnacle,,,validate,,,5735330
+2026-10-13T18:23:40Z,boxing,Boxing International Matchups,Louie O Doherty,Michael Gomez Jr,,,客胜,1x2,2.73,0,2.6678,2.33,0,3,1792263600,BB,pinnacle,,,validate,,,5655555
+2026-10-13T18:27:59Z,football,England Isthmian League Division One,Sheppey United FC,Broadbridge Heath FC,,,小球,ou,1.96,0,1.8788,4.32,0,3,1791917100,ALL,pinnacle,,,validate,,3.0,5741108
+2026-10-13T18:32:53Z,football,England Championship League,Burnley FC,Charlton Athletic,,,和局,1x2,3.88,0,2.4815,56.36,0,2,1791917100,ALL,pinnacle,,,validate,,,5724153
+2026-10-13T18:32:53Z,football,England Championship League,Burnley FC,Charlton Athletic,,,双重机会-和局/客,dc,2.38,0,1.8175,30.95,0,2,1791917100,ALL,pinnacle,,,validate,,,5724153
+2026-10-13T18:37:46Z,football,England Northern Premier League Division One,Bedworth United,Carlton Town,,,主胜,1x2,2.5,0,2.4458,2.22,0,2,1791917100,ALL,pinnacle,,,validate,,,5740871
+2026-10-13T18:38:52Z,football,England Northern Premier League,Redcar Athletic,Avro FC,,,大球,ou,2.0,0,1.7144,16.66,0,2,1791917100,BB,pinnacle,,,validate,,3.0,5321847
+2026-10-13T18:38:52Z,football,England Northern Premier League,Redcar Athletic,Avro FC,,,双重机会-主/和局,dc,1.35,0,1.3126,2.85,0,2,1791917100,BB,pinnacle,,,validate,,,5321847
+2026-10-13T18:42:41Z,football,England Northern Premier League,Bamber Bridge,Warrington Town,,,小球,ou,2.0,0,1.9147,4.46,0,2,1791917100,ALL,pinnacle,,,validate,,3.0,5321858
+2026-10-13T18:42:41Z,football,England Championship League,Bristol City,Blackburn Rovers,,,和局,1x2,3.29,0,2.2435,46.65,0,2,1791917100,ALL,pinnacle,,,validate,,,5709648
+2026-10-13T18:42:41Z,football,England Championship League,Bristol City,Blackburn Rovers,,,双重机会-主/和局,dc,1.37,0,1.2901,6.19,0,2,1791917100,ALL,pinnacle,,,validate,,,5709648
+2026-10-13T18:42:41Z,football,England Championship League,Bristol City,Blackburn Rovers,,,双重机会-和局/客,dc,1.65,0,1.4912,10.65,0,2,1791917100,ALL,pinnacle,,,validate,,,5709648
+2026-10-13T18:42:41Z,football,England Isthmian League Division One,Buckhurst Hill,Newmarket Town FC,,,大球,ou,1.95,0,1.7346,12.42,0,3,1791917100,ALL,pinnacle,,,validate,,3.0,5598167
+2026-10-13T18:42:41Z,football,England Northern Premier League Division One,Long Eaton United,Wellingborough Town,,,大球,ou,1.92,0,1.7204,11.6,0,2,1791917100,ALL,pinnacle,,,validate,,3.0,5740904
+2026-10-13T18:42:41Z,football,England Northern Premier League Division One,Bourne Town,Shepshed Dynamo FC,,,客胜,1x2,1.95,0,1.9094,2.13,0,2,1791917100,ALL,pinnacle,,,validate,,,5745531
+2026-10-13T18:42:41Z,football,England Southern League Premier Division Central,Stamford AFC,Stratford Town FC,,,主胜,1x2,4.07,0,3.9692,2.54,0,2,1791917100,ALL,pinnacle,,,validate,,,5470655
+2026-10-13T18:42:41Z,football,Northern Ireland County Antrim Shield,Ards FC,Bangor FC,,,主胜,1x2,2.75,0,2.6601,3.38,0,3,1791917100,BB,pinnacle,,,validate,,,5747862
+2026-10-13T18:43:15Z,football,England Isthmian League Division One,Sheppey United FC,Broadbridge Heath FC,,,大球,ou,1.99,0,1.8604,6.97,0,3,1791917100,ALL,pinnacle,,,validate,,3.0,5741108
+2026-10-13T18:43:47Z,football,Northern Ireland County Antrim Shield,Cliftonville FC,Glentoran FC,,,客胜,1x2,1.99,0,1.8754,6.11,0,3,1791917100,BB,pinnacle,,,validate,,,5747847
+2026-10-13T18:43:47Z,football,England Northern Premier League Division One,Newcastle Town,Clitheroe FC,,,客胜,1x2,2.7,0,2.4936,8.28,0,2,1791917100,ALL,pinnacle,,,validate,,,5745534
+2026-10-13T18:43:47Z,football,England Northern Premier League,Redcar Athletic,Avro FC,,,让球主胜,hc,2.01,0,1.8621,7.94,0,2,1791917100,BB,pinnacle,,,validate,,-0.5,5321847
+2026-10-13T18:47:33Z,football,Spain Tercera Division,Deportivo Maritimo,Bullas Deportivo,,,客胜,1x2,2.71,0,2.3706,14.32,0,4,1792002600,BB,pinnacle,,,validate,,,5746272
+2026-10-13T18:47:33Z,football,Spain Tercera Division,Deportivo Maritimo,Bullas Deportivo,,,双重机会-和局/客,dc,1.46,0,1.4177,2.98,0,4,1792002600,BB,pinnacle,,,validate,,,5746272
+2026-10-13T19:08:12Z,football,Japan J. League Cup,Yokohama F Marinos,Shimizu S Pulse,,,和局,1x2,3.29,0,2.3268,41.4,0,3,1791972000,BB,pinnacle,,,validate,,,5713878
+2026-10-13T19:08:12Z,football,Japan J. League Cup,Yokohama F Marinos,Shimizu S Pulse,,,双重机会-和局/客,dc,1.72,0,1.553,10.75,0,3,1791972000,BB,pinnacle,,,validate,,,5713878
+2026-10-13T19:13:07Z,football,England Championship League,Queens Park Rangers,Derby County,,,和局,1x2,3.85,0,2.5245,52.51,0,2,1792003500,ALL,pinnacle,,,validate,,,5714055
+2026-10-13T19:13:07Z,football,England Championship League,Queens Park Rangers,Derby County,,,双重机会-和局/客,dc,2.23,0,1.7782,25.41,0,2,1792003500,ALL,pinnacle,,,validate,,,5714055
+2026-10-13T19:13:07Z,football,England Championship League,Lincoln City,West Ham United,,,和局,1x2,4.12,0,2.5736,60.09,0,2,1792004400,ALL,pinnacle,,,validate,,,5717327
+2026-10-13T19:13:07Z,football,England Championship League,Lincoln City,West Ham United,,,双重机会-主/和局,dc,2.21,0,1.7694,24.9,0,2,1792004400,ALL,pinnacle,,,validate,,,5717327
+2026-10-13T19:17:29Z,football,England Championship League,Wrexham AFC,Preston North End,,,主胜,1x2,1.77,0,1.6982,4.23,0,2,1792245600,ALL,pinnacle,,,validate,,,5728550
+2026-10-13T19:26:09Z,football,AFC Champions League Two,Kuching City FC,Kitchee SC,,,让球客胜,hc,1.96,0,1.8352,6.8,0,2,1792066500,ALL,pinnacle,,,validate,,+0.5,5683194
+2026-10-13T19:26:09Z,football,AFC Champions League Two,Kuching City FC,Kitchee SC,,,双重机会-和局/客,dc,1.91,0,1.8706,2.11,0,2,1792066500,ALL,pinnacle,,,validate,,,5683194
+2026-10-13T19:39:37Z,basketball,Poland Basketball 2 Liga,MKKS Rybnik,GTK Gliwice II,,,主胜,1x2,1.21,0,1.157,4.58,0,3,1791999000,ALL,pinnacle,,,validate,,,5747997
+2026-10-13T19:42:19Z,football,England Championship League,Watford FC,Charlton Athletic,,,大球,ou,2.04,0,1.9906,2.48,0,2,1792236600,ALL,pinnacle,,,validate,,2.5,5728562
+2026-10-13T19:43:23Z,football,Argentina Primera Nacional,Nueva Chicago,Gimnasia Jujuy,,,大球,ou,1.98,0,1.9408,2.02,0,2,1792348200,ALL,pinnacle,,,validate,,2.0,5738079
+2026-10-13T19:48:47Z,football,AFC Champions League Two,Melbourne Victory FC,FC Seoul,,,让球主胜,hc,1.87,0,1.8127,3.16,0,2,1791963900,ALL,pinnacle,,,validate,,-1,5481259
+2026-10-13T20:08:43Z,football,USA Major League Soccer,FC Dallas,Seattle Sounders,,,和局,1x2,4.11,0,2.6696,53.96,0,1,1792024200,ALL,pinnacle,,,validate,,,4231079
+2026-10-13T20:08:43Z,football,USA Major League Soccer,FC Dallas,Seattle Sounders,,,双重机会-和局/客,dc,1.97,0,1.6864,16.82,0,1,1792024200,ALL,pinnacle,,,validate,,,4231079
+2026-10-13T20:12:29Z,football,England Championship League,Middlesbrough FC,Cardiff City,,,大球,ou,2.01,0,1.9448,3.35,0,2,1792236600,ALL,pinnacle,,,validate,,3.5,5728556
+2026-10-13T20:29:09Z,football,AFC Champions League Two,Al Faisaly Amman,Al Nahda,,,让球客胜,hc,2.03,0,1.9818,2.43,0,2,1792001700,ALL,pinnacle,,,validate,,+0.5,5481263
+2026-10-13T20:44:09Z,basketball,Japan B.League One,Kagoshima Rebnise,Aomori Wats,,,让分主胜,hc,1.85,0,1.6928,9.29,0,3,1791972300,BB,pinnacle,,,validate,,-4.5,5325612
+2026-10-13T21:03:19Z,basketball,Australia NBL,Sydney Kings,New Zealand Breakers,,,主胜,1x2,1.15,0,1.1185,2.82,0,3,1791966600,ALL,pinnacle,,,validate,,,5074411
+2026-10-13T21:03:19Z,basketball,Australia NBL,Sydney Kings,New Zealand Breakers,,,让分主胜,hc,1.91,0,1.8579,2.8,0,3,1791966600,ALL,pinnacle,,,validate,,-11.5,5074411
+2026-10-13T21:08:39Z,football,England Championship League,Middlesbrough FC,Cardiff City,,,客胜,1x2,5.55,0,5.3467,3.8,0,2,1792236600,ALL,pinnacle,,,validate,,,5728556
+2026-10-13T21:09:43Z,football,AFC Champions League Two,Al Faisaly Amman,Al Nahda,,,客胜,1x2,4.12,0,3.7757,9.12,0,2,1792001700,ALL,pinnacle,,,validate,,,5481263
+2026-10-13T21:30:29Z,basketball,BNXT League,Donar Groningen,Spirou Charleroi,,,客胜,1x2,1.76,0,1.7165,2.53,0,3,1791999000,ALL,pinnacle,,,validate,,,5691891
+2026-10-13T21:30:29Z,basketball,BNXT League,Donar Groningen,Spirou Charleroi,,,让分客胜,hc,1.89,0,1.8219,3.74,0,3,1791999000,ALL,pinnacle,,,validate,,-1.5,5691891
+2026-10-13T21:36:21Z,football,AFC Champions League Two,Persib Bandung,Viettel FC,,,小球,ou,1.93,0,1.869,3.26,0,2,1791980100,ALL,pinnacle,,,validate,,2.5,5539979
+2026-10-13T21:40:36Z,basketball,Japan B.League One,Gifu Swoops,Saitama Broncos,,,客胜,1x2,1.47,0,1.4387,2.18,0,3,1791972300,BB,pinnacle,,,validate,,,5325618
+2026-10-13T21:42:12Z,football,Venezuela Cup,Trujillanos FC,Rayo Zuliano,,,让球客胜,hc,1.94,0,1.864,4.08,0,3,1792008000,ALL,pinnacle,,,validate,,+0.5,5715225
+2026-10-13T21:45:55Z,football,South Korea K-League 2,Busan I Park,Jeonnam Dragons,,,主胜,1x2,1.93,0,1.8454,4.58,0,2,1792308600,ALL,pinnacle,,,validate,,,5732781
+2026-10-13T21:45:55Z,football,South Korea K-League 2,Busan I Park,Jeonnam Dragons,,,让球主胜,hc,1.93,0,1.8766,2.85,0,2,1792308600,ALL,pinnacle,,,validate,,-0.5,5732781
+2026-10-13T21:48:02Z,football,Venezuela Cup,Trujillanos FC,Rayo Zuliano,,,客胜,1x2,3.39,0,3.0561,10.93,0,3,1792008000,ALL,pinnacle,,,validate,,,5715225
+2026-10-13T22:01:22Z,football,Japan J. League Cup,Yokohama F Marinos,Shimizu S Pulse,,,主胜,1x2,2.01,0,1.9097,5.25,0,3,1791972000,BB,pinnacle,,,validate,,,5713878
+2026-10-13T22:02:57Z,football,Venezuela Cup,Monagas SC,Dynamo Puerto FC,,,小球,ou,1.97,0,1.8824,4.65,0,3,1792015200,ALL,pinnacle,,,validate,,3.0,5702957
+2026-10-13T22:18:56Z,football,Venezuela Cup,Trujillanos FC,Rayo Zuliano,,,双重机会-和局/客,dc,1.76,0,1.5311,14.95,0,3,1792008000,ALL,pinnacle,,,validate,,,5715225
+2026-10-13T22:49:51Z,football,CONCACAF Caribbean Cup-Playoff,Portmore United,Violette AC,,,和局,1x2,3.13,0,3.0347,3.14,0,3,1791936000,BB,pinnacle,,,validate,,,5629203
