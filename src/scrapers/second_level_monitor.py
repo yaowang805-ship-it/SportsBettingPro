@@ -219,6 +219,7 @@ OBS_STATE_FILE = ROOT / "data" / "storage" / "observe_release_state.json"
 PIN_TRIGGER_FILE = ROOT / "data" / "storage" / "pin_trigger.jsonl"  # Pin drop 触发信号(scripts/pin_ws_trigger.py 写)
 PIN_LIVE_TICK_FILE = ROOT / "data" / "storage" / "pin_live_tick.ts"  # Pin WS live 帧触发信号时间戳(2026-10-11)
 DAILY_STAKE_LIMIT = 1000  # 新释放盘口当日累计投注额上限(2026-09-12 用户要求), 次日实盘ROI>4%解除
+DAILY_LOSS_LIMIT = 200   # 2026-10-13 探针单日亏损熔断: 资本10000的2%, 当日实盘亏损超200即停
 PENDING_SETTLE_FILE = ROOT / "data" / "storage" / "pending_settle.json"  # 结算明细缓存(每小时汇总推一次)
 SETTLE_PUSH_INTERVAL = 3600  # 结算明细每小时汇总推一次(2026-09-12 用户要求, 不一场推一场)
 SETTLE_PUSH_TS_FILE = ROOT / "data" / "storage" / "settle_push_ts.txt"  # 上次结算推送时间戳(落盘, 重启不归零, 防重复推送)
@@ -628,6 +629,7 @@ class SecondLevelMonitor:
         self._lev_fail_log_ts = 0.0  # 失败统计落盘节流(300s 一次)
         self._token_ok_until = 0.0     # token 有效缓存到期时间戳(10min 缓存, 省每单 1s 探测)
         self._attempted = {}           # 滚球指纹去重: match_id -> {market_id -> 尝试时间戳}
+        self._pin_event_bet = set()    # 2026-10-13 同 Pin 事件互斥: 已下注的 pin_matchup_id(一事件一注)
         self._last_bet_time = 0.0      # 上次下单时间(非阻塞限频用)
         self._bet_delay = 0.0          # 下一单需等待的随机间隔(10-15s, 每次下单后重抽)
         # 上次结算汇总推送时间(每小时推一次, 2026-09-12)。落盘读取, 重启不归零 → 防「每次重启都立即重推结算」。
@@ -1265,6 +1267,24 @@ class SecondLevelMonitor:
         if market_id is None:
             return
         from src.betting.bb_auto_bet import _load_stake_record, place_single_bet, check_sub_market_bet
+        # 2026-10-13 探针闸门(测量不赌博, 本地判断 Fail Fast):
+        # 1) degraded_mode gated: 非 Pin 触发(bf_ws/poll 兜底)=异质锚污染, 不下注
+        if self._trigger_source != "pin":
+            self._count_skip("degraded_mode")
+            print(f"  ⏭️ gate=degraded_mode 非Pin触发({self._trigger_source}), 跳过 {tag}", flush=True)
+            return
+        # 2) 单日亏损熔断: 当日实盘亏损超 DAILY_LOSS_LIMIT 即停
+        _today_pnl = _recent_pnl(days=1)
+        if _today_pnl < -DAILY_LOSS_LIMIT:
+            self._count_skip("daily_loss")
+            print(f"  ⏭️ gate=daily_loss 当日亏损{_today_pnl:.0f}超{-DAILY_LOSS_LIMIT}, 跳过 {tag}", flush=True)
+            return
+        # 3) 同 pin_event_id 互斥: 同一 Pin 价格事件只下一注(防让球/大小球/独赢三盘口同时上, 相关性记账)
+        _pin_eid = sig.get("pin_matchup_id")
+        if _pin_eid and _pin_eid in self._pin_event_bet:
+            self._count_skip("same_pin_event")
+            print(f"  ⏭️ gate=same_pin_event 同Pin事件已投, 跳过 {tag}", flush=True)
+            return
         # 同场同盘口互斥锁(2026-09-19): 同一 match 同一盘口只下一注(防对立方向/多线重复下注)
         if check_sub_market_bet(sig["match_id"], sig.get("sub")):
             print(f"  ⏭️ 同场同盘口已投, 跳过 {tag}", flush=True)
@@ -1412,6 +1432,8 @@ class SecondLevelMonitor:
         self._probe_token_async()  # 2026-09-28 token 探针移到投注后(后台, 不占下单关键路径)
         if code == 0:
             # 2026-10-11 冷却三层只在成交成功后记(拒单/void 不烧窗口)。
+            if _pin_eid:
+                self._pin_event_bet.add(_pin_eid)  # 2026-10-13 同Pin事件成交后记录(下次同事件跳过)
             if LIVE_COOLDOWN_PER_MARKET:
                 self._market_cooldown[(str(sig["match_id"]), str(market_id))] = time.time()
                 self._event_exposure[sig["match_id"]] = self._event_exposure.get(sig["match_id"], 0) + 1
