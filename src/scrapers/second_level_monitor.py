@@ -902,6 +902,10 @@ class SecondLevelMonitor:
             # 2026-10-13 结算断言: 记录终局比分(供未来独立重算校验) + 比分单调性自检
             # (终局比分不能小于下注瞬间 bsc, 否则下注瞬间比分或终局比分有一方脏 → 落盘 result_conflict)
             b["final_score"] = sc
+            # 2026-10-13 落盘 line_semantics: 让球盘口的 line 语义(赛前/滚球), 供未来重算/追溯
+            # (篮球=赛前让分, 足球/冰球等=滚球让分; 两个结算式子不许合并)
+            if b.get("sub") == "handicap":
+                b["line_semantics"] = "pregame" if b.get("sport") == 3 else "relative"
             _bsc = b.get("bsc")
             if isinstance(_bsc, list) and len(_bsc) >= 2:
                 try:
@@ -1019,6 +1023,7 @@ class SecondLevelMonitor:
                 continue
             # 按盘口类型取原始赔率 + 方向索引 + designation
             line_val = None
+            pin_points = None; neg_sign_used = False  # 2026-10-13 落盘: Pin 让分线 + 是否负号分支
             if sub == "opportunities":
                 ml = lv.get("moneyline") or []
                 if len(ml) == 3:
@@ -1034,9 +1039,16 @@ class SecondLevelMonitor:
                     continue
             elif sub == "handicap":
                 line_val = _extract_line(it.get("name", ""))
-                raw = _match_2way_line(line_val, lv.get("spread"))
+                _spread = lv.get("spread") or {}
+                raw = _match_2way_line(line_val, _spread)
                 if not raw:
                     continue
+                # 2026-10-13 落盘 pin_points(匹配到的 Pin 让分线) + neg_sign_used(是否走负号分支)
+                if line_val is not None and line_val in _spread:
+                    pin_points = line_val
+                elif line_val is not None and -line_val in _spread:
+                    pin_points = -line_val
+                    neg_sign_used = True
                 idx = {"主": 0, "客": 1}
                 desig = {"主": "让球主胜", "客": "让球客胜"}
             elif sub == "over_under":
@@ -1065,6 +1077,13 @@ class SecondLevelMonitor:
             sig = {"match_id": match_id, "sub": sub, "desig": desig[d],
                    "bb_odds": bb, "fair": fair_p, "ev": ev, "line": line_val,
                    "pin_raw": raw[i],  # Pin 原始价(去抽水前), 供推送展示(2026-09-14)
+                   # 2026-10-13 落盘 ev 层口径: pin_points(匹配到的Pin让分线) + neg_sign_used(负号分支)
+                   # + line_semantics(赛前/滚球) + ev_branch + ev_valid(篮球让球跨参考系=unverified)
+                   "pin_points": pin_points, "neg_sign_used": neg_sign_used,
+                   "line_semantics": ("pregame" if (sub == "handicap" and lv.get("sport") == 3)
+                                      else ("relative" if sub == "handicap" else None)),
+                   "ev_branch": sub,
+                   "ev_valid": "unverified" if (sub == "handicap" and lv.get("sport") == 3) else "ok",
                    # 2026-10-13 补英文队名+sport 顶层字段: _reverify_live_ev_oa 复验 Pin 公平价要英文队名
                    # (Pin 缓存 participants 是英文), 之前只在 match 里存中文优先名, 复验取顶层取空 → LEV 全 None。
                    "home_en": lv.get("home", ""), "away_en": lv.get("away", ""), "sport_id": lv.get("sport", ""),
