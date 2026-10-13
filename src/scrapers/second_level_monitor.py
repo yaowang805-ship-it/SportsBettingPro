@@ -1128,10 +1128,11 @@ class SecondLevelMonitor:
                     "pin_matchup_id": sig.get("pin_matchup_id"),
                     "sub": sig.get("sub"), "desig": sig.get("desig"),
                     "bb_odds": sig.get("bb_odds"), "line": sig.get("line"),
-                    # 2026-10-11 Pin 主锚 LEV: 存队名+运动, 供 _reverify_live_ev_oa 用 Pin 复验
-                    "home": _m.get("home") or _m.get("home_cn", ""),
-                    "away": _m.get("away") or _m.get("away_cn", ""),
-                    "sport": sig.get("sport"),
+                    # 2026-10-13 修: 存英文队名 home_en/away_en + sport_id, 供 _reverify_live_ev_oa 用
+                    # Pin 复验(Pin 缓存 participants 是英文)。之前存 home(中文)/sport(顶层空)→ 复验全 None。
+                    "home_en": sig.get("home_en") or _m.get("home") or _m.get("home_cn", ""),
+                    "away_en": sig.get("away_en") or _m.get("away") or _m.get("away_cn", ""),
+                    "sport_id": sig.get("sport_id") or _m.get("sport", ""),
                 },
                 "ts": time.time(),
             }

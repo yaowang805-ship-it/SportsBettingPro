@@ -1842,3 +1842,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-13T12:12:40Z,football,AGCFF Gulf Club Champions League,Al Nasr Dubai SC,Al Riffa SC,,,大球,ou,2.0,0,1.9552,2.29,0,2,1791907200,ALL,pinnacle,,,validate,,2.5,5735464
 2026-10-13T12:23:28Z,basketball,Euroleague,Olimpia Milano,Real Madrid,,,让分客胜,hc,1.86,0,1.8127,2.61,0,2,1791916200,ALL,pinnacle,,,validate,,-3.5,5355187
 2026-10-13T12:43:15Z,basketball,Euroleague,Baskonia Vitoria Gasteiz,BC Dubai,,,让分主胜,hc,1.88,0,1.7795,5.65,0,2,1791916200,ALL,pinnacle,,,validate,,+5.5,5355392
+2026-10-13T12:48:33Z,football,Japan J. League Cup,Mito Hollyhock,FC Tokyo,,,和局,1x2,3.41,0,2.41,41.49,0,3,1791972000,BB,pinnacle,,,validate,,,5713876
+2026-10-13T12:48:33Z,football,Japan J. League Cup,Mito Hollyhock,FC Tokyo,,,双重机会-主/和局,dc,1.91,0,1.6975,12.52,0,3,1791972000,BB,pinnacle,,,validate,,,5713876
