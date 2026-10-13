@@ -893,6 +893,16 @@ class SecondLevelMonitor:
                 continue
             profit = 0.0 if result == "push" else (stake * (odds - 1) if result == "won" else -stake)
             b["settled"] = True; b["result"] = result; b["profit"] = round(profit, 1)
+            # 2026-10-13 结算断言: 记录终局比分(供未来独立重算校验) + 比分单调性自检
+            # (终局比分不能小于下注瞬间 bsc, 否则下注瞬间比分或终局比分有一方脏 → 落盘 result_conflict)
+            b["final_score"] = sc
+            _bsc = b.get("bsc")
+            if isinstance(_bsc, list) and len(_bsc) >= 2:
+                try:
+                    if home < int(_bsc[0]) or away < int(_bsc[1]):
+                        b["result_conflict"] = True
+                except (ValueError, TypeError):
+                    pass
             changed = True
         # 删除「match_id 找不到比赛」的样本(连续 3 次 getMatchDetail 返回 None)
         _before = len(bets)
