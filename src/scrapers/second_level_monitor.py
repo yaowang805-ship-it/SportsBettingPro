@@ -1265,6 +1265,7 @@ class SecondLevelMonitor:
             return
         match_id = sig.get("match_id")  # 2026-10-13 修: 之前 fetch_current_odds(market_id, match_id, ...) 用裸 match_id 但没定义 → NameError 卡死下单
         market_id = sig.get("market_id")
+        option_type = sig.get("option_type")  # 2026-10-13 修: fetch_current_odds 也用裸 option_type
         if market_id is None:
             return
         from src.betting.bb_auto_bet import _load_stake_record, place_single_bet, check_sub_market_bet
