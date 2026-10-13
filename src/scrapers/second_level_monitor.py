@@ -1565,9 +1565,9 @@ class SecondLevelMonitor:
         k = idx.get(desig)
         # 1) Pin 主锚(2026-10-11): 1x2/hc/ou 优先用 Pin 实时赔率复验, Betfair 只兜底(btts/dc Pin 无覆盖)
         if sub in ("1x2", "hc", "ou"):
-            _home = sig.get("home", "")
-            _away = sig.get("away", "")
-            _sport = sig.get("sport")
+            _home = sig.get("home_en", "")
+            _away = sig.get("away_en", "")
+            _sport = sig.get("sport_id") or (sig.get("match") or {}).get("sport")
             if _home and _away and _sport:
                 try:
                     from src.scrapers.pinnapi_client import pinnacle_fair_price

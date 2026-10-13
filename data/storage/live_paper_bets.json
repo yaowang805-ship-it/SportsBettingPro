@@ -132802,5 +132802,35 @@
   "clv_sign": null,
   "clv_anchor": "no_outcome",
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1791895586.361888,
+  "match_id": 5317722,
+  "market_id": 131338069,
+  "option_type": 3,
+  "sport": 1,
+  "home": "蒙通联",
+  "away": "帕府联合",
+  "designation": "和局",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   1
+  ],
+  "bb_odds": 4.64,
+  "fair": 3.9097,
+  "ev": 18.68,
+  "spread": null,
+  "bb_ts": 1791895583.686047,
+  "stake": 90,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
