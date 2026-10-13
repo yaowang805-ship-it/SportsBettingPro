@@ -1844,3 +1844,10 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-13T12:43:15Z,basketball,Euroleague,Baskonia Vitoria Gasteiz,BC Dubai,,,让分主胜,hc,1.88,0,1.7795,5.65,0,2,1791916200,ALL,pinnacle,,,validate,,+5.5,5355392
 2026-10-13T12:48:33Z,football,Japan J. League Cup,Mito Hollyhock,FC Tokyo,,,和局,1x2,3.41,0,2.41,41.49,0,3,1791972000,BB,pinnacle,,,validate,,,5713876
 2026-10-13T12:48:33Z,football,Japan J. League Cup,Mito Hollyhock,FC Tokyo,,,双重机会-主/和局,dc,1.91,0,1.6975,12.52,0,3,1791972000,BB,pinnacle,,,validate,,,5713876
+2026-10-13T12:58:33Z,football,UEFA Champions League,Manchester City FC,Paris Saint Germain,,,双重机会-主/和局,dc,1.41,0,1.3669,3.15,0,2,1792004400,ALL,pinnacle,,,validate,,,5525959
+2026-10-13T12:58:33Z,football,Algeria Ligue 2,CA Batna,AS Khroub,,,让球客胜,hc,1.94,0,1.7466,11.07,0,3,1791900000,ALL,pinnacle,,,validate,,+1,5740253
+2026-10-13T12:58:33Z,basketball,Norway BLNO Basketball League,Baerums Verk Defenders,Centrum Tigers Oslo,,,主胜,1x2,1.77,0,1.5832,11.8,0,3,1791910800,ALL,pinnacle,,,validate,,,5305047
+2026-10-13T13:03:50Z,football,Germany 3rd Liga,SC Verl,Jahn Regensburg,,,小球,ou,1.99,0,1.9229,3.49,0,4,1791997200,ALL,pinnacle,,,validate,,3.5,5664733
+2026-10-13T13:08:35Z,football,Japan J. League Cup,Sagan Tosu,Avispa Fukuoka,,,和局,1x2,3.24,0,2.277,42.29,0,3,1791972000,BB,pinnacle,,,validate,,,5713881
+2026-10-13T13:08:35Z,football,Japan J. League Cup,Sagan Tosu,Avispa Fukuoka,,,双重机会-主/和局,dc,1.65,0,1.5061,9.55,0,3,1791972000,BB,pinnacle,,,validate,,,5713881
+2026-10-13T13:09:08Z,basketball,Norway BLNO Basketball League,Baerums Verk Defenders,Centrum Tigers Oslo,,,让分主胜,hc,1.92,0,1.6229,18.31,0,3,1791910800,ALL,pinnacle,,,validate,,-4.5,5305047

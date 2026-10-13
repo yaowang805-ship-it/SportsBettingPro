@@ -872,15 +872,20 @@ class SecondLevelMonitor:
                 if line is None:
                     continue  # hc/ou 缺 line, 跳(旧记录)
                 if desig == "让球主胜":
-                    # 2026-10-13 修根因: 之前用「下注后净胜」(home-hb)-(away-ab) 结算, 把 BB 的
-                    # 全场让分线 line 当成"下注后剩余让分", 主队已领先的分被重复让 →
-                    # 主队领先越多、让球主胜越亏(领先21分让21.5分几乎全亏 -97.9%)。
-                    # 不变式: line 是「该方向全场让分」(让球主胜 line<0=主队让|line|分),
-                    # 主队赢盘 ⇔ (home-away)+line > 0。直接用全场净胜结算。
-                    diff = (home - away) + line
+                    # 2026-10-13 修: line 语义按运动区分。篮球/冰球 line=「赛前让分」→ 全场净胜+line;
+                    # 足球 line=「滚球让分(相对下注瞬间)」→ 下注后净胜+line。之前全局用全场净胜, 把
+                    # 足球拧反(主队已领先球数被重复算, 主胜虚高 +23.9%, 客胜 -16.9% 是同一 bug 的镜像)。
+                    if b.get("sport") == 1:  # 足球 = 滚球让分
+                        hb, ab = _bet_score(b)
+                        diff = ((home - hb) + line) - (away - ab)
+                    else:  # 篮球/冰球等 = 赛前让分
+                        diff = (home - away) + line
                 elif desig == "让球客胜":
-                    # 同上, 客队赢盘 ⇔ (away-home)+line > 0(line<0=客队让分, >0=客队受让)。
-                    diff = (away - home) + line
+                    if b.get("sport") == 1:
+                        hb, ab = _bet_score(b)
+                        diff = ((away - ab) + line) - (home - hb)
+                    else:
+                        diff = (away - home) + line
                 elif desig == "大球":
                     diff = (home + away) - line
                 else:  # 小球
