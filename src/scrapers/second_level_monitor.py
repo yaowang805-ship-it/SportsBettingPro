@@ -1072,6 +1072,20 @@ class SecondLevelMonitor:
                 continue
             fair_p = fair[i]
             ev = (bb - fair_p) / fair_p * 100.0
+            # 2026-10-13 原始 tick 普查(补分母): 比价后、ev 过滤前落一条, 一行一条。
+            # 有了它才能算覆盖率/base rate("BB 到底有多少时候错"), 不被下注样本条件化。
+            try:
+                _tk = {"ts": time.time(), "match_id": match_id, "sub": sub, "desig": desig[d],
+                       "bb_price": bb, "pin_fair": round(fair_p, 4), "pin_raw": raw[i],
+                       "pin_points": pin_points, "ev": round(ev, 2),
+                       "trigger_source": self._trigger_source,
+                       "degraded_mode": (self._trigger_source != "pin"),
+                       "sport": lv.get("sport", ""),
+                       "home": lv.get("home", ""), "away": lv.get("away", "")}
+                with open(ROOT / "data" / "storage" / "live_tick_log.jsonl", "a", encoding="utf-8") as _tf:
+                    _tf.write(json.dumps(_tk, ensure_ascii=False) + "\n")
+            except Exception:
+                pass
             tag = f"{lv['home']} vs {lv['away']} [滚球] {desig[d]}"
             if ev < self.threshold:
                 continue
@@ -1369,6 +1383,7 @@ class SecondLevelMonitor:
                      "sub": sig.get("sub", ""), "line": sig.get("line"),
                      "league": sig["match"].get("league_cn", ""),
                      "trigger_source": self._trigger_source,
+                     "degraded_mode": (self._trigger_source != "pin"),  # 2026-10-13 降级标记: 非 Pin 触发(bf_ws/poll)=异质锚
                      "bb_ts": sig.get("bb_ts"), "lag_sec": _lag_sec,
                      "poll_ts": sig.get("poll_ts")}  # 触发时刻(供 latency-ROI 曲线, 2026-10-11)
         code, order_id, msg = place_single_bet(

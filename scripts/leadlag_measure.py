@@ -139,8 +139,10 @@ async def main():
                 if not q:
                     continue
                 recent = None
+                # 2026-10-13 修: 去掉 0<= 强制, 允许 BB 先动(找最近 sharp 不管前后, lag 可正可负)。
+                # 之前 0<=ts-s 只找 soft 之前的 sharp → 强制"BB 永远滞后", "100% 正"是配对假象。
                 for s in q:
-                    if 0 <= ts - s <= LAG_MAX and (recent is None or s > recent):
+                    if abs(ts - s) <= LAG_MAX and (recent is None or abs(ts - s) < abs(ts - recent)):
                         recent = s
                 if recent:
                     lags.append(ts - recent)

@@ -1855,3 +1855,12 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-13T13:21:32Z,football,AFC Champions League Two,Tai Po FC,Lion City Sailors FC,,,让球客胜,hc,1.8,0,1.6097,11.82,0,2,1792058400,BB,pinnacle,,,validate,,-0.5,5737128
 2026-10-13T13:21:32Z,football,AFC Champions League Two,Tai Po FC,Lion City Sailors FC,,,双重机会-和局/客,dc,1.24,0,1.2135,2.18,0,2,1792058400,BB,pinnacle,,,validate,,,5737128
 2026-10-13T13:29:02Z,football,Saudi Arabia Division 1,AL Raed FC,Jeddah Club,,,让球客胜,hc,1.91,0,1.8695,2.17,0,2,1791997200,BB,pinnacle,,,validate,,+1,5340776
+2026-10-13T13:44:17Z,football,Egypt Premier League,National Bank of Egypt SC,Talaea El Gaish,,,小球,ou,1.92,0,1.7043,12.66,0,2,1791900000,ALL,pinnacle,,,validate,,2.0,5709531
+2026-10-13T13:46:26Z,football,AFC Champions League Two,Tampines Rovers FC,Machida Zelvia,,,客胜,1x2,1.47,0,1.4046,4.66,0,2,1792066500,BB,pinnacle,,,validate,,,5737131
+2026-10-13T13:46:26Z,football,AFC Champions League Two,Tampines Rovers FC,Machida Zelvia,,,让球客胜,hc,1.93,0,1.6673,15.76,0,2,1792066500,BB,pinnacle,,,validate,,-1,5737131
+2026-10-13T13:46:26Z,football,AFC Champions League Two,Kuching City FC,Kitchee SC,,,主胜,1x2,2.13,0,1.7571,21.22,0,2,1792066500,BB,pinnacle,,,validate,,,5737132
+2026-10-13T13:46:26Z,football,AFC Champions League Two,Kuching City FC,Kitchee SC,,,小球,ou,2.0,0,1.8122,10.36,0,2,1792066500,BB,pinnacle,,,validate,,3.0,5737132
+2026-10-13T13:46:26Z,football,AFC Champions League Two,Kuching City FC,Kitchee SC,,,双重机会-主/和局,dc,1.37,0,1.2311,11.28,0,2,1792066500,BB,pinnacle,,,validate,,,5737132
+2026-10-13T13:49:07Z,football,Algeria Ligue 1,ES Setif,JS Kabylie,,,让球客胜,hc,1.82,0,1.7516,3.91,0,2,1791997200,ALL,pinnacle,,,validate,,+0.5,5741707
+2026-10-13T13:49:07Z,football,AGCFF Gulf Club Champions League,Al Nasr Dubai SC,Al Riffa SC,,,小球,ou,2.01,0,1.9552,2.8,0,2,1791907200,ALL,pinnacle,,,validate,,2.5,5735464
+2026-10-13T13:56:46Z,football,AFC Champions League Two,Kuching City FC,Kitchee SC,,,让球主胜,hc,2.0,0,1.9304,3.61,0,2,1792066500,BB,pinnacle,,,validate,,-0.5,5737132
