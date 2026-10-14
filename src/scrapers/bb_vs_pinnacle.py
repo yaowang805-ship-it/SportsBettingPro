@@ -1904,15 +1904,16 @@ def main():
     if _filtered:
         print(f"  🕐 已过滤 {_filtered} 场已开赛的比赛")
 
-    # V5: 网球只保留ATP/WTA正赛 (挑战赛/ITF/双打错配率极高, Pinnacle覆盖差)
+    # V5(2026-10-14 放开): 网球只拦双打(名字 "A / B" 歧义 + 0% 匹配 Pin)。
+    # ITF(M15/W15/W35/W50 60%匹配Pin)/Challenger(18%) 已放开 —— 之前"Pinnacle覆盖差"已不成立。
     _tennis_before = sum(1 for m in bb_matches if m.get("sport") == "tennis")
     bb_matches = [m for m in bb_matches if not (
         m.get("sport") == "tennis" and
-        any(kw in str(m.get("league","")) for kw in ("ITF", "Challenger", "挑战赛", "W15", "M15", "W25", "M25", "W35", "W50", "W75", "双打", "Doubles"))
+        any(kw in str(m.get("league","")) for kw in ("双打", "Doubles"))
     )]
     _tennis_filtered = _tennis_before - sum(1 for m in bb_matches if m.get("sport") == "tennis")
     if _tennis_filtered:
-        print(f"  🎾 网球仅保留ATP/WTA正赛, 过滤 {_tennis_filtered} 场低级别赛事")
+        print(f"  🎾 网球拦双打, 过滤 {_tennis_filtered} 场")
 
     # 过滤禁区联赛（中国足球等），在对比层就跳过
     _banned_file = DATA_DIR / "banned_leagues.json"
