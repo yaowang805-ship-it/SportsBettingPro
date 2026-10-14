@@ -192,7 +192,13 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     "football|1x2|客|*|early": 30,
     "basketball|1x2|主|*|early": 30,
     "basketball|1x2|客|*|early": 30,
+    # 2026-10-14 用户要求释放网球测试格(cap 30): 早盘=让盘(hc)主/客, 滚球=独赢(1x2)主/客。
+    "tennis|hc|主|*|early": 30,
+    "tennis|hc|客|*|early": 30,
+    "tennis|1x2|主|*|live": 30,
+    "tennis|1x2|客|*|live": 30,
 }
+
 
 
 DIR_N_MIN = 30              # 方向级赢率采信最小样本量(2026-09-12 15→50→30: 实盘方向样本, 30够)
