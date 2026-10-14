@@ -128,10 +128,11 @@ _pin_cache_idx = {"_ts": 0.0, "_idx": {}}
 _pin_cache_file = {"mtime": 0.0, "data": None}
 
 
-def _pin_cache_find_event(home, away):
+def _pin_cache_find_event(home, away, games=False):
     """从 pin_odds_cache.json(实时缓存)按队名找事件。返回 event dict 或 None。
 
     只认有 periods 的全量事件; 缓存 >60s 视为失效。文件 mtime 缓存 + 队名索引, 二次调用 ~0ms。
+    games=True(2026-10-14): 网球让局/总局数在 Pin 的 "(Games)" 子事件里, 键 = 归一化名+"games"。
     """
     try:
         f = Path(__file__).resolve().parent.parent.parent / "data" / "storage" / "pin_odds_cache.json"
@@ -163,7 +164,8 @@ def _pin_cache_find_event(home, away):
                         idx[(eh, ea)] = ev
             _pin_cache_idx["_ts"] = ts
             _pin_cache_idx["_idx"] = idx
-        return _pin_cache_idx["_idx"].get((_norm(home), _norm(away)))
+        _suf = "games" if games else ""
+        return _pin_cache_idx["_idx"].get((_norm(home) + _suf, _norm(away) + _suf))
     except Exception:
         return None
 
@@ -205,17 +207,21 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
     # 1) WS 实时缓存优先(秒级), 2) REST 兜底(15min 缓存 + 队名索引)
     # 2026-10-13: 2-way 运动(篮球/MMA/网球)BB 与 Pin 数据源主客标记可能相反(实测 13 场),
     # 正序查不到时反序再查, 标记 swapped → 后续把 fair 的 home/away 交换, 对齐 BB 主客方向。
+    # 2026-10-14 网球让局(hc_games)/总局数(ou)在 Pin 的 "(Games)" 子事件里(主事件 num_0 的
+    # spreads/totals 是让盘/总局盘数, 不是让局/总局局数)。games=True 用归一化名+"games" 键查子事件。
+    _games = (sport_id == 5 and sub_market in ("hc_games", "ou"))
+    _suf = "games" if _games else ""
     swapped = False
-    e = _pin_cache_find_event(home, away)
+    e = _pin_cache_find_event(home, away, games=_games)
     if not e:
-        e = _pin_cache_find_event(away, home)
+        e = _pin_cache_find_event(away, home, games=_games)
         if e:
             swapped = True
     if not e:
         idx = _get_event_index(pin_sid, event_type)
-        e = idx.get((_norm(home), _norm(away)))
+        e = idx.get((_norm(home) + _suf, _norm(away) + _suf))
         if not e:
-            e = idx.get((_norm(away), _norm(home)))
+            e = idx.get((_norm(away) + _suf, _norm(home) + _suf))
             if e:
                 swapped = True
     if not e:

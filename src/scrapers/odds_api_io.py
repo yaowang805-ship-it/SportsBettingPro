@@ -463,7 +463,11 @@ _COUNTRY_ALIAS = {
 
 def _norm_team(name):
     import re
-    n = re.sub(r'[^a-z0-9]', '', (name or '').lower())
+    # 2026-10-14 网球/羽毛球球员名带国家码后缀 "(USA)"/"(AUT)"/"(GBR)" (BB 侧), Pin 侧是干净名
+    # (无国家码), 不剥离则 "Tommy Paul (USA)"→tommypaulusa 永远配不上 Pin 的 tommypaul。
+    # 只剥尾部 2-3 大写字母国家码(实测 198/198 网球都带), 不误伤 "(Games)"(5字母) 等 Pin 事件后缀。
+    name = re.sub(r'\s*\([A-Z]{2,3}\)\s*$', '', (name or '').strip())
+    n = re.sub(r'[^a-z0-9]', '', name.lower())
     # 俱乐部后缀归一(与 pinnacle_live._norm_team 同口径, 2026-09-29 补): FC/SC/CF 等去后缀
     for suf in ("footballclub", "club", "cfc", "afc", "fc", "sc", "cf", "cd", "ac"):
         if n.endswith(suf) and len(n) > len(suf) + 3:
