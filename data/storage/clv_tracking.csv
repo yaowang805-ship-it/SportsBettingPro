@@ -2164,3 +2164,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-14T12:47:16Z,football,Scotland Championship,Ayr United FC,Partick Thistle FC,,,和局,1x2,3.83,0,2.4356,57.25,0,2,1792175400,ALL,pinnacle,,,validate,,,5718019
 2026-10-14T12:47:16Z,football,Scotland Championship,Ayr United FC,Partick Thistle FC,,,双重机会-主/和局,dc,1.97,0,1.6594,18.72,0,2,1792175400,ALL,pinnacle,,,validate,,,5718019
 2026-10-14T12:57:06Z,basketball,Arab Basketball Club Championship,Al Rayyan,Sagesse,,,让分主胜,hc,1.91,0,1.8186,5.03,0,3,1792002600,ALL,pinnacle,,,validate,,+12.5,5739241
+2026-10-14T12:57:40Z,football,UEFA Champions League,Bodo/Glimt,Borussia Dortmund,,,双重机会-和局/客,dc,1.43,0,1.3919,2.74,0,2,1792004400,ALL,pinnacle,,,validate,,,5509909
+2026-10-14T13:07:26Z,football,Germany Bundesliga,Eintracht Frankfurt,FC Koln,,,和局,1x2,4.39,0,4.3017,2.05,0,1,1792175400,ALL,pinnacle,,,validate,,,5581859
+2026-10-14T13:18:49Z,football,Cyprus Cup,Spartakos Kitiou FC,Ypsonas FC,,,双重机会-主/客,dc,1.12,0,1.0712,4.56,0,3,1791990000,ALL,pinnacle,,,validate,,,5713929
