@@ -424,7 +424,7 @@ def _close_direction_fair(close, sub_market, designation, swapped=False):
         return close.get(key)
     if sub_market in ("1x2", "ht"):
         idx = {"主": "home", "和": "draw", "客": "away"}
-    elif sub_market in ("hc", "ht_hc"):
+    elif sub_market in ("hc", "ht_hc", "hc_games"):
         idx = {"主": "home", "客": "away"}
     elif sub_market in ("ou", "ht_ou"):
         idx = {"大": "over", "小": "under"}
