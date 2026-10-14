@@ -2358,3 +2358,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-14T13:52:54Z,football,Scotland Championship,Ayr United FC,Partick Thistle FC,,,客胜,1x2,1.8,0,1.7369,3.63,0,2,1792175400,ALL,pinnacle,,,validate,,,5718019
 2026-10-14T13:57:37Z,football,Thailand League 2,Khon Kaen United FC,Chainat Hornbill FC,,,主胜,1x2,1.69,0,1.6354,3.34,0,3,1792065600,ALL,pinnacle,,,validate,,,5317677
 2026-10-14T14:02:36Z,basketball,Chile LNB,奥索尔诺西班牙人,康塞普西翁大学,奥索尔诺西班牙人,康塞普西翁大学,客胜,1x2,1.72,1.4808,1.587,8.38,30,4,1792024200.0,BB,,,,push,,,
+2026-10-14T14:07:24Z,football,Venezuela Cup,亚拉库雅诺斯,巴基西梅托 SC,亚拉库雅诺斯,巴基西梅托 SC,主胜,1x2,1.97,1.6803,1.7672,11.48,30,3,1792008000.0,BB,,,,push,,,
+2026-10-14T14:07:24Z,football,Venezuela Cup,亚拉库雅诺斯,巴基西梅托 SC,亚拉库雅诺斯,巴基西梅托 SC,让球主胜,hc,1.97,1.6757,1.7924,9.91,0,3,1792008000.0,BB,,,,push,,-0.5,
+2026-10-14T14:07:24Z,basketball,Switzerland NLB,黄金海岸小袋鼠,中央瑞士,黄金海岸小袋鼠,中央瑞士,客胜,1x2,4.39,3.03,4.0046,9.62,0,3,1792002600.0,FB,,,,push,,,
