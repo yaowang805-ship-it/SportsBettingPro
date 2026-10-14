@@ -102,6 +102,8 @@ def _get_all_matches(token, domain):
                     break
                 data = d.get("data") or {}
                 recs = data.get("records") or []
+                for _rec in recs:
+                    _rec["_sport_id"] = sport_id  # 2026-10-15 打标运动id, 供 find_market_from_match 按运动找盘口码
                 all_recs.extend(recs)
                 page_total = data.get("pageTotal") or 1
                 if page >= page_total or not recs:

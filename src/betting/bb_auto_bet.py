@@ -656,28 +656,43 @@ def find_market_from_match(match, sub_market="1x2", direction=None):
     direction: "主"/"客"/"和"/"大"/"小" 或 optionType 数字
     返回 (market_id, odds, option_type) 或 None
     """
-    # 盘口 → (mty, pe) 码。mty=盘口类型码(语言无关), pe=period(1001全场/1002半场)。
-    # 必须同时匹配 mty+pe, 否则"上半场1x2"(1005+1002)会被误当成"全场1x2"(1005+1001)。
-    market_codes = {
-        "1x2": [(1005, 1001)],
-        "hc": [(1000, 1001)],
-        "ou": [(1007, 1001)],
-        "dc": [(1012, 1001)],
-        "ht": [(1005, 1002)],            # 上半场独赢
-        "ht_hc": [(1000, 1002)],         # 上半场让球
-        "ht_ou": [(1007, 1002)],         # 上半场大小
-        "ht_dc": [(1012, 1002)],         # 上半场双机会
-        "htft": [(1033, 1001)],          # 半全场
-        "correct_score": [(1099, 1001), (1188, 1001)],   # 正确比分(全场)
-        "correct_score_ht": [(1100, 1002), (1188, 1002)],  # 上半场正确比分
-        "exact_goals_ht": [(1103, 1002)],  # 上半场精确进球
-        "btts": [(1027, 1001)],          # 双边进球
-        "corner": [(1009, 1001), (1010, 1001), (1011, 1001)],  # 角球(独赢/大小/让球)
-        "oe": [(1008, 1001)],            # 单双
-        "winning_margin": [(1018, 1001)],  # 净胜球
-        "total_goals": [(1101, 1001)],   # 总进球区间
+    # 2026-10-15 运动感知: 各运动盘口码不同(足球1x2=1005/篮球=3004/网球=5001...),
+    # 之前硬编码足球码 → 篮球/网球早盘机会找到 +EV 也"未找到盘口"下不了单。
+    _sport_id = match.get("_sport_id")
+    if _sport_id is None:
+        for _mg in match.get("mg", []):
+            _m = _mg.get("mty", 0)
+            if 1000 <= _m < 2000: _sport_id = 1; break
+            elif 2000 <= _m < 3000: _sport_id = 2; break
+            elif 3000 <= _m < 4000: _sport_id = 3; break
+            elif 5000 <= _m < 6000: _sport_id = 5; break
+            elif 6000 <= _m < 7000: _sport_id = 6; break
+            elif 7000 <= _m < 8000: _sport_id = 7; break
+            elif 13000 <= _m < 14000: _sport_id = 13; break
+            elif 15000 <= _m < 16000: _sport_id = 15; break
+    # 主盘口(全场): 运动 → sub_market → (mty, ft period)。mty=盘口类型码(语言无关),
+    # pe=period(分运动: 足球1001/篮球3001/网球5001...), 必须同时匹配 mty+pe 才能区分全场/半场。
+    _MAIN_CODES = {
+        1: {"1x2": (1005, 1001), "hc": (1000, 1001), "ou": (1007, 1001),
+            "dc": (1012, 1001), "btts": (1027, 1001)},
+        3: {"1x2": (3004, 3001), "hc": (3002, 3001), "ou": (3003, 3001)},
+        5: {"1x2": (5001, 5001), "hc": (5004, 5001), "hc_games": (5002, 5001), "ou": (5003, 5001)},
+        7: {"1x2": (7003, 7001), "hc": (7001, 7001), "ou": (7002, 7001)},
+        6: {"1x2": (6003, 6001), "hc": (6001, 6001), "ou": (6002, 6001)},
+        2: {"1x2": (2003, 2001), "hc": (2001, 2001), "ou": (2002, 2001)},
     }
-    target_codes = market_codes.get(sub_market)
+    _code = _MAIN_CODES.get(_sport_id, {}).get(sub_market)
+    target_codes = [_code] if _code is not None else None
+    if target_codes is None and _sport_id == 1:
+        # 足球专属特殊盘口(半场/正确比分等)保留旧码
+        market_codes = {
+            "ht": [(1005, 1002)], "ht_hc": [(1000, 1002)], "ht_ou": [(1007, 1002)], "ht_dc": [(1012, 1002)],
+            "htft": [(1033, 1001)], "correct_score": [(1099, 1001), (1188, 1001)],
+            "correct_score_ht": [(1100, 1002), (1188, 1002)], "exact_goals_ht": [(1103, 1002)],
+            "corner": [(1009, 1001), (1010, 1001), (1011, 1001)], "oe": [(1008, 1001)],
+            "winning_margin": [(1018, 1001)], "total_goals": [(1101, 1001)],
+        }
+        target_codes = market_codes.get(sub_market)
     # 方向 → optionType
     dir_map = {
         "主": 1, "客": 2, "和": 3, "大": 4, "小": 5,
