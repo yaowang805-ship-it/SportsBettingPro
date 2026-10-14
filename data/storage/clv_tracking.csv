@@ -2369,3 +2369,96 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-14T14:38:55Z,football,AFC Champions League Two,Tampines Rovers FC,Machida Zelvia,,,小球,ou,1.91,0,1.7669,8.1,0,2,1792066500,ALL,pinnacle,,,validate,,3.0,5737131
 2026-10-14T15:09:34Z,basketball,Euroleague,Hapoel Tel Aviv,Besiktas JK,,,主胜,1x2,1.38,0,1.3497,2.24,0,2,1791993600,ALL,pinnacle,,,validate,,,5355332
 2026-10-14T15:24:58Z,basketball,FIBA Europe Cup,Rilski Sportist,Esenler Erokspor,,,让分客胜,hc,1.87,0,1.7312,8.02,0,2,1791993600,ALL,pinnacle,,,validate,,-12.5,5706331
+2026-10-14T16:05:26Z,football,England Northern Premier League Division One,Stocksbridge Park Steels FC,Bridlington Town FC,,,主胜,1x2,3.64,0,3.434,6.0,0,2,1792003500,ALL,pinnacle,,,validate,,,5751957
+2026-10-14T16:05:26Z,football,England Northern Premier League Division One,Stocksbridge Park Steels FC,Bridlington Town FC,,,让球主胜,hc,2.01,0,1.8618,7.96,0,2,1792003500,ALL,pinnacle,,,validate,,+0.5,5751957
+2026-10-14T16:05:26Z,football,England Northern Premier League Division One,Stocksbridge Park Steels FC,Bridlington Town FC,,,双重机会-主/和局,dc,1.94,0,1.898,2.21,0,2,1792003500,ALL,pinnacle,,,validate,,,5751957
+2026-10-14T16:06:05Z,football,Saudi Arabia Division 1,AL Raed FC,Jeddah Club,,,让球主胜,hc,1.99,0,1.9218,3.55,0,2,1791997200,ALL,pinnacle,,,validate,,-1,5702969
+2026-10-14T16:06:38Z,basketball,Eurocup,Reyer Venezia,Turk Telekom,,,小分,ou,1.86,0,1.7313,7.43,0,3,1792004400,BB,pinnacle,,,validate,,168.5,5251391
+2026-10-14T16:12:49Z,tennis,ATP Challenger - Jinan Open,Yosuke Watanuki (JPN),Marin Cilic (CRO),,,主胜,1x2,2.62,0,2.3556,11.22,0,3,1792041000,BB,pinnacle,,,validate,,,5750764
+2026-10-14T16:12:49Z,tennis,ATP Challenger - Jinan Open,Yosuke Watanuki (JPN),Marin Cilic (CRO),,,让盘主胜,hc,1.62,0,1.5426,5.02,0,3,1792041000,BB,pinnacle,,,validate,,+1.5,5750764
+2026-10-14T16:25:33Z,football,UEFA Champions League,Bodo/Glimt,Borussia Dortmund,,,和局,1x2,4.33,0,4.0463,7.01,0,2,1792004402,ALL,pinnacle,,,validate,,,5509909
+2026-10-14T16:26:07Z,basketball,Israel Basketball National League,Elitzur Yavne,Hapoel Haifa BC,,,客胜,1x2,1.52,0,1.4862,2.27,0,3,1792144800,ALL,pinnacle,,,validate,,,5759927
+2026-10-14T16:28:52Z,volleyball,Argentina Volleyball Superiores Primera,Escuela Cangallo,77 Futbol Club,,,主胜,1x2,1.23,0,1.1726,4.9,0,2,1792022400,ALL,pinnacle,,,validate,,,5747588
+2026-10-14T16:31:10Z,football,Norway 1st Division,Hodd,Ranheim,,,让球主胜,hc,1.83,0,1.7827,2.65,0,2,1791997200,ALL,pinnacle,,,validate,,+0.5,4253914
+2026-10-14T16:41:20Z,basketball,Germany Pro A Basketball Bundesliga,Medi Bayreuth,Orange Academy,,,主胜,1x2,1.91,0,1.8434,3.61,0,3,1791997200,ALL,pinnacle,,,validate,,,5200734
+2026-10-14T16:41:20Z,basketball,FIBA Europe Cup,KK Split,KB Trepca,,,主胜,1x2,1.27,0,1.2412,2.32,0,2,1791997200,ALL,pinnacle,,,validate,,,5431071
+2026-10-14T16:46:49Z,basketball,Eurocup,CB San Pablo Burgos,Hapoel Jerusalem,,,让分主胜,hc,1.93,0,1.8025,7.07,0,3,1792002600,ALL,pinnacle,,,validate,,+5.5,5280348
+2026-10-14T16:51:06Z,football,England Premier League,Sunderland AFC,Leeds United,,,主胜,1x2,2.88,0,2.8104,2.48,0,1,1792945800,ALL,pinnacle,,,validate,,,5130854
+2026-10-14T16:55:57Z,football,USA Major League Soccer,Inter Miami CF,New York City FC,,,小球,ou,1.86,0,1.7994,3.37,0,1,1792020600,ALL,pinnacle,,,validate,,3.5,4231081
+2026-10-14T16:56:30Z,football,AFC Champions League Two,Tai Po FC,Lion City Sailors FC,,,小球,ou,1.91,0,1.8497,3.26,0,2,1792058400,BB,pinnacle,,,validate,,3.5,5737128
+2026-10-14T17:06:59Z,basketball,Germany Pro B Basketball Bundesliga,Dresden Titans,BBC Coburg,,,主胜,1x2,2.35,0,2.0093,16.96,0,3,1791999000,ALL,pinnacle,,,validate,,,5746422
+2026-10-14T17:06:59Z,basketball,Germany Pro B Basketball Bundesliga,Dresden Titans,BBC Coburg,,,让分主胜,hc,1.89,0,1.6517,14.43,0,3,1791999000,ALL,pinnacle,,,validate,,+3.5,5746422
+2026-10-14T17:11:59Z,tennis,WTA - Lisbon Open,Dalma Galfi (HUN),Matilde Jorge (POR),,,客胜,1x2,5.0,0,4.2787,16.86,0,2,1792058400,BB,pinnacle,,,validate,,,5748278
+2026-10-14T17:11:59Z,football,Germany 3rd Liga,Alemannia Aachen,Hansa Rostock,,,和局,1x2,3.77,0,2.5996,45.02,0,4,1792238400,ALL,pinnacle,,,validate,,,5439887
+2026-10-14T17:11:59Z,football,Germany 3rd Liga,Alemannia Aachen,Hansa Rostock,,,双重机会-主/和局,dc,1.49,0,1.4347,3.85,0,4,1792238400,ALL,pinnacle,,,validate,,,5439887
+2026-10-14T17:11:59Z,football,Germany 3rd Liga,Alemannia Aachen,Hansa Rostock,,,双重机会-和局/客,dc,1.5,0,1.4542,3.15,0,4,1792238400,ALL,pinnacle,,,validate,,,5439887
+2026-10-14T17:13:09Z,football,Spain Primera Division RFEF,FC Cartagena,CE Europa,,,主胜,1x2,1.67,0,1.5779,5.84,0,1,1792170000,BB,pinnacle,,,validate,,,5748552
+2026-10-14T17:14:17Z,tennis,WTA - Lisbon Open,Francisca Jorge (POR),Francesca Jones (GBR),,,让盘主胜,hc,2.75,0,2.6002,5.76,0,2,1792062600,BB,pinnacle,,,validate,,+1.5,5748281
+2026-10-14T17:14:17Z,tennis,WTA - Lisbon Open,Francisca Jorge (POR),Francesca Jones (GBR),,,大分,ou,1.8,0,1.7576,2.41,0,2,1792062600,BB,pinnacle,,,validate,,18.5,5748281
+2026-10-14T17:17:13Z,tennis,WTA - Lisbon Open,Dalma Galfi (HUN),Matilde Jorge (POR),,,让盘客胜,hc,2.6,0,2.4941,4.25,0,2,1792058400,BB,pinnacle,,,validate,,+1.5,5748278
+2026-10-14T17:17:13Z,tennis,WTA - Lisbon Open,Dalma Galfi (HUN),Matilde Jorge (POR),,,大分,ou,1.81,0,1.7606,2.81,0,2,1792058400,BB,pinnacle,,,validate,,18.5,5748278
+2026-10-14T17:21:09Z,tennis,WTA - Rovereto Open,Anouk Koevermans (NED),Lea Boskovic (CRO),,,主胜,1x2,1.6,0,1.5628,2.38,0,2,1792074600,BB,pinnacle,,,validate,,,5748247
+2026-10-14T17:44:56Z,tennis,ATP Challenger - Maia Open,Marco Trungelliti (ARG),Milos Karol (SVK),,,让盘客胜,hc,2.39,0,2.2566,5.91,0,3,1792058400,BB,pinnacle,,,validate,,+1.5,5749189
+2026-10-14T17:50:02Z,tennis,ATP Challenger - Maia Open,Marco Trungelliti (ARG),Milos Karol (SVK),,,客胜,1x2,4.6,0,4.4197,4.08,0,3,1792058400,BB,pinnacle,,,validate,,,5749189
+2026-10-14T17:52:18Z,football,USA Major League Soccer,FC Dallas,Seattle Sounders,,,让球客胜,hc,2.04,0,2.0,2.0,0,1,1792024200,ALL,pinnacle,,,validate,,+0.5,5684082
+2026-10-14T17:53:28Z,tennis,ATP Challenger - Olbia Open,Jacob Fearnley (GBR),Jan Kumstat (CZE),,,小分,ou,1.8,0,1.7458,3.1,0,3,1792069200,BB,pinnacle,,,validate,,22.5,5748266
+2026-10-14T17:55:42Z,tennis,ATP Challenger - Maia Open,Marco Trungelliti (ARG),Milos Karol (SVK),,,大分,ou,1.86,0,1.7795,4.52,0,3,1792058400,BB,pinnacle,,,validate,,20.5,5749189
+2026-10-14T18:10:25Z,tennis,WTA - Rovereto Open,Teodora Kostovic (SRB),Martyna Kubka (POL),,,主胜,1x2,1.57,0,1.5338,2.36,0,2,1792058400,BB,pinnacle,,,validate,,,5749215
+2026-10-14T18:12:41Z,football,UEFA Champions League,Bodo/Glimt,Borussia Dortmund,,,小球,ou,2.01,0,1.8875,6.49,0,2,1792004400,ALL,pinnacle,,,validate,,3.5,5525961
+2026-10-14T18:17:52Z,football,AFC Champions League Two,Gangwon FC,Phnom Penh Crown,,,大球,ou,2.02,0,1.8806,7.41,0,2,1792058400,ALL,pinnacle,,,validate,,2.5,5481262
+2026-10-14T18:33:44Z,basketball,Eurocup,La Laguna Tenerife,Maxima Roma,,,让分客胜,hc,1.91,0,1.8343,4.13,0,3,1792004400,ALL,pinnacle,,,validate,,+7.5,5531199
+2026-10-14T18:34:18Z,basketball,Eurocup,Reyer Venezia,Turk Telekom,,,客胜,1x2,2.05,0,2.0,2.5,0,3,1792004400,BB,pinnacle,,,validate,,,5251391
+2026-10-14T18:34:18Z,basketball,Eurocup,Reyer Venezia,Turk Telekom,,,让分客胜,hc,1.92,0,1.8766,2.31,0,3,1792004400,BB,pinnacle,,,validate,,+1.5,5251391
+2026-10-14T18:38:40Z,basketball,Uruguay Basketball Tercera de Ascenso,Auriblanco,Reducto,,,客胜,1x2,2.11,0,1.9098,10.48,0,4,1792021500,ALL,pinnacle,,,validate,,,5747810
+2026-10-14T18:38:40Z,basketball,Uruguay Basketball Tercera de Ascenso,Auriblanco,Reducto,,,让分客胜,hc,1.84,0,1.6723,10.03,0,4,1792021500,ALL,pinnacle,,,validate,,+2.5,5747810
+2026-10-14T18:48:09Z,football,Indonesia Super League,Persita Tangerang,Persija Jakarta,,,让球主胜,hc,1.8,0,1.7037,5.65,0,2,1792238400,ALL,pinnacle,,,validate,,+1,5730996
+2026-10-14T18:51:59Z,tennis,World Tennis - M25 Solapur Men Singles,Digvijay Pratap Singh (IND),Pranav Karthik (IND),,,主胜,1x2,1.1,0,1.0676,3.03,0,3,1792035000,BB,pinnacle,,,validate,,,5748822
+2026-10-14T18:58:34Z,football,UEFA Champions League,Manchester City FC,Paris Saint Germain,,,小球,ou,1.92,0,1.8639,3.01,0,2,1792004400,ALL,pinnacle,,,validate,,3.5,5509924
+2026-10-14T19:12:22Z,football,England Championship League,Swansea City,West Ham United,,,客胜,1x2,2.39,0,2.2549,5.99,0,2,1792245600,ALL,pinnacle,,,validate,,,5726282
+2026-10-14T19:12:22Z,football,England Championship League,Swansea City,West Ham United,,,双重机会-和局/客,dc,1.46,0,1.4266,2.34,0,2,1792245600,ALL,pinnacle,,,validate,,,5726282
+2026-10-14T19:12:22Z,football,England Championship League,Norwich City,Portsmouth FC,,,小球,ou,1.88,0,1.6883,11.35,0,2,1792245600,ALL,pinnacle,,,validate,,3.0,5726280
+2026-10-14T19:12:22Z,football,England Championship League,Birmingham City,Queens Park Rangers,,,主胜,1x2,2.02,0,1.9031,6.14,0,2,1792245600,ALL,pinnacle,,,validate,,,5726277
+2026-10-14T19:12:22Z,football,England Championship League,Birmingham City,Queens Park Rangers,,,让球主胜,hc,2.02,0,1.9403,4.11,0,2,1792245600,ALL,pinnacle,,,validate,,-0.5,5726277
+2026-10-14T19:12:22Z,football,England Championship League,Bristol City,Sheffield United FC,,,主胜,1x2,2.13,0,1.9969,6.67,0,2,1792245600,ALL,pinnacle,,,validate,,,5726278
+2026-10-14T19:28:13Z,tennis,World Tennis - M15 Monastir Men Singles,Carles Hernandez (ESP),Mathys Picard (FRA),,,客胜,1x2,3.42,0,3.1801,7.54,0,3,1792062000,BB,pinnacle,,,validate,,,5752720
+2026-10-14T19:28:45Z,tennis,World Tennis - M15 Monastir Men Singles,Felix Roussel (CAN),Anas Mazdrashki (BUL),,,主胜,1x2,4.92,0,4.7072,4.52,0,3,1792056600,BB,pinnacle,,,validate,,,5752724
+2026-10-14T19:34:14Z,football,Venezuela Cup,Yaracuyanos FC,Barquisimeto SC,,,让球客胜,hc,1.98,0,1.8788,5.39,0,3,1792008000,ALL,pinnacle,,,validate,,+0.5,5715224
+2026-10-14T19:34:14Z,football,Venezuela Cup,Yaracuyanos FC,Barquisimeto SC,,,双重机会-和局/客,dc,1.95,0,1.9116,2.01,0,3,1792008000,ALL,pinnacle,,,validate,,,5715224
+2026-10-14T19:35:55Z,ice_hockey,NHL,Tampa Bay Lightning,Seattle Kraken,,,大分,ou,1.94,0,1.8718,3.64,0,1,1792105200,BB,pinnacle,,,validate,,6.0,5646153
+2026-10-14T19:36:27Z,tennis,World Tennis - M15 Monastir Men Singles,Luca Castagnola (ITA),Kasra Rahmani (IRI),,,主胜,1x2,3.84,0,3.3978,13.01,0,3,1792053000,BB,pinnacle,,,validate,,,5752722
+2026-10-14T19:39:45Z,football,South Korea K-League 2,Gyeongnam FC,Chungnam Asan FC,,,小球,ou,1.96,0,1.8349,6.82,0,2,1792222200,ALL,pinnacle,,,validate,,2.5,5727140
+2026-10-14T19:44:07Z,tennis,ATP Challenger - Jinan Open,Luka Pavlovic (FRA),Mattia Bellucci (ITA),,,主胜,1x2,3.84,0,3.6758,4.47,0,3,1792041000,BB,pinnacle,,,validate,,,5750778
+2026-10-14T19:44:40Z,ice_hockey,NHL,New Jersey Devils,New York Rangers,,,大分,ou,2.04,0,1.9904,2.49,0,1,1792105200,BB,pinnacle,,,validate,,6.0,5646136
+2026-10-14T19:46:18Z,ice_hockey,NHL,Chicago Blackhawks,Winnipeg Jets,,,大分,ou,2.0,0,1.9437,2.9,0,1,1792108800,BB,pinnacle,,,validate,,6.0,5646154
+2026-10-14T19:49:33Z,football,Venezuela Cup,Yaracuyanos FC,Barquisimeto SC,,,客胜,1x2,3.08,0,2.8622,7.61,0,3,1792008000,ALL,pinnacle,,,validate,,,5715224
+2026-10-14T19:50:07Z,ice_hockey,NHL,Minnesota Wild,St. Louis Blues,,,大分,ou,2.04,0,1.9904,2.49,0,1,1792108800,BB,pinnacle,,,validate,,6.0,5646143
+2026-10-14T19:52:49Z,ice_hockey,NHL,Nashville Predators,San Jose Sharks,,,大分,ou,1.96,0,1.9042,2.93,0,1,1792108800,BB,pinnacle,,,validate,,6.0,5646146
+2026-10-14T20:05:13Z,basketball,Mexico LNBP Basketball League,Santos del Potosi,Abejas de Leon,,,客胜,1x2,2.13,0,1.9646,8.42,0,3,1792116000,ALL,pinnacle,,,validate,,,5744556
+2026-10-14T20:05:13Z,basketball,Mexico LNBP Basketball League,Santos del Potosi,Abejas de Leon,,,让分客胜,hc,1.89,0,1.7144,10.24,0,3,1792116000,ALL,pinnacle,,,validate,,+2.5,5744556
+2026-10-14T20:18:07Z,football,England Championship League,Norwich City,Portsmouth FC,,,主胜,1x2,1.75,0,1.6952,3.23,0,2,1792245600,ALL,pinnacle,,,validate,,,5728569
+2026-10-14T20:20:17Z,basketball,Mexico LNBP Basketball League,Santos del Potosi,Abejas de Leon,,,让分主胜,hc,1.82,0,1.7779,2.37,0,3,1792116000,ALL,pinnacle,,,validate,,+1.5,5744556
+2026-10-14T20:20:49Z,football,AFC Champions League Two,Kuching City FC,Kitchee SC,,,大球,ou,1.95,0,1.8309,6.5,0,2,1792066500,ALL,pinnacle,,,validate,,2.5,5737132
+2026-10-14T20:23:29Z,tennis,World Tennis - W15 Chisinau Women Singles,Zuzanna Bednarz (POL),Arina Gamretkaia (MDA),,,客胜,1x2,6.8,0,6.5307,4.12,0,3,1792056600,BB,pinnacle,,,validate,,,5753189
+2026-10-14T20:32:35Z,tennis,World Tennis - W35 Monastir Women Singles,Sofia Camila Rojas (USA),Ada Kumru (TUR),,,客胜,1x2,3.25,0,2.863,13.52,0,3,1792058400,BB,pinnacle,,,validate,,,5753137
+2026-10-14T20:38:29Z,football,England Championship League,Millwall FC,Lincoln City,,,主胜,1x2,2.01,0,1.9654,2.27,0,2,1792236600,ALL,pinnacle,,,validate,,,5730839
+2026-10-14T21:20:10Z,football,England Championship League,Millwall FC,Lincoln City,,,让球主胜,hc,1.94,0,1.896,2.32,0,2,1792236600,ALL,pinnacle,,,validate,,-0.5,5730839
+2026-10-14T21:25:30Z,tennis,World Tennis - M15 Monastir Men Singles,Carles Hernandez (ESP),Mathys Picard (FRA),,,主胜,1x2,1.42,0,1.3508,5.12,0,3,1792062000,BB,pinnacle,,,validate,,,5752720
+2026-10-14T21:32:26Z,ice_hockey,AHL,Hartford Wolf Pack,Lehigh Valley Phantoms,,,大分,ou,1.91,0,1.867,2.3,0,3,1792017000,BB,pinnacle,,,validate,,5.5,5644778
+2026-10-14T21:37:46Z,basketball,Germany Pro A Basketball Bundesliga,Tigers Tubingen,VFL Astrostars Bochum,,,让分主胜,hc,1.89,0,1.8405,2.69,0,3,1792171800,BB,pinnacle,,,validate,,-4.5,5200749
+2026-10-14T21:40:57Z,tennis,ATP Challenger - Catania Open,Pedro Vives Marcos (ESP),Max Wiskandt (GER),,,客胜,1x2,3.0,0,2.6876,11.62,0,3,1792062000,BB,pinnacle,,,validate,,,5748515
+2026-10-14T21:46:16Z,tennis,ATP Challenger - Catania Open,Pavel Lagutin (RUS),Massimo Giunta (ITA),,,客胜,1x2,2.25,0,2.1673,3.82,0,3,1792062000,BB,pinnacle,,,validate,,,5746775
+2026-10-14T21:47:53Z,tennis,WTA - Mallorca Open,Andrea Lazaro Garcia (ESP),Nuria Brancaccio (ITA),,,让盘客胜,hc,1.58,0,1.5448,2.28,0,2,1792051200,BB,pinnacle,,,validate,,+1.5,5746255
+2026-10-14T21:48:25Z,tennis,WTA - Mallorca Open,Tamara Zidansek (SLO),Joelle Lilly Sophie Steur (GER),,,让盘客胜,hc,1.64,0,1.5594,5.17,0,2,1792063800,BB,pinnacle,,,validate,,+1.5,5747701
+2026-10-14T21:52:09Z,football,USL Championship,Rhode Island FC,Loudoun United FC,,,小球,ou,2.0,0,1.9353,3.34,0,2,1792020600,ALL,pinnacle,,,validate,,3.0,5717948
+2026-10-14T22:02:19Z,football,Egypt Second Division A,El Mansoura,Al Nasr Cairo,,,小球,ou,1.75,0,1.7063,2.56,0,3,1792067400,ALL,pinnacle,,,validate,,2.0,5287822
+2026-10-14T22:08:11Z,basketball,Finland Basketball Division 1A,Aanekosken Huima,Lappeenrannan NMKY,,,大分,ou,1.84,0,1.7734,3.76,0,3,1792078200,ALL,pinnacle,,,validate,,160.5,5718271
+2026-10-14T22:28:29Z,football,USL League One,Greenville Triumph SC,Spokane Velocity FC,,,主胜,1x2,2.59,0,2.4992,3.63,0,2,1792018800,ALL,pinnacle,,,validate,,,5748346
+2026-10-14T22:34:22Z,football,UEFA Champions League,Fenerbahce,Slavia Prague,,,大球,ou,1.88,0,1.6961,10.84,0,2,1792514700,BB,pinnacle,,,validate,,2.5,5525981
+2026-10-14T22:34:22Z,basketball,British Basketball Super League,Cheshire Phoenix,London Lions,,,主胜,1x2,2.21,0,2.0571,7.43,0,2,1792341000,ALL,pinnacle,,,validate,,,5733386
+2026-10-14T22:37:03Z,football,Venezuela Cup,Deportivo Lara,Urena SC,,,小球,ou,1.99,0,1.9373,2.72,0,3,1792018800,ALL,pinnacle,,,validate,,2.5,5715226
+2026-10-14T22:43:27Z,football,USA Major League Soccer,FC Cincinnati,New England Revolution,,,让球客胜,hc,1.93,0,1.8875,2.25,0,1,1792020600,ALL,pinnacle,,,validate,,+0.5,4231086
+2026-10-14T22:46:08Z,football,UEFA Champions League,Real Madrid,RB Leipzig,,,大球,ou,1.92,0,1.7548,9.41,0,2,1792609200,BB,pinnacle,,,validate,,3.5,5526021
+2026-10-14T22:47:43Z,football,UEFA Champions League,Bayern Munich,Arsenal FC,,,大球,ou,1.86,0,1.6684,11.48,0,2,1792609200,BB,pinnacle,,,validate,,2.5,5526018
+2026-10-14T22:48:48Z,football,USL Championship,Rhode Island FC,Loudoun United FC,,,让球客胜,hc,2.0,0,1.944,2.88,0,2,1792020600,ALL,pinnacle,,,validate,,+1,5717948
+2026-10-14T22:51:25Z,basketball,Denmark Basketligaen,内斯提夫,斯文堡格兔子,内斯提夫,斯文堡格兔子,主胜,1x2,1.14,1.082,1.0959,4.02,30,2,1792083600.0,FB,,,,push,,,
+2026-10-14T22:51:25Z,basketball,Iceland Basketball Premier League,IR 雷克雅未克,阿佛坦斯,IR 雷克雅未克,阿佛坦斯,客胜,1x2,1.12,1.049,1.0634,5.32,30,2,1792091700.0,FB,,,,push,,,

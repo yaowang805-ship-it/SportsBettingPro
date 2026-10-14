@@ -1,5 +1,5 @@
 {
-  "balance": 16382.53,
+  "balance": 16322.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -46,6 +46,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792008000.0,
       "created_at": "2026-10-14T14:05:22.856470+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_内斯提夫_斯文堡格兔子_主胜",
+      "sport": "basketball",
+      "league": "丹麦篮球甲级联赛",
+      "home_team": "内斯提夫",
+      "away_team": "斯文堡格兔子",
+      "home_cn": "内斯提夫",
+      "away_cn": "斯文堡格兔子",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.14,
+      "stake": 30,
+      "model_prob": 0.9125,
+      "ev_pct": 4.02,
+      "pin_odds": 1.082,
+      "fair_price": 1.0959,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792083600.0,
+      "created_at": "2026-10-14T22:50:57.387275+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_IR_雷克雅未克_阿佛坦斯_客胜",
+      "sport": "basketball",
+      "league": "冰岛篮球超级联赛",
+      "home_team": "IR 雷克雅未克",
+      "away_team": "阿佛坦斯",
+      "home_cn": "IR 雷克雅未克",
+      "away_cn": "阿佛坦斯",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.12,
+      "stake": 30,
+      "model_prob": 0.9404,
+      "ev_pct": 5.32,
+      "pin_odds": 1.049,
+      "fair_price": 1.0634,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792091700.0,
+      "created_at": "2026-10-14T22:50:57.387317+00:00",
       "track_only": false
     }
   ],
@@ -9521,7 +9567,7 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-10-14",
+    "date": "2026-10-15",
     "used": 60.0,
     "bets": 2
   },
