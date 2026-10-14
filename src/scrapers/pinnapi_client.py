@@ -257,8 +257,9 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
                 if 'home' in fair['_raw'] and 'away' in fair['_raw']:
                     fair['_raw']['home'], fair['_raw']['away'] = fair['_raw']['away'], fair['_raw']['home']
         return fair
-    if sub_market == 'hc':
+    if sub_market in ('hc', 'hc_games'):
         # ht_hc(上半场让球) 同理: 半场 spreads 未解析, 全场 spreads 冒充半场 → 不定价(2026-10-12)
+        # hc_games(网球让局, 2026-10-14): 与 hc(让盘)共用逻辑, 事件已由上面 _games 定位到 "(Games)" 子事件
         spreads = full.get('spreads') or {}
         if not spreads:
             return None
