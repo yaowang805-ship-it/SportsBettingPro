@@ -311,7 +311,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
                 f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_ev_str} | 注额 ¥{stake:.0f} | 投注 {_bj} | 开赛 {_kickoff}")
             _append_bet_history(rec)
         else:
-            failed.append({"home": home, "away": away, "reason": f"code={code} {msg}"})
+            failed.append({"home": disp_home, "away": disp_away, "reason": f"code={code} {msg}"})
             # token 过期(14010) → 标记, 循环结束后发一次钉钉提醒(带30分钟节流)
             if code == 14010:
                 _token_expired_alert()
