@@ -1,7 +1,31 @@
 {
-  "balance": 16442.53,
+  "balance": 16412.53,
   "initial_bankroll": 20000.0,
-  "pending_bets": [],
+  "pending_bets": [
+    {
+      "id": "bb_vs_pin_1x2_奥索尔诺西班牙人_康塞普西翁大学_客胜",
+      "sport": "basketball",
+      "league": "智利全国篮球联赛",
+      "home_team": "奥索尔诺西班牙人",
+      "away_team": "康塞普西翁大学",
+      "home_cn": "奥索尔诺西班牙人",
+      "away_cn": "康塞普西翁大学",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.72,
+      "stake": 30,
+      "model_prob": 0.6301,
+      "ev_pct": 8.38,
+      "pin_odds": 1.4808,
+      "fair_price": 1.587,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792024200.0,
+      "created_at": "2026-10-14T14:01:45.965438+00:00",
+      "track_only": false
+    }
+  ],
   "settled": {
     "bb_vs_pin_handicap_托利马_约森独立队_让球客胜(0)": "won",
     "bb_vs_pin_1x2_累西腓航海_塞阿拉_和局": "lost",
@@ -9474,9 +9498,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-10-11",
-    "used": 1200.0,
-    "bets": 10
+    "date": "2026-10-14",
+    "used": 30.0,
+    "bets": 1
   },
   "updated": null
 }
