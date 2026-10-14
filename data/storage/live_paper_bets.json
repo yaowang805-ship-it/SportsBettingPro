@@ -198400,14 +198400,19 @@
   "spread": null,
   "bb_ts": 1791977174.0881972,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -30.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   85,
+   74
+  ],
+  "line_semantics": "pregame"
  },
  {
   "ts": 1791977174.911942,
@@ -198430,14 +198435,19 @@
   "spread": null,
   "bb_ts": 1791977174.0881972,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -30.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   85,
+   74
+  ],
+  "line_semantics": "pregame"
  },
  {
   "ts": 1791977188.8218691,
@@ -198460,14 +198470,19 @@
   "spread": null,
   "bb_ts": 1791977187.29938,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 26.4,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   75,
+   70
+  ],
+  "line_semantics": "pregame"
  },
  {
   "ts": 1791977188.828733,
@@ -198490,14 +198505,18 @@
   "spread": null,
   "bb_ts": 1791977187.29938,
   "stake": 100,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -100.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   75,
+   70
+  ]
  },
  {
   "ts": 1791977188.828922,
@@ -198520,14 +198539,18 @@
   "spread": null,
   "bb_ts": 1791977187.29938,
   "stake": 110,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 86.9,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   65,
+   72
+  ]
  },
  {
   "ts": 1791977188.829109,
@@ -198550,14 +198573,18 @@
   "spread": null,
   "bb_ts": 1791977187.29938,
   "stake": 95,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 79.8,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   95,
+   74
+  ]
  },
  {
   "ts": 1791977218.712966,
@@ -203739,6 +203766,36 @@
   "ev": 18.79,
   "spread": null,
   "bb_ts": 1791984029.927158,
+  "stake": 60,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": "no_outcome",
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1791984369.4187891,
+  "match_id": 5620399,
+  "market_id": 133511756,
+  "option_type": 2,
+  "sport": 1,
+  "home": "MS阿布埃尔马塔米尔",
+  "away": "城际足球俱乐部",
+  "designation": "让球客胜",
+  "sub": "handicap",
+  "line": -1.0,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.73,
+  "fair": 1.5071,
+  "ev": 14.79,
+  "spread": null,
+  "bb_ts": 1791984367.690312,
   "stake": 60,
   "settled": false,
   "result": null,

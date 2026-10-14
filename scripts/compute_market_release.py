@@ -155,58 +155,10 @@ MANUAL_OBSERVE_RELEASE = {
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
 # 优先于 MANUAL_OBSERVE_RELEASE 的区间。数据驱动拦截(observe_blocked)照常追加。
 MANUAL_OBSERVE_BLOCK = {
-    # 2026-10-03 概率桶迁移: 赔率区间→概率桶(按运动定制)。冷门(低概率)拦截, 大球全概率拦截。
-    "football|1x2|主|<10%|live",      # 主胜冷门 实盘 ROI -65.8%
-    "football|1x2|主|10-20%|live",
-    "football|1x2|主|20-30%|live",   # 主胜 3.0-5.0 edge -3.3pp
-    "football|1x2|主|30-40%|live",
-    "football|1x2|客|<10%|live",      # 客胜冷门
-    "football|1x2|客|10-20%|live",
-    "football|1x2|客|20-30%|live",   # 客胜 3.0-5.0 edge -3.3pp
-    "football|1x2|客|30-40%|live",   # 2026-10-10 撤: 实盘逆向选择(客胜全量14笔 -29.5% ROI)
-    "football|1x2|客|40-50%|live",
-    "football|1x2|客|50-55%|live",
-    "football|1x2|客|55-60%|live",
-    "football|1x2|客|60-70%|live",
-    "football|1x2|平|<10%|live",      # 和局冷门
-    "football|1x2|平|10-20%|live",
-    "football|1x2|平|20-30%|live",   # 和局 3.0-5.0 edge -5.5pp(头号巨亏)
-    "football|1x2|平|30-40%|live",
-    "football|ou|大|20-30%|live",    # 大球全概率拦截(1.0-5.0 → 概率20-100%)
-    "football|ou|大|30-40%|live",
-    "football|ou|大|40-50%|live",
-    "football|ou|大|50-55%|live",
-    "football|ou|大|55-60%|live",
-    "football|ou|大|60-70%|live",
-    "football|ou|大|>70%|live",
-    "football|ou|小|50-55%|live",    # 小球 1.5-2.0 edge -7.6pp(负格子)
-    "football|ou|小|55-60%|live",
-    "football|ou|小|60-70%|live",
-    "football|hc|主|30-40%|live",    # 让球主胜 2.0-3.0 edge -1.2pp(溢价负), 用户要求拦
-    "football|hc|主|40-50%|live",
-    "football|hc|主|50-55%|live",    # 2026-10-06 撤: 实盘10天 ROI -16.9%(n=19, 出血-444)
-    "football|hc|主|55-60%|live",    # 2026-10-06 撤: 实盘10天 ROI -15.5%(n=20, 出血-465)
-    "football|hc|主|60-70%|live",    # 2026-10-08 撤: 实盘三天 ROI -8.0%(n=31, 出血-459)
-    "football|btts|双方进球|50-55%|live",  # 2026-10-10 撤: 无LEV背书(clv未采集)+近2天实盘-52.7%
-    "football|btts|双方进球|55-60%|live",
-    "football|btts|双方进球|60-70%|live",
-    # 2026-09-19 让球主胜2.0-3.0 溢价负(edge-1.2pp/49%<50%隐含), 用户按「溢价或ROI任一为负」拦截;
-    # 让球客胜2.0-3.0仍正(+6.6pp)不拦。旧"撤销让球3格拦截"是锚点切换前pin口径, 现已用betfair口径重判。
-    # 早盘(保留旧拦截)
-    "football|ht|客|<10%|early",
-    "football|ht|客|10-20%|early",
-    # 2026-09-30 封锁 ht 客 冷门: 实盘 -20.7% ROI(8笔6负1胜胜率14%, 高赔率彩票型), 用户要求封锁
-    "football|ht|客|20-30%|early",
-    "football|ht|客|30-40%|early",
-    "football|1x2|平|20-30%|early",
-    "football|1x2|平|30-40%|early",
-    "football|ht_dc|客|50-55%|early",
-    "football|ht_dc|客|55-60%|early",
-    "football|ht_dc|客|60-70%|early",
-    "football|ht_dc|客|>70%|early",
-    # 2026-10-08 撤棒球独赢主胜<55%冷门: 观察库已结算 ROI -24.2%(n=14), 冷门被高估(与篮球/棒球冷门规律一致)
-    "baseball|1x2|主|<55%|live",
+    # 2026-10-14 用户要求放开所有拦截: 清空手动拦截(观察库全量收集, 释放格不再被手动拦)。
+    # 历史拦截依据(实盘 ROI 负/逆向选择/冷门高估)见 git 历史, 需要时按格子重新加回。
 }
+
 
 # 手动释放 + 当日累计上限(2026-09-15 用户要求): 释放的是"有希望的格子"试探, 单注≤150, 当日累计≤2000。
 # 2026-09-15 清空: 原 dc 早盘 1.0-3.0 是旧判据(赢率vs隐含)放的, 但 dc 在 CLV 口径下中位为负
@@ -235,7 +187,13 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     "football|1x2|平|20-30%|early": 100,
     "football|1x2|平|30-40%|early": 100,
     "football|1x2|平|40-50%|early": 100,
+    # 2026-10-14 用户要求释放独赢主/客(cap 30 试探)。足球/篮球 1x2 主/客早盘全桶。
+    "football|1x2|主|*|early": 30,
+    "football|1x2|客|*|early": 30,
+    "basketball|1x2|主|*|early": 30,
+    "basketball|1x2|客|*|early": 30,
 }
+
 
 DIR_N_MIN = 30              # 方向级赢率采信最小样本量(2026-09-12 15→50→30: 实盘方向样本, 30够)
 
