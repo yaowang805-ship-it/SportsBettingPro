@@ -1850,7 +1850,7 @@ def _collect_opportunities(match, market_key):
         # 用户要求: 所有进观察库的比赛都要能结算、统计真实可靠。
         _SETTLEABLE_MARKETS = {"1x2", "hc", "ou", "dc", "btts", "dnb",
                                "ht", "ht_hc", "ht_ou", "ht_dc", "ht_dnb",
-                               "correct_score_ht", "htft"}
+                               "correct_score_ht", "htft", "hc_games"}
         if sub_market not in _SETTLEABLE_MARKETS:
             continue
 

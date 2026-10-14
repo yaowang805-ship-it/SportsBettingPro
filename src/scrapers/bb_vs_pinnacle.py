@@ -1063,7 +1063,47 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     opp.setdefault("tags", []).append(line_info)
                 entry["handicap"].append(opp)
 
-        # 2026-09-18: 网球让局(hc_games) 已禁用 —— Betfair 网球 Spread 无法区分让盘/让局, 不再用 Pin 生成假溢价。
+        # 2026-10-14 重开网球让局(hc_games): Pin 用 "(Games)" 子事件单独提供让局(games)和总局数,
+        # 已能区分让盘(set)vs让局(game), 假溢价风险消除(之前禁用是因为 Betfair Spread 分不清两者)。
+        # 线匹配校验(0.25 容差)与让盘同口径, 语义错配会被拦。
+        if sport == "tennis" and not _is_doubles_mismatch:
+            _gh = (bb.get("odds_ft") or {}).get("games_handicap")
+            if isinstance(_gh, dict) and _gh.get("home_odds") and _gh.get("away_odds"):
+                _ghl = _gh.get("home_line") if _gh.get("home_line") is not None else _gh.get("away_line")
+                if _ghl is not None:
+                    _oa_gh = _oa_fair(entry, sport, "hc_games", target_line=_ghl)
+                    if _oa_gh and _oa_gh.get("home") and _oa_gh.get("away"):
+                        _bf_line = _oa_gh.get("line")
+                        if _bf_line is None or abs(float(_ghl) - float(_bf_line)) > 0.25:
+                            cal_blocked_hc += 1
+                        else:
+                            _hfair, _afair = _oa_gh["home"], _oa_gh["away"]
+                            _evh = (_gh["home_odds"] - _hfair) / _hfair * 100 if _hfair > 0 else 0
+                            _eva = (_gh["away_odds"] - _afair) / _afair * 100 if _afair > 0 else 0
+                            if _evh > 1:
+                                entry["handicap"].append({
+                                    "_market": "hc_games",
+                                    "designation": "让局主胜",
+                                    "line": _gh.get("home_line_str", ""),
+                                    "bb_odds": _gh["home_odds"],
+                                    "pin_odds": (_oa_gh.get("_raw") or {}).get("home"),
+                                    "fair_price": round(_hfair, 4),
+                                    "ev_pct": round(_evh, 2),
+                                    "pin_raw_at_decision": (_oa_gh.get("_raw") or {}).get("home"),
+                                    "water_pct": round((_hfair - (_oa_gh.get("_raw") or {}).get("home")) / (_oa_gh.get("_raw") or {}).get("home") * 100, 3) if (_oa_gh.get("_raw") or {}).get("home") else None,
+                                })
+                            if _eva > 1:
+                                entry["handicap"].append({
+                                    "_market": "hc_games",
+                                    "designation": "让局客胜",
+                                    "line": _gh.get("away_line_str", ""),
+                                    "bb_odds": _gh["away_odds"],
+                                    "pin_odds": (_oa_gh.get("_raw") or {}).get("away"),
+                                    "fair_price": round(_afair, 4),
+                                    "ev_pct": round(_eva, 2),
+                                    "pin_raw_at_decision": (_oa_gh.get("_raw") or {}).get("away"),
+                                    "water_pct": round((_afair - (_oa_gh.get("_raw") or {}).get("away")) / (_oa_gh.get("_raw") or {}).get("away") * 100, 3) if (_oa_gh.get("_raw") or {}).get("away") else None,
+                                })
 
         # --- 大小 (Over/Under) 带去抽水 ---
         ou_candidates = []
