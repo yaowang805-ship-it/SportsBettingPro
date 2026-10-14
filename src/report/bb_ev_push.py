@@ -1916,7 +1916,7 @@ def _collect_opportunities(match, market_key):
         _mtx_ev = _matrix_min_ev(sub_market, match.get("sport", ""),
                                   league=match.get("league", ""), lead_minutes=_lead_min)
         if _released and _mtx_ev is not None:
-            _mtx_ev = min(_mtx_ev, 8.0)  # 释放盘口不被 CLV 20% 封杀(ROI 已判过赚钱, CLV 负是假负)
+            _mtx_ev = min(_mtx_ev, 3.0)  # 2026-10-14 释放门槛 8%→3%(用户放量试探, 对齐 get_min_ev 3% 基础门槛)
         if not _dir_override and _mtx_ev is not None and ev < _mtx_ev:
             continue
 

@@ -2361,3 +2361,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-14T14:07:24Z,football,Venezuela Cup,亚拉库雅诺斯,巴基西梅托 SC,亚拉库雅诺斯,巴基西梅托 SC,主胜,1x2,1.97,1.6803,1.7672,11.48,30,3,1792008000.0,BB,,,,push,,,
 2026-10-14T14:07:24Z,football,Venezuela Cup,亚拉库雅诺斯,巴基西梅托 SC,亚拉库雅诺斯,巴基西梅托 SC,让球主胜,hc,1.97,1.6757,1.7924,9.91,0,3,1792008000.0,BB,,,,push,,-0.5,
 2026-10-14T14:07:24Z,basketball,Switzerland NLB,黄金海岸小袋鼠,中央瑞士,黄金海岸小袋鼠,中央瑞士,客胜,1x2,4.39,3.03,4.0046,9.62,0,3,1792002600.0,FB,,,,push,,,
+2026-10-14T14:08:14Z,tennis,World Tennis - M15 Lexington Men Singles,Michael Bassem Sobhy (EGY),Eli Stephenson (USA),,,让盘客胜,hc,1.51,0,1.48,2.03,0,3,1791988200,BB,pinnacle,,,validate,,+1.5,5750339
+2026-10-14T14:28:20Z,football,USA Major League Soccer,Toronto FC,Orlando City SC,,,大球,ou,2.0,0,1.9435,2.91,0,1,1792020600,ALL,pinnacle,,,validate,,3.5,4231082
+2026-10-14T14:28:20Z,football,AFC Champions League Two,BG Pathum United FC,Adelaide United FC,,,主胜,1x2,2.12,0,2.0715,2.34,0,2,1792066500,ALL,pinnacle,,,validate,,,5737133
+2026-10-14T14:33:38Z,football,Cyprus Cup,Spartakos Kitiou FC,Ypsonas FC,,,主胜,1x2,9.8,0,9.4188,4.05,0,3,1791990000,ALL,pinnacle,,,validate,,,5713929
+2026-10-14T14:33:38Z,football,Cyprus Cup,Spartakos Kitiou FC,Ypsonas FC,,,大球,ou,1.91,0,1.872,2.03,0,3,1791990000,ALL,pinnacle,,,validate,,3.0,5713929
