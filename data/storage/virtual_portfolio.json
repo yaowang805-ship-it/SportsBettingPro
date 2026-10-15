@@ -1,5 +1,5 @@
 {
-  "balance": 16142.53,
+  "balance": 16112.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -230,6 +230,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792072800.0,
       "created_at": "2026-10-15T09:02:02.691584+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_艾内科斯基汇马_拉普宾兰南NMKY_主胜",
+      "sport": "basketball",
+      "league": "芬兰篮球1A联赛",
+      "home_team": "艾内科斯基汇马",
+      "away_team": "拉普宾兰南NMKY",
+      "home_cn": "艾内科斯基汇马",
+      "away_cn": "拉普宾兰南NMKY",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.42,
+      "stake": 30,
+      "model_prob": 0.7316,
+      "ev_pct": 3.89,
+      "pin_odds": 1.3106,
+      "fair_price": 1.3668,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792078200.0,
+      "created_at": "2026-10-15T09:10:09.191419+00:00",
       "track_only": false
     }
   ],
@@ -9706,8 +9729,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-15",
-    "used": 240.0,
-    "bets": 8
+    "used": 270.0,
+    "bets": 9
   },
   "updated": null
 }
