@@ -19,6 +19,16 @@
     "bb": 4.39,
     "ts": 1791986844.5744698
   },
+  "football|AFC Champions League Two|Kuching City FC|Kitchee SC|主胜|1x2|2026-10-15": {
+    "ev": 4.4,
+    "bb": 1.83,
+    "ts": 1792029066.609663
+  },
+  "football|AFC Champions League Two|Kuching City FC|Kitchee SC|让球主胜(-0.5)|hc|-0.5|2026-10-15": {
+    "ev": 3.03,
+    "bb": 1.83,
+    "ts": 1792029066.6097212
+  },
   "football|Uganda Premier League|Kataka FC|Vipers SC|客胜|1x2|2026-10-15": {
     "ev": 14.35,
     "bb": 1.44,
@@ -34,14 +44,9 @@
     "bb": 1.97,
     "ts": 1791986844.5744262
   },
-  "football|AFC Champions League Two|Kuching City FC|Kitchee SC|主胜|1x2|2026-10-15": {
-    "ev": 4.4,
-    "bb": 1.83,
-    "ts": 1792029066.609663
-  },
-  "football|AFC Champions League Two|Kuching City FC|Kitchee SC|让球主胜(-0.5)|hc|-0.5|2026-10-15": {
-    "ev": 3.03,
-    "bb": 1.83,
-    "ts": 1792029066.6097212
+  "basketball|Mexico LNBP Basketball League|Santos del Potosi|Abejas de Leon|客胜|1x2|2026-10-16": {
+    "ev": 9.65,
+    "bb": 1.56,
+    "ts": 1792030579.892378
   }
 }

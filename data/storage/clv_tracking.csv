@@ -2497,3 +2497,10 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-15T01:42:55Z,football,USA Major League Soccer,Minnesota United FC,Saint Louis City SC,,,大球,ou,1.83,0,1.7927,2.08,0,1,1792269000,ALL,pinnacle,,,validate,,3.0,4231098
 2026-10-15T01:51:06Z,football,AFC Champions League Two,古晋城,杰志,古晋城,杰志,主胜,1x2,1.83,1.6369,1.7529,4.4,30,2,1792066500.0,BB,,,,push,,,
 2026-10-15T01:51:06Z,football,AFC Champions League Two,古晋城,杰志,古晋城,杰志,让球主胜,hc,1.83,1.6098,1.7762,3.03,0,2,1792066500.0,BB/FB,,,,push,,-0.5,
+2026-10-15T02:12:33Z,football,Canadian Premier League,Vancouver FC,HFX Wanderers FC,,,让球客胜,hc,1.82,0,1.6731,8.78,0,3,1792202400,ALL,pinnacle,,,validate,,+0.5,5727892
+2026-10-15T02:12:33Z,football,Canadian Premier League,Vancouver FC,HFX Wanderers FC,,,小球,ou,1.93,0,1.8909,2.07,0,3,1792202400,ALL,pinnacle,,,validate,,3.0,5727892
+2026-10-15T02:12:33Z,football,Canadian Premier League,Vancouver FC,HFX Wanderers FC,,,双重机会-和局/客,dc,1.76,0,1.7041,3.28,0,3,1792202400,ALL,pinnacle,,,validate,,,5727892
+2026-10-15T02:12:33Z,football,Algeria Ligue 2,USM EL Harrach,RC Arbaa,,,客胜,1x2,51.0,0,40.8137,24.96,0,3,1792072800,ALL,pinnacle,,,validate,,,5749432
+2026-10-15T02:12:33Z,football,Algeria Ligue 2,USM EL Harrach,RC Arbaa,,,小球,ou,1.79,0,1.716,4.31,0,3,1792072800,ALL,pinnacle,,,validate,,2.5,5749432
+2026-10-15T02:14:10Z,football,USA Major League Soccer,New England Revolution,Chicago Fire,,,和局,1x2,4.15,0,4.0622,2.16,0,1,1792279800,ALL,pinnacle,,,validate,,,4231094
+2026-10-15T02:16:19Z,basketball,Mexico LNBP Basketball League,桑托斯波托西,莱昂蜜蜂,桑托斯波托西,莱昂蜜蜂,客胜,1x2,1.56,1.3584,1.4227,9.65,30,3,1792116000.0,FB,,,,push,,,
