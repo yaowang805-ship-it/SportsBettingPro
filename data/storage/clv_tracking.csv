@@ -2673,3 +2673,24 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-15T12:56:35Z,football,Uganda Premier League,Kataka FC,Vipers SC,,,小球,ou,1.96,0,1.8909,3.65,0,2,1792069200,ALL,pinnacle,,,validate,,2.5,5750564
 2026-10-15T13:04:43Z,basketball,Euroleague,Virtus Bologna,Baskonia Vitoria Gasteiz,,,让分主胜,hc,1.85,0,1.8094,2.24,0,2,1792175400,ALL,pinnacle,,,validate,,-3.5,5355500
 2026-10-15T13:20:26Z,basketball,Euroleague,Panathinaikos BC,Hapoel Tel Aviv,,,让分主胜,hc,1.87,0,1.8027,3.73,0,2,1792174500,ALL,pinnacle,,,validate,,-8.5,5355465
+2026-10-15T13:29:39Z,tennis,World Tennis - W50 Stara Zagora Women Singles,Iva Ivanova (BUL),Federica Urgesi (ITA),,,主胜,1x2,4.42,0,3.8165,15.81,0,3,1792134000,BB,pinnacle,,,validate,,,5748825
+2026-10-15T13:36:46Z,basketball,Bulgaria NBL,Balkan Botevgrad,BC Levski,,,让分主胜,hc,1.92,0,1.8113,6.0,0,3,1792162800,ALL,pinnacle,,,validate,,-21.5,5722894
+2026-10-15T13:38:23Z,tennis,World Tennis - M15 Maringa Men Singles,Guilherme Barbieri Renner (BRA),Joao Eduardo Schiessl (BRA),,,让盘客胜,hc,1.6,0,1.545,3.56,0,3,1792092600,BB,pinnacle,,,validate,,-1.5,5755097
+2026-10-15T13:41:05Z,basketball,Iceland Basketball Premier League,UMF Tindastoll,Armann,,,大分,ou,1.84,0,1.7308,6.31,0,2,1792091700,ALL,pinnacle,,,validate,,183.5,5748973
+2026-10-15T13:42:10Z,football,South Africa National First Division,Gomora United,Cape Town City FC,,,客胜,1x2,2.4,0,2.2043,8.88,0,2,1792157400,BB,pinnacle,,,validate,,,5443053
+2026-10-15T13:42:42Z,football,USA Major League Soccer,Sporting Kansas City,Real Salt Lake,,,和局,1x2,4.13,0,2.7146,52.14,0,1,1792283400,ALL,pinnacle,,,validate,,,4231114
+2026-10-15T13:42:42Z,football,USA Major League Soccer,Sporting Kansas City,Real Salt Lake,,,双重机会-主/和局,dc,1.67,0,1.5371,8.65,0,1,1792283400,ALL,pinnacle,,,validate,,,4231114
+2026-10-15T13:42:42Z,football,USA Major League Soccer,Sporting Kansas City,Real Salt Lake,,,双重机会-和局/客,dc,1.43,0,1.3931,2.65,0,1,1792283400,ALL,pinnacle,,,validate,,,4231114
+2026-10-15T13:50:18Z,football,England League One,Mansfield Town,Oxford United,,,双重机会-主/和局,dc,1.38,0,1.3476,2.4,0,2,1792090800,ALL,pinnacle,,,validate,,,5718396
+2026-10-15T13:54:38Z,basketball,Sweden Basketball League,Norrkoping Dolphins,Koping Stars,,,主胜,1x2,1.06,0,1.0332,2.59,0,3,1792170240,ALL,pinnacle,,,validate,,,5753361
+2026-10-15T13:57:53Z,football,Venezuela Primera Division,Deportivo La Guaira,Trujillanos FC,,,双重机会-和局/客,dc,2.15,0,2.0852,3.11,0,2,1792267200,BB,pinnacle,,,validate,,,5372941
+2026-10-15T14:08:13Z,football,Venezuela Primera Division,Deportivo La Guaira,Trujillanos FC,,,主胜,1x2,1.73,0,1.6923,2.23,0,2,1792267200,BB,pinnacle,,,validate,,,5372941
+2026-10-15T14:18:34Z,basketball,Czech Republic Basketball 1 Liga,Valecnici Decin,Sokol Prazsky,,,主胜,1x2,1.09,0,1.0607,2.76,0,2,1792173600,BB,pinnacle,,,validate,,,5753532
+2026-10-15T14:20:12Z,football,New Zealand National League,Wellington Olympic,Eastern Suburbs AFC,,,客胜,1x2,2.93,0,2.6919,8.85,0,2,1792202400,BB,pinnacle,,,validate,,,5756323
+2026-10-15T14:20:12Z,football,New Zealand National League,Wellington Olympic,Eastern Suburbs AFC,,,让球客胜,hc,1.79,0,1.6563,8.07,0,2,1792202400,BB,pinnacle,,,validate,,+0.5,5756323
+2026-10-15T14:20:12Z,football,New Zealand National League,Wellington Olympic,Eastern Suburbs AFC,,,双重机会-和局/客,dc,1.74,0,1.685,3.26,0,2,1792202400,BB,pinnacle,,,validate,,,5756323
+2026-10-15T14:20:45Z,tennis,World Tennis - M15 Lexington Men Singles,Noah Zamora (USA),Pablo Martinez Gomez (ESP),,,让盘主胜,hc,1.56,0,1.5176,2.79,0,3,1792077600,BB,pinnacle,,,validate,,+1.5,5755084
+2026-10-15T14:23:59Z,basketball,Japan B.League Premier,Kawasaki Brave Thunders,Ibaraki Robots,,,客胜,1x2,2.77,0,2.5227,9.8,0,2,1792145100,BB,pinnacle,,,validate,,,5298123
+2026-10-15T14:23:59Z,basketball,Japan B.League Premier,Kawasaki Brave Thunders,Ibaraki Robots,,,让分客胜,hc,1.89,0,1.709,10.59,0,2,1792145100,BB,pinnacle,,,validate,,+5.5,5298123
+2026-10-15T14:23:59Z,basketball,Japan B.League Premier,Saga Ballooners,Levanga Hokkaido,,,小分,ou,1.84,0,1.7828,3.21,0,2,1792145100,BB,pinnacle,,,validate,,179.5,5298118
+2026-10-15T14:30:50Z,basketball,Euroleague,米兰奥林匹亚,迪拜,米兰奥林匹亚,迪拜,主胜,1x2,2.2,2.02,2.1057,4.48,30,2,1792089000.0,BB,,,,push,,,
