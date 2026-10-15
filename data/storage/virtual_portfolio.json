@@ -1,5 +1,5 @@
 {
-  "balance": 16322.53,
+  "balance": 16292.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -92,6 +92,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792091700.0,
       "created_at": "2026-10-14T22:50:57.387317+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_卡达卡_毒蛇_客胜",
+      "sport": "football",
+      "league": "乌干达超级联赛",
+      "home_team": "卡达卡",
+      "away_team": "毒蛇",
+      "home_cn": "卡达卡",
+      "away_cn": "毒蛇",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.44,
+      "stake": 30,
+      "model_prob": 0.7941,
+      "ev_pct": 14.35,
+      "pin_odds": 1.2331,
+      "fair_price": 1.2593,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792069200.0,
+      "created_at": "2026-10-15T01:12:26.437422+00:00",
       "track_only": false
     }
   ],
@@ -9568,8 +9591,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-15",
-    "used": 60.0,
-    "bets": 2
+    "used": 90.0,
+    "bets": 3
   },
   "updated": null
 }
