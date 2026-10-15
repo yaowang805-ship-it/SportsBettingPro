@@ -203,6 +203,10 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     "football|hc|客|*|live": 80,
     "basketball|hc|主|*|live": 60,
     "basketball|hc|客|*|live": 80,
+    # 2026-10-15 释放大小大(样本>50 ROI正): 足球50-55%/篮球45-55%/冰球55-65%, cap30试探。
+    "football|ou|大|50-55%|live": 30,
+    "basketball|ou|大|45-55%|live": 30,
+    "ice_hockey|ou|大|55-65%|live": 30,
 }
 
 

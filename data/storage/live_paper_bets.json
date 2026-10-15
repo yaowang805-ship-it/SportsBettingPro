@@ -280613,14 +280613,18 @@
   "spread": null,
   "bb_ts": 1792067459.998573,
   "stake": 130,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 109.2,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   0,
+   2
+  ]
  },
  {
   "ts": 1792067508.118558,
@@ -280643,14 +280647,18 @@
   "spread": null,
   "bb_ts": 1792067507.282528,
   "stake": 130,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -130.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   1
+  ]
  },
  {
   "ts": 1792067508.118932,
@@ -280673,14 +280681,19 @@
   "spread": null,
   "bb_ts": 1792067507.282528,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 54.6,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   1
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1792067564.7082849,
@@ -280703,14 +280716,18 @@
   "spread": null,
   "bb_ts": 1792067562.9209201,
   "stake": 135,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -135.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   2,
+   1
+  ]
  },
  {
   "ts": 1792067579.134272,
@@ -284693,6 +284710,36 @@
   "spread": null,
   "bb_ts": 1792074583.145476,
   "stake": 125,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": "no_outcome",
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1792074769.2660701,
+  "match_id": 5748616,
+  "market_id": 133473885,
+  "option_type": 1,
+  "sport": 5,
+  "home": "卡洛·阿尔贝托.卡尼亚托 (意大利)",
+  "away": "马文.默勒 (德国)",
+  "designation": "让局主胜",
+  "sub": "handicap_games",
+  "line": -2.5,
+  "bsc": [
+   0,
+   1
+  ],
+  "bb_odds": 2.06,
+  "fair": 1.8529,
+  "ev": 11.18,
+  "spread": null,
+  "bb_ts": 1792074768.514527,
+  "stake": 30,
   "settled": false,
   "result": null,
   "profit": null,
