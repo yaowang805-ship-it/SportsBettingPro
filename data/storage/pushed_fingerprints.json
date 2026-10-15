@@ -1,4 +1,9 @@
 {
+  "basketball|Chile LNB|ABA Ancud|Universidad de Concepcion|客胜|1x2|2026-10-16": {
+    "ev": 5.12,
+    "bb": 1.25,
+    "ts": 1792034613.306437
+  },
   "basketball|Chile LNB|Espanol Osorno|Universidad de Concepcion|客胜|1x2|2026-10-15": {
     "ev": 8.38,
     "bb": 1.72,
@@ -34,6 +39,11 @@
     "bb": 1.83,
     "ts": 1792029066.6097212
   },
+  "football|Jordan Pro League|Al Arabi Irbid|Shabab Al Ordon|客胜|1x2|2026-10-15": {
+    "ev": 3.19,
+    "bb": 2.19,
+    "ts": 1792034613.306379
+  },
   "football|Uganda Premier League|Kataka FC|Vipers SC|客胜|1x2|2026-10-15": {
     "ev": 14.35,
     "bb": 1.44,
@@ -49,14 +59,9 @@
     "bb": 1.97,
     "ts": 1791986844.5744262
   },
-  "football|Jordan Pro League|Al Arabi Irbid|Shabab Al Ordon|客胜|1x2|2026-10-15": {
-    "ev": 3.19,
-    "bb": 2.19,
-    "ts": 1792034613.306379
-  },
-  "basketball|Chile LNB|ABA Ancud|Universidad de Concepcion|客胜|1x2|2026-10-16": {
-    "ev": 5.12,
-    "bb": 1.25,
-    "ts": 1792034613.306437
+  "football|Algeria Ligue 2|USM EL Harrach|Arbaa|主胜|1x2|2026-10-15": {
+    "ev": 4.67,
+    "bb": 1.31,
+    "ts": 1792055042.512703
   }
 }
