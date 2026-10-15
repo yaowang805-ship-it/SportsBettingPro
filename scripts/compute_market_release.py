@@ -158,6 +158,9 @@ MANUAL_OBSERVE_BLOCK = {
     # 2026-10-15 撤网球独赢: 交叉验证实盘负(客-11.3%胜率36%/主+0.9%胜率41%), 逆向选择毒性流。
     "tennis|1x2|主|*|live",
     "tennis|1x2|客|*|live",
+    # 2026-10-16 撤篮球让球主滚球(纸面-28%+实盘-13.9%双负) + 足球独赢主早盘(纸面-2.2%→实盘-14.4%逆向选择)。
+    "basketball|hc|主|*|live",
+    "football|1x2|主|*|early",
 }
 
 
@@ -189,7 +192,7 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     "football|1x2|平|30-40%|early": 100,
     "football|1x2|平|40-50%|early": 100,
     # 2026-10-14 用户要求释放独赢主/客(cap 30 试探)。足球/篮球 1x2 主/客早盘全桶。
-    "football|1x2|主|*|early": 30,
+    # 2026-10-16 撤足球独赢主早盘(纸面-2.2%→实盘-14.4%, 逆向选择)。
     "football|1x2|客|*|early": 30,
     "basketball|1x2|主|*|early": 30,
     "basketball|1x2|客|*|early": 30,
@@ -202,7 +205,7 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 2026-10-15 滚球让球固化(之前手工加JSON没进MANUAL, 会丢): 让球客cap80(正edge加码), 让球主cap60。
     "football|hc|主|*|live": 60,
     "football|hc|客|*|live": 80,
-    "basketball|hc|主|*|live": 60,
+    # 2026-10-16 撤篮球让球主滚球(纸面-28%+实盘-13.9%双负)。
     "basketball|hc|客|*|live": 80,
     # 2026-10-15 释放大小大(样本>50 ROI正): 足球50-55%/篮球45-55%/冰球55-65%, cap30试探。
     "football|ou|大|50-55%|live": 30,

@@ -42,13 +42,6 @@
     [
       "basketball",
       "hc",
-      "主",
-      "*",
-      "live"
-    ],
-    [
-      "basketball",
-      "hc",
       "客",
       "*",
       "live"
@@ -78,13 +71,6 @@
       "basketball",
       "hc",
       "客",
-      "*",
-      "early"
-    ],
-    [
-      "football",
-      "1x2",
-      "主",
       "*",
       "early"
     ],
@@ -166,6 +152,20 @@
       "客",
       "*",
       "live"
+    ],
+    [
+      "basketball",
+      "hc",
+      "主",
+      "*",
+      "live"
+    ],
+    [
+      "football",
+      "1x2",
+      "主",
+      "*",
+      "early"
     ]
   ],
   "observe_release_caps": {
@@ -174,13 +174,11 @@
     "football|1x2|平|40-50%|early": 100,
     "football|hc|主|*|live": 60,
     "football|hc|客|*|live": 80,
-    "basketball|hc|主|*|live": 60,
     "basketball|hc|客|*|live": 80,
     "football|hc|主|*|early": 30,
     "football|hc|客|*|early": 30,
     "basketball|hc|主|*|early": 30,
     "basketball|hc|客|*|early": 30,
-    "football|1x2|主|*|early": 30,
     "football|1x2|客|*|early": 30,
     "basketball|1x2|主|*|early": 30,
     "basketball|1x2|客|*|early": 30,
