@@ -2714,3 +2714,25 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-15T15:50:34Z,tennis,ATP Challenger - Santa Cruz 2 Open,Luis Guto Miguel (BRA),Hugo Dellien (BOL),,,让盘主胜,hc,1.77,0,1.7265,2.52,0,3,1792173600,BB,pinnacle,,,validate,,+1.5,5754874
 2026-10-15T15:50:34Z,tennis,ATP Challenger - Santa Cruz 2 Open,Luis Guto Miguel (BRA),Hugo Dellien (BOL),,,大分,ou,1.83,0,1.7549,4.28,0,3,1792173600,BB,pinnacle,,,validate,,20.5,5754874
 2026-10-15T15:51:07Z,tennis,ATP Challenger - Santa Cruz 2 Open,Francisco Comesana (ARG),Genaro Alberto Olivieri (ARG),,,让盘客胜,hc,2.59,0,2.4605,5.26,0,3,1792173600,BB,pinnacle,,,validate,,+1.5,5754873
+2026-10-15T16:09:28Z,football,Saudi Arabia Professional League,AL Hilal (KSA),AL Hazem FC,,,让球主胜,hc,1.9,0,1.8364,3.46,0,3,1792432800,BB,pinnacle,,,validate,,-2.5,5446299
+2026-10-15T16:16:41Z,basketball,Mexico Liga ABE,Tec Mty Guadalajara,Universidad Veracruzana,,,主胜,1x2,1.2,0,1.1697,2.59,0,3,1792090800,ALL,pinnacle,,,validate,,,5617583
+2026-10-15T16:18:22Z,football,Indonesia Super League,Persita Tangerang,Persija Jakarta,,,客胜,1x2,1.94,0,1.8765,3.38,0,2,1792238400,ALL,pinnacle,,,validate,,,5730996
+2026-10-15T16:28:54Z,football,UEFA Europa League,Union Saint Gilloise,Real Sociedad,,,小球,ou,1.96,0,1.8716,4.72,0,3,1792082700,ALL,pinnacle,,,validate,,3.0,5528006
+2026-10-15T16:34:25Z,basketball,Estonia I Liiga,Tartu Ulikool/Estiko,Rae Koss Hansaviimistlus,,,客胜,1x2,2.0,0,1.7935,11.51,0,2,1792082700,BB,pinnacle,,,validate,,,5500795
+2026-10-15T16:34:25Z,basketball,Estonia I Liiga,Tartu Ulikool/Estiko,Rae Koss Hansaviimistlus,,,让分客胜,hc,1.87,0,1.6987,10.08,0,2,1792082700,BB,pinnacle,,,validate,,+1.5,5500795
+2026-10-15T16:42:19Z,football,Jordan Pro League,Al Baqaa,Al Salt,,,和局,1x2,3.27,0,3.2029,2.09,0,3,1792168200,ALL,pinnacle,,,validate,,,5722945
+2026-10-15T16:42:19Z,football,Jordan Pro League,Al Baqaa,Al Salt,,,小球,ou,1.8,0,1.6985,5.98,0,3,1792168200,ALL,pinnacle,,,validate,,2.5,5722945
+2026-10-15T16:52:59Z,basketball,Czech Republic Basketball 1 Liga,BC Novy Jicin,Basketbal Olomouc,,,主胜,1x2,1.06,0,1.03,2.91,0,2,1792170000,ALL,pinnacle,,,validate,,,5753372
+2026-10-15T16:54:39Z,basketball,Spain Basketball Primera FEB,Tizona Burgos,Oviedo BC,,,小分,ou,1.84,0,1.6811,9.45,0,3,1792176300,ALL,pinnacle,,,validate,,171.5,5753634
+2026-10-15T16:58:01Z,basketball,Czech Republic Basketball 1 Liga,Slavoj BK Litomerice,USK Prague B,,,主胜,1x2,1.33,0,1.2697,4.75,0,2,1792170000,ALL,pinnacle,,,validate,,,5761632
+2026-10-15T17:03:05Z,basketball,Austria Basketball Superliga,SKN St. Polten Basketball,Swans Gmunden,,,客胜,1x2,1.31,0,1.2812,2.25,0,2,1792170000,ALL,pinnacle,,,validate,,,5755758
+2026-10-15T17:15:06Z,football,Spain Primera Division RFEF,Real Madrid Castilla,Antequera CF,,,主胜,1x2,1.9,0,1.7847,6.46,0,1,1792317600,ALL,pinnacle,,,validate,,,5751876
+2026-10-15T17:15:06Z,football,Spain Primera Division RFEF,Real Madrid Castilla,Antequera CF,,,让球主胜,hc,1.9,0,1.8032,5.37,0,1,1792317600,ALL,pinnacle,,,validate,,-0.5,5751876
+2026-10-15T17:27:41Z,tennis,ATP Challenger - Catania Open,Buvaysar Gadamauri (BEL),Felix Gill (GBR),,,大分,ou,1.83,0,1.7289,5.85,0,3,1792148400,BB,pinnacle,,,validate,,21.5,5752914
+2026-10-15T17:31:06Z,tennis,ATP Challenger - Maia Open,Lorenzo Giustino (ITA),Zsombor Piros (HUN),,,大分,ou,1.72,0,1.6843,2.12,0,3,1792144800,BB,pinnacle,,,validate,,19.5,5752889
+2026-10-15T17:35:06Z,football,Sweden Superettan,Sandvikens IF,Ostersunds FK,,,小球,ou,2.02,0,1.9147,5.5,0,2,1792242000,ALL,pinnacle,,,validate,,2.5,5731062
+2026-10-15T18:06:58Z,basketball,Colombia Professional Basketball League,Caribbean Storm Islands,Sabios de Manizales,,,客胜,1x2,2.21,0,2.0773,6.39,0,3,1792114200,ALL,pinnacle,,,validate,,,5671562
+2026-10-15T18:42:16Z,basketball,Bulgaria NBL,Balkan Botevgrad,BC Levski,,,让分客胜,hc,1.87,0,1.7553,6.53,0,3,1792162800,ALL,pinnacle,,,validate,,+22.5,5722894
+2026-10-15T18:46:54Z,football,Spain Primera Division RFEF,Real Aviles CF,UD Ourense,,,小球,ou,1.9,0,1.8621,2.04,0,1,1792340100,BB,pinnacle,,,validate,,2.5,5751821
+2026-10-15T18:46:54Z,tennis,World Tennis - W35 Redding Women Singles,Francesca Pace (ITA),Duru Soke (TUR),,,主胜,1x2,1.43,0,1.3676,4.56,0,3,1792091700,BB,pinnacle,,,validate,,,5755092
+2026-10-15T18:46:54Z,basketball,Iceland Basketball Premier League,UMF Tindastoll,Armann,,,让分客胜,hc,1.89,0,1.7975,5.15,0,2,1792091700,ALL,pinnacle,,,validate,,+21.5,5748973
