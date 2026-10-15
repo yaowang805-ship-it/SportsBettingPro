@@ -125,6 +125,15 @@
     ],
     [
       "tennis",
+      "hc_games",
+      "主",
+      "*",
+      "live"
+    ]
+  ],
+  "observe_blocked": [
+    [
+      "tennis",
       "1x2",
       "主",
       "*",
@@ -138,7 +147,6 @@
       "live"
     ]
   ],
-  "observe_blocked": [],
   "observe_release_caps": {
     "football|1x2|平|10-20%|early": 100,
     "football|1x2|平|20-30%|early": 100,
@@ -157,8 +165,7 @@
     "basketball|1x2|客|*|early": 30,
     "tennis|hc|主|*|early": 30,
     "tennis|hc|客|*|early": 30,
-    "tennis|1x2|主|*|live": 30,
-    "tennis|1x2|客|*|live": 30
+    "tennis|hc_games|主|*|live": 30
   },
   "direction_released": [],
   "direction_blocked": [],

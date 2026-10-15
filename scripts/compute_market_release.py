@@ -155,8 +155,9 @@ MANUAL_OBSERVE_RELEASE = {
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
 # 优先于 MANUAL_OBSERVE_RELEASE 的区间。数据驱动拦截(observe_blocked)照常追加。
 MANUAL_OBSERVE_BLOCK = {
-    # 2026-10-14 用户要求放开所有拦截: 清空手动拦截(观察库全量收集, 释放格不再被手动拦)。
-    # 历史拦截依据(实盘 ROI 负/逆向选择/冷门高估)见 git 历史, 需要时按格子重新加回。
+    # 2026-10-15 撤网球独赢: 交叉验证实盘负(客-11.3%胜率36%/主+0.9%胜率41%), 逆向选择毒性流。
+    "tennis|1x2|主|*|live",
+    "tennis|1x2|客|*|live",
 }
 
 
@@ -192,11 +193,11 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     "football|1x2|客|*|early": 30,
     "basketball|1x2|主|*|early": 30,
     "basketball|1x2|客|*|early": 30,
-    # 2026-10-14 用户要求释放网球测试格(cap 30): 早盘=让盘(hc)主/客, 滚球=独赢(1x2)主/客。
+    # 2026-10-14 用户要求释放网球测试格(cap 30): 早盘=让盘(hc)主/客。
+    # 2026-10-15 网球滚球改测让局主(实盘独赢负, 交叉验证毒性流), 撤独赢主客。
     "tennis|hc|主|*|early": 30,
     "tennis|hc|客|*|early": 30,
-    "tennis|1x2|主|*|live": 30,
-    "tennis|1x2|客|*|live": 30,
+    "tennis|hc_games|主|*|live": 30,
 }
 
 

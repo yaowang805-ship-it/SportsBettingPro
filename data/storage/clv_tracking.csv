@@ -2652,3 +2652,22 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-15T11:33:18Z,football,Japan J.League,Tokyo Verdy,FC Tokyo,,,客胜,1x2,1.77,0,1.7048,3.82,0,2,1792213200,ALL,pinnacle,,,validate,,,5153530
 2026-10-15T11:33:51Z,football,Mexico Liga De Expansion MX,Cancun FC,Venados FC,,,让球客胜,hc,2.02,0,1.9721,2.43,0,2,1792285200,ALL,pinnacle,,,validate,,+0.5,5300176
 2026-10-15T11:35:10Z,football,Singapore Premier League,丹戎巴葛,后港联,丹戎巴葛,后港联,客胜,1x2,1.87,1.7353,1.8026,3.74,30,2,1792150200.0,FB,,,,push,,,
+2026-10-15T11:38:46Z,tennis,World Tennis - M15 Lexington Men Singles,Noah Zamora (USA),Pablo Martinez Gomez (ESP),,,让盘主胜,hc,1.58,0,1.5176,4.11,0,3,1792067700,BB,pinnacle,,,validate,,+1.5,5755084
+2026-10-15T11:42:34Z,football,Israel Leumit League,FC Ashdod,Maccabi Kiryat Gat FC,,,和局,1x2,6.15,0,5.5751,10.31,0,2,1792155600,ALL,pinnacle,,,validate,,,5751889
+2026-10-15T11:42:34Z,football,Israel Leumit League,FC Ashdod,Maccabi Kiryat Gat FC,,,客胜,1x2,11.3,0,7.7489,45.83,0,2,1792155600,ALL,pinnacle,,,validate,,,5751889
+2026-10-15T11:42:34Z,football,Israel Leumit League,FC Ashdod,Maccabi Kiryat Gat FC,,,双重机会-和局/客,dc,4.06,0,3.2423,25.22,0,2,1792155600,ALL,pinnacle,,,validate,,,5751889
+2026-10-15T11:43:40Z,football,Denmark 2nd Division,Thisted FC,VSK Aarhus,,,主胜,1x2,3.63,0,3.0292,19.83,0,3,1792321200,ALL,pinnacle,,,validate,,,5733750
+2026-10-15T11:45:51Z,football,AFC Champions League Two,Tampines Rovers FC,Machida Zelvia,,,主胜,1x2,10.4,0,9.621,8.1,0,2,1792066500,ALL,pinnacle,,,validate,,,5683191
+2026-10-15T11:46:23Z,football,USA Major League Soccer,FC Cincinnati,Columbus Crew,,,和局,1x2,4.24,0,2.7893,52.01,0,1,1792357200,ALL,pinnacle,,,validate,,,5733533
+2026-10-15T11:46:23Z,football,USA Major League Soccer,FC Cincinnati,Columbus Crew,,,双重机会-和局/客,dc,1.73,0,1.566,10.47,0,1,1792357200,ALL,pinnacle,,,validate,,,5733533
+2026-10-15T11:48:01Z,football,Israel Leumit League,FC Ashdod,Maccabi Kiryat Gat FC,,,让球客胜,hc,1.97,0,1.7911,9.99,0,2,1792155600,ALL,pinnacle,,,validate,,+1.5,5751889
+2026-10-15T11:49:07Z,basketball,Euroleague,Olimpia Milano,BC Dubai,,,大分,ou,1.9,0,1.7992,5.6,0,2,1792089000,ALL,pinnacle,,,validate,,168.5,5710299
+2026-10-15T11:54:37Z,tennis,World Tennis - M15 Quito Men Singles,Alex Hernandez (MEX),Felipe De Dios (ARG),,,让盘主胜,hc,1.4,0,1.3725,2.0,0,3,1792081800,BB,pinnacle,,,validate,,-1.5,5753878
+2026-10-15T12:12:05Z,football,Canadian Premier League,Supra Du Quebec,Inter Toronto FC,,,让球主胜,hc,1.84,0,1.7999,2.23,0,3,1792191600,BB,pinnacle,,,validate,,-1,5727170
+2026-10-15T12:15:22Z,football,Egypt Second Division B,Sila SC,Al Badari SC,,,主胜,1x2,1.63,0,1.5807,3.12,0,3,1792067400,ALL,pinnacle,,,validate,,,5540400
+2026-10-15T12:20:17Z,football,Indonesia Super League,Persib Bandung,Persik Kediri,,,让球客胜,hc,1.93,0,1.8027,7.06,0,2,1792324800,ALL,pinnacle,,,validate,,+1,5736227
+2026-10-15T12:24:37Z,football,England Championship League,West Bromwich Albion,Blackburn Rovers,,,小球,ou,1.85,0,1.8127,2.06,0,2,1792245600,ALL,pinnacle,,,validate,,2.5,5728581
+2026-10-15T12:24:37Z,football,Scotland League One,Peterhead FC,Cove Rangers FC,,,大球,ou,1.79,0,1.7428,2.71,0,2,1792245600,ALL,pinnacle,,,validate,,2.5,5127752
+2026-10-15T12:25:10Z,football,Egypt Second Division B,Sila SC,Al Badari SC,,,让球主胜,hc,1.85,0,1.8012,2.71,0,3,1792067400,ALL,pinnacle,,,validate,,-1,5540400
+2026-10-15T12:44:41Z,football,Indonesia Super League,Persita Tangerang,Persija Jakarta,,,双重机会-主/和局,dc,2.07,0,1.997,3.66,0,2,1792238400,ALL,pinnacle,,,validate,,,5730996
+2026-10-15T12:56:35Z,football,Uganda Premier League,Kataka FC,Vipers SC,,,小球,ou,1.96,0,1.8909,3.65,0,2,1792069200,ALL,pinnacle,,,validate,,2.5,5750564
