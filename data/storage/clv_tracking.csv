@@ -2696,3 +2696,21 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-15T14:30:50Z,basketball,Euroleague,米兰奥林匹亚,迪拜,米兰奥林匹亚,迪拜,主胜,1x2,2.2,2.02,2.1057,4.48,30,2,1792089000.0,BB,,,,push,,,
 2026-10-15T14:32:11Z,basketball,Euroleague,Olimpia Milano,BC Dubai,,,主胜,1x2,2.2,0,2.1315,3.21,0,2,1792089000,ALL,pinnacle,,,validate,,,5355387
 2026-10-15T14:32:11Z,basketball,Czech Republic Basketball 1 Liga,BA Lynx Liberec,CZ Academy,,,主胜,1x2,1.35,0,1.2962,4.15,0,2,1792171800,ALL,pinnacle,,,validate,,,5753472
+2026-10-15T14:37:04Z,basketball,Euroleague,Olimpia Milano,BC Dubai,,,让分主胜,hc,1.92,0,1.8093,6.12,0,2,1792089000,ALL,pinnacle,,,validate,,+2.5,5355387
+2026-10-15T14:39:15Z,basketball,Japan B.League Premier,Kawasaki Brave Thunders,Ibaraki Robots,,,大分,ou,1.87,0,1.8311,2.12,0,2,1792145100,BB,pinnacle,,,validate,,165.5,5298123
+2026-10-15T14:46:20Z,football,Japan J.League 2,Vegalta Sendai,Tokushima Vortis,,,主胜,1x2,1.66,0,1.6157,2.74,0,3,1792213200,ALL,pinnacle,,,validate,,,5164367
+2026-10-15T14:48:31Z,tennis,World Tennis - W50 Quebec City Women Singles,Madison Sieg (USA),Ariana Arseneault (CAN),,,主胜,1x2,2.18,0,2.0943,4.09,0,3,1792076400,BB,pinnacle,,,validate,,,5755069
+2026-10-15T14:48:31Z,tennis,World Tennis - W50 Quebec City Women Singles,Madison Sieg (USA),Ariana Arseneault (CAN),,,让盘主胜,hc,1.52,0,1.464,3.83,0,3,1792076400,BB,pinnacle,,,validate,,+1.5,5755069
+2026-10-15T14:49:36Z,basketball,Chile LNB,CD ABA Ancud,CD Universidad de Concepcion,,,主胜,1x2,3.59,0,3.0127,19.16,0,4,1792107000,ALL,pinnacle,,,validate,,,5765284
+2026-10-15T15:07:04Z,basketball,Finland Basketball Division 1A,Aanekosken Huima,Lappeenrannan NMKY,,,让分主胜,hc,1.84,0,1.7233,6.77,0,3,1792078200,ALL,pinnacle,,,validate,,-5.5,5718271
+2026-10-15T15:11:59Z,football,Estonia Esiliiga,FC Tallinn,Tartu JK Welco,,,和局,1x2,4.85,0,4.6142,5.11,0,3,1792080000,BB,pinnacle,,,validate,,,4456709
+2026-10-15T15:11:59Z,football,Estonia Esiliiga,FC Tallinn,Tartu JK Welco,,,让球主胜,hc,1.97,0,1.887,4.4,0,3,1792080000,BB,pinnacle,,,validate,,+1,4456709
+2026-10-15T15:24:13Z,football,Venezuela Primera Division,Academia Puerto Cabello,Monagas SC,,,客胜,1x2,5.85,0,5.127,14.1,0,2,1792351800,ALL,pinnacle,,,validate,,,5372938
+2026-10-15T15:29:09Z,football,Venezuela Primera Division,Academia Puerto Cabello,Monagas SC,,,双重机会-和局/客,dc,2.25,0,2.0135,11.75,0,2,1792351800,ALL,pinnacle,,,validate,,,5372938
+2026-10-15T15:30:14Z,basketball,Chile LNB,CD ABA Ancud,CD Universidad de Concepcion,,,让分主胜,hc,2.13,0,1.9655,8.37,0,4,1792107000,ALL,pinnacle,,,validate,,+3.5,5710971
+2026-10-15T15:32:28Z,tennis,WTA - Lisbon Open,Jessica Bouzas Maneiro (ESP),Polona Hercog (SLO),,,大分,ou,1.88,0,1.8094,3.9,0,2,1792144800,BB,pinnacle,,,validate,,19.5,5752915
+2026-10-15T15:39:37Z,football,Venezuela Primera Division,Academia Puerto Cabello,Monagas SC,,,小球,ou,1.92,0,1.8781,2.23,0,2,1792351800,ALL,pinnacle,,,validate,,2.5,5372938
+2026-10-15T15:47:49Z,tennis,World Tennis - M15 Lexington Men Singles,Noah Zamora (USA),Pablo Martinez Gomez (ESP),,,让盘主胜,hc,1.56,0,1.5176,2.79,0,3,1792082700,BB,pinnacle,,,validate,,+1.5,5755084
+2026-10-15T15:50:34Z,tennis,ATP Challenger - Santa Cruz 2 Open,Luis Guto Miguel (BRA),Hugo Dellien (BOL),,,让盘主胜,hc,1.77,0,1.7265,2.52,0,3,1792173600,BB,pinnacle,,,validate,,+1.5,5754874
+2026-10-15T15:50:34Z,tennis,ATP Challenger - Santa Cruz 2 Open,Luis Guto Miguel (BRA),Hugo Dellien (BOL),,,大分,ou,1.83,0,1.7549,4.28,0,3,1792173600,BB,pinnacle,,,validate,,20.5,5754874
+2026-10-15T15:51:07Z,tennis,ATP Challenger - Santa Cruz 2 Open,Francisco Comesana (ARG),Genaro Alberto Olivieri (ARG),,,让盘客胜,hc,2.59,0,2.4605,5.26,0,3,1792173600,BB,pinnacle,,,validate,,+1.5,5754873
