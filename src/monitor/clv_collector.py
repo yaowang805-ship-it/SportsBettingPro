@@ -543,9 +543,22 @@ def _fetch_close_odds_pinnapi(entries):
 
         home_pin = e.get("home_pin") or e.get("home", "")
         away_pin = e.get("away_pin") or e.get("away", "")
-        close = pinnacle_fair_price(home_pin, away_pin, sport_id, sub_market, event_type='prematch')
+        # 2026-10-15 修线错配: 之前不传 target_line, hc/ou 收盘公平价用 Pin 主线(最接近0),
+        # 与下注线错配(下注 over 5.0 但收盘用 over ~1.5) → 假 CLV(大球全正/小球全负)。
+        _tl = None
+        if sub_market in ("hc", "hc_games", "ou", "ht_hc", "ht_ou"):
+            _tl = _parse_line_str(e.get("line"))
+        close = pinnacle_fair_price(home_pin, away_pin, sport_id, sub_market,
+                                    target_line=_tl, event_type='prematch')
         if not close:
             continue
+        # 线校验: 收盘公平价的线必须≈下注线(容差0.25), 否则是不同线的价, CLV 无意义
+        if _tl is not None and close.get("line") is not None:
+            try:
+                if abs(_tl - float(close["line"])) > 0.25:
+                    continue
+            except (TypeError, ValueError):
+                pass
         fair_p = _close_direction_fair(close, sub_market, designation)
         if fair_p is None or fair_p <= 1:
             continue
