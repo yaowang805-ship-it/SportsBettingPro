@@ -198,6 +198,11 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     "tennis|hc|主|*|early": 30,
     "tennis|hc|客|*|early": 30,
     "tennis|hc_games|主|*|live": 30,
+    # 2026-10-15 滚球让球固化(之前手工加JSON没进MANUAL, 会丢): 让球客cap80(正edge加码), 让球主cap60。
+    "football|hc|主|*|live": 60,
+    "football|hc|客|*|live": 80,
+    "basketball|hc|主|*|live": 60,
+    "basketball|hc|客|*|live": 80,
 }
 
 
