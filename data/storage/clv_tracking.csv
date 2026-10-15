@@ -2504,3 +2504,25 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-15T02:12:33Z,football,Algeria Ligue 2,USM EL Harrach,RC Arbaa,,,小球,ou,1.79,0,1.716,4.31,0,3,1792072800,ALL,pinnacle,,,validate,,2.5,5749432
 2026-10-15T02:14:10Z,football,USA Major League Soccer,New England Revolution,Chicago Fire,,,和局,1x2,4.15,0,4.0622,2.16,0,1,1792279800,ALL,pinnacle,,,validate,,,4231094
 2026-10-15T02:16:19Z,basketball,Mexico LNBP Basketball League,桑托斯波托西,莱昂蜜蜂,桑托斯波托西,莱昂蜜蜂,客胜,1x2,1.56,1.3584,1.4227,9.65,30,3,1792116000.0,FB,,,,push,,,
+2026-10-15T02:23:18Z,tennis,World Tennis - W35 Redding Women Singles,Connie Ma (USA),Jo Yee Chan (USA),,,主胜,1x2,1.38,0,1.3438,2.69,0,3,1792083600,BB,pinnacle,,,validate,,,5752591
+2026-10-15T02:23:51Z,tennis,World Tennis - W35 Redding Women Singles,Jenna Defalco (USA),Annika Penickova (USA),,,客胜,1x2,1.26,0,1.199,5.09,0,3,1792090800,BB,pinnacle,,,validate,,,5752594
+2026-10-15T02:33:31Z,football,USA Major League Soccer,FC Cincinnati,Columbus Crew,,,客胜,1x2,3.25,0,3.1652,2.68,0,1,1792357200,ALL,pinnacle,,,validate,,,4231105
+2026-10-15T02:35:08Z,tennis,World Tennis - M25 Luanda Men Singles,Allan Gatoto (BDI),Alec Beckley (RSA),,,让盘客胜,hc,1.39,0,1.2951,7.33,0,3,1792054800,BB,pinnacle,,,validate,,-1.5,5753831
+2026-10-15T02:36:13Z,football,USA Major League Soccer,Los Angeles Galaxy,Portland Timbers,,,和局,1x2,4.3,0,4.1794,2.89,0,1,1792032000,ALL,pinnacle,,,validate,,,4231084
+2026-10-15T02:36:13Z,football,Egypt Premier League,Wadi Degla SC,National Bank of Egypt SC,,,大球,ou,1.93,0,1.7398,10.93,0,2,1792508400,ALL,pinnacle,,,validate,,2.0,5743648
+2026-10-15T02:36:45Z,football,UEFA Champions League,Fenerbahce,Slavia Prague,,,主胜,1x2,1.69,0,1.6552,2.1,0,2,1792514700,BB,pinnacle,,,validate,,,5525981
+2026-10-15T02:41:36Z,tennis,World Tennis - W35 Birmingham City Women Singles,Mayuka Aikawa (JPN),Jessika Ponchet (FRA),,,让盘客胜,hc,1.42,0,1.3691,3.72,0,3,1792054800,BB,pinnacle,,,validate,,-1.5,5753834
+2026-10-15T02:41:36Z,basketball,Australia NBL,Brisbane Bullets,SE Melbourne Phoenix,,,让分客胜,hc,1.93,0,1.8805,2.63,0,3,1792053000,ALL,pinnacle,,,validate,,-7.5,5074400
+2026-10-15T02:42:08Z,football,USA Major League Soccer,Houston Dynamo,FC Dallas,,,主胜,1x2,2.14,0,2.0905,2.37,0,1,1792283400,ALL,pinnacle,,,validate,,,4231104
+2026-10-15T02:42:41Z,football,Canadian Premier League,Vancouver FC,HFX Wanderers FC,,,和局,1x2,3.84,0,3.7437,2.57,0,3,1792202400,ALL,pinnacle,,,validate,,,5727892
+2026-10-15T02:42:41Z,football,USA Major League Soccer,New York City FC,Los Angeles FC,,,和局,1x2,3.78,0,3.675,2.86,0,1,1792279800,ALL,pinnacle,,,validate,,,4231106
+2026-10-15T02:42:41Z,football,USA Major League Soccer,Los Angeles Galaxy,San Diego FC,,,让球客胜,hc,1.91,0,1.8025,5.96,0,1,1792290600,ALL,pinnacle,,,validate,,+0.5,4231097
+2026-10-15T02:49:41Z,football,Jordan Pro League,Al Arabi Irbid,Shabab Al Ordon,,,客胜,1x2,2.35,0,2.2764,3.23,0,3,1792076400,ALL,pinnacle,,,validate,,,5718266
+2026-10-15T02:55:04Z,football,Mongolia Premier League,Hunters FC,Khovd,,,让球主胜,hc,1.89,0,1.8318,3.18,0,2,1792040400,ALL,pinnacle,,,validate,,-2,5750155
+2026-10-15T02:57:46Z,football,UEFA Champions League,Real Betis,Feyenoord,,,让球主胜,hc,1.91,0,1.8678,2.26,0,2,1792609200,BB,pinnacle,,,validate,,-1,5526024
+2026-10-15T03:12:19Z,football,Jordan 1st Division,Al Hashemeya,Al Aqaba,,,主胜,1x2,1.7,0,1.6337,4.06,0,2,1792076400,ALL,pinnacle,,,validate,,,5718263
+2026-10-15T03:17:10Z,basketball,Australia NBL,Brisbane Bullets,SE Melbourne Phoenix,,,小分,ou,1.94,0,1.8527,4.71,0,3,1792053000,ALL,pinnacle,,,validate,,193.5,5074400
+2026-10-15T03:19:19Z,tennis,World Tennis - W35 Redding Women Singles,Jenna Defalco (USA),Annika Penickova (USA),,,客胜,1x2,1.26,0,1.2026,4.77,0,3,1792083600,BB,pinnacle,,,validate,,,5752594
+2026-10-15T03:23:06Z,basketball,Chile LNB,CD ABA Ancud,CD Universidad de Concepcion,,,客胜,1x2,1.25,0,1.1891,5.12,0,4,1792107000,BB,pinnacle,,,validate,,,5710971
+2026-10-15T03:23:33Z,football,Jordan Pro League,伊尔比德,沙巴阿罗登,伊尔比德,沙巴阿罗登,客胜,1x2,2.19,2,2.1224,3.19,30,3,1792076400.0,BB,,,,push,,,
+2026-10-15T03:23:33Z,basketball,Chile LNB,安库德,康塞普西翁大学,安库德,康塞普西翁大学,客胜,1x2,1.25,1.149,1.1891,5.12,30,4,1792107000.0,BB/FB,,,,push,,,
