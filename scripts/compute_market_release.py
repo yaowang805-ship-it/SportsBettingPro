@@ -197,7 +197,8 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 2026-10-15 网球滚球改测让局主(实盘独赢负, 交叉验证毒性流), 撤独赢主客。
     "tennis|hc|主|*|early": 30,
     "tennis|hc|客|*|early": 30,
-    "tennis|hc_games|主|*|live": 30,
+    # 2026-10-16 让局降额 30→10(实盘让局-29%ROI/胜率29%, 小成本试水), 配合 MIN_STAKE 对 cap<30 放行。
+    "tennis|hc_games|主|*|live": 10,
     # 2026-10-15 滚球让球固化(之前手工加JSON没进MANUAL, 会丢): 让球客cap80(正edge加码), 让球主cap60。
     "football|hc|主|*|live": 60,
     "football|hc|客|*|live": 80,

@@ -2736,3 +2736,126 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-15T18:46:54Z,football,Spain Primera Division RFEF,Real Aviles CF,UD Ourense,,,小球,ou,1.9,0,1.8621,2.04,0,1,1792340100,BB,pinnacle,,,validate,,2.5,5751821
 2026-10-15T18:46:54Z,tennis,World Tennis - W35 Redding Women Singles,Francesca Pace (ITA),Duru Soke (TUR),,,主胜,1x2,1.43,0,1.3676,4.56,0,3,1792091700,BB,pinnacle,,,validate,,,5755092
 2026-10-15T18:46:54Z,basketball,Iceland Basketball Premier League,UMF Tindastoll,Armann,,,让分客胜,hc,1.89,0,1.7975,5.15,0,2,1792091700,ALL,pinnacle,,,validate,,+21.5,5748973
+2026-10-15T22:46:30Z,football,Armenia Premier League,Gandzasar Kapan FC,Sardarapat FC,,,客胜,1x2,2.37,0,2.2567,5.02,0,2,1792162800,ALL,pinnacle,,,validate,,,5722901
+2026-10-15T22:46:30Z,football,Chile Primera B,San Marcos de Arica,Puerto Montt,,,主胜,1x2,1.83,0,1.6746,9.28,0,3,1792346400,BB,pinnacle,,,validate,,,5733961
+2026-10-15T22:46:30Z,football,Chile Primera B,San Marcos de Arica,Puerto Montt,,,让球主胜,hc,1.83,0,1.688,8.41,0,3,1792346400,BB,pinnacle,,,validate,,-0.5,5733961
+2026-10-15T22:48:37Z,football,Ireland First Division,Wexford,University College Dublin,,,和局,1x2,3.77,0,2.5988,45.07,0,2,1792176300,ALL,pinnacle,,,validate,,,5722348
+2026-10-15T22:48:37Z,football,Ireland First Division,Wexford,University College Dublin,,,双重机会-主/和局,dc,1.47,0,1.4238,3.24,0,2,1792176300,ALL,pinnacle,,,validate,,,5722348
+2026-10-15T22:48:37Z,football,Ireland First Division,Wexford,University College Dublin,,,双重机会-和局/客,dc,1.52,0,1.4653,3.73,0,2,1792176300,ALL,pinnacle,,,validate,,,5722348
+2026-10-15T22:48:37Z,football,Qatar Stars League,Al Shahaniya,Al Arabi Doha SC,,,和局,1x2,3.86,0,2.766,39.55,0,3,1792169100,ALL,pinnacle,,,validate,,,5731591
+2026-10-15T22:48:37Z,football,Qatar Stars League,Al Shahaniya,Al Arabi Doha SC,,,双重机会-主/和局,dc,1.91,0,1.7428,9.59,0,3,1792169100,ALL,pinnacle,,,validate,,,5731591
+2026-10-15T22:48:37Z,football,Uruguay Primera Division,CA Cerro,Cerro Largo,,,和局,1x2,3.05,0,2.1057,44.84,0,3,1792188000,ALL,pinnacle,,,validate,,,5737387
+2026-10-15T22:48:37Z,football,Uruguay Primera Division,CA Cerro,Cerro Largo,,,双重机会-主/和局,dc,1.34,0,1.3103,2.27,0,3,1792188000,ALL,pinnacle,,,validate,,,5737387
+2026-10-15T22:48:37Z,football,Uruguay Primera Division,CA Cerro,Cerro Largo,,,双重机会-和局/客,dc,1.53,0,1.4051,8.89,0,3,1792188000,ALL,pinnacle,,,validate,,,5737387
+2026-10-15T22:48:37Z,football,England Championship League,Southampton FC,Bolton Wanderers,,,和局,1x2,4.83,0,2.9537,63.52,0,2,1792245600,ALL,pinnacle,,,validate,,,5728554
+2026-10-15T22:48:37Z,football,England Championship League,Southampton FC,Bolton Wanderers,,,双重机会-和局/客,dc,2.74,0,2.065,32.69,0,2,1792245600,ALL,pinnacle,,,validate,,,5728554
+2026-10-15T22:48:37Z,football,England Championship League,Swansea City,West Ham United,,,和局,1x2,3.72,0,2.4469,52.03,0,2,1792245600,ALL,pinnacle,,,validate,,,5728560
+2026-10-15T22:48:37Z,football,England Championship League,Swansea City,West Ham United,,,双重机会-主/和局,dc,1.68,0,1.5145,10.93,0,2,1792245600,ALL,pinnacle,,,validate,,,5728560
+2026-10-15T22:48:37Z,football,England League One,Sheffield Wednesday,AFC Wimbledon,,,和局,1x2,3.96,0,2.5634,54.48,0,2,1792245600,ALL,pinnacle,,,validate,,,5728561
+2026-10-15T22:48:37Z,football,England League One,Sheffield Wednesday,AFC Wimbledon,,,双重机会-和局/客,dc,2.16,0,1.7738,21.77,0,2,1792245600,ALL,pinnacle,,,validate,,,5728561
+2026-10-15T22:48:37Z,football,England Championship League,Birmingham City,Queens Park Rangers,,,和局,1x2,3.37,0,2.3924,40.86,0,2,1792245600,ALL,pinnacle,,,validate,,,5728551
+2026-10-15T22:48:37Z,football,England Championship League,Birmingham City,Queens Park Rangers,,,双重机会-和局/客,dc,1.76,0,1.5784,11.51,0,2,1792245600,ALL,pinnacle,,,validate,,,5728551
+2026-10-15T22:48:37Z,football,England Championship League,Bristol City,Sheffield United FC,,,和局,1x2,3.4,0,2.412,40.96,0,2,1792245600,ALL,pinnacle,,,validate,,,5728563
+2026-10-15T22:48:37Z,football,England Championship League,Bristol City,Sheffield United FC,,,双重机会-和局/客,dc,1.76,0,1.5648,12.47,0,2,1792245600,ALL,pinnacle,,,validate,,,5728563
+2026-10-15T22:48:37Z,football,England Championship League,Derby County,Stoke City,,,和局,1x2,3.33,0,2.3349,42.62,0,2,1792245600,ALL,pinnacle,,,validate,,,5728567
+2026-10-15T22:48:37Z,football,England Championship League,Derby County,Stoke City,,,双重机会-主/和局,dc,1.53,0,1.4417,6.12,0,2,1792245600,ALL,pinnacle,,,validate,,,5728567
+2026-10-15T22:48:37Z,football,England Championship League,Derby County,Stoke City,,,双重机会-和局/客,dc,1.43,0,1.3612,5.05,0,2,1792245600,ALL,pinnacle,,,validate,,,5728567
+2026-10-15T22:48:37Z,football,Japan J.League 2,Vegalta Sendai,Tokushima Vortis,,,和局,1x2,3.96,0,2.4265,63.2,0,3,1792213200,ALL,pinnacle,,,validate,,,5164367
+2026-10-15T22:48:37Z,football,Japan J.League 2,Vegalta Sendai,Tokushima Vortis,,,双重机会-和局/客,dc,2.37,0,1.8046,31.33,0,3,1792213200,ALL,pinnacle,,,validate,,,5164367
+2026-10-15T22:48:37Z,football,Japan J.League 2,Sagan Tosu,Omiya Ardija,,,和局,1x2,3.74,0,2.4624,51.88,0,3,1792213200,ALL,pinnacle,,,validate,,,5164337
+2026-10-15T22:48:37Z,football,Japan J.League 2,Sagan Tosu,Omiya Ardija,,,双重机会-主/和局,dc,1.45,0,1.3918,4.18,0,3,1792213200,ALL,pinnacle,,,validate,,,5164337
+2026-10-15T22:48:37Z,football,Japan J.League 2,Sagan Tosu,Omiya Ardija,,,双重机会-和局/客,dc,1.56,0,1.4543,7.27,0,3,1792213200,ALL,pinnacle,,,validate,,,5164337
+2026-10-15T22:48:37Z,football,South Korea K-League 2,Daegu FC,Chungbuk Cheongju FC,,,和局,1x2,4.23,0,2.6751,58.12,0,2,1792213200,ALL,pinnacle,,,validate,,,5727204
+2026-10-15T22:48:37Z,football,South Korea K-League 2,Daegu FC,Chungbuk Cheongju FC,,,双重机会-和局/客,dc,2.44,0,1.8888,29.18,0,2,1792213200,ALL,pinnacle,,,validate,,,5727204
+2026-10-15T22:48:37Z,football,South Korea K-League 2,Yongin,Ansan Greeners,,,和局,1x2,3.49,0,2.3939,45.79,0,2,1792222200,BB,pinnacle,,,validate,,,5727094
+2026-10-15T22:48:37Z,football,South Korea K-League 2,Yongin,Ansan Greeners,,,双重机会-和局/客,dc,2.02,0,1.6732,20.73,0,2,1792222200,BB,pinnacle,,,validate,,,5727094
+2026-10-15T22:48:37Z,football,South Korea K-League 2,Gyeongnam FC,Chungnam Asan FC,,,和局,1x2,3.25,0,2.2453,44.75,0,2,1792222200,ALL,pinnacle,,,validate,,,5727140
+2026-10-15T22:48:37Z,football,South Korea K-League 2,Gyeongnam FC,Chungnam Asan FC,,,双重机会-主/和局,dc,1.57,0,1.4038,11.84,0,2,1792222200,ALL,pinnacle,,,validate,,,5727140
+2026-10-15T22:48:37Z,football,Japan J.League 2,Tegevajaro Miyazaki,Jubilo Iwata,,,和局,1x2,3.43,0,2.2595,51.8,0,3,1792231200,ALL,pinnacle,,,validate,,,5164412
+2026-10-15T22:48:37Z,football,Japan J.League 2,Tegevajaro Miyazaki,Jubilo Iwata,,,双重机会-主/和局,dc,1.47,0,1.3764,6.8,0,3,1792231200,ALL,pinnacle,,,validate,,,5164412
+2026-10-15T22:48:37Z,football,Japan J.League 2,Tegevajaro Miyazaki,Jubilo Iwata,,,双重机会-和局/客,dc,1.47,0,1.3966,5.26,0,3,1792231200,ALL,pinnacle,,,validate,,,5164412
+2026-10-15T22:48:37Z,football,England League Two,Shrewsbury Town,Bristol Rovers,,,和局,1x2,3.25,0,2.265,43.49,0,2,1792236600,ALL,pinnacle,,,validate,,,5731305
+2026-10-15T22:48:37Z,football,England League Two,Shrewsbury Town,Bristol Rovers,,,双重机会-主/和局,dc,1.6,0,1.4664,9.11,0,2,1792236600,ALL,pinnacle,,,validate,,,5731305
+2026-10-15T22:48:37Z,football,England Championship League,Millwall FC,Lincoln City,,,和局,1x2,3.61,0,2.4849,45.28,0,2,1792236600,ALL,pinnacle,,,validate,,,5730839
+2026-10-15T22:48:37Z,football,England Championship League,Millwall FC,Lincoln City,,,双重机会-和局/客,dc,2.17,0,1.7788,21.99,0,2,1792236600,ALL,pinnacle,,,validate,,,5730839
+2026-10-15T22:48:37Z,football,Sweden Superettan,Sandvikens IF,Ostersunds FK,,,和局,1x2,3.54,0,2.3121,53.11,0,2,1792242000,ALL,pinnacle,,,validate,,,5731062
+2026-10-15T22:48:37Z,football,Sweden Superettan,Sandvikens IF,Ostersunds FK,,,双重机会-主/和局,dc,1.58,0,1.487,6.25,0,2,1792242000,ALL,pinnacle,,,validate,,,5731062
+2026-10-15T22:48:37Z,football,Sweden Superettan,Sandvikens IF,Ostersunds FK,,,双重机会-和局/客,dc,1.37,0,1.3158,4.12,0,2,1792242000,ALL,pinnacle,,,validate,,,5731062
+2026-10-15T22:48:37Z,football,Peru Liga 1,Sporting Cristal,Comerciantes Unidos,,,和局,1x2,5.8,0,3.1311,85.24,0,2,1792339200,ALL,pinnacle,,,validate,,,5732784
+2026-10-15T22:48:37Z,football,Peru Liga 1,Sporting Cristal,Comerciantes Unidos,,,双重机会-和局/客,dc,3.88,0,2.4753,56.75,0,2,1792339200,ALL,pinnacle,,,validate,,,5732784
+2026-10-15T22:48:37Z,football,USL Championship,FC Tulsa,Oakland Roots SC,,,主胜,1x2,1.99,0,1.8506,7.53,0,2,1792281600,ALL,pinnacle,,,validate,,,4259090
+2026-10-15T22:48:37Z,football,USL Championship,FC Tulsa,Oakland Roots SC,,,客胜,1x2,3.36,0,2.1757,54.43,0,2,1792281600,ALL,pinnacle,,,validate,,,4259090
+2026-10-15T22:48:37Z,football,Turkey Super Lig,Kasimpasa,Samsunspor,,,主胜,1x2,2.44,0,1.8766,30.02,0,2,1792319400,ALL,pinnacle,,,validate,,,5446228
+2026-10-15T22:48:37Z,football,Turkey Super Lig,Kasimpasa,Samsunspor,,,客胜,1x2,2.68,0,2.1407,25.19,0,2,1792319400,ALL,pinnacle,,,validate,,,5446228
+2026-10-15T22:48:37Z,football,Poland Ekstraklasa,Zaglebie Lubin,Jagiellonia Bialystok,,,主胜,1x2,2.52,0,2.0333,23.94,0,2,1792327500,ALL,pinnacle,,,validate,,,5092687
+2026-10-15T22:48:37Z,football,Poland Ekstraklasa,Zaglebie Lubin,Jagiellonia Bialystok,,,客胜,1x2,2.48,0,1.9677,26.04,0,2,1792327500,ALL,pinnacle,,,validate,,,5092687
+2026-10-15T22:48:37Z,football,South Korea K-League 1,Gangwon FC,Incheon United FC,,,主胜,1x2,2.19,0,1.6022,36.69,0,2,1792308600,ALL,pinnacle,,,validate,,,5733380
+2026-10-15T22:48:37Z,football,South Korea K-League 1,Gangwon FC,Incheon United FC,,,客胜,1x2,3.54,0,2.6606,33.05,0,2,1792308600,ALL,pinnacle,,,validate,,,5733380
+2026-10-15T22:48:37Z,football,South Korea K-League 1,FC Seoul,Gimcheon Sangmu FC,,,主胜,1x2,1.53,0,1.2391,23.48,0,2,1792308600,ALL,pinnacle,,,validate,,,5733330
+2026-10-15T22:48:37Z,football,South Korea K-League 1,FC Seoul,Gimcheon Sangmu FC,,,客胜,1x2,5.7,0,5.1816,10.0,0,2,1792308600,ALL,pinnacle,,,validate,,,5733330
+2026-10-15T22:48:37Z,football,USL Championship,San Antonio FC,New Mexico United,,,客胜,1x2,3.59,0,2.3462,53.01,0,2,1792283400,ALL,pinnacle,,,validate,,,4259104
+2026-10-15T22:48:37Z,football,South Korea K-League 2,Suwon Bluewings,Hwaseong FC,,,主胜,1x2,1.66,0,1.33,24.81,0,2,1792299600,ALL,pinnacle,,,validate,,,5732814
+2026-10-15T22:48:37Z,football,South Korea K-League 2,Suwon Bluewings,Hwaseong FC,,,客胜,1x2,4.98,0,4.0307,23.55,0,2,1792299600,ALL,pinnacle,,,validate,,,5732814
+2026-10-15T22:48:37Z,football,South Korea K-League 2,Busan I Park,Jeonnam Dragons,,,客胜,1x2,4.07,0,3.5686,14.05,0,2,1792308600,ALL,pinnacle,,,validate,,,5732781
+2026-10-15T22:48:37Z,football,Uruguay Primera Division,Danubio FC,Central Espanol FC,,,客胜,1x2,3.73,0,2.9629,25.89,0,3,1792346400,ALL,pinnacle,,,validate,,,5737411
+2026-10-15T22:48:37Z,football,Uruguay Primera Division,Danubio FC,Central Espanol FC,,,双重机会-和局/客,dc,1.8,0,1.5255,17.99,0,3,1792346400,ALL,pinnacle,,,validate,,,5737411
+2026-10-15T22:48:37Z,football,Saudi Arabia Professional League,AL Qadisiyah,Abha Club,,,主胜,1x2,1.13,0,1.0368,8.99,0,3,1792156500,ALL,pinnacle,,,validate,,,5411515
+2026-10-15T22:48:37Z,football,UAE Pro League,Shabab Al Ahli,Al Ain FC,,,主胜,1x2,2.95,0,2.8274,4.34,0,2,1792251900,ALL,pinnacle,,,validate,,,5588365
+2026-10-15T22:48:37Z,football,UAE Pro League,Shabab Al Ahli,Al Ain FC,,,客胜,1x2,2.19,0,1.5472,41.55,0,2,1792251900,ALL,pinnacle,,,validate,,,5588365
+2026-10-15T22:48:37Z,football,Austria 2. Liga,Wacker Innsbruck,Austria Salzburg,,,主胜,1x2,2.31,0,1.7927,28.86,0,3,1792175400,ALL,pinnacle,,,validate,,,5740529
+2026-10-15T22:48:37Z,football,Austria 2. Liga,Wacker Innsbruck,Austria Salzburg,,,客胜,1x2,2.82,0,2.2616,24.69,0,3,1792175400,ALL,pinnacle,,,validate,,,5740529
+2026-10-15T22:48:37Z,football,UEFA Champions League,Fenerbahce,Slavia Prague,,,客胜,1x2,4.72,0,4.5375,4.02,0,2,1792514700,ALL,pinnacle,,,validate,,,5525981
+2026-10-15T22:48:37Z,football,UEFA Champions League,Bayern Munich,Arsenal FC,,,主胜,1x2,2.16,0,1.5489,39.45,0,2,1792609200,ALL,pinnacle,,,validate,,,5526018
+2026-10-15T22:48:37Z,football,UEFA Champions League,Bayern Munich,Arsenal FC,,,客胜,1x2,3.09,0,2.8217,9.51,0,2,1792609200,ALL,pinnacle,,,validate,,,5526018
+2026-10-15T22:48:37Z,football,UEFA Champions League,Real Betis,Feyenoord,,,主胜,1x2,1.55,0,1.2487,24.13,0,2,1792609200,ALL,pinnacle,,,validate,,,5526024
+2026-10-15T22:48:37Z,football,UEFA Champions League,Real Betis,Feyenoord,,,客胜,1x2,5.45,0,5.0201,8.56,0,2,1792609200,ALL,pinnacle,,,validate,,,5526024
+2026-10-15T22:48:37Z,football,UEFA Champions League,Real Madrid,RB Leipzig,,,主胜,1x2,1.3,0,1.1111,17.0,0,2,1792609200,ALL,pinnacle,,,validate,,,5526021
+2026-10-15T22:48:37Z,football,USL Championship,Hartford Athletic,Brooklyn FC,,,主胜,1x2,1.44,0,1.1644,23.67,0,2,1792278000,ALL,pinnacle,,,validate,,,4571596
+2026-10-15T22:48:37Z,football,USL Championship,Miami FC,Charleston Battery,,,主胜,1x2,3.37,0,3.0582,10.2,0,2,1792278000,ALL,pinnacle,,,validate,,,4259080
+2026-10-15T22:48:37Z,football,USA Major League Soccer,Orlando City SC,DC United,,,客胜,1x2,3.67,0,3.45,6.38,0,1,1792279800,ALL,pinnacle,,,validate,,,4231095
+2026-10-15T22:48:37Z,football,USA Major League Soccer,New York Red Bulls,Toronto FC,,,主胜,1x2,2.05,0,1.5926,28.72,0,1,1792279800,ALL,pinnacle,,,validate,,,4231107
+2026-10-15T22:48:37Z,football,USA Major League Soccer,New York Red Bulls,Toronto FC,,,客胜,1x2,3.07,0,2.6876,14.23,0,1,1792279800,ALL,pinnacle,,,validate,,,4231107
+2026-10-15T22:48:37Z,football,USA Major League Soccer,FC Cincinnati,Columbus Crew,,,主胜,1x2,2.17,0,1.7457,24.31,0,1,1792357200,ALL,pinnacle,,,validate,,,4231105
+2026-10-15T22:48:37Z,football,USL Championship,Rhode Island FC,Pittsburgh Riverhounds,,,主胜,1x2,1.81,0,1.3456,34.51,0,2,1792279800,ALL,pinnacle,,,validate,,,4259101
+2026-10-15T22:48:37Z,football,USL Championship,Rhode Island FC,Pittsburgh Riverhounds,,,客胜,1x2,4.67,0,3.8937,19.94,0,2,1792279800,ALL,pinnacle,,,validate,,,4259101
+2026-10-15T22:48:37Z,football,USA Major League Soccer,Philadelphia Union,Charlotte FC,,,主胜,1x2,1.56,0,1.4716,6.01,0,1,1792261800,ALL,pinnacle,,,validate,,,4231103
+2026-10-15T22:48:37Z,football,USA Major League Soccer,Philadelphia Union,Charlotte FC,,,客胜,1x2,4.8,0,3.1207,53.81,0,1,1792261800,ALL,pinnacle,,,validate,,,4231103
+2026-10-15T22:48:37Z,football,USA Major League Soccer,Seattle Sounders,CF Montreal,,,主胜,1x2,1.5,0,1.2108,23.89,0,1,1792290600,ALL,pinnacle,,,validate,,,4231118
+2026-10-15T22:48:37Z,football,Egypt Second Division A,Proxy SC,El Entag El Harby,,,主胜,1x2,2.61,0,2.0,30.5,0,3,1792153800,ALL,pinnacle,,,validate,,,5285173
+2026-10-15T22:48:37Z,football,Egypt Second Division A,Proxy SC,El Entag El Harby,,,客胜,1x2,2.66,0,2.0,33.0,0,3,1792153800,ALL,pinnacle,,,validate,,,5285173
+2026-10-15T22:48:37Z,football,USA Major League Soccer,Minnesota United FC,Saint Louis City SC,,,主胜,1x2,2.43,0,1.8766,29.49,0,1,1792269000,ALL,pinnacle,,,validate,,,4231098
+2026-10-15T22:48:37Z,football,USA Major League Soccer,Minnesota United FC,Saint Louis City SC,,,客胜,1x2,2.52,0,2.1407,17.72,0,1,1792269000,ALL,pinnacle,,,validate,,,4231098
+2026-10-15T22:48:37Z,football,USA Major League Soccer,Sporting Kansas City,Real Salt Lake,,,主胜,1x2,2.84,0,2.3305,21.86,0,1,1792283400,ALL,pinnacle,,,validate,,,4231114
+2026-10-15T22:48:37Z,football,USA Major League Soccer,Sporting Kansas City,Real Salt Lake,,,客胜,1x2,2.25,0,1.7516,28.45,0,1,1792283400,ALL,pinnacle,,,validate,,,4231114
+2026-10-15T22:48:37Z,football,USA Major League Soccer,San Jose Earthquakes,Nashville SC,,,主胜,1x2,3.46,0,3.0553,13.25,0,1,1792290600,ALL,pinnacle,,,validate,,,4231108
+2026-10-15T22:48:37Z,football,USA Major League Soccer,New York City FC,Los Angeles FC,,,主胜,1x2,2.68,0,2.0532,30.53,0,1,1792279800,ALL,pinnacle,,,validate,,,4231106
+2026-10-15T22:48:37Z,football,USA Major League Soccer,New York City FC,Los Angeles FC,,,客胜,1x2,2.47,0,1.9494,26.71,0,1,1792279800,ALL,pinnacle,,,validate,,,4231106
+2026-10-15T22:48:37Z,football,USA Major League Soccer,Portland Timbers,Colorado Rapids,,,主胜,1x2,2.12,0,1.6392,29.33,0,1,1792290600,ALL,pinnacle,,,validate,,,4231113
+2026-10-15T22:48:37Z,football,USA Major League Soccer,Portland Timbers,Colorado Rapids,,,客胜,1x2,3.15,0,2.5645,22.83,0,1,1792290600,ALL,pinnacle,,,validate,,,4231113
+2026-10-15T22:48:37Z,football,USA Major League Soccer,Houston Dynamo,FC Dallas,,,客胜,1x2,3.44,0,2.3781,44.65,0,1,1792283400,ALL,pinnacle,,,validate,,,4231104
+2026-10-15T22:48:37Z,football,Cyprus 1st Division,Omonia Aradippou,AEL Limassol,,,主胜,1x2,2.64,0,1.709,54.48,0,2,1792335600,ALL,pinnacle,,,validate,,,5732776
+2026-10-15T22:48:37Z,football,Cyprus 1st Division,Aris Limassol FC,AEK Larnaca,,,主胜,1x2,2.61,0,2.1239,22.89,0,2,1792339200,ALL,pinnacle,,,validate,,,5740806
+2026-10-15T22:48:37Z,football,Cyprus 1st Division,Aris Limassol FC,AEK Larnaca,,,客胜,1x2,2.35,0,1.8898,24.35,0,2,1792339200,ALL,pinnacle,,,validate,,,5740806
+2026-10-15T22:48:37Z,football,Venezuela Primera Division,Estudiantes de Merida,Metropolitanos FC,,,让球客胜,hc,1.75,0,1.6731,4.6,0,2,1792351800,BB,pinnacle,,,validate,,+0.5,5372936
+2026-10-15T22:48:37Z,football,New Zealand National League,Wellington Olympic,Eastern Suburbs AFC,,,主胜,1x2,2.25,0,1.5184,48.18,0,2,1792202400,BB,pinnacle,,,validate,,,5756323
+2026-10-15T22:48:37Z,football,Ireland First Division,Kerry FC,Cork City FC,,,主胜,1x2,2.61,0,2.0094,29.89,0,2,1792176300,ALL,pinnacle,,,validate,,,5722327
+2026-10-15T22:48:37Z,football,Ireland First Division,Kerry FC,Cork City FC,,,客胜,1x2,2.39,0,1.9907,20.06,0,2,1792176300,ALL,pinnacle,,,validate,,,5722327
+2026-10-15T22:48:37Z,football,Chile Primera B,Union San Felipe,Deportes Temuco,,,小球,ou,1.9,0,1.8611,2.09,0,3,1792337400,BB,pinnacle,,,validate,,2.5,5733916
+2026-10-15T22:48:37Z,football,Portugal Primeira Liga,Sporting CP,Academico de Viseu FC,,,让球客胜,hc,1.98,0,1.9382,2.16,0,1,1792960200,ALL,pinnacle,,,validate,,+2,5740404
+2026-10-15T22:48:37Z,football,Chile Primera B,Santiago Wanderers,CSD Rangers,,,让球客胜,hc,1.78,0,1.6706,6.55,0,3,1792184400,BB,pinnacle,,,validate,,+0.5,5723071
+2026-10-15T22:48:37Z,football,Chile Primera B,Santiago Wanderers,CSD Rangers,,,双重机会-和局/客,dc,1.75,0,1.6987,3.02,0,3,1792184400,BB,pinnacle,,,validate,,,5723071
+2026-10-15T22:48:37Z,football,Chile Primera B,Curico Unido,Deportes Iquique,,,主胜,1x2,2.73,0,2.5871,5.52,0,3,1792337400,BB,pinnacle,,,validate,,,5733915
+2026-10-15T22:48:37Z,football,Chile Primera B,Curico Unido,Deportes Iquique,,,小球,ou,1.91,0,1.8542,3.01,0,3,1792337400,BB,pinnacle,,,validate,,2.5,5733915
+2026-10-15T22:48:37Z,football,Chile Primera B,Curico Unido,Deportes Iquique,,,双重机会-主/和局,dc,1.55,0,1.512,2.51,0,3,1792337400,BB,pinnacle,,,validate,,,5733915
+2026-10-15T22:48:37Z,football,Chile Primera B,Union Espanola,Deportes Copiapo,,,大球,ou,1.96,0,1.8853,3.96,0,3,1792447200,BB,pinnacle,,,validate,,2.5,5738439
+2026-10-15T22:48:37Z,basketball,Hungary NB I,NKA Universitas Pecs,Falco KC Szombathely,,,让分主胜,hc,1.84,0,1.7646,4.27,0,3,1792166400,ALL,pinnacle,,,validate,,+13.5,5472664
+2026-10-15T22:48:37Z,basketball,Sweden Basketball League,Hogsbo Basket,Jamtland Basket,,,让分主胜,hc,1.85,0,1.7712,4.45,0,3,1792170240,ALL,pinnacle,,,validate,,+7.5,5753362
+2026-10-15T22:48:37Z,basketball,BNXT League,Brussels Basketball,BC Oostende,,,主胜,1x2,2.3,0,1.836,25.27,0,3,1792175400,ALL,pinnacle,,,validate,,,5753638
+2026-10-15T22:48:37Z,ice_hockey,NHL,Vegas Golden Knights,Calgary Flames,,,让球客胜,hc,2.0,0,1.9526,2.43,0,1,1792116000,BB,pinnacle,,,validate,,+1.5,5646158
+2026-10-15T22:52:33Z,football,England League Two,Port Vale,Chesterfield FC,,,客胜,1x2,2.5,0,2.4481,2.12,0,2,1792245600,ALL,pinnacle,,,validate,,,5731450
+2026-10-15T22:52:33Z,football,Chile Primera B,Santiago Wanderers,CSD Rangers,,,小球,ou,1.98,0,1.8353,7.88,0,3,1792184400,ALL,pinnacle,,,validate,,2.5,5723071
+2026-10-15T22:52:33Z,basketball,Turkey Basketball Super League,Bursaspor,Bahcesehir Koleji,,,客胜,1x2,1.25,0,1.2069,3.57,0,2,1792240200,ALL,pinnacle,,,validate,,,5751208
+2026-10-15T22:52:33Z,basketball,Sweden Basketball Superettan,Wetterbygden Stars,Huddinge Basketklubb,,,主胜,1x2,1.4,0,1.3466,3.97,0,2,1792249200,ALL,pinnacle,,,validate,,,5728571
+2026-10-15T22:52:33Z,basketball,Czech Republic NBL Basketball,BK Pardubice,BK Decin,,,主胜,1x2,1.14,0,1.0924,4.36,0,3,1792251000,ALL,pinnacle,,,validate,,,5234009
+2026-10-15T22:52:33Z,basketball,Romania Basketball National League,CSO Voluntari,CSM Corona Brasov,,,主胜,1x2,1.14,0,1.0788,5.67,0,3,1792252800,ALL,pinnacle,,,validate,,,5740346
+2026-10-15T22:52:33Z,basketball,Slovakia Basketball League,BC Prievidza,Nitra Blue Wings,,,主胜,1x2,1.35,0,1.2552,7.55,0,3,1792252800,BB,pinnacle,,,validate,,,5306131

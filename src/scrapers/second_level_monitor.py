@@ -1255,7 +1255,10 @@ class SecondLevelMonitor:
                           f"{sig['match']['home']} vs {sig['match']['away']} {sig['desig']}", flush=True)
                     return
         sig["_stake"] = stake
-        if stake < MIN_STAKE:
+        # 2026-10-16 让局降额: cap<MIN_STAKE 的盘口用 cap 作下限(让局 cap10 → 允许投10元),
+        # 否则 MIN_STAKE=30 会把降额注拦掉(10<30 → 实际停投)。其他盘口 cap≥30, floor 仍=30 不变。
+        _floor = min(MIN_STAKE, _cap)
+        if stake < _floor:
             return
         self._load_live_spent()
         tag = f"{sig['match']['home']} vs {sig['match']['away']} {sig['desig']}"
