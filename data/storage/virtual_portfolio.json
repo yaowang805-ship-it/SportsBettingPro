@@ -1,5 +1,5 @@
 {
-  "balance": 16112.53,
+  "balance": 16082.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -253,6 +253,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792078200.0,
       "created_at": "2026-10-15T09:10:09.191419+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_丹戎巴葛_后港联_客胜",
+      "sport": "football",
+      "league": "新加坡超级联赛",
+      "home_team": "丹戎巴葛",
+      "away_team": "后港联",
+      "home_cn": "丹戎巴葛",
+      "away_cn": "后港联",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.87,
+      "stake": 30,
+      "model_prob": 0.5548,
+      "ev_pct": 3.74,
+      "pin_odds": 1.7353,
+      "fair_price": 1.8026,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792150200.0,
+      "created_at": "2026-10-15T11:34:15.058208+00:00",
       "track_only": false
     }
   ],
@@ -9729,8 +9752,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-15",
-    "used": 270.0,
-    "bets": 9
+    "used": 300.0,
+    "bets": 10
   },
   "updated": null
 }
