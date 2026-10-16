@@ -110,13 +110,6 @@
       "early"
     ],
     [
-      "tennis",
-      "hc_games",
-      "主",
-      "*",
-      "live"
-    ],
-    [
       "football",
       "ou",
       "大",
@@ -166,6 +159,13 @@
       "主",
       "*",
       "early"
+    ],
+    [
+      "tennis",
+      "hc_games",
+      "主",
+      "*",
+      "live"
     ]
   ],
   "observe_release_caps": {
@@ -184,7 +184,6 @@
     "basketball|1x2|客|*|early": 30,
     "tennis|hc|主|*|early": 30,
     "tennis|hc|客|*|early": 30,
-    "tennis|hc_games|主|*|live": 10,
     "football|ou|大|50-55%|live": 30,
     "basketball|ou|大|45-55%|live": 30,
     "ice_hockey|ou|大|55-65%|live": 30

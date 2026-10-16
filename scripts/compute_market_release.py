@@ -158,6 +158,7 @@ MANUAL_OBSERVE_BLOCK = {
     # 2026-10-15 撤网球独赢: 交叉验证实盘负(客-11.3%胜率36%/主+0.9%胜率41%), 逆向选择毒性流。
     "tennis|1x2|主|*|live",
     "tennis|1x2|客|*|live",
+    "tennis|hc_games|主|*|live",
     # 2026-10-16 撤篮球让球主滚球(纸面-28%+实盘-13.9%双负) + 足球独赢主早盘(纸面-2.2%→实盘-14.4%逆向选择)。
     "basketball|hc|主|*|live",
     "football|1x2|主|*|early",
@@ -200,8 +201,7 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 2026-10-15 网球滚球改测让局主(实盘独赢负, 交叉验证毒性流), 撤独赢主客。
     "tennis|hc|主|*|early": 30,
     "tennis|hc|客|*|early": 30,
-    # 2026-10-16 让局降额 30→10(实盘让局-29%ROI/胜率29%, 小成本试水), 配合 MIN_STAKE 对 cap<30 放行。
-    "tennis|hc_games|主|*|live": 10,
+    # 2026-10-16 撤回网球让局主滚球(实盘-29%ROI/胜率29%, 逆向选择毒性流), 交还数据驱动判据。
     # 2026-10-15 滚球让球固化(之前手工加JSON没进MANUAL, 会丢): 让球客cap80(正edge加码), 让球主cap60。
     "football|hc|主|*|live": 60,
     "football|hc|客|*|live": 80,
