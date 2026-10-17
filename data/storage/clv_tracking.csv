@@ -3444,3 +3444,101 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T05:13:43Z,ice_hockey,Finland Liiga,Oulun Karpat,KooKoo,,,上半场客胜,ht,3.57,0,2.7861,28.14,0,3,1792245600,BB,pinnacle,,,validate,,,5763119
 2026-10-17T05:14:18Z,basketball,Australia NBL,Sydney Kings,Perth Wildcats,,,主胜,1x2,1.32,0,1.2813,3.02,0,3,1792225800,ALL,pinnacle,,,validate,,,5074442
 2026-10-17T05:14:18Z,basketball,Australia NBL,Sydney Kings,Perth Wildcats,,,上半场主胜,ht,1.41,0,1.3459,4.76,0,3,1792225800,ALL,pinnacle,,,validate,,,5074442
+2026-10-17T05:18:44Z,ice_hockey,Sweden Hockey League,Linkopings HC,Farjestads BK,,,上半场主胜,ht,3.9,0,2.9107,33.99,0,3,1792242900,BB,pinnacle,,,validate,,,5616771
+2026-10-17T05:18:44Z,ice_hockey,Sweden Hockey League,Linkopings HC,Farjestads BK,,,上半场客胜,ht,2.25,0,1.5234,47.7,0,3,1792242900,BB,pinnacle,,,validate,,,5616771
+2026-10-17T05:18:44Z,ice_hockey,Sweden Hockey League,Djurgardens IF,Malmo IF,,,上半场主胜,ht,2.73,0,1.9317,41.33,0,3,1792242900,BB,pinnacle,,,validate,,,5616770
+2026-10-17T05:18:44Z,ice_hockey,Sweden Hockey League,Djurgardens IF,Malmo IF,,,上半场客胜,ht,2.99,0,2.0733,44.21,0,3,1792242900,BB,pinnacle,,,validate,,,5616770
+2026-10-17T05:18:44Z,ice_hockey,NHL,Tampa Bay Lightning,Vancouver Canucks,,,上半场主胜,ht,1.94,0,1.4462,34.14,0,1,1792267200,BB,pinnacle,,,validate,,,5646125
+2026-10-17T05:18:44Z,ice_hockey,NHL,Tampa Bay Lightning,Vancouver Canucks,,,上半场客胜,ht,4.22,0,3.2411,30.2,0,1,1792267200,BB,pinnacle,,,validate,,,5646125
+2026-10-17T05:18:44Z,ice_hockey,NHL,Florida Panthers,Seattle Kraken,,,上半场主胜,ht,2.37,0,1.6994,39.46,0,1,1792274400,BB,pinnacle,,,validate,,,5646168
+2026-10-17T05:18:44Z,ice_hockey,NHL,Florida Panthers,Seattle Kraken,,,上半场客胜,ht,3.25,0,2.4298,33.76,0,1,1792274400,BB,pinnacle,,,validate,,,5646168
+2026-10-17T05:18:44Z,ice_hockey,NHL,Philadelphia Flyers,Ottawa Senators,,,上半场主胜,ht,3.14,0,2.1991,42.79,0,1,1792278000,BB,pinnacle,,,validate,,,5646151
+2026-10-17T05:18:44Z,ice_hockey,NHL,Philadelphia Flyers,Ottawa Senators,,,上半场客胜,ht,2.52,0,1.8339,37.41,0,1,1792278000,BB,pinnacle,,,validate,,,5646151
+2026-10-17T05:18:44Z,ice_hockey,NHL,Toronto Maple Leafs,New York Islanders,,,上半场主胜,ht,2.52,0,1.8525,36.03,0,1,1792278000,BB,pinnacle,,,validate,,,5646110
+2026-10-17T05:18:44Z,ice_hockey,NHL,Toronto Maple Leafs,New York Islanders,,,上半场客胜,ht,3.02,0,2.173,38.98,0,1,1792278000,BB,pinnacle,,,validate,,,5646110
+2026-10-17T05:23:41Z,ice_hockey,NHL,Detroit Red Wings,San Jose Sharks,,,上半场主胜,ht,2.53,0,1.8525,36.57,0,1,1792278000,BB,pinnacle,,,validate,,,5646163
+2026-10-17T05:23:41Z,ice_hockey,NHL,Detroit Red Wings,San Jose Sharks,,,上半场客胜,ht,2.98,0,2.173,37.14,0,1,1792278000,BB,pinnacle,,,validate,,,5646163
+2026-10-17T05:29:14Z,ice_hockey,NHL,Columbus Blue Jackets,New York Rangers,,,上半场主胜,ht,2.53,0,1.868,35.44,0,1,1792278000,BB,pinnacle,,,validate,,,5646170
+2026-10-17T05:29:14Z,ice_hockey,NHL,Columbus Blue Jackets,New York Rangers,,,上半场客胜,ht,2.98,0,2.1521,38.47,0,1,1792278000,BB,pinnacle,,,validate,,,5646170
+2026-10-17T05:29:14Z,ice_hockey,NHL,Nashville Predators,St. Louis Blues,,,上半场主胜,ht,2.81,0,2.0096,39.83,0,1,1792281600,BB,pinnacle,,,validate,,,5646114
+2026-10-17T05:29:14Z,ice_hockey,NHL,Nashville Predators,St. Louis Blues,,,上半场客胜,ht,2.72,0,1.9905,36.65,0,1,1792281600,BB,pinnacle,,,validate,,,5646114
+2026-10-17T05:29:14Z,ice_hockey,NHL,Utah Mammoth,Edmonton Oilers,,,上半场主胜,ht,2.44,0,1.8525,31.71,0,1,1792288800,BB,pinnacle,,,validate,,,5646132
+2026-10-17T05:29:14Z,ice_hockey,NHL,Utah Mammoth,Edmonton Oilers,,,上半场客胜,ht,2.81,0,2.173,29.31,0,1,1792288800,BB,pinnacle,,,validate,,,5646132
+2026-10-17T05:34:24Z,ice_hockey,Sweden Hockey League,Brynas IF,Vaxjo Lakers,,,上半场主胜,ht,2.36,0,1.622,45.5,0,3,1792252800,BB,pinnacle,,,validate,,,5616772
+2026-10-17T05:34:24Z,ice_hockey,Sweden Hockey League,Brynas IF,Vaxjo Lakers,,,上半场客胜,ht,3.51,0,2.6076,34.61,0,3,1792252800,BB,pinnacle,,,validate,,,5616772
+2026-10-17T05:34:24Z,ice_hockey,NHL,Chicago Blackhawks,Dallas Stars,,,上半场主胜,ht,3.32,0,2.4774,34.01,0,1,1792278000,BB,pinnacle,,,validate,,,5646161
+2026-10-17T05:34:24Z,ice_hockey,NHL,Chicago Blackhawks,Dallas Stars,,,上半场客胜,ht,2.36,0,1.6769,40.74,0,1,1792278000,BB,pinnacle,,,validate,,,5646161
+2026-10-17T05:38:53Z,tennis,World Tennis - M15 Quito Men Singles,Mwendwa Mbithi (USA),Lucas Andrade Da Silva (BRA),,,让盘客胜,hc,1.78,0,1.701,4.64,0,3,1792249200,BB,pinnacle,,,validate,,-1.5,5763879
+2026-10-17T05:39:27Z,football,Malta Premier League,Balzan FC,Zabbar Saint Patrick FC,,,客胜,1x2,2.84,0,2.6296,8.0,0,2,1792252800,ALL,pinnacle,,,validate,,,5728595
+2026-10-17T05:40:03Z,basketball,Australia NBL,SE Melbourne Phoenix,Cairns Taipans,,,小分,ou,1.93,0,1.8163,6.26,0,3,1792218600,ALL,pinnacle,,,validate,,196.5,5074407
+2026-10-17T05:40:37Z,basketball,Japan B.League One,Tachikawa Dice,Tokyo Hachioji Trains,,,主胜,1x2,2.65,0,2.1484,23.35,0,3,1792217100,BB,pinnacle,,,validate,,,5325625
+2026-10-17T05:40:37Z,basketball,Japan B.League One,Tachikawa Dice,Tokyo Hachioji Trains,,,上半场主胜,ht,2.25,0,2.1699,3.69,0,3,1792217100,BB,pinnacle,,,validate,,,5325625
+2026-10-17T05:43:57Z,football,USL Championship,Monterey Bay FC,Colorado Springs Switchbacks FC,,,客胜,1x2,1.83,0,1.7437,4.95,0,2,1792288800,ALL,pinnacle,,,validate,,,4259100
+2026-10-17T05:43:57Z,football,USL Championship,Monterey Bay FC,Colorado Springs Switchbacks FC,,,让球客胜,hc,1.83,0,1.7669,3.57,0,2,1792288800,ALL,pinnacle,,,validate,,-0.5,4259100
+2026-10-17T05:43:57Z,football,UAE Pro League,Al Nasr Dubai SC,Hatta SC,,,和局,1x2,5.15,0,3.064,68.08,0,2,1792242300,ALL,pinnacle,,,validate,,,5588366
+2026-10-17T05:43:57Z,football,UAE Pro League,Al Nasr Dubai SC,Hatta SC,,,双重机会-和局/客,dc,3.04,0,2.2178,37.07,0,2,1792242300,ALL,pinnacle,,,validate,,,5588366
+2026-10-17T05:44:31Z,ice_hockey,Switzerland National League,HC Fribourg Gotteron,HC Lugano,,,上半场主胜,ht,2.29,0,1.6607,37.89,0,3,1792259100,BB,pinnacle,,,validate,,,5617786
+2026-10-17T05:44:31Z,ice_hockey,Switzerland National League,HC Fribourg Gotteron,HC Lugano,,,上半场客胜,ht,3.43,0,2.5134,36.47,0,3,1792259100,BB,pinnacle,,,validate,,,5617786
+2026-10-17T05:49:33Z,ice_hockey,Switzerland National League,HC Lausanne,EHC Kloten,,,上半场主胜,ht,2.06,0,1.481,39.1,0,3,1792259100,BB,pinnacle,,,validate,,,5617788
+2026-10-17T05:49:33Z,ice_hockey,Switzerland National League,HC Lausanne,EHC Kloten,,,上半场客胜,ht,4.07,0,3.079,32.19,0,3,1792259100,BB,pinnacle,,,validate,,,5617788
+2026-10-17T05:54:34Z,ice_hockey,AHL,Belleville Senators,Toronto Marlies,,,上半场主胜,ht,2.88,0,2.626,9.67,0,3,1792267200,BB,pinnacle,,,validate,,,5645100
+2026-10-17T05:54:34Z,ice_hockey,AHL,Belleville Senators,Toronto Marlies,,,上半场客胜,ht,2.7,0,2.4644,9.56,0,3,1792267200,BB,pinnacle,,,validate,,,5645100
+2026-10-17T05:54:34Z,ice_hockey,AHL,Cleveland Monsters,Wilkes Barre Scranton Penguins,,,上半场主胜,ht,2.56,0,2.2256,15.03,0,3,1792263600,BB,pinnacle,,,validate,,,5645080
+2026-10-17T05:54:34Z,ice_hockey,AHL,Cleveland Monsters,Wilkes Barre Scranton Penguins,,,上半场客胜,ht,3.09,0,2.9433,4.98,0,3,1792263600,BB,pinnacle,,,validate,,,5645080
+2026-10-17T05:54:34Z,ice_hockey,AHL,Syracuse Crunch,Rochester Americans,,,上半场主胜,ht,2.62,0,1.8093,44.81,0,3,1792270800,BB,pinnacle,,,validate,,,5645069
+2026-10-17T05:54:34Z,ice_hockey,AHL,Syracuse Crunch,Rochester Americans,,,上半场客胜,ht,3.12,0,2.2357,39.55,0,3,1792270800,BB,pinnacle,,,validate,,,5645069
+2026-10-17T05:55:08Z,basketball,Australia NBL,SE Melbourne Phoenix,Cairns Taipans,,,客胜,1x2,3.14,0,3.0384,3.34,0,3,1792218600,ALL,pinnacle,,,validate,,,5074407
+2026-10-17T05:59:00Z,football,USA Major League Soccer,Philadelphia Union,Charlotte FC,,,和局,1x2,5.4,0,3.2167,67.87,0,1,1792261800,ALL,pinnacle,,,validate,,,4231103
+2026-10-17T05:59:00Z,football,USA Major League Soccer,Philadelphia Union,Charlotte FC,,,上半场主胜,ht,1.92,0,1.8734,2.49,0,1,1792261800,ALL,pinnacle,,,validate,,,4231103
+2026-10-17T05:59:00Z,football,USA Major League Soccer,Philadelphia Union,Charlotte FC,,,双重机会-和局/客,dc,2.84,0,2.1449,32.41,0,1,1792261800,ALL,pinnacle,,,validate,,,4231103
+2026-10-17T05:59:00Z,tennis,ATP - Almaty Open,Amir Omarkhanov (KAZ),Rei Sakamoto (JPN),,,小分,ou,1.99,0,1.9222,3.53,0,2,1792216800,BB,pinnacle,,,validate,,19.5,5762306
+2026-10-17T05:59:33Z,ice_hockey,AHL,Hershey Bears,Providence Bruins,,,上半场主胜,ht,2.93,0,2.0737,41.29,0,3,1792274400,BB,pinnacle,,,validate,,,5645091
+2026-10-17T05:59:33Z,ice_hockey,AHL,Hershey Bears,Providence Bruins,,,上半场客胜,ht,2.73,0,1.9314,41.35,0,3,1792274400,BB,pinnacle,,,validate,,,5645091
+2026-10-17T05:59:33Z,ice_hockey,AHL,Charlotte Checkers,Hartford Wolf Pack,,,上半场主胜,ht,3.24,0,2.4148,34.17,0,3,1792274400,BB,pinnacle,,,validate,,,5645089
+2026-10-17T05:59:33Z,ice_hockey,AHL,Charlotte Checkers,Hartford Wolf Pack,,,上半场客胜,ht,2.49,0,1.7068,45.89,0,3,1792274400,BB,pinnacle,,,validate,,,5645089
+2026-10-17T05:59:33Z,ice_hockey,AHL,Utica Comets,Laval Rocket,,,上半场主胜,ht,2.71,0,1.8967,42.88,0,3,1792274400,BB,pinnacle,,,validate,,,5645093
+2026-10-17T05:59:33Z,ice_hockey,AHL,Utica Comets,Laval Rocket,,,上半场客胜,ht,2.97,0,2.1152,40.41,0,3,1792274400,BB,pinnacle,,,validate,,,5645093
+2026-10-17T06:02:53Z,football,Hungary NB III,Tiszaujvaros,Diosgyori VTK II,,,大球,ou,1.89,0,1.8276,3.41,0,4,1792234800,BB,pinnacle,,,validate,,3.0,5761059
+2026-10-17T06:05:06Z,ice_hockey,NHL,Montreal Canadiens,Buffalo Sabres,,,上半场主胜,ht,2.49,0,1.845,34.96,0,1,1792278000,BB,pinnacle,,,validate,,,5646134
+2026-10-17T06:05:06Z,ice_hockey,NHL,Montreal Canadiens,Buffalo Sabres,,,上半场客胜,ht,2.98,0,2.1834,36.48,0,1,1792278000,BB,pinnacle,,,validate,,,5646134
+2026-10-17T06:05:06Z,ice_hockey,AHL,Springfield Thunderbirds,Lehigh Valley Phantoms,,,上半场主胜,ht,2.97,0,2.1258,39.71,0,3,1792274700,BB,pinnacle,,,validate,,,5645102
+2026-10-17T06:05:06Z,ice_hockey,AHL,Springfield Thunderbirds,Lehigh Valley Phantoms,,,上半场客胜,ht,2.67,0,1.8883,41.4,0,3,1792274700,BB,pinnacle,,,validate,,,5645102
+2026-10-17T06:05:06Z,ice_hockey,AHL,Rockford Icehogs,Grand Rapids Griffins,,,上半场主胜,ht,2.73,0,2.4519,11.34,0,3,1792281600,BB,pinnacle,,,validate,,,5645103
+2026-10-17T06:05:06Z,ice_hockey,AHL,Rockford Icehogs,Grand Rapids Griffins,,,上半场客胜,ht,2.93,0,2.6944,8.74,0,3,1792281600,BB,pinnacle,,,validate,,,5645103
+2026-10-17T06:06:14Z,basketball,Australia NBL,SE Melbourne Phoenix,Cairns Taipans,,,让分客胜,hc,2.01,0,1.8927,6.2,0,3,1792218600,ALL,pinnacle,,,validate,,+6.5,5074407
+2026-10-17T06:09:31Z,football,Turkey Super Lig,Fenerbahce,Alanyaspor,,,大球,ou,1.88,0,1.8095,3.9,0,2,1792252800,ALL,pinnacle,,,validate,,3.0,5446223
+2026-10-17T06:10:04Z,basketball,Turkey Basketball Super League,Bordo Sportif RS,Turk Telekom,,,上半场主胜,ht,2.13,0,2.0461,4.1,0,2,1792231200,BB,pinnacle,,,validate,,,5761513
+2026-10-17T06:11:43Z,ice_hockey,AHL,Tucson Roadrunners,San Diego Gulls,,,上半场主胜,ht,2.86,0,2.0535,39.27,0,3,1792288800,BB,pinnacle,,,validate,,,5645073
+2026-10-17T06:11:43Z,ice_hockey,AHL,Tucson Roadrunners,San Diego Gulls,,,上半场客胜,ht,2.69,0,1.9492,38.01,0,3,1792288800,BB,pinnacle,,,validate,,,5645073
+2026-10-17T06:12:16Z,football,Malta Challenge League,St Andrews FC,Mgarr United FC,,,让球主胜,hc,1.79,0,1.7267,3.67,0,3,1792238400,ALL,pinnacle,,,validate,,+0.5,5728219
+2026-10-17T06:12:16Z,football,Malta Challenge League,St Andrews FC,Mgarr United FC,,,大球,ou,1.82,0,1.7565,3.62,0,3,1792238400,ALL,pinnacle,,,validate,,2.5,5728219
+2026-10-17T06:12:16Z,football,Brazil Campeonato Gaucho A2,APAFUT,Passo Fundo,,,小球,ou,1.77,0,1.7101,3.5,0,3,1792260000,BB,pinnacle,,,validate,,2.0,5748428
+2026-10-17T06:14:37Z,football,South Korea K-League 1,Ulsan HD FC,Bucheon FC 1995,,,让球主胜,hc,2.0,0,1.9572,2.19,0,2,1792222200,ALL,pinnacle,,,validate,,-1,5725396
+2026-10-17T06:15:15Z,ice_hockey,AHL,Ontario Reign,Henderson Silver Knights,,,上半场主胜,ht,2.89,0,2.6339,9.72,0,3,1792285200,BB,pinnacle,,,validate,,,5645068
+2026-10-17T06:15:15Z,ice_hockey,AHL,Ontario Reign,Henderson Silver Knights,,,上半场客胜,ht,2.71,0,2.4613,10.1,0,3,1792285200,BB,pinnacle,,,validate,,,5645068
+2026-10-17T06:15:15Z,ice_hockey,AHL,Abbotsford Canucks,Coachella Valley Firebirds,,,上半场主胜,ht,2.79,0,2.532,10.19,0,3,1792288800,BB,pinnacle,,,validate,,,5645098
+2026-10-17T06:15:15Z,ice_hockey,AHL,Abbotsford Canucks,Coachella Valley Firebirds,,,上半场客胜,ht,2.78,0,2.5551,8.8,0,3,1792288800,BB,pinnacle,,,validate,,,5645098
+2026-10-17T06:15:50Z,ice_hockey,AHL,Bakersfield Condors,Calgary Wranglers,,,上半场主胜,ht,2.67,0,2.4663,8.26,0,3,1792289400,BB,pinnacle,,,validate,,,5645099
+2026-10-17T06:15:50Z,ice_hockey,AHL,Bakersfield Condors,Calgary Wranglers,,,上半场客胜,ht,2.79,0,2.5818,8.06,0,3,1792289400,BB,pinnacle,,,validate,,,5645099
+2026-10-17T06:19:42Z,football,UEFA Champions League,Liverpool FC,Villarreal CF,,,上半场主胜,ht,2.02,0,1.9744,2.31,0,2,1792522800,ALL,pinnacle,,,validate,,,5748831
+2026-10-17T06:20:17Z,ice_hockey,NHL,Montreal Canadiens,Buffalo Sabres,,,大分,ou,1.81,0,1.7701,2.25,0,1,1792278000,BB,pinnacle,,,validate,,6.0,5646134
+2026-10-17T06:20:17Z,ice_hockey,Czech Republic Extraliga,BK Mlada Boleslav,Mountfield HK,,,上半场主胜,ht,3.17,0,2.2096,43.46,0,2,1792332000,BB,pinnacle,,,validate,,,5733824
+2026-10-17T06:20:17Z,ice_hockey,Czech Republic Extraliga,BK Mlada Boleslav,Mountfield HK,,,上半场客胜,ht,2.66,0,1.8267,45.62,0,2,1792332000,BB,pinnacle,,,validate,,,5733824
+2026-10-17T06:20:17Z,ice_hockey,Czech Republic Extraliga,HC Plzen,HC Vitkovice,,,上半场主胜,ht,2.18,0,1.4848,46.82,0,2,1792333800,BB,pinnacle,,,validate,,,5733872
+2026-10-17T06:20:17Z,ice_hockey,Czech Republic Extraliga,HC Plzen,HC Vitkovice,,,上半场客胜,ht,4.28,0,3.0625,39.76,0,2,1792333800,BB,pinnacle,,,validate,,,5733872
+2026-10-17T06:24:50Z,football,Sweden Superettan,Sandvikens IF,Ostersunds FK,,,客胜,1x2,2.25,0,2.1839,3.03,0,2,1792242000,ALL,pinnacle,,,validate,,,5731062
+2026-10-17T06:24:50Z,football,Sweden Superettan,Sandvikens IF,Ostersunds FK,,,上半场客胜,ht,2.99,0,2.8788,3.86,0,2,1792242000,ALL,pinnacle,,,validate,,,5731062
+2026-10-17T06:24:50Z,football,Japan Football League,Veertien Mie,Azul Claro Numazu,,,和局,1x2,3.16,0,3.0972,2.03,0,3,1792227600,ALL,pinnacle,,,validate,,,5518976
+2026-10-17T06:24:50Z,football,Thailand League 1,Rayong FC,Uthai Thani FC,,,双重机会-和局/客,dc,1.49,0,1.4248,4.58,0,2,1792238400,ALL,pinnacle,,,validate,,,5285514
+2026-10-17T06:25:28Z,ice_hockey,Czech Republic Extraliga,HC Kometa Brno,Bili Tygri Liberec,,,上半场主胜,ht,2.57,0,1.913,34.34,0,2,1792335600,BB,pinnacle,,,validate,,,5733887
+2026-10-17T06:25:28Z,ice_hockey,Czech Republic Extraliga,HC Kometa Brno,Bili Tygri Liberec,,,上半场客胜,ht,2.92,0,2.0952,39.37,0,2,1792335600,BB,pinnacle,,,validate,,,5733887
+2026-10-17T06:25:28Z,ice_hockey,Czech Republic Extraliga,Ceske Budejovice,HC Rytiri Kladno,,,上半场主胜,ht,2.69,0,1.9086,40.94,0,2,1792335600,BB,pinnacle,,,validate,,,5733886
+2026-10-17T06:25:28Z,ice_hockey,Czech Republic Extraliga,Ceske Budejovice,HC Rytiri Kladno,,,上半场客胜,ht,3.0,0,2.1006,42.82,0,2,1792335600,BB,pinnacle,,,validate,,,5733886
+2026-10-17T06:29:59Z,tennis,World Tennis - W35 Birmingham City Women Singles,Manon Leonard (FRA),Alicia Dudeney (GBR),,,上半场主胜,ht,2.58,0,2.4836,3.88,0,3,1792227600,BB,pinnacle,,,validate,,,5762511
+2026-10-17T06:33:24Z,football,Australia A-League,Brisbane Roar FC,Perth Glory FC,,,上半场客胜,ht,4.39,0,4.3004,2.08,0,2,1792746000,ALL,pinnacle,,,validate,,,5631907
+2026-10-17T06:35:38Z,basketball,Japan B.League One,Earthfriends Tokyo Z,Koshigaya Alphas,,,让分主胜,hc,1.94,0,1.8751,3.46,0,3,1792227900,BB,pinnacle,,,validate,,+11.5,5325629
+2026-10-17T06:35:38Z,ice_hockey,Vysshaya Hokkeinaya Liga,Yuzhny Ural Orsk,HC Norilsk,,,上半场主胜,ht,2.63,0,1.7335,51.72,0,3,1792416600,BB,pinnacle,,,validate,,,5667166
+2026-10-17T06:35:38Z,ice_hockey,Vysshaya Hokkeinaya Liga,Yuzhny Ural Orsk,HC Norilsk,,,上半场客胜,ht,3.57,0,2.3634,51.05,0,3,1792416600,BB,pinnacle,,,validate,,,5667166
+2026-10-17T06:35:38Z,ice_hockey,AHL,Manitoba Moose,Texas Stars,,,上半场主胜,ht,2.94,0,2.6746,9.92,0,3,1792350000,BB,pinnacle,,,validate,,,5645107
+2026-10-17T06:35:38Z,ice_hockey,AHL,Manitoba Moose,Texas Stars,,,上半场客胜,ht,2.71,0,2.4317,11.44,0,3,1792350000,BB,pinnacle,,,validate,,,5645107
+2026-10-17T06:40:07Z,football,England FA Cup-Qualification,Uxbridge FC,Hornchurch FC,,,小球,ou,1.87,0,1.6207,15.38,0,3,1792245600,BB,pinnacle,,,validate,,3.5,5757025

@@ -218,13 +218,9 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         if e:
             swapped = True
     if not e:
-        idx = _get_event_index(pin_sid, event_type)
-        e = idx.get((_norm(home) + _suf, _norm(away) + _suf))
-        if not e:
-            e = idx.get((_norm(away) + _suf, _norm(home) + _suf))
-            if e:
-                swapped = True
-    if not e:
+        # 2026-10-17 禁用 REST 兜底: _get_event_index 拉 REST 4.31s, 滚球浪费窗口/早盘下单超时 20s。
+        # 职业团队共识「REST for truth, WebSocket for delta」——REST 只做快照/恢复, 不做比价兜底。
+        # 匹配不到就 return None(宁缺毋滥), 由上层放弃该盘口。
         return None
     periods = e.get('periods') or {}
     # 2026-10-11 修崩溃: Pin 元数据的 periods 是 list(比赛时段元数据, 无赔率), 只有

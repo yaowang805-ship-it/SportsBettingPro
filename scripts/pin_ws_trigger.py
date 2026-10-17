@@ -248,41 +248,54 @@ PREMATCH_FLUSH_INTERVAL = 30.0  # 入库批量写间隔(秒)
 class PrematchIngestor:
     def __init__(self, cache):
         self.cache = cache
-        self._last = {}        # (norm_home, norm_away) -> 上次比价 ts
         self._pending = []     # 待入库 entry 队列
         self._lock = threading.Lock()
         self._last_flush = 0.0
+        self._pin_trigger_offset = 0  # 2026-10-17: 读 pin_trigger.jsonl 的 prematch drop offset(与实盘同源)
 
     def sweep(self):
-        """扫 Pin 缓存, 反查 BB, 比价, 入 pending(不阻塞主循环)。"""
+        """读 pin_trigger.jsonl 的 prematch drop(骤降), 反查 BB, 比价, 入 pending。
+
+        2026-10-17 改: 之前扫 cache.all_events()(全量)入库, 与实盘(_consume_pin_triggers 读骤降 drop)
+        触发源不同 → 观察库(全量) vs 实盘(骤降)样本不同, 观察库 CLV 无参考性。改成与实盘同源:
+        都读 pin_trigger.jsonl 的 prematch drop(骤降), 入库/实盘样本一致。
+        """
         from src.scrapers.bb_vs_pinnacle import _build_oa_entry, _oa_add_markets
-        now = time.time()
-        bb_idx = {}
-        for m in _load_bb_matches():
-            eh, ea = _norm(m.get("home", "")), _norm(m.get("away", ""))
-            if eh and ea:
-                bb_idx[(eh, ea)] = m
-                bb_idx[(ea, eh)] = m  # 主客互换也命中(对齐 _match_bb 口径)
-        if not bb_idx:
+        if not TRIGGER_FILE.exists():
             return
-        for entry in self.cache.all_events():
-            ev = entry.get("event") or {}
-            if ev.get("event_type") != "prematch":
+        try:
+            lines = TRIGGER_FILE.read_text().splitlines()
+        except OSError:
+            return
+        last = self._pin_trigger_offset
+        if last >= len(lines):
+            self._pin_trigger_offset = 0  # 文件被截断, offset 重置
+            last = 0
+        new_lines = lines[last:]
+        self._pin_trigger_offset = len(lines)
+        # BB 快照(bb_match_id → match)
+        bb_by_id = {}
+        for m in _load_bb_matches():
+            mid = m.get("id")
+            if mid is not None:
+                bb_by_id[str(mid)] = m
+        if not bb_by_id:
+            return
+        for line in new_lines:
+            try:
+                trig = json.loads(line)
+            except (json.JSONDecodeError, ValueError):
                 continue
-            home, away = ev.get("home", ""), ev.get("away", "")
-            if not home or not away:
+            if trig.get('stream') != 'prematch':
                 continue
-            key = (_norm(home), _norm(away))
-            if now - self._last.get(key, 0.0) < PREMATCH_COOLDOWN:
-                continue
-            self._last[key] = now
-            m = bb_idx.get(key)
+            mid = str(trig.get('bb_match_id') or '')
+            m = bb_by_id.get(mid)
             if not m:
                 continue
-            sport = m.get("sport", "football")
+            sport = m.get('sport', 'football')
             try:
                 e = _build_oa_entry(m, sport)
-                _oa_add_markets(e, m, sport, use_rest=False, status="prematch")
+                _oa_add_markets(e, m, sport, use_rest=False, status='prematch')
             except Exception:
                 continue
             if any(e.get(g) for g in ("opportunities", "handicap", "over_under",
