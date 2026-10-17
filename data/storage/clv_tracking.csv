@@ -3772,3 +3772,23 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T09:32:23Z,football,England FA Cup-Qualification,Wealdstone FC,Worthing FC,,,客胜,1x2,2.51,0,2.4468,2.58,0,3,1792245600,BB,pinnacle,,,validate,,,5751354
 2026-10-17T09:32:23Z,football,England FA Cup-Qualification,Wealdstone FC,Worthing FC,,,上半场主胜,ht,2.89,0,2.6903,7.42,0,3,1792245600,BB,pinnacle,,,validate,,,5751354
 2026-10-17T09:32:23Z,football,England FA Cup-Qualification,Wealdstone FC,Worthing FC,,,上半场客胜,ht,3.22,0,2.4468,31.6,0,3,1792245600,BB,pinnacle,,,validate,,,5751354
+2026-10-17T09:33:04Z,football,England Isthmian League Premier Division,Aveley FC,Chatham Town,,,上半场主胜,ht,3.01,0,2.8034,7.37,0,2,1792245600,ALL,pinnacle,,,validate,,,5322451
+2026-10-17T09:33:04Z,football,England Isthmian League Premier Division,Aveley FC,Chatham Town,,,上半场客胜,ht,3.21,0,2.3836,34.67,0,2,1792245600,ALL,pinnacle,,,validate,,,5322451
+2026-10-17T09:33:41Z,football,Belgium First Amateur Division,Hoogstraten VV,SK Roeselare,,,上半场主胜,ht,3.88,0,3.7337,3.92,0,2,1792260000,ALL,pinnacle,,,validate,,,5758050
+2026-10-17T09:33:41Z,football,Belgium First Amateur Division,Hoogstraten VV,SK Roeselare,,,上半场客胜,ht,2.59,0,2.0928,23.76,0,2,1792260000,ALL,pinnacle,,,validate,,,5758050
+2026-10-17T09:34:55Z,football,England Premier League,Everton FC,Chelsea FC,,,和局,1x2,3.86,0,2.4918,54.91,0,1,1792236600,ALL,pinnacle,,,validate,,,5130837
+2026-10-17T09:34:55Z,football,England Premier League,Everton FC,Chelsea FC,,,双重机会-主/和局,dc,1.62,0,1.482,9.31,0,1,1792236600,ALL,pinnacle,,,validate,,,5130837
+2026-10-17T09:34:55Z,football,England Premier League,Everton FC,Chelsea FC,,,双重机会-和局/客,dc,1.46,0,1.3763,6.08,0,1,1792236600,ALL,pinnacle,,,validate,,,5130837
+2026-10-17T09:36:39Z,football,Peru Liga 1,FBC Melgar,Deportivo Garcilaso,,,主胜,1x2,1.53,0,1.4434,6.0,0,2,1792278000,ALL,pinnacle,,,validate,,,5732837
+2026-10-17T09:36:39Z,football,Peru Liga 1,FBC Melgar,Deportivo Garcilaso,,,让球主胜,hc,1.93,0,1.7427,10.75,0,2,1792278000,ALL,pinnacle,,,validate,,-1,5732837
+2026-10-17T09:37:56Z,football,Venezuela Primera Division,Rayo Zuliano,Caracas FC,,,让球主胜,hc,1.86,0,1.709,8.84,0,2,1792351800,ALL,pinnacle,,,validate,,+1,5372947
+2026-10-17T09:37:56Z,football,Venezuela Primera Division,Rayo Zuliano,Caracas FC,,,双重机会-主/和局,dc,2.46,0,2.3303,5.57,0,2,1792351800,ALL,pinnacle,,,validate,,,5372947
+2026-10-17T09:39:08Z,football,Scotland League One,Peterhead FC,Cove Rangers FC,,,上半场主胜,ht,2.96,0,2.5008,18.36,0,2,1792245600,ALL,pinnacle,,,validate,,,5127752
+2026-10-17T09:39:08Z,football,Scotland League One,Peterhead FC,Cove Rangers FC,,,上半场客胜,ht,3.39,0,2.999,13.04,0,2,1792245600,ALL,pinnacle,,,validate,,,5127752
+2026-10-17T09:39:08Z,football,Scotland Championship,Stenhousemuir FC,Raith Rovers FC,,,双重机会-和局/客,dc,1.32,0,1.287,2.56,0,2,1792245600,ALL,pinnacle,,,validate,,,5731455
+2026-10-17T09:39:44Z,football,CAF Confederations Cup-Qualification,Rayon Sports FC,Black Bulls Maputo,,,小球,ou,1.8,0,1.7075,5.42,0,3,1792252800,BB,pinnacle,,,validate,,2.0,5630396
+2026-10-17T09:41:26Z,football,Saudi Arabia Professional League,AL Hilal (KSA),AL Hazem FC,,,上半场主胜,ht,1.24,0,1.0561,17.41,0,3,1792432800,BB,pinnacle,,,validate,,,5446299
+2026-10-17T09:41:26Z,football,UEFA Champions League,Liverpool FC,Villarreal CF,,,和局,1x2,4.76,0,2.884,65.05,0,2,1792522800,ALL,pinnacle,,,validate,,,5525983
+2026-10-17T09:41:26Z,football,UEFA Champions League,Liverpool FC,Villarreal CF,,,双重机会-和局/客,dc,2.61,0,2.0266,28.79,0,2,1792522800,ALL,pinnacle,,,validate,,,5525983
+2026-10-17T09:41:59Z,football,Italy Serie C,Vado FC,Sambenedettese,,,上半场客胜,ht,3.78,0,3.1407,20.36,0,4,1792240200,ALL,pinnacle,,,validate,,,5743736
+2026-10-17T09:43:49Z,football,Taca de Portugal,ACDR Lamelas,Vitoria Guimaraes,,,上半场客胜,ht,1.28,0,1.0761,18.95,0,3,1792242000,ALL,pinnacle,,,validate,,,5743704

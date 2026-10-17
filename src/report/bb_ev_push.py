@@ -483,10 +483,10 @@ def _log_clv(opps: list):
                 "timestamp": now,
                 "sport": o.get("sport", ""),
                 "league": o.get("league", ""),
-                "home": o.get("home_cn", ""),
-                "away": o.get("away_cn", ""),
-                "home_pin": o.get("home_team", o.get("home_pin", "")),   # Pinnacle 英文名
-                "away_pin": o.get("away_team", o.get("away_pin", "")),   # Pinnacle 英文名
+                "home": o.get("home_bb", o.get("home_cn", "")),   # 2026-10-17 修: 存英文BB名(与 validate 同口径), 收盘采集按英文匹配 Pin(中文永远配不上)
+                "away": o.get("away_bb", o.get("away_cn", "")),
+                "home_pin": o.get("home_team", o.get("home_pin", "")) if o.get("home_team") and o.get("home_team") != o.get("home_cn") else "",   # Pinnacle 英文名(无真Pin名则留空)
+                "away_pin": o.get("away_team", o.get("away_pin", "")) if o.get("away_team") and o.get("away_team") != o.get("away_cn") else "",
                 "designation": desig,
                 "sub_market": o.get("_sub_market", o.get("_market", "")),
                 "bb_odds": o.get("bb_odds", 0),
