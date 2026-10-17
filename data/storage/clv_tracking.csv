@@ -3950,3 +3950,38 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T11:26:34Z,basketball,Greece Basketball Elite League,GS Lavrio,Glafkos Esperos,,,主胜,1x2,1.21,1.1391,1.1686,3.54,0,3,1792245600.0,BB/FB,,,,push,,,
 2026-10-17T11:26:34Z,basketball,Romania Basketball National League,CSO Voluntari,CSM Corona Brasov,,,主胜,1x2,1.13,1.076,1.089,3.76,0,3,1792252800.0,FB,,,,push,,,
 2026-10-17T11:26:34Z,basketball,Spain Basketball Segunda FEB,CBC Valladolid,Baloncesto Ciudad de Badajoz,,,主胜,1x2,1.12,1.04,1.0584,5.82,0,4,1792256400.0,FB,,,,push,,,
+2026-10-17T11:29:25Z,football,England Championship League,Bristol City,Sheffield United FC,,,双重机会-主/和局,dc,1.3,0,1.2608,3.11,0,2,1792245600,ALL,pinnacle,,,validate,,,5728563
+2026-10-17T11:30:33Z,football,Germany 3rd Liga,Alemannia Aachen,Hansa Rostock,,,上半场主胜,ht,3.27,0,2.7687,18.11,0,4,1792238400,ALL,pinnacle,,,validate,,,5439887
+2026-10-17T11:30:33Z,football,Germany 3rd Liga,Alemannia Aachen,Hansa Rostock,,,上半场客胜,ht,2.84,0,2.6238,8.24,0,4,1792238400,ALL,pinnacle,,,validate,,,5439887
+2026-10-17T11:32:17Z,football,Cyprus 1st Division,Ypsonas FC,Karmiotissa FC,,,小球,ou,1.98,0,1.9229,2.97,0,2,1792249200,ALL,pinnacle,,,validate,,2.5,5727123
+2026-10-17T11:32:17Z,football,Israel Premier League,Maccabi Petah Tikva FC,Maccabi Haifa FC,,,上半场客胜,ht,1.91,0,1.8689,2.2,0,2,1792254600,ALL,pinnacle,,,validate,,,5742105
+2026-10-17T11:32:17Z,football,UAE Division 1,Al Dhaid,Al Jazira Al Hamra,,,上半场主胜,ht,2.12,0,1.5947,32.94,0,2,1792242000,ALL,pinnacle,,,validate,,,5756127
+2026-10-17T11:32:47Z,football,Netherlands Tweede Divisie,Koninklijke HFC,Kloetinge,,,上半场主胜,ht,2.69,0,2.2543,19.33,0,4,1792238400,ALL,pinnacle,,,validate,,,5727867
+2026-10-17T11:32:47Z,football,Netherlands Tweede Divisie,Koninklijke HFC,Kloetinge,,,上半场客胜,ht,3.43,0,2.9772,15.21,0,4,1792238400,ALL,pinnacle,,,validate,,,5727867
+2026-10-17T11:32:47Z,football,Thailand League 1,Rayong FC,Uthai Thani FC,,,主胜,1x2,2.49,0,2.4179,2.98,0,2,1792238400,ALL,pinnacle,,,validate,,,5285514
+2026-10-17T11:33:23Z,football,Spain Tercera Division,Astur,Condal Club,,,客胜,1x2,2.47,0,2.1925,12.66,0,4,1792317600,BB,pinnacle,,,validate,,,5766345
+2026-10-17T11:33:23Z,football,Spain Tercera Division,Astur,Condal Club,,,双重机会-和局/客,dc,1.38,0,1.345,2.6,0,4,1792317600,BB,pinnacle,,,validate,,,5766345
+2026-10-17T11:33:23Z,football,Scotland Championship,Dunfermline Athletic FC,Livingston FC,,,和局,1x2,3.64,0,2.4013,51.58,0,2,1792245600,ALL,pinnacle,,,validate,,,5731233
+2026-10-17T11:33:23Z,football,Scotland Championship,Dunfermline Athletic FC,Livingston FC,,,双重机会-主/和局,dc,1.5,0,1.3644,9.94,0,2,1792245600,ALL,pinnacle,,,validate,,,5731233
+2026-10-17T11:33:59Z,football,Indonesia Super League,Persita Tangerang,Persija Jakarta,,,上半场主胜,ht,8.2,0,6.9496,17.99,0,2,1792238400,ALL,pinnacle,,,validate,,,5730996
+2026-10-17T11:33:59Z,football,Netherlands Tweede Divisie,HSV Hoek,Kozakken Boys,,,上半场主胜,ht,3.11,0,2.842,9.43,0,4,1792240200,ALL,pinnacle,,,validate,,,5727874
+2026-10-17T11:33:59Z,football,Netherlands Tweede Divisie,HSV Hoek,Kozakken Boys,,,上半场客胜,ht,2.9,0,2.4315,19.27,0,4,1792240200,ALL,pinnacle,,,validate,,,5727874
+2026-10-17T11:34:34Z,football,UAE Division 1,Al Dhaid,Al Jazira Al Hamra,,,主胜,1x2,1.57,0,1.443,8.8,0,2,1792242000,ALL,pinnacle,,,validate,,,5756127
+2026-10-17T11:34:34Z,football,UAE Division 1,Al Dhaid,Al Jazira Al Hamra,,,双重机会-主/和局,dc,1.17,0,1.1415,2.5,0,2,1792242000,ALL,pinnacle,,,validate,,,5756127
+2026-10-17T11:35:43Z,football,Scotland Championship,Dunfermline Athletic FC,Livingston FC,,,主胜,1x2,2.55,0,2.445,4.29,0,2,1792245600,ALL,pinnacle,,,validate,,,5731233
+2026-10-17T11:36:17Z,basketball,France LNB,BCM Gravelines Dunkerque,JDA Dijon Basket,,,主胜,1x2,3.01,0,2.7806,8.25,0,2,1792332000,BB,pinnacle,,,validate,,,5733399
+2026-10-17T11:36:53Z,basketball,Austria Basketball Superliga,Traiskirchen Lions,Pirlo Kufstein Towers,,,上半场主胜,ht,1.11,0,1.0308,7.68,0,2,1792252800,ALL,pinnacle,,,validate,,,5760499
+2026-10-17T11:39:10Z,football,UAE Division 1,Al Dhaid,Al Jazira Al Hamra,,,让球主胜,hc,1.94,0,1.7199,12.8,0,2,1792242000,ALL,pinnacle,,,validate,,-1,5756127
+2026-10-17T11:39:44Z,football,Norway 2nd Division,Trygg/Lade,Stjordals Blink,,,上半场主胜,ht,3.89,0,3.7175,4.64,0,3,1792238400,ALL,pinnacle,,,validate,,,4865040
+2026-10-17T11:41:23Z,football,Thailand League 1,Rayong FC,Uthai Thani FC,,,上半场客胜,ht,3.73,0,3.5233,5.87,0,2,1792238400,ALL,pinnacle,,,validate,,,5285514
+2026-10-17T11:45:58Z,basketball,Italy Basketball Serie A,Derthona Basket,Maxima Roma,,,让分主胜,hc,1.93,0,1.8853,2.37,0,2,1792342800,ALL,pinnacle,,,validate,,-3.5,5531210
+2026-10-17T11:45:58Z,football,Netherlands Tweede Divisie,Rijnsburgse Boys,Rohda Raalte,,,上半场主胜,ht,1.5,0,1.1835,26.74,0,4,1792240200,BB,pinnacle,,,validate,,,5740950
+2026-10-17T11:47:03Z,basketball,Spain ACB Basketball,Real Madrid,Bilbao Basket,,,客胜,1x2,4.59,0,4.4117,4.04,0,2,1792319400,ALL,pinnacle,,,validate,,,5748545
+2026-10-17T11:47:03Z,basketball,Spain ACB Basketball,Real Madrid,Bilbao Basket,,,上半场主胜,ht,1.32,0,1.2931,2.08,0,2,1792319400,ALL,pinnacle,,,validate,,,5748545
+2026-10-17T11:47:34Z,football,Spain Tercera Division,Colonia Moscardo,Las Rozas CF,,,上半场主胜,ht,2.93,0,2.1807,34.36,0,4,1792317600,BB,pinnacle,,,validate,,,5766310
+2026-10-17T11:47:34Z,football,Turkey 2nd Lig,68 Aksaray Belediyespor,Adana Demirspor,,,主胜,1x2,1.86,0,1.4001,32.85,0,3,1792323000,ALL,pinnacle,,,validate,,,5757052
+2026-10-17T11:47:34Z,football,Turkey 2nd Lig,68 Aksaray Belediyespor,Adana Demirspor,,,上半场主胜,ht,2.31,0,1.4001,64.99,0,3,1792323000,ALL,pinnacle,,,validate,,,5757052
+2026-10-17T11:47:34Z,football,Turkey 2nd Lig,68 Aksaray Belediyespor,Adana Demirspor,,,双重机会-主/和局,dc,1.23,0,1.1121,10.6,0,3,1792323000,ALL,pinnacle,,,validate,,,5757052
+2026-10-17T11:48:11Z,football,Turkey 2nd Lig,Erbaaspor,Corluspor 1947,,,主胜,1x2,3.05,0,2.7779,9.8,0,3,1792323000,ALL,pinnacle,,,validate,,,5757046
+2026-10-17T11:48:11Z,football,Turkey 2nd Lig,Erbaaspor,Corluspor 1947,,,双重机会-主/和局,dc,1.69,0,1.6236,4.09,0,3,1792323000,ALL,pinnacle,,,validate,,,5757046
+2026-10-17T11:49:55Z,basketball,Italy Basketball Serie A,Derthona Basket,Maxima Roma,,,上半场主胜,ht,1.64,0,1.5995,2.53,0,2,1792342800,ALL,pinnacle,,,validate,,,5531210

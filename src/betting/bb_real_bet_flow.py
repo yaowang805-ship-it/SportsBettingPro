@@ -262,9 +262,9 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
         if _daily_bets >= EARLY_DAILY_MAX_BETS or _daily_stake >= EARLY_DAILY_MAX_STAKE:
             print(f"  ⏭️ 早盘日限额已达(笔{_daily_bets}/{EARLY_DAILY_MAX_BETS} 额{_daily_stake:.0f}/{EARLY_DAILY_MAX_STAKE:.0f}), 停止")
             break
-        # 2026-10-14 早盘探针: cap 30 元(flat) + 补验价(fair_price + min_ev_pct, 早盘之前缺 EV 门槛,
-        # 只会 oddsChange=0 价格变了就拒, EV 跌破不主动放弃 → 系统性负偏)
-        stake = min(stake, 30.0)
+        # 2026-10-17 解冻注额公式: 恢复 Kelly 档(弱65/中125/强190), 早盘上限 300。
+        # (之前 cap 30 flat 是早盘探针, 把 Kelly 档全压成 30 → 无大额、不按 Kelly)
+        stake = min(stake, 300.0)
         # 2026-10-17: 下注时EV门槛与采集门槛对齐。之前硬编码 min_ev_pct=4.0 高于采集门槛
         # (get_min_ev 直接盘3%/dc 3%/特殊盘4%, 另有方向级覆盖), 把 2~4% 档机会扫进来又在下单时拒掉。
         _min_ev = opp.get("_min_ev")

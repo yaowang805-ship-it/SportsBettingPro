@@ -196,26 +196,32 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     "football|1x2|平|40-50%|early": 100,
     # 2026-10-14 用户要求释放独赢主/客(cap 30 试探)。足球/篮球 1x2 主/客早盘全桶。
     # 2026-10-16 撤足球独赢主早盘(纸面-2.2%→实盘-14.4%, 逆向选择)。
-    "football|1x2|客|*|early": 30,
-    "basketball|1x2|主|*|early": 30,
-    "basketball|1x2|客|*|early": 30,
+    # 2026-10-17 撤 football 独赢客胜早盘(CLV+4.0% 但纸面ROI-15% 假正)。
+    "basketball|1x2|主|*|early": 300,
+    "basketball|1x2|客|*|early": 300,
     # 2026-10-14 用户要求释放网球测试格(cap 30): 早盘=让盘(hc)主/客。
     # 2026-10-15 网球滚球改测让局主(实盘独赢负, 交叉验证毒性流), 撤独赢主客。
-    "tennis|hc|主|*|early": 30,
-    "tennis|hc|客|*|early": 30,
+    "tennis|hc|主|*|early": 300,
+    "tennis|hc|客|*|early": 300,
     # 2026-10-17 释放早盘表现好的盘口(观察库纸面ROI正 n>=15, cap30试探): 半场独赢ht + 大小球ou。
     # 注: 纸面ROI未过六闸门, 属试探性释放, 冻结期内接受实盘ROI检验。
-    "football|ht|主|40-50%|early": 30,
-    "football|ht|客|40-50%|early": 30,
-    "football|ht|主|60-70%|early": 30,
-    "football|ou|小|50-55%|early": 30,
-    "football|ou|大|50-55%|early": 30,
+    "football|ht|主|40-50%|early": 300,
+    # 2026-10-17 撤 football 上半场客胜早盘(CLV-6.4% 负)。
+    "football|ht|主|60-70%|early": 300,
+    "football|ou|小|50-55%|early": 300,
+    "football|ou|大|50-55%|early": 300,
     # 2026-10-16 撤回网球让局主滚球(实盘-29%ROI/胜率29%, 逆向选择毒性流), 交还数据驱动判据。
     # 2026-10-15 滚球让球固化(之前手工加JSON没进MANUAL, 会丢): 让球客cap80(正edge加码), 让球主cap60。
-    "football|hc|主|*|live": 60,
-    # 2026-10-17 撤 football 让球客胜(近3天观察库 -15.4% ROI/39笔, 客胜侧逆向选择毒性流)。
+    # 2026-10-17 桶级化: 让球主胜 50-55%/55-60% 实盘负(毒性桶)撤, 其余桶保留。
+    "football|hc|主|30-40%|live": 60,
+    "football|hc|主|40-50%|live": 60,
+    "football|hc|主|60-70%|live": 60,
+    "football|hc|主|>70%|live": 60,
+    # 2026-10-17 恢复 football 让球客胜(实盘+5.8%/114注全桶正, 之前按纸面误撤)。
+    "football|hc|客|*|live": 80,
     # 2026-10-16 撤篮球让球主滚球(纸面-28%+实盘-13.9%双负)。
-    # 2026-10-17 撤 basketball 让球客胜(近3天观察库 -23.3% ROI/120笔, 客胜侧最重出血点)。
+    # 2026-10-17 恢复 basketball 让球客胜 55-65%(实盘+8.8%/39注正); 45-55%实盘-4.5%仍撤。
+    "basketball|hc|客|55-65%|live": 80,
     # 2026-10-15 释放大小大(样本>50 ROI正): 足球50-55%/篮球45-55%/冰球55-65%, cap30试探。
     "football|ou|大|50-55%|live": 30,
     "ice_hockey|ou|大|55-65%|live": 30,
