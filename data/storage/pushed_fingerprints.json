@@ -14,6 +14,11 @@
     "bb": 3.72,
     "ts": 1792223655.2085881
   },
+  "football|England Premier League|Everton FC|Chelsea FC|和局|1x2|2026-10-17": {
+    "ev": 3.39,
+    "bb": 3.91,
+    "ts": 1792227172.142526
+  },
   "football|Finland Ykkosliiga|Mikkelin Palloilijat|JAPS|和局|1x2|2026-10-17": {
     "ev": 41.54,
     "bb": 3.76,
@@ -44,9 +49,14 @@
     "bb": 2.93,
     "ts": 1792220101.7034822
   },
-  "football|England Premier League|Everton FC|Chelsea FC|和局|1x2|2026-10-17": {
-    "ev": 3.39,
+  "football|Australia A-League|Wellington Phoenix FC|Melbourne Victory FC|和局|1x2|2026-10-18": {
+    "ev": 51.17,
     "bb": 3.91,
-    "ts": 1792227172.142526
+    "ts": 1792229433.140518
+  },
+  "football|Ecuador LigaPro Primera B|LDU Portoviejo|Gualaceo SC|和局|1x2|2026-10-18": {
+    "ev": 19.51,
+    "bb": 2.96,
+    "ts": 1792229433.140585
   }
 }

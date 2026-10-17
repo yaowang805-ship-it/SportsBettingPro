@@ -1,5 +1,5 @@
 {
-  "balance": 15402.53,
+  "balance": 15332.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1128,6 +1128,75 @@
       "commence_time": 1792240200.0,
       "created_at": "2026-10-17T08:51:05.317466+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_惠灵顿凤凰_墨尔本胜利_和局",
+      "sport": "football",
+      "league": "澳大利亚甲级联赛",
+      "home_team": "惠灵顿凤凰",
+      "away_team": "墨尔本胜利",
+      "home_cn": "惠灵顿凤凰",
+      "away_cn": "墨尔本胜利",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.91,
+      "stake": 30,
+      "model_prob": 0.3866,
+      "ev_pct": 51.17,
+      "pin_odds": 2.5,
+      "fair_price": 2.5865,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792288800.0,
+      "created_at": "2026-10-17T09:28:28.254118+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_波图维耶霍_瓜拉塞奥_和局",
+      "sport": "football",
+      "league": "厄瓜多尔乙级联赛",
+      "home_team": "波图维耶霍",
+      "away_team": "瓜拉塞奥",
+      "home_cn": "波图维耶霍",
+      "away_cn": "瓜拉塞奥",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.96,
+      "stake": 30,
+      "model_prob": 0.4038,
+      "ev_pct": 19.51,
+      "pin_odds": 2.32,
+      "fair_price": 2.4767,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792269000.0,
+      "created_at": "2026-10-17T09:28:28.254214+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_路斯坦尼亚_阿德伽罗玛_主胜",
+      "sport": "basketball",
+      "league": "葡萄牙篮球乙级联赛",
+      "home_team": "路斯坦尼亚",
+      "away_team": "阿德伽罗玛",
+      "home_cn": "路斯坦尼亚",
+      "away_cn": "阿德伽罗玛",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.36,
+      "stake": 10,
+      "model_prob": 0.766,
+      "ev_pct": 4.18,
+      "pin_odds": 1.2469,
+      "fair_price": 1.3054,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792258200.0,
+      "created_at": "2026-10-17T09:28:28.254294+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -10603,8 +10672,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-17",
-    "used": 620.0,
-    "bets": 35
+    "used": 690.0,
+    "bets": 38
   },
   "updated": null
 }

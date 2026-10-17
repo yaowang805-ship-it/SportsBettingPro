@@ -3713,3 +3713,59 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T08:52:08Z,football,CAF Confederations Cup-Qualification,Rayon Sports FC,Black Bulls Maputo,,,上半场主胜,ht,2.88,0,2.0281,42.0,0,3,1792252800,BB,pinnacle,,,validate,,,5630396
 2026-10-17T08:52:08Z,football,CAF Confederations Cup-Qualification,Rayon Sports FC,Black Bulls Maputo,,,上半场客胜,ht,5.6,0,4.8557,15.33,0,3,1792252800,BB,pinnacle,,,validate,,,5630396
 2026-10-17T08:52:52Z,football,England Premier League,埃弗顿,切尔西,埃弗顿,切尔西,和局,1x2,3.91,3.64,3.7818,3.39,40,1,1792236600.0,BB,,,,push,,,
+2026-10-17T08:53:54Z,football,CAF Confederations Cup-Qualification,Kitara FC,AL Ahly SC,,,上半场客胜,ht,2.03,0,1.3953,45.49,0,3,1792242000,BB,pinnacle,,,validate,,,5610537
+2026-10-17T08:54:32Z,football,England FA Cup-Qualification,Kidderminster Harriers FC,Solihull Moors FC,,,主胜,1x2,2.37,0,2.2843,3.75,0,3,1792245600,BB,pinnacle,,,validate,,,5751695
+2026-10-17T08:54:32Z,football,England Northern Premier League Division One,Coventry United,Loughborough University,,,上半场主胜,ht,3.23,0,2.8487,13.39,0,2,1792245600,ALL,pinnacle,,,validate,,,5760809
+2026-10-17T08:54:32Z,football,England Northern Premier League Division One,Coventry United,Loughborough University,,,上半场客胜,ht,2.96,0,2.2971,28.86,0,2,1792245600,ALL,pinnacle,,,validate,,,5760809
+2026-10-17T08:55:08Z,football,Canadian Premier League,Cavalry FC,Pacific FC,,,上半场主胜,ht,1.47,0,1.176,25.0,0,3,1792267200,ALL,pinnacle,,,validate,,,5727944
+2026-10-17T08:56:19Z,football,Japan J.League 3,Kagoshima United,Ehime FC,,,上半场客胜,ht,4.37,0,4.2287,3.34,0,4,1792227600,ALL,pinnacle,,,validate,,,5126384
+2026-10-17T08:56:19Z,football,England FA Cup-Qualification,Kidderminster Harriers FC,Solihull Moors FC,,,双重机会-主/和局,dc,1.45,0,1.4007,3.52,0,3,1792245600,BB,pinnacle,,,validate,,,5751695
+2026-10-17T09:00:21Z,football,Poland III Liga,Rakow Czestochowa II,Warta Gorzow Wielkopolski,,,让球主胜,hc,1.95,0,1.8526,5.26,0,4,1792231200,ALL,pinnacle,,,validate,,-1,5727142
+2026-10-17T09:00:56Z,football,USA Major League Soccer,FC Cincinnati,Columbus Crew,,,双重机会-主/和局,dc,1.49,0,1.4365,3.72,0,1,1792357200,ALL,pinnacle,,,validate,,,4231105
+2026-10-17T09:01:30Z,football,Sweden Allsvenskan,AIK,IFK Goteborg,,,上半场主胜,ht,3.63,0,3.1132,16.6,0,2,1792251000,ALL,pinnacle,,,validate,,,4794678
+2026-10-17T09:01:30Z,football,Sweden Allsvenskan,AIK,IFK Goteborg,,,上半场客胜,ht,2.92,0,2.3454,24.5,0,2,1792251000,ALL,pinnacle,,,validate,,,4794678
+2026-10-17T09:02:05Z,football,Indonesia Super League,Persebaya Surabaya,PSS Sleman,,,和局,1x2,4.28,0,2.6677,60.44,0,2,1792312200,ALL,pinnacle,,,validate,,,5755637
+2026-10-17T09:02:05Z,football,Indonesia Super League,Persebaya Surabaya,PSS Sleman,,,双重机会-和局/客,dc,2.31,0,1.8463,25.12,0,2,1792312200,ALL,pinnacle,,,validate,,,5755637
+2026-10-17T09:02:05Z,football,UAE Pro League,Shabab Al Ahli,Al Ain FC,,,上半场客胜,ht,2.58,0,2.0864,23.66,0,2,1792251900,ALL,pinnacle,,,validate,,,5588365
+2026-10-17T09:02:05Z,football,USL Championship,Birmingham Legion FC,Loudoun United FC,,,和局,1x2,3.78,0,2.6831,40.88,0,2,1792357200,ALL,pinnacle,,,validate,,,4259099
+2026-10-17T09:02:05Z,football,USL Championship,Birmingham Legion FC,Loudoun United FC,,,双重机会-和局/客,dc,1.78,0,1.6243,9.59,0,2,1792357200,ALL,pinnacle,,,validate,,,4259099
+2026-10-17T09:03:48Z,football,CAF Confederations Cup-Qualification,Kitara FC,AL Ahly SC,,,小球,ou,2.0,0,1.9465,2.75,0,3,1792242000,BB,pinnacle,,,validate,,2.0,5610537
+2026-10-17T09:04:58Z,football,Norway 3rd Division,Drobak Frogn,Elverum,,,主胜,1x2,2.78,0,2.3307,19.28,0,4,1792238400,ALL,pinnacle,,,validate,,,4907081
+2026-10-17T09:04:58Z,football,Norway 3rd Division,Drobak Frogn,Elverum,,,上半场主胜,ht,3.29,0,2.3307,41.16,0,4,1792238400,ALL,pinnacle,,,validate,,,4907081
+2026-10-17T09:04:58Z,football,Norway 3rd Division,Drobak Frogn,Elverum,,,双重机会-主/和局,dc,1.77,0,1.4964,18.28,0,4,1792238400,ALL,pinnacle,,,validate,,,4907081
+2026-10-17T09:06:38Z,football,Norway 3rd Division,Drobak Frogn,Elverum,,,让球主胜,hc,1.81,0,1.6387,10.45,0,4,1792238400,ALL,pinnacle,,,validate,,+0.5,4907081
+2026-10-17T09:10:02Z,football,Norway 3rd Division,Nordstrand,Heming,,,大球,ou,1.99,0,1.872,6.3,0,4,1792234800,ALL,pinnacle,,,validate,,4.0,4907071
+2026-10-17T09:10:02Z,football,Indonesia Super League,Persebaya Surabaya,PSS Sleman,,,小球,ou,1.96,0,1.8927,3.56,0,2,1792312200,ALL,pinnacle,,,validate,,3.0,5755637
+2026-10-17T09:10:02Z,football,Brazil Copa Paulista,Sao Jose EC SP,Uniao Sao Joao,,,主胜,1x2,1.86,0,1.6047,15.91,0,3,1792270800,BB,pinnacle,,,validate,,,5728752
+2026-10-17T09:10:02Z,football,Brazil Copa Paulista,Sao Jose EC SP,Uniao Sao Joao,,,让球主胜,hc,1.86,0,1.6188,14.9,0,3,1792270800,BB,pinnacle,,,validate,,-0.5,5728752
+2026-10-17T09:11:43Z,football,Singapore Premier League,Balestier Khalsa FC,Geylang International FC,,,小球,ou,1.83,0,1.709,7.08,0,2,1792236600,ALL,pinnacle,,,validate,,4.0,5727929
+2026-10-17T09:12:52Z,football,Mexico Liga MX,Deportivo Toluca FC,Atletico San Luis,,,和局,1x2,5.85,0,4.664,25.43,0,3,1792285200,ALL,pinnacle,,,validate,,,5083878
+2026-10-17T09:12:52Z,football,Mexico Liga MX,Deportivo Toluca FC,Atletico San Luis,,,客胜,1x2,8.4,0,6.3453,32.38,0,3,1792285200,ALL,pinnacle,,,validate,,,5083878
+2026-10-17T09:12:52Z,football,Mexico Liga MX,Deportivo Toluca FC,Atletico San Luis,,,上半场主胜,ht,1.74,0,1.5924,9.27,0,3,1792285200,ALL,pinnacle,,,validate,,,5083878
+2026-10-17T09:12:52Z,football,Mexico Liga MX,Deportivo Toluca FC,Atletico San Luis,,,上半场客胜,ht,7.6,0,6.3453,19.77,0,3,1792285200,ALL,pinnacle,,,validate,,,5083878
+2026-10-17T09:12:52Z,football,Mexico Liga MX,Deportivo Toluca FC,Atletico San Luis,,,双重机会-和局/客,dc,3.42,0,2.6881,27.23,0,3,1792285200,ALL,pinnacle,,,validate,,,5083878
+2026-10-17T09:12:52Z,football,Mexico Liga MX,Cruz Azul,FC Juarez,,,和局,1x2,5.45,0,3.3989,60.35,0,3,1792293000,ALL,pinnacle,,,validate,,,5083879
+2026-10-17T09:12:52Z,football,Mexico Liga MX,Cruz Azul,FC Juarez,,,客胜,1x2,8.65,0,3.2339,167.48,0,3,1792293000,ALL,pinnacle,,,validate,,,5083879
+2026-10-17T09:12:52Z,football,Mexico Liga MX,Cruz Azul,FC Juarez,,,上半场客胜,ht,8.45,0,3.2339,161.29,0,3,1792293000,ALL,pinnacle,,,validate,,,5083879
+2026-10-17T09:12:52Z,football,Mexico Liga MX,Cruz Azul,FC Juarez,,,双重机会-和局/客,dc,3.31,0,1.6572,99.73,0,3,1792293000,ALL,pinnacle,,,validate,,,5083879
+2026-10-17T09:14:10Z,football,Indonesia Super League,Persita Tangerang,Persija Jakarta,,,上半场客胜,ht,2.11,0,1.925,9.61,0,2,1792238400,ALL,pinnacle,,,validate,,,5725843
+2026-10-17T09:14:10Z,football,Indonesia Super League,Persita Tangerang,Persija Jakarta,,,大球,ou,1.97,0,1.9134,2.96,0,2,1792238400,ALL,pinnacle,,,validate,,2.5,5725843
+2026-10-17T09:15:22Z,football,England National League South,Farnborough FC,Dagenham and Redbridge FC,,,和局,1x2,3.73,0,2.574,44.91,0,3,1792245600,ALL,pinnacle,,,validate,,,5199520
+2026-10-17T09:15:22Z,football,England National League South,Farnborough FC,Dagenham and Redbridge FC,,,双重机会-主/和局,dc,1.83,0,1.5987,14.47,0,3,1792245600,ALL,pinnacle,,,validate,,,5199520
+2026-10-17T09:17:41Z,football,England National League North,Hednesford Town,Brackley Town FC,,,和局,1x2,3.53,0,2.4686,43.0,0,3,1792245600,ALL,pinnacle,,,validate,,,5321532
+2026-10-17T09:17:41Z,football,England National League North,Hednesford Town,Brackley Town FC,,,双重机会-和局/客,dc,1.93,0,1.6595,16.3,0,3,1792245600,ALL,pinnacle,,,validate,,,5321532
+2026-10-17T09:19:28Z,basketball,China CBA,Ningbo Rockets,Beijing Royal Fighters,,,让分主胜,hc,1.85,0,1.811,2.15,0,3,1792236900,ALL,pinnacle,,,validate,,+12.5,5626216
+2026-10-17T09:19:28Z,football,Ecuador LigaPro Primera B,LDU Portoviejo,Gualaceo SC,,,上半场主胜,ht,3.54,0,2.5861,36.89,0,3,1792269000,ALL,pinnacle,,,validate,,,5761526
+2026-10-17T09:19:28Z,football,Ecuador LigaPro Primera B,LDU Portoviejo,Gualaceo SC,,,上半场客胜,ht,4.06,0,3.3788,20.16,0,3,1792269000,ALL,pinnacle,,,validate,,,5761526
+2026-10-17T09:20:36Z,basketball,China CBA,Ningbo Rockets,Beijing Royal Fighters,,,小分,ou,1.86,0,1.8177,2.33,0,3,1792236900,ALL,pinnacle,,,validate,,176.5,5626216
+2026-10-17T09:21:10Z,football,Ecuador LigaPro Primera B,LDU Portoviejo,Gualaceo SC,,,和局,1x2,2.96,0,2.4689,19.89,0,3,1792269000,ALL,pinnacle,,,validate,,,5761526
+2026-10-17T09:22:59Z,football,Scotland Championship,Greenock Morton FC,Queens Park FC,,,和局,1x2,3.41,0,2.2261,53.18,0,2,1792245600,ALL,pinnacle,,,validate,,,5731223
+2026-10-17T09:22:59Z,football,Scotland Championship,Greenock Morton FC,Queens Park FC,,,双重机会-主/和局,dc,1.42,0,1.3484,5.31,0,2,1792245600,ALL,pinnacle,,,validate,,,5731223
+2026-10-17T09:22:59Z,football,Scotland Championship,Greenock Morton FC,Queens Park FC,,,双重机会-和局/客,dc,1.52,0,1.4132,7.56,0,2,1792245600,ALL,pinnacle,,,validate,,,5731223
+2026-10-17T09:25:58Z,football,USA Major League Soccer,Atlanta United FC,Inter Miami CF,,,和局,1x2,4.44,0,2.9489,50.56,0,1,1792279800,ALL,pinnacle,,,validate,,,4231102
+2026-10-17T09:25:58Z,football,USA Major League Soccer,Atlanta United FC,Inter Miami CF,,,双重机会-主/和局,dc,1.92,0,1.6722,14.82,0,1,1792279800,ALL,pinnacle,,,validate,,,4231102
+2026-10-17T09:30:33Z,football,Australia A-League,惠灵顿凤凰,墨尔本胜利,惠灵顿凤凰,墨尔本胜利,和局,1x2,3.91,2.5,2.5865,51.17,30,2,1792288800.0,FB,,,,push,,,
+2026-10-17T09:30:33Z,football,Ecuador LigaPro Primera B,波图维耶霍,瓜拉塞奥,波图维耶霍,瓜拉塞奥,和局,1x2,2.96,2.32,2.4767,19.51,30,3,1792269000.0,BB,,,,push,,,
+2026-10-17T09:30:33Z,basketball,Portugal Basketball Proliga,路斯坦尼亚,阿德伽罗玛,路斯坦尼亚,阿德伽罗玛,主胜,1x2,1.36,1.2469,1.3054,4.18,10,3,1792258200.0,BB,,,,push,,,
+2026-10-17T09:30:34Z,football,Malta Premier League,Valletta FC,Sliema Wanderers FC,,,上半场主胜,ht,2.44,0,1.9522,24.99,0,2,1792243800,BB,pinnacle,,,validate,,,5756016
+2026-10-17T09:30:34Z,football,Malta Premier League,Valletta FC,Sliema Wanderers FC,,,上半场客胜,ht,6.15,0,4.8697,26.29,0,2,1792243800,BB,pinnacle,,,validate,,,5756016
