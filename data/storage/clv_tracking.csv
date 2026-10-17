@@ -4527,3 +4527,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T23:12:14Z,football,Spain Tercera Division,Atletico Malagueno,Churriana de la Vega CF,,,上半场主胜,ht,2.17,0,1.5415,40.77,0,4,1792317600,ALL,pinnacle,,,validate,,,5734401
 2026-10-17T23:12:14Z,football,Argentina Liga Profesional,CA Tigre,Atletico Tucuman,,,主胜,1x2,2.35,0,2.0915,12.36,0,1,1792800900,ALL,pinnacle,,,validate,,,5747854
 2026-10-17T23:15:23Z,football,Spain Tercera Division,Atletico Malagueno,Churriana de la Vega CF,,,让球主胜,hc,1.99,1.8,1.9071,4.35,50,4,1792317600.0,FB,,,,push,,-1,
+2026-10-17T23:17:05Z,basketball,Spain ACB Basketball,Real Madrid,Bilbao Basket,,,主胜,1x2,1.18,0,1.1565,2.03,0,2,1792319400,ALL,pinnacle,,,validate,,,5748545
+2026-10-17T23:18:10Z,american_football,NFL,Philadelphia Eagles,Carolina Panthers,,,主胜,1x2,2.41,0,2.3082,4.41,0,1,1792342800,BB,pinnacle,,,validate,,,5338606
+2026-10-17T23:24:34Z,football,USA Major League Soccer,Los Angeles Galaxy,San Diego FC,,,和局,1x2,4.38,2.8,2.902,50.93,40,1,1792290600.0,BB,,,,push,,,
