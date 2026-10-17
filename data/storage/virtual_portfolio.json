@@ -1,5 +1,5 @@
 {
-  "balance": 15232.53,
+  "balance": 15202.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1403,6 +1403,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792256400.0,
       "created_at": "2026-10-17T10:05:45.676379+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_PEC_兹沃勒_前进之鹰_和局",
+      "sport": "football",
+      "league": "荷兰甲级联赛",
+      "home_team": "PEC 兹沃勒",
+      "away_team": "前进之鹰",
+      "home_cn": "PEC 兹沃勒",
+      "away_cn": "前进之鹰",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.18,
+      "stake": 30,
+      "model_prob": 0.2509,
+      "ev_pct": 4.87,
+      "pin_odds": 3.76,
+      "fair_price": 3.9859,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792318500.0,
+      "created_at": "2026-10-17T10:18:15.512516+00:00",
       "track_only": false
     }
   ],
@@ -10879,8 +10902,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-17",
-    "used": 790.0,
-    "bets": 47
+    "used": 820.0,
+    "bets": 48
   },
   "updated": null
 }

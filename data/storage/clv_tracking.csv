@@ -3824,3 +3824,12 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T10:06:42Z,basketball,BNXT League,Heroes Den Bosch,Antwerp Giants,,,客胜,1x2,1.13,1.055,1.0706,5.55,10,3,1792260000.0,FB,,,,push,,,
 2026-10-17T10:06:42Z,basketball,Portugal Basketball Proliga,SC Lusitania,AD Galomar,,,主胜,1x2,1.36,1.2469,1.3054,4.18,10,3,1792258200.0,BB,,,,push,,,
 2026-10-17T10:06:42Z,basketball,Spain Basketball Segunda FEB,CBC Valladolid,Baloncesto Ciudad de Badajoz,,,主胜,1x2,1.12,1.04,1.0584,5.82,10,4,1792256400.0,FB,,,,push,,,
+2026-10-17T10:06:56Z,football,USL League One,Fort Wayne FC,Sarasota Paradise,,,上半场主胜,ht,2.33,0,1.8075,28.91,0,2,1792279800,ALL,pinnacle,,,validate,,,5637965
+2026-10-17T10:08:08Z,football,Taca de Portugal,Louletano DC,Rio Ave FC,,,客胜,1x2,1.54,0,1.2812,20.2,0,3,1792252800,ALL,pinnacle,,,validate,,,5743710
+2026-10-17T10:08:08Z,football,Taca de Portugal,Louletano DC,Rio Ave FC,,,上半场客胜,ht,2.09,0,1.2812,63.13,0,3,1792252800,ALL,pinnacle,,,validate,,,5743710
+2026-10-17T10:08:08Z,football,Taca de Portugal,Louletano DC,Rio Ave FC,,,双重机会-主/客,dc,1.22,0,1.1359,7.4,0,3,1792252800,ALL,pinnacle,,,validate,,,5743710
+2026-10-17T10:09:59Z,football,Norway 3rd Division,Nordstrand,Heming,,,主胜,1x2,3.26,0,2.867,13.71,0,4,1792234800,ALL,pinnacle,,,validate,,,5725585
+2026-10-17T10:09:59Z,football,Norway 3rd Division,Nordstrand,Heming,,,双重机会-主/和局,dc,2.02,0,1.9488,3.65,0,4,1792234800,ALL,pinnacle,,,validate,,,5725585
+2026-10-17T10:19:46Z,football,Netherlands Eredivisie,PEC Zwolle,Go Ahead Eagles,,,和局,1x2,4.18,3.76,3.9859,4.87,30,1,1792318500.0,BB,,,,push,,,
+2026-10-17T10:19:48Z,football,England National League North,Southport FC,Radcliffe FC,,,和局,1x2,3.75,0,2.6483,41.6,0,3,1792245600,ALL,pinnacle,,,validate,,,5321561
+2026-10-17T10:19:48Z,football,England National League North,Southport FC,Radcliffe FC,,,双重机会-和局/客,dc,1.78,0,1.6157,10.17,0,3,1792245600,ALL,pinnacle,,,validate,,,5321561
