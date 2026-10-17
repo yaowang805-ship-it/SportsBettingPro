@@ -592,73 +592,49 @@ def fetch_live_opportunities(threshold=3.0, platform="BB", use_file_cache=False)
     返回 [{bb_match_id, home, away, sub, direction, bb_odds, fair, ev, market_id,
            option_type, line, pin_matchup_id, league_id, max_stake}]。
     """
-    from src.scrapers.devig import shin_fair_odds
+    from src.scrapers.pinnapi_client import pinnacle_fair_price, _pin_cache_find_event
     bb = fetch_bb_live_matches(platform=platform)
     _bb_ts = time.time()  # BB 拉取时间(本次 getList 完成时刻)
-    pin = fetch_live_fair_prices(use_file_cache=use_file_cache)
-    _pin_ts = _FAIR_CACHE.get("ts", time.time())  # Pin 拉取时间(公平价缓存的实际抓取时刻, 15-45s前)
-    # 过滤角球/罚牌子比赛, 只留主比赛
-    pin_list = [(mid, v) for mid, v in pin.items()
-                if not _is_sub_market(v["home"]) and not _is_sub_market(v["away"])]
+    # 2026-10-17 停 Pin 官方 guest(15min 陈旧价), 改用 pinnapi 实时公平价(pinnacle_fair_price)。
+    # 之前 fetch_live_fair_prices 走 arcadia.pinnacle.com 拉 15 分钟前的陈旧价 → 滚球比价基准是旧的。
     opps = []
     for bmid, b in bb.items():
-        # 模糊匹配(精确优先, 子串兜底)
-        best = None; best_score = 0.0
-        for pin_mid, pv in pin_list:
-            s = _match_score(b["home_en"], b["away_en"], pv["home"], pv["away"])
-            if s > best_score:
-                best_score = s; best = (pin_mid, pv)
-        if not best or best_score == 0.0:
-            continue
-        pin_mid, pv = best
-        if float(pv.get("max_stake", 0) or 0) < 200:  # 薄盘过滤
-            continue
+        # 按英文队名匹配 pinnapi 缓存, 拿 event_id 作 pin_matchup_id(与 lag_sec/clv 对齐)
+        _ev = _pin_cache_find_event(b["home_en"], b["away_en"])
+        _eid = str(_ev.get("event_id") or _ev.get("id")) if _ev else None
         for mk in b["markets"]:
             sub = mk["sub"]; d = mk["direction"]
             if not d:
                 continue
             bb_odds = mk["odds"]
-            if sub == "1x2":
-                ml = pv.get("moneyline") or []
-                if len(ml) != 3 or not any(ml):
-                    continue
-                raw = ml; idx = {"主": 0, "和": 1, "客": 2}
-            elif sub == "hc":
-                raw = _match_2way_line(mk["line"], pv.get("spread"))
-                if not raw:
-                    continue
-                idx = {"主": 0, "客": 1}
+            # 用 pinnapi 实时公平价(已 Shin 去水), 替代 Pin 官方原始价 + 自己 shin_fair_odds
+            fair = pinnacle_fair_price(b["home_en"], b["away_en"], b["sport"], sub, mk["line"], event_type='live')
+            if not fair:
+                continue
+            if sub in ("1x2", "ht"):
+                fair_p = fair.get({"主": "home", "和": "draw", "客": "away"}.get(d))
+            elif sub in ("hc", "hc_games"):
+                fair_p = fair.get({"主": "home", "客": "away"}.get(d))
             elif sub == "ou":
-                raw = _match_2way_line(mk["line"], pv.get("total"))
-                if not raw:
-                    continue
-                idx = {"大": 0, "小": 1}
+                fair_p = fair.get({"大": "over", "小": "under"}.get(d))
             else:
                 continue
-            i = idx.get(d)
-            if i is None:
+            if not fair_p or fair_p <= 1:
                 continue
-            try:
-                fair = shin_fair_odds(raw)
-            except Exception:
-                continue
-            if not fair or len(fair) <= i or fair[i] <= 0:
-                continue
-            fair_p = fair[i]
             ev = (bb_odds - fair_p) / fair_p * 100.0
             # EV 上限 12%(防临时高价假机会/数据错配): BB 滚球价远高于 Pin 多是假 edge
             if ev >= threshold and ev <= 12.0:
                 opps.append({
                     "bb_match_id": bmid,
-                    "home": b.get("home_cn") or pv["home"], "away": b.get("away_cn") or pv["away"],  # 中文队名优先(2026-09-12 推送要中文)
-                    "league_cn": b.get("league_cn", "") or pv.get("league_name", ""),  # 中文联赛名(2026-09-12 推送加联赛)
+                    "home": b.get("home_cn") or b["home_en"], "away": b.get("away_cn") or b["away_en"],
+                    "league_cn": b.get("league_cn", ""),
                     "sport": b["sport"],  # BB 运动 id(1足球/3篮球/5网球/7棒球/6美足), 供按运动×盘口分账
-                    "sub": sub, "direction": d, "bb_odds": bb_odds, "fair": fair_p, "ev": ev, "pin_raw": raw[i],
+                    "sub": sub, "direction": d, "bb_odds": bb_odds, "fair": fair_p, "ev": ev, "pin_raw": fair.get("_raw"),
                     "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
-                    "pin_matchup_id": pin_mid, "league_id": pv.get("league_id"),
-                    "max_stake": pv.get("max_stake", 0),
+                    "pin_matchup_id": _eid, "league_id": None,
+                    "max_stake": 0,
                     "sc": b.get("sc"),  # [主,客] 下注瞬间比分(让球按当前比分结算用, 2026-09-13)
-                    "bb_ts": _bb_ts, "pin_ts": _pin_ts,  # BB/Pin 数据拉取时间(供推送展示数据新鲜度)
+                    "bb_ts": _bb_ts, "pin_ts": _bb_ts,  # BB/Pin 数据拉取时间(供推送展示数据新鲜度)
                     "platform": platform,  # BB/FB(推送时标注在哪平台投注, 2026-09-13)
                 })
     return opps
