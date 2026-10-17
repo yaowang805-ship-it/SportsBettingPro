@@ -3269,3 +3269,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T00:37:31Z,football,England FA Cup-Qualification,Boston United FC,Scunthorpe United,,,大球,ou,1.89,0,1.8236,3.64,0,3,1792245600,BB,pinnacle,,,validate,,3.0,5752190
 2026-10-17T00:37:31Z,basketball,Australia NBL,Sydney Kings,Perth Wildcats,,,大分,ou,1.89,0,1.842,2.61,0,3,1792225800,ALL,pinnacle,,,validate,,186.5,5074442
 2026-10-17T00:38:09Z,football,Indonesia Championship League,PSGC Ciamis,PSIS Semarang,,,客胜,1x2,2.11,0,2.0494,2.96,0,3,1792238400,BB,pinnacle,,,validate,,,5740763
+2026-10-17T00:42:34Z,football,USA Major League Soccer,Austin FC,Vancouver Whitecaps FC,,,和局,1x2,4.45,0,2.789,59.56,0,1,1792283400,ALL,pinnacle,,,validate,,,4231100
+2026-10-17T00:42:34Z,football,USA Major League Soccer,Austin FC,Vancouver Whitecaps FC,,,双重机会-主/和局,dc,2.35,0,1.8654,25.98,0,1,1792283400,ALL,pinnacle,,,validate,,,4231100

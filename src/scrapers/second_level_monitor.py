@@ -1161,9 +1161,7 @@ class SecondLevelMonitor:
         # fetch_live_opportunities_oa 的 Betfair 中间价(实时), BB 赔率也是秒级拉的, 下单前不再
         # 重复 fetch_current_odds 验价(lead-lag 抢窗口, 直接下单)。
         stake = self._stake_for(sig)
-        # 2026-09-19 SBO 无覆盖降投注额: 只有 Betfair 单源(无 SBO 同向)的 edge 可靠性降一档, 半额
-        if not sig.get("sbo_confirm"):
-            stake = int(stake * 0.5)
+        # 2026-10-17 撤 SBO 置信度: 只用 Pin 单锚, 不再半额
         sig["_stake"] = stake
         # 2026-09-12 纠正: 观察库必须采集所有运动及盘口的有效+EV信号(不只实盘方向)。
         # 之前误改"只记实盘方向"会堵死新盘口释放通道(非实盘方向永远没数据凑不到n>100)。
@@ -1662,30 +1660,8 @@ class SecondLevelMonitor:
                 except Exception:
                     pass
             self._lev_fail_stats["no_pin"] = self._lev_fail_stats.get("no_pin", 0) + 1
-        # 2) Betfair 兜底(btts/dc, 或 Pin 复验失败)
-        from src.scrapers.odds_api_io import fair_price, get_odds, _SUB_TO_BETFAIR
-        eid = sig.get("pin_matchup_id")
-        if not eid:
-            self._lev_fail_stats["no_event_id"] = self._lev_fail_stats.get("no_event_id", 0) + 1
-            return None
-        fair = fair_price(eid, sub, target_line=sig.get("line"))
-        if not fair:
-            _odds = get_odds(eid)
-            if not _odds:
-                _reason = "get_odds_empty"
-            elif not _odds.get("Betfair Exchange"):
-                _reason = "no_betfair"
-            else:
-                _mn = _SUB_TO_BETFAIR.get(sub)
-                _m = next((x for x in _odds.get("Betfair Exchange", []) if x.get("name") == _mn), None)
-                _reason = "spread_or_line" if _m else "market_closed"
-            self._lev_fail_stats[_reason] = self._lev_fail_stats.get(_reason, 0) + 1
-            return None
-        fair_p = fair.get(k)
-        if not fair_p or fair_p <= 1:
-            self._lev_fail_stats["no_direction"] = self._lev_fail_stats.get("no_direction", 0) + 1
-            return None
-        return (sig["bb_odds"] - fair_p) / fair_p * 100.0
+        # 2) Betfair 兜底已撤(2026-10-17 只用 Pin 单锚): Pin 失败/无覆盖(btts/dc)直接放弃, 不再兜底
+        return None
 
     def _stake_for(self, sig):
         """EV-Kelly 半凯利: stake = _bankroll() × 0.5 × (ev/100) / (odds-1), 封顶 ¥300。
@@ -2339,11 +2315,9 @@ class SecondLevelMonitor:
             # 2026-09-24 滚球高频只订 6 主运动(拆4+2); 早盘全量走 --all-sports, 不经此 WS。
             # 2026-10-07 合并 2→1: 6 运动 < WS 单连接 ≤10 运动限制, 且实测 live 事件量 ~615/min=10/s,
             # 单连接轻松扛(拆2条是当年 11 运动的历史遗留)。合并后腾出 1 条 apiKey 连接配额给早盘 WS 触发。
-            self._odds_ws = OddsWSClient(
-                sport="football,basketball,tennis,baseball,volleyball,ice-hockey",
-                markets=_ws_mkts)
-            self._odds_ws.start()
-            print("[slm] 已启动 odds-api.io WebSocket 实时赔率订阅(6运动 live+prematch, ML/Spread/Totals/DC/BTTS, 单连接)", flush=True)
+            # 2026-10-17 撤 Bet/SBO: 停 odds-api.io WS 订阅, 只用 Pin 单锚(Betfair/SBO 不再推送)
+            self._odds_ws = None
+            print("[slm] odds-api.io WS 已停用(只用 Pin 单锚)", flush=True)
         except Exception as e:
             self._odds_ws = None
             print(f"[slm] WebSocket 订阅启动失败(回退 REST 轮询): {type(e).__name__} {str(e)[:80]}", flush=True)
