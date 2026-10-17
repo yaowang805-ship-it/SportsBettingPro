@@ -79,14 +79,14 @@
     "bb": 3.83,
     "ts": 1792230725.3681438
   },
-  "football|USA Major League Soccer|San Jose Earthquakes|Nashville SC|和局|1x2|2026-10-18": {
-    "ev": 50.54,
-    "bb": 4.03,
-    "ts": 1792231602.623992
-  },
   "football|Thailand League 1|Bangkok United|Port FC|和局|1x2|2026-10-18": {
     "ev": 7.65,
     "bb": 3.62,
     "ts": 1792235457.9810529
+  },
+  "football|USA Major League Soccer|San Jose Earthquakes|Nashville SC|和局|1x2|2026-10-18": {
+    "ev": 50.54,
+    "bb": 4.03,
+    "ts": 1792231602.623992
   }
 }
