@@ -2035,7 +2035,7 @@ def _collect_opportunities(match, market_key):
             "_market_weight": market_w,
             "_kelly_pct": kelly_pct,
             "_tier": tier,
-            "_min_ev": v3_min_ev,  # 2026-10-17 采集时最终EV门槛(含方向/运动覆盖), 供下注时二次验价对齐(不再硬编码4%)
+            "_min_ev": max(v3_min_ev, min_ev),  # 2026-10-17 采集时最终EV门槛(方向覆盖 + Tier底线取max), 供下注时二次验价对齐(不再硬编码4%)
             "_pin_epoch": match.get("start_time_pin_epoch"),  # 用于显示开赛时间
             "bb_price_source": _ml_dir_source(platform_sources, sub_market,
                                               opp.get("designation", "")) or price_source,
