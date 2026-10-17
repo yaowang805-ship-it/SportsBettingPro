@@ -168,7 +168,7 @@ def _designation_to_dir(sub_market, designation):
 
 # 2026-09-12 用户要求: 早盘恢复实盘, 按释放清单控制(观察库样本>100且赢率>隐含才释放)。
 # bb_ev_push 推送前已过 _is_market_released 过滤, 这里只下单、不再硬编码盘口白名单。
-EARLY_BET_ENABLED = True
+EARLY_BET_ENABLED = False  # 2026-10-17 暂停: num_1半场价bug仍复发(费城联合和局70%假溢价), 真正解决前停实盘
 
 
 def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):

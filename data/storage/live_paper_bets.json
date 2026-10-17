@@ -46603,14 +46603,19 @@
   "spread": null,
   "bb_ts": 1792232485.221534,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -30.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   2,
+   2
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1792232494.404483,
@@ -46633,14 +46638,18 @@
   "spread": null,
   "bb_ts": 1792232493.1386921,
   "stake": 240,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -240.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   2,
+   0
+  ]
  },
  {
   "ts": 1792232494.41387,
@@ -46663,14 +46672,18 @@
   "spread": null,
   "bb_ts": 1792232493.1386921,
   "stake": 270,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 234.9,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": 1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 2906.46
+  "clv_elapsed_s": 2906.46,
+  "final_score": [
+   2,
+   0
+  ]
  },
  {
   "ts": 1792232494.415126,
@@ -46693,14 +46706,18 @@
   "spread": null,
   "bb_ts": 1792232493.1386921,
   "stake": 210,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "push",
+  "profit": 0.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   1
+  ]
  },
  {
   "ts": 1792232648.9371572,
@@ -55753,6 +55770,36 @@
   "spread": null,
   "bb_ts": 1792239612.783799,
   "stake": 290,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1792239643.8801,
+  "match_id": 4578544,
+  "market_id": 133970950,
+  "option_type": 5,
+  "sport": 1,
+  "home": "深圳青年人",
+  "away": "大连鲲城",
+  "designation": "小球",
+  "sub": "over_under",
+  "line": 3.0,
+  "bsc": [
+   1,
+   1
+  ],
+  "bb_odds": 2.02,
+  "fair": 1.6835,
+  "ev": 19.99,
+  "spread": null,
+  "bb_ts": 1792239643.114909,
+  "stake": 270,
   "settled": false,
   "result": null,
   "profit": null,
