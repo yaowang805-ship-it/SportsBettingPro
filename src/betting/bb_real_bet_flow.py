@@ -265,10 +265,17 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
         # 2026-10-14 早盘探针: cap 30 元(flat) + 补验价(fair_price + min_ev_pct, 早盘之前缺 EV 门槛,
         # 只会 oddsChange=0 价格变了就拒, EV 跌破不主动放弃 → 系统性负偏)
         stake = min(stake, 30.0)
+        # 2026-10-17: 下注时EV门槛与采集门槛对齐。之前硬编码 min_ev_pct=4.0 高于采集门槛
+        # (get_min_ev 直接盘3%/dc 3%/特殊盘4%, 另有方向级覆盖), 把 2~4% 档机会扫进来又在下单时拒掉。
+        _min_ev = opp.get("_min_ev")
+        if _min_ev is None:
+            from config.weight_matrix_v5 import get_min_ev
+            _min_ev = get_min_ev(opp.get("sport", ""), opp.get("league_cn") or opp.get("league", ""),
+                                 _sub_market_to_key(sub), odds)
         _t0 = time.time()
         code, order_id, msg = place_single_bet(
             market_id, odds, option_type, stake, token=token, domain=domain, match_id=match_id,
-            fair_price=opp.get("fair_price") or opp.get("fair"), min_ev_pct=4.0)
+            fair_price=opp.get("fair_price") or opp.get("fair"), min_ev_pct=_min_ev)
         _latency = time.time() - _t0
         # 执行质量记录(2026-10-08): 按方向记拒单/延迟, 供早盘定仓的执行质量系数打折
         from src.scrapers.execution_quality import record as _eq_record
@@ -282,6 +289,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
         time.sleep(_random.uniform(20, 90))
 
         if code == 0:
+            opp["_bet_succeeded"] = True  # 2026-10-17 供 push_report 只对成功注写指纹(失败注下次可重试)
             rec = {
                 "home": disp_home, "away": disp_away, "sub_market": sub, "designation": desig,
                 "odds": odds, "stake": stake, "order_id": order_id,

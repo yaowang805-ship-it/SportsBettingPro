@@ -3564,3 +3564,27 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T06:52:15Z,football,South Africa Premier Soccer League,Chippa United FC,Kruger United,,,双重机会-和局/客,dc,1.48,0,1.364,8.5,0,2,1792243800,ALL,pinnacle,,,validate,,,5311222
 2026-10-17T06:54:36Z,basketball,Germany Pro A Basketball Bundesliga,PS Karlsruhe Lions,MLP Academics Heidelberg,,,主胜,1x2,3.99,0,3.8553,3.49,0,3,1792258200,ALL,pinnacle,,,validate,,,5200754
 2026-10-17T06:55:01Z,football,South Africa Premier Soccer League,茨普帕,克鲁格联,茨普帕,克鲁格联,和局,1x2,2.93,2.65,2.8411,3.13,30,2,1792243800.0,BB,,,,push,,,
+2026-10-17T06:56:14Z,football,South Africa Premier Soccer League,Chippa United FC,Kruger United,,,上半场主胜,ht,3.63,0,3.4217,6.09,0,2,1792243800,ALL,pinnacle,,,validate,,,5311222
+2026-10-17T06:58:54Z,football,England FA Cup-Qualification,Bedford Town Football Club,Cray Wanderers,,,上半场主胜,ht,1.92,0,1.526,25.82,0,3,1792245600,BB,pinnacle,,,validate,,,5756842
+2026-10-17T06:59:28Z,football,Bolivia Division Profesional,Universitario de Vinto,San Antonio Bulo Bulo,,,上半场主胜,ht,2.09,0,1.6316,28.1,0,2,1792271700,ALL,pinnacle,,,validate,,,5742181
+2026-10-17T07:00:00Z,football,AFC Challenge League,Ahal FC,Paro FC,,,上半场客胜,ht,3.14,0,2.4719,27.03,0,3,1792238400,ALL,pinnacle,,,validate,,,5475793
+2026-10-17T07:00:34Z,football,Faroe Islands 1st Deild,HB Torshavn II,EB/Streymur II,,,上半场主胜,ht,1.52,0,1.269,19.78,0,2,1792234800,BB,pinnacle,,,validate,,,5727093
+2026-10-17T07:00:34Z,football,Poland III Liga,MKS Kluczbork,Miedz Legnica II,,,上半场客胜,ht,2.76,0,2.149,28.43,0,4,1792249200,ALL,pinnacle,,,validate,,,5214474
+2026-10-17T07:05:26Z,football,Japan Football League,Veertien Mie,Azul Claro Numazu,,,上半场主胜,ht,3.49,0,2.9304,19.1,0,3,1792227600,ALL,pinnacle,,,validate,,,5518976
+2026-10-17T07:05:26Z,football,Japan Football League,Veertien Mie,Azul Claro Numazu,,,上半场客胜,ht,3.49,0,2.9805,17.09,0,3,1792227600,ALL,pinnacle,,,validate,,,5518976
+2026-10-17T07:05:26Z,football,Ukraine Persha Liga,Kolos Kovalivka II,UCSA Tarasivka,,,上半场主胜,ht,2.49,0,1.9499,27.7,0,2,1792227600,ALL,pinnacle,,,validate,,,5727987
+2026-10-17T07:05:26Z,football,Ukraine Persha Liga,Kolos Kovalivka II,UCSA Tarasivka,,,上半场客胜,ht,4.28,0,4.0562,5.52,0,2,1792227600,ALL,pinnacle,,,validate,,,5727987
+2026-10-17T07:06:02Z,football,Thailand League 2,Chiangmai United,Songkhla FC,,,上半场主胜,ht,3.64,0,3.0094,20.95,0,3,1792234800,ALL,pinnacle,,,validate,,,5317672
+2026-10-17T07:06:02Z,football,Thailand League 2,Chiangmai United,Songkhla FC,,,上半场客胜,ht,3.05,0,2.3854,27.86,0,3,1792234800,ALL,pinnacle,,,validate,,,5317672
+2026-10-17T07:07:10Z,football,AFC Challenge League,Ahal FC,Paro FC,,,上半场主胜,ht,2.83,0,2.484,13.93,0,3,1792238400,ALL,pinnacle,,,validate,,,5475793
+2026-10-17T07:07:10Z,football,Scotland Championship,Inverness CT,Arbroath FC,,,和局,1x2,4.35,0,2.5221,72.48,0,2,1792245600,ALL,pinnacle,,,validate,,,5731234
+2026-10-17T07:07:10Z,football,Scotland Championship,Inverness CT,Arbroath FC,,,双重机会-和局/客,dc,2.67,0,1.9385,37.74,0,2,1792245600,ALL,pinnacle,,,validate,,,5731234
+2026-10-17T07:07:42Z,football,Thailand League 2,Chiangmai United,Songkhla FC,,,大球,ou,1.93,0,1.7645,9.38,0,3,1792234800,ALL,pinnacle,,,validate,,2.5,5317672
+2026-10-17T07:08:16Z,football,Thailand League 2,Nakhon Pathom United FC,NongBua Pitchaya FC,,,客胜,1x2,2.39,0,2.1922,9.02,0,3,1792234800,ALL,pinnacle,,,validate,,,5317717
+2026-10-17T07:08:16Z,football,Thailand League 2,Nakhon Pathom United FC,NongBua Pitchaya FC,,,上半场客胜,ht,3.36,0,2.1922,53.27,0,3,1792234800,ALL,pinnacle,,,validate,,,5317717
+2026-10-17T07:10:29Z,football,South Korea K-League 2,Gimpo FC,Paju Frontier FC,,,让球客胜,hc,2.06,0,2.0097,2.5,0,2,1792222200,BB,pinnacle,,,validate,,+0.5,5727143
+2026-10-17T07:13:50Z,football,Hong Kong Premier League,Eastern District,Eastern SC,,,上半场主胜,ht,3.07,0,2.4193,26.9,0,2,1792224000,ALL,pinnacle,,,validate,,,5718600
+2026-10-17T07:13:50Z,football,Hong Kong Premier League,Eastern District,Eastern SC,,,上半场客胜,ht,3.1,0,2.9386,5.49,0,2,1792224000,ALL,pinnacle,,,validate,,,5718600
+2026-10-17T07:17:42Z,football,Hong Kong Premier League,Hong Kong Rangers,North District FC,,,上半场客胜,ht,1.51,0,1.2236,23.41,0,2,1792319400,BB,pinnacle,,,validate,,,5718602
+2026-10-17T07:17:42Z,football,England FA Cup-Qualification,Plymouth Parkway,Chertsey Town,,,上半场主胜,ht,2.36,0,2.0389,15.75,0,3,1792245600,BB,pinnacle,,,validate,,,5757020
+2026-10-17T07:17:42Z,football,England FA Cup-Qualification,Plymouth Parkway,Chertsey Town,,,上半场客胜,ht,3.93,0,3.5345,11.19,0,3,1792245600,BB,pinnacle,,,validate,,,5757020

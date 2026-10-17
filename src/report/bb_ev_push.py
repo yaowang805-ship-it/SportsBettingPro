@@ -1102,12 +1102,10 @@ def _calc_kelly_stakes(opps: list) -> list:
             except (ValueError, TypeError):
                 pass
 
-        # 高赔率冷门过滤(2026-09-11 longshot bias): 主盘口(1x2/hc/ou)赔率>3.0 冷门,
-        # BB/Pin 都系统性高估其概率(实测 3-4倍赢率0%/4-6倍12%), 真实赢率远低于隐含。
-        # 特殊盘口(正确比分/半全场等)天然高赔率(>10), 不受此限。
-        if sub in ("1x2", "hc", "ou") and odds > 3.0:
-            o["_stake"] = 0; o["_raw_stake"] = 0
-            continue
+        # 2026-10-17 移除 odds>3.0 冷门过滤: 它跟释放清单自相矛盾——释放清单里「足球1x2平」
+        # 的概率桶(10-20%/20-30%/30-40%)对应赔率2.5~10, 几乎全部>3.0, 被这条过滤系统性杀光,
+        # 导致「释放了也永远投不出去」。longshot bias 已由释放判据(CLV中位>0+n≥200)在释放阶段
+        # 把关, 这里不再二次拦截(到这一步的机会都是已释放格子)。
 
         stake_pct = get_kelly_stake_pct(sport, league, sub, odds, match_type, match_score)
         if stake_pct < 0:
@@ -2037,6 +2035,7 @@ def _collect_opportunities(match, market_key):
             "_market_weight": market_w,
             "_kelly_pct": kelly_pct,
             "_tier": tier,
+            "_min_ev": v3_min_ev,  # 2026-10-17 采集时最终EV门槛(含方向/运动覆盖), 供下注时二次验价对齐(不再硬编码4%)
             "_pin_epoch": match.get("start_time_pin_epoch"),  # 用于显示开赛时间
             "bb_price_source": _ml_dir_source(platform_sources, sub_market,
                                               opp.get("designation", "")) or price_source,
@@ -3943,15 +3942,18 @@ def push_report(place_bets=False, incremental=False, qualified=None, skip_dedup:
                 pass
         elif place_bets:
             logger.info("无可投注机会（全部被结算可行性过滤）")
-        # 指纹永存 — 无论模式, 推送成功即记录
-        _save_qualified_fingerprints(qualified)
+        # 2026-10-17 优化: 只对「真正下单成功」的机会写指纹。之前对全部 qualified 写指纹,
+        # 失败注(EV跌破门槛/找不到盘口/token过期)也被标记"已推送" → 下次扫描永远跳过、永不重试。
+        # 现在失败注不写指纹, 下次扫描可重试。未开启 place_bets 时照旧全写(防重复推送)。
+        _fp_qualified = [o for o in qualified if o.get("_bet_succeeded")] if place_bets else qualified
+        _save_qualified_fingerprints(_fp_qualified)
         # 同场同盘口的盘口线配额, 同样只在推送成功后登记
         _commit_line_quota(qualified)
         # JSON 二次备份 (必须与 _save_qualified_fingerprints 同字段, 含 bb!)
         # V5.5 bug修复: 原代码只写 {"ev","ts"} 丢了 bb, 导致 _filter_pushed 读 JSON 时
         #   old_bb 恒为 0 → "BB赔率上升即重推"永远不触发 → 增量扫描每次只剩 1 场新比赛。
         existing = _load_fingerprints()
-        for o in qualified:
+        for o in _fp_qualified:
             fp = _make_fingerprint(o)
             ev = o.get("ev_pct", 0)
             bb = o.get("bb_odds", 0)
