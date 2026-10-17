@@ -1298,13 +1298,9 @@ class SecondLevelMonitor:
         if market_id is None:
             return
         from src.betting.bb_auto_bet import _load_stake_record, place_single_bet, check_sub_market_bet
-        # 2026-10-13 探针闸门(测量不赌博, 本地判断 Fail Fast):
-        # 1) degraded_mode gated: 非 Pin 触发(bf_ws/poll 兜底)=异质锚污染, 不下注
-        if self._trigger_source != "pin":
-            self._count_skip("degraded_mode")
-            print(f"  ⏭️ gate=degraded_mode 非Pin触发({self._trigger_source}), 跳过 {tag}", flush=True)
-            self._record_reject(sig, "exclude_list")
-            return
+        # 2026-10-17 放开 degraded_mode 闸门: 切 pinnapi 后滚球公平价统一实时价(pinnacle_fair_price),
+        # poll 触发的机会与 pin 触发同源, 不再是「异质锚污染」。degraded_mode 字段仍落盘供 pin/poll 对照。
+        # (原 2026-10-13: 非 Pin 触发跳过 —— 因 Betfair 异质锚已撤, 前提不成立, 已废弃)
         # 2) 单日亏损熔断: 当日实盘亏损超 DAILY_LOSS_LIMIT 即停
         _today_pnl = _recent_pnl(days=1)
         if _today_pnl < -DAILY_LOSS_LIMIT:
