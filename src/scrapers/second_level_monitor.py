@@ -1197,9 +1197,19 @@ class SecondLevelMonitor:
         _sub = sig.get("sub")
         _desig = sig.get("desig")
         # 方向归一化(大/小/平/客/主), 与 compute_market_release._direction 同口径。
-        # 双机会(dc)/双边进球(btts) 用完整 desig 作方向(主/和、主/客、双方进球等), 否则"主/客"和"客/和"撞车。
-        if _sub in ("double_chance", "btts"):
-            _dr = _desig
+        # 2026-10-17 修: dc 之前用完整 desig(客/和)作方向, 与清单的 X2 口径不一致 → dc 释放/拦截永远匹配不上。
+        # 改对齐 compute_market_release._direction 的 dc 三向: 主/和→1X, 主/客→12, 客/和→X2。
+        if _sub == "double_chance":
+            if "主" in _desig and "和" in _desig:
+                _dr = "1X"
+            elif "主" in _desig and "客" in _desig:
+                _dr = "12"
+            elif "和" in _desig and "客" in _desig:
+                _dr = "X2"
+            else:
+                _dr = "其他"
+        elif _sub == "btts":
+            _dr = _desig  # btts 保持完整 desig(双方进球/非双方进球)
         elif "大" in _desig:
             _dr = "大"
         elif "小" in _desig:

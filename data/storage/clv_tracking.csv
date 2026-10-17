@@ -3278,3 +3278,16 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T01:03:32Z,football,England Southern League Premier Division Central,Stamford AFC,Real Bedford FC,,,客胜,1x2,1.31,0,1.2807,2.29,0,2,1792245600,ALL,pinnacle,,,validate,,,5142260
 2026-10-17T01:03:32Z,football,England Southern League Premier Division Central,Stamford AFC,Real Bedford FC,,,让球客胜,hc,1.94,0,1.8843,2.96,0,2,1792245600,ALL,pinnacle,,,validate,,-1.5,5142260
 2026-10-17T01:07:34Z,football,Norway Eliteserien,HamKam,Bodo/Glimt,,,大球,ou,1.97,0,1.9307,2.04,0,3,1792238400,ALL,pinnacle,,,validate,,3.5,5725740
+2026-10-17T01:10:55Z,tennis,World Tennis - W35 Heraklion Women Singles,Alice Tubello (FRA),Alisa Oktiabreva (CZE),,,客胜,1x2,1.38,0,1.3466,2.48,0,3,1792224000,BB,pinnacle,,,validate,,,5762690
+2026-10-17T01:11:27Z,football,CAF Confederations Cup-Qualification,Red Arrows,Kaizer Chiefs,,,和局,1x2,3.09,0,2.3482,31.59,0,3,1792242000,BB,pinnacle,,,validate,,,5630391
+2026-10-17T01:11:27Z,football,CAF Confederations Cup-Qualification,Red Arrows,Kaizer Chiefs,,,双重机会-主/和局,dc,1.69,0,1.5729,7.44,0,3,1792242000,BB,pinnacle,,,validate,,,5630391
+2026-10-17T01:12:32Z,basketball,Japan B.League Premier,Chiba Jets Funabashi,Shimane Susanoo Magic,,,主胜,1x2,1.56,0,1.5167,2.85,0,2,1792209900,BB,pinnacle,,,validate,,,5298113
+2026-10-17T01:12:32Z,basketball,Japan B.League Premier,Chiba Jets Funabashi,Shimane Susanoo Magic,,,让分主胜,hc,1.86,0,1.7893,3.95,0,2,1792209900,BB,pinnacle,,,validate,,-3.5,5298113
+2026-10-17T01:18:35Z,football,Indonesia Championship League,PSGC Ciamis,PSIS Semarang,,,让球客胜,hc,1.96,0,1.88,4.26,0,3,1792238400,BB,pinnacle,,,validate,,-0.5,5740763
+2026-10-17T01:21:52Z,football,CAF Confederations Cup-Qualification,Red Arrows,Kaizer Chiefs,,,小球,ou,2.02,0,1.9729,2.39,0,3,1792242000,BB,pinnacle,,,validate,,2.0,5630391
+2026-10-17T01:23:01Z,basketball,Australia NBL,Sydney Kings,Perth Wildcats,,,让分主胜,hc,1.95,0,1.8977,2.76,0,3,1792225800,ALL,pinnacle,,,validate,,-7.5,5074442
+2026-10-17T01:28:02Z,football,Venezuela Primera Division,Estudiantes de Merida,Metropolitanos FC,,,让球主胜,hc,1.98,0,1.8172,8.96,0,2,1792351800,ALL,pinnacle,,,validate,,-0.5,5372936
+2026-10-17T01:31:54Z,basketball,Switzerland NLB,BC Alte Kanti Aarau,BC Boncourt Red Team,,,主胜,1x2,1.41,0,1.3626,3.48,0,3,1792251000,ALL,pinnacle,,,validate,,,5696169
+2026-10-17T01:32:28Z,football,CAF Confederations Cup-Qualification,Red Arrows,Kaizer Chiefs,,,双重机会-和局/客,dc,1.26,0,1.2245,2.9,0,3,1792242000,BB,pinnacle,,,validate,,,5630391
+2026-10-17T01:33:04Z,football,Canadian Premier League,Vancouver FC,HFX Wanderers FC,,,主胜,1x2,1.9,0,1.8291,3.88,0,3,1792202400,ALL,pinnacle,,,validate,,,5727892
+2026-10-17T01:33:04Z,football,Canadian Premier League,Vancouver FC,HFX Wanderers FC,,,让球主胜,hc,1.9,0,1.8496,2.72,0,3,1792202400,ALL,pinnacle,,,validate,,-0.5,5727892

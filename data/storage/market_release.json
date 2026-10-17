@@ -117,17 +117,24 @@
       "live"
     ],
     [
-      "basketball",
-      "ou",
-      "大",
-      "45-55%",
-      "live"
-    ],
-    [
       "ice_hockey",
       "ou",
       "大",
       "55-65%",
+      "live"
+    ],
+    [
+      "tennis",
+      "ou",
+      "小",
+      "40-60%",
+      "live"
+    ],
+    [
+      "football",
+      "dc",
+      "X2",
+      "60-70%",
       "live"
     ]
   ],
@@ -166,6 +173,13 @@
       "主",
       "*",
       "live"
+    ],
+    [
+      "basketball",
+      "ou",
+      "大",
+      "45-55%",
+      "live"
     ]
   ],
   "observe_release_caps": {
@@ -185,8 +199,9 @@
     "tennis|hc|主|*|early": 30,
     "tennis|hc|客|*|early": 30,
     "football|ou|大|50-55%|live": 30,
-    "basketball|ou|大|45-55%|live": 30,
-    "ice_hockey|ou|大|55-65%|live": 30
+    "ice_hockey|ou|大|55-65%|live": 30,
+    "tennis|ou|小|40-60%|live": 30,
+    "football|dc|X2|60-70%|live": 30
   },
   "direction_released": [],
   "direction_blocked": [],
