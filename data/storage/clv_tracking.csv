@@ -3593,3 +3593,17 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T07:19:29Z,football,England FA Cup-Qualification,Bury FC,Harrogate Town,,,客胜,1x2,2.13,0,1.9908,6.99,0,3,1792236600,BB,pinnacle,,,validate,,,5756797
 2026-10-17T07:19:29Z,football,England FA Cup-Qualification,Bury FC,Harrogate Town,,,上半场主胜,ht,3.84,0,3.6898,4.07,0,3,1792236600,BB,pinnacle,,,validate,,,5756797
 2026-10-17T07:19:29Z,football,England FA Cup-Qualification,Bury FC,Harrogate Town,,,上半场客胜,ht,2.49,0,1.9908,25.08,0,3,1792236600,BB,pinnacle,,,validate,,,5756797
+2026-10-17T07:20:37Z,football,England Northern Premier League Division One,Pontefract Collieries,Bridlington Town FC,,,上半场主胜,ht,2.08,0,1.5764,31.95,0,2,1792245600,BB,pinnacle,,,validate,,,5760808
+2026-10-17T07:25:28Z,football,USA Major League Soccer,San Jose Earthquakes,Nashville SC,,,和局,1x2,4.04,0,2.666,51.54,0,1,1792290600,ALL,pinnacle,,,validate,,,4231108
+2026-10-17T07:25:28Z,football,USA Major League Soccer,San Jose Earthquakes,Nashville SC,,,双重机会-主/和局,dc,1.88,0,1.625,15.69,0,1,1792290600,ALL,pinnacle,,,validate,,,4231108
+2026-10-17T07:25:28Z,football,England FA Cup-Qualification,Torquay United,Oxford City,,,上半场主胜,ht,3.38,0,2.9274,15.46,0,3,1792245600,BB,pinnacle,,,validate,,,5757014
+2026-10-17T07:25:28Z,football,England FA Cup-Qualification,Torquay United,Oxford City,,,上半场客胜,ht,2.88,0,2.3717,21.43,0,3,1792245600,BB,pinnacle,,,validate,,,5757014
+2026-10-17T07:26:01Z,football,England FA Cup-Qualification,Chorley FC,Worcester City,,,上半场主胜,ht,2.16,0,1.6254,32.89,0,3,1792245600,BB,pinnacle,,,validate,,,5756874
+2026-10-17T07:27:41Z,football,England FA Cup-Qualification,Dover Athletic FC,Dorking Wanderers,,,主胜,1x2,2.63,0,2.4832,5.91,0,3,1792245600,BB,pinnacle,,,validate,,,5757016
+2026-10-17T07:27:41Z,football,England FA Cup-Qualification,Dover Athletic FC,Dorking Wanderers,,,上半场主胜,ht,3.11,0,2.4832,25.24,0,3,1792245600,BB,pinnacle,,,validate,,,5757016
+2026-10-17T07:27:41Z,football,England FA Cup-Qualification,Dover Athletic FC,Dorking Wanderers,,,上半场客胜,ht,2.63,0,2.5341,3.78,0,3,1792245600,BB,pinnacle,,,validate,,,5757016
+2026-10-17T07:27:41Z,football,England FA Cup-Qualification,Dover Athletic FC,Dorking Wanderers,,,双重机会-主/和局,dc,1.69,0,1.6519,2.31,0,3,1792245600,BB,pinnacle,,,validate,,,5757016
+2026-10-17T07:28:14Z,football,Thailand League 1,Rayong FC,Uthai Thani FC,,,上半场主胜,ht,3.54,0,3.4441,2.78,0,2,1792238400,ALL,pinnacle,,,validate,,,5285514
+2026-10-17T07:28:14Z,basketball,Czech Republic NBL Basketball,BK Pardubice,BK Decin,,,让分客胜,hc,1.87,0,1.7466,7.07,0,3,1792251000,ALL,pinnacle,,,validate,,+12.5,5234009
+2026-10-17T07:30:58Z,football,CAF Confederations Cup-Qualification,Red Arrows,Kaizer Chiefs,,,上半场客胜,ht,2.86,0,2.5241,13.31,0,3,1792242000,BB,pinnacle,,,validate,,,5630391
+2026-10-17T07:32:08Z,football,England Championship League,米尔沃尔,林肯城,米尔沃尔,林肯城,和局,1x2,3.7,2.33,2.3957,54.44,40,2,1792236600.0,BB,,,,push,,,
