@@ -7,6 +7,7 @@
 drop 是 lead-lag 命门: Pin 赔率骤降 = sharp money 进来, 要抢在 BB 跟上之前下单。
 """
 import json
+import os
 import threading
 import time
 import sys
@@ -19,6 +20,7 @@ from src.scrapers.pin_client import PinOddsCache, PinRestClient, PinWSClient, Pi
 
 DROP_FILE = ROOT / "data" / "storage" / "pin_drops.jsonl"
 TRIGGER_FILE = ROOT / "data" / "storage" / "pin_trigger.jsonl"
+DROP_RETENTION_DAYS = 30  # pin_drops 归档保留天数(超期清理, 显式管磁盘)
 LIVE_TICK_FILE = ROOT / "data" / "storage" / "pin_live_tick.ts"  # 滚球 WS live 帧触发信号时间戳
 FRAME_GAP_FILE = ROOT / "data" / "storage" / "pin_frame_gaps.jsonl"  # 帧间隔埋点(2026-10-11 攒帧间隔分布, 定 suspension 阈值)
 BB_SNAPSHOT = ROOT / "data" / "storage" / "bb_odds_extracted.json"
@@ -67,6 +69,79 @@ def _append_rotating(path, line):
         if path.stat().st_size > 1_500_000:  # >1.5MB 截断
             lines = path.read_text().splitlines()
             path.write_text("\n".join(lines[-100:]) + "\n")
+    except OSError:
+        pass
+
+
+# ── pin_drops 按天归档(2026-10-17) ──
+# 旧 1.5MB 截断物理删除 drop 历史(只留 ~2 分钟), nvp/alerted/limit 已落盘但窗口太短,
+# 口径对比/信号级回测/校准无样本。改按 UTC 日归档 pin_drops_YYYYMMDD.jsonl + 保留天数。
+# pin_drops.jsonl 保留为 symlink 指向「今天」归档 → 旧读者(leadlag_measure.py)零修改。
+# pin_trigger.jsonl 仍走 _append_rotating(触发信号热路径, offset 消费, 不归档)。
+
+
+def _utc_date_str(ts=None):
+    """UTC 日期字符串 YYYYMMDD(跨时区赛事对齐, 避免同场 drop 散落两个文件)。"""
+    from datetime import datetime, timezone
+    dt = datetime.fromtimestamp(ts if ts is not None else time.time(), tz=timezone.utc)
+    return dt.strftime("%Y%m%d")
+
+
+def _drop_archive_file(date_str):
+    return ROOT / "data" / "storage" / f"pin_drops_{date_str}.jsonl"
+
+
+_drop_day = {"date": "", "path": None}  # 当日归档缓存: 日期变化才重建 symlink + 清理
+
+
+def _ensure_drop_symlink():
+    """确保 pin_drops.jsonl 是指向「今天」归档的 symlink(每日切分时重建)。
+
+    兼容旧版: pin_drops.jsonl 若还是普通文件(非 symlink), 先 rename 成今天归档(内容保留)。
+    """
+    today = _utc_date_str()
+    archive = _drop_archive_file(today)
+    try:
+        if DROP_FILE.is_symlink():
+            if os.readlink(DROP_FILE) == archive.name:
+                return archive  # 已指向今天
+        elif DROP_FILE.exists():
+            DROP_FILE.rename(archive)  # 旧普通文件 → 今天归档(原子, 不丢内容)
+    except OSError:
+        pass
+    try:
+        if DROP_FILE.is_symlink() or DROP_FILE.exists():
+            DROP_FILE.unlink()
+        DROP_FILE.symlink_to(archive.name)  # 相对 symlink(同目录)
+    except OSError:
+        pass
+    return archive
+
+
+def _cleanup_old_drops():
+    """删除超过 DROP_RETENTION_DAYS 天的 pin_drops_*.jsonl 归档。"""
+    import glob as _glob
+    cutoff = _utc_date_str(time.time() - DROP_RETENTION_DAYS * 86400)
+    for p in _glob.glob(str(ROOT / "data" / "storage" / "pin_drops_*.jsonl")):
+        date_part = Path(p).name[len("pin_drops_"):-len(".jsonl")]
+        if len(date_part) == 8 and date_part.isdigit() and date_part < cutoff:
+            try:
+                Path(p).unlink()
+            except OSError:
+                pass
+
+
+def _append_drop(rec):
+    """按 UTC 日归档追加一条 drop(append + 每行 flush, 崩一次只丢一行)。"""
+    today = _utc_date_str()
+    if _drop_day["date"] != today:
+        _drop_day["date"] = today
+        _drop_day["path"] = _ensure_drop_symlink()
+        _cleanup_old_drops()
+    try:
+        with open(_drop_day["path"], "a", encoding="utf-8") as f:
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            f.flush()  # 每行刷盘
     except OSError:
         pass
 
@@ -120,7 +195,7 @@ def _on_live(matchup_id, rec, frame_ts=None):
 def _on_drop(stream, drop):
     """SSE drop 回调: 落盘 + 映射 BB 比赛 + 写触发信号。"""
     rec = {"ts": time.time(), "stream": stream, **drop}
-    _append_rotating(DROP_FILE, json.dumps(rec, ensure_ascii=False))
+    _append_drop(rec)
     home = drop.get("home", "?")
     away = drop.get("away", "?")
     fp = drop.get("from_price")
@@ -241,6 +316,8 @@ def main():
     ws = PinWSClient(cache, rest, on_live=_on_live)
     sse = PinSSEClient(on_event=_on_drop)
 
+    _ensure_drop_symlink()   # 启动时迁移旧文件 + 建当天 symlink
+    _cleanup_old_drops()     # 启动时清理过期归档
     ws.start()
     sse.start()
     threading.Thread(target=_poll_rest_cache, args=(cache, rest), daemon=True, name="pin-rest").start()

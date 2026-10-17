@@ -657,7 +657,7 @@ def _load_release_list():
         return None
 
 
-def _is_market_released(sport: str, sub_market: str, league: str = "", designation: str = "", match_epoch=None, odds=None) -> bool:
+def _is_market_released(sport: str, sub_market: str, league: str = "", designation: str = "", match_epoch=None, odds=None, scope: str = "early") -> bool:
     """该运动×盘口(或运动×联赛×盘口)是否被释放(允许投注)。未释放 → 只观察不投注。
 
     优先级: 联赛细化(league_released/league_blocked) > 观察库兜底(observe_released)
@@ -676,13 +676,14 @@ def _is_market_released(sport: str, sub_market: str, league: str = "", designati
             return True
         if [sport, league, sub_market] in rl.get("league_blocked", []):
             return False
-    # 2. 观察库释放/拦截(运动×盘口×方向×赔率区间, 早盘 scope=early)。
+    # 2. 观察库释放/拦截(运动×盘口×方向×赔率区间, scope=early/live)。
     #    2026-09-15 加赔率区间维度(之前漏了, 5要素清单配 4要素查询永远匹配不上)。
-    if [sport, sub_market, dr, _iv, "early"] in rl.get("observe_blocked", []):
+    #    2026-10-17 修: 之前硬编码 "early", 滚球(live)条目永远匹配不上 → 滚球撤回/释放全失效。
+    if [sport, sub_market, dr, _iv, scope] in rl.get("observe_blocked", []):
         return False
-    if [sport, sub_market, dr, _iv, "early"] in rl.get("observe_released", []):
+    if [sport, sub_market, dr, _iv, scope] in rl.get("observe_released", []):
         return True
-    if [sport, sub_market, dr, "*", "early"] in rl.get("observe_released", []):
+    if [sport, sub_market, dr, "*", scope] in rl.get("observe_released", []):
         return True
     # 3. 方向级释放(2026-09-03): 整盘没过主开关, 但该方向实盘 ROI 强正(如 1x2 和局+37.4%)
     if [sport, sub_market, dr] in rl.get("direction_released", []):
