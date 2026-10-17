@@ -1,5 +1,5 @@
 {
-  "balance": 15082.53,
+  "balance": 15052.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1749,6 +1749,29 @@
       "commence_time": 1792251600.0,
       "created_at": "2026-10-17T11:25:22.934648+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_费城联合_夏洛特FC_和局",
+      "sport": "football",
+      "league": "美国职业大联盟",
+      "home_team": "费城联合",
+      "away_team": "夏洛特FC",
+      "home_cn": "费城联合",
+      "away_cn": "夏洛特FC",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 5.55,
+      "stake": 30,
+      "model_prob": 0.3073,
+      "ev_pct": 70.57,
+      "pin_odds": 3.11,
+      "fair_price": 3.2538,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792261800.0,
+      "created_at": "2026-10-17T12:11:11.605322+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -11224,8 +11247,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-17",
-    "used": 940.0,
-    "bets": 62
+    "used": 970.0,
+    "bets": 63
   },
   "updated": null
 }
