@@ -3424,3 +3424,23 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T04:58:13Z,ice_hockey,Kontinental Hockey League,CSKA Moscow,Neftekhimik Nizhnekamsk,,,上半场客胜,ht,4.01,0,3.1543,27.13,0,3,1792321200,BB,pinnacle,,,validate,,,5620894
 2026-10-17T05:03:10Z,football,UAE Pro League,Al Nasr Dubai SC,Hatta SC,,,上半场主胜,ht,1.9,0,1.8402,3.25,0,2,1792242300,ALL,pinnacle,,,validate,,,5588366
 2026-10-17T05:03:10Z,football,Thailand League 1,Bangkok United,Port FC,,,上半场主胜,ht,2.66,0,2.5873,2.81,0,2,1792321200,ALL,pinnacle,,,validate,,,5285516
+2026-10-17T05:08:09Z,football,Northern Ireland Premiership,Glentoran FC,Limavady United FC,,,小球,ou,1.97,0,1.884,4.56,0,2,1792245600,ALL,pinnacle,,,validate,,3.0,5726311
+2026-10-17T05:08:09Z,football,Scotland Championship,Stenhousemuir FC,Raith Rovers FC,,,小球,ou,2.05,0,1.9718,3.97,0,2,1792245600,ALL,pinnacle,,,validate,,2.0,5726271
+2026-10-17T05:08:09Z,football,England FA Cup-Qualification,Uxbridge FC,Hornchurch FC,,,上半场主胜,ht,4.37,0,3.8857,12.46,0,3,1792245600,BB,pinnacle,,,validate,,,5757025
+2026-10-17T05:08:09Z,football,England FA Cup-Qualification,Uxbridge FC,Hornchurch FC,,,上半场客胜,ht,2.16,0,1.7419,24.0,0,3,1792245600,BB,pinnacle,,,validate,,,5757025
+2026-10-17T05:08:43Z,basketball,Japan B.League One,Bambitious Nara,Veltex Shizuoka,,,大分,ou,1.88,0,1.7971,4.61,0,3,1792217100,BB,pinnacle,,,validate,,161.5,5325634
+2026-10-17T05:08:43Z,football,Mexico Liga De Expansion MX,Cancun FC,Venados FC,,,小球,ou,2.0,0,1.9536,2.38,0,2,1792285200,ALL,pinnacle,,,validate,,3.0,5733441
+2026-10-17T05:13:43Z,football,Japan J.League,Mito Hollyhock,Urawa Red Diamonds,,,小球,ou,1.87,0,1.8304,2.16,0,2,1792220400,ALL,pinnacle,,,validate,,2.5,5153534
+2026-10-17T05:13:43Z,ice_hockey,Sweden Hockey League,Frolunda HC,Skelleftea AIK,,,上半场主胜,ht,2.82,0,1.9813,42.33,0,3,1792242900,BB,pinnacle,,,validate,,,5616768
+2026-10-17T05:13:43Z,ice_hockey,Sweden Hockey League,Frolunda HC,Skelleftea AIK,,,上半场客胜,ht,2.9,0,2.019,43.64,0,3,1792242900,BB,pinnacle,,,validate,,,5616768
+2026-10-17T05:13:43Z,ice_hockey,Sweden Hockey League,Rogle BK,HC Orebro,,,上半场主胜,ht,2.28,0,1.5532,46.79,0,3,1792242900,BB,pinnacle,,,validate,,,5616769
+2026-10-17T05:13:43Z,ice_hockey,Sweden Hockey League,Rogle BK,HC Orebro,,,上半场客胜,ht,3.83,0,2.8076,36.42,0,3,1792242900,BB,pinnacle,,,validate,,,5616769
+2026-10-17T05:13:43Z,ice_hockey,NHL,Washington Capitals,New Jersey Devils,,,上半场主胜,ht,2.6,0,1.958,32.79,0,1,1792256400,BB,pinnacle,,,validate,,,5646120
+2026-10-17T05:13:43Z,ice_hockey,NHL,Washington Capitals,New Jersey Devils,,,上半场客胜,ht,2.91,0,2.0438,42.38,0,1,1792256400,BB,pinnacle,,,validate,,,5646120
+2026-10-17T05:13:43Z,ice_hockey,NHL,Winnipeg Jets,Carolina Hurricanes,,,上半场主胜,ht,3.2,0,2.3825,34.31,0,1,1792265400,BB,pinnacle,,,validate,,,5646141
+2026-10-17T05:13:43Z,ice_hockey,NHL,Winnipeg Jets,Carolina Hurricanes,,,上半场客胜,ht,2.4,0,1.7233,39.27,0,1,1792265400,BB,pinnacle,,,validate,,,5646141
+2026-10-17T05:13:43Z,ice_hockey,NHL,Winnipeg Jets,Carolina Hurricanes,,,大分,ou,1.96,0,1.9215,2.0,0,1,1792265400,BB,pinnacle,,,validate,,6.0,5646141
+2026-10-17T05:13:43Z,ice_hockey,Finland Liiga,Oulun Karpat,KooKoo,,,上半场主胜,ht,2.14,0,1.5599,37.19,0,3,1792245600,BB,pinnacle,,,validate,,,5763119
+2026-10-17T05:13:43Z,ice_hockey,Finland Liiga,Oulun Karpat,KooKoo,,,上半场客胜,ht,3.57,0,2.7861,28.14,0,3,1792245600,BB,pinnacle,,,validate,,,5763119
+2026-10-17T05:14:18Z,basketball,Australia NBL,Sydney Kings,Perth Wildcats,,,主胜,1x2,1.32,0,1.2813,3.02,0,3,1792225800,ALL,pinnacle,,,validate,,,5074442
+2026-10-17T05:14:18Z,basketball,Australia NBL,Sydney Kings,Perth Wildcats,,,上半场主胜,ht,1.41,0,1.3459,4.76,0,3,1792225800,ALL,pinnacle,,,validate,,,5074442

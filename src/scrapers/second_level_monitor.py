@@ -1381,10 +1381,20 @@ class SecondLevelMonitor:
             self._count_skip("score_untrusted")
             print(f"  ⚠️ 比分缓存超龄(不可信), 跳过 {tag}", flush=True)
             return
-        # 2026-10-11 重拉前置: 只有过了廉价过滤(冷却/年龄/比分)才拉最新赔率, 不「每注都收 0.7-1s 税」;
-        # 非阻塞前置——拿不到新鲜价(封盘/关闭)直接放弃, 不降级用旧价。
-        from src.betting.bb_auto_bet import fetch_current_odds
-        _fresh = fetch_current_odds(market_id, match_id, option_type)
+        # 2026-10-17 验价改读缓存: BB 0.5s 预取缓存替代实时 fetch_current_odds(省 0.32s)。
+        # 新鲜度从「实时」降到「0.5s 内」, oddsChange=0 兜底 0.5s 内的漂移。smin/smax 限额缓存无, 置 None。
+        _fresh = None
+        try:
+            from src.scrapers.pinnacle_live import get_bb_fresh_or_cached
+            _bb, _ = get_bb_fresh_or_cached(wait_for_fresh=False)
+            _b = _bb.get(int(match_id)) if match_id is not None else None
+            if _b:
+                for _mk in _b.get("markets", []):
+                    if str(_mk.get("market_id")) == str(market_id) and str(_mk.get("option_type")) == str(option_type):
+                        _fresh = (_mk.get("odds"), None, None, _mk.get("line"))
+                        break
+        except Exception:
+            pass
         _fresh_odds = _fresh[0] if _fresh else None
         _fresh_line = _fresh[3] if (_fresh and len(_fresh) > 3) else None
         if _fresh_odds is None:
