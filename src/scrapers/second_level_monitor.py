@@ -1672,18 +1672,27 @@ class SecondLevelMonitor:
         回撤熔断(2026-09-13): 最近7天滚球实盘累计亏超 DRAWDOWN_STOP_PNL → 半仓。
         """
         if self.stake and self.stake > 0:
+            sig["stake_kelly_raw"] = float(self.stake)
+            sig["clamp_reason"] = "fixed_stake"
             return self.stake
         edge = sig["ev"] / 100.0
         odds = sig["bb_odds"]
         if odds <= 1 or edge <= 0:
+            sig["stake_kelly_raw"] = 0.0
+            sig["clamp_reason"] = "none"
             return 0
-        stake = _bankroll() * KELLY_FRACTION * edge / (odds - 1)
+        _kelly_raw = _bankroll() * KELLY_FRACTION * edge / (odds - 1)
+        sig["stake_kelly_raw"] = round(_kelly_raw, 2)
+        stake = _kelly_raw
         # 执行质量系数(2026-10-08): 按方向拒单率/延迟打折(0.6~1.0), 样本不足=1.0
         from src.scrapers.execution_quality import factor as _eq_factor
         stake = stake * _eq_factor(f"{sig.get('sport')}|{sig.get('sub')}|{sig.get('desig')}")
         # 2026-09-19: 去掉 max(stake, MIN_STAKE) 兜底。之前把 Kelly<30 的冷门单硬抬到 30 投出
         # = 超 Kelly 数倍下冷门(方差击穿来源), 与「stake<30 不投」铁律语义相反。现在 <30 原样
         # 返回, 由调用方 _try_live_auto_bet/_try_auto_bet 的 `if stake < MIN_STAKE: return` 拦截。
+        _clamp = "none"
+        if stake > MAX_STAKE:
+            _clamp = "max_cap"
         stake = int(min(stake, MAX_STAKE))
         # 注额抖动 ×0.8~1.0(防风控): 让每注金额非恒定, 避免固定档位被风控识别为机器。
         # 2026-09-22: 冷门压额(tier cap)已取消——冷门低级别联赛可能有大溢价, 不该压额。
@@ -1692,6 +1701,8 @@ class SecondLevelMonitor:
         _pnl = _recent_pnl()
         if _pnl < -DRAWDOWN_STOP_PNL:
             stake = int(stake * 0.5)
+            _clamp = _clamp + "+drawdown_half" if _clamp != "none" else "drawdown_half"
+        sig["clamp_reason"] = _clamp
         # 四舍五入到 10: 避免 ¥91/¥82 有零有整被风控识别为机器下单
         return int(round(stake / 10.0) * 10)
 
