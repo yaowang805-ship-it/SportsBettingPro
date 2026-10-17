@@ -1,4 +1,9 @@
 {
+  "basketball|Belgium Basketball Top Division 1|BC Guco Lier|LDP Donza|主胜|1x2|2026-10-18": {
+    "ev": 4.39,
+    "bb": 1.24,
+    "ts": 1792280175.605083
+  },
   "basketball|Japan B.League One|Ehime Orange Vikings|Kagoshima Rebnise|主胜|1x2|2026-10-18": {
     "ev": 3.99,
     "bb": 1.23,
@@ -8,6 +13,11 @@
     "ev": 4.5,
     "bb": 1.25,
     "ts": 1792277193.595233
+  },
+  "basketball|Portugal Basketball League|Braga|Vitoria Sport Clube|主胜|1x2|2026-10-18": {
+    "ev": 6.71,
+    "bb": 1.42,
+    "ts": 1792280175.605033
   },
   "football|Argentina Liga Profesional|Independiente Rivadavia|Tigre|和局|1x2|2026-10-18": {
     "ev": 55.26,
@@ -119,14 +129,9 @@
     "bb": 1.99,
     "ts": 1792277617.0422862
   },
-  "basketball|Portugal Basketball League|Braga|Vitoria Sport Clube|主胜|1x2|2026-10-18": {
-    "ev": 6.71,
-    "bb": 1.42,
-    "ts": 1792280175.605033
-  },
-  "basketball|Belgium Basketball Top Division 1|BC Guco Lier|LDP Donza|主胜|1x2|2026-10-18": {
-    "ev": 4.39,
-    "bb": 1.24,
-    "ts": 1792280175.605083
+  "basketball|Germany Pro A Basketball Bundesliga|Orange Academy|Crailsheim Merlins|客胜|1x2|2026-10-18": {
+    "ev": 5.67,
+    "bb": 1.17,
+    "ts": 1792281513.1692429
   }
 }
