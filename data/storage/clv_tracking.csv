@@ -4032,3 +4032,27 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T12:08:09Z,football,England FA Cup-Qualification,Spalding United,Alvechurch,,,大球,ou,1.95,0,1.8909,3.13,0,3,1792245600,BB,pinnacle,,,validate,,2.5,5756845
 2026-10-17T12:11:01Z,basketball,BNXT League,Heroes Den Bosch,Antwerp Giants,,,上半场客胜,ht,1.23,0,1.1127,10.54,0,3,1792260000,ALL,pinnacle,,,validate,,,5758078
 2026-10-17T12:12:02Z,football,USA Major League Soccer,Philadelphia Union,Charlotte FC,,,和局,1x2,5.55,3.11,3.2538,70.57,30,1,1792261800.0,BB,,,,push,,,
+2026-10-17T12:12:46Z,football,Norway 2nd Division,Lysekloster,Traeff,,,客胜,1x2,2.29,0,2.1783,5.13,0,3,1792332000,BB,pinnacle,,,validate,,,4865050
+2026-10-17T12:12:46Z,football,Norway 2nd Division,Lysekloster,Traeff,,,上半场客胜,ht,2.81,0,2.1783,29.0,0,3,1792332000,BB,pinnacle,,,validate,,,4865050
+2026-10-17T12:12:46Z,football,Norway 2nd Division,Lysekloster,Traeff,,,双重机会-和局/客,dc,1.48,0,1.4235,3.97,0,3,1792332000,BB,pinnacle,,,validate,,,4865050
+2026-10-17T12:15:01Z,football,Mexico Liga De Expansion MX,Piratas FC,Tepatitlan FC,,,和局,1x2,8.4,0,3.8701,117.05,0,2,1792285200,ALL,pinnacle,,,validate,,,5300178
+2026-10-17T12:15:01Z,football,Mexico Liga De Expansion MX,Piratas FC,Tepatitlan FC,,,客胜,1x2,19.3,0,14.9653,28.97,0,2,1792285200,ALL,pinnacle,,,validate,,,5300178
+2026-10-17T12:15:01Z,football,Mexico Liga De Expansion MX,Piratas FC,Tepatitlan FC,,,双重机会-和局/客,dc,4.7,0,3.0749,52.85,0,2,1792285200,ALL,pinnacle,,,validate,,,5300178
+2026-10-17T12:15:35Z,football,France Ligue 3,Valenciennes FC,Amiens SC,,,双重机会-主/和局,dc,1.47,0,1.3574,8.3,0,4,1792241100,ALL,pinnacle,,,validate,,,5214814
+2026-10-17T12:15:35Z,football,France Ligue 3,Valenciennes FC,Amiens SC,,,双重机会-和局/客,dc,1.46,0,1.4109,3.48,0,4,1792241100,ALL,pinnacle,,,validate,,,5214814
+2026-10-17T12:16:11Z,football,USL League One,Richmond Kickers,Corpus Christi FC,,,上半场主胜,ht,3.12,0,2.6334,18.48,0,2,1792274400,ALL,pinnacle,,,validate,,,5637961
+2026-10-17T12:16:11Z,football,USL League One,Richmond Kickers,Corpus Christi FC,,,上半场客胜,ht,3.12,0,2.6938,15.82,0,2,1792274400,ALL,pinnacle,,,validate,,,5637961
+2026-10-17T12:17:16Z,football,Algeria Ligue 2,US Chaouia,NRB Teleghma,,,主胜,1x2,1.33,0,1.3018,2.17,0,3,1792245600,ALL,pinnacle,,,validate,,,5756791
+2026-10-17T12:17:16Z,football,Algeria Ligue 2,US Chaouia,NRB Teleghma,,,上半场主胜,ht,1.94,0,1.3018,49.02,0,3,1792245600,ALL,pinnacle,,,validate,,,5756791
+2026-10-17T12:17:55Z,basketball,Poland Basketball 1 Liga,Resovia Rzeszow,Decka Pelplin,,,主胜,1x2,2.32,0,2.1857,6.14,0,2,1792242000,ALL,pinnacle,,,validate,,,5757097
+2026-10-17T12:17:55Z,football,Ecuador LigaPro Primera B,LDU Portoviejo,Gualaceo SC,,,双重机会-主/和局,dc,1.35,0,1.2591,7.22,0,3,1792269000,ALL,pinnacle,,,validate,,,5761526
+2026-10-17T12:17:55Z,football,Brazil Copa Paulista,Sao Jose EC SP,Uniao Sao Joao,,,上半场主胜,ht,2.36,0,1.6979,39.0,0,3,1792270800,BB,pinnacle,,,validate,,,5728752
+2026-10-17T12:17:55Z,football,Brazil Copa Paulista,Sao Jose EC SP,Uniao Sao Joao,,,上半场客胜,ht,7.4,0,6.8743,7.65,0,3,1792270800,BB,pinnacle,,,validate,,,5728752
+2026-10-17T12:21:14Z,football,Saudi Arabia Professional League,NEOM SC,Al Ettifaq FC,,,大球,ou,2.03,1.885,1.9625,3.44,50,3,1792251600.0,BB/FB,,,,push,,3.0,
+2026-10-17T12:21:14Z,basketball,Algeria Basketball Super Division,MC Alger,CRB Dar Beida,,,主胜,1x2,1.07,1.022,1.0313,3.75,50,2,1792252800.0,FB,,,,push,,,
+2026-10-17T12:21:14Z,basketball,Austria Basketball Superliga,Kapfenberg Bulls,BK Dukes Klosterneuburg,,,主胜,1x2,1.09,1.045,1.0538,3.44,0,2,1792256400.0,FB,,,,push,,,
+2026-10-17T12:21:14Z,basketball,Austria Basketball 2. Liga,Mistelbach Mustangs,UDW Alligators,,,主胜,1x2,1.31,1.2169,1.2584,4.1,0,3,1792249200.0,BB,,,,push,,,
+2026-10-17T12:21:14Z,basketball,Czech Republic NBL Basketball,BK Pardubice,BK Decin,,,主胜,1x2,1.17,1.095,1.1106,5.35,0,3,1792251000.0,BB,,,,push,,,
+2026-10-17T12:21:14Z,basketball,Portugal Basketball Proliga,SC Lusitania,AD Galomar,,,主胜,1x2,1.36,1.2469,1.3054,4.18,0,3,1792258200.0,BB,,,,push,,,
+2026-10-17T12:21:14Z,basketball,Romania Basketball National League,CSO Voluntari,CSM Corona Brasov,,,主胜,1x2,1.13,1.076,1.089,3.76,0,3,1792252800.0,FB,,,,push,,,
+2026-10-17T12:21:14Z,basketball,Spain Basketball Segunda FEB,CBC Valladolid,Baloncesto Ciudad de Badajoz,,,主胜,1x2,1.12,1.051,1.0658,5.09,0,4,1792256400.0,FB,,,,push,,,

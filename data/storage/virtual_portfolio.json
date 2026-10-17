@@ -1,5 +1,5 @@
 {
-  "balance": 15052.53,
+  "balance": 15002.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1771,6 +1771,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792261800.0,
       "created_at": "2026-10-17T12:11:11.605322+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_新未来城_伊蒂法克_大球(30)",
+      "sport": "football",
+      "league": "沙特阿拉伯职业联赛",
+      "home_team": "新未来城",
+      "away_team": "伊蒂法克",
+      "home_cn": "新未来城",
+      "away_cn": "伊蒂法克",
+      "market": "over_under",
+      "market_type": "大球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 2.03,
+      "stake": 50,
+      "model_prob": 0.5096,
+      "ev_pct": 3.44,
+      "pin_odds": 1.885,
+      "fair_price": 1.9625,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792251600.0,
+      "created_at": "2026-10-17T12:18:49.797931+00:00",
       "track_only": false
     }
   ],
@@ -11247,8 +11270,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-17",
-    "used": 970.0,
-    "bets": 63
+    "used": 1020.0,
+    "bets": 64
   },
   "updated": null
 }

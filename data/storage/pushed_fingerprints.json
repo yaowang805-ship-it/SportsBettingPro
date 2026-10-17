@@ -84,14 +84,14 @@
     "bb": 3.62,
     "ts": 1792235457.9810529
   },
-  "football|USA Major League Soccer|San Jose Earthquakes|Nashville SC|和局|1x2|2026-10-18": {
-    "ev": 50.54,
-    "bb": 4.03,
-    "ts": 1792231602.623992
-  },
   "football|USA Major League Soccer|Philadelphia Union|Charlotte FC|和局|1x2|2026-10-18": {
     "ev": 70.57,
     "bb": 5.55,
     "ts": 1792239122.061456
+  },
+  "football|USA Major League Soccer|San Jose Earthquakes|Nashville SC|和局|1x2|2026-10-18": {
+    "ev": 50.54,
+    "bb": 4.03,
+    "ts": 1792231602.623992
   }
 }
