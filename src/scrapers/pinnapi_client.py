@@ -233,13 +233,14 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
     # 返回 None 让上层 consensus 用 Betfair/SBO 兜底, 而不是 .get() 崩在 list 上。
     if not isinstance(periods, dict):
         return None
-    full = periods.get('num_0') or (list(periods.values())[0] if periods else None)
+    # 半场盘口(ht/ht_hc/ht_ou)用 num_1(半场)赔率, 全场用 num_0 —— 2026-10-17 修 ht 半场赔率(之前 10-12 逃避式不定价)
+    _num = 'num_1' if sub_market in ('ht', 'ht_hc', 'ht_ou') else 'num_0'
+    full = periods.get(_num) or (list(periods.values())[0] if periods else None)
     if not full:
         return None
-    if sub_market == '1x2':
-        # ht(上半场) 不再走这里: 2026-10-12 发现 ht 用的是全场 money_line 冒充半场
-        # (pin_client._parse_markets 只解析全场 moneyline/spread/total, 半场赔率未解析),
-        # 导致 ht 公平价=全场独赢价, CLV 虚高(实测 ht +17% 是假象)。半场数据接好前 ht 不定价。
+    if sub_market in ('1x2', 'ht'):
+        # ht(半场独赢) 走这里: 2026-10-17 修 —— 之前用全场 num_0 冒充半场(错配), 现上面已选 num_1。
+        # 半场独赢 = num_1 的 money_line(home/draw/away), 与全场独赢同结构, 共用去水逻辑。
         ml = full.get('money_line')
         if not ml:
             return None
