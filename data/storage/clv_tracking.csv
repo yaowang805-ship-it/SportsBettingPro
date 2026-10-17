@@ -4512,3 +4512,18 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T22:52:32Z,basketball,Uruguay Basketball Tercera de Ascenso,Ateneo de Piriapolis,CA 25 de Agosto,,,客胜,1x2,2.47,0,2.3296,6.03,0,4,1792278000,BB,pinnacle,,,validate,,,5767136
 2026-10-17T22:53:04Z,basketball,Uruguay Basketball Tercera de Ascenso,Ateneo de Piriapolis,CA 25 de Agosto,,,让分客胜,hc,1.84,0,1.7177,7.12,0,4,1792278000,BB,pinnacle,,,validate,,+4.5,5767136
 2026-10-17T22:53:37Z,football,USL League One,Spokane Velocity FC,Chattanooga Red Wolves SC,,,让球主胜,hc,1.99,1.7692,1.8701,6.41,50,2,1792285200.0,BB,,,,push,,-0.5,
+2026-10-17T22:54:11Z,ice_hockey,NHL,Detroit Red Wings,San Jose Sharks,,,大分,ou,1.95,0,1.8796,3.75,0,1,1792278000,BB,pinnacle,,,validate,,6.0,5646163
+2026-10-17T22:56:23Z,football,USL Championship,Miami FC,Charleston Battery,,,小球,ou,1.93,0,1.8798,2.67,0,2,1792278000,ALL,pinnacle,,,validate,,3.0,4259080
+2026-10-17T22:56:23Z,football,USA Major League Soccer,New England Revolution,Chicago Fire,,,上半场主胜,ht,3.0,0,2.6192,14.54,0,1,1792279800,ALL,pinnacle,,,validate,,,4231094
+2026-10-17T23:00:20Z,football,USA Major League Soccer,Atlanta United FC,Inter Miami CF,,,让球主胜,hc,2.02,0,1.9617,2.97,0,1,1792279800,ALL,pinnacle,,,validate,,+0.5,4231102
+2026-10-17T23:00:20Z,football,USA Major League Soccer,New York City FC,Los Angeles FC,,,上半场主胜,ht,3.49,0,3.3939,2.83,0,1,1792279800,ALL,pinnacle,,,validate,,,4231106
+2026-10-17T23:00:53Z,football,USL Championship,Rhode Island FC,Pittsburgh Riverhounds,,,让球客胜,hc,1.99,0,1.944,2.37,0,2,1792279800,ALL,pinnacle,,,validate,,+0.5,4259101
+2026-10-17T23:04:07Z,football,Nicaragua Primera Division,Managua FC,Matagalpa FC,,,上半场主胜,ht,1.48,0,1.1674,26.78,0,2,1792285200,BB,pinnacle,,,validate,,,5733289
+2026-10-17T23:05:43Z,football,USL League One,Fort Wayne FC,Sarasota Paradise,,,主胜,1x2,1.76,0,1.674,5.14,0,2,1792279800,ALL,pinnacle,,,validate,,,5637965
+2026-10-17T23:12:14Z,football,Argentina Liga Profesional,CA Tigre,Atletico Tucuman,,,和局,1x2,3.05,0,2.0322,50.08,0,1,1792800900,ALL,pinnacle,,,validate,,,5747854
+2026-10-17T23:12:14Z,football,Argentina Liga Profesional,CA Tigre,Atletico Tucuman,,,上半场主胜,ht,3.33,0,2.9447,13.08,0,1,1792800900,ALL,pinnacle,,,validate,,,5747854
+2026-10-17T23:12:14Z,football,Argentina Liga Profesional,CA Tigre,Atletico Tucuman,,,双重机会-主/和局,dc,1.32,0,1.2024,9.78,0,1,1792800900,ALL,pinnacle,,,validate,,,5747854
+2026-10-17T23:12:14Z,football,Argentina Liga Profesional,CA Tigre,Atletico Tucuman,,,双重机会-和局/客,dc,1.56,0,1.5142,3.02,0,1,1792800900,ALL,pinnacle,,,validate,,,5747854
+2026-10-17T23:12:14Z,football,Spain Tercera Division,Atletico Malagueno,Churriana de la Vega CF,,,上半场主胜,ht,2.17,0,1.5415,40.77,0,4,1792317600,ALL,pinnacle,,,validate,,,5734401
+2026-10-17T23:12:14Z,football,Argentina Liga Profesional,CA Tigre,Atletico Tucuman,,,主胜,1x2,2.35,0,2.0915,12.36,0,1,1792800900,ALL,pinnacle,,,validate,,,5747854
+2026-10-17T23:15:23Z,football,Spain Tercera Division,Atletico Malagueno,Churriana de la Vega CF,,,让球主胜,hc,1.99,1.8,1.9071,4.35,50,4,1792317600.0,FB,,,,push,,-1,
