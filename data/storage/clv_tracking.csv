@@ -3542,3 +3542,23 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T06:35:38Z,ice_hockey,AHL,Manitoba Moose,Texas Stars,,,上半场主胜,ht,2.94,0,2.6746,9.92,0,3,1792350000,BB,pinnacle,,,validate,,,5645107
 2026-10-17T06:35:38Z,ice_hockey,AHL,Manitoba Moose,Texas Stars,,,上半场客胜,ht,2.71,0,2.4317,11.44,0,3,1792350000,BB,pinnacle,,,validate,,,5645107
 2026-10-17T06:40:07Z,football,England FA Cup-Qualification,Uxbridge FC,Hornchurch FC,,,小球,ou,1.87,0,1.6207,15.38,0,3,1792245600,BB,pinnacle,,,validate,,3.5,5757025
+2026-10-17T06:44:46Z,football,USL Championship,Monterey Bay FC,Colorado Springs Switchbacks FC,,,上半场客胜,ht,2.28,0,2.2341,2.05,0,2,1792288800,ALL,pinnacle,,,validate,,,4259100
+2026-10-17T06:44:46Z,football,England Southern League Premier Division South,Evesham United,Taunton Town,,,上半场主胜,ht,3.12,0,2.9975,4.09,0,2,1792245600,ALL,pinnacle,,,validate,,,5466178
+2026-10-17T06:44:46Z,football,England Southern League Premier Division South,Evesham United,Taunton Town,,,上半场客胜,ht,3.0,0,2.4835,20.8,0,2,1792245600,ALL,pinnacle,,,validate,,,5466178
+2026-10-17T06:44:46Z,football,AFC Challenge League,Al Arabi Kuwait,Homs Al Fidaa SC,,,小球,ou,1.9,0,1.8539,2.49,0,3,1792234800,BB,pinnacle,,,validate,,2.5,5475809
+2026-10-17T06:44:46Z,football,AFC Challenge League,Al Arabi Kuwait,Homs Al Fidaa SC,,,双重机会-和局/客,dc,2.03,0,1.9451,4.36,0,3,1792234800,BB,pinnacle,,,validate,,,5475809
+2026-10-17T06:44:46Z,football,England Northern Premier League Division One,Long Eaton United,St Ives Town,,,小球,ou,1.88,0,1.8097,3.88,0,2,1792245600,BB,pinnacle,,,validate,,3.0,5760804
+2026-10-17T06:45:11Z,football,AFC Challenge League,Al Arabi Kuwait,Homs Al Fidaa SC,,,上半场主胜,ht,2.36,0,2.0581,14.67,0,3,1792234800,BB,pinnacle,,,validate,,,5475809
+2026-10-17T06:45:11Z,football,AFC Challenge League,Al Arabi Kuwait,Homs Al Fidaa SC,,,上半场客胜,ht,5.15,0,4.1364,24.5,0,3,1792234800,BB,pinnacle,,,validate,,,5475809
+2026-10-17T06:45:11Z,football,UAE Pro League,Shabab Al Ahli,Al Ain FC,,,和局,1x2,3.75,0,2.5454,47.32,0,2,1792251900,ALL,pinnacle,,,validate,,,5588365
+2026-10-17T06:45:11Z,football,UAE Pro League,Shabab Al Ahli,Al Ain FC,,,双重机会-主/和局,dc,1.86,0,1.5759,18.03,0,2,1792251900,ALL,pinnacle,,,validate,,,5588365
+2026-10-17T06:45:49Z,football,Scotland League One,East Kilbride,Montrose FC,,,上半场主胜,ht,2.21,0,1.7155,28.83,0,2,1792245600,ALL,pinnacle,,,validate,,,5127744
+2026-10-17T06:49:02Z,football,USL Championship,Monterey Bay FC,Colorado Springs Switchbacks FC,,,和局,1x2,3.74,0,2.574,45.3,0,2,1792288800,ALL,pinnacle,,,validate,,,4259100
+2026-10-17T06:49:02Z,football,USL Championship,Monterey Bay FC,Colorado Springs Switchbacks FC,,,双重机会-主/和局,dc,2.13,0,1.7809,19.6,0,2,1792288800,ALL,pinnacle,,,validate,,,4259100
+2026-10-17T06:50:38Z,football,Poland III Liga,Rakow Czestochowa II,Warta Gorzow Wielkopolski,,,上半场主胜,ht,2.62,0,2.0399,28.44,0,4,1792231200,ALL,pinnacle,,,validate,,,5727142
+2026-10-17T06:51:11Z,football,England League One,Stockport County FC,Bromley FC,,,上半场主胜,ht,1.58,0,1.257,25.7,0,2,1792245600,ALL,pinnacle,,,validate,,,5728552
+2026-10-17T06:51:43Z,football,Thailand League 2,Phrae United,Nakhon Ratchasima FC,,,上半场主胜,ht,2.91,0,2.3508,23.79,0,3,1792240200,ALL,pinnacle,,,validate,,,5317746
+2026-10-17T06:51:43Z,football,Thailand League 2,Phrae United,Nakhon Ratchasima FC,,,上半场客胜,ht,4.06,0,3.7686,7.73,0,3,1792240200,ALL,pinnacle,,,validate,,,5317746
+2026-10-17T06:52:15Z,football,South Africa Premier Soccer League,Chippa United FC,Kruger United,,,和局,1x2,2.93,0,2.0492,42.98,0,2,1792243800,ALL,pinnacle,,,validate,,,5311222
+2026-10-17T06:52:15Z,football,South Africa Premier Soccer League,Chippa United FC,Kruger United,,,双重机会-主/和局,dc,1.38,0,1.3248,4.17,0,2,1792243800,ALL,pinnacle,,,validate,,,5311222
+2026-10-17T06:52:15Z,football,South Africa Premier Soccer League,Chippa United FC,Kruger United,,,双重机会-和局/客,dc,1.48,0,1.364,8.5,0,2,1792243800,ALL,pinnacle,,,validate,,,5311222

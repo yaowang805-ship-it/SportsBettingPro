@@ -793,6 +793,9 @@ def _matrix_min_ev(sub_market: str, sport: str, league: str = "", lead_minutes=N
     门槛 = 盘口层(时间窗×盘口独立门槛优先, 否则 base+time pp) + 运动微调 + 联赛微调。
     三级回退: 联赛层(n≥30 才设) → 运动层 → 盘口层。
     """
+    # 2026-10-17 停用数据驱动门槛矩阵: 矩阵基于切Pin前+ht公平价错的脏数据, 门槛 8%/20% 过度保守。
+    # 门槛回退 tier 分层(ev_floor 2~4%, 即职业团队的 2~5% 滑动)。矩阵保留但不再消费。
+    return None
     mtx = _load_threshold_matrix()
     if not mtx:
         return None
