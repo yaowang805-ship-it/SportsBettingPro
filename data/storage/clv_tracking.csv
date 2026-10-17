@@ -4056,3 +4056,19 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T12:21:14Z,basketball,Portugal Basketball Proliga,SC Lusitania,AD Galomar,,,主胜,1x2,1.36,1.2469,1.3054,4.18,0,3,1792258200.0,BB,,,,push,,,
 2026-10-17T12:21:14Z,basketball,Romania Basketball National League,CSO Voluntari,CSM Corona Brasov,,,主胜,1x2,1.13,1.076,1.089,3.76,0,3,1792252800.0,FB,,,,push,,,
 2026-10-17T12:21:14Z,basketball,Spain Basketball Segunda FEB,CBC Valladolid,Baloncesto Ciudad de Badajoz,,,主胜,1x2,1.12,1.051,1.0658,5.09,0,4,1792256400.0,FB,,,,push,,,
+2026-10-17T12:24:10Z,football,England Southern League Premier Division Central,Halesowen Town FC,Hitchin Town,,,上半场主胜,ht,2.16,0,1.6617,29.99,0,2,1792245600,ALL,pinnacle,,,validate,,,5470667
+2026-10-17T12:24:10Z,football,England Southern League Premier Division Central,Halesowen Town FC,Hitchin Town,,,上半场客胜,ht,6.1,0,5.9136,3.15,0,2,1792245600,ALL,pinnacle,,,validate,,,5470667
+2026-10-17T12:24:44Z,football,Turkey 2nd Lig,Belediye Kutahyaspor,12 Bingol Spor,,,主胜,1x2,2.46,0,2.0568,19.6,0,3,1792324800,ALL,pinnacle,,,validate,,,5757125
+2026-10-17T12:24:44Z,football,Turkey 2nd Lig,Belediye Kutahyaspor,12 Bingol Spor,,,上半场主胜,ht,3.24,0,2.0568,57.53,0,3,1792324800,ALL,pinnacle,,,validate,,,5757125
+2026-10-17T12:24:44Z,football,Turkey 2nd Lig,Belediye Kutahyaspor,12 Bingol Spor,,,双重机会-主/和局,dc,1.46,0,1.3735,6.3,0,3,1792324800,ALL,pinnacle,,,validate,,,5757125
+2026-10-17T12:26:27Z,football,Slovakia 3. Liga,Lokomotiva Kosice,Slavia Tu Kosice,,,让球客胜,hc,1.84,0,1.7233,6.77,0,4,1792240200,ALL,pinnacle,,,validate,,+1,5728264
+2026-10-17T12:26:27Z,football,Slovakia 3. Liga,Lokomotiva Kosice,Slavia Tu Kosice,,,小球,ou,1.85,0,1.6987,8.91,0,4,1792240200,ALL,pinnacle,,,validate,,3.0,5728264
+2026-10-17T12:26:27Z,football,Slovakia 3. Liga,Lokomotiva Kosice,Slavia Tu Kosice,,,双重机会-和局/客,dc,2.45,0,2.3583,3.89,0,4,1792240200,ALL,pinnacle,,,validate,,,5728264
+2026-10-17T12:26:27Z,football,Cyprus 2nd Division,Doxa Katokopias,Ayia Napa FC,,,让球客胜,hc,2.0,0,1.8295,9.32,0,3,1792240200,ALL,pinnacle,,,validate,,+1.5,5728303
+2026-10-17T12:29:52Z,tennis,ATP - Almaty Open,Gabriel Diallo (CAN),Rei Sakamoto (JPN),,,主胜,1x2,2.23,0,2.0095,10.97,0,2,1792303200,BB,pinnacle,,,validate,,,5765993
+2026-10-17T12:29:52Z,tennis,ATP - Almaty Open,Gabriel Diallo (CAN),Rei Sakamoto (JPN),,,上半场主胜,ht,2.13,0,2.0095,6.0,0,2,1792303200,BB,pinnacle,,,validate,,,5765993
+2026-10-17T12:30:59Z,football,England FA Cup-Qualification,Aldershot Town FC,Tadley Calleva,,,上半场主胜,ht,1.38,0,1.0898,26.63,0,3,1792245600,BB,pinnacle,,,validate,,,5752210
+2026-10-17T12:31:34Z,football,Finland Ykkosliiga,PK 35,SJK Akatemia,,,让球主胜,hc,1.92,0,1.8604,3.2,0,3,1792242000,ALL,pinnacle,,,validate,,-2,5736345
+2026-10-17T12:31:34Z,football,Argentina Torneo Federal A,Sportivo y Biblioteca Atenas,FADEP Mendoza,,,客胜,1x2,3.85,0,3.6888,4.37,0,2,1792276200,BB,pinnacle,,,validate,,,5705791
+2026-10-17T12:31:34Z,football,Argentina Torneo Federal A,Sportivo y Biblioteca Atenas,FADEP Mendoza,,,双重机会-和局/客,dc,1.85,0,1.6988,8.9,0,2,1792276200,BB,pinnacle,,,validate,,,5705791
+2026-10-17T12:32:29Z,football,England Premier League,Newcastle United FC,Aston Villa FC,,,和局,1x2,3.98,3.7,3.8457,3.49,40,1,1792254600.0,BB,,,,push,,,
