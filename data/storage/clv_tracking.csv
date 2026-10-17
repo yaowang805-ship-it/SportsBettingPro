@@ -3799,3 +3799,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T09:50:56Z,football,Poland III Liga,Zaglebie Lubin II,Zaglebie Sosnowiec,,,上半场主胜,ht,2.86,0,2.7169,5.27,0,4,1792231200,ALL,pinnacle,,,validate,,,5214478
 2026-10-17T09:50:56Z,football,Poland III Liga,Zaglebie Lubin II,Zaglebie Sosnowiec,,,上半场客胜,ht,3.16,0,2.7043,16.85,0,4,1792231200,ALL,pinnacle,,,validate,,,5214478
 2026-10-17T09:52:05Z,football,Sweden Allsvenskan,AIK,IFK Goteborg,,,和局,1x2,3.83,2.41,2.4978,53.33,40,2,1792251000.0,BB,,,,push,,,
+2026-10-17T09:58:27Z,football,Poland IV Liga,Cartusia Kartuzy,Pogon Lebork,,,让球客胜,hc,1.84,0,1.7527,4.98,0,4,1792231200,BB,pinnacle,,,validate,,+1,5761789
+2026-10-17T09:59:03Z,football,Poland III Liga,Rakow Czestochowa II,Warta Gorzow Wielkopolski,,,大球,ou,1.91,0,1.8726,2.0,0,4,1792231200,ALL,pinnacle,,,validate,,3.5,5727142
+2026-10-17T09:59:03Z,football,Mexico Liga De Expansion MX,Piratas FC,Tepatitlan FC,,,大球,ou,1.93,0,1.8027,7.06,0,2,1792285200,ALL,pinnacle,,,validate,,3.5,5300178
+2026-10-17T09:59:03Z,football,Norway 3rd Division,Drobak Frogn,Elverum,,,上半场客胜,ht,2.71,0,2.4719,9.63,0,4,1792238400,ALL,pinnacle,,,validate,,,4907081

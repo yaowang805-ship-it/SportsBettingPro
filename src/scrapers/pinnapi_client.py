@@ -68,39 +68,6 @@ def fetch_pinnacle_markets(sport_id, event_type='prematch', since=None, force=Fa
     return data
 
 
-def _devig_two_way(o1, o2):
-    """两路盘比例去水 → (fair1, fair2)。返回十进制公平价或 None。"""
-    try:
-        o1, o2 = float(o1), float(o2)
-    except (TypeError, ValueError):
-        return None
-    if o1 <= 1 or o2 <= 1:
-        return None
-    p1, p2 = 1.0 / o1, 1.0 / o2
-    s = p1 + p2
-    if s <= 0:
-        return None
-    p1, p2 = p1 / s, p2 / s
-    return round(1.0 / p1, 4), round(1.0 / p2, 4)
-
-
-def _devig_three_way(home, draw, away):
-    """三路盘比例去水 → {'home':..,'draw':..,'away':..} 或 None。"""
-    try:
-        home, draw, away = float(home), float(draw), float(away)
-    except (TypeError, ValueError):
-        return None
-    if home <= 1 or draw <= 1 or away <= 1:
-        return None
-    ph, pd, pa = 1.0 / home, 1.0 / draw, 1.0 / away
-    s = ph + pd + pa
-    if s <= 0:
-        return None
-    return {'home': round(1.0 / (ph / s), 4),
-            'draw': round(1.0 / (pd / s), 4),
-            'away': round(1.0 / (pa / s), 4)}
-
-
 def find_pinnacle_event(data, home, away):
     """在 Pinnacle 响应里按队名找主比赛(跳过 corners/特殊盘)。返回 event dict 或 None。"""
     if not data:
