@@ -1157,6 +1157,17 @@ class SecondLevelMonitor:
     def _try_live_auto_bet(self, sig):
         """滚球机会处理: 观察库入库前验价(漂移假EV不入库), 实盘下单由 LIVE_REAL_BET_ENABLED 控制。"""
         _t0 = time.time(); _t = _t0  # 计时埋点(2026-09-17)
+        # 2026-10-17 统一 Pin id: pin_matchup_id 之前是 Pin 官方 matchupId(与 pinnapi event_id 不一致)
+        # → lag_sec(_pin_event_last)/clv(_reversion_track) 全 null。改用 pinnapi 按英文队名反查 event_id。
+        try:
+            from src.scrapers.pinnapi_client import _pin_cache_find_event
+            _ev = _pin_cache_find_event(sig.get("home_en", ""), sig.get("away_en", ""))
+            if _ev:
+                _eid = _ev.get("event_id") or _ev.get("id")
+                if _eid:
+                    sig["pin_matchup_id"] = str(_eid)
+        except Exception:
+            pass
         # 2026-09-18 用户决定: 实时赔率下不再验价、不再并发预拉。sig["ev"]/sig["fair"] 直接来自
         # fetch_live_opportunities_oa 的 Betfair 中间价(实时), BB 赔率也是秒级拉的, 下单前不再
         # 重复 fetch_current_odds 验价(lead-lag 抢窗口, 直接下单)。
