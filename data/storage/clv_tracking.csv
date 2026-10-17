@@ -3904,3 +3904,14 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T11:05:05Z,football,England Championship League,Southampton FC,Bolton Wanderers,,,客胜,1x2,7.15,0,6.959,2.74,0,2,1792245600,ALL,pinnacle,,,validate,,,5728554
 2026-10-17T11:05:05Z,football,USA Major League Soccer,Minnesota United FC,Saint Louis City SC,,,上半场主胜,ht,3.31,0,3.1686,4.46,0,1,1792269000,ALL,pinnacle,,,validate,,,4231098
 2026-10-17T11:06:48Z,football,CAF Confederations Cup-Qualification,Red Arrows,Kaizer Chiefs,,,上半场主胜,ht,5.6,0,5.29,5.86,0,3,1792242000,BB,pinnacle,,,validate,,,5630391
+2026-10-17T11:09:45Z,football,England Premier League,Manchester City FC,Ipswich Town,,,上半场主胜,ht,1.59,0,1.2585,26.34,0,1,1792245600,ALL,pinnacle,,,validate,,,5130818
+2026-10-17T11:10:20Z,football,Japan J.League,Yokohama F Marinos,Tokyo Verdy,,,上半场主胜,ht,2.42,0,1.9153,26.35,0,2,1792576800,BB,pinnacle,,,validate,,,5153543
+2026-10-17T11:10:20Z,football,Japan J.League,Yokohama F Marinos,Tokyo Verdy,,,上半场客胜,ht,5.95,0,4.8097,23.71,0,2,1792576800,BB,pinnacle,,,validate,,,5153543
+2026-10-17T11:10:20Z,football,Japan J.League,Yokohama F Marinos,Tokyo Verdy,,,和局,1x2,3.54,0,2.2697,55.97,0,2,1792576800,BB,pinnacle,,,validate,,,5153543
+2026-10-17T11:10:20Z,football,Japan J.League,Yokohama F Marinos,Tokyo Verdy,,,双重机会-和局/客,dc,1.96,0,1.6191,21.05,0,2,1792576800,BB,pinnacle,,,validate,,,5153543
+2026-10-17T11:10:58Z,football,Thailand League 1,Bangkok United,Port FC,,,和局,1x2,3.62,3.08,3.3628,7.65,30,2,1792321200.0,FB,,,,push,,,
+2026-10-17T11:10:58Z,football,Argentina Torneo Federal A,Sportivo y Biblioteca Atenas,FADEP Mendoza,,,让球客胜,hc,1.91,1.7353,1.8526,3.1,10,2,1792276200.0,BB/FB,,,,push,,+0.5,
+2026-10-17T11:10:58Z,football,Indonesia Super League,Persebaya Surabaya,PSS Sleman,,,小球,ou,1.96,1.813,1.8927,3.56,10,2,1792312200.0,BB/FB,,,,push,,3.0,
+2026-10-17T11:10:58Z,basketball,Israel Basketball Super League,Hapoel Jerusalem,Hapoel Beer Sheva,,,主胜,1x2,1.1,1.06,1.068,3.0,10,2,1792257300.0,FB,,,,push,,,
+2026-10-17T11:10:58Z,basketball,BNXT League,Heroes Den Bosch,Antwerp Giants,,,客胜,1x2,1.13,1.055,1.0706,5.55,10,3,1792260000.0,FB,,,,push,,,
+2026-10-17T11:10:58Z,basketball,Portugal Basketball Proliga,SC Lusitania,AD Galomar,,,主胜,1x2,1.36,1.2469,1.3054,4.18,10,3,1792258200.0,BB,,,,push,,,
