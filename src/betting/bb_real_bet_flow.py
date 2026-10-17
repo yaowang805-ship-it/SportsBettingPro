@@ -32,9 +32,9 @@ from config.settings import DATA_DIR
 SPORT_CN = {"football": "足球", "basketball": "篮球", "tennis": "网球",
             "baseball": "棒球", "american_football": "美式足球", "ice_hockey": "冰球"}
 
-# 2026-10-14 早盘探针日限额: 笔数上限为主(25), 金额兜底(600, 25×30=750 被压到 600≈20注)
-EARLY_DAILY_MAX_BETS = 25
-EARLY_DAILY_MAX_STAKE = 600.0
+# 2026-10-17 用户要求取消早盘日限额(原 25笔/600元), 改为无限(风控改由单注上限+硬性止损承担)
+EARLY_DAILY_MAX_BETS = float('inf')
+EARLY_DAILY_MAX_STAKE = float('inf')
 DAILY_EXPOSURE_FILE = DATA_DIR / "daily_exposure.json"
 
 

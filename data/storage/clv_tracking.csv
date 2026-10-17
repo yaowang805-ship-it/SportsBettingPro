@@ -3311,3 +3311,9 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T02:53:39Z,football,England Northern Premier League Division One,Pontefract Collieries,Bridlington Town FC,,,主胜,1x2,1.6,0,1.5643,2.28,0,2,1792245600,BB,pinnacle,,,validate,,,5760808
 2026-10-17T03:10:28Z,basketball,Japan B.League Premier,Akita Northern Happinets,Shinshu Brave Warriors,,,主胜,1x2,2.28,0,2.0943,8.87,0,2,1792213500,BB,pinnacle,,,validate,,,5298120
 2026-10-17T03:10:28Z,basketball,Japan B.League Premier,Akita Northern Happinets,Shinshu Brave Warriors,,,让分主胜,hc,1.84,0,1.7398,5.76,0,2,1792213500,BB,pinnacle,,,validate,,+3.5,5298120
+2026-10-17T03:13:23Z,football,Poland III Liga,MKS Kluczbork,Miedz Legnica II,,,客胜,1x2,2.36,0,2.0687,14.08,0,4,1792249200,ALL,pinnacle,,,validate,,,5214474
+2026-10-17T03:13:23Z,football,Poland III Liga,MKS Kluczbork,Miedz Legnica II,,,双重机会-和局/客,dc,1.45,0,1.3952,3.93,0,4,1792249200,ALL,pinnacle,,,validate,,,5214474
+2026-10-17T03:26:11Z,football,AFC Challenge League,Ahal FC,Paro FC,,,主胜,1x2,2.36,0,2.1865,7.94,0,3,1792238400,ALL,pinnacle,,,validate,,,5475793
+2026-10-17T03:26:11Z,football,AFC Challenge League,Ahal FC,Paro FC,,,双重机会-主/和局,dc,1.49,0,1.4517,2.64,0,3,1792238400,ALL,pinnacle,,,validate,,,5475793
+2026-10-17T03:31:08Z,tennis,World Tennis - M15 Quito Men Singles,Mwendwa Mbithi (USA),Lucas Andrade Da Silva (BRA),,,主胜,1x2,4.33,0,4.034,7.34,0,3,1792249200,BB,pinnacle,,,validate,,,5763879
+2026-10-17T03:36:44Z,football,UAE Pro League,Shabab Al Ahli,Al Ain FC,,,大球,ou,2.03,0,1.9627,3.43,0,2,1792251900,ALL,pinnacle,,,validate,,3.0,5726657
