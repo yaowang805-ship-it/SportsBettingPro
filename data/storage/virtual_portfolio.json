@@ -1,5 +1,5 @@
 {
-  "balance": 14672.53,
+  "balance": 14402.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1955,6 +1955,75 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792290600.0,
       "created_at": "2026-10-17T23:23:23.097091+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_SC布拉加_维多利亚SC_主胜",
+      "sport": "basketball",
+      "league": "葡萄牙篮球超级联赛",
+      "home_team": "SC布拉加",
+      "away_team": "维多利亚SC",
+      "home_cn": "SC布拉加",
+      "away_cn": "维多利亚SC",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.42,
+      "stake": 90,
+      "model_prob": 0.7515,
+      "ev_pct": 6.71,
+      "pin_odds": 1.2681,
+      "fair_price": 1.3307,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792332000.0,
+      "created_at": "2026-10-17T23:33:01.424509+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_利尔GUCO_LDP栋扎_主胜",
+      "sport": "basketball",
+      "league": "比利时篮球顶级联赛 1",
+      "home_team": "利尔GUCO",
+      "away_team": "LDP栋扎",
+      "home_cn": "利尔GUCO",
+      "away_cn": "LDP栋扎",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.24,
+      "stake": 90,
+      "model_prob": 0.8419,
+      "ev_pct": 4.39,
+      "pin_odds": 1.1479,
+      "fair_price": 1.1878,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792326600.0,
+      "created_at": "2026-10-17T23:33:01.424549+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_日内瓦狮子_U23_温特图尔_主胜",
+      "sport": "basketball",
+      "league": "瑞士篮球全国联赛",
+      "home_team": "日内瓦狮子 U23",
+      "away_team": "温特图尔",
+      "home_cn": "日内瓦狮子 U23",
+      "away_cn": "温特图尔",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.11,
+      "stake": 90,
+      "model_prob": 0.9537,
+      "ev_pct": 5.86,
+      "pin_odds": 1.032,
+      "fair_price": 1.0486,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792332000.0,
+      "created_at": "2026-10-17T23:33:01.424579+00:00",
       "track_only": false
     }
   ],
@@ -11431,8 +11500,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-18",
-    "used": 290.0,
-    "bets": 6
+    "used": 560.0,
+    "bets": 9
   },
   "updated": null
 }

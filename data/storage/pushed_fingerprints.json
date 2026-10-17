@@ -99,6 +99,11 @@
     "bb": 3.62,
     "ts": 1792235457.9810529
   },
+  "football|USA Major League Soccer|Los Angeles Galaxy|San Diego FC|和局|1x2|2026-10-18": {
+    "ev": 50.93,
+    "bb": 4.38,
+    "ts": 1792279474.278163
+  },
   "football|USA Major League Soccer|Philadelphia Union|Charlotte FC|和局|1x2|2026-10-18": {
     "ev": 70.57,
     "bb": 5.55,
@@ -114,9 +119,14 @@
     "bb": 1.99,
     "ts": 1792277617.0422862
   },
-  "football|USA Major League Soccer|Los Angeles Galaxy|San Diego FC|和局|1x2|2026-10-18": {
-    "ev": 50.93,
-    "bb": 4.38,
-    "ts": 1792279474.278163
+  "basketball|Portugal Basketball League|Braga|Vitoria Sport Clube|主胜|1x2|2026-10-18": {
+    "ev": 6.71,
+    "bb": 1.42,
+    "ts": 1792280175.605033
+  },
+  "basketball|Belgium Basketball Top Division 1|BC Guco Lier|LDP Donza|主胜|1x2|2026-10-18": {
+    "ev": 4.39,
+    "bb": 1.24,
+    "ts": 1792280175.605083
   }
 }
