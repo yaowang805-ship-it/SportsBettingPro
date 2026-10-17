@@ -168,7 +168,7 @@ def _designation_to_dir(sub_market, designation):
 
 # 2026-09-12 用户要求: 早盘恢复实盘, 按释放清单控制(观察库样本>100且赢率>隐含才释放)。
 # bb_ev_push 推送前已过 _is_market_released 过滤, 这里只下单、不再硬编码盘口白名单。
-EARLY_BET_ENABLED = False  # 2026-10-17 暂停: num_1半场价bug仍复发(费城联合和局70%假溢价), 真正解决前停实盘
+EARLY_BET_ENABLED = True  # 2026-10-17 恢复: num_1已修(daemon确认num_0), 早盘上限改200
 
 
 def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
@@ -262,9 +262,9 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
         if _daily_bets >= EARLY_DAILY_MAX_BETS or _daily_stake >= EARLY_DAILY_MAX_STAKE:
             print(f"  ⏭️ 早盘日限额已达(笔{_daily_bets}/{EARLY_DAILY_MAX_BETS} 额{_daily_stake:.0f}/{EARLY_DAILY_MAX_STAKE:.0f}), 停止")
             break
-        # 2026-10-17 解冻注额公式: 恢复 Kelly 档(弱65/中125/强190), 早盘上限 300。
+        # 2026-10-17 解冻注额公式: 恢复 Kelly 档(弱65/中125/强190), 早盘上限 200(用户充值5000定)。
         # (之前 cap 30 flat 是早盘探针, 把 Kelly 档全压成 30 → 无大额、不按 Kelly)
-        stake = min(stake, 300.0)
+        stake = min(stake, 200.0)
         # 2026-10-17: 下注时EV门槛与采集门槛对齐。之前硬编码 min_ev_pct=4.0 高于采集门槛
         # (get_min_ev 直接盘3%/dc 3%/特殊盘4%, 另有方向级覆盖), 把 2~4% 档机会扫进来又在下单时拒掉。
         _min_ev = opp.get("_min_ev")
