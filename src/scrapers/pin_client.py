@@ -282,9 +282,12 @@ class PinWSClient:
             # 导致 snapshot 全量赔率丢失, 之后只有 prematch_markets(增量, 只推"变化"的比赛)
             # 和 REST 兜底在更新 → 大部分比赛赔率冻结陈旧(实测 67% 差 30%)。live 帧一直
             # 解析 markets, snapshot 漏了。这里补上, 与 live 帧对齐。
+            _ts = d.get("ts")  # 帧顶层时间戳(毫秒), 2026-10-17 补 event.last 供 lag_sec 度量
             for ev in d.get("events", []):
                 eid = str(ev.get("event_id") or ev.get("id") or "")
                 if eid and eid != "None":
+                    if _ts and not ev.get("last"):
+                        ev["last"] = _ts / 1000.0  # 毫秒→秒, 补 Pin 帧时间戳(此前 lag_sec 全 null)
                     self.cache.update_event(eid, ev)
                     markets = self._parse_markets(ev.get("markets") or [])
                     if markets:
@@ -304,6 +307,9 @@ class PinWSClient:
             if isinstance(rec, dict):
                 mid = str(rec.get("id") or "")
                 if mid and mid != "None":
+                    _ts = d.get("ts")
+                    if _ts and not rec.get("last"):
+                        rec["last"] = _ts / 1000.0  # 毫秒→秒, 补 Pin 帧时间戳(供 lag_sec 度量)
                     self.cache.update_event(mid, rec)
                     markets = self._parse_markets(rec.get("markets") or [])
                     if markets:

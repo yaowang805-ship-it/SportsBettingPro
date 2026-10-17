@@ -38,7 +38,27 @@
 - **统计量**：该格子观察库样本的（估计 edge, 实现 CLV）校准。
 - **通过标准**：CLV 中位 > 0 且 n≥200，且通过 §5/§6 的评估窗口检验。
 
-## 9. 防作弊
+## 9. 释放判据（简化标准，2026-10-17 替换六闸门）
+
+> 依据职业团队方法论（[Karl Whelan](https://www.karlwhelan.com/sportsbetting/the-truth-about-closing-line-value/) / Bailey & López de Prado）+ 本系统实测。六闸门（pin_points/out-of-sample/placebo/滚动/top-k/void）是过度工程，简化为「edge 度量 + 样本量 + 防假正」三层；且早盘/滚球机制不同，**判据分家**。
+
+**早盘（prematch）—— 用收盘线 CLV 作 edge 度量**
+1. 收盘线 CLV 中位 > 2%（早盘收盘线比开盘线更准确，CLV 是有效 edge）
+2. 实盘 ROI > 0（CLV 是必要非充分：Whelan 3670 场 NBA 证明正 CLV 也可能亏）
+3. n ≥ 200（<50 只方向性、不显著）
+
+**滚球（live）—— 用实盘 ROI 作 edge 度量**
+1. 实盘 ROI > 0（滚球 CLV = latency 不是 edge；逆向选择强 + 博彩公司 in-play 临时垄断权）
+2. n ≥ 200
+3. 滚球特有：pin_points 配对、void 对称（让球结算特有，早盘不需要；数据落盘后启用）
+
+**通用防假正（两市场都要）**
+- top-k 场/联赛贡献 ≤ 40%（防「几场撑全场」假象）
+
+**砍掉的（职业团队不跑 + 样本撑不起）**
+- out-of-sample、placebo：学术严谨性，职业团队方法论里没有，且当前 n<50 撑不起。
+
+## 10. 防作弊
 - 评估报告生成即存档编号（`reports/prereg_YYYYMMDD_XXX.md`）；任何参数改动必须引用该编号。
 - 冻结期内「发现某格子亏 20%」→ 走 §2 止损流程，而非开新会话讨论它是不是新病根。
 

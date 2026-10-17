@@ -3294,3 +3294,18 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T01:38:40Z,basketball,Japan B.League Premier,Sendai 89Ers,Utsunomiya Brex,,,客胜,1x2,2.07,0,1.9627,5.47,0,2,1792213500,BB,pinnacle,,,validate,,,5298122
 2026-10-17T01:38:40Z,basketball,Japan B.League Premier,Sendai 89Ers,Utsunomiya Brex,,,让分客胜,hc,1.94,0,1.8801,3.19,0,2,1792213500,BB,pinnacle,,,validate,,+1.5,5298122
 2026-10-17T01:48:07Z,football,England Premier League,Manchester City FC,Ipswich Town,,,让球客胜,hc,1.86,0,1.8197,2.21,0,1,1792245600,ALL,pinnacle,,,validate,,+2,5574671
+2026-10-17T01:58:48Z,basketball,Turkey Basketball Super League,Bordo Sportif RS,Turk Telekom,,,主胜,1x2,2.26,0,2.1491,5.16,0,2,1792231200,BB,pinnacle,,,validate,,,5761513
+2026-10-17T01:58:48Z,basketball,Turkey Basketball Super League,Bordo Sportif RS,Turk Telekom,,,让分主胜,hc,1.85,0,1.7374,6.48,0,2,1792231200,BB,pinnacle,,,validate,,+3.5,5761513
+2026-10-17T01:58:48Z,football,Solomon Islands S-League,Honiara City FC,SOSA FC,,,让球客胜,hc,1.8,0,1.7124,5.12,0,2,1792202400,BB,pinnacle,,,validate,,+2,5763846
+2026-10-17T02:12:01Z,football,AFC Challenge League,Nejmeh SC,Istiklol,,,主胜,1x2,3.55,0,3.0612,15.97,0,3,1792245600,ALL,pinnacle,,,validate,,,5475813
+2026-10-17T02:12:01Z,football,AFC Challenge League,Nejmeh SC,Istiklol,,,让球主胜,hc,1.86,0,1.694,9.8,0,3,1792245600,ALL,pinnacle,,,validate,,+0.5,5475813
+2026-10-17T02:12:01Z,football,AFC Challenge League,Nejmeh SC,Istiklol,,,双重机会-主/和局,dc,1.8,0,1.729,4.11,0,3,1792245600,ALL,pinnacle,,,validate,,,5475813
+2026-10-17T02:12:36Z,football,Algeria Ligue 2,US Chaouia,NRB Teleghma,,,客胜,1x2,10.6,0,9.3154,13.79,0,3,1792245600,ALL,pinnacle,,,validate,,,5756791
+2026-10-17T02:12:36Z,football,England Isthmian League Division One,Fakenham Town FC,Newmarket Town FC,,,客胜,1x2,1.7,0,1.6332,4.09,0,3,1792245600,ALL,pinnacle,,,validate,,,5322804
+2026-10-17T02:12:36Z,football,England Isthmian League Division One,Fakenham Town FC,Newmarket Town FC,,,大球,ou,1.95,0,1.8462,5.62,0,3,1792245600,ALL,pinnacle,,,validate,,3.0,5322804
+2026-10-17T02:13:46Z,basketball,Japan B.League One,Ehime Orange Vikings,Kagoshima Rebnise,,,让分客胜,hc,1.91,0,1.8441,3.57,0,3,1792213500,BB,pinnacle,,,validate,,+8.5,5325626
+2026-10-17T02:19:16Z,basketball,Australia NBL,Sydney Kings,Perth Wildcats,,,让分客胜,hc,1.87,0,1.7797,5.07,0,3,1792225800,ALL,pinnacle,,,validate,,+8.5,5541963
+2026-10-17T02:24:18Z,football,Australia A-League,Auckland FC,Melbourne City FC,,,小球,ou,1.96,0,1.8794,4.29,0,2,1792209600,ALL,pinnacle,,,validate,,2.5,5599906
+2026-10-17T02:24:52Z,baseball,Mexican Pacific League,Jaguares de Nayarit,Charros de Jalisco,,,让分主胜,hc,1.7,0,1.6586,2.5,0,3,1792204200,BB,pinnacle,,,validate,,+1.5,5727078
+2026-10-17T02:34:12Z,tennis,WTA - Osaka Open,Mei Yamaguchi (JPN),Sofia Kenin (USA),,,主胜,1x2,5.05,0,4.386,15.14,0,2,1792212600,BB,pinnacle,,,validate,,,5761132
+2026-10-17T02:53:39Z,football,England Northern Premier League Division One,Pontefract Collieries,Bridlington Town FC,,,主胜,1x2,1.6,0,1.5643,2.28,0,2,1792245600,BB,pinnacle,,,validate,,,5760808
