@@ -3291,3 +3291,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T01:32:28Z,football,CAF Confederations Cup-Qualification,Red Arrows,Kaizer Chiefs,,,双重机会-和局/客,dc,1.26,0,1.2245,2.9,0,3,1792242000,BB,pinnacle,,,validate,,,5630391
 2026-10-17T01:33:04Z,football,Canadian Premier League,Vancouver FC,HFX Wanderers FC,,,主胜,1x2,1.9,0,1.8291,3.88,0,3,1792202400,ALL,pinnacle,,,validate,,,5727892
 2026-10-17T01:33:04Z,football,Canadian Premier League,Vancouver FC,HFX Wanderers FC,,,让球主胜,hc,1.9,0,1.8496,2.72,0,3,1792202400,ALL,pinnacle,,,validate,,-0.5,5727892
+2026-10-17T01:38:40Z,basketball,Japan B.League Premier,Sendai 89Ers,Utsunomiya Brex,,,客胜,1x2,2.07,0,1.9627,5.47,0,2,1792213500,BB,pinnacle,,,validate,,,5298122
+2026-10-17T01:38:40Z,basketball,Japan B.League Premier,Sendai 89Ers,Utsunomiya Brex,,,让分客胜,hc,1.94,0,1.8801,3.19,0,2,1792213500,BB,pinnacle,,,validate,,+1.5,5298122
+2026-10-17T01:48:07Z,football,England Premier League,Manchester City FC,Ipswich Town,,,让球客胜,hc,1.86,0,1.8197,2.21,0,1,1792245600,ALL,pinnacle,,,validate,,+2,5574671

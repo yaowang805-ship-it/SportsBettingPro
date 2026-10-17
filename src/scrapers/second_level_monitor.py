@@ -1493,6 +1493,13 @@ class SecondLevelMonitor:
                     "lag_sec": _lag_sec,  # 2026-10-11 BB-vs-Pin 滞后(含钟偏, 看相对/分组)
                     "poll_ts": sig.get("poll_ts"),  # 触发时刻(供 latency-ROI 曲线)
                     "latency": round(_total_time, 2),  # 端到端耗时(触发→下单完成)
+                    # 2026-10-17 补落盘六闸门第1条口径(pin_points配对/line语义/ev分支/负号):
+                    # 之前 sig 里有但 real_bets 没写, 导致六闸门第1条无数据可检。
+                    "pin_points": sig.get("pin_points"),  # Pin 让分线(配对 |d|>0.5 比例)
+                    "line_semantics": sig.get("line_semantics"),  # 赛前/滚球语义(两支结算式不许合并)
+                    "neg_sign_used": sig.get("neg_sign_used"),  # 是否走负号分支
+                    "ev_branch": sig.get("ev_branch"),  # ev 分支(1x2/hc/ou)
+                    "ev_valid": sig.get("ev_valid"),  # ev 有效性(篮球让球跨参考系=unverified)
                 }
                 self._live_bets[str(order_id)] = _binfo
                 _append_real_bet(str(order_id), _binfo)  # 2026-09-27 实盘库: 持久化下单信息

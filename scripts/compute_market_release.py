@@ -203,6 +203,13 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 2026-10-15 网球滚球改测让局主(实盘独赢负, 交叉验证毒性流), 撤独赢主客。
     "tennis|hc|主|*|early": 30,
     "tennis|hc|客|*|early": 30,
+    # 2026-10-17 释放早盘表现好的盘口(观察库纸面ROI正 n>=15, cap30试探): 半场独赢ht + 大小球ou。
+    # 注: 纸面ROI未过六闸门, 属试探性释放, 冻结期内接受实盘ROI检验。
+    "football|ht|主|40-50%|early": 30,
+    "football|ht|客|40-50%|early": 30,
+    "football|ht|主|60-70%|early": 30,
+    "football|ou|小|50-55%|early": 30,
+    "football|ou|大|50-55%|early": 30,
     # 2026-10-16 撤回网球让局主滚球(实盘-29%ROI/胜率29%, 逆向选择毒性流), 交还数据驱动判据。
     # 2026-10-15 滚球让球固化(之前手工加JSON没进MANUAL, 会丢): 让球客cap80(正edge加码), 让球主cap60。
     "football|hc|主|*|live": 60,
