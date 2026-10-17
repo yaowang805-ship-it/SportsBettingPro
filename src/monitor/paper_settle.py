@@ -31,7 +31,7 @@ RESULTS_FILE = DATA_DIR / "clv_results.csv"
 PAPER_FILE = DATA_DIR / "paper_bets.json"
 DAILY_BUDGET = 20000.0  # 每日虚拟投注额 —— 已弃用(2026-10-10 注额口径修复, 不再做日归一化)
 KELLY_FRACTION = 0.5   # 与 second_level_monitor 一致(半凯利)
-MAX_STAKE = 300.0      # 与 second_level_monitor 一致(单盘口上限)
+MAX_STAKE = 200.0      # 2026-10-17 早盘上限200(用户充值5000定), 纸面 stake 与实盘对齐
 BANKROLL_BASE_FILE = DATA_DIR / "bankroll_base.txt"
 
 
