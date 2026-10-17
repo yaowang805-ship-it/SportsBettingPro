@@ -1231,6 +1231,7 @@ class SecondLevelMonitor:
             if f"{_base}|{_iv}|live" in _obs_blocked or f"{_base}|*|live" in _obs_blocked:
                 print(f"  🚫 赔率区间{_iv}已拦截(n>200表现差), 跳过 "
                       f"{sig['match']['home']} vs {sig['match']['away']} {sig['desig']}", flush=True)
+                self._record_reject(sig, "exclude_list")
                 return
             _caps = _load_obs_caps()
             _cap = _caps.get(f"{_base}|*|live")  # 已验证方向(所有区间)
@@ -1240,6 +1241,7 @@ class SecondLevelMonitor:
                 _cap = _caps.get(f"{_base}|{_iv}|live")  # 该赔率区间单独释放
                 _cap_key = f"{_base}|{_iv}|live"
         if _cap is None:
+            self._record_reject(sig, "below_threshold")
             return
         stake = min(stake, _cap)
         # 2026-09-19 分配逻辑一致: 观察库 stake 同步成实盘 cap 后的值(否则观察库 ROI 用未 cap 的 Kelly, 与实盘不一致)
@@ -1254,6 +1256,7 @@ class SecondLevelMonitor:
                 if _daily_stake + stake > DAILY_STAKE_LIMIT:
                     print(f"  📝 当日累计超限({_daily_stake:.0f}+{stake:.0f}>{DAILY_STAKE_LIMIT}), 跳过 "
                           f"{sig['match']['home']} vs {sig['match']['away']} {sig['desig']}", flush=True)
+                    self._record_reject(sig, "risk_block")
                     return
         sig["_stake"] = stake
         # 2026-10-16 让局降额: cap<MIN_STAKE 的盘口用 cap 作下限(让局 cap10 → 允许投10元),
@@ -1266,6 +1269,7 @@ class SecondLevelMonitor:
         # 预算封顶(滚动预算): 按"未结算额"封顶, 结算后释放额度 → 结算的钱可继续投滚球
         if self._live_outstanding + stake > LIVE_BUDGET:
             print(f"  📝 滚球预算已满(未结算¥{self._live_outstanding:.0f}/{LIVE_BUDGET}), 已记观察库 {tag}", flush=True)
+            self._record_reject(sig, "risk_block")
             return
         match_id = sig.get("match_id")  # 2026-10-13 修: 之前 fetch_current_odds(market_id, match_id, ...) 用裸 match_id 但没定义 → NameError 卡死下单
         market_id = sig.get("market_id")
@@ -1278,26 +1282,31 @@ class SecondLevelMonitor:
         if self._trigger_source != "pin":
             self._count_skip("degraded_mode")
             print(f"  ⏭️ gate=degraded_mode 非Pin触发({self._trigger_source}), 跳过 {tag}", flush=True)
+            self._record_reject(sig, "exclude_list")
             return
         # 2) 单日亏损熔断: 当日实盘亏损超 DAILY_LOSS_LIMIT 即停
         _today_pnl = _recent_pnl(days=1)
         if _today_pnl < -DAILY_LOSS_LIMIT:
             self._count_skip("daily_loss")
             print(f"  ⏭️ gate=daily_loss 当日亏损{_today_pnl:.0f}超{-DAILY_LOSS_LIMIT}, 跳过 {tag}", flush=True)
+            self._record_reject(sig, "risk_block")
             return
         # 3) 同 pin_event_id 互斥: 同一 Pin 价格事件只下一注(防让球/大小球/独赢三盘口同时上, 相关性记账)
         _pin_eid = sig.get("pin_matchup_id")
         if _pin_eid and _pin_eid in self._pin_event_bet:
             self._count_skip("same_pin_event")
             print(f"  ⏭️ gate=same_pin_event 同Pin事件已投, 跳过 {tag}", flush=True)
+            self._record_reject(sig, "mutex")
             return
         # 同场同盘口互斥锁(2026-09-19): 同一 match 同一盘口只下一注(防对立方向/多线重复下注)
         if check_sub_market_bet(sig["match_id"], sig.get("sub")):
             print(f"  ⏭️ 同场同盘口已投, 跳过 {tag}", flush=True)
+            self._record_reject(sig, "mutex")
             return
         rec = _load_stake_record()
         if rec.get(str(sig["match_id"]), {}).get(str(market_id), 0.0) > 0:
             print(f"  ⏭️ 已下过注, 跳过 {tag}", flush=True)
+            self._record_reject(sig, "mutex")
             return
         # 指纹去重: 同一 (match, market) 5min 内尝试过(无论成败)则跳过, 避免每 2s 轮询重复下单
         _d = self._attempted.get(str(sig["match_id"]), {})
@@ -1342,12 +1351,14 @@ class SecondLevelMonitor:
         if (time.time() - _detect_ts) > SNAPSHOT_MAX_AGE:
             self._count_skip("stale_snapshot")
             print(f"  ⏭️ 快照单跳过(快照已{time.time()-_detect_ts:.0f}s>{SNAPSHOT_MAX_AGE}s, 不投stale) {tag}", flush=True)
+            self._record_reject(sig, "risk_block")
             return
         # 2026-10-11 比分状态校验: 进球/比分变了 → 快照作废(死球), 跳过。补 SNAPSHOT_MAX_AGE 只看年龄的缺口。
         _sc = self._score_changed(sig)
         if _sc == "changed":
             self._count_skip("score_changed")
             print(f"  ⚽ 比分已变(进球/状态), 快照作废跳过 {tag}", flush=True)
+            self._record_reject(sig, "risk_block")
             return
         if _sc == "untrusted":
             self._count_skip("score_untrusted")
@@ -1362,6 +1373,7 @@ class SecondLevelMonitor:
         if _fresh_odds is None:
             self._count_skip("reverify_failed")
             print(f"  ⏭️ 重拉拿不到新鲜价(封盘/关闭), 放弃 {tag}", flush=True)
+            self._record_reject(sig, "system_error")
             return
         # 2026-10-11 线变更校验: oddsChange=0 只查价格不查盘口线。让球/大小球线在重拉到提交间变了 → 放弃(旧EV打错线)。
         if sig.get("line") is not None and _fresh_line is not None:
@@ -1369,6 +1381,7 @@ class SecondLevelMonitor:
                 if abs(float(_fresh_line) - float(sig.get("line"))) > 0.01:
                     self._count_skip("line_changed")
                     print(f"  ⚠️ 盘口线已变({sig.get('line')}→{_fresh_line}), 放弃 {tag}", flush=True)
+                    self._record_reject(sig, "risk_block")
                     return
             except (TypeError, ValueError):
                 pass
@@ -1705,6 +1718,39 @@ class SecondLevelMonitor:
         sig["clamp_reason"] = _clamp
         # 四舍五入到 10: 避免 ¥91/¥82 有零有整被风控识别为机器下单
         return int(round(stake / 10.0) * 10)
+
+    def _record_reject(self, sig, reason):
+        """记录拒绝域信号(比价出 edge 但没下单), 供区分逆向选择 vs 回归均值(2026-10-17)。"""
+        try:
+            from src.monitor.reject_domain import record_reject
+            _m = sig.get("match") or {}
+            _now = time.time()
+            _bb_ts = sig.get("bb_ts")
+            rec = {
+                "signal_ts": _bb_ts or _now,
+                "sport": sig.get("sport_id") or _m.get("sport") or sig.get("sport"),
+                "sub": sig.get("sub"),
+                "direction": sig.get("desig"),
+                "market_id": sig.get("market_id"),
+                "option_type": sig.get("option_type"),
+                "estimated_edge": sig.get("ev"),
+                "bb_odds": sig.get("bb_odds"),
+                "pin_odds": sig.get("fair"),
+                "fair": sig.get("fair"),
+                "bb_snapshot_ts": _bb_ts,
+                "pin_snapshot_ts": sig.get("pin_ts"),
+                "bb_snapshot_age": round(_now - _bb_ts, 2) if _bb_ts else None,
+                "latency": None,
+                "stake_kelly_raw": sig.get("stake_kelly_raw"),
+                "stake_if_placed": sig.get("_stake"),
+                "clamp_reason": sig.get("clamp_reason"),
+                "available_exposure": getattr(self, "_live_outstanding", None),
+                "reject_reason": reason,
+                "config_hash": self._decision_version(self.threshold),
+            }
+            record_reject(rec)
+        except Exception:
+            pass
 
     def _try_auto_bet(self, sig):
         """秒级信号 → 自动下单。复用 place_single_bet(注额上限 + 下注前验价 + 记录)。"""
