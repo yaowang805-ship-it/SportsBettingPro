@@ -3415,3 +3415,12 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T04:48:24Z,ice_hockey,Vysshaya Hokkeinaya Liga,Rubin Tyumen,Kristall Saratov,,,上半场客胜,ht,3.64,0,2.972,22.48,0,3,1792238400,BB,pinnacle,,,validate,,,5728211
 2026-10-17T04:48:24Z,ice_hockey,Vysshaya Hokkeinaya Liga,HC Yugra,Dizel Penza,,,上半场主胜,ht,2.49,0,1.6818,48.06,0,3,1792238400,BB,pinnacle,,,validate,,,5728212
 2026-10-17T04:48:24Z,ice_hockey,Vysshaya Hokkeinaya Liga,HC Yugra,Dizel Penza,,,上半场客胜,ht,3.88,0,2.4668,57.29,0,3,1792238400,BB,pinnacle,,,validate,,,5728212
+2026-10-17T04:53:19Z,football,Japan J.League,Kashiwa Reysol,Nagoya Grampus,,,让球客胜,hc,1.86,0,1.7414,6.81,0,2,1792231200,ALL,pinnacle,,,validate,,+1,5153527
+2026-10-17T04:53:19Z,basketball,Japan B.League Premier,Akita Northern Happinets,Shinshu Brave Warriors,,,大分,ou,1.92,0,1.8801,2.12,0,2,1792213500,BB,pinnacle,,,validate,,160.5,5298120
+2026-10-17T04:58:13Z,football,England Championship League,Millwall FC,Lincoln City,,,上半场客胜,ht,6.2,0,6.0656,2.22,0,2,1792236600,ALL,pinnacle,,,validate,,,5730839
+2026-10-17T04:58:13Z,football,UAE Pro League,Shabab Al Ahli,Al Ain FC,,,上半场主胜,ht,3.78,0,3.7037,2.06,0,2,1792251900,ALL,pinnacle,,,validate,,,5588365
+2026-10-17T04:58:13Z,football,UAE Pro League,Shabab Al Ahli,Al Ain FC,,,让球主胜,hc,1.85,0,1.7892,3.4,0,2,1792251900,ALL,pinnacle,,,validate,,+0.5,5588365
+2026-10-17T04:58:13Z,ice_hockey,Kontinental Hockey League,CSKA Moscow,Neftekhimik Nizhnekamsk,,,上半场主胜,ht,2.05,0,1.4642,40.01,0,3,1792321200,BB,pinnacle,,,validate,,,5620894
+2026-10-17T04:58:13Z,ice_hockey,Kontinental Hockey League,CSKA Moscow,Neftekhimik Nizhnekamsk,,,上半场客胜,ht,4.01,0,3.1543,27.13,0,3,1792321200,BB,pinnacle,,,validate,,,5620894
+2026-10-17T05:03:10Z,football,UAE Pro League,Al Nasr Dubai SC,Hatta SC,,,上半场主胜,ht,1.9,0,1.8402,3.25,0,2,1792242300,ALL,pinnacle,,,validate,,,5588366
+2026-10-17T05:03:10Z,football,Thailand League 1,Bangkok United,Port FC,,,上半场主胜,ht,2.66,0,2.5873,2.81,0,2,1792321200,ALL,pinnacle,,,validate,,,5285516
