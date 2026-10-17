@@ -210,6 +210,11 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         return None
     # 半场盘口(ht/ht_hc/ht_ou)用 num_1(半场)赔率, 全场用 num_0 —— 2026-10-17 修 ht 半场赔率(之前 10-12 逃避式不定价)
     _num = 'num_1' if sub_market in ('ht', 'ht_hc', 'ht_ou') else 'num_0'
+    # 2026-10-17 诊断: 打印版本标记+num选择, 定位 daemon 是否在跑旧 num_1 代码
+    if not getattr(pinnacle_fair_price, "_dbg_printed", False):
+        import sys as _s
+        print(f"[FAIR_DBG v20261017] pinnacle_fair_price 已加载: sub_market={sub_market} -> _num={_num}", flush=True, file=_s.stderr)
+        pinnacle_fair_price._dbg_printed = True
     # 2026-10-17 修: num_0(全场)缺失时不拿 num_1(半场)冒充。之前 fallback 到 list(periods.values())[0],
     # 对「只有半场没全场」的比赛(实测 cache 里 21 场)会把半场价当全场价 → 全场平局假高溢价。宁缺毋滥。
     full = periods.get(_num)
