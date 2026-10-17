@@ -115,6 +115,12 @@ def _pin_cache_find_event(home, away, games=False):
             return None
         if _pin_cache_idx.get("_ts") != ts:
             idx = {}
+            # 2026-10-17 修队名撞车: 同俱乐部正赛 vs U21/女足/预备队, 队名一样但联赛不同。
+            # 两个都是 parent 时按联赛消歧 —— 优先非青年/女足/预备队联赛(否则拿 U21 的价当正赛价)。
+            def _junior(e):
+                ln = (e.get("league_name") or "").lower()
+                return any(k in ln for k in ("u21", "u20", "u19", "u18", "u17", "u23",
+                                             "reserve", "youth", "women", "academy"))
             for entry in d.get("cache", {}).values():
                 ev = entry.get("event") or {}
                 if not ev.get("periods"):
@@ -127,8 +133,14 @@ def _pin_cache_find_event(home, away, games=False):
                     # parent(parent_id 空)优先, child 只在不冲突时兜底。
                     parent_ref = ev.get("parent_id") or ev.get("parentId")
                     is_parent = not parent_ref
-                    if idx.get((eh, ea)) is None or is_parent:
-                        idx[(eh, ea)] = ev
+                    _key = (eh, ea)
+                    _cur = idx.get(_key)
+                    if _cur is None:
+                        idx[_key] = ev
+                    elif is_parent:
+                        _cur_p = not (_cur.get("parent_id") or _cur.get("parentId"))
+                        if not _cur_p or (_junior(_cur) and not _junior(ev)):
+                            idx[_key] = ev  # child→parent 覆盖; junior parent→senior parent 覆盖
             _pin_cache_idx["_ts"] = ts
             _pin_cache_idx["_idx"] = idx
         _suf = "games" if games else ""
