@@ -3859,3 +3859,31 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T10:45:23Z,football,Argentina Torneo Federal A,Sportivo y Biblioteca Atenas,FADEP Mendoza,,,上半场主胜,ht,2.53,0,2.1601,17.12,0,2,1792276200,BB,pinnacle,,,validate,,,5705791
 2026-10-17T10:45:23Z,football,Argentina Torneo Federal A,Sportivo y Biblioteca Atenas,FADEP Mendoza,,,上半场客胜,ht,5.9,0,4.6921,25.74,0,2,1792276200,BB,pinnacle,,,validate,,,5705791
 2026-10-17T10:45:23Z,football,Argentina Torneo Federal A,Sportivo y Biblioteca Atenas,FADEP Mendoza,,,让球客胜,hc,1.91,0,1.8295,4.4,0,2,1792276200,BB,pinnacle,,,validate,,+0.5,5705791
+2026-10-17T10:47:13Z,football,Thailand League 2,Chiangmai United,Songkhla FC,,,客胜,1x2,2.39,0,2.3358,2.32,0,3,1792234800,ALL,pinnacle,,,validate,,,5317672
+2026-10-17T10:49:37Z,football,Singapore Premier League,Balestier Khalsa FC,Geylang International FC,,,上半场客胜,ht,2.38,0,2.1882,8.77,0,2,1792236600,ALL,pinnacle,,,validate,,,5727929
+2026-10-17T10:50:48Z,football,Norway 3rd Division,Stord,Gneist,,,上半场主胜,ht,2.12,0,1.9019,11.47,0,4,1792238400,ALL,pinnacle,,,validate,,,4907080
+2026-10-17T10:50:48Z,football,Norway 3rd Division,Stord,Gneist,,,主胜,1x2,1.7,0,1.6595,2.44,0,4,1792238400,ALL,pinnacle,,,validate,,,4907080
+2026-10-17T10:53:46Z,basketball,Greece Basketball Elite League,GS Lavrio,Glafkos Esperos,,,主胜,1x2,1.21,0,1.1686,3.54,0,3,1792245600,BB,pinnacle,,,validate,,,5729408
+2026-10-17T10:54:54Z,football,Indonesia Super League,Persita Tangerang,Persija Jakarta,,,主胜,1x2,9.05,0,8.6492,4.63,0,2,1792238400,ALL,pinnacle,,,validate,,,5730996
+2026-10-17T10:55:27Z,football,England National League North,Buxton FC,Worksop Town,,,和局,1x2,4.14,0,2.709,52.82,0,3,1792245600,ALL,pinnacle,,,validate,,,5321553
+2026-10-17T10:55:27Z,football,England National League North,Buxton FC,Worksop Town,,,双重机会-和局/客,dc,2.17,0,1.7967,20.78,0,3,1792245600,ALL,pinnacle,,,validate,,,5321553
+2026-10-17T10:57:08Z,football,USA Major League Soccer,New York Red Bulls,Toronto FC,,,上半场主胜,ht,2.33,0,2.2519,3.47,0,1,1792279800,ALL,pinnacle,,,validate,,,4231107
+2026-10-17T10:59:17Z,football,England Premier League,Brentford FC,Liverpool FC,,,和局,1x2,3.96,3.64,3.7822,4.7,40,1,1792245600.0,BB,,,,push,,,
+2026-10-17T10:59:17Z,football,CAF Confederations Cup-Qualification,Red Arrows,Kaizer Chiefs,,,和局,1x2,3.04,2.52,2.814,8.03,40,3,1792242000.0,BB/FB,,,,push,,,
+2026-10-17T10:59:17Z,football,England FA Cup-Qualification,Southend United,Berkhamsted FC,,,和局,1x2,6.2,3.91,4.9536,25.16,20,3,1792245600.0,BB/FB,,,,push,,,
+2026-10-17T10:59:17Z,football,Sierra Leone Premier League,Old Edwardians,Kamboi Eagles,,,让球客胜,hc,1.97,1.7634,1.8838,4.58,10,2,1792254600.0,BB,,,,push,,+0.5,
+2026-10-17T10:59:17Z,football,England FA Cup-Qualification,Boston United FC,Scunthorpe United,,,大球,ou,2.0,1.7463,1.8941,5.59,10,3,1792245600.0,BB/FB,,,,push,,3.0,
+2026-10-17T10:59:17Z,football,England FA Cup-Qualification,Dover Athletic FC,Dorking Wanderers,,,上半场客胜,ht,2.76,2.26,2.4733,11.59,0,3,1792245600.0,BB/FB,,,,push,,,
+2026-10-17T10:59:17Z,football,England FA Cup-Qualification,Eastleigh FC,Brentwood Town FC,,,客胜,1x2,7.35,4.74,6.3529,15.7,0,3,1792245600.0,BB/FB,,,,push,,,
+2026-10-17T10:59:17Z,football,England FA Cup-Qualification,Hartlepool United FC,Marine FC,,,让球客胜,hc,1.9,1.6494,1.7634,7.75,0,3,1792245600.0,BB/FB,,,,push,,+1,
+2026-10-17T10:59:17Z,football,England FA Cup-Qualification,Wimborne Town,Chelmsford City,,,让球主胜,hc,1.94,1.6667,1.8059,7.43,0,3,1792245600.0,BB/FB,,,,push,,+0.5,
+2026-10-17T10:59:17Z,football,England FA Cup-Qualification,Kidderminster Harriers FC,Solihull Moors FC,,,让球客胜,hc,1.96,1.7246,1.8539,5.72,0,3,1792245600.0,BB/FB,,,,push,,+0.5,
+2026-10-17T10:59:17Z,football,England FA Cup-Qualification,Plymouth Parkway,Chertsey Town,,,小球,ou,2.0,1.8,1.9337,3.43,0,3,1792245600.0,BB/FB,,,,push,,3.0,
+2026-10-17T10:59:17Z,football,England Isthmian League Division One,Fakenham Town FC,Newmarket Town FC,,,大球,ou,1.95,1.7194,1.8462,5.62,0,3,1792245600.0,BB/FB,,,,push,,3.0,
+2026-10-17T10:59:17Z,basketball,Algeria Basketball Super Division,MC Alger,CRB Dar Beida,,,主胜,1x2,1.07,1.016,1.0286,4.02,0,2,1792252800.0,FB,,,,push,,,
+2026-10-17T10:59:17Z,basketball,Austria Basketball 2. Liga,Mistelbach Mustangs,UDW Alligators,,,主胜,1x2,1.31,1.2169,1.2584,4.1,0,3,1792249200.0,BB,,,,push,,,
+2026-10-17T10:59:17Z,basketball,Austria Basketball 2. Liga,KOS Celovec,Swarco Raiders Tirol,,,客胜,1x2,1.2,1.116,1.1498,4.37,0,3,1792252800.0,BB,,,,push,,,
+2026-10-17T10:59:17Z,basketball,Czech Republic NBL Basketball,BK Pardubice,BK Decin,,,主胜,1x2,1.16,1.095,1.1105,4.46,0,3,1792251000.0,FB,,,,push,,,
+2026-10-17T10:59:17Z,basketball,Greece Basketball Elite League,GS Lavrio,Glafkos Esperos,,,主胜,1x2,1.21,1.1391,1.1686,3.54,0,3,1792245600.0,BB/FB,,,,push,,,
+2026-10-17T10:59:17Z,basketball,Romania Basketball National League,CSO Voluntari,CSM Corona Brasov,,,主胜,1x2,1.13,1.061,1.0777,4.85,0,3,1792252800.0,FB,,,,push,,,
+2026-10-17T10:59:17Z,basketball,Slovakia Basketball League,BC Prievidza,Nitra Blue Wings,,,主胜,1x2,1.24,1.158,1.1907,4.14,0,3,1792252800.0,BB,,,,push,,,
