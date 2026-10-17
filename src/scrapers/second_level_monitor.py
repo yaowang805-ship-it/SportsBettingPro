@@ -1227,7 +1227,10 @@ class SecondLevelMonitor:
         if _sp_en and _sm:
             _base = f"{_sp_en}|{_sm}|{_dr}"
             _iv = _odds_interval(sig.get("fair") or sig.get("bb_odds"), _sp_en)
-            if f"{_base}|{_iv}|live" in _load_obs_blocked():
+            _obs_blocked = _load_obs_blocked()
+            # 2026-10-17 修: 之前只用具体区间 {_iv} 匹配, observe_blocked 的 "*"(所有区间)条目永远匹配不上
+            # → 滚球撤回(如 tennis|1x2|主|*|live)形同虚设。补 "*" 通配, 与下方 caps 查询同口径。
+            if f"{_base}|{_iv}|live" in _obs_blocked or f"{_base}|*|live" in _obs_blocked:
                 print(f"  🚫 赔率区间{_iv}已拦截(n>200表现差), 跳过 "
                       f"{sig['match']['home']} vs {sig['match']['away']} {sig['desig']}", flush=True)
                 return
