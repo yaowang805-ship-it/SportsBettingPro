@@ -3620,3 +3620,16 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T07:34:29Z,basketball,Lithuania National Basketball League,尤尔巴尔卡斯队,凯代尼乌,尤尔巴尔卡斯队,凯代尼乌,主胜,1x2,1.19,1.114,1.1396,4.42,10,3,1792245600.0,BB,,,,push,,,
 2026-10-17T07:34:29Z,basketball,Romania Basketball National League,沃伦塔利,科罗娜布拉索夫,沃伦塔利,科罗娜布拉索夫,主胜,1x2,1.13,1.061,1.0777,4.85,10,3,1792252800.0,FB,,,,push,,,
 2026-10-17T07:34:29Z,basketball,Slovakia Basketball League,普列维萨,尼特拉蓝翼,普列维萨,尼特拉蓝翼,主胜,1x2,1.24,1.158,1.1907,4.14,10,3,1792252800.0,BB,,,,push,,,
+2026-10-17T07:36:22Z,football,Indian Super League,Inter Kashi FC,Odisha FC,,,和局,1x2,3.47,0,2.4172,43.55,0,2,1792236600,ALL,pinnacle,,,validate,,,5752498
+2026-10-17T07:36:22Z,football,Indian Super League,Inter Kashi FC,Odisha FC,,,上半场客胜,ht,2.42,0,2.3725,2.0,0,2,1792236600,ALL,pinnacle,,,validate,,,5752498
+2026-10-17T07:36:22Z,football,Indian Super League,Inter Kashi FC,Odisha FC,,,双重机会-主/和局,dc,2.01,0,1.7286,16.28,0,2,1792236600,ALL,pinnacle,,,validate,,,5752498
+2026-10-17T07:36:22Z,football,Indian Super League,Inter Kashi FC,Odisha FC,,,双重机会-和局/客,dc,1.26,0,1.1973,5.24,0,2,1792236600,ALL,pinnacle,,,validate,,,5752498
+2026-10-17T07:38:31Z,football,England League One,Leyton Orient,Blackpool,,,双重机会-主/和局,dc,1.4,0,1.3339,4.96,0,2,1792245600,ALL,pinnacle,,,validate,,,5728553
+2026-10-17T07:38:31Z,basketball,Germany Pro A Basketball Bundesliga,Eisbaren Bremerhaven,ETB Miners,,,客胜,1x2,4.13,0,4.0132,2.91,0,3,1792252800,ALL,pinnacle,,,validate,,,5200752
+2026-10-17T07:43:27Z,tennis,ATP - Brussels Open,Kimmer Coppejans (BEL),Andrea Guerrieri (ITA),,,主胜,1x2,2.34,0,2.2935,2.03,0,2,1792241400,BB,pinnacle,,,validate,,,5762886
+2026-10-17T07:45:06Z,tennis,ATP - Brussels Open,Aziz Dougaz (TUN),Tom Gentzsch (GER),,,主胜,1x2,2.29,0,2.1623,5.91,0,2,1792245600,BB,pinnacle,,,validate,,,5762894
+2026-10-17T07:47:16Z,football,England FA Cup-Qualification,Kidderminster Harriers FC,Solihull Moors FC,,,上半场主胜,ht,2.95,0,2.4341,21.19,0,3,1792245600,BB,pinnacle,,,validate,,,5751695
+2026-10-17T07:47:16Z,football,England FA Cup-Qualification,Kidderminster Harriers FC,Solihull Moors FC,,,上半场客胜,ht,3.72,0,3.0064,23.74,0,3,1792245600,BB,pinnacle,,,validate,,,5751695
+2026-10-17T07:47:16Z,tennis,ATP - Brussels Open,Kimmer Coppejans (BEL),Andrea Guerrieri (ITA),,,小分,ou,1.78,0,1.7312,2.82,0,2,1792241400,BB,pinnacle,,,validate,,22.5,5762886
+2026-10-17T07:47:55Z,football,England Championship League,米德尔斯堡,卡迪夫城,米德尔斯堡,卡迪夫城,和局,1x2,5.15,2.94,3.0635,68.11,40,2,1792236600.0,BB,,,,push,,,
+2026-10-17T07:47:55Z,football,Finland Ykkosliiga,米凯林·帕洛伊利亚特,查普斯,米凯林·帕洛伊利亚特,查普斯,和局,1x2,3.76,2.54,2.6564,41.54,40,3,1792242000.0,FB,,,,push,,,
