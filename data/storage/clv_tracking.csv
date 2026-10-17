@@ -3887,3 +3887,20 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T10:59:17Z,basketball,Greece Basketball Elite League,GS Lavrio,Glafkos Esperos,,,主胜,1x2,1.21,1.1391,1.1686,3.54,0,3,1792245600.0,BB/FB,,,,push,,,
 2026-10-17T10:59:17Z,basketball,Romania Basketball National League,CSO Voluntari,CSM Corona Brasov,,,主胜,1x2,1.13,1.061,1.0777,4.85,0,3,1792252800.0,FB,,,,push,,,
 2026-10-17T10:59:17Z,basketball,Slovakia Basketball League,BC Prievidza,Nitra Blue Wings,,,主胜,1x2,1.24,1.158,1.1907,4.14,0,3,1792252800.0,BB,,,,push,,,
+2026-10-17T11:00:29Z,basketball,Poland Basketball 1 Liga,Resovia Rzeszow,Decka Pelplin,,,大分,ou,1.84,0,1.8003,2.21,0,2,1792242000,ALL,pinnacle,,,validate,,166.5,5757097
+2026-10-17T11:00:29Z,football,Thailand League 1,Chonburi FC,Prachuap FC,,,和局,1x2,3.38,0,2.3373,44.61,0,2,1792236600,ALL,pinnacle,,,validate,,,5285508
+2026-10-17T11:00:29Z,football,Thailand League 1,Chonburi FC,Prachuap FC,,,双重机会-主/和局,dc,1.42,0,1.3402,5.95,0,2,1792236600,ALL,pinnacle,,,validate,,,5285508
+2026-10-17T11:00:29Z,football,Thailand League 1,Chonburi FC,Prachuap FC,,,双重机会-和局/客,dc,1.54,0,1.4669,4.98,0,2,1792236600,ALL,pinnacle,,,validate,,,5285508
+2026-10-17T11:01:03Z,football,England League One,Peterborough United,Burton Albion,,,主胜,1x2,1.93,0,1.8744,2.97,0,2,1792236600,ALL,pinnacle,,,validate,,,5728566
+2026-10-17T11:01:03Z,football,England League One,Peterborough United,Burton Albion,,,上半场主胜,ht,2.36,0,1.8744,25.91,0,2,1792236600,ALL,pinnacle,,,validate,,,5728566
+2026-10-17T11:01:03Z,football,Thailand League 1,Chonburi FC,Prachuap FC,,,上半场主胜,ht,3.17,0,2.4059,31.76,0,2,1792236600,ALL,pinnacle,,,validate,,,5285508
+2026-10-17T11:01:03Z,football,Thailand League 1,Chonburi FC,Prachuap FC,,,上半场客胜,ht,3.7,0,3.2741,13.01,0,2,1792236600,ALL,pinnacle,,,validate,,,5285508
+2026-10-17T11:01:37Z,football,England League Two,Fleetwood Town,Rotherham United,,,主胜,1x2,2.11,0,2.0446,3.2,0,2,1792236600,ALL,pinnacle,,,validate,,,5731306
+2026-10-17T11:01:37Z,football,England FA Cup-Qualification,Plymouth Parkway,Chertsey Town,,,小球,ou,2.0,0,1.9337,3.43,0,3,1792245600,BB,pinnacle,,,validate,,3.0,5757020
+2026-10-17T11:03:54Z,football,Cyprus 1st Division,Ypsonas FC,Karmiotissa FC,,,和局,1x2,3.46,0,2.3364,48.09,0,2,1792249200,ALL,pinnacle,,,validate,,,5727123
+2026-10-17T11:03:54Z,football,Cyprus 1st Division,Ypsonas FC,Karmiotissa FC,,,双重机会-和局/客,dc,1.62,0,1.444,12.19,0,2,1792249200,ALL,pinnacle,,,validate,,,5727123
+2026-10-17T11:03:54Z,football,Netherlands Tweede Divisie,BVV Barendrecht,Amsterdamsche FC,,,上半场主胜,ht,2.98,0,2.6003,14.6,0,4,1792242000,ALL,pinnacle,,,validate,,,5727960
+2026-10-17T11:03:54Z,football,Netherlands Tweede Divisie,BVV Barendrecht,Amsterdamsche FC,,,上半场客胜,ht,2.98,0,2.5522,16.76,0,4,1792242000,ALL,pinnacle,,,validate,,,5727960
+2026-10-17T11:05:05Z,football,England Championship League,Southampton FC,Bolton Wanderers,,,客胜,1x2,7.15,0,6.959,2.74,0,2,1792245600,ALL,pinnacle,,,validate,,,5728554
+2026-10-17T11:05:05Z,football,USA Major League Soccer,Minnesota United FC,Saint Louis City SC,,,上半场主胜,ht,3.31,0,3.1686,4.46,0,1,1792269000,ALL,pinnacle,,,validate,,,4231098
+2026-10-17T11:06:48Z,football,CAF Confederations Cup-Qualification,Red Arrows,Kaizer Chiefs,,,上半场主胜,ht,5.6,0,5.29,5.86,0,3,1792242000,BB,pinnacle,,,validate,,,5630391

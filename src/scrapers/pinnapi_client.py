@@ -210,7 +210,9 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         return None
     # 半场盘口(ht/ht_hc/ht_ou)用 num_1(半场)赔率, 全场用 num_0 —— 2026-10-17 修 ht 半场赔率(之前 10-12 逃避式不定价)
     _num = 'num_1' if sub_market in ('ht', 'ht_hc', 'ht_ou') else 'num_0'
-    full = periods.get(_num) or (list(periods.values())[0] if periods else None)
+    # 2026-10-17 修: num_0(全场)缺失时不拿 num_1(半场)冒充。之前 fallback 到 list(periods.values())[0],
+    # 对「只有半场没全场」的比赛(实测 cache 里 21 场)会把半场价当全场价 → 全场平局假高溢价。宁缺毋滥。
+    full = periods.get(_num)
     if not full:
         return None
     if sub_market in ('1x2', 'ht'):
