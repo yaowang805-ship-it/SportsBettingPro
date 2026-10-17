@@ -3651,3 +3651,21 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T07:54:15Z,basketball,Germany Pro A Basketball Bundesliga,卡尔斯鲁厄,海德堡,卡尔斯鲁厄,海德堡,客胜,1x2,1.21,1.1401,1.1613,4.19,10,3,1792258200.0,BB,,,,push,,,
 2026-10-17T07:54:15Z,basketball,Romania Basketball National League,沃伦塔利,科罗娜布拉索夫,沃伦塔利,科罗娜布拉索夫,主胜,1x2,1.13,1.061,1.0777,4.85,10,3,1792252800.0,FB,,,,push,,,
 2026-10-17T07:54:15Z,basketball,Slovakia Basketball League,普列维萨,尼特拉蓝翼,普列维萨,尼特拉蓝翼,主胜,1x2,1.24,1.158,1.1907,4.14,10,3,1792252800.0,BB,,,,push,,,
+2026-10-17T07:55:30Z,football,Israel Premier League,Hapoel Beer Sheva FC,Hapoel Jerusalem FC,,,主胜,1x2,1.36,0,1.3189,3.12,0,2,1792343700,ALL,pinnacle,,,validate,,,5742114
+2026-10-17T07:55:30Z,football,Israel Premier League,Hapoel Beer Sheva FC,Hapoel Jerusalem FC,,,上半场主胜,ht,1.82,0,1.7807,2.21,0,2,1792343700,ALL,pinnacle,,,validate,,,5742114
+2026-10-17T07:58:11Z,football,Scotland League Two,Spartans FC,Stranraer FC,,,上半场主胜,ht,2.77,0,2.2907,20.92,0,3,1792245600,ALL,pinnacle,,,validate,,,5731909
+2026-10-17T07:58:11Z,football,Scotland League Two,Spartans FC,Stranraer FC,,,上半场客胜,ht,3.48,0,2.9425,18.27,0,3,1792245600,ALL,pinnacle,,,validate,,,5731909
+2026-10-17T07:58:44Z,football,Norway Eliteserien,HamKam,Bodo/Glimt,,,上半场主胜,ht,11.1,0,10.6319,4.4,0,3,1792238400,ALL,pinnacle,,,validate,,,4252994
+2026-10-17T07:59:17Z,football,Italy Serie C,Vado FC,Sambenedettese,,,和局,1x2,3.17,0,2.2446,41.23,0,4,1792240200,ALL,pinnacle,,,validate,,,5743736
+2026-10-17T07:59:17Z,football,Italy Serie C,Vado FC,Sambenedettese,,,上半场主胜,ht,3.3,0,3.144,4.96,0,4,1792240200,ALL,pinnacle,,,validate,,,5743736
+2026-10-17T07:59:17Z,football,Italy Serie C,Vado FC,Sambenedettese,,,双重机会-主/和局,dc,1.41,0,1.3096,7.67,0,4,1792240200,ALL,pinnacle,,,validate,,,5743736
+2026-10-17T07:59:17Z,football,Italy Serie C,Vado FC,Sambenedettese,,,双重机会-和局/客,dc,1.49,0,1.4531,2.54,0,4,1792240200,ALL,pinnacle,,,validate,,,5743736
+2026-10-17T08:00:24Z,football,Indonesia Super League,Garudayaksa FC,Arema FC,,,和局,1x2,3.65,0,2.499,46.06,0,2,1792225800,ALL,pinnacle,,,validate,,,5755628
+2026-10-17T08:00:24Z,football,Indonesia Super League,Garudayaksa FC,Arema FC,,,双重机会-主/和局,dc,1.48,0,1.3716,7.9,0,2,1792225800,ALL,pinnacle,,,validate,,,5755628
+2026-10-17T08:00:24Z,football,Indonesia Super League,Garudayaksa FC,Arema FC,,,双重机会-和局/客,dc,1.53,0,1.4901,2.68,0,2,1792225800,ALL,pinnacle,,,validate,,,5755628
+2026-10-17T08:00:24Z,football,Indonesia Championship League,Semen Padang,PSMS Medan,,,上半场主胜,ht,2.94,0,1.9506,50.72,0,2,1792225800,BB,pinnacle,,,validate,,,5739851
+2026-10-17T08:02:04Z,football,Venezuela Primera Division,Carabobo FC,Deportivo Tachira,,,上半场主胜,ht,3.18,0,2.5947,22.56,0,2,1792276200,ALL,pinnacle,,,validate,,,5372932
+2026-10-17T08:02:04Z,football,Venezuela Primera Division,Carabobo FC,Deportivo Tachira,,,上半场客胜,ht,3.8,0,3.1331,21.29,0,2,1792276200,ALL,pinnacle,,,validate,,,5372932
+2026-10-17T08:02:44Z,football,England Premier League,埃弗顿,切尔西,埃弗顿,切尔西,和局,1x2,3.91,2.5,2.5632,52.54,40,1,1792236600.0,FB,,,,push,,,
+2026-10-17T08:02:44Z,football,Finland Ykkosliiga,米凯林·帕洛伊利亚特,查普斯,米凯林·帕洛伊利亚特,查普斯,大球,ou,2.03,1.8547,1.931,5.13,10,3,1792242000.0,BB/FB,,,,push,,3.0,
+2026-10-17T08:02:44Z,football,Scotland League Two,凯尔蒂赫斯,福弗尔竞技,凯尔蒂赫斯,福弗尔竞技,上半场主胜,ht,2.65,2.02,2.1265,24.62,0,3,1792245600.0,BB,,,,push,,,
