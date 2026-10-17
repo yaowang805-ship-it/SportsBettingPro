@@ -1,5 +1,5 @@
 {
-  "balance": 14812.53,
+  "balance": 14762.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1886,6 +1886,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792321200.0,
       "created_at": "2026-10-17T22:42:30.575114+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_斯波坎速度_查塔努加红狼_让球主胜(-05)",
+      "sport": "football",
+      "league": "美国甲级联赛",
+      "home_team": "斯波坎速度",
+      "away_team": "查塔努加红狼",
+      "home_cn": "斯波坎速度",
+      "away_cn": "查塔努加红狼",
+      "market": "handicap",
+      "market_type": "让球主胜(-0.5)",
+      "sub_market": "hc",
+      "line": "-0.5",
+      "odds": 1.99,
+      "stake": 50,
+      "model_prob": 0.5347,
+      "ev_pct": 6.41,
+      "pin_odds": 1.7692,
+      "fair_price": 1.8701,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792285200.0,
+      "created_at": "2026-10-17T22:52:38.691349+00:00",
       "track_only": false
     }
   ],
@@ -11362,8 +11385,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-18",
-    "used": 150.0,
-    "bets": 3
+    "used": 200.0,
+    "bets": 4
   },
   "updated": null
 }

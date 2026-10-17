@@ -4501,3 +4501,14 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T22:46:33Z,football,Bolivia Division Profesional,The Strongest,Always Ready,,,小球,ou,1.96,1.7937,1.8987,3.23,50,2,1792358100.0,BB/FB,,,,push,,3.0,
 2026-10-17T22:46:33Z,basketball,Japan B.League One,Ehime Orange Vikings,Kagoshima Rebnise,,,主胜,1x2,1.23,1.1511,1.1828,3.99,50,3,1792299900.0,BB/FB,,,,push,,,
 2026-10-17T22:46:33Z,basketball,Poland Basketball 2 Liga,Trefl Sopot II,KS Kutno,,,主胜,1x2,1.25,1.155,1.1962,4.5,50,3,1792321200.0,BB/FB,,,,push,,,
+2026-10-17T22:47:00Z,basketball,Uruguay Basketball Tercera de Ascenso,Ateneo de Piriapolis,CA 25 de Agosto,,,主胜,1x2,1.72,0,1.574,9.28,0,4,1792278000,BB,pinnacle,,,validate,,,5767136
+2026-10-17T22:47:34Z,football,Spain Tercera Division,Gran Pena FC,Celtiga,,,上半场主胜,ht,2.93,0,2.2533,30.03,0,4,1792315800,ALL,pinnacle,,,validate,,,5766363
+2026-10-17T22:47:34Z,football,Spain Tercera Division,Gran Pena FC,Celtiga,,,上半场客胜,ht,4.01,0,3.6026,11.31,0,4,1792315800,ALL,pinnacle,,,validate,,,5766363
+2026-10-17T22:47:34Z,football,Spain Tercera Division,Gran Pena FC,Celtiga,,,主胜,1x2,2.13,0,1.9966,6.68,0,4,1792315800,ALL,pinnacle,,,validate,,,5766363
+2026-10-17T22:48:07Z,football,USL Championship,Las Vegas Lights,Lexington SC,,,双重机会-和局/客,dc,1.35,0,1.3148,2.68,0,2,1792290600,ALL,pinnacle,,,validate,,,5733465
+2026-10-17T22:49:14Z,basketball,Japan B.League One,Yokohama Excellence,Gifu Swoops,,,主胜,1x2,1.1,0,1.0706,2.75,0,3,1792303500,BB,pinnacle,,,validate,,,5325673
+2026-10-17T22:50:52Z,football,USL League One,Westchester SC,Union Omaha SC,,,客胜,1x2,1.82,0,1.7513,3.92,0,2,1792278000,ALL,pinnacle,,,validate,,,5727070
+2026-10-17T22:51:26Z,football,USL League One,Westchester SC,Union Omaha SC,,,让球客胜,hc,1.82,0,1.7668,3.01,0,2,1792278000,ALL,pinnacle,,,validate,,-0.5,5727070
+2026-10-17T22:52:32Z,basketball,Uruguay Basketball Tercera de Ascenso,Ateneo de Piriapolis,CA 25 de Agosto,,,客胜,1x2,2.47,0,2.3296,6.03,0,4,1792278000,BB,pinnacle,,,validate,,,5767136
+2026-10-17T22:53:04Z,basketball,Uruguay Basketball Tercera de Ascenso,Ateneo de Piriapolis,CA 25 de Agosto,,,让分客胜,hc,1.84,0,1.7177,7.12,0,4,1792278000,BB,pinnacle,,,validate,,+4.5,5767136
+2026-10-17T22:53:37Z,football,USL League One,Spokane Velocity FC,Chattanooga Red Wolves SC,,,让球主胜,hc,1.99,1.7692,1.8701,6.41,50,2,1792285200.0,BB,,,,push,,-0.5,
