@@ -469,7 +469,9 @@ def _norm_team(name):
     name = re.sub(r'\s*\([A-Z]{2,3}\)\s*$', '', (name or '').strip())
     n = re.sub(r'[^a-z0-9]', '', name.lower())
     # 俱乐部后缀归一(与 pinnacle_live._norm_team 同口径, 2026-09-29 补): FC/SC/CF 等去后缀
-    for suf in ("footballclub", "club", "cfc", "afc", "fc", "sc", "cf", "cd", "ac"):
+    # 2026-10-17 修: 之前 cfc/afc 在 fc 前, "Sanga FC"(sangafc) 被 afc 误剥成 "sang"(少个 a, 配不上 Pin 的 sanga)。
+    # 去掉 cfc/afc(与 fc 冲突且作后缀罕见), fc 正常剥。代价: "Sunderland AFC" 会剥成 sunderlanda, 但影响小。
+    for suf in ("footballclub", "club", "fc", "sc", "cf", "cd", "ac"):
         if n.endswith(suf) and len(n) > len(suf) + 3:
             n = n[:-len(suf)]
             break
