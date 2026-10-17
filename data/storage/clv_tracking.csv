@@ -3854,3 +3854,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T10:39:28Z,football,Sierra Leone Premier League,Old Edwardians,Kamboi Eagles,,,上半场主胜,ht,3.1,0,2.247,37.96,0,2,1792254600,ALL,pinnacle,,,validate,,,5763260
 2026-10-17T10:39:28Z,football,Sierra Leone Premier League,Old Edwardians,Kamboi Eagles,,,上半场客胜,ht,6.1,0,4.5873,32.98,0,2,1792254600,ALL,pinnacle,,,validate,,,5763260
 2026-10-17T10:40:39Z,football,Argentina Liga Profesional,Independiente Rivadavia,CA Tigre,,,和局,1x2,3.39,2.13,2.1835,55.26,30,3,1792269000.0,BB,,,,push,,,
+2026-10-17T10:45:23Z,football,England FA Cup-Qualification,Harborough Town FC,Spennymoor Town FC,,,上半场主胜,ht,2.31,0,1.8658,23.81,0,3,1792245600,BB,pinnacle,,,validate,,,5756854
+2026-10-17T10:45:23Z,football,England FA Cup-Qualification,Harborough Town FC,Spennymoor Town FC,,,上半场客胜,ht,4.68,0,3.8771,20.71,0,3,1792245600,BB,pinnacle,,,validate,,,5756854
+2026-10-17T10:45:23Z,football,Argentina Torneo Federal A,Sportivo y Biblioteca Atenas,FADEP Mendoza,,,上半场主胜,ht,2.53,0,2.1601,17.12,0,2,1792276200,BB,pinnacle,,,validate,,,5705791
+2026-10-17T10:45:23Z,football,Argentina Torneo Federal A,Sportivo y Biblioteca Atenas,FADEP Mendoza,,,上半场客胜,ht,5.9,0,4.6921,25.74,0,2,1792276200,BB,pinnacle,,,validate,,,5705791
+2026-10-17T10:45:23Z,football,Argentina Torneo Federal A,Sportivo y Biblioteca Atenas,FADEP Mendoza,,,让球客胜,hc,1.91,0,1.8295,4.4,0,2,1792276200,BB,pinnacle,,,validate,,+0.5,5705791
