@@ -3669,3 +3669,39 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T08:02:44Z,football,England Premier League,埃弗顿,切尔西,埃弗顿,切尔西,和局,1x2,3.91,2.5,2.5632,52.54,40,1,1792236600.0,FB,,,,push,,,
 2026-10-17T08:02:44Z,football,Finland Ykkosliiga,米凯林·帕洛伊利亚特,查普斯,米凯林·帕洛伊利亚特,查普斯,大球,ou,2.03,1.8547,1.931,5.13,10,3,1792242000.0,BB/FB,,,,push,,3.0,
 2026-10-17T08:02:44Z,football,Scotland League Two,凯尔蒂赫斯,福弗尔竞技,凯尔蒂赫斯,福弗尔竞技,上半场主胜,ht,2.65,2.02,2.1265,24.62,0,3,1792245600.0,BB,,,,push,,,
+2026-10-17T08:04:49Z,football,Brazil Serie C,Maringa FC,Ferroviaria SP,,,上半场主胜,ht,3.1,0,2.5016,23.92,0,4,1792267200,BB,pinnacle,,,validate,,,5739970
+2026-10-17T08:04:49Z,football,Brazil Serie C,Maringa FC,Ferroviaria SP,,,上半场客胜,ht,3.97,0,3.2758,21.19,0,4,1792267200,BB,pinnacle,,,validate,,,5739970
+2026-10-17T08:05:23Z,football,Poland III Liga,Rakow Czestochowa II,Warta Gorzow Wielkopolski,,,上半场客胜,ht,3.99,0,3.3637,18.62,0,4,1792231200,ALL,pinnacle,,,validate,,,5727142
+2026-10-17T08:05:23Z,tennis,World Tennis - M15 Quito Men Singles,Mwendwa Mbithi (USA),Lucas Andrade Da Silva (BRA),,,主胜,1x2,3.73,0,3.4262,8.87,0,3,1792252800,BB,pinnacle,,,validate,,,5763879
+2026-10-17T08:08:39Z,football,Japan J.League 3,Zweigen Kanazawa,Nara Club,,,上半场主胜,ht,2.5,0,2.0766,20.39,0,4,1792227600,ALL,pinnacle,,,validate,,,5126418
+2026-10-17T08:08:39Z,football,Japan J.League 3,Zweigen Kanazawa,Nara Club,,,上半场客胜,ht,3.83,0,3.5916,6.64,0,4,1792227600,ALL,pinnacle,,,validate,,,5126418
+2026-10-17T08:10:18Z,football,Indonesia Championship League,Rans Nusantara FC,Persela Lamongan,,,上半场客胜,ht,3.31,0,2.5949,27.56,0,2,1792225800,BB,pinnacle,,,validate,,,5751236
+2026-10-17T08:10:18Z,football,Indonesia Championship League,Rans Nusantara FC,Persela Lamongan,,,上半场主胜,ht,3.17,0,3.0788,2.96,0,2,1792225800,BB,pinnacle,,,validate,,,5751236
+2026-10-17T08:10:51Z,football,Venezuela Primera Division,Academia Puerto Cabello,Monagas SC,,,上半场主胜,ht,2.73,0,2.2256,22.66,0,2,1792351800,ALL,pinnacle,,,validate,,,5372938
+2026-10-17T08:10:51Z,football,Venezuela Primera Division,Academia Puerto Cabello,Monagas SC,,,上半场客胜,ht,4.55,0,3.7489,21.37,0,2,1792351800,ALL,pinnacle,,,validate,,,5372938
+2026-10-17T08:11:24Z,basketball,Australia NBL,Sydney Kings,Perth Wildcats,,,客胜,1x2,4.05,0,3.7399,8.29,0,3,1792225800,ALL,pinnacle,,,validate,,,5074442
+2026-10-17T08:11:57Z,football,Japan J.League 3,Zweigen Kanazawa,Nara Club,,,客胜,1x2,3.39,0,3.0805,10.05,0,4,1792227600,ALL,pinnacle,,,validate,,,5126418
+2026-10-17T08:11:57Z,football,Japan J.League 3,Zweigen Kanazawa,Nara Club,,,让球客胜,hc,1.93,0,1.7255,11.85,0,4,1792227600,ALL,pinnacle,,,validate,,+0.5,5126418
+2026-10-17T08:11:57Z,football,Japan J.League 3,Zweigen Kanazawa,Nara Club,,,双重机会-和局/客,dc,1.84,0,1.748,5.26,0,4,1792227600,ALL,pinnacle,,,validate,,,5126418
+2026-10-17T08:14:43Z,ice_hockey,AHL,Springfield Thunderbirds,Lehigh Valley Phantoms,,,大分,ou,1.98,0,1.8788,5.39,0,3,1792274700,BB,pinnacle,,,validate,,5.5,5645102
+2026-10-17T08:14:43Z,football,England Northern Premier League,Ilkeston Town FC,Avro FC,,,上半场客胜,ht,1.96,0,1.3364,46.66,0,2,1792245600,ALL,pinnacle,,,validate,,,5321883
+2026-10-17T08:15:17Z,football,Venezuela Primera Division,Estudiantes de Merida,Metropolitanos FC,,,上半场主胜,ht,2.59,0,1.9538,32.56,0,2,1792351800,ALL,pinnacle,,,validate,,,5372936
+2026-10-17T08:18:35Z,basketball,China CBA,Jiangsu Dragons,Fujian Sturgeons,,,客胜,1x2,2.86,0,2.6109,9.54,0,3,1792236900,ALL,pinnacle,,,validate,,,5626212
+2026-10-17T08:19:12Z,football,AFC Challenge League,Ahal FC,Paro FC,,,小球,ou,2.0,0,1.9085,4.79,0,3,1792238400,ALL,pinnacle,,,validate,,3.0,5475793
+2026-10-17T08:19:12Z,ice_hockey,AHL,Belleville Senators,Toronto Marlies,,,大分,ou,1.88,0,1.7836,5.4,0,3,1792267200,BB,pinnacle,,,validate,,5.5,5645100
+2026-10-17T08:19:12Z,basketball,China CBA,Jiangsu Dragons,Fujian Sturgeons,,,让分客胜,hc,1.81,0,1.6863,7.34,0,3,1792236900,ALL,pinnacle,,,validate,,+6.5,5626212
+2026-10-17T08:20:51Z,football,Algeria Ligue 2,ES Mostaganem,WA Tlemcen,,,上半场主胜,ht,2.25,0,1.6485,36.49,0,3,1792245600,ALL,pinnacle,,,validate,,,5757163
+2026-10-17T08:20:51Z,football,Algeria Ligue 2,ES Mostaganem,WA Tlemcen,,,上半场客胜,ht,9.25,0,7.8503,17.83,0,3,1792245600,ALL,pinnacle,,,validate,,,5757163
+2026-10-17T08:29:12Z,basketball,China CBA,Jiangsu Dragons,Fujian Sturgeons,,,上半场客胜,ht,2.31,0,2.2094,4.55,0,3,1792236900,ALL,pinnacle,,,validate,,,5626212
+2026-10-17T08:30:51Z,football,Japan J.League 3,Kagoshima United,Ehime FC,,,主胜,1x2,2.07,0,1.9412,6.64,0,4,1792227600,ALL,pinnacle,,,validate,,,5126384
+2026-10-17T08:30:51Z,football,Japan J.League 3,Kagoshima United,Ehime FC,,,上半场主胜,ht,2.68,0,1.9412,38.06,0,4,1792227600,ALL,pinnacle,,,validate,,,5126384
+2026-10-17T08:30:51Z,football,Ukraine Persha Liga,Kolos Kovalivka II,UCSA Tarasivka,,,客胜,1x2,3.54,0,3.269,8.29,0,2,1792227600,ALL,pinnacle,,,validate,,,5727987
+2026-10-17T08:31:26Z,football,Ukraine Persha Liga,Kolos Kovalivka II,UCSA Tarasivka,,,让球客胜,hc,1.97,0,1.8447,6.79,0,2,1792227600,ALL,pinnacle,,,validate,,+0.5,5727987
+2026-10-17T08:31:26Z,football,Poland II Liga,Sandecja Nowy Sacz,Zawisza Bydgoszcz,,,上半场主胜,ht,2.17,0,1.8899,14.82,0,3,1792344600,ALL,pinnacle,,,validate,,,5163901
+2026-10-17T08:31:26Z,football,Poland II Liga,Sandecja Nowy Sacz,Zawisza Bydgoszcz,,,上半场客胜,ht,4.92,0,4.5605,7.88,0,3,1792344600,ALL,pinnacle,,,validate,,,5163901
+2026-10-17T08:32:33Z,volleyball,Turkey Volleyball Efeler League,Fenerbahce SK Istanbul,Ziraat Bankasi Ankara,,,上半场客胜,ht,1.53,0,1.456,5.08,0,2,1792252800,BB,pinnacle,,,validate,,,5709704
+2026-10-17T08:40:20Z,football,Japan J.League 3,Zweigen Kanazawa,Nara Club,,,主胜,1x2,2.13,0,2.0554,3.63,0,4,1792227600,ALL,pinnacle,,,validate,,,5126418
+2026-10-17T08:41:27Z,football,Cambodia Premier League,Kirivong Sok Sen Chey,Visakha FC,,,上半场客胜,ht,1.56,0,1.1545,35.12,0,2,1792226700,ALL,pinnacle,,,validate,,,5760345
+2026-10-17T08:45:00Z,basketball,Argentina La Liga,Provincial de Rosario,La Union Colon Entre Rios,,,主胜,1x2,1.68,0,1.6455,2.1,0,1,1792279800,BB,pinnacle,,,validate,,,5674213
+2026-10-17T08:45:36Z,basketball,Japan B.League One,Earthfriends Tokyo Z,Koshigaya Alphas,,,主胜,1x2,5.25,0,4.3695,20.15,0,3,1792227900,BB,pinnacle,,,validate,,,5325629
+2026-10-17T08:49:56Z,football,Sweden Allsvenskan,AIK索尔纳,哥德堡,AIK索尔纳,哥德堡,和局,1x2,3.85,2.41,2.4955,54.28,30,2,1792251000.0,BB,,,,push,,,
