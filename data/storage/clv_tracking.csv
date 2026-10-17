@@ -3795,3 +3795,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T09:46:12Z,football,Belgium Cup,KSK Heist,Royal Antwerp FC,,,上半场客胜,ht,1.72,0,1.2798,34.4,0,3,1792251000,ALL,pinnacle,,,validate,,,5748390
 2026-10-17T09:48:34Z,ice_hockey,Kontinental Hockey League,Admiral Vladivostok,Salavat Yulaev UFA,,,上半场主胜,ht,3.15,0,2.7802,13.3,0,3,1792402200,BB,pinnacle,,,validate,,,5624860
 2026-10-17T09:48:34Z,ice_hockey,Kontinental Hockey League,Admiral Vladivostok,Salavat Yulaev UFA,,,上半场客胜,ht,2.42,0,2.0521,17.93,0,3,1792402200,BB,pinnacle,,,validate,,,5624860
+2026-10-17T09:50:20Z,basketball,China CBA,Sichuan Blue Whales,Tianjin Pioneers,,,上半场客胜,ht,1.86,0,1.777,4.67,0,3,1792236900,ALL,pinnacle,,,validate,,,5626169
+2026-10-17T09:50:56Z,football,Poland III Liga,Zaglebie Lubin II,Zaglebie Sosnowiec,,,上半场主胜,ht,2.86,0,2.7169,5.27,0,4,1792231200,ALL,pinnacle,,,validate,,,5214478
+2026-10-17T09:50:56Z,football,Poland III Liga,Zaglebie Lubin II,Zaglebie Sosnowiec,,,上半场客胜,ht,3.16,0,2.7043,16.85,0,4,1792231200,ALL,pinnacle,,,validate,,,5214478
+2026-10-17T09:52:05Z,football,Sweden Allsvenskan,AIK,IFK Goteborg,,,和局,1x2,3.83,2.41,2.4978,53.33,40,2,1792251000.0,BB,,,,push,,,
