@@ -2334,13 +2334,87 @@ class SecondLevelMonitor:
             return len(new_lines)
         try:
             from src.betting.bb_real_bet_flow import auto_bet_flow
-            res = auto_bet_flow(opps, trigger_ts=min_trig_ts)
+            res = auto_bet_flow(opps, trigger_ts=min_trig_ts, trigger_source="pin_drop")
             n = len(res.get('success', [])) if isinstance(res, dict) else 0
             if n:
                 print(f'[slm] Pin drop 触发下单 {n} 注', flush=True)
         except Exception as e:
             print(f'[slm] Pin drop 触发下单异常: {type(e).__name__} {e}', flush=True)
         return len(new_lines)
+
+    def _scan_prematch(self):
+        """早盘 WS 全量扫描触发(双轨制第二轨, 2026-10-18)。
+
+        drop 触发只抓 ≥5% 骤降的冷门(波动大), 命中 BB 率仅 17.6% 且冷门无 edge;
+        释放清单里的热门/中概率真 edge(不骤降)永远等不到 drop → 早盘 0 下单。
+        本函数每 30s 扫 BB 早盘快照全量 → 比价(结果锚校准已在 _oa_add_markets 内) →
+        释放过滤 → 入库(trigger_source=ws_scan) + 下单。与 drop 触发同口径, 触发源标记区分。
+        """
+        from src.scrapers.bb_incremental_scanner import BB_EXTRACTED
+        try:
+            d = json.loads(BB_EXTRACTED.read_text())
+            matches = d.get('matches', []) if isinstance(d, dict) else []
+        except Exception:
+            return 0
+        if not matches:
+            return 0
+        from src.scrapers.bb_vs_pinnacle import _build_oa_entry, _oa_add_markets
+        from src.report.bb_ev_push import _is_market_released, _is_direction_blocked
+        _GROUP_TO_SUB = {'opportunities': '1x2', 'handicap': 'hc', 'over_under': 'ou',
+                         'double_chance': 'dc', 'draw_no_bet': 'dnb'}
+        opps = []
+        entries = []  # 入库观察库(含正 EV opp 的 entry)
+        _t0 = time.time()
+        for m in matches:
+            sport = m.get('sport', 'football')
+            try:
+                entry = _build_oa_entry(m, sport)
+                _oa_add_markets(entry, m, sport, use_rest=False, status='prematch')
+            except Exception:
+                continue
+            _league = entry.get('league', '')
+            _epoch = entry.get('start_time_pin_epoch', 0)
+            _has_ev = False
+            for group in ('opportunities', 'handicap', 'over_under', 'double_chance', 'draw_no_bet'):
+                for o in entry.get(group, []):
+                    if (o.get('ev_pct') or 0) <= 0:
+                        continue
+                    _has_ev = True
+                    sub_market = o.get('_market') or _GROUP_TO_SUB.get(group, group)
+                    if not _is_market_released(sport, sub_market, _league,
+                                               o.get('designation', ''), _epoch,
+                                               o.get('fair_price') or o.get('bb_odds'), scope='early'):
+                        continue
+                    if _is_direction_blocked(sport, sub_market, o.get('designation', ''), _epoch):
+                        continue
+                    o['home_bb'] = entry.get('home_bb', '')
+                    o['away_bb'] = entry.get('away_bb', '')
+                    o['sport'] = sport
+                    o['_pin_epoch'] = _epoch
+                    opps.append(o)
+            if _has_ev:
+                entries.append(entry)
+        _dt = time.time() - _t0
+        # 入库观察库(ws_scan 来源, 与 drop 来源分开, 供对比两流程优劣)
+        if entries:
+            try:
+                from src.monitor.clv_collector import log_oa_opportunities
+                log_oa_opportunities(entries, min_ev=2.0, source="ws_scan")
+            except Exception:
+                pass
+        if opps:
+            # 按 EV 降序, 限 30 注/轮(防风控: auto_bet_flow 每单 sleep 20-90s)
+            opps.sort(key=lambda o: -(o.get('ev_pct') or 0))
+            opps = opps[:30]
+            try:
+                from src.betting.bb_real_bet_flow import auto_bet_flow
+                res = auto_bet_flow(opps, trigger_ts=_t0, trigger_source="ws_scan")
+                n = len(res.get('success', [])) if isinstance(res, dict) else 0
+                if n:
+                    print(f'[slm] 早盘WS扫描触发下单 {n} 注', flush=True)
+            except Exception as e:
+                print(f'[slm] 早盘WS扫描触发下单异常: {type(e).__name__} {e}', flush=True)
+        return len(opps)
 
     def _match_drop_anchor(self, trig):
         """live drop 作事件锚点(2026-10-11 简化版): 匹配观察库 pending, 用 drop 方向算 clv_sign。

@@ -1002,7 +1002,7 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
     return len(rows)
 
 
-def log_oa_opportunities(details, min_ev=2.0):
+def log_oa_opportunities(details, min_ev=2.0, source="validate"):
     """Betfair 直接匹配的机会入库 tracking(2026-09-27 修复 tracking 冻结)。
 
     早盘 9-18 切换 Betfair 直接匹配(compare_bb_vs_oa)后, 新流程不再调 log_all_ev_opportunities
@@ -1075,7 +1075,7 @@ def log_oa_opportunities(details, min_ev=2.0):
                     "bb_price_source": m.get("bb_price_source", "BB"),
                     "fair_source": m.get("_fair_source", {}).get(sub, ""),  # pinnacle/betfair, 2026-10-11 CLV口径分组
                     "pin_league_id": "", "pin_match_id": "",
-                    "source": "validate", "pin_max_stake": "",
+                    "source": source, "pin_max_stake": "",
                     "bb_match_id": bb_match_id,
                 })
 
