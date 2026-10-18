@@ -350,7 +350,7 @@ class PrematchIngestor:
 def main():
     cache = PinOddsCache()
     rest = PinRestClient()
-    ws = PinWSClient(cache, rest, on_live=_on_live)
+    ws = PinWSClient(cache, rest, on_live=_on_live, on_prematch=_on_prematch)
     sse = PinSSEClient(on_event=_on_drop)
 
     _ensure_drop_symlink()   # 启动时迁移旧文件 + 建当天 symlink

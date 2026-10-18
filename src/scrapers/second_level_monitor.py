@@ -217,6 +217,7 @@ BB_SUB_TO_SM = {"over_under": "ou", "handicap": "hc", "handicap_games": "hc_game
 MARKET_RELEASE_FILE = ROOT / "data" / "storage" / "market_release.json"
 OBS_STATE_FILE = ROOT / "data" / "storage" / "observe_release_state.json"
 PIN_TRIGGER_FILE = ROOT / "data" / "storage" / "pin_trigger.jsonl"  # Pin drop 触发信号(scripts/pin_ws_trigger.py 写)
+PREMATCH_TICK_FILE = ROOT / "data" / "storage" / "pin_prematch_tick.jsonl"  # 早盘 WS 赔率变动触发(2026-10-18 事件驱动)
 PIN_LIVE_TICK_FILE = ROOT / "data" / "storage" / "pin_live_tick.ts"  # Pin WS live 帧触发信号时间戳(2026-10-11)
 DAILY_STAKE_LIMIT = 1000  # 新释放盘口当日累计投注额上限(2026-09-12 用户要求), 次日实盘ROI>4%解除
 DAILY_LOSS_LIMIT = 200   # 2026-10-13 探针单日亏损熔断: 资本10000的2%, 当日实盘亏损超200即停
@@ -612,6 +613,7 @@ class SecondLevelMonitor:
         self._token_remind_until = 0.0  # token 失效钉钉提醒节流(30min)
         self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
         self._pin_trigger_offset = 0  # Pin drop 触发文件已消费行数(2026-10-11)
+        self._prematch_tick_offset = 0  # 早盘 WS 赔率变动 tick 已消费行数(2026-10-18 事件驱动)
         self._last_prematch_scan = 0.0  # 早盘 WS 全量扫描上次时间戳(2026-10-18 双轨制, 每 30s)
         self._pin_live_wake = False  # 滚球 drop 唤醒标志(2026-10-11): live drop 触发立即滚球比较
         self._trigger_source = "init"  # 触发源标签(ws/pin/poll), 供审计组内对照(2026-10-11)

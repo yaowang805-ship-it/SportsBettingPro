@@ -190,11 +190,16 @@ EARLY_BET_ENABLED = True  # 2026-10-17 恢复: num_1已修(daemon确认num_0), �
 
 
 def _early_outstanding():
-    """早盘未结算投注额(读 tracked_bets.json 里 status=pending 的注额合计), 独立于滚球 _live_outstanding。"""
+    """早盘未结算投注额(读 real_bets.json 里 trigger_source 是早盘 且 result=None 的注额)。
+
+    2026-10-18 修: 之前读 tracked_bets.json(status=pending), 但早盘实盘下单只写 real_bets 不写
+    tracked_bets → 未结冻结在旧值 810。改读 real_bets 的早盘注单(trigger_source 非空=早盘, result=None=未结)。
+    """
     try:
-        d = json.loads((DATA_DIR / "tracked_bets.json").read_text())
-        bets = d.get("bets", [])
-        return sum(float(b.get("stake", 0) or 0) for b in bets if b.get("status") == "pending")
+        d = json.loads((DATA_DIR / "real_bets.json").read_text())
+        bets = d.get("bets", {})
+        return sum(float(b.get("stake", 0) or 0) for b in bets.values()
+                   if b.get("trigger_source") and b.get("result") is None)
     except Exception:
         return 0.0
 
