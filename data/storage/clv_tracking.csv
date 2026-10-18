@@ -4992,3 +4992,14 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T14:42:10Z,football,USA Major League Soccer,Philadelphia Union,New England Revolution,,,和局,1x2,4.68,0,4.0437,15.74,0,1,1792884600,BB,pinnacle,,,ws_scan,,,4231115
 2026-10-18T14:42:10Z,football,USA Major League Soccer,Philadelphia Union,New England Revolution,,,客胜,1x2,4.85,0,4.0967,18.39,0,1,1792884600,BB,pinnacle,,,ws_scan,,,4231115
 2026-10-18T14:42:10Z,football,USA Major League Soccer,Philadelphia Union,New England Revolution,,,上半场客胜,ht,5.2,0,4.1174,26.29,0,1,1792884600,BB,pinnacle,,,ws_scan,,,4231115
+2026-10-18T14:43:17Z,football,USA Major League Soccer,Atlanta United FC,Chicago Fire,,,和局,1x2,4.13,0,4.0437,2.13,0,1,1792884600,BB,pinnacle,,,ws_scan,,,4231119
+2026-10-18T14:43:17Z,tennis,ATP Challenger - Lisbon Open,Carlos Taberner (ESP),Goncalo Marques (POR),,,客胜,1x2,6.05,0,4.6922,28.94,0,3,1792335600,BB,pinnacle,,,ws_scan,,,5768759
+2026-10-18T14:44:26Z,basketball,Poland Basketball League,MKS Dabrowa Gornicza,Slask Wroclaw,,,上半场客胜,ht,1.73,0,1.6911,2.3,0,3,1792337400,ALL,pinnacle,,,ws_scan,,,5762246
+2026-10-18T14:44:26Z,basketball,Poland Basketball League,MKS Dabrowa Gornicza,Slask Wroclaw,,,让分客胜,hc,1.83,0,1.7612,3.91,0,3,1792337400,ALL,pinnacle,,,ws_scan,,-2.5,5762246
+2026-10-18T14:45:36Z,football,USA Major League Soccer,CF Montreal,Nashville SC,,,双重机会-主/和局,dc,2.31,0,1.8286,26.33,0,1,1792863000,BB,pinnacle,,,ws_scan,,,4231122
+2026-10-18T14:46:51Z,football,Algeria Ligue 1,MB Rouisset,JS Saoura,,,和局,1x2,2.75,0,2.6532,3.65,0,2,1792341900,ALL,pinnacle,,,ws_scan,,,5391266
+2026-10-18T14:46:51Z,football,Algeria Ligue 1,MB Rouisset,JS Saoura,,,双重机会-和局/客,dc,1.78,0,1.4764,20.56,0,2,1792341900,ALL,pinnacle,,,ws_scan,,,5391266
+2026-10-18T14:48:05Z,football,USA Major League Soccer,FC Dallas,San Jose Earthquakes,,,和局,1x2,4.2,0,4.0437,3.87,0,1,1792888200,BB,pinnacle,,,ws_scan,,,4231117
+2026-10-18T14:48:05Z,football,USA Major League Soccer,FC Dallas,San Jose Earthquakes,,,上半场客胜,ht,4.57,0,4.0437,13.02,0,1,1792888200,BB,pinnacle,,,ws_scan,,,4231117
+2026-10-18T14:48:05Z,football,USA Major League Soccer,FC Dallas,San Jose Earthquakes,,,双重机会-和局/客,dc,1.99,0,1.7134,16.14,0,1,1792888200,BB,pinnacle,,,ws_scan,,,4231117
+2026-10-18T14:48:05Z,football,USA Major League Soccer,Houston Dynamo,Minnesota United FC,,,上半场客胜,ht,4.37,0,4.0437,8.07,0,1,1792888200,BB,pinnacle,,,ws_scan,,,4231120
