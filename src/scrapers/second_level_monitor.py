@@ -1076,13 +1076,16 @@ class SecondLevelMonitor:
             if not fair or len(fair) <= i or fair[i] <= 0:
                 continue
             fair_p = fair[i]
-            ev = (bb - fair_p) / fair_p * 100.0
+            from src.scrapers.fair_calibration import calibrated_ev
+            ev, ev_raw, fair_cal = calibrated_ev(bb, fair_p)  # 2026-10-18 校准热门高估
+            fair_cal = fair_cal or fair_p
             # 2026-10-13 原始 tick 普查(补分母): 比价后、ev 过滤前落一条, 一行一条。
             # 有了它才能算覆盖率/base rate("BB 到底有多少时候错"), 不被下注样本条件化。
             try:
                 _tk = {"ts": time.time(), "match_id": match_id, "sub": sub, "desig": desig[d],
                        "bb_price": bb, "pin_fair": round(fair_p, 4), "pin_raw": raw[i],
                        "pin_points": pin_points, "ev": round(ev, 2),
+                       "ev_raw": round(ev_raw, 2), "fair_cal": round(fair_cal, 4),
                        "trigger_source": self._trigger_source,
                        "degraded_mode": (self._trigger_source != "pin"),
                        "sport": lv.get("sport", ""),
