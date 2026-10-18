@@ -21,8 +21,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 
-# 总开关(可回退): 关掉则校准完全不生效, 回到 ev=(bb-fair)/fair 原始口径
-CALIBRATE_FAIR = True
+# 总开关(分市场, 可回退): 关掉则该端校准不生效, 回到 ev=(bb-fair)/fair 原始口径。
+# 2026-10-18 时间切分样本外验证:
+#   prematch 前半拟合→后半测试 ev_cal>0 ROI +9.0%(194笔) → 通过, 开
+#   live     前半拟合→后半测试 ev_cal>0 ROI -10.7%(419笔) → 失败(1天数据偏差不稳定), 关
+CALIBRATE_FAIR = {"prematch": True, "live": False}
 
 _TABLE_FILES = {
     "live": "fair_calibration.json",
@@ -55,7 +58,7 @@ def calibrate_fair(fair, market="live"):
     无表/开关关/非法输入 → 返回原 fair(no-op)。
     market ∈ {'live', 'prematch'}。
     """
-    if not CALIBRATE_FAIR:
+    if not CALIBRATE_FAIR.get(market, False):
         return fair
     if fair is None or fair <= 1.0:
         return fair
