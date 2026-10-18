@@ -786,32 +786,8 @@ def _diagnose_pinnacle_error(url, status_code):
         logger.error("503 Service Unavailable — Pinnacle 服务不可用")
 
 
-def us_to_decimal(us_price):
-    """美式赔率 → 十进制。"""
-    if us_price is None:
-        return None
-    if us_price > 0:
-        return round(1 + us_price / 100, 4)
-    else:
-        return round(1 - 100 / us_price, 4)
-
-
-def get_decimal_price(price_obj: dict) -> float:
-    """从 Pinnacle 价格对象中提取十进制赔率。
-
-    兼容两种 API 格式:
-    - 新格式: {"price": 147} (美式赔率)
-    - 旧格式: {"price_decimal": 2.47} (十进制)
-    """
-    # 新格式: price (US odds)
-    us_price = price_obj.get("price")
-    if us_price is not None and isinstance(us_price, (int, float)):
-        return us_to_decimal(us_price)
-    # 旧格式: price_decimal
-    dec = price_obj.get("price_decimal")
-    if dec is not None and isinstance(dec, (int, float)) and dec > 1:
-        return float(dec)
-    return None
+# 2026-10-18 纯工具已迁至 odds_utils.py, 此处 re-export 向后兼容(结算/匹配等纯本地用途)
+from src.scrapers.odds_utils import us_to_decimal, get_decimal_price  # noqa: F401
 
 
 # ── Preflight connectivity check ───────────────────────────────────────
