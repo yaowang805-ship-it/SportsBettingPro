@@ -4639,3 +4639,10 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T02:15:57Z,basketball,Japan B.League Premier,Ibaraki Robots,Osaka Evessa,,,让分客胜,hc,1.91,0,1.8417,3.71,0,3,1792303500,BB,pinnacle,,,validate,,+7.5,5298117
 2026-10-18T02:25:02Z,football,USL Championship,Las Vegas Lights,Lexington SC,,,上半场主胜,ht,3.64,0,3.2924,10.56,0,2,1792290600,ALL,pinnacle,,,validate,,,4259091
 2026-10-18T02:25:02Z,football,USL Championship,Las Vegas Lights,Lexington SC,,,上半场客胜,ht,2.72,0,2.2397,21.44,0,2,1792290600,ALL,pinnacle,,,validate,,,4259091
+2026-10-18T02:35:45Z,basketball,Australia NBL,Tasmania Jackjumpers,New Zealand Breakers,,,让分客胜,hc,1.94,0,1.8607,4.26,0,3,1792296000,ALL,pinnacle,,,validate,,+5.5,5074485
+2026-10-18T02:39:02Z,basketball,Japan B.League One,Tachikawa Dice,Tokyo Hachioji Trains,,,让分客胜,hc,1.89,0,1.8483,2.26,0,3,1792299900,BB,pinnacle,,,validate,,-1.5,5325672
+2026-10-18T02:39:02Z,basketball,Japan B.League One,Ehime Orange Vikings,Kagoshima Rebnise,,,让分主胜,hc,1.84,0,1.7944,2.54,0,3,1792299900,BB,pinnacle,,,validate,,-8.5,5325670
+2026-10-18T02:39:02Z,basketball,Japan B.League One,Tachikawa Dice,Tokyo Hachioji Trains,,,客胜,1x2,1.77,0,1.7118,3.4,0,3,1792299900,BB,pinnacle,,,validate,,,5325672
+2026-10-18T02:46:37Z,football,Philippines Football League,Tuloy FC,Dynamic Herb Cebu,,,大球,ou,1.91,0,1.8041,5.87,0,3,1792306800,ALL,pinnacle,,,validate,,4.5,5733372
+2026-10-18T02:46:37Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Levanga Hokkaido,,,让分客胜,hc,1.98,0,1.9403,2.05,0,3,1792303500,BB,pinnacle,,,validate,,-1.5,5298107
+2026-10-18T02:47:10Z,football,Uganda Premier League,UPDF FC,Bul FC,,,上半场客胜,ht,2.78,0,2.2463,23.76,0,2,1792332000,BB,pinnacle,,,validate,,,5767230

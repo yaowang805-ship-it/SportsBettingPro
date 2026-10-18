@@ -2383,6 +2383,8 @@ class SecondLevelMonitor:
         from src.scrapers.devig import shin_fair_odds
         _DIR = {"主胜": "home", "客胜": "away", "和局": "draw", "大球": "over", "小球": "under"}
         now = time.time()
+        _total = sum(len(v) for v in self._drop_anchor_track.values())
+        print(f"[slm] 复开价锚点: pending {_total} 注", flush=True)
         _live_evs = {}  # sid -> live events(每运动拉一次, force 绕过 15min 缓存拿实时)
         for mid, recs in list(self._drop_anchor_track.items()):
             remain = []
