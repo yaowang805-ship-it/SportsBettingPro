@@ -987,7 +987,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 fair_price = _oa_ml.get(_ml_keys[i])
                 if bb_o and fair_price and fair_price > 1:
                     ev = (bb_o - fair_price) / fair_price * 100
-                    if ev > 1:
+                    if ev > 0:
                         entry["opportunities"].append({
                             "designation": mlabels["ml"][i],
                             "bb_odds": bb_o,
@@ -1191,7 +1191,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                         fair_price = _oa_ht.get(_keys[i])
                         if bb_o and fair_price and fair_price > 1:
                             ev = (bb_o - fair_price) / fair_price * 100
-                            if ev > 1:
+                            if ev > 0:
                                 entry["opportunities"].append({
                                     "designation": label,
                                     "bb_odds": bb_o,
@@ -1269,7 +1269,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     if bb_ml[idx1] and bb_ml[idx2] and bb_dc_val >= min(bb_ml[idx1], bb_ml[idx2]):
                         continue
                     ev = (bb_dc_val - fp) / fp * 100
-                    if ev > 1:
+                    if ev > 0:
                         entry["double_chance"].append({
                             "designation": dc_labels[i],
                             "bb_odds": bb_dc_val,
@@ -1503,7 +1503,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             "phase2_threshold_default": 0.70,
             "phase2_threshold_tennis": 0.75,
             "ev_cap_pct": 20,
-            "min_ev_pct": 1,
+            "min_ev_pct": 0,
         },
         "timestamp": timestamp,
         "bb_matches_total": len(bb_matches),
@@ -1615,7 +1615,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
                     _conf_p = _conf.get(keys[i])
                     if _conf_p and _conf_p <= fair:
                         continue  # SBO 不同向 → 跳过
-                    if ev > 1:
+                    if ev > 0:
                         entry["opportunities"].append({
                             "designation": mlabels["ml"][i], "bb_odds": bb_o,
                             "pin_odds": (oa_ml.get("_raw") or {}).get(keys[i]), "fair_price": round(fair, 4), "ev_pct": round(ev, 2),
@@ -1703,7 +1703,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
                 fair = oa_ht.get(keys[i])
                 if bb_o and fair and fair > 1:
                     ev = (bb_o - fair) / fair * 100
-                    if ev > 1:
+                    if ev > 0:
                         entry["opportunities"].append({
                             "designation": ht_labels[i], "bb_odds": bb_o,
                             "pin_odds": (oa_ht.get("_raw") or {}).get(keys[i]), "fair_price": round(fair, 4), "ev_pct": round(ev, 2),
@@ -1770,7 +1770,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
                 fair = oa_dc.get(dc_keys[i])
                 if bb_val and fair and fair > 0:
                     ev = (bb_val - fair) / fair * 100
-                    if ev > 1:
+                    if ev > 0:
                         entry["double_chance"].append({
                             "designation": dc_labels[i], "bb_odds": bb_val,
                             "pin_odds": 0, "fair_price": round(fair, 4), "ev_pct": round(ev, 2), "_market": "dc",
@@ -1851,7 +1851,7 @@ def compare_bb_vs_oa(bb_matches, save_path=None):
     output = {
         "version": "2.0",
         "code_version": COMPARISON_CODE_VERSION + 10,  # 强制全量重建(Betfair 直接匹配新引擎)
-        "parameters": {"min_ev_pct": 1, "ev_cap_pct": 20},
+        "parameters": {"min_ev_pct": 0, "ev_cap_pct": 20},
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "bb_matches_total": len(bb_matches),
         "pinnacle_leagues_found": 0,  # 无 Pin
