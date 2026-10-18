@@ -204,15 +204,14 @@ def _kill_stale_pin_cache(max_age_min=15):
 
 
 def check_pin():
-    # 2026-09-20 锚点已换 odds-api.io(Betfair公平价+Sbobet置信度), Pin 已暂停(15min CDN陈旧)。
-    # 此检查从「Pin 连通」改为「odds-api.io 连通」(新锚点健康)。
+    # 2026-10-18 锚点已切 pinnapi.com(单锚), 此检查从「odds-api.io 连通」改为「pinnapi 连通」。
     import time as _t
     for i in range(3):
         try:
-            from src.scrapers.odds_api_io import get_sports
-            data = get_sports()
+            from src.scrapers.pinnapi_client import fetch_pinnacle_markets
+            data = fetch_pinnacle_markets(1, 'prematch', force=True)
             if data:
-                return True, f"连通({len(data)}运动)"
+                return True, f"连通({len(data.get('events', []))}事件)"
         except Exception:
             pass
         if i < 2:
