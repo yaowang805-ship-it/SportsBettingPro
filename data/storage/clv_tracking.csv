@@ -5003,3 +5003,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T14:48:05Z,football,USA Major League Soccer,FC Dallas,San Jose Earthquakes,,,上半场客胜,ht,4.57,0,4.0437,13.02,0,1,1792888200,BB,pinnacle,,,ws_scan,,,4231117
 2026-10-18T14:48:05Z,football,USA Major League Soccer,FC Dallas,San Jose Earthquakes,,,双重机会-和局/客,dc,1.99,0,1.7134,16.14,0,1,1792888200,BB,pinnacle,,,ws_scan,,,4231117
 2026-10-18T14:48:05Z,football,USA Major League Soccer,Houston Dynamo,Minnesota United FC,,,上半场客胜,ht,4.37,0,4.0437,8.07,0,1,1792888200,BB,pinnacle,,,ws_scan,,,4231120
+2026-10-18T14:50:42Z,football,USA Major League Soccer,Sporting Kansas City,Austin FC,,,和局,1x2,4.13,0,4.0437,2.13,0,1,1792888200,BB,pinnacle,,,ws_scan,,,4231126
+2026-10-18T14:52:18Z,football,USA Major League Soccer,Portland Timbers,Charlotte FC,,,和局,1x2,4.36,0,4.0437,7.82,0,1,1792895400,BB,pinnacle,,,ws_scan,,,4231124
+2026-10-18T14:52:50Z,tennis,ATP Challenger - Lisbon Open,Carlos Taberner (ESP),Goncalo Marques (POR),,,客胜,1x2,6.05,0,4.6922,28.94,0,3,1792335300,BB,pinnacle,,,ws_scan,,,5768759
+2026-10-18T14:53:20Z,football,England Premier League,Coventry City,Fulham FC,,,上半场小球,ht_ou,2.17,0,1.9917,8.95,0,1,1792850400,ALL,pinnacle,,,ws_scan,,1.25,5130849

@@ -331,9 +331,17 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
             # 2026-10-11: 公平价已切 Pin 主锚(_oa_fair→consensus_fair_price skip_betfair=True), 旧 Betfair/pin_odds 分支废弃
             _fair_str = f" | Pin公平价 {float(_fair):.2f}" if _fair else ""
             _ev_str = f" | 溢价 {float(_ev):+.1f}%" if _ev else ""
-            sent_dingtalk.append(
-                f"✅【{_win_label(opp.get('_pin_epoch'))}】{disp_home} vs {disp_away} | {desig}\n"
-                f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_ev_str} | 注额 ¥{stake:.0f} | 投注 {_bj} | 开赛 {_kickoff}")
+            _kickoff_str = f" | 开赛 {_kickoff}" if _kickoff else ""
+            _src_label = "WS扫描" if trigger_source == "ws_scan" else "Drop"
+            _single = (f"✅【{_win_label(opp.get('_pin_epoch'))}】{disp_home} vs {disp_away} | {desig}\n"
+                       f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_ev_str} | 注额 ¥{stake:.0f} | {_src_label} | 投注 {_bj}{_kickoff_str}")
+            sent_dingtalk.append(_single)
+            # 2026-10-18 改: 每单立即推钉钉(不再攒批等循环结束, 否则 sleep 20-90s/单 循环不结束推送被吞)
+            try:
+                from config.settings import send_dingtalk
+                send_dingtalk(f"🟦 早盘投注 {desig}", _single)
+            except Exception:
+                pass
             _append_bet_history(rec)
         else:
             failed.append({"home": disp_home, "away": disp_away, "reason": f"code={code} {msg}"})
