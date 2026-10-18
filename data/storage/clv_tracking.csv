@@ -4670,3 +4670,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T03:57:26Z,basketball,China CBA,Shandong Hi Speed Kirin,Liaoning Flying Leopards,,,让分主胜,hc,1.94,0,1.6839,15.21,0,3,1792323300,ALL,pinnacle,,,validate,,-1.5,5626176
 2026-10-18T04:04:05Z,basketball,Japan B.League One,Tachikawa Dice,Tokyo Hachioji Trains,,,主胜,1x2,2.41,0,2.287,5.38,0,3,1792299900,BB,pinnacle,,,validate,,,5325672
 2026-10-18T04:04:05Z,basketball,Japan B.League One,Tachikawa Dice,Tokyo Hachioji Trains,,,让分主胜,hc,1.94,0,1.8364,5.64,0,3,1792299900,BB,pinnacle,,,validate,,+3.5,5325672
+2026-10-18T04:05:21Z,football,Oman Professional League,Oman Club,Bahla Club,,,上半场主胜,ht,3.35,0,2.7269,22.85,0,3,1792332300,ALL,pinnacle,,,validate,,,5766550
+2026-10-18T04:05:21Z,football,Oman Professional League,Oman Club,Bahla Club,,,上半场客胜,ht,3.68,0,3.1073,18.43,0,3,1792332300,ALL,pinnacle,,,validate,,,5766550
+2026-10-18T04:16:59Z,football,Malta Premier League,Gzira United FC,Hamrun Spartans FC,,,和局,1x2,4.65,4.6,4.3875,5.98,40,2,1792314000.0,BB,,,,push,,,
+2026-10-18T04:16:59Z,football,South Korea K-League 1,FC Seoul,Gimcheon Sangmu FC,,,和局,1x2,4.81,4.76,4.0621,18.41,0,2,1792308600.0,BB,,,,push,,,
