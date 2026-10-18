@@ -101,7 +101,7 @@ def _oa_fair(entry, sport, sub, target_line=None, use_rest=None, status=None):
 
     2026-09-26 曾退化为 Betfair 单锚(pinnapi 免费 100次/天, 额度用完就 429 退化)。现在用户已买
     实时 key, 切回三锚共识(Pin 黄金 sharp 基准 0.24%效率, 拉平 Betfair 单锚的长腿 bias)。
-    sub ∈ {1x2, hc, ou, ht, ht_ou, dc, dnb, btts}; ht_hc/correct_score/oe/corner/booking 无源。
+    sub ∈ {1x2, hc, ou, ht, ht_ou, ht_hc, dc, dnb, btts}; correct_score/oe/corner/booking 无源。
     target_line: hc/ou/ht_ou 的 BB 让球/大小线(用于选对应线)。
     use_rest: 透传给 consensus_fair_price → fair_price_bb(早盘 WS 触发传 False 只读 WS 缓存)。
     status: 'live'/'prematch' → 透传给 consensus_fair_price 选 live/prematch 赔率(滚球 live drop 传 live)。
@@ -1042,7 +1042,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             ev_h = (bb_home_odds - home_fair) / home_fair * 100 if home_fair > 0 else 0
             ev_a = (bb_away_odds - away_fair) / away_fair * 100 if away_fair > 0 else 0
             line_info = f"[备{bb_hl}]" if hc_tag == "alt" else ""
-            if ev_h > 1:
+            if ev_h > 0:
                 opp = {
                     "designation": mlabels["hc_home"],
                     "line": hc_dict.get("home_line_str", ""),
@@ -1056,7 +1056,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 if line_info:
                     opp.setdefault("tags", []).append(line_info)
                 entry["handicap"].append(opp)
-            if ev_a > 1:
+            if ev_a > 0:
                 opp = {
                     "designation": mlabels["hc_away"],
                     "line": hc_dict.get("away_line_str", ""),
@@ -1201,8 +1201,40 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                     "_market": "ht",
                                 })
 
-            # HT 让球 (2026-09-18): Betfair 无 Spread HT 市场(仅 Sbobet 有, 但 Sbobet 是置信度
-            # 不进定价), 无 Betfair 公平价 → 按「无覆盖=无机会」跳过, 不再用 Pin 生成 ht_hc 假溢价。
+            # HT 让球 (2026-10-18 补): 之前因「Betfair 无 Spread HT」跳过; 现切 Pin 单锚, Pin num_1
+            # 有半场 spreads → 恢复比价。BB 的 odds_ht.handicap = 半场让球主/客(与全场 hc 同结构)。
+            bb_ht_hc = bb_ht.get("handicap")
+            if bb_ht_hc:
+                bb_hhl = bb_ht_hc.get("home_line") if bb_ht_hc.get("home_line") is not None else bb_ht_hc.get("away_line")
+                if bb_hhl is not None:
+                    _oa_hthc = _oa_fair(entry, sport, "ht_hc", target_line=bb_hhl)
+                    if _oa_hthc and _oa_hthc.get("home") and _oa_hthc.get("away"):
+                        _bf_hl = _oa_hthc.get("line")
+                        if _bf_hl is not None and abs(float(bb_hhl) - float(_bf_hl)) <= 0.25:
+                            hh_fair = _oa_hthc["home"]
+                            ha_fair = _oa_hthc["away"]
+                            ev_hh = (bb_ht_hc["home_odds"] - hh_fair) / hh_fair * 100 if hh_fair > 0 else 0
+                            ev_ha = (bb_ht_hc["away_odds"] - ha_fair) / ha_fair * 100 if ha_fair > 0 else 0
+                            if ev_hh > 0:
+                                entry["handicap"].append({
+                                    "designation": mlabels["hc_home"],
+                                    "line": bb_ht_hc.get("home_line_str", ""),
+                                    "bb_odds": bb_ht_hc["home_odds"],
+                                    "pin_odds": (_oa_hthc.get("_raw") or {}).get("home"),
+                                    "fair_price": round(hh_fair, 4),
+                                    "ev_pct": round(ev_hh, 2),
+                                    "_market": "ht_hc",
+                                })
+                            if ev_ha > 0:
+                                entry["handicap"].append({
+                                    "designation": mlabels["hc_away"],
+                                    "line": bb_ht_hc.get("away_line_str", ""),
+                                    "bb_odds": bb_ht_hc["away_odds"],
+                                    "pin_odds": (_oa_hthc.get("_raw") or {}).get("away"),
+                                    "fair_price": round(ha_fair, 4),
+                                    "ev_pct": round(ev_ha, 2),
+                                    "_market": "ht_hc",
+                                })
 
             # HT 大小 (2026-09-18): 用 Betfair Totals HT 中间价替代 Pin
             # 2026-10-03: Betfair 无 Totals HT 盘口(拿不到 CLV), ht_ou 不进观察库(只收能拿 CLV+赛果的盘口)。
