@@ -251,8 +251,8 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
                 if 'home' in fair['_raw'] and 'away' in fair['_raw']:
                     fair['_raw']['home'], fair['_raw']['away'] = fair['_raw']['away'], fair['_raw']['home']
         return fair
-    if sub_market in ('hc', 'hc_games'):
-        # ht_hc(上半场让球) 同理: 半场 spreads 未解析, 全场 spreads 冒充半场 → 不定价(2026-10-12)
+    if sub_market in ('hc', 'hc_games', 'ht_hc'):
+        # ht_hc(上半场让球, 2026-10-18 补): num_1 的 spreads 与全场同结构, 共用去水/线匹配逻辑
         # hc_games(网球让局, 2026-10-14): 与 hc(让盘)共用逻辑, 事件已由上面 _games 定位到 "(Games)" 子事件
         spreads = full.get('spreads') or {}
         if not spreads:
@@ -279,8 +279,8 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
                     '_raw': {'home': o.get('away'), 'away': o.get('home')}}
         return {'home': _fairs[0], 'away': _fairs[1], 'line': o.get('hdp'),
                 '_raw': {'home': o.get('home'), 'away': o.get('away')}}
-    if sub_market == 'ou':
-        # ht_ou(上半场大小) 同理: 半场 totals 未解析, 全场 totals 冒充半场 → 不定价(2026-10-12)
+    if sub_market in ('ou', 'ht_ou'):
+        # ht_ou(上半场大小, 2026-10-18 补): num_1 的 totals 与全场同结构, 共用去水/线匹配逻辑
         totals = full.get('totals') or {}
         if not totals:
             return None

@@ -128,7 +128,14 @@ class PinOddsCache:
                 p0["spreads"] = spreads
             if totals:
                 p0["totals"] = totals
+            # 2026-10-18 保 num_1(半场): WS 只推 num_0(全场), 但 REST /kit/v1/markets 自带 num_1(半场
+            # money_line/spreads/totals)。旧逻辑这里覆盖成 {"num_0": p0} 把 num_1 冲掉 → ht_hc/ht_ou
+            # 永远无价。先留住旧 num_1, 覆盖后再挂回去。
+            _old = ev.get("periods")
+            _num1 = _old.get("num_1") if isinstance(_old, dict) else None
             ev["periods"] = {"num_0": p0}
+            if _num1:
+                ev["periods"]["num_1"] = _num1
 
     def update_tick(self, event_id, market, odds, ts):
         with self._lock:
