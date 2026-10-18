@@ -226,11 +226,12 @@ class PinWSClient:
     断线: 重连 → REST get_snapshot 重建缓存 → 继续吃 tick。
     """
 
-    def __init__(self, cache: PinOddsCache, rest: PinRestClient, on_tick=None, on_live=None):
+    def __init__(self, cache: PinOddsCache, rest: PinRestClient, on_tick=None, on_live=None, on_prematch=None):
         self.cache = cache
         self.rest = rest
         self.on_tick = on_tick or (lambda event_id, event: None)
         self.on_live = on_live or (lambda matchup_id, rec, frame_ts=None: None)
+        self.on_prematch = on_prematch or (lambda mid, home, away: None)
         self._stop = False
 
     def start(self):
@@ -307,6 +308,10 @@ class PinWSClient:
             markets = self._parse_markets(d.get("data") or [])
             if mid and markets:
                 self.cache.update_markets(mid, markets)
+                # 2026-10-18 早盘事件驱动: 赔率变动就触发(替代 30s 轮询), 反查 home/away 供早盘比价
+                _e = self.cache.get(mid) or {}
+                _ev = _e.get("event") or {}
+                self.on_prematch(mid, _ev.get("home", ""), _ev.get("away", ""))
             return
         if t == "live":
             # 滚球帧: rec = 单场(元数据 participants + 赔率 markets, 美国盘)
