@@ -2378,10 +2378,12 @@ class SecondLevelMonitor:
         """
         if not self._drop_anchor_track:
             return
-        from src.scrapers.pinnapi_client import pinnacle_fair_price
+        from src.scrapers.pinnapi_client import fetch_pinnacle_markets, _norm
         from src.scrapers.bb_vs_pinnacle import _BB_SPORT_TO_OA_ID
+        from src.scrapers.devig import shin_fair_odds
         _DIR = {"主胜": "home", "客胜": "away", "和局": "draw", "大球": "over", "小球": "under"}
         now = time.time()
+        _live_evs = {}  # sid -> live events(每运动拉一次, force 绕过 15min 缓存拿实时)
         for mid, recs in list(self._drop_anchor_track.items()):
             remain = []
             for rec in recs:
@@ -2392,10 +2394,36 @@ class SecondLevelMonitor:
                 if not sid:
                     remain.append(rec)
                     continue
-                sm = "1x2" if rec.get("sub") == "opportunities" else "ou"
-                cur = pinnacle_fair_price(rec.get("home", ""), rec.get("away", ""), sid, sm, event_type='live', use_rest_live=True)
+                if sid not in _live_evs:
+                    _live_evs[sid] = (fetch_pinnacle_markets(sid, 'live', force=True) or {}).get('events', [])
+                ev = None
+                for _ev in _live_evs[sid]:
+                    if _norm(_ev.get('home', '')) == _norm(rec.get("home", "")) and _norm(_ev.get('away', '')) == _norm(rec.get("away", "")):
+                        ev = _ev
+                        break
+                if not ev:
+                    remain.append(rec)
+                    continue
+                per = ev.get('periods', {})
+                full = (per.get('num_0') or {}) if isinstance(per, dict) else {}
+                ml = full.get('money_line') or {}
+                sm = rec.get("sub")
+                if sm == "opportunities":
+                    if not ml.get("draw"):
+                        remain.append(rec); continue
+                    _f = shin_fair_odds([ml['home'], ml['draw'], ml['away']])
+                    fair_map = {'home': _f[0], 'draw': _f[1], 'away': _f[2]}
+                elif sm == "over_under":
+                    tot = full.get('totals') or {}
+                    _o = (tot.get('0') or list(tot.values())[0]) if tot else None
+                    if not _o or not _o.get('over') or not _o.get('under'):
+                        remain.append(rec); continue
+                    _f = shin_fair_odds([_o['over'], _o['under']])
+                    fair_map = {'over': _f[0], 'under': _f[1]}
+                else:
+                    remain.append(rec); continue
                 dk = _DIR.get(rec.get("designation", ""))
-                new_f = cur.get(dk) if (cur and dk) else None
+                new_f = fair_map.get(dk) if dk else None
                 old_f = rec.get("fair")
                 if not new_f or not old_f or new_f <= 1:
                     remain.append(rec)
