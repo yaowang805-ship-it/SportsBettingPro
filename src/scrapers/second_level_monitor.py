@@ -2352,6 +2352,116 @@ class SecondLevelMonitor:
             print(f'[slm] Pin drop 触发下单异常: {type(e).__name__} {e}', flush=True)
         return len(new_lines)
 
+    def _consume_prematch_ticks(self):
+        """早盘 WS 赔率变动触发(事件驱动, 替代 30s 轮询, 2026-10-18)。
+
+        Pin WS 推 prematch 赔率变动 → pin_ws_trigger 写 pin_prematch_tick.jsonl(home/away/ts)。
+        读新行 → 反查 BB 快照 → 比价 → 释放过滤 → 下单(trigger_source=ws_scan)。
+        与 _scan_prematch 同口径, 但只比价「变动的比赛」(非全量 1488 场), 比价 <1s。
+        """
+        if not PREMATCH_TICK_FILE.exists():
+            return 0
+        try:
+            lines = PREMATCH_TICK_FILE.read_text().splitlines()
+        except OSError:
+            return 0
+        last = self._prematch_tick_offset
+        if last >= len(lines):
+            self._prematch_tick_offset = 0  # 文件被轮转截断, offset 重置
+            last = 0
+        new_lines = lines[last:]
+        self._prematch_tick_offset = len(lines)
+        if not new_lines:
+            return 0
+        from src.scrapers.bb_incremental_scanner import BB_EXTRACTED
+        from src.scrapers.odds_api_io import _norm_team
+        try:
+            d = json.loads(BB_EXTRACTED.read_text())
+            bb_matches = d.get('matches', []) if isinstance(d, dict) else []
+        except Exception:
+            return 0
+        bb_by_norm = {}
+        for m in bb_matches:
+            h, a = _norm_team(m.get('home', '')), _norm_team(m.get('away', ''))
+            if h and a:
+                bb_by_norm[(h, a)] = m
+                bb_by_norm[(a, h)] = m
+        from src.scrapers.bb_vs_pinnacle import _build_oa_entry, _oa_add_markets
+        from src.report.bb_ev_push import _is_market_released, _is_direction_blocked
+        _GROUP_TO_SUB = {'opportunities': '1x2', 'handicap': 'hc', 'over_under': 'ou',
+                         'double_chance': 'dc', 'draw_no_bet': 'dnb'}
+        opps = []
+        entries = []
+        seen = set()
+        _t0 = time.time()
+        for line in new_lines:
+            try:
+                trig = json.loads(line)
+            except (json.JSONDecodeError, ValueError):
+                continue
+            h, a = _norm_team(trig.get('home', '')), _norm_team(trig.get('away', ''))
+            m = bb_by_norm.get((h, a))
+            if not m:
+                continue
+            mid = str(m.get('id'))
+            if mid in seen:
+                continue
+            seen.add(mid)
+            sport = m.get('sport', 'football')
+            try:
+                entry = _build_oa_entry(m, sport)
+                _oa_add_markets(entry, m, sport, use_rest=False, status='prematch')
+            except Exception:
+                continue
+            _league = entry.get('league', '')
+            _epoch = entry.get('start_time_pin_epoch', 0)
+            _has_ev = False
+            for group in ('opportunities', 'handicap', 'over_under', 'double_chance', 'draw_no_bet'):
+                for o in entry.get(group, []):
+                    _ev = o.get('ev_pct') or 0
+                    if _ev <= 0:
+                        continue
+                    _has_ev = True  # 入库: ev>0 全收
+                    if _ev < 3 or _ev > 20:  # 下单门槛 3-20%
+                        continue
+                    sm = o.get('_market') or _GROUP_TO_SUB.get(group, group)
+                    if not _is_market_released(sport, sm, _league, o.get('designation', ''), _epoch,
+                                               o.get('fair_price') or o.get('bb_odds'), scope='early'):
+                        continue
+                    if _is_direction_blocked(sport, sm, o.get('designation', ''), _epoch):
+                        continue
+                    o['home_bb'] = entry.get('home_bb', '')
+                    o['away_bb'] = entry.get('away_bb', '')
+                    o['sport'] = sport
+                    o['sub_market'] = sm
+                    o['_pin_epoch'] = _epoch
+                    _o_odds = o.get('bb_odds') or 0
+                    _o_ev = o.get('ev_pct') or 0
+                    if _o_odds > 1 and _o_ev > 0:
+                        o['_stake'] = round(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1), 2)
+                    opps.append(o)
+            if _has_ev:
+                entries.append(entry)
+        _dt = time.time() - _t0
+        if entries:
+            try:
+                from src.monitor.clv_collector import log_oa_opportunities
+                log_oa_opportunities(entries, min_ev=2.0, source="ws_scan")
+            except Exception:
+                pass
+        if opps:
+            opps.sort(key=lambda o: -(o.get('ev_pct') or 0))
+            opps = opps[:30]
+            try:
+                from src.betting.bb_real_bet_flow import auto_bet_flow
+                res = auto_bet_flow(opps, trigger_ts=_t0, trigger_source="ws_scan")
+                n = len(res.get('success', [])) if isinstance(res, dict) else 0
+                if n:
+                    print(f'[slm] 早盘WS触发下单 {n} 注', flush=True)
+            except Exception as e:
+                print(f'[slm] 早盘WS触发下单异常: {type(e).__name__} {e}', flush=True)
+        return len(opps)
+
     def _scan_prematch(self):
         """早盘 WS 全量扫描触发(双轨制第二轨, 2026-10-18)。
 
@@ -2760,15 +2870,12 @@ class SecondLevelMonitor:
                 await _run_task(self._consume_pin_triggers, timeout=20, tag="Pin drop触发")
             except Exception as e:
                 print(f"[slm] Pin drop触发异常: {type(e).__name__} {str(e)[:80]}", flush=True)
-            # 2026-10-18 双轨制第二轨: 早盘 WS 全量扫描(每 30s), 覆盖释放清单里的热门/中概率真 edge
-            # (drop 只抓骤降冷门, 命中 BB 17.6% 且冷门无 edge; 全量扫描命中 100% 且覆盖热门 edge)
+            # 2026-10-18 双轨制第二轨: 早盘 WS 赔率变动事件驱动(读 pin_prematch_tick, 替代 30s 轮询)。
+            # Pin WS 推 prematch 赔率变动 → pin_ws_trigger 写 tick → 这里读到就只比价变动的比赛。
             try:
-                _now = time.time()
-                if _now - self._last_prematch_scan >= 30:
-                    self._last_prematch_scan = _now
-                    await _run_task(self._scan_prematch, timeout=60, tag="早盘WS扫描")
+                await _run_task(self._consume_prematch_ticks, timeout=60, tag="早盘WS触发")
             except Exception as e:
-                print(f"[slm] 早盘WS扫描异常: {type(e).__name__} {str(e)[:80]}", flush=True)
+                print(f"[slm] 早盘WS触发异常: {type(e).__name__} {str(e)[:80]}", flush=True)
             # 2026-09-19 事件驱动: WS 变动立即唤醒(省 sleep 0.5s 轮询延迟), 否则等 0.5s
             try:
                 from src.scrapers.odds_ws import wait_change
