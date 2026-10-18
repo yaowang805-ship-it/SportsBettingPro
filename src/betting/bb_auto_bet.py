@@ -108,21 +108,25 @@ def _load_sub_record():
     return {}
 
 
-def check_sub_market_bet(match_id, sub_market):
-    """同一 match + 同一标准化盘口是否已下过注。True=已投(跳过), False=可投。"""
+def check_sub_market_bet(match_id, sub_market, scope="live"):
+    """同一 match + 同一标准化盘口 + 同一 scope 是否已下过注。True=已投(跳过), False=可投。
+
+    scope: "live"(滚球)/"prematch"(早盘)。2026-10-18 滚球/早盘分开锁互不干预——之前只按 match_id,
+    早盘下注会拦掉滚球同场同盘口(反过来也拦), 但两注是不同窗口的不同注。
+    """
     if match_id is None:
         return False
     rec = _load_sub_record()
     sub = _canonical_sub(sub_market)
-    return sub in rec.get(str(match_id), [])
+    return sub in rec.get(f"{match_id}|{scope}", [])
 
 
-def record_sub_market_bet(match_id, sub_market):
-    """下单成功后记录该场该盘口已投(互斥锁落盘)。"""
+def record_sub_market_bet(match_id, sub_market, scope="live"):
+    """下单成功后记录该场该盘口该 scope 已投(互斥锁落盘)。"""
     if match_id is None:
         return
     rec = _load_sub_record()
-    key = str(match_id)
+    key = f"{match_id}|{scope}"
     sub = _canonical_sub(sub_market)
     rec.setdefault(key, [])
     if sub not in rec[key]:

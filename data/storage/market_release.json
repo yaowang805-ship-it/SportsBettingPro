@@ -1,9 +1,16 @@
 {
-  "generated_at": "2026-10-12T01:03:58.961694",
+  "generated_at": "2026-10-18T14:02:51.229511",
   "market_released": [],
   "league_released": [],
   "league_blocked": [],
   "observe_released": [
+    [
+      "football",
+      "1x2",
+      "主",
+      "60-70%",
+      "early"
+    ],
     [
       "football",
       "1x2",
@@ -15,35 +22,7 @@
       "football",
       "1x2",
       "平",
-      "20-30%",
-      "early"
-    ],
-    [
-      "football",
-      "1x2",
-      "平",
-      "40-50%",
-      "early"
-    ],
-    [
-      "football",
-      "hc",
-      "主",
-      "*",
-      "early"
-    ],
-    [
-      "basketball",
-      "hc",
-      "主",
-      "*",
-      "early"
-    ],
-    [
-      "basketball",
-      "hc",
-      "客",
-      "*",
+      "30-40%",
       "early"
     ],
     [
@@ -104,9 +83,16 @@
     ],
     [
       "football",
-      "1x2",
-      "平",
-      "30-40%",
+      "ou",
+      "小",
+      "55-60%",
+      "early"
+    ],
+    [
+      "football",
+      "ou",
+      "大",
+      "55-60%",
       "early"
     ],
     [
@@ -138,48 +124,6 @@
       "live"
     ],
     [
-      "football",
-      "ou",
-      "大",
-      "50-55%",
-      "live"
-    ],
-    [
-      "ice_hockey",
-      "ou",
-      "大",
-      "55-65%",
-      "live"
-    ],
-    [
-      "tennis",
-      "ou",
-      "小",
-      "40-60%",
-      "live"
-    ],
-    [
-      "football",
-      "ou",
-      "小",
-      "55-60%",
-      "early"
-    ],
-    [
-      "football",
-      "ou",
-      "大",
-      "55-60%",
-      "early"
-    ],
-    [
-      "basketball",
-      "hc",
-      "主",
-      "45-55%",
-      "live"
-    ],
-    [
       "ice_hockey",
       "hc",
       "客",
@@ -192,84 +136,75 @@
       "客",
       "65-75%",
       "live"
-    ]
-  ],
-  "observe_blocked": [
+    ],
+    [
+      "tennis",
+      "ou",
+      "小",
+      "40-60%",
+      "live"
+    ],
     [
       "football",
-      "1x2",
-      "主",
-      "*",
+      "dc",
+      "1X",
+      "60-70%",
       "early"
     ],
     [
-      "tennis",
-      "1x2",
-      "主",
-      "*",
-      "live"
-    ],
-    [
-      "tennis",
-      "1x2",
-      "客",
-      "*",
-      "live"
-    ],
-    [
-      "tennis",
-      "hc_games",
-      "主",
-      "*",
-      "live"
-    ],
-    [
-      "basketball",
-      "ou",
-      "大",
-      "45-55%",
-      "live"
+      "football",
+      "dc",
+      "1X",
+      ">70%",
+      "early"
     ],
     [
       "football",
-      "hc",
-      "主",
-      "50-55%",
-      "live"
-    ],
-    [
-      "football",
-      "hc",
-      "主",
+      "dc",
+      "X2",
       "55-60%",
-      "live"
-    ],
-    [
-      "basketball",
-      "hc",
-      "客",
-      "45-55%",
-      "live"
+      "early"
     ],
     [
       "football",
       "dc",
       "X2",
       "60-70%",
-      "live"
-    ],
-    [
-      "football",
-      "1x2",
-      "客",
-      "*",
       "early"
     ],
     [
       "football",
-      "hc",
+      "dc",
+      "X2",
+      ">70%",
+      "early"
+    ],
+    [
+      "football",
+      "dc",
+      "12",
+      ">70%",
+      "early"
+    ],
+    [
+      "football",
+      "ht",
+      "主",
+      "20-30%",
+      "early"
+    ],
+    [
+      "football",
+      "ht",
+      "主",
+      ">70%",
+      "early"
+    ],
+    [
+      "football",
+      "ht",
       "客",
-      "*",
+      "10-20%",
       "early"
     ],
     [
@@ -281,26 +216,893 @@
     ],
     [
       "football",
+      "ht",
+      "客",
+      "50-55%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "40-50%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "60-70%",
+      "early"
+    ],
+    [
+      "football",
       "hc",
       "主",
+      "55-60%",
+      "early"
+    ],
+    [
+      "football",
+      "hc",
+      "客",
+      "55-60%",
+      "early"
+    ],
+    [
+      "football",
+      "hc",
+      "客",
+      "60-70%",
+      "early"
+    ],
+    [
+      "football",
+      "ou",
+      "大",
+      "60-70%",
+      "early"
+    ],
+    [
+      "basketball",
+      "hc",
+      "客",
+      "55-65%",
+      "early"
+    ],
+    [
+      "basketball",
+      "ou",
+      "大",
+      "55-65%",
+      "early"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "客",
+      "<45%",
+      "early"
+    ]
+  ],
+  "observe_blocked": [
+    [
+      "american_football",
+      "1x2",
+      "客",
+      "20-40%",
+      "early"
+    ],
+    [
+      "baseball",
+      "1x2",
+      "主",
+      "<55%",
+      "early"
+    ],
+    [
+      "baseball",
+      "1x2",
+      "客",
+      "<55%",
+      "early"
+    ],
+    [
+      "baseball",
+      "1x2",
+      "客",
+      ">64%",
+      "early"
+    ],
+    [
+      "baseball",
+      "hc",
+      "主",
+      "58-61%",
+      "early"
+    ],
+    [
+      "baseball",
+      "ou",
+      "小",
+      "55-58%",
+      "early"
+    ],
+    [
+      "baseball",
+      "ou",
+      "小",
+      "58-61%",
+      "early"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "主",
+      "45-55%",
+      "early"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "主",
+      "55-65%",
+      "early"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "主",
+      "65-75%",
+      "early"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "主",
+      "<45%",
+      "early"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "主",
+      ">75%",
+      "early"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "客",
+      "45-55%",
+      "early"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "客",
+      "55-65%",
+      "early"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "客",
+      "65-75%",
+      "early"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "客",
+      ">75%",
+      "early"
+    ],
+    [
+      "basketball",
+      "hc",
+      "主",
+      "45-55%",
+      "early"
+    ],
+    [
+      "basketball",
+      "hc",
+      "主",
+      "55-65%",
+      "early"
+    ],
+    [
+      "basketball",
+      "hc",
+      "客",
+      "45-55%",
+      "early"
+    ],
+    [
+      "basketball",
+      "ht",
+      "主",
+      "45-55%",
+      "early"
+    ],
+    [
+      "basketball",
+      "ht",
+      "主",
+      "55-65%",
+      "early"
+    ],
+    [
+      "basketball",
+      "ht",
+      "主",
+      "65-75%",
+      "early"
+    ],
+    [
+      "basketball",
+      "ht",
+      "主",
+      ">75%",
+      "early"
+    ],
+    [
+      "basketball",
+      "ht",
+      "客",
+      "45-55%",
+      "early"
+    ],
+    [
+      "basketball",
+      "ht",
+      "客",
+      "55-65%",
+      "early"
+    ],
+    [
+      "basketball",
+      "ht",
+      "客",
+      "65-75%",
+      "early"
+    ],
+    [
+      "basketball",
+      "ht",
+      "客",
+      "<45%",
+      "early"
+    ],
+    [
+      "basketball",
+      "ht",
+      "客",
+      ">75%",
+      "early"
+    ],
+    [
+      "basketball",
+      "ou",
+      "大",
+      "45-55%",
+      "early"
+    ],
+    [
+      "basketball",
+      "ou",
+      "小",
+      "45-55%",
+      "early"
+    ],
+    [
+      "basketball",
+      "ou",
+      "小",
+      "55-65%",
+      "early"
+    ],
+    [
+      "boxing",
+      "1x2",
+      "主",
+      ">80%",
+      "early"
+    ],
+    [
+      "boxing",
+      "1x2",
+      "客",
+      "20-40%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "主",
+      "10-20%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "主",
+      "20-30%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "主",
+      "30-40%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "主",
       "40-50%",
-      "live"
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "主",
+      "50-55%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "主",
+      "55-60%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "主",
+      "<10%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "主",
+      ">70%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "10-20%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "20-30%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "30-40%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "50-55%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "55-60%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      "<10%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "客",
+      ">70%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "平",
+      "20-30%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "平",
+      "40-50%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "平",
+      "<10%",
+      "early"
+    ],
+    [
+      "football",
+      "dc",
+      "1X",
+      "20-30%",
+      "early"
+    ],
+    [
+      "football",
+      "dc",
+      "1X",
+      "30-40%",
+      "early"
+    ],
+    [
+      "football",
+      "dc",
+      "1X",
+      "40-50%",
+      "early"
+    ],
+    [
+      "football",
+      "dc",
+      "1X",
+      "50-55%",
+      "early"
+    ],
+    [
+      "football",
+      "dc",
+      "1X",
+      "55-60%",
+      "early"
+    ],
+    [
+      "football",
+      "dc",
+      "X2",
+      "10-20%",
+      "early"
+    ],
+    [
+      "football",
+      "dc",
+      "X2",
+      "20-30%",
+      "early"
+    ],
+    [
+      "football",
+      "dc",
+      "X2",
+      "30-40%",
+      "early"
+    ],
+    [
+      "football",
+      "dc",
+      "X2",
+      "40-50%",
+      "early"
+    ],
+    [
+      "football",
+      "dc",
+      "X2",
+      "50-55%",
+      "early"
+    ],
+    [
+      "football",
+      "hc",
+      "主",
+      "50-55%",
+      "early"
     ],
     [
       "football",
       "hc",
       "主",
       "60-70%",
+      "early"
+    ],
+    [
+      "football",
+      "hc",
+      "客",
+      "40-50%",
+      "early"
+    ],
+    [
+      "football",
+      "hc",
+      "客",
+      "50-55%",
+      "early"
+    ],
+    [
+      "football",
+      "ht",
+      "主",
+      "10-20%",
+      "early"
+    ],
+    [
+      "football",
+      "ht",
+      "主",
+      "30-40%",
+      "early"
+    ],
+    [
+      "football",
+      "ht",
+      "主",
+      "50-55%",
+      "early"
+    ],
+    [
+      "football",
+      "ht",
+      "主",
+      "<10%",
+      "early"
+    ],
+    [
+      "football",
+      "ht",
+      "客",
+      "20-30%",
+      "early"
+    ],
+    [
+      "football",
+      "ht",
+      "客",
+      "30-40%",
+      "early"
+    ],
+    [
+      "football",
+      "ht",
+      "客",
+      "<10%",
+      "early"
+    ],
+    [
+      "football",
+      "ou",
+      "大",
+      "40-50%",
+      "early"
+    ],
+    [
+      "football",
+      "ou",
+      "小",
+      "60-70%",
+      "early"
+    ],
+    [
+      "ice_hockey",
+      "hc",
+      "客",
+      "45-55%",
+      "early"
+    ],
+    [
+      "ice_hockey",
+      "ht",
+      "主",
+      "45-55%",
+      "early"
+    ],
+    [
+      "ice_hockey",
+      "ht",
+      "主",
+      "<45%",
+      "early"
+    ],
+    [
+      "ice_hockey",
+      "ht",
+      "客",
+      "45-55%",
+      "early"
+    ],
+    [
+      "ice_hockey",
+      "ht",
+      "客",
+      "<45%",
+      "early"
+    ],
+    [
+      "ice_hockey",
+      "ou",
+      "大",
+      "45-55%",
+      "early"
+    ],
+    [
+      "ice_hockey",
+      "ou",
+      "大",
+      "55-65%",
+      "early"
+    ],
+    [
+      "mma",
+      "1x2",
+      "主",
+      "40-60%",
+      "early"
+    ],
+    [
+      "mma",
+      "1x2",
+      "客",
+      "40-60%",
+      "early"
+    ],
+    [
+      "tennis",
+      "1x2",
+      "主",
+      "20-40%",
+      "early"
+    ],
+    [
+      "tennis",
+      "1x2",
+      "主",
+      "40-60%",
+      "early"
+    ],
+    [
+      "tennis",
+      "1x2",
+      "主",
+      "60-80%",
+      "early"
+    ],
+    [
+      "tennis",
+      "1x2",
+      "主",
+      "<20%",
+      "early"
+    ],
+    [
+      "tennis",
+      "1x2",
+      "主",
+      ">80%",
+      "early"
+    ],
+    [
+      "tennis",
+      "1x2",
+      "客",
+      "20-40%",
+      "early"
+    ],
+    [
+      "tennis",
+      "1x2",
+      "客",
+      "40-60%",
+      "early"
+    ],
+    [
+      "tennis",
+      "1x2",
+      "客",
+      "60-80%",
+      "early"
+    ],
+    [
+      "tennis",
+      "1x2",
+      "客",
+      "<20%",
+      "early"
+    ],
+    [
+      "tennis",
+      "1x2",
+      "客",
+      ">80%",
+      "early"
+    ],
+    [
+      "tennis",
+      "hc",
+      "主",
+      "20-40%",
+      "early"
+    ],
+    [
+      "tennis",
+      "hc",
+      "主",
+      "40-60%",
+      "early"
+    ],
+    [
+      "tennis",
+      "hc",
+      "主",
+      "60-80%",
+      "early"
+    ],
+    [
+      "tennis",
+      "hc",
+      "客",
+      "40-60%",
+      "early"
+    ],
+    [
+      "tennis",
+      "hc",
+      "客",
+      "60-80%",
+      "early"
+    ],
+    [
+      "tennis",
+      "ht",
+      "主",
+      "20-40%",
+      "early"
+    ],
+    [
+      "tennis",
+      "ht",
+      "主",
+      "40-60%",
+      "early"
+    ],
+    [
+      "tennis",
+      "ht",
+      "主",
+      "60-80%",
+      "early"
+    ],
+    [
+      "tennis",
+      "ht",
+      "主",
+      ">80%",
+      "early"
+    ],
+    [
+      "tennis",
+      "ht",
+      "客",
+      "60-80%",
+      "early"
+    ],
+    [
+      "tennis",
+      "ou",
+      "大",
+      "40-60%",
+      "early"
+    ],
+    [
+      "tennis",
+      "ou",
+      "小",
+      "40-60%",
+      "early"
+    ],
+    [
+      "volleyball",
+      "1x2",
+      "主",
+      ">80%",
+      "early"
+    ],
+    [
+      "volleyball",
+      "1x2",
+      "客",
+      "60-80%",
+      "early"
+    ],
+    [
+      "volleyball",
+      "1x2",
+      "客",
+      ">80%",
+      "early"
+    ],
+    [
+      "basketball",
+      "hc",
+      "主",
+      "45-55%",
+      "live"
+    ],
+    [
+      "football",
+      "ou",
+      "大",
+      "50-55%",
+      "live"
+    ],
+    [
+      "ice_hockey",
+      "ou",
+      "大",
+      "55-65%",
+      "live"
+    ],
+    [
+      "basketball",
+      "ou",
+      "大",
+      "45-55%",
+      "live"
+    ],
+    [
+      "tennis",
+      "hc_games",
+      "主",
+      "*",
+      "live"
+    ],
+    [
+      "football",
+      "1x2",
+      "主",
+      "*",
+      "early"
+    ],
+    [
+      "tennis",
+      "1x2",
+      "客",
+      "*",
+      "live"
+    ],
+    [
+      "tennis",
+      "1x2",
+      "主",
+      "*",
       "live"
     ]
   ],
   "observe_release_caps": {
+    "football|1x2|主|60-70%|early": 150,
     "football|1x2|平|10-20%|early": 100,
-    "football|1x2|平|20-30%|early": 100,
-    "football|1x2|平|40-50%|early": 100,
-    "football|hc|主|*|early": 300,
-    "basketball|hc|主|*|early": 300,
-    "basketball|hc|客|*|early": 300,
+    "football|1x2|平|30-40%|early": 100,
     "basketball|1x2|主|*|early": 300,
     "basketball|1x2|客|*|early": 300,
     "tennis|hc|主|*|early": 300,
@@ -309,19 +1111,35 @@
     "football|ht|主|60-70%|early": 300,
     "football|ou|小|50-55%|early": 300,
     "football|ou|大|50-55%|early": 300,
-    "football|1x2|平|30-40%|early": 100,
+    "football|ou|小|55-60%|early": 300,
+    "football|ou|大|55-60%|early": 300,
     "football|hc|主|30-40%|live": 60,
     "football|hc|主|>70%|live": 60,
     "football|hc|客|*|live": 80,
     "basketball|hc|客|55-65%|live": 80,
-    "football|ou|大|50-55%|live": 30,
-    "ice_hockey|ou|大|55-65%|live": 30,
-    "tennis|ou|小|40-60%|live": 30,
-    "football|ou|小|55-60%|early": 300,
-    "football|ou|大|55-60%|early": 300,
-    "basketball|hc|主|45-55%|live": 60,
     "ice_hockey|hc|客|55-65%|live": 60,
-    "ice_hockey|hc|客|65-75%|live": 60
+    "ice_hockey|hc|客|65-75%|live": 60,
+    "tennis|ou|小|40-60%|live": 30,
+    "football|dc|1X|60-70%|early": 100,
+    "football|dc|1X|>70%|early": 100,
+    "football|dc|X2|55-60%|early": 100,
+    "football|dc|X2|60-70%|early": 100,
+    "football|dc|X2|>70%|early": 100,
+    "football|dc|12|>70%|early": 100,
+    "football|ht|主|20-30%|early": 100,
+    "football|ht|主|>70%|early": 100,
+    "football|ht|客|10-20%|early": 100,
+    "football|ht|客|40-50%|early": 100,
+    "football|ht|客|50-55%|early": 100,
+    "football|1x2|客|40-50%|early": 100,
+    "football|1x2|客|60-70%|early": 100,
+    "football|hc|主|55-60%|early": 100,
+    "football|hc|客|55-60%|early": 100,
+    "football|hc|客|60-70%|early": 100,
+    "football|ou|大|60-70%|early": 100,
+    "basketball|hc|客|55-65%|early": 100,
+    "basketball|ou|大|55-65%|early": 100,
+    "basketball|1x2|客|<45%|early": 100
   },
   "direction_released": [],
   "direction_blocked": [],
@@ -330,78 +1148,279 @@
   "direction_window_released": [],
   "observe_real_paper_gap": [
     {
-      "cell": "football|ou|大|50-55%|live",
-      "real_n": 36,
-      "real_winrate": 61.1,
-      "paper_winrate": 90.0,
-      "gap_pp": -28.9
+      "cell": "football|hc|客|30-40%|live",
+      "real_n": 21,
+      "real_winrate": 42.9,
+      "paper_winrate": 62.5,
+      "gap_pp": -19.6
+    },
+    {
+      "cell": "football|hc|主|50-55%|live",
+      "real_n": 58,
+      "real_winrate": 41.4,
+      "paper_winrate": 53.3,
+      "gap_pp": -12.0
+    },
+    {
+      "cell": "football|ou|小|40-50%|live",
+      "real_n": 53,
+      "real_winrate": 35.8,
+      "paper_winrate": 45.5,
+      "gap_pp": -9.6
+    },
+    {
+      "cell": "ice_hockey|ou|大|55-65%|live",
+      "real_n": 20,
+      "real_winrate": 50.0,
+      "paper_winrate": 59.5,
+      "gap_pp": -9.5
     },
     {
       "cell": "football|ou|大|60-70%|live",
       "real_n": 26,
       "real_winrate": 42.3,
-      "paper_winrate": 66.7,
-      "gap_pp": -24.4
+      "paper_winrate": 46.8,
+      "gap_pp": -4.5
     },
     {
-      "cell": "football|hc|主|55-60%|live",
-      "real_n": 37,
-      "real_winrate": 37.8,
-      "paper_winrate": 56.2,
-      "gap_pp": -18.4
+      "cell": "football|hc|主|40-50%|live",
+      "real_n": 45,
+      "real_winrate": 31.1,
+      "paper_winrate": 32.6,
+      "gap_pp": -1.5
+    },
+    {
+      "cell": "football|ou|大|40-50%|live",
+      "real_n": 39,
+      "real_winrate": 35.9,
+      "paper_winrate": 37.3,
+      "gap_pp": -1.4
     },
     {
       "cell": "football|hc|主|60-70%|live",
-      "real_n": 45,
-      "real_winrate": 35.6,
-      "paper_winrate": 44.4,
-      "gap_pp": -8.9
+      "real_n": 84,
+      "real_winrate": 46.4,
+      "paper_winrate": 44.7,
+      "gap_pp": 1.7
     },
     {
-      "cell": "football|ou|小|40-50%|live",
-      "real_n": 52,
-      "real_winrate": 34.6,
-      "paper_winrate": 42.9,
-      "gap_pp": -8.2
-    },
-    {
-      "cell": "football|hc|主|50-55%|live",
-      "real_n": 39,
-      "real_winrate": 41.0,
-      "paper_winrate": 44.4,
-      "gap_pp": -3.4
+      "cell": "football|hc|主|55-60%|live",
+      "real_n": 62,
+      "real_winrate": 43.5,
+      "paper_winrate": 40.0,
+      "gap_pp": 3.5
     },
     {
       "cell": "football|hc|客|40-50%|live",
-      "real_n": 32,
-      "real_winrate": 50.0,
-      "paper_winrate": 42.9,
-      "gap_pp": 7.1
+      "real_n": 74,
+      "real_winrate": 45.9,
+      "paper_winrate": 38.1,
+      "gap_pp": 7.9
+    },
+    {
+      "cell": "football|hc|客|60-70%|live",
+      "real_n": 49,
+      "real_winrate": 53.1,
+      "paper_winrate": 43.6,
+      "gap_pp": 9.4
     },
     {
       "cell": "football|ou|大|55-60%|live",
       "real_n": 30,
       "real_winrate": 66.7,
-      "paper_winrate": 58.8,
-      "gap_pp": 7.8
+      "paper_winrate": 53.7,
+      "gap_pp": 13.0
+    },
+    {
+      "cell": "football|hc|客|50-55%|live",
+      "real_n": 55,
+      "real_winrate": 50.9,
+      "paper_winrate": 35.0,
+      "gap_pp": 15.9
+    },
+    {
+      "cell": "football|ou|大|50-55%|live",
+      "real_n": 73,
+      "real_winrate": 54.8,
+      "paper_winrate": 37.5,
+      "gap_pp": 17.3
+    },
+    {
+      "cell": "football|hc|客|55-60%|live",
+      "real_n": 28,
+      "real_winrate": 67.9,
+      "paper_winrate": 50.0,
+      "gap_pp": 17.9
     }
   ],
   "observe_calibration": [
     {
+      "cell": "basketball|ou|小|55-65%|live",
+      "n": 421,
+      "brier": 0.2625,
+      "brier_base": 0.244,
+      "calib_err": 0.0184
+    },
+    {
       "cell": "basketball|hc|主|55-65%|live",
-      "n": 312,
-      "brier": 0.2907,
-      "brier_base": 0.2417,
-      "calib_err": 0.049
+      "n": 437,
+      "brier": 0.2586,
+      "brier_base": 0.2413,
+      "calib_err": 0.0173
     },
     {
       "cell": "basketball|hc|客|55-65%|live",
-      "n": 262,
-      "brier": 0.2138,
-      "brier_base": 0.2418,
-      "calib_err": -0.0281
+      "n": 334,
+      "brier": 0.2557,
+      "brier_base": 0.2407,
+      "calib_err": 0.015
+    },
+    {
+      "cell": "basketball|ou|大|55-65%|live",
+      "n": 295,
+      "brier": 0.2591,
+      "brier_base": 0.2443,
+      "calib_err": 0.0148
     }
   ],
+  "observe_clv_validation": {
+    "football|1x2|客|40-50%|early": 4.01,
+    "basketball|1x2|客|<45%|early": -8.98,
+    "football|1x2|客|20-30%|early": -5.94,
+    "football|dc|X2|55-60%|early": -4.37,
+    "football|1x2|客|30-40%|early": 4.88,
+    "baseball|1x2|客|<55%|early": 7.97,
+    "basketball|1x2|主|65-75%|early": 4.3,
+    "basketball|1x2|客|45-55%|early": 3.0,
+    "basketball|1x2|主|45-55%|early": 13.51,
+    "basketball|1x2|主|<45%|early": -6.83,
+    "football|1x2|主|60-70%|early": 3.47,
+    "football|dc|X2|60-70%|early": -5.32,
+    "football|1x2|主|50-55%|early": 5.06,
+    "football|1x2|客|10-20%|early": -7.64,
+    "football|dc|X2|40-50%|early": -8.92,
+    "football|dc|X2|50-55%|early": -5.58,
+    "football|1x2|客|<10%|early": -5.02,
+    "football|dc|X2|20-30%|early": -7.35,
+    "football|dc|X2|30-40%|early": 1.58,
+    "football|hc|主|50-55%|early": 4.52,
+    "football|1x2|主|30-40%|early": -0.07,
+    "football|dc|12|>70%|early": -3.21,
+    "football|1x2|主|20-30%|early": -3.43,
+    "football|dc|1X|55-60%|early": -8.95,
+    "football|1x2|平|20-30%|early": 2.06,
+    "basketball|1x2|主|55-65%|early": 6.97,
+    "football|dc|1X|>70%|early": -0.59,
+    "football|dc|X2|>70%|early": -1.89,
+    "football|1x2|主|55-60%|early": 7.68,
+    "football|1x2|平|40-50%|early": -6.39,
+    "football|1x2|平|30-40%|early": -5.61,
+    "football|1x2|平|10-20%|early": 0.7,
+    "football|dc|1X|60-70%|early": -4.98,
+    "football|dc|1X|40-50%|early": 5.77,
+    "football|1x2|主|40-50%|early": 4.61,
+    "football|1x2|客|55-60%|early": 3.87,
+    "football|1x2|主|10-20%|early": 5.3,
+    "basketball|1x2|主|>75%|early": 2.33,
+    "football|1x2|客|50-55%|early": 2.37,
+    "football|1x2|客|60-70%|early": 10.4,
+    "baseball|1x2|主|<55%|early": 9.85,
+    "football|1x2|主|>70%|early": 2.03,
+    "football|dc|X2|10-20%|early": -26.08,
+    "football|1x2|平|<10%|early": -28.2,
+    "basketball|1x2|客|>75%|early": 3.3,
+    "basketball|1x2|客|65-75%|early": 7.22,
+    "football|1x2|客|>70%|early": 9.71,
+    "basketball|1x2|客|55-65%|early": -7.71,
+    "baseball|1x2|客|>64%|early": -1.59,
+    "football|1x2|主|<10%|early": 20.39,
+    "football|dc|1X|20-30%|early": 25.51,
+    "football|dc|1X|50-55%|early": -15.34,
+    "volleyball|1x2|主|>80%|early": 4.79,
+    "tennis|1x2|主|>80%|early": 1.94,
+    "tennis|1x2|主|40-60%|early": -0.08,
+    "tennis|1x2|主|20-40%|early": -2.26,
+    "tennis|1x2|客|>80%|early": 1.91,
+    "tennis|1x2|主|60-80%|early": 2.09,
+    "tennis|1x2|客|40-60%|early": -0.04,
+    "tennis|1x2|客|<20%|early": -32.9,
+    "tennis|1x2|客|20-40%|early": -7.17,
+    "football|ou|小|55-60%|early": 3.22,
+    "basketball|hc|主|55-65%|early": 1.11,
+    "basketball|ou|大|55-65%|early": 6.02,
+    "football|hc|主|60-70%|early": 10.12,
+    "tennis|hc|客|60-80%|early": -58.36,
+    "tennis|hc|主|60-80%|early": -0.18,
+    "football|ou|大|50-55%|early": 1.47,
+    "tennis|hc|主|20-40%|early": 5.48,
+    "football|ou|小|50-55%|early": 3.42,
+    "basketball|hc|客|55-65%|early": -0.73,
+    "football|ou|大|55-60%|early": 3.92,
+    "ice_hockey|ou|大|45-55%|early": 3.75,
+    "basketball|hc|主|45-55%|early": 1.97,
+    "ice_hockey|ou|大|55-65%|early": 0.78,
+    "ice_hockey|hc|客|45-55%|early": 2.43,
+    "football|hc|主|55-60%|early": 4.36,
+    "basketball|ou|小|55-65%|early": -2.21,
+    "tennis|ou|大|40-60%|early": 2.16,
+    "basketball|ou|大|45-55%|early": 3.68,
+    "football|hc|客|50-55%|early": -1.71,
+    "basketball|hc|客|45-55%|early": 1.43,
+    "football|dc|1X|30-40%|early": 2.52,
+    "football|ou|大|60-70%|early": 4.15,
+    "football|hc|客|55-60%|early": -33.24,
+    "volleyball|1x2|客|>80%|early": 2.53,
+    "football|ou|小|60-70%|early": 13.84,
+    "football|hc|客|60-70%|early": 16.12,
+    "football|ou|大|40-50%|early": -6.11,
+    "tennis|hc|主|40-60%|early": -0.29,
+    "tennis|hc|客|40-60%|early": 56.65,
+    "basketball|ou|小|45-55%|early": -5.3,
+    "baseball|ou|小|58-61%|early": 14.1,
+    "baseball|hc|主|58-61%|early": 3.38,
+    "baseball|ou|小|55-58%|early": 5.91,
+    "football|ht|主|30-40%|early": -2.85,
+    "football|ht|客|30-40%|early": -5.29,
+    "football|ht|主|40-50%|early": -3.57,
+    "football|ht|客|40-50%|early": -8.86,
+    "football|ht|客|10-20%|early": 0.28,
+    "football|ht|主|10-20%|early": 9.72,
+    "basketball|ht|客|65-75%|early": 4.17,
+    "football|ht|客|20-30%|early": -8.84,
+    "tennis|1x2|主|<20%|early": -0.19,
+    "basketball|ht|主|45-55%|early": 12.01,
+    "basketball|ht|主|65-75%|early": 4.16,
+    "football|ht|主|20-30%|early": -0.89,
+    "tennis|ht|客|60-80%|early": -2.55,
+    "ice_hockey|ht|主|<45%|early": 29.4,
+    "football|ht|主|50-55%|early": -3.23,
+    "tennis|ht|主|60-80%|early": -3.64,
+    "tennis|ht|主|>80%|early": -3.48,
+    "football|hc|客|40-50%|early": -61.63,
+    "tennis|1x2|客|60-80%|early": 4.51,
+    "tennis|ht|主|20-40%|early": 4.1,
+    "tennis|ht|主|40-60%|early": 5.22,
+    "football|ht|客|50-55%|early": -0.72,
+    "basketball|ht|客|>75%|early": 8.69,
+    "basketball|ht|客|45-55%|early": 4.02,
+    "basketball|ht|客|55-65%|early": -21.84,
+    "tennis|ou|小|40-60%|early": 4.2,
+    "ice_hockey|ht|客|<45%|early": 36.54,
+    "football|ht|主|<10%|early": 12.13,
+    "football|ht|主|60-70%|early": 1.43,
+    "basketball|ht|主|55-65%|early": 7.7,
+    "basketball|ht|主|>75%|early": 3.17,
+    "volleyball|1x2|客|60-80%|early": 2.87,
+    "boxing|1x2|主|>80%|early": 4.04,
+    "boxing|1x2|客|20-40%|early": 5.7,
+    "american_football|1x2|客|20-40%|early": -0.18,
+    "mma|1x2|客|40-60%|early": 10.17,
+    "ice_hockey|ht|主|45-55%|early": 40.78,
+    "ice_hockey|ht|客|45-55%|early": 37.45,
+    "basketball|ht|客|<45%|early": 1.5,
+    "football|ht|客|<10%|early": -5.72,
+    "mma|1x2|主|40-60%|early": -7.12
+  },
   "sport_cn": {
     "football": "⚽足球",
     "basketball": "🏀篮球",

@@ -177,6 +177,11 @@ MANUAL_OBSERVE_BLOCK = {
     "football|1x2|主|*|early",
     # 2026-10-17 撤篮球大小球大(观察库45-55% n=952 -7.2%负)。
     "basketball|ou|大|45-55%|live",
+    # 2026-10-18 结果锚校准撤假溢价(下注时公平价高估, 校准ROI负): 和局 20-30%(-56%)/40-50%(-6.4%)。
+    "football|1x2|平|20-30%|early",
+    "football|1x2|平|40-50%|early",
+    # 2026-10-18 撤滚球大小球大 50-55%: 实盘 -5.3%(n=59) 双负(纸面 -25.3%)。
+    "football|ou|大|50-55%|live",
 }
 
 
@@ -204,9 +209,8 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 依据 = 去水CLV(Shin) 全正: 10-20% +15.09%(n34)/20-30% +3.79%(n214)/30-40% +2.97%(n198)/40-50% +8.05%(n16),
     # 方向级纸面 ROI +52%(n13) 双正。n 仍远小于判据 n≥200, 走手动试探(cap 100 控风险)。
     "football|1x2|平|10-20%|early": 100,
-    "football|1x2|平|20-30%|early": 100,
+    # 2026-10-18 撤平 20-30%/40-50%: 结果锚校准 ROI -56%/-6.4% 假溢价(下注时公平价高估和局)。
     "football|1x2|平|30-40%|early": 100,
-    "football|1x2|平|40-50%|early": 100,
     # 2026-10-14 用户要求释放独赢主/客(cap 30 试探)。足球/篮球 1x2 主/客早盘全桶。
     # 2026-10-16 撤足球独赢主早盘(纸面-2.2%→实盘-14.4%, 逆向选择)。
     # 2026-10-17 撤 football 独赢客胜早盘(CLV+4.0% 但纸面ROI-15% 假正)。
@@ -247,6 +251,28 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 网球大小球小40-60%(+4.0% n=84)/足球双机会X2(客队不败)60-70%(+15.7% n=41), cap30试探。
     "tennis|ou|小|40-60%|live": 30,
     # 2026-10-17 撤 football dc X2(客/和)(近3天观察库 -1.9% ROI/12笔, 微负)。
+    # 2026-10-18 结果锚校准释放真 edge(校准ROI正, 用户要求直接放不等 n≥200): dc/ht/1x2客/hc/ou。
+    # 依据 = 结果锚校准 ROI(下注时公平价高估被修正后仍为正), cap 100 试探控风险(实盘冻结期检验)。
+    "football|dc|1X|60-70%|early": 100,
+    "football|dc|1X|>70%|early": 100,
+    "football|dc|X2|55-60%|early": 100,
+    "football|dc|X2|60-70%|early": 100,
+    "football|dc|X2|>70%|early": 100,
+    "football|dc|12|>70%|early": 100,
+    "football|ht|主|20-30%|early": 100,
+    "football|ht|主|>70%|early": 100,
+    "football|ht|客|10-20%|early": 100,
+    "football|ht|客|40-50%|early": 100,
+    "football|ht|客|50-55%|early": 100,
+    "football|1x2|客|40-50%|early": 100,
+    "football|1x2|客|60-70%|early": 100,
+    "football|hc|主|55-60%|early": 100,
+    "football|hc|客|55-60%|early": 100,
+    "football|hc|客|60-70%|early": 100,
+    "football|ou|大|60-70%|early": 100,
+    "basketball|hc|客|55-65%|early": 100,
+    "basketball|ou|大|55-65%|early": 100,
+    "basketball|1x2|客|<45%|early": 100,
 }
 
 

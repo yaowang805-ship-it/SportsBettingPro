@@ -245,7 +245,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
 
         # 同场同盘口互斥锁(2026-09-19): 同一 match 同一盘口只下一注(防对立方向/多线重复下注)
         from src.betting.bb_auto_bet import check_sub_market_bet
-        if check_sub_market_bet(match_id, sub):
+        if check_sub_market_bet(match_id, sub, "prematch"):
             failed.append({"home": disp_home, "away": disp_away,
                            "reason": f"同场同盘口已投({sub}), 跳过对立/重复"})
             continue
@@ -310,7 +310,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
             _add_daily_exposure(1, stake)  # 2026-10-14 早盘探针日暴露累加
             total_latency += _latency
             from src.betting.bb_auto_bet import record_sub_market_bet
-            record_sub_market_bet(match_id, sub)
+            record_sub_market_bet(match_id, sub, "prematch")
             _bj = datetime.now(timezone(timedelta(hours=8))).strftime("%H:%M")
             # 开赛时间 + 运动类型(2026-09-07 用户要求)
             _sport_cn = SPORT_CN.get(opp.get("sport", ""), opp.get("sport", ""))
