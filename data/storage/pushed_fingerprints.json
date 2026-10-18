@@ -39,6 +39,11 @@
     "bb": 1.88,
     "ts": 1792282302.445436
   },
+  "football|Bahrain Premier League|Al Muharraq SC|Malkiya Club|和局|1x2|2026-10-19": {
+    "ev": 18.01,
+    "bb": 4.82,
+    "ts": 1792300059.6955981
+  },
   "football|Bolivia Division Profesional|The Strongest|Always Ready|小球(3.0)|ou|3.0|2026-10-19": {
     "ev": 3.23,
     "bb": 1.96,
@@ -54,6 +59,16 @@
     "bb": 1.88,
     "ts": 1792289103.156457
   },
+  "football|Faroe Islands Premier League|EB/Streymur|HB Torshavn|和局|1x2|2026-10-18": {
+    "ev": 3.37,
+    "bb": 4.18,
+    "ts": 1792300059.6956391
+  },
+  "football|Faroe Islands Premier League|Vikingur Gota|AB Argir|和局|1x2|2026-10-19": {
+    "ev": 11.82,
+    "bb": 4.62,
+    "ts": 1792300059.695678
+  },
   "football|Hong Kong Division 1|WSE|Citizen AA|大球(3.5)|ou|3.5|2026-10-18": {
     "ev": 7.48,
     "bb": 1.8,
@@ -63,6 +78,11 @@
     "ev": 5.98,
     "bb": 4.65,
     "ts": 1792297019.865699
+  },
+  "football|Netherlands Eredivisie|FC Twente|FC Utrecht|和局|1x2|2026-10-19": {
+    "ev": 43.43,
+    "bb": 5.8,
+    "ts": 1792300059.6955478
   },
   "football|Netherlands Eredivisie|PEC Zwolle|Go Ahead Eagles|和局|1x2|2026-10-18": {
     "ev": 4.87,
@@ -108,25 +128,5 @@
     "ev": 5.87,
     "bb": 1.44,
     "ts": 1792281964.99432
-  },
-  "football|Netherlands Eredivisie|FC Twente|FC Utrecht|和局|1x2|2026-10-19": {
-    "ev": 43.43,
-    "bb": 5.8,
-    "ts": 1792300059.6955478
-  },
-  "football|Bahrain Premier League|Al Muharraq SC|Malkiya Club|和局|1x2|2026-10-19": {
-    "ev": 18.01,
-    "bb": 4.82,
-    "ts": 1792300059.6955981
-  },
-  "football|Faroe Islands Premier League|EB/Streymur|HB Torshavn|和局|1x2|2026-10-18": {
-    "ev": 3.37,
-    "bb": 4.18,
-    "ts": 1792300059.6956391
-  },
-  "football|Faroe Islands Premier League|Vikingur Gota|AB Argir|和局|1x2|2026-10-19": {
-    "ev": 11.82,
-    "bb": 4.62,
-    "ts": 1792300059.695678
   }
 }
