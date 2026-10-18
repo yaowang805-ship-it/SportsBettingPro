@@ -4591,3 +4591,23 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T00:43:36Z,football,USL Championship,El Paso Locomotive FC,Sacramento Republic FC,,,双重机会-主/和局,dc,1.51,0,1.4689,2.8,0,2,1792285200,ALL,pinnacle,,,validate,,,4259076
 2026-10-18T00:43:36Z,football,USL Championship,El Paso Locomotive FC,Sacramento Republic FC,,,双重机会-和局/客,dc,1.46,0,1.3443,8.61,0,2,1792285200,ALL,pinnacle,,,validate,,,4259076
 2026-10-18T00:46:21Z,football,Japan J.League 3,Renofa Yamaguchi,Kochi United SC,,,主胜,1x2,1.65,0,1.5884,3.88,0,4,1792299600,ALL,pinnacle,,,validate,,,5126417
+2026-10-18T00:52:24Z,football,Indonesia Championship League,Dejan FC,Barito Putera,,,客胜,1x2,2.42,0,2.284,5.95,0,2,1792324800,BB,pinnacle,,,validate,,,5763889
+2026-10-18T00:52:24Z,football,Indonesia Championship League,Dejan FC,Barito Putera,,,双重机会-和局/客,dc,1.4,0,1.3484,3.83,0,2,1792324800,BB,pinnacle,,,validate,,,5763889
+2026-10-18T00:52:56Z,football,Indonesia Championship League,Dejan FC,Barito Putera,,,上半场主胜,ht,3.62,0,2.9349,23.34,0,2,1792324800,BB,pinnacle,,,validate,,,5763889
+2026-10-18T00:52:56Z,football,Indonesia Championship League,Dejan FC,Barito Putera,,,上半场客胜,ht,3.28,0,2.6734,22.69,0,2,1792324800,BB,pinnacle,,,validate,,,5763889
+2026-10-18T00:53:30Z,football,Venezuela Primera Division,Rayo Zuliano,Caracas FC,,,上半场客胜,ht,2.23,0,1.7307,28.85,0,2,1792351800,ALL,pinnacle,,,validate,,,5372947
+2026-10-18T00:56:43Z,football,Hong Kong Division 1,WSE,Citizen AA,,,大球,ou,1.8,0,1.6747,7.48,0,2,1792301400,ALL,pinnacle,,,validate,,3.5,5514159
+2026-10-18T01:00:32Z,football,Peru Liga 1,Alianza Lima,Atletico Grau,,,主胜,1x2,1.27,0,1.2248,3.69,0,2,1792287000,ALL,pinnacle,,,validate,,,5733459
+2026-10-18T01:02:41Z,football,Zambia Super League,Zesco United,Mufulira Wanderers,,,主胜,1x2,1.84,0,1.5894,15.77,0,2,1792328400,ALL,pinnacle,,,validate,,,5784726
+2026-10-18T01:02:41Z,football,Zambia Super League,Zesco United,Mufulira Wanderers,,,上半场主胜,ht,2.69,0,1.5894,69.25,0,2,1792328400,ALL,pinnacle,,,validate,,,5784726
+2026-10-18T01:09:40Z,basketball,Japan B.League One,Earthfriends Tokyo Z,Koshigaya Alphas,,,客胜,1x2,1.18,0,1.1557,2.1,0,3,1792303500,BB,pinnacle,,,validate,,,5325661
+2026-10-18T01:10:47Z,american_football,NFL,Jacksonville Jaguars,Houston Texans,,,客胜,1x2,2.22,0,2.1732,2.15,0,1,1792330200,BB,pinnacle,,,validate,,,5337651
+2026-10-18T01:12:25Z,football,Belgium Second Amateur Division,RUS Binche,Royale Union Hutoise,,,客胜,1x2,2.91,0,2.4224,20.13,0,3,1792328400,BB,pinnacle,,,validate,,,5757512
+2026-10-18T01:12:25Z,football,Belgium Second Amateur Division,RUS Binche,Royale Union Hutoise,,,上半场客胜,ht,3.67,0,2.4224,51.5,0,3,1792328400,BB,pinnacle,,,validate,,,5757512
+2026-10-18T01:12:25Z,football,Belgium Second Amateur Division,RUS Binche,Royale Union Hutoise,,,双重机会-和局/客,dc,1.68,0,1.561,7.62,0,3,1792328400,BB,pinnacle,,,validate,,,5757512
+2026-10-18T01:12:59Z,basketball,Japan B.League One,Bambitious Nara,Veltex Shizuoka,,,大分,ou,1.92,0,1.8512,3.72,0,3,1792299900,BB,pinnacle,,,validate,,166.5,5325663
+2026-10-18T01:17:21Z,football,Argentina Liga Profesional,Argentinos Juniors,Independiente Rivadavia,,,客胜,1x2,4.34,0,4.2519,2.07,0,1,1793138400,ALL,pinnacle,,,validate,,,5462507
+2026-10-18T01:17:21Z,football,Argentina Liga Profesional,Argentinos Juniors,Independiente Rivadavia,,,上半场主胜,ht,2.63,0,2.1088,24.72,0,1,1793138400,ALL,pinnacle,,,validate,,,5462507
+2026-10-18T01:17:21Z,football,Argentina Liga Profesional,Argentinos Juniors,Independiente Rivadavia,,,上半场客胜,ht,4.84,0,4.2519,13.83,0,1,1793138400,ALL,pinnacle,,,validate,,,5462507
+2026-10-18T01:17:21Z,basketball,Japan B.League One,Earthfriends Tokyo Z,Koshigaya Alphas,,,让分客胜,hc,1.9,0,1.8405,3.23,0,3,1792303500,BB,pinnacle,,,validate,,-10.5,5325661
+2026-10-18T01:20:12Z,football,Hong Kong Division 1,WSE,Citizen AA,,,大球,ou,1.8,1.5682,1.6747,7.48,90,2,1792301400.0,BB/FB,,,,push,,3.5,

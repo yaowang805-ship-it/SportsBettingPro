@@ -120,20 +120,6 @@
       "football",
       "hc",
       "主",
-      "40-50%",
-      "live"
-    ],
-    [
-      "football",
-      "hc",
-      "主",
-      "60-70%",
-      "live"
-    ],
-    [
-      "football",
-      "hc",
-      "主",
       ">70%",
       "live"
     ],
@@ -171,6 +157,41 @@
       "小",
       "40-60%",
       "live"
+    ],
+    [
+      "football",
+      "ou",
+      "小",
+      "55-60%",
+      "early"
+    ],
+    [
+      "football",
+      "ou",
+      "大",
+      "55-60%",
+      "early"
+    ],
+    [
+      "basketball",
+      "hc",
+      "主",
+      "45-55%",
+      "live"
+    ],
+    [
+      "ice_hockey",
+      "hc",
+      "客",
+      "55-65%",
+      "live"
+    ],
+    [
+      "ice_hockey",
+      "hc",
+      "客",
+      "65-75%",
+      "live"
     ]
   ],
   "observe_blocked": [
@@ -192,13 +213,6 @@
       "tennis",
       "1x2",
       "客",
-      "*",
-      "live"
-    ],
-    [
-      "basketball",
-      "hc",
-      "主",
       "*",
       "live"
     ],
@@ -264,6 +278,20 @@
       "客",
       "40-50%",
       "early"
+    ],
+    [
+      "football",
+      "hc",
+      "主",
+      "40-50%",
+      "live"
+    ],
+    [
+      "football",
+      "hc",
+      "主",
+      "60-70%",
+      "live"
     ]
   ],
   "observe_release_caps": {
@@ -283,14 +311,17 @@
     "football|ou|大|50-55%|early": 300,
     "football|1x2|平|30-40%|early": 100,
     "football|hc|主|30-40%|live": 60,
-    "football|hc|主|40-50%|live": 60,
-    "football|hc|主|60-70%|live": 60,
     "football|hc|主|>70%|live": 60,
     "football|hc|客|*|live": 80,
     "basketball|hc|客|55-65%|live": 80,
     "football|ou|大|50-55%|live": 30,
     "ice_hockey|ou|大|55-65%|live": 30,
-    "tennis|ou|小|40-60%|live": 30
+    "tennis|ou|小|40-60%|live": 30,
+    "football|ou|小|55-60%|early": 300,
+    "football|ou|大|55-60%|early": 300,
+    "basketball|hc|主|45-55%|live": 60,
+    "ice_hockey|hc|客|55-65%|live": 60,
+    "ice_hockey|hc|客|65-75%|live": 60
   },
   "direction_released": [],
   "direction_blocked": [],
