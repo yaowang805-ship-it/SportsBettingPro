@@ -4778,3 +4778,21 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T08:26:11Z,football,Japan J.League,Shimizu S Pulse,Machida Zelvia,,,上半场主胜,ht,4.86,0,4.0437,20.19,0,2,1792576800,BB,pinnacle,,,validate,,,5153542
 2026-10-18T08:28:18Z,football,Jamaica Premier League,Montego Bay United,Arnett Gardens FC,,,客胜,1x2,4.17,0,4.0547,2.84,0,2,1792355400,ALL,pinnacle,,,validate,,,5585063
 2026-10-18T08:30:59Z,football,Malta Premier League,Gzira United FC,Hamrun Spartans FC,,,和局,1x2,4.65,0,4.132,12.54,0,2,1792314000,ALL,pinnacle,,,validate,,,5723030
+2026-10-18T08:36:21Z,football,Paraguay Primera Division,Cerro Porteno,Sportivo Ameliano,,,客胜,1x2,5.6,0,5.081,10.21,0,3,1792353600,ALL,pinnacle,,,validate,,,5742724
+2026-10-18T08:37:25Z,football,Jamaica Premier League,Montego Bay United,Arnett Gardens FC,,,让球主胜,hc,1.82,0,1.7194,5.85,0,2,1792355400,ALL,pinnacle,,,validate,,-0.5,5585063
+2026-10-18T08:37:58Z,football,Japan J.League 2,Omiya Ardija,Kataller Toyama,,,双重机会-和局/客,dc,1.69,0,1.5528,8.84,0,3,1792576800,ALL,pinnacle,,,validate,,,5164437
+2026-10-18T08:41:25Z,football,Peru Liga 1,Alianza Atletico,Universitario de Deportes,,,双重机会-和局/客,dc,1.43,0,1.3608,5.09,0,2,1792355400,ALL,pinnacle,,,validate,,,5732855
+2026-10-18T08:41:25Z,football,Colombia Primera B,Envigado FC,Barranquilla FC,,,上半场大球,ht_ou,2.11,0,1.9094,10.51,0,3,1792355400,BB,pinnacle,,,validate,,1.25,5761175
+2026-10-18T08:53:44Z,football,Paraguay Primera Division,Sportivo Trinidense,Libertad Asuncion,,,双重机会-主/和局,dc,1.52,0,1.4559,4.4,0,3,1792362000,ALL,pinnacle,,,validate,,,5742731
+2026-10-18T08:53:44Z,football,Paraguay Primera Division,Sportivo Trinidense,Libertad Asuncion,,,双重机会-和局/客,dc,1.39,0,1.3258,4.84,0,3,1792362000,ALL,pinnacle,,,validate,,,5742731
+2026-10-18T08:58:33Z,football,Switzerland Challenge League,Stade Lausanne Ouchy,Neuchatel Xamax FC,,,和局,1x2,4.33,0,4.0437,7.08,0,3,1792776600,BB,pinnacle,,,validate,,,5758610
+2026-10-18T08:58:33Z,football,Switzerland Challenge League,Stade Lausanne Ouchy,Neuchatel Xamax FC,,,客胜,1x2,4.63,0,4.1863,10.6,0,3,1792776600,BB,pinnacle,,,validate,,,5758610
+2026-10-18T08:58:33Z,football,Switzerland Challenge League,Stade Lausanne Ouchy,Neuchatel Xamax FC,,,上半场客胜,ht,4.8,0,4.142,15.89,0,3,1792776600,BB,pinnacle,,,validate,,,5758610
+2026-10-18T08:58:33Z,football,Switzerland Challenge League,Stade Lausanne Ouchy,Neuchatel Xamax FC,,,双重机会-和局/客,dc,2.26,0,1.8693,20.9,0,3,1792776600,BB,pinnacle,,,validate,,,5758610
+2026-10-18T09:02:20Z,football,Cyprus 1st Division,Aris Limassol FC,AEK Larnaca,,,和局,1x2,3.51,0,3.3636,4.35,0,2,1792339200,ALL,pinnacle,,,validate,,,5740806
+2026-10-18T09:02:20Z,football,Cyprus 1st Division,Aris Limassol FC,AEK Larnaca,,,双重机会-主/和局,dc,1.53,0,1.4164,8.02,0,2,1792339200,ALL,pinnacle,,,validate,,,5740806
+2026-10-18T09:02:20Z,football,Cyprus 1st Division,Aris Limassol FC,AEK Larnaca,,,双重机会-和局/客,dc,1.46,0,1.4254,2.43,0,2,1792339200,ALL,pinnacle,,,validate,,,5740806
+2026-10-18T09:09:19Z,football,Israel Liga Alef,Maccabi Ironi Kiryat Malakhi,Ironi Beit Shemesh,,,和局,1x2,4.33,0,4.0437,7.08,0,3,1792335900,ALL,pinnacle,,,validate,,,5536264
+2026-10-18T09:09:19Z,football,Israel Liga Alef,Maccabi Ironi Kiryat Malakhi,Ironi Beit Shemesh,,,双重机会-和局/客,dc,2.99,0,2.6517,12.76,0,3,1792335900,ALL,pinnacle,,,validate,,,5536264
+2026-10-18T09:09:51Z,football,Turkey 1. Lig,Kayserispor,Batman Petrolspor,,,上半场客胜,ht,5.2,0,4.3055,20.78,0,2,1792328400,ALL,pinnacle,,,validate,,,5366687
+2026-10-18T09:09:51Z,football,Turkey 1. Lig,Kayserispor,Batman Petrolspor,,,上半场小球,ht_ou,2.09,0,1.8111,15.4,0,2,1792328400,ALL,pinnacle,,,validate,,1.25,5366687

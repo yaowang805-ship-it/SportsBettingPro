@@ -616,6 +616,7 @@ class SecondLevelMonitor:
         self._trigger_source = "init"  # 触发源标签(ws/pin/poll), 供审计组内对照(2026-10-11)
         self._trigger_source_stats = {}  # 触发源分布计数(2026-10-11): pin/betfair_ws/poll 各多少次
         self._drop_anchor_track = {}  # match_id -> [pending记录], 等 live drop 算 clv_sign(2026-10-11 简化版事件锚点)
+        self._reanchor_live_cache = {}  # sid -> (ts, live_events) 复开价锚点 force 拉取跨调用缓存(2026-10-18 降频缓解 Pin 限速)
         self._last_pin_live_tick = 0.0  # 上次读到的 Pin WS live 帧时间戳(2026-10-11)
         self._last_pin_frame_last = 0.0  # Pin 帧自带 last(供「Pin产生→我收到」段1上游延迟)
         self._pin_clock_samples = []  # 本地-Pin帧ts 样本(判定时钟偏移稳定 vs 积压漂移)
@@ -2403,7 +2404,9 @@ class SecondLevelMonitor:
         now = time.time()
         _total = sum(len(v) for v in self._drop_anchor_track.values())
         print(f"[slm] 复开价锚点: pending {_total} 注", flush=True)
-        _live_evs = {}  # sid -> live events(每运动拉一次, force 绕过 15min 缓存拿实时)
+        # 2026-10-18 跨调用缓存(TTL 300s): force 拉取结果跨 60s 调用复用, 请求量降 5 倍缓解 Pin 限速;
+        # LEV 仍用 ≤5min 实时价(准)。缓存存 sid -> (ts, events)。
+        _live_evs = self._reanchor_live_cache
         for mid, recs in list(self._drop_anchor_track.items()):
             remain = []
             for rec in recs:
@@ -2414,10 +2417,13 @@ class SecondLevelMonitor:
                 if not sid:
                     remain.append(rec)
                     continue
-                if sid not in _live_evs:
-                    _live_evs[sid] = (fetch_pinnacle_markets(sid, 'live', force=True) or {}).get('events', [])
+                _cached = _live_evs.get(sid)
+                if not _cached or now - _cached[0] > 300:
+                    _evs = (fetch_pinnacle_markets(sid, 'live', force=True) or {}).get('events', [])
+                    _live_evs[sid] = (now, _evs)
+                _sid_evs = _live_evs[sid][1]
                 ev = None
-                for _ev in _live_evs[sid]:
+                for _ev in _sid_evs:
                     if _norm(_ev.get('home', '')) == _norm(rec.get("home", "")) and _norm(_ev.get('away', '')) == _norm(rec.get("away", "")):
                         ev = _ev
                         break
