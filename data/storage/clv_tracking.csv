@@ -5007,3 +5007,18 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T14:52:18Z,football,USA Major League Soccer,Portland Timbers,Charlotte FC,,,和局,1x2,4.36,0,4.0437,7.82,0,1,1792895400,BB,pinnacle,,,ws_scan,,,4231124
 2026-10-18T14:52:50Z,tennis,ATP Challenger - Lisbon Open,Carlos Taberner (ESP),Goncalo Marques (POR),,,客胜,1x2,6.05,0,4.6922,28.94,0,3,1792335300,BB,pinnacle,,,ws_scan,,,5768759
 2026-10-18T14:53:20Z,football,England Premier League,Coventry City,Fulham FC,,,上半场小球,ht_ou,2.17,0,1.9917,8.95,0,1,1792850400,ALL,pinnacle,,,ws_scan,,1.25,5130849
+2026-10-18T14:56:27Z,volleyball,Switzerland Volleyball Nationalliga A,Volley Nafels,Lausanne UC,,,客胜,1x2,4.52,0,4.1111,9.95,0,2,1792335600,ALL,pinnacle,,,validate,,,5141373
+2026-10-18T14:57:25Z,football,Spain LaLiga,Real Madrid,Sevilla FC,,,和局,1x2,7.0,0,4.0437,73.11,0,1,1792350000,ALL,pinnacle,,,ws_scan,,,5192321
+2026-10-18T14:57:25Z,football,Spain LaLiga,Real Madrid,Sevilla FC,,,双重机会-和局/客,dc,4.55,0,2.6387,72.43,0,1,1792350000,ALL,pinnacle,,,ws_scan,,,5192321
+2026-10-18T14:59:35Z,football,USA Major League Soccer,San Diego FC,Seattle Sounders,,,和局,1x2,4.2,0,4.0437,3.87,0,1,1792895400,BB,pinnacle,,,ws_scan,,,4231134
+2026-10-18T14:59:35Z,american_football,NFL,Los Angeles Rams,Arizona Cardinals,,,上半场客胜,ht,4.2,0,4.0437,3.87,0,1,1792353900,BB,pinnacle,,,ws_scan,,,5339195
+2026-10-18T15:00:51Z,football,Greece Super League,AEK Athens,Panetolikos,,,上半场客胜,ht,18.4,0,17.0068,8.19,0,2,1792861200,ALL,pinnacle,,,ws_scan,,,5285242
+2026-10-18T15:01:24Z,football,Algeria Ligue 1,JS Kabylie,US Biskra,,,双重机会-和局/客,dc,3.33,0,2.0431,62.99,0,2,1792342800,ALL,pinnacle,,,ws_scan,,,5392693
+2026-10-18T15:01:57Z,football,USL Championship,Charleston Battery,Indy Eleven,,,客胜,1x2,5.05,0,4.1268,22.37,0,2,1792879200,ALL,pinnacle,,,ws_scan,,,4259092
+2026-10-18T15:02:28Z,football,Algeria Ligue 1,JS Kabylie,US Biskra,,,双重机会-和局/客,dc,3.33,0,2.0431,62.99,0,2,1792341900,ALL,pinnacle,,,ws_scan,,,5620547
+2026-10-18T15:02:28Z,basketball,Austria Basketball Superliga,UBSC Graz,Oberwart Gunners,,,客胜,1x2,1.86,0,1.7884,4.0,0,2,1792339200,ALL,pinnacle,,,ws_scan,,,5479384
+2026-10-18T15:02:56Z,football,Argentina Primera Nacional,Ferro Carril Oeste,Racing de Cordoba,,,和局,1x2,3.74,0,3.3145,12.84,0,2,1792350000,ALL,pinnacle,,,validate,,,5738074
+2026-10-18T15:02:56Z,football,Argentina Primera Nacional,Ferro Carril Oeste,Racing de Cordoba,,,双重机会-和局/客,dc,2.69,0,1.8575,44.82,0,2,1792350000,ALL,pinnacle,,,validate,,,5738074
+2026-10-18T15:03:19Z,football,USL Championship,Colorado Springs Switchbacks FC,FC Tulsa,,,上半场小球,ht_ou,2.02,0,1.7612,14.7,0,2,1792886400,ALL,pinnacle,,,ws_scan,,1.25,4259094
+2026-10-18T15:04:28Z,football,USL Championship,El Paso Locomotive FC,New Mexico United,,,上半场客胜,ht,4.52,0,4.0712,11.02,0,2,1792886400,ALL,pinnacle,,,ws_scan,,,4259102
+2026-10-18T15:05:43Z,football,USL Championship,San Antonio FC,Orange County SC,,,客胜,1x2,5.2,0,4.3119,20.6,0,2,1792888200,ALL,pinnacle,,,ws_scan,,,4259108

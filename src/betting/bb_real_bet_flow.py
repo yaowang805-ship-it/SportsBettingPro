@@ -336,8 +336,26 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
             _ev_str = f" | 溢价 {float(_ev):+.1f}%" if _ev else ""
             _kickoff_str = f" | 开赛 {_kickoff}" if _kickoff else ""
             _src_label = "WS扫描" if trigger_source == "ws_scan" else "Drop"
+            # 余额 + 早盘未结 + 总耗时(2026-10-18 补回: 每单推不能丢这三个字段)
+            _extra = []
+            try:
+                from src.betting.bb_auto_bet import fetch_balance
+                _bal = fetch_balance()
+                if _bal:
+                    _extra.append(f"余额 ¥{_bal}")
+            except Exception:
+                pass
+            try:
+                _early_out = _early_outstanding()
+                if _early_out > 0:
+                    _extra.append(f"早盘未结 ¥{_early_out:.0f}")
+            except Exception:
+                pass
+            if trigger_ts:
+                _extra.append(f"总耗时 {time.time() - trigger_ts:.1f}s")
+            _extra_str = ("\n  " + " | ".join(_extra)) if _extra else ""
             _single = (f"✅【{_win_label(opp.get('_pin_epoch'))}】{disp_home} vs {disp_away} | {desig}\n"
-                       f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_ev_str} | 注额 ¥{stake:.0f} | {_src_label} | 投注 {_bj}{_kickoff_str}")
+                       f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_ev_str} | 注额 ¥{stake:.0f} | {_src_label} | 投注 {_bj}{_kickoff_str}{_extra_str}")
             sent_dingtalk.append(_single)
             # 2026-10-18 改: 每单立即推钉钉(不再攒批等循环结束, 否则 sleep 20-90s/单 循环不结束推送被吞)
             try:
