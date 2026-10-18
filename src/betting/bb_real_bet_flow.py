@@ -219,6 +219,15 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
     if not token:
         return {"success": [], "failed": [], "error": "无 token"}
 
+    # 2026-10-18 余额熔断(用户要求): 总余额<1000 早盘停, 滚球不受影响(滚球走 second_level_monitor 自己的预算)。
+    try:
+        from src.betting.bb_auto_bet import fetch_balance
+        _bal = fetch_balance()
+        if _bal is not None and _bal < 1000:
+            return {"success": [], "failed": [], "error": f"余额 {_bal:.0f}<1000, 早盘暂停"}
+    except Exception:
+        pass
+
     records = _get_all_matches(token, domain)
     success, failed = [], []
     sent_dingtalk = []
@@ -250,6 +259,11 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
                 _lead = float(_ep) - time.time()
                 if _lead < 0:
                     failed.append({"home": disp_home, "away": disp_away, "reason": "已开赛, 早盘跳过"})
+                    continue
+                # 2026-10-18 用户要求: 早盘只投 72h 以内的比赛(超远早盘不投)
+                if _lead > 72 * 3600:
+                    failed.append({"home": disp_home, "away": disp_away,
+                                   "reason": f"距开赛 {_lead/3600:.0f}h>72h, 跳过"})
                     continue
             except (TypeError, ValueError):
                 pass
