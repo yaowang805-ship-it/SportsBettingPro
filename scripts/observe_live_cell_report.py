@@ -79,7 +79,8 @@ def main():
 
     cells = defaultdict(lambda: {"n": 0, "stake": 0.0, "profit": 0.0,
                                  "real_n": 0, "real_stake": 0.0, "real_profit": 0.0,
-                                 "cal_n": 0, "cal_stake": 0.0, "cal_profit": 0.0})
+                                 "cal_n": 0, "cal_stake": 0.0, "cal_profit": 0.0,
+                                 "lev_pos": 0, "lev_neg": 0})
 
     # ── 滚球观察库 (live_paper_bets) ──
     live = json.load(open(DATA / "live_paper_bets.json"))
@@ -103,6 +104,11 @@ def main():
         c["n"] += 1
         c["stake"] += _f(b.get("stake")) or 0
         c["profit"] += _f(b.get("profit")) or 0
+        cs = b.get("clv_sign")
+        if cs == 1:
+            c["lev_pos"] += 1
+        elif cs == -1:
+            c["lev_neg"] += 1
         if iso and _f(b.get("bb_odds")):
             p_cal = max(float(iso.predict([1.0 / fair])[0]), 0.01)
             bb = _f(b.get("bb_odds"))
@@ -136,21 +142,26 @@ def main():
     for k, c in cells.items():
         if c["n"] < min_n:
             continue
+        lev_n = c["lev_pos"] + c["lev_neg"]
+        lev_rate = (100.0 * c["lev_pos"] / lev_n) if lev_n else None
         rows.append((k, c, roi(c["profit"], c["stake"]), roi(c["real_profit"], c["real_stake"]),
-                     roi(c["cal_profit"], c["cal_stake"])))
+                     roi(c["cal_profit"], c["cal_stake"]), lev_n, lev_rate))
     rows.sort(key=lambda x: -x[1]["n"])
 
-    print("⚠️ 滚球无收盘价(无真 CLV), 且结果锚校准过不了时间切分(前半+11.6%→后半-10.7%), 结果锚列仅供观察不可信\n")
+    print("⚠️ 滚球无收盘价(无真 CLV); 结果锚校准过不了时间切分(前半+11.6%→后半-10.7%), 结果锚列仅供观察不可信\n")
+    print("LEV正率 = 有 drop/复开价锚点的注里 clv_sign=+1(下注后价格朝有利走)的占比, 只覆盖 1x2+ou\n")
     print(f"滚球观察库格子报表 (纸面 n≥{min_n}, 共 {len(rows)} 格)\n")
-    print(f"{'格子(运动|盘口|方向|桶)':44s} {'纸面n':>6s} {'纸面ROI':>8s} {'实盘n':>6s} {'实盘ROI':>8s} {'校准n':>6s} {'校准ROI(⚠)':>10s}")
-    print("-" * 96)
-    for k, c, proi, rroi, croi in rows:
+    print(f"{'格子(运动|盘口|方向|桶)':40s} {'纸面n':>6s} {'纸面ROI':>8s} {'实盘n':>6s} {'实盘ROI':>8s} {'LEVn':>5s} {'LEV正率':>8s} {'校准n':>6s} {'校准ROI(⚠)':>10s}")
+    print("-" * 104)
+    for k, c, proi, rroi, croi, lev_n, lev_rate in rows:
         sport, sm, dr, bk = k
         label = f"{sport}|{sm}|{dr}|{bk}"
         def fmt(v):
             return f"{v:+.1f}%" if v is not None else "  --  "
-        print(f"{label:44s} {c['n']:6d} {fmt(proi):>8s} {c['real_n']:6d} {fmt(rroi):>8s} "
-              f"{c['cal_n']:6d} {fmt(croi):>10s}")
+        def fmt_lev(v):
+            return f"{v:.0f}%" if v is not None else " -- "
+        print(f"{label:40s} {c['n']:6d} {fmt(proi):>8s} {c['real_n']:6d} {fmt(rroi):>8s} "
+              f"{lev_n:5d} {fmt_lev(lev_rate):>8s} {c['cal_n']:6d} {fmt(croi):>10s}")
 
 
 if __name__ == "__main__":

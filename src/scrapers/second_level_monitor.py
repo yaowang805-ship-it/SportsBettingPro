@@ -728,21 +728,22 @@ class SecondLevelMonitor:
                 "anchor": "pin",  # 2026-09-19 锚点口径标记: 10-11后 Pin 公平价
                 "sbo_direction": sig.get("sbo_direction", "same"),  # same/diff/none(供统计同向/不同向赛果)
                 "clv_sign": None,  # drop 锚点方向(+1朝有利/-1朝不利), 2026-10-11 简化版事件锚点
-                "clv_anchor": None if sig.get("sub") in ("opportunities", "over_under") else "no_outcome",  # 1x2/ou等drop, 其余no_outcome(drop不覆盖)
+                "clv_anchor": None if sig.get("sub") in ("opportunities", "over_under", "handicap", "ht") else "no_outcome",  # 1x2/ou/hc/ht 等复开价锚点, 其余 no_outcome(不覆盖)
                 "clv_elapsed_s": None,  # 下注到 drop 的秒数
             })
             keys.add(key)
             # drop 锚点(2026-10-11 简化版): 1x2 + ou 盘。方向匹配(drop outcome: Home/Away/Draw/Over/Under),
             # 不依赖线(ou 跨线 2.5/3.0 方向强相关, clv_sign 只看方向不看价, 噪声可接受)。
             # hc/ht/dc/让局 盘 drop 无对应 outcome → 不覆盖(需「下次复开价」锚点, 后续再扩)。
-            if sig.get("sub") in ("opportunities", "over_under"):
+            if sig.get("sub") in ("opportunities", "over_under", "handicap", "ht"):
                 self._drop_anchor_track.setdefault(str(sig["match_id"]), []).append({
                     "market_id": sig.get("market_id"), "option_type": sig.get("option_type"),
                     "sub": sig.get("sub"), "designation": sig["desig"],
                     "bb_odds": sig["bb_odds"], "ts": time.time(),
-                    # 2026-10-18 复开价锚点: 补队名/运动/下注fair, 供 _reanchor_pending 周期性复查询
+                    # 2026-10-18 复开价锚点: 补队名/运动/下注fair/line, 供 _reanchor_pending 周期性复查询
                     "home": sig["match"].get("home", ""), "away": sig["match"].get("away", ""),
                     "sport": sig.get("sport", ""), "fair": sig["fair"],
+                    "line": sig.get("line"),
                 })
             _paper_bets_cache["dirty"] = True
             _paper_bets_cache["pending"] += 1
@@ -2391,10 +2392,12 @@ class SecondLevelMonitor:
         """
         if not self._drop_anchor_track:
             return
-        from src.scrapers.pinnapi_client import fetch_pinnacle_markets, _norm
+        from src.scrapers.pinnapi_client import fetch_pinnacle_markets, _norm, _select_line
         from src.scrapers.bb_vs_pinnacle import _BB_SPORT_TO_OA_ID
         from src.scrapers.devig import shin_fair_odds
-        _DIR = {"主胜": "home", "客胜": "away", "和局": "draw", "大球": "over", "小球": "under"}
+        _DIR = {"主胜": "home", "客胜": "away", "和局": "draw", "大球": "over", "小球": "under",
+                "让球主胜": "home", "让球客胜": "away",
+                "上半场主胜": "home", "上半场客胜": "away", "上半场和局": "draw"}
         now = time.time()
         _total = sum(len(v) for v in self._drop_anchor_track.values())
         print(f"[slm] 复开价锚点: pending {_total} 注", flush=True)
@@ -2435,6 +2438,24 @@ class SecondLevelMonitor:
                         remain.append(rec); continue
                     _f = shin_fair_odds([_o['over'], _o['under']])
                     fair_map = {'over': _f[0], 'under': _f[1]}
+                elif sm == "handicap":
+                    # 2026-10-18 复开价锚点扩让球: 找最接近 bet line 的 spread, 算 home/away 公平价
+                    spreads = full.get('spreads') or {}
+                    if not spreads or rec.get("line") is None:
+                        remain.append(rec); continue
+                    _o = _select_line(spreads, rec.get("line"))
+                    if not _o or not _o.get('home') or not _o.get('away'):
+                        remain.append(rec); continue
+                    _f = shin_fair_odds([_o['home'], _o['away']])
+                    fair_map = {'home': _f[0], 'away': _f[1]}
+                elif sm == "ht":
+                    # 2026-10-18 复开价锚点扩半场: 半场独赢走 num_1 的 money_line
+                    full_ht = (per.get('num_1') or {}) if isinstance(per, dict) else {}
+                    ml_ht = full_ht.get('money_line') or {}
+                    if not ml_ht.get('draw'):
+                        remain.append(rec); continue
+                    _f = shin_fair_odds([ml_ht['home'], ml_ht['draw'], ml_ht['away']])
+                    fair_map = {'home': _f[0], 'draw': _f[1], 'away': _f[2]}
                 else:
                     remain.append(rec); continue
                 dk = _DIR.get(rec.get("designation", ""))
