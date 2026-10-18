@@ -4613,3 +4613,15 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T01:20:12Z,football,Hong Kong Division 1,WSE,Citizen AA,,,大球,ou,1.8,1.5682,1.6747,7.48,90,2,1792301400.0,BB/FB,,,,push,,3.5,
 2026-10-18T01:30:23Z,football,USL Championship,Orange County SC,Phoenix Rising FC,,,上半场主胜,ht,3.61,0,3.2421,11.35,0,2,1792288800,ALL,pinnacle,,,validate,,,4259095
 2026-10-18T01:30:23Z,football,USL Championship,Orange County SC,Phoenix Rising FC,,,上半场客胜,ht,2.75,0,2.3582,16.61,0,2,1792288800,ALL,pinnacle,,,validate,,,4259095
+2026-10-18T01:40:37Z,football,USA Major League Soccer,Los Angeles Galaxy,San Diego FC,,,上半场主胜,ht,2.76,0,2.6987,2.27,0,1,1792290600,ALL,pinnacle,,,validate,,,4231097
+2026-10-18T01:42:17Z,basketball,Croatia Basketball Premier League,KK Split,KK Zadar,,,客胜,1x2,2.32,0,2.2654,2.41,0,2,1792342800,BB,pinnacle,,,validate,,,5762569
+2026-10-18T01:44:25Z,basketball,Croatia Basketball Premier League,KK Split,KK Zadar,,,让分客胜,hc,1.87,0,1.8216,2.66,0,2,1792342800,BB,pinnacle,,,validate,,+3.5,5762569
+2026-10-18T01:49:42Z,basketball,Australia NBL,Tasmania Jackjumpers,New Zealand Breakers,,,主胜,1x2,1.46,0,1.4276,2.27,0,3,1792296000,ALL,pinnacle,,,validate,,,5548551
+2026-10-18T01:52:26Z,football,USL Championship,Orange County SC,Phoenix Rising FC,,,双重机会-和局/客,dc,1.44,0,1.3514,6.56,0,2,1792288800,ALL,pinnacle,,,validate,,,4259095
+2026-10-18T01:52:58Z,football,USL Championship,Monterey Bay FC,Colorado Springs Switchbacks FC,,,上半场主胜,ht,5.85,0,5.6025,4.42,0,2,1792288800,ALL,pinnacle,,,validate,,,4259100
+2026-10-18T01:53:32Z,football,USL Championship,Monterey Bay FC,Colorado Springs Switchbacks FC,,,主胜,1x2,5.45,0,5.1492,5.84,0,2,1792288800,ALL,pinnacle,,,validate,,,4259100
+2026-10-18T01:54:06Z,basketball,Japan B.League Premier,Kyoto Hannaryz,Saga Ballooners,,,让分主胜,hc,1.85,0,1.786,3.58,0,3,1792301700,BB,pinnacle,,,validate,,-8.5,5298125
+2026-10-18T02:00:50Z,football,Japan Football League,Verspah Oita,Criacao Shinjuku,,,上半场主胜,ht,2.69,0,2.081,29.26,0,3,1792296000,ALL,pinnacle,,,validate,,,5518978
+2026-10-18T02:00:50Z,football,Japan Football League,Verspah Oita,Criacao Shinjuku,,,上半场客胜,ht,4.79,0,3.8633,23.99,0,3,1792296000,ALL,pinnacle,,,validate,,,5518978
+2026-10-18T02:02:27Z,football,Japan J.League 2,Iwaki FC,Ventforet Kofu,,,主胜,1x2,1.8,0,1.7611,2.21,0,3,1792296000,ALL,pinnacle,,,validate,,,5164440
+2026-10-18T02:05:03Z,football,England Premier League,Nottingham Forest,Arsenal FC,,,让球主胜,hc,1.88,1.7752,1.8199,3.3,90,1,1792337400.0,BB,,,,push,,+1,
