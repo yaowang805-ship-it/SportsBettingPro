@@ -1,9 +1,9 @@
-"""odds-api.io 实时赔率接入 — 替代 Pin 的公平价源(2026-09-18)。
+"""odds-api.io 实时赔率接入 — 已停用(2026-10-17 切 pinnapi 单锚)。
 
-平台: https://api.odds-api.io/v3 (与 oddspapi.io 是两家公司, 别混)。
-锚点书商: Sbobet(亚洲盘+置信度) + Betfair Exchange(公平价)。
-公平价 = Betfair 中间价(加 back-lay 价差流动性门槛); SBO devig 只做置信度确认, 不进定价。
-用户只在 BB 投注, Betfair 只当参考尺子, 不扣 Betfair 佣金。
+2026-10-18 停用: 系统已切 pinnapi.com 单锚(pinnapi_client/pin_client), Betfair/SBO 全部撤除。
+本文件 `_get`(核心 HTTP) 已短路, 所有 Betfair API(get_sports/get_events/get_odds/fair_price/
+sbo_fair_price)不再发请求。保留的纯工具(_norm_team/_match_score/mid_price/_select_line 等)
+已迁至 odds_utils.py, 此处保留原始定义向后兼容(供 pinnapi_client/pin_ws_trigger 等引用)。
 
 盘口映射(BB 子盘口 → odds-api.io 市场名):
   1x2(全场独赢) → ML
