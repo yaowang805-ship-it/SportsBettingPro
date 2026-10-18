@@ -2245,6 +2245,7 @@ class SecondLevelMonitor:
                     o['home_bb'] = entry.get('home_bb', '')
                     o['away_bb'] = entry.get('away_bb', '')
                     o['sport'] = sport
+                    o['sub_market'] = sub_market  # 2026-10-18 修: opp 缺 sub_market → auto_bet_flow 读空 fallback 1x2 错盘
                     o['_pin_epoch'] = _epoch
                     opps.append(o)
         if not opps:
@@ -2329,6 +2330,7 @@ class SecondLevelMonitor:
                     o['home_bb'] = entry.get('home_bb', '')
                     o['away_bb'] = entry.get('away_bb', '')
                     o['sport'] = sport
+                    o['sub_market'] = sub_market  # 2026-10-18 修: opp 缺 sub_market → auto_bet_flow 读空 fallback 1x2 错盘
                     o['_pin_epoch'] = _epoch
                     # 2026-10-18 修: 早盘 opp 缺 _stake → auto_bet_flow stake=0 全被 stake<30 跳过。
                     _o_odds = o.get('bb_odds') or 0
@@ -2401,6 +2403,7 @@ class SecondLevelMonitor:
                     o['home_bb'] = entry.get('home_bb', '')
                     o['away_bb'] = entry.get('away_bb', '')
                     o['sport'] = sport
+                    o['sub_market'] = sub_market  # 2026-10-18 修: opp 缺 sub_market → auto_bet_flow 读空 fallback 1x2 错盘
                     o['_pin_epoch'] = _epoch
                     # 2026-10-18 修: 早盘 opp 缺 _stake → auto_bet_flow stake=0 全被 stake<30 跳过。
                     # 复用滚球 Kelly 半凯利算注额(cap 在 auto_bet_flow 按触发源 80/50)。

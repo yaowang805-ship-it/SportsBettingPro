@@ -215292,14 +215292,18 @@
   "spread": null,
   "bb_ts": 1792326999.823369,
   "stake": 240,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "push",
+  "profit": 0.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": 1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 854.22
+  "clv_elapsed_s": 854.22,
+  "final_score": [
+   2,
+   3
+  ]
  },
  {
   "ts": 1792327088.391497,
@@ -215322,14 +215326,18 @@
   "spread": null,
   "bb_ts": 1792327085.042212,
   "stake": 280,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 151.2,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   0
+  ]
  },
  {
   "ts": 1792327114.4756181,
@@ -215352,14 +215360,18 @@
   "spread": null,
   "bb_ts": 1792327110.7154272,
   "stake": 20,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -20.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   0
+  ]
  },
  {
   "ts": 1792327165.797888,
@@ -215382,14 +215394,18 @@
   "spread": null,
   "bb_ts": 1792327165.142476,
   "stake": 110,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -110.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": 1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 16.74
+  "clv_elapsed_s": 16.74,
+  "final_score": [
+   2,
+   0
+  ]
  },
  {
   "ts": 1792327178.18261,
@@ -228732,6 +228748,36 @@
   "spread": null,
   "bb_ts": 1792334072.148927,
   "stake": 130,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1792334173.3057091,
+  "match_id": 5366687,
+  "market_id": 133940969,
+  "option_type": 2,
+  "sport": 1,
+  "home": "开塞利体育",
+  "away": "贝特曼",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   1,
+   1
+  ],
+  "bb_odds": 6.05,
+  "fair": 5.8487,
+  "ev": 3.44,
+  "spread": null,
+  "bb_ts": 1792334168.639936,
+  "stake": 20,
   "settled": false,
   "result": null,
   "profit": null,
