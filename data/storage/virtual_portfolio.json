@@ -1,5 +1,5 @@
 {
-  "balance": 14092.53,
+  "balance": 14002.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2093,6 +2093,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792306800.0,
       "created_at": "2026-10-18T00:09:58.661309+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_韦克舍北部_欧卡哈姆斯_让球主胜(+05)",
+      "sport": "football",
+      "league": "瑞典乙级联赛",
+      "home_team": "韦克舍北部",
+      "away_team": "欧卡哈姆斯",
+      "home_cn": "韦克舍北部",
+      "away_cn": "欧卡哈姆斯",
+      "market": "handicap",
+      "market_type": "让球主胜(+0.5)",
+      "sub_market": "hc",
+      "line": "+0.5",
+      "odds": 1.83,
+      "stake": 90,
+      "model_prob": 0.6232,
+      "ev_pct": 14.04,
+      "pin_odds": 1.5155,
+      "fair_price": 1.6047,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792324800.0,
+      "created_at": "2026-10-18T00:21:27.218067+00:00",
       "track_only": false
     }
   ],
@@ -11569,8 +11592,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-18",
-    "used": 870.0,
-    "bets": 12
+    "used": 960.0,
+    "bets": 13
   },
   "updated": null
 }
