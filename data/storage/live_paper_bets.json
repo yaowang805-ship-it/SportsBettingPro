@@ -218652,14 +218652,18 @@
   "spread": null,
   "bb_ts": 1792328826.928494,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 72.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   3,
+   2
+  ]
  },
  {
   "ts": 1792328862.6888251,

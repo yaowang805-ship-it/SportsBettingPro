@@ -78,8 +78,20 @@ def _win_label(epoch):
     return "远场"
 
 
-def _get_all_matches(token, domain):
-    """getList 拉全量比赛(英文名), 返回 list[record]。用 EN 与对比引擎 home_bb 英文直配。"""
+_get_all_matches_cache = {"ts": 0.0, "records": [], "token": ""}
+
+
+def _get_all_matches(token, domain, cache_ttl=180):
+    """getList 拉全量比赛(英文名), 返回 list[record]。用 EN 与对比引擎 home_bb 英文直配。
+
+    2026-10-18 加 3min 缓存: 之前每次 auto_bet_flow 都重拉 5 运动分页(~26s), ws_scan 每 30s
+    扫一轮 → 重复拉取浪费。早盘比赛列表几分钟内不变, 缓存省 26s。token 变化失效; 拉取失败用旧缓存兜底。
+    """
+    global _get_all_matches_cache
+    now = time.time()
+    if (_get_all_matches_cache["records"] and _get_all_matches_cache["token"] == token
+            and now - _get_all_matches_cache["ts"] < cache_ttl):
+        return _get_all_matches_cache["records"]
     import requests
     import urllib3
     urllib3.disable_warnings()
@@ -111,6 +123,12 @@ def _get_all_matches(token, domain):
                 page += 1
             except Exception:
                 break
+    if all_recs:
+        _get_all_matches_cache = {"ts": now, "records": all_recs, "token": token}
+    else:
+        # 拉取失败/空 → 旧缓存兜底(避免缓存过期+拉取失败=无数据可匹配)
+        if _get_all_matches_cache["records"]:
+            return _get_all_matches_cache["records"]
     return all_recs
 
 
