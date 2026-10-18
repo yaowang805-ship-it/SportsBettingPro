@@ -301,9 +301,12 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         # 记录全局下单时间戳
         record_global_bet()
 
-        # 防风控(2026-09-05): 每注之间随机间隔 20~90 秒, 模拟真人看盘思考, 避免秒下多注被风控识别
+        # 防风控(2026-09-05): 每注之间随机间隔, 模拟真人看盘思考, 避免秒下多注被风控识别。
+        # 2026-10-18 双轨制: ws_scan 全量扫描每 30s 来 13-16 个 opp, 20-90s 会让循环永不结束
+        # (下单慢 + 钉钉攒批被吞), 缩短到 10-20s; drop 低频触发保留原 20-90s。
         import random as _random
-        time.sleep(_random.uniform(20, 90))
+        _sleep = _random.uniform(10, 20) if trigger_source == "ws_scan" else _random.uniform(20, 90)
+        time.sleep(_sleep)
 
         if code == 0:
             opp["_bet_succeeded"] = True  # 2026-10-17 供 push_report 只对成功注写指纹(失败注下次可重试)
@@ -349,36 +352,9 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
             if code == 14010:
                 _token_expired_alert()
 
-    # 下单成功后发钉钉(只发已投注金额+明细, 不发推荐)
-    # 标题含"机会"关键词 → 不受标题节流(否则同标题30分钟只发一次, 多注被吞)
-    if sent_dingtalk:
-        try:
-            from config.settings import send_dingtalk
-            total = sum(o.get("stake", 0) for o in success)
-            body = f"**已投注 {len(sent_dingtalk)} 注 / ¥{total:.0f}**\n\n" + "\n".join(sent_dingtalk)
-            # 余额 + 投注总耗时(2026-10-11 用户要求: 投注信息补余额显示和总耗时)
-            _extra = []
-            try:
-                from src.betting.bb_auto_bet import fetch_balance
-                _bal = fetch_balance()
-                if _bal:
-                    _extra.append(f"余额 ¥{_bal}")
-            except Exception:
-                pass
-            # 2026-10-18 早盘自己的未结(独立于滚球 _live_outstanding, 读 tracked_bets.json)
-            _early_out = _early_outstanding()
-            if _early_out > 0:
-                _extra.append(f"早盘未结 ¥{_early_out:.0f}")
-            # 总耗时(2026-10-11 对齐滚球口径): Pin drop 路径用端到端(触发→下单完成),
-            # pipeline 路径(无触发时刻)兜底用下单 HTTP 累加。
-            _total_time = (time.time() - trigger_ts) if trigger_ts else total_latency
-            if _total_time > 0:
-                _extra.append(f"总耗时 {_total_time:.1f}s")
-            if _extra:
-                body += "\n\n" + " | ".join(_extra)
-            send_dingtalk(f"🟦 已投注机会 {len(sent_dingtalk)} 注", body)
-        except Exception as e:
-            pass
+    # 2026-10-18 攒批推送已停用(改每单立即推, 见上面循环内 send_dingtalk)。
+    # 原攒批逻辑: 循环结束后才发, 但 sleep 20-90s/单 让循环长时间不结束 → 推送被吞。
+    # sent_dingtalk 列表保留(success 记录用), 但不再攒批发。
 
     return {"success": success, "failed": failed}
 
