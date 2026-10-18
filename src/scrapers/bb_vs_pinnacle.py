@@ -126,11 +126,14 @@ def _oa_fair(entry, sport, sub, target_line=None, use_rest=None, status=None):
             entry.setdefault("_oa_conf", {})[sub] = _sbo
         # 2026-10-11 记公平价来源(pinnacle/betfair), 供 CLV 口径分组(19号 Betfair 停订后前后不可跨组聚合)
         entry.setdefault("_fair_source", {})[sub] = res.get("fair_source")
-        # 2026-10-18 校准热门高估(早盘 Pin 公平价隐含胜率比实际高 ~7pp): 返回校准后公平价
+        # 2026-10-18 校准热门高估(早盘 Pin 公平价隐含胜率比实际高 ~7pp): 只校准赔率键,
+        # 保留 line(盘口线)/_raw(原始赔率) 原样, 否则 line>1 会被误当赔率、_raw 会被丢。
         from src.scrapers.fair_calibration import calibrate_fair
-        _fair = res["fair"]
-        _fair = {k: calibrate_fair(v, market="prematch") for k, v in _fair.items()
-                 if isinstance(v, (int, float)) and v > 1}
+        _fair = dict(res["fair"])
+        for _k in ("home", "draw", "away", "over", "under"):
+            _v = _fair.get(_k)
+            if isinstance(_v, (int, float)) and _v > 1:
+                _fair[_k] = calibrate_fair(_v, market="prematch")
         return _fair
     return None
 
