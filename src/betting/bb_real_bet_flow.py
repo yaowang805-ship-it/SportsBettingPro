@@ -276,8 +276,9 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
             break
         # 2026-10-17 解冻注额公式: 恢复 Kelly 档(弱65/中125/强190), 早盘上限 200(用户充值5000定)。
         # (之前 cap 30 flat 是早盘探针, 把 Kelly 档全压成 30 → 无大额、不按 Kelly)
-        # 2026-10-18 双轨制上线: 早盘单笔上限降到 50(用户定), 两条触发流程(pin_drop/ws_scan)同限。
-        stake = min(stake, 50.0)
+        # 2026-10-18 双轨制: 单笔上限按触发源区分 — drop 骤降(有 edge 信号)80 / ws_scan 全量扫描 50。
+        _max_stake = 80.0 if trigger_source == "pin_drop" else 50.0
+        stake = min(stake, _max_stake)
         # 2026-10-17: 下注时EV门槛与采集门槛对齐。之前硬编码 min_ev_pct=4.0 高于采集门槛
         # (get_min_ev 直接盘3%/dc 3%/特殊盘4%, 另有方向级覆盖), 把 2~4% 档机会扫进来又在下单时拒掉。
         _min_ev = opp.get("_min_ev")

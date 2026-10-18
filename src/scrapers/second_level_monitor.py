@@ -612,6 +612,7 @@ class SecondLevelMonitor:
         self._token_remind_until = 0.0  # token 失效钉钉提醒节流(30min)
         self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
         self._pin_trigger_offset = 0  # Pin drop 触发文件已消费行数(2026-10-11)
+        self._last_prematch_scan = 0.0  # 早盘 WS 全量扫描上次时间戳(2026-10-18 双轨制, 每 30s)
         self._pin_live_wake = False  # 滚球 drop 唤醒标志(2026-10-11): live drop 触发立即滚球比较
         self._trigger_source = "init"  # 触发源标签(ws/pin/poll), 供审计组内对照(2026-10-11)
         self._trigger_source_stats = {}  # 触发源分布计数(2026-10-11): pin/betfair_ws/poll 各多少次
@@ -2733,6 +2734,15 @@ class SecondLevelMonitor:
                 await _run_task(self._consume_pin_triggers, timeout=20, tag="Pin drop触发")
             except Exception as e:
                 print(f"[slm] Pin drop触发异常: {type(e).__name__} {str(e)[:80]}", flush=True)
+            # 2026-10-18 双轨制第二轨: 早盘 WS 全量扫描(每 30s), 覆盖释放清单里的热门/中概率真 edge
+            # (drop 只抓骤降冷门, 命中 BB 17.6% 且冷门无 edge; 全量扫描命中 100% 且覆盖热门 edge)
+            try:
+                _now = time.time()
+                if _now - self._last_prematch_scan >= 30:
+                    self._last_prematch_scan = _now
+                    await _run_task(self._scan_prematch, timeout=60, tag="早盘WS扫描")
+            except Exception as e:
+                print(f"[slm] 早盘WS扫描异常: {type(e).__name__} {str(e)[:80]}", flush=True)
             # 2026-09-19 事件驱动: WS 变动立即唤醒(省 sleep 0.5s 轮询延迟), 否则等 0.5s
             try:
                 from src.scrapers.odds_ws import wait_change
