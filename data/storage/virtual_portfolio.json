@@ -1,5 +1,5 @@
 {
-  "balance": 14182.53,
+  "balance": 14092.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2070,6 +2070,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792294800.0,
       "created_at": "2026-10-18T00:04:43.874347+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_昆士兰狮队_南霍巴特_大球(40)",
+      "sport": "football",
+      "league": "澳大利亚锦标赛",
+      "home_team": "昆士兰狮队",
+      "away_team": "南霍巴特",
+      "home_cn": "昆士兰狮队",
+      "away_cn": "南霍巴特",
+      "market": "over_under",
+      "market_type": "大球(4.0)",
+      "sub_market": "ou",
+      "line": "4.0",
+      "odds": 1.88,
+      "stake": 90,
+      "model_prob": 0.548,
+      "ev_pct": 3.02,
+      "pin_odds": 1.7246,
+      "fair_price": 1.8249,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792306800.0,
+      "created_at": "2026-10-18T00:09:58.661309+00:00",
       "track_only": false
     }
   ],
@@ -11546,8 +11569,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-18",
-    "used": 780.0,
-    "bets": 11
+    "used": 870.0,
+    "bets": 12
   },
   "updated": null
 }

@@ -4568,3 +4568,11 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T00:01:36Z,football,CAF Confederations Cup-Qualification,Tusker Football Club,Singida Black Stars SC,,,双重机会-主/和局,dc,1.67,0,1.5708,6.32,0,3,1792324800,BB,pinnacle,,,validate,,,5630400
 2026-10-18T00:02:42Z,basketball,Australia NBL,Tasmania Jackjumpers,New Zealand Breakers,,,上半场主胜,ht,1.56,0,1.5196,2.66,0,3,1792296000,ALL,pinnacle,,,validate,,,5074485
 2026-10-18T00:06:05Z,tennis,WTA - Osaka Open,Sinja Kraus (AUT),Sofia Kenin (USA),,,让盘客胜,hc,1.44,1.3356,1.3602,5.87,90,2,1792294800.0,BB/FB,,,,push,,+1.5,
+2026-10-18T00:07:43Z,football,USL Championship,San Antonio FC,New Mexico United,,,双重机会-主/和局,dc,1.28,0,1.2518,2.25,0,2,1792283400,ALL,pinnacle,,,validate,,,4259104
+2026-10-18T00:08:48Z,football,Australian Championship,Queensland Lions FC,South Hobart FC,,,客胜,1x2,27.0,0,25.1995,7.14,0,3,1792306800,ALL,pinnacle,,,validate,,,5624552
+2026-10-18T00:09:21Z,football,Australian Championship,Queensland Lions FC,South Hobart FC,,,和局,1x2,11.0,0,4.292,156.29,0,3,1792306800,ALL,pinnacle,,,validate,,,5624552
+2026-10-18T00:09:21Z,football,Australian Championship,Queensland Lions FC,South Hobart FC,,,双重机会-和局/客,dc,6.8,0,3.4318,98.15,0,3,1792306800,ALL,pinnacle,,,validate,,,5624552
+2026-10-18T00:10:28Z,football,Australian Championship,Queensland Lions FC,South Hobart FC,,,大球,ou,1.91,0,1.8249,4.66,0,3,1792306800,ALL,pinnacle,,,validate,,4.0,5624552
+2026-10-18T00:11:03Z,football,USL Championship,San Antonio FC,New Mexico United,,,让球主胜,hc,2.03,0,1.9624,3.44,0,2,1792283400,ALL,pinnacle,,,validate,,-0.5,4259104
+2026-10-18T00:11:42Z,football,Australian Championship,Queensland Lions FC,South Hobart FC,,,大球,ou,1.88,1.7246,1.8249,3.02,90,3,1792306800.0,BB/FB,,,,push,,4.0,
+2026-10-18T00:11:42Z,basketball,Switzerland NLB,Lions de Geneve U23,BC Winterthur,,,主胜,1x2,1.11,1.032,1.0486,5.86,0,3,1792332000.0,FB,,,,push,,,
