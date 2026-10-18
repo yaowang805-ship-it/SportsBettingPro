@@ -1,5 +1,5 @@
 {
-  "balance": 14092.53,
+  "balance": 14002.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1656,6 +1656,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792301400.0,
       "created_at": "2026-10-18T01:18:24.531385+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_横滨海盗_北海道风神_让分客胜(-15)",
+      "sport": "basketball",
+      "league": "日本B篮球联赛PREMIER",
+      "home_team": "横滨海盗",
+      "away_team": "北海道风神",
+      "home_cn": "横滨海盗",
+      "away_cn": "北海道风神",
+      "market": "handicap",
+      "market_type": "让分客胜(-1.5)",
+      "sub_market": "hc",
+      "line": "-1.5",
+      "odds": 1.89,
+      "stake": 90,
+      "model_prob": 0.5495,
+      "ev_pct": 3.85,
+      "pin_odds": 1.7407,
+      "fair_price": 1.82,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792303500.0,
+      "created_at": "2026-10-18T03:51:55.733610+00:00",
       "track_only": false
     }
   ],
@@ -11267,8 +11290,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-18",
-    "used": 1140.0,
-    "bets": 15
+    "used": 1230.0,
+    "bets": 16
   },
   "updated": null
 }

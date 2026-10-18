@@ -1099,6 +1099,7 @@ class SecondLevelMonitor:
                 continue
             sig = {"match_id": match_id, "sub": sub, "desig": desig[d],
                    "bb_odds": bb, "fair": fair_p, "ev": ev, "line": line_val,
+                   "fair_cal": fair_cal, "ev_raw": ev_raw,  # 2026-10-18 校准公平价/原始EV 落盘对照
                    "pin_raw": raw[i],  # Pin 原始价(去抽水前), 供推送展示(2026-09-14)
                    # 2026-10-13 落盘 ev 层口径: pin_points(匹配到的Pin让分线) + neg_sign_used(负号分支)
                    # + line_semantics(赛前/滚球) + ev_branch + ev_valid(篮球让球跨参考系=unverified)
@@ -1504,6 +1505,8 @@ class SecondLevelMonitor:
                 _binfo = {
                     "stake": stake,
                     "fair": sig.get("fair", 0), "ev": sig.get("ev", 0),
+                    "fair_cal": sig.get("fair_cal", sig.get("fair", 0)),  # 2026-10-18 校准公平价
+                    "ev_raw": sig.get("ev_raw", sig.get("ev", 0)),  # 2026-10-18 原始EV(校准前)
                     "bb_odds": sig.get("bb_odds", 0), "desig": sig.get("desig", ""),
                     "sub": sig.get("sub", ""), "home": sig["match"].get("home", ""),
                     "away": sig["match"].get("away", ""), "sport": sig["match"].get("sport", ""),
@@ -1599,11 +1602,14 @@ class SecondLevelMonitor:
             bb = float(it.get("value") or 0)
             if bb <= 0 or fair <= 0:
                 continue
-            ev = (bb - fair) / fair * 100.0
+            from src.scrapers.fair_calibration import calibrated_ev
+            ev, ev_raw, fair_cal = calibrated_ev(bb, fair)  # 2026-10-18 校准热门高估
+            fair_cal = fair_cal or fair
             tag = f"{match['home_cn']} vs {match['away_cn']} [{match['sport']}/{match['league_cn']}] {desig}"
             if ev >= self.threshold:
                 sig = {"match_id": match_id, "market_id": market_id, "option_type": option_type,
                        "sub": sub, "desig": desig, "bb_odds": bb, "fair": fair, "ev": ev,
+                       "fair_cal": fair_cal, "ev_raw": ev_raw,  # 2026-10-18 校准公平价/原始EV 落盘对照
                        "match": match}
                 print(f"⚡秒级+EV {ev:+.2f}% | {tag} | BB {bb:.2f} vs 公平 {fair:.2f}", flush=True)
                 if self.on_signal:
@@ -1661,7 +1667,9 @@ class SecondLevelMonitor:
         i = idx.get(sig["desig"])
         if i is None or not fair or len(fair) <= i or fair[i] <= 0:
             return None
-        return (sig["bb_odds"] - fair[i]) / fair[i] * 100.0
+        from src.scrapers.fair_calibration import calibrated_ev
+        ev_cal, _, _ = calibrated_ev(sig["bb_odds"], fair[i])  # 2026-10-18 校准热门高估
+        return ev_cal
 
     def _reverify_live_ev_oa(self, sig):
         """下注前重验公平价(odds-api.io Betfair 中间价), 替代 Pin 的 reverify_live_markets。
@@ -1709,7 +1717,9 @@ class SecondLevelMonitor:
                     if _pfair:
                         _fp = _pfair.get(k)
                         if _fp and _fp > 1:
-                            return (sig["bb_odds"] - _fp) / _fp * 100.0
+                            from src.scrapers.fair_calibration import calibrated_ev
+                            ev_cal, _, _ = calibrated_ev(sig["bb_odds"], _fp)  # 2026-10-18 校准热门高估
+                            return ev_cal
                 except Exception:
                     pass
             self._lev_fail_stats["no_pin"] = self._lev_fail_stats.get("no_pin", 0) + 1
