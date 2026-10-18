@@ -11,12 +11,20 @@
     true_clv_pct < 0 一律不释放(见 live-clv-capture-rate-fix-20260915)。
     注: 旧头「CLV 假正」结论只针对滚球「稍后价 CLV」(软书滞后), 不适用早盘「收盘线 CLV」。
 
+    2026-10-18 再纠正(实证): 早盘收盘价本身仍有 +2.2pp 残留偏差(和局档收盘后仍高估),
+    正 CLV 的注实际亏钱(Whelan: 3/5 正CLV档仍亏)。三路对比: 原始 bb vs fair 全留 ROI -2.7%
+    (没分开) / 真实CLV +2.7% / 结果锚校准 +14.65%。故早盘释放「决策尺」从 CLV 换成「结果锚
+    校准」(校准到实际胜率, 去除热门/和局假溢价), CLV 降级为「事后验证尺」(见 observe_clv_validation)。
+    这不是推翻 CLV——CLV 仍是正确的事后验证(下注价是否赢过收盘), 只是下注那一刻没有收盘价,
+    决策只能用「预测真实概率」的结果锚校准。
+
 释放规则(混合粒度, 三通道):
     1. 主开关(运动×盘口):      实盘 ROI > 4% 且 n≥30 → 释放。
     2. 联赛细化(运动×联赛×盘口): 某联赛三维格子 n≥30 时, 用该联赛自己的 ROI 覆盖主开关
                                 (ROI>4% 释放, 否则封杀)。
-    3. 观察库释放(运动×联赛×盘口): 观察库 CLV 中位>0 且 正率>55% 且 观察库纸面结算
-                                ROI>0, 且 CLV n≥30 / ROI n≥5 → 释放(未释放盘口的动态释放通道)。
+    3. 观察库释放(运动×盘口×方向×概率桶×来源): 早盘用「结果锚校准」(校准后 ev_cal>0 的注
+                                ROI>0 且 n≥20) → 释放; CLV 降级为验证/审计字段(2026-10-18)。
+                                滚球(scope=live)仍用 n≥20 + 纸面ROI>0(校准过不了时间切分)。
     其余盘口一律封杀(只观察积累, 不投注)。
 
 数据源:
@@ -73,6 +81,11 @@ OBS_LEV_MIN = 0.4          # [审计字段, 非释放闸门] 滚球 LEV(价格�
                             # 释放判据改为 n≥OBS_N_MIN_LIVE + obsROI>0 + REAL_ROI_GATE(见 live 释放循环)。
 OBS_WINRATE_EDGE_MIN = 3.0 # 赢率>隐含(差>3pp 才释放)。2026-09-15 0→3pp: 观察库整体负edge(逆向选择),
                             # 差0pp会把打平的噪声格子释放; 对齐实盘 REAL_WINRATE_EDGE_MIN=3pp 去噪声
+# 2026-10-18 早盘释放判据改「结果锚校准」: 下注时 Pin 公平价系统性高估热门/和局(隐含胜率比实际
+# 高 ~7pp), 导致 CLV(bb vs 收盘价)也继承收盘价 +2.2pp 残留偏差(Whelan: 3/5 正CLV档仍亏)。
+# 实测三路对比: 原始 bb vs fair 全留 ROI -2.7%(没分开) / 真实CLV +2.7% / 结果锚校准 +14.65%。
+# 结论: 释放决策用「结果锚校准」(校准到实际胜率), CLV 降级为事后验证尺(验证有没有赢过收盘)。
+OBS_N_CAL_MIN = 20          # 结果锚校准释放最小样本(校准后 ev_cal>0 的注数, 2026-10-18)
 REAL_WINRATE_EDGE_MIN = 3.0  # 实盘主开关/方向释放赢率vs隐含差值阈值(差>3pp 去噪声)
 LIQUIDITY_MAX_SPREAD = 6.0   # Betfair 流动性门槛(2026-09-19): 格子中位 back-lay 价差 ≥6% 判薄盘,
                              # 公平价/CLV 不可信(低流动性联赛 Betfair 高估冷门方向 → 假溢价), 不采信不释放。
@@ -725,6 +738,59 @@ def load_observe_winrate():
     return out
 
 
+def load_observe_calibrated():
+    """观察库「结果锚校准」ROI(2026-10-18): {(sport,sm,direction,interval,scope): {n_cal, roi_cal}}。
+
+    决策尺(结果锚): 用历史已结算注拟合 isotonic 曲线(下注时隐含胜率=1/fair → 实际胜率),
+    把公平价校准到真实胜率, 再算校准后 EV。本函数返回每格子「校准后 ev_cal>0 的注」的实际 ROI
+    与笔数。roi_cal>0 才是真 edge(公平价低估了它); 否则是假溢价(公平价高估, 尤其和局/热门)。
+
+    为什么不用 CLV 当闸门(2026-10-18): 早盘收盘价本身仍有 +2.2pp 残留偏差(和局档收盘后仍高估),
+    CLV 继承此偏差 → 正 CLV 的注实际亏钱(实测 +2.7% ROI vs 结果锚 +14.65%)。CLV 降级为事后
+    验证尺(开赛才有, 验证「有没有赢过收盘」), 不再是释放决策。见 load_clv_median 保留用于审计。
+
+    只对 scope=early 生效(滚球校准过不了时间切分样本外, 不用于 live 释放)。
+    """
+    from sklearn.isotonic import IsotonicRegression
+    # 拟合校准(早盘): 只收集早盘已结算注
+    X, Y = [], []
+    for b in _read_paper_bets():
+        if b.get("result") in ("won", "lost") and _f(b.get("fair_price")):
+            X.append(1.0 / _f(b.get("fair_price")))
+            Y.append(1.0 if b.get("result") == "won" else 0.0)
+    if len(X) < 50:
+        return {}
+    iso = IsotonicRegression(out_of_bounds="clip")
+    iso.fit(X, Y)
+    # 逐格统计 ev_cal>0 的注
+    by = defaultdict(lambda: {"n_cal": 0, "stake_cal": 0.0, "profit_cal": 0.0})
+    for b in _read_paper_bets():
+        if b.get("result") not in ("won", "lost") or not _f(b.get("fair_price")) or not _f(b.get("bb_odds")):
+            continue
+        fair = _f(b.get("fair_price"))
+        bb = _f(b.get("bb_odds"))
+        p_cal = max(float(iso.predict([1.0 / fair])[0]), 0.01)
+        fair_cal = 1.0 / p_cal
+        if (bb - fair_cal) / fair_cal <= 0:
+            continue
+        sm = b.get("sub_market") or "?"
+        k = (b.get("sport") or "?", sm, _direction(b.get("designation"), sm),
+             _odds_interval(fair, b.get("sport")), SCOPE_EARLY)
+        d = by[k]
+        d["n_cal"] += 1
+        d["stake_cal"] += _f(b.get("stake")) or 0
+        d["profit_cal"] += _f(b.get("profit")) or 0
+    out = {}
+    for k, d in by.items():
+        if d["n_cal"] == 0:
+            continue
+        out[k] = {
+            "n_cal": d["n_cal"],
+            "roi_cal": round(d["profit_cal"] / d["stake_cal"] * 100.0, 2) if d["stake_cal"] > 0 else 0.0,
+        }
+    return out
+
+
 def load_clv_median():
     """早盘收盘线 CLV 中位+n(运动×盘口×方向×赔率区间): clv_results.csv 的 true_clv_pct。
 
@@ -1020,7 +1086,8 @@ def main():
     market_roi = load_real_roi()
     market_roi_dir = load_real_roi_direction()  # 方向级 ROI(满7天提额用, 2026-09-18 修混方向bug)
     obs_winrate = load_observe_winrate()
-    clv_med = load_clv_median()  # 早盘收盘线 CLV 中位(释放闸门, 2026-09-15)
+    clv_med = load_clv_median()  # 早盘收盘线 CLV 中位(2026-10-18 降级为验证/审计, 不再是释放闸门)
+    obs_cal = load_observe_calibrated()  # 结果锚校准 ROI(2026-10-18 起 = 早盘释放决策尺)
     live_clv = load_live_clv(window_days=(LIVE_CLV_WINDOW_DAYS if LIVE_CLV_WINDOW_ENABLED else None))  # 14天窗口过滤(2026-10-11)
     # 自洽检查(2026-10-11): 按 grid 逐格比对 n_total vs n_window(不是集合差——窗口会造成 n 变少但格不消失)。
     # 今天静默(全部相等); 哪天响, 说明窗口开始咬人, 且能立刻看到是哪个格、掉了多少笔(排查「grid 突然不释放」的唯一线索)。
@@ -1080,7 +1147,12 @@ def main():
         if _real.get("n", 0) >= REAL_ROI_GATE_N_MIN and _real.get("roi", 0) < 0:
             observe_blocked.append([sport, sm, dr, interval, "early"])
             continue
-        if med > OBS_CLV_MIN and n >= OBS_N_MIN and _roi > 0:
+        _cal = obs_cal.get((sport, sm, dr, interval, "early"), {})
+        _n_cal = _cal.get("n_cal", 0)
+        _roi_cal = _cal.get("roi_cal", 0.0)
+        # 2026-10-18 决策尺=结果锚校准(校准后 ev_cal>0 的注 ROI>0 才是真 edge, 去除热门/和局假溢价);
+        # CLV 降级为验证/审计(见 observe_clv_validation), 不再是释放闸门。
+        if _n_cal >= OBS_N_CAL_MIN and _roi_cal > 0:
             observe_released.append([sport, sm, dr, interval, "early"])
         else:
             observe_blocked.append([sport, sm, dr, interval, "early"])
@@ -1303,6 +1375,10 @@ def main():
         "direction_window_released": direction_window_released,
         "observe_real_paper_gap": observe_real_paper_gap,  # 实盘-纸单赢率差(只展示, 2026-09-19)
         "observe_calibration": observe_calibration,  # Brier 校准检验(只展示, 2026-09-19)
+        "observe_clv_validation": {  # 早盘 CLV 中位(验证/审计, 2026-10-18 起不再是释放闸门)
+            f"{s}|{sm}|{dr}|{iv}|early": round(med, 2)
+            for (s, sm, dr, iv), (med, _n) in clv_med.items()
+        },
         "sport_cn": SPORT_CN,
     }
     tmp = OUT.with_suffix(".tmp")
