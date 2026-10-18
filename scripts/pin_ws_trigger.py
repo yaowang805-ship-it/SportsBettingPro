@@ -22,6 +22,7 @@ DROP_FILE = ROOT / "data" / "storage" / "pin_drops.jsonl"
 TRIGGER_FILE = ROOT / "data" / "storage" / "pin_trigger.jsonl"
 DROP_RETENTION_DAYS = 30  # pin_drops 归档保留天数(超期清理, 显式管磁盘)
 LIVE_TICK_FILE = ROOT / "data" / "storage" / "pin_live_tick.ts"  # 滚球 WS live 帧触发信号时间戳
+PREMATCH_TICK_FILE = ROOT / "data" / "storage" / "pin_prematch_tick.jsonl"  # 早盘 WS prematch 赔率变动触发信号(2026-10-18 事件驱动替代30s轮询)
 FRAME_GAP_FILE = ROOT / "data" / "storage" / "pin_frame_gaps.jsonl"  # 帧间隔埋点(2026-10-11 攒帧间隔分布, 定 suspension 阈值)
 BB_SNAPSHOT = ROOT / "data" / "storage" / "bb_odds_extracted.json"
 
@@ -190,6 +191,26 @@ def _on_live(matchup_id, rec, frame_ts=None):
         LIVE_TICK_FILE.write_text(f"{now},{_pin_ts}")
     except OSError:
         pass
+
+
+_prematch_ts = {}  # (home, away) -> 上次写 tick 时刻(节流用)
+
+
+def _on_prematch(mid, home, away):
+    """Pin WS prematch 赔率变动 → 写早盘触发信号(事件驱动替代 30s 轮询, 2026-10-18)。
+
+    供 second_level_monitor 读 offset 消费: 每行一个变动的比赛(home/away/ts)。
+    节流 5s: 同一比赛连续多帧赔率变动只写一次(避免同场重复触发)。
+    """
+    if not home or not away:
+        return
+    now = time.time()
+    _key = (home, away)
+    _last = _prematch_ts.get(_key)
+    if _last is not None and now - _last < 5:
+        return
+    _prematch_ts[_key] = now
+    _append_rotating(PREMATCH_TICK_FILE, json.dumps({"home": home, "away": away, "ts": now}, ensure_ascii=False))
 
 
 def _on_drop(stream, drop):

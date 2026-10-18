@@ -334,6 +334,23 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
                 "ts": time.time(), "trigger_source": trigger_source,
             }
             success.append(rec)
+            # 2026-10-18 早盘实盘也写 real_bets(与滚球同库), 供结算 + 未结统计。
+            # 之前只写 bet_history → 早盘未结读 tracked_bets.json(旧追踪)冻结在 810, 结算系统也不认早盘注单。
+            try:
+                _rb_file = DATA_DIR / "real_bets.json"
+                _rd = json.loads(_rb_file.read_text()) if _rb_file.exists() else {}
+                _rd.setdefault("bets", {})[str(order_id)] = {
+                    "ts": time.time(), "stake": stake,
+                    "fair": opp.get("fair_price") or opp.get("fair"),
+                    "ev": opp.get("ev_pct"), "bb_odds": odds,
+                    "desig": desig, "sub": sub, "home": disp_home, "away": disp_away,
+                    "sport": opp.get("sport"), "verify": True,
+                    "result": None, "profit": None, "settled_ts": None,
+                    "trigger_source": trigger_source,
+                }
+                _rb_file.write_text(json.dumps(_rd, ensure_ascii=False))
+            except Exception:
+                pass
             _daily_bets += 1; _daily_stake += stake
             _add_daily_exposure(1, stake)  # 2026-10-14 早盘探针日暴露累加
             total_latency += _latency
