@@ -728,14 +728,14 @@ class SecondLevelMonitor:
                 "anchor": "pin",  # 2026-09-19 锚点口径标记: 10-11后 Pin 公平价
                 "sbo_direction": sig.get("sbo_direction", "same"),  # same/diff/none(供统计同向/不同向赛果)
                 "clv_sign": None,  # drop 锚点方向(+1朝有利/-1朝不利), 2026-10-11 简化版事件锚点
-                "clv_anchor": None if sig.get("sub") in ("opportunities", "over_under", "handicap", "ht") else "no_outcome",  # 1x2/ou/hc/ht 等复开价锚点, 其余 no_outcome(不覆盖)
+                "clv_anchor": None if sig.get("sub") in ("opportunities", "over_under", "handicap", "ht", "double_chance", "ht_ou") else "no_outcome",  # 复开价锚点覆盖盘口, 其余 no_outcome(不覆盖)
                 "clv_elapsed_s": None,  # 下注到 drop 的秒数
             })
             keys.add(key)
             # drop 锚点(2026-10-11 简化版): 1x2 + ou 盘。方向匹配(drop outcome: Home/Away/Draw/Over/Under),
             # 不依赖线(ou 跨线 2.5/3.0 方向强相关, clv_sign 只看方向不看价, 噪声可接受)。
             # hc/ht/dc/让局 盘 drop 无对应 outcome → 不覆盖(需「下次复开价」锚点, 后续再扩)。
-            if sig.get("sub") in ("opportunities", "over_under", "handicap", "ht"):
+            if sig.get("sub") in ("opportunities", "over_under", "handicap", "ht", "double_chance", "ht_ou"):
                 self._drop_anchor_track.setdefault(str(sig["match_id"]), []).append({
                     "market_id": sig.get("market_id"), "option_type": sig.get("option_type"),
                     "sub": sig.get("sub"), "designation": sig["desig"],
@@ -2397,7 +2397,9 @@ class SecondLevelMonitor:
         from src.scrapers.devig import shin_fair_odds
         _DIR = {"主胜": "home", "客胜": "away", "和局": "draw", "大球": "over", "小球": "under",
                 "让球主胜": "home", "让球客胜": "away",
-                "上半场主胜": "home", "上半场客胜": "away", "上半场和局": "draw"}
+                "上半场主胜": "home", "上半场客胜": "away", "上半场和局": "draw",
+                "主/和": "1X", "主/客": "12", "客/和": "X2",
+                "上半场大球": "over", "上半场小球": "under"}
         now = time.time()
         _total = sum(len(v) for v in self._drop_anchor_track.values())
         print(f"[slm] 复开价锚点: pending {_total} 注", flush=True)
@@ -2456,6 +2458,22 @@ class SecondLevelMonitor:
                         remain.append(rec); continue
                     _f = shin_fair_odds([ml_ht['home'], ml_ht['draw'], ml_ht['away']])
                     fair_map = {'home': _f[0], 'draw': _f[1], 'away': _f[2]}
+                elif sm == "double_chance":
+                    # 2026-10-18 复开价锚点扩双机会: 从 1x2 三路概率合成 1X/12/X2 公平价
+                    if not ml.get('draw'):
+                        remain.append(rec); continue
+                    _f = shin_fair_odds([ml['home'], ml['draw'], ml['away']])
+                    _ph, _pd, _pa = 1.0 / _f[0], 1.0 / _f[1], 1.0 / _f[2]
+                    fair_map = {'1X': 1.0 / (_ph + _pd), '12': 1.0 / (_ph + _pa), 'X2': 1.0 / (_pd + _pa)}
+                elif sm == "ht_ou":
+                    # 2026-10-18 复开价锚点扩半场大小: 走 num_1 的 totals
+                    full_ht = (per.get('num_1') or {}) if isinstance(per, dict) else {}
+                    tot_ht = full_ht.get('totals') or {}
+                    _o = (tot_ht.get('0') or list(tot_ht.values())[0]) if tot_ht else None
+                    if not _o or not _o.get('over') or not _o.get('under'):
+                        remain.append(rec); continue
+                    _f = shin_fair_odds([_o['over'], _o['under']])
+                    fair_map = {'over': _f[0], 'under': _f[1]}
                 else:
                     remain.append(rec); continue
                 dk = _DIR.get(rec.get("designation", ""))
