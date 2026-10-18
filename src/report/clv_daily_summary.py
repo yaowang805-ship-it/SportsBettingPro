@@ -118,7 +118,7 @@ def main(push: bool = True):
     arc = _load_archive_clv()
     s_fwd = _stats(fwd)
     s_arc = _stats(arc)
-    all_clv = fwd + arc
+    all_clv = fwd  # 2026-10-18 归档库已废弃(2条25天没更新), 合计只用实时采集
     s_all = _stats(all_clv)
 
     lines = ["**投注推荐 · CLV 验证日报**", ""]
