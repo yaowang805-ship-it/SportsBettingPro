@@ -169,7 +169,7 @@ def _get_event_index(sport_id, event_type):
     return idx
 
 
-def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, event_type='prematch'):
+def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, event_type='prematch', use_rest_live=False):
     """从 Pinnacle 赔率算去水公平价(多锚共识的无偏基准)。
 
     sub_market: '1x2'→{home,draw,away}; 'hc'→{home,away}+line; 'ou'→{over,under}+line;
@@ -191,11 +191,27 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
     _games = (sport_id == 5 and sub_market in ("hc_games", "ou"))
     _suf = "games" if _games else ""
     swapped = False
-    e = _pin_cache_find_event(home, away, games=_games)
+    e = None
+    if use_rest_live:
+        # 2026-10-18 复开价锚点: WS 缓存缺滚球 live 价(只有 prematch 冻结价), 改用 REST 拉 live 事件
+        _data = fetch_pinnacle_markets(sport_id, 'live')
+        if _data:
+            for _ev in _data.get('events', []):
+                if _norm(_ev.get('home', '')) == _norm(home) and _norm(_ev.get('away', '')) == _norm(away):
+                    e = _ev
+                    break
+            if not e:
+                for _ev in _data.get('events', []):
+                    if _norm(_ev.get('home', '')) == _norm(away) and _norm(_ev.get('away', '')) == _norm(home):
+                        e = _ev
+                        swapped = True
+                        break
     if not e:
-        e = _pin_cache_find_event(away, home, games=_games)
-        if e:
-            swapped = True
+        e = _pin_cache_find_event(home, away, games=_games)
+        if not e:
+            e = _pin_cache_find_event(away, home, games=_games)
+            if e:
+                swapped = True
     if not e:
         # 2026-10-17 禁用 REST 兜底: _get_event_index 拉 REST 4.31s, 滚球浪费窗口/早盘下单超时 20s。
         # 职业团队共识「REST for truth, WebSocket for delta」——REST 只做快照/恢复, 不做比价兜底。

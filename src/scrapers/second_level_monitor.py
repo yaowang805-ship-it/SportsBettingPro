@@ -2393,7 +2393,7 @@ class SecondLevelMonitor:
                     remain.append(rec)
                     continue
                 sm = "1x2" if rec.get("sub") == "opportunities" else "ou"
-                cur = pinnacle_fair_price(rec.get("home", ""), rec.get("away", ""), sid, sm, event_type='live')
+                cur = pinnacle_fair_price(rec.get("home", ""), rec.get("away", ""), sid, sm, event_type='live', use_rest_live=True)
                 dk = _DIR.get(rec.get("designation", ""))
                 new_f = cur.get(dk) if (cur and dk) else None
                 old_f = rec.get("fair")
