@@ -740,6 +740,9 @@ class SecondLevelMonitor:
                     "market_id": sig.get("market_id"), "option_type": sig.get("option_type"),
                     "sub": sig.get("sub"), "designation": sig["desig"],
                     "bb_odds": sig["bb_odds"], "ts": time.time(),
+                    # 2026-10-18 复开价锚点: 补队名/运动/下注fair, 供 _reanchor_pending 周期性复查询
+                    "home": sig["match"].get("home", ""), "away": sig["match"].get("away", ""),
+                    "sport": sig.get("sport", ""), "fair": sig["fair"],
                 })
             _paper_bets_cache["dirty"] = True
             _paper_bets_cache["pending"] += 1
