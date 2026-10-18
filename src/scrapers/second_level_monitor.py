@@ -2449,6 +2449,7 @@ class SecondLevelMonitor:
                 log_oa_opportunities(entries, min_ev=2.0, source="ws_scan")
             except Exception:
                 pass
+        _t_ingest = time.time() - _t0  # 入库后耗时
         if opps:
             opps.sort(key=lambda o: -(o.get('ev_pct') or 0))
             opps = opps[:30]
@@ -2456,6 +2457,8 @@ class SecondLevelMonitor:
                 from src.betting.bb_real_bet_flow import auto_bet_flow
                 res = auto_bet_flow(opps, trigger_ts=_t0, trigger_source="ws_scan")
                 n = len(res.get('success', [])) if isinstance(res, dict) else 0
+                _t_bet = time.time() - _t0
+                print(f'[slm] 早盘WS触发耗时: 比价 {_dt:.1f}s + 入库 {_t_ingest-_dt:.1f}s + 下单 {_t_bet-_t_ingest:.1f}s = 总 {_t_bet:.1f}s ({len(opps)}单)', flush=True)
                 if n:
                     print(f'[slm] 早盘WS触发下单 {n} 注', flush=True)
             except Exception as e:
