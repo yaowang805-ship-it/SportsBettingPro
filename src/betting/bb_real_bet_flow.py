@@ -181,11 +181,13 @@ def _early_outstanding():
         return 0.0
 
 
-def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
+def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigger_source="pin_drop"):
     """全自动下单。返回 {成功: [...], 失败: [...]}。
 
     trigger_ts(2026-10-11): Pin drop 触发时刻(供端到端「总耗时」=触发→下单完成, 对齐滚球口径)。
     None(pipeline 扫描路径无触发时刻)则兜底用下单 HTTP 累加。
+    trigger_source(2026-10-18 双轨制): pin_drop(Pin骤降触发) / ws_scan(WS全量扫描触发),
+    落盘到 real_bets 供区分两条流程优劣。
     """
     if not EARLY_BET_ENABLED:
         return {"success": [], "failed": [], "error": "早盘投注已暂停"}
@@ -274,7 +276,8 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
             break
         # 2026-10-17 解冻注额公式: 恢复 Kelly 档(弱65/中125/强190), 早盘上限 200(用户充值5000定)。
         # (之前 cap 30 flat 是早盘探针, 把 Kelly 档全压成 30 → 无大额、不按 Kelly)
-        stake = min(stake, 200.0)
+        # 2026-10-18 双轨制上线: 早盘单笔上限降到 50(用户定), 两条触发流程(pin_drop/ws_scan)同限。
+        stake = min(stake, 50.0)
         # 2026-10-17: 下注时EV门槛与采集门槛对齐。之前硬编码 min_ev_pct=4.0 高于采集门槛
         # (get_min_ev 直接盘3%/dc 3%/特殊盘4%, 另有方向级覆盖), 把 2~4% 档机会扫进来又在下单时拒掉。
         _min_ev = opp.get("_min_ev")
@@ -303,7 +306,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
             rec = {
                 "home": disp_home, "away": disp_away, "sub_market": sub, "designation": desig,
                 "odds": odds, "stake": stake, "order_id": order_id,
-                "ts": time.time(),
+                "ts": time.time(), "trigger_source": trigger_source,
             }
             success.append(rec)
             _daily_bets += 1; _daily_stake += stake
