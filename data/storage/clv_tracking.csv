@@ -4814,3 +4814,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T10:01:20Z,football,UAE Pro League,Al Ittihad Kalba,Al Jazira (UAE),,,和局,1x2,4.84,0,4.0437,19.69,0,2,1792328700,ALL,pinnacle,,,validate,,,5588360
 2026-10-18T10:01:20Z,football,UAE Pro League,Al Ittihad Kalba,Al Jazira (UAE),,,双重机会-主/和局,dc,2.93,0,2.0816,40.76,0,2,1792328700,ALL,pinnacle,,,validate,,,5588360
 2026-10-18T10:01:20Z,football,Sweden Division 2,Qviding FIF,Lindome GIF,,,和局,1x2,4.2,0,4.0437,3.87,0,3,1792324800,ALL,pinnacle,,,validate,,,4806809
+2026-10-18T10:11:08Z,basketball,China CBA,Guangzhou Loong Lions,Zhejiang Golden Bulls,,,让分主胜,hc,1.85,0,1.778,4.05,0,3,1792323300,ALL,pinnacle,,,validate,,+8.5,5626223
+2026-10-18T10:17:47Z,football,Indian Super League,Punjab FC,Mumbai City FC,,,双重机会-主/和局,dc,1.37,0,1.3294,3.05,0,2,1792418400,BB,pinnacle,,,validate,,,5758843
+2026-10-18T10:17:47Z,football,Indian Super League,Punjab FC,Mumbai City FC,,,双重机会-和局/客,dc,1.52,0,1.4206,7.0,0,2,1792418400,BB,pinnacle,,,validate,,,5758843
+2026-10-18T10:26:40Z,football,Qatar Stars League,Al Sadd SC,AL Duhail SC,,,双重机会-和局/客,dc,1.83,0,1.6511,10.84,0,3,1792333800,ALL,pinnacle,,,validate,,,5752362
