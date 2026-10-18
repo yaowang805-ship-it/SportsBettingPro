@@ -1679,7 +1679,6 @@ class SecondLevelMonitor:
         用 sig 里的 odds-api.io 事件 id(pin_matchup_id) 重拉 Betfair 公平价, 重算 EV。
         2026-09-19 加失败原因统计(_lev_fail_stats), 量化 close/价差/deleted 各占多少。
         """
-        from src.scrapers.odds_api_io import fair_price, get_odds, _SUB_TO_BETFAIR
         eid = sig.get("pin_matchup_id")
         if not eid:
             self._lev_fail_stats["no_event_id"] = self._lev_fail_stats.get("no_event_id", 0) + 1
