@@ -2557,13 +2557,10 @@ class SecondLevelMonitor:
             print("[slm] 已启动 BB 滚球后台预取(sleep 0.5s, 周期≈2.7s, 下单读缓存)", flush=True)
         except Exception as e:
             print(f"[slm] BB 后台预取启动失败: {type(e).__name__} {str(e)[:80]}", flush=True)
-        # 2026-09-22 后台预取事件列表: 让 get_events 的 REST 永远不在公平价匹配关键路径上(消除每5min 8.4s尖峰)
-        try:
-            from src.scrapers.odds_api_io import start_events_prefetch
-            start_events_prefetch(interval=60.0)
-            print("[slm] 已启动事件列表后台预取(每 60s 刷新 live 事件索引, 匹配读热缓存)", flush=True)
-        except Exception as e:
-            print(f"[slm] 事件列表预取启动失败: {type(e).__name__} {str(e)[:80]}", flush=True)
+        # 2026-10-18 停用 Betfair 事件列表预取: odds-api.io 已撤(切 pinnapi 单锚),
+        # get_events 走 _get 短路返回空, 预取空转。公平价匹配已用 pinnacle_fair_price(WS缓存),
+        # 不再依赖 Betfair 事件索引。
+        # (原 2026-09-22: 让 get_events REST 不在公平价匹配关键路径上)
         # 2026-09-25 后台预取 CMN 中文名: 推送全中文, 后台线程每 60s 拉 CMN, 不占下单链路
         try:
             from src.scrapers.pinnacle_live import start_cn_prefetch

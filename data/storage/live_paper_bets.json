@@ -205851,5 +205851,35 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1792323136.458028,
+  "match_id": 5717369,
+  "market_id": 131531294,
+  "option_type": 2,
+  "sport": 13,
+  "home": "路德",
+  "away": "索伦蒂纳",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.62,
+  "fair": 1.4407,
+  "ev": 12.45,
+  "spread": null,
+  "bb_ts": 1792323129.799724,
+  "stake": 300,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
