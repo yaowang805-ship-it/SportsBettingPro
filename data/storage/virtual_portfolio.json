@@ -1,30 +1,7 @@
 {
-  "balance": 14032.53,
+  "balance": 14062.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_卡达卡_毒蛇_客胜",
-      "sport": "football",
-      "league": "乌干达超级联赛",
-      "home_team": "卡达卡",
-      "away_team": "毒蛇",
-      "home_cn": "卡达卡",
-      "away_cn": "毒蛇",
-      "market": "1x2",
-      "market_type": "客胜",
-      "sub_market": "1x2",
-      "line": "",
-      "odds": 1.44,
-      "stake": 30,
-      "model_prob": 0.7941,
-      "ev_pct": 14.35,
-      "pin_odds": 1.2331,
-      "fair_price": 1.2593,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1792069200.0,
-      "created_at": "2026-10-15T01:12:26.437422+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_古晋城_杰志_主胜",
       "sport": "football",
@@ -11302,6 +11279,21 @@
       "sport": "basketball",
       "home_cn": "IR 雷克雅未克",
       "away_cn": "阿佛坦斯",
+      "market_type": "客胜"
+    },
+    {
+      "id": "bb_vs_pin_1x2_卡达卡_毒蛇_客胜",
+      "match": "30¥ @ 1.44 (超时作废)",
+      "date": "2026-10-18T01:24:56.327598+00:00",
+      "stake": 30,
+      "odds": 1.44,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "乌干达超级联赛",
+      "sport": "football",
+      "home_cn": "卡达卡",
+      "away_cn": "毒蛇",
       "market_type": "客胜"
     }
   ],

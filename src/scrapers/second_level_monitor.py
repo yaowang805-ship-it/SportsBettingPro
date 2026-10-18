@@ -2369,6 +2369,48 @@ class SecondLevelMonitor:
         else:
             self._drop_anchor_track.pop(mid, None)
 
+    def _reanchor_pending(self):
+        """复开价锚点(2026-10-18): 周期性重查 Pin 实时公平价, 对下注后价格已移动的注写 clv_sign。
+
+        覆盖所有 1x2/ou 注(不只 drop 场次, 解决 drop 锚点 0.6% 覆盖率的死角)。
+        方向: 重查公平价 vs 下注公平价, fair 下降(概率升)=朝有利 +1, 上升=朝不利 -1。
+        下注 ≥5s 后才复查(避开同刻价), |移动|<2% 视为没动继续等。
+        """
+        if not self._drop_anchor_track:
+            return
+        from src.scrapers.pinnapi_client import pinnacle_fair_price
+        from src.scrapers.bb_vs_pinnacle import _BB_SPORT_TO_OA_ID
+        _DIR = {"主胜": "home", "客胜": "away", "和局": "draw", "大球": "over", "小球": "under"}
+        now = time.time()
+        for mid, recs in list(self._drop_anchor_track.items()):
+            remain = []
+            for rec in recs:
+                if now - rec.get("ts", 0) < 5:
+                    remain.append(rec)
+                    continue
+                sid = _BB_SPORT_TO_OA_ID.get(rec.get("sport", ""), 0)
+                if not sid:
+                    remain.append(rec)
+                    continue
+                sm = "1x2" if rec.get("sub") == "opportunities" else "ou"
+                cur = pinnacle_fair_price(rec.get("home", ""), rec.get("away", ""), sid, sm, event_type='live')
+                dk = _DIR.get(rec.get("designation", ""))
+                new_f = cur.get(dk) if (cur and dk) else None
+                old_f = rec.get("fair")
+                if not new_f or not old_f or new_f <= 1:
+                    remain.append(rec)
+                    continue
+                moved = (old_f - new_f) / new_f
+                if abs(moved) < 0.02:
+                    remain.append(rec)
+                    continue
+                self._write_clv_sign(mid, rec["market_id"], rec["option_type"], rec["sub"],
+                                     (1 if moved > 0 else -1), "reopen", round(now - rec["ts"], 2))
+            if remain:
+                self._drop_anchor_track[mid] = remain
+            else:
+                self._drop_anchor_track.pop(mid, None)
+
     def _write_clv_sign(self, match_id, market_id, option_type, sub, clv_sign, anchor, elapsed):
         """把 clv_sign 写回 live_paper_bets 对应记录(2026-10-11)。"""
         try:
@@ -2490,6 +2532,11 @@ class SecondLevelMonitor:
                         _t_settle0 = time.time()
                         # 2026-09-26 防假死: 结算放独立线程池+60s超时(根治: 卡住不占默认池)
                         await _run_task(self._settle_paper_bets, timeout=60, tag="结算")
+                        # 2026-10-18 复开价锚点: 周期性重查 Pin 公平价给 pending 注写 clv_sign(全覆盖, 不只 drop 场次)
+                        try:
+                            self._reanchor_pending()
+                        except Exception as _e:
+                            print(f"[slm] 复开价锚点异常: {type(_e).__name__} {str(_e)[:80]}", flush=True)
                         if time.time() - _t_settle0 > 60:
                             print(f"[slm] ⚠️ 结算耗时 {time.time()-_t_settle0:.0f}s(>60s)", flush=True)
                     if poll_count % 15 == 0:  # 每 ~30s 查一次已结算订单 → 推钉钉
