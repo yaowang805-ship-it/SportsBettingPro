@@ -4807,3 +4807,10 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T09:32:58Z,football,Wales Cup,Afan Lido,Penybont FC,,,主胜,1x2,19.4,0,17.0068,14.07,0,3,1792323000,BB,pinnacle,,,validate,,,5733551
 2026-10-18T09:37:45Z,tennis,ATP - Almaty Open,Fabian Marozsan (HUN),Timofey Skatov (KAZ),,,客胜,1x2,4.38,0,4.0437,8.32,0,2,1792389600,BB,pinnacle,,,validate,,,5766640
 2026-10-18T09:41:30Z,football,Ghana Premier League,Debibi United FC,Bibiani Gold Stars FC,,,小球,ou,1.87,0,1.8074,3.46,0,2,1792335600,ALL,pinnacle,,,validate,,2.0,5733545
+2026-10-18T09:54:41Z,football,UAE Pro League,Khor Fakkan Club,Al Wahda FC,,,和局,1x2,4.83,0,4.0437,19.45,0,2,1792328700,ALL,pinnacle,,,validate,,,5588361
+2026-10-18T09:54:41Z,football,UAE Pro League,Khor Fakkan Club,Al Wahda FC,,,双重机会-主/和局,dc,2.84,0,2.1016,35.14,0,2,1792328700,ALL,pinnacle,,,validate,,,5588361
+2026-10-18T09:56:49Z,football,Thailand League 1,Bangkok United,Port FC,,,双重机会-主/和局,dc,1.33,0,1.283,3.66,0,2,1792321200,ALL,pinnacle,,,validate,,,5285516
+2026-10-18T09:59:35Z,football,Mexico Liga MX,Tigres UANL,Club Leon,,,上半场客胜,ht,5.05,0,4.071,24.05,0,3,1792551600,ALL,pinnacle,,,validate,,,5089228
+2026-10-18T10:01:20Z,football,UAE Pro League,Al Ittihad Kalba,Al Jazira (UAE),,,和局,1x2,4.84,0,4.0437,19.69,0,2,1792328700,ALL,pinnacle,,,validate,,,5588360
+2026-10-18T10:01:20Z,football,UAE Pro League,Al Ittihad Kalba,Al Jazira (UAE),,,双重机会-主/和局,dc,2.93,0,2.0816,40.76,0,2,1792328700,ALL,pinnacle,,,validate,,,5588360
+2026-10-18T10:01:20Z,football,Sweden Division 2,Qviding FIF,Lindome GIF,,,和局,1x2,4.2,0,4.0437,3.87,0,3,1792324800,ALL,pinnacle,,,validate,,,4806809

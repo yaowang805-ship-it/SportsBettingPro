@@ -1322,11 +1322,10 @@ class PipelineOrchestrator:
             # Pin 瞬时速率仍 12req/s 限速内, 只增请求总量不增瞬时, 风控风险低。
             # 2026-09-15 早盘恢复频次(已有早盘释放盘口 ht/ht_dc/1x2, 见 CLV>2% 判据): far 24-72h 15min→10min,
             # 回退 9-14 的降频(当时早盘无释放)。10min 是降频前的已知安全值, 不增 Pin 压力(瞬时速率仍 12req/s 内)。
-            # near/urgent 是临场真 edge 窗口, 保持不动。
-            #   far 24-72h: 10min
-            #   near 6-24h: 6min
-            #   urgent <6h: 5min(临场真edge格子, 提高频次)
-            for tw, interval, label in [("far", 600, "早盘24-72h"), ("near", 360, "中程6-24h"), ("urgent", 300, "临场<6h")]:
+            # 2026-10-18 早盘快照提速: far/near/urgent 全 30s(原 10/6/5min), 让 BB 快照(初始信号赔率)
+            # 新鲜到 30s。只改扫描触发频率 —— bet 流程(run_incremental→推送→auto_bet_flow)、资金分配(stake/Kelly)
+            # 完全不变, 指纹去重保证不重复下注。Pin 侧有共享限速兜底, 不会因此重新触发封禁。
+            for tw, interval, label in [("far", 30, "早盘24-72h"), ("near", 30, "中程6-24h"), ("urgent", 30, "临场<6h")]:
                 last_key = f"_last_inc_{tw}"
                 last_val = getattr(self, last_key, None)
                 if last_val is None:
