@@ -620,6 +620,12 @@ def api_get(path, retry=True, bypass_pause=False):
     V4.5: 指数退避 + 封顶 + 抖动 + 累积超时保护。
     bypass_pause=True 时跳过 Cloudflare 封禁冷却检查(换节点自检用)。
     """
+    # 2026-10-18 彻底停用: arcadia.pinnacle.com 已被 Pin 官方停用(2025-07-23),
+    # 永远 Cloudflare 封禁。系统已切 pinnapi.com 单锚(pinnapi_client/pin_client)。
+    # 短路: 不再打旧端点(消除封禁噪音+浪费请求)。依赖本函数的 pinnacle_markets/
+    # pinnacle_league_map/pin_proxy_pool 全部随之停用。纯工具(get_decimal_price/
+    # us_to_decimal)仍保留在本文件, 供结算/匹配等纯本地用途。
+    return None
     global _ssl_fail_count
     _load_cookie()
     if not _rate_limit(bypass_pause=bypass_pause):
