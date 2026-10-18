@@ -2273,9 +2273,13 @@ class SecondLevelMonitor:
             return 0
         last = self._pin_trigger_offset
         if last >= len(lines):
-            return 0
-        # 批处理: 每次最多 3 条(公平价要扫 Pin REST, 全量 373 条会超 20s), 其余下轮再消费
-        new_lines = lines[last:last + 3]
+            # 2026-10-18 修: pin_trigger.jsonl 被 _append_rotating 截断(>1.5MB 留 100 行)后
+            # offset 卡死永远 return 0 → 早盘实盘停摆。对齐 PrematchIngestor.sweep 的重置逻辑。
+            self._pin_trigger_offset = 0
+            last = 0
+        # 批处理: 每次最多 30 条。原 3 条理由是「公平价要扫 Pin REST 全量超 20s」,
+        # 2026-10-17 REST 兜底已禁用(读 WS 缓存 0ms), 理由失效, 放宽到 30 条(比价仍 <20s)。
+        new_lines = lines[last:last + 30]
         self._pin_trigger_offset = last + len(new_lines)
         # BB 快照(id → match)
         from src.scrapers.bb_incremental_scanner import BB_EXTRACTED
