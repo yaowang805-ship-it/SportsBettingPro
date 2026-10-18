@@ -293,9 +293,10 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         # 下单失败也保留占坑(该 opp 本轮已尝试, 不再重试, 防重复), 下次扫描靠 check 拦。
         record_sub_market_bet(match_id, sub, "prematch")
 
-        # 全局冷却(2026-09-08): 跨进程共享时间戳, 与滚球流程错开, 避免"同一时间"下单
+        # 全局冷却(2026-09-08): 跨进程共享时间戳。2026-10-18 早盘 scope=early 独立冷却,
+        # 不跟滚球共享(滚球 2s 高频下单让早盘每次等 20-90s → 早盘 WS 触发一轮超 60s)。
         from src.betting.bb_auto_bet import global_bet_cooldown, record_global_bet
-        _wait = global_bet_cooldown(20, 90)
+        _wait = global_bet_cooldown(20, 90, scope="early")
         if _wait > 0:
             time.sleep(_wait)
 
@@ -337,7 +338,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         _eq_record(f"{opp.get('sport')}|{sub}|{desig}", code, _latency)
 
         # 记录全局下单时间戳
-        record_global_bet()
+        record_global_bet(scope="early")
 
         # 防风控(2026-09-05): 每注之间随机间隔, 模拟真人看盘思考, 避免秒下多注被风控识别。
         # 2026-10-18 双轨制: ws_scan 全量扫描每 30s 来 13-16 个 opp, 20-90s 会让循环永不结束

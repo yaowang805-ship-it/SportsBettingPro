@@ -141,18 +141,22 @@ def record_sub_market_bet(match_id, sub_market, scope="live"):
 # 早盘(auto_bet_flow) + 滚球(second_level_monitor)是两个独立进程, 各自有随机间隔但互不知晓,
 # 可能"同一时间"各下一单, 像机器投注被风控识别。用共享时间戳文件强制全局随机间隔。
 GLOBAL_BET_TS_FILE = ROOT / "data" / "storage" / "last_bet_ts.txt"
+EARLY_BET_TS_FILE = ROOT / "data" / "storage" / "last_bet_ts_early.txt"
 
 
-def global_bet_cooldown(min_s=15.0, max_s=45.0):
-    """返回还需等待的秒数(全局随机间隔 min~max)。跨进程读共享时间戳:
-    上次任意流程下单距今 < 随机间隔 → 返回还需等待秒数; 否则 0(可下单)。
-    下单成功后必须调 record_global_bet()。
+def global_bet_cooldown(min_s=15.0, max_s=45.0, scope="live"):
+    """返回还需等待的秒数(随机间隔 min~max)。跨进程读共享时间戳。
+
+    scope: live(滚球)/early(早盘) 各自独立冷却时间戳(2026-10-18 分开: 滚球 2s 高频下单让早盘
+    每次都等 20-90s → 早盘 WS 触发一轮超 60s。分开后早盘只跟早盘错开, 不被滚球拖慢)。
+    下单成功后必须调 record_global_bet(scope)。
     """
     import random as _r
+    _file = EARLY_BET_TS_FILE if scope == "early" else GLOBAL_BET_TS_FILE
     last = 0.0
     try:
-        if GLOBAL_BET_TS_FILE.exists():
-            last = float(GLOBAL_BET_TS_FILE.read_text().strip() or 0)
+        if _file.exists():
+            last = float(_file.read_text().strip() or 0)
     except Exception:
         pass
     if not last:
@@ -161,11 +165,12 @@ def global_bet_cooldown(min_s=15.0, max_s=45.0):
     return max(0.0, wait - (time.time() - last))
 
 
-def record_global_bet():
-    """下单成功后记录共享时间戳(全局冷却起点)。"""
+def record_global_bet(scope="live"):
+    """下单成功后记录时间戳(冷却起点)。scope: live/early 各自独立文件。"""
+    _file = EARLY_BET_TS_FILE if scope == "early" else GLOBAL_BET_TS_FILE
     try:
-        GLOBAL_BET_TS_FILE.parent.mkdir(parents=True, exist_ok=True)
-        GLOBAL_BET_TS_FILE.write_text(str(time.time()))
+        _file.parent.mkdir(parents=True, exist_ok=True)
+        _file.write_text(str(time.time()))
     except Exception:
         pass
 
