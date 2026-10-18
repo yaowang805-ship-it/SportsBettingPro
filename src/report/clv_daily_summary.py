@@ -126,7 +126,9 @@ def main(push: bool = True):
     lines.append("")
     lines.append("| 口径 | 样本 | 均值 | 中位 | 正率 |")
     lines.append("|---|---|---|---|---|")
-    for name, s in [("实时采集(赛前1-20min)", s_fwd), ("归档库回溯", s_arc), ("合计", s_all)]:
+    # 2026-10-18 去掉「归档库回溯」: clv_archive_results.json 只有 2 条、Sep 23 起 25 天没更新,
+    # 每天报同一个数是摆设。只报实时采集(真实有效)。
+    for name, s in [("实时采集(赛前1-20min)", s_fwd)]:
         if s:
             lines.append(f"| {name} | {s['n']} | {s['mean']:+.1f}% | {s['median']:+.1f}% | {s['positive_pct']:.0f}% |")
         else:

@@ -4818,3 +4818,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T10:17:47Z,football,Indian Super League,Punjab FC,Mumbai City FC,,,双重机会-主/和局,dc,1.37,0,1.3294,3.05,0,2,1792418400,BB,pinnacle,,,validate,,,5758843
 2026-10-18T10:17:47Z,football,Indian Super League,Punjab FC,Mumbai City FC,,,双重机会-和局/客,dc,1.52,0,1.4206,7.0,0,2,1792418400,BB,pinnacle,,,validate,,,5758843
 2026-10-18T10:26:40Z,football,Qatar Stars League,Al Sadd SC,AL Duhail SC,,,双重机会-和局/客,dc,1.83,0,1.6511,10.84,0,3,1792333800,ALL,pinnacle,,,validate,,,5752362
+2026-10-18T10:32:15Z,tennis,ATP Challenger - Lisbon Open,Carlos Taberner (ESP),Goncalo Marques (POR),,,客胜,1x2,6.55,0,4.1267,58.72,0,3,1792327800,BB,pinnacle,,,validate,,,5768759
+2026-10-18T10:32:15Z,tennis,ATP Challenger - Lisbon Open,Carlos Taberner (ESP),Goncalo Marques (POR),,,上半场客胜,ht,4.39,0,4.1303,6.29,0,3,1792327800,BB,pinnacle,,,validate,,,5768759
+2026-10-18T10:32:49Z,football,Ireland Premier Division,Derry City FC,Saint Patricks Athletic FC,,,双重机会-主/和局,dc,1.76,0,1.5662,12.37,0,2,1792436400,ALL,pinnacle,,,validate,,,5694142
+2026-10-18T10:32:49Z,football,Thailand League 1,Bangkok United,Port FC,,,上半场客胜,ht,4.2,0,4.0437,3.87,0,2,1792321200,ALL,pinnacle,,,validate,,,5285516
