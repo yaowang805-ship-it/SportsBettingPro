@@ -215428,14 +215428,18 @@
   "spread": null,
   "bb_ts": 1792327177.6662972,
   "stake": 260,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -260.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   4,
+   3
+  ]
  },
  {
   "ts": 1792327189.21316,
@@ -215458,14 +215462,18 @@
   "spread": null,
   "bb_ts": 1792327188.560166,
   "stake": 300,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -300.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   2,
+   0
+  ]
  },
  {
   "ts": 1792327239.5986612,
@@ -215488,14 +215496,18 @@
   "spread": null,
   "bb_ts": 1792327235.369635,
   "stake": 90,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 71.1,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   3,
+   0
+  ]
  },
  {
   "ts": 1792327337.306421,
@@ -228778,6 +228790,36 @@
   "spread": null,
   "bb_ts": 1792334168.639936,
   "stake": 20,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1792334515.367154,
+  "match_id": 5756141,
+  "market_id": 134430986,
+  "option_type": 4,
+  "sport": 1,
+  "home": "迪巴阿尔富吉拉",
+  "away": "阿拉比欧姆古温",
+  "designation": "大球",
+  "sub": "over_under",
+  "line": 2.5,
+  "bsc": [
+   2,
+   0
+  ],
+  "bb_odds": 1.66,
+  "fair": 1.5889,
+  "ev": 4.47,
+  "spread": null,
+  "bb_ts": 1792334510.780159,
+  "stake": 150,
   "settled": false,
   "result": null,
   "profit": null,

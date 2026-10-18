@@ -2433,6 +2433,10 @@ class SecondLevelMonitor:
                 n = len(res.get('success', [])) if isinstance(res, dict) else 0
                 if n:
                     print(f'[slm] 早盘WS扫描触发下单 {n} 注', flush=True)
+                else:
+                    _failed = res.get('failed', []) if isinstance(res, dict) else []
+                    for _f in _failed[:3]:
+                        print(f"[slm] 早盘WS扫描下单失败: {_f.get('home')} {_f.get('reason')}", flush=True)
             except Exception as e:
                 print(f'[slm] 早盘WS扫描触发下单异常: {type(e).__name__} {e}', flush=True)
         return len(opps)
