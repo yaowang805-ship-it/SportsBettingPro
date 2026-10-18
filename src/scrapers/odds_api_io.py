@@ -68,6 +68,11 @@ _ODDS_BACKOFF_UNTIL = 0.0  # 2026-09-24 限流退避: 429 后退避到此时刻,
 
 def _get(path, params=None, timeout=15):
     """REST GET, 带 apiKey。失败返回 None。"""
+    # 2026-10-18 彻底停用: odds-api.io(Betfair/SBO) 已撤(2026-10-17 切 pinnapi 单锚)。
+    # 短路: 所有 Betfair API(get_sports/get_events/get_odds/fair_price/sbo_fair_price)
+    # 不再发请求(省 5000/小时额度 + 消除异构锚点残留)。纯工具(_norm_team/mid_price/
+    # _select_line 等)仍保留在本文件, 供队名归一化/去水等纯本地用途。
+    return None
     global _ODDS_BACKOFF_UNTIL
     if not ODDS_API_IO_KEY:
         return None

@@ -236,6 +236,10 @@ def fetch_live_fair_prices(sport_ids=LIVE_SPORT_IDS, use_file_cache=False):
     use_file_cache=True 时(仅 FB 观察库收集进程用): 复用 BB 进程刚写入的公平价文件,
     不重复拉 Pin markets。BB 秒级监控永远 use_file_cache=False(要新鲜公平价)。
     """
+    # 2026-10-18 彻底停用: 旧 arcadia.pinnacle.com 滚球公平价(15min 陈旧)已由
+    # pinnapi 实时公平价替代(pinnacle_fair_price, 见 match_live_bb_pin 10-17 切)。
+    # 本函数只剩 legacy match_live_bb_pin 和 __main__ 手动测试调用, 不再打旧端点。
+    return {}
     if time.time() - _FAIR_CACHE["ts"] < _FAIR_TTL:
         return _FAIR_CACHE["data"]
     # 文件缓存(跨进程, 仅 FB 收集进程读): 复用 BB 进程刚拉的结果, 避免重复拉 Pin markets
