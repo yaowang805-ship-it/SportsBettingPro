@@ -1143,7 +1143,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
             under_fair = _oa_ou["under"]
             ev_o = (bb_ou["over_odds"] - over_fair) / over_fair * 100 if over_fair > 0 else 0
             ev_u = (bb_ou["under_odds"] - under_fair) / under_fair * 100 if under_fair > 0 else 0
-            if ev_o > 1:
+            if ev_o > 0:
                 entry["over_under"].append({
                     "designation": mlabels["over"],
                     "line": str(bb_line),
@@ -1154,7 +1154,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     "pin_raw_at_decision": (_oa_ou.get("_raw") or {}).get("over"),
                     "water_pct": round((over_fair - (_oa_ou.get("_raw") or {}).get("over")) / (_oa_ou.get("_raw") or {}).get("over") * 100, 3) if (_oa_ou.get("_raw") or {}).get("over") else None,
                 })
-            if ev_u > 1:
+            if ev_u > 0:
                 entry["over_under"].append({
                     "designation": mlabels["under"],
                     "line": str(bb_line),
@@ -1218,7 +1218,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                             under_fair = _oa_htou["under"]
                             ev_o = (bb_ht_ou["over_odds"] - over_fair) / over_fair * 100 if over_fair > 0 else 0
                             ev_u = (bb_ht_ou["under_odds"] - under_fair) / under_fair * 100 if under_fair > 0 else 0
-                            if ev_o > 1:
+                            if ev_o > 0:
                                 entry["over_under"].append({
                                     "designation": ht_labels["over"],
                                     "line": str(bb_line),
@@ -1228,7 +1228,7 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                                     "ev_pct": round(ev_o, 2),
                                     "_market": "ht_ou",
                                 })
-                            if ev_u > 1:
+                            if ev_u > 0:
                                 entry["over_under"].append({
                                     "designation": ht_labels["under"],
                                     "line": str(bb_line),
