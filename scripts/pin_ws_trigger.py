@@ -319,7 +319,7 @@ class PrematchIngestor:
         self._last_flush = time.time()
         try:
             from src.monitor.clv_collector import log_oa_opportunities
-            n = log_oa_opportunities(batch) or 0
+            n = log_oa_opportunities(batch, source="pin_drop") or 0  # 2026-10-18 双轨制: drop 来源
             if n:
                 print(f"[pin-prematch] 入库 {n} 条机会", flush=True)
         except Exception as e:

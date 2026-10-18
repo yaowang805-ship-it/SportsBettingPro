@@ -2378,9 +2378,14 @@ class SecondLevelMonitor:
             _has_ev = False
             for group in ('opportunities', 'handicap', 'over_under', 'double_chance', 'draw_no_bet'):
                 for o in entry.get(group, []):
-                    if (o.get('ev_pct') or 0) <= 0:
+                    _ev = o.get('ev_pct') or 0
+                    if _ev <= 0:
                         continue
-                    _has_ev = True
+                    _has_ev = True  # 入库观察库: ev>0 都收(全量正EV, 供未来对比两流程)
+                    # 下单门槛: 3-20%(结果锚校准后 EV)。3% 挡 2-3% 噪声, 20% 挡极端冷门假 EV
+                    # (如 152.9% 的 1x2 客胜 / 87.5% 的 dc, favorite-longshot 校准残留)
+                    if _ev < 3 or _ev > 20:
+                        continue
                     sub_market = o.get('_market') or _GROUP_TO_SUB.get(group, group)
                     if not _is_market_released(sport, sub_market, _league,
                                                o.get('designation', ''), _epoch,
