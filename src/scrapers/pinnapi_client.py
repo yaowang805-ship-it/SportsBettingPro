@@ -44,8 +44,13 @@ def _norm(name):
     return _norm_team(name)
 
 
-def fetch_pinnacle_markets(sport_id, event_type='prematch', since=None, force=False):
-    """拉 Pinnacle 赔率(带 15min 缓存)。返回 API 原始 dict(sport_id/sport_name/events)。"""
+def fetch_pinnacle_markets(sport_id, event_type='prematch', since=None, force=False, priority="high"):
+    """拉 Pinnacle 赔率(带 15min 缓存)。返回 API 原始 dict(sport_id/sport_name/events)。
+
+    2026-10-18 走共享限速(pin_rate_state): 请求前查 Cloudflare 封禁(pause_until), 被封就跳过,
+    不再盲目打 Pin 重新触发封禁(这是限速反复复发的剩余源头——之前 fetch_pinnacle_markets 用
+    requests.get 直接打、完全看不到共享层的 pause)。
+    """
     global _pin_cache
     key = (sport_id, event_type)
     now = time.time()
@@ -53,6 +58,16 @@ def fetch_pinnacle_markets(sport_id, event_type='prematch', since=None, force=Fa
         return _pin_cache[key][1]
     if not PINNAPI_KEY:
         return None
+    # 共享限速: 被封(pause)就跳过; 允许则按号 sleep(≤5s, fail-open)
+    try:
+        from src.scrapers import pin_rate_state
+        allowed, wait, _reason = pin_rate_state.reserve(0.10, 120, 10, priority=priority)
+        if allowed is False:
+            return None
+        if allowed is True and wait > 0:
+            time.sleep(wait)
+    except Exception:
+        pass  # 共享层不可用, fail-open 不阻塞
     params = {'sport_id': sport_id, 'event_type': event_type}
     if since is not None:
         params['since'] = since

@@ -4796,3 +4796,14 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T09:09:19Z,football,Israel Liga Alef,Maccabi Ironi Kiryat Malakhi,Ironi Beit Shemesh,,,双重机会-和局/客,dc,2.99,0,2.6517,12.76,0,3,1792335900,ALL,pinnacle,,,validate,,,5536264
 2026-10-18T09:09:51Z,football,Turkey 1. Lig,Kayserispor,Batman Petrolspor,,,上半场客胜,ht,5.2,0,4.3055,20.78,0,2,1792328400,ALL,pinnacle,,,validate,,,5366687
 2026-10-18T09:09:51Z,football,Turkey 1. Lig,Kayserispor,Batman Petrolspor,,,上半场小球,ht_ou,2.09,0,1.8111,15.4,0,2,1792328400,ALL,pinnacle,,,validate,,1.25,5366687
+2026-10-18T09:17:17Z,football,England Premier League,Chelsea FC,Tottenham Hotspur,,,和局,1x2,4.15,0,4.0437,2.63,0,1,1792859400,ALL,pinnacle,,,validate,,,5130844
+2026-10-18T09:17:17Z,football,England Premier League,Chelsea FC,Tottenham Hotspur,,,上半场客胜,ht,4.47,0,4.0437,10.54,0,1,1792859400,ALL,pinnacle,,,validate,,,5130844
+2026-10-18T09:19:26Z,football,UEFA Champions League,Sabah FK,Borussia Dortmund,,,上半场小球,ht_ou,2.08,0,2.0064,3.67,0,2,1792514700,ALL,pinnacle,,,validate,,1.5,5525982
+2026-10-18T09:19:58Z,football,Israel Liga Alef,Maccabi Ironi Ashdod FC,Shimshon Tel Aviv,,,小球,ou,1.85,0,1.7612,5.04,0,3,1792345500,ALL,pinnacle,,,validate,,2.5,5409921
+2026-10-18T09:19:58Z,football,Israel Liga Alef,Maccabi Ironi Ashdod FC,Shimshon Tel Aviv,,,上半场小球,ht_ou,1.95,0,1.8234,6.94,0,3,1792345500,ALL,pinnacle,,,validate,,1.0,5409921
+2026-10-18T09:21:34Z,football,UAE Division 1,Al Bataeh,Forte Virtus,,,双重机会-和局/客,dc,1.91,0,1.8715,2.06,0,2,1792328400,BB,pinnacle,,,validate,,,5756522
+2026-10-18T09:21:34Z,football,Poland II Liga,Sandecja Nowy Sacz,Zawisza Bydgoszcz,,,客胜,1x2,4.19,0,4.1023,2.14,0,3,1792344600,ALL,pinnacle,,,validate,,,5163901
+2026-10-18T09:21:34Z,football,Turkey 1. Lig,Kayserispor,Batman Petrolspor,,,客胜,1x2,4.59,0,4.1211,11.38,0,2,1792328400,ALL,pinnacle,,,validate,,,5366687
+2026-10-18T09:32:58Z,football,Wales Cup,Afan Lido,Penybont FC,,,主胜,1x2,19.4,0,17.0068,14.07,0,3,1792323000,BB,pinnacle,,,validate,,,5733551
+2026-10-18T09:37:45Z,tennis,ATP - Almaty Open,Fabian Marozsan (HUN),Timofey Skatov (KAZ),,,客胜,1x2,4.38,0,4.0437,8.32,0,2,1792389600,BB,pinnacle,,,validate,,,5766640
+2026-10-18T09:41:30Z,football,Ghana Premier League,Debibi United FC,Bibiani Gold Stars FC,,,小球,ou,1.87,0,1.8074,3.46,0,2,1792335600,ALL,pinnacle,,,validate,,2.0,5733545

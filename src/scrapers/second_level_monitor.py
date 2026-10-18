@@ -2419,7 +2419,7 @@ class SecondLevelMonitor:
                     continue
                 _cached = _live_evs.get(sid)
                 if not _cached or now - _cached[0] > 300:
-                    _evs = (fetch_pinnacle_markets(sid, 'live', force=True) or {}).get('events', [])
+                    _evs = (fetch_pinnacle_markets(sid, 'live', force=True, priority="low") or {}).get('events', [])
                     _live_evs[sid] = (now, _evs)
                 _sid_evs = _live_evs[sid][1]
                 ev = None

@@ -215,25 +215,28 @@ def _on_drop(stream, drop):
 
 
 def _poll_rest_cache(cache, rest):
-    """REST since 轮询: 维护标准化 Pin 赔率缓存(WS 只有元数据没赔率, 赔率在 REST)。
+    """REST 低频轮询: 只拉 prematch 补 num_1(半场) 数据。
 
-    每 5s 拉 live+prematch 全量(10 次 REST/轮, ≤10 req/s), 存 {event_id: {event: 标准化事件}}。
+    2026-10-18 深度优化: WS 已实时推全量赔率(num_0 全场, snapshot+prematch_markets+live 帧),
+    REST 周期轮询的 num_0 是冗余(120req/min 吃满 rate limit 触发 Cloudflare 封禁)。REST 只保留:
+      - num_1(半场): WS 不推半场 spreads/totals, 只有 REST /kit/v1/markets 有, ht/ht_hc/ht_ou 用。
+        半场赔率变化慢, 每 5min 拉一次足够(5 运动 × 1 prematch = 1 req/min)。
+      - live 的 num_0 走 WS live 帧(实时), 不再用 REST 拉。
     供 pinnacle_fair_price 读(pin_odds_cache.json 落盘)。
     """
     while True:
         try:
             for sid in (1, 2, 3, 4, 6):
-                for et in ("live", "prematch"):
-                    data = rest.get_odds(sid, et)
-                    if not data:
-                        continue
-                    for ev in data.get("events", []):
-                        eid = str(ev.get("event_id"))
-                        if eid:
-                            cache.update_event(eid, ev)
+                data = rest.get_odds(sid, "prematch")
+                if not data:
+                    continue
+                for ev in data.get("events", []):
+                    eid = str(ev.get("event_id"))
+                    if eid:
+                        cache.update_event(eid, ev)
         except Exception as e:
             print(f"[pin] REST 轮询异常: {type(e).__name__} {str(e)[:80]}", flush=True)
-        time.sleep(5)
+        time.sleep(300)
 
 
 # ── 早盘入库(2026-10-11): Pin 驱动观察库入库 ──
@@ -333,9 +336,14 @@ def main():
     _cleanup_old_drops()     # 启动时清理过期归档
     ws.start()
     sse.start()
+    # 2026-10-18 REST 改低频(只补 num_1 半场, 每 5min): WS 已实时推全量 num_0 赔率, 原 REST 周期轮询的
+    # num_0 是冗余(120req/min 吃满 rate limit 触发 Cloudflare 封禁)。REST 现在只:
+    #   ① _poll_rest_cache 低频拉 prematch 补 num_1(半场, ht/ht_hc/ht_ou 用, 1 req/min)
+    #   ② WS 断线重连快照(PinWSClient._run 里 get_snapshot)
+    #   ③ 滚球 LEV(second_level_monitor._reanchor_pending 独立 force 路径)
     threading.Thread(target=_poll_rest_cache, args=(cache, rest), daemon=True, name="pin-rest").start()
     ingestor = PrematchIngestor(cache)
-    print("[pin] Pin WS + SSE + REST轮询 + 早盘入库 常驻已启动", flush=True)
+    print("[pin] Pin WS + SSE + REST低频补半场 + 早盘入库 常驻已启动", flush=True)
 
     # 每 10s: 落盘缓存(供早盘/滚球进程读实时公平价) + 扫缓存入库(早盘观察库)
     while True:
