@@ -1,5 +1,5 @@
 {
-  "balance": 13682.53,
+  "balance": 13642.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1979,6 +1979,29 @@
       "commence_time": 1792308600.0,
       "created_at": "2026-10-18T04:15:32.786161+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_马拉加_皇家社会_和局",
+      "sport": "football",
+      "league": "西班牙甲级联赛",
+      "home_team": "马拉加",
+      "away_team": "皇家社会",
+      "home_cn": "马拉加",
+      "away_cn": "皇家社会",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.77,
+      "stake": 40,
+      "model_prob": 0.2973,
+      "ev_pct": 12.08,
+      "pin_odds": 2.41,
+      "fair_price": 3.3636,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792341000.0,
+      "created_at": "2026-10-18T04:44:49.999844+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -11589,8 +11612,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-18",
-    "used": 1550.0,
-    "bets": 29
+    "used": 1590.0,
+    "bets": 30
   },
   "updated": null
 }

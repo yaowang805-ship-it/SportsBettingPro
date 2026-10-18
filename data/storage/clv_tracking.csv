@@ -4675,3 +4675,12 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T04:16:59Z,football,Malta Premier League,Gzira United FC,Hamrun Spartans FC,,,和局,1x2,4.65,4.6,4.3875,5.98,40,2,1792314000.0,BB,,,,push,,,
 2026-10-18T04:16:59Z,football,South Korea K-League 1,FC Seoul,Gimcheon Sangmu FC,,,和局,1x2,4.81,4.76,4.0621,18.41,0,2,1792308600.0,BB,,,,push,,,
 2026-10-18T04:18:51Z,football,Vietnam League 1,Ninh Binh FC,Hoang Anh Gia Lai,,,上半场主胜,ht,1.96,0,1.3744,42.61,0,2,1792321200,BB,pinnacle,,,validate,,,5499249
+2026-10-18T04:23:13Z,tennis,ATP Challenger - Lisbon Open,Pedro Liborio (POR),Oleksii Krutykh (UKR),,,上半场客胜,ht,1.04,0,1.0151,2.45,0,3,1792318800,BB,pinnacle,,,validate,,,5768751
+2026-10-18T04:25:22Z,football,UEFA Champions League,Bayern Munich,Arsenal FC,,,双重机会-主/和局,dc,1.37,0,1.343,2.01,0,2,1792609200,ALL,pinnacle,,,validate,,,5526018
+2026-10-18T04:37:45Z,basketball,Japan B.League One,Saitama Broncos,Kagawa Five Arrows,,,让分客胜,hc,1.92,0,1.8149,5.79,0,3,1792299900,BB,pinnacle,,,validate,,+9.5,5325668
+2026-10-18T04:39:54Z,basketball,Japan B.League One,Saitama Broncos,Kagawa Five Arrows,,,上半场主胜,ht,1.42,0,1.3351,6.36,0,3,1792299900,BB,pinnacle,,,validate,,,5325668
+2026-10-18T04:40:27Z,basketball,Japan B.League One,Ehime Orange Vikings,Kagoshima Rebnise,,,小分,ou,1.9,0,1.8434,3.07,0,3,1792299900,BB,pinnacle,,,validate,,173.5,5325670
+2026-10-18T04:44:13Z,football,Ecuador LigaPro Primera A-Playoff,Delfin SC,Manta FC,,,和局,1x2,3.12,0,3.0123,3.58,0,2,1792341000,BB,pinnacle,,,validate,,,5616341
+2026-10-18T04:44:13Z,football,Ecuador LigaPro Primera A-Playoff,Delfin SC,Manta FC,,,双重机会-主/和局,dc,1.37,0,1.3332,2.76,0,2,1792341000,BB,pinnacle,,,validate,,,5616341
+2026-10-18T04:44:13Z,football,Ecuador LigaPro Primera A-Playoff,Delfin SC,Manta FC,,,双重机会-和局/客,dc,1.51,0,1.398,8.01,0,2,1792341000,BB,pinnacle,,,validate,,,5616341
+2026-10-18T04:46:21Z,football,Spain LaLiga,Malaga CF,Real Sociedad,,,和局,1x2,3.77,2.41,3.3636,12.08,40,1,1792341000.0,BB,,,,push,,,
