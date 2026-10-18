@@ -2401,6 +2401,7 @@ class SecondLevelMonitor:
             if _has_ev:
                 entries.append(entry)
         _dt = time.time() - _t0
+        print(f'[slm] 早盘WS扫描: {len(matches)}场比价 {_dt:.1f}s, 可投 {len(opps)} 个, 入库 {len(entries)} 场', flush=True)
         # 入库观察库(ws_scan 来源, 与 drop 来源分开, 供对比两流程优劣)
         if entries:
             try:
