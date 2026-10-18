@@ -4646,3 +4646,17 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T02:46:37Z,football,Philippines Football League,Tuloy FC,Dynamic Herb Cebu,,,大球,ou,1.91,0,1.8041,5.87,0,3,1792306800,ALL,pinnacle,,,validate,,4.5,5733372
 2026-10-18T02:46:37Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Levanga Hokkaido,,,让分客胜,hc,1.98,0,1.9403,2.05,0,3,1792303500,BB,pinnacle,,,validate,,-1.5,5298107
 2026-10-18T02:47:10Z,football,Uganda Premier League,UPDF FC,Bul FC,,,上半场客胜,ht,2.78,0,2.2463,23.76,0,2,1792332000,BB,pinnacle,,,validate,,,5767230
+2026-10-18T02:51:27Z,football,Japan J.League,Fagiano Okayama,Vissel Kobe,,,主胜,1x2,2.95,0,2.8033,5.23,0,2,1792299300,ALL,pinnacle,,,validate,,,5733493
+2026-10-18T02:54:07Z,football,Japan Football League,Verspah Oita,Criacao Shinjuku,,,主胜,1x2,2.02,0,1.9558,3.28,0,3,1792296000,ALL,pinnacle,,,validate,,,5518978
+2026-10-18T02:56:45Z,basketball,Japan B.League Premier,Toyama Grouses,Seahorses Mikawa,,,主胜,1x2,2.9,0,2.7783,4.38,0,3,1792299900,BB,pinnacle,,,validate,,,5298110
+2026-10-18T02:58:52Z,basketball,Japan B.League Premier,Toyama Grouses,Seahorses Mikawa,,,让分主胜,hc,1.95,0,1.8887,3.25,0,3,1792299900,BB,pinnacle,,,validate,,+5.5,5298110
+2026-10-18T03:03:39Z,football,Japan J.League 3,Kamatamare Sanuki,Roasso Kumamoto,,,上半场主胜,ht,4.24,0,3.9502,7.34,0,4,1792299600,ALL,pinnacle,,,validate,,,5126398
+2026-10-18T03:03:39Z,football,Japan J.League 3,Kamatamare Sanuki,Roasso Kumamoto,,,上半场客胜,ht,2.71,0,2.0999,29.05,0,4,1792299600,ALL,pinnacle,,,validate,,,5126398
+2026-10-18T03:16:58Z,basketball,Australia NBL,Melbourne United,Illawarra Hawks,,,让分客胜,hc,1.92,0,1.8567,3.41,0,3,1792303200,ALL,pinnacle,,,validate,,+9.5,5074397
+2026-10-18T03:20:13Z,football,Japan Football League,Verspah Oita,Criacao Shinjuku,,,客胜,1x2,3.62,0,3.3313,8.67,0,3,1792296000,ALL,pinnacle,,,validate,,,5518978
+2026-10-18T03:20:13Z,football,Japan Football League,Verspah Oita,Criacao Shinjuku,,,让球客胜,hc,1.91,0,1.7284,10.51,0,3,1792296000,ALL,pinnacle,,,validate,,+0.5,5518978
+2026-10-18T03:20:13Z,football,Japan Football League,Verspah Oita,Criacao Shinjuku,,,双重机会-和局/客,dc,1.88,0,1.7543,7.17,0,3,1792296000,ALL,pinnacle,,,validate,,,5518978
+2026-10-18T03:20:13Z,basketball,Australia NBL,Melbourne United,Illawarra Hawks,,,主胜,1x2,1.24,0,1.2005,3.29,0,3,1792303200,ALL,pinnacle,,,validate,,,5074397
+2026-10-18T03:20:47Z,football,Hong Kong Premier League,Sha Tin,Hong Kong FC,,,上半场主胜,ht,2.41,0,1.9727,22.17,0,2,1792310400,ALL,pinnacle,,,validate,,,5718601
+2026-10-18T03:20:47Z,football,Hong Kong Premier League,Sha Tin,Hong Kong FC,,,上半场客胜,ht,3.76,0,3.6861,2.0,0,2,1792310400,ALL,pinnacle,,,validate,,,5718601
+2026-10-18T03:32:43Z,football,Solomon Islands S-League,Kossa FC,Malaita Kingz,,,大球,ou,1.81,0,1.7619,2.73,0,2,1792296000,BB,pinnacle,,,validate,,3.0,5766907
