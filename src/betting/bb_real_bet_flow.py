@@ -331,7 +331,8 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         _t0 = time.time()
         code, order_id, msg = place_single_bet(
             market_id, odds, option_type, stake, token=token, domain=domain, match_id=match_id,
-            fair_price=opp.get("fair_price") or opp.get("fair"), min_ev_pct=_min_ev)
+            fair_price=opp.get("fair_price") or opp.get("fair"), min_ev_pct=_min_ev,
+            verify_price=False)  # 2026-10-18 早盘直接下单(对齐滚球秒级), oddsChange=0 兜底
         _latency = time.time() - _t0
         # 执行质量记录(2026-10-08): 按方向记拒单/延迟, 供早盘定仓的执行质量系数打折
         from src.scrapers.execution_quality import record as _eq_record
