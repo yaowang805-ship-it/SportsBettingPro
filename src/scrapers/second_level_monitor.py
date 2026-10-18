@@ -2330,6 +2330,11 @@ class SecondLevelMonitor:
                     o['away_bb'] = entry.get('away_bb', '')
                     o['sport'] = sport
                     o['_pin_epoch'] = _epoch
+                    # 2026-10-18 修: 早盘 opp 缺 _stake → auto_bet_flow stake=0 全被 stake<30 跳过。
+                    _o_odds = o.get('bb_odds') or 0
+                    _o_ev = o.get('ev_pct') or 0
+                    if _o_odds > 1 and _o_ev > 0:
+                        o['_stake'] = round(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1), 2)
                     opps.append(o)
         if not opps:
             return len(new_lines)
@@ -2397,6 +2402,12 @@ class SecondLevelMonitor:
                     o['away_bb'] = entry.get('away_bb', '')
                     o['sport'] = sport
                     o['_pin_epoch'] = _epoch
+                    # 2026-10-18 修: 早盘 opp 缺 _stake → auto_bet_flow stake=0 全被 stake<30 跳过。
+                    # 复用滚球 Kelly 半凯利算注额(cap 在 auto_bet_flow 按触发源 80/50)。
+                    _o_odds = o.get('bb_odds') or 0
+                    _o_ev = o.get('ev_pct') or 0
+                    if _o_odds > 1 and _o_ev > 0:
+                        o['_stake'] = round(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1), 2)
                     opps.append(o)
             if _has_ev:
                 entries.append(entry)
