@@ -4684,3 +4684,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T04:44:13Z,football,Ecuador LigaPro Primera A-Playoff,Delfin SC,Manta FC,,,双重机会-主/和局,dc,1.37,0,1.3332,2.76,0,2,1792341000,BB,pinnacle,,,validate,,,5616341
 2026-10-18T04:44:13Z,football,Ecuador LigaPro Primera A-Playoff,Delfin SC,Manta FC,,,双重机会-和局/客,dc,1.51,0,1.398,8.01,0,2,1792341000,BB,pinnacle,,,validate,,,5616341
 2026-10-18T04:46:21Z,football,Spain LaLiga,Malaga CF,Real Sociedad,,,和局,1x2,3.77,2.41,3.3636,12.08,40,1,1792341000.0,BB,,,,push,,,
+2026-10-18T04:47:25Z,football,Indonesia Super League,Persib Bandung,Persik Kediri,,,客胜,1x2,5.25,0,4.4199,18.78,0,2,1792324800,ALL,pinnacle,,,validate,,,5736227
+2026-10-18T04:52:48Z,basketball,Japan B.League Premier,Kyoto Hannaryz,Saga Ballooners,,,客胜,1x2,5.1,0,4.9499,3.03,0,3,1792301700,BB,pinnacle,,,validate,,,5298125
+2026-10-18T04:54:05Z,football,South Korea K-League 1,FC Seoul,Gimcheon Sangmu FC,,,和局,1x2,5.05,5.09,4.1142,22.75,70,2,1792308600.0,BB,,,,push,,,
