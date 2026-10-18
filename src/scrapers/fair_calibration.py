@@ -3,14 +3,15 @@
 问题(2026-10-18 实测): Pin 公平价(Shin 去水后)系统性高估热门, 隐含胜率比实际
 高 ~8-10pp(滚球) / ~7pp(早盘), 导致 ev=(bb-fair)/fair 虚高, 投的是假溢价。
 
-方案: 用历史已结算注拟合 isotonic 校准曲线(scripts/calibrate_live_fair.py 生成
-data/storage/fair_calibration.json), 把 p_implied=1/fair 映射到 p_cal, 再回代
-fair_cal=1/p_cal。回测: 校准后 ev_cal>0 只剩 ~15% 注, 实盘 ROI 从 -2.5% 翻 +7%。
+方案: 用历史已结算注拟合 isotonic 校准曲线, 把 p_implied=1/fair 映射到 p_cal,
+再回代 fair_cal=1/p_cal。滚球/早盘分开拟合(偏差幅度不同):
+  - scripts/calibrate_live_fair.py     → fair_calibration.json (滚球, 回测 ROI -2.5%→+7%)
+  - scripts/calibrate_prematch_fair.py → fair_calibration_prematch.json (早盘, 回测 +0.8%→+14%)
 
 用法:
     from src.scrapers.fair_calibration import calibrate_fair, calibrated_ev
-    fair_cal = calibrate_fair(fair)              # 校准公平价(无表时 no-op 返回原价)
-    ev_cal, ev_raw, fair_cal = calibrated_ev(bb, fair)  # 校准后 EV + 原始 EV + 校准公平价
+    fair_cal = calibrate_fair(fair, market="prematch")      # 校准公平价(无表时 no-op)
+    ev_cal, ev_raw, fair_cal = calibrated_ev(bb, fair, market="prematch")
 
 开关: CALIBRATE_FAIR=False 时全部 no-op(可回退)。
 """
@@ -23,38 +24,42 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 # 总开关(可回退): 关掉则校准完全不生效, 回到 ev=(bb-fair)/fair 原始口径
 CALIBRATE_FAIR = True
 
-# 校准表缓存(懒加载一次)
-_cal_table = None
-_cal_loaded = False
+_TABLE_FILES = {
+    "live": "fair_calibration.json",
+    "prematch": "fair_calibration_prematch.json",
+}
+
+_cal_tables = {}   # market -> [(p_implied, p_cal), ...]
+_cal_loaded = {}   # market -> bool
 
 
-def _load_table():
-    global _cal_table, _cal_loaded
-    if _cal_loaded:
-        return _cal_table
-    _cal_loaded = True
+def _load_table(market="live"):
+    if _cal_loaded.get(market):
+        return _cal_tables.get(market)
+    _cal_loaded[market] = True
     try:
-        p = ROOT / "data" / "storage" / "fair_calibration.json"
+        p = ROOT / "data" / "storage" / _TABLE_FILES.get(market, _TABLE_FILES["live"])
         if p.exists():
             d = json.load(open(p, encoding="utf-8"))
             tbl = d.get("table")
             if tbl and len(tbl) >= 2:
-                _cal_table = [(float(t["p_implied"]), float(t["p_cal"])) for t in tbl]
+                _cal_tables[market] = [(float(t["p_implied"]), float(t["p_cal"])) for t in tbl]
     except Exception:
-        _cal_table = None
-    return _cal_table
+        _cal_tables[market] = None
+    return _cal_tables.get(market)
 
 
-def calibrate_fair(fair):
+def calibrate_fair(fair, market="live"):
     """校准公平价: fair(十进制赔率) → fair_cal(校准到真实胜率)。
 
     无表/开关关/非法输入 → 返回原 fair(no-op)。
+    market ∈ {'live', 'prematch'}。
     """
     if not CALIBRATE_FAIR:
         return fair
     if fair is None or fair <= 1.0:
         return fair
-    tbl = _load_table()
+    tbl = _load_table(market)
     if not tbl:
         return fair
     try:
@@ -70,13 +75,13 @@ def calibrate_fair(fair):
             x0, x1 = xs[i], xs[i + 1]
             y0, y1 = ys[i], ys[i + 1]
             p_cal = y0 + (y1 - y0) * (p_imp - x0) / (x1 - x0)
-        p_cal = max(p_cal, 0.01)  # 防 fair_cal 爆炸(0.7-0.8 档校准后 p 可很低)
+        p_cal = max(p_cal, 0.01)  # 防 fair_cal 爆炸(热门档校准后 p 可很低)
         return 1.0 / p_cal
     except Exception:
         return fair
 
 
-def calibrated_ev(bb, fair):
+def calibrated_ev(bb, fair, market="live"):
     """返回 (ev_cal, ev_raw, fair_cal)。
 
     ev_cal  用校准公平价, 纠正热门高估(用于闸门/定仓)
@@ -88,7 +93,7 @@ def calibrated_ev(bb, fair):
         return None, None, None
     try:
         ev_raw = (bb - fair) / fair * 100.0
-        fair_cal = calibrate_fair(fair)
+        fair_cal = calibrate_fair(fair, market=market)
         if fair_cal is None or fair_cal <= 0:
             return None, ev_raw, None
         ev_cal = (bb - fair_cal) / fair_cal * 100.0

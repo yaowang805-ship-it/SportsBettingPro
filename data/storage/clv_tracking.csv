@@ -4663,3 +4663,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T03:43:36Z,basketball,Japan B.League One,Ehime Orange Vikings,Kagoshima Rebnise,,,让分客胜,hc,1.84,0,1.7375,5.9,0,3,1792299900,BB,pinnacle,,,validate,,+12.5,5325670
 2026-10-18T03:49:58Z,basketball,Germany Pro A Basketball Bundesliga,Orange Academy,Crailsheim Merlins,,,客胜,1x2,1.15,0,1.1062,3.96,0,3,1792335600,ALL,pinnacle,,,validate,,,5734354
 2026-10-18T03:49:58Z,basketball,Germany Pro A Basketball Bundesliga,Orange Academy,Crailsheim Merlins,,,上半场客胜,ht,1.27,0,1.1993,5.9,0,3,1792335600,ALL,pinnacle,,,validate,,,5734354
+2026-10-18T03:56:54Z,basketball,China CBA,Shandong Hi Speed Kirin,Liaoning Flying Leopards,,,主胜,1x2,1.79,0,1.4895,20.17,0,3,1792323300,ALL,pinnacle,,,validate,,,5626176
+2026-10-18T03:56:54Z,basketball,China CBA,Shandong Hi Speed Kirin,Liaoning Flying Leopards,,,上半场主胜,ht,1.89,0,1.5268,23.79,0,3,1792323300,ALL,pinnacle,,,validate,,,5626176
+2026-10-18T03:56:54Z,basketball,China CBA,Guangzhou Loong Lions,Zhejiang Golden Bulls,,,客胜,1x2,1.36,0,1.3068,4.07,0,3,1792323300,ALL,pinnacle,,,validate,,,5626223
+2026-10-18T03:56:54Z,basketball,China CBA,Guangzhou Loong Lions,Zhejiang Golden Bulls,,,让分客胜,hc,1.89,0,1.8276,3.41,0,3,1792323300,ALL,pinnacle,,,validate,,-6.5,5626223
+2026-10-18T03:57:26Z,basketball,China CBA,Shandong Hi Speed Kirin,Liaoning Flying Leopards,,,让分主胜,hc,1.94,0,1.6839,15.21,0,3,1792323300,ALL,pinnacle,,,validate,,-1.5,5626176
