@@ -736,7 +736,7 @@
       "success_rate": 0.0
     },
     "委内瑞拉杯": {
-      "attempts": 10,
+      "attempts": 11,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1369,9 +1369,24 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "智利全国篮球联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "丹麦篮球甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "冰岛篮球超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-10-14T09:00:16.519982+00:00",
+  "updated": "2026-10-18T00:23:15.238410+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

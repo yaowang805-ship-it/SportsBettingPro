@@ -4584,3 +4584,10 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T00:12:40Z,football,Lebanon Premier League,Al Mabarrah,Tripoli AC,,,上半场客胜,ht,2.47,0,1.8448,33.89,0,2,1792324800,ALL,pinnacle,,,validate,,,5733596
 2026-10-18T00:16:31Z,football,Argentina Liga Profesional,Argentinos Juniors,Independiente Rivadavia,,,让球客胜,hc,1.97,0,1.8682,5.45,0,3,1793138400,ALL,pinnacle,,,validate,,+0.5,5462507
 2026-10-18T00:20:53Z,football,Sweden Division 2,Vaxjo Norra,Oskarshamns AIK,,,让球主胜,hc,1.83,0,1.6047,14.04,0,3,1792324800,ALL,pinnacle,,,validate,,+0.5,4806805
+2026-10-18T00:30:42Z,football,Mexico Liga De Expansion MX,Cancun FC,Venados FC,,,双重机会-主/和局,dc,1.31,0,1.2688,3.25,0,2,1792285200,ALL,pinnacle,,,validate,,,5300176
+2026-10-18T00:31:14Z,tennis,ATP Challenger - Guangzhou Open,Yuta Shimizu (JPN),Alibek Kachmazov (RUS),,,主胜,1x2,2.55,0,2.4051,6.02,0,3,1792300800,BB,pinnacle,,,validate,,,5766979
+2026-10-18T00:43:36Z,football,USL Championship,El Paso Locomotive FC,Sacramento Republic FC,,,和局,1x2,3.38,0,2.3549,43.53,0,2,1792285200,ALL,pinnacle,,,validate,,,4259076
+2026-10-18T00:43:36Z,football,USL Championship,El Paso Locomotive FC,Sacramento Republic FC,,,上半场客胜,ht,3.21,0,3.1325,2.47,0,2,1792285200,ALL,pinnacle,,,validate,,,4259076
+2026-10-18T00:43:36Z,football,USL Championship,El Paso Locomotive FC,Sacramento Republic FC,,,双重机会-主/和局,dc,1.51,0,1.4689,2.8,0,2,1792285200,ALL,pinnacle,,,validate,,,4259076
+2026-10-18T00:43:36Z,football,USL Championship,El Paso Locomotive FC,Sacramento Republic FC,,,双重机会-和局/客,dc,1.46,0,1.3443,8.61,0,2,1792285200,ALL,pinnacle,,,validate,,,4259076
+2026-10-18T00:46:21Z,football,Japan J.League 3,Renofa Yamaguchi,Kochi United SC,,,主胜,1x2,1.65,0,1.5884,3.88,0,4,1792299600,ALL,pinnacle,,,validate,,,5126417

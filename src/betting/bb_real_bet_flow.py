@@ -171,6 +171,16 @@ def _designation_to_dir(sub_market, designation):
 EARLY_BET_ENABLED = True  # 2026-10-17 恢复: num_1已修(daemon确认num_0), 早盘上限改200
 
 
+def _early_outstanding():
+    """早盘未结算投注额(读 tracked_bets.json 里 status=pending 的注额合计), 独立于滚球 _live_outstanding。"""
+    try:
+        d = json.loads((DATA_DIR / "tracked_bets.json").read_text())
+        bets = d.get("bets", [])
+        return sum(float(b.get("stake", 0) or 0) for b in bets if b.get("status") == "pending")
+    except Exception:
+        return 0.0
+
+
 def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
     """全自动下单。返回 {成功: [...], 失败: [...]}。
 
@@ -342,6 +352,10 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None):
                     _extra.append(f"余额 ¥{_bal}")
             except Exception:
                 pass
+            # 2026-10-18 早盘自己的未结(独立于滚球 _live_outstanding, 读 tracked_bets.json)
+            _early_out = _early_outstanding()
+            if _early_out > 0:
+                _extra.append(f"早盘未结 ¥{_early_out:.0f}")
             # 总耗时(2026-10-11 对齐滚球口径): Pin drop 路径用端到端(触发→下单完成),
             # pipeline 路径(无触发时刻)兜底用下单 HTTP 累加。
             _total_time = (time.time() - trigger_ts) if trigger_ts else total_latency
