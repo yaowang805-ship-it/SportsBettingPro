@@ -4555,3 +4555,16 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-17T23:54:29Z,tennis,World Tennis - M25 Luanda Men Singles,Jack Loge (BEL),Thomas Faurel (FRA),,,让盘主胜,hc,1.55,0,1.4914,3.93,0,3,1792317600,BB,pinnacle,,,validate,,+1.5,5767956
 2026-10-17T23:58:17Z,tennis,World Tennis - W35 Heraklion Women Singles,Alisa Oktiabreva (CZE),Tilwith Di Girolami (BEL),,,上半场主胜,ht,1.09,0,1.0632,2.52,0,3,1792306800,BB,pinnacle,,,validate,,,5767946
 2026-10-17T23:58:33Z,basketball,Germany Pro A Basketball Bundesliga,Orange Academy,Crailsheim Merlins,,,客胜,1x2,1.17,1.092,1.1072,5.67,130,3,1792335600.0,FB,,,,push,,,
+2026-10-17T23:58:50Z,tennis,World Tennis - W35 Santa Margherita di Pula Women Singles,Jessica Pieri (ITA),Nina Radovanovic (FRA),,,主胜,1x2,1.83,0,1.7199,6.4,0,3,1792310400,BB,pinnacle,,,validate,,,5767953
+2026-10-17T23:58:50Z,tennis,World Tennis - W35 Santa Margherita di Pula Women Singles,Jessica Pieri (ITA),Nina Radovanovic (FRA),,,上半场主胜,ht,1.83,0,1.7199,6.4,0,3,1792310400,BB,pinnacle,,,validate,,,5767953
+2026-10-17T23:59:24Z,tennis,World Tennis - W35 Santa Margherita di Pula Women Singles,Jessica Pieri (ITA),Nina Radovanovic (FRA),,,让盘主胜,hc,1.36,0,1.2803,6.23,0,3,1792310400,BB,pinnacle,,,validate,,+1.5,5767953
+2026-10-17T23:59:57Z,tennis,World Tennis - M25 Luanda Men Singles,Jack Loge (BEL),Thomas Faurel (FRA),,,客胜,1x2,1.56,0,1.5266,2.19,0,3,1792317600,BB,pinnacle,,,validate,,,5767956
+2026-10-18T00:00:30Z,football,USL Championship,San Antonio FC,New Mexico United,,,上半场主胜,ht,2.47,0,2.0557,20.15,0,2,1792283400,ALL,pinnacle,,,validate,,,4259104
+2026-10-18T00:00:30Z,football,USL Championship,San Antonio FC,New Mexico United,,,上半场客胜,ht,4.24,0,3.9606,7.05,0,2,1792283400,ALL,pinnacle,,,validate,,,4259104
+2026-10-18T00:01:03Z,tennis,ATP Challenger - Guangzhou Open,Kasidit Samrej (THA),Naoya Honda (JPN),,,客胜,1x2,2.96,0,2.8147,5.16,0,3,1792300800,BB,pinnacle,,,validate,,,5766983
+2026-10-18T00:01:36Z,football,CAF Confederations Cup-Qualification,Tusker Football Club,Singida Black Stars SC,,,主胜,1x2,3.49,0,2.8829,21.06,0,3,1792324800,BB,pinnacle,,,validate,,,5630400
+2026-10-18T00:01:36Z,football,CAF Confederations Cup-Qualification,Tusker Football Club,Singida Black Stars SC,,,上半场主胜,ht,5.2,0,2.8829,80.37,0,3,1792324800,BB,pinnacle,,,validate,,,5630400
+2026-10-18T00:01:36Z,football,CAF Confederations Cup-Qualification,Tusker Football Club,Singida Black Stars SC,,,上半场客胜,ht,2.99,0,2.7519,8.65,0,3,1792324800,BB,pinnacle,,,validate,,,5630400
+2026-10-18T00:01:36Z,football,CAF Confederations Cup-Qualification,Tusker Football Club,Singida Black Stars SC,,,双重机会-主/和局,dc,1.67,0,1.5708,6.32,0,3,1792324800,BB,pinnacle,,,validate,,,5630400
+2026-10-18T00:02:42Z,basketball,Australia NBL,Tasmania Jackjumpers,New Zealand Breakers,,,上半场主胜,ht,1.56,0,1.5196,2.66,0,3,1792296000,ALL,pinnacle,,,validate,,,5074485
+2026-10-18T00:06:05Z,tennis,WTA - Osaka Open,Sinja Kraus (AUT),Sofia Kenin (USA),,,让盘客胜,hc,1.44,1.3356,1.3602,5.87,90,2,1792294800.0,BB/FB,,,,push,,+1.5,
