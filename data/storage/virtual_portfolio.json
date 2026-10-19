@@ -1,5 +1,5 @@
 {
-  "balance": 13462.53,
+  "balance": 13392.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1932,6 +1932,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792404300.0,
       "created_at": "2026-10-19T04:13:14.510004+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_岛根魔术_川崎雷霆勇者_大分(1645)",
+      "sport": "basketball",
+      "league": "日本B篮球联赛PREMIER",
+      "home_team": "岛根魔术",
+      "away_team": "川崎雷霆勇者",
+      "home_cn": "岛根魔术",
+      "away_cn": "川崎雷霆勇者",
+      "market": "over_under",
+      "market_type": "大分(164.5)",
+      "sub_market": "ou",
+      "line": "164.5",
+      "odds": 1.9,
+      "stake": 70,
+      "model_prob": 0.5678,
+      "ev_pct": 7.88,
+      "pin_odds": 1.6494,
+      "fair_price": 1.7612,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792404300.0,
+      "created_at": "2026-10-19T05:15:01.260246+00:00",
       "track_only": false
     }
   ],
@@ -11603,8 +11626,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-19",
-    "used": 210.0,
-    "bets": 3
+    "used": 280.0,
+    "bets": 4
   },
   "updated": null
 }

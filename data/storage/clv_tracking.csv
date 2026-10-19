@@ -5225,3 +5225,27 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-19T04:11:50Z,football,Estonia Esiliiga,FC Tallinn,Viimsi JK,,,主胜,1x2,5.65,0,4.1128,37.37,0,3,1792425600,ALL,pinnacle,,,ws_scan,,,4456687
 2026-10-19T04:11:50Z,football,Estonia Esiliiga,FC Tallinn,Viimsi JK,,,和局,1x2,5.0,0,4.2625,17.3,0,3,1792425600,ALL,pinnacle,,,ws_scan,,,4456687
 2026-10-19T04:13:18Z,basketball,Japan B.League Premier,Nagasaki Velca,Altiri Chiba,,,让分客胜,hc,1.94,1.625,1.7612,10.15,70,3,1792404300.0,BB/FB,,,,push,,+4.5,
+2026-10-19T04:15:51Z,football,Germany 2. Bundesliga,Holstein Kiel,Dynamo Dresden,,,和局,1x2,3.93,0,3.6062,8.98,0,1,1792931400,ALL,pinnacle,,,ws_scan,,,5203030
+2026-10-19T04:15:51Z,football,England League One,Oxford United,Wigan Athletic,,,和局,1x2,3.56,0,3.3636,5.84,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5743734
+2026-10-19T04:15:51Z,football,England League One,Oxford United,Wigan Athletic,,,双重机会-和局/客,dc,1.84,0,1.7066,7.82,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5743734
+2026-10-19T04:15:51Z,football,US Open Cup,Columbus Crew,Saint Louis City SC,,,双重机会-和局/客,dc,1.77,0,1.7213,2.83,0,2,1792627200,BB,pinnacle,,,ws_scan,,,5754665
+2026-10-19T04:15:51Z,football,England League One,Doncaster Rovers,Stockport County FC,,,和局,1x2,3.75,0,3.482,7.7,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5761030
+2026-10-19T04:15:51Z,football,England League One,Doncaster Rovers,Stockport County FC,,,双重机会-主/和局,dc,1.88,0,1.7034,10.37,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5761030
+2026-10-19T04:15:51Z,football,Saudi Arabia Division 1,Damac FC,AL Tai,,,和局,1x2,3.66,0,3.377,8.38,0,2,1792423200,ALL,pinnacle,,,ws_scan,,,5340792
+2026-10-19T04:15:51Z,football,Saudi Arabia Division 1,Damac FC,AL Tai,,,双重机会-和局/客,dc,2.1,0,1.7612,19.24,0,2,1792423200,ALL,pinnacle,,,ws_scan,,,5340792
+2026-10-19T04:30:16Z,tennis,World Tennis - M25 Santa Margherita di Pula Men Singles,Valerio Bracci (ITA),Gabriele Bosio (ITA),,,主胜,1x2,5.95,0,4.1035,45.0,0,3,1792405800,BB,pinnacle,,,pin_drop,,,5773465
+2026-10-19T04:30:49Z,football,Israel Liga Alef,Hapoel Beit Shean Mesilot,Hapoel Ironi Karmiel,,,双重机会-和局/客,dc,1.58,0,1.5164,4.19,0,3,1792427400,ALL,pinnacle,,,pin_drop,,,5409579
+2026-10-19T04:30:49Z,football,Israel Liga Alef,Hapoel Mahane Yehuda,MS Jerusalem,,,客胜,1x2,1.67,0,1.5196,9.9,0,3,1792427400,ALL,pinnacle,,,pin_drop,,,5409867
+2026-10-19T04:32:05Z,basketball,Japan B.League Premier,Shinshu Brave Warriors,Nagoya Diamond Dolphins,,,客胜,1x2,1.2,0,1.1621,3.26,0,3,1792404300,BB,pinnacle,,,ws_scan,,,5298131
+2026-10-19T04:33:41Z,basketball,Japan B.League Premier,Shinshu Brave Warriors,Nagoya Diamond Dolphins,,,上半场客胜,ht,1.3,0,1.2605,3.13,0,3,1792404300,BB,pinnacle,,,ws_scan,,,5298131
+2026-10-19T04:53:12Z,football,Saudi Arabia Division 1,AL Raed FC,Al Saqer FC,,,上半场客胜,ht,4.68,0,4.0712,14.96,0,2,1792428600,BB,pinnacle,,,ws_scan,,,5340781
+2026-10-19T04:53:19Z,football,Saudi Arabia Division 1,AL Raed FC,Al Saqer FC,,,双重机会-和局/客,dc,1.76,0,1.6924,3.99,0,2,1792428600,BB,pinnacle,,,ws_scan,,,5340781
+2026-10-19T04:53:53Z,basketball,Japan B.League Premier,Utsunomiya Brex,Gunma Crane Thunders,,,上半场让球客胜,ht_hc,1.81,0,1.7612,2.77,0,3,1792404300,BB,pinnacle,,,pin_drop,,-1.5,5298133
+2026-10-19T05:00:52Z,football,Kenya Premier League,Mara Sugar FC,Mombasa United,,,客胜,1x2,4.76,0,4.0437,17.71,0,2,1792407600,BB,pinnacle,,,pin_drop,,,5770707
+2026-10-19T05:00:52Z,football,Kenya Premier League,Mara Sugar FC,Mombasa United,,,双重机会-和局/客,dc,2.0,0,1.8522,7.98,0,2,1792407600,BB,pinnacle,,,pin_drop,,,5770707
+2026-10-19T05:00:52Z,football,Israel Liga Alef,Tzeirey Tira FC,Hapoel Hadera,,,和局,1x2,4.24,0,4.0437,4.86,0,3,1792429200,BB,pinnacle,,,pin_drop,,,5409910
+2026-10-19T05:03:52Z,football,Egypt Premier League,Wadi Degla SC,National Bank of Egypt SC,,,和局,1x2,3.17,0,2.9996,5.68,0,2,1792515600,ALL,pinnacle,,,ws_scan,,,5743648
+2026-10-19T05:03:52Z,football,Egypt Premier League,Wadi Degla SC,National Bank of Egypt SC,,,双重机会-主/和局,dc,1.5,0,1.4652,2.38,0,2,1792515600,ALL,pinnacle,,,ws_scan,,,5743648
+2026-10-19T05:04:10Z,basketball,Japan B.League Premier,Shimane Susanoo Magic,Kawasaki Brave Thunders,,,大分,ou,1.9,0,1.8359,3.49,0,3,1792404300,BB,pinnacle,,,ws_scan,,164.5,5298129
+2026-10-19T05:08:30Z,football,Estonia Esiliiga,FC Tallinn,Viimsi JK,,,双重机会-主/和局,dc,2.72,0,2.5786,5.48,0,3,1792425600,ALL,pinnacle,,,pin_drop,,,4456687
+2026-10-19T05:15:05Z,basketball,Japan B.League Premier,Shimane Susanoo Magic,Kawasaki Brave Thunders,,,大分,ou,1.9,1.6494,1.7612,7.88,70,3,1792404300.0,BB/FB,,,,push,,164.5,
