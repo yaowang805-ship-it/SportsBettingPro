@@ -5401,3 +5401,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-19T12:04:20Z,football,Indonesia Super League,Madura United,Persib Bandung,,,上半场主胜,ht,5.25,0,4.12,27.43,0,2,1792670400,ALL,pinnacle,,,ws_scan,,,5766738
 2026-10-19T12:38:16Z,basketball,Eurocup,KK Buducnost Voli,BC Neptunas Klaipeda,,,客胜,1x2,5.1,0,4.0437,26.12,0,3,1792515600,ALL,pinnacle,,,ws_scan,,,5251393
 2026-10-19T12:39:23Z,basketball,Eurocup,KK Buducnost Voli,BC Neptunas Klaipeda,,,让分客胜,hc,1.87,0,1.7612,6.18,0,3,1792515600,ALL,pinnacle,,,ws_scan,,+11.5,5251393
+2026-10-19T13:03:50Z,football,Spain LaLiga,Athletic Bilbao,Real Sociedad,,,和局,1x2,3.68,0,3.3636,9.41,0,1,1793563200,ALL,pinnacle,,,ws_scan,,,5192344
+2026-10-19T13:03:50Z,football,Spain LaLiga,Athletic Bilbao,Real Sociedad,,,上半场客胜,ht,4.54,0,4.0437,12.27,0,1,1793563200,ALL,pinnacle,,,ws_scan,,,5192344
+2026-10-19T13:03:50Z,football,Spain LaLiga,Athletic Bilbao,Real Sociedad,,,双重机会-和局/客,dc,1.87,0,1.6906,10.61,0,1,1793563200,ALL,pinnacle,,,ws_scan,,,5192344
+2026-10-19T13:09:46Z,basketball,China CBA,Xinjiang Flying Tigers,Tianjin Pioneers,,,客胜,1x2,5.15,0,4.1076,25.38,0,3,1792497600,ALL,pinnacle,,,ws_scan,,,5626205
+2026-10-19T13:11:04Z,basketball,China CBA,Xinjiang Flying Tigers,Tianjin Pioneers,,,客胜,1x2,5.15,3.91,4.1076,25.38,70,3,1792497600.0,BB,,,,push,,,

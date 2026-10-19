@@ -1,5 +1,5 @@
 {
-  "balance": 13322.53,
+  "balance": 13252.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1978,6 +1978,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792404300.0,
       "created_at": "2026-10-19T06:05:12.810380+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_新疆伊力特_天津先行者_客胜",
+      "sport": "basketball",
+      "league": "中国篮球职业联赛",
+      "home_team": "新疆伊力特",
+      "away_team": "天津先行者",
+      "home_cn": "新疆伊力特",
+      "away_cn": "天津先行者",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 5.15,
+      "stake": 70,
+      "model_prob": 0.2435,
+      "ev_pct": 25.38,
+      "pin_odds": 3.91,
+      "fair_price": 4.1076,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792497600.0,
+      "created_at": "2026-10-19T13:09:52.942522+00:00",
       "track_only": false
     }
   ],
@@ -11649,8 +11672,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-19",
-    "used": 350.0,
-    "bets": 5
+    "used": 420.0,
+    "bets": 6
   },
   "updated": null
 }
