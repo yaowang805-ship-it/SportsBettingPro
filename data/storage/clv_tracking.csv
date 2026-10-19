@@ -5159,3 +5159,24 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-18T22:16:45Z,football,Jamaica Premier League,Molynes United FC,Cavalier FC,,,让球客胜,hc,1.84,0,1.8013,2.15,0,2,1792447500,BB,pinnacle,,,ws_scan,,-0.5,5585073
 2026-10-18T22:27:34Z,basketball,Japan B.League Premier,Alvark Tokyo,Akita Northern Happinets,,,让分主胜,hc,1.86,0,1.7612,5.61,0,3,1792404300,BB,pinnacle,,,ws_scan,,-14.5,5298126
 2026-10-18T22:30:30Z,football,USA MLS Next Pro,Crown Legacy FC,New York Red Bulls II,,,双重机会-和局/客,dc,1.67,0,1.6333,2.25,0,1,1792364400,ALL,pinnacle,,,ws_scan,,,5739858
+2026-10-18T22:59:01Z,football,Japan J.League,Nagoya Grampus,Cerezo Osaka,,,和局,1x2,3.77,0,3.3636,12.08,0,2,1792576800,ALL,pinnacle,,,ws_scan,,,5756503
+2026-10-18T23:00:50Z,football,Japan J.League 2,Tegevajaro Miyazaki,Blaublitz Akita,,,和局,1x2,3.29,0,3.0925,6.39,0,3,1792576800,ALL,pinnacle,,,pin_drop,,,5164361
+2026-10-18T23:00:50Z,football,Japan J.League 2,Tegevajaro Miyazaki,Blaublitz Akita,,,双重机会-主/和局,dc,1.28,0,1.2222,4.73,0,3,1792576800,ALL,pinnacle,,,pin_drop,,,5164361
+2026-10-18T23:00:50Z,football,Japan J.League 2,Tegevajaro Miyazaki,Blaublitz Akita,,,双重机会-和局/客,dc,1.73,0,1.557,11.11,0,3,1792576800,ALL,pinnacle,,,pin_drop,,,5164361
+2026-10-18T23:03:51Z,football,Egypt Premier League,Talaea El Gaish,Pyramids FC,,,和局,1x2,3.84,0,3.358,14.36,0,2,1792515600,ALL,pinnacle,,,ws_scan,,,5743650
+2026-10-18T23:03:51Z,football,Egypt Premier League,Talaea El Gaish,Pyramids FC,,,双重机会-主/和局,dc,2.45,0,2.3476,4.36,0,2,1792515600,ALL,pinnacle,,,ws_scan,,,5743650
+2026-10-18T23:16:30Z,football,Egypt Premier League,Asyut Petroleum,Zamalek SC,,,双重机会-主/和局,dc,2.88,0,2.7532,4.61,0,2,1792504800,ALL,pinnacle,,,ws_scan,,,5743652
+2026-10-18T23:32:57Z,basketball,Mexico LNBP Basketball League,Soles de Mexicali,Abejas de Leon,,,客胜,1x2,4.96,0,4.158,19.29,0,3,1792368000,ALL,pinnacle,,,ws_scan,,,5760238
+2026-10-18T23:36:50Z,football,Germany Bundesliga,Bayern Munich,Borussia Dortmund,,,客胜,1x2,7.35,0,6.1307,19.89,0,1,1793467800,BB,pinnacle,,,ws_scan,,,5201523
+2026-10-18T23:58:22Z,tennis,World Tennis - M25 Santa Margherita di Pula Men Singles,Tommaso Compagnucci (ITA),Pietro Marino (ITA),,,客胜,1x2,4.86,0,4.0814,19.08,0,3,1792405800,BB,pinnacle,,,ws_scan,,,5773578
+2026-10-18T23:58:53Z,tennis,World Tennis - M25 Santa Margherita di Pula Men Singles,Tommaso Compagnucci (ITA),Pietro Marino (ITA),,,上半场客胜,ht,4.22,0,4.0437,4.36,0,3,1792405800,BB,pinnacle,,,ws_scan,,,5773578
+2026-10-19T00:12:09Z,football,USA Major League Soccer,Atlanta United FC,Chicago Fire,,,双重机会-和局/客,dc,1.6,0,1.4632,9.35,0,1,1792884600,BB,pinnacle,,,pin_drop,,,4231119
+2026-10-19T00:13:15Z,football,Israel Leumit League,Hapoel Raanana FC,Bnei Yehuda Tel Aviv FC,,,主胜,1x2,4.38,0,4.0702,7.61,0,2,1792425600,ALL,pinnacle,,,ws_scan,,,5738420
+2026-10-19T00:14:15Z,football,USA Major League Soccer,Philadelphia Union,New England Revolution,,,双重机会-和局/客,dc,2.41,0,1.9893,21.15,0,1,1792884600,BB,pinnacle,,,pin_drop,,,4231115
+2026-10-19T00:17:16Z,football,USA Major League Soccer,Houston Dynamo,Minnesota United FC,,,和局,1x2,3.94,0,3.6161,8.96,0,1,1792888200,BB,pinnacle,,,ws_scan,,,4231120
+2026-10-19T00:17:16Z,football,USA Major League Soccer,Houston Dynamo,Minnesota United FC,,,双重机会-和局/客,dc,1.84,0,1.6906,8.84,0,1,1792888200,BB,pinnacle,,,ws_scan,,,4231120
+2026-10-19T00:28:17Z,football,USA MLS Next Pro,Austin FC II,San Jose Earthquakes II,,,上半场小球,ht_ou,2.11,0,1.9304,9.31,0,1,1792369800,ALL,pinnacle,,,ws_scan,,1.25,5739859
+2026-10-19T00:36:59Z,tennis,ATP Challenger - Lisbon Open,Vasco Leote Prata (POR),Joao Domingues (POR),,,主胜,1x2,4.37,0,4.0437,8.07,0,3,1792400400,BB,pinnacle,,,ws_scan,,,5772548
+2026-10-19T00:37:32Z,tennis,ATP Challenger - Lisbon Open,Alejo Sanchez Quilez (ESP),Kai Wehnelt (GER),,,客胜,1x2,3.87,0,3.3665,14.96,0,3,1792408800,BB,pinnacle,,,ws_scan,,,5773072
+2026-10-19T00:39:24Z,tennis,ATP Challenger - Lisbon Open,Andrej Martin (SVK),Alexander Ritschard (SUI),,,让盘客胜,hc,1.81,0,1.7642,2.6,0,3,1792400400,BB,pinnacle,,,ws_scan,,-1.5,5772547
+2026-10-19T01:01:58Z,football,Jamaica Premier League,Molynes United FC,Cavalier FC,,,让球客胜,hc,1.84,1.5525,1.7287,6.44,70,2,1792447500.0,BB/FB,,,,push,,-0.5,
