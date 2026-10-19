@@ -1,4 +1,9 @@
 {
+  "basketball|Japan B.League Premier|Sendai 89Ers|Kobe Storks|让分客胜(+7.5)|hc|+7.5|2026-10-19": {
+    "ev": 5.04,
+    "bb": 1.85,
+    "ts": 1792375610.3956852
+  },
   "football|Bahrain Premier League|Al Muharraq SC|Malkiya Club|和局|1x2|2026-10-19": {
     "ev": 18.01,
     "bb": 4.82,
@@ -23,10 +28,5 @@
     "ev": 12.08,
     "bb": 3.77,
     "ts": 1792298781.195575
-  },
-  "basketball|Japan B.League Premier|Sendai 89Ers|Kobe Storks|让分客胜(+7.5)|hc|+7.5|2026-10-19": {
-    "ev": 5.04,
-    "bb": 1.85,
-    "ts": 1792375610.3956852
   }
 }
