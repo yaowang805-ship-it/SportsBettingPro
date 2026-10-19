@@ -1,44 +1,4 @@
 {
-  "basketball|Belgium Basketball Top Division 1|BC Guco Lier|LDP Donza|主胜|1x2|2026-10-18": {
-    "ev": 4.39,
-    "bb": 1.24,
-    "ts": 1792280175.605083
-  },
-  "basketball|Germany Pro A Basketball Bundesliga|Orange Academy|Crailsheim Merlins|客胜|1x2|2026-10-18": {
-    "ev": 5.67,
-    "bb": 1.17,
-    "ts": 1792281513.1692429
-  },
-  "basketball|Japan B.League One|Ehime Orange Vikings|Kagoshima Rebnise|主胜|1x2|2026-10-18": {
-    "ev": 3.99,
-    "bb": 1.23,
-    "ts": 1792277193.5951638
-  },
-  "basketball|Poland Basketball 2 Liga|Trefl Sopot II|KS Kutno|主胜|1x2|2026-10-18": {
-    "ev": 4.5,
-    "bb": 1.25,
-    "ts": 1792277193.595233
-  },
-  "basketball|Portugal Basketball League|Braga|Vitoria Sport Clube|主胜|1x2|2026-10-18": {
-    "ev": 6.71,
-    "bb": 1.42,
-    "ts": 1792280175.605033
-  },
-  "football|Argentina Liga Profesional|Independiente Rivadavia|Tigre|和局|1x2|2026-10-18": {
-    "ev": 55.26,
-    "bb": 3.39,
-    "ts": 1792233639.2588139
-  },
-  "football|Australia A-League|Wellington Phoenix FC|Melbourne Victory FC|和局|1x2|2026-10-18": {
-    "ev": 51.17,
-    "bb": 3.91,
-    "ts": 1792229433.140518
-  },
-  "football|Australian Championship|Queensland Lions FC|South Hobart FC|大球(4.0)|ou|4.0|2026-10-18": {
-    "ev": 3.02,
-    "bb": 1.88,
-    "ts": 1792282302.445436
-  },
   "football|Bahrain Premier League|Al Muharraq SC|Malkiya Club|和局|1x2|2026-10-19": {
     "ev": 18.01,
     "bb": 4.82,
@@ -49,89 +9,24 @@
     "bb": 1.96,
     "ts": 1792277193.595077
   },
-  "football|Ecuador LigaPro Primera B|LDU Portoviejo|Gualaceo SC|和局|1x2|2026-10-18": {
-    "ev": 19.51,
-    "bb": 2.96,
-    "ts": 1792229433.140585
-  },
-  "football|England Premier League|Nottingham Forest|Arsenal FC|让球主胜(+1)|hc|+1|2026-10-18": {
-    "ev": 3.3,
-    "bb": 1.88,
-    "ts": 1792289103.156457
-  },
-  "football|Faroe Islands Premier League|EB/Streymur|HB Torshavn|和局|1x2|2026-10-18": {
-    "ev": 3.37,
-    "bb": 4.18,
-    "ts": 1792300059.6956391
-  },
   "football|Faroe Islands Premier League|Vikingur Gota|AB Argir|和局|1x2|2026-10-19": {
     "ev": 11.82,
     "bb": 4.62,
     "ts": 1792300059.695678
-  },
-  "football|Hong Kong Division 1|WSE|Citizen AA|大球(3.5)|ou|3.5|2026-10-18": {
-    "ev": 7.48,
-    "bb": 1.8,
-    "ts": 1792286412.103679
-  },
-  "football|Indonesia Super League|Persebaya Surabaya|PSS Sleman|和局|1x2|2026-10-18": {
-    "ev": 3.12,
-    "bb": 4.17,
-    "ts": 1792302316.6054919
-  },
-  "football|Malta Premier League|Gzira United FC|Hamrun Spartans FC|和局|1x2|2026-10-18": {
-    "ev": 5.98,
-    "bb": 4.65,
-    "ts": 1792297019.865699
   },
   "football|Netherlands Eredivisie|FC Twente|FC Utrecht|和局|1x2|2026-10-19": {
     "ev": 43.43,
     "bb": 5.8,
     "ts": 1792300059.6955478
   },
-  "football|Netherlands Eredivisie|PEC Zwolle|Go Ahead Eagles|和局|1x2|2026-10-18": {
-    "ev": 4.87,
-    "bb": 4.18,
-    "ts": 1792232386.7037241
-  },
-  "football|South Korea K-League 1|FC Seoul|Gimcheon Sangmu FC|和局|1x2|2026-10-18": {
-    "ev": 22.75,
-    "bb": 5.05,
-    "ts": 1792299245.374601
-  },
   "football|Spain LaLiga|Malaga CF|Real Sociedad|和局|1x2|2026-10-19": {
     "ev": 12.08,
     "bb": 3.77,
     "ts": 1792298781.195575
   },
-  "football|Thailand League 1|Bangkok United|Port FC|和局|1x2|2026-10-18": {
-    "ev": 7.65,
-    "bb": 3.62,
-    "ts": 1792235457.9810529
-  },
-  "football|USA Major League Soccer|Los Angeles Galaxy|San Diego FC|和局|1x2|2026-10-18": {
-    "ev": 50.93,
-    "bb": 4.38,
-    "ts": 1792279474.278163
-  },
-  "football|USA Major League Soccer|Philadelphia Union|Charlotte FC|和局|1x2|2026-10-18": {
-    "ev": 70.57,
-    "bb": 5.55,
-    "ts": 1792239122.061456
-  },
-  "football|USA Major League Soccer|San Jose Earthquakes|Nashville SC|和局|1x2|2026-10-18": {
-    "ev": 50.54,
-    "bb": 4.03,
-    "ts": 1792231602.623992
-  },
-  "football|USL League One|Spokane Velocity FC|Chattanooga Red Wolves SC|让球主胜(-0.5)|hc|-0.5|2026-10-18": {
-    "ev": 6.41,
-    "bb": 1.99,
-    "ts": 1792277617.0422862
-  },
-  "tennis|WTA - Osaka Open|Sinja Kraus (AUT)|Sofia Kenin (USA)|让盘客胜(+1.5)|hc|+1.5|2026-10-18": {
-    "ev": 5.87,
-    "bb": 1.44,
-    "ts": 1792281964.99432
+  "basketball|Japan B.League Premier|Sendai 89Ers|Kobe Storks|让分客胜(+7.5)|hc|+7.5|2026-10-19": {
+    "ev": 5.04,
+    "bb": 1.85,
+    "ts": 1792375610.3956852
   }
 }

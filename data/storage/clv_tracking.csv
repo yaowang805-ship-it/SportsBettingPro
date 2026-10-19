@@ -5180,3 +5180,17 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-19T00:37:32Z,tennis,ATP Challenger - Lisbon Open,Alejo Sanchez Quilez (ESP),Kai Wehnelt (GER),,,客胜,1x2,3.87,0,3.3665,14.96,0,3,1792408800,BB,pinnacle,,,ws_scan,,,5773072
 2026-10-19T00:39:24Z,tennis,ATP Challenger - Lisbon Open,Andrej Martin (SVK),Alexander Ritschard (SUI),,,让盘客胜,hc,1.81,0,1.7642,2.6,0,3,1792400400,BB,pinnacle,,,ws_scan,,-1.5,5772547
 2026-10-19T01:01:58Z,football,Jamaica Premier League,Molynes United FC,Cavalier FC,,,让球客胜,hc,1.84,1.5525,1.7287,6.44,70,2,1792447500.0,BB/FB,,,,push,,-0.5,
+2026-10-19T01:29:40Z,football,Egypt Premier League,Wadi Degla SC,National Bank of Egypt SC,,,上半场小球,ht_ou,2.14,0,1.8243,17.31,0,2,1792515600,ALL,pinnacle,,,ws_scan,,1.0,5743648
+2026-10-19T01:30:01Z,football,Australia A-League,Melbourne Victory FC,Melbourne City FC,,,和局,1x2,3.74,0,3.3636,11.19,0,2,1792831200,ALL,pinnacle,,,pin_drop,,,5276721
+2026-10-19T01:30:01Z,football,Australia A-League,Melbourne Victory FC,Melbourne City FC,,,双重机会-主/和局,dc,1.44,0,1.4035,2.6,0,2,1792831200,ALL,pinnacle,,,pin_drop,,,5276721
+2026-10-19T01:30:01Z,football,Australia A-League,Melbourne Victory FC,Melbourne City FC,,,双重机会-和局/客,dc,1.58,0,1.4234,11.0,0,2,1792831200,ALL,pinnacle,,,pin_drop,,,5276721
+2026-10-19T01:31:05Z,football,Australia A-League,Wellington Phoenix FC,Central Coast Mariners FC,,,和局,1x2,4.0,0,3.5374,13.08,0,2,1792893600,ALL,pinnacle,,,pin_drop,,,5276710
+2026-10-19T01:31:05Z,football,Australia A-League,Wellington Phoenix FC,Central Coast Mariners FC,,,双重机会-和局/客,dc,2.02,0,1.6862,19.8,0,2,1792893600,ALL,pinnacle,,,pin_drop,,,5276710
+2026-10-19T01:40:50Z,football,Cambodia Premier League,Phnom Penh Crown,Life FC Sihanoukville,,,客胜,1x2,18.1,0,17.0068,6.43,0,2,1792407600,ALL,pinnacle,,,ws_scan,,,5770679
+2026-10-19T01:42:24Z,football,Poland I Liga,Ruch Chorzow,Pogon Grodzisk Mazowiecki,,,客胜,1x2,4.84,0,4.1296,17.2,0,2,1792935000,ALL,pinnacle,,,ws_scan,,,5768614
+2026-10-19T01:42:41Z,football,Australia A-League,Western Sydney Wanderers FC,Auckland FC,,,和局,1x2,3.67,0,3.3636,9.11,0,2,1792821600,ALL,pinnacle,,,ws_scan,,,5276701
+2026-10-19T01:42:41Z,football,Australia A-League,Western Sydney Wanderers FC,Auckland FC,,,双重机会-和局/客,dc,1.57,0,1.4652,7.15,0,2,1792821600,ALL,pinnacle,,,ws_scan,,,5276701
+2026-10-19T01:50:42Z,basketball,Mexico LNBP Basketball League,Soles de Mexicali,Abejas de Leon,,,小分,ou,1.86,0,1.8132,2.58,0,3,1792465200,BB,pinnacle,,,ws_scan,,163.5,5760242
+2026-10-19T02:00:09Z,football,England League One,Oxford United,Wigan Athletic,,,上半场客胜,ht,4.59,0,4.0437,13.51,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5743734
+2026-10-19T02:03:14Z,football,England League One,Doncaster Rovers,Stockport County FC,,,上半场主胜,ht,4.27,0,4.0437,5.6,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5761030
+2026-10-19T02:06:50Z,basketball,Japan B.League Premier,Sendai 89Ers,Kobe Storks,,,让分客胜,hc,1.85,1.6024,1.7612,5.04,70,2,1792404300.0,BB/FB,,,,push,,+7.5,

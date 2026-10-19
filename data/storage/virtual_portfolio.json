@@ -1,5 +1,5 @@
 {
-  "balance": 13602.53,
+  "balance": 13532.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1886,6 +1886,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792447500.0,
       "created_at": "2026-10-19T01:01:39.422996+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_仙台89人_神户鹳鸟_让分客胜(+75)",
+      "sport": "basketball",
+      "league": "日本B联盟超级联赛",
+      "home_team": "仙台89人",
+      "away_team": "神户鹳鸟",
+      "home_cn": "仙台89人",
+      "away_cn": "神户鹳鸟",
+      "market": "handicap",
+      "market_type": "让分客胜(+7.5)",
+      "sub_market": "hc",
+      "line": "+7.5",
+      "odds": 1.85,
+      "stake": 70,
+      "model_prob": 0.5678,
+      "ev_pct": 5.04,
+      "pin_odds": 1.6024,
+      "fair_price": 1.7612,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792404300.0,
+      "created_at": "2026-10-19T02:05:58.903531+00:00",
       "track_only": false
     }
   ],
@@ -11557,8 +11580,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-19",
-    "used": 70.0,
-    "bets": 1
+    "used": 140.0,
+    "bets": 2
   },
   "updated": null
 }
