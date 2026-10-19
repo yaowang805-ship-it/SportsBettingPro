@@ -233,6 +233,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
     success, failed = [], []
     sent_dingtalk = []
     total_latency = 0.0  # 投注总耗时(实际下单 HTTP 时间累加, 2026-10-11 用户要求推送到钉钉)
+    _sleep_total = 0.0  # 防风控 sleep 累计(冷却+间隔), 供"总耗时"扣掉(2026-10-19 用户要求只算触发→投注完成)
     _daily_bets, _daily_stake = _load_daily_exposure()  # 2026-10-14 早盘探针日限额
 
     for opp in opportunities:
@@ -299,6 +300,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         _wait = global_bet_cooldown(20, 90, scope="early")
         if _wait > 0:
             time.sleep(_wait)
+            _sleep_total += _wait
 
         # 余额熔断已取消(2026-10-11 用户要求): 不再用余额<1000 拦投注, 符合释放门槛就投
 
@@ -347,6 +349,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         import random as _random
         _sleep = _random.uniform(10, 20) if trigger_source == "ws_scan" else _random.uniform(20, 90)
         time.sleep(_sleep)
+        _sleep_total += _sleep
 
         if code == 0:
             opp["_bet_succeeded"] = True  # 2026-10-17 供 push_report 只对成功注写指纹(失败注下次可重试)
@@ -409,7 +412,9 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
             except Exception:
                 pass
             if trigger_ts:
-                _extra.append(f"总耗时 {time.time() - trigger_ts:.1f}s")
+                # 2026-10-19 总耗时只算「触发→投注完成」, 去掉防风控 sleep(冷却+间隔)累计时间
+                _pure = time.time() - trigger_ts - _sleep_total
+                _extra.append(f"总耗时 {_pure:.1f}s")
             _extra_str = ("\n  " + " | ".join(_extra)) if _extra else ""
             _single = (f"✅【{_win_label(opp.get('_pin_epoch'))}】{disp_home} vs {disp_away} | {desig}\n"
                        f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_ev_str} | 注额 ¥{stake:.0f} | {_src_label} | 投注 {_bj}{_kickoff_str}{_extra_str}")
