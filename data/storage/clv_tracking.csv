@@ -5249,3 +5249,12 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-19T05:04:10Z,basketball,Japan B.League Premier,Shimane Susanoo Magic,Kawasaki Brave Thunders,,,大分,ou,1.9,0,1.8359,3.49,0,3,1792404300,BB,pinnacle,,,ws_scan,,164.5,5298129
 2026-10-19T05:08:30Z,football,Estonia Esiliiga,FC Tallinn,Viimsi JK,,,双重机会-主/和局,dc,2.72,0,2.5786,5.48,0,3,1792425600,ALL,pinnacle,,,pin_drop,,,4456687
 2026-10-19T05:15:05Z,basketball,Japan B.League Premier,Shimane Susanoo Magic,Kawasaki Brave Thunders,,,大分,ou,1.9,1.6494,1.7612,7.88,70,3,1792404300.0,BB/FB,,,,push,,164.5,
+2026-10-19T05:29:41Z,ice_hockey,Alps Hockey League,Hockey Unterland Cavaliers,HC Asiago,,,上半场客胜,ht,1.86,0,1.6867,10.27,0,3,1792519200,BB,pinnacle,,,ws_scan,,,5743579
+2026-10-19T05:36:51Z,football,England League One,Huddersfield Town,Peterborough United,,,和局,1x2,4.44,0,4.0437,9.8,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5743732
+2026-10-19T05:36:51Z,football,England League One,Huddersfield Town,Peterborough United,,,上半场客胜,ht,5.0,0,4.6439,7.67,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5743732
+2026-10-19T05:39:56Z,football,England League One,Huddersfield Town,Peterborough United,,,客胜,1x2,4.85,0,4.1339,17.32,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5743732
+2026-10-19T06:00:56Z,football,Israel Liga Alef,Hapoel Mahane Yehuda,MS Jerusalem,,,主胜,1x2,5.0,0,4.13,21.06,0,3,1792427400,ALL,pinnacle,,,ws_scan,,,5409867
+2026-10-19T06:00:56Z,football,Israel Liga Alef,Hapoel Mahane Yehuda,MS Jerusalem,,,和局,1x2,4.26,0,4.0437,5.35,0,3,1792427400,ALL,pinnacle,,,ws_scan,,,5409867
+2026-10-19T06:03:36Z,basketball,Japan B.League Premier,Shinshu Brave Warriors,Nagoya Diamond Dolphins,,,让分客胜,hc,1.83,0,1.7612,3.91,0,3,1792404300,BB,pinnacle,,,ws_scan,,-11.5,5298131
+2026-10-19T06:04:22Z,basketball,Hungary NB I,KTE Duna Aszfalt,SZTE Szedeak,,,客胜,1x2,1.58,0,1.5476,2.09,0,3,1792512000,ALL,pinnacle,,,ws_scan,,,5472684
+2026-10-19T06:05:34Z,basketball,Japan B.League Premier,Shinshu Brave Warriors,Nagoya Diamond Dolphins,,,让分客胜,hc,1.83,1.6452,1.7612,3.91,70,3,1792404300.0,BB/FB,,,,push,,-11.5,

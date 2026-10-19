@@ -1,5 +1,5 @@
 {
-  "balance": 13392.53,
+  "balance": 13322.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1955,6 +1955,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792404300.0,
       "created_at": "2026-10-19T05:15:01.260246+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_信州勇士_名古屋钻石海豚_让分客胜(-115)",
+      "sport": "basketball",
+      "league": "日本B篮球联赛PREMIER",
+      "home_team": "信州勇士",
+      "away_team": "名古屋钻石海豚",
+      "home_cn": "信州勇士",
+      "away_cn": "名古屋钻石海豚",
+      "market": "handicap",
+      "market_type": "让分客胜(-11.5)",
+      "sub_market": "hc",
+      "line": "-11.5",
+      "odds": 1.83,
+      "stake": 70,
+      "model_prob": 0.5678,
+      "ev_pct": 3.91,
+      "pin_odds": 1.6452,
+      "fair_price": 1.7612,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792404300.0,
+      "created_at": "2026-10-19T06:05:12.810380+00:00",
       "track_only": false
     }
   ],
@@ -11626,8 +11649,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-19",
-    "used": 280.0,
-    "bets": 4
+    "used": 350.0,
+    "bets": 5
   },
   "updated": null
 }
