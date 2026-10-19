@@ -1,5 +1,5 @@
 {
-  "balance": 13252.53,
+  "balance": 13182.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2001,6 +2001,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792497600.0,
       "created_at": "2026-10-19T13:09:52.942522+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_布杜克诺斯特_克莱佩达海王星_客胜",
+      "sport": "basketball",
+      "league": "欧洲篮球杯",
+      "home_team": "布杜克诺斯特",
+      "away_team": "克莱佩达海王星",
+      "home_cn": "布杜克诺斯特",
+      "away_cn": "克莱佩达海王星",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.47,
+      "stake": 70,
+      "model_prob": 0.2473,
+      "ev_pct": 10.54,
+      "pin_odds": 3.81,
+      "fair_price": 4.0437,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792515600.0,
+      "created_at": "2026-10-19T23:14:07.818390+00:00",
       "track_only": false
     }
   ],
@@ -11671,9 +11694,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-10-19",
-    "used": 420.0,
-    "bets": 6
+    "date": "2026-10-20",
+    "used": 70.0,
+    "bets": 1
   },
   "updated": null
 }

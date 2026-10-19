@@ -182,6 +182,14 @@ MANUAL_OBSERVE_BLOCK = {
     "football|1x2|平|40-50%|early",
     # 2026-10-18 撤滚球大小球大 50-55%: 实盘 -5.3%(n=59) 双负(纸面 -25.3%)。
     "football|ou|大|50-55%|live",
+    # 2026-10-20 撤 ht 上半场独赢全部(实盘 ROI -59%/胜率7.7%, 半场公平价假 edge)。
+    "football|ht|主|20-30%|early",
+    "football|ht|主|40-50%|early",
+    "football|ht|主|60-70%|early",
+    "football|ht|主|>70%|early",
+    "football|ht|客|10-20%|early",
+    "football|ht|客|40-50%|early",
+    "football|ht|客|50-55%|early",
 }
 
 
@@ -220,11 +228,7 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 2026-10-15 网球滚球改测让局主(实盘独赢负, 交叉验证毒性流), 撤独赢主客。
     "tennis|hc|主|*|early": 300,
     "tennis|hc|客|*|early": 300,
-    # 2026-10-17 释放早盘表现好的盘口(观察库纸面ROI正 n>=15, cap30试探): 半场独赢ht + 大小球ou。
-    # 注: 纸面ROI未过六闸门, 属试探性释放, 冻结期内接受实盘ROI检验。
-    "football|ht|主|40-50%|early": 300,
-    # 2026-10-17 撤 football 上半场客胜早盘(CLV-6.4% 负)。
-    "football|ht|主|60-70%|early": 300,
+    # 2026-10-20 撤 ht 上半场独赢全部(实盘 ROI -59%/胜率7.7%, 半场公平价假 edge), 交还数据驱动判据。
     "football|ou|小|50-55%|early": 300,
     "football|ou|大|50-55%|early": 300,
     # 2026-10-18 释放 55-60%(近3天双正: 小球CLV+3.2%ROI+33.1% / 大球CLV+3.9%ROI+15.0%)
@@ -259,11 +263,6 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     "football|dc|X2|60-70%|early": 100,
     "football|dc|X2|>70%|early": 100,
     "football|dc|12|>70%|early": 100,
-    "football|ht|主|20-30%|early": 100,
-    "football|ht|主|>70%|early": 100,
-    "football|ht|客|10-20%|early": 100,
-    "football|ht|客|40-50%|early": 100,
-    "football|ht|客|50-55%|early": 100,
     "football|1x2|客|40-50%|early": 100,
     "football|1x2|客|60-70%|early": 100,
     "football|hc|主|55-60%|early": 100,

@@ -1,1 +1,37 @@
-{"basketball|Japan B.League Premier|Sendai 89Ers|Kobe Storks|让分客胜(+7.5)|hc|+7.5|2026-10-19": {"ev": 5.04, "bb": 1.85, "ts": 1792375610.3956852}, "football|Bahrain Premier League|Al Muharraq SC|Malkiya Club|和局|1x2|2026-10-19": {"ev": 18.01, "bb": 4.82, "ts": 1792300059.6955981}, "football|Bolivia Division Profesional|The Strongest|Always Ready|小球(3.0)|ou|3.0|2026-10-19": {"ev": 3.23, "bb": 1.96, "ts": 1792277193.595077}, "football|Faroe Islands Premier League|Vikingur Gota|AB Argir|和局|1x2|2026-10-19": {"ev": 11.82, "bb": 4.62, "ts": 1792300059.695678}, "football|Netherlands Eredivisie|FC Twente|FC Utrecht|和局|1x2|2026-10-19": {"ev": 43.43, "bb": 5.8, "ts": 1792300059.6955478}, "football|Spain LaLiga|Malaga CF|Real Sociedad|和局|1x2|2026-10-19": {"ev": 12.08, "bb": 3.77, "ts": 1792298781.195575}, "basketball|China CBA|Xinjiang Flying Tigers|Tianjin Pioneers|客胜|1x2|2026-10-20": {"bb": 5.15, "ev": 25.33, "fair": 4.1091, "pin": 3.91, "ts": 1792419035.7274408, "kickoff": 1792497600.0, "repush_count": 0}, "football|Indonesia Super League|Isenmulang Kalteng|Java United FC|上半场主胜|ht|2026-10-20": {"bb": 4.2, "ev": 3.43, "fair": 4.0605, "pin": 4.47, "ts": 1792420099.619123, "kickoff": 1792485000.0, "repush_count": 0}, "football|Indonesia Super League|Bhayangkara FC|PSIM Yogyakarta|上半场客胜|ht|2026-10-20": {"bb": 5.35, "ev": 5.81, "fair": 5.056, "pin": 5.21, "ts": 1792420099.6198962, "kickoff": 1792497600.0, "repush_count": 0}, "football|Spain LaLiga|Getafe CF|Rayo Vallecano|上半场主胜|ht|2026-10-20": {"bb": 4.44, "ev": 9.8, "fair": 4.0437, "pin": 4.01, "ts": 1792420136.392407, "kickoff": 1792436400.0, "repush_count": 0}, "football|Argentina Primera Nacional|San Telmo|Defensores de Belgrano|上半场主胜|ht|2026-10-20": {"bb": 4.85, "ev": 19.19, "fair": 4.0691, "pin": 4.08, "ts": 1792420136.392999, "kickoff": 1792434600.0, "repush_count": 0}, "football|Ireland Premier Division|Derry City FC|Saint Patricks Athletic FC|上半场主胜|ht|2026-10-20": {"bb": 4.38, "ev": 8.32, "fair": 4.0437, "pin": 4.15, "ts": 1792420136.398805, "kickoff": 1792436400.0, "repush_count": 0}, "football|Poland Ekstraklasa|Wisla Plock|Radomiak Radom|双重机会-和局/客|dc|2026-10-20": {"bb": 2.04, "ev": 15.83, "fair": 1.7612, "pin": 0, "ts": 1792415976.156084, "kickoff": 1792429200.0, "repush_count": 0}, "football|Spain LaLiga|Getafe CF|Rayo Vallecano|和局|1x2|2026-10-20": {"bb": 2.99, "ev": 4.76, "fair": 2.854, "pin": 1.9615, "ts": 1792415976.149838, "kickoff": 1792436400.0, "repush_count": 0}, "football|Spain LaLiga|Getafe CF|Rayo Vallecano|双重机会-主/和局|dc|2026-10-20": {"bb": 1.52, "ev": 4.1, "fair": 1.4602, "pin": 0, "ts": 1792415976.155115, "kickoff": 1792436400.0, "repush_count": 0}, "football|Ireland Premier Division|Waterford FC|Galway United FC|双重机会-和局/客|dc|2026-10-20": {"bb": 1.96, "ev": 12.96, "fair": 1.7351, "pin": 0, "ts": 1792420045.1068668, "kickoff": 1792435500.0, "repush_count": 0}, "football|Argentina Liga Profesional|Deportivo Riestra|Union de Santa Fe|和局|1x2|2026-10-20": {"bb": 3.05, "ev": 6.38, "fair": 2.867, "pin": 1.9709, "ts": 1792417882.69665, "kickoff": 1792455300.0, "repush_count": 0}, "football|Argentina Liga Profesional|Deportivo Riestra|Union de Santa Fe|双重机会-和局/客|dc|2026-10-20": {"bb": 1.7, "ev": 9.11, "fair": 1.5581, "pin": 0, "ts": 1792417882.6971, "kickoff": 1792455300.0, "repush_count": 0}}
+{
+  "basketball|China CBA|Xinjiang Flying Tigers|Tianjin Pioneers|客胜|1x2|2026-10-20": {
+    "ev": 25.38,
+    "bb": 5.15,
+    "ts": 1792415464.503647
+  },
+  "basketball|Japan B.League Premier|Sendai 89Ers|Kobe Storks|让分客胜(+7.5)|hc|+7.5|2026-10-19": {
+    "ev": 5.04,
+    "bb": 1.85,
+    "ts": 1792375610.3956852
+  },
+  "football|Bahrain Premier League|Al Muharraq SC|Malkiya Club|和局|1x2|2026-10-19": {
+    "ev": 18.01,
+    "bb": 4.82,
+    "ts": 1792300059.6955981
+  },
+  "football|Bolivia Division Profesional|The Strongest|Always Ready|小球(3.0)|ou|3.0|2026-10-19": {
+    "ev": 3.23,
+    "bb": 1.96,
+    "ts": 1792277193.595077
+  },
+  "football|Faroe Islands Premier League|Vikingur Gota|AB Argir|和局|1x2|2026-10-19": {
+    "ev": 11.82,
+    "bb": 4.62,
+    "ts": 1792300059.695678
+  },
+  "football|Netherlands Eredivisie|FC Twente|FC Utrecht|和局|1x2|2026-10-19": {
+    "ev": 43.43,
+    "bb": 5.8,
+    "ts": 1792300059.6955478
+  },
+  "football|Spain LaLiga|Malaga CF|Real Sociedad|和局|1x2|2026-10-19": {
+    "ev": 12.08,
+    "bb": 3.77,
+    "ts": 1792298781.195575
+  }
+}
