@@ -706,6 +706,9 @@ def find_market_from_match(match, sub_market="1x2", direction=None):
     dir_map = {
         "主": 1, "客": 2, "和": 3, "大": 4, "小": 5,
         "主/和": 50, "主/客": 51, "和局/客": 52,
+        # 2026-10-20 修: _designation_to_dir 对 dc 返回 1X/12/X2, 之前 dir_map 没这些 key
+        # → target_ty=None → 返回第一个在售选项(下错盘口), 导致 dc 的 BB价 2.48 被下成 1.60 等。
+        "1X": 50, "12": 51, "X2": 52,
     }
     target_ty = dir_map.get(direction) if direction else None
 

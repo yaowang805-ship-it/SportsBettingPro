@@ -5880,3 +5880,57 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-20T10:21:45Z,basketball,China CBA,Xinjiang Flying Tigers,Tianjin Pioneers,,,上半场客胜,ht,4.6,0,4.21,9.26,0,3,1792497600,ALL,pinnacle,,,ws_scan,,,5626205
 2026-10-20T10:22:11Z,tennis,World Tennis - M25 Redbridge Men Singles,Sebastian Sorger (AUT),Rhys Lawlor (GBR),,,上半场客胜,ht,4.22,0,4.0437,4.36,0,3,1792494900,BB,pinnacle,,,ws_scan,,,5778487
 2026-10-20T10:22:58Z,football,England Northern Premier League Division One,Hanley Town,Vauxhall Motors,,,大球,ou,1.87,1.6061,1.7612,6.18,30,2,1792521900.0,BB/FB,,,,push,,2.5,
+2026-10-20T10:25:15Z,football,England Northern Premier League Division One,Shepshed Dynamo FC,St Ives Town,,,上半场大球,ht_ou,2.01,0,1.7612,14.13,0,2,1792521900,ALL,pinnacle,,,ws_scan,,1.0,5797560
+2026-10-20T10:25:15Z,football,Japan J.League 3,Ehime FC,Renofa Yamaguchi,,,上半场小球,ht_ou,2.16,0,1.851,16.69,0,4,1792576800,ALL,pinnacle,,,ws_scan,,1.25,5756523
+2026-10-20T10:27:49Z,football,England FA Cup-Qualification,Yeovil Town,Leatherhead FC,,,上半场大球,ht_ou,2.04,0,1.9632,3.91,0,3,1792521900,ALL,pinnacle,,,ws_scan,,1.25,5776254
+2026-10-20T10:30:49Z,tennis,World Tennis - M25 Redbridge Men Singles,Sebastian Sorger (AUT),Rhys Lawlor (GBR),,,客胜,1x2,5.4,0,4.9149,9.87,0,3,1792494900,BB,pinnacle,,,ws_scan,,,5778487
+2026-10-20T10:30:56Z,football,Thailand FA Cup,Ayutthaya United FC,Muang Thong United,,,客胜,1x2,4.35,0,4.0437,7.58,0,3,1792582200,ALL,pinnacle,,,ws_scan,,,5767624
+2026-10-20T10:31:09Z,football,Thailand FA Cup,Ayutthaya United FC,Muang Thong United,,,双重机会-和局/客,dc,2.01,0,1.7612,14.13,0,3,1792582200,ALL,pinnacle,,,ws_scan,,,5767624
+2026-10-20T10:32:23Z,tennis,World Tennis - M15 Monastir Men Singles,Nicolas Tepmahc (FRA),Yassine Smiej (MAR),,,客胜,1x2,4.39,0,4.0972,7.15,0,3,1792496100,BB,pinnacle,,,ws_scan,,,5777400
+2026-10-20T10:32:23Z,football,England Southern League Premier Division South,Chichester City FC,Berkhamsted FC,,,上半场小球,ht_ou,2.04,0,1.7263,18.17,0,2,1792521900,ALL,pinnacle,,,ws_scan,,1.25,5199818
+2026-10-20T10:33:53Z,tennis,World Tennis - M25 Redbridge Men Singles,Sebastian Sorger (AUT),Rhys Lawlor (GBR),,,客胜,1x2,5.4,0,4.9149,9.87,0,3,1792492500,BB,pinnacle,,,ws_scan,,,5778487
+2026-10-20T10:33:53Z,tennis,World Tennis - M25 Redbridge Men Singles,Sebastian Sorger (AUT),Rhys Lawlor (GBR),,,上半场客胜,ht,4.22,0,4.0437,4.36,0,3,1792492500,BB,pinnacle,,,ws_scan,,,5778487
+2026-10-20T10:34:24Z,tennis,World Tennis - M25 Redbridge Men Singles,Sebastian Sorger (AUT),Rhys Lawlor (GBR),,,客胜,1x2,5.4,0,4.9149,9.87,0,3,1792492800,BB,pinnacle,,,ws_scan,,,5778487
+2026-10-20T10:34:24Z,tennis,World Tennis - M25 Redbridge Men Singles,Sebastian Sorger (AUT),Rhys Lawlor (GBR),,,上半场客胜,ht,4.22,0,4.0437,4.36,0,3,1792492800,BB,pinnacle,,,ws_scan,,,5778487
+2026-10-20T10:43:00Z,ice_hockey,NHL,Montreal Canadiens,San Jose Sharks,,,上半场主胜,ht,2.29,0,1.7544,30.53,0,1,1792537200,BB,pinnacle,,,ws_scan,,,5646118
+2026-10-20T10:43:00Z,ice_hockey,NHL,Montreal Canadiens,San Jose Sharks,,,上半场客胜,ht,3.6,0,3.4163,5.38,0,1,1792537200,BB,pinnacle,,,ws_scan,,,5646118
+2026-10-20T10:43:00Z,ice_hockey,NHL,New York Islanders,Anaheim Ducks,,,上半场主胜,ht,2.52,0,1.9752,27.58,0,1,1792537200,BB,pinnacle,,,ws_scan,,,5646149
+2026-10-20T10:43:00Z,ice_hockey,NHL,Columbus Blue Jackets,Toronto Maple Leafs,,,上半场主胜,ht,2.52,0,1.9604,28.54,0,1,1792537200,BB,pinnacle,,,ws_scan,,,5646112
+2026-10-20T10:43:02Z,football,England Isthmian League Division One,Horley Town FC,Erith Town FC,,,主胜,1x2,4.26,0,4.063,4.85,0,3,1792521000,ALL,pinnacle,,,ws_scan,,,5142978
+2026-10-20T10:44:31Z,tennis,World Tennis - M15 Monastir Men Singles,Nicolas Tepmahc (FRA),Yassine Smiej (MAR),,,客胜,1x2,4.47,0,4.0972,9.1,0,3,1792496460,BB,pinnacle,,,ws_scan,,,5777400
+2026-10-20T10:46:33Z,football,England League One,Burton Albion,Bradford City,,,和局,1x2,3.43,0,3.3614,2.04,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5743737
+2026-10-20T10:46:33Z,football,England League Two,Gillingham FC,Port Vale,,,上半场主胜,ht,4.14,0,4.0437,2.38,0,2,1792522800,ALL,pinnacle,,,ws_scan,,,5758284
+2026-10-20T10:49:56Z,tennis,ATP Challenger - Cali Open,Federico Coria (ARG),Nicolas Mejia (COL),,,主胜,1x2,4.52,0,4.0437,11.78,0,3,1792537200,BB,pinnacle,,,ws_scan,,,5770210
+2026-10-20T10:52:00Z,basketball,Sweden Basketball Superettan,Norrort Basket,Huddinge Basketklubb,,,客胜,1x2,4.16,0,4.0437,2.88,0,2,1792515600,ALL,pinnacle,,,ws_scan,,,5743561
+2026-10-20T10:52:07Z,football,England League Two,Bristol Rovers,Salford City,,,双重机会-主/和局,dc,1.51,0,1.4652,3.06,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5758238
+2026-10-20T10:55:42Z,football,Thailand FA Cup,Chonburi FC,BFB Pattaya City,,,上半场大球,ht_ou,1.97,0,1.9143,2.91,0,3,1792494000,ALL,pinnacle,,,ws_scan,,1.25,5757641
+2026-10-20T10:56:23Z,tennis,ATP Challenger - Guangzhou Open,Sergey Fomin (UZB),Tristan Schoolkate (AUS),,,主胜,1x2,4.68,0,4.0437,15.74,0,3,1792494600,BB,pinnacle,,,ws_scan,,,5767019
+2026-10-20T10:56:55Z,football,Argentina Liga Profesional,Barracas Central,Estudiantes Rio Cuarto,,,双重机会-主/客,dc,1.33,0,1.3019,2.16,0,1,1792974600,ALL,pinnacle,,,pin_drop,,,5462521
+2026-10-20T10:57:20Z,tennis,ATP Challenger - Guangzhou Open,Sergey Fomin (UZB),Tristan Schoolkate (AUS),,,主胜,1x2,4.68,0,4.0437,15.74,0,3,1792494000,BB,pinnacle,,,ws_scan,,,5767019
+2026-10-20T10:59:35Z,tennis,ATP Challenger - Guangzhou Open,Sergey Fomin (UZB),Tristan Schoolkate (AUS),,,主胜,1x2,4.68,0,4.0437,15.74,0,3,1792494300,BB,pinnacle,,,ws_scan,,,5767019
+2026-10-20T11:01:09Z,football,Thailand FA Cup,Thapluang United,Rayong FC,,,和局,1x2,5.0,0,4.0437,23.65,0,3,1792580400,BB,pinnacle,,,pin_drop,,,5780224
+2026-10-20T11:01:09Z,football,Thailand FA Cup,Thapluang United,Rayong FC,,,双重机会-主/和局,dc,3.09,0,2.8833,7.17,0,3,1792580400,BB,pinnacle,,,pin_drop,,,5780224
+2026-10-20T11:06:25Z,football,Egypt Premier League,Wadi Degla SC,National Bank of Egypt SC,,,双重机会-和局/客,dc,1.38,0,1.2992,6.22,0,2,1792515600,ALL,pinnacle,,,pin_drop,,,5743648
+2026-10-20T11:06:54Z,football,Egypt Premier League,Wadi Degla SC,National Bank of Egypt SC,,,上半场主胜,ht,4.24,0,4.0437,4.86,0,2,1792515600,ALL,pinnacle,,,ws_scan,,,5743648
+2026-10-20T11:14:39Z,football,Uruguay Primera Division,Deportivo Maldonado,Danubio FC,,,上半场客胜,ht,5.4,0,4.0896,32.04,0,3,1792881000,ALL,pinnacle,,,ws_scan,,,5768849
+2026-10-20T11:24:50Z,basketball,Japan B.League Premier,Levanga Hokkaido,Toyama Grouses,,,客胜,1x2,5.15,0,4.0541,27.03,0,3,1792577100,BB,pinnacle,,,pin_drop,,,5298128
+2026-10-20T11:29:45Z,football,England Isthmian League Premier Division,Ramsgate FC,Stanway Rovers,,,小球,ou,1.94,0,1.7554,10.52,0,2,1792521900,BB,pinnacle,,,ws_scan,,3.5,5322546
+2026-10-20T11:29:45Z,basketball,Japan B.League Premier,Saga Ballooners,Nagasaki Velca,,,让分主胜,hc,1.83,0,1.7757,3.06,0,3,1792577100,BB,pinnacle,,,ws_scan,,+6.5,5298143
+2026-10-20T11:29:45Z,basketball,Japan B.League Premier,Shiga Lake Stars,Kobe Storks,,,大分,ou,1.89,0,1.7989,5.06,0,3,1792577100,BB,pinnacle,,,ws_scan,,167.5,5298146
+2026-10-20T11:30:50Z,tennis,World Tennis - M15 Monastir Men Singles,Josh Manuel (GBR),Liam Gavrielides (GER),,,主胜,1x2,4.47,0,4.0437,10.54,0,3,1792496520,BB,pinnacle,,,ws_scan,,,5777617
+2026-10-20T11:30:50Z,tennis,World Tennis - M15 Monastir Men Singles,Lilian Marmousez (FRA),Kaan Isik Kosaner (TUR),,,客胜,1x2,4.93,0,4.4684,10.33,0,3,1792496100,BB,pinnacle,,,ws_scan,,,5777628
+2026-10-20T11:31:09Z,tennis,World Tennis - M15 Monastir Men Singles,Lilian Marmousez (FRA),Kaan Isik Kosaner (TUR),,,客胜,1x2,4.93,0,4.4684,10.33,0,3,1792497780,BB,pinnacle,,,ws_scan,,,5777628
+2026-10-20T11:32:58Z,football,USL League One,Sarasota Paradise,FC Naples,,,上半场大球,ht_ou,2.05,0,1.765,16.15,0,2,1792621800,ALL,pinnacle,,,ws_scan,,1.0,5637968
+2026-10-20T11:37:24Z,football,England League One,Doncaster Rovers,Stockport County FC,,,主胜,1x2,4.21,0,4.0604,3.68,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5761030
+2026-10-20T11:40:16Z,basketball,Japan B.League Premier,Saga Ballooners,Nagasaki Velca,,,上半场让球主胜,ht_hc,1.87,0,1.8239,2.53,0,3,1792577100,BB,pinnacle,,,ws_scan,,+3.5,5298143
+2026-10-20T11:44:02Z,football,England League One,Luton Town,Barnsley,,,上半场小球,ht_ou,2.05,0,1.9907,2.98,0,2,1792521900,ALL,pinnacle,,,ws_scan,,1.5,5748779
+2026-10-20T11:45:15Z,basketball,Japan B.League Premier,Levanga Hokkaido,Toyama Grouses,,,让分客胜,hc,1.89,0,1.7757,6.44,0,3,1792577100,BB,pinnacle,,,ws_scan,,+10.5,5298128
+2026-10-20T11:46:17Z,football,Northern Ireland League Cup,Strabane Athletic FC,Glenavon FC,,,主胜,1x2,6.45,0,4.1149,56.75,0,3,1792521900,ALL,pinnacle,,,ws_scan,,,5743608
+2026-10-20T11:46:17Z,football,Northern Ireland League Cup,Strabane Athletic FC,Glenavon FC,,,和局,1x2,5.5,0,4.121,33.46,0,3,1792521900,ALL,pinnacle,,,ws_scan,,,5743608
+2026-10-20T11:46:17Z,football,Northern Ireland League Cup,Strabane Athletic FC,Glenavon FC,,,双重机会-主/和局,dc,3.02,0,2.782,8.55,0,3,1792521900,ALL,pinnacle,,,pin_drop,,,5743608
+2026-10-20T11:48:02Z,football,Thailand FA Cup,Rasisalai United,Port FC,,,和局,1x2,4.56,0,4.1491,9.9,0,3,1792580400,BB,pinnacle,,,ws_scan,,,5777241
+2026-10-20T11:50:24Z,football,Northern Ireland League Cup,Strabane Athletic FC,Glenavon FC,,,让球主胜,hc,1.84,0,1.7612,4.48,0,3,1792521900,ALL,pinnacle,,,ws_scan,,+1.5,5743608
+2026-10-20T11:50:57Z,football,UEFA Europa Conference League,Lincoln Red Imps FC,FC Twente,,,双重机会-主/和局,dc,4.83,0,4.1057,17.64,0,3,1792695000,ALL,pinnacle,,,ws_scan,,,5527990
+2026-10-20T11:51:32Z,football,Indonesia Super League,Dewa United,Persijap Jepara,,,上半场小球,ht_ou,2.06,0,1.862,10.63,0,2,1792497600,ALL,pinnacle,,,ws_scan,,1.5,5761479
+2026-10-20T11:52:43Z,football,England Northern Premier League Division One,Shepshed Dynamo FC,St Ives Town,,,双重机会-主/客,dc,1.19,0,1.1617,2.44,0,2,1792521900,ALL,pinnacle,,,pin_drop,,,5776036
+2026-10-20T11:53:32Z,football,England League One,Burton Albion,Bradford City,,,主胜,1x2,4.18,0,4.0643,2.85,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5743737

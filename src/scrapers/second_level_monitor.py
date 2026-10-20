@@ -2338,7 +2338,7 @@ class SecondLevelMonitor:
                     _o_odds = o.get('bb_odds') or 0
                     _o_ev = o.get('ev_pct') or 0
                     if _o_odds > 1 and _o_ev > 0:
-                        o['_stake'] = round(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1), 2)
+                        o['_stake'] = int(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1))
                     opps.append(o)
         if not opps:
             return len(new_lines)
@@ -2438,7 +2438,7 @@ class SecondLevelMonitor:
                     _o_odds = o.get('bb_odds') or 0
                     _o_ev = o.get('ev_pct') or 0
                     if _o_odds > 1 and _o_ev > 0:
-                        o['_stake'] = round(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1), 2)
+                        o['_stake'] = int(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1))
                     opps.append(o)
             if _has_ev:
                 entries.append(entry)
@@ -2525,7 +2525,7 @@ class SecondLevelMonitor:
                     _o_odds = o.get('bb_odds') or 0
                     _o_ev = o.get('ev_pct') or 0
                     if _o_odds > 1 and _o_ev > 0:
-                        o['_stake'] = round(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1), 2)
+                        o['_stake'] = int(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1))
                     opps.append(o)
             if _has_ev:
                 entries.append(entry)
