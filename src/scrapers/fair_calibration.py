@@ -37,11 +37,16 @@ _cal_loaded = {}   # market -> bool
 
 
 def _load_table(market="live"):
-    if _cal_loaded.get(market):
-        return _cal_tables.get(market)
-    _cal_loaded[market] = True
+    p = ROOT / "data" / "storage" / _TABLE_FILES.get(market, _TABLE_FILES["live"])
     try:
-        p = ROOT / "data" / "storage" / _TABLE_FILES.get(market, _TABLE_FILES["live"])
+        mtime = p.stat().st_mtime if p.exists() else 0.0
+    except OSError:
+        mtime = 0.0
+    # 2026-10-21 改 mtime 缓存: 校准表每日自动更新后, 无需重启进程即可重读新表(旧 bool 缓存永不刷新)
+    if _cal_loaded.get(market) == mtime:
+        return _cal_tables.get(market)
+    _cal_loaded[market] = mtime
+    try:
         if p.exists():
             d = json.load(open(p, encoding="utf-8"))
             tbl = d.get("table")

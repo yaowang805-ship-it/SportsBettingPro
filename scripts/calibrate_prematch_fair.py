@@ -22,11 +22,19 @@ def _load(p):
 
 
 def _rows(bets):
+    """统一提取 (隐含概率, 胜负, bb赔率, stake, profit)。兼容 paper_bets(fair_price) 和 real_bets(fair)。"""
     out = []
     for b in bets:
-        if b.get("result") in ("won", "lost") and b.get("fair_price") and b.get("bb_odds"):
-            out.append((1.0 / b["fair_price"], 1.0 if b["result"] == "won" else 0.0,
-                        b["bb_odds"], b.get("stake") or 0, b.get("profit") or 0))
+        if not isinstance(b, dict):
+            continue
+        if b.get("result") not in ("won", "lost"):
+            continue
+        fair = b.get("fair_price") or b.get("fair")
+        bb = b.get("bb_odds")
+        if not fair or not bb:
+            continue
+        out.append((1.0 / fair, 1.0 if b["result"] == "won" else 0.0,
+                    bb, b.get("stake") or 0, b.get("profit") or 0))
     return out
 
 
@@ -54,15 +62,24 @@ def _backtest(rows, iso, name):
 
 def main():
     save = "--save" in sys.argv
-    tr = _rows(_load(STORAGE / "paper_bets.json"))
-    te = _rows(_load(STORAGE / "tracked_bets.json"))
+    # 2026-10-21 改用实盘库(real_bets)训练: 观察库含大量未实盘的假 edge 机会, 样本和实盘分布不同,
+    # 校准表会偏。实盘(trigger_source in pin_drop/ws_scan)才是真实下注样本。
+    rb = _load(STORAGE / "real_bets.json")
+    if isinstance(rb, dict):
+        rb = list(rb.values())  # real_bets.json 是 {order_id: bet}, 直接取 values
+    early_real = [b for b in rb if isinstance(b, dict) and b.get("trigger_source") in ("pin_drop", "ws_scan")]
+    tr = _rows(early_real)  # 实盘训练
+    # 观察库做补充(实盘样本少时), 但实盘为主
+    pb = _rows(_load(STORAGE / "paper_bets.json"))
+    if len(tr) < 100:
+        tr = tr + pb
+    te = tr  # 样本少, 不分训练/测试
     p = np.array([r[0] for r in tr])
     y = np.array([r[1] for r in tr])
     iso = IsotonicRegression(out_of_bounds="clip")
     iso.fit(p, y)
-    print(f"训练(观察库) n={len(tr)}  测试(实盘) n={len(te)}")
-    _backtest(tr, iso, "训练集(观察库, in-sample)")
-    _backtest(te, iso, "测试集(实盘, 样本外)")
+    print(f"训练(实盘为主) n={len(tr)}  其中纯实盘 {len(_rows(early_real))}")
+    _backtest(tr, iso, "训练集(in-sample)")
 
     if save:
         bins = np.linspace(0.05, 0.95, 37)
