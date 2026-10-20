@@ -5761,3 +5761,22 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-20T06:46:24Z,football,England FA Cup-Qualification,Harrogate Town,Bury FC,,,让球主胜,hc,1.82,0,1.7612,3.34,0,3,1792521900,ALL,pinnacle,,,ws_scan,,-0.5,5787252
 2026-10-20T06:47:08Z,football,England FA Cup-Qualification,Harrogate Town,Bury FC,,,让球主胜,hc,1.82,1.6098,1.7612,3.34,70,3,1792521900.0,BB/FB,,,,push,,-0.5,
 2026-10-20T06:47:08Z,football,England League Two,Walsall FC,Oldham Athletic,,,双重机会-和局/客,dc,1.55,0,1.4919,3.89,0,2,1792521900.0,BB/FB,,,,push,,,
+2026-10-20T06:48:04Z,football,England Southern League Premier Division South,Hanworth Villa,Chippenham Town,,,和局,1x2,4.19,0,4.0437,3.62,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5466193
+2026-10-20T06:59:06Z,football,Indonesia Super League,Dewa United,Persijap Jepara,,,上半场客胜,ht,18.4,0,17.0068,8.19,0,2,1792497600,ALL,pinnacle,,,ws_scan,,,5748638
+2026-10-20T07:07:22Z,football,England League Two,Northampton Town,Tranmere Rovers,,,上半场客胜,ht,4.14,0,4.0437,2.38,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5748790
+2026-10-20T07:08:41Z,football,Netherlands Eerste Divisie,NAC Breda,Heracles Almelo,,,双重机会-和局/客,dc,1.58,0,1.5431,2.39,0,3,1792778400,ALL,pinnacle,,,pin_drop,,,5085046
+2026-10-20T07:08:41Z,football,Costa Rica Primera Division,Puntarenas FC,Inter San Carlos,,,双重机会-和局/客,dc,1.53,0,1.4452,5.87,0,2,1792886400,ALL,pinnacle,,,pin_drop,,,5779155
+2026-10-20T07:12:13Z,football,England Northern Premier League Division One,Shepshed Dynamo FC,St Ives Town,,,客胜,1x2,11.6,0,10.3497,12.08,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5776036
+2026-10-20T07:12:13Z,football,England Northern Premier League Division One,West Auckland Town,Hallam FC,,,和局,1x2,4.8,0,4.0547,18.38,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5776046
+2026-10-20T07:12:13Z,football,England Northern Premier League Division One,West Auckland Town,Hallam FC,,,客胜,1x2,7.6,0,4.057,87.33,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5776046
+2026-10-20T07:12:24Z,football,England Northern Premier League Division One,Shepshed Dynamo FC,St Ives Town,,,双重机会-和局/客,dc,4.03,0,3.6977,8.99,0,2,1792521900,ALL,pinnacle,,,pin_drop,,,5776036
+2026-10-20T07:12:24Z,football,England Northern Premier League Division One,West Auckland Town,Hallam FC,,,双重机会-和局/客,dc,3.0,0,2.5428,17.98,0,2,1792521900,ALL,pinnacle,,,pin_drop,,,5776046
+2026-10-20T07:14:40Z,football,Ireland Premier Division,Derry City FC,Dundalk FC,,,上半场客胜,ht,4.42,0,4.0437,9.31,0,2,1792781100,ALL,pinnacle,,,ws_scan,,,5758601
+2026-10-20T07:14:40Z,football,Ireland Premier Division,Waterford FC,Drogheda United FC,,,上半场客胜,ht,4.21,0,4.0437,4.11,0,2,1792781100,ALL,pinnacle,,,ws_scan,,,5758608
+2026-10-20T07:15:34Z,football,England League One,Luton Town,Barnsley,,,双重机会-和局/客,dc,2.62,0,1.9813,32.24,0,2,1792521900,ALL,pinnacle,,,pin_drop,,,5743730
+2026-10-20T07:16:07Z,football,Costa Rica Primera Division,Puntarenas FC,Inter San Carlos,,,上半场小球,ht_ou,2.03,0,1.7612,15.26,0,2,1792886400,ALL,pinnacle,,,pin_drop,,1.25,5779155
+2026-10-20T07:16:29Z,football,Ireland Premier Division,Galway United FC,Saint Patricks Athletic FC,,,主胜,1x2,4.97,0,4.1292,20.36,0,2,1792781100,ALL,pinnacle,,,ws_scan,,,5758599
+2026-10-20T07:17:29Z,football,England Northern Premier League Division One,Hanley Town,Vauxhall Motors,,,和局,1x2,4.15,0,4.0618,2.17,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5797674
+2026-10-20T07:17:29Z,football,England Northern Premier League Division One,Hanley Town,Vauxhall Motors,,,客胜,1x2,4.17,0,4.0437,3.12,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5797674
+2026-10-20T07:18:30Z,football,England Northern Premier League Division One,Newcastle Town,Lower Breck FC,,,让球客胜,hc,1.84,0,1.7612,4.48,0,2,1792521900,ALL,pinnacle,,,ws_scan,,+0.5,5776146
+2026-10-20T07:19:49Z,football,England Northern Premier League Division One,Newcastle Town,Lower Breck FC,,,让球客胜,hc,1.84,1.5682,1.7612,4.48,70,2,1792521900.0,BB/FB,,,,push,,+0.5,
