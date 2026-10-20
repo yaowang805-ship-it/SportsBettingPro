@@ -1,5 +1,5 @@
 {
-  "balance": 12722.53,
+  "balance": 12632.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2162,6 +2162,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792521900.0,
       "created_at": "2026-10-20T07:19:31.077819+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_哈洛贾特_伯利_小球(30)",
+      "sport": "football",
+      "league": "英格兰足总杯-资格赛",
+      "home_team": "哈洛贾特",
+      "away_team": "伯利",
+      "home_cn": "哈洛贾特",
+      "away_cn": "伯利",
+      "market": "over_under",
+      "market_type": "小球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 1.96,
+      "stake": 90,
+      "model_prob": 0.5306,
+      "ev_pct": 3.99,
+      "pin_odds": 1.6369,
+      "fair_price": 1.8848,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792521900.0,
+      "created_at": "2026-10-20T07:43:52.869102+00:00",
       "track_only": false
     }
   ],
@@ -11833,8 +11856,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-20",
-    "used": 530.0,
-    "bets": 7
+    "used": 620.0,
+    "bets": 8
   },
   "updated": null
 }
