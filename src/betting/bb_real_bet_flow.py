@@ -344,10 +344,9 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         record_global_bet(scope="early")
 
         # 防风控(2026-09-05): 每注之间随机间隔, 模拟真人看盘思考, 避免秒下多注被风控识别。
-        # 2026-10-18 双轨制: ws_scan 全量扫描每 30s 来 13-16 个 opp, 20-90s 会让循环永不结束
-        # (下单慢 + 钉钉攒批被吞), 缩短到 10-20s; drop 低频触发保留原 20-90s。
+        # 2026-10-20 用户要求 drop 也秒级下单(对齐 ws_scan), 两轨统一 10-20s。
         import random as _random
-        _sleep = _random.uniform(10, 20) if trigger_source == "ws_scan" else _random.uniform(20, 90)
+        _sleep = _random.uniform(10, 20)
         time.sleep(_sleep)
         _sleep_total += _sleep
 

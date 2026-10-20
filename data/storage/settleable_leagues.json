@@ -486,7 +486,7 @@
       "success_rate": 0.0
     },
     "阿根廷全国甲级联赛A": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -581,7 +581,7 @@
       "success_rate": 0.0
     },
     "英格兰北部超级联赛甲组": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -596,7 +596,7 @@
       "success_rate": 0.0
     },
     "沙特阿拉伯职业联赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -681,7 +681,7 @@
       "success_rate": 0.0
     },
     "英格兰足球全国联赛北区": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1211,7 +1211,7 @@
       "success_rate": 0.0
     },
     "荷兰甲级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1221,7 +1221,7 @@
       "success_rate": 0.0
     },
     "印尼超级联赛": {
-      "attempts": 2,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1361,7 +1361,7 @@
       "success_rate": 0.0
     },
     "泰国甲级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1426,7 +1426,7 @@
       "success_rate": 0.0
     },
     "英格兰足总杯": {
-      "attempts": 2,
+      "attempts": 7,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1491,7 +1491,7 @@
       "success_rate": 0.0
     },
     "亚足联挑战联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1504,9 +1504,64 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "澳大利亚甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "厄瓜多尔乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "葡萄牙篮球乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "中国篮球职业联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "奥地利篮球超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "以色列篮球超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "BNXT联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "西班牙篮球丙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "塞拉利昂超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "希腊篮球精英联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "英格兰南部超级联赛中部": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-10-20T09:00:24.205779+00:00",
+  "updated": "2026-10-20T11:57:58.661260+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

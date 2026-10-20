@@ -367087,14 +367087,18 @@
   "spread": null,
   "bb_ts": 1792487371.189247,
   "stake": 40,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -40.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": 1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 66.31
+  "clv_elapsed_s": 66.31,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1792487371.621428,
@@ -367389,14 +367393,18 @@
   "spread": null,
   "bb_ts": 1792487423.458112,
   "stake": 130,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -130.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1792487477.416477,
@@ -367589,14 +367597,18 @@
   "spread": null,
   "bb_ts": 1792487502.214889,
   "stake": 290,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -290.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1792487502.878336,
@@ -367687,14 +367699,18 @@
   "spread": null,
   "bb_ts": 1792487502.214889,
   "stake": 240,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 103.2,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": -1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 82.21
+  "clv_elapsed_s": 82.21,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1792487502.882724,
@@ -367785,14 +367801,18 @@
   "spread": null,
   "bb_ts": 1792487601.300441,
   "stake": 280,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -280.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1792487601.541513,
@@ -368053,14 +368073,18 @@
   "spread": null,
   "bb_ts": 1792487805.154748,
   "stake": 290,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 232.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1792487806.038442,
@@ -369138,14 +369162,18 @@
   "spread": null,
   "bb_ts": 1792488873.5842612,
   "stake": 240,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -240.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1792488920.185338,
@@ -370762,14 +370790,18 @@
   "spread": null,
   "bb_ts": 1792490279.060761,
   "stake": 150,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -150.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": -1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 12.86
+  "clv_elapsed_s": 12.86,
+  "final_score": [
+   2,
+   1
+  ]
  },
  {
   "ts": 1792490306.4254668,
