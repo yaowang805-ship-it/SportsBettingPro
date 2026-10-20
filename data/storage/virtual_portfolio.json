@@ -1,5 +1,5 @@
 {
-  "balance": 13092.53,
+  "balance": 13022.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2047,6 +2047,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792483200.0,
       "created_at": "2026-10-20T01:28:29.862839+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_联合曼彻斯特_奥特林查姆_让球主胜(+05)",
+      "sport": "football",
+      "league": "英格兰足总杯-资格赛",
+      "home_team": "联合曼彻斯特",
+      "away_team": "奥特林查姆",
+      "home_cn": "联合曼彻斯特",
+      "away_cn": "奥特林查姆",
+      "market": "handicap",
+      "market_type": "让球主胜(+0.5)",
+      "sub_market": "hc",
+      "line": "+0.5",
+      "odds": 1.85,
+      "stake": 70,
+      "model_prob": 0.5678,
+      "ev_pct": 5.04,
+      "pin_odds": 1.6135,
+      "fair_price": 1.7612,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792521900.0,
+      "created_at": "2026-10-20T02:56:12.813098+00:00",
       "track_only": false
     }
   ],
@@ -11718,8 +11741,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-20",
-    "used": 160.0,
-    "bets": 2
+    "used": 230.0,
+    "bets": 3
   },
   "updated": null
 }
