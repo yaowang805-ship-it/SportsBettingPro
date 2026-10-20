@@ -5648,3 +5648,31 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-20T01:11:46Z,football,Uganda Premier League,Maroons FC,Kataka FC,,,客胜,1x2,5.65,0,4.0584,39.22,0,2,1792501200,ALL,pinnacle,,,ws_scan,,,5771110
 2026-10-20T01:25:36Z,football,Thailand FA Cup,Udon United,Lopburi City FC,,,大球,ou,1.92,0,1.7161,11.88,0,3,1792483200,ALL,pinnacle,,,ws_scan,,4.0,5775982
 2026-10-20T01:29:06Z,football,Thailand FA Cup,Udon United,Lopburi City FC,,,大球,ou,1.92,1.5236,1.7161,11.88,90,3,1792483200.0,BB/FB,,,,push,,4.0,
+2026-10-20T01:30:48Z,football,Argentina Liga Profesional,Union de Santa Fe,Estudiantes de La Plata,,,双重机会-和局/客,dc,1.43,0,1.3806,3.58,0,3,1793052000,ALL,pinnacle,,,pin_drop,,,5462509
+2026-10-20T01:30:50Z,football,AFC Challenge League,Fortis FC,FC Goa,,,主胜,1x2,4.74,0,4.0437,17.22,0,3,1792502700,ALL,pinnacle,,,ws_scan,,,5475822
+2026-10-20T01:33:16Z,football,AFC Challenge League,Fortis FC,FC Goa,,,双重机会-主/和局,dc,2.1,0,1.7612,19.24,0,3,1792502700,ALL,pinnacle,,,ws_scan,,,5583999
+2026-10-20T01:40:57Z,tennis,World Tennis - M15 Bol Men Singles,Dusan Bazdar (SRB),Matei Todoran (ROU),,,主胜,1x2,4.65,0,4.079,14.0,0,3,1792494000,BB,pinnacle,,,ws_scan,,,5777108
+2026-10-20T01:41:28Z,tennis,World Tennis - M15 Bol Men Singles,Giannicola Misasi (ITA),Richard Lacis (BLR),,,客胜,1x2,6.3,0,4.1207,52.89,0,3,1792494000,BB,pinnacle,,,ws_scan,,,5777110
+2026-10-20T01:41:28Z,tennis,World Tennis - M15 Bol Men Singles,Giannicola Misasi (ITA),Richard Lacis (BLR),,,上半场客胜,ht,4.25,0,4.1207,3.14,0,3,1792494000,BB,pinnacle,,,ws_scan,,,5777110
+2026-10-20T01:44:22Z,tennis,World Tennis - W35 Sydney Women Singles,Catherine Aulia (AUS),Miho Kuramochi (JPN),,,主胜,1x2,4.24,0,4.0949,3.54,0,3,1792461060,BB,pinnacle,,,ws_scan,,,5776355
+2026-10-20T01:47:07Z,football,England Championship League,Charlton Athletic,Norwich City,,,上半场主胜,ht,4.22,0,4.0437,4.36,0,2,1792841400,ALL,pinnacle,,,ws_scan,,,5764801
+2026-10-20T01:51:46Z,tennis,World Tennis - W35 Loule Women Singles,Mariella Thamm (GER),Maria Martinez Vaquero (ESP),,,客胜,1x2,4.22,0,4.0437,4.36,0,3,1792495800,BB,pinnacle,,,ws_scan,,,5778461
+2026-10-20T01:54:31Z,tennis,World Tennis - W35 Sydney Women Singles,Catherine Aulia (AUS),Miho Kuramochi (JPN),,,主胜,1x2,4.24,0,4.0949,3.54,0,3,1792461600,BB,pinnacle,,,ws_scan,,,5776355
+2026-10-20T02:01:04Z,football,Peru Liga 1,Atletico Grau,Asociacion Deportiva Tarma,,,客胜,1x2,4.15,0,4.0541,2.36,0,2,1792786500,ALL,pinnacle,,,ws_scan,,,5771789
+2026-10-20T02:01:04Z,football,Peru Liga 1,Atletico Grau,Asociacion Deportiva Tarma,,,上半场客胜,ht,5.4,0,4.5183,19.52,0,2,1792786500,ALL,pinnacle,,,ws_scan,,,5771789
+2026-10-20T02:09:37Z,tennis,World Tennis - W35 Sydney Women Singles,Tahlia Kokkinis (AUS),Renee Alame (AUS),,,客胜,1x2,4.31,0,4.1049,5.0,0,3,1792462680,BB,pinnacle,,,ws_scan,,,5776356
+2026-10-20T02:11:56Z,tennis,World Tennis - W35 Sydney Women Singles,Catherine Aulia (AUS),Miho Kuramochi (JPN),,,主胜,1x2,4.26,0,4.0437,5.35,0,3,1792462320,BB,pinnacle,,,ws_scan,,,5776355
+2026-10-20T02:14:12Z,football,Mexico Liga MX,Tigres UANL,Club Leon,,,上半场小球,ht_ou,2.12,0,1.7753,19.42,0,3,1792551600,ALL,pinnacle,,,ws_scan,,1.25,5756480
+2026-10-20T02:14:43Z,tennis,World Tennis - W35 Sydney Women Singles,Tahlia Kokkinis (AUS),Renee Alame (AUS),,,客胜,1x2,4.31,0,4.1049,5.0,0,3,1792462920,BB,pinnacle,,,ws_scan,,,5776356
+2026-10-20T02:15:49Z,football,Mexico Liga MX,Tigres UANL,Club Leon,,,上半场大球,ht_ou,2.17,0,1.9304,12.41,0,3,1792551600,ALL,pinnacle,,,ws_scan,,1.0,5089228
+2026-10-20T02:17:06Z,football,Peru Liga 1,Atletico Grau,Asociacion Deportiva Tarma,,,和局,1x2,3.54,0,3.3636,5.24,0,2,1792786500,ALL,pinnacle,,,ws_scan,,,5758605
+2026-10-20T02:17:06Z,football,Peru Liga 1,Atletico Grau,Asociacion Deportiva Tarma,,,双重机会-和局/客,dc,2.0,0,1.7612,13.56,0,2,1792786500,ALL,pinnacle,,,ws_scan,,,5758605
+2026-10-20T02:17:48Z,basketball,China CBA,Xinjiang Flying Tigers,Tianjin Pioneers,,,客胜,1x2,5.45,4.15,4.274,27.51,70,3,1792497600.0,BB,,,,push,,,
+2026-10-20T02:17:48Z,basketball,Eurocup,KK Buducnost Voli,BC Neptunas Klaipeda,,,客胜,1x2,4.47,3.81,4.0437,10.54,70,3,1792515600.0,BB,,,,push,,,
+2026-10-20T02:17:48Z,football,Egypt Premier League,Wadi Degla SC,National Bank of Egypt SC,,,和局,1x2,3.14,2.08,3.025,3.8,0,2,1792515600.0,BB,,,,push,,,
+2026-10-20T02:17:48Z,football,Egypt Premier League,Wadi Degla SC,National Bank of Egypt SC,,,双重机会-主/和局,dc,1.52,0,1.4652,3.74,0,2,1792515600.0,BB/FB,,,,push,,,
+2026-10-20T02:17:48Z,football,England League One,Oxford United,Wigan Athletic,,,双重机会-和局/客,dc,1.82,0,1.6906,7.65,0,2,1792521900.0,BB/FB,,,,push,,,
+2026-10-20T02:17:48Z,football,England League Two,York City FC,Accrington Stanley,,,双重机会-和局/客,dc,2.12,0,1.7888,18.51,0,2,1792521900.0,BB/FB,,,,push,,,
+2026-10-20T02:17:48Z,football,England League Two,Crawley Town,Shrewsbury Town,,,双重机会-主/和局,dc,1.53,0,1.4652,4.42,0,2,1792521900.0,BB/FB,,,,push,,,
+2026-10-20T02:17:48Z,football,Northern Ireland Premiership,Larne FC,Linfield FC,,,双重机会-和局/客,dc,1.76,0,1.6906,4.1,0,2,1792521900.0,BB/FB,,,,push,,,
+2026-10-20T02:17:48Z,football,Scotland Championship,Dunfermline Athletic FC,Partick Thistle FC,,,和局,1x2,3.51,2.21,3.3282,5.46,0,2,1792521900.0,BB,,,,push,,,
