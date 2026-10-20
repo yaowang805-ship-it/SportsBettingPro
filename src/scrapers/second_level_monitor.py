@@ -194,6 +194,7 @@ def _record_bet_result(code, latency=0.0, direction_key=None):
 LIVE_BUDGET = float('inf')  # 2026-09-18 用户取消每日投注额上限: 滚球不再设总限额(由单场/单盘口300 + 账户余额兜底)
 LIVE_BUDGET_FILE = ROOT / "data" / "storage" / "live_bet_budget.json"
 REAL_BETS_FILE = ROOT / "data" / "storage" / "real_bets.json"  # 实盘库(2026-09-27): 每笔实盘注单的下单信息+结算结果
+_BALANCE_CACHE = {"ts": 0.0, "bal": None}  # 余额节流缓存(2026-10-21 余额<80 停实盘, 30s 查一次)
 DRAWDOWN_STOP_PNL = 1000  # 回撤熔断(2026-09-13): 最近7天滚球实盘累计亏超¥1000(=20%BANKROLL) → 半仓
 DRAWDOWN_RESET_FILE = ROOT / "data" / "storage" / "drawdown_reset_ts.txt"  # 熔断归零时间戳(2026-09-19 用户要求归零重算)
 LIVE_PAPER_FILE = ROOT / "data" / "storage" / "live_paper_bets.json"
@@ -1464,6 +1465,19 @@ class SecondLevelMonitor:
                      "degraded_mode": (self._trigger_source != "pin"),  # 2026-10-13 降级标记: 非 Pin 触发(bf_ws/poll)=异质锚
                      "bb_ts": sig.get("bb_ts"), "lag_sec": _lag_sec,
                      "poll_ts": sig.get("poll_ts")}  # 触发时刻(供 latency-ROI 曲线, 2026-10-11)
+        # 2026-10-21 余额熔断(用户要求): 总余额<80 停实盘(滚球+早盘), >80 自动恢复。30s 节流查余额。
+        try:
+            _now_bal = time.time()
+            if _now_bal - _BALANCE_CACHE["ts"] >= 30:
+                from src.betting.bb_auto_bet import fetch_balance
+                _BALANCE_CACHE["ts"] = _now_bal
+                _BALANCE_CACHE["bal"] = fetch_balance()
+            _bal = _BALANCE_CACHE.get("bal")
+            if _bal is not None and _bal < 80:
+                print(f"  🚫 余额 {_bal:.0f}<80, 滚球暂停", flush=True)
+                return
+        except Exception:
+            pass
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
             match_id=sig["match_id"], check_limit=True, verify_price=True,
