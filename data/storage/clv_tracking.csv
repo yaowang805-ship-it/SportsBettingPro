@@ -5876,3 +5876,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-20T10:17:43Z,football,England Northern Premier League Division One,Shepshed Dynamo FC,St Ives Town,,,小球,ou,1.82,0,1.6906,7.65,0,2,1792521900,ALL,pinnacle,,,ws_scan,,3.0,5776036
 2026-10-20T10:17:43Z,football,Japan J.League 3,Ehime FC,Renofa Yamaguchi,,,上半场大球,ht_ou,2.14,0,1.9317,10.78,0,4,1792576800,ALL,pinnacle,,,ws_scan,,1.0,5126377
 2026-10-20T10:18:55Z,football,England Northern Premier League Division One,Shepshed Dynamo FC,St Ives Town,,,小球,ou,1.82,1.4762,1.6906,7.65,80,2,1792521900.0,BB/FB,,,,push,,3.0,
+2026-10-20T10:20:50Z,football,England Northern Premier League Division One,Hanley Town,Vauxhall Motors,,,大球,ou,1.87,0,1.7612,6.18,0,2,1792521900,ALL,pinnacle,,,ws_scan,,2.5,5776114
+2026-10-20T10:21:45Z,basketball,China CBA,Xinjiang Flying Tigers,Tianjin Pioneers,,,上半场客胜,ht,4.6,0,4.21,9.26,0,3,1792497600,ALL,pinnacle,,,ws_scan,,,5626205
+2026-10-20T10:22:11Z,tennis,World Tennis - M25 Redbridge Men Singles,Sebastian Sorger (AUT),Rhys Lawlor (GBR),,,上半场客胜,ht,4.22,0,4.0437,4.36,0,3,1792494900,BB,pinnacle,,,ws_scan,,,5778487
+2026-10-20T10:22:58Z,football,England Northern Premier League Division One,Hanley Town,Vauxhall Motors,,,大球,ou,1.87,1.6061,1.7612,6.18,30,2,1792521900.0,BB/FB,,,,push,,2.5,

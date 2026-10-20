@@ -1,5 +1,5 @@
 {
-  "balance": 12902.53,
+  "balance": 12872.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1564,6 +1564,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792521900.0,
       "created_at": "2026-10-20T10:18:35.976509+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_汉利镇_沃克斯豪尔_大球(25)",
+      "sport": "football",
+      "league": "英格兰北部超级联赛甲组",
+      "home_team": "汉利镇",
+      "away_team": "沃克斯豪尔",
+      "home_cn": "汉利镇",
+      "away_cn": "沃克斯豪尔",
+      "market": "over_under",
+      "market_type": "大球(2.5)",
+      "sub_market": "ou",
+      "line": "2.5",
+      "odds": 1.87,
+      "stake": 30,
+      "model_prob": 0.5678,
+      "ev_pct": 6.18,
+      "pin_odds": 1.6061,
+      "fair_price": 1.7612,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792521900.0,
+      "created_at": "2026-10-20T10:22:39.623943+00:00",
       "track_only": false
     }
   ],
@@ -11670,8 +11693,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-20",
-    "used": 760.0,
-    "bets": 10
+    "used": 790.0,
+    "bets": 11
   },
   "updated": null
 }
