@@ -837,7 +837,7 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
             "league_cn": b.get("league_cn", ""),
             "sport": b["sport"],
             "sub": sub, "direction": d,
-            "bb_odds": bb_odds, "fair": fair_p, "ev": round(ev, 2), "pin_raw": 0,
+            "bb_odds": bb_odds, "fair": fair_p, "ev": round(ev, 2), "pin_raw": (fair.get("_raw") or {}).get(k),
             "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
             "pin_matchup_id": res.get("event_id"),
             "spread": res.get("spread"),  # 2026-09-19 流动性门槛: back-lay 价差
