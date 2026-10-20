@@ -35,6 +35,7 @@ REAL_BETS = ROOT / "data" / "storage" / "real_bets.json"
 STARTED_AT_FILE = ROOT / "data" / "storage" / "trial_cells_started_at.txt"
 
 # 2026-10-18 释放的 11 个试探格(明确列出, 不用 cap==30 推断, 避免误算现有 cap=30 的 tennis ou 小)
+# 2026-10-20 加 6 个大样本滚球格(观察库 n>=50 且胜率合理, cap=30 试探)
 TRIAL_CELLS = [
     "volleyball|ou|小|60-80%",
     "football|1x2|客|10-20%",
@@ -47,6 +48,12 @@ TRIAL_CELLS = [
     "tennis|1x2|客|20-40%",
     "tennis|hc_games|主|60-80%",
     "football|1x2|平|20-30%",
+    "tennis|hc_games|客|40-60%",
+    "tennis|hc_games|客|60-80%",
+    "football|ou|大|50-55%",
+    "football|ou|小|50-55%",
+    "ice_hockey|ou|大|55-65%",
+    "football|dc|1X|>70%",
 ]
 
 

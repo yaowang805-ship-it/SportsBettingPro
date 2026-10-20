@@ -5985,3 +5985,44 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-20T13:58:15Z,football,Paraguay Segunda Division,Paraguari AC,Club Fernando de La Mora,,,上半场大球,ht_ou,2.11,0,1.7612,19.81,0,3,1792533600,ALL,pinnacle,,,ws_scan,,0.75,5749240
 2026-10-20T14:00:53Z,football,Thailand FA Cup,Chumphon United,Songkhla FC,,,和局,1x2,4.61,0,4.1204,11.88,0,3,1792569600,BB,pinnacle,,,ws_scan,,,5781225
 2026-10-20T14:01:31Z,football,Thailand FA Cup,Kasem Bundit University,Customs United FC,,,双重机会-主/和局,dc,1.33,0,1.2995,2.35,0,3,1792569600,BB,pinnacle,,,pin_drop,,,5780200
+2026-10-20T14:05:06Z,football,Thailand FA Cup,Kasem Bundit University,Customs United FC,,,小球,ou,1.88,0,1.7612,6.75,0,3,1792569600,BB,pinnacle,,,ws_scan,,3.5,5780200
+2026-10-20T14:06:08Z,football,England League One,Bromley FC,Leicester City FC,,,和局,1x2,4.15,0,4.0437,2.63,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5743723
+2026-10-20T14:06:08Z,basketball,Eurocup,Balkan Botevgrad,BC Lietkabelis Panevezys,,,客胜,1x2,1.51,0,1.4652,3.06,0,3,1792512000,ALL,pinnacle,,,ws_scan,,,5280356
+2026-10-20T14:08:40Z,football,Turkey 1. Lig,Pendikspor,Kayserispor,,,和局,1x2,3.53,0,3.3636,4.95,0,2,1792924200,ALL,pinnacle,,,ws_scan,,,5367097
+2026-10-20T14:08:40Z,football,Turkey 1. Lig,Pendikspor,Kayserispor,,,双重机会-主/和局,dc,1.87,0,1.756,6.49,0,2,1792924200,ALL,pinnacle,,,ws_scan,,,5367097
+2026-10-20T14:10:46Z,football,Argentina Primera Nacional,Almirante Brown,Deportivo Moron,,,和局,1x2,2.61,0,2.215,17.84,0,2,1792953000,ALL,pinnacle,,,ws_scan,,,5793222
+2026-10-20T14:13:41Z,football,England League One,Notts County,Sheffield Wednesday,,,上半场主胜,ht,4.14,0,4.0437,2.38,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5743725
+2026-10-20T14:15:13Z,football,Indonesia Super League,Persik Kediri,PSS Sleman,,,上半场客胜,ht,4.83,0,4.0876,18.16,0,2,1792657800,ALL,pinnacle,,,ws_scan,,,5775990
+2026-10-20T14:15:36Z,football,Indonesia Super League,Persik Kediri,PSS Sleman,,,和局,1x2,3.57,0,3.3636,6.14,0,2,1792657800,ALL,pinnacle,,,ws_scan,,,5775990
+2026-10-20T14:15:36Z,football,Indonesia Super League,Persik Kediri,PSS Sleman,,,双重机会-和局/客,dc,1.96,0,1.7346,12.99,0,2,1792657800,ALL,pinnacle,,,ws_scan,,,5775990
+2026-10-20T14:17:43Z,football,England League One,AFC Wimbledon,Mansfield Town,,,上半场主胜,ht,4.21,0,4.0437,4.11,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5743726
+2026-10-20T14:31:48Z,football,Qatar Stars League,Al Gharafa SC,Al Ahli Doha SC,,,双重机会-和局/客,dc,1.62,0,1.5522,4.37,0,3,1792687500,ALL,pinnacle,,,pin_drop,,,5767797
+2026-10-20T14:39:14Z,football,Poland I Liga,Odra Opole,Pogon Siedlce,,,双重机会-和局/客,dc,1.77,0,1.6906,4.7,0,2,1792926000,ALL,pinnacle,,,ws_scan,,,5768637
+2026-10-20T14:45:08Z,football,England Southern League Premier Division Central,Banbury United,Leighton Town,,,上半场大球,ht_ou,2.08,0,1.7908,16.15,0,2,1792521900,ALL,pinnacle,,,ws_scan,,1.0,5470678
+2026-10-20T14:46:23Z,basketball,Uruguay Basketball League,Club Malvin,Club Atletico Atenas,,,上半场主胜,ht,1.24,0,1.168,6.17,0,3,1792534500,ALL,pinnacle,,,ws_scan,,,5779482
+2026-10-20T14:46:25Z,ice_hockey,NHL,New Jersey Devils,Colorado Avalanche,,,上半场主胜,ht,2.9,0,2.7956,3.73,0,1,1792537200,BB,pinnacle,,,ws_scan,,,5646162
+2026-10-20T14:46:25Z,ice_hockey,Czech Republic Extraliga,HC Vitkovice,Bili Tygri Liberec,,,上半场主胜,ht,3.32,0,3.23,2.79,0,2,1792510200,BB,pinnacle,,,ws_scan,,,5743526
+2026-10-20T14:48:34Z,football,England Southern League Premier Division Central,Kettering Town,Leiston FC,,,客胜,1x2,4.15,0,4.0502,2.46,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5470680
+2026-10-20T14:51:13Z,football,England League One,Stevenage FC,Plymouth Argyle,,,和局,1x2,3.46,0,3.3636,2.87,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5743729
+2026-10-20T14:51:13Z,football,England Northern Premier League Division One,Newcastle Town,Lower Breck FC,,,双重机会-和局/客,dc,1.83,0,1.7612,3.91,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5776146
+2026-10-20T14:58:46Z,football,England National League,Aldershot Town FC,Wealdstone FC,,,和局,1x2,3.65,0,3.5696,2.25,0,3,1792850400,ALL,pinnacle,,,ws_scan,,,5321299
+2026-10-20T14:59:17Z,football,Israel Liga Bet,Maccabi Ironi Amishav Petah Tikva,Beitar Ramat Gan,,,上半场小球,ht_ou,2.03,0,1.8502,9.72,0,4,1792516500,ALL,pinnacle,,,ws_scan,,1.25,5776190
+2026-10-20T15:00:16Z,football,Israel Liga Bet,Maccabi Ironi Amishav Petah Tikva,Beitar Ramat Gan,,,上半场大球,ht_ou,2.0,0,1.8578,7.66,0,4,1792516500,ALL,pinnacle,,,ws_scan,,1.0,5797799
+2026-10-20T15:00:18Z,football,England Southern League Premier Division Central,Banbury United,Leighton Town,,,上半场小球,ht_ou,2.04,0,1.9494,4.65,0,2,1792521900,ALL,pinnacle,,,ws_scan,,1.25,5142244
+2026-10-20T15:01:40Z,basketball,Brazil NBB League,Caxias do Sul,Minas Tenis Clube MG,,,主胜,1x2,4.14,0,4.0437,2.38,0,3,1792535400,ALL,pinnacle,,,ws_scan,,,5729771
+2026-10-20T15:12:14Z,football,Estonia Meistriliiga,Harju JK Laagri,Flora Tallinn,,,上半场主胜,ht,4.24,0,4.0437,4.86,0,3,1792594800,ALL,pinnacle,,,ws_scan,,,4395448
+2026-10-20T15:12:14Z,football,Estonia Meistriliiga,Harju JK Laagri,Flora Tallinn,,,双重机会-主/和局,dc,2.04,0,1.7164,18.85,0,3,1792594800,ALL,pinnacle,,,ws_scan,,,4395448
+2026-10-20T15:12:20Z,football,Saudi Arabia Professional League,AL Qadisiyah,AL Hilal (KSA),,,双重机会-和局/客,dc,1.4,0,1.3108,6.81,0,3,1792778400,BB,pinnacle,,,pin_drop,,,5446334
+2026-10-20T15:12:20Z,football,Saudi Arabia Professional League,Al Riyadh,AL Taawoun FC,,,双重机会-主/和局,dc,1.64,0,1.5643,4.84,0,3,1792864800,ALL,pinnacle,,,pin_drop,,,5446342
+2026-10-20T15:12:20Z,football,Saudi Arabia Professional League,Al Riyadh,AL Taawoun FC,,,双重机会-和局/客,dc,1.35,0,1.2878,4.83,0,3,1792864800,ALL,pinnacle,,,pin_drop,,,5446342
+2026-10-20T15:14:32Z,football,Saudi Arabia Professional League,AL Qadisiyah,AL Hilal (KSA),,,双重机会-主/和局,dc,1.66,0,1.6111,3.04,0,3,1792778400,BB,pinnacle,,,pin_drop,,,5446334
+2026-10-20T15:22:45Z,ice_hockey,Switzerland National League,HC Ambri Piotta,HC Fribourg Gotteron,,,上半场主胜,ht,3.09,0,2.867,7.78,0,3,1792518300,BB,pinnacle,,,ws_scan,,,5631926
+2026-10-20T15:25:50Z,football,Japan J.League 3,Kamatamare Sanuki,Zweigen Kanazawa,,,上半场小球,ht_ou,2.16,0,1.9613,10.13,0,4,1792576800,ALL,pinnacle,,,ws_scan,,1.25,5126361
+2026-10-20T15:28:30Z,football,Indian Super League,Kerala Blasters FC,Mumbai City FC,,,双重机会-主/和局,dc,1.56,0,1.4652,6.47,0,2,1792936800,ALL,pinnacle,,,ws_scan,,,5776822
+2026-10-20T15:31:39Z,football,Japan J.League 3,Kamatamare Sanuki,Zweigen Kanazawa,,,上半场大球,ht_ou,2.14,0,1.7884,19.66,0,4,1792576800,ALL,pinnacle,,,ws_scan,,1.0,5756521
+2026-10-20T15:32:12Z,basketball,Eurocup,Balkan Botevgrad,BC Lietkabelis Panevezys,,,上半场客胜,ht,1.85,0,1.7612,5.04,0,3,1792512000,ALL,pinnacle,,,ws_scan,,,5280356
+2026-10-20T15:32:54Z,basketball,Eurocup,Balkan Botevgrad,BC Lietkabelis Panevezys,,,让分主胜,hc,1.8,0,1.7612,2.2,0,3,1792512000,ALL,pinnacle,,,ws_scan,,+4.5,5280356
+2026-10-20T15:43:18Z,football,Colombia Primera B,Independiente Yumbo,Boca Juniors de Cali,,,上半场大球,ht_ou,2.08,0,1.854,12.19,0,3,1792526400,ALL,pinnacle,,,ws_scan,,1.0,5776936
+2026-10-20T15:47:07Z,ice_hockey,NHL,New Jersey Devils,Colorado Avalanche,,,上半场客胜,ht,2.94,0,2.867,2.55,0,1,1792537200,BB,pinnacle,,,ws_scan,,,5646162
+2026-10-20T15:52:11Z,football,England Isthmian League Premier Division,Three Bridges,Eastbourne Borough,,,和局,1x2,4.36,0,4.0616,7.35,0,2,1792521900,ALL,pinnacle,,,ws_scan,,,5322460
+2026-10-20T15:54:33Z,football,Spain LaLiga,Getafe CF,Sevilla FC,,,和局,1x2,3.0,0,2.7975,7.24,0,1,1793538000,ALL,pinnacle,,,ws_scan,,,5192349
