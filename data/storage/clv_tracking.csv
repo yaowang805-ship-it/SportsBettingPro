@@ -5691,3 +5691,20 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-20T02:55:45Z,football,England FA Cup-Qualification,FC United of Manchester,Altrincham FC,,,让球主胜,hc,1.85,0,1.7612,5.04,0,3,1792521900,ALL,pinnacle,,,ws_scan,,+0.5,5787250
 2026-10-20T02:56:30Z,football,England FA Cup-Qualification,FC United of Manchester,Altrincham FC,,,让球主胜,hc,1.85,1.6135,1.7612,5.04,70,3,1792521900.0,BB/FB,,,,push,,+0.5,
 2026-10-20T02:57:32Z,football,Thailand FA Cup,Udon United,Lopburi City FC,,,大球,ou,1.92,1.4202,1.6666,15.21,70,3,1792483200.0,BB/FB,,,,push,,4.0,
+2026-10-20T03:04:56Z,tennis,World Tennis - M25 Sarreguemines Men Singles,Oleg Prihodko (MKD),Florent Lagarrigue (FRA),,,客胜,1x2,4.93,0,4.0975,20.32,0,3,1792486800,BB,pinnacle,,,ws_scan,,,5777757
+2026-10-20T03:09:15Z,tennis,World Tennis - M25 Sarreguemines Men Singles,Oleg Prihodko (MKD),Florent Lagarrigue (FRA),,,让盘主胜,hc,1.57,0,1.4656,7.12,0,3,1792486800,BB,pinnacle,,,ws_scan,,-1.5,5777757
+2026-10-20T03:29:45Z,tennis,World Tennis - W15 Villena Women Singles,Pauline Dore (FRA),Anastasia Bertacchi (ITA),,,客胜,1x2,1.81,0,1.7612,2.77,0,3,1792488600,BB,pinnacle,,,ws_scan,,,5774286
+2026-10-20T03:32:54Z,tennis,World Tennis - M25 Mumbai Men Singles,Arjun Rathi (IND),Garrett Johns (USA),,,主胜,1x2,4.97,0,4.0437,22.91,0,3,1792471080,BB,pinnacle,,,ws_scan,,,5777038
+2026-10-20T03:36:02Z,tennis,World Tennis - W35 Monastir Women Singles,Oriana Gniewkowska (POL),Sofia Camila Rojas (USA),,,主胜,1x2,4.79,0,4.0437,18.46,0,3,1792492200,BB,pinnacle,,,ws_scan,,,5777484
+2026-10-20T03:39:26Z,football,Indonesia Super League,Isenmulang Kalteng,Java United FC,,,主胜,1x2,4.17,0,4.0437,3.12,0,2,1792485000,BB,pinnacle,,,ws_scan,,,5775074
+2026-10-20T03:39:49Z,tennis,World Tennis - W35 Santa Margherita di Pula Women Singles,Martha Matoula (GRE),Franziska Sziedat (GER),,,客胜,1x2,4.2,0,4.0437,3.87,0,3,1792492200,BB,pinnacle,,,ws_scan,,,5777811
+2026-10-20T03:40:01Z,football,England FA Cup-Qualification,Stafford Rangers,Gateshead FC,,,上半场大球,ht_ou,1.81,0,1.7705,2.23,0,3,1792521900,ALL,pinnacle,,,ws_scan,,1.0,5787245
+2026-10-20T03:53:01Z,football,USL Championship,El Paso Locomotive FC,New Mexico United,,,和局,1x2,3.83,0,3.7328,2.6,0,2,1792886400,ALL,pinnacle,,,ws_scan,,,4259102
+2026-10-20T04:01:38Z,tennis,World Tennis - M25 Redbridge Men Singles,Liam Hignett (GBR),Pablo Perez Ramos (ESP),,,主胜,1x2,4.22,0,4.1038,2.83,0,3,1792490400,BB,pinnacle,,,ws_scan,,,5778484
+2026-10-20T04:10:22Z,basketball,China CBA,Ningbo Rockets,Shanxi Loongs,,,上半场主胜,ht,4.33,0,4.0437,7.08,0,3,1792496100,ALL,pinnacle,,,ws_scan,,,5626225
+2026-10-20T04:10:22Z,basketball,China CBA,Ningbo Rockets,Shanxi Loongs,,,上半场让球主胜,ht_hc,1.87,0,1.7937,4.26,0,3,1792496100,ALL,pinnacle,,,ws_scan,,+7.5,5626225
+2026-10-20T04:28:10Z,football,Netherlands Eerste Divisie,Jong AZ Alkmaar,Helmond Sport,,,和局,1x2,4.51,0,4.0437,11.53,0,3,1792778400,ALL,pinnacle,,,ws_scan,,,5085059
+2026-10-20T04:28:10Z,football,Netherlands Eerste Divisie,Jong AZ Alkmaar,Helmond Sport,,,客胜,1x2,4.13,0,4.0437,2.13,0,3,1792778400,ALL,pinnacle,,,ws_scan,,,5085059
+2026-10-20T04:28:10Z,football,Netherlands Eerste Divisie,Jong AZ Alkmaar,Helmond Sport,,,上半场客胜,ht,4.25,0,4.0658,4.53,0,3,1792778400,ALL,pinnacle,,,ws_scan,,,5085059
+2026-10-20T04:30:07Z,tennis,World Tennis - M25 Mumbai Men Singles,Arjun Rathi (IND),Garrett Johns (USA),,,主胜,1x2,4.97,0,4.0437,22.91,0,3,1792471500,BB,pinnacle,,,ws_scan,,,5777038
+2026-10-20T04:31:54Z,basketball,Eurocup,KK Buducnost Voli,BC Neptunas Klaipeda,,,客胜,1x2,4.47,3.81,4.0437,10.54,70,3,1792515600.0,BB,,,,push,,,
