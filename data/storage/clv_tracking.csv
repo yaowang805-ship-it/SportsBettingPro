@@ -5749,3 +5749,12 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-20T06:40:22Z,football,Turkey 1. Lig,Pendikspor,Kayserispor,,,上半场主胜,ht,4.55,0,4.0437,12.52,0,2,1792924200,ALL,pinnacle,,,ws_scan,,,5367097
 2026-10-20T06:40:42Z,basketball,Uruguay Basketball League,Club Nacional,Aguada,,,让分客胜,hc,1.87,0,1.7612,6.18,0,3,1792542600,BB,pinnacle,,,ws_scan,,+5.5,5759326
 2026-10-20T06:41:29Z,basketball,Uruguay Basketball League,Club Nacional,Aguada,,,让分客胜,hc,1.87,1.6289,1.7612,6.18,70,3,1792542600.0,BB/FB,,,,push,,+5.5,
+2026-10-20T06:44:34Z,basketball,Eurocup,KK Buducnost Voli,BC Neptunas Klaipeda,,,客胜,1x2,4.36,3.66,4.0437,7.82,50,3,1792515600.0,BB,,,,push,,,
+2026-10-20T06:44:34Z,football,Egypt Premier League,Wadi Degla SC,National Bank of Egypt SC,,,和局,1x2,3.15,2.05,2.8984,8.68,0,2,1792515600.0,BB,,,,push,,,
+2026-10-20T06:44:34Z,football,Egypt Premier League,Wadi Degla SC,National Bank of Egypt SC,,,双重机会-主/和局,dc,1.52,0,1.4652,3.74,0,2,1792515600.0,BB/FB,,,,push,,,
+2026-10-20T06:44:34Z,football,England League One,Oxford United,Wigan Athletic,,,双重机会-和局/客,dc,1.82,0,1.6906,7.65,0,2,1792521900.0,BB/FB,,,,push,,,
+2026-10-20T06:44:34Z,football,England League Two,York City FC,Accrington Stanley,,,双重机会-和局/客,dc,2.09,0,1.7888,16.84,0,2,1792521900.0,BB/FB,,,,push,,,
+2026-10-20T06:44:34Z,football,England League Two,Crawley Town,Shrewsbury Town,,,双重机会-主/和局,dc,1.53,0,1.4652,4.42,0,2,1792521900.0,BB/FB,,,,push,,,
+2026-10-20T06:44:34Z,football,Northern Ireland Premiership,Larne FC,Linfield FC,,,双重机会-和局/客,dc,1.76,0,1.6906,4.1,0,2,1792521900.0,BB/FB,,,,push,,,
+2026-10-20T06:44:34Z,football,England FA Cup-Qualification,FC United of Manchester,Altrincham FC,,,双重机会-主/客,dc,1.24,0,1.2014,3.22,0,3,1792521900.0,BB/FB,,,,push,,,
+2026-10-20T06:44:34Z,football,Mexico Liga MX,Tigres UANL,Club Leon,,,双重机会-和局/客,dc,1.88,0,1.7208,9.25,0,3,1792551600.0,BB/FB,,,,push,,,
