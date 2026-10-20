@@ -393,6 +393,8 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
             # 2026-10-11: 公平价已切 Pin 主锚(_oa_fair→consensus_fair_price skip_betfair=True), 旧 Betfair/pin_odds 分支废弃
             _fair_str = f" | Pin公平价 {float(_fair):.2f}" if _fair else ""
             _ev_str = f" | 溢价 {float(_ev):+.1f}%" if _ev else ""
+            _pin_odds = opp.get("pin_odds")
+            _pin_raw_str = f" | Pin原价 {float(_pin_odds):.2f}" if _pin_odds else ""  # 2026-10-20 加 Pin 原始价(dc 无原价为0)
             _kickoff_str = f" | 开赛 {_kickoff}" if _kickoff else ""
             _src_label = "WS扫描" if trigger_source == "ws_scan" else "Drop"
             # 余额 + 早盘未结 + 总耗时(2026-10-18 补回: 每单推不能丢这三个字段)
@@ -416,7 +418,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
                 _extra.append(f"总耗时 {_pure:.1f}s")
             _extra_str = ("\n  " + " | ".join(_extra)) if _extra else ""
             _single = (f"✅【{_win_label(opp.get('_pin_epoch'))}】{disp_home} vs {disp_away} | {desig}\n"
-                       f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_ev_str} | 注额 ¥{stake:.0f} | {_src_label} | 投注 {_bj}{_kickoff_str}{_extra_str}")
+                       f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_pin_raw_str}{_ev_str} | 注额 ¥{stake:.0f} | {_src_label} | 投注 {_bj}{_kickoff_str}{_extra_str}")
             sent_dingtalk.append(_single)
             # 2026-10-18 改: 每单立即推钉钉(不再攒批等循环结束, 否则 sleep 20-90s/单 循环不结束推送被吞)
             try:
