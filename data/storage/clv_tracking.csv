@@ -5758,3 +5758,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-20T06:44:34Z,football,Northern Ireland Premiership,Larne FC,Linfield FC,,,双重机会-和局/客,dc,1.76,0,1.6906,4.1,0,2,1792521900.0,BB/FB,,,,push,,,
 2026-10-20T06:44:34Z,football,England FA Cup-Qualification,FC United of Manchester,Altrincham FC,,,双重机会-主/客,dc,1.24,0,1.2014,3.22,0,3,1792521900.0,BB/FB,,,,push,,,
 2026-10-20T06:44:34Z,football,Mexico Liga MX,Tigres UANL,Club Leon,,,双重机会-和局/客,dc,1.88,0,1.7208,9.25,0,3,1792551600.0,BB/FB,,,,push,,,
+2026-10-20T06:46:24Z,football,England FA Cup-Qualification,Harrogate Town,Bury FC,,,让球主胜,hc,1.82,0,1.7612,3.34,0,3,1792521900,ALL,pinnacle,,,ws_scan,,-0.5,5787252
+2026-10-20T06:47:08Z,football,England FA Cup-Qualification,Harrogate Town,Bury FC,,,让球主胜,hc,1.82,1.6098,1.7612,3.34,70,3,1792521900.0,BB/FB,,,,push,,-0.5,
+2026-10-20T06:47:08Z,football,England League Two,Walsall FC,Oldham Athletic,,,双重机会-和局/客,dc,1.55,0,1.4919,3.89,0,2,1792521900.0,BB/FB,,,,push,,,

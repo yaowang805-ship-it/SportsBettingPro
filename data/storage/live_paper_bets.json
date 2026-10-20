@@ -359359,14 +359359,19 @@
   "spread": null,
   "bb_ts": 1792471517.4406369,
   "stake": 290,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -290.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   100,
+   60
+  ],
+  "line_semantics": "pregame"
  },
  {
   "ts": 1792471518.343798,
@@ -359389,14 +359394,19 @@
   "spread": null,
   "bb_ts": 1792471517.4406369,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 62.4,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   100,
+   60
+  ],
+  "line_semantics": "pregame"
  },
  {
   "ts": 1792471565.6280692,
@@ -359419,14 +359429,18 @@
   "spread": null,
   "bb_ts": 1792471564.9446158,
   "stake": 110,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 86.9,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": -1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 6.52
+  "clv_elapsed_s": 6.52,
+  "final_score": [
+   100,
+   60
+  ]
  },
  {
   "ts": 1792471633.161403,
@@ -362037,5 +362051,35 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 56.4
+ },
+ {
+  "ts": 1792478738.3845482,
+  "match_id": 5772074,
+  "market_id": 135322959,
+  "option_type": 1,
+  "sport": 5,
+  "home": "玛雅.乔因特 (澳大利亚)",
+  "away": "泽伊内普.索梅兹 (土耳其)",
+  "designation": "让局主胜",
+  "sub": "handicap_games",
+  "line": -3.5,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.86,
+  "fair": 1.7488,
+  "ev": 6.36,
+  "spread": null,
+  "bb_ts": 1792478737.548706,
+  "stake": 100,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": "no_outcome",
+  "clv_elapsed_s": null
  }
 ]
