@@ -2424,7 +2424,7 @@ class SecondLevelMonitor:
                     if _ev <= 0:
                         continue
                     _has_ev = True  # 入库: ev>0 全收
-                    if _ev < 3 or _ev > 20:  # 下单门槛 3-20%
+                    if _ev < 5 or _ev > 20:  # 下单门槛 5-20%(2026-10-20 数据: <5% 全负, 5-10% 正)
                         continue
                     sm = o.get('_market') or _GROUP_TO_SUB.get(group, group)
                     if not _is_market_released(sport, sm, _league, o.get('designation', ''), _epoch,
@@ -2508,7 +2508,7 @@ class SecondLevelMonitor:
                     _has_ev = True  # 入库观察库: ev>0 都收(全量正EV, 供未来对比两流程)
                     # 下单门槛: 3-20%(结果锚校准后 EV)。3% 挡 2-3% 噪声, 20% 挡极端冷门假 EV
                     # (如 152.9% 的 1x2 客胜 / 87.5% 的 dc, favorite-longshot 校准残留)
-                    if _ev < 3 or _ev > 20:
+                    if _ev < 5 or _ev > 20:
                         continue
                     sub_market = o.get('_market') or _GROUP_TO_SUB.get(group, group)
                     if not _is_market_released(sport, sub_market, _league,

@@ -371190,14 +371190,18 @@
   "spread": null,
   "bb_ts": 1792490692.998935,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -60.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": -1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 8.3
+  "clv_elapsed_s": 8.3,
+  "final_score": [
+   2,
+   0
+  ]
  },
  {
   "ts": 1792490772.789536,
