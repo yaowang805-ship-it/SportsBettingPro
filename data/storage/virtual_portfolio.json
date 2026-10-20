@@ -1,5 +1,5 @@
 {
-  "balance": 12632.53,
+  "balance": 12572.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2185,6 +2185,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792521900.0,
       "created_at": "2026-10-20T07:43:52.869102+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_耶奥维尔_勒色赫_大球(30)",
+      "sport": "football",
+      "league": "英格兰足总杯-资格赛",
+      "home_team": "耶奥维尔",
+      "away_team": "勒色赫",
+      "home_cn": "耶奥维尔",
+      "away_cn": "勒色赫",
+      "market": "over_under",
+      "market_type": "大球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 1.89,
+      "stake": 60,
+      "model_prob": 0.5678,
+      "ev_pct": 7.31,
+      "pin_odds": 1.5917,
+      "fair_price": 1.7612,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792521900.0,
+      "created_at": "2026-10-20T08:44:44.277017+00:00",
       "track_only": false
     }
   ],
@@ -11856,8 +11879,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-20",
-    "used": 620.0,
-    "bets": 8
+    "used": 680.0,
+    "bets": 9
   },
   "updated": null
 }
