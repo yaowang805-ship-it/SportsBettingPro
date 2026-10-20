@@ -107,8 +107,8 @@
   "football|hc|客|*|live": {
     "first_released_at": "2026-10-18T14:02:50.524806",
     "cap": 80,
-    "daily_stake": 1000,
-    "daily_stake_date": "2026-10-20",
+    "daily_stake": 80,
+    "daily_stake_date": "2026-10-21",
     "limit_removed": false
   },
   "basketball|hc|客|55-65%|live": {
@@ -122,7 +122,7 @@
     "first_released_at": "2026-10-18T14:02:50.524814",
     "cap": 60,
     "daily_stake": 60,
-    "daily_stake_date": "2026-10-20",
+    "daily_stake_date": "2026-10-21",
     "limit_removed": false
   },
   "ice_hockey|hc|客|65-75%|live": {

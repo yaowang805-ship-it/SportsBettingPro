@@ -94,6 +94,9 @@ def main():
     print(f"试探格共 {len(trial_cells)} 个(只统计释放后新增投注):")
     promote, withdraw = [], []
     for k in sorted(trial_cells):
+        # 2026-10-21 修幂等: 只处理 cap=30 的未裁决格(cap=60 已恢复/cap 不存在已撤回, 跳过避免重复裁决)
+        if caps.get(k) != 30:
+            continue
         s = stats.get(k, {"n": 0, "stake": 0.0, "profit": 0.0})
         n = s["n"]
         roi = s["profit"] / s["stake"] * 100 if s["stake"] else 0.0
