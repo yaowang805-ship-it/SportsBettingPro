@@ -1,5 +1,5 @@
 {
-  "balance": 13022.53,
+  "balance": 12932.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -2070,6 +2070,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792521900.0,
       "created_at": "2026-10-20T02:56:12.813098+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_格兰森林流浪_车斯曼_小球(30)",
+      "sport": "football",
+      "league": "英格兰足总杯-资格赛",
+      "home_team": "格兰森林流浪",
+      "away_team": "车斯曼",
+      "home_cn": "格兰森林流浪",
+      "away_cn": "车斯曼",
+      "market": "over_under",
+      "market_type": "小球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 1.94,
+      "stake": 90,
+      "model_prob": 0.5604,
+      "ev_pct": 8.72,
+      "pin_odds": 1.6135,
+      "fair_price": 1.7844,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792521900.0,
+      "created_at": "2026-10-20T06:31:04.177526+00:00",
       "track_only": false
     }
   ],
@@ -11741,8 +11764,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-20",
-    "used": 230.0,
-    "bets": 3
+    "used": 320.0,
+    "bets": 4
   },
   "updated": null
 }
