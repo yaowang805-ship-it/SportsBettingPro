@@ -6240,3 +6240,11 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-21T12:43:04Z,football,Egypt Second Division A,Haras El Hodood,Proxy SC,,,双重机会-和局/客,dc,2.59,0,2.0148,28.55,0,3,1792758600,ALL,pinnacle,,,pin_drop,,,5287834
 2026-10-21T12:43:36Z,basketball,Japan B.League Premier,Alvark Tokyo,Ibaraki Robots,,,客胜,1x2,5.8,0,4.2863,35.31,0,2,1792663500,BB,pinnacle,,,ws_scan,,,5309907
 2026-10-21T12:44:04Z,basketball,Japan B.League Premier,Alvark Tokyo,Ibaraki Robots,,,客胜,1x2,5.8,3.74,4.2863,35.31,40,2,1792663500.0,BB/FB,,,,push,,,
+2026-10-21T12:44:32Z,football,Spain LaLiga,Athletic Bilbao,Getafe CF,,,上半场小球,ht_ou,2.14,0,1.8423,16.16,0,1,1792933200,ALL,pinnacle,,,ws_scan,,1.0,5192329
+2026-10-21T12:45:06Z,ice_hockey,Vysshaya Hokkeinaya Liga,Yuzhny Ural Orsk,Sokol Krasnoyarsk,,,上半场客胜,ht,3.98,0,3.8551,3.24,0,3,1792589400,BB,pinnacle,,,ws_scan,,,5749782
+2026-10-21T12:45:45Z,football,Germany 2. Bundesliga,Eintracht Braunschweig,Hannover 96,,,双重机会-主/和局,dc,1.66,0,1.5166,9.46,0,1,1792931400,ALL,pinnacle,,,pin_drop,,,5202908
+2026-10-21T12:45:45Z,football,Germany 2. Bundesliga,Eintracht Braunschweig,Hannover 96,,,双重机会-和局/客,dc,1.43,0,1.4,2.14,0,1,1792931400,ALL,pinnacle,,,pin_drop,,,5202908
+2026-10-21T12:46:17Z,football,Turkey Super Lig,Caykur Rizespor,Trabzonspor,,,双重机会-主/和局,dc,1.77,0,1.5687,12.83,0,2,1793030400,ALL,pinnacle,,,pin_drop,,,5446275
+2026-10-21T12:47:20Z,football,Egypt Second Division A,FC Masar,Pharco FC,,,客胜,1x2,4.14,0,4.0437,2.38,0,3,1792758600,ALL,pinnacle,,,pin_drop,,,5771676
+2026-10-21T12:47:40Z,football,Rwanda Premier League,Gasogi United,Gorilla FC,,,上半场小球,ht_ou,1.89,0,1.8423,2.59,0,2,1792587600,ALL,pinnacle,,,ws_scan,,0.75,5772189
+2026-10-21T12:48:01Z,basketball,Eurocup,PAOK BC,Ratiopharm Ulm,,,客胜,1x2,7.85,5.38,6.9979,12.18,40,3,1792602000.0,BB,,,,push,,,
