@@ -309,13 +309,6 @@
    "tennis",
    "hc_games",
    "客",
-   "40-60%",
-   "live"
-  ],
-  [
-   "tennis",
-   "hc_games",
-   "客",
    "60-80%",
    "live"
   ],
@@ -1223,6 +1216,13 @@
    "平",
    "20-30%",
    "live"
+  ],
+  [
+   "tennis",
+   "hc_games",
+   "客",
+   "40-60%",
+   "live"
   ]
  ],
  "observe_release_caps": {
@@ -1269,7 +1269,6 @@
   "football|ou|小|40-50%|live": 30,
   "tennis|1x2|客|20-40%|live": 30,
   "tennis|hc_games|主|60-80%|live": 30,
-  "tennis|hc_games|客|40-60%|live": 30,
   "tennis|hc_games|客|60-80%|live": 30,
   "football|ou|大|50-55%|live": 30,
   "football|ou|小|50-55%|live": 30,
