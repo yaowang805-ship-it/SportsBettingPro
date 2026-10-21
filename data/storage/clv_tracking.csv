@@ -6614,3 +6614,18 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-21T22:41:33Z,tennis,World Tennis - W100 Wrexham Women Singles,Anna Blinkova (RUS),Suzan Lamens (NED),,,客胜,1x2,2.62,0,2.3747,10.33,0,3,1792672200,BB,pinnacle,,,ws_scan,,,5782199
 2026-10-21T22:41:33Z,tennis,World Tennis - W100 Wrexham Women Singles,Anna Blinkova (RUS),Suzan Lamens (NED),,,上半场客胜,ht,2.44,0,2.3747,2.75,0,3,1792672200,BB,pinnacle,,,ws_scan,,,5782199
 2026-10-21T22:41:39Z,basketball,NBA,Los Angeles Lakers,Golden State Warriors,,,客胜,1x2,3.08,2.37,2.3747,29.7,40,1,1792634400.0,BB,,,,push,,,
+2026-10-21T22:42:01Z,football,USL Championship,Loudoun United FC,Brooklyn FC,,,和局,1x2,4.14,0,2.3747,74.34,0,2,1792875600,ALL,pinnacle,,,ws_scan,,,4571597
+2026-10-21T22:42:01Z,football,USL Championship,Pittsburgh Riverhounds,Birmingham Legion FC,,,和局,1x2,3.41,0,2.3747,43.6,0,2,1792882800,ALL,pinnacle,,,ws_scan,,,4259107
+2026-10-21T22:42:01Z,football,USL Championship,Pittsburgh Riverhounds,Birmingham Legion FC,,,双重机会-和局/客,dc,1.97,0,1.7419,13.09,0,2,1792882800,ALL,pinnacle,,,ws_scan,,,4259107
+2026-10-21T22:42:05Z,football,Iceland Besta Deild-Playoff,Vikingur Reykjavik,Fram Reykjavik,,,双重机会-和局/客,dc,2.58,0,2.3747,8.64,0,2,1792858500,BB,pinnacle,,,ws_scan,,,5776800
+2026-10-21T22:42:11Z,football,USL Championship,Loudoun United FC,Brooklyn FC,,,客胜,1x2,4.23,0,4.0576,4.25,0,2,1792875600,ALL,pinnacle,,,pin_drop,,,4571597
+2026-10-21T22:42:11Z,football,USL Championship,Loudoun United FC,Brooklyn FC,,,双重机会-和局/客,dc,2.14,0,1.787,19.75,0,2,1792875600,ALL,pinnacle,,,pin_drop,,,4571597
+2026-10-21T22:42:11Z,football,USL Championship,Pittsburgh Riverhounds,Birmingham Legion FC,,,客胜,1x2,4.22,0,4.0554,4.06,0,2,1792882800,ALL,pinnacle,,,pin_drop,,,4259107
+2026-10-21T22:42:11Z,football,Iceland Besta Deild-Playoff,Vikingur Reykjavik,Fram Reykjavik,,,客胜,1x2,4.97,0,4.5386,9.5,0,2,1792858500,BB,pinnacle,,,pin_drop,,,5776800
+2026-10-21T22:42:38Z,tennis,ATP - Almaty Open,Alexander Bublik (KAZ),Fabian Marozsan (HUN),,,客胜,1x2,3.25,0,2.5694,26.49,0,2,1792679400,BB,pinnacle,,,ws_scan,,,5781684
+2026-10-21T22:42:48Z,basketball,Euroleague,Anadolu Efes SK,Besiktas JK,,,客胜,1x2,2.53,2.66,2.3747,6.54,40,2,1792690200.0,BB,,,,push,,,
+2026-10-21T22:42:48Z,football,Ethiopia Premier League,Wolaita Dicha SC,Bahir Dar Kenema FC,,,客胜,1x2,2.83,2.77,2.4357,16.19,0,2,1792670400.0,BB,,,,push,,,
+2026-10-21T22:42:48Z,football,Ethiopia Premier League,Saint George SC,Adama City FC,,,和局,1x2,2.73,2.81,2.5618,6.57,0,2,1792670400.0,BB,,,,push,,,
+2026-10-21T22:42:48Z,football,Egypt Second Division A,Dayrout SC,El Sekka El Hadid,,,和局,1x2,2.88,2.78,2.6683,7.93,0,3,1792672200.0,FB,,,,push,,,
+2026-10-21T22:42:48Z,football,Egypt Second Division A,Delta United Club,Tanta FC,,,客胜,1x2,2.56,2.59,2.3747,7.8,0,3,1792672200.0,BB/FB,,,,push,,,
+2026-10-21T22:42:48Z,football,UEFA Europa Conference League,Pafos FC,Riga FC,,,双重机会-主/和局,dc,1.12,0,1.084,3.32,0,3,1792687500.0,BB/FB,,,,push,,,
