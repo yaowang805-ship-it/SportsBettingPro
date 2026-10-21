@@ -103,20 +103,6 @@
    "live"
   ],
   [
-   "basketball",
-   "hc",
-   "客",
-   "55-65%",
-   "live"
-  ],
-  [
-   "ice_hockey",
-   "hc",
-   "客",
-   "55-65%",
-   "live"
-  ],
-  [
    "ice_hockey",
    "hc",
    "客",
@@ -148,27 +134,6 @@
    "football",
    "dc",
    "X2",
-   "55-60%",
-   "early"
-  ],
-  [
-   "football",
-   "dc",
-   "X2",
-   "60-70%",
-   "early"
-  ],
-  [
-   "football",
-   "dc",
-   "X2",
-   ">70%",
-   "early"
-  ],
-  [
-   "football",
-   "dc",
-   "12",
    ">70%",
    "early"
   ],
@@ -243,38 +208,10 @@
    "live"
   ],
   [
-   "football",
-   "1x2",
-   "客",
-   "10-20%",
-   "live"
-  ],
-  [
-   "basketball",
-   "hc",
-   "主",
-   "45-55%",
-   "live"
-  ],
-  [
    "basketball",
    "ou",
    "小",
    "45-55%",
-   "live"
-  ],
-  [
-   "basketball",
-   "hc",
-   "客",
-   "45-55%",
-   "live"
-  ],
-  [
-   "football",
-   "hc",
-   "主",
-   "50-55%",
    "live"
   ],
   [
@@ -292,59 +229,10 @@
    "live"
   ],
   [
-   "tennis",
-   "1x2",
-   "客",
-   "20-40%",
-   "live"
-  ],
-  [
-   "tennis",
-   "hc_games",
-   "主",
-   "60-80%",
-   "live"
-  ],
-  [
-   "tennis",
-   "hc_games",
-   "客",
-   "60-80%",
-   "live"
-  ],
-  [
-   "football",
-   "ou",
-   "大",
-   "50-55%",
-   "live"
-  ],
-  [
    "football",
    "ou",
    "小",
    "50-55%",
-   "live"
-  ],
-  [
-   "ice_hockey",
-   "ou",
-   "大",
-   "55-65%",
-   "live"
-  ],
-  [
-   "football",
-   "dc",
-   "1X",
-   ">70%",
-   "live"
-  ],
-  [
-   "football",
-   "hc",
-   "主",
-   "55-60%",
    "live"
   ],
   [
@@ -352,20 +240,6 @@
    "ou",
    "大",
    "55-65%",
-   "live"
-  ],
-  [
-   "football",
-   "ou",
-   "小",
-   "55-60%",
-   "live"
-  ],
-  [
-   "football",
-   "hc",
-   "客",
-   "50-55%",
    "live"
   ]
  ],
@@ -1223,6 +1097,132 @@
    "客",
    "40-60%",
    "live"
+  ],
+  [
+   "basketball",
+   "hc",
+   "客",
+   "55-65%",
+   "live"
+  ],
+  [
+   "ice_hockey",
+   "hc",
+   "客",
+   "55-65%",
+   "live"
+  ],
+  [
+   "football",
+   "1x2",
+   "客",
+   "10-20%",
+   "live"
+  ],
+  [
+   "basketball",
+   "hc",
+   "主",
+   "45-55%",
+   "live"
+  ],
+  [
+   "basketball",
+   "hc",
+   "客",
+   "45-55%",
+   "live"
+  ],
+  [
+   "football",
+   "hc",
+   "主",
+   "50-55%",
+   "live"
+  ],
+  [
+   "tennis",
+   "1x2",
+   "客",
+   "20-40%",
+   "live"
+  ],
+  [
+   "football",
+   "ou",
+   "大",
+   "50-55%",
+   "live"
+  ],
+  [
+   "ice_hockey",
+   "ou",
+   "大",
+   "55-65%",
+   "live"
+  ],
+  [
+   "football",
+   "hc",
+   "主",
+   "55-60%",
+   "live"
+  ],
+  [
+   "football",
+   "hc",
+   "客",
+   "50-55%",
+   "live"
+  ],
+  [
+   "tennis",
+   "hc_games",
+   "主",
+   "60-80%",
+   "live"
+  ],
+  [
+   "tennis",
+   "hc_games",
+   "客",
+   "60-80%",
+   "live"
+  ],
+  [
+   "football",
+   "dc",
+   "1X",
+   ">70%",
+   "live"
+  ],
+  [
+   "football",
+   "ou",
+   "小",
+   "55-60%",
+   "live"
+  ],
+  [
+   "football",
+   "dc",
+   "X2",
+   "55-60%",
+   "early"
+  ],
+  [
+   "football",
+   "dc",
+   "X2",
+   "60-70%",
+   "early"
+  ],
+  [
+   "football",
+   "dc",
+   "12",
+   ">70%",
+   "early"
   ]
  ],
  "observe_release_caps": {
@@ -1240,16 +1240,11 @@
   "football|hc|主|30-40%|live": 60,
   "football|hc|主|>70%|live": 60,
   "football|hc|客|*|live": 80,
-  "basketball|hc|客|55-65%|live": 80,
-  "ice_hockey|hc|客|55-65%|live": 60,
   "ice_hockey|hc|客|65-75%|live": 60,
   "tennis|ou|小|40-60%|live": 30,
   "football|dc|1X|60-70%|early": 100,
   "football|dc|1X|>70%|early": 100,
-  "football|dc|X2|55-60%|early": 100,
-  "football|dc|X2|60-70%|early": 100,
   "football|dc|X2|>70%|early": 100,
-  "football|dc|12|>70%|early": 100,
   "football|1x2|客|40-50%|early": 100,
   "football|1x2|客|60-70%|early": 100,
   "football|hc|主|55-60%|early": 100,
@@ -1260,24 +1255,11 @@
   "basketball|ou|大|55-65%|early": 100,
   "basketball|1x2|客|<45%|early": 100,
   "volleyball|ou|小|60-80%|live": 30,
-  "football|1x2|客|10-20%|live": 30,
-  "basketball|hc|主|45-55%|live": 30,
   "basketball|ou|小|45-55%|live": 30,
-  "basketball|hc|客|45-55%|live": 30,
-  "football|hc|主|50-55%|live": 30,
   "football|hc|客|40-50%|live": 30,
   "football|ou|小|40-50%|live": 30,
-  "tennis|1x2|客|20-40%|live": 30,
-  "tennis|hc_games|主|60-80%|live": 30,
-  "tennis|hc_games|客|60-80%|live": 30,
-  "football|ou|大|50-55%|live": 30,
   "football|ou|小|50-55%|live": 30,
-  "ice_hockey|ou|大|55-65%|live": 30,
-  "football|dc|1X|>70%|live": 30,
-  "football|hc|主|55-60%|live": 30,
-  "basketball|ou|大|55-65%|live": 30,
-  "football|ou|小|55-60%|live": 30,
-  "football|hc|客|50-55%|live": 30
+  "basketball|ou|大|55-65%|live": 30
  },
  "direction_released": [],
  "direction_blocked": [],

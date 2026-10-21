@@ -190,6 +190,23 @@ MANUAL_OBSERVE_BLOCK = {
     "football|ht|客|10-20%|early",
     "football|ht|客|40-50%|early",
     "football|ht|客|50-55%|early",
+    # 2026-10-22 撤滚球实盘负(REAL_ROI_GATE n≥5 且 ROI<0), 交还数据驱动判据。
+    "basketball|hc|客|55-65%|live",
+    "ice_hockey|hc|客|55-65%|live",
+    "football|1x2|客|10-20%|live",
+    "basketball|hc|主|45-55%|live",
+    "basketball|hc|客|45-55%|live",
+    "football|hc|主|50-55%|live",
+    "ice_hockey|ou|大|55-65%|live",
+    "football|hc|主|55-60%|live",
+    "football|hc|客|50-55%|live",
+    "tennis|hc_games|客|60-80%|live",
+    "football|dc|1X|>70%|live",
+    "football|ou|小|55-60%|live",
+    # 2026-10-22 撤早盘 CLV+纸面ROI 双负(假溢价)。
+    "football|dc|X2|55-60%|early",
+    "football|dc|X2|60-70%|early",
+    "football|dc|12|>70%|early",
 }
 
 
@@ -243,14 +260,10 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     "football|hc|客|*|live": 80,
     # 2026-10-16 撤篮球让球主滚球(纸面-28%+实盘-13.9%双负)。
     # 2026-10-17 恢复 basketball 让球客胜 55-65%(实盘+8.8%/39注正); 45-55%实盘-4.5%仍撤。
-    "basketball|hc|客|55-65%|live": 80,
-    # 2026-10-18 释放纸面正格子(用户要求): 篮球让球主45-55%/冰球让球客55-65%+65-75%, cap60试探(实盘样本仍不足, 冻结期观察)。
-    "basketball|hc|主|45-55%|live": 60,
-    "ice_hockey|hc|客|55-65%|live": 60,
+    # 2026-10-22 撤(实盘ROI负, REAL_ROI_GATE n≥5): basketball让球客55-65%(-3.5%/109笔)、
+    # basketball让球主45-55%(-54.2%/19笔)、ice_hockey让球客55-65%(-36.8%/6笔)、
+    # football ou大50-55%(-1.2%/67笔)、ice_hockey ou大55-65%(-19.9%/36笔), 交还数据驱动判据。
     "ice_hockey|hc|客|65-75%|live": 60,
-    # 2026-10-15 释放大小大(样本>50 ROI正): 足球50-55%/篮球45-55%/冰球55-65%, cap30试探。
-    "football|ou|大|50-55%|live": 30,
-    "ice_hockey|ou|大|55-65%|live": 30,
     # 2026-10-17 撤篮球大小球大(观察库45-55% n=952 -7.2%负) + 释放真潜力(准确概率桶):
     # 网球大小球小40-60%(+4.0% n=84)/足球双机会X2(客队不败)60-70%(+15.7% n=41), cap30试探。
     "tennis|ou|小|40-60%|live": 30,
@@ -259,10 +272,8 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 依据 = 结果锚校准 ROI(下注时公平价高估被修正后仍为正), cap 100 试探控风险(实盘冻结期检验)。
     "football|dc|1X|60-70%|early": 100,
     "football|dc|1X|>70%|early": 100,
-    "football|dc|X2|55-60%|early": 100,
-    "football|dc|X2|60-70%|early": 100,
+    # 2026-10-22 撤 X2 55-60%/60-70% + 12 >70%: CLV与纸面ROI双负(假溢价), 交还数据驱动判据。
     "football|dc|X2|>70%|early": 100,
-    "football|dc|12|>70%|early": 100,
     "football|1x2|客|40-50%|early": 100,
     "football|1x2|客|60-70%|early": 100,
     "football|hc|主|55-60%|early": 100,

@@ -6629,3 +6629,29 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-21T22:42:48Z,football,Egypt Second Division A,Dayrout SC,El Sekka El Hadid,,,和局,1x2,2.88,2.78,2.6683,7.93,0,3,1792672200.0,FB,,,,push,,,
 2026-10-21T22:42:48Z,football,Egypt Second Division A,Delta United Club,Tanta FC,,,客胜,1x2,2.56,2.59,2.3747,7.8,0,3,1792672200.0,BB/FB,,,,push,,,
 2026-10-21T22:42:48Z,football,UEFA Europa Conference League,Pafos FC,Riga FC,,,双重机会-主/和局,dc,1.12,0,1.084,3.32,0,3,1792687500.0,BB/FB,,,,push,,,
+2026-10-21T22:43:55Z,football,USL Championship,Pittsburgh Riverhounds,Birmingham Legion FC,,,上半场客胜,ht,5.5,0,4.0437,36.01,0,2,1792882800,ALL,pinnacle,,,pin_drop,,,4259107
+2026-10-21T22:43:55Z,football,USL Championship,Pittsburgh Riverhounds,Birmingham Legion FC,,,让球客胜,hc,2.01,0,1.9531,2.92,0,2,1792882800,ALL,pinnacle,,,pin_drop,,+0.5,4259107
+2026-10-21T22:47:43Z,football,USL Championship,Pittsburgh Riverhounds,Birmingham Legion FC,,,上半场主胜,ht,2.59,0,2.3747,9.06,0,2,1792882800,ALL,pinnacle,,,ws_scan,,,4259107
+2026-10-21T22:47:43Z,football,Australian Championship,Avondale FC,Broadmeadow Magic FC,,,和局,1x2,5.6,0,4.2499,31.77,0,3,1792814400,ALL,pinnacle,,,ws_scan,,,5624550
+2026-10-21T22:47:43Z,football,Australian Championship,Avondale FC,Broadmeadow Magic FC,,,双重机会-和局/客,dc,3.6,0,2.3747,51.6,0,3,1792814400,ALL,pinnacle,,,ws_scan,,,5624550
+2026-10-21T22:49:57Z,tennis,World Tennis - W15 Bol Women Singles,Eliska Tichackova (CZE),Andrea Obradovic (SRB),,,客胜,1x2,6.8,0,5.9019,15.22,0,3,1792668600,BB,pinnacle,,,ws_scan,,,5783576
+2026-10-21T22:50:14Z,football,England League Two,Exeter City,Fleetwood Town,,,主胜,1x2,2.59,0,2.3747,9.06,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5767737
+2026-10-21T22:50:14Z,football,England League Two,Exeter City,Fleetwood Town,,,客胜,1x2,2.69,0,2.3747,13.28,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5767737
+2026-10-21T22:54:13Z,football,Colombia Primera A,Llaneros FC,Deportivo Cali,,,客胜,1x2,2.49,0,2.3747,4.85,0,2,1792624500,BB,pinnacle,,,ws_scan,,,5561494
+2026-10-21T22:54:13Z,basketball,China CBA,Beijing Ducks,Shenzhen Leopards,,,上半场主胜,ht,1.37,0,1.3333,2.75,0,3,1792668900,ALL,pinnacle,,,ws_scan,,,5626193
+2026-10-21T22:54:13Z,basketball,China CBA,Shanxi Loongs,Shanghai Sharks,,,上半场客胜,ht,1.4,0,1.369,2.26,0,3,1792668900,ALL,pinnacle,,,ws_scan,,,5626271
+2026-10-21T23:00:11Z,tennis,World Tennis - M25 Tamworth Men Singles,Sam Ryan Ziegann (AUS),Enzo Aguiard (AUS),,,客胜,1x2,1.13,0,1.0516,7.46,0,3,1792634400,BB,pinnacle,,,ws_scan,,,5786159
+2026-10-21T23:00:29Z,football,Mexico Liga De Expansion MX,Venados FC,Alacranes de Durango,,,上半场主胜,ht,2.7,0,2.3747,13.7,0,2,1792882800,ALL,pinnacle,,,ws_scan,,,5780255
+2026-10-21T23:00:32Z,basketball,China CBA,Beijing Ducks,Shenzhen Leopards,,,让分客胜,hc,1.81,0,1.7693,2.3,0,3,1792668900,ALL,pinnacle,,,ws_scan,,+11.5,5582073
+2026-10-21T23:06:10Z,tennis,World Tennis - M25 Tamworth Men Singles,Herman Hoeyeraal (NOR),Moerani Bouzige (AUS),,,让盘客胜,hc,2.52,0,2.3747,6.12,0,3,1792634400,BB,pinnacle,,,ws_scan,,-1.5,5786141
+2026-10-21T23:06:10Z,tennis,World Tennis - W35 Sydney Women Singles,Nanari Katsumi (JPN),Hikaru Sato (JPN),,,上半场客胜,ht,1.17,0,1.0097,15.88,0,3,1792627680,BB,pinnacle,,,ws_scan,,,5786134
+2026-10-21T23:06:48Z,football,Colombia Primera A,America de Cali,Cucuta Deportivo FC,,,上半场大球,ht_ou,2.09,0,1.9867,5.2,0,2,1792883100,ALL,pinnacle,,,ws_scan,,1.25,5754505
+2026-10-21T23:06:48Z,football,Colombia Primera A,America de Cali,Cucuta Deportivo FC,,,双重机会-主/和局,dc,1.06,0,1.0,6.0,0,2,1792883100,ALL,pinnacle,,,ws_scan,,,5754505
+2026-10-21T23:09:10Z,tennis,World Tennis - W35 Sydney Women Singles,Nanari Katsumi (JPN),Hikaru Sato (JPN),,,上半场客胜,ht,1.17,0,1.0097,15.88,0,3,1792628220,BB,pinnacle,,,ws_scan,,,5786134
+2026-10-21T23:13:06Z,football,Japan J.League,Kashima Antlers,Kashiwa Reysol,,,和局,1x2,3.68,0,2.3747,54.96,0,2,1792821600,ALL,pinnacle,,,ws_scan,,,5153571
+2026-10-21T23:13:06Z,football,Japan J.League,Kashima Antlers,Kashiwa Reysol,,,双重机会-主/和局,dc,1.4,0,1.3548,3.33,0,2,1792821600,ALL,pinnacle,,,ws_scan,,,5153571
+2026-10-21T23:13:06Z,football,Japan J.League,Kashima Antlers,Kashiwa Reysol,,,双重机会-和局/客,dc,1.65,0,1.579,4.49,0,2,1792821600,ALL,pinnacle,,,ws_scan,,,5153571
+2026-10-21T23:13:06Z,tennis,World Tennis - W35 Sydney Women Singles,Nanari Katsumi (JPN),Hikaru Sato (JPN),,,客胜,1x2,1.03,0,1.0097,2.01,0,3,1792628220,BB,pinnacle,,,ws_scan,,,5786134
+2026-10-21T23:13:46Z,basketball,Japan B.League Premier,Sendai 89Ers,Yokohama B Corsairs,,,客胜,1x2,4.48,3.31,4.2499,5.41,40,3,1792663500.0,BB/FB,,,,push,,,
+2026-10-21T23:13:46Z,football,Indonesia Super League,PSM Makassar,Persebaya Surabaya,,,双重机会-主/和局,dc,1.71,0,1.579,8.29,0,2,1792657800.0,BB/FB,,,,push,,,
+2026-10-21T23:13:46Z,football,Saudi Arabia Professional League,AL Fateh SC,AL Shabab FC (KSA),,,双重机会-主/和局,dc,1.7,0,1.6448,3.35,0,3,1792680300.0,BB/FB,,,,push,,,
