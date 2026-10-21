@@ -6266,3 +6266,11 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-21T13:18:37Z,basketball,Japan B.League Premier,Sendai 89Ers,Yokohama B Corsairs,,,客胜,1x2,4.99,4.18,4.2863,16.42,40,2,1792663500.0,BB/FB,,,,push,,,
 2026-10-21T13:24:44Z,basketball,Japan B.League Premier,Sendai 89Ers,Yokohama B Corsairs,,,客胜,1x2,5.2,4.29,4.478,16.12,40,2,1792663500.0,BB/FB,,,,push,,,
 2026-10-21T13:24:44Z,football,Colombia Primera A,Independiente Santa Fe,Jaguares de Cordoba,,,和局,1x2,5.35,5.35,5.0987,4.93,0,2,1792632000.0,BB,,,,push,,,
+2026-10-21T13:24:48Z,tennis,World Tennis - W35 Santa Margherita di Pula Women Singles,Beatrise Zeltina (LAT),Ane Mintegi Del Olmo (ESP),,,主胜,1x2,6.35,0,4.2863,48.15,0,3,1792589460,BB,pinnacle,,,ws_scan,,,5782274
+2026-10-21T13:24:48Z,tennis,World Tennis - W35 Santa Margherita di Pula Women Singles,Beatrise Zeltina (LAT),Ane Mintegi Del Olmo (ESP),,,上半场主胜,ht,4.97,0,4.2863,15.95,0,3,1792589460,BB,pinnacle,,,ws_scan,,,5782274
+2026-10-21T13:27:34Z,football,Mexico Liga MX,Atlante FC,Atletico San Luis,,,上半场小球,ht_ou,2.16,0,1.8821,14.76,0,3,1792810800,ALL,pinnacle,,,ws_scan,,1.25,5778539
+2026-10-21T13:28:20Z,football,Mexico Liga MX,Atlante FC,Atletico San Luis,,,上半场大球,ht_ou,2.17,0,1.8674,16.21,0,3,1792810800,ALL,pinnacle,,,ws_scan,,1.0,5089220
+2026-10-21T13:33:08Z,football,Scotland Championship,Queens Park FC,Dunfermline Athletic FC,,,和局,1x2,4.12,0,3.667,12.35,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5767199
+2026-10-21T13:33:08Z,football,Scotland Championship,Queens Park FC,Dunfermline Athletic FC,,,双重机会-主/和局,dc,2.32,0,2.057,12.78,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5767199
+2026-10-21T13:34:12Z,football,USA Major League Soccer,Real Salt Lake,Saint Louis City SC,,,和局,1x2,4.05,0,3.8334,5.65,0,1,1792888200,ALL,pinnacle,,,ws_scan,,,4231116
+2026-10-21T13:39:31Z,basketball,NBA,Toronto Raptors,Chicago Bulls,,,客胜,1x2,4.41,2.69,3.8551,14.4,40,1,1792625400.0,BB,,,,push,,,
