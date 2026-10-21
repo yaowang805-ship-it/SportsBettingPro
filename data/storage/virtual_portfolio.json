@@ -1,5 +1,5 @@
 {
-  "balance": 14452.53,
+  "balance": 14412.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -483,6 +483,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792625400.0,
       "created_at": "2026-10-21T13:38:57.321685+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_休士顿火箭_达拉斯独行侠_客胜",
+      "sport": "basketball",
+      "league": "NBA 美国职业篮球联赛",
+      "home_team": "休士顿火箭",
+      "away_team": "达拉斯独行侠",
+      "home_cn": "休士顿火箭",
+      "away_cn": "达拉斯独行侠",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.08,
+      "stake": 40,
+      "model_prob": 0.2594,
+      "ev_pct": 5.84,
+      "pin_odds": 2.73,
+      "fair_price": 3.8551,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792629000.0,
+      "created_at": "2026-10-21T13:43:31.656308+00:00",
       "track_only": false
     }
   ],
@@ -11369,8 +11392,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-21",
-    "used": 160.0,
-    "bets": 4
+    "used": 200.0,
+    "bets": 5
   },
   "updated": null
 }

@@ -6274,3 +6274,16 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-21T13:33:08Z,football,Scotland Championship,Queens Park FC,Dunfermline Athletic FC,,,双重机会-主/和局,dc,2.32,0,2.057,12.78,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5767199
 2026-10-21T13:34:12Z,football,USA Major League Soccer,Real Salt Lake,Saint Louis City SC,,,和局,1x2,4.05,0,3.8334,5.65,0,1,1792888200,ALL,pinnacle,,,ws_scan,,,4231116
 2026-10-21T13:39:31Z,basketball,NBA,Toronto Raptors,Chicago Bulls,,,客胜,1x2,4.41,2.69,3.8551,14.4,40,1,1792625400.0,BB,,,,push,,,
+2026-10-21T13:40:45Z,football,England League One,Bromley FC,Peterborough United,,,双重机会-主/和局,dc,1.72,0,1.5643,9.95,0,2,1792850400,ALL,pinnacle,,,pin_drop,,,5764819
+2026-10-21T13:41:51Z,football,England League One,Doncaster Rovers,Sheffield Wednesday,,,和局,1x2,3.6,0,3.3636,7.03,0,2,1792850400,ALL,pinnacle,,,pin_drop,,,5764828
+2026-10-21T13:41:51Z,football,England League One,Doncaster Rovers,Sheffield Wednesday,,,双重机会-主/和局,dc,1.54,0,1.449,6.28,0,2,1792850400,ALL,pinnacle,,,pin_drop,,,5764828
+2026-10-21T13:43:28Z,football,England League One,Blackpool,Mansfield Town,,,和局,1x2,3.55,0,3.3636,5.54,0,2,1792850400,ALL,pinnacle,,,pin_drop,,,5764822
+2026-10-21T13:43:28Z,football,England League One,Blackpool,Mansfield Town,,,双重机会-主/和局,dc,1.52,0,1.4346,5.95,0,2,1792850400,ALL,pinnacle,,,pin_drop,,,5764822
+2026-10-21T13:43:28Z,football,England League One,Blackpool,Mansfield Town,,,双重机会-和局/客,dc,1.44,0,1.3998,2.87,0,2,1792850400,ALL,pinnacle,,,pin_drop,,,5764822
+2026-10-21T13:43:28Z,football,Japan J.League,Gamba Osaka,Kyoto Sanga FC,,,上半场客胜,ht,4.53,0,4.0437,12.03,0,2,1792825200,ALL,pinnacle,,,pin_drop,,,5153525
+2026-10-21T13:43:29Z,football,Japan J.League,Vissel Kobe,Machida Zelvia,,,和局,1x2,3.35,0,2.8475,17.65,0,2,1792821600,ALL,pinnacle,,,ws_scan,,,5153564
+2026-10-21T13:43:29Z,football,Japan J.League,Vissel Kobe,Machida Zelvia,,,双重机会-和局/客,dc,1.6,0,1.5179,5.41,0,2,1792821600,ALL,pinnacle,,,ws_scan,,,5153564
+2026-10-21T13:44:01Z,football,England League One,Cambridge United,Plymouth Argyle,,,和局,1x2,3.59,0,3.3636,6.73,0,2,1792850400,ALL,pinnacle,,,pin_drop,,,5764829
+2026-10-21T13:44:01Z,football,England League One,Cambridge United,Plymouth Argyle,,,双重机会-主/和局,dc,1.44,0,1.4086,2.23,0,2,1792850400,ALL,pinnacle,,,pin_drop,,,5764829
+2026-10-21T13:44:01Z,football,England League One,Cambridge United,Plymouth Argyle,,,双重机会-和局/客,dc,1.52,0,1.4337,6.02,0,2,1792850400,ALL,pinnacle,,,pin_drop,,,5764829
+2026-10-21T13:45:17Z,basketball,NBA,Houston Rockets,Dallas Mavericks,,,客胜,1x2,4.08,2.73,3.8551,5.84,40,1,1792629000.0,BB,,,,push,,,
