@@ -54,6 +54,11 @@ TRIAL_CELLS = [
     "football|ou|小|50-55%",
     "ice_hockey|ou|大|55-65%",
     "football|dc|1X|>70%",
+    # 2026-10-21 加 CLV>0 且 纸面ROI>0 的双正格子(排除 ht 假edge)
+    "football|hc|主|55-60%",
+    "basketball|ou|大|55-65%",
+    "football|ou|小|55-60%",
+    "football|hc|客|50-55%",
 ]
 
 

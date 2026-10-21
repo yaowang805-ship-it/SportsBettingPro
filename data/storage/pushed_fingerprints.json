@@ -1,12 +1,1 @@
-{
-  "basketball|Japan B.League Premier|Alvark Tokyo|Ibaraki Robots|客胜|1x2|2026-10-22": {
-    "ev": 35.31,
-    "bb": 5.8,
-    "ts": 1792586644.369615
-  },
-  "basketball|NBA|Houston Rockets|Dallas Mavericks|客胜|1x2|2026-10-22": {
-    "ev": 5.84,
-    "bb": 4.08,
-    "ts": 1792590317.171115
-  }
-}
+{"basketball|Japan B.League Premier|Alvark Tokyo|Ibaraki Robots|客胜|1x2|2026-10-22": {"ev": 35.31, "bb": 5.8, "ts": 1792586644.369615}, "basketball|NBA|Houston Rockets|Dallas Mavericks|客胜|1x2|2026-10-22": {"bb": 4.08, "ev": 5.84, "fair": 3.8551, "pin": 2.66, "ts": 1792592986.872532, "kickoff": 1792629000.0, "repush_count": 0}, "basketball|NBA|Toronto Raptors|Chicago Bulls|客胜|1x2|2026-10-22": {"bb": 4.49, "ev": 16.47, "fair": 3.8551, "pin": 2.66, "ts": 1792592986.8718889, "kickoff": 1792625400.0, "repush_count": 0}, "football|Colombia Primera A|Independiente Santa Fe|Jaguares de Cordoba|和局|1x2|2026-10-22": {"bb": 5.35, "ev": 4.93, "fair": 5.0987, "pin": 5.35, "ts": 1792590397.6113842, "kickoff": 1792632000.0, "repush_count": 0}}
