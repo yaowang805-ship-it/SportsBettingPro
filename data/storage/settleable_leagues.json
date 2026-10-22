@@ -1521,7 +1521,7 @@
       "success_rate": 0.0
     },
     "中国篮球职业联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1631,7 +1631,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-10-22T09:00:21.252671+00:00",
+  "updated": "2026-10-22T13:15:03.210220+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
