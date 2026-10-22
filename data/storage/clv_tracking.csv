@@ -6740,3 +6740,27 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-22T01:18:58Z,football,Uganda Premier League,SC Villa,Mbarara City FC,,,小球,ou,1.9,0,1.7693,7.39,0,2,1792674000,ALL,pinnacle,,,ws_scan,,3.0,5781447
 2026-10-22T01:24:10Z,tennis,ATP - Almaty Open,Nikoloz Basilashvili (GEO),Adrian Mannarino (FRA),,,让盘主胜,hc,2.6,0,2.3747,9.49,0,2,1792737000,BB,pinnacle,,,ws_scan,,-1.5,5786735
 2026-10-22T01:26:44Z,football,Uganda Premier League,SC Villa,Mbarara City FC,,,小球,ou,1.9,1.5376,1.7693,7.39,50,2,1792674000.0,BB/FB,,,,push,,3.0,
+2026-10-22T01:28:28Z,tennis,ATP - Brussels Open,Damir Dzumhur (BIH),Zizou Bergs (BEL),,,主胜,1x2,4.18,0,4.0437,3.37,0,2,1792681200,BB,pinnacle,,,pin_drop,,,5786734
+2026-10-22T01:29:42Z,tennis,World Tennis - W15 Singapore Women Singles,Kurea Hayasaka (JPN),Kai Ning Chanya Ng (SGP),,,让盘主胜,hc,1.05,0,1.0,5.0,0,3,1792632900,BB,pinnacle,,,ws_scan,,-1.5,5786555
+2026-10-22T01:31:13Z,tennis,World Tennis - M15 Singapore Men Singles,Alexey Aleshchev (RUS),Pranav Karthik (IND),,,主胜,1x2,2.82,0,2.6726,5.51,0,3,1792638000,BB,pinnacle,,,ws_scan,,,5782221
+2026-10-22T01:31:13Z,tennis,World Tennis - M15 Singapore Men Singles,Alexey Aleshchev (RUS),Pranav Karthik (IND),,,上半场主胜,ht,2.44,0,2.3747,2.75,0,3,1792638000,BB,pinnacle,,,ws_scan,,,5782221
+2026-10-22T01:31:30Z,tennis,ATP - Lyon Open,Flavio Cobolli (ITA),Stan Wawrinka (SUI),,,客胜,1x2,3.11,0,2.3747,30.96,0,2,1792688400,BB,pinnacle,,,ws_scan,,,5787051
+2026-10-22T01:31:30Z,tennis,ATP - Lyon Open,Flavio Cobolli (ITA),Stan Wawrinka (SUI),,,上半场客胜,ht,2.6,0,2.3747,9.49,0,2,1792688400,BB,pinnacle,,,ws_scan,,,5787051
+2026-10-22T01:39:41Z,basketball,Australia NBL,Illawarra Hawks,Sydney Kings,,,上半场客胜,ht,1.38,0,1.351,2.14,0,3,1792657800,ALL,pinnacle,,,ws_scan,,,5074452
+2026-10-22T01:41:18Z,football,Saudi Arabia Professional League,AL Qadisiyah,AL Hilal (KSA),,,和局,1x2,3.91,0,2.3747,64.65,0,3,1792778400,BB,pinnacle,,,ws_scan,,,5446334
+2026-10-22T01:44:35Z,football,Saudi Arabia Professional League,AL Hazem FC,AL Fayha FC,,,上半场主胜,ht,3.07,0,3.0083,2.05,0,3,1792676400,ALL,pinnacle,,,ws_scan,,,5446327
+2026-10-22T01:48:49Z,tennis,World Tennis - M15 Singapore Men Singles,Alexey Aleshchev (RUS),Pranav Karthik (IND),,,主胜,1x2,2.82,0,2.6726,5.51,0,3,1792636560,BB,pinnacle,,,ws_scan,,,5782221
+2026-10-22T01:48:49Z,tennis,World Tennis - M15 Singapore Men Singles,Alexey Aleshchev (RUS),Pranav Karthik (IND),,,上半场主胜,ht,2.44,0,2.3747,2.75,0,3,1792636560,BB,pinnacle,,,ws_scan,,,5782221
+2026-10-22T01:52:04Z,football,Mexico Liga MX,Atlas FC,Puebla FC,,,客胜,1x2,4.5,0,4.0684,10.61,0,3,1792969200,ALL,pinnacle,,,pin_drop,,,5089222
+2026-10-22T01:52:04Z,football,Mexico Liga MX,Atlas FC,Puebla FC,,,上半场客胜,ht,5.5,0,4.1219,33.43,0,3,1792969200,ALL,pinnacle,,,pin_drop,,,5089222
+2026-10-22T01:57:56Z,basketball,Euroleague,Anadolu Efes SK,Besiktas JK,,,客胜,1x2,2.53,0,2.3747,6.54,0,2,1792690200,ALL,pinnacle,,,ws_scan,,,5355502
+2026-10-22T01:59:55Z,basketball,China CBA,Shanxi Loongs,Shanghai Sharks,,,主胜,1x2,3.59,0,3.0892,16.21,0,3,1792668900,ALL,pinnacle,,,ws_scan,,,5626271
+2026-10-22T02:01:03Z,tennis,World Tennis - W50 Cherbourg En Cotentin Women Singles,Manon Leonard (FRA),Sada Nahimana (BDI),,,上半场客胜,ht,2.43,0,2.3747,2.33,0,3,1792661400,BB,pinnacle,,,ws_scan,,,5787106
+2026-10-22T02:02:35Z,football,Mexico Liga MX,Atlas FC,Puebla FC,,,上半场主胜,ht,2.44,0,2.3747,2.75,0,3,1792969200,ALL,pinnacle,,,ws_scan,,,5089222
+2026-10-22T02:03:12Z,basketball,China CBA,Fujian Sturgeons,Ningbo Rockets,,,客胜,1x2,5.4,0,4.274,26.34,0,3,1792668900,ALL,pinnacle,,,pin_drop,,,5626220
+2026-10-22T02:04:16Z,football,USL Championship,Colorado Springs Switchbacks FC,FC Tulsa,,,双重机会-主/和局,dc,1.11,0,1.0,11.0,0,2,1792886400,ALL,pinnacle,,,ws_scan,,,4259094
+2026-10-22T02:10:44Z,tennis,ATP Challenger - Florence Open,Filippo Romano (ITA),Yanaki Milev (BUL),,,让盘主胜,hc,2.83,0,2.3747,19.17,0,3,1792660200,BB,pinnacle,,,ws_scan,,-1.5,5786852
+2026-10-22T02:18:24Z,basketball,China CBA,Beijing Ducks,Shenzhen Leopards,,,客胜,1x2,4.41,0,4.0437,9.06,0,3,1792668900,ALL,pinnacle,,,pin_drop,,,5626193
+2026-10-22T02:21:50Z,basketball,China CBA,Beijing Ducks,Shenzhen Leopards,,,主胜,1x2,1.19,0,1.0749,10.7,0,3,1792668900,ALL,pinnacle,,,ws_scan,,,5626193
+2026-10-22T02:21:52Z,football,USA Major League Soccer,FC Dallas,San Jose Earthquakes,,,上半场和局,ht,2.43,0,2.3747,2.33,0,1,1792888200,ALL,pinnacle,,,ws_scan,,,4231117
+2026-10-22T02:23:45Z,basketball,China CBA,Beijing Ducks,Shenzhen Leopards,,,让分客胜,hc,1.86,1.6098,1.7693,5.13,40,3,1792668900.0,BB/FB,,,,push,,+12.5,

@@ -1,30 +1,7 @@
 {
-  "balance": 14282.53,
+  "balance": 14312.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_handicap_莫利尼斯联_卡瓦立尔_让球客胜(-05)",
-      "sport": "football",
-      "league": "牙买加超级联赛",
-      "home_team": "莫利尼斯联",
-      "away_team": "卡瓦立尔",
-      "home_cn": "莫利尼斯联",
-      "away_cn": "卡瓦立尔",
-      "market": "handicap",
-      "market_type": "让球客胜(-0.5)",
-      "sub_market": "hc",
-      "line": "-0.5",
-      "odds": 1.84,
-      "stake": 70,
-      "model_prob": 0.5785,
-      "ev_pct": 6.44,
-      "pin_odds": 1.5525,
-      "fair_price": 1.7287,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1792447500.0,
-      "created_at": "2026-10-19T01:01:39.422996+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_handicap_仙台89人_神户鹳鸟_让分客胜(+75)",
       "sport": "basketball",
@@ -575,6 +552,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792674000.0,
       "created_at": "2026-10-22T01:26:24.780498+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_北汽男篮_深圳马可波罗_让分客胜(+125)",
+      "sport": "basketball",
+      "league": "中国男子篮球职业联赛",
+      "home_team": "北汽男篮",
+      "away_team": "深圳马可波罗",
+      "home_cn": "北汽男篮",
+      "away_cn": "深圳马可波罗",
+      "market": "handicap",
+      "market_type": "让分客胜(+12.5)",
+      "sub_market": "hc",
+      "line": "+12.5",
+      "odds": 1.86,
+      "stake": 40,
+      "model_prob": 0.5652,
+      "ev_pct": 5.13,
+      "pin_odds": 1.6098,
+      "fair_price": 1.7693,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792668900.0,
+      "created_at": "2026-10-22T02:23:19.058511+00:00",
       "track_only": false
     }
   ],
@@ -11457,12 +11457,27 @@
       "home_cn": "帕尔斯巴亚",
       "away_cn": "斯乐门",
       "market_type": "和局"
+    },
+    {
+      "id": "bb_vs_pin_handicap_莫利尼斯联_卡瓦立尔_让球客胜(-05)",
+      "match": "70¥ @ 1.84 (超时作废)",
+      "date": "2026-10-22T01:45:07.746878+00:00",
+      "stake": 70,
+      "odds": 1.84,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "牙买加超级联赛",
+      "sport": "football",
+      "home_cn": "莫利尼斯联",
+      "away_cn": "卡瓦立尔",
+      "market_type": "让球客胜(-0.5)"
     }
   ],
   "daily_budget": {
     "date": "2026-10-22",
-    "used": 130.0,
-    "bets": 3
+    "used": 170.0,
+    "bets": 4
   },
   "updated": null
 }
