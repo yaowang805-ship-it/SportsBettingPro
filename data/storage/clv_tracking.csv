@@ -6789,3 +6789,11 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-22T02:42:11Z,football,Uganda Premier League,SC Villa,Mbarara City FC,,,上半场大球,ht_ou,2.05,0,1.8438,11.18,0,2,1792674000,ALL,pinnacle,,,ws_scan,,1.0,5781447
 2026-10-22T02:47:02Z,football,Germany Bundesliga,Bayern Munich,Borussia Dortmund,,,双重机会-主/客,dc,1.12,0,1.0644,5.23,0,1,1793467800,ALL,pinnacle,,,ws_scan,,,5201523
 2026-10-22T02:47:58Z,football,Philippines UAAP,Ateneo Blue Eagles,UE Red Warriors,,,小球,ou,1.83,1.495,1.7148,6.72,50,3,1792648800.0,BB/FB,,,,push,,4.0,
+2026-10-22T02:48:36Z,football,Saudi Arabia Professional League,AL Fateh SC,AL Shabab FC (KSA),,,上半场客胜,ht,2.61,0,2.3747,9.91,0,3,1792680300,ALL,pinnacle,,,ws_scan,,,5446336
+2026-10-22T02:48:43Z,football,Saudi Arabia Professional League,AL Fateh SC,AL Shabab FC (KSA),,,和局,1x2,3.78,0,2.3747,59.18,0,3,1792680300,ALL,pinnacle,,,ws_scan,,,5446336
+2026-10-22T02:48:43Z,football,Saudi Arabia Professional League,AL Fateh SC,AL Shabab FC (KSA),,,双重机会-主/和局,dc,1.7,0,1.647,3.22,0,3,1792680300,ALL,pinnacle,,,ws_scan,,,5446336
+2026-10-22T02:54:17Z,tennis,World Tennis - M25 Sarreguemines Men Singles,Kenny De Schepper (FRA),Louis Wessels (GER),,,让盘客胜,hc,2.81,0,2.3747,18.33,0,3,1792670400,BB,pinnacle,,,ws_scan,,-1.5,5787113
+2026-10-22T02:59:49Z,football,USA Major League Soccer,DC United,FC Cincinnati,,,双重机会-和局/客,dc,1.48,0,1.4057,5.29,0,1,1792884600,ALL,pinnacle,,,pin_drop,,,4231110
+2026-10-22T03:00:18Z,tennis,World Tennis - M15 Singapore Men Singles,Alexey Aleshchev (RUS),Pranav Karthik (IND),,,主胜,1x2,2.82,0,2.3747,18.75,0,3,1792638300,BB,pinnacle,,,ws_scan,,,5782221
+2026-10-22T03:00:18Z,tennis,World Tennis - M15 Singapore Men Singles,Alexey Aleshchev (RUS),Pranav Karthik (IND),,,上半场主胜,ht,2.44,0,2.3747,2.75,0,3,1792638300,BB,pinnacle,,,ws_scan,,,5782221
+2026-10-22T03:03:18Z,basketball,China CBA,Beijing Ducks,Shenzhen Leopards,,,让分客胜,hc,1.86,1.6173,1.7693,5.13,40,3,1792668900.0,BB/FB,,,,push,,+12.5,
