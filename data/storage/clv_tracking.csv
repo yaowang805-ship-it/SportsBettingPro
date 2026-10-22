@@ -7385,3 +7385,24 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-22T12:03:26Z,tennis,World Tennis - W100 Wrexham Women Singles,Anna Blinkova (RUS),Suzan Lamens (NED),,,客胜,1x2,2.78,0,2.3747,17.07,0,3,1792677720,BB,pinnacle,,,ws_scan,,,5782199
 2026-10-22T12:03:30Z,tennis,ATP - Almaty Open,Daniil Medvedev (RUS),Sho Shimabukuro (JPN),,,上半场主胜,ht,1.14,0,1.1001,3.63,0,2,1792671600,BB,pinnacle,,,ws_scan,,,5780795
 2026-10-22T12:04:32Z,basketball,Qatar Basketball League,Al Shamal,Al Gharafa,,,客胜,1x2,2.52,2.62,2.3747,6.12,40,3,1792688400.0,BB,,,,push,,,
+2026-10-22T12:07:12Z,tennis,World Tennis - W100 Wrexham Women Singles,Anna Blinkova (RUS),Suzan Lamens (NED),,,上半场客胜,ht,2.44,0,2.3747,2.75,0,3,1792678320,BB,pinnacle,,,ws_scan,,,5782199
+2026-10-22T12:07:12Z,tennis,World Tennis - M25 Sarreguemines Men Singles,Kenny De Schepper (FRA),Louis Wessels (GER),,,让盘客胜,hc,2.66,0,2.3747,12.01,0,3,1792674720,BB,pinnacle,,,ws_scan,,-1.5,5787113
+2026-10-22T12:10:52Z,football,Italy Serie A,AC Milan,Bologna FC,,,双重机会-主/和局,dc,1.15,0,1.0201,12.74,0,1,1793208600,ALL,pinnacle,,,ws_scan,,,5773224
+2026-10-22T12:12:20Z,tennis,ATP - Almaty Open,Daniil Medvedev (RUS),Sho Shimabukuro (JPN),,,上半场主胜,ht,1.14,0,1.1001,3.63,0,2,1792672200,BB,pinnacle,,,ws_scan,,,5780795
+2026-10-22T12:13:50Z,football,Japan Football League,Criacao Shinjuku,Minebea Mitsumi FC,,,双重机会-主/和局,dc,1.13,0,1.0882,3.84,0,3,1792814400,ALL,pinnacle,,,ws_scan,,,5518981
+2026-10-22T12:16:59Z,tennis,World Tennis - W100 Wrexham Women Singles,Anna Blinkova (RUS),Suzan Lamens (NED),,,上半场客胜,ht,2.44,0,2.3747,2.75,0,3,1792678800,BB,pinnacle,,,ws_scan,,,5782199
+2026-10-22T12:16:59Z,football,UAE Presidents Cup,Al Wasl FC,Al Ittihad Kalba,,,双重机会-和局/客,dc,2.54,0,2.3747,6.96,0,3,1792674000,ALL,pinnacle,,,ws_scan,,,5754719
+2026-10-22T12:22:03Z,tennis,ATP Challenger - Florence Open,Samuele Pieri (ITA),Sandro Kopp (AUT),,,让盘客胜,hc,2.51,0,2.3747,5.7,0,3,1792672200,BB,pinnacle,,,ws_scan,,-1.5,5781848
+2026-10-22T12:23:03Z,football,Jordan 1st Division,Al Sareeh,Jerash SC,,,双重机会-和局/客,dc,1.4,0,1.3651,2.56,0,2,1792681200,ALL,pinnacle,,,pin_drop,,,5754735
+2026-10-22T12:23:03Z,tennis,ATP - Almaty Open,Daniil Medvedev (RUS),Sho Shimabukuro (JPN),,,客胜,1x2,8.35,0,6.8408,22.06,0,2,1792672200,BB,pinnacle,,,pin_drop,,,5780795
+2026-10-22T12:23:03Z,football,Netherlands Eerste Divisie,De Graafschap,RKC Waalwijk,,,双重机会-和局/客,dc,1.5,0,1.4496,3.48,0,3,1792778400,ALL,pinnacle,,,pin_drop,,,5085065
+2026-10-22T12:24:13Z,tennis,World Tennis - W100 Wrexham Women Singles,Anna Blinkova (RUS),Suzan Lamens (NED),,,上半场客胜,ht,2.44,0,2.3747,2.75,0,3,1792679340,BB,pinnacle,,,ws_scan,,,5782199
+2026-10-22T12:24:13Z,football,Iraq Stars League,Zakho FC,Erbil SC,,,上半场小球,ht_ou,2.04,0,1.7693,15.3,0,2,1792677600,ALL,pinnacle,,,ws_scan,,1.0,5442771
+2026-10-22T12:24:13Z,tennis,World Tennis - M25 Sarreguemines Men Singles,Kenny De Schepper (FRA),Louis Wessels (GER),,,让盘客胜,hc,2.66,0,2.3747,12.01,0,3,1792675560,BB,pinnacle,,,ws_scan,,-1.5,5787113
+2026-10-22T12:26:26Z,football,UEFA Europa League,Union Saint Gilloise,Hapoel Beer Sheva FC,,,上半场和局,ht,2.51,0,2.3747,5.7,0,3,1792687502,ALL,pinnacle,,,ws_scan,,,5764559
+2026-10-22T12:26:26Z,football,UEFA Europa League,Union Saint Gilloise,Hapoel Beer Sheva FC,,,双重机会-主/和局,dc,1.09,0,1.0,9.0,0,3,1792687502,ALL,pinnacle,,,ws_scan,,,5764559
+2026-10-22T12:26:26Z,football,Turkey 1. Lig,Pendikspor,Kayserispor,,,上半场大球,ht_ou,2.09,0,1.9723,5.97,0,2,1792924200,ALL,pinnacle,,,ws_scan,,1.0,5786898
+2026-10-22T12:28:06Z,football,Algeria Ligue 1,Olympique Akbou,CS Constantine,,,和局,1x2,3.0,0,2.3747,26.33,0,2,1792764900,ALL,pinnacle,,,ws_scan,,,5391281
+2026-10-22T12:28:06Z,football,Algeria Ligue 1,Olympique Akbou,CS Constantine,,,双重机会-和局/客,dc,1.93,0,1.579,22.23,0,2,1792764900,ALL,pinnacle,,,ws_scan,,,5391281
+2026-10-22T12:28:49Z,football,Algeria Ligue 1,Olympique Akbou,CS Constantine,,,双重机会-主/和局,dc,1.15,0,1.0453,10.02,0,2,1792764900,ALL,pinnacle,,,ws_scan,,,5391281
+2026-10-22T12:29:21Z,basketball,Euroleague,Anadolu Efes SK,Besiktas JK,,,客胜,1x2,2.81,2.55,2.3747,18.33,40,2,1792690200.0,BB,,,,push,,,
