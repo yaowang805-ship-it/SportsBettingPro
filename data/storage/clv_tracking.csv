@@ -6765,3 +6765,27 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-22T02:21:52Z,football,USA Major League Soccer,FC Dallas,San Jose Earthquakes,,,上半场和局,ht,2.43,0,2.3747,2.33,0,1,1792888200,ALL,pinnacle,,,ws_scan,,,4231117
 2026-10-22T02:23:45Z,basketball,China CBA,Beijing Ducks,Shenzhen Leopards,,,让分客胜,hc,1.86,1.6098,1.7693,5.13,40,3,1792668900.0,BB/FB,,,,push,,+12.5,
 2026-10-22T02:26:41Z,football,Uganda Premier League,SC Villa,Mbarara City FC,,,小球,ou,1.9,1.6289,1.7693,7.39,50,2,1792674000.0,BB/FB,,,,push,,3.0,
+2026-10-22T02:29:43Z,football,Qatar Stars League,Al Shamal,Qatar SC,,,上半场和局,ht,2.46,0,2.3747,3.59,0,3,1792765800,ALL,pinnacle,,,ws_scan,,,5767924
+2026-10-22T02:30:46Z,tennis,World Tennis - W35 Monastir Women Singles,Victoria Milovanova (RUS),Kayo Nishimura (JPN),,,客胜,1x2,2.7,0,2.5775,4.75,0,3,1792657800,BB,pinnacle,,,ws_scan,,,5787008
+2026-10-22T02:30:50Z,football,USA Major League Soccer,San Diego FC,Seattle Sounders,,,客胜,1x2,2.89,0,2.53,14.23,0,1,1792895400,ALL,pinnacle,,,ws_scan,,,4231134
+2026-10-22T02:30:50Z,football,USA Major League Soccer,San Diego FC,Seattle Sounders,,,上半场主胜,ht,2.61,0,2.3747,9.91,0,1,1792895400,ALL,pinnacle,,,ws_scan,,,4231134
+2026-10-22T02:30:50Z,football,USA Major League Soccer,San Diego FC,Seattle Sounders,,,上半场和局,ht,2.44,0,2.3747,2.75,0,1,1792895400,ALL,pinnacle,,,ws_scan,,,4231134
+2026-10-22T02:31:16Z,football,USA Major League Soccer,Portland Timbers,Charlotte FC,,,上半场主胜,ht,2.49,0,2.3747,4.85,0,1,1792895400,ALL,pinnacle,,,ws_scan,,,4231124
+2026-10-22T02:31:16Z,football,USA Major League Soccer,Portland Timbers,Charlotte FC,,,上半场和局,ht,2.52,0,2.3747,6.12,0,1,1792895400,ALL,pinnacle,,,ws_scan,,,4231124
+2026-10-22T02:31:16Z,ice_hockey,Vysshaya Hokkeinaya Liga,Izhstal Izhevsk,Zauralye Kurgan,,,上半场客胜,ht,3.78,0,2.3747,59.18,0,3,1792679400,BB,pinnacle,,,ws_scan,,,5754727
+2026-10-22T02:31:17Z,football,Qatar Stars League,Al Shamal,Qatar SC,,,和局,1x2,4.02,0,2.3747,69.28,0,3,1792765800,ALL,pinnacle,,,ws_scan,,,5767924
+2026-10-22T02:31:17Z,football,Qatar Stars League,Al Shamal,Qatar SC,,,双重机会-和局/客,dc,2.03,0,1.8547,9.45,0,3,1792765800,ALL,pinnacle,,,ws_scan,,,5767924
+2026-10-22T02:31:17Z,football,USA Major League Soccer,San Diego FC,Seattle Sounders,,,双重机会-和局/客,dc,1.71,0,1.6595,3.05,0,1,1792895400,ALL,pinnacle,,,ws_scan,,,4231134
+2026-10-22T02:31:57Z,football,UEFA Europa Conference League,Getafe CF,FC Lugano,,,上半场主胜,ht,2.44,0,2.3747,2.75,0,3,1792687500,ALL,pinnacle,,,ws_scan,,,5527988
+2026-10-22T02:33:35Z,football,Qatar Stars League,Al Shahaniya,Al Sadd SC,,,双重机会-主/和局,dc,3.7,0,2.5268,46.43,0,3,1792679400,ALL,pinnacle,,,pin_drop,,,5767254
+2026-10-22T02:33:45Z,football,Qatar Stars League,Al Shahaniya,Al Sadd SC,,,双重机会-和局/客,dc,1.06,0,1.0,6.0,0,3,1792679400,ALL,pinnacle,,,ws_scan,,,5767254
+2026-10-22T02:34:33Z,tennis,World Tennis - M15 Singapore Men Singles,Alexey Aleshchev (RUS),Pranav Karthik (IND),,,主胜,1x2,2.82,0,2.6726,5.51,0,3,1792636860,BB,pinnacle,,,ws_scan,,,5782221
+2026-10-22T02:34:33Z,tennis,World Tennis - M15 Singapore Men Singles,Alexey Aleshchev (RUS),Pranav Karthik (IND),,,上半场主胜,ht,2.44,0,2.3747,2.75,0,3,1792636860,BB,pinnacle,,,ws_scan,,,5782221
+2026-10-22T02:35:36Z,football,USA Major League Soccer,Real Salt Lake,Saint Louis City SC,,,客胜,1x2,2.61,0,2.3747,9.91,0,1,1792891800,ALL,pinnacle,,,ws_scan,,,4231116
+2026-10-22T02:35:36Z,football,USA Major League Soccer,Real Salt Lake,Saint Louis City SC,,,上半场主胜,ht,2.92,0,2.3747,22.96,0,1,1792891800,ALL,pinnacle,,,ws_scan,,,4231116
+2026-10-22T02:35:36Z,football,USA Major League Soccer,Colorado Rapids,Vancouver Whitecaps FC,,,上半场客胜,ht,2.66,0,2.3747,12.01,0,1,1792891800,ALL,pinnacle,,,ws_scan,,,4231112
+2026-10-22T02:36:49Z,football,Qatar Stars League,Al Shahaniya,Al Sadd SC,,,双重机会-主/客,dc,1.11,0,1.0,11.0,0,3,1792679400,ALL,pinnacle,,,ws_scan,,,5767254
+2026-10-22T02:39:07Z,tennis,World Tennis - M15 Monastir Men Singles,Nikola Djukic Valera (ESP),Maxence Rivet (FRA),,,主胜,1x2,2.98,0,2.7136,9.82,0,3,1792657800,BB,pinnacle,,,ws_scan,,,5787629
+2026-10-22T02:42:11Z,football,Uganda Premier League,SC Villa,Mbarara City FC,,,上半场大球,ht_ou,2.05,0,1.8438,11.18,0,2,1792674000,ALL,pinnacle,,,ws_scan,,1.0,5781447
+2026-10-22T02:47:02Z,football,Germany Bundesliga,Bayern Munich,Borussia Dortmund,,,双重机会-主/客,dc,1.12,0,1.0644,5.23,0,1,1793467800,ALL,pinnacle,,,ws_scan,,,5201523
+2026-10-22T02:47:58Z,football,Philippines UAAP,Ateneo Blue Eagles,UE Red Warriors,,,小球,ou,1.83,1.495,1.7148,6.72,50,3,1792648800.0,BB/FB,,,,push,,4.0,

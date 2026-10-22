@@ -1,5 +1,5 @@
 {
-  "balance": 14312.53,
+  "balance": 14262.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -575,6 +575,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792668900.0,
       "created_at": "2026-10-22T02:23:19.058511+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_雅典耀蓝老鹰_UE_红色勇士_小球(40)",
+      "sport": "football",
+      "league": "菲律宾UAAP锦标赛",
+      "home_team": "雅典耀蓝老鹰",
+      "away_team": "UE 红色勇士",
+      "home_cn": "雅典耀蓝老鹰",
+      "away_cn": "UE 红色勇士",
+      "market": "over_under",
+      "market_type": "小球(4.0)",
+      "sub_market": "ou",
+      "line": "4.0",
+      "odds": 1.83,
+      "stake": 50,
+      "model_prob": 0.5832,
+      "ev_pct": 6.72,
+      "pin_odds": 1.495,
+      "fair_price": 1.7148,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792648800.0,
+      "created_at": "2026-10-22T02:47:19.361954+00:00",
       "track_only": false
     }
   ],
@@ -11476,8 +11499,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-22",
-    "used": 170.0,
-    "bets": 4
+    "used": 220.0,
+    "bets": 5
   },
   "updated": null
 }
