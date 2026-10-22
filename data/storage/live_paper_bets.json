@@ -506646,14 +506646,18 @@
   "spread": null,
   "bb_ts": 1792647490.953394,
   "stake": 140,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 155.4,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   2,
+   1
+  ]
  },
  {
   "ts": 1792647799.985368,
@@ -506676,14 +506680,18 @@
   "spread": null,
   "bb_ts": 1792647799.117749,
   "stake": 250,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 195.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   2,
+   0
+  ]
  },
  {
   "ts": 1792647960.873535,
@@ -506706,14 +506714,18 @@
   "spread": null,
   "bb_ts": 1792647960.247461,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -80.0,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": -1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 75.69
+  "clv_elapsed_s": 75.69,
+  "final_score": [
+   2,
+   0
+  ]
  },
  {
   "ts": 1792648142.239051,
@@ -508844,5 +508856,95 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 31.57
+ },
+ {
+  "ts": 1792654855.8191628,
+  "match_id": 5787118,
+  "market_id": 135750935,
+  "option_type": 2,
+  "sport": 5,
+  "home": "胡里奥.塞萨尔.波拉斯 (阿根廷)",
+  "away": "帕夫洛斯.西西帕斯 (希腊)",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 2.97,
+  "fair": 2.6806,
+  "ev": 10.8,
+  "spread": null,
+  "bb_ts": 1792654855.112823,
+  "stake": 110,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1792655187.307321,
+  "match_id": 5786159,
+  "market_id": 135685333,
+  "option_type": 2,
+  "sport": 5,
+  "home": "萨姆.瑞安.齐甘 (澳大利亚)",
+  "away": "恩佐.阿吉亚德 (澳大利亚)",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.39,
+  "fair": 1.3076,
+  "ev": 6.3,
+  "spread": null,
+  "bb_ts": 1792655186.1214561,
+  "stake": 260,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": -1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 68.32
+ },
+ {
+  "ts": 1792655230.455432,
+  "match_id": 5787118,
+  "market_id": 135764477,
+  "option_type": 1,
+  "sport": 5,
+  "home": "胡里奥.塞萨尔.波拉斯 (阿根廷)",
+  "away": "帕夫洛斯.西西帕斯 (希腊)",
+  "designation": "让局主胜",
+  "sub": "handicap_games",
+  "line": -3.5,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.7,
+  "fair": 1.4314,
+  "ev": 18.76,
+  "spread": null,
+  "bb_ts": 1792655229.420318,
+  "stake": 280,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": "no_outcome",
+  "clv_elapsed_s": null
  }
 ]
