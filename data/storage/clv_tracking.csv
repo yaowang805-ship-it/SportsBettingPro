@@ -7146,3 +7146,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-22T08:18:19Z,tennis,ATP - Almaty Open,Tomas Machac (CZE),Karen Khachanov (RUS),,,主胜,1x2,3.03,0,2.3747,27.59,0,2,1792657800,BB,pinnacle,,,ws_scan,,,5785940
 2026-10-22T08:23:17Z,basketball,Euroleague,Anadolu Efes SK,Besiktas JK,,,客胜,1x2,2.88,2.86,2.4403,18.02,30,2,1792690200.0,BB,,,,push,,,
 2026-10-22T08:23:17Z,basketball,Lithuania National Basketball League,Neptunas Akvaservis Klaipeda,BC Olimpas Palanga,,,让分客胜,hc,1.91,1.6173,1.7693,7.95,30,3,1792681500.0,BB/FB,,,,push,,-4.5,
+2026-10-22T08:24:00Z,basketball,Lithuania National Basketball League,Alytaus Patriotai,Kretingos Kretinga,,,让分主胜,hc,1.87,0,1.7219,8.6,0,3,1792681200,ALL,pinnacle,,,ws_scan,,+4.5,5788509
+2026-10-22T08:27:13Z,tennis,World Tennis - M15 Monastir Men Singles,Kasra Rahmani (IRI),Lars Goran Verwerft (BEL),,,客胜,1x2,3.15,0,2.4032,31.07,0,3,1792657800,BB,pinnacle,,,ws_scan,,,5786798
+2026-10-22T08:28:50Z,basketball,Euroleague,Anadolu Efes SK,Besiktas JK,,,客胜,1x2,2.99,2.86,2.4403,22.53,30,2,1792690200.0,BB,,,,push,,,
