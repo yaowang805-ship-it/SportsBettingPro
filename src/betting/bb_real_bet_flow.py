@@ -366,6 +366,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
                 _rd.setdefault("bets", {})[str(order_id)] = {
                     "ts": time.time(), "stake": stake,
                     "fair": opp.get("fair_price") or opp.get("fair"),
+                    "pin_odds": opp.get("pin_odds"),  # 2026-10-22 Pin原价(原始赔率, dc合成无原价为None/0)
                     "ev": opp.get("ev_pct"), "bb_odds": odds,
                     "desig": desig, "sub": sub, "home": disp_home, "away": disp_away,
                     "sport": opp.get("sport"), "verify": True,
