@@ -7149,3 +7149,52 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-22T08:24:00Z,basketball,Lithuania National Basketball League,Alytaus Patriotai,Kretingos Kretinga,,,让分主胜,hc,1.87,0,1.7219,8.6,0,3,1792681200,ALL,pinnacle,,,ws_scan,,+4.5,5788509
 2026-10-22T08:27:13Z,tennis,World Tennis - M15 Monastir Men Singles,Kasra Rahmani (IRI),Lars Goran Verwerft (BEL),,,客胜,1x2,3.15,0,2.4032,31.07,0,3,1792657800,BB,pinnacle,,,ws_scan,,,5786798
 2026-10-22T08:28:50Z,basketball,Euroleague,Anadolu Efes SK,Besiktas JK,,,客胜,1x2,2.99,2.86,2.4403,22.53,30,2,1792690200.0,BB,,,,push,,,
+2026-10-22T08:29:13Z,tennis,World Tennis - M15 Monastir Men Singles,Kasra Rahmani (IRI),Lars Goran Verwerft (BEL),,,上半场客胜,ht,2.69,0,2.3747,13.28,0,3,1792657800,BB,pinnacle,,,ws_scan,,,5786798
+2026-10-22T08:32:25Z,football,Egypt Second Division A,Dayrout SC,El Sekka El Hadid,,,主胜,1x2,4.39,0,4.0437,8.56,0,3,1792672200,ALL,pinnacle,,,pin_drop,,,5764695
+2026-10-22T08:39:12Z,tennis,ATP - Almaty Open,Daniil Medvedev (RUS),Sho Shimabukuro (JPN),,,上半场主胜,ht,1.12,0,1.0141,10.44,0,2,1792663200,BB,pinnacle,,,ws_scan,,,5780795
+2026-10-22T08:39:14Z,football,USL Championship,Loudoun United FC,Brooklyn FC,,,上半场和局,ht,2.44,0,2.3747,2.75,0,2,1792875600,ALL,pinnacle,,,ws_scan,,,4571597
+2026-10-22T08:39:39Z,football,Jordan 1st Division,Al Sareeh,Jerash SC,,,主胜,1x2,3.31,0,3.1826,4.0,0,2,1792681200,ALL,pinnacle,,,ws_scan,,,5754735
+2026-10-22T08:41:36Z,football,England Championship League,Lincoln City,Burnley FC,,,和局,1x2,3.42,0,2.3747,44.02,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5767163
+2026-10-22T08:41:36Z,football,England Championship League,Lincoln City,Burnley FC,,,上半场客胜,ht,3.06,0,2.9284,4.49,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5767163
+2026-10-22T08:42:15Z,tennis,ATP - Almaty Open,Daniil Medvedev (RUS),Sho Shimabukuro (JPN),,,上半场主胜,ht,1.12,0,1.0141,10.44,0,2,1792663800,BB,pinnacle,,,ws_scan,,,5780795
+2026-10-22T08:43:28Z,tennis,World Tennis - M25 Santa Margherita di Pula Men Singles,Adrian Oetzbach (GER),Andrey Chepelev (RUS),,,主胜,1x2,2.61,0,2.3747,9.91,0,3,1792671300,BB,pinnacle,,,ws_scan,,,5788444
+2026-10-22T08:44:37Z,football,England League One,Bromley FC,Peterborough United,,,主胜,1x2,3.03,0,2.6285,15.27,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5764819
+2026-10-22T08:44:37Z,football,England League One,Bromley FC,Peterborough United,,,上半场客胜,ht,2.57,0,2.3747,8.22,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5764819
+2026-10-22T08:44:39Z,football,England Championship League,Lincoln City,Burnley FC,,,主胜,1x2,2.84,0,2.3747,19.59,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5767163
+2026-10-22T08:44:47Z,football,England League One,Bromley FC,Peterborough United,,,和局,1x2,3.89,0,2.3747,63.81,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5764819
+2026-10-22T08:46:17Z,tennis,ATP - Almaty Open,Tomas Machac (CZE),Karen Khachanov (RUS),,,上半场主胜,ht,2.58,0,2.3747,8.64,0,2,1792659600,BB,pinnacle,,,ws_scan,,,5785940
+2026-10-22T08:46:29Z,tennis,ATP - Almaty Open,Tomas Machac (CZE),Karen Khachanov (RUS),,,主胜,1x2,3.14,0,2.3747,32.23,0,2,1792659600,BB,pinnacle,,,ws_scan,,,5785940
+2026-10-22T08:47:18Z,tennis,World Tennis - M15 Monastir Men Singles,Ferdinand Livet Novkirichka (FRA),Leo Borg (SWE),,,主胜,1x2,3.33,0,3.1431,5.95,0,3,1792662180,BB,pinnacle,,,ws_scan,,,5786799
+2026-10-22T08:49:35Z,tennis,World Tennis - W35 Loule Women Singles,Esther Adeshina (GBR),Laia Petretic (FRA),,,上半场客胜,ht,2.9,0,2.3747,22.12,0,3,1792666800,BB,pinnacle,,,ws_scan,,,5787074
+2026-10-22T08:49:35Z,football,England Premier League,Ipswich Town,Nottingham Forest,,,上半场大球,ht_ou,2.16,0,1.9062,13.31,0,1,1792782000,ALL,pinnacle,,,ws_scan,,1.0,5130840
+2026-10-22T08:50:21Z,football,Indonesia Super League,Madura United,Persib Bandung,,,上半场客胜,ht,2.44,0,2.3747,2.75,0,2,1792670400,ALL,pinnacle,,,ws_scan,,,5766738
+2026-10-22T08:52:12Z,tennis,ATP Challenger - Cali Open,Carlos Maria Zarate (ARG),Francisco Comesana (ARG),,,主胜,1x2,5.9,0,4.0437,45.91,0,3,1792681200,BB,pinnacle,,,pin_drop,,,5784550
+2026-10-22T08:54:01Z,tennis,ATP - Almaty Open,Tomas Machac (CZE),Karen Khachanov (RUS),,,上半场主胜,ht,2.54,0,2.3747,6.96,0,2,1792660200,BB,pinnacle,,,ws_scan,,,5785940
+2026-10-22T08:54:16Z,tennis,ATP Challenger - Florence Open,Michele Ribecai (ITA),Max Houkes (NED),,,让盘客胜,hc,2.48,0,2.3747,4.43,0,3,1792662600,BB,pinnacle,,,ws_scan,,-1.5,5781003
+2026-10-22T08:54:28Z,tennis,ATP - Almaty Open,Daniil Medvedev (RUS),Sho Shimabukuro (JPN),,,上半场主胜,ht,1.12,0,1.0375,7.95,0,2,1792664400,BB,pinnacle,,,ws_scan,,,5780795
+2026-10-22T08:54:43Z,tennis,ATP Challenger - Cali Open,Carlos Maria Zarate (ARG),Francisco Comesana (ARG),,,让盘主胜,hc,2.66,0,2.3747,12.01,0,3,1792681200,BB,pinnacle,,,ws_scan,,+1.5,5784550
+2026-10-22T08:54:43Z,tennis,ATP Challenger - Florence Open,Samuele Pieri (ITA),Sandro Kopp (AUT),,,让盘客胜,hc,2.5,0,2.3747,5.27,0,3,1792666800,BB,pinnacle,,,ws_scan,,-1.5,5781848
+2026-10-22T08:55:57Z,tennis,World Tennis - W100 Wrexham Women Singles,Lucie Havlickova (CZE),Dalayna Hewitt (USA),,,客胜,1x2,5.8,0,4.1251,40.6,0,3,1792659600,BB,pinnacle,,,pin_drop,,,5787081
+2026-10-22T09:01:00Z,tennis,ATP Challenger - Florence Open,Henry Searle (GBR),Matthew William Donald (CZE),,,让盘客胜,hc,2.74,0,2.5414,7.82,0,3,1792668600,BB,pinnacle,,,ws_scan,,-1.5,5782176
+2026-10-22T09:01:30Z,tennis,World Tennis - M15 Ithaca Men Singles,Vignesh Gogineni (USA),Zsombor Velcz (HUN),,,客胜,1x2,2.52,0,2.3747,6.12,0,3,1792681200,BB,pinnacle,,,ws_scan,,,5788434
+2026-10-22T09:01:52Z,tennis,World Tennis - M15 Ithaca Men Singles,Jack Secord (USA),Benjamin Willwerth (USA),,,上半场主胜,ht,2.44,0,2.3747,2.75,0,3,1792681200,BB,pinnacle,,,ws_scan,,,5788435
+2026-10-22T09:02:38Z,tennis,ATP Challenger - Cali Open,Miguel Tobon (COL),Nicolas Mejia (COL),,,主胜,1x2,2.87,0,2.3747,20.86,0,3,1792708200,BB,pinnacle,,,ws_scan,,,5785101
+2026-10-22T09:02:51Z,football,Germany Bundesliga,Borussia Dortmund,Eintracht Frankfurt,,,上半场和局,ht,2.78,0,2.4622,12.91,0,1,1792859400,ALL,pinnacle,,,ws_scan,,,5201511
+2026-10-22T09:02:51Z,football,Germany Bundesliga,Borussia Dortmund,Eintracht Frankfurt,,,双重机会-主/和局,dc,1.14,0,1.0399,9.63,0,1,1792859400,ALL,pinnacle,,,ws_scan,,,5201511
+2026-10-22T09:03:14Z,tennis,ATP - Almaty Open,Daniil Medvedev (RUS),Sho Shimabukuro (JPN),,,上半场主胜,ht,1.12,0,1.0375,7.95,0,2,1792665000,BB,pinnacle,,,ws_scan,,,5780795
+2026-10-22T09:03:14Z,tennis,ATP - Almaty Open,Tomas Machac (CZE),Karen Khachanov (RUS),,,上半场主胜,ht,2.54,0,2.3747,6.96,0,2,1792660800,BB,pinnacle,,,ws_scan,,,5785940
+2026-10-22T09:03:14Z,tennis,ATP Challenger - Florence Open,Michele Ribecai (ITA),Max Houkes (NED),,,让盘客胜,hc,2.48,0,2.3747,4.43,0,3,1792664100,BB,pinnacle,,,ws_scan,,-1.5,5781003
+2026-10-22T09:03:24Z,football,Northern Ireland Premiership,Bangor FC,Larne FC,,,上半场和局,ht,2.47,0,2.3747,4.01,0,2,1792861200,ALL,pinnacle,,,ws_scan,,,5763640
+2026-10-22T09:03:24Z,football,Northern Ireland Premiership,Bangor FC,Larne FC,,,双重机会-和局/客,dc,1.02,0,1.0,2.0,0,2,1792861200,ALL,pinnacle,,,ws_scan,,,5763640
+2026-10-22T09:03:24Z,football,Northern Ireland Premiership,Bangor FC,Larne FC,,,双重机会-主/客,dc,1.12,0,1.0857,3.16,0,2,1792861200,ALL,pinnacle,,,ws_scan,,,5763640
+2026-10-22T09:03:27Z,football,Northern Ireland Premiership,Bangor FC,Larne FC,,,和局,1x2,5.05,0,4.0437,24.89,0,2,1792861200,ALL,pinnacle,,,pin_drop,,,5763640
+2026-10-22T09:03:27Z,football,Northern Ireland Premiership,Bangor FC,Larne FC,,,双重机会-主/和局,dc,3.3,0,2.2142,49.04,0,2,1792861200,ALL,pinnacle,,,pin_drop,,,5763640
+2026-10-22T09:05:22Z,tennis,ATP Challenger - Cali Open,Miguel Tobon (COL),Nicolas Mejia (COL),,,上半场主胜,ht,2.46,0,2.3747,3.59,0,3,1792708200,BB,pinnacle,,,ws_scan,,,5785101
+2026-10-22T09:06:01Z,tennis,ATP Challenger - Fort Worth Open,Kaylan Bigun (USA),Aidan Mayo (USA),,,主胜,1x2,2.64,0,2.4807,6.42,0,3,1792684800,BB,pinnacle,,,ws_scan,,,5783228
+2026-10-22T09:06:40Z,football,Jordan 1st Division,Al Sareeh,Jerash SC,,,客胜,1x2,2.55,0,2.3747,7.38,0,2,1792681200,ALL,pinnacle,,,ws_scan,,,5764519
+2026-10-22T09:06:41Z,football,South Korea K-League 2,Suwon FC,Chungnam Asan FC,,,上半场客胜,ht,4.33,0,4.0437,7.08,0,2,1792904400,ALL,pinnacle,,,pin_drop,,,4939984
+2026-10-22T09:06:41Z,football,South Korea K-League 2,Suwon FC,Chungnam Asan FC,,,上半场小球,ht_ou,2.14,0,2.0937,2.21,0,2,1792904400,ALL,pinnacle,,,pin_drop,,1.25,4939984
+2026-10-22T09:10:10Z,tennis,World Tennis - W15 Villena Women Singles,Juliana Giaccio (ESP),Kateryna Lazarenko (UKR),,,上半场客胜,ht,2.58,0,2.3747,8.64,0,3,1792661400,BB,pinnacle,,,ws_scan,,,5787102
+2026-10-22T09:10:39Z,football,Panama Liga Nacional de Ascenso,Udelas FC,Union Cocle II,,,小球,ou,1.88,0,1.8018,4.34,0,3,1792677600,BB,pinnacle,,,ws_scan,,3.5,5780075
+2026-10-22T09:10:39Z,football,England League One,Cambridge United,Plymouth Argyle,,,上半场主胜,ht,2.99,0,2.6705,11.97,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5764829
+2026-10-22T09:10:59Z,football,Panama Liga Nacional de Ascenso,Udelas FC,Union Cocle II,,,小球,ou,1.88,1.6369,1.8018,4.34,50,3,1792677600.0,BB/FB,,,,push,,3.5,

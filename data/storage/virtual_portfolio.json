@@ -1,30 +1,7 @@
 {
-  "balance": 14332.53,
+  "balance": 14352.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_handicap_信州勇士_名古屋钻石海豚_让分客胜(-115)",
-      "sport": "basketball",
-      "league": "日本B篮球联赛PREMIER",
-      "home_team": "信州勇士",
-      "away_team": "名古屋钻石海豚",
-      "home_cn": "信州勇士",
-      "away_cn": "名古屋钻石海豚",
-      "market": "handicap",
-      "market_type": "让分客胜(-11.5)",
-      "sub_market": "hc",
-      "line": "-11.5",
-      "odds": 1.83,
-      "stake": 70,
-      "model_prob": 0.5678,
-      "ev_pct": 3.91,
-      "pin_odds": 1.6452,
-      "fair_price": 1.7612,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1792404300.0,
-      "created_at": "2026-10-19T06:05:12.810380+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_新疆伊力特_天津先行者_客胜",
       "sport": "basketball",
@@ -621,6 +598,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792681500.0,
       "created_at": "2026-10-22T07:06:14.588782+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_德拉斯_科克莱联二队_小球(35)",
+      "sport": "football",
+      "league": "巴拿马乙级联赛",
+      "home_team": "德拉斯",
+      "away_team": "科克莱联二队",
+      "home_cn": "德拉斯",
+      "away_cn": "科克莱联二队",
+      "market": "over_under",
+      "market_type": "小球(3.5)",
+      "sub_market": "ou",
+      "line": "3.5",
+      "odds": 1.88,
+      "stake": 50,
+      "model_prob": 0.555,
+      "ev_pct": 4.34,
+      "pin_odds": 1.6369,
+      "fair_price": 1.8018,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792677600.0,
+      "created_at": "2026-10-22T09:10:39.854584+00:00",
       "track_only": false
     }
   ],
@@ -11563,12 +11563,27 @@
       "home_cn": "岛根魔术",
       "away_cn": "川崎雷霆勇者",
       "market_type": "大分(164.5)"
+    },
+    {
+      "id": "bb_vs_pin_handicap_信州勇士_名古屋钻石海豚_让分客胜(-115)",
+      "match": "70¥ @ 1.83 (超时作废)",
+      "date": "2026-10-22T09:00:21.251253+00:00",
+      "stake": 70,
+      "odds": 1.83,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "日本B篮球联赛PREMIER",
+      "sport": "basketball",
+      "home_cn": "信州勇士",
+      "away_cn": "名古屋钻石海豚",
+      "market_type": "让分客胜(-11.5)"
     }
   ],
   "daily_budget": {
     "date": "2026-10-22",
-    "used": 360.0,
-    "bets": 9
+    "used": 410.0,
+    "bets": 10
   },
   "updated": null
 }
