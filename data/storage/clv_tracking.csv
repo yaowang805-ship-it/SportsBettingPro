@@ -6905,3 +6905,28 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-22T05:48:08Z,basketball,Lithuania National Basketball League,Alytaus Patriotai,Kretingos Kretinga,,,客胜,1x2,1.65,0,1.579,4.49,0,3,1792681200,ALL,pinnacle,,,ws_scan,,,5788509
 2026-10-22T05:48:20Z,basketball,Lithuania National Basketball League,Alytaus Patriotai,Kretingos Kretinga,,,让分客胜,hc,1.86,0,1.7693,5.13,0,3,1792681200,ALL,pinnacle,,,ws_scan,,-2.5,5788509
 2026-10-22T05:49:24Z,basketball,Lithuania National Basketball League,Alytaus Patriotai,Kretingos Kretinga,,,让分客胜,hc,1.86,1.5848,1.7693,5.13,30,3,1792681200.0,BB/FB,,,,push,,-2.5,
+2026-10-22T05:50:14Z,tennis,World Tennis - W35 Monastir Women Singles,Victoria Milovanova (RUS),Kayo Nishimura (JPN),,,上半场客胜,ht,2.58,0,2.3747,8.64,0,3,1792657800,BB,pinnacle,,,ws_scan,,,5787008
+2026-10-22T05:51:48Z,basketball,Qatar Basketball League,Al Shamal,Al Gharafa,,,主胜,1x2,1.78,0,1.7177,3.63,0,3,1792688400,ALL,pinnacle,,,pin_drop,,,5754763
+2026-10-22T05:53:27Z,basketball,Qatar Basketball League,Al Shamal,Al Gharafa,,,让分主胜,hc,1.87,0,1.8123,3.18,0,3,1792688400,ALL,pinnacle,,,ws_scan,,-1.5,5754763
+2026-10-22T05:54:46Z,basketball,Lithuania National Basketball League,Alytaus Patriotai,Kretingos Kretinga,,,主胜,1x2,2.51,0,2.3747,5.7,0,3,1792681200,ALL,pinnacle,,,ws_scan,,,5788509
+2026-10-22T05:56:27Z,football,Australian Championship,Queensland Lions FC,Preston Lions FC,,,上半场大球,ht_ou,2.09,0,2.0408,2.41,0,3,1792657800,ALL,pinnacle,,,ws_scan,,1.0,5624551
+2026-10-22T06:00:23Z,basketball,Qatar Basketball League,Al Ahli Qatar,Al Khor,,,让分客胜,hc,1.88,0,1.7693,6.26,0,3,1792681200,ALL,pinnacle,,,ws_scan,,+13.5,5743568
+2026-10-22T06:00:49Z,football,India Bangalore Super Division,Technico FF,FC Real Bengaluru,,,上半场小球,ht_ou,1.9,0,1.7693,7.39,0,2,1792656000,ALL,pinnacle,,,ws_scan,,2.25,5817050
+2026-10-22T06:00:49Z,football,South Korea K-League 2,Suwon FC,Chungnam Asan FC,,,上半场大球,ht_ou,2.05,0,1.7693,15.87,0,2,1792904400,ALL,pinnacle,,,ws_scan,,1.0,5786773
+2026-10-22T06:01:15Z,football,Spain LaLiga,Racing Santander,Real Madrid,,,双重机会-和局/客,dc,1.07,0,1.0,7.0,0,1,1793546100,ALL,pinnacle,,,ws_scan,,,5793841
+2026-10-22T06:01:59Z,football,Netherlands Eerste Divisie,De Graafschap,RKC Waalwijk,,,和局,1x2,4.0,0,2.3747,68.44,0,3,1792778400,ALL,pinnacle,,,ws_scan,,,5085065
+2026-10-22T06:02:06Z,football,Netherlands Eerste Divisie,De Graafschap,RKC Waalwijk,,,双重机会-主/和局,dc,1.52,0,1.4702,3.39,0,3,1792778400,ALL,pinnacle,,,pin_drop,,,5085065
+2026-10-22T06:02:51Z,tennis,WTA - Ningbo Open,Katarzyna Kawa (POL),Belinda Bencic (SUI),,,上半场客胜,ht,1.14,0,1.0782,5.73,0,2,1792650000,BB,pinnacle,,,ws_scan,,,5782027
+2026-10-22T06:03:53Z,football,Spain LaLiga,Racing Santander,Real Madrid,,,双重机会-主/客,dc,1.11,0,1.0,11.0,0,1,1793546100,ALL,pinnacle,,,ws_scan,,,5192351
+2026-10-22T06:06:53Z,football,Ecuador LigaPro Primera B-Playoff,San Antonio FC,9 de Octubre FC,,,双重机会-和局/客,dc,1.08,0,1.0,8.0,0,3,1792693800,BB,pinnacle,,,ws_scan,,,5763738
+2026-10-22T06:07:00Z,football,Ecuador LigaPro Primera B-Playoff,San Antonio FC,9 de Octubre FC,,,主胜,1x2,6.25,0,4.2383,47.46,0,3,1792693800,BB,pinnacle,,,pin_drop,,,5763738
+2026-10-22T06:07:33Z,football,Ecuador LigaPro Primera B-Playoff,San Antonio FC,9 de Octubre FC,,,双重机会-主/和局,dc,2.26,0,2.0283,11.42,0,3,1792693800,BB,pinnacle,,,pin_drop,,,5763738
+2026-10-22T06:10:14Z,tennis,World Tennis - W50 Cherbourg En Cotentin Women Singles,Liv Boulard (FRA),Katarina Zavatska (UKR),,,主胜,1x2,4.43,0,4.0759,8.69,0,3,1792670400,BB,pinnacle,,,pin_drop,,,5782216
+2026-10-22T06:12:09Z,football,Uganda Premier League,Kigezi Homeboyz FC,Entebbe UPPC FC,,,双重机会-和局/客,dc,1.06,0,1.0,6.0,0,2,1792674000,ALL,pinnacle,,,ws_scan,,,5784563
+2026-10-22T06:12:17Z,basketball,Qatar Basketball League,Al Ahli Qatar,Al Khor,,,主胜,1x2,1.23,0,1.0749,14.42,0,3,1792681200,ALL,pinnacle,,,ws_scan,,,5743568
+2026-10-22T06:12:19Z,football,Netherlands Eerste Divisie,Jong AZ Alkmaar,Helmond Sport,,,上半场大球,ht_ou,2.07,0,1.9274,7.4,0,3,1792778400,ALL,pinnacle,,,ws_scan,,1.25,5085059
+2026-10-22T06:14:04Z,tennis,WTA - Ningbo Open,Katarzyna Kawa (POL),Belinda Bencic (SUI),,,上半场客胜,ht,1.14,0,1.0782,5.73,0,2,1792650600,BB,pinnacle,,,ws_scan,,,5782027
+2026-10-22T06:14:36Z,football,UAE Presidents Cup,Shabab Al Ahli,Al Ain FC,,,主胜,1x2,2.53,0,2.3747,6.54,0,3,1792684800,ALL,pinnacle,,,ws_scan,,,5754755
+2026-10-22T06:14:36Z,football,UAE Presidents Cup,Shabab Al Ahli,Al Ain FC,,,客胜,1x2,2.56,0,2.3747,7.8,0,3,1792684800,ALL,pinnacle,,,ws_scan,,,5754755
+2026-10-22T06:14:36Z,football,UAE Presidents Cup,Shabab Al Ahli,Al Ain FC,,,双重机会-主/客,dc,1.27,0,1.2349,2.84,0,3,1792684800,ALL,pinnacle,,,ws_scan,,,5754755
+2026-10-22T06:16:49Z,basketball,Euroleague,Anadolu Efes SK,Besiktas JK,,,客胜,1x2,2.87,2.78,2.3747,20.86,30,2,1792690200.0,BB,,,,push,,,

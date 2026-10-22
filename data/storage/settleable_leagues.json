@@ -1606,7 +1606,7 @@
       "success_rate": 0.0
     },
     "日本B篮球联赛PREMIER": {
-      "attempts": 1,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1624,9 +1624,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "日本B联盟超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-10-22T01:45:07.747863+00:00",
+  "updated": "2026-10-22T06:00:11.511668+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
