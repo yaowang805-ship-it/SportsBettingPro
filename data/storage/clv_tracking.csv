@@ -6797,3 +6797,43 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-22T03:00:18Z,tennis,World Tennis - M15 Singapore Men Singles,Alexey Aleshchev (RUS),Pranav Karthik (IND),,,主胜,1x2,2.82,0,2.3747,18.75,0,3,1792638300,BB,pinnacle,,,ws_scan,,,5782221
 2026-10-22T03:00:18Z,tennis,World Tennis - M15 Singapore Men Singles,Alexey Aleshchev (RUS),Pranav Karthik (IND),,,上半场主胜,ht,2.44,0,2.3747,2.75,0,3,1792638300,BB,pinnacle,,,ws_scan,,,5782221
 2026-10-22T03:03:18Z,basketball,China CBA,Beijing Ducks,Shenzhen Leopards,,,让分客胜,hc,1.86,1.6173,1.7693,5.13,40,3,1792668900.0,BB/FB,,,,push,,+12.5,
+2026-10-22T03:06:14Z,tennis,World Tennis - W15 Karlovy Vary Women Singles,Emily Victoria Eigelsbach (GER),Katerina Zajickova (CZE),,,让盘客胜,hc,2.52,0,2.3747,6.12,0,3,1792657800,BB,pinnacle,,,ws_scan,,-1.5,5787092
+2026-10-22T03:06:25Z,tennis,World Tennis - W15 Karlovy Vary Women Singles,Daria Lopatetska (UKR),Isabella Angelina Abendroth (GER),,,客胜,1x2,2.44,0,2.3747,2.75,0,3,1792657800,BB,pinnacle,,,ws_scan,,,5787093
+2026-10-22T03:10:06Z,basketball,China CBA,Guangdong Southern Tigers,Zhejiang Guangsha Lions,,,客胜,1x2,1.81,0,1.7693,2.3,0,3,1792668900,ALL,pinnacle,,,ws_scan,,,5582074
+2026-10-22T03:11:55Z,football,Mexico Liga MX,Pumas UNAM,Tigres UANL,,,和局,1x2,3.52,0,2.3747,48.23,0,3,1792897800,ALL,pinnacle,,,ws_scan,,,5089213
+2026-10-22T03:11:55Z,football,Mexico Liga MX,Pumas UNAM,Tigres UANL,,,双重机会-主/和局,dc,1.63,0,1.55,5.16,0,3,1792897800,ALL,pinnacle,,,ws_scan,,,5089213
+2026-10-22T03:11:55Z,football,Mexico Liga MX,Queretaro FC,Cruz Azul,,,和局,1x2,3.72,0,2.3747,56.65,0,3,1792976400,ALL,pinnacle,,,ws_scan,,,5089209
+2026-10-22T03:12:27Z,football,Mexico Liga MX,Queretaro FC,Cruz Azul,,,双重机会-主/和局,dc,1.7,0,1.6319,4.17,0,3,1792976400,ALL,pinnacle,,,pin_drop,,,5089209
+2026-10-22T03:12:27Z,football,Mexico Liga MX,Queretaro FC,Cruz Azul,,,双重机会-和局/客,dc,1.34,0,1.2912,3.78,0,3,1792976400,ALL,pinnacle,,,pin_drop,,,5089209
+2026-10-22T03:12:48Z,football,Mexico Liga MX,Pumas UNAM,Tigres UANL,,,主胜,1x2,3.1,0,2.3747,30.54,0,3,1792897800,ALL,pinnacle,,,ws_scan,,,5089213
+2026-10-22T03:12:48Z,football,Mexico Liga MX,Queretaro FC,Cruz Azul,,,上半场客胜,ht,2.72,0,2.3747,14.54,0,3,1792976400,ALL,pinnacle,,,ws_scan,,,5089209
+2026-10-22T03:12:59Z,football,Mexico Liga MX,Queretaro FC,Cruz Azul,,,上半场大球,ht_ou,1.73,0,1.6955,2.04,0,3,1792976400,ALL,pinnacle,,,pin_drop,,1.0,5089209
+2026-10-22T03:13:04Z,basketball,China CBA,Guangdong Southern Tigers,Zhejiang Guangsha Lions,,,让分客胜,hc,1.93,0,1.8815,2.58,0,3,1792668900,ALL,pinnacle,,,ws_scan,,+1.5,5626203
+2026-10-22T03:13:34Z,football,Mexico Liga De Expansion MX,Tepatitlan FC,Cancun FC,,,和局,1x2,3.88,0,2.3747,63.39,0,2,1792803600,ALL,pinnacle,,,ws_scan,,,5300279
+2026-10-22T03:13:34Z,football,Mexico Liga De Expansion MX,Tepatitlan FC,Cancun FC,,,双重机会-主/和局,dc,2.0,0,1.7693,13.04,0,2,1792803600,ALL,pinnacle,,,ws_scan,,,5300279
+2026-10-22T03:15:06Z,football,Mexico Liga MX,Queretaro FC,Cruz Azul,,,上半场主胜,ht,4.21,0,4.0437,4.11,0,3,1792976400,ALL,pinnacle,,,pin_drop,,,5089209
+2026-10-22T03:15:49Z,football,Israel Premier League,Hapoel Jerusalem FC,Hapoel Tel Aviv FC,,,双重机会-主/和局,dc,2.78,0,2.5212,10.27,0,2,1792856700,ALL,pinnacle,,,ws_scan,,,5772914
+2026-10-22T03:15:49Z,football,Israel Premier League,Hapoel Jerusalem FC,Hapoel Tel Aviv FC,,,双重机会-和局/客,dc,1.07,0,1.0,7.0,0,2,1792856700,ALL,pinnacle,,,ws_scan,,,5772914
+2026-10-22T03:16:43Z,basketball,China CBA,Beijing Ducks,Shenzhen Leopards,,,上半场客胜,ht,4.2,0,4.0437,3.87,0,3,1792668900,ALL,pinnacle,,,pin_drop,,,5626193
+2026-10-22T03:16:53Z,basketball,China CBA,Fujian Sturgeons,Ningbo Rockets,,,主胜,1x2,1.19,0,1.066,11.63,0,3,1792668900,ALL,pinnacle,,,ws_scan,,,5626220
+2026-10-22T03:17:18Z,football,Philippines UAAP,Ateneo Blue Eagles,UE Red Warriors,,,小球,ou,1.83,0,1.7148,6.72,0,3,1792648800,ALL,pinnacle,,,ws_scan,,4.0,5784006
+2026-10-22T03:23:49Z,tennis,World Tennis - W35 Bakersfield Women Singles,Allegra Korpanec Davies (GBR),Lea Ma (USA),,,上半场客胜,ht,1.2,0,1.1718,2.41,0,3,1792688400,BB,pinnacle,,,pin_drop,,,5780124
+2026-10-22T03:25:01Z,tennis,World Tennis - W35 Santa Margherita di Pula Women Singles,Martha Matoula (GRE),Maria Garcia Cid (ESP),,,让盘客胜,hc,2.52,0,2.3747,6.12,0,3,1792656000,BB,pinnacle,,,ws_scan,,-1.5,5787563
+2026-10-22T03:28:31Z,tennis,World Tennis - W35 Santa Margherita di Pula Women Singles,Despina Papamichail (GRE),Carolina Bohrer Martins (BRA),,,主胜,1x2,1.17,0,1.0082,16.05,0,3,1792661400,BB,pinnacle,,,ws_scan,,,5787101
+2026-10-22T03:28:31Z,tennis,World Tennis - W50 Cherbourg En Cotentin Women Singles,Manon Leonard (FRA),Sada Nahimana (BDI),,,客胜,1x2,2.69,0,2.3747,13.28,0,3,1792661400,BB,pinnacle,,,ws_scan,,,5787106
+2026-10-22T03:30:48Z,tennis,World Tennis - W15 Villena Women Singles,Juliana Giaccio (ESP),Kateryna Lazarenko (UKR),,,客胜,1x2,2.51,0,2.3747,5.7,0,3,1792661400,BB,pinnacle,,,ws_scan,,,5787102
+2026-10-22T03:33:54Z,tennis,World Tennis - M25 Mumbai Men Singles,Adhithya Ganesan (USA),Digvijay Pratap Singh (IND),,,让盘客胜,hc,2.46,0,2.3747,3.59,0,3,1792640280,BB,pinnacle,,,ws_scan,,-1.5,5786660
+2026-10-22T03:34:26Z,tennis,World Tennis - W35 Santa Margherita di Pula Women Singles,Despina Papamichail (GRE),Carolina Bohrer Martins (BRA),,,客胜,1x2,4.22,0,4.0437,4.36,0,3,1792661400,BB,pinnacle,,,pin_drop,,,5787101
+2026-10-22T03:40:44Z,tennis,World Tennis - W35 Loule Women Singles,Joy De Zeeuw (NED),Federica Urgesi (ITA),,,让盘主胜,hc,2.46,0,2.3747,3.59,0,3,1792663200,BB,pinnacle,,,ws_scan,,+1.5,5787073
+2026-10-22T03:40:45Z,tennis,World Tennis - W35 Loule Women Singles,Angela Fita Boluda (ESP),Mariella Thamm (GER),,,主胜,1x2,2.86,0,2.3747,20.43,0,3,1792666800,BB,pinnacle,,,ws_scan,,,5782503
+2026-10-22T03:41:07Z,tennis,World Tennis - W35 Loule Women Singles,Tian Jialin (CHN),Laura Mair (ITA),,,客胜,1x2,2.54,0,2.3747,6.96,0,3,1792666800,BB,pinnacle,,,ws_scan,,,5787078
+2026-10-22T03:41:34Z,football,Mexico Liga MX,Pumas UNAM,Tigres UANL,,,主胜,1x2,2.98,0,2.3747,25.49,0,3,1792897200,ALL,pinnacle,,,ws_scan,,,5786737
+2026-10-22T03:41:55Z,football,Australian Championship,Avondale FC,Broadmeadow Magic FC,,,上半场大球,ht_ou,2.0,0,1.8298,9.3,0,3,1792814400,ALL,pinnacle,,,ws_scan,,1.25,5778556
+2026-10-22T03:44:40Z,football,Paraguay Primera Division,Nacional Asuncion,Sportivo Trinidense,,,双重机会-和局/客,dc,1.54,0,1.4356,7.27,0,3,1792872000,ALL,pinnacle,,,pin_drop,,,5496990
+2026-10-22T03:46:20Z,football,UEFA Europa Conference League,Pafos FC,Riga FC,,,双重机会-主/和局,dc,1.12,0,1.084,3.32,0,3,1792687500,ALL,pinnacle,,,ws_scan,,,5527985
+2026-10-22T03:49:18Z,tennis,World Tennis - W35 Loule Women Singles,Angela Fita Boluda (ESP),Mariella Thamm (GER),,,上半场主胜,ht,2.58,0,2.3747,8.64,0,3,1792666800,BB,pinnacle,,,ws_scan,,,5782503
+2026-10-22T03:53:15Z,tennis,World Tennis - M25 Sarreguemines Men Singles,Arthur Bouquier (FRA),Maximilian Marterer (GER),,,让盘客胜,hc,2.86,0,2.7236,5.01,0,3,1792683900,BB,pinnacle,,,ws_scan,,-1.5,5787112
+2026-10-22T03:59:29Z,basketball,Qatar Basketball League,Al Ahli Qatar,Al Khor,,,大分,ou,1.84,0,1.7693,4.0,0,3,1792681200,ALL,pinnacle,,,ws_scan,,167.5,5743568
+2026-10-22T03:59:29Z,basketball,Lithuania National Basketball League,Neptunas Akvaservis Klaipeda,BC Olimpas Palanga,,,大分,ou,1.86,0,1.7693,5.13,0,3,1792681500,ALL,pinnacle,,,ws_scan,,160.5,5653434
+2026-10-22T04:00:25Z,basketball,Lithuania National Basketball League,Neptunas Akvaservis Klaipeda,BC Olimpas Palanga,,,大分,ou,1.86,1.6173,1.7693,5.13,40,3,1792681500.0,BB/FB,,,,push,,160.5,
+2026-10-22T04:00:25Z,basketball,Qatar Basketball League,Al Ahli Qatar,Al Khor,,,大分,ou,1.84,1.6135,1.7693,4.0,40,3,1792681200.0,BB/FB,,,,push,,167.5,
