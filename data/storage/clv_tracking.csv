@@ -7087,3 +7087,14 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-22T07:27:05Z,football,Spain Segunda Division RFEF,Xerez CD,Marbella FC,,,主胜,1x2,1.97,0,1.7693,11.34,0,3,1792951200,ALL,pinnacle,,,ws_scan,,,5769428
 2026-10-22T07:27:05Z,football,Spain Segunda Division RFEF,Xerez CD,Marbella FC,,,双重机会-主/和局,dc,1.2,0,1.0156,18.16,0,3,1792951200,ALL,pinnacle,,,ws_scan,,,5769428
 2026-10-22T07:28:06Z,basketball,Lithuania National Basketball League,Neptunas Akvaservis Klaipeda,BC Olimpas Palanga,,,让分客胜,hc,1.91,1.6173,1.7693,7.95,30,3,1792681500.0,BB/FB,,,,push,,-4.5,
+2026-10-22T07:31:54Z,football,Spain Segunda Division RFEF,Xerez CD,Marbella FC,,,让球主胜,hc,1.97,0,1.7693,11.34,0,3,1792951200,ALL,pinnacle,,,ws_scan,,-0.5,5787747
+2026-10-22T07:31:54Z,football,England League One,Oxford United,Bradford City,,,主胜,1x2,2.64,0,2.3747,11.17,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5779475
+2026-10-22T07:31:54Z,football,England League One,Oxford United,Bradford City,,,客胜,1x2,2.63,0,2.3747,10.75,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5779475
+2026-10-22T07:33:06Z,football,Scotland League One,Hamilton Academical FC,East Fife FC,,,和局,1x2,5.05,0,4.9074,2.9,0,2,1792850400,ALL,pinnacle,,,pin_drop,,,5779454
+2026-10-22T07:34:11Z,football,South Korea K-League 1,Ulsan HD FC,Pohang Steelers FC,,,上半场主胜,ht,2.56,0,2.3747,7.8,0,2,1792818000,ALL,pinnacle,,,ws_scan,,,5764330
+2026-10-22T07:35:14Z,football,South Korea K-League 2,Chungbuk Cheongju FC,Yongin,,,客胜,1x2,2.93,0,2.763,6.04,0,2,1792913400,BB,pinnacle,,,ws_scan,,,5768611
+2026-10-22T07:36:44Z,football,England National League,Harrogate Town,Sutton United,,,双重机会-主/和局,dc,1.17,0,1.121,4.37,0,3,1792841400,ALL,pinnacle,,,ws_scan,,,5321284
+2026-10-22T07:36:47Z,football,Cyprus 1st Division,AEL Limassol,Aris Limassol FC,,,上半场大球,ht_ou,2.07,0,1.7693,17.0,0,2,1792947600,ALL,pinnacle,,,ws_scan,,1.0,5775640
+2026-10-22T07:36:47Z,football,England National League South,Chelmsford City,Tonbridge Angels,,,上半场小球,ht_ou,2.08,0,1.7693,17.56,0,3,1792850400,ALL,pinnacle,,,ws_scan,,1.25,5322215
+2026-10-22T07:37:16Z,basketball,Euroleague,Anadolu Efes SK,Besiktas JK,,,上半场主胜,ht,1.62,0,1.579,2.59,0,2,1792690200,ALL,pinnacle,,,ws_scan,,,5355502
+2026-10-22T07:38:35Z,basketball,Euroleague,Anadolu Efes SK,Besiktas JK,,,客胜,1x2,2.76,2.76,2.3747,16.22,30,2,1792690200.0,FB,,,,push,,,
