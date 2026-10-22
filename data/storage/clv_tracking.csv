@@ -6930,3 +6930,42 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-22T06:14:36Z,football,UAE Presidents Cup,Shabab Al Ahli,Al Ain FC,,,客胜,1x2,2.56,0,2.3747,7.8,0,3,1792684800,ALL,pinnacle,,,ws_scan,,,5754755
 2026-10-22T06:14:36Z,football,UAE Presidents Cup,Shabab Al Ahli,Al Ain FC,,,双重机会-主/客,dc,1.27,0,1.2349,2.84,0,3,1792684800,ALL,pinnacle,,,ws_scan,,,5754755
 2026-10-22T06:16:49Z,basketball,Euroleague,Anadolu Efes SK,Besiktas JK,,,客胜,1x2,2.87,2.78,2.3747,20.86,30,2,1792690200.0,BB,,,,push,,,
+2026-10-22T06:19:13Z,tennis,World Tennis - W50 Cherbourg En Cotentin Women Singles,Liv Boulard (FRA),Katarina Zavatska (UKR),,,让盘主胜,hc,2.55,0,2.4146,5.61,0,3,1792670400,BB,pinnacle,,,ws_scan,,+1.5,5782216
+2026-10-22T06:19:36Z,football,Colombia Primera A,America de Cali,Cucuta Deportivo FC,,,主胜,1x2,1.39,0,1.3333,4.25,0,2,1792883100,ALL,pinnacle,,,ws_scan,,,5754505
+2026-10-22T06:20:19Z,football,UAE Presidents Cup,Shabab Al Ahli,Al Ain FC,,,双重机会-和局/客,dc,1.46,0,1.4265,2.35,0,3,1792684800,ALL,pinnacle,,,ws_scan,,,5754755
+2026-10-22T06:24:09Z,tennis,WTA - Ningbo Open,Katarzyna Kawa (POL),Belinda Bencic (SUI),,,上半场客胜,ht,1.14,0,1.0782,5.73,0,2,1792651200,BB,pinnacle,,,ws_scan,,,5782027
+2026-10-22T06:29:49Z,football,England Championship League,Bolton Wanderers,Middlesbrough FC,,,上半场和局,ht,2.43,0,2.3747,2.33,0,2,1792782000,ALL,pinnacle,,,ws_scan,,,5759470
+2026-10-22T06:29:51Z,football,Ireland Premier Division,Shamrock Rovers,Sligo Rovers FC,,,双重机会-主/客,dc,1.07,0,1.0,7.0,0,2,1792782000,ALL,pinnacle,,,ws_scan,,,5758611
+2026-10-22T06:29:51Z,football,Northern Ireland Premiership,Portadown FC,Linfield FC,,,双重机会-和局/客,dc,1.05,0,1.0,5.0,0,2,1792781100,ALL,pinnacle,,,ws_scan,,,5758620
+2026-10-22T06:29:58Z,football,Ecuador LigaPro Primera B-Playoff,San Antonio FC,9 de Octubre FC,,,客胜,1x2,1.68,0,1.579,6.39,0,3,1792693800,BB,pinnacle,,,ws_scan,,,5763738
+2026-10-22T06:29:58Z,football,Ireland Premier Division,Waterford FC,Drogheda United FC,,,和局,1x2,3.6,0,2.3747,51.6,0,2,1792781100,ALL,pinnacle,,,ws_scan,,,5758608
+2026-10-22T06:29:58Z,football,Ireland Premier Division,Waterford FC,Drogheda United FC,,,双重机会-和局/客,dc,1.89,0,1.7693,6.82,0,2,1792781100,ALL,pinnacle,,,ws_scan,,,5758608
+2026-10-22T06:29:58Z,football,Ireland Premier Division,Derry City FC,Dundalk FC,,,和局,1x2,3.71,0,2.3747,56.23,0,2,1792781100,ALL,pinnacle,,,ws_scan,,,5758601
+2026-10-22T06:29:58Z,football,South Korea K-League 2,Jeonnam Dragons,Daegu FC,,,和局,1x2,4.17,0,2.3747,75.6,0,2,1792818000,ALL,pinnacle,,,ws_scan,,,5763616
+2026-10-22T06:30:27Z,football,Australian Championship,Queensland Lions FC,Preston Lions FC,,,双重机会-和局/客,dc,1.44,0,1.3966,3.11,0,3,1792657800,ALL,pinnacle,,,ws_scan,,,5764462
+2026-10-22T06:30:35Z,football,UAE Presidents Cup,Shabab Al Ahli,Al Ain FC,,,上半场大球,ht_ou,2.07,0,1.7693,17.0,0,3,1792684800,ALL,pinnacle,,,ws_scan,,1.0,5764542
+2026-10-22T06:31:01Z,football,Netherlands Eerste Divisie,Jong AZ Alkmaar,Helmond Sport,,,上半场小球,ht_ou,2.04,0,1.9069,6.98,0,3,1792778400,ALL,pinnacle,,,ws_scan,,1.5,5771659
+2026-10-22T06:32:05Z,football,England Championship League,Charlton Athletic,Norwich City,,,和局,1x2,3.32,0,2.3747,39.81,0,2,1792841400,ALL,pinnacle,,,ws_scan,,,5764801
+2026-10-22T06:32:05Z,football,England Championship League,Charlton Athletic,Norwich City,,,上半场客胜,ht,2.86,0,2.3747,20.43,0,2,1792841400,ALL,pinnacle,,,ws_scan,,,5764801
+2026-10-22T06:34:53Z,football,Australian Championship,Queensland Lions FC,Preston Lions FC,,,上半场客胜,ht,2.98,0,2.5815,15.44,0,3,1792657800,ALL,pinnacle,,,ws_scan,,,5624551
+2026-10-22T06:35:24Z,basketball,ABA League Division 2,KK Hercegovac,KK Podgorica,,,小分,ou,1.84,0,1.7693,4.0,0,3,1792684800,ALL,pinnacle,,,ws_scan,,160.5,5414947
+2026-10-22T06:37:03Z,basketball,NBA,Washington Wizards,Toronto Raptors,,,主胜,1x2,2.47,0,2.3747,4.01,0,1,1792796400,ALL,pinnacle,,,ws_scan,,,5439606
+2026-10-22T06:37:45Z,basketball,NBA,Indiana Pacers,Dallas Mavericks,,,客胜,1x2,2.84,0,2.3747,19.59,0,1,1792796400,ALL,pinnacle,,,ws_scan,,,5439610
+2026-10-22T06:38:11Z,football,England Championship League,Portsmouth FC,Millwall FC,,,和局,1x2,3.3,0,2.3747,38.96,0,2,1792841400,ALL,pinnacle,,,ws_scan,,,5763573
+2026-10-22T06:39:24Z,tennis,WTA - Ningbo Open,Katarzyna Kawa (POL),Belinda Bencic (SUI),,,上半场客胜,ht,1.12,0,1.0782,3.87,0,2,1792651500,BB,pinnacle,,,ws_scan,,,5782027
+2026-10-22T06:39:43Z,football,England Premier League,Crystal Palace,Newcastle United FC,,,主胜,1x2,2.78,0,2.3747,17.07,0,1,1792936800,ALL,pinnacle,,,ws_scan,,,5130847
+2026-10-22T06:39:58Z,football,England Championship League,Portsmouth FC,Millwall FC,,,客胜,1x2,2.78,0,2.444,13.75,0,2,1792841400,ALL,pinnacle,,,ws_scan,,,5763573
+2026-10-22T06:41:02Z,basketball,NBA,Utah Jazz,New Orleans Pelicans,,,客胜,1x2,2.65,0,2.3747,11.59,0,1,1792805400,ALL,pinnacle,,,ws_scan,,,5439616
+2026-10-22T06:45:42Z,football,Australia A-League,Melbourne City FC,Sydney FC,,,主胜,1x2,1.99,0,1.7534,13.49,0,2,1793426400,ALL,pinnacle,,,ws_scan,,,5276725
+2026-10-22T06:45:42Z,football,Australia A-League,Melbourne City FC,Sydney FC,,,上半场主胜,ht,2.66,0,2.3747,12.01,0,2,1793426400,ALL,pinnacle,,,ws_scan,,,5276725
+2026-10-22T06:45:42Z,football,Australia A-League,Melbourne City FC,Sydney FC,,,双重机会-主/和局,dc,1.28,0,1.2091,5.87,0,2,1793426400,ALL,pinnacle,,,ws_scan,,,5276725
+2026-10-22T06:46:40Z,football,Saudi Arabia Professional League,AL Fateh SC,AL Shabab FC (KSA),,,双重机会-和局/客,dc,1.39,0,1.3531,2.73,0,3,1792680300,ALL,pinnacle,,,ws_scan,,,5446336
+2026-10-22T06:47:01Z,football,Northern Ireland Premiership,Portadown FC,Linfield FC,,,和局,1x2,4.36,0,3.9644,9.98,0,2,1792781100,ALL,pinnacle,,,pin_drop,,,5758620
+2026-10-22T06:47:01Z,football,Northern Ireland Premiership,Portadown FC,Linfield FC,,,双重机会-主/和局,dc,2.7,0,1.9984,35.11,0,2,1792781100,ALL,pinnacle,,,pin_drop,,,5758620
+2026-10-22T07:00:36Z,football,USA Major League Soccer,Real Salt Lake,Saint Louis City SC,,,上半场客胜,ht,3.31,0,3.1524,5.0,0,1,1792888200,ALL,pinnacle,,,ws_scan,,,4231116
+2026-10-22T07:00:50Z,football,USA Major League Soccer,Real Salt Lake,Saint Louis City SC,,,主胜,1x2,2.45,0,2.3747,3.17,0,1,1792888200,ALL,pinnacle,,,ws_scan,,,4231116
+2026-10-22T07:03:27Z,football,England League One,Cambridge United,Plymouth Argyle,,,主胜,1x2,2.47,0,2.3747,4.01,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5764829
+2026-10-22T07:03:27Z,football,England League One,Cambridge United,Plymouth Argyle,,,客胜,1x2,2.61,0,2.3747,9.91,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5764829
+2026-10-22T07:05:48Z,basketball,Lithuania National Basketball League,Neptunas Akvaservis Klaipeda,BC Olimpas Palanga,,,客胜,1x2,1.51,0,1.4652,3.06,0,3,1792681500,ALL,pinnacle,,,pin_drop,,,5798816
+2026-10-22T07:06:00Z,basketball,Lithuania National Basketball League,Neptunas Akvaservis Klaipeda,BC Olimpas Palanga,,,让分客胜,hc,1.91,0,1.7693,7.95,0,3,1792681500,ALL,pinnacle,,,ws_scan,,-4.5,5653434
+2026-10-22T07:06:32Z,basketball,Lithuania National Basketball League,Neptunas Akvaservis Klaipeda,BC Olimpas Palanga,,,让分客胜,hc,1.91,1.6173,1.7693,7.95,30,3,1792681500.0,FB,,,,push,,-4.5,
