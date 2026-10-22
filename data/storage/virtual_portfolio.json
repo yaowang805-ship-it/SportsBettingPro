@@ -1,5 +1,5 @@
 {
-  "balance": 14352.53,
+  "balance": 14312.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -621,6 +621,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792677600.0,
       "created_at": "2026-10-22T09:10:39.854584+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_沙马尔_加拉法_客胜",
+      "sport": "basketball",
+      "league": "卡塔尔篮球联赛",
+      "home_team": "沙马尔",
+      "away_team": "加拉法",
+      "home_cn": "沙马尔",
+      "away_cn": "加拉法",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.52,
+      "stake": 40,
+      "model_prob": 0.4211,
+      "ev_pct": 6.12,
+      "pin_odds": 2.62,
+      "fair_price": 2.3747,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792688400.0,
+      "created_at": "2026-10-22T12:03:46.509434+00:00",
       "track_only": false
     }
   ],
@@ -11582,8 +11605,8 @@
   ],
   "daily_budget": {
     "date": "2026-10-22",
-    "used": 410.0,
-    "bets": 10
+    "used": 450.0,
+    "bets": 11
   },
   "updated": null
 }

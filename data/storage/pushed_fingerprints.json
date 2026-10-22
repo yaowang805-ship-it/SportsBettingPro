@@ -1,1 +1,27 @@
-{"basketball|Japan B.League Premier|Alvark Tokyo|Ibaraki Robots|客胜|1x2|2026-10-22": {"ev": 35.31, "bb": 5.8, "ts": 1792586644.369615}, "basketball|NBA|Houston Rockets|Dallas Mavericks|客胜|1x2|2026-10-22": {"ev": 5.84, "bb": 4.08, "ts": 1792590317.171115}, "basketball|NBA|Los Angeles Lakers|Golden State Warriors|客胜|1x2|2026-10-22": {"ev": 29.7, "bb": 3.08, "ts": 1792622499.175447}, "basketball|Qatar Basketball League|Al Ahli Qatar|Al Khor|大分(167.5)|ou|167.5|2026-10-22": {"ev": 4.0, "bb": 1.84, "ts": 1792641625.458598}, "football|Philippines UAAP|Ateneo Blue Eagles|UE Red Warriors|小球(4.0)|ou|4.0|2026-10-22": {"ev": 6.72, "bb": 1.83, "ts": 1792637278.2198}, "football|Panama Liga Nacional de Ascenso|elas FC|Union Cocle II|小球(3.5)|ou|3.5|2026-10-22": {"bb": 1.88, "ev": 4.34, "fair": 1.8018, "pin": 1.6369, "ts": 1792660271.5945191, "kickoff": 1792677600.0, "repush_count": 0}, "basketball|Euroleague|Anadolu Efes SK|Besiktas JK|客胜|1x2|2026-10-23": {"bb": 2.81, "ev": 18.33, "fair": 2.3747, "pin": 2.64, "ts": 1792669802.482431, "kickoff": 1792690200.0, "repush_count": 0}, "football|Ethiopia Premier League|Hawassa Kenema SC|Ethiopia Nigd Bank|客胜|1x2|2026-10-22": {"bb": 2.71, "ev": 14.12, "fair": 2.3747, "pin": 2.73, "ts": 1792663159.0484061, "kickoff": 1792670400.0, "repush_count": 0}, "football|Ethiopia Premier League|Wolaita Dicha SC|Bahir Dar Kenema FC|客胜|1x2|2026-10-22": {"bb": 2.83, "ev": 15.42, "fair": 2.4519, "pin": 2.79, "ts": 1792666723.8138309, "kickoff": 1792674000.0, "repush_count": 0}, "football|Iraq Stars League|Al Gharraf SC|Al Naft|和局|1x2|2026-10-23": {"bb": 2.78, "ev": 8.82, "fair": 2.5548, "pin": 2.75, "ts": 1792669863.236458, "kickoff": 1792684800.0, "repush_count": 0}, "football|Jordan 1st Division|Al Sareeh|Jerash SC|客胜|1x2|2026-10-22": {"bb": 2.52, "ev": 6.12, "fair": 2.3747, "pin": 2.4, "ts": 1792661668.4235232, "kickoff": 1792681200.0, "repush_count": 0}, "football|Saudi Arabia Professional League|AL Hazem FC|AL Fayha FC|双重机会-主/和局|dc|2026-10-22": {"bb": 1.39, "ev": 4.25, "fair": 1.3333, "pin": 0, "ts": 1792667059.0206668, "kickoff": 1792676400.0, "repush_count": 0}, "football|UEFA Europa Conference League|Pafos FC|Riga FC|双重机会-主/和局|dc|2026-10-23": {"bb": 1.16, "ev": 15.47, "fair": 1.0046, "pin": 0, "ts": 1792670474.733135, "kickoff": 1792687500.0, "repush_count": 0}, "football|Ukraine Premier League|Veres Rivne|Kolos Kovalivka|双重机会-主/和局|dc|2026-10-23": {"bb": 1.64, "ev": 3.86, "fair": 1.579, "pin": 0, "ts": 1792669459.9462101, "kickoff": 1792749600.0, "repush_count": 0}, "football|Saudi Arabia Professional League|AL Fateh SC|AL Shabab FC (KSA)|双重机会-主/和局|dc|2026-10-22": {"bb": 1.69, "ev": 7.03, "fair": 1.579, "pin": 0, "ts": 1792670474.732896, "kickoff": 1792680300.0, "repush_count": 0}, "football|Vietnam League 1|Hoang Anh Gia Lai|Song Lam Nghe An|客胜|1x2|2026-10-23": {"bb": 2.56, "ev": 7.8, "fair": 2.3747, "pin": 2.48, "ts": 1792670465.7759402, "kickoff": 1792749600.0, "repush_count": 0}, "football|Saudi Arabia Professional League|AL Fateh SC|AL Shabab FC (KSA)|双重机会-和局/客|dc|2026-10-22": {"bb": 1.4, "ev": 3.18, "fair": 1.3569, "pin": 0, "ts": 1792669954.733943, "kickoff": 1792680300.0, "repush_count": 0}, "football|Malta Premier League|Birkirkara FC|Floriana FC|客胜|1x2|2026-10-23": {"bb": 2.48, "ev": 4.43, "fair": 2.3747, "pin": 2.53, "ts": 1792670474.732523, "kickoff": 1792684800.0, "repush_count": 0}}
+{
+  "basketball|Japan B.League Premier|Alvark Tokyo|Ibaraki Robots|客胜|1x2|2026-10-22": {
+    "ev": 35.31,
+    "bb": 5.8,
+    "ts": 1792586644.369615
+  },
+  "basketball|NBA|Houston Rockets|Dallas Mavericks|客胜|1x2|2026-10-22": {
+    "ev": 5.84,
+    "bb": 4.08,
+    "ts": 1792590317.171115
+  },
+  "basketball|NBA|Los Angeles Lakers|Golden State Warriors|客胜|1x2|2026-10-22": {
+    "ev": 29.7,
+    "bb": 3.08,
+    "ts": 1792622499.175447
+  },
+  "basketball|Qatar Basketball League|Al Ahli Qatar|Al Khor|大分(167.5)|ou|167.5|2026-10-22": {
+    "ev": 4.0,
+    "bb": 1.84,
+    "ts": 1792641625.458598
+  },
+  "football|Philippines UAAP|Ateneo Blue Eagles|UE Red Warriors|小球(4.0)|ou|4.0|2026-10-22": {
+    "ev": 6.72,
+    "bb": 1.83,
+    "ts": 1792637278.2198
+  }
+}
