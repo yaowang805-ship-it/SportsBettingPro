@@ -207,6 +207,15 @@ MANUAL_OBSERVE_BLOCK = {
     "football|dc|X2|55-60%|early",
     "football|dc|X2|60-70%|early",
     "football|dc|12|>70%|early",
+    # 2026-10-22 撤早盘: 实盘负/校准负/CLV负(逆向选择或假溢价)。
+    "football|ou|大|55-60%|early",
+    "basketball|1x2|客|<45%|early",
+    "basketball|1x2|客|*|early",
+    "football|ou|小|50-55%|early",
+    "football|ou|大|50-55%|early",
+    "football|ou|小|55-60%|early",
+    "football|hc|客|55-60%|early",
+    "tennis|hc|客|*|early",
 }
 
 
@@ -239,18 +248,16 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 2026-10-14 用户要求释放独赢主/客(cap 30 试探)。足球/篮球 1x2 主/客早盘全桶。
     # 2026-10-16 撤足球独赢主早盘(纸面-2.2%→实盘-14.4%, 逆向选择)。
     # 2026-10-17 撤 football 独赢客胜早盘(CLV+4.0% 但纸面ROI-15% 假正)。
+    # 2026-10-22 撤篮球1x2客全桶(实盘-72.4%/12注)。
     "basketball|1x2|主|*|early": 300,
-    "basketball|1x2|客|*|early": 300,
     # 2026-10-14 用户要求释放网球测试格(cap 30): 早盘=让盘(hc)主/客。
     # 2026-10-15 网球滚球改测让局主(实盘独赢负, 交叉验证毒性流), 撤独赢主客。
     "tennis|hc|主|*|early": 300,
-    "tennis|hc|客|*|early": 300,
+    # 2026-10-22 撤网球让盘客全桶(60-80%桶 CLV-58.4%)。
     # 2026-10-20 撤 ht 上半场独赢全部(实盘 ROI -59%/胜率7.7%, 半场公平价假 edge), 交还数据驱动判据。
-    "football|ou|小|50-55%|early": 300,
-    "football|ou|大|50-55%|early": 300,
+    # 2026-10-22 撤ou 50-55%(小实盘-56.2%/大纸面-5.2%+实盘-87.5%)。
     # 2026-10-18 释放 55-60%(近3天双正: 小球CLV+3.2%ROI+33.1% / 大球CLV+3.9%ROI+15.0%)
-    "football|ou|小|55-60%|early": 300,
-    "football|ou|大|55-60%|early": 300,
+    # 2026-10-22 撤ou 55-60%(大校准-26.8%假溢价/小实盘-58.4%)。
     # 2026-10-16 撤回网球让局主滚球(实盘-29%ROI/胜率29%, 逆向选择毒性流), 交还数据驱动判据。
     # 2026-10-15 滚球让球固化(之前手工加JSON没进MANUAL, 会丢): 让球客cap80(正edge加码), 让球主cap60。
     # 2026-10-17 桶级化: 让球主胜 50-55%/55-60% 实盘负(毒性桶)撤; 2026-10-18 40-50%(-7.5%)/60-70%(-13.6%)也转负再撤。仅留 30-40%/>70%。
@@ -277,12 +284,12 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     "football|1x2|客|40-50%|early": 100,
     "football|1x2|客|60-70%|early": 100,
     "football|hc|主|55-60%|early": 100,
-    "football|hc|客|55-60%|early": 100,
+    # 2026-10-22 撤 football|hc|客|55-60%(CLV-33.2%+实盘-100%)。
     "football|hc|客|60-70%|early": 100,
     "football|ou|大|60-70%|early": 100,
     "basketball|hc|客|55-65%|early": 100,
     "basketball|ou|大|55-65%|early": 100,
-    "basketball|1x2|客|<45%|early": 100,
+    # 2026-10-22 撤 basketball|1x2|客|<45%(实盘-100%/6注+CLV-9.0%)。
 }
 
 

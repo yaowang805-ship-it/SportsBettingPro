@@ -7406,3 +7406,52 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-22T12:28:06Z,football,Algeria Ligue 1,Olympique Akbou,CS Constantine,,,双重机会-和局/客,dc,1.93,0,1.579,22.23,0,2,1792764900,ALL,pinnacle,,,ws_scan,,,5391281
 2026-10-22T12:28:49Z,football,Algeria Ligue 1,Olympique Akbou,CS Constantine,,,双重机会-主/和局,dc,1.15,0,1.0453,10.02,0,2,1792764900,ALL,pinnacle,,,ws_scan,,,5391281
 2026-10-22T12:29:21Z,basketball,Euroleague,Anadolu Efes SK,Besiktas JK,,,客胜,1x2,2.81,2.55,2.3747,18.33,40,2,1792690200.0,BB,,,,push,,,
+2026-10-22T12:30:35Z,volleyball,Bulgaria Volleyball Super League,Deya Volley Burgas,Neftochimic Burgas,,,主胜,1x2,4.86,0,4.0437,20.19,0,2,1792684800,ALL,pinnacle,,,pin_drop,,,5662708
+2026-10-22T12:31:32Z,football,Uruguay Primera Division,Deportivo Maldonado,Danubio FC,,,上半场主胜,ht,2.49,0,2.3747,4.85,0,3,1792879200,ALL,pinnacle,,,ws_scan,,,5768849
+2026-10-22T12:31:56Z,tennis,World Tennis - W100 Wrexham Women Singles,Anna Blinkova (RUS),Suzan Lamens (NED),,,上半场客胜,ht,2.44,0,2.3747,2.75,0,3,1792679880,BB,pinnacle,,,ws_scan,,,5782199
+2026-10-22T12:31:56Z,volleyball,Czech Republic Volleyball Extraliga,Volejbal Brno,Odolena Voda,,,客胜,1x2,2.61,0,2.3747,9.91,0,2,1792684800,BB,pinnacle,,,ws_scan,,,5788808
+2026-10-22T12:32:38Z,football,Algeria Ligue 1,Olympique Akbou,CS Constantine,,,上半场主胜,ht,2.49,0,2.3747,4.85,0,2,1792764900,ALL,pinnacle,,,ws_scan,,,5391281
+2026-10-22T12:34:52Z,volleyball,Poland Volleyball I Liga,Fort Poznan,BKS Visla Bydgoszcz,,,客胜,1x2,2.9,0,2.4519,18.28,0,2,1792693800,ALL,pinnacle,,,ws_scan,,,5754781
+2026-10-22T12:34:52Z,football,Germany 2. Bundesliga,Eintracht Braunschweig,Hannover 96,,,上半场客胜,ht,2.74,0,2.3747,15.38,0,1,1792931400,ALL,pinnacle,,,ws_scan,,,5202908
+2026-10-22T12:37:38Z,tennis,World Tennis - W50 Cherbourg En Cotentin Women Singles,Liv Boulard (FRA),Katarina Zavatska (UKR),,,让盘主胜,hc,2.62,0,2.3747,10.33,0,3,1792673040,BB,pinnacle,,,ws_scan,,+1.5,5782216
+2026-10-22T12:37:38Z,football,Germany 2. Bundesliga,Eintracht Braunschweig,Hannover 96,,,主胜,1x2,2.79,0,2.3747,17.49,0,1,1792931400,ALL,pinnacle,,,ws_scan,,,5202908
+2026-10-22T12:42:19Z,football,Algeria Ligue 1,JS El Biar,MC Oran,,,双重机会-和局/客,dc,1.66,0,1.3309,24.73,0,2,1792764900,ALL,pinnacle,,,pin_drop,,,5392717
+2026-10-22T12:42:19Z,football,Israel Leumit League,Hapoel Acre FC,Hapoel Raanana FC,,,和局,1x2,4.35,0,4.0672,6.95,0,2,1792760400,BB,pinnacle,,,pin_drop,,,5759370
+2026-10-22T12:42:19Z,football,Israel Leumit League,Hapoel Rishon Lezion FC,Hapoel Kfar Shalem FC,,,双重机会-和局/客,dc,1.84,0,1.7353,6.03,0,2,1792760400,ALL,pinnacle,,,pin_drop,,,5759367
+2026-10-22T12:42:46Z,football,Israel Leumit League,Hapoel Acre FC,Hapoel Raanana FC,,,双重机会-主/和局,dc,2.6,0,2.3747,9.49,0,2,1792760400,BB,pinnacle,,,ws_scan,,,5759370
+2026-10-22T12:42:46Z,football,Israel Leumit League,Hapoel Kfar Saba FC,Hapoel Afula FC,,,客胜,1x2,2.53,0,2.3747,6.54,0,2,1792760400,ALL,pinnacle,,,ws_scan,,,5759362
+2026-10-22T12:42:46Z,football,Algeria Ligue 1,JS El Biar,MC Oran,,,和局,1x2,2.88,0,2.3747,21.28,0,2,1792764900,ALL,pinnacle,,,ws_scan,,,5392717
+2026-10-22T12:42:46Z,football,Algeria Ligue 1,JS El Biar,MC Oran,,,上半场客胜,ht,5.0,0,4.2499,17.65,0,2,1792764900,ALL,pinnacle,,,ws_scan,,,5392717
+2026-10-22T12:42:46Z,football,Israel Leumit League,Hapoel Rishon Lezion FC,Hapoel Kfar Shalem FC,,,客胜,1x2,3.33,0,2.3747,40.23,0,2,1792760400,ALL,pinnacle,,,ws_scan,,,5759367
+2026-10-22T12:42:46Z,football,Israel Leumit League,Hapoel Rishon Lezion FC,Hapoel Kfar Shalem FC,,,让球客胜,hc,1.92,0,1.8148,5.8,0,2,1792760400,ALL,pinnacle,,,ws_scan,,+0.5,5759367
+2026-10-22T12:42:52Z,football,Israel Leumit League,Hapoel Acre FC,Hapoel Raanana FC,,,主胜,1x2,6.15,0,4.5364,35.57,0,2,1792760400,BB,pinnacle,,,pin_drop,,,5759370
+2026-10-22T12:42:52Z,football,Algeria Ligue 1,JS El Biar,MC Oran,,,小球,ou,1.84,0,1.7612,4.48,0,2,1792764900,ALL,pinnacle,,,pin_drop,,2.0,5392717
+2026-10-22T12:43:49Z,football,Israel Leumit League,Hapoel Kfar Saba FC,Hapoel Afula FC,,,主胜,1x2,2.47,0,2.3747,4.01,0,2,1792760400,ALL,pinnacle,,,ws_scan,,,5759362
+2026-10-22T12:45:08Z,football,Algeria Ligue 1,JS El Biar,MC Oran,,,双重机会-主/和局,dc,1.38,0,1.3333,3.5,0,2,1792764900,ALL,pinnacle,,,ws_scan,,,5392717
+2026-10-22T12:47:44Z,football,Israel Leumit League,Hapoel Acre FC,Hapoel Raanana FC,,,让球主胜,hc,1.86,0,1.7612,5.61,0,2,1792760400,BB,pinnacle,,,pin_drop,,+1,5759370
+2026-10-22T12:47:51Z,football,Algeria Ligue 1,JS El Biar,MC Oran,,,主胜,1x2,2.45,0,2.3747,3.17,0,2,1792764900,ALL,pinnacle,,,ws_scan,,,5710206
+2026-10-22T12:47:51Z,football,Algeria Ligue 1,JS El Biar,MC Oran,,,客胜,1x2,3.31,0,2.3747,39.38,0,2,1792764900,ALL,pinnacle,,,ws_scan,,,5710206
+2026-10-22T12:51:59Z,football,UAE Presidents Cup,Fujairah FC,Al Wahda FC,,,双重机会-和局/客,dc,1.03,0,1.0,3.0,0,3,1792760100,BB,pinnacle,,,ws_scan,,,5759189
+2026-10-22T12:51:59Z,football,UAE Presidents Cup,Fujairah FC,Al Wahda FC,,,双重机会-主/客,dc,1.09,0,1.036,5.21,0,3,1792760100,BB,pinnacle,,,ws_scan,,,5759189
+2026-10-22T12:53:46Z,football,Spain Primera Division RFEF,CE Europa,Real Zaragoza,,,双重机会-和局/客,dc,1.14,0,1.0603,7.51,0,1,1792782900,ALL,pinnacle,,,ws_scan,,,5782042
+2026-10-22T12:54:46Z,football,Saudi Arabia Professional League,NEOM SC,Abha Club,,,双重机会-主/和局,dc,1.12,0,1.0383,7.87,0,3,1792850400,ALL,pinnacle,,,ws_scan,,,5446331
+2026-10-22T13:00:32Z,football,Sweden Allsvenskan,GAIS,IFK Goteborg,,,上半场主胜,ht,2.84,0,2.3747,19.59,0,2,1792933200,ALL,pinnacle,,,ws_scan,,,4794686
+2026-10-22T13:00:43Z,football,Sweden Allsvenskan,GAIS,IFK Goteborg,,,双重机会-主/和局,dc,1.37,0,1.3333,2.75,0,2,1792933200,ALL,pinnacle,,,ws_scan,,,4794686
+2026-10-22T13:00:43Z,football,Sweden Allsvenskan,GAIS,IFK Goteborg,,,双重机会-和局/客,dc,1.67,0,1.579,5.76,0,2,1792933200,ALL,pinnacle,,,ws_scan,,,4794686
+2026-10-22T13:01:09Z,football,Uruguay Primera Division,Montevideo Wanderers,CA Progreso,,,上半场主胜,ht,2.9,0,2.3747,22.12,0,3,1792933200,ALL,pinnacle,,,ws_scan,,,5772135
+2026-10-22T13:02:30Z,tennis,World Tennis - M15 Maceio Men Singles,Paulo Andre Saraiva Dos Santos (BRA),Joao Victor Couto Loureiro (BRA),,,客胜,1x2,3.72,0,3.2208,15.5,0,3,1792681200,BB,pinnacle,,,ws_scan,,,5789267
+2026-10-22T13:03:19Z,football,England National League South,Farnham Town,Braintree Town FC,,,上半场客胜,ht,4.13,0,4.0437,2.13,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5322195
+2026-10-22T13:03:19Z,football,Israel Premier League,Maccabi Haifa FC,Hapoel Beer Sheva FC,,,双重机会-主/和局,dc,1.44,0,1.3923,3.43,0,2,1793034000,ALL,pinnacle,,,pin_drop,,,5777547
+2026-10-22T13:03:23Z,basketball,France LNB,Saint Quentin,JDA Dijon Basket,,,上半场主胜,ht,2.56,0,2.465,3.85,0,2,1792778400,BB,pinnacle,,,ws_scan,,,5758592
+2026-10-22T13:03:23Z,football,Israel Premier League,Maccabi Haifa FC,Hapoel Beer Sheva FC,,,和局,1x2,3.78,0,2.3747,59.18,0,2,1793034000,ALL,pinnacle,,,ws_scan,,,5777547
+2026-10-22T13:03:23Z,football,Israel Premier League,Maccabi Haifa FC,Hapoel Beer Sheva FC,,,上半场主胜,ht,2.93,0,2.3747,23.38,0,2,1793034000,ALL,pinnacle,,,ws_scan,,,5777547
+2026-10-22T13:03:50Z,tennis,World Tennis - W50 Cherbourg En Cotentin Women Singles,Liv Boulard (FRA),Katarina Zavatska (UKR),,,让盘主胜,hc,2.62,0,2.3747,10.33,0,3,1792674480,BB,pinnacle,,,ws_scan,,+1.5,5782216
+2026-10-22T13:03:51Z,tennis,World Tennis - M15 Maceio Men Singles,Paulo Andre Saraiva Dos Santos (BRA),Joao Victor Couto Loureiro (BRA),,,上半场客胜,ht,3.42,0,3.2208,6.18,0,3,1792681200,BB,pinnacle,,,ws_scan,,,5789267
+2026-10-22T13:10:00Z,football,Israel Premier League,Maccabi Haifa FC,Hapoel Beer Sheva FC,,,客胜,1x2,2.52,0,2.4636,2.29,0,2,1793034000,ALL,pinnacle,,,ws_scan,,,5777547
+2026-10-22T13:11:15Z,football,UEFA Europa League,Union Saint Gilloise,Hapoel Beer Sheva FC,,,和局,1x2,5.35,0,2.3747,125.29,0,3,1792687502,ALL,pinnacle,,,ws_scan,,,5764559
+2026-10-22T13:11:15Z,football,UEFA Europa League,Union Saint Gilloise,Hapoel Beer Sheva FC,,,双重机会-和局/客,dc,3.2,0,2.3747,34.75,0,3,1792687502,ALL,pinnacle,,,ws_scan,,,5764559
+2026-10-22T13:11:55Z,football,Chile Primera B,San Luis de Quillota,Deportes Recoleta,,,双重机会-和局/客,dc,2.43,0,2.3747,2.33,0,3,1792873800,ALL,pinnacle,,,ws_scan,,,5780194
+2026-10-22T13:12:14Z,football,Saudi Arabia Professional League,AL Hazem FC,AL Fayha FC,,,上半场客胜,ht,4.14,0,4.0437,2.38,0,3,1792676400,ALL,pinnacle,,,pin_drop,,,5764496
+2026-10-22T13:12:46Z,football,Chile Primera B,San Luis de Quillota,Deportes Recoleta,,,和局,1x2,4.17,0,4.0711,2.43,0,3,1792873800,ALL,pinnacle,,,pin_drop,,,5780194
+2026-10-22T13:13:13Z,tennis,ATP Challenger - Lisbon Open,Andrea Pellegrino (ITA),Francesco Passaro (ITA),,,主胜,1x2,2.91,0,2.3747,22.54,0,3,1792675800,BB,pinnacle,,,ws_scan,,,5782225
+2026-10-22T13:13:18Z,football,Chile Primera B,San Luis de Quillota,Deportes Recoleta,,,客胜,1x2,5.5,0,4.0936,34.36,0,3,1792873800,ALL,pinnacle,,,pin_drop,,,5764972

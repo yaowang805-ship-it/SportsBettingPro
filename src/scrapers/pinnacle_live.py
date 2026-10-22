@@ -852,13 +852,13 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
             # 2026-09-20 diff 从「跳过」改「半额投注」后, 也必须过滤 EV 上下限——
             # 之前只拦高 EV(>20% 线错配假EV), 漏了负 EV: 负 EV diff(如 -14%) 也进观察库污染统计
             # (2026-09-21 修: 补 ev < threshold 下限, 与 same 同口径)。
-            if ev < threshold or ev > 20.0:
+            if ev < threshold or ev > 12.0:
                 return []
             base["sbo_confirm"] = False
             base["sbo_direction"] = "diff"
             return [base]
-        if ev < threshold or ev > 20.0:
-            # 2026-09-20 上限 12%→20%(与早盘对齐): 让球真edge能到+7.6pp, 12%会误伤; 20%仍挡+50%线错配假EV
+        if ev < threshold or ev > 12.0:
+            # 2026-10-22 上限 20%→12%(12-20%桶冷门假EV负: 滚球-2.1%/早盘-10.1%), 早盘同改对齐。
             return []
         base["sbo_confirm"] = (_sbo_dir == 'same')
         base["sbo_direction"] = _sbo_dir

@@ -27,22 +27,8 @@
     "daily_stake_date": "2026-10-18",
     "limit_removed": false
   },
-  "basketball|1x2|客|*|early": {
-    "first_released_at": "2026-10-18T14:02:50.524732",
-    "cap": 300,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-18",
-    "limit_removed": false
-  },
   "tennis|hc|主|*|early": {
     "first_released_at": "2026-10-18T14:02:50.524736",
-    "cap": 300,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-18",
-    "limit_removed": false
-  },
-  "tennis|hc|客|*|early": {
-    "first_released_at": "2026-10-18T14:02:50.524740",
     "cap": 300,
     "daily_stake": 0,
     "daily_stake_date": "2026-10-18",
@@ -57,34 +43,6 @@
   },
   "football|ht|主|60-70%|early": {
     "first_released_at": "2026-10-18T14:02:50.524748",
-    "cap": 300,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-18",
-    "limit_removed": false
-  },
-  "football|ou|小|50-55%|early": {
-    "first_released_at": "2026-10-18T14:02:50.524751",
-    "cap": 300,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-18",
-    "limit_removed": false
-  },
-  "football|ou|大|50-55%|early": {
-    "first_released_at": "2026-10-18T14:02:50.524754",
-    "cap": 300,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-18",
-    "limit_removed": false
-  },
-  "football|ou|小|55-60%|early": {
-    "first_released_at": "2026-10-18T14:02:50.524758",
-    "cap": 300,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-18",
-    "limit_removed": false
-  },
-  "football|ou|大|55-60%|early": {
-    "first_released_at": "2026-10-18T14:02:50.524776",
     "cap": 300,
     "daily_stake": 0,
     "daily_stake_date": "2026-10-18",
@@ -202,13 +160,6 @@
     "daily_stake_date": "2026-10-18",
     "limit_removed": false
   },
-  "football|hc|客|55-60%|early": {
-    "first_released_at": "2026-10-18T14:02:50.524885",
-    "cap": 100,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-18",
-    "limit_removed": false
-  },
   "football|hc|客|60-70%|early": {
     "first_released_at": "2026-10-18T14:02:50.524888",
     "cap": 100,
@@ -232,13 +183,6 @@
   },
   "basketball|ou|大|55-65%|early": {
     "first_released_at": "2026-10-18T14:02:50.524899",
-    "cap": 100,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-10-18",
-    "limit_removed": false
-  },
-  "basketball|1x2|客|<45%|early": {
-    "first_released_at": "2026-10-18T14:02:50.524902",
     "cap": 100,
     "daily_stake": 0,
     "daily_stake_date": "2026-10-18",
