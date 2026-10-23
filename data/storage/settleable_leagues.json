@@ -581,7 +581,7 @@
       "success_rate": 0.0
     },
     "英格兰北部超级联赛甲组": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1256,7 +1256,7 @@
       "success_rate": 0.0
     },
     "英格兰足总杯-资格赛": {
-      "attempts": 1,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1629,9 +1629,24 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "欧洲篮球杯": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "泰国足总杯": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "乌拉圭篮球联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-10-22T13:15:03.210220+00:00",
+  "updated": "2026-10-23T09:00:23.790634+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
