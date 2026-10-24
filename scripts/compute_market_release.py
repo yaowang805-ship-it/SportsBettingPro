@@ -204,7 +204,6 @@ MANUAL_OBSERVE_BLOCK = {
     "football|dc|1X|>70%|live",
     "football|ou|小|55-60%|live",
     # 2026-10-22 撤早盘 CLV+纸面ROI 双负(假溢价)。
-    "football|dc|X2|55-60%|early",
     "football|dc|X2|60-70%|early",
     "football|dc|12|>70%|early",
     # 2026-10-22 撤早盘: 实盘负/校准负/CLV负(逆向选择或假溢价)。
@@ -279,7 +278,8 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 依据 = 结果锚校准 ROI(下注时公平价高估被修正后仍为正), cap 100 试探控风险(实盘冻结期检验)。
     "football|dc|1X|60-70%|early": 100,
     "football|dc|1X|>70%|early": 100,
-    # 2026-10-22 撤 X2 55-60%/60-70% + 12 >70%: CLV与纸面ROI双负(假溢价), 交还数据驱动判据。
+    # 2026-10-24 复开 X2 55-60%: 实盘+27.3%(22注+353.7元), 纸面-40.2%是低EV样本假负, 交还实盘判据。
+    "football|dc|X2|55-60%|early": 100,
     "football|dc|X2|>70%|early": 100,
     "football|1x2|客|40-50%|early": 100,
     "football|1x2|客|60-70%|early": 100,

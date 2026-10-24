@@ -96,7 +96,7 @@ _BB_SPORT_TO_OA_ID = {"football": 1, "basketball": 3, "tennis": 5, "baseball": 7
                        "badminton": 47}  # 2026-09-27 补冰球/排球/乒乓/MMA/拳击/羽毛球(之前只5运动, 早盘这6运动收集了但没比价)
 
 
-def _oa_fair(entry, sport, sub, target_line=None, use_rest=None, status=None):
+def _oa_fair(entry, sport, sub, target_line=None, use_rest=None, status=None, calibrate=True):
     """三锚共识公平价(2026-10-11 切回): Pinnacle 0.5 + Betfair 0.3 + SBO 0.2。
 
     2026-09-26 曾退化为 Betfair 单锚(pinnapi 免费 100次/天, 额度用完就 429 退化)。现在用户已买
@@ -131,10 +131,12 @@ def _oa_fair(entry, sport, sub, target_line=None, use_rest=None, status=None):
         from src.scrapers.fair_calibration import calibrate_fair
         _fair = dict(res["fair"])
         # 2026-10-19 补 dc 键(1X/12/X2): dc 从 1x2 合成, 合成时带进热门高估, 之前漏校准致 dc edge 虚高
-        for _k in ("home", "draw", "away", "over", "under", "1X", "12", "X2"):
-            _v = _fair.get(_k)
-            if isinstance(_v, (int, float)) and _v > 1:
-                _fair[_k] = calibrate_fair(_v, market="prematch")
+        # 2026-10-24 Drop 传 calibrate=False: 取消结果锚校准(校准表过拟合把去水效果抵消), 直接 Shin 去水
+        if calibrate:
+            for _k in ("home", "draw", "away", "over", "under", "1X", "12", "X2"):
+                _v = _fair.get(_k)
+                if isinstance(_v, (int, float)) and _v > 1:
+                    _fair[_k] = calibrate_fair(_v, market="prematch")
         return _fair
     return None
 
@@ -1622,7 +1624,7 @@ def _build_oa_entry(m, sport):
     }
 
 
-def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
+def _oa_add_markets(entry, bb, sport, use_rest=None, status=None, calibrate=True):
     """给 entry 加各盘口的 Betfair 公平价机会(替代 Pin 比价)。只产 ev>1 的机会。
 
     use_rest: 透传给 _oa_fair → fair_price_bb(早盘 WS 触发传 False 只读 WS 缓存不 REST)。
@@ -1635,7 +1637,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
     # --- 1x2 (全场独赢) ---
     bb_ml, valid = extract_bb_1x2(bb, sport)
     if valid:
-        oa_ml = _oa_fair(entry, sport, "1x2", use_rest=use_rest, status=status)
+        oa_ml = _oa_fair(entry, sport, "1x2", use_rest=use_rest, status=status, calibrate=calibrate)
         if oa_ml:
             keys = ["home", "draw", "away"] if n_ml == 3 else ["home", "away"]
             for i in range(n_ml):
@@ -1664,7 +1666,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
         if bb_hl is not None and abs(float(bb_hl) * 2 - round(float(bb_hl) * 2)) > 1e-6:
             bb_hl = None
         if bb_hl is not None:
-            oa_hc = _oa_fair(entry, sport, "hc", target_line=bb_hl, use_rest=use_rest, status=status)
+            oa_hc = _oa_fair(entry, sport, "hc", target_line=bb_hl, use_rest=use_rest, status=status, calibrate=calibrate)
             if oa_hc and oa_hc.get("home") and oa_hc.get("away"):
                 bf_line = oa_hc.get("line")
                 # 2026-09-27 线容差 0.25→0.01(对齐滚球): 0.25 容差会放行 BB线0.5 配 Betfair线0.25 的错配假EV
@@ -1697,7 +1699,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
         if abs(_ou_l * 2 - round(_ou_l * 2)) > 1e-6:
             bb_ou = None
     if bb_ou and bb_ou.get("line") is not None:
-        oa_ou = _oa_fair(entry, sport, "ou", target_line=bb_ou["line"], use_rest=use_rest, status=status)
+        oa_ou = _oa_fair(entry, sport, "ou", target_line=bb_ou["line"], use_rest=use_rest, status=status, calibrate=calibrate)
         if oa_ou and oa_ou.get("over") and oa_ou.get("under"):
             bf_line = oa_ou.get("line")
             # 2026-09-27 线容差 0.25→0.01(对齐滚球): 0.25 容差会放行 BB线 配 Betfair线 差0.25 的错配假EV
@@ -1726,7 +1728,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
     bb_ht = bb.get("odds_ht", {})
     ht_ml = bb_ht.get("ml")
     if ht_ml:
-        oa_ht = _oa_fair(entry, sport, "ht", use_rest=use_rest, status=status)
+        oa_ht = _oa_fair(entry, sport, "ht", use_rest=use_rest, status=status, calibrate=calibrate)
         if oa_ht:
             keys = ["home", "draw", "away"] if sport == "football" else ["home", "away"]
             ht_labels = ([f"上半场主胜", f"上半场和局", f"上半场客胜"] if sport == "football"
@@ -1746,7 +1748,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
     # --- ht_ou (上半场大小) ---
     ht_ou = bb_ht.get("total")
     if ht_ou and ht_ou.get("line") is not None:
-        oa_htou = _oa_fair(entry, sport, "ht_ou", target_line=ht_ou["line"], use_rest=use_rest, status=status)
+        oa_htou = _oa_fair(entry, sport, "ht_ou", target_line=ht_ou["line"], use_rest=use_rest, status=status, calibrate=calibrate)
         if oa_htou and oa_htou.get("over") and oa_htou.get("under"):
             bf_line = oa_htou.get("line")
             if bf_line is not None and abs(float(ht_ou["line"]) - float(bf_line)) <= 0.25:
@@ -1772,7 +1774,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
         if ht_hl is not None and abs(float(ht_hl) * 2 - round(float(ht_hl) * 2)) > 1e-6:
             ht_hl = None  # quarter-ball 过滤(对齐滚球)
         if ht_hl is not None:
-            oa_hthc = _oa_fair(entry, sport, "ht_hc", target_line=ht_hl, use_rest=use_rest, status=status)
+            oa_hthc = _oa_fair(entry, sport, "ht_hc", target_line=ht_hl, use_rest=use_rest, status=status, calibrate=calibrate)
             if oa_hthc and oa_hthc.get("home") and oa_hthc.get("away"):
                 bf_line = oa_hthc.get("line")
                 if bf_line is not None and abs(float(ht_hl) - float(bf_line)) <= 0.01:
@@ -1794,7 +1796,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None):
     # --- dc (双重机会) ---
     bb_dc = bb.get("odds_dc", [])
     if len(bb_dc) >= 3 and n_ml == 3:
-        oa_dc = _oa_fair(entry, sport, "dc", use_rest=use_rest, status=status)
+        oa_dc = _oa_fair(entry, sport, "dc", use_rest=use_rest, status=status, calibrate=calibrate)
         if oa_dc:
             dc_labels = ["双重机会-主/和局", "双重机会-和局/客", "双重机会-主/客"]
             dc_keys = ["1X", "X2", "12"]  # BB 顺序 [1X(主/和), 2X(和/客)=Betfair X2, 12(主/客)]

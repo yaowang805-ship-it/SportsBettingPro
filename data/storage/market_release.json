@@ -185,6 +185,13 @@
    "大",
    "55-65%",
    "live"
+  ],
+  [
+   "football",
+   "dc",
+   "X2",
+   "55-60%",
+   "early"
   ]
  ],
  "observe_blocked": [
@@ -1151,13 +1158,6 @@
    "football",
    "dc",
    "X2",
-   "55-60%",
-   "early"
-  ],
-  [
-   "football",
-   "dc",
-   "X2",
    "60-70%",
    "early"
   ],
@@ -1251,7 +1251,8 @@
   "football|hc|客|40-50%|live": 30,
   "football|ou|小|40-50%|live": 30,
   "football|ou|小|50-55%|live": 30,
-  "basketball|ou|大|55-65%|live": 30
+  "basketball|ou|大|55-65%|live": 30,
+  "football|dc|X2|55-60%|early": 100
  },
  "direction_released": [],
  "direction_blocked": [],

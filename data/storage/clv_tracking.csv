@@ -8651,3 +8651,9 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-24T01:15:29Z,ice_hockey,NHL,Columbus Blue Jackets,Vegas Golden Knights,,,上半场客胜,ht,2.43,0,2.2512,7.94,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651957
 2026-10-24T01:15:31Z,tennis,WTA - Tokyo Open,Hayu Kinoshita (JPN),Yulia Putintseva (KAZ),,,让盘客胜,hc,1.38,0,1.2986,6.27,0,2,1792818000,BB,pinnacle,,,ws_scan,,-1.5,5796093
 2026-10-24T01:17:00Z,basketball,Japan B.League Premier,Hiroshima Dragonflies,Levanga Hokkaido,,,客胜,1x2,2.77,0,2.5295,9.51,0,3,1792818300,BB,pinnacle,,,drop,,,5309900
+2026-10-24T01:17:40Z,football,Japan J.League 3,Thespa Gunma,Kamatamare Sanuki,,,上半场小球,ht_ou,2.13,0,2.0406,4.38,0,4,1792818000,ALL,pinnacle,,,ws_scan,,1.25,5359585
+2026-10-24T01:20:03Z,ice_hockey,Sweden Hockey League,Linkopings HC,HC Orebro,,,上半场主胜,ht,2.62,0,2.3577,11.13,0,3,1792847700,BB,pinnacle,,,ws_scan,,,5649494
+2026-10-24T01:20:03Z,ice_hockey,Sweden Hockey League,Linkopings HC,HC Orebro,,,上半场客胜,ht,3.01,0,2.4546,22.63,0,3,1792847700,BB,pinnacle,,,ws_scan,,,5649494
+2026-10-24T01:20:03Z,ice_hockey,Sweden Hockey League,IF Bjorkloven,Skelleftea AIK,,,上半场主胜,ht,3.93,0,2.5775,52.47,0,3,1792847700,BB,pinnacle,,,ws_scan,,,5764660
+2026-10-24T01:20:03Z,ice_hockey,Sweden Hockey League,IF Bjorkloven,Skelleftea AIK,,,上半场客胜,ht,2.18,0,1.5883,37.25,0,3,1792847700,BB,pinnacle,,,ws_scan,,,5764660
+2026-10-24T01:20:46Z,tennis,ATP - Brussels Open,Arthur Fils (FRA),Jan Lennard Struff (GER),,,上半场主胜,ht,1.27,0,1.2,5.83,0,2,1792859400,BB,pinnacle,,,ws_scan,,,5797480

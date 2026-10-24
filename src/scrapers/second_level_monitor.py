@@ -2334,7 +2334,7 @@ class SecondLevelMonitor:
                 min_trig_ts = _ts
             sport = m.get('sport') or trig.get('sport') or 'football'
             entry = _build_oa_entry(m, sport)
-            _oa_add_markets(entry, m, sport, use_rest=False, status='prematch')
+            _oa_add_markets(entry, m, sport, use_rest=False, status='prematch', calibrate=False)  # 2026-10-24 Drop 取消结果锚校准, 直接 Shin 去水
             _league = entry.get('league', '')
             _epoch = entry.get('start_time_pin_epoch', 0)
             _has_ev = False  # 入库观察库: ev>0 全收(与 WS 同口径)
