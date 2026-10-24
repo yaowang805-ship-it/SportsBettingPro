@@ -322,9 +322,12 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         # (get_min_ev 直接盘3%/dc 3%/特殊盘4%, 另有方向级覆盖), 把 2~4% 档机会扫进来又在下单时拒掉。
         _min_ev = opp.get("_min_ev")
         if _min_ev is None:
-            from config.weight_matrix_v5 import get_min_ev
-            _min_ev = get_min_ev(opp.get("sport", ""), opp.get("league_cn") or opp.get("league", ""),
-                                 _sub_market_to_key(sub), odds)
+            if trigger_source == "pin_drop":
+                _min_ev = 2.5  # 2026-10-24 Drop 投注门槛统一 2.5%(校准取消后真实EV2-3%, 3%门槛太高)
+            else:
+                from config.weight_matrix_v5 import get_min_ev
+                _min_ev = get_min_ev(opp.get("sport", ""), opp.get("league_cn") or opp.get("league", ""),
+                                     _sub_market_to_key(sub), odds)
         _t0 = time.time()
         code, order_id, msg = place_single_bet(
             market_id, odds, option_type, stake, token=token, domain=domain, match_id=match_id,

@@ -2366,7 +2366,7 @@ class SecondLevelMonitor:
         if entries:
             try:
                 from src.monitor.clv_collector import log_oa_opportunities
-                log_oa_opportunities(entries, min_ev=5.0, source="drop")
+                log_oa_opportunities(entries, min_ev=2.5, source="drop")
             except Exception:
                 pass
         if not opps:

@@ -8755,3 +8755,21 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-24T02:13:34Z,football,England FA Trophy,Deal Town,Hashtag United,,,上半场让球客胜,ht_hc,1.96,0,1.8532,5.76,0,3,1792850400,ALL,pinnacle,,,drop,,-0.5,5683673
 2026-10-24T02:14:01Z,tennis,WTA - Tokyo Open,Ena Shibahara (JPN),Alycia Parks (USA),,,让盘客胜,hc,2.67,0,2.4568,8.68,0,2,1792809900,BB,pinnacle,,,ws_scan,,-1.5,5795413
 2026-10-24T02:15:30Z,tennis,WTA - Guangzhou Open,Tatiana Prozorova (RUS),Ekaterine Gorgodze (GEO),,,上半场主胜,ht,1.27,0,1.2,5.83,0,2,1792819200,BB,pinnacle,,,ws_scan,,,5795962
+2026-10-24T02:29:55Z,football,Argentina Primera Nacional,Quilmes AC,San Martin de Tucuman,,,上半场主胜,ht,2.86,0,2.5687,11.34,0,2,1792872000,ALL,pinnacle,,,ws_scan,,,5773998
+2026-10-24T02:31:26Z,tennis,WTA - Tokyo Open,Kimberly Birrell (AUS),Aoi Ito (JPN),,,客胜,1x2,3.08,0,2.5389,21.31,0,2,1792818300,BB,pinnacle,,,ws_scan,,,5795422
+2026-10-24T02:33:24Z,tennis,ATP Challenger - Fort Worth Open,Sander Jong (NED),Darwin Blanch (USA),,,主胜,1x2,2.65,0,2.5052,5.78,0,3,1792872000,BB,pinnacle,,,ws_scan,,,5797809
+2026-10-24T02:34:01Z,basketball,Japan B.League Premier,Akita Northern Happinets,Yokohama B Corsairs,,,客胜,1x2,1.35,0,1.2364,9.19,0,3,1792821600,BB,pinnacle,,,ws_scan,,,5309908
+2026-10-24T02:34:37Z,tennis,ATP Challenger - Lisbon Open,Svyatoslav Gulin (RUS),Elmer Moller (DEN),,,主胜,1x2,2.75,0,2.4546,12.03,0,3,1792840200,BB,pinnacle,,,ws_scan,,,5796839
+2026-10-24T02:37:19Z,tennis,WTA - Tokyo Open,Ena Shibahara (JPN),Alycia Parks (USA),,,让盘客胜,hc,2.6,0,2.4568,5.83,0,2,1792810200,BB,pinnacle,,,ws_scan,,-1.5,5795413
+2026-10-24T02:39:44Z,tennis,World Tennis - M15 Bol Men Singles,Viacheslav Bielinskyi (UKR),Alessio Basile (BEL),,,客胜,1x2,3.56,0,2.9522,20.59,0,3,1792825200,BB,pinnacle,,,ws_scan,,,5797796
+2026-10-24T02:40:12Z,football,England FA Trophy,Weymouth FC,Sholing FC,,,客胜,1x2,2.62,0,2.4546,6.74,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683666
+2026-10-24T02:40:12Z,football,England FA Trophy,Weymouth FC,Sholing FC,,,双重机会-主/客,dc,1.24,0,1.2,3.33,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683666
+2026-10-24T02:40:30Z,basketball,NBA,Philadelphia 76ers,Milwaukee Bucks,,,主胜,1x2,1.16,0,1.0833,7.08,0,1,1792884600,ALL,pinnacle,,,ws_scan,,,5439609
+2026-10-24T02:42:14Z,tennis,World Tennis - M15 Monastir Men Singles,Robin Bertrand (FRA),Liam Gavrielides (GER),,,客胜,1x2,2.88,0,2.4681,16.69,0,3,1792832400,BB,pinnacle,,,ws_scan,,,5796328
+2026-10-24T02:44:38Z,tennis,World Tennis - M15 Bol Men Singles,Viacheslav Bielinskyi (UKR),Alessio Basile (BEL),,,上半场客胜,ht,3.31,0,2.9522,12.12,0,3,1792825200,BB,pinnacle,,,ws_scan,,,5797796
+2026-10-24T02:47:29Z,tennis,WTA - Guangzhou Open,Joanna Garland (TPE),Maddison Inglis (AUS),,,让盘客胜,hc,2.6,0,2.4546,5.92,0,2,1792823400,BB,pinnacle,,,ws_scan,,-1.5,5795723
+2026-10-24T02:49:18Z,basketball,Korea Basketball League,Mobis Phoebus,Samsung Thunders,,,主胜,1x2,3.27,0,2.5453,28.47,0,3,1792827000,ALL,pinnacle,,,ws_scan,,,5764361
+2026-10-24T02:49:57Z,basketball,Korea Basketball League,Mobis Phoebus,Samsung Thunders,,,上半场主胜,ht,2.66,0,2.5453,4.51,0,3,1792827000,ALL,pinnacle,,,pin_drop,,,5764361
+2026-10-24T02:53:46Z,football,Japan Football League,Maruyasu Okazaki,Briobecca Urayasu,,,双重机会-主/客,dc,1.33,0,1.2918,2.95,0,3,1792814400,ALL,pinnacle,,,pin_drop,,,5518984
+2026-10-24T02:55:27Z,basketball,Australia NBL,Illawarra Hawks,Brisbane Bullets,,,客胜,1x2,2.52,0,2.4546,2.66,0,3,1792823400,ALL,pinnacle,,,pin_drop,,,5074441
+2026-10-24T02:56:23Z,tennis,WTA - Tokyo Open,Kimberly Birrell (AUS),Aoi Ito (JPN),,,客胜,1x2,3.08,0,2.5389,21.31,0,2,1792819800,BB,pinnacle,,,ws_scan,,,5795422
