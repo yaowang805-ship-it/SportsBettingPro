@@ -9005,3 +9005,13 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-24T07:41:46Z,football,Brazil Campeonato Gaucho A2,Passo Fundo,APAFUT,,,小球,ou,1.85,0,1.7924,3.21,0,3,1792868400,ALL,pinnacle,,,drop,,2.0,5764960
 2026-10-24T07:44:06Z,football,Andorra Primera Division,SC Escaldes,Casa De Portugal,,,客胜,1x2,1.32,0,1.2652,4.33,0,2,1792866600,BB,pinnacle,,,pin_drop,,,5780793
 2026-10-24T07:44:06Z,football,Andorra Primera Division,SC Escaldes,Casa De Portugal,,,双重机会-主/客,dc,1.13,0,1.0951,3.19,0,2,1792866600,BB,pinnacle,,,pin_drop,,,5780793
+2026-10-24T07:45:46Z,basketball,Hungary NB I,SZTE Szedeak,Debreceni Eac,,,客胜,1x2,2.55,0,2.4546,3.89,0,3,1792857600,ALL,pinnacle,,,pin_drop,,,5472658
+2026-10-24T07:46:18Z,basketball,Hungary NB I,SZTE Szedeak,Debreceni Eac,,,让分客胜,hc,1.89,0,1.6751,12.83,0,3,1792857600,ALL,pinnacle,,,drop,,+4.5,5472658
+2026-10-24T07:49:05Z,football,Spain Tercera Division,Xerez Deportivo FC,Chiclana,,,双重机会-和局/客,dc,2.54,0,2.4546,3.48,0,4,1792864800,ALL,pinnacle,,,pin_drop,,,5791074
+2026-10-24T07:49:52Z,football,Spain Tercera Division,Xerez Deportivo FC,Chiclana,,,客胜,1x2,6.3,0,5.9988,5.02,0,4,1792864800,ALL,pinnacle,,,ws_scan,,,5791074
+2026-10-24T07:49:52Z,football,Spain Tercera Division,Xerez Deportivo FC,Chiclana,,,和局,1x2,4.07,0,3.8816,4.85,0,4,1792864800,ALL,pinnacle,,,drop,,,5791074
+2026-10-24T07:50:17Z,basketball,Czech Republic NBL Basketball,Sluneta Usti Nad Labem,BK Pardubice,,,主胜,1x2,2.31,0,2.228,3.68,0,3,1792947600,ALL,pinnacle,,,drop,,,5234015
+2026-10-24T07:51:26Z,football,Thailand League 3,Chachoengsao FC,Padriew City,,,上半场小球,ht_ou,2.04,0,1.9631,3.92,0,4,1792839600,ALL,pinnacle,,,pin_drop,,1.0,5795329
+2026-10-24T07:52:02Z,football,Thailand League 3,Ang Thong FC,Singburi Warriors,,,让球主胜,hc,1.91,0,1.7078,11.84,0,4,1792836000,BB,pinnacle,,,drop,,-1.5,5794794
+2026-10-24T07:56:25Z,football,Thailand League 3,Chachoengsao FC,Padriew City,,,让球客胜,hc,1.74,1.4065,1.5565,11.79,100,4,1792839600.0,BB/FB,,,,push,,+0.5,
+2026-10-24T07:56:29Z,football,Malawi Super League,Silver Strikers,Kamuzu Barracks FC,,,让球主胜,hc,1.74,0,1.5887,9.52,0,2,1792846800,ALL,pinnacle,,,drop,,-1,5764536

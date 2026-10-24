@@ -1,5 +1,5 @@
 {
-  "balance": 15142.53,
+  "balance": 15042.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -391,6 +391,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1792771200.0,
       "created_at": "2026-10-23T10:11:17.256727+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_北柳府_帕德里欧城_让球客胜(+05)",
+      "sport": "football",
+      "league": "泰国丙级联赛",
+      "home_team": "北柳府",
+      "away_team": "帕德里欧城",
+      "home_cn": "北柳府",
+      "away_cn": "帕德里欧城",
+      "market": "handicap",
+      "market_type": "让球客胜(+0.5)",
+      "sub_market": "hc",
+      "line": "+0.5",
+      "odds": 1.74,
+      "stake": 100,
+      "model_prob": 0.6425,
+      "ev_pct": 11.79,
+      "pin_odds": 1.4065,
+      "fair_price": 1.5565,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1792839600.0,
+      "created_at": "2026-10-24T07:56:24.905861+00:00",
       "track_only": false
     }
   ],
@@ -11531,8 +11554,8 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-10-23",
-    "used": 30.0,
+    "date": "2026-10-24",
+    "used": 100.0,
     "bets": 1
   },
   "updated": null
