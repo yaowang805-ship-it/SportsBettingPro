@@ -2924,19 +2924,21 @@ class SecondLevelMonitor:
 
 def _append_real_bet(order_id, info):
     """下单成功: 写入实盘库(real_bets.json), 记录下单时 odds/fair/ev/stake/比赛等。"""
+    from src.scrapers.bet_file_lock import REAL_BETS_LOCK
     try:
-        d = {}
-        if REAL_BETS_FILE.exists():
-            try:
-                d = json.loads(REAL_BETS_FILE.read_text())
-            except Exception:
-                d = {}
-        d.setdefault("bets", {})[str(order_id)] = {
-            "ts": time.time(), **info,
-            "result": None, "profit": None, "settled_ts": None,
-        }
-        REAL_BETS_FILE.parent.mkdir(parents=True, exist_ok=True)
-        REAL_BETS_FILE.write_text(json.dumps(d, ensure_ascii=False))
+        with REAL_BETS_LOCK:
+            d = {}
+            if REAL_BETS_FILE.exists():
+                try:
+                    d = json.loads(REAL_BETS_FILE.read_text())
+                except Exception:
+                    d = {}
+            d.setdefault("bets", {})[str(order_id)] = {
+                "ts": time.time(), **info,
+                "result": None, "profit": None, "settled_ts": None,
+            }
+            REAL_BETS_FILE.parent.mkdir(parents=True, exist_ok=True)
+            REAL_BETS_FILE.write_text(json.dumps(d, ensure_ascii=False))
     except Exception:
         pass
 
@@ -2947,21 +2949,23 @@ def _settle_real_bet(order_id, pnl, won):
     2026-10-07 修标注 bug: 之前 result = "won" if won else "lost", 而 won=pnl>0,
     走盘退款(pnl=0)被误标成 "lost"。改按 pnl 三态: >0 赢 / <0 输 / =0 走盘退款(push)。
     """
+    from src.scrapers.bet_file_lock import REAL_BETS_LOCK
     try:
-        if not REAL_BETS_FILE.exists():
-            return
-        d = json.loads(REAL_BETS_FILE.read_text())
-        b = d.get("bets", {}).get(str(order_id))
-        if b:
-            b["profit"] = pnl
-            if pnl > 0:
-                b["result"] = "won"
-            elif pnl < 0:
-                b["result"] = "lost"
-            else:
-                b["result"] = "push"  # 走盘退款(pnl=0, BB官方uwl=0)
-            b["settled_ts"] = time.time()
-            REAL_BETS_FILE.write_text(json.dumps(d, ensure_ascii=False))
+        with REAL_BETS_LOCK:
+            if not REAL_BETS_FILE.exists():
+                return
+            d = json.loads(REAL_BETS_FILE.read_text())
+            b = d.get("bets", {}).get(str(order_id))
+            if b:
+                b["profit"] = pnl
+                if pnl > 0:
+                    b["result"] = "won"
+                elif pnl < 0:
+                    b["result"] = "lost"
+                else:
+                    b["result"] = "push"  # 走盘退款(pnl=0, BB官方uwl=0)
+                b["settled_ts"] = time.time()
+                REAL_BETS_FILE.write_text(json.dumps(d, ensure_ascii=False))
     except Exception:
         pass
 

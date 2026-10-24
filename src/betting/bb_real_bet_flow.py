@@ -361,19 +361,21 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
             # 2026-10-18 早盘实盘也写 real_bets(与滚球同库), 供结算 + 未结统计。
             # 之前只写 bet_history → 早盘未结读 tracked_bets.json(旧追踪)冻结在 810, 结算系统也不认早盘注单。
             try:
-                _rb_file = DATA_DIR / "real_bets.json"
-                _rd = json.loads(_rb_file.read_text()) if _rb_file.exists() else {}
-                _rd.setdefault("bets", {})[str(order_id)] = {
-                    "ts": time.time(), "stake": stake,
-                    "fair": opp.get("fair_price") or opp.get("fair"),
-                    "pin_odds": opp.get("pin_odds"),  # 2026-10-22 Pin原价(原始赔率, dc合成无原价为None/0)
-                    "ev": opp.get("ev_pct"), "bb_odds": odds,
-                    "desig": desig, "sub": sub, "home": disp_home, "away": disp_away,
-                    "sport": opp.get("sport"), "verify": True,
-                    "result": None, "profit": None, "settled_ts": None,
-                    "trigger_source": trigger_source,
-                }
-                _rb_file.write_text(json.dumps(_rd, ensure_ascii=False))
+                from src.scrapers.bet_file_lock import REAL_BETS_LOCK
+                with REAL_BETS_LOCK:  # 2026-10-24 早盘独立线程与滚球并发写 real_bets, 加锁防丢单
+                    _rb_file = DATA_DIR / "real_bets.json"
+                    _rd = json.loads(_rb_file.read_text()) if _rb_file.exists() else {}
+                    _rd.setdefault("bets", {})[str(order_id)] = {
+                        "ts": time.time(), "stake": stake,
+                        "fair": opp.get("fair_price") or opp.get("fair"),
+                        "pin_odds": opp.get("pin_odds"),  # 2026-10-22 Pin原价(原始赔率, dc合成无原价为None/0)
+                        "ev": opp.get("ev_pct"), "bb_odds": odds,
+                        "desig": desig, "sub": sub, "home": disp_home, "away": disp_away,
+                        "sport": opp.get("sport"), "verify": True,
+                        "result": None, "profit": None, "settled_ts": None,
+                        "trigger_source": trigger_source,
+                    }
+                    _rb_file.write_text(json.dumps(_rd, ensure_ascii=False))
             except Exception:
                 pass
             _daily_bets += 1; _daily_stake += stake
