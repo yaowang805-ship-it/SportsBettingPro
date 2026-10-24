@@ -8637,3 +8637,17 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-24T01:03:43Z,basketball,Japan B.League Premier,Akita Northern Happinets,Yokohama B Corsairs,,,主胜,1x2,2.82,0,2.4546,14.89,0,2,1792821600,BB,pinnacle,,,ws_scan,,,5309908
 2026-10-24T01:04:49Z,volleyball,Turkey Volleyball Efeler League,Spor Toto SK Ankara,Halkbank Ankara,,,主胜,1x2,2.54,0,2.4546,3.48,0,2,1792846800,BB,pinnacle,,,ws_scan,,,5687371
 2026-10-24T01:05:00Z,tennis,World Tennis - W15 Bol Women Singles,Daria Gorska (POL),Mia Horvit (USA),,,客胜,1x2,1.23,0,1.2,2.5,0,3,1792825200,BB,pinnacle,,,ws_scan,,,5797788
+2026-10-24T01:11:10Z,tennis,ATP - Almaty Open,Nikoloz Basilashvili (GEO),Stefanos Tsitsipas (GRE),,,上半场主胜,ht,2.51,0,2.4546,2.26,0,2,1792836000,BB,pinnacle,,,ws_scan,,,5795298
+2026-10-24T01:12:15Z,football,Austria Landesliga,Lac Inter,Hellas Kagran,,,主胜,1x2,1.54,0,1.3962,10.3,0,4,1792846800,ALL,pinnacle,,,ws_scan,,,5780787
+2026-10-24T01:12:15Z,football,Austria Landesliga,Lac Inter,Hellas Kagran,,,双重机会-主/和局,dc,1.13,0,1.0833,4.31,0,4,1792846800,ALL,pinnacle,,,ws_scan,,,5780787
+2026-10-24T01:12:21Z,football,Norway 3rd Division,NTNUI,Melhus,,,双重机会-和局/客,dc,1.31,0,1.2,9.16,0,4,1792846800,BB,pinnacle,,,ws_scan,,,4907226
+2026-10-24T01:12:24Z,football,Faroe Islands Premier League,B36 Torshavn,KI Klaksvik,,,客胜,1x2,1.71,0,1.5883,7.66,0,2,1792940400,ALL,pinnacle,,,pin_drop,,,5769663
+2026-10-24T01:12:24Z,football,Faroe Islands Premier League,B36 Torshavn,KI Klaksvik,,,双重机会-和局/客,dc,1.16,0,1.0833,7.08,0,2,1792940400,ALL,pinnacle,,,pin_drop,,,5769663
+2026-10-24T01:12:24Z,football,Paraguay Segunda Division,3 de Noviembre,Encarnacion FC,,,主胜,1x2,3.09,0,2.494,23.9,0,3,1792846800,ALL,pinnacle,,,pin_drop,,,5786430
+2026-10-24T01:12:24Z,football,Norway 3rd Division,NTNUI,Melhus,,,主胜,1x2,2.82,0,2.4546,14.89,0,4,1792846800,BB,pinnacle,,,pin_drop,,,4907226
+2026-10-24T01:13:38Z,football,Paraguay Segunda Division,3 de Noviembre,Encarnacion FC,,,双重机会-主/和局,dc,1.76,0,1.3221,33.12,0,3,1792846800,ALL,pinnacle,,,pin_drop,,,5786430
+2026-10-24T01:13:38Z,football,Norway 3rd Division,NTNUI,Melhus,,,双重机会-主/和局,dc,1.73,0,1.2583,37.49,0,4,1792846800,BB,pinnacle,,,pin_drop,,,4907226
+2026-10-24T01:15:29Z,ice_hockey,NHL,Columbus Blue Jackets,Vegas Golden Knights,,,上半场主胜,ht,2.82,0,2.4546,14.89,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651957
+2026-10-24T01:15:29Z,ice_hockey,NHL,Columbus Blue Jackets,Vegas Golden Knights,,,上半场客胜,ht,2.43,0,2.2512,7.94,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651957
+2026-10-24T01:15:31Z,tennis,WTA - Tokyo Open,Hayu Kinoshita (JPN),Yulia Putintseva (KAZ),,,让盘客胜,hc,1.38,0,1.2986,6.27,0,2,1792818000,BB,pinnacle,,,ws_scan,,-1.5,5796093
+2026-10-24T01:17:00Z,basketball,Japan B.League Premier,Hiroshima Dragonflies,Levanga Hokkaido,,,客胜,1x2,2.77,0,2.5295,9.51,0,3,1792818300,BB,pinnacle,,,drop,,,5309900

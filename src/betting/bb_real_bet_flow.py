@@ -297,7 +297,10 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         # 全局冷却(2026-09-08): 跨进程共享时间戳。2026-10-18 早盘 scope=early 独立冷却,
         # 不跟滚球共享(滚球 2s 高频下单让早盘每次等 20-90s → 早盘 WS 触发一轮超 60s)。
         from src.betting.bb_auto_bet import global_bet_cooldown, record_global_bet
-        _wait = global_bet_cooldown(20, 90, scope=("drop" if trigger_source == "pin_drop" else "early"))
+        if trigger_source == "pin_drop":
+            _wait = global_bet_cooldown(3, 8, scope="drop")  # 2026-10-24 Drop 秒级: cooldown 缩短到 3-8s(骤降抢窗口)
+        else:
+            _wait = global_bet_cooldown(20, 90, scope="early")
         if _wait > 0:
             time.sleep(_wait)
             _sleep_total += _wait
