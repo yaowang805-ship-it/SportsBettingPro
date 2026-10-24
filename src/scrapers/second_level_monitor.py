@@ -2821,6 +2821,13 @@ class SecondLevelMonitor:
             print("[slm] 已启动 BB 滚球后台预取(sleep 0.5s, 周期≈2.7s, 下单读缓存)", flush=True)
         except Exception as e:
             print(f"[slm] BB 后台预取启动失败: {type(e).__name__} {str(e)[:80]}", flush=True)
+        # 2026-10-24 早盘 getList 预取: 避免下单时 cache miss 拉全量 20-30s(实测「下单 32.7s」)
+        try:
+            from src.betting.bb_real_bet_flow import start_early_getlist_prefetch
+            start_early_getlist_prefetch(interval=150)
+            print("[slm] 已启动早盘 getList 后台预取(每150s刷新, 下单命中缓存0ms)", flush=True)
+        except Exception as e:
+            print(f"[slm] 早盘 getList 预取启动失败: {type(e).__name__} {str(e)[:80]}", flush=True)
         # 2026-10-18 停用 Betfair 事件列表预取: odds-api.io 已撤(切 pinnapi 单锚),
         # get_events 走 _get 短路返回空, 预取空转。公平价匹配已用 pinnacle_fair_price(WS缓存),
         # 不再依赖 Betfair 事件索引。

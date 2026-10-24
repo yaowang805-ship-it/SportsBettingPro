@@ -8776,3 +8776,29 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-24T02:56:43Z,ice_hockey,Kontinental Hockey League,Lokomotiv Yaroslavl,Severstal Cherepovets,,,上半场小球,ht_ou,1.69,0,1.6438,2.81,0,3,1792936800,BB,pinnacle,,,drop,,1.5,5654457
 2026-10-24T03:00:32Z,tennis,WTA - Guangzhou Open,Polina Iatcenko (RUS),Alexandra Shubladze (RUS),,,主胜,1x2,2.63,0,2.4546,7.15,0,2,1792811100,BB,pinnacle,,,ws_scan,,,5795761
 2026-10-24T03:00:32Z,tennis,World Tennis - M15 Singapore Men Singles,Maxime Janvier (FRA),Kosuke Ogura (JPN),,,上半场主胜,ht,1.34,0,1.2388,8.17,0,3,1792811100,BB,pinnacle,,,ws_scan,,,5797748
+2026-10-24T03:05:53Z,basketball,Qatar Basketball League,Al Khor,Al Wakrah,,,客胜,1x2,1.29,0,1.2174,5.96,0,3,1792854000,ALL,pinnacle,,,drop,,,5764795
+2026-10-24T03:05:53Z,basketball,Qatar Basketball League,Al Khor,Al Wakrah,,,让分主胜,hc,1.81,0,1.7228,5.06,0,3,1792854000,ALL,pinnacle,,,drop,,+9.5,5764795
+2026-10-24T03:06:00Z,tennis,WTA - Tokyo Open,Kimberly Birrell (AUS),Aoi Ito (JPN),,,客胜,1x2,3.08,0,2.5389,21.31,0,2,1792827900,BB,pinnacle,,,ws_scan,,,5795422
+2026-10-24T03:06:21Z,football,Norway 3rd Division,Gneist,Os,,,主胜,1x2,10.2,0,9.3099,9.56,0,4,1792843200,ALL,pinnacle,,,drop,,,4907215
+2026-10-24T03:07:33Z,tennis,WTA - Tokyo Open,Kimberly Birrell (AUS),Aoi Ito (JPN),,,客胜,1x2,3.08,0,2.5389,21.31,0,2,1792820400,BB,pinnacle,,,ws_scan,,,5795422
+2026-10-24T03:08:56Z,football,Japan J.League 3,FC Osaka,Kagoshima United,,,主胜,1x2,3.04,0,2.5295,20.18,0,4,1792818000,ALL,pinnacle,,,pin_drop,,,5359586
+2026-10-24T03:09:00Z,football,Japan J.League 3,FC Osaka,Kagoshima United,,,双重机会-主/和局,dc,1.67,0,1.6059,3.99,0,4,1792818000,ALL,pinnacle,,,drop,,,5359586
+2026-10-24T03:13:16Z,football,Japan Football League,Reinmeer Aomori,Verspah Oita,,,主胜,1x2,2.73,0,2.506,8.94,0,3,1792814400,ALL,pinnacle,,,ws_scan,,,5778550
+2026-10-24T03:14:11Z,basketball,Japan B.League One,Niigata Albirex BB,Iwate Big Bulls,,,让分客胜,hc,1.87,0,1.7712,5.58,0,3,1792818300,BB,pinnacle,,,drop,,-2.5,5326673
+2026-10-24T03:14:16Z,football,Japan J.League,Vissel Kobe,Machida Zelvia,,,主胜,1x2,2.58,0,2.4546,5.11,0,2,1792821600,ALL,pinnacle,,,ws_scan,,,5153564
+2026-10-24T03:16:26Z,basketball,Japan B.League One,Kagawa Five Arrows,Yokohama Excellence,,,客胜,1x2,1.09,0,1.0617,2.67,0,3,1792821900,BB,pinnacle,,,drop,,,5326663
+2026-10-24T03:21:05Z,football,England League Two,Crawley Town,Tranmere Rovers,,,上半场小球,ht_ou,2.12,0,1.9938,6.33,0,2,1792850400,ALL,pinnacle,,,ws_scan,,1.25,5767740
+2026-10-24T03:24:19Z,football,Hong Kong Senior Shield,Tai Po FC,Kitchee SC,,,双重机会-和局/客,dc,1.32,0,1.2572,5.0,0,3,1792839600,BB,pinnacle,,,pin_drop,,,5764209
+2026-10-24T03:29:47Z,football,Japan J.League 3,Thespa Gunma,Kamatamare Sanuki,,,双重机会-主/客,dc,1.28,0,1.2495,2.44,0,4,1792818000,ALL,pinnacle,,,pin_drop,,,5359585
+2026-10-24T03:29:57Z,football,Chile Primera Division,Nublense,Coquimbo Unido,,,主胜,1x2,2.81,0,2.6425,6.34,0,2,1792940400,ALL,pinnacle,,,ws_scan,,,5741090
+2026-10-24T03:30:46Z,football,Chile Primera Division,Nublense,Coquimbo Unido,,,和局,1x2,3.38,0,2.4546,37.7,0,2,1792940400,ALL,pinnacle,,,ws_scan,,,5741090
+2026-10-24T03:30:46Z,football,Chile Primera Division,Nublense,Coquimbo Unido,,,双重机会-主/和局,dc,1.54,0,1.3815,11.47,0,2,1792940400,ALL,pinnacle,,,ws_scan,,,5741090
+2026-10-24T03:30:46Z,football,Chile Primera Division,Nublense,Coquimbo Unido,,,双重机会-和局/客,dc,1.39,0,1.2343,12.61,0,2,1792940400,ALL,pinnacle,,,ws_scan,,,5741090
+2026-10-24T03:32:27Z,football,Japan J.League 3,FC Osaka,Kagoshima United,,,客胜,1x2,2.59,0,2.46,5.28,0,4,1792818000,ALL,pinnacle,,,ws_scan,,,5359586
+2026-10-24T03:35:00Z,football,Japan Football League,Criacao Shinjuku,Minebea Mitsumi FC,,,让球客胜,hc,1.96,0,1.8506,5.91,0,3,1792814400,ALL,pinnacle,,,drop,,+0.5,5518981
+2026-10-24T03:36:28Z,tennis,World Tennis - M15 Bol Men Singles,Nico Hipfl (AUT),Ivan Biletic (BIH),,,客胜,1x2,4.12,0,3.3283,23.79,0,3,1792825200,BB,pinnacle,,,drop,,,5797795
+2026-10-24T03:36:28Z,tennis,World Tennis - M15 Bol Men Singles,Nico Hipfl (AUT),Ivan Biletic (BIH),,,上半场客胜,ht,3.62,0,3.5153,2.98,0,3,1792825200,BB,pinnacle,,,drop,,,5797795
+2026-10-24T03:41:10Z,tennis,ATP Challenger - Fort Worth Open,Sander Jong (NED),Darwin Blanch (USA),,,客胜,1x2,1.41,0,1.2783,10.31,0,3,1792872000,BB,pinnacle,,,ws_scan,,,5797809
+2026-10-24T03:47:32Z,basketball,Mexico Liga ABE,UMAD,Tec Mty Guadalajara,,,主胜,1x2,1.29,0,1.2,7.5,0,3,1792868400,BB,pinnacle,,,ws_scan,,,5617585
+2026-10-24T03:50:46Z,football,England FA Trophy,Taunton Town,Wimborne Town,,,客胜,1x2,2.63,0,2.4589,6.96,0,3,1792850400,ALL,pinnacle,,,ws_scan,,,5683677
+2026-10-24T03:51:08Z,football,England FA Trophy,Taunton Town,Wimborne Town,,,双重机会-主/客,dc,1.27,0,1.2,5.83,0,3,1792850400,ALL,pinnacle,,,ws_scan,,,5683677

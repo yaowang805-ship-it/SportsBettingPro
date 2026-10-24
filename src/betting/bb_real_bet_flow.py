@@ -132,6 +132,29 @@ def _get_all_matches(token, domain, cache_ttl=180):
     return all_recs
 
 
+def start_early_getlist_prefetch(interval=150):
+    """后台预取早盘 getList(预热 _get_all_matches_cache), 避免下单时 cache miss 拉全量 20-30s。
+
+    2026-10-24: 早盘下单前 _get_all_matches 有 3min 缓存, 缓存过期时同步重拉 5 运动分页 ~20-30s,
+    卡住下单(实测「下单 32.7s」)。此预取线程每 interval 秒预热一次, 让缓存永远新鲜, 下单直接命中 0ms。
+    复用全局 _get_all_matches_cache, 与 auto_bet_flow 共享。
+    """
+    import threading
+    def _loop():
+        while True:
+            try:
+                tok = read_token()
+                dom = read_domain()
+                if tok and dom:
+                    _get_all_matches(tok, dom, cache_ttl=interval)  # 强制每 interval 秒刷新一次
+            except Exception:
+                pass
+            time.sleep(interval)
+    t = threading.Thread(target=_loop, daemon=True, name="early-getlist-prefetch")
+    t.start()
+    return t
+
+
 def _find_match(records, home_cn, away_cn):
     """按中文队名匹配 getList 比赛。返回 record 或 None。"""
     def norm(n):
