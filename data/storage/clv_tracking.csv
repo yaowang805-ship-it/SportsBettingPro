@@ -8609,3 +8609,13 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-24T00:35:50Z,football,Bolivia Division Profesional,San Antonio Bulo Bulo,Real Potosi,,,双重机会-主/客,dc,1.28,0,1.2,6.66,0,2,1792876500,ALL,pinnacle,,,ws_scan,,,5778964
 2026-10-24T00:36:18Z,football,England League One,Huddersfield Town,Wigan Athletic,,,双重机会-主/客,dc,1.14,0,1.111,2.61,0,2,1792841400,ALL,pinnacle,,,ws_scan,,,5764823
 2026-10-24T00:38:39Z,tennis,WTA - Guangzhou Open,Elena Pridankina (RUS),Tyra Caterina Grant (ITA),,,让盘主胜,hc,2.67,0,2.4599,8.54,0,2,1792815000,BB,pinnacle,,,ws_scan,,-1.5,5795741
+2026-10-24T00:39:53Z,basketball,Korea Basketball League,Mobis Phoebus,Samsung Thunders,,,上半场客胜,ht,1.44,0,1.3995,2.89,0,3,1792827000,ALL,pinnacle,,,ws_scan,,,5764361
+2026-10-24T00:41:40Z,football,Australia A-League,Melbourne Victory FC,Melbourne City FC,,,双重机会-主/客,dc,1.29,0,1.254,2.87,0,2,1792831200,ALL,pinnacle,,,ws_scan,,,5276721
+2026-10-24T00:42:20Z,football,AFC Challenge League,Manila Digger FC,Shan United FC,,,和局,1x2,3.25,0,2.4546,32.4,0,3,1792834200,ALL,pinnacle,,,pin_drop,,,5727580
+2026-10-24T00:42:20Z,football,AFC Challenge League,Manila Digger FC,Shan United FC,,,双重机会-主/和局,dc,1.17,0,1.0833,8.0,0,3,1792834200,ALL,pinnacle,,,pin_drop,,,5727580
+2026-10-24T00:43:27Z,basketball,Japan B.League Premier,Ibaraki Robots,Altiri Chiba,,,主胜,1x2,1.33,0,1.2,10.83,0,2,1792821900,BB,pinnacle,,,ws_scan,,,5309932
+2026-10-24T00:44:31Z,basketball,Japan B.League Premier,Kawasaki Brave Thunders,Sendai 89Ers,,,客胜,1x2,1.22,0,1.1753,3.8,0,2,1792821900,BB,pinnacle,,,ws_scan,,,5309902
+2026-10-24T00:44:31Z,football,Germany 2. Bundesliga,Hertha BSC,Arminia Bielefeld,,,双重机会-主/客,dc,1.24,0,1.2,3.33,0,1,1792839600,ALL,pinnacle,,,ws_scan,,,5202916
+2026-10-24T00:45:05Z,basketball,Japan B.League Premier,Hiroshima Dragonflies,Levanga Hokkaido,,,主胜,1x2,1.36,0,1.222,11.3,0,2,1792818300,BB,pinnacle,,,ws_scan,,,5309900
+2026-10-24T00:45:05Z,football,AFC Challenge League,Manila Digger FC,Shan United FC,,,上半场大球,ht_ou,2.08,0,1.9631,5.96,0,3,1792834200,ALL,pinnacle,,,ws_scan,,0.75,5727580
+2026-10-24T00:46:27Z,football,Japan J.League,Kashima Antlers,Kashiwa Reysol,,,双重机会-主/客,dc,1.29,0,1.258,2.55,0,2,1792821600,ALL,pinnacle,,,ws_scan,,,5153571

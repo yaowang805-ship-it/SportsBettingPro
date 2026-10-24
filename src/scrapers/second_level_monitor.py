@@ -2747,23 +2747,27 @@ class SecondLevelMonitor:
         except Exception:
             pass
 
-    async def _early_trigger_loop(self):
-        """早盘触发独立循环(2026-10-24): Drop + WS 事件驱动, 不跟滚球主循环的 60s 轮次绑定。
+    async def _drop_trigger_loop(self):
+        """Pin drop 触发: 最高优先级独立循环(2026-10-24)。
 
-        根因: 之前 _consume_pin_triggers/_consume_prematch_ticks 串行在主循环末尾, 主循环一轮
-        (滚球轮询 + 观察库结算 16792 条)要 61s, Pin 骤降信号等 61s 才处理, lead-lag 窗口(几秒)
-        早过了 → Drop 全盘口负(-11.8%)。拆出来每 1s 查一次, 骤降立即比价下单。
+        Drop 是 lead-lag 命门(骤降 → BB 滞后跟随, 窗口仅几秒), 之前串行在主循环末尾等 61s,
+        窗口早过 → 全盘口负(-11.8%)。拆成独立循环 0.2s 轮询, 第一优先级, 确保秒级投注。
         """
         while True:
             try:
                 await _run_task(self._consume_pin_triggers, timeout=20, tag="Pin drop触发")
             except Exception as e:
                 print(f"[slm] Pin drop触发异常: {type(e).__name__} {str(e)[:80]}", flush=True)
+            await asyncio.sleep(0.2)  # 0.2s 轮询, 骤降立即处理(第一优先级)
+
+    async def _ws_trigger_loop(self):
+        """早盘 WS 赔率变动: 事件驱动(次要优先级), 1s 轮询。"""
+        while True:
             try:
                 await _run_task(self._consume_prematch_ticks, timeout=60, tag="早盘WS触发")
             except Exception as e:
                 print(f"[slm] 早盘WS触发异常: {type(e).__name__} {str(e)[:80]}", flush=True)
-            await asyncio.sleep(1.0)  # 每 1s 查一次 drop/tick(事件驱动, 不跟主循环 60s 绑定)
+            await asyncio.sleep(1.0)
 
     async def run(self, seconds=0, refresh_every=2):
         """轮询 getList type=1 滚球赔率(HTTP, 不依赖浏览器), 每 refresh_every 秒一次。"""
@@ -2816,8 +2820,9 @@ class SecondLevelMonitor:
         except Exception as e:
             print(f"[slm] CMN 中文名预取启动失败: {type(e).__name__} {str(e)[:80]}", flush=True)
         last_poll = 0.0
-        # 2026-10-24 早盘触发独立循环: Drop+WS 拆出主循环, 不跟滚球轮询的 60s 轮次绑定(lead-lag 命门)
-        _early_task = asyncio.create_task(self._early_trigger_loop())
+        # 2026-10-24 早盘触发独立循环: Drop(0.2s 第一优先级) + WS(1s), 拆出主循环, 不跟滚球 60s 轮次绑定(lead-lag 命门)
+        _drop_task = asyncio.create_task(self._drop_trigger_loop())
+        _ws_task = asyncio.create_task(self._ws_trigger_loop())
         while deadline is None or time.time() < deadline:
             now = time.time()
             # 2026-09-19 WS 触发: sharp 变动 → 立即 poll(滚球) + 单场比价(早盘)
@@ -2919,7 +2924,8 @@ class SecondLevelMonitor:
             except Exception:
                 await asyncio.sleep(0.5)
 
-        _early_task.cancel()  # 2026-10-24 早盘触发循环随主循环退出
+        _drop_task.cancel()  # 2026-10-24 Drop/WS 触发循环随主循环退出
+        _ws_task.cancel()
 
 
 def _append_real_bet(order_id, info):
