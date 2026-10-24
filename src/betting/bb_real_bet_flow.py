@@ -338,7 +338,12 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         # 记录全局下单时间戳
         record_global_bet(scope=("drop" if trigger_source == "pin_drop" else "early"))
 
-        # 2026-10-24 废除冷却积累: 每注间隔也去掉(与 global_bet_cooldown 一起), 直接连续下单(防风控靠单笔封顶 drop80/ws50)。
+        # 防风控(2026-09-05): 每注之间随机间隔, 模拟真人看盘思考, 避免秒下多注被风控识别。
+        # 2026-10-20 用户要求 drop 也秒级下单(对齐 ws_scan), 两轨统一 10-20s。
+        import random as _random
+        _sleep = _random.uniform(10, 20)
+        time.sleep(_sleep)
+        _sleep_total += _sleep
 
         if code == 0:
             opp["_bet_succeeded"] = True  # 2026-10-17 供 push_report 只对成功注写指纹(失败注下次可重试)
