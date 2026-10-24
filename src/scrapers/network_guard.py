@@ -15,7 +15,7 @@ pin_ws_trigger)会无限重试烧 CPU(实测双进程 127%+87%) + 日志爆炸(9
 """
 import time
 
-MIN_FAIL_DURATION = 30     # 连接失败持续 30s 才触发熔断(去抖, 短暂网络抖动不误报)
+MIN_FAIL_DURATION = 120    # 连接失败持续 120s 才触发熔断(去抖, 短暂网络抖动不误报)
 COOLDOWN_SECONDS = 5 * 60  # 熔断冷却 5 分钟, 之后自动重试
 
 _first_fail_ts = None  # 连续失败起始时间戳
@@ -64,7 +64,7 @@ def _alert():
         from config.settings import send_dingtalk
         send_dingtalk(
             "⚠️ 网络/代理故障",
-            "连接失败持续 30s, 已熔断停止重试(5分钟后自动恢复)。\n"
+            "连接失败持续 120s, 已熔断停止重试(5分钟后自动恢复)。\n"
             "请检查 Shadowrocket 代理节点 / VPN 是否正常。",
             urgent=True,
         )
