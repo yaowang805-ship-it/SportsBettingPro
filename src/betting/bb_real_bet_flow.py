@@ -247,8 +247,12 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
     try:
         from src.betting.bb_auto_bet import fetch_balance
         _bal = fetch_balance()
-        if _bal is not None and _bal < 1000:
-            return {"success": [], "failed": [], "error": f"余额 {_bal:.0f}<1000, 早盘暂停(滚球继续)"}
+        try:
+            _bal_f = float(_bal) if _bal else None  # fetch_balance 返回字符串, 转 float 再比
+        except (TypeError, ValueError):
+            _bal_f = None
+        if _bal_f is not None and _bal_f < 1000:
+            return {"success": [], "failed": [], "error": f"余额 {_bal_f:.0f}<1000, 早盘暂停(滚球继续)"}
     except Exception:
         pass
 
