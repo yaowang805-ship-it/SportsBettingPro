@@ -8990,3 +8990,14 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-24T07:30:16Z,tennis,ATP - Swiss Indoors Basel,Sebastian Baez (ARG),Giovanni Mpetshi Perricard (FRA),,,让盘客胜,hc,2.87,0,2.5527,12.43,0,4,1792840800,BB,pinnacle,,,ws_scan,,-1.5,5797193
 2026-10-24T07:30:23Z,football,Andorra Primera Division,SC Escaldes,Casa De Portugal,,,上半场让球主胜,ht_hc,2.01,0,1.8532,8.46,0,2,1792866600,BB,pinnacle,,,drop,,+0.5,5780793
 2026-10-24T07:30:28Z,football,Austria Bundesliga,WSG Tirol,Grazer AK,,,上半场主胜,ht,3.01,0,2.857,5.36,0,2,1792854000,ALL,pinnacle,,,ws_scan,,,5165789
+2026-10-24T07:33:24Z,football,England FA Trophy,Aveley FC,Carshalton Athletic FC,,,双重机会-主/和局,dc,1.23,0,1.2,2.5,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683668
+2026-10-24T07:33:24Z,football,England FA Trophy,Aveley FC,Carshalton Athletic FC,,,双重机会-主/客,dc,1.23,0,1.2,2.5,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683668
+2026-10-24T07:33:24Z,volleyball,Finland Volleyball Mestaruusliiga,Hurrikaani Loimaa,Savo Volley,,,主胜,1x2,1.22,0,1.0833,12.62,0,2,1792850400,ALL,pinnacle,,,pin_drop,,,5555496
+2026-10-24T07:34:28Z,football,Hong Kong Senior Shield,Eastern SC,Southern District Football Club,,,双重机会-主/和局,dc,1.36,0,1.2432,9.4,0,3,1792828800,ALL,pinnacle,,,ws_scan,,,5764069
+2026-10-24T07:36:02Z,football,Thailand League 3,Ang Thong FC,Singburi Warriors,,,上半场大球,ht_ou,1.91,0,1.8352,4.08,0,4,1792836000,BB,pinnacle,,,drop,,1.25,5794794
+2026-10-24T07:36:10Z,tennis,ATP - Swiss Indoors Basel,Jaime Faria (POR),Mika Brunold (SUI),,,让盘客胜,hc,1.42,0,1.3137,8.09,0,4,1792836600,BB,pinnacle,,,ws_scan,,+1.5,5797192
+2026-10-24T07:37:06Z,football,Chile Primera B,Union Espanola,Santiago Wanderers,,,上半场小球,ht_ou,2.11,0,1.9799,6.57,0,3,1792873800,ALL,pinnacle,,,ws_scan,,1.25,5764973
+2026-10-24T07:37:14Z,football,Brazil Campeonato Gaucho A2,Passo Fundo,APAFUT,,,和局,1x2,3.17,0,2.6259,20.72,0,3,1792868400,ALL,pinnacle,,,ws_scan,,,5764960
+2026-10-24T07:38:22Z,football,Brazil Campeonato Gaucho A2,Passo Fundo,APAFUT,,,客胜,1x2,5.6,0,4.6964,19.24,0,3,1792868400,ALL,pinnacle,,,drop,,,5764960
+2026-10-24T07:38:22Z,football,Brazil Campeonato Gaucho A2,Passo Fundo,APAFUT,,,双重机会-和局/客,dc,2.06,0,1.8436,11.74,0,3,1792868400,ALL,pinnacle,,,drop,,,5764960
+2026-10-24T07:38:57Z,football,South Africa National First Division,Leicesterford City,Lerumo Lions FC,,,和局,1x2,2.95,0,2.7769,6.23,0,2,1792848600,BB,pinnacle,,,ws_scan,,,5443033
