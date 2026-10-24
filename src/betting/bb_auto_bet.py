@@ -142,6 +142,7 @@ def record_sub_market_bet(match_id, sub_market, scope="live"):
 # 可能"同一时间"各下一单, 像机器投注被风控识别。用共享时间戳文件强制全局随机间隔。
 GLOBAL_BET_TS_FILE = ROOT / "data" / "storage" / "last_bet_ts.txt"
 EARLY_BET_TS_FILE = ROOT / "data" / "storage" / "last_bet_ts_early.txt"
+DROP_BET_TS_FILE = ROOT / "data" / "storage" / "last_bet_ts_drop.txt"  # 2026-10-24 Drop 独立冷却(与 WS 分开, 防 WS 高频下注拖慢 Drop 秒级投注)
 
 
 def global_bet_cooldown(min_s=15.0, max_s=45.0, scope="live"):
@@ -152,7 +153,7 @@ def global_bet_cooldown(min_s=15.0, max_s=45.0, scope="live"):
     下单成功后必须调 record_global_bet(scope)。
     """
     import random as _r
-    _file = EARLY_BET_TS_FILE if scope == "early" else GLOBAL_BET_TS_FILE
+    _file = DROP_BET_TS_FILE if scope == "drop" else (EARLY_BET_TS_FILE if scope == "early" else GLOBAL_BET_TS_FILE)
     last = 0.0
     try:
         if _file.exists():
@@ -167,7 +168,7 @@ def global_bet_cooldown(min_s=15.0, max_s=45.0, scope="live"):
 
 def record_global_bet(scope="live"):
     """下单成功后记录时间戳(冷却起点)。scope: live/early 各自独立文件。"""
-    _file = EARLY_BET_TS_FILE if scope == "early" else GLOBAL_BET_TS_FILE
+    _file = DROP_BET_TS_FILE if scope == "drop" else (EARLY_BET_TS_FILE if scope == "early" else GLOBAL_BET_TS_FILE)
     try:
         _file.parent.mkdir(parents=True, exist_ok=True)
         _file.write_text(str(time.time()))
