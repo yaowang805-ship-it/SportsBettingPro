@@ -243,12 +243,12 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
     if not token:
         return {"success": [], "failed": [], "error": "无 token"}
 
-    # 2026-10-21 余额熔断(用户要求): 总余额<80 停实盘(滚球+早盘都停), >80 自动恢复。滚球在 second_level_monitor 也加了同门槛。
+    # 2026-10-24 余额熔断(用户要求): 总余额<1000 停早盘实盘(滚球继续投注), >1000 自动恢复。
     try:
         from src.betting.bb_auto_bet import fetch_balance
         _bal = fetch_balance()
-        if _bal is not None and _bal < 80:
-            return {"success": [], "failed": [], "error": f"余额 {_bal:.0f}<80, 早盘暂停"}
+        if _bal is not None and _bal < 1000:
+            return {"success": [], "failed": [], "error": f"余额 {_bal:.0f}<1000, 早盘暂停(滚球继续)"}
     except Exception:
         pass
 

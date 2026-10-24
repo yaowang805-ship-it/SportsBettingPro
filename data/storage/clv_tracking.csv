@@ -8803,3 +8803,71 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-24T03:50:46Z,football,England FA Trophy,Taunton Town,Wimborne Town,,,客胜,1x2,2.63,0,2.4589,6.96,0,3,1792850400,ALL,pinnacle,,,ws_scan,,,5683677
 2026-10-24T03:51:08Z,football,England FA Trophy,Taunton Town,Wimborne Town,,,双重机会-主/客,dc,1.27,0,1.2,5.83,0,3,1792850400,ALL,pinnacle,,,ws_scan,,,5683677
 2026-10-24T03:56:17Z,football,England FA Trophy,Taunton Town,Wimborne Town,,,上半场大球,ht_ou,2.08,0,1.9631,5.96,0,3,1792850400,ALL,pinnacle,,,pin_drop,,1.0,5683677
+2026-10-24T03:59:03Z,ice_hockey,NHL,Ottawa Senators,New York Rangers,,,上半场主胜,ht,2.6,0,2.4544,5.93,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651945
+2026-10-24T04:00:52Z,tennis,WTA - Tokyo Open,Kimberly Birrell (AUS),Aoi Ito (JPN),,,客胜,1x2,3.08,0,2.5389,21.31,0,2,1792820100,BB,pinnacle,,,ws_scan,,,5795422
+2026-10-24T04:02:06Z,football,Australian Championship,Canberra Croatia FC,Sutherland Sharks,,,双重机会-主/客,dc,1.25,0,1.2,4.16,0,3,1792821600,ALL,pinnacle,,,pin_drop,,,5624554
+2026-10-24T04:02:39Z,basketball,China CBA,Guangdong Southern Tigers,Ningbo Rockets,,,小分,ou,1.9,0,1.8302,3.81,0,3,1792841700,ALL,pinnacle,,,drop,,174.5,5626189
+2026-10-24T04:02:39Z,basketball,China CBA,Guangdong Southern Tigers,Ningbo Rockets,,,上半场小球,ht_ou,1.89,0,1.8366,2.91,0,3,1792841700,ALL,pinnacle,,,drop,,88.5,5626189
+2026-10-24T04:02:45Z,tennis,WTA - Guangzhou Open,Joanna Garland (TPE),Maddison Inglis (AUS),,,让盘客胜,hc,2.6,0,2.4546,5.92,0,2,1792827000,BB,pinnacle,,,ws_scan,,-1.5,5795723
+2026-10-24T04:02:45Z,tennis,WTA - Guangzhou Open,Elena Pridankina (RUS),Tyra Caterina Grant (ITA),,,让盘主胜,hc,2.63,0,2.4828,5.93,0,2,1792816200,BB,pinnacle,,,ws_scan,,-1.5,5795741
+2026-10-24T04:04:28Z,football,Germany Regionalliga North,VFB Oldenburg,HSC Hannover,,,主胜,1x2,1.33,0,1.222,8.84,0,3,1792857600,ALL,pinnacle,,,ws_scan,,,5764809
+2026-10-24T04:05:45Z,football,Mongolia Premier League,Khovd Western,Amtat FC,,,上半场大球,ht_ou,1.92,0,1.7244,11.34,0,2,1792828800,ALL,pinnacle,,,drop,,2.0,5795221
+2026-10-24T04:06:58Z,football,Mongolia Premier League,Khovd Western,Amtat FC,,,大球,ou,1.75,0,1.5889,10.14,0,2,1792828800,ALL,pinnacle,,,drop,,5.0,5795221
+2026-10-24T04:07:02Z,tennis,WTA - Guangzhou Open,Elena Pridankina (RUS),Tyra Caterina Grant (ITA),,,让盘主胜,hc,2.63,0,2.4828,5.93,0,2,1792815600,BB,pinnacle,,,ws_scan,,-1.5,5795741
+2026-10-24T04:07:21Z,basketball,China CBA,Guangdong Southern Tigers,Ningbo Rockets,,,让分主胜,hc,1.91,0,1.7634,8.31,0,3,1792841700,ALL,pinnacle,,,drop,,-23.5,5626189
+2026-10-24T04:07:49Z,basketball,China CBA,Guangdong Southern Tigers,Ningbo Rockets,,,上半场主胜,ht,1.11,0,1.0833,2.46,0,3,1792841700,ALL,pinnacle,,,pin_drop,,,5626189
+2026-10-24T04:08:22Z,tennis,WTA - Guangzhou Open,Joanna Garland (TPE),Maddison Inglis (AUS),,,让盘客胜,hc,2.6,0,2.4546,5.92,0,2,1792824000,BB,pinnacle,,,ws_scan,,-1.5,5795723
+2026-10-24T04:08:26Z,basketball,Japan B.League One,Niigata Albirex BB,Iwate Big Bulls,,,客胜,1x2,1.58,0,1.5326,3.09,0,3,1792818300,BB,pinnacle,,,pin_drop,,,5326673
+2026-10-24T04:10:20Z,football,England FA Trophy,Whitehawk FC,St Albans City,,,让球客胜,hc,2.01,0,1.8497,8.67,0,3,1792850400,ALL,pinnacle,,,drop,,-0.5,5683675
+2026-10-24T04:10:55Z,tennis,ATP - Swiss Indoors Basel,Jaime Faria (POR),Mika Brunold (SUI),,,让盘主胜,hc,2.6,0,2.4546,5.92,0,4,1792836600,BB,pinnacle,,,ws_scan,,-1.5,5797192
+2026-10-24T04:10:55Z,football,Turkey 2nd Lig,Sakaryaspor,24 Erzincanspor,,,上半场小球,ht_ou,2.08,0,1.9631,5.96,0,3,1792857600,ALL,pinnacle,,,ws_scan,,1.25,5790392
+2026-10-24T04:12:02Z,football,South Korea K-League 1,FC Seoul,Gangwon FC,,,双重机会-主/和局,dc,1.26,0,1.2,5.0,0,2,1792818000,ALL,pinnacle,,,ws_scan,,,5764349
+2026-10-24T04:12:02Z,football,Germany 3rd Liga,Hansa Rostock,Fortuna Dusseldorf,,,让球客胜,hc,1.85,0,1.7401,6.32,0,4,1792843200,ALL,pinnacle,,,drop,,+0.5,5446294
+2026-10-24T04:16:53Z,ice_hockey,NHL,Washington Capitals,Buffalo Sabres,,,上半场主胜,ht,2.58,0,2.4546,5.11,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651941
+2026-10-24T04:17:12Z,football,Thailand League 3,Ang Thong FC,Singburi Warriors,,,上半场让球主胜,ht_hc,1.94,0,1.687,15.0,0,4,1792836000,BB,pinnacle,,,drop,,-0.5,5794794
+2026-10-24T04:17:14Z,football,Japan J.League 2,Omiya Ardija,Yokohama FC,,,主胜,1x2,2.59,0,2.4546,5.52,0,3,1792818000,ALL,pinnacle,,,ws_scan,,,5164461
+2026-10-24T04:18:02Z,tennis,WTA - Guangzhou Open,Joanna Garland (TPE),Maddison Inglis (AUS),,,让盘客胜,hc,2.6,0,2.4546,5.92,0,2,1792824600,BB,pinnacle,,,ws_scan,,-1.5,5795723
+2026-10-24T04:21:36Z,football,Japan J.League 3,FC Osaka,Kagoshima United,,,双重机会-和局/客,dc,1.48,0,1.3984,5.84,0,4,1792818000,ALL,pinnacle,,,pin_drop,,,5359586
+2026-10-24T04:21:36Z,football,Japan J.League 3,FC Osaka,Kagoshima United,,,双重机会-主/客,dc,1.3,0,1.2644,2.82,0,4,1792818000,ALL,pinnacle,,,pin_drop,,,5359586
+2026-10-24T04:26:50Z,basketball,China CBA,Guangdong Southern Tigers,Ningbo Rockets,,,上半场让球主胜,ht_hc,1.9,0,1.8025,5.41,0,3,1792841700,ALL,pinnacle,,,drop,,-13.5,5626189
+2026-10-24T04:27:59Z,basketball,Norway BLNO Basketball League,Fyllingen BK,Ammerud Basket,,,让分主胜,hc,1.91,0,1.6196,17.93,0,3,1792846800,ALL,pinnacle,,,drop,,-15.5,5305081
+2026-10-24T04:28:29Z,basketball,China CBA,Shanghai Sharks,Fujian Sturgeons,,,上半场让球主胜,ht_hc,1.93,0,1.8344,5.21,0,3,1792841700,ALL,pinnacle,,,drop,,-11.5,5626222
+2026-10-24T04:28:57Z,football,Japan J.League,Tokyo Verdy,Avispa Fukuoka,,,上半场客胜,ht,3.75,0,3.6441,2.91,0,2,1792821600,ALL,pinnacle,,,drop,,,5153538
+2026-10-24T04:29:48Z,football,Japan J.League,Tokyo Verdy,Avispa Fukuoka,,,客胜,1x2,2.51,0,2.4546,2.26,0,2,1792821600,ALL,pinnacle,,,pin_drop,,,5153538
+2026-10-24T04:29:58Z,basketball,China CBA,Shanghai Sharks,Fujian Sturgeons,,,让分主胜,hc,1.92,0,1.8243,5.25,0,3,1792841700,ALL,pinnacle,,,drop,,-21.5,5626222
+2026-10-24T04:31:10Z,football,CAF Champions League-Qualification,Esperance Sportive de Tunis,Asswehly,,,主胜,1x2,1.16,0,1.0991,5.54,0,2,1792857600,ALL,pinnacle,,,ws_scan,,,5630344
+2026-10-24T04:31:12Z,tennis,WTA - Guangzhou Open,Joanna Garland (TPE),Maddison Inglis (AUS),,,让盘客胜,hc,2.6,0,2.4546,5.92,0,2,1792825200,BB,pinnacle,,,ws_scan,,-1.5,5795723
+2026-10-24T04:36:05Z,football,Germany Regionalliga Bayern,Bayern Munich II,DJK Vilzing,,,双重机会-主/和局,dc,1.28,0,1.2,6.66,0,3,1792843200,ALL,pinnacle,,,ws_scan,,,5764284
+2026-10-24T04:37:15Z,tennis,WTA - Guangzhou Open,Joanna Garland (TPE),Maddison Inglis (AUS),,,让盘客胜,hc,2.6,0,2.4546,5.92,0,2,1792825800,BB,pinnacle,,,ws_scan,,-1.5,5795723
+2026-10-24T04:37:41Z,football,Germany Regionalliga Bayern,Bayern Munich II,DJK Vilzing,,,主胜,1x2,1.99,0,1.8904,5.27,0,3,1792843200,ALL,pinnacle,,,drop,,,5764284
+2026-10-24T04:38:00Z,football,Germany Regionalliga Bayern,Bayern Munich II,DJK Vilzing,,,让球主胜,hc,1.99,0,1.9147,3.93,0,3,1792843200,ALL,pinnacle,,,drop,,-0.5,5764284
+2026-10-24T04:38:37Z,football,South Korea K-League 1,Bucheon FC 1995,Gwangju FC,,,客胜,1x2,2.94,0,2.7424,7.2,0,2,1792818000,ALL,pinnacle,,,ws_scan,,,5764466
+2026-10-24T04:43:20Z,basketball,Japan B.League One,Niigata Albirex BB,Iwate Big Bulls,,,上半场客胜,ht,1.77,0,1.5851,11.66,0,3,1792818300,BB,pinnacle,,,drop,,,5326673
+2026-10-24T04:43:56Z,tennis,WTA - Guangzhou Open,Joanna Garland (TPE),Maddison Inglis (AUS),,,让盘客胜,hc,2.6,0,2.4546,5.92,0,2,1792826400,BB,pinnacle,,,ws_scan,,-1.5,5795723
+2026-10-24T04:44:19Z,football,Spain Segunda Division RFEF,Sestao River Club,Arosa SC,,,让球客胜,hc,1.94,0,1.8611,4.24,0,3,1792859400,ALL,pinnacle,,,drop,,+1,5764398
+2026-10-24T04:45:25Z,basketball,Australia NBL,SE Melbourne Phoenix,Adelaide 36Ers,,,客胜,1x2,2.25,0,2.188,2.83,0,3,1792830600,ALL,pinnacle,,,drop,,,5074434
+2026-10-24T04:46:09Z,basketball,Japan B.League One,Veltex Shizuoka,Ehime Orange Vikings,,,主胜,1x2,1.97,0,1.916,2.82,0,3,1792818300,BB,pinnacle,,,drop,,,5326666
+2026-10-24T04:47:04Z,football,South Korea K-League 2,Gimpo FC,Gimhae FC,,,双重机会-主/和局,dc,1.19,0,1.1247,5.81,0,2,1792827000,ALL,pinnacle,,,ws_scan,,,5763504
+2026-10-24T04:47:04Z,football,England Premier League,Coventry City,Fulham FC,,,上半场大球,ht_ou,2.17,0,1.9652,10.42,0,1,1792850400,ALL,pinnacle,,,ws_scan,,1.0,5130849
+2026-10-24T04:47:30Z,basketball,NBA,Cleveland Cavaliers,Brooklyn Nets,,,主胜,1x2,1.2,0,1.1757,2.07,0,1,1792884600,ALL,pinnacle,,,pin_drop,,,5439614
+2026-10-24T04:48:12Z,basketball,Australia NBL,SE Melbourne Phoenix,Adelaide 36Ers,,,上半场大球,ht_ou,1.88,0,1.7827,5.46,0,3,1792830600,ALL,pinnacle,,,drop,,96.5,5074434
+2026-10-24T04:53:41Z,basketball,Denmark Basketligaen,Gladsaxe BK,Team FOG Naestved,,,大分,ou,1.87,0,1.8072,3.47,0,2,1792854000,BB,pinnacle,,,drop,,175.5,5791493
+2026-10-24T04:53:41Z,basketball,NBA,Cleveland Cavaliers,Brooklyn Nets,,,让分主胜,hc,1.93,0,1.8524,4.19,0,1,1792884600,ALL,pinnacle,,,drop,,-10.5,5755107
+2026-10-24T04:54:03Z,football,Japan J.League,Sanfrecce Hiroshima,Shimizu S Pulse,,,客胜,1x2,8.1,0,7.8604,3.05,0,2,1792818000,ALL,pinnacle,,,drop,,,5153522
+2026-10-24T04:57:31Z,football,Japan J.League 3,Thespa Gunma,Kamatamare Sanuki,,,上半场大球,ht_ou,1.81,0,1.7608,2.79,0,4,1792818000,ALL,pinnacle,,,drop,,1.0,5359585
+2026-10-24T04:58:10Z,football,Japan J.League 3,FC Osaka,Kagoshima United,,,和局,1x2,3.34,0,3.2157,3.87,0,4,1792818000,ALL,pinnacle,,,drop,,,5359586
+2026-10-24T04:58:12Z,football,Japan J.League 3,Thespa Gunma,Kamatamare Sanuki,,,客胜,1x2,2.54,0,2.4546,3.48,0,4,1792818000,ALL,pinnacle,,,pin_drop,,,5359585
+2026-10-24T04:59:03Z,basketball,Estonian-Latvian Basketball League,Rigas Zelli,Keila Korvpallikool,,,让分客胜,hc,1.89,0,1.8289,3.34,0,3,1792843200,BB,pinnacle,,,drop,,+23.5,5558258
+2026-10-24T04:59:45Z,football,Saudi Arabia Professional League,Al Riyadh,AL Taawoun FC,,,主胜,1x2,2.65,0,2.5091,5.62,0,3,1792864800,ALL,pinnacle,,,ws_scan,,,5446342
+2026-10-24T05:00:19Z,ice_hockey,Asia Ice Hockey League,Yokohama Grits,Red Eagles Hokkaido,,,上半场主胜,ht,2.97,0,2.4546,21.0,0,3,1792821600,BB,pinnacle,,,ws_scan,,,5793991
+2026-10-24T05:00:19Z,ice_hockey,Asia Ice Hockey League,Yokohama Grits,Red Eagles Hokkaido,,,上半场客胜,ht,2.38,0,1.9631,21.24,0,3,1792821600,BB,pinnacle,,,ws_scan,,,5793991
+2026-10-24T05:01:40Z,football,Norway 3rd Division,NTNUI,Melhus,,,客胜,1x2,2.51,0,2.4546,2.26,0,4,1792846800,BB,pinnacle,,,pin_drop,,,4907226
+2026-10-24T05:01:51Z,football,South Korea K-League 2,Chungbuk Cheongju FC,Yongin,,,双重机会-和局/客,dc,1.57,0,1.4604,7.5,0,2,1792913400,BB,pinnacle,,,ws_scan,,,5768611
+2026-10-24T05:02:19Z,football,Japan J.League 2,Sagan Tosu,Vanraure Hachinohe FC,,,双重机会-主/和局,dc,1.14,0,1.0833,5.23,0,3,1792904400,ALL,pinnacle,,,ws_scan,,,5164296
+2026-10-24T05:02:54Z,football,Uruguay Primera Division,Montevideo City Torque,CA Cerro,,,和局,1x2,4.09,0,2.4546,66.63,0,3,1792962000,ALL,pinnacle,,,pin_drop,,,5772794
+2026-10-24T05:02:54Z,football,Uruguay Primera Division,Montevideo City Torque,CA Cerro,,,双重机会-和局/客,dc,2.54,0,2.225,14.16,0,3,1792962000,ALL,pinnacle,,,pin_drop,,,5772794
+2026-10-24T05:03:47Z,tennis,WTA - Tokyo Open,Hayu Kinoshita (JPN),Yulia Putintseva (KAZ),,,让盘客胜,hc,1.39,0,1.3226,5.1,0,2,1792835100,BB,pinnacle,,,ws_scan,,-1.5,5796093
+2026-10-24T05:03:47Z,football,Denmark 2nd Division,Nykobing FC,Thisted FC,,,主胜,1x2,1.35,0,1.2731,6.04,0,3,1792933200,ALL,pinnacle,,,ws_scan,,,5203428
+2026-10-24T05:04:35Z,football,Japan J.League 2,Oita Trinita,Ventforet Kofu,,,上半场大球,ht_ou,2.14,0,2.04,4.9,0,3,1792904400,ALL,pinnacle,,,pin_drop,,0.75,5786785
+2026-10-24T05:05:15Z,tennis,World Tennis - W35 Monastir Women Singles,Kayo Nishimura (JPN),Marie Vogt (GER),,,让盘主胜,hc,2.52,0,2.4701,2.02,0,3,1792832400,BB,pinnacle,,,pin_drop,,-1.5,5796357
+2026-10-24T05:10:27Z,football,Chile Primera B,Puerto Montt,Union San Felipe,,,双重机会-主/和局,dc,1.26,0,1.2,5.0,0,3,1792873800,ALL,pinnacle,,,pin_drop,,,5780192

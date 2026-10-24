@@ -1465,19 +1465,7 @@ class SecondLevelMonitor:
                      "degraded_mode": (self._trigger_source != "pin"),  # 2026-10-13 降级标记: 非 Pin 触发(bf_ws/poll)=异质锚
                      "bb_ts": sig.get("bb_ts"), "lag_sec": _lag_sec,
                      "poll_ts": sig.get("poll_ts")}  # 触发时刻(供 latency-ROI 曲线, 2026-10-11)
-        # 2026-10-21 余额熔断(用户要求): 总余额<80 停实盘(滚球+早盘), >80 自动恢复。30s 节流查余额。
-        try:
-            _now_bal = time.time()
-            if _now_bal - _BALANCE_CACHE["ts"] >= 30:
-                from src.betting.bb_auto_bet import fetch_balance
-                _BALANCE_CACHE["ts"] = _now_bal
-                _BALANCE_CACHE["bal"] = fetch_balance()
-            _bal = _BALANCE_CACHE.get("bal")
-            if _bal is not None and _bal < 80:
-                print(f"  🚫 余额 {_bal:.0f}<80, 滚球暂停", flush=True)
-                return
-        except Exception:
-            pass
+        # 2026-10-24 取消滚球余额熔断(用户要求): 余额<1000 只停早盘, 滚球继续投注(不做余额拦截)。
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
             match_id=sig["match_id"], check_limit=True, verify_price=True,
