@@ -2366,7 +2366,7 @@ class SecondLevelMonitor:
         if entries:
             try:
                 from src.monitor.clv_collector import log_oa_opportunities
-                log_oa_opportunities(entries, min_ev=2.0, source="drop")
+                log_oa_opportunities(entries, min_ev=5.0, source="drop")
             except Exception:
                 pass
         if not opps:
@@ -2475,7 +2475,7 @@ class SecondLevelMonitor:
         if entries:
             try:
                 from src.monitor.clv_collector import log_oa_opportunities
-                log_oa_opportunities(entries, min_ev=2.0, source="ws_scan")
+                log_oa_opportunities(entries, min_ev=5.0, source="ws_scan")
             except Exception:
                 pass
         _t_ingest = time.time() - _t0  # 入库后耗时
@@ -2564,7 +2564,7 @@ class SecondLevelMonitor:
         if entries:
             try:
                 from src.monitor.clv_collector import log_oa_opportunities
-                log_oa_opportunities(entries, min_ev=2.0, source="ws_scan")
+                log_oa_opportunities(entries, min_ev=5.0, source="ws_scan")
             except Exception:
                 pass
         if opps:
