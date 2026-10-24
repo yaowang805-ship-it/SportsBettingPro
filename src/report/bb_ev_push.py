@@ -657,7 +657,7 @@ def _load_release_list():
         return None
 
 
-def _is_market_released(sport: str, sub_market: str, league: str = "", designation: str = "", match_epoch=None, odds=None, scope: str = "early") -> bool:
+def _is_market_released(sport: str, sub_market: str, league: str = "", designation: str = "", match_epoch=None, odds=None, scope: str = "early", source: str = None) -> bool:
     """该运动×盘口(或运动×联赛×盘口)是否被释放(允许投注)。未释放 → 只观察不投注。
 
     优先级: 联赛细化(league_released/league_blocked) > 观察库兜底(observe_released)
@@ -668,6 +668,9 @@ def _is_market_released(sport: str, sub_market: str, league: str = "", designati
     rl = _load_release_list()
     if not rl:
         return True
+    # 2026-10-24 触发源拆分: Drop 专用释放=足球+篮球所有盘口(用户定); WS 走下面正常清单。
+    if source == "drop":
+        return sport in ("football", "basketball")
     dr = _release_direction(designation, sub_market)
     _iv = _odds_interval(odds, sport)
     # 1. 联赛细化: 该联赛三维格子 n≥30 时用联赛自己的 ROI 覆盖主开关

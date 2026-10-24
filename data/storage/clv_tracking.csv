@@ -8619,3 +8619,17 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-24T00:45:05Z,basketball,Japan B.League Premier,Hiroshima Dragonflies,Levanga Hokkaido,,,主胜,1x2,1.36,0,1.222,11.3,0,2,1792818300,BB,pinnacle,,,ws_scan,,,5309900
 2026-10-24T00:45:05Z,football,AFC Challenge League,Manila Digger FC,Shan United FC,,,上半场大球,ht_ou,2.08,0,1.9631,5.96,0,3,1792834200,ALL,pinnacle,,,ws_scan,,0.75,5727580
 2026-10-24T00:46:27Z,football,Japan J.League,Kashima Antlers,Kashiwa Reysol,,,双重机会-主/客,dc,1.29,0,1.258,2.55,0,2,1792821600,ALL,pinnacle,,,ws_scan,,,5153571
+2026-10-24T00:54:22Z,football,Norway 3rd Division,Heming,Lokomotiv Oslo,,,双重机会-和局/客,dc,2.81,0,2.6644,5.46,0,4,1792839600,ALL,pinnacle,,,ws_scan,,,4907207
+2026-10-24T00:54:22Z,football,Norway 3rd Division,Heming,Lokomotiv Oslo,,,双重机会-主/客,dc,1.11,0,1.0833,2.46,0,4,1792839600,ALL,pinnacle,,,ws_scan,,,4907207
+2026-10-24T00:54:22Z,ice_hockey,Switzerland National League,SC Bern,HC Lugano,,,上半场主胜,ht,2.53,0,2.1069,20.08,0,3,1792933200,BB,pinnacle,,,ws_scan,,,5654455
+2026-10-24T00:54:22Z,ice_hockey,Switzerland National League,SC Bern,HC Lugano,,,上半场客胜,ht,3.13,0,2.4546,27.52,0,3,1792933200,BB,pinnacle,,,ws_scan,,,5654455
+2026-10-24T00:55:33Z,football,Mexico Liga De Expansion MX,Tepatitlan FC,Cancun FC,,,双重机会-和局/客,dc,1.12,0,1.0833,3.39,0,2,1792803600,ALL,pinnacle,,,ws_scan,,,5300279
+2026-10-24T00:55:57Z,football,Mexico Liga De Expansion MX,Tepatitlan FC,Cancun FC,,,上半场小球,ht_ou,2.08,0,2.0087,3.55,0,2,1792803600,ALL,pinnacle,,,ws_scan,,1.5,5300279
+2026-10-24T00:59:34Z,football,Mexico Liga De Expansion MX,Tepatitlan FC,Cancun FC,,,客胜,1x2,1.3,0,1.2263,6.01,0,2,1792803600,ALL,pinnacle,,,ws_scan,,,5300279
+2026-10-24T00:59:34Z,football,Mexico Liga De Expansion MX,Tepatitlan FC,Cancun FC,,,双重机会-主/客,dc,1.13,0,1.0966,3.05,0,2,1792803600,ALL,pinnacle,,,ws_scan,,,5300279
+2026-10-24T01:00:10Z,tennis,WTA - Tokyo Open,Liudmila Samsonova (RUS),Heather Watson (GBR),,,主胜,1x2,1.11,0,1.0833,2.46,0,2,1792805400,BB,pinnacle,,,ws_scan,,,5795412
+2026-10-24T01:00:10Z,tennis,WTA - Tokyo Open,Liudmila Samsonova (RUS),Heather Watson (GBR),,,上半场主胜,ht,1.19,0,1.1628,2.34,0,2,1792805400,BB,pinnacle,,,ws_scan,,,5795412
+2026-10-24T01:00:10Z,tennis,WTA - Tokyo Open,Liudmila Samsonova (RUS),Heather Watson (GBR),,,让盘主胜,hc,1.45,0,1.3891,4.38,0,2,1792805400,BB,pinnacle,,,ws_scan,,-1.5,5795412
+2026-10-24T01:01:08Z,ice_hockey,Vysshaya Hokkeinaya Liga,Izhstal Izhevsk,Rubin Tyumen,,,上半场主胜,ht,2.67,0,2.4546,8.78,0,3,1792846800,BB,pinnacle,,,ws_scan,,,5764614
+2026-10-24T01:01:08Z,ice_hockey,Vysshaya Hokkeinaya Liga,Izhstal Izhevsk,Rubin Tyumen,,,上半场客胜,ht,3.17,0,2.4546,29.15,0,3,1792846800,BB,pinnacle,,,ws_scan,,,5764614
+2026-10-24T01:01:08Z,football,Japan J.League 3,Thespa Gunma,Kamatamare Sanuki,,,主胜,1x2,2.6,0,2.4546,5.92,0,4,1792818000,ALL,pinnacle,,,ws_scan,,,5359585

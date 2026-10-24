@@ -2341,7 +2341,7 @@ class SecondLevelMonitor:
                     sub_market = o.get('_market') or _GROUP_TO_SUB.get(group, group)
                     if not _is_market_released(sport, sub_market, _league,
                                                o.get('designation', ''), _epoch,
-                                               o.get('fair_price') or o.get('bb_odds')):
+                                               o.get('fair_price') or o.get('bb_odds'), source='drop'):
                         continue
                     if _is_direction_blocked(sport, sub_market, o.get('designation', ''), _epoch):
                         continue
@@ -2442,7 +2442,7 @@ class SecondLevelMonitor:
                         continue
                     sm = o.get('_market') or _GROUP_TO_SUB.get(group, group)
                     if not _is_market_released(sport, sm, _league, o.get('designation', ''), _epoch,
-                                               o.get('fair_price') or o.get('bb_odds'), scope='early'):
+                                               o.get('fair_price') or o.get('bb_odds'), scope='early', source='ws'):
                         continue
                     if _is_direction_blocked(sport, sm, o.get('designation', ''), _epoch):
                         continue
