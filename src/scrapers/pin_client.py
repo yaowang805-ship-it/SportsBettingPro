@@ -23,6 +23,7 @@ import time
 from pathlib import Path
 
 from src.scrapers.pin_fair import pin_fair_price
+from src.scrapers.network_guard import is_open, report_failure, report_success
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 CACHE_FILE = ROOT / "data" / "storage" / "pin_odds_cache.json"
@@ -247,6 +248,7 @@ class PinWSClient:
                 asyncio.run(self._connect_and_consume())
             except Exception as e:
                 print(f"[pin-ws] 连接异常: {type(e).__name__} {str(e)[:80]}", flush=True)
+                report_failure()  # 连接失败 → 熔断计数
             if self._stop:
                 break
             # 断线 → REST 快照重同步
@@ -256,7 +258,7 @@ class PinWSClient:
                     self.cache.load_snapshot(snap)
             except Exception:
                 pass
-            time.sleep(2.0)
+            time.sleep(60 if is_open() else 2.0)  # 熔断中降低重试频率(防烧CPU)
 
     async def _connect_and_consume(self):
         import websockets
@@ -269,6 +271,7 @@ class PinWSClient:
                    "sport_ids": PIN_SUBSCRIBE_SPORTS}
             await ws.send(json.dumps(sub))
             print(f"[pin-ws] 已连接 + 订阅 {PIN_SUBSCRIBE_SPORTS}", flush=True)
+            report_success()  # 连接成功 → 关熔断清计数
             while not self._stop:
                 try:
                     raw = await ws.recv()
@@ -399,6 +402,7 @@ class PinSSEClient:
             try:
                 r = requests.get(f"{PINNAPI_BASE}{path}?key={PINNAPI_KEY}",
                                  stream=True, timeout=(15, 60))
+                report_success()  # 连接成功 → 关熔断清计数
                 for line in r.iter_lines(decode_unicode=True):
                     if self._stop:
                         return
@@ -415,9 +419,10 @@ class PinSSEClient:
                         self.on_event(stream, drop)
             except Exception as e:
                 print(f"[pin-sse] {stream} 异常: {type(e).__name__} {str(e)[:80]}", flush=True)
+                report_failure()  # 连接失败 → 熔断计数
             if self._stop:
                 return
-            time.sleep(2.0)
+            time.sleep(60 if is_open() else 2.0)  # 熔断中降低重试频率(防烧CPU)
 
 
 # 便捷入口: 组装三通道

@@ -316,9 +316,14 @@ def api_post(endpoint, params, platform="BB"):
     返回解析后的 JSON dict，或 None。
     """
     import time as _time
+    from src.scrapers.network_guard import is_open, report_failure, report_success
+    if is_open():
+        logger.warning("网络熔断中(代理/网络故障), 跳过请求 %s", endpoint)
+        return None
     platform_config = PLATFORMS.get(platform, PLATFORMS["BB"])
     # BB 走候选域名列表 failover; FB 单域名
     domains = bb_domain_candidates() if platform == "BB" else [platform_config["api_base"]]
+    conn_failed = False  # 本次调用是否因连接级失败(代理down)耗尽全域
 
     for dom in domains:
         token = _ensure_token()
@@ -342,6 +347,7 @@ def api_post(endpoint, params, platform="BB"):
                     continue
                 break  # 超时耗尽 → 换下一个域
             except requests.exceptions.RequestException as e:
+                conn_failed = True  # 连接级失败(ProxyError/SSL/DNS/连接拒绝)
                 if attempt < 2:
                     _time.sleep(2 ** attempt)
                     continue
@@ -359,6 +365,8 @@ def api_post(endpoint, params, platform="BB"):
                     continue  # 同域重试新 token
                 return None
             if resp.status_code in (429, 503, 502):
+                if resp.status_code in (503, 502):
+                    conn_failed = True  # 503/502 = 代理拒绝/上游down
                 wait = 2 ** attempt
                 logger.warning("API HTTP %s: %s, %ds后重试(%d/3)", resp.status_code, endpoint, wait, attempt+1)
                 _time.sleep(wait)
@@ -373,9 +381,12 @@ def api_post(endpoint, params, platform="BB"):
             # 成功 → 持久化活域名(动态读方 bb_auto_bet.read_domain 会跟着用)
             if platform == "BB":
                 persist_bb_domain(dom)
+            report_success()  # 连接成功 → 关熔断清计数
             return resp.json()
         # 该域 retry 耗尽(连接错误/超时/403) → 换下一个域
         logger.warning("API %s @%s 失败, 尝试下一个域名", endpoint, dom)
+    if conn_failed:
+        report_failure()  # 全域连接失败 → 熔断计数(3次→推钉钉+停止重试)
     return None
 
 
