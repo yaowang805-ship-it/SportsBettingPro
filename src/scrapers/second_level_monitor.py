@@ -1220,6 +1220,15 @@ class SecondLevelMonitor:
         _sport = sig["match"].get("sport")
         _sub = sig.get("sub")
         _desig = sig.get("desig")
+        # 2026-10-24 临场保护(职业团队做法): 比赛临近结束不下注(赔率短、不确定性已消除、无信息优势)。
+        # 键: sport id, 值: (总时长秒, 剩余下限秒)。棒球/网球无固定时长, 暂不加。
+        _near_end = {1: (5400, 900), 3: (2400, 180), 2: (3600, 300)}.get(_sport)
+        if _near_end:
+            _total, _min_left = _near_end
+            _mc = int(sig["match"].get("mc", 0) or 0)
+            if _mc > _total - _min_left:
+                print(f"  ⏭️ 临场保护(剩<{_min_left//60}min), 跳过 {sig['match']['home']} vs {sig['match']['away']}", flush=True)
+                return
         # 方向归一化(大/小/平/客/主), 与 compute_market_release._direction 同口径。
         # 2026-10-17 修: dc 之前用完整 desig(客/和)作方向, 与清单的 X2 口径不一致 → dc 释放/拦截永远匹配不上。
         # 改对齐 compute_market_release._direction 的 dc 三向: 主/和→1X, 主/客→12, 客/和→X2。
