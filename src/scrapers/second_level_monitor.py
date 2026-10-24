@@ -2312,6 +2312,7 @@ class SecondLevelMonitor:
         _GROUP_TO_SUB = {'opportunities': '1x2', 'handicap': 'hc', 'over_under': 'ou',
                          'double_chance': 'dc', 'draw_no_bet': 'dnb'}
         opps = []
+        entries = []  # 2026-10-24 Drop 入库观察库(source=drop)
         min_trig_ts = None  # 本批最早 prematch drop 触发时刻(供端到端总耗时)
         for line in new_lines:
             try:
@@ -2336,8 +2337,11 @@ class SecondLevelMonitor:
             _oa_add_markets(entry, m, sport, use_rest=False, status='prematch')
             _league = entry.get('league', '')
             _epoch = entry.get('start_time_pin_epoch', 0)
+            _has_ev = False  # 入库观察库: ev>0 全收(与 WS 同口径)
             for group in ('opportunities', 'handicap', 'over_under', 'double_chance', 'draw_no_bet'):
                 for o in entry.get(group, []):
+                    if (o.get('ev_pct') or 0) > 0:
+                        _has_ev = True
                     sub_market = o.get('_market') or _GROUP_TO_SUB.get(group, group)
                     if not _is_market_released(sport, sub_market, _league,
                                                o.get('designation', ''), _epoch,
@@ -2356,6 +2360,15 @@ class SecondLevelMonitor:
                     if _o_odds > 1 and _o_ev > 0:
                         o['_stake'] = int(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1))
                     opps.append(o)
+            if _has_ev:
+                entries.append(entry)
+        # 2026-10-24 Drop 入库观察库(source=drop), 与 WS 分库, 供未来按源释放
+        if entries:
+            try:
+                from src.monitor.clv_collector import log_oa_opportunities
+                log_oa_opportunities(entries, min_ev=2.0, source="drop")
+            except Exception:
+                pass
         if not opps:
             return len(new_lines)
         try:

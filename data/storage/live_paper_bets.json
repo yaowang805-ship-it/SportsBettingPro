@@ -577194,5 +577194,35 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1792803656.776509,
+  "match_id": 5426720,
+  "market_id": 136280833,
+  "option_type": 1,
+  "sport": 3,
+  "home": "波士顿凯尔特人",
+  "away": "纽约尼克斯",
+  "designation": "让球主胜",
+  "sub": "handicap",
+  "line": -3.0,
+  "bsc": [
+   68,
+   66
+  ],
+  "bb_odds": 1.92,
+  "fair": 1.7259,
+  "ev": 11.25,
+  "spread": null,
+  "bb_ts": 1792803655.1551712,
+  "stake": 220,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
