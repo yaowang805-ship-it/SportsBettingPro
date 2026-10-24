@@ -8657,3 +8657,101 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-24T01:20:03Z,ice_hockey,Sweden Hockey League,IF Bjorkloven,Skelleftea AIK,,,上半场主胜,ht,3.93,0,2.5775,52.47,0,3,1792847700,BB,pinnacle,,,ws_scan,,,5764660
 2026-10-24T01:20:03Z,ice_hockey,Sweden Hockey League,IF Bjorkloven,Skelleftea AIK,,,上半场客胜,ht,2.18,0,1.5883,37.25,0,3,1792847700,BB,pinnacle,,,ws_scan,,,5764660
 2026-10-24T01:20:46Z,tennis,ATP - Brussels Open,Arthur Fils (FRA),Jan Lennard Struff (GER),,,上半场主胜,ht,1.27,0,1.2,5.83,0,2,1792859400,BB,pinnacle,,,ws_scan,,,5797480
+2026-10-24T01:29:21Z,tennis,ATP - Lyon Open,Flavio Cobolli (ITA),Lorenzo Musetti (ITA),,,让盘主胜,hc,1.35,0,1.278,5.63,0,2,1792848600,BB,pinnacle,,,ws_scan,,+1.5,5797855
+2026-10-24T01:30:19Z,ice_hockey,Kontinental Hockey League,Lokomotiv Yaroslavl,Severstal Cherepovets,,,上半场主胜,ht,2.21,0,1.708,29.39,0,3,1792936800,BB,pinnacle,,,ws_scan,,,5654457
+2026-10-24T01:30:19Z,ice_hockey,Kontinental Hockey League,Lokomotiv Yaroslavl,Severstal Cherepovets,,,上半场客胜,ht,3.71,0,2.4546,51.15,0,3,1792936800,BB,pinnacle,,,ws_scan,,,5654457
+2026-10-24T01:30:19Z,ice_hockey,Kontinental Hockey League,SKA Saint Petersburg,CSKA Moscow,,,上半场主胜,ht,2.9,0,2.4546,18.15,0,3,1792936800,BB,pinnacle,,,ws_scan,,,5654456
+2026-10-24T01:30:19Z,ice_hockey,Kontinental Hockey League,SKA Saint Petersburg,CSKA Moscow,,,上半场客胜,ht,2.7,0,2.1428,26.0,0,3,1792936800,BB,pinnacle,,,ws_scan,,,5654456
+2026-10-24T01:31:02Z,tennis,WTA - Tokyo Open,Kimberly Birrell (AUS),Aoi Ito (JPN),,,客胜,1x2,3.08,0,2.5527,20.66,0,2,1792813800,BB,pinnacle,,,ws_scan,,,5795422
+2026-10-24T01:34:01Z,ice_hockey,NHL,Washington Capitals,Buffalo Sabres,,,上半场客胜,ht,2.79,0,2.4546,13.66,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651941
+2026-10-24T01:34:31Z,football,Japan J.League 2,Fujieda MYFC,Tokushima Vortis,,,上半场大球,ht_ou,2.17,0,1.9631,10.54,0,3,1792818000,ALL,pinnacle,,,ws_scan,,0.75,5164413
+2026-10-24T01:36:46Z,basketball,China CBA,Zhejiang Guangsha Lions,Jilin Northeast Tigers,,,上半场主胜,ht,1.34,0,1.2,11.66,0,3,1792841700,ALL,pinnacle,,,ws_scan,,,5626191
+2026-10-24T01:36:58Z,basketball,China CBA,Zhejiang Guangsha Lions,Jilin Northeast Tigers,,,主胜,1x2,1.24,0,1.2,3.33,0,3,1792841700,ALL,pinnacle,,,pin_drop,,,5626191
+2026-10-24T01:38:58Z,football,Japan J.League 2,Fujieda MYFC,Tokushima Vortis,,,上半场小球,ht_ou,2.19,0,2.0561,6.51,0,3,1792818000,ALL,pinnacle,,,ws_scan,,1.0,5778582
+2026-10-24T01:40:29Z,tennis,WTA - Tokyo Open,Hayu Kinoshita (JPN),Yulia Putintseva (KAZ),,,让盘客胜,hc,1.38,0,1.2986,6.27,0,2,1792821600,BB,pinnacle,,,ws_scan,,-1.5,5796093
+2026-10-24T01:42:25Z,tennis,WTA - Tokyo Open,Hayu Kinoshita (JPN),Yulia Putintseva (KAZ),,,让盘客胜,hc,1.38,0,1.2986,6.27,0,2,1792818300,BB,pinnacle,,,ws_scan,,-1.5,5796093
+2026-10-24T01:43:51Z,football,Iraq Stars League,Newroz SC,Diyala SC,,,双重机会-主/和局,dc,1.11,0,1.0833,2.46,0,2,1792848600,ALL,pinnacle,,,pin_drop,,,5442786
+2026-10-24T01:43:51Z,football,Iraq Stars League,Newroz SC,Diyala SC,,,双重机会-主/客,dc,1.24,0,1.2,3.33,0,2,1792848600,ALL,pinnacle,,,pin_drop,,,5442786
+2026-10-24T01:45:48Z,basketball,Austria Basketball Superliga,BK Dukes Klosterneuburg,SKN St. Polten Basketball,,,客胜,1x2,3.08,0,2.7159,13.41,0,2,1792861200,ALL,pinnacle,,,ws_scan,,,5789565
+2026-10-24T01:47:32Z,tennis,ATP - Swiss Indoors Basel,Aleksandar Kovacevic (USA),James Duckworth (AUS),,,客胜,1x2,2.53,0,2.4546,3.07,0,4,1792848600,BB,pinnacle,,,pin_drop,,,5797205
+2026-10-24T01:50:04Z,tennis,ATP - Vienna Open,Fabian Marozsan (HUN),Sebastian Sorger (AUT),,,客胜,1x2,6.0,0,5.1968,15.46,0,2,1792842600,BB,pinnacle,,,ws_scan,,,5797072
+2026-10-24T01:50:42Z,tennis,ATP - Vienna Open,Joel Josef Schwaerzler (AUT),Titouan Droguet (FRA),,,主胜,1x2,3.6,0,2.5992,38.51,0,2,1792839600,BB,pinnacle,,,ws_scan,,,5797078
+2026-10-24T01:52:25Z,tennis,ATP - Vienna Open,Alex Molcan (SVK),Hamad Medjedovic (SRB),,,让盘客胜,hc,2.6,0,2.4546,5.92,0,2,1792843200,BB,pinnacle,,,ws_scan,,-1.5,5797075
+2026-10-24T01:52:32Z,basketball,Kosovo Basketball Superliga,KB Trepca,Golden Eagle Ylli,,,主胜,1x2,1.17,0,1.0833,8.0,0,2,1792953000,ALL,pinnacle,,,ws_scan,,,5521329
+2026-10-24T01:52:32Z,basketball,Bosnia and Herzegovina Basketball Championship,Kk Orlovik Zepce,KK Promo Donji Vakuf,,,主胜,1x2,1.18,0,1.0833,8.93,0,3,1792857600,ALL,pinnacle,,,ws_scan,,,5773861
+2026-10-24T01:52:50Z,basketball,Romania Basketball National League,CSM CSU Oradea,CSU Sibiu,,,主胜,1x2,1.2,0,1.0833,10.77,0,3,1792854000,ALL,pinnacle,,,ws_scan,,,5789527
+2026-10-24T01:52:50Z,basketball,Poland Basketball 1 Liga,Decka Pelplin,Spojnia Stargard,,,客胜,1x2,1.39,0,1.3038,6.61,0,2,1792857600,ALL,pinnacle,,,ws_scan,,,5791691
+2026-10-24T01:52:50Z,basketball,Austria Basketball Superliga,Oberwart Gunners,Pirlo Kufstein Towers,,,上半场主胜,ht,1.14,0,1.0833,5.23,0,2,1792861200,ALL,pinnacle,,,ws_scan,,,5789516
+2026-10-24T01:52:50Z,basketball,Uruguay Basketball League,Hebraica Macabi,Urunday Universitario,,,客胜,1x2,2.71,0,2.5565,6.01,0,3,1792888200,ALL,pinnacle,,,ws_scan,,,5758651
+2026-10-24T01:52:50Z,basketball,Portugal Basketball League,Sporting CP,Ovarense Basquetebol,,,上半场主胜,ht,1.52,0,1.3802,10.13,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5791330
+2026-10-24T01:52:50Z,basketball,Switzerland NLB,SAV Vacallo Basket,BC Winterthur,,,主胜,1x2,1.27,0,1.2,5.83,0,3,1792855800,ALL,pinnacle,,,ws_scan,,,5696181
+2026-10-24T01:52:50Z,basketball,Hungary NB I,SZTE Szedeak,Debreceni Eac,,,主胜,1x2,1.43,0,1.2736,12.28,0,3,1792857600,ALL,pinnacle,,,ws_scan,,,5472658
+2026-10-24T01:52:50Z,basketball,Portugal Basketball League,UD Oliveirense,CP Esgueira,,,上半场主胜,ht,1.17,0,1.0833,8.0,0,2,1792861200,ALL,pinnacle,,,ws_scan,,,5791966
+2026-10-24T01:52:50Z,basketball,Turkey Basketball Super League,Bahcesehir Koleji,Besiktas JK,,,上半场主胜,ht,1.79,0,1.6932,5.72,0,2,1792863000,ALL,pinnacle,,,ws_scan,,,5786110
+2026-10-24T01:52:50Z,basketball,British Basketball Championship,Derby Trailblazers,Essex Rebels,,,主胜,1x2,1.28,0,1.2,6.66,0,3,1792866600,BB,pinnacle,,,ws_scan,,,5796037
+2026-10-24T01:52:50Z,basketball,Sweden Basketball Superettan,Wetterbygden Stars,Eskilstuna Basket,,,主胜,1x2,1.36,0,1.2,13.33,0,2,1792940400,ALL,pinnacle,,,ws_scan,,,5769706
+2026-10-24T01:52:50Z,basketball,Portugal Basketball Campeonato Nacional 1 Division,AD Sanjoanense,Beira Mar,,,客胜,1x2,1.27,0,1.2,5.83,0,2,1792850400,BB,pinnacle,,,ws_scan,,,5746692
+2026-10-24T01:53:38Z,ice_hockey,Sweden Hockey League,Brynas IF,Rogle BK,,,上半场主胜,ht,2.59,0,2.0812,24.45,0,3,1792857600,BB,pinnacle,,,ws_scan,,,5650423
+2026-10-24T01:53:38Z,ice_hockey,Sweden Hockey League,Brynas IF,Rogle BK,,,上半场客胜,ht,3.35,0,2.4546,36.48,0,3,1792857600,BB,pinnacle,,,ws_scan,,,5650423
+2026-10-24T01:53:38Z,ice_hockey,Sweden Hockey League,HV71,Frolunda HC,,,上半场主胜,ht,3.31,0,2.4546,34.85,0,3,1792857600,BB,pinnacle,,,ws_scan,,,5650420
+2026-10-24T01:53:38Z,ice_hockey,Sweden Hockey League,HV71,Frolunda HC,,,上半场客胜,ht,2.51,0,2.0644,21.59,0,3,1792857600,BB,pinnacle,,,ws_scan,,,5650420
+2026-10-24T01:53:38Z,ice_hockey,Sweden Hockey League,Farjestads BK,Vaxjo Lakers,,,上半场主胜,ht,2.1,0,1.5883,32.22,0,3,1792857600,BB,pinnacle,,,ws_scan,,,5650425
+2026-10-24T01:53:38Z,ice_hockey,Sweden Hockey League,Farjestads BK,Vaxjo Lakers,,,上半场客胜,ht,3.94,0,2.604,51.3,0,3,1792857600,BB,pinnacle,,,ws_scan,,,5650425
+2026-10-24T01:53:38Z,ice_hockey,NHL,Philadelphia Flyers,Anaheim Ducks,,,上半场主胜,ht,2.59,0,2.4546,5.52,0,1,1792861200,BB,pinnacle,,,ws_scan,,,5650418
+2026-10-24T01:53:38Z,ice_hockey,NHL,Philadelphia Flyers,Anaheim Ducks,,,上半场客胜,ht,2.91,0,2.4546,18.55,0,1,1792861200,BB,pinnacle,,,ws_scan,,,5650418
+2026-10-24T01:53:38Z,ice_hockey,Switzerland National League,HC Lausanne,HC Fribourg Gotteron,,,上半场主胜,ht,2.66,0,2.4234,9.76,0,3,1792863900,BB,pinnacle,,,ws_scan,,,5651252
+2026-10-24T01:53:38Z,ice_hockey,Switzerland National League,HC Lausanne,HC Fribourg Gotteron,,,上半场客胜,ht,2.94,0,2.4546,19.78,0,3,1792863900,BB,pinnacle,,,ws_scan,,,5651252
+2026-10-24T01:53:38Z,ice_hockey,Switzerland National League,EHC Biel,EV Zug,,,上半场主胜,ht,2.84,0,2.4546,15.7,0,3,1792863900,BB,pinnacle,,,ws_scan,,,5651246
+2026-10-24T01:53:38Z,ice_hockey,Switzerland National League,EHC Biel,EV Zug,,,上半场客胜,ht,2.73,0,2.4546,11.22,0,3,1792863900,BB,pinnacle,,,ws_scan,,,5651246
+2026-10-24T01:53:38Z,ice_hockey,NHL,New Jersey Devils,Los Angeles Kings,,,上半场主胜,ht,2.36,0,1.9799,19.2,0,1,1792870200,BB,pinnacle,,,ws_scan,,,5651249
+2026-10-24T01:53:38Z,ice_hockey,NHL,New Jersey Devils,Los Angeles Kings,,,上半场客胜,ht,3.25,0,2.4546,32.4,0,1,1792870200,BB,pinnacle,,,ws_scan,,,5651249
+2026-10-24T01:53:38Z,ice_hockey,NHL,Pittsburgh Penguins,Nashville Predators,,,上半场主胜,ht,2.48,0,2.3009,7.78,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651955
+2026-10-24T01:53:38Z,ice_hockey,NHL,Pittsburgh Penguins,Nashville Predators,,,上半场客胜,ht,2.85,0,2.4546,16.11,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651955
+2026-10-24T01:53:38Z,ice_hockey,NHL,Boston Bruins,San Jose Sharks,,,上半场主胜,ht,2.25,0,1.9631,14.61,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651949
+2026-10-24T01:53:38Z,ice_hockey,NHL,Boston Bruins,San Jose Sharks,,,上半场客胜,ht,3.27,0,2.4546,33.22,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651949
+2026-10-24T01:53:38Z,ice_hockey,NHL,Edmonton Oilers,Toronto Maple Leafs,,,上半场主胜,ht,2.25,0,1.9631,14.61,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651951
+2026-10-24T01:53:38Z,ice_hockey,NHL,Edmonton Oilers,Toronto Maple Leafs,,,上半场客胜,ht,3.14,0,2.4546,27.92,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651951
+2026-10-24T01:53:38Z,ice_hockey,NHL,Ottawa Senators,New York Rangers,,,上半场客胜,ht,2.91,0,2.4546,18.55,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651945
+2026-10-24T01:53:38Z,ice_hockey,NHL,St. Louis Blues,Carolina Hurricanes,,,上半场主胜,ht,3.05,0,2.4546,24.26,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651933
+2026-10-24T01:53:38Z,ice_hockey,NHL,St. Louis Blues,Carolina Hurricanes,,,上半场客胜,ht,2.44,0,2.1156,15.33,0,1,1792882800,BB,pinnacle,,,ws_scan,,,5651933
+2026-10-24T01:53:38Z,ice_hockey,NHL,Seattle Kraken,Minnesota Wild,,,上半场主胜,ht,3.05,0,2.4546,24.26,0,1,1792893600,BB,pinnacle,,,ws_scan,,,5651936
+2026-10-24T01:53:38Z,ice_hockey,NHL,Seattle Kraken,Minnesota Wild,,,上半场客胜,ht,2.44,0,2.1069,15.81,0,1,1792893600,BB,pinnacle,,,ws_scan,,,5651936
+2026-10-24T01:53:38Z,ice_hockey,NHL,Calgary Flames,Detroit Red Wings,,,上半场主胜,ht,3.01,0,2.4546,22.63,0,1,1792893600,BB,pinnacle,,,ws_scan,,,5651948
+2026-10-24T01:53:38Z,ice_hockey,NHL,Calgary Flames,Detroit Red Wings,,,上半场客胜,ht,2.45,0,2.1337,14.82,0,1,1792893600,BB,pinnacle,,,ws_scan,,,5651948
+2026-10-24T01:53:38Z,ice_hockey,Kontinental Hockey League,Amur Khabarovsk,Admiral Vladivostok,,,上半场主胜,ht,2.39,0,1.9631,21.75,0,3,1792911600,BB,pinnacle,,,ws_scan,,,5653271
+2026-10-24T01:53:38Z,ice_hockey,Kontinental Hockey League,Amur Khabarovsk,Admiral Vladivostok,,,上半场客胜,ht,3.27,0,2.4546,33.22,0,3,1792911600,BB,pinnacle,,,ws_scan,,,5653271
+2026-10-24T01:53:38Z,ice_hockey,Vysshaya Hokkeinaya Liga,Chelmet Chelyabinsk,Sokol Krasnoyarsk,,,上半场主胜,ht,2.35,0,1.9631,19.71,0,3,1792915200,BB,pinnacle,,,ws_scan,,,5653274
+2026-10-24T01:53:38Z,ice_hockey,Vysshaya Hokkeinaya Liga,Chelmet Chelyabinsk,Sokol Krasnoyarsk,,,上半场客胜,ht,3.53,0,2.4546,43.81,0,3,1792915200,BB,pinnacle,,,ws_scan,,,5653274
+2026-10-24T01:53:38Z,ice_hockey,Kontinental Hockey League,Salavat Yulaev UFA,AK Bars Kazan,,,上半场主胜,ht,2.61,0,2.0087,29.93,0,3,1792927800,BB,pinnacle,,,ws_scan,,,5654454
+2026-10-24T01:53:38Z,ice_hockey,Kontinental Hockey League,Salavat Yulaev UFA,AK Bars Kazan,,,上半场客胜,ht,2.94,0,2.4546,19.78,0,3,1792927800,BB,pinnacle,,,ws_scan,,,5654454
+2026-10-24T01:53:38Z,ice_hockey,Czech Republic Extraliga,HC Rytiri Kladno,HC Vitkovice,,,上半场主胜,ht,2.31,0,1.9631,17.67,0,2,1792940400,BB,pinnacle,,,ws_scan,,,5769669
+2026-10-24T01:53:38Z,ice_hockey,Czech Republic Extraliga,HC Rytiri Kladno,HC Vitkovice,,,上半场客胜,ht,3.67,0,2.4546,49.52,0,2,1792940400,BB,pinnacle,,,ws_scan,,,5769669
+2026-10-24T01:53:38Z,ice_hockey,Czech Republic Extraliga,HC Litvinov,HC Kometa Brno,,,上半场主胜,ht,2.82,0,2.4546,14.89,0,2,1792945800,BB,pinnacle,,,ws_scan,,,5769743
+2026-10-24T01:53:38Z,ice_hockey,Czech Republic Extraliga,HC Litvinov,HC Kometa Brno,,,上半场客胜,ht,3.06,0,2.4546,24.66,0,2,1792945800,BB,pinnacle,,,ws_scan,,,5769743
+2026-10-24T01:53:38Z,ice_hockey,Vysshaya Hokkeinaya Liga,Toros Neftekamsk,Zauralye Kurgan,,,上半场主胜,ht,2.27,0,1.7237,31.69,0,3,1792843200,BB,pinnacle,,,ws_scan,,,5764477
+2026-10-24T01:53:38Z,ice_hockey,Vysshaya Hokkeinaya Liga,Toros Neftekamsk,Zauralye Kurgan,,,上半场客胜,ht,4.01,0,2.4546,63.37,0,3,1792843200,BB,pinnacle,,,ws_scan,,,5764477
+2026-10-24T01:53:38Z,ice_hockey,Czech Republic Extraliga,Sparta Prague,HC Olomouc,,,上半场主胜,ht,1.8,0,1.2,49.99,0,2,1792850400,BB,pinnacle,,,ws_scan,,,5764674
+2026-10-24T01:53:38Z,ice_hockey,Czech Republic Extraliga,BK Mlada Boleslav,Ceske Budejovice,,,上半场主胜,ht,2.69,0,2.3262,15.64,0,2,1792940400,BB,pinnacle,,,ws_scan,,,5769668
+2026-10-24T01:53:38Z,ice_hockey,Czech Republic Extraliga,BK Mlada Boleslav,Ceske Budejovice,,,上半场客胜,ht,3.08,0,2.4546,25.48,0,2,1792940400,BB,pinnacle,,,ws_scan,,,5769668
+2026-10-24T01:53:38Z,ice_hockey,Czech Republic Extraliga,Bili Tygri Liberec,HC Plzen,,,上半场主胜,ht,2.71,0,2.2632,19.74,0,2,1792940400,BB,pinnacle,,,ws_scan,,,5769670
+2026-10-24T01:53:38Z,ice_hockey,Czech Republic Extraliga,Bili Tygri Liberec,HC Plzen,,,上半场客胜,ht,3.27,0,2.4546,33.22,0,2,1792940400,BB,pinnacle,,,ws_scan,,,5769670
+2026-10-24T01:54:14Z,tennis,WTA - Tokyo Open,Hayu Kinoshita (JPN),Yulia Putintseva (KAZ),,,让盘客胜,hc,1.38,0,1.2986,6.27,0,2,1792827600,BB,pinnacle,,,ws_scan,,-1.5,5796093
+2026-10-24T01:57:47Z,basketball,Uruguay Basketball League,Hebraica Macabi,Urunday Universitario,,,主胜,1x2,1.42,0,1.3456,5.53,0,3,1792888200,ALL,pinnacle,,,ws_scan,,,5758651
+2026-10-24T01:57:47Z,basketball,Portugal Basketball League,Sporting CP,Ovarense Basquetebol,,,主胜,1x2,1.38,0,1.2,15.0,0,2,1792850400,ALL,pinnacle,,,ws_scan,,,5791330
+2026-10-24T01:59:28Z,football,England League Two,Cheltenham Town,Newport County,,,双重机会-主/客,dc,1.29,0,1.2626,2.17,0,2,1792841400,ALL,pinnacle,,,pin_drop,,,5767741
+2026-10-24T02:05:20Z,football,England FA Trophy,Leek Town FC,Bootle FC,,,双重机会-和局/客,dc,1.49,0,1.375,8.36,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683652
+2026-10-24T02:06:02Z,football,England FA Trophy,Whitehawk FC,St Albans City,,,客胜,1x2,2.01,0,1.9631,2.39,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683675
+2026-10-24T02:06:02Z,football,England FA Trophy,Whitehawk FC,St Albans City,,,双重机会-和局/客,dc,1.3,0,1.2,8.33,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683675
+2026-10-24T02:06:02Z,football,England FA Trophy,Whitehawk FC,St Albans City,,,双重机会-主/客,dc,1.23,0,1.2,2.5,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683675
+2026-10-24T02:06:02Z,football,England FA Trophy,Anstey Nomads,Bromsgrove Sporting FC,,,主胜,1x2,3.02,0,2.4546,23.03,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683657
+2026-10-24T02:06:02Z,football,England FA Trophy,Anstey Nomads,Bromsgrove Sporting FC,,,双重机会-主/客,dc,1.27,0,1.2,5.83,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683657
+2026-10-24T02:06:47Z,volleyball,Netherlands Volleyball Eredivisie,Lycurgus Groningen,VV Huizen,,,主胜,1x2,1.32,0,1.2,10.0,0,2,1792864800,ALL,pinnacle,,,pin_drop,,,5762974
+2026-10-24T02:06:47Z,football,England FA Trophy,Leatherhead FC,Eastbourne Borough,,,客胜,1x2,2.17,0,2.1199,2.37,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683660
+2026-10-24T02:06:47Z,football,England FA Trophy,Leatherhead FC,Eastbourne Borough,,,双重机会-和局/客,dc,1.38,0,1.2,15.0,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683660
+2026-10-24T02:06:47Z,football,England FA Trophy,Leatherhead FC,Eastbourne Borough,,,双重机会-主/客,dc,1.24,0,1.2,3.33,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683660
+2026-10-24T02:12:51Z,football,England FA Trophy,Deal Town,Hashtag United,,,客胜,1x2,1.49,0,1.2652,17.77,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683673
+2026-10-24T02:12:51Z,football,England FA Trophy,Deal Town,Hashtag United,,,双重机会-和局/客,dc,1.13,0,1.0833,4.31,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683673
+2026-10-24T02:12:51Z,football,England FA Trophy,Deal Town,Hashtag United,,,双重机会-主/客,dc,1.15,0,1.0833,6.16,0,3,1792850400,ALL,pinnacle,,,pin_drop,,,5683673
+2026-10-24T02:13:34Z,football,England FA Trophy,Deal Town,Hashtag United,,,上半场让球客胜,ht_hc,1.96,0,1.8532,5.76,0,3,1792850400,ALL,pinnacle,,,drop,,-0.5,5683673
+2026-10-24T02:14:01Z,tennis,WTA - Tokyo Open,Ena Shibahara (JPN),Alycia Parks (USA),,,让盘客胜,hc,2.67,0,2.4568,8.68,0,2,1792809900,BB,pinnacle,,,ws_scan,,-1.5,5795413
+2026-10-24T02:15:30Z,tennis,WTA - Guangzhou Open,Tatiana Prozorova (RUS),Ekaterine Gorgodze (GEO),,,上半场主胜,ht,1.27,0,1.2,5.83,0,2,1792819200,BB,pinnacle,,,ws_scan,,,5795962

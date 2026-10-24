@@ -294,16 +294,8 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         # 下单失败也保留占坑(该 opp 本轮已尝试, 不再重试, 防重复), 下次扫描靠 check 拦。
         record_sub_market_bet(match_id, sub, "prematch")
 
-        # 全局冷却(2026-09-08): 跨进程共享时间戳。2026-10-18 早盘 scope=early 独立冷却,
-        # 不跟滚球共享(滚球 2s 高频下单让早盘每次等 20-90s → 早盘 WS 触发一轮超 60s)。
-        from src.betting.bb_auto_bet import global_bet_cooldown, record_global_bet
-        if trigger_source == "pin_drop":
-            _wait = global_bet_cooldown(3, 8, scope="drop")  # 2026-10-24 Drop 秒级: cooldown 缩短到 3-8s(骤降抢窗口)
-        else:
-            _wait = global_bet_cooldown(20, 90, scope="early")
-        if _wait > 0:
-            time.sleep(_wait)
-            _sleep_total += _wait
+        # 2026-10-24 废除冷却积累: 早盘下注不再 sleep 20-90s(16单累积431s), 直接下单(防风控靠单笔封顶 drop80/ws50)。
+        from src.betting.bb_auto_bet import record_global_bet
 
         # 余额熔断已取消(2026-10-11 用户要求): 不再用余额<1000 拦投注, 符合释放门槛就投
 
@@ -346,12 +338,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         # 记录全局下单时间戳
         record_global_bet(scope=("drop" if trigger_source == "pin_drop" else "early"))
 
-        # 防风控(2026-09-05): 每注之间随机间隔, 模拟真人看盘思考, 避免秒下多注被风控识别。
-        # 2026-10-20 用户要求 drop 也秒级下单(对齐 ws_scan), 两轨统一 10-20s。
-        import random as _random
-        _sleep = _random.uniform(10, 20)
-        time.sleep(_sleep)
-        _sleep_total += _sleep
+        # 2026-10-24 废除冷却积累: 每注间隔也去掉(与 global_bet_cooldown 一起), 直接连续下单(防风控靠单笔封顶 drop80/ws50)。
 
         if code == 0:
             opp["_bet_succeeded"] = True  # 2026-10-17 供 push_report 只对成功注写指纹(失败注下次可重试)
