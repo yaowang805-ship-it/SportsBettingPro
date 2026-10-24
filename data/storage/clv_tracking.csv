@@ -8773,3 +8773,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-10-24T02:53:46Z,football,Japan Football League,Maruyasu Okazaki,Briobecca Urayasu,,,双重机会-主/客,dc,1.33,0,1.2918,2.95,0,3,1792814400,ALL,pinnacle,,,pin_drop,,,5518984
 2026-10-24T02:55:27Z,basketball,Australia NBL,Illawarra Hawks,Brisbane Bullets,,,客胜,1x2,2.52,0,2.4546,2.66,0,3,1792823400,ALL,pinnacle,,,pin_drop,,,5074441
 2026-10-24T02:56:23Z,tennis,WTA - Tokyo Open,Kimberly Birrell (AUS),Aoi Ito (JPN),,,客胜,1x2,3.08,0,2.5389,21.31,0,2,1792819800,BB,pinnacle,,,ws_scan,,,5795422
+2026-10-24T02:56:43Z,ice_hockey,Kontinental Hockey League,Lokomotiv Yaroslavl,Severstal Cherepovets,,,上半场小球,ht_ou,1.69,0,1.6438,2.81,0,3,1792936800,BB,pinnacle,,,drop,,1.5,5654457
+2026-10-24T03:00:32Z,tennis,WTA - Guangzhou Open,Polina Iatcenko (RUS),Alexandra Shubladze (RUS),,,主胜,1x2,2.63,0,2.4546,7.15,0,2,1792811100,BB,pinnacle,,,ws_scan,,,5795761
+2026-10-24T03:00:32Z,tennis,World Tennis - M15 Singapore Men Singles,Maxime Janvier (FRA),Kosuke Ogura (JPN),,,上半场主胜,ht,1.34,0,1.2388,8.17,0,3,1792811100,BB,pinnacle,,,ws_scan,,,5797748

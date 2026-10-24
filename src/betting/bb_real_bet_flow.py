@@ -325,9 +325,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
             if trigger_source == "pin_drop":
                 _min_ev = 2.5  # 2026-10-24 Drop 投注门槛统一 2.5%(校准取消后真实EV2-3%, 3%门槛太高)
             else:
-                from config.weight_matrix_v5 import get_min_ev
-                _min_ev = get_min_ev(opp.get("sport", ""), opp.get("league_cn") or opp.get("league", ""),
-                                     _sub_market_to_key(sub), odds)
+                _min_ev = 5.0  # 2026-10-24 WS 投注门槛统一 5%(与入库一致, 之前 get_min_ev 3% 偏低)
         _t0 = time.time()
         code, order_id, msg = place_single_bet(
             market_id, odds, option_type, stake, token=token, domain=domain, match_id=match_id,
