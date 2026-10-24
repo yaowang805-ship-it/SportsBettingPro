@@ -8,7 +8,7 @@
 
 本脚本统一走 CDP 连 Chrome 9222:
 1. 找/开 BB 页(vv899.bbty0vip7.com)
-2. 读 st-auth，测下单接口; 失效则清 st-auth + reload 触发自动登录(靠持久 cookie)
+2. 读 st-auth，测下单接口; 失效/为空则跳登录页点「登录」按钮(账号密码浏览器已预填, 2026-10-24 实测)
 3. 读新 st-auth/st-domain 写 .bb_token / .bb_domain
 
 用法: .venv312/bin/python scripts/renew_bb_login.py
@@ -101,6 +101,53 @@ def _get_bb_page(ctx):
     return None
 
 
+def _click_login(pg):
+    """在登录页点「登录」按钮(账号密码浏览器已预填), 返回新 st-auth 或空串。
+
+    2026-10-24 替代旧「清 st-auth + reload 靠持久 cookie 自动登录」: 实测 .chrome-bb
+    独立 profile 无持久 cookie, 自动登录走不通; 但登录页账号名/密码已预填(浏览器记住),
+    直接点「登录」即可。无验证码时 2s 内出 st-auth。
+    """
+    # 1. 若不在登录页, 跳到登录页
+    if "/login" not in pg.url:
+        try:
+            pg.goto(BB_URL.rstrip("/") + "/login", wait_until="domcontentloaded", timeout=25000)
+        except Exception:
+            pass
+        pg.wait_for_timeout(3000)
+    # 2. 点账户登录表单里的「登录」按钮
+    clicked = pg.evaluate("""() => {
+        const form = document.querySelector('form.main-container.account, form.account, form.el-form');
+        if (form) {
+            for (const b of form.querySelectorAll('button')) {
+                if (b.innerText.trim() === '登录') { b.click(); return 'account'; }
+            }
+        }
+        for (const b of document.querySelectorAll('button')) {
+            if (b.innerText.trim() === '登录') { b.click(); return 'first'; }
+        }
+        return 'none';
+    }""")
+    _log(f"点登录按钮: {clicked}")
+    # 3. 等新 st-auth 出现(最多 20s)
+    for _ in range(20):
+        time.sleep(1)
+        st = pg.evaluate("() => localStorage.getItem('st-auth') || ''")
+        if st:
+            return st
+    return ""
+
+
+def _close_chrome():
+    """彻底关闭 Chrome 9222(防电脑过热)。browser.close() 是 Playwright 断连, 再加 pkill 兜底。"""
+    try:
+        import subprocess
+        subprocess.run(["pkill", "-f", "remote-debugging-port=9222"],
+                       capture_output=True, timeout=5)
+    except Exception:
+        pass
+
+
 def main():
     from playwright.sync_api import sync_playwright
 
@@ -131,36 +178,29 @@ def main():
             pass
         prefer_dom = (ls.get("st-domain", "") or _last_dom or BB_DOMAIN_CANDIDATES[0]).rstrip("/")
 
-        # 2. 测 token 在候选域里哪个有效(优先 st-domain)；失效则清 + reload 触发自动登录
-        dom, _reachable = _find_working_domain(st, prefer_dom) if st else (None, False)
-        if dom:
-            _log(f"token 有效，直接写盘: {st[:25]}... domain={dom}")
-        elif not _reachable:
-            _log("所有域网络异常(连不上), 不判失效不 reload(可能是网络抖动), 保留旧 token")
-            browser.close()
-            return 0
-        else:
-            _log(f"token 失效或为空({st[:15] if st else '无'})，清 st-auth + reload 触发自动登录")
-            try:
-                pg.evaluate('() => { localStorage.removeItem("st-auth"); '
-                            'localStorage.removeItem("user-token"); localStorage.removeItem("h5-token"); }')
-                pg.reload(wait_until="domcontentloaded", timeout=30000)
-            except Exception as e:
-                _log(f"reload 异常(可忽略): {e}")
-            # 等自动登录(靠持久 cookie)生成新 st-auth
-            for _ in range(10):
-                time.sleep(3)
-                ls2 = _read_ls(pg)
-                st2 = ls2.get("st-auth", "")
-                wd, _reachable2 = _find_working_domain(st2, (ls2.get("st-domain", "") or prefer_dom)) if st2 else (None, False)
-                if wd:
-                    st = st2
-                    dom = wd
-                    break
-            if not dom:
-                _log("⚠️ 自动登录未成功(可能需手动登录)，保留旧 token 不覆盖")
+        # 2. 测 token 在候选域里哪个有效(优先 st-domain)；失效/为空 → 点登录续期
+        dom = None
+        if st:
+            dom, _reachable = _find_working_domain(st, prefer_dom)
+            if dom:
+                _log(f"token 有效，直接写盘: {st[:25]}... domain={dom}")
+            elif not _reachable:
+                _log("所有域网络异常(连不上), 不判失效不续期(可能是网络抖动), 保留旧 token")
                 browser.close()
+                _close_chrome()
+                return 0
+
+        if not dom:
+            _log(f"token 失效或为空({st[:15] if st else '无'})，点登录按钮续期(账号密码已预填)")
+            st = _click_login(pg)
+            if not st:
+                _log("⚠️ 点登录未成功(可能需处理验证码/手动登录)，保留旧 token 不覆盖")
+                browser.close()
+                _close_chrome()
                 return 1
+            wd, _reachable2 = _find_working_domain(st, prefer_dom)
+            dom = wd or prefer_dom
+            _log(f"新 token 写盘: {st[:25]}... domain={dom}")
 
         # 3. 写盘
         try:
@@ -169,9 +209,12 @@ def main():
             _log(f"✅ token 写盘成功: {st[:25]}... domain={dom}")
         except Exception as e:
             _log(f"写盘失败: {e}")
+            browser.close()
+            _close_chrome()
             return 1
 
         browser.close()
+        _close_chrome()
     return 0
 
 
