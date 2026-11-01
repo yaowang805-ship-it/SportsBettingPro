@@ -68,11 +68,7 @@ def main():
     if isinstance(rb, dict):
         rb = list(rb.values())  # real_bets.json 是 {order_id: bet}, 直接取 values
     early_real = [b for b in rb if isinstance(b, dict) and b.get("trigger_source") in ("pin_drop", "ws_scan")]
-    tr = _rows(early_real)  # 实盘训练
-    # 观察库做补充(实盘样本少时), 但实盘为主
-    pb = _rows(_load(STORAGE / "paper_bets.json"))
-    if len(tr) < 100:
-        tr = tr + pb
+    tr = _rows(early_real)  # 纯实盘训练(2026-11-01: 观察库纸面是快照价脏数据, 会污染校准方向, 彻底不用观察库补充)
     te = tr  # 样本少, 不分训练/测试
     p = np.array([r[0] for r in tr])
     y = np.array([r[1] for r in tr])

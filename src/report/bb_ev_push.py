@@ -657,6 +657,25 @@ def _load_release_list():
         return None
 
 
+# 2026-10-26 数据驱动: Drop 触发源砍掉实盘 ROI 负的盘口(lead-lag 型 edge, 看实盘不看 CLV)。
+# 方向口径与 _release_direction 一致。
+DROP_BLOCK = {
+    ("football", "1x2", "平"),       # 和局 -41.1%
+    ("basketball", "hc", "主"),      # 篮球让分主胜 -68.3%
+    ("football", "dc", "X2"),        # 和/客 -22.6%
+    ("football", "ou", "小"),        # 小球 -53.7%
+    ("football", "dc", "1X"),        # 主/和 -26.8%
+    ("basketball", "1x2", "主"),     # 篮球独赢主 -15.2%
+    ("basketball", "1x2", "客"),     # 篮球独赢客 -10.7%
+    ("football", "hc", "主"),        # 足球让球主胜 -24.4%
+    # 2026-10-27 撤 drop 实盘负盘口(近3天): 半场三盘口 + 全场大球(足球)。
+    ("football", "ht_ou", "大"),     # 半场大小球大 -58.3%/5注
+    ("football", "ht", "主"),        # 半场独赢主 -43.9%/4注
+    ("football", "ht_hc", "主"),     # 半场让球主 -100%/4注
+    ("football", "ou", "大"),        # 全场大球 -44.4%/3注
+}
+
+
 def _is_market_released(sport: str, sub_market: str, league: str = "", designation: str = "", match_epoch=None, odds=None, scope: str = "early", source: str = None) -> bool:
     """该运动×盘口(或运动×联赛×盘口)是否被释放(允许投注)。未释放 → 只观察不投注。
 
@@ -669,8 +688,21 @@ def _is_market_released(sport: str, sub_market: str, league: str = "", designati
     if not rl:
         return True
     # 2026-10-24 触发源拆分: Drop 专用释放=足球+篮球所有盘口(用户定); WS 走下面正常清单。
+    # 2026-11-01 drop 数据驱动: 用 drop 实盘 ROI 分「盘口×方向×概率桶」(compute_market_release 生成
+    # drop_released/drop_blocked), 替换硬编码 DROP_BLOCK 整盘口一刀切。样本不足的格走 DROP_BLOCK 兜底。
     if source == "drop":
-        return sport in ("football", "basketball")
+        dr = _release_direction(designation, sub_market)
+        _iv = _odds_interval(odds, sport)
+        if [sport, sub_market, dr, _iv] in rl.get("drop_blocked", []):
+            return False
+        if [sport, sub_market, dr, _iv] in rl.get("drop_released", []):
+            return True
+        # 兜底: 旧 DROP_BLOCK(整盘口一刀切, 样本不足的格走这里)
+        if sport not in ("football", "basketball"):
+            return False
+        if (sport, sub_market, dr) in DROP_BLOCK:
+            return False
+        return True
     dr = _release_direction(designation, sub_market)
     _iv = _odds_interval(odds, sport)
     # 1. 联赛细化: 该联赛三维格子 n≥30 时用联赛自己的 ROI 覆盖主开关
@@ -683,6 +715,9 @@ def _is_market_released(sport: str, sub_market: str, league: str = "", designati
     #    2026-09-15 加赔率区间维度(之前漏了, 5要素清单配 4要素查询永远匹配不上)。
     #    2026-10-17 修: 之前硬编码 "early", 滚球(live)条目永远匹配不上 → 滚球撤回/释放全失效。
     if [sport, sub_market, dr, _iv, scope] in rl.get("observe_blocked", []):
+        return False
+    # 2026-10-26 补 * 通配拦截: 之前 observe_blocked 只认具体区间, 通配撤(如 football|1x2|平|*|early)形同虚设。
+    if [sport, sub_market, dr, "*", scope] in rl.get("observe_blocked", []):
         return False
     if [sport, sub_market, dr, _iv, scope] in rl.get("observe_released", []):
         return True

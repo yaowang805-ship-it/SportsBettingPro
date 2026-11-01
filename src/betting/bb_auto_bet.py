@@ -153,7 +153,7 @@ def global_bet_cooldown(min_s=15.0, max_s=45.0, scope="live"):
     下单成功后必须调 record_global_bet(scope)。
     """
     import random as _r
-    _file = DROP_BET_TS_FILE if scope == "drop" else (EARLY_BET_TS_FILE if scope == "early" else GLOBAL_BET_TS_FILE)
+    _file = GLOBAL_BET_TS_FILE  # 2026-10-25 统一全局冷却(三源共享), 修复14068跨源连发
     last = 0.0
     try:
         if _file.exists():
@@ -168,7 +168,7 @@ def global_bet_cooldown(min_s=15.0, max_s=45.0, scope="live"):
 
 def record_global_bet(scope="live"):
     """下单成功后记录时间戳(冷却起点)。scope: live/early 各自独立文件。"""
-    _file = DROP_BET_TS_FILE if scope == "drop" else (EARLY_BET_TS_FILE if scope == "early" else GLOBAL_BET_TS_FILE)
+    _file = GLOBAL_BET_TS_FILE  # 2026-10-25 统一全局冷却(三源共享), 修复14068跨源连发
     try:
         _file.parent.mkdir(parents=True, exist_ok=True)
         _file.write_text(str(time.time()))
@@ -353,7 +353,10 @@ def auto_renew_token():
 
 
 def fetch_balance():
-    """读账户余额(下单接口 Authorization 鉴权, 比 user-token 严格)。返回余额字符串或 None。"""
+    """读账户余额(下单接口 Authorization 鉴权, 比 user-token 严格)。返回余额 float 或 None。
+
+    2026-10-26 从返回 str 改为返回 float(从根杜绝「字符串比整数」的 TypeError 坑)。
+    """
     tok = read_token(); dom = read_domain()
     if not tok:
         return None
@@ -364,7 +367,10 @@ def fetch_balance():
                                      "User-Agent": _UA}, timeout=15, verify=False)
         d = r.json()
         if d.get("code") == 0:
-            return str((d.get("data") or {}).get("bl", ""))
+            try:
+                return float((d.get("data") or {}).get("bl", 0))
+            except (TypeError, ValueError):
+                return None
     except Exception:
         pass
     return None
@@ -429,6 +435,31 @@ def check_balance_ok(min_balance=BALANCE_MIN):
     except (TypeError, ValueError, OSError):
         pass
     return ok
+
+
+def get_balance_cached():
+    """读缓存余额(不联网)。下单关键路径展示用, 避免 fetch_balance 的 1-2s HTTP 阻塞秒级投注。
+
+    2026-10-27: 早盘 drop 实盘须 <3s 完成投注, fetch_balance 是 1-2s 阻塞 HTTP(timeout=15),
+    在 drop 关键路径上每触发一次卡一次是「总耗时很高」主因之一。余额展示容忍 60s 陈旧。
+    返回 float 或 None(从未取到过)。
+    """
+    return _balance_cache.get("value")
+
+
+def warm_balance():
+    """后台预热余额缓存(不阻塞下单)。供早盘余额预取线程调用, 让 check_balance_ok 命中缓存 0ms。
+
+    2026-10-27: 与 check_balance_ok 共享 _balance_cache, 提前在后台拉余额, 下单时 0ms。
+    """
+    try:
+        bal = fetch_balance()
+        if bal:
+            v = float(str(bal).replace(",", "").replace("¥", "").strip())
+            _balance_cache["ts"] = time.time()
+            _balance_cache["value"] = v
+    except (TypeError, ValueError, OSError):
+        pass
 
 
 _session_singleton = None  # 2026-09-30 单例 session: 复用 keep-alive 连接, 省每次 TLS 握手 ~0.7s
@@ -498,7 +529,7 @@ def fetch_current_odds(market_id, match_id, option_type, token=None, domain=None
 def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domain=None,
                      match_id=None, check_limit=True, verify_price=True,
                      platform="BB", fair_price=None, min_ev_pct=None, prefetched_odds=None,
-                     decision_version=None, bet_meta=None):
+                     decision_version=None, bet_meta=None, fast=False):
     """单关下单。返回 (code, order_id, message)。
 
     code=0 成功; code=5 参数错; code=14010 token过期; code=3015 盘口关闭;
@@ -582,11 +613,11 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
         "Origin": "https://pc.7y99z.com" if platform == "FB" else "https://pc.x14ff.com",
         "Referer": "https://pc.7y99z.com/" if platform == "FB" else "https://pc.x14ff.com/",
     }
-    for attempt in range(3):
+    for attempt in range(1 if fast else 3):
         _t0 = time.time()  # 请求发出时刻(acceptance 埋点)
         try:
             r = _session().post(f"{domain}/v1/order/bet/singlePass",
-                                json=body, headers=headers, timeout=15, verify=False)
+                                json=body, headers=headers, timeout=(5 if fast else 15), verify=False)
             _elapsed_ms = round((time.time() - _t0) * 1000, 1)
             d = r.json()
             code = d.get("code", -1)
@@ -600,7 +631,7 @@ def place_single_bet(market_id, odds, option_type, stake=10.0, token=None, domai
                     continue
             # 二次验价(2026-09-19 用户要求): 下单失败(盘口关闭3015/赔率变等可重试错误,
             # 排除注额超限-3/参数错5) → 重拉实时价, edge 还在则用实时价重试一次, 否则放弃。
-            if attempt == 0 and code not in (0, 14010, -3, 5) and fair_price and min_ev_pct is not None:
+            if not fast and attempt == 0 and code not in (0, 14010, -3, 5) and fair_price and min_ev_pct is not None:
                 _cur = fetch_current_odds(market_id, match_id, option_type, token, domain)
                 _new_odds = _cur[0] if _cur else None
                 if _new_odds and float(fair_price) > 1:

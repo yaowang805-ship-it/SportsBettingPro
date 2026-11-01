@@ -21,6 +21,8 @@ from src.scrapers.pin_client import PinOddsCache, PinRestClient, PinWSClient, Pi
 DROP_FILE = ROOT / "data" / "storage" / "pin_drops.jsonl"
 TRIGGER_FILE = ROOT / "data" / "storage" / "pin_trigger.jsonl"
 DROP_RETENTION_DAYS = 30  # pin_drops 归档保留天数(超期清理, 显式管磁盘)
+DROP_MIN_PROB_CHANGE = 2.0  # 2026-11-01 骤降概率过滤下限(pp): 骤降价值看「隐含概率上升」非「价格降幅%」。
+# 冷门(赔率高)降5%价格=概率只动~1pp(噪声), 热门(赔率低)降2%价格=概率动~4pp(真sharp)。配合 min_drop=2% 放开热门。
 LIVE_TICK_FILE = ROOT / "data" / "storage" / "pin_live_tick.ts"  # 滚球 WS live 帧触发信号时间戳
 PREMATCH_TICK_FILE = ROOT / "data" / "storage" / "pin_prematch_tick.jsonl"  # 早盘 WS prematch 赔率变动触发信号(2026-10-18 事件驱动替代30s轮询)
 FRAME_GAP_FILE = ROOT / "data" / "storage" / "pin_frame_gaps.jsonl"  # 帧间隔埋点(2026-10-11 攒帧间隔分布, 定 suspension 阈值)
@@ -215,6 +217,18 @@ def _on_prematch(mid, home, away):
 
 def _on_drop(stream, drop):
     """SSE drop 回调: 落盘 + 映射 BB 比赛 + 写触发信号。"""
+    # 2026-11-01 概率过滤: 拦掉「价格降幅大但概率变化小」的冷门噪声(冷门 favorite-longshot 无 edge)
+    _fp = drop.get("from_price")
+    _tp = drop.get("to_price")
+    if _fp and _tp:
+        try:
+            _fp, _tp = float(_fp), float(_tp)
+            if _fp > 1 and _tp > 1:
+                _prob_change_pp = (1 / _tp - 1 / _fp) * 100
+                if _prob_change_pp < DROP_MIN_PROB_CHANGE:
+                    return  # 概率变化太小 = 冷门噪声, 不落盘不下单
+        except (TypeError, ValueError):
+            pass
     rec = {"ts": time.time(), "stream": stream, **drop}
     _append_drop(rec)
     home = drop.get("home", "?")
@@ -317,6 +331,17 @@ class PrematchIngestor:
             if not m:
                 continue
             sport = m.get('sport', 'football')
+            # 2026-10-31 统一数据源: 入库用 getMatchDetail 鲜价替换快照价(与实盘 auto_bet_flow 同源)。
+            try:
+                from src.scrapers.bb_api_fetcher import fetch_match_for_order, extract_match_odds
+                _fresh = fetch_match_for_order(mid, timeout=3, max_attempts=1, max_domains=1)
+                if _fresh and _fresh.get('mg'):
+                    _fm = extract_match_odds(_fresh, sport)
+                    for _k in ('odds_ft', 'odds_ht', 'odds_sh'):
+                        if _fm.get(_k):
+                            m[_k] = _fm[_k]
+            except Exception:
+                pass
             try:
                 e = _build_oa_entry(m, sport)
                 _oa_add_markets(e, m, sport, use_rest=False, status='prematch')
@@ -324,6 +349,13 @@ class PrematchIngestor:
                 continue
             if any(e.get(g) for g in ("opportunities", "handicap", "over_under",
                                       "double_chance", "draw_no_bet")):
+                # 2026-10-31 早盘模拟拒单: 登记第一道鲜价快照, flush 写前复验第二道, 价变跳过(不入库)
+                try:
+                    _of = m.get("odds_ft")
+                    if _of:
+                        e["_odds_ft_snapshot"] = dict(_of) if isinstance(_of, dict) else _of
+                except Exception:
+                    pass
                 with self._lock:
                     self._pending.append(e)
 
@@ -338,6 +370,8 @@ class PrematchIngestor:
             batch = self._pending
             self._pending = []
         self._last_flush = time.time()
+        # 2026-10-31 早盘模拟拒单: 写 clv_tracking 前复验第二道鲜价, 价变跳过(对齐实盘 auto_bet_flow 的 oddsChange=0)
+        batch = self._filter_rejected(batch)
         try:
             from src.monitor.clv_collector import log_oa_opportunities
             n = log_oa_opportunities(batch, source="pin_drop") or 0  # 2026-10-18 双轨制: drop 来源
@@ -345,6 +379,38 @@ class PrematchIngestor:
                 print(f"[pin-prematch] 入库 {n} 条机会", flush=True)
         except Exception as e:
             print(f"[pin-prematch] 入库失败: {type(e).__name__} {str(e)[:80]}", flush=True)
+
+    def _filter_rejected(self, batch):
+        """早盘模拟拒单(2026-10-31): 对每个 pending entry 复验第二道 getMatchDetail 鲜价, 价变跳过不入库。
+
+        对齐实盘 auto_bet_flow 的 oddsChange=0: sweep 里 getMatchDetail(第一道)与 flush(每30s)之间价变,
+        实盘会因提交瞬间价变被拒。这里写 clv_tracking 前复验第二道, 价变就跳过该场(不入观察库)。
+        """
+        if not batch:
+            return batch
+        from src.scrapers.bb_api_fetcher import fetch_match_for_order, extract_match_odds
+        kept = []
+        skipped = 0
+        for e in batch:
+            _snap = e.get("_odds_ft_snapshot")
+            _mid = str(e.get("bb_match_id") or "")
+            if not _snap or not _mid:
+                kept.append(e)
+                continue
+            try:
+                _fresh = fetch_match_for_order(_mid, timeout=3, max_attempts=1, max_domains=1)
+                if _fresh and _fresh.get("mg"):
+                    _fm = extract_match_odds(_fresh, e.get("sport", "football"))
+                    _new = _fm.get("odds_ft")
+                    if _new and _new != _snap:
+                        skipped += 1
+                        continue  # 价变, 模拟拒单跳过
+            except Exception:
+                pass
+            kept.append(e)
+        if skipped:
+            print(f"[pin-prematch] 模拟拒单: 复验 {len(batch)} 场, 价变跳过 {skipped} 场", flush=True)
+        return kept
 
 
 def main():

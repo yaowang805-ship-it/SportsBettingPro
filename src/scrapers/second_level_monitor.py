@@ -37,7 +37,7 @@ COMPARISON_FILE = ROOT / "data" / "storage" / "bb_vs_pinnacle_comparison.json"
 # EV-Kelly 半凯利仓位(秒级自动下单注额)。有效资金 = ¥5000(日目标, 2026-09-06 用户选 C),
 # 让弱 edge 落在 ¥300 上限以下, 强 edge 顶格, 真正按 edge 分档。
 KELLY_FRACTION = 0.5   # 半凯利
-MAX_STAKE = 300        # 单盘口上限(2026-09-19 用户提额: 滚球单注≤300, 原150)
+MAX_STAKE = 80         # 滚球单盘口上限(2026-11-01 用户明确要求: 滚球单笔≤80; 铁律, 未授权不改)
 
 _POLL_EXECUTOR = None  # 2026-09-24 防假死: 比价拉取线程池(lazy初始化, max_workers=2), 90s超时
 _TASK_EXECUTOR = None  # 2026-09-26 防假死: 结算/CLV/早盘WS 用独立线程池(max_workers=16), 卡住的readline不占满asyncio默认池(根治假死)
@@ -203,7 +203,7 @@ LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 
 # 滚球实盘只投小球(under), EV-Kelly 最优定仓, 单注上限 ¥400(预算1/5)兼顾分散。
 # 其它盘口(大球/1x2/让球)仍只进观察库, 不下真单。
 LIVE_REAL_BET_ENABLED = True  # 2026-09-18 重新开启滚球实盘(新数据源 Sbobet+Betfair 替代 Pin)
-LIVE_UNDER_BET_ENABLED = False  # 2026-09-19 用户暂停小球盘投注(实盘小球-31%失效; 观察库仍收纸单攒数据, 只不下真单)
+LIVE_UNDER_BET_ENABLED = True  # 2026-10-25 用户要求足球小球滚球全量放开(历史-31%暂停取消)
 LIVE_UNDER_MAX_STAKE = 150  # 单注上限(2026-09-18 滚球单注≤150; 实际生效cap=min(MAX_STAKE=150, release_cap))
 BB_SPORT_CN = {1: "足球", 3: "篮球", 5: "网球", 7: "棒球", 6: "美式足球",
                2: "冰球", 13: "排球", 15: "乒乓球", 18: "MMA", 19: "拳击", 47: "羽毛球"}
@@ -220,7 +220,9 @@ OBS_STATE_FILE = ROOT / "data" / "storage" / "observe_release_state.json"
 PIN_TRIGGER_FILE = ROOT / "data" / "storage" / "pin_trigger.jsonl"  # Pin drop 触发信号(scripts/pin_ws_trigger.py 写)
 PREMATCH_TICK_FILE = ROOT / "data" / "storage" / "pin_prematch_tick.jsonl"  # 早盘 WS 赔率变动触发(2026-10-18 事件驱动)
 PIN_LIVE_TICK_FILE = ROOT / "data" / "storage" / "pin_live_tick.ts"  # Pin WS live 帧触发信号时间戳(2026-10-11)
-DAILY_STAKE_LIMIT = 1000  # 新释放盘口当日累计投注额上限(2026-09-12 用户要求), 次日实盘ROI>4%解除
+DAILY_STAKE_LIMIT = float('inf')  # 2026-10-25 用户要求解除单日1000封顶
+LIVE_MAX_EV = 8.0  # 2026-10-26 滚球 EV 上限(8%以上低赔率热门假溢价, 实测 8-12%/-7.3%、12-20%/-4.3%)
+LIVE_INGEST_EV_MIN = 2.0  # 2026-11-01 滚球入库 EV 下限(观察库收 2%+, 实盘投注仍用 self.threshold 不变)
 DAILY_LOSS_LIMIT = 200   # 2026-10-13 探针单日亏损熔断: 资本10000的2%, 当日实盘亏损超200即停
 PENDING_SETTLE_FILE = ROOT / "data" / "storage" / "pending_settle.json"  # 结算明细缓存(每小时汇总推一次)
 SETTLE_PUSH_INTERVAL = 3600  # 结算明细每小时汇总推一次(2026-09-12 用户要求, 不一场推一场)
@@ -562,6 +564,15 @@ def _bet_score(b):
 _paper_bets_cache = {"mtime": 0.0, "data": None, "keys": None, "dirty": False, "pending": 0}
 _PAPER_BETS_FLUSH_EVERY = 10  # 每 10 次新增 flush 一次盘(观察库是纸单, 丢几笔不致命)
 
+# ── 纸面模拟拒单(2026-10-31): 消除「oddsChange=0 拒单 selection bias」──
+# 纸面观察库记录所有 +EV 机会, 但实盘只成交「下单一刻赔率没变」的(oddsChange=0, 变了就拒)。
+# 全样本纸面 vs 只成交实盘 → 纸面 ROI 系统性地高/低于实盘(逆向选择), 污染释放判据。
+# 模拟法: 入库后等 SIM_REJECT_DELAY 秒(对齐实盘从入库到 HTTP 提交的延迟), 再 fetch_current_odds 复验
+# BB 当前价; 价变(或封盘拿不到价)即当作被拒, 回写 sim_rejected=True, 统计侧剔除。
+SIM_REJECT_DELAY = 1.5        # 入库→复验延迟(秒): 对齐实盘 place_single_bet 的验价+HTTP 提交耗时
+SIM_REJECT_EPS = 0.001        # 复验价 vs 入库价差异阈值: 任何变动都算拒单(与 BB oddsChange=0 语义一致)
+SIM_REJECT_MAX_PER_DRAIN = 10 # 每次 drain 最多发几个 fetch_current_odds(防突发 HTTP 堆积占满线程池)
+
 
 def _load_paper_bets():
     """读观察库(带 mtime 缓存 + set 去重索引)。返回 (data, keys)。"""
@@ -597,6 +608,34 @@ def _flush_paper_bets():
         pass
 
 
+def _fetch_fresh_odds_concurrent(tasks, max_workers=6):
+    """并发 getMatchDetail 拉鲜价(2026-10-31): 早盘比价循环逐场串行 fetch_match_for_order(1-2s/场)
+    是「比价 12-40s」的瓶颈(Pin WS 批量推 prematch 变动, 每批中位11场/峰值99场)。
+
+    把 getMatchDetail 拆出来线程池并发: tasks=[(mid, sport), ...] → [odds_dict or None, ...]。
+    并发度 6(>连接池10 的一半, 留余量; BB 14068 是投注频次限速, getMatchDetail 只读查询不受同限)。
+    返回的 odds_dict 只含 odds_ft/odds_ht/odds_sh(extract_match_odds 的结果), 由调用方替换到 m。
+    """
+    if not tasks:
+        return []
+    from concurrent.futures import ThreadPoolExecutor
+    from src.scrapers.bb_api_fetcher import fetch_match_for_order, extract_match_odds
+
+    def _one(item):
+        mid, sport = item
+        try:
+            _fresh = fetch_match_for_order(mid, timeout=3, max_attempts=1, max_domains=1)
+            if _fresh and _fresh.get('mg'):
+                _fm = extract_match_odds(_fresh, sport)
+                return {k: _fm[k] for k in ('odds_ft', 'odds_ht', 'odds_sh') if _fm.get(k)}
+        except Exception:
+            pass
+        return None
+
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        return list(ex.map(_one, tasks))
+
+
 class SecondLevelMonitor:
     def __init__(self, threshold=4.0, on_signal=None, auto_bet=False, stake=None):
         self.threshold = threshold
@@ -614,6 +653,15 @@ class SecondLevelMonitor:
         self._token_remind_until = 0.0  # token 失效钉钉提醒节流(30min)
         self._ws_trigger_ts = 0.0  # WS 触发节流时间戳(2026-09-19)
         self._pin_trigger_offset = 0  # Pin drop 触发文件已消费行数(2026-10-11)
+        self._pending_acceptance = {}  # 滚球入库模拟 oddsChange=0: (match_id,market_id,option_type)->{odds,ts}(2026-10-31)
+        import threading
+        self._pending_acceptance_lock = threading.Lock()  # 主循环写 vs drain 读/删 并发护栏(2026-10-31)
+        self._accept_drain_busy = False  # 模拟拒单 drain 进行中标志(防并发, 2026-10-31)
+        self._last_accept_drain = 0.0    # 上次触发模拟拒单 drain 的时间戳(节流, 2026-10-31)
+        self._pending_early_acceptance = {}  # 早盘模拟拒单(2026-10-31): bb_match_id -> {odds_ft,ts,sport}(按场复验, 价变整场标拒)
+        self._pending_early_lock = threading.Lock()  # 早盘 pending 写 vs drain 读/删 并发护栏
+        self._early_drain_busy = False  # 早盘模拟拒单 drain 进行中标志(防并发)
+        self._last_early_drain = 0.0    # 上次触发早盘 drain 的时间戳(节流)
         self._prematch_tick_offset = 0  # 早盘 WS 赔率变动 tick 已消费行数(2026-10-18 事件驱动)
         self._last_prematch_scan = 0.0  # 早盘 WS 全量扫描上次时间戳(2026-10-18 双轨制, 每 30s)
         self._pin_live_wake = False  # 滚球 drop 唤醒标志(2026-10-11): live drop 触发立即滚球比较
@@ -730,6 +778,9 @@ class SecondLevelMonitor:
                 "spread": sig.get("spread"),  # 2026-09-19 流动性门槛: back-lay 价差
                 "bb_ts": sig.get("bb_ts"),  # BB 赔率拉取时间(供算 delay=ts-bb_ts, 快/慢单口径)
                 "stake": sig.get("_stake", 0), "settled": False, "result": None, "profit": None,
+                # 2026-10-31 EV 门槛模拟: 鲜价重算后 EV 跌破 threshold = 实盘 verify_price -4 拒
+                # (与「价变拒单」是两个独立维度, 任一触发都标 sim_rejected, 统计侧剔除)
+                "sim_rejected": bool(sig.get("_sim_reject")), "sim_reject_reason": sig.get("_sim_reject"),
                 "anchor": "pin",  # 2026-09-19 锚点口径标记: 10-11后 Pin 公平价
                 "sbo_direction": sig.get("sbo_direction", "same"),  # same/diff/none(供统计同向/不同向赛果)
                 "clv_sign": None,  # drop 锚点方向(+1朝有利/-1朝不利), 2026-10-11 简化版事件锚点
@@ -737,6 +788,20 @@ class SecondLevelMonitor:
                 "clv_elapsed_s": None,  # 下注到 drop 的秒数
             })
             keys.add(key)
+            # 纸面模拟拒单(2026-10-31): 登记待复验。实盘 oddsChange=0 只在「下单一刻赔率没变」成交,
+            # 观察库全样本无此过滤 → 这里登记入库价, 由 _drain_pending_acceptance 1.5s 后复验, 价变/封盘则标 sim_rejected。
+            _mid = sig.get("match_id"); _mkid = sig.get("market_id"); _ot = sig.get("option_type")
+            if _mkid is not None and _ot is not None:
+                try:
+                    _odds = float(sig["bb_odds"])
+                    if _odds > 1.0:
+                        with self._pending_acceptance_lock:
+                            self._pending_acceptance[(str(_mid), str(_mkid), str(_ot))] = {
+                                "match_id": _mid, "market_id": _mkid, "option_type": _ot,
+                                "odds": _odds, "ts": time.time(),
+                            }
+                except (TypeError, ValueError, KeyError):
+                    pass
             # drop 锚点(2026-10-11 简化版): 1x2 + ou 盘。方向匹配(drop outcome: Home/Away/Draw/Over/Under),
             # 不依赖线(ou 跨线 2.5/3.0 方向强相关, clv_sign 只看方向不看价, 噪声可接受)。
             # hc/ht/dc/让局 盘 drop 无对应 outcome → 不覆盖(需「下次复开价」锚点, 后续再扩)。
@@ -773,6 +838,146 @@ class SecondLevelMonitor:
                     return
         except Exception:
             pass
+
+    def _drain_pending_acceptance(self):
+        """纸面模拟拒单(2026-10-31): 复验入库 SIM_REJECT_DELAY 秒后的 BB 价, 价变/封盘 → 标 sim_rejected。
+
+        消除「oddsChange=0 拒单」的 selection bias: 观察库记录所有 +EV 机会, 实盘只成交「下单一刻
+        赔率没变」的(变了就拒)。这里对每笔新入库纸面注, 在延迟后 fetch_current_odds 复验 BB 当前价,
+        价变(oddsChange 会被拒)或封盘(3015 拿不到价)即回写 sim_rejected=True, 统计侧剔除被拒样本,
+        让纸面 ROI 对齐实盘「只成交没变价」的口径。
+
+        无 token 直接返回(否则 token 过期会让所有待复验误判成「封盘」→ 全拒污染统计)。
+        """
+        if not self._pending_acceptance:
+            return
+        from src.betting.bb_auto_bet import read_token, fetch_current_odds
+        tok = read_token()
+        if not tok:
+            return
+        now = time.time()
+        # 取出到期项(加锁防主循环并发写 _pending_acceptance → dict 迭代 RuntimeError)。上限 SIM_REJECT_MAX_PER_DRAIN。
+        with self._pending_acceptance_lock:
+            due_items = [(k, v) for k, v in self._pending_acceptance.items() if now - v["ts"] >= SIM_REJECT_DELAY]
+            due_items = due_items[:SIM_REJECT_MAX_PER_DRAIN]
+            for k, _ in due_items:
+                self._pending_acceptance.pop(k, None)  # 先移除: 无论结论如何都不复验第二次
+        if not due_items:
+            return
+        verdict = {}  # 键 -> "ok" | "rejected_odds_changed" | "rejected_unavailable"
+        fetched = 0
+        for key, ent in due_items:
+            fetched += 1
+            try:
+                cur = fetch_current_odds(ent["market_id"], ent["match_id"], ent["option_type"], token=tok)
+            except Exception:
+                cur = None
+            if cur is None:
+                verdict[key] = "rejected_unavailable"  # 封盘/下架 → 实盘 3015 拒单
+                continue
+            fresh = cur[0]
+            try:
+                fresh = float(fresh) if fresh else None
+            except (TypeError, ValueError):
+                fresh = None
+            if fresh is not None and abs(fresh - float(ent["odds"])) > SIM_REJECT_EPS:
+                verdict[key] = "rejected_odds_changed"
+            else:
+                verdict[key] = "ok"
+        rejected_keys = {k for k, v in verdict.items() if v != "ok"}
+        if not rejected_keys:
+            return
+        # 回写 sim_rejected 到观察库记录(只改内存缓存置 dirty, 由结算/攒批 flush 落盘, 避免跨线程并发写 4.7MB 盘)
+        data, _ = _load_paper_bets()
+        if data is None:
+            return
+        n = 0
+        for b in data:
+            _bk = (str(b.get("match_id")), str(b.get("market_id")), str(b.get("option_type")))
+            if _bk in rejected_keys and not b.get("sim_rejected"):
+                b["sim_rejected"] = True
+                b["sim_reject_reason"] = verdict[_bk]
+                n += 1
+        if n:
+            _paper_bets_cache["dirty"] = True
+            print(f"[slm] 模拟拒单: 复验 {fetched} 笔, 标拒 {n} 笔 "
+                  f"(价变 {sum(1 for v in verdict.values() if v == 'rejected_odds_changed')} / "
+                  f"封盘 {sum(1 for v in verdict.values() if v == 'rejected_unavailable')})", flush=True)
+
+    def _register_early_acceptance(self, m, sport):
+        """早盘模拟拒单登记(按场): 入库后登记第一道 getMatchDetail 鲜价 odds_ft,
+        由 _drain_pending_early_acceptance 延迟复验第二道, 价变把整场 clv_tracking 标 sim_rejected。"""
+        try:
+            _mid = str(m.get("id") or m.get("bb_match_id") or "").strip()
+            _odds = m.get("odds_ft")
+            if _mid and _odds:
+                with self._pending_early_lock:
+                    self._pending_early_acceptance[_mid] = {
+                        "odds_ft": dict(_odds) if isinstance(_odds, dict) else _odds,
+                        "ts": time.time(), "sport": sport,
+                    }
+        except Exception:
+            pass
+
+    def _drain_pending_early_acceptance(self):
+        """早盘模拟拒单(2026-10-31): 入库 SIM_REJECT_DELAY 秒后复验 getMatchDetail, 整场价变 → 标 sim_rejected。
+
+        对齐实盘 auto_bet_flow 的 oddsChange=0: 早盘入库用 getMatchDetail 鲜价(第一道), 实盘下单前又拉一次
+        (第二道), 两道之间价变 = 实盘会被拒。这里延迟复验第二道, 价变把该场 clv_tracking 记录全标 sim_rejected,
+        统计侧(clv_collector/paper_settle)剔除被拒样本, 让早盘观察库 CLV/ROI 对齐实盘「只成交没变价」。
+        """
+        if not self._pending_early_acceptance:
+            return
+        from src.scrapers.bb_api_fetcher import fetch_match_for_order, extract_match_odds
+        now = time.time()
+        with self._pending_early_lock:
+            due = [(k, v) for k, v in self._pending_early_acceptance.items() if now - v["ts"] >= SIM_REJECT_DELAY]
+            due = due[:SIM_REJECT_MAX_PER_DRAIN]
+            for k, _ in due:
+                self._pending_early_acceptance.pop(k, None)
+        if not due:
+            return
+        rejected_mids = set()
+        for mid, ent in due:
+            try:
+                _fresh = fetch_match_for_order(mid, timeout=3, max_attempts=1, max_domains=1)
+                if _fresh and _fresh.get("mg"):
+                    _fm = extract_match_odds(_fresh, ent["sport"])
+                    _new = _fm.get("odds_ft")
+                    _old = ent.get("odds_ft")
+                    if _new and _old and _new != _old:
+                        rejected_mids.add(mid)
+            except Exception:
+                pass
+        if not rejected_mids:
+            return
+        # 写回 clv_tracking.csv: 被拒场的所有记录标 sim_rejected
+        import csv as _csv
+        from src.monitor.clv_collector import TRACKING_FILE
+        try:
+            if not TRACKING_FILE.exists():
+                return
+            with open(TRACKING_FILE, encoding="utf-8-sig", newline="") as f:
+                reader = _csv.DictReader(f)
+                fieldnames = list(reader.fieldnames or [])
+                rows = list(reader)
+            for extra in ("sim_rejected", "sim_reject_reason"):
+                if extra not in fieldnames:
+                    fieldnames.append(extra)
+            n = 0
+            for r in rows:
+                if (r.get("bb_match_id") or "").strip() in rejected_mids and not r.get("sim_rejected"):
+                    r["sim_rejected"] = "1"
+                    r["sim_reject_reason"] = "odds_changed"
+                    n += 1
+            if n:
+                with open(TRACKING_FILE, "w", encoding="utf-8", newline="") as f:
+                    w = _csv.DictWriter(f, fieldnames=fieldnames)
+                    w.writeheader()
+                    w.writerows(rows)
+                print(f"[slm] 早盘模拟拒单: 复验 {len(due)} 场, 标拒 {n} 条 (价变 {len(rejected_mids)} 场)", flush=True)
+        except Exception as e:
+            print(f"[slm] 早盘模拟拒单写回失败: {type(e).__name__} {str(e)[:80]}", flush=True)
 
     def _settle_paper_bets(self):
         """结算虚拟投注(观察库): 按 match_id 定向查 getMatchDetail 判输赢, 写回 result/profit。"""
@@ -819,6 +1024,11 @@ class SecondLevelMonitor:
             if not detail.get("completed"):
                 continue
             if detail.get("home_score") is None or detail.get("away_score") is None:
+                # 2026-10-26 比赛已结束但拿不到全场比分 → 连续 3 次标记 void(防永久 pending 污染统计)
+                b["_no_score"] = b.get("_no_score", 0) + 1
+                if b["_no_score"] >= 3:
+                    b["result"] = "void"; b["profit"] = 0.0; b["settled"] = True; b["settled_ts"] = now
+                    changed = True
                 continue
             sc = [detail["home_score"], detail["away_score"]]
             desig = b.get("designation", ""); line = b.get("line")
@@ -854,6 +1064,11 @@ class SecondLevelMonitor:
                 # 半场比分带 HT+2H==FT 自校验, 拿不到(异常)就跳过不结, 绝不拿全场比分错结半场。
                 ht_h = detail.get("ht_home_score"); ht_a = detail.get("ht_away_score")
                 if ht_h is None or ht_a is None:
+                    # 2026-10-26 半场比分拿不到 → 连续 3 次标记 void(半场盘口 ht/ht_ou 结算不了的样本不永久 pending)
+                    b["_no_score"] = b.get("_no_score", 0) + 1
+                    if b["_no_score"] >= 3:
+                        b["result"] = "void"; b["profit"] = 0.0; b["settled"] = True; b["settled_ts"] = now
+                        changed = True
                     continue
                 if desig == "上半场主胜":
                     result = "won" if ht_h > ht_a else "lost"
@@ -1101,7 +1316,7 @@ class SecondLevelMonitor:
             except Exception:
                 pass
             tag = f"{lv['home']} vs {lv['away']} [滚球] {desig[d]}"
-            if ev < self.threshold:
+            if ev < LIVE_INGEST_EV_MIN or ev > LIVE_MAX_EV:
                 continue
             sig = {"match_id": match_id, "sub": sub, "desig": desig[d],
                    "bb_odds": bb, "fair": fair_p, "ev": ev, "line": line_val,
@@ -1187,14 +1402,33 @@ class SecondLevelMonitor:
         stake = self._stake_for(sig)
         # 2026-10-17 撤 SBO 置信度: 只用 Pin 单锚, 不再半额
         sig["_stake"] = stake
-        # 2026-09-12 纠正: 观察库必须采集所有运动及盘口的有效+EV信号(不只实盘方向)。
-        # 之前误改"只记实盘方向"会堵死新盘口释放通道(非实盘方向永远没数据凑不到n>100)。
-        # 观察库释放靠「赢率>隐含」判据区分真假溢价(大球赢率<隐含不释放, 小球赢率>隐含释放),
-        # 不需要在采样层就过滤。有效=验价通过(fresh_ev≥threshold)+可结算(白名单), 已由上游保证。
+        # 2026-10-31 观察库与实盘同源: 入库前用鲜价(与实盘 verify_price 同源, get_bb_fresh_or_cached)
+        # 重算 EV, 但保留「记录所有 +EV 机会」(不只实盘方向)——观察库的本意就是不用实盘也能验证盘口价值。
+        # 价格/EV 用鲜价, 保证纸面ROI 和实盘 ROI 同口径(消除信号价 0.5s 陈旧造成的假正)。
+        try:
+            from src.scrapers.pinnacle_live import get_bb_fresh_or_cached
+            _bb, _ = get_bb_fresh_or_cached(wait_for_fresh=False)
+            _b = _bb.get(int(sig["match_id"])) if sig.get("match_id") is not None else None
+            if _b:
+                for _mk in _b.get("markets", []):
+                    if (str(_mk.get("market_id")) == str(sig.get("market_id"))
+                            and str(_mk.get("option_type")) == str(sig.get("option_type"))):
+                        _fod = _mk.get("odds")
+                        if _fod and float(_fod) > 1:
+                            sig["bb_odds"] = _fod
+                            if sig.get("fair") and float(sig["fair"]) > 1:
+                                sig["ev"] = round((float(_fod) - float(sig["fair"])) / float(sig["fair"]) * 100, 2)
+                        break
+        except Exception:
+            pass
+        # 2026-10-31 EV 门槛模拟: 实盘 verify_price 用鲜价重算 EV, 跌破 min_ev_pct(=threshold) 就 -4 放弃。
+        # 观察库重算鲜价后若 EV 已跌破门槛, 也应标 sim_rejected(否则多记「快照+EV 但鲜价已跌破门槛」的逆向选择样本)。
+        try:
+            if sig.get("ev") is not None and float(sig["ev"]) < self.threshold:
+                sig["_sim_reject"] = "ev_below_entry"
+        except (TypeError, ValueError):
+            pass
         _added = self._append_live_paper_bet(sig)
-        # LEV 追踪(2026-09-15 改): 首次入库即触发, 下注后 3s 复验 Pin 公平价算 CLV 写回 clv 字段。
-        # 之前只对「实盘下单成功」的注采(在 _notify_bet 后), 导致新方向没下单就永远攒不到 LEV =
-        # 释放死循环。现在所有进观察库的 +EV 机会(虚拟投注)都采 LEV, 让释放判据能数据驱动所有方向。
         if _added and sig.get("pin_matchup_id"):
             _m = sig.get("match") or {}
             self._reversion_track[(str(sig["match_id"]), str(sig.get("market_id")), str(sig.get("option_type")))] = {
@@ -1202,8 +1436,6 @@ class SecondLevelMonitor:
                     "pin_matchup_id": sig.get("pin_matchup_id"),
                     "sub": sig.get("sub"), "desig": sig.get("desig"),
                     "bb_odds": sig.get("bb_odds"), "line": sig.get("line"),
-                    # 2026-10-13 修: 存英文队名 home_en/away_en + sport_id, 供 _reverify_live_ev_oa 用
-                    # Pin 复验(Pin 缓存 participants 是英文)。之前存 home(中文)/sport(顶层空)→ 复验全 None。
                     "home_en": sig.get("home_en") or _m.get("home") or _m.get("home_cn", ""),
                     "away_en": sig.get("away_en") or _m.get("away") or _m.get("away_cn", ""),
                     "sport_id": sig.get("sport_id") or _m.get("sport", ""),
@@ -1215,6 +1447,13 @@ class SecondLevelMonitor:
         # (稳定性计数已撤 2026-09-20: 与 persistence 2s 重复且加 4s 延迟; 防闪动靠 persistence + oddsChange=0)
         if not LIVE_REAL_BET_ENABLED:
             return
+        # 2026-11-01 实盘投注门槛不变: 入库已降到 LIVE_INGEST_EV_MIN(2%), 但投注仍要求 >= self.threshold。
+        # (鲜价重算后 EV 跌破门槛的样本已标 sim_rejected 进观察库, 但不下单)
+        try:
+            if sig.get("ev") is not None and float(sig["ev"]) < self.threshold:
+                return
+        except (TypeError, ValueError):
+            pass
         # 2026-09-12 优化: 不再硬编码"只投小球/网球/篮球", 改为「观察库释放优先, 已验证方向其次」。
         # 观察库释放的盘口(让球主胜/客胜等赢率>隐含+n>100)也实盘投(cap 150/300 试探)。
         _sport = sig["match"].get("sport")
@@ -1350,6 +1589,13 @@ class SecondLevelMonitor:
         # 指纹去重: 同一 (match, market) 5min 内尝试过(无论成败)则跳过, 避免每 2s 轮询重复下单
         _d = self._attempted.get(str(sig["match_id"]), {})
         if time.time() - _d.get(str(market_id), 0) < 300:
+            return
+        # 2026-10-25 修复14068(投注过于频繁): 全局跨源冷却, 与早盘 drop/ws_scan 共享同一文件
+        # (GLOBAL_BET_TS_FILE), 保证 BB 侧任何两注(不管哪个源/口子)都 ≥10-20s。
+        from src.betting.bb_auto_bet import global_bet_cooldown as _gbc
+        if _gbc(10, 20) > 0:
+            self._count_skip("global_cooldown")
+            print(f"  ⏭️ gate=global_cooldown 全局跨源冷却中, 跳过 {tag}", flush=True)
             return
         # 冷却三层(2026-10-11): per-market 防连打 + per-event 敞口 + 全局频次帽。全部只记成功(成交)。
         if LIVE_COOLDOWN_PER_MARKET:
@@ -1507,6 +1753,8 @@ class SecondLevelMonitor:
                 self._market_cooldown[(str(sig["match_id"]), str(market_id))] = time.time()
                 self._event_exposure[sig["match_id"]] = self._event_exposure.get(sig["match_id"], 0) + 1
                 self._global_bet_ts.append(time.time())
+                from src.betting.bb_auto_bet import record_global_bet as _rgb
+                _rgb()  # 2026-10-25 写全局冷却文件(三源共享), 修复14068
             else:
                 self._last_bet_time = time.time()
                 self._bet_delay = random.uniform(3, 8)
@@ -1551,8 +1799,10 @@ class SecondLevelMonitor:
                 _update_daily_stake(_cap_key, stake)
             print(f"  ✅ 滚球下单成功 {tag} | 注额¥{stake} | 累计¥{self._live_spent:.0f}/{LIVE_BUDGET}", flush=True)
             # 每笔成功下单都推钉钉(不限频) + 显示账户总余额
-            from src.betting.bb_auto_bet import fetch_balance as _fetch_balance
-            _bal = _fetch_balance() or "未知"
+            # 2026-10-27 改读缓存余额(不联网): fetch_balance 是 1-2s 阻塞 HTTP, 在滚球轮询循环里
+            # 每笔成功单都卡一次, 拖慢下一轮 poll。余额已由 start_balance_prefetch(45s) 后台预热。
+            from src.betting.bb_auto_bet import get_balance_cached
+            _bal = get_balance_cached() or "未知"
             _sport_cn = BB_SPORT_CN.get(sig["match"].get("sport"), "") or ""
             _league = sig["match"].get("league_cn", "滚球") or "滚球"
             _mc = int(sig["match"].get("mc", 0) or 0)
@@ -1624,7 +1874,7 @@ class SecondLevelMonitor:
             ev, ev_raw, fair_cal = calibrated_ev(bb, fair)  # 2026-10-18 校准热门高估
             fair_cal = fair_cal or fair
             tag = f"{match['home_cn']} vs {match['away_cn']} [{match['sport']}/{match['league_cn']}] {desig}"
-            if ev >= self.threshold:
+            if LIVE_INGEST_EV_MIN <= ev <= LIVE_MAX_EV:
                 sig = {"match_id": match_id, "market_id": market_id, "option_type": option_type,
                        "sub": sub, "desig": desig, "bb_odds": bb, "fair": fair, "ev": ev,
                        "fair_cal": fair_cal, "ev_raw": ev_raw,  # 2026-10-18 校准公平价/原始EV 落盘对照
@@ -1767,6 +2017,12 @@ class SecondLevelMonitor:
         # 执行质量系数(2026-10-08): 按方向拒单率/延迟打折(0.6~1.0), 样本不足=1.0
         from src.scrapers.execution_quality import factor as _eq_factor
         stake = stake * _eq_factor(f"{sig.get('sport')}|{sig.get('sub')}|{sig.get('desig')}")
+        # 2026-11-01 不确定性调整 Kelly: 用校准表算 KL 散度收缩注额(edge 越不确定收缩越多, 防高估edge全Kelly破产)
+        try:
+            from src.scrapers.fair_calibration import kelly_shrink
+            stake = stake * kelly_shrink(sig.get("fair"), market="live")
+        except Exception:
+            pass
         # 2026-09-19: 去掉 max(stake, MIN_STAKE) 兜底。之前把 Kelly<30 的冷门单硬抬到 30 投出
         # = 超 Kelly 数倍下冷门(方差击穿来源), 与「stake<30 不投」铁律语义相反。现在 <30 原样
         # 返回, 由调用方 _try_live_auto_bet/_try_auto_bet 的 `if stake < MIN_STAKE: return` 拦截。
@@ -1821,6 +2077,12 @@ class SecondLevelMonitor:
 
     def _try_auto_bet(self, sig):
         """秒级信号 → 自动下单。复用 place_single_bet(注额上限 + 下注前验价 + 记录)。"""
+        # 2026-11-01 实盘投注门槛不变: 入库已降到 LIVE_INGEST_EV_MIN(2%), 但投注仍要求 >= self.threshold
+        try:
+            if sig.get("ev") is not None and float(sig["ev"]) < self.threshold:
+                return
+        except (TypeError, ValueError):
+            pass
         from src.betting.bb_auto_bet import _load_stake_record, place_single_bet, check_sub_market_bet
         match_id = sig["match_id"]; market_id = sig["market_id"]
         m = sig["match"]
@@ -1889,41 +2151,56 @@ class SecondLevelMonitor:
             pass
 
     def _push_settle_summary(self, pending):
-        """每小时汇总推结算明细(2026-09-12 用户要求, 不一场推一场)。"""
+        """每小时汇总推结算明细, 按源细分为滚球/早盘两段(2026-10-27 用户要求)。"""
         try:
             from config.settings import send_dingtalk
         except Exception:
             return
-        total_pnl = sum((p.get("uwl", 0) or 0) for p in pending)
-        lines = []
-        for p in pending:
-            mn = p.get("mn", "?"); mgn = p.get("mgn", ""); on = p.get("on", "?")
-            od = p.get("od", 0); sat = p.get("sat", 0); pnl = p.get("uwl", 0); won = p.get("won", False)
-            sid = p.get("sid", 0)
-            sp_cn = BB_SPORT_CN.get(sid, "") or ""
-            _desig = f"{mgn}-{on}" if mgn else on
-            sign = "+" if won else ""
-            fair = p.get("fair", 0); ev = p.get("ev", 0)
-            _fair_str = f" | 公平价 {fair:.2f}" if fair else ""
-            _ev_str = f" | 溢价 {ev:+.1f}%" if ev else ""
-            lines.append(f"{sp_cn} {mn} | {_desig} @{od}{_fair_str}{_ev_str} | 注额¥{sat} | {sign}{pnl:.0f}")
-        body = f"📊 滚球结算汇总({len(pending)}笔, 总盈亏{total_pnl:+.0f})\n\n" + "\n".join(lines)
+
+        def _fmt(ps):
+            total = sum((p.get("uwl", 0) or 0) for p in ps)
+            lines = []
+            for p in ps:
+                mn = p.get("mn", "?"); mgn = p.get("mgn", ""); on = p.get("on", "?")
+                od = p.get("od", 0); sat = p.get("sat", 0); pnl = p.get("uwl", 0); won = p.get("won", False)
+                sid = p.get("sid", 0)
+                sp_cn = BB_SPORT_CN.get(sid, "") or ""
+                _desig = f"{mgn}-{on}" if mgn else on
+                sign = "+" if won else ""
+                fair = p.get("fair", 0); ev = p.get("ev", 0)
+                _fair_str = f" | 公平价 {fair:.2f}" if fair else ""
+                _ev_str = f" | 溢价 {ev:+.1f}%" if ev else ""
+                lines.append(f"{sp_cn} {mn} | {_desig} @{od}{_fair_str}{_ev_str} | 注额¥{sat} | {sign}{pnl:.0f}")
+            return total, lines
+
+        live = [p for p in pending if p.get("source") != "early"]
+        early = [p for p in pending if p.get("source") == "early"]
+        sections = []
+        if live:
+            _t, _ls = _fmt(live)
+            sections.append(f"📊 滚球结算({len(live)}笔, 盈亏{_t:+.0f})\n" + "\n".join(_ls))
+        if early:
+            _t, _ls = _fmt(early)
+            sections.append(f"📊 早盘结算({len(early)}笔, 盈亏{_t:+.0f})\n" + "\n".join(_ls))
+        if not sections:
+            return
+        body = "\n\n".join(sections)
         try:
-            ok = bool(send_dingtalk("📊 滚球结算汇总(赢了/输了)", body))
+            ok = bool(send_dingtalk("📊 结算汇总(滚球/早盘)", body))
             # 2026-09-19: 无论成败都清空 pending, 避免推送失败时 pending 累积、重试时把
             # 「旧+新」一起推导致重复。结算明细已持久化在 live_settled_log.json, notified
             # (已通知oid)也已落盘不会重复收集, 清空不丢数据、不重复推。
             PENDING_SETTLE_FILE.write_text(json.dumps([], ensure_ascii=False))
             if ok:
-                print(f"[slm] 结算汇总推送成功: {len(pending)}笔, 总盈亏{total_pnl:+.0f}", flush=True)
+                print(f"[slm] 结算汇总推送成功: 滚球{len(live)}笔+早盘{len(early)}笔", flush=True)
             else:
-                print(f"[slm] 结算汇总推送失败(已清空pending防重复): {len(pending)}笔", flush=True)
+                print(f"[slm] 结算汇总推送失败(已清空pending防重复): 滚球{len(live)}+早盘{len(early)}", flush=True)
         except Exception as e:
             print(f"[slm] 结算汇总推送异常: {e}", flush=True)
 
     def _check_settled(self):
         """查 BB 已结算订单, 对新的(未通知的)推钉钉(含盈亏 + 账户余额)。"""
-        from src.betting.bb_auto_bet import read_token, read_domain, _session, fetch_balance
+        from src.betting.bb_auto_bet import read_token, read_domain, _session
         tok = read_token(); dom = read_domain()
         if not tok:
             return
@@ -1983,6 +2260,13 @@ class SecondLevelMonitor:
             except Exception:
                 pending = []
         new_settled_records = []  # 2026-09-28 批量追加结算流水(修每条全量读改写+非原子丢数据)
+        # 2026-10-27 结算明细按源分(滚球/早盘): 读 real_bets.json 的 trigger_source 映射
+        _ts_map = {}
+        try:
+            _rb = json.loads(REAL_BETS_FILE.read_text())
+            _ts_map = {k: v.get("trigger_source") for k, v in _rb.get("bets", {}).items()}
+        except Exception:
+            _ts_map = {}
         for o in records:
             oid = o.get("id")
             if not oid or oid in notified:
@@ -1996,6 +2280,11 @@ class SecondLevelMonitor:
                 pnl = float(pnl_raw)
             except (TypeError, ValueError):
                 pnl = 0.0
+            # 2026-10-29/30 修结算返还额 bug: BB 退款订单 st=2(比赛取消,uwl=0) / st=3(退赛,uwl=+sat
+            # 本金返还被记成盈利), 导致结算明细把「退款/退赛」显示成「赢 sat」。用 st 字段归一:
+            # st∈{2,3}(退款/退赛) → pnl=0(本金返还, 无盈亏), 让 _settle_real_bet 正确落 result=push。
+            if o.get("st") in (2, 3):
+                pnl = 0.0
             won = pnl > 0
             _settle_real_bet(str(oid), pnl, won)  # 2026-09-27 实盘库: 回填结算结果
             od = op.get("od", 0)  # 赔率
@@ -2005,10 +2294,14 @@ class SecondLevelMonitor:
             _fair = _bi.get("fair", 0) if isinstance(_bi, dict) else 0
             _ev = _bi.get("ev", 0) if isinstance(_bi, dict) else 0
             _iv = _odds_interval(_bi.get("fair") or od, BB_SPORT_EN.get(sid))
+            # 2026-10-27 按源分: pin_drop/ws_scan=早盘, 其余(pin/poll/betfair_ws)=滚球
+            _src = _ts_map.get(str(oid))
+            _source = "early" if _src in ("pin_drop", "ws_scan") else "live"
             pending.append({
                 "mn": mn, "mgn": mgn, "on": on, "od": od,
                 "sat": stake, "uwl": pnl, "sid": sid, "won": won,
                 "fair": _fair, "ev": _ev, "interval": _iv,
+                "source": _source,
             })
             new_notified.add(oid)
             print(f"[slm] 结算收集: {'✅赢' if won else '❌输'} {mn} {mgn}-{on} | {pnl:+.0f}", flush=True)
@@ -2245,6 +2538,19 @@ class SecondLevelMonitor:
         opps = []
         for m in triggered:
             sport = m.get('sport', 'football')
+            # 2026-10-31 统一数据源: 入库和实盘都用 getMatchDetail 鲜价(同 drop 路径)。
+            try:
+                from src.scrapers.bb_api_fetcher import fetch_match_for_order, extract_match_odds
+                _mid = m.get('id')
+                if _mid:
+                    _fresh = fetch_match_for_order(str(_mid), timeout=3, max_attempts=1, max_domains=1)
+                    if _fresh and _fresh.get('mg'):
+                        _fm = extract_match_odds(_fresh, sport)
+                        for _k in ('odds_ft', 'odds_ht', 'odds_sh'):
+                            if _fm.get(_k):
+                                m[_k] = _fm[_k]
+            except Exception:
+                pass
             entry = _build_oa_entry(m, sport)
             _oa_add_markets(entry, m, sport, use_rest=False)
             _league = entry.get('league', '')
@@ -2261,6 +2567,7 @@ class SecondLevelMonitor:
                     o['away_bb'] = entry.get('away_bb', '')
                     o['sport'] = sport
                     o['sub_market'] = sub_market  # 2026-10-18 修: opp 缺 sub_market → auto_bet_flow 读空 fallback 1x2 错盘
+                    o['bb_match_id'] = entry.get('bb_match_id', '')  # 2026-10-25 定向下单用: 缓存过期时按 id 拉单场盘口
                     o['_pin_epoch'] = _epoch
                     opps.append(o)
         if not opps:
@@ -2288,11 +2595,17 @@ class SecondLevelMonitor:
         except OSError:
             return 0
         last = self._pin_trigger_offset
-        if last >= len(lines):
+        if last > len(lines):
             # 2026-10-18 修: pin_trigger.jsonl 被 _append_rotating 截断(>1.5MB 留 100 行)后
-            # offset 卡死永远 return 0 → 早盘实盘停摆。对齐 PrematchIngestor.sweep 的重置逻辑。
+            # offset 超出新长度 → 重置。必须是 > 不是 >= —— offset 恰好追平文件末尾(last == len)
+            # 表示「已消费完、无新行」, 应 return 0 等待, 而不是重置到 0 重放整个文件。
+            # 2026-10-27 修 offset 循环 bug: 之前 >= 让 offset 追平末尾就重置, 反复重放旧 trigger,
+            # 每次重放都重付 getMatchDetail(网络差时 13s) → 真 trigger 排队分钟级才被消费
+            # (实测 drop 触发→完成 109s)。修后追平末尾直接等待, 新 trigger 0.2s 内消费。
             self._pin_trigger_offset = 0
             last = 0
+        elif last == len(lines):
+            return 0  # 已消费到文件末尾, 无新行
         # 批处理: 每次最多 30 条。原 3 条理由是「公平价要扫 Pin REST 全量超 20s」,
         # 2026-10-17 REST 兜底已禁用(读 WS 缓存 0ms), 理由失效, 放宽到 30 条(比价仍 <20s)。
         new_lines = lines[last:last + 30]
@@ -2308,9 +2621,27 @@ class SecondLevelMonitor:
         from src.report.bb_ev_push import _is_market_released, _is_direction_blocked
         _GROUP_TO_SUB = {'opportunities': '1x2', 'handicap': 'hc', 'over_under': 'ou',
                          'double_chance': 'dc', 'draw_no_bet': 'dnb'}
+        # 2026-11-01 drop 骤降方向 → (group, designation) 映射: drop 只下注骤降方向(顺势抢 BB 高价),
+        # 不下注逆向/其他方向(否则 Home 骤降时下注「和局」= 逆向选择, 是 drop 累计 -9.5% 的根因)。
+        _DROP_DIR_MAP = {"Home": ("opportunities", "主胜"), "Away": ("opportunities", "客胜"),
+                         "Draw": ("opportunities", "和局"), "Over": ("over_under", "大球"),
+                         "Under": ("over_under", "小球")}
+        # 2026-11-01 drop 概率区间过滤: 拦负段(中间段 Shin 去水高估赢率 + 大小球全线负), 只放两端。
+        # 与 compute_market_release 的 LIVE_NEGATIVE_IMPLIED 同口径, 但按 group 键。
+        _DROP_NEG_IMPLIED = {
+            'opportunities': (30.0, 70.0),  # 独赢中间段(50-60%最负)
+            'handicap': (50.0, 70.0),       # 让球中间段
+            'over_under': None,             # 大小球全线负
+            'double_chance': (60.0, 70.0),  # 双机会中间段
+        }
         opps = []
         entries = []  # 2026-10-24 Drop 入库观察库(source=drop)
         min_trig_ts = None  # 本批最早 prematch drop 触发时刻(供端到端总耗时)
+        _seen_mids = set()  # 2026-10-28 去重: pin_ws_trigger 会给同一 match 写几十条重复 trigger(实测44条同场),
+                            # 之前每条都重算公平价(_build_oa_entry+_oa_add_markets), 44条积压成几十秒阻塞 drop 循环。
+        # 阶段1: 收集(live唤醒 + prematch任务去重), 不调 getMatchDetail(串行 1-2s/场 是比价慢的瓶颈)
+        _tasks = []  # [(mid, sport, trig), ...]
+        _ms = {}     # mid -> m(阶段3替换鲜价用)
         for line in new_lines:
             try:
                 trig = json.loads(line)
@@ -2323,22 +2654,53 @@ class SecondLevelMonitor:
                 self._match_drop_anchor(trig)  # 2026-10-11: live drop 作事件锚点, 匹配观察库算 clv_sign
                 continue
             mid = str(trig.get('bb_match_id') or '')
+            if mid in _seen_mids:  # 同场重复 drop 跳过(已处理过一场, 无需重算)
+                continue
+            _seen_mids.add(mid)
             m = bb_by_id.get(mid)
             if not m:
                 continue
+            sport = m.get('sport') or trig.get('sport') or 'football'
+            _tasks.append((mid, sport, trig))
+            _ms[mid] = m
+        # 阶段2: 并发 getMatchDetail 拉鲜价(2026-10-31 修「比价12-40s」: 串行→并发)
+        _t_fetch0 = time.time()
+        _odds_list = _fetch_fresh_odds_concurrent([(t[0], t[1]) for t in _tasks])
+        _t_fetch = time.time() - _t_fetch0
+        # 阶段3: 串行替换鲜价 + 比价 + 过滤
+        _t_price0 = time.time()
+        for (mid, sport, trig), _fresh_odds in zip(_tasks, _odds_list):
+            m = _ms[mid]
+            if _fresh_odds:
+                for _k, _v in _fresh_odds.items():
+                    m[_k] = _v
             _ts = trig.get('ts')
             if _ts and (min_trig_ts is None or _ts < min_trig_ts):
                 min_trig_ts = _ts
-            sport = m.get('sport') or trig.get('sport') or 'football'
             entry = _build_oa_entry(m, sport)
             _oa_add_markets(entry, m, sport, use_rest=False, status='prematch', calibrate=False)  # 2026-10-24 Drop 取消结果锚校准, 直接 Shin 去水
             _league = entry.get('league', '')
             _epoch = entry.get('start_time_pin_epoch', 0)
             _has_ev = False  # 入库观察库: ev>0 全收(与 WS 同口径)
+            # 2026-11-01 drop 方向过滤: 骤降方向 = 顺势(抢 BB 高价), 只下注该方向, 逆向/其他方向不下注;
+            # outcome 无法映射(组合骤降 AwayUnder/HomeOver 或空) → _drop_dir=None → 不下注(但入库仍全量)。
+            _drop_dir = _DROP_DIR_MAP.get(trig.get('outcome', ''))
             for group in ('opportunities', 'handicap', 'over_under', 'double_chance', 'draw_no_bet'):
                 for o in entry.get(group, []):
                     if (o.get('ev_pct') or 0) > 0:
                         _has_ev = True
+                    if _drop_dir is None or group != _drop_dir[0] or o.get('designation', '') != _drop_dir[1]:
+                        continue  # 非骤降方向, 跳过(不下注)
+                    # 2026-11-01 drop 概率区间过滤: 拦负段(中间段高估赢率+大小球全线负), 放两端
+                    _neg_o = _DROP_NEG_IMPLIED.get(group)
+                    if _neg_o is None:
+                        continue  # 全线负盘口(over_under)拦
+                    try:
+                        _imp_o = 1.0 / float(o.get('fair_price') or o.get('bb_odds')) * 100
+                    except (TypeError, ValueError, ZeroDivisionError):
+                        _imp_o = None
+                    if _imp_o is not None and _neg_o[0] <= _imp_o <= _neg_o[1]:
+                        continue  # 负段(中间段)拦
                     sub_market = o.get('_market') or _GROUP_TO_SUB.get(group, group)
                     if not _is_market_released(sport, sub_market, _league,
                                                o.get('designation', ''), _epoch,
@@ -2350,6 +2712,7 @@ class SecondLevelMonitor:
                     o['away_bb'] = entry.get('away_bb', '')
                     o['sport'] = sport
                     o['sub_market'] = sub_market  # 2026-10-18 修: opp 缺 sub_market → auto_bet_flow 读空 fallback 1x2 错盘
+                    o['bb_match_id'] = entry.get('bb_match_id', '')  # 2026-10-25 定向下单用: 缓存过期时按 id 拉单场盘口
                     o['_pin_epoch'] = _epoch
                     # 2026-10-18 修: 早盘 opp 缺 _stake → auto_bet_flow stake=0 全被 stake<30 跳过。
                     _o_odds = o.get('bb_odds') or 0
@@ -2359,23 +2722,39 @@ class SecondLevelMonitor:
                     opps.append(o)
             if _has_ev:
                 entries.append(entry)
-        # 2026-10-24 Drop 入库观察库(source=drop), 与 WS 分库, 供未来按源释放
-        if entries:
-            try:
-                from src.monitor.clv_collector import log_oa_opportunities
-                log_oa_opportunities(entries, min_ev=2.5, source="drop")
-            except Exception:
-                pass
+                self._register_early_acceptance(m, sport)
+        _t_price = time.time() - _t_price0
+        if _tasks:
+            print(f"[slm] drop分段: 鲜价{_t_fetch:.2f}s(共{len(_tasks)}场) 比价{_t_price:.2f}s", flush=True)
+        # 2026-10-31 drop 关键路径: 先下单(抢 lead-lag 窗口), 入库观察库移到下单后(不阻塞下单)
         if not opps:
+            if entries:  # 无下单机会仍入库(观察库记录所有 +EV)
+                try:
+                    from src.monitor.clv_collector import log_oa_opportunities
+                    log_oa_opportunities(entries, min_ev=2.0, max_ev=12.0, source="drop")
+                except Exception:
+                    pass
             return len(new_lines)
+        _t_bet0 = time.time()
         try:
             from src.betting.bb_real_bet_flow import auto_bet_flow
             res = auto_bet_flow(opps, trigger_ts=min_trig_ts, trigger_source="pin_drop")
             n = len(res.get('success', [])) if isinstance(res, dict) else 0
             if n:
-                print(f'[slm] Pin drop 触发下单 {n} 注', flush=True)
+                # 2026-10-27 加落盘耗时(不只钉钉): drop 实盘须<3s, 用日志量化「auto_bet_flow 内部耗时」
+                # 与「触发→完成」两个口径, 后续「仍然很高」可直接查日志定位, 不再拍脑门。
+                _t_bet = time.time() - _t_bet0
+                _pure = (time.time() - min_trig_ts) if min_trig_ts else 0.0
+                print(f'[slm] Pin drop 触发下单 {n} 注 | auto_bet_flow耗时 {_t_bet:.2f}s | 触发→完成 {_pure:.2f}s', flush=True)
         except Exception as e:
             print(f'[slm] Pin drop 触发下单异常: {type(e).__name__} {e}', flush=True)
+        # 入库观察库(下单后, 不占 drop 实盘关键路径)
+        if entries:
+            try:
+                from src.monitor.clv_collector import log_oa_opportunities
+                log_oa_opportunities(entries, min_ev=2.0, max_ev=12.0, source="drop")
+            except Exception:
+                pass
         return len(new_lines)
 
     def _consume_prematch_ticks(self):
@@ -2392,9 +2771,11 @@ class SecondLevelMonitor:
         except OSError:
             return 0
         last = self._prematch_tick_offset
-        if last >= len(lines):
-            self._prematch_tick_offset = 0  # 文件被轮转截断, offset 重置
+        if last > len(lines):
+            self._prematch_tick_offset = 0  # 文件被轮转截断, offset 超出新长度 → 重置
             last = 0
+        elif last == len(lines):
+            return 0  # 2026-10-27 同 drop 的 offset 循环 bug: 追平末尾直接等待, 不重放旧行
         new_lines = lines[last:]
         self._prematch_tick_offset = len(lines)
         if not new_lines:
@@ -2420,6 +2801,9 @@ class SecondLevelMonitor:
         entries = []
         seen = set()
         _t0 = time.time()
+        # 阶段1: 收集待处理比赛(去重+匹配), 不调 getMatchDetail(串行 1-2s/场 是比价慢的瓶颈)
+        _tasks = []  # [(mid, sport), ...]
+        _ms = {}     # mid -> m(阶段3替换鲜价用)
         for line in new_lines:
             try:
                 trig = json.loads(line)
@@ -2434,6 +2818,16 @@ class SecondLevelMonitor:
                 continue
             seen.add(mid)
             sport = m.get('sport', 'football')
+            _tasks.append((mid, sport))
+            _ms[mid] = m
+        # 阶段2: 并发 getMatchDetail 拉鲜价(2026-10-31 修「比价12-40s」: 串行→并发, 一批14场从~20s→~3s)
+        _odds_list = _fetch_fresh_odds_concurrent(_tasks)
+        # 阶段3: 串行替换鲜价 + 比价 + 过滤(比价是本地公平价匹配, 快)
+        for (mid, sport), _fresh_odds in zip(_tasks, _odds_list):
+            m = _ms[mid]
+            if _fresh_odds:
+                for _k, _v in _fresh_odds.items():
+                    m[_k] = _v
             try:
                 entry = _build_oa_entry(m, sport)
                 _oa_add_markets(entry, m, sport, use_rest=False, status='prematch')
@@ -2460,6 +2854,7 @@ class SecondLevelMonitor:
                     o['away_bb'] = entry.get('away_bb', '')
                     o['sport'] = sport
                     o['sub_market'] = sm
+                    o['bb_match_id'] = entry.get('bb_match_id', '')  # 2026-10-25 定向下单用: 缓存过期时按 id 拉单场盘口
                     o['_pin_epoch'] = _epoch
                     _o_odds = o.get('bb_odds') or 0
                     _o_ev = o.get('ev_pct') or 0
@@ -2468,11 +2863,12 @@ class SecondLevelMonitor:
                     opps.append(o)
             if _has_ev:
                 entries.append(entry)
+                self._register_early_acceptance(m, sport)
         _dt = time.time() - _t0
         if entries:
             try:
                 from src.monitor.clv_collector import log_oa_opportunities
-                log_oa_opportunities(entries, min_ev=5.0, source="ws_scan")
+                log_oa_opportunities(entries, min_ev=2.0, max_ev=12.0, source="ws_scan")
             except Exception:
                 pass
         _t_ingest = time.time() - _t0  # 入库后耗时
@@ -2545,6 +2941,7 @@ class SecondLevelMonitor:
                     o['away_bb'] = entry.get('away_bb', '')
                     o['sport'] = sport
                     o['sub_market'] = sub_market  # 2026-10-18 修: opp 缺 sub_market → auto_bet_flow 读空 fallback 1x2 错盘
+                    o['bb_match_id'] = entry.get('bb_match_id', '')  # 2026-10-25 定向下单用: 缓存过期时按 id 拉单场盘口
                     o['_pin_epoch'] = _epoch
                     # 2026-10-18 修: 早盘 opp 缺 _stake → auto_bet_flow stake=0 全被 stake<30 跳过。
                     # 复用滚球 Kelly 半凯利算注额(cap 在 auto_bet_flow 按触发源 80/50)。
@@ -2555,13 +2952,14 @@ class SecondLevelMonitor:
                     opps.append(o)
             if _has_ev:
                 entries.append(entry)
+                self._register_early_acceptance(m, sport)
         _dt = time.time() - _t0
         print(f'[slm] 早盘WS扫描: {len(matches)}场比价 {_dt:.1f}s, 可投 {len(opps)} 个, 入库 {len(entries)} 场', flush=True)
         # 入库观察库(ws_scan 来源, 与 drop 来源分开, 供对比两流程优劣)
         if entries:
             try:
                 from src.monitor.clv_collector import log_oa_opportunities
-                log_oa_opportunities(entries, min_ev=5.0, source="ws_scan")
+                log_oa_opportunities(entries, min_ev=2.0, max_ev=12.0, source="ws_scan")
             except Exception:
                 pass
         if opps:
@@ -2825,6 +3223,14 @@ class SecondLevelMonitor:
             print("[slm] 已启动早盘 getList 后台预取(每150s刷新, 下单命中缓存0ms)", flush=True)
         except Exception as e:
             print(f"[slm] 早盘 getList 预取启动失败: {type(e).__name__} {str(e)[:80]}", flush=True)
+        # 2026-10-27 早盘余额预取: fetch_balance 是 1-2s 阻塞 HTTP, 已从下单关键路径移除,
+        # 改后台每 45s 预热缓存, 下单时 check_balance_ok 命中缓存 0ms(drop 实盘 <3s 关键)。
+        try:
+            from src.betting.bb_real_bet_flow import start_balance_prefetch
+            start_balance_prefetch(interval=45)
+            print("[slm] 已启动早盘余额后台预取(每45s刷新, 下单命中缓存0ms)", flush=True)
+        except Exception as e:
+            print(f"[slm] 早盘余额预取启动失败: {type(e).__name__} {str(e)[:80]}", flush=True)
         # 2026-10-18 停用 Betfair 事件列表预取: odds-api.io 已撤(切 pinnapi 单锚),
         # get_events 走 _get 短路返回空, 预取空转。公平价匹配已用 pinnacle_fair_price(WS缓存),
         # 不再依赖 Betfair 事件索引。
@@ -2918,6 +3324,32 @@ class SecondLevelMonitor:
                         print(f"[slm] Pin时钟差 中位{_med:.2f}s 跨度{_span:.2f}s (稳定≈纯偏移可归一化; 持续变负/跨度放大=积压告警)", flush=True)
                     # 每次轮询(2s)查 CLV(3s窗口)。2026-09-26 独立线程池+30s超时
                     await _run_task(self._check_clv, timeout=30, tag="CLV复验")
+                    import threading  # 提前 import(两个 drain 的 if 块共用, 避免局部 import 未触发时 UnboundLocalError)
+                    # 纸面模拟拒单(2026-10-31): 每~2s fire-and-forget 复验一次, busy 守卫防并发,
+                    # 不占下单关键路径(独立 daemon 线程, fetch_current_odds 的 HTTP 延迟不进主循环)。
+                    if (self._pending_acceptance and not self._accept_drain_busy
+                            and time.time() - self._last_accept_drain >= 2.0):
+                        self._last_accept_drain = time.time()
+                        self._accept_drain_busy = True
+
+                        def _drain_done():
+                            try:
+                                self._drain_pending_acceptance()
+                            finally:
+                                self._accept_drain_busy = False
+                        threading.Thread(target=_drain_done, daemon=True, name="sim-reject").start()
+                    # 早盘模拟拒单(2026-10-31): 同样 fire-and-forget 复验, 独立 daemon 线程不占早盘 drop 实盘关键路径
+                    if (self._pending_early_acceptance and not self._early_drain_busy
+                            and time.time() - self._last_early_drain >= 2.0):
+                        self._last_early_drain = time.time()
+                        self._early_drain_busy = True
+
+                        def _early_drain_done():
+                            try:
+                                self._drain_pending_early_acceptance()
+                            finally:
+                                self._early_drain_busy = False
+                        threading.Thread(target=_early_drain_done, daemon=True, name="early-sim-reject").start()
                     # 2026-09-24 每轮耗时监控: 定位假死根因(哪一步慢/卡), poll/settle 分阶段打点
                     _t_round = time.time() - _t_round0
                     if _t_round > 60:

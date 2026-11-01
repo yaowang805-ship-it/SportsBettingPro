@@ -307,12 +307,14 @@ def _ensure_token():
 _USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
 
 
-def api_post(endpoint, params, platform="BB"):
+def api_post(endpoint, params, platform="BB", timeout=30, max_attempts=3, max_domains=None):
     """直接 HTTP POST 调用指定平台的 API。
 
     使用 requests 库避免 Python 3.14 urllib IncompleteRead 截断问题。
     V4.5: 增加指数退避重试 (3次, 1s/2s/4s)。
     2026-10-05: BB 域名 failover(线路切换多镜像): 连接错误/超时/403 换下一个镜像域, 不再死磕死域。
+    2026-10-27: 加 timeout/max_attempts/max_domains 参数, 供下单关键路径收紧(网络差时 3 域名×3
+    重试×退避 ~13s, lead-lag 窗口早过)。默认保持原行为(30s/3次/全域名)。
     返回解析后的 JSON dict，或 None。
     """
     import time as _time
@@ -323,6 +325,8 @@ def api_post(endpoint, params, platform="BB"):
     platform_config = PLATFORMS.get(platform, PLATFORMS["BB"])
     # BB 走候选域名列表 failover; FB 单域名
     domains = bb_domain_candidates() if platform == "BB" else [platform_config["api_base"]]
+    if max_domains:
+        domains = domains[:max_domains]
     conn_failed = False  # 本次调用是否因连接级失败(代理down)耗尽全域
 
     for dom in domains:
@@ -338,20 +342,20 @@ def api_post(endpoint, params, platform="BB"):
             "User-Agent": _USER_AGENT,
         }
 
-        for attempt in range(3):
+        for attempt in range(max_attempts):
             try:
-                resp = _SESSION.post(url, json=params, headers=headers, timeout=30)
+                resp = _SESSION.post(url, json=params, headers=headers, timeout=timeout)
             except requests.exceptions.Timeout:
-                if attempt < 2:
+                if attempt < max_attempts - 1:
                     _time.sleep(2 ** attempt)
                     continue
                 break  # 超时耗尽 → 换下一个域
             except requests.exceptions.RequestException as e:
                 conn_failed = True  # 连接级失败(ProxyError/SSL/DNS/连接拒绝)
-                if attempt < 2:
+                if attempt < max_attempts - 1:
                     _time.sleep(2 ** attempt)
                     continue
-                logger.warning("API 请求失败(3次) %s @%s: %s", endpoint, dom, e)
+                logger.warning("API 请求失败(%d次) %s @%s: %s", max_attempts, endpoint, dom, e)
                 break  # 连接错误(SSL/DNS/连接拒绝) → 换下一个域
             except json.JSONDecodeError as e:
                 logger.warning("API 响应异常 %s @%s: %s", endpoint, dom, e)
@@ -368,7 +372,7 @@ def api_post(endpoint, params, platform="BB"):
                 if resp.status_code in (503, 502):
                     conn_failed = True  # 503/502 = 代理拒绝/上游down
                 wait = 2 ** attempt
-                logger.warning("API HTTP %s: %s, %ds后重试(%d/3)", resp.status_code, endpoint, wait, attempt+1)
+                logger.warning("API HTTP %s: %s, %ds后重试(%d/%d)", resp.status_code, endpoint, wait, attempt+1, max_attempts)
                 _time.sleep(wait)
                 continue
             if resp.status_code == 403:
@@ -533,6 +537,48 @@ def fetch_bb_match_result(match_id, language_type="EN", platform="BB"):
         "ms": ms,
         "completed": status == "finished",
     }
+
+
+_fetch_match_cache = {}  # (platform, match_id) -> (ts, match) 短 TTL 缓存, 去重复 getMatchDetail
+_fetch_match_lock = __import__('threading').Lock()
+_FETCH_MATCH_TTL = 3.0  # 短 TTL: 同一次 drop 触发内(入库+下单)复用同一份鲜价, 超时则拉新(下单不陈旧)
+
+
+def fetch_match_for_order(match_id, platform="BB", timeout=30, max_attempts=3, max_domains=None):
+    """定向拉单场比赛的盘口(mg), 供早盘下单用(替代全量 getList 重拉 20-30s)。
+
+    2026-10-25: 早盘下单关键路径的 _get_all_matches 缓存过期时会同步重拉 5 运动分页 ~20-30s,
+    lead-lag 窗口早过(实测「下单 36s」)。实测 getMatchDetail 原始响应含完整 mg[]
+    (mty/pe + mks[].id market_id + op[].od 赔率 + op[].ty optionType), 结构与 getList record 一致。
+
+    2026-10-27: 加 timeout/max_attempts/max_domains, 供 drop 关键路径收紧。默认保持原行为。
+
+    返回: match dict(含 mg[]/ts[]/id/_sport_id), 直接喂 find_market_from_match;
+          None 表示无盘口(已开赛/老比赛空壳)/接口失败。
+    """
+    # 短 TTL 缓存(2026-10-31): 去重复 getMatchDetail —— 早盘 drop 关键路径「入库鲜价」+「下单鲜价」
+    # 各拉一次(累计 2-4s), 是同一次 drop 触发内同一场, 复用省 1-2s, 把「触发→完成」压进 <3s。
+    global _fetch_match_cache
+    _key = (platform, str(match_id))
+    _now = time.time()
+    with _fetch_match_lock:
+        _hit = _fetch_match_cache.get(_key)
+    if _hit and _now - _hit[0] < _FETCH_MATCH_TTL:
+        return _hit[1]
+    resp = api_post("/v1/match/getMatchDetail",
+                    {"matchId": match_id, "languageType": "EN"},
+                    platform=platform, timeout=timeout, max_attempts=max_attempts, max_domains=max_domains)
+    if not resp or not resp.get("success"):
+        return None
+    data = resp.get("data") or {}
+    if not isinstance(data, dict):
+        return None
+    if not data.get("mg"):
+        return None  # 无盘口(已开赛/老比赛空壳), 不可下单
+    data["_sport_id"] = data.get("sid")  # find_market_from_match 需要 _sport_id 定盘口码
+    with _fetch_match_lock:
+        _fetch_match_cache[_key] = (time.time(), data)
+    return data
 
 
 # ─── 提取函数 ─────────────────────────────────────────────────

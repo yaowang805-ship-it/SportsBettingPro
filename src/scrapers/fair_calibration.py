@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 # 2026-10-18 时间切分样本外验证:
 #   prematch 前半拟合→后半测试 ev_cal>0 ROI +9.0%(194笔) → 通过, 开
 #   live     前半拟合→后半测试 ev_cal>0 ROI -10.7%(419笔) → 失败(1天数据偏差不稳定), 关
-CALIBRATE_FAIR = {"prematch": True, "live": False}
+CALIBRATE_FAIR = {"prematch": False, "live": True}  # 2026-11-01 时间切分样本外验证: 滚球校准有效(样本外ev_cal>0 ROI+4.71%), 早盘校准过拟合(样本外-10.54%, in-sample+2.29%是假象) → 早盘关, 滚球开
 
 _TABLE_FILES = {
     "live": "fair_calibration.json",
@@ -87,6 +87,43 @@ def calibrate_fair(fair, market="live"):
         return 1.0 / p_cal
     except Exception:
         return fair
+
+
+def kelly_shrink(fair, market="live", lam=10.0):
+    """不确定性调整 Kelly 收缩系数(2026-11-01 职业团队做法)。
+
+    f_adj = f* × exp(-λ × KL(p_imp || p_cal))。KL 散度度量「隐含概率 vs 校准概率」的偏差,
+    偏差越大(edge 估计越不可靠)注额收缩越多——防止「高估 edge + 全 Kelly」走向破产。
+    校准表无/开关关 → 返回 1.0(不收缩)。λ=风险厌恶系数(默认 10, 中间段偏差~11pp → 收缩~16%)。
+    """
+    if not CALIBRATE_FAIR.get(market, False):
+        return 1.0
+    if fair is None or fair <= 1.0:
+        return 1.0
+    tbl = _load_table(market)
+    if not tbl:
+        return 1.0
+    try:
+        import math
+        p_imp = 1.0 / fair
+        xs = [t[0] for t in tbl]
+        ys = [t[1] for t in tbl]
+        if p_imp <= xs[0]:
+            p_cal = ys[0]
+        elif p_imp >= xs[-1]:
+            p_cal = ys[-1]
+        else:
+            i = bisect.bisect_right(xs, p_imp) - 1
+            x0, x1 = xs[i], xs[i + 1]
+            y0, y1 = ys[i], ys[i + 1]
+            p_cal = y0 + (y1 - y0) * (p_imp - x0) / (x1 - x0)
+        p_imp = max(p_imp, 0.01)
+        p_cal = max(p_cal, 0.01)
+        kl = p_imp * math.log(p_imp / p_cal) + (1.0 - p_imp) * math.log((1.0 - p_imp) / (1.0 - p_cal))
+        kl = max(kl, 0.0)
+        return math.exp(-lam * kl)
+    except Exception:
+        return 1.0
 
 
 def calibrated_ev(bb, fair, market="live"):

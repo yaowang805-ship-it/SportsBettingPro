@@ -67,9 +67,23 @@ N_REAL_MIN = 50        # 实盘赢率采信最小样本量(2026-09-12 30→100�
 # 样本门槛从 n≥30 提到 n>100。滚球+早盘观察库合并统计, 滚球 league 归 "滚球"。
 # 2026-09-13: n>100 → n>200, 对齐职业 CLV 有效标准(CLV 从 n≥200 才统计有效, <100 是噪声)。
 OBS_N_MIN = 200            # 早盘观察库释放采信最小结算样本数(>200, 对齐职业CLV标准)。单位=笔
-OBS_N_MIN_LIVE = 20        # 滚球释放样本门槛(2026-10-11 从 200 降到 20): live grid 数量几百上千, 单 grid 攒 200 笔
-                           # 几个月都达不到 → 10-03 事故结构根因(n≥200 让滚球数据驱动路径形同虚设, 只能靠手动释放绕闸门)。
-                           # 单位=笔。
+OBS_N_MIN_LIVE = 50        # 滚球释放样本门槛(2026-11-01 从 30 提到 50, 口径=已结算样本数):
+                           # 原 10-11 从 200 降到 20(单 grid 攒 200 笔几个月达不到 → 数据驱动形同虚设),
+                           # 但 20 太少(SE≈11%)且当时 n 口径是「价格变动样本」(依赖 clv 字段, 已断)。
+                           # 10-31 改口径=已结算样本数(不依赖 clv) + 提到 30; 11-01 再提到 50(SE≈7.1%),
+                           # 因足球小球释放后实盘 -44.8% 印证纸面正仍可能是假正, 提高样本门槛挡噪声。单位=笔。
+OBS_LIVE_ROI_MIN = 2.0     # 滚球释放纸面ROI门槛(2026-10-31 用户要求): 纸面ROI>2% 才释放(挡 0~2% 的噪声正格)
+
+# 滚球负段黑名单(2026-11-01 实盘 ROI 矩阵推导, 治本): 用「平均隐含概率」判断, 绕过概率桶标签运动定制的复杂性。
+# 核心规律 = 中间概率段(50-60%)系统性出血: 独赢(1x2) 30-70% 负(50-60%最负 -41.2%/60注),
+# 让球(hc) 50-70% 负(-11.4%/368注); 大小球(ou)/网球让局(hc_games) 全线负 → None 表示该盘口全拦。
+LIVE_NEGATIVE_IMPLIED = {
+    '1x2': (30.0, 70.0),
+    'hc': (50.0, 70.0),
+    'dc': (60.0, 70.0),  # dc 60-70% 负(-21.4%/65注, 方向=客为主)
+    'ou': None,
+    'hc_games': None,
+}
 # 滚球观察库 14 天时间窗(2026-10-11): 保险, 非调参。防未来换锚点/换公平价源时旧样本混进新 grid 的 n。
 # 纯过滤, 不动阈值不动判据。env 开关默认开(回退用), 与 ENFORCE_REAL_ROI_GATE_ON_MANUAL 同待遇。
 LIVE_CLV_WINDOW_ENABLED = os.getenv("LIVE_CLV_WINDOW_ENABLED", "true").lower() in ("1", "true", "yes")
@@ -91,7 +105,12 @@ LIQUIDITY_MAX_SPREAD = 6.0   # Betfair 流动性门槛(2026-09-19): 格子中位
                              # 公平价/CLV 不可信(低流动性联赛 Betfair 高估冷门方向 → 假溢价), 不采信不释放。
                              # 6% 是初值(基于「让球真edge价差<3% vs 大小球假edge价差6~15%」反推), 待攒 spread 数据后标定
 REAL_GAP_N_MIN = 20          # 实盘-纸单 gap 指标的最小实盘样本数(只展示, <20 的 gap 是噪声, 2026-09-19)
-REAL_ROI_GATE_N_MIN = 5      # 实盘ROI交叉验证最小样本(2026-10-05): 有≥5笔实盘且ROI<0 就拦(CLV假正)
+REAL_ROI_GATE_N_MIN = 20     # 实盘ROI交叉验证最小样本(2026-11-01 从 5 提到 20): 有≥20笔实盘且ROI<0 才拦,
+                             # 5 太少(5笔负可能是噪声, 误撤真edge格), 20 才够统计置信(SE≈11%)。用户要求。
+LIVE_CIRCUIT_BREAKER_N_MIN = 30  # 2026-10-28 滚球熔断: 已释放滚球格 新投注>30单 且 ROI<0 → 自动撤回
+EARLY_CIRCUIT_BREAKER_N_MIN = 10  # 2026-10-30 早盘熔断: 已释放早盘格 新投注>10单 且 ROI<0 → 自动撤回
+DROP_N_MIN = 10  # 2026-11-01 drop 源数据驱动释放最小样本: drop 实盘稀疏(245笔/全时段), 10 笔(SE≈32%)才敢放,
+                 # 5 笔 SE≈45% 纯噪声(6笔4赢2输就+77%假edge)。只作「已确认正/负」的硬闸, 不足 10 笔走 DROP_BLOCK 兜底。
 
 # 放弃的特殊盘口(2026-09-15 用户决定): 这些盘口 margin 15%+ (vs 主盘口 3-8%), 收盘线不 sharp,
 # 且 clv_collector 里 close_fair 用的是 proportional devig(非 Shin), CLV 虚高无意义。
@@ -102,6 +121,9 @@ SPECIAL_MARKET_PREFIX = ('corner',)
 # 实盘数据切分点(2026-09-12 用户要求): 实盘释放只用「重收后」的干净数据, 不用之前被结算bug
 # (ms=7漏判/league_cn对不上)污染的旧数据。切分点=观察库重收日 9-10。
 REAL_DATA_CUTOFF_TS = datetime.fromisoformat("2026-09-10T00:00:00+00:00").timestamp()
+# 滚球实盘 ROI 交叉验证时间窗起点(2026-10-31): 只认「统一入库鲜价生效后」的实盘。
+# 旧快照价(10-31前)实盘是假负(足球小球 10-25/10-26 -7.5%/-21.1%), 不该拦新口径(鲜价+模拟拒单)的正格。
+LIVE_REAL_ROI_CUTOFF_TS = datetime.fromisoformat("2026-10-31T00:00:00+00:00").timestamp()
 LIVE_PAPER = DATA / "live_paper_bets.json"
 LIVE_REAL = DATA / "real_bets.json"  # 滚球实盘(second_level_monitor 写), 实盘ROI交叉验证用(2026-10-05)
 OBS_STATE = DATA / "observe_release_state.json"  # 释放状态(首次释放时间 + cap)
@@ -109,10 +131,18 @@ OBS_STATE = DATA / "observe_release_state.json"  # 释放状态(首次释放时�
 # 滚球观察库口径映射: BB 运动 id → 英文运动名; 滚球 sub → sub_market
 BB_SPORT_MAP = {1: "football", 3: "basketball", 5: "tennis", 7: "baseball", 6: "american_football",
                  2: "ice_hockey", 13: "volleyball", 15: "pingpong", 18: "mma", 19: "boxing",
-                 47: "badminton"}  # 2026-09-27 补排球/乒乓/冰球/MMA/拳击/羽毛球(之前只5运动, 排球乒乓样本被统计层过滤)
+                 47: "badminton",
+                 "1": "football", "3": "basketball", "5": "tennis", "7": "baseball", "6": "american_football",
+                 "2": "ice_hockey", "13": "volleyball", "15": "pingpong", "18": "mma", "19": "boxing", "47": "badminton",
+                 "football": "football", "basketball": "basketball", "tennis": "tennis", "baseball": "baseball",
+                 "american_football": "american_football", "ice_hockey": "ice_hockey", "volleyball": "volleyball",
+                 "pingpong": "pingpong", "mma": "mma", "boxing": "boxing", "badminton": "badminton"}  # 2026-10-26 补字符串运动码(之前只 int, 漏统计157条football字符串)
 BB_SUB_MAP = {"over_under": "ou", "handicap": "hc", "opportunities": "1x2",
               "double_chance": "dc", "btts": "btts",
-              "ht": "ht", "ht_ou": "ht_ou"}  # 2026-09-19 滚球新增 dc/btts; 2026-10-11 补 ht/ht_ou(半场盘归类失败106条)
+              "ht": "ht", "ht_ou": "ht_ou",
+              "ou": "ou", "hc": "hc", "1x2": "1x2", "dc": "dc", "ml": "1x2",
+              "hc_games": "hc_games", "handicap_games": "hc_games",
+              "ht_hc": "ht_hc", "ht_dc": "ht_dc", "dnb": "dnb"}  # 2026-10-26 补子盘缩写(之前只全称, 漏统计 hc/ou/dc/1x2/handicap_games 缩写)
 LIVE_LEAGUE = "滚球"
 
 # 运动中文名(2026-09-12 用户要求: 释放盘口必须标注具体运动)。释放清单 sport 字段是英文,
@@ -169,19 +199,25 @@ MANUAL_OBSERVE_RELEASE = {
 # 优先于 MANUAL_OBSERVE_RELEASE 的区间。数据驱动拦截(observe_blocked)照常追加。
 MANUAL_OBSERVE_BLOCK = {
     # 2026-10-15 撤网球独赢: 交叉验证实盘负(客-11.3%胜率36%/主+0.9%胜率41%), 逆向选择毒性流。
-    "tennis|1x2|主|*|live",
+    # 2026-10-26 网球独赢主只留 40-60%(实盘+5.8%), 其余区间仍拦。
+    "tennis|1x2|主|20-40%|live",
+    "tennis|1x2|主|60-80%|live",
     "tennis|1x2|客|*|live",
     "tennis|hc_games|主|*|live",
     # 2026-10-16 撤篮球让球主滚球(纸面-28%+实盘-13.9%双负) + 足球独赢主早盘(纸面-2.2%→实盘-14.4%逆向选择)。
     # 2026-10-18 篮球让球主改桶级: 45-55%释放(纸面+55.5%/49注), 其余桶不释放。
-    "football|1x2|主|*|early",
+    # 2026-10-27 改桶级: 只放 主40-50%/50-55%(CLV正), 其余桶拦。
+    # 2026-11-01 恢复主胜两端(>70%/<10%/10-20%/20-30%)试探释放(加进LIMITED cap50); 中间段30-40%/55-60%/60-70%仍拦。
+    "football|1x2|主|30-40%|early",
+    "football|1x2|主|55-60%|early",
+    "football|1x2|主|60-70%|early",
     # 2026-10-17 撤篮球大小球大(观察库45-55% n=952 -7.2%负)。
     "basketball|ou|大|45-55%|live",
     # 2026-10-18 结果锚校准撤假溢价(下注时公平价高估, 校准ROI负): 和局 20-30%(-56%)/40-50%(-6.4%)。
     "football|1x2|平|20-30%|early",
     "football|1x2|平|40-50%|early",
     # 2026-10-18 撤滚球大小球大 50-55%: 实盘 -5.3%(n=59) 双负(纸面 -25.3%)。
-    "football|ou|大|50-55%|live",
+    # 2026-10-26 恢复(实盘已转正 +0.3%/79注)。
     # 2026-10-20 撤 ht 上半场独赢全部(实盘 ROI -59%/胜率7.7%, 半场公平价假 edge)。
     "football|ht|主|20-30%|early",
     "football|ht|主|40-50%|early",
@@ -198,23 +234,94 @@ MANUAL_OBSERVE_BLOCK = {
     "basketball|hc|客|45-55%|live",
     "football|hc|主|50-55%|live",
     "ice_hockey|ou|大|55-65%|live",
-    "football|hc|主|55-60%|live",
     "football|hc|客|50-55%|live",
     "tennis|hc_games|客|60-80%|live",
     "football|dc|1X|>70%|live",
-    "football|ou|小|55-60%|live",
+    # 2026-10-25 解除 football|ou|小|55-60%|live 拦截(用户要求足球小球全量放开)。
     # 2026-10-22 撤早盘 CLV+纸面ROI 双负(假溢价)。
     "football|dc|X2|60-70%|early",
-    "football|dc|12|>70%|early",
+    # 2026-10-27 撤 12>70% 拦截(实盘+2.5%正, 改释放)。
     # 2026-10-22 撤早盘: 实盘负/校准负/CLV负(逆向选择或假溢价)。
     "football|ou|大|55-60%|early",
-    "basketball|1x2|客|<45%|early",
-    "basketball|1x2|客|*|early",
-    "football|ou|小|50-55%|early",
     "football|ou|大|50-55%|early",
-    "football|ou|小|55-60%|early",
     "football|hc|客|55-60%|early",
     "tennis|hc|客|*|early",
+    # 2026-10-25 撤实盘负格(最近一周 REAL_ROI n≥5 且 ROI<0):
+    # 篮球让球客胜55-65%早盘(-33.2%/13注)、足球让球客胜55-60%(-7.0%/20注)、60-70%(-12.0%/41注)、>70%(-6.3%/6注)。
+    "basketball|hc|客|55-65%|early",
+    "football|hc|客|55-60%|live",
+    "football|hc|客|60-70%|live",
+    # 2026-10-26 撤实盘负格(全量 n>10 且 ROI<0):
+    # 篮球让球主胜55-65%(-8.6%/51注,昨日按load_real_roi_cell漏统计假正误释)、足球1x2客40-50%(-8.6%/34注)、
+    # 足球小球60-70%(-10.1%/52注)、足球大球40-50%(-22.9%/20注)、dc1X60-70%(-5.2%/32注)、小球55-60%(-16.1%/15注)、>70%(-4.7%/23注)。
+    "basketball|hc|主|55-65%|live",
+    "football|1x2|客|40-50%|early",
+    # 2026-10-31 解除 football|ou|小 的 60-70%/>70%/通配* 拦截: 模拟拒单后新数据
+    # 60-70% ROI+8.3%、>70% ROI+5.8% 转正(旧实盘负是快照价假负), 交数据驱动释放(n≥30+ROI>2%)。
+    # 55-60% 仍负(-16.1% 旧数据)继续拦; 其余区间(<40%/40-50%/50-55%)由数据驱动判据拦。
+    "football|ou|大|40-50%|live",
+    # 2026-10-27 撤 1X 60-70% 拦截(实盘+22.3%正, 改释放)。
+    "football|ou|小|55-60%|live",
+    # 2026-10-26 撤双负盘口(实盘负+观察库纸面负): 足球大球/篮球大球/足球小球(滚球)+足球和局(早盘)。
+    "basketball|ou|大|*|live",
+    "football|ou|大|*|live",
+    # 2026-10-27 改桶级: 只放 平20-30%(CLV正), 其余桶拦。
+    "football|1x2|平|<10%|early",
+    # 2026-11-01 恢复和局10-20%/30-40%(早盘ws和局+5.5%正, 之前被drop方向错配bug连累误杀; CLV负但实盘正, 同dc超热门格绕CLV用LIMITED释放)
+    "football|1x2|平|40-50%|early",
+    "football|1x2|平|50-55%|early",
+    "football|1x2|平|55-60%|early",
+    "football|1x2|平|60-70%|early",
+    "football|1x2|平|>70%|early",
+    # 2026-10-26 撤早盘 CLV 负方向(CLV 主判据):
+    # 2026-10-27 改桶级: 只放 客30-40%/40-50%(CLV正), 其余桶拦。
+    # 2026-11-01 恢复客胜两端(>70%/<10%/10-20%/20-30%)试探释放(加进LIMITED cap50); 中间段50-55%/55-60%/60-70%仍拦。
+    "football|1x2|客|50-55%|early",
+    "football|1x2|客|55-60%|early",
+    "football|1x2|客|60-70%|early",
+    # 2026-10-27 改桶级(dc 超热门): 只放 1X 60-70%/>70%、X2 >70%、12 >70%(实盘ROI正), 其余桶拦。
+    "football|dc|1X|<10%|early",
+    "football|dc|1X|10-20%|early",
+    "football|dc|1X|20-30%|early",
+    "football|dc|1X|30-40%|early",
+    "football|dc|1X|40-50%|early",
+    "football|dc|1X|50-55%|early",
+    "football|dc|1X|55-60%|early",
+    "football|dc|X2|10-20%|early",
+    "football|dc|X2|20-30%|early",
+    "football|dc|X2|30-40%|early",
+    "football|dc|X2|40-50%|early",
+    "football|dc|X2|50-55%|early",
+    "football|dc|X2|60-70%|early",
+    "football|dc|12|10-20%|early",
+    "football|dc|12|20-30%|early",
+    "football|dc|12|30-40%|early",
+    "football|dc|12|40-50%|early",
+    "football|dc|12|50-55%|early",
+    "football|dc|12|55-60%|early",
+    "football|dc|12|60-70%|early",
+    "football|ht|主|*|early",
+    "tennis|hc|主|*|early",
+    "football|hc|客|*|early",
+    # 2026-10-27 撤滚球实盘负格(近3天 REAL_ROI n>=5 且 ROI<0):
+    "tennis|1x2|主|40-60%|live",   # -17.9%/19注
+    "football|hc|客|40-50%|live",  # -10.5%/17注
+    # 2026-11-01 撤足球早盘出血盘口(历史累计实盘持续负):
+    "football|hc|主|55-60%|early",   # 让球主胜 -12.1%/21注
+    "football|ht_hc|主|*|early",     # 上半场让球主 -68.8%/7注(胜1负6)
+    # 2026-11-01 撤网球大小球小(实盘 ou 全线负, 纸面+7.8% 假正):
+    "tennis|ou|小|40-60%|live",
+    # 2026-11-01 撤早盘实盘负盘口:
+    "football|ou|小|*|early",         # 足球小球 -27.5%/16注
+    "ice_hockey|ou|大|*|early",       # 冰球大分 -19.4%/5注
+    "basketball|1x2|客|*|early",      # 篮球独赢客 -11.8%/38注
+    # 2026-11-01 全量交叉验证撤回(鲜价后10-31起, 实盘n>=10且ROI<0, 纸面假正):
+    "football|ou|小|60-70%|live",      # -51.3%/14注
+    "football|dc|X2|>70%|early",       # -1.7%/37注
+    # 2026-11-01 撤早盘历史实盘负格(和局假溢价 + 篮球大球全输):
+    "football|1x2|平|10-20%|early",     # 5笔全输 -100%
+    "football|1x2|平|30-40%|early",     # -3.2%/70注
+    "basketball|ou|大|55-65%|early",    # 6笔全输 -100%
 }
 
 
@@ -225,6 +332,12 @@ MANUAL_OBSERVE_BLOCK = {
 # 但样本极薄(每区间 n=2~6, 远低于 n>200), 走日限额通道攒实盘数据(单注≤150, 当日累计≤1000)。
 # 棒球 1.0-2.0 = 1.0-1.5(n5)+1.5-2.0(n3); 篮球 1.0-3.0 = 1.0-1.5(n6)+2.0-3.0(n2)。样本够后转数据驱动。
 MANUAL_OBSERVE_RELEASE_LIMITED = {
+    # 2026-10-30 用户要求: 释放 3 个 dc 超热门格(实盘 ROI 正, 但 CLV 负被 CLV 判据误杀), 单笔 cap 50。
+    # 依据 = 实盘 ROI 正(唯一可信尺): X2 55-60% +19.3%/26、X2>70% +8.0%/28、1X>70% +3.2%/47。
+    # dc 双选 + 超热门的 CLV 合成不准(Pin 收盘价对超热门偏低), 所以绕过 CLV 判据, 按实盘放。
+    "football|dc|X2|55-60%|early": 50,
+    "football|dc|1X|>70%|early": 50,
+    # 2026-10-27 撤: 之前按 CLV 放的 6 格, 校准后落在中热门亏损黑洞, 全撤。改按「校准后EV正+实盘ROI正」重选。
     # 2026-10-10 用户要求撤回全部滚球释放: 棒球独赢主(4桶)+篮球独赢主(5桶)撤回观察库,
     # 滚球释放一律改走数据驱动 LEV 判据(不再手动试探)。
     # 2026-10-10 撤回足球独赢客 30-70% 全区间: 实盘逆向选择铁证(全量14笔 -29.5% ROI, 赢率29% vs 隐含52% -23pp;
@@ -241,56 +354,101 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 2026-10-12 用户要求: 释放足球独赢平局(和局)四桶, 单笔 cap 100(试探)。
     # 依据 = 去水CLV(Shin) 全正: 10-20% +15.09%(n34)/20-30% +3.79%(n214)/30-40% +2.97%(n198)/40-50% +8.05%(n16),
     # 方向级纸面 ROI +52%(n13) 双正。n 仍远小于判据 n≥200, 走手动试探(cap 100 控风险)。
-    "football|1x2|平|10-20%|early": 100,
-    # 2026-10-18 撤平 20-30%/40-50%: 结果锚校准 ROI -56%/-6.4% 假溢价(下注时公平价高估和局)。
-    "football|1x2|平|30-40%|early": 100,
+    # 2026-11-01 撤平 10-20%/30-40%: 历史实盘负(平30-40% -3.2%/70注, 平10-20% 5笔全输), 和局假溢价, 已移 MANUAL_OBSERVE_BLOCK。
     # 2026-10-14 用户要求释放独赢主/客(cap 30 试探)。足球/篮球 1x2 主/客早盘全桶。
     # 2026-10-16 撤足球独赢主早盘(纸面-2.2%→实盘-14.4%, 逆向选择)。
     # 2026-10-17 撤 football 独赢客胜早盘(CLV+4.0% 但纸面ROI-15% 假正)。
     # 2026-10-22 撤篮球1x2客全桶(实盘-72.4%/12注)。
     "basketball|1x2|主|*|early": 300,
+    "tennis|hc|主|*|early": 300,
     # 2026-10-14 用户要求释放网球测试格(cap 30): 早盘=让盘(hc)主/客。
     # 2026-10-15 网球滚球改测让局主(实盘独赢负, 交叉验证毒性流), 撤独赢主客。
-    "tennis|hc|主|*|early": 300,
     # 2026-10-22 撤网球让盘客全桶(60-80%桶 CLV-58.4%)。
     # 2026-10-20 撤 ht 上半场独赢全部(实盘 ROI -59%/胜率7.7%, 半场公平价假 edge), 交还数据驱动判据。
     # 2026-10-22 撤ou 50-55%(小实盘-56.2%/大纸面-5.2%+实盘-87.5%)。
     # 2026-10-18 释放 55-60%(近3天双正: 小球CLV+3.2%ROI+33.1% / 大球CLV+3.9%ROI+15.0%)
     # 2026-10-22 撤ou 55-60%(大校准-26.8%假溢价/小实盘-58.4%)。
-    # 2026-10-16 撤回网球让局主滚球(实盘-29%ROI/胜率29%, 逆向选择毒性流), 交还数据驱动判据。
-    # 2026-10-15 滚球让球固化(之前手工加JSON没进MANUAL, 会丢): 让球客cap80(正edge加码), 让球主cap60。
-    # 2026-10-17 桶级化: 让球主胜 50-55%/55-60% 实盘负(毒性桶)撤; 2026-10-18 40-50%(-7.5%)/60-70%(-13.6%)也转负再撤。仅留 30-40%/>70%。
-    "football|hc|主|30-40%|live": 60,
-    "football|hc|主|>70%|live": 60,
-    # 2026-10-17 恢复 football 让球客胜(实盘+5.8%/114注全桶正, 之前按纸面误撤)。
-    "football|hc|客|*|live": 80,
-    # 2026-10-16 撤篮球让球主滚球(纸面-28%+实盘-13.9%双负)。
-    # 2026-10-17 恢复 basketball 让球客胜 55-65%(实盘+8.8%/39注正); 45-55%实盘-4.5%仍撤。
-    # 2026-10-22 撤(实盘ROI负, REAL_ROI_GATE n≥5): basketball让球客55-65%(-3.5%/109笔)、
-    # basketball让球主45-55%(-54.2%/19笔)、ice_hockey让球客55-65%(-36.8%/6笔)、
-    # football ou大50-55%(-1.2%/67笔)、ice_hockey ou大55-65%(-19.9%/36笔), 交还数据驱动判据。
-    "ice_hockey|hc|客|65-75%|live": 60,
-    # 2026-10-17 撤篮球大小球大(观察库45-55% n=952 -7.2%负) + 释放真潜力(准确概率桶):
-    # 网球大小球小40-60%(+4.0% n=84)/足球双机会X2(客队不败)60-70%(+15.7% n=41), cap30试探。
-    "tennis|ou|小|40-60%|live": 30,
+    # 2026-10-28 用户要求: 滚球只留 4 个稳定盈利格(10-11以来 ROI>1% 且 n>30)。
+    "football|hc|主|>70%|live": 60,        # +16.8%/51
+    "football|hc|客|40-50%|live": 60,      # +17.4%/49
+    "football|hc|客|>70%|live": 80,        # +1.7%/31
+    # 2026-11-01 撤 tennis|ou|小|40-60%(纸面+7.8% 但实盘 ou 全线负, 假正), 已移 MANUAL_OBSERVE_BLOCK。
     # 2026-10-17 撤 football dc X2(客/和)(近3天观察库 -1.9% ROI/12笔, 微负)。
     # 2026-10-18 结果锚校准释放真 edge(校准ROI正, 用户要求直接放不等 n≥200): dc/ht/1x2客/hc/ou。
     # 依据 = 结果锚校准 ROI(下注时公平价高估被修正后仍为正), cap 100 试探控风险(实盘冻结期检验)。
-    "football|dc|1X|60-70%|early": 100,
-    "football|dc|1X|>70%|early": 100,
-    # 2026-10-24 复开 X2 55-60%: 实盘+27.3%(22注+353.7元), 纸面-40.2%是低EV样本假负, 交还实盘判据。
-    "football|dc|X2|55-60%|early": 100,
-    "football|dc|X2|>70%|early": 100,
-    "football|1x2|客|40-50%|early": 100,
-    "football|1x2|客|60-70%|early": 100,
-    "football|hc|主|55-60%|early": 100,
+    # 2026-10-27 撤 dc 手动释放: 改由数据驱动 CLV>2% 判据统一决定(避免和 CLV 判据冲突)。
+    # 2026-11-01 撤独赢客胜40-50%/60-70%+让球主胜55-60%(历史累计实盘负: 独赢客-10.2%/51注, 让球主-12.1%/21注), 交还数据驱动+MANUAL_OBSERVE_BLOCK。
+
     # 2026-10-22 撤 football|hc|客|55-60%(CLV-33.2%+实盘-100%)。
     "football|hc|客|60-70%|early": 100,
     "football|ou|大|60-70%|early": 100,
-    "basketball|hc|客|55-65%|early": 100,
-    "basketball|ou|大|55-65%|early": 100,
+    # 2026-11-01 撤 basketball|ou|大|55-65%|early(历史实盘 6笔全输 -100%, 纸面假正), 已移 MANUAL_OBSERVE_BLOCK。
     # 2026-10-22 撤 basketball|1x2|客|<45%(实盘-100%/6注+CLV-9.0%)。
+    # 2026-10-26 释放 CLV 正 + 纸面ROI 正 方向(早盘, CLV 主判据):
+    # 2026-11-01 撤上半场让球主(历史累计实盘 -68.8%/7注, 胜1负6), 已移 MANUAL_OBSERVE_BLOCK。
+
+    # 2026-11-01 撤早盘实盘负盘口: 足球小球(-27.5%/16注)、冰球大分(-19.4%/5注)、篮球独赢客(-11.8%/38注), 已移 MANUAL_OBSERVE_BLOCK。
+    "basketball|hc|主|*|early": 100,
+    # 2026-11-01 试探释放独赢两端(drop骤降方向Home/Away的正段, cap50试探攒数据裁决)。
+    # 两端=热门>70% + 冷门<10%/10-20%/20-30%(足球概率桶, <30%拆3桶)。
+    "football|1x2|主|>70%|early": 50,
+    "football|1x2|主|<10%|early": 50,
+    "football|1x2|主|10-20%|early": 50,
+    "football|1x2|主|20-30%|early": 50,
+    "football|1x2|客|>70%|early": 50,
+    "football|1x2|客|<10%|early": 50,
+    "football|1x2|客|10-20%|early": 50,
+    "football|1x2|客|20-30%|early": 50,
+    # 2026-11-01 全量试探释放: 滚球观察库纸面ROI为正的47格, 每注固定20(用户要求)。
+    # 注意: 纸面正≠实盘正(历史已证明虚高), 小注试探攒实盘数据裁决。
+    "ice_hockey|1x2|平|<45%|live": 20,
+    "ice_hockey|1x2|客|<45%|live": 20,
+    "volleyball|hc|客|60-80%|live": 20,
+    "football|hc|客|30-40%|live": 20,
+    "volleyball|hc|客|40-60%|live": 20,
+    "football|1x2|主|55-60%|live": 20,
+    "ice_hockey|ou|小|45-55%|live": 20,
+    "football|ht|主|30-40%|live": 20,
+    "volleyball|ou|小|60-80%|live": 20,
+    "football|ht|客|20-30%|live": 20,
+    "tennis|hc_games|主|60-80%|live": 20,
+    "football|ht_ou|大|40-50%|live": 20,
+    "basketball|1x2|主|45-55%|live": 20,
+    "football|1x2|客|50-55%|live": 20,
+    "football|ou|大|20-30%|live": 20,
+    "football|1x2|主|>70%|live": 20,
+    "basketball|1x2|客|>75%|live": 20,
+    "football|1x2|客|20-30%|live": 20,
+    "football|1x2|客|40-50%|live": 20,
+    "football|hc|主|40-50%|live": 20,
+    "basketball|1x2|主|>75%|live": 20,
+    "football|ht_ou|大|60-70%|live": 20,
+    "football|dc|12|>70%|live": 20,
+    "football|ou|大|>70%|live": 20,
+    "football|dc|X2|>70%|live": 20,
+    "basketball|1x2|主|<45%|live": 20,
+    "football|ht_ou|大|>70%|live": 20,
+    "ice_hockey|hc|客|55-65%|live": 20,
+    "football|hc|客|50-55%|live": 20,
+    "football|ou|小|55-60%|live": 20,
+    "football|hc|客|60-70%|live": 20,
+    "football|hc|客|>70%|live": 20,
+    "football|hc|客|55-60%|live": 20,
+    "basketball|hc|主|55-65%|live": 20,
+    "football|hc|主|50-55%|live": 20,
+    "tennis|hc_games|主|40-60%|live": 20,
+    "football|dc|X2|60-70%|live": 20,
+    "football|ou|小|>70%|live": 20,
+    "tennis|hc_games|客|40-60%|live": 20,
+    "basketball|ou|大|45-55%|live": 20,
+    "football|1x2|客|10-20%|live": 20,
+    "ice_hockey|ou|大|55-65%|live": 20,
+    "football|hc|主|>70%|live": 20,
+    "football|hc|客|40-50%|live": 20,
+    "tennis|ou|小|40-60%|live": 20,
+    "basketball|1x2|客|55-65%|live": 20,
 }
+
 
 
 
@@ -714,7 +872,11 @@ def _read_paper_bets():
 
 
 def _read_live_paper_bets():
-    """读滚球观察库(live_paper_bets.json)记录(只 Betfair 口径, 2026-09-19 锚点分区)。"""
+    """读滚球观察库(live_paper_bets.json)记录(只 Betfair 口径, 2026-09-19 锚点分区)。
+
+    2026-10-31 补 sim_rejected 过滤: 纸面模拟拒单标记的样本(下单一刻 oddsChange=0 会被拒的)
+    不参与任何观察库统计(ROI/赢率/CLV/释放判据), 消除「纸面全样本 vs 实盘只成交」的 selection bias。
+    """
     if not LIVE_PAPER.exists():
         return []
     try:
@@ -722,7 +884,7 @@ def _read_live_paper_bets():
     except (json.JSONDecodeError, OSError):
         return []
     bets = raw.get("bets", []) if isinstance(raw, dict) else raw
-    return [b for b in bets if b.get("anchor") == "pin"]
+    return [b for b in bets if b.get("anchor") == "pin" and not b.get("sim_rejected")]
 
 
 def load_observe_winrate():
@@ -993,20 +1155,21 @@ def load_real_roi_cell():
     """
     out = {}
 
-    def _agg(bets, scope):
+    def _agg(bets, scope, fmt="early"):
+        # fmt: "live" = real_bets.json 格式(sub/desig/sport数字/fair), "early" = tracked_bets 格式(sub_market/designation/sport字符串/fair_price)
         for b in bets:
-            if scope == SCOPE_EARLY:
-                sp = b.get("sport") or "?"
-                sm = b.get("sub_market") or "?"
-                fair = _f(b.get("fair_price")) or _f(b.get("bb_odds"))
-                dr = _direction(b.get("designation"), sm)
-            else:
+            if fmt == "live":
                 sp = BB_SPORT_MAP.get(b.get("sport"))
                 sm = BB_SUB_MAP.get(b.get("sub"))
                 if not sp or not sm:
                     continue
                 fair = _f(b.get("fair")) or _f(b.get("bb_odds"))
                 dr = _direction(b.get("desig") or b.get("designation"), sm)
+            else:
+                sp = b.get("sport") or "?"
+                sm = b.get("sub_market") or "?"
+                fair = _f(b.get("fair_price")) or _f(b.get("bb_odds"))
+                dr = _direction(b.get("designation"), sm)
             iv = _odds_interval(fair, sp)
             if iv == "?":
                 continue
@@ -1015,29 +1178,107 @@ def load_real_roi_cell():
             d["stake"] += _f(b.get("stake")) or 0.0
             d["profit"] += _f(b.get("profit")) or 0.0
 
-    # 早盘实盘
+    # 早盘实盘(老口径 tracked_bets.json)
     if TRACKED.exists():
         try:
             raw = json.loads(TRACKED.read_text())
             bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
                     if isinstance(b, dict) and b.get("status") == "settled"
                     and b.get("anchor") == "pin"]
-            _agg(bets, SCOPE_EARLY)
+            _agg(bets, SCOPE_EARLY, "early")
         except (json.JSONDecodeError, OSError):
             pass
-    # 滚球实盘
+    # 滚球+早盘实盘(real_bets.json, 按 trigger_source 拆来源, 2026-11-01 修正)
+    # 之前把 real_bets.json 全算成滚球 live, 早盘 707 笔(pin_drop/ws_scan)误计入滚球污染 ROI,
+    # 且早盘实盘只读老 tracked_bets 漏了这批新早盘样本。滚球=pin/poll/None, 早盘=pin_drop/ws_scan。
     if LIVE_REAL.exists():
         try:
             raw = json.loads(LIVE_REAL.read_text())
             d = raw.get("bets", raw) if isinstance(raw, dict) else {}
             vals = list(d.values()) if isinstance(d, dict) else d
-            bets = [b for b in vals if isinstance(b, dict) and b.get("result") in ("won", "lost")]
-            _agg(bets, SCOPE_LIVE)
+            live_bets, early_bets = [], []
+            for b in vals:
+                if not isinstance(b, dict) or b.get("result") not in ("won", "lost"):
+                    continue
+                (early_bets if b.get("trigger_source") in ("pin_drop", "ws_scan") else live_bets).append(b)
+            # 2026-10-31 时间窗: 只认鲜价生效后的实盘(滚球+早盘同口径, 旧快照价是假负)
+            live_bets = [b for b in live_bets if (b.get("ts") or 0) >= LIVE_REAL_ROI_CUTOFF_TS]
+            early_bets = [b for b in early_bets if (b.get("ts") or 0) >= LIVE_REAL_ROI_CUTOFF_TS]
+            _agg(live_bets, SCOPE_LIVE, "live")
+            _agg(early_bets, SCOPE_EARLY, "live")
         except (json.JSONDecodeError, OSError):
             pass
 
     return {k: {"n": d["n"], "roi": (d["profit"] / d["stake"] * 100.0) if d["stake"] > 0 else 0.0}
             for k, d in out.items()}
+
+
+def load_drop_obs_cells():
+    """drop 源观察库(CLV + 纸面ROI) → {(sport,sub_market,direction,interval): {n_clv, clv, n_paper, paper_roi}}。
+
+    2026-11-01 修正: drop 释放标准不能用实盘 ROI(不释放就没实盘=死循环), 改用观察库:
+      - CLV = clv_results.csv source=pin_drop 的 true_clv_pct 中位(收盘线 CLV, 下注价 vs 收盘价)。
+      - 纸面ROI = paper_bets.json source=pin_drop/drop 的 profit/stake。
+    观察库对每个信号都记(不管放不放), 永远在攒数据, 没有死循环。
+    """
+    import csv as _csv
+    out = {}
+    _clv = defaultdict(list)
+    _paper = defaultdict(lambda: {"n": 0, "stake": 0.0, "profit": 0.0})
+    # 1) CLV (clv_results.csv source=pin_drop)
+    _clv_f = DATA / "clv_results.csv"
+    if _clv_f.exists():
+        try:
+            with open(_clv_f, encoding="utf-8-sig") as f:
+                for r in _csv.DictReader(f):
+                    if r.get("source") != "pin_drop":
+                        continue
+                    sp = r.get("sport"); sm = r.get("sub_market")
+                    if not sp or not sm:
+                        continue
+                    fair = _f(r.get("push_fair_price")) or _f(r.get("bb_odds"))
+                    if not fair or fair <= 1.0:
+                        continue
+                    iv = _odds_interval(fair, sp)
+                    dr = _direction(r.get("designation"), sm)
+                    v = _f(r.get("true_clv_pct"))
+                    if v is None or iv == "?":
+                        continue
+                    _clv[(sp, sm, dr, iv)].append(v)
+        except Exception:
+            pass
+    # 2) 纸面 ROI (paper_bets.json source=pin_drop/drop)
+    if PAPER.exists():
+        try:
+            raw = json.loads(PAPER.read_text())
+            bets = raw.get("bets", []) if isinstance(raw, dict) else raw
+            for b in bets:
+                if b.get("source") not in ("pin_drop", "drop"):
+                    continue
+                if b.get("result") not in ("won", "lost"):
+                    continue
+                sp = b.get("sport"); sm = b.get("sub_market")
+                fair = _f(b.get("fair_price")) or _f(b.get("bb_odds"))
+                if not fair or fair <= 1.0:
+                    continue
+                iv = _odds_interval(fair, sp)
+                dr = _direction(b.get("designation"), sm)
+                if iv == "?":
+                    continue
+                x = _paper[(sp, sm, dr, iv)]
+                x["n"] += 1; x["stake"] += _f(b.get("stake")) or 0.0; x["profit"] += _f(b.get("profit")) or 0.0
+        except Exception:
+            pass
+    for k in set(_clv) | set(_paper):
+        c = _clv.get(k, [])
+        p = _paper.get(k, {"n": 0, "stake": 0.0, "profit": 0.0})
+        out[k] = {
+            "n_clv": len(c),
+            "clv": (sorted(c)[len(c) // 2] if c else None),
+            "n_paper": p["n"],
+            "paper_roi": (p["profit"] / p["stake"] * 100.0 if p["stake"] > 0 else None),
+        }
+    return out
 
 
 def _load_obs_state():
@@ -1110,7 +1351,9 @@ def _real_roi_gate_blocks(real_roi_cell, sport, sm, dr, interval, scope):
     _real = real_roi_cell.get((sport, sm, dr, interval, scope), {})
     _n = _real.get("n", 0)
     _roi = _real.get("roi", 0.0)
-    return (_n >= REAL_ROI_GATE_N_MIN and _roi < 0), _n, _roi
+    # 2026-10-30 熔断: 滚球(live)用 >30 单, 早盘(early)用 >10 单(用户要求, 比原来5更宽观察期)。
+    _n_min = LIVE_CIRCUIT_BREAKER_N_MIN if scope == "live" else EARLY_CIRCUIT_BREAKER_N_MIN
+    return (_n > _n_min and _roi < 0), _n, _roi
 
 
 # 回退开关(2026-10-11): 手动格是否强制过 REAL_ROI_GATE。默认 true(根治); false 回退旧行为(跳过)。
@@ -1145,6 +1388,40 @@ def main():
     if _n_no_ts:
         print(f"[release] ⚠️ {_n_no_ts} 条观察记录缺 ts，已排除(数据质量事故, 查写入链路)", flush=True)
     real_roi_cell = load_real_roi_cell()  # 实盘 ROI 交叉验证(2026-10-05): CLV假正拦截
+
+    # 2026-11-01 drop 数据驱动释放: 用观察库 CLV(收盘线)+纸面ROI 分格(不是实盘 ROI——不释放就没实盘=死循环),
+    # 替换 bb_ev_push.py 的硬编码 DROP_BLOCK。已确认正/负的格进清单, 不足样本走 DROP_BLOCK 兜底。
+    drop_obs = load_drop_obs_cells()
+    drop_released = []
+    drop_blocked = []
+    # 试探释放(2026-11-01): 这 4 格 drop 实盘已转正(n=5~9, +19.7%~+77%), 先放出攒数据;
+    # 否则按「实盘ROI≥10笔才放」会死循环(不放出就没实盘)。观察库 CLV/纸面样本不足的走这里。
+    _drop_trial = [
+        ["football", "1x2", "主", "30-40%"],   # 实盘 +77.2%/6注
+        ["basketball", "1x2", "客", "<45%"],   # 实盘 +19.7%/8注
+        ["basketball", "1x2", "主", ">75%"],   # 实盘 +20.8%/5注
+        ["football", "hc", "客", "55-60%"],    # 实盘 +29.8%/9注
+    ]
+    for (_sp, _sm, _dr, _iv), _d in sorted(drop_obs.items()):
+        _entry = [_sp, _sm, _dr, _iv]
+        # CLV 优先(收盘线 CLV 更 sharp, 正向=下注价优于收盘价)
+        if _d["n_clv"] >= DROP_N_MIN and _d["clv"] is not None:
+            if _d["clv"] > 0:
+                drop_released.append(_entry)
+            else:
+                drop_blocked.append(_entry)
+        # CLV 不足时用纸面 ROI 兜底
+        elif _d["n_paper"] >= DROP_N_MIN and _d["paper_roi"] is not None:
+            if _d["paper_roi"] > 0:
+                drop_released.append(_entry)
+            else:
+                drop_blocked.append(_entry)
+    # 试探格并入释放(去重)
+    for _e in _drop_trial:
+        if _e not in drop_released and _e not in drop_blocked:
+            drop_released.append(_e)
+    if drop_released or drop_blocked:
+        print(f"[release] drop数据驱动(观察库CLV+纸面ROI): 释放 {len(drop_released)} 格 / 拦截 {len(drop_blocked)} 格 (n≥{DROP_N_MIN})", flush=True)
 
     # 2026-09-19 用户要求: 释放盘口不用实盘投注数据(不释放就没实盘=死循环), 只用观察库。
     # 实盘释放通道(主开关/方向/时间窗/联赛)废弃, 全设空; 实盘 ROI 仅保留「满7天提额」。
@@ -1190,12 +1467,18 @@ def main():
         if _real.get("n", 0) >= REAL_ROI_GATE_N_MIN and _real.get("roi", 0) < 0:
             observe_blocked.append([sport, sm, dr, interval, "early"])
             continue
-        _cal = obs_cal.get((sport, sm, dr, interval, "early"), {})
-        _n_cal = _cal.get("n_cal", 0)
-        _roi_cal = _cal.get("roi_cal", 0.0)
-        # 2026-10-18 决策尺=结果锚校准(校准后 ev_cal>0 的注 ROI>0 才是真 edge, 去除热门/和局假溢价);
-        # CLV 降级为验证/审计(见 observe_clv_validation), 不再是释放闸门。
-        if _n_cal >= OBS_N_CAL_MIN and _roi_cal > 0:
+        # 2026-11-01 负段过滤(实盘 ROI 矩阵): 中间概率段系统性出血, 大小球/网球让局全线负(早盘同滚球)。
+        _neg = LIVE_NEGATIVE_IMPLIED.get(sm)
+        if _neg is None:
+            observe_blocked.append([sport, sm, dr, interval, "early"])
+            continue
+        _implied = _cell.get("implied")
+        if _implied is not None and _neg[0] <= _implied <= _neg[1]:
+            observe_blocked.append([sport, sm, dr, interval, "early"])
+            continue
+        # 2026-10-27 决策尺改回 CLV>2%(用户要求 CLV 主判据): 早盘观察库 CLV 中位 >2% 就释放。
+        # 之前(10-18)用「结果锚校准」, 用户要求放弃, 回到 CLV。REAL_ROI_GATE(上面)仍拦实盘负格。
+        if med > 2.0:
             observe_released.append([sport, sm, dr, interval, "early"])
         else:
             observe_blocked.append([sport, sm, dr, interval, "early"])
@@ -1210,9 +1493,11 @@ def main():
         # 2026-09-24 修bug: 只有全区间(*)才方向级跳过; 具体区间(如1.0-1.5)不该让同方向其他区间被跳过
         if _p[3] == "*":
             _manual_dirs.add((_p[0], _p[1], _p[2]))  # (sport, sub_market, direction)
-    for (sport, sm, dr, interval), (med, n) in sorted(live_clv.items()):
+    for (sport, sm, dr, interval, scope), _cell in sorted(obs_winrate.items()):
+        if scope != "live":
+            continue  # 只处理滚球(live)格; 早盘(early)已在上面的 clv_med 循环处理
         # 2026-09-28 修bug: MANUAL_OBSERVE_RELEASE 的「具体区间」格子(如 football|hc|主|1.5-2.0)也被
-        # 数据驱动 LEV 判据加到 observe_blocked, 导致 released+blocked 同时出现 → 释放被拦截, 一场都投不出。
+        # 数据驱动判据加到 observe_blocked, 导致 released+blocked 同时出现 → 释放被拦截, 一场都投不出。
         # 之前 _manual_dirs 只跳全区间(*), 漏了具体区间。这里补: MANUAL 释放的完整 key(含区间)也跳过。
         if (f"{sport}|{sm}|{dr}|{interval}|live" in MANUAL_OBSERVE_RELEASE
                 or f"{sport}|{sm}|{dr}|{interval}|live" in MANUAL_OBSERVE_RELEASE_LIMITED):
@@ -1220,24 +1505,36 @@ def main():
         if (sport, sm, dr) in _manual_dirs:
             continue  # 已验证方向(全区间*), 数据驱动不拦(用户显式开放)
         # 2026-09-27 手动拦截优先: 被 MANUAL_OBSERVE_BLOCK 拦的格子, 数据驱动不释放
-        # (避免 released+blocked 同时出现的脏数据, 如大球1.5-2.0 LEV正但实盘劣化-33.4%被手动撤)
+        # (避免 released+blocked 同时出现的脏数据, 如大球1.5-2.0 假正但实盘劣化被手动撤)
         if f"{sport}|{sm}|{dr}|{interval}|live" in MANUAL_OBSERVE_BLOCK:
             observe_blocked.append([sport, sm, dr, interval, "live"])
             continue
-        _cell = obs_winrate.get((sport, sm, dr, interval, "live"), {})
         _roi = _cell.get("roi", 0.0)
+        _n = _cell.get("n", 0)
         _mspread = _cell.get("median_spread")
         if _mspread is not None and _mspread >= LIQUIDITY_MAX_SPREAD:
             observe_blocked.append([sport, sm, dr, interval, "live"])  # 2026-09-19 薄盘拦(公平价/CLV不可信)
             continue
-        # 实盘 ROI 交叉验证(2026-10-05): 有实盘样本且 ROI<0 → 拦(LEV 假正同早盘)
+        # 实盘 ROI 交叉验证(2026-10-05): 有实盘样本且 ROI<0 → 拦(纸面假正)
         _real = real_roi_cell.get((sport, sm, dr, interval, "live"), {})
         if _real.get("n", 0) >= REAL_ROI_GATE_N_MIN and _real.get("roi", 0) < 0:
             observe_blocked.append([sport, sm, dr, interval, "live"])
             continue
-        # 2026-10-11 滚球释放判据: n≥OBS_N_MIN_LIVE(20) + obsROI>0。LEV 降级为审计(信噪比≈0), 不再当闸门。
-        # REAL_ROI_GATE 已在上面拦(实盘 n≥5 且 ROI<0 → 撤回)。med(LEV) 仍落审计, 供诊断。
-        if n >= OBS_N_MIN_LIVE and _roi > 0:
+        # 2026-11-01 负段过滤(实盘 ROI 矩阵治本): 中间概率段系统性出血, 大小球/网球让局全线负。
+        # 用「平均隐含概率」(obs_winrate.implied) 判断, 绕过概率桶标签运动定制的复杂性。
+        _neg = LIVE_NEGATIVE_IMPLIED.get(sm)
+        if _neg is None:
+            observe_blocked.append([sport, sm, dr, interval, "live"])
+            continue
+        _implied = _cell.get("implied")
+        if _implied is not None and _neg[0] <= _implied <= _neg[1]:
+            observe_blocked.append([sport, sm, dr, interval, "live"])
+            continue
+        # 2026-10-31 滚球释放判据改口径: n = obs_winrate 的「已结算样本数」(非 live_clv 的价格变动样本)。
+        # 原 10-11 用 live_clv 的 n 依赖 clv 字段, 而滚球 live 在 Pin 缓存覆盖极差 → pin_matchup_id 空
+        # → clv 全 None → n 永远 0, 数据驱动释放形同虚设。改回已结算样本数, 不依赖 clv。
+        # 纸面ROI 门槛 >2%(OBS_LIVE_ROI_MIN, 2026-10-31 用户要求), 挡 0~2% 的噪声正格(篮球小球+0.3% 这类)。
+        if _n >= OBS_N_MIN_LIVE and _roi > OBS_LIVE_ROI_MIN:
             observe_released.append([sport, sm, dr, interval, "live"])
         else:
             observe_blocked.append([sport, sm, dr, interval, "live"])
@@ -1410,6 +1707,8 @@ def main():
         "league_blocked": league_blocked,
         "observe_released": observe_released,
         "observe_blocked": observe_blocked,
+        "drop_released": drop_released,   # 2026-11-01 drop 源数据驱动释放(盘口×方向×概率桶)
+        "drop_blocked": drop_blocked,     # 2026-11-01 drop 源数据驱动拦截(实盘ROI负)
         "observe_release_caps": observe_release_caps,
         "direction_released": direction_released,
         "direction_blocked": direction_blocked,

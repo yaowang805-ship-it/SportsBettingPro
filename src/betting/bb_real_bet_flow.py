@@ -33,9 +33,24 @@ SPORT_CN = {"football": "足球", "basketball": "篮球", "tennis": "网球",
             "baseball": "棒球", "american_football": "美式足球", "ice_hockey": "冰球"}
 
 # 2026-10-17 用户要求取消早盘日限额(原 25笔/600元), 改为无限(风控改由单注上限+硬性止损承担)
+# 2026-10-26 注额方案: 半凯利 + 单注封顶(本金2%) + 日累计封顶(本金20%)。
 EARLY_DAILY_MAX_BETS = float('inf')
 EARLY_DAILY_MAX_STAKE = float('inf')
+MAX_STAKE_FRACTION = 0.02     # 单注封顶 = 本金 2% = 100
+EARLY_MAX_EV = 12.0  # 2026-10-26 早盘 EV 上限(12%以上假溢价, 实测 12-20%/-8.3%、20%+/-4.9%)
+DAILY_STAKE_FRACTION = float('inf')  # 日累计封顶已取消(2026-10-26 用户要求)
 DAILY_EXPOSURE_FILE = DATA_DIR / "daily_exposure.json"
+
+
+def _read_bankroll():
+    """早盘本金基准(读 bankroll_base.txt, 缺省 5000)。与 second_level_monitor._bankroll 同源。"""
+    try:
+        f = DATA_DIR / "bankroll_base.txt"
+        if f.exists():
+            return float(f.read_text().strip() or 5000)
+    except (OSError, ValueError):
+        pass
+    return 5000.0
 
 
 def _load_daily_exposure():
@@ -132,6 +147,19 @@ def _get_all_matches(token, domain, cache_ttl=180):
     return all_recs
 
 
+def _get_all_matches_cached(token, domain, cache_ttl=180):
+    """只读 getList 缓存, 过期也不重拉(下单关键路径不阻塞)。返回 (records, is_fresh)。
+
+    2026-10-25: 下单关键路径之前用 _get_all_matches(缓存过期同步重拉 5 运动分页 20-30s),
+    卡住下单(实测「下单 36s」)。改为只读缓存 + 定向 getMatchDetail 兜底(见 auto_bet_flow)。
+    """
+    global _get_all_matches_cache
+    if (_get_all_matches_cache["records"] and _get_all_matches_cache["token"] == token
+            and time.time() - _get_all_matches_cache["ts"] < cache_ttl):
+        return _get_all_matches_cache["records"], True
+    return _get_all_matches_cache["records"], False
+
+
 def start_early_getlist_prefetch(interval=150):
     """后台预取早盘 getList(预热 _get_all_matches_cache), 避免下单时 cache miss 拉全量 20-30s。
 
@@ -151,6 +179,26 @@ def start_early_getlist_prefetch(interval=150):
                 pass
             time.sleep(interval)
     t = threading.Thread(target=_loop, daemon=True, name="early-getlist-prefetch")
+    t.start()
+    return t
+
+
+def start_balance_prefetch(interval=45):
+    """后台预热余额缓存(每 45s 拉一次), 让 check_balance_ok 下单时命中缓存 0ms。
+
+    2026-10-27: check_balance_ok 的 _balance_cache TTL 是 60s, 预取间隔须 <60s 否则缓存会
+    在两次预取之间过期、下单时退回同步 fetch_balance(1-2s)。45s 保证缓存永远新鲜, 下单 0ms。
+    """
+    import threading
+    def _loop():
+        while True:
+            try:
+                from src.betting.bb_auto_bet import warm_balance
+                warm_balance()
+            except Exception:
+                pass
+            time.sleep(interval)
+    t = threading.Thread(target=_loop, daemon=True, name="early-balance-prefetch")
     t.start()
     return t
 
@@ -243,20 +291,10 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
     if not token:
         return {"success": [], "failed": [], "error": "无 token"}
 
-    # 2026-10-24 余额熔断(用户要求): 总余额<1000 停早盘实盘(滚球继续投注), >1000 自动恢复。
-    try:
-        from src.betting.bb_auto_bet import fetch_balance
-        _bal = fetch_balance()
-        try:
-            _bal_f = float(_bal) if _bal else None  # fetch_balance 返回字符串, 转 float 再比
-        except (TypeError, ValueError):
-            _bal_f = None
-        if _bal_f is not None and _bal_f < 1000:
-            return {"success": [], "failed": [], "error": f"余额 {_bal_f:.0f}<1000, 早盘暂停(滚球继续)"}
-    except Exception:
-        pass
+    # 2026-10-28 用户要求: 去除「余额<1000 早盘不实盘投注」的限制。余额熔断不再拦早盘(滚球也不拦),
+    # 风控改由单注封顶(本金2%)+滚球熔断(>30单负ROI撤回)承担。不再每次调 check_balance_ok。
 
-    records = _get_all_matches(token, domain)
+    records, _ = _get_all_matches_cached(token, domain)  # 2026-10-25 只读缓存(现仅作 getMatchDetail 失败时的兜底)
     success, failed = [], []
     sent_dingtalk = []
     total_latency = 0.0  # 投注总耗时(实际下单 HTTP 时间累加, 2026-10-11 用户要求推送到钉钉)
@@ -297,10 +335,30 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
             except (TypeError, ValueError):
                 pass
 
-        # 匹配比赛(英文名)
-        match = _find_match(records, match_home, match_away)
+        # 同场同盘口互斥锁(2026-09-19) — 提前到 getMatchDetail 之前(2026-10-27):
+        # opp 已带 bb_match_id, 先用它查锁; 已投的场直接跳过, 不再为它付 getMatchDetail 的
+        # 1-13s(网络差时 3 域名 failover 重试)。否则 offset 重放旧 trigger / 同批多 opp 时每注重付一遍。
+        from src.betting.bb_auto_bet import check_sub_market_bet, record_sub_market_bet, global_bet_cooldown
+        if opp.get("bb_match_id") and check_sub_market_bet(opp["bb_match_id"], sub, "prematch"):
+            failed.append({"home": disp_home, "away": disp_away,
+                           "reason": f"同场同盘口已投({sub}), 跳过对立/重复"})
+            continue
+
+        # 匹配比赛: 优先定向 getMatchDetail 拉鲜价(1-2s), 失败才回退 getList 缓存。
+        # 2026-10-28 测: BB 跟进 Pin drop 中位 ~37s(最小6.5s), lead-lag 窗口是分钟级不是秒级,
+        # 所以 getMatchDetail 的 1-2s 绰绰有余, 不需要压到 1s(150s 缓存反而陈旧→oddsChange=0 大量拒单)。
+        match = None
+        if opp.get("bb_match_id"):
+            try:
+                from src.scrapers.bb_api_fetcher import fetch_match_for_order
+                # 2026-10-27: 收紧 getMatchDetail —— 单活域+单次+3s 超时。
+                match = fetch_match_for_order(opp["bb_match_id"], timeout=3, max_attempts=1, max_domains=1)
+            except Exception:
+                match = None
+        if match is None:
+            match = _find_match(records, match_home, match_away)
         if not match:
-            failed.append({"home": disp_home, "away": disp_away, "reason": "getList 未匹配到比赛"})
+            failed.append({"home": disp_home, "away": disp_away, "reason": "未匹配到比赛(定向+缓存均未命中)"})
             continue
         match_id = match.get("id")
 
@@ -312,10 +370,16 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         market_id, odds, option_type = mk
 
         # 同场同盘口互斥锁(2026-09-19): 同一 match 同一盘口只下一注(防对立方向/多线重复下注)
-        from src.betting.bb_auto_bet import check_sub_market_bet, record_sub_market_bet
+        # 2026-10-27: 已提前到 fetch 之前用 bb_match_id 查过一次; 这里保留作兜底(bb_match_id 缺失
+        # 走了 _find_match 兜底路径的 opp, 用真实 match_id 再查一次)。
         if check_sub_market_bet(match_id, sub, "prematch"):
             failed.append({"home": disp_home, "away": disp_away,
                            "reason": f"同场同盘口已投({sub}), 跳过对立/重复"})
+            continue
+        # 2026-10-24 防风控两全其美: 每注间隔 10-20s, 但「太频繁就跳过」而非「sleep 阻塞」,
+        # 避免 30 注 × 10-20s = 300-600s 阻塞 drop 循环导致总耗时几百秒。
+        if global_bet_cooldown(10, 20, scope=("drop" if trigger_source == "pin_drop" else "early")) > 0:
+            failed.append({"home": disp_home, "away": disp_away, "reason": "防风控间隔(10-20s)未到, 跳过本注"})
             continue
         # 2026-10-18 修并发重复下单: 先占坑 record(下单前), 防多个 ws_scan 并发线程同场同盘口重复下单。
         # 下单失败也保留占坑(该 opp 本轮已尝试, 不再重试, 防重复), 下次扫描靠 check 拦。
@@ -336,28 +400,46 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
                 pass
 
         # 下单(含注额上限检查)
-        # 2026-10-14 早盘探针日限额: 笔数 25 或金额 600 达上限即停(笔数为主, 金额兜底)
-        if _daily_bets >= EARLY_DAILY_MAX_BETS or _daily_stake >= EARLY_DAILY_MAX_STAKE:
-            print(f"  ⏭️ 早盘日限额已达(笔{_daily_bets}/{EARLY_DAILY_MAX_BETS} 额{_daily_stake:.0f}/{EARLY_DAILY_MAX_STAKE:.0f}), 停止")
-            break
-        # 2026-10-17 解冻注额公式: 恢复 Kelly 档(弱65/中125/强190), 早盘上限 200(用户充值5000定)。
-        # (之前 cap 30 flat 是早盘探针, 把 Kelly 档全压成 30 → 无大额、不按 Kelly)
-        # 2026-10-18 双轨制: 单笔上限按触发源区分 — drop 骤降(有 edge 信号)80 / ws_scan 全量扫描 50。
-        _max_stake = 80.0 if trigger_source == "pin_drop" else 50.0
+        # 2026-10-26 注额方案: 半凯利 + 单注封顶(本金2%)。日累计上限已取消(用户要求)。
+        _bankroll = _read_bankroll()
+        _max_stake = _bankroll * MAX_STAKE_FRACTION
         stake = min(stake, _max_stake)
         # 2026-10-17: 下注时EV门槛与采集门槛对齐。之前硬编码 min_ev_pct=4.0 高于采集门槛
         # (get_min_ev 直接盘3%/dc 3%/特殊盘4%, 另有方向级覆盖), 把 2~4% 档机会扫进来又在下单时拒掉。
         _min_ev = opp.get("_min_ev")
         if _min_ev is None:
             if trigger_source == "pin_drop":
-                _min_ev = 2.5  # 2026-10-24 Drop 投注门槛统一 2.5%(校准取消后真实EV2-3%, 3%门槛太高)
+                _min_ev = 2.0  # 2026-11-01 Drop 投注门槛降到 2%(和入库一致): 分格释放(CLV)才是 drop 的真正过滤器, EV 门槛只去噪声
             else:
                 _min_ev = 5.0  # 2026-10-24 WS 投注门槛统一 5%(与入库一致, 之前 get_min_ev 3% 偏低)
+        # 2026-10-26 早盘 EV 上限拦截(12%以上低赔率热门假溢价, 实测 12-20%/-8.3%、20%+/-4.9%)
+        _ev_signal = opp.get("ev_pct")
+        if _ev_signal is not None:
+            try:
+                if float(_ev_signal) > EARLY_MAX_EV:
+                    failed.append({"home": disp_home, "away": disp_away,
+                                   "reason": f"EV {float(_ev_signal):.1f}%>{EARLY_MAX_EV}% 假溢价, 放弃"})
+                    continue
+            except (TypeError, ValueError):
+                pass
+        # 2026-10-25 零延迟内存验价: 用 find_market_from_match 刚拿到的最新 BB 价(odds)重算 EV,
+        # 跌破门槛即放弃。纯内存浮点计算不联网, 不牺牲秒级。拦「信号价→成交价」间 BB 跌穿公平价的负EV单。
+        _fair = opp.get("fair_price") or opp.get("fair")
+        try:
+            if _fair and odds and float(_fair) > 1 and float(odds) > 1:
+                _ev_now = (float(odds) - float(_fair)) / float(_fair) * 100
+                if _ev_now < _min_ev or _ev_now > EARLY_MAX_EV:
+                    failed.append({"home": disp_home, "away": disp_away,
+                                   "reason": f"最新价EV {_ev_now:.1f}% 不在[{_min_ev}%,{EARLY_MAX_EV}%], 放弃"})
+                    continue
+        except (TypeError, ValueError):
+            pass
         _t0 = time.time()
         code, order_id, msg = place_single_bet(
             market_id, odds, option_type, stake, token=token, domain=domain, match_id=match_id,
             fair_price=opp.get("fair_price") or opp.get("fair"), min_ev_pct=_min_ev,
-            verify_price=False)  # 2026-10-18 早盘直接下单(对齐滚球秒级), oddsChange=0 兜底
+            verify_price=False,  # 2026-10-18 早盘直接下单(对齐滚球秒级), oddsChange=0 兜底
+            fast=(trigger_source == "pin_drop"))  # 2026-10-27 drop 快路径: 单次+不二次验价+5s超时(lead-lag 秒级)
         _latency = time.time() - _t0
         # 执行质量记录(2026-10-08): 按方向记拒单/延迟, 供早盘定仓的执行质量系数打折
         from src.scrapers.execution_quality import record as _eq_record
@@ -366,12 +448,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         # 记录全局下单时间戳
         record_global_bet(scope=("drop" if trigger_source == "pin_drop" else "early"))
 
-        # 防风控(2026-09-05): 每注之间随机间隔, 模拟真人看盘思考, 避免秒下多注被风控识别。
-        # 2026-10-20 用户要求 drop 也秒级下单(对齐 ws_scan), 两轨统一 10-20s。
-        import random as _random
-        _sleep = _random.uniform(10, 20)
-        time.sleep(_sleep)
-        _sleep_total += _sleep
+        # 2026-10-24 防风控间隔已改为「下注前 global_bet_cooldown 跳过」(不再 sleep 阻塞循环)。
 
         if code == 0:
             opp["_bet_succeeded"] = True  # 2026-10-17 供 push_report 只对成功注写指纹(失败注下次可重试)
@@ -426,10 +503,12 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
             # 余额 + 早盘未结 + 总耗时(2026-10-18 补回: 每单推不能丢这三个字段)
             _extra = []
             try:
-                from src.betting.bb_auto_bet import fetch_balance
-                _bal = fetch_balance()
+                # 2026-10-27 改读缓存余额(不联网): 下单已完成的展示字段不该再触发 1-2s HTTP,
+                # 拖慢同批下一注 + 无意义(余额已由 check_balance_ok/warm_balance 预热)。
+                from src.betting.bb_auto_bet import get_balance_cached
+                _bal = get_balance_cached()
                 if _bal:
-                    _extra.append(f"余额 ¥{_bal}")
+                    _extra.append(f"余额 ¥{_bal:.0f}")
             except Exception:
                 pass
             try:
@@ -447,9 +526,13 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
                        f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_pin_raw_str}{_ev_str} | 注额 ¥{stake:.0f} | {_src_label} | 投注 {_bj}{_kickoff_str}{_extra_str}")
             sent_dingtalk.append(_single)
             # 2026-10-18 改: 每单立即推钉钉(不再攒批等循环结束, 否则 sleep 20-90s/单 循环不结束推送被吞)
+            # 2026-10-27 改后台线程推送(对齐滚球 _notify_bet): 钉钉 HTTP ~0.5-1s 不占下单链路,
+            # 避免多注批处理时每单阻塞累积拖满 _run_task(timeout=20) 被强制取消。
             try:
+                import threading as _thr
                 from config.settings import send_dingtalk
-                send_dingtalk(f"🟦 早盘投注 {desig}", _single)
+                _thr.Thread(target=send_dingtalk, args=(f"🟦 早盘投注 {desig}", _single),
+                            daemon=True).start()
             except Exception:
                 pass
             _append_bet_history(rec)

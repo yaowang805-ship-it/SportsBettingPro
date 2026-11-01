@@ -149,16 +149,23 @@ def save_attempts(att: dict):
 
 
 def _read_validate_rows():
-    """读观察库 source=validate 记录, 去重(按 key)。
+    """读观察库记录, 去重(按 key)。
 
     两个源(2026-10-06): clv_tracking.csv(实时跟踪, 有 bb_match_id/line) +
     clv_results.csv(CLV 结果, 覆盖全运动含网球/排球/拳击, 弥补 tracking 被轮转后老记录
     丢失导致结算不到)。clv_results.csv 字段映射: push_fair_price→fair_price。
+
+    2026-11-01 source 语义修正: 观察库 source 已从 "validate"(旧 Betfair 锚点验证) 改为
+    trigger_source(pin_drop/ws_scan/drop)。之前只认 "validate" → 早盘纸面全部被跳过、
+    paper_bets.json 空。保留 "validate" 兼容旧数据。
     """
+    _VALID_SOURCES = {"validate", "pin_drop", "ws_scan", "drop"}
     rows = {}
 
     def _feed(r):
-        if r.get("source") != "validate":
+        if r.get("source") not in _VALID_SOURCES:
+            return
+        if r.get("sim_rejected"):  # 2026-10-31 早盘模拟拒单: 价变被拒样本不进纸面结算
             return
         bid = (r.get("bb_match_id") or "").strip()
         if not bid:
@@ -179,7 +186,7 @@ def _read_validate_rows():
     if RESULTS_FILE.exists():
         with open(RESULTS_FILE, encoding="utf-8-sig") as f:
             for r in csv.DictReader(f):
-                if r.get("source") != "validate":
+                if r.get("source") not in _VALID_SOURCES:
                     continue
                 if not (r.get("bb_match_id") or "").strip():
                     continue  # 老 clv_results.csv 没有 bb_match_id, 跳过(无法结算)
@@ -302,7 +309,7 @@ def settle_paper(dry_run: bool = False) -> dict:
             "profit": round(profit, 2),
             "settled_at": datetime.now(timezone.utc).isoformat(),
             "is_paper": True,
-            "source": "validate",
+            "source": r.get("source", "validate"),  # 2026-11-01 保留 trigger_source(pin_drop/ws_scan/drop), 供 drop/ws 分源统计
             "anchor": "pin",  # 2026-09-19 锚点口径标记: 10-11后 Pin 公平价
         }
         settled_map[k] = rec

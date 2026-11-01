@@ -400,7 +400,7 @@ class PinSSEClient:
         import requests
         while not self._stop:
             try:
-                r = requests.get(f"{PINNAPI_BASE}{path}?key={PINNAPI_KEY}",
+                r = requests.get(f"{PINNAPI_BASE}{path}?key={PINNAPI_KEY}&min_drop=2.0",
                                  stream=True, timeout=(15, 60))
                 report_success()  # 连接成功 → 关熔断清计数
                 for line in r.iter_lines(decode_unicode=True):

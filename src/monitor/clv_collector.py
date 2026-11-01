@@ -103,6 +103,8 @@ def _load_pending_entries(return_expired=False):
     entries, expired = [], []
     with open(TRACKING_FILE, newline='') as f:
         for r in csv.DictReader(f):
+            if r.get("sim_rejected"):  # 2026-10-31 早盘模拟拒单: 价变被拒样本不进 CLV 采集
+                continue
             # sub_market 统一推断口径 (ht→ht_hc/ht_ou), 否则去重 key 与结果不匹配
             sm = _infer_sub_market(r.get("sub_market", ""), r.get("designation", ""))
             # 用 BB 中文名 + Pinnacle 英文名组合做 key
@@ -1002,7 +1004,7 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
     return len(rows)
 
 
-def log_oa_opportunities(details, min_ev=2.0, source="validate"):
+def log_oa_opportunities(details, min_ev=2.0, source="validate", max_ev=None):
     """Betfair 直接匹配的机会入库 tracking(2026-09-27 修复 tracking 冻结)。
 
     早盘 9-18 切换 Betfair 直接匹配(compare_bb_vs_oa)后, 新流程不再调 log_all_ev_opportunities
@@ -1056,6 +1058,8 @@ def log_oa_opportunities(details, min_ev=2.0, source="validate"):
                 ev = opp.get("ev_pct", 0) or 0
                 if ev < min_ev:
                     continue
+                if max_ev and ev > max_ev:
+                    continue
                 sub = opp.get("_market", "") or _MK.get(mk, "1x2")
                 if sub == "main":
                     sub = _MK.get(mk, "1x2")
@@ -1077,6 +1081,7 @@ def log_oa_opportunities(details, min_ev=2.0, source="validate"):
                     "pin_league_id": "", "pin_match_id": "",
                     "source": source, "pin_max_stake": "",
                     "bb_match_id": bb_match_id,
+                    "sim_rejected": "", "sim_reject_reason": "",  # 2026-10-31 早盘模拟拒单标记(默认空, drain 复验价变后回填)
                 })
 
     if skipped_started:
@@ -1089,7 +1094,7 @@ def log_oa_opportunities(details, min_ev=2.0, source="validate"):
     fieldnames = ["timestamp", "sport", "league", "home", "away", "home_pin", "away_pin",
                   "designation", "sub_market", "bb_odds", "pin_odds", "fair_price", "ev_pct",
                   "stake", "tier", "match_epoch", "bb_price_source", "fair_source", "pin_league_id", "pin_match_id",
-                  "source", "pin_max_stake", "line", "bb_match_id"]
+                  "source", "pin_max_stake", "line", "bb_match_id", "sim_rejected", "sim_reject_reason"]
     _migrate_csv_header(TRACKING_FILE, fieldnames)
     file_exists = TRACKING_FILE.exists()
     with open(TRACKING_FILE, "a", newline="", encoding="utf-8") as f:
@@ -1117,7 +1122,30 @@ def collect():
         if not acquired:
             logger.info("CLV 采集已在运行，跳过本次（防 crontab/pipeline 重叠）")
             return 0
-        return _collect_inner()
+        n = _collect_inner()
+    _settle_early_paper()  # 2026-11-01 早盘纸面结算挂进 clv_collector(独立锁, 不阻塞 CLV 采集)
+    return n
+
+
+def _settle_early_paper():
+    """早盘观察库结算(2026-11-01 修复结算断)。
+
+    早盘纸面结算(paper_settle.settle_paper)原本只挂在 pipeline_orchestrator, 该进程 10-24 卸载后
+    早盘纸面从未结算 → paper_bets.json 一直空 → 早盘纸面 ROI 无法与实盘交叉验证。
+    挂进 clv_collector(每2min cron)顺带结算, 让 clv_tracking.csv 里 pending 记录重新结算进 paper_bets.json。
+    settle_paper 自带退避(24h 重试/3次放弃) + 开赛后2h~48h窗口, 每轮只结算新到期样本, 不会重复调 BB。
+    """
+    from src.storage.file_lock import task_lock
+    with task_lock("paper_settle") as acquired:
+        if not acquired:
+            return
+        try:
+            from src.monitor.paper_settle import settle_paper
+            r = settle_paper(dry_run=False)
+            if r.get("new_settled"):
+                logger.info("早盘纸面结算: 新增 %d 笔, 累计 %d 笔", r["new_settled"], r["total_paper"])
+        except Exception as _e:
+            logger.warning("早盘纸面结算失败(不影响CLV采集): %s", _e)
 
 
 def _collect_inner():
