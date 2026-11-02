@@ -23,6 +23,8 @@ TRIGGER_FILE = ROOT / "data" / "storage" / "pin_trigger.jsonl"
 DROP_RETENTION_DAYS = 30  # pin_drops 归档保留天数(超期清理, 显式管磁盘)
 DROP_MIN_PROB_CHANGE = 2.0  # 2026-11-01 骤降概率过滤下限(pp): 骤降价值看「隐含概率上升」非「价格降幅%」。
 # 冷门(赔率高)降5%价格=概率只动~1pp(噪声), 热门(赔率低)降2%价格=概率动~4pp(真sharp)。配合 min_drop=2% 放开热门。
+DROP_MIN_LIMIT = 200.0  # 2026-11-02 最低限额过滤: limit<200 的骤降是书商整理低限额市场, 非 sharp money(职业团队「比任何阈值都重要」)
+DROP_MAX_NO_VIG = 1.12  # 2026-11-02 no-vig 和上限: 1/price_x+1/price_y >1.12 = 双边动(收margin), 非单边 sharp move
 LIVE_TICK_FILE = ROOT / "data" / "storage" / "pin_live_tick.ts"  # 滚球 WS live 帧触发信号时间戳
 PREMATCH_TICK_FILE = ROOT / "data" / "storage" / "pin_prematch_tick.jsonl"  # 早盘 WS prematch 赔率变动触发信号(2026-10-18 事件驱动替代30s轮询)
 FRAME_GAP_FILE = ROOT / "data" / "storage" / "pin_frame_gaps.jsonl"  # 帧间隔埋点(2026-10-11 攒帧间隔分布, 定 suspension 阈值)
@@ -216,8 +218,24 @@ def _on_prematch(mid, home, away):
 
 
 def _on_drop(stream, drop):
-    """SSE drop 回调: 落盘 + 映射 BB 比赛 + 写触发信号。"""
-    # 2026-11-01 概率过滤: 拦掉「价格降幅大但概率变化小」的冷门噪声(冷门 favorite-longshot 无 edge)
+    """SSE drop 回调: 过滤(限额/双边动/概率) → 落盘 + 映射 BB 比赛 + 写触发信号。"""
+    # 1) 最低限额过滤(2026-11-02): 低限额骤降=书商整理盘口, 非 sharp money(职业「比任何阈值都重要」)
+    _lim = drop.get("limit")
+    if _lim is not None:
+        try:
+            if float(_lim) < DROP_MIN_LIMIT:
+                return
+        except (TypeError, ValueError):
+            pass
+    # 2) 排除双边动(2026-11-02): 1/price_x+1/price_y 过高=双边同降=收margin, 非单边 sharp move
+    _px = drop.get("price_x"); _py = drop.get("price_y")
+    if _px and _py:
+        try:
+            if 1.0 / float(_px) + 1.0 / float(_py) > DROP_MAX_NO_VIG:
+                return
+        except (TypeError, ValueError, ZeroDivisionError):
+            pass
+    # 3) 概率过滤(2026-11-01): 拦掉「价格降幅大但概率变化小」的冷门噪声(冷门 favorite-longshot 无 edge)
     _fp = drop.get("from_price")
     _tp = drop.get("to_price")
     if _fp and _tp:
