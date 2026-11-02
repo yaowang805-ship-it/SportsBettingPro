@@ -181,10 +181,10 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
                 'dc'→由 1x2 合成 {1X,12,X2}。
     返回 dict(含 line) 或 None。target_line: hc/ou 的 BB 线(在 Pinnacle 线里找最接近的)。
     优先读 WS 实时缓存(快), 否则 REST 兜底(带队名索引, O(1) 查)。
-    去水: 2026-10-12 统一 Shin(devig_shin/shin_fair_odds), 与 clv_collector 收盘侧一致——
-    之前用比例去水(_devig_three_way)导致下注侧/收盘侧 devig 口径不一致, EV_close 脏。
+    去水: 2026-11-02 改 Power(devig_power/power_fair_odds), 修 Shin 法 favorite-longshot bias
+    (Shin 实测高估赢率 ~6.5pp, 是早盘「CLV正纸面正实盘负」的根因)。
     """
-    from src.scrapers.devig import shin_fair_odds, devig_shin
+    from src.scrapers.devig import power_fair_odds, devig_power
     pin_sid = BB_TO_PIN.get(sport_id)
     if not pin_sid:
         return None
@@ -244,10 +244,10 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
             return None
         # 2026-10-11 修: 杯赛 2-way 独赢(draw=None)用两路去水, 3-way 用三路去水
         if ml.get('draw'):
-            _fairs = shin_fair_odds([ml.get('home'), ml.get('draw'), ml.get('away')])
+            _fairs = power_fair_odds([ml.get('home'), ml.get('draw'), ml.get('away')])
             fair = {'home': _fairs[0], 'draw': _fairs[1], 'away': _fairs[2]} if (_fairs[0] > 1 and _fairs[1] > 1 and _fairs[2] > 1) else None
         else:
-            _fairs = shin_fair_odds([ml.get('home'), ml.get('away')])
+            _fairs = power_fair_odds([ml.get('home'), ml.get('away')])
             fair = {'home': _fairs[0], 'away': _fairs[1]} if (_fairs[0] > 1 and _fairs[1] > 1) else None
         if fair is not None:
             fair['_raw'] = {k: ml.get(k) for k in ('home', 'draw', 'away') if ml.get(k)}
@@ -276,7 +276,7 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
                     return None
             except (TypeError, ValueError):
                 pass
-        _fairs = shin_fair_odds([o.get('home'), o.get('away')])
+        _fairs = power_fair_odds([o.get('home'), o.get('away')])
         if _fairs[0] <= 1 or _fairs[1] <= 1:
             return None
         if swapped:
@@ -292,7 +292,7 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         o = _select_line(totals, target_line)
         if not o:
             return None
-        _fairs = shin_fair_odds([o.get('over'), o.get('under')])
+        _fairs = power_fair_odds([o.get('over'), o.get('under')])
         if _fairs[0] <= 1 or _fairs[1] <= 1:
             return None
         return {'over': _fairs[0], 'under': _fairs[1], 'line': o.get('points'),
@@ -301,7 +301,7 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         ml = full.get('money_line')
         if not ml:
             return None
-        _probs = devig_shin([ml.get('home'), ml.get('draw'), ml.get('away')])
+        _probs = devig_power([ml.get('home'), ml.get('draw'), ml.get('away')])
         if not _probs or any(p <= 0 for p in _probs):
             return None
         ph, pd, pa = _probs

@@ -14,7 +14,7 @@ from src.scrapers.bb_data import (
 )
 from src.scrapers.pinnacle_league_map import TEAM_NAME_MAP
 from src.scrapers.pinnacle_api import get_decimal_price
-from src.scrapers.devig import devig_mult, shin_fair_odds
+from src.scrapers.devig import devig_mult, power_fair_odds
 from src.scrapers.dixon_coles import correct_score_probs  # 正确比分公平概率
 from src.scrapers.pinnacle_markets import get_league_matchups_and_markets, get_league_corner_markets
 from src.scrapers.matching_engine import (
@@ -401,7 +401,7 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                 if home_sp and away_sp and get_decimal_price(home_sp) and get_decimal_price(away_sp):
                     pin_odds_h = get_decimal_price(home_sp)
                     pin_odds_a = get_decimal_price(away_sp)
-                    _fairs = shin_fair_odds([pin_odds_h, pin_odds_a])
+                    _fairs = power_fair_odds([pin_odds_h, pin_odds_a])
                     fair_h = _fairs[0]
                     fair_a = _fairs[1]
 
@@ -443,7 +443,7 @@ def fetch_corner_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                     if pin_line is not None and abs(bb_line - pin_line) > 0.01:
                         over_p = under_p = None  # 线不匹配, 拒绝
                 if over_p and under_p and get_decimal_price(over_p) and get_decimal_price(under_p):
-                    _fairs = shin_fair_odds([get_decimal_price(over_p), get_decimal_price(under_p)])
+                    _fairs = power_fair_odds([get_decimal_price(over_p), get_decimal_price(under_p)])
                     over_fair = _fairs[0]
                     under_fair = _fairs[1]
 
@@ -705,7 +705,7 @@ def fetch_booking_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                 if home_sp and away_sp and get_decimal_price(home_sp) and get_decimal_price(away_sp):
                     pin_odds_h = get_decimal_price(home_sp)
                     pin_odds_a = get_decimal_price(away_sp)
-                    _fairs = shin_fair_odds([pin_odds_h, pin_odds_a])
+                    _fairs = power_fair_odds([pin_odds_h, pin_odds_a])
                     fair_h = _fairs[0]
                     fair_a = _fairs[1]
 
@@ -747,7 +747,7 @@ def fetch_booking_opportunities(bb_matches, all_pin_leagues, matched_leagues):
                     if pin_line is not None and abs(bb_line - pin_line) > 0.01:
                         over_p = under_p = None  # 线不匹配, 拒绝
                 if over_p and under_p and get_decimal_price(over_p) and get_decimal_price(under_p):
-                    _fairs = shin_fair_odds([get_decimal_price(over_p), get_decimal_price(under_p)])
+                    _fairs = power_fair_odds([get_decimal_price(over_p), get_decimal_price(under_p)])
                     over_fair = _fairs[0]
                     under_fair = _fairs[1]
 
@@ -904,7 +904,7 @@ def fetch_special_opportunities(bb_matches, all_pin_leagues, matched_leagues):
     """
     from src.scrapers.pinnacle_markets import get_league_special_markets
     from src.scrapers.pinnacle_league_map import lookup_pin_league
-    from src.scrapers.devig import devig_mult, shin_fair_odds
+    from src.scrapers.devig import devig_mult, power_fair_odds
 
     # BB 有特殊盘口的比赛 (V5.11: 补半场特殊盘 correct_score_ht, 从 odds_ht 取)
     bb_special_matches = []

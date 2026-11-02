@@ -26,7 +26,7 @@ from src.scrapers.pinnacle_api import (
     API_BASE, SESSION, api_get, _rate_limit, _diagnose_pinnacle_error, us_to_decimal, get_decimal_price,
 )
 from src.scrapers.pinnacle_api import _rate_limit as _  # noqa: ensure rate_limit usable
-from src.scrapers.devig import shin_fair_odds, devig_favorite_divergence  # Shin 法去抽水, 替代比例法
+from src.scrapers.devig import power_fair_odds, devig_favorite_divergence  # Shin 法去抽水, 替代比例法
 
 API_BASE = API_BASE  # re-export for backward compat
 SESSION = SESSION
@@ -144,7 +144,7 @@ def _oa_fair(entry, sport, sub, target_line=None, use_rest=None, status=None, ca
 def _devig_dc(dc_odds):
     """DC(双重机会)去抽水 — 三条**非互斥**腿, 公平概率和=2(不是1)。
 
-    之前对 [1X,2X,12] 直接用 shin_fair_odds 会强推 Σp=1, 把每条 DC 公平价
+    之前对 [1X,2X,12] 直接用 power_fair_odds 会强推 Σp=1, 把每条 DC 公平价
     抬高 40-90%(假+EV); 而"从 1X2 推导"又有 HT 平局高估的 21pp 偏差。
     正确做法: 比例法归一化到和=2(三条腿覆盖两个结果, 公平和=2)。
 
@@ -360,7 +360,7 @@ def _derive_dnb_fair(ml_odds):
     if len(ml_odds) < 3:
         return None
     try:
-        _fairs = shin_fair_odds([ml_odds[0], ml_odds[1], ml_odds[2]])
+        _fairs = power_fair_odds([ml_odds[0], ml_odds[1], ml_odds[2]])
     except Exception:
         return None
     if any(not f or f <= 0 for f in _fairs):

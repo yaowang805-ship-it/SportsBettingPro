@@ -611,7 +611,7 @@ def fetch_live_opportunities(threshold=3.0, platform="BB", use_file_cache=False)
             if not d:
                 continue
             bb_odds = mk["odds"]
-            # 用 pinnapi 实时公平价(已 Shin 去水), 替代 Pin 官方原始价 + 自己 shin_fair_odds
+            # 用 pinnapi 实时公平价(已 Shin 去水), 替代 Pin 官方原始价 + 自己 power_fair_odds
             fair = pinnacle_fair_price(b["home_en"], b["away_en"], b["sport"], sub, mk["line"], event_type='live')
             if not fair:
                 continue

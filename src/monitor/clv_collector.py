@@ -327,19 +327,19 @@ def _extract_market_odds(pin_matchup, sub_market, designation, sport="football",
     des = (designation or "").lower()
 
     def _devig(odds, selected_idx):
-        """Shin devig(2026-09-12 与主比价统一): 公平概率用 devig_shin, 组合项概率相加。
+        """Shin devig(2026-09-12 与主比价统一): 公平概率用 devig_power, 组合项概率相加。
 
         proportional(比例法)会系统性高估热门概率/低估冷门概率(favorite-longshot bias),
         导致高赔端 CLV 虚高 → 假 +EV。Shin 法(知情资金 z 参数)修正该偏差, 与
-        bb_vs_pinnacle 主比价的 shin_fair_odds 一致。
+        bb_vs_pinnacle 主比价的 power_fair_odds 一致。
         selected_idx 可为 int(单选项) 或 list/tuple(组合, 如 dc 主/和)。
         返回 (fair, total): fair=公平赔率, total=隐含概率和(去抽水前)。
         """
-        from src.scrapers.devig import devig_shin
+        from src.scrapers.devig import devig_power
         total = sum(1.0 / p for p in odds if p and p > 0)
         if total <= 0:
             return None, None
-        probs = devig_shin(odds)  # 对齐 odds 顺序, 无效位置=0, 和≈1
+        probs = devig_power(odds)  # 对齐 odds 顺序, 无效位置=0, 和≈1
         if isinstance(selected_idx, (list, tuple)):
             prob = sum(probs[i] for i in selected_idx if 0 <= i < len(probs))
         else:

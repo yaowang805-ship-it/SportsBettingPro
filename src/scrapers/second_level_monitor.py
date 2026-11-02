@@ -1174,14 +1174,15 @@ class SecondLevelMonitor:
                     print(f"    {sp}/{sub}: n={n2} 盈亏{pnl2:+.0f} ROI{pnl2/stk2*100:+.1f}%", flush=True)
 
     def _check_clv(self):
-        """CLV 追踪(2026-09-15 改 LEV 口径): 下注 3s 后复验 Betfair 公平价(odds-api.io), 算 CLV 写回观察库。
+        """CLV 追踪(2026-11-02 改滚球 live CLV 口径): 下注 60s 后复验 Pin 公平价, 算 live CLV 写回观察库。
 
-        CLV = (bb_odds - fair@T+3) / fair@T+3。正 CLV = 我们抢到比市场后来
-        定价更优的价格(真 edge); 负 CLV = 逆向选择。写回 live_paper_bets 的 clv 字段,
+        live CLV = (bb_odds - fair@T+60) / fair@T+60。正 = 你抢到比市场 60s 后
+        重定价更优的价格(真 edge); 负 = 逆向选择(接盘)。写回 live_paper_bets 的 clv 字段,
         供结算按 CLV 正负分桶。
 
-        2026-09-15 用户定: 职业团队的 Live Execution Value(LEV)=下注后~3s 复验中间价,
-        持续跑赢它才说明 edge 还活着。窗口 20s→3s(逆向选择几秒内就发生, 20s 太晚错过)。
+        2026-11-02 修正: 之前 3s 复验测的是「延迟噪声」(信噪比≈0, 见记忆 live-clv-redesign),
+        因为早盘 lead-lag 窗口实测 ~37s(分钟级), 3s 只够看延迟、看不出 edge。改 60s(>37s),
+        让复验价反映「市场真正重定价后」的评估, 这才和早盘「收盘线 CLV」同结构(参考价=下注后60s)。
         每次轮询(2s)都查 _check_clv, 有 ready 才发 Pin 请求(请求率=下注率, 不额外加压)。
         另: allow_closed=True + nearest=True 只对 CLV 路径; 下单前验价保持严格。
         """
@@ -1192,7 +1193,7 @@ class SecondLevelMonitor:
         if not self._reversion_track:
             return
         now = time.time()
-        ready = {k: v for k, v in self._reversion_track.items() if now - v["ts"] >= 3}
+        ready = {k: v for k, v in self._reversion_track.items() if now - v["ts"] >= 60}
         if not ready:
             return
         for key, v in ready.items():
@@ -1238,7 +1239,7 @@ class SecondLevelMonitor:
         if sub not in ("opportunities", "handicap", "over_under"):
             return
         try:
-            from src.scrapers.devig import shin_fair_odds
+            from src.scrapers.devig import power_fair_odds
         except Exception:
             return
         for it in data.get("items", []):
@@ -1291,7 +1292,7 @@ class SecondLevelMonitor:
             if i is None:
                 continue
             try:
-                fair = shin_fair_odds(raw)
+                fair = power_fair_odds(raw)
             except Exception:
                 continue
             if not fair or len(fair) <= i or fair[i] <= 0:
@@ -1897,7 +1898,7 @@ class SecondLevelMonitor:
         保持 False, 避免用 closed 盘口 stale 价 / 就近匹配错线 误下单。
         """
         from src.scrapers.pinnacle_live import reverify_live_markets
-        from src.scrapers.devig import shin_fair_odds
+        from src.scrapers.devig import power_fair_odds
         pin_mid = sig.get("pin_matchup_id"); lid = sig.get("league_id")
         if not pin_mid or not lid:
             return None
@@ -1929,7 +1930,7 @@ class SecondLevelMonitor:
         if not raw:
             return None
         try:
-            fair = shin_fair_odds(raw)
+            fair = power_fair_odds(raw)
         except Exception:
             return None
         i = idx.get(sig["desig"])
@@ -3036,7 +3037,7 @@ class SecondLevelMonitor:
             return
         from src.scrapers.pinnapi_client import fetch_pinnacle_markets, _norm, _select_line
         from src.scrapers.bb_vs_pinnacle import _BB_SPORT_TO_OA_ID
-        from src.scrapers.devig import shin_fair_odds
+        from src.scrapers.devig import power_fair_odds
         _DIR = {"主胜": "home", "客胜": "away", "和局": "draw", "大球": "over", "小球": "under",
                 "让球主胜": "home", "让球客胜": "away",
                 "上半场主胜": "home", "上半场客胜": "away", "上半场和局": "draw",
@@ -3078,14 +3079,14 @@ class SecondLevelMonitor:
                 if sm == "opportunities":
                     if not ml.get("draw"):
                         remain.append(rec); continue
-                    _f = shin_fair_odds([ml['home'], ml['draw'], ml['away']])
+                    _f = power_fair_odds([ml['home'], ml['draw'], ml['away']])
                     fair_map = {'home': _f[0], 'draw': _f[1], 'away': _f[2]}
                 elif sm == "over_under":
                     tot = full.get('totals') or {}
                     _o = (tot.get('0') or list(tot.values())[0]) if tot else None
                     if not _o or not _o.get('over') or not _o.get('under'):
                         remain.append(rec); continue
-                    _f = shin_fair_odds([_o['over'], _o['under']])
+                    _f = power_fair_odds([_o['over'], _o['under']])
                     fair_map = {'over': _f[0], 'under': _f[1]}
                 elif sm == "handicap":
                     # 2026-10-18 复开价锚点扩让球: 找最接近 bet line 的 spread, 算 home/away 公平价
@@ -3095,7 +3096,7 @@ class SecondLevelMonitor:
                     _o = _select_line(spreads, rec.get("line"))
                     if not _o or not _o.get('home') or not _o.get('away'):
                         remain.append(rec); continue
-                    _f = shin_fair_odds([_o['home'], _o['away']])
+                    _f = power_fair_odds([_o['home'], _o['away']])
                     fair_map = {'home': _f[0], 'away': _f[1]}
                 elif sm == "ht":
                     # 2026-10-18 复开价锚点扩半场: 半场独赢走 num_1 的 money_line
@@ -3103,13 +3104,13 @@ class SecondLevelMonitor:
                     ml_ht = full_ht.get('money_line') or {}
                     if not ml_ht.get('draw'):
                         remain.append(rec); continue
-                    _f = shin_fair_odds([ml_ht['home'], ml_ht['draw'], ml_ht['away']])
+                    _f = power_fair_odds([ml_ht['home'], ml_ht['draw'], ml_ht['away']])
                     fair_map = {'home': _f[0], 'draw': _f[1], 'away': _f[2]}
                 elif sm == "double_chance":
                     # 2026-10-18 复开价锚点扩双机会: 从 1x2 三路概率合成 1X/12/X2 公平价
                     if not ml.get('draw'):
                         remain.append(rec); continue
-                    _f = shin_fair_odds([ml['home'], ml['draw'], ml['away']])
+                    _f = power_fair_odds([ml['home'], ml['draw'], ml['away']])
                     _ph, _pd, _pa = 1.0 / _f[0], 1.0 / _f[1], 1.0 / _f[2]
                     fair_map = {'1X': 1.0 / (_ph + _pd), '12': 1.0 / (_ph + _pa), 'X2': 1.0 / (_pd + _pa)}
                 elif sm == "ht_ou":
@@ -3119,7 +3120,7 @@ class SecondLevelMonitor:
                     _o = (tot_ht.get('0') or list(tot_ht.values())[0]) if tot_ht else None
                     if not _o or not _o.get('over') or not _o.get('under'):
                         remain.append(rec); continue
-                    _f = shin_fair_odds([_o['over'], _o['under']])
+                    _f = power_fair_odds([_o['over'], _o['under']])
                     fair_map = {'over': _f[0], 'under': _f[1]}
                 else:
                     remain.append(rec); continue
@@ -3274,10 +3275,10 @@ class SecondLevelMonitor:
             # 2026-09-29 去掉 3.0s 节流 + persistence: sharp 动立即触发 poll(WS 变动即比价下单),
             # 不再等 3s 节流/0.5s 稳定。oddsChange=0 兜底(变了就拒), 防假溢价靠 SBO 同向 + 快照年龄。
             if _ws_changed or self._pin_live_wake or now - last_poll >= refresh_every:
-                # 触发源标签(2026-10-11): pin(Pin live tick优先) / betfair_ws / poll, 供审计组内对照
-                # Pin live 优先；若 Pin live 未唤醒则退回 Betfair WS，再退回 2s 轮询。
+                # 触发源标签(2026-11-02 改名): drop(Pin live drop唤醒=滚球drop) / betfair_ws / poll, 供审计组内对照
+                # drop=滚球 Pin 骤降唤醒(单独标记, 与早盘 pin_drop 区分); 否则 betfair_ws; 再退回 poll。
                 # 三态兜底完整保留，本行只改优先级，不改可达性(最坏退回 betfair_ws，行为与改前一致)。
-                self._trigger_source = "pin" if self._pin_live_wake else ("betfair_ws" if _ws_changed else "poll")
+                self._trigger_source = "drop" if self._pin_live_wake else ("betfair_ws" if _ws_changed else "poll")
                 self._trigger_source_stats[self._trigger_source] = self._trigger_source_stats.get(self._trigger_source, 0) + 1
                 self._pin_live_wake = False  # 2026-10-11: Pin 滚球 drop 唤醒后立即比较一次
                 try:

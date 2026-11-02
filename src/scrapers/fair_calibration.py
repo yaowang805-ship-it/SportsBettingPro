@@ -22,10 +22,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent.parent
 
 # 总开关(分市场, 可回退): 关掉则该端校准不生效, 回到 ev=(bb-fair)/fair 原始口径。
-# 2026-10-18 时间切分样本外验证:
-#   prematch 前半拟合→后半测试 ev_cal>0 ROI +9.0%(194笔) → 通过, 开
-#   live     前半拟合→后半测试 ev_cal>0 ROI -10.7%(419笔) → 失败(1天数据偏差不稳定), 关
-CALIBRATE_FAIR = {"prematch": False, "live": True}  # 2026-11-01 时间切分样本外验证: 滚球校准有效(样本外ev_cal>0 ROI+4.71%), 早盘校准过拟合(样本外-10.54%, in-sample+2.29%是假象) → 早盘关, 滚球开
+# 2026-11-02 改: 早盘校准从 isotonic(逐段拟合=过拟合根因)换成 platt(2参数平滑单调), 不再过拟合,
+# 早盘重新打开。配合 Power 去水(修 Shin favorite-longshot bias 的源头)双保险。
+CALIBRATE_FAIR = {"prematch": True, "live": True}
 
 _TABLE_FILES = {
     "live": "fair_calibration.json",

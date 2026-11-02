@@ -184,14 +184,14 @@ def main():
               f"p_cal={100*p_cal:.1f}%  ev_cal={ev_cal:+.1f}%")
 
     if save:
-        # 保存 isotonic 查找表 (bin 中心 -> p_cal)
-        iso_fn = models["isotonic"][0]
+        # 2026-11-02 改平滑参数化(platt 逻辑校准, 2参数), 替代 isotonic(逐段拟合=过拟合根因)
+        plat_fn = models["platt"][0]
         bins = np.linspace(0.05, 0.95, 37)
-        table = [{"p_implied": round(float(b), 4), "p_cal": round(float(iso_fn(np.array([b]))[0]), 4)} for b in bins]
-        out = {"model": "isotonic", "n": len(p), "table": table}
+        table = [{"p_implied": round(float(b), 4), "p_cal": round(float(plat_fn(np.array([b]))[0]), 4)} for b in bins]
+        out = {"model": "platt", "n": len(p), "table": table}
         dest = STORAGE / "fair_calibration.json"
         json.dump(out, open(dest, "w"), ensure_ascii=False, indent=1)
-        print(f"\n已保存校准表 -> {dest}")
+        print(f"\n已保存校准表(platt 平滑) -> {dest}")
 
 
 if __name__ == "__main__":

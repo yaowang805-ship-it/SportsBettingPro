@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""早盘公平价校准 — 拟合 isotonic 校准曲线, 存 fair_calibration_prematch.json。
+"""早盘公平价校准 — 拟合平滑 platt 校准曲线(逻辑校准), 存 fair_calibration_prematch.json。
 
-问题: 早盘 Pin 公平价(Shin 去水后)同样系统性高估热门 ~+7pp(观察库实测), 与滚球同病。
-数据: paper_bets.json(观察库, fair_price+result) 训练; tracked_bets.json(实盘) 样本外验证。
+问题: 早盘 Pin 公平价(去水后)同样系统性高估热门 ~+7pp, 与滚球同病。
+数据: real_bets.json 早盘实盘(trigger_source in pin_drop/ws_scan)训练。
+2026-11-02 改: 之前 isotonic 逐段拟合在早盘小样本上过拟合(样本外 -10.54%), 换成
+platt(logit 空间线性, 2参数)平滑单调, 不会过拟合。
 用法: python3 scripts/calibrate_prematch_fair.py [--save]
 """
 import json
@@ -10,10 +12,21 @@ import sys
 from pathlib import Path
 
 import numpy as np
-from sklearn.isotonic import IsotonicRegression
+from sklearn.linear_model import LogisticRegression
 
 ROOT = Path(__file__).resolve().parent.parent
 STORAGE = ROOT / "data" / "storage"
+
+EPS = 1e-6
+
+
+def logit(p):
+    p = np.clip(p, EPS, 1 - EPS)
+    return np.log(p / (1 - p))
+
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
 
 
 def _load(p):
@@ -38,10 +51,10 @@ def _rows(bets):
     return out
 
 
-def _backtest(rows, iso, name):
+def _backtest(rows, predict_fn, name):
     evr, evc, res = [], [], []
     for p_imp, won, bb, stk, prof in rows:
-        p_cal = max(float(iso.predict(np.array([p_imp]))[0]), 0.01)
+        p_cal = max(float(predict_fn(np.array([p_imp]))[0]), 0.01)
         fc = 1.0 / p_cal
         evr.append((bb - 1.0 / p_imp) / (1.0 / p_imp) * 100)
         evc.append((bb - fc) / fc * 100)
@@ -62,29 +75,32 @@ def _backtest(rows, iso, name):
 
 def main():
     save = "--save" in sys.argv
-    # 2026-10-21 改用实盘库(real_bets)训练: 观察库含大量未实盘的假 edge 机会, 样本和实盘分布不同,
-    # 校准表会偏。实盘(trigger_source in pin_drop/ws_scan)才是真实下注样本。
     rb = _load(STORAGE / "real_bets.json")
     if isinstance(rb, dict):
-        rb = list(rb.values())  # real_bets.json 是 {order_id: bet}, 直接取 values
+        rb = list(rb.values())
     early_real = [b for b in rb if isinstance(b, dict) and b.get("trigger_source") in ("pin_drop", "ws_scan")]
-    tr = _rows(early_real)  # 纯实盘训练(2026-11-01: 观察库纸面是快照价脏数据, 会污染校准方向, 彻底不用观察库补充)
-    te = tr  # 样本少, 不分训练/测试
+    tr = _rows(early_real)  # 纯实盘训练
     p = np.array([r[0] for r in tr])
     y = np.array([r[1] for r in tr])
-    iso = IsotonicRegression(out_of_bounds="clip")
-    iso.fit(p, y)
-    print(f"训练(实盘为主) n={len(tr)}  其中纯实盘 {len(_rows(early_real))}")
-    _backtest(tr, iso, "训练集(in-sample)")
+
+    # platt 逻辑校准: logit(p_hat) = a + b*logit(p_implied)
+    lr = LogisticRegression(C=1e6, max_iter=10000)
+    lr.fit(logit(p).reshape(-1, 1), y)
+    a = float(lr.intercept_[0])
+    b = float(lr.coef_[0][0])
+    predict_fn = lambda x: sigmoid(a + b * logit(x))
+
+    print(f"训练(纯早盘实盘) n={len(tr)}  platt a={a:+.3f} b={b:.3f}")
+    _backtest(tr, predict_fn, "训练集(in-sample)")
 
     if save:
         bins = np.linspace(0.05, 0.95, 37)
-        table = [{"p_implied": round(float(b), 4),
-                  "p_cal": round(float(iso.predict(np.array([b]))[0]), 4)} for b in bins]
-        out = {"model": "isotonic_prematch", "n": len(tr), "table": table}
+        table = [{"p_implied": round(float(x), 4),
+                  "p_cal": round(float(predict_fn(np.array([x]))[0]), 4)} for x in bins]
+        out = {"model": "platt_prematch", "n": len(tr), "a": round(a, 4), "b": round(b, 4), "table": table}
         dest = STORAGE / "fair_calibration_prematch.json"
         json.dump(out, open(dest, "w"), ensure_ascii=False, indent=1)
-        print(f"\n已保存早盘校准表 -> {dest}")
+        print(f"\n已保存早盘校准表(platt 平滑) -> {dest}")
 
 
 if __name__ == "__main__":

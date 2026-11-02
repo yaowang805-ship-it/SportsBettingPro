@@ -688,8 +688,9 @@ def _is_market_released(sport: str, sub_market: str, league: str = "", designati
     if not rl:
         return True
     # 2026-10-24 触发源拆分: Drop 专用释放=足球+篮球所有盘口(用户定); WS 走下面正常清单。
-    # 2026-11-01 drop 数据驱动: 用 drop 实盘 ROI 分「盘口×方向×概率桶」(compute_market_release 生成
+    # 2026-11-01 drop 数据驱动: 用观察库 CLV+纸面ROI 分「盘口×方向×概率桶」(compute_market_release 生成
     # drop_released/drop_blocked), 替换硬编码 DROP_BLOCK 整盘口一刀切。样本不足的格走 DROP_BLOCK 兜底。
+    # 2026-11-02 放开: 不只足球+篮球, 全运动都放(tennis/冰球等 drop 也能投, 之前被「只足篮」一刀切丢)。
     if source == "drop":
         dr = _release_direction(designation, sub_market)
         _iv = _odds_interval(odds, sport)
@@ -697,9 +698,7 @@ def _is_market_released(sport: str, sub_market: str, league: str = "", designati
             return False
         if [sport, sub_market, dr, _iv] in rl.get("drop_released", []):
             return True
-        # 兜底: 旧 DROP_BLOCK(整盘口一刀切, 样本不足的格走这里)
-        if sport not in ("football", "basketball"):
-            return False
+        # 兜底: 旧 DROP_BLOCK(整盘口一刀切, 样本不足的格走这里; DROP_BLOCK 只含足球+篮球的负盘口)
         if (sport, sub_market, dr) in DROP_BLOCK:
             return False
         return True

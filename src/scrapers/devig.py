@@ -76,6 +76,50 @@ def shin_fair_odds(odds: list) -> list:
     return [round(1.0 / p, 4) if p and p > 0 else 0.0 for p in probs]
 
 
+def devig_power(odds: list) -> list:
+    """Power 法去抽水(Clarke/Kovalchik/Ingram 2017), 返回公平概率(和=1)。
+
+    p_i = q_i^k, 求 k 使 sum(p_i)=1。k>1 时热门被压得比冷门更多,
+    专门修正 favorite-longshot bias(Shin 法实测高估赢率 ~6.5pp 的根因)。
+    实证(跨三个大型 bookmaker 数据集): power 完胜比例法、不输 Shin。
+    """
+    clean = [float(o) for o in odds if o and float(o) > 1.0]
+    n = len(clean)
+    if n < 2:
+        return [1.0 / float(o) if o and float(o) > 1.0 else 0.0 for o in odds]
+    q = [1.0 / o for o in clean]
+    if sum(q) <= 1.0 + 1e-9:  # 无抽水/underbroke, 直接返回原始隐含
+        return [1.0 / float(o) if o and float(o) > 1.0 else 0.0 for o in odds]
+    # 二分求 k(>1)使 sum(q^k)=1
+    lo, hi = 1.0, 50.0
+    for _ in range(200):
+        mid = (lo + hi) / 2.0
+        s = sum(x ** mid for x in q)
+        if s > 1.0:
+            lo = mid
+        else:
+            hi = mid
+    k = (lo + hi) / 2.0
+    probs = [x ** k for x in q]
+    total = sum(probs)
+    if total > 0:
+        probs = [p / total for p in probs]
+    result, idx = [], 0
+    for o in odds:
+        if o and float(o) > 1.0:
+            result.append(probs[idx])
+            idx += 1
+        else:
+            result.append(0.0)
+    return result
+
+
+def power_fair_odds(odds: list) -> list:
+    """Power 法去抽水, 返回公平十进制赔率列表(1/prob)。"""
+    probs = devig_power(odds)
+    return [round(1.0 / p, 4) if p and p > 0 else 0.0 for p in probs]
+
+
 def devig_mult(odds: list) -> list:
     """比例法(multiplicative/proportional)去抽水, 返回公平概率(和=1)。
 
