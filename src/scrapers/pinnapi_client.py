@@ -132,20 +132,18 @@ def _pin_cache_find_event(home, away, games=False):
                     continue
                 eh, ea = _norm(ev.get("home", "")), _norm(ev.get("away", ""))
                 if eh and ea:
-                    # 2026-10-13 修: 同一队名有多个 event(全场 parent + 2-way 变体/角球 child),
-                    # child 主客可能反转(Orlando Pirates 全场 parent home=1.19, 2-way child 却
-                    # home=3.32), 按队名索引互相覆盖会命中反转 child → 比价方向错配出假高 ev。
-                    # parent(parent_id 空)优先, child 只在不冲突时兜底。
-                    parent_ref = ev.get("parent_id") or ev.get("parentId")
-                    is_parent = not parent_ref
                     _key = (eh, ea)
                     _cur = idx.get(_key)
                     if _cur is None:
                         idx[_key] = ev
-                    elif is_parent:
-                        _cur_p = not (_cur.get("parent_id") or _cur.get("parentId"))
-                        if not _cur_p or (_junior(_cur) and not _junior(ev)):
-                            idx[_key] = ev  # child→parent 覆盖; junior parent→senior parent 覆盖
+                        continue
+                    # 1) junior 过滤(2026-10-17): senior 优先(U21/女足/预备队不覆盖正赛)
+                    if _junior(ev) and not _junior(_cur):
+                        continue
+                    # 2) 2026-11-03 修「最旧 live 快照」: 同一队名多个事件(live 父子链 4.27→2.36→1.59)
+                    # 时, 用「后出现的」(cache 插入序=新)覆盖「先出现的」(旧), 让滚球 live 拿到最新
+                    # 快照赔率(1.59 而非 4.27)。(last 时间戳所有快照同一帧相同, 不能用它判新旧)
+                    idx[_key] = ev
             _pin_cache_idx["_ts"] = ts
             _pin_cache_idx["_idx"] = idx
         _suf = "games" if games else ""

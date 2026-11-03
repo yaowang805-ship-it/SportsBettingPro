@@ -799,8 +799,8 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         _target_line = mk.get("line") if sub in ("hc", "hc_games", "ou", "ht_ou") else None
         # 2026-10-11 Pin 主锚: 滚球公平价切三锚共识(Pin 去水优先, Betfair 只交叉验证/兜底)
         from src.scrapers.pinnapi_client import consensus_fair_price
-        res = consensus_fair_price(b["home_en"], b["away_en"], b["sport"], sub, target_line=_target_line, status="live",
-                                   skip_betfair=True)  # 2026-10-11 滚球下单路径跳过 Betfair 交叉验证, Pin 定价
+        res = consensus_fair_price(b.get("home_en") or b.get("home"), b.get("away_en") or b.get("away"), b["sport"], sub, target_line=_target_line, status="live",
+                                   skip_betfair=True)  # 2026-11-03 修: b["home_en"] 恒 None, 英文名在 b["home"], 用 or 回退
         if not res or not res["fair"]:
             return []
         fair = res["fair"]
@@ -832,8 +832,10 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         _sbo_dir = 'none' if _conf_p is None else ('same' if _conf_p > fair_p else 'diff')
         base = {
             "bb_match_id": bmid,
-            "home": b.get("home_cn") or b["home_en"],
-            "away": b.get("away_cn") or b["away_en"],
+            "home": b.get("home_cn") or b.get("home_en") or b.get("home"),
+            "away": b.get("away_cn") or b.get("away_en") or b.get("away"),
+            "home_en": b.get("home_en") or b.get("home", ""),  # 2026-11-03 英文名(供 _pin_cache_find_event 匹配 Pin)
+            "away_en": b.get("away_en") or b.get("away", ""),
             "league_cn": b.get("league_cn", ""),
             "sport": b["sport"],
             "sub": sub, "direction": d,

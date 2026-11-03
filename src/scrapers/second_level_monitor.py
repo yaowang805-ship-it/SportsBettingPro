@@ -2418,6 +2418,7 @@ class SecondLevelMonitor:
             "bb_odds": opp["bb_odds"], "fair": opp["fair"], "ev": opp["ev"], "line": opp["line"],
             "pin_raw": opp.get("pin_raw", 0),  # Pin 原始价(去抽水前), 供推送展示
             "sport": opp.get("sport", ""),
+            "home_en": opp.get("home_en", ""), "away_en": opp.get("away_en", ""),  # 2026-11-03 英文队名(供 pin_matchup_id/lag_sec/live CLV)
             "match": {"home": opp["home"], "away": opp["away"], "sport": opp.get("sport", ""),
                       "league_cn": opp.get("league_cn", "滚球") or "滚球"},
             "pin_matchup_id": opp["pin_matchup_id"], "league_id": opp["league_id"],
@@ -2719,7 +2720,7 @@ class SecondLevelMonitor:
                     _o_odds = o.get('bb_odds') or 0
                     _o_ev = o.get('ev_pct') or 0
                     if _o_odds > 1 and _o_ev > 0:
-                        o['_stake'] = int(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1))
+                        o['_stake'] = int(round(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1) / 10.0) * 10)
                     opps.append(o)
             if _has_ev:
                 entries.append(entry)
@@ -2860,7 +2861,7 @@ class SecondLevelMonitor:
                     _o_odds = o.get('bb_odds') or 0
                     _o_ev = o.get('ev_pct') or 0
                     if _o_odds > 1 and _o_ev > 0:
-                        o['_stake'] = int(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1))
+                        o['_stake'] = int(round(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1) / 10.0) * 10)
                     opps.append(o)
             if _has_ev:
                 entries.append(entry)
@@ -2949,7 +2950,7 @@ class SecondLevelMonitor:
                     _o_odds = o.get('bb_odds') or 0
                     _o_ev = o.get('ev_pct') or 0
                     if _o_odds > 1 and _o_ev > 0:
-                        o['_stake'] = int(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1))
+                        o['_stake'] = int(round(_bankroll() * KELLY_FRACTION * (_o_ev / 100.0) / (_o_odds - 1) / 10.0) * 10)
                     opps.append(o)
             if _has_ev:
                 entries.append(entry)
