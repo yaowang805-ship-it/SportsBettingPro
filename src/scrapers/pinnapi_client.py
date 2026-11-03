@@ -140,10 +140,21 @@ def _pin_cache_find_event(home, away, games=False):
                     # 1) junior 过滤(2026-10-17): senior 优先(U21/女足/预备队不覆盖正赛)
                     if _junior(ev) and not _junior(_cur):
                         continue
-                    # 2) 2026-11-03 修「最旧 live 快照」: 同一队名多个事件(live 父子链 4.27→2.36→1.59)
-                    # 时, 用「后出现的」(cache 插入序=新)覆盖「先出现的」(旧), 让滚球 live 拿到最新
-                    # 快照赔率(1.59 而非 4.27)。(last 时间戳所有快照同一帧相同, 不能用它判新旧)
-                    idx[_key] = ev
+                    # 2) 2026-11-03 修「最旧 live 快照 + 增量帧丢盘口」: 同一队名多个快照时,
+                    # 合并 periods.num_0 —— 独赢(money_line)用后出现的(最新), 让球/大小球
+                    # (spreads/totals)保留旧的(live 增量帧常只推 money_line, 不推 spreads/totals)。
+                    # 否则滚球 hc/ou 拿不到公平价, 只剩 1x2/dc 能投。
+                    _cur_p = _cur.get("periods")
+                    _ev_p = ev.get("periods")
+                    if isinstance(_cur_p, dict) and isinstance(_ev_p, dict):
+                        _c0 = _cur_p.setdefault("num_0", {})
+                        _e0 = _ev_p.get("num_0") or {}
+                        for _mk, _mv in _e0.items():
+                            if _mv:
+                                _c0[_mk] = _mv  # 新帧有该盘口才覆盖(保留旧的 spreads/totals)
+                        if _ev_p.get("num_1"):
+                            _cur_p["num_1"] = _ev_p["num_1"]
+                    idx[_key] = _cur
             _pin_cache_idx["_ts"] = ts
             _pin_cache_idx["_idx"] = idx
         _suf = "games" if games else ""
