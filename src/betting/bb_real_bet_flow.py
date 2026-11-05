@@ -309,6 +309,10 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         disp_away = opp.get("away_cn") or opp.get("away_bb") or opp.get("away", "")
         sub = opp.get("sub_market") or opp.get("_sub_market") or "1x2"
         desig = opp.get("designation", "")
+        # 2026-11-04 停投推导公平价盘口(dc 双重机会从 1x2 合成, 合成误差一直输)
+        if sub in ("dc", "double_chance"):
+            failed.append({"home": disp_home, "away": disp_away, "reason": "推导公平价盘口(dc)停投"})
+            continue
         stake = float(opp.get("_stake") or opp.get("stake") or 0)
         # 铁律(2026-08-27 stake-min-and-24h-push-rules): stake<30 一律不投。
         # 之前 `or 10` fallback 把 stake=0 的机会投成 10 元碎单, 违反铁律。

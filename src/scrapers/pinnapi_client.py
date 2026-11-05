@@ -323,27 +323,47 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
 
 
 def _select_line(lines, target_line):
-    """从 Pinnacle 线字典(键=hdp/points)里选最接近 target_line 的条目; 无 target 选主线(键=0)。"""
+    """从 Pinnacle 线字典(键=hdp/points)里选最接近 target_line 的条目; 无 target 选主线(键=0)。
+
+    2026-11-04 修: 之前只返回内层条目, 而 WS 归一化结构的内层 dict 无 hdp/points
+    (REST 原生结构才有), 导致 pinnacle_fair_price 取 o.get('hdp')/o.get('points') 恒 None
+    → 早盘 hc/ou 被静默丢弃、滚球线匹配校验被跳过(拿「最近但不同线」的价比出假溢价)。
+    现把命中的键回填到 hdp/points(拷贝, 不污染原缓存), 保证取线值对两种结构都成立。
+    """
     if not lines:
         return None
     if target_line is not None:
-        best, best_diff = None, 1e9
+        best, best_key, best_diff = None, None, 1e9
         for key, o in lines.items():
             try:
                 d = abs(float(key) - float(target_line))
             except (TypeError, ValueError):
                 continue
             if d < best_diff:
-                best, best_diff = o, d
-        return best
-    # 主线: 键 0(让球)/或数值最小的(大小球)
-    if '0' in lines:
-        return lines['0']
-    try:
-        main_key = min(lines.keys(), key=lambda k: abs(float(k)))
-    except (TypeError, ValueError):
+                best, best_key, best_diff = o, key, d
+    else:
+        # 主线: 键 0(让球)/或数值最小的(大小球)
+        if '0' in lines:
+            best, best_key = lines['0'], '0'
+        else:
+            try:
+                best_key = min(lines.keys(), key=lambda k: abs(float(k)))
+                best = lines[best_key]
+            except (TypeError, ValueError):
+                return None
+    if not best:
         return None
-    return lines[main_key]
+    # 回填线值(拷贝, 不改原缓存): 内层可能无 hdp/points, 用命中的键补上
+    out = dict(best)
+    if best_key is not None:
+        try:
+            _v = float(best_key)
+        except (TypeError, ValueError):
+            _v = None
+        if _v is not None:
+            out.setdefault('hdp', _v)
+            out.setdefault('points', _v)
+    return out
 
 
 def _combine_anchors(anchors):

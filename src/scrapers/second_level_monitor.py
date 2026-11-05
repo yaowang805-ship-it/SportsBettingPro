@@ -87,6 +87,7 @@ def _bankroll():
     _bankroll_cache["value"] = v
     return v
 MIN_STAKE = 30         # stake<30 拦截铁律
+DERIVED_FAIR_SUBS = {"dc", "double_chance"}  # 2026-11-04 停投推导公平价盘口(双重机会 dc 从 1x2 合成, 合成误差一直输)
 REVERIFY_THRESHOLD = 3.0  # 2026-09-19 验价阈值(秒): lead-lag 窗口 2-3s(赔率秒级变动), 超过 3s 就重拉验价(逆向选择)
 SNAPSHOT_MAX_AGE = 2.0  # 快照年龄阈值(秒): 2026-10-13 从 6s 收紧到 2s(τ 中位~7s, 端到端~1.7s, 2s 保新鲜度; 后续按 τ 分位数再调)
                         # 之前15s是管线12s时的临时值; 现在管线~1.7s(公平价匹配0.1s), 收紧回6s
@@ -1417,8 +1418,10 @@ class SecondLevelMonitor:
                         _fod = _mk.get("odds")
                         if _fod and float(_fod) > 1:
                             sig["bb_odds"] = _fod
-                            if sig.get("fair") and float(sig["fair"]) > 1:
-                                sig["ev"] = round((float(_fod) - float(sig["fair"])) / float(sig["fair"]) * 100, 2)
+                            # 2026-11-05 修: 用校准公平价重算 EV(之前用原始 fair, 把 platt 校准冲掉 → 热门假溢价又回来)
+                            _fair_for_ev = sig.get("fair_cal") or sig.get("fair")
+                            if _fair_for_ev and float(_fair_for_ev) > 1:
+                                sig["ev"] = round((float(_fod) - float(_fair_for_ev)) / float(_fair_for_ev) * 100, 2)
                         break
         except Exception:
             pass
@@ -1460,6 +1463,9 @@ class SecondLevelMonitor:
         _sport = sig["match"].get("sport")
         _sub = sig.get("sub")
         _desig = sig.get("desig")
+        # 2026-11-04 停投推导公平价盘口(dc 双重机会从 1x2 合成, 合成误差一直输)。已入库观察库, 只不下单。
+        if _sub in DERIVED_FAIR_SUBS:
+            return
         # 2026-10-24 临场保护(职业团队做法): 比赛临近结束不下注(赔率短、不确定性已消除、无信息优势)。
         # 键: sport id, 值: (总时长秒, 剩余下限秒)。棒球/网球无固定时长, 暂不加。
         _near_end = {1: (5400, 900), 3: (2400, 180), 2: (3600, 300)}.get(_sport)
@@ -1725,7 +1731,7 @@ class SecondLevelMonitor:
         code, order_id, msg = place_single_bet(
             market_id, sig["bb_odds"], sig["option_type"], stake=stake,
             match_id=sig["match_id"], check_limit=True, verify_price=True,
-            fair_price=sig.get("fair"), min_ev_pct=self.threshold,
+            fair_price=sig.get("fair_cal") or sig.get("fair"), min_ev_pct=self.threshold,
             prefetched_odds=_fresh_odds, decision_version=_dv, bet_meta=_bet_meta)
         _t_order = time.time() - _t0  # 下单函数内部耗时(调试用)
         _t_http = time.time() - _t_place  # place_single_bet HTTP 耗时
@@ -2416,6 +2422,7 @@ class SecondLevelMonitor:
             "option_type": opp["option_type"], "sub": sub_map.get(opp["sub"], opp["sub"]),
             "desig": desig_map.get(opp["sub"], {}).get(opp["direction"], opp["direction"]),
             "bb_odds": opp["bb_odds"], "fair": opp["fair"], "ev": opp["ev"], "line": opp["line"],
+            "ev_raw": opp.get("ev_raw"), "fair_cal": opp.get("fair_cal"),  # 2026-11-05 校准口径透传(下单价/CLV用校准公平价)
             "pin_raw": opp.get("pin_raw", 0),  # Pin 原始价(去抽水前), 供推送展示
             "sport": opp.get("sport", ""),
             "home_en": opp.get("home_en", ""), "away_en": opp.get("away_en", ""),  # 2026-11-03 英文队名(供 pin_matchup_id/lag_sec/live CLV)
@@ -2631,10 +2638,10 @@ class SecondLevelMonitor:
         # 2026-11-01 drop 概率区间过滤: 拦负段(中间段 Shin 去水高估赢率 + 大小球全线负), 只放两端。
         # 与 compute_market_release 的 LIVE_NEGATIVE_IMPLIED 同口径, 但按 group 键。
         _DROP_NEG_IMPLIED = {
-            'opportunities': (30.0, 70.0),  # 独赢中间段(50-60%最负)
-            'handicap': (50.0, 70.0),       # 让球中间段
-            'over_under': None,             # 大小球全线负
-            'double_chance': (60.0, 70.0),  # 双机会中间段
+            'opportunities': (30.0, 70.0),  # 独赢中间段(50-60%最负) - 保留(Shin假溢价, tier3)
+            'handicap': (0.0, 0.0),         # 2026-11-04 释放: line bug已修, 让球中间段不再拦(tier1)
+            'over_under': (0.0, 0.0),       # 2026-11-04 释放: line bug已修, 大小球全线负不再拦(tier1)
+            'double_chance': (60.0, 70.0),  # 双机会中间段 - 保留(dc另有DERIVED_FAIR_SUBS停投)
         }
         opps = []
         entries = []  # 2026-10-24 Drop 入库观察库(source=drop)
@@ -2653,6 +2660,25 @@ class SecondLevelMonitor:
             # 早盘(prematch) drop 才走这里的早盘快照比较。避免 live drop 用早盘快照价下单(错)。
             if trig.get('stream') == 'live':
                 self._pin_live_wake = True  # 唤醒滚球轮询立即比较
+                # 2026-11-05 fast path: live drop 实时价(price_x/y/z)算公平价, 供 _process 绕开落盘缓存
+                _px, _py, _pz = trig.get("price_x"), trig.get("price_y"), trig.get("price_z")
+                if _px and _py:
+                    try:
+                        from src.scrapers.devig import power_fair_odds
+                        from src.scrapers.pinnacle_live import set_drop_fresh
+                        _prices = [float(_px), float(_py)] + ([float(_pz)] if _pz else [])
+                        _fairs = power_fair_odds(_prices)
+                        _tp = float(trig.get("to_price") or 0)
+                        _idx = 0
+                        for _i, _p in enumerate(_prices):
+                            if abs(_p - _tp) < 0.01:
+                                _idx = _i
+                                break
+                        _dir = {"Home": "主", "Away": "客", "Draw": "和", "Over": "大", "Under": "小"}.get(trig.get("outcome", ""))
+                        if _dir:
+                            set_drop_fresh(trig.get("bb_match_id"), _dir, _fairs[_idx])
+                    except (TypeError, ValueError, IndexError):
+                        pass
                 self._match_drop_anchor(trig)  # 2026-10-11: live drop 作事件锚点, 匹配观察库算 clv_sign
                 continue
             mid = str(trig.get('bb_match_id') or '')
@@ -2680,7 +2706,24 @@ class SecondLevelMonitor:
             if _ts and (min_trig_ts is None or _ts < min_trig_ts):
                 min_trig_ts = _ts
             entry = _build_oa_entry(m, sport)
-            _oa_add_markets(entry, m, sport, use_rest=False, status='prematch', calibrate=False)  # 2026-10-24 Drop 取消结果锚校准, 直接 Shin 去水
+            _oa_add_markets(entry, m, sport, use_rest=False, status='prematch')  # 2026-11-04 恢复校准: platt 已替代 isotonic(过拟合根因), 早盘重开, drop 与 ws_scan 对齐
+            # 2026-11-05 fast path: drop 实时价(price_x/y/z)直算公平价, 绕开落盘缓存(接近0延迟)
+            _drop_fair = None
+            _px, _py, _pz = trig.get("price_x"), trig.get("price_y"), trig.get("price_z")
+            if _px and _py:
+                try:
+                    from src.scrapers.devig import power_fair_odds
+                    _prices = [float(_px), float(_py)] + ([float(_pz)] if _pz else [])
+                    _fairs = power_fair_odds(_prices)
+                    _tp = float(trig.get("to_price") or 0)
+                    _idx = 0
+                    for _i, _p in enumerate(_prices):
+                        if abs(_p - _tp) < 0.01:
+                            _idx = _i
+                            break
+                    _drop_fair = _fairs[_idx]
+                except (TypeError, ValueError, IndexError):
+                    _drop_fair = None
             _league = entry.get('league', '')
             _epoch = entry.get('start_time_pin_epoch', 0)
             _has_ev = False  # 入库观察库: ev>0 全收(与 WS 同口径)
@@ -2693,6 +2736,10 @@ class SecondLevelMonitor:
                         _has_ev = True
                     if _drop_dir is None or group != _drop_dir[0] or o.get('designation', '') != _drop_dir[1]:
                         continue  # 非骤降方向, 跳过(不下注)
+                    # 2026-11-05 fast path: 骤降方向用 drop 实时价覆盖公平价 + 重算 EV(绕开落盘缓存)
+                    if _drop_fair and _drop_fair > 1:
+                        o['fair_price'] = round(_drop_fair, 4)
+                        o['ev_pct'] = round((float(o.get('bb_odds') or 0) - _drop_fair) / _drop_fair * 100, 2)
                     # 2026-11-01 drop 概率区间过滤: 拦负段(中间段高估赢率+大小球全线负), 放两端
                     _neg_o = _DROP_NEG_IMPLIED.get(group)
                     if _neg_o is None:

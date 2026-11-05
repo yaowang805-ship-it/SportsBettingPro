@@ -78,16 +78,20 @@ OBS_LIVE_ROI_MIN = 2.0     # 滚球释放纸面ROI门槛(2026-10-31 用户要求
 # 核心规律 = 中间概率段(50-60%)系统性出血: 独赢(1x2) 30-70% 负(50-60%最负 -41.2%/60注),
 # 让球(hc) 50-70% 负(-11.4%/368注); 大小球(ou)/网球让局(hc_games) 全线负 → None 表示该盘口全拦。
 LIVE_NEGATIVE_IMPLIED = {
-    '1x2': (30.0, 70.0),
-    'hc': (50.0, 70.0),
-    'dc': (60.0, 70.0),  # dc 60-70% 负(-21.4%/65注, 方向=客为主)
-    'ou': None,
-    'hc_games': None,
+    '1x2': (30.0, 70.0),      # 独赢中间段 - 保留(Shin假溢价, tier3)
+    'hc': (0.0, 0.0),         # 2026-11-05 释放: line bug已修, 让球中间段不再拦(tier1)
+    'dc': None,               # 2026-11-05 dc(双重机会, 从1x2推导公平价)彻底停投+停入库, 全拦
+    'ou': (0.0, 0.0),         # 2026-11-05 释放: line bug已修, 大小球全线负不再拦(tier1)
+    'hc_games': (0.0, 0.0),   # 2026-11-05 释放: 网球让局同 line bug(tier1)
 }
 # 滚球观察库 14 天时间窗(2026-10-11): 保险, 非调参。防未来换锚点/换公平价源时旧样本混进新 grid 的 n。
 # 纯过滤, 不动阈值不动判据。env 开关默认开(回退用), 与 ENFORCE_REAL_ROI_GATE_ON_MANUAL 同待遇。
 LIVE_CLV_WINDOW_ENABLED = os.getenv("LIVE_CLV_WINDOW_ENABLED", "true").lower() in ("1", "true", "yes")
 LIVE_CLV_WINDOW_DAYS = 14.0  # 窗口天数
+
+# 2026-11-05 干净数据起点: line bug修复(11-04)+滚球platt校准(11-05)之前的历史观察是「错线+Shin bias+未校准」
+# 时期采的, fair/ev/ROI 全是脏的。释放判据只看此之后的干净样本(宁缺毋滥), 防止 cron 用脏数据把已释放的格重新拦回。
+CLEAN_DATA_CUTOFF = 1793836800  # 2026-11-05 00:00 UTC
 OBS_CLV_MIN = 2.0          # 早盘释放中位CLV阈值(>2% no-vig CLV): 职业sharp选手平均+2~5%, 单位=%edge(收盘线CLV)
                             # >0太松(+0.5%以下是devig/匹配噪声), >2 既严格又留容错(2026-09-15 用户定)
 OBS_LEV_MIN = 0.4          # [审计字段, 非释放闸门] 滚球 LEV(价格变化方向 clv-ev)阈值, 单位=%edge(3s复验)
@@ -123,7 +127,7 @@ SPECIAL_MARKET_PREFIX = ('corner',)
 REAL_DATA_CUTOFF_TS = datetime.fromisoformat("2026-09-10T00:00:00+00:00").timestamp()
 # 滚球实盘 ROI 交叉验证时间窗起点(2026-10-31): 只认「统一入库鲜价生效后」的实盘。
 # 旧快照价(10-31前)实盘是假负(足球小球 10-25/10-26 -7.5%/-21.1%), 不该拦新口径(鲜价+模拟拒单)的正格。
-LIVE_REAL_ROI_CUTOFF_TS = datetime.fromisoformat("2026-10-31T00:00:00+00:00").timestamp()
+LIVE_REAL_ROI_CUTOFF_TS = CLEAN_DATA_CUTOFF  # 2026-11-05 起: line bug+Power+platt校准全生效, 之前实盘ROI是脏的
 LIVE_PAPER = DATA / "live_paper_bets.json"
 LIVE_REAL = DATA / "real_bets.json"  # 滚球实盘(second_level_monitor 写), 实盘ROI交叉验证用(2026-10-05)
 OBS_STATE = DATA / "observe_release_state.json"  # 释放状态(首次释放时间 + cap)
@@ -193,6 +197,34 @@ MANUAL_OBSERVE_RELEASE = {
     # 2026-10-06 撤 50-55%/55-60%: 实盘近10天 ROI -16.9%/-15.5%(n=19/20, 出血合计-908元)。
     # 2026-10-08 撤 60-70%(最后一个让球主胜释放桶): 实盘三天 ROI -8.0%(n=31, 出血-459),
     # 观察库 real_winrate 36.4% vs paper 64.5% gap -28.2pp 逆向选择铁证。交还数据驱动判据。
+    # ── 2026-11-05 试探释放(第一二档): line bug(WS/REST线值结构不一致)已修 + Power去水 + platt校准,
+    # hc/ou/ht_ou/ht_hc(让球/大小球)与深冷门1x2 的历史负ROI是错线+Shin bias 冤枉的。clean cutoff 之后
+    # 干净样本不足(0笔), 数据驱动判据会「不足→拦」, 故手动 grandfather 放行, 走 REAL_ROI_GATE 自动撤假正。
+    "basketball|1x2|客|<45%|live", "basketball|hc|主|*|early", "basketball|hc|主|45-55%|live",
+    "basketball|hc|主|55-65%|live", "basketball|hc|主|65-75%|live", "basketball|hc|客|45-55%|live",
+    "basketball|hc|客|55-65%|early", "basketball|hc|客|55-65%|live", "basketball|ou|大|*|live",
+    "basketball|ou|大|45-55%|live", "basketball|ou|大|55-65%|early", "basketball|ou|大|55-65%|live",
+    "basketball|ou|小|55-65%|live", "football|1x2|主|10-20%|early", "football|1x2|主|10-20%|live",
+    "football|1x2|主|<10%|early", "football|1x2|主|<10%|live", "football|hc|主|40-50%|live",
+    "football|hc|主|50-55%|live", "football|hc|主|55-60%|early", "football|hc|主|55-60%|live",
+    "football|hc|主|60-70%|live", "football|hc|主|>70%|live", "football|hc|客|*|early",
+    "football|hc|客|30-40%|live", "football|hc|客|40-50%|live", "football|hc|客|50-55%|live",
+    "football|hc|客|55-60%|early", "football|hc|客|55-60%|live", "football|hc|客|60-70%|early",
+    "football|hc|客|60-70%|live", "football|hc|客|>70%|live", "football|ht_hc|主|*|early",
+    "football|ht_ou|大|20-30%|live", "football|ht_ou|大|30-40%|live", "football|ht_ou|大|40-50%|live",
+    "football|ht_ou|大|50-55%|live", "football|ht_ou|大|55-60%|live", "football|ht_ou|大|60-70%|live",
+    "football|ht_ou|大|>70%|live", "football|ht_ou|小|60-70%|live", "football|ht_ou|小|>70%|live",
+    "football|ou|大|*|live", "football|ou|大|10-20%|live", "football|ou|大|20-30%|live",
+    "football|ou|大|30-40%|live", "football|ou|大|40-50%|live", "football|ou|大|50-55%|early",
+    "football|ou|大|50-55%|live", "football|ou|大|55-60%|early", "football|ou|大|55-60%|live",
+    "football|ou|大|60-70%|early", "football|ou|大|60-70%|live", "football|ou|大|>70%|live",
+    "football|ou|小|*|early", "football|ou|小|40-50%|live", "football|ou|小|50-55%|live",
+    "football|ou|小|55-60%|live", "football|ou|小|60-70%|live", "football|ou|小|>70%|live",
+    "ice_hockey|hc|客|55-65%|live", "ice_hockey|ou|大|*|early", "ice_hockey|ou|大|45-55%|live",
+    "ice_hockey|ou|大|55-65%|live", "ice_hockey|ou|小|45-55%|live", "tennis|hc|主|*|early",
+    "tennis|hc|客|*|early", "tennis|ou|大|40-60%|live", "tennis|ou|大|60-80%|live",
+    "tennis|ou|小|40-60%|live", "tennis|ou|小|60-80%|live", "volleyball|hc|客|40-60%|live",
+    "volleyball|hc|客|60-80%|live", "volleyball|ou|小|60-80%|live",
 }
 
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
@@ -399,54 +431,54 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     "football|1x2|客|<10%|early": 50,
     "football|1x2|客|10-20%|early": 50,
     "football|1x2|客|20-30%|early": 50,
-    # 2026-11-01 全量试探释放: 滚球观察库纸面ROI为正的47格, 每注固定20(用户要求)。
+    # 2026-11-01 全量试探释放: 滚球观察库纸面ROI为正的47格, 每注固定30(用户要求)。
     # 注意: 纸面正≠实盘正(历史已证明虚高), 小注试探攒实盘数据裁决。
-    "ice_hockey|1x2|平|<45%|live": 20,
-    "ice_hockey|1x2|客|<45%|live": 20,
-    "volleyball|hc|客|60-80%|live": 20,
-    "football|hc|客|30-40%|live": 20,
-    "volleyball|hc|客|40-60%|live": 20,
-    "football|1x2|主|55-60%|live": 20,
-    "ice_hockey|ou|小|45-55%|live": 20,
-    "football|ht|主|30-40%|live": 20,
-    "volleyball|ou|小|60-80%|live": 20,
-    "football|ht|客|20-30%|live": 20,
-    "tennis|hc_games|主|60-80%|live": 20,
-    "football|ht_ou|大|40-50%|live": 20,
-    "basketball|1x2|主|45-55%|live": 20,
-    "football|1x2|客|50-55%|live": 20,
-    "football|ou|大|20-30%|live": 20,
-    "football|1x2|主|>70%|live": 20,
-    "basketball|1x2|客|>75%|live": 20,
-    "football|1x2|客|20-30%|live": 20,
-    "football|1x2|客|40-50%|live": 20,
-    "football|hc|主|40-50%|live": 20,
-    "basketball|1x2|主|>75%|live": 20,
-    "football|ht_ou|大|60-70%|live": 20,
-    "football|dc|12|>70%|live": 20,
-    "football|ou|大|>70%|live": 20,
-    "football|dc|X2|>70%|live": 20,
-    "basketball|1x2|主|<45%|live": 20,
-    "football|ht_ou|大|>70%|live": 20,
-    "ice_hockey|hc|客|55-65%|live": 20,
-    "football|hc|客|50-55%|live": 20,
-    "football|ou|小|55-60%|live": 20,
-    "football|hc|客|60-70%|live": 20,
-    "football|hc|客|>70%|live": 20,
-    "football|hc|客|55-60%|live": 20,
-    "basketball|hc|主|55-65%|live": 20,
-    "football|hc|主|50-55%|live": 20,
-    "tennis|hc_games|主|40-60%|live": 20,
-    "football|dc|X2|60-70%|live": 20,
-    "football|ou|小|>70%|live": 20,
-    "tennis|hc_games|客|40-60%|live": 20,
-    "basketball|ou|大|45-55%|live": 20,
-    "football|1x2|客|10-20%|live": 20,
-    "ice_hockey|ou|大|55-65%|live": 20,
-    "football|hc|主|>70%|live": 20,
-    "football|hc|客|40-50%|live": 20,
-    "tennis|ou|小|40-60%|live": 20,
-    "basketball|1x2|客|55-65%|live": 20,
+    "ice_hockey|1x2|平|<45%|live": 30,
+    "ice_hockey|1x2|客|<45%|live": 30,
+    "volleyball|hc|客|60-80%|live": 30,
+    "football|hc|客|30-40%|live": 30,
+    "volleyball|hc|客|40-60%|live": 30,
+    "football|1x2|主|55-60%|live": 30,
+    "ice_hockey|ou|小|45-55%|live": 30,
+    "football|ht|主|30-40%|live": 30,
+    "volleyball|ou|小|60-80%|live": 30,
+    "football|ht|客|20-30%|live": 30,
+    "tennis|hc_games|主|60-80%|live": 30,
+    "football|ht_ou|大|40-50%|live": 30,
+    "basketball|1x2|主|45-55%|live": 30,
+    "football|1x2|客|50-55%|live": 30,
+    "football|ou|大|20-30%|live": 30,
+    "football|1x2|主|>70%|live": 30,
+    "basketball|1x2|客|>75%|live": 30,
+    "football|1x2|客|20-30%|live": 30,
+    "football|1x2|客|40-50%|live": 30,
+    "football|hc|主|40-50%|live": 30,
+    "basketball|1x2|主|>75%|live": 30,
+    "football|ht_ou|大|60-70%|live": 30,
+    "football|dc|12|>70%|live": 30,
+    "football|ou|大|>70%|live": 30,
+    "football|dc|X2|>70%|live": 30,
+    "basketball|1x2|主|<45%|live": 30,
+    "football|ht_ou|大|>70%|live": 30,
+    "ice_hockey|hc|客|55-65%|live": 30,
+    "football|hc|客|50-55%|live": 30,
+    "football|ou|小|55-60%|live": 30,
+    "football|hc|客|60-70%|live": 30,
+    "football|hc|客|>70%|live": 30,
+    "football|hc|客|55-60%|live": 30,
+    "basketball|hc|主|55-65%|live": 30,
+    "football|hc|主|50-55%|live": 30,
+    "tennis|hc_games|主|40-60%|live": 30,
+    "football|dc|X2|60-70%|live": 30,
+    "football|ou|小|>70%|live": 30,
+    "tennis|hc_games|客|40-60%|live": 30,
+    "basketball|ou|大|45-55%|live": 30,
+    "football|1x2|客|10-20%|live": 30,
+    "ice_hockey|ou|大|55-65%|live": 30,
+    "football|hc|主|>70%|live": 30,
+    "football|hc|客|40-50%|live": 30,
+    "tennis|ou|小|40-60%|live": 30,
+    "basketball|1x2|客|55-65%|live": 30,
 }
 
 
@@ -868,7 +900,7 @@ def _read_paper_bets():
     except (json.JSONDecodeError, OSError):
         return []
     bets = raw.get("bets", []) if isinstance(raw, dict) else raw
-    return [b for b in bets if b.get("anchor") == "pin"]
+    return [b for b in bets if b.get("anchor") == "pin" and (b.get("ts") or 0) >= CLEAN_DATA_CUTOFF]
 
 
 def _read_live_paper_bets():
@@ -884,7 +916,8 @@ def _read_live_paper_bets():
     except (json.JSONDecodeError, OSError):
         return []
     bets = raw.get("bets", []) if isinstance(raw, dict) else raw
-    return [b for b in bets if b.get("anchor") == "pin" and not b.get("sim_rejected")]
+    return [b for b in bets if b.get("anchor") == "pin" and not b.get("sim_rejected")
+            and (b.get("ts") or 0) >= CLEAN_DATA_CUTOFF]
 
 
 def load_observe_winrate():
@@ -1184,7 +1217,8 @@ def load_real_roi_cell():
             raw = json.loads(TRACKED.read_text())
             bets = [b for b in (raw.get("bets", []) if isinstance(raw, dict) else raw)
                     if isinstance(b, dict) and b.get("status") == "settled"
-                    and b.get("anchor") == "pin"]
+                    and b.get("anchor") == "pin"
+                    and (_ts(b.get("push_time")) or 0) >= CLEAN_DATA_CUTOFF]
             _agg(bets, SCOPE_EARLY, "early")
         except (json.JSONDecodeError, OSError):
             pass
@@ -1575,6 +1609,10 @@ def main():
     for _mkey in MANUAL_OBSERVE_BLOCK:
         _p = _mkey.split("|")
         _entry = [_p[0], _p[1], _p[2], _p[3], _p[4]]
+        # 2026-11-05: 修复后手动释放(MANUAL_OBSERVE_RELEASE)优先于旧手动拦截——后者是 line bug/Shin bias
+        # 脏数据时期的结论, 已被本次释放覆盖。二者冲突时以释放为准(REAL_ROI_GATE 仍兜底撤假正)。
+        if _mkey in MANUAL_OBSERVE_RELEASE:
+            continue
         if _entry not in observe_blocked:
             observe_blocked.append(_entry)
 

@@ -661,18 +661,12 @@ def _load_release_list():
 # 方向口径与 _release_direction 一致。
 DROP_BLOCK = {
     ("football", "1x2", "平"),       # 和局 -41.1%
-    ("basketball", "hc", "主"),      # 篮球让分主胜 -68.3%
     ("football", "dc", "X2"),        # 和/客 -22.6%
-    ("football", "ou", "小"),        # 小球 -53.7%
     ("football", "dc", "1X"),        # 主/和 -26.8%
     ("basketball", "1x2", "主"),     # 篮球独赢主 -15.2%
     ("basketball", "1x2", "客"),     # 篮球独赢客 -10.7%
-    ("football", "hc", "主"),        # 足球让球主胜 -24.4%
-    # 2026-10-27 撤 drop 实盘负盘口(近3天): 半场三盘口 + 全场大球(足球)。
-    ("football", "ht_ou", "大"),     # 半场大小球大 -58.3%/5注
     ("football", "ht", "主"),        # 半场独赢主 -43.9%/4注
-    ("football", "ht_hc", "主"),     # 半场让球主 -100%/4注
-    ("football", "ou", "大"),        # 全场大球 -44.4%/3注
+    # 2026-11-04 移除 hc/ou/ht_ou/ht_hc 6 项: line bug(WS/REST线值结构不一致)已修, 这些负盘口是被冤枉的(tier1 释放)
 }
 
 

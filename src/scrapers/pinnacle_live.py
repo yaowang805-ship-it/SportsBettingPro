@@ -627,7 +627,7 @@ def fetch_live_opportunities(threshold=3.0, platform="BB", use_file_cache=False)
                 continue
             ev = (bb_odds - fair_p) / fair_p * 100.0
             # EV 上限 12%(防临时高价假机会/数据错配): BB 滚球价远高于 Pin 多是假 edge
-            if ev >= threshold and ev <= 12.0:
+            if ev >= threshold and ev <= 8.0:
                 opps.append({
                     "bb_match_id": bmid,
                     "home": b.get("home_cn") or b["home_en"], "away": b.get("away_cn") or b["away_en"],
@@ -744,6 +744,19 @@ _nonfb_poll_counter = 0  # 非足球降频计数器(2026-09-22): 非足球不需
 NONFB_EVERY = 15  # 非足球公平价匹配频率: 每 15 轮(≈30s)才匹配一次非足球, 省公平价匹配任务数
 
 
+# 2026-11-05 接近0延迟: drop 信号实时价(price_x/y/z)算的公平价, 供 live drop 绕开落盘缓存
+# key=(bb_match_id, 方向), 值=去水公平价。second_level_monitor 写, _process 读。
+DROP_FRESH = {}
+
+
+def set_drop_fresh(match_id, direction, fair):
+    DROP_FRESH[(str(match_id), direction)] = fair
+
+
+def get_drop_fresh(match_id, direction):
+    return DROP_FRESH.get((str(match_id), direction))
+
+
 def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
     """滚球机会: BB live + Sbobet/Betfair 公平价(替代 Pin, 2026-09-18)。
 
@@ -786,6 +799,9 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         bmid, b, mk = task
         sub = mk["sub"]; d = mk["direction"]
         bb_odds = mk["odds"]
+        # 2026-11-05 dc(双重机会, 从1x2推导公平价)停投+停入库: 合成误差一直输, 直接在源头跳过(不产机会不入观察库)
+        if sub in ("dc", "double_chance"):
+            return []
         # 2026-09-22 修 quarter-ball 假溢价根因: |line| 是 0.25/0.75 这类四分盘(hc/ou/ht_ou 都有,
         # 实测让球55%/大小球58%是四分盘), BB 与 Betfair 的合成口径不一致(半注挂0/半注挂0.5),
         # 线匹配算出假公平价(实测让球 EV>20% 桶 87% 是 0.25 线, 观察库让球 +13.8pp 假 edge 主因)。
@@ -818,6 +834,10 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
             idx = {"大": "over", "小": "under"}
         k = idx.get(d)
         fair_p = fair.get(k)
+        # 2026-11-05 fast path: drop 实时价覆盖(绕开落盘缓存, 接近0延迟)
+        _dropf = get_drop_fresh(bmid, d)
+        if _dropf and _dropf > 1:
+            fair_p = _dropf
         if not fair_p or fair_p <= 1:
             return []
         # hc/ou 线匹配: BB 线必须 = Betfair 线(否则比的是不同线的价, 假EV)。
@@ -826,7 +846,14 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         if sub in ("hc", "hc_games", "ou", "ht_ou") and mk.get("line") is not None and fair.get("line") is not None:
             if abs(float(mk["line"]) - float(fair["line"])) > 0.01:
                 return []
-        ev = (bb_odds - fair_p) / fair_p * 100.0
+        # 2026-11-05 补滚球校准(#6): platt 校准表把 Power 公平价映射到真胜率, 修热门 favorite-longshot 残留
+        # (滚球独赢热门方向还假溢价亏损的根因)。ev 用校准值做决策, fair 保留原始 Power 价供 kelly_shrink 算 KL。
+        from src.scrapers.fair_calibration import calibrated_ev
+        ev, ev_raw, fair_cal = calibrated_ev(bb_odds, fair_p, market="live")
+        if ev is None:  # 校准表异常/缺失 → 退回原始口径
+            ev = (bb_odds - fair_p) / fair_p * 100.0
+            ev_raw = ev
+            fair_cal = fair_p
         _conf = res.get("sbo") or res.get("confidence")
         _conf_p = _conf.get(k) if _conf else None
         _sbo_dir = 'none' if _conf_p is None else ('same' if _conf_p > fair_p else 'diff')
@@ -839,7 +866,7 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
             "league_cn": b.get("league_cn", ""),
             "sport": b["sport"],
             "sub": sub, "direction": d,
-            "bb_odds": bb_odds, "fair": fair_p, "ev": round(ev, 2), "pin_raw": (fair.get("_raw") or {}).get(k),
+            "bb_odds": bb_odds, "fair": fair_p, "ev": round(ev, 2), "ev_raw": round(ev_raw, 2), "fair_cal": round(fair_cal, 4), "pin_raw": (fair.get("_raw") or {}).get(k),
             "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
             "pin_matchup_id": res.get("event_id"),
             "spread": res.get("spread"),  # 2026-09-19 流动性门槛: back-lay 价差
@@ -854,13 +881,13 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
             # 2026-09-20 diff 从「跳过」改「半额投注」后, 也必须过滤 EV 上下限——
             # 之前只拦高 EV(>20% 线错配假EV), 漏了负 EV: 负 EV diff(如 -14%) 也进观察库污染统计
             # (2026-09-21 修: 补 ev < threshold 下限, 与 same 同口径)。
-            if ev < threshold or ev > 12.0:
+            if ev < threshold or ev > 8.0:
                 return []
             base["sbo_confirm"] = False
             base["sbo_direction"] = "diff"
             return [base]
-        if ev < threshold or ev > 12.0:
-            # 2026-10-22 上限 20%→12%(12-20%桶冷门假EV负: 滚球-2.1%/早盘-10.1%), 早盘同改对齐。
+        if ev < threshold or ev > 8.0:
+            # 2026-10-26 上限 12%→8%(8-12%桶-7.3%/12-20%桶-4.3% 低赔率热门假溢价), 对齐 LIVE_MAX_EV
             return []
         base["sbo_confirm"] = (_sbo_dir == 'same')
         base["sbo_direction"] = _sbo_dir

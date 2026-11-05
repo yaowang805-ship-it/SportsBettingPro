@@ -1751,7 +1751,7 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None, calibrate=True
         oa_htou = _oa_fair(entry, sport, "ht_ou", target_line=ht_ou["line"], use_rest=use_rest, status=status, calibrate=calibrate)
         if oa_htou and oa_htou.get("over") and oa_htou.get("under"):
             bf_line = oa_htou.get("line")
-            if bf_line is not None and abs(float(ht_ou["line"]) - float(bf_line)) <= 0.25:
+            if bf_line is not None and abs(float(ht_ou["line"]) - float(bf_line)) <= 0.01:
                 ev_o = (ht_ou["over_odds"] - oa_htou["over"]) / oa_htou["over"] * 100
                 ev_u = (ht_ou["under_odds"] - oa_htou["under"]) / oa_htou["under"] * 100
                 if 1 < ev_o <= 20:
@@ -1793,23 +1793,8 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None, calibrate=True
                             "fair_price": round(oa_hthc["away"], 4), "ev_pct": round(ev_a, 2), "_market": "ht_hc",
                         })
 
-    # --- dc (双重机会) ---
-    bb_dc = bb.get("odds_dc", [])
-    if len(bb_dc) >= 3 and n_ml == 3:
-        oa_dc = _oa_fair(entry, sport, "dc", use_rest=use_rest, status=status, calibrate=calibrate)
-        if oa_dc:
-            dc_labels = ["双重机会-主/和局", "双重机会-和局/客", "双重机会-主/客"]
-            dc_keys = ["1X", "X2", "12"]  # BB 顺序 [1X(主/和), 2X(和/客)=Betfair X2, 12(主/客)]
-            for i in range(3):
-                bb_val = float(bb_dc[i]) if isinstance(bb_dc[i], str) else bb_dc[i]
-                fair = oa_dc.get(dc_keys[i])
-                if bb_val and fair and fair > 0:
-                    ev = (bb_val - fair) / fair * 100
-                    if ev > 0:
-                        entry["double_chance"].append({
-                            "designation": dc_labels[i], "bb_odds": bb_val,
-                            "pin_odds": 0, "fair_price": round(fair, 4), "ev_pct": round(ev, 2), "_market": "dc",
-                        })
+    # --- dc (双重机会) 已停投+停入库(2026-11-05): 从1x2推导公平价, 合成误差一直输 ---
+    # 原 dc 分支移除: 不再调用 _oa_fair(..., "dc") 合成公平价, 不进观察库/实盘(与 dnb/btts 同待遇)
 
     # --- dnb/btts (Betfair 兜底盘) 已移除(2026-10-11) ---
     # 用户要求: 只要 Pin∩BB 盘口, Betfair 兜底的不要。Pin 只提供独赢/让球/大小球(全场+半场),

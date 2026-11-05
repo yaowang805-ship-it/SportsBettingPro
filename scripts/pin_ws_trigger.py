@@ -259,6 +259,9 @@ def _on_drop(stream, drop):
         trig = {"ts": time.time(), "stream": stream,
                 "home": home, "away": away, "outcome": outcome,
                 "from_price": fp, "to_price": tp,
+                "price_x": drop.get("price_x"), "price_y": drop.get("price_y"),
+                "price_z": drop.get("price_z"), "point": drop.get("point"),
+                "period": drop.get("period"), "period_name": drop.get("period_name"),
                 "bb_match_id": m.get("id"), "bb_home": m.get("home"),
                 "bb_away": m.get("away"), "sport": m.get("sport")}
         _append_rotating(TRIGGER_FILE, json.dumps(trig, ensure_ascii=False))
@@ -450,18 +453,21 @@ def main():
     ingestor = PrematchIngestor(cache)
     print("[pin] Pin WS + SSE + REST低频补半场 + 早盘入库 常驻已启动", flush=True)
 
-    # 每 10s: 落盘缓存(供早盘/滚球进程读实时公平价) + 扫缓存入库(早盘观察库)
+    # 2026-11-05 落盘 10s→1s: 滚球 Pin 价更新鲜(10s 滞后吃 lead-lag 窗口, 压到 1s)。早盘入库仍 10s 一次。
+    _last_ingest = 0.0
     while True:
-        time.sleep(10)
+        time.sleep(1)
         try:
             cache.persist()
         except Exception as e:
             print(f"[pin] 缓存落盘失败: {type(e).__name__}", flush=True)
-        try:
-            ingestor.sweep()
-            ingestor.flush()
-        except Exception as e:
-            print(f"[pin-prematch] 扫描异常: {type(e).__name__} {str(e)[:80]}", flush=True)
+        if time.time() - _last_ingest >= 10:
+            _last_ingest = time.time()
+            try:
+                ingestor.sweep()
+                ingestor.flush()
+            except Exception as e:
+                print(f"[pin-prematch] 扫描异常: {type(e).__name__} {str(e)[:80]}", flush=True)
 
 
 if __name__ == "__main__":

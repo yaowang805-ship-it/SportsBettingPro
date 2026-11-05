@@ -361,16 +361,21 @@ class PinWSClient:
                     if p.get("points") is not None:
                         line = p["points"]
                 if line is not None:
-                    out["spreads"][str(line)] = {
-                        p.get("designation"): _am_to_dec(p.get("price")) for p in prices}
+                    # 2026-11-04 补 hdp: 对齐 REST 原生 periods 结构(pinnacle_fair_price 用 o.get('hdp') 取线值),
+                    # 之前 WS 归一化内层 dict 无 hdp → line 恒 None → 早盘 hc 被静默丢弃 / 滚球线校验被跳过
+                    _inner = {p.get("designation"): _am_to_dec(p.get("price")) for p in prices}
+                    _inner["hdp"] = line
+                    out["spreads"][str(line)] = _inner
             elif mtype == "total":
                 line = None
                 for p in prices:
                     if p.get("points") is not None:
                         line = p["points"]
                 if line is not None:
-                    out["totals"][str(line)] = {
-                        p.get("designation"): _am_to_dec(p.get("price")) for p in prices}
+                    # 2026-11-04 补 points: 对齐 REST 结构(pinnacle_fair_price 用 o.get('points') 取线值)
+                    _inner = {p.get("designation"): _am_to_dec(p.get("price")) for p in prices}
+                    _inner["points"] = line
+                    out["totals"][str(line)] = _inner
         return out
 
 
