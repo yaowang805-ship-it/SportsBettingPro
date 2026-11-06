@@ -509,8 +509,8 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
             try:
                 # 2026-10-27 改读缓存余额(不联网): 下单已完成的展示字段不该再触发 1-2s HTTP,
                 # 拖慢同批下一注 + 无意义(余额已由 check_balance_ok/warm_balance 预热)。
-                from src.betting.bb_auto_bet import get_balance_cached
-                _bal = get_balance_cached()
+                from src.betting.bb_auto_bet import get_balance_cached, fetch_balance
+                _bal = get_balance_cached() or fetch_balance()  # 2026-11-07: 缓存空(429期间预热失败)时兜底联网取一次, 保证推送有余额
                 if _bal:
                     _extra.append(f"余额 ¥{_bal:.0f}")
             except Exception:

@@ -2842,7 +2842,13 @@ class SecondLevelMonitor:
         elif last == len(lines):
             return 0  # 2026-10-27 同 drop 的 offset 循环 bug: 追平末尾直接等待, 不重放旧行
         new_lines = lines[last:]
-        self._prematch_tick_offset = len(lines)
+        # 2026-11-07 限批: Pin WS 突发(峰值数百场)时全量比价 getMatchDetail 会拖 115s+,
+        # 每轮 ≤60 场(offset 停在 last+60), 剩余留到下一轮, 比价延迟封顶 ~17s(60/6并发×1.66s)。
+        if len(new_lines) > 60:
+            new_lines = new_lines[:60]
+            self._prematch_tick_offset = last + 60
+        else:
+            self._prematch_tick_offset = len(lines)
         if not new_lines:
             return 0
         from src.scrapers.bb_incremental_scanner import BB_EXTRACTED
