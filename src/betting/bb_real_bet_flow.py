@@ -36,7 +36,7 @@ SPORT_CN = {"football": "足球", "basketball": "篮球", "tennis": "网球",
 # 2026-10-26 注额方案: 半凯利 + 单注封顶(本金2%) + 日累计封顶(本金20%)。
 EARLY_DAILY_MAX_BETS = float('inf')
 EARLY_DAILY_MAX_STAKE = float('inf')
-MAX_STAKE_FRACTION = 0.024     # 单注封顶 = 本金 2.4% = 120 (2026-11-03 用户要求 100→120)
+MAX_STAKE_FRACTION = 0.01      # 单注封顶 = 本金 1% = 50 (2026-11-05 用户要求早盘单笔≤50, 滚球仍≤80)
 EARLY_MAX_EV = 12.0  # 2026-10-26 早盘 EV 上限(12%以上假溢价, 实测 12-20%/-8.3%、20%+/-4.9%)
 DAILY_STAKE_FRACTION = float('inf')  # 日累计封顶已取消(2026-10-26 用户要求)
 DAILY_EXPOSURE_FILE = DATA_DIR / "daily_exposure.json"
@@ -310,7 +310,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         sub = opp.get("sub_market") or opp.get("_sub_market") or "1x2"
         desig = opp.get("designation", "")
         # 2026-11-04 停投推导公平价盘口(dc 双重机会从 1x2 合成, 合成误差一直输)
-        if sub in ("dc", "double_chance"):
+        if sub in ("dc", "double_chance", "ht", "ht_hc", "ht_ou"):
             failed.append({"home": disp_home, "away": disp_away, "reason": "推导公平价盘口(dc)停投"})
             continue
         stake = float(opp.get("_stake") or opp.get("stake") or 0)
@@ -415,7 +415,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
             if trigger_source == "pin_drop":
                 _min_ev = 2.0  # 2026-11-01 Drop 投注门槛降到 2%(和入库一致): 分格释放(CLV)才是 drop 的真正过滤器, EV 门槛只去噪声
             else:
-                _min_ev = 5.0  # 2026-10-24 WS 投注门槛统一 5%(与入库一致, 之前 get_min_ev 3% 偏低)
+                _min_ev = 3.0  # 2026-11-06 WS 投注门槛 5%→3%(放量, 与滚球3%对齐; 线匹配+护栏修好后真实时价可得真溢价)
         # 2026-10-26 早盘 EV 上限拦截(12%以上低赔率热门假溢价, 实测 12-20%/-8.3%、20%+/-4.9%)
         _ev_signal = opp.get("ev_pct")
         if _ev_signal is not None:

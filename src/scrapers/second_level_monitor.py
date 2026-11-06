@@ -87,7 +87,7 @@ def _bankroll():
     _bankroll_cache["value"] = v
     return v
 MIN_STAKE = 30         # stake<30 拦截铁律
-DERIVED_FAIR_SUBS = {"dc", "double_chance"}  # 2026-11-04 停投推导公平价盘口(双重机会 dc 从 1x2 合成, 合成误差一直输)
+DERIVED_FAIR_SUBS = {"dc", "double_chance", "ht", "ht_hc", "ht_ou"}  # 停投盘口: dc(推导公平价合成误差一直输) + ht系列(半场比分源缺失无法结算, 永远void)
 REVERIFY_THRESHOLD = 3.0  # 2026-09-19 验价阈值(秒): lead-lag 窗口 2-3s(赔率秒级变动), 超过 3s 就重拉验价(逆向选择)
 SNAPSHOT_MAX_AGE = 2.0  # 快照年龄阈值(秒): 2026-10-13 从 6s 收紧到 2s(τ 中位~7s, 端到端~1.7s, 2s 保新鲜度; 后续按 τ 分位数再调)
                         # 之前15s是管线12s时的临时值; 现在管线~1.7s(公平价匹配0.1s), 收紧回6s
@@ -2676,7 +2676,8 @@ class SecondLevelMonitor:
                                 break
                         _dir = {"Home": "主", "Away": "客", "Draw": "和", "Over": "大", "Under": "小"}.get(trig.get("outcome", ""))
                         if _dir:
-                            set_drop_fresh(trig.get("bb_match_id"), _dir, _fairs[_idx])
+                            # 2026-11-06 修: 传 drop 的 point(线), 供 _process 按 BB 下注线匹配(修跨线套价)
+                            set_drop_fresh(trig.get("bb_match_id"), trig.get("point"), _dir, _fairs[_idx])
                     except (TypeError, ValueError, IndexError):
                         pass
                 self._match_drop_anchor(trig)  # 2026-10-11: live drop 作事件锚点, 匹配观察库算 clv_sign
@@ -2737,7 +2738,22 @@ class SecondLevelMonitor:
                     if _drop_dir is None or group != _drop_dir[0] or o.get('designation', '') != _drop_dir[1]:
                         continue  # 非骤降方向, 跳过(不下注)
                     # 2026-11-05 fast path: 骤降方向用 drop 实时价覆盖公平价 + 重算 EV(绕开落盘缓存)
-                    if _drop_fair and _drop_fair > 1:
+                    # 2026-11-06 修: 只有 drop 的 point 与 BB 下注线一致才覆盖(修「公平价<原价」跨线套价根因)
+                    _drop_line_match = bool(_drop_fair and _drop_fair > 1)
+                    if _drop_line_match and trig.get("point") is not None and o.get("line") is not None:
+                        try:
+                            _drop_line_match = abs(float(trig.get("point")) - float(o.get("line"))) <= 0.01
+                        except (TypeError, ValueError):
+                            _drop_line_match = False
+                    # 2026-11-06 护栏: 去水公平价必应 ≥ 原价; < 原价 = 跨线错配, 不覆盖
+                    if _drop_line_match:
+                        _raw_po = o.get("pin_odds")
+                        try:
+                            if _raw_po and float(_raw_po) > 1 and _drop_fair < float(_raw_po) - 0.01:
+                                _drop_line_match = False
+                        except (TypeError, ValueError):
+                            pass
+                    if _drop_line_match:
                         o['fair_price'] = round(_drop_fair, 4)
                         o['ev_pct'] = round((float(o.get('bb_odds') or 0) - _drop_fair) / _drop_fair * 100, 2)
                     # 2026-11-01 drop 概率区间过滤: 拦负段(中间段高估赢率+大小球全线负), 放两端

@@ -745,16 +745,28 @@ NONFB_EVERY = 15  # 非足球公平价匹配频率: 每 15 轮(≈30s)才匹配�
 
 
 # 2026-11-05 接近0延迟: drop 信号实时价(price_x/y/z)算的公平价, 供 live drop 绕开落盘缓存
-# key=(bb_match_id, 方向), 值=去水公平价。second_level_monitor 写, _process 读。
+# key=(bb_match_id, line, 方向), 值=去水公平价。second_level_monitor 写, _process 读。
+# 2026-11-06 修: key 加 line —— drop 的 point(如 3.25)与 BB 下注线(如 3.0)不同线时不得互相覆盖
+# (之前只按方向覆盖, 把「小3.25球」公平价套到「小3球」, 造出公平价<原价的假溢价)。
 DROP_FRESH = {}
 
 
-def set_drop_fresh(match_id, direction, fair):
-    DROP_FRESH[(str(match_id), direction)] = fair
+def _line_key(line):
+    """线值归一化成可作 dict key 的浮点(0.25 步长精确可表示)。None(1x2 无盘口线)→None。"""
+    if line is None:
+        return None
+    try:
+        return round(float(line), 2)
+    except (TypeError, ValueError):
+        return None
 
 
-def get_drop_fresh(match_id, direction):
-    return DROP_FRESH.get((str(match_id), direction))
+def set_drop_fresh(match_id, line, direction, fair):
+    DROP_FRESH[(str(match_id), _line_key(line), direction)] = fair
+
+
+def get_drop_fresh(match_id, line, direction):
+    return DROP_FRESH.get((str(match_id), _line_key(line), direction))
 
 
 def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
@@ -799,8 +811,8 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         bmid, b, mk = task
         sub = mk["sub"]; d = mk["direction"]
         bb_odds = mk["odds"]
-        # 2026-11-05 dc(双重机会, 从1x2推导公平价)停投+停入库: 合成误差一直输, 直接在源头跳过(不产机会不入观察库)
-        if sub in ("dc", "double_chance"):
+        # 2026-11-05 dc(推导公平价) + 2026-11-06 ht系列(半场比分源缺失无法结算) 停投+停入库, 源头跳过
+        if sub in ("dc", "double_chance", "ht", "ht_hc", "ht_ou"):
             return []
         # 2026-09-22 修 quarter-ball 假溢价根因: |line| 是 0.25/0.75 这类四分盘(hc/ou/ht_ou 都有,
         # 实测让球55%/大小球58%是四分盘), BB 与 Betfair 的合成口径不一致(半注挂0/半注挂0.5),
@@ -835,11 +847,19 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         k = idx.get(d)
         fair_p = fair.get(k)
         # 2026-11-05 fast path: drop 实时价覆盖(绕开落盘缓存, 接近0延迟)
-        _dropf = get_drop_fresh(bmid, d)
+        # 2026-11-06 修: 按 BB 下注线(mk["line"])匹配 drop 的 point, 不同线不覆盖(修「公平价<原价」根因)
+        _dropf = get_drop_fresh(bmid, mk.get("line"), d)
         if _dropf and _dropf > 1:
             fair_p = _dropf
         if not fair_p or fair_p <= 1:
             return []
+        # 2026-11-06 护栏: 去水公平价必应 ≥ 原价(同线); < 原价 = 线错配/去水bug, 拒单(宁缺毋滥)
+        _raw_p = (fair.get("_raw") or {}).get(k)
+        try:
+            if _raw_p and float(_raw_p) > 1 and fair_p < float(_raw_p) - 0.01:
+                return []
+        except (TypeError, ValueError):
+            pass
         # hc/ou 线匹配: BB 线必须 = Betfair 线(否则比的是不同线的价, 假EV)。
         # 2026-09-22 收紧 0.25→0.01: 之前 0.25 容差允许 BB线0.5 匹配 Betfair线0.25(差0.25不被拦),
         # 是假溢价的又一处漏。线是 0.5 整数倍, 正确匹配差=0, 任何差>0.01 都是错配。

@@ -58,6 +58,13 @@ def _bias_by_bucket(bets, lo, hi):
     return _bias(sub)
 
 
+def _roi(bets):
+    """返回 (n, ROI%)。"""
+    stake = sum(f(b.get("stake")) or 0 for b in bets)
+    profit = sum(f(b.get("profit")) or 0 for b in bets)
+    return len(bets), (profit / stake * 100.0 if stake else 0.0)
+
+
 def main():
     real = json.load(open(STORAGE / "real_bets.json"))
     bets = list(real.get("bets", real).values())
@@ -97,6 +104,13 @@ def main():
         lines.append(f"\n⚠️ {'/'.join(warn)} 偏差仍 >3pp, Power 去水可能未完全修好")
     elif new:
         lines.append("\n✅ 偏差已收敛到 ≤3pp, Power 去水生效")
+
+    # 2026-11-04 加: 实盘 ROI 分「推导公平价盘口(dc)」vs「非dc」, 看停投 dc 后非 dc 是否转正
+    lines.append("\n💰 实盘 ROI (Power 去水后)")
+    for name, sub in [("早盘", early), ("滚球", live)]:
+        n_nondc, roi_nondc = _roi([b for b in sub if b.get("sub") not in ("dc", "double_chance")])
+        n_dc, roi_dc = _roi([b for b in sub if b.get("sub") in ("dc", "double_chance")])
+        lines.append(f"  {name} 非dc: n={n_nondc} ROI={roi_nondc:+.2f}%  |  dc(已停投): n={n_dc} ROI={roi_dc:+.2f}%")
 
     body = "\n".join(lines)
     print(body)

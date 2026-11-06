@@ -48,9 +48,11 @@ while True:
                 flag = "⚠️ 校准未生效(ev==ev_raw)"
             else:
                 flag = "✅ 校准生效"
-            print("[新滚球注] %s vs %s | %s %s | ev=%.1f%% ev_raw=%.1f%% fair_cal=%s | %s"
-                  % (v.get("home"), v.get("away"), v.get("sub"), v.get("desig"),
-                     ev or 0, ev_raw or 0, fair_cal, flag), flush=True)
+            # 2026-11-06: 只在异常时报警(正常"校准生效"不再逐条推, 避免刷屏)
+            if flag != "✅ 校准生效":
+                print("[新滚球注] %s vs %s | %s %s | ev=%.1f%% ev_raw=%.1f%% fair_cal=%s | %s"
+                      % (v.get("home"), v.get("away"), v.get("sub"), v.get("desig"),
+                         ev or 0, ev_raw or 0, fair_cal, flag), flush=True)
     except Exception:
         pass
     time.sleep(60)
