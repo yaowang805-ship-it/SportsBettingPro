@@ -1,5 +1,5 @@
 {
-  "balance": 14922.53,
+  "balance": 14872.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -414,6 +414,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794027600.0,
       "created_at": "2026-11-06T23:13:11.491810+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_培斯塔坦格朗_阿迪亚克萨法梅尔_主胜",
+      "sport": "football",
+      "league": "印尼超级联赛",
+      "home_team": "培斯塔坦格朗",
+      "away_team": "阿迪亚克萨法梅尔",
+      "home_cn": "培斯塔坦格朗",
+      "away_cn": "阿迪亚克萨法梅尔",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.24,
+      "stake": 50,
+      "model_prob": 0.8406,
+      "ev_pct": 4.24,
+      "pin_odds": 1.1115,
+      "fair_price": 1.1896,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794052800.0,
+      "created_at": "2026-11-06T23:15:50.803758+00:00",
       "track_only": false
     }
   ],
@@ -11825,8 +11848,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-07",
-    "used": 900.0,
-    "bets": 18
+    "used": 950.0,
+    "bets": 19
   },
   "updated": null
 }
