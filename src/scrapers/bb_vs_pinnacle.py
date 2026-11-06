@@ -1624,6 +1624,14 @@ def _build_oa_entry(m, sport):
     }
 
 
+def _fair_below_raw(fair, raw):
+    """去水公平价必应 ≥ 原价(同线结构不变量)。< 原价 = 跨线/去水 bug → 拒单(宁缺毋滥, 2026-11-06)。"""
+    try:
+        return bool(raw and float(raw) > 1 and float(fair) < float(raw) - 0.01)
+    except (TypeError, ValueError):
+        return False
+
+
 def _oa_add_markets(entry, bb, sport, use_rest=None, status=None, calibrate=True):
     """给 entry 加各盘口的 Betfair 公平价机会(替代 Pin 比价)。只产 ev>1 的机会。
 
@@ -1644,6 +1652,8 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None, calibrate=True
                 bb_o = bb_ml[i]
                 fair = oa_ml.get(keys[i])
                 if bb_o and fair and fair > 1:
+                    if _fair_below_raw(fair, (oa_ml.get("_raw") or {}).get(keys[i])):
+                        continue  # 2026-11-06 护栏: 去水公平价<原价=跨线/去水bug
                     ev = (bb_o - fair) / fair * 100
                     # 2026-09-19 SBO 同向确认: BB 和 SBO 都偏离 Betfair 同向才采信(过滤 Betfair 单边噪音假高溢价)
                     _conf = (entry.get("_oa_conf") or {}).get("1x2", {})
@@ -1673,17 +1683,19 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None, calibrate=True
                 if bf_line is not None and abs(float(bb_hl) - float(bf_line)) <= 0.01:
                     ev_h = (bb_hc["home_odds"] - oa_hc["home"]) / oa_hc["home"] * 100
                     ev_a = (bb_hc["away_odds"] - oa_hc["away"]) / oa_hc["away"] * 100
+                    _raw_h = (oa_hc.get("_raw") or {}).get("home")
+                    _raw_a = (oa_hc.get("_raw") or {}).get("away")
                     # EV>20% = BB 让球盘与独赢盘数据自相矛盾(线错配), 丢弃(对齐 bb_ev_push 的 EV cap)
                     # 2026-09-19 SBO 同向确认: BB 和 SBO 都偏离 Betfair 同向才采信
                     _conf = (entry.get("_oa_conf") or {}).get("hc", {})
-                    if 1 < ev_h <= 20 and (not _conf.get("home") or _conf["home"] > oa_hc["home"]):
+                    if 1 < ev_h <= 20 and not _fair_below_raw(oa_hc["home"], _raw_h) and (not _conf.get("home") or _conf["home"] > oa_hc["home"]):
                         entry["handicap"].append({
                             "designation": mlabels["hc_home"], "line": bb_hc.get("home_line_str", ""),
                             "bb_odds": bb_hc["home_odds"], "pin_odds": (oa_hc.get("_raw") or {}).get("home"),
                             "fair_price": round(oa_hc["home"], 4), "ev_pct": round(ev_h, 2),
                             "spread": oa_hc.get("spread"),
                         })
-                    if 1 < ev_a <= 20 and (not _conf.get("away") or _conf["away"] > oa_hc["away"]):
+                    if 1 < ev_a <= 20 and not _fair_below_raw(oa_hc["away"], _raw_a) and (not _conf.get("away") or _conf["away"] > oa_hc["away"]):
                         entry["handicap"].append({
                             "designation": mlabels["hc_away"], "line": bb_hc.get("away_line_str", ""),
                             "bb_odds": bb_hc["away_odds"], "pin_odds": (oa_hc.get("_raw") or {}).get("away"),
@@ -1706,17 +1718,19 @@ def _oa_add_markets(entry, bb, sport, use_rest=None, status=None, calibrate=True
             if bf_line is not None and abs(float(bb_ou["line"]) - float(bf_line)) <= 0.01:
                 ev_o = (bb_ou["over_odds"] - oa_ou["over"]) / oa_ou["over"] * 100
                 ev_u = (bb_ou["under_odds"] - oa_ou["under"]) / oa_ou["under"] * 100
+                _raw_o = (oa_ou.get("_raw") or {}).get("over")
+                _raw_u = (oa_ou.get("_raw") or {}).get("under")
                 # EV>20% = 大小球线与 Betfair 线错配, 丢弃
                 # 2026-09-19 SBO 同向确认: BB 和 SBO 都偏离 Betfair 同向才采信
                 _conf = (entry.get("_oa_conf") or {}).get("ou", {})
-                if 1 < ev_o <= 20 and (not _conf.get("over") or _conf["over"] > oa_ou["over"]):
+                if 1 < ev_o <= 20 and not _fair_below_raw(oa_ou["over"], _raw_o) and (not _conf.get("over") or _conf["over"] > oa_ou["over"]):
                     entry["over_under"].append({
                         "designation": mlabels["over"], "line": str(bb_ou["line"]),
                         "bb_odds": bb_ou["over_odds"], "pin_odds": (oa_ou.get("_raw") or {}).get("over"),
                         "fair_price": round(oa_ou["over"], 4), "ev_pct": round(ev_o, 2),
                         "spread": oa_ou.get("spread"),
                     })
-                if 1 < ev_u <= 20 and (not _conf.get("under") or _conf["under"] > oa_ou["under"]):
+                if 1 < ev_u <= 20 and not _fair_below_raw(oa_ou["under"], _raw_u) and (not _conf.get("under") or _conf["under"] > oa_ou["under"]):
                     entry["over_under"].append({
                         "designation": mlabels["under"], "line": str(bb_ou["line"]),
                         "bb_odds": bb_ou["under_odds"], "pin_odds": (oa_ou.get("_raw") or {}).get("under"),

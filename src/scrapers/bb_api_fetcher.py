@@ -307,6 +307,11 @@ def _ensure_token():
 _USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
 
 
+# 2026-11-06 全局 429 限流冷却熔断: 检测到 429 后 60s 内所有 BB 请求短路, 避免全局限流时各调用独立重试"打群架"
+_RATE_LIMITED_UNTIL = {}      # platform -> 冷却截止 epoch 秒
+_RATE_LIMIT_COOLDOWN = 60.0   # 429 后冷却时长(秒)
+
+
 def api_post(endpoint, params, platform="BB", timeout=30, max_attempts=3, max_domains=None):
     """直接 HTTP POST 调用指定平台的 API。
 
@@ -318,9 +323,15 @@ def api_post(endpoint, params, platform="BB", timeout=30, max_attempts=3, max_do
     返回解析后的 JSON dict，或 None。
     """
     import time as _time
+    import random as _random
     from src.scrapers.network_guard import is_open, report_failure, report_success
     if is_open():
         logger.warning("网络熔断中(代理/网络故障), 跳过请求 %s", endpoint)
+        return None
+    # 2026-11-06 全局 429 冷却: 限流窗口内直接短路(不打 BB), 让调用方走缓存/跳过
+    _rl_until = _RATE_LIMITED_UNTIL.get(platform, 0.0)
+    if _rl_until > _time.time():
+        logger.warning("BB 限流冷却中(剩 %.0fs), 跳过请求 %s", _rl_until - _time.time(), endpoint)
         return None
     platform_config = PLATFORMS.get(platform, PLATFORMS["BB"])
     # BB 走候选域名列表 failover; FB 单域名
@@ -371,8 +382,13 @@ def api_post(endpoint, params, platform="BB", timeout=30, max_attempts=3, max_do
             if resp.status_code in (429, 503, 502):
                 if resp.status_code in (503, 502):
                     conn_failed = True  # 503/502 = 代理拒绝/上游down
-                wait = 2 ** attempt
-                logger.warning("API HTTP %s: %s, %ds后重试(%d/%d)", resp.status_code, endpoint, wait, attempt+1, max_attempts)
+                else:
+                    # 2026-11-06 429 = 全局限流(IP/账户级): 设全局冷却窗口, 期间所有请求短路(治"打群架")
+                    _RATE_LIMITED_UNTIL[platform] = _time.time() + _RATE_LIMIT_COOLDOWN
+                # 退避 1s/2s/4s 太短(限流窗口 30-60s), 加长 5s/10s/20s + 抖动(消除并发同秒重试尖峰)
+                _base = 5 * (2 ** attempt)
+                wait = _base + _random.uniform(0.0, _base * 0.5)
+                logger.warning("API HTTP %s: %s, %.1fs后重试(%d/%d)", resp.status_code, endpoint, wait, attempt+1, max_attempts)
                 _time.sleep(wait)
                 continue
             if resp.status_code == 403:

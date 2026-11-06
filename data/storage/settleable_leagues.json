@@ -1386,7 +1386,7 @@
       "success_rate": 0.0
     },
     "乌干达超级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1421,7 +1421,7 @@
       "success_rate": 0.0
     },
     "欧洲篮球联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1456,7 +1456,7 @@
       "success_rate": 0.0
     },
     "立陶宛全国篮球联赛": {
-      "attempts": 1,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1481,7 +1481,7 @@
       "success_rate": 0.0
     },
     "非洲联合会杯": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1626,12 +1626,12 @@
       "success_rate": 0.0
     },
     "日本B联盟超级联赛": {
-      "attempts": 1,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
     "欧洲篮球杯": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1644,9 +1644,39 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "NBA 美国职业篮球联赛": {
+      "attempts": 3,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "中国男子篮球职业联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "菲律宾UAAP锦标赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "卡塔尔篮球联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "巴拿马乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "泰国丙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-10-23T12:30:25.422566+00:00",
+  "updated": "2026-11-06T15:14:49.585593+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
