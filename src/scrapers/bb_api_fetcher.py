@@ -312,6 +312,11 @@ _RATE_LIMITED_UNTIL = {}      # platform -> 冷却截止 epoch 秒
 _RATE_LIMIT_COOLDOWN = 60.0   # 429 后冷却时长(秒)
 
 
+def bb_rate_limited(platform="BB"):
+    """BB 是否处于 429 限流冷却中(供裸 session 路径如 getList 也短路, 2026-11-06)。"""
+    return _RATE_LIMITED_UNTIL.get(platform, 0.0) > time.time()
+
+
 def api_post(endpoint, params, platform="BB", timeout=30, max_attempts=3, max_domains=None):
     """直接 HTTP POST 调用指定平台的 API。
 

@@ -411,7 +411,9 @@ def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6, 18, 19, 47, 2, 13), platform
     返回 {matchId: {home_en, away_en, home_cn, away_cn, league_cn, sport, markets, mc, sc}}。
     """
     from src.betting.bb_auto_bet import read_token, _session
-    from src.scrapers.bb_api_fetcher import PLATFORMS, bb_domain_candidates, persist_bb_domain
+    from src.scrapers.bb_api_fetcher import PLATFORMS, bb_domain_candidates, persist_bb_domain, bb_rate_limited
+    if bb_rate_limited(platform):
+        return {}  # 2026-11-06 429 限流冷却中, getList 短路(不打 BB, 治"打群架")
     token = read_token()
     if not token:
         return {}
