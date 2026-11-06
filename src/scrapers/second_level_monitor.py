@@ -2677,7 +2677,7 @@ class SecondLevelMonitor:
                         _dir = {"Home": "主", "Away": "客", "Draw": "和", "Over": "大", "Under": "小"}.get(trig.get("outcome", ""))
                         if _dir:
                             # 2026-11-06 修: 传 drop 的 point(线), 供 _process 按 BB 下注线匹配(修跨线套价)
-                            set_drop_fresh(trig.get("bb_match_id"), trig.get("point"), _dir, _fairs[_idx])
+                            set_drop_fresh(trig.get("home"), trig.get("away"), trig.get("point"), _dir, _fairs[_idx])
                     except (TypeError, ValueError, IndexError):
                         pass
                 self._match_drop_anchor(trig)  # 2026-10-11: live drop 作事件锚点, 匹配观察库算 clv_sign

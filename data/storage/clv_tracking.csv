@@ -1350,7 +1350,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-06T14:06:13Z,basketball,NBA,Charlotte Hornets,Boston Celtics,,,主胜,1x2,3.61,0,3.1203,15.69,0,1,1794009600,BB,pinnacle,,,pin_drop,,,5438226,1,odds_changed
 2026-11-06T14:08:59Z,basketball,NBA,Milwaukee Bucks,Toronto Raptors,,,主胜,1x2,3.06,0,2.9359,4.23,0,1,1794013200,BB,pinnacle,,,ws_scan,,,5438223,,
 2026-11-06T14:09:04Z,football,Hungary NB I,Debreceni VSC,Ujpest FC,,,主胜,1x2,2.17,0,2.071,4.78,0,2,1794148200,ALL,pinnacle,,,ws_scan,,,5845502,,
-2026-11-06T14:09:04Z,basketball,NBA,Dallas Mavericks,Utah Jazz,,,客胜,1x2,3.25,0,2.9912,8.65,0,1,1794013200,BB,pinnacle,,,ws_scan,,,5438225,,
+2026-11-06T14:09:04Z,basketball,NBA,Dallas Mavericks,Utah Jazz,,,客胜,1x2,3.25,0,2.9912,8.65,0,1,1794013200,BB,pinnacle,,,ws_scan,,,5438225,1,odds_changed
 2026-11-06T14:13:26Z,football,Egypt Cup,Enppi Club,Proxy SC,,,主胜,1x2,1.45,0,1.4009,3.51,0,3,1793977200,ALL,pinnacle,,,pin_drop,,,5831426,1,odds_changed
 2026-11-06T14:24:32Z,football,UEFA Nations League C,Moldova,Kazakhstan,,,和局,1x2,2.98,0,2.4163,23.33,0,3,1794589200,ALL,pinnacle,,,pin_drop,,,4863374,,
 2026-11-06T14:31:11Z,football,Cyprus 1st Division,AEL Limassol,Ypsonas FC,,,客胜,1x2,6.1,0,2.4258,151.46,0,2,1794060000,ALL,pinnacle,,,pin_drop,,,5836211,,
@@ -1413,3 +1413,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-06T23:22:20Z,football,Scotland League Two,Stranraer FC,Stirling Albion FC,,,主胜,1x2,1.62,0,1.5665,3.42,0,3,1794063600,ALL,pinnacle,,,ws_scan,,,5865158,,
 2026-11-06T23:26:59Z,football,UAE Pro League,Hatta SC,Khor Fakkan Club,,,主胜,1x2,3.01,0,2.9146,3.27,0,2,1794065400,ALL,pinnacle,,,ws_scan,,,5890584,,
 2026-11-06T23:32:49Z,football,Panama Liga Panamena de Futbol,Umecit,Tauro FC,,,主胜,1x2,2.54,0,2.2391,13.44,0,2,1794015000,ALL,pinnacle,,,pin_drop,,,5867269,,
+2026-11-06T23:47:39Z,football,Turkey Super Lig,Eyupspor,Kocaelispor,,,客胜,1x2,1.96,0,1.5861,23.57,0,2,1794047400,ALL,pinnacle,,,pin_drop,,,5836202,,
+2026-11-06T23:51:55Z,football,Turkey 1. Lig,Umraniyespor,Kayserispor,,,主胜,1x2,3.79,0,2.2385,69.31,0,2,1794142800,ALL,pinnacle,,,pin_drop,,,5367517,,

@@ -763,12 +763,13 @@ def _line_key(line):
         return None
 
 
-def set_drop_fresh(match_id, line, direction, fair):
-    DROP_FRESH[(str(match_id), _line_key(line), direction)] = fair
+def set_drop_fresh(home, away, line, direction, fair):
+    """live drop 实时公平价, 按归一化队名作 key(早盘快照匹配不上时滚球列表按队名匹配, 2026-11-07)。"""
+    DROP_FRESH[(_norm_team(home), _norm_team(away), _line_key(line), direction)] = fair
 
 
-def get_drop_fresh(match_id, line, direction):
-    return DROP_FRESH.get((str(match_id), _line_key(line), direction))
+def get_drop_fresh(home, away, line, direction):
+    return DROP_FRESH.get((_norm_team(home), _norm_team(away), _line_key(line), direction))
 
 
 def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
@@ -850,7 +851,7 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         fair_p = fair.get(k)
         # 2026-11-05 fast path: drop 实时价覆盖(绕开落盘缓存, 接近0延迟)
         # 2026-11-06 修: 按 BB 下注线(mk["line"])匹配 drop 的 point, 不同线不覆盖(修「公平价<原价」根因)
-        _dropf = get_drop_fresh(bmid, mk.get("line"), d)
+        _dropf = get_drop_fresh(b.get("home_en") or b.get("home"), b.get("away_en") or b.get("away"), mk.get("line"), d)
         if _dropf and _dropf > 1:
             fair_p = _dropf
         if not fair_p or fair_p <= 1:

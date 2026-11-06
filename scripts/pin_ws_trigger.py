@@ -255,17 +255,19 @@ def _on_drop(stream, drop):
     tp = drop.get("to_price")
     m = _match_bb(home, away)
     outcome = drop.get("outcome", "")
-    if m:
+    # 2026-11-07: live drop 不要求早盘快照匹配(74% 滚球场不在早盘), 照写 trigger 让滚球列表按队名匹配
+    if m or stream == "live":
         trig = {"ts": time.time(), "stream": stream,
                 "home": home, "away": away, "outcome": outcome,
                 "from_price": fp, "to_price": tp,
                 "price_x": drop.get("price_x"), "price_y": drop.get("price_y"),
                 "price_z": drop.get("price_z"), "point": drop.get("point"),
                 "period": drop.get("period"), "period_name": drop.get("period_name"),
-                "bb_match_id": m.get("id"), "bb_home": m.get("home"),
-                "bb_away": m.get("away"), "sport": m.get("sport")}
+                "bb_match_id": m.get("id") if m else None, "bb_home": m.get("home") if m else None,
+                "bb_away": m.get("away") if m else None, "sport": m.get("sport") if m else None}
         _append_rotating(TRIGGER_FILE, json.dumps(trig, ensure_ascii=False))
-        print(f"[pin-drop] {stream} {home} vs {away}: {fp} → {tp} [{outcome}] → 命中BB #{m.get('id')}", flush=True)
+        _tag = f"命中BB #{m.get('id')}" if m else "滚球队名匹配"
+        print(f"[pin-drop] {stream} {home} vs {away}: {fp} → {tp} [{outcome}] → {_tag}", flush=True)
     else:
         print(f"[pin-drop] {stream} {home} vs {away}: {fp} → {tp} [{outcome}] (BB未匹配)", flush=True)
 
