@@ -455,7 +455,7 @@ def main():
 
     # 2026-11-05 落盘 10s→1s: 滚球 Pin 价更新鲜(10s 滞后吃 lead-lag 窗口, 压到 1s)。早盘入库仍 10s 一次。
     _last_ingest = 0.0
-    _last_full = 0.0
+    _last_full = time.time()  # 2026-11-07: 初始化为当前时间, 避免重启后第一次循环就把空缓存 persist_full 覆盖旧 base
     while True:
         time.sleep(1)
         try:

@@ -167,7 +167,8 @@ class PinOddsCache:
             d = json.loads(raw) if isinstance(raw, str) else raw
             self._cache = d.get("cache", {})
             self._dirty_since_full.clear()
-        self.persist_full()  # 2026-11-07: 重建后立即全量落盘, 读端立刻看到新快照(delta 已清空)
+        if self._cache:
+            self.persist_full()  # 2026-11-07: 重建后立即全量落盘(非空才写, 防空快照覆盖旧 base)
 
     def persist(self):
         """增量落盘(2026-11-07): 只写自上次全量快照以来变更的事件到 delta 文件(小, ~0.04s),
