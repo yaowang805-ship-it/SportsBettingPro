@@ -455,12 +455,19 @@ def main():
 
     # 2026-11-05 落盘 10s→1s: 滚球 Pin 价更新鲜(10s 滞后吃 lead-lag 窗口, 压到 1s)。早盘入库仍 10s 一次。
     _last_ingest = 0.0
+    _last_full = 0.0
     while True:
         time.sleep(1)
         try:
-            cache.persist()
+            cache.persist()  # 增量落盘(每 1s, 只写变更事件, ~0.04s)
         except Exception as e:
             print(f"[pin] 缓存落盘失败: {type(e).__name__}", flush=True)
+        if time.time() - _last_full >= 60:
+            _last_full = time.time()
+            try:
+                cache.persist_full()  # 全量快照(每 60s, 清空 delta 累积)
+            except Exception:
+                pass
         if time.time() - _last_ingest >= 10:
             _last_ingest = time.time()
             try:

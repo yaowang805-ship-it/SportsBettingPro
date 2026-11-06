@@ -97,7 +97,7 @@ def find_pinnacle_event(data, home, away):
 
 
 _pin_cache_idx = {"_ts": 0.0, "_idx": {}}
-_pin_cache_file = {"mtime": 0.0, "data": None}
+_pin_cache_file = {"_key": None, "data": None}  # _key=(base mtime, delta mtime), 双文件都变才重读合并
 
 
 def _pin_cache_find_event(home, away, games=False):
@@ -110,10 +110,22 @@ def _pin_cache_find_event(home, away, games=False):
         f = Path(__file__).resolve().parent.parent.parent / "data" / "storage" / "pin_odds_cache.json"
         if not f.exists():
             return None
+        delta_f = f.with_name(f.stem + ".delta.json")
         mtime = f.stat().st_mtime
-        if _pin_cache_file["mtime"] != mtime or _pin_cache_file["data"] is None:
-            _pin_cache_file["data"] = json.loads(f.read_text())
-            _pin_cache_file["mtime"] = mtime
+        delta_mtime = delta_f.stat().st_mtime if delta_f.exists() else 0.0
+        _key = (mtime, delta_mtime)
+        if _pin_cache_file.get("_key") != _key or _pin_cache_file["data"] is None:
+            d = json.loads(f.read_text())
+            # 2026-11-07 增量落盘: delta 文件承载自上次全量快照以来的变更, 合并覆盖 base
+            if delta_f.exists():
+                try:
+                    dd = json.loads(delta_f.read_text())
+                    d["cache"].update(dd.get("cache", {}))
+                    d["ts"] = max(d.get("ts", 0), dd.get("ts", 0))
+                except Exception:
+                    pass
+            _pin_cache_file["data"] = d
+            _pin_cache_file["_key"] = _key
         d = _pin_cache_file["data"]
         ts = d.get("ts", 0)
         if time.time() - ts > 60:
