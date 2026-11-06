@@ -7497,5 +7497,38 @@
    0
   ],
   "line_semantics": "relative"
+ },
+ {
+  "ts": 1794007906.476678,
+  "match_id": 5863495,
+  "market_id": 140411512,
+  "option_type": 1,
+  "sport": 5,
+  "home": "马科斯.吉龙 (美国)",
+  "away": "克莱门特.齐德赫 (法国)",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 2.26,
+  "fair": 1.9073,
+  "ev": 1.84,
+  "spread": null,
+  "bb_ts": 1794007903.9697652,
+  "stake": 80,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": true,
+  "sim_reject_reason": "ev_below_entry",
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": -1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 119.05,
+  "clv": -18.71
  }
 ]

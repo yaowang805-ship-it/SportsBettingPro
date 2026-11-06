@@ -85,7 +85,9 @@ class PinOddsCache:
 
     def __init__(self, cache_file=CACHE_FILE):
         self.cache_file = cache_file
+        self.delta_file = cache_file.with_name(cache_file.stem + ".delta.json")
         self._cache = {}
+        self._dirty_since_full = set()  # 自上次全量快照后变更的 event_id(增量落盘, 2026-11-07)
         self._lock = threading.Lock()
 
     def update_event(self, event_id, event):
@@ -111,6 +113,7 @@ class PinOddsCache:
                     event["periods"] = old["periods"]
             e["event"] = event
             e["ts"] = time.time()
+            self._dirty_since_full.add(str(event_id))
 
     def update_markets(self, matchup_id, markets):
         """prematch_markets 赔率 → 归一化成 periods(供 pinnacle_fair_price 读)。"""
@@ -137,11 +140,13 @@ class PinOddsCache:
             ev["periods"] = {"num_0": p0}
             if _num1:
                 ev["periods"]["num_1"] = _num1
+            self._dirty_since_full.add(str(matchup_id))
 
     def update_tick(self, event_id, market, odds, ts):
         with self._lock:
             e = self._cache.setdefault(event_id, {"event": {}, "markets": {}})
             e["markets"][market] = {"odds": odds, "ts": ts}
+            self._dirty_since_full.add(str(event_id))
 
     def get(self, event_id):
         with self._lock:
