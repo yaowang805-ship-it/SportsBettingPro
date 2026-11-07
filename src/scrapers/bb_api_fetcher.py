@@ -317,6 +317,11 @@ def bb_rate_limited(platform="BB"):
     return _RATE_LIMITED_UNTIL.get(platform, 0.0) > time.time()
 
 
+def set_bb_rate_limited(platform="BB", cooldown=None):
+    """设置 BB 429 冷却(供裸 session 路径如 getList 也触发冷却, 2026-11-07)。"""
+    _RATE_LIMITED_UNTIL[platform] = time.time() + (cooldown if cooldown else _RATE_LIMIT_COOLDOWN)
+
+
 def api_post(endpoint, params, platform="BB", timeout=30, max_attempts=3, max_domains=None):
     """直接 HTTP POST 调用指定平台的 API。
 

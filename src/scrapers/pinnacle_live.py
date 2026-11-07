@@ -411,7 +411,7 @@ def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6, 18, 19, 47, 2, 13), platform
     返回 {matchId: {home_en, away_en, home_cn, away_cn, league_cn, sport, markets, mc, sc}}。
     """
     from src.betting.bb_auto_bet import read_token, _session
-    from src.scrapers.bb_api_fetcher import PLATFORMS, bb_domain_candidates, persist_bb_domain, bb_rate_limited
+    from src.scrapers.bb_api_fetcher import PLATFORMS, bb_domain_candidates, persist_bb_domain, bb_rate_limited, set_bb_rate_limited
     if bb_rate_limited(platform):
         return {}  # 2026-11-06 429 限流冷却中, getList 短路(不打 BB, 治"打群架")
     token = read_token()
@@ -432,7 +432,16 @@ def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6, 18, 19, 47, 2, 13), platform
                 continue
             if r.status_code == 403:
                 continue
-            d = r.json()
+            if r.status_code == 429:
+                # 2026-11-07 getList 也吃 429 限流: 设全局冷却(让 getMatchDetail 等短路) + 换域名
+                set_bb_rate_limited(platform)
+                continue
+            if r.status_code != 200:
+                continue  # 500/502 等非200 → 换域名
+            try:
+                d = r.json()
+            except Exception:
+                continue  # 非 JSON(如 WAF HTML) → 换域名
             if d.get("code") != 0:
                 return []
             if platform == "BB":
