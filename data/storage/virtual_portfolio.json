@@ -1,5 +1,5 @@
 {
-  "balance": 14372.53,
+  "balance": 14252.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1656,6 +1656,75 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794155400.0,
       "created_at": "2026-11-07T22:42:35.914882+00:00",
+      "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_萨克拉门托_埃尔帕索机车_客胜",
+      "sport": "football",
+      "league": "美国冠军联赛-附加赛",
+      "home_team": "萨克拉门托",
+      "away_team": "埃尔帕索机车",
+      "home_cn": "萨克拉门托",
+      "away_cn": "埃尔帕索机车",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.89,
+      "stake": 80,
+      "model_prob": 0.4763,
+      "ev_pct": 132.9,
+      "pin_odds": 1.885,
+      "fair_price": 2.0996,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794106800.0,
+      "created_at": "2026-11-07T22:43:38.590018+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_南霍巴特_昆士兰狮队_主胜",
+      "sport": "football",
+      "league": "澳大利亚锦标赛",
+      "home_team": "南霍巴特",
+      "away_team": "昆士兰狮队",
+      "home_cn": "南霍巴特",
+      "away_cn": "昆士兰狮队",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 7.9,
+      "stake": 40,
+      "model_prob": 0.5358,
+      "ev_pct": 323.25,
+      "pin_odds": 1.5988,
+      "fair_price": 1.8665,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794110400.0,
+      "created_at": "2026-11-07T22:43:38.590067+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_老虎大学_蓝十字_主胜",
+      "sport": "football",
+      "league": "墨西哥超级联赛",
+      "home_team": "老虎大学",
+      "away_team": "蓝十字",
+      "home_cn": "老虎大学",
+      "away_cn": "蓝十字",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.39,
+      "stake": 0,
+      "model_prob": 0.5478,
+      "ev_pct": 85.69,
+      "pin_odds": 1.578,
+      "fair_price": 1.8256,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794099600.0,
+      "created_at": "2026-11-07T22:43:38.590094+00:00",
       "track_only": true
     }
   ],
@@ -13067,8 +13136,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-08",
-    "used": 400.0,
-    "bets": 50
+    "used": 520.0,
+    "bets": 53
   },
   "updated": null
 }
