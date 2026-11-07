@@ -1384,7 +1384,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-06T23:06:28Z,football,Sweden Superettan,Sandvikens IF,Nordic United FC,,,主胜,1x2,1.74,0,1.6639,4.58,0,2,1794060000,BB,pinnacle,,,ws_scan,,,5840722,,
 2026-11-06T23:07:02Z,football,UAE Pro League,Hatta SC,Khor Fakkan Club,,,客胜,1x2,2.12,0,1.9028,11.42,0,2,1794065400,ALL,pinnacle,,,ws_scan,,,5673140,,
 2026-11-06T23:07:23Z,football,Chile Primera Division,Universidad de Chile,Cobresal,,,主胜,1x2,1.21,0,1.176,2.89,0,2,1794160800,ALL,pinnacle,,,ws_scan,,,5843568,,
-2026-11-06T23:10:53Z,football,Vietnam League 1,Cong An Ha Noi FC,Cong An Ho Chi Minh City,,,客胜,1x2,7.2,0,6.1324,17.41,0,2,1794053700,BB,pinnacle,,,pin_drop,,,5499273,,
+2026-11-06T23:10:53Z,football,Vietnam League 1,Cong An Ha Noi FC,Cong An Ho Chi Minh City,,,客胜,1x2,7.2,0,6.1324,17.41,0,2,1794053700,BB,pinnacle,,,pin_drop,,,5499273,1,odds_changed
 2026-11-06T23:12:03Z,football,Japan J.League 3,Nara Club,Kochi United SC,,,客胜,1x2,3.78,0,3.6524,3.49,0,4,1794027600,ALL,pinnacle,,,pin_drop,,,5359551,,
 2026-11-06T23:13:13Z,football,Japan J.League 3,Nara Club,Kochi United SC,,,客胜,1x2,3.92,2.67,3.5217,11.31,50,4,1794027600.0,FB,,,,push,,,,,
 2026-11-06T23:15:53Z,football,England Premier League,Arsenal FC,Hull City,,,主胜,1x2,1.18,1.0405,1.0818,9.08,50,1,1794063600.0,FB,,,,push,,,,,
@@ -1405,7 +1405,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-06T23:16:04Z,football,South Korea K-League 1-Playoff,FC Seoul,Ulsan HD FC,,,主胜,1x2,1.98,0,1.8273,8.36,0,2,1794114000,ALL,pinnacle,,,ws_scan,,,5842555,,
 2026-11-06T23:16:04Z,football,South Korea K-League 1-Playoff,FC Seoul,Ulsan HD FC,,,客胜,1x2,3.36,0,3.0891,8.77,0,2,1794114000,ALL,pinnacle,,,ws_scan,,,5842555,,
 2026-11-06T23:16:04Z,football,England National League North,Merthyr Town,Hebburn Town,,,主胜,1x2,2.01,0,1.8634,7.87,0,3,1794063600,ALL,pinnacle,,,ws_scan,,,5321711,,
-2026-11-06T23:16:10Z,football,Vietnam League 1,Cong An Ha Noi FC,Cong An Ho Chi Minh City,,,主胜,1x2,1.37,0,1.3366,2.5,0,2,1794053700,BB,pinnacle,,,pin_drop,,,5499273,,
+2026-11-06T23:16:10Z,football,Vietnam League 1,Cong An Ha Noi FC,Cong An Ho Chi Minh City,,,主胜,1x2,1.37,0,1.3366,2.5,0,2,1794053700,BB,pinnacle,,,pin_drop,,,5499273,1,odds_changed
 2026-11-06T23:16:11Z,football,Scotland League One,Montrose FC,East Fife FC,,,主胜,1x2,2.16,0,1.9844,8.85,0,2,1794063600,ALL,pinnacle,,,ws_scan,,,5127766,,
 2026-11-06T23:16:11Z,football,Scotland League One,Montrose FC,East Fife FC,,,客胜,1x2,2.83,0,2.756,2.69,0,2,1794063600,ALL,pinnacle,,,ws_scan,,,5127766,,
 2026-11-06T23:19:50Z,football,Egypt Cup,Modern Sport FC,El Qanah,,,和局,1x2,3.02,0,2.8193,7.12,0,3,1794150000,BB,pinnacle,,,ws_scan,,,5842510,,
@@ -1531,3 +1531,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-07T01:48:42Z,football,England League Cup,Manchester City FC,Bradford City,,,客胜,1x2,18.4,0,16.5668,11.07,0,2,1797364800,ALL,pinnacle,,,ws_scan,,,5874714,,
 2026-11-07T01:49:04Z,basketball,Japan B.League One,Veltex Shizuoka,Iwate Big Bulls,,,让分主胜,hc,1.94,0,1.8381,5.54,0,3,1794027900,BB,pinnacle,,,ws_scan,,-1.5,5326709,,
 2026-11-07T01:49:05Z,football,Belarus Premier League,Naftan Novopolotsk,FC Maxline Vitebsk,,,主胜,1x2,28.0,0,2.6933,939.62,0,3,1794045600,ALL,pinnacle,,,pin_drop,,,4633672,,
+2026-11-07T01:49:45Z,basketball,Japan B. League One,Earthfriends Tokyo Z,Fukushima Firebonds,,,主胜,1x2,2.51,0,2.4242,3.54,0,3,1794038700,ALL,pinnacle,,,ws_scan,,,5902562,,
+2026-11-07T01:49:45Z,basketball,Australia NBL,Melbourne United,Brisbane Bullets,,,客胜,1x2,5.05,0,4.5246,11.61,0,3,1794040200,ALL,pinnacle,,,ws_scan,,,5074394,,
+2026-11-07T01:50:08Z,football,Poland Ekstraklasa,Jagiellonia Bialystok,GKS Katowice,,,客胜,1x2,2.68,0,2.2639,18.38,0,2,1794145500,ALL,pinnacle,,,pin_drop,,,5899257,,
+2026-11-07T01:50:45Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Kobe Storks,,,客胜,1x2,3.36,0,3.0834,8.97,0,2,1794031500,BB,pinnacle,,,pin_drop,,,5309941,,
+2026-11-07T01:52:19Z,football,Australia A-League,Auckland FC,Wellington Phoenix FC,,,客胜,1x2,3.04,0,2.4037,26.47,0,2,1794024000,ALL,pinnacle,,,pin_drop,,,5276699,,

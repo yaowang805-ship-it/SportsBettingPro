@@ -777,11 +777,20 @@ def _line_key(line):
 
 def set_drop_fresh(home, away, line, direction, fair):
     """live drop 实时公平价, 按归一化队名作 key(早盘快照匹配不上时滚球列表按队名匹配, 2026-11-07)。"""
-    DROP_FRESH[(_norm_team(home), _norm_team(away), _line_key(line), direction)] = fair
+    DROP_FRESH[(_norm_team(home), _norm_team(away), _line_key(line), direction)] = (fair, time.time())
 
 
-def get_drop_fresh(home, away, line, direction):
-    return DROP_FRESH.get((_norm_team(home), _norm_team(away), _line_key(line), direction))
+def get_drop_fresh(home, away, line, direction, max_age=5.0):
+    """取 drop 实时公平价。2026-11-07 加 TTL: drop 价只在 lead-lag 窗口(默认5s)内有效,
+    超时返回 None 退回 WS 缓存(有60s新鲜度检查)。否则防风控 skip 后下次 poll 下单会用到
+    3~45s 前的 stale drop 价, 不是下单那一刻的实时赔率。"""
+    v = DROP_FRESH.get((_norm_team(home), _norm_team(away), _line_key(line), direction))
+    if not v:
+        return None
+    fair, ts = v
+    if time.time() - ts > max_age:
+        return None
+    return fair
 
 
 def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
