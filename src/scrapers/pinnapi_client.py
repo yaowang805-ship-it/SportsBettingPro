@@ -268,6 +268,11 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         # 职业团队共识「REST for truth, WebSocket for delta」——REST 只做快照/恢复, 不做比价兜底。
         # 匹配不到就 return None(宁缺毋滥), 由上层放弃该盘口。
         return None
+    # 2026-11-07 运动匹配校验(防御性兜底): 匹配到的事件运动必须 == 目标运动(pin_sid)。
+    # 索引 key 已按 sport_id 区分, 但 REST 兜底(use_rest_live)直接按队名匹配未区分运动,
+    # 这里统一兜底, 防跨运动同名队(FC Vitebsk 足球 vs HK Vitebsk 冰球)错配成假溢价。
+    if pin_sid is not None and e.get("sport_id") is not None and str(e.get("sport_id")) != str(pin_sid):
+        return None
     periods = e.get('periods') or {}
     # 2026-10-11 修崩溃: Pin 元数据的 periods 是 list(比赛时段元数据, 无赔率), 只有
     # pin_client.update_markets 归一化后才是 dict({"num_0": {money_line/spreads/totals}})。
