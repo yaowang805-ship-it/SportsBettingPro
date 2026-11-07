@@ -472,6 +472,9 @@ def _norm_team(name):
     # (无国家码), 不剥离则 "Tommy Paul (USA)"→tommypaulusa 永远配不上 Pin 的 tommypaul。
     # 只剥尾部 2-3 大写字母国家码(实测 198/198 网球都带), 不误伤 "(Games)"(5字母) 等 Pin 事件后缀。
     name = re.sub(r'\s*\([A-Z]{2,3}\)\s*$', '', (name or '').strip())
+    # 2026-11-07 俱乐部前缀归一: KK(欧洲篮球)/BC(篮球)/SC/CD/CA/AC(南美足球篮球) 等前缀,
+    # 否则 "SC Corinthians" 配不上 Pin 的 "Corinthians"(篮球匹配率 80% 失败的根因)。仅剥独立 token。
+    name = re.sub(r'^(KK|BC|SC|CD|CA|AC|AD|UD|RC|FC|HC|BK)\s+', '', name, flags=re.I)
     n = re.sub(r'[^a-z0-9]', '', name.lower())
     # 俱乐部后缀归一(与 pinnacle_live._norm_team 同口径, 2026-09-29 补): FC/SC/CF 等去后缀
     # 2026-10-17 修: 之前 cfc/afc 在 fc 前, "Sanga FC"(sangafc) 被 afc 误剥成 "sang"(少个 a, 配不上 Pin 的 sanga)。

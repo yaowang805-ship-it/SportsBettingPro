@@ -533,7 +533,10 @@ def _parse_line(li):
 
 def _norm_team(name):
     """队名归一化(模糊匹配用): 小写 + 去非字母数字 + 去俱乐部前后缀 + Saint→St。"""
-    n = "".join(c for c in (name or "").lower() if c.isalnum())
+    import re
+    # 2026-11-07 前缀归一(对齐 odds_api_io._norm_team): KK/BC/SC/CD 等, 否则篮球匹配率低
+    name = re.sub(r'^(KK|BC|SC|CD|CA|AC|AD|UD|RC|FC|HC|BK)\s+', '', (name or '').strip(), flags=re.I)
+    n = "".join(c for c in name.lower() if c.isalnum())
     for suf in ("footballclub", "club", "cfc", "afc", "fc", "sc", "cf", "cd", "ac"):
         if n.endswith(suf) and len(n) > len(suf) + 3:
             n = n[:-len(suf)]
