@@ -1,5 +1,5 @@
 {
-  "balance": 14872.53,
+  "balance": 14812.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -437,6 +437,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794052800.0,
       "created_at": "2026-11-06T23:15:50.803758+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_阿根廷青年人_飓风队_客胜",
+      "sport": "football",
+      "league": "阿根廷甲级联赛",
+      "home_team": "阿根廷青年人",
+      "away_team": "飓风队",
+      "home_cn": "阿根廷青年人",
+      "away_cn": "飓风队",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.93,
+      "stake": 60,
+      "model_prob": 0.5925,
+      "ev_pct": 132.85,
+      "pin_odds": 1.6211,
+      "fair_price": 1.6878,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794083400.0,
+      "created_at": "2026-11-07T05:19:25.259666+00:00",
       "track_only": false
     }
   ],
@@ -11848,8 +11871,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-07",
-    "used": 950.0,
-    "bets": 19
+    "used": 1010.0,
+    "bets": 20
   },
   "updated": null
 }
