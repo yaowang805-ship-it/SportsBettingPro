@@ -1394,8 +1394,8 @@ class SecondLevelMonitor:
         # 2026-10-17 统一 Pin id: pin_matchup_id 之前是 Pin 官方 matchupId(与 pinnapi event_id 不一致)
         # → lag_sec(_pin_event_last)/clv(_reversion_track) 全 null。改用 pinnapi 按英文队名反查 event_id。
         try:
-            from src.scrapers.pinnapi_client import _pin_cache_find_event
-            _ev = _pin_cache_find_event(sig.get("home_en", ""), sig.get("away_en", ""))
+            from src.scrapers.pinnapi_client import _pin_cache_find_event, BB_TO_PIN
+            _ev = _pin_cache_find_event(sig.get("home_en", ""), sig.get("away_en", ""), pin_sid=BB_TO_PIN.get(sig.get("sport")))
             if _ev:
                 _eid = _ev.get("event_id") or _ev.get("id")
                 if _eid:

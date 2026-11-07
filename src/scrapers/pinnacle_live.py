@@ -622,7 +622,7 @@ def fetch_live_opportunities(threshold=3.0, platform="BB", use_file_cache=False)
     返回 [{bb_match_id, home, away, sub, direction, bb_odds, fair, ev, market_id,
            option_type, line, pin_matchup_id, league_id, max_stake}]。
     """
-    from src.scrapers.pinnapi_client import pinnacle_fair_price, _pin_cache_find_event
+    from src.scrapers.pinnapi_client import pinnacle_fair_price, _pin_cache_find_event, BB_TO_PIN
     bb = fetch_bb_live_matches(platform=platform)
     _bb_ts = time.time()  # BB 拉取时间(本次 getList 完成时刻)
     # 2026-10-17 停 Pin 官方 guest(15min 陈旧价), 改用 pinnapi 实时公平价(pinnacle_fair_price)。
@@ -630,7 +630,8 @@ def fetch_live_opportunities(threshold=3.0, platform="BB", use_file_cache=False)
     opps = []
     for bmid, b in bb.items():
         # 按英文队名匹配 pinnapi 缓存, 拿 event_id 作 pin_matchup_id(与 lag_sec/clv 对齐)
-        _ev = _pin_cache_find_event(b["home_en"], b["away_en"])
+        # 2026-11-07 传 pin_sid 区分运动(队名撞车跨运动混淆)
+        _ev = _pin_cache_find_event(b["home_en"], b["away_en"], pin_sid=BB_TO_PIN.get(b["sport"]))
         _eid = str(_ev.get("event_id") or _ev.get("id")) if _ev else None
         for mk in b["markets"]:
             sub = mk["sub"]; d = mk["direction"]
