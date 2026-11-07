@@ -303,7 +303,7 @@
   "football|hc|客|55-60%|live": {
     "first_released_at": "2026-11-01T09:17:35.212467",
     "cap": 30,
-    "daily_stake": 0,
+    "daily_stake": 30,
     "daily_stake_date": "2026-11-07",
     "limit_removed": true
   },
@@ -660,7 +660,7 @@
   "football|1x2|客|40-50%|live": {
     "first_released_at": "2026-11-01T09:17:35.212447",
     "cap": 30,
-    "daily_stake": 0,
+    "daily_stake": 30,
     "daily_stake_date": "2026-11-07",
     "limit_removed": false
   },

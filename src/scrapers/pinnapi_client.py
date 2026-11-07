@@ -101,11 +101,13 @@ _pin_cache_base = {"mtime": None, "data": None}       # base 缓存(14MB, persis
 _pin_cache_file = {"delta_mtime": None, "data": None}  # base+delta 合并缓存(每1s只重读delta 0.4MB)
 
 
-def _pin_cache_find_event(home, away, games=False):
+def _pin_cache_find_event(home, away, games=False, max_age=None):
     """从 pin_odds_cache.json(实时缓存)按队名找事件。返回 event dict 或 None。
 
     只认有 periods 的全量事件; 缓存 >60s 视为失效。文件 mtime 缓存 + 队名索引, 二次调用 ~0ms。
     games=True(2026-10-14): 网球让局/总局数在 Pin 的 "(Games)" 子事件里, 键 = 归一化名+"games"。
+    max_age(2026-11-07): 每事件新鲜度门槛(秒)。该队名 WS 帧陈旧(>max_age)则返回 None,
+    防 poll 路径用旧赔率。live 传 60, prematch 传 300。
     """
     try:
         f = Path(__file__).resolve().parent.parent.parent / "data" / "storage" / "pin_odds_cache.json"
@@ -154,16 +156,16 @@ def _pin_cache_find_event(home, away, games=False):
                     _key = (eh, ea)
                     _cur = idx.get(_key)
                     if _cur is None:
-                        idx[_key] = ev
+                        idx[_key] = [ev, entry.get("ts", 0)]  # [事件, 该事件最后更新ts]
                         continue
                     # 1) junior 过滤(2026-10-17): senior 优先(U21/女足/预备队不覆盖正赛)
-                    if _junior(ev) and not _junior(_cur):
+                    if _junior(ev) and not _junior(_cur[0]):
                         continue
                     # 2) 2026-11-03 修「最旧 live 快照 + 增量帧丢盘口」: 同一队名多个快照时,
                     # 合并 periods.num_0 —— 独赢(money_line)用后出现的(最新), 让球/大小球
                     # (spreads/totals)保留旧的(live 增量帧常只推 money_line, 不推 spreads/totals)。
                     # 否则滚球 hc/ou 拿不到公平价, 只剩 1x2/dc 能投。
-                    _cur_p = _cur.get("periods")
+                    _cur_p = _cur[0].get("periods")
                     _ev_p = ev.get("periods")
                     if isinstance(_cur_p, dict) and isinstance(_ev_p, dict):
                         _c0 = _cur_p.setdefault("num_0", {})
@@ -173,11 +175,17 @@ def _pin_cache_find_event(home, away, games=False):
                                 _c0[_mk] = _mv  # 新帧有该盘口才覆盖(保留旧的 spreads/totals)
                         if _ev_p.get("num_1"):
                             _cur_p["num_1"] = _ev_p["num_1"]
-                    idx[_key] = _cur
+                    _cur[1] = max(_cur[1], entry.get("ts", 0))  # 取较新的 ts
             _pin_cache_idx["_ts"] = ts
             _pin_cache_idx["_idx"] = idx
         _suf = "games" if games else ""
-        return _pin_cache_idx["_idx"].get((_norm(home) + _suf, _norm(away) + _suf))
+        _hit = _pin_cache_idx["_idx"].get((_norm(home) + _suf, _norm(away) + _suf))
+        if not _hit:
+            return None
+        # 2026-11-07 每事件新鲜度: 该队名 WS 帧陈旧(>max_age)则返回 None, 防用旧赔率(否则哪来真溢价)
+        if max_age and _hit[1] and time.time() - _hit[1] > max_age:
+            return None
+        return _hit[0]
     except Exception:
         return None
 
@@ -239,10 +247,12 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
                         e = _ev
                         swapped = True
                         break
+    # 2026-11-07 每事件新鲜度: live 60s / prematch 300s(早盘 REST 低频频 5min 拉, 阈值放宽)
+    _max_age = 60 if event_type == 'live' else 300
     if not e:
-        e = _pin_cache_find_event(home, away, games=_games)
+        e = _pin_cache_find_event(home, away, games=_games, max_age=_max_age)
         if not e:
-            e = _pin_cache_find_event(away, home, games=_games)
+            e = _pin_cache_find_event(away, home, games=_games, max_age=_max_age)
             if e:
                 swapped = True
     if not e:
