@@ -97,7 +97,8 @@ def find_pinnacle_event(data, home, away):
 
 
 _pin_cache_idx = {"_ts": 0.0, "_idx": {}}
-_pin_cache_file = {"_key": None, "data": None}  # _key=(base mtime, delta mtime), 双文件都变才重读合并
+_pin_cache_base = {"mtime": None, "data": None}       # base 缓存(14MB, persist_full 每60s才重读)
+_pin_cache_file = {"delta_mtime": None, "data": None}  # base+delta 合并缓存(每1s只重读delta 0.4MB)
 
 
 def _pin_cache_find_event(home, away, games=False):
@@ -113,10 +114,16 @@ def _pin_cache_find_event(home, away, games=False):
         delta_f = f.with_name(f.stem + ".delta.json")
         mtime = f.stat().st_mtime
         delta_mtime = delta_f.stat().st_mtime if delta_f.exists() else 0.0
-        _key = (mtime, delta_mtime)
-        if _pin_cache_file.get("_key") != _key or _pin_cache_file["data"] is None:
-            d = json.loads(f.read_text())
-            # 2026-11-07 增量落盘: delta 文件承载自上次全量快照以来的变更, 合并覆盖 base
+        # 1) base 只在 persist_full(mtime 变化, 每60s)时重读 14MB; 否则复用缓存。
+        #    2026-11-07 修「公平价匹配 143s」回归: 之前 _key=(base,delta) 使 delta 每1s变化就重读 14MB base,
+        #    16 并发线程放大成 thundering herd(每任务~0.8s)。
+        if _pin_cache_base["mtime"] != mtime or _pin_cache_base["data"] is None:
+            _pin_cache_base["data"] = json.loads(f.read_text())
+            _pin_cache_base["mtime"] = mtime
+        # 2) delta 每1s重读(0.4MB小), 浅拷贝 base 再 merge(不污染 base 缓存; 索引重建的 merge 是幂等覆盖, 无害)
+        if _pin_cache_file.get("delta_mtime") != delta_mtime or _pin_cache_file["data"] is None:
+            _base = _pin_cache_base["data"]
+            d = {"ts": _base.get("ts", 0), "cache": dict(_base.get("cache", {}))}
             if delta_f.exists():
                 try:
                     dd = json.loads(delta_f.read_text())
@@ -125,7 +132,7 @@ def _pin_cache_find_event(home, away, games=False):
                 except Exception:
                     pass
             _pin_cache_file["data"] = d
-            _pin_cache_file["_key"] = _key
+            _pin_cache_file["delta_mtime"] = delta_mtime
         d = _pin_cache_file["data"]
         ts = d.get("ts", 0)
         if time.time() - ts > 60:
