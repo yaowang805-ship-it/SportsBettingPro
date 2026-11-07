@@ -120,6 +120,11 @@ class PinOddsCache:
         with self._lock:
             e = self._cache.setdefault(matchup_id, {"event": {}, "markets": {}})
             e["markets"] = markets
+            # 2026-11-07 修 ts 不更新 bug: 赔率帧(update_markets)之前不更新 e["ts"], 只有元数据帧
+            # (update_event)更新 → 早盘 prematch 事件 ts 停留在元数据帧时间(实测中位 329s), 而
+            # _pin_cache_find_event 用 ts 判 max_age=300 新鲜度, 把新鲜的赔率误拒 → 早盘 ws_scan 匹配不到 Pin 价。
+            # 赔率帧才是「赔率变了」的真信号, ts 应在这刷新。
+            e["ts"] = time.time()
             ev = e["event"]
             # 覆盖 periods(元数据的 periods 是 list 无赔率, 这里换成 dict)
             p0 = {}
