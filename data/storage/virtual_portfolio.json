@@ -1910,6 +1910,29 @@
       "commence_time": 1794155400.0,
       "created_at": "2026-11-07T22:46:09.325024+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_坡州市民_忠南牙山_主胜",
+      "sport": "football",
+      "league": "韩国乙级联赛",
+      "home_team": "坡州市民",
+      "away_team": "忠南牙山",
+      "home_cn": "坡州市民",
+      "away_cn": "忠南牙山",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 3.94,
+      "stake": 0,
+      "model_prob": 0.4914,
+      "ev_pct": 93.63,
+      "pin_odds": 1.8065,
+      "fair_price": 2.0348,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794123000.0,
+      "created_at": "2026-11-07T22:49:11.923615+00:00",
+      "track_only": true
     }
   ],
   "settled": {
@@ -13321,7 +13344,7 @@
   "daily_budget": {
     "date": "2026-11-08",
     "used": 570.0,
-    "bets": 61
+    "bets": 62
   },
   "updated": null
 }
