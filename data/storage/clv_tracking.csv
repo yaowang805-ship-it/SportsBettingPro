@@ -221,12 +221,12 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-02T18:21:39Z,football,Netherlands Eerste Divisie,Heracles Almelo,TOP Oss,,,双重机会-和局/客,dc,5.45,0,3.3185,64.23,0,3,1793646000,ALL,pinnacle,,,pin_drop,,,5786723,1,odds_changed
 2026-11-02T18:22:40Z,football,England Premier League,Newcastle United FC,Everton FC,,,双重机会-和局/客,dc,1.75,0,1.7085,2.43,0,1,1793649600,ALL,pinnacle,,,ws_scan,,,5130868,1,odds_changed
 2026-11-02T18:27:12Z,football,Spain LaLiga,Valencia CF,Real Madrid,,,主胜,1x2,9.05,0,8.7304,3.66,0,1,1794081600,ALL,pinnacle,,,ws_scan,,,5192376,,
-2026-11-02T18:30:45Z,football,USA Major League Soccer,DC United,New York City FC,,,双重机会-主/和局,dc,1.62,0,1.5203,6.56,0,1,1794085200,ALL,pinnacle,,,drop,,,4231164,,
-2026-11-02T18:30:45Z,football,USA Major League Soccer,DC United,New York City FC,,,双重机会-和局/客,dc,1.43,0,1.3629,4.92,0,1,1794085200,ALL,pinnacle,,,drop,,,4231164,,
+2026-11-02T18:30:45Z,football,USA Major League Soccer,DC United,New York City FC,,,双重机会-主/和局,dc,1.62,0,1.5203,6.56,0,1,1794085200,ALL,pinnacle,,,drop,,,4231164,1,odds_changed
+2026-11-02T18:30:45Z,football,USA Major League Soccer,DC United,New York City FC,,,双重机会-和局/客,dc,1.43,0,1.3629,4.92,0,1,1794085200,ALL,pinnacle,,,drop,,,4231164,1,odds_changed
 2026-11-02T18:30:46Z,football,USA Major League Soccer,Seattle Sounders,Los Angeles FC,,,双重机会-和局/客,dc,1.82,0,1.6405,10.94,0,1,1794096000,ALL,pinnacle,,,drop,,,4231162,1,odds_changed
 2026-11-02T18:30:46Z,football,USA Major League Soccer,Houston Dynamo,Saint Louis City SC,,,双重机会-主/和局,dc,1.49,0,1.4075,5.86,0,1,1794096000,ALL,pinnacle,,,drop,,,4231167,1,odds_changed
 2026-11-02T18:30:46Z,football,USA Major League Soccer,Houston Dynamo,Saint Louis City SC,,,双重机会-和局/客,dc,1.55,0,1.458,6.31,0,1,1794096000,ALL,pinnacle,,,drop,,,4231167,1,odds_changed
-2026-11-02T18:30:59Z,football,USA Major League Soccer,DC United,New York City FC,,,和局,1x2,3.86,0,2.8953,33.32,0,1,1794085200,ALL,pinnacle,,,pin_drop,,,4231164,,
+2026-11-02T18:30:59Z,football,USA Major League Soccer,DC United,New York City FC,,,和局,1x2,3.86,0,2.8953,33.32,0,1,1794085200,ALL,pinnacle,,,pin_drop,,,4231164,1,odds_changed
 2026-11-02T18:30:59Z,football,USA Major League Soccer,Seattle Sounders,Los Angeles FC,,,和局,1x2,3.96,0,2.9745,33.13,0,1,1794096000,ALL,pinnacle,,,pin_drop,,,4231162,1,odds_changed
 2026-11-02T18:30:59Z,football,USA Major League Soccer,Houston Dynamo,Saint Louis City SC,,,和局,1x2,3.81,0,2.8618,33.13,0,1,1794096000,ALL,pinnacle,,,pin_drop,,,4231167,1,odds_changed
 2026-11-02T18:41:57Z,football,Spain LaLiga 2,Cordoba CF,AD Ceuta,,,和局,1x2,5.0,0,3.3354,49.91,0,3,1794072600,ALL,pinnacle,,,pin_drop,,,5192849,1,odds_changed
@@ -1009,7 +1009,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-04T16:57:39Z,volleyball,Bulgaria Volleyball Super League,Slavia Sofia,Neftochimic Burgas,,,客胜,1x2,1.19,0,1.1476,3.69,0,2,1793811600,ALL,pinnacle,,,ws_scan,,,5662714,1,odds_changed
 2026-11-04T17:06:28Z,football,Spain LaLiga,Racing Santander,Real Sociedad,,,和局,1x2,4.11,0,3.1615,30.0,0,1,1795360500,ALL,pinnacle,,,pin_drop,,,5192379,,
 2026-11-04T17:08:15Z,football,Germany Bundesliga,Borussia Monchengladbach,Borussia Dortmund,,,和局,1x2,4.7,0,3.2295,45.53,0,1,1795271400,ALL,pinnacle,,,pin_drop,,,5201550,,
-2026-11-04T17:12:19Z,football,USA Major League Soccer,Inter Miami CF,Charlotte FC,,,主胜,1x2,1.36,0,1.2876,5.62,0,1,1794085200,ALL,pinnacle,,,ws_scan,,,4231161,,
+2026-11-04T17:12:19Z,football,USA Major League Soccer,Inter Miami CF,Charlotte FC,,,主胜,1x2,1.36,0,1.2876,5.62,0,1,1794085200,ALL,pinnacle,,,ws_scan,,,4231161,1,odds_changed
 2026-11-04T17:13:28Z,football,USA Major League Soccer,Minnesota United FC,San Jose Earthquakes,,,主胜,1x2,1.75,0,1.7058,2.59,0,1,1794096000,ALL,pinnacle,,,ws_scan,,,4231156,1,odds_changed
 2026-11-04T17:15:02Z,football,USA Major League Soccer,FC Dallas,Colorado Rapids,,,客胜,1x2,3.14,0,2.9654,5.89,0,1,1794096000,ALL,pinnacle,,,ws_scan,,,4231159,1,odds_changed
 2026-11-04T17:15:52Z,football,Germany 2. Bundesliga,Holstein Kiel,Arminia Bielefeld,,,上半场小球,ht_ou,2.09,0,1.9656,6.33,0,1,1794052800,ALL,pinnacle,,,ws_scan,,1.25,5889809,,
@@ -1658,7 +1658,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-07T04:24:02Z,football,Japan J.League 3,Roasso Kumamoto,Renofa Yamaguchi,,,客胜,1x2,2.61,0,2.2869,14.13,0,4,1794110400,ALL,pinnacle,,,pin_drop,,,5359552,,
 2026-11-07T04:25:21Z,basketball,Bulgaria NBL,Botev 2012,BC Beroe SZ,,,客胜,1x2,1.26,0,1.2336,2.14,0,3,1794067200,ALL,pinnacle,,,ws_scan,,,5837563,,
 2026-11-07T04:25:21Z,basketball,Italy Basketball Serie B,Fulgor Omegna Basket,Andrea Costa Imola,,,让分主胜,hc,1.95,0,1.7642,10.53,0,3,1794081600,ALL,pinnacle,,,ws_scan,,-1.5,5734753,,
-2026-11-07T04:27:22Z,basketball,ABA League Division 1,KD Ilirija,BC Vienna,,,让分主胜,hc,1.88,0,1.7103,9.92,0,2,1794074400,ALL,pinnacle,,,ws_scan,,-1.5,5515648,,
+2026-11-07T04:27:22Z,basketball,ABA League Division 1,KD Ilirija,BC Vienna,,,让分主胜,hc,1.88,0,1.7103,9.92,0,2,1794074400,ALL,pinnacle,,,ws_scan,,-1.5,5515648,1,odds_changed
 2026-11-07T04:27:24Z,basketball,Italy Basketball Serie B,Pallacanestro Fiorenzuola,Virtus Lumezzane,,,让分主胜,hc,1.95,0,1.8675,4.42,0,3,1794157200,ALL,pinnacle,,,ws_scan,,-1.5,5734752,,
 2026-11-07T04:27:47Z,basketball,Taiwan Professional Basketball League,Taipei Taishin Mars,Formosa Dreamers,,,主胜,1x2,1.92,0,1.8067,6.27,0,3,1794033000,ALL,pinnacle,,,drop,,,5593578,,
 2026-11-07T04:31:18Z,football,Georgia Erovnuli Liga 2,FC Aragvi Dusheti,FC Kolkheti 1913 Poti,,,客胜,1x2,2.41,0,2.3374,3.11,0,3,1794049200,ALL,pinnacle,,,ws_scan,,,4450184,1,odds_changed
@@ -1705,3 +1705,16 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-07T05:14:38Z,football,Scotland League One,Ross County FC,Peterhead FC,,,小球,ou,1.83,0,1.7927,2.08,0,2,1794063600,ALL,pinnacle,,,ws_scan,,3.5,5127767,,
 2026-11-07T05:14:48Z,football,Scotland League One,Ross County FC,Peterhead FC,,,客胜,1x2,14.4,0,1.8564,675.69,0,2,1794063600,ALL,pinnacle,,,pin_drop,,,5127767,,
 2026-11-07T05:19:25Z,football,Argentina Liga Profesional,Argentinos Juniors,CA Huracan,,,客胜,1x2,3.93,1.6211,1.6878,132.85,60,1,1794083400.0,BB,,,,push,,,,,
+2026-11-07T05:21:22Z,football,Scotland League Two,Forfar Athletic FC,Edinburgh City FC,,,主胜,1x2,2.97,0,2.5235,17.69,0,3,1794063600,ALL,pinnacle,,,pin_drop,,,5865157,1,odds_changed
+2026-11-07T05:21:22Z,football,Scotland League Two,Forfar Athletic FC,Edinburgh City FC,,,客胜,1x2,1.99,0,1.6564,20.14,0,3,1794063600,ALL,pinnacle,,,pin_drop,,,5865157,1,odds_changed
+2026-11-07T05:21:22Z,football,Russia Premier League,FC Krasnodar,CSKA Moscow,,,和局,1x2,3.69,0,2.5019,47.49,0,2,1794069000,ALL,pinnacle,,,pin_drop,,,5808121,,
+2026-11-07T05:21:22Z,football,Austria Bundesliga,Austria Lustenau,Grazer AK,,,主胜,1x2,2.54,0,1.6531,53.65,0,2,1794067200,ALL,pinnacle,,,pin_drop,,,5165788,,
+2026-11-07T05:21:22Z,football,Netherlands Eredivisie,Fortuna Sittard,SC Telstar,,,主胜,1x2,2.08,0,1.5954,30.37,0,1,1794065400,ALL,pinnacle,,,pin_drop,,,5084195,,
+2026-11-07T05:21:22Z,football,Netherlands Eredivisie,Fortuna Sittard,SC Telstar,,,客胜,1x2,3.25,0,2.6797,21.28,0,1,1794065400,ALL,pinnacle,,,pin_drop,,,5084195,,
+2026-11-07T05:22:45Z,basketball,Bulgaria NBL,BC Spartak Pleven,Balkan Botevgrad,,,主胜,1x2,2.36,0,2.2283,5.91,0,3,1794067200,ALL,pinnacle,,,ws_scan,,,5837560,1,odds_changed
+2026-11-07T05:32:53Z,basketball,Australia NBL,Melbourne United,Brisbane Bullets,,,大分,ou,1.91,0,1.8523,3.12,0,3,1794040200,ALL,pinnacle,,,ws_scan,,193.5,5074394,,
+2026-11-07T05:36:31Z,basketball,Bulgaria NBL,BC Spartak Pleven,Balkan Botevgrad,,,让分客胜,hc,1.85,0,1.7554,5.39,0,3,1794067200,ALL,pinnacle,,,ws_scan,,-3.5,5837560,1,odds_changed
+2026-11-07T05:36:31Z,basketball,Bulgaria NBL,BC Spartak Pleven,Balkan Botevgrad,,,小分,ou,1.84,0,1.7368,5.94,0,3,1794067200,ALL,pinnacle,,,ws_scan,,163.5,5837560,1,odds_changed
+2026-11-07T05:37:31Z,basketball,Bulgaria NBL,BC Spartak Pleven,Balkan Botevgrad,,,客胜,1x2,2.12,0,2.0534,3.24,0,3,1794067200,ALL,pinnacle,,,ws_scan,,,5837560,,
+2026-11-07T05:37:31Z,basketball,Bulgaria NBL,BC Spartak Pleven,Balkan Botevgrad,,,让分主胜,hc,1.89,0,1.7089,10.6,0,3,1794067200,ALL,pinnacle,,,ws_scan,,-2.5,5837560,,
+2026-11-07T05:38:11Z,football,England FA Cup,Altrincham FC,Notts County,,,主胜,1x2,3.89,0,3.5052,10.98,0,3,1794072600,ALL,pinnacle,,,ws_scan,,,5840904,,

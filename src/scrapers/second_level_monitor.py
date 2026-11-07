@@ -2997,7 +2997,7 @@ class SecondLevelMonitor:
                     if _ev <= 0:
                         continue
                     _has_ev = True  # 入库: ev>0 全收
-                    if _ev < 5 or _ev > 12:  # 下单门槛 5-12%(2026-10-22 上限20%→12%: 12-20%桶冷门假EV负)
+                    if _ev < 2 or _ev > 12:  # 下单门槛 2-12%(2026-11-07 用户决定 5%→2%: ws 抓定价错误 edge 薄)
                         continue
                     sm = o.get('_market') or _GROUP_TO_SUB.get(group, group)
                     if not _is_market_released(sport, sm, _league, o.get('designation', ''), _epoch,
@@ -3027,12 +3027,19 @@ class SecondLevelMonitor:
             except Exception:
                 pass
         _t_ingest = time.time() - _t0  # 入库后耗时
-        # 2026-11-07 早盘 drop 为主: ws_scan 只入库不实盘投注(公平价是 WS 缓存, 非 drop 实时价)。
-        # 实盘只走 drop 路径(pin_drop, 实时 price_x/y/z)。观察库样本已由上面 log_oa_opportunities 记录。
+        # 2026-11-07 ws 独立投注(抓 BB 定价错误): ws_scan 用 Pin 缓存价(5min批量)抓定价偏差,
+        # 与 drop(抓 lead-lag 秒级窗口)职责不同, 各自入库+各自投注。ev_raw>20% 护栏+line漂移检查已兜底跨线假溢价。
+        _n_bet = 0
         if opps:
             opps.sort(key=lambda o: -(o.get('ev_pct') or 0))
             opps = opps[:30]
-        print(f'[slm] 早盘WS触发耗时: 比价 {_dt:.1f}s + 入库 {_t_ingest-_dt:.1f}s + 下单 0.0s = 总 {_dt:.1f}s ({len(opps)}单, 只入库不投注)', flush=True)
+            try:
+                from src.betting.bb_real_bet_flow import auto_bet_flow
+                res = auto_bet_flow(opps, trigger_source="ws_scan")
+                _n_bet = len(res.get('success', [])) if isinstance(res, dict) else 0
+            except Exception as e:
+                print(f'[slm] 早盘 ws_scan 下单异常: {type(e).__name__} {str(e)[:80]}', flush=True)
+        print(f'[slm] 早盘WS触发耗时: 比价 {_dt:.1f}s + 入库 {_t_ingest-_dt:.1f}s + 下单 {_n_bet}注 = 总 {_dt:.1f}s ({len(opps)}单)', flush=True)
         return len(opps)
 
     def _scan_prematch(self):
@@ -3074,9 +3081,9 @@ class SecondLevelMonitor:
                     if _ev <= 0:
                         continue
                     _has_ev = True  # 入库观察库: ev>0 都收(全量正EV, 供未来对比两流程)
-                    # 下单门槛: 5-12%(结果锚校准后 EV)。5% 挡 <5% 逆向选择(3-5%桶 -11.1% 铁证),
-                    # 12% 挡冷门/彩票型假 EV(12-20%桶滚球 -2.1%/早盘 -10.1%)。2026-10-22 上限 20%→12%。
-                    if _ev < 5 or _ev > 12:
+                    # 下单门槛: 2-12%(2026-11-07 用户决定 5%→2%: ws 抓定价错误 edge 薄)
+                    # 12% 挡冷门/彩票型假 EV。校准后 EV。
+                    if _ev < 2 or _ev > 12:
                         continue
                     sub_market = o.get('_market') or _GROUP_TO_SUB.get(group, group)
                     if not _is_market_released(sport, sub_market, _league,
@@ -3110,12 +3117,20 @@ class SecondLevelMonitor:
                 log_oa_opportunities(entries, min_ev=2.0, max_ev=12.0, source="ws_scan")
             except Exception:
                 pass
+        _n_bet = 0
         if opps:
             # 按 EV 降序, 限 30 注/轮(防风控: auto_bet_flow 每单 sleep 20-90s)
             opps.sort(key=lambda o: -(o.get('ev_pct') or 0))
             opps = opps[:30]
-            # 2026-11-07 早盘 drop 为主: ws_scan 全量扫描也只入库不实盘投注(公平价是 WS 缓存)。
-            # 实盘只走 drop 路径(pin_drop, 实时 price_x/y/z)。观察库样本已由 log_oa_opportunities 记录。
+            # 2026-11-07 ws 独立投注(抓 BB 定价错误): 与 drop(抓 lead-lag 窗口)职责不同, 各自投注。
+            # ev_raw>20% 护栏+line漂移检查已兜底跨线假溢价。
+            try:
+                from src.betting.bb_real_bet_flow import auto_bet_flow
+                res = auto_bet_flow(opps, trigger_source="ws_scan")
+                _n_bet = len(res.get('success', [])) if isinstance(res, dict) else 0
+            except Exception as e:
+                print(f'[slm] 早盘 ws_scan 下单异常: {type(e).__name__} {str(e)[:80]}', flush=True)
+        print(f'[slm] 早盘WS扫描下单: {_n_bet} 注', flush=True)
         return len(opps)
 
     def _match_drop_anchor(self, trig):
