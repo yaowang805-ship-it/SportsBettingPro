@@ -6399,5 +6399,37 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1794091549.89584,
+  "match_id": 5602645,
+  "market_id": 125421119,
+  "option_type": 2,
+  "sport": 1,
+  "home": "韦拉克鲁斯竞赛",
+  "away": "伊拉普阿托",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 10,
+  "fair": 4.4854,
+  "ev": 5.95,
+  "spread": null,
+  "bb_ts": 1794091549.121026,
+  "stake": 0,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
