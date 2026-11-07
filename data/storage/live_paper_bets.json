@@ -7961,5 +7961,38 @@
   "clv_anchor": null,
   "clv_elapsed_s": null,
   "clv": -15.97
+ },
+ {
+  "ts": 1794016073.471663,
+  "match_id": 5869089,
+  "market_id": 140698583,
+  "option_type": 1,
+  "sport": 5,
+  "home": "维维安.伍尔夫 (美国)",
+  "away": "阿什顿·鲍尔斯 (美国)",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   1
+  ],
+  "bb_odds": 1.52,
+  "fair": 1.2262,
+  "ev": 3.58,
+  "spread": null,
+  "bb_ts": 1794016070.837718,
+  "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": 1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 15.13,
+  "clv": 13.29
  }
 ]

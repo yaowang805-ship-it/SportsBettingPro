@@ -1450,6 +1450,9 @@ class SecondLevelMonitor:
         # 2026-09-20 SBO 不同向(diff): 不再跳过, 改为半额投注(上面 sbo_confirm=False 已 stake×0.5)。
         # 同向(same)=全注额; 不覆盖(none)/不同向(diff)=半额(置信度降一档)。观察库仍标注 sbo_direction 供统计。
         # (稳定性计数已撤 2026-09-20: 与 persistence 2s 重复且加 4s 延迟; 防闪动靠 persistence + oddsChange=0)
+        # 2026-11-07 drop 为主: 只有 drop 唤醒才实盘投注, poll/ws 只入库不投注(观察库样本照收, 供 ROI/释放决策)
+        if self._trigger_source != "drop":
+            return
         if not LIVE_REAL_BET_ENABLED:
             return
         # 2026-11-01 实盘投注门槛不变: 入库已降到 LIVE_INGEST_EV_MIN(2%), 但投注仍要求 >= self.threshold。
