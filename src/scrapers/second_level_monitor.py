@@ -200,6 +200,7 @@ _BALANCE_CACHE = {"ts": 0.0, "bal": None}  # 余额节流缓存(2026-10-21 余�
 DRAWDOWN_STOP_PNL = 1000  # 回撤熔断(2026-09-13): 最近7天滚球实盘累计亏超¥1000(=20%BANKROLL) → 半仓
 DRAWDOWN_RESET_FILE = ROOT / "data" / "storage" / "drawdown_reset_ts.txt"  # 熔断归零时间戳(2026-09-19 用户要求归零重算)
 LIVE_PAPER_FILE = ROOT / "data" / "storage" / "live_paper_bets.json"
+BB_TRACK_FILE = ROOT / "data" / "storage" / "bb_price_track.jsonl"  # 2026-11-07 BB价轨迹追踪落盘
 LIVE_SETTLED_FILE = ROOT / "data" / "storage" / "live_settled_notified.json"  # 已推送过结算的 order_id
 
 # 滚球实盘只投小球(under), EV-Kelly 最优定仓, 单注上限 ¥400(预算1/5)兼顾分散。
@@ -687,6 +688,8 @@ class SecondLevelMonitor:
         self._pin_event_bet = set()    # 2026-10-13 同 Pin 事件互斥: 已下注的 pin_matchup_id(一事件一注)
         self._last_bet_time = 0.0      # 上次下单时间(非阻塞限频用)
         self._bet_delay = 0.0          # 下一单需等待的随机间隔(10-15s, 每次下单后重抽)
+        self._bb_track = {}            # 2026-11-07 BB价轨迹追踪: {(match_id,market_id,option_type): {ts,bb_at_bet,fair_cal_at_bet,home,away,desig,sub,history:[(ts,bb_odds)]}}
+        self._last_bb_track_ts = 0.0   # 上次采样 BB 价轨迹的时间戳(30s 一次)
         # 上次结算汇总推送时间(每小时推一次, 2026-09-12)。落盘读取, 重启不归零 → 防「每次重启都立即重推结算」。
         self._last_settle_push = 0.0
         try:
@@ -1775,6 +1778,15 @@ class SecondLevelMonitor:
             record_sub_market_bet(sig["match_id"], sig.get("sub"))
             self._live_spent += stake
             self._live_outstanding += stake
+            # 2026-11-07 BB价轨迹追踪: 下单成功后注册, 周期采样 BB 价直到追上 Pin 或超时(验证 lead-lag)
+            self._bb_track[(str(sig["match_id"]), str(market_id), str(sig["option_type"]))] = {
+                "ts": time.time(),
+                "bb_at_bet": sig["bb_odds"],
+                "fair_cal_at_bet": sig.get("fair_cal") or sig.get("fair"),
+                "home": sig["match"].get("home", ""), "away": sig["match"].get("away", ""),
+                "desig": sig.get("desig", ""), "sub": sig.get("sub", ""),
+                "history": [(time.time(), sig["bb_odds"])],
+            }
             if order_id:
                 # 记录投注时的 fair/ev/bb_odds 等(2026-09-12: 结算汇总时按 order_id 关联补全明细要素)
                 _binfo = {

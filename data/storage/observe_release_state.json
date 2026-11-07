@@ -198,7 +198,7 @@
   "football|hc|客|60-70%|live": {
     "first_released_at": "2026-11-01T09:17:35.212453",
     "cap": 30,
-    "daily_stake": 0,
+    "daily_stake": 30,
     "daily_stake_date": "2026-11-07",
     "limit_removed": true
   },
@@ -450,7 +450,7 @@
   "basketball|1x2|客|<45%|live": {
     "first_released_at": "2026-11-07T08:35:23.084548",
     "cap": 150,
-    "daily_stake": 0,
+    "daily_stake": 30,
     "daily_stake_date": "2026-11-07",
     "limit_removed": true
   },
@@ -646,7 +646,7 @@
   "basketball|1x2|客|>75%|live": {
     "first_released_at": "2026-11-01T09:17:35.212436",
     "cap": 30,
-    "daily_stake": 0,
+    "daily_stake": 30,
     "daily_stake_date": "2026-11-07",
     "limit_removed": false
   },
