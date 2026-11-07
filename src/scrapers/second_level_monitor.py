@@ -2950,19 +2950,12 @@ class SecondLevelMonitor:
             except Exception:
                 pass
         _t_ingest = time.time() - _t0  # 入库后耗时
+        # 2026-11-07 早盘 drop 为主: ws_scan 只入库不实盘投注(公平价是 WS 缓存, 非 drop 实时价)。
+        # 实盘只走 drop 路径(pin_drop, 实时 price_x/y/z)。观察库样本已由上面 log_oa_opportunities 记录。
         if opps:
             opps.sort(key=lambda o: -(o.get('ev_pct') or 0))
             opps = opps[:30]
-            try:
-                from src.betting.bb_real_bet_flow import auto_bet_flow
-                res = auto_bet_flow(opps, trigger_ts=_t0, trigger_source="ws_scan")
-                n = len(res.get('success', [])) if isinstance(res, dict) else 0
-                _t_bet = time.time() - _t0
-                print(f'[slm] 早盘WS触发耗时: 比价 {_dt:.1f}s + 入库 {_t_ingest-_dt:.1f}s + 下单 {_t_bet-_t_ingest:.1f}s = 总 {_t_bet:.1f}s ({len(opps)}单)', flush=True)
-                if n:
-                    print(f'[slm] 早盘WS触发下单 {n} 注', flush=True)
-            except Exception as e:
-                print(f'[slm] 早盘WS触发下单异常: {type(e).__name__} {e}', flush=True)
+        print(f'[slm] 早盘WS触发耗时: 比价 {_dt:.1f}s + 入库 {_t_ingest-_dt:.1f}s + 下单 0.0s = 总 {_dt:.1f}s ({len(opps)}单, 只入库不投注)', flush=True)
         return len(opps)
 
     def _scan_prematch(self):
@@ -3044,18 +3037,8 @@ class SecondLevelMonitor:
             # 按 EV 降序, 限 30 注/轮(防风控: auto_bet_flow 每单 sleep 20-90s)
             opps.sort(key=lambda o: -(o.get('ev_pct') or 0))
             opps = opps[:30]
-            try:
-                from src.betting.bb_real_bet_flow import auto_bet_flow
-                res = auto_bet_flow(opps, trigger_ts=_t0, trigger_source="ws_scan")
-                n = len(res.get('success', [])) if isinstance(res, dict) else 0
-                if n:
-                    print(f'[slm] 早盘WS扫描触发下单 {n} 注', flush=True)
-                else:
-                    _failed = res.get('failed', []) if isinstance(res, dict) else []
-                    for _f in _failed[:3]:
-                        print(f"[slm] 早盘WS扫描下单失败: {_f.get('home')} {_f.get('reason')}", flush=True)
-            except Exception as e:
-                print(f'[slm] 早盘WS扫描触发下单异常: {type(e).__name__} {e}', flush=True)
+            # 2026-11-07 早盘 drop 为主: ws_scan 全量扫描也只入库不实盘投注(公平价是 WS 缓存)。
+            # 实盘只走 drop 路径(pin_drop, 实时 price_x/y/z)。观察库样本已由 log_oa_opportunities 记录。
         return len(opps)
 
     def _match_drop_anchor(self, trig):
