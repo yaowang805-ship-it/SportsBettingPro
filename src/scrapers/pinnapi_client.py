@@ -99,6 +99,7 @@ def find_pinnacle_event(data, home, away):
 _pin_cache_idx = {"_ts": 0.0, "_idx": {}}
 _pin_cache_base = {"mtime": None, "data": None}       # base 缓存(14MB, persist_full 每60s才重读)
 _pin_cache_file = {"delta_mtime": None, "data": None}  # base+delta 合并缓存(每1s只重读delta 0.4MB)
+_pin_cache_lock = __import__('threading').Lock()       # 2026-11-07 索引重建锁(防16并发 thundering herd → 60s)
 
 
 def _pin_cache_find_event(home, away, games=False, max_age=None):

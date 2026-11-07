@@ -1348,7 +1348,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-06T14:05:44Z,basketball,NBA,Atlanta Hawks,Washington Wizards,,,客胜,1x2,3.26,0,3.0218,7.88,0,1,1794009600,BB,pinnacle,,,ws_scan,,,5438229,1,odds_changed
 2026-11-06T14:05:44Z,basketball,Japan B. League One,Earthfriends Tokyo Z,Fukushima Firebonds,,,让分客胜,hc,1.94,0,1.8461,5.09,0,3,1794038700,ALL,pinnacle,,,ws_scan,,-2.5,5902562,,
 2026-11-06T14:06:13Z,basketball,NBA,Charlotte Hornets,Boston Celtics,,,主胜,1x2,3.61,0,3.1203,15.69,0,1,1794009600,BB,pinnacle,,,pin_drop,,,5438226,1,odds_changed
-2026-11-06T14:08:59Z,basketball,NBA,Milwaukee Bucks,Toronto Raptors,,,主胜,1x2,3.06,0,2.9359,4.23,0,1,1794013200,BB,pinnacle,,,ws_scan,,,5438223,,
+2026-11-06T14:08:59Z,basketball,NBA,Milwaukee Bucks,Toronto Raptors,,,主胜,1x2,3.06,0,2.9359,4.23,0,1,1794013200,BB,pinnacle,,,ws_scan,,,5438223,1,odds_changed
 2026-11-06T14:09:04Z,football,Hungary NB I,Debreceni VSC,Ujpest FC,,,主胜,1x2,2.17,0,2.071,4.78,0,2,1794148200,ALL,pinnacle,,,ws_scan,,,5845502,,
 2026-11-06T14:09:04Z,basketball,NBA,Dallas Mavericks,Utah Jazz,,,客胜,1x2,3.25,0,2.9912,8.65,0,1,1794013200,BB,pinnacle,,,ws_scan,,,5438225,1,odds_changed
 2026-11-06T14:13:26Z,football,Egypt Cup,Enppi Club,Proxy SC,,,主胜,1x2,1.45,0,1.4009,3.51,0,3,1793977200,ALL,pinnacle,,,pin_drop,,,5831426,1,odds_changed
@@ -1524,3 +1524,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-07T01:25:32Z,football,UEFA Champions League,RB Leipzig,RC Lens,,,客胜,1x2,6.5,0,6.1267,6.09,0,2,1795550400,ALL,pinnacle,,,ws_scan,,,5526363,,
 2026-11-07T01:29:57Z,basketball,NBA,Sacramento Kings,San Antonio Spurs,,,主胜,1x2,9.0,0,3.8737,132.34,0,1,1794020400,BB,pinnacle,,,pin_drop,,,5438222,,
 2026-11-07T01:31:00Z,football,Japan J.League 3,FC Gifu,Giravanz Kitakyushu,,,主胜,1x2,1.52,0,1.3143,15.65,0,4,1794027600,ALL,pinnacle,,,pin_drop,,,5359549,,
+2026-11-07T01:38:25Z,football,Mexico Liga TDP,Cordoba FC,Montaneses FC II,,,小球,ou,1.91,0,1.8684,2.23,0,3,1794016800,ALL,pinnacle,,,pin_drop,,3.5,5867479,,
+2026-11-07T01:39:29Z,football,Guatemala Liga Nacional,CD Guastatoya,CD Suchitepequez,,,客胜,1x2,6.5,0,6.1272,6.08,0,3,1794016800,ALL,pinnacle,,,ws_scan,,,5889398,,
