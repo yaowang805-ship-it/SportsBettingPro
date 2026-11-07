@@ -477,7 +477,11 @@ def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6, 18, 19, 47, 2, 13), platform
                         markets.append({
                             "sub": sub, "market_id": mk.get("id"),
                             "option_type": op.get("ty"), "odds": od,
-                            "line": _parse_line(op.get("li")),
+                            # 2026-11-07 修跨线套价根因: 让球/大小线在盘口层 mk.li(权威数值线),
+                            # 不是选项层 op.li(四分盘拆注串 '-0/0.5', 客队方向符号反且四分线算错)。
+                            # 早盘 extract_bb_handicap 读 mk.get("li") 一致。之前 op.get("li") 致滚球让球客胜
+                            # 拿到反号/主线的 Pin 价 → ev_raw 22~34% 假溢价(如 科尔多瓦 vs 山地人 2.07 vs 1.56)。
+                            "line": _parse_line(mk.get("li")),
                             "direction": _TY_TO_DIR.get(op.get("ty")) or _SUB_TY_TO_DIR.get(sub, {}).get(op.get("ty")),
                         })
             # 当前比分(下注瞬间比分): 滚球让球按「当前比分让球」结算要用(2026-09-13 修根因)。
