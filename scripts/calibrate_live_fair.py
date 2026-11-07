@@ -31,6 +31,9 @@ STORAGE = ROOT / "data" / "storage"
 
 EPS = 1e-6
 
+# 2026-11-07: 校准只用干净数据(11-05 后, Power去水+线结构修复后), 剔除 Shin 时代+线 bug 脏数据
+CLEAN_DATA_CUTOFF = 1793836800  # 2026-11-05 00:00 UTC
+
 
 def logit(p):
     p = np.clip(p, EPS, 1 - EPS)
@@ -56,12 +59,12 @@ def load_bets(include_paper=False):
     real = list(real.get("bets", real).values())
     rows = []
     for b in real:
-        if b.get("result") in ("won", "lost") and b.get("fair"):
+        if b.get("result") in ("won", "lost") and b.get("fair") and (b.get("ts") or 0) >= CLEAN_DATA_CUTOFF:
             rows.append((1.0 / b["fair"], 1.0 if b["result"] == "won" else 0.0))
     if include_paper:
         paper = json.load(open(STORAGE / "live_paper_bets.json"))
         for b in paper:
-            if b.get("result") in ("won", "lost") and b.get("fair"):
+            if b.get("result") in ("won", "lost") and b.get("fair") and (b.get("ts") or 0) >= CLEAN_DATA_CUTOFF and not b.get("sim_rejected"):
                 rows.append((1.0 / b["fair"], 1.0 if b["result"] == "won" else 0.0))
     return rows
 

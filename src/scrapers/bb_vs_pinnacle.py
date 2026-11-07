@@ -1170,7 +1170,8 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                 })
 
         # --- 上半场 (HT) 对比：从 DOM odds_ht 读，与 Pinnacle period=1 对比 ---
-        bb_ht = bb.get("odds_ht", {})
+        # 2026-11-07: ht 半场比分源缺失无法结算(观察库 ht 结算恒 void), 停 ht 入库清理噪声
+        bb_ht = {}
         if bb_ht and bb_ht.get("ml"):
             # V5.11: period 名称按运动区分 — 足球/篮球/美式足球是"半场", 网球/排球是"第1盘", 冰球是"第1节"
             _ht_period = {"football": "上半场", "basketball": "上半场", "american_football": "上半场",

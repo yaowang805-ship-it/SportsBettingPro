@@ -19,6 +19,9 @@ STORAGE = ROOT / "data" / "storage"
 
 EPS = 1e-6
 
+# 2026-11-07: 校准只用干净数据(11-05 后), 剔除 Shin 时代+线 bug 脏数据
+CLEAN_DATA_CUTOFF = 1793836800  # 2026-11-05 00:00 UTC
+
 
 def logit(p):
     p = np.clip(p, EPS, 1 - EPS)
@@ -78,8 +81,27 @@ def main():
     rb = _load(STORAGE / "real_bets.json")
     if isinstance(rb, dict):
         rb = list(rb.values())
-    early_real = [b for b in rb if isinstance(b, dict) and b.get("trigger_source") in ("pin_drop", "ws_scan")]
-    tr = _rows(early_real)  # 纯实盘训练
+    # 2026-11-07: 干净数据(11-05 后) + 补早盘观察库 paper_bets(实盘干净样本只有个位数, 观察库同逻辑更全)
+    early_real = [b for b in rb if isinstance(b, dict) and b.get("trigger_source") in ("pin_drop", "ws_scan")
+                  and (b.get("ts") or 0) >= CLEAN_DATA_CUTOFF]
+    paper = _load(STORAGE / "paper_bets.json")
+    if isinstance(paper, dict):
+        paper = list(paper.values())
+    def _settled_ts(b):
+        v = b.get("settled_at")
+        if not v:
+            return 0.0
+        try:
+            from datetime import datetime
+            return datetime.fromisoformat(str(v).replace("Z", "+00:00")).timestamp()
+        except (ValueError, TypeError):
+            return 0.0
+
+    early_paper = [b for b in paper if isinstance(b, dict)
+                   and b.get("sub_market") not in ("ht", "ht_hc", "ht_ou")  # ht 半场无比分源, 排除
+                   and b.get("result") in ("won", "lost")
+                   and _settled_ts(b) >= CLEAN_DATA_CUTOFF]
+    tr = _rows(early_real) + _rows(early_paper)  # 实盘 + 观察库训练
     p = np.array([r[0] for r in tr])
     y = np.array([r[1] for r in tr])
 
