@@ -470,18 +470,26 @@ def fetch_bb_live_matches(sport_ids=(1, 3, 5, 7, 6, 18, 19, 47, 2, 13), platform
                 for mk in (mg.get("mks") or []):
                     if mk.get("ss") != 1:
                         continue
+                    # 2026-11-07 修跨线套价根因: 让球/大小线必须统一成「主队让分(home-line)」约定,
+                    # 否则跨线套价 → 假溢价(ev_raw 22~34%)。之前读每个 op 自己的 li: 足球让球客胜 op.li
+                    # 符号反('+0.5' 应 '-0.5'), 篮球/冰球 mk.li 又无符号(丢主让/主受让方向)。
+                    # hc/hc_games/ht_hc: 主 option(ty=1) 的 li 是带符号 home-line(主让=负/主受让=正);
+                    # ou/ht_ou: 无主客方向, 用 mk.li(权威数值线, 四分盘拆注串只在 op.li 出现)。
+                    _home_li = None
+                    if sub in ("hc", "hc_games", "ht_hc"):
+                        for _op in (mk.get("op") or []):
+                            if _op.get("ty") == 1:
+                                _home_li = _op.get("li")
+                                break
                     for op in (mk.get("op") or []):
                         od = op.get("od", 0)
                         if od <= 0:
                             continue
+                        _li = _home_li if _home_li is not None else mk.get("li")
                         markets.append({
                             "sub": sub, "market_id": mk.get("id"),
                             "option_type": op.get("ty"), "odds": od,
-                            # 2026-11-07 修跨线套价根因: 让球/大小线在盘口层 mk.li(权威数值线),
-                            # 不是选项层 op.li(四分盘拆注串 '-0/0.5', 客队方向符号反且四分线算错)。
-                            # 早盘 extract_bb_handicap 读 mk.get("li") 一致。之前 op.get("li") 致滚球让球客胜
-                            # 拿到反号/主线的 Pin 价 → ev_raw 22~34% 假溢价(如 科尔多瓦 vs 山地人 2.07 vs 1.56)。
-                            "line": _parse_line(mk.get("li")),
+                            "line": _parse_line(_li),
                             "direction": _TY_TO_DIR.get(op.get("ty")) or _SUB_TY_TO_DIR.get(sub, {}).get(op.get("ty")),
                         })
             # 当前比分(下注瞬间比分): 滚球让球按「当前比分让球」结算要用(2026-09-13 修根因)。
