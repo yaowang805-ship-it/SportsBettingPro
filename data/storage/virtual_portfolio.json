@@ -1,5 +1,5 @@
 {
-  "balance": 14812.53,
+  "balance": 14772.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -461,6 +461,52 @@
       "commence_time": 1794083400.0,
       "created_at": "2026-11-07T05:19:25.259666+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_阿森纳_赫尔城_让球主胜(-2)",
+      "sport": "football",
+      "league": "英格兰超级联赛",
+      "home_team": "阿森纳",
+      "away_team": "赫尔城",
+      "home_cn": "阿森纳",
+      "away_cn": "赫尔城",
+      "market": "handicap",
+      "market_type": "让球主胜(-2)",
+      "sub_market": "hc",
+      "line": "-2",
+      "odds": 1.86,
+      "stake": 40,
+      "model_prob": 0.5548,
+      "ev_pct": 3.19,
+      "pin_odds": 1.7519,
+      "fair_price": 1.8025,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794063600.0,
+      "created_at": "2026-11-07T10:35:33.289793+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_利蒂亚_NK紫日_客胜",
+      "sport": "football",
+      "league": "斯洛文尼亚丙级联赛",
+      "home_team": "利蒂亚",
+      "away_team": "NK紫日",
+      "home_cn": "利蒂亚",
+      "away_cn": "NK紫日",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 7.3,
+      "stake": 0,
+      "model_prob": 0.1449,
+      "ev_pct": 5.78,
+      "pin_odds": 5.37,
+      "fair_price": 6.9009,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794056400.0,
+      "created_at": "2026-11-07T10:35:33.289855+00:00",
+      "track_only": true
     }
   ],
   "settled": {
@@ -11871,8 +11917,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-07",
-    "used": 1010.0,
-    "bets": 20
+    "used": 1050.0,
+    "bets": 22
   },
   "updated": null
 }
