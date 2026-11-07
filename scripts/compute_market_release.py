@@ -1669,11 +1669,11 @@ def main():
     newly_released = []  # 新释放的盘口(推钉钉通知)
     for (sport, sm, dr, interval, scope) in observe_released:
         key = f"{sport}|{sm}|{dr}|{interval}|{scope}"
-        _manual = MANUAL_OBSERVE_RELEASE.get(key)  # 已验证方向(固定cap+无日限额, 不走分阶段)
+        _manual = key in MANUAL_OBSERVE_RELEASE  # 已验证方向(固定cap+无日限额) — 2026-11-07 修 set 用 .get 崩溃
         _manual_limited = MANUAL_OBSERVE_RELEASE_LIMITED.get(key)  # 手动释放+有日限额(固定cap, 不走150→300提额)
         prev = obs_state.get(key)
         first = (prev or {}).get("first_released_at")
-        cap = _manual if _manual else (_manual_limited if _manual_limited else (prev or {}).get("cap", OBS_CAP_NEW))
+        cap = _manual_limited if _manual_limited else (prev or {}).get("cap", OBS_CAP_NEW)
         daily_stake = (prev or {}).get("daily_stake", 0)
         daily_date = (prev or {}).get("daily_stake_date", "")
         limit_removed = True if _manual else (prev or {}).get("limit_removed", False)

@@ -1431,3 +1431,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-07T00:32:23Z,football,Qatar Stars League,Al Gharafa SC,AL Duhail SC,,,客胜,1x2,1.68,0,1.3103,28.21,0,3,1794069000,ALL,pinnacle,,,pin_drop,,,5854795,,
 2026-11-07T00:32:23Z,football,Mexico Liga MX,Atletico San Luis,FC Juarez,,,主胜,1x2,1.63,0,1.2836,26.99,0,3,1794013200,ALL,pinnacle,,,pin_drop,,,5089184,,
 2026-11-07T00:32:23Z,football,Mexico Liga MX,Atletico San Luis,FC Juarez,,,客胜,1x2,4.95,0,4.5258,9.37,0,3,1794013200,ALL,pinnacle,,,pin_drop,,,5089184,,
+2026-11-07T00:33:03Z,volleyball,Greece Volleyball A1 League,OFI,AONS Milon,,,让分客胜,hc,1.84,0,1.7039,7.99,0,2,1794063600,ALL,pinnacle,,,ws_scan,,-1.5,5836879,,
+2026-11-07T00:34:37Z,american_football,NFL,Minnesota Vikings,Buffalo Bills,,,主胜,1x2,2.39,0,2.2613,5.69,0,1,1794273300,BB,pinnacle,,,ws_scan,,,5484097,,
+2026-11-07T00:35:01Z,football,Japan J.League 3,Nara Club,Kochi United SC,,,让球客胜,hc,1.94,0,1.7057,13.74,0,4,1794027600,ALL,pinnacle,,,pin_drop,,+0.5,5359551,,

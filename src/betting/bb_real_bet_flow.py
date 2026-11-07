@@ -293,6 +293,14 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
 
     # 2026-10-28 用户要求: 去除「余额<1000 早盘不实盘投注」的限制。余额熔断不再拦早盘(滚球也不拦),
     # 风控改由单注封顶(本金2%)+滚球熔断(>30单负ROI撤回)承担。不再每次调 check_balance_ok。
+    # 2026-11-07 用户新规则: 可用余额(体育钱包 bl)<300 时早盘实盘停投(防余额过低继续下单)。
+    try:
+        from src.betting.bb_auto_bet import get_balance_cached, fetch_balance
+        _bal_gate = get_balance_cached() or fetch_balance()
+        if _bal_gate is not None and float(_bal_gate) < 300:
+            return {"success": [], "failed": [], "error": f"余额 ¥{float(_bal_gate):.0f}<300, 早盘停投"}
+    except Exception:
+        pass
 
     records, _ = _get_all_matches_cached(token, domain)  # 2026-10-25 只读缓存(现仅作 getMatchDetail 失败时的兜底)
     success, failed = [], []
