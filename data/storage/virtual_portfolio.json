@@ -1,5 +1,5 @@
 {
-  "balance": 14772.53,
+  "balance": 14692.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -507,6 +507,29 @@
       "commence_time": 1794056400.0,
       "created_at": "2026-11-07T10:35:33.289855+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_博伊西竞技_查塔努加红狼_客胜",
+      "sport": "football",
+      "league": "美国甲级联赛-附加赛",
+      "home_team": "博伊西竞技",
+      "away_team": "查塔努加红狼",
+      "home_cn": "博伊西竞技",
+      "away_cn": "查塔努加红狼",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 5.2,
+      "stake": 80,
+      "model_prob": 0.4417,
+      "ev_pct": 129.68,
+      "pin_odds": 2.06,
+      "fair_price": 2.2641,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794103200.0,
+      "created_at": "2026-11-07T22:41:06.590974+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -11916,9 +11939,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-11-07",
-    "used": 1050.0,
-    "bets": 22
+    "date": "2026-11-08",
+    "used": 80.0,
+    "bets": 1
   },
   "updated": null
 }
