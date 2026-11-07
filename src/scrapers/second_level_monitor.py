@@ -1419,7 +1419,15 @@ class SecondLevelMonitor:
                 for _mk in _b.get("markets", []):
                     if (str(_mk.get("market_id")) == str(sig.get("market_id"))
                             and str(_mk.get("option_type")) == str(sig.get("option_type"))):
+                        # 2026-11-07 修 line 漂移跨线: 滚球让球/大小球线会随比赛漂移(进球后 4.5→3.5),
+                        # market_id 不变但 line 变了 → 鲜价 BB 和信号时 fair 是不同线的价, 假溢价。
+                        # 线漂了(和信号时 sig["line"] 不一致)就放弃(宁缺毋滥, 不拿错线的价下单)。
                         _fod = _mk.get("odds")
+                        _fresh_line = _mk.get("line")
+                        if (sig.get("line") is not None and _fresh_line is not None
+                                and abs(float(_fresh_line) - float(sig["line"])) > 0.01):
+                            sig["_sim_reject"] = "line_drift"
+                            break
                         if _fod and float(_fod) > 1:
                             sig["bb_odds"] = _fod
                             # 2026-11-05 修: 用校准公平价重算 EV(之前用原始 fair, 把 platt 校准冲掉 → 热门假溢价又回来)
