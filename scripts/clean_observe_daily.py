@@ -24,8 +24,8 @@ sys.path.insert(0, str(ROOT))
 DATA = ROOT / "data" / "storage"
 
 # 与 compute_market_release.py 的 CLEAN_DATA_CUTOFF 保持一致(单一事实来源, 别改漂移)
-CLEAN_DATA_CUTOFF = 1793836800  # 2026-11-05 00:00 UTC
-CLEAN_DATA_LABEL = "2026-11-05 00:00 UTC"
+CLEAN_DATA_CUTOFF = 1794009600  # 2026-11-07 00:00 UTC
+CLEAN_DATA_LABEL = "2026-11-07 00:00 UTC"
 
 
 def _ts(v):

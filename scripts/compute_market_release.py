@@ -91,7 +91,7 @@ LIVE_CLV_WINDOW_DAYS = 14.0  # 窗口天数
 
 # 2026-11-05 干净数据起点: line bug修复(11-04)+滚球platt校准(11-05)之前的历史观察是「错线+Shin bias+未校准」
 # 时期采的, fair/ev/ROI 全是脏的。释放判据只看此之后的干净样本(宁缺毋滥), 防止 cron 用脏数据把已释放的格重新拦回。
-CLEAN_DATA_CUTOFF = 1793836800  # 2026-11-05 00:00 UTC
+CLEAN_DATA_CUTOFF = 1794009600  # 2026-11-07 00:00 UTC
 OBS_CLV_MIN = 2.0          # 早盘释放中位CLV阈值(>2% no-vig CLV): 职业sharp选手平均+2~5%, 单位=%edge(收盘线CLV)
                             # >0太松(+0.5%以下是devig/匹配噪声), >2 既严格又留容错(2026-09-15 用户定)
 OBS_LEV_MIN = 0.4          # [审计字段, 非释放闸门] 滚球 LEV(价格变化方向 clv-ev)阈值, 单位=%edge(3s复验)
@@ -127,7 +127,7 @@ SPECIAL_MARKET_PREFIX = ('corner',)
 REAL_DATA_CUTOFF_TS = datetime.fromisoformat("2026-09-10T00:00:00+00:00").timestamp()
 # 滚球实盘 ROI 交叉验证时间窗起点(2026-10-31): 只认「统一入库鲜价生效后」的实盘。
 # 旧快照价(10-31前)实盘是假负(足球小球 10-25/10-26 -7.5%/-21.1%), 不该拦新口径(鲜价+模拟拒单)的正格。
-LIVE_REAL_ROI_CUTOFF_TS = CLEAN_DATA_CUTOFF  # 2026-11-05 起: line bug+Power+platt校准全生效, 之前实盘ROI是脏的
+LIVE_REAL_ROI_CUTOFF_TS = CLEAN_DATA_CUTOFF  # 2026-11-07 起: line bug+Power+platt校准全生效, 之前实盘ROI是脏的
 LIVE_PAPER = DATA / "live_paper_bets.json"
 LIVE_REAL = DATA / "real_bets.json"  # 滚球实盘(second_level_monitor 写), 实盘ROI交叉验证用(2026-10-05)
 OBS_STATE = DATA / "observe_release_state.json"  # 释放状态(首次释放时间 + cap)

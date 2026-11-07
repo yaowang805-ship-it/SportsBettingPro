@@ -20,7 +20,7 @@ STORAGE = ROOT / "data" / "storage"
 EPS = 1e-6
 
 # 2026-11-07: 校准只用干净数据(11-05 后), 剔除 Shin 时代+线 bug 脏数据
-CLEAN_DATA_CUTOFF = 1793836800  # 2026-11-05 00:00 UTC
+CLEAN_DATA_CUTOFF = 1794009600  # 2026-11-07 00:00 UTC
 
 
 def logit(p):
