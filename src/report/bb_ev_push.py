@@ -681,6 +681,10 @@ def _is_market_released(sport: str, sub_market: str, league: str = "", designati
     rl = _load_release_list()
     if not rl:
         return True
+    # 2026-11-07 全量放开: 早盘三运动三主力盘口直接放行(绕过 observe_blocked/数据驱动拦截),
+    # 只留 EV 门槛 + REAL_ROI_GATE 兜底撤假正。
+    if scope == "early" and f"{sport}|{sub_market}" in rl.get("full_release_early", []):
+        return True
     # 2026-10-24 触发源拆分: Drop 专用释放=足球+篮球所有盘口(用户定); WS 走下面正常清单。
     # 2026-11-01 drop 数据驱动: 用观察库 CLV+纸面ROI 分「盘口×方向×概率桶」(compute_market_release 生成
     # drop_released/drop_blocked), 替换硬编码 DROP_BLOCK 整盘口一刀切。样本不足的格走 DROP_BLOCK 兜底。
