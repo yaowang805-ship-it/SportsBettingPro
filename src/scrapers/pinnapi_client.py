@@ -305,8 +305,17 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         spreads = full.get('spreads') or {}
         if not spreads:
             return None
+        # 2026-11-07 修 swapped 线符号: swapped(主客反)时 Pin 的 spread key 是「Pin 主队让分」,
+        # 而 target_line 是「BB 主队让分」, 两者符号相反 → 不取反会错配到反号市场(主让↔主受让)。
+        # 取反后 _select_line 才匹配到正确线, 返回的 line 也取反对齐 BB 主队约定。
+        _tl = target_line
+        if swapped and target_line is not None:
+            try:
+                _tl = -float(target_line)
+            except (TypeError, ValueError):
+                pass
         # 找最接近 target_line 的线(或主线 hdp=0)
-        o = _select_line(spreads, target_line)
+        o = _select_line(spreads, _tl)
         if not o:
             return None
         # 2026-10-11 让球0(平局退款盘)是三路事件(主/平/客, 平=走盘), 却被两路去水把平局概率强压主客
@@ -322,10 +331,17 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         _fairs = power_fair_odds([o.get('home'), o.get('away')])
         if _fairs[0] <= 1 or _fairs[1] <= 1:
             return None
+        # 返回的 line 对齐 BB 主队约定: swapped 时 hdp 是 Pin 主队(即 BB 客队)让分, 取反才是 BB 主队让分
+        _line = o.get('hdp')
+        if swapped and _line is not None:
+            try:
+                _line = -float(_line)
+            except (TypeError, ValueError):
+                pass
         if swapped:
-            return {'home': _fairs[1], 'away': _fairs[0], 'line': o.get('hdp'),
+            return {'home': _fairs[1], 'away': _fairs[0], 'line': _line,
                     '_raw': {'home': o.get('away'), 'away': o.get('home')}}
-        return {'home': _fairs[0], 'away': _fairs[1], 'line': o.get('hdp'),
+        return {'home': _fairs[0], 'away': _fairs[1], 'line': _line,
                 '_raw': {'home': o.get('home'), 'away': o.get('away')}}
     if sub_market in ('ou', 'ht_ou'):
         # ht_ou(上半场大小, 2026-10-18 补): num_1 的 totals 与全场同结构, 共用去水/线匹配逻辑
