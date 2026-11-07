@@ -102,7 +102,7 @@ _pin_cache_file = {"delta_mtime": None, "data": None}  # base+delta 合并缓存
 _pin_cache_lock = __import__('threading').Lock()       # 2026-11-07 索引重建锁(防16并发 thundering herd → 60s)
 
 
-def _pin_cache_find_event(home, away, games=False, max_age=None):
+def _pin_cache_find_event(home, away, games=False, max_age=None, pin_sid=None):
     """从 pin_odds_cache.json(实时缓存)按队名找事件。返回 event dict 或 None。
 
     只认有 periods 的全量事件; 缓存 >60s 视为失效。文件 mtime 缓存 + 队名索引, 二次调用 ~0ms。
@@ -156,7 +156,10 @@ def _pin_cache_find_event(home, away, games=False, max_age=None):
                         continue
                     eh, ea = _norm(ev.get("home", "")), _norm(ev.get("away", ""))
                     if eh and ea:
-                        _key = (eh, ea)
+                        # 2026-11-07 修队名撞车跨运动混淆: FC Vitebsk(足球) vs HK Vitebsk(冰球)
+                        # 归一化后都="vitebsk", 之前同一 key 导致 1x2 用了冰球 2-way 价(ev 135% 假溢价)。
+                        # 加 sport_id(Pin 运动 ID)区分运动。
+                        _key = (ev.get("sport_id"), eh, ea)
                         _cur = idx.get(_key)
                         if _cur is None:
                             idx[_key] = [ev, entry.get("ts", 0)]  # [事件, 该事件最后更新ts]
@@ -184,7 +187,7 @@ def _pin_cache_find_event(home, away, games=False, max_age=None):
             _idx = _pin_cache_idx["_idx"]
         # 锁外: 查索引(快, dict O(1)); 索引 dict 重建后是新的不可变引用, 旧引用仍安全
         _suf = "games" if games else ""
-        _hit = _idx.get((_norm(home) + _suf, _norm(away) + _suf))
+        _hit = _idx.get((pin_sid, _norm(home) + _suf, _norm(away) + _suf))
         if not _hit:
             return None
         # 2026-11-07 每事件新鲜度: 该队名 WS 帧陈旧(>max_age)则返回 None, 防用旧赔率(否则哪来真溢价)
@@ -255,9 +258,9 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
     # 2026-11-07 每事件新鲜度: live 60s / prematch 300s(早盘 REST 低频频 5min 拉, 阈值放宽)
     _max_age = 60 if event_type == 'live' else 300
     if not e:
-        e = _pin_cache_find_event(home, away, games=_games, max_age=_max_age)
+        e = _pin_cache_find_event(home, away, games=_games, max_age=_max_age, pin_sid=pin_sid)
         if not e:
-            e = _pin_cache_find_event(away, home, games=_games, max_age=_max_age)
+            e = _pin_cache_find_event(away, home, games=_games, max_age=_max_age, pin_sid=pin_sid)
             if e:
                 swapped = True
     if not e:
