@@ -105,6 +105,7 @@ LIVE_MARKET_COOLDOWN = (3, 8)   # 层1: per-(event,market) 冷却(秒) 随机区
 LIVE_EVENT_MAX_EXPOSURE = 3     # 层2: per-event 单场最多持仓数(防对冲吃手续费)
 LIVE_GLOBAL_RATE_MIN = 4        # 层3: 全局频次帽 每分钟≤4 笔(滑动窗口, 纯账号风控)
 LIVE_GLOBAL_RATE_HOUR = 20      # 层3: 全局频次帽 每小时≤20 笔
+MAX_BETS_PER_POLL = 8           # 2026-11-07 每轮 poll 最多处理的机会数(按EV降序), 让 poll 快速返回不被阻塞
 MAPPING_VERSION = "1"           # 市场映射表/队名归一化版本(2026-10-11): 改了映射逻辑要手动 bump, 进 decision_version
 RELEASE_VERSION = "2"           # 释放机制版本(2026-10-11): compute_market_release.py 的释放判据改了要手动 bump(如 REAL_ROI_GATE 单出口重构), 进 decision_version 标记 post-fix cohort
 SETTLE_VERSION = "3"            # 让球结算口径版本(2026-10-13): 篮球=赛前让分(全场净胜), 足球/冰球=滚球让分(下注后净胜); 改了让球结算分支要手动 bump, 进 decision_version 区分修复前后 cohort
@@ -2469,7 +2470,10 @@ class SecondLevelMonitor:
         # 2026-09-20 按 EV 降序排序: 暴增时冷却只能下少数几单, 优先下高 EV 的(之前按 BB 返回任意顺序,
         # 可能下到低 EV 跳过高 EV)。diff(只观察)排最后, 不占冷却名额。
         opps.sort(key=lambda o: (o.get("sbo_direction") == "diff", -(o.get("ev", 0) or 0)))
-        for opp in opps:
+        # 2026-11-07 限批: 每轮 poll 只处理前 N 个机会(已按 EV 降序, 含 drop 高EV),
+        # 让 poll 快速返回, 不被几十笔普通单阻塞 —— 修「drop 唤醒→下注 2.4min 延迟」根因。
+        # 剩余机会下一轮 poll 再处理(opps 每次全量重算, 不会漏)。
+        for opp in opps[:MAX_BETS_PER_POLL]:
             sig = self._opp_to_sig(opp)
             print(f"⚡滚球+EV {sig['ev']:+.2f}% | {sig['match']['home']} vs {sig['match']['away']} "
                   f"{sig['desig']} | BB {sig['bb_odds']:.2f} vs 公平 {sig['fair']:.2f}", flush=True)

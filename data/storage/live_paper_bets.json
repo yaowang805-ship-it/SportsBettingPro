@@ -7519,9 +7519,9 @@
   "spread": null,
   "bb_ts": 1794007903.9697652,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -80.0,
   "sim_rejected": true,
   "sim_reject_reason": "ev_below_entry",
   "anchor": "pin",
@@ -7529,7 +7529,11 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 119.05,
-  "clv": -18.71
+  "clv": -18.71,
+  "final_score": [
+   0,
+   2
+  ]
  },
  {
   "ts": 1794013276.7103481,
@@ -7859,5 +7863,38 @@
   "clv_anchor": null,
   "clv_elapsed_s": null,
   "clv": -24.57
+ },
+ {
+  "ts": 1794014977.276273,
+  "match_id": 5863652,
+  "market_id": 140694208,
+  "option_type": 1,
+  "sport": 3,
+  "home": "圣罗伦素",
+  "away": "瑞加塔斯",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   20,
+   25
+  ],
+  "bb_odds": 2.28,
+  "fair": 1.7015,
+  "ev": 7.21,
+  "spread": null,
+  "bb_ts": 1794014975.761179,
+  "stake": 60,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": 1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 13.06,
+  "clv": 3.73
  }
 ]
