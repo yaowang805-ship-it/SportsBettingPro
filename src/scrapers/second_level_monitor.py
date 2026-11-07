@@ -2743,12 +2743,10 @@ class SecondLevelMonitor:
                         from src.scrapers.pinnacle_live import set_drop_fresh
                         _prices = [float(_px), float(_py)] + ([float(_pz)] if _pz else [])
                         _fairs = power_fair_odds(_prices)
-                        _tp = float(trig.get("to_price") or 0)
-                        _idx = 0
-                        for _i, _p in enumerate(_prices):
-                            if abs(_p - _tp) < 0.01:
-                                _idx = _i
-                                break
+                        # 2026-11-07 修方向搞反: 用 outcome 直接映射方向索引(替代 _idx 匹配 to_price)。
+                        # 之前 _idx 匹配 to_price, 匹配失败(默认0)时客胜/小球用了主胜/大球的价(ev 962% 假溢价)。
+                        # price 顺序: 1x2=主/客/和(px主/py客/pz和), hc=主/客, ou=大/小。
+                        _idx = {"Home": 0, "Away": 1, "Draw": 2, "Over": 0, "Under": 1}.get(trig.get("outcome", ""), 0)
                         _dir = {"Home": "主", "Away": "客", "Draw": "和", "Over": "大", "Under": "小"}.get(trig.get("outcome", ""))
                         if _dir:
                             # 2026-11-06 修: 传 drop 的 point(线), 供 _process 按 BB 下注线匹配(修跨线套价)
@@ -2800,12 +2798,9 @@ class SecondLevelMonitor:
                     from src.scrapers.devig import power_fair_odds
                     _prices = [float(_px), float(_py)] + ([float(_pz)] if _pz else [])
                     _fairs = power_fair_odds(_prices)
-                    _tp = float(trig.get("to_price") or 0)
-                    _idx = 0
-                    for _i, _p in enumerate(_prices):
-                        if abs(_p - _tp) < 0.01:
-                            _idx = _i
-                            break
+                    # 2026-11-07 修方向搞反: 用 outcome 直接映射方向索引(替代 _idx 匹配 to_price)。
+                    # 之前 _idx 匹配失败(默认0)时客胜/小球用了主胜/大球的价(ev 962% 假溢价)。
+                    _idx = {"Home": 0, "Away": 1, "Draw": 2, "Over": 0, "Under": 1}.get(trig.get("outcome", ""), 0)
                     _drop_fair = _fairs[_idx]
                 except (TypeError, ValueError, IndexError):
                     _drop_fair = None

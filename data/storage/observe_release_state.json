@@ -443,7 +443,7 @@
   "ice_hockey|ou|大|55-65%|live": {
     "first_released_at": "2026-11-01T09:17:35.212430",
     "cap": 30,
-    "daily_stake": 30,
+    "daily_stake": 60,
     "daily_stake_date": "2026-11-07",
     "limit_removed": true
   },
@@ -688,7 +688,7 @@
   "basketball|1x2|主|<45%|live": {
     "first_released_at": "2026-11-01T09:17:35.212475",
     "cap": 30,
-    "daily_stake": 0,
+    "daily_stake": 30,
     "daily_stake_date": "2026-11-07",
     "limit_removed": false
   },

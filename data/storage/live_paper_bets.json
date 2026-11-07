@@ -3122,9 +3122,9 @@
   "spread": null,
   "bb_ts": 1794040818.203107,
   "stake": 40,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -40.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3132,7 +3132,11 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 5586.56,
-  "clv": 4.01
+  "clv": 4.01,
+  "final_score": [
+   1,
+   1
+  ]
  },
  {
   "ts": 1794040878.3108292,
@@ -3155,9 +3159,9 @@
   "spread": null,
   "bb_ts": 1794040875.8464,
   "stake": 50,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 46.5,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3165,7 +3169,11 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 50.86,
-  "clv": 16.73
+  "clv": 16.73,
+  "final_score": [
+   67,
+   72
+  ]
  },
  {
   "ts": 1794040918.383698,
@@ -3188,9 +3196,9 @@
   "spread": null,
   "bb_ts": 1794040917.418632,
   "stake": 20,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -20.0,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -3198,7 +3206,11 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 42.31,
-  "clv": -34.34
+  "clv": -34.34,
+  "final_score": [
+   0,
+   2
+  ]
  },
  {
   "ts": 1794041167.6980119,
@@ -3221,9 +3233,9 @@
   "spread": null,
   "bb_ts": 1794041166.637009,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 37.5,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3231,7 +3243,11 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 217.37,
-  "clv": 7.4
+  "clv": 7.4,
+  "final_score": [
+   2,
+   1
+  ]
  },
  {
   "ts": 1794041227.559787,
@@ -3254,9 +3270,9 @@
   "spread": null,
   "bb_ts": 1794041225.7475688,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 22.4,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -3264,7 +3280,11 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 13.05,
-  "clv": -41.97
+  "clv": -41.97,
+  "final_score": [
+   0,
+   2
+  ]
  },
  {
   "ts": 1794041269.747452,
@@ -3287,9 +3307,9 @@
   "spread": null,
   "bb_ts": 1794041266.890661,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -30.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3297,7 +3317,11 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 115.32,
-  "clv": 4.59
+  "clv": 4.59,
+  "final_score": [
+   2,
+   1
+  ]
  },
  {
   "ts": 1794041304.445129,
@@ -3320,9 +3344,9 @@
   "spread": null,
   "bb_ts": 1794041301.039679,
   "stake": 20,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -20.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3330,7 +3354,11 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "clv": 7.96
+  "clv": 7.96,
+  "final_score": [
+   3,
+   2
+  ]
  },
  {
   "ts": 1794041343.077238,
@@ -3353,9 +3381,9 @@
   "spread": null,
   "bb_ts": 1794041341.718724,
   "stake": 40,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 86.8,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -3363,7 +3391,11 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 49.42,
-  "clv": -48.33
+  "clv": -48.33,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1794041469.457143,
@@ -3386,9 +3418,9 @@
   "spread": null,
   "bb_ts": 1794041466.991501,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -60.0,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -3396,7 +3428,12 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "clv": -25.73
+  "clv": -25.73,
+  "final_score": [
+   67,
+   72
+  ],
+  "line_semantics": "pregame"
  },
  {
   "ts": 1794041509.210892,
@@ -3419,16 +3456,20 @@
   "spread": null,
   "bb_ts": 1794041508.171988,
   "stake": 10,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -10.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   1
+  ]
  },
  {
   "ts": 1794041587.7839732,
@@ -3451,9 +3492,9 @@
   "spread": null,
   "bb_ts": 1794041586.952735,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -70.0,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -3461,7 +3502,11 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 15.52,
-  "clv": -40.31
+  "clv": -40.31,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1794041625.387073,
@@ -3484,9 +3529,9 @@
   "spread": null,
   "bb_ts": 1794041623.479979,
   "stake": 40,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 39.2,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3494,7 +3539,11 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 864.95,
-  "clv": 3.73
+  "clv": 3.73,
+  "final_score": [
+   2,
+   1
+  ]
  },
  {
   "ts": 1794041780.786979,
@@ -3517,9 +3566,9 @@
   "spread": null,
   "bb_ts": 1794041777.625003,
   "stake": 10,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -10.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3527,7 +3576,11 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 29.39,
-  "clv": 625.47
+  "clv": 625.47,
+  "final_score": [
+   1,
+   0
+  ]
  },
  {
   "ts": 1794041780.787861,
@@ -3550,9 +3603,9 @@
   "spread": null,
   "bb_ts": 1794041777.625003,
   "stake": 10,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -10.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3560,7 +3613,11 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 156.52,
-  "clv": 5.71
+  "clv": 5.71,
+  "final_score": [
+   2,
+   2
+  ]
  },
  {
   "ts": 1794042323.533397,
@@ -3583,9 +3640,9 @@
   "spread": null,
   "bb_ts": 1794042321.93915,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 28.7,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3593,7 +3650,11 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 3913.83,
-  "clv": 4.16
+  "clv": 4.16,
+  "final_score": [
+   1,
+   4
+  ]
  },
  {
   "ts": 1794042543.9132679,
@@ -3616,9 +3677,9 @@
   "spread": null,
   "bb_ts": 1794042543.0419672,
   "stake": 40,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -40.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3626,7 +3687,11 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 13.36,
-  "clv": 6.93
+  "clv": 6.93,
+  "final_score": [
+   92,
+   88
+  ]
  },
  {
   "ts": 1794043093.46944,
@@ -3649,9 +3714,9 @@
   "spread": null,
   "bb_ts": 1794043091.152756,
   "stake": 40,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 94.4,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -3659,7 +3724,11 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 15.96,
-  "clv": -53.09
+  "clv": -53.09,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1794043145.120503,
@@ -3682,9 +3751,9 @@
   "spread": null,
   "bb_ts": 1794043143.606475,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 33.6,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -3692,7 +3761,11 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 38.87,
-  "clv": -14.11
+  "clv": -14.11,
+  "final_score": [
+   0,
+   2
+  ]
  },
  {
   "ts": 1794043373.286432,
@@ -3715,9 +3788,9 @@
   "spread": null,
   "bb_ts": 1794043372.067681,
   "stake": 10,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -10.0,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -3725,7 +3798,11 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 37.66,
-  "clv": 6.33
+  "clv": 6.33,
+  "final_score": [
+   76,
+   94
+  ]
  },
  {
   "ts": 1794043610.656818,
@@ -3748,9 +3825,9 @@
   "spread": null,
   "bb_ts": 1794043608.93075,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -70.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3758,7 +3835,11 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 36.32,
-  "clv": -19.27
+  "clv": -19.27,
+  "final_score": [
+   0,
+   2
+  ]
  },
  {
   "ts": 1794043782.819037,
@@ -3781,9 +3862,9 @@
   "spread": null,
   "bb_ts": 1794043781.7399948,
   "stake": 10,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -10.0,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -3791,7 +3872,11 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "clv": 3.65
+  "clv": 3.65,
+  "final_score": [
+   1,
+   4
+  ]
  },
  {
   "ts": 1794044357.917509,
@@ -3814,9 +3899,9 @@
   "spread": null,
   "bb_ts": 1794044356.6810691,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -70.0,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -3824,7 +3909,11 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 106.26,
-  "clv": 4.21
+  "clv": 4.21,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1794044780.497918,
@@ -3847,9 +3936,9 @@
   "spread": null,
   "bb_ts": 1794044777.992533,
   "stake": 40,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 72.8,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3857,7 +3946,11 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 90.01,
-  "clv": -20.43
+  "clv": -20.43,
+  "final_score": [
+   85,
+   88
+  ]
  },
  {
   "ts": 1794045435.505791,
@@ -3880,9 +3973,9 @@
   "spread": null,
   "bb_ts": 1794045433.743467,
   "stake": 40,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -40.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3890,7 +3983,11 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 16.49,
-  "clv": -16.29
+  "clv": -16.29,
+  "final_score": [
+   85,
+   88
+  ]
  },
  {
   "ts": 1794045847.711016,
@@ -3913,9 +4010,9 @@
   "spread": null,
   "bb_ts": 1794045839.123123,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 93.3,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3923,7 +4020,11 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 12.96,
-  "clv": -30.45
+  "clv": -30.45,
+  "final_score": [
+   2,
+   1
+  ]
  },
  {
   "ts": 1794046626.0081348,
@@ -3946,9 +4047,9 @@
   "spread": null,
   "bb_ts": 1794046625.583455,
   "stake": 40,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -40.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -3956,7 +4057,11 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "clv": 5.66
+  "clv": 5.66,
+  "final_score": [
+   2,
+   1
+  ]
  },
  {
   "ts": 1794046673.5404701,
@@ -3979,16 +4084,20 @@
   "spread": null,
   "bb_ts": 1794046672.860776,
   "stake": 20,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -20.0,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   0,
+   1
+  ]
  },
  {
   "ts": 1794046752.1547039,
@@ -4011,9 +4120,9 @@
   "spread": null,
   "bb_ts": 1794046749.1427681,
   "stake": 20,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -20.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -4021,7 +4130,11 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "clv": 3.45
+  "clv": 3.45,
+  "final_score": [
+   1,
+   0
+  ]
  },
  {
   "ts": 1794047410.2734709,
@@ -4044,6 +4157,175 @@
   "spread": null,
   "bb_ts": 1794047407.875324,
   "stake": 30,
+  "settled": true,
+  "result": "lost",
+  "profit": -30.0,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": -1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 10.13,
+  "clv": -22.31,
+  "final_score": [
+   95,
+   78
+  ]
+ },
+ {
+  "ts": 1794048192.979952,
+  "match_id": 5859776,
+  "market_id": 141162573,
+  "option_type": 2,
+  "sport": 3,
+  "home": "卡伊罗娃贝莱迪耶西",
+  "away": "波尔多 RS",
+  "designation": "让球客胜",
+  "sub": "handicap",
+  "line": -1.0,
+  "bsc": [
+   36,
+   40
+  ],
+  "bb_odds": 1.94,
+  "fair": 1.4558,
+  "ev": 7.42,
+  "spread": null,
+  "bb_ts": 1794048191.1615381,
+  "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": true,
+  "sim_reject_reason": "rejected_odds_changed",
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null,
+  "clv": -31.62
+ },
+ {
+  "ts": 1794048599.6188679,
+  "match_id": 5326701,
+  "market_id": 141160791,
+  "option_type": 1,
+  "sport": 3,
+  "home": "青森热力",
+  "away": "山形飞龙",
+  "designation": "让球主胜",
+  "sub": "handicap",
+  "line": -1.5,
+  "bsc": [
+   69,
+   73
+  ],
+  "bb_odds": 2.12,
+  "fair": 1.6355,
+  "ev": 3.75,
+  "spread": null,
+  "bb_ts": 1794048598.945298,
+  "stake": 30,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": true,
+  "sim_reject_reason": "rejected_odds_changed",
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null,
+  "clv": -19.56
+ },
+ {
+  "ts": 1794048653.43621,
+  "match_id": 5837015,
+  "market_id": 139601920,
+  "option_type": 3,
+  "sport": 1,
+  "home": "海美瑞",
+  "away": "霍尼红冰",
+  "designation": "和局",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   2,
+   0
+  ],
+  "bb_odds": 13.2,
+  "fair": 15.1534,
+  "ev": 4.15,
+  "spread": null,
+  "bb_ts": 1794048652.682005,
+  "stake": 10,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null,
+  "clv": 3.02
+ },
+ {
+  "ts": 1794048743.349053,
+  "match_id": 5836202,
+  "market_id": 139062024,
+  "option_type": 2,
+  "sport": 1,
+  "home": "伊尤斯堡",
+  "away": "高卡尔利",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   1
+  ],
+  "bb_odds": 1.3,
+  "fair": 1.0898,
+  "ev": 5.9,
+  "spread": null,
+  "bb_ts": 1794048742.857336,
+  "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": 1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 1452.0,
+  "clv": 5.9
+ },
+ {
+  "ts": 1794048847.3547342,
+  "match_id": 5873983,
+  "market_id": 141036775,
+  "option_type": 2,
+  "sport": 5,
+  "home": "伊格纳西奥.帕里斯卡 (委内瑞拉)",
+  "away": "卢卡斯.维达勒.兰西亚罗 (斯洛文尼亚)",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   1,
+   0
+  ],
+  "bb_odds": 9.65,
+  "fair": 9.9508,
+  "ev": 5.48,
+  "spread": null,
+  "bb_ts": 1794048845.647556,
+  "stake": 10,
   "settled": false,
   "result": null,
   "profit": null,
@@ -4053,7 +4335,401 @@
   "sbo_direction": "none",
   "clv_sign": -1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 10.13,
-  "clv": -22.31
+  "clv_elapsed_s": 82.4,
+  "clv": -38.24
+ },
+ {
+  "ts": 1794048847.355822,
+  "match_id": 5872848,
+  "market_id": 141029544,
+  "option_type": 1,
+  "sport": 5,
+  "home": "米卡.布鲁诺德 (瑞士)",
+  "away": "博尔纳.戈约 (克罗地亚)",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 3.46,
+  "fair": 2.7931,
+  "ev": 3.7,
+  "spread": null,
+  "bb_ts": 1794048845.647556,
+  "stake": 30,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": 1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 18.73,
+  "clv": -29.97
+ },
+ {
+  "ts": 1794049326.384609,
+  "match_id": 5867900,
+  "market_id": 140746346,
+  "option_type": 1,
+  "sport": 1,
+  "home": "拉贾斯坦邦联",
+  "away": "喀拉拉邦FC",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   1
+  ],
+  "bb_odds": 12.9,
+  "fair": 14.9119,
+  "ev": 3.07,
+  "spread": null,
+  "bb_ts": 1794049326.094524,
+  "stake": 0,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null,
+  "clv": -2.51
+ },
+ {
+  "ts": 1794050294.9802759,
+  "match_id": 5711922,
+  "market_id": 141164886,
+  "option_type": 4,
+  "sport": 2,
+  "home": "阿克姆图拉",
+  "away": "萨马拉",
+  "designation": "大球",
+  "sub": "over_under",
+  "line": 6.5,
+  "bsc": [
+   2,
+   2
+  ],
+  "bb_odds": 2.12,
+  "fair": 1.6225,
+  "ev": 4.6,
+  "spread": null,
+  "bb_ts": 1794050293.441303,
+  "stake": 30,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": -1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 2013.35,
+  "clv": -26.19
+ },
+ {
+  "ts": 1794050955.822005,
+  "match_id": 5837056,
+  "market_id": 139445122,
+  "option_type": 3,
+  "sport": 1,
+  "home": "理文",
+  "away": "冠忠南区",
+  "designation": "和局",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   1,
+   0
+  ],
+  "bb_odds": 7.45,
+  "fair": 7.179,
+  "ev": 4.75,
+  "spread": null,
+  "bb_ts": 1794050954.341634,
+  "stake": 20,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null,
+  "clv": -2.21
+ },
+ {
+  "ts": 1794052455.07158,
+  "match_id": 5711922,
+  "market_id": 140526959,
+  "option_type": 2,
+  "sport": 2,
+  "home": "阿克姆图拉",
+  "away": "萨马拉",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   3,
+   2
+  ],
+  "bb_odds": 16.3,
+  "fair": 20.6037,
+  "ev": 4.32,
+  "spread": null,
+  "bb_ts": 1794052454.103843,
+  "stake": 0,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": -1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 15.4,
+  "clv": 79.12
+ },
+ {
+  "ts": 1794052869.693162,
+  "match_id": 4379392,
+  "market_id": 140740115,
+  "option_type": 2,
+  "sport": 1,
+  "home": "梅夏特堤基布利",
+  "away": "古泰斯鱼雷",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   2,
+   1
+  ],
+  "bb_odds": 11.6,
+  "fair": 12.6533,
+  "ev": 5.31,
+  "spread": null,
+  "bb_ts": 1794052869.176032,
+  "stake": 10,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": 1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 355.0
+ },
+ {
+  "ts": 1794052878.683022,
+  "match_id": 5872850,
+  "market_id": 141029492,
+  "option_type": 1,
+  "sport": 5,
+  "home": "欧勒.瓦林 (瑞典)",
+  "away": "罗伦佐.索内戈 (意大利)",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 6.05,
+  "fair": 5.3564,
+  "ev": 6.96,
+  "spread": null,
+  "bb_ts": 1794052875.558935,
+  "stake": 20,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": 1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 21.68,
+  "clv": -23.45
+ },
+ {
+  "ts": 1794053141.267638,
+  "match_id": 4450184,
+  "market_id": 139099835,
+  "option_type": 1,
+  "sport": 1,
+  "home": "阿拉吉夫杜塞提",
+  "away": "科克禾迪 1913",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 5.95,
+  "fair": 5.3144,
+  "ev": 5.85,
+  "spread": null,
+  "bb_ts": 1794053138.0271559,
+  "stake": 20,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null,
+  "clv": 5.85
+ },
+ {
+  "ts": 1794053748.408746,
+  "match_id": 5871200,
+  "market_id": 140892658,
+  "option_type": 1,
+  "sport": 1,
+  "home": "蒙巴萨联队",
+  "away": "沙巴纳",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   1
+  ],
+  "bb_odds": 12.2,
+  "fair": 13.3487,
+  "ev": 6.41,
+  "spread": null,
+  "bb_ts": 1794053747.585482,
+  "stake": 10,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null,
+  "clv": 4.68
+ },
+ {
+  "ts": 1794053954.651506,
+  "match_id": 5813398,
+  "market_id": 140953917,
+  "option_type": 1,
+  "sport": 13,
+  "home": "伊斯坦布尔青年体育",
+  "away": "加拉塔萨雷",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   1,
+   1
+  ],
+  "bb_odds": 4.09,
+  "fair": 3.4351,
+  "ev": 3.19,
+  "spread": null,
+  "bb_ts": 1794053951.686155,
+  "stake": 20,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": -1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 71.94,
+  "clv": -25.6
+ },
+ {
+  "ts": 1794054145.9090838,
+  "match_id": 5865701,
+  "market_id": 140700078,
+  "option_type": 1,
+  "sport": 3,
+  "home": "安卡拉科勒基尔",
+  "away": "布约切克梅杰",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   14,
+   15
+  ],
+  "bb_odds": 2.94,
+  "fair": 2.2302,
+  "ev": 7.17,
+  "spread": null,
+  "bb_ts": 1794054143.7119539,
+  "stake": 30,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": true,
+  "sim_reject_reason": "rejected_odds_changed",
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": -1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 74.09,
+  "clv": -17.04
+ },
+ {
+  "ts": 1794054567.87554,
+  "match_id": 5836124,
+  "market_id": 139439283,
+  "option_type": 2,
+  "sport": 1,
+  "home": "比得哥什东夏电器",
+  "away": "托伦",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   2,
+   1
+  ],
+  "bb_odds": 14.9,
+  "fair": 17.7926,
+  "ev": 3.97,
+  "spread": null,
+  "bb_ts": 1794054564.65357,
+  "stake": 0,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
