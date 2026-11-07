@@ -220,7 +220,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-02T18:21:39Z,football,Netherlands Eerste Divisie,Heracles Almelo,TOP Oss,,,客胜,1x2,14.0,0,11.5833,20.86,0,3,1793646000,ALL,pinnacle,,,pin_drop,,,5786723,1,odds_changed
 2026-11-02T18:21:39Z,football,Netherlands Eerste Divisie,Heracles Almelo,TOP Oss,,,双重机会-和局/客,dc,5.45,0,3.3185,64.23,0,3,1793646000,ALL,pinnacle,,,pin_drop,,,5786723,1,odds_changed
 2026-11-02T18:22:40Z,football,England Premier League,Newcastle United FC,Everton FC,,,双重机会-和局/客,dc,1.75,0,1.7085,2.43,0,1,1793649600,ALL,pinnacle,,,ws_scan,,,5130868,1,odds_changed
-2026-11-02T18:27:12Z,football,Spain LaLiga,Valencia CF,Real Madrid,,,主胜,1x2,9.05,0,8.7304,3.66,0,1,1794081600,ALL,pinnacle,,,ws_scan,,,5192376,,
+2026-11-02T18:27:12Z,football,Spain LaLiga,Valencia CF,Real Madrid,,,主胜,1x2,9.05,0,8.7304,3.66,0,1,1794081600,ALL,pinnacle,,,ws_scan,,,5192376,1,odds_changed
 2026-11-02T18:30:45Z,football,USA Major League Soccer,DC United,New York City FC,,,双重机会-主/和局,dc,1.62,0,1.5203,6.56,0,1,1794085200,ALL,pinnacle,,,drop,,,4231164,1,odds_changed
 2026-11-02T18:30:45Z,football,USA Major League Soccer,DC United,New York City FC,,,双重机会-和局/客,dc,1.43,0,1.3629,4.92,0,1,1794085200,ALL,pinnacle,,,drop,,,4231164,1,odds_changed
 2026-11-02T18:30:46Z,football,USA Major League Soccer,Seattle Sounders,Los Angeles FC,,,双重机会-和局/客,dc,1.82,0,1.6405,10.94,0,1,1794096000,ALL,pinnacle,,,drop,,,4231162,1,odds_changed
@@ -427,8 +427,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-03T09:39:28Z,football,Saudi Arabia Professional League,Al Ettifaq FC,AL Hilal (KSA),,,双重机会-和局/客,dc,1.1,0,1.0604,3.73,0,3,1794061800,BB,pinnacle,,,drop,,,5840403,1,odds_changed
 2026-11-03T09:48:48Z,football,Spain LaLiga,Real Sociedad,Rayo Vallecano,,,和局,1x2,4.11,0,3.0232,35.95,0,1,1794150900,ALL,pinnacle,,,pin_drop,,,5192369,1,odds_changed
 2026-11-03T09:48:48Z,football,Spain LaLiga,Real Sociedad,Rayo Vallecano,,,双重机会-和局/客,dc,2.18,0,1.9699,10.66,0,1,1794150900,ALL,pinnacle,,,pin_drop,,,5192369,1,odds_changed
-2026-11-03T09:49:24Z,football,Spain LaLiga,Valencia CF,Real Madrid,,,和局,1x2,6.0,0,3.5439,69.3,0,1,1794081600,ALL,pinnacle,,,pin_drop,,,5192376,,
-2026-11-03T09:49:24Z,football,Spain LaLiga,Valencia CF,Real Madrid,,,双重机会-主/和局,dc,3.62,0,2.6135,38.51,0,1,1794081600,ALL,pinnacle,,,pin_drop,,,5192376,,
+2026-11-03T09:49:24Z,football,Spain LaLiga,Valencia CF,Real Madrid,,,和局,1x2,6.0,0,3.5439,69.3,0,1,1794081600,ALL,pinnacle,,,pin_drop,,,5192376,1,odds_changed
+2026-11-03T09:49:24Z,football,Spain LaLiga,Valencia CF,Real Madrid,,,双重机会-主/和局,dc,3.62,0,2.6135,38.51,0,1,1794081600,ALL,pinnacle,,,pin_drop,,,5192376,1,odds_changed
 2026-11-03T09:49:31Z,football,Saudi Arabia Professional League,Abha Club,AL Shabab FC (KSA),,,上半场小球,ht_ou,1.76,0,1.7201,2.32,0,3,1793891400,ALL,pinnacle,,,drop,,1.25,5832546,1,odds_changed
 2026-11-03T09:52:37Z,football,Saudi Arabia Professional League,AL Fateh SC,Al Riyadh,,,双重机会-和局/客,dc,1.64,0,1.5934,2.92,0,3,1793975400,ALL,pinnacle,,,ws_scan,,,5834573,1,odds_changed
 2026-11-03T09:57:02Z,tennis,ATP Challenger - Costa do Sauipe Open,Marco Cecchinato (ITA),Francisco Comesana (ARG),,,主胜,1x2,3.18,0,3.0383,4.67,0,3,1793743200,BB,pinnacle,,,ws_scan,,,5842270,,
@@ -530,7 +530,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-03T12:54:35Z,football,Ecuador LigaPro Primera A-Playoff,Mushuc Runa SC,Manta FC,,,主胜,1x2,1.45,0,1.3318,8.87,0,2,1793737800,ALL,pinnacle,,,ws_scan,,,5616347,1,odds_changed
 2026-11-03T12:54:35Z,football,England Championship League,Blackburn Rovers,Stoke City,,,客胜,1x2,2.53,0,2.2653,11.68,0,2,1793735100,ALL,pinnacle,,,ws_scan,,,5814440,1,odds_changed
 2026-11-03T12:54:35Z,football,Colombia Primera B-Playoff,Real Cartagena FC,Deportes Quindio,,,客胜,1x2,3.82,0,3.6959,3.36,0,3,1793755800,ALL,pinnacle,,,ws_scan,,,5845035,1,odds_changed
-2026-11-03T12:54:35Z,football,Spain LaLiga,Valencia CF,Real Madrid,,,客胜,1x2,1.27,0,1.2314,3.13,0,1,1794081600,ALL,pinnacle,,,ws_scan,,,5192376,,
+2026-11-03T12:54:35Z,football,Spain LaLiga,Valencia CF,Real Madrid,,,客胜,1x2,1.27,0,1.2314,3.13,0,1,1794081600,ALL,pinnacle,,,ws_scan,,,5192376,1,odds_changed
 2026-11-03T12:54:35Z,football,Egypt League Cup,Al Masry Club,Petrojet FC,,,主胜,1x2,2.07,0,1.8491,11.94,0,3,1793815200,ALL,pinnacle,,,ws_scan,,,5820428,1,odds_changed
 2026-11-03T12:54:35Z,football,Japan J.League,Avispa Fukuoka,V Varen Nagasaki,,,客胜,1x2,3.59,0,3.28,9.45,0,2,1794031200,ALL,pinnacle,,,ws_scan,,,5156733,1,odds_changed
 2026-11-03T12:54:35Z,football,Japan J.League,Kashiwa Reysol,Kawasaki Frontale,,,主胜,1x2,2.16,0,1.992,8.43,0,2,1794034800,ALL,pinnacle,,,ws_scan,,,5156738,1,odds_changed
@@ -1534,7 +1534,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-07T01:49:45Z,basketball,Japan B. League One,Earthfriends Tokyo Z,Fukushima Firebonds,,,主胜,1x2,2.51,0,2.4242,3.54,0,3,1794038700,ALL,pinnacle,,,ws_scan,,,5902562,,
 2026-11-07T01:49:45Z,basketball,Australia NBL,Melbourne United,Brisbane Bullets,,,客胜,1x2,5.05,0,4.5246,11.61,0,3,1794040200,ALL,pinnacle,,,ws_scan,,,5074394,,
 2026-11-07T01:50:08Z,football,Poland Ekstraklasa,Jagiellonia Bialystok,GKS Katowice,,,客胜,1x2,2.68,0,2.2639,18.38,0,2,1794145500,ALL,pinnacle,,,pin_drop,,,5899257,,
-2026-11-07T01:50:45Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Kobe Storks,,,客胜,1x2,3.36,0,3.0834,8.97,0,2,1794031500,BB,pinnacle,,,pin_drop,,,5309941,,
+2026-11-07T01:50:45Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Kobe Storks,,,客胜,1x2,3.36,0,3.0834,8.97,0,2,1794031500,BB,pinnacle,,,pin_drop,,,5309941,1,odds_changed
 2026-11-07T01:52:19Z,football,Australia A-League,Auckland FC,Wellington Phoenix FC,,,客胜,1x2,3.04,0,2.4037,26.47,0,2,1794024000,ALL,pinnacle,,,pin_drop,,,5276699,1,odds_changed
 2026-11-07T02:00:26Z,football,Australian Championship,Marconi Stallions,Bayswater City,,,主胜,1x2,1.8,0,1.7637,2.06,0,3,1794024000,ALL,pinnacle,,,ws_scan,,,5889488,,
 2026-11-07T02:03:03Z,football,Australian Championship,Wollongong Wolves FC,Preston Lions FC,,,主胜,1x2,3.23,0,2.7573,17.14,0,3,1794031200,ALL,pinnacle,,,pin_drop,,,5889541,,
@@ -1660,7 +1660,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-07T04:25:21Z,basketball,Italy Basketball Serie B,Fulgor Omegna Basket,Andrea Costa Imola,,,让分主胜,hc,1.95,0,1.7642,10.53,0,3,1794081600,ALL,pinnacle,,,ws_scan,,-1.5,5734753,,
 2026-11-07T04:27:22Z,basketball,ABA League Division 1,KD Ilirija,BC Vienna,,,让分主胜,hc,1.88,0,1.7103,9.92,0,2,1794074400,ALL,pinnacle,,,ws_scan,,-1.5,5515648,1,odds_changed
 2026-11-07T04:27:24Z,basketball,Italy Basketball Serie B,Pallacanestro Fiorenzuola,Virtus Lumezzane,,,让分主胜,hc,1.95,0,1.8675,4.42,0,3,1794157200,ALL,pinnacle,,,ws_scan,,-1.5,5734752,,
-2026-11-07T04:27:47Z,basketball,Taiwan Professional Basketball League,Taipei Taishin Mars,Formosa Dreamers,,,主胜,1x2,1.92,0,1.8067,6.27,0,3,1794033000,ALL,pinnacle,,,drop,,,5593578,,
+2026-11-07T04:27:47Z,basketball,Taiwan Professional Basketball League,Taipei Taishin Mars,Formosa Dreamers,,,主胜,1x2,1.92,0,1.8067,6.27,0,3,1794033000,ALL,pinnacle,,,drop,,,5593578,1,odds_changed
 2026-11-07T04:31:18Z,football,Georgia Erovnuli Liga 2,FC Aragvi Dusheti,FC Kolkheti 1913 Poti,,,客胜,1x2,2.41,0,2.3374,3.11,0,3,1794049200,ALL,pinnacle,,,ws_scan,,,4450184,1,odds_changed
 2026-11-07T04:32:36Z,football,Ukraine Premier League,FC Epitsentr Kamianets Podilskyi,FC Kryvbas Kriviy Rih,,,主胜,1x2,2.16,0,1.7518,23.3,0,2,1794049200,BB,pinnacle,,,pin_drop,,,5837409,1,odds_changed
 2026-11-07T04:32:36Z,football,Ukraine Premier League,FC Epitsentr Kamianets Podilskyi,FC Kryvbas Kriviy Rih,,,客胜,1x2,2.86,0,2.3301,22.74,0,2,1794049200,BB,pinnacle,,,pin_drop,,,5837409,1,odds_changed
@@ -1676,7 +1676,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-07T04:46:54Z,tennis,ATP - Stockholm Open,Adrian Mannarino (FRA),Jan Simonsson (SWE),,,让盘主胜,hc,1.12,0,1.0906,2.7,0,2,1794059400,BB,pinnacle,,,ws_scan,,-1.5,5872908,,
 2026-11-07T04:48:24Z,basketball,Estonian-Latvian Basketball League,Parnu,BK Ventspils,,,主胜,1x2,1.76,0,1.7043,3.27,0,3,1794063600,BB,pinnacle,,,ws_scan,,,5549171,,
 2026-11-07T04:48:24Z,basketball,Estonian-Latvian Basketball League,Parnu,BK Ventspils,,,让分主胜,hc,1.88,0,1.7692,6.26,0,3,1794063600,BB,pinnacle,,,ws_scan,,-1.5,5549171,,
-2026-11-07T04:49:54Z,basketball,Taiwan Professional Basketball League,Taipei Taishin Mars,Formosa Dreamers,,,让分主胜,hc,1.88,0,1.7024,10.43,0,3,1794033000,ALL,pinnacle,,,ws_scan,,-1.5,5593578,,
+2026-11-07T04:49:54Z,basketball,Taiwan Professional Basketball League,Taipei Taishin Mars,Formosa Dreamers,,,让分主胜,hc,1.88,0,1.7024,10.43,0,3,1794033000,ALL,pinnacle,,,ws_scan,,-1.5,5593578,1,odds_changed
 2026-11-07T04:50:18Z,basketball,Australia NBL,Adelaide 36Ers,Illawarra Hawks,,,小分,ou,1.96,0,1.8989,3.22,0,3,1794033000,ALL,pinnacle,,,pin_drop,,193.5,5074396,1,odds_changed
 2026-11-07T04:50:32Z,football,Ukraine Premier League,FC Epitsentr Kamianets Podilskyi,FC Kryvbas Kriviy Rih,,,小球,ou,2.02,0,1.9462,3.79,0,2,1794049200,BB,pinnacle,,,ws_scan,,2.5,5837409,1,odds_changed
 2026-11-07T04:55:50Z,football,South Korea K-League 2,Suwon FC,Gyeongnam FC,,,客胜,1x2,6.3,0,2.0766,203.38,0,2,1794027600,ALL,pinnacle,,,pin_drop,,,5889496,,
@@ -1715,6 +1715,15 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-07T05:32:53Z,basketball,Australia NBL,Melbourne United,Brisbane Bullets,,,大分,ou,1.91,0,1.8523,3.12,0,3,1794040200,ALL,pinnacle,,,ws_scan,,193.5,5074394,,
 2026-11-07T05:36:31Z,basketball,Bulgaria NBL,BC Spartak Pleven,Balkan Botevgrad,,,让分客胜,hc,1.85,0,1.7554,5.39,0,3,1794067200,ALL,pinnacle,,,ws_scan,,-3.5,5837560,1,odds_changed
 2026-11-07T05:36:31Z,basketball,Bulgaria NBL,BC Spartak Pleven,Balkan Botevgrad,,,小分,ou,1.84,0,1.7368,5.94,0,3,1794067200,ALL,pinnacle,,,ws_scan,,163.5,5837560,1,odds_changed
-2026-11-07T05:37:31Z,basketball,Bulgaria NBL,BC Spartak Pleven,Balkan Botevgrad,,,客胜,1x2,2.12,0,2.0534,3.24,0,3,1794067200,ALL,pinnacle,,,ws_scan,,,5837560,,
-2026-11-07T05:37:31Z,basketball,Bulgaria NBL,BC Spartak Pleven,Balkan Botevgrad,,,让分主胜,hc,1.89,0,1.7089,10.6,0,3,1794067200,ALL,pinnacle,,,ws_scan,,-2.5,5837560,,
+2026-11-07T05:37:31Z,basketball,Bulgaria NBL,BC Spartak Pleven,Balkan Botevgrad,,,客胜,1x2,2.12,0,2.0534,3.24,0,3,1794067200,ALL,pinnacle,,,ws_scan,,,5837560,1,odds_changed
+2026-11-07T05:37:31Z,basketball,Bulgaria NBL,BC Spartak Pleven,Balkan Botevgrad,,,让分主胜,hc,1.89,0,1.7089,10.6,0,3,1794067200,ALL,pinnacle,,,ws_scan,,-2.5,5837560,1,odds_changed
 2026-11-07T05:38:11Z,football,England FA Cup,Altrincham FC,Notts County,,,主胜,1x2,3.89,0,3.5052,10.98,0,3,1794072600,ALL,pinnacle,,,ws_scan,,,5840904,,
+2026-11-07T05:41:01Z,basketball,Japan B.League One,Yokohama Excellence,Koshigaya Alphas,,,主胜,1x2,2.04,0,1.9648,3.83,0,3,1794040500,BB,pinnacle,,,drop,,,5326702,,
+2026-11-07T05:42:23Z,basketball,Uruguay Basketball League,Club Bigua de Villa Biarritz,Club Nacional,,,让分客胜,hc,1.92,0,1.7425,10.19,0,3,1794270600,ALL,pinnacle,,,ws_scan,,-1.5,5858880,,
+2026-11-07T05:47:11Z,basketball,Germany Pro A Basketball Bundesliga,ETB Miners,Orange Academy,,,让分客胜,hc,1.95,0,1.8167,7.34,0,3,1794076200,BB,pinnacle,,,ws_scan,,-1.5,5200777,,
+2026-11-07T05:47:50Z,football,USL Championship-Playoff,New Mexico United,Colorado Springs Switchbacks FC,,,和局,1x2,3.51,0,2.4017,46.15,0,2,1794105000,ALL,pinnacle,,,pin_drop,,,5848971,,
+2026-11-07T05:55:47Z,football,Japan J.League 3,Gainare Tottori,Tochigi SC,,,主胜,1x2,2.98,0,2.5187,18.32,0,4,1794114000,ALL,pinnacle,,,pin_drop,,,5359546,,
+2026-11-07T05:55:47Z,football,Japan J.League 3,Gainare Tottori,Tochigi SC,,,客胜,1x2,2.11,0,1.6585,27.22,0,4,1794114000,ALL,pinnacle,,,pin_drop,,,5359546,,
+2026-11-07T05:55:51Z,tennis,ATP - Stockholm Open,Karl Friberg (SWE),Toby Samuel (GBR),,,主胜,1x2,6.05,0,5.6064,7.91,0,2,1794055200,BB,pinnacle,,,ws_scan,,,5872847,,
+2026-11-07T05:56:19Z,basketball,Spain Basketball Primera FEB,CB Gran Canaria,San Sebastian Gipuzkoa BC,,,客胜,1x2,9.0,0,8.1235,10.79,0,3,1794078000,BB,pinnacle,,,ws_scan,,,5860542,,
+2026-11-07T05:57:00Z,football,Japan J.League,Avispa Fukuoka,V Varen Nagasaki,,,主胜,1x2,2.0,0,1.4658,36.44,0,2,1794031200,ALL,pinnacle,,,pin_drop,,,5156733,1,odds_changed

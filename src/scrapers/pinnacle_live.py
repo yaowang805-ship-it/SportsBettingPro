@@ -910,11 +910,6 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
             ev = (bb_odds - fair_p) / fair_p * 100.0
             ev_raw = ev
             fair_cal = fair_p
-        # 2026-11-07 修跨线套价假溢价: 校准会把跨线的假溢价(ev_raw 22~34%)映射到合理范围(ev 5~8%),
-        # 掩盖假单(科尔多瓦让球 ev_raw 32.68%→ev 6.38%、亚博斯福大球 ev_raw 31.84%→ev 5.48%)。
-        # ev_raw > 20% 几乎必是跨线/方向错配(正常 edge 不会这么高, 深冷门真溢价也 <20%), 拒单宁缺毋滥。
-        if ev_raw is not None and ev_raw > 20.0:
-            return []
         _conf = res.get("sbo") or res.get("confidence")
         _conf_p = _conf.get(k) if _conf else None
         _sbo_dir = 'none' if _conf_p is None else ('same' if _conf_p > fair_p else 'diff')
