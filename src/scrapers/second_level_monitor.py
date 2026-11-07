@@ -2501,6 +2501,54 @@ class SecondLevelMonitor:
                 self._try_live_auto_bet(sig)
         return len(opps)
 
+    def _sample_bb_track(self):
+        """BB价轨迹采样(每30s): 对已下注的比赛采样当前 BB 价, 追上 Pin(校准公平价)或超时(10min)则落盘。"""
+        if not self._bb_track:
+            return
+        try:
+            from src.scrapers.pinnacle_live import get_bb_fresh_or_cached
+            bb, _ = get_bb_fresh_or_cached(wait_for_fresh=False)
+        except Exception:
+            return
+        done = []
+        for key, rec in list(self._bb_track.items()):
+            mid, mkid, ot = key
+            cur_bb = None
+            try:
+                b = bb.get(int(mid)) if mid else None
+                if b:
+                    for mk in b.get("markets", []):
+                        if str(mk.get("market_id")) == mkid and str(mk.get("option_type")) == ot:
+                            cur_bb = mk.get("odds")
+                            break
+            except (TypeError, ValueError):
+                pass
+            rec["history"].append((time.time(), cur_bb))
+            # 追上 Pin(校准公平价) 或 超时 10min → 完成
+            if cur_bb is not None and float(cur_bb) <= float(rec["fair_cal_at_bet"]):
+                done.append(key)
+            elif time.time() - rec["ts"] > 600:
+                done.append(key)
+        for key in done:
+            self._write_bb_track(key)
+            del self._bb_track[key]
+
+    def _write_bb_track(self, key):
+        """把一条 BB 价轨迹写落盘(bb_price_track.jsonl), 供离线分析 lead-lag 窗口多长、BB 追价延迟。"""
+        rec = self._bb_track.get(key)
+        if not rec:
+            return
+        hist = rec.get("history", [])
+        rec = dict(rec)
+        rec["final_bb"] = hist[-1][1] if hist else None
+        rec["catchup_sec"] = round(hist[-1][0] - rec["ts"], 1) if hist else None
+        rec["n_samples"] = len(hist)
+        try:
+            with open(BB_TRACK_FILE, "a", encoding="utf-8") as f:
+                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+        except OSError:
+            pass
+
     def _consume_early_ws_changes(self, changes):
         """早盘 WS 触发: prematch sharp 变动 → 匹配 BB → 单场比价 → 下单(实时验价)。
 
@@ -3364,6 +3412,13 @@ class SecondLevelMonitor:
                         print(f"[slm] 本轮发现 {n} 个滚球机会")
                     last_poll = now
                     poll_count += 1
+                    # 2026-11-07 BB价轨迹采样(每30s): 对已下注比赛采样 BB 价, 验证 lead-lag 窗口多长
+                    if time.time() - self._last_bb_track_ts >= 30:
+                        self._last_bb_track_ts = time.time()
+                        try:
+                            self._sample_bb_track()
+                        except Exception:
+                            pass
                     # 观察库结算: 每 60s 结一批(独立时间戳, 不依赖 poll_count — pin_live 超时拖慢轮询,
                     # 依赖 poll_count%15 会把 1130 条拖到 2-3h 才结完)
                     if time.time() - last_settle >= 60:
