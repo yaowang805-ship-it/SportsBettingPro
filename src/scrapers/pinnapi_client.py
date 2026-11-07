@@ -120,67 +120,71 @@ def _pin_cache_find_event(home, away, games=False, max_age=None):
         # 1) base 只在 persist_full(mtime 变化, 每60s)时重读 14MB; 否则复用缓存。
         #    2026-11-07 修「公平价匹配 143s」回归: 之前 _key=(base,delta) 使 delta 每1s变化就重读 14MB base,
         #    16 并发线程放大成 thundering herd(每任务~0.8s)。
-        if _pin_cache_base["mtime"] != mtime or _pin_cache_base["data"] is None:
-            _pin_cache_base["data"] = json.loads(f.read_text())
-            _pin_cache_base["mtime"] = mtime
-        # 2) delta 每1s重读(0.4MB小), 浅拷贝 base 再 merge(不污染 base 缓存; 索引重建的 merge 是幂等覆盖, 无害)
-        if _pin_cache_file.get("delta_mtime") != delta_mtime or _pin_cache_file["data"] is None:
-            _base = _pin_cache_base["data"]
-            d = {"ts": _base.get("ts", 0), "cache": dict(_base.get("cache", {}))}
-            if delta_f.exists():
-                try:
-                    dd = json.loads(delta_f.read_text())
-                    d["cache"].update(dd.get("cache", {}))
-                    d["ts"] = max(d.get("ts", 0), dd.get("ts", 0))
-                except Exception:
-                    pass
-            _pin_cache_file["data"] = d
-            _pin_cache_file["delta_mtime"] = delta_mtime
-        d = _pin_cache_file["data"]
-        ts = d.get("ts", 0)
-        if time.time() - ts > 60:
-            return None
-        if _pin_cache_idx.get("_ts") != ts:
-            idx = {}
-            # 2026-10-17 修队名撞车: 同俱乐部正赛 vs U21/女足/预备队, 队名一样但联赛不同。
-            # 两个都是 parent 时按联赛消歧 —— 优先非青年/女足/预备队联赛(否则拿 U21 的价当正赛价)。
-            def _junior(e):
-                ln = (e.get("league_name") or "").lower()
-                return any(k in ln for k in ("u21", "u20", "u19", "u18", "u17", "u23",
-                                             "reserve", "youth", "women", "academy"))
-            for entry in d.get("cache", {}).values():
-                ev = entry.get("event") or {}
-                if not ev.get("periods"):
-                    continue
-                eh, ea = _norm(ev.get("home", "")), _norm(ev.get("away", ""))
-                if eh and ea:
-                    _key = (eh, ea)
-                    _cur = idx.get(_key)
-                    if _cur is None:
-                        idx[_key] = [ev, entry.get("ts", 0)]  # [事件, 该事件最后更新ts]
+        #    2026-11-07 再加锁: 读+重建索引只做一次, 防 16 并发各自重建(实测 382任务 60s)。
+        with _pin_cache_lock:
+            if _pin_cache_base["mtime"] != mtime or _pin_cache_base["data"] is None:
+                _pin_cache_base["data"] = json.loads(f.read_text())
+                _pin_cache_base["mtime"] = mtime
+            # 2) delta 每1s重读(0.4MB小), 浅拷贝 base 再 merge(不污染 base 缓存; 索引重建的 merge 是幂等覆盖, 无害)
+            if _pin_cache_file.get("delta_mtime") != delta_mtime or _pin_cache_file["data"] is None:
+                _base = _pin_cache_base["data"]
+                d = {"ts": _base.get("ts", 0), "cache": dict(_base.get("cache", {}))}
+                if delta_f.exists():
+                    try:
+                        dd = json.loads(delta_f.read_text())
+                        d["cache"].update(dd.get("cache", {}))
+                        d["ts"] = max(d.get("ts", 0), dd.get("ts", 0))
+                    except Exception:
+                        pass
+                _pin_cache_file["data"] = d
+                _pin_cache_file["delta_mtime"] = delta_mtime
+            d = _pin_cache_file["data"]
+            ts = d.get("ts", 0)
+            if time.time() - ts > 60:
+                return None
+            if _pin_cache_idx.get("_ts") != ts:
+                idx = {}
+                # 2026-10-17 修队名撞车: 同俱乐部正赛 vs U21/女足/预备队, 队名一样但联赛不同。
+                # 两个都是 parent 时按联赛消歧 —— 优先非青年/女足/预备队联赛(否则拿 U21 的价当正赛价)。
+                def _junior(e):
+                    ln = (e.get("league_name") or "").lower()
+                    return any(k in ln for k in ("u21", "u20", "u19", "u18", "u17", "u23",
+                                                 "reserve", "youth", "women", "academy"))
+                for entry in d.get("cache", {}).values():
+                    ev = entry.get("event") or {}
+                    if not ev.get("periods"):
                         continue
-                    # 1) junior 过滤(2026-10-17): senior 优先(U21/女足/预备队不覆盖正赛)
-                    if _junior(ev) and not _junior(_cur[0]):
-                        continue
-                    # 2) 2026-11-03 修「最旧 live 快照 + 增量帧丢盘口」: 同一队名多个快照时,
-                    # 合并 periods.num_0 —— 独赢(money_line)用后出现的(最新), 让球/大小球
-                    # (spreads/totals)保留旧的(live 增量帧常只推 money_line, 不推 spreads/totals)。
-                    # 否则滚球 hc/ou 拿不到公平价, 只剩 1x2/dc 能投。
-                    _cur_p = _cur[0].get("periods")
-                    _ev_p = ev.get("periods")
-                    if isinstance(_cur_p, dict) and isinstance(_ev_p, dict):
-                        _c0 = _cur_p.setdefault("num_0", {})
-                        _e0 = _ev_p.get("num_0") or {}
-                        for _mk, _mv in _e0.items():
-                            if _mv:
-                                _c0[_mk] = _mv  # 新帧有该盘口才覆盖(保留旧的 spreads/totals)
-                        if _ev_p.get("num_1"):
-                            _cur_p["num_1"] = _ev_p["num_1"]
-                    _cur[1] = max(_cur[1], entry.get("ts", 0))  # 取较新的 ts
-            _pin_cache_idx["_ts"] = ts
-            _pin_cache_idx["_idx"] = idx
+                    eh, ea = _norm(ev.get("home", "")), _norm(ev.get("away", ""))
+                    if eh and ea:
+                        _key = (eh, ea)
+                        _cur = idx.get(_key)
+                        if _cur is None:
+                            idx[_key] = [ev, entry.get("ts", 0)]  # [事件, 该事件最后更新ts]
+                            continue
+                        # 1) junior 过滤(2026-10-17): senior 优先(U21/女足/预备队不覆盖正赛)
+                        if _junior(ev) and not _junior(_cur[0]):
+                            continue
+                        # 2) 2026-11-03 修「最旧 live 快照 + 增量帧丢盘口」: 同一队名多个快照时,
+                        # 合并 periods.num_0 —— 独赢(money_line)用后出现的(最新), 让球/大小球
+                        # (spreads/totals)保留旧的(live 增量帧常只推 money_line, 不推 spreads/totals)。
+                        # 否则滚球 hc/ou 拿不到公平价, 只剩 1x2/dc 能投。
+                        _cur_p = _cur[0].get("periods")
+                        _ev_p = ev.get("periods")
+                        if isinstance(_cur_p, dict) and isinstance(_ev_p, dict):
+                            _c0 = _cur_p.setdefault("num_0", {})
+                            _e0 = _ev_p.get("num_0") or {}
+                            for _mk, _mv in _e0.items():
+                                if _mv:
+                                    _c0[_mk] = _mv  # 新帧有该盘口才覆盖(保留旧的 spreads/totals)
+                            if _ev_p.get("num_1"):
+                                _cur_p["num_1"] = _ev_p["num_1"]
+                        _cur[1] = max(_cur[1], entry.get("ts", 0))  # 取较新的 ts
+                _pin_cache_idx["_ts"] = ts
+                _pin_cache_idx["_idx"] = idx
+            _idx = _pin_cache_idx["_idx"]
+        # 锁外: 查索引(快, dict O(1)); 索引 dict 重建后是新的不可变引用, 旧引用仍安全
         _suf = "games" if games else ""
-        _hit = _pin_cache_idx["_idx"].get((_norm(home) + _suf, _norm(away) + _suf))
+        _hit = _idx.get((_norm(home) + _suf, _norm(away) + _suf))
         if not _hit:
             return None
         # 2026-11-07 每事件新鲜度: 该队名 WS 帧陈旧(>max_age)则返回 None, 防用旧赔率(否则哪来真溢价)

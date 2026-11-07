@@ -590,7 +590,7 @@
   "ice_hockey|1x2|客|<45%|live": {
     "first_released_at": "2026-11-01T09:17:35.212354",
     "cap": 30,
-    "daily_stake": 0,
+    "daily_stake": 30,
     "daily_stake_date": "2026-11-07",
     "limit_removed": false
   },
