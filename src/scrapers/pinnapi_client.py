@@ -293,6 +293,11 @@ def pinnacle_fair_price(home, away, sport_id, sub_market, target_line=None, even
         ml = full.get('money_line')
         if not ml:
             return None
+        # 2026-11-08 修 2-way/3-way 盘口混淆: 足球(3-way运动)独赢必须有 draw(3-way)。
+        # Pin 缓存 money_line 可能混入让球盘的 2-way(draw=None), 之前直接两路去水 → 用让球 2-way 价
+        # 套到 1x2 独赢 3-way 价 → ev 126~206% 假溢价。无 draw=非独赢盘, 返回 None(宁缺毋滥)。
+        if pin_sid == 1 and not ml.get('draw'):
+            return None
         # 2026-10-11 修: 杯赛 2-way 独赢(draw=None)用两路去水, 3-way 用三路去水
         if ml.get('draw'):
             _fairs = power_fair_odds([ml.get('home'), ml.get('draw'), ml.get('away')])
