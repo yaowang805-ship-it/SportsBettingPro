@@ -1,5 +1,5 @@
 {
-  "balance": 14202.53,
+  "balance": 14172.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1933,6 +1933,29 @@
       "commence_time": 1794123000.0,
       "created_at": "2026-11-07T22:49:11.923615+00:00",
       "track_only": true
+    },
+    {
+      "id": "bb_vs_pin_1x2_拉罗卡阿尔塔维拉联合_AC埃斯特_和局",
+      "sport": "football",
+      "league": "意大利丁级联赛",
+      "home_team": "拉罗卡阿尔塔维拉联合",
+      "away_team": "AC埃斯特",
+      "home_cn": "拉罗卡阿尔塔维拉联合",
+      "away_cn": "AC埃斯特",
+      "market": "1x2",
+      "market_type": "和局",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 2.99,
+      "stake": 30,
+      "model_prob": 0.4114,
+      "ev_pct": 23.0,
+      "pin_odds": 2.27,
+      "fair_price": 2.431,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794144600.0,
+      "created_at": "2026-11-08T04:00:53.233762+00:00",
+      "track_only": false
     }
   ],
   "settled": {
@@ -13343,8 +13366,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-08",
-    "used": 570.0,
-    "bets": 62
+    "used": 600.0,
+    "bets": 63
   },
   "updated": null
 }

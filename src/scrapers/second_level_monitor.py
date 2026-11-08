@@ -2826,7 +2826,13 @@ class SecondLevelMonitor:
                     _drop_line_match = bool(_drop_fair and _drop_fair > 1)
                     if _drop_line_match and trig.get("point") is not None and o.get("line") is not None:
                         try:
-                            _drop_line_match = abs(float(trig.get("point")) - float(o.get("line"))) <= 0.01
+                            # 2026-11-08 修客方向 line 匹配: drop point 是「outcome 自己的线」约定,
+                            # 让球 outcome=Away 时 point=客队让分(如 -23), 而 BB line=主队让分(如 +23),
+                            # 符号相反 → 取反对齐主队约定(对齐滚球 drop 的 set_drop_fresh 取反逻辑)。
+                            _pt = trig.get("point")
+                            if trig.get("outcome") == "Away" and _pt is not None:
+                                _pt = -float(_pt)
+                            _drop_line_match = abs(float(_pt) - float(o.get("line"))) <= 0.01
                         except (TypeError, ValueError):
                             _drop_line_match = False
                     # 2026-11-06 护栏: 去水公平价必应 ≥ 原价; < 原价 = 跨线错配, 不覆盖
