@@ -23,6 +23,9 @@ logger = get_logger(__name__)
 
 TRACKING_FILE = DATA_DIR / "clv_tracking.csv"
 RESULTS_FILE = DATA_DIR / "clv_results.csv"
+# 2026-11-08 去重独立持久化: 去重 key 存独立文件, 清空观察库(clv_tracking.csv)后去重仍生效,
+# 不会重新入库旧数据(之前清空观察库 → existing 去重读空 → 早盘 ws 重新入库旧数据)。
+OA_INGESTED_FILE = DATA_DIR / "oa_ingested.json"
 
 # 采集窗口：比赛开始前 20 分钟内拉取收盘赔率 (真收盘线)
 # V5.4 收窄: BEFORE_MAX 720→20, AFTER_MAX 60→0 — 用户要求开赛前20分钟,
