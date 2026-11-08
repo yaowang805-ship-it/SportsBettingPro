@@ -2710,6 +2710,11 @@ class SecondLevelMonitor:
         _DROP_DIR_MAP = {"Home": ("opportunities", "主胜"), "Away": ("opportunities", "客胜"),
                          "Draw": ("opportunities", "和局"), "Over": ("over_under", "大球"),
                          "Under": ("over_under", "小球")}
+        # 2026-11-08 修盘口歧义: drop 的 outcome=Home/Away 有歧义——pz 有值=独赢(3-way),
+        # pz 无值=让球(2-way)。之前固定映射到 opportunities(独赢), 让球盘 drop 错配到独赢,
+        # 用让球 2-way 价比 1x2 独赢 3-way 价 → ev 122~236% 假溢价。
+        _DROP_DIR_MAP_2WAY = {"Home": ("handicap", "让球主胜"), "Away": ("handicap", "让球客胜"),
+                              "Over": ("over_under", "大球"), "Under": ("over_under", "小球")}
         # 2026-11-01 drop 概率区间过滤: 拦负段(中间段 Shin 去水高估赢率 + 大小球全线负), 只放两端。
         # 与 compute_market_release 的 LIVE_NEGATIVE_IMPLIED 同口径, 但按 group 键。
         _DROP_NEG_IMPLIED = {
@@ -2809,7 +2814,7 @@ class SecondLevelMonitor:
             _has_ev = False  # 入库观察库: ev>0 全收(与 WS 同口径)
             # 2026-11-01 drop 方向过滤: 骤降方向 = 顺势(抢 BB 高价), 只下注该方向, 逆向/其他方向不下注;
             # outcome 无法映射(组合骤降 AwayUnder/HomeOver 或空) → _drop_dir=None → 不下注(但入库仍全量)。
-            _drop_dir = _DROP_DIR_MAP.get(trig.get('outcome', ''))
+            _drop_dir = _DROP_DIR_MAP.get(trig.get('outcome', '')) if trig.get("price_z") else _DROP_DIR_MAP_2WAY.get(trig.get('outcome', ''))
             for group in ('opportunities', 'handicap', 'over_under', 'double_chance', 'draw_no_bet'):
                 for o in entry.get(group, []):
                     if (o.get('ev_pct') or 0) > 0:
