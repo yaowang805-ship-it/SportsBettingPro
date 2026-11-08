@@ -889,6 +889,13 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
                                   r.get("match_epoch", "")))
         except Exception:
             pass
+    # 2026-11-08 去重独立持久化: 额外读独立去重文件(OA_INGESTED_FILE), 清空观察库后去重仍生效。
+    if OA_INGESTED_FILE.exists():
+        try:
+            for k in json.loads(OA_INGESTED_FILE.read_text()):
+                existing.add(tuple(k))
+        except Exception:
+            pass
 
     _MK = {"opportunities": "1x2", "handicap": "hc", "over_under": "ou",
            "double_chance": "dc", "draw_no_bet": "dnb", "btts": "btts"}
@@ -1031,6 +1038,13 @@ def log_oa_opportunities(details, min_ev=2.0, source="validate", max_ev=None):
                                   r.get("match_epoch", "")))
         except Exception:
             pass
+    # 2026-11-08 去重独立持久化: 额外读独立去重文件(OA_INGESTED_FILE), 清空观察库后去重仍生效。
+    if OA_INGESTED_FILE.exists():
+        try:
+            for k in json.loads(OA_INGESTED_FILE.read_text()):
+                existing.add(tuple(k))
+        except Exception:
+            pass
 
     _MK = {"opportunities": "1x2", "handicap": "hc", "over_under": "ou",
            "double_chance": "dc", "draw_no_bet": "dnb"}
@@ -1106,6 +1120,16 @@ def log_oa_opportunities(details, min_ev=2.0, source="validate", max_ev=None):
             w.writeheader()
         for r in rows:
             w.writerow(r)
+    # 2026-11-08 去重独立持久化: 把本轮新入库 key 追加到独立去重文件, 清空观察库后去重仍生效
+    try:
+        _ingested = set()
+        if OA_INGESTED_FILE.exists():
+            _ingested = set(tuple(k) for k in json.loads(OA_INGESTED_FILE.read_text()))
+        for r in rows:
+            _ingested.add((r["home"], r["away"], r["sub_market"], r["designation"], str(r["match_epoch"])))
+        OA_INGESTED_FILE.write_text(json.dumps([list(k) for k in _ingested]))
+    except Exception:
+        pass
     logger.info("CLV Betfair入库: +%d 条 EV>=%.0f%% 机会 (source=validate)", len(rows), min_ev)
     return len(rows)
 
