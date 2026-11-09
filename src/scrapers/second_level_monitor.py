@@ -2844,6 +2844,11 @@ class SecondLevelMonitor:
                         except (TypeError, ValueError):
                             pass
                     if _drop_line_match:
+                        # 2026-11-09 修 drop 热门段虚高(38-44pp): 骤降方向隐含胜率>50% 时, 骤降后价是 Pin
+                        # 过度反应(favorite bias 热门侧), 不用骤降后价覆盖, 保留 _oa_add_markets 的 Pin 缓存价(骤降前)。
+                        if _drop_fair > 1 and (1.0 / _drop_fair) <= 0.5:
+                            _drop_line_match = False
+                    if _drop_line_match:
                         o['fair_price'] = round(_drop_fair, 4)
                         o['ev_pct'] = round((float(o.get('bb_odds') or 0) - _drop_fair) / _drop_fair * 100, 2)
                     # 2026-11-01 drop 概率区间过滤: 拦负段(中间段高估赢率+大小球全线负), 放两端
