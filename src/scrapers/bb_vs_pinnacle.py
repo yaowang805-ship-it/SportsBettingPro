@@ -1024,6 +1024,12 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     hc_candidates.append(("alt", alt))
 
         for hc_tag, hc_dict in hc_candidates:
+            # 2026-11-09 修 hc 盘跨线错配(-81.56%根因): BB 亚洲盘组合让球(home_line_str 含 "/",
+            # 如 "-0.5/1")是「一半让0.5一半让1」的组合盘, home_line(-0.75)是平均值, 恰好落在 Pin 标准线,
+            # _select_line 精确匹配但赔率是 Pin 标准让球(非组合) → 跨线假溢价。宁缺毋滥跳过(约占 28%)。
+            _hls = str(hc_dict.get("home_line_str") or hc_dict.get("away_line_str") or "")
+            if "/" in _hls:
+                continue
             bb_hl = hc_dict.get("home_line") if hc_dict.get("home_line") is not None else hc_dict.get("away_line")
             if bb_hl is None:
                 continue
