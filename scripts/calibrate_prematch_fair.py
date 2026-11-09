@@ -101,28 +101,45 @@ def main():
                    and b.get("sub_market") not in ("ht", "ht_hc", "ht_ou")  # ht 半场无比分源, 排除
                    and b.get("result") in ("won", "lost")
                    and _settled_ts(b) >= CLEAN_DATA_CUTOFF]
-    tr = _rows(early_real) + _rows(early_paper)  # 实盘 + 观察库训练
-    p = np.array([r[0] for r in tr])
-    y = np.array([r[1] for r in tr])
+    all_bets = early_real + early_paper
 
-    # platt 逻辑校准: logit(p_hat) = a + b*logit(p_implied)
-    lr = LogisticRegression(C=1e6, max_iter=10000)
-    lr.fit(logit(p).reshape(-1, 1), y)
-    a = float(lr.intercept_[0])
-    b = float(lr.coef_[0][0])
-    predict_fn = lambda x: sigmoid(a + b * logit(x))
+    def _fit(rows):
+        if len(rows) < 50:
+            return None
+        p = np.array([r[0] for r in rows])
+        y = np.array([r[1] for r in rows])
+        lr = LogisticRegression(C=1e6, max_iter=10000)
+        lr.fit(logit(p).reshape(-1, 1), y)
+        a = float(lr.intercept_[0])
+        b = float(lr.coef_[0][0])
+        _pred = lambda x: sigmoid(a + b * logit(x))
+        bins = np.linspace(0.05, 0.95, 37)
+        table = [{"p_implied": round(float(x), 4), "p_cal": round(float(_pred(np.array([x]))[0]), 4)} for x in bins]
+        return {"n": len(rows), "a": round(a, 4), "b": round(b, 4), "table": table}
 
-    print(f"训练(纯早盘实盘) n={len(tr)}  platt a={a:+.3f} b={b:.3f}")
-    _backtest(tr, predict_fn, "训练集(in-sample)")
+    # 2026-11-09 分盘口校准(agent2 S3): 全局单曲线掩盖 hc(-81%) vs 1x2(-30%) 的 bias 差, 按盘口分表拟合。
+    from collections import defaultdict
+    by_sm = defaultdict(list)
+    for _b in all_bets:
+        _sm = (_b.get("sub_market") or "") if isinstance(_b, dict) else ""
+        if _sm:
+            by_sm[_sm].append(_b)
+    tables = {}
+    _t_all = _fit(_rows(all_bets))
+    if _t_all:
+        tables["all"] = _t_all
+        print(f"[all] n={_t_all['n']} a={_t_all['a']:+.3f} b={_t_all['b']:.3f}")
+    for sm in sorted(by_sm):
+        _t = _fit(_rows(by_sm[sm]))
+        if _t:
+            tables[sm] = _t
+            print(f"[{sm}] n={_t['n']} a={_t['a']:+.3f} b={_t['b']:.3f}")
 
     if save:
-        bins = np.linspace(0.05, 0.95, 37)
-        table = [{"p_implied": round(float(x), 4),
-                  "p_cal": round(float(predict_fn(np.array([x]))[0]), 4)} for x in bins]
-        out = {"model": "platt_prematch", "n": len(tr), "a": round(a, 4), "b": round(b, 4), "table": table}
+        out = {"model": "platt_prematch", "tables": tables}
         dest = STORAGE / "fair_calibration_prematch.json"
         json.dump(out, open(dest, "w"), ensure_ascii=False, indent=1)
-        print(f"\n已保存早盘校准表(platt 平滑) -> {dest}")
+        print(f"\n已保存早盘校准表(分盘口 platt, {len(tables)} 表) -> {dest}")
 
 
 if __name__ == "__main__":
