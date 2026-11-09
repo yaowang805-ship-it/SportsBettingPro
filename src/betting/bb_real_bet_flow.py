@@ -534,7 +534,10 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
                 _pure = time.time() - trigger_ts - _sleep_total
                 _extra.append(f"总耗时 {_pure:.1f}s")
             _extra_str = ("\n  " + " | ".join(_extra)) if _extra else ""
-            _single = (f"✅【{_win_label(opp.get('_pin_epoch'))}】{disp_home} vs {disp_away} | {desig}\n"
+            # 2026-11-10 补线值: 让球/大小球推送必须带线(让多少/大多少小多少), 之前只写方向丢线。
+            _line = opp.get("line")
+            _desig_full = f"{desig} {_line}" if _line else desig
+            _single = (f"✅【{_win_label(opp.get('_pin_epoch'))}】{disp_home} vs {disp_away} | {_desig_full}\n"
                        f"  {_sport_cn} | {_league} | BB {odds:.2f}{_fair_str}{_pin_raw_str}{_ev_str} | 注额 ¥{stake:.0f} | {_src_label} | 投注 {_bj}{_kickoff_str}{_extra_str}")
             sent_dingtalk.append(_single)
             # 2026-10-18 改: 每单立即推钉钉(不再攒批等循环结束, 否则 sleep 20-90s/单 循环不结束推送被吞)

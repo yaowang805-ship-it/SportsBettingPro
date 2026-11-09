@@ -306,7 +306,7 @@
       "success_rate": 0.5
     },
     "葡萄牙超级联赛": {
-      "attempts": 11,
+      "attempts": 12,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -401,7 +401,7 @@
       "success_rate": 0.0
     },
     "北爱尔兰超级联赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1111,7 +1111,7 @@
       "success_rate": 0.0
     },
     "苏格兰乙级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1121,7 +1121,7 @@
       "success_rate": 0.0
     },
     "以色列超级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1426,7 +1426,7 @@
       "success_rate": 0.0
     },
     "英格兰足总杯": {
-      "attempts": 7,
+      "attempts": 8,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1611,7 +1611,7 @@
       "success_rate": 0.0
     },
     "越南甲级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1674,9 +1674,34 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "印度超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "印尼甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "英格兰足球议会联赛-北部": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "英格兰足球议会联赛-南部": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "西班牙乙级联赛RFEF": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-11-06T15:14:49.585593+00:00",
+  "updated": "2026-11-09T23:02:50.171906+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
