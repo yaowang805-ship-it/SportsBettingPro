@@ -1912,6 +1912,12 @@ def _collect_opportunities(match, market_key):
                                  match.get("start_time_pin_epoch")):
             continue
 
+        # 2026-11-09 大热排除: 隐含胜率>60%(赔率<1.67)的热门是 Power favorite-longshot bias 热门侧假溢价重灾区
+        # (60-70%段实测-40.89%), 全量放开时排除大热, 等干净数据重拟合校准修好热门 bias 再放开。
+        _imp_prob = 1.0 / (opp.get("fair_price") or bb_odds) if (opp.get("fair_price") or bb_odds) else 0
+        if _imp_prob > 0.60:
+            continue
+
         # 自有标定喂 EV 层(2026-08-29): 薄锚盘口(ht_dc等)用真实结算胜率覆盖 Pin 假价重算 EV,
         # 让假机会在准入门槛前就被拦住(不只靠 stake 层 -1.0 拦截)。
         from config.weight_matrix_v5 import get_self_cal_win_rate

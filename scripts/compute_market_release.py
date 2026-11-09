@@ -228,12 +228,14 @@ MANUAL_OBSERVE_RELEASE = {
 }
 
 # 2026-11-07 用户决定: 早盘三个主力盘口(独赢1x2/大小球ou/让球hc)×三运动(足球/篮球/网球) 全量放开。
+# 2026-11-09 用户决定: 放开所有运动×所有主力盘口(1x2/hc/ou), 只留「大热排除」(隐含>60%)+EV门槛+REAL_ROI_GATE。
 # 依据: 实时赔率比价 + 匹配正确的真溢价已就位, 不再按数据驱动/手动拦截过滤, 只要符合EV门槛就投。
 # 实现: 全量放开格直接放行(绕过 observe_blocked/observe_released/数据驱动拦截), 由 REAL_ROI_GATE 兜底撤假正。
 FULL_RELEASE_EARLY = {
-    "football|1x2", "football|ou", "football|hc",
-    "basketball|1x2", "basketball|ou", "basketball|hc",
-    "tennis|1x2", "tennis|ou", "tennis|hc",
+    f"{sport}|{sm}"
+    for sport in ("football", "basketball", "tennis", "baseball",
+                  "ice_hockey", "american_football", "volleyball")
+    for sm in ("1x2", "hc", "ou")
 }
 
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
