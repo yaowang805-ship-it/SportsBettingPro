@@ -205,6 +205,16 @@ def _close_direction_fair(close, sub_market, designation, swapped=False):
     return close.get(key)
 
 
+def _close_direction_raw(close, sub_market, designation, swapped=False):
+    """从收盘价的 _raw(原始赔率)提取指定方向的 Pin 原始收盘价。
+
+    CLV 应该比 Pin 原始价(不是去水公平价)——去水方法(favorite-longshot bias)不应污染 CLV 口径。
+    复用 _close_direction_fair 的 key 映射, 只是从 close['_raw'] 取原始价而非去水价。
+    """
+    raw = (close or {}).get("_raw") or {}
+    return _close_direction_fair(raw, sub_market, designation, swapped)
+
+
 def _fetch_close_odds_pinnapi(entries):
     """为 pending entries 拉取 Pinnacle(pinnapi.com) 收盘价, 算真实 CLV(2026-10-11 替代 Betfair 版)。
 
@@ -255,10 +265,14 @@ def _fetch_close_odds_pinnapi(entries):
         fair_p = _close_direction_fair(close, sub_market, designation)
         if fair_p is None or fair_p <= 1:
             continue
+        raw_p = _close_direction_raw(close, sub_market, designation)  # Pin 原始收盘价
+        if raw_p is None or raw_p <= 1:
+            raw_p = fair_p  # dc/dnb 等推导盘无 _raw, 回退去水价
 
         bb_odds = float(e.get("bb_odds", 0))
         push_ev = float(e.get("ev_pct", 0))
-        true_clv = round((bb_odds - fair_p) / fair_p * 100, 2)
+        # 2026-11-09 修 CLV 口径: 比 Pin 原始收盘价(不是去水公平价), 去水 bias 不再污染 CLV
+        true_clv = round((bb_odds - raw_p) / raw_p * 100, 2)
         clv_delta = round(true_clv - push_ev, 2)
 
         _row = {
@@ -277,6 +291,7 @@ def _fetch_close_odds_pinnapi(entries):
             "bb_odds": bb_odds,
             "push_fair_price": float(e.get("fair_price", 0)),
             "push_ev_pct": push_ev,
+            "close_pin_odds": raw_p,  # 2026-11-09 补 Pin 原始收盘价(CLV 应比原始价, 之前恒空)
             "close_fair_price": fair_p,
             "true_clv_pct": true_clv,
             "clv_delta": clv_delta,
