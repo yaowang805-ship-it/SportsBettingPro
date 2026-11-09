@@ -320,6 +320,7 @@ def settle_paper(dry_run: bool = False) -> dict:
             "bb_odds": bb_odds,
             "fair_price": float(r.get("fair_price") or 0),
             "ev_pct": float(r.get("ev_pct") or 0),
+            "line": r.get("line", ""),  # 2026-11-09 补 line: 之前 rec 漏写 line, hc/ou 盘线不可追溯(排查跨线错配无据)
             "match_epoch": epoch,
             "ts": _extract_collect_ts(r),  # 2026-11-09 补采集时刻, 供 CLEAN_DATA_CUTOFF 精确过滤(早盘无 ts 致释放判据全丢)
             "bb_match_id": bid,

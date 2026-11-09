@@ -7390,5 +7390,37 @@
    6
   ],
   "line_semantics": "relative"
+ },
+ {
+  "ts": 1794229383.355944,
+  "match_id": 5881485,
+  "market_id": 141944174,
+  "option_type": 5,
+  "sport": 1,
+  "home": "侯赛因巴格达",
+  "away": "Al纳西里耶",
+  "designation": "小球",
+  "sub": "over_under",
+  "line": 2.5,
+  "bsc": [
+   0,
+   2
+  ],
+  "bb_odds": 2.2,
+  "fair": 1.5046,
+  "ev": 3.08,
+  "spread": null,
+  "bb_ts": 1794229382.33252,
+  "stake": 20,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
