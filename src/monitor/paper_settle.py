@@ -61,6 +61,26 @@ def _key(sport, home_pin, away_pin, designation, sub_market, match_epoch):
     return f"{sport}|{home_pin}|{away_pin}|{designation}|{sub_market}|{match_epoch}"
 
 
+def _extract_collect_ts(r: dict):
+    """从源 row 提取采集时刻(epoch float), 供早盘观察库补 ts 字段(2026-11-09)。
+
+    clv_tracking.csv 用 timestamp(实时跟踪采集时刻); clv_results.csv 用 collect_time(采集)
+    优先于 push_time(推送)。兼容 ISO 字符串或纯 epoch。取不到返回 None。
+    """
+    for col in ("timestamp", "collect_time", "push_time"):
+        v = r.get(col)
+        if not v:
+            continue
+        try:
+            s = str(v).strip()
+            if s.isdigit() or (s.startswith("-") and s[1:].isdigit()):
+                return float(s)
+            return datetime.fromisoformat(s.replace("Z", "+00:00")).timestamp()
+        except (ValueError, TypeError):
+            continue
+    return None
+
+
 def _normalize_team(name: str) -> str:
     """归一化队名(去变音符号/小写/去 fc/cf 后缀), 供模糊匹配。"""
     import re as _re
@@ -301,6 +321,7 @@ def settle_paper(dry_run: bool = False) -> dict:
             "fair_price": float(r.get("fair_price") or 0),
             "ev_pct": float(r.get("ev_pct") or 0),
             "match_epoch": epoch,
+            "ts": _extract_collect_ts(r),  # 2026-11-09 补采集时刻, 供 CLEAN_DATA_CUTOFF 精确过滤(早盘无 ts 致释放判据全丢)
             "bb_match_id": bid,
             "result": result,
             "home_score": hs,

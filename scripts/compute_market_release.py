@@ -901,7 +901,11 @@ def load_observe_brier():
 
 
 def _read_paper_bets():
-    """读早盘观察库(paper_bets.json)记录(只 Betfair 口径, 2026-09-19 锚点分区)。"""
+    """读早盘观察库(paper_bets.json)记录(只 Betfair 口径, 2026-09-19 锚点分区)。
+
+    早盘 paper_bets.json 无 ts 字段(采集时刻未落盘), 用 settled_at(结算时刻)作干净口径,
+    与 clean_observe_daily.py 的早盘口径一致(滚球=ts, 早盘=settled_at)。
+    """
     if not PAPER.exists():
         return []
     try:
@@ -909,7 +913,8 @@ def _read_paper_bets():
     except (json.JSONDecodeError, OSError):
         return []
     bets = raw.get("bets", []) if isinstance(raw, dict) else raw
-    return [b for b in bets if b.get("anchor") == "pin" and (b.get("ts") or 0) >= CLEAN_DATA_CUTOFF]
+    return [b for b in bets if b.get("anchor") == "pin"
+            and (_ts(b.get("settled_at")) or 0) >= CLEAN_DATA_CUTOFF]
 
 
 def _read_live_paper_bets():
