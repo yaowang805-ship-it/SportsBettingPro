@@ -31,42 +31,51 @@ _TABLE_FILES = {
     "prematch": "fair_calibration_prematch.json",
 }
 
-_cal_tables = {}   # market -> [(p_implied, p_cal), ...]
-_cal_loaded = {}   # market -> bool
+_cal_tables = {}   # (market, sub_market) -> [(p_implied, p_cal), ...]
+_cal_loaded = {}   # (market, sub_market) -> mtime
 
 
-def _load_table(market="live"):
+def _load_table(market="live", sub_market=None):
     p = ROOT / "data" / "storage" / _TABLE_FILES.get(market, _TABLE_FILES["live"])
+    key = (market, sub_market or "all")
     try:
         mtime = p.stat().st_mtime if p.exists() else 0.0
     except OSError:
         mtime = 0.0
     # 2026-10-21 改 mtime 缓存: 校准表每日自动更新后, 无需重启进程即可重读新表(旧 bool 缓存永不刷新)
-    if _cal_loaded.get(market) == mtime:
-        return _cal_tables.get(market)
-    _cal_loaded[market] = mtime
+    if _cal_loaded.get(key) == mtime:
+        return _cal_tables.get(key)
+    _cal_loaded[key] = mtime
     try:
         if p.exists():
             d = json.load(open(p, encoding="utf-8"))
-            tbl = d.get("table")
+            tbl = None
+            # 2026-11-09 分表: 优先按盘口(sub_market)取, 回退 all, 再回退旧单表格式(向后兼容)
+            _tables = d.get("tables")
+            if isinstance(_tables, dict):
+                _t = _tables.get(sub_market) or _tables.get("all") or {}
+                tbl = _t.get("table")
+            if not tbl:
+                tbl = d.get("table")  # 旧单表格式
             if tbl and len(tbl) >= 2:
-                _cal_tables[market] = [(float(t["p_implied"]), float(t["p_cal"])) for t in tbl]
+                _cal_tables[key] = [(float(t["p_implied"]), float(t["p_cal"])) for t in tbl]
     except Exception:
-        _cal_tables[market] = None
-    return _cal_tables.get(market)
+        _cal_tables[key] = None
+    return _cal_tables.get(key)
 
 
-def calibrate_fair(fair, market="live"):
+def calibrate_fair(fair, market="live", sub_market=None):
     """校准公平价: fair(十进制赔率) → fair_cal(校准到真实胜率)。
 
     无表/开关关/非法输入 → 返回原 fair(no-op)。
     market ∈ {'live', 'prematch'}。
+    sub_market(2026-11-09): 按盘口(1x2/hc/ou)分表, 修正全局单曲线掩盖盘口 bias 差异(hc-81% vs 1x2-30%)。
     """
     if not CALIBRATE_FAIR.get(market, False):
         return fair
     if fair is None or fair <= 1.0:
         return fair
-    tbl = _load_table(market)
+    tbl = _load_table(market, sub_market)
     if not tbl:
         return fair
     try:

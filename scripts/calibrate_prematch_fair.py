@@ -45,7 +45,7 @@ def _rows(bets):
             continue
         if b.get("result") not in ("won", "lost"):
             continue
-        fair = b.get("fair_price") or b.get("fair")
+        fair = b.get("fair") or b.get("fair_price")  # 2026-11-09 优先原始 fair(real_bets 字段), paper_bets 回退 fair_price
         bb = b.get("bb_odds")
         if not fair or not bb:
             continue

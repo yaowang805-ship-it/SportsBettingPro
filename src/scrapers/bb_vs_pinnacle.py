@@ -136,7 +136,7 @@ def _oa_fair(entry, sport, sub, target_line=None, use_rest=None, status=None, ca
             for _k in ("home", "draw", "away", "over", "under", "1X", "12", "X2"):
                 _v = _fair.get(_k)
                 if isinstance(_v, (int, float)) and _v > 1:
-                    _fair[_k] = calibrate_fair(_v, market="prematch")
+                    _fair[_k] = calibrate_fair(_v, market="prematch", sub_market=sub)
         return _fair
     return None
 
