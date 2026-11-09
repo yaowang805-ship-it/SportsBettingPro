@@ -1024,26 +1024,52 @@ def compare_bb_vs_pinnacle(bb_matches, all_pin_leagues, selected_leagues=None, s
                     hc_candidates.append(("alt", alt))
 
         for hc_tag, hc_dict in hc_candidates:
-            # 2026-11-09 修 hc 盘跨线错配(-81.56%根因): BB 亚洲盘组合让球(home_line_str 含 "/",
-            # 如 "-0.5/1")是「一半让0.5一半让1」的组合盘, home_line(-0.75)是平均值, 恰好落在 Pin 标准线,
-            # _select_line 精确匹配但赔率是 Pin 标准让球(非组合) → 跨线假溢价。宁缺毋滥跳过(约占 28%)。
+            # 2026-11-09 组合盘拆分比价: BB 亚洲盘组合让球(home_line_str 含 "/", 如 "-0.5/1")
+            # 是「一半让0.5一半让1」的组合, 分别拿 Pin 对应两条线的价做调和平均(隐含概率平均=组合盘公平价)。
+            # 修正两个极端: 之前"直接跳过"(丢28%真溢价) + 更早"用平均值home_line匹配标准线"(跨线假溢价)。
             _hls = str(hc_dict.get("home_line_str") or hc_dict.get("away_line_str") or "")
+            _composite_lines = None
             if "/" in _hls:
-                continue
-            bb_hl = hc_dict.get("home_line") if hc_dict.get("home_line") is not None else hc_dict.get("away_line")
-            if bb_hl is None:
-                continue
-            # 2026-09-18: 公平价改用 Betfair Spread(替代 Pin get_pin_spread+devig)。
-            # 主客反转/线取反由 odds-api.io 的 match_event_orient 内部处理。
-            _oa_hc = _oa_fair(entry, sport, "hc", target_line=bb_hl)
-            if not _oa_hc or not _oa_hc.get("home") or not _oa_hc.get("away"):
-                continue
-            # 线匹配校验: BB 让球线须 ≈ Betfair 线(否则比的是不同线的价, 假EV)
-            _bf_line = _oa_hc.get("line")
-            if _bf_line is None or abs(float(bb_hl) - float(_bf_line)) > 0.25:
-                if hc_tag == "main":
-                    cal_blocked_hc += 1
-                continue
+                try:
+                    _sgn = -1.0 if _hls.strip().startswith("-") else 1.0
+                    _parts = _hls.strip().lstrip("+-").split("/")
+                    if len(_parts) == 2:
+                        _composite_lines = [_sgn * float(_parts[0]), _sgn * float(_parts[1])]
+                except (ValueError, TypeError):
+                    _composite_lines = None
+            if _composite_lines:
+                _fairs = []
+                for _ln in _composite_lines:
+                    _f = _oa_fair(entry, sport, "hc", target_line=_ln)
+                    if (_f and _f.get("home") and _f.get("away") and _f.get("line") is not None
+                            and abs(_ln - float(_f["line"])) <= 0.25):
+                        _fairs.append(_f)
+                    else:
+                        break
+                if len(_fairs) != 2:
+                    continue  # 拆分后拿不到两条线的 Pin 价, 跳过(宁缺毋滥)
+                # 组合盘公平价 = 两条线公平价的调和平均(隐含概率平均)
+                home_fair = 2.0 / (1.0 / _fairs[0]["home"] + 1.0 / _fairs[1]["home"])
+                away_fair = 2.0 / (1.0 / _fairs[0]["away"] + 1.0 / _fairs[1]["away"])
+                _raw_home = (_fairs[0].get("_raw") or {}).get("home")
+                _raw_away = (_fairs[0].get("_raw") or {}).get("away")
+                _oa_hc = {"home": home_fair, "away": away_fair, "line": _hls,
+                          "_raw": {"home": _raw_home, "away": _raw_away}}
+            else:
+                bb_hl = hc_dict.get("home_line") if hc_dict.get("home_line") is not None else hc_dict.get("away_line")
+                if bb_hl is None:
+                    continue
+                # 2026-09-18: 公平价改用 Betfair Spread(替代 Pin get_pin_spread+devig)。
+                # 主客反转/线取反由 odds-api.io 的 match_event_orient 内部处理。
+                _oa_hc = _oa_fair(entry, sport, "hc", target_line=bb_hl)
+                if not _oa_hc or not _oa_hc.get("home") or not _oa_hc.get("away"):
+                    continue
+                # 线匹配校验: BB 让球线须 ≈ Betfair 线(否则比的是不同线的价, 假EV)
+                _bf_line = _oa_hc.get("line")
+                if _bf_line is None or abs(float(bb_hl) - float(_bf_line)) > 0.25:
+                    if hc_tag == "main":
+                        cal_blocked_hc += 1
+                    continue
             home_fair = _oa_hc["home"]
             away_fair = _oa_hc["away"]
             bb_home_odds = hc_dict["home_odds"]
