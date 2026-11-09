@@ -1912,10 +1912,10 @@ def _collect_opportunities(match, market_key):
                                  match.get("start_time_pin_epoch")):
             continue
 
-        # 2026-11-09 大热排除: 隐含胜率>60%(赔率<1.67)的热门是 Power favorite-longshot bias 热门侧假溢价重灾区
-        # (60-70%段实测-40.89%), 全量放开时排除大热, 等干净数据重拟合校准修好热门 bias 再放开。
+        # 2026-11-09 大热排除: 隐含胜率>70%(赔率<1.43)的超热门不投(用户定)。热门侧 favorite-longshot bias
+        # 假溢价(50-70%段负), 但 60-70%段是校准可修的 bias, 超热门>70%赔率太低爆冷亏损大, 保守排除。
         _imp_prob = 1.0 / (opp.get("fair_price") or bb_odds) if (opp.get("fair_price") or bb_odds) else 0
-        if _imp_prob > 0.60:
+        if _imp_prob > 0.70:
             continue
 
         # 自有标定喂 EV 层(2026-08-29): 薄锚盘口(ht_dc等)用真实结算胜率覆盖 Pin 假价重算 EV,
