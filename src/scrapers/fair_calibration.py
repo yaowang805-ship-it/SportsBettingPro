@@ -24,7 +24,9 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 # 总开关(分市场, 可回退): 关掉则该端校准不生效, 回到 ev=(bb-fair)/fair 原始口径。
 # 2026-11-02 改: 早盘校准从 isotonic(逐段拟合=过拟合根因)换成 platt(2参数平滑单调), 不再过拟合,
 # 早盘重新打开。配合 Power 去水(修 Shin favorite-longshot bias 的源头)双保险。
-CALIBRATE_FAIR = {"prematch": True, "live": True}
+# 2026-11-10 关早盘校准: 校准表(11-07前脏数据拟合 b=0.656)抬高冷门ev制造假溢价, 中间段真溢价稀少。
+# 关掉回纯 Power 去水口径, 验证中间段真溢价是否恢复, 等干净数据(11-08后)攒够再重拟合。
+CALIBRATE_FAIR = {"prematch": False, "live": True}
 
 _TABLE_FILES = {
     "live": "fair_calibration.json",
