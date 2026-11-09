@@ -1516,6 +1516,10 @@ class SecondLevelMonitor:
             _dr = "主"
         else:
             _dr = "其他"
+        # 2026-11-09 两端排除(对齐早盘): 隐含胜率 20-75% 放开, <20%(冷门 favorite-longshot bias)和>75%(超热门)排除。
+        _imp_live = 1.0 / (sig.get("fair") or sig.get("bb_odds")) if (sig.get("fair") or sig.get("bb_odds")) else 0
+        if _imp_live < 0.20 or _imp_live > 0.75:
+            return
         # 2026-09-19 用户暂停小球盘投注: 实盘小球-31%失效, 观察库已收纸单继续攒数据, 只不下真单
         if not LIVE_UNDER_BET_ENABLED and _sub == "over_under" and _dr == "小":
             print(f"  ⏸️ 小球盘已暂停投注(仅记观察库) {sig['match']['home']} vs {sig['match']['away']}", flush=True)
