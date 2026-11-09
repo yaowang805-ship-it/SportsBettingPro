@@ -1924,6 +1924,10 @@ def _collect_opportunities(match, market_key):
             _dir_override = True
         else:
             _dir_override = False
+        # 2026-11-09 早盘 ws 直接盘(1x2/hc/ou)基础门槛 3%→2%(对齐入库+drop, 用户要求):
+        # 方向级覆盖(_dir_override)/冷门高赔分层(41-65%)/矩阵门槛保留, 只降基础门槛。
+        if not _dir_override and sub_market in ("1x2", "hc", "ou") and v3_min_ev == 3.0:
+            v3_min_ev = 2.0
         # V5: FB独有机会降门槛 — FB赔率比BB更接近Pin, edge天然低, 含金量更高
         if price_source == "FB" and not platform_sources:
             v3_min_ev = max(1.0, v3_min_ev * 0.6)  # 降到60%

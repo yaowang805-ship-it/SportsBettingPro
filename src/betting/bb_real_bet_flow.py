@@ -423,7 +423,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
             if trigger_source == "pin_drop":
                 _min_ev = 2.0  # 2026-11-01 Drop 投注门槛降到 2%(和入库一致): 分格释放(CLV)才是 drop 的真正过滤器, EV 门槛只去噪声
             else:
-                _min_ev = 3.0  # 2026-11-06 WS 投注门槛 5%→3%(放量, 与滚球3%对齐; 线匹配+护栏修好后真实时价可得真溢价)
+                _min_ev = 2.0  # 2026-11-09 WS 投注门槛 3%→2%(对齐入库+drop, 用户要求; 线匹配+护栏已修好, 真溢价可得)
         # 2026-10-26 早盘 EV 上限拦截(12%以上低赔率热门假溢价, 实测 12-20%/-8.3%、20%+/-4.9%)
         _ev_signal = opp.get("ev_pct")
         if _ev_signal is not None:
