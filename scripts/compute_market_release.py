@@ -1758,9 +1758,23 @@ def main():
         _worst = observe_calibration[:5]
         print(f"[calib] Betfair公平价校准误差(>0=miscalibrated): {_worst}", flush=True)
 
+    # 2026-11-09 修 full_release 无 REAL_ROI_GATE 兜底(agent2 S1): 全量放开格也过实盘负 ROI 熔断,
+    # 实盘 n>=REAL_ROI_GATE_N_MIN 且 ROI<0 的方向×区间加进 full_release_blocked, 投注端 full_release 命中先查。
+    full_release_blocked = []
+    for (_sp, _sm, _dr, _iv, _scope), _real in real_roi_cell.items():
+        if _scope != SCOPE_EARLY:
+            continue
+        if f"{_sp}|{_sm}" not in FULL_RELEASE_EARLY:
+            continue
+        if _real.get("n", 0) >= REAL_ROI_GATE_N_MIN and _real.get("roi", 0) < 0:
+            full_release_blocked.append([_sp, _sm, _dr, _iv, SCOPE_EARLY])
+    if full_release_blocked:
+        print(f"[full-release] 实盘负ROI熔断撤回 {len(full_release_blocked)} 格: {full_release_blocked}", flush=True)
+
     out = {
         "generated_at": datetime.now().isoformat(),
         "full_release_early": sorted(FULL_RELEASE_EARLY),  # 2026-11-07 早盘三运动三主力盘口全量放开
+        "full_release_blocked": full_release_blocked,  # 2026-11-09 全量放开格的实盘负ROI熔断清单(投注端先查)
         "market_released": market_released,
         "league_released": league_released,
         "league_blocked": league_blocked,
