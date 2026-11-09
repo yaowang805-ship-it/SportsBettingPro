@@ -1859,10 +1859,13 @@ class SecondLevelMonitor:
             _bf_t = datetime.fromtimestamp(float(_pin_ts)).strftime("%H:%M:%S") if _pin_ts else "--"
             _pin_raw = sig.get("pin_raw")
             _pin_raw_str = f" | Pin原价 {float(_pin_raw):.2f}" if _pin_raw else ""
+            # 2026-11-10 补线值: 让球/大小球推送带线(让多少/大多少小多少)。
+            _line = sig.get("line")
+            _desig_full = f"{_desig} {_line}" if _line else _desig
             self._notify_bet(
                 "🟦 滚球已下单",
                 f"{_sport_cn} | {_league} | 滚球{_clock} | 下单 {_bj}\n"
-                f"{sig['match']['home']} vs {sig['match']['away']} | {_desig}\n"
+                f"{sig['match']['home']} vs {sig['match']['away']} | {_desig_full}\n"
                 f"{_platform} {sig['bb_odds']:.2f} | Pin公平价 {sig['fair']:.2f}{_pin_raw_str} | 溢价 {sig['ev']:+.2f}% | 置信度:滚球\n"
                 f"拉取 BB {_bb_t} | Pin {_bf_t}\n"
                 f"单注 ¥{stake} | 余额 ¥{_bal} | 今日已投 ¥{self._live_spent:.0f} | 未结 ¥{self._live_outstanding:.0f} | 总耗时 {_total_time:.1f}s")
