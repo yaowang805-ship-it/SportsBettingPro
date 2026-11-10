@@ -1171,7 +1171,7 @@
       "success_rate": 0.0
     },
     "日本丙级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1221,7 +1221,7 @@
       "success_rate": 0.0
     },
     "印尼超级联赛": {
-      "attempts": 6,
+      "attempts": 7,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1701,7 +1701,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-11-09T23:02:50.171906+00:00",
+  "updated": "2026-11-10T01:45:12.471890+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
