@@ -1553,21 +1553,26 @@ class SecondLevelMonitor:
         if _sp_en and _sm:
             _base = f"{_sp_en}|{_sm}|{_dr}"
             _iv = _odds_interval(sig.get("fair") or sig.get("bb_odds"), _sp_en)
-            _obs_blocked = _load_obs_blocked()
-            # 2026-10-17 修: 之前只用具体区间 {_iv} 匹配, observe_blocked 的 "*"(所有区间)条目永远匹配不上
-            # → 滚球撤回(如 tennis|1x2|主|*|live)形同虚设。补 "*" 通配, 与下方 caps 查询同口径。
-            if f"{_base}|{_iv}|live" in _obs_blocked or f"{_base}|*|live" in _obs_blocked:
-                print(f"  🚫 赔率区间{_iv}已拦截(n>200表现差), 跳过 "
-                      f"{sig['match']['home']} vs {sig['match']['away']} {sig['desig']}", flush=True)
-                self._record_reject(sig, "exclude_list")
-                return
-            _caps = _load_obs_caps()
-            _cap = _caps.get(f"{_base}|*|live")  # 已验证方向(所有区间)
-            if _cap is not None:
-                _cap_key = f"{_base}|*|live"
+            # 2026-11-10 滚球与早盘一致: full_release_live 全量放开(绕过 observe_blocked, cap=MAX_STAKE)
+            if f"{_sp_en}|{_sm}" in _load_full_release_live():
+                _cap = MAX_STAKE  # 全量放开, cap 用滚球单注上限(80)
+                _cap_key = None
             else:
-                _cap = _caps.get(f"{_base}|{_iv}|live")  # 该赔率区间单独释放
-                _cap_key = f"{_base}|{_iv}|live"
+                _obs_blocked = _load_obs_blocked()
+                # 2026-10-17 修: 之前只用具体区间 {_iv} 匹配, observe_blocked 的 "*"(所有区间)条目永远匹配不上
+                # → 滚球撤回(如 tennis|1x2|主|*|live)形同虚设。补 "*" 通配, 与下方 caps 查询同口径。
+                if f"{_base}|{_iv}|live" in _obs_blocked or f"{_base}|*|live" in _obs_blocked:
+                    print(f"  🚫 赔率区间{_iv}已拦截(n>200表现差), 跳过 "
+                          f"{sig['match']['home']} vs {sig['match']['away']} {sig['desig']}", flush=True)
+                    self._record_reject(sig, "exclude_list")
+                    return
+                _caps = _load_obs_caps()
+                _cap = _caps.get(f"{_base}|*|live")  # 已验证方向(所有区间)
+                if _cap is not None:
+                    _cap_key = f"{_base}|*|live"
+                else:
+                    _cap = _caps.get(f"{_base}|{_iv}|live")  # 该赔率区间单独释放
+                    _cap_key = f"{_base}|{_iv}|live"
         if _cap is None:
             self._record_reject(sig, "below_threshold")
             return
