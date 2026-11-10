@@ -237,6 +237,8 @@ FULL_RELEASE_EARLY = {
                   "ice_hockey", "american_football", "volleyball")
     for sm in ("1x2", "hc", "ou")
 }
+# 2026-11-10 滚球与早盘保持一致: 同样放开 7 运动 × 1x2/hc/ou(两端排除 20-75% 在 second_level_monitor 里)。
+FULL_RELEASE_LIVE = set(FULL_RELEASE_EARLY)
 
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
 # 优先于 MANUAL_OBSERVE_RELEASE 的区间。数据驱动拦截(observe_blocked)照常追加。
@@ -1776,6 +1778,7 @@ def main():
     out = {
         "generated_at": datetime.now().isoformat(),
         "full_release_early": sorted(FULL_RELEASE_EARLY),  # 2026-11-07 早盘三运动三主力盘口全量放开
+        "full_release_live": sorted(FULL_RELEASE_LIVE),  # 2026-11-10 滚球与早盘一致(7运动×1x2/hc/ou)
         "full_release_blocked": full_release_blocked,  # 2026-11-09 全量放开格的实盘负ROI熔断清单(投注端先查)
         "market_released": market_released,
         "league_released": league_released,

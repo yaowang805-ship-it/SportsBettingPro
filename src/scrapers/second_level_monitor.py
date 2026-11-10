@@ -331,6 +331,26 @@ def _load_obs_blocked():
         return set()
 
 
+_full_release_live_cache = None
+_full_release_live_mtime = 0.0
+
+
+def _load_full_release_live():
+    """读 full_release_live(滚球全量放开的 运动|盘口 set), 带 mtime 缓存。2026-11-10 与早盘一致。"""
+    global _full_release_live_cache, _full_release_live_mtime
+    if not MARKET_RELEASE_FILE.exists():
+        return set()
+    try:
+        m = MARKET_RELEASE_FILE.stat().st_mtime
+        if _full_release_live_cache is None or m != _full_release_live_mtime:
+            _raw = (json.loads(MARKET_RELEASE_FILE.read_text()) or {}).get("full_release_live", []) or []
+            _full_release_live_cache = set(_raw)
+            _full_release_live_mtime = m
+        return _full_release_live_cache
+    except Exception:
+        return set()
+
+
 # (已删除重复的 4 档 _odds_interval——它覆盖了上面的 5 档版本, 导致 1.0-1.5/1.5-2.0 拦截失效)
 
 
