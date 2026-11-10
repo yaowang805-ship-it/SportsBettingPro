@@ -1,5 +1,5 @@
 {
-  "balance": 14352.53,
+  "balance": 14232.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1219,6 +1219,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794355200.0,
       "created_at": "2026-11-10T12:21:31.209793+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_斯宾特克斯骑士_JCA国王_大分(1525)",
+      "sport": "basketball",
+      "league": "FIBA非洲篮球联赛资格赛",
+      "home_team": "斯宾特克斯骑士",
+      "away_team": "JCA国王",
+      "home_cn": "斯宾特克斯骑士",
+      "away_cn": "JCA国王",
+      "market": "over_under",
+      "market_type": "大分(152.5)",
+      "sub_market": "ou",
+      "line": "152.5",
+      "odds": 1.84,
+      "stake": 120,
+      "model_prob": 0.5665,
+      "ev_pct": 4.24,
+      "pin_odds": 1.6667,
+      "fair_price": 1.7652,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794340800.0,
+      "created_at": "2026-11-10T12:27:27.636451+00:00",
       "track_only": false
     }
   ],
@@ -12855,8 +12878,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-10",
-    "used": 300.0,
-    "bets": 5
+    "used": 420.0,
+    "bets": 6
   },
   "updated": null
 }
