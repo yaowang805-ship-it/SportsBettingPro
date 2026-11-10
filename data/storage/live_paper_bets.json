@@ -7448,9 +7448,9 @@
   "spread": null,
   "bb_ts": 1794271417.502885,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -30.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -7459,7 +7459,11 @@
   "clv_anchor": null,
   "clv_elapsed_s": null,
   "_not_found": 546,
-  "_unresolvable": true
+  "_unresolvable": true,
+  "final_score": [
+   95,
+   99
+  ]
  },
  {
   "ts": 1794271701.983022,
@@ -7482,9 +7486,9 @@
   "spread": null,
   "bb_ts": 1794271700.673388,
   "stake": 40,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 33.6,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -7493,7 +7497,12 @@
   "clv_anchor": null,
   "clv_elapsed_s": null,
   "_not_found": 542,
-  "_unresolvable": true
+  "_unresolvable": true,
+  "final_score": [
+   95,
+   99
+  ],
+  "line_semantics": "pregame"
  },
  {
   "ts": 1794272681.266558,
@@ -7516,9 +7525,9 @@
   "spread": null,
   "bb_ts": 1794272680.429615,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 20.4,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -7527,7 +7536,11 @@
   "clv_anchor": null,
   "clv_elapsed_s": null,
   "_not_found": 525,
-  "_unresolvable": true
+  "_unresolvable": true,
+  "final_score": [
+   95,
+   99
+  ]
  },
  {
   "ts": 1794273253.7786071,
@@ -7550,9 +7563,9 @@
   "spread": null,
   "bb_ts": 1794273252.021409,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 48.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -7561,6 +7574,11 @@
   "clv_anchor": null,
   "clv_elapsed_s": null,
   "_not_found": 516,
-  "_unresolvable": true
+  "_unresolvable": true,
+  "final_score": [
+   95,
+   99
+  ],
+  "line_semantics": "pregame"
  }
 ]

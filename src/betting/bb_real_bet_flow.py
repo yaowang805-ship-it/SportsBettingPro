@@ -533,6 +533,9 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
                 # 2026-10-19 总耗时只算「触发→投注完成」, 去掉防风控 sleep(冷却+间隔)累计时间
                 _pure = time.time() - trigger_ts - _sleep_total
                 _extra.append(f"总耗时 {_pure:.1f}s")
+            else:
+                # 2026-11-10 ws_scan 无触发时刻, 用下单 HTTP 耗时(下单关键路径)展示, 保证每单推送都有耗时
+                _extra.append(f"下单耗时 {_latency:.1f}s")
             _extra_str = ("\n  " + " | ".join(_extra)) if _extra else ""
             # 2026-11-10 补线值: 让球/大小球推送必须带线(让多少/大多少小多少), 之前只写方向丢线。
             _line = opp.get("line")
