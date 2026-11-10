@@ -112,6 +112,11 @@ def main():
     _res = token_valid(tok)
     if _res is True:
         _save_streak(0)  # 有效 → 清连续失败计数
+        # 2026-11-10 token 恢复 → 清失效告警冷却, 下次失效才重新推(修网络故障后无限推送)
+        try:
+            COOLDOWN_FILE.write_text(json.dumps({"ts": 0}))
+        except Exception:
+            pass
         return
     if _res is None:
         # 网络异常(连不上域名): 无法判断 token 是否失效, 不判失效不续期(防网络抖动误开浏览器)
@@ -125,14 +130,14 @@ def main():
         print(f"token 检测失败(第 {streak}/{STREAK_THRESHOLD} 次, 可能是网络抖动), 暂不续期")
         return
 
-    # 连续 N 次失败 → 判失效, 走 30min 冷却
+    # 连续 N 次失败 → 判失效, 失效期间只推一次(直到 token 恢复才重置, 不再 30min 重复推)
     now = time.time()
     try:
         last = float(json.loads(COOLDOWN_FILE.read_text()).get("ts", 0) or 0)
     except Exception:
         last = 0.0
-    if now - last < COOLDOWN:
-        print(f"冷却中(距上次 {(now - last) / 60:.0f}min), 跳过")
+    if last > 0:
+        print("token 失效告警已推过, token 恢复前不再重复推")
         return
 
     # 2026-10-08 用户要求: token 失效只推钉钉提醒, 不再自动开浏览器续期(避免浏览器被打开+发热)。

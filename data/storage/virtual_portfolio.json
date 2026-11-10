@@ -1,30 +1,7 @@
 {
-  "balance": 14602.53,
+  "balance": 14552.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_1x2_利蒂亚_NK紫日_客胜",
-      "sport": "football",
-      "league": "斯洛文尼亚丙级联赛",
-      "home_team": "利蒂亚",
-      "away_team": "NK紫日",
-      "home_cn": "利蒂亚",
-      "away_cn": "NK紫日",
-      "market": "1x2",
-      "market_type": "客胜",
-      "sub_market": "1x2",
-      "line": "",
-      "odds": 7.3,
-      "stake": 0,
-      "model_prob": 0.1449,
-      "ev_pct": 5.78,
-      "pin_odds": 5.37,
-      "fair_price": 6.9009,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1794056400.0,
-      "created_at": "2026-11-07T10:35:33.289855+00:00",
-      "track_only": true
-    },
     {
       "id": "bb_vs_pin_1x2_博伊西竞技_查塔努加红狼_客胜",
       "sport": "football",
@@ -1150,6 +1127,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794339900.0,
       "created_at": "2026-11-10T12:13:17.280936+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_佩雷斯科_纽卡斯尔城_小球(30)",
+      "sport": "football",
+      "league": "英格兰北部超级联赛甲组",
+      "home_team": "佩雷斯科",
+      "away_team": "纽卡斯尔城",
+      "home_cn": "佩雷斯科",
+      "away_cn": "纽卡斯尔城",
+      "market": "over_under",
+      "market_type": "小球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 1.93,
+      "stake": 50,
+      "model_prob": 0.5476,
+      "ev_pct": 5.68,
+      "pin_odds": 1.6993,
+      "fair_price": 1.8263,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794339900.0,
+      "created_at": "2026-11-10T12:16:50.930432+00:00",
       "track_only": false
     }
   ],
@@ -12767,12 +12767,27 @@
       "home_cn": "培斯塔坦格朗",
       "away_cn": "阿迪亚克萨法梅尔",
       "market_type": "主胜"
+    },
+    {
+      "id": "bb_vs_pin_1x2_利蒂亚_NK紫日_客胜",
+      "match": "0¥ @ 7.30 (超时作废)",
+      "date": "2026-11-10T12:14:44.324959+00:00",
+      "stake": 0,
+      "odds": 7.3,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "斯洛文尼亚丙级联赛",
+      "sport": "football",
+      "home_cn": "利蒂亚",
+      "away_cn": "NK紫日",
+      "market_type": "客胜"
     }
   ],
   "daily_budget": {
     "date": "2026-11-10",
-    "used": 50.0,
-    "bets": 1
+    "used": 100.0,
+    "bets": 2
   },
   "updated": null
 }
