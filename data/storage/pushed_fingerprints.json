@@ -1,1 +1,17 @@
-{"basketball|FIBA Basketball Africa League Qualifiers|Spintex Knights|JCA|大分(152.5)|ou|152.5|2026-11-11": {"ev": 4.24, "bb": 1.84, "ts": 1794313652.649786}, "ice_hockey|NHL|Toronto Maple Leafs|Colorado Avalanche|大分(6.5)|ou|6.5|2026-11-11": {"ev": 5.39, "bb": 2.04, "ts": 1794313348.81371}, "football|Spain Tercera Division|Manacor|Inter Ibiza CD|大球(2.5)|ou|2.5|2026-11-12": {"bb": 1.79, "ev": 7.03, "fair": 1.6724, "pin": 1.5525, "ts": 1794366729.125896, "kickoff": 1794414600.0, "repush_count": 0}, "ice_hockey|NHL|San Jose Sharks|Pittsburgh Penguins|大分(6.5)|ou|6.5|2026-11-12": {"bb": 1.96, "ev": 7.34, "fair": 1.826, "pin": 1.7752, "ts": 1794369115.927989, "kickoff": 1794452400.0, "repush_count": 0}}
+{
+  "basketball|FIBA Basketball Africa League Qualifiers|Spintex Knights|JCA|大分(152.5)|ou|152.5|2026-11-11": {
+    "ev": 4.24,
+    "bb": 1.84,
+    "ts": 1794313652.649786
+  },
+  "ice_hockey|NHL|Toronto Maple Leafs|Colorado Avalanche|大分(6.5)|ou|6.5|2026-11-11": {
+    "ev": 5.39,
+    "bb": 2.04,
+    "ts": 1794313348.81371
+  },
+  "ice_hockey|NHL|Anaheim Ducks|Nashville Predators|大分(6.5)|ou|6.5|2026-11-12": {
+    "ev": 8.88,
+    "bb": 2.04,
+    "ts": 1794405211.172122
+  }
+}

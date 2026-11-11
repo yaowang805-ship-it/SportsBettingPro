@@ -1,5 +1,5 @@
 {
-  "balance": 14772.53,
+  "balance": 14722.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -207,6 +207,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794452400.0,
       "created_at": "2026-11-11T03:07:06.809387+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_安那翰鸭_纳什维尔掠夺者_大分(65)",
+      "sport": "ice_hockey",
+      "league": "NHL 美国冰球联盟",
+      "home_team": "安那翰鸭",
+      "away_team": "纳什维尔掠夺者",
+      "home_cn": "安那翰鸭",
+      "away_cn": "纳什维尔掠夺者",
+      "market": "over_under",
+      "market_type": "大分(6.5)",
+      "sub_market": "ou",
+      "line": "6.5",
+      "odds": 2.04,
+      "stake": 50,
+      "model_prob": 0.5337,
+      "ev_pct": 8.88,
+      "pin_odds": 1.8197,
+      "fair_price": 1.8736,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794452400.0,
+      "created_at": "2026-11-11T13:53:26.587139+00:00",
       "track_only": false
     }
   ],
@@ -12563,8 +12586,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-11",
-    "used": 140.0,
-    "bets": 3
+    "used": 190.0,
+    "bets": 4
   },
   "updated": null
 }
