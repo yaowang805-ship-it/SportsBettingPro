@@ -1356,7 +1356,7 @@
       "success_rate": 0.0
     },
     "葡萄牙全国冠军锦标赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1546,7 +1546,7 @@
       "success_rate": 0.0
     },
     "塞拉利昂超级联赛": {
-      "attempts": 1,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1744,9 +1744,24 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "意大利丁级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "肯尼亚超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "越南乙级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-11-11T01:45:55.222695+00:00",
+  "updated": "2026-11-11T06:08:54.186262+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

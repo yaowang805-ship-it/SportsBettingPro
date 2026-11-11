@@ -55,6 +55,7 @@ def report_failure():
         if not _failure_notified:
             _failure_notified = True
             _alert("故障")
+            _self_heal()  # 2026-11-11 用户要求: 自动重启 Shadowrocket 隧道自愈网络
 
 
 def report_success():
@@ -86,3 +87,24 @@ def _alert(kind):
             )
     except Exception:
         pass
+
+
+def _self_heal():
+    """2026-11-11 用户要求: 网络故障时自动重启 Shadowrocket 隧道自愈。
+
+    后台跑 scripts/self_heal_network.py(自带 5min 文件锁冷却, 多进程只触发一次实际自愈)。
+    不阻塞调用方(网络已熔断, 这里不能同步等)。
+    """
+    try:
+        import subprocess
+        import sys
+        from pathlib import Path
+        _root = Path(__file__).resolve().parent.parent.parent
+        subprocess.Popen(
+            [sys.executable, str(_root / "scripts" / "self_heal_network.py")],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
+    except Exception:
+        pass
+
