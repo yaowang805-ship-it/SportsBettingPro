@@ -9099,9 +9099,9 @@
   "spread": null,
   "bb_ts": 1794363573.112891,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -80.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -9109,8 +9109,12 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 431,
-  "_unresolvable": true
+  "_not_found": 436,
+  "_unresolvable": true,
+  "final_score": [
+   5,
+   3
+  ]
  },
  {
   "ts": 1794363574.724479,
@@ -9133,9 +9137,9 @@
   "spread": null,
   "bb_ts": 1794363573.112891,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -70.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -9143,8 +9147,13 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 431,
-  "_unresolvable": true
+  "_not_found": 436,
+  "_unresolvable": true,
+  "final_score": [
+   5,
+   3
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1794365408.296881,
@@ -9167,9 +9176,9 @@
   "spread": null,
   "bb_ts": 1794365407.973585,
   "stake": 50,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 78.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -9177,8 +9186,13 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 401,
-  "_unresolvable": true
+  "_not_found": 406,
+  "_unresolvable": true,
+  "final_score": [
+   5,
+   3
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1794366012.611943,
@@ -9201,9 +9215,9 @@
   "spread": null,
   "bb_ts": 1794366011.098144,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 70.4,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -9211,8 +9225,12 @@
   "clv_sign": null,
   "clv_anchor": "no_outcome",
   "clv_elapsed_s": null,
-  "_not_found": 392,
-  "_unresolvable": true
+  "_not_found": 397,
+  "_unresolvable": true,
+  "final_score": [
+   0,
+   2
+  ]
  },
  {
   "ts": 1794366012.61244,
@@ -9235,9 +9253,9 @@
   "spread": null,
   "bb_ts": 1794366011.098144,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 57.6,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -9245,8 +9263,12 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 392,
-  "_unresolvable": true
+  "_not_found": 397,
+  "_unresolvable": true,
+  "final_score": [
+   5,
+   4
+  ]
  },
  {
   "ts": 1794366331.389437,
@@ -9269,9 +9291,9 @@
   "spread": null,
   "bb_ts": 1794366330.848777,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 68.6,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -9279,8 +9301,12 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 386,
-  "_unresolvable": true
+  "_not_found": 391,
+  "_unresolvable": true,
+  "final_score": [
+   1,
+   11
+  ]
  },
  {
   "ts": 1794366637.0075421,
@@ -9303,9 +9329,9 @@
   "spread": null,
   "bb_ts": 1794366634.8632581,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 49.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -9313,8 +9339,12 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 382,
-  "_unresolvable": true
+  "_not_found": 387,
+  "_unresolvable": true,
+  "final_score": [
+   1,
+   11
+  ]
  },
  {
   "ts": 1794366655.110181,
@@ -9337,9 +9367,9 @@
   "spread": null,
   "bb_ts": 1794366652.94174,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 49.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -9347,8 +9377,12 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 381,
-  "_unresolvable": true
+  "_not_found": 386,
+  "_unresolvable": true,
+  "final_score": [
+   5,
+   4
+  ]
  },
  {
   "ts": 1794366952.497644,
@@ -9371,9 +9405,9 @@
   "spread": null,
   "bb_ts": 1794366951.8706172,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 36.4,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -9381,8 +9415,13 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 377,
-  "_unresolvable": true
+  "_not_found": 382,
+  "_unresolvable": true,
+  "final_score": [
+   1,
+   11
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1794366982.932118,
@@ -9405,9 +9444,9 @@
   "spread": null,
   "bb_ts": 1794366981.808831,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 47.2,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -9415,8 +9454,13 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 376,
-  "_unresolvable": true
+  "_not_found": 381,
+  "_unresolvable": true,
+  "final_score": [
+   5,
+   4
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1794367275.874311,
@@ -9439,9 +9483,9 @@
   "spread": null,
   "bb_ts": 1794367274.5884311,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -70.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -9449,8 +9493,13 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 371,
-  "_unresolvable": true
+  "_not_found": 376,
+  "_unresolvable": true,
+  "final_score": [
+   5,
+   3
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1794367583.987585,
@@ -9473,9 +9522,9 @@
   "spread": null,
   "bb_ts": 1794367583.2377338,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 84.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -9483,8 +9532,12 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 366,
-  "_unresolvable": true
+  "_not_found": 371,
+  "_unresolvable": true,
+  "final_score": [
+   1,
+   11
+  ]
  },
  {
   "ts": 1794368192.901862,
@@ -9507,9 +9560,9 @@
   "spread": null,
   "bb_ts": 1794368192.6060002,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -80.0,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
@@ -9517,8 +9570,13 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 357,
-  "_unresolvable": true
+  "_not_found": 362,
+  "_unresolvable": true,
+  "final_score": [
+   5,
+   4
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1794368225.9719648,
@@ -9541,9 +9599,9 @@
   "spread": null,
   "bb_ts": 1794368224.953025,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 60.6,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -9551,8 +9609,12 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 356,
-  "_unresolvable": true
+  "_not_found": 361,
+  "_unresolvable": true,
+  "final_score": [
+   5,
+   4
+  ]
  },
  {
   "ts": 1794368499.51692,
@@ -9575,9 +9637,9 @@
   "spread": null,
   "bb_ts": 1794368499.094959,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 68.8,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -9585,8 +9647,12 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 352,
-  "_unresolvable": true
+  "_not_found": 357,
+  "_unresolvable": true,
+  "final_score": [
+   2,
+   1
+  ]
  },
  {
   "ts": 1794369125.8220742,
@@ -9609,9 +9675,9 @@
   "spread": null,
   "bb_ts": 1794369124.915628,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -60.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -9619,7 +9685,11 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "_not_found": 342,
-  "_unresolvable": true
+  "_not_found": 347,
+  "_unresolvable": true,
+  "final_score": [
+   5,
+   4
+  ]
  }
 ]

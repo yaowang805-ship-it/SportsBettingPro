@@ -49,6 +49,67 @@ def _network_ok():
         return False
 
 
+def _get_nodes():
+    """解析 Shadowrocket 的 ServerManager(bplist/NSKeyedArchiver), 提取节点名列表。
+
+    节点配置存在 Group Containers/group.com.liguangming.Shadowrocket/ServerManager。
+    返回 [(title, host), ...], 过滤掉订阅条目(title 为 None)。
+    """
+    import os
+    import plistlib
+    p = os.path.expanduser(
+        '~/Library/Group Containers/group.com.liguangming.Shadowrocket/ServerManager')
+    if not os.path.exists(p):
+        return []
+    try:
+        d = plistlib.load(open(p, 'rb'))
+    except Exception:
+        return []
+    objs = d.get('$objects', [])
+
+    def _resolve(o, depth=0):
+        if depth > 50:
+            return None
+        if isinstance(o, plistlib.UID):
+            return _resolve(objs[o.data], depth + 1)
+        if isinstance(o, list):
+            return [_resolve(x, depth) for x in o]
+        if isinstance(o, dict):
+            return {k: _resolve(v, depth) for k, v in o.items()}
+        return o
+
+    nodes = []
+    for o in objs:
+        if not isinstance(o, dict):
+            continue
+        cls = o.get('$class')
+        cn = None
+        if isinstance(cls, plistlib.UID):
+            cob = objs[cls.data]
+            if isinstance(cob, dict):
+                cn = cob.get('$classname')
+        if cn == 'DLWServer':
+            title = _resolve(o.get('title'))
+            host = _resolve(o.get('host'))
+            if title and isinstance(title, str):
+                nodes.append((title, host if isinstance(host, str) else ''))
+    return nodes
+
+
+def _switch_node():
+    """从节点列表随机选一个切换(shadowrocket://select?s=节点名)。返回切换的节点名或 None。"""
+    import random
+    import subprocess
+    import urllib.parse
+    nodes = _get_nodes()
+    if not nodes:
+        return None
+    title = random.choice(nodes)[0]
+    enc = urllib.parse.quote(title)
+    subprocess.run(["open", "-g", f"shadowrocket://select?s={enc}"], capture_output=True)
+    return title
+
+
 def main():
     # 冷却(文件锁): COOLDOWN 秒内不自愈第二次, 防多进程/频繁触发重复重启 Shadowrocket
     now = time.time()
@@ -86,6 +147,20 @@ def main():
     if _network_ok():
         print("自愈: 彻底重启后网络恢复 ✅", flush=True)
         return 0
+
+    # 6. 换节点(节点失效时重启隧道/app 都无效, 循环尝试多个节点直到网络通, 最多 6 个)
+    import random
+    import urllib.parse
+    nodes = _get_nodes()
+    random.shuffle(nodes)
+    for _i, (_title, _host) in enumerate(nodes[:6]):
+        _enc = urllib.parse.quote(_title)
+        subprocess.run(["open", "-g", f"shadowrocket://select?s={_enc}"], capture_output=True)
+        print(f"自愈: 换节点 {_i + 1}/{min(6, len(nodes))} -> {_title}, 等 8s...", flush=True)
+        time.sleep(8)
+        if _network_ok():
+            print(f"自愈: 换节点 {_title} 后网络恢复 ✅", flush=True)
+            return 0
 
     print("自愈: 失败, 网络仍不通 ❌", flush=True)
     return 1
