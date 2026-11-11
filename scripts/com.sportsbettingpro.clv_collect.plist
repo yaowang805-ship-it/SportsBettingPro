@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.sportsbettingpro.clv_collect</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/wangyao/SportsBettingPro/.venv312/bin/python</string>
+        <string>-u</string>
+        <string>-m</string>
+        <string>src.monitor.clv_collector</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/wangyao/SportsBettingPro</string>
+    <key>StartInterval</key>
+    <integer>30</integer>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/Users/wangyao/SportsBettingPro/data/logs/clv_collect.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/wangyao/SportsBettingPro/data/logs/clv_collect.log</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>PYTHONUNBUFFERED</key>
+        <string>1</string>
+    </dict>
+</dict>
+</plist>
