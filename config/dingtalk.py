@@ -150,6 +150,35 @@ def _connect_with_fallback(hostname: str):
     return None
 
 
+_PROXY_URL = "http://127.0.0.1:1082"  # Shadowrocket HTTP 代理端口
+
+
+def _send_via_proxy(host: str, path: str, body: str):
+    """走 Shadowrocket 代理发钉钉(2026-11-11 用户要求: 改走代理, 网络恢复自动跟着恢复)。
+
+    返回 (ok, fallback): ok=成功; fallback=True 表示网络连接失败(值得 fallback socket 直连),
+    False 表示业务失败(errcode!=0, 如关键词不匹配, socket 直连也会同样失败, 不 fallback)。
+    """
+    try:
+        import requests
+        import urllib3
+        urllib3.disable_warnings()
+        proxies = {"http": _PROXY_URL, "https": _PROXY_URL}
+        # URL 用真实 IP(绕过 Shadowrocket fake-ip 劫持) + Host header 指定 oapi.dingtalk.com(SNI)
+        r = requests.post(f"https://{_REAL_IP}{path}", data=body.encode("utf-8"),
+                          headers={"Content-Type": "application/json", "Host": host},
+                          proxies=proxies, timeout=_TIMEOUT, verify=False)
+        result = r.json()
+        if result.get("errcode") == 0:
+            logger.info("  钉钉推送成功(走代理)")
+            return True, False
+        logger.warning("  钉钉推送失败(走代理): %s", result.get("errmsg", r.text[:200]))
+        return False, False
+    except Exception as e:
+        logger.warning("  钉钉走代理连接失败(将 fallback 直连): %s", e)
+        return False, True
+
+
 def send_dingtalk(
     content: str,
     msgtype: str = "text",
@@ -180,6 +209,13 @@ def send_dingtalk(
 
     body = json.dumps(payload)
     host, path = _resolve_host(DINGTALK_WEBHOOK)
+
+    # 2026-11-11 优先走代理(网络恢复自动跟着恢复), 连接失败才 fallback socket 直连
+    _ok, _fallback = _send_via_proxy(host, path, body)
+    if _ok:
+        return True
+    if not _fallback:
+        return False
 
     ssock = _connect_with_fallback(host)
     if ssock is None:
