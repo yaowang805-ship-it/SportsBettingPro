@@ -1663,6 +1663,16 @@ def main():
         _new_blocks = [list(x) for x in observe_blocked
                        if tuple(x) not in _old_blocked and tuple(x) in _old_released]
         if _new_releases or _new_blocks:
+            # 2026-11-11 去重: pending 内容相同(变更未确认), 不重复推钉钉(网络故障期间每轮 cron 都推的刷屏根因)
+            try:
+                _old_pending = json.loads(PENDING.read_text()) if PENDING.exists() else {}
+                _same = (_old_pending.get("released") == _new_releases
+                         and _old_pending.get("block_released") == _new_blocks)
+            except Exception:
+                _same = False
+            if _same:
+                print(f"[release] 变更已推过待确认(pending未变), 不重复推(释放{len(_new_releases)} 封锁{len(_new_blocks)})")
+                return
             try:
                 PENDING.write_text(json.dumps(
                     {"released": _new_releases, "block_released": _new_blocks,
