@@ -1,5 +1,5 @@
 {
-  "balance": 14722.53,
+  "balance": 14672.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -230,6 +230,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794452400.0,
       "created_at": "2026-11-11T13:53:26.587139+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_希奥利艾_特内里费拉拉古纳队_小分(1685)",
+      "sport": "basketball",
+      "league": "欧洲篮球杯",
+      "home_team": "希奥利艾",
+      "away_team": "特内里费拉拉古纳队",
+      "home_cn": "希奥利艾",
+      "away_cn": "特内里费拉拉古纳队",
+      "market": "over_under",
+      "market_type": "小分(168.5)",
+      "sub_market": "ou",
+      "line": "168.5",
+      "odds": 1.91,
+      "stake": 50,
+      "model_prob": 0.5494,
+      "ev_pct": 4.93,
+      "pin_odds": 1.7463,
+      "fair_price": 1.8202,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794414600.0,
+      "created_at": "2026-11-11T13:57:06.877843+00:00",
       "track_only": false
     }
   ],
@@ -12586,8 +12609,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-11",
-    "used": 190.0,
-    "bets": 4
+    "used": 240.0,
+    "bets": 5
   },
   "updated": null
 }
