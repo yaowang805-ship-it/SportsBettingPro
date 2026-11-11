@@ -251,7 +251,7 @@
       "success_rate": 0.0
     },
     "丹麦超级联赛": {
-      "attempts": 1,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -306,7 +306,7 @@
       "success_rate": 0.5
     },
     "葡萄牙超级联赛": {
-      "attempts": 12,
+      "attempts": 13,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -491,7 +491,7 @@
       "success_rate": 0.0
     },
     "乌克兰超级联赛": {
-      "attempts": 6,
+      "attempts": 7,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -521,12 +521,12 @@
       "success_rate": 0.0
     },
     "土耳其甲级联赛": {
-      "attempts": 13,
+      "attempts": 14,
       "successes": 0,
       "success_rate": 0.0
     },
     "亚美尼亚超级联赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -716,7 +716,7 @@
       "success_rate": 0.0
     },
     "阿联酋超级联赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -726,7 +726,7 @@
       "success_rate": 0.0
     },
     "日本乙级联赛": {
-      "attempts": 16,
+      "attempts": 20,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -746,7 +746,7 @@
       "success_rate": 0.0
     },
     "土耳其超级联赛": {
-      "attempts": 10,
+      "attempts": 12,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1061,7 +1061,7 @@
       "success_rate": 0.0
     },
     "阿尔及利亚甲级联赛": {
-      "attempts": 6,
+      "attempts": 8,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1096,7 +1096,7 @@
       "success_rate": 0.0
     },
     "塞浦路斯甲级联赛": {
-      "attempts": 5,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1171,7 +1171,7 @@
       "success_rate": 0.0
     },
     "日本丙级联赛": {
-      "attempts": 2,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1206,12 +1206,12 @@
       "success_rate": 0.0
     },
     "匈牙利甲级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
     "荷兰甲级联赛": {
-      "attempts": 5,
+      "attempts": 7,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1361,7 +1361,7 @@
       "success_rate": 0.0
     },
     "泰国甲级联赛": {
-      "attempts": 3,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1426,7 +1426,7 @@
       "success_rate": 0.0
     },
     "英格兰足总杯": {
-      "attempts": 8,
+      "attempts": 11,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1506,7 +1506,7 @@
       "success_rate": 0.0
     },
     "澳大利亚甲级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1571,7 +1571,7 @@
       "success_rate": 0.0
     },
     "西班牙丙级联赛": {
-      "attempts": 1,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1596,7 +1596,7 @@
       "success_rate": 0.0
     },
     "澳大利亚锦标赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1696,12 +1696,57 @@
       "success_rate": 0.0
     },
     "西班牙乙级联赛RFEF": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "美国甲级联赛-附加赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "非洲超级杯": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "香港超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "埃及杯": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "卡塔尔星级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "南亚足球锦标赛 (在孟加拉)": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "南非联赛杯": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "美国冠军联赛-附加赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "南亞足球錦標賽 (在孟加拉国)": {
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
     }
   },
-  "updated": "2026-11-10T12:14:44.326029+00:00",
+  "updated": "2026-11-11T01:45:55.222695+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
