@@ -110,6 +110,64 @@ def _switch_node():
     return title
 
 
+def _token_status():
+    """检测 BB token 有效性。返回 'ok' / 'expired' / 'network_error'。"""
+    import requests
+    import urllib3
+    urllib3.disable_warnings()
+    try:
+        tok = (DATA / ".bb_token").read_text().strip()
+    except Exception:
+        return 'network_error'
+    if not tok or len(tok) < 30:
+        return 'expired'
+    s = requests.Session()
+    s.trust_env = False
+    s.proxies = {"http": "", "https": ""}
+    try:
+        r = s.post(f'{_bb_domain()}/v1/order/new/bet/list',
+                   json={'languageType': 'CMN', 'isSettled': False, 'current': 1, 'size': 1},
+                   headers={'Content-Type': 'application/json', 'Authorization': tok,
+                            'User-Agent': 'Mozilla/5.0'},
+                   timeout=10, verify=False)
+        code = r.json().get('code')
+        return 'ok' if code == 0 else 'expired'
+    except Exception:
+        return 'network_error'
+
+
+def _renew_token():
+    """自动续期 token(launch_chrome_9222 + renew_bb_login + 关 9222)。返回是否成功。"""
+    print("自愈: 启动 Chrome 9222 续期 token...", flush=True)
+    subprocess.run(["bash", str(ROOT / "scripts" / "launch_chrome_9222.sh")],
+                   capture_output=True, timeout=90)
+    try:
+        subprocess.run([sys.executable, str(ROOT / "scripts" / "renew_bb_login.py")],
+                       capture_output=True, timeout=180)
+    except Exception as e:
+        print(f"自愈: renew 异常 {e}", flush=True)
+    subprocess.run(["pkill", "-f", "remote-debugging-port=9222"], capture_output=True)
+    subprocess.run(["pkill", "-f", ".chrome-bb"], capture_output=True)
+    time.sleep(3)
+    return _token_status() == 'ok'
+
+
+def _check_and_renew_token():
+    """网络恢复后: token 失效(14010)则自动续期。返回最终 token 是否 ok。"""
+    st = _token_status()
+    if st == 'ok':
+        return True
+    if st == 'expired':
+        print("自愈: 网络已恢复但 token 失效(14010), 自动续期...", flush=True)
+        if _renew_token():
+            print("自愈: token 续期成功 ✅", flush=True)
+            return True
+        print("自愈: token 续期失败 ❌", flush=True)
+        return False
+    # network_error: 网络其实还没真正恢复(可能误判), 不阻塞, 下次自愈再试
+    return True
+
+
 def main():
     # 冷却(文件锁): COOLDOWN 秒内不自愈第二次, 防多进程/频繁触发重复重启 Shadowrocket
     now = time.time()
@@ -134,6 +192,7 @@ def main():
     # 3. 检测网络
     if _network_ok():
         print("自愈: 隧道重启后网络恢复 ✅", flush=True)
+        _check_and_renew_token()  # 2026-11-11 网络恢复后 token 失效(14010)则自动续期
         return 0
 
     # 4. 彻底重启 Shadowrocket(kill 主进程 → open app)
@@ -146,6 +205,7 @@ def main():
     # 5. 再检测
     if _network_ok():
         print("自愈: 彻底重启后网络恢复 ✅", flush=True)
+        _check_and_renew_token()
         return 0
 
     # 6. 换节点(节点失效时重启隧道/app 都无效, 循环尝试多个节点直到网络通, 最多 6 个)
@@ -160,6 +220,7 @@ def main():
         time.sleep(8)
         if _network_ok():
             print(f"自愈: 换节点 {_title} 后网络恢复 ✅", flush=True)
+            _check_and_renew_token()
             return 0
 
     print("自愈: 失败, 网络仍不通 ❌", flush=True)
