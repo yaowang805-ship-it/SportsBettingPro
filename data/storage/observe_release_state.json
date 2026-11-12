@@ -709,8 +709,8 @@
   "tennis|hc_games|客|40-60%|live": {
     "first_released_at": "2026-11-07T08:35:23.084661",
     "cap": 30,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-11-11",
+    "daily_stake": 30,
+    "daily_stake_date": "2026-11-12",
     "limit_removed": false
   },
   "football|1x2|客|10-20%|live": {

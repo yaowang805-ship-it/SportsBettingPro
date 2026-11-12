@@ -711,3 +711,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-12T10:57:48Z,football,CONCACAF Nations League B,Cayman Islands,Guyana,,,让球客胜,hc,1.95,1.7519,1.889,3.23,50,3,1794510000.0,FB,,,,push,,-3.5,,,
 2026-11-12T11:13:31Z,football,Africa Cup of Nations 2027 Qualification,Senegal,Sudan,,,让球客胜,hc,1.82,1.6623,1.7465,4.21,50,3,1794510000.0,FB,,,,push,,+2.5,,,
 2026-11-12T11:13:31Z,basketball,Iceland Basketball Premier League,Stjarnan,Keflavik,,,小分,ou,1.82,1.5747,1.6874,7.86,0,2,1794510900.0,BB/FB,,,,push,,207.5,,,
+2026-11-12T11:54:30Z,football,Egypt Second Division A,FC Masar,Tersana SC,,,让球主胜,hc,2.02,0,1.9504,3.57,0,3,1794486600,ALL,pinnacle,,,drop,,-1,5933246,,
+2026-11-12T12:00:06Z,tennis,World Tennis - M15 Naples Men Singles,Emilio Sanchez Bronzetti (ESP),Evan Bynoe (USA),,,客胜,1x2,1.2,0,1.1608,3.38,0,3,1794495600,BB,pinnacle,,,drop,,,5900421,,
+2026-11-12T12:00:06Z,tennis,World Tennis - M15 Naples Men Singles,Emilio Sanchez Bronzetti (ESP),Evan Bynoe (USA),,,让盘客胜,hc,1.6,0,1.5027,6.48,0,3,1794495600,BB,pinnacle,,,drop,,-1.5,5900421,,
+2026-11-12T12:41:43Z,ice_hockey,NHL,Seattle Kraken,Carolina Hurricanes,,,大分,ou,2.04,0,1.9812,2.97,0,1,1794502800,BB,pinnacle,,,ws_scan,,6.5,5793897,,
+2026-11-12T12:43:15Z,football,El Salvador Primera Division,CD Aguila,Municipal Limeno,,,让球主胜,hc,1.85,1.6944,1.7892,3.4,40,2,1794517200.0,BB/FB,,,,push,,-0.5,,,
