@@ -1,5 +1,5 @@
 {
-  "balance": 14542.53,
+  "balance": 14452.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -322,6 +322,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794502800.0,
       "created_at": "2026-11-11T22:40:43.631772+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_阿喀巴_海伊阿尔阿米尔哈桑_客胜",
+      "sport": "football",
+      "league": "约旦足球甲级联赛",
+      "home_team": "阿喀巴",
+      "away_team": "海伊阿尔阿米尔哈桑",
+      "home_cn": "阿喀巴",
+      "away_cn": "海伊阿尔阿米尔哈桑",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.86,
+      "stake": 50,
+      "model_prob": 0.5795,
+      "ev_pct": 7.79,
+      "pin_odds": 1.6211,
+      "fair_price": 1.7255,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794495600.0,
+      "created_at": "2026-11-12T03:14:45.788441+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_阿喀巴_海伊阿尔阿米尔哈桑_让球客胜(-05)",
+      "sport": "football",
+      "league": "约旦足球甲级联赛",
+      "home_team": "阿喀巴",
+      "away_team": "海伊阿尔阿米尔哈桑",
+      "home_cn": "阿喀巴",
+      "away_cn": "海伊阿尔阿米尔哈桑",
+      "market": "handicap",
+      "market_type": "让球客胜(-0.5)",
+      "sub_market": "hc",
+      "line": "-0.5",
+      "odds": 1.86,
+      "stake": 40,
+      "model_prob": 0.5816,
+      "ev_pct": 8.18,
+      "pin_odds": 1.6098,
+      "fair_price": 1.7194,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794495600.0,
+      "created_at": "2026-11-12T03:14:45.788614+00:00",
       "track_only": false
     }
   ],
@@ -12678,8 +12724,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-12",
-    "used": 80.0,
-    "bets": 2
+    "used": 170.0,
+    "bets": 4
   },
   "updated": null
 }
