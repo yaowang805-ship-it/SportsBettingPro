@@ -697,3 +697,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-12T08:58:01Z,tennis,World Tennis - W35 Weston Women Singles,Cadence Brace (CAN),Rachel Gailis (USA),,,客胜,1x2,2.88,0,2.7931,3.11,0,3,1794506400,BB,pinnacle,,,pin_drop,,,5902086,,
 2026-11-12T09:12:47Z,tennis,World Tennis - M15 Naples Men Singles,Zsombor Velcz (HUN),Tomas Jirousek (CZE),,,让盘主胜,hc,2.33,0,2.283,2.06,0,3,1794501300,BB,pinnacle,,,ws_scan,,-1.5,5901297,,
 2026-11-12T09:33:38Z,football,El Salvador Primera Division,CD Aguila,Municipal Limeno,,,让球主胜,hc,1.89,1.7407,1.8399,2.72,50,2,1794517200.0,FB,,,,push,,-0.5,,,
+2026-11-12T09:36:52Z,football,El Salvador Primera Division,CD Aguila,Municipal Limeno,,,让球主胜,hc,1.89,0,1.8399,2.72,0,2,1794517200,ALL,pinnacle,,,pin_drop,,-0.5,5907658,,
+2026-11-12T09:40:20Z,football,Oman Professional League Cup,Samail,Bahla Club,,,让球客胜,hc,1.87,1.6849,1.8092,3.36,50,3,1794491700.0,BB/FB,,,,push,,-0.5,,,
