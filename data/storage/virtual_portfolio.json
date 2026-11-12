@@ -1,5 +1,5 @@
 {
-  "balance": 13922.53,
+  "balance": 13912.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -621,6 +621,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794510900.0,
       "created_at": "2026-11-12T10:24:18.633627+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_特尔希艾_阿利托斯爱国者_小分(1665)",
+      "sport": "basketball",
+      "league": "立陶宛全国篮球联赛",
+      "home_team": "特尔希艾",
+      "away_team": "阿利托斯爱国者",
+      "home_cn": "特尔希艾",
+      "away_cn": "阿利托斯爱国者",
+      "market": "over_under",
+      "market_type": "小分(166.5)",
+      "sub_market": "ou",
+      "line": "166.5",
+      "odds": 1.82,
+      "stake": 10,
+      "model_prob": 0.5719,
+      "ev_pct": 4.09,
+      "pin_odds": 1.625,
+      "fair_price": 1.7485,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794499200.0,
+      "created_at": "2026-11-12T10:27:58.511488+00:00",
       "track_only": false
     }
   ],
@@ -12977,8 +13000,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-12",
-    "used": 700.0,
-    "bets": 15
+    "used": 710.0,
+    "bets": 16
   },
   "updated": null
 }
