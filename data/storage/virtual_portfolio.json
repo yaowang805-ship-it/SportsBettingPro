@@ -1,5 +1,5 @@
 {
-  "balance": 14272.53,
+  "balance": 14222.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -460,6 +460,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794488400.0,
       "created_at": "2026-11-12T06:18:10.326888+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_亨德森银骑士_卡尔加里牧马人_大分(55)",
+      "sport": "ice_hockey",
+      "league": "AHL 美国冰球联盟",
+      "home_team": "亨德森银骑士",
+      "away_team": "卡尔加里牧马人",
+      "home_cn": "亨德森银骑士",
+      "away_cn": "卡尔加里牧马人",
+      "market": "over_under",
+      "market_type": "大分(5.5)",
+      "sub_market": "ou",
+      "line": "5.5",
+      "odds": 1.92,
+      "stake": 50,
+      "model_prob": 0.5421,
+      "ev_pct": 4.08,
+      "pin_odds": 1.7353,
+      "fair_price": 1.8447,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794538800.0,
+      "created_at": "2026-11-12T07:20:38.817439+00:00",
       "track_only": false
     }
   ],
@@ -12816,8 +12839,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-12",
-    "used": 350.0,
-    "bets": 8
+    "used": 400.0,
+    "bets": 9
   },
   "updated": null
 }
