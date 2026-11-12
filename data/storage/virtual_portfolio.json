@@ -1,5 +1,5 @@
 {
-  "balance": 13912.53,
+  "balance": 13862.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -644,6 +644,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794499200.0,
       "created_at": "2026-11-12T10:27:58.511488+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_斯塔尔南_凯夫拉维克_小分(2075)",
+      "sport": "basketball",
+      "league": "冰岛篮球超级联赛",
+      "home_team": "斯塔尔南",
+      "away_team": "凯夫拉维克",
+      "home_cn": "斯塔尔南",
+      "away_cn": "凯夫拉维克",
+      "market": "over_under",
+      "market_type": "小分(207.5)",
+      "sub_market": "ou",
+      "line": "207.5",
+      "odds": 1.84,
+      "stake": 50,
+      "model_prob": 0.5766,
+      "ev_pct": 6.09,
+      "pin_odds": 1.6135,
+      "fair_price": 1.7343,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794510900.0,
+      "created_at": "2026-11-12T10:41:32.556721+00:00",
       "track_only": false
     }
   ],
@@ -13000,8 +13023,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-12",
-    "used": 710.0,
-    "bets": 16
+    "used": 760.0,
+    "bets": 17
   },
   "updated": null
 }
