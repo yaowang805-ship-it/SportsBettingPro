@@ -1,5 +1,5 @@
 {
-  "balance": 14122.53,
+  "balance": 14072.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -529,6 +529,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794486600.0,
       "created_at": "2026-11-12T08:21:40.154306+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_亚古雷_利梅诺_小球(25)",
+      "sport": "football",
+      "league": "萨尔瓦多超级联赛",
+      "home_team": "亚古雷",
+      "away_team": "利梅诺",
+      "home_cn": "亚古雷",
+      "away_cn": "利梅诺",
+      "market": "over_under",
+      "market_type": "小球(2.5)",
+      "sub_market": "ou",
+      "line": "2.5",
+      "odds": 1.93,
+      "stake": 50,
+      "model_prob": 0.5485,
+      "ev_pct": 5.87,
+      "pin_odds": 1.7194,
+      "fair_price": 1.823,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794519000.0,
+      "created_at": "2026-11-12T08:26:06.368149+00:00",
       "track_only": false
     }
   ],
@@ -12885,8 +12908,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-12",
-    "used": 500.0,
-    "bets": 11
+    "used": 550.0,
+    "bets": 12
   },
   "updated": null
 }
