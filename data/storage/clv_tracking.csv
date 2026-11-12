@@ -716,3 +716,13 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-12T12:00:06Z,tennis,World Tennis - M15 Naples Men Singles,Emilio Sanchez Bronzetti (ESP),Evan Bynoe (USA),,,让盘客胜,hc,1.6,0,1.5027,6.48,0,3,1794495600,BB,pinnacle,,,drop,,-1.5,5900421,,
 2026-11-12T12:41:43Z,ice_hockey,NHL,Seattle Kraken,Carolina Hurricanes,,,大分,ou,2.04,0,1.9812,2.97,0,1,1794502800,BB,pinnacle,,,ws_scan,,6.5,5793897,,
 2026-11-12T12:43:15Z,football,El Salvador Primera Division,CD Aguila,Municipal Limeno,,,让球主胜,hc,1.85,1.6944,1.7892,3.4,40,2,1794517200.0,BB/FB,,,,push,,-0.5,,,
+2026-11-12T13:06:17Z,football,Colombia Primera A,Llaneros FC,Boyaca Chico FC,,,让球主胜,hc,1.86,0,1.7496,6.31,0,2,1794528000,ALL,pinnacle,,,pin_drop,,-1,5917521,,
+2026-11-12T14:39:16Z,football,Jordan 1st Division,Al Aqaba,Hayy Al Amir Hassan,,,让球客胜,hc,2.0,0,1.952,2.46,0,2,1794495600,BB,pinnacle,,,pin_drop,,-1,5863397,,
+2026-11-12T14:45:24Z,football,Africa Cup of Nations 2027 Qualification,Ghana,Somalia,,,大球,ou,2.0,0,1.9243,3.93,0,3,1794495600,ALL,pinnacle,,,drop,,3.0,5679569,,
+2026-11-12T14:45:43Z,ice_hockey,NHL,Columbus Blue Jackets,Tampa Bay Lightning,,,大分,ou,1.88,0,1.8404,2.15,0,1,1794528000,BB,pinnacle,,,ws_scan,,6.0,5792317,,
+2026-11-12T14:45:43Z,ice_hockey,NHL,Chicago Blackhawks,Buffalo Sabres,,,大分,ou,1.85,0,1.8093,2.25,0,1,1794531600,BB,pinnacle,,,ws_scan,,6.0,5792303,,
+2026-11-12T14:45:48Z,basketball,Germany Pro A Basketball Bundesliga,Orange Academy,Tigers Tubingen,,,让分客胜,hc,1.86,0,1.8144,2.51,0,3,1794592800,ALL,pinnacle,,,ws_scan,,-4.5,5200803,1,odds_changed
+2026-11-12T14:55:10Z,basketball,Qatar Basketball League,Al Sadd,Al Shamal,,,主胜,1x2,1.2,0,1.0828,10.82,0,3,1794495600,ALL,pinnacle,,,drop,,,5933071,,
+2026-11-12T15:48:39Z,basketball,Estonia I Liiga,Tamsalu Los Toros/TalTech,Haljala NGU,,,主胜,1x2,1.56,0,1.4753,5.74,0,2,1794499200,BB,pinnacle,,,drop,,,5631154,,
+2026-11-12T15:48:39Z,basketball,Estonia I Liiga,Tamsalu Los Toros/TalTech,Haljala NGU,,,让分主胜,hc,1.87,0,1.7,10.0,0,2,1794499200,BB,pinnacle,,,drop,,-3.5,5631154,,
+2026-11-12T15:52:57Z,basketball,Lithuania National Basketball League,Telsiai,Alytaus Patriotai,,,主胜,1x2,1.14,0,1.0998,3.66,0,3,1794499200,ALL,pinnacle,,,drop,,,5945650,,
