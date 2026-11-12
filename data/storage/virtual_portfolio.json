@@ -1,5 +1,5 @@
 {
-  "balance": 14402.53,
+  "balance": 14352.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -391,6 +391,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794531600.0,
       "created_at": "2026-11-12T03:55:55.864005+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_阿德莱德36人_墨尔本联队_大分(1915)",
+      "sport": "basketball",
+      "league": "澳大利亚国家篮球联赛",
+      "home_team": "阿德莱德36人",
+      "away_team": "墨尔本联队",
+      "home_cn": "阿德莱德36人",
+      "away_cn": "墨尔本联队",
+      "market": "over_under",
+      "market_type": "大分(191.5)",
+      "sub_market": "ou",
+      "line": "191.5",
+      "odds": 1.9,
+      "stake": 50,
+      "model_prob": 0.5505,
+      "ev_pct": 4.59,
+      "pin_odds": 1.7463,
+      "fair_price": 1.8166,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794472200.0,
+      "created_at": "2026-11-12T05:27:28.567927+00:00",
       "track_only": false
     }
   ],
@@ -12747,8 +12770,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-12",
-    "used": 220.0,
-    "bets": 5
+    "used": 270.0,
+    "bets": 6
   },
   "updated": null
 }
