@@ -1,5 +1,5 @@
 {
-  "balance": 14172.53,
+  "balance": 14122.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -506,6 +506,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794542400.0,
       "created_at": "2026-11-12T07:28:16.424071+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_达雅洛特_普斯SC_大球(20)",
+      "sport": "football",
+      "league": "埃及乙级A组联赛",
+      "home_team": "达雅洛特",
+      "away_team": "普斯SC",
+      "home_cn": "达雅洛特",
+      "away_cn": "普斯SC",
+      "market": "over_under",
+      "market_type": "大球(2.0)",
+      "sub_market": "ou",
+      "line": "2.0",
+      "odds": 1.89,
+      "stake": 50,
+      "model_prob": 0.5466,
+      "ev_pct": 3.31,
+      "pin_odds": 1.7299,
+      "fair_price": 1.8294,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794486600.0,
+      "created_at": "2026-11-12T08:21:40.154306+00:00",
       "track_only": false
     }
   ],
@@ -12862,8 +12885,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-12",
-    "used": 450.0,
-    "bets": 10
+    "used": 500.0,
+    "bets": 11
   },
   "updated": null
 }

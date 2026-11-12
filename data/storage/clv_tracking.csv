@@ -676,3 +676,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-12T07:14:25Z,basketball,Sweden Basketball League,Boras Basket,Koping Stars,,,主胜,1x2,1.13,0,1.1047,2.29,0,3,1794593040,ALL,pinnacle,,,ws_scan,,,5899989,,
 2026-11-12T07:20:41Z,ice_hockey,AHL,Henderson Silver Knights,Calgary Wranglers,,,大分,ou,1.92,1.7353,1.8447,4.08,50,3,1794538800.0,BB/FB,,,,push,,5.5,,,
 2026-11-12T07:28:18Z,basketball,Mexico LNBP Basketball League,Soles de Mexicali,Astros de Jalisco,,,小分,ou,1.87,1.625,1.7485,6.95,50,3,1794542400.0,BB/FB,,,,push,,159.5,,,
+2026-11-12T07:35:29Z,tennis,World Tennis - M25 Montreal Men Singles,Max Wiskandt (GER),Joshua Peck (CAN),,,主胜,1x2,1.12,0,1.0931,2.46,0,3,1794501300,BB,pinnacle,,,ws_scan,,,5901547,,
+2026-11-12T07:40:37Z,basketball,Australia NBL,Adelaide 36Ers,Melbourne United,,,小分,ou,1.93,0,1.8747,2.95,0,3,1794472200,ALL,pinnacle,,,ws_scan,,194.5,5074539,,
+2026-11-12T07:46:06Z,basketball,Mexico LNBP Basketball League,Soles de Mexicali,Astros de Jalisco,,,小分,ou,1.84,0,1.7485,5.23,0,3,1794542400,ALL,pinnacle,,,ws_scan,,159.5,5952024,,
+2026-11-12T08:02:06Z,basketball,Japan B.League Premier,Toyama Grouses,Osaka Evessa,,,让分客胜,hc,1.85,0,1.8037,2.57,0,2,1794477900,BB,pinnacle,,,drop,,+10.5,5309962,,
+2026-11-12T08:21:40Z,football,Egypt Second Division A,Dayrout SC,Proxy SC,,,大球,ou,1.89,1.7299,1.8294,3.31,50,3,1794486600.0,BB/FB,,,,push,,2.0,,,
