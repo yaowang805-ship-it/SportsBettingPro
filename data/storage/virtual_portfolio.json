@@ -1,5 +1,5 @@
 {
-  "balance": 13122.53,
+  "balance": 13072.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1035,6 +1035,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794600000.0,
       "created_at": "2026-11-13T08:19:12.490240+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_利马瓦迪联_克里夫顿维尔_大球(30)",
+      "sport": "football",
+      "league": "北爱尔兰超级联赛",
+      "home_team": "利马瓦迪联",
+      "away_team": "克里夫顿维尔",
+      "home_cn": "利马瓦迪联",
+      "away_cn": "克里夫顿维尔",
+      "market": "over_under",
+      "market_type": "大球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 1.97,
+      "stake": 50,
+      "model_prob": 0.5245,
+      "ev_pct": 3.32,
+      "pin_odds": 1.8333,
+      "fair_price": 1.9067,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794599100.0,
+      "created_at": "2026-11-13T08:49:40.702160+00:00",
       "track_only": false
     }
   ],
@@ -13391,8 +13414,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-13",
-    "used": 640.0,
-    "bets": 14
+    "used": 690.0,
+    "bets": 15
   },
   "updated": null
 }

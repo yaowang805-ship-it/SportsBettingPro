@@ -13877,16 +13877,20 @@
   "spread": null,
   "bb_ts": 1794551676.4822772,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 60.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": 1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 171.78
+  "clv_elapsed_s": 171.78,
+  "final_score": [
+   94,
+   90
+  ]
  },
  {
   "ts": 1794554157.655396,
@@ -13951,5 +13955,37 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 75.53
+ },
+ {
+  "ts": 1794559464.813396,
+  "match_id": 5904695,
+  "market_id": 143019561,
+  "option_type": 1,
+  "sport": 5,
+  "home": "阿纳斯塔西娅.利祖诺娃 (俄罗斯)",
+  "away": "露安·贾法里 (德国)",
+  "designation": "让局主胜",
+  "sub": "handicap_games",
+  "line": -6.5,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 2.14,
+  "fair": 1.9816,
+  "ev": 7.99,
+  "spread": null,
+  "bb_ts": 1794559463.8339221,
+  "stake": 80,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": "no_outcome",
+  "clv_elapsed_s": null
  }
 ]
