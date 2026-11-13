@@ -830,3 +830,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-13T10:32:10Z,football,India I-League,FC Bengaluru United,Real Kashmir FC,,,小球,ou,1.91,1.6849,1.7765,7.51,50,2,1794652200.0,BB/FB,,,,push,,3.0,,,
 2026-11-13T10:34:16Z,football,Scotland Highland League,Strathspey Thistle,Deveronvale FC,,,客胜,1x2,3.69,3.02,3.4611,6.61,30,3,1794600000.0,BB,,,,push,,,,,
 2026-11-13T10:38:57Z,football,Liberia First Division,Bea Mountain FC,Paynesville,,,让球主胜,hc,1.82,1.6135,1.7248,5.52,50,2,1794585600.0,FB,,,,push,,-0.5,,,
+2026-11-13T10:39:07Z,football,Australian Championship,South Hobart FC,Wollongong Wolves FC,,,让球客胜,hc,1.97,0,1.8907,4.19,0,3,1794628800,ALL,pinnacle,,,drop,,-1,5949137,,
+2026-11-13T10:41:21Z,football,Scotland Highland League,Strathspey Thistle,Deveronvale FC,,,客胜,1x2,3.69,3.02,3.4611,6.61,30,3,1794600000.0,BB,,,,push,,,,,
+2026-11-13T10:41:21Z,basketball,Czech Republic Basketball 1 Liga,BK Pardubice II,MS Academy,,,客胜,1x2,2.74,2.14,2.4717,10.85,0,2,1794596400.0,BB,,,,push,,,,,
+2026-11-13T10:41:21Z,basketball,Philippines UAAP,FEU Tamaraws,UP Fighting Maroons,,,主胜,1x2,2.17,1.7874,1.9834,9.41,0,3,1794646800.0,BB,,,,push,,,,,
