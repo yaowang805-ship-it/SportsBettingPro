@@ -780,3 +780,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-13T05:18:46Z,basketball,Hungary NB I,Budapesti Honved SE,Falco KC Szombathely,,,客胜,1x2,1.1,0,1.0696,2.84,0,3,1794675600,ALL,pinnacle,,,ws_scan,,,5971495,,
 2026-11-13T05:18:46Z,basketball,Croatia Basketball Premier League,KK Dubrovnik,KK Cibona,,,客胜,1x2,1.13,0,1.0974,2.97,0,2,1794682800,ALL,pinnacle,,,ws_scan,,,5977093,,
 2026-11-13T05:18:53Z,football,Egypt Second Division A,Haras El Hodood,El Daklyeh,,,大球,ou,1.91,1.7634,1.8494,3.28,50,3,1794573000.0,BB/FB,,,,push,,2.0,,,
+2026-11-13T05:23:11Z,football,Portugal Primeira Liga,FC Porto,Sporting CP,,,主胜,1x2,2.03,0,1.9898,2.02,0,1,1795984200,ALL,pinnacle,,,ws_scan,,,5969577,,
+2026-11-13T05:23:22Z,football,Germany Regionalliga Bayern,SpVgg Bayreuth,DJK Vilzing,,,让球主胜,hc,1.97,0,1.9293,2.11,0,3,1794592800,ALL,pinnacle,,,ws_scan,,-0.5,5940978,,
+2026-11-13T05:35:44Z,football,Japan J.League 3,Giravanz Kitakyushu,Thespa Gunma,,,小球,ou,1.9,0,1.8473,2.85,0,4,1794632400,ALL,pinnacle,,,pin_drop,,3.0,5917160,,
+2026-11-13T05:37:58Z,football,Ukraine Persha Liga,FC Prykarpattya Ivano Frankivsk,Kolos Kovalivka II,,,让球客胜,hc,1.91,1.6993,1.8263,4.58,50,2,1794564000.0,BB/FB,,,,push,,+1,,,
