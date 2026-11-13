@@ -790,3 +790,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-13T06:19:24Z,football,Egypt Second Division A,Haras El Hodood,El Daklyeh,,,大球,ou,1.91,0,1.8326,4.22,0,3,1794573000,ALL,pinnacle,,,ws_scan,,2.0,5940998,,
 2026-11-13T06:19:24Z,football,Denmark 2nd Division,FC Roskilde,Nykobing FC,,,和局,1x2,3.71,0,3.4304,8.15,0,3,1794592800,ALL,pinnacle,,,ws_scan,,,5940965,,
 2026-11-13T06:19:56Z,football,Denmark 2nd Division,FC Roskilde,Nykobing FC,,,和局,1x2,3.71,3.13,3.4304,8.15,30,3,1794592800.0,FB,,,,push,,,,,
+2026-11-13T06:20:54Z,basketball,Australia NBL,Cairns Taipans,Sydney Kings,,,小分,ou,1.89,0,1.8484,2.25,0,3,1794558600,ALL,pinnacle,,,ws_scan,,194.5,5744601,,
+2026-11-13T06:28:31Z,basketball,Australia NBL,New Zealand Breakers,Brisbane Bullets,,,小分,ou,1.98,0,1.8989,4.27,0,3,1794551400,ALL,pinnacle,,,drop,,189.5,5743188,,
+2026-11-13T06:29:34Z,football,Algeria Ligue 1,JS Saoura,USM Khenchela,,,小球,ou,1.95,1.7246,1.8147,7.46,50,2,1794589200.0,BB/FB,,,,push,,2.0,,,
+2026-11-13T06:29:36Z,basketball,Japan B.League Premier,Kawasaki Brave Thunders,Saga Ballooners,,,主胜,1x2,1.38,0,1.3422,2.82,0,2,1794564300,BB,pinnacle,,,pin_drop,,,5309961,,
+2026-11-13T06:29:36Z,basketball,Japan B.League Premier,Kawasaki Brave Thunders,Saga Ballooners,,,让分主胜,hc,1.93,0,1.8528,4.17,0,2,1794564300,BB,pinnacle,,,pin_drop,,-6.5,5309961,,
