@@ -1,5 +1,5 @@
 {
-  "balance": 13072.53,
+  "balance": 13022.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1058,6 +1058,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794599100.0,
       "created_at": "2026-11-13T08:49:40.702160+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_卡纳芬_霍利韦尔镇_大球(40)",
+      "sport": "football",
+      "league": "威尔士杯",
+      "home_team": "卡纳芬",
+      "away_team": "霍利韦尔镇",
+      "home_cn": "卡纳芬",
+      "away_cn": "霍利韦尔镇",
+      "market": "over_under",
+      "market_type": "大球(4.0)",
+      "sub_market": "ou",
+      "line": "4.0",
+      "odds": 1.97,
+      "stake": 50,
+      "model_prob": 0.5272,
+      "ev_pct": 3.86,
+      "pin_odds": 1.7576,
+      "fair_price": 1.8968,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794599100.0,
+      "created_at": "2026-11-13T09:41:58.683180+00:00",
       "track_only": false
     }
   ],
@@ -13414,8 +13437,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-13",
-    "used": 690.0,
-    "bets": 15
+    "used": 740.0,
+    "bets": 16
   },
   "updated": null
 }

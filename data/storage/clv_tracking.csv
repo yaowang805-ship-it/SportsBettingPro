@@ -811,3 +811,10 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-13T08:19:13Z,football,Northern Ireland Championship,Loughgall FC,Glenavon FC,,,主胜,1x2,4.44,3.64,4.2775,3.8,30,2,1794599100.0,BB,,,,push,,,,,
 2026-11-13T08:19:13Z,football,Scotland Highland League,Strathspey Thistle,Deveronvale FC,,,客胜,1x2,3.67,3.02,3.4611,6.04,30,3,1794600000.0,BB,,,,push,,,,,
 2026-11-13T08:49:41Z,football,Northern Ireland Premiership,Limavady United FC,Cliftonville FC,,,大球,ou,1.97,1.8333,1.9067,3.32,50,2,1794599100.0,BB/FB,,,,push,,3.0,,,
+2026-11-13T08:50:04Z,football,Northern Ireland Premiership,Limavady United FC,Cliftonville FC,,,大球,ou,1.97,0,1.9067,3.32,0,2,1794599100,ALL,pinnacle,,,drop,,3.0,5941096,,
+2026-11-13T08:50:18Z,basketball,Japan B.League Premier,Kyoto Hannaryz,Ibaraki Robots,,,大分,ou,1.9,0,1.8134,4.78,0,2,1794564900,BB,pinnacle,,,drop,,157.5,5309971,1,odds_changed
+2026-11-13T08:50:18Z,basketball,Japan B.League Premier,Kyoto Hannaryz,Ibaraki Robots,,,大分,ou,1.9,0,1.8134,4.78,0,2,1794564900,BB,pinnacle,,,ws_scan,,157.5,5309971,1,odds_changed
+2026-11-13T09:25:54Z,basketball,Japan B.League Premier,Kyoto Hannaryz,Ibaraki Robots,,,主胜,1x2,1.42,0,1.3865,2.42,0,2,1794564900,BB,pinnacle,,,ws_scan,,,5309971,,
+2026-11-13T09:37:23Z,football,Ukraine Persha Liga,FC Prykarpattya Ivano Frankivsk,Kolos Kovalivka II,,,让球主胜,hc,1.98,0,1.8144,9.13,0,2,1794564000,ALL,pinnacle,,,pin_drop,,-1,5940755,,
+2026-11-13T09:41:56Z,basketball,Japan B.League Premier,Shimane Susanoo Magic,Sendai 89Ers,,,客胜,1x2,1.38,0,1.3524,2.04,0,2,1794564300,BB,pinnacle,,,drop,,,5309998,,
+2026-11-13T09:41:59Z,football,Wales Cup,Caernarfon Town FC,Holywell Town,,,大球,ou,1.97,1.7576,1.8968,3.86,50,3,1794599100.0,BB/FB,,,,push,,4.0,,,
