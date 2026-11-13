@@ -1,5 +1,5 @@
 {
-  "balance": 12692.53,
+  "balance": 12642.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1219,6 +1219,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794652200.0,
       "created_at": "2026-11-13T10:32:09.904728+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_高山俱乐部_佩恩斯维尔_让球主胜(-05)",
+      "sport": "football",
+      "league": "利比里亚甲级联赛",
+      "home_team": "高山俱乐部",
+      "away_team": "佩恩斯维尔",
+      "home_cn": "高山俱乐部",
+      "away_cn": "佩恩斯维尔",
+      "market": "handicap",
+      "market_type": "让球主胜(-0.5)",
+      "sub_market": "hc",
+      "line": "-0.5",
+      "odds": 1.82,
+      "stake": 50,
+      "model_prob": 0.5798,
+      "ev_pct": 5.52,
+      "pin_odds": 1.6135,
+      "fair_price": 1.7248,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794585600.0,
+      "created_at": "2026-11-13T10:38:57.232330+00:00",
       "track_only": false
     }
   ],
@@ -13575,8 +13598,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-13",
-    "used": 1070.0,
-    "bets": 22
+    "used": 1120.0,
+    "bets": 23
   },
   "updated": null
 }
