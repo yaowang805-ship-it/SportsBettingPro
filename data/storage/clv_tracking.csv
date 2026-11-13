@@ -805,3 +805,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-13T07:47:15Z,football,Mexico Liga TDP,Halcones Zuniga SC,Aztecas AMF,,,大球,ou,1.92,1.6329,1.7537,9.48,50,3,1794585600.0,BB/FB,,,,push,,4.0,,,
 2026-11-13T07:47:15Z,football,Wales Cup,Baglan Dragons,Barry Town United FC,,,让球客胜,hc,1.9,1.6623,1.787,6.32,50,3,1794599100.0,BB/FB,,,,push,,-1.5,,,
 2026-11-13T07:47:15Z,football,Wales Cup,Caernarfon Town FC,Holywell Town,,,大球,ou,1.83,1.578,1.6925,8.12,50,3,1794599100.0,BB/FB,,,,push,,3.5,,,
+2026-11-13T07:52:30Z,football,Mongolia Premier League,Deren,Central Stallions,,,让球主胜,hc,1.76,0,1.7194,2.36,0,2,1794556800,BB,pinnacle,,,drop,,+0.5,5903245,,
+2026-11-13T07:58:17Z,football,Egypt Second Division A,Tanta FC,La Viena FC,,,让球客胜,hc,1.83,0,1.7922,2.11,0,3,1794573000,ALL,pinnacle,,,pin_drop,,+0.5,5941014,,
+2026-11-13T08:19:13Z,football,Northern Ireland Championship,Annagh United FC,Ballinamallard United FC,,,让球客胜,hc,1.88,1.6993,1.8263,2.94,50,2,1794599100.0,FB,,,,push,,+1,,,
+2026-11-13T08:19:13Z,football,Northern Ireland Championship,Loughgall FC,Glenavon FC,,,主胜,1x2,4.44,3.64,4.2775,3.8,30,2,1794599100.0,BB,,,,push,,,,,
+2026-11-13T08:19:13Z,football,Scotland Highland League,Strathspey Thistle,Deveronvale FC,,,客胜,1x2,3.67,3.02,3.4611,6.04,30,3,1794600000.0,BB,,,,push,,,,,
