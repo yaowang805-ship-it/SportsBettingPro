@@ -1,5 +1,5 @@
 {
-  "balance": 12792.53,
+  "balance": 12742.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1173,6 +1173,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794582000.0,
       "created_at": "2026-11-13T10:03:20.608084+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_阿特拉姆德_金勇士队_让球客胜(+05)",
+      "sport": "football",
+      "league": "加纳甲级联赛",
+      "home_team": "阿特拉姆德",
+      "away_team": "金勇士队",
+      "home_cn": "阿特拉姆德",
+      "away_cn": "金勇士队",
+      "market": "handicap",
+      "market_type": "让球客胜(+0.5)",
+      "sub_market": "hc",
+      "line": "+0.5",
+      "odds": 1.97,
+      "stake": 50,
+      "model_prob": 0.5253,
+      "ev_pct": 3.49,
+      "pin_odds": 1.7752,
+      "fair_price": 1.9035,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794582000.0,
+      "created_at": "2026-11-13T10:08:54.644869+00:00",
       "track_only": false
     }
   ],
@@ -13529,8 +13552,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-13",
-    "used": 970.0,
-    "bets": 20
+    "used": 1020.0,
+    "bets": 21
   },
   "updated": null
 }
