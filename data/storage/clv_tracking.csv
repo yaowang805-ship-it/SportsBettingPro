@@ -901,3 +901,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-13T22:28:44Z,basketball,Mexico LNBP Basketball League,Soles de Mexicali,Astros de Jalisco,,,小分,ou,1.91,0,1.8387,3.88,0,3,1794628800,ALL,pinnacle,,,ws_scan,,158.5,5952023,,
 2026-11-13T22:40:17Z,basketball,BNXT League,Antwerp Giants,Brussels Basketball,,,客胜,1x2,5.05,3.45,4.6953,7.55,80,3,1794684600.0,BB/FB,,,,push,,,,,
 2026-11-13T22:40:17Z,football,England Northern Premier League,Cleethorpes Town FC,Stockton Town,,,客胜,1x2,4.61,3.9,4.4906,2.66,30,2,1794668400.0,BB,,,,push,,,,,
+2026-11-13T22:40:25Z,basketball,Serbia Basketball League,KK Sloga Kraljevo,OKK Beograd,,,主胜,1x2,1.21,0,1.1855,2.07,0,3,1794681000,ALL,pinnacle,,,ws_scan,,,5926708,,
+2026-11-13T22:40:53Z,basketball,Mexico LNBP Basketball League,Soles de Mexicali,Astros de Jalisco,,,主胜,1x2,1.52,1.3311,1.4076,7.99,40,3,1794628800.0,FB,,,,push,,,,,
+2026-11-13T22:40:53Z,basketball,Mexico LNBP Basketball League,Soles de Mexicali,Astros de Jalisco,,,小分,ou,1.91,1.6993,1.8387,3.88,40,3,1794628800.0,BB/FB,,,,push,,158.5,,,
+2026-11-13T22:40:53Z,football,Japan Regional League,ASC Hokkaido,Veroskronos Tsuno,,,主胜,1x2,3.84,3.14,3.6272,5.87,30,3,1794620700.0,BB,,,,push,,,,,
+2026-11-13T22:40:53Z,football,Mexico Liga TDP,Club Sure,Gambeta,,,主胜,1x2,3.99,3.22,3.7244,7.13,30,3,1794618000.0,BB/FB,,,,push,,,,,
