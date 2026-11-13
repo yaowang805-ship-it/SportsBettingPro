@@ -13842,5 +13842,37 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 37.65
+ },
+ {
+  "ts": 1794551677.882176,
+  "match_id": 5074491,
+  "market_id": 141116368,
+  "option_type": 1,
+  "sport": 3,
+  "home": "New Zealand Breakers",
+  "away": "Brisbane Bullets",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.75,
+  "fair": 1.6508,
+  "ev": 6.01,
+  "spread": null,
+  "bb_ts": 1794551676.4822772,
+  "stake": 80,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": 1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 171.78
  }
 ]
