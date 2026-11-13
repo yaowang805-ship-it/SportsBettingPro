@@ -820,3 +820,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-13T09:41:59Z,football,Wales Cup,Caernarfon Town FC,Holywell Town,,,大球,ou,1.97,1.7576,1.8968,3.86,50,3,1794599100.0,BB/FB,,,,push,,4.0,,,
 2026-11-13T09:52:02Z,basketball,VTB United League,BC Samara,CSKA Moscow,,,让分主胜,hc,1.86,0,1.7409,6.84,0,3,1794661200,ALL,pinnacle,,,ws_scan,,+36.5,5990573,,
 2026-11-13T09:57:45Z,basketball,Greece Basketball Elite League,Glafkos Esperos,Asa Koroivos,,,大分,ou,1.87,1.6757,1.7742,5.4,50,3,1794580200.0,BB/FB,,,,push,,154.5,,,
+2026-11-13T09:57:57Z,basketball,Germany Pro A Basketball Bundesliga,Orange Academy,Tigers Tubingen,,,客胜,1x2,1.24,0,1.2091,2.56,0,3,1794592800,ALL,pinnacle,,,pin_drop,,,5940974,,
+2026-11-13T10:02:44Z,football,Northern Ireland Championship,Loughgall FC,Glenavon FC,,,客胜,1x2,1.67,1.495,1.5809,5.64,80,2,1794599100.0,FB,,,,push,,,,,
+2026-11-13T10:02:44Z,football,Mexico Liga TDP,Furia Azul,Deportivo Zamora FC,,,让球客胜,hc,1.95,1.5952,1.7068,14.25,50,3,1794607200.0,BB,,,,push,,-1.5,,,
