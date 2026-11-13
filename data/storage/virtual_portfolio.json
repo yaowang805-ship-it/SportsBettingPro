@@ -1,5 +1,5 @@
 {
-  "balance": 12732.53,
+  "balance": 12682.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1311,6 +1311,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794618000.0,
       "created_at": "2026-11-13T22:40:53.338544+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_科其姆波_奥希金斯_让球客胜(+05)",
+      "sport": "football",
+      "league": "智利联赛杯",
+      "home_team": "科其姆波",
+      "away_team": "奥希金斯",
+      "home_cn": "科其姆波",
+      "away_cn": "奥希金斯",
+      "market": "handicap",
+      "market_type": "让球客胜(+0.5)",
+      "sub_market": "hc",
+      "line": "+0.5",
+      "odds": 1.98,
+      "stake": 50,
+      "model_prob": 0.5312,
+      "ev_pct": 5.17,
+      "pin_odds": 1.8065,
+      "fair_price": 1.8827,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794691800.0,
+      "created_at": "2026-11-13T22:41:47.104069+00:00",
       "track_only": false
     }
   ],
@@ -13757,8 +13780,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-14",
-    "used": 250.0,
-    "bets": 6
+    "used": 300.0,
+    "bets": 7
   },
   "updated": null
 }
