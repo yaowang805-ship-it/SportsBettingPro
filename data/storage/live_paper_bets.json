@@ -14057,16 +14057,21 @@
   "spread": null,
   "bb_ts": 1794562261.489909,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -70.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   2
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1794562899.6270669,
@@ -14089,16 +14094,20 @@
   "spread": null,
   "bb_ts": 1794562898.398359,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -80.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1794565124.5324202,
@@ -14121,16 +14130,20 @@
   "spread": null,
   "bb_ts": 1794565124.083634,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 57.4,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1794565758.605891,
@@ -14153,16 +14166,20 @@
   "spread": null,
   "bb_ts": 1794565757.9251761,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 30.6,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1794567062.889817,
@@ -14291,6 +14308,38 @@
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1794570065.208979,
+  "match_id": 5309971,
+  "market_id": 143127582,
+  "option_type": 2,
+  "sport": 3,
+  "home": "京都创荣",
+  "away": "茨城机器人",
+  "designation": "让球客胜",
+  "sub": "handicap",
+  "line": -18.0,
+  "bsc": [
+   64,
+   45
+  ],
+  "bb_odds": 1.94,
+  "fair": 1.8789,
+  "ev": 3.25,
+  "spread": null,
+  "bb_ts": 1794570062.908229,
+  "stake": 40,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
   "clv_elapsed_s": null
  }
 ]

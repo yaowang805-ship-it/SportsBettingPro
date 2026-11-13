@@ -840,3 +840,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-13T10:49:34Z,football,Ghana Division One League,Attram De Visser,Golden Warriors,,,让球客胜,hc,1.97,1.6757,1.7994,9.48,50,2,1794582000.0,BB,,,,push,,+0.5,,,
 2026-11-13T11:26:58Z,football,Northern Ireland Championship,Loughgall FC,Glenavon FC,,,让球客胜,hc,1.88,1.6711,1.7927,4.87,50,2,1794599100.0,BB/FB,,,,push,,-1,,,
 2026-11-13T11:26:58Z,football,Mexico Liga TDP,Furia Azul,Deportivo Zamora FC,,,让球客胜,hc,1.92,1.6993,1.8346,4.65,0,3,1794607200.0,BB,,,,push,,-2,,,
+2026-11-13T12:20:05Z,football,USA Major League Soccer-Playoff,New England Revolution,Philadelphia Union,,,小球,ou,1.97,0,1.9152,2.86,0,1,1795287600,ALL,pinnacle,,,drop,,3.0,5979247,,
+2026-11-13T12:21:30Z,basketball,Israel Basketball Super League,Hapoel Tel Aviv,Bnei Herzliya,,,主胜,1x2,1.08,0,1.0583,2.05,0,2,1794673800,ALL,pinnacle,,,ws_scan,,,5911068,,
+2026-11-13T12:27:44Z,football,Argentina Liga Profesional-Playoff,Boca Juniors,Independiente Rivadavia,,,让球客胜,hc,1.91,0,1.8302,4.36,0,3,1795302000,ALL,pinnacle,,,ws_scan,,+1,5990991,,
+2026-11-13T12:50:42Z,football,Mexico Liga TDP,Halcones Zuniga SC,Aztecas AMF,,,让球客胜,hc,1.89,1.6803,1.8182,3.95,30,3,1794585600.0,FB,,,,push,,-3,,,

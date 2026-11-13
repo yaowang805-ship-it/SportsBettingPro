@@ -381,7 +381,7 @@
       "success_rate": 0.0
     },
     "萨尔瓦多超级联赛": {
-      "attempts": 2,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -581,7 +581,7 @@
       "success_rate": 0.0
     },
     "英格兰北部超级联赛甲组": {
-      "attempts": 6,
+      "attempts": 8,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1759,9 +1759,19 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "NHL 美国冰球联盟": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "FIBA非洲篮球联赛资格赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-11-11T06:08:54.186262+00:00",
+  "updated": "2026-11-13T12:34:45.878281+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
