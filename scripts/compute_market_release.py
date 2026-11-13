@@ -236,6 +236,10 @@ FULL_RELEASE_EARLY = {
     for sport in ("football", "basketball", "tennis", "baseball",
                   "ice_hockey", "american_football", "volleyball")
     for sm in ("1x2", "hc", "ou")
+} | {
+    # 2026-11-13 用户要求"打开所有运动及对应盘口": 拳击/MMA 只有独赢(2-way 无线, 匹配天然安全)。
+    # 羽毛球 Pin 无覆盖+BB无主盘口、乒乓球无数据 → 不补。
+    "boxing|1x2", "mma|1x2",
 }
 # 2026-11-10 滚球与早盘保持一致: 同样放开 7 运动 × 1x2/hc/ou(两端排除 20-75% 在 second_level_monitor 里)。
 FULL_RELEASE_LIVE = set(FULL_RELEASE_EARLY)
