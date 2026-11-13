@@ -50,7 +50,7 @@
   },
   "football|1x2|主|<10%|early": {
     "first_released_at": "2026-11-01T08:57:20.633228",
-    "cap": 50,
+    "cap": 70,
     "daily_stake": 0,
     "daily_stake_date": "2026-11-12",
     "limit_removed": true
@@ -211,7 +211,7 @@
   },
   "football|1x2|主|10-20%|early": {
     "first_released_at": "2026-11-01T08:57:20.633233",
-    "cap": 50,
+    "cap": 70,
     "daily_stake": 0,
     "daily_stake_date": "2026-11-12",
     "limit_removed": true
@@ -519,14 +519,14 @@
   },
   "football|dc|X2|55-60%|early": {
     "first_released_at": "2026-10-30T19:23:29.957044",
-    "cap": 50,
+    "cap": 70,
     "daily_stake": 0,
     "daily_stake_date": "2026-11-12",
     "limit_removed": false
   },
   "football|dc|1X|>70%|early": {
     "first_released_at": "2026-10-30T19:23:29.957058",
-    "cap": 50,
+    "cap": 70,
     "daily_stake": 0,
     "daily_stake_date": "2026-11-12",
     "limit_removed": false
@@ -540,42 +540,42 @@
   },
   "football|1x2|主|>70%|early": {
     "first_released_at": "2026-11-01T08:57:20.633206",
-    "cap": 50,
+    "cap": 70,
     "daily_stake": 0,
     "daily_stake_date": "2026-11-12",
     "limit_removed": false
   },
   "football|1x2|主|20-30%|early": {
     "first_released_at": "2026-11-01T08:57:20.633238",
-    "cap": 50,
+    "cap": 70,
     "daily_stake": 0,
     "daily_stake_date": "2026-11-12",
     "limit_removed": false
   },
   "football|1x2|客|>70%|early": {
     "first_released_at": "2026-11-01T08:57:20.633243",
-    "cap": 50,
+    "cap": 70,
     "daily_stake": 0,
     "daily_stake_date": "2026-11-12",
     "limit_removed": false
   },
   "football|1x2|客|<10%|early": {
     "first_released_at": "2026-11-01T08:57:20.633247",
-    "cap": 50,
+    "cap": 70,
     "daily_stake": 0,
     "daily_stake_date": "2026-11-12",
     "limit_removed": false
   },
   "football|1x2|客|10-20%|early": {
     "first_released_at": "2026-11-01T08:57:20.633251",
-    "cap": 50,
+    "cap": 70,
     "daily_stake": 0,
     "daily_stake_date": "2026-11-12",
     "limit_removed": false
   },
   "football|1x2|客|20-30%|early": {
     "first_released_at": "2026-11-01T08:57:20.633255",
-    "cap": 50,
+    "cap": 70,
     "daily_stake": 0,
     "daily_stake_date": "2026-11-12",
     "limit_removed": false

@@ -1,5 +1,5 @@
 {
-  "balance": 13582.53,
+  "balance": 13532.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -805,6 +805,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794599100.0,
       "created_at": "2026-11-13T05:01:33.555346+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_哈伊赫多_El达克尔野_大球(20)",
+      "sport": "football",
+      "league": "埃及乙级A组联赛",
+      "home_team": "哈伊赫多",
+      "away_team": "El达克尔野",
+      "home_cn": "哈伊赫多",
+      "away_cn": "El达克尔野",
+      "market": "over_under",
+      "market_type": "大球(2.0)",
+      "sub_market": "ou",
+      "line": "2.0",
+      "odds": 1.91,
+      "stake": 50,
+      "model_prob": 0.5407,
+      "ev_pct": 3.28,
+      "pin_odds": 1.7634,
+      "fair_price": 1.8494,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794573000.0,
+      "created_at": "2026-11-13T05:18:50.727481+00:00",
       "track_only": false
     }
   ],
@@ -13161,8 +13184,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-13",
-    "used": 180.0,
-    "bets": 4
+    "used": 230.0,
+    "bets": 5
   },
   "updated": null
 }

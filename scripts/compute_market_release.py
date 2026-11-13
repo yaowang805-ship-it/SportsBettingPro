@@ -378,10 +378,11 @@ MANUAL_OBSERVE_BLOCK = {
 # 棒球 1.0-2.0 = 1.0-1.5(n5)+1.5-2.0(n3); 篮球 1.0-3.0 = 1.0-1.5(n6)+2.0-3.0(n2)。样本够后转数据驱动。
 MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 2026-10-30 用户要求: 释放 3 个 dc 超热门格(实盘 ROI 正, 但 CLV 负被 CLV 判据误杀), 单笔 cap 50。
+    # 2026-11-13 早盘单笔上限+20: cap 50→70。
     # 依据 = 实盘 ROI 正(唯一可信尺): X2 55-60% +19.3%/26、X2>70% +8.0%/28、1X>70% +3.2%/47。
     # dc 双选 + 超热门的 CLV 合成不准(Pin 收盘价对超热门偏低), 所以绕过 CLV 判据, 按实盘放。
-    "football|dc|X2|55-60%|early": 50,
-    "football|dc|1X|>70%|early": 50,
+    "football|dc|X2|55-60%|early": 70,
+    "football|dc|1X|>70%|early": 70,
     # 2026-10-27 撤: 之前按 CLV 放的 6 格, 校准后落在中热门亏损黑洞, 全撤。改按「校准后EV正+实盘ROI正」重选。
     # 2026-10-10 用户要求撤回全部滚球释放: 棒球独赢主(4桶)+篮球独赢主(5桶)撤回观察库,
     # 滚球释放一律改走数据驱动 LEV 判据(不再手动试探)。
@@ -435,15 +436,16 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
     # 2026-11-01 撤早盘实盘负盘口: 足球小球(-27.5%/16注)、冰球大分(-19.4%/5注)、篮球独赢客(-11.8%/38注), 已移 MANUAL_OBSERVE_BLOCK。
     "basketball|hc|主|*|early": 100,
     # 2026-11-01 试探释放独赢两端(drop骤降方向Home/Away的正段, cap50试探攒数据裁决)。
+    # 2026-11-13 早盘单笔上限+20: cap 50→70。
     # 两端=热门>70% + 冷门<10%/10-20%/20-30%(足球概率桶, <30%拆3桶)。
-    "football|1x2|主|>70%|early": 50,
-    "football|1x2|主|<10%|early": 50,
-    "football|1x2|主|10-20%|early": 50,
-    "football|1x2|主|20-30%|early": 50,
-    "football|1x2|客|>70%|early": 50,
-    "football|1x2|客|<10%|early": 50,
-    "football|1x2|客|10-20%|early": 50,
-    "football|1x2|客|20-30%|early": 50,
+    "football|1x2|主|>70%|early": 70,
+    "football|1x2|主|<10%|early": 70,
+    "football|1x2|主|10-20%|early": 70,
+    "football|1x2|主|20-30%|early": 70,
+    "football|1x2|客|>70%|early": 70,
+    "football|1x2|客|<10%|early": 70,
+    "football|1x2|客|10-20%|early": 70,
+    "football|1x2|客|20-30%|early": 70,
     # 2026-11-01 全量试探释放: 滚球观察库纸面ROI为正的47格, 每注固定30(用户要求)。
     # 注意: 纸面正≠实盘正(历史已证明虚高), 小注试探攒实盘数据裁决。
     "ice_hockey|1x2|平|<45%|live": 30,
