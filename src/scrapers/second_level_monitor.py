@@ -2048,7 +2048,8 @@ class SecondLevelMonitor:
                         _fp = _pfair.get(k)
                         if _fp and _fp > 1:
                             from src.scrapers.fair_calibration import calibrated_ev
-                            ev_cal, _, _ = calibrated_ev(sig["bb_odds"], _fp)  # 2026-10-18 校准热门高估
+                            ev_cal, _, _ = calibrated_ev(sig["bb_odds"], _fp,
+                                                         raw=(_pfair.get("_raw") or {}).get(k))  # 2026-10-18 校准热门高估
                             return ev_cal
                 except Exception:
                     pass
