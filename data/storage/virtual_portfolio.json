@@ -1,5 +1,5 @@
 {
-  "balance": 12642.53,
+  "balance": 12592.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1243,6 +1243,52 @@
       "commence_time": 1794585600.0,
       "created_at": "2026-11-13T10:38:57.232330+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_拉夫格尔_基拿云_让球客胜(-1)",
+      "sport": "football",
+      "league": "北爱尔兰冠军联赛",
+      "home_team": "拉夫格尔",
+      "away_team": "基拿云",
+      "home_cn": "拉夫格尔",
+      "away_cn": "基拿云",
+      "market": "handicap",
+      "market_type": "让球客胜(-1)",
+      "sub_market": "hc",
+      "line": "-1",
+      "odds": 1.88,
+      "stake": 50,
+      "model_prob": 0.5578,
+      "ev_pct": 4.87,
+      "pin_odds": 1.6711,
+      "fair_price": 1.7927,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794599100.0,
+      "created_at": "2026-11-13T11:26:58.021435+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_富里亚阿祖尔_萨莫拉FC_让球客胜(-2)",
+      "sport": "football",
+      "league": "墨西哥TDP联赛",
+      "home_team": "富里亚阿祖尔",
+      "away_team": "萨莫拉FC",
+      "home_cn": "富里亚阿祖尔",
+      "away_cn": "萨莫拉FC",
+      "market": "handicap",
+      "market_type": "让球客胜(-2)",
+      "sub_market": "hc",
+      "line": "-2",
+      "odds": 1.92,
+      "stake": 0,
+      "model_prob": 0.5451,
+      "ev_pct": 4.65,
+      "pin_odds": 1.6993,
+      "fair_price": 1.8346,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794607200.0,
+      "created_at": "2026-11-13T11:26:58.021497+00:00",
+      "track_only": true
     }
   ],
   "settled": {
@@ -13598,8 +13644,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-13",
-    "used": 1120.0,
-    "bets": 23
+    "used": 1170.0,
+    "bets": 25
   },
   "updated": null
 }
