@@ -906,7 +906,7 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         # 2026-11-05 补滚球校准(#6): platt 校准表把 Power 公平价映射到真胜率, 修热门 favorite-longshot 残留
         # (滚球独赢热门方向还假溢价亏损的根因)。ev 用校准值做决策, fair 保留原始 Power 价供 kelly_shrink 算 KL。
         from src.scrapers.fair_calibration import calibrated_ev
-        ev, ev_raw, fair_cal = calibrated_ev(bb_odds, fair_p, market="live")
+        ev, ev_raw, fair_cal = calibrated_ev(bb_odds, fair_p, market="live", raw=_raw_p)
         if ev is None:  # 校准表异常/缺失 → 退回原始口径
             ev = (bb_odds - fair_p) / fair_p * 100.0
             ev_raw = ev

@@ -1324,7 +1324,7 @@ class SecondLevelMonitor:
                 continue
             fair_p = fair[i]
             from src.scrapers.fair_calibration import calibrated_ev
-            ev, ev_raw, fair_cal = calibrated_ev(bb, fair_p)  # 2026-10-18 校准热门高估
+            ev, ev_raw, fair_cal = calibrated_ev(bb, fair_p, raw=raw[i])  # 2026-10-18 校准热门高估
             fair_cal = fair_cal or fair_p
             # 2026-10-13 原始 tick 普查(补分母): 比价后、ev 过滤前落一条, 一行一条。
             # 有了它才能算覆盖率/base rate("BB 到底有多少时候错"), 不被下注样本条件化。
@@ -1999,7 +1999,7 @@ class SecondLevelMonitor:
         if i is None or not fair or len(fair) <= i or fair[i] <= 0:
             return None
         from src.scrapers.fair_calibration import calibrated_ev
-        ev_cal, _, _ = calibrated_ev(sig["bb_odds"], fair[i])  # 2026-10-18 校准热门高估
+        ev_cal, _, _ = calibrated_ev(sig["bb_odds"], fair[i], raw=raw[i])  # 2026-10-18 校准热门高估
         return ev_cal
 
     def _reverify_live_ev_oa(self, sig):

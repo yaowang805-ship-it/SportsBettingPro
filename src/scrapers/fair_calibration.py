@@ -67,12 +67,14 @@ def _load_table(market="live", sub_market=None):
     return _cal_tables.get(key)
 
 
-def calibrate_fair(fair, market="live", sub_market=None):
+def calibrate_fair(fair, market="live", sub_market=None, raw=None):
     """校准公平价: fair(十进制赔率) → fair_cal(校准到真实胜率)。
 
     无表/开关关/非法输入 → 返回原 fair(no-op)。
     market ∈ {'live', 'prematch'}。
     sub_market(2026-11-09): 按盘口(1x2/hc/ou)分表, 修正全局单曲线掩盖盘口 bias 差异(hc-81% vs 1x2-30%)。
+    raw(2026-11-13): Pin 原始价(去抽水前)。校准表方向错(抬冷门)时 p_cal 被调高 → fair_cal < raw,
+    这是"公平价跌破原价"的低级错误。传 raw 后强制 clamp 到 ≥ raw; raw=None 时护栏 no-op(安全)。
     """
     if not CALIBRATE_FAIR.get(market, False):
         return fair
@@ -95,7 +97,11 @@ def calibrate_fair(fair, market="live", sub_market=None):
             y0, y1 = ys[i], ys[i + 1]
             p_cal = y0 + (y1 - y0) * (p_imp - x0) / (x1 - x0)
         p_cal = max(p_cal, 0.01)  # 防 fair_cal 爆炸(热门档校准后 p 可很低)
-        return 1.0 / p_cal
+        fair_cal = 1.0 / p_cal
+        # 2026-11-13 护栏: 去水只剥 margin, fair 应 >= raw; 校准方向错会跌破, 强制 clamp 回 raw。
+        if raw is not None and float(raw) > 1.0:
+            fair_cal = max(fair_cal, float(raw))
+        return fair_cal
     except Exception:
         return fair
 
@@ -137,19 +143,20 @@ def kelly_shrink(fair, market="live", lam=10.0):
         return 1.0
 
 
-def calibrated_ev(bb, fair, market="live"):
+def calibrated_ev(bb, fair, market="live", raw=None):
     """返回 (ev_cal, ev_raw, fair_cal)。
 
     ev_cal  用校准公平价, 纠正热门高估(用于闸门/定仓)
     ev_raw  原始 ev=(bb-fair)/fair(落盘对照)
     fair_cal 校准后公平价
+    raw(2026-11-13): Pin 原始价, 透传 calibrate_fair 做 fair_cal ≥ raw 护栏。
     非法输入返回 (None, None, None)。
     """
     if not bb or not fair or bb <= 0 or fair <= 0:
         return None, None, None
     try:
         ev_raw = (bb - fair) / fair * 100.0
-        fair_cal = calibrate_fair(fair, market=market)
+        fair_cal = calibrate_fair(fair, market=market, raw=raw)
         if fair_cal is None or fair_cal <= 0:
             return None, ev_raw, None
         ev_cal = (bb - fair_cal) / fair_cal * 100.0

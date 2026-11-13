@@ -130,13 +130,15 @@ def _oa_fair(entry, sport, sub, target_line=None, use_rest=None, status=None, ca
         # 保留 line(盘口线)/_raw(原始赔率) 原样, 否则 line>1 会被误当赔率、_raw 会被丢。
         from src.scrapers.fair_calibration import calibrate_fair
         _fair = dict(res["fair"])
+        _raw_map = _fair.get("_raw") or {}
         # 2026-10-19 补 dc 键(1X/12/X2): dc 从 1x2 合成, 合成时带进热门高估, 之前漏校准致 dc edge 虚高
         # 2026-10-24 Drop 传 calibrate=False: 取消结果锚校准(校准表过拟合把去水效果抵消), 直接 Shin 去水
         if calibrate:
             for _k in ("home", "draw", "away", "over", "under", "1X", "12", "X2"):
                 _v = _fair.get(_k)
                 if isinstance(_v, (int, float)) and _v > 1:
-                    _fair[_k] = calibrate_fair(_v, market="prematch", sub_market=sub)
+                    _fair[_k] = calibrate_fair(_v, market="prematch", sub_market=sub,
+                                               raw=_raw_map.get(_k))
         return _fair
     return None
 
