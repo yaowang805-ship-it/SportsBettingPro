@@ -13768,16 +13768,21 @@
   "spread": null,
   "bb_ts": 1794546292.630306,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 64.4,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_unavailable",
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   7,
+   1
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1794546656.625607,
@@ -13800,16 +13805,20 @@
   "spread": null,
   "bb_ts": 1794546654.698213,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 60.0,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_unavailable",
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": "no_outcome",
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   0,
+   2
+  ]
  },
  {
   "ts": 1794546656.62988,
@@ -13832,16 +13841,20 @@
   "spread": null,
   "bb_ts": 1794546654.698213,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 45.0,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_unavailable",
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": -1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 37.65
+  "clv_elapsed_s": 37.65,
+  "final_score": [
+   0,
+   2
+  ]
  },
  {
   "ts": 1794551677.882176,
@@ -13874,5 +13887,69 @@
   "clv_sign": 1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 171.78
+ },
+ {
+  "ts": 1794554157.655396,
+  "match_id": 5903447,
+  "market_id": 142991548,
+  "option_type": 2,
+  "sport": 5,
+  "home": "阿基拉.桑特尔兰 (日本)",
+  "away": "克里斯蒂安.兰莫 (美国)",
+  "designation": "让局客胜",
+  "sub": "handicap_games",
+  "line": -2.5,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.9,
+  "fair": 1.8372,
+  "ev": 3.42,
+  "spread": null,
+  "bb_ts": 1794554155.523068,
+  "stake": 30,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": true,
+  "sim_reject_reason": "rejected_odds_changed",
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": "no_outcome",
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1794554186.0483708,
+  "match_id": 5903447,
+  "market_id": 142991428,
+  "option_type": 2,
+  "sport": 5,
+  "home": "阿基拉.桑特尔兰 (日本)",
+  "away": "克里斯蒂安.兰莫 (美国)",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 2.48,
+  "fair": 2.3529,
+  "ev": 5.4,
+  "spread": null,
+  "bb_ts": 1794554184.504718,
+  "stake": 80,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": true,
+  "sim_reject_reason": "rejected_odds_changed",
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": 1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 75.53
  }
 ]

@@ -1,5 +1,5 @@
 {
-  "balance": 13382.53,
+  "balance": 13232.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -897,6 +897,75 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794564000.0,
       "created_at": "2026-11-13T06:44:56.770359+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_哈尔库尼加SC_阿兹特克_大球(40)",
+      "sport": "football",
+      "league": "墨西哥TDP联赛",
+      "home_team": "哈尔库尼加SC",
+      "away_team": "阿兹特克",
+      "home_cn": "哈尔库尼加SC",
+      "away_cn": "阿兹特克",
+      "market": "over_under",
+      "market_type": "大球(4.0)",
+      "sub_market": "ou",
+      "line": "4.0",
+      "odds": 1.92,
+      "stake": 50,
+      "model_prob": 0.5702,
+      "ev_pct": 9.48,
+      "pin_odds": 1.6329,
+      "fair_price": 1.7537,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794585600.0,
+      "created_at": "2026-11-13T07:47:14.701369+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_巴格兰龙_巴利镇_让球客胜(-15)",
+      "sport": "football",
+      "league": "威尔士杯",
+      "home_team": "巴格兰龙",
+      "away_team": "巴利镇",
+      "home_cn": "巴格兰龙",
+      "away_cn": "巴利镇",
+      "market": "handicap",
+      "market_type": "让球客胜(-1.5)",
+      "sub_market": "hc",
+      "line": "-1.5",
+      "odds": 1.9,
+      "stake": 50,
+      "model_prob": 0.5596,
+      "ev_pct": 6.32,
+      "pin_odds": 1.6623,
+      "fair_price": 1.787,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794599100.0,
+      "created_at": "2026-11-13T07:47:14.701553+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_卡纳芬_霍利韦尔镇_大球(35)",
+      "sport": "football",
+      "league": "威尔士杯",
+      "home_team": "卡纳芬",
+      "away_team": "霍利韦尔镇",
+      "home_cn": "卡纳芬",
+      "away_cn": "霍利韦尔镇",
+      "market": "over_under",
+      "market_type": "大球(3.5)",
+      "sub_market": "ou",
+      "line": "3.5",
+      "odds": 1.83,
+      "stake": 50,
+      "model_prob": 0.5908,
+      "ev_pct": 8.12,
+      "pin_odds": 1.578,
+      "fair_price": 1.6925,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794599100.0,
+      "created_at": "2026-11-13T07:47:14.701613+00:00",
       "track_only": false
     }
   ],
@@ -13253,8 +13322,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-13",
-    "used": 380.0,
-    "bets": 8
+    "used": 530.0,
+    "bets": 11
   },
   "updated": null
 }
