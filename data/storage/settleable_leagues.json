@@ -1571,7 +1571,7 @@
       "success_rate": 0.0
     },
     "西班牙丙级联赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1761,7 +1761,7 @@
       "success_rate": 0.0
     },
     "NHL 美国冰球联盟": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1776,7 +1776,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-11-14T01:46:09.331783+00:00",
+  "updated": "2026-11-14T05:50:09.057303+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

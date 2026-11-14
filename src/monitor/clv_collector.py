@@ -26,6 +26,10 @@ RESULTS_FILE = DATA_DIR / "clv_results.csv"
 # 2026-11-08 去重独立持久化: 去重 key 存独立文件, 清空观察库(clv_tracking.csv)后去重仍生效,
 # 不会重新入库旧数据(之前清空观察库 → existing 去重读空 → 早盘 ws 重新入库旧数据)。
 OA_INGESTED_FILE = DATA_DIR / "oa_ingested.json"
+# 2026-11-14 校准样本库: 收 ev>0 全量比价单(不限 2% 门槛), 供 refit_power_devig 拟合去水 bias。
+# 独立文件 + 独立去重, 与观察库(clv_tracking.csv)隔离, 避免污染释放判定(释放只认 2%+ 溢价单)。
+CAL_TRACKING_FILE = DATA_DIR / "calibration_tracking.csv"
+CAL_INGESTED_FILE = DATA_DIR / "calibration_ingested.json"
 
 # 采集窗口：比赛开始前 20 分钟内拉取收盘赔率 (真收盘线)
 # V5.4 收窄: BEFORE_MAX 720→20, AFTER_MAX 60→0 — 用户要求开赛前20分钟,
@@ -1029,7 +1033,7 @@ def log_all_ev_opportunities(comparison_path=None, min_ev=5.0):
     return len(rows)
 
 
-def log_oa_opportunities(details, min_ev=2.0, source="validate", max_ev=None):
+def log_oa_opportunities(details, min_ev=2.0, source="validate", max_ev=None, cal_tracking=True):
     """Betfair 直接匹配的机会入库 tracking(2026-09-27 修复 tracking 冻结)。
 
     早盘 9-18 切换 Betfair 直接匹配(compare_bb_vs_oa)后, 新流程不再调 log_all_ev_opportunities
@@ -1038,6 +1042,10 @@ def log_oa_opportunities(details, min_ev=2.0, source="validate", max_ev=None):
     home/away 存 BB 英文名(home_bb/away_bb, 供 _fetch_close_odds_betfair 的 match_event_orient
     反查 odds-api.io 事件 id), Pin 字段置空。口径与 log_all_ev_opportunities 一致: source=validate,
     min_ev=2%(2026-10-07 从 5% 降到 2% 加快样本积累, 代价是混入 2-5% 噪声档)。
+
+    cal_tracking(2026-11-14): 额外落校准样本库(calibration_tracking.csv), 收 ev>0 全量比价单
+    (不限 2% 门槛), 排除 dc/dnb 推导盘口。目的=快速积累全概率段样本供 refit_power_devig 拟合
+    去水 bias; 与观察库隔离, 释放判定仍只认观察库的 2%+ 溢价单。
     """
     from datetime import datetime, timezone
     from config.constants import get_league_tier
@@ -1061,9 +1069,19 @@ def log_oa_opportunities(details, min_ev=2.0, source="validate", max_ev=None):
         except Exception:
             pass
 
+    # 2026-11-14 校准样本去重(独立文件, 与观察库隔离)
+    cal_seen = set()
+    if cal_tracking and CAL_INGESTED_FILE.exists():
+        try:
+            for k in json.loads(CAL_INGESTED_FILE.read_text()):
+                cal_seen.add(tuple(k))
+        except Exception:
+            pass
+
     _MK = {"opportunities": "1x2", "handicap": "hc", "over_under": "ou",
            "double_chance": "dc", "draw_no_bet": "dnb"}
     rows = []
+    cal_rows = []
     skipped_started = 0
     skipped_no_bid = 0
     seen = set(existing)
