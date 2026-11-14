@@ -1631,7 +1631,7 @@
       "success_rate": 0.0
     },
     "欧洲篮球杯": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1761,7 +1761,7 @@
       "success_rate": 0.0
     },
     "NHL 美国冰球联盟": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1774,9 +1774,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "挪威BLNO篮球联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-11-14T05:50:09.057303+00:00",
+  "updated": "2026-11-14T14:56:45.942027+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

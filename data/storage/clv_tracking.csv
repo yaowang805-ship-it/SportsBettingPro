@@ -1072,3 +1072,16 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-14T14:54:29Z,football,Africa Cup of Nations 2027 Qualification,Angola,South Sudan,,,客胜,1x2,43.0,0,34.5603,24.42,0,3,1794682800,ALL,pinnacle,,,pin_drop,,,5874890,,
 2026-11-14T14:54:40Z,football,England FA Trophy,Bedford Town Football Club,Chesham United,,,主胜,1x2,1.99,0,1.8576,7.13,0,3,1794668400,ALL,pinnacle,,,drop,,,5811993,,
 2026-11-14T14:54:40Z,football,England FA Trophy,Bedford Town Football Club,Chesham United,,,让球主胜,hc,1.99,0,1.8574,7.14,0,3,1794668400,ALL,pinnacle,,,drop,,-0.5,5811993,,
+2026-11-14T14:54:50Z,boxing,Boxing International Matchups,Bruno Surace,Kamil Bednarek,,,客胜,1x2,3.35,0,3.1072,7.81,0,3,1794672000,BB,pinnacle,,,ws_scan,,,5886733,,
+2026-11-14T14:55:02Z,football,England FA Trophy,Wimborne Town,Uxbridge FC,,,小球,ou,1.8,0,1.5605,15.35,0,3,1794668400,ALL,pinnacle,,,pin_drop,,3.0,5812068,,
+2026-11-14T15:02:41Z,football,Guatemala Liga Nacional,CD Malacateco,CSD Municipal,,,客胜,1x2,2.21,0,2.1524,2.68,0,3,1794704400,BB,pinnacle,,,ws_scan,,,5880320,,
+2026-11-14T15:12:35Z,ice_hockey,NHL,St. Louis Blues,Florida Panthers,,,大分,ou,2.04,0,2.0,2.0,0,1,1794700800,BB,pinnacle,,,ws_scan,,6.0,5792321,,
+2026-11-14T15:12:43Z,ice_hockey,NHL,Montreal Canadiens,Colorado Avalanche,,,大分,ou,1.9,0,1.8625,2.01,0,1,1794700800,BB,pinnacle,,,ws_scan,,6.0,5792288,1,odds_changed
+2026-11-14T15:15:36Z,football,Argentina Primera C Metropolitana-Playoff,Canuelas FC,CA Central Cordoba Rosario,,,和局,1x2,2.76,0,2.6418,4.47,0,3,1794679200,ALL,pinnacle,,,ws_scan,,,5880697,1,odds_changed
+2026-11-14T15:16:40Z,basketball,Croatia Basketball Premier League,KK Dinamo Zagreb,KK Samobor,,,主胜,1x2,1.41,0,1.3735,2.66,0,2,1794682800,ALL,pinnacle,,,pin_drop,,,5905349,,
+2026-11-14T15:16:41Z,football,UAE League Cup,Al Wasl FC,Al Nasr Dubai SC,,,让球主胜,hc,1.95,0,1.8951,2.9,0,3,1794670200,ALL,pinnacle,,,ws_scan,,-0.5,5874697,,
+2026-11-14T15:21:19Z,basketball,Croatia Basketball Premier League,KK Dinamo Zagreb,KK Samobor,,,让分主胜,hc,1.87,0,1.772,5.53,0,2,1794682800,ALL,pinnacle,,,ws_scan,,-5.5,5905349,,
+2026-11-14T15:26:34Z,basketball,Australia NBL,Sydney Kings,New Zealand Breakers,,,小分,ou,1.87,0,1.8142,3.08,0,3,1794715200,ALL,pinnacle,,,ws_scan,,185.5,5074503,,
+2026-11-14T15:26:48Z,basketball,Australia NBL,Brisbane Bullets,Tasmania Jackjumpers,,,小分,ou,1.88,0,1.8315,2.65,0,3,1794722400,ALL,pinnacle,,,ws_scan,,185.5,5074560,,
+2026-11-14T15:32:55Z,basketball,Israel Basketball Super League,Maccabi Tel Aviv,Hapoel Jerusalem,,,小分,ou,1.82,0,1.7841,2.01,0,2,1794682500,ALL,pinnacle,,,drop,,172.5,5520845,,
+2026-11-14T15:36:15Z,basketball,France LNB,BCM Gravelines Dunkerque,SLUC Nancy Basket,,,让分客胜,hc,1.94,0,1.8958,2.33,0,2,1794754800,BB,pinnacle,,,ws_scan,,-2.5,5845583,,
