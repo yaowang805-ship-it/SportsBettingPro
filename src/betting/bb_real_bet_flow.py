@@ -36,7 +36,7 @@ SPORT_CN = {"football": "足球", "basketball": "篮球", "tennis": "网球",
 # 2026-10-26 注额方案: 半凯利 + 单注封顶(本金2%) + 日累计封顶(本金20%)。
 EARLY_DAILY_MAX_BETS = float('inf')
 EARLY_DAILY_MAX_STAKE = float('inf')
-MAX_STAKE_FRACTION = 0.024     # 单注封顶 = 本金 2.4% = 120 (2026-11-13 用户要求早盘单笔 100→120, 滚球仍≤80)
+MAX_STAKE_FRACTION = 0.036     # 单注封顶 = 本金 3.6% = 180 (2026-11-14 用户要求早盘单笔 120→180, 滚球仍≤80)
 EARLY_MAX_EV = 12.0  # 2026-10-26 早盘 EV 上限(12%以上假溢价, 实测 12-20%/-8.3%、20%+/-4.9%)
 DAILY_STAKE_FRACTION = float('inf')  # 日累计封顶已取消(2026-10-26 用户要求)
 DAILY_EXPOSURE_FILE = DATA_DIR / "daily_exposure.json"
