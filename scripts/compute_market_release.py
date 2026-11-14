@@ -245,7 +245,11 @@ FULL_RELEASE_EARLY = ({
     "football|hc",
 }
 # 2026-11-10 滚球与早盘保持一致: 同样放开 7 运动 × 1x2/hc/ou(两端排除 20-75% 在 second_level_monitor 里)。
-FULL_RELEASE_LIVE = set(FULL_RELEASE_EARLY)
+# 2026-11-15 用户要求撤回滚球: 冰球全部盘口(独赢-68%全负)+篮球让分(-44.6%)+足球大小(-37%), 早盘保留这些盘口。
+FULL_RELEASE_LIVE = set(FULL_RELEASE_EARLY) - {
+    "ice_hockey|1x2", "ice_hockey|hc", "ice_hockey|ou",
+    "basketball|hc", "football|ou",
+}
 
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
 # 优先于 MANUAL_OBSERVE_RELEASE 的区间。数据驱动拦截(observe_blocked)照常追加。
