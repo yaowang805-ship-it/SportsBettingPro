@@ -489,6 +489,7 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
                         "ev": opp.get("ev_pct"), "bb_odds": odds,
                         "desig": desig, "sub": sub, "home": disp_home, "away": disp_away,
                         "sport": opp.get("sport"), "verify": True,
+                        "line": opp.get("line"),  # 2026-11-14 让球/大小球线(结算必需, 之前漏写致让球单 line=null 误判走水)
                         "result": None, "profit": None, "settled_ts": None,
                         "trigger_source": trigger_source,
                     }

@@ -1837,6 +1837,7 @@ class SecondLevelMonitor:
                     "latency": round(_total_time, 2),  # 端到端耗时(触发→下单完成)
                     # 2026-10-17 补落盘六闸门第1条口径(pin_points配对/line语义/ev分支/负号):
                     # 之前 sig 里有但 real_bets 没写, 导致六闸门第1条无数据可检。
+                    "line": sig.get("line"),  # 2026-11-14 让球/大小球线(结算必需, 之前漏写致让球单 line=null 误判走水)
                     "pin_points": sig.get("pin_points"),  # Pin 让分线(配对 |d|>0.5 比例)
                     "line_semantics": sig.get("line_semantics"),  # 赛前/滚球语义(两支结算式不许合并)
                     "neg_sign_used": sig.get("neg_sign_used"),  # 是否走负号分支
