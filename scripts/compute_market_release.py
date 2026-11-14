@@ -927,6 +927,9 @@ def _read_paper_bets():
     for b in bets:
         if b.get("anchor") != "pin":
             continue
+        # 2026-11-14 校准样本(source=calibration, ev>0 全量)不进释放判定, 只供 refit 拟合去水 bias
+        if b.get("source") == "calibration":
+            continue
         _t = b.get("ts") or _ts(b.get("settled_at")) or 0
         if _t >= CLEAN_DATA_CUTOFF:
             out.append(b)
@@ -947,6 +950,7 @@ def _read_live_paper_bets():
         return []
     bets = raw.get("bets", []) if isinstance(raw, dict) else raw
     return [b for b in bets if b.get("anchor") == "pin" and not b.get("sim_rejected")
+            and b.get("source") != "calibration"  # 2026-11-14 校准样本不进释放判定
             and (b.get("ts") or 0) >= CLEAN_DATA_CUTOFF]
 
 
