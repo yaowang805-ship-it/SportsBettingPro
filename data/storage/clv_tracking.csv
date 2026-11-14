@@ -755,7 +755,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-12T23:25:36Z,basketball,Iceland Basketball First Division,KFG Gardabaer,Haukar,,,客胜,1x2,1.14,0,1.098,3.83,0,2,1794598200,ALL,pinnacle,,,ws_scan,,,5903204,,
 2026-11-12T23:46:06Z,football,UEFA Nations League D,Liechtenstein,Azerbaijan,,,主胜,1x2,16.7,0,15.5451,7.43,0,3,1794599100,ALL,pinnacle,,,ws_scan,,,4863411,1,odds_changed
 2026-11-12T23:52:06Z,tennis,ATP Challenger - Monastir Open,Marvin Moeller (GER),Lorenzo Giustino (ITA),,,客胜,1x2,1.78,0,1.7256,3.15,0,3,1794571200,BB,pinnacle,,,ws_scan,,,5904664,,
-2026-11-13T00:01:44Z,basketball,Austria Basketball 2. Liga,Mistelbach Mustangs,Mattersburg Rocks,,,主胜,1x2,1.17,0,1.1413,2.51,0,3,1794672000,BB,pinnacle,,,ws_scan,,,5897395,,
+2026-11-13T00:01:44Z,basketball,Austria Basketball 2. Liga,Mistelbach Mustangs,Mattersburg Rocks,,,主胜,1x2,1.17,0,1.1413,2.51,0,3,1794672000,BB,pinnacle,,,ws_scan,,,5897395,1,odds_changed
 2026-11-13T00:27:45Z,tennis,WTA - Sopo Open,Laura Samson (CZE),Elizabeth Mandlik (USA),,,大分,ou,1.77,0,1.723,2.73,0,2,1794582000,BB,pinnacle,,,ws_scan,,20.0,5904961,,
 2026-11-13T00:40:21Z,tennis,World Tennis - M15 Las Palmas de Gran Canaria Men Singles,Mario Arce Fernandez (ESP),Manuel Mazza (ITA),,,让盘客胜,hc,1.6,0,1.4391,11.18,0,3,1794564000,BB,pinnacle,,,ws_scan,,-1.5,5899664,,
 2026-11-13T00:55:33Z,football,India Bangalore Super Division,Kodagu FC,Technico FF,,,大球,ou,1.9,1.6452,1.7723,7.21,50,2,1794549600.0,BB/FB,,,,push,,5.0,,,
@@ -766,7 +766,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-13T05:11:43Z,basketball,Japan B.League One,Niigata Albirex BB,Gifu Swoops,,,主胜,1x2,1.31,0,1.28,2.34,0,3,1794636300,BB,pinnacle,,,ws_scan,,,5326744,,
 2026-11-13T05:11:43Z,basketball,Japan B.League One,Tachikawa Dice,Earthfriends Tokyo Z,,,主胜,1x2,1.25,0,1.2113,3.19,0,3,1794636300,BB,pinnacle,,,ws_scan,,,5326736,,
 2026-11-13T05:11:49Z,basketball,Portugal Basketball League,Ovarense Basquetebol,CA Queluz,,,主胜,1x2,1.17,0,1.1465,2.05,0,2,1794672000,ALL,pinnacle,,,ws_scan,,,5904807,,
-2026-11-13T05:11:53Z,basketball,Hungary NB I,OSE Lions,KTE Duna Aszfalt,,,主胜,1x2,1.2,0,1.1661,2.91,0,3,1794675600,ALL,pinnacle,,,ws_scan,,,5472632,,
+2026-11-13T05:11:53Z,basketball,Hungary NB I,OSE Lions,KTE Duna Aszfalt,,,主胜,1x2,1.2,0,1.1661,2.91,0,3,1794675600,ALL,pinnacle,,,ws_scan,,,5472632,1,odds_changed
 2026-11-13T05:11:59Z,basketball,Hungary NB I,Atomeromu SE,Alba Fehervar,,,主胜,1x2,1.17,0,1.1394,2.69,0,3,1794664800,ALL,pinnacle,,,ws_scan,,,5472646,,
 2026-11-13T05:11:59Z,basketball,Hungary NB I,SZTE Szedeak,NKA Universitas Pecs,,,主胜,1x2,1.39,0,1.3484,3.09,0,3,1794677400,ALL,pinnacle,,,ws_scan,,,5472625,,
 2026-11-13T05:11:59Z,basketball,Croatia Basketball Premier League,KK Split,KK Skrljevo,,,主胜,1x2,1.14,0,1.1167,2.09,0,2,1794679200,ALL,pinnacle,,,ws_scan,,,5905170,,
@@ -1085,3 +1085,18 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-14T15:26:48Z,basketball,Australia NBL,Brisbane Bullets,Tasmania Jackjumpers,,,小分,ou,1.88,0,1.8315,2.65,0,3,1794722400,ALL,pinnacle,,,ws_scan,,185.5,5074560,,
 2026-11-14T15:32:55Z,basketball,Israel Basketball Super League,Maccabi Tel Aviv,Hapoel Jerusalem,,,小分,ou,1.82,0,1.7841,2.01,0,2,1794682500,ALL,pinnacle,,,drop,,172.5,5520845,,
 2026-11-14T15:36:15Z,basketball,France LNB,BCM Gravelines Dunkerque,SLUC Nancy Basket,,,让分客胜,hc,1.94,0,1.8958,2.33,0,2,1794754800,BB,pinnacle,,,ws_scan,,-2.5,5845583,,
+2026-11-14T16:18:11Z,football,New Zealand National League Championship,Birkenhead United,Eastern Suburbs AFC,,,让球客胜,hc,1.88,0,1.8223,3.17,0,2,1794711600,ALL,pinnacle,,,ws_scan,,+0.5,5880091,,
+2026-11-14T16:19:53Z,basketball,Poland Basketball 2 Liga,Swiecki Klub Koszykowki,Akademia Gortata Gdansk,,,主胜,1x2,2.32,0,2.0828,11.39,0,3,1794744000,ALL,pinnacle,,,ws_scan,,,5914466,,
+2026-11-14T16:20:04Z,basketball,Poland Basketball 2 Liga,MKKS Rybnik,Cracovia Krakow,,,主胜,1x2,1.14,0,1.1097,2.73,0,3,1794675600,ALL,pinnacle,,,ws_scan,,,5914253,,
+2026-11-14T16:28:35Z,basketball,France LNB,Saint Quentin,Cholet Basket,,,主胜,1x2,2.1,0,2.0381,3.04,0,2,1794675600,BB,pinnacle,,,ws_scan,,,5840870,,
+2026-11-14T16:39:06Z,basketball,Czech Republic NBL Basketball,BK Decin,BK Lokomotiva Plzen,,,让分客胜,hc,1.92,0,1.8309,4.87,0,3,1794675600,ALL,pinnacle,,,ws_scan,,+17.5,5234040,,
+2026-11-14T16:39:41Z,basketball,Romania Basketball National League,CSM Ploiesti,CS Municipal Galati,,,客胜,1x2,1.43,0,1.3987,2.24,0,3,1794675600,ALL,pinnacle,,,ws_scan,,,5904997,1,odds_changed
+2026-11-14T17:31:59Z,football,Spain Tercera Division,Caudal Deportivo,CD Colunga,,,大球,ou,1.92,0,1.7754,8.14,0,4,1794762000,ALL,pinnacle,,,ws_scan,,3.0,5958634,,
+2026-11-14T17:36:27Z,football,Belgium First Amateur Division,KSK Heist,Hoogstraten VV,,,大球,ou,1.96,0,1.9073,2.76,0,2,1794682800,ALL,pinnacle,,,pin_drop,,3.5,5952629,,
+2026-11-14T17:41:31Z,football,Spain Tercera Division,CD Guadiana,CD Gevora,,,让球主胜,hc,1.9,0,1.8341,3.59,0,4,1794756600,BB,pinnacle,,,ws_scan,,+0.5,5879531,,
+2026-11-14T17:41:31Z,basketball,Japan B.League Premier,Shimane Susanoo Magic,Utsunomiya Brex,,,客胜,1x2,2.21,0,2.1615,2.24,0,2,1794717300,BB,pinnacle,,,ws_scan,,,5309978,,
+2026-11-14T17:57:33Z,basketball,Croatia Basketball Premier League,KK Zabok,KK Virtus Zagreb,,,客胜,1x2,4.07,0,3.7462,8.64,0,2,1794679200,BB,pinnacle,,,pin_drop,,,5905171,,
+2026-11-14T18:12:23Z,football,Argentina Primera B Metropolitana-Playoff,Real Pilar FC,CA Talleres de Remedios,,,小球,ou,1.95,0,1.8659,4.51,0,3,1794693600,ALL,pinnacle,,,ws_scan,,2.0,5856497,,
+2026-11-14T18:19:58Z,football,Belgium First Amateur Division,KSK Heist,Hoogstraten VV,,,让球主胜,hc,1.98,0,1.9163,3.32,0,2,1794682800,ALL,pinnacle,,,ws_scan,,-1,5952629,,
+2026-11-14T18:23:54Z,basketball,BNXT League,Antwerp Giants,Brussels Basketball,,,主胜,1x2,1.08,0,1.0564,2.23,0,3,1794684600,ALL,pinnacle,,,ws_scan,,,5912339,,
+2026-11-14T18:39:12Z,football,New Zealand National League Championship,Cashmere Technical,Wellington Olympic,,,让球主胜,hc,2.0,0,1.9338,3.42,0,2,1794699000,ALL,pinnacle,,,ws_scan,,-0.5,5958947,,

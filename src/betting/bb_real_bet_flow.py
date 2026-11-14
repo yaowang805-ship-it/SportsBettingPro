@@ -408,6 +408,9 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         _bankroll = _read_bankroll()
         _max_stake = _bankroll * MAX_STAKE_FRACTION
         stake = min(stake, _max_stake)
+        # 2026-11-15 用户要求: 早盘网球盘口单笔上限 80(其他运动仍 180)
+        if opp.get("sport") == "tennis":
+            stake = min(stake, 80.0)
         # 2026-11-14 用户要求: 取消「余额<300 停投」硬门槛, 改成「余额够单注就投」。
         # 每单前余额 < stake 才跳过(读不到余额放行, 由 BB 下单返回 3001 兜底)。
         try:
