@@ -279,6 +279,28 @@ def _fetch_close_odds_pinnapi(entries):
         true_clv = round((bb_odds - raw_p) / raw_p * 100, 2)
         clv_delta = round(true_clv - push_ev, 2)
 
+        # 2026-11-14 BB 收盘价采集: 用 bb_match_id 拉 BB 开赛前最终价, 算 BB CLV。
+        # BB CLV=(下注价-BB收盘价)/BB收盘价, 直接度量 lead-lag 套利"进场那一刻 BB 还没被拉平"的时机。
+        bb_closing_odds = ""
+        bb_clv_pct = ""
+        _bbid = (e.get("bb_match_id") or "").strip()
+        if _bbid:
+            try:
+                from src.scrapers.bb_api_fetcher import fetch_match_for_order
+                from src.betting.bb_auto_bet import find_market_from_match
+                from src.betting.bb_real_bet_flow import _sub_market_to_key, _designation_to_dir
+                _bbm = fetch_match_for_order(_bbid, timeout=3, max_attempts=1, max_domains=1)
+                if _bbm:
+                    _loc = find_market_from_match(_bbm, _sub_market_to_key(sub_market),
+                                                  _designation_to_dir(sub_market, e.get("designation", "")))
+                    if _loc:
+                        _bc = float(_loc[1]) if _loc[1] else 0
+                        if _bc > 1:
+                            bb_closing_odds = round(_bc, 3)
+                            bb_clv_pct = round((bb_odds - _bc) / _bc * 100, 2)
+            except Exception:
+                pass
+
         _row = {
             "collect_time": datetime.now(timezone.utc).isoformat(),
             "push_time": e.get("timestamp", ""),
@@ -305,6 +327,8 @@ def _fetch_close_odds_pinnapi(entries):
             "close_lag_min": round(minutes_to_match, 1),
             "bb_match_id": e.get("bb_match_id", ""),
             "line": e.get("line", ""),
+            "bb_closing_odds": bb_closing_odds,  # 2026-11-14 BB 开赛前最终价
+            "bb_clv_pct": bb_clv_pct,  # BB CLV=(下注价-BB收盘价)/BB收盘价
         }
         results.append(_row)
 
@@ -809,6 +833,7 @@ def _save_results(results):
         "close_source", "close_lag_min",
         # 2026-10-06: BB比赛ID + 线值, 供 paper_settle 直接从 clv_results.csv 结算(覆盖全运动)
         "bb_match_id", "line",
+        "bb_closing_odds", "bb_clv_pct",  # 2026-11-14 BB 收盘价 + BB CLV
     ]
 
     _migrate_results_header(fieldnames)
