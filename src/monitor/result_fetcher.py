@@ -254,7 +254,11 @@ def determine_result(bet: dict, match_result: dict) -> tuple:
     """
     home_score = match_result.get("home_score", 0)
     away_score = match_result.get("away_score", 0)
-    sub_market = bet.get("sub_market", "1x2")
+    sub_market = bet.get("sub_market") or bet.get("sub") or "1x2"
+    # 2026-11-15 修: real_bets 滚球单字段是 sub(handicap/over_under/opportunities), 不是 sub_market。
+    # 之前 sub_market 读 None → 默认 1x2 → 让球/大小球被当成独赢判(忽略让球线/大小线, 结算全错)。
+    sub_market = {"handicap": "hc", "over_under": "ou", "opportunities": "1x2",
+                  "ml": "1x2", "money_line": "1x2"}.get(sub_market, sub_market)
     designation = bet.get("designation", "")
 
     # 网球: 让局(Game Handicap, mty=5002)/总局数(Total Games, mty=5003)的线是局数, 用总局数判定;
