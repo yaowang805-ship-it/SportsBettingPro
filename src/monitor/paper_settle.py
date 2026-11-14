@@ -29,6 +29,9 @@ logger = get_logger(__name__)
 TRACKING_FILE = DATA_DIR / "clv_tracking.csv"
 RESULTS_FILE = DATA_DIR / "clv_results.csv"
 PAPER_FILE = DATA_DIR / "paper_bets.json"
+# 2026-11-14 校准样本库(ev>0 全量, source=calibration): 供 refit_power_devig 拟合去水 bias。
+# 也结算进 paper_bets.json(source=calibration), 释放判定侧过滤掉。
+CAL_TRACKING_FILE = DATA_DIR / "calibration_tracking.csv"
 DAILY_BUDGET = 20000.0  # 每日虚拟投注额 —— 已弃用(2026-10-10 注额口径修复, 不再做日归一化)
 KELLY_FRACTION = 0.5   # 与 second_level_monitor 一致(半凯利)
 MAX_STAKE = 200.0      # 2026-10-17 早盘上限200(用户充值5000定), 纸面 stake 与实盘对齐
@@ -179,7 +182,7 @@ def _read_validate_rows():
     trigger_source(pin_drop/ws_scan/drop)。之前只认 "validate" → 早盘纸面全部被跳过、
     paper_bets.json 空。保留 "validate" 兼容旧数据。
     """
-    _VALID_SOURCES = {"validate", "pin_drop", "ws_scan", "drop"}
+    _VALID_SOURCES = {"validate", "pin_drop", "ws_scan", "drop", "calibration"}
     rows = {}
 
     def _feed(r):
@@ -200,6 +203,13 @@ def _read_validate_rows():
 
     if TRACKING_FILE.exists():
         with open(TRACKING_FILE, encoding="utf-8-sig") as f:
+            for r in csv.DictReader(f):
+                _feed(r)
+
+    # 2026-11-14 校准样本库也结算(ev>0 全量, source=calibration), 供 refit 拟合去水 bias。
+    # 同 key 观察库样本优先(tracking 先读), 校准样本只补充低 EV 段观察库没有的样本。
+    if CAL_TRACKING_FILE.exists():
+        with open(CAL_TRACKING_FILE, encoding="utf-8-sig") as f:
             for r in csv.DictReader(f):
                 _feed(r)
 

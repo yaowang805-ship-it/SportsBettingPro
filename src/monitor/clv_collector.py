@@ -1106,19 +1106,11 @@ def log_oa_opportunities(details, min_ev=2.0, source="validate", max_ev=None, ca
         for mk in ("opportunities", "handicap", "over_under", "double_chance", "draw_no_bet"):
             for opp in m.get(mk, []) or []:
                 ev = opp.get("ev_pct", 0) or 0
-                if ev < min_ev:
-                    continue
-                if max_ev and ev > max_ev:
-                    continue
                 sub = opp.get("_market", "") or _MK.get(mk, "1x2")
                 if sub == "main":
                     sub = _MK.get(mk, "1x2")
                 desig = opp.get("designation", "")
-                key = (home, away, sub, desig, str(epoch))
-                if key in seen:
-                    continue
-                seen.add(key)
-                rows.append({
+                _row = {
                     "timestamp": now, "sport": sport, "league": league,
                     "home": home, "away": away, "home_pin": "", "away_pin": "",
                     "designation": desig, "sub_market": sub,
@@ -1132,19 +1124,60 @@ def log_oa_opportunities(details, min_ev=2.0, source="validate", max_ev=None, ca
                     "source": source, "pin_max_stake": "",
                     "bb_match_id": bb_match_id,
                     "sim_rejected": "", "sim_reject_reason": "",  # 2026-10-31 早盘模拟拒单标记(默认空, drain 复验价变后回填)
-                })
+                }
+                # 2026-11-14 校准样本: ev>0 全收(不限 2% 门槛), 排除 dc/dnb 推导盘口。
+                if cal_tracking and ev > 0 and sub not in ("dc", "dnb"):
+                    _ckey = (home, away, sub, desig, str(epoch))
+                    if _ckey not in cal_seen:
+                        cal_seen.add(_ckey)
+                        _crow = dict(_row)
+                        _crow["source"] = "calibration"
+                        cal_rows.append(_crow)
+                if ev < min_ev:
+                    continue
+                if max_ev and ev > max_ev:
+                    continue
+                key = (home, away, sub, desig, str(epoch))
+                if key in seen:
+                    continue
+                seen.add(key)
+                rows.append(_row)
 
     if skipped_started:
         logger.info("CLV Betfair入库: 跳过 %d 场已开赛(滚球价, 不算赛前机会)", skipped_started)
     if skipped_no_bid:
         logger.info("CLV Betfair入库门槛: 跳过 %d 场缺 bb_match_id", skipped_no_bid)
-    if not rows:
-        return 0
 
     fieldnames = ["timestamp", "sport", "league", "home", "away", "home_pin", "away_pin",
                   "designation", "sub_market", "bb_odds", "pin_odds", "fair_price", "ev_pct",
                   "stake", "tier", "match_epoch", "bb_price_source", "fair_source", "pin_league_id", "pin_match_id",
                   "source", "pin_max_stake", "line", "bb_match_id", "sim_rejected", "sim_reject_reason"]
+
+    # 2026-11-14 校准样本库落盘(独立文件, 先写; 观察库 rows 为空时校准样本也要落)
+    if cal_rows:
+        _migrate_csv_header(CAL_TRACKING_FILE, fieldnames)
+        _cal_exists = CAL_TRACKING_FILE.exists()
+        with open(CAL_TRACKING_FILE, "a", newline="", encoding="utf-8") as f:
+            w = csv.DictWriter(f, fieldnames=fieldnames)
+            if not _cal_exists:
+                w.writeheader()
+            for r in cal_rows:
+                w.writerow(r)
+        try:
+            _cal_ing = set()
+            if CAL_INGESTED_FILE.exists():
+                _cal_ing = set(tuple(k) for k in json.loads(CAL_INGESTED_FILE.read_text()))
+            for r in cal_rows:
+                _cal_ing.add((r["home"], r["away"], r["sub_market"], r["designation"], str(r["match_epoch"])))
+            CAL_INGESTED_FILE.write_text(json.dumps([list(k) for k in _cal_ing]))
+        except Exception:
+            pass
+
+    if not rows:
+        if cal_rows:
+            logger.info("CLV校准样本入库: +%d 条 EV>0 (source=calibration)", len(cal_rows))
+        return 0
+
     _migrate_csv_header(TRACKING_FILE, fieldnames)
     file_exists = TRACKING_FILE.exists()
     with open(TRACKING_FILE, "a", newline="", encoding="utf-8") as f:
@@ -1163,6 +1196,8 @@ def log_oa_opportunities(details, min_ev=2.0, source="validate", max_ev=None, ca
         OA_INGESTED_FILE.write_text(json.dumps([list(k) for k in _ingested]))
     except Exception:
         pass
+    if cal_rows:
+        logger.info("CLV校准样本入库: +%d 条 EV>0 (source=calibration)", len(cal_rows))
     logger.info("CLV Betfair入库: +%d 条 EV>=%.0f%% 机会 (source=validate)", len(rows), min_ev)
     return len(rows)
 
