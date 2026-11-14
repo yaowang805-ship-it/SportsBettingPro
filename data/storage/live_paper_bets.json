@@ -1266,5 +1266,37 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1794616545.093256,
+  "match_id": 5816121,
+  "market_id": 143065874,
+  "option_type": 2,
+  "sport": 3,
+  "home": "维拉圣马丁竞技",
+  "away": "苏亚蒂体育",
+  "designation": "让球客胜",
+  "sub": "handicap",
+  "line": -1.5,
+  "bsc": [
+   3,
+   3
+  ],
+  "bb_odds": 1.8,
+  "fair": 1.6734,
+  "ev": 7.57,
+  "spread": null,
+  "bb_ts": 1794616544.000961,
+  "stake": 80,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
