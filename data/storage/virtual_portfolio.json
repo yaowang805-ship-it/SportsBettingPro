@@ -1,5 +1,5 @@
 {
-  "balance": 12472.53,
+  "balance": 12442.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1403,6 +1403,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794632400.0,
       "created_at": "2026-11-14T00:51:14.818063+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_维谢赫拉德_雷马洛夫_主胜",
+      "sport": "football",
+      "league": "捷克丁级联赛",
+      "home_team": "维谢赫拉德",
+      "away_team": "雷马洛夫",
+      "home_cn": "维谢赫拉德",
+      "away_cn": "雷马洛夫",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 5.25,
+      "stake": 30,
+      "model_prob": 0.2147,
+      "ev_pct": 12.72,
+      "pin_odds": 3.86,
+      "fair_price": 4.6577,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794647700.0,
+      "created_at": "2026-11-14T01:00:19.377629+00:00",
       "track_only": false
     }
   ],
@@ -13849,8 +13872,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-14",
-    "used": 510.0,
-    "bets": 10
+    "used": 540.0,
+    "bets": 11
   },
   "updated": null
 }
