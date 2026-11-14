@@ -1111,3 +1111,25 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-14T19:34:54Z,ice_hockey,NHL,Dallas Stars,Buffalo Sabres,,,大分,ou,1.93,0,1.889,2.17,0,1,1794704400,BB,pinnacle,,,ws_scan,,6.0,5792294,,
 2026-11-14T19:35:32Z,football,Spain Segunda Division RFEF,CD Badajoz,CD Don Benito,,,让球主胜,hc,1.97,0,1.9293,2.11,0,3,1794758400,ALL,pinnacle,,,ws_scan,,-0.5,5880317,,
 2026-11-14T19:35:43Z,football,Spain Tercera Division,Caudal Deportivo,CD Colunga,,,客胜,1x2,23.0,0,21.6212,6.38,0,4,1794762000,ALL,pinnacle,,,ws_scan,,,5879485,,
+2026-11-14T19:37:07Z,football,Spain LaLiga 2,FC Andorra,CD Leganes,,,让球客胜,hc,1.99,0,1.8897,5.31,0,3,1795203000,BB,pinnacle,,,ws_scan,,+0.5,5192895,,
+2026-11-14T19:37:20Z,football,Mexico Liga Premier Serie B,Gorilas de Juanacatlan,Internacional Laguna,,,小球,ou,1.94,0,1.8171,6.76,0,3,1794693600,ALL,pinnacle,,,ws_scan,,4.0,5592517,,
+2026-11-14T19:43:58Z,football,Africa Cup of Nations 2027 Qualification,Niger,Morocco,,,主胜,1x2,47.0,0,45.8038,2.61,0,3,1794945600,ALL,pinnacle,,,ws_scan,,,5959970,,
+2026-11-14T20:18:04Z,football,El Salvador Primera Division,Inter Santa Tecla,CD Cacahuatique,,,主胜,1x2,1.84,0,1.5415,19.36,0,2,1794700800,ALL,pinnacle,,,pin_drop,,,5336675,,
+2026-11-14T20:28:03Z,football,Panama Liga Panamena de Futbol,Union Cocle FC,CA Independiente de La Chorrera,,,客胜,1x2,1.54,0,1.4862,3.62,0,2,1794690000,ALL,pinnacle,,,drop,,,5997346,,
+2026-11-14T20:28:03Z,football,Panama Liga Panamena de Futbol,Union Cocle FC,CA Independiente de La Chorrera,,,让球客胜,hc,1.93,0,1.7755,8.7,0,2,1794690000,ALL,pinnacle,,,drop,,-1,5997346,,
+2026-11-14T20:49:18Z,basketball,Japan B.League Premier,Akita Northern Happinets,Osaka Evessa,,,主胜,1x2,1.14,0,1.111,2.61,0,3,1794719100,BB,pinnacle,,,ws_scan,,,5309996,1,odds_changed
+2026-11-14T20:49:18Z,basketball,Japan B.League Premier,Akita Northern Happinets,Osaka Evessa,,,让分主胜,hc,1.87,0,1.7246,8.43,0,3,1794719100,BB,pinnacle,,,ws_scan,,-11.5,5309996,1,odds_changed
+2026-11-14T20:49:18Z,basketball,Japan B.League Premier,Akita Northern Happinets,Osaka Evessa,,,大分,ou,1.9,0,1.8525,2.56,0,3,1794719100,BB,pinnacle,,,ws_scan,,171.5,5309996,1,odds_changed
+2026-11-14T20:49:18Z,basketball,Japan B.League Premier,Akita Northern Happinets,Osaka Evessa,,,主胜,1x2,1.14,0,1.111,2.61,0,3,1794719100,BB,pinnacle,,,drop,,,5309996,1,odds_changed
+2026-11-14T20:49:18Z,basketball,Japan B.League Premier,Akita Northern Happinets,Osaka Evessa,,,让分主胜,hc,1.87,0,1.7246,8.43,0,3,1794719100,BB,pinnacle,,,drop,,-11.5,5309996,1,odds_changed
+2026-11-14T20:49:18Z,basketball,Japan B.League Premier,Akita Northern Happinets,Osaka Evessa,,,大分,ou,1.9,0,1.8525,2.56,0,3,1794719100,BB,pinnacle,,,drop,,171.5,5309996,1,odds_changed
+2026-11-14T21:09:23Z,basketball,FIBA South American League,Flamengo RJ,Brasilia Basquete,,,主胜,1x2,1.15,0,1.1237,2.34,0,3,1794690600,ALL,pinnacle,,,drop,,,5968575,,
+2026-11-14T21:09:23Z,basketball,FIBA South American League,Flamengo RJ,Brasilia Basquete,,,让分客胜,hc,1.9,0,1.8067,5.16,0,3,1794690600,ALL,pinnacle,,,drop,,+12.5,5968575,,
+2026-11-14T21:11:05Z,football,UEFA Nations League A,Denmark,Norway,,,大球,ou,1.97,0,1.9152,2.86,0,3,1794944700,ALL,pinnacle,,,ws_scan,,3.0,5808823,,
+2026-11-14T21:34:44Z,basketball,NBA,New Orleans Pelicans,Denver Nuggets,,,让分主胜,hc,1.9,0,1.8296,3.85,0,1,1794700800,ALL,pinnacle,,,ws_scan,,+13.5,5756982,,
+2026-11-14T22:26:17Z,football,Uruguay Segunda Division,Paysandu FC,Uruguay Montevideo FC,,,让球客胜,hc,1.78,0,1.7158,3.74,0,3,1794695400,ALL,pinnacle,,,ws_scan,,+1,5950289,,
+2026-11-14T22:52:46Z,basketball,Japan B.League One,Kagawa Five Arrows,Tokyo Hachioji Trains,,,主胜,1x2,1.47,0,1.4376,2.25,0,3,1794715500,BB,pinnacle,,,ws_scan,,,5326784,,
+2026-11-14T23:17:46Z,tennis,ATP Challenger - Sydney Open,Jason Jung (TPE),Herman Hoeyeraal (NOR),,,主胜,1x2,1.83,0,1.7292,5.83,0,3,1794710400,BB,pinnacle,,,ws_scan,,,5915670,,
+2026-11-14T23:27:23Z,tennis,ATP Challenger - Kobe Open,Maxim Zhukov (RUS),Takuya Kumasaka (JPN),,,主胜,1x2,2.14,0,2.0906,2.36,0,3,1794708000,BB,pinnacle,,,ws_scan,,,5915660,,
+2026-11-14T23:36:14Z,football,Argentina Primera Nacional-Playoff,Deportivo Moron,CA Colegiales,,,让球主胜,hc,1.95,0,1.9067,2.27,0,2,1794765600,ALL,pinnacle,,,ws_scan,,-0.5,5912400,,
+2026-11-14T23:41:45Z,basketball,Finland Basketball Division 1A,Pantterit,Torpan Pojat,,,大分,ou,1.84,1.6061,1.7231,6.78,50,3,1794754800.0,BB/FB,,,,push,,166.5,,,
