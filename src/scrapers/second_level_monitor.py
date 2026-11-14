@@ -705,7 +705,6 @@ class SecondLevelMonitor:
         self._lev_fail_log_ts = 0.0  # 失败统计落盘节流(300s 一次)
         self._token_ok_until = 0.0     # token 有效缓存到期时间戳(10min 缓存, 省每单 1s 探测)
         self._attempted = {}           # 滚球指纹去重: match_id -> {market_id -> 尝试时间戳}
-        self._pin_event_bet = set()    # 2026-10-13 同 Pin 事件互斥: 已下注的 pin_matchup_id(一事件一注)
         self._last_bet_time = 0.0      # 上次下单时间(非阻塞限频用)
         self._bet_delay = 0.0          # 下一单需等待的随机间隔(10-15s, 每次下单后重抽)
         self._bb_track = {}            # 2026-11-07 BB价轨迹追踪: {(match_id,market_id,option_type): {ts,bb_at_bet,fair_cal_at_bet,home,away,desig,sub,history:[(ts,bb_odds)]}}
@@ -1620,14 +1619,9 @@ class SecondLevelMonitor:
             print(f"  ⏭️ gate=daily_loss 当日亏损{_today_pnl:.0f}超{-DAILY_LOSS_LIMIT}, 跳过 {tag}", flush=True)
             self._record_reject(sig, "risk_block")
             return
-        # 3) 同 pin_event_id 互斥: 同一 Pin 价格事件只下一注(防让球/大小球/独赢三盘口同时上, 相关性记账)
-        _pin_eid = sig.get("pin_matchup_id")
-        if _pin_eid and _pin_eid in self._pin_event_bet:
-            self._count_skip("same_pin_event")
-            print(f"  ⏭️ gate=same_pin_event 同Pin事件已投, 跳过 {tag}", flush=True)
-            self._record_reject(sig, "mutex")
-            return
-        # 同场同盘口互斥锁(2026-09-19): 同一 match 同一盘口只下一注(防对立方向/多线重复下注)
+        # 同场同盘口互斥锁(2026-09-19): 同一 match 同一盘口只下一注(防对立方向/多线重复下注)。
+        # 2026-11-14 删掉上面的「同 Pin 事件(pin_matchup_id 比赛级)互斥」: 用户明确不同盘口可分别下注
+        # (让球/大小球/独赢各下一注), 只保留比赛+盘口级互斥, 不再用比赛级 pin_matchup_id 一刀切拦三盘口。
         if check_sub_market_bet(sig["match_id"], sig.get("sub")):
             print(f"  ⏭️ 同场同盘口已投, 跳过 {tag}", flush=True)
             self._record_reject(sig, "mutex")
@@ -1798,8 +1792,6 @@ class SecondLevelMonitor:
         self._probe_token_async()  # 2026-09-28 token 探针移到投注后(后台, 不占下单关键路径)
         if code == 0:
             # 2026-10-11 冷却三层只在成交成功后记(拒单/void 不烧窗口)。
-            if _pin_eid:
-                self._pin_event_bet.add(_pin_eid)  # 2026-10-13 同Pin事件成交后记录(下次同事件跳过)
             if LIVE_COOLDOWN_PER_MARKET:
                 self._market_cooldown[(str(sig["match_id"]), str(market_id))] = time.time()
                 self._event_exposure[sig["match_id"]] = self._event_exposure.get(sig["match_id"], 0) + 1
