@@ -231,7 +231,7 @@ MANUAL_OBSERVE_RELEASE = {
 # 2026-11-09 用户决定: 放开所有运动×所有主力盘口(1x2/hc/ou), 只留「大热排除」(隐含>60%)+EV门槛+REAL_ROI_GATE。
 # 依据: 实时赔率比价 + 匹配正确的真溢价已就位, 不再按数据驱动/手动拦截过滤, 只要符合EV门槛就投。
 # 实现: 全量放开格直接放行(绕过 observe_blocked/observe_released/数据驱动拦截), 由 REAL_ROI_GATE 兜底撤假正。
-FULL_RELEASE_EARLY = {
+FULL_RELEASE_EARLY = ({
     f"{sport}|{sm}"
     for sport in ("football", "basketball", "tennis", "baseball",
                   "ice_hockey", "american_football", "volleyball")
@@ -240,6 +240,9 @@ FULL_RELEASE_EARLY = {
     # 2026-11-13 用户要求"打开所有运动及对应盘口": 拳击/MMA 只有独赢(2-way 无线, 匹配天然安全)。
     # 羽毛球 Pin 无覆盖+BB无主盘口、乒乓球无数据 → 不补。
     "boxing|1x2", "mma|1x2",
+}) - {
+    # 2026-11-15 用户要求关闭足球让球全部盘口: 早盘 ROI -42.5%(胜率仅12.5%) 严重出血。
+    "football|hc",
 }
 # 2026-11-10 滚球与早盘保持一致: 同样放开 7 运动 × 1x2/hc/ou(两端排除 20-75% 在 second_level_monitor 里)。
 FULL_RELEASE_LIVE = set(FULL_RELEASE_EARLY)
