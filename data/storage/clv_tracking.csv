@@ -913,3 +913,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-13T23:14:29Z,basketball,Mexico LNBP Basketball League,Soles de Mexicali,Astros de Jalisco,,,小分,ou,1.91,0,1.8447,3.54,0,3,1794621600,ALL,pinnacle,,,ws_scan,,158.5,5869999,,
 2026-11-13T23:22:47Z,football,Chile Copa de la Liga,Coquimbo Unido,O Higgins,,,让球客胜,hc,1.98,0,1.8827,5.17,0,3,1794691800,BB,pinnacle,,,ws_scan,,+0.5,5874915,,
 2026-11-14T00:15:10Z,football,Poland III Liga,Warta Gorzow Wielkopolski,Karkonosze Jelenia Gora,,,客胜,1x2,2.03,1.6944,1.81,12.15,80,4,1794657600.0,FB,,,,push,,,,,
+2026-11-14T00:15:45Z,basketball,Mexico LNBP Basketball League,Soles de Mexicali,Astros de Jalisco,,,主胜,1x2,1.52,1.3584,1.4208,6.98,40,3,1794628800.0,FB,,,,push,,,,,
+2026-11-14T00:15:45Z,basketball,Mexico LNBP Basketball League,Soles de Mexicali,Astros de Jalisco,,,小分,ou,1.91,1.7353,1.8447,3.54,40,3,1794628800.0,BB/FB,,,,push,,158.5,,,
