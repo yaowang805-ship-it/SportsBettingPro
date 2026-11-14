@@ -4544,5 +4544,37 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1794699811.790977,
+  "match_id": 5592517,
+  "market_id": 143712513,
+  "option_type": 5,
+  "sport": 1,
+  "home": "胡安纳卡特兰",
+  "away": "拉古纳国际",
+  "designation": "小球",
+  "sub": "over_under",
+  "line": 4.5,
+  "bsc": [
+   4,
+   0
+  ],
+  "bb_odds": 1.77,
+  "fair": 1.6852,
+  "ev": 5.03,
+  "spread": null,
+  "bb_ts": 1794699810.6312928,
+  "stake": 30,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
