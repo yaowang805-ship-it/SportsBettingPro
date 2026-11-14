@@ -80,7 +80,8 @@ def _is_betting_push(title: str) -> bool:
     t = title or ""
     return ("+EV" in t or "投注推荐" in t or "机会" in t or "已投注" in t
             or "赢了" in t or "输了" in t or "滚球" in t
-            or "已下单" in t or "已成交" in t)
+            or "已下单" in t or "已成交" in t
+            or "早盘投注" in t)  # 2026-11-14 早盘下单 title「🟦 早盘投注 {desig}」之前漏识为投注推送 → 吃每日6条限额+30min冷却, 20笔只推2笔
 
 
 def _non_betting_quota_ok() -> bool:
