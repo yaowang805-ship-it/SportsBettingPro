@@ -291,16 +291,8 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
     if not token:
         return {"success": [], "failed": [], "error": "无 token"}
 
-    # 2026-10-28 用户要求: 去除「余额<1000 早盘不实盘投注」的限制。余额熔断不再拦早盘(滚球也不拦),
-    # 风控改由单注封顶(本金2%)+滚球熔断(>30单负ROI撤回)承担。不再每次调 check_balance_ok。
-    # 2026-11-07 用户新规则: 可用余额(体育钱包 bl)<300 时早盘实盘停投(防余额过低继续下单)。
-    try:
-        from src.betting.bb_auto_bet import get_balance_cached, fetch_balance
-        _bal_gate = get_balance_cached() or fetch_balance()
-        if _bal_gate is not None and float(_bal_gate) < 300:
-            return {"success": [], "failed": [], "error": f"余额 ¥{float(_bal_gate):.0f}<300, 早盘停投"}
-    except Exception:
-        pass
+    # 2026-11-14 用户要求: 取消「余额<300 早盘停投」的硬门槛, 改成「余额够单注就投」。
+    # 余额检查移到下单循环内(每单前余额<stake 才跳过), 见下方 stake 计算之后。
 
     records, _ = _get_all_matches_cached(token, domain)  # 2026-10-25 只读缓存(现仅作 getMatchDetail 失败时的兜底)
     success, failed = [], []
@@ -416,6 +408,19 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
         _bankroll = _read_bankroll()
         _max_stake = _bankroll * MAX_STAKE_FRACTION
         stake = min(stake, _max_stake)
+        # 2026-11-14 用户要求: 取消「余额<300 停投」硬门槛, 改成「余额够单注就投」。
+        # 每单前余额 < stake 才跳过(读不到余额放行, 由 BB 下单返回 3001 兜底)。
+        try:
+            from src.betting.bb_auto_bet import get_balance_cached, fetch_balance
+            _bal_now = get_balance_cached()
+            if _bal_now is None:
+                _bal_now = fetch_balance()
+            if _bal_now is not None and stake > 0 and float(_bal_now) < stake:
+                failed.append({"home": disp_home, "away": disp_away,
+                               "reason": f"余额 ¥{float(_bal_now):.0f}<注额¥{stake:.0f}, 跳过"})
+                continue
+        except Exception:
+            pass
         # 2026-10-17: 下注时EV门槛与采集门槛对齐。之前硬编码 min_ev_pct=4.0 高于采集门槛
         # (get_min_ev 直接盘3%/dc 3%/特殊盘4%, 另有方向级覆盖), 把 2~4% 档机会扫进来又在下单时拒掉。
         _min_ev = opp.get("_min_ev")
