@@ -439,6 +439,16 @@ def auto_bet_flow(opportunities, token=None, domain=None, trigger_ts=None, trigg
                     continue
             except (TypeError, ValueError):
                 pass
+        # 2026-11-15 胜率过滤(20%-75%, 对齐 bb_ev_push): 大热>75%/大冷<20%不投。
+        # 之前只在推送路径(bb_ev_push)过滤, 实盘下单(auto_bet_flow)漏了 → BB1.15(胜率87%)照下单。
+        try:
+            _imp_p = 1.0 / (opp.get("fair_price") or opp.get("fair") or 0)
+            if _imp_p and (_imp_p < 0.20 or _imp_p > 0.75):
+                failed.append({"home": disp_home, "away": disp_away,
+                               "reason": f"隐含胜率 {_imp_p*100:.0f}% 不在 20%-75%, 放弃"})
+                continue
+        except (TypeError, ValueError, ZeroDivisionError):
+            pass
         # 2026-10-25 零延迟内存验价: 用 find_market_from_match 刚拿到的最新 BB 价(odds)重算 EV,
         # 跌破门槛即放弃。纯内存浮点计算不联网, 不牺牲秒级。拦「信号价→成交价」间 BB 跌穿公平价的负EV单。
         _fair = opp.get("fair_price") or opp.get("fair")
