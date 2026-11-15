@@ -381,7 +381,7 @@
       "success_rate": 0.0
     },
     "萨尔瓦多超级联赛": {
-      "attempts": 4,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -796,7 +796,7 @@
       "success_rate": 0.0
     },
     "埃及乙级A组联赛": {
-      "attempts": 7,
+      "attempts": 8,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1311,7 +1311,7 @@
       "success_rate": 0.0
     },
     "约旦足球甲级联赛": {
-      "attempts": 1,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1336,7 +1336,7 @@
       "success_rate": 0.0
     },
     "非洲国家杯2027资格赛": {
-      "attempts": 5,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1381,12 +1381,12 @@
       "success_rate": 0.0
     },
     "冰岛篮球超级联赛": {
-      "attempts": 1,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
     "乌干达超级联赛": {
-      "attempts": 2,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1396,7 +1396,7 @@
       "success_rate": 0.0
     },
     "墨西哥全国篮球职业联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1456,7 +1456,7 @@
       "success_rate": 0.0
     },
     "立陶宛全国篮球联赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1646,7 +1646,7 @@
       "success_rate": 0.0
     },
     "NBA 美国职业篮球联赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1781,12 +1781,27 @@
       "success_rate": 0.0
     },
     "中北美洲及加勒比海国家联赛B组": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "澳大利亚国家篮球联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "AHL 美国冰球联盟": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "阿曼职业联赛杯": {
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
     }
   },
-  "updated": "2026-11-15T01:46:01.828413+00:00",
+  "updated": "2026-11-15T12:31:33.081907+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
