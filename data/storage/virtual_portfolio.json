@@ -1,5 +1,5 @@
 {
-  "balance": 12382.53,
+  "balance": 12332.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1495,6 +1495,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794717000.0,
       "created_at": "2026-11-15T00:21:19.910819+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_阿尔塔奇青年队_沃尔夫_主胜",
+      "sport": "football",
+      "league": "奥地利丙级联赛西部组",
+      "home_team": "阿尔塔奇青年队",
+      "away_team": "沃尔夫",
+      "home_cn": "阿尔塔奇青年队",
+      "away_cn": "沃尔夫",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.84,
+      "stake": 50,
+      "model_prob": 0.6099,
+      "ev_pct": 12.23,
+      "pin_odds": 1.5464,
+      "fair_price": 1.6395,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794745800.0,
+      "created_at": "2026-11-15T00:49:06.036734+00:00",
       "track_only": false
     }
   ],
@@ -14031,8 +14054,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-15",
-    "used": 320.0,
-    "bets": 8
+    "used": 370.0,
+    "bets": 9
   },
   "updated": null
 }
