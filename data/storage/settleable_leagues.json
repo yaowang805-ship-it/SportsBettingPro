@@ -1341,7 +1341,7 @@
       "success_rate": 0.0
     },
     "欧洲国家联赛 C组": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1779,9 +1779,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "中北美洲及加勒比海国家联赛B组": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-11-14T14:56:45.942027+00:00",
+  "updated": "2026-11-15T01:46:01.828413+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
