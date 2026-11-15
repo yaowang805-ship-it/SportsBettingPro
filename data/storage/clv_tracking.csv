@@ -1165,3 +1165,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-15T00:20:16Z,football,Spain Segunda Division RFEF,Gimnastica Segoviana CF,Real Avila CF,,,和局,1x2,3.25,2.86,3.1259,3.97,30,3,1794758400.0,BB,,,,push,,,,,
 2026-11-15T00:20:49Z,ice_hockey,NHL,Anaheim Ducks,New York Islanders,,,大分,ou,1.94,1.7519,1.7927,8.22,50,1,1794711600.0,BB/FB,,,,push,,6.5,,,
 2026-11-15T00:20:49Z,basketball,Japan B.League Premier,Akita Northern Happinets,Osaka Evessa,,,让分主胜,hc,1.84,1.6211,1.7207,6.93,40,3,1794719100.0,BB/FB,,,,push,,-13.5,,,
+2026-11-15T00:21:03Z,tennis,ATP Challenger - Kobe Open,Masamichi Imamura (JPN),Hiromasa Koyama (JPN),,,让盘主胜,hc,1.67,0,1.6301,2.45,0,3,1794713400,BB,pinnacle,,,ws_scan,,-1.5,5914536,,
+2026-11-15T00:21:22Z,football,Japan Regional League,Blancdieu Hirosaki,Tokyo United,,,大球,ou,1.77,1.5464,1.6602,6.61,40,3,1794717000.0,BB/FB,,,,push,,2.5,,,

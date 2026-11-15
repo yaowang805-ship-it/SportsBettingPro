@@ -1,5 +1,5 @@
 {
-  "balance": 12422.53,
+  "balance": 12382.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1472,6 +1472,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794744300.0,
       "created_at": "2026-11-15T00:14:40.658330+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_布兰迪厄广崎_东京联队_大球(25)",
+      "sport": "football",
+      "league": "日本地区联赛",
+      "home_team": "布兰迪厄广崎",
+      "away_team": "东京联队",
+      "home_cn": "布兰迪厄广崎",
+      "away_cn": "东京联队",
+      "market": "over_under",
+      "market_type": "大球(2.5)",
+      "sub_market": "ou",
+      "line": "2.5",
+      "odds": 1.77,
+      "stake": 40,
+      "model_prob": 0.6023,
+      "ev_pct": 6.61,
+      "pin_odds": 1.5464,
+      "fair_price": 1.6602,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794717000.0,
+      "created_at": "2026-11-15T00:21:19.910819+00:00",
       "track_only": false
     }
   ],
@@ -14008,8 +14031,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-15",
-    "used": 280.0,
-    "bets": 7
+    "used": 320.0,
+    "bets": 8
   },
   "updated": null
 }
