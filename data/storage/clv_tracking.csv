@@ -1284,3 +1284,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-16T06:37:52Z,tennis,World Tennis - W50 Heraklion Women Singles,Anastasija Cvetkovic (SRB),Felitsata Dorofeeva Rybas (RUS),,,主胜,1x2,2.33,0,2.2349,4.26,0,3,1794828600,BB,pinnacle,,,pin_drop,,,5921879,,
 2026-11-16T06:41:56Z,football,CONCACAF Nations League B,Cuba,Grenada,,,让球主胜,hc,1.88,1.6849,1.8092,3.91,50,3,1794855600.0,BB,,,,push,,-1.5,,,
 2026-11-16T06:41:56Z,basketball,NBA,Miami Heat,Houston Rockets,,,让分主胜,hc,1.89,1.7752,1.8296,3.3,40,1,1794875400.0,FB,,,,push,,+3.5,,,
+2026-11-16T06:45:22Z,football,CONCACAF Nations League B,Cuba,Grenada,,,让球主胜,hc,1.88,0,1.8092,3.91,0,3,1794855600,ALL,pinnacle,,,ws_scan,,-1.5,5812037,,
+2026-11-16T07:01:29Z,football,CONCACAF Nations League B,Cuba,Grenada,,,主胜,1x2,1.29,0,1.2576,2.58,0,3,1794855600,ALL,pinnacle,,,pin_drop,,,5812037,,
+2026-11-16T07:04:08Z,football,UEFA Nations League A,Germany,Netherlands,,,大球,ou,1.96,0,1.9179,2.2,0,3,1794858300,ALL,pinnacle,,,ws_scan,,3.5,5808811,,
+2026-11-16T07:27:22Z,tennis,ATP Challenger - Champaign Open,Bryce Nakashima (USA),Shunsuke Mitsui (JPN),,,主胜,1x2,1.65,0,1.5792,4.48,0,2,1794844800,BB,pinnacle,,,ws_scan,,,5922558,,
+2026-11-16T07:28:36Z,basketball,NBA,Boston Celtics,Orlando Magic,,,让分客胜,hc,1.93,1.8065,1.8622,3.64,50,1,1794873600.0,FB,,,,push,,+9.5,,,

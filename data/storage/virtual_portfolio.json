@@ -1,5 +1,5 @@
 {
-  "balance": 13012.53,
+  "balance": 12962.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1196,6 +1196,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794875400.0,
       "created_at": "2026-11-16T06:41:54.865306+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_波士顿凯尔特人_奥兰多魔术_让分客胜(+95)",
+      "sport": "basketball",
+      "league": "NBA 美国职业篮球联赛",
+      "home_team": "波士顿凯尔特人",
+      "away_team": "奥兰多魔术",
+      "home_cn": "波士顿凯尔特人",
+      "away_cn": "奥兰多魔术",
+      "market": "handicap",
+      "market_type": "让分客胜(+9.5)",
+      "sub_market": "hc",
+      "line": "+9.5",
+      "odds": 1.93,
+      "stake": 50,
+      "model_prob": 0.537,
+      "ev_pct": 3.64,
+      "pin_odds": 1.8065,
+      "fair_price": 1.8622,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794873600.0,
+      "created_at": "2026-11-16T07:28:34.811753+00:00",
       "track_only": false
     }
   ],
@@ -14107,8 +14130,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-16",
-    "used": 460.0,
-    "bets": 11
+    "used": 510.0,
+    "bets": 12
   },
   "updated": null
 }
