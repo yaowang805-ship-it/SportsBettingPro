@@ -245,10 +245,24 @@ FULL_RELEASE_EARLY = ({
     "football|hc",
 }
 # 2026-11-10 滚球与早盘保持一致: 同样放开 7 运动 × 1x2/hc/ou(两端排除 20-75% 在 second_level_monitor 里)。
-# 2026-11-15 用户要求撤回滚球: 冰球全部盘口(独赢-68%全负)+篮球让分(-44.6%)+足球大小(-37%), 早盘保留这些盘口。
+# 2026-11-15/16 用户要求撤回滚球(观察库+实盘双数据源都出血): 冰球全部+篮球让分/独赢+足球大小+棒球让球, 早盘保留。
 FULL_RELEASE_LIVE = set(FULL_RELEASE_EARLY) - {
     "ice_hockey|1x2", "ice_hockey|hc", "ice_hockey|ou",
-    "basketball|hc", "football|ou",
+    "basketball|hc", "basketball|1x2",
+    "football|ou", "baseball|hc",
+}
+
+# 2026-11-16 用户要求: 观察库纸面负ROI格子手动拦截(格子级, 非整盘口)。full_release 命中先查这个。
+# 来源: 早盘观察库 paper_bets 7天, n>=8 且 ROI<-10% 的格子。方向按 _release_direction 归一化。
+MANUAL_FULL_RELEASE_BLOCK = {
+    ("basketball", "1x2", "客", "<45%"),      # n=21 ROI-80.1%
+    ("ice_hockey", "ou", "大", "45-55%"),     # n=13 ROI-58.6%
+    ("tennis", "hc", "主", "60-80%"),         # n=23 ROI-54.9%
+    ("tennis", "hc", "客", "60-80%"),         # n=21 ROI-51.7%
+    ("tennis", "1x2", "客", "20-40%"),        # n=13 ROI-40.9%
+    ("basketball", "1x2", "主", "<45%"),      # n=11 ROI-29.8%
+    ("football", "1x2", "平", "20-30%"),      # n=10 ROI-12.3%
+    ("tennis", "hc", "主", "40-60%"),         # n=12 ROI-10.4%
 }
 
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
@@ -1798,6 +1812,10 @@ def main():
         if f"{_sp}|{_sm}" not in FULL_RELEASE_EARLY:
             continue
         if _real.get("n", 0) >= REAL_ROI_GATE_N_MIN and _real.get("roi", 0) < 0:
+            full_release_blocked.append([_sp, _sm, _dr, _iv, SCOPE_EARLY])
+    # 2026-11-16 合并手动拦截的观察库负ROI格子(用户要求, 格子级精准封杀)
+    for _sp, _sm, _dr, _iv in MANUAL_FULL_RELEASE_BLOCK:
+        if f"{_sp}|{_sm}" in FULL_RELEASE_EARLY and [_sp, _sm, _dr, _iv, SCOPE_EARLY] not in full_release_blocked:
             full_release_blocked.append([_sp, _sm, _dr, _iv, SCOPE_EARLY])
     if full_release_blocked:
         print(f"[full-release] 实盘负ROI熔断撤回 {len(full_release_blocked)} 格: {full_release_blocked}", flush=True)
