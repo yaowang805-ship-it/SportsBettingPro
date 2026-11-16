@@ -1,17 +1,12 @@
 {
-  "basketball|Finland Basketball Division 1A|Pantterit|Torpan Pojat|大分(166.5)|ou|166.5|2026-11-15": {
-    "ev": 6.78,
-    "bb": 1.84,
-    "ts": 1794699705.8128052
-  },
-  "football|Japan Regional League|Blancdieu Hirosaki|Tokyo United|大球(2.5)|ou|2.5|2026-11-15": {
-    "ev": 6.61,
-    "bb": 1.77,
-    "ts": 1794702082.0213912
-  },
   "football|UEFA Nations League C|Finland|San Marino|让球客胜(+3.5)|hc|+3.5|2026-11-16": {
     "ev": 3.55,
     "bb": 1.93,
     "ts": 1794699887.730714
+  },
+  "basketball|NBA|New Orleans Pelicans|Golden State Warriors|大分(225.5)|ou|225.5|2026-11-17": {
+    "ev": 3.44,
+    "bb": 1.9,
+    "ts": 1794796750.716639
   }
 }

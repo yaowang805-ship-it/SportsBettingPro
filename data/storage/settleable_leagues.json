@@ -1101,7 +1101,7 @@
       "success_rate": 0.0
     },
     "丹麦乙级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1551,7 +1551,7 @@
       "success_rate": 0.0
     },
     "希腊篮球精英联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1771,7 +1771,7 @@
       "success_rate": 0.0
     },
     "印度班加罗尔超级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1801,7 +1801,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-11-15T12:31:33.081907+00:00",
+  "updated": "2026-11-16T01:45:13.940661+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
