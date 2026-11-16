@@ -1331,3 +1331,11 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-16T13:34:27Z,tennis,ATP Challenger - Kobe Open,Mili Poljicak (CRO),Jay Dylan Hara Friend (JPN),,,主胜,1x2,3.98,0,3.7069,7.37,0,3,1794889200,BB,pinnacle,,,ws_scan,,,5914978,,
 2026-11-16T13:34:27Z,tennis,ATP Challenger - Kobe Open,Mili Poljicak (CRO),Jay Dylan Hara Friend (JPN),,,让盘主胜,hc,2.05,0,1.9546,4.88,0,3,1794889200,BB,pinnacle,,,ws_scan,,+1.5,5914978,,
 2026-11-16T13:52:44Z,basketball,Uruguay Basketball League,Club Malvin,CS Larranaga,,,主胜,1x2,1.37,0,1.3423,2.06,0,3,1795048200,ALL,pinnacle,,,ws_scan,,,5907882,,
+2026-11-16T13:58:12Z,basketball,Czech Republic Basketball 1 Liga,GBA Lions Jindrichuv Hradec,BA Lynx Liberec,,,主胜,1x2,1.2,0,1.1555,3.85,0,2,1794925800,ALL,pinnacle,,,ws_scan,,,6024721,,
+2026-11-16T14:26:43Z,football,CONCACAF Nations League B,Guadeloupe,Bermuda,,,客胜,1x2,21.0,0,17.331,21.17,0,3,1794855600,ALL,pinnacle,,,pin_drop,,,5909008,1,odds_changed
+2026-11-16T14:43:04Z,basketball,Japan B.League Premier,Nagasaki Velca,Seahorses Mikawa,,,让分主胜,hc,1.92,0,1.7857,7.52,0,3,1794909900,BB,pinnacle,,,pin_drop,,+7.5,5310006,,
+2026-11-16T14:45:51Z,football,Germany Bundesliga,Hamburger SV,Bayern Munich,,,主胜,1x2,17.9,0,17.331,3.28,0,1,1795876200,ALL,pinnacle,,,ws_scan,,,5961990,,
+2026-11-16T14:47:40Z,basketball,NBA,Washington Wizards,Memphis Grizzlies,,,大分,ou,1.95,0,1.9018,2.53,0,1,1794873600,ALL,pinnacle,,,ws_scan,,230.5,5967301,,
+2026-11-16T14:48:44Z,football,UEFA Nations League D,Lithuania,Liechtenstein,,,客胜,1x2,36.0,0,30.52,17.96,0,3,1794848400,ALL,pinnacle,,,pin_drop,,,5916717,,
+2026-11-16T15:03:59Z,tennis,ATP Challenger - Helsinki Open,Shintaro Mochizuki (JPN),Lorenzo Giustino (ITA),,,让盘客胜,hc,1.81,0,1.7311,4.56,0,2,1794906000,BB,pinnacle,,,pin_drop,,+1.5,5916587,,
+2026-11-16T15:25:42Z,tennis,ATP Challenger - Champaign Open,Hunter Heck (USA),Colson Wells (USA),,,让盘主胜,hc,1.63,0,1.5775,3.33,0,2,1794849000,BB,pinnacle,,,drop,,-1.5,5923499,,
