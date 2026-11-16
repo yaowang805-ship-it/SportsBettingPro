@@ -1,5 +1,5 @@
 {
-  "balance": 13682.53,
+  "balance": 13632.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -874,6 +874,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794944700.0,
       "created_at": "2026-11-16T22:41:56.416050+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_达特福德_三桥_小球(35)",
+      "sport": "football",
+      "league": "英格兰伊斯米安超级联赛",
+      "home_team": "达特福德",
+      "away_team": "三桥",
+      "home_cn": "达特福德",
+      "away_cn": "三桥",
+      "market": "over_under",
+      "market_type": "小球(3.5)",
+      "sub_market": "ou",
+      "line": "3.5",
+      "odds": 1.89,
+      "stake": 50,
+      "model_prob": 0.5795,
+      "ev_pct": 9.54,
+      "pin_odds": 1.6757,
+      "fair_price": 1.7255,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794944700.0,
+      "created_at": "2026-11-16T22:47:30.831784+00:00",
       "track_only": false
     }
   ],
@@ -14085,8 +14108,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-17",
-    "used": 50.0,
-    "bets": 1
+    "used": 100.0,
+    "bets": 2
   },
   "updated": null
 }
