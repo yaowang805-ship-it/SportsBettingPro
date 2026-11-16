@@ -1,5 +1,5 @@
 {
-  "balance": 13732.53,
+  "balance": 13702.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -851,6 +851,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794881700.0,
       "created_at": "2026-11-16T12:38:48.607245+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_泰国_塔吉克斯坦_客胜",
+      "sport": "football",
+      "league": "国王杯 (在泰国）",
+      "home_team": "泰国",
+      "away_team": "塔吉克斯坦",
+      "home_cn": "泰国",
+      "away_cn": "塔吉克斯坦",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.72,
+      "stake": 30,
+      "model_prob": 0.2351,
+      "ev_pct": 10.94,
+      "pin_odds": 3.86,
+      "fair_price": 4.2544,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794918600.0,
+      "created_at": "2026-11-16T12:59:37.347695+00:00",
       "track_only": false
     }
   ],
@@ -14047,8 +14070,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-16",
-    "used": 630.0,
-    "bets": 15
+    "used": 660.0,
+    "bets": 16
   },
   "updated": null
 }

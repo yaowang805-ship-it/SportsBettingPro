@@ -1,4 +1,9 @@
 {
+  "basketball|Mexico LNBP Basketball League|Astros de Jalisco|Soles de Mexicali|客胜|1x2|2026-11-17": {
+    "ev": 5.44,
+    "bb": 1.52,
+    "ts": 1794832732.408073
+  },
   "basketball|NBA|New Orleans Pelicans|Golden State Warriors|大分(225.5)|ou|225.5|2026-11-17": {
     "ev": 3.44,
     "bb": 1.9,
@@ -14,9 +19,9 @@
     "bb": 1.93,
     "ts": 1794699887.730714
   },
-  "basketball|Mexico LNBP Basketball League|Astros de Jalisco|Soles de Mexicali|客胜|1x2|2026-11-17": {
-    "ev": 5.44,
-    "bb": 1.52,
-    "ts": 1794832732.408073
+  "football|King's Cup (In Thailand)|Thailand|Tajikistan|客胜|1x2|2026-11-17": {
+    "ev": 10.94,
+    "bb": 4.72,
+    "ts": 1794833981.328962
   }
 }

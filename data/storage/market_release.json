@@ -29,9 +29,7 @@
     "american_football|hc",
     "american_football|ou",
     "baseball|1x2",
-    "baseball|hc",
     "baseball|ou",
-    "basketball|1x2",
     "basketball|ou",
     "boxing|1x2",
     "football|1x2",
@@ -43,7 +41,64 @@
     "volleyball|hc",
     "volleyball|ou"
   ],
-  "full_release_blocked": [],
+  "full_release_blocked": [
+    [
+      "basketball",
+      "1x2",
+      "客",
+      "<45%",
+      "early"
+    ],
+    [
+      "ice_hockey",
+      "ou",
+      "大",
+      "45-55%",
+      "early"
+    ],
+    [
+      "tennis",
+      "hc",
+      "主",
+      "60-80%",
+      "early"
+    ],
+    [
+      "tennis",
+      "hc",
+      "客",
+      "60-80%",
+      "early"
+    ],
+    [
+      "tennis",
+      "1x2",
+      "客",
+      "20-40%",
+      "early"
+    ],
+    [
+      "basketball",
+      "1x2",
+      "主",
+      "<45%",
+      "early"
+    ],
+    [
+      "football",
+      "1x2",
+      "平",
+      "20-30%",
+      "early"
+    ],
+    [
+      "tennis",
+      "hc",
+      "主",
+      "40-60%",
+      "early"
+    ]
+  ],
   "market_released": [],
   "league_released": [],
   "league_blocked": [],
