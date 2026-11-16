@@ -275,8 +275,9 @@ def _fetch_close_odds_pinnapi(entries):
 
         bb_odds = float(e.get("bb_odds", 0))
         push_ev = float(e.get("ev_pct", 0))
-        # 2026-11-09 修 CLV 口径: 比 Pin 原始收盘价(不是去水公平价), 去水 bias 不再污染 CLV
-        true_clv = round((bb_odds - raw_p) / raw_p * 100, 2)
+        # 2026-11-16 改回公平价口径(用户要求): CLV = BB下注价 vs Pin收盘公平价, 正才证明拿到优势赔率。
+        # (11-09 曾改成原始价防去水bias污染CLV, 但原始价含margin分母小→CLV虚高全正, 掩盖真实edge)
+        true_clv = round((bb_odds - fair_p) / fair_p * 100, 2)
         clv_delta = round(true_clv - push_ev, 2)
 
         # 2026-11-14 BB 收盘价采集: 用 bb_match_id 拉 BB 开赛前最终价, 算 BB CLV。
