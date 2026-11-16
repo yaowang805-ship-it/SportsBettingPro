@@ -886,7 +886,7 @@
       "success_rate": 0.0
     },
     "北爱尔兰冠军联赛": {
-      "attempts": 3,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1551,7 +1551,7 @@
       "success_rate": 0.0
     },
     "希腊篮球精英联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1806,12 +1806,12 @@
       "success_rate": 0.0
     },
     "墨西哥TDP联赛": {
-      "attempts": 1,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
     "威尔士杯": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1819,9 +1819,24 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "加纳甲级联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "印度甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "利比里亚甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-11-16T09:00:53.829704+00:00",
+  "updated": "2026-11-16T12:30:43.473144+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

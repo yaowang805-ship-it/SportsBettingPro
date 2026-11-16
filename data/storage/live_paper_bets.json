@@ -9937,5 +9937,41 @@
    4,
    8
   ]
+ },
+ {
+  "ts": 1794823897.312255,
+  "match_id": 5310008,
+  "market_id": 142372527,
+  "option_type": 1,
+  "sport": 3,
+  "home": "群马雷鹤",
+  "away": "滋贺湖星",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   2
+  ],
+  "bb_odds": 1.19,
+  "fair": 1.1469,
+  "ev": 3.76,
+  "spread": null,
+  "bb_ts": 1794823896.362967,
+  "stake": 70,
+  "settled": true,
+  "result": "won",
+  "profit": 13.3,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": 1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 16.72,
+  "final_score": [
+   100,
+   80
+  ]
  }
 ]

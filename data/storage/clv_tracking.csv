@@ -1273,8 +1273,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-16T05:11:53Z,basketball,Bosnia and Herzegovina Basketball Championship,KK Siroki,Radnicki Gorazde,,,主胜,1x2,1.08,0,1.0362,4.23,0,3,1794848400,ALL,pinnacle,,,ws_scan,,,6013693,,
 2026-11-16T05:13:34Z,football,Africa Cup of Nations 2027 Qualification,Rwanda,Mali,,,和局,1x2,3.31,0,3.1806,4.07,0,3,1794942000,ALL,pinnacle,,,ws_scan,,,5959951,,
 2026-11-16T05:35:06Z,tennis,World Tennis - W50 Heraklion Women Singles,Lydia Panagiotidou (GRE),Briana Szabo (ROU),,,让盘客胜,hc,1.68,0,1.5952,5.32,0,3,1794821400,BB,pinnacle,,,pin_drop,,-1.5,5921874,,
-2026-11-16T05:46:35Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Kawasaki Brave Thunders,,,客胜,1x2,2.14,0,2.0522,4.28,0,2,1794823500,BB,pinnacle,,,pin_drop,,,5310021,,
-2026-11-16T05:46:35Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Kawasaki Brave Thunders,,,让分客胜,hc,1.87,0,1.8074,3.46,0,2,1794823500,BB,pinnacle,,,pin_drop,,+2.5,5310021,,
+2026-11-16T05:46:35Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Kawasaki Brave Thunders,,,客胜,1x2,2.14,0,2.0522,4.28,0,2,1794823500,BB,pinnacle,,,pin_drop,,,5310021,1,odds_changed
+2026-11-16T05:46:35Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Kawasaki Brave Thunders,,,让分客胜,hc,1.87,0,1.8074,3.46,0,2,1794823500,BB,pinnacle,,,pin_drop,,+2.5,5310021,1,odds_changed
 2026-11-16T05:47:15Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Kawasaki Brave Thunders,,,客胜,1x2,2.14,1.9524,2.0522,4.28,50,2,1794823500.0,BB/FB,,,,push,,,,,
 2026-11-16T05:47:15Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Kawasaki Brave Thunders,,,让分客胜,hc,1.87,1.7246,1.8074,3.46,40,2,1794823500.0,BB/FB,,,,push,,+2.5,,,
 2026-11-16T06:11:06Z,football,Argentina Liga Profesional-Playoff,Boca Juniors,Independiente Rivadavia,,,让球主胜,hc,2.07,0,2.019,2.53,0,1,1795651200,ALL,pinnacle,,,ws_scan,,-1,5990991,,
@@ -1302,7 +1302,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-16T08:06:25Z,football,CONCACAF Nations League B,Saint Kitts and Nevis,Bonaire,,,大球,ou,1.87,0,1.6858,10.93,0,3,1794942000,ALL,pinnacle,,,ws_scan,,3.0,5812046,,
 2026-11-16T08:11:33Z,football,USL Championship-Playoff,New Mexico United,Sacramento Republic FC,,,和局,1x2,3.34,3,3.2261,3.53,30,2,1794880800.0,BB,,,,push,,,,,
 2026-11-16T09:20:26Z,tennis,WTA - Colina Open,Guiomar Maristany Zuleta De Reales (ESP),Martina Trevisan (ITA),,,主胜,1x2,1.78,0,1.7101,4.09,0,2,1794834000,BB,pinnacle,,,pin_drop,,,5923263,1,odds_changed
-2026-11-16T09:30:58Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Kawasaki Brave Thunders,,,主胜,1x2,1.95,0,1.8827,3.57,0,2,1794823500,BB,pinnacle,,,pin_drop,,,5310021,,
+2026-11-16T09:30:58Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Kawasaki Brave Thunders,,,主胜,1x2,1.95,0,1.8827,3.57,0,2,1794823500,BB,pinnacle,,,pin_drop,,,5310021,1,odds_changed
 2026-11-16T09:35:58Z,basketball,Japan B.League Premier,Hiroshima Dragonflies,Altiri Chiba,,,客胜,1x2,6.3,0,5.8359,7.95,0,2,1794823500,BB,pinnacle,,,pin_drop,,,5310007,,
 2026-11-16T09:49:11Z,football,CONCACAF Nations League B,Saint Lucia,Barbados,,,主胜,1x2,1.78,0,1.646,8.14,0,3,1794942000,ALL,pinnacle,,,ws_scan,,,5812031,,
 2026-11-16T09:49:11Z,football,CONCACAF Nations League B,Saint Lucia,Barbados,,,让球主胜,hc,1.78,0,1.6484,7.98,0,3,1794942000,ALL,pinnacle,,,ws_scan,,-0.5,5812031,,
@@ -1314,3 +1314,13 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-16T09:57:01Z,football,Cameroon Elite One,Colombe FC,Dynamo de Douala,,,让球客胜,hc,1.94,1.6849,1.8092,7.23,40,2,1794839400.0,BB,,,,push,,+0.5,,,
 2026-11-16T09:57:01Z,football,Cameroon Elite One,Colombe FC,Dynamo de Douala,,,小球,ou,1.89,1.6993,1.8263,3.49,40,2,1794839400.0,BB/FB,,,,push,,2.5,,,
 2026-11-16T09:57:05Z,football,CONCACAF Nations League B,Saint Kitts and Nevis,Bonaire,,,客胜,1x2,9.0,0,8.1145,10.91,0,3,1794942000,ALL,pinnacle,,,ws_scan,,,5915088,,
+2026-11-16T09:57:26Z,basketball,Japan B.League Premier,Yokohama B Corsairs,Kawasaki Brave Thunders,,,让分主胜,hc,1.83,0,1.7785,2.9,0,3,1794823500,BB,pinnacle,,,drop,,+1.5,5310021,1,odds_changed
+2026-11-16T09:57:36Z,tennis,ATP Challenger - Montevideo Open,Carlos Sanchez Jover (ESP),Francisco Llanes (URU),,,客胜,1x2,5.25,0,4.7837,9.75,0,3,1794850800,BB,pinnacle,,,ws_scan,,,5922673,,
+2026-11-16T10:05:07Z,ice_hockey,NHL,New York Rangers,Montreal Canadiens,,,大分,ou,2.02,0,1.9627,2.92,0,1,1794875400,BB,pinnacle,,,ws_scan,,6.0,5791922,,
+2026-11-16T10:25:43Z,football,SAFF Championship (In Bangladesh),India,Pakistan,,,小球,ou,1.96,0,1.9169,2.25,0,3,1794924000,ALL,pinnacle,,,ws_scan,,2.5,6016694,,
+2026-11-16T10:26:08Z,football,Africa Cup of Nations 2027 Qualification,Kenya,South Africa,,,客胜,1x2,1.81,0,1.7687,2.34,0,3,1794931200,ALL,pinnacle,,,ws_scan,,,5959666,,
+2026-11-16T10:26:08Z,football,Africa Cup of Nations 2027 Qualification,Kenya,South Africa,,,让球客胜,hc,1.81,0,1.7662,2.48,0,3,1794931200,ALL,pinnacle,,,ws_scan,,-0.5,5959666,,
+2026-11-16T11:27:08Z,football,UEFA Nations League C,Iceland,Luxembourg,,,客胜,1x2,21.0,0,19.9532,5.25,0,3,1794848400,ALL,pinnacle,,,ws_scan,,,5916700,,
+2026-11-16T11:27:08Z,football,UEFA Nations League A,Wales,Portugal,,,主胜,1x2,7.45,0,7.2558,2.68,0,3,1794944700,ALL,pinnacle,,,ws_scan,,,5808829,,
+2026-11-16T12:38:52Z,basketball,Mexico LNBP Basketball League,Astros de Jalisco,Soles de Mexicali,,,客胜,1x2,1.52,1.361,1.4416,5.44,50,3,1794881700.0,BB,,,,push,,,,,
+2026-11-16T12:38:52Z,basketball,Mexico LNBP Basketball League,Astros de Jalisco,Soles de Mexicali,,,让分客胜,hc,1.83,1.625,1.7554,4.25,40,3,1794881700.0,BB/FB,,,,push,,-3.5,,,
