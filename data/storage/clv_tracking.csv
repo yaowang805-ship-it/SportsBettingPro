@@ -1265,3 +1265,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-16T00:43:54Z,basketball,Israel Basketball National League,Elitzur Yavne,AS Ramat Hasharon,,,客胜,1x2,1.2,0,1.1758,2.06,0,3,1794934800,ALL,pinnacle,,,ws_scan,,,5977137,,
 2026-11-16T02:16:59Z,basketball,Japan B.League Premier,Gunma Crane Thunders,Shiga Lake Stars,,,主胜,1x2,1.2,0,1.1749,2.14,0,2,1794823500,BB,pinnacle,,,ws_scan,,,5310008,,
 2026-11-16T02:39:10Z,basketball,NBA,New Orleans Pelicans,Golden State Warriors,,,大分,ou,1.9,1.7752,1.8369,3.44,50,1,1794877200.0,BB/FB,,,,push,,225.5,,,
+2026-11-16T03:43:11Z,basketball,Mexico LNBP Basketball League,Astros de Jalisco,Soles de Mexicali,,,客胜,1x2,1.77,1.5747,1.6874,4.9,50,3,1794881700.0,FB,,,,push,,,,,
+2026-11-16T03:43:11Z,basketball,Mexico LNBP Basketball League,Astros de Jalisco,Soles de Mexicali,,,让分客胜,hc,1.87,1.6329,1.7606,6.21,40,3,1794881700.0,BB/FB,,,,push,,-1.5,,,

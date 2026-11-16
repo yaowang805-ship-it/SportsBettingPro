@@ -1,12 +1,12 @@
 {
-  "football|UEFA Nations League C|Finland|San Marino|让球客胜(+3.5)|hc|+3.5|2026-11-16": {
-    "ev": 3.55,
-    "bb": 1.93,
-    "ts": 1794699887.730714
-  },
   "basketball|NBA|New Orleans Pelicans|Golden State Warriors|大分(225.5)|ou|225.5|2026-11-17": {
     "ev": 3.44,
     "bb": 1.9,
     "ts": 1794796750.716639
+  },
+  "football|UEFA Nations League C|Finland|San Marino|让球客胜(+3.5)|hc|+3.5|2026-11-16": {
+    "ev": 3.55,
+    "bb": 1.93,
+    "ts": 1794699887.730714
   }
 }
