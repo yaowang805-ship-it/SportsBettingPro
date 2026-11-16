@@ -16,8 +16,8 @@
   "football|ou|小|60-70%|live": {
     "first_released_at": "2026-11-07T08:35:23.084426",
     "cap": 150,
-    "daily_stake": 60,
-    "daily_stake_date": "2026-11-15",
+    "daily_stake": 70,
+    "daily_stake_date": "2026-11-17",
     "limit_removed": true
   },
   "football|hc|主|60-70%|live": {
@@ -114,8 +114,8 @@
   "football|ou|大|*|live": {
     "first_released_at": "2026-11-07T08:35:23.084446",
     "cap": 150,
-    "daily_stake": 230,
-    "daily_stake_date": "2026-11-16",
+    "daily_stake": 100,
+    "daily_stake_date": "2026-11-17",
     "limit_removed": true
   },
   "basketball|hc|客|55-65%|early": {

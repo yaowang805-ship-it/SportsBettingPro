@@ -1,5 +1,5 @@
 {
-  "balance": 13732.53,
+  "balance": 13682.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -851,6 +851,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794918600.0,
       "created_at": "2026-11-16T12:59:37.347695+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_夸恩_伯利_小球(35)",
+      "sport": "football",
+      "league": "英格兰北部超级联赛",
+      "home_team": "夸恩",
+      "away_team": "伯利",
+      "home_cn": "夸恩",
+      "away_cn": "伯利",
+      "market": "over_under",
+      "market_type": "小球(3.5)",
+      "sub_market": "ou",
+      "line": "3.5",
+      "odds": 1.91,
+      "stake": 50,
+      "model_prob": 0.6183,
+      "ev_pct": 18.1,
+      "pin_odds": 1.6173,
+      "fair_price": 1.6173,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794944700.0,
+      "created_at": "2026-11-16T22:41:56.416050+00:00",
       "track_only": false
     }
   ],
@@ -14061,9 +14084,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-11-16",
-    "used": 660.0,
-    "bets": 16
+    "date": "2026-11-17",
+    "used": 50.0,
+    "bets": 1
   },
   "updated": null
 }

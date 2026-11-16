@@ -1,1 +1,27 @@
-{"basketball|Mexico LNBP Basketball League|Astros de Jalisco|Soles de Mexicali|客胜|1x2|2026-11-17": {"ev": 5.44, "bb": 1.52, "ts": 1794832732.408073}, "basketball|NBA|New Orleans Pelicans|Golden State Warriors|大分(225.5)|ou|225.5|2026-11-17": {"ev": 3.44, "bb": 1.9, "ts": 1794796750.716639}, "football|Cameroon Elite One|Colombe FC|Dynamo de Douala|让球客胜(+0.5)|hc|+0.5|2026-11-16": {"ev": 7.23, "bb": 1.94, "ts": 1794823021.881254}, "football|UEFA Nations League C|Finland|San Marino|让球客胜(+3.5)|hc|+3.5|2026-11-16": {"ev": 3.55, "bb": 1.93, "ts": 1794699887.730714}, "football|King's Cup (In Thailand)|Thailand|Tajikistan|客胜|1x2|2026-11-17": {"bb": 4.72, "ev": 10.94, "fair": 4.2544, "pin": 3.86, "ts": 1794834010.9590662, "kickoff": 1794918600.0, "repush_count": 0}}
+{
+  "basketball|Mexico LNBP Basketball League|Astros de Jalisco|Soles de Mexicali|客胜|1x2|2026-11-17": {
+    "ev": 5.44,
+    "bb": 1.52,
+    "ts": 1794832732.408073
+  },
+  "basketball|NBA|New Orleans Pelicans|Golden State Warriors|大分(225.5)|ou|225.5|2026-11-17": {
+    "ev": 3.44,
+    "bb": 1.9,
+    "ts": 1794796750.716639
+  },
+  "football|Cameroon Elite One|Colombe FC|Dynamo de Douala|让球客胜(+0.5)|hc|+0.5|2026-11-16": {
+    "ev": 7.23,
+    "bb": 1.94,
+    "ts": 1794823021.881254
+  },
+  "football|King's Cup (In Thailand)|Thailand|Tajikistan|客胜|1x2|2026-11-17": {
+    "ev": 10.94,
+    "bb": 4.72,
+    "ts": 1794833981.328962
+  },
+  "football|UEFA Nations League C|Finland|San Marino|让球客胜(+3.5)|hc|+3.5|2026-11-16": {
+    "ev": 3.55,
+    "bb": 1.93,
+    "ts": 1794699887.730714
+  }
+}
