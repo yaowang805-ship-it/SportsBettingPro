@@ -22,12 +22,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent.parent
 
 # 总开关(分市场, 可回退): 关掉则该端校准不生效, 回到 ev=(bb-fair)/fair 原始口径。
-# 2026-11-02 改: 早盘校准从 isotonic(逐段拟合=过拟合根因)换成 platt(2参数平滑单调), 不再过拟合,
-# 早盘重新打开。配合 Power 去水(修 Shin favorite-longshot bias 的源头)双保险。
-# 2026-11-10 关早盘+滚球校准: 校准表(platt 概率收缩)抬冷门压中间段/热门, 制造冷门假溢价。
-# 早盘=脏数据拟合+双校准错位; 滚球=n=101样本少深冷门抬升2.5倍过度。都关掉回纯 Power 去水口径,
-# 等干净数据(11-08后)每盘口 n≥50 再重拟合。
-CALIBRATE_FAIR = {"prematch": False, "live": False}
+# 2026-11-16 重开早盘 1x2 校准: refit 分桶经验校准(方向天然对=全段压低), 只 1x2(表只含1x2,
+# hc/ou 无表 → calibrate_fair no-op)。hc/ou 中间段抬升是样本噪声(每桶<20), 等每桶 n≥50 再拟合。
+# 滚球样本不够(结算bug刚修), 仍关。
+CALIBRATE_FAIR = {"prematch": True, "live": False}
 
 _TABLE_FILES = {
     "live": "fair_calibration.json",

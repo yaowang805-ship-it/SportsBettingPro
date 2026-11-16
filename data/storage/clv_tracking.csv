@@ -1326,3 +1326,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-16T12:38:52Z,basketball,Mexico LNBP Basketball League,Astros de Jalisco,Soles de Mexicali,,,让分客胜,hc,1.83,1.625,1.7554,4.25,40,3,1794881700.0,BB/FB,,,,push,,-3.5,,,
 2026-11-16T12:44:04Z,tennis,ATP Challenger - Champaign Open,Filip Jeff Planinsek (SLO),Andres Martin (USA),,,大分,ou,1.82,0,1.769,2.88,0,2,1794867000,BB,pinnacle,,,ws_scan,,21.5,5919890,,
 2026-11-16T12:59:41Z,football,King's Cup (In Thailand),Thailand,Tajikistan,,,客胜,1x2,4.72,3.86,4.2544,10.94,30,3,1794918600.0,BB,,,,push,,,,,
+2026-11-16T13:24:27Z,tennis,ATP Challenger - Kobe Open,Niels McDonald (GER),Keegan Smith (USA),,,大分,ou,1.81,0,1.7182,5.34,0,3,1794885000,BB,pinnacle,,,ws_scan,,21.5,5914989,,
+2026-11-16T13:26:22Z,ice_hockey,NHL,Utah Mammoth,Vancouver Canucks,,,大分,ou,1.78,0,1.745,2.01,0,1,1794882600,BB,pinnacle,,,ws_scan,,6.0,5791942,,
+2026-11-16T13:34:27Z,tennis,ATP Challenger - Kobe Open,Mili Poljicak (CRO),Jay Dylan Hara Friend (JPN),,,主胜,1x2,3.98,0,3.7069,7.37,0,3,1794889200,BB,pinnacle,,,ws_scan,,,5914978,,
+2026-11-16T13:34:27Z,tennis,ATP Challenger - Kobe Open,Mili Poljicak (CRO),Jay Dylan Hara Friend (JPN),,,让盘主胜,hc,2.05,0,1.9546,4.88,0,3,1794889200,BB,pinnacle,,,ws_scan,,+1.5,5914978,,
+2026-11-16T13:52:44Z,basketball,Uruguay Basketball League,Club Malvin,CS Larranaga,,,主胜,1x2,1.37,0,1.3423,2.06,0,3,1795048200,ALL,pinnacle,,,ws_scan,,,5907882,,

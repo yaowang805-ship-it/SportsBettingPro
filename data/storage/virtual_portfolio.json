@@ -1,30 +1,7 @@
 {
-  "balance": 13702.53,
+  "balance": 13732.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
-    {
-      "id": "bb_vs_pin_handicap_哈尔库尼加SC_阿兹特克_让球客胜(-3)",
-      "sport": "football",
-      "league": "墨西哥TDP联赛",
-      "home_team": "哈尔库尼加SC",
-      "away_team": "阿兹特克",
-      "home_cn": "哈尔库尼加SC",
-      "away_cn": "阿兹特克",
-      "market": "handicap",
-      "market_type": "让球客胜(-3)",
-      "sub_market": "hc",
-      "line": "-3",
-      "odds": 1.89,
-      "stake": 30,
-      "model_prob": 0.55,
-      "ev_pct": 3.95,
-      "pin_odds": 1.6803,
-      "fair_price": 1.8182,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1794585600.0,
-      "created_at": "2026-11-13T12:50:42.132308+00:00",
-      "track_only": false
-    },
     {
       "id": "bb_vs_pin_1x2_安特卫普巨人_布鲁塞尔_客胜",
       "sport": "basketball",
@@ -14066,6 +14043,21 @@
       "home_cn": "富里亚阿祖尔",
       "away_cn": "萨莫拉FC",
       "market_type": "让球客胜(-2)"
+    },
+    {
+      "id": "bb_vs_pin_handicap_哈尔库尼加SC_阿兹特克_让球客胜(-3)",
+      "match": "30¥ @ 1.89 (超时作废)",
+      "date": "2026-11-16T13:17:26.892093+00:00",
+      "stake": 30,
+      "odds": 1.89,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "墨西哥TDP联赛",
+      "sport": "football",
+      "home_cn": "哈尔库尼加SC",
+      "away_cn": "阿兹特克",
+      "market_type": "让球客胜(-3)"
     }
   ],
   "daily_budget": {

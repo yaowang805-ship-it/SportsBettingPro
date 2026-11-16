@@ -60,10 +60,13 @@ def load_clean(market="prematch"):
     rows = []  # (p_imp, won, fair, raw, sub)
     rb = _aslist(_load(STORAGE / "real_bets.json"))
     if market == "prematch":
+        # 2026-11-16 清洗: real_bets 早盘 hc/ou 的 line 缺失85%+结算误判(独赢+走水), 只保留 1x2(独赢不需要line)。
+        # hc/ou 只用 paper_bets(line 有值, 结算正确)。
         real = [b for b in rb if isinstance(b, dict)
                 and b.get("trigger_source") in ("pin_drop", "ws_scan")
                 and (b.get("ts") or 0) >= CLEAN_CUTOFF
-                and b.get("result") in ("won", "lost")]
+                and b.get("result") in ("won", "lost")
+                and b.get("sub") in ("1x2", "ml")]
         # 观察库 paper_bets 同逻辑(更全, 选择偏差小)
         paper = _aslist(_load(STORAGE / "paper_bets.json"))
         paper = [b for b in paper if isinstance(b, dict)
@@ -183,11 +186,14 @@ def main():
         tables[sm] = table
 
     if save and tables:
+        # 2026-11-16 只保存 1x2(方向已收敛); hc/ou 中间段抬升是样本噪声, 等每桶 n>=50 再拟合
+        # 结构对齐 fair_calibration._load_table: tables[sm] = {"table": [...]}
+        tables_1x2 = {sm: {"table": t} for sm, t in tables.items() if sm == "1x2"}
         dest = STORAGE / ({"prematch": "fair_calibration_prematch.json",
                            "live": "fair_calibration.json"}[market])
-        out = {"model": "empirical_bucket", "tables": tables}
+        out = {"model": "empirical_bucket", "tables": tables_1x2}
         json.dump(out, open(dest, "w"), ensure_ascii=False, indent=1)
-        print(f"\n已保存 {market} 校准表(分桶经验, {len(tables)} 盘口) -> {dest}")
+        print(f"\n已保存 {market} 校准表(只 1x2, 分桶经验) -> {dest}")
     elif not tables:
         print("\n无盘口样本足够, 不产出表(保持 CALIBRATE_FAIR=False 现状)")
 
