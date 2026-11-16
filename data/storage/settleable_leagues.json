@@ -796,7 +796,7 @@
       "success_rate": 0.0
     },
     "埃及乙级A组联赛": {
-      "attempts": 8,
+      "attempts": 9,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1086,7 +1086,7 @@
       "success_rate": 0.0
     },
     "乌克兰甲级联赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1799,9 +1799,14 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "欧洲国家联赛 D组": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-11-16T01:45:13.940661+00:00",
+  "updated": "2026-11-16T06:00:23.339412+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
