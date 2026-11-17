@@ -145,6 +145,43 @@ def devig_mult(odds: list) -> list:
     return result
 
 
+def devig_additive(odds: list) -> list:
+    """加法法(additive)去抽水, 返回公平概率列表(和≈1)。
+
+    p_i = q_i - m/n, 其中 m = Σq_i - 1(总抽水), n = 结果数。假设抽水均匀减去(每结果
+    减相同的概率量)。与比例法(按占比缩放)、Power 法(幂)、Shin 法(知情资金)并列,
+    作为去水方法交叉验证的第四个基准——不同方法对 margin 的分配假设不同, 会改变
+    校准 tilt 的大小和方向(见 2026-11 「Well Calibrated, Unevenly Priced」)。
+    """
+    clean = [float(o) for o in odds if o and float(o) > 1.0]
+    n = len(clean)
+    if n < 2:
+        return [1.0 / float(o) if o and float(o) > 1.0 else 0.0 for o in odds]
+    q = [1.0 / o for o in clean]
+    s = sum(q)
+    if s <= 1.0 + 1e-9:  # 无抽水/underbroke, 返回原始隐含
+        return [1.0 / float(o) if o and float(o) > 1.0 else 0.0 for o in odds]
+    m = (s - 1.0) / n
+    probs = [max(qi - m, 1e-9) for qi in q]
+    total = sum(probs)
+    if total > 0:
+        probs = [p / total for p in probs]
+    result, idx = [], 0
+    for o in odds:
+        if o and float(o) > 1.0:
+            result.append(probs[idx])
+            idx += 1
+        else:
+            result.append(0.0)
+    return result
+
+
+def additive_fair_odds(odds: list) -> list:
+    """加法法去抽水, 返回公平十进制赔率列表(1/prob)。"""
+    probs = devig_additive(odds)
+    return [round(1.0 / p, 4) if p and p > 0 else 0.0 for p in probs]
+
+
 def devig_favorite_divergence(odds: list) -> float:
     """热门端 Shin vs 比例法 的公平赔率分歧(%)。
 
