@@ -1410,3 +1410,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-17T22:50:20Z,ice_hockey,NHL,St. Louis Blues,Anaheim Ducks,,,大分,ou,1.78,1.6623,1.7124,3.95,50,1,1794963600.0,BB/FB,,,,push,,6.0,,,
 2026-11-17T22:51:18Z,basketball,VTB United League,MBA Moscow,BC Samara,,,让分客胜,hc,1.85,1.6494,1.7861,3.58,50,3,1795019400.0,BB/FB,,,,push,,+21.5,,,
 2026-11-17T22:53:22Z,ice_hockey,NHL,St. Louis Blues,Anaheim Ducks,,,大分,ou,1.85,1.6623,1.7124,8.04,50,1,1794963600.0,BB/FB,,,,push,,6.0,,,
+2026-11-17T22:54:20Z,tennis,World Tennis - M15 Kuala Lumpur Men Singles,Haqim Kamal (GBR),Darrshan Suresh (MAS),,,让盘客胜,hc,1.32,0,1.268,4.1,0,3,1794965400,BB,pinnacle,,,ws_scan,,-1.5,5931460,,
+2026-11-17T22:54:22Z,football,CONCACAF Nations League A,USA,Haiti,,,客胜,1x2,37.0,0,23.82,55.33,0,3,1794960000,BB,pinnacle,,,pin_drop,,,5910189,,
+2026-11-17T22:57:54Z,basketball,Australia NBL,New Zealand Breakers,SE Melbourne Phoenix,,,让分客胜,hc,1.99,1.8197,1.9169,3.81,50,3,1794983400.0,FB,,,,push,,-1.5,,,
+2026-11-17T22:57:54Z,basketball,VTB United League,MBA Moscow,BC Samara,,,让分客胜,hc,1.85,1.6494,1.7861,3.58,50,3,1795019400.0,BB/FB,,,,push,,+21.5,,,

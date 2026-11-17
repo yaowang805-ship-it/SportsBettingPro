@@ -1,5 +1,5 @@
 {
-  "balance": 13442.53,
+  "balance": 13392.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -989,6 +989,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795019400.0,
       "created_at": "2026-11-17T22:44:43.146742+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_新西兰破坏者_墨尔本凤凰_让分客胜(-15)",
+      "sport": "basketball",
+      "league": "澳大利亚国家篮球联赛",
+      "home_team": "新西兰破坏者",
+      "away_team": "墨尔本凤凰",
+      "home_cn": "新西兰破坏者",
+      "away_cn": "墨尔本凤凰",
+      "market": "handicap",
+      "market_type": "让分客胜(-1.5)",
+      "sub_market": "hc",
+      "line": "-1.5",
+      "odds": 1.99,
+      "stake": 50,
+      "model_prob": 0.5217,
+      "ev_pct": 3.81,
+      "pin_odds": 1.8197,
+      "fair_price": 1.9169,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794983400.0,
+      "created_at": "2026-11-17T22:57:53.371337+00:00",
       "track_only": false
     }
   ],
@@ -14380,8 +14403,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-18",
-    "used": 240.0,
-    "bets": 5
+    "used": 290.0,
+    "bets": 6
   },
   "updated": null
 }
