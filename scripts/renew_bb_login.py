@@ -44,11 +44,17 @@ def _test_token(tok, dom):
     import requests
     urllib3.disable_warnings()
     try:
-        r = requests.post(f"{dom}/v1/order/new/bet/list",
-                          json={"languageType": "CMN", "isSettled": False, "current": 1, "size": 1},
-                          headers={"Content-Type": "application/json", "Authorization": tok,
-                                   "User-Agent": _UA},
-                          timeout=15, verify=False)
+        # 2026-11-17 修: 对齐主代码 _session() 的 no-proxy 语义(trust_env=False + 空 proxies)。
+        # 之前 requests.post 走系统代理 127.0.0.1:8081, 代理挂了就把所有域误判成「网络异常」,
+        # 掩盖真 14010(token 失效), 导致失效也不续期。
+        s = requests.Session()
+        s.trust_env = False
+        s.proxies = {"http": "", "https": ""}
+        r = s.post(f"{dom}/v1/order/new/bet/list",
+                   json={"languageType": "CMN", "isSettled": False, "current": 1, "size": 1},
+                   headers={"Content-Type": "application/json", "Authorization": tok,
+                            "User-Agent": _UA},
+                   timeout=15, verify=False)
         return r.json().get("code") == 0
     except Exception as e:
         _log(f"测试 token 网络异常: {e}")
