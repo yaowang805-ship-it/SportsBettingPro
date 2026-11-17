@@ -1371,3 +1371,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-17T13:47:15Z,football,England Isthmian League Cup,Dulwich Hamlet,Stanway Rovers,,,小球,ou,1.96,0,1.8954,3.41,0,3,1794944700,BB,pinnacle,,,ws_scan,,3.0,5925760,,
 2026-11-17T14:04:00Z,ice_hockey,NHL,Minnesota Wild,Nashville Predators,,,大分,ou,2.01,0,1.9625,2.42,0,1,1794963600,BB,pinnacle,,,ws_scan,,6.0,5791940,,
 2026-11-17T14:09:25Z,football,England National League North,South Shields,Harborough Town FC,,,大球,ou,1.79,1.6329,1.7109,4.62,50,3,1794944700.0,BB/FB,,,,push,,3.0,,,
+2026-11-17T14:13:40Z,football,Turkey 2nd Lig,Sanliurfaspor,Erbaaspor,,,让球主胜,hc,1.92,0,1.8381,4.46,0,3,1795005000,ALL,pinnacle,,,ws_scan,,-1,5982548,,
+2026-11-17T14:13:40Z,football,Algeria Ligue 1,CR Temouchent,JS El Biar,,,小球,ou,1.97,0,1.8832,4.61,0,2,1795020300,ALL,pinnacle,,,ws_scan,,2.0,5817485,,
+2026-11-17T14:40:56Z,tennis,ATP Challenger - Kobe Open,Benjamin Hassan (LBN),Keegan Smith (USA),,,大分,ou,1.84,0,1.7001,8.23,0,3,1795053600,BB,pinnacle,,,ws_scan,,22.0,5930125,,
+2026-11-17T14:58:35Z,tennis,ATP Challenger - Drummondville Open,Patrick Zahraj (GER),Alvin Nicholas Tudorica (CAN),,,小分,ou,1.86,0,1.817,2.37,0,3,1794949200,BB,pinnacle,,,ws_scan,,20.0,5919521,,
+2026-11-17T15:34:16Z,football,Africa Cup of Nations 2027 Qualification,Gambia,Ivory Coast,,,让球主胜,hc,1.9,0,1.8625,2.01,0,3,1794931200,ALL,pinnacle,,,ws_scan,,+1,5884305,,
