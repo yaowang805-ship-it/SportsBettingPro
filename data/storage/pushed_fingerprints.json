@@ -1,1 +1,32 @@
-{"basketball|Mexico LNBP Basketball League|Astros de Jalisco|Soles de Mexicali|客胜|1x2|2026-11-17": {"ev": 5.44, "bb": 1.52, "ts": 1794832732.408073}, "basketball|NBA|New Orleans Pelicans|Golden State Warriors|大分(225.5)|ou|225.5|2026-11-17": {"ev": 3.44, "bb": 1.9, "ts": 1794796750.716639}, "football|England Isthmian League Premier Division|Dartford FC|Three Bridges|小球(3.5)|ou|3.5|2026-11-18": {"ev": 9.54, "bb": 1.89, "ts": 1794869254.7275252}, "football|King's Cup (In Thailand)|Thailand|Tajikistan|客胜|1x2|2026-11-17": {"ev": 10.94, "bb": 4.72, "ts": 1794833981.328962}, "ice_hockey|NHL|Tampa Bay Lightning|Washington Capitals|大分(6.0)|ou|6.0|2026-11-18": {"bb": 1.85, "ev": 3.95, "fair": 1.7798, "pin": 1.7299, "ts": 1794896813.560716, "kickoff": 1794961800.0, "repush_count": 0}, "basketball|Paraguay Liga Nacional de Basquetbol|Deportivo San Jose|Olimpia Kings|大分(153.5)|ou|153.5|2026-11-18": {"bb": 1.84, "ev": 14.83, "fair": 1.6024, "pin": 1.6024, "ts": 1794898129.700217, "kickoff": 1794956400.0, "repush_count": 0}, "basketball|Slovenia Basketball Cup|Rogaska|Nova Gorica Mladi|大分(152.5)|ou|152.5|2026-11-18": {"bb": 1.84, "ev": 13.5, "fair": 1.6211, "pin": 1.6211, "ts": 1794916348.126956, "kickoff": 1794934800.0, "repush_count": 0}}
+{
+  "basketball|Mexico LNBP Basketball League|Astros de Jalisco|Soles de Mexicali|客胜|1x2|2026-11-17": {
+    "ev": 5.44,
+    "bb": 1.52,
+    "ts": 1794832732.408073
+  },
+  "basketball|NBA|New Orleans Pelicans|Golden State Warriors|大分(225.5)|ou|225.5|2026-11-17": {
+    "ev": 3.44,
+    "bb": 1.9,
+    "ts": 1794796750.716639
+  },
+  "football|England Isthmian League Premier Division|Dartford FC|Three Bridges|小球(3.5)|ou|3.5|2026-11-18": {
+    "ev": 9.54,
+    "bb": 1.89,
+    "ts": 1794869254.7275252
+  },
+  "football|King's Cup (In Thailand)|Thailand|Tajikistan|客胜|1x2|2026-11-17": {
+    "ev": 10.94,
+    "bb": 4.72,
+    "ts": 1794833981.328962
+  },
+  "ice_hockey|NHL|Tampa Bay Lightning|Washington Capitals|大分(6.0)|ou|6.0|2026-11-18": {
+    "ev": 3.95,
+    "bb": 1.85,
+    "ts": 1794875435.6034849
+  },
+  "football|England Isthmian League Cup|Dulwich Hamlet|Stanway Rovers|小球(3.0)|ou|3.0|2026-11-18": {
+    "ev": 3.41,
+    "bb": 1.96,
+    "ts": 1794920762.4343219
+  }
+}
