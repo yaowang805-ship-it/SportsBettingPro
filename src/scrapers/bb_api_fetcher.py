@@ -542,9 +542,13 @@ def fetch_bb_match_result(match_id, language_type="EN", platform="BB"):
     # 完赛判定(2026-08-26 收严后改): 完赛码 0/3/6/7 各不相同, 枚举总漏 —— ms=0 曾死4天
     # (8/15→8/19 链路全失效), 现在 ms=7 又被漏(Scotland Challenge Cup 5390765 比分1:0、
     # ms=7 却结算不了, 触发静默失效告警)。改为以"有最终比分"为准:
-    #   home+away 都非 None 且 不是未开赛(4)/进行中(5) = 完赛。
-    # 这样 0/3/6/7 全都能结算, 且仍保守(无比分 或 live/未开赛 不会误判)。
-    if home_score is not None and away_score is not None and ms not in (4, 5):
+    #   home+away 都非 None 且 不是未开赛(4) = 完赛。
+    # 这样 0/3/5/6/7 全都能结算。
+    # 2026-11-17 BB 状态码漂移: ms=5 现在同时是「进行中」和「已结束」(getList type=1 live 与
+    # type=6 完赛都返回 ms=5), 无法靠 ms 区分。完赛判定只排 ms=4(未开赛, 无比分), ms=5 有比分
+    # 也算 finished —— 由调用方(paper_settle/second_level_monitor)用开赛/捕捉时间窗口(≥2h)
+    # 保证「该结算了」, 这里不再用 ms=5 挡结算(否则 ms=5 的已结束比赛永远漏)。
+    if home_score is not None and away_score is not None and ms != 4:
         status = "finished"
     return {
         "id": match_id,
