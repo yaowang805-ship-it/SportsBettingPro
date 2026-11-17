@@ -1,5 +1,5 @@
 {
-  "balance": 13182.53,
+  "balance": 13092.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1127,6 +1127,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795024800.0,
       "created_at": "2026-11-17T23:35:54.618463+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_中央德国_利耶帕亚_小分(1735)",
+      "sport": "basketball",
+      "league": "欧洲北部篮球联赛",
+      "home_team": "中央德国",
+      "away_team": "利耶帕亚",
+      "home_cn": "中央德国",
+      "away_cn": "利耶帕亚",
+      "market": "over_under",
+      "market_type": "小分(173.5)",
+      "sub_market": "ou",
+      "line": "173.5",
+      "odds": 1.84,
+      "stake": 50,
+      "model_prob": 0.573,
+      "ev_pct": 5.43,
+      "pin_odds": 1.625,
+      "fair_price": 1.7452,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795024800.0,
+      "created_at": "2026-11-17T23:46:33.113864+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_卡芬堡公牛_科卡斯亚BC_让分主胜(-115)",
+      "sport": "basketball",
+      "league": "欧洲北部篮球联赛",
+      "home_team": "卡芬堡公牛",
+      "away_team": "科卡斯亚BC",
+      "home_cn": "卡芬堡公牛",
+      "away_cn": "科卡斯亚BC",
+      "market": "handicap",
+      "market_type": "让分主胜(-11.5)",
+      "sub_market": "hc",
+      "line": "-11.5",
+      "odds": 1.81,
+      "stake": 40,
+      "model_prob": 0.5844,
+      "ev_pct": 5.77,
+      "pin_odds": 1.5882,
+      "fair_price": 1.7112,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795024800.0,
+      "created_at": "2026-11-17T23:46:33.113926+00:00",
       "track_only": false
     }
   ],
@@ -14518,8 +14564,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-18",
-    "used": 500.0,
-    "bets": 11
+    "used": 590.0,
+    "bets": 13
   },
   "updated": null
 }
