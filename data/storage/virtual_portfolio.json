@@ -1,5 +1,5 @@
 {
-  "balance": 13732.53,
+  "balance": 13682.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -851,6 +851,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794944700.0,
       "created_at": "2026-11-17T13:32:48.875616+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_南希尔兹_哈伯勒镇_大球(30)",
+      "sport": "football",
+      "league": "英格兰足球全国联赛北区",
+      "home_team": "南希尔兹",
+      "away_team": "哈伯勒镇",
+      "home_cn": "南希尔兹",
+      "away_cn": "哈伯勒镇",
+      "market": "over_under",
+      "market_type": "大球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 1.79,
+      "stake": 50,
+      "model_prob": 0.5845,
+      "ev_pct": 4.62,
+      "pin_odds": 1.6329,
+      "fair_price": 1.7109,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1794944700.0,
+      "created_at": "2026-11-17T14:09:22.512201+00:00",
       "track_only": false
     }
   ],
@@ -14242,8 +14265,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-17",
-    "used": 570.0,
-    "bets": 12
+    "used": 620.0,
+    "bets": 13
   },
   "updated": null
 }

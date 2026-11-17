@@ -1,1 +1,42 @@
-{"basketball|Mexico LNBP Basketball League|Astros de Jalisco|Soles de Mexicali|客胜|1x2|2026-11-17": {"ev": 5.44, "bb": 1.52, "ts": 1794832732.408073}, "basketball|NBA|New Orleans Pelicans|Golden State Warriors|大分(225.5)|ou|225.5|2026-11-17": {"ev": 3.44, "bb": 1.9, "ts": 1794796750.716639}, "football|England Isthmian League Cup|Dulwich Hamlet|Stanway Rovers|小球(3.0)|ou|3.0|2026-11-18": {"bb": 1.96, "ev": 3.41, "fair": 1.8954, "pin": 1.7692, "ts": 1794922913.0330591, "kickoff": 1794944700.0, "repush_count": 0}, "football|England Isthmian League Premier Division|Dartford FC|Three Bridges|小球(3.5)|ou|3.5|2026-11-18": {"ev": 9.54, "bb": 1.89, "ts": 1794869254.7275252}, "football|King's Cup (In Thailand)|Thailand|Tajikistan|客胜|1x2|2026-11-17": {"ev": 10.94, "bb": 4.72, "ts": 1794833981.328962}, "ice_hockey|NHL|Chicago Blackhawks|Toronto Maple Leafs|大分(6.0)|ou|6.0|2026-11-18": {"bb": 1.87, "ev": 3.73, "fair": 1.8027, "pin": 1.7463, "ts": 1794922793.258153, "kickoff": 1794961800.0, "repush_count": 0}, "ice_hockey|NHL|Tampa Bay Lightning|Washington Capitals|大分(6.0)|ou|6.0|2026-11-18": {"bb": 1.88, "ev": 3.52, "fair": 1.816, "pin": 1.7576, "ts": 1794922456.378779, "kickoff": 1794961800.0, "repush_count": 0}, "football|England Northern Premier League Division One|Boldmere St Michaels FC|Loughborough University|大球(3.0)|ou|3.0|2026-11-18": {"bb": 1.97, "ev": 5.44, "fair": 1.8684, "pin": 1.7463, "ts": 1794922793.2558699, "kickoff": 1794944700.0, "repush_count": 0}, "basketball|Sweden Basketball League|Norrkoping Dolphins|Sloga Uppsala|让分主胜(-23.5)|hc|-23.5|2026-11-18": {"bb": 1.85, "ev": 10.41, "fair": 1.6756, "pin": 1.5814, "ts": 1794922952.742784, "kickoff": 1794938640.0, "repush_count": 0}}
+{
+  "basketball|Mexico LNBP Basketball League|Astros de Jalisco|Soles de Mexicali|客胜|1x2|2026-11-17": {
+    "ev": 5.44,
+    "bb": 1.52,
+    "ts": 1794832732.408073
+  },
+  "basketball|NBA|New Orleans Pelicans|Golden State Warriors|大分(225.5)|ou|225.5|2026-11-17": {
+    "ev": 3.44,
+    "bb": 1.9,
+    "ts": 1794796750.716639
+  },
+  "football|England Isthmian League Cup|Dulwich Hamlet|Stanway Rovers|小球(3.0)|ou|3.0|2026-11-18": {
+    "ev": 3.41,
+    "bb": 1.96,
+    "ts": 1794920762.4343219
+  },
+  "football|England Isthmian League Premier Division|Dartford FC|Three Bridges|小球(3.5)|ou|3.5|2026-11-18": {
+    "ev": 9.54,
+    "bb": 1.89,
+    "ts": 1794869254.7275252
+  },
+  "football|England Northern Premier League Division One|Boldmere St Michaels FC|Loughborough University|大球(3.0)|ou|3.0|2026-11-18": {
+    "ev": 5.44,
+    "bb": 1.97,
+    "ts": 1794922373.108087
+  },
+  "football|King's Cup (In Thailand)|Thailand|Tajikistan|客胜|1x2|2026-11-17": {
+    "ev": 10.94,
+    "bb": 4.72,
+    "ts": 1794833981.328962
+  },
+  "ice_hockey|NHL|Chicago Blackhawks|Toronto Maple Leafs|大分(6.0)|ou|6.0|2026-11-18": {
+    "ev": 4.84,
+    "bb": 1.89,
+    "ts": 1794921006.771582
+  },
+  "ice_hockey|NHL|Tampa Bay Lightning|Washington Capitals|大分(6.0)|ou|6.0|2026-11-18": {
+    "ev": 3.95,
+    "bb": 1.85,
+    "ts": 1794875435.6034849
+  }
+}

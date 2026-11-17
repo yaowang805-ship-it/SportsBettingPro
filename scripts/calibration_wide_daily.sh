@@ -8,4 +8,6 @@ LOG=data/logs/calibration_wide.log
   .venv312/bin/python scripts/build_calibration_wide.py
   echo "===== $(date '+%Y-%m-%d %H:%M:%S') settle ====="
   .venv312/bin/python scripts/build_calibration_wide.py --settle
+  echo "===== $(date '+%Y-%m-%d %H:%M:%S') orchestrate ====="
+  .venv312/bin/python scripts/calibration_orchestrate.py
 } >> "$LOG" 2>&1
