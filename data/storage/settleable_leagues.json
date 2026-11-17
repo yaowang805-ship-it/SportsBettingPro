@@ -461,7 +461,7 @@
       "success_rate": 0.0
     },
     "波兰丙级联赛": {
-      "attempts": 8,
+      "attempts": 9,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -571,7 +571,7 @@
       "success_rate": 0.0
     },
     "英格兰北部超级联赛": {
-      "attempts": 9,
+      "attempts": 10,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1141,7 +1141,7 @@
       "success_rate": 0.0
     },
     "捷克丁级联赛": {
-      "attempts": 3,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1156,7 +1156,7 @@
       "success_rate": 0.0
     },
     "日本地区联赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1171,7 +1171,7 @@
       "success_rate": 0.0
     },
     "日本丙级联赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1396,7 +1396,7 @@
       "success_rate": 0.0
     },
     "墨西哥全国篮球职业联赛": {
-      "attempts": 2,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1536,7 +1536,7 @@
       "success_rate": 0.0
     },
     "BNXT联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1806,7 +1806,7 @@
       "success_rate": 0.0
     },
     "墨西哥TDP联赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1834,9 +1834,19 @@
       "attempts": 1,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "智利联赛杯": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "阿根廷全国篮球联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-11-16T13:17:26.892754+00:00",
+  "updated": "2026-11-17T01:45:52.922962+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
