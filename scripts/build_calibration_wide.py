@@ -145,6 +145,8 @@ def build():
         eid = str(ev.get("id") or "")
         if not eid or eid in existing:
             continue
+        if ev.get("isLive"):
+            continue  # 只收 prematch; live 赔率含比赛进行信息, 污染去水校准(且 2-way 缺 draw 腿)
         rows.extend(_extract_rows(ev))
     if not rows:
         print(f"无新增比赛(缓存 {len(cache)} 场, 已有 {len(existing)} 场已落盘)")
