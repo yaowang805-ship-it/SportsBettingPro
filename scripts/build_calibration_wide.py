@@ -1,106 +1,78 @@
 #!/usr/bin/env python3
-"""宽样本校准库构建 — 全市场 Pin 比赛的方向级去水样本(不做 ev/drop 筛选)。
+"""宽样本校准库构建 — 全市场 BB∩Pin 比赛的方向级去水样本(不做 ev/drop 筛选)。
 
 目的(2026-11-17): 区分「去水 bias」vs「选择 bias」。现有 refit 校准用的 real_bets+paper_bets
 都是「BB 偏离 Pin 才记录」的选择样本, 分不清 +5.8~12pp 偏差是去水方法错、还是选择动作本身制造。
-宽样本 = pin_odds_cache.json 里全部有 1x2(money_line) 赔率的比赛, 每个方向(home/draw/away)
-一行, 四种去水(Power/Shin/比例/additive)各算概率。赛后用 result_fetcher 回填比分 + 方向胜负,
-供 compare_devig_methods.py 对比哪种去水在宽样本上 log-loss 最低(无偏)。
+宽样本 = bb_odds_extracted.json 里全部 BB 比赛(1938 场), 用 Pin 赔率(队名匹配)算四种去水
+(Power/Shin/比例/additive)的概率, 赛后用 BB getMatchDetail(bb_score_settle)按 bb_match_id 精确回填比分。
+
+数据源:
+  - 公平价: Pinnacle(pinnacle_fair_price 的 _raw 原始价 → 自己算四种去水)
+  - 赛果:   BB getList type=6(fetch_bb_scores 的 id_map, 按 bb_match_id 精确匹配, 覆盖 ESPN 拿不到的联赛)
 
 用法:
-    .venv312/bin/python scripts/build_calibration_wide.py              # 落盘/追加当前缓存比赛
-    .venv312/bin/python scripts/build_calibration_wide.py --settle     # 回填已开赛但无结果的行
+    .venv312/bin/python scripts/build_calibration_wide.py              # 落盘/追加当前 BB 全量比赛
+    .venv312/bin/python scripts/build_calibration_wide.py --settle     # 回填已开赛且无结果的行
 
-字段: event_id,sport,league,home,away,match_epoch,side,pin_raw,p_power,p_shin,p_prop,p_add,home_score,away_score,y
+字段: bb_match_id,sport,league,home,away,match_epoch,side,pin_raw,p_power,p_shin,p_prop,p_add,home_score,away_score,y
 """
 import csv
 import json
 import sys
 import time
-from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 STORAGE = ROOT / "data" / "storage"
 
-PIN_CACHE = STORAGE / "pin_odds_cache.json"
+BB_SNAPSHOT = STORAGE / "bb_odds_extracted.json"
 WIDE_CSV = STORAGE / "calibration_wide.csv"
 
-FIELDS = ["event_id", "sport", "league", "home", "away", "match_epoch", "side",
+FIELDS = ["bb_match_id", "sport", "league", "home", "away", "match_epoch", "side",
           "pin_raw", "p_power", "p_shin", "p_prop", "p_add",
           "home_score", "away_score", "y"]
 
-# Pin league.sport.name → 系统 sport 名(与 result_fetcher / 观察库口径对齐)
-SPORT_MAP = {
-    "Soccer": "football",
-    "Basketball": "basketball",
-    "Baseball": "baseball",
-    "Ice Hockey": "ice_hockey",
-    "Hockey": "ice_hockey",
-    "Tennis": "tennis",
-    "American Football": "american_football",
-    "Football": "american_football",  # 美式足球(Pin 里 football 可能是美足, 需 league 名辅助, 保守映射)
-    "Table Tennis": "table_tennis",
-    "Volleyball": "volleyball",
-    "MMA": "mma",
-    "Boxing": "boxing",
+# bb_odds_extracted 的 sport slug(下划线) → 系统 sport id(与 BB_TO_PIN 一致)
+SLUG_TO_ID = {
+    "football": 1, "basketball": 3, "tennis": 5, "baseball": 7,
+    "american_football": 6, "ice_hockey": 2, "volleyball": 13,
+    "table_tennis": 15, "pingpong": 15, "mma": 18, "boxing": 19, "badminton": 47,
 }
 
 
-def _sport(ev):
-    """从 event 提取系统 sport 名。优先 p_sport 字段, 回退 league.sport.name。"""
-    ps = ev.get("p_sport")
-    if ps:
-        return SPORT_MAP.get(str(ps), str(ps).lower().replace(" ", "_"))
-    lg = ev.get("league") or {}
-    sp = (lg.get("sport") or {}).get("name")
-    return SPORT_MAP.get(str(sp), str(sp).lower().replace(" ", "_"))
-
-
-def _league(ev):
-    return (ev.get("league") or {}).get("name", "")
-
-
-def _match_epoch(ev):
-    st = ev.get("startTime")
-    if not st:
-        return ""
-    try:
-        return datetime.fromisoformat(str(st).replace("Z", "+00:00")).timestamp()
-    except (ValueError, TypeError):
-        return ""
-
-
 def _devig_probs(odds_list):
-    """四种去水 → 概率列表(按输入顺序)。返回 (p_power, p_shin, p_prop, p_add) 四元组。"""
+    """四种去水 → 概率列表(按输入顺序)。返回 (p_power, p_shin, p_prop, p_add)。"""
     from src.scrapers.devig import devig_power, devig_shin, devig_mult, devig_additive
     return (devig_power(odds_list), devig_shin(odds_list),
             devig_mult(odds_list), devig_additive(odds_list))
 
 
-def _extract_rows(ev):
-    """单个 event → 方向级行 list(每方向一行, 四种去水概率)。"""
-    eid = ev.get("id")
-    p0 = (ev.get("periods") or {}).get("num_0") or {}
-    ml = p0.get("money_line") or {}
-    if not ml or not eid:
+def _extract_rows(m):
+    """单个 BB 比赛 → 方向级行 list(每方向一行, 四种去水概率)。失败返回 []。"""
+    sport_slug = m.get("sport", "")
+    sport_id = SLUG_TO_ID.get(sport_slug)
+    home = (m.get("home") or "").strip()
+    away = (m.get("away") or "").strip()
+    mid = m.get("id")
+    if not sport_id or not home or not away or not mid:
         return []
-    home = ev.get("home", "")
-    away = ev.get("away", "")
-    if not home or not away:
-        return []
-    sport = _sport(ev)
-    league = _league(ev)
-    epoch = _match_epoch(ev)
 
-    # 方向顺序固定: home/draw/away (2-way 无 draw)
-    sides = ["home", "draw", "away"] if "draw" in ml else ["home", "away"]
+    from src.scrapers.pinnapi_client import pinnacle_fair_price
+    try:
+        fair = pinnacle_fair_price(home, away, sport_id, "1x2", event_type="prematch")
+    except Exception:
+        return []
+    if not fair or not fair.get("_raw"):
+        return []
+
+    raw = fair["_raw"]
+    sides = ["home", "draw", "away"] if "draw" in raw else ["home", "away"]
     odds_list = []
     for s in sides:
-        o = ml.get(s)
+        o = raw.get(s)
         if not o or float(o) <= 1.0:
-            return []  # 缺腿, 整个盘口丢弃(去水需要完整向量)
+            return []  # 缺腿, 整盘口丢弃
         odds_list.append(float(o))
 
     try:
@@ -108,10 +80,16 @@ def _extract_rows(ev):
     except Exception:
         return []
 
+    bt = m.get("bt")
+    try:
+        epoch = float(bt) / 1000.0 if bt else ""
+    except (TypeError, ValueError):
+        epoch = ""
+
     rows = []
     for i, s in enumerate(sides):
         rows.append({
-            "event_id": str(eid), "sport": sport, "league": league,
+            "bb_match_id": str(mid), "sport": sport_slug, "league": m.get("league", ""),
             "home": home, "away": away, "match_epoch": epoch, "side": s,
             "pin_raw": round(odds_list[i], 4),
             "p_power": round(p_pw[i], 6), "p_shin": round(p_sh[i], 6),
@@ -122,34 +100,30 @@ def _extract_rows(ev):
 
 
 def _existing_ids():
-    """读现有 CSV 的 event_id 集合(upsert 去重)。"""
     ids = set()
     if WIDE_CSV.exists():
         try:
             with open(WIDE_CSV, newline="") as f:
                 for row in csv.DictReader(f):
-                    if row.get("event_id"):
-                        ids.add(row["event_id"])
+                    if row.get("bb_match_id"):
+                        ids.add(row["bb_match_id"])
         except Exception:
             pass
     return ids
 
 
 def build():
-    d = json.loads(PIN_CACHE.read_text())
-    cache = d.get("cache", d)
+    d = json.loads(BB_SNAPSHOT.read_text())
+    matches = d.get("matches", d) if isinstance(d, dict) else d
     existing = _existing_ids()
     rows = []
-    for e in cache.values():
-        ev = e.get("event", {})
-        eid = str(ev.get("id") or "")
-        if not eid or eid in existing:
+    for m in matches:
+        mid = str(m.get("id") or "")
+        if not mid or mid in existing:
             continue
-        if ev.get("isLive"):
-            continue  # 只收 prematch; live 赔率含比赛进行信息, 污染去水校准(且 2-way 缺 draw 腿)
-        rows.extend(_extract_rows(ev))
+        rows.extend(_extract_rows(m))
     if not rows:
-        print(f"无新增比赛(缓存 {len(cache)} 场, 已有 {len(existing)} 场已落盘)")
+        print(f"无新增比赛(BB {len(matches)} 场, 已落盘 {len(existing)} 场)")
         return
     write_header = not WIDE_CSV.exists()
     with open(WIDE_CSV, "a", newline="") as f:
@@ -157,14 +131,14 @@ def build():
         if write_header:
             w.writeheader()
         w.writerows(rows)
-    print(f"落盘 {len(rows)} 行方向级样本 (新增 {len({r['event_id'] for r in rows})} 场比赛)")
+    n_match = len({r["bb_match_id"] for r in rows})
+    print(f"落盘 {len(rows)} 行方向级样本 (新增 {n_match} 场 BB∩Pin 比赛)")
 
 
 def settle():
-    """回填赛果: 读 CSV 里已开赛但 y 为空的行, 用 result_fetcher 匹配比分, 判定方向胜负。"""
-    from src.monitor.result_fetcher import fetch_results, find_match_result
+    """回填赛果: 用 BB getList type=6 的 id_map(bb_match_id→比分) 精确回填。"""
+    from src.monitor.bb_score_settle import fetch_bb_scores
 
-    rows = []
     if not WIDE_CSV.exists():
         print("宽样本 CSV 不存在, 先跑 build")
         return
@@ -178,43 +152,28 @@ def settle():
         print("无待回填赛果的行(已开赛且无结果)")
         return
 
-    # 按 league 分组抓赛果
-    by_league = {}
-    for r in pending:
-        by_league.setdefault((r.get("sport", ""), r.get("league", "")), []).append(r)
-
+    _score_map, id_map = fetch_bb_scores()
     settled = 0
-    for (sport, league), grp in by_league.items():
-        results = fetch_results(league, days_back=4)
-        if not results:
+    for r in pending:
+        hs_as = id_map.get(r["bb_match_id"])
+        if not hs_as:
             continue
-        for r in grp:
-            bet = {"home_pin": r["home"], "away_pin": r["away"],
-                   "home": r["home"], "away": r["away"],
-                   "match_epoch": float(r["match_epoch"]), "league": league}
-            mr = find_match_result(bet, results)
-            if not mr:
-                continue
-            hs = mr.get("home_score")
-            as_ = mr.get("away_score")
-            if hs is None or as_ is None:
-                continue
-            hs, as_ = int(hs), int(as_)
-            r["home_score"], r["away_score"] = hs, as_
-            if hs > as_:
-                outcome = "home"
-            elif as_ > hs:
-                outcome = "away"
-            else:
-                outcome = "draw"
-            r["y"] = 1 if r["side"] == outcome else 0
-            settled += 1
+        hs, as_ = int(hs_as[0]), int(hs_as[1])
+        r["home_score"], r["away_score"] = hs, as_
+        if hs > as_:
+            outcome = "home"
+        elif as_ > hs:
+            outcome = "away"
+        else:
+            outcome = "draw"
+        r["y"] = 1 if r["side"] == outcome else 0
+        settled += 1
 
     with open(WIDE_CSV, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=FIELDS)
         w.writeheader()
         w.writerows(rows)
-    print(f"回填 {settled} 行赛果 (待回填 {len(pending)} 行)")
+    print(f"回填 {settled}/{len(pending)} 行赛果 (id_map 覆盖 {len(id_map)} 场)")
 
 
 if __name__ == "__main__":

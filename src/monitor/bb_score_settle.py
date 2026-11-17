@@ -49,9 +49,11 @@ def fetch_bb_scores():
                 else:
                     records = data.get("records", [])
                 for rec in records:
-                    # 只取已完赛(ms=0/3/6/7); 未完赛/进行中(ms=4)比分不完整, 会误判
+                    # 只取已完赛(ms=0/3/5/6/7); 未完赛/进行中(ms=4)比分不完整, 会误判
                     # (2026-09-10 bug: type=6 含未完赛比赛, 0-0 默认比分被当终局, 小球全判win)
-                    if rec.get("ms") not in (0, 3, 6, 7):
+                    # 2026-11-17 BB 状态码漂移修复: ms=5 现在是「已结束」(getMatchDetail 返回真实终局比分,
+                    # 如 Kyrgyzstan 0-1 Vietnam), 不是 MATCH_STATUS_LABELS 里的 live。之前漏 ms=5 → 结算全空。
+                    if rec.get("ms") not in (0, 3, 5, 6, 7):
                         continue
                     teams = rec.get("ts", [])
                     if len(teams) < 2:

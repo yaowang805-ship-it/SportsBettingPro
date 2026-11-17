@@ -10700,5 +10700,37 @@
    2
   ],
   "line_semantics": "relative"
+ },
+ {
+  "ts": 1794922363.575553,
+  "match_id": 5890749,
+  "market_id": 143849456,
+  "option_type": 2,
+  "sport": 2,
+  "home": "乌拉尔奥尔斯克",
+  "away": "萨拉托夫水晶",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 2.99,
+  "fair": 2.8631,
+  "ev": 4.43,
+  "spread": null,
+  "bb_ts": 1794922360.709562,
+  "stake": 30,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
