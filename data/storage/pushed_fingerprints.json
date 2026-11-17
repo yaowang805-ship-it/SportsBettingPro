@@ -1,4 +1,9 @@
 {
+  "basketball|China CBA Club Cup|Jiangsu Dragons|Beijing Ducks|让分主胜(+15.5)|hc|+15.5|2026-11-18": {
+    "ev": 7.27,
+    "bb": 1.87,
+    "ts": 1794957368.599968
+  },
   "basketball|Mexico LNBP Basketball League|Astros de Jalisco|Soles de Mexicali|客胜|1x2|2026-11-17": {
     "ev": 5.44,
     "bb": 1.52,
@@ -38,10 +43,5 @@
     "ev": 3.95,
     "bb": 1.85,
     "ts": 1794875435.6034849
-  },
-  "basketball|China CBA Club Cup|Jiangsu Dragons|Beijing Ducks|让分主胜(+15.5)|hc|+15.5|2026-11-18": {
-    "ev": 7.27,
-    "bb": 1.87,
-    "ts": 1794957368.599968
   }
 }

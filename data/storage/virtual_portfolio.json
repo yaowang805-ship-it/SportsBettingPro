@@ -1,5 +1,5 @@
 {
-  "balance": 13352.53,
+  "balance": 13262.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1035,6 +1035,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795003200.0,
       "created_at": "2026-11-17T23:16:07.043335+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_德索纳_里加斯泽利_让分客胜(+95)",
+      "sport": "basketball",
+      "league": "欧洲篮球杯",
+      "home_team": "德索纳",
+      "away_team": "里加斯泽利",
+      "home_cn": "德索纳",
+      "away_cn": "里加斯泽利",
+      "market": "handicap",
+      "market_type": "让分客胜(+9.5)",
+      "sub_market": "hc",
+      "line": "+9.5",
+      "odds": 1.93,
+      "stake": 50,
+      "model_prob": 0.5365,
+      "ev_pct": 3.55,
+      "pin_odds": 1.7813,
+      "fair_price": 1.8639,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795019400.0,
+      "created_at": "2026-11-17T23:25:15.844734+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_布杜克诺斯特_斯拉斯克_让分主胜(-125)",
+      "sport": "basketball",
+      "league": "欧洲篮球杯",
+      "home_team": "布杜克诺斯特",
+      "away_team": "斯拉斯克",
+      "home_cn": "布杜克诺斯特",
+      "away_cn": "斯拉斯克",
+      "market": "handicap",
+      "market_type": "让分主胜(-12.5)",
+      "sub_market": "hc",
+      "line": "-12.5",
+      "odds": 1.88,
+      "stake": 40,
+      "model_prob": 0.5837,
+      "ev_pct": 9.74,
+      "pin_odds": 1.641,
+      "fair_price": 1.7131,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795024800.0,
+      "created_at": "2026-11-17T23:25:15.844799+00:00",
       "track_only": false
     }
   ],
@@ -14426,8 +14472,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-18",
-    "used": 330.0,
-    "bets": 7
+    "used": 420.0,
+    "bets": 9
   },
   "updated": null
 }
