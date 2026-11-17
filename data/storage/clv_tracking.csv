@@ -1362,3 +1362,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-17T13:06:02Z,football,England Isthmian League Cup,Dulwich Hamlet,Stanway Rovers,,,让球客胜,hc,1.92,1.6452,1.7617,8.99,40,3,1794944700.0,BB/FB,,,,push,,+1,,,
 2026-11-17T13:06:02Z,football,England Isthmian League Cup,Dulwich Hamlet,Stanway Rovers,,,小球,ou,1.96,1.7692,1.8954,3.41,40,3,1794944700.0,BB/FB,,,,push,,3.0,,,
 2026-11-17T13:10:06Z,ice_hockey,NHL,Chicago Blackhawks,Toronto Maple Leafs,,,大分,ou,1.89,1.7463,1.8027,4.84,50,1,1794961800.0,BB/FB,,,,push,,6.0,,,
+2026-11-17T13:11:13Z,basketball,Sweden Basketball League,Norrkoping Dolphins,Sloga Uppsala,,,让分主胜,hc,1.82,0,1.7128,6.26,0,3,1794938640,ALL,pinnacle,,,ws_scan,,-22.5,5922013,,
+2026-11-17T13:13:02Z,football,England Northern Premier League Division One,Boldmere St Michaels FC,Loughborough University,,,大球,ou,1.97,1.7463,1.8684,5.44,50,2,1794944700.0,BB/FB,,,,push,,3.0,,,

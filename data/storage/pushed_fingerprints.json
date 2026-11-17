@@ -24,14 +24,14 @@
     "bb": 4.72,
     "ts": 1794833981.328962
   },
-  "ice_hockey|NHL|Tampa Bay Lightning|Washington Capitals|大分(6.0)|ou|6.0|2026-11-18": {
-    "ev": 3.95,
-    "bb": 1.85,
-    "ts": 1794875435.6034849
-  },
   "ice_hockey|NHL|Chicago Blackhawks|Toronto Maple Leafs|大分(6.0)|ou|6.0|2026-11-18": {
     "ev": 4.84,
     "bb": 1.89,
     "ts": 1794921006.771582
+  },
+  "ice_hockey|NHL|Tampa Bay Lightning|Washington Capitals|大分(6.0)|ou|6.0|2026-11-18": {
+    "ev": 3.95,
+    "bb": 1.85,
+    "ts": 1794875435.6034849
   }
 }
