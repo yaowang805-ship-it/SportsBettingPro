@@ -1,5 +1,5 @@
 {
-  "balance": 13042.53,
+  "balance": 12992.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1173,6 +1173,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1794996300.0,
       "created_at": "2026-11-18T04:11:13.036874+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_MC阿尔及尔_奥德阿库_让球主胜(-1)",
+      "sport": "football",
+      "league": "阿尔及利亚甲级联赛",
+      "home_team": "MC阿尔及尔",
+      "away_team": "奥德阿库",
+      "home_cn": "MC阿尔及尔",
+      "away_cn": "奥德阿库",
+      "market": "handicap",
+      "market_type": "让球主胜(-1)",
+      "sub_market": "hc",
+      "line": "-1",
+      "odds": 1.82,
+      "stake": 50,
+      "model_prob": 0.5719,
+      "ev_pct": 4.08,
+      "pin_odds": 1.6711,
+      "fair_price": 1.7487,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795106700.0,
+      "created_at": "2026-11-18T22:40:36.559539+00:00",
       "track_only": false
     }
   ],
@@ -14698,9 +14721,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-11-18",
-    "used": 1010.0,
-    "bets": 22
+    "date": "2026-11-19",
+    "used": 50.0,
+    "bets": 1
   },
   "updated": null
 }
