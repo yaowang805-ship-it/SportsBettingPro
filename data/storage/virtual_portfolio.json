@@ -1,5 +1,5 @@
 {
-  "balance": 13332.53,
+  "balance": 13282.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1035,6 +1035,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795046400.0,
       "created_at": "2026-11-18T01:53:45.676909+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_俄克拉荷马雷霆_亚特兰大老鹰_大分(2265)",
+      "sport": "basketball",
+      "league": "NBA 美国职业篮球联赛",
+      "home_team": "俄克拉荷马雷霆",
+      "away_team": "亚特兰大老鹰",
+      "home_cn": "俄克拉荷马雷霆",
+      "away_cn": "亚特兰大老鹰",
+      "market": "over_under",
+      "market_type": "大分(226.5)",
+      "sub_market": "ou",
+      "line": "226.5",
+      "odds": 1.92,
+      "stake": 50,
+      "model_prob": 0.5369,
+      "ev_pct": 3.09,
+      "pin_odds": 1.8,
+      "fair_price": 1.8625,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795050000.0,
+      "created_at": "2026-11-18T02:19:07.461592+00:00",
       "track_only": false
     }
   ],
@@ -14561,8 +14584,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-18",
-    "used": 720.0,
-    "bets": 16
+    "used": 770.0,
+    "bets": 17
   },
   "updated": null
 }

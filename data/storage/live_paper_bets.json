@@ -14373,5 +14373,37 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1794968033.434516,
+  "match_id": 5929867,
+  "market_id": 144483556,
+  "option_type": 2,
+  "sport": 5,
+  "home": "杰森.库伯勒 (澳大利亚)",
+  "away": "菲利普.塞库里奇 (澳大利亚)",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 3.05,
+  "fair": 2.9423,
+  "ev": 3.66,
+  "spread": null,
+  "bb_ts": 1794968032.607575,
+  "stake": 40,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": 1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 14.47
  }
 ]
