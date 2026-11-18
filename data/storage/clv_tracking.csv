@@ -1472,3 +1472,16 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-18T08:56:16Z,basketball,Japan B.League Premier,Utsunomiya Brex,Levanga Hokkaido,,,让分客胜,hc,1.94,0,1.8381,5.54,0,3,1794996300,BB,pinnacle,,,ws_scan,,-5.5,5310016,,
 2026-11-18T09:47:50Z,basketball,Japan B.League Premier,Gunma Crane Thunders,Shimane Susanoo Magic,,,让分主胜,hc,1.87,0,1.817,2.92,0,3,1794996300,BB,pinnacle,,,pin_drop,,-11.5,5310010,1,odds_changed
 2026-11-18T09:51:37Z,basketball,Japan B.League Premier,Osaka Evessa,Hiroshima Dragonflies,,,让分主胜,hc,1.91,0,1.8037,5.89,0,3,1794996300,BB,pinnacle,,,ws_scan,,+20.5,5310017,,
+2026-11-18T12:04:34Z,football,Australian Championship,Preston Lions FC,South Hobart FC,,,和局,1x2,6.8,0,6.4631,5.21,0,3,1795077000,ALL,pinnacle,,,drop,,,5991133,,
+2026-11-18T12:04:57Z,football,Australian Championship,Preston Lions FC,South Hobart FC,,,客胜,1x2,17.5,0,13.7552,27.22,0,3,1795077000,ALL,pinnacle,,,pin_drop,,,5991133,,
+2026-11-18T12:08:45Z,football,Egypt Cup,Al Masry Club,Asyut Petroleum,,,主胜,1x2,1.87,0,1.6878,10.79,0,3,1795100400,BB,pinnacle,,,ws_scan,,,5907759,,
+2026-11-18T12:09:10Z,football,Spain LaLiga,Elche CF,Atletico Madrid,,,让球主胜,hc,1.91,0,1.8476,3.38,0,1,1795887000,ALL,pinnacle,,,ws_scan,,+1,5966453,,
+2026-11-18T12:09:57Z,football,Algeria Ligue 1,MC Alger,Olympique Akbou,,,让球主胜,hc,1.8,0,1.7487,2.93,0,2,1795106700,ALL,pinnacle,,,ws_scan,,-1,5817486,,
+2026-11-18T12:57:09Z,football,Egypt Premier League,Al Mokawloon Al Arab,El Qanah,,,主胜,1x2,2.09,0,1.999,4.55,0,2,1795543200,ALL,pinnacle,,,ws_scan,,,5928764,,
+2026-11-18T12:57:09Z,basketball,NBA,New Orleans Pelicans,Detroit Pistons,,,小分,ou,1.94,0,1.8893,2.68,0,1,1795050000,ALL,pinnacle,,,ws_scan,,228.5,5439807,,
+2026-11-18T13:12:59Z,basketball,NBA,Dallas Mavericks,Golden State Warriors,,,让分客胜,hc,1.97,0,1.8733,5.16,0,1,1795050000,ALL,pinnacle,,,ws_scan,,+5.5,5989438,,
+2026-11-18T14:36:17Z,ice_hockey,Kontinental Hockey League,Shanghai Dragons,Amur Khabarovsk,,,小分,ou,1.78,0,1.7381,2.41,0,3,1795019400,BB,pinnacle,,,ws_scan,,5.0,5768432,,
+2026-11-18T14:41:21Z,basketball,NBA,Denver Nuggets,Boston Celtics,,,小分,ou,1.9,0,1.8547,2.44,0,1,1795055400,ALL,pinnacle,,,ws_scan,,222.5,5439809,,
+2026-11-18T14:41:21Z,football,India I-League,Mohammedan SC,Gokulam Kerala FC,,,客胜,1x2,1.94,0,1.8342,5.77,0,2,1795179600,ALL,pinnacle,,,ws_scan,,,5906562,1,odds_changed
+2026-11-18T15:07:16Z,basketball,NBA,Sacramento Kings,Phoenix Suns,,,小分,ou,1.9,0,1.8515,2.62,0,1,1795057200,ALL,pinnacle,,,ws_scan,,226.5,5439813,,
+2026-11-18T15:53:40Z,ice_hockey,NHL,New Jersey Devils,Montreal Canadiens,,,大分,ou,2.02,0,1.9717,2.45,0,1,1795048200,BB,pinnacle,,,drop,,6.0,5791936,,
