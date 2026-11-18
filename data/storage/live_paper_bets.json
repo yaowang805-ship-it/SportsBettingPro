@@ -14411,16 +14411,21 @@
   "spread": null,
   "bb_ts": 1794966517.637876,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 65.6,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   88,
+   86
+  ],
+  "line_semantics": "pregame"
  },
  {
   "ts": 1794968033.434516,
@@ -14804,6 +14809,38 @@
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1794974138.313644,
+  "match_id": 5929829,
+  "market_id": 144666810,
+  "option_type": 1,
+  "sport": 5,
+  "home": "马克西姆斯.琼斯 (泰国)",
+  "away": "里亚姆.布拉迪 (英国)",
+  "designation": "让局主胜",
+  "sub": "handicap_games",
+  "line": 4.5,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.86,
+  "fair": 1.8004,
+  "ev": 3.31,
+  "spread": null,
+  "bb_ts": 1794974137.8124878,
+  "stake": 50,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": "no_outcome",
   "clv_elapsed_s": null
  }
 ]
