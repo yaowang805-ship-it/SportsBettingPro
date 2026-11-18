@@ -1441,3 +1441,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-18T02:19:41Z,basketball,China CBA Club Cup,Jiangsu Dragons,Beijing Ducks,,,让分主胜,hc,1.99,1.6667,1.8374,8.31,30,3,1795003200.0,BB/FB,,,,push,,+13.5,,,
 2026-11-18T02:19:41Z,basketball,VTB United League,MBA Moscow,BC Samara,,,让分客胜,hc,1.83,1.5435,1.6608,10.19,0,3,1795019400.0,BB/FB,,,,push,,+22.5,,,
 2026-11-18T02:29:18Z,basketball,NBA,Indiana Pacers,Houston Rockets,,,大分,ou,1.89,1.7692,1.8298,3.29,50,1,1795046400.0,BB/FB,,,,push,,224.5,,,
+2026-11-18T02:34:43Z,basketball,NBA,Cleveland Cavaliers,Memphis Grizzlies,,,小分,ou,1.95,0,1.9058,2.32,0,1,1795046400,ALL,pinnacle,,,ws_scan,,235.5,5989434,,
+2026-11-18T02:34:46Z,football,Australian Championship,Preston Lions FC,South Hobart FC,,,小球,ou,1.8,0,1.7642,2.03,0,3,1795077000,ALL,pinnacle,,,ws_scan,,4.0,5991133,,
+2026-11-18T02:49:01Z,basketball,Eurocup,KK Buducnost Voli,Slask Wroclaw,,,让分主胜,hc,1.9,0,1.7973,5.71,0,3,1795024800,ALL,pinnacle,,,ws_scan,,-13.5,5997093,,
+2026-11-18T02:54:34Z,tennis,World Tennis - W75 Trnava Women Singles,Emily Appleton (GBR),Amelia Rajecki (GBR),,,让盘主胜,hc,1.48,0,1.4505,2.03,0,3,1794992400,BB,pinnacle,,,ws_scan,,+1.5,5932746,,
+2026-11-18T03:09:58Z,basketball,China CBA Club Cup,Tianjin Pioneers,Shanghai Blackbird,,,让分客胜,hc,1.87,1.5882,1.7112,9.28,50,3,1794988800.0,FB,,,,push,,+10.5,,,
