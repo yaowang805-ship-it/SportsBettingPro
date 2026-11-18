@@ -1,5 +1,5 @@
 {
-  "balance": 13092.53,
+  "balance": 13052.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1173,6 +1173,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795024800.0,
       "created_at": "2026-11-17T23:46:33.113926+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_江苏肯帝亚_北京北汽_让分主胜(+135)",
+      "sport": "basketball",
+      "league": "中国CBA俱乐部杯",
+      "home_team": "江苏肯帝亚",
+      "away_team": "北京北汽",
+      "home_cn": "江苏肯帝亚",
+      "away_cn": "北京北汽",
+      "market": "handicap",
+      "market_type": "让分主胜(+13.5)",
+      "sub_market": "hc",
+      "line": "+13.5",
+      "odds": 1.91,
+      "stake": 40,
+      "model_prob": 0.5442,
+      "ev_pct": 3.95,
+      "pin_odds": 1.6667,
+      "fair_price": 1.8374,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795003200.0,
+      "created_at": "2026-11-18T00:07:18.980214+00:00",
       "track_only": false
     }
   ],
@@ -14564,8 +14587,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-18",
-    "used": 590.0,
-    "bets": 13
+    "used": 630.0,
+    "bets": 14
   },
   "updated": null
 }
