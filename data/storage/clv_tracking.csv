@@ -1448,3 +1448,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-18T03:09:58Z,basketball,China CBA Club Cup,Tianjin Pioneers,Shanghai Blackbird,,,让分客胜,hc,1.87,1.5882,1.7112,9.28,50,3,1794988800.0,FB,,,,push,,+10.5,,,
 2026-11-18T03:10:24Z,basketball,NBA,Denver Nuggets,Boston Celtics,,,大分,ou,1.85,1.7353,1.793,3.18,50,1,1795055400.0,BB/FB,,,,push,,219.5,,,
 2026-11-18T03:10:24Z,basketball,VTB United League,MBA Moscow,BC Samara,,,让分客胜,hc,1.85,1.6369,1.7704,4.5,0,3,1795019400.0,BB/FB,,,,push,,+21.5,,,
+2026-11-18T03:14:52Z,basketball,NBA,Los Angeles Lakers,Charlotte Hornets,,,让分客胜,hc,1.97,0,1.9224,2.48,0,1,1794974400,ALL,pinnacle,,,ws_scan,,+7.5,5982497,,
+2026-11-18T03:14:52Z,football,Spain Copa del Rey,CD Badajoz,Tenerife CD,,,小球,ou,1.92,0,1.8723,2.55,0,3,1795028400,ALL,pinnacle,,,ws_scan,,2.5,5981733,,
+2026-11-18T03:40:43Z,football,Peru Liga 1,Alianza Atletico,FBC Melgar,,,让球客胜,hc,1.99,1.8197,1.8989,4.8,50,2,1795032000.0,BB,,,,push,,+0.5,,,
