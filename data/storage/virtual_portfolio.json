@@ -1,5 +1,5 @@
 {
-  "balance": 12992.53,
+  "balance": 12942.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1196,6 +1196,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795106700.0,
       "created_at": "2026-11-18T22:40:36.559539+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_马斯里_佩特雷姆_主胜",
+      "sport": "football",
+      "league": "埃及杯",
+      "home_team": "马斯里",
+      "away_team": "佩特雷姆",
+      "home_cn": "马斯里",
+      "away_cn": "佩特雷姆",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 1.82,
+      "stake": 50,
+      "model_prob": 0.599,
+      "ev_pct": 9.02,
+      "pin_odds": 1.4525,
+      "fair_price": 1.6695,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795100400.0,
+      "created_at": "2026-11-18T23:18:11.955556+00:00",
       "track_only": false
     }
   ],
@@ -14722,8 +14745,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-19",
-    "used": 50.0,
-    "bets": 1
+    "used": 100.0,
+    "bets": 2
   },
   "updated": null
 }
