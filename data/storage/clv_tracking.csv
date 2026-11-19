@@ -1506,3 +1506,4 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-19T00:18:41Z,basketball,NBA,New Orleans Pelicans,Detroit Pistons,,,让分客胜,hc,1.88,0,1.7997,4.46,0,1,1795050000,ALL,pinnacle,,,ws_scan,,-4.5,5989431,,
 2026-11-19T00:28:59Z,basketball,NBA,New Orleans Pelicans,Detroit Pistons,,,让分主胜,hc,1.92,0,1.8785,2.21,0,1,1795050000,ALL,pinnacle,,,ws_scan,,+6.5,5989431,,
 2026-11-19T01:12:56Z,football,Egypt Cup,Al Masry Club,Asyut Petroleum,,,主胜,1x2,1.82,1.4525,1.6695,9.02,50,3,1795100400.0,BB,,,,push,,,,,
+2026-11-19T01:15:29Z,football,Algeria Ligue 1,MC Alger,Olympique Akbou,,,让球主胜,hc,1.82,1.6711,1.7487,4.08,50,2,1795106700.0,BB/FB,,,,push,,-1,,,
