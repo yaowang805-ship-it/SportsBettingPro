@@ -1,5 +1,5 @@
 {
-  "balance": 12742.53,
+  "balance": 12712.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1265,6 +1265,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795100400.0,
       "created_at": "2026-11-19T04:19:11.967839+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_深圳马可波罗_天津先行者_让分客胜(-65)",
+      "sport": "basketball",
+      "league": "中国CBA俱乐部杯",
+      "home_team": "深圳马可波罗",
+      "away_team": "天津先行者",
+      "home_cn": "深圳马可波罗",
+      "away_cn": "天津先行者",
+      "market": "handicap",
+      "market_type": "让分客胜(-6.5)",
+      "sub_market": "hc",
+      "line": "-6.5",
+      "odds": 1.84,
+      "stake": 30,
+      "model_prob": 0.5648,
+      "ev_pct": 3.93,
+      "pin_odds": 1.6369,
+      "fair_price": 1.7704,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795075200.0,
+      "created_at": "2026-11-19T04:44:40.876545+00:00",
       "track_only": false
     }
   ],
@@ -14851,8 +14874,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-19",
-    "used": 440.0,
-    "bets": 9
+    "used": 470.0,
+    "bets": 10
   },
   "updated": null
 }
