@@ -1,5 +1,5 @@
 {
-  "balance": 12832.53,
+  "balance": 12782.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1219,6 +1219,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795192200.0,
       "created_at": "2026-11-19T23:11:03.537259+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_西雅图海怪_温哥华加人_大分(60)",
+      "sport": "ice_hockey",
+      "league": "NHL 美国冰球联盟",
+      "home_team": "西雅图海怪",
+      "away_team": "温哥华加人",
+      "home_cn": "西雅图海怪",
+      "away_cn": "温哥华加人",
+      "market": "over_under",
+      "market_type": "大分(6.0)",
+      "sub_market": "ou",
+      "line": "6.0",
+      "odds": 1.82,
+      "stake": 50,
+      "model_prob": 0.5703,
+      "ev_pct": 3.8,
+      "pin_odds": 1.6993,
+      "fair_price": 1.7534,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795142400.0,
+      "created_at": "2026-11-19T23:48:12.162887+00:00",
       "track_only": false
     }
   ],
@@ -14955,8 +14978,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-20",
-    "used": 330.0,
-    "bets": 7
+    "used": 380.0,
+    "bets": 8
   },
   "updated": null
 }
