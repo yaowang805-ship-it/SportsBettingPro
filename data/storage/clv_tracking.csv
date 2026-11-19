@@ -1502,3 +1502,4 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-18T22:42:59Z,basketball,NBA,Orlando Magic,Philadelphia 76ers,,,让分主胜,hc,1.91,0,1.862,2.58,0,1,1795046400,ALL,pinnacle,,,pin_drop,,+1.5,5439789,,
 2026-11-18T22:47:39Z,ice_hockey,NHL,Pittsburgh Penguins,St. Louis Blues,,,大分,ou,1.9,0,1.8372,3.42,0,1,1795132800,BB,pinnacle,,,ws_scan,,6.0,5791931,,
 2026-11-18T23:18:13Z,football,Egypt Cup,Al Masry Club,Asyut Petroleum,,,主胜,1x2,1.82,1.4525,1.6695,9.02,50,3,1795100400.0,BB,,,,push,,,,,
+2026-11-19T00:02:22Z,ice_hockey,NHL,Washington Capitals,Buffalo Sabres,,,大分,ou,1.75,1.6329,1.6875,3.7,50,1,1795132800.0,BB/FB,,,,push,,6.0,,,

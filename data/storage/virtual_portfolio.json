@@ -1,5 +1,5 @@
 {
-  "balance": 12942.53,
+  "balance": 12892.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1219,6 +1219,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795100400.0,
       "created_at": "2026-11-18T23:18:11.955556+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_华盛顿首都_水牛城军刀_大分(60)",
+      "sport": "ice_hockey",
+      "league": "NHL 美国冰球联盟",
+      "home_team": "华盛顿首都",
+      "away_team": "水牛城军刀",
+      "home_cn": "华盛顿首都",
+      "away_cn": "水牛城军刀",
+      "market": "over_under",
+      "market_type": "大分(6.0)",
+      "sub_market": "ou",
+      "line": "6.0",
+      "odds": 1.75,
+      "stake": 50,
+      "model_prob": 0.5926,
+      "ev_pct": 3.7,
+      "pin_odds": 1.6329,
+      "fair_price": 1.6875,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795132800.0,
+      "created_at": "2026-11-19T00:02:22.354995+00:00",
       "track_only": false
     }
   ],
@@ -14745,8 +14768,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-19",
-    "used": 100.0,
-    "bets": 2
+    "used": 150.0,
+    "bets": 3
   },
   "updated": null
 }
