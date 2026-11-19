@@ -1514,3 +1514,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-19T02:31:24Z,basketball,NBA,Sacramento Kings,Phoenix Suns,,,让分主胜,hc,1.98,0,1.9353,2.31,0,1,1795057200,ALL,pinnacle,,,ws_scan,,+7.5,5989429,,
 2026-11-19T02:31:38Z,football,Kuwait Division 1,Khaitan SC,Al Yarmouk,,,让球主胜,hc,1.81,1.5714,1.6743,8.1,50,2,1795098000.0,BB/FB,,,,push,,+0.5,,,
 2026-11-19T02:34:07Z,football,Egypt Cup,Al Masry Club,Asyut Petroleum,,,主胜,1x2,1.82,1.4525,1.6695,9.02,50,3,1795100400.0,BB,,,,push,,,,,
+2026-11-19T02:36:28Z,ice_hockey,NHL,Winnipeg Jets,New York Islanders,,,大分,ou,2.01,0,1.9493,3.11,0,1,1795132800,BB,pinnacle,,,ws_scan,,6.0,5791910,,
+2026-11-19T02:36:28Z,ice_hockey,NHL,Seattle Kraken,Vancouver Canucks,,,大分,ou,1.83,0,1.7805,2.78,0,1,1795142400,BB,pinnacle,,,ws_scan,,6.0,5794251,,
+2026-11-19T02:38:44Z,football,Algeria Ligue 1,MC Alger,Olympique Akbou,,,让球主胜,hc,1.82,1.6711,1.7487,4.08,50,2,1795106700.0,BB/FB,,,,push,,-1,,,
+2026-11-19T02:38:44Z,football,Zambia Super League,Nkwazi,Mutondo Stars,,,小球,ou,1.86,1.5714,1.6743,11.09,50,2,1795093200.0,BB/FB,,,,push,,2.0,,,

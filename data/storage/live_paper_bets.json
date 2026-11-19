@@ -16583,16 +16583,20 @@
   "spread": null,
   "bb_ts": 1795048447.282666,
   "stake": 20,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -20.0,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": 1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 700.56
+  "clv_elapsed_s": 700.56,
+  "final_score": [
+   75,
+   71
+  ]
  },
  {
   "ts": 1795048484.4650319,
@@ -16615,16 +16619,20 @@
   "spread": null,
   "bb_ts": 1795048482.0612018,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 57.4,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": -1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 664.57
+  "clv_elapsed_s": 664.57,
+  "final_score": [
+   75,
+   71
+  ]
  },
  {
   "ts": 1795049084.4246888,
@@ -16689,5 +16697,69 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 61.23
+ },
+ {
+  "ts": 1795055793.314256,
+  "match_id": 5900491,
+  "market_id": 144138743,
+  "option_type": 1,
+  "sport": 7,
+  "home": "洛斯莫奇斯蔗糖农夫队",
+  "away": "奥布雷冈亚基人",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 2.09,
+  "fair": 1.9911,
+  "ev": 4.97,
+  "spread": null,
+  "bb_ts": 1795055792.4893272,
+  "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795055793.349621,
+  "match_id": 5900491,
+  "market_id": 145117241,
+  "option_type": 1,
+  "sport": 7,
+  "home": "洛斯莫奇斯蔗糖农夫队",
+  "away": "奥布雷冈亚基人",
+  "designation": "让球主胜",
+  "sub": "handicap",
+  "line": 1.5,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.66,
+  "fair": 1.5891,
+  "ev": 4.46,
+  "spread": null,
+  "bb_ts": 1795055792.4893272,
+  "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
