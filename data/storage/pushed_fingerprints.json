@@ -1,19 +1,4 @@
 {
-  "basketball|China CBA Club Cup|Guangzhou Loong Lions|Jilin Northeast Tigers|让分主胜(+1.5)|hc|+1.5|2026-11-18": {
-    "ev": 5.81,
-    "bb": 1.8,
-    "ts": 1794958556.448054
-  },
-  "basketball|China CBA Club Cup|Jiangsu Dragons|Beijing Ducks|让分主胜(+15.5)|hc|+15.5|2026-11-18": {
-    "ev": 7.27,
-    "bb": 1.87,
-    "ts": 1794957368.599968
-  },
-  "basketball|China CBA Club Cup|Tianjin Pioneers|Shanghai Blackbird|让分客胜(+10.5)|hc|+10.5|2026-11-18": {
-    "ev": 9.28,
-    "bb": 1.87,
-    "ts": 1794971398.352534
-  },
   "basketball|Eurocup|KK Buducnost Voli|Slask Wroclaw|让分主胜(-13.5)|hc|-13.5|2026-11-19": {
     "ev": 3.77,
     "bb": 1.9,
@@ -23,11 +8,6 @@
     "ev": 5.43,
     "bb": 1.84,
     "ts": 1794959194.944003
-  },
-  "basketball|Japan B.League Premier|Osaka Evessa|Hiroshima Dragonflies|让分客胜(-21.5)|hc|-21.5|2026-11-18": {
-    "ev": 10.52,
-    "bb": 1.94,
-    "ts": 1794975076.9066932
   },
   "basketball|NBA|Denver Nuggets|Boston Celtics|大分(219.5)|ou|219.5|2026-11-19": {
     "ev": 3.18,
@@ -39,29 +19,9 @@
     "bb": 1.92,
     "ts": 1794968351.47902
   },
-  "football|England Isthmian League Cup|Dulwich Hamlet|Stanway Rovers|小球(3.0)|ou|3.0|2026-11-18": {
-    "ev": 3.41,
-    "bb": 1.96,
-    "ts": 1794920762.4343219
-  },
-  "football|England Isthmian League Premier Division|Dartford FC|Three Bridges|小球(3.5)|ou|3.5|2026-11-18": {
-    "ev": 9.54,
-    "bb": 1.89,
-    "ts": 1794869254.7275252
-  },
-  "football|England Northern Premier League Division One|Boldmere St Michaels FC|Loughborough University|大球(3.0)|ou|3.0|2026-11-18": {
-    "ev": 5.44,
-    "bb": 1.97,
-    "ts": 1794922373.108087
-  },
-  "ice_hockey|NHL|Chicago Blackhawks|Toronto Maple Leafs|大分(6.0)|ou|6.0|2026-11-18": {
-    "ev": 4.84,
-    "bb": 1.89,
-    "ts": 1794921006.771582
-  },
-  "ice_hockey|NHL|Tampa Bay Lightning|Washington Capitals|大分(6.0)|ou|6.0|2026-11-18": {
-    "ev": 3.95,
-    "bb": 1.85,
-    "ts": 1794875435.6034849
+  "football|Kuwait Division 1|Khaitan SC|Al Yarmouk|让球主胜(+0.5)|hc|+0.5|2026-11-19": {
+    "ev": 8.1,
+    "bb": 1.81,
+    "ts": 1795055498.943122
   }
 }
