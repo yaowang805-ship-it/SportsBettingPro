@@ -24,6 +24,11 @@
     "bb": 1.85,
     "ts": 1794971424.9034848
   },
+  "basketball|NBA|Memphis Grizzlies|Golden State Warriors|让分客胜(+6.5)|hc|+6.5|2026-11-20": {
+    "ev": 2.58,
+    "bb": 1.93,
+    "ts": 1795128169.9734259
+  },
   "basketball|NBA|Oklahoma City Thunder|Atlanta Hawks|大分(226.5)|ou|226.5|2026-11-19": {
     "ev": 3.09,
     "bb": 1.92,
@@ -43,10 +48,5 @@
     "ev": 9.83,
     "bb": 1.86,
     "ts": 1795057326.552982
-  },
-  "basketball|NBA|Memphis Grizzlies|Golden State Warriors|让分客胜(+6.5)|hc|+6.5|2026-11-20": {
-    "ev": 2.58,
-    "bb": 1.93,
-    "ts": 1795128169.9734259
   }
 }
