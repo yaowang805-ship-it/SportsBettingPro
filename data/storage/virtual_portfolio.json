@@ -1,5 +1,5 @@
 {
-  "balance": 12872.53,
+  "balance": 12832.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1196,6 +1196,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795169100.0,
       "created_at": "2026-11-19T22:58:53.972757+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_HBA马尔斯基_潘特里特_让分主胜(-45)",
+      "sport": "basketball",
+      "league": "芬兰篮球1A联赛",
+      "home_team": "HBA马尔斯基",
+      "away_team": "潘特里特",
+      "home_cn": "HBA马尔斯基",
+      "away_cn": "潘特里特",
+      "market": "handicap",
+      "market_type": "让分主胜(-4.5)",
+      "sub_market": "hc",
+      "line": "-4.5",
+      "odds": 1.9,
+      "stake": 40,
+      "model_prob": 0.5771,
+      "ev_pct": 9.66,
+      "pin_odds": 1.6061,
+      "fair_price": 1.7327,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795192200.0,
+      "created_at": "2026-11-19T23:11:03.537259+00:00",
       "track_only": false
     }
   ],
@@ -14932,8 +14955,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-20",
-    "used": 290.0,
-    "bets": 6
+    "used": 330.0,
+    "bets": 7
   },
   "updated": null
 }
