@@ -1,5 +1,5 @@
 {
-  "balance": 13162.53,
+  "balance": 13072.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1058,6 +1058,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795075200.0,
       "created_at": "2026-11-19T04:44:40.876545+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_圣乔治_哈迪萨纳_小球(20)",
+      "sport": "football",
+      "league": "埃塞俄比亚超级联赛",
+      "home_team": "圣乔治",
+      "away_team": "哈迪萨纳",
+      "home_cn": "圣乔治",
+      "away_cn": "哈迪萨纳",
+      "market": "over_under",
+      "market_type": "小球(2.0)",
+      "sub_market": "ou",
+      "line": "2.0",
+      "odds": 1.81,
+      "stake": 50,
+      "model_prob": 0.584,
+      "ev_pct": 5.7,
+      "pin_odds": 1.6173,
+      "fair_price": 1.7124,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795177800.0,
+      "created_at": "2026-11-19T22:40:35.951419+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_萨波克_扎达尔_让分主胜(+205)",
+      "sport": "basketball",
+      "league": "克罗地亚篮球超级联赛",
+      "home_team": "萨波克",
+      "away_team": "扎达尔",
+      "home_cn": "萨波克",
+      "away_cn": "扎达尔",
+      "market": "handicap",
+      "market_type": "让分主胜(+20.5)",
+      "sub_market": "hc",
+      "line": "+20.5",
+      "odds": 1.87,
+      "stake": 40,
+      "model_prob": 0.5565,
+      "ev_pct": 4.06,
+      "pin_odds": 1.6897,
+      "fair_price": 1.7971,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795197600.0,
+      "created_at": "2026-11-19T22:40:35.951492+00:00",
       "track_only": false
     }
   ],
@@ -14793,9 +14839,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-11-19",
-    "used": 470.0,
-    "bets": 10
+    "date": "2026-11-20",
+    "used": 90.0,
+    "bets": 2
   },
   "updated": null
 }

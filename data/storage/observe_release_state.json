@@ -275,8 +275,8 @@
   "basketball|1x2|客|<45%|live": {
     "first_released_at": "2026-11-07T08:35:23.084548",
     "cap": 150,
-    "daily_stake": 150,
-    "daily_stake_date": "2026-11-18",
+    "daily_stake": 30,
+    "daily_stake_date": "2026-11-20",
     "limit_removed": true
   },
   "basketball|ou|大|55-65%|early": {
