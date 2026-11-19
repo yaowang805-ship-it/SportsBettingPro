@@ -16802,5 +16802,37 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795057981.463427,
+  "match_id": 5930241,
+  "market_id": 144871655,
+  "option_type": 4,
+  "sport": 5,
+  "home": "特里斯坦.思古柯 (澳大利亚)",
+  "away": "阿拉菲亚.阿耶尼 (美国)",
+  "designation": "大球",
+  "sub": "over_under",
+  "line": 21.5,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.79,
+  "fair": 1.6924,
+  "ev": 5.77,
+  "spread": null,
+  "bb_ts": 1795057980.795661,
+  "stake": 80,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": true,
+  "sim_reject_reason": "rejected_odds_changed",
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": 1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 271.64
  }
 ]
