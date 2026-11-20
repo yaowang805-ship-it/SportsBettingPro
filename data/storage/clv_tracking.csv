@@ -1752,3 +1752,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-20T23:15:30Z,basketball,Serbia Basketball League,KK Mladost Zemun,Borac Zemun,,,让分客胜,hc,1.84,1.5435,1.6582,10.96,20,3,1795273200.0,BB/FB,,,,push,,+7.5,,,
 2026-11-20T23:15:30Z,ice_hockey,NHL,Nashville Predators,Pittsburgh Penguins,,,大分,ou,1.86,1.7194,1.7805,4.47,0,1,1795302000.0,BB/FB,,,,push,,6.0,,,
 2026-11-20T23:20:34Z,football,Cambodia Premier League,Phnom Penh Crown,Kirivong Sok Sen Chey,,,大球,ou,1.87,1.6452,1.7687,5.73,50,2,1795258800.0,BB/FB,,,,push,,3.5,,,
+2026-11-20T23:52:33Z,basketball,NBA,Oklahoma City Thunder,New Orleans Pelicans,,,让分客胜,hc,1.95,0,1.8811,3.66,0,1,1795222800,BB,pinnacle,,,ws_scan,,+11.5,5438249,,
+2026-11-20T23:54:58Z,football,England League Two,Chesterfield FC,Shrewsbury Town,,,让球客胜,hc,1.83,1.7092,1.7778,2.94,50,2,1795273200.0,FB,,,,push,,+1,,,
