@@ -1621,3 +1621,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-20T00:06:52Z,basketball,Croatia Basketball Premier League,KK Zabok,KK Zadar,,,让分主胜,hc,1.87,1.6897,1.7971,4.06,40,2,1795197600.0,BB/FB,,,,push,,+20.5,,,
 2026-11-20T00:08:30Z,ice_hockey,NHL,Seattle Kraken,Vancouver Canucks,,,大分,ou,1.82,1.6993,1.7534,3.8,50,1,1795142400.0,BB/FB,,,,push,,6.0,,,
 2026-11-20T00:09:27Z,football,Ethiopia Premier League,Saint George SC,Hadiya Hossana FC,,,小球,ou,1.81,1.6173,1.7124,5.7,50,2,1795177800.0,BB/FB,,,,push,,2.0,,,
+2026-11-20T00:15:34Z,football,Vietnam League 2,Ho Chi Minh City FC,Thai Nguyen,,,让球主胜,hc,1.95,0,1.8549,5.13,0,3,1795168800,ALL,pinnacle,,,ws_scan,,+0.5,5999626,,
+2026-11-20T00:15:34Z,football,Vietnam League 2,Ho Chi Minh City FC,Thai Nguyen,,,大球,ou,1.92,0,1.8024,6.52,0,3,1795168800,ALL,pinnacle,,,ws_scan,,2.5,5999626,,
+2026-11-20T00:17:34Z,football,Indonesia Championship League,PSMS Medan,Sumsel United,,,大球,ou,2.0,1.7874,1.9196,4.19,50,3,1795176000.0,BB/FB,,,,push,,3.0,,,
+2026-11-20T00:17:34Z,football,Saudi Arabia Division 2,Al Hada,Najran SC,,,让球客胜,hc,1.95,1.6993,1.8263,6.77,10,3,1795175400.0,BB/FB,,,,push,,+0.5,,,

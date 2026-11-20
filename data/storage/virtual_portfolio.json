@@ -1,5 +1,5 @@
 {
-  "balance": 12782.53,
+  "balance": 12722.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1242,6 +1242,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795142400.0,
       "created_at": "2026-11-19T23:48:12.162887+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_棉兰_苏美尔联_大球(30)",
+      "sport": "football",
+      "league": "印尼乙级联赛",
+      "home_team": "棉兰",
+      "away_team": "苏美尔联",
+      "home_cn": "棉兰",
+      "away_cn": "苏美尔联",
+      "market": "over_under",
+      "market_type": "大球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 2.0,
+      "stake": 50,
+      "model_prob": 0.5209,
+      "ev_pct": 4.19,
+      "pin_odds": 1.7874,
+      "fair_price": 1.9196,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795176000.0,
+      "created_at": "2026-11-20T00:17:31.051943+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_哈达_纳积兰_让球客胜(+05)",
+      "sport": "football",
+      "league": "沙特阿拉伯乙级联赛",
+      "home_team": "哈达",
+      "away_team": "纳积兰",
+      "home_cn": "哈达",
+      "away_cn": "纳积兰",
+      "market": "handicap",
+      "market_type": "让球客胜(+0.5)",
+      "sub_market": "hc",
+      "line": "+0.5",
+      "odds": 1.95,
+      "stake": 10,
+      "model_prob": 0.5476,
+      "ev_pct": 6.77,
+      "pin_odds": 1.6993,
+      "fair_price": 1.8263,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795175400.0,
+      "created_at": "2026-11-20T00:17:31.051983+00:00",
       "track_only": false
     }
   ],
@@ -14978,8 +15024,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-20",
-    "used": 380.0,
-    "bets": 8
+    "used": 440.0,
+    "bets": 10
   },
   "updated": null
 }
