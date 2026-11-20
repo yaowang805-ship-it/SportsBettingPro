@@ -1,5 +1,5 @@
 {
-  "balance": 13232.53,
+  "balance": 13182.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1036,6 +1036,52 @@
       "commence_time": 1795302000.0,
       "created_at": "2026-11-20T23:14:58.332161+00:00",
       "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_拿加科普_科尔森奇FC_让球客胜(+05)",
+      "sport": "football",
+      "league": "柬埔寨超级联赛",
+      "home_team": "拿加科普",
+      "away_team": "科尔森奇FC",
+      "home_cn": "拿加科普",
+      "away_cn": "科尔森奇FC",
+      "market": "handicap",
+      "market_type": "让球客胜(+0.5)",
+      "sub_market": "hc",
+      "line": "+0.5",
+      "odds": 1.9,
+      "stake": 50,
+      "model_prob": 0.5527,
+      "ev_pct": 5.02,
+      "pin_odds": 1.6849,
+      "fair_price": 1.8092,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795258800.0,
+      "created_at": "2026-11-20T23:15:27.026540+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_纳什维尔掠夺者_匹兹堡企鹅_大分(60)",
+      "sport": "ice_hockey",
+      "league": "NHL 美国冰球联盟",
+      "home_team": "纳什维尔掠夺者",
+      "away_team": "匹兹堡企鹅",
+      "home_cn": "纳什维尔掠夺者",
+      "away_cn": "匹兹堡企鹅",
+      "market": "over_under",
+      "market_type": "大分(6.0)",
+      "sub_market": "ou",
+      "line": "6.0",
+      "odds": 1.86,
+      "stake": 0,
+      "model_prob": 0.5616,
+      "ev_pct": 4.47,
+      "pin_odds": 1.7194,
+      "fair_price": 1.7805,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795302000.0,
+      "created_at": "2026-11-20T23:15:27.026645+00:00",
+      "track_only": true
     }
   ],
   "settled": {
@@ -15086,8 +15132,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-21",
-    "used": 430.0,
-    "bets": 9
+    "used": 480.0,
+    "bets": 11
   },
   "updated": null
 }
