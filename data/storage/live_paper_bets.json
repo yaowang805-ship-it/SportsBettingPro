@@ -22445,9 +22445,9 @@
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
-  "clv_sign": null,
-  "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_sign": -1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 3169.03
  },
  {
   "ts": 1795211512.139864,

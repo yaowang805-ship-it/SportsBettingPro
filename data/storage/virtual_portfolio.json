@@ -1,5 +1,5 @@
 {
-  "balance": 12852.53,
+  "balance": 12802.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1219,6 +1219,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795273200.0,
       "created_at": "2026-11-20T22:40:53.746499+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_中原大学_国立台湾艺术大学_让分客胜(-345)",
+      "sport": "basketball",
+      "league": "台湾UBA大专篮球联赛",
+      "home_team": "中原大学",
+      "away_team": "国立台湾艺术大学",
+      "home_cn": "中原大学",
+      "away_cn": "国立台湾艺术大学",
+      "market": "handicap",
+      "market_type": "让分客胜(-34.5)",
+      "sub_market": "hc",
+      "line": "-34.5",
+      "odds": 1.87,
+      "stake": 50,
+      "model_prob": 0.5739,
+      "ev_pct": 7.32,
+      "pin_odds": 1.641,
+      "fair_price": 1.7425,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795230000.0,
+      "created_at": "2026-11-20T22:44:02.050976+00:00",
       "track_only": false
     }
   ],
@@ -15075,8 +15098,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-21",
-    "used": 200.0,
-    "bets": 4
+    "used": 250.0,
+    "bets": 5
   },
   "updated": null
 }
