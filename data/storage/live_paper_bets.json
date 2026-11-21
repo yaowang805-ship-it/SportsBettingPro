@@ -22608,16 +22608,21 @@
   "spread": null,
   "bb_ts": 1795212554.393024,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -30.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   5,
+   1
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1795212614.166055,
@@ -22640,9 +22645,9 @@
   "spread": null,
   "bb_ts": 1795212612.371613,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -60.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
@@ -22650,7 +22655,11 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null,
-  "clv": 3.27
+  "clv": 3.27,
+  "final_score": [
+   1,
+   0
+  ]
  },
  {
   "ts": 1795212793.460437,
@@ -22833,6 +22842,38 @@
   "spread": null,
   "bb_ts": 1795218065.689163,
   "stake": 40,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795219303.726718,
+  "match_id": 5812867,
+  "market_id": 143851190,
+  "option_type": 2,
+  "sport": 2,
+  "home": "赫希熊",
+  "away": "罗契斯特美洲人",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 2.31,
+  "fair": 2.2192,
+  "ev": 4.09,
+  "spread": null,
+  "bb_ts": 1795219302.186475,
+  "stake": 60,
   "settled": false,
   "result": null,
   "profit": null,
