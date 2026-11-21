@@ -1,5 +1,5 @@
 {
-  "balance": 13082.53,
+  "balance": 13032.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1127,6 +1127,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795273200.0,
       "created_at": "2026-11-20T23:54:56.783727+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_高卡尔利_费内巴切_主胜",
+      "sport": "football",
+      "league": "土耳其超级联赛",
+      "home_team": "高卡尔利",
+      "away_team": "费内巴切",
+      "home_cn": "高卡尔利",
+      "away_cn": "费内巴切",
+      "market": "1x2",
+      "market_type": "主胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 5.6,
+      "stake": 50,
+      "model_prob": 0.3282,
+      "ev_pct": 83.79,
+      "pin_odds": 2.22,
+      "fair_price": 3.0469,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795276800.0,
+      "created_at": "2026-11-21T00:35:58.563227+00:00",
       "track_only": false
     }
   ],
@@ -15178,8 +15201,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-21",
-    "used": 580.0,
-    "bets": 13
+    "used": 630.0,
+    "bets": 14
   },
   "updated": null
 }

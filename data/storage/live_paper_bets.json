@@ -22682,16 +22682,20 @@
   "spread": null,
   "bb_ts": 1795212790.312525,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 53.9,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": -1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 659.54
+  "clv_elapsed_s": 659.54,
+  "final_score": [
+   8,
+   7
+  ]
  },
  {
   "ts": 1795214320.747489,
@@ -22881,8 +22885,8 @@
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
-  "clv_sign": null,
-  "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_sign": -1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 964.71
  }
 ]
