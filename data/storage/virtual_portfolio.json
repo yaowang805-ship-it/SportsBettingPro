@@ -1,5 +1,5 @@
 {
-  "balance": 13002.53,
+  "balance": 12952.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1150,6 +1150,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795320000.0,
       "created_at": "2026-11-21T23:08:27.276095+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_圣安东尼奥布鲁布鲁_阿拉维准备_让球主胜(+15)",
+      "sport": "football",
+      "league": "玻利维亚甲级联赛",
+      "home_team": "圣安东尼奥布鲁布鲁",
+      "away_team": "阿拉维准备",
+      "home_cn": "圣安东尼奥布鲁布鲁",
+      "away_cn": "阿拉维准备",
+      "market": "handicap",
+      "market_type": "让球主胜(+1.5)",
+      "sub_market": "hc",
+      "line": "+1.5",
+      "odds": 1.91,
+      "stake": 50,
+      "model_prob": 0.5693,
+      "ev_pct": 8.75,
+      "pin_odds": 1.6579,
+      "fair_price": 1.7564,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795390200.0,
+      "created_at": "2026-11-21T23:48:23.753270+00:00",
       "track_only": false
     }
   ],
@@ -15426,8 +15449,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-22",
-    "used": 450.0,
-    "bets": 10
+    "used": 500.0,
+    "bets": 11
   },
   "updated": null
 }

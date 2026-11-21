@@ -1916,3 +1916,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-21T23:11:26Z,basketball,NBA,New York Knicks,Portland Trail Blazers,,,让分客胜,hc,1.93,0,1.8698,3.22,0,1,1795307400,ALL,pinnacle,,,ws_scan,,+1.5,5448143,,
 2026-11-21T23:13:32Z,basketball,Australia NBL,SE Melbourne Phoenix,Cairns Taipans,,,让分主胜,hc,1.9,1.7463,1.8239,4.17,40,3,1795320000.0,BB/FB,,,,push,,-2.5,,,
 2026-11-21T23:13:32Z,ice_hockey,NHL,San Jose Sharks,Seattle Kraken,,,大分,ou,1.86,1.7353,1.793,3.74,40,1,1795316400.0,BB/FB,,,,push,,6.0,,,
+2026-11-21T23:37:12Z,basketball,Taiwan Professional Basketball League,Formosa Dreamers,New Taipei CTBC DEA,,,让分客胜,hc,1.86,0,1.7207,8.1,0,3,1795329000,ALL,pinnacle,,,ws_scan,,+3.5,5593474,,
+2026-11-21T23:48:25Z,football,Bolivia Division Profesional,San Antonio Bulo Bulo,Always Ready,,,让球主胜,hc,1.91,1.6579,1.7564,8.75,50,2,1795390200.0,BB,,,,push,,+1.5,,,
