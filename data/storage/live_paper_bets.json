@@ -22718,16 +22718,20 @@
   "spread": null,
   "bb_ts": 1795214319.850253,
   "stake": 50,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 59.5,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   0,
+   1
+  ]
  },
  {
   "ts": 1795214322.226322,
@@ -22750,16 +22754,21 @@
   "spread": null,
   "bb_ts": 1795214319.850253,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 35.7,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   0,
+   1
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1795216842.50542,
@@ -22888,5 +22897,37 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 964.71
+ },
+ {
+  "ts": 1795221496.343256,
+  "match_id": 5942142,
+  "market_id": 145714841,
+  "option_type": 2,
+  "sport": 3,
+  "home": "奥林匹亚国王",
+  "away": "圣荷西",
+  "designation": "让球客胜",
+  "sub": "handicap",
+  "line": -4.5,
+  "bsc": [
+   48,
+   44
+  ],
+  "bb_odds": 1.82,
+  "fair": 1.7317,
+  "ev": 5.1,
+  "spread": null,
+  "bb_ts": 1795221494.4421601,
+  "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": true,
+  "sim_reject_reason": "rejected_odds_changed",
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
