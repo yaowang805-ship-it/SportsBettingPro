@@ -935,7 +935,7 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
             "sport": b["sport"],
             "sub": sub, "direction": d,
             "bb_odds": bb_odds, "fair": fair_p, "ev": round(ev, 2), "ev_raw": round(ev_raw, 2), "fair_cal": round(fair_cal, 4), "pin_raw": (fair.get("_raw") or {}).get(k),
-            "market_id": mk["market_id"], "option_type": mk["option_type"], "line": mk["line"],
+            "market_id": mk["market_id"], "option_type": mk["option_type"], "line": _line,
             "pin_matchup_id": res.get("event_id"),
             "spread": res.get("spread"),  # 2026-09-19 流动性门槛: back-lay 价差
             "league_id": None,

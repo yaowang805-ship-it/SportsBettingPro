@@ -1443,8 +1443,10 @@ class SecondLevelMonitor:
                         # 线漂了(和信号时 sig["line"] 不一致)就放弃(宁缺毋滥, 不拿错线的价下单)。
                         _fod = _mk.get("odds")
                         _fresh_line = _mk.get("line")
+                        # 2026-11-21 让球线已改 bet-side(客方向取反), 而鲜价 BB _mk["line"] 仍是 home-line,
+                        # 直接比符号会恒判漂移(客胜 +48.5 vs 鲜价 -48.5 差97)。改比 |线| 绝对值(漂移=幅度变, 符号由方向定)。
                         if (sig.get("line") is not None and _fresh_line is not None
-                                and abs(float(_fresh_line) - float(sig["line"])) > 0.01):
+                                and abs(abs(float(_fresh_line)) - abs(float(sig["line"]))) > 0.01):
                             sig["_sim_reject"] = "line_drift"
                             break
                         if _fod and float(_fod) > 1:
@@ -1716,9 +1718,10 @@ class SecondLevelMonitor:
             self._record_reject(sig, "system_error")
             return
         # 2026-10-11 线变更校验: oddsChange=0 只查价格不查盘口线。让球/大小球线在重拉到提交间变了 → 放弃(旧EV打错线)。
+        # 2026-11-21 让球线已改 bet-side(客方向取反), 鲜价 _fresh_line 仍是 home-line, 比 |线| 绝对值(见上方 line_drift 同款)。
         if sig.get("line") is not None and _fresh_line is not None:
             try:
-                if abs(float(_fresh_line) - float(sig.get("line"))) > 0.01:
+                if abs(abs(float(_fresh_line)) - abs(float(sig.get("line")))) > 0.01:
                     self._count_skip("line_changed")
                     print(f"  ⚠️ 盘口线已变({sig.get('line')}→{_fresh_line}), 放弃 {tag}", flush=True)
                     self._record_reject(sig, "risk_block")
