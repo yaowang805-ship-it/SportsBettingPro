@@ -1,5 +1,5 @@
 {
-  "balance": 12962.53,
+  "balance": 12912.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1196,6 +1196,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795278600.0,
       "created_at": "2026-11-21T00:43:56.241123+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_广岛三箭_横滨水手_让球主胜(-1)",
+      "sport": "football",
+      "league": "日本甲级联赛",
+      "home_team": "广岛三箭",
+      "away_team": "横滨水手",
+      "home_cn": "广岛三箭",
+      "away_cn": "横滨水手",
+      "market": "handicap",
+      "market_type": "让球主胜(-1)",
+      "sub_market": "hc",
+      "line": "-1",
+      "odds": 1.83,
+      "stake": 50,
+      "model_prob": 0.5608,
+      "ev_pct": 2.62,
+      "pin_odds": 1.7407,
+      "fair_price": 1.7832,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795237200.0,
+      "created_at": "2026-11-21T01:00:57.031029+00:00",
       "track_only": false
     }
   ],
@@ -15247,8 +15270,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-21",
-    "used": 700.0,
-    "bets": 16
+    "used": 750.0,
+    "bets": 17
   },
   "updated": null
 }

@@ -22929,5 +22929,37 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795222132.2875881,
+  "match_id": 5942142,
+  "market_id": 145713434,
+  "option_type": 2,
+  "sport": 3,
+  "home": "奥林匹亚国王",
+  "away": "圣荷西",
+  "designation": "让球客胜",
+  "sub": "handicap",
+  "line": -5.5,
+  "bsc": [
+   56,
+   50
+  ],
+  "bb_odds": 1.72,
+  "fair": 1.6296,
+  "ev": 5.55,
+  "spread": null,
+  "bb_ts": 1795222130.713613,
+  "stake": 80,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
