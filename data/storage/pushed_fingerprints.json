@@ -1,23 +1,8 @@
 {
-  "basketball|Japan B.League One|Tokyo Hachioji Trains|Fukushima Firebonds|让分客胜(-6.5)|hc|-6.5|2026-11-20": {
-    "ev": 7.29,
-    "bb": 1.89,
-    "ts": 1795129138.5932071
-  },
-  "basketball|Mexico LNBP Basketball League|Astros de Jalisco|Soles de Mexicali|让分客胜(-1.5)|hc|-1.5|2026-11-20": {
-    "ev": 6.36,
-    "bb": 1.82,
-    "ts": 1795057021.716126
-  },
   "basketball|NBA|Denver Nuggets|Houston Rockets|让分主胜(+1.5)|hc|+1.5|2026-11-21": {
     "ev": 4.84,
     "bb": 1.86,
     "ts": 1795214950.721201
-  },
-  "basketball|NBA|Memphis Grizzlies|Golden State Warriors|让分客胜(+6.5)|hc|+6.5|2026-11-20": {
-    "ev": 2.58,
-    "bb": 1.93,
-    "ts": 1795128169.9734259
   },
   "basketball|Sweden Basketball Superettan|IK Eos|Norrort Basket|小分(163.5)|ou|163.5|2026-11-22": {
     "ev": 5.94,
@@ -54,11 +39,6 @@
     "bb": 2.01,
     "ts": 1795214457.282099
   },
-  "football|Indonesia Championship League|PSMS Medan|Sumsel United|大球(3.0)|ou|3.0|2026-11-20": {
-    "ev": 4.19,
-    "bb": 2.0,
-    "ts": 1795133854.761782
-  },
   "football|Nicaragua Primera Division|UNAN Managua|Matagalpa FC|让球客胜(+0.5)|hc|+0.5|2026-11-22": {
     "ev": 8.87,
     "bb": 1.77,
@@ -68,5 +48,10 @@
     "ev": 6.94,
     "bb": 1.97,
     "ts": 1795223529.111624
+  },
+  "basketball|Australia NBL|Melbourne United|New Zealand Breakers|小分(186.5)|ou|186.5|2026-11-21": {
+    "ev": 4.48,
+    "bb": 1.92,
+    "ts": 1795230320.035118
   }
 }

@@ -1764,3 +1764,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-21T01:16:16Z,football,Japan J.League,Sanfrecce Hiroshima,Yokohama F Marinos,,,让球主胜,hc,1.83,1.7407,1.7832,2.62,50,2,1795237200.0,BB/FB,,,,push,,-1,,,
 2026-11-21T01:42:17Z,football,Zambia Super League,Power Dynamos,Zanaco,,,小球,ou,1.97,0,1.8422,6.94,0,2,1795266000,ALL,pinnacle,,,ws_scan,,2.0,5896062,,
 2026-11-21T01:58:12Z,football,UAE Division 1,Forte Virtus,Gulf United,,,让球客胜,hc,2.01,1.7143,1.8237,10.22,50,2,1795265100.0,BB/FB,,,,push,,+0.5,,,
+2026-11-21T02:20:10Z,football,England FA Cup,Wimborne Town,Bradford City,,,让球主胜,hc,1.79,0,1.7087,4.76,0,3,1796412600,ALL,pinnacle,,,ws_scan,,+2,5905300,,
+2026-11-21T02:49:09Z,football,Mozambique Mocambola,Costa Do Sol,AD Pemba,,,客胜,1x2,15.7,0,14.4928,8.33,0,2,1795266000,ALL,pinnacle,,,ws_scan,,,5915752,,
+2026-11-21T03:05:20Z,basketball,Australia NBL,Melbourne United,New Zealand Breakers,,,小分,ou,1.92,1.7634,1.8377,4.48,40,3,1795249800.0,BB/FB,,,,push,,186.5,,,
