@@ -4,6 +4,11 @@
     "bb": 1.92,
     "ts": 1795230320.035118
   },
+  "basketball|Italy Basketball Serie A|Pallacanestro Varese|Reyer Venezia|让分客胜(-1.5)|hc|-1.5|2026-11-23": {
+    "ev": 3.8,
+    "bb": 1.96,
+    "ts": 1795301321.36813
+  },
   "basketball|NBA|Denver Nuggets|Houston Rockets|让分主胜(+1.5)|hc|+1.5|2026-11-21": {
     "ev": 4.84,
     "bb": 1.86,
@@ -58,10 +63,5 @@
     "ev": 6.94,
     "bb": 1.97,
     "ts": 1795223529.111624
-  },
-  "basketball|Italy Basketball Serie A|Pallacanestro Varese|Reyer Venezia|让分客胜(-1.5)|hc|-1.5|2026-11-23": {
-    "ev": 3.8,
-    "bb": 1.96,
-    "ts": 1795301321.36813
   }
 }

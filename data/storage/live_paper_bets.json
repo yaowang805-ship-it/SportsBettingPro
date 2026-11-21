@@ -5283,5 +5283,37 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795301426.603541,
+  "match_id": 5947681,
+  "market_id": 145628108,
+  "option_type": 2,
+  "sport": 1,
+  "home": "莱恩达斯",
+  "away": "圣路易斯",
+  "designation": "让球客胜",
+  "sub": "handicap",
+  "line": -0.5,
+  "bsc": [
+   1,
+   2
+  ],
+  "bb_odds": 2.08,
+  "fair": 1.9648,
+  "ev": 5.86,
+  "spread": null,
+  "bb_ts": 1795301425.320435,
+  "stake": 30,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
