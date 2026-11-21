@@ -22961,5 +22961,38 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795223323.055985,
+  "match_id": 5947577,
+  "market_id": 145555651,
+  "option_type": 1,
+  "sport": 5,
+  "home": "张汉娜 (美国)",
+  "away": "萨尔玛.茹布里 (法国)",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.52,
+  "fair": 1.4479,
+  "ev": 4.98,
+  "spread": null,
+  "bb_ts": 1795223321.61679,
+  "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": -1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 32.77,
+  "clv": 4.98
  }
 ]

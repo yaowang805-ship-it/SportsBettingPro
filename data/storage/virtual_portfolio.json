@@ -1,5 +1,5 @@
 {
-  "balance": 12912.53,
+  "balance": 12872.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1219,6 +1219,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795237200.0,
       "created_at": "2026-11-21T01:00:57.031029+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_动力发电机足球会_萨纳科_小球(20)",
+      "sport": "football",
+      "league": "赞比亚超级联赛",
+      "home_team": "动力发电机足球会",
+      "away_team": "萨纳科",
+      "home_cn": "动力发电机足球会",
+      "away_cn": "萨纳科",
+      "market": "over_under",
+      "market_type": "小球(2.0)",
+      "sub_market": "ou",
+      "line": "2.0",
+      "odds": 1.97,
+      "stake": 40,
+      "model_prob": 0.5428,
+      "ev_pct": 6.94,
+      "pin_odds": 1.7246,
+      "fair_price": 1.8422,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795266000.0,
+      "created_at": "2026-11-21T01:12:05.387851+00:00",
       "track_only": false
     }
   ],
@@ -15270,8 +15293,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-21",
-    "used": 750.0,
-    "bets": 17
+    "used": 790.0,
+    "bets": 18
   },
   "updated": null
 }
