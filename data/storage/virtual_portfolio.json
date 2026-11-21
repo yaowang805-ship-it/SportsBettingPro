@@ -1,5 +1,5 @@
 {
-  "balance": 13452.53,
+  "balance": 13402.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -920,6 +920,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795249800.0,
       "created_at": "2026-11-21T03:05:16.416241+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_犹他猛犸象_安那翰鸭_大分(65)",
+      "sport": "ice_hockey",
+      "league": "NHL 美国冰球联盟",
+      "home_team": "犹他猛犸象",
+      "away_team": "安那翰鸭",
+      "home_cn": "犹他猛犸象",
+      "away_cn": "安那翰鸭",
+      "market": "over_under",
+      "market_type": "大分(6.5)",
+      "sub_market": "ou",
+      "line": "6.5",
+      "odds": 1.9,
+      "stake": 50,
+      "model_prob": 0.5768,
+      "ev_pct": 9.59,
+      "pin_odds": 1.6803,
+      "fair_price": 1.7338,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795312800.0,
+      "created_at": "2026-11-21T22:42:05.338324+00:00",
       "track_only": false
     }
   ],
@@ -15195,9 +15218,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-11-21",
-    "used": 880.0,
-    "bets": 20
+    "date": "2026-11-22",
+    "used": 50.0,
+    "bets": 1
   },
   "updated": null
 }
