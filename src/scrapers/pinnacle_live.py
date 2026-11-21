@@ -914,6 +914,17 @@ def fetch_live_opportunities_oa(threshold=3.0, poll_ts=None, platform="BB"):
         _conf = res.get("sbo") or res.get("confidence")
         _conf_p = _conf.get(k) if _conf else None
         _sbo_dir = 'none' if _conf_p is None else ('same' if _conf_p > fair_p else 'diff')
+        # 2026-11-21 修让球线符号: mk["line"] 是「主队让分(home-line, 主让=负/主受让=正)」约定
+        # (11-07 修跨线套价时统一), 但落盘/结算/推送按「投注侧线(bet-side)」约定(客胜=客队让分)。
+        # 客方向不取反 → 客队受让却记成主队让分(如客胜@-48.5 实为 +48.5), 结算/展示符号全反。
+        # 早盘(extract_bb_handicap away_line=-line_val)与 G04 推送(name 已按侧给)都是 bet-side,
+        # 这里取反对齐, 让 downstream(determine_result 客方向 -goal_diff+line)一致。
+        _line = mk["line"]
+        if sub in ("hc", "hc_games") and d == "客" and _line is not None:
+            try:
+                _line = -float(_line)
+            except (TypeError, ValueError):
+                pass
         base = {
             "bb_match_id": bmid,
             "home": b.get("home_cn") or b.get("home_en") or b.get("home"),
