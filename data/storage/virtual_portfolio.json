@@ -1,5 +1,5 @@
 {
-  "balance": 13082.53,
+  "balance": 13042.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1104,6 +1104,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795316400.0,
       "created_at": "2026-11-21T22:48:10.249752+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_斯拉斯克_特里弗索波特_让分主胜(-205)",
+      "sport": "basketball",
+      "league": "波兰篮球联赛",
+      "home_team": "斯拉斯克",
+      "away_team": "特里弗索波特",
+      "home_cn": "斯拉斯克",
+      "away_cn": "特里弗索波特",
+      "market": "handicap",
+      "market_type": "让分主胜(-20.5)",
+      "sub_market": "hc",
+      "line": "-20.5",
+      "odds": 1.9,
+      "stake": 40,
+      "model_prob": 0.5799,
+      "ev_pct": 10.18,
+      "pin_odds": 1.641,
+      "fair_price": 1.7244,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795356000.0,
+      "created_at": "2026-11-21T23:01:19.329530+00:00",
       "track_only": false
     }
   ],
@@ -15380,8 +15403,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-22",
-    "used": 370.0,
-    "bets": 8
+    "used": 410.0,
+    "bets": 9
   },
   "updated": null
 }
