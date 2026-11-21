@@ -1631,7 +1631,7 @@
       "success_rate": 0.0
     },
     "欧洲篮球杯": {
-      "attempts": 3,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1894,9 +1894,19 @@
       "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "中国CBA俱乐部杯": {
+      "attempts": 4,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "欧洲北部篮球联赛": {
+      "attempts": 2,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-11-20T23:11:46.561589+00:00",
+  "updated": "2026-11-21T01:46:11.006035+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
