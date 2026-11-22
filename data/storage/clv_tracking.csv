@@ -1854,7 +1854,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-21T18:10:26Z,basketball,NBA,San Antonio Spurs,New Orleans Pelicans,,,小分,ou,1.93,0,1.816,6.28,0,1,1795309200,ALL,pinnacle,,,ws_scan,,229.5,5448144,,
 2026-11-21T18:20:10Z,basketball,NBA,San Antonio Spurs,New Orleans Pelicans,,,让分主胜,hc,1.87,0,1.826,2.41,0,1,1795309200,ALL,pinnacle,,,ws_scan,,-17.5,5448144,,
 2026-11-21T18:25:23Z,basketball,Italy Basketball Serie A,Pallacanestro Varese,Reyer Venezia,,,大分,ou,1.92,0,1.8281,5.03,0,2,1795370400,BB,pinnacle,,,ws_scan,,175.5,5387630,,
-2026-11-21T18:25:45Z,basketball,Italy Basketball Serie B,Ferrara Basket 2018,Andrea Costa Imola,,,小分,ou,1.84,0,1.7207,6.93,0,3,1795366800,ALL,pinnacle,,,ws_scan,,140.5,5734786,,
+2026-11-21T18:25:45Z,basketball,Italy Basketball Serie B,Ferrara Basket 2018,Andrea Costa Imola,,,小分,ou,1.84,0,1.7207,6.93,0,3,1795366800,ALL,pinnacle,,,ws_scan,,140.5,5734786,1,odds_changed
 2026-11-21T18:28:34Z,basketball,Poland Basketball League,Slask Wroclaw,Trefl Sopot,,,让分主胜,hc,1.81,0,1.6742,8.11,0,3,1795356000,ALL,pinnacle,,,drop,,-13.5,5947699,,
 2026-11-21T18:30:30Z,football,Mexico Liga Primera Premier,Tapachula Soconusco FC,CD Irapuato,,,主胜,1x2,14.9,0,14.4928,2.81,0,3,1795302000,BB,pinnacle,,,ws_scan,,,5602674,1,odds_changed
 2026-11-21T18:30:30Z,football,Mexico Liga Primera Premier,Tapachula Soconusco FC,CD Irapuato,,,大球,ou,1.94,0,1.7816,8.89,0,3,1795302000,BB,pinnacle,,,ws_scan,,4.0,5602674,1,odds_changed
@@ -1999,3 +1999,17 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-22T15:21:54Z,basketball,NBA,Chicago Bulls,Denver Nuggets,,,让分客胜,hc,1.89,0,1.8474,2.31,0,1,1795392000,ALL,pinnacle,,,ws_scan,,-8.5,5453883,1,odds_changed
 2026-11-22T15:32:18Z,football,Estonia Esiliiga-Playoff,Viljandi JK Tulevik,FC Tallinn,,,大球,ou,1.88,0,1.7543,7.17,0,3,1795363200,BB,pinnacle,,,drop,,3.0,5892208,,
 2026-11-22T15:56:28Z,football,Ecuador LigaPro Primera A-Playoff,Manta FC,Delfin SC,,,小球,ou,1.85,0,1.7627,4.95,0,2,1795365000,ALL,pinnacle,,,ws_scan,,2.5,5616355,,
+2026-11-22T17:37:56Z,football,Mexico Liga Premier Serie A,Real Apodaca FC,Acambaro FC,,,大球,ou,1.83,0,1.712,6.89,0,3,1795384800,BB,pinnacle,,,ws_scan,,3.0,5476929,,
+2026-11-22T18:28:13Z,football,Mexico Liga MX,Queretaro FC,Necaxa,,,客胜,1x2,2.86,0,2.7965,2.27,0,3,1795396200,ALL,pinnacle,,,ws_scan,,,5970965,,
+2026-11-22T18:37:21Z,football,England Premier League,Leeds United,Coventry City,,,让球主胜,hc,1.98,0,1.9408,2.02,0,1,1795878000,ALL,pinnacle,,,ws_scan,,-1,5955642,,
+2026-11-22T18:58:45Z,football,Netherlands Eredivisie,NEC Nijmegen,FC Twente,,,让球客胜,hc,1.93,0,1.8822,2.54,0,1,1795978800,ALL,pinnacle,,,ws_scan,,-0.5,5965246,,
+2026-11-22T20:11:34Z,tennis,ATP Challenger - Florianopolis Open,Thiago Cigarran (ARG),Boris Arias (BOL),,,让盘主胜,hc,1.47,0,1.4393,2.13,0,3,1795438800,BB,pinnacle,,,ws_scan,,-1.5,5956658,,
+2026-11-22T20:18:43Z,basketball,NBA,Atlanta Hawks,Detroit Pistons,,,小分,ou,1.9,0,1.8622,2.03,0,1,1795379400,ALL,pinnacle,,,ws_scan,,225.5,5989482,,
+2026-11-22T20:24:23Z,football,England National League North,Darlington FC,Southport FC,,,让球主胜,hc,1.97,0,1.8668,5.53,0,3,1795549500,ALL,pinnacle,,,ws_scan,,-0.5,5199952,,
+2026-11-22T20:28:42Z,tennis,ATP Challenger - Florianopolis Open,Nicolas Zanellato (BRA),Natan Rodrigues (BRA),,,让盘主胜,hc,1.55,0,1.5064,2.89,0,3,1795447200,BB,pinnacle,,,ws_scan,,-1.5,5956210,,
+2026-11-22T20:28:53Z,football,England Premier League,Coventry City,Ipswich Town,,,小球,ou,1.94,0,1.8043,7.52,0,1,1796155200,ALL,pinnacle,,,ws_scan,,3.0,6072633,,
+2026-11-22T20:28:53Z,football,England Premier League,Manchester City FC,Leeds United,,,主胜,1x2,1.58,0,1.5295,3.3,0,1,1796239800,ALL,pinnacle,,,ws_scan,,,6072679,,
+2026-11-22T20:28:53Z,football,England Premier League,Manchester City FC,Leeds United,,,大球,ou,2.03,0,1.9375,4.77,0,1,1796239800,ALL,pinnacle,,,ws_scan,,3.0,6072679,,
+2026-11-22T21:27:24Z,basketball,Mexico LNBP Basketball League,Soles de Mexicali,Astros de Jalisco,,,让分主胜,hc,1.9,0,1.8599,2.16,0,3,1795395600,ALL,pinnacle,,,ws_scan,,-3.5,6062513,,
+2026-11-22T21:44:23Z,football,Germany Bundesliga,Bayern Munich,SC Paderborn,,,和局,1x2,18.2,0,17.84,2.02,0,1,1796412600,BB,pinnacle,,,ws_scan,,,5201570,,
+2026-11-22T22:40:29Z,football,Jamaica Premier League,Tru Juice FC,Dunbeholden FC,,,小球,ou,1.93,1.7299,1.8414,4.81,50,2,1795471500.0,BB/FB,,,,push,,3.0,,,

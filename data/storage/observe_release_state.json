@@ -100,8 +100,8 @@
   "football|hc|客|60-70%|live": {
     "first_released_at": "2026-11-01T09:17:35.212453",
     "cap": 30,
-    "daily_stake": 30,
-    "daily_stake_date": "2026-11-22",
+    "daily_stake": 60,
+    "daily_stake_date": "2026-11-23",
     "limit_removed": true
   },
   "tennis|hc|主|*|early": {
@@ -114,8 +114,8 @@
   "football|ou|大|*|live": {
     "first_released_at": "2026-11-07T08:35:23.084446",
     "cap": 150,
-    "daily_stake": 1540,
-    "daily_stake_date": "2026-11-22",
+    "daily_stake": 60,
+    "daily_stake_date": "2026-11-23",
     "limit_removed": true
   },
   "basketball|hc|客|55-65%|early": {
@@ -177,8 +177,8 @@
   "basketball|hc|主|55-65%|live": {
     "first_released_at": "2026-11-01T09:17:35.212481",
     "cap": 30,
-    "daily_stake": 60,
-    "daily_stake_date": "2026-11-22",
+    "daily_stake": 90,
+    "daily_stake_date": "2026-11-23",
     "limit_removed": true
   },
   "football|ou|大|55-60%|early": {
@@ -205,8 +205,8 @@
   "football|ou|小|55-60%|live": {
     "first_released_at": "2026-11-01T09:17:35.212444",
     "cap": 30,
-    "daily_stake": 30,
-    "daily_stake_date": "2026-11-21",
+    "daily_stake": 60,
+    "daily_stake_date": "2026-11-23",
     "limit_removed": true
   },
   "volleyball|ou|小|60-80%|live": {
@@ -220,7 +220,7 @@
     "first_released_at": "2026-10-28T20:53:20.963151",
     "cap": 30,
     "daily_stake": 60,
-    "daily_stake_date": "2026-11-21",
+    "daily_stake_date": "2026-11-23",
     "limit_removed": true
   },
   "ice_hockey|ou|大|45-55%|live": {
