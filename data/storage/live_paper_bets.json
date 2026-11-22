@@ -10510,5 +10510,37 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 97.2
+ },
+ {
+  "ts": 1795387735.160634,
+  "match_id": 5945280,
+  "market_id": 146532194,
+  "option_type": 2,
+  "sport": 1,
+  "home": "纳什维尔",
+  "away": "辛辛那提",
+  "designation": "让球客胜",
+  "sub": "handicap",
+  "line": 1.0,
+  "bsc": [
+   0,
+   1
+  ],
+  "bb_odds": 1.43,
+  "fair": 1.3568,
+  "ev": 5.4,
+  "spread": null,
+  "bb_ts": 1795387733.530498,
+  "stake": 30,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": true,
+  "sim_reject_reason": "rejected_odds_changed",
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
