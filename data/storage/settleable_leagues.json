@@ -1061,7 +1061,7 @@
       "success_rate": 0.0
     },
     "阿尔及利亚甲级联赛": {
-      "attempts": 10,
+      "attempts": 11,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1396,7 +1396,7 @@
       "success_rate": 0.0
     },
     "墨西哥全国篮球职业联赛": {
-      "attempts": 7,
+      "attempts": 8,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1716,7 +1716,7 @@
       "success_rate": 0.0
     },
     "埃及杯": {
-      "attempts": 1,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1761,7 +1761,7 @@
       "success_rate": 0.0
     },
     "NHL 美国冰球联盟": {
-      "attempts": 9,
+      "attempts": 10,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1771,7 +1771,7 @@
       "success_rate": 0.0
     },
     "印度班加罗尔超级联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1896,7 +1896,7 @@
       "success_rate": 0.0
     },
     "中国CBA俱乐部杯": {
-      "attempts": 5,
+      "attempts": 7,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1904,9 +1904,19 @@
       "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "赞比亚超级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "科威特甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-11-21T06:02:36.897228+00:00",
+  "updated": "2026-11-22T06:02:18.939856+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
