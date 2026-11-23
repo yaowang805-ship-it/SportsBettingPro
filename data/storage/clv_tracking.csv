@@ -2023,3 +2023,4 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-23T01:01:29Z,ice_hockey,NHL,Winnipeg Jets,Utah Mammoth,,,大分,ou,1.84,0,1.7744,3.7,0,1,1795480200,BB,pinnacle,,,ws_scan,,6.0,5793656,,
 2026-11-23T01:54:06Z,football,Turkey Super Lig,Istanbul Basaksehir,Corum FK,,,大球,ou,1.99,0,1.8754,6.11,0,2,1795453200,ALL,pinnacle,,,ws_scan,,3.0,5969556,,
 2026-11-23T01:55:29Z,basketball,NBA,Minnesota Timberwolves,Brooklyn Nets,,,让分主胜,hc,1.93,1.8065,1.8622,3.64,40,1,1795480200.0,BB/FB,,,,push,,-11.5,,,
+2026-11-23T02:01:33Z,football,Greece Super League,Asteras Tripolis,Aris Thessaloniki,,,和局,1x2,3.18,2.17,2.9407,8.14,30,2,1795446000.0,BB,,,,push,,,,,
