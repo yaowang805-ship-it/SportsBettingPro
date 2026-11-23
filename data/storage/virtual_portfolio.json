@@ -1,5 +1,5 @@
 {
-  "balance": 13222.53,
+  "balance": 13172.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1035,6 +1035,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795442400.0,
       "created_at": "2026-11-23T05:38:54.316892+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_华沙波罗尼亚_波洛尼亚比托姆_大分(1755)",
+      "sport": "basketball",
+      "league": "波兰篮球甲级联赛",
+      "home_team": "华沙波罗尼亚",
+      "away_team": "波洛尼亚比托姆",
+      "home_cn": "华沙波罗尼亚",
+      "away_cn": "波洛尼亚比托姆",
+      "market": "over_under",
+      "market_type": "大分(175.5)",
+      "sub_market": "ou",
+      "line": "175.5",
+      "odds": 1.82,
+      "stake": 50,
+      "model_prob": 0.5739,
+      "ev_pct": 4.44,
+      "pin_odds": 1.6211,
+      "fair_price": 1.7426,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795460400.0,
+      "created_at": "2026-11-23T05:50:36.765217+00:00",
       "track_only": false
     }
   ],
@@ -15626,8 +15649,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-23",
-    "used": 680.0,
-    "bets": 16
+    "used": 730.0,
+    "bets": 17
   },
   "updated": null
 }
