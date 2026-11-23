@@ -11659,16 +11659,20 @@
   "spread": null,
   "bb_ts": 1795418292.944919,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 65.8,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   4,
+   1
+  ]
  },
  {
   "ts": 1795418629.725566,
@@ -11691,16 +11695,20 @@
   "spread": null,
   "bb_ts": 1795418628.114697,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 48.8,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   4,
+   1
+  ]
  },
  {
   "ts": 1795420883.8890939,
@@ -11723,16 +11731,20 @@
   "spread": null,
   "bb_ts": 1795420882.082944,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -80.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   4,
+   1
+  ]
  },
  {
   "ts": 1795421517.5601668,
@@ -11755,15 +11767,56 @@
   "spread": null,
   "bb_ts": 1795421516.323549,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -70.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   1
+  ]
+ },
+ {
+  "ts": 1795428101.832983,
+  "match_id": 5942655,
+  "market_id": 146194097,
+  "option_type": 1,
+  "sport": 1,
+  "home": "皇家游骑兵FC",
+  "away": "印度空军",
+  "designation": "让球主胜",
+  "sub": "handicap",
+  "line": -2.0,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.77,
+  "fair": 1.6993,
+  "ev": 4.16,
+  "spread": null,
+  "bb_ts": 1795428100.788311,
+  "stake": 80,
+  "settled": true,
+  "result": "push",
+  "profit": 0.0,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null,
+  "final_score": [
+   2,
+   0
+  ],
+  "line_semantics": "relative"
  }
 ]
