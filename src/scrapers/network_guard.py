@@ -17,14 +17,47 @@ pin_ws_trigger)会无限重试烧 CPU(实测双进程 127%+87%) + 日志爆炸(9
 
 进程内单例状态: second_level_monitor 和 pin_ws_trigger 是两个独立进程, 各自独立熔断。
 """
+import os
 import time
+from pathlib import Path
 
 MIN_FAIL_DURATION = 120    # 连接失败持续 120s 才触发熔断(去抖, 短暂网络抖动不误报)
 COOLDOWN_SECONDS = 5 * 60  # 熔断冷却 5 分钟, 之后自动重试
 
+_ROOT = Path(__file__).resolve().parent.parent.parent
+_NET_FAILURE_FLAG = _ROOT / "data" / "storage" / ".network_failure_pushed"  # 跨进程推送去重标记
+_SELF_HEAL_LOG = _ROOT / "data" / "logs" / "self_heal_network.log"  # 自愈脚本输出日志(2026-11-24 从 DEVNULL 改写日志, 便于诊断换节点失败原因)
+
 _first_fail_ts = None  # 连续失败起始时间戳
 _circuit_open_until = 0.0
 _failure_notified = False  # 本次故障是否已推送(去重: 直到恢复才重置)
+
+
+def _try_mark_failure_pushed():
+    """跨进程推送去重(2026-11-24): second_level_monitor/pin_ws_trigger/clv_collect 各自独立熔断,
+    之前三进程各推一次「网络故障」。用标记文件原子占位, 只让首个进程推。返回 True=本进程该推。
+    """
+    try:
+        if _NET_FAILURE_FLAG.exists():
+            if time.time() - _NET_FAILURE_FLAG.stat().st_mtime < 3600:
+                return False  # 已有新鲜标记(本故障已被别的进程推过)
+            _NET_FAILURE_FLAG.unlink()  # 陈旧标记(>1h, 上次进程崩溃残留), 清掉重推
+    except OSError:
+        pass
+    try:
+        fd = os.open(_NET_FAILURE_FLAG, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o644)
+        os.write(fd, str(time.time()).encode())
+        os.close(fd)
+        return True
+    except FileExistsError:
+        return False
+
+
+def _clear_failure_pushed():
+    try:
+        _NET_FAILURE_FLAG.unlink()
+    except FileNotFoundError:
+        pass
 
 
 def _now():
@@ -54,8 +87,9 @@ def report_failure():
         _circuit_open_until = now + COOLDOWN_SECONDS  # 每次持续失败都重新开熔断(保 CPU)
         if not _failure_notified:
             _failure_notified = True
-            _alert("故障")
-            _self_heal()  # 2026-11-11 用户要求: 自动重启 Shadowrocket 隧道自愈网络
+            if _try_mark_failure_pushed():  # 跨进程去重: 只首个进程推「网络故障」
+                _alert("故障")
+        _self_heal()  # 2026-11-24 修: 从去重条件拆出, 每次熔断重开都再试自愈(脚本自带5min冷却限频, 不会打爆)
 
 
 def report_success():
@@ -66,6 +100,7 @@ def report_success():
     _circuit_open_until = 0.0
     _failure_notified = False
     if was_failing:
+        _clear_failure_pushed()  # 清跨进程去重标记, 下次故障可再推
         _alert("恢复")
 
 
@@ -94,17 +129,20 @@ def _self_heal():
 
     后台跑 scripts/self_heal_network.py(自带 5min 文件锁冷却, 多进程只触发一次实际自愈)。
     不阻塞调用方(网络已熔断, 这里不能同步等)。
+    2026-11-24 输出从 DEVNULL 改写日志, 换节点失败原因可查。
     """
     try:
         import subprocess
         import sys
-        from pathlib import Path
-        _root = Path(__file__).resolve().parent.parent.parent
-        subprocess.Popen(
-            [sys.executable, str(_root / "scripts" / "self_heal_network.py")],
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-            start_new_session=True,
-        )
+        _log = open(_SELF_HEAL_LOG, "a", encoding="utf-8")
+        try:
+            subprocess.Popen(
+                [sys.executable, str(_ROOT / "scripts" / "self_heal_network.py")],
+                stdout=_log, stderr=subprocess.STDOUT,
+                start_new_session=True,
+            )
+        finally:
+            _log.close()  # 父进程关自己的句柄(子进程已继承 fd), 防长进程每 7min 漏一个 fd
     except Exception:
         pass
 

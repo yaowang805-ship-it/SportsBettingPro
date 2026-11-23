@@ -407,8 +407,12 @@ def main():
     pin_ok, pin_detail = check_pin()
     statuses.append(f"Pinnacle: {'✅' if pin_ok else '❌'} {pin_detail}")
     if not pin_ok:
-        # 铁律(2026-08-24 用户): 看门狗只告警, 不允许自动换节点。换节点由用户手动决定。
-        fixes.append(f"Pinnacle 断连: {pin_detail} → 仅告警, 不自动换节点(请手动处理)")
+        # 2026-11-24 接上自动换节点(替代 8-24 旧铁律「换节点由用户手动」): recover_pin 调 pin_proxy_pool --recover
+        _rp_ok, _rp_detail, _rp_switched = recover_pin()
+        if _rp_switched:
+            fixes.append(f"Pinnacle 断连: {pin_detail} → 已自动换节点 {_rp_detail[-120:]}")
+        else:
+            fixes.append(f"Pinnacle 断连: {pin_detail} → 换节点判定无需切换(瞬时故障) {_rp_detail[-120:]}")
 
     # 4b) Pin 缓存健康: 缓存空了(0场)会致增量扫描读空缓存→对比无结果→不推, 且
     # 扫描心跳正常(跑完了但没产出) —— 传统"看心跳/进程"看门狗测不出的静默失效。
