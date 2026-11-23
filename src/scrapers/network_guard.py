@@ -107,7 +107,8 @@ def report_success():
     _failure_notified = False
     if was_failing:
         _clear_failure_pushed()  # 清跨进程去重标记, 下次故障可再推
-        _alert("恢复")
+        if FAILURE_PUSH_ENABLED:
+            _alert("恢复")
 
 
 def _alert(kind):
