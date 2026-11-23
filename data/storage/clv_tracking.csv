@@ -2045,3 +2045,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-23T05:23:19Z,basketball,Serbia Basketball League,KK Vojvodina,KK Sloboda Uzice,,,让分主胜,hc,1.88,1.578,1.6983,10.7,40,3,1795453200.0,BB,,,,push,,-3.5,,,
 2026-11-23T05:29:19Z,basketball,Serbia Basketball League,KK Vojvodina,KK Sloboda Uzice,,,主胜,1x2,1.56,1.3155,1.5025,3.83,40,3,1795453200.0,BB,,,,push,,,,,
 2026-11-23T05:33:53Z,basketball,NBA,Philadelphia 76ers,Portland Trail Blazers,,,大分,ou,1.9,1.7752,1.8369,3.44,50,1,1795478400.0,BB/FB,,,,push,,229.5,,,
+2026-11-23T05:36:49Z,basketball,Serbia Basketball League,KK Vojvodina,KK Sloboda Uzice,,,主胜,1x2,1.56,0,1.5025,3.83,0,3,1795453200,ALL,pinnacle,,,ws_scan,,,5960393,,
+2026-11-23T05:36:49Z,basketball,Serbia Basketball League,KK Vojvodina,KK Sloboda Uzice,,,让分主胜,hc,1.88,0,1.6887,11.33,0,3,1795453200,ALL,pinnacle,,,ws_scan,,-3.5,5960393,,
+2026-11-23T05:38:57Z,basketball,FIBA Basketball Africa League Qualifiers,Dar City,Ferroviario Beira,,,让分主胜,hc,1.9,1.6061,1.7327,9.66,40,3,1795442400.0,BB,,,,push,,-11.5,,,
