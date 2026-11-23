@@ -11216,16 +11216,21 @@
   "spread": null,
   "bb_ts": 1795394888.866882,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 14.1,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   2
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1795396118.474889,
@@ -11248,16 +11253,20 @@
   "spread": null,
   "bb_ts": 1795396117.994959,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -60.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   2
+  ]
  },
  {
   "ts": 1795396147.609594,
@@ -11280,16 +11289,21 @@
   "spread": null,
   "bb_ts": 1795396147.406204,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -30.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   1,
+   2
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1795396431.146128,
@@ -11312,16 +11326,20 @@
   "spread": null,
   "bb_ts": 1795396429.961559,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -70.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   0,
+   1
+  ]
  },
  {
   "ts": 1795397373.468671,
@@ -11344,16 +11362,20 @@
   "spread": null,
   "bb_ts": 1795397372.200104,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -80.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   5,
+   3
+  ]
  },
  {
   "ts": 1795397661.5723279,
@@ -11376,16 +11398,20 @@
   "spread": null,
   "bb_ts": 1795397661.325247,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 24.3,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   0,
+   1
+  ]
  },
  {
   "ts": 1795398593.963383,
@@ -11408,16 +11434,20 @@
   "spread": null,
   "bb_ts": 1795398592.4771662,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -80.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": -1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 2213.64
+  "clv_elapsed_s": 2213.64,
+  "final_score": [
+   2,
+   0
+  ]
  },
  {
   "ts": 1795398963.832865,
@@ -11504,6 +11534,70 @@
   "spread": null,
   "bb_ts": 1795399553.64887,
   "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795402027.016542,
+  "match_id": 5945685,
+  "market_id": 146574639,
+  "option_type": 2,
+  "sport": 1,
+  "home": "温哥华白帽",
+  "away": "皇家盐湖城",
+  "designation": "让球客胜",
+  "sub": "handicap",
+  "line": 1.0,
+  "bsc": [
+   1,
+   0
+  ],
+  "bb_odds": 1.36,
+  "fair": 1.2903,
+  "ev": 5.4,
+  "spread": null,
+  "bb_ts": 1795402024.97632,
+  "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795402641.6616142,
+  "match_id": 5945685,
+  "market_id": 146599781,
+  "option_type": 2,
+  "sport": 1,
+  "home": "温哥华白帽",
+  "away": "皇家盐湖城",
+  "designation": "让球客胜",
+  "sub": "handicap",
+  "line": 0.5,
+  "bsc": [
+   2,
+   0
+  ],
+  "bb_odds": 1.67,
+  "fair": 1.5862,
+  "ev": 5.28,
+  "spread": null,
+  "bb_ts": 1795402639.894315,
+  "stake": 30,
   "settled": false,
   "result": null,
   "profit": null,
