@@ -1,5 +1,5 @@
 {
-  "balance": 13622.53,
+  "balance": 13572.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -828,6 +828,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795446000.0,
       "created_at": "2026-11-23T02:01:32.239976+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_明尼苏达森林狼_布鲁克林篮网_小分(2255)",
+      "sport": "basketball",
+      "league": "NBA 美国职业篮球联赛",
+      "home_team": "明尼苏达森林狼",
+      "away_team": "布鲁克林篮网",
+      "home_cn": "明尼苏达森林狼",
+      "away_cn": "布鲁克林篮网",
+      "market": "over_under",
+      "market_type": "小分(225.5)",
+      "sub_market": "ou",
+      "line": "225.5",
+      "odds": 1.91,
+      "stake": 50,
+      "model_prob": 0.5391,
+      "ev_pct": 2.96,
+      "pin_odds": 1.7937,
+      "fair_price": 1.855,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795480200.0,
+      "created_at": "2026-11-23T02:26:56.596148+00:00",
       "track_only": false
     }
   ],
@@ -15419,8 +15442,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-23",
-    "used": 280.0,
-    "bets": 7
+    "used": 330.0,
+    "bets": 8
   },
   "updated": null
 }
