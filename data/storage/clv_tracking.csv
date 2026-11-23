@@ -2018,3 +2018,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-22T23:15:29Z,football,Turkey Super Lig,Istanbul Basaksehir,Corum FK,,,大球,ou,1.99,1.6173,1.7182,15.82,40,2,1795453200.0,BB/FB,,,,push,,3.0,,,
 2026-11-22T23:15:29Z,football,Turkey Super Lig,Istanbul Basaksehir,Corum FK,,,主胜,1x2,1.95,1.2732,1.4183,37.49,20,2,1795453200.0,FB,,,,push,,,,,
 2026-11-23T00:30:10Z,ice_hockey,NHL,Winnipeg Jets,Utah Mammoth,,,大分,ou,1.84,1.7143,1.7744,3.7,50,1,1795480200.0,BB/FB,,,,push,,6.0,,,
+2026-11-23T00:41:11Z,ice_hockey,NHL,San Jose Sharks,Minnesota Wild,,,大分,ou,1.95,0,1.8936,2.98,0,1,1795489200,BB,pinnacle,,,ws_scan,,6.0,5794253,,
+2026-11-23T00:41:11Z,ice_hockey,NHL,New York Islanders,Toronto Maple Leafs,,,大分,ou,1.86,0,1.8063,2.97,0,1,1795480200,BB,pinnacle,,,ws_scan,,6.0,5793663,,
+2026-11-23T01:01:29Z,ice_hockey,NHL,Winnipeg Jets,Utah Mammoth,,,大分,ou,1.84,0,1.7744,3.7,0,1,1795480200,BB,pinnacle,,,ws_scan,,6.0,5793656,,
+2026-11-23T01:54:06Z,football,Turkey Super Lig,Istanbul Basaksehir,Corum FK,,,大球,ou,1.99,0,1.8754,6.11,0,2,1795453200,ALL,pinnacle,,,ws_scan,,3.0,5969556,,
+2026-11-23T01:55:29Z,basketball,NBA,Minnesota Timberwolves,Brooklyn Nets,,,让分主胜,hc,1.93,1.8065,1.8622,3.64,40,1,1795480200.0,BB/FB,,,,push,,-11.5,,,
