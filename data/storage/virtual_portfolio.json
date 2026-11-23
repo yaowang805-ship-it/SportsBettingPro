@@ -1,5 +1,5 @@
 {
-  "balance": 13172.53,
+  "balance": 13142.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1058,6 +1058,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795460400.0,
       "created_at": "2026-11-23T05:50:36.765217+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_印第安纳步行者_俄克拉荷马雷霆_让分主胜(+55)",
+      "sport": "basketball",
+      "league": "NBA 美国职业篮球联赛",
+      "home_team": "印第安纳步行者",
+      "away_team": "俄克拉荷马雷霆",
+      "home_cn": "印第安纳步行者",
+      "away_cn": "俄克拉荷马雷霆",
+      "market": "handicap",
+      "market_type": "让分主胜(+5.5)",
+      "sub_market": "hc",
+      "line": "+5.5",
+      "odds": 1.93,
+      "stake": 30,
+      "model_prob": 0.5293,
+      "ev_pct": 2.15,
+      "pin_odds": 1.8333,
+      "fair_price": 1.8893,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795480200.0,
+      "created_at": "2026-11-23T06:09:55.326325+00:00",
       "track_only": false
     }
   ],
@@ -15649,8 +15672,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-23",
-    "used": 730.0,
-    "bets": 17
+    "used": 760.0,
+    "bets": 18
   },
   "updated": null
 }
