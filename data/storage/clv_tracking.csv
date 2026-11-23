@@ -2039,3 +2039,4 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-23T04:12:43Z,ice_hockey,NHL,Montreal Canadiens,Los Angeles Kings,,,大分,ou,2.02,0,1.9447,3.87,0,1,1795480200,BB,pinnacle,,,ws_scan,,6.0,5793657,,
 2026-11-23T04:31:12Z,basketball,NBA,Philadelphia 76ers,Portland Trail Blazers,,,大分,ou,1.9,1.7519,1.8093,5.01,50,1,1795478400.0,BB/FB,,,,push,,229.5,,,
 2026-11-23T04:31:12Z,basketball,NBA,Charlotte Hornets,Memphis Grizzlies,,,小分,ou,1.92,1.8,1.8625,3.09,50,1,1795478400.0,BB/FB,,,,push,,216.5,,,
+2026-11-23T04:46:39Z,basketball,NBA,Philadelphia 76ers,Portland Trail Blazers,,,让分主胜,hc,1.97,1.8547,1.9142,2.92,30,1,1795478400.0,BB,,,,push,,-3.5,,,
