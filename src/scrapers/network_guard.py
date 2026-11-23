@@ -24,6 +24,11 @@ from pathlib import Path
 MIN_FAIL_DURATION = 120    # 连接失败持续 120s 才触发熔断(去抖, 短暂网络抖动不误报)
 COOLDOWN_SECONDS = 5 * 60  # 熔断冷却 5 分钟, 之后自动重试
 
+# 2026-11-24 用户指令: 小火箭节点故障(机场节点问题, 非代码可修), 先不用管小火箭 + 不推故障提醒。
+# 熔断器本身保留(失败时停重试保 CPU), 只关「自动换节点/重启小火箭」和「网络故障钉钉推送」。
+SELF_HEAL_ENABLED = False       # False=不自愈(不换节点/不重启小火箭, 用户手动处理机场节点)
+FAILURE_PUSH_ENABLED = False    # False=不推送「网络故障/已恢复」钉钉提醒
+
 _ROOT = Path(__file__).resolve().parent.parent.parent
 _NET_FAILURE_FLAG = _ROOT / "data" / "storage" / ".network_failure_pushed"  # 跨进程推送去重标记
 _SELF_HEAL_LOG = _ROOT / "data" / "logs" / "self_heal_network.log"  # 自愈脚本输出日志(2026-11-24 从 DEVNULL 改写日志, 便于诊断换节点失败原因)
@@ -87,9 +92,10 @@ def report_failure():
         _circuit_open_until = now + COOLDOWN_SECONDS  # 每次持续失败都重新开熔断(保 CPU)
         if not _failure_notified:
             _failure_notified = True
-            if _try_mark_failure_pushed():  # 跨进程去重: 只首个进程推「网络故障」
+            if FAILURE_PUSH_ENABLED and _try_mark_failure_pushed():  # 跨进程去重: 只首个进程推「网络故障」
                 _alert("故障")
-        _self_heal()  # 2026-11-24 修: 从去重条件拆出, 每次熔断重开都再试自愈(脚本自带5min冷却限频, 不会打爆)
+        if SELF_HEAL_ENABLED:  # 2026-11-24 用户暂停自愈(机场节点问题非代码可修); 重开后这里会每次熔断重开都再试
+            _self_heal()
 
 
 def report_success():

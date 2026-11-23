@@ -7,6 +7,8 @@
 3. 检测网络(连 BB 域名)
 4. 不行 → 彻底关闭 Shadowrocket(kill 主进程)再打开
 5. 再检测
+6. 不行 → 换节点(最多 6 个)
+7. 换节点还不行 → 主动把小火箭退出后重启(2026-11-24 用户要求)
 
 5 分钟冷却(文件锁), 避免多进程/频繁触发时重复自愈。
 """
@@ -222,6 +224,18 @@ def main():
             print(f"自愈: 换节点 {_title} 后网络恢复 ✅", flush=True)
             _check_and_renew_token()
             return 0
+
+    # 7. 换节点都不好使 → 主动把小火箭退出后重启(2026-11-24 用户要求: 换节点无效时退出重启,
+    #    重置 Shadowrocket 完整状态, 与上面第 4 步不同——这次是换过节点后带着最后选中的节点重启)
+    print("自愈: 换节点全部失败, 主动退出并重启 Shadowrocket...", flush=True)
+    subprocess.run(["pkill", "-f", "/Applications/Shadowrocket.app"], capture_output=True)
+    time.sleep(4)
+    subprocess.run(["open", "/Applications/Shadowrocket.app"], capture_output=True)
+    time.sleep(10)
+    if _network_ok():
+        print("自愈: 退出重启后网络恢复 ✅", flush=True)
+        _check_and_renew_token()
+        return 0
 
     print("自愈: 失败, 网络仍不通 ❌", flush=True)
     return 1
