@@ -1,5 +1,5 @@
 {
-  "balance": 13402.53,
+  "balance": 13352.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -897,6 +897,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795534200.0,
       "created_at": "2026-11-24T03:35:41.828147+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_阿拉伯建筑_艾卡纳_小球(20)",
+      "sport": "football",
+      "league": "埃及超级联赛",
+      "home_team": "阿拉伯建筑",
+      "away_team": "艾卡纳",
+      "home_cn": "阿拉伯建筑",
+      "away_cn": "艾卡纳",
+      "market": "over_under",
+      "market_type": "小球(2.0)",
+      "sub_market": "ou",
+      "line": "2.0",
+      "odds": 1.99,
+      "stake": 50,
+      "model_prob": 0.5243,
+      "ev_pct": 4.34,
+      "pin_odds": 1.8264,
+      "fair_price": 1.9073,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795543200.0,
+      "created_at": "2026-11-24T04:07:41.144916+00:00",
       "track_only": false
     }
   ],
@@ -15743,8 +15766,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-24",
-    "used": 310.0,
-    "bets": 5
+    "used": 360.0,
+    "bets": 6
   },
   "updated": null
 }
