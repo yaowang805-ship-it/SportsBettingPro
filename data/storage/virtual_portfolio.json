@@ -1,5 +1,5 @@
 {
-  "balance": 13392.53,
+  "balance": 13342.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -897,6 +897,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795521600.0,
       "created_at": "2026-11-24T08:58:24.799602+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_埃德蒙顿油工_维加斯黄金骑士_大分(60)",
+      "sport": "ice_hockey",
+      "league": "NHL 美国冰球联盟",
+      "home_team": "埃德蒙顿油工",
+      "away_team": "维加斯黄金骑士",
+      "home_cn": "埃德蒙顿油工",
+      "away_cn": "维加斯黄金骑士",
+      "market": "over_under",
+      "market_type": "大分(6.0)",
+      "sub_market": "ou",
+      "line": "6.0",
+      "odds": 1.92,
+      "stake": 50,
+      "model_prob": 0.5422,
+      "ev_pct": 4.11,
+      "pin_odds": 1.7813,
+      "fair_price": 1.8442,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795568400.0,
+      "created_at": "2026-11-24T22:41:12.709503+00:00",
       "track_only": false
     }
   ],
@@ -15772,9 +15795,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-11-24",
-    "used": 410.0,
-    "bets": 7
+    "date": "2026-11-25",
+    "used": 50.0,
+    "bets": 1
   },
   "updated": null
 }
