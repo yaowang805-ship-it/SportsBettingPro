@@ -1,1 +1,17 @@
-{"basketball|Italy Basketball Serie A|Pallacanestro Varese|Reyer Venezia|让分客胜(-1.5)|hc|-1.5|2026-11-23": {"ev": 3.8, "bb": 1.96, "ts": 1795301321.36813}, "football|Jamaica Premier League|Treasure Beach FC|Arnett Gardens FC|大球(3.0)|ou|3.0|2026-11-23": {"ev": 11.0, "bb": 1.97, "ts": 1795301138.61939}, "football|Jamaica Premier League|Tru Juice FC|Dunbeholden FC|小球(3.0)|ou|3.0|2026-11-24": {"bb": 1.93, "ev": 2.57, "fair": 1.8817, "pin": 1.7752, "ts": 1795444150.6552079, "kickoff": 1795471500.0, "repush_count": 0}, "ice_hockey|NHL|Seattle Kraken|Anaheim Ducks|大分(6.0)|ou|6.0|2026-11-24": {"ev": 3.99, "bb": 1.74, "ts": 1795401610.199845}, "ice_hockey|NHL|Winnipeg Jets|Utah Mammoth|大分(6.0)|ou|6.0|2026-11-24": {"bb": 1.86, "ev": 3.93, "fair": 1.7897, "pin": 1.7353, "ts": 1795444150.66137, "kickoff": 1795480200.0, "repush_count": 0}, "ice_hockey|NHL|New York Islanders|Toronto Maple Leafs|大分(6.0)|ou|6.0|2026-11-24": {"bb": 1.87, "ev": 3.73, "fair": 1.8027, "pin": 1.7463, "ts": 1795439824.207083, "kickoff": 1795480200.0, "repush_count": 0}, "basketball|NBA|Los Angeles Lakers|Utah Jazz|小分(227.5)|ou|227.5|2026-11-24": {"bb": 1.9, "ev": 2.01, "fair": 1.8625, "pin": 1.8, "ts": 1795439122.974273, "kickoff": 1795489200.0, "repush_count": 0}, "basketball|Russia Basketball Super League|Desna Bryansk|BC Tambov|让分主胜(-2.5)|hc|-2.5|2026-11-24": {"bb": 1.87, "ev": 4.02, "fair": 1.7977, "pin": 1.6849, "ts": 1795442359.319999, "kickoff": 1795449600.0, "repush_count": 0}, "basketball|NBA|Philadelphia 76ers|Portland Trail Blazers|大分(230.5)|ou|230.5|2026-11-24": {"bb": 1.91, "ev": 2.98, "fair": 1.8547, "pin": 1.8, "ts": 1795441257.839293, "kickoff": 1795478400.0, "repush_count": 0}, "basketball|NBA|Los Angeles Lakers|Utah Jazz|让分主胜(-13.5)|hc|-13.5|2026-11-24": {"bb": 1.95, "ev": 2.98, "fair": 1.8936, "pin": 1.8333, "ts": 1795443692.504479, "kickoff": 1795489200.0, "repush_count": 0}, "football|Mexico Liga Primera Premier|Deportiva Venados|Reboceros de La Piedad|让球主胜(-0.5)|hc|-0.5|2026-11-24": {"bb": 1.89, "ev": 4.47, "fair": 1.8092, "pin": 1.6849, "ts": 1795444150.655648, "kickoff": 1795485900.0, "repush_count": 0}}
+{
+  "football|Jamaica Premier League|Tru Juice FC|Dunbeholden FC|小球(3.0)|ou|3.0|2026-11-24": {
+    "ev": 4.81,
+    "bb": 1.93,
+    "ts": 1795387229.1461928
+  },
+  "ice_hockey|NHL|Seattle Kraken|Anaheim Ducks|大分(6.0)|ou|6.0|2026-11-24": {
+    "ev": 3.99,
+    "bb": 1.74,
+    "ts": 1795401610.199845
+  },
+  "ice_hockey|NHL|Winnipeg Jets|Utah Mammoth|大分(6.0)|ou|6.0|2026-11-24": {
+    "ev": 3.7,
+    "bb": 1.84,
+    "ts": 1795393810.648222
+  }
+}
