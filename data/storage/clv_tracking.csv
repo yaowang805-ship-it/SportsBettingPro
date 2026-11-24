@@ -2173,3 +2173,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-24T22:32:27Z,football,England League Cup,Manchester City FC,Bradford City,,,客胜,1x2,23.0,0,21.645,6.26,0,2,1797364800,ALL,pinnacle,,,ws_scan,,,5826575,,
 2026-11-24T22:37:39Z,football,Japan J.League 3,FC Ryukyu,Roasso Kumamoto,,,小球,ou,1.81,0,1.7554,3.11,0,4,1795575600,ALL,pinnacle,,,pin_drop,,3.0,6041676,,
 2026-11-24T22:41:12Z,ice_hockey,NHL,Edmonton Oilers,Vegas Golden Knights,,,大分,ou,1.92,1.7813,1.8442,4.11,50,1,1795568400.0,BB/FB,,,,push,,6.0,,,
+2026-11-24T22:43:34Z,tennis,ATP Challenger - Yokohama Open,Lennon Roark Jones (JPN),David Jorda Sanchis (ESP),,,让盘客胜,hc,1.27,0,1.245,2.01,0,3,1795571700,BB,pinnacle,,,pin_drop,,-1.5,5967669,,
+2026-11-24T22:58:42Z,football,UEFA Champions League,Club Brugge,Liverpool FC,,,主胜,1x2,4.09,1.9091,2.4636,66.01,50,2,1795636800.0,BB,,,,push,,,,,
