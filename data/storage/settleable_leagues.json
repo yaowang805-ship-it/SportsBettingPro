@@ -1216,7 +1216,7 @@
       "success_rate": 0.0
     },
     "阿联酋甲级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1786,7 +1786,7 @@
       "success_rate": 0.0
     },
     "澳大利亚国家篮球联赛": {
-      "attempts": 2,
+      "attempts": 3,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1946,7 +1946,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-11-24T01:53:34.628055+00:00",
+  "updated": "2026-11-24T06:01:17.533226+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

@@ -12324,15 +12324,55 @@
   "spread": null,
   "bb_ts": 1795490389.656546,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 15.4,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   3,
+   2
+  ]
+ },
+ {
+  "ts": 1795494440.6954298,
+  "match_id": 5962380,
+  "market_id": 146658078,
+  "option_type": 1,
+  "sport": 5,
+  "home": "清水悠太 (日本)",
+  "away": "市川泰诚 (日本)",
+  "designation": "主胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.23,
+  "fair": 1.175,
+  "ev": 4.68,
+  "spread": null,
+  "bb_ts": 1795494438.964447,
+  "stake": 80,
+  "settled": true,
+  "result": "won",
+  "profit": 18.4,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null,
+  "final_score": [
+   2,
+   0
+  ]
  }
 ]
