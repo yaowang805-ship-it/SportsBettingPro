@@ -225,6 +225,13 @@ MANUAL_OBSERVE_RELEASE = {
     "tennis|hc|客|*|early", "tennis|ou|大|40-60%|live", "tennis|ou|大|60-80%|live",
     "tennis|ou|小|40-60%|live", "tennis|ou|小|60-80%|live", "volleyball|hc|客|40-60%|live",
     "volleyball|hc|客|60-80%|live", "volleyball|ou|小|60-80%|live",
+    # 2026-11-24 按CLV唯一标准释放(早盘, n>10且CLV正):
+    "football|hc|主|50-55%|early",       # CLV+2.7% n44
+    "ice_hockey|ou|大|45-55%|early",     # CLV+4.2% n34 (从 full_release_blocked 移出)
+    "basketball|1x2|客|>75%|early",      # CLV+3.5% n23
+    "tennis|hc|主|60-80%|early",         # CLV+4.3% n17 (从 full_release_blocked 移出)
+    "tennis|hc|客|60-80%|early",         # CLV+17.1% n14 (从 full_release_blocked 移出)
+    "tennis|hc|主|40-60%|early",         # CLV+2.9% n11 (从 full_release_blocked 移出)
 }
 
 # 2026-11-07 用户决定: 早盘三个主力盘口(独赢1x2/大小球ou/让球hc)×三运动(足球/篮球/网球) 全量放开。
@@ -255,14 +262,13 @@ FULL_RELEASE_LIVE = set(FULL_RELEASE_EARLY) - {
 # 2026-11-16 用户要求: 观察库纸面负ROI格子手动拦截(格子级, 非整盘口)。full_release 命中先查这个。
 # 来源: 早盘观察库 paper_bets 7天, n>=8 且 ROI<-10% 的格子。方向按 _release_direction 归一化。
 MANUAL_FULL_RELEASE_BLOCK = {
-    ("basketball", "1x2", "客", "<45%"),      # n=21 ROI-80.1%
-    ("ice_hockey", "ou", "大", "45-55%"),     # n=13 ROI-58.6%
-    ("tennis", "hc", "主", "60-80%"),         # n=23 ROI-54.9%
-    ("tennis", "hc", "客", "60-80%"),         # n=21 ROI-51.7%
-    ("tennis", "1x2", "客", "20-40%"),        # n=13 ROI-40.9%
+    ("basketball", "1x2", "客", "<45%"),      # n=21 ROI-80.1%  (CLV+12.7%但n=7不足, 2026-11-24 暂留)
+    ("tennis", "1x2", "客", "20-40%"),        # n=13 ROI-40.9%  (CLV+5.9%但n=4不足, 2026-11-24 暂留)
     ("basketball", "1x2", "主", "<45%"),      # n=11 ROI-29.8%
-    ("football", "1x2", "平", "20-30%"),      # n=10 ROI-12.3%
-    ("tennis", "hc", "主", "40-60%"),         # n=12 ROI-10.4%
+    ("football", "1x2", "平", "20-30%"),      # n=10 ROI-12.3%  (CLV+4.7%但n=7不足, 2026-11-24 暂留)
+    # 2026-11-24 按CLV唯一标准释放(移出拦截, 加进 MANUAL_OBSERVE_RELEASE):
+    # ice_hockey|ou|大|45-55% (CLV+4.2% n34) / tennis|hc|主|60-80% (CLV+4.3% n17)
+    # tennis|hc|客|60-80% (CLV+17.1% n14) / tennis|hc|主|40-60% (CLV+2.9% n11)
 }
 
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
@@ -315,6 +321,7 @@ MANUAL_OBSERVE_BLOCK = {
     "football|ou|大|55-60%|early",
     "football|ou|大|50-55%|early",
     "football|hc|客|55-60%|early",
+    "football|hc|客|50-55%|early",   # 2026-11-24 按CLV唯一标准撤回(CLV-17.5% n23)
     "tennis|hc|客|*|early",
     # 2026-10-25 撤实盘负格(最近一周 REAL_ROI n≥5 且 ROI<0):
     # 篮球让球客胜55-65%早盘(-33.2%/13注)、足球让球客胜55-60%(-7.0%/20注)、60-70%(-12.0%/41注)、>70%(-6.3%/6注)。
