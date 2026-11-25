@@ -36,7 +36,7 @@ PAPER_FILE = DATA_DIR / "paper_bets.json"
 CAL_TRACKING_FILE = DATA_DIR / "calibration_tracking.csv"
 DAILY_BUDGET = 20000.0  # 每日虚拟投注额 —— 已弃用(2026-10-10 注额口径修复, 不再做日归一化)
 KELLY_FRACTION = 0.5   # 与 second_level_monitor 一致(半凯利)
-MAX_STAKE = 200.0      # 2026-10-17 早盘上限200(用户充值5000定), 纸面 stake 与实盘对齐
+# 2026-11-26 铁律: 纸面单注上限永远与实盘一致。不再硬编码, 用实盘 MAX_STAKE_FRACTION × 本金动态算。
 BANKROLL_BASE_FILE = DATA_DIR / "bankroll_base.txt"
 
 
@@ -49,6 +49,11 @@ def _bankroll():
     except (OSError, ValueError):
         v = 20000.0
     return v
+
+
+def _max_stake():
+    """纸面单注上限 = 本金 × 实盘 MAX_STAKE_FRACTION(与实盘永远一致, 2026-11-26 铁律)。"""
+    return _bankroll() * _REAL_MAX_STAKE_FRACTION
 
 # 赛果窗口: 开赛后至少等这么久才结算(BB 赛果有时效窗口 ~24-48h, 太早可能还没出)
 SETTLE_AFTER_HOURS = 2.0
@@ -380,7 +385,7 @@ def _virtual_stake(fair_price: float, bb_odds: float, tier) -> float:
     p = 1.0 / fair_price
     edge = max(0.0, p * bb_odds - 1.0)
     stake = _bankroll() * KELLY_FRACTION * edge / (bb_odds - 1.0)
-    return round(min(stake, MAX_STAKE), 2)
+    return round(min(stake, _max_stake()), 2)
 
 
 def _normalize_daily_budget(dry_run: bool = False):
