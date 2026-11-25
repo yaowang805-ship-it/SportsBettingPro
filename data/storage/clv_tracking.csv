@@ -2223,3 +2223,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-25T07:55:40Z,football,San Marino Coppa Titano,SP La Fiorita,SS Cosmos,,,让球主胜,hc,1.91,1.6993,1.8263,4.58,50,3,1795635900.0,FB,,,,push,,-0.5,,,
 2026-11-25T07:57:40Z,ice_hockey,NHL,Buffalo Sabres,New York Rangers,,,大分,ou,1.92,1.7937,1.855,3.5,50,1,1795651200.0,BB/FB,,,,push,,6.0,,,
 2026-11-25T07:59:05Z,football,UEFA Champions League,Club Brugge,Liverpool FC,,,主胜,1x2,4.27,1.9009,2.4475,74.46,50,2,1795636800.0,FB,,,,push,,,,,
+2026-11-25T07:59:17Z,football,UEFA Champions League,Club Brugge,Liverpool FC,,,大球,ou,1.86,0,1.7686,5.17,0,2,1795636800,ALL,pinnacle,,,ws_scan,,3.5,5526371,,
+2026-11-25T08:01:14Z,ice_hockey,NHL,Buffalo Sabres,New York Rangers,,,大分,ou,1.92,1.7937,1.855,3.5,50,1,1795651200.0,BB/FB,,,,push,,6.0,,,
