@@ -2221,3 +2221,4 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-25T07:40:21Z,football,Kenya Premier League,3K FC,Nairobi United,,,小球,ou,1.91,0,1.8684,2.23,0,2,1795608000,ALL,pinnacle,,,ws_scan,,2.0,5968398,,
 2026-11-25T07:50:26Z,football,Japan J.League 2,Shonan Bellmare,Ventforet Kofu,,,大球,ou,1.91,0,1.8711,2.08,0,3,1795600800,ALL,pinnacle,,,ws_scan,,2.5,5164438,,
 2026-11-25T07:55:40Z,football,San Marino Coppa Titano,SP La Fiorita,SS Cosmos,,,让球主胜,hc,1.91,1.6993,1.8263,4.58,50,3,1795635900.0,FB,,,,push,,-0.5,,,
+2026-11-25T07:57:40Z,ice_hockey,NHL,Buffalo Sabres,New York Rangers,,,大分,ou,1.92,1.7937,1.855,3.5,50,1,1795651200.0,BB/FB,,,,push,,6.0,,,
