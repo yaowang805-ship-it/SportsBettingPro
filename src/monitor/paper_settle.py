@@ -23,6 +23,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent.parent
 from config.settings import DATA_DIR
 from config.logging_config import get_logger
+# 早盘单注上限与实盘单一事实来源一致(2026-11-26 用户铁律: 纸面和实盘永远保持一致)
+from src.betting.bb_real_bet_flow import MAX_STAKE_FRACTION as _REAL_MAX_STAKE_FRACTION
 
 logger = get_logger(__name__)
 
