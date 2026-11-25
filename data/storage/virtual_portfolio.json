@@ -1,5 +1,5 @@
 {
-  "balance": 13442.53,
+  "balance": 13392.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -851,6 +851,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795654800.0,
       "created_at": "2026-11-25T04:49:35.666402+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_托诺塔_尼科联_让球主胜(-05)",
+      "sport": "football",
+      "league": "博茨瓦纳超级联赛",
+      "home_team": "托诺塔",
+      "away_team": "尼科联",
+      "home_cn": "托诺塔",
+      "away_cn": "尼科联",
+      "market": "handicap",
+      "market_type": "让球主胜(-0.5)",
+      "sub_market": "hc",
+      "line": "-0.5",
+      "odds": 1.84,
+      "stake": 50,
+      "model_prob": 0.5869,
+      "ev_pct": 7.99,
+      "pin_odds": 1.5952,
+      "fair_price": 1.7039,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795626000.0,
+      "created_at": "2026-11-25T05:15:57.803862+00:00",
       "track_only": false
     }
   ],
@@ -15877,8 +15900,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-25",
-    "used": 400.0,
-    "bets": 8
+    "used": 450.0,
+    "bets": 9
   },
   "updated": null
 }
