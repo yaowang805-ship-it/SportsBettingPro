@@ -2186,3 +2186,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-25T02:16:03Z,football,UEFA Champions League,Club Brugge,Liverpool FC,,,主胜,1x2,4.13,1.9091,2.4636,67.64,50,2,1795636801.0,BB,,,,push,,,,,
 2026-11-25T02:21:08Z,football,Nicaragua Primera Division,Real Esteli FC,Rancho Santana FC,,,大球,ou,1.9,1.7143,1.8317,3.73,50,2,1795654800.0,BB/FB,,,,push,,3.5,,,
 2026-11-25T02:34:18Z,ice_hockey,NHL,Colorado Avalanche,Montreal Canadiens,,,大分,ou,1.9,1.7634,1.8229,4.23,50,1,1795660200.0,BB/FB,,,,push,,6.0,,,
+2026-11-25T02:37:14Z,ice_hockey,NHL,Buffalo Sabres,New York Rangers,,,大分,ou,1.92,0,1.855,3.5,0,1,1795651200,BB,pinnacle,,,ws_scan,,6.0,5805022,,
+2026-11-25T02:37:20Z,ice_hockey,NHL,Boston Bruins,Winnipeg Jets,,,大分,ou,1.84,1.7194,1.7742,3.71,50,1,1795651200.0,BB/FB,,,,push,,6.0,,,
