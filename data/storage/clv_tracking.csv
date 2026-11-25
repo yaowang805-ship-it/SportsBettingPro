@@ -2241,3 +2241,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-25T08:42:44Z,football,Thailand League 2,Muang Thong United,Nakhon Ratchasima FC,,,让球主胜,hc,1.91,0,1.8381,3.91,0,3,1795606200,ALL,pinnacle,,,ws_scan,,-0.5,5317749,,
 2026-11-25T08:42:54Z,football,Thailand League 2,Muang Thong United,Nakhon Ratchasima FC,,,让球主胜,hc,1.91,1.7246,1.8381,3.91,50,3,1795606200.0,BB/FB,,,,push,,-0.5,,,
 2026-11-25T08:43:21Z,ice_hockey,NHL,Buffalo Sabres,New York Rangers,,,大分,ou,1.92,1.7937,1.855,3.5,40,1,1795651200.0,BB/FB,,,,push,,6.0,,,
+2026-11-25T09:25:23Z,tennis,World Tennis - W75 Trnava Women Singles,Mia Ristic (SRB),Aneta Laboutkova (CZE),,,让盘客胜,hc,1.65,0,1.5674,5.27,0,3,1795601820,BB,pinnacle,,,ws_scan,,+1.5,5969529,,
+2026-11-25T09:25:24Z,tennis,World Tennis - W50 Ortisei Women Singles,Samira De Stefano (ITA),Julia Stusek (GER),,,让盘客胜,hc,1.49,0,1.4448,3.13,0,3,1795601220,BB,pinnacle,,,ws_scan,,+1.5,5969948,,
+2026-11-25T09:25:26Z,tennis,World Tennis - M15 Santa Cruz Men Singles,Robin Eldin (FRA),Julian Cundom (ARG),,,让盘主胜,hc,2.61,0,2.447,6.66,0,3,1795640400,BB,pinnacle,,,ws_scan,,+1.5,5972109,,
+2026-11-25T09:50:47Z,football,UEFA Champions League,Club Brugge,Liverpool FC,,,主胜,1x2,4.27,1.9009,2.4475,74.46,50,2,1795636800.0,FB,,,,push,,,,,
