@@ -281,7 +281,7 @@
       "success_rate": 0.0
     },
     "玻利维亚甲级联赛": {
-      "attempts": 11,
+      "attempts": 14,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1571,7 +1571,7 @@
       "success_rate": 0.0
     },
     "西班牙丙级联赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1621,7 +1621,7 @@
       "success_rate": 0.0
     },
     "牙买加超级联赛": {
-      "attempts": 1,
+      "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1761,7 +1761,7 @@
       "success_rate": 0.0
     },
     "NHL 美国冰球联盟": {
-      "attempts": 12,
+      "attempts": 14,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1786,7 +1786,7 @@
       "success_rate": 0.0
     },
     "澳大利亚国家篮球联赛": {
-      "attempts": 3,
+      "attempts": 4,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1944,9 +1944,19 @@
       "attempts": 2,
       "successes": 0,
       "success_rate": 0.0
+    },
+    "意大利篮球甲级联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
+    },
+    "波兰篮球联赛": {
+      "attempts": 1,
+      "successes": 0,
+      "success_rate": 0.0
     }
   },
-  "updated": "2026-11-24T06:01:17.533226+00:00",
+  "updated": "2026-11-25T01:45:01.690340+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",
