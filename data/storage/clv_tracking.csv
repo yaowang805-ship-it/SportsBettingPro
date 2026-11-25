@@ -2249,3 +2249,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-25T10:00:45Z,football,Northern Ireland Premiership,Bangor FC,Carrick Rangers FC,,,让球主胜,hc,1.95,0,1.7848,9.26,0,2,1795878000,ALL,pinnacle,,,drop,,+0.5,5949481,,
 2026-11-25T10:04:59Z,football,AFC Champions League Two,Gangwon FC,Kitchee SC,,,大球,ou,1.87,0,1.787,4.64,0,2,1795687200,BB,pinnacle,,,ws_scan,,2.5,5481288,,
 2026-11-25T10:06:03Z,basketball,NBA,Houston Rockets,Phoenix Suns,,,小分,ou,1.89,1.7752,1.8369,2.89,50,1,1795656600.0,BB/FB,,,,push,,224.5,,,
+2026-11-25T10:36:25Z,football,Indonesia League Cup,PSM Makassar,Persipura Jayapura,,,大球,ou,1.77,0,1.7145,3.24,0,3,1795608000,BB,pinnacle,,,drop,,4.0,5934362,,
+2026-11-25T10:57:43Z,football,Indonesia League Cup,Arema FC,Isenmulang Kalteng,,,大球,ou,1.74,0,1.6403,6.08,0,3,1795608000,BB,pinnacle,,,drop,,3.0,5934366,,
+2026-11-25T12:13:21Z,basketball,FIBA World Cup 2027 Europe Qualifiers,Lithuania,Serbia,,,让分主胜,hc,1.84,0,1.7543,4.89,0,3,1795710600,BB,pinnacle,,,ws_scan,,-1.5,5864400,,
+2026-11-25T12:38:45Z,ice_hockey,NHL,Seattle Kraken,Chicago Blackhawks,,,大分,ou,1.9,1.7519,1.8093,5.01,30,1,1795660800.0,BB/FB,,,,push,,6.0,,,
+2026-11-25T12:38:45Z,ice_hockey,NHL,Anaheim Ducks,San Jose Sharks,,,大分,ou,2.03,1.8333,1.8811,7.92,0,1,1795662000.0,BB/FB,,,,push,,6.5,,,

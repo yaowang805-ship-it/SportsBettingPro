@@ -1,4 +1,9 @@
 {
+  "basketball|NBA|Houston Rockets|Phoenix Suns|小分(224.5)|ou|224.5|2026-11-26": {
+    "ev": 2.89,
+    "bb": 1.89,
+    "ts": 1795601163.93876
+  },
   "basketball|NBA|Milwaukee Bucks|Brooklyn Nets|大分(230.5)|ou|230.5|2026-11-26": {
     "ev": 3.03,
     "bb": 1.9,
@@ -43,10 +48,5 @@
     "ev": 4.23,
     "bb": 1.9,
     "ts": 1795574058.429562
-  },
-  "basketball|NBA|Houston Rockets|Phoenix Suns|小分(224.5)|ou|224.5|2026-11-26": {
-    "ev": 2.89,
-    "bb": 1.89,
-    "ts": 1795601163.93876
   }
 }
