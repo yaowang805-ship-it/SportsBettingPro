@@ -15093,5 +15093,37 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795574708.419899,
+  "match_id": 5933509,
+  "market_id": 147205402,
+  "option_type": 4,
+  "sport": 7,
+  "home": "马萨特兰鹿",
+  "away": "奥布雷冈亚基人",
+  "designation": "大球",
+  "sub": "over_under",
+  "line": 8.5,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.72,
+  "fair": 1.6633,
+  "ev": 3.41,
+  "spread": null,
+  "bb_ts": 1795574707.0518668,
+  "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
