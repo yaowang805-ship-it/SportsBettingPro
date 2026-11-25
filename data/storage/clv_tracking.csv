@@ -2176,3 +2176,8 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-24T22:43:34Z,tennis,ATP Challenger - Yokohama Open,Lennon Roark Jones (JPN),David Jorda Sanchis (ESP),,,让盘客胜,hc,1.27,0,1.245,2.01,0,3,1795571700,BB,pinnacle,,,pin_drop,,-1.5,5967669,,
 2026-11-24T22:58:42Z,football,UEFA Champions League,Club Brugge,Liverpool FC,,,主胜,1x2,4.09,1.9091,2.4636,66.01,50,2,1795636800.0,BB,,,,push,,,,,
 2026-11-24T22:59:17Z,ice_hockey,NHL,Edmonton Oilers,Vegas Golden Knights,,,大分,ou,1.92,1.7813,1.8442,4.11,50,1,1795568400.0,BB/FB,,,,push,,6.0,,,
+2026-11-24T23:18:10Z,football,Japan Regional League,Veroskronos Tsuno,Nankatsu SC,,,小球,ou,1.97,0,1.8919,4.13,0,3,1795571100,ALL,pinnacle,,,drop,,3.0,6036001,,
+2026-11-24T23:33:18Z,baseball,Mexican Pacific League,Mayos de Navojoa,Tomateros De Culiacan,,,让分主胜,hc,1.85,0,1.8045,2.52,0,3,1795573800,BB,pinnacle,,,ws_scan,,+2.5,5933469,,
+2026-11-24T23:34:18Z,basketball,NBA,Orlando Magic,Detroit Pistons,,,主胜,1x2,2.1,0,1.8985,10.61,0,1,1795564800,BB,pinnacle,,,ws_scan,,,5438231,,
+2026-11-25T00:10:17Z,football,Japan Regional League,Veroskronos Tsuno,Nankatsu SC,,,让球客胜,hc,1.97,0,1.6926,16.39,0,3,1795571100,ALL,pinnacle,,,pin_drop,,+0.5,5919679,,
+2026-11-25T01:16:44Z,football,Nicaragua Primera Division,Real Esteli FC,Rancho Santana FC,,,大球,ou,1.9,1.7143,1.8317,3.73,50,2,1795654800.0,BB/FB,,,,push,,3.5,,,
