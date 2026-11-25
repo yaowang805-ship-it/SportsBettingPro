@@ -15833,16 +15833,21 @@
   "spread": null,
   "bb_ts": 1795584367.328526,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -30.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   83,
+   87
+  ],
+  "line_semantics": "pregame"
  },
  {
   "ts": 1795584368.993331,
@@ -15865,16 +15870,20 @@
   "spread": null,
   "bb_ts": 1795584367.328526,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -70.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   83,
+   87
+  ]
  },
  {
   "ts": 1795587150.075501,
