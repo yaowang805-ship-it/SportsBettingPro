@@ -2245,3 +2245,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-25T09:25:24Z,tennis,World Tennis - W50 Ortisei Women Singles,Samira De Stefano (ITA),Julia Stusek (GER),,,让盘客胜,hc,1.49,0,1.4448,3.13,0,3,1795601220,BB,pinnacle,,,ws_scan,,+1.5,5969948,,
 2026-11-25T09:25:26Z,tennis,World Tennis - M15 Santa Cruz Men Singles,Robin Eldin (FRA),Julian Cundom (ARG),,,让盘主胜,hc,2.61,0,2.447,6.66,0,3,1795640400,BB,pinnacle,,,ws_scan,,+1.5,5972109,,
 2026-11-25T09:50:47Z,football,UEFA Champions League,Club Brugge,Liverpool FC,,,主胜,1x2,4.27,1.9009,2.4475,74.46,50,2,1795636800.0,FB,,,,push,,,,,
+2026-11-25T10:00:34Z,basketball,NBA,Philadelphia 76ers,Miami Heat,,,小分,ou,1.88,0,1.816,3.52,0,1,1795644000,BB,pinnacle,,,pin_drop,,238.5,5448780,,
+2026-11-25T10:00:45Z,football,Northern Ireland Premiership,Bangor FC,Carrick Rangers FC,,,让球主胜,hc,1.95,0,1.7848,9.26,0,2,1795878000,ALL,pinnacle,,,drop,,+0.5,5949481,,
+2026-11-25T10:04:59Z,football,AFC Champions League Two,Gangwon FC,Kitchee SC,,,大球,ou,1.87,0,1.787,4.64,0,2,1795687200,BB,pinnacle,,,ws_scan,,2.5,5481288,,
+2026-11-25T10:06:03Z,basketball,NBA,Houston Rockets,Phoenix Suns,,,小分,ou,1.89,1.7752,1.8369,2.89,50,1,1795656600.0,BB/FB,,,,push,,224.5,,,
