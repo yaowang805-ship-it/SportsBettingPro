@@ -1,5 +1,5 @@
 {
-  "balance": 13332.53,
+  "balance": 13282.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -897,6 +897,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795712400.0,
       "created_at": "2026-11-26T07:21:05.597772+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_科克禾迪_1913_施安尼_让球主胜(-05)",
+      "sport": "football",
+      "league": "格鲁吉亚乙级联赛",
+      "home_team": "科克禾迪 1913",
+      "away_team": "施安尼",
+      "home_cn": "科克禾迪 1913",
+      "away_cn": "施安尼",
+      "market": "handicap",
+      "market_type": "让球主胜(-0.5)",
+      "sub_market": "hc",
+      "line": "-0.5",
+      "odds": 1.8,
+      "stake": 50,
+      "model_prob": 0.5798,
+      "ev_pct": 4.36,
+      "pin_odds": 1.6135,
+      "fair_price": 1.7248,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795694400.0,
+      "created_at": "2026-11-26T08:31:41.315779+00:00",
       "track_only": false
     }
   ],
@@ -16178,8 +16201,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-26",
-    "used": 380.0,
-    "bets": 8
+    "used": 430.0,
+    "bets": 9
   },
   "updated": null
 }
