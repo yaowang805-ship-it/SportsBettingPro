@@ -1,5 +1,5 @@
 {
-  "balance": 12992.53,
+  "balance": 12942.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1012,6 +1012,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795759200.0,
       "created_at": "2026-11-26T11:36:56.262581+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_约旦_新西兰_让分客胜(-125)",
+      "sport": "basketball",
+      "league": "FIBA篮球世界杯亚洲资格赛",
+      "home_team": "约旦",
+      "away_team": "新西兰",
+      "home_cn": "约旦",
+      "away_cn": "新西兰",
+      "market": "handicap",
+      "market_type": "让分客胜(-12.5)",
+      "sub_market": "hc",
+      "line": "-12.5",
+      "odds": 1.81,
+      "stake": 50,
+      "model_prob": 0.572,
+      "ev_pct": 3.52,
+      "pin_odds": 1.6452,
+      "fair_price": 1.7484,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795759200.0,
+      "created_at": "2026-11-26T11:57:13.393646+00:00",
       "track_only": false
     }
   ],
@@ -16353,8 +16376,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-26",
-    "used": 820.0,
-    "bets": 17
+    "used": 870.0,
+    "bets": 18
   },
   "updated": null
 }
