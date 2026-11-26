@@ -18355,16 +18355,20 @@
   "spread": null,
   "bb_ts": 1795660802.847959,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 77.4,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   3,
+   2
+  ]
  },
  {
   "ts": 1795661374.818242,
@@ -18387,16 +18391,21 @@
   "spread": null,
   "bb_ts": 1795661374.025017,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 49.6,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   4,
+   2
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1795661416.1449301,
@@ -18419,16 +18428,20 @@
   "spread": null,
   "bb_ts": 1795661413.9679968,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -80.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   5,
+   3
+  ]
  },
  {
   "ts": 1795661416.182004,
@@ -18451,16 +18464,21 @@
   "spread": null,
   "bb_ts": 1795661413.9679968,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 64.8,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   5,
+   3
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1795661989.210499,
@@ -18483,16 +18501,20 @@
   "spread": null,
   "bb_ts": 1795661988.694185,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -80.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   4,
+   2
+  ]
  },
  {
   "ts": 1795662310.044051,
@@ -18515,16 +18537,21 @@
   "spread": null,
   "bb_ts": 1795662308.447923,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 24.9,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   81,
+   73
+  ],
+  "line_semantics": "pregame"
  },
  {
   "ts": 1795662312.0130408,
@@ -18547,16 +18574,20 @@
   "spread": null,
   "bb_ts": 1795662308.447923,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 45.0,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   81,
+   73
+  ]
  },
  {
   "ts": 1795662331.206492,
@@ -18579,16 +18610,20 @@
   "spread": null,
   "bb_ts": 1795662330.945248,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 67.2,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   81,
+   73
+  ]
  },
  {
   "ts": 1795662605.21859,
@@ -18611,16 +18646,21 @@
   "spread": null,
   "bb_ts": 1795662603.365026,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "won",
+  "profit": 66.5,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   4,
+   2
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1795665384.826896,
@@ -18744,6 +18784,102 @@
   "profit": null,
   "sim_rejected": false,
   "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795667250.840833,
+  "match_id": 5938621,
+  "market_id": 147382086,
+  "option_type": 5,
+  "sport": 7,
+  "home": "阿奎拉斯德梅希卡利",
+  "away": "哈利斯科州查罗斯",
+  "designation": "小球",
+  "sub": "over_under",
+  "line": 8.5,
+  "bsc": [
+   2,
+   0
+  ],
+  "bb_odds": 1.84,
+  "fair": 1.7805,
+  "ev": 3.34,
+  "spread": null,
+  "bb_ts": 1795667250.3562722,
+  "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795667902.928661,
+  "match_id": 5938621,
+  "market_id": 147528872,
+  "option_type": 2,
+  "sport": 7,
+  "home": "阿奎拉斯德梅希卡利",
+  "away": "哈利斯科州查罗斯",
+  "designation": "让球客胜",
+  "sub": "handicap",
+  "line": 1.5,
+  "bsc": [
+   2,
+   2
+  ],
+  "bb_odds": 1.59,
+  "fair": 1.5305,
+  "ev": 3.89,
+  "spread": null,
+  "bb_ts": 1795667902.0869539,
+  "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": true,
+  "sim_reject_reason": "rejected_odds_changed",
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795668162.1708002,
+  "match_id": 5938621,
+  "market_id": 146924284,
+  "option_type": 2,
+  "sport": 7,
+  "home": "阿奎拉斯德梅希卡利",
+  "away": "哈利斯科州查罗斯",
+  "designation": "客胜",
+  "sub": "opportunities",
+  "line": null,
+  "bsc": [
+   2,
+   2
+  ],
+  "bb_odds": 2.25,
+  "fair": 2.1434,
+  "ev": 4.97,
+  "spread": null,
+  "bb_ts": 1795668161.08544,
+  "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": true,
+  "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,

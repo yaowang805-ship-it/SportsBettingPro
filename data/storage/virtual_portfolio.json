@@ -1,5 +1,5 @@
 {
-  "balance": 12942.53,
+  "balance": 12902.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1104,6 +1104,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795680000.0,
       "created_at": "2026-11-26T04:28:07.611134+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_莫丘迪中央酋长_奥拉帕联_让球客胜(+05)",
+      "sport": "football",
+      "league": "博茨瓦纳超级联赛",
+      "home_team": "莫丘迪中央酋长",
+      "away_team": "奥拉帕联",
+      "home_cn": "莫丘迪中央酋长",
+      "away_cn": "奥拉帕联",
+      "market": "handicap",
+      "market_type": "让球客胜(+0.5)",
+      "sub_market": "hc",
+      "line": "+0.5",
+      "odds": 1.79,
+      "stake": 40,
+      "model_prob": 0.619,
+      "ev_pct": 10.8,
+      "pin_odds": 1.5291,
+      "fair_price": 1.6155,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795712400.0,
+      "created_at": "2026-11-26T05:13:43.548689+00:00",
       "track_only": false
     }
   ],
@@ -16205,8 +16228,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-26",
-    "used": 250.0,
-    "bets": 5
+    "used": 290.0,
+    "bets": 6
   },
   "updated": null
 }
