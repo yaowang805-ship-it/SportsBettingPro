@@ -2325,3 +2325,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-26T08:30:12Z,football,Israel Leumit League,Hapoel Acre FC,Maccabi Herzliya,,,让球主胜,hc,1.9,0,1.8122,4.84,0,2,1795784400,ALL,pinnacle,,,ws_scan,,+0.5,6058617,,
 2026-11-26T08:30:39Z,football,Japan Football League,Honda FC,Criacao Shinjuku,,,小球,ou,1.88,0,1.7904,5.0,0,3,1795838400,ALL,pinnacle,,,ws_scan,,2.5,5950126,,
 2026-11-26T08:31:41Z,football,Georgia Erovnuli Liga 2,FC Kolkheti 1913 Poti,Sioni Bolnisi,,,让球主胜,hc,1.8,1.6135,1.7248,4.36,50,3,1795694400.0,FB,,,,push,,-0.5,,,
+2026-11-26T08:33:38Z,football,Ukraine Premier League,FC Kryvbas Kriviy Rih,Veres Rivne,,,让球客胜,hc,1.83,0,1.7079,7.15,0,2,1795950000,ALL,pinnacle,,,ws_scan,,+0.5,6075059,,
+2026-11-26T08:35:02Z,basketball,Poland Basketball 1 Liga,WKK Wroclaw,KKK Mosir Krosno,,,让分主胜,hc,1.81,0,1.7246,4.95,0,2,1795795200,ALL,pinnacle,,,ws_scan,,+1.5,5974601,,
+2026-11-26T08:46:21Z,basketball,FIBA Eurobasket 2029 Pre-Qualifiers,Norway,Belgium,,,让分客胜,hc,1.87,1.6098,1.7105,9.32,50,2,1795717800.0,BB/FB,,,,push,,-8.5,,,
