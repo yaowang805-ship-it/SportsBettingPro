@@ -2335,3 +2335,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-26T09:08:24Z,football,Cyprus 1st Division,Anorthosis Famagusta,Karmiotissa FC,,,让球主胜,hc,2.01,0,1.9157,4.92,0,2,1795881600,ALL,pinnacle,,,ws_scan,,-1,6067145,,
 2026-11-26T09:11:23Z,football,Czech Republic FNL,FC Vlasim,MFK Karvina,,,小球,ou,1.94,0,1.848,4.98,0,3,1795955400,ALL,pinnacle,,,ws_scan,,3.0,5230728,,
 2026-11-26T09:21:53Z,football,Israel Liga Alef,Hapoel Nof Hagalil FC,Maccabi Kiryat Ata Bialik,,,大球,ou,1.99,1.7937,1.9321,3.0,50,3,1795708800.0,BB/FB,,,,push,,3.0,,,
+2026-11-26T09:37:20Z,football,Israel Liga Alef,Hapoel Nof Hagalil FC,Maccabi Kiryat Ata Bialik,,,大球,ou,2.0,0,1.9321,3.51,0,3,1795708800,ALL,pinnacle,,,ws_scan,,3.0,5409531,,
+2026-11-26T09:43:16Z,basketball,FIBA Eurobasket 2029 Pre-Qualifiers,Norway,Belgium,,,让分客胜,hc,1.89,1.7092,1.8206,3.81,50,2,1795717800.0,BB/FB,,,,push,,-9.5,,,
+2026-11-26T09:43:16Z,basketball,FIBA Eurobasket 2029 Pre-Qualifiers,North Macedonia,Cyprus,,,让分主胜,hc,1.93,1.7407,1.8564,3.96,40,2,1795712400.0,BB,,,,push,,-19.5,,,

@@ -1,5 +1,5 @@
 {
-  "balance": 13232.53,
+  "balance": 13192.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -897,6 +897,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795708800.0,
       "created_at": "2026-11-26T09:21:51.015056+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_北马其顿_塞浦路斯_让分主胜(-195)",
+      "sport": "basketball",
+      "league": "FIBA欧洲篮球锦标赛2029预选资格赛",
+      "home_team": "北马其顿",
+      "away_team": "塞浦路斯",
+      "home_cn": "北马其顿",
+      "away_cn": "塞浦路斯",
+      "market": "handicap",
+      "market_type": "让分主胜(-19.5)",
+      "sub_market": "hc",
+      "line": "-19.5",
+      "odds": 1.93,
+      "stake": 40,
+      "model_prob": 0.5387,
+      "ev_pct": 3.96,
+      "pin_odds": 1.7407,
+      "fair_price": 1.8564,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795712400.0,
+      "created_at": "2026-11-26T09:43:11.605250+00:00",
       "track_only": false
     }
   ],
@@ -16238,8 +16261,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-26",
-    "used": 580.0,
-    "bets": 12
+    "used": 620.0,
+    "bets": 13
   },
   "updated": null
 }
