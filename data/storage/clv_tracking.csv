@@ -2294,3 +2294,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-26T01:20:01Z,basketball,FIBA Asia Cup 2029 Pre-Qualifiers,Mongolia,Indonesia,,,让分客胜,hc,1.83,1.6289,1.7003,7.63,50,3,1795690800.0,BB/FB,,,,push,,+5.5,,,
 2026-11-26T01:32:56Z,football,UEFA Champions League,Liverpool FC,FC Porto,,,大球,ou,1.92,0,1.8454,4.04,0,2,1796846400,BB,pinnacle,,,ws_scan,,3.0,5526399,,
 2026-11-26T01:49:24Z,football,AFC Champions League Two,Gangwon FC,Kitchee SC,,,让球主胜,hc,1.95,1.7576,1.8625,4.7,50,2,1795687200.0,FB,,,,push,,-1,,,
+2026-11-26T02:03:15Z,football,AFC Champions League Two,Gangwon FC,Kitchee SC,,,让球主胜,hc,1.9,0,1.8309,3.77,0,2,1795687200,ALL,pinnacle,,,ws_scan,,-1,5481288,,
+2026-11-26T02:13:45Z,football,Bahrain Premier League,East Riffa,Al Ittifaq Maqaba,,,小球,ou,1.83,0,1.688,8.41,0,2,1795791600,BB,pinnacle,,,ws_scan,,2.5,5799692,1,odds_changed
+2026-11-26T02:54:36Z,basketball,FIBA World Cup 2027 Asian Qualifiers,Qatar,Republic of Korea,,,让分主胜,hc,1.83,0,1.7343,5.52,0,3,1795708800,BB,pinnacle,,,pin_drop,,+11.5,5939533,,
+2026-11-26T03:00:57Z,football,AFC Champions League Two,Kuching City FC,Phnom Penh Crown,,,让球主胜,hc,1.99,1.8065,1.918,3.75,50,2,1795687200.0,FB,,,,push,,-1,,,

@@ -1,5 +1,5 @@
 {
-  "balance": 13042.53,
+  "balance": 12992.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1058,6 +1058,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795687200.0,
       "created_at": "2026-11-26T01:49:22.336725+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_古晋城_金边皇冠_让球主胜(-1)",
+      "sport": "football",
+      "league": "亚足联冠军联赛二级联赛",
+      "home_team": "古晋城",
+      "away_team": "金边皇冠",
+      "home_cn": "古晋城",
+      "away_cn": "金边皇冠",
+      "market": "handicap",
+      "market_type": "让球主胜(-1)",
+      "sub_market": "hc",
+      "line": "-1",
+      "odds": 1.99,
+      "stake": 50,
+      "model_prob": 0.5214,
+      "ev_pct": 3.75,
+      "pin_odds": 1.8065,
+      "fair_price": 1.918,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795687200.0,
+      "created_at": "2026-11-26T03:00:53.696625+00:00",
       "track_only": false
     }
   ],
@@ -16159,8 +16182,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-26",
-    "used": 150.0,
-    "bets": 3
+    "used": 200.0,
+    "bets": 4
   },
   "updated": null
 }
