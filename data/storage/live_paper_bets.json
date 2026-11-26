@@ -19283,5 +19283,37 @@
    1,
    1
   ]
+ },
+ {
+  "ts": 1795692577.5997949,
+  "match_id": 5976342,
+  "market_id": 147498812,
+  "option_type": 1,
+  "sport": 3,
+  "home": "蒙古",
+  "away": "印尼",
+  "designation": "让球主胜",
+  "sub": "handicap",
+  "line": -2.5,
+  "bsc": [
+   28,
+   24
+  ],
+  "bb_odds": 1.92,
+  "fair": 1.8136,
+  "ev": 5.87,
+  "spread": null,
+  "bb_ts": 1795692575.916894,
+  "stake": 30,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": true,
+  "sim_reject_reason": "rejected_odds_changed",
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
