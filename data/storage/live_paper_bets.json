@@ -19140,5 +19140,37 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795677493.03811,
+  "match_id": 5969579,
+  "market_id": 147500815,
+  "option_type": 2,
+  "sport": 3,
+  "home": "健行科技大学",
+  "away": "国立政治大学",
+  "designation": "让球客胜",
+  "sub": "handicap",
+  "line": -27.5,
+  "bsc": [
+   7,
+   9
+  ],
+  "bb_odds": 1.76,
+  "fair": 1.6876,
+  "ev": 4.29,
+  "spread": null,
+  "bb_ts": 1795677492.905049,
+  "stake": 70,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": true,
+  "sim_reject_reason": "rejected_odds_changed",
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]

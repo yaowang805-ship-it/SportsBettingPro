@@ -1,5 +1,5 @@
 {
-  "balance": 13382.53,
+  "balance": 13332.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -874,6 +874,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795705200.0,
       "created_at": "2026-11-26T07:10:56.790717+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_斯洛伐克_瑞士_大分(1575)",
+      "sport": "basketball",
+      "league": "FIBA欧洲篮球锦标赛2029预选资格赛",
+      "home_team": "斯洛伐克",
+      "away_team": "瑞士",
+      "home_cn": "斯洛伐克",
+      "away_cn": "瑞士",
+      "market": "over_under",
+      "market_type": "大分(157.5)",
+      "sub_market": "ou",
+      "line": "157.5",
+      "odds": 1.89,
+      "stake": 50,
+      "model_prob": 0.5474,
+      "ev_pct": 3.45,
+      "pin_odds": 1.7194,
+      "fair_price": 1.8269,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795712400.0,
+      "created_at": "2026-11-26T07:21:05.597772+00:00",
       "track_only": false
     }
   ],
@@ -16155,8 +16178,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-26",
-    "used": 330.0,
-    "bets": 7
+    "used": 380.0,
+    "bets": 8
   },
   "updated": null
 }
