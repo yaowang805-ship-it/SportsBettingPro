@@ -1,5 +1,5 @@
 {
-  "balance": 12942.53,
+  "balance": 12892.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1035,6 +1035,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795759200.0,
       "created_at": "2026-11-26T11:57:13.393646+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_布罗德美度兰_昆士兰狮队_大球(35)",
+      "sport": "football",
+      "league": "澳大利亚锦标赛-附加赛",
+      "home_team": "布罗德美度兰",
+      "away_team": "昆士兰狮队",
+      "home_cn": "布罗德美度兰",
+      "away_cn": "昆士兰狮队",
+      "market": "over_under",
+      "market_type": "大球(3.5)",
+      "sub_market": "ou",
+      "line": "3.5",
+      "odds": 1.94,
+      "stake": 50,
+      "model_prob": 0.5316,
+      "ev_pct": 3.14,
+      "pin_odds": 1.7813,
+      "fair_price": 1.881,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795768200.0,
+      "created_at": "2026-11-26T12:07:24.363423+00:00",
       "track_only": false
     }
   ],
@@ -16376,8 +16399,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-26",
-    "used": 870.0,
-    "bets": 18
+    "used": 920.0,
+    "bets": 19
   },
   "updated": null
 }
