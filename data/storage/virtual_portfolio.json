@@ -1,5 +1,5 @@
 {
-  "balance": 13142.53,
+  "balance": 13092.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -943,6 +943,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795698000.0,
       "created_at": "2026-11-26T10:04:37.783397+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_卡塔尔_韩国_让分客胜(-25)",
+      "sport": "basketball",
+      "league": "FIBA篮球世界杯亚洲资格赛",
+      "home_team": "卡塔尔",
+      "away_team": "韩国",
+      "home_cn": "卡塔尔",
+      "away_cn": "韩国",
+      "market": "handicap",
+      "market_type": "让分客胜(-2.5)",
+      "sub_market": "hc",
+      "line": "-2.5",
+      "odds": 1.94,
+      "stake": 50,
+      "model_prob": 0.5374,
+      "ev_pct": 4.26,
+      "pin_odds": 1.7143,
+      "fair_price": 1.8608,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795708800.0,
+      "created_at": "2026-11-26T10:55:25.048297+00:00",
       "track_only": false
     }
   ],
@@ -16284,8 +16307,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-26",
-    "used": 670.0,
-    "bets": 14
+    "used": 720.0,
+    "bets": 15
   },
   "updated": null
 }
