@@ -1,5 +1,5 @@
 {
-  "balance": 12892.53,
+  "balance": 12842.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1058,6 +1058,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795768200.0,
       "created_at": "2026-11-26T12:07:24.363423+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_哈拉帕城市_圣马科斯_大球(30)",
+      "sport": "football",
+      "league": "尼加拉瓜甲级联赛",
+      "home_team": "哈拉帕城市",
+      "away_team": "圣马科斯",
+      "home_cn": "哈拉帕城市",
+      "away_cn": "圣马科斯",
+      "market": "over_under",
+      "market_type": "大球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 1.97,
+      "stake": 50,
+      "model_prob": 0.5203,
+      "ev_pct": 2.5,
+      "pin_odds": 1.813,
+      "fair_price": 1.9219,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795730400.0,
+      "created_at": "2026-11-26T12:23:04.985179+00:00",
       "track_only": false
     }
   ],
@@ -16399,8 +16422,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-26",
-    "used": 920.0,
-    "bets": 19
+    "used": 970.0,
+    "bets": 20
   },
   "updated": null
 }
