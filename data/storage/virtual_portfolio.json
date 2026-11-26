@@ -1,5 +1,5 @@
 {
-  "balance": 13032.53,
+  "balance": 12982.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1081,6 +1081,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795696200.0,
       "created_at": "2026-11-26T00:46:25.186619+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_蒙古_印尼_让分客胜(+55)",
+      "sport": "basketball",
+      "league": "FIBA篮球亚洲杯2029预选资格赛",
+      "home_team": "蒙古",
+      "away_team": "印尼",
+      "home_cn": "蒙古",
+      "away_cn": "印尼",
+      "market": "handicap",
+      "market_type": "让分客胜(+5.5)",
+      "sub_market": "hc",
+      "line": "+5.5",
+      "odds": 1.83,
+      "stake": 50,
+      "model_prob": 0.5881,
+      "ev_pct": 7.63,
+      "pin_odds": 1.6289,
+      "fair_price": 1.7003,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795690800.0,
+      "created_at": "2026-11-26T01:19:58.242059+00:00",
       "track_only": false
     }
   ],
@@ -16137,8 +16160,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-26",
-    "used": 50.0,
-    "bets": 1
+    "used": 100.0,
+    "bets": 2
   },
   "updated": null
 }

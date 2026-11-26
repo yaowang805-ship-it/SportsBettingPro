@@ -18253,9 +18253,9 @@
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
-  "clv_sign": null,
-  "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_sign": -1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 722.45
  },
  {
   "ts": 1795653978.114478,
@@ -18317,8 +18317,8 @@
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
   "sbo_direction": "none",
-  "clv_sign": null,
-  "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_sign": -1,
+  "clv_anchor": "drop",
+  "clv_elapsed_s": 572.47
  }
 ]
