@@ -415,8 +415,8 @@
   "football|hc|主|60-70%|live": {
     "first_released_at": "2026-11-07T08:35:23.084537",
     "cap": 150,
-    "daily_stake": 0,
-    "daily_stake_date": "2026-11-24",
+    "daily_stake": 70,
+    "daily_stake_date": "2026-11-26",
     "limit_removed": true
   },
   "football|ht_ou|大|>70%|live": {
@@ -429,7 +429,7 @@
   "football|ou|小|60-70%|live": {
     "first_released_at": "2026-11-07T08:35:23.084426",
     "cap": 150,
-    "daily_stake": 80,
+    "daily_stake": 160,
     "daily_stake_date": "2026-11-26",
     "limit_removed": true
   },

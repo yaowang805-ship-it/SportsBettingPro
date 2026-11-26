@@ -3,29 +3,6 @@
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
-      "id": "bb_vs_pin_handicap_费城76人_波特兰开拓者_让分客胜(+45)",
-      "sport": "basketball",
-      "league": "NBA 美国职业篮球联赛",
-      "home_team": "费城76人",
-      "away_team": "波特兰开拓者",
-      "home_cn": "费城76人",
-      "away_cn": "波特兰开拓者",
-      "market": "handicap",
-      "market_type": "让分客胜(+4.5)",
-      "sub_market": "hc",
-      "line": "+4.5",
-      "odds": 1.91,
-      "stake": 50,
-      "model_prob": 0.5348,
-      "ev_pct": 2.15,
-      "pin_odds": 1.813,
-      "fair_price": 1.8698,
-      "source": "bb_vs_pinnacle",
-      "commence_time": 1795478400.0,
-      "created_at": "2026-11-23T12:09:32.556375+00:00",
-      "track_only": false
-    },
-    {
       "id": "bb_vs_pin_over_under_布拉迪斯拉发_皇家贝蒂斯_大球(35)",
       "sport": "football",
       "league": "欧洲冠军联赛",
@@ -1081,6 +1058,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795730400.0,
       "created_at": "2026-11-26T12:23:04.985179+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_海湾联_棕榈城_让球主胜(+05)",
+      "sport": "football",
+      "league": "阿联酋甲级联赛",
+      "home_team": "海湾联",
+      "away_team": "棕榈城",
+      "home_cn": "海湾联",
+      "away_cn": "棕榈城",
+      "market": "handicap",
+      "market_type": "让球主胜(+0.5)",
+      "sub_market": "hc",
+      "line": "+0.5",
+      "odds": 1.81,
+      "stake": 50,
+      "model_prob": 0.5805,
+      "ev_pct": 5.07,
+      "pin_odds": 1.6289,
+      "fair_price": 1.7226,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795783500.0,
+      "created_at": "2026-11-26T12:46:26.740030+00:00",
       "track_only": false
     }
   ],
@@ -16418,12 +16418,27 @@
       "home_cn": "巴赫拉",
       "away_cn": "萨马尔",
       "market_type": "小球(2.5)"
+    },
+    {
+      "id": "bb_vs_pin_handicap_费城76人_波特兰开拓者_让分客胜(+45)",
+      "match": "50¥ @ 1.91 (超时作废)",
+      "date": "2026-11-26T12:30:41.802462+00:00",
+      "stake": 50,
+      "odds": 1.91,
+      "profit": 0.0,
+      "status": "void",
+      "source": "bb_vs_pinnacle",
+      "league": "NBA 美国职业篮球联赛",
+      "sport": "basketball",
+      "home_cn": "费城76人",
+      "away_cn": "波特兰开拓者",
+      "market_type": "让分客胜(+4.5)"
     }
   ],
   "daily_budget": {
     "date": "2026-11-26",
-    "used": 970.0,
-    "bets": 20
+    "used": 1020.0,
+    "bets": 21
   },
   "updated": null
 }
