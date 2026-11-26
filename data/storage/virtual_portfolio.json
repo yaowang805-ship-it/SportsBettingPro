@@ -1,5 +1,5 @@
 {
-  "balance": 12992.53,
+  "balance": 12942.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1081,6 +1081,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795687200.0,
       "created_at": "2026-11-26T03:00:53.696625+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_泰国_马来西亚_小分(1505)",
+      "sport": "basketball",
+      "league": "FIBA篮球亚洲杯2029预选资格赛",
+      "home_team": "泰国",
+      "away_team": "马来西亚",
+      "home_cn": "泰国",
+      "away_cn": "马来西亚",
+      "market": "over_under",
+      "market_type": "小分(150.5)",
+      "sub_market": "ou",
+      "line": "150.5",
+      "odds": 1.86,
+      "stake": 50,
+      "model_prob": 0.5654,
+      "ev_pct": 5.16,
+      "pin_odds": 1.6993,
+      "fair_price": 1.7688,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795680000.0,
+      "created_at": "2026-11-26T04:28:07.611134+00:00",
       "track_only": false
     }
   ],
@@ -16182,8 +16205,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-26",
-    "used": 200.0,
-    "bets": 4
+    "used": 250.0,
+    "bets": 5
   },
   "updated": null
 }
