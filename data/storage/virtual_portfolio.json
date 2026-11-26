@@ -1,5 +1,5 @@
 {
-  "balance": 13232.53,
+  "balance": 13182.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -943,6 +943,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795717800.0,
       "created_at": "2026-11-26T08:46:16.591200+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_挪威_比利时_让分客胜(-95)",
+      "sport": "basketball",
+      "league": "FIBA欧洲篮球锦标赛2029预选资格赛",
+      "home_team": "挪威",
+      "away_team": "比利时",
+      "home_cn": "挪威",
+      "away_cn": "比利时",
+      "market": "handicap",
+      "market_type": "让分客胜(-9.5)",
+      "sub_market": "hc",
+      "line": "-9.5",
+      "odds": 1.93,
+      "stake": 50,
+      "model_prob": 0.5775,
+      "ev_pct": 11.45,
+      "pin_odds": 1.6289,
+      "fair_price": 1.7317,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795717800.0,
+      "created_at": "2026-11-26T08:53:51.576224+00:00",
       "track_only": false
     }
   ],
@@ -16224,8 +16247,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-26",
-    "used": 480.0,
-    "bets": 10
+    "used": 530.0,
+    "bets": 11
   },
   "updated": null
 }
