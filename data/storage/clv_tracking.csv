@@ -2393,7 +2393,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-26T16:09:00Z,basketball,FIBA World Cup 2027 Asian Qualifiers,Syria,Philippines,,,让分客胜,hc,1.88,0,1.8309,2.68,0,3,1795780800,BB,pinnacle,,,pin_drop,,-22.5,5944619,,
 2026-11-26T16:24:09Z,basketball,Finland Basketball Division 1A,Lappeenrannan NMKY,Torpan Pojat,,,客胜,1x2,1.41,0,1.3487,4.55,0,3,1795710600,ALL,pinnacle,,,pin_drop,,,5939541,,
 2026-11-26T17:59:03Z,basketball,FIBA World Cup 2027 Americas Qualifiers,Uruguay,Canada,,,让分客胜,hc,1.86,0,1.7597,5.7,0,3,1795731000,BB,pinnacle,,,ws_scan,,-9.5,5864401,,
-2026-11-26T19:21:34Z,basketball,Japan B.League One,Yokohama Excellence,Gifu Swoops,,,让分主胜,hc,1.87,0,1.7642,6.0,0,3,1795773900,BB,pinnacle,,,ws_scan,,-18.5,5326797,,
+2026-11-26T19:21:34Z,basketball,Japan B.League One,Yokohama Excellence,Gifu Swoops,,,让分主胜,hc,1.87,0,1.7642,6.0,0,3,1795773900,BB,pinnacle,,,ws_scan,,-18.5,5326797,1,odds_changed
 2026-11-26T19:23:41Z,football,England National League,Boreham Wood FC,Gateshead FC,,,大球,ou,1.93,0,1.8754,2.91,0,3,1795878000,ALL,pinnacle,,,ws_scan,,4.0,5321328,,
 2026-11-26T19:28:17Z,football,Israel Liga Bet,Maccabi Ashkelon,Maccabi Ironi Netivot,,,让球主胜,hc,1.82,0,1.7463,4.22,0,4,1795721400,BB,pinnacle,,,ws_scan,,+2,5972552,,
 2026-11-26T20:14:10Z,football,Japan Football League,YSCC Yokohama,Veertien Mie,,,小球,ou,1.98,0,1.9016,4.12,0,3,1795838400,ALL,pinnacle,,,ws_scan,,2.5,5950128,,
@@ -2452,3 +2452,5 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-27T07:53:59Z,football,Israel Liga Bet,SC Hapoel Lod,Ironi Beit Dagan,,,让球主胜,hc,1.94,1.7407,1.865,4.02,50,4,1795779000.0,BB,,,,push,,+1,,,
 2026-11-27T08:05:06Z,ice_hockey,NHL,Boston Bruins,Toronto Maple Leafs,,,大分,ou,1.81,1.6849,1.745,3.72,50,1,1795802400.0,BB/FB,,,,push,,6.0,,,
 2026-11-27T08:05:06Z,ice_hockey,NHL,Buffalo Sabres,Pittsburgh Penguins,,,大分,ou,1.83,1.6803,1.7366,5.38,50,1,1795827600.0,BB/FB,,,,push,,6.0,,,
+2026-11-27T08:09:00Z,football,Vietnam League 2,Hue FC,Long An FC,,,让球主胜,hc,1.8,0,1.7024,5.73,0,3,1795768200,ALL,pinnacle,,,ws_scan,,+0.5,6058086,,
+2026-11-27T08:11:43Z,basketball,FIBA Asia Cup 2029 Pre-Qualifiers,Hong Kong,Mongolia,,,小分,ou,1.91,1.7692,1.8449,3.53,50,3,1795777200.0,BB/FB,,,,push,,159.5,,,
