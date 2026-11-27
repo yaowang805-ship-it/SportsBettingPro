@@ -1,5 +1,5 @@
 {
-  "balance": 12232.53,
+  "balance": 12182.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1357,6 +1357,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795838400.0,
       "created_at": "2026-11-27T05:43:59.206380+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_叙利亚_菲律宾_小分(1615)",
+      "sport": "basketball",
+      "league": "FIBA篮球世界杯2027亚洲资格赛",
+      "home_team": "叙利亚",
+      "away_team": "菲律宾",
+      "home_cn": "叙利亚",
+      "away_cn": "菲律宾",
+      "market": "over_under",
+      "market_type": "小分(161.5)",
+      "sub_market": "ou",
+      "line": "161.5",
+      "odds": 1.83,
+      "stake": 50,
+      "model_prob": 0.5665,
+      "ev_pct": 3.67,
+      "pin_odds": 1.6667,
+      "fair_price": 1.7652,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795780800.0,
+      "created_at": "2026-11-27T05:58:10.841122+00:00",
       "track_only": false
     }
   ],
@@ -16713,8 +16736,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-27",
-    "used": 610.0,
-    "bets": 12
+    "used": 660.0,
+    "bets": 13
   },
   "updated": null
 }
