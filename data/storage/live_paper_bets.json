@@ -21792,5 +21792,37 @@
   "clv_sign": null,
   "clv_anchor": null,
   "clv_elapsed_s": null
+ },
+ {
+  "ts": 1795758471.878743,
+  "match_id": 5968224,
+  "market_id": 147854728,
+  "option_type": 4,
+  "sport": 1,
+  "home": "班加罗尔梦幻联",
+  "away": "班加罗尔市",
+  "designation": "大球",
+  "sub": "over_under",
+  "line": 3.0,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.85,
+  "fair": 1.7452,
+  "ev": 6.01,
+  "spread": null,
+  "bb_ts": 1795758470.5983481,
+  "stake": 60,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null
  }
 ]
