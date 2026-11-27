@@ -1,5 +1,5 @@
 {
-  "balance": 12172.53,
+  "balance": 12122.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1426,6 +1426,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795794000.0,
       "created_at": "2026-11-27T12:08:55.550544+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_比瑟汀_ES扎兹斯_让球主胜(-05)",
+      "sport": "football",
+      "league": "突尼斯甲级联赛",
+      "home_team": "比瑟汀",
+      "away_team": "ES扎兹斯",
+      "home_cn": "比瑟汀",
+      "away_cn": "ES扎兹斯",
+      "market": "handicap",
+      "market_type": "让球主胜(-0.5)",
+      "sub_market": "hc",
+      "line": "-0.5",
+      "odds": 2.03,
+      "stake": 50,
+      "model_prob": 0.5148,
+      "ev_pct": 4.51,
+      "pin_odds": 1.8403,
+      "fair_price": 1.9424,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795870800.0,
+      "created_at": "2026-11-27T22:41:59.690580+00:00",
       "track_only": false
     }
   ],
@@ -16886,9 +16909,9 @@
     }
   ],
   "daily_budget": {
-    "date": "2026-11-27",
-    "used": 1080.0,
-    "bets": 22
+    "date": "2026-11-28",
+    "used": 50.0,
+    "bets": 1
   },
   "updated": null
 }
