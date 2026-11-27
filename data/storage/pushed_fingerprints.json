@@ -1,14 +1,4 @@
 {
-  "basketball|FIBA Asia Cup 2029 Pre-Qualifiers|Mongolia|Indonesia|让分客胜(+5.5)|hc|+5.5|2026-11-26": {
-    "ev": 7.63,
-    "bb": 1.83,
-    "ts": 1795656001.748705
-  },
-  "basketball|FIBA Asia Cup 2029 Pre-Qualifiers|Thailand|Malaysia|小分(150.5)|ou|150.5|2026-11-26": {
-    "ev": 5.16,
-    "bb": 1.86,
-    "ts": 1795667291.494326
-  },
   "basketball|FIBA Eurobasket 2029 Pre-Qualifiers|North Macedonia|Cyprus|让分主胜(-19.5)|hc|-19.5|2026-11-27": {
     "ev": 3.96,
     "bb": 1.93,
@@ -24,6 +14,11 @@
     "bb": 1.89,
     "ts": 1795677670.3350341
   },
+  "basketball|FIBA World Cup 2027 Asian Qualifiers|Iran|Australia|让分客胜(-13.5)|hc|-13.5|2026-11-27": {
+    "ev": 3.71,
+    "bb": 1.81,
+    "ts": 1795742653.1657448
+  },
   "basketball|FIBA World Cup 2027 Asian Qualifiers|Jordan|New Zealand|让分客胜(-12.5)|hc|-12.5|2026-11-27": {
     "ev": 3.52,
     "bb": 1.81,
@@ -33,26 +28,6 @@
     "ev": 4.26,
     "bb": 1.94,
     "ts": 1795690529.815999
-  },
-  "basketball|FIBA World Cup 2027 Asian Qualifiers|Saudi Arabia|China|大分(159.5)|ou|159.5|2026-11-26": {
-    "ev": 3.87,
-    "bb": 2.01,
-    "ts": 1795687481.658838
-  },
-  "basketball|NBA|Houston Rockets|Phoenix Suns|小分(224.5)|ou|224.5|2026-11-26": {
-    "ev": 2.89,
-    "bb": 1.89,
-    "ts": 1795601163.93876
-  },
-  "basketball|NBA|Milwaukee Bucks|Brooklyn Nets|大分(230.5)|ou|230.5|2026-11-26": {
-    "ev": 3.03,
-    "bb": 1.9,
-    "ts": 1795582177.519586
-  },
-  "football|AFC Champions League Two|Kuching City FC|Phnom Penh Crown|让球主胜(-1)|hc|-1|2026-11-26": {
-    "ev": 3.75,
-    "bb": 1.99,
-    "ts": 1795662057.3273978
   },
   "football|Australian Championship-Playoff|Broadmeadow Magic FC|Queensland Lions FC|大球(3.5)|ou|3.5|2026-11-27": {
     "ev": 3.14,
@@ -69,11 +44,6 @@
     "bb": 1.97,
     "ts": 1795695789.327158
   },
-  "football|Nicaragua Primera Division|Real Esteli FC|Rancho Santana FC|大球(3.5)|ou|3.5|2026-11-26": {
-    "ev": 3.73,
-    "bb": 1.9,
-    "ts": 1795573268.162077
-  },
   "football|UAE Division 1|Gulf United|Palm City|让球主胜(+0.5)|hc|+0.5|2026-11-27": {
     "ev": 5.07,
     "bb": 1.81,
@@ -88,20 +58,5 @@
     "ev": 11.66,
     "bb": 1.91,
     "ts": 1795693024.422694
-  },
-  "ice_hockey|NHL|Boston Bruins|Winnipeg Jets|大分(6.0)|ou|6.0|2026-11-26": {
-    "ev": 3.71,
-    "bb": 1.84,
-    "ts": 1795575063.764344
-  },
-  "ice_hockey|NHL|Colorado Avalanche|Montreal Canadiens|大分(6.0)|ou|6.0|2026-11-26": {
-    "ev": 4.23,
-    "bb": 1.9,
-    "ts": 1795574058.429562
-  },
-  "basketball|FIBA World Cup 2027 Asian Qualifiers|Iran|Australia|让分客胜(-13.5)|hc|-13.5|2026-11-27": {
-    "ev": 3.71,
-    "bb": 1.81,
-    "ts": 1795742653.1657448
   }
 }
