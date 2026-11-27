@@ -1,5 +1,5 @@
 {
-  "balance": 12602.53,
+  "balance": 12522.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1196,6 +1196,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795833000.0,
       "created_at": "2026-11-27T03:42:07.029896+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_1x2_海关足_墨西哥独立_客胜",
+      "sport": "football",
+      "league": "墨西哥TDP联赛",
+      "home_team": "海关足",
+      "away_team": "墨西哥独立",
+      "home_cn": "海关足",
+      "away_cn": "墨西哥独立",
+      "market": "1x2",
+      "market_type": "客胜",
+      "sub_market": "1x2",
+      "line": "",
+      "odds": 4.8,
+      "stake": 80,
+      "model_prob": 0.3091,
+      "ev_pct": 48.39,
+      "pin_odds": 2.21,
+      "fair_price": 3.2348,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795795200.0,
+      "created_at": "2026-11-27T04:01:24.761362+00:00",
       "track_only": false
     }
   ],
@@ -16552,8 +16575,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-27",
-    "used": 240.0,
-    "bets": 5
+    "used": 320.0,
+    "bets": 6
   },
   "updated": null
 }
