@@ -21786,16 +21786,21 @@
   "spread": null,
   "bb_ts": 1795757892.1775959,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -30.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   0,
+   0
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1795758471.878743,
@@ -21818,16 +21823,20 @@
   "spread": null,
   "bb_ts": 1795758470.5983481,
   "stake": 60,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -60.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": 1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 2456.59
+  "clv_elapsed_s": 2456.59,
+  "final_score": [
+   0,
+   0
+  ]
  },
  {
   "ts": 1795759943.468533,
@@ -21988,5 +21997,37 @@
   "clv_sign": -1,
   "clv_anchor": "drop",
   "clv_elapsed_s": 11.37
+ },
+ {
+  "ts": 1795765120.568704,
+  "match_id": 5979842,
+  "market_id": 147877172,
+  "option_type": 1,
+  "sport": 5,
+  "home": "莉迪亚·帕纳吉奥蒂杜 (希腊)",
+  "away": "乔吉娅.佩多内 (意大利)",
+  "designation": "让局主胜",
+  "sub": "handicap_games",
+  "line": 6.5,
+  "bsc": [
+   0,
+   0
+  ],
+  "bb_odds": 1.8,
+  "fair": 1.7398,
+  "ev": 3.46,
+  "spread": null,
+  "bb_ts": 1795765119.655804,
+  "stake": 60,
+  "settled": false,
+  "result": null,
+  "profit": null,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": "no_outcome",
+  "clv_elapsed_s": null
  }
 ]
