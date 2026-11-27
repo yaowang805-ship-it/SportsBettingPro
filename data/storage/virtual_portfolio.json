@@ -1,5 +1,5 @@
 {
-  "balance": 12022.53,
+  "balance": 11872.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1495,6 +1495,75 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795874400.0,
       "created_at": "2026-11-27T22:43:36.240247+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_根斯堡_艾尔佛莱顿_让球主胜(-05)",
+      "sport": "football",
+      "league": "英格兰北部超级联赛",
+      "home_team": "根斯堡",
+      "away_team": "艾尔佛莱顿",
+      "home_cn": "根斯堡",
+      "away_cn": "艾尔佛莱顿",
+      "market": "handicap",
+      "market_type": "让球主胜(-0.5)",
+      "sub_market": "hc",
+      "line": "-0.5",
+      "odds": 1.94,
+      "stake": 50,
+      "model_prob": 0.5629,
+      "ev_pct": 9.2,
+      "pin_odds": 1.6849,
+      "fair_price": 1.7765,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795878000.0,
+      "created_at": "2026-11-27T22:47:38.687465+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_伊斯特雷格_夏利法斯_让球主胜(+05)",
+      "sport": "football",
+      "league": "英格兰足球议会全国联赛",
+      "home_team": "伊斯特雷格",
+      "away_team": "夏利法斯",
+      "home_cn": "伊斯特雷格",
+      "away_cn": "夏利法斯",
+      "market": "handicap",
+      "market_type": "让球主胜(+0.5)",
+      "sub_market": "hc",
+      "line": "+0.5",
+      "odds": 1.91,
+      "stake": 50,
+      "model_prob": 0.5576,
+      "ev_pct": 6.5,
+      "pin_odds": 1.7246,
+      "fair_price": 1.7935,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795878000.0,
+      "created_at": "2026-11-27T22:47:38.687534+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_兰格勒奥_莫斯科尼亚_让球主胜(-05)",
+      "sport": "football",
+      "league": "西班牙丙级联赛",
+      "home_team": "兰格勒奥",
+      "away_team": "莫斯科尼亚",
+      "home_cn": "兰格勒奥",
+      "away_cn": "莫斯科尼亚",
+      "market": "handicap",
+      "market_type": "让球主胜(-0.5)",
+      "sub_market": "hc",
+      "line": "-0.5",
+      "odds": 1.79,
+      "stake": 50,
+      "model_prob": 0.5962,
+      "ev_pct": 6.71,
+      "pin_odds": 1.5882,
+      "fair_price": 1.6774,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795885200.0,
+      "created_at": "2026-11-27T22:47:38.687584+00:00",
       "track_only": false
     }
   ],
@@ -16956,8 +17025,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-28",
-    "used": 150.0,
-    "bets": 3
+    "used": 300.0,
+    "bets": 6
   },
   "updated": null
 }
