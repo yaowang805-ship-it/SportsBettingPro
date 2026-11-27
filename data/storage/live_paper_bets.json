@@ -21567,16 +21567,20 @@
   "spread": null,
   "bb_ts": 1795746829.4597208,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -80.0,
   "sim_rejected": true,
   "sim_reject_reason": "rejected_odds_changed",
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": 1,
   "clv_anchor": "drop",
-  "clv_elapsed_s": 19.92
+  "clv_elapsed_s": 19.92,
+  "final_score": [
+   0,
+   2
+  ]
  },
  {
   "ts": 1795748913.970526,

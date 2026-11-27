@@ -2426,3 +2426,6 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-27T04:17:19Z,basketball,NBA,Portland Trail Blazers,Golden State Warriors,,,让分主胜,hc,1.93,0,1.8776,2.79,0,1,1795833000,BB,pinnacle,,,ws_scan,,-8.5,5438263,,
 2026-11-27T04:25:44Z,basketball,NBA,Indiana Pacers,Philadelphia 76ers,,,小分,ou,1.95,0,1.8515,5.32,0,1,1795825800,BB,pinnacle,,,drop,,232.5,5438269,1,odds_changed
 2026-11-27T04:33:43Z,basketball,FIBA World Cup 2027 Asian Qualifiers,Iran,Australia,,,让分客胜,hc,1.87,1.6757,1.7847,4.78,50,3,1795770000.0,BB/FB,,,,push,,-15.5,,,
+2026-11-27T04:35:01Z,basketball,FIBA World Cup 2027 Asian Qualifiers,Iran,Australia,,,让分客胜,hc,1.87,0,1.7847,4.78,0,3,1795770000,BB,pinnacle,,,pin_drop,,-15.5,5944587,,
+2026-11-27T04:44:08Z,ice_hockey,NHL,Boston Bruins,Toronto Maple Leafs,,,大分,ou,1.81,1.6897,1.7478,3.56,50,1,1795802400.0,BB/FB,,,,push,,6.0,,,
+2026-11-27T04:44:08Z,basketball,Taiwan Professional Basketball League,Formosa Dreamers,TaiwanBeer Leopards,,,让分主胜,hc,1.92,1.7353,1.8447,4.08,40,3,1795777200.0,BB/FB,,,,push,,-3.5,,,
