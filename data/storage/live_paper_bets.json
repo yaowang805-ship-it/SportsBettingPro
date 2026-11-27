@@ -21203,16 +21203,20 @@
   "spread": null,
   "bb_ts": 1795730529.843169,
   "stake": 70,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -70.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   0,
+   1
+  ]
  },
  {
   "ts": 1795732688.31795,
@@ -21235,16 +21239,20 @@
   "spread": null,
   "bb_ts": 1795732687.918271,
   "stake": 80,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -80.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   0,
+   1
+  ]
  },
  {
   "ts": 1795732689.3861,
@@ -21267,16 +21275,21 @@
   "spread": null,
   "bb_ts": 1795732687.918271,
   "stake": 30,
-  "settled": false,
-  "result": null,
-  "profit": null,
+  "settled": true,
+  "result": "lost",
+  "profit": -30.0,
   "sim_rejected": false,
   "sim_reject_reason": null,
   "anchor": "pin",
   "sbo_direction": "none",
   "clv_sign": null,
   "clv_anchor": null,
-  "clv_elapsed_s": null
+  "clv_elapsed_s": null,
+  "final_score": [
+   0,
+   1
+  ],
+  "line_semantics": "relative"
  },
  {
   "ts": 1795733004.7775922,
@@ -21298,6 +21311,42 @@
   "ev": 3.98,
   "spread": null,
   "bb_ts": 1795733004.0964322,
+  "stake": 30,
+  "settled": true,
+  "result": "won",
+  "profit": 87.3,
+  "sim_rejected": false,
+  "sim_reject_reason": null,
+  "anchor": "pin",
+  "sbo_direction": "none",
+  "clv_sign": null,
+  "clv_anchor": null,
+  "clv_elapsed_s": null,
+  "final_score": [
+   0,
+   1
+  ]
+ },
+ {
+  "ts": 1795738994.743967,
+  "match_id": 5960588,
+  "market_id": 147805167,
+  "option_type": 1,
+  "sport": 3,
+  "home": "委内瑞拉",
+  "away": "厄瓜多尔",
+  "designation": "让球主胜",
+  "sub": "handicap",
+  "line": -11.5,
+  "bsc": [
+   27,
+   23
+  ],
+  "bb_odds": 1.8,
+  "fair": 1.7177,
+  "ev": 4.79,
+  "spread": null,
+  "bb_ts": 1795738994.134033,
   "stake": 30,
   "settled": false,
   "result": null,
