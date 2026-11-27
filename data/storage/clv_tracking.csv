@@ -2390,7 +2390,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-26T15:31:43Z,basketball,FIBA World Cup 2027 Asian Qualifiers,Qatar,Republic of Korea,,,小分,ou,1.85,0,1.8072,2.37,0,3,1795708800,BB,pinnacle,,,pin_drop,,157.5,5939533,1,odds_changed
 2026-11-26T15:31:43Z,basketball,Russia Basketball Super League,Rusichi Kursk,BC Tambov,,,小分,ou,1.88,0,1.7067,10.15,0,2,1795710600,ALL,pinnacle,,,pin_drop,,155.5,5546982,,
 2026-11-26T16:05:36Z,basketball,Russia Basketball Super League,Rusichi Kursk,BC Tambov,,,让分主胜,hc,1.81,0,1.6756,8.02,0,2,1795710600,ALL,pinnacle,,,drop,,+1.5,5546982,,
-2026-11-26T16:09:00Z,basketball,FIBA World Cup 2027 Asian Qualifiers,Syria,Philippines,,,让分客胜,hc,1.88,0,1.8309,2.68,0,3,1795780800,BB,pinnacle,,,pin_drop,,-22.5,5944619,,
+2026-11-26T16:09:00Z,basketball,FIBA World Cup 2027 Asian Qualifiers,Syria,Philippines,,,让分客胜,hc,1.88,0,1.8309,2.68,0,3,1795780800,BB,pinnacle,,,pin_drop,,-22.5,5944619,1,odds_changed
 2026-11-26T16:24:09Z,basketball,Finland Basketball Division 1A,Lappeenrannan NMKY,Torpan Pojat,,,客胜,1x2,1.41,0,1.3487,4.55,0,3,1795710600,ALL,pinnacle,,,pin_drop,,,5939541,,
 2026-11-26T17:59:03Z,basketball,FIBA World Cup 2027 Americas Qualifiers,Uruguay,Canada,,,让分客胜,hc,1.86,0,1.7597,5.7,0,3,1795731000,BB,pinnacle,,,ws_scan,,-9.5,5864401,,
 2026-11-26T19:21:34Z,basketball,Japan B.League One,Yokohama Excellence,Gifu Swoops,,,让分主胜,hc,1.87,0,1.7642,6.0,0,3,1795773900,BB,pinnacle,,,ws_scan,,-18.5,5326797,1,odds_changed
@@ -2406,7 +2406,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-26T21:57:47Z,football,Nicaragua Primera Division,ART Municipal Jalapa,San Marcos FC,,,大球,ou,1.86,0,1.8054,3.02,0,2,1795730400,ALL,pinnacle,,,pin_drop,,3.0,5962877,,
 2026-11-26T22:04:05Z,football,Wales Cymru Premier,Flint Town United,The New Saints FC,,,主胜,1x2,25.0,0,22.6757,10.25,0,2,1795808700,ALL,pinnacle,,,ws_scan,,,5212211,,
 2026-11-26T22:12:03Z,football,Turkey Super Lig,Caykur Rizespor,Kasimpasa,,,让球客胜,hc,1.92,0,1.8548,3.52,0,2,1795798800,ALL,pinnacle,,,ws_scan,,+0.5,6057113,,
-2026-11-26T22:24:43Z,basketball,FIBA World Cup 2027 Asian Qualifiers,Syria,Philippines,,,让分主胜,hc,1.81,0,1.6926,6.94,0,3,1795780800,BB,pinnacle,,,drop,,+24.5,5944619,,
+2026-11-26T22:24:43Z,basketball,FIBA World Cup 2027 Asian Qualifiers,Syria,Philippines,,,让分主胜,hc,1.81,0,1.6926,6.94,0,3,1795780800,BB,pinnacle,,,drop,,+24.5,5944619,1,odds_changed
 2026-11-26T22:33:02Z,football,Belarus Premier League,Naftan Novopolotsk,FC Dinamo Minsk,,,主胜,1x2,25.0,0,22.6757,10.25,0,3,1795860000,ALL,pinnacle,,,ws_scan,,,4633614,,
 2026-11-26T22:48:54Z,football,Vietnam League 1,Nam Dinh FC,Cong An Ha Noi FC,,,大球,ou,1.87,1.7353,1.8211,2.69,50,2,1795777200.0,BB/FB,,,,push,,2.5,,,
 2026-11-26T22:54:33Z,football,Vietnam League 1,Nam Dinh FC,Cong An Ha Noi FC,,,大球,ou,1.87,0,1.8211,2.69,0,2,1795777200,ALL,pinnacle,,,ws_scan,,2.5,6083054,,
@@ -2438,7 +2438,7 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-27T05:50:02Z,ice_hockey,NHL,Boston Bruins,Toronto Maple Leafs,,,大分,ou,1.81,1.6897,1.7478,3.56,50,1,1795802400.0,BB/FB,,,,push,,6.0,,,
 2026-11-27T05:50:02Z,ice_hockey,NHL,Buffalo Sabres,Pittsburgh Penguins,,,大分,ou,1.83,1.6803,1.7366,5.38,50,1,1795827600.0,BB/FB,,,,push,,6.0,,,
 2026-11-27T05:58:15Z,basketball,FIBA World Cup 2027 Asian Qualifiers,Syria,Philippines,,,小分,ou,1.83,1.6667,1.7652,3.67,50,3,1795780800.0,BB/FB,,,,push,,161.5,,,
-2026-11-27T06:00:06Z,basketball,FIBA World Cup 2027 Asian Qualifiers,Syria,Philippines,,,小分,ou,1.83,0,1.7652,3.67,0,3,1795780800,BB,pinnacle,,,pin_drop,,161.5,5944619,,
+2026-11-27T06:00:06Z,basketball,FIBA World Cup 2027 Asian Qualifiers,Syria,Philippines,,,小分,ou,1.83,0,1.7652,3.67,0,3,1795780800,BB,pinnacle,,,pin_drop,,161.5,5944619,1,odds_changed
 2026-11-27T06:02:13Z,football,Israel Premier League,Beitar Jerusalem FC,Hapoel Jerusalem FC,,,客胜,1x2,6.9,0,3.8151,80.86,0,2,1795889700,ALL,pinnacle,,,pin_drop,,,5954854,,
 2026-11-27T06:04:09Z,football,Chile Primera Division,Coquimbo Unido,Deportes Limache,,,让球主胜,hc,1.87,0,1.8272,2.34,0,2,1795899600,ALL,pinnacle,,,ws_scan,,-0.5,5955595,,
 2026-11-27T06:05:58Z,football,England National League North,Oxford City,Southport FC,,,小球,ou,1.89,0,1.7215,9.79,0,3,1795878000,ALL,pinnacle,,,ws_scan,,3.0,5321700,,
@@ -2461,3 +2461,11 @@ timestamp,sport,league,home,away,home_pin,away_pin,designation,sub_market,bb_odd
 2026-11-27T09:14:27Z,ice_hockey,NHL,Boston Bruins,Toronto Maple Leafs,,,大分,ou,1.81,1.6849,1.745,3.72,50,1,1795802400.0,BB/FB,,,,push,,6.0,,,
 2026-11-27T09:14:27Z,ice_hockey,NHL,Buffalo Sabres,Pittsburgh Penguins,,,大分,ou,1.83,1.6803,1.7366,5.38,20,1,1795827600.0,BB/FB,,,,push,,6.0,,,
 2026-11-27T09:47:37Z,football,Turkey Super Lig,Caykur Rizespor,Kasimpasa,,,客胜,1x2,3.39,1.6944,2.04,66.18,80,2,1795798800.0,FB,,,,push,,,,,
+2026-11-27T10:28:18Z,basketball,FIBA Asia Cup 2029 Pre-Qualifiers,Hong Kong,Mongolia,,,让分客胜,hc,2.01,0,1.9416,3.52,0,3,1795777200,ALL,pinnacle,,,drop,,-5.5,6114109,,
+2026-11-27T10:38:16Z,football,Vietnam League 2,Thai Nguyen,Hung Yen,,,小球,ou,1.87,0,1.8045,3.63,0,3,1795777200,BB,pinnacle,,,drop,,2.5,5944701,,
+2026-11-27T11:00:41Z,football,Israel Liga Bet,SC Hapoel Lod,Ironi Beit Dagan,,,大球,ou,1.83,0,1.5977,14.54,0,4,1795779000,ALL,pinnacle,,,pin_drop,,3.0,5979774,,
+2026-11-27T11:31:36Z,football,Jordan Pro League,Shabab Al Ordon,Al Salt,,,让球客胜,hc,2.01,0,1.9268,4.32,0,2,1795788000,ALL,pinnacle,,,pin_drop,,-0.5,5944771,,
+2026-11-27T11:33:15Z,basketball,FIBA Asia Cup 2029 Pre-Qualifiers,Palestine,United Arab Emirates,,,让分主胜,hc,1.89,0,1.8277,3.41,0,3,1795802400,ALL,pinnacle,,,drop,,+2.5,5982235,,
+2026-11-27T11:58:19Z,basketball,FIBA Asia Cup 2029 Pre-Qualifiers,Sri Lanka,Bahrain,,,大分,ou,1.81,0,1.7688,2.33,0,3,1795780800,ALL,pinnacle,,,drop,,165.5,5979809,,
+2026-11-27T11:59:26Z,football,Wales Cymru Championship South,Newport City FC,Pontardawe Town FC,,,让球主胜,hc,1.92,1.7407,1.8564,3.43,50,2,1795807800.0,FB,,,,push,,-0.5,,,
+2026-11-27T11:59:26Z,football,Wales Cymru Premier,Cambrian United,Trefelin BGC,,,大球,ou,1.95,1.7463,1.8684,4.37,10,2,1795808700.0,BB/FB,,,,push,,3.0,,,

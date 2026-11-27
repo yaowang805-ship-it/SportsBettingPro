@@ -1,5 +1,5 @@
 {
-  "balance": 12272.53,
+  "balance": 12212.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1357,6 +1357,52 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795798800.0,
       "created_at": "2026-11-27T09:47:34.718075+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_纽波特城_普塔达韦城_让球主胜(-05)",
+      "sport": "football",
+      "league": "威尔士冠军联赛南部组",
+      "home_team": "纽波特城",
+      "away_team": "普塔达韦城",
+      "home_cn": "纽波特城",
+      "away_cn": "普塔达韦城",
+      "market": "handicap",
+      "market_type": "让球主胜(-0.5)",
+      "sub_market": "hc",
+      "line": "-0.5",
+      "odds": 1.92,
+      "stake": 50,
+      "model_prob": 0.5387,
+      "ev_pct": 3.43,
+      "pin_odds": 1.7407,
+      "fair_price": 1.8564,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795807800.0,
+      "created_at": "2026-11-27T11:59:21.777721+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_over_under_卡姆比利安联_特芬琳_大球(30)",
+      "sport": "football",
+      "league": "威尔士超级联赛",
+      "home_team": "卡姆比利安联",
+      "away_team": "特芬琳",
+      "home_cn": "卡姆比利安联",
+      "away_cn": "特芬琳",
+      "market": "over_under",
+      "market_type": "大球(3.0)",
+      "sub_market": "ou",
+      "line": "3.0",
+      "odds": 1.95,
+      "stake": 10,
+      "model_prob": 0.5352,
+      "ev_pct": 4.37,
+      "pin_odds": 1.7463,
+      "fair_price": 1.8684,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795808700.0,
+      "created_at": "2026-11-27T11:59:21.777774+00:00",
       "track_only": false
     }
   ],
@@ -16818,8 +16864,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-27",
-    "used": 980.0,
-    "bets": 19
+    "used": 1040.0,
+    "bets": 21
   },
   "updated": null
 }
