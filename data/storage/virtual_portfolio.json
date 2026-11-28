@@ -1,5 +1,5 @@
 {
-  "balance": 11682.53,
+  "balance": 11642.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1656,6 +1656,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795908600.0,
       "created_at": "2026-11-28T00:04:58.894144+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_谢斯伯利_切尔滕汉姆_让球主胜(-05)",
+      "sport": "football",
+      "league": "英格兰乙级联赛",
+      "home_team": "谢斯伯利",
+      "away_team": "切尔滕汉姆",
+      "home_cn": "谢斯伯利",
+      "away_cn": "切尔滕汉姆",
+      "market": "handicap",
+      "market_type": "让球主胜(-0.5)",
+      "sub_market": "hc",
+      "line": "-0.5",
+      "odds": 1.88,
+      "stake": 40,
+      "model_prob": 0.5535,
+      "ev_pct": 4.06,
+      "pin_odds": 1.7353,
+      "fair_price": 1.8066,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795878000.0,
+      "created_at": "2026-11-28T00:09:31.129193+00:00",
       "track_only": false
     }
   ],
@@ -17117,8 +17140,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-28",
-    "used": 490.0,
-    "bets": 10
+    "used": 530.0,
+    "bets": 11
   },
   "updated": null
 }
