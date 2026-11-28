@@ -1,5 +1,5 @@
 {
-  "balance": 11732.53,
+  "balance": 11682.53,
   "initial_bankroll": 20000.0,
   "pending_bets": [
     {
@@ -1633,6 +1633,29 @@
       "source": "bb_vs_pinnacle",
       "commence_time": 1795863600.0,
       "created_at": "2026-11-27T23:17:11.044356+00:00",
+      "track_only": false
+    },
+    {
+      "id": "bb_vs_pin_handicap_国民波托斯_奥利恩特_让球主胜(-25)",
+      "sport": "football",
+      "league": "玻利维亚甲级联赛",
+      "home_team": "国民波托斯",
+      "away_team": "奥利恩特",
+      "home_cn": "国民波托斯",
+      "away_cn": "奥利恩特",
+      "market": "handicap",
+      "market_type": "让球主胜(-2.5)",
+      "sub_market": "hc",
+      "line": "-2.5",
+      "odds": 2.0,
+      "stake": 50,
+      "model_prob": 0.5705,
+      "ev_pct": 14.11,
+      "pin_odds": 1.6623,
+      "fair_price": 1.7527,
+      "source": "bb_vs_pinnacle",
+      "commence_time": 1795908600.0,
+      "created_at": "2026-11-28T00:04:58.894144+00:00",
       "track_only": false
     }
   ],
@@ -17094,8 +17117,8 @@
   ],
   "daily_budget": {
     "date": "2026-11-28",
-    "used": 440.0,
-    "bets": 9
+    "used": 490.0,
+    "bets": 10
   },
   "updated": null
 }
