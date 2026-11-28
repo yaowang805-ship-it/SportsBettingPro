@@ -1225,6 +1225,10 @@ class SecondLevelMonitor:
             try:
                 clv = self._reverify_live_ev_oa(v["sig"])
                 if clv is None:
+                    # 2026-11-28 修滚球 CLV 采集率(22%→): no_pin(574次)是主因, Pin live 缓存覆盖差。
+                    # 兜底用 BB 同源价轨迹算 CLV(bb_at_bet vs bb@60s), 不依赖 Pin live 缓存。
+                    clv = self._bb_clv_fallback(key)
+                if clv is None:
                     # 2026-09-19 复验失败(盘口close/价差过大)重试一次, 3s后再试; 失败2次才弃(提升 LEV 采集率)
                     if v.get("attempts", 0) < 1:
                         v["attempts"] = v.get("attempts", 0) + 1
@@ -1250,6 +1254,47 @@ class SecondLevelMonitor:
                     break
         except Exception:
             pass
+
+    def _bb_clv_fallback(self, key):
+        """Pin live 缓存缺(no_pin)时兜底: 用 BB 同源价轨迹算 CLV=(bb_at_bet - bb@60s)/bb@60s。
+
+        2026-11-28 修滚球 CLV 采集率(22%→): no_pin(574次)是主因(Pin live WS 覆盖差)。
+        _bb_track 每 30s 采样 BB 价(下注时已注册, _sample_bb_track), 用它算「同源 BB CLV」
+        (早盘 clv_collector 同款 bb_clv_pct)。正=抢到比 60s 后更优的价(真 edge), 负=逆向选择接盘。
+        lead-lag 窗口 ~37s, 60s 反映市场重定价后。
+        """
+        rec = self._bb_track.get(key)
+        if not rec:
+            return None
+        bb_at_bet = rec.get("bb_at_bet")
+        if not bb_at_bet:
+            return None
+        try:
+            bb_at_bet = float(bb_at_bet)
+        except (TypeError, ValueError):
+            return None
+        if bb_at_bet <= 1:
+            return None
+        hist = rec.get("history", [])
+        target = rec.get("ts", time.time()) + 60.0
+        best = None
+        for ts, bb in hist:
+            if bb is None:
+                continue
+            try:
+                bb = float(bb)
+            except (TypeError, ValueError):
+                continue
+            if bb <= 1:
+                continue
+            if best is None or abs(ts - target) < abs(best[0] - target):
+                best = (ts, bb)
+        if not best:
+            return None
+        try:
+            return round((bb_at_bet - best[1]) / best[1] * 100, 2)
+        except (TypeError, ValueError, ZeroDivisionError):
+            return None
 
     def _handle_live_g04(self, match_id, data):
         """滚球 G04: 用 Pin live 公平价(moneyline/spread/total)算 EV。1x2/让球/大小球。"""

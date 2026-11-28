@@ -426,7 +426,7 @@
       "success_rate": 0.0
     },
     "尼加拉瓜甲级联赛": {
-      "attempts": 4,
+      "attempts": 5,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1276,7 +1276,7 @@
       "success_rate": 0.0
     },
     "欧洲冠军联赛": {
-      "attempts": 5,
+      "attempts": 6,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1761,7 +1761,7 @@
       "success_rate": 0.0
     },
     "NHL 美国冰球联盟": {
-      "attempts": 18,
+      "attempts": 19,
       "successes": 0,
       "success_rate": 0.0
     },
@@ -1986,7 +1986,7 @@
       "success_rate": 0.0
     }
   },
-  "updated": "2026-11-27T09:07:45.770609+00:00",
+  "updated": "2026-11-28T01:45:09.921308+00:00",
   "玻利维亚甲级联赛": {
     "sport": "football",
     "source": "espn",

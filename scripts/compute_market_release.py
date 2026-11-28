@@ -203,23 +203,22 @@ MANUAL_OBSERVE_RELEASE = {
     "basketball|1x2|客|<45%|live", "basketball|hc|主|*|early", "basketball|hc|主|45-55%|live",
     "basketball|hc|主|55-65%|live", "basketball|hc|主|65-75%|live", "basketball|hc|客|45-55%|live",
     "basketball|hc|客|55-65%|early", "basketball|hc|客|55-65%|live", "basketball|ou|大|*|live",
-    "basketball|ou|大|45-55%|live", "basketball|ou|大|55-65%|early", "basketball|ou|大|55-65%|live",
+    "basketball|ou|大|45-55%|live", "basketball|ou|大|55-65%|live",
     "basketball|ou|小|55-65%|live", "football|1x2|主|10-20%|early", "football|1x2|主|10-20%|live",
     "football|1x2|主|<10%|early", "football|1x2|主|<10%|live", "football|hc|主|40-50%|live",
-    "football|hc|主|50-55%|live", "football|hc|主|55-60%|early", "football|hc|主|55-60%|live",
-    "football|hc|主|60-70%|live", "football|hc|主|>70%|live", "football|hc|客|*|early",
-    "football|hc|客|30-40%|live", "football|hc|客|40-50%|live", "football|hc|客|50-55%|live",
-    "football|hc|客|55-60%|early", "football|hc|客|55-60%|live", "football|hc|客|60-70%|early",
+    "football|hc|主|50-55%|live", "football|hc|主|55-60%|early",
+    "football|hc|主|60-70%|live", "football|hc|主|>70%|live",
+    "football|hc|客|30-40%|live", "football|hc|客|50-55%|live",
     "football|hc|客|60-70%|live", "football|hc|客|>70%|live", "football|ht_hc|主|*|early",
     "football|ht_ou|大|20-30%|live", "football|ht_ou|大|30-40%|live", "football|ht_ou|大|40-50%|live",
     "football|ht_ou|大|50-55%|live", "football|ht_ou|大|55-60%|live", "football|ht_ou|大|60-70%|live",
     "football|ht_ou|大|>70%|live", "football|ht_ou|小|60-70%|live", "football|ht_ou|小|>70%|live",
     "football|ou|大|*|live", "football|ou|大|10-20%|live", "football|ou|大|20-30%|live",
-    "football|ou|大|30-40%|live", "football|ou|大|40-50%|live", "football|ou|大|50-55%|early",
-    "football|ou|大|50-55%|live", "football|ou|大|55-60%|early", "football|ou|大|55-60%|live",
-    "football|ou|大|60-70%|early", "football|ou|大|60-70%|live", "football|ou|大|>70%|live",
-    "football|ou|小|*|early", "football|ou|小|40-50%|live", "football|ou|小|50-55%|live",
-    "football|ou|小|55-60%|live", "football|ou|小|60-70%|live", "football|ou|小|>70%|live",
+    "football|ou|大|30-40%|live", "football|ou|大|40-50%|live",
+    "football|ou|大|50-55%|live", "football|ou|大|55-60%|live",
+    "football|ou|大|60-70%|live", "football|ou|大|>70%|live",
+    "football|ou|小|40-50%|live", "football|ou|小|50-55%|live",
+    "football|ou|小|55-60%|live", "football|ou|小|>70%|live",
     "ice_hockey|hc|客|55-65%|live", "ice_hockey|ou|大|*|early", "ice_hockey|ou|大|45-55%|live",
     "ice_hockey|ou|大|55-65%|live", "ice_hockey|ou|小|45-55%|live", "tennis|hc|主|*|early",
     "tennis|hc|客|*|early", "tennis|ou|大|40-60%|live", "tennis|ou|大|60-80%|live",
@@ -250,6 +249,8 @@ FULL_RELEASE_EARLY = ({
 }) - {
     # 2026-11-15 用户要求关闭足球让球全部盘口: 早盘 ROI -42.5%(胜率仅12.5%) 严重出血。
     "football|hc",
+    # 2026-11-28 用户要求关闭早盘大小球(ou): 公平价高估赢率10-19pp(足球37.7%vs55.4%/网球37.5%vs56.9%/篮球50%vs55.3%), 实盘足球-24.1%/网球-32.1%/篮球-6.8%。冰球ou保留(+12.6%正)。
+    "football|ou", "basketball|ou", "tennis|ou",
 }
 # 2026-11-10 滚球与早盘保持一致: 同样放开 7 运动 × 1x2/hc/ou(两端排除 20-75% 在 second_level_monitor 里)。
 # 2026-11-15/16 用户要求撤回滚球(观察库+实盘双数据源都出血): 冰球全部+篮球让分/独赢+足球大小+棒球让球, 早盘保留。
@@ -262,13 +263,12 @@ FULL_RELEASE_LIVE = set(FULL_RELEASE_EARLY) - {
 # 2026-11-16 用户要求: 观察库纸面负ROI格子手动拦截(格子级, 非整盘口)。full_release 命中先查这个。
 # 来源: 早盘观察库 paper_bets 7天, n>=8 且 ROI<-10% 的格子。方向按 _release_direction 归一化。
 MANUAL_FULL_RELEASE_BLOCK = {
-    ("basketball", "1x2", "客", "<45%"),      # n=21 ROI-80.1%  (CLV+12.7%但n=7不足, 2026-11-24 暂留)
+    # 2026-11-28 按CLV唯一标准整方向撤回(CLV负):
+    ("basketball", "1x2", "客", "*"),        # CLV-2.2% 实盘-16.5% 双负
+    ("basketball", "hc", "客", "*"),         # CLV-3.6% (ROI正但CLV负=lead-lag时机错)
     ("tennis", "1x2", "客", "20-40%"),        # n=13 ROI-40.9%  (CLV+5.9%但n=4不足, 2026-11-24 暂留)
     ("basketball", "1x2", "主", "<45%"),      # n=11 ROI-29.8%
     ("football", "1x2", "平", "20-30%"),      # n=10 ROI-12.3%  (CLV+4.7%但n=7不足, 2026-11-24 暂留)
-    # 2026-11-24 按CLV唯一标准释放(移出拦截, 加进 MANUAL_OBSERVE_RELEASE):
-    # ice_hockey|ou|大|45-55% (CLV+4.2% n34) / tennis|hc|主|60-80% (CLV+4.3% n17)
-    # tennis|hc|客|60-80% (CLV+17.1% n14) / tennis|hc|主|40-60% (CLV+2.9% n11)
 }
 
 # 手动拦截的赔率区间(用户明确要求): 数据驱动「方向×赔率区间」按 edge(赢率vs隐含) 硬编码拦截(2026-09-19)。
@@ -313,6 +313,13 @@ MANUAL_OBSERVE_BLOCK = {
     "football|hc|客|50-55%|live",
     "tennis|hc_games|客|60-80%|live",
     "football|dc|1X|>70%|live",
+    # 2026-11-28 撤滚球实盘负格(格子级 ROI<-30% 且 n≥5):
+    "tennis|hc_games|客|40-60%|live",   # -100% n5
+    "ice_hockey|1x2|客|<45%|live",      # -100% n5
+    "football|hc|客|55-60%|live",       # -39.8% n6
+    "football|hc|客|40-50%|live",       # -33.4% n10
+    "football|hc|主|55-60%|live",       # -36.1% n9
+    "football|ou|小|60-70%|live",       # -37.2% n8
     # 2026-10-25 解除 football|ou|小|55-60%|live 拦截(用户要求足球小球全量放开)。
     # 2026-10-22 撤早盘 CLV+纸面ROI 双负(假溢价)。
     "football|dc|X2|60-70%|early",
@@ -322,6 +329,7 @@ MANUAL_OBSERVE_BLOCK = {
     "football|ou|大|50-55%|early",
     "football|hc|客|55-60%|early",
     "football|hc|客|50-55%|early",   # 2026-11-24 按CLV唯一标准撤回(CLV-17.5% n23)
+    "football|hc|客|*|early",        # 2026-11-28 整方向撤回(CLV-22.6% 深负, lead-lag时机错)
     "tennis|hc|客|*|early",
     # 2026-10-25 撤实盘负格(最近一周 REAL_ROI n≥5 且 ROI<0):
     # 篮球让球客胜55-65%早盘(-33.2%/13注)、足球让球客胜55-60%(-7.0%/20注)、60-70%(-12.0%/41注)、>70%(-6.3%/6注)。
@@ -459,7 +467,7 @@ MANUAL_OBSERVE_RELEASE_LIMITED = {
 
     # 2026-10-22 撤 football|hc|客|55-60%(CLV-33.2%+实盘-100%)。
     "football|hc|客|60-70%|early": 100,
-    "football|ou|大|60-70%|early": 100,
+    # 2026-11-28 撤早盘 ou(大小球): football|ou|大|60-70% 实盘 -27.4%(胜率50%vs隐含61.7%), 已随全 ou 撤回。
     # 2026-11-01 撤 basketball|ou|大|55-65%|early(历史实盘 6笔全输 -100%, 纸面假正), 已移 MANUAL_OBSERVE_BLOCK。
     # 2026-10-22 撤 basketball|1x2|客|<45%(实盘-100%/6注+CLV-9.0%)。
     # 2026-10-26 释放 CLV 正 + 纸面ROI 正 方向(早盘, CLV 主判据):
